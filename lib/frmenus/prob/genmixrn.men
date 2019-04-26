@@ -1,0 +1,55 @@
+This is file gensmixn.men--Generate Mixture Random Numbers
+ 
+--------------------
+ 1. Generate Mixture Random Numbers
+ 2. LET Y = ... RANDOM NUMBERS FOR I = START INC STOP
+ 3.
+ 4. Distribution (Select one):
+ 5. @CE 1 1 4 30 Mixture of 2 Normals
+ 5.                                u1 =
+ 5. @CE 2 0 41 50 ?
+ 6.                                sd1 =
+ 6. @CE 3 0 41 50 ?
+ 7.                                 u2 =
+ 7. @CE 4 0 41 50 ?
+ 8.                                sd2 =
+ 8. @CE 5 0 41 50 ?
+ 9.                                  p =
+ 9. @CE 6 0 41 50 ?
+10.
+11. @CE 1 2 4 30 Bi-Weibull
+11.                                 s1 =
+11. @CE 7 0 41 50 ?
+12.                             gamma1 =
+12. @CE 8 0 41 50 ?
+13.                                 u2 =
+13. @CE 9 0 41 50 ?
+14.                                 s2 =
+14. @CE 10 0 41 50 ?
+15.                             gamma2 =
+15. @CE 11 0 41 50 ?
+16.
+17. Number of Random Numbers:
+17. @CE 12 0 41 50 ?
+18. Name of Output Variable :
+18. @CE 13 0 41 50 ?
+19.
+20.
+21. Generate the Random Numbers?
+--------------------
+AN FE
+@IF 1 1 LET U1 = _2
+@IF 1 1 LET SD1 = _3
+@IF 1 1 LET U2 = _4
+@IF 1 1 LET SD2 = _5
+@IF 1 1 LET P = _6
+@IF 1 1 LET _13 = NORMAL MIXTURE RANDOM NUMBERS FOR I = 1 1 _12
+@IF 1 2 LET SCALE1 = _7
+@IF 1 2 LET GAMMA1 = _8
+@IF 1 2 LET LOC2 = _9
+@IF 1 2 LET SCALE2 = _10
+@IF 1 2 LET GAMMA2 = _11
+@IF 1 2 LET _13 = BI-WEIBULL RANDOM NUMBERS FOR I = 1 1 _12
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

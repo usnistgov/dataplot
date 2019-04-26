@@ -1,0 +1,23 @@
+This is file variesti.men--Estimate Shift in Variation
+ 
+--------------------
+ 1. Estimate Shift in Variation
+ 2. LET M1 = SD Y1; LET M2 = SD Y2
+ 3.        LET RATIO = SD2/SD1
+ 4.
+ 5. Pre-mod  Response Variable:
+ 5. @CE 1 0 33 50 ?
+ 6. Post-mod Response Variable:
+ 6. @CE 2 0 33 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 3 0 1 50 *
+10.
+11.
+12. Estimate Variation Shift?
+--------------------
+GR FE
+LET ZSD1 = SD Y1
+LET ZSD2 = SD Y2
+LET ZRATIO = ZSD2/ZSD1
+--------------------

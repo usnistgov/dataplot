@@ -1,0 +1,31 @@
+This is file warppf.men--Compute Waring percent point
+ 
+--------------------
+ 1. Compute Waring Percent Point
+ 2. LET A = WARPPF(P,C,A)
+ 3.
+ 4. This distribution has very long tails for
+ 5. values of the a shape parameters less than 1.  The
+ 6. Dataplot algorithms still need work for this
+ 7. case.
+ 8.
+ 9. Input values:
+10.         probability:                   0 < p < 1
+10. @CE 1 0 20 37 ?
+11.   shape parameter c:                       c > a
+11. @CE 2 0 20 37 ?
+12.   shape parameter a:                       a > 0
+12. @CE 3 0 20 37 ?
+13.
+14. Output value:
+15.      name for the percent point:
+15. @CE 4 0 38 49 ?
+16.
+17.
+18. Compute the Percent Point?
+--------------------
+AN FE
+LET _4 = WARPPF( _1 , _2 , _3 )
+--------------------
+WEB HELP WARPPF
+--------------------

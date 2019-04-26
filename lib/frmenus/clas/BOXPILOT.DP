@@ -1,0 +1,10 @@
+----- <~dataloex\BOXPILOT.DP> Load & Execute BOXPILOT.DAT
+
+. This is file    BOXPILOT.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ BOXPILOT.DAT Y X1 X2 X3
+TITLE BOXPILOT.DAT
+/
+

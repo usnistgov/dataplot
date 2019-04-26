@@ -1,0 +1,37 @@
+----- <~dex2kmp\2to15m11.top> 2**(15-11) Design
+ 
+2**(15-11) Design
+ 
+   k = 15 factors
+   n = 16 runs
+   r = resolution 3
+       (main effects  ==  2-term interactions)
+       (each main effect is confounded with
+       7 2-term interactions)
+ 
+                 (13)  (23)  (34) (124) (234)
+              (12)  (14)  (24) (123) (134) (1234)
+   X  X  X  X  X  X  X  X  X  X  X  X  X  X  X
+   1  2  3  4  5  6  7  8  9  1  1  1  1  1  1
+                              0  1  2  3  4  5
+ ...............................................
+   -  -  -  -  +  +  +  +  +  +  -  -  -  -  +
+   +  -  -  -  -  -  -  +  +  +  +  +  +  -  -
+   -  +  -  -  -  +  +  -  -  +  +  +  -  +  -
+   +  +  -  -  +  -  -  -  -  +  -  -  +  +  +
+   -  -  +  -  +  -  +  -  +  -  +  -  +  +  -
+   +  -  +  -  -  +  -  -  +  -  -  +  -  +  +
+   -  +  +  -  -  -  +  +  -  -  -  +  +  -  +
+   +  +  +  -  +  +  -  +  -  -  +  -  -  -  -
+   -  -  -  +  +  +  -  +  -  -  -  +  +  +  -
+   +  -  -  +  -  -  +  +  -  -  +  -  -  +  +
+   -  +  -  +  -  +  -  -  +  -  +  -  +  -  +
+   +  +  -  +  +  -  +  -  +  -  -  +  -  -  -
+   -  -  +  +  +  -  -  -  -  +  +  +  -  -  +
+   +  -  +  +  -  +  +  -  -  +  -  -  +  -  -
+   -  +  +  +  -  -  -  +  +  +  -  -  -  +  -
+   +   +   +   +   +   +   +   +   +   +   +   +   +   +   +
+ 
+Click here to view confounding structure. <~dex2kmp\cs215m11.top>
+Click here to load design. <x2cl: SKIP 100; READ 2TO15M11.DAT X1 TO X15>
+ 

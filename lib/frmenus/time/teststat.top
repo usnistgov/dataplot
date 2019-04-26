@@ -1,0 +1,11 @@
+----- <~time\teststat.top> Testing Stationarity
+ 
+Testing Stationarity
+ 
+Discussion                 <~time\teststdi.top>
+ 
+Mean plot                  <xemf: ~time\meanplot.men>
+SD plot                    <xemf: ~time\sdplot.men>
+
+Autocorrelation plot matrix <xemf: ~time\autocpma.men>
+

@@ -1,0 +1,16 @@
+----- <~reli\evhistpd.top> Histogram & superimposed pdf plot
+
+Histogram and Superimposed PDF Plot
+
+Extreme Value Type 1 (Gumbel) (Minimum)   <xemf: ~prob\ev11hispd.men>
+Extreme Value Type 1 (Gumbel) (Maximum)   <xemf: ~prob\ev12hispd.men>
+
+Extreme Value Type 2 (Frechet) (Minimum)  <xemf: ~prob\ev21hispd.men>
+Extreme Value Type 2 (Frechet) (Maximum)  <xemf: ~prob\ev21hispd.men>
+
+Weibull (Minimum)                          <xemf: ~prob\wei1hispd.men>
+Weibull (Maximum)                          <xemf: ~prob\wei2hispd.men>
+
+Generalized Pareto                        <xemf: ~prob\gephispd.men>
+Generalized Extreme Value                 <xemf: ~prob\gevhispd.men>
+

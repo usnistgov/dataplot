@@ -1,0 +1,8 @@
+----- <~datalist\BOXCLEAN.top> BOXCLEAN.DAT
+ 
+BOXCLEAN.DAT
+ 
+View     <xcl: LIST BOXCLEAN.DAT>
+Load     <x2cl: SKIP 25; READ BOXCLEAN.DAT Y X1 TO X4>
+Print    <xccl: printfile C:\DATAPLOT\BOXCLEAN.DAT>
+ 

@@ -1,0 +1,34 @@
+This is Dataplot data file     CORNEL78.DAT
+Example of ...
+        3-Factor Constrained Mixture (... Region)
+        Design Type =
+Source--Cornell, John A. (1990).  ASQC Statistics
+        Division Volume 5:  How to Run Mixture Experiments
+        for Product Quality.  Page 78.
+Response Variable                  = ?
+Number of observations             = 9
+Number of variables per line image = 4 (= 1 + 3)
+Order of variables per line image--
+   Response variable = Y
+   Factor 1          = X1
+   Factor 2          = X2
+   Factor 3          = X3
+Project Question--What settings for the 3 ingredients
+                  optimize Y?
+Statistical area--mixture design of experiment
+To read this file into Dataplot--
+      SKIP 25
+      READ CORNEL78.DAT Y X1 X2 X3
+  Y                  X1           X2           X3
+Response         Component 1  Component 2  Component 3
+                 Proportion   Proportion   Proportion
+-------------------------------------------------------
+17.2                .100         .225         .675
+21.4                .100         .450         .450
+14.7                .100         .600         .300
+13.9                .300         .175         .525
+20.6                .300         .350         .350
+16.1                .300         .467         .233
+ 9.3                .500         .125         .375
+12.5                .500         .250         .250
+ 7.8                .500         .333         .167

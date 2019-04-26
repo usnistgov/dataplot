@@ -1,0 +1,11 @@
+----- <~dexmix\scmodel3.top> Model for k=3 Simplex-Centroid Design
+ 
+Model for k=3 Simplex-Centroid Design
+ 
+k = 3 factors
+n = 7 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 +
+    B12*X1*X2 + B13*X1*X3 + B23*X2*X3 +
+    B123*X1*X2*X3
+ 

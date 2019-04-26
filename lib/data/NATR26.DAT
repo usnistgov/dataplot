@@ -1,0 +1,35 @@
+This is Dataplot data file     NATR26.DAT
+Burn Time of Rocket Powder
+Question: What is the variability?
+ 
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 2-6 to 2-8.
+ 
+Number of observations             = 10
+Number of variables per line image = 1
+Order of variables on a line image--
+   1. Y = Response Variable = burn time (seconds)
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR26.DAT Y
+   SUMMARY Y
+ 
+ 
+ 
+ 
+ 
+     Y
+ Burn Time
+-----------
+   50.7
+   54.9
+   54.3
+   44.8
+   42.2
+   69.8
+   53.4
+   66.1
+   48.1
+   35.5

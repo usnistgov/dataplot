@@ -1,0 +1,8 @@
+----- <~dataload\SPIEGEL.DP> Load SPIEGEL.DAT
+
+. This is file    SPIEGEL.DP
+
+DELETE Y X
+SKIP 25
+READ SPIEGEL.DAT Y X
+

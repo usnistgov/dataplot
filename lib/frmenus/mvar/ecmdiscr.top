@@ -1,0 +1,14 @@
+----- <~mvar\ecmdiscr.top> ECM Discrimination
+ 
+ECM Discriminant Analysis
+ 
+Discussion                             <~mvar\ecmdisc.top>
+
+Linear Discriminants
+   Compute Discriminant Functions      <xemf: ~mvar\linedisc.men>
+   Classify New Points                 <xemf: ~mvar\lineclas.men>
+
+Quadratic Discriminants
+   Compute Discriminant Functions      <xemf: ~mvar\quaddisc.men>
+   Classify New Points                 <xemf: ~mvar\quadclas.men>
+

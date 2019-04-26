@@ -1,0 +1,14 @@
+-----  <~mvar\workexam.top> Multi-Variable Examples
+
+Multivariate Analysis: Worked Examples
+
+PROFPLOT.DP      Profile plot for 25 rows of AUTO79.DAT  <xcl: CALL PROFPLOT.DP>
+STARPLOT.DP      Star plot for 25 rows of AUTO79.DAT     <xcl: CALL STARPLOT.DP>
+
+LEVONSO3.DP      Multiplot for LEVENSO3.DAT             <xcl: CALL LEVENSO3.DP>
+MULTPLOT.DP      Multiplot for AUTO83.DAT               <xcl: CALL MULTPLOT.DP>
+PERIODIC.DP      Multiplot for PERIODIC.DAT              <xcl: CALL PERIODIC.DP>
+PLANETS.DP       Multiplot for PLANETS.DAT              <xcl: CALL PLANETS.DP>
+
+FISHIRIS.DP      Fisher's Discriminant Analysis of Iris data <xcl: CALL FISHIRIS.DP>
+

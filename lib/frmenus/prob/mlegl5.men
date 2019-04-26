@@ -1,0 +1,122 @@
+This is file mlegl5.men--Generalized Logistic Type 5 MLE Estimates
+ 
+--------------------
+ 1. Generalized Logistic Type 5 Maximum Likelihood Estimates
+ 2. GENERALIZED LOGISTIC TYPE 5 MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. L-Moment point estimates for the parameters of
+ 5. thje generalized logistic type 5 (i.e., Hosking
+ 6. parameterization).  You can optionally request to
+ 7. have bootstrap  confidence limits generated for the
+ 8. distribution parameters.
+ 9.
+10. Response Variable:
+10. @CE 1 0 42 50 ? gui-variable
+11.
+12. Number of bootstrap samples (0 to omit)?
+12. @CE 2 0 42 50 *
+13.
+14. Subset/Except/For Specification:
+15. @CE 3 0 1 50 *
+16.
+17.
+18. Compute Generalized Logistic Type 5 MLE's?
+--------------------
+GR FE
+LET NUMBOOT = 0
+@IF 2 0 LET NUMBOOT = _2
+let numboot = min(1000,numboot)
+if numboot > 0
+   bootstrap samples numboot
+   set maximum likelihood percentiles default
+   device 1 font simplex
+   multiplot 2 3
+   multiplot corner coordinates 0 0 100 100
+   multiplot scale factor 2
+   label
+   title case asis
+   label case asis
+   case asis
+   title displacement 2
+   x2label displacement 13
+   x3label displacement 18
+   y1label Parameter Estimate
+   x1label
+   x2label Bootstrap Sample
+   title Bootstrap Plot
+   line color blue red green
+   limits
+   bootstrap generalized logistic type 5 mle plot _1 _3
+   line color black all
+   .
+   delete ashape ascale
+   skip 0
+   read dpst1f.dat aloc ascale ashape
+   y1label
+   x2label
+   title Alpha Parameter
+   let amed = median ashape
+   let amean = mean ashape
+   let asd = sd ashape
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram ashape
+   title Scale Parameter
+   let amed = median ascale
+   let amean = mean ascale
+   let asd = sd ascale
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram ascale
+   title Location Parameter
+   let amed = median aloc
+   let amean = mean aloc
+   let asd = sd aloc
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram aloc
+   x3label displacement
+   end of multiplot
+   .
+   let alpha = 0.05
+   let xqlow = alpha/2
+   let xqupp = 1 - alpha/2
+   .
+   let xq = xqlow
+   let sha95low = xq quantile ashape
+   let xq = xqupp
+   let sha95upp = xq quantile ashape
+   let xq = xqlow
+   let sca95low = xq quantile ascale
+   let xq = xqupp
+   let sca95upp = xq quantile ascale
+   let xq = xqlow
+   let loc95low = xq quantile aloc
+   let xq = xqupp
+   let loc95upp = xq quantile aloc
+   .
+   device 1 font tektronix
+   window corner coordinates 50 0 100 50
+   justification left
+   height 4
+   move 5 80
+   text Confidence Interval for Alpha:
+   move 5 73
+   text (^sha95low,^sha95upp)
+   move 5 60
+   text Confidence Interval for Scale:
+   move 5 53
+   text (^sca95low,^sca95upp)
+   move 5 40
+   text Confidence Interval for Location:
+   move 5 33
+   text (^loc95low,^loc95upp)
+   window corner coordinates 0 0 100 100
+   height
+   title
+   label
+end of if
+GENERALIZED LOGISTIC TYPE 5 MAXIMUM LIKELIHOOD _1 _3
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

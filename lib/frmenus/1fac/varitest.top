@@ -1,0 +1,21 @@
+----- <~1fac\varitest.top> Testing: Shift in Variation
+
+Testing: Shift in Variation
+
+Testing:
+
+    Case 1: 1 level of data
+            Pre -mod: historical reference value
+            Post-mod: data
+            (click here for case 1)        <xemf: ~univ\tesvar11.men>
+    
+    Case 2: 2 levels of data
+            Pre -mod: data
+            Post-mod: data
+            (click here for case 2)        <xemf: ~1fac\tesvar12.men>
+    
+    Case 3: 3 or more levels of data
+            (click here for case 3)        <xemf: ~1fac\tesvar13.men>
+
+Checking assumptions                   <xemf: ~univ\4plot.men>
+

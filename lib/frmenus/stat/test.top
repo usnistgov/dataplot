@@ -1,0 +1,53 @@
+----- <~stat\test.top> Common Statistical Tests
+
+Common Statistical Tests
+
+Univariate:
+    Summary Statistics for Univariate Data   <xemf: ~stat\summstat.men>
+    Confidence Limits for Mean               <xemf: ~stat\conlimme.men>
+    1 Sample T Test                          <xemf: ~stat\ttest.men>
+    Normal Tolerance Limits                  <xemf: ~stat\normtole.men>
+    Chi-Square Test for Standard Deviation   <xemf: ~stat\chisqtst.men>
+    Runs Test for Randomness                 <xemf: ~stat\runs.men>
+    Grubbs Test for Outliers                 <xemf: ~stat\grubb.men>
+    Chi-Square Goodness of Fit               <~univ\chisq.top>
+    Kolmogorov-Smirnov Goodness of Fit       <~univ\ks.top>
+    Anderson-Darling Goodness of Fit         <xemf: ~stat\andedarl.men>
+
+2 Response Variables:
+    F Test for Shift in Variation            <xemf: ~stat\1fvatest.men>
+    T Test for Shift in Location             <xemf: ~stat\1flotest.men>
+    Sign Test for Paired Data                <xemf: ~stat\signtest.men>
+    Wilcoxon Signed Rank Sum Test (Paired Data) <xemf: ~stat\wilcoxon.men>
+    Wilcoxon Signed Rank U (= Mann-Whitney) Test<xemf: ~stat\mannwhit.men>
+    Chi-Square 2 Sample Test                 <~stat\chisq2s.men>
+    Kolmogorov-Smirnov 2 Sample Test         <~stat\ks2s.men>
+
+1 Response, 1 Factor:
+    F Test for Homogeneous Locations         <xemf: ~stat\ftestloc.men>
+    Bartlett Test for Homogeneous Variances  <xemf: ~stat\bartlett.men>
+    Levene Test for Homogeneous Variances    <xemf: ~stat\levene.men>
+    Anderson Darling K Sample Test           <xemf: ~stat\andrdark.men>
+    Tabulate Statistics for Grouped Data     <xemf: ~stat\tabulate.men>
+    Kruskal-Wallis 1-Factor ANOVA            <xemf: ~stat\kruskal.men>
+
+1 Response, 2 Factor:
+    Cross-Tabulate Statistics for Grouped Data <xemf: ~stat\crosstab.men>
+    Chi-Square Test for Independence         <xemf: ~stat\chisqind.men>
+
+General Multi-Factor
+    Analysis of Variance (Balanced)          <xemf: ~stat\anova.men>
+    Analysis of Variance (Balanced, with Graphics) <xemf: ~stat\anovag.men>
+    Median Polish                            <xemf: ~stat\medpol.men>
+    Median Polish (with Graphics)            <xemf: ~stat\medpolg.men>
+    Yates Analysis                           <xemf: ~stat\yates.men>
+    Yates Analysis Principle Hessian Directions <xemf: ~stat\dexphd.men>
+
+Reliability:
+   2-Parameter Weibull ML Estimates         <xemf: ~stat\weibmle.men>
+   B-Basis Tolerance Limits                 <xemf: ~stat\bbasis.men>
+   A-Basis Tolerance Limits                 <xemf: ~stat\abasis.men>
+
+Quality Control:
+    Capability Analysis                     <xemf: ~stat\capabili.men>
+

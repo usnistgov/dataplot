@@ -1,0 +1,20 @@
+----- <~dex\crbdinde.top> Index: Randomized Block Designss
+
+Index: Randomized Block Designss
+
+    Name of      Number of      Number of
+    Design        Factors         Runs
+                     k              n
+    ...................................................
+    2-factor RBD     2           l1 * l2
+    3-factor RBD     3           l1 * l2 * l3
+    4-factor RBD     4           l1 * l2 * l3 * l4
+    .                .           .
+    k-factor RBD     k           l1 * l2 * ... * lk
+
+where
+    l2 = number of levels (settings) of factor 2
+    l3 = number of levels (settings) of factor 3
+    l4 = number of levels (settings) of factor 4
+    lk = number of levels (settings) of factor k
+

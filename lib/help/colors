@@ -1,0 +1,174 @@
+This is Dataplot file    C:\DATAPLOT\HELP\COLORS.
+ 
+Purpose: List the colors available within Dataplot
+ 
+Example of usage:
+ 
+   CHARACTER COLOR YELLOW    or   CHARACTER COLOR 3
+   LINE COLOR YELLOW         or   LINE COLOR 3
+ 
+Within Dataplot, this COLORS file may be viewed by entering:
+ 
+   LIST COLORS.       (be sure to include the trailing .)
+ 
+You may specify 89 different colors within Dataplot.
+A given output device (monitor, laser printer, penplotter)
+may or may not have the capacity to do all 89 colors;
+if the capacity does not exist, then a mapping of the
+89 colors onto a subset will occur.
+ 
+Devices Accommodating all 89 colors:
+   X11             will yield all 89 colors
+   POSTSCRIPT      will yield all 89 colors
+   CGM             will yield all 89 colors
+ 
+Devices Accommodating 15 colors:
+   VGA             will yield 15 colors:
+                   white, black, red, blue,
+                   green, magenta, cyan, yellow,
+                   light cyan, light blue, gray, light gray,
+                   dark gray, red2, magenta2
+ 
+Devices Accommodating 8 colors:
+   TEKTRONIX 4115  will yield 8 colors:
+                   white, black, red, blue,
+                   green, magenta, cyan, yellow
+   TEKTRONIX 42XX  will yield 8 colors:
+                   white, black, red, blue,
+                   green, magenta, cyan, yellow
+   TEKTRONIX 43XX  will yield 8 colors:
+                   white, black, red, blue,
+                   green, magenta, cyan, yellow
+   TEKTRONIX 4027  will yield 8 colors:
+                   white, black, red, blue,
+                   green, purple, orange, yellow
+   HP 2622         will yield 8 colors:
+                   white, black, red, blue,
+                   green, magenta, cyan, yellow
+   GENERAL         will yield 8 colors:
+                   white, black, red, blue,
+                   green, magenta, cyan, yellow
+ 
+Devices Accommodating 7 colors:
+   SUN/SUNVIEW     will yield 7 colors:
+                   white, black, red, blue,
+                   green, magenta, yellow
+ 
+Devices Accommodating 4 colors:
+   HPGL            will yield 4 colors :
+                   black, red, blue, green
+   TEKTRONIX 4662  will yield 4 colors:
+                   black, red, blue, green
+   CALCOMP         will yield 4 colors:
+                   black, red, blue, green
+   ZETA            will yield 4 colors:
+                   black, red, blue, green
+ 
+For details of the color mapping for a device,
+use the SHOW command, as in
+ 
+    SHOW CALCOMP COLORS
+    SHOW VGA COLORS
+ 
+or (to capture such a listing to a file (e.g., JUNK.),
+which may be viewed either within Dataplot or later upon
+exit from Dataplot) enter
+ 
+   CAPTURE JUNK; SHOW CALCOMP COLORS; END CAPTURE; LIST JUNK.
+   CAPTURE JUNK; SHOW VGA     COLORS; END CAPTURE; LIST JUNK.
+ 
+ 
+                      Dataplot  Dataplot   VGA
+ Color                Name      Index     Output
+                                        (15-color)
+ --------------------------------------------------
+ White                WHITE      0        White
+ Black                BLACK      1        Black
+ Red                  RED        2        Red
+ Blue                 BLUE       3        Blue
+ Green                GREEN      4        Green
+ Magenta              MAGENTA    5        Magenta
+ Orange               ORANGE     6        Orange
+ Cyan                 CYAN       7        Cyan
+ Yellow               YELLOW     8        Yellow
+ 
+ Yellow Green         YGRE       9        Yellow
+ Dark Green           DGRE      10        Green
+ Light Blue           LBLU      11        Light Blue
+ Blue Violet          VBLU      12        Blue
+ Violet Red           VRED      13        Red
+ Dark Slate Gray      DGRA      14        Dark Gray
+ Light Gray           LGRA      15        Light Gray
+ Aquamarine           AQUA      16        Cyan
+ Brown                BROWN     17        Brown
+ Cadet Blue           CABL      18        Light Blue
+ Coral                CORAL     19        Light Red
+ Cornflower Blue      CBLU      20        Blue
+ Dark Olive Green     DOGR      21        Green
+ Dark Orchid          DORC      22        Magenta
+ Dark Slate Blue      DSBL      23        Blue
+ Dark Turquoise       DTUR      24        Magenta
+ Firebrick            FIRE      25        Yellow
+ Forest Green         FGRE      26        Green
+ Gold                 GOLD      27        Yellow
+ Goldenrod            GLDR      28        Yellow
+ Gray                 GRAY      29        Gray
+ Indian Red           IRED      30        Light Red
+ Khaki                KHAKI     31        Yellow
+ Dim Gray             DMGR      32        Light Gray
+ Light Blue Steel     LSBL      33        Light Blue
+ Lime Green           LGRE      34        Green
+ Maroon               MAROON    35        Magenta
+ Medium Aquamarine    MAQU      36        Light Cyan
+ Medium Blue          MBLU      37        Light Blue
+ Medium Forest Green  MFGR      38        Green
+ Medium Goldenrod     MGLD      39        Yellow
+ Medium Orchid        MORC      40        Magenta
+ Medium Sea Green     MSGR      41        Green
+ Medium Slate Blue    MSBL      42        Light Blue
+ Medium Spring Green  MSPG      43        Green
+ Medium Turquoise     MTUR      44        Light Magenta
+ Medium Violet Red    MVRD      45        Magenta
+ Midnight Blue        MDBL      46        Blue
+ Navy                 NAVY      47        Blue
+ Orange Red           ORED      48        Red
+ Orchid               ORCHID    49        Light Magenta
+ Pale Green           PGRE      50        Green
+ Pink                 PINK      51        Red
+ Plum                 PLUM      52        Magenta
+ Purple               PURPLE    53        Magenta
+ Salmon               SALMON    54        Yellow
+ Sea Green            SGRE      55        Green
+ Sienna               SIENNA    56        Magenta
+ Sky Blue             SKBL      57        Light Cyan
+ Slate Blue           SBLU      58        Blue
+ Spring Green         SPGR      59        Green
+ Steel Blue           STBL      60        Blue
+ Tan                  TAN       61        Brown
+ Thistle              THISTLE   62        Yellow
+ Turquoise            TURQ      63        Magenta
+ Violet               VIOLET    64        Magenta
+ Wheat                WHEAT     65        Yellow
+ Green Yellow         GYEL      66        Green
+ Light Cyan           LCYA      67        Light Cyan
+ Blue2                BLU2      68        Blue
+ Blue3                BLU3      69        Blue
+ Blue4                BLU4      70        Blue
+ Cyan2                CYA2      71        Cyan
+ Cyan3                CYA3      72        Cyan
+ Cyan4                CYA4      73        Cyan
+ Green2               GRE2      74        Green
+ Green3               GRE3      75        Green
+ Green4               GRE4      76        Green
+ Yellow2              YEL2      77        Yellow
+ Yellow3              YEL3      78        Yellow
+ Yellow4              YEL4      79        Yellow
+ Orange2              ORA2      80        Yellow
+ Orange3              ORA3      81        Yellow
+ Orange4              ORA4      82        Yellow
+ Red2                 RED2      83        Red
+ Red3                 RED3      84        Red
+ Red4                 RED4      85        Red
+ Magenta2             MAG2      86        Magenta
+ Magenta3             MAG3      87        Magenta
+ Magenta4             MAG4      88        Magenta

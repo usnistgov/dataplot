@@ -1,0 +1,25 @@
+----- <~dataall\univnist.top> View/etc. Univariate Data: NIST
+
+View/Load/Print Univariate Data: NIST
+
+LEW.DAT       Beam deflections            <~dataall\LEW.top>
+SOULEN0.DAT   Josephson junc cryothermom. <~dataall\SOULEN0.top>
+SOULEN.DAT    Josephson junc cryothermom. <~dataall\SOULEN.top>
+MARSHAK.DAT   Nuclear thermometry         <~dataall\MARSHAK.top>
+
+SIMIU.DAT     Wind speeds                 <~dataall\SIMIU.top>
+WASHDC.DAT    Washington DC wind speeds   <~dataall\WASHDC.top>
+KEYWEST.DAT   Key West wind speeds        <~dataall\KEYWEST.top>
+MAVRO.DAT*    Filter transmittance        <~dataall\MAVRO.top>
+DZIUBA.DAT    Standard resistor           <~dataall\DZIUBA.top>
+ZARR13.DAT    Hear flow meter             <~dataall\ZARR13.top>
+ZARR14.DAT    Hear flow meter             <~dataall\ZARR14.top>
+ZARR15.DAT    Hear flow meter             <~dataall\ZARR15.top>
+
+MORALES.DAT   Mass spec: sulfur exa-fluor <~dataall\MORALES.top>
+MORALES2.DAT  Mass spec: sulfur exa-fluor <~dataall\MORALES2.top>
+
+REHM.DAT      Asmathic air flow           <~dataall\REHM.top>
+FUNNEL5A.DAT  Funnel data                 <~dataall\FUNNEL5A.top>
+VANGEL5.DAT   Strength at failure         <~dataall\VANGEL5.top>
+

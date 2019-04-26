@@ -1,0 +1,47 @@
+This is file autocopl.men--Autocorrelation plot
+ 
+--------------------
+ 1. Autocorrelation Plot
+ 2. AUTOCORRELATION PLOT Y
+ 3.
+ 4. Definition: Autocorrelation(at lag h) =
+ 5.     correlation of Y(i) with Y(i-lag)
+ 6.     -1  <= autocorrelation  <= +1
+ 7.
+ 8. Vertical   axis = autocorrelation at lag h
+ 9. Horizontal axis = lag h
+10.
+11. Question being addressed:
+12.     For which lag is the series most closely
+13.     related to other members of the series?
+14.
+15. Reference: Granger & Hatanaka, page 59.
+16.
+17. Response Variable:
+17. @CE 1 0 33 50 ? gui-variable
+18.
+19. Line Type:
+19. @CE 2 0 33 50 * gui-line
+20. Character type:
+20. @CE 3 0 33 50 * gui-char
+21. Character fill on/off?:
+21. @CE 4 0 33 50 * gui-ooff
+22. Spike on/off
+22. @CE 5 0 33 50 * gui-ooff
+23.
+24. Subset/Except/For Specification:
+25. @CE 6 0 6 50 *
+26.
+27.
+28. Generate the Plot?:
+--------------------
+GR FE
+@IF 2 0 LINES _2
+@IF 3 0 CHARACTERS _3
+@IF 4 0 CHARACTER FILL _4
+@IF 5 0 SPIKE _5
+@IF 5 0 SPIKE BASE 0
+AUTOCORRELATION PLOT _1 _6
+--------------------
+WEB HELP AUTOCORELATION PLOT
+--------------------

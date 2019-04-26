@@ -1,0 +1,53 @@
+This is file makppf.men--Compute Gompertz-Makeham ppf
+ 
+--------------------
+ 1. Compute Gompertz-Makeham ppf
+ 2. LET A = MAKPPF(P,SHAPE1,SHAPE2,LOC,SCALE)
+ 3.
+ 4. This menu computes the Meeker-Escobar
+ 5. parameterization with two shape parameters.
+ 6. Dataplot supports two additional
+ 7. parameterizations with 3 shape parameters
+ 8. (click on HELP for details).
+ 9.
+11. The input argument, p, can be either a
+12. single number, the name of a parameter,
+13. or the name of a variable.
+14.  
+15. Input values:
+16.                  p (0 <= p < 1):
+16. @CE 1 0 42 50 ?
+17.                      shape zeta:
+17. @CE 2 0 42 50 ?
+18.            shape eta (eta >= 0):
+18. @CE 3 0 42 50 ?
+19.                      location u:
+19. @CE 4 0 42 50 ?
+20.                 scale s (s > 0):
+20. @CE 5 0 42 50 ?
+21.
+22. Output parameters:
+23.          name for the ppf value:
+23. @CE 6 0 42 50 ?
+24.
+25.
+26. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 4 0 LET ZLOC = _4
+LET ZSCALE = 1
+@IF 5 0 LET ZSCALE = _5
+IF ZSCALE <= 0
+   LET ZSCALE = 1
+END OF IF
+@IF 2 0 LET ZSHAPE1 = _2
+@IF 3 0 LET ZSHAPE2 = _3
+IF ZSHAPE2 < 0
+   LET ZSHAPE2 = 1
+END OF IF
+SET GOMPERTZ MAKEHAM DEFINITION REPARAMETERIZED MEEKER
+@IF 6 0 LET _6 = MAKPPF( _1 ,ZSHAPE1,ZSHAPE2,ZLOC,ZSCALE)
+--------------------
+WEB HELP MAKPPF
+--------------------

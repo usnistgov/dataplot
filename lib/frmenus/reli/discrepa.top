@@ -1,0 +1,37 @@
+-----<~reli\discrepa.top> Discussion: Repairable Systems
+
+Discussion: Repairable Systems
+
+Repairable Systems
+
+In reliability applications, a distinction is
+made between nonrepairable and repairable systems.
+In a nonrepairable system, failed items are simply
+removed from service.  In a repairable system, failed
+items are repaired and returned to service.
+
+The key assumption for nonrepairable systems is that
+failure times are independent and identically
+distributed (iid).  This means that failure times
+can be combined for analysis and that the order of
+ocurrence can be ignored.
+
+For repairable systems, repairs occur sequentially
+in time and the assumption that the times between
+repairs (i.e., the interarrival times) are independent
+and come from a common distribution (iid) may not be
+valid.
+
+If the interarrival times are iid, then they can be
+modeled as a renewal process.  However, if the
+interarrival times are not iid, then we need to
+model them as a non-renewal process.
+
+Some quantities of interest in analyzing repair
+data are:
+
+   N(t)  = the cumulative number of repairs at time t
+   M(t)  = the population mean cumulative number of
+           repairs at time t
+   m(t)  = the rate of repairs at time t (i.e., the
+           derivative of M(t))

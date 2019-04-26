@@ -1,0 +1,21 @@
+This is file tabusd.men--Tabulate Standard Deviations
+ 
+--------------------
+ 1. Tabulate Standard Deviations	
+ 2. TABULATE STANDARD DEVIATION Y X
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. Group    Variable:
+ 5. @CE 2 0 42 50 ? gui-vari
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Tabulate the Standard Deviations?
+--------------------
+TABULATE STANDARD DEVIATIONS _1 _2 _3
+--------------------
+WEB HELP TABULATE
+--------------------

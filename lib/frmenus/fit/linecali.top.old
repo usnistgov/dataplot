@@ -1,0 +1,37 @@
+----- <~fit\linecali.top> Linear Calibration
+
+Linear Calibration
+
+Discussion                          <~fit\calidisc.top>
+NIST/SEMATECH Handbook (Calibration) <xcl: web handbook fit calibration>
+
+Other kinds of calibration          <~fit\othecali.top>
+FAQs                                <LIST ~fit\califaqs.tex>
+Assumptions                         <LIST ~fit\caliassu.tex>
+Recommendations: what's on Y; what's on X?  <~fit\caliyx.top>
+
+Do the linear fit                   <xemf: ~fit\linecali.men>
+Validate the linear model           <~fit\modelval.top>
+Inferences from linear fit          <~fit\inferenc.top>
+
+Use the fit: inverse calibration    <~fit\invecali.top>
+
+Problems
+   When group/subset effects exist...  <~fit\groucali.top>
+   When drift exists...                <~fit\drifcali.top>
+   When both measurements are noisy... <~fit\noiscali.top
+
+Dataplot data sets
+   View
+      Ozone Monitor    <xcl: LIST NORRIS11.DAT>
+      Piston Gage      <xcl: LIST EHRLICH.DAT>
+   Load
+      Ozone Monitor    <x2cl: SKIP 25; READ NORRIS11.DAT Y X TAG>
+      Piston Gage      <x2cl: SKIP 25; READ EHRLICH.DAT Y X TAG>
+
+Selected NIST Calibration Services
+   Ozone Photometer Calibration     <~fit\ozoncali.top>
+   Piston Gage                      <~fit\pistgage.top>
+
+References                          <xcl: LIST ~fit\calirefe.tex>
+

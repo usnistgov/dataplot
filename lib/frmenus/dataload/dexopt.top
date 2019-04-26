@@ -1,0 +1,10 @@
+----- <~dataload\dexopt.top> Load Optimization Design Data
+
+Load Optimization Design Data
+
+BOXCLEAN.DAT  2**(4-1)  Cleanser stability <xcf: ~dataload\BOXCLEAN.DP>
+
+BOXYIELD.DAT* 2**2 wcp  Yield & time, temp <xcf: ~dataload\BOXYIELD.DP>
+BOXYIEL2.DAT  2**2 wcp  Yield & time, temp <xcf: ~dataload\BOXYIEL2.DP>
+BOXYIEL3.DAT  2**2 wcp  Yield & time, temp <xcf: ~dataload\BOXYIEL3.DP>
+

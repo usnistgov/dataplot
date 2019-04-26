@@ -1,0 +1,37 @@
+This is file slplot.men--Spread-Location Plot
+ 
+--------------------
+ 1. Spread-Location Plot
+ 2. SPREAD-LOCATION PLOT Y X
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Group ID Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Character Setting:
+ 7. @CE 3 0 42 50 gui-char
+ 8. Character Fill:
+ 8. @CE 4 0 42 50 gui-ooff
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 1 50 *
+12.
+13.
+14. Generate the Homoscedasticity Plot?:
+--------------------
+GR FE
+CHARACTER SAVE
+LINE SAVE
+CHARACTER X ALL
+CHARACTER _3 ALL
+CHARACTER BLANK
+CHARACTER FILL _4 ALL
+LINE BLANK ALL
+LINE SOLID
+SPREAD-LOCATION PLOT _1 _2 _5
+LINE RESTORE
+CHARACTER RESTORE
+--------------------
+WEB HELP HOMOSCEDASTICITY PLOT
+--------------------

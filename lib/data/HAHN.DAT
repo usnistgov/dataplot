@@ -1,0 +1,121 @@
+RELIABILITY OF LOCOMOTIVE CONTROLS
+HAHN & SHAPIRO (1967)
+NUMBER OF OBSERVATIONS = 96
+NUMBER OF VARIABLES PER LINE IMAGE = 2
+ORDER OF VARIABLES ON A LINE IMAGE--
+   Y  = LOCOMOTIVE CONTROLS MILES TO FAILURE
+   TAG = FAILURE INDEX (1 = DID     FAIL BY 13500 MILES (37 CASES)
+                        2 = DID NOT FAIL BY 13500 MILES (59 CASES))
+SOURCE--HAHN, GERALD J. AND SHAPIRO, SAMUEL S. (1967).
+        STATISTICAL MODELS IN ENGINEERING.
+        WILEY, NEW YORK, PAGE 284.
+STATISTICAL AREA =  RELIABILITY ANALYSIS
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ HAHN.DAT Y TAG
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+MILES TO        TAG
+FAILURE
+-------------------
+22500             1
+37500             1
+46000             1
+48500             1
+51500             1
+53000             1
+54500             1
+57500             1
+66500             1
+68000             1
+69500             1
+76500             1
+77000             1
+78500             1
+80000             1
+81500             1
+82000             1
+83000             1
+84000             1
+91500             1
+93500             1
+102500            1
+107000            1
+108500            1
+112500            1
+113500            1
+116000            1
+117000            1
+118500            1
+119000            1
+120000            1
+122500            1
+123000            1
+127500            1
+131000            1
+132500            1
+134000            1
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2
+135000            2

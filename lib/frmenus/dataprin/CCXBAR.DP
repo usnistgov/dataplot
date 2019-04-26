@@ -1,0 +1,6 @@
+----- <~dataprin\CCXBAR.DP> Print (to Printer) CCXBAR.DAT
+
+. This is file    CCXBAR.DP
+
+PRINT CCXBAR.DAT
+

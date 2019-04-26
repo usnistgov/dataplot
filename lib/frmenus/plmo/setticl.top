@@ -1,0 +1,25 @@
+----- <~plmo\setticl.top> Set Tic Mark Label Attributes
+ 
+Set Tic Mark Label Attributes
+ 
+Set Bottom Axis Tic Mark Label Attributes   <xemf: ~plmo\setx1tcl.men>
+Set Top    Axis Tic Mark Label Attributes   <xemf: ~plmo\setx2tcl.men>
+Set Left   Axis Tic Mark Label Attributes   <xemf: ~plmo\sety1tcl.men>
+Set Top    Axis Tic Mark Label Attributes   <xemf: ~plmo\sety2tcl.men>
+Set All    Axis Tic Mark Label Attributes   <xemf: ~plmo\setaltcl.men>
+ 
+Help for Tic Mark Label Attributes
+   TIC MARK LABEL ANGLE        <xcl: HELP TIC MARK LABEL ANGLE>
+   TIC MARK LABEL CASE         <xcl: HELP TIC MARK LABEL CASE>
+   TIC MARK LABEL COLOR        <xcl: HELP TIC MARK LABEL COLOR>
+   TIC MARK LABEL CONTENT      <xcl: HELP TIC MARK LABEL CONTENT>
+   TIC MARK LABEL DECIMAL      <xcl: HELP TIC MARK LABEL DECIMAL>
+   TIC MARK LABEL DIRECTION    <xcl: HELP TIC MARK LABEL DIRECTION>
+   TIC MARK LABEL DISPLACEMENT <xcl: HELP TIC MARK LABEL DISPLACEMENT>
+   TIC MARK LABEL FONT         <xcl: HELP TIC MARK LABEL FONT>
+   TIC MARK LABEL FORMAT       <xcl: HELP TIC MARK LABEL FORMAT>
+   TIC MARK LABEL HW           <xcl: HELP TIC MARK LABEL HW>
+   TIC MARK LABEL JUSTIFICATION <xcl: HELP TIC MARK LABEL JUSTIFICATION>
+   TIC MARK LABEL SIZE         <xcl: HELP TIC MARK LABEL SIZE>
+   TIC MARK LABEL THICKNESS    <xcl: HELP TIC MARK LABEL THICKNESS>
+

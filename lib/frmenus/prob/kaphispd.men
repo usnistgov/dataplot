@@ -1,0 +1,83 @@
+This is file kaphispd.men--Histogram & Superimposed Mielke's Beta-Kappa pdf Plot
+
+--------------------
+ 1. Histogram & Superimposed Mielke Beta-Kappa pdf Plot
+ 2. HISTOGRAM Y; PLOT KAPPDF(X,K,BETA,THETA) FOR X = START INC STOP
+ 3.
+ 4.
+ 5. Response variable: 
+ 5. @CE 1 0 42 50 ? gui-vari
+ 6.
+ 7. Relative histogram of data (leave blank for defaults):
+ 8.    Class width:
+ 8. @CE 2 0 42 50 ?
+ 9.    Lower limit of first class:
+ 9. @CE 3 0 42 50 ?
+10.    Upper limit of last class:
+10. @CE 4 0 42 50 ?
+11.    Bar fill on/off:
+11. @CE 5 0 42 50 ?
+12.
+13. Superimposed Mielke's Beta-Kappa probability density function:
+14.    Shape (k > 0):
+14. @CE 6 0 42 50 ?
+15.    Shape (beta > 0):
+15. @CE 7 0 42 50 ?
+16.    Shape (theta > 0):
+16. @CE 8 0 42 50 ?
+17.    Location:
+17. @CE 9 0 42 50 ?
+18.    Scale s:
+18. @CE 10 0 42 50 ?
+19.    Start point:
+19. @CE 11 0 42 50 ?
+20.    Increment:
+20. @CE 12 0 42 50 ?
+21.    Stop point:
+21. @CE 13 0 42 50 ?
+22.    Line type:
+22. @CE 14 0 42 50 ? gui-line
+23.    Line color:
+23. @CE 15 0 42 50 ? gui-color
+24.
+25.
+26. Title:
+26. @CE 16 0 20 50 *
+27. Left Axis Label:
+27. @CE 17 0 20 50 *
+28. Bottom Axis Label:
+28. @CE 18 0 20 50 *
+29.
+30.
+31. Generate the plot?
+--------------------
+AN FE
+@IF 2 0 CLASS WIDTH _2
+@IF 3 0 CLASS LOWER _3
+@IF 4 0 CLASS UPPER _4
+@IF 5 0 BAR FILL _5
+TITLE _16
+Y1LABEL _17
+X1LABEL _18
+@IF 1 0 RELATIVE HISTOGRAM _1
+@IF 1 0 LIMITS FREEZE
+.
+@IF 14 0 LINES _14
+@IF 15 0 LINE COLOR _15
+PRE-ERASE OFF
+LET ZSHAPE1 = 1
+@IF 6 0 LET ZSHAPE1 = _6
+LET ZSHAPE2 = 1
+@IF 7 0 LET ZSHAPE2 = _7
+LET ZSHAPE3 = 1
+@IF 8 0 LET ZSHAPE3 = _8
+LET ZLOC = 0
+@IF 9 0 LET ZLOC = _9
+LET ZSCALE = 1
+@IF 10 0 LET ZSCALE = _10
+PLOT KAPPDF(X,ZSHAPE1,ZSHAPE2,ZSHAPE3,ZLOC,ZSCALE) FOR X = _11 _12 _13
+@IF 1 0 LIMITS
+PRE-ERASE ON
+--------------------
+WEB HELP KAPPDF
+--------------------

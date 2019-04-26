@@ -1,0 +1,11 @@
+----- <~1fac\relvsdes.top> Standard Deviation(Rel. Variation Estimate)
+
+Standard Deviation (Relative Variation Estimate)
+
+To estimate Relative SD (grand relative standard deviation):
+   Compute classical s/sqrt(n)         <xemf: ~math\sd_mean.top>
+   Compute classical SD(sigma)
+   Compute from bootstrap plot of rel. stan. dev. <xemf: ~1fac\bootrlsd.men>
+
+Checking assumptions                   <xemf: ~univ\4plot.men>
+

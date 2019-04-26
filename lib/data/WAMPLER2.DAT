@@ -1,0 +1,46 @@
+ROY WAMPLER (NIST) LEAST SQUARES ALGORITHM TEST DATA (MULTILINEAR)
+NOTE--THE TEST CONSISTS OF--
+      FITTING A 5-TERM (+ CONSTANT) MULTILINEAR MODEL
+NOTE--THE COEFFICIENTS FOR THE FIT ARE
+      1, 1, 1, 1, 1, 1.
+SOURCE--WAMPLER,ROY H. (1970).
+        "A REPORT ON THE ACCURACY OF SOME WIDELY-USED
+        LEAST SQUARES COMPUTER PROGRAMS".
+        JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
+        1970, VOL. 65, PAGES 549-565.
+TO READ THIS DATA FILE INTO DATAPLOT (& DO FIT)--
+   SKIP 25
+   READ WAMPLER2.DAT Y X0 X1 X2 X3 X4 X5
+   FIT Y X1 X2 X3 X4 X5; (note--not need X0 since additive
+                                constant is automatic in FIT)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+      Y     X0   X1      X2       X3       X4        X5
+-------------------------------------------------------
+    760.    1.   0.      0.       0.       0.        0.
+  -2042.    1.   1.      1.       1.       1.        1.
+   2111.    1.   2.      4.       8.      16.       32.
+  -1684.    1.   3.      9.      27.      81.      243.
+   3888.    1.   4.     16.      64.     256.     1024.
+   1858.    1.   5.     25.     125.     625.     3125.
+  11379.    1.   6.     36.     216.    1296.     7776.
+  17560.    1.   7.     49.     343.    2401.    16807.
+  39287.    1.   8.     64.     512.    4096.    32768.
+  64382.    1.   9.     81.     729.    6561.    59049.
+ 113159.    1.  10.    100.    1000.   10000.   100000.
+ 175108.    1.  11.    121.    1331.   14641.   161051.
+ 273291.    1.  12.    144.    1728.   20736.   248832.
+ 400186.    1.  13.    169.    2197.   28561.   371293.
+ 581243.    1.  14.    196.    2744.   38416.   537824.
+ 811568.    1.  15.    225.    3375.   50625.   759375.
+1121004.    1.  16.    256.    4096.   65536.  1048576.
+1506550.    1.  17.    289.    4913.   83521.  1419857.
+2002767.    1.  18.    324.    5832.  104976.  1889568.
+2611612.    1.  19.    361.    6859.  130321.  2476099.
+3369180.    1.  20.    400.    8000.  160000.  3200000.

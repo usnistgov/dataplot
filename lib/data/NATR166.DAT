@@ -1,0 +1,45 @@
+This is Dataplot data file     NATR166.DAT
+Tensile strength of aluminum alloy
+Question: Is the average of a new product less than that of a standard?
+
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 16-6
+Number of observations = 20
+Number of variables per line image = 2
+Order of variables on a line image--Y X
+   1. Y = Ultimate tensile strength (psi)
+   2. X = Specimen
+Standard value = 27000
+
+
+
+
+
+
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR166.DAT Y X
+     Y
+  Strength     Specimen 
+--------------------------
+   24200            1
+   25900            2
+   26000            3
+   26000            4
+   26300            5
+   26450            6
+   27250            7
+   27450            8
+   27550            9
+   28550           10
+   29150           11
+   29900           12
+   30000           13
+   30400           14
+   30450           15
+   30450           16
+   31450           17
+   31600           18
+   32400           19
+   33750           20

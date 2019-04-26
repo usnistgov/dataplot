@@ -1,0 +1,94 @@
+----- <~fit\disccatc.top> Regression Diagnostics (Catcher Matrix)
+ 
+Regression Diagnostics Based on Catcher Matrix
+
+Regression diagnostics are used for the following purposes:
+
+  1) detect violations in the regression assumptions.
+  2) identify outliers.
+  3) identify influential points.
+  4) identify high leverage points.
+  5) identify multi-colinearity problems.
+     Related to this is identifying variables
+     to be deleted (or added) to the model.
+  6) uncover features in the data that may cause
+     problems for the fitted regression.
+
+Several regression diagnostic techniques are based on the 
+NxP "catcher matrix", which is X(X'X)**(-1).
+
+Dataplot provides built-in commands for computing the
+catcher matrix (and the (X'X)**(-1) matrix as well).
+
+The following techniques are based on the catcher matrix:
+
+  1) DFBETA Statistic
+
+     The DFBETA statistic assesses the influence of each
+     parameter on the estimated regression coefficients.
+     The usual recommendation is that DFBETA values
+     larger than 1 for small to moderate size data sets
+     are influential while DFBETA values larger than 
+     2/SQRT(N) for large data sets are influential.
+
+  2) Variance Inflation Factors (VIF)
+
+     The variance inflation factor for variable j is:
+
+         VIF(j) = 1/(1-R(j)**2)
+
+     where R(j) is the correlation between the jth variable
+     and the remaining independent variables.  Variance 
+     inflation factors are measures of multi-colinearity.
+     A high variance inflation factor is an indication that
+     a variable is a candidate for deletion in the model.
+     A rule of thumb indication is variance inflation
+     factors greater than 10 are indications of
+     multicolinearity.
+
+     Variance inflation factors are sometimes expressed as
+     tolerance factors.  Tolerance factors are simply the
+     reciprocals of the variance inflation factors.
+
+  3) Condition indices are an alternative measure of
+     multi-colinearity.  They are computed as follows:
+
+        a) Scale the columns of the X matrix to have unit
+           sums of squares.
+
+        b) Calculate the singular values of the scaled matrix
+           and square them.
+
+     Condition indices between 30 and 100 indicate moderate
+     to strong multi-colinearity.
+
+  4) Partial residual plots are plots of
+
+         RES + b(k)X(ik) versus X(ik)
+
+     where RES are the ordinary residuals, the b(k) is the
+     kth regression coefficient estimate, and X(ik) is the
+     ith row of the kth independent variable.
+
+     These plots are an attempt to plot the dependent variable
+     against the kth independent variable after removing the
+     effect of the other independent variables in the fit.
+     That is, if no linear pattern is evident in the partial
+     residual plot for the kth variable, it is not a good
+     candidate for the fit.  This plot does not require the
+     catcher matrix.
+
+  5) Partial regression plots (or added variable plots) are
+     plots of the residuals when X(j) is removed from the fit
+     versus the residuals of the fit of X(j) versus the
+     remaining independent variables.
+
+     This plot serves a similar function to the partial
+     residual plot.  The partial regression plot is more
+     difficult to compute than the partial residual plot.
+     However, it is generally considered to have better
+     statistical properties than the partial residual plot.
+
+
+
+

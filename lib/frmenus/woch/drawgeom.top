@@ -1,0 +1,19 @@
+----- <~woch\drawgeom.top> Geometric Figures
+ 
+Draw a Geometric Figure
+ 
+Arc                       <xemf: ~woch\arc.men>
+Arrow                     <xemf: ~woch\arrow.men>
+Box                       <xemf: ~woch\box.men>
+Circle                    <xemf: ~woch\circle.men>
+Diamond                   <xemf: ~woch\diamond.men>
+Cube                      <xemf: ~woch\cube.men>
+Ellipse                   <xemf: ~woch\ellipse.men>
+Lattice                   <xemf: ~woch\lattice.men>
+Oval                      <xemf: ~woch\oval.men>
+Point                     <xemf: ~woch\point.men>
+2D Polygon                <xemf: ~woch\polygon.men>
+Pyramid                   <xemf: ~woch\pyramid.men>
+Semi-circle               <xemf: ~woch\semicirc.men>
+Triangle                  <xemf: ~woch\triangle.men>
+

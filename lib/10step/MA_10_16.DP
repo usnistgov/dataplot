@@ -1,0 +1,73 @@
+. This is dataplot program   ma_10_16.dp     6/29/15
+. Purpose: Analyze Additive Manufacturing Post-Laser_Scan Peak Temperature via 10-Step Analysis
+. Design = 2**(10-5) wcp orthogonal fractional factorial  (k=10,n=16+1)
+. Date: 6/29/15
+.
+. -----start point-----
+.
+dimension 100 variables
+.
+. -----Step 1: Read in the data-----
+.
+let k = 10
+skip 25
+read ma_10_16.dat y x1 to x^k
+.
+let ncent = number y subset x1 0
+let meancent = mean y subset x1 0
+delete y x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 subset x1 0
+. stat v
+. pause
+.
+. -----Step 2: Define strings for plot annotation-----
+.
+let string header = Factors Affecting Additive Manufacturing FEA Onetrack Peak Temperature
+let string trailer = ma_10_16.dp
+let string trailer2 = Datafile: ma_10_16.dat
+let string currdate = 10/18/18
+let string sty = Post-Laser-Scanning Peak Temperature
+
+let string stx1  = Emissivity E
+let string stx2  = Convection hc (W/K/m^2)
+let string stx3  = PreheatTemperature Ti (K)
+let string stx4  = Absorption Ab (0-1)
+let string stx5  = Density Rho (kg/mm^3)
+let string stx6  = SpecificHeat Cp (J/kgK)
+let string stx7  = ThermalConduct. K (W/m/K)
+let string stx8  = PowderPorosity Dp (%)
+let string stx9  = LaserPower P (W)
+let string stx10 = ScanSpeed V (mm/s)
+.
+let string stxshort = E hc Ti Ab Rho Cp K Dp P V
+.
+let string stcp = 0.37 0.05 353 0.12 7.27e-9 550e6 18.1 0.5 195 800
+let cpperc = 1
+.
+let string stx1l  = -10% +10%
+let string stx2l  = -10% +10%
+let string stx3l  = -1% +1%
+let string stx4l  = -0.5% +0.5%
+let string stx5l  = -1% +1%
+let string stx6l  = -3% +3%
+let string stx7l  = -3% +3%
+let string stx8l  = -10% +10%
+let string stx9l  = -3% +3%
+let string stx10l = -5% +5%
+.
+let string stbest = down
+let string colorl = red blue
+.
+. -----Step 3: Generate 10-step DEX analysis on the original data-----
+.
+let projech2 = 3
+let projecw2 = 1.5
+let lh = 1.4; let lw = 0.7; let ypdel = 1.5
+let contourh = 10
+let contourv = 9
+let plotid = data 1 2 3 4 5 6 7 8 9 10
+call dex10stepanalysis.dp
+.
+. -----Step 4: Carry out a Jeff Fong Uncertainty Analysis-----
+.
+call fong_uncertainty_analysis.dp
+.

@@ -1,0 +1,81 @@
+. This is dataplot macro   dexwritelevel.dp
+. Purpose: Write out a single value at    moveds (xpos,ypos)
+.          For the factz'th SINGLE factor, write out the caz'th SINGLE level l
+. Note: Used by dex ordered data plot, dex scatter plot,
+.       dex mean plot, and dexrightmargins.dp
+. Input:
+.    levelsw (parameter) = Switch dictating the desired type of levels
+.                          (optional, default = not exist)
+.                             1 = classic (-1,0,1) case
+.                             2 = integer (1, 2, 3, 4, ...) case
+.                             3 = pre-existing strings cas
+.    factz    (parameter) = coded factor ID (1, 2, . . .)
+.    caz      (parameter) = coded level ID within a factor (1, 2, . . .).
+.    numlevfa (parameter) = number of levels for a factor (1, 2, . . .)
+.    stx1l, stx2l, etc
+. Output:
+.    a string is written out on the pre-existing plot
+. Assumption: the plot has already been generated, and
+.             the print cursor is already positioned (move has already been done)
+.             and justified (= center)
+. Example of calling routine: dexmp.dp
+. Date: 02/03/14
+.
+. -----start point-----
+.
+let pausedwl = 0
+if pausedwl = 1
+   print "At the beginning of dexwritelevel.dp:"
+   print "   levelsw = ^levelsw"
+   print "   numlevfa = ^numlevfa"
+   print "   caz = ^caz"
+   print "   factz = ^factz"
+   print "   stx1l = ^stx1l"
+   if ibatch not exist or ibatch = 0; pause; end if
+end if
+.
+. -----Step -1: Check for missing input values-----
+.
+let string stmacro = dexwritelevel.dp
+set check name output filliben
+feedback save; feedback on
+let iflag = check name numlevfa caz
+feedback restore
+.
+if levelsw exist and levelsw = 3
+   let iflag = check name factz numlevfa
+end if
+.
+. -----Step 0: Treat the levelsw not exist case (= classic (-1,0,1) case)-----
+.
+if levelsw not exist
+   call dexwritelevelcoded.dp
+end if
+.
+. -----Step 1: Treat the levelsw = 1 case (= classic (-1,0,1) case)-----
+.
+if levelsw exists and levelsw = 1
+   call dexwritelevelcoded.dp
+end if
+.
+. -----Step 2: Treat the levelsw = 2 case (= coded integers case)-----
+.
+if levelsw exists and levelsw = 2
+   text ^caz
+end if
+.
+. -----Step 3: Treat the levelsw = 3 case (= pre-existing strings case)-----
+.
+if levelsw exists and levelsw = 3
+   if stx1l exists
+      delete stjunk; let stjunk = string word   stx^factz&l  caz
+      let string stoutz = ^stjunk
+      text ^stoutz
+   end if
+   .
+   if stx1l not exist
+      call dexwritelevelcoded.dp
+   end if
+end if
+delete stoutz
+.

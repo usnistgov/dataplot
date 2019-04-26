@@ -1,0 +1,9 @@
+----- <~dataload\orthdist.top> View Built-in Orthogonal Distance Data Files
+
+View Built-in Orthogonal Distance Fit Data Files
+
+FULLODR1.DAT   Compression Velocity         <xcf: ~dataload\FULLODR1.DP>
+FULLODR2.DAT   X-Ray (Implicit Model)       <xcf: ~dataload\FULLODR2.DP>
+DRAPS521.DAT   Remaining Material           <xcf: ~dataload\DRAPS521.DP>
+DRAPS518.DAT   Saturated Steam              <xcf: ~dataload\DRAPS518.DP>
+

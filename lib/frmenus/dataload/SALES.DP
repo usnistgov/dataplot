@@ -1,0 +1,8 @@
+----- <~dataload\SALES.DP> Load SALES.DAT
+
+. This is file    SALES.DP
+
+DELETE Y X
+SKIP 25
+READ SALES.DAT Y X
+

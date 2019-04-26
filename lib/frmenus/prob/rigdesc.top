@@ -1,0 +1,20 @@
+----- <~prob\rigdesc.top> Reciprocal Inverse Gaussian Description
+
+*Reciprocal Inverse Gaussian Description
+
+pdf: f(x)         = ...
+pdf: f(x;u,gamma) = ...
+
+Moments   : E(X)  =
+            SD(X) =
+
+Type      : Continuous, skewed family of distributions--
+            moderate-tailed to long-tailed.
+Domain    : 0 to +infinity
+Synonym   :
+Genesis   :
+Definition: If
+            then
+
+Reference :
+

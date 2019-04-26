@@ -1,0 +1,8 @@
+----- <~dataload\QUASIBIE.DP> Load QUASIBIE.DAT
+
+. This is file    QUASIBIE.DP
+
+DELETE Y
+SKIP 25
+READ QUASIBIE.DAT Y X YEAR MONTH
+

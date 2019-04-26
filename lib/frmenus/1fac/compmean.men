@@ -1,0 +1,20 @@
+This is file compmean.men--Compute Means
+ 
+--------------------
+ 1. Compute Grand Mean
+ 2. LET A = MEAN Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5.
+ 6. Name of Output Parameter:
+ 6. @CE 2 0 33 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 3 0 1 50 *
+10.
+11.
+12. Compute the Grand Mean?
+--------------------
+LET _2 = MEAN _1 _3
+--------------------

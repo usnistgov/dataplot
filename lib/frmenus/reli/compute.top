@@ -1,0 +1,19 @@
+----- <~reli\compute.top> Compute
+
+Compute
+
+Common Reliability Statistics
+   Mean life                              <xemf: ~reli\estmeali.men>
+   Interarrival times                     <xemf: ~math\intarr.men>
+   Cumulative mean time between failures  <xemf: ~math\cummean.men>
+   Hazards                                <xemf: ~reli\hazard.men>
+   Cumulative Hazards                     <xemf: ~reli\cumuhaza.men>
+
+Tail probabilities (CDF and 1 - CDF)
+    Definition                            <~reli\esttpdef.top>
+    Parameteric Approach                  <~reli\esttppar.top>
+
+Percent points
+    Definition                            <~reli\estppdef.top>
+    Parameteric Approach                  <~reli\estpppar.top>
+

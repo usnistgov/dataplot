@@ -1,0 +1,14 @@
+----- <~prob\pcdfchis.top> Plot Chi-Square, Beta, F, and Related cdf's
+
+Plot Chi-square, Beta, F, and Related CDF Functions
+
+Chi-Squared              <xemf: ~prob\pchscdf.men>
+Chi                      <xemf: ~prob\pchcdf.men>
+
+F                        <xemf: ~prob\pfcdf.men>
+Beta                     <xemf: ~prob\pbetcdf.men>
+Power                    <xemf: ~prob\ppowcdf.men>
+Arcsin                   <xemf: ~prob\parscdf.men>
+Mielke's Beta-Kappa      <xemf: ~prob\pkapcdf.men>
+Two-Sided Power          <xemf: ~prob\ptspcdf.men>
+

@@ -1,0 +1,7 @@
+----- <~data\gammfunc.top> xx
+
+Gamma Functions
+
+GAMMA(X)          gamma function
+LOGGAMMA(X)       log (to the base e) gamma function
+

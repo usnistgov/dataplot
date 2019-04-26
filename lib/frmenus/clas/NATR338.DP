@@ -1,0 +1,10 @@
+----- <~dataloex\NATR338.DP> Load & Execute NATR338.DAT
+
+. This is file    NATR338.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ NATR338.DAT Y1 Y2
+TITLE NATR338.DAT
+/
+

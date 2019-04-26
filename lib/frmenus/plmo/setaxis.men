@@ -1,0 +1,40 @@
+This is file setframe.men--Set Frame and Attributes
+ 
+--------------------
+ 1. Set Frame
+ 2. FRAME OFF
+ 3.
+ 4. All 4 Frame Lines:
+ 4. @CE 1 0 42 50 ? gui-ooff
+ 5.
+ 6. Bottom Frame Line:
+ 6. @CE 2 0 42 50 ? gui-ooff
+ 7. Top    Frame Line:
+ 7. @CE 3 0 42 50 ? gui-ooff
+ 8. Left   Frame Line:
+ 8. @CE 4 0 42 50 ? gui-ooff
+ 9. Right  Frame Line:
+ 9. @CE 5 0 42 50 ? gui-ooff
+10.
+11. Color for the Frame:
+11. @CE 6 0 42 50 * gui-color
+12. Line Thickness for the Frame:
+12. @CE 7 0 42 50 * gui-thick
+13. Line Style for the Frame:
+13. @CE 8 0 42 50 * gui-thick
+14.
+15.
+16. Set Frame and Attributes?
+--------------------
+PC FE
+@IF 1 0 FRAME _1
+@IF 2 0 X1FRAME _2
+@IF 3 0 X2FRAME _3
+@IF 4 0 Y1FRAME _4
+@IF 5 0 Y2FRAME _5
+@IF 6 0 FRAME COLOR _6
+@IF 7 0 FRAME THICKNESS _7
+@IF 8 0 FRAME PATTERN _8
+--------------------
+WEB HELP FRAME
+--------------------

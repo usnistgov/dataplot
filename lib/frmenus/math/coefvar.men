@@ -1,0 +1,23 @@
+This is file coefvar.men--Compute coefficient of variation of a variable
+ 
+--------------------
+ 1. Coefficient of Variation
+ 2. LET A = COEFFICIENT OF VARIATION Y
+ 3.
+ 4. Variable for which to compute the coefficient of
+ 5.    variation:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Parameter to store the coefficient of variation:
+ 6. @CE 2 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 3 0 -10 50 *
+10.
+11.
+12. Compute the Coefficient of Variation?:
+--------------------
+GR FE
+LET _2 = COEFFICIENT OF VARIATION  _1 _3
+--------------------
+WEB HELP COEFFICIENT OF VARIATION
+--------------------

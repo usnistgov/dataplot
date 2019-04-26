@@ -1,0 +1,8 @@
+----- <~datalist\DZIUBA.top> DZIUBA.DAT
+ 
+DZIUBA.DAT
+ 
+View     <xcl: LIST DZIUBA.DAT>
+Load     <x2cl: SKIP 25; READ DZIUBA.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\DZIUBA.DAT>
+ 

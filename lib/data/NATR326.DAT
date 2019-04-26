@@ -1,0 +1,34 @@
+This is Dataplot data file     NATR326.DAT
+Compressive Strength of Concrete
+(Location Shift Example (with sigma1 not assumed equal to sigma2))
+Question: Are the 2 methods the same?
+ 
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 3-26 to 3-30.
+ 
+Number of observations             = 4 + 9 = 13
+Number of variables per line image = 2
+Order of variables on a line image--
+   1. Y1 = Response Variable 1 = Compressive Strength (Method 1)
+   2. Y2 = Response Variable 2 = Compressive Strength (Method 2)
+Note--In the data set below, -99 indicates a missing value
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR326.DAT Y1 Y2
+   DELETE Y1 SUBSET Y1 -99
+   T TEST Y1 Y2
+ 
+         Y1                   Y2
+   Comp. Strength       Comp. Strength
+      Method 1             Method 2
+----------------------------------------
+        3128                 1939
+        3219                 1697
+        3244                 3030
+        3073                 2424
+         -99                 2020
+         -99                 2909
+         -99                 1815
+         -99                 2020
+         -99                 2310

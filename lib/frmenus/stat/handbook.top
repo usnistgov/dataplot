@@ -1,0 +1,54 @@
+----- <~stat\handbook.top> NIST/SEMATECH Handbook
+
+NIST/SEMATECH Handbook
+
+The following accesses specific topics in the
+NIST/SEMATECH Engineering Statistics Handbook
+
+Product Comparison Chapter   <xcl: web handbook prc>
+EDA Discussion               <xcl: web handbook eda discussion>
+
+Quantitative Techniques      <xcl: web handbook quantitative gallery>
+   Confidence Interval for Mean  <xcl: web handbook confidence limits for mean>
+   1 Sample T Test           <xcl: web handbook one sample t test>
+   2 Sample T Test           <xcl: web handbook two sample t test>
+   Sign Test                 <xcl: web handbook sign test>
+   Signed Rank Test          <xcl: web handbook signed rank test>
+   Rank Sum Test             <xcl: web handbook rank sum test>
+   Chi-Square Test for SD    <xcl: web handbook chisquare test>
+   F Test for 2 SD's         <xcl: web handbook f test>
+   Tolerance Intervals       <xcl: web handbook tolerance intervals>
+
+   Bartlett Test             <xcl: web handbook bartlett test>
+   Levene Test               <xcl: web handbook levene test>
+   Runs Test                 <xcl: web handbook runs test>
+
+   Outliers                  <xcl: web handbook outliers>
+   Grubbs Test               <xcl: web handbook grubbs test>
+   Tietjen-Moore Test        <xcl: web handbook tietjen moore test>
+   ESD Test                  <xcl: web handbook esd test>
+
+   Anderson-Darling Test     <xcl: web handbook anderson-darling test>
+   Wilks-Shapiro Test        <xcl: web handbook wilks-shapiro test>
+   Chi-Square Goodness of Fit <xcl: web handbook chi-square goodness of fit>
+   Kolmogorov-Smirnov Goodness of Fit <xcl: web handbook kolmogorov-smirnov goodness of fit>
+
+   One Way Anova             <xcl: web handbook one way anova>
+   Kruskall-Wallis Test      <xcl: web handbook kruskall-wallis test>
+   Two Way Anova             <xcl: web handbook two way anova>
+
+Measures of Location         <xcl: web handbook location>
+   Mean                      <xcl: web handbook mean>
+   Median                    <xcl: web handbook median>
+   Mode                      <xcl: web handbook mode>
+   Trimmed Mean              <xcl: web handbook trimmed mean>
+   Winsorized Mean           <xcl: web handbook winsorized mean>
+Measures of Scale            <xcl: web handbook scale>
+   Standard Deviation        <xcl: web handbook standard deviation>
+   Range                     <xcl: web handbook range>
+   Interquartile Range       <xcl: web handbook interquartile range>
+   Average Absolute Deviation   <xcl: web handbook aad>
+   Median Absolute Deviation    <xcl: web handbook mad>
+Measure of Skewness          <xcl: web handbook skewness>
+Measure of Kurtosis          <xcl: web handbook kurtosis>
+

@@ -1,0 +1,20 @@
+----------  *WEATHERHOT*  ----------
+
+    USA's 10 Hottest Locations
+ (Based on Daily Mean Temperature)
+
+     Location               Temperature
+                            (Farenheit)
+
+Death Valley, California         78
+Key West, Florida                78
+Honolulu, Hawaii                 77
+Miami, Florida                   76
+Kahului, Hawaii                  76
+Lihue, Hawaii                    75
+West Palm Beach, Florida         74
+Fort Myers, Florida              74
+Hilo, Hawaii                     74
+Brownsville, Texas                74
+
+   Source--USA Today, December 30, 1987.

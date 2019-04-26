@@ -1,0 +1,53 @@
+This is file starplot.men--Star Plot
+ 
+--------------------
+1. Star Plot
+2. STAR PLOT Y1 Y2 Y3 Y4 Y5
+3.
+4. A star plot is generated for one row of a
+5. group of variables.  This menu allows you to
+6. either generate a single star plot for a
+7. single row or to generate a multiplot of 
+8. star plots for a number of rows (each row is
+9. one plot in the multiplot).
+10.
+11. List of Response Variables:
+12. @CE 1 0 1 50 ? gui-variable
+13. First row of variable to plot?:
+13. @CE 2 0 42 50 *
+14. Last row of variable to plot?:
+14. @CE 3 0 42 50 *
+15.
+16. If specified, the number of rows times the
+17. number of columns should be greater than or
+18. equal to the number of rows (last - first + 1)
+19. specified above.  Otherwise, some stars 
+20. may overlap.
+21.
+22. Number of rows for multi-plot (1 for none):
+22. @CE 4 0 42 50 *
+23. Number of columns for multi-plot (1 for none):
+23. @CE 5 0 42 50 *
+24.
+25.
+26. Generate the Star Plot?:
+--------------------
+GR FE
+LET ZZZZFRST = 1
+@IF 2 0 LET ZZZZFRST = _2
+LET ZZZZLST = 1
+@IF 3 0 LET ZZZZLST = _3
+LET ZZZZROWS = 1
+@IF 4 0 LET ZZZZROWS = _4
+LET ZZZZCOLS = 1
+@IF 5 0 LET ZZZZCOLS = _5
+MULTIPLOT CORNER COORDINATES 5 5 95 95
+MULTIPLOT ZZZZROWS ZZZZCOLS
+LOOP FOR K = ZZZZFRST 1 ZZZZLST
+STAR PLOT _1 FOR I = K 1 K
+END OF LOOP
+END OF MULTIPLOT
+MULTIPLOT CORNER COORDINATES
+--------------------
+WEB HELP STAR PLOT
+--------------------

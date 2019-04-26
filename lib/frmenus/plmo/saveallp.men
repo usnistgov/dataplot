@@ -1,0 +1,33 @@
+This is file saveplot.men--Save Current Plot to File
+ 
+--------------------
+ 1. Save All Subsequent Plots to File
+ 2. DEVICE 2 CLOSE; SET IPL1NA MYPLOT.PS; DEVICE 2 POSTSCRIPT
+ 3.
+ 4. The command DEVICE 2 POSTSCRIPT can be used
+ 5. generate all subsequent plots to the file
+ 6. dppl1f.dat in Postscript format.  You can
+ 7. specify your own name if you prefer not to
+ 8. use the default name.  You can also generate
+ 9. plots in formats other than Postscript.
+10. 
+11. Enter the File Name for Saved Plots:
+12. @CE 1 0 1 70 ?
+13.
+14. Enter the Plot Format:
+15. @CE 2 1 5 30 Postscript
+16. @CE 2 2 5 30 Encapsulated Postscript
+17. @CE 2 3 5 30 HP-GL (for Laser printers)
+18.
+19.
+20. Save Subsequent Plots?
+--------------------
+PC FE
+DEVICE 2 CLOSE
+SET IPL1NA _1
+@IF 2 1 DEVICE 2 POSTSCRIPT
+@IF 2 2 DEVICE 2 ENCAPSULATED POSTSCRIPT
+@IF 2 3 DEVICE 2 HP-GL LASER
+--------------------
+WEB HELP DEVICE
+--------------------

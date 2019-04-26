@@ -1,0 +1,416 @@
+. This is (jjf's) Dataplot login file dplogf.tex
+. (Customized for Jim Filliben running on a Windows 2000 PC  2/3/05)
+. (Updated: 9/14/12:  Alan's checksys.dp)
+. (Updated: 9/25/12): Change the   set fatal error   setting from the default (ignore) to prompt
+. (Updated: 1/7/16):  For NIST DEX Class
+.
+feedback off
+.
+.  User Login File
+.
+.  The following options are available as command line switches:
+.
+.  -true    - use if your video display is set to "true color" mode
+.             (if no text shows up in the text window)
+.  -svga    - set size of frame window based on assumption that you
+.             are running in Super VGA mode (i.e., 1024x768)
+.  -large   - set size of frame window based on assumption that you
+.             are running with high resolution (e.g, 1180x1024)
+.  -tile    - have text and graphics window come up in "tiled", i.e.,
+.             no overlap, mode.
+.  (JJF Preference: -tile and -large)
+.
+. ---Step 1: Define Your Graphics Output Devices------------
+.      Device 1 is your computer screen.
+.      Devices 2 and 3 are (graphics) output files on your computer.
+.
+.         1. SET DEVICE 1 (SCREEN) TO QWIN (I..E., FOR THE COMMAND LINE
+.            VERSION (GUI VERSION WILL AUTOMATICALLY OVERRIDE THE CHOICE
+.            GIVEN HERE).
+.
+.         2. FOR DEVICE 2 AND DEVICE 3 (file devices), THERE ARE 3 CASES:
+.
+.              i) You want to access a Postscript printer
+.             ii) You want to access a printer with HP-GL emulation
+.                 (e.g., most HP LaserJet printers)
+.            iii) You want to access a generic printer that has neither
+.                 Postscript or HPGL capability.
+.
+.            Set IDEV to 1, 2, or 3 based on the above.  Also, you may
+.            need to define the name of your network printer (the actual
+.            name will need to be obtained from your local site
+.            system administrator).
+.
+DEVICE 1 QWIN;. (since I am running on a PC)
+.
+. DEVICE 1 FONT SIMPLEX   ;. this may be commented out to speed up character plots 1/16/14 (but bad side effects)
+DEVICE 1 FONT TEKTRONIX;. due to an Alan update that sped up graphics by factor of 40! (but has char offsets) 5/9/16
+CHAR OFFSET -.05 .35;. use this when use DEVICE 1 FONT TEKTRONIX
+.
+. SET QWIN FONT VERDONNA;.  due to an Alan update that sped up graphics by a factor of 40   5/9/16
+.          in fact commented out 5/9/16 due to Alan's update on font support
+SET QWIN COLOR DIRECT;. (To activate on-screen multiple colors)
+. DEVICE 3 CLOSE
+. DEVICE 3 HPGL LASER
+.
+SET POSTSCRIPT DEFAULT COLOR ON;. inserted 9/1/11 to allow dynamic color viewing of dppl2f.dat
+.
+LET IDEV = 1
+.
+IF IDEV = 1
+   . Postscript Case.  Set printer to PRN: for a local printer, to
+   . the appropriate network id for a network printer.
+   SET PRINTER PRN:
+   . SET PRINTER "\\DCIS-NT3\HP8_PS"  12/1/04
+   DEVICE 2 POSTSCRIPT
+ELSE IF IDEV = 2
+   . HP-GL Case.  Set printer to PRN: for a local printer, to
+   . the appropriate network id for a network printer.
+   . SET PRINTER PRN:
+   SET PRINTER "\\DCIS-NT3\HP8"
+   DEVICE 2 HP-GL LJET
+ELSE
+  . Generic printer case.  Use the Ghostscript/Ghostview "GSPRINT" command.
+  . This assumes that Ghostscript (at least version 6.5) and Ghostview have
+  . been installed.  If the path for Ghostview is not "C:\Ghostgum\Gsview",
+  . Then set the correct path with the "SET GHOSTVIEW PATH" command.
+  . If you do not want to access your default printer, then use the
+  . SET PRINTER command to specify the printer id.
+  . SET PRINTER "\\DCIS-NT3\HP8 - HP 8000 Series PCL 5e"
+  . SET PRINTER \\DCIS-NT3\HP8_PS - HP LaserJet 8000 Series PS
+  SET GHOSTSCRIPT PRINTER ON
+  SET POSTSCRIPT PATH F:\GHOSTGUM\GSVIEW\
+  . SET GHOSTSCRIPT PATH "C:\Program Files\gs\gs8.54";. changed 9/1/11 at Alan's direction
+  . SET GHOSTVIEW PATH C:\GHOSTGUM\GSVIEW\;.            changed 9/1/11 at Alan's direction
+END IF
+.
+. ---Step 2: Define Your Browser (optional) (updated by Alan 10/09/14)---------------------
+. -----        Note: this is needed only by the    WEB   command which spins off a separate job to view a web page-----
+.
+. SET BROWSER "C:\program files\netscape\navigator\program\netscape.exe"
+.
+. Define the browser (Uncomment the relevant line)
+.
+. LET IBROWSE = 1 ; . Internet Explorer (the default)
+LET IBROWSE = 2 ; . Mozilla Firefox;. This setting is for Jim Filliben at NIST (64-bit Dell)
+. LET IBROWSE = 3 ; . Mozilla Seamonkey
+. LET IBROWSE = 4 ; . Google Chrome
+. LET IBROWSE = 5 ; . Opera
+.
+. LET IOPS = 1 ; . Windows XP/7/8 32-bit
+LET IOPS = 2 ; . Windows XP/7/8 64-bit;. This setting is for Jim Filliben at NIST (64-bit Dell)
+.
+IF IBROWSE = 1  ; . Internet Explorer
+   IF IOPS = 1  ; . 32-bit
+     SET BROWSER "C:\program files\Internet Explorer\iexplore.exe"
+   ELSE         ; . 64-bit
+     SET BROWSER "C:\program files (x86)\Internet Explorer\iexplore.exe"
+   END OF IF
+END OF IF
+.
+IF IBROWSE = 2  ; . Mozilla Firefox
+   IF IOPS = 1  ; . 32-bit
+     SET BROWSER "C:\program files\Mozilla Firefox\firefox.exe"
+   ELSE         ; . 64-bit
+     SET BROWSER "C:\program files (x86)\Internet Explorer\iexplore.exe"
+   END OF IF
+END OF IF
+IF IBROWSE = 3  ; . Mozilla Seamonkey
+   IF IOPS = 1  ; . 32-bit
+     SET BROWSER "C:\program files\SeaMonkey\seamonkey.exe"
+   ELSE         ; . 64-bit
+     SET BROWSER "C:\program files (x86)\SeaMonkey\seamonkey.exe"
+   END OF IF
+END OF IF
+IF IBROWSE = 4  ; . Google Chrome
+   IF IOPS = 1  ; . 32-bit
+     SET BROWSER "C:\program files\Google\Chrome\Application\chrome.exe" -disk-cache-size=1 -media-cache-size=1
+   ELSE         ; . 64-bit
+     SET BROWSER "C:\program files (x86)\Google\Chrome\Application\chrome.exe" -disk-cache-size=1 -media-cache-size=1
+   END OF IF
+END OF IF
+IF IBROWSE = 5  ; . Opera
+   IF IOPS = 1  ; . 32-bit
+     SET BROWSER "C:\program files\Opera\opera.exe"
+   ELSE         ; . 64-bit
+     SET BROWSER "C:\program files (x86)\Opera\opera.exe"
+   END OF IF
+END OF IF
+.
+. ---Step 3: Define Dataplot and NIST Handbook URL's (optional)----
+.
+. Dataplot has a web site.
+. The NIST e-Handbook of Statistical Methods (a useful 3000-page
+. companion resource) also has a web site.
+. By default, the following Dataplot and e-Handbook URL's
+. are for the NIST facility.
+. If you have installed (free via CD) the Dataplot and e-Handbook
+. onto your local site, then change the following URL's:
+.
+SET DATAPLOT URL http://www.itl.nist.gov/div898/software/dataplot/
+SET HANDBOOK URL http://www.itl.nist.gov/div898/handbook/
+.
+. ---Step 4: Define Any Dataplot Personal Preferences (optional)-----
+.
+. ---Preference 1: Plot Appearance:
+.
+. The following sets default foreground and background colors.
+. Set to suit your own taste.
+. Some prefer yellow foreground on a blue background.
+. I (Jim Filliben) prefer a black foreground on a white background--
+. it is better for me for printing, and for day-in/day-out data analysis.
+.
+     . background color blue
+     . let string fore = yellow
+     background color white
+     let string fore = black
+     .
+     frame color ^fore
+     line color ^fore all
+     character color ^fore all
+     spike color ^fore all
+     bar color ^fore all
+     bar border color ^fore all
+     tic mark color ^fore
+     tic mark label color ^fore
+     label color ^fore
+     title color ^fore
+     legend color ^fore
+     bar fill color ^fore
+     region fill color ^fore
+     segment color ^fore
+     color ^fore
+     grid color ^fore
+     box color ^fore
+.
+. ---Preference 2: Data Workspace Number of Variables:
+.    I like 40 variables (rather than the 10 variable default)
+.    for the data workspace:
+.
+.    dimension 40 variables
+.    dimension 50 variables;. changed from 40 to 50 due to dexplot.dp
+     dimension 100 variables;. changed from 50 to 100 due to dex10stepanalysis.dp
+.
+. ---Preference 3: Print Formatting:
+.    I like decimal (rather than exponential) default for printing:
+.
+     set write decimals 4
+.
+. ---Preference 4: Plot Appearance:
+.    I like margins (spacings) within the frames on my plots:
+.
+     tic offset units screen
+     tic offset 5 5
+.
+. ---Preference 5: Plot Appearance:
+.    I like upper and lower case text on my plots:
+.
+     case asis
+     title case asis
+     label case asis
+     tic label case asis
+     character case asis all
+     legend case asis
+.
+. ---Preference 6: Command Execution Feedback:
+.    I like automatic feedback for executed commands:
+.
+. ---Preference 7: Title Positioning
+.    I like the title to be closer to the top frame line
+.
+     title displacement 2
+.
+. ---Preference 8: Box Appearance
+.    I like the box to have no shadow
+.
+     box shadow hw 0 0
+.
+. ---Preference 9: Auto-Annotation of Plot Command
+.    I like the command which generates a plot to be printed
+.    immediately below the plot (in x3label)
+.
+     x3label automatic
+.
+. ---Preference 10: Resolution of Output Graphics
+.    I like output graphics to be 600 dpi rather than the default 300 dpi
+.
+     set postscript dpi 600
+.
+. ---Preference 11: Color Graphics (7/27/10)-----
+.    I like plots with blue lines, characters, frame lines, labels, etc.
+.
+     . call jjfcolor.dp
+     device 2 color on
+     set postscript font helvetica bold;. versus arial or verdanna or . . .
+     let string foreground = blue
+     let string background = white
+     .
+     . call color.dp
+     if foreground not exist; let string foreground = white; end if
+     if background not exist; let string background = blue; end if
+     .
+     background color ^background
+     .
+     char color ^foreground all
+     line color ^foreground all
+     bar border color ^foreground all
+     spike color ^foreground all
+     frame color ^foreground
+     tic color ^foreground
+     tic label color ^foreground
+     label color ^foreground
+     title color ^foreground
+     legend color ^foreground
+     color ^foreground
+     grid color ^foreground
+     .
+     let string darkgree = 76
+     let string olivegre = 10
+     .
+     let string darkgree = 76
+     let string olivegre = 10
+.
+. ---Preference 12: Header Size-----
+.    I like the 3 header lines above a plot to be larger than the default of     hw 2 1
+.
+let string headhw1 = 2.6 1.3
+let string headhw2 = 2.6 1.3
+let string headhw3 = 2.6 1.3
+.
+. ---Preference 13: Label and tic label size-----
+.    I like the plot labels and tic labels to be larger than the default of    height = 2
+.
+label size 2.6
+.
+. ---Preference 14 (9/2/11): I like to be able to see ghostview's version of t
+.
+. let string show = system gvdp2.bat
+let string show = system c:\ghostgum\gsview\gsview32.exe dppl2f.dat
+.
+. ---Preference 15 (9/14/12): Add Alan's checksys.dp to
+.                             1. determine if running in batch mode or GUI
+.                             2. appropriatly sets device 1 to X11 (if linux) or QWIN (if Windows)
+.                             3. checks device 2--if not open, then open as Postscript
+.                                                 if already open, then do nothing
+. call checksys.dp
+.
+. ---Preference 15: Set Fatal Error---
+.    When Dataplot encounters a fatal error, I like Dataplot's response to be a prompt message
+.    (asking as to whether to continue or to exit),
+.    as opposed to the default Dataplot response (= ignore and execute onward)
+.
+set fatal error prompt
+.
+. ---Preference 16: Print out the date for this version of dataplot-----
+.
+. print " "
+print "Dataplot Version Date: 04/18/13
+.
+. ---Preference 17: Print out note about lost cursor-----
+.
+. print " "
+. print "Executing c:\0\dpx\folder.tex
+. print " "
+. print "Note: If cursor gets 'lost' off bottom of the text"
+. print "      (= left) screen, hit  Page Down  key to restore."
+.
+. ---Preference 18: Print out note about all graphics being captured in dppl1f.dat (modified 1/7/16)-----
+.
+. print " "
+print "      After a Dataplot run, postscript versions of"
+print "      all graphics are captured in dataplot's"
+print "      graphics output file     dppl1f.dat"
+print "      for viewing (& conversion to pdf) by ghostscript"
+print "      via e.g.    gvdp.bat"
+print " "
+. print "      If   dppl1f.dat   incorrectly contains only 1"
+. print "      plot (or no plots), then fix by inserting"
+. print "      a   device 2 postscript    command"
+. print "      into your dataplot login file   dplogf.tex  ."
+.
+. ---Preference 19: Show version-----
+.
+. version
+.
+. ---Preference 20: Allow 4-plot output to be controlled by the    multiplot corner coordinates    command---
+.
+.    When the 4-plot command is used, the default output is
+.    sitting a bit high on the page to the point that there is not as much
+.    room to write annotations on top of the page.
+.    The following command will solve that problem.
+.    Note: in the program, it is recommended that the user
+.          enter (immediately before the 4plot command):
+.             multiplot 5 10 95 90
+.
+set 4plot multiplot on
+.
+. ---Preference 21 (Temporary--for use with GUI and folder c:\0\dpx): link to c:\0\---
+.                   where many of my data files and macros exist     11/21/14---
+.
+set search directory c:\0\
+.
+. ---Preference 22: Define (and print) a string    version   which defines
+.                   the version ID for this dataplot exec utable---
+.
+let string versiond = Executable: 10/17/18
+. print " "
+print "      ^versiond"
+.
+. ---Preference 23: Define a string command    g3    which will display device 3
+.                   (= the postscript version of the last plot generated)          6/16/16
+.    (Note: this assumes that a gvdp.bat batch file exists in your path,
+.    and that file calls ghostscript to render the contents of    dppl12.dat
+.    and example of gvdp.bat:
+.       c:\progra~1\ghostgum\gsview\gsview64.exe dppl2f.dat
+.    To use the    g3   "command" within dataplot,
+.    then after a lower-resolution plot has been generated on the screen in the usual fashion
+.    (for example, via    plot x for x = 1 1 10),
+.    enter   ^g3   to generate a higher-resolution of the same plot in a separate window.
+.
+. ---Preference 24: Define path on my PC to ghostview (used by the    psview    command)
+.
+set ghostscript version 64
+let string stpath = c:\progra~1\gs\gs9.07\bin\
+set ghostscript path ^stpath
+.
+. here
+. ---Preference 25 (4/9/18): Note the question-mark-based search commands---
+.
+let printsw = 0
+if printsw = 1
+   print " "
+   print "      ? = General  search of Dataplot Reference Manual, as in:"
+   print "          ? distributions   ? plot   ? fit   ? let"
+   print "          ? lognormal distribution   ? block plot   ? gallery   etc."
+   print " "
+   print "     ?? = Specific search of Dataplot Reference Manual, as in:"
+   print "          ?? distributions   ?? plot   ?? fit   ?? let"
+   print "          ?? lognormal distribution    ?? block plot   ?? gallery   etc."
+   print " "
+   print "    ??? = General  search of NIST/SEMATECH Handbook, as in:"
+   print "          ??? gallery   ??? fit   ??? 10 step"
+   print "          ??? main effects plot   ??? effects plot"
+   print "          ??? halfnormal plot     ??? fitting   ??? 4plot"
+   print "          ??? lognormal   ??? distributions   ??? spc"
+   print "          ??? block plot  ??? gallery"
+   print " "
+   print "   ???? = Specific search of NIST/SEMATECH Handbook, as in:"
+   print "          ???? gallery   ???? fit   ???? 10 step"
+   print "          ???? main effects plot   ???? effects plot"
+   print "          ???? halfnormal plot     ???? fitting   ???? 4plot"
+   print "          ???? lognormal   ???? distributions   ???? spc"
+   print "          ???? block plot   ???? gallery"
+   print " "
+   print "  ????? = Specific search of internet via Google, as in:"
+   print "          ????? gallery   ????? fit   ????? 10 step"
+   print "          ????? main effects plot   ????? effects plot"
+   print "          ????? halfnormal plot     ????? fitting   ????? 4plot"
+   print "          ????? lognormal   ????? distributions   ????? spc"
+   print "          ????? block plot   ????? gallery"
+end if
+.
+. -----All done----
+.
+feedback on
+print " "
+. echo on

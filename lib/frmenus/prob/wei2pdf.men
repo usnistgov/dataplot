@@ -1,0 +1,46 @@
+This is file wei2pdf.men--Compute Weibull (for maximum) pdf
+ 
+--------------------
+ 1. Compute Weibull (for maximum) pdf
+ 2. SET MINMAX MAX; LET A = WEIPDF(X,SHAPE,LOC,SCALE)
+ 3.
+ 4. Note: The Weibull distribution can be based on either
+ 5.       the maximum or the maximum order statistic.
+ 6.       This menu computes the maximum case.
+ 7.       Example: maximum breaking strength of a chain.
+ 9.
+10. Input values:
+11.                 x (x <= mu):
+11. @CE 1 0 42 50 ?
+12.     shape gamma (gamma > 0):
+12. @CE 2 0 42 50 ?
+13.                  location u:
+13. @CE 3 0 42 50 ?
+14.             scale s (s > 0):
+14. @CE 4 0 42 50 ?
+15.
+16. Output parameters:
+17.      name for the pdf value:
+17. @CE 5 0 42 50 ?
+18.
+19.
+20. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 3 0 LET ZLOC = _3
+LET ZSCALE = 1
+@IF 3 0 LET ZSCALE = _4
+IF ZSCALE <= 0
+   LET ZSCALE = 1
+END OF IF
+LET ZSHAPE = 1
+@IF 2 0 LET ZSHAPE = _2
+IF ZSHAPE <= 0
+   LET ZSHAPE = 1
+END OF IF
+SET MINMAX MAX
+@IF 5 0 LET _5 = WEIPDF( _1 ,ZSHAPE,ZLOC,ZSCALE)
+--------------------
+WEB HELP WEIPDF
+--------------------

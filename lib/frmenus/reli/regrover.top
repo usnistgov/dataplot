@@ -1,0 +1,44 @@
+-----<~reli\regress.top> Discussion: Regression Acceleration Models
+
+Discussion: Regression Acceleration Models
+
+Acceleration Models: Regression Models
+
+For the exponential, Weibull, and lognormal acceleration
+models discussed above, it is assumed that we have
+failure data at both high stress conditions and normal
+use conditions.
+
+However, in some cases it may only be practical to
+obtain failure data at high stresses.  In this case,
+we fit a regression model to the high stress data and
+extrapolate this model to normal use conditions.
+
+Note that caution needs to be used in applying these
+models.  A few issues include:
+
+   1) Different failure mechanisms will typically
+      result in different acceleration models.  For
+      this reason, acceleration tests are designed
+      to model one particular type of failure (if we
+      can determine a failure was due to a different
+      mechanism, we would treat this as a censored data
+      point rather than a failure time).
+
+   2) Care must be taken in choosing the stress levels.
+      Too high a stress level can cause new failure
+      mechanisms (which typically means that linear
+      acceleration no longer applies) and too low a stress
+      level can result in insufficient failures.
+
+   3) We are extrapolating the model beyond the point
+      where we actually have data.  This means that we
+      are making fairly strong assumptions about the
+      validity of the model.
+
+For these reasons, designing acceleration tests typically
+involves much accumulated engineering knowledge and
+experience.  These types of acceleration tests are
+typically used when there is already good understanding
+of the underlying failure mechanisms.
+

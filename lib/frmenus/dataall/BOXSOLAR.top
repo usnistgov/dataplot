@@ -1,0 +1,8 @@
+----- <~dataall\BOXSOLAR.top> BOXSOLAR.DAT
+
+BOXSOLAR.DAT
+
+View     <xcl: LIST BOXSOLAR.DAT>
+Load     <xcf: ~dataload/BOXSOLAR.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXSOLAR.DAT>
+

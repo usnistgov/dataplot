@@ -1,0 +1,22 @@
+This is file norrspdf.men--Specify Data File
+
+--------------------
+ 1. Specify Data File
+ 2. LET STRING FILENAME = XXX
+ 3.
+ 4. Name of data file (fully specify):
+ 5. @CE 1 0 1 50 ?
+ 6.
+ 7. Total number of runs (= columns/2):
+ 8. @CE 2 0 1 50 ?
+ 9.
+10. Guest device index for run 1 (e.g., 170)
+11. @CE 3 0 1 50 ?
+12.
+13. Done?
+--------------------
+GR FE
+LET STRING FILENAME = _1
+LET NUMRUN = _2
+LET GUESTDE1 = _3
+--------------------

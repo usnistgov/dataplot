@@ -1,0 +1,12 @@
+----- <~math\vector.top> Vector Operations
+ 
+Vector Operations
+ 
+Vector Addition                        <xemf: ~math\vect_add.men>
+Vector Angle                           <xemf: ~math\vect_ang.men>
+Vector Cross Product                   <xemf: ~math\vect_cro.men>
+Vector Distance                        <xemf: ~math\vect_dis.men>
+Vector Dot Product                     <xemf: ~math\vect_dot.men>
+Vector Length                          <xemf: ~math\vect_len.men>
+Vector Subtraction                     <xemf: ~math\vect_sub.men>
+ 

@@ -1,0 +1,32 @@
+-----<~reli\discsyst.top> Discussion: System Reliability
+
+Discussion: System Reliability
+
+System Reliability
+
+System reliability is concerned with the issue of
+how we predict total system reliability based on
+the reliability of the components of that system.
+
+There are several steps in this process.
+
+   1) First, we decompose the overall system into
+      distinct subsystems.
+
+      This is primarily an engineering task rather
+      than a statistical task.
+
+   2) Next, we estimate the reliability of each of
+      these subsystems (e.g., distributional models,
+      HPP processes, NHPP processes, accelerated tests,
+      and so on).
+
+      Other menus in this section provide the menus for
+      estimating the reliability for these subsystems.
+
+   3) Finally, we combine these subsystems to compute
+      the overall system reliability.
+
+      Note that rather complex systems can be built from
+      a few basic models.
+

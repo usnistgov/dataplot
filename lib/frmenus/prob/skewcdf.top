@@ -1,0 +1,24 @@
+----- <~prob\skewcdf.top> Skewed Distribution cdf & Tail Prob.
+
+Skewed Distribution cdf & Tail Probabilities
+
+Lognormal                               <xemf: ~prob\lgncdf.men>
+Halfnormal                              <xemf: ~prob\hfncdf.men>
+Chi-Squared                             <xemf: ~prob\chscdf.men>
+F                                       <xemf: ~prob\fcdf.men>
+
+Exponential                             <xemf: ~prob\expcdf.men>
+Gamma                                   <xemf: ~prob\gamcdf.men>
+Beta                                    <xemf: ~prob\betcdf.men>
+Weibull                       (for min) <xemf: ~prob\wei1cdf.men>
+Weibull                       (for max) <xemf: ~prob\wei2cdf.men>
+Ext. Value Type 1 (= Gumbel)  (for min) <xemf: ~prob\ev11cdf.men>
+Ext. Value Type 1 (= Gumbel)  (for max) <xemf: ~prob\ev12cdf.men>
+Ext. Value Type 2 (= Frechet) (for min) <xemf: ~prob\ev21cdf.men>
+Ext. Value Type 2 (= Frechet) (for max) <xemf: ~prob\ev22cdf.men>
+Pareto                                  <xemf: ~prob\parcdf.men>
+Inverse Gaussian                        <xemf: ~prob\igcdf.men>
+Reciprocal Inverse Gaussian             <xemf: ~prob\rigcdf.men>
+Wald                                    <xemf: ~prob\walcdf.men>
+Fatigue Life                            <xemf: ~prob\flcdf.men>
+

@@ -1,0 +1,708 @@
+. This is dataplot macro   DEXCP.DP        latest update: 9/25/18
+. Purpose: Generate a DEX contour plot
+.          (= ste p 10 of the DEXPLOT.DP 10-ste p DEX analysis procedure)
+. Date: May 2005 ==> 1/26/15 ==> 2/23/15 => 9/25/18
+. 9/25/18: insert logic for vertical and horizontal factors for the k >= 10 case
+.
+. Input
+.    1. k (parameter)               = Total number of plot factors
+.    2. y (vector)                  = Response variable
+.    3. x1, x2, x3, . . . (vectors) = Factors
+.    4. ycont (vector)              = Desired contour line values (optional) (default = auto)
+.
+.    5. contourh (parameter) = factor id for #1 dominant (=> horizontal axis) (optional) (default = automatic)
+.    6. contourv (parameter) = factor id for #2 dominant (=> vertical   axis) (optional) (default = automatic)
+.    7. ncent    (parameter) = number of center point values (if existent)    (optional) (default = 0)
+.    8. meancent (parameter) = mean of center point values (if existent)      (optional) (default = not exist)
+.    9. sdcent (parameter) = sd of center point values (if existent)      (optional) (default = not exist)
+.
+.    9. confdone (parameter) = 0,1 switch defining whether effects & confounding have been computed or not (optional)
+.
+.   10. framet (parameter)          = top    frame line (in %) (optional) (default = 90)
+.   11. frameb (parameter)          = bottom frame line (in %) (optional) (default = 20)
+.   12. dpmean (parameter)       = number of decimal places for the mean
+.   13. dpcont (parameter) = number of dec. places for the corner means (optional) (def. = 3)
+.   14. qual   (string)    = a subset/except qualification
+. Output:
+.    A contour plot
+.
+. -----start point-----
+.
+feedback save
+feedback off
+printing off
+let bugswcp = 0
+. let pausesw = 1
+.
+if bugswcp = 1; print " "; print "--At beginning of DEX Ste p 10 (DEXCP.DP)"
+   print "contourh contourv = ^contourh ^contourv"
+   print "meancent ncent = ^meancent ^ncent"
+   print "confdone = ^confdone"
+   print "steft1 steft2 = ^steft1 ^steft2"
+   if pausesw = 1; pause; end if
+   . feedback on
+end if
+.
+. -------------------------------------------
+. -----Do Analysis Ste p 10: Contour Plot-----
+. -------------------------------------------
+.
+x3label
+.
+. -----Step 1.1: Check for missing input values-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 1.1): check input"
+   if pausesw = 1; pause; end if
+end if
+.
+let string stmacro = dexcp.dp
+if k not exist
+   call determine_k.dp
+end if
+set check name output filliben
+set check length output filliben
+feedback on
+let iflag = check name k y x1 to x^k
+let iflag = check equal length y x1 to x^k
+feedback off
+.
+. -----Step 1.2: Since dexcp.dp will use center points for validation (if they
+.                have center points), extract such center points here-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 1.2): extract center points"
+   if pausesw = 1; pause; end if
+end if
+.
+. print tagcent tagjunk
+. pause
+call extract_center_points.dp
+.
+. -----Step 1.3: Copy the user's original y and x1 to xk data out to file-----
+.                since y and x1 to xk may potentially be modified within this macro-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 1.3): save original data"
+   if pausesw = 1; pause; end if
+end if
+.
+set write format 40f15.7
+write dex_original_data.dat y x1 to x^k
+set write format
+.
+. -----Step 1.4: Check/Extract 2 levels, and map into -1 and +1-----
+.                For this macro to work, the number of levels must be 1 or 2,
+.                and the 2 levels must be -1 and +1.  Check for this (and fix, if need be).-----
+.                If not 2 levels, then only the min and max will be used herein.-----
+.                If not -1 and +1, then min => -1 and max => +1-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 1.4): normalize to (-1,+1)"
+   if pausesw = 1; pause; end if
+end if
+.
+let string stcall = dexcp.dp
+call check_and_fix_original_data_for_2_levels_and_m1_p1.dp
+.
+. -----Step 2: Define plot settings-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 2): plot settings"
+   if pausesw = 1; pause; end if
+end if
+.
+call dexplotinit.dp
+.
+. -----Step 3: Compute effect estimates (ordered) and confounding-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 3): confounding"
+   print "confsw = ^confsw"
+   if pausesw = 1; pause; end if
+end if
+.
+call compute_effect_estimates_and_confounding.dp
+.
+if bugswcp = 1; print "--At end of step 3 of dexcp.dp"
+   print "numeff = ^numeff"
+   loop for jzz = 1 1 numeff
+      print steft^jzz
+   end loop
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 4: Extract the ID of the most important factor-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 4): id of most imp. factor"
+   if pausesw = 1; pause; end if
+end if
+.
+. let effhor = effid1(1)
+let effhor = ^steft1
+let string ch = ^effhor
+let posint = ^ch
+. call digit.dp      ;. replaced by digits command + sdigit macro   1/26/15
+let digitv = digits posint
+let numdigit = number digitv
+call sdigit.dp
+.
+let numdig1 = numdigit
+.
+let d1 = digitv(1)
+if numdig1 >= 2; let d2 = digitv(2); end if
+.
+if bugswcp = 1
+   print effid1 effid2
+   print effhor
+   print digitv
+   print numdig1
+   print posint
+   print d1
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 5: Extract the ID of the second most important factor-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 5): id of 2nd most imp. factor"
+   if pausesw = 1; pause; end if
+end if
+.
+. let effvert = effid1(2)
+let effvert = ^steft2
+let string ch = ^effvert
+let posint = ^ch
+. call digit.dp      ;. replaced by digits command + sdigit macro   1/26/15
+let digitv = digits posint
+let numdigit = number digitv
+call sdigit.dp
+let numdig2 = numdigit
+let d3 = digitv(1)
+if numdig2 >= 2; let d4 = digitv(2); end if
+.
+if bugswcp = 1
+   print effvert
+   print digitv
+   print numdig2
+   print posint
+   print d1 d2 d3 d4
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 6: Determine the ID (1 to k) (= hit1) for the vertical axis factor
+. -----        and (= hit2) for the horizontal axis factor.-----
+. -----        Also, form the 2 vert and horiz vectors u1 and u2-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 6): factor id for vert. axis"
+   if pausesw = 1; pause; end if
+end if
+.
+if contourh not exist and contourv not exist
+   if bugswcp = 1
+      print "k = ^k"
+      print numdig1 numdig2
+      if d1 exists; print d1; end if
+      if d2 exists; print d2; end if
+      if d3 exists; print d3; end if
+      if d4 exists; print d4; end if
+   end if
+   .
+   let trace = 0
+   .
+   . ---Step 6.1: Treat the k <= 9 (= 1-digit) case-----
+   .
+   if bugswcp = 1; print "--At (dexcp.dp, step 6.1): test for k <= 9 case"
+      if pausesw = 1; pause; end if
+   end if
+   .
+   if k <= 9
+      .
+      if bugswcp = 1
+         print "dexcpd.dp: at beginning of treating the k <= 9 case"
+         print "k = ^k"
+         print numdig1 numdig2
+         print d1 d2 d3 d4
+         if ibatch not exist or ibatch = 0; pause; end if
+      end if
+      .
+      if numdig1 = 1; if numdig2 = 1
+         let hit1 = d1; let hit2 = d3
+         let trace = 9.1
+      end if; end if
+      .
+      if numdig1 = 1; if numdig2 >= 2
+         let hit1 = d1; let hit2 = d3
+         if d1 = d3; let hit1 = d1; let hit2 = d4; end if
+         if d1 = d4; let hit1 = d1; let hit2 = d3; end if
+         let trace = 9.2
+      end if; end if
+      .
+      if numdig1 >= 2; if numdig2 = 1
+         let hit1 = d1; let hit2 = d2
+         if d1 = d3; let hit1 = d1; let hit2 = d2; end if
+         if d2 = d3; let hit1 = d2; let hit2 = d1; end if
+         let trace = 9.3
+      end if; end if
+      .
+      if numdig1 >= 2; if numdig2 >= 2
+         let hit1 = d1; let hit2 = d2
+         if d1 = d3; let hit1 = d1; let hit2 = d2; end if
+         if d1 = d4; let hit1 = d1; let hit2 = d2; end if
+         if d2 = d3; let hit1 = d2; let hit2 = d1; end if
+         if d2 = d4; let hit1 = d2; let hit2 = d1; end if
+         let trace = 9.4
+      end if; end if
+      .
+      let u1 = x^hit1
+      let u2 = x^hit2
+      .
+      if bugswcp = 1
+         print "dexcp.dp: at end of treating the k <= 9 case"
+         print "k = ^k"
+         print prod12 prod34
+         print u1 u2
+         if ibatch not exist or ibatch = 0; pause; end if
+      end if
+   end if
+   .
+   if bugswcp = 1;
+      print "--At end of step 6 of dexcp.dp"
+      print "trace = ^trace"
+      if pausesw = 1; pause; end if
+   end if
+   .
+   . ---Step 6.2: Treat the k >= 10 (= 2-digit) case-----
+   .
+   if bugswcp = 1; print "--At (dexcp.dp, step 6.2): test for k >= 10 case"
+      if pausesw = 1; pause; end if
+   end if
+   .
+   if k >= 10
+      if bugswcp = 1
+         print "dexcpd.dp: at beginning of treating the k >= 10 case"
+         print "k = ^k"
+         print numdig1 numdig2
+         print d1 d2 d3 d4
+         if ibatch not exist or ibatch = 0; pause; end if
+      end if
+      .
+      if numdig1 = 1; if numdig2 = 1
+         let hit1 = d1; let hit2 = d3
+         let trace = 10.1
+      end if; end if
+      .
+      if numdig1 = 1; if numdig2 >= 2
+         let prod34 = 10*d3 + d4
+         if prod34 > k ;. hence word2 = a 2-term interaction
+            let hit1 = d1; let hit2 = d3
+            if d1 = d3; let hit1 = d1; let hit2 = d4; end if
+            if d1 = d4; let hit1 = d1; let hit2 = d3; end if
+         end if
+         if prod34 <= k ;. hence assume word2 = a single 2-digit factor
+            let hit1 = d1; let hit2 = prod34
+         end if
+         let trace = 10.2
+      end if; end if
+      .
+      if numdig1 >= 2; if numdig2 = 1
+         let prod12 = 10*d1 + d2
+         if prod12 > k ;. hence word1 = a 2-term interaction
+            let hit1 = d1; let hit2 = d2
+            if d1 = d3; let hit1 = d1; let hit2 = d2; end if
+            if d2 = d3; let hit1 = d2; let hit2 = d1; end if
+         end if
+         if prod12 <= k ;. hence assume word1 = a single 2-digit factor
+            let hit1 = prod12; let hit2 = d3
+         end if
+         let trace = 10.3
+      end if; end if
+      .
+      if numdig1 >= 2; if numdig2 >= 2
+         let prod12 = 10*d1 + d2
+         let prod34 = 10*d3 + d4
+         if prod12 > k; if prod34 > k ;. thus both words are 2-term interactions
+            let hit1 = d1; let hit2 = d2
+            if d1 = d3; let hit1 = d1; let hit2 = d2; end if
+            if d1 = d4; let hit1 = d1; let hit2 = d2; end if
+            if d2 = d3; let hit1 = d2; let hit2 = d1; end if
+            if d2 = d4; let hit1 = d2; let hit2 = d1; end if
+            let trace = 10.41
+            . print "hit1 hit2 = ^hit1 ^hit2"
+            . pause
+         end if; end if
+         .
+         if prod12 > k; if prod34 <= k ;. thus word 1 = 2TI & word 2 = 2-digit factor
+            let hit1 = d1; let hit2 = d2
+            let trace = 10.42
+         end if; end if
+         .
+         if prod12 <= k; if prod34 > k ;. thus word 1 = 2-digit factor & word2 = 2TI
+            let hit1 = 10*d1 + d2; let hit2 = d3
+            let trace = 10.43
+         end if; end if
+         .
+         if prod12 <= k; if prod34 <= k ;. thus word 1 and word 2 both = 2-digit factors
+            let hit1 = 10*d1 + d2; let hit2 = 10*d3 + d4
+            let trace = 10.44
+         end if; end if
+      end if; end if
+      .
+      let u1 = x^hit1
+      let u2 = x^hit2
+      .
+      if bugswcp = 1
+         print "dexcp.dp: at end of treating the k >= 10 case"
+         print "k = ^k"
+         print prod12 prod34
+         print hit1 hit2
+         print "trace = ^trace"
+         print u1 u2
+         if ibatch not exist or ibatch = 0; pause; end if
+      end if
+   end if
+end if
+.
+if contourh exists and contourv exists
+   let hit1 = contourh
+   let hit2 = contourv
+   let numdig1 = 1
+   let numdig2 = 1
+   let u1 = x^hit1
+   let u2 = x^hit2
+end if
+.
+if bugswcp = 1; print "--At end of step 6 of dexcp.dp"
+   print contourv contourh numdig1 numdig2 hit1 hit2
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 7: Print out the subtitle immediately above the plot-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 7): subtitle above plot"
+   if pausesw = 1; pause; end if
+end if
+.
+title: Contour Plot of 2 Dominant Factors: X^hit1 & X^hit2
+.
+if cx^hit1 exist and cx^hit2 exist
+   title: Contour Plot of 2 Dominant Factors: X^hit1 (^cx^hit1) & X^hit2 (^cx^hit2)
+end if
+.
+if cx^hit1 not exist and cx^hit2 not exist
+   if stx^hit1 exist and stx^hit2 exist
+      title: Contour Plot of 2 Dominant Factors: X^hit1 (^stx^hit1) & X^hit2 (^stx^hit2)
+   end if
+end if
+.
+. -----Step 8: Determine axis labels for the upcoming contour plot-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 8): axis labels"
+   if pausesw = 1; pause; end if
+end if
+.
+. let bugswcp = 1
+. feedback on
+. echo on
+.
+if stx^hit2 exist
+   y1label X^hit2(^stx^hit2)
+   if cx^hit2 exist
+      y1label X^hit2(^cx^hit2)
+   end if
+else
+   y1label X^hit2
+   if cx^hit2 exist
+      y1label X^hit2(^cx^hit2)
+   end if
+end if
+.
+if stx^hit1 exist
+   x1label X^hit1(^stx^hit1)
+   if cx^hit1 exist
+      x1label X^hit1(^cx^hit1)
+   end if
+else
+   x1label X^hit1
+   if cx^hit1 exist
+      x1label X^hit1(^cx^hit1)
+   end if
+end if
+.
+. -----Step 9: Determine contour line values-----
+.
+. call determine_contour_line_values.dp
+. print ycont
+. pause
+.
+. -----Step 10: GENERATE THE PLOT-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 10): GENERATE THE PLOT"
+   if pausesw = 1; pause; end if
+end if
+.
+label size labelsiz
+tic label size ticlabsi
+. print "labelsiz = ^labelsiz, ticlabsi = ^ticlabsi"
+. pause
+.
+if dpcp exists; let dpcont = dpcp; end if
+.                <========================================
+call dexcont.dp
+.                <========================================
+.
+. -----Step 11: Write out the contour line values-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 11): Write contour line values"
+   if pausesw = 1; pause; end if
+end if
+.
+delete valcl tagcl numcl
+skip 0
+read dpst1f.dat valcl tagcl numcl
+. print tagcl valcl numcl
+. pause
+.
+retain xplot yplot tagplot subset yplot -2 to 2
+print junk1.out xplot yplot tagplot
+retain xplot yplot tagplot subset xplot -2 1.95
+print junk2.out xplot yplot tagplot
+. print xplot yplot tagplot
+. pause
+.
+let nxplot = number xplot
+. print "nxplot = ^nxplot"
+hw 2 1
+loop for jz = 1 1 nxplot
+   let xpj = xplot(jz)
+   let ypj = yplot(jz)
+   let tagpj = tagplot(jz)
+   delete junkv; let junkv = valcl
+   retain junkv subset tagcl tagpj
+   let cvj = junkv(1)
+   . print jz xpj ypj tagpj cvj
+   . pause
+   if xpj = -2; just lece; end if
+   if xpj = 1.95; just rice; end if
+   movedd xpj ypj; text ^cvj
+end loop
+.
+. -----Step 12: For the horizontal axis, write out the real values at -2 -1 0 1 2-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 12): horiz. axis: -1 -1 0 1 2"
+   if pausesw = 1; pause; end if
+end if
+.
+if colorall exists; color ^colorall; end if
+.
+if stx1l1 exists
+   delete stjunka stjunkb
+   let string stjunka = stx^hit1&l1
+   let string out1 = ^^stjunka
+   if nlevv exist; let upperz = nlevv(^hit1); end if
+   if nlevv not exist; let upperz = number of words stx^hit1&l; end if
+   let string stjunkb = stx^hit1&l^upperz
+   let string out2 = ^stjunkb
+end if
+.
+if stx1l exists
+   delete stjunka stjunkb
+   let stjunka = string word   stx^hit1&l  1
+   let string out1 = ^stjunka
+   if nlevv exist; let upperz = nlevv(^hit1); end if
+   if nlevv not exist; let upperz = number of words stx^hit1&l; end if
+   let stjunkb = string word   stx^hit1&l  upperz
+   let string out2 = ^stjunkb
+end if
+.
+if stx1l exists
+   let string staxissw = h
+   call dexcp_write_augmented_tic_labels.dp
+end if
+.
+. -----Step 12: For the vertical axis, write out the real values at -2 -1 0 1 2-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 12): vert. axis: -2 -1 0 1 2"
+   if pausesw = 1; pause; end if
+end if
+.
+if stx1l1 exists
+   delete stjunka stjunkb
+   let string stjunka = stx^hit2&l1
+   let string out1 = ^^stjunk
+   if nlevv exist; let upperz = nlevv(^hit2); end if
+   if nlevv not exist; let upperz = number of words stx^hit2&l; end if
+   let string stjunkb = stx^hit2&l^upperz
+   let string out2 = ^stjunkb
+end if
+.
+if stx1l exists
+   delete stjunka stjunkb
+   let stjunka = string word   stx^hit2&l  1
+   let string out1 = ^stjunka
+   if nlevv exist; let upperz = nlevv(^hit2); end if
+   if nlevv not exist; let upperz = number of words stx^hit2&l; end if
+   let stjunkb = string word   stx^hit2&l  upperz
+   let string out2 = ^stjunkb
+end if
+.
+if stx1l exists
+   let string staxissw = v
+   call dexcp_write_augmented_tic_labels.dp
+end if
+.
+. -----Step 13: Write out the model-based center-point predicted value in bottom margin of the plot
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 13): write center point pred value"
+   if pausesw = 1; pause; end if
+end if
+.
+let ybar = mean y
+let dpmeanz = 4
+if dpmean exists; let dpmeanz = dpmean; end if
+set write decimals dpmeanz; let ybarr = number to string ybar
+hw texth textw
+move 50 07; just center; text Center-Point Predicted Value (From 2-Factor Edge-based Model) = ^ybarr
+.
+. -----Step 14: If center point data exists, then print out the mean value---
+.               and carry out a t test. if have 2 or more replicates-----
+.               Needed: ncent, meancent, sdcent-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 14): if cp exists, write comparison"
+   if pausesw = 1; pause; end if
+end if
+.
+if ycent exists
+   let ncent = number ycent
+   let meancent = mean ycent
+   let sdcent = sd ycent
+   let meancenr = number to string meancent
+   let sdcentr = number to string sdcent
+   .
+   if ncent = 1
+      move 50 05; just center; text Center Point Data: # Obs. = ^ncent, Mean = ^meancenr
+   end if
+   .
+   if ncent > 1.5
+      if colorall exists; color ^colorall; end if
+      move 50 05; just center; text Center Point Data: # Obs. = ^ncent, Mean = ^meancenr, SD(data) = ^sdcentr
+   end if
+   .
+   if ncent > 1.5 and sdcent > 0
+      let num = meancent - ybar
+      let num = abs(numer)
+      let denom = (1/(ncent**2)) + (1/(n**2))
+      let denom = sdcent*sqrt(denom)
+      let tcent = num/denom
+      let tcent = abs(tcent)
+      let tcentr = round(tcent,2)
+      let dfcent = ncent-1
+      let tcutoff = tppf(0.975,dfcent)
+      let tcutoffr = round(tcutoff,2)
+      let string tconclus = Model is Adequate
+      if tcent > tcutoff; let string tconclus = Model Not Adequate; end if
+      move 15 01; just left; text t Test of Model Adequacy at Center Point:
+      move 47 01; just left; text |t stat| = ^tcentr   tcutoff = ^tcutoffr   Conclusion = ^tconclus
+   end if; end if
+end if
+.
+. -----Step 15: Write out project, (k,n), Step, annotate-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 15): proj,(k,n),step,annotate"
+   if pausesw = 1; pause; end if
+end if
+.
+if project exists
+   if projcol exists; color ^projcol; end if
+   call dexwriteproject.dp
+end if
+.
+if step exists
+   let step = step + 1; hw 2 1; just left; move 5 95
+   . text Step ^step
+   . call tagcorn.dp   9/17/18/
+   if stepprsw not exist
+      call tagcorn.dp
+   end if
+   if stepprsw exists; if stepprsw = 1
+      call tagcorn.dp
+   end if; end if
+end if
+.
+if step exists
+   call tagcorn.dp
+end if
+.
+if annotate exists; if annotate = 1
+   if colorall exists; color ^colorall; end if
+   call annotate.dp
+end if; end if
+.
+. -----Step 16: write out upper left----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 16): upper left"
+   if pausesw = 1; pause; end if
+end if
+.
+if stcorn1 exists
+   call upperleft.dp
+end if
+.
+. -----Step 17: Write out right margin factor and setting info-----
+.
+if bugswcp = 1; print "--At (dexcp.dp, step 17): right margin"
+   if pausesw = 1; pause; end if
+end if
+.
+if rightmsw exists and rightmsw = 1 or rightmsw not exist
+   if stx1 exists and stx1l exists
+      call dexrightmargin.dp
+   end if
+end if
+.
+. -----Step 98: Restore the user's original y and x1 to xk data from file-----
+.
+if bugswcp = 1; print " "; print "---At (dexcp.dp, step 98): restore orig. data (pre-restore)"
+   print y x1 to x^k
+   if pausesw = 1; pause; end if
+end if
+.
+delete y x1 to x^k
+set read format 40f15.7
+skip 0; read dex_original_data.dat y x1 to x^k
+set read format
+.
+if bugswcp = 1; print " "; print "---At (dexcp.dp, step 98): (post-restore)"
+   print y x1 to x^k
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 31: Form conclusions and write out to file-----
+.
+let step = 10
+call form_and_write_dex_10_step_conclusions.dp
+
+. -----Step 99: Finish up-----
+.
+if bugswcp = 1; print " "; print "---At end of dexcp.dp"
+   if pausesw = 1; pause; end if
+end if
+.
+just center
+title
+y1label
+x1label
+char hw 2 1 all
+char offset 0 0 all
+char justification cece all
+.
+delete digitv junkvar dxz
+.
+feedback restore
+.
+if itime exists and itime = 1
+   cpu time
+   let t10 = cputime
+   set write decimals 4
+   print t0 t1 t2 t3 t4 t5 t6 t7 t8 t9 t10
+   let tdiff1 = t1 - t0
+   loop for jz = 1 1 10
+       let jz2 = jz - 1
+       let tdiff^jz = t^jz - t^jz2
+   end of loop
+   print tdiff1 tdiff2 tdiff3 tdiff4 tdiff5 tdiff6 tdiff7 tdiff8 tdiff9 tdiff10
+end if
+.

@@ -1,0 +1,48 @@
+This is file setpc.men--Set Plot Control
+ 
+--------------------
+ 1. Set Plot Control
+ 2. Macro
+ 3.
+ 4. Line Types:
+ 4. @CE 1 0 42 50 * gui-line
+ 5. Character Types:
+ 5. @CE 2 0 42 50 * gui-char
+ 6. Character Fill:
+ 6. @CE 3 0 42 50 * gui-ooff
+ 7. Spikes:
+ 7. @CE 4 0 42 50 * gui-ooff
+ 8. Bars:
+ 8. @CE 5 0 42 50 * gui-ooff
+ 9. Base for Spikes and Bars:
+ 9. @CE 6 0 42 50 * 
+10.
+11. Title:
+11. @CE 7 0 22 50 *
+12. Left Axis Label:
+12. @CE 8 0 22 50 *
+13. Bottom Axis Label:
+13. @CE 9 0 22 50 *
+14.
+15. Subset/Except/For Specification:
+16. @CE 10 0 6 50 *
+17.
+18.
+19. Set Plot Control?:
+--------------------
+GR FE
+LINES _1
+CHARACTERS _2
+CHARACTER FILL _3
+SPIKE _4
+SPIKE BASE _5
+BAR BASE _5
+BAR _5
+TITLE _7
+Y1LABEL _8
+X1LABEL _9
+LET STRING ZZZZSUBS = SP()
+LET STRING ZZZZSUBS = _10
+--------------------
+WEB HELP PLOT CONTROL
+--------------------

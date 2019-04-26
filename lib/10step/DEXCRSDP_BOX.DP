@@ -1,0 +1,183 @@
+. This is dataplot macro     dexcrsdp_box.dp     10/15/18
+. Purpose: For dexcrsdp.dp, draw out the box and contents in upper right corner within the plot
+. Date: 10/15/18
+. Input:
+.   numeff               (parameter) = number of effects
+.   maxnumef             (parameter) = maximum number of effects to be printed out (optional) (default = 20)
+.   cumrsd               (vector)    = cumulative residual standard deviationseffect estimates
+.   steft1, steft2, etc. (strings)   = primary names of the effects
+.   stefc1, stefc2, etc. (strings)   = confounding structure strings
+.   colorall             (string)    = color for text (optional) (default = blue)
+. Output:
+.   A drawn out box with 4 columns of info:
+.      1. effect names
+.      2. cumulative residual standard deviation values
+.      3. relative cumulative residualk standard deviation values (%)
+.
+. -----start point-----
+.
+let bugswepb = 0
+. let pausesw = 1
+.
+if bugswepb = 1; print " "; print "--At beginning of dexcrsdp_box.dp): draw box and contents"
+   print "numeff = ^numeff"
+   loop for jz = 1 1 numeff
+      let effj = eff(jz)
+      print "jz = ^jz   steft^jz = ^steft^jz   eff.. = ^effj    stefc^jz = ^stefc^jz"
+   end loop
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 1: Draw out the box for the ordered effects-----
+.
+if bugswepb = 1; print "--At (dexcrsdp_box.dp, step 1): draw box"
+   if pausesw = 1; pause; end if
+end if
+.
+let numeffp = numeff
+if numeff >= 20; let numeffp = 20; end if
+if maxnumef exists and numeffp > maxnumef
+   let numeffp = maxnumef
+end if
+.
+let length = 0
+loop for j = 1 1 numeff
+   let lengthj = string length stefc^j
+   if lengthj > length; let length = lengthj; end if
+end loop
+. print "length = ^length"
+. pause
+.
+let fudge = 0.9
+. let xright = 99
+let xright = 85
+let xleft = xright - 10 - 10 - length*fudge + 1 + 10
+if xleft >= 60; let xleft = 60; end if
+.
+let fudge = 1
+let y0del = 1
+if texth >= 2; let y0del = fudge*texth; end if
+. print texth fudge y0 y0del
+. print y0del numeffp
+let y0 = 86.5 - y0del*numeffp - 1.5
+let y0 = y0 - y0del
+box fill pattern solid; box fill color g80
+. print "xleft = ^xleft"
+. box xleft y0 85 90
+box xleft y0 xright 90
+.
+. -----Step 2: Within the box, write out the title line-----
+.
+if bugswepb = 1; print "--At (dexcrsdp_box.dp, step 2): write list of cum res. sds"
+   print "numeff = ^numeff     numeffp = ^numeffp"
+   if pausesw = 1; pause; end if
+end if
+.
+if colorall exists; color ^colorall; end if
+.
+hw texth textw; just center
+let y0 = 87.7
+let x0 = xleft + 4; move x0 y0; text Model
+let x0 = xleft + 13; move x0 y0; text CumRSD
+let x0 = xleft + 21; move x0 y0; text (%)
+.
+lines dotted; draw xleft 86.7 xright 86.7; lines solid
+.
+. -----Step 3: Write column  1 in box: constant and effect ids ordered -----
+.
+if bugswepb = 1; print "--At (dexcrsdp_box.dp, step 3): col. 1: effect ids"
+   if pausesw = 1; pause; end if
+end if
+.
+character justification center all
+.
+let x0 = xleft + 4; let y0 = 86.5
+just center
+.
+let fudge = 1
+let y0del = 1
+if texth >= 2; let y0del = fudge*texth; end if
+. print texth fudge y0 y0del
+. pause
+.
+let y0 = y0 - y0del
+let y0pos(j) = y0
+let plot character j = ^steft^j
+move x0 y0; just center; hw 2 1; text Average                 ;. column 1 constant
+.
+loop for j = 1 1 numeffp
+   let y0 = y0 - y0del
+   let y0pos(j) = y0
+   let plot character j = ^steft^j
+   move x0 y0; just center; hw 2 1; text + ^steft^j           ;. column 1 other factors
+end loop
+. draw symbol x0 y0pos tagzzz
+delete tagzzz; let tagzzz = sequence 1 1 numeffp
+   .
+if bugswepb = 1; print "--At end of step 7.3 of dexcrsdp_box.dp"
+   print   x0 y0pos tagzzz numeffp
+   loop for jz = 1 1 numeff
+      let effj = eff(jz)
+      print "jz = ^jz   steft^jz = ^steft^jz   eff.. = ^effj    stefc^jz = ^stefc^jz"
+   end loop
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 4: Write column  2 in box: ordered residual standard deviations-----
+.
+if bugswepb = 1; print "--At (dexcrsdp_box.dp, step 4): col. 2: residual sds"
+   if pausesw = 1; pause; end if
+end if
+.
+let m = mean y
+let s = sd y
+.
+let x0 = xleft + 16
+let dpepz = 4
+if dpep exists; let dpepz = dpep; end if
+set write decimals dpepz
+.
+let y0 = 86.5
+let sj = s
+let y0 = y0 - y0del
+let stsj = number to string sj
+move x0 y0; just right; hw 2 1; text ^stsj
+.
+loop for j = 1 1 numeffp
+   let y0 = y0 - y0del
+   let sj = cumrsd(j)
+   let stsj = number to string sj
+   move x0 y0; just right; hw 2 1; text ^stsj
+end loop
+   .
+. -----Step 5: Write column 3 in box: ordered relative standard deviations-----
+.
+if bugswepb = 1; print "--At (dexcrsdp_box.dp, step 5): col. 3: relative residuals sds"
+   if pausesw = 1; pause; end if
+end if
+.
+let x0 = xleft + 23
+set write decimals 1
+.
+let y0 = 86.5
+let sj = s
+let y0 = y0 - y0del
+let rsj = 100*sj/m
+let strsj = number to string rsj
+move x0 y0; just right; hw 2 1; text (^strsj%)
+.
+loop for j = 1 1 numeffp
+   let y0 = y0 - y0del
+   let sj = cumrsd(j)
+   let rsj = 100*sj/m
+   let strsj = number to string rsj
+   move x0 y0; just right; hw 2 1; text (^strsj%)
+end loop
+set write decimals
+.
+. -----Sterp 99: Finish up the macro-----
+.
+if bugswepb = 1; print " "; print "--At end of dexcrsdp_box.dp)"
+   if pausesw = 1; pause; end if
+end if
+.

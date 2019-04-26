@@ -1,0 +1,37 @@
+----- <~qual\discacce.top> Acceptance Sampling
+ 
+Acceptance Sampling
+ 
+Acceptance sampling involes the inspection of items
+after they have been produced.  A sample of the items
+are inspected and based on the number of defective items
+found, the total lot of items is either accepted or
+rejected.
+
+Note the contrast between acceptace sampling and 
+standard control charts.  Control charts are designed
+to detect flaws in the manufacturing process at the time
+of production while acceptance sampling occurs after
+production has been completed.  As such, they serve
+somewhat different purposes.  Control charts are used
+to ensure that defects are kept to a minimum during
+production.  acceptance sampling is performed (by either
+the producer or the consumer) to determine how many
+defective items were actually produced.
+
+Much work has been done in the statistical design of
+a suitable sampling plan.  There are extensive tables
+avaialbe.  Dataplot does not generate the sampling
+(with the exception of the single sample method).
+However, it does generate a number of graphs commonly
+used in acceptance sampling.  These are implemented as
+macros rather than built-in commands.  They are available
+from the GUI and as macros in the Dataplot macros directory.
+The command line macros may be useful if you want to modify
+the graphs somewhat.
+
+The graphs given in these menus are taken from the
+Montgomery text (see References section) and are described
+in more detail there or in the on-line NIST/SEMATECH
+Engineering Statistics Handbook.
+

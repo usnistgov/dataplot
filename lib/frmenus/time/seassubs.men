@@ -1,0 +1,27 @@
+This is file seassubs.men--Generate a seasonal subseries plot
+ 
+--------------------
+ 1. Seasonal subseries plot
+ 2. SEASONAL SUBSERIES PLOT Y
+ 3.
+ 4. Variable for sub-series plot:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Seasonal Period (e.g., 12 for monthly data):
+ 5. @CE 2 0 42 50 ? *
+ 6. Starting period (usually 1):
+ 6. @CE 3 0 42 50 *
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -5 50 *
+10.
+11.
+12. Generate the Seasonal Subseries Plot?:
+--------------------
+GR FE
+LINES SOLID ALL
+LET PERIOD = _2
+LET START = _3
+SEASONAL SUBSERIES PLOT _1 _4
+--------------------
+WEB HELP SEASONAL SUBSERIES PLOT
+--------------------

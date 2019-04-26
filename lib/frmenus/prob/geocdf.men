@@ -1,0 +1,40 @@
+This is file geocdf.men--Compute geometric cdf
+ 
+--------------------
+ 1. Compute Geometric cdf
+ 2. LET A = GEOCDF(X,P)
+ 3.
+ 4. The default parameterization of the geometric
+ 5. distribution is for the number of failures until
+ 6. the first success.  Alternatively, it can be
+ 7. parameterized as the number of trials up to and
+ 8. including the first success.
+ 9.
+10.                     Default           Alternative
+11. Parameterization:
+11. @CE 1 1 23 36 x = 0, 1, ...
+11. @CE 1 2 37 50 x = 1, 2, ...
+12.
+13. Input values:
+14.                                       x:
+14. @CE 2 0 42 50 ?
+15.       probability success p (0 < p < 1):
+15. @CE 3 0 42 50 ?
+16.
+17. Output parameters:
+18.                  name for the cdf value:
+18. @CE 4 0 42 50 ?
+19.     name for the tail probability value:
+19. @CE 5 0 42 50 ?
+20.
+21.
+22. Compute the Probability?
+--------------------
+AN FE
+SET GEOMETRIC DEFINITION JOHNSON AND KOTZ
+@IF 1 2 SET GEOMETRIC DEFINITION DLMF
+@IF 4 0 LET _4 = GEOCDF( _2 , _3 )
+@IF 5 0 LET _5 = 1 - GEOCDF( _2 , _3 )
+--------------------
+WEB HELP GEOCDF
+--------------------

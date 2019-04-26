@@ -1,0 +1,22 @@
+----------  *ISHIKAWA4*  ----------
+
+   The 4 Usual "M" Components in the Ishikawa
+         Cause-and-Effect Diagram
+
+1. Material
+      Biased High or Low in Size, Content, etc.
+      Too Variable
+2. Machine
+      Out of Calibration
+      Worn Parts
+3. Man
+      Lack of Training
+      Lack of Information
+      Not Enough Time
+      Carelessness
+4. Method/Process
+      Wrong Set-Up
+      Not Enough Time
+      Improper Lubrication
+
+   Source--Quality Progress, April 1987.

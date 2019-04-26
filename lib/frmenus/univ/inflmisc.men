@@ -1,0 +1,52 @@
+This is file inflmisc.men--Generate Influence Curves (Miscellaneous)
+ 
+--------------------line 3
+01. Influence Curves (Miscellanous)
+02. <statistic> Influence Curve Y XSEQ
+03.
+04. Response Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. X Sequence Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06.
+07. Statistic (Select one):
+08. @CE 3 2 5 25 normal PPCC
+09. @CE 3 3 5 25 autocorrelation
+09. @CE 3 4 30 50 autocovariance
+10. @CE 3 5 5 25 sine amplitude
+10. @CE 3 6 30 50 sine frequency
+11.
+12. Character Type for Data
+12. @CE 4 0 42 50 * gui-char
+13. Character Fill for Data
+13. @CE 5 0 42 50 gui-ooff
+14. Line Type for Data-connecting Line
+14. @CE 6 0 42 50 * gui-line
+15.
+16. Title:
+16. @CE 7 0 10 50 *
+17. Left Axis Label:
+17. @CE 8 0 22 50 *
+18. Bottom Axis Label:
+18. @CE 9 0 22 50 *
+19.
+20. Subset/Except/For Specification:
+21. @CE 10 0 1 50 *
+22.
+23. Generate the Influence Curve Plot?:
+--------------------
+TITLE _7
+Y1LABEL _8
+X1LABEL _9
+CHARACTERS _4
+CHARACTER FILL _5
+LINES _6 _7
+.
+@IF 3 2 NORMAL PPCC INFLUENCE CURVE _1 _2 _10
+@IF 3 3 AUTOCORRELATION STATISTIC INFLUENCE CURVE _1 _2 _10
+@IF 3 4 AUTOCOVARIANCE STATISTIC INFLUENCE CURVE _1 _2 _10
+@IF 3 5 SINE AMPLITUDE INFLUENCE CURVE _1 _2 _10
+@IF 3 6 SINE FREQUENCY INFLUENCE CURVE _1 _2 _10
+--------------------
+WEB HELP INFLUENCE CURVE
+--------------------

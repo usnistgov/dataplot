@@ -1,0 +1,10 @@
+----- <~dataload\rfrdata.top> Load Rational Fit Data
+
+Load Rational Fit Data
+
+CHWIRUT1.DAT  Ultrasonic ref. block calib       <xcf: ~dataload\CHWIRUT1.DP>
+CHWIRUT2.DAT  Ultrasonic ref. block calib       <xcf: ~dataload\CHWIRUT2.DP>
+HAHN1.DAT     Thermal expansion of copper       <xcf: ~dataload\HAHN1.DP>
+KIRBY2.DAT    Electron microscope line width    <xcf: ~dataload\KIRBY2.DP>
+LEW4.DAT      EConcrete pull-out bond strength  <xcf: ~dataload\LEW4.DP>
+

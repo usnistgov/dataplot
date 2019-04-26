@@ -1,0 +1,15 @@
+This is file norrspru.men--Specify Run
+
+--------------------
+ 1. Specify Run
+ 2. LET RUNID = XXX
+ 3.
+ 4. Desired run (1, 2, 3, ...)
+ 4. @CE 1 0 40 50 ?
+ 5.
+ 6.
+ 7. Done?
+--------------------
+GR FE
+LET RUNID = _1
+--------------------

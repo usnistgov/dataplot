@@ -1,0 +1,44 @@
+-----<~time\assumpti.top> Assumptions: Time Series
+ 
+Assumptions: Time Series
+ 
+The typical assumptions for the data are:
+
+   1) The data are equi-spaced;
+   2) There are no missing values;
+   3) N is large.
+
+If one or more of these assumptions are violated,
+then some of the techniques of this section
+may not be valid.
+
+The typical assumptions for a univariate process
+or for a model of the form y = f(x) + error, the
+common assumptions are:
+
+   1) the data are random (= independent);
+   2) the data have fixed distribution;
+   3) the data have fixed location;
+   4) the data have fixed scale.
+
+For time series, assumptions 1 and 2 do NOT
+apply.  In fact, the assumption is that the
+data are in fact correlated with each other and
+time series models are concerned with trying to
+model this correlation.
+
+Weak stationarity, which is the typical
+assumption for many time series techniques, is
+that assumptions 1 and 2 (data are random from a
+fixed distribution) do NOT hold, but that assumptions
+3 and 4 (fixed location and scale) do hold.
+
+Note that AFTER fitting a time series model, the
+residuals should in fact satisfy all 4 of these
+assumptions.  Assumption checking occurs at two
+levels.  First, the original data are checked for
+weak stationarity.  Second, the residuals from the
+fitted time series model are checked for randomness,
+fixed distribution, fixed location, and fixed scale.
+
+ 

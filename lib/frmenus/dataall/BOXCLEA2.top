@@ -1,0 +1,8 @@
+----- <~dataall\BOXCLEA2.top> BOXCLEA2.DAT
+
+BOXCLEA2.DAT
+
+View     <xcl: LIST BOXCLEA2.DAT>
+Load     <xcf: ~dataload/BOXCLEA2.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXCLEA2.DAT>
+

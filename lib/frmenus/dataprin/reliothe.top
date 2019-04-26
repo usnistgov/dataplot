@@ -1,0 +1,21 @@
+----- <~dataprin\reliothe.top> Print (to Printer) Reliability Data: Other
+
+Print (to Printer) Reliability Data: Other
+
+ABERN17.DAT*  Compressor rivet failure    <xcf: ~dataprin\ABERN17.DP>
+ABERN35.DAT   Fatigue failure time        <xcf: ~dataprin\ABERN35.DP>
+ABERN43.DAT   Bearing cage failure time   <xcf: ~dataprin\ABERN43.DP>
+
+HAHN.DAT      Locomotive controls failure <xcf: ~dataprin\HAHN.DP>
+NELSON.DAT    Dial. brkdwn stren of insul <xcf: ~dataprin\NELSON.DP>
+
+GEAR.DAT      Gear diameters (Ishikawa)   <xcf: ~dataprin\GEAR.DP>
+CLEAR.DAT     Component clearances        <xcf: ~dataprin\CLEAR.DP>
+
+CASTILL6.DAT  Chain link strength         <xcf: ~dataprin\CASTILL6.DP>
+CASTILL7.DAT  Elect. insulation lifetime  <xcf: ~dataprin\CASTILL7.DP>
+CASTILL8.DAT  Wire cycles-to-failure      <xcf: ~dataprin\CASTILL8.DP>
+
+RANDN.DAT     Normal random numbers       <xcf: ~dataprin\RANDN.DP>
+RANDU.DAT     Uniform random numbers      <xcf: ~dataprin\RANDU.DP>
+

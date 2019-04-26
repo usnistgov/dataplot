@@ -1,0 +1,10 @@
+----- <~dataload\imag.top> Load Time Series Data: Image Analysis
+
+Load Time Series Data: Image Analysis
+
+EHRSTEIN.DAT  Semicond. wafer resistiv.  <xcf: ~dataload\EHRSTEIN.DP>
+BENNETT.DAT   Fracture surface roughness <xcf: ~dataload\BENNETT.DP>
+BRAIN.DAT     Brain wave analysis        <xcf: ~dataload\BRAIN.DP>
+CUBE.DAT      Vertices of a cube         <xcf: ~dataload\CUBE.DP>
+WOOLLEY.DAT   Optical disk errors        <xcf: ~dataload\WOOLLEY.DP>
+

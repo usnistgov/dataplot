@@ -1,0 +1,52 @@
+----- <~fit\disclowe.top> LOWESS Fitting
+
+LOWESS Fitting
+
+LOWESS stands for locally-weighted least squares.
+LOWESS is used for time series and scatter plot
+smoothing for both equispaced and non-equispaced data.
+ 
+Lowess is a data analysis technique for producing a "smooth" set of
+values from a time series which has been contaminated with noise,
+or from a scatter plot with a "noisy" relationship between the 2
+variables.  In a time series context, the technique is an
+improvement over least squares smoothing when the data is not
+equally spaced (as least squares smoothing assumes).  For lowess
+smoothing, the analyst can vary the size of the smoothing
+window.  This size is given as the fraction (0 to 1) of the data
+that the window should cover.  The default window size is .1 (which
+states that the smoothing window has a total width of 10% of the
+horizontal axis variable).  To specify the width of the lowess
+smooth, use the LOWESS FRACTION command prior to using the LOWESS
+SMOOTH command.  This width must be a decimal value between 0 and
+1.
+ 
+The LOWESS fraction controls the smoothness of the curve.  For
+example, if it is 1.0, then the LOWESS curve is a single straight
+line.  In general, the smaller the fraction, the more that LOWESS
+curve follows individual data points.  To obtain a smoother LOWESS
+curve, increase the value of the LOWESS FRACTION.
+ 
+The LOWESS DEGREE command is used to specify whether local linear
+or local quadratic fits are applied to the points in the current
+data window.  Quadratic fits are recommended if there are local
+minimum and maximum points in the data.  Otherwise, linear fitting
+should be adequate.  Linear fitting is the default.
+
+The following is a brief sketch of the LOWESS algorithm.
+   1) Compute the number of points in the neighborhood.  This is
+      the LOWESS fraction times the number of data points rounded
+      to the nearest integer.  Call this number q.
+   2) Use a tricube function to generate a weighted least squares
+      fit.  Let d(i) be the distance from x(i) to its qth nearest
+      neighbor.  The weight given to point (x(k),y(k)) is:
+          T(i)(x(k)) = T[(x(i)-x(k))/d(i)]
+      where T is the tri-cube weight function.
+   3) Compute the residuals of this fit.
+   4) Compute a bi-square weight function of the residuals.
+   5) Use the horizontal weights (from the tri-cube function)
+      multiplied by the vertical weights (from the bi-square of the
+      residuals) in a weighted least squares fit.
+See the documentation for TRICUBE and BIWEIGHT for the details on
+these weighting functions.
+

@@ -1,0 +1,45 @@
+This is Dataplot Data File     CASTILL6.DAT
+Link Data--Strength of chain links
+Engineering Goal--Determine min strength characteristics of chain
+Response Variable = strength of chain links (Kgs)
+Number of Observations = 20
+Number of Variables per line image = 1
+Order of variables per line image--
+   1. Response variable = strength of chain links (Kgs)
+Statistical Category--Extreme Value Analysis
+To read this into Dataplot--
+   SKIP 25
+   READ CASTILL6.DAT Y
+Source--Enrique Castillo (1988). Extreme Value Theory
+        in Engineering. Academic Press, San Diego, California,
+        p. 336.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Strength of chain links (Kgs) (pre-sorted)
+-----------------------------------------------------
+  51.1
+  57.1
+  65.1
+  69.2
+  71.2
+  73.1
+  76.1
+  81.9
+  84.1
+  86.6
+  88.1
+  92.6
+  94.9
+  96.6
+  97.0
+ 101.4
+ 103.4
+ 103.8
+ 105.2
+ 119.1

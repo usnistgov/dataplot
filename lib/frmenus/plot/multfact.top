@@ -1,0 +1,12 @@
+----- <~plot\multfact.top> Multifactor Plots
+
+Multifactor Plots
+
+Statistics for Grouped Data (One Group Variable)  <~plot\statplot.top>
+Statistics for Grouped Data (Two Group Variables) <~plot\crosplot.top>
+Analysis of Proportions Plot               <xemf: ~plot\anopplot.men>
+Homoscedasticity Plot                      <xemf: ~plot\homoplot.men>
+Spread-Location Plot                       <xemf: ~plot\slplot.men>
+Box Plot                                   <xemf: ~stat\boxplot.men>
+Violin Plot                                <xemf: ~plot\violin.men>
+

@@ -1,0 +1,8 @@
+----- <~dataload\BPWEIGHT.DP> Load BPWEIGHT.DAT
+
+. This is file    BPWEIGHT.DP
+
+DELETE Y X
+SKIP 25
+READ BPWEIGHT.DAT Y X
+

@@ -1,0 +1,40 @@
+-----<~reli\goodfopt.top> Goodness of Fit: Options
+
+Goodness-of-Fit: Options
+
+Goodness-of-Fit: Options
+
+When computing the critical values, we need to consider whether
+the parameters are "known" or estimated from the data (the more
+common case).  Note that this does not affect the value of the
+test statistic, but it does affect the critical values.  The
+following command is used to specify this choice (ON means the
+parameters are "known", OFF means they are estimated from the data)
+
+    SET GOODNESS OF FIT FULLY SPECIFIED ON/OFF
+
+To determine critical values, we run a Monte Carlo simulation
+based on 10,000 samples.  If FULLY SPECIFIED is ON, we use
+the specified parameter values to compute the goodness of fit
+statistic for each of the samples.  If FULLY SPECIFIED is OFF,
+we estimate the parameters for each sample (maximum likelihood
+for K-S and AD, PPCC method for PPCC, this option does not
+apply to the Chi-Square method) to compute the goodness of fit
+statistic.
+
+One drawback is that the simulation can take some time to
+run.  For the Anderson-Darling test, you can request that
+published table values be used for the following distributions:
+
+    normal, lognormal, Weibull, generalized Pareto, gamma, Frechet,
+    uniform, exponential, Cauchy, logistic, double exponential
+
+For the K-S test, you can also request that tabled values be
+used.  However, be aware that this assumes the parameters are
+known (FULLY SPECIFIED equals ON).
+
+Set Goodness of Fit Options:
+
+   Parameters known or estimated from the data   <xemf: ~reli\fullspec.men>
+   Critical values simulated or from tables      <xemf: ~reli\simulati.men>
+

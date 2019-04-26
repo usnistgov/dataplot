@@ -1,0 +1,8 @@
+----- <~dataall\OIL.top> OIL.DAT
+
+OIL.DAT
+
+View     <xcl: LIST OIL.DAT>
+Load     <xcf: ~dataload/OIL.DP>
+Print    <xccl: printfile C:\DATAPLOT\OIL.DAT>
+

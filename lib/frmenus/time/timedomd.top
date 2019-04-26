@@ -1,0 +1,49 @@
+----- <~time\timedomd.top> Discussion: Time-Domain Modeling
+ 
+Discussion: Time-Domain Modeling
+ 
+There are 2 main approaches to modeling in
+the time domain:
+
+   1) Fitting moving averages
+   2) Fitting autoregressive models
+
+The Box-Jenkins methodolgy combines these approaches
+and is often referred to as ARIMA (Auto Regressive
+Integrated Moving Average).
+ 
+Data Dependent Systems (DDS) is a method for
+modeling high order auto regressive models.
+
+Although time series are typically fit with
+special methods that exploit the autocorrelation
+of the data, you can apply standard regression
+techniques as well.  In this case, the major issue
+is what to use for the X variable.  Using the
+original time variable (or a simple sequence from
+1 to N) is only effective if in fact there is no
+autocorrelation in the data.  Simple auto regressive
+models can be fit by explicitly fitting against
+the appropriate lag.  A common model is an order 1
+autoregressive model:
+
+    X(t) = a0+ a1*X(t-1)
+
+Polynomial or non-linear models can be fit as well.
+An example of fitting this model in Dataplot (where
+Y contains the original time series) would be:
+
+    LET N = SIZE Y
+    LET TAG = SEQUENCE 1 1 N
+    LET YLAG = Y
+    RETAIN Y FOR I = 2 1 N
+    LET NM1 = N - 1
+    RETAIN YLAG FOR I = 1 1 NM1
+    FIT Y YLAG
+
+The 2 series had to be adjusted since we are fitting a
+variable with its lag 1 component.  The first element of
+the original Y is deleted and the last element of the
+lagged variable is deleted.  This model can then be analyzed
+using standard least squares techniques.
+

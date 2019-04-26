@@ -1,0 +1,15 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     HISTOGRAM.DP
+. PURPOSE--GENERATE A HISTOGRAM
+.
+. -----START POINT-----------------------------------
+.
+TITLE Sunspot Analysis (1749 to 1947)
+Y1LABEL Frequency of Occurrance
+X1LABEL Wolf Sunspot Number
+LEGEND 1 Distributional Analysis
+LEGEND 2 Histogram
+.
+SKIP 25
+READ SUNSPOT2.DAT Y
+.
+HISTOGRAM Y

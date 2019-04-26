@@ -1,0 +1,32 @@
+This is file ppccperc.men--Number of Percentiles for PPCC/KS Plot
+ 
+--------------------
+ 1. Set Number of Points to Use for PPCC/KS Plot
+ 2. SET PPCC PLOT DATA POINTS 100
+ 3.
+ 4. For distributions where it is expensive to
+ 5. compute the percent point (or cumulative
+ 6. distribution) function, the PPCC/KS plot can
+ 7. take a long time to generate.  To speed up the
+ 8. generation of the plot, you can specify a
+ 9. number of equally spaced percentiles and then
+10. Dataplot will generate the PPCC/KS plot on these
+11. percentiles.  Values between 50 and 200 are
+12. recommended.  This is an alternative to binning.
+13.
+14. Note that if you set the number of percentiles
+15. here, this value stays in effect for all subsequent
+16. PPCC/KS plots until you change it again (entering
+17. 0 reverts to using the full data set).
+18.
+19. Enter the Number of Percentiles:
+19. @CE 1 0 42 50 ? gui-variable
+20.
+21.
+22. Specify the Number of Percentiles?
+--------------------
+GR FE
+SET PPCC PLOT DATA POINTS _1
+--------------------
+WEB HELP PPCC PLOT
+--------------------

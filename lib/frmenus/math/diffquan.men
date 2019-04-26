@@ -1,0 +1,32 @@
+This is file diffquan.men--Compute difference of quantile
+ 
+--------------------
+ 1. Difference of Quantile
+ 2. LET A = DIFFERENCE OF QUANTILE Y1 Y2
+ 3.
+ 4. First Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Second Response Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Desired quantile (fraction between 0 and 1):
+ 6. @CE 3 0 42 50 ?
+ 7. Quantile method to use:
+ 8. @CE 4 1 11 30 Order Statistic
+ 9. @CE 4 2 11 30 Herrell-Davis
+10. Parameter to store the difference:
+10. @CE 5 0 42 50 ?
+11.
+12. Subset/Except/For Specification:
+13. @CE 6 0 1 50 *
+14.
+15.
+16. Compute the Difference of Quantile?:
+--------------------
+GR FE
+SET QUANTILE METHOD ORDER
+@IF 4 2 SET QUANTILE METHOD HERRELL-DAVIS
+LET XQ = _3
+LET _5 = DIFFERENCE OF QUANTILE  _1 _2 _6
+--------------------
+WEB HELP DIFFERENCE OF QUANTILE
+--------------------

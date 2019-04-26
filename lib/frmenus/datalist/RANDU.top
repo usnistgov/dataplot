@@ -1,0 +1,8 @@
+----- <~datalist\RANDU.top> RANDU.DAT
+ 
+RANDU.DAT
+ 
+View     <xcl: LIST RANDU.DAT>
+Load     <x2cl: SKIP 25; READ RANDU.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\RANDU.DAT>
+ 

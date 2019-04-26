@@ -1,0 +1,24 @@
+----- <~dexpb\discussi.top> Discussion:  Plackett-Burman Designs
+ 
+Discussion:  Plackett-Burman Designs
+ 
+Standard fractional factorial designs, i.e. the
+2**(k-p) designs, require that the number of runs, N,
+be a power of 2.
+
+Plackett and Burman developed designs that have
+the orthogonality property of 2**(k-p) designs for
+the case where N is a multiple of 4.
+
+Plackett-Burman designs are very efficient screening
+designs when only main effects are of interest.  That
+is, a large number of factors can be tested with a
+minimal number of runs.  The primary drawback of
+Plackett-Burman designs is that the heavy confounding
+does not allow the analysis of interaction effects.
+
+For this reason, Plackett-Burman designs are primarily
+used when an economical design is required to detect
+large main effects and we are willing to assume that
+interaction effects are negligble.
+

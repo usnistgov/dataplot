@@ -1,0 +1,60 @@
+-----<~time\approach.top> Time Series: Approach
+
+Time Series: Approaches to Analysis
+
+There are 2 primary approaches to time series analysis:
+
+  1) Time domain - the data are analyzed in the original 
+     time scale.
+
+     The advantages of time domain analysis are:
+
+     * Analyzing in time is natural.
+     * No transformations are required.
+     * Well developed theory is available.
+     * Easy estimation is available via regression.
+     * Can provide insight about the observed phenomenon,
+       the measuring device, and the sampling rate.
+
+     The disadvantages are:
+
+     * Nature is often cyclic and the time domain is not
+       a natural model for cyclic data.
+     * More insight is sometimes possible using frequency
+       approaches.
+     * Time domain approaches do not always detect cyclic
+       behaviour.
+     * The ith and jth observation are correlated.
+
+  2) Frequency domain - the data are transformed to a frequency
+     scale:
+
+          Y(t) = g(freq1, freq2, ...)
+
+     The analysis is performed on this frequency scale.
+
+     The advantages of the frequency domain approach are:
+
+     * Good at modeling cyclic phenomenon and nature is
+       often cyclic.
+     * More natural model for cyclic data.
+     * Well developed theory is available.
+     * Spectral estimates are uncorrelated.
+     * Variance decomposition can be performed via spectrum
+       analysis.
+     * Can provide insight about the observed phenomenon,
+       the measuring device, and the sampling rate.
+     * Many success stories.
+ 
+     The disadvantages of the frequency domain approach are:
+
+     * The analysis is more complicated due to the
+       transformation to the frequency scale.
+     * The interpretation is performed in a non-time
+       domain.
+     * There are often non-Fourier (i.e., non-cyclic)
+       frequency contributions.
+     * Aliasing limits the resolution of the frequency
+       analysis.
+     * There can be leakage is the estimation.
+

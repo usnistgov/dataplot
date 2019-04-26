@@ -1,0 +1,92 @@
+This is file effework.men--Effects Worksheet for 2-Factor Linear Model
+ 
+--------------------
+ 1. Effects Worksheet and Curvature Test: 2-Factor Linear Model
+ 2. Macro
+ 3.
+ 4. Variables:
+ 5.    Response    Y:
+ 5. @CE 1 0 40 50 ? gui-variable
+ 6.    First Independent X:
+ 6. @CE 2 0 40 50 ? gui-variable
+ 7.    Second Independent Variable:
+ 7. @CE 3 0 40 50 * gui-variable
+ 8.
+ 9.
+10. Generate the Effects Worksheet and Curvature Test?
+--------------------
+GR FE
+DELETE ZZZZX12
+LET ZZZZX12 = _2 * _3
+LET ZZZZN = SIZE _1
+LET ZZZZN0 = SIZE _1 SUBSET _2 = 0 SUBSET _3 = 0
+LET ZZZZNF = ZZZZN - ZZZZN0
+LET M1P = MEAN _1 SUBSET _2 = +1
+LET M1M = MEAN _1 SUBSET _2 = -1
+LET M2P = MEAN _1 SUBSET _3 = +1
+LET M2M = MEAN _1 SUBSET _3 = -1
+LET M12P = MEAN _1 SUBSET ZZZZX12 = +1
+LET M12M = MEAN _1 SUBSET ZZZZX12 = -1
+LET M1EFF = M1P - M1M
+LET M2EFF = M2P - M2M
+LET M12EFF = M12P - M12M
+LET ZZZZSP = STANDARD DEVIATION _1 SUBSET _2 = 0 SUBSET _3 = 0
+LET ZZZZFPA = MEAN _1 SUBSET _2 <> 0 SUBSET _2 <> 0
+LET ZZZZCPA = MEAN _1 SUBSET _2 = 0  SUBSET _3 = 0
+LET ZZZZCURV = ZZZZFPA - ZZZZCPA
+LET ZZZZCSE=0.0
+LET ZZZZSTAT = 0
+LET ZZZZNUM = ZZZZFPA - ZZZZCPA
+IF ZZZZNF > 0
+  LET ZZZZEFSE = 2*(2*ZZZZSP/SQRT(ZZZZNF))
+  IF ZZZZN0 > 0
+    LET ZZZZCSE = 2*ZZZZSP*SQRT((1/ZZZZNF) + (1/ZZZZN0))
+    LET ZZZZDEN = ZZZZSP*SQRT((1/ZZZZNF) + (1/ZZZZN0))
+    LET ZZZZSTAT = ZZZZNUM/ZZZZDEN
+  END OF IF
+END OF IF
+LET ZZZZNDF = ZZZZN0 - 1
+LET CUTOFF2 = TPPF(.975,ZZZZNDF)
+LET CUTOFF1 = -CUTOFF2
+LET STRING CONCLUSI = NO CURVATURE
+IF ZZZZSTAT < CUTOFF1
+  LET STRING CONCLUSI = CURVATURE
+END OF IF
+IF ZZZZSTAT > CUTOFF2
+  LET STRING CONCLUSI = CURVATURE
+END OF IF
+CAPTURE ZZZZJUNK.DAT
+PRINT "SAMPLE SIZE                           = ^ZZZZN"
+PRINT "NUMBER OF FACTORIAL POINTS            = ^ZZZZNF"
+PRINT "NUMBER OF CENTER POINTS               = ^ZZZZN0"
+PRINT " "
+PRINT "MEANS FOR +1 VALUES"
+PRINT "    _2                                = ^M1P"
+PRINT "    _3                                = ^M2P"
+PRINT "    INTERACTION TERM                  = ^M12P"
+PRINT "MEANS FOR -1 VALUES"
+PRINT "    _2                                = ^M1M"
+PRINT "    _3                                = ^M2M"
+PRINT "    INTERACTION TERM                  = ^M12M"
+PRINT "EFFECTS"
+PRINT "    _2                                = ^M1EFF"
+PRINT "    _3                                = ^M2EFF"
+PRINT "    INTERACTION TERM                  = ^M12EFF"
+PRINT " "
+PRINT "STANDARD DEVIATION OF CENTER POINTS   = ^ZZZZSP"
+PRINT "EFFECT UNCERTAINTY                    = ^ZZZZEFSE"
+PRINT " "
+PRINT "FACTORIAL POINT AVERAGE               = ^ZZZZFPA"
+PRINT "CENTER POINT AVERAGE                  = ^ZZZZCPA"
+PRINT "CURVATURE (= NUMERATOR OF T-TEST)     = ^ZZZZCURV"
+PRINT "DENOMINATOR OF T-TEST                 = ^ZZZZDEN"
+PRINT "T-TEST STATISTIC                      = ^ZZZZSTAT"
+PRINT " "
+PRINT "LOWER CUTOFF                          = ^CUTOFF1"
+PRINT "UPPER CUTOFF                          = ^CUTOFF2"
+PRINT " "
+PRINT "CONCLUSION                            = ^CONCLUSI"
+END OF CAPTURE
+.
+LIST ZZZZJUNK.DAT
+--------------------

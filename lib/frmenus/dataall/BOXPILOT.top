@@ -1,0 +1,8 @@
+----- <~dataall\BOXPILOT.top> BOXPILOT.DAT
+
+BOXPILOT.DAT
+
+View     <xcl: LIST BOXPILOT.DAT>
+Load     <xcf: ~dataload/BOXPILOT.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXPILOT.DAT>
+

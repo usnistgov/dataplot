@@ -1,0 +1,50 @@
+----- <~reli\bestfitd.top> Best-Fit Dist. (Domain of Attraction)
+
+Distributional Fitting
+
+Discussion                               <~reli\rfitdisc.top>
+NIST/SEMATECH Handbook             <xcl: web handbook reliability best fit>
+
+Exponential
+   Maximum Likelihood (full sample)      <xemf: ~reli\expomle.men>
+   Maximum Likelihood (type 1 censoring) <xemf: ~reli\expomle1.men>
+   Maximum Likelihood (type 2 censoring) <xemf: ~reli\expomle2.men>
+   Probability plot method               <xemf: ~reli\probexpo.men>
+   Least Squares                         <xemf: ~reli\lsqexpo.men>
+Weibull (2-parameter)
+   Maximum Likelihood (full sample)      <xemf: ~reli\weibmle.men>
+   Maximum Likelihood (censored)         <xemf: ~reli\weibmlec.men>
+Weibull (3-parameter)
+   PPCC method                           <xemf: ~reli\ppccweib.men>
+   Least Squares                         <xemf: ~reli\lsqweib.men>
+Normal
+   Maximum Likelihood                    <xemf: ~reli\normmle.men>
+   Probability plot method               <xemf: ~reli\probnorm.men>
+   Least Squares                         <xemf: ~reli\lsqnor.men>
+Lognormal
+   Maximum Likelihood (2-parameter)      <xemf: ~reli\lgnmle.men>
+   PPCC method                           <xemf: ~reli\ppcclgn.men>
+   Least Squares                         <xemf: ~reli\lsqlgn.men>
+
+Inverse Gaussian
+   Maximum Likelihood (2-parameter)      <xemf: ~reli\igmle.men>
+   PPCC method                           <xemf: ~reli\ppccig.men>
+   Least Squares                         <xemf: ~reli\lsqig.men>
+Reciprocal Inverse Gaussian
+   PPCC method                           <xemf: ~reli\ppccrig.men>
+   Least Squares                         <xemf: ~reli\lsqrig.men>
+Fatigue Life (or Birnbaum Saunders)
+   PPCC method                           <xemf: ~reli\ppccfl.men>
+   Least Squares                         <xemf: ~reli\lsqfl.men>
+
+Gamma
+   Maximum Likelihood (2-parameter)      <xemf: ~reli\gammle.men>
+   PPCC method                           <xemf: ~reli\ppccgamm.men>
+   Least Squares                         <xemf: ~reli\lsqgamm.men>
+Inverted Gamma
+   PPCC method                           <xemf: ~reli\ppcciga.men>
+   Least Squares                         <xemf: ~reli\lsqiga.men>
+Log Gamma
+   PPCC method                           <xemf: ~reli\ppcclga.men>
+   Least Squares                         <xemf: ~reli\lsqlga.men>
+

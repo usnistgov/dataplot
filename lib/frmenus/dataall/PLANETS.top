@@ -1,0 +1,8 @@
+----- <~dataall\PLANETS.top> PLANETS.DAT
+
+PLANETS.DAT
+
+View     <xcl: LIST PLANETS.DAT>
+Load     <xcf: ~dataload/PLANETS.DP>
+Print    <xccl: printfile C:\DATAPLOT\PLANETS.DAT>
+

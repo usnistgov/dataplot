@@ -1,0 +1,74 @@
+This is file dexsumsh.men--Print Design of Experiment Summary Sheet
+ 
+--------------------
+DEX Summary Sheet
+ 
+ 
+Project/Problem Title:
+ 
+Researcher & Date:
+Background & Importance:
+ 
+ 
+ 
+Goal:
+ 
+ 
+ 
+DEX Essentials:
+   Response Variable Y:
+   Project Target/Goal Value for Y:
+   Target Eng. Fitting Residual SD:
+   Minimal Eng. Signif. Diff. for Y:
+   Run Time & Cost per Observation:
+   Constraint--Max Number of Runs n:
+ 
+   Factors & Factor Levels:
+   X1:
+   X2:
+   X3:
+   X4:
+   X5:
+   X6:
+   X7:
+   X8:
+ 
+Print this Summary Page?:
+--------------------
+0
+0
+0
+26 100 *
+3 100 *
+26 100 *
+26 100 *
+3 100 *
+3 100 *
+3 100 *
+8 100 *
+3 100 *
+3 100 *
+0
+0
+38 100 *
+38 100 *
+38 100 *
+38 100 *
+38 100 *
+38 100 *
+0
+0
+8 100 *
+8 100 *
+8 100 *
+8 100 *
+8 100 *
+8 100 *
+8 100 *
+8 100 *
+0
+0
+--------------------
+OT FE
+XXX
+--------------------

@@ -1,0 +1,18 @@
+This is file fullspec.men--SET GOODNESS OF FIT FULLY SPECIFIED ON/OFF
+ 
+--------------------
+ 1. Parameters known or estimated from the data
+ 2. SET GOODNESS OF FIT FULLY SPECIFIED OFF
+ 3.
+ 4. Goodness of Fit Fully Specified:
+ 5. @CE 1 1 5 35 ON (Parameters Known)
+ 6. @CE 1 2 5 35 OFF (Estimate from Data)
+ 7.
+ 8. Specify Fully Specified Option?
+--------------------
+GR FE
+@IF 1 1 SET GOODNESS OF FIT FULLY SPECIFIED ON
+@IF 1 2 SET GOODNESS OF FIT FULLY SPECIFIED OFF
+--------------------
+WEB HELP GOODNESS OF FIT
+--------------------

@@ -1,0 +1,47 @@
+. This is dataplot macro    intchar.dp
+. Purpose--convert (map) a (positive) integer into a character
+. Input  --targint (a positive integer)
+. Output --outchar (a character string)
+. Date   --July 2002
+.
+. -----start point-----
+.
+let string outchar = ^targint
+if targint >= 10
+   if targint = 10; let string outchar = 0; end if
+   if targint = 11; let string outchar = a; end if
+   if targint = 12; let string outchar = b; end if
+   if targint = 13; let string outchar = c; end if
+   if targint = 14; let string outchar = d; end if
+end if
+if targint >= 15
+   if targint = 15; let string outchar = e; end if
+   if targint = 16; let string outchar = f; end if
+   if targint = 17; let string outchar = g; end if
+   if targint = 18; let string outchar = h; end if
+   if targint = 19; let string outchar = i; end if
+end if
+if targint >= 20
+   if targint = 20; let string outchar = j; end if
+   if targint = 21; let string outchar = k; end if
+   if targint = 22; let string outchar = l; end if
+   if targint = 23; let string outchar = m; end if
+   if targint = 24; let string outchar = n; end if
+   if targint = 25; let string outchar = o; end if
+   if targint = 26; let string outchar = p; end if
+   if targint = 27; let string outchar = q; end if
+   if targint = 28; let string outchar = r; end if
+   if targint = 29; let string outchar = s; end if
+   if targint = 30; let string outchar = t; end if
+   if targint = 31; let string outchar = u; end if
+   if targint = 32; let string outchar = v; end if
+   if targint = 33; let string outchar = w; end if
+   if targint = 34; let string outchar = x; end if
+   if targint = 35; let string outchar = y; end if
+   if targint = 36; let string outchar = z; end if
+end if
+if targint >= 37; let string outchar = ?; end if
+if targint <= 0; let string outchar = -?; end if
+.
+. print targint outchar
+. pause

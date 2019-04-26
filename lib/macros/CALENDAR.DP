@@ -1,0 +1,282 @@
+. THIS IS DATAPLOT MACRO     CALENDAR.DP
+. PURPOSE--COMPUTE
+. INPUT--JD1 =
+.        JD2 =
+.
+. -----START POINT-----
+.
+.  determines day of month of year from julean date
+.
+.
+LET YEARI    = INT(JDI/1OOO)+1900
+LET DOM      = JD1~((YEAR1~19oo)*1ooo)
+LET LEAP     - INT(YEARI/4)
+LET LEAPCK   = YEARI/4
+                                  January
+   IF DOM <= 31
+     LET STRING MST = UC()JLC()ANUARY,
+     LET TXDOM=DOM
+   END IF
+  LET DOM = DOM-31
+   IF DOM <= O
+     LET DOM - INFINITY
+   END IF
+                                   February
+   IF LEAPCK = LEAP
+     IF DOM <= 29
+       LET STRING MST - UC()FLC()EBRUARY,
+       LET TXDOM=DOM
+     END IF
+     LET DOM - DOM-29
+     IF LEAPCK > LEAP
+       LET DOM = DOM+29
+     END IF
+     IF DOM <= O
+       LET DOM = INFINITY
+     END IF
+   END IF
+ 
+   IF LEAPCK > LEAP
+     IF DOM <- 28
+       LET STRING MST = UC()FLC()EBRUARY,
+       LET TXDOM=DOM
+     END IF
+     LET DOM = DOM-28
+     IF LEAPCK = LEAP
+       LET DOM = DOM+28
+     END IF
+     IF DQM <= O
+       LET DOM = INFINITY
+     END IF
+   END IF
+                                   March
+   IF DOM <- 31
+     LET STRING MST = UC()MLC()ARCH,
+     LET TXDOM-DOM
+   END IF
+   LET DOM - DOM-31
+   IF DOM <= O
+     LET DOM - INFINITY
+   END IF
+                                   April
+   IF DOM <= 30
+     LET STRING MST = UC()ALC()PRIL,
+     LET TXDOM=DOM
+   END IF
+   LET DOM = DON-30
+   IF DOM <- O
+     LET DOM - INFINITY
+   END IF
+
+                                 May
+IF DOM <- 31
+   LET STRING MST - UC()MLC()AY,
+   LET TXDOM-DOM
+END IF
+LET DOM - DOM-31
+IF DOM <- 0
+   LET DOM - INFINITY
+END IF
+                                 June
+IF DOM <= 30
+   LET STRING MST - UC()JLC()UNE,
+   LET TXDOM=DOM
+END IF
+LET DOM = DOM-30
+IF DOM <- 0
+   LET DOM = INFINITY
+END IF
+                                 July
+IF DOM <= 31
+   LET STRING MST - UC()JLC()ULY,
+   LET TXDOM=DOM
+END IF
+LET DOM = DOM-31
+IF DOM <= 0
+   LET DOM - INFINITY
+END IF
+                                 August
+IF DOM <= 31
+   LET STRING MST = UC()ALC()UGUST,
+   LET TXDOM=DOM
+END IF
+LET DOM = DOM-31
+IF DOM <= 0
+   LET DOM = INFINITY
+END IF
+                                 September
+IF DOM <= 30
+   LET STRING MST = UC()SLC()EPTEMBER,
+   LET TXDOM=DOM
+END IF
+LET DOM = DOM-30
+IF DOM <- 0
+   LET DOM - INFINITY
+END IF
+                                 October
+IF DOM <= 31
+   LET STRING MST - UC()OLC()CTOBER,
+   LET TXDOM=DOM
+END IF
+LET DOM = DOM-31
+IF DOM <= 0
+   LET DOM - INFINITY
+END IF
+                                 Novembe r
+IF DOM <= 30
+   LET STRING MST - tJC()NLC()OVEMBER,
+   LET TXDOM-DOM
+END IF
+LET DOM - DOM-30
+IF DOM <- 0
+   LET DOM = INFINITY
+-END IF
+
+                                   December
+   IF DOM <= 31
+     LET STRING MST - UC()DLC()ECEMBER,
+     LET TXDOM=DOM
+   END IF
+ 
+LET TXDOMI - TXDOM
+LET STRING MSTI = \MST
+LET STRING DAYSTI - VALU()TXDOMI \MSTI VALU()YEARI
+ 
+     ¸2nd day
+ 
+   ¸determines day of month of year from julean date
+ 
+LET YEAR2    - INT(JD2/1000)+1900
+LET DOM      = JD2-((YEAR2-1900)*1000)
+LET LEAP     = INT(YEAR2/4)
+LET LEAPCK   = YEAR2/4
+                                  January
+   IF DOM <= 31
+     LET STRING MST = UC()JLC()ANUARY,
+     LET TXDOM-DOM
+   END IF
+   LET DOM   DOM-31
+   IF DOM <= 0
+     LET DOM - INFINITY
+   END IF
+                                   February
+   IF LEAPCK = LEAP
+     IF DOM <= 29
+       LET STRING MST - UC()FLC()EBRUARY,
+       LET TXDOM=DOM
+     END IF
+     LET DOM = DOM-29
+     IF LEAPCK > LEAP
+       LET DOM = DOM+29
+     END IF
+     IF DOM <= 0
+       LET DOM = INFINITY
+     END IF
+   END IF
+ 
+   IF LEAPCK > LEAP
+     IF DOM <- 28
+       LET STRING MST - UC()FLC()EBRUARY,
+       LET TXDOM=DOM
+     END IF
+     LET DOM = DOM-28
+     IF LEAPCK - LEAP
+       LET DOM = DOM+28
+     END IF
+     IF DOM <= 0
+       LET DOM = INFINITY
+     END IF
+   END IF
+                                   March
+   IF DOM <- 31
+     LET STRING MST - UC()MLC()ARCH,
+     LET TXDOM=DOM
+   END IF
+   LET DOM - DOM-31
+   IF DOM <- 0
+     LET DOM = INFINITY
+
+END IF
+                                 April
+IF DOM <= 30
+   LET STRING MST - UC()ALC()PRIL,
+   LET TXDOM-DOM
+END IF
+LET DOM = DOM-30
+IF DOM <- 0
+   LET DOM = INFINITY
+END IF
+                                 May
+IF DOM <= 31
+   LET STRING MST = UC()MLC()AY,
+   LET TXDOM=DOM
+END IF
+LET DOM = DOM-31
+IF DOM <= 0
+   LET DOM - INFINITY
+END IF
+                                 June
+IF DOM <= 30
+   LET STRING MST = UC()JLC()UNE,
+   LET TXDOM=DOM
+END IF
+LET DOM = DOM-30
+IF DOM <= 0
+   LET DOM = INFINITY
+END IF
+                                 July
+IF DOM <- 31
+   LET STRING MST = UC()JLC()ULY,
+   LET TXDOM=DOM
+END IF
+LET DOM = DOM-31
+IF DOM <= 0
+   LET DOM = INFINITY
+END IF
+                                 August
+IF DOM <= 31
+   LET STRING MST = UC()ALC()UGUST,
+   LET TXDOM=DOM
+END IF
+LET DOM = DOM-31
+IF DOM <= 0
+   LET DOM = INFINITY
+END IF
+                                 September
+IF DOM <- 30
+   LET STRING MST = UC()SLC()EPTEMBER,
+   LET TXDOM=DOM
+END IF
+LET DOM = DOM-30
+IF DOM <- 0
+   LET DOM = INFINITY
+END IF
+                                 October
+IF DOM <= 31
+   LET STRING MST - UC()OLC()CTOBER,
+   LET TXDOM=DOM
+END IF
+LET DOM = DOM-31
+-IF DOM <- 0
+   LET DOM = INFINITY
+
+   END IF
+                                   Novembe r
+   IF DOM <- 30
+     LET STRING MST = UC()NLC()OVEMBER,
+     LET TXDOM=DOM
+   END IF
+   LET DOM - DOM-30
+   IF DOM <= 0
+     LET DOM = INFINITY
+   END IF
+                                   December
+   IF DOM <- 31
+     LET STRING MST - UC()DLC()ECEMBER,
+     LET TXDOM-DOM
+   END IF
+ 
+LET TXDOM2 = TXDOM
+LET STRING MST2 - \MST
+LET STRING DAYST2 - VALU()TXDOM2 \MST2 VALU()YEAR2
+

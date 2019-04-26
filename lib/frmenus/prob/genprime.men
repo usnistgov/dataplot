@@ -1,0 +1,18 @@
+This is file genprime.men--Generate Prime Numbers
+ 
+--------------------
+ 1. Generate Prime Numbers
+ 2. LET Y = PRIME NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of prime numbers to be generated:
+ 4. @CE 1 0 41 50 ?
+ 5.
+ 6. Name of output variable:
+ 6. @CE 2 0 41 50 ?
+ 7.
+ 8.
+ 9. Generate the sequence?
+--------------------
+AN FE
+LET _2 = PRIME NUMBERS FOR I = 1 1 _1
+--------------------

@@ -1,0 +1,119 @@
+This is file newptcl.men--Compute Confidence Interval for New Points
+ 
+--------------------
+ 1. Compute Confidence Interval for New Points
+ 2. Macro
+ 3.
+ 4. Dependent Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Independent Variable 1:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Independent Variable 2:
+ 6. @CE 3 0 42 50 ? gui-variable
+ 7. Independent Variable 3:
+ 7. @CE 4 0 42 50 ? gui-variable
+ 8. Independent Variable 4:
+ 8. @CE 5 0 42 50 ? gui-variable
+ 9. Independent Variable 5:
+ 9. @CE 6 0 42 50 ? gui-variable
+10. Independent Variable 6:
+10. @CE 7 0 42 50 ? gui-variable
+11. Independent Variable 7:
+11. @CE 8 0 42 50 ? gui-variable
+12. Independent Variable 8:
+12. @CE 9 0 42 50 ? gui-variable
+13. Independent Variable 9:
+13. @CE 10 0 42 50 ? gui-variable
+14.
+15. Enter a single new value for each variable in
+16. the fit.  The variance-covariance matrix is required.
+17.
+18. New Value for Independent Variable 1:
+18. @CE 11 0 42 50 ?
+19. New Value for Independent Variable 2:
+19. @CE 12 0 42 50 ?
+20. New Value for Independent Variable 3:
+20. @CE 13 0 42 50 ?
+21. New Value for Independent Variable 4:
+21. @CE 14 0 42 50 ?
+22. New Value for Independent Variable 5:
+22. @CE 15 0 42 50 ?
+23. New Value for Independent Variable 6:
+23. @CE 16 0 42 50 ?
+24. New Value for Independent Variable 7:
+24. @CE 17 0 42 50 ?
+25. New Value for Independent Variable 8:
+25. @CE 18 0 42 50 ?
+26. New Value for Independent Variable 9:
+26. @CE 19 0 42 50 ?
+27.
+28. Name of Parameter Variance-Covariance Matrix:
+28. @ce 20 0 42 50 ?
+29.
+30. Select Confidence Level:
+30. @CE 21 1 35 39 90%
+30. @CE 21 2 40 44 95%
+30. @CE 21 3 46 50 99%
+31.
+32.
+33. Compute the Confidence Interval for the New Point?:
+--------------------
+GR FE
+LET ZZZZNVAR = 0
+@IF 2 0 LET STRING ZZZZS2 = _2
+@IF 2 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 3 0 LET STRING ZZZZS3 = _3
+@IF 3 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 4 0 LET STRING ZZZZS4 = _4
+@IF 4 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 5 0 LET STRING ZZZZS5 = _5
+@IF 5 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 6 0 LET STRING ZZZZS6 = _6
+@IF 6 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 7 0 LET STRING ZZZZS7 = _7
+@IF 7 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 8 0 LET STRING ZZZZS8 = _8
+@IF 8 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 9 0 LET STRING ZZZZS9 = _9
+@IF 9 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 10 0 LET STRING ZZZZS10 = _10
+@IF 10 0 LET ZZZZNVAR = ZZZZNVAR + 1
+LET ZZZZXNEW = DATA 1 _11 _12 _13 _14 _15 _16 _17 _18 _19
+LET ZZZZP = MATRIX NUMBER OF COLUMNS _20
+LET STRING ZZZZC = _20
+LET ZZZZYHAT = 0
+LOOP FOR K = 1 1 ZZZZP
+    LET STRING ZZZZKK = ^K
+    LET ZZZZDUM2 = VECTOR DOT PRODUCT ZZZZXNEW ^ZZZZC&^ZZZZKK
+    LET ZZZZSUM(K) = ZZZZDUM2
+    LET K2 = K - 1
+    LET ZZZZA = ZZZZXNEW(K)
+    LET ZZZZYHAT = ZZZZYHAT + A^K2*ZZZZA
+END OF LOOP
+LET ZZZZVAR = VECTOR DOT PRODUCT ZZZZSUM ZZZZXNEW
+LET ZZZZPRED = RESSD**2 + ZZZZVAR
+LET ZZALP2 = .05
+@IF 21 1 LET ZZALP2 = .10
+@IF 21 3 LET ZZALP2 = .01
+LET ZZALPH = 1 - ZZALP2/2
+LET ZZZZT = TPPF(ZZALPH,RESDF)
+LET ZZCLLO = ZZZZYHAT - ZZZZT*SQRT(ZZZZVAR)
+LET ZZCLUP = ZZZZYHAT + ZZZZT*SQRT(ZZZZVAR)
+LET ZZPLLO = ZZZZYHAT - ZZZZT*SQRT(ZZZZPRED)
+LET ZZPLUP = ZZZZYHAT + ZZZZT*SQRT(ZZZZPRED)
+LET ZZALPH = 100*(1 - ZZALP2)
+CAPTURE ZZZZJUNK.DAT
+PRINT "THE PREDICTED VALUE FOR THE NEW POINT      = ^ZZZZYHAT"
+PRINT "THE VARIANCE OF THE NEW POINT              = ^ZZZZVAR"
+PRINT "THE VARIANCE FOR PREDICTION INTERVALS      = ^ZZZZPRED"
+PRINT " "
+PRINT "^ZZALPH % CONFIDENCE INTERVAL: ^ZZCLLO <= ^ZZZZYHAT <= ^ZZCLUP"
+PRINT "^ZZALPH % PREDICTION INTERVAL: ^ZZPLLO <= ^ZZZZYHAT <= ^ZZPLUP"
+PRINT " "
+END OF CAPTURE
+DELETE ZZZZSUM ZZZZDUM2 ZZZZVAR ZZZZXNEW ZZZZP ZZZZPRED ZZALPH ZZZZT
+DELETE ZZCLLO ZZCLUP ZZPLLO ZZPLUP ZZZZA ZZALP2
+LIST ZZZZJUNK.DAT
+--------------------
+WEB HELP FIT
+--------------------

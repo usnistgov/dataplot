@@ -1,0 +1,28 @@
+----- <~prob\sh1bhisp.top> Relative Histogram with Overlaid PDF
+
+Relative Histogram with Overlaid PDF
+
+Generate a relative histogram and overlay the
+specified probability density function for
+distributions with one shape parameters.
+
+McLeish                                   <xemf: ~prob\mclhispd.men>
+Muth                                      <xemf: ~prob\muthispd.men>
+Ogive                                     <xemf: ~prob\ogihispd.men>
+Power                                     <xemf: ~prob\powhispd.men>
+Power Normal                              <xemf: ~prob\pnrhispd.men>
+Reciprocal                                <xemf: ~prob\rechispd.men>
+Reflected Power                           <xemf: ~prob\rpohispd.men>
+Skew Double Exponential (Skew Laplace)    <xemf: ~prob\sdehispd.men>
+Skew Normal                               <xemf: ~prob\snhispd.men>
+Slope                                     <xemf: ~prob\slohispd.men>
+T                                         <xemf: ~prob\thispd.men>
+Topp and Leone                            <xemf: ~prob\tophispd.men>
+Triangular                                <xemf: ~prob\trihispd.men>
+Tukey-Lambda (symmetric)                  <xemf: ~prob\lamhispd.men>
+Von Mises                                 <xemf: ~prob\vonhispd.men>
+Wald                                      <xemf: ~prob\walhispd.men>
+Weibull (minimum case)                    <xemf: ~prob\wei1hisp.men>
+Weibull (maximum case)                    <xemf: ~prob\wei2hisp.men>
+Wrapped Cauchy                            <xemf: ~prob\wcahispd.men>
+

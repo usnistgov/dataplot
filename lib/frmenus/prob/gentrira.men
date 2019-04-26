@@ -1,0 +1,37 @@
+This is file gentrira.men--Generate Triangular Random Numbers
+ 
+--------------------
+ 1. Generate Triangular Random Numbers
+ 2. LET Y = TRIANGULAR RANDOM NUMBERS FOR I = START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Shape Parameter:
+ 5. @CE 2 0 42 50 ?
+ 6. Lower Limit Parameter:
+ 6. @CE 3 0 42 50 ?
+ 7. Upper Limit Parameter:
+ 7. @CE 4 0 42 50 ?
+ 8.
+ 9. Optional random number generator seed (default=305):
+10.    (integer >= 305)
+10. @CE 5 0 42 50 ?
+11.
+12. Name of output variable;
+12. @CE 6 0 42 50 ?
+13.
+14.
+15. Generate the random numbers?
+--------------------
+AN FE
+@IF 5 0 SEED _5
+LET C = 0.5
+@IF 2 0 LET C = _2
+LET A = 0
+@IF 3 0 LET A = _3
+LET B = 1
+@IF 4 0 LET B = _4
+LET _6 = TRIANGULAR RANDOM NUMBERS FOR I = 1 1 _1
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

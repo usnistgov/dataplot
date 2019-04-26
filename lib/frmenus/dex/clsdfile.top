@@ -1,0 +1,9 @@
+----- <~dex\clsdfile.top> Built-in Files: Latin Square Designss
+
+Built-in Files:  Latin Square+ Designs
+
+SKIP 25; READ LATSQ3.DAT X1 TO X3
+SKIP 25; READ LATSQ4.DAT X1 TO X4
+SKIP 25; READ GRLATSQ3.DAT X1 TO X3
+SKIP 25; READ GRLATSQ4.DAT X1 TO X4
+

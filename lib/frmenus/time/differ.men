@@ -1,0 +1,44 @@
+This is file differ.men--Compute a first difference across time
+ 
+--------------------
+ 1. First difference
+ 2. LET YDIFF = SEQUENTIAL DIFFERENCE Y
+ 3.
+ 4. Time Series Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Variable to Save Differenced Data:
+ 5. @CE 2 0 42 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Perform the Differencing?:
+--------------------
+GR FE
+DEVICE 1 FONT SIMPLEX
+MULTIPLOT CORNER COORDINATES 5 5 95 95
+MULTIPLOT 2 1
+CHARACTER X BLANK
+LINES BLANK SOLID
+LET ZZZZN = SIZE _1
+LET ZZZZX = SEQUENCE 1 1 ZZZZN
+FIT _1 ZZZZX  _3
+X1LABEL RAW DATA
+X2LABEL INTERCEPT = ^A0, SLOPE = ^A1
+PLOT _1 ZZZZX _3
+LET _2 = SEQUENTIAL DIFFERENCE _1 _3
+RETAIN ZZZZX FOR I = 2 1 ZZZZN
+FIT _2 ZZZZX  _3
+X1LABEL DIFFERENCED DATA
+X2LABEL INTERCEPT = ^A0, SLOPE = ^A1
+XLIMITS FREEZE
+PLOT _2 PRED VS ZZZZX _3
+X1LABEL
+X2LABEL
+XLIMITS
+END OF MULTIPLOT
+DEVICE 1 FONT TEKTRONIX
+--------------------
+WEB HELP SEQUENTIAL DIFFERENCE
+--------------------

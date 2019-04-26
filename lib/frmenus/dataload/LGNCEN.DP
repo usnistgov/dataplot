@@ -1,0 +1,8 @@
+----- <~dataload\LGNCEN.DP> Load LGNCEN.DAT
+
+. This is file    LGNCEN.DP
+
+DELETE Y X
+SKIP 25
+READ LGNCEN.DAT Y X
+

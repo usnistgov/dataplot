@@ -1,0 +1,11 @@
+----- <~fit\norrdecr.top> DEX Criteria: Jim Norris
+
+DEX Criteria: Jim Norris Calibration Procedure
+
+1. Small sample size
+2. Be able to estimate model coefficients
+3. Minimize bias of coefficient estimate
+4. Minimize variability of coefficient estimates
+5. Be able to generate model-free estimate of sigma
+6. Be sensitive to drift
+

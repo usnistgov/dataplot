@@ -1,0 +1,27 @@
+----- <~dataload\dex2k.top> Load 2**k Full Factorial Design Data
+
+Load 2**k Full Factorial Design Data
+
+ROSSITE2.DAT  2**2  Asphalt roofing vertical peel  <xcf: ~dataload\ROSSITE2.DP>
+
+BOXSPRIN.DAT* 2**3  Defective springs   <xcf: ~dataload\BOXSPRIN.DP>
+BOXPILOT.DAT  2**3  Pilot plant yield   <xcf: ~dataload\BOXPILOT.DP>
+BOXRADAR.DAT  2**3  Radar acquis. time  <xcf: ~dataload\BOXRADAR.DP>
+BOWEN.DAT     2**3  Dental adhesion     <xcf: ~dataload\BOWEN.DP>
+SUPERCON.DAT  2**3  Superconduct. temp. <xcf: ~dataload\SUPERCON.DP>
+NUT.DAT       2**3  Nut strength        <xcf: ~dataload\NUT.DP>
+SPLETT3.DAT   2**3  Eddy Current        <xcf: ~dataload\SPLETT3.DP>
+
+BOXCHEM.DAT   2**4  Chemical yield      <xcf: ~dataload\BOXCHEM.DP>
+BOXSOLAR.DAT  2**4  Solar collector eff <xcf: ~dataload\BOXSOLAR.DP>
+SPLETT4.DAT   2**4  Eddy Current        <xcf: ~dataload\SPLETT4.DP>
+
+BOXREACT.DAT  2**5  Chem. reactor eff   <xcf: ~dataload\BOXREACT.DP>
+KRASNY1.DAT   2**5  Cigarette flammab.  <xcf: ~dataload\KRASNY1.DP>
+WEBER.DAT     2**5  Hospital energy     <xcf: ~dataload\WEBER.DP>
+
+STENBAKK.DAT  2**10 DAC Converter       <xcf: ~dataload\STENBAKK.DP>
+
+BOXCAKE.DAT   2**5 wcp Cake taste       <xcf: ~dataload\BOXCAKE.DP>
+BOXCAKE2.DAT  2**3 wcp Cake taste       <xcf: ~dataload\BOXCAKE2.DP>
+

@@ -1,0 +1,35 @@
+This is Dataplot data file     NATR332.DAT
+Battery Capacity
+(Location Shift Example (paired comparison))
+Question: Are the 2 manufacturers the same?
+ 
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 3-32 to 3-33.
+Number of observations             = 10 + 10 = 20
+Number of variables per line image = 2
+Order of variables on a line image--
+   1. Y1 = Response Variable 1 = Capacity of Manufacturer 1 Batteries
+   2. Y2 = Response Variable 2 = Capacity of Manufacturer 2 Batteries
+Note--Capacity is measured in ampere-hours
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR332.DAT Y1 Y2
+   T TEST Y1 Y2
+   LET DEL = Y1-Y2
+   T TEST DEL 0
+ 
+       Y1                Y2
+    Capacity          Capacity
+ Manufacturer 1    Manufacturer 2
+-----------------------------------
+      146               141
+      141               143
+      135               139
+      142               139
+      140               140
+      143               141
+      138               138
+      137               140
+      142               142
+      136               138

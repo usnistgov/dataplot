@@ -1,0 +1,10 @@
+----- <~dex2kmp\ranklifa.top> Tech. for Analysis Goal 1: Ranked List
+ 
+Techniques: Goal 1: Ranked List of Factors
+ 
+DEX scatter plot                  <xemf: ~plot\dexscatp.men>
+DEX mean plot (main effects plot) <xemf: ~plot\dexmeanp.men>
+Block plots                       <xemf: ~dex2k\blocplot.men>
+Interaction effects matrix        <xemf: ~dex2k\inteffma.men>
+Estimate effects (Yates analysis) <xemf: ~dex2k\yates.men>
+ 

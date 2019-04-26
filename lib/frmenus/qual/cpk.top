@@ -1,0 +1,16 @@
+----- <~qual\cpk.top> Process Capability Index
+ 
+Process capability Index
+ 
+NIST/SEMATECH Handbook (Process Capabilty) <xcl: web handbook process capability>
+ 
+Compute Process Capability Analysis Statistic <~qual\cpkstat.top>
+Compute Process Capability Analysis Summary   <xemf: ~stat\capabili.men>
+Generate Process Capability Analysis Plot     <~qual\cpkplot.top>
+ 
+Built-in Datasets
+   View                                  <~dataview\qualpci.top>
+   Load                                  <~dataload\qualpci.top>
+
+References                               <~qual\cpkrefer.top>
+ 

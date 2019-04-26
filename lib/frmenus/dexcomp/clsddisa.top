@@ -1,0 +1,16 @@
+----- <~dexcomp\clsddisa.top> Discussion: Latin Square Designs - Disadvantages
+ 
+Discussion: Latin Square Designs - Disadvantages
+ 
+The disadvantages are:
+
+   1) The number of levels of each blocking variable must
+      equal the number of levels of the treatment factor.
+
+   2) The Latin square models assumes that there are no
+      interactions between the blocking variables and
+      between the treatment variable and the blocking
+      variable.
+
+   3) The randomization is more complex.
+

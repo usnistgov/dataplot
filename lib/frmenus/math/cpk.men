@@ -1,0 +1,28 @@
+This is file cpk.men--Compute cpk of a variable
+ 
+--------------------
+ 1. Cpk
+ 2. LET A = CPK Y
+ 3.
+ 4. Variable for which to compute the Cpk:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Value for the upper specification limit?:
+ 5. @CE 2 0 33 50 ?
+ 6. Value for the lower specification limit?:
+ 6. @CE 3 0 33 50 ?
+ 7. Parameter to store the Cpk:
+ 7. @CE 4 0 33 50 ? gui-none
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 -1 50 *
+11.
+12.
+13. Compute the Cpk?:
+--------------------
+GR FE
+LET USL = _2
+LET LSL = _3
+LET _4 = CPK  _1 _5
+--------------------
+WEB HELP CPK
+--------------------

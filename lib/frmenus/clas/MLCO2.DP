@@ -1,0 +1,10 @@
+----- <~dataloex\MLCO2.DP> Load & Execute MLCO2.DAT
+
+. This is file    MLCO2.DP
+
+DELETE Y
+SKIP 25
+READ MLCO2.DAT Y
+TITLE MLCO2.DAT
+/
+

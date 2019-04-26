@@ -1,0 +1,7 @@
+----- <~fit\modelsel.top> Model Selection: Plotting
+
+Model Selection: Plotting
+
+Scatter plot                  <xemf: ~stat\scatplot.men>
+Transform X to linearity      <~fit\tranxlin.men>
+

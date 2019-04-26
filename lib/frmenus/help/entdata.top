@@ -1,0 +1,39 @@
+----- <~help\entdata.top> Help: Entering Data
+ 
+Help: Discussion/Entering Data
+
+Typically the first hurdle in using a new software system
+is loading your data into the program.
+
+By default, Dataplot provides a workspace of 10 columns
+by X rows where X is typically 100,000 on Unix/Linux
+platforms and 20,000 or 100,000 on Windows platforms.
+Note that you can use the "File/Re-Dimension Workspace"
+menu to re-dimension this workspace to obtain more columns
+of data (however you cannot increase the maximum number of
+rows without recompiling Dataplot).  It is recommended
+that you re-dimension before reading your data.  If you
+would like to modify the default dimensions, see the
+"Dataplot Startup Files" menu.
+
+One particularly important point to note is that although
+the data spreadsheet window is convenient, it can impose
+significant overhead.  You can turn off the data spreadsheet
+by clicking the "No Update" button.  We recommend that you
+do this before reading large data files.  The definition of
+large will depend somewhat on how new your computer is, but
+a good starting point is check the "No Update" if you
+anticipate reading more than 1,000 rows of data.  If you have
+a lot of columns or you will be making frequent modifications
+to the data, you may want to click the "No Upate" if you
+anticipate 500 rows or more.  
+
+We will consider several different options for loading data
+into Dataplot.
+
+   Reading Dataplot Built-in Files       <~help\builtin.top>
+   Using the Data Spreadsheet            <~dp\guispre.top>
+   Reading Data From ASCII Files         <~help\ascifile.top>
+   Non-ASCII Data Files                  <~help\nonafile.top>
+   Generating Data                       <~help\generate.top>
+

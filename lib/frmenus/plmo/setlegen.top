@@ -1,0 +1,22 @@
+----- <~plmo\setlegen.top> Set Legends and Attributes
+ 
+Set Legends and Attributes
+ 
+Text for Legends            <xemf: ~plmo\setlegen.men>
+
+Set All Legend Attributes                  <xemf: ~plmo\setalleg.men>
+Set Legend Attributes for a Single Legend  <xemf: ~plmo\setleg1.men>
+
+Help for Legend Attributes
+   LEGEND ANGLE        <xcl: HELP LEGEND ANGLE>
+   LEGEND CASE         <xcl: HELP LEGEND CASE>
+   LEGEND COLOR        <xcl: HELP LEGEND COLOR>
+   LEGEND COORDINATES  <xcl: HELP LEGEND COORDINATES>
+   LEGEND DIRECTION    <xcl: HELP LEGEND DIRECTION>
+   LEGEND FILL         <xcl: HELP LEGEND FILL>
+   LEGEND FONT         <xcl: HELP LEGEND FONT>
+   LEGEND HW           <xcl: HELP LEGEND HW>
+   LEGEND JUSTIFICATION <xcl: HELP LEGEND JUSTIFICATION>
+   LEGEND SIZE         <xcl: HELP LEGEND SIZE>
+   LEGEND THICKNESS    <xcl: HELP LEGEND THICKNESS>
+

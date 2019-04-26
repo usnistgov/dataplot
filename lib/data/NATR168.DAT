@@ -1,0 +1,35 @@
+This is Dataplot data file     NATR168.DAT
+Reverse-Bias Collector Current of Ten transistors (in microamperes)
+Question: Do products A and B differ in average performance?
+
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 16-8
+Number of observations = 10
+Number of variables per line image = 2
+Order of variables on a line image--Y1 Y2
+   1. Y1 = reverse -bias collector current for type A
+   2. Y2 = reverse -bias collector current for type B
+
+
+
+
+
+
+
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR168.DAT Y1 Y2
+     Y1                            Y2
+ Type A                          Type B
+---------------------------------------
+   .19                             .21
+   .22                             .27
+   .18                             .15
+   .17                             .18
+  1.20                             .40
+   .14                             .08
+   .09                             .14
+   .13                             .28
+   .26                             .30
+   .66                             .68

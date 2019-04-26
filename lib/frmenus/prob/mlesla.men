@@ -1,0 +1,107 @@
+This is file mlesla.men--Slash MLE Estimates
+ 
+--------------------
+ 1. Slash Maximum Likelihood Estimates
+ 2. SLASH MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. This mneu will generate maximum likelihood
+ 5. estimates for the location and scale parameters
+ 6. for uncenored data.  You can optionally request
+ 7. to have bootstrap  confidence limits generated
+ 8. for the distribution parameters.
+ 9.
+10. Response Variable:
+10. @CE 1 0 42 50 ? gui-variable
+11.
+12. Number of bootstrap samples (0 to omit)?
+12. @CE 2 0 42 50 *
+13.
+14. Subset/Except/For Specification:
+15. @CE 3 0 1 50 *
+16.
+17.
+18. Compute Slash MLE's?
+--------------------
+GR FE
+LET NUMBOOT = 0
+@IF 2 0 LET NUMBOOT = _2
+let numboot = min(1000,numboot)
+if numboot > 0
+   bootstrap samples numboot
+   set maximum likelihood percentiles default
+   device 1 font simplex
+   multiplot 2 2
+   multiplot corner coordinates 0 0 100 100
+   multiplot scale factor 2
+   label
+   title case asis
+   label case asis
+   case asis
+   title displacement 2
+   x2label displacement 13
+   x3label displacement 18
+   y1label Parameter Estimate
+   x1label
+   x2label Bootstrap Sample
+   title Bootstrap Plot
+   line color blue red green
+   limits
+   bootstrap slash maximum likelihood plot _1 _3
+   line color black all
+   .
+   delete aloc ascale
+   skip 0
+   read dpst1f.dat aloc ascale
+   y1label
+   2label
+   title Location Parameter
+   let amed = median aloc
+   let amean = mean aloc
+   let asd = sd aloc
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram aloc
+   title Scale Parameter
+   let amed = median ascale
+   let amean = mean ascale
+   let asd = sd ascale
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram ascale
+   x3label displacement
+   end of multiplot
+   .
+   let alpha = 0.05
+   let xqlow = alpha/2
+   let xqupp = 1 - alpha/2
+   .
+   let xq = xqlow
+   let loc95low = xq quantile aloc
+   let xq = xqupp
+   let loc95upp = xq quantile aloc
+   let xq = xqlow
+   let mu95low = xq quantile ascale
+   let xq = xqupp
+   let mu95upp = xq quantile ascale
+   .
+   device 1 font tektronix
+   window corner coordinates 50 0 100 50
+   justification left
+   height 4
+   move 5 70
+   text Confidence Interval for Location:
+   move 5 63
+   text (^loc95low,^loc95upp)
+   move 5 50
+   text Confidence Interval for Scale:
+   move 5 43
+   text (^mu95low,^mu95upp)
+   window corner coordinates 0 0 100 100
+   height
+   title
+   label
+end of if
+SLASH MAXIMUM LIKELIHOOD _1 _4
+--------------------
+WEB HELP SLAPDF
+--------------------

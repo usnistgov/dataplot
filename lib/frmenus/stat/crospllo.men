@@ -1,0 +1,86 @@
+This is file crospllo.men--Generate Cross Tab Statistic Plots (Location)
+ 
+--------------------line 3
+01. Cross Tabulated Statistic Plot (Location)
+02. CROSS TABULATE <statistic> PLOT Y X1 X2
+03.
+04. Vertical Axis Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Group One ID Variables:
+05. @CE 2 0 37 54 ? gui-vari
+06. Group One ID Variables:
+06. @CE 3 0 37 54 ? gui-vari
+07.
+08. Location Statistic:
+09. @CE 4 1 5 25 counts
+09. @CE 4 2 30 50 mean
+10. @CE 4 3 5 25 median
+10. @CE 4 4 30 50 midrange
+11. @CE 4 5 5 25 midmean
+11. @CE 4 6 30 50 biweight location
+12. @CE 4 7 5 25 trimmed mean
+12. @CE 4 8 30 50 Winsorized mean
+13. @CE 4 9 5 25 Hodges Lehman
+14.
+15. For trimmed and Winsorized means, you need
+16. to specify the percentage to trim/Winsorize.
+17. 
+18. Percentage of values to trim/Winsorize above?:
+18. @CE 5 0 42 50 ? 
+19. Percentage of values to trim/Winsorize below?:
+19. @CE 6 0 42 50 ?
+20.
+21. Character Type for Data
+21. @CE 7 0 42 50 * gui-char
+22. Character Fill for Data
+22. @CE 8 0 42 50 gui-ooff
+23. Line Type for Group 1 Global Stat Line?
+23. @CE 9 0 42 50 * gui-line
+24. Line Type for Global Stat Line?
+24. @CE 10 0 42 50 * gui-line
+25.
+26. Title:
+26. @CE 11 0 10 50 *
+27. Left Axis Label:
+27. @CE 12 0 22 50 *
+28. Bottom Axis Label:
+28. @CE 13 0 22 50 *
+29.
+30. Subset/Except/For Specification:
+31. @CE 14 0 1 50 *
+32.
+33. Generate the Cross Tabulated Statistic Plot?:
+--------------------
+TITLE _11
+Y1LABEL _12
+X1LABEL _13
+CHARACTER SAVE
+LINE SAVE
+CHARACTER X BLANK BLANK
+LINE BLANK SOLID SOLID
+CHARACTERS _7
+CHARACTER FILL _8
+LINES _9 ALL
+LINES BLANK _10
+SPIKE OFF OFF OFF
+BAR OFF OFF OFF
+.
+LET P1 = 5
+LET P2 = 5
+LET P1 = _6
+LET P2 = _5
+.
+@IF 4 1 CROSS TABULATE COUNT PLOT _2 _3 _14
+@IF 4 2 CROSS TABULATE MEAN PLOT _1 _2 _3 _14
+@IF 4 3 CROSS TABULATE MEDIAN PLOT _1 _2 _3 _14
+@IF 4 4 CROSS TABULATE MIDRANGE PLOT _1 _2 _3 _14
+@IF 4 5 CROSS TABULATE MIDMEAN PLOT _1 _2 _3 _14
+@IF 4 6 CROSS TABULATE BIWEIGHT LOCATION PLOT _1 _2 _3 _14
+@IF 4 7 CROSS TABULATE TRIMMED MEAN PLOT _1 _2 _3 _14
+@IF 4 8 CROSS TABULATE WINSORIZED MEAN PLOT _1 _2 _3 _14
+@IF 4 9 CROSS TABULATE HODGES LEHMAN PLOT _1 _2 _3 _14
+CHARACTER RESTORE
+LINE RESTORE
+--------------------
+WEB HELP CROSS TABULATE PLOT
+--------------------

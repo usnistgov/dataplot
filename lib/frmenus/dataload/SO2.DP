@@ -1,0 +1,8 @@
+----- <~dataload\SO2.DP> Load SO2.DAT
+
+. This is file    SO2.DP
+
+DELETE Y X
+SKIP 25
+READ SO2.DAT Y X
+

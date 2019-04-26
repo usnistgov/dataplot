@@ -1,0 +1,60 @@
+This is file ksqbi.men--Chi-Square Test for Quasi-Binomial Type I
+ 
+--------------------
+ 1. Chi-Square Test for Quasi-Binomial Type I Distribution
+ 2. QUASI-BINOMIAL TYPE I CHI-SQUARE GOODNESS OF FIT Y
+ 3.
+ 4. Your data can be either ungrouped (a single
+ 5. response variable) or grouped (a bin counts
+ 6. variable and a bin mid-points variable).
+ 7. For ungrouped data, a Chi-Square
+ 8. goodness-of-fit test is performed.  For grouped
+ 9. data, a chi-square goodness-of-fit test is performed.
+10.
+11. Response (or Bin Counts) Variable:
+11. @CE 1 0 42 50 ? gui-variable
+12. Optional Bin Mid-Points Variable:
+12. @CE 2 0 42 50 ? gui-variable
+13.
+14. Value of P Parameter:
+14. @CE 3 0 42 50 ?
+15. Value of Phi Parameter:
+15. @CE 4 0 42 50 ?
+16. Value of M Parameter:
+16. @CE 5 0 42 50 ?
+17.
+18. Minimum frequency for chi-square (default=5):
+18. @CE 6 0 42 50 ?
+19.
+20. Subset/Except/For Specification:
+21. @CE 7 0 1 50 *
+22.
+23.
+24. Compute Chi-Square Quasi-Binomial Type I Test?
+--------------------
+GR FE
+LET P = _3
+LET PHI = _4
+LET M = _5
+LET MINSIZE = 5
+LET MINSIZE = _6
+DELETE ZZZZY ZZZZXLOW ZZZZXUP ZZZZY2 ZZZZX2
+LET ICASE = 0
+@IF 2 0 LET ICASE = 1
+IF ICASE = 0
+   LET ZZZZMIN = MINIMUM _1 _7
+   LET ZZZZMIN = ZZZZMIN - 0.5
+   LET ZZZZMAX = MAXIMUM _1 _7
+   LET ZZZZMAX = ZZZZMAX + 0.5
+   CLASS LOWER ZZZZMIN
+   CLASS UPPER ZZZZMAX
+   CLASS WIDTH 1
+   LET ZZZZY2 ZZZZX2 = BINNED _1 _7
+   LET ZZZZY ZZZZXLOW ZZZZXUP = COMBINE FREQUENCY TABLE ZZZZY2 ZZZZX2
+ELSE
+   LET ZZZZY ZZZZXLOW ZZZZXUP = COMBINE FREQUENCY TABLE _1 _2 _7
+END OF IF
+QUASI-BINOMIAL TYPE I CHI-SQUARE GOODNESS OF FIT ZZZZY ZZZZXLOW ZZZZXUP
+--------------------
+WEB HELP CHI SQUARE GOODNESS OF FIT
+--------------------

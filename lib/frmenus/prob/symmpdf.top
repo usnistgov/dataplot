@@ -1,0 +1,20 @@
+----- <~prob\symmpdf.top> Symmetric Distribution pdf
+
+Symmetric Distribution pdf
+
+Uniform                  <xemf: ~prob\unipdf.men>
+Normal                   <xemf: ~prob\norpdf.men>
+Logistic                 <xemf: ~prob\logpdf.men>
+Double Exponential       <xemf: ~prob\dexpdf.men>
+Double Weibull           <xemf: ~prob\dwepdf.men>
+Double Gamma             <xemf: ~prob\dgapdf.men>
+Cauchy                   <xemf: ~prob\caupdf.men>
+Tukey-Lambda             <xemf: ~prob\tukpdf.men>
+t (df NU)                <xemf: ~prob\tpdf.men>
+Semi-Circular            <xemf: ~prob\sempdf.men>
+Triangular               <xemf: ~prob\tripdf.men>
+Von Mises                <xemf: ~prob\vonpdf.men>
+Cosine                   <xemf: ~prob\cospdf.men>
+Anglit                   <xemf: ~prob\angpdf.men>
+Hyperbolic Secant        <xemf: ~prob\hsepdf.men>
+

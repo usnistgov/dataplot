@@ -1,0 +1,8 @@
+----- <~dataall\NEGIZ3.top> NEGIZ3.DAT
+
+NEGIZ3.DAT
+
+View     <xcl: LIST NEGIZ3.DAT>
+Load     <xcf: ~dataload/NEGIZ3.DP>
+Print    <xccl: printfile C:\DATAPLOT\NEGIZ3.DAT>
+

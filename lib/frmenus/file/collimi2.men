@@ -1,0 +1,37 @@
+This is file collimi2.men--Specify columns in file to read
+ 
+--------------------
+ 1. Specify Columns in File to Read
+ 2. COLUMN LIMITS <lowlimit>  <upplimits>
+ 3.
+ 4. Some software programs write ASCII files that
+ 5. are either left or right justified by certain
+ 6. columns.  Since the decimal points may not line
+ 7. up with this type of justification, the SET READ
+ 8. FORMAT cannot be used.  Also, fields may not be
+ 9. separated by at least one space.
+10.
+11. This menu allows you to specify pairs of lower
+12. and upper column limits for the data fields.
+13. For example, if the fields are in columns 1-15,
+14. 16-30, and 31-45, you would enter 1, 16, and
+15. 31 for the lower limits and 15, 30, and 45 for
+16. the upper limits.
+17.
+18. Enter the lower limits for the data fields:
+19. @CE 1 0 1 50 ?
+20. Enter the upper limits for the data fields:
+21. @CE 2 0 1 50 ?
+22.
+23.
+24. Define the Column Limits?
+--------------------
+SU FE
+LET ZZZZLOWL = DATA 1
+LET ZZZZUPPL = DATA 255
+LET ZZZZLOWL = DATA _1
+LET ZZZZUPPL = DATA _2
+COLUMN LIMITS ZZZZLOWL ZZZZUPPL
+--------------------
+WEB HELP COLUMN LIMITS
+--------------------

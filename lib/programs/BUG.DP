@@ -1,0 +1,33 @@
+. This is Dataplot program file     BENNETT8.DP
+. Larry Bennett Superconducitivy modeling
+. May 1994
+.
+. -----start point-----
+.
+. dimension 5000 observations
+dimension 2500 observations
+.
+skip 25
+read bennett6.dat y x tag temp
+let tag = code tag
+.
+. multiplot 3 4
+. loop for k = 1 1 10
+.    plot y x subset tag k
+. end loop
+.
+let function f = m0*(1+a*x)**(-1/mu)
+.
+. retain y x tag subset tag 2
+.
+LET LAMBDA1 = 0
+LET LAMBDA2 = 1
+. MULTIPLOT 2 3
+LOOP FOR K = 1 1 2
+   BOX-COX LINEARITY PLOT Y X SUBSET TAG K
+   LET LAMBDA^K = LPLAMBDA
+   PRINT LPLAMBDA LAMBDA1 LAMBDA2
+   PAUSE
+END LOOP
+PRINT LAMBDA1 LAMBDA2
+.

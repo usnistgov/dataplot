@@ -1,0 +1,8 @@
+----- <~dataall\LONGLEY.top> LONGLEY.DAT
+
+LONGLEY.DAT
+
+View     <xcl: LIST LONGLEY.DAT>
+Load     <xcf: ~dataload/LONGLEY.DP>
+Print    <xccl: printfile C:\DATAPLOT\LONGLEY.DAT>
+

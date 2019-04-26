@@ -1,0 +1,45 @@
+-----<~reli\disctren.top> Discussion: Repairable Systems - Trend
+
+Discussion: Repairable Systems - Trend
+
+Repairable Systems: Trend
+
+When  analyzing repair time data, we need to determine
+whether the interarrival times (i.e., the times between
+repairs) are independent and identically distributed (iid)
+or not.  If the interarrival times are iid, we can analyze
+the data as a renewal process.  If they are not iid, we
+need to analyze the data as a non-renewal process.
+
+Data that are iid should have constant location and scale
+(i.e., no discernable trend) and exhibit no significant
+autocorrelation.
+
+To determine if the interarrival times are iid, we can
+do the following:
+
+   1) There are a number of graphical techniques for
+      checking for trend.  These are discussed in the
+      "Plotting Repair Times" menu.
+
+   2) There are several analytic tests for trend.
+
+      a) The reverse arrangement test is used to test
+         whether the interarrival times are iid against
+         the alternative of a monotonic trend.
+
+      b) The Laplace trend test is used to test whether
+         the interarrival times have "no trend" versus
+         the alternative of a Non-Homogeneous Poisson
+         Process (NHPP) following an exponential law
+         model.
+
+      c) The military handbook test is used to test whether
+         the interarrival times have "no trend" versus
+         the alternative of a Non-Homogeneous Poisson
+         Process (NHPP) following a power law model.
+
+
+      The "Reliability Trend Tests" menu performs all
+      three of these tests.
+

@@ -1,0 +1,75 @@
+This is Dataplot Data File     CASTILL1.DAT
+Wind Data--Maximum Yearly Wind Speed (pre-sorted)
+Engineering Goal--Determine design wind speed for structures
+Response Variable = maximum yearly wind speed (mph) (pre-sorted)
+Number of Observations = 50
+Number of Variables per line image = 1
+Order of variables per line image--
+   1. Response variable = max yearly wind speed (mph) (pre-sorted)
+Statistical Category--Extreme Value Analysis
+To read this into Dataplot--
+   SKIP 25
+   READ CASTILL1.DAT Y
+Source--Enrique Castillo (1988). Extreme Value Theory
+        in Engineering. Academic Press, San Diego, California,
+        p. 333-334.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Maximum yearly wind speed (mph) (pre-sorted)
+-------------------------------------------------------
+ 22.64
+ 22.80
+ 23.75
+ 24.01
+ 24.04
+ 24.24
+ 24.74
+ 25.45
+ 25.55
+ 25.66
+ 25.99
+ 26.63
+ 26.69
+ 26.88
+ 26.89
+ 27.12
+ 27.43
+ 27.69
+ 27.71
+ 28.12
+ 28.58
+ 28.88
+ 29.12
+ 29.45
+ 29.48
+ 30.18
+ 31.31
+ 31.55
+ 31.57
+ 32.54
+ 32.98
+ 33.83
+ 33.86
+ 34.64
+ 35.21
+ 36.82
+ 37.23
+ 38.09
+ 38.26
+ 38.82
+ 38.96
+ 38.90
+ 42.99
+ 43.66
+ 44.61
+ 45.24
+ 47.91
+ 54.75
+ 69.40
+ 98.16

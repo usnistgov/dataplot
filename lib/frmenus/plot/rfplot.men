@@ -1,0 +1,42 @@
+This is file rfplot.men--Residuals-Fitted Spread Plot
+ 
+--------------------
+ 1. R-F Spread Plot
+ 2. RF SPREAD PLOT
+ 3.
+ 4. This plot assumes that some type of fit has
+ 5. already been computed and the residuals and
+ 6. fitted values from that fit are already in
+ 7. the internal variables PRED and RES.
+ 8.
+ 9. Character Type:
+ 9. @CE 1 0 42 50 ? gui-character
+10. Character Fill:
+10. @CE 2 0 42 50 ? gui-ooff
+11.
+12. Overall Title:
+13. @CE 3 0 1 50 ?
+14. Vertical Axis Label:
+15. @CE 4 0 1 50 ?
+16. Horizontal Axis Label:
+17. @CE 5 0 1 50 ?
+18.
+19.
+20. Generate the R-F Spread Plot?
+--------------------
+GR FE
+CHARACTERS X
+CHARACTERS _1
+CHARACTER FILL _2
+LINES BLANK
+X1LABEL _5
+Y1LABEL _4
+RF SPREAD PLOT
+LINE SOLID
+CHARACTER BLANK
+MOVE 50 97
+JUSTIFICATION CENTER
+TEXT _3
+--------------------
+WEB HELP RF SPREAD PLOT
+--------------------

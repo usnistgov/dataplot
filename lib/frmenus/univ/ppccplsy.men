@@ -1,0 +1,32 @@
+This is file ppccplsy.men--PPCC Plot (Symmetric Dist. Family)
+
+--------------------
+1. PPCC Plot (Symmetric Distributional Families)
+2. <Name of Distributional Family> PPCC PLOT Y
+3.
+4. Variable:
+4. @CE 1 0 11 25 ? gui-variable
+5.
+6. Distributional Family:
+7. @CE 2 1 11 25 Tukey-Lambda
+8. @CE 2 2 11 25 t
+9. @CE 2 3 11 25 double weibull
+10. @CE 2 4 11 25 double gamma
+11. @CE 2 5 11 25 Von Mises
+12.
+13. Subset/Except/For Specification:
+14. @CE 3 0 -25 50 *
+15.
+16.
+17. Generate the PPCC Plot?
+--------------------
+GR FE
+@IF 2 1 TUKEY-LAMBDA PPCC PLOT _1 _3
+@IF 2 2 T PPCC PLOT _1 _3
+@IF 2 3 DOUBLE WEIBULL PPCC PLOT _1 _3
+@IF 2 4 DOUBLE GAMMA PPCC PLOT _1 _3
+@IF 2 5 VON MISES PPCC PLOT _1 _3
+WRITE MAXPPCC SHAPE
+--------------------
+WEB HELP PPCC PLOT
+--------------------

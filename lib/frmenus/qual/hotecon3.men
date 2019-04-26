@@ -1,0 +1,41 @@
+This is file hotecon3.men--Generate Phase I Hotelling Individual Cont Chart
+ 
+--------------------line 3
+1. Phase I Hotelling Individual Control Chart
+2. PHASE I HOTELLING INDIVIDUAL CONTROL CHART Y1 Y2
+3.
+4. List of Response Variables:
+5. @CE 1 0 1 50 ? gui-variable
+6.
+7. Optional Engineering Upper Specification Limit:
+7. @CE 2 0 42 50 *
+8. Optional Engineering Lower Specification Limit:
+8. @CE 3 0 42 50 *
+9.
+10. Line Type for Data:
+10. @CE 4 0 42 50 gui-line
+11. Line Type for Default Control Limits:
+11. @CE 5 0 42 50 gui-line
+12. Line Type for Engineering Specification Limit:
+12. @CE 6 0 42 50 gui-line
+13.
+14. Character Type for Data
+14. @CE 7 0 42 50 gui-char
+15. Character Fill for Data
+15. @CE 8 0 42 50 gui-ooff
+16.
+17. Subset/Except/For Specification:
+18. @CE 9 0 1 50 *
+19.
+20. Generate the Chart?:
+--------------------
+LET USL = _2
+LET LSL = _3
+LINES _4 _5 _5 _6 _6
+CHARACTER BLANK ALL
+CHAR _7
+CHAR FILL _8
+PHASE I HOTELLING INDIVIDUAL CONTROL CHART _1 _2 _9
+--------------------
+WEB HELP HOTELLING CONTROL CHART
+--------------------

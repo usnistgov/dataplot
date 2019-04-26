@@ -1,0 +1,27 @@
+This is file pbendcr.men--Compute percentage bend correlation of a variable
+ 
+--------------------
+ 1. Percentage Bend Correlation
+ 2. LET A = PERCENTAGE BEND CORRELATION Y1 Y2
+ 3.
+ 4. First variable for which to compute the percentage bend correlation:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Second variable for which to compute the percentage bend correlation:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Parameter to store the percentage bend correlation:
+ 6. @CE 3 0 42 50 ? gui-none
+ 7. Value of beta (0 < beta < 0.5):
+ 7. @CE 4 0 42 50 ? gui-none
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 1 50 *
+11.
+12.
+13. Compute the Percentage Bend Correlation?:
+--------------------
+GR FE
+LET BETA = _4
+LET _3 = PERCENTAGE BEND CORRELATION  _1 _2 _5
+--------------------
+WEB HELP PERCENTAGE BEND CORRELATION
+--------------------

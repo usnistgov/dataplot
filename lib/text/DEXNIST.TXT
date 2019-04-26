@@ -1,0 +1,105 @@
+This is Dataplot File    DEXNIST.TEX     12/92
+ 
+      DEX Examples at NIST
+ 
+ 
+Ray Bowen--Dental Adhesion 2**3
+BOWEN.DAT
+Y = adhesion     Goal: maximize
+X1/X2/X3 = agent/cleanser/mordant
+ 
+Ed Krasny--Cigarette Flammability 2**5
+KRASNY1.DAT
+Y =flammability      Goal: minimize
+X1/X2/X3/X4/X5 = citrate conc/paper porosity/fluffed?/tob. type/circumferee
+ 
+Jerry Stenbakken--A/D Converter 2**13
+STENBAK1.DAT AND STENBAK2.DAT
+Y = theoretical - actual output voltage      Goal: minimize
+Xi = setting for bit i
+ 
+Steve Weber--Hospital Energy Modeling 2**5
+WEBER.DAT
+Y1 = KWH; Y2 = heating MBTU; Y3 = cooling MBTU      Goal: on-target
+X1/X2/X3/X4/X5 = light hours/ligt w sq. foot/ roof u/ oa %/ dbst f
+ 
+Ed Fuller--Superconductivity Grain Size Mean Aspect Ratio  2**3
+FULLER.DAT
+Y = grain size mean aspect ratio       Goal:
+X1/X2/X3 = Temperature/Time/O2 Pressure
+ 
+Fred Eichmiller--Dental Tooth Strength 2**3
+EICHMILL.DAT
+Y = tooth strength to failure      Goal: maximize
+X1/X2/X3 = use adhesive?/use st. steel. threaded pin?/use amalgam n?
+ 
+Gordon Lyon--Parallel Processor Exectuion Time 2**(6-2), ..., 2**5)
+LYON5.DAT
+Y = execution time (= cycle time)      Goal:
+Xi = call to sub-procedure i
+ 
+Mike Verkouteren--Mass Spec Graphite Target Production 2**(4-1)
+VERKOUT1.DAT
+Y = amount of residual carbon in gas      Goal: minimize
+X1/X2/X3/X4 = spec. size/iron cat. temp./hyd conc./pre-treat time
+ 
+Sabri Cetinkunt--Low Velocity Lathe Friction Modeling (2**5
+CETINK3E.DAT
+Y = Distance Travelled      Goal: on target
+X1/X2/X3/X4/X5 = table position/direction/side/signal height/signal width
+ 
+Dom Vecchia--Underetching on Superconducting Chips
+VECCHIA2.DAT
+Y = amount of underetching      Goal: minimize
+X1/X2/X3 = power/pressure/oxygen
+ 
+AMRF--VWS Milling Accuracy  2**(7-4)
+AMRF.DAT (hypothetical)
+Y = hole-to-hole distance      Goal: on-target
+X1/.../X7 = table x/table y/feed rate/drill speed/drill id/mat/temp
+ 
+John Martin--Propeller Shaft Surface Material Deposition <future>
+(no data as of yet)
+Y = surface roughness or void rate or wear      Goal: maximize
+X1/.../X5 = material/compressor rate/O2/gas/deposition speed
+ 
+Carol Handwerker--Circuit Board Solderability/Wetting Force
+Y1 = time for 2/3 max     Goal: minimize
+Y2 = max wetting force    Goal: maximize
+Y3 = max withdrawal force     Goal: maximize
+X1/X2/X3/X4/X5 = flux type/temperature/time/
+                 immersion speed/immersion depth
+ 
+Said Jahanmir--Ceramic Machining
+Y1 = strength of resulting ceramic   Y2 = rate of chip removal   Goal: max/max
+X1/X2/X3/X4 = grinding wheel grit size/grinding fluid type/
+              horizontal table speed/vertical feed rate
+ 
+Subash Malghan--Silicon nitride powder measurement    2**4 with 4 reps
+Y = particle size dist. (spectrum)   Goal: reproducible over 4 reps
+X1/X2/X3/X4 =
+ 
+Subash Malghan--Milling of Silicon nitride powder
+Y =
+X1/X2/X3/X4 =
+ 
+Colin Lobo (Concrete mix association)--recycled concrete
+Y1 = strength  Y2 = shrinkage   Y3 = water content    Goal: max/min/...
+X1/X2/X3/X4 = stabilizer dosage / stabilizer addition rate /
+              concrete addition rate / % amount of recycled material
+ 
+Nick Calvano/Dan Frank--Test Methods for Bullet-Proof Vests    2/93
+Y = Force for penetration
+CALVANO.DAT & CALVANO.DP
+X1/X2/X3 = vest condition (dry/wet), vest backing (air, P/E), attack angle (0)
+ 
+Jolene Splett--Eddy Current (NDE) Metal Crack Detection
+???
+ 
+Dick Deslattes--
+ 
+Sherry Wood--
+Others--contact NIST DEX Course Attendees
+ 
+Walt Rossiter--Lead Paint Encapsulant (= Coating)
+Y = Strength

@@ -1,0 +1,84 @@
+This is file bootpllo.men--Generate Bootstrap Plots (Location)
+ 
+--------------------line 3
+01. Bootstrap Plot (Location Statistics)
+02. BOOTSTRAP <statistic> PLOT Y
+03.
+04. Response Variable:
+04. @CE 1 0 42 50 ? gui-vari
+05. Variable to Save Computed Bootstrap Values:
+05. @CE 2 0 42 50 ?
+06. Optional Group ID Variable:
+06. @CE 3 0 42 50 ? gui-vari
+07.
+08. Location Statistic:
+09. @CE 4 2 5 25 mean
+09. @CE 4 3 30 50 median
+10. @CE 4 4 5 25 midrange
+10. @CE 4 5 30 50 midmean
+11. @CE 4 6 5 25 biweight location
+11. @CE 4 7 30 50 trimmed mean
+12. @CE 4 8 5 25 Winsorized mean
+12. @CE 4 9 30 50 Hodges Lehman
+13.
+14. For trimmed and Winsorized means, you need
+15. to specify the percentage to trim/Winsorize.
+16. 
+17. Percentage of values to trim/Winsorize above?:
+17. @CE 5 0 42 50 ? 
+18. Percentage of values to trim/Winsorize below?:
+18. @CE 6 0 42 50 ?
+19.
+20. Character Type for Data
+20. @CE 7 0 42 50 * gui-char
+21. Character Fill for Data
+21. @CE 8 0 42 50 gui-ooff
+22. Line Type for Data-connecting Line
+22. @CE 9 0 42 50 * gui-line
+23.
+24. Title:
+24. @CE 10 0 10 50 *
+25. Left Axis Label:
+25. @CE 11 0 22 50 *
+26. Bottom Axis Label:
+26. @CE 12 0 22 50 *
+27.
+28. Number of bootstrap samples (default = 100):
+28. @CE 13 0 42 50
+29.
+30. Subset/Except/For Specification:
+31. @CE 14 0 1 50 *
+32.
+33. Generate the Bootstrap Plot?:
+--------------------
+TITLE _10
+Y1LABEL _11
+X1LABEL _12
+LINE SAVE
+CHARACTER SAVE
+CHARACTERS _7
+CHARACTER FILL _8
+LINES _9
+@IF 3 0 CHARACTERS _7 ALL
+@IF 3 0 CHARACTER FILL _8 ALL
+@IF 3 0 LINES _9 ALL
+LET P1 = 5
+LET P2 = 5
+LET P1 = _6
+LET P2 = _5
+.
+BOOTSTRAP SAMPLES _13
+@IF 4 2 BOOTSTRAP MEAN PLOT _1 _3 _14
+@IF 4 3 BOOTSTRAP MEDIAN PLOT _1 _3 _14
+@IF 4 4 BOOTSTRAP MIDRANGE PLOT _1 _3 _14
+@IF 4 5 BOOTSTRAP MIDMEAN PLOT _1 _3 _14
+@IF 4 6 BOOTSTRAP BIWEIGHT LOCATION PLOT _1 _3 _14
+@IF 4 7 BOOTSTRAP TRIMMED MEAN PLOT _1 _3 _14
+@IF 4 8 BOOTSTRAP WINSORIZED MEAN PLOT _1 _3 _14
+@IF 4 9 BOOTSTRAP HODGES LEHMAN PLOT _1 _3 _14
+CHARACTER RESTORE
+LINE RESTORE
+LET _2 = YPLOT
+--------------------
+WEB HELP BOOTSTRAP PLOT
+--------------------

@@ -1,0 +1,10 @@
+----- <~dataloex\GEAR.DP> Load & Execute GEAR.DAT
+
+. This is file    GEAR.DP
+
+DELETE Y X
+SKIP 25
+READ GEAR.DAT Y X
+TITLE GEAR.DAT
+/
+

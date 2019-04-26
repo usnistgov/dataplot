@@ -1,0 +1,40 @@
+----- <~dp\outputfi.top> Output Files
+ 
+Output Files
+ 
+Graphics Output "File" 1 (all plots)
+   Name of "file"  : Screen
+   Format of "file": device-specific (e.g., VGA)
+   Create          : automatic
+   Write to        : all plots
+   Laserprint      : ??
+ 
+Graphics Output File 2 (all plots)
+   Name of file    : DPPL1F.DAT
+   Format of file  : ASCII & User-specified
+   Create          : DEVICE 2 [graphics format]>
+   Write to        : all succeeding plots
+   Laserprint      : ??
+ 
+Graphics Output File 3 (last plot only)
+   Name of file    : DPPL2F.DAT
+   Format of file  : ASCII & POSTSCRIPT
+   Create          : automatic
+   Write to        : automatic with every plot
+   Laserprint      : PP (last plot only)
+ 
+Data Output Files
+   Name of file    : user-specified
+   Format of file  : ASCII
+   Create          : WRITE [file name] [variables]
+   Write to        : WRITE [file name] [variables]
+   Laserprint      : ??
+ 
+Text Output Files
+   Name of file    : user-specified
+   Format of file  : ASCII
+   Create          : CAPTURE & END CAPTURE
+   Write to        : all succeeding text commands
+   Laserprint      : ??
+ 
+ 

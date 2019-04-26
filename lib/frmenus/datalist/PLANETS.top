@@ -1,0 +1,8 @@
+----- <~datalist\PLANETS.top> PLANETS.DAT
+ 
+PLANETS.DAT
+ 
+View     <xcl: LIST PLANETS.DAT>
+Load     <x2cl: SKIP 25; READ PLANETS.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\PLANETS.DAT>
+ 

@@ -1,0 +1,21 @@
+----- <~prob\normppf.top> Plot Symmetric ppf's
+
+Plot Symmetric ppf Functions
+
+Normal                   <xemf: ~prob\norppf.men>
+Half-Normal              <xemf: ~prob\hfnppf.men>
+Power-Normal             <xemf: ~prob\pnrppf.men>
+Folded Normal            <xemf: ~prob\fnrppf.men>
+Truncated Normal         <xemf: ~prob\tnrppf.men>
+
+Log-Normal               <xemf: ~prob\lgnppf.men>
+Power-Lognormal          <xemf: ~prob\plnppf.men>
+
+Cauchy                   <xemf: ~prob\cauppf.men>
+Half-Cauchy              <xemf: ~prob\hfcppf.men>
+Wrapped-Cauchy           <xemf: ~prob\wcappf.men>
+Folded-Cauchy            <xemf: ~prob\fcappf.men>
+
+Johnson SB               <xemf: ~prob\jsbppf.men>
+Johnson SU               <xemf: ~prob\jsuppf.men>
+

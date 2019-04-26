@@ -1,0 +1,40 @@
+. This is Dataplot macro   OC_XBAR.DP
+. Purpose--Generate an Operating Characteristic curve for an
+.          XBAR Control Chart.
+.          The OC is defined as:
+.            NORCDF(3 - k*SQRT(N)) - NORCDF(-3-k*SQRT(N)) versus k
+.          where 
+.            n      = total sample size
+.            k      = k*sigma is the limit we want to be able to
+.                     detect
+.
+.          It is essentiallty a plot of the type II (or Beta error)
+.          (probability of incorrectly accepting the hypothesis of
+.          statistical control).  It measures the sensitivity of the
+.          control chart.
+. Input --N        = variable containing sample sizes
+.       --KSTART   = 0
+.       --KINC     = increment between plot points
+.       --KSTOP    = stop point for plot
+. Output--graph
+.
+y1label Beta
+x1label Magnitude to Detect (in standard deviation units)
+title OC Curve for XBAR Control Chart (N = ^n)
+.
+xlimits 0 5
+ylimits 0 1
+.
+let kstart = 0
+let kinct = 0.01
+let kstopt = 5.0
+if kinc exist
+  let kinct = kinc
+end of if
+if kstop exist
+  let kstopt = kstop
+  let kjunk=int(kstop+1)
+  xlimits 0 kstop
+end of if
+plot norcdf(3 - k*sqrt(n)) - norcdf(-3 - k*sqrt(n)) for k = kstart kinct kstopt
+.

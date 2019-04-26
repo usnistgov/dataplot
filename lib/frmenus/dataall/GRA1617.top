@@ -1,0 +1,8 @@
+----- <~dataall\GRA1617.top> GRA1617.DAT
+
+GRA1617.DAT
+
+View     <xcl: LIST GRA1617.DAT>
+Load     <xcf: ~dataload/GRA1617.DP>
+Print    <xccl: printfile C:\DATAPLOT\GRA1617.DAT>
+

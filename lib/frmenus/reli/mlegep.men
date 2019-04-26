@@ -1,0 +1,33 @@
+This is file mlegep.men--Generalized Pareto MLE Estimates
+ 
+--------------------
+ 1. Generalized Pareto Maximum Likelihood Estimates
+ 2. GENERALIZED PARETO MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Maximum likelihood estimates for the shape
+ 5. and scale parameters may be obtained for
+ 6. uncensored data.  Note that the maximum
+ 7. likelihood estimate does not exist in some
+ 8. regions of the parameter space.  Method of
+ 9. moments estimators are also returned.
+10.
+11. Response Variable:
+11. @CE 1 0 42 50 ? gui-variable
+12.
+13. Which definition of generalized Pareto?:
+14. @CE 2 1 1 20 Default
+15. @CE 2 2 1 20 Reverse Sign
+16.
+17. Subset/Except/For Specification:
+18. @C3 4 0 1 50 *
+19.
+20.
+21. Compute Generalized Pareto MLE's?
+--------------------
+GR FE
+@IF 2 1 SET GENERALIZED PARETO DEFINITION SIMIU
+@IF 2 2 SET GENERALIZED PARETO DEFINITION JOHNSON
+GENERALIZED PARETO MAXIMUM LIKELIHOOD _1 _3
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

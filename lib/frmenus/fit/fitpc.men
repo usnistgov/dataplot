@@ -1,0 +1,69 @@
+This is file fitpc.men--Principal Components Regression
+ 
+--------------------
+ 1. Principal Components Regression
+ 2. Macro ...
+ 3.
+ 4. For principal components regression, you need:
+ 5.   1) A response variable (i.e., Y)
+ 6.   2) A list of factor variables (i.e., X)
+ 7.   3) A value defining the cut-off for the
+ 8.      amount of variance you want explained
+ 9.      (i.e., if you specify 90, enough
+10.      principal components will be kept to
+11.      account for 90% of the variablility.
+12.
+13. Variables:
+14.    Response Variable:
+14. @CE 1 0 42 50 ? gui-variable
+15.    List of Independent Variables:
+16. @CE 2 0  1 50 ? gui-variable
+17.    Variability Cutoff (defaults to 90%):
+17. @CE 3 0 42 50 *
+18.
+19. The principal components makes use of
+20. several matrices.  You may want to set
+21. the maximum number of columns in the
+22. workspace as high as possible (under the
+23. Files/Data menu) before running the principal
+24. components regression macro.
+25.
+26. Do the Principal Components Regression?
+--------------------
+GR FE
+DELETE ZZZZ ZZZZE ZZZZRAT
+WRITE ZZZZJUNK.DAT _2
+SKIP 0
+READ MATRIX ZZZZJUNK.DAT ZZZZ
+LET ZZZZP = MATRIX NUMBER OF COLUMNS ZZZZ
+LET ZZZZN = SIZE ZZZZ1
+. DELETE ZZZZW
+DELETE ZZZZW1 TO ZZZZW^ZZZZP
+PRINCIPAL COMPONENTS TYPE DATA CORRELATION
+LET ZZZZW = PRINCIPAL COMPONENTS ZZZZ
+LET ZZZZE = PRINCIPAL COMPONENTS EIGENVALUES ZZZZ
+DELETE ZZZZ
+LET ZZZZRAT = CUMULATIVE SUM ZZZZE
+LET ZZZZRAT = ZZZZRAT/ZZZZP
+PRINT ZZZZE ZZZZRAT
+LET ZZZZCUT = 90
+LET ZZZZCUT = _3
+IF ZZZZCUT > 1
+  LET ZZZZCUT = ZZZZCUT/100
+END OF IF
+LET ZZZZNUSE = SIZE ZZZZRAT SUBSET ZZZZRAT < ZZZZCUT
+IF ZZZZNUSE < 1
+  LET ZZZNUSE = 1
+END OF IF
+LET STRING ZZZZSTR = SP()
+LET STRING ZZZZSP = SP()
+FEEDBACK OFF
+LOOP FOR K = 1 1 ZZZZNUSE
+    LET STRING ZZZZTMP = ZZZZW^K
+    LET STRING ZZZZSTR = ^ZZZZSTR&^ZZZZSP&^ZZZZTMP
+END OF LOOP
+FEEDBACK ON
+FIT _1  ^ZZZZSTR
+--------------------
+WEB HELP PRINCIPAL COMPONENTS
+--------------------

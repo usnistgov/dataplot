@@ -1,0 +1,24 @@
+This is file rankcorr.men--Compute rank correlation of a variable
+ 
+--------------------
+ 1. Rank Correlation
+ 2. LET A = RANK CORRELATION Y1 Y2
+ 3.
+ 4. First variable for which to compute the rank correlation:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Second variable for which to compute the rank correlation:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Parameter to store the rank correlation:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -15 50 *
+10.
+11.
+12. Compute the Rank Correlation?:
+--------------------
+GR FE
+LET _3 = RANK CORRELATION  _1 _2 _4
+--------------------
+WEB HELP RANK CORRELATION
+--------------------

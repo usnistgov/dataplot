@@ -1,0 +1,62 @@
+----- <~dex\cs27m3.top> Confounding:  2**(7-3) Design
+
+Confounding:  2**(7-3) Design
+
+Name of Design      = 2**(7-3) Fractional Factorial Design
+
+Number of Factors k = 7
+Number of Obs.    n = 16
+
+Resolution          = 4 (Main effects confounded with
+                      3-term interactions and higher;
+                      no main effects are confounded
+                      with any 2-term interactions)
+
+Factor Definitions  : 5 = 123
+                      6 = 234
+                      7 = 134
+
+Defining Relation   : I +
+                      1235 + 1267 + 1347 + 1456 +
+                      2346 + 2457 + 3567
+
+Main Effect         : 1  =  1 +  *
+Confounding           2  =  2 +  *
+                      3  =  3 +  *
+                      4  =  4 +  *
+                      5  =  5 +  *
+                      6  =  6 +  *
+                      7  =  7 +  *
+
+2-Term              : 12 = 12 + 35 + 67 +  *
+Confounding           13 = 13 + 25 + 47 +  *
+                      14 = 14 + 37 + 56 +  *
+                      15 = 15 + 23 + 46 +  *
+                      16 = 16 + 27 + 45 +  *
+                      17 = 17 + 26 + 34 +  *
+                      23 = 23 + 15 + 46 +  *
+                      24 = 24 + 36 + 57 +  *
+                      25 = 25 + 13 + 47 +  *
+                      26 = 26 + 17 + 34 +  *
+                      27 = 27 + 16 + 45 +  *
+                      34 = 34 + 17 + 26 +  *
+                      35 = 35 + 12 + 67 +  *
+                      36 = 36 + 24 + 57 +  *
+                      37 = 37 + 14 + 56 +  *
+                      45 = 45 + 16 + 27 +  *
+                      46 = 46 + 15 + 23 +  *
+                      47 = 47 + 13 + 25 +  *
+                      56 = 56 + 14 + 37 +  *
+                      57 = 57 + 24 + 36 +  *
+                      67 = 67 + 12 + 35 +  *
+
+Confounding Matrix:
+                          1   2   3   4   5   6   7
+                      ...............................
+                      1 -    12  13  14  15  16  17
+                      2 -        15  24  13  17  16
+                      3 -            17  12  24  14
+                      4 -                16  15  13
+                      5 -                    14  24
+                      6 -                        12
+

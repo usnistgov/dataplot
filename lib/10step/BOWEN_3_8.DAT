@@ -1,0 +1,33 @@
+This is dataplot data file     bowen_3_8.dat
+Cleanser/Mordant/Agent effect on dental composites polysac adhesion
+Ray Bowen dental polysac adhesion study (patent 4,251,565, Feb. 17, 1981)
+2**3 full factorial design (k=3,n=8)
+Number of observations = 8
+Number of variables per line image = 4
+Order of variables on a line image:
+   Response variable = Dental Adhesion (kPa)
+   Factor 1          = Cleanser       (2 levels: Distilled H2O and Formic Acid)
+   Factor 2          = Mordant        (2 levels: Distilled H2O and Isotonic Ferric Chloride)
+   Factor 3          = Coupling Agent (2 levels: No Polysac    and With Polysac)
+To read this file into dataplot--
+   skip 25
+   read bowen_3_8.dat y x1 x2 x3
+
+
+
+
+
+
+
+
+
+   Y     X1    X2    X3
+------------------------
+ 680     -1    -1    -1
+ 620      1    -1    -1
+1630     -1     1    -1
+1730      1     1    -1
+1030     -1    -1     1
+ 640      1    -1     1
+1280     -1     1     1
+2580      1     1     1

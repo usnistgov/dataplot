@@ -1,0 +1,8 @@
+----- <~datalist\LEW3.top> LEW3.DAT
+ 
+LEW3.DAT
+ 
+View     <xcl: LIST LEW3.DAT>
+Load     <x2cl: SKIP 25; READ LEW3.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\LEW3.DAT>
+ 

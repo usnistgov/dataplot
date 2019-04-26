@@ -1,0 +1,35 @@
+----- <~reli\relirand.top> Random Numbers
+
+Random Numbers
+
+Set seed                                   <xemf: ~prob\setseed.men>
+Select generator to use                    <xemf: ~prob\setgene.men>
+
+Normal                                     <xemf: ~prob\gennorra.men>
+Lognormal                                  <xemf: ~prob\genlgnra.men>
+Power Normal                               <xemf: ~prob\genpnrra.men>
+Power Lognormal                            <xemf: ~prob\genplnra.men>
+
+Exponential                                <xemf: ~prob\genexpra.men>
+Geometric Extreme Exponential              <xemf: ~prob\gengeera.men>
+
+Weibull (Minimum)                          <xemf: ~prob\genwe1ra.men>
+Weibull (Maximum)                          <xemf: ~prob\genwe2ra.men>
+Inverted Weibull                           <xemf: ~prob\geniwera.men>
+Exponentiated Weibull                      <xemf: ~prob\genewera.men>
+Bi-Weibull                                 <xemf: ~prob\genbwera.men>
+
+Wald                                       <xemf: ~prob\genwalra.men>
+Inverse Gaussian                           <xemf: ~prob\genigra.men>
+Reciprocal Inverse Gaussian                <xemf: ~prob\genrigra.men>
+Fatigue Life                               <xemf: ~prob\genflra.men>
+
+Gamma                                      <xemf: ~prob\gengamra.men>
+Log Gamma                                  <xemf: ~prob\genlgara.men>
+Inverted Gamma                             <xemf: ~prob\genigara.men>
+
+Alpha                                      <xemf: ~prob\genalpra.men>
+Exponential Power                          <xemf: ~prob\genpexra.men>
+
+Power Law Failure Times                    <xemf: ~reli\powersim.men>
+

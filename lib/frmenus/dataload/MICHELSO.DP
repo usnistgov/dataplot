@@ -1,0 +1,8 @@
+----- <~dataload\MICHELSO.DP> Load MICHELSO.DAT
+
+. This is file    MICHELSO.DP
+
+DELETE Y T D AMPM SET
+SKIP 25
+READ MICHELSO.DAT Y T D AMPM Set
+

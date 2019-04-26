@@ -1,0 +1,10 @@
+----- <~dataloex\NBSPOW2.DP> Load & Execute NBSPOW2.DAT
+
+. This is file    NBSPOW2.DP
+
+DELETE Y
+SKIP 25
+READ NBSPOW2.DAT Y
+TITLE NBSPOW2.DAT
+4-PLOT Y
+

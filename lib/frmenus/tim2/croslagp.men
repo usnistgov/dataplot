@@ -1,0 +1,44 @@
+This is file croslagp.men--Cross-lag plot
+ 
+--------------------
+ 1. Cross-lag Plot
+ 2. LAG ...  PLOT Y1 Y2
+ 3.
+ 4. Definition: Cross-lag plot =
+ 5.     Plot of Y1(i) versus of Y2(i-lag)
+ 6.
+ 7. Vertical   axis = Y1(i)
+ 8. Horizontal axis = Y2(i-lag)
+ 9.
+10. Question being addressed:
+11.     Is series 1 related to series 2
+12.     (with time-shift =   lag ).
+13.
+14. Reference: Granger & Hatanaka, pages 74-77.
+15.
+17. Response Variable   #1:
+18. @CE 1 0 33 50 ? gui-variable
+19. Response Variable   #2:
+19. @CE 2 0 33 50 ? gui-variable
+20. Lag:
+20. @CE 3 0 33 50 ?
+21.
+22. Character type:
+22. @CE 4 0 33 50 ? gui-char
+24.
+25. Subset/Except/For Specification:
+26. @CE 5 0 6 50 *
+27.
+28.
+29. Generate the Plot?:
+--------------------
+GR FE
+CHARACTERS _3
+LINES BLANK
+@IF 3 0 LAG _3 PLOT _1 _2 _5
+@IFNE 3 0 LAG PLOT _1 _2 _5
+CHARACTERS BLANK
+LINES SOLID
+--------------------
+WEB HELP LAG PLOT
+--------------------

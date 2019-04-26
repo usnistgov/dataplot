@@ -1,0 +1,29 @@
+----- <~unce\statinfo.top> Stat-Based Component Information
+ 
+Stat-Based Component Information
+ 
+For a given component, the needed information is
+ 
+   1. Typical Value
+   2. Uncertainty
+   3. Degrees of Freedom
+ 
+If the data analysis has already been completed
+and the analyst knows the above 3 values,
+ 
+   then click here          <xemf: ~unce\typuncdf.men>
+ 
+If the data analysis has not yet been done
+and the analyst would like Dataplot to compute
+the needed information from available data,
+ 
+   then click one of the following
+   appropriate statistics:
+ 
+       Mean            <xemf: ~unce\meansd.men>
+       Weighted Mean   <xemf: ~unce\wemeansd.men>
+       Intercept       <xemf: ~unce\fitline.men>
+       Slope           <xemf: ~unce\fitline.men>
+       Predicted Value <xemf: ~unce\fitline.men>
+       Grand Mean      <xemf: ~unce\vcgmsd.men>
+ 

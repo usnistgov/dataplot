@@ -1,0 +1,27 @@
+----- <~prob\locsccdf.top> PDF's for Location-Scale Continuous Distributions
+
+Compute CDF's and Tail Probabilities (no shape parameters)
+
+Compute Cumulative Distribution Function and Tail Probabilities
+for Continuous Distributions with No Shape Parameters
+
+Anglit                                    <xemf: ~prob\angcdf.men>
+Arcsin                                    <xemf: ~prob\arscdf.men>
+Cauchy                                    <xemf: ~prob\caucdf.men>
+Cosine                                    <xemf: ~prob\coscdf.men>
+Double Exponential (Laplace)              <xemf: ~prob\dexcdf.men>
+Exponential                               <xemf: ~prob\expcdf.men>
+Extreme Value Type I(Gumbel)  - Minimum   <xemf: ~prob\ev11cdf.men>
+Extreme Value Type I(Gumbel)  - Maximum   <xemf: ~prob\ev12cdf.men>
+Half-Cauchy                               <xemf: ~prob\hfccdf.men>
+Half-Logistic                             <xemf: ~prob\hflcdf.men>
+Half-Normal                               <xemf: ~prob\hfncdf.men>
+Hyperbolic Secant                         <xemf: ~prob\hsecdf.men>
+Logistic                                  <xemf: ~prob\logcdf.men>
+Maxwell                                   <xemf: ~prob\maxcdf.men>
+Normal                                    <xemf: ~prob\norcdf.men>
+Rayleigh                                  <xemf: ~prob\raycdf.men>
+Semi-Circular                             <xemf: ~prob\semcdf.men>
+Slash                                     <xemf: ~prob\slacdf.men>
+Uniform                                   <xemf: ~prob\unicdf.men>
+

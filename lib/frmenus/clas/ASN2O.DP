@@ -1,0 +1,10 @@
+----- <~dataloex\ASN2O.DP> Load & Execute ASN2O.DAT
+
+. This is file    ASN2O.DP
+
+DELETE Y
+SKIP 25
+READ ASN20.DAT Y
+TITLE ASN20.DAT
+/
+

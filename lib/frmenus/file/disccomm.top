@@ -1,0 +1,21 @@
+----- <~file\disccomm.top> Files: Comment Lines in Data Files
+
+File: Comment Lines in Data Files
+
+COMMENT LINES IN DATA FILES
+
+It is sometimes convenient to include comments in data files.
+If these comments are contained at the beginning of the file, then
+the SKIP command can be used.  To have Dataplot check for comment
+lines in the data file, enter the command
+
+    COMMENT CHECK ON
+
+The default comment character is a ".".  That is, any line starting
+with a ". " is treted as a comment line and ignored.  To specify
+a different comment character, enter the command
+
+    COMMENT CHARACTER  char
+
+with char denoting the desired comment character.
+

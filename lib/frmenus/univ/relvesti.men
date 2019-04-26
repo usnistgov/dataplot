@@ -1,0 +1,22 @@
+This is file relvesti.men--Estimate Relative Variation
+ 
+--------------------
+ 1. Estimate Relative Variation
+ 2. SUMMARY Y; LET A = RELATIVE SD Y
+ 3. Note--Definition: Relative Var. = (Standard Deviation) / |Mean|
+ 4.
+ 5. Response Variable:
+ 5. @CE 1 0 33 50 ? gui-vari
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 2 0 1 50 *
+ 9.
+10.
+11. Estimate Relative Variation?
+--------------------
+GR FE
+SUMMARY _1 _2
+LET ZSTAT = RELATIVE SD _1 _2
+--------------------
+WEB HELP SUMMARY
+--------------------

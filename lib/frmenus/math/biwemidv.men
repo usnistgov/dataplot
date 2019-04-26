@@ -1,0 +1,22 @@
+This is file biwescal.men--Compute biweight midvariance of a variable
+ 
+--------------------
+ 1. Biweight Midvariance
+ 2. LET A = BIWEIGHT MIDVARIANCE Y
+ 3.
+ 4. Variable for which to compute the biweight midvariance:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Parameter to store the biweight midvariance:
+ 5. @CE 2 0 42 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Biweight Midvariance?:
+--------------------
+GR FE
+LET _2 = BIWEIGHT MIDVARIANCE  _1 _3
+--------------------
+WEB HELP BIWEIGHT MIDVARIANCE
+--------------------

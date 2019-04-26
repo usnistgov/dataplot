@@ -1,0 +1,16 @@
+----- <~plot\multplot.top> Multivariate Plots
+
+Multivariate Plots
+
+Andrews Plot                    <xemf: ~plot\andrplot.men>
+Biplot                          <xemf: ~plot\biplot.men>
+Conditioning (and Level) Plot   <~plot\condplot.top>
+Factor Plot                     <~plot\fact.top>
+Graphical Representation of First 2 Principal Components <xemf: ~plot\prinplot.men>
+Parallel Coordinates Plot       <xemf: ~plot\parcplot.men>
+Principal Coordinates Plot      <xemf: ~plot\pcorplot.men>
+Profile Plot                    <xemf: ~plot\profplot.men>
+Star Plot                       <xemf: ~plot\starplot.men>
+Symbol Plot                     <xemf: ~plot\symbplot.men>
+Scatter Plot Matrix             <~plot\matrplot.top>
+

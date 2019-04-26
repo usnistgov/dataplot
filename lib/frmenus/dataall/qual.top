@@ -1,0 +1,10 @@
+----- <~dataall\qual.top> View/etc. Built-in Quality/SPC Data Files
+
+View/Load/Print Built-in Quality/SPC Data Files
+
+7 Old Tools                              <~dataall\qual7old.top>
+Control Charts                           <~dataall\qualcoch.top>
+EWMA                                     <~dataall\qualewma.top>
+Process Capability Index                 <~dataall\qualpci.top>
+Taguchi                                  <~dataall\qualtag.top>
+

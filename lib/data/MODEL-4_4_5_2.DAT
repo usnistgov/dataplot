@@ -1,0 +1,65 @@
+This is the Dataplot data file        MODEL-4_4_5_2.DAT
+Source: This data set is used to demonstrate various fitting procedures in
+        the Process Modeling Chapter of the e-Handbook.  This data set
+        was provided by Will Guthrie.
+Description:  This data is a modified version of MODEL-4_4_4.DAT.
+              The data consists of the temperature and pressure of a gas.
+              In this data set, we compute a "rounded" temperature to
+              compute a standard deviation for pressure values with
+              nearly the same temperature.  This is used to determine
+              more stable weights for weighted fits.
+
+Data: This is a simulated data set
+   1. Column 1 = Temperature (Independent Variable)
+   2. Column 2 = Rounded Temperature (Independent Variable)
+   3. Column 3 = Pressure (Dependent Variable)
+   4. Column 4 = Standard deviation of pressure for values with
+                 same value of rounded temperature
+
+To read this file into Dataplot--
+   SKIP 25
+   READ MODEL-4_4_5_2.DAT TEMP RTEMP PRESSURE PSD
+
+               Rounded              Standard
+Temperature  Temperature  Pressure  Deviation
+---------------------------------------------
+   21.602        21        91.423    0.192333
+   21.448        21        91.695    0.192333
+   23.323        24        98.883    1.102380
+   22.971        24        97.324    1.102380
+   25.854        27       107.620    0.852080
+   25.609        27       108.112    0.852080
+   25.838        27       109.279    0.852080
+   29.242        30       119.933   11.046422
+   31.489        30       135.555   11.046422
+   34.101        33       139.684    0.454670
+   33.901        33       139.041    0.454670
+   37.481        36       150.165    0.031820
+   35.451        36       150.210    0.031820
+   39.506        39       164.155    2.884289
+   40.285        39       168.234    2.884289
+   43.004        42       180.802    4.845772
+   41.449        42       172.646    4.845772
+   42.989        42       169.884    4.845772
+   41.976        42       171.617    4.845772
+   44.692        45       180.564          NA
+   48.599        48       191.243    5.985219
+   47.901        48       199.386    5.985219
+   49.127        48       202.913    5.985219
+   49.542        51       196.225    9.074554
+   51.144        51       207.458    9.074554
+   50.995        51       205.375    9.074554
+   50.917        51       218.322    9.074554
+   54.749        54       225.607    2.040637
+   53.226        54       223.994    2.040637
+   54.467        54       229.040    2.040637
+   55.350        54       227.416    2.040637
+   54.673        54       223.958    2.040637
+   54.936        54       224.790    2.040637
+   57.549        57       230.715   10.098899
+   56.982        57       216.433   10.098899
+   58.775        60       224.124   23.120270
+   61.204        60       256.821   23.120270
+   68.297        69       276.594    6.721043
+   68.476        69       267.296    6.721043
+   68.774        69       280.352    6.721043

@@ -1,0 +1,37 @@
+This is Dataplot data file       KENDALL.DAT
+This data is used to test the Kendall tau and rank correlation
+coefficient commands.  In particular, the
+
+    KENDALL TAU INDEPENDENCE TEST
+    RANK CORRELATION INDEPENDENCE TEST
+
+Source--Conover (1991), "Practical Nonparameteric Statistics",
+        Third Edition, Wiley, pp. 315-316 (example 1).
+
+Number of Observations    = 12
+Number of Variables       = 2
+Order of Variables--
+   1. Y1    = GMAT scores of 12 MBA graduates
+   2. Y2    = corresponding grade point averages while in graduate school
+To read this file into Dataplot-
+
+   SKIP 25
+   READ KENDALL.DAT  Y1 Y2
+
+
+
+
+      Y1             Y2
+-------------------------------------
+     530            3.5
+     540            3.3
+     545            3.7
+     560            3.2
+     560            3.5
+     560            3.6
+     570            3.2
+     580            3.8
+     610            3.5
+     610            4.0
+     640            3.9
+     740            4.0

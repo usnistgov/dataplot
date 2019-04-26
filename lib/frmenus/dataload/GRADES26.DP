@@ -1,0 +1,8 @@
+----- <~dataload\GRADES26.DP> Load GRADES26.DAT
+
+. This is file    GRADES26.DP
+
+DELETE Y X
+SKIP 25
+READ GRADES26.DAT Y X
+

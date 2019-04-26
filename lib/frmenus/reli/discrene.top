@@ -1,0 +1,33 @@
+-----<~reli\discrene.top> Discussion: Renewal Processes
+
+Discussion: Renewal Processes
+
+Renewal Processes
+
+If the interarrival times for the repair times are
+independent and identically distributed (iid), then
+the repair times can be modeled as a renewal process.
+
+The primary implication of the iid assumption is
+that the interarrival times are no longer order
+dependent and that we can fit a distributional
+model to the interarrival times as we do for a
+non-repairable system.  Exponential, Weibull, and
+lognormal distributions are commonly used.
+
+One model of particular interest is the case where
+the interarrival times follow an exponential
+distribution.  This model is referred to as a
+Homogeneous Poisson Process (HPP).
+
+In analyzing a renewal process, the following
+quantities are typically of interest:
+
+   F(t)  = the cumulative distribution function of
+           the interarrival times
+   N(t)  = the cumulative number of failures from
+           time 0 to time t
+   M(t)  = the expected number of failures by time t
+   m(t)  = the repair rate ( = the derivative of M(t))
+   MTBF  = mean time between failures
+

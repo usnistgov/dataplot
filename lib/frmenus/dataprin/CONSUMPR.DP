@@ -1,0 +1,6 @@
+----- <~dataprin\CONSUMPR.DP> Print (to Printer) CONSUMPR.DAT
+
+. This is file    CONSUMPR.DP
+
+PRINT CONSUMPR.DAT
+

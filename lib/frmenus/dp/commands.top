@@ -1,0 +1,39 @@
+----- <~dp\commands.top> Commands
+ 
+Commands
+ 
+Built-in file of commands   : COMMANDS.
+   List                     : LIST    COMMANDS.
+   Search for string        : SEARCH  COMMANDS. [string]
+              Example       : SEARCH  COMMANDS. TITLE
+ 
+Built-in file of syntaxes   : SYNTAX.
+   List                     : LIST    SYNTAX.
+   Search for string        : SEARCH  SYNTAX.   [string]
+              Example       : SEARCH  SYNTAX. TITLE
+ 
+Most Important Commands     : PLOT, FIT, LET
+ 
+View/Save/Redo prior commands
+   View prior commands      : LIST   (or L)
+   Save prior commands      : SAVE   (or S) [list of #'s]
+   Redo saved commands      : /
+   Redo a prior command     : REPEAT (or R) [#]
+ 
+Read Data from File         : READ        [file name] [list]
+                            : SERIAL READ [file name] [list]
+Write Data to File          : WRITE       [file name] [list]
+Execute macro               : CALL        [file name]
+ 
+Loop                        : LOOP and END LOOP
+Conditional                 : IF and END IF
+                            : SUBSET/EXCEPT/FOR
+ 
+Restrict command to subset  : [command] SUBSET/EXCEPT/FOR
+Continue to next line       : [long command line] ...
+Null command (= comment)    : .[space]
+Pause execution             : PAUSE
+ 
+Exit from Dataplot          : EXIT/STOP/END/HALT/QUIT/BYE
+Execute DOS/UNIX/etc. comm. : SYSTEM [system command]
+ 

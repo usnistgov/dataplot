@@ -1,0 +1,8 @@
+----- <~dataload\BOXCLEA2.DP> Load BOXCLEA2.DAT
+
+. This is file    BOXCLEA2.DP
+
+DELETE Y
+SKIP 25
+READ BOXCLEA2.DAT Y
+

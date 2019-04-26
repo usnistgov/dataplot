@@ -1,0 +1,33 @@
+----- <~time\dds3.top> DDS FAQ 3 DDS Math/Stat Components
+ 
+3. What are the math/stat components of DDS?
+ 
+    1. Autoregressive moving average (ARMA) els for possibly
+       nonstationary  data.
+ 
+    2. Sequential modeling strategy that  donot  use
+       indicators such as sample autocorrelations or sample spectra
+       for model specification.
+ 
+    3. Parameter estimation using   norm.
+ 
+    4. Standardized auto-correlations less t 2 and F-Test for model
+       adequacy.
+ 
+    5. State space formulation to facilitatedeling strategy and
+       analysis.
+ 
+    6. Spectral (eigenvalue-eigenvector) decosition of the state
+       matrix.
+ 
+    7. Solution of linear differential/diffece equations.
+ 
+    8. Fourier Transform applied to autocovance function to get
+       spectrum as an analytic function.
+ 
+    9. Minimum mean squared error forecastinnd control.
+ 
+   10. Convolution of desired residuals witdal components.
+ 
+   11. Modal/Wavelength decomposition.
+ 

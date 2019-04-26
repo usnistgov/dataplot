@@ -1,0 +1,13 @@
+----- <~dataloex\1facnist.top> Load & Execute 1-Factor Data: OTHER
+
+Load & Execute 1-Factor Data: OTHER
+
+USADEFIC.DAT  USA nat. def. (1980-1988)    <xcf: ~dataloex\USADEFIC.DP>
+USADEBT.DAT   USA nat. debt (1947-1993)    <xcf: ~dataloex\USADEBT.DP>
+PENTAGON.DAT  Pentagon expenditures        <xcf: ~dataloex\PENTAGON.DP>
+
+LOTTERY3.DAT  Md. "Pick 3" Lottery         <xcf: ~dataloex\LOTTERY3.DP>
+LOTTERY4.DAT  Md. "Pick 4" Lottery         <xcf: ~dataloex\LOTTERY4.DP>
+
+MICHELSO.DAT  Speed of Light               <xcf: ~dataloex\MICHELSO.DP>
+

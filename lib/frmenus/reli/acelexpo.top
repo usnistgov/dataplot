@@ -1,0 +1,53 @@
+-----<~reli\acelexpo.top> Discussion: Exponential Acceleratin
+
+Discussion: Exponential Acceleration
+
+Exponential Acceleration
+
+If the failure times at high stress can be
+modeled as an exponential distribution, then
+
+    F(s)(t) = 1 - EXP(-lambda(s)*t)
+
+If linear acceleration holds, then
+
+   F(u)(t) = F(s)(t/AF)
+           = 1 - EXP(-lambda(s)*t/AF)
+           = 1 - EXP(-(lambda(s)/AF)*t)
+
+That is, the CDF at use condition remains exponential
+with scale parameter
+
+   lambda(u) = lambda(s)/AF
+
+An exponential fit at any one stress condition implies
+an exponential fit at any other stress condition where
+true linear acceleration holds.  In particular, the
+failure rate at use is failure rate at stress divided
+by the acceleration factor
+
+   lambda(u) = lambda(s)/AF
+
+The exponential failure rate varies inversely with the
+acceleration factor.  Note that this is not true in
+general.  For non-exponential distributions, the failure
+rate is typically very non-linear under linear acceleration
+of the time scale.
+
+In terms of estimation, we have 3 quantities of interest:
+
+    1) lambda(s)
+    2) lambda(u)
+    3) AF (acceleration facctor)
+
+If we have data at two stress level, we can estimate
+lambda(s) at each stress level (call these lanbda(s1) and
+lambda(s2)).  From this, 
+
+    lambdahat(s1) = lambdahat(s2)/AF
+    AF = lambdahat(s2)/lambdahat(s1)
+
+Once we have AF, we can then estimate lambdahat(u) as
+
+    lambdahat(u) = lambdahat(s1)/AF
+

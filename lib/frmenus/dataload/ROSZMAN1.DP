@@ -1,0 +1,8 @@
+----- <~dataload\ROSZMAN1.DP> Load ROSZMAN1.DAT
+
+. This is file    ROSZMAN1.DP
+
+DELETE Y X
+SKIP 25
+READ ROSZMAN1.DAT X Y
+

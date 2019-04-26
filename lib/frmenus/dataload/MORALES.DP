@@ -1,0 +1,8 @@
+----- <~dataload\MORALES.DP> Load MORALES.DAT
+
+. This is file    MORALES.DP
+
+DELETE Y1 Y2 Y3 X
+SKIP 25
+READ MORALES.DAT Y1 Y2 Y3 X
+

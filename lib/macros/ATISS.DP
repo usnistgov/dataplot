@@ -1,0 +1,51 @@
+. This is Dataplot macro   ATISS.DP
+. Purpose--Generate an Average Total Inspection (AOQ) curve for a
+.          single sample plan.
+.          The ATI is defined as:
+.              n + (1-Pa)*(nn-n)/n versus p
+.          where 
+.            n      = sample size
+.            nn     = lot size
+.            p      = desired probabilities
+.            pa     = bincdf(c,p,n)
+.                     where c is the acceptance number for defectives
+.
+. Input --N        = sample size
+.       --NN       = lot size
+.       --C        = number of defectives
+.       --PSTART   = start value for p
+.       --PINC     = increment value for p
+.       --PSTOP    = stop value for p
+. Output--graph
+.
+DELETE ZZZZP ZZZZY ZZZZX
+.
+LET ZZZZC = C
+LET ZZZZN = N
+LET ZZZZNNNN = NN
+.
+LET PSTARTT = 0.001
+LET PINCT = 0.001
+LET PSTOPT = 0.20
+IF PSTART EXISTS
+  LET PSTARTT = PSTART
+END OF IF
+IF PINC EXISTS
+  LET PINCT = PINC
+END OF IF
+IF PSTOP EXISTS
+  LET PSTOPT = PSTOP
+END OF IF
+.
+LET ZZZZP = SEQUENCE PSTARTT PINCT PSTOPT
+LET ZZZZY = BINCDF(ZZZZC,ZZZZP,ZZZZN)
+LET ZZZZY = ZZZZN + (1 - ZZZZY)*(ZZZZNNNN-ZZZZN)
+.
+LABEL CASE ASIS
+TITLE CASE ASIS
+Y1LABEL Probability of Acceptance, Pa
+X1LABEL Lot Fraction Defective, p
+TITLE AOQ Single Sample (^ZZZZN, ^ZZZZC) Curve
+.
+PLOT ZZZZY VS ZZZZP
+.

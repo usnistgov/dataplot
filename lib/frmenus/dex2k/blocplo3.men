@@ -1,0 +1,52 @@
+This is file blocplot.men--Generate DEX Block Plots
+ 
+--------------------
+ 1. Block Plot
+ 2. BLOCK PLOT Y    X1 X2 ... XK    XPRIMARY
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Total number of independent factors:
+ 6. @CE 2 1 3 40 50
+ 7. Independent Factors:
+ 8.   1.:
+ 8. @CE 3 0 20 50 ? gui-vari
+ 9.   2.:
+ 9. @CE 4 0 20 50 ? gui-vari
+10.   3.:
+10. @CE 5 0 20 50 ? gui-vari
+11.   4.:
+11. @CE 6 0 20 50 ? gui-vari
+12.   5.:
+12. @CE 7 0 20 50 ? gui-vari
+13.   6.:
+13. @CE 8 0 20 50 ? gui-vari
+14.   7.:
+14. @CE 9 0 20 50 ? gui-vari
+15.   8.:
+15. @CE 10 0 20 50 ? gui-vari
+16.   9.:
+16. @CE 11 0 20 50 ? gui-vari
+17.
+18. Subset/Except/For Specification:
+18. @CE 12 0 1 50 ?
+19.
+20. Characters for the 2 primary factor levels:
+20. @CE 13 0 33 50 ? gui-char
+21.
+22. Generate the Block Plots?:
+--------------------
+GR FE
+LINES SOLID ALL
+LINES BLANK BLANK
+CHAR BLANK ALL
+CHAR _13
+MULTIPLOT 2 2
+BLOCK PLOT _1 _4 _5 _3   _12
+BLOCK PLOT _1 _3 _5 _4   _12
+BLOCK PLOT _1 _3 _4 _5   _12
+MULTIPLOT OFF
+--------------------
+WEB HELP BLOCK PLOT
+--------------------

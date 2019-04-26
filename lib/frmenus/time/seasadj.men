@@ -1,0 +1,44 @@
+This is file seasadj.men--Adjust by Seasonal Means
+ 
+--------------------line 3
+ 1. Adjust by Seasonal Means
+ 2. Macro
+ 3.
+ 4. This menu computes
+ 5.    Y(t) = X(t) - S(t) + M
+ 6. where X(t) is the original seris, S(t) is the
+ 7. corresponding seasonal mean, and M is the overall
+ 8. mean.
+ 9.
+10. Response Variable:
+10. @CE 1 0 42 50 ? gui-variable
+11. Seasonal Index Variable:
+11. @CE 2 0 42 50 ? gui-variable
+12.
+13. Name for Seasonally Adjusted Variable:
+13. @CE 3 0 42 50 ? 
+14.
+15. Subset/Except/For Specification:
+16. @CE 4 0 1 50 *
+17.
+18.
+19. Perform the Seasonal Adjustment?:
+--------------------
+LET ZZZZMEAN = MEAN _1 _4
+LET ZZZZX = DISTINCT _2
+LET ZZZZP = SIZE ZZZZX
+FEEDBACK OFF
+LOOP FOR K = 1 1 ZZZZP
+    LET ZZZZJUNK = ZZZZX(K)
+    LET ZZZZA = MEAN _1 SUBSET _2 = ZZZZJUNK _4
+    LET _3 = _1 - ZZZZA + ZZZZMEAN SUBSET _2 = ZZZZJUNK _4
+END OF LOOP
+FEEDBACK ON
+LET ZZZZN = SIZE _1
+LET ZZZZX2 = SEQUENCE 1 1 ZZZZN
+LINE DASH SOLID
+CHARACTER BLANK BLANK
+PLOT _1 ZZZZX2 _4 AND
+PLOT _3 ZZZZX2 _4
+DELETE ZZZZX ZZZZX2
+--------------------

@@ -1,0 +1,57 @@
+. THIS IS DATAPLOT PROGRAM FILE    MANDEL3.DP
+. PURPOSE--2-WAY ANALYSIS OF CHIMP SIGN TIMES
+.
+. -----START POINT-----
+.
+DEVICE 2 POSTSCRIPT
+.
+SKIP 25
+READ ATKINSON.DAT Y SIGN CHIMP
+.
+LET DSIGN = DISTINCT SIGN
+LET NDSIGN = NUMBER DSIGN
+LET DCHIMP = DISTINCT CHIMP
+LET NDCHIMP = NUMBER DCHIMP
+.
+LOOP FOR J = 1 1 NDSIGN
+   LET A = MEAN Y SUBSET SIGN J
+   LET COLMEAN = A SUBSET SIGN J
+END LOOP
+.
+LET GM = MEAN Y
+LOOP FOR I = 1 1 NDCHIMP
+   FIT Y = H+SLOPE*(COLMEAN-^GM) SUBSET CHIMP I
+END LOOP
+.
+LET DEL = Y-COLMEAN
+LOOP FOR I = 1 1 NDCHIMP
+   FIT DEL COLMEAN SUBSET CHIMP I
+END LOOP
+.
+TITLE Example 3: Chimpanzee Sign Learning Times
+Y1LABEL Learning Time Y
+XLABEL Sign
+X3LABEL Figure x. learning time versus sign (for each chimp)
+LEGEND 1 Line = Chimp
+Response versus Sign for each Chimp
+PLOT Y SIGN CHIMP
+.
+TITLE Example 3: Chimpanzee Sign Learning Times
+Y1LABEL Y - Column (= Sign) Means
+XLABEL Column (= Sign) Means
+X3LABEL Figure 3. Prediction lines of Y-sign means vs.
+sign means (for each chimp)
+LEGEND 1 Line = Chimp
+PLOT PRED COLMEAN CHIMP
+.
+TITLE Example 3: Chimpanzee Sign Learning Times
+Y1LABEL Residuals
+XLABEL Row (= Chimp)
+X3LABEL Figure 4. Residuals from row-linear model
+CHAR BLANK ALL
+LINES BLANK ALL
+SPIKE ON ALL
+XLIMITS 1 NDCHIMP
+legend 1
+LET INDEX = CHIMP+(SIGN-4)/10
+PLOT RES INDEX

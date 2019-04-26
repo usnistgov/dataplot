@@ -1,0 +1,22 @@
+----- <~prob\lgndesc.top> Lognormal Description
+
+*Lognormal Description
+
+pdf: f(x) = (1/(x*sqrt(2*pi))) * exp(-0.5*(log(x)**2)    x >= 0
+pdf: f(x) = (1/(z*sqrt(2*pi))) * exp(-0.5*(log(z)**2)    ???
+                with z = (x-u)/s
+
+Moments   : E(X)  =
+            SD(X) =
+
+Type      : Continuous, skewed, moderate-tailed
+Domain    : 0 to +infinity
+Synonym   :
+Genesis   :
+Definition: If X is lognormal,
+            then log(X) is normal.
+
+Reference : Johnson & Kotz,
+            Continuous Univariate Distributions-2,
+            Chapter 14 (pages 112-136).
+

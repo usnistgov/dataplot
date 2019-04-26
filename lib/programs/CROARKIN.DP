@@ -1,0 +1,93 @@
+. This is Dataplot program file   CROARKIN.DP
+. EWMA (Exponentially Weighted Moving Average) Control Chart
+. of NIST Mass Calibration Check Standard data.
+. 1998
+.
+. -----start point-----
+.
+. device 1 x11
+. device 2 postscript
+.
+. -----Step 1--Read in the data-----
+.
+delete y x
+skip 25
+read croark5.dat y x
+.
+. -----Step 2--Form tag variable based on historical data and on new data-----
+.
+let n = number y
+let cutoff = 85.4
+let tag = 2 for i = 1 1 n
+let tag = 1 subset x < cutoff
+.
+. -----Step 3--Plot the raw data-----
+.
+title Mass Calibration Check Standard
+y1label Response
+xlabel Year
+char 1 2
+lines blank blank
+xlimits 75 90
+plot y x tag
+.
+. -----Step 4--Compute mean and standard deviation of historical data-----
+.
+let m = mean y subset tag 1
+let s = sd y subset tag 1
+.
+. -----Step 5--Compute EWMA control chart limits-----
+.
+let lambda = .2
+let fudge = sqrt(lambda/(2-lambda))
+let mean = m for i = 1 1 n
+let upper = mean + 3*fudge*s
+let lower = mean - 3*fudge*s
+.
+. -----Step 6--Plot all data along with mean and EWMA control limits-----
+. -----        (but no EWMA predicted values yet)-----
+.
+x2label Reference Mean and Standard Deviation = ^m   ^s
+x3label EWMA Control Chart    lambda = ^lambda
+lines blank solid dotted dotted
+char * blank blank blank
+plot y mean upper lower versus x
+lines dotted
+draw data    cutoff -19.35    cutoff -19.6
+.
+. -----Step 7--Compute EWMA (predicted) values for the new data-----
+.
+let nm1 = n-1
+let start = 106
+let pred2 = mean
+loop for i = start 1 nm1
+   let ip1 = i+1
+   let yi = y(i)
+   let predi = pred2(i)
+   let predip1 = lambda*yi + (1-lambda)*predi
+   let pred2(ip1) = predip1
+end loop
+.
+. -----Step 7--Plot everything-----
+.
+char * blank * circle blank blank
+char size 2 2 2 1 2 2
+char fill on all
+lines blank dotted blank solid solid solid
+plot y mean versus x and
+plot y pred2 lower upper versus x subset x > cutoff
+lines dotted
+draw data    cutoff -19.35    cutoff -19.6
+.
+. -----Step 8--Plot everything again but with increased resolution-----
+.
+xlimits 84 88
+char * blank * circle blank blank
+char size 2 2 2 1 2 2
+char fill on all
+lines blank dotted blank solid solid solid
+plot y mean versus x and
+plot y pred2 lower upper versus x subset x > cutoff
+lines dotted
+draw data    cutoff -19.35    cutoff -19.6
+

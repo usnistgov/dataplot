@@ -1,0 +1,140 @@
+. This is dataplot macro    SIMPLEX.DP
+.
+. Purpose--Generate a mixture experiment simplex triangular grid.
+.          Display the grid.
+.          Display superimposed data.
+.
+. Date   --December 1996
+.
+. Input  --the following items must pre-exist:
+.          1. Y  = the response variable
+.          2. X1 = the proportion of element 1 (0 to 1)
+.          3. X2 = the proportion of element 2 (0 to 1)
+.          4. X3 = the proportion of element 3 (0 to 1)
+.          5. S1 = the name of element 1 (a string)
+.          6. S2 = the name of element 2 (a string)
+.          7. S3 = the name of element 3 (a string)
+.
+. Output --a triangular simplex grid
+.          with the data points superimposed
+.
+. Example--SKIP 25
+.          READ PUNCH.DAT Y W P O
+.          LET X1 = (W-30)/70
+.          LET X2 = P/70
+.          LET X3 = O/70
+.          LET STRING S1 = Watermelon
+.          LET STRING S2 = Pineapple
+.          LET STRING S3 = Orange
+.          CALL SIMPLEX.DP
+.
+. -----START POINT-----
+.
+FEEDBACK OFF
+ERASE
+.
+. ----Step 1--Define horizontal and vertical percentage units-----
+.         for the landscape orientation image
+.
+LET PXMIN = 20
+LET PXMAX = 80
+LET PYMIN = 18
+LET PYMAX = 88
+.
+LET PXRANGE = PXMAX-PXMIN
+LET PYRANGE = PYMAX-PYMIN
+.
+. ----Step 2--Define the desired increment (in 0 to 1 units)-----
+.         for grid lines on each of the 3 axes
+.
+. LET INC = .10
+LET INC = 1
+
+.
+. ----Step 3--Generate the grid-----
+.
+LOOP FOR XDUMMY = 0 INC 1
+   LET PXSTART = PXMIN + 0.5*PXRANGE*XDUMMY
+   LET PYSTART = PYMIN + PYRANGE*XDUMMY
+   LET PXSTOP = PXMAX - (PXSTART-PXMIN)
+   LET PYSTOP = PYSTART
+   DRAW PXSTART PYSTART PXSTOP PYSTOP
+END LOOP
+.
+LOOP FOR XDUMMY = 0 INC 1
+   LET PXSTART = PXMAX - PXRANGE*XDUMMY
+   LET PYSTART = PYMIN
+   LET PXSTOP = PXSTART - 0.5*PXRANGE*(1-XDUMMY)
+   LET PYSTOP = PYSTART + PYRANGE*(1-XDUMMY)
+   DRAW PXSTART PYSTART PXSTOP PYSTOP
+END LOOP
+.
+LOOP FOR XDUMMY = 0 INC 1
+   LET PXSTART = PXMIN + PXRANGE*XDUMMY
+   LET PYSTART = PYMIN
+   LET PXSTOP = PXSTART + 0.5*PXRANGE*(1-XDUMMY)
+   LET PYSTOP = PYSTART + PYRANGE*(1-XDUMMY)
+   DRAW PXSTART PYSTART PXSTOP PYSTOP
+END LOOP
+.
+. ----Step 4--Annotate the plot-----
+.
+HW 2 1
+JUSTIFICATION CENTER
+.
+LET PXHALF = (PXMIN+PXMAX)/2
+LET PYTHIRD = PYMIN + (PYMAX-PYMIN)/3
+LET PXMINM = PXMIN-5
+LET PXMAXP = PXMAX+5
+LET PYMINM = PYMIN-4
+LET PYMINM2 = PYMIN-7
+LET PYMAXP = PYMAX+3
+LET PYMAXP2 = PYMAX+6
+.
+MOVE PXHALF PYMAXP2; TEXT X1 = 1
+MOVE PXHALF PYMAXP; TEXT ^S1
+MOVE PXMINM PYMINM; TEXT X2 = 1
+MOVE PXMINM PYMINM2; TEXT ^S2
+MOVE PXMAXP PYMINM; TEXT X3 = 1
+MOVE PXMAXP PYMINM2; TEXT ^S3
+.
+. ----Step 5--Superimpose the Design Points-----
+.
+LET K2 = SQRT(2)
+LET K6 = SQRT(6)
+.
+FILL ON
+JUSTIFICATION LEFT
+.
+LET N = NUMBER Y
+LOOP FOR K = 1 1 N
+   LET YK = Y(K)
+   LET X1K = X1(K)
+   LET X2K = X2(K)
+   LET X3K = X3(K)
+   .
+   LET H = (1/K2) * (X3K - X2K)
+   LET V = (1/K6) * (2 - 3*X2K - 3*X3K)
+   .
+   LET PX = PXHALF  + ((PXRANGE)/(2/K2)) * H
+   LET PY = PYTHIRD + ((PYRANGE)/(3/K6)) * V
+   .
+   MOVE PX PY
+   JUSTIFICATION CECE
+   FONT SIMPLEX
+   HW 1 0.75
+   TEXT CIRC()
+   FONT TEKTRONIX
+   HW
+   .
+   MOVE PX PY
+   JUSTIFICATION LECE
+   TEXT  ^YK
+END LOOP
+.
+MOVE 90 3
+HW 1 .5
+JUST LEFT
+TEXT SIMPLEX.DP
+.
+FEEDBACK ON

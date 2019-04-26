@@ -1,0 +1,134 @@
+. This is dataplot macro     annotate_boxplot_subplot.dp     10/9/18
+. Purpose: For a given subplot within the DEX 10-step step 5 box plots, annotate the subplot:
+.             1. write out the within-subplot primary factor designation
+.             2. write out the robustness factor settings below the horizontal axis
+.             3. for the lower left corner subplot only, write out the vertical and horizontal axis labels.
+.          below the horizontal axis of a single sub-plot
+.          for the multiplot for step 5 of the DEX 10-step analysis.
+. Date: 10/9/18
+. Input:
+.   k                   (parameter)  = number of factors
+.   primj               (parameter)  = primary factor ID
+.   jrob1, jrob2, jrob3 (parameters) = the 3 robustness factor settings
+.   leftcorn            (parameter)  = the primj ID of the lower left corner subplot
+.   xplot               (vector)     = automatic horizontal axis values (from existing plot)
+
+.
+. Note: it is assumed that a mean block plot sub-plot has already been plotted out
+.
+. -----start point-----
+.
+let bugswwrf = 1
+. let pausesw = 1
+.
+.
+. -----Step 1: Within each subplot, write out the within-subplot primary factor ID in upper left corner-----
+.
+just left
+let xp = 17; let yp = 81.5; hw 4 2
+if         k > 16 and k <= 20; let xp = 17; let yp = 81.5; hw 4 2
+   else if k > 12 and k <= 16; let xp = 17; let yp = 80.0; hw 4 2
+   else if k > 9 and k <= 12;  let xp = 17; let yp = 81.5; hw 4 2
+   else if k > 6 and k <= 9;   let xp = 17; let yp = 81.5; hw 4 2
+   else if k > 4 and k <= 6;   let xp = 17; let yp = 83.5; hw 4 2
+   else if k <= 4;             let xp = 17; let yp = 83.5; hw 4 2
+end if
+
+move xp yp
+if cx^jprim not exist ; text X^jprim            ; end if
+if cx^jprim     exists; text X^jprim (^cx^jprim); end if
+.
+. -----Step 2.1: From the existing subplot, determine the data-units x-positions of the 8 blocks-----
+.
+. print yplot xplot tagplot
+.
+skip 0
+let xpv = xplot
+retain xpv subset tagplot < 99 subset tagplot 1
+. print xpv
+. pause
+.
+. -----Step 2.2: For each of the 3 robustness factors, write out the 8 -'s or +'s-----
+.
+hw 4 2; just center
+if k >= 12; hw 2.8 1.4; end if
+.
+let yp1 = 13; let yp2 = 7; let yp3 = 1
+if k >= 12; let yp1 = 12; let yp2 = 6; let yp3 = 0; end if
+.
+let nxpv = number xpv
+.
+if k = 3 or n = 8
+   loop for j = 1 1 nxpv
+      let xpvj = xpv(j)
+      let string stout = -; color blue
+      if j = 3 4; let string stout = +; color red; end if
+      moveds xpvj yp1;  text ^stout
+      let string stout = -; color blue
+      if j = 2 4; let string stout = +; color red; end if
+      moveds xpvj yp2;  text ^stout
+   end loop
+end if
+.
+if k >= 4 and n >= 16
+   loop for j = 1 1 nxpv
+      let xpvj = xpv(j)
+      let string stout = -; color blue
+      if j = 5 6 7 8; let string stout = +; color red; end if
+      moveds xpvj yp1;  text ^stout
+      let string stout = -; color blue
+      if j = 3 4 7 8; let string stout = +; color red; end if
+      moveds xpvj yp2;  text ^stout
+      let string stout = -; color blue
+      if j = 2 4 6 8; let string stout = +; color red; end if
+      moveds xpvj yp3;  text ^stout
+   end loop
+end if
+.
+. -----Step 2.3: For each of the 3 robustness factors, write out the factor ID's-----
+.
+hw 4 2; just right; color blue
+if k >= 12; hw 2.8 1.4; end if
+let xp = 21
+move xp yp1; text X^jrob1&:
+move xp yp2; text X^jrob2&:
+if k >= 4 and n >= 16; move xp yp3; text X^jrob3&:; end if
+.
+. -----Step 3: For the lower left corner subplot only, write out the vertical and horizontal axis text-----
+.
+if jprim = leftcorn
+   let vxp = -5;     let vyp = 55; let hxp = 50; let hyp = -10;
+   if         k > 16 and k <= 20;
+                     let vxp = -5; let vyp = 55; let hxp = 50; let hyp = -10;
+      else if k > 12 and k <= 16;
+                     let vxp = -5; let vyp = 55; let hxp = 50; let hyp = -10;
+      else if k > 9  and k <= 12;
+                     let vxp = -12; let vyp = 55; let hxp = 50; let hyp = -10;
+      else if k > 6  and k <= 9;
+                     let vxp = -5; let vyp = 55; let hxp = 50; let hyp = -10;
+      else if k > 4  and k <= 6;
+                     let vxp = -5; let vyp = 55; let hxp = 50; let hyp = -10;
+      else if k <= 4;
+                     let vxp = -5; let vyp = 55; let hxp = 50; let hyp = -5;
+   end if
+   .
+   delete yjunk; let yjunk = y
+   let yjunk = abs(yjunk)
+   let numb = maximum yjunk
+   call number_of_digits.dp
+   let numint3 = 3*numint
+   let vxp = -numint3 - 2
+   if k <= 4; let vxp = -numint3 + 2; end if
+   . print numb numint numint3 vxp
+   . pause
+   .
+   if cy not exist; let string stout = Mean Y      ; end if
+   if cy exists   ; let string stout = Mean Y (^cy); end if
+   move vxp vyp; just center; direction vertical; text ^stout
+   direction horizontal
+   .
+   move hxp hyp; just center; text Robustness Factor Setting
+end if
+.
+
+

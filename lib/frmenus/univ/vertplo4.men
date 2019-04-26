@@ -1,0 +1,37 @@
+This is file vertplo4.men--Vertical Plot on Quarters
+ 
+--------------------
+ 1. Vertical Plot on Quarters
+ 2. PLOT Y X X
+ 3.
+ 4. Vertical   Axis Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Line Types for Data:
+ 6. @CE 2 0 33 50 * gui-line
+ 7. Character Type for Data:
+ 7. @CE 3 0 33 50 * gui-char
+ 8. Character Fill for Data:
+ 8. @CE 4 0 33 50 * gui-ooff
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 1 50 *
+12.
+13.
+14. Generate the Vertical Plot?
+--------------------
+GR FE
+DELETE ZSEQ
+DELETE ZTAG
+LET ZN = NUMBER _1 _5
+LET ZSEQ = SEQUENCE 1 1 ZN _5
+LET ZTAG = CODE4 ZSEQ _5
+.
+@IF 2 0 LINES _2 ALL
+@IF 3 0 CHARACTERS _3 ALL
+@IF 4 0 CHARACTER FILL _4 ALL
+.
+PLOT _1 ZTAG ZTAG _5
+--------------------
+WEB HELP PLOT
+--------------------

@@ -1,0 +1,27 @@
+----- <~prob\ppsh1cprob.top> Censored Probability Plot for One Shape Parameter Continuous Distributions
+
+Generate Censored Probability Plot (one shape parameters)
+
+Generate Probability Plot for Continuous Distributions
+with One Shape Parameters (Censored Case)
+
+McLeish                                   <xemf: ~prob\ppmclce.men>
+Muth                                      <xemf: ~prob\ppmutce.men>
+Ogive                                     <xemf: ~prob\ppogice.men>
+Power                                     <xemf: ~prob\pppowce.men>
+Power Normal                              <xemf: ~reli\pppnrce.men>
+Reciprocal                                <xemf: ~prob\pprecce.men>
+Reflected Power                           <xemf: ~prob\pprpoce.men>
+Skew Double Exponential (Skew Laplace)    <xemf: ~prob\ppsdece.men>
+Skew Normal                               <xemf: ~prob\ppsnce.men>
+Slope                                     <xemf: ~prob\ppsloce.men>
+T                                         <xemf: ~prob\pptce.men>
+Topp and Leone                            <xemf: ~prob\pptopce.men>
+Triangular                                <xemf: ~prob\pptrice.men>
+Tukey-Lambda (symmetric)                  <xemf: ~prob\pplamce.men>
+Von Mises                                 <xemf: ~prob\ppvonce.men>
+Wald                                      <xemf: ~reli\ppwalce.men>
+Weibull (minimum case)                    <xemf: ~reli\ppwei1ce.men>
+Weibull (maximum case)                    <xemf: ~reli\ppwei2ce.men>
+Wrapped Cauchy                            <xemf: ~prob\ppwcace.men>
+

@@ -1,0 +1,23 @@
+. This is dataplot test program HARE.DP
+.
+. Purpose--Test Simplex Region Fill Program   SIMPLEXR.DP
+.
+. Source--Lynne Hare notes--page 20
+.
+. Date--December 1996
+.
+. -----START POINT-----
+.
+DEVICE 2 POSTSCRIPT
+.
+LET X1MIN = 0
+LET X1MAX = .5
+LET X2MIN = .3
+LET X2MAX = .8
+LET X3MIN = .1
+LET X3MAX = .5
+
+LET GRIDINC = .1
+
+CALL SIMPLEXR.DP
+.

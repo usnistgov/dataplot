@@ -1,0 +1,35 @@
+----- <~dataload\core.top> Load Built-in Core data Files
+
+Load Built-in Core Data Files
+
+Univariate
+   LEW.DAT       Beam deflections            <xcf: ~dataload\LEW.DP>
+   MAVRO.DAT     Filter transmittance        <xcf: ~dataload\MAVRO.DP>
+   SUNSPOT2.DAT  Monthly sunspot             <xcf: ~dataload\SUNSPOT2.DP>
+   SINSIN.DAT    Multiple sine curves        <xcf: ~dataload\SINSIN.DP>
+
+Regression
+   BERGER1.DAT   Alaska Pipeline cracks       <xcf: ~dataload\BERGER1.DP>
+   PONTIUS.DAT   Load cell calibration        <xcf: ~dataload\PONTIUS.DP>
+   SPIEGEL.DAT   Nuclear tank calibration     <xcf: ~dataload\SPIEGEL.DP>
+
+Multi-factor
+   BATTADD2.DAT  Battery Additive (2-level)   <xcf: ~dataload\BATTADD2.DP>
+   SPLETT2.DAT   Charpy testing (4-level)     <xcf: ~dataload\SPLETT2.DP>
+   DRAFT69B.DAT  1969 draft lottery           <xcf: ~dataload\DRAFT69B.DP>
+   SHEESLE2.DAT  Defective lighbulbs          <xcf: ~dataload\SHEESLE2.DP>
+
+DEX: Design of Experiment
+   BOXSPRIN.DAT  2**3  Defective springs      <xcf: ~dataload\BOXSPRIN.DP>
+   SPLETT3.DAT   2**3  Eddy Current           <xcf: ~dataload\SPLETT3.DP>
+   SPLETT4.DAT   2**4  Eddy Current           <xcf: ~dataload\SPLETT4.DP>
+
+Multivariate
+   AUTO83B.DAT   EPA auto miles per gallon    <xcf: ~dataload\AUTO83B.DP>
+   IRIS.DAT      Classic Fisher iris data     <xcf: ~dataload\IRIS.DP>
+   AUTO83.DAT    EPA auto miles per gallon    <xcf: ~dataload\AUTO83.DP>
+
+Quality & SPC: Statistical Process Control
+   CROARK3.DAT   NIST SEM line width SRM      <xcf: ~dataload\CROARK3.DP>
+   UGIANSKY.DAT  Interlab stress corrosion    <xcf: ~dataload\UGIANSKY.DP>
+

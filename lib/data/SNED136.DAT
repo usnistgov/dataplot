@@ -1,0 +1,30 @@
+This is Dataplot data file     SNED136.DAT
+Snedecor & Cochran Linear Regression Example:
+   Women's Systolic Blood Pressure versus Age
+Question: What linear function related blodd pressure to age?
+ 
+Source--Snedecore, George W. and Cochran , William G. (1937).
+        Statistical Methods. Sixth Edition.
+        The Iowa State University Press, Ames, Iowa, page 136.
+ 
+Number of observations             =  5
+Number of variables per line image =  2
+Order of variables on a line image--
+   1. Response Variable Y = Systolic Blood Pressure
+   2. Factor 1            = Age
+ 
+To read this into Dataplot--
+   SKIP 25
+   READ SNED136.DAT Y X
+ 
+ 
+ 
+ 
+       Y            X
+Blood Pressure     Age
+------------------------
+      114           35
+      124           45
+      143           55
+      158           65
+      166           75

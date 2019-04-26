@@ -1,0 +1,19 @@
+----- <~dataloex\evacast.top> Load & Execute Extreme Value Data: Castillo
+
+Load & Execute Extreme Value Data: Castillo
+
+CASTILL1.DAT  Max yearly wind speeds       <xcf: ~dataloex\CASTILL1.DP>
+CASTILL2.DAT  Max yearly river discharge   <xcf: ~dataloex\CASTILL2.DP>
+CASTILL3.DAT  Max yearly wave height       <xcf: ~dataloex\CASTILL3.DP>
+CASTILL4.DAT  Between-phone-call wait time <xcf: ~dataloex\CASTILL4.DP>
+CASTILL5.DAT  Earthquake epicenter dist.   <xcf: ~dataloex\CASTILL5.DP>
+CASTILL6.DAT  Chain link strength          <xcf: ~dataloex\CASTILL6.DP>
+CASTILL7.DAT  Elect. insulation lifetime   <xcf: ~dataloex\CASTILL7.DP>
+CASTILL8.DAT  Wire cycles-to-failure       <xcf: ~dataloex\CASTILL8.DP>
+CASTILL9.DAT  Philadelphia yearly precip.  <xcf: ~dataloex\CASTILL9.DP>
+CASTIL10.DAT  Max wave height (Norway)     <xcf: ~dataloex\CASTIL10.DP>
+CASTIL11.DAT  Max yearly riv disch (Macon) <xcf: ~dataloex\CASTIL11.DP>
+CASTIL12.DAT  Max yearly riv disch (Hawk.) <xcf: ~dataloex\CASTIL12.DP>
+CASTIL13.DAT  Oldest man's age in Sweden   <xcf: ~dataloex\CASTIL13.DP>
+CASTIL14.DAT  Oldest woman's age in Sweden <xcf: ~dataloex\CASTIL14.DP>
+

@@ -1,0 +1,11 @@
+-----  <~dexcomp\clsdload.top> Load Latin Square Designs
+
+Load Data Sets: Latin Square Designs
+
+Latin Square Designs
+   BOXAUTO.DAT   Auto Emission            <xcf: ~dataload\BOXAUTO.DP>
+
+Graeco-Latin Square Designs
+   BOXCLOTH.DAT  Cloth wear (replicate I only) <xcf: ~dataload\BOXCLOTH.DP>
+   BOXCLOT2.DAT  Cloth wear (full data)   <xcf: ~dataload\BOXCLOT2.DP>
+

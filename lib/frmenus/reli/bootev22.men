@@ -1,0 +1,166 @@
+This is file bootev22.men--Bootstrap Confidence Intervals for Frechet (Maximum)
+ 
+--------------------
+ 1. Frechet (Maximum) Bootstrap Confidence Intervals
+ 2. BOOTSTRAP FRECHET PLOT Y
+ 3.
+ 4. The Frechet (Maximum) PPCC/probability plot generates point
+ 5. estimates for the location, scale, and shape
+ 6. parameters.  This menu uses the bootstrap to generate
+ 7. confidence intervals for these parameters.  Both
+ 8. uncensored and censored data are supported.  Grouped
+ 9. data is not.  Censoring is only supported for the PPCC plot.
+10.
+11. If a censoring variable is specified, it should contain
+12. a value of 1 to signify a failure time and a value of 0
+13. to signify a censoring time.
+14.
+15. Response Variable:
+15. @CE 1 0 42 50 ? gui-variable
+16. Optional Censoring Variable:
+16. @CE 2 0 42 50 ? gui-variable
+17.
+18. Number of bootstrap samples:
+18. @CE 3 0 42 50 *
+19. Select goodness of fit critierion:
+20. @CE 4 1 1 30 PPCC
+21. @CE 4 2 1 30 Kolmogorov-Smirnov
+22. Maximum Value for gamma (omit for default):
+22. @CE 5 0 42 50 *
+23. Maximum Value for gamma (omit for default):
+23. @CE 6 0 42 50 *
+24.
+25. Significance Level (default=0.05):
+25. @CE 7 0 42 50 ? *
+26.
+27. Subset/Except/For Specification:
+28. @CE 8 0 1 50 *
+29.
+30.
+31. Compute Bootstrap Confidence Intervals?
+--------------------
+GR FE
+SET MINMAX 2
+LET NUMBOOT = 100
+@IF 3 0 LET NUMBOOT = _3
+let numboot = min(1000,numboot)
+let numboot = max(100,numboot)
+let icensor = 1
+@IF 2 0 let icensor = 3
+@IF 4 2 let icensor = icensor + 1
+let alpha = 0.05
+let alpha = _7
+if alpha <= 0
+   let alpha = 0.05
+end of if
+if alpha >= 1
+   let alpha = 0.05
+end of if
+if alpha > 0.5
+   let alpha = 1 - alpha
+end of if
+let xqlow = alpha/2
+let xqupp = 1 - alpha/2
+delete gamma1 gamma2
+let gamma1 = _5
+let gamma2 = _6
+.
+bootstrap samples numboot
+set maximum likelihood percentiles default
+device 1 font simplex
+multiplot 2 3
+multiplot corner coordinates 0 0 100 100
+multiplot scale factor 2
+label
+title case asis
+label case asis
+case asis
+title displacement 2
+x2label displacement 13
+x3label displacement 18
+y1label Parameter Estimate
+x1label
+x2label Bootstrap Sample
+title Bootstrap Plot
+line color blue red green black
+limits
+if icensor = 1
+   bootstrap frechet plot _1 _8
+end of if
+if icensor = 2
+   bootstrap frechet ks plot _1 _8
+end of if
+if icensor = 3
+   bootstrap frechet censored plot _1 _2 _8
+end of if
+ if icensor = 4
+   bootstrap frechet censored plot _1 _2 _8
+   . bootstrap frechet ks censored plot _1 _8
+end of if
+line color black all
+.
+delete aloc ascale agamma
+skip 0
+read dpst1f.dat aloc ascale agamma
+y1label
+x2label
+title Location Parameter
+let amed = median aloc
+let amean = mean aloc
+let asd = sd aloc
+x2label Median = ^amed, Mean = ^amean
+x3label SD = ^asd
+histogram aloc
+title Scale Parameter
+let amed = median ascale
+let amean = mean ascale
+let asd = sd ascale
+x2label Median = ^amed, Mean = ^amean
+x3label SD = ^asd
+histogram ascale
+title Gamma Parameter
+let amed = median agamma
+let amean = mean agamma
+let asd = sd agamma
+x2label Median = ^amed, Mean = ^amean
+x3label SD = ^asd
+histogram agamma
+x3label displacement
+end of multiplot
+.
+let xq = xqlow
+let loc95low = xq quantile aloc
+let xq = xqupp
+let loc95upp = xq quantile aloc
+let xq = xqlow
+let sca95low = xq quantile ascale
+let xq = xqupp
+let sca95upp = xq quantile ascale
+let xq = xqlow
+let gam95low = xq quantile agamma
+let xq = xqupp
+let gam95upp = xq quantile agamma
+.
+device 1 font tektronix
+window corner coordinates 50 0 100 50
+justification left
+height 4
+move 5 70
+text Confidence Interval for Location:
+move 5 63
+text (^loc95low,^loc95upp)
+move 5 50
+text Confidence Interval for Scale:
+move 5 43
+text (^sca95low,^sca95upp)
+move 5 30
+text Confidence Interval for Gamma:
+move 5 23
+text (^gam95low,^gam95upp)
+window corner coordinates 0 0 100 100
+height
+title
+label
+--------------------
+WEB HELP DISTRIBUTIONAL BOOTSTRAP
+--------------------

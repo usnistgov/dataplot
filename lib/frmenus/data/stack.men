@@ -1,0 +1,32 @@
+This is file stack.men--Stack columns and create group-id variable
+ 
+--------------------
+ 1. Stack 
+ 2. LET Y GROUPID = STACK Y1 Y2 .. YK
+ 3.
+ 4. Many Dataplot commands expect the data to be
+ 5. in the format of a response variable and a 
+ 6. corresponding group-id variable.  However, many
+ 7. datasets may have this data in the form where
+ 8. each group is a separate column.  This menu will
+ 9. convert the data to form needed by Dataplot.
+ 8. 
+ 9. List of variables to stack:
+10. @CE 1 0 1 50 ? gui-variable
+11. 
+12. Variable to store the stacked response data:
+12. @CE 2 0 42 50 ? gui-none
+13. Variable to store the group-id data:
+13. @CE 3 0 42 50 ? gui-none
+14.
+15. Subset/Except/For Specification:
+15. @CE 4 0 1 50 *
+16.
+17.
+18. Carry out the Stack?:
+--------------------
+GR FE
+LET _2 _3 = STACK  _1  _4
+--------------------
+WEB HELP STACK
+--------------------

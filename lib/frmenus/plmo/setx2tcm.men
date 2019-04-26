@@ -1,0 +1,44 @@
+This is file setx2tcm.men--Set X2TIC MARK Attributes
+ 
+--------------------
+ 1. Set X2TIC MARK  Attributes
+ 2. X2TIC MARK COLOR RED; X2TIC MARK SIZE 3
+ 3.
+ 4. X2 Tic Marks:
+ 4. @CE 1 0 42 50 * gui-ooff
+ 5. Color for X2 Tic Marks:
+ 5. @CE 2 0 42 50 * gui-color
+ 6. Lower Offset for X2 Tic Marks:
+ 6. @CE 3 0 42 50 *
+ 7. Upper Offset for X2 Tic Marks:
+ 7. @CE 4 0 42 50 *
+ 8. Position for X2 Tic Marks:
+ 9. @CE 5 1  5 15 outside
+ 9. @CE 5 2 17 27 inside
+ 9. @CE 5 3 29 39 through
+10. Size for X2 Tic Marks (0 to 100 units):
+10. @CE 6 0 42 50 * 
+11. Number of Major Tic Marks for X2 Axis:
+11. @CE 7 0 42 50 *
+12. Number of Minor Tic Marks for X2 Axis:
+12. @CE 8 0 42 50 *
+13. Thickness for X2 Tic Marks:
+13. @CE 9 0 42 50 * gui-thick
+14.
+15.
+16. Set X2TIC MARK Attributes?
+--------------------
+PC FE
+@IF 1 0 X2TIC MARKS _1
+@IF 2 0 X2TIC MARKS COLOR _2
+X2TIC MARKS OFFSET _3 _4
+@IF 5 1 X2TIC MARKS POSITION OUTSIDE
+@IF 5 2 X2TIC MARKS POSITION INSIDE
+@IF 5 3 X2TIC MARKS POSITION THROUGH
+@IF 6 0 X2TIC MARKS SIZE _6
+@IF 7 0 MAJOR X2TIC MARKS NUMBER _7
+@IF 8 0 MINOR X2TIC MARKS NUMBER _8
+@IF 9 0 X2TIC MARKS THICKNESS _9
+--------------------
+WEB HELP TIC MARKS
+--------------------

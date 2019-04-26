@@ -1,0 +1,19 @@
+----- <~dexopt\viewdesi.top> View Response Surface Designs
+ 
+View Response Surface Designs
+ 
+   INDEX OF RESPONSE SURFACE EXPERIMENT DESIGNS
+
+ Name                           Number   Number
+  of                              of       of 
+Design                          Factors  Runs
+............................................
+ 
+2**2 Design with Center Point     2        5  <xcl: LIST 2TO2WCP.DAT>
+Star Design with Center Point     2        5  <xcl: LIST STAR2WCP.DAT>
+2-Factor Composite                2       12  <xcl: LIST CC2.DAT>
+
+2**3 Design with Center Point     3        9  <xcl: LIST 2TO3WCP.DAT>
+Star Design with Center Point     3        9  <xcl: LIST STAR3WCP.DAT>
+3-Factor Composite                3       20  <xcl: LIST CC3.DAT>
+

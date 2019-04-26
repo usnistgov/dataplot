@@ -1,0 +1,48 @@
+----- <~prob\sha1hisp.top> Relative Histogram with Overlaid PDF
+
+Relative Histogram with Overlaid PDF
+
+Generate a relative histogram and overlay the
+specified probability density function for
+distributions with one shape parameters.
+
+Asymmetric Double Exponential (Laplace)   <xemf: ~prob\adehispd.men>
+Bradford                                  <xemf: ~prob\brahispd.men>
+Chi                                       <xemf: ~prob\chhispd.men>
+Chi-Square                                <xemf: ~prob\chshispd.men>
+Double Gamma                              <xemf: ~prob\dgahispd.men>
+Double Weibull                            <xemf: ~prob\dwehispd.men>
+Error (Subbotin)                          <xemf: ~prob\subhispd.men>
+Fatigue Life                              <xemf: ~prob\flhispd.men>
+Folded T                                  <xemf: ~prob\fthispd.men>
+Frechet (minimum) (extreme value type 2)  <xemf: ~prob\ev21hisp.men>
+Frechet (maximum) (extreme value type 2)  <xemf: ~prob\ev22hisp.men>
+Gamma                                     <xemf: ~prob\gamhispd.men>
+Generalized Extreme Value (Minimum)       <xemf: ~prob\gev1hisp.men>
+Generalized Extreme Value (Maximum)       <xemf: ~prob\gev2hisp.men>
+Generalized Half-Logistic                 <xemf: ~prob\ghfhispd.men>
+Generalized Logistic                      <xemf: ~prob\glohispd.men>
+Generalized Pareto                        <xemf: ~prob\gephispd.men>
+Geometric Extreme Exponential             <xemf: ~prob\geehispd.men>
+Inverted Gamma                            <xemf: ~prob\igahispd.men>
+Inverted Weibull                          <xemf: ~prob\iwehispd.men>
+Log Double Exponential (Log Laplace)      <xemf: ~prob\ldehispd.men>
+Log Gamma                                 <xemf: ~prob\lgahispd.men>
+Log Logistic                              <xemf: ~prob\llghispd.men>
+Lognormal                                 <xemf: ~prob\lgnhispd.men>
+Maxwell                                   <xemf: ~prob\maxhispd.men>
+McLeish                                   <xemf: ~prob\mclhispd.men>
+Power Normal                              <xemf: ~prob\pnrhispd.men>
+Reciprocal                                <xemf: ~prob\rechispd.men>
+Skew Double Exponential (Skew Laplace)    <xemf: ~prob\sdehispd.men>
+Skew Normal                               <xemf: ~prob\snhispd.men>
+T                                         <xemf: ~prob\thispd.men>
+Topp and Leone                            <xemf: ~prob\tophispd.men>
+Triangular                                <xemf: ~prob\trihispd.men>
+Tukey-Lambda (symmetric)                  <xemf: ~prob\lamhispd.men>
+Von Mises                                 <xemf: ~prob\vonhispd.men>
+Wald                                      <xemf: ~prob\walhispd.men>
+Weibull (minimum case)                    <xemf: ~prob\wei1hisp.men>
+Weibull (maximum case)                    <xemf: ~prob\wei2hisp.men>
+Wrapped Cauchy                            <xemf: ~prob\wcahispd.men>
+

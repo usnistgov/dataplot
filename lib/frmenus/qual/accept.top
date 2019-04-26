@@ -1,0 +1,36 @@
+----- <~qual\accept.top> Acceptance Sampling
+ 
+Acceptance Sampling
+ 
+Discussion                                   <~qual\discacce.top>
+NIST/SEMATECH Handbook (Acceptance Sampling) <xcl: web handbook acceptance sampling>
+ 
+Single Sampling
+   NIST/SEMATECH Handbook (Single Sampling) <xcl: web handbook single sampling>
+   Operating Characterstic (OC) Curve (type B) <xemf: ~qual\ocssb.men>
+   Operating Characterstic (OC) Curve (type A) <xemf: ~qual\ocssa.men>
+   Average Outgoing Quality (AOQ) Curve        <xemf: ~qual\aoqss.men>
+   Average Total Inspection (ATI) Curve        <xemf: ~qual\atiss.men>
+   Generate a Sampling Plan                    <xemf: ~qual\planss.men>
+
+Double Sampling
+   NIST/SEMATECH Handbook (Double Sampling) <xcl: web handbook double sampling>
+   Operating Characterstic (OC) Curve           <xemf: ~qual\ocds.men>
+   Average Outgoing Quality (AOQ) Curve         <xemf: ~qual\aoqds.men>
+   Average Total Inspection (ATI) Curve         <xemf: ~qual\atids.men>
+
+Multiple Sampling
+   NIST/SEMATECH Handbook (Multiple Sampling) <xcl: web handbook multiple sampling>
+
+Sequential Sampling
+   NIST/SEMATECH Handbook (Sequential Sampling) <xcl: web handbook sequential sampling>
+   Accept/Reject Plot                        <xemf: ~qual\accrejss.men>
+
+Skip Lot Sampling
+   NIST/SEMATECH Handbook (Skip Lot Sampling) <xcl: web handbook skip lot sampling<
+   Operating Characteristic (OC) Curve       <xemf: ~qual\ocsl.men>
+   Average Sample Number (ASN) Curve         <xemf: ~qual\asnsl.men>
+
+Continuous Sampling  (CSP-1)
+   Operating Characteristic (OC) Curve       <xemf: ~qual\occsp1.men>
+

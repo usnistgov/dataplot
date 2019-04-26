@@ -1,0 +1,29 @@
+This is file e691bph1.men--Box Plot of h-consistency statistic: lab within materials
+ 
+--------------------
+ 1. Box Plot of h-Consistency Statistic: Lab within Materials
+ 2. CALL E691BPH1.DP
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Material ID Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Lab ID Variable:
+ 6. @CE 3 0 42 50 ? gui-variable
+ 7.
+ 8. Title for the Data Set:
+ 9. @CE 4 0 1 50 ? 
+10.
+11.
+12. Generate the h-Consistency Statistic Box Plot?:
+--------------------
+FEEDBACK OFF
+LET Y = _1
+LET MATID = _2
+LET LABID = _3
+LET STRING E691TIT = _4
+CALL E691BPH1.DP
+FEEDBACK ON
+--------------------
+WEB HELP E691 INTERLAB
+--------------------

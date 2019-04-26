@@ -1,0 +1,28 @@
+This is file durbin.men--Durbin 2-Factor Anova
+ 
+--------------------
+ 1. Durbin 2-Factor Nonparametric Analysis of Variance
+ 2. DURBIN TEST Y X1 X2
+ 3.
+ 4. Note: The Durbin test is used for incomplete
+ 5. randomized block designs.  The Friedman test
+ 6. is used for complete block designs.
+ 7
+ 8. Response Variable:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9. First Factor Variable:
+ 9. @CE 2 0 42 50 ? gui-variable
+10. Second Variable:
+10. @CE 3 0 42 50 ? gui-variable
+11.
+12. Subset/Except/For Specification:
+13. @CE 4 0 1 50 *
+14.
+15.
+16. Compute Durbin ANOVA?
+--------------------
+AN FE
+DURBIN TEST _1 _2 _3 _4
+--------------------
+WEB HELP DURBIN TEST
+--------------------

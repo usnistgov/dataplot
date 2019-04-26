@@ -1,0 +1,63 @@
+. This is Dataplot macro file    JONES.DP
+. Denisty of Water as a Function of Temperature
+. Frank Jones, June 1998
+.
+. -----start point-----
+.
+DEVICE 1 X11
+DEVICE 2 POSTSCRIPT
+.
+MULTIPLOT 3 3
+.
+SKIP 25
+READ JONES.DAT Y X
+.
+TITLE SIZE 5
+LABEL SIZE 4
+TIC LABEL SIZE 5
+X3LABEL AUTOMATIC
+PLOT Y X
+YLIMITS -.1 .1
+.
+CAPTURE jones.out
+   .
+   LINEAR FIT Y X
+   TITLE Linear    Res. SD = ^RESSD
+   PLOT RES X
+   .
+   QUADRATIC FIT Y X
+   TITLE Quadratic    Res. SD = ^RESSD
+   PLOT RES X
+   .
+   CUBIC FIT Y X
+   TITLE Cubic    Res. SD = ^RESSD
+   PLOT RES X
+   .
+   QUARTIC FIT Y X
+   TITLE Quartic    Res. SD = ^RESSD
+   PLOT RES X
+   .
+   QUINTIC FIT Y X
+   TITLE Quintic    Res. SD = ^RESSD
+   PLOT RES X
+   .
+   SEXTIC FIT Y X
+   TITLE Sextic    Res. SD = ^RESSD
+   PLOT RES X
+   .
+   SEPTIC FIT Y X
+   TITLE Septic    Res. SD = ^RESSD
+   PLOT RES X
+   .
+END CAPTURE
+.
+MULTIPLOT OFF
+JUSTIFICATION CENTER
+MOVE 50 95
+HW 3 2
+TEXT .Patterson & Morris Data (Sample 8 Only)
+.
+move 95 5
+just right
+hw 1 .75
+TEXT jones.dp

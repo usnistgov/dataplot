@@ -1,0 +1,24 @@
+----- <~dexcomp\stattech.top> Comparative Designs: Quantitative Techniques
+ 
+Comparative Designs: Quantitative Techniques
+
+1 Response, 1 Factor:
+    F Test for Homogeneous Locations         <xemf: ~stat\ftestloc.men>
+    Bartlett Test for Homogeneous Variances  <xemf: ~stat\bartlett.men>
+    Levene Test for Homogeneous Variances    <xemf: ~stat\levene.men>
+    Anderson Darling K Sample Test           <xemf: ~stat\andrdark.men>
+    Tabulate Statistics for Grouped Data     <xemf: ~stat\tabulate.men>
+    Kruskal-Wallis 1-Factor ANOVA            <xemf: ~stat\kruskal.men>
+
+2 Factors
+    Cross-Tabulate Statistics for Grouped Data <xemf: ~stat\crosstab.men>
+    Chi-Square Test for Independence         <xemf: ~stat\chisqind.men>
+
+General Multi-Factor (1+ Factors)
+    Analysis of Variance (Balanced)          <xemf: ~stat\anova.men>
+    Analysis of Variance (Balanced, with Graphics) <xemf: ~stat\anovag.men>
+    Median Polish                            <xemf: ~stat\medpol.men>
+    Median Polish (with Graphics)            <xemf: ~stat\medpolg.men>
+    Yates Analysis (Factors have 2 Levels)   <xemf: ~stat\yates.men>
+    Yates Analysis Principle Hessian Directions <xemf: ~stat\dexphd.men>
+

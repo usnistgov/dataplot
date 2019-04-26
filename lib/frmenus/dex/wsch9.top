@@ -1,0 +1,22 @@
+----- <~dex\wsch9.top> Chapter 9: Fractional Factorial Designs
+
+Chapter 9: Fractional Factorial Designs
+
+View:
+ BOXCLEAN.DAT  2**(4-1)  Cleanser stab. <xcl: LIST ~BOXCLEAN.DAT>
+ BOXREACT.DAT  2**5      Chem. reactor  <xcl: LIST ~BOXREACT.DAT>
+ BOXREAC2.DAT  2**(5-1)  Chem. reactor  <xcl: LIST ~BOXREAC2.DAT>
+ BOXBIKE2.DAT  2**(7-4)  Bike speed     <xcl: LIST ~BOXBIKE2.DAT>
+ BOXBIKE3.DAT  2**(7-3)  Bike speed     <xcl: LIST ~BOXBIKE3.DAT>
+ BOXFILT.DAT   2**(7-4)  Filtrat. time  <xcl: LIST ~BOXFILT.DAT>
+ BOXFILT2.DAT  2**(7-3)  Filtrat. time  <xcl: LIST ~BOXFILT2.DAT>
+
+Load:
+ BOXCLEAN.DAT  2**(4-1) <x2cl: SKIP 25; READ BOXCLEAN.DAT Y X1 TO X4>
+ BOXREACT.DAT  2**5     <x2cl: SKIP 25; READ BOXREACT.DAT Y X1 TO X5>
+ BOXREAC2.DAT  2**(5-1) <x2cl: SKIP 25; READ BOXREAC2.DAT Y X1 TO X5>
+ BOXBIKE2.DAT  2**(7-4) <x2cl: SKIP 25; READ BOXBIKE2.DAT Y X1 TO X7>
+ BOXBIKE3.DAT  2**(7-3) <x2cl: SKIP 25; READ BOXBIKE3.DAT Y X1 TO X7>
+ BOXFILT.DAT   2**(7-4) <x2cl: SKIP 25; READ BOXFILT.DAT Y X1 TO X7>
+ BOXFILT2.DAT  2**(7-3) <x2cl: SKIP 25; READ BOXFILT2.DAT Y X1 TO X7>
+

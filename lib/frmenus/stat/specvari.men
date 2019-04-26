@@ -1,0 +1,72 @@
+This is file specvari.men--Specify variables
+ 
+---------------------
+ 1. Specify Variables
+ 2.
+ 3.
+ 4.   Y:                   X:
+ 4. @CE 1 0 6 16 *
+ 4. @CE 2 0 27 37 *
+ 5.
+ 6.  Y1:                  X1:
+ 6. @CE 3 0 6 16 *
+ 6. @CE 4 0 27 37 *
+ 7.  Y2:                  X2:
+ 7. @CE 5 0 6 16 *
+ 7. @CE 6 0 27 37 *
+ 8.  Y3:                  X3:
+ 8. @CE 7 0 6 16 *
+ 8. @CE 8 0 27 37 *
+ 9.  Y4:                  X4:
+ 9. @CE 9 0 6 16 *
+ 9. @CE 10 0 27 37 *
+10.  Y5:                  X5:
+10. @CE 11 0 6 16 *
+10. @CE 12 0 27 37 *
+11.  Y6:                  X1
+11. @CE 13 0 6 16 *
+11. @CE 14 0 27 37 *
+12.  Y7:                  X7:
+12. @CE 15 0 6 16 *
+12. @CE 16 0 27 37 *
+13.  Y8:                  X8:
+13. @CE 17 0 6 16 *
+13. @CE 18 0 27 37 *
+14.  Y9:                  X9:
+14. @CE 19 0 6 16 *
+14. @CE 20 0 27 37 *
+15. Y10:                 X10:
+15. @CE 21 0 6 16 *
+15. @CE 22 0 27 37 *
+16.
+17. Subset/Except/For Specification:
+18. @CE 23 0 1 50 *
+19.
+20.
+21.  Specify the Variables?:
+--------------------
+GR SU
+set coded variable _Y = _1
+set coded variable _X = _2
+set coded variable _Y1 = _3
+set coded variable _X1 = _4
+set coded variable _Y2 = _5
+set coded variable _X2 = _6
+set coded variable _Y3 = _7
+set coded variable _X3 = _8
+set coded variable _Y4 = _9
+set coded variable _X4 = _10
+set coded variable _Y5 = _11
+set coded variable _X5 = _12
+set coded variable _Y6 = _13
+set coded variable _X6 = _14
+set coded variable _Y7 = _15
+set coded variable _X7 = _16
+set coded variable _Y8 = _17
+set coded variable _X8 = _18
+set coded variable _Y9 = _19
+set coded variable _X9 = _20
+set coded variable _Y10 = _21
+set coded variable _X10 = _22
+set coded variable _Q = _23
+--------------------

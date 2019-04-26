@@ -1,0 +1,28 @@
+----- <~dataprin\timeothe.top> Print (to Printer) Time Series Data: Other
+
+Print (to Printer) Time Series Data: Other
+
+SUNSPOT.DAT*  Monthly sunspot             <xcf: ~dataprin\SUNSPOT.DP>
+SUNSPOT2.DAT  Yearly sunspot              <xcf: ~dataprin\SUNSPOT2.DP>
+
+GEAR.DAT      Gear diameters (Ishikawa)   <xcf: ~dataprin\GEAR.DP>
+CLEAR.DAT     Component clearances        <xcf: ~dataprin\CLEAR.DP>
+MICHELSO.DAT  Michelson speed of light exp <xcf: ~dataprin\MICHELSO.DP>
+LIN.DAT       Polonium 209 SRM conc       <xcf: ~dataprin\LIN.DP>
+
+SIN1.DAT   Sinusoidal (freq = .1)         <xcf: ~dataprin\SIN1.DP>
+SIN2.DAT   Sinusoidal (freq = .2)         <xcf: ~dataprin\SIN2.DP>
+SIN3.DAT   Sinusoidal (freq = .3)         <xcf: ~dataprin\SIN3.DP>
+SIN4.DAT   Sinusoidal (freq = .4)         <xcf: ~dataprin\SIN4.DP>
+
+RANDN.DAT     Normal random numbers       <xcf: ~dataprin\RANDN.DP>
+RANDU.DAT     Uniform random numbers      <xcf: ~dataprin\RANDU.DP>
+RANDWALK.DAT  Random walk                 <xcf: ~dataprin\RANDWALK.DP>
+FLICKER.DAT   Flicker noise               <xcf: ~dataprin\FLICKER.DP>
+LOTTERY3.DAT  Maryland "pick 3" lott. #'s <xcf: ~dataprin\LOTTERY3.DP>
+LOTTERY4.DAT  Maryland "pick 4" lott. #'s <xcf: ~dataprin\LOTTERY4.DP>
+
+CONSUMPR.DAT  Consumer price index        <xcf: ~dataprin\CONSUMPR.DP>
+GNP.DAT       Gross national product      <xcf: ~dataprin\GNP.DP>
+OIL.DAT       Oil depth analysis          <xcf: ~dataprin\OIL.DP>
+

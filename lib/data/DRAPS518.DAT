@@ -1,0 +1,39 @@
+This is the Dataplot data file        DRAPS518.DAT
+This is the data set from exercise E on page 518 of
+Draper and Smith "Applied Regression Analysis: 2nd Edition".
+This is an example data set used in the ODRPACK ACM paper
+(version 1.7).  We have included it here to calibrate the Dataplot
+implementation of the ODRPACK package.
+The proposed model is:
+    Y = B1*10**[B2*X/(B3+X)] + E
+Contact--Alan Heckert, NIST
+Number of observations                       = 15
+Number of observations per line image        = 2
+Order of variables on a line image--
+   1. Dependent Variable Y  = Pressure in saturated steam
+   2. Factor Variable X     = Temperatue in satureated steam
+  
+To read this file into Dataplot--
+   SKIP 25
+   READ DRAPS518.DAT TEMP PRESSURE
+
+
+
+
+
+TEMERATURE     PRESSURE
+-----------------------
+  4.14                0
+  8.52               10
+ 16.31               20
+ 32.18               30
+ 64.62               40
+ 98.76               50
+151.13               60
+224.74               70
+341.35               80
+423.36               85
+522.78               90
+674.32               95
+782.04              100
+920.01              105

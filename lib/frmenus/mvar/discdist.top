@@ -1,0 +1,36 @@
+----- <~mvar\discdist.top> Matrix Distance
+ 
+Matrix Distances
+ 
+You can compute matrix distances for either
+rows or columns.
+
+For row distances, the number of columns in
+the distance matrix is equal to the number of
+rows in the original matrix.  For this reason,
+you should click the "No Update" option on the
+data spread sheet when calculating row distances.
+In addition, you may need to re-dimension the
+number of columns in the Dataplot workspace
+(Files/Data > Re-Dimension Workspace menu).
+Otherwise, the GUI may hang.
+
+The Mahalanobis distances require "full rank".
+This is particularly a problem when calculating
+row based distances for a large number of rows.
+If you have this problem, you might try using a
+subset of the rows in the original matrix.
+
+The "Distance from the Mean" is the quadratic form:
+
+     (Xi-XMEAN)'SINV(Xi-XMEAN)
+
+where SINV is the inverse of the variance-covariance
+matrix, Xi is a row of the matrix, and XMEAN is vector
+containing the the column means.  It is a measure of
+how far a given row is from the column means of the matrix.
+
+Scaling is often used for the Euclidean, Chebychev,
+Block, and Minkowsky distances.  It is normally
+not used for Mahalanobis distances.
+

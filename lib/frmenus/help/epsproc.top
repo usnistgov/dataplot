@@ -1,0 +1,123 @@
+----- <~help\epsproc.top> Issues Regarding Importing Postscript
+
+Issues When Impporting Dataplot Postscript Graphics into External Programs
+
+Issues When Impporting Dataplot Postscript Graphics            -
+into External Programs
+
+
+There are a number of special considerations when
+importing encapsulated Postscript files:
+
+1) There is a distinction between encapsulated Postscript
+   and regular Postscript.  Encapsulated Postscript is a
+   special form of Postscript that is intended
+   specifically for importing Postscript graphics into
+   another program.  When you are creating the
+   Postscript graphic in your application software, you
+   need to be aware whether or not you are creating
+   regular or encapsulated Postscript.  If you know
+   that the graphic is intended for importing into
+   another program such as Word or Power Point, then
+   I recommend that you create it as an encapsulated
+   Postscript file.  Note that an encapsulated Postscript
+   file may print as a blank page on your printer.  This
+   is an intentional design feature, not a bug.
+
+2) Programs such as Word and Power Point handle
+   encapsulated Postscript files differently than they
+   do other graphics formats.  Typically, imported
+   graphics are first converted to a common internal
+   format.  However, encapsulated Postscript files
+   are typically not converted.  Instead, they are
+   simply "passed on" when the file is displayed or
+   printed.  The reason for this is that Postscript
+   is actually a full blown computer language, not just
+   a device protocol.  Unless the importing program
+   has licensed a Postscript interpreter (not
+   common for non-Adobe software), it will not be able
+   to translate Postscript.  Note that Adobe products
+   will typically translate imported Postscript graphs
+   correctly (this is reasonable since Postscript was
+   developed by Adobe).
+
+3) The above bullet has an important implication.
+   If the imported graphic is displayed on a
+   non-Postscript device, it will typically display
+   as an empty box (some programs will print a
+   sentence to the effect that "a Postscript graph
+   goes here").  This inability to display encapsulated
+   Postscript files can be addressed in several ways.
+
+   a. For printed output, simply be sure to print on
+      a Postscript printer.  Note that the application
+      program (i.e., Word, Power Point) must know that
+      you are printing on a Postscript printer.  Many
+      printers support both a native mode format
+      (e.g., PCL) and Postscript.  Word and Power Point
+      (and most Windows applications) by default assume
+      the native word format.  The solution is to
+      install both the native mode version and the
+      Postscript version of the printer.  Then be sure
+      to select the Postscript version of the printer
+      when you print a file containing imported
+      encapsulated Postscript files.
+
+   b. To address this issue of non-Postscript devices,
+      encapsulated Postscript allows for an optional
+      "bit-map preview".  This is a bit map of the
+      encapsulated Postscript graph that will be used
+      to display on non-Postscript devices.  The
+      bit-map preview is ignored on Postscript
+      devices.  Even if your encapsulated Postscript
+      contains a bit-map preview, I recommend
+      printing to a Postscript printer when one is
+      available (i.e., it is preferrable to print
+      the original Postscript rather than the
+      bit-map preview).
+
+   c. Bit-map previews are optional and Dataplot does
+      not support it.  However, you can use
+      the Windows version of Ghostview to create the
+      bit-map preview.  That is, import the Dataplot
+      encapsulated Postscript file into Ghostview,
+      add a bit-map preview, save the file, and
+      then import this saved file (which contains the
+      bit-map preview) into your Word (or Power Point,
+      etc.) program.  Note that you can only
+      add a bit-map preview to an encapsulated
+      Postscript file, not a regular Postscript file.
+      Also, the current versions of Ghostview only add
+      the bit-map preview for portrait orientation plots.
+
+   d. From within Dataplot, use the following commands
+      to create the encapsulated Postscript file:
+
+         DEVICE 2 POSTSCRIPT ENCAPSULATED
+         ORIENTATION LANDSCAPE WORDPERFECT
+
+      The order is important.  That is, initialize
+      the device first, then set the orientation.
+      This orientation sets a landscape orientation
+      on a portrait page.  If you use this
+      orientation, you should not have to rotate or
+      scale the graph once you import it (you will
+      have to rotate and scale if you use the default
+      landscape orientation).
+
+   Given the above, it is reasonable to ask "why bother
+   with importing Postscript?".  The reason is image
+   quality.  Most of the other import formats are
+   essentially bit maps that are generally created
+   at "screen" resolution (typically 72 dots per inch).
+   Postscript graphics are generally created at much
+   higher resolution (300, 600, or 1200 dots per inch
+   is typical).  This can result in much sharper
+   looking graphs in printed documents.
+
+   However, the option of having Ghostview convert
+   Postscript to PDF (or JPEG) provides a simpler
+   alternative for maintaining the high quality of
+   Postscript without some of the complications
+   detailed above.
+

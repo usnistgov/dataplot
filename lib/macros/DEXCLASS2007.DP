@@ -1,0 +1,94 @@
+. This is dataplot macro file    dexclass2007.dp
+.
+. Purpose: Define dex class team data for 2**3 full factorial design and
+.          the 2**(4-1) fractional factorial design (2/7/07)
+. Note--The string variable    team
+.       must pre-exist before calling dexplot
+.       (via    let team = 4   (for example))
+. Note--This routine is called by dexcase.dp (when case = 2007)
+.
+. Example of using this macro (after entering dataplot):
+.    let team = 4 (for example)
+.    call dexplot.dp
+.
+. -----start point-----
+.
+feedback off
+.
+. -----Step 1.1: Define the team ID-----
+.
+. let team = 4
+.
+if team not exist
+   let string stparam = team
+   let string stparam2 = the number of teams
+   call alert.dp
+end if
+.
+. -----Step 1.2: Define the number of factors k-----
+.
+. let k = 4
+.
+if k not exist
+   let string stparam = k
+   let string stparam2 = the number of factors
+   call alert.dp
+end if
+.
+. -----Step 1.3: Define the number of runs n-----
+.
+let n = 8
+.
+. -----Step 2: Define the team names-----
+.
+let string stteam1 = Funnel Cakes
+let string stteam2 = Spill
+let string stteam3 = High Rollers
+let string stteam4 = The Error Bars
+let string stteam5 = Cub Cadets
+let string stteam6 = Standard Deviants
+let string stteam7 = 5 Sigma
+let string stteam8 = The Partials
+let string stteam9 = Backtreet Boys
+.
+. -----Step 3: Read in the experiment design-----
+.
+if k = 3; skip 25; read 2to3.dat x1 x2 x3; end if
+if k = 4; skip 50; read 2to4m1.dat x1 x2 x3 x4; end if
+.
+. -----Step 4.1: Define the data for the 2**3 funnel experiment-----
+.
+let y1 = data 8.19 11.93 6.09 6.66 10.41 14.60 7.91 10.12
+let y2 = data 6.91 8.72 5.92 7.47 8.00 9.91 5.78 8.89
+let y3 = data 8.09 10.00 9.13 12.62 1.47 4.60 5.31 13.31
+let y4 = data 6.85 5.41 2.31 5.63 2.03 2.34 2.28 2.18
+let y5 = data 8.0 7.7 7.2 7.3 10.8 10.4 9.4 10.6
+let y6 = data 5.34 7.35 5.34 2.81 6.53 7.66 4.00 6.47
+let y7 = data 7.10 2.57 5.73 4.63 0.69 0.94 6.13 1.00
+let y8 = data 2.9 10.6 6.7 6.6 2.5 2.6 2.0 2.3
+let y9 = data 5.91 4.65 5.75 6.66 6.21 9.09 8.25 10.50
+.
+. -----Step 4.2: Define the data for the 2**(4-1) funnel experiment-----
+.
+let y1 = data 2.47 1.69 10.81 7.28 9.44 9.44 10.50 13.87
+let y2 = data 16.84 15.31 12.60 13.22 13.94 15.90 14.75  13.82
+let y3 = data  11.38 18.43 15.65 19.16 13.53 17.25 14.97 18.04
+let y4 = data 9.75 10.35 7.53 11.41 7.91 11 7.47 9.37
+let y5 = data 13.8 11.8 12.6 13.5 12.7 15.4 13.6 14.9
+let y6 = data 8.84 10.25 7.41 12.45 7.66 8.44 7.18 5.94
+let y7 = data 10.28 8.22 11.6 10.19 12.97 10.75 12.5 10.72
+let y8 = data 7.81 18.16 7.78 8.02 8.53 15.62 6.71 10.56
+let y9 = data  9.5 13.56 8.62 12.59 8 10 7.53 9.09
+.
+let y = y^team
+.
+. -----Step 5: Define the project titles-----
+.
+let string project = DEX Class Team ^team (^stteam^team)     (k = ^k, n = ^n)
+if k = 3
+   let string project2 = 2**3 Screening/Sensitivity Funnel Experiment (9/10/07)
+end if
+if k = 4
+   let string project2 = 2**(4-1) Screening/Sensitivity Funnel Experiment (9/11/07)
+end if
+.

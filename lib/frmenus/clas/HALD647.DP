@@ -1,0 +1,10 @@
+----- <~dataloex\HALD647.DP> Load & Execute HALD647.DAT
+
+. This is file    HALD647.DP
+
+DELETE Y
+SKIP 25
+READ HALD647.DAT Y
+TITLE HALD647.DAT
+/
+

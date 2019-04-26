@@ -1,0 +1,8 @@
+----- <~datalist\CROARKIN.top> CROARKIN.DAT
+ 
+CROARKIN.DAT
+ 
+View     <xcl: skip 25; READ CROARKIN.DAT>
+Load     <x2cl: skip 25; READ CROARKIN.DAT Y X>
+Print    <xcl: skip 25; READ CROARKIN.DAT>
+ 

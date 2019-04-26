@@ -1,0 +1,40 @@
+This is Dataplot data file     YOUDEN94.DAT
+Astronomical Units (= average distance from earth to sun)
+Source--Scientific American, April 1961, page 94.
+Number of observations             =  15
+Number of variables per line image =   4
+Order of variables on a line image--
+   1. Response variable 1 = astronomical unit (in millions of miles)
+   2. Response variable 2 = experimenter's lower bound on true value
+   3. Response variable 3 = experimenter's upper bound on true value
+   4. Factor 1            = year
+To read this file into Dataplot--
+   SKIP 25
+   READ YOUDEN94.DAT Y YLOWER YUPPER X
+
+
+
+
+
+
+
+
+
+   Y           YLOWER           YUPPER            X
+Distance     Lower Bound      Upper Bound        Year       Experimenter
+--------------------------------------------------------------------------
+ 93.28          93.20            93.35           1895       Newcomb
+ 92.83          92.79            92.87           1901       Hinks
+ 92.91          92.90            92.92           1921       Noteboom
+ 92.87          92.82            92.91           1928       Spencer Jones
+ 93.00          92.99            93.01           1931       Spencer Jones
+ 92.91          92.90            92.92           1933       Witt
+ 92.84          92.77            92.92           1941       Adams
+ 92.977         92.945           93.008          1950       Brower
+ 92.9148        92.9107          92.9190         1950       Rabe
+ 92.874         92.873           92.875          1958       Millstone Hill
+ 92.876         92.871           92.882          1959       Jodrell Bank
+ 92.9251        92.9166          92.9335         1960       S.T.L.
+ 92.960         92.958           92.962          1961       Jodrell Bank
+ 92.956         92.955           92.957          1961       Cal. Tech.
+ 92.813         92.810           92.816          1961       Soviets

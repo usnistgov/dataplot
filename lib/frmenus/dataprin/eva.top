@@ -1,0 +1,9 @@
+----- <~dataprin\eva.top> Print (to Printer) Built-in Extreme Value Analysis D
+ta Files
+
+Print (to Printer) Built-in Extreme Value Analysis Data Files
+
+NIST data                                <xcf: ~dataprin\evanist.DP>
+Castillo data                            <xcf: ~dataprin\evacast.DP>
+Other data                               <xcf: ~dataprin\evaothe.DP>
+

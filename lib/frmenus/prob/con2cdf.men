@@ -1,0 +1,37 @@
+This is file con2cdf.men--Compute Consul cdf and tail probability
+ 
+--------------------
+ 1. Compute Consul cdf and Tail Probability
+ 2. LET Y = CONCDF(X,MU,M)
+ 3.
+ 4. Input values:
+ 5.                  x (x = 1, 2, ...):
+ 5. @CE 1 0 42 50 ?
+ 6.       shape parameter mu (mu >= 1):
+ 6. @CE 2 0 42 50 
+ 7.          shape parameter m (m > 1):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Output parameters:
+10.                  name for the cdf value:
+10. @CE 4 0 42 50 ?
+11.     name for the tail probability value:
+11. @CE 5 0 42 50 ?
+12.
+13.
+14. Compute the Probability?
+--------------------
+AN FE
+SET CONSUL DEFINITION MU
+LET ZMU = 1.5
+LET ZM = 1
+@IF 2 0 LET ZMU = _2
+IF ZMU <= 1
+   LET ZMU = 1.5
+END OF IF
+@IF 3 0 LET ZM = _3
+@IF 4 0 LET _4 = CONCDF( _1 , ZMU, ZM )
+@IF 5 0 LET _5 = 1 - CONCDF( _1 , ZMU, ZM )
+--------------------
+WEB HELP CONCDF
+--------------------

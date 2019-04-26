@@ -1,0 +1,7 @@
+----- <~dataview\prob.top> View Built-in Probability Data Files
+
+View Built-in Probability Data Files
+
+RANDN.DAT     Normal random numbers         <xcf: ~dataview\RANDN.DP>
+RANDU.DAT     Uniform random numbers        <xcf: ~dataview\RANDU.DP>
+

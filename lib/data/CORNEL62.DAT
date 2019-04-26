@@ -1,0 +1,31 @@
+This is Dataplot data file     CORNEL62.DAT
+Reduction of Gasoline Octane
+        3-Factor Unconstrained Mixture Experiment
+        {3,2} Simplex-Lattice
+Source--Cornell, John A. (1990).  ASQC Statistics
+        Division Volume 5:  How to Run Mixture Experiments
+        for Product Quality.  Page 62 .
+Response Variable                  = octane rating - 90
+Number of observations             = 6
+Number of variables per line image = 4 (= 1 + 3)
+Order of variables per line image--
+   Response variable 1 = octane rating - 90 (replication 1)
+   Response variable 2 = octane rating - 90 (replication 2)
+   Factor 1            = naptha
+   Factor 2            = C5-isomer
+   Factor 3            = C6-isomer
+Project Question--What settings for the 3 ingredients
+                  minimize the octane rating?
+Statistical areas--mixture design of experiment
+To read this file into Dataplot--
+   SKIP 25; READ CORNELL62.DAT Y1 Y2 X1 X2 X3
+  Y1     Y2           X1       X2       X3
+Octane Octane       Naptha  C5-isomer C6-isomer
+ Rep 1  Rep 2
+------------------------------------------------
+ 2.5    0.9           1        0        0
+ 4.5    6.5           0        1        0
+10.2    8.6           .5       .5       0
+ 5.2    6.0           0        0        1
+ 8.9   10.1           .5       0        .5
+ 5.2    6.0           0        .5       .5

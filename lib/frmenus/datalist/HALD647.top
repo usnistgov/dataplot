@@ -1,0 +1,8 @@
+----- <~datalist\HALD647.top> HALD647.DAT
+ 
+HALD647.DAT
+ 
+View     <xcl: LIST HALD647.DAT>
+Load     <x2cl: SKIP 25; READ HALD647.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\HALD647.DAT>
+ 

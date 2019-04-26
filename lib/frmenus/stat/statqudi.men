@@ -1,0 +1,69 @@
+This is file statqudi.men--Generate Statistic Plots (Diff of Quantiles)
+ 
+--------------------line 3
+01. Statistic Plots (Extremes and Quantiles)
+02. DIFFERENCE OF <statistic> PLOT Y1 Y2 X
+03.
+04. First Response Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Second Response Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06. Group ID        Variable:
+06. @CE 3 0 37 54 ? gui-vari
+07.
+08. Statistic (Select one):
+09. @CE 4 1 5 25 minimum
+09. @CE 4 2 30 50 maximum
+10. @CE 4 3 5 25 extreme
+10. @CE 4 4 30 50 quantile
+11.
+12. Desired quantile (> 0, < 1)):
+12. @CE 5 0 42 50 ?
+13.
+14. Character Type for Data
+14. @CE 6 0 42 50 * gui-char
+15. Character Fill for Data
+15. @CE 7 0 42 50 gui-ooff
+16. Line Type for Data-connecting Line
+16. @CE 8 0 42 50 * gui-line
+17. Line Type for Global Stat Line?
+17. @CE 9 0 42 50 * gui-line
+18. Spike to Global Stat Line?
+18. @CE 10 0 42 50 gui-ooff
+19.
+20. Title:
+20. @CE 11 0 10 50 *
+21. Left Axis Label:
+21. @CE 12 0 22 50 *
+22. Bottom Axis Label:
+22. @CE 13 0 22 50 *
+23.
+24. Subset/Except/For Specification:
+25. @CE 14 0 1 50 *
+26.
+27. Generate the Statistic Plot?:
+--------------------
+TITLE _11
+Y1LABEL _12
+X1LABEL _13
+CHARACTERS _6
+CHARACTER FILL _7
+LINES _8 _9
+LET XQ = 0.5
+LET XQ = _5
+.
+@IF 4 1 LET ZSTAT = DIFFERENCE OF MINIMUM _1 _2 _14
+@IF 4 2 LET ZSTAT = DIFFERENCE OF MAXIMUM _1 _2 _14
+@IF 4 3 LET ZSTAT = DIFFERENCE OF EXTREME _1 _2 _14
+@IF 4 4 LET ZSTAT = DIFFERENCE OF QUANTILE _1 _2 _14
+SPIKE _10
+SPIKE BASE ZSTAT
+.
+BAR OFF OFF
+@IF 4 1 DIFFERENCE OF MINIMUM PLOT _1 _2 _3 _14
+@IF 4 2 DIFFERENCE OF MAXIMUM PLOT _1 _2 _3 _14
+@IF 4 3 DIFFERENCE OF EXTREME PLOT _1 _2 _3 _14
+@IF 4 4 DIFFERENCE OF QUANTILE PLOT _1 _2 _3 _14
+--------------------
+WEB HELP STATISTICS PLOT
+--------------------

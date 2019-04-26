@@ -1,0 +1,8 @@
+----- <~dataload\VANGEL33.DP> Load VANGEL33.DAT
+
+. This is file    VANGEL33.DP
+
+DELETE Y X BATCH
+SKIP 25
+READ VANGEL33.DAT Y X BATCH
+

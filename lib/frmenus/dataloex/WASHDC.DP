@@ -1,0 +1,10 @@
+----- <~dataloex\WASHDC.DP> Load & Execute WASHDC.DAT
+
+. This is file    WASHDC.DP
+
+DELETE Y X
+SKIP 25
+READ WASHDC.DAT Y X
+TITLE WASHDC.DAT
+4-PLOT Y
+

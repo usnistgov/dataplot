@@ -1,0 +1,23 @@
+This is file catcher.men--Compute the Catcher Matrix
+ 
+--------------------
+ 1. Compute the Catcher Matrix
+ 2. LET C = CATCHER MATRIX X
+ 3.
+ 4. Use the "Create Design Matrix" menu
+ 5. to create a design matrix from a list
+ 6. of independent variables.
+ 7.
+ 8. Name of the design matrix:
+ 8. @CE 1 0  42 50 ? gui-variable
+ 9. Name for the catcher matrix:
+ 9. @CE 2 0  42 50 ?
+10.
+11.
+12. Compute the Catcher Matrix?:
+--------------------
+GR FE
+LET _2 = CATCHER MATRIX _1
+--------------------
+WEB HELP CATCHER MATRIX
+--------------------

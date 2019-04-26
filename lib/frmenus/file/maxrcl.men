@@ -1,0 +1,21 @@
+This is file maxrcl.men--Specify maximum record length
+ 
+--------------------
+ 1. Specify Maximum Record Length for Data Files
+ 2. MAXIMUM RECORD LENGTH <n>
+ 3.
+ 4. By default, Dataplot will read a maximum of 255
+ 5. characters per record in a data file.  You can
+ 6. use this menu to increase that limit if needed.
+ 7.
+ 8. Enter the maximum record length (default=255):
+ 8. @CE 1 0 42 50 ?
+ 9.
+10.
+11. Define the Maximum Record Length?
+--------------------
+SU FE
+MAXIMUM RECORD LENGTH _1
+--------------------
+WEB HELP MAXIMUM RECORD LENGTH
+--------------------

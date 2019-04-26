@@ -1,0 +1,203 @@
+----- <~time\dds21.top> DDS FAQ 21 DDS versus Box-Jenkins
+ 
+21. DDS versus Box-Jenkins
+ 
+DDS is much better compared to the Box-Jenkins
+(B-J) model building based on the repetitive
+(circular) use of specification (identification)
+estimation diagnostic checking.  The first step in
+B-J procedure requires subjective determination of
+autoregressive order and moving average order of
+the models separately, based respectively on plots
+of (sample) autocorrelations and partial
+autocorrelations, which are very poor estimators
+of their theoretical counterparts.  At best, one
+can identify low order pure AR, pure MA, or very
+low order (2 or less) ARMA, from these plots.
+Similar difficulties arise when the specified
+model turns out to be wrong and diagnostic
+checking of residuals must be used to see how this
+could be corrected.  Since the B-J procedure
+requires stationarity, nonstationary data (so
+identified from sample autocorrelation plots!)
+must be transformed into stationary data by
+procedures such as differencing, removal of
+periodic components, and log transformation.  Such
+transformations are themselves hard to determine
+and may distort or destroy physically useful
+information in the data.  The B-J and DDS modeling
+results may not differ much for the simulated data
+sets, however, for data collected from working
+systems the DDS modeling will be far superior.
+ 
+All the compromises of the B-J procedure are
+avoided in the DDS modeling procedure.  Using DDS,
+very high order ARMA models, often necessary in
+data from complex systems are readily obtained
+without requiring any subjective examination of
+sample correlation plots.  Since stationarity is
+NOT required for DDS modeling, nonstationary data
+can be modelled quite easily without any
+distortion.  In fact, the nature of
+nonstationarity due to such physically important
+features as instability in the underlying system,
+periodicity, trends etc.  is preserved and
+quantitatively specified by the characteristic
+roots of the model provided by DDS.
+ 
+These aspects are further amplified by the
+enclosed passages from Pandit and Wu (1983):
+``Just like Green's/inverse function, the
+theoretical autocovariance function completely
+characterizes an ARMA model.  That is, given a
+model, we can find any of these functions, and
+given a form of these functions, we can find the
+ARMA model corresponding to it.  However, unlike
+the Green's/inverse function, the autocovariance
+function can be estimated from a sample of
+observations by Eqs (3.3.2) and (3.3.3), without
+knowing the model.  A large part of the existing
+time series literature therefore deals with the
+use of this estimated sample autocorrelation for
+the modeling and estimation of time series.
+ 
+Such use of the sample autocorrelation function
+would be appropriate if it was a good estimate of
+the theoretical autocorrelation.  Unfortunately,
+this is not the case.  In fact, sample
+autocorrelations are very poor estimates; they
+often have large variances and can be highly
+correlated with each other, presenting a distorted
+version of the true autocorrelations.  These
+discouraging properties of the estimated sample
+autocorrelation function and consequent dangers in
+the modeling procedures essentially based on them
+have been pointed out by Kendall (1945).
+As we will see in this section, for pure
+autoregressive and pure moving average models of
+low order (m,n 2), the theoretical autocorrelation
+function has rather simple forms.  Under fortunate
+circumstances, it is sometimes possible to discern
+these forms from their distorted version given by
+the estimated sample autocorrelation function.  It
+is then possible to make use of a plot of
+autocorrelations and partial autocorrelations
+(defined in Section 3.4) to guess the form of the
+model.  However, even in these simple cases, a
+modeling procedure based on sample autocorrelation
+ends up with trial and error when the guess is
+found to be wrong after fitting.  The only
+systematic method of modeling that remains is to
+try all the possible ARMA models of order (m,n )
+for etc.  As indicated in Chapter 2, a simpler and
+more straightforward modeling procedure is
+possible based on the ARMA(n, n-1) strategy, which
+does not involve the examination of sample
+autocorrelations.
+ 
+Similar remarks apply to checking the independence
+of 's for model adequacy by residual
+autocorrelations, that is, the autocorrelation
+estimates obtained from Eqs.  (3.3.2) and (3.3.3)
+replacing 's by the residuals 's obtained after
+fitting the model.  If 's were an actual
+uncorrelated or white noise series, their
+estimated autocorrelations would be distributed
+approximately normally with mean zero and variance
+(see Appendix A2.1.4).  Therefore, values smaller
+than may be considered insignificant in testing
+whether a given series is white noise or
+independent.  However, it is pointed out in Durbin
+(1970) that such a test is no longer appropriate
+for testin whether 's are uncorrelated or not,
+since the 's are estimated residuals obtained by
+using esitmated parameter values.  For this reason
+we will make use of the residual autocorrelation
+only as a supplementary criterion in checking.
+The main checking criterion will be based on
+reductions in the sum of squares of 's, as
+illustrated in Section 2.3.3.  Hence, neither the
+sample nor the residual autocorrelations play a
+significant role in our approach .
+ 
+In the preceding discussion, we have advocated the
+introduction of trend (differencing) or
+seasonality operators purely for the sake of
+parsimony after the adequate model has been found
+and its roots strongly suggest such operators.
+Throughout the book, we have discouraged the use
+of such operators on the data before modeling in
+order to reduce a seemingly nonstationary or
+unstable series to an apparently stationary stable
+series that is supposedly easier to model.
+ 
+The procedure of simplifying the series of data by
+differencing or seasonality operators before
+modeling is often recommended in the literature.
+In such cases, modeling is based on identifying
+the model, either from the data or from the plots
+of sample autocorrelations, spectra, etc.  When
+trends and seasonality are dominant in the data,
+the sample autocorrelations fail to damp out
+quickly, and the plots of spectra by the
+conventional methods are badly distorted, thus
+making it almost impossible to tentatively
+identify the model from their plots.  The only way
+to get them to forms, from which a low order AR or
+MA model can be guessed, is to apply differencing
+or seasonality operators (which, in turn, have to
+be guessed from the data, sample autocorrelations,
+or spectra).
+ 
+The danger of such indiscriminate operating or
+smoothing of the data simply for the sake of
+making it easier to analyze has been pointed out
+by Slutsky (1927).  SUch an operation itself may
+introduce spurious trends and periods in the
+resultant series that are absent in the original
+data.  The final fitted model, although
+statistically adequate and apparently
+parsimonious, may give a completely distorted
+picture of the structure of the original series.
+ 
+In particular when there are deterministic trends
+present in the data, they will be completely
+masked and an irrelevant model fitted to represent
+them.  As an example, a linear trend superimposed
+with an AR(2) model is shown in Fig.  9.8.  The
+linear trend was and the AR(2) data is the same as
+that for the grinding wheel profile in Appendix I,
+with and . If we ``simplify' the data and ``make
+it s differencing it and fit a model to the
+differenced series based on the estimated
+autocorrelation, we get an MA(3) model with
+ 
+  =0.107,   =0.357,   = 0.185
+ 
+that has no relation to the actual AR(2) model
+whatsoever.  Moreover, the valuable information
+contained in the linear trend in the original data
+is lost.  (On the other hand, the methods of
+Chapter 10 recommended for such data almost
+exactly estimate the linear trend and the AR(2)
+parameters).
+ 
+No such simplification of the data to guess a
+model form is needed in our modeling procedure
+described in Chapter 4. The procedure is robust
+enough to model data with trends and seasonality.
+If the adequate model naturally indicates trends
+by real roots and seasonality by complex roots
+close to one in absolute value, we can then
+introduce these operators ensuring that the
+original series is not distorted.
+ 
+When two or more roots are equal to or greater
+than one in absolute value with or without
+seasonality and the data has a smooth trend or a
+regular periodic behavior, the possibility of a
+deterministic component is indicated.  If the
+physical understanding of the underlying system
+justifies such a deterministic component, one can
+use the methods discussed subsequently in Chapter 10.
+ 

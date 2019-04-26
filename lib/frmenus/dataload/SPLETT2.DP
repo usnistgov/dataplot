@@ -1,0 +1,8 @@
+----- <~dataload\SPLETT2.DP> Load SPLETT2.DAT
+
+. This is file    SPLETT2.DP
+
+DELETE Y MACHINE
+SKIP 25
+READ SPLETT2.DAT Y MACHINE
+

@@ -1,0 +1,30 @@
+This is file gumbmle.men--Gumbel 2-Parameter MLE Estimates
+ 
+--------------------
+ 1. Gumbel Maximum Likelihood Estimates
+ 2. GUMBEL MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Compute Gumbel MLE's?
+--------------------
+GR FE
+SET MINMAX 2
+GUMBEL MAXIMUM LIKELIHOOD _1 _2
+RELATIVE HISTOGRAM _1 _2
+LIMITS FREEZE
+PRE-ERASE OFF
+LET ZZZZ1 = MINIMUM _1 _2
+LET ZZZZ2 = MAXIMUM _1 _2
+LET ZZZZINC = (ZZZZ2 - ZZZZ1)/1000
+PLOT EV1PDF(ZZZZX,LOC,SCALE) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+LIMITS
+PRE-ERASE ON
+--------------------
+WEB HELP GUMBEL MAXIMUM LIKELIHOOD
+--------------------

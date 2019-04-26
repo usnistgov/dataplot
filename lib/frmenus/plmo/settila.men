@@ -1,0 +1,32 @@
+This is file settila.men--Set Title and Labels
+ 
+--------------------
+ 1. Set Title and Labels
+ 2.  TITLE <...>             ...LABEL <...>
+ 3.
+ 4. Title:
+ 4. @CE 1 0 10 49 ?
+ 5.
+ 6. Left   Label   :
+ 6. @CE 2 0 20 49 ?
+ 7. Right  Label   :
+ 7. @CE 3 0 20 49 ?
+ 8.
+ 9. Bottom Label #1:
+ 9. @CE 4 0 20 49 ?
+10. Bottom Label #2:
+10. @CE 5 0 20 49 ?
+11. Bottom Label #3:
+11. @CE 6 0 20 49 ?
+12.
+13.
+13. Set title & labels?
+--------------------
+PC FE
+@IF 1 0 TITLE _1
+@IF 2 0 Y1LABEL _2
+@IF 3 0 Y2LABEL _3
+@IF 4 0 X1LABEL _4
+@IF 5 0 X2LABEL _5
+@IF 6 0 X3LABEL _6
+--------------------

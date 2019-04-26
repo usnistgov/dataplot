@@ -1,0 +1,49 @@
+This is file boxplot.men--Box Plot
+ 
+--------------------
+ 1. Box Plot
+ 2. BOX PLOT Y X
+ 3.
+ 4. Vertical   Axis Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Horizontal Axis Variable:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6.
+ 7. Line & Character Settings (Select one):
+ 8. @CE 3 1 10 32 Standard Box Plot
+ 9. @CE 3 2 10 32 Tufte Box Plot
+10. @CE 3 3 10 32 No Change
+11.
+12. Fences:
+12. @CE 4 0 33 50 gui-ooff
+13. Orientation of the boxes:
+14. @CE 5 1 10 32 Vertical (default)
+15. @CE 5 2 10 32 Horizontal
+16. Width of boxes:
+17. @CE 6 1 10 32 Variable (default)
+18. @CE 6 2 10 32 Fixed
+19.
+20. Subset/Except/For Specification:
+21. @CE 7 0 1 50 *
+22.
+23.
+24. Generate the Box Plot?:
+--------------------
+GR FE
+LINE SAVE
+CHARACTER SAVE
+@IF 3 1 CHARACTERS BOX PLOT
+@IF 3 1 LINES BOX PLOT
+@IF 3 2 CHARACTERS TUFTE BOX PLOT
+@IF 3 2 LINES TUFTE BOX PLOT
+FENCES _4
+@IF 5 1 HORIZONTAL SWITCH OFF
+@IF 5 2 HORIZONTAL SWITCH ON
+SET BOX PLOT WIDTH VARIABLE
+@IF 6 2 SET BOX PLOT WIDTH FIXED
+BOX PLOT _1 _2 _7
+LINE RESTORE
+CHARACTER RESTORE
+--------------------
+WEB HELP BOX PLOT
+--------------------

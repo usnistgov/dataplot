@@ -1,0 +1,132 @@
+This is file genskern.men--Generate Skewed Random Numbers
+ 
+--------------------
+ 1. Generate Skewed Random Numbers
+ 2. LET Y = ... RANDOM NUMBERS FOR I = START INC STOP
+ 3.
+ 4. Distribution (Select one):
+ 5. @CE 1 1 4 30 Lognormal
+ 6. @CE 1 2 4 30 Halfnormal
+ 7. @CE 1 3 4 30 Chi-Squared
+ 7.                                 nu =
+ 7. @CE 2 0 41 50 ?
+ 8. @CE 1 4 4 30 F
+ 8.                                 nu1 =
+ 8. @CE 3 0 41 50 ?
+ 9.                                 nu2 =
+ 9. @CE 4 0 41 50 ?
+10. @CE 1 5 4 30 Exponential
+11. @CE 1 6 4 30 Gamma
+11.                                 gamma =
+11. @CE 5 0 41 50 ?
+12. @CE 1 7 4 30 Beta
+12.                                 alpha =
+12. @CE 6 0 41 50 ?
+13.                                 beta =
+13. @CE 7 0 41 50 ?
+14. @CE 1 8 4 30 Weibull (minimum)
+14.                                 gamma =
+14. @CE 8 0 41 50 ?
+15. @CE 1 19 4 30 Weibull (maximum)
+15.                                 gamma =
+15. @CE 26 0 41 50 ?
+16. @CE 1 9 4 30 Extr Value Type 1 (minimum)
+17. @CE 1 20 4 30 Extr Value Type 1 (maximum)
+18. @CE 1 10 4 30 Extr Value Type 2 (minimum)
+18.                                 gamma =
+18. @CE 9 0 41 50 ?
+19. @CE 1 21 4 30 Extr Value Type 2 (maximum)
+19.                                 gamma =
+19. @CE 27 0 41 50 ?
+20. @CE 1 11 4 30 Pareto
+20.                                 gamma =
+20. @CE 10 0 41 50 ?
+21. @CE 1 22 4 30 Generalized Pareto
+21.                                 gamma =
+21. @CE 28 0 41 50 ?
+22. @CE 1 12 4 30 Inverse Gaus
+22.                                 gamma =
+22. @CE 11 0 41 50 ?
+23. @CE 1 13 4 30 Wald
+23.                                 gamma =
+23. @CE 16 0 41 50 ?
+24. @CE 1 14 4 30 Recip Inve Gaus
+24.                                 gamma =
+24. @CE 12 0 41 50 ?
+25. @CE 1 15 4 30 Failure Time
+25.                                 gamma =
+25. @CE 13 0 41 50 ?
+26. @CE 1 16 4 30 Folded Normal
+26.                                 u =
+26. @CE 17 0 41 50 ?
+27.                                 sd =
+27. @CE 18 0 41 50 ?
+28. @CE 1 17 4 30 Power
+28.                                 c =
+28. @CE 18 0 41 50 ?
+29.
+30. Number of Random Numbers:
+30. @CE 14 0 41 50 ?
+31. Optional Location Parameter:
+31. @CE 24 0 41 50 ?
+32. Optional Scale Parameter:
+32. @CE 25 0 41 50 ?
+33. Name of Output Variable :
+33. @CE 15 0 41 50 ?
+34.
+35.
+36. Generate the Random Numbers?
+--------------------
+AN FE
+@IF 1 1 LET _15 = LOGNORMAL RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 2 LET _15 = HALFNORMAL RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 3 LET NU = _2
+@IF 1 3 LET _15 = CHI-SQUARED RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 4 LET NU1 = _3
+@IF 1 4 LET NU2 = _4
+@IF 1 4 LET _15 = F RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 5 LET _15 = EXPONENTIAL RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 6 LET GAMMA = _5
+@IF 1 6 LET _15 = GAMMA RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 7 LET ALPHA = _6
+@IF 1 7 LET BETA = _7
+@IF 1 7 LET _15 = BETA RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 8 SET MINMAX = 1
+@IF 1 8 LET GAMMA = _8
+@IF 1 8 LET _15 = WEIBULL RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 19 SET MINMAX = 2
+@IF 1 19 LET GAMMA = _26
+@IF 1 19 LET _15 = WEIBULL RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 9 LET _15 = EV1 RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 20 SET MINMAX 2
+@IF 1 20 LET _15 = EV1 RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 10 SET MINMAX 1
+@IF 1 10 LET GAMMA = _9
+@IF 1 10 LET _15 = EV2 RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 21 SET MINMAX 2
+@IF 1 21 LET GAMMA = _27
+@IF 1 21 LET _15 = EV2 RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 11 LET GAMMA = _10
+@IF 1 11 LET _15 = PARETO RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 22 LET GAMMA = _28
+@IF 1 22 LET _15 = GENERALIZED PARETO RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 12 LET GAMMA = _11
+@IF 1 12 LET _15 = INVERSE GAUSSIAN RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 13 LET _15 = WALD RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 14 LET GAMMA = _12
+@IF 1 14 LET _15 = RECI INVE GAUS RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 15 LET GAMMA = _13
+@IF 1 15 LET _15 = FAILURE TIME RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 16 LET U = _17
+@IF 1 16 LET SD = _18
+@IF 1 16 LET _15 = FOLDED NORMAL RANDOM NUMBERS FOR I = 1 1 _14
+@IF 1 17 LET C = _18
+@IF 1 17 LET _15 = POWER FUNCTION RANDOM NUMBERS FOR I = 1 1 _14
+LET ZLOC = 0
+LET ZSD = 1
+@IF 24 0 LET ZLOC = _24
+@IF 25 0 LET ZSD = _25
+LET _15 = ZLOC + ZSD* _15
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

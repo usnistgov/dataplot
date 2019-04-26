@@ -1,0 +1,75 @@
+This is Dataplot Data File     CASTILL3.DAT
+Wave Data--Maximum Yearly Wave Height
+Engineering Goal--Design a breakwater
+Response Variable = maximum yearly wave height (feet) (pre-sorted)
+Number of Observations = 50
+Number of Variables per line image = 1
+Order of variables per line image--
+   1. Response variable = max yearly wave height (feet) (pre-sorted)
+Statistical Category--Extreme Value Analysis
+To read this into Dataplot--
+   SKIP 25
+   READ CASTILL3.DAT Y
+Source--Enrique Castillo (1988). Extreme Value Theory
+        in Engineering. Academic Press, San Diego, California,
+        p. 334.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Maximum yearly wave height (feet) (pre-sorted)
+---------------------------------------------------------
+  2.91
+  3.74
+  4.09
+  5.88
+  6.42
+  6.93
+  7.21
+  7.92
+  8.26
+  8.79
+  9.17
+  9.50
+  9.62
+ 10.00
+ 10.14
+ 10.28
+ 10.45
+ 10.77
+ 11.65
+ 11.65
+ 11.82
+ 12.27
+ 12.68
+ 13.28
+ 13.46
+ 13.88
+ 13.98
+ 14.32
+ 14.38
+ 14.46
+ 14.86
+ 15.03
+ 15.30
+ 16.07
+ 16.23
+ 17.36
+ 18.68
+ 18.72
+ 19.44
+ 20.09
+ 21.06
+ 21.13
+ 21.53
+ 21.80
+ 23.15
+ 24.75
+ 25.45
+ 28.13
+ 29.95
+ 37.19

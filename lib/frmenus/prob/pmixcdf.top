@@ -1,0 +1,10 @@
+----- <~prob\pmixcdf.top> Plot Mixture cdf's
+
+Plot Mixture cdf Functions
+
+Plot Cumulative Distribution Function for
+Mixture Distributions
+
+Normal Mixture           <xemf: ~prob\pnormcdf.men>
+Bi-Weibull               <xemf: ~prob\pbwecdf.men>
+

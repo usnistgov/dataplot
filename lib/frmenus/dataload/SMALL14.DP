@@ -1,0 +1,8 @@
+----- <~dataload\SMALL14.DP> Load SMALL14.DAT
+
+. This is file    SMALL14.DP
+
+DELETE X1 X2 X3 Y
+SKIP 25
+READ SMALL14.DAT X1 X2 X3 Y
+

@@ -1,0 +1,35 @@
+This is file matr_dim.men--Dimension Matrix Workspace
+ 
+--------------------
+ 1. Dimension Matrix Workspace
+ 2. DIMENSION MATRIX ROWS 200
+ 3. 
+ 4. The Dataplot matrix commands utilize
+ 5. various temporary matrices.  The available
+ 6. space for a single scratch matrix is
+ 7. 46*MAXOBV/3 where MAXOBV is the maximum
+ 8. number of rows per variable (20,000 for
+ 9. most installations).  This can be divided
+10. among the row and column dimensions as
+11. needed.  Typically, you would specify the
+12. number of rows in your original matrix and
+13. let Dataplot determine the maximum number of
+14. columns available for the scratch matrices.
+15.
+16. Note that this command only applies to scratch
+17. matrices.  It can be changed as often as you
+18. like during a Dataplot session.  Unlike the 
+19. normal DIMENSION command, it does not
+20. re-initialize your data space.
+21.
+22. Enter the number of matrix rows:
+22. @CE 1 0 42 50 ?
+23.
+24.
+25. Specify the Matrix Dimensions?:
+--------------------
+SU FE
+DIMENSION MATRIX ROWS _1
+--------------------
+WEB HELP DIMENSION
+--------------------

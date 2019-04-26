@@ -1,0 +1,128 @@
+This is file relvtest.men--Formal Test: Shift in Relative Variation
+ 
+--------------------
+ 1. Formal Test: Shift in Relative Variation
+ 2. Vangel-McKay Test (Vangel, p. 174)
+ 3.     (Note: relative variation = 100*sigma/mu)
+ 4.
+ 5. The Problem: 1) IF   a process has a pre-mod
+ 6.                 reference relative variation
+ 7.                 (= historical 100*sigma0/mu0), &
+ 8.              2) IF   an engineering mod is made, &
+ 9.              3) IF   post-mod data is collected,
+10.              4) THEN can we conclude that the
+11.                 process rel. variation has improved
+12.                 (the new 100*sigma/mu is smaller)?
+13.
+14. The Engineering Deliverable: A Yes/No Conclusion
+15.
+16.
+17. Pre -mod Reference Value (%):
+17. @CE 1 0 35 50 ?
+18. Post-mod Response  Variable :
+18. @CE 2 0 35 50 ? gui-vari
+19.
+20. Define "improvement" (select one):
+21.    The process has "improved" if the
+22.    post-mod rel-var .?. pre-mod rel-var
+23. @CE 3 1  4 16 is < than
+23. @CE 3 2 20 32 is > than
+23. @CE 3 3 36 48 differs from
+24.
+25. Alpha (= Type I) error (select one):
+26. @CE 4 1  4  8 5%
+26. @CE 4 2 20 24 1%
+27.
+28. Subset/Except/For Specification:
+29. @CE 5 0 1 50 *
+30.
+31. Do the Test?
+--------------------
+GR FE
+CHI-SQUARED TEST _2 _1 _5
+ 
+LET ZKAPPA0 = _1
+LET ZN = NUMBER _2 _5
+LET ZDF = ZN-1
+ 
+LET ZSTAT = RELATIVE SD _2 _5
+ 
+LET ZTHETA = (ZN-1)/ZN
+LET ZNUM = ZSTAT*ZSTAT*(1+ZKAPPA0*ZKAPPA0)
+LET ZDEN = ZKAPPA0*ZKAPPA0*(1+ZTHETA*ZSTAT*ZSTAT)
+LET ZTESTSTA = (ZN-1)*(ZNUM/ZDEN)
+ 
+LET ZP = .95
+@IF 4 2 LET ZP = .99
+LET ZQ = 1-ZP
+LET ZP2 = ZP+(1-ZP)/2
+LET ZQ2 = 1-ZP2
+LET ZPERC = 100*ZP
+LET ZALPHA = 100*ZQ
+ 
+@IF 3 2 LET ZCUT1 = 0
+@IF 3 2 LET ZCUT2 = CHSPPF(ZP,ZDF)
+@IF 3 1 LET ZCUT1 = CHSPPF(ZQ,ZDF)
+@IF 3 1 LET ZCUT2 = CHSPPF(.99,ZDF)
+@IF 3 3 LET ZCUT1 = CHSPPF(ZQ2,ZDF)
+@IF 3 3 LET ZCUT2 = CHSPPF(ZP2,ZDF)
+ 
+LET Z80 = CHSPPF(.80,ZDF)
+LET ZLOWER = 0
+LET ZUPPER = CHSPPF(.99,ZDF)
+LET ZLOWER2 = MIN(ZTESTSTA,ZLOWER)
+LET ZUPPER2 = MAX(ZUPPER,ZTESTSTA)
+ 
+LET FUNCTION ZF = CHSPDF(ZZ,ZDF)
+PLOT ZF FOR ZZ = ZLOWER2 .1 ZUPPER2 AND
+PLOT 0 FOR ZZ = ZLOWER2 .1 ZUPPER2
+ 
+JUSTIFICATION CENTER
+LET ZZ = ZTESTSTA; LET ZPDFSTAT = ZF
+LET ZZ = ZLOWER; LET ZPDFLOWE = ZF
+LET ZZ = ZUPPER; LET ZPDFUPPE = ZF
+LET ZZ = ZCUT1; LET ZPDFCUT1 = ZF
+LET ZZ = ZCUT2; LET ZPDFCUT2 = ZF
+LET ZZ = Z80; LET ZPDF80 = ZF
+ 
+DRAWDSDS ZTESTSTA 25 ZTESTSTA 10
+MOVEDS ZTESTSTA 26; TEXT TSV
+MOVEDS ZTESTSTA 26; TEXT TSV
+MOVEDS ZTESTSTA 6; TEXT ^ZTESTSTA
+MOVEDS ZTESTSTA 6; TEXT ^ZTESTSTA
+ 
+@IF 3 2 DRAWDDDS ZCUT2 ZPDFCUT2 ZCUT2 5
+@IF 3 2 DRAWDSDS ZCUT2 85 ZCUT2 5
+@IF 3 2 DRAWDSDS ZCUT2 85 ZLOWER2 85
+@IF 3 2 LET ZLOWER2P = ZLOWER2+(ZCUT2-ZLOWER2)/20
+@IF 3 2 DRAWDSDS ZLOWER2P 86 ZLOWER2 85 ZLOWER2P 84
+@IF 3 2 MOVEDS ZCUT2 1; TEXT ^ZCUT2
+ 
+@IF 3 1 DRAWDDDS ZCUT1 ZPDFCUT1 ZCUT1 5
+@IF 3 1 DRAWDSDS ZCUT1 85 ZCUT1 5
+@IF 3 1 DRAWDSDS ZCUT1 85 ZUPPER2 85
+@IF 3 1 LET ZUPPER2P = ZUPPER2-(ZUPPER2-ZCUT1)/20
+@IF 3 1 DRAWDSDS ZUPPER2P 86 ZUPPER2 85 ZUPPER2P 84
+@IF 3 1 MOVEDS ZCUT1 1; TEXT ^ZCUT1
+ 
+@IF 3 3 DRAWDDDS ZCUT1 ZPDFCUT1 ZCUT1 5
+@IF 3 3 DRAWDSDS ZCUT1 85 ZCUT1 5
+@IF 3 3 DRAWDDDS ZCUT2 ZPDFCUT2 ZCUT2 5
+@IF 3 3 DRAWDSDS ZCUT2 85 ZCUT2 5
+@IF 3 3 DRAWDSDS ZCUT1 85 ZCUT2 85
+@IF 3 3 MOVEDS ZCUT1 1; TEXT ^ZCUT1
+@IF 3 3 MOVEDS ZCUT2 1; TEXT ^ZCUT2
+ 
+LET ZHALF = (ZCUT1+ZCUT2)/2
+MOVEDS ZHALF 80; TEXT NO
+MOVEDS ZHALF 75; TEXT IMPROVEMENT
+MOVEDS ZHALF 70; TEXT REGION
+ 
+JUSTIFICATION LEFT
+MOVEDD Z80 ZPDF80
+TEXT Chi-sq(^ZDF)
+ 
+WRITE ZALPHA ZKAPPA0 ZN ZSTAT ZTESTSTA ZCUT1 ZCUT2
+--------------------
+WEB HELP CHI_SQUARED TEST
+--------------------

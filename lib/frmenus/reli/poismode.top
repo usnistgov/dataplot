@@ -1,0 +1,14 @@
+----- <~reli\poismode.top>
+
+Reliability: Compute/Plot Poisson Model
+
+Compute Poisson Distribution Functions
+    Cumulative Distribution Function        <xemf: ~prob\poicdf.men>
+    Probability Mass Function               <xemf: ~prob\poipdf.men>
+    Percent Point Function                  <xemf: ~prob\poippf.men>
+    
+Plot Poisson Distribution Functions
+    Cumulative Distribution Function        <xemf: ~prob\ppoicdf.men>
+    Probability Mass Function               <xemf: ~prob\ppoipdf.men>
+    Percent Point Function                  <xemf: ~prob\ppoippf.men>
+

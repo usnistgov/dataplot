@@ -1,0 +1,70 @@
+This is file bu8ppcc.men-- Burr Type 8 PPCC Plot
+
+--------------------
+ 1. Burr Type 8 PPCC Plot
+ 2. BURR TYPE 8 PPCC PLOT Y
+ 3.
+ 4. Your data can be either ungrouped (a single
+ 5. response variable) or grouped (a bin counts
+ 6. variable and a bin mid-points variable).
+ 7. 
+ 8. Response (or Bin Counts) Variable:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9. Optional Bin Mid-Points Variable:
+ 9. @CE 2 0 42 50 ? gui-variable
+10.
+11. Line Types:
+11. @CE 3 0 42 50 * gui-line
+12. Character Types:
+12. @CE 4 0 42 50 * gui-char
+13. Character Fill:
+13. @CE 5 0 42 50 * gui-ooff
+14.
+15. Title:
+15. @CE 6 0 22 50 *
+16. Left Axis Label:
+16. @CE 7 0 22 50 *
+17. Bottom Axis Label:
+17. @CE 8 0 22 50 *
+18.
+19. Minimum Value for r (omit for default):
+19. @CE 9 0 42 50 *
+20. Maximum Value for r (omit for default):
+20. @CE 10 0 42 50 *
+21.
+22. Select goodness of fit critierion:
+23. @CE 11 1 1 30 PPCC
+24. @CE 11 2 1 30 Kolmogorov-Smirnov
+25.
+26. Subset/Except/For Specification:
+27. @CE 12 0 1 50 *
+28.
+29.
+30. Generate the Burr Type 8 PPCC Plot?
+--------------------
+GR FE
+TITLE CASE ASIS
+LABEL CASE ASIS
+CASE ASIS
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+DELETE R1 R2
+LET R1 = _9
+LET R2 = _10
+@IF 11 1 BURR TYPE 8 PPCC PLOT _1 _2 _12
+@IF 11 2 BURR TYPE 8 KS PLOT _1 _2 _12
+MOVE 50 5
+JUSTIFICATION CENTER
+TEXT Optimal Value of r = ^shape
+MOVE 50 2
+@IF 11 1 TEXT Maximum PPCC = ^maxppcc
+@IF 11 2 TEXT Minimum KS = ^minks
+TITLE
+LABEL
+--------------------
+WEB HELP PPCC PLOT
+--------------------

@@ -1,0 +1,36 @@
+This is file comp_mul.men--Compute complex multiplication
+ 
+--------------------
+ 1. Complex Multiplication
+ 2. LET YR YC = COMPLEX MULTIPLICATION XR XC
+ 3.
+ 4. Real component of the first  variable for
+ 5.    which to compute the complex multiplication:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Complex component of the first variable for
+ 7.    which to compute the complex multiplication:
+ 7. @CE 2 0 33 50 * gui-variable
+ 8. Real component of the second variable for
+ 9.    which to compute the complex multiplication:
+ 9. @CE 3 0 33 50 ? gui-variable
+10. Complex component of the second variable for
+11.    which to compute the complex multiplication:
+11. @CE 4 0 33 50 * gui-variable
+12. Variable to store the real component of
+13.    the complex multiplication:
+13. @CE 5 0 33 50 ? gui-none
+14. Variable to store the complex component of
+15.    the complex multiplication:
+15. @CE 6 0 33 50 ? gui-none
+16.
+17. Subset/Except/For Specification:
+18. @CE 7 0 -10 50 *
+19.
+20.
+21. Compute the Complex Multiplication?:
+--------------------
+GR FE
+LET _5 _6 = COMPLEX MULTIPLICATION  _1 _2 _3 _4 _7
+--------------------
+WEB HELP COMPLEX MULTIPLICATION
+--------------------

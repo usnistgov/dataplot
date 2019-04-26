@@ -1,0 +1,16 @@
+----- <~time\dds23.top> DDS FAQ 23 DDS vs. Spectral Analysis
+ 
+23. DDS versus Spectral Analysis
+ 
+DDS is much better than conventional spectral
+analysis becuase DDS provides far clearer plots of
+spectra without requiring the compromise between
+variance and bias necessary in the conventional
+methods.  Moreover, DDS provides precise
+quantitative estimates of all the important
+physical features of these plots such as peak
+frequencies, corresponding damping ratios, its
+contribution to the overall spectrum and plots of
+individual spectra corresponding to all peaks
+adding to the overall plot.
+ 

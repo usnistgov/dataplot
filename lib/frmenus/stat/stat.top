@@ -1,0 +1,33 @@
+----- <~stat\stat.top> Statistics
+
+Statistics
+
+Discussion                               <~stat\discussi.top>
+NIST/SEMATECH Handbook                   <~stat\handbook.top>
+
+1. Univariate                               <~univ\univanal.top>
+
+2. Equi-spaced data
+   Time Series (1-Variable)              <~time\timeanal.top>
+   Time Series (2-Variable)              <~tim2\tim2anal.top>
+
+3. Fitting/Regression: Y = f(x1,x2,x3,...)     <~fit/fit.top>
+
+4. Multifactor: Y = f(x1,x2,x3,...)
+   1-factor (including "2-sample")            <~1fac\1facanal.top>
+   multi-factor (general, 2 or more factors)  <~mfac\mfacanal.top>
+
+5. Multivariate: (Y1,Y2,Y3,...)               <~mvar\mvaranal.top>
+
+Common Statistical Tests
+   Statistical Calculations                   <~stat\statcalc.top>
+   Univariate                                 <~stat\univaria.top>
+   2 Response Variables                       <~stat\2resp.top>
+   1 Response, 1 Factor                       <~stat\1res1fac.top>
+   1 Response, 2 Factor                       <~stat\1res2fac.top>
+   Interlab (E691 Standard)                   <~nist\e691.top>
+   General Multi-Factor                       <~stat\multfact.top>
+   Reliability                                <~stat\reli.top>
+   Quality Control                            <~stat\qualcont.top>
+
+   Multi-factor (Bundled Analysis)            <xemf: ~stat\mulfbund.men>

@@ -1,0 +1,3004 @@
+MENU FILE #3 (COMMANDS)
+ 
+0                  0       200
+Commands--
+1                  0       215
+Commands--A
+2                  0       287
+Commands--B
+3                  0       466
+Commands--C
+4                  0       678
+Commands--D
+5                  0       831
+Commands--E
+6                  0       922
+Commands--F
+7                  0      1035
+Commands--G
+8                  0      1090
+Commands--H
+9                  0      1160
+Commands--I
+10                 0      1242
+Commands--J
+11                 0      1317
+Commands--K
+12                 0      1337
+Commands--L
+13                 0      1626
+Commands--M
+14                 0      1963
+Commands--N
+15                 0      2008
+Commands--O
+16                 0      2054
+Commands--P
+17                 0      2383
+Commands--Q
+18                 0      2400
+Commands--R
+19                 0      2573
+Commands--S
+20                 0      2699
+Commands--T
+21                 0      2790
+Commands--U
+22                 0      2825
+Commands--V
+23                 0      2848
+Commands--W
+24                 0      2872
+Commands--X
+25                 0      2898
+Commands--Y
+26                 0      2924
+Commands--Z
+27                 0      2934
+Commands--Other
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------
+ 
+0
+Commands--
+   1. A      11. K      21. U
+   2. B      12. L      22. V
+   3. C      13. M      23. W
+   4. D      14. N      24. X
+   5. E      15. O      25. Y
+   6. F      16. P      26. Z
+   7. G      17. Q      27. Other
+   8. H      18. R
+   9. I      19. S
+  10. J      20. T
+ 
+----------------------------------------
+ 
+1
+Commands--A
+ 
+ALLAN STAN DEVIATION PLOT   CO-GR Generate an Allan stand. dev. plot
+                                  ALLAN STANDARD DEVIATION PLOT Y
+ALLAN VARIANCE PLOT         CO-GR Generate an Allan variance plot
+                                  ALLAN VARIANCE PLOT Y
+ALPH()                      CH/SY Write/draw Greek alpha
+                                  FONT TRIPLEX; TEXT ALPH()
+AMPLIFIER                   CO-WC Draw an amplifier
+                                  AMPLIFIER 10 20 80 50
+AMPLITUDE SPECTRAL PLOT     CO-GR Generate amplitude spectral plot
+                                  AMPLITUDE SPECTRAL PLOT Y
+AND                         CO-WC Draw an and box
+                                  AND 40 40 50 40
+AND                         KEYW  Used with PLOT, etc for multi-trace plot
+                                  PLOT Y X AND
+                                  PLOT X**2 FOR X = 1 1 10
+ANGLE                       CO-WC Set angle for TEXT strings
+                                  ANGLE 45
+ANGLE UNITS                 CO-WC Define angle units for ANGLE command
+                                  ANGLE UNITS DEGREES
+ANOP LIMITS                 CO-SU Set limits for region in ANOP Plot
+                                  ANOP LIMITS 700 1000
+ANOP PLOT                   CO-GR Generate ANOP plot
+                                  ANOP LIMITS 700 1000; ANOP PLOT Y X
+ANOVA                       CO-AN Perform analysis of variance
+                                  ANOVA Y X1 X2 X3
+APPEND                      CO-SU Append one var to end of another var
+                                  APPEND Y2 Y1
+APPR()                      CH/SY Write/draw approximatly equal to
+                                  FONT TRIPLEX; TEXT APPR()
+ARC                         CO-WC Draw an arc
+                                  ARC 20 20 30 30 40 25
+ARGAND SPECTRAL PLOT        CO-GR Generate argand spectral plot
+                                  ARGAND SPECTRAL PLOT Y
+ARRD()                      CH/SY Write/draw arrow pointing down
+                                  FONT TRIPLEX; TEXT ARRD()
+ARRL()                      CH/SY Write/draw arrow pointing left
+                                  FONT TRIPLEX; TEXT ARRL()
+ARROW                       CO-WC Draw an arrow
+                                  ARROW 20 20 50 50
+ARROW ... COLOR             CO-PC Set colors for arrows on plots
+                                  ARROW 1 COLOR RED
+ARROW ... COORDINATES       CO-PC Set location of arrows on plots
+                                  ARROW 1 COORDINATES 20 70 50 50
+ARROW PATTERN
+ARROW THICKNESS
+ARROWD                      AR-CH Set plot character to arrow down
+                                  CHARACTERS ARROWD
+ARROWU                      AR-CH Set plot character to arrow up
+                                  CHARACTERS ARROWU
+ARRR()                      CH/SY Write/draw arrow pointing right
+                                  FONT TRIPLEX; TEXT ARRR()
+ARRU()                      CH/SY Write/draw arrow pointing up
+                                  FONT TRIPLEX; TEXT ARRU()
+AUTOCORRELATION             SC-LE Compute sample autocorrelation
+                                  LET R = AUTOCOORELATION Y
+AUTOCORRELATION PLOT        CO-GR Generate autocorrelation plot
+                                  AUTOCORRELATION PLOT Y
+AUTOCORRELATION STAT PLOT   CO-GR Generate autocorrelation (vs. subset) plot
+                                  AUTOCORRELATION STAT PLOT Y X
+AUTOCOVARIANCE              SC-LE Compute sample autocovariance
+                                  LET R = AUTOCOVARIANCE Y
+AUTOMATIC                   KEYW  Set a switch to "automatic" position
+                                  X3LABEL AUTOMATIC
+AUTOPLOT ???(OBS)           CO-SU Set switch (ON/OFF) for auto-plot-regen
+AUTOSPECTRAL PLOT           CO-GR Generate autospectral plot
+                                  AUTOSPECTRAL PLOT Y
+ 
+----------------------------------------
+ 
+2
+Commands--B
+ 
+B...                        KEYW  Params with comput. WEIBULL PLOT percent pts
+                                  WEIBULL PLOT Y; WRITE B01 B05 B99
+BACKGROUND COLOR            CO-PC Set color of background (= inside frame)
+                                  BACKGROUND COLOR BLUE
+BACKGROUND COLOR            CO-WC Set color of background after next ERASE
+                                  ???
+BAR                         CO-PC Set switch (ON/OFF) for bars on plots
+                                  BAR ON; PLOT Y X
+BAR BASE                    CO-PC Set base location for bars on plots
+                                  BAR ON; BAR BASE 5
+BAR BORDER COLOR            CO-PC Set color of border on bars
+                                  BAR ON; BAR BORDER COLOR BLUE
+BAR BORDER LINE             CO-PC Set line type for border on bars
+                                  BAR ON; BAR BORDER LINE DOTTED
+BAR BORDER THICKNESS        CO-PC Set thickness of border on bars
+                                  BAR ON; BAR BORDER THICKNESS .5
+BAR DIMENSION               CO-PC Set bar dimension to 2d or 3d
+                                  BAR ON; BAR DIMENSION 3
+BAR DIRECTION               CO-PC Set bar dirction (H/V)
+                                  BAR ON; BAR DIRECTION H
+BAR FILL                    CO-PC Set switch (ONXX/OFF) for bar fill subregion
+                                  BAR ON; BAR FILL ON
+BAR FILL COLOR              CO-PC Set (background) color of bar fill
+                                  BAR ON; BAR FILL COLOR BLUE
+BAR PATTERN                 CO-PC Set type of pattern for bar fill
+                                  BAR ON; BAR PATTERN DUP
+BAR PATTERN COLOR           CO-PC Set line color in bar fill pattern
+                                  BAR ON; BAR PATTERN BLUE
+BAR PATTERN LINE            CO-PC Set pattern line type within bars
+                                  BAR ON; BAR PATTERN LINE ON
+BAR PATTERN LINE TYPE       CO-PC Set line type in fill pattern
+                                  BAR ON; BAR PATTERN LINE TYPE DOT
+BAR PATTERN SPACING         CO-PC Set line spacing in bar fill pattern
+                                  BAR ON; BAR PATTERN SPACING 1
+BAR PATTERN THICKNESS       CO-PC Set line thickness in bar fill pattern
+                                  BAR ON; BAR PATTERN THICKNESS .5
+BAR WIDTH                   CO-PC Set width for bars on plots
+                                  BAR ON; BAR WIDTH .5
+BAR()                       CH/SY Write/draw bar
+                                  FONT TRIPLEX; TEXT BAR()
+BARH()                      CH/SY Write/draw horizontal bar
+                                  FONT TRIPLEX; TEXT BARH()
+BARV()                      CH/SY Write/draw vertical bar
+                                  FONT TRIPLEX; TEXT BARV()
+BASL()                      CH/SY Write/draw backslash
+                                  FONT TRIPLEX; TEXT BASL()
+BATCH                       CO-GD Set dev 1 to 130-char alpha dev
+                                  BATCH
+BAUD RATE                   CO-SU Set baud rate
+                                  BAUD RATE 9600
+BELL                        CO-PC Set automatic pre-plot bell (ON/OFF)
+                                  BELL ON
+BETA PROBABILITY PLOT       CO-GR Generate beta probability plot
+                                  LET P = .3; LET Q = .6
+                                  BETA PROBABILITY PLOT Y
+BETA RANDOM NUMBERS         SC-LE Generate beta random num.
+                                  LET P = .3; LET Q = .6
+                                  LET Y = BETA RANDOM NUMBERS FOR I = 1 1 100
+BETA()                      CH/SY Write/draw Greek beta
+                                  FONT TRIPLEX; TEXT BETA() LC() BETA()
+BINOMIAL PROBABILITY PLOT   CO-GR Generate binomial probability plot
+                                  LET P = .75; LET N = 10
+                                  BINOMIAL PROABILITY PLOT Y
+BINOMIAL RANDOM NUMBERS     SC-LE Generate binomial random num.
+                                  LET P = .75; LET N = 10
+                                  LET Y = BINOMIAL RANDOM NUMBERS FOR I = 1 1 10
+BIWEIGHT                    SC-LE Compute biweight (robust) transformation
+                                  FIT Y X; LET W = BIWEIGHT RES
+                                  WEIGHTS W; FIT Y X
+BLACK                       AR-CO Set color to black
+                                  BACKGROUND COLOR BLACK
+BLANK                       AR-CH Set plot character to blank
+                                  CHARACTERS BLANK
+BLANK                       AR-LI Set line type to blank (= none)
+                                  LINES BLANK
+BLUE                        AR-CO Set color to blue
+                                  LINE COLOR BLUE
+BOOTSTRAP INDEX             SC-LE Generate bootstrap index (rand samp w repl)
+                                  LET TAG = BOOTSTRAP INDEX FOR I = 1 1 100
+BOOTSTRAP SAMPLE            SC-LE Generate bootstrap sample (rand samp w repl)
+                                  LET TAG = BOOTSTRAP SAMPLE FOR I = 1 1 100
+                                  LET YB = BOOTSTRAP SAMPLE Y TAG
+BOOTSTRAP MEAN PLOT         GR-CO Generate bootstrap mean plot
+                                  BOOTSTRAP MEAN PLOT Y
+BOOTSTRAP MIDMEAN PLOT      GR-CO Generate bootstrap midmean plot
+                                  BOOTSTRAP MIDMEAN PLOT Y
+BOOTSTRAP MEDIAN PLOT       GR-CO Generate bootstrap median plot
+                                  BOOTSTRAP MEDIAN PLOT Y
+BOOTSTRAP SD PLOT           GR-CO Generate bootstrap standard deviation plot
+                                  BOOTSTRAP SD PLOT Y
+BOOTSTRAP VARIANCE PLOT     GR-CO Generate bootstrap variance plot
+                                  BOOTSTRAP VARIANCE PLOT Y
+BOOTSTRAP RELATIVE SD PLOT  GR-CO Generate bootstrap relative st. dev. plot
+                                  BOOTSTRAP RELATIVE SD PLOT Y
+BOOTSTRAP RANGE PLOT        GR-CO Generate bootstrap range plot
+                                  BOOTSTRAP RANGE PLOT Y
+BOOTSTRAP MINIMUM PLOT      GR-CO Generate bootstrap minimum plot
+                                  BOOTSTRAP MINIMUM PLOT Y
+BOOTSTRAP MAXIMUM PLOT      GR-CO Generate bootstrap maximum plot
+                                  BOOTSTRAP MAXIMUM PLOT Y
+BOOTSTRAP SKEWNESS PLOT     GR-CO Generate bootstrap skewness plot
+                                  BOOTSTRAP SKEWNESS PLOT Y
+BOOTSTRAP KURTOSIS PLOT     GR-CO Generate bootstrap kurtosis plot
+                                  BOOTSTRAP KURTOSIS PLOT Y
+BOOTSTRAP AUTOCORR PLOT     GR-CO Generate bootstrap autocorrelation plot
+                                  BOOTSTRAP AUTOCORR PLOT Y
+BOOTSTRAP SD OF MEAN PLOT   GR-CO Generate bootstrap st. dev. of the mean plot
+                                  BOOTSTRAP SD OF MEAN PLOT Y
+BOOTSTRAP AUTOCOV PLOT      GR-CO Generate bootstrap autocovariance plot
+                                  BOOTSTRAP AUTOCOV PLOT Y
+BOOTSTRAP RANK COVAR PLOT   GR-CO Generate bootstrap rank covariance plot
+                                  BOOTSTRAP RAND COVAR PLOT Y1 Y2
+BOOTSTRAP LOWER HINGE PLOT  GR-CO Generate bootstrap lower hinge plot
+                                  BOOTSTRAP LOWER HINGE PLOT Y
+BOOTSTRAP UPPER HINGE PLOT  GR-CO Generate bootstrap upper hinge plot
+                                  BOOTSTRAP UPPER HINGE PLOT Y
+BOOTSTRAP LOWER QUAR PLOT   GR-CO Generate bootstrap lower quartile plot
+                                  BOOTSTRAP LOWER QUAR PLOT Y
+BOOTSTRAP UPPER QUAR PLOT   GR-CO Generate bootstrap upper quartile plot
+                                  BOOTSTRAP UPPER QUAR PLOT Y
+BOOTSTRAP TRIMMED MEAN PLOT GR-CO Generate bootstrap trimmed mean plot
+                                  BOOTSTRAP TRIMMED MEAN PLOT Y
+BOOTSTRAP WIND MEAN PLOT    GR-CO Generate bootstrap Windsorized mean plot
+                                  BOOTSTRAP WIND MEAN PLOT Y
+BOOTSTRAP ... DECILE PLOT   GR-CO Generate bootstrap ... decile plots
+                                  BOOTSTRAP FIRST DECILE PLOT Y
+                                  BOOTSTRAP SEVENTH DECILE PLOT Y
+BOOTSTRAP SINE FREQ PLOT    GR-CO Generate bootstrap sine frequency plot
+                                  BOOTSTRAP SINE FREQ PLOT Y
+BOOTSTRAP SINE AMPL PLOT    GR-CO Generate bootstrap sine amplitude plot
+                                  BOOTSTRAP SINE AMPL PLOT Y
+BOOTSTRAP LINEAR INTE PLOT  GR-CO Generate bootstrap linear intercept plot
+                                  BOOTSTRAP LINE INTE PLOT Y X
+BOOTSTRAP LINEAR SLOPE PLOT GR-CO Generate bootstrap linear slope plot
+                                  BOOTSTRAP LINEAR SLOPE PLOT Y X
+BOOTSTRAP LINEAR RESSD PLOT GR-CO Generate bootstrap linear resid. s.d. plot
+                                  BOOTSTRAP LINEAR RESSD PLOT Y X
+BOOTSTRAP LINEAR CORR PLOT  GR-CO Generate bootstrap linear correlation plot
+                                  BOOTSTRAP LINEAR CORR PLOT Y X
+BOOTSTRAP TAGUCHI SN.. PLOT GR-CO Generate bootstrap Taguchi S/N plots
+                                  BOOTSTRAP TAGUCHI SN1 PLOT Y
+BOX                         CO-WC Draw a box
+                                  BOX 40 40 60 60
+BOX ... COLOR               CO-PC Set colors for box frame on plots
+                                  BOX 1 COLOR RED
+BOX ... COORDINATES         CO-PC Set location of boxes on plots
+                                  BOX 1 COORDINATES 30 70 40 80
+BOX PATTERN
+BOX THICKNESS
+BOX-COX LINEARITY PLOT      CO-GR Generate linearity plot (Box-Cox family)
+                                  BOX COX LINEARITY PLOT Y X
+BOX PLOT                    AR-CH Set all plot characters for BOX PLOT
+                                  BOX PLOT Y X
+BOX PLOT                    AR-LI Set all plot lines for BOX PLOT
+                                  LINES BOX PLOT
+BOX PLOT                    CO-GR Generate box plot
+                                  CHARACTERS BOX PLOT
+BOX-COX HOMOSCED PLOT       CO-GR Generate homosced. plot (Box-Cox family)
+                                  BOX COX HOMOSCED PLOT Y X
+BOX-COX NORMALITY PLOT      CO-GR Generate normality plot (Box-Cox family)
+                                  BOX COX NORMALITY PLOT Y
+BRAD()                      CH/SY Write/draw larger radical
+                                  FONT TRIPLEX; TEXT BRAD()
+BREV()                      CH/SY Write/draw breve
+                                  FONT TRIPLEX; TEXT BREV()
+BS() <make work>            CH/SY Move 1 backspace
+                                  FONT TRIPLEX; TEXT BS()
+BUGS                        CO-SU List known bugs
+                                  TEXT BUGS
+BUILT-IN CHAR/SYMBOL (ANY)  AR-CH All b-i char/sym may be used for plot char
+                                  CHARACTERS A B C * ? $ +
+BYE                         CO-SU Exit from DATAPLOT (= EXIT, STOP, etc.)
+                                  BYE
+ 
+----------------------------------------
+ 
+3
+Commands--C
+ 
+C CHART                     CO-GR Generate C control chart
+                                  SKIP 25; READ CCC.DAT X YDEF YSIZE
+                                  C CHART YDEF YSIZE X
+CALCOMP
+CALL                        CO-SU Execute a DATAPLOT subprgm from file
+                                  CALL REFPLOT.DP
+CAPACITOR                   CO-WC Draw a capacitor
+                                  CAPACITOR 20 20 40 20
+CARA()                      CH/SY Write/draw carot
+                                  TEXT CARA()
+CASE                        CO-WC Set case of letters (UPPER, LOWER)
+                                  CASE LOWER; TEXT ALPH()
+CAUCHY PROBABILITY PLOT     CO-GR Generate Cauchy probability plot
+                                  CAUCHY PROBABILITY PLOT Y
+CAUCHY RANDOM NUMBERS       SC-LE Generate Cauchy random num.
+                                  LET Y = CAUCHY RAND NUMB FOR I = 1 1 100
+CGM
+CH                          CO-WC Activate and read cross-hair (0 to 100)
+                                  CH X1 Y1
+                                  CH X1 Y1 X2 Y2
+CHARACTER ANGLE             CO-PC Set angle (in deg) for characters on plot
+                                  FONT TRIPLEX; CHARACTER ANGLE 45
+CHARACTER CASE
+CHARACTER COLORS            CO-PC Set colors for characters on plots
+                                  CHARACTER COLORS RED
+                                  CHARACTER COLORS RED BLUE GREEN
+CHARACTER FILL              CO-PC Set fill switch (ON/OFF) for char. on plot
+                                  CHARACTER FILL ON
+                                  CHARACTER FILL ON OFF OFF
+CHARACTER FONT
+CHARACTER HW ...            CO-PC Set height and width for char on plot
+                                  CHARACTER HW 3 2.5
+CHARACTER JUSTIFICATION     CO-PC Set justification for characters on plot
+                                  CHARACTER JUSTIFICATION LEFT
+CHARACTER OFFSET ...        CO-PC Set offset (displacement) for char on plot
+                                  CHARACTER OFFSET 1 3
+CHARACTER SIZES             CO-PC Set size (height) for characters on plot
+                                  CHARACTER SIZE 3
+CHARACTER THICKNESS
+CHARACTER WIDTH             CO-PC Set width for characters on plots
+                                  CHARACTER WIDTH 2.5
+CHARACTERS                  CO-PC Set plot character types (X, SQUARE, etc)
+                                  CHARACTERS X
+                                  CHARACTERS SQUARE PYRAMID *
+CHI()                       CH/SY Write/draw Greek chi
+                                  FONT TRIPLEX; TEXT CHI()
+                                  FONT TRIPLEX; TEXT LC() CHI()
+                                  CHI-SQUARED PPCC PLOT       CO-GR Generate chi
+CHI-SQUARED PROB PLOT       CO-GR Generate chi-squared probability plot
+                                  LET NU = 3; CHI-SQUA PROB PLOT Y
+CHI-SQUARED RANDOM NUMBERS  SC-LE Generate chi-squared random num.
+                                  LET NU = 5
+                                  LET Y = CHI-SQUA RAND NUMB FOR I = 1 1 100
+CINT()                      CH/SY Write/draw circular integral
+                                  FONT TRIPLEX; TEXT CINT()
+CIRC()                      CH/SY Write/draw circle
+                                  TEXT CIRC()
+CIRCLE                      AR-CH Set plot character to circle
+                                  CHARACTERS CIRCLE
+CIRCLE                      CO-WC Draw a circle
+                                  CIRCLE 30 30 40 40
+CLASS ...LOWER              CO-SU Spec. first class lower lim for HISTOGRAM
+                                  CLASS XLOWER -2; HIST Y
+CLASS ...UPPER              CO-SU Spec. last class upper lim for HISTOGRAM
+                                  CLASS XUPPER 2; HIST Y
+CLASS ...WIDTH              CO-SU Set class width for HISTOGRAM
+                                  CLASS WIDTH .5; HIST Y
+CO-SPECTRAL PLOT            CO-GR Generate co-spectral plot
+                                  CO-SPECTRAL PLOT Y1 Y2
+CODE                        SC-LE Code the elements in a variable
+                                  LET Y2 = CODE Y
+CODE...                     SC-LE Carry out binary, quartile,... coding
+                                  LET Y2 = CODE2 Y
+                                  LET Y2 = CODE3 Y
+                                  LET Y2 = CODE4 Y
+                                  LET Y2 = CODE8 Y
+CODE2                       SC-LE Carry out binary coding
+                                  LET Y2 = CODE2 Y
+CODE4                       SC-LE Carry out quartile coding
+                                  LET Y2 = CODE4 Y
+CODE8                       SC-LE Carry out octile coding
+                                  LET Y2 = CODE8 Y
+COEF (NOT WORK)            KEYW  Var where FIT, ANOVA, etc coef stored
+COEFSD (NOT WORK)           KEYW  Var where FIT, ANOVA, etc coef sd stored
+COHERENCY SPECTRAL PLOT     CO-GR Generate coherency spectral plot
+                                  COHERENCY PLOT Y1 Y2
+COLOR                       CO-WC Set color of TEXT letters (RED, BLUE, etc)
+                                  COLOR RED; TEXT ABC
+COLUMN LIMITS               CO-IO Set col limts for READ & SERIAL READ
+                                  COLUMN LIMITS 17 25
+                                  READ HAYES1.DAT Y
+COMMENT                     CO-SU Insert a comment line in code
+                                  COMMENT PLOT THE DATA
+COMMENT CHARACTER
+COMMENT CHECK
+COMPLEX                     AR-FO Set font to complex
+                                  FONT COMPLEX; TEXT ABC
+COMPLEX ADDITION            SC-LE Carry out complex addition
+                                  LET X3 Y3 = COMP ADDI X1 Y1 X2 Y2
+COMPLEX CONJUGATE           SC-LE Carry out complex conjugate
+                                  LET X2 Y2 = COMP CONJ X1 Y1
+COMPLEX DEMOD AMPL PLOT     CO-GR Generate complex demodulation amp. plot
+                                  DEMODULATION FREQUENCY .3
+                                  COMPLEX DEMODULATION AMPLITUDE PLOT Y
+COMPLEX DEMOD PHASE PLOT    CO-GR Generate complex demodulation phase plot
+                                  DEMODULATION FREQUENCY .3
+                                  COMPLEX DEMODULATION PHASE PLOT Y
+COMPLEX DIVISION            SC-LE Carry out complex division
+                                  LET X3 Y3 = COMP DIVI X1 Y1 X2 Y2
+COMPLEX EXPONENTIATION      SC-LE Carry out complex exponentiation
+                                  LET X2 Y2 = COMP EXPO X1 Y1
+COMPLEX MULTIPLICATION      SC-LE Carry out complex multiplication
+                                  LET X3 Y3 = COMP MULT X1 Y1 X2 Y2
+COMPLEX ROOTS               SC-LE Compute complex roots
+                                  LET X2 Y2 = COMPLEX ROOTS X1 X2
+COMPLEX SCRIPT              AR-FO Set font to complex script
+                                  FONT COMPLEX; TEXT ABC
+COMPLEX SQUARE ROOT         SC-LE Carry out complex square root
+                                  LET X2 Y2 = COMP SQUA ROOT X1 Y1
+COMPLEX SUBTRACTION         SC-LE Carry out complex subtraction
+                                  LET X3 Y3 = COMP SUBT X1 Y1 X2 Y2
+COMMUNICATIONS LINK
+CONCLUSIONS                 KEYW  Symbolic name for DATAPLOT's Conclus. file
+                                  PPCC PLOT Y; LIST CONCLUSIONS
+CONFIDENCE LIMITS MEAN      CO-AN Compute confidence limits for mean
+                                  CONFIDENCE LIMITS Y
+CONNDOTS.DP                 FI-MM Menu macro to connect dots via cross-hair
+                                  CALL CONNDOTS.DP
+CONTINUE CHARACTER
+CONTOUR PLOT   (FUTURE)     CO-GR Generate contour plot
+                                  CONTOUR PLOT Y X1 X2   Y2
+... CONTROL CHART           CO-GR Gen. mean, range, sd, P, PN, U, C control char
+                                  SKIP 25; READ CCXBAR.DAT X Y
+                                  MEAN CONTROL CHART Y X
+                                  RANGE CONTROL CHART Y X
+                                  STANDARD DEVIATION CONTROL CHART Y X
+                                  SKIP 25; READ CCP.DAT X NUMDEF NUMTOT
+                                  P CONTROL CHART NUMDEF NUMTOT X
+                                  DELETE X NUMDEF NUMTOT
+                                  SKIP 25; READ CCPN.DAT X NUMDEF NUMTOT
+                                  PN CONTROL CHART NUMDEF NUMTOT X
+                                  DELETE X NUMDEF NUMTOT
+                                  SKIP 25; READ CCU.DAT X NUMDEF SIZE
+                                  U CONTROL CHART NUMDEF SIZE X
+                                  DELETE X NUMDEF SIZE
+                                  SKIP 25; READ CCC.DAT X NUMDEF SIZE
+                                  C CONTROL CHART X NUMDEF SIZE
+CONTROL CHART               AR-CH Set all plot characters for CONTROL CHART
+                                  CHARACTERS CONTROL CHART
+CONTROL CHART               AR-LI Set all plot lines for CONTROL CHART
+                                  LINES CONTROL CHART
+CONVOLUTION                 SC-LE Compute convolution of elts in 2 var
+                                  LET Y3 = CONVOLUTION Y1 Y2
+COPY                        CO-WC Copy the current scr onto local hardcopier
+                                  COPY
+... CORRELATION PLOT        CO-GR Generate auto- or cross-correlation plot
+                                  AUTOCORRELATION PLOT Y
+                                  CROSS-CORRELATION PLOT Y1 Y2
+CORRELATION                 SC-LE Compute sample correlation
+                                  LET C = CORRELATION Y X
+COUNTS PLOT                 CO-GR Generate counts (vs. subset) plot
+                                  COUNTS PLOT Y X
+COVARIANCE                  SC-LE Compute sample covariance
+                                  LET C = COVARIANCE Y X
+CR                          CO-WC Set automatic carriage return after TEXT
+                                  CR ON; TEXT A; TEXT B
+                                  CR OFF; TEXT A; TEXT B
+CREATE                      CO-SU Create a subprogram
+                                  CREATE JUNK.DP
+                                  SPIKE ON
+                                  PLOT SIN(X)* EXP(-X/10) FOR X = 0 .1 10
+                                  END OF CREATE
+                                  CALL JUNK.DP
+CRLF                        CO-WC Set auto carr return/line feed after TEXT
+                                  CRLF ON; TEXT A; TEXT B
+                                  CRLF OFF; TEXT A; TEXT B
+CROSS-CORRELATION PLOT      CO-GR Generate cross-correlation plot
+                                  CROSS-CORRELATION PLOT Y1 Y2
+CROSS-HAIR (or CH)          CO-WC Activate and read cross-hair (0 to 100)
+                                  CROSS-HAIR X1 Y1
+                                  CROSS-HAIR X1 Y1 X2 Y2
+CROSS-PERIODOGRAM           CO-GR Generate cross-periodogram
+                                  CROSS-PERIODOGRAM Y1 Y2
+CROSS-SPECTRAL PLOT         CO-GR Generate cross-spectral plot
+                                  CROSS-SPECTRAL PLOT Y1 Y2
+CUBE                        AR-CH Set plot character to cube
+                                  CHAR CUBE
+CUBE                        CO-WC Draw a cube
+                                  CUBE 20 20 70 70
+CUBE()                      CH/SY Write/draw cube
+                                  FONT TRIPLEX; TEXT CUBE()
+CUMULATIVE INTEGRAL         SC-LE Compute cum. integrals of elts in a var
+                                  LET Y2 = CUMULATIVE INTEGRAL Y X
+CUMULATIVE PRODUCT          SC-LE Compute cum. products of elts in a var
+                                  LET Y2 = CUMULATIVE PRODUCT Y X
+CUMULATIVE SUM              SC-LE Compute cum. sums of elts in a var
+                                  LET Y2 = CUMULATIVE SUM Y X
+CURSOR COORDINATES          CO-SU Set cursor coor loc after PLOT, ERASE, etc
+                                  CURSOR COORDINATES 2 5
+                                  PLOT X FOR X = 1 1 5
+CURSOR SIZE                 CO-SU Set cursor size after a plot
+                                  CURSOR SIZE 1
+                                  PLOT X FOR X = 1 1 5
+CURSOR SPACING works?       CO-SU Set cursor spacing after a plot
+CYAN                        AR-CO Set color to cyan
+                                  COLOR CYAN; TEXT ABC
+ 
+----------------------------------------
+ 
+4
+Commands--D
+ 
+DAGG()                      CH/SY Write/draw dagger
+                                  FONT TRIPLEX; TEXT DAGG()
+DARR()                      CH/SY Write/draw down arrow
+                                  FONT TRIPLEX; TEXT DARR()
+DASH1                       AR-LI Set line type to dashed type 1
+                                  LINES DASH1; PLOT Y X
+                                  LINES DA1; PLOT Y X
+DASH2                       AR-LI Set line type to dashed type 2
+                                  LINES DASH2; PLOT Y X
+                                  LINES DA2; PLOT Y X
+DASH3                       AR-LI Set line type to dashed type 3
+                                  LINES DASH3; PLOT Y X
+                                  LINES DA3; PLOT Y X
+DASH4                       AR-LI Set line type to dashed type 4
+                                  LINES DASH4; PLOT Y X
+                                  LINES DA4; PLOT Y X
+DASHED                      AR-LI Set line type to dashed
+                                  LINES DASHED PLOT Y X
+                                  LINES DASH; PLOT Y X
+                                  LINES DA; PLOT Y X
+DATA                        SC-LE Generate a set of data values
+                                  LET Y = DATA 1 4 9 15 20
+DDAG()                      CH/SY Write/draw double dagger
+                                  FONT TRIPLEX; TEXT DDAG()
+... DECILE                  SC-LE Compute decile
+                                  LET A = FIRST DECILE Y
+                                  LET B = FOURTH DECILE Y
+                                  LET C = NINTH DECILE Y
+... DECILE PLOT             CO-GR Generate decile (vs. subset) plot
+                                  FIRST DECILE PLOT Y X
+                                  THIRD DECILE PLOT Y X
+                                  EIGHTH DECILE PLOT Y X
+DEFAULT                     KEYW  Set a switch to "default" position
+                                  TICS DEFAULT
+                                  TIC LABELS DEFAULT
+DEFINE                      CO-SU Define general ASCII string commands
+                                  DEFINE ER ESC FF; ER
+DEFINE POSTHELP             CO-SU Define terminal string to succeed HELP
+                                  XXX
+DEFINE PREHELP              CO-SU Define terminal string to precede HELP
+                                  XXX
+DEGREES                     CO-SU Set degrees for trig calculations (ON/OFF)
+                                  DEGREES
+                                  PLOT SIN(X) FOR X = 0 10 720
+DEL()                       CH/SY Write/draw vector product
+                                  FONT TRIPLEX; TEXT DEL()
+                                  CHAR DEL(); PLOT Y X
+DELETE                      CO-SU Delete var or elements of a var
+                                  DELETE Y X1 X2 X3 SUBSET Y < 0
+                                  DELETE Y X1 X2 SUBSET X1 = 2
+DELT()                      CH/SY Write/draw Greek delta
+                                  FONT TRIPLEX; TEXT DELT()
+                                  FONT TRIPLEX; TEXT LC() DELT()
+DEMODF                      KEYW  Param with updated demod freq. (COMP DEMOD)
+                                  SKIP 25; READ LEW.DAT Y
+                                  DEMODULATION FREQUENCY .3
+                                  COMPLEX DEMO AMPL PLOT Y
+                                  STATUS; WRITE DEMODF
+DEMODULATION FREQUENCY      CO-SU Set frequency for COMP DEMOD ... PLOT/
+                                  SKIP 25; READ LEW.DAT Y
+                                  DEMODULATION FREQUENCY .3
+                                  COMPLEX DEMO AMPL PLOT Y
+DERIVATIVE                  SC-LE Compute derivative of a function
+                                  LET FUNCTION F = SIN(EXP(X))
+                                  LET FUNCTION G = DERIVATIVE F WRT X
+                                  PLOT G FOR X = .1 .1 2
+DEVICE ...                  CO-GD Set dev 1/2/3 manufacturer
+                                  DEVICE 2 POSTSCRIPT
+                                  DEVICE 2 HP-GL
+                                  DEVICE 1 DEC REGIS
+                                  DEVICE 1 OFF
+DEVICE ... CLOSE
+DEVICE ... COLOR            CO-GD Set dev 1/2/3 color (ON/OFF)
+                                  DEVICE 1 COLOR ON
+DEVICE ... CONTINUOUS
+DEVICE ... GENERAL          CO-GD Set dev 1/2/3 to dev-indep
+                                  DEVICE 2 GENERAL
+DEVICE ... GENERAL CODED    CO-GD Set dev 1/2/3 to coded dev-indep
+                                  DEVICE 2 GENERAL CODE
+DEVICE ... HP 2623          CO-GD Set dev 1/2/3 to HP 2623
+                                  DEVICE 2 HP 2623
+DEVICE ... HP 7221          CO-GD Set dev 1/2/3 to HP 7221
+                                  DEVICE 2 HP 7221
+DEVICE ... HP-GL            CO-GD Set dev 1/2/3 to HP-GL
+                                  DEVICE 2 HP-GL
+DEVICE ... OFF
+DEVICE ... ON
+DEVICE ... PICTURE POINTS   CO-GD Set dev 1/2/3 num of pic pts
+                                  DEVICE 2 HP-GL
+                                  DEVICE 2 PICTURE POINTS 10000 8000
+DEVICE ... POWER            CO-GD Set dev 1/2/3 power (ON/OFF)
+                                  DEVICE 2 POWER ON
+DEVICE ... REGIS            CO-GD Set dev 1/2/3 to DEC REGIS
+                                  DEVICE 1 REGIS
+DEVICE ... TEKTRONIX 4010   CO-GD Set dev 1/2/3 to Tekt 4010
+                                  DEVICE 2 TEKT 4010
+                                  DEVICE 1 TEKT 4010
+DEVICE ... TEKTRONIX 4014   CO-GD Set dev 1/2/3 to Tekt 4014
+                                  DEVICE 1 TEKT 4014
+DEVICE ... TEKTRONIX 4105   CO-GD Set dev 1/2/3 to Tekt 4105
+                                  DEVICE 1 TEKT 4105
+DEVICE ... TEKTRONIX 4662   CO-GD Set dev 1/2/3 to Tekt 4662
+                                  DEVICE 2 TEKT 4662
+DEVICE ... UNIT NUMBER ???  CO-GD Set dev 1/2/3 unit num ident
+                                  XXX
+DIAM()                      CH/SY Write/draw diamond
+                                  FONT TRIPLEX; TEXT DIAM()
+DIAMOND                     AR-CH Set plot character to diamond
+                                  CHARACTERS DIAMOND; PLOT Y X
+DIAMOND                     CO-WC Draw a diamond
+                                  DIAMOND 50 50 80 50
+DICTIONARY                  KEYW  Symbolic name for DATAPLOT's Dictionary (1000+
+                                  LIST DICTIONARY
+                                  SEARCH DICTIONARY COLOR
+DIMENSION                   CO-SU Set dimensions of internal data storage
+                                  DIMENSION 50 VARIABLES
+                                  DIMENSION 1000 OBSERVATIONS
+DIRECTORY                   KEYW  Symbolic name for DATAPLOT's Directory of file
+                                  LIST DIRECTORY
+                                  SEARCH DIRECTORY REFERENCE
+DISCRETE                    CO-GD Set dev 1 to  70-char alpha dev
+                                  DEVICE 1 DISCRETE
+DISC UNIF RANDOM NUMBERS    SC-LE Generate discrete uniform random num.
+                                  LET Y = DISC UNIF RAND NUMB FOR I = 1 1 100
+DISTINCT                    SC-LE Extract distinct elements from a var
+                                  LET Y = DATA 1 2 3 2 5 5 5 8
+                                  LET Y2 = DISTINCT Y
+                                  WRITE Y; WRITE Y2
+DIVI()                      CH/SY Write/draw division
+                                  FONT TRIPLEX; TEXT DIVI()
+DOTP()                      CH/SY Write/draw dot product
+                                  FONT TRIPLEX; TEXT DOTP()
+DOTTED                      AR-LI Set line type to dotted
+                                  LINES DOTTED; PLOT Y X
+                                  LINES DOT; PLOT Y X
+                                  LINES DO; PLOT Y X
+DOUBLE EXPO PROB PLOT       CO-GR Generate double exp. probability plot
+                                  DOUBLE EXPO PROB PLOT Y
+DOUBLE EXPO RANDOM NUMBER   SC-LE Generate double exponential random num.
+                                  LET Y = DOUB EXP RAND NUMB FOR I = 1 1 100
+DRAW                        CO-WC Draw a line
+                                  DRAW 20 20 70 70
+                                  DRAW 20 20 70 70 50 30 60 90
+DUPLEX                      AR-FO Set font to duplex
+                                  FONT DUPLEX; TEXT ABC
+DVBA()                      CH/SY Write/draw double vertical bar
+                                  FONT TRIPLEX; TEXT DVBA()
+ 
+----------------------------------------
+ 
+5
+Commands--E
+ 
+ECHO                        CO-SU Set auto echo of command lines (ON/OFF)
+                                  ECHO ON; FIT PRES = A+B*TEMP
+ELEM()                      CH/SY Write/draw is an element of
+                                  FONT TRIPLEX; TEXT ELEM()
+ELLIPSE                     CO-WC Draw an ellipse
+                                  ELLIPSE 30 50 50 60 70 50
+END                         CO-SU Exit from DATAPLOT (= STOP, EXIT, etc.)
+                                  END
+END OF CREATE               CO-SU End CREATion of a subprogram
+                                  CREATE JUNK.DP
+                                  LET FUNCTION F1 = EXP(-X)
+                                  LET FUNCTION F2 = A*SIN(F1)+B*COS(F1)
+                                  END OF CREATE
+END OF DATA                 CO-IO Define end data for READ & SERIAL READ
+                                  READ X Y1 Y2
+                                  1 1 1
+                                  2 4 8
+                                  3 9 27
+                                  END OF DATA
+END OF IF                   CO-SU Define end of condit-executed commands
+                                  MULTIPLOT 5 5
+                                  LOOP FOR K = 1 1 5; LOOP FOR L = 1 1 5
+                                  IF L = K; HISTOGRAM Y^K ; END OF IF
+                                  IF L <> K; PLOT Y^K Y^L ; END OF IF
+                                  END OF LOOP; END OF LOOP
+END OF LOOP                 CO-SU Terminate a loop
+                                  MULTIPLOT 2 3
+                                  LOOP FOR K = 1 1 6
+                                  PLOT X**K FOR X = 0 .1 1
+                                  END OF LOOP
+END OF MULTIPLOT
+EPSI()                      CH/SY Write/draw Greek epsilon
+                                  FONT TRIPLEX; TEXT EPSI()
+                                  FONT TRIPLEX; TEXT LC() EPSI()
+EQUI()                      CH/SY Write/draw equivalence
+                                  FONT TRIPLEX; TEXT A EQUI() B
+ERASE                       CO-WC Erase the current screen
+                                  ERASE
+ERASE DELAY                 CO-SU Set delay factor for ERASE
+                                  ERASE DELAY 50; ERASE
+ERROR BAR PLOT              GR-CO Generate error bar plot
+                                  ERROR BAR PLOT Y DELY
+                                  ERROR BAR PLOT Y DELY X
+                                  ERROR BAR PLOT Y DELYU DELYD X
+                                  ERROR BAR PLOT Y DELYU DELYD X DELX
+                                  ERROR BAR PLOT Y DELYU DELYD X DELXL DELXR
+ETA()                       CH/SY Write/draw Greek eta
+                                  FONT TRIPLEX; TEXT LC() ETA()
+                                  FONT TRIPLEX; TEXT UC() ETA()
+EXACT ... RATIONAL FIT      CO-AN Perform exact rational function fit
+                                  EXACT 1/1 RATIONAL FIT Y X Y2 X2
+EXCEPT                      KEYW  Qualifier denoting excepted subset
+                                  PLOT Y X EXCEPT MONTH 12
+                                  FIT Y X EXCEPT Y > 1000
+EXIT                        CO-SU Exit from DATAPLOT (= STOP, END, etc.)
+                                  EXIT
+EXPERT                      CO-SU Invoke expert subsystem
+                                  EXPERT
+EXPONENTIAL PROB PLOT       CO-GR Generate exponential probability plot
+                                  EXPO PROB PLOT Y
+EXPONENTIAL RANDOM NUMBERS  SC-LE Generate exponential random num.
+                                  LET Y = EXPO RAND NUMB FOR I = 1 1 100
+EXTEND                      CO-SU Extend one var by (attaching) another var
+                                  LET Y1 = DATA 1 2 3; LET Y2 = DATA 7 8 9
+                                  EXTEND Y1 Y2; WRITE Y2
+EXTR VALUE 1 RANDOM NUMBERS SC-LE Generate extreme value type 1 ran num
+                                  LET Y = EXTR VALUE TYPE 1 RAND NUMB FOR I = 1
+                                  LET Y = EV1 RAND NUMB FOR I = 1 1 100
+EXTR VALUE 2 RANDOM NUMBERS SC-LE Generate extreme value type 2 ran num
+                                  LET GAMMA = 3
+                                  LET Y = EXTR VALUE TYPE 2 RAND NUMB FOR I = 1
+                                  LET Y = EV2 RAND NUMB FOR I = 1 1 100
+EXTR VALUE TYPE 1 PROB PLOT CO-GR Generate ext. val. type 1 probability plot
+                                  EXTR VALUE TYPE 1 PROB PLOT Y
+                                  EV1 PROB PLOT Y
+EXTR VALUE TYPE 2 PPCC PLOT CO-GR Generate ext. val. type 2 prob plot cc plot
+                                  EXTR VALUE TYPE 2 PPCC PLOT Y
+                                  EV2 PPCC PLOT Y
+EXTR VALUE TYPE 2 PROB PLOT CO-GR Generate ext. val. type 2 probability plot
+                                  LET GAMMA = 3
+                                  EXTR VALUE TYPE 2 PROB PLOT Y
+                                  EV2 PROB PLOT Y
+EYE COORDINATES             CO-PC Set eye position for 3-dimensional plot
+                               3DPLOT EXP(-X**2-Y**2) FOR X = -2 .2 2
+                               EYE COOR 3 4 6
+                               3DPLOT EXP(-X**2-Y**2) FOR X = -2 .2 2
+----------------------------------------
+ 
+6
+Commands--F
+ 
+F PROBABILITY PLOT          CO-GR Generate F probability plot
+                                  LET NU1=3; LET NU2=6
+                                  F PROBABILITY PLOT Y
+F RANDOM NUMBERS            SC-LE Generate F random num.
+                                  LET NU1 = 3; LET NU2 = 6
+                                  LET Y = F RAND NUMB FOR I = 1 1 100
+FEEDBACK                    CO-SU Allow/suppress feedback printing (ON/OFF)
+                                  MULTIPLOT 3 4; FEEDBACK OFF
+                                  LOOP FOR K = 1 1 12
+                                  PLOT Y X SUBSET MONTH K
+                                  END OF LOOP
+FENCE                       CO-SU Set fence switch (ON/OFF) for BOX PLOT
+                                  BOX PLOT Y X
+                                  FENCE ON
+                                  BOX PLOT Y X
+FFT                         SC-LE Compute fast Fourier transform
+                                  LET U V = FFT X
+                                  LET U V = FFT X Y
+FIBONNACCI NUMBERS          SC-LE Generate Fibonnacci numbers
+                                  LET Y = FIBONNACCI NUMBERS FOR I = 1 1 20
+FILL                        CO-WC Set fill switch (ON/OFF) for TEXT figure
+                                  FONT TRIPLEX; FILL ON; TEXT ABC
+                                  FILL ON; BOX 20 20 30 30
+FILTER WIDTH                CO-SU Set filter width for SMOOTH
+                                  FILTER WIDTH 7
+                                  MOVING AVERAGE SMOOTH Y
+... FIT                     CO-AN Perform lst sq lin/poly/multilin/non-lin fit
+                                  LINEAR FIT Y X
+                                  QUADRATIC FIT Y X
+                                  CUBIC FIT Y X
+                                  QUARTIC FIT Y X
+                                  QUINTIC FIT Y X
+                                  SEXTIC FIT Y X
+                                  SEPTIC FIT Y X
+                                  OCTIC FIT Y X
+                                  NONIC FIT Y X
+                                  DEXIC FIT Y X
+                                  FIT Y X
+                                  FIT Y X1 X2
+                                  FIT Y X1 X2 X3 X4 X5 X6 X7
+FIT CONSTRAINTS [not work]  CO-SU Set constraints for FIT & PRE-FIT
+FIT ITERATIONS              CO-SU Set upper bound on iterations for FIT
+                                  FIT ITERATIONS 30 (default = 50)
+FIT POWER>>PRE-FIT          CO-SU Set fit criterion power for PRE-FIT
+                                  FIT POWER 1
+                                  PRE-FIT Y = A+B*X FOR A = -2 .1 2 FOR B = -10
+FIT STANDARD DEVIATION      CO-SU Set lower bound on res sd for FIT
+                                  FIT STANDARD DEVIATION .000001
+                                  FIT Y = A+B*X+C*X**2
+FONT                        CO-WC Set font for letters (TRIPLEX, COMPLEX, etc)
+                                  FONT SIMPLEX; TEXT ABC
+                                  FONT DUPLEX; TEXT ABC
+                                  FONT TRIPLEX; TEXT ABC
+                                  FONT TRIPLEX ITALIC; TEXT ABC
+                                  FONT COMPLEX; TEXT ABC
+                                  FONT SIMPLEX SCRIPT; TEXT ABC
+                                  FONT COMPLEX SCRIPT; TEXT ABC
+FOR                         KEYW  Qualifier denoting elts or var of interest
+                                  PLOT X**2 FOR X = 1 1 10
+                                  PLOT Y X FOR I = 20 1 40
+                                  FIT Y X FOR I = 20 1 40
+                                  WRITE X Y FOR I = 20 1 40
+                                  DELETE Y1 Y2 Y3 FOR I = 50 1 60
+FOURIER EXPONENT            SC-SE Set Fourier exponent
+                                  SET FOURIER EXPONENT +
+                                  (default = -)
+FOURIER TRANSFORM           SC-LE Compute Fourier transform
+                                  LET U V = FOURIER TRANSFORM X
+                                  LET U V = FOURIER TRANSFORM X Y
+FOURTH CENTR MOME           SC-LE Compute sample 4th central moment
+                                  LET A = FOURTH CENT MOME Y
+FRACTAL                     SC-LE Compute values of fractal curve
+FRACTAL PLOT                GR-CO Generate fractal plot
+                                  SKIP 25; READ FRACFERN.DAT Y1 TO Y7
+                                  FRACTAL PLOT Y1 TO Y7
+FRAME COORDINATES           CO-PC Set plot frame location and shape
+                                  PLOT Y X
+                                  FRAME COORDINATES 10 10 50 50
+                                  PLOT Y X
+                                  (default is   15 20    85 90)
+...FRAME                    CO-PC Set switch (ON/OFF) for frames on plots
+                                  (default is all frame lines   ON)
+                                  PLOT Y X
+                                  X1FRAME OFF; PLOT Y X
+                                  X2FRAME OFF; PLOT Y X
+                                  XFRAME ON; PLOT Y X
+                                  Y1FRAME OFF; PLOT Y X
+                                  Y2FRAME OFF; PLOT Y X
+                                  YFRAME ON; PLOT Y X
+                                  FRAME OFF; PLOT Y X
+...FRAME COLOR              CO-PC Set colors for frame on plots
+                                  PLOT Y X
+                                  FRAME COLOR BLUE; PLOT Y X
+                                  X1FRAME COLOR RED; PLOT Y X
+                                  YFRAME COLOR YELLOW; PLOT Y X
+...FRAME PATTERN
+... FREQUENCY PLOT          CO-GR Generate frequency plot--cum/rel/cum rel
+                                  FREQUENCY PLOT Y X
+                                  RELATIVE FREQUENCY PLOT Y
+                                  CUMULATIVE FREQUENCY PLOT Y
+                                  CUMULATIVE RELATIVE FREQUENCY PLOT Y
+...FRAME THICKNESS
+FREQUENCY                   SC-LE Compute frequencies of distinct values
+                                  LET Y = DATA 1 2 3 8 8 8 9 9 12 12
+                                  LET YD = DISTINCT Y
+                                  LET YF = FREQUENCY Y YD
+                                  WRITE YD YF; PLOT YF YD
+ 
+----------------------------------------
+ 
+7
+Commands--G
+ 
+GAIN SPECTRAL PLOT          CO-GR Generate gain spectral plot
+                                  GAIN SPECTRAL PLOT Y
+GAMM()                      CH/SY Write/draw Greek gamma
+                                  FONT TRIPLEX; TEXT LC() GAMM()
+                                  FONT TRIPLEX; TEXT UC() GAMM()
+GAMMA PPCC PLOT             CO-GR Generate gamma prob plot corr coef plot
+                                  GAMMA PPCC PLOT Y
+GAMMA PROBABILITY PLOT      CO-GR Generate gamma probability plot
+                                  LET GAMMA = 5
+                                  GAMMA PROB PLOT Y
+GAMMA RANDOM NUMBERS        SC-LE Generate gamma random num.
+                                  LET GAMMA = 2
+                                  LET Y = GAMMA RAND NUMB FOR I = 1 1 100
+GENERAL                     CO-GD Set dev 1 to device-indep
+                                  GENERAL
+GENERAL (CODED)             CO-GD Set dev 1 to coded device-indep
+                                  GENERAL CODED
+GEOMETRIC PPCC PLOT         CO-GR Generate geometric prob plot corr coef plot
+                                  GEOMETRIC PPCC PLOT Y
+GEOMETRIC PROB PLOT         CO-GR Generate geometric probability plot
+                                  LET P = .7
+                                  GEOMETRIC PROB PLOT Y
+GEOMETRIC RANDOM NUMBERS    SC-LE Generate geometric random num.
+                                  LET P = .37
+                                  LET Y = GEOM RAND NUMB FOR I = 1 1 100
+GRADS                       CO-SU Set grads for trig calculations (ON/OFF)
+                                  GRADS
+                                  PLOT SIN(X) FOR X = 0 10 400
+GREEN                       AR-CO Set color to green
+                                  COLOR GREEN; TEXT ABC
+...GRID                     CO-PC Set swtch (ON/OFF) for (major) grid on plots
+                                  (default is OFF)
+                                  PLOT Y X
+                                  GRID ON; PLOT Y X; GRID OFF
+                                  XGRID ON; PLOT Y X; GRID OFF
+                                  YGRID ON; PLOT Y X; GRID OFF
+...GRID COLOR                  CO-PC Set color for grid on plots
+                                  GRID ON; PLOT Y X
+                                  GRID COLOR RED; PLOT Y X
+...GRID PATTERN                CO-PC Set line type for grid on plots
+                                  GRID ON; PLOT Y X
+                                  GRID PATTERN DOTTED; PLOT Y X
+...GRID THICKNESS
+GROUND                      CO-WC Darw a ground
+                                  GROUND 50 50 50 40
+GT()                        CH/SY Write/draw greater than
+                                  FONT TRIPLEX; TEXT 3 GT() 2
+GTEQ()                      CH/SY Write/draw greater than or equal to
+                                  FONT TRIPLEX; TEXT 3 GTEQ() 2
+ 
+----------------------------------------
+ 
+8
+Commands--H
+ 
+HALFNORMAL PROB PLOT        CO-GR Generate halfnormal probability plot
+                                  HALFNORMAL PROB PLOT Y
+HALFNORMAL RANDOM NUMBERS   SC-LE Generate halfnormal random num.
+                                  LET Y = HALFNORM RAND NUMB FOR I = 1 1 100
+HALT                        CO-SU Exit from DATAPLOT (= STOP, END, etc.)
+                                  HALT
+HARDCOPY                    CO-PC Set auto copy of plots to loc hdcpy (ON/OFF)
+                                  PLOT Y X
+                                  HARDCOPY ON; PLOT Y X
+HARDCOPY DELAY              CO-SU Set delay factor for hardcopy
+                                  PLOT Y X
+                                  HARDCOPY DELAY 100
+                                  HARDCOPY; PLOT Y X
+HASP()                      CH/SY Move a half-space
+                                  FONT TRIPLEX; TEXT A HASP() B
+HAT()                       CH&SY Write/draw hat (= high carat)
+                                  FONT TRIPLEX; TEXT HAT()
+HBAR()                      CH/SY Write/draw horizontal bar
+                                  FONT TRIPLEX; TEXT HBAR()
+HEIGHT                      CO-WC Set height of letters (0 to 100)
+                                  (default is 2)
+                                  FONT TRIPLEX; TEXT ABC
+                                  HEIGHT 5; TEXT ABC
+HELP                        CO-SU Print short documentation for a command
+                                  HELP
+                                  HELP FUNTIONS
+                                  HELP PLOT
+                                  HELP FIT
+                                  HELP LET
+HELP LINES                  SC-SE Set number of lines/screen for HELP
+                                  SET HELP LINES 20 (default is 15)
+HEXAGON                     CO-WC Draw a hexagon
+                                  HEXAGON 50 50 70 50
+HHBA()  ???                 CH/SY Write/draw xx
+                                  XXX
+... HINGE PLOT              CO-GR Generate lower/upper hinge (vs. subset) plot
+                                  LOWER HINGE PLOT Y X
+                                  UPPER HINGE PLOT Y X
+... HISTOGRAM               CO-GR Generate histogram--cum/rel/cum rel
+                                  HISTOGRAM Y
+                                  RELATIVE HISTOGRAM Y
+                                  CUMULATIVE HISTOGRAM Y
+                                  CUMULATIVE RELATIVE HISTOGRAM Y
+                                  XCLASS LOWER -2; XCLASS UPPER 2
+                                  XLCASS WIDTH .5; HISTOGRAM Y
+HOMOSCEDASTICITY PLOT       CO-GR Generate homoscedasticity plot.
+                                  HOMOSCED PLOT Y X
+HORIZONTAL SPACING          CO-WC Set horiz. spacing between char (0 to 100)
+                                  FONT TRIPLEX; TEXT ABC
+                                  HORI SPAC 1; TEXT ABC
+HORIZONTAL SWITCH
+HOTELL.DP                   MA-FI Macro to compute Hotelling (simult) conf lim
+                                  CALL HOTELL.DP
+HOST                        CO-SU Set host computer
+                                  HOST VAX
+HP 2623                     CO-GD Set dev 1 to HP 2623
+                                  HP 2623
+HP 7221                     CO-GD Set dev 1 to HP 7221
+                                  HP 7221
+HP-GL                       CO-GD Set dev 1 to HP-GL
+                                  HP-GL
+HW                          CO-WC Set height and width of letters
+                                  FONT TRIPLEX; TEXT ABC
+                                  HW 5 4; TEXT ABC
+ 
+----------------------------------------
+ 
+9
+Commands--I
+ 
+I                           KEYW  Var denoting dummy index; used in FOR
+                                  PLOT Y X FOR I = 20 1 30
+                                  FIT Y X FOR I = 50 1 70
+                                  WRITE X Y FOR I = 1 1 30
+                                  RETAIN Y1 Y2 Y3 X FOR I = 10 10 1000
+I PLOT                      AR-CH Set all plot characters for I PLOT
+                                  CHARACTERS I PLOT
+                                  LINES I PLOT
+                                  I PLOT Y X
+I PLOT                      AR-LI Set all plot lines for I PLOT
+                                  CHARACTERS I PLOT
+                                  LINES I PLOT
+                                  I PLOT Y X
+I PLOT                      CO-GR Generate I plot
+                                  CHARACTERS I PLOT
+                                  LINES I PLOT
+                                  I PLOT Y X
+IASP()                      CH/SY Write/draw inverted nasp
+                                  FONT TRIPLEX; TEXT IASP()
+IF                          CO-SU Define start of condit-executed commands
+                                  MULTIPLOT 5 5
+                                  LOOP FOR K = 1 1 5; LOOP FOR L = 1 1 5
+                                  IF L = K; HISTOGRAM Y^K ; END OF IF
+                                  IF L <> K; PLOT Y^K Y^L ; END OF IF
+                                  END OF LOOP; END OF LOOP
+IMPLEMENT (OBSOLETE)        CO-SU Activ local chg to DTPLT. implement. (obs)
+INDUCTOR                    CO-WC Draw an inductor
+                                  INDUCTOR 50 50 70 50
+INFI()                      CH/SY Write/draw infinity
+                                  FONT TRIPLEX; TEXT INFI()
+INFINITY                    KEYW  Parameter with value "infinity"
+                                  PLOT Y X SUBSET X 100 TO INFINITY
+INTE()                      CH/SY Write/draw integral
+                                  FONT TRIPLEX; TEXT INFI()
+INTR()                      CH/SY Write/draw intersection
+                                  TEXT TRIPLEX; TEXT INTR()
+INTEGRAL                    SC-LE Compute definite integral of a function
+                                  LET A = INTEGRAL SIN(X**2) WRT X FOR X = 0 TO
+INTEGRAL                    SC-LE Compute integral of elements in a var
+                                  LET X = SEQUENCE 0 1 10
+                                  LET Y = X**2
+                                  LET A = INTEGRAL Y X
+INTERPOLATION               SC-LE Compute (cubic spline) interpolated values
+                                  LET X = SEQUENCE 0 1 10
+                                  LET Y = X**2; PLOT Y X
+                                  LET X2 = SEQUENCE 0 .1 10
+                                  LET Y2 = INTERPOLATION Y X X2
+                                  PLOT Y2 X2
+INVERSE FFT                 SC-LE Compute inverse fast Fourier transform
+                                  LET U V = FFT Y
+                                  LET U = 0 SUBSET U -.1 TO .1
+                                  LET V = 0 SUBSET V -.1 TO .1
+                                  LET Y2 X2 = INVERSE FFT U V
+                                  PLOT Y AND
+                                  PLOT Y2
+INVERSE FOURIER TRANSFORM   SC-LE Compute inverse Fourier transform
+                                  LET U V = FOURIER TRANSFORM Y
+                                  LET U = 0 SUBSET U -.1 TO .1
+                                  LET V = 0 SUBSET V -.1 TO .1
+                                  LET Y2 X2 = INVERSE FOURIER TRANSFORM U V
+                                  PLOT Y AND
+                                  PLOT Y2
+INVMAT.DP                   FI-MM Menu macro to invert a matrix
+IO                          SC-SE Set IO source for menu macros
+IOTA()                      CH/SY Write/draw Greek iota
+                                  FONT TRIPLEX; TEXT LC() TEXT IOTA()
+                                  FONT TRIPLEX; TEXT UP() TEXT IOTA()
+IPR                         SC-SE Set log unit num for printed output
+                                  (default is unit 6)
+                                  FIT Y X
+                                  SET IPR 7; FIT Y X
+IRD                         SC-SE Set log unit num for input
+                                  (default is unit 5)
+                                  XXX
+ISHIKAWA.DP                 FI-MM Menu macro to gen an Ishikawa diagram
+                                  CALL ISHIKAWA.DP
+ 
+----------------------------------------
+ 
+10
+Commands--J
+ 
+JACKNIFE MEAN PLOT          GR-CO Generate jacknife mean plot
+                                  JACKNIFE MEAN PLOT Y
+JACKNIFE MIDMEAN PLOT       GR-CO Generate jacknife midmean plot
+                                  JACKNIFE MIDMEAN PLOT Y
+JACKNIFE MEDIAN PLOT        GR-CO Generate jacknife median plot
+                                  JACKNIFE MEDIAN PLOT Y
+JACKNIFE SD PLOT            GR-CO Generate jacknife standard deviation plot
+                                  JACKNIFE SD PLOT Y
+JACKNIFE VARIANCE PLOT      GR-CO Generate jacknife variance plot
+                                  JACKNIFE VARIANCE PLOT Y
+JACKNIFE RELATIVE SD PLOT   GR-CO Generate jacknife relative st. dev. plot
+                                  JACKNIFE RELATIVE SD PLOT Y
+JACKNIFE RANGE PLOT         GR-CO Generate jacknife range plot
+                                  JACKNIFE RANGE PLOT Y
+JACKNIFE MINIMUM PLOT       GR-CO Generate jacknife minimum plot
+                                  JACKNIFE MINIMUM PLOT Y
+JACKNIFE MAXIMUM PLOT       GR-CO Generate jacknife maximum plot
+                                  JACKNIFE MAXIMUM PLOT Y
+JACKNIFE SKEWNESS PLOT      GR-CO Generate jacknife skewness plot
+                                  JACKNIFE SKEWNESS PLOT Y
+JACKNIFE KURTOSIS PLOT      GR-CO Generate jacknife kurtosis plot
+                                  JACKNIFE KURTOSIS PLOT Y
+JACKNIFE AUTOCORR PLOT      GR-CO Generate jacknife autocorrelation plot
+                                  JACKNIFE AUTOCORR PLOT Y
+JACKNIFE SD OF MEAN PLOT    GR-CO Generate jacknife st. dev. of the mean plot
+                                  JAKCNIFE SD OF MEAN PLOT Y
+JACKNIFE AUTOCOV PLOT       GR-CO Generate jacknife autocovariance plot
+                                  JACKNIFE AUTOCOV PLOT Y
+JACKNIFE RANK COVAR PLOT    GR-CO Generate jacknife rank covariance plot
+                                  JACKNIFE RANK COVARIANCE PLOT Y
+JACKNIFE LOWER HINGE PLOT   GR-CO Generate jacknife lower hinge plot
+                                  JACKNIFE LOWER HINGE PLOT Y
+JACKNIFE UPPER HINGE PLOT   GR-CO Generate jacknife upper hinge plot
+                                  JACKNIFE UPPER HINGE PLOT Y
+JACKNIFE LOWER QUAR PLOT    GR-CO Generate jacknife lower quartile plot
+                                  JACKNIFE LO0WER QUARTILE PLOT Y
+JACKNIFE UPPER QUAR PLOT    GR-CO Generate jacknife upper quartile plot
+                                  JACKNIFE UPPER QUARTILE PLOT Y
+JACKNIFE TRIMMED MEAN PLOT  GR-CO Generate jacknife trimmed mean plot
+                                  XXX
+                                  JACKNIFE TRIMMED MEAN PLOT Y
+JACKNIFE WIND MEAN PLOT     GR-CO Generate jacknife Windsorized mean plot
+                                  XXX
+                                  JACKNIFE WINSORIZED MEAN PLOT Y
+JACKNIFE ... DECILE PLOT    GR-CO Generate jacknife ... decile plots
+                                  JACKNIFE FIRST DECILE PLOT Y
+                                  JACKNIFE THIRD DECILE PLOT Y
+                                  JACKNIFE NINTH DECILE PLOT Y
+JACKNIFE SINE FREQ PLOT     GR-CO Generate jacknife sine frequency plot
+                                  JACKNIFE SINE FREQUENCY PLOT Y
+JACKNIFE SINE AMPL PLOT     GR-CO Generate jacknife sine amplitude plot
+                                  JACKNIFE SINE AMPLITUDE PLOT Y
+JACKNIFE LINEAR INTERC PLOT GR-CO Generate jacknife linear intercept plot
+                                  JACKNIFE LINEAR INTERCEPT PLOT Y X
+JACKNIFE LINEAR SLOPE PLOT  GR-CO Generate jacknife linear slope plot
+                                  JACKNIFE LINEAR SLOPE PLOT Y X
+JACKNIFE LINEAR RESSD PLOT  GR-CO Generate jacknife linear resid. s.d. plot
+                                  JACKNIFE LINEAR RESSD PLOT Y
+JACKNIFE LINEAR CORR PLOT   GR-CO Generate jacknife linear correlation plot
+                                  JACKNIFE LINEAR CORRELATION PLOT Y
+JACKNIFE TAGUCHI SN.. PLOT  GR-CO Generate jacknife Taguchi S/N plots
+                                  JACKNIFE TAGUCHI SN1 PLOT Y
+                                  JACKNIFE TAGUCHI SN2 PLOT Y
+                                  JACKNIFE TAGUCHI SN3 PLOT Y
+                                  JACKNIFE TAGUCHI SN4 PLOT Y
+JUSTIFICATION               CO-WC Set justif of text (LEFT, CENTER, RIGHT)
+                                  JUST LEFT; MOVE 50 50; TEXT ABC
+                                  JUST CENTER; MOVE 50 40; TEXT ABC
+                                  JUST RIGHT; MOVE 50 30; TEXT ABC
+ 
+----------------------------------------
+ 
+11
+Commands--K
+ 
+KAPP()                      CH/SY Write/draw Greek kappa
+                                  FONT TRIPLEX; TEXT LC() KAPP()
+                                  FONT TRIPLEX; TEXT UC() KAPP()
+KEYBOARD CHARACTER (ANY)    AR-CH All keybd char may be used for plot char
+                                  CHARACTER A B C; PLOT Y X TAG
+                                  CHAR X * + -; PLOT Y X TAG
+KNOTS                       CO-SU Set knots variable for SPLINE
+                                  LET X2 = KNOTS 100 125 170 200
+                                  KNOTS X2
+                                  CUBIC SPLINE FIT Y X
+KURTOSIS                    SC-LE Compute sample kurt (stand 4th cent mom)
+                                  LET A = KURTOSIS Y
+KURTOSIS PLOT               CO-GR Generate kurtosis (vs. subset) plot
+                                  KURTOSIS PLOT Y X
+ 
+----------------------------------------
+ 
+12
+Commands--L
+ 
+...LABEL                    CO-PC Set labels at sides & bottom of plot
+                                  Y1LABEL TEMP; PLOT Y X
+                                  Y2LABEL PRESSURE; PLOT Y X
+                                  YLABEL VOLUME; PLOT Y X
+                                  XLABEL TIME; PLOT Y X
+                                  X1LABEL DAY; PLOT Y X
+                                  X2LABEL SAMPLE 3; PLOT Y X
+                                  X3LABEL CATALYST 6; PLOT Y X
+                                  X3LABEL AUTOMATIC; PLOT Y X
+                                  LABEL ; PLOT Y X
+...LABEL CASE
+...LABEL COLOR              CO-PC Set colors for labels on plots
+                                  YLABEL COLOR RED; PLOT Y X
+                                  XLABEL COLOR BLUE; PLOT Y X
+                                  X3LABEL COLOR GREEN; PLOT Y X
+                                  LABEL COLOR; PLOT Y X
+...LABEL FONT
+...LABEL SIZE               CO-PC Set size (height) for labels on plots
+                                  FONT TRIPLEX
+                                  YLABEL SIZE 3; PLOT Y X
+                                  XLABEL SIZE 2; PLOT Y X
+                                  X3LABEL SIZE 1.6; PLOT Y X
+...LABEL THICKNESS
+LACC()                      CH/SY Write/draw left accent
+                                  FONT TRIPLEX; TEXT LACC(0
+LAG ... PLOT                CO-GR Generate lag plot for a given lag number
+                                  LAG PLOT Y
+                                  LAG 2 PLOT Y
+                                  LAG 12 PLOT Y
+                                  LAG PLOT Y1 Y2
+                                  LAG 7 PLOT Y X
+                                  LAG 365 PLOT Y1 Y2
+LAMB()                      CH/SY Write/draw Greek lambda
+                                  FONT TRIPLEX; TEXT LC() LAMB()
+                                  FONT TRIPLEX; TEXT UC() LAMB()
+LAPO()                      CH/SY Write/draw left apostrophe
+                                  FONT TRIPLEX; TEXT LAPO()
+LARR()                      CH/SY Write/draw left arrow
+                                  FONT TRIPLEX; TEXT LARR()
+LATTICE                     CO-WC Draw a lattice
+                                  LATTICE 20 20 1 1 50 50
+LBRA()                      CH/SY Write/draw left bracket
+                                  FONT TRIPLEX; TEXT LBRA()
+LC()                        CH/SY Shift to lower case
+                                  FONT TRIPLEX TEXT LC() A UC() A
+LCBR()                      CH/SY Write/draw left curly bracket
+                                  FONT TRIPLEX; TEXT LCBR()
+LEGEND ...                  CO-PC Set text for plot legends
+                                  LEGEND 1 MONDAY; PLOT Y X
+                                  LEGEND 2 OPERATOR 5; PLOT Y X
+                                  LET K = 15
+                                  LEGEND 3 BATCH ^K ; PLOT Y X
+                                  LET M = STANDARD DEVIATION Y
+                                  LEGEND 4 SD = ^M ; PLOT Y X
+                                  LET STRING S6 = POTASSIUM
+                                  LET K = 6
+                                  LEGEND 5 ELEMENT = ^S^K ; PLOT Y X
+LEGEND ... CASE
+LEGEND ... COLOR            CO-PC Set color for legends on plots
+                                  LEGEND 1 COLOR RED; PLOT Y X
+                                  LEGEND 3 COLOR BLUE; PLOT Y X
+                                  LEGEND COLOR GREEN; PLOT Y X
+LEGEND ... COORDINATES      CO-PC Set plot legend positioning
+                                  LEGEND 1 COOR 70 80; PLOT Y X
+                                  LEGEND 2 COOR 70 75; PLOT Y X
+                                  LEGEND 3 COOR 50 80; PLOT Y X
+LEGEND ... DIRECTION
+LEGEND ... FONT
+LEGEND HW  --               CO-PC Set legend height & width
+                                  FONT TRIPLEX
+                                  LEGEND 1 HW 3 2; PLOT Y X
+                                  LEGEND 2 HW 2 1.5; PLOT Y X
+                                  LEGEND 3 HW 1 1; PLOT Y X
+LEGEND ... JUSTIFICATION
+LEGEND ... SIZE             CO-PC Set size (height) for legends on plots
+                                  FONT TRIPLEX
+                                  LEGEND 1 SIZE 3
+                                  LEGEND 2 SIZE 1
+                                  LEGEND 3 SIZE .8
+LEGEND ... THICKNESS
+LELB()                      CH/SY Write/draw left elbow
+                                  FONT TRIPLEX; TEXT LELB()
+LET                         CO-AN Define var & param; calc stat; roots/dif etc
+                                  XXX
+                                  LET FUNCTION                CO-AN Define & ope
+                                  XXX
+LF                          CO-WC Set automatic line feed after TEXT
+                                  LF ON; TEXT ABC; TEXT ABC
+                                  LF OFF; TEXT ABC; TEXT ABC
+LHBA()                      CH/SY Write/draw long horizontal bar
+                                  FONT TRIPLEX; TEXT LHBA()
+...LIMITS                   CO-PC Set limits (min and max) for plot frame
+                                  (default is neat & float with data)
+                                  YLIMITS 100 200; PLOT Y X
+                                  XLIMITS 0 30; PLOT Y X
+                                  YLIMITS ; PLOT Y X
+                                  XLIMITS ; PLOT Y X
+                                  Y1LIMITS 32 212; PLOT Y X
+                                  Y2LIMITS 0 100; PLOT Y X
+                                  X1LIMITS 0 30; PLOT Y X
+                                  X2LIMITS 1 2; PLOT Y X
+                                  LIMITS ; PLOT Y X
+LINE COLORS                 CO-PC Set colors for lines (plots & figures)
+                                  (default is white)
+                                  LINE COLOR YELLOW; PLOT Y X
+                                  LINE COLORS RED BLUE GREEN
+                                  PLOT Y X TAG
+LINE THICKNESS              CO-PC Set thicknesses of lines (plots & figures)
+                                  (default is .1)
+                                  LINE THICKNESS .3; PLOT Y X
+                                  LINE THICKNESS .1 .3 1; PLOT Y X TAG
+LINE THICKNESS              CO-WC Set thickness of lines (0 to 100)
+                                  XXX?
+LINEAR CORRELATION PLOT     CO-GR Generate linear corr (vs. subset) plot
+                                  LINEAR CORRELATION PLOT Y X TAG
+LINEAR INTERCEPT PLOT       CO-GR Generate linear intercept (vs. subset) plot
+                                  LINEAR INTERCEPT PLOT Y X TAG
+LINEAR RESSD PLOT           CO-GR Generate linear res. sd. (vs. subset) plot
+                                  LINEAR RESSD PLOT Y X TAG
+LINEAR SLOPE PLOT           CO-GR Generate linear slope (vs. subset) plot
+                                  LINEAR SLOPE PLOT Y X TAG
+LINES                       CO-PC Set line types (SOLID, DOT, etc.) on plots
+                                  (default is solid)
+                                  LINES SOLID; PLOT Y X
+                                  LINES SO; PLOT Y X
+                                  LINES SOLID DOT DASH; PLOT Y X TAG
+LINES                       CO-WC Set line type for figures (SOLID, DOT, etc)
+                                  (default is solid)
+                                  LINES SOLID; BOX 20 20 30 30
+                                  LINES DOTTED; BOX 60 60 70 70
+LIST                        CO-SU List last 20 (or more) commands entered
+                                  LIST
+                                  L
+                                  PLOT Y X; LIST; SAVE 1; /
+LIST ...                    CO-SU List contents of a file
+                                  LIST LEW.DAT
+                                  LIST LEW.DAT FOR I = 1 1 20
+                                  LIST L8.DAT
+                                  LIST PDF.TEX
+LIST CONCLUSIONS            CO-SU List DATAPLOT's Conclusions file
+                                  TUKEY PPCC PLOT Y X
+                                  LIST CONCLUSIONS
+                                  AUTOCORRELATION PLOT Y
+                                  LIST CONCLUSIONS
+LIST DEFINITIONS            CO-SU List current user-defined definit (DEFINE)
+                                  DEFINE ER ESC FF
+                                  DEFINE BIG ESC 8
+                                  DEFINE JUNK H E L L O
+                                  LIST DEFINITIONS
+                                  ER; BIG; JUNK
+LIST LINES                  SC-SE Change number of commands for LISTing
+                                  (default is 20)
+                                  LIST
+                                  SET LIST 50
+                                  LIST
+LIST DICTIONARY             CO-SU List DATAPLOT's Dictionary (1000+ lines)
+                                  LIST DICTIONARY  (1000 line output!)
+                                  LIST DICTIONARY FOR I = 1 1 30
+LIST DIRECTORY              CO-SU List DATAPLOT's Directory of files
+                                  LIST DIRECTORY (1500 line output!)
+                                  LIST DIRECTORY FOR I = 1 1 20
+LIST SAVE                   CO-SU List current Saved-Commands file (SAVE)
+                                  LIST SAVE
+LOFCDF                      KEYW  Param with lack of fit cdf val from FIT, etc
+                                  SKIP 25; READ LEW.DAT
+                                  LINEAR FIT Y X
+                                  WRITE RESSD REPSD LOFCDF
+...LOG                      CO-PC Set switch (ON/OFF) for log scale on plots
+                                  (default is linear scale)
+                                  LOGLOG ON; PLOT Y X
+                                  LOGLOG; PLOT Y X
+                                  LOGLOG OFF; PLOT Y X
+                                  YLOG ON; PLOT Y X
+                                  XLOG ON; PLOT Y X
+                                  LOGLOG OFF; PLOT Y X
+LOGICAL AND                 SC-LE Carry out logical and
+                                  LET X1 = DATA 1 1 0 0 1 0 1
+                                  LET X2 = DATA 0 1 1 0 0 0 1
+                                  LET X3 = LOGICAL AND X1 X2
+                                  SET WRITE DECIMALS 0
+                                  WRITE X1 X2 X3
+LOGICAL IFF                 SC-LE Carry out logical iff
+                                  LET X1 = DATA 1 1 0 0 1 0 1
+                                  LET X2 = DATA 0 1 1 0 0 0 1
+                                  LET X3 = LOGICAL IFF X1 X2
+                                  SET WRITE DECIMALS 0
+                                  WRITE X1 X2 X3
+LOGICAL IFTHEN              SC-LE Carry out logical ifthen
+                                  LET X1 = DATA 1 1 0 0 1 0 1
+                                  LET X2 = DATA 0 1 1 0 0 0 1
+                                  LET X3 = LOGICAL IFTHEN X1 X2
+                                  SET WRITE DECIMALS 0
+                                  WRITE X1 X2 X3
+LOGICAL NAND                SC-LE Carry out logical nand
+                                  LET X1 = DATA 1 1 0 0 1 0 1
+                                  LET X2 = DATA 0 1 1 0 0 0 1
+                                  LET X3 = LOGICAL NAND X1 X2
+                                  SET WRITE DECIMALS 0
+                                  WRITE X1 X2 X3
+LOGICAL NOR                 SC-LE Carry out logical nor
+                                  LET X1 = DATA 1 1 0 0 1 0 1
+                                  LET X2 = DATA 0 1 1 0 0 0 1
+                                  LET X3 = LOGICAL NOR X1 X2
+                                  SET WRITE DECIMALS 0
+                                  WRITE X1 X2 X3
+LOGICAL NOT                 SC-LE Carry out logical not
+                                  LET X1 = DATA 1 1 0 0 1 0 1
+                                  LET X2 = DATA 0 1 1 0 0 0 1
+                                  LET X3 = LOGICAL NOT X1 X2
+                                  SET WRITE DECIMALS 0
+                                  WRITE X1 X2 X3
+LOGICAL OR                  SC-LE Carry out logical or
+                                  LET X1 = DATA 1 1 0 0 1 0 1
+                                  LET X2 = DATA 0 1 1 0 0 0 1
+                                  LET X3 = LOGICAL NOR X1 X2
+                                  SET WRITE DECIMALS 0
+                                  WRITE X1 X2 X3
+LOGICAL XOR                 SC-LE Carry out logical xor
+                                  LET X1 = DATA 1 1 0 0 1 0 1
+                                  LET X2 = DATA 0 1 1 0 0 0 1
+                                  LET X3 = LOGICAL XOR X1 X2
+                                  SET WRITE DECIMALS 0
+                                  WRITE X1 X2 X3
+LOGISTIC PROBABILITY PLOT   CO-GR Generate logistic probability plot
+                                  LOGISTIC PROBABILITY PLOT Y X
+LOGISTIC RANDOM NUMBERS     SC-LE Generate logistic random num.
+                                  LET Y = LOGISTIC RAND NUMB FOR I = 1 1 100
+LOGNORMAL PROBABILITY PLOT  CO-GR Generate lognormal probability plot
+                                  LOGNORMAL PROB PLOT Y
+LOGNORMAL RANDOM NUMBERS    SC-LE Generate lognormal random num.
+                                  LET Y = LOGNORMAL RAND NUMB FOR I = 1 1 100
+LOOP                        CO-SU Initiate a loop
+                                  MULTIPLOT 2 3
+                                  LOOP FOR K = 1 1 6
+                                  PLOT X**K FOR X = 0 .1 1
+                                  END OF LOOP
+                                  MULTIPLOT 3 4
+                                  FEEDBACK OFF
+                                  LOOP FOR K = 1 1 12
+                                  PLOT Y X SUBSET HOUR = K
+                                  END OF LOOP
+LOWER HINGE                 SC-LE Compute sample lower hinge
+                                  LET A = LOWER HINGE Y
+LOWER HINGE PLOT            CO-GR Generate lower hinge (vs. subset) plot
+                                  LOWER HINGE PLOT Y X
+LOWER QUARTILE              SC-LE Compute sample lower quartile
+                                  LET A = LOWER QUARTILE Y
+LOWER QUARTILE PLOT         CO-GR Generate lower quartile (vs. subset) plot
+                                  LOWER QUARTILE PLOT Y X
+LOWESS FRACTION             SU-CO Set 0.0 to 1.0 width for lowess smooth
+(default is .1)
+                                  (default neighborhood width is .1 of total)
+                                  SKIP 25; READ SUNSPOT2.DAT Y X
+                                  LOWESS SMOOTH Y X
+                                  PLOT Y PRED VS X
+                                  LOWESS FRACTION .5
+                                  LOWESS SMOOTH Y X
+                                  PLOT Y PRED VS X
+LOWESS PERCENTAGE           SU-CO Set 0 to 100% width for lowess smooth
+                                  (default neighborhood width is 10% of total)
+                                  SKIP 25; READ SUNSPOT2.DAT Y X
+                                  LOWESS SMOOTH Y X
+                                  PLOT Y PRED VS X
+                                  LOWESS PERCENTAGE 50
+                                  LOWESS SMOOTH Y X
+                                  PLOT Y PRED VS X
+LOWESS SMOOTH               CO-AN Perform lowess smoothing
+                                  SKIP 25; READ SUNSPOT2.DAT Y X
+                                  LOWESS SMOOTH Y X
+                                  PLOT Y PRED VS X
+                                  LOWESS FRACTION .3
+                                  LOWESS SMOOTH Y X
+                                  PLOT Y PRED VS X
+LQUO()                      CH/SY Write/draw left quote
+                                  FONT TRIPLEX; TEXT LQUO()
+LRAD()                      CH/SY Write/draw large radiacal
+                                  FONT TRIPLEX; TEXT LRAD()
+LT()                        CH/SY Write/draw less than
+                                  FONT TRIPLEX; TEXT 2 LT() 3
+LTEQ()                      CH/SY Write/draw less than or equal to
+                                  FONT TRIPLEX; TEXT 2 LTEQ() 3
+LVBA()                      CH/SY Write/draw long vertical bar
+                                  FONT TRIPLEX; TEXT LVBA()
+ 
+----------------------------------------
+ 
+13
+Commands--M
+ 
+MAGENTA                     AR-CO Set color to magenta
+                                  COLOR MAGENTA; TEXT A
+MAIL                        CO-SU Print message from DATAPLOT service org
+                                  (OBSOLETE)
+MAJOR ...TIC NUMBER         CO-PC Set number of major tics on plots
+                                  SKIP 25; READ KEYWEST.DAT Y X
+                                  PLOT Y X
+                                  XLIMITS 1950 2000; PLOT Y X
+                                  MAJOR XTIC NUMBER 11; PLOT Y X
+                                  YLIMITS 0 100; PLOT Y X
+                                  MAJOR YTIC NUMBER 5; PLOT Y X
+                                  MAJOR TIC NUMBER ; PLOT Y X
+                                  LIMITS ; PLOT Y X
+MARGIN                      CO-WC Set posit (0 to 100) for carr ret after TEXT
+                                  (default is 50 (= half across screen))
+                                  MOVE 50 50; TEXT ABC
+                                  TEXT ABC; TEXT ABC
+                                  MARGIN 20
+                                  TEXT ABC; TEXT ABC
+MARGIN COLOR                CO-PC Set color of margin (= outside frame)
+                                  (default is black)
+                                  PLOT Y X
+                                  MARGIN COLOR YELLOW
+                                  PLOT Y X
+MATRIX ADDITION             SC-LE Carry out matrix addition
+                                  READ MATRIX M1
+                                  1 0
+                                  2 3
+                                  END OF DATA
+                                  READ MATRIX M2
+                                  5 7
+                                  4 8
+                                  END OF DATA
+                                  LET M3 = MATRIX ADDITION M1 M2
+                                  SET WRITE DECIMALS 0; WRITE M3
+MATRIX COFACTOR             SC-LE Compute matrix cofactor
+                                  READ MATRIX M1
+                                  1 2 3
+                                  4 6 8
+                                  5 0 9
+                                  END OF DATA
+                                  LET C11 = MATRIX COFACTOR M1 1 1
+                                  LET C23 = MATRIX COFACTOR M1 2 3
+MATRIX DEFINITION           SC-LE Set matrix definition
+                                  READ Y1 Y2 Y3
+                                  1 2 3
+                                  4 6 8
+                                  5 0 9
+                                  END OF DATA
+                                  SET WRITE DECIMALS 0; WRITE Y1 Y2 Y3
+                                  LET M1 = MATRIX DEFINITION Y1 3 3
+                                  LET M2 = MATRIX DEFINITION Y2 3 2
+                                  WRITE M1 M2
+MATRIX DETERMINANT          SC-LE Compute matrix determinant
+                                  READ MATRIX M
+                                  1 2 3
+                                  4 6 8
+                                  5 0 9
+                                  END OF DATA
+                                  LET D = MATRIX DETERMINANT M
+MATRIX EIGENVALUES          SC-LE Compute matrix eigenvalues
+                                  (symmetric matrices only)
+                                  READ MATRIX M
+                                  1 2 3
+                                  2 6 8
+                                  3 8 1
+                                  END OF DATA
+                                  LET Y = MATRIX EIGENVALUES M
+                                  WRITE Y
+MATRIX EIGENVECTORS         SC-LE Compute matrix eigenvectors
+                                  (symmetric matrices only)
+                                  READ MATRIX M1
+                                  1 2 3
+                                  2 6 8
+                                  3 8 1
+                                  END OF DATA
+                                  LET M2 = MATRIX EIGENVECTORS M1
+                                  WRITE M2
+MATRIX EUCLIDEAN NORM       SC-LE Compute matrix Euclidean norm
+                                  READ MATRIX M
+                                  1 2 3
+                                  4 6 8
+                                  5 0 9
+                                  END OF DATA
+                                  LET A = MATRIX EUCLIDEAN NORM M
+MATRIX INVERSE              SC-LE Compute matrix inverse
+                                  READ MATRIX M1
+                                  1 2 3
+                                  2 5 3
+                                  1 0 8
+                                  END OF DATA
+                                  LET M2 = MATRIX INVERSE M1
+                                  WRITE M2
+MATRIX MINOR                SC-LE Compute matrix minor
+                                  READ MATRIX M1
+                                  1 2 3
+                                  4 6 8
+                                  5 0 9
+                                  END OF DATA
+                                  LET C11 = MATRIX MINOR M1 1 1
+                                  LET C23 = MATRIX MINOR M1 2 3
+MATRIX MULTIPLICATION       SC-LE Carry out matrix multiplication
+                                  READ MATRIX M1
+                                  1 0
+                                  2 3
+                                  END OF DATA
+                                  READ MATRIX M2
+                                  5 7
+                                  4 8
+                                  END OF DATA
+                                  LET M3 = MATRIX MULTIPLICATION M1 M2
+                                  SET WRITE DECIMALS 0; WRITE M3
+MATRIX NUMBER OF COLUMNS    SC-LE Compute matrix number of columns
+                                  READ MATRIX M
+                                  1 0
+                                  2 3
+                                  4 7
+                                  END OF DATA
+                                  LET A = MATRIX NUMBER OF COLUMNS M
+MATRIX NUMBER OF ROWS       SC-LE Compute matrix number of rows
+                                  READ MATRIX M
+                                  1 0
+                                  2 3
+                                  4 7
+                                  END OF DATA
+                                  LET A = MATRIX NUMBER OF ROWS M
+MATRIX SIMPLEX SOLUTION     SC-LE Compute matrix simplex solution
+                                  LET OBJFUNCO = DATA 4 -3 6 -1
+                                  READ MATRIX M
+                                  1 1 0 0     -1   100000
+                                  0 0 1 1     -1    20000
+                                  1 0 1 0     -1    40000
+                                  0 1 0 1     -1    60000
+                                  1 -10 0 0   -1        0
+                                  0 0 6 -5    -1        0
+                                  2 -8 0 0    -1        0
+                                  0 0 2 -8    -1        0
+                                  1 1 0 0     +1    50000
+                                  0 0 1 1     +1     5000
+                                  END OF DATA
+                                  (above code:  < = > as -1 0 +1)
+                                  LET X = MATRIX SIMPLEX SOLUTION OBJFUNCO M
+                                  LET PRED = VECTOR DOT PRODUCT OBJFUNCO X
+MATRIX SOLUTION             SC-LE Compute matrix solution
+                                  READ MATRIX M
+                                  1 2 1
+                                  3 1 -2
+                                  4 -3 -1
+                                  2 4 2
+                                  END OF DATA
+                                  READ V
+                                  2
+                                  1
+                                  3
+                                  4
+                                  END OF DATA
+                                  LET X = MATRIX SOLUTION M V
+MATRIX SPECTRAL NORM        SC-LE Compute matrix spectral norm
+                                  READ MATRIX M
+                                  1 2 3
+                                  4 6 8
+                                  5 0 9
+                                  END OF DATA
+                                  LET A = MATRIX SPECTRAL NORM M
+MATRIX SPECTRAL RADIUS      SC-LE Compute matrix spectral radius
+                                  READ MATRIX M
+                                  1 2 3
+                                  4 6 8
+                                  5 0 9
+                                  END OF DATA
+                                  LET A = MATRIX SPECTRAL RADIUS M
+MATRIX SUBMATRIX            SC-LE Define matrix submatrix
+                                  READ MATRIX M1
+                                  1 2 3
+                                  4 6 8
+                                  5 0 9
+                                  END OF DATA
+                                  LET M2 = MATRIX SUBMATRIX M1 2 2
+                                  LET M3 = MATRIX SUBMATRIX M1 2 3
+                                  SET WRITE DECIMALS 0; WRITE M2 M3
+MATRIX SUBTRACTION          SC-LE Carry out matrix subtraction
+                                  READ MATRIX M1
+                                  1 0
+                                  2 3
+                                  END OF DATA
+                                  READ MATRIX M2
+                                  5 7
+                                  4 8
+                                  END OF DATA
+                                  LET M3 = MATRIX SUBTRACTION M1 M2
+                                  SET WRITE DECIMALS 0; WRITE M3
+MATRIX TRACE                SC-LE Compute matrix trace
+                                  READ MATRIX M
+                                  1 2 3
+                                  4 6 8
+                                  5 0 9
+                                  END OF DATA
+                                  LET A = MATRIX TRACE M
+MATRIX TRANSPOSE            SC-LE Compute matrix transpose
+                                  READ MATRIX M1
+                                  1 2
+                                  4 6
+                                  5 0
+                                  END OF DATA
+                                  LET M2 = MATRIX TRANSPOSE M1
+                                  SET WRITE DECIMALS 0; WRITE M1 M2
+                                  WRITE M11 M12; WRITE M21 M22 M23
+...MAXIMUM                  CO-PC Set maxima to appear on plot frame
+                                  (default is neat & float with data)
+                                  YMAXIMUM 100; PLOT Y X
+                                  XMAXIMUM 90; PLOT Y X
+                                  YMAXIMUM ; PLOT Y X
+                                  XMAXIMUM ; PLOT Y X
+                                  Y1MAXIMUM 212; PLOT Y X
+                                  Y2MAXIMUM 100; PLOT Y X
+                                  X1MAXIMUM 30; PLOT Y X
+                                  X2MAXIMUM 2; PLOT Y X
+                                  MAXIMUM ; PLOT Y X
+MAXIMUM                     SC-LE Compute sample maximum
+                                  LET A = MAXIMUM Y
+MAXIMUM PLOT                CO-GR Generate maxima (vs. subset) plot
+                                  MAXIMUM PLOT Y X
+MEAN                        SC-LE Compute sample mean
+                                  LET A = SAMPLE MEAN Y
+MEAN CONTROL CHART          CO-GR Generate mean control chart
+                                  SKIP 25; READ CCXBAR.DAT X Y
+                                  LINES CONTROL CHART
+                                  CHARACTERS CONTROL CHART
+                                  MEAN CONTROL CHART Y X
+                                  LINES SOLID SOLID DOTTED
+                                  MEAN CONTROL CHART Y X
+                                  LET M = MEAN Y
+                                  SPIKE ON
+                                  SPIKE BASE M
+                                  MEAN CONTROL CHART Y X
+                                  LINES OFF
+                                  MEAN CONTROL CHART Y X
+                                  CHARACTER CIRCLE
+                                  CHARACTER FILL ON
+                                  MEAN CONTROL CHART Y X
+MEAN PLOT                   CO-GR Generate mean (vs. subset) plot
+                                  MEAN PLOT Y X
+MEDIAN                      SC-LE Compute sample median
+                                  LET A = MEDIAN Y
+MEDIAN PLOT                 CO-GR Generate median (vs. subset) plot
+                                  MEDIAN PLOT Y X
+MEDIAN POLISH               CO-AN Perform analysis of variance
+                                  MEDIAN POLISH Y X1 X2 X3
+MESSAGE      [not work]     CO-SU Write message to DATAPLOT service org
+MIDMEAN                     SC-LE Compute sample midmean
+                                  LET A = MIDMEAN Y
+MIDMEAN PLOT                CO-GR Generate midmean (vs. subset) plot
+                                  MIDMEAN PLOT Y X
+MIDRANGE                    SC-LE Compute sample midrange
+                                  LET A = MIDRANGE Y
+MIDRANGE PLOT               CO-GR Generate midrange (vs. subset) plot
+                                  MIDRANGE PLOT Y X
+MIMIMUM                     SC-LE Compute sample minimum
+                                  LET A = MINIMUM Y
+...MINIMUM                  CO-PC Set minima to appear on plot frame
+                                  (default is neat & float with data)
+                                  YMINIMUM 10; PLOT Y X
+                                  XMINIMUM 0; PLOT Y X
+                                  YMINIMUM ; PLOT Y X
+                                  XMINIMUM ; PLOT Y X
+                                  Y1MINIMUM 32; PLOT Y X
+                                  Y2MINIMUM 0; PLOT Y X
+                                  X1MINIMUM 0; PLOT Y X
+                                  X2MINIMUM -30; PLOT Y X
+                                  MINIMUM ; PLOT Y X
+MINIMUM PLOT                CO-GR Generate minima (vs. subset) plot
+                                  MINIMUM PLOT Y X
+MINOR GRID                  CO-PC Set switch (ON/OFF) for minor grid on plots
+                                  (default is OFF)
+                                  SKIP 25; READ TEXAS.DAT X Y
+                                  PRE-SORT OFF; PLOT Y X
+                                  GRID ON; PLOT Y X
+                                  MINOR GRID ON; PLOT Y X
+MINOR ...TIC NUMBER         CO-PC Set number of minor tics on plots
+                                  SKIP 25; READ KEYWEST.DAT Y X
+                                  PLOT Y X
+                                  XLIMITS 1950 2000; PLOT Y X
+                                  MAJOR XTIC NUMBER 11; PLOT Y X
+                                  MINOR XTIC NUMBER 0; PLOT Y X
+                                  YLIMITS 0 100; PLOT Y X
+                                  MAJOR YTIC NUMBER 5; PLOT Y X
+                                  MINOR XTIC NUMBER 4; PLOT Y X
+                                  MAJOR TIC NUMBER ; PLOT Y X
+                                  MINOR TIC NUMBER ; PLOT Y X
+                                  LIMITS ; PLOT Y X
+MOVE                        CO-WC Move to a point
+                                  MOVE 50 50; TEXT ABC
+MU()                        CH/SY Write/draw Greek mu
+                                  FONT TRIPLEX; TEXT LC() MU()
+                                  FONT TRIPLEX; TEXT UC() MU()
+MULTIPLOT                   CO-PC Set number of rows & columns for multiplot
+                                  (Synonym is MP)
+                                  SKIP 25; READ AUTO83.DAT Y X1 TO X7
+                                  MULTIPLOT 2 4
+                                  X3LABEL AUTOMATIC
+                                  LOOP FOR K = 1 1 7
+                                  PLOT Y X^K
+                                  END OF LOOP
+                                  MULTIPLOT 2 3
+                                  LOOP FOR K = 1 1 6
+                                  HISTOGRAM X^K
+                                  END OF LOOP
+                                  MULTIPLOT 2 2
+                                  FEEDBACK OFF
+                                  LOOP FOR K = 1 1 3
+                                  PLOT Y X3 SUBSET X7 K
+                                  END OF LOOP
+MULTIPLOT COORDINATES       CO-PC Change default global coor. for MULTIPLOT
+                                  MULTIPLOT 2 2
+                                  LOOP FOR K = 1 1 4
+                                  PLOT X**K FOR X = 0 .1 1
+                                  END OF LOOP
+                                  TICS OFF
+                                  TIC LABELS OFF
+                                  FRAME CORNER COORDINATES 0 0 100 100
+                                  MULTIPLOT 2 2
+                                  LOOP FOR K = 1 1 4
+                                  PLOT X**K FOR X = 0 .1 1
+                                  END OF LOOP
+                                  MULTIPLOT COORDINATES 5 5 95 95
+                                  MULTIPLOT 2 2
+                                  LOOP FOR K = 1 1 4
+                                  PLOT X**K FOR X = 0 .1 1
+                                  END OF LOOP
+MULTITEX.DP                 FI-MM Menu macro to position text via cross-hair
+                                  CALL MULTITEX.DP
+ 
+----------------------------------------
+ 
+14
+Commands--N
+ 
+NAME                        CO-SU Assign (equate) additional names to a var
+                                  XXX--NO
+NAND       [not work]       CO-WC Draw a nand box
+                                  NAND 50 50 60 50
+NASP()                      CH/SY Write/draw nasp
+                                  FONT TRIPLEX; TEXT NASP()
+NEGATE                      CO-SU Set switch (ON/OFF) to negate vert. plot
+                                  XXX--NO
+NEGATIVE BINO PROB PLOT     CO-GR Generate neg. bin. probability plot
+                                  LET P = .3
+                                  LET K = 15
+                                  NEGA BINO PROB PLOT Y
+NEGATIVE BINO RANDOM NUMBERSSC-LE Generate negative binomial random num.
+                                  LET P = .6
+                                  LET K = 20
+                                  LET Y = NEGA BINO RAND NUMB FOR I = 1 1 100
+NEWS                        CO-SU Print general news from DATAPLOT service org
+                                  NEWS
+NOR                         CO-WC Draw a nor box
+                                  NOR 50 50 60 50
+NORMAL PLOT
+NORMAL ORDER STAT MEDIANS   SC-LE Generate normal order statistic medians
+                                  LET YS = SORT Y
+                                  LET N = NUMBER YS
+                                  LET M = NORMAL ORDER STAT MEDIANS FOR I = 1 1
+                                  PLOT YS M
+NORMAL PROBABILITY PLOT     CO-GR Generate normal probability plot
+                                  (very heavily used command)
+                                  NORMAL PROB PLOT Y
+NORMAL RANDOM NUMBERS       SC-LE Generate normal N(0,1) random num.
+                                  LET Y = NORMAL RAND NUMB FOR I = 1 1 100
+NORMHIST.DP                 FI-MM Menu macro to gen hist + normal density
+                                  CALL NORMHIST.DP
+NOT=()                      CH/SY Write/draw not equal
+                                  FONT TRIPLEX; TEXT 2 + 2 NOT=() 3
+ORIENTATION
+NU()                        CH/SY Write/draw Greek nu
+                                  FONT TRIPLEX; TEXT LC() NU()
+                                  FONT TRIPLEX; TEXT UC() NU()
+ 
+----------------------------------------
+ 
+15
+Commands--O
+ 
+OFF                         KEYW  Set a switch to "off" position
+                                  SKIP 25; READ TEXAS.DAT X Y
+                                  PRE-SORT OFF; PLOT Y X
+                                  TICS LABELS OFF; PLOT Y X
+                                  TICS OFF; PLOT Y X
+                                  FRAME OFF; PLOT Y X
+                                  GRID ON; PLOT Y X
+                                  GRID OFF; PLOT Y X
+OMEG()                      CH/SY Write/draw Greek omega
+                                  FONT TRIPLEX; TEXT LC() OMEG()
+                                  FONT TRIPLEX; TEXT UC() OMEG()
+OMIC()                      CH/SY Write/draw Greek omicon
+                                  FONT TRIPLEX; TEXT LC() OMIC(0
+                                  FONT TRIPLEX; TEXT UC() OMIC()
+ON                          KEYW  Set a switch to "on" position
+                                  SKIP 25; READ TEXAS.DAT X Y
+                                  PRE-SORT OFF; PLOT Y X
+                                  TICS LABELS OFF; PLOT Y X
+                                  TICS OFF; PLOT Y X
+                                  FRAME OFF; PLOT Y X
+                                  FRAME ON; PLOT Y X
+                                  X1TICS ON; PLOT Y X
+                                  Y1TICS ON; PLOT Y X
+                                  X1TIC LABELS ON; PLOT Y X
+                                  Y1TIC LABELS ON; PLOT Y X
+                                  GRID ON; PLOT Y X
+                                  GRID OFF; PLOT Y X
+OPERATOR     [not work]     CO-SU Send a message to host console oper. (obs)
+                                  XXX--NO
+OR                          CO-WC Draw an or box
+                                  OR 50 50 60 50
+ORIGIN COORDINATES          CO-PC Set reference origin for 3-dimensional plot
+(NOT WORK)                        LET FUNCTION F = EXP(-X**2-Y**2)
+                                  3DPLOT F FOR X = -2 .2 2 FOR Y = -2 .2 2
+                                  ORIGIN COOR -3 -3 0
+                                  3DPLOT F FOR X = -2 .2 2 FOR Y = -2 .2 2
+ORTHOGONAL FIT [FUTURE]     CO-AN Carry out a least squares orthogonal fit
+                                  XXX
+OVAL                        CO-WC Draw an oval
+                                  OVAL 50 50 60 50 70 50
+ 
+----------------------------------------
+ 
+16
+Commands--P
+ 
+P CHART                     CO-GR Generate P control chart
+                                  SKIP 25; READ CCP.DAT X NUMDEF NUMTOT
+                                  LINES CONTROL CHART
+                                  CHARACTERS CONTROL CHART
+                                  P CHART NUMDEF NUMTOT X
+                                  LINES SOLID SOLID DOTTED
+                                  P CHART NUMDEF NUMTOT X
+                                  LET M = MEAN NUMDEF
+                                  SPIKE ON
+                                  SPIKE BASE M
+                                  P CHART NUMDEF NUMTOT X
+                                  LINES OFF
+                                  P CHART NUMDEF NUMTOT X
+                                  CHARACTER CIRCLE
+                                  CHARACTER FILL ON
+                                  P CHART NUMDEF NUMTOT X
+PARA()                      CH/SY Write/draw paragraph
+                                  FONT TRIPLEX; TEXT PARA()
+PARETO PLOT                 CO-GR Generate Pareto plot
+PARETO PPCC PLOT            CO-GR Generate Pareto prob plot corr coef plot
+                                  LET GAMMA = 5
+                                  LET Y = PARETO RAND NUMB FOR I = 1 1 100
+                                  PARETO PPCC PLOT Y
+PARETO PROBABILITY PLOT     CO-GR Generate Pareto probability plot
+                                  LET GAMMA = 5
+                                  LET Y = PARETO RAND NUMB FOR I = 1 1 100
+                                  PARETO PROBABILITY PLOT Y
+PARETO RANDOM NUMBERS       SC-LE Generate Pareto random num.
+                                  LET GAMMA = 2
+                                  LET Y = PARETO RAND NUMB FOR I = 1 1 100
+PARETO.DP                   FI-MM Menu macro to generate a Pareto plot
+                                  XXX
+PART()                      CH/SY Write/draw partial derivative
+                                  FONT TRIPLEX; PART()Y
+PATTERN                     SC-LE Generate a patterned seq within a var
+                                  LET X = PATTERN 1 2 5 7 9 FOR I = 1 1 20
+PATTERN COLOR        ???    CO-WC Set (general) pattern color
+                                  XXX
+PATTERN HEIGHT       ???    CO-WC Set (general) pattern height??
+                                  XXX
+PATTERN LINE         ???    CO-WC Set (general) pattern line type
+                                  XXX
+PATTERN SPACING      ???    CO-WC Set (general) pattern spacing
+                                  XXX
+PATTERN THICKLNESS   ???    CO-WC Set (general) pattern thickness
+XXX
+PATTERN WIDTH        ???    CO-WC Set (general) pattern (line) width
+XXX
+PAUSE                       CO-SU Stop execution (of a macro) until CR entered
+                                  CREATE JUNK.DP
+                                  FIT Y X
+                                  PAUSE
+                                  PLOT Y PRED VS X
+                                  END OF CREATE
+                                  SKIP 25; READ BERGER.DAT X Y
+                                  CALL JUNK.DP
+PEDESTAL        [not work]  CO-PC Set switch (ON/OFF) for pedestal on 3d-plot
+PEDESTAL COLOR  [not work]  CO-PC Set color of pedestal on 3d-plots
+PEDESTAL HEIGHT             CO-PC Set height for 3-d pedestal
+PEDESTAL SIZE   [not work]  CO-PC Set size for pedestal on 3d-plots
+PERCENT POINT PLOT          CO-GR Generate percent point plot
+                                  SKIP 25; READ GEAR.DAT Y
+                                  PERCENT POINT PLOT Y
+... PERIODOGRAM             CO-GR Generate auto- or cross-periodogram
+                                  SKIP 25; READ LEW.DAT Y
+                                  PERIODOGRAM Y
+PERIODOGRAM                 CO-GR Generate auto-periodogram
+                                  SKIP 25; READ LEW.DAT
+                                  PERIDOGRAM Y
+PHASE SPECTRAL PLOT         CO-GR Generate phase spectral plot
+XXX
+PHI()                       CH/SY Write/draw Greek phi
+                                  FONT TRIPLEX; TEXT LC() PHI()
+                                  FONT TRIPLEX; TEXT UC() PHI()
+PI                          KEYW  Parameter with value 3.1415926
+                                  WRITE PI
+                                  PLOT SIN(2*PI*X) FOR X = 0 .1 6.3
+PI()                        CH/SY Write/draw Greek pi
+                                  FONT TRIPLEX; TEXT LC() PI()
+                                  FONT TRIPLEX; TEXT UC() PI()
+PICTURE POINTS (or PP)      CO-GD Set dev 1 num of pict pts
+                                  PICTURE POINT 1000 700
+                                  PLOT X**2 FOR X = 1 1 10
+PIE CHART                   CO-GR Generate pie chart
+                                  SKIP 25; READ LEW.DAT Y
+                                  PIE CHART Y
+PIECHART.DP                 FI-MM Menu macro to generate labelled pie chart
+                                  CALL PIECHART.DP
+PLOT                        CO-GR Generate plot of var &/or func
+                                  SKIP 25; READ GEAR.DAT Y X
+                                  PLOT Y
+                                  CHAR X
+                                  PLOT Y
+                                  PLOT Y X
+                                  CHAR X ALL
+                                  PLOT Y X X
+                                  SKIP 25; READ  HAYES.DAT X Y1 Y2 Y3 Y4 Y5 Y6
+                                  PLOT Y1 Y2 Y3 Y4 Y5 Y6 VS X
+                                  PLOT Y1 Y2 VS X Y3 Y4 Y5 Y6 VS X
+                                  PLOT Y1 Y2 Y3 VS X AND
+                                  PLOT Y4 Y5 Y6 VS X
+                                  CHAR
+                                  PLOT SIN(X)*EXP(-X/10) FOR X = 0 .1 10
+PLOTFUNC.DP                 FI-MM Menu macro to plot a function
+                                  CALL PLOTFUNC.DP
+PLOTSIN.DP                  FI-MM Menu macro (elementary) to plot sin function
+                                  CALL PLOTSIN.DP
+PLOT1VAR.DP                 FI-MM Menu macro (elementary) to read & plot 1 var
+                                  CALL PLOT1VAR.DP
+PLOT2VAR.DP                 FI-MM Menu macro (elementary) to read & plot 2 var
+                                  CALL PLOT2VAR.DP
+...PEN MAP
+PN CHART                    CO-GR Generate PN control chart
+                                  SKIP 25; READ CCPN.DAT X NUMDEF NUMTOT
+                                  LINES CONTROL CHART
+                                  CHARACTERS CONTROL CHART
+                                  PN CHART NUMDEF NUMTOT X
+                                  LINES SOLID SOLID DOTTED
+                                  PN CHART NUMDEF NUMTOT X
+                                  LET M = MEAN NUMDEF
+                                  SPIKE ON
+                                  SPIKE BASE M
+                                  PN CHART NUMDEF NUMTOT X
+                                  LINES OFF
+                                  PN CHART NUMDEF NUMTOT X
+                                  CHARACTER CIRCLE
+                                  CHARACTER FILL ON
+                                  PN CHART NUMDEF NUMTOT X
+POINCARE PLOT               GR-CO Generate Poincare plot
+XXX
+POINT                       CO-WC Draw a point
+                                  ERASE; POINT 30 30
+                                  POINT 50 50 55 50 60 50 55 60
+POISSON PPCC PLOT           CO-GR Generate Poisson prob plot corr coef plot
+                                  LET LAMBDA = 7
+                                  LET Y = POISSON RAND NUMB FOR I = 1 1 100
+                                  POISSON PPCC PLOT Y
+POISSON PROBABILITY PLOT    CO-GR Generate Poisson probability plot
+                                  LET LAMBDA = 7
+                                  LET Y = POISSON RAND NUMB FOR I = 1 1 100
+                                  LAMBDA PROB PLOT Y
+POISSON RANDOM NUMBERS      SC-LE Generate Poisson random num.
+                                  LET LAMBDA = 4.3
+                                  LET Y = POISSON RAND NUMB FOR I = 1 1 100
+POLYNOMIAL ADDITION         SC-LE Carry out polynomial addition
+                                  LET Y1 = DATA 1 2 3
+                                  LET Y2 = DATA 1 1 0
+                                  LET Y3 = POLYNOMIAL ADDITION Y1 Y2
+POLYNOMIAL DEGREE           CO-SU Set degree of polynomial in smoothing; (obs)
+                                  SKIP 25; READ SUNSPOT2.DAT Y X
+                                  SMOOTH Y X
+                                  PLOT Y PRED VS X
+                                  POLYNOMIAL DEGREE 3
+                                  SMOOTH Y X
+                                  PLOT Y PRED VS X
+POLYNOMIAL DIVISION         SC-LE Carry out polynomial division
+                                  LET Y1 = DATA 2 5 3
+                                  LET Y2 = DATA 1 1 0
+                                  LET Y3 = POLYNOMIAL DIVISION Y1 Y2
+POLYNOMIAL EVALUATION       SC-LE Carry out polynomial evaluation
+XXX
+POLYNOMIAL MULTIPLICATION   SC-LE Carry out polynomial multiplication
+                                  LET Y1 = DATA 1 2 1
+                                  LET Y2 = DATA 1 1 0
+                                  LET Y3 = POLYNOMIAL MULT Y1 Y2
+POLYNOMIAL SQUARE           SC-LE Carry out polynomial square
+                                  LET Y1 = DATA 1 2 1
+                                  LET Y2 = POLYNOMIAL SQUARE Y1
+POLYNOMIAL SUBTRACTION      SC-LE Carry out polynomial subtraction
+                                  LET Y1 = DATA 1 2 1
+                                  LET Y2 = DATA 1 1 0
+                                  LET Y3 = POLYNOMIAL SUBT Y1 Y2
+POSTSCRIPT
+... PPCC PLOT               CO-GR Generate prob plot corr coef plot (9 fam)
+XXXXX
+                                  SKIP 25; READ MARSHAK.DAT Y
+                                  PPCC PLOT Y
+PPCC PLOT                   CO-GR Generate (Tukey lambda) prob plot cc pl
+                                  SKIP 25; READ MARSHAK.DAT Y
+                                  PPCC PLOT Y
+PRE-ERASE                   CO-PC Set switch (ON/OFF) for auto-erase bef plots
+                                  SKIP 25; READ GEAR.DAT Y X
+                                  PRE-ERASE OFF; ERASE
+                                  CHAR CONTROL CHART; LINES CONTROL CHART
+                                  XBAR CHART Y X
+                                  CHAR ; LINES DOTTED
+                                  PLOT 1.O FOR X = 1 1 10
+                                  PLOT 1.1 FOR X = 1 1 10
+                                  PLOT 0.9 FOR X = 1 1 10
+... PRE-FIT                 CO-AN Perform pre-fit analysis for starting values
+PRE-SORT                    CO-PC Set automatic pre-plot sort (ON/OFF)
+                                  (default is ON)
+                                  SKIP 25; READ TEXAS.DAT
+                                  PLOT Y X;  this will be a bad map
+                                  PRE-SORT OFF; PLOT Y X
+PRED                        KEYW  Var with predicted values from FIT, etc
+                                  SKIP 25; READ BERGER.DAT X Y
+                                  PLOT Y X; LINEAR FIT Y X
+                                  CHAR X BLANK; LINES BLANK SOLID
+                                  PLOT Y PRED VERSUS X
+PREPLOT                     CO-PC Set graphics device for pre-plot strings
+PREPLOT                     SC-SE Define gr dev for PREPLOT/POSTPLOT str
+PRIM()                      CH/SY Write/draw prime
+                                  ERASE; FONT TRIPLEX
+                                  MOVE 50 50; TEXT A PRIM()
+                                  TEXT APRIM() ; TEXT BPRIM()PRIM()
+PRIME NUMBERS               SC-LE Generate prime numbers
+                                  LET Y = PRIME NUMBERS FOR I = 1 1 100
+                                  PLOT Y
+PRINCIPLE COMPONENTS        SC-LE Generate all principle components
+                                  SKIP 25; ROW LIMITS 10 35
+                                  READ MATRIX CURRIE3.DAT Y
+                                  SET WRITE DECIMALS 2
+                                  WRITE Y; WRITE Y1 Y2 Y3
+                                  MULTIPLOT 2 2; LIMITS 0 40
+                                  PLOT Y2 Y1; PLOT Y3 Y1; PLOT Y3 Y2
+                                  LET P = PRINCIPLE COMPONENTS Y
+                                  WRITE P; WRITE P1 P2 P3
+                                  MULTIPLOT 2 2; LIMITS -30 30
+                                  PLOT S2 S1; PLOT S3 S1; PLOT S3 S2
+PRINT                       CO-IO Write (terminal/file) var, param, func
+                                  (Synonym is WRITE)
+                                  LET X = DATA 1 2 5 9 12
+                                  LET A = 23.6
+                                  LET FUNCTION F = EXP(-ALPHA*X)
+                                  READ MATRIX M
+                                  1 2 3
+                                  4 5 6
+                                  END OF DATA
+                                  PRINT X A F M
+PRINTING                    CO-SU Allow/suppress analysis printing (ON/OFF)
+                                  SKIP 25; READ BERGER.DAT Y X
+                                  PRINTING OFF
+                                  FIT Y X
+                                  CHAR X BLANK; LINES BLANK SOLID
+                                  PLOT Y PRED VS X
+                                  PRINTING ON
+... PROBABILITY PLOT        CO-GR Generate probability plot (24 dist)
+                                  (Usually precede with ... PPCC PLOT)
+                                  LET Y = NORMAL RAND NUMB FOR I = 1 1 100
+                                  NORMAL PROB PLOT Y
+                                  UNIFORM PROB PLOT Y
+                                  CAUCHY PROB PLOT Y
+                                  LOGISTIC PROB PLOT Y
+                                  DOUBLE EXPONENTIAL PROB PLOT Y
+                                  SEMI-CIRCULAR PROB PLOT Y
+                                  LET LAMBDA = .14
+                                  TUKEY LAMBDA PROB PLOT Y
+                                  LET Y2 = ABS(Y)
+                                  LOGNORMAL PROB PLOT Y2
+                                  HALFNORMAL PROB PLOT Y2
+                                  LET NU = 5
+                                  T PROB PLOT Y
+                                  LET NU = 7
+                                  CHI-SQUARED PROB PLOT Y2
+                                  LET NU1 = 3; LET NU2 = 5
+                                  F PROB PLOT Y2
+                                  EXPONENTIAL PROB PLOT Y2
+                                  LET GAMMA = 3
+                                  GAMMA PROB PLOT Y2
+                                  LET ALPHA = 2; LET BETA = 6
+                                  BETA PROB PLOT Y2
+                                  LET GAMMA = 2
+                                  WEIBULL PROB PLOT Y2
+                                  EXTREME VALUE TYPE 1 PROB PLOT Y2
+                                  EV1 PROB PLOT Y2
+                                  LET GAMMA = 3
+                                  EXTREME VALUE TYPE 2 PROB PLOT Y2
+                                  EV2 PROB PLOT Y2
+                                  LET GAMMA = 6
+                                  PARETO PROB PLOT Y2
+                                  LET GAMMA = 3
+                                  INVERSE GAUSSIAN PROB PLOT Y2
+                                  IG PROB PLOT Y2
+                                  LET GAMMA = 4
+                                  WALD PROB PLOT Y2
+                                  LET GAMMA = 2
+                                  RECIPROCAL INVERSE GAUSSIAN PROB PLOT Y2
+                                  RIG PROB PLOT Y2
+                                  LET GAMMA = 7
+                                  FATIGUE LIFE PROB PLOT Y2
+                                  LET P = .4; LET N = 20
+                                  LET Y3 = BINO RAND NUMB FOR I = 1 1 50
+                                  BINOMIAL PROB PLOT Y3
+                                  LET P = .8
+                                  LET Y3 = GEOMETRIC RAND NUMB FOR I = 1 1 50
+                                  GEOMETRIC PROB PLOT
+                                  LET LAMBDA = 235
+                                  LET Y3 = POISSON RAND NUMB FOR I = 1 1 50
+                                  POISSON PROB PLOT
+                                  LET K = 4; LET P = .8
+                                  LET Y3 = NEGA BINO RAND NUMB FOR I = 1 1 50
+                                  NEGATIVE BINOMIAL PROB PLOT
+PROBE                       CO-SU Examine code settings (used by implementor)
+                                  PROBE IRD IPR
+PROD()                      CH/SY Write/draw product
+                                  FONT TRIPLEX; TEXT PROD()
+PRODUCT                     SC-LE Compute product of elements in a var
+                                  LET Y = DATA 1 3 4 6
+                                  LET A = PRODUCT Y
+PROFILE PLOT                CO-GR Generate profile plot (multivar anal)
+                                  SKIP 25; COLUMN LIMITS 20 132
+                                  READ AUTO83.DAT CAR Y1 TO Y5
+                                  LINES DOTTED ALL
+                                  LINES SOLID
+                                  LIMITS -1.5 1.5
+                                  PROFILE PLOT Y1 Y2 Y3 Y4 Y5 SUBSET CAR 1
+PROMPT                      CO-WC Set switch (ON/OFF) for prompt
+                                  PROMPT OFF; ERASE
+                                  MOVE 50 50; TEXT ABC
+                                  TEXT DEF; TEXT GHI
+PSI()                       CH/SY Write/draw Greek psi
+                                  ERASE; FONT TRIPLEX
+                                  TEXT LC() PSI() UC() PSI()
+PYRA()                      CH/SY Write/draw pyramid
+                                  ERASE; FONT TRIPLEX
+                                  MOVE 50 50; TEXT PYRA()
+PYRAMID                     AR-CH Set plot character to pyramid
+                                  SKIP 25; READ HAMAKER.DAT Y X1 X2
+                                  CHARACTER PYRAMID SQUARE
+                                  PLOT Y X1 X2
+PYRAMID                     CO-WC Draw a pyramid
+                                  PYRAMID 40 40 60 40 50 60
+ 
+----------------------------------------
+ 
+17
+Commands--Q
+ 
+QUADRATURE SPECTRAL PLOT    CO-GR Generate quadrature spectral plot
+QUANTILE-QUANTILE PLOT      CO-GR Generate quantile-quantile plot
+... QUARTILE PLOT           CO-GR Generate lower/upper quart (vs. subset) plot
+                                  SKIP 25; READ GEAR.DAT Y X
+                                  LOWER QUARTILE PLOT Y X
+                                  UPPER QUARTILE PLOT Y X
+QUERY                       CO-SU Send query line to DATAPLOT consultant file
+                                  QUERY HOW DO I WRITE TO HP-GL?
+QUIC
+QUIT                        CO-SU Exit from DATAPLOT (= STOP, END, etc.)
+                                  QUIT
+ 
+----------------------------------------
+ 
+18
+Commands--R
+ 
+R                           CO-SU Re-execute one previous command
+                                  LET FUNCTION F = EXP(-X**2-Y**2)
+                                  3DPLOT F FOR X = -2 .2 2 FOR Y = -2 .2 2
+                                  R
+R CHART                     CO-GR Generate range control chart plot
+                                  (Synonym is RANGE CHART)
+                                  (Synonym is RANGE CONTROL CHART)
+                                  SKIP 25; READ CCXBAR.DAT X Y
+                                  LINES CONTROL CHART
+                                  CHARACTERS CONTROL CHART
+                                  R CHART Y X
+                                  LINES SOLID SOLID DOTTED
+                                  R CHART Y X
+                                  SPIKE ON
+                                  SPIKE BASE 0
+                                  R CHART Y X
+                                  LINES OFF
+                                  R CHART Y X
+                                  CHARACTER CIRCLE
+                                  CHARACTER FILL ON
+                                  R CHART Y X
+RACC()                      CH/SY Write/draw right accent
+                                  ERASE; FONT TRIPLEX
+                                  MOVE 50 50; TEXT ABC RACC()
+                                  TEXT ABCRACC()
+RADI()                      CH/SY Write/draw radical
+                                  ERASE; FONT TRIPLEX
+                                  MOVE 30 60; TEXT RADI()
+RADIANS                     CO-SU Set radians for trig calculations (ON/OFF)
+                                  (Default trig units are radians)
+                                  DEGREES
+                                  PLOT SIN(X) FOR X = 0 1 360
+                                  RADIANS
+                                  PLOT SIN(X) FOR X = 0 .1 6.3
+RANDOM NUMBERS              SC-LE Generate random sample (with replacement)
+                                  (Synonym is RANDOM SAMPLE)
+                    LET Y = NORMAL RANDOM NUMBERS FOR I = 1 1 50
+                    LET Y = UNIFORM RANDOM NUMBERS FOR I = 1 1 50
+                    LET Y = CAUCHY RANDOM NUMBERS FOR I = 1 1 50
+                    LET Y = LOGISTIC RANDOM NUMBERS FOR I = 1 1 50
+                    LET Y = DOUBLE EXPONENTIAL RAN NUMB FOR I = 1 1 50
+                    LET Y = SEMI-CIRCULAR RAND NUMB FOR I = 1 1 50
+                    LET LAMBDA = .14
+                    LET Y = TUKEY LAMBDA RAND NUMB FOR I = 1 1 50
+                    LET Y = LOGNORMAL RAND NUMB FOR I = 1 1 50
+                    LET Y = HALFNORMAL RAND NUMB FOR I = 1 1 50
+                    LET NU = 5
+                    LET Y = T RAND NUMB FOR I = 1 1 50
+                    LET NU = 7
+                    LET Y = CHI-SQUARED RAND NUMB FOR I = 1 1 50
+                    LET NU1 = 3; LET NU2 = 5
+                    LET Y = F RAND NUMB FOR I = 1 1 50
+                    LET Y = EXPONENTIAL RAND NUMB FOR I = 1 1 50
+                    LET GAMMA = 3
+                    LET Y = GAMMA RAND NUMB FOR I = 1 1 50
+                    LET ALPHA = 2; LET BETA = 6
+                    LET Y = BETA RAND NUMB FOR I = 1 1 50
+                    LET GAMMA = 2
+                    LET Y = WEIBULL RAND NUMB FOR I = 1 1 50
+                    LET Y = EXTREME VALUE TYPE 1 RND NUMB FOR I = 1 1 50
+                    LET Y = EV1 RAND NUMB FOR I = 1 1 50
+                    LET GAMMA = 3
+                    LET Y = EXTREME VALUE TYPE 2 RAND NUMB FOR I = 1 1 50
+                    LET Y = EV2 RAND NUMB FOR I = 1 1 50
+                    LET GAMMA = 6
+                    LET Y = PARETO RAND NUMB FOR I = 1 1 50
+                    LET GAMMA = 3
+                    LET Y = INVERSE GAUSSIAN RAND NUMB FOR I = 1 1 50
+                    LET Y = IG RAND NUMB FOR I = 1 1 50
+                    LET GAMMA = 4
+                    LET Y = WALD RAND NUMB FOR I = 1 1 50
+                    LET GAMMA = 2
+                    LET Y = RECIPROCAL INVERSE GAUSSIAN RAND NUMB FOR I = 1 1 50
+                    LET Y = RIG RAND NUMB FOR I = 1 1 50
+                    LET GAMMA = 7
+                    LET Y = FATIGUE LIFE RAND NUMB FOR I = 1 1 50
+                    LET P = .4; LET N = 20
+                    LET Y = BINOMIAL RAND NUMB FOR I = 1 1 50
+                    LET P = .8
+                    LET Y = GEOMETRIC RAND NUMB FOR I = 1 1 50
+                    LET LAMBDA = 235
+                    LET Y = POISSON RAND NUMB FOR I = 1 1 50
+                    LET K = 4; LET P = .8
+                    LET Y = NEGATIVE BINOMIAL RAND NUMB FOR I = 1 1 50
+RANDOM PERMUTATION          SC-LE Generate random permutation
+                                  LET Y = RAND PERM FOR I = 1 1 10
+                                  SET WRITE DECIMALS 0; WRITE Y
+RANDSAMP.DP                 FI-MM Menu macro to gen stratified random sample
+                                  CALL RANDSAMP.DP
+RANGE                       SC-LE Compute sample range
+                                  SKIP 25; READ GEAR.DAT Y
+                                  LET A = RANGE Y
+RANGE CONTROL CHART         CO-GR Generate range control chart
+                                  SKIP 25; READ CCXBAR.DAT X Y
+                                  LINES CONTROL CHART
+                                  CHARACTERS CONTROL CHART
+                                  RANGE CONTROL CHART Y X
+                                  LINES SOLID SOLID DOTTED
+                                  RANGE CONTROL CHART Y X
+                                  SPIKE ON
+                                  SPIKE BASE 0
+                                  RANGE CONTROL CHART Y X
+                                  LINES OFF
+                                  RANGE CONTROL CHART Y X
+                                  CHARACTER CIRCLE
+                                  CHARACTER FILL ON
+                                  RANGE CONTROL CHART Y X
+RANGE PLOT                  CO-GR Generate range (vs. subset) plot
+                                  SKIP 25; READ GEAR.DAT Y X
+                                  RANGE PLOT Y X
+RANK                        SC-LE Rank the elements in a variable
+RANK CORRELATION            SC-LE Compute sample rank correlation
+RANK COVARIANCE             SC-LE Compute sample rank covariance
+RAPO()                      CH/SY Write/draw right apostrophe
+RARR()                      CH/SY Write/draw right arrow
+RBRA()                      CH/SY Write/draw right bracket
+RCBR()                      CH/SY Write/draw right curly bracket
+READ                        CO-IO Read variables
+READ FORMAT                 SC-SE Set format for (fast) READ
+READ FUNCTION               CO-IO Read 1 line of functions (= READ STRING)
+READ MATRIX                 CO-IO Read in a matrix
+READ PARAMETER              CO-IO Read one line of parameters.
+READ STRING                 CO-IO Read one line of strings (= READ FUNCTION)
+RED                         AR-CO Set color to red
+REFPLOT.DP                  MA-FI Macro to gen DATAPLOT tutorial ref plot
+REGION BASE          ???    CO-WC Set region base??
+REGION BORDER COLOR  ???    CO-WC Set region border color
+REGION BORDER LINE   ???    CO-WC Set region border line type
+REGION BORDER THICKNESS ??? CO-WC Set region border (line) thickness
+REGION FILL                 CO-WC Set fill switch (ONXX/OFF) for reg (& 3d)
+REGION FILL     ???         CO-WC Set region fill switch (ON/OFF)
+REGION FILL COLOR    ???    CO-WC Set region fill color
+REGION PATTERN       ???    CO-WC Set region pattern
+REGION PATTERN COLOR ???    CO-WC Set region pattern color
+REGION PATTERN LINE  ???    CO-WC Set region pattern line type
+REGION PATTERN SPACING  ??? CO-WC Set region pattern spacing
+REGION PATTERN THICKNESS ???CO-WC Set region pattern (line) thickness
+REGIS                       CO-GD Set dev 1 to DEC Regis
+RELATIVE SD PLOT            CO-GR Generate relative st. dev. (vs. subset) plot
+RELATIVE STANDARD DEVIATION SC-LE Compute sample relative stand dev
+RELB()                      CH/SY Write/draw right elbow
+RENAME                      CO-SU Assign a different name to a variable
+REPDF                       KEYW  Param with rep deg of freedom from FIT etc
+REPEAT (or R)               CO-SU Re-execute one previous command
+REPSD                       KEYW  Param with replic. sd from FIT, ANOVA, etc
+RES                         KEYW  Var with residuals from FIT, ANOVA, etc
+RESDF                       KEYW  Param with res deg of freedom from FIT etc
+RESET                       SU-CO "Zero-out" var &/or param &/or func, etc
+RESISTOR                    CO-WC Draw a resistor
+                                  RESISTOR 30 30 60 60
+                                  HW 1 .5
+                                  RESISTOR 30 40 60 70
+RESSD                       KEYW  Param with res sd from FIT, ANOVA, etc
+RESTORE MEMORY              CO-SU Restore all saved var/param/func from file
+RETAIN                      CO-SU Retain var or elements of a var
+REVTRI                      AR-CH Set plot character to reverse triangle
+RHO()                       CH/SY Write/draw Greek rho
+RING BELL                   CO-WC Ring the bell
+ROOT ACCURACY               CO-SU Set accuracy for ROOT subcommand under LET
+ROOTOGRAM                   CO-GR Generate rootogram
+ROOTS                       SC-LE Compute roots of a function
+ROW LIMITS                  CO-IO Set row limts for READ and SERIAL READ
+RQUO()                      CH/SY Write/draw right quote
+RUN SEQUENCE PLOT           CO-GR Generate run sequence plot
+RUNGE-KUTTA                 SC-LE Compute Runge-Kutta diff. eq. solution
+RUNS                        CO-AN Carry out runs analysis
+RUNS PLOT (FUTURE)          CO-GR Generate runs plot
+ 
+----------------------------------------
+ 
+19
+Commands--S
+ 
+S CHART                     CO-GR Generate st. dev. control chart plot
+                                  SKIP 25; READ CCXBAR.DAT X Y
+                                  LINES CONTROL CHART
+                                  CHARACTERS CONTROL CHART
+                                  S CHART Y X
+                                  LINES SOLID SOLID DOTTED
+                                  S CHART Y X
+                                  SPIKE ON
+                                  SPIKE BASE 0
+                                  S CHART Y X
+                                  LINES OFF
+                                  S CHART Y X
+                                  CHARACTER CIRCLE
+                                  CHARACTER FILL ON
+                                  S CHART Y X
+SAVE                        CO-SU Save selected LISTed commands
+SAVE                        KEYW  Symbolic name for DTPLT SAVEd-command file
+SAVE MEMORY                 CO-SU Save all var/param/func to file
+SDPRED.DP                   MA-FI Macro to compute linear fit conf lim for obs
+SEARCH                      CO-SU Search a file for all occurrances of string
+SEARCH DICTIONARY           CO-SU Search DATAPLOT Dict file for all occ of str
+SEARCH DIRECTORY            CO-SU Search DATAPLOT Direc file for all occ of str
+SEARCH1                     CO-SU Search file for 1st occurrance of string
+SEARCH1 DICTIONARY          CO-SU Search DATAPLOT Dict file for 1st occ of str
+SEARCH1 DIRECTORY           CO-SU Search DATAPLOT Direc file for 1st occ of str
+SEED                        CO-SU Set seed for random number generators
+SEGMENT ... COLOR           CO-PC Set colors for line segments on plots
+SEGMENT ... COORDINATES     CO-PC Set location of line segments on plots
+SEGMENT ... PATTERN
+SEGMENT ... THICKNESS
+SEMI-CIRC RANDOM NUMBERS    SC-LE Generate semi-circular random num.
+SEMI-CIRCLE                 CO-WC Draw a semi-circle
+SEMI-CIRULAR PROB PLOT      CO-GR Generate semi-circ. probability plot
+SEQUENCE                    CO-PC Set auto-seq-numbering for plots (ON/OFF)
+SEQUENCE                    SC-LE Generate a sequence within a var
+SEQUENTIAL DIFFERENCE       SC-LE Compute seq. differences of elts in a var
+SERIAL READ                 CO-IO Read variables serially
+SET                         CO-SU Specify settings for certain commands
+SET CARDINALITY             SC-LE Compute set cardinality
+SET CARTESIAN PRODUCT       SC-LE Carry out set cartesian product
+SET COMPLEMENT              SC-LE Carry out set complement
+SET DISTINCT                SC-LE Extract distinct elements of a set
+SET INTERSECTION            SC-LE Carry out set intersection
+SET UNION                   SC-LE Carry out set union
+SIGM()                      CH/SY Write/draw Greek sigma
+SIMPLEX                     AR-FO Set font to simplex
+SIMPLEX SCRIPT              AR-FO Set font to simplex script
+SIMPMETH.DP                 FI-MM Menu macro to compute simplex sol (lin prog)
+SINE AMPLITUDE PLOT         CO-GR Generate sine amplitude (vs. subset) plot
+SINE FREQUENCY PLOT         CO-GR Generate sine freq. (vs. subset) plot
+SIZE                        SC-LE Compute sample size (number of observ)
+SKEWNESS                    SC-LE Compute sample skew (stand 3rd cent mom)
+SKEWNESS PLOT               CO-GR Generate skewness (vs. subset) plot
+SKIP                        CO-IO Set num of header lines to skip for READ
+... SMOOTH                  CO-AN Perform smoothing of equi-spaced data
+SOLID                       AR-LI Set line type to solid
+SORT                        SC-LE Sort the elements in a variable
+SORT.DP                     FI-MM Menu macro to sort alpha list via priorities
+SORTC                       SC-LE Sort elem in 1 var & carry another var
+SPACING                     CO-WC Set spacing (equal/proportional) for TEXT
+... SPECTRAL PLOT           CO-GR Generate auto-, cross-, etc spectral plot)
+SPECTRAL PLOT               CO-GR Generate (auto-) spectral plot
+SPIKE                       CO-PC Set switch (ON/OFF) for spikes on plots
+SPIKE BASE                  CO-PC Set base location for spikes on plots
+SPIKE COLOR                 CO-WC Set color for spikes
+SPIKE DIRECTION             CO-PC Set spike direction (H/V)
+SPIKE LINE                  CO-PC Set line types for spikes on plots
+SPIKE PATTERN               CO-WC Set line pattern for spikes
+SPIKE THICKNESS             CO-WC Set thickness for spikes
+... SPLINE FIT              CO-AN Perform spline fit
+SQUA()                      CH/SY Write/draw square
+SQUARE                      AR-CH Set plot character to square
+STAN DEVI CONTROL CHART     CO-GR Generate stan. dev. control chart
+                                  SKIP 25; READ CCXBAR.DAT X Y
+                                  LINES CONTROL CHART
+                                  CHARACTERS CONTROL CHART
+                                  STAN DEVI CONTROL CHART Y X
+                                  LINES SOLID SOLID DOTTED
+                                  STAN DEVI CONTROL CHART Y X
+                                  SPIKE ON
+                                  SPIKE BASE 0
+                                  STAN DEVI CONTROL CHART Y X
+                                  LINES OFF
+                                  STAN DEVI CONTROL CHART Y X
+                                  CHARACTER CIRCLE
+                                  CHARACTER FILL ON
+                                  STAN DEVI CONTROL CHART Y X
+STAN DEVI OF THE MEAN PLOT  CO-GR Generate sd of mean (vs. subset) plot
+STANDARD DEVI OF THE MEAN   SC-LE Compute standard deviation of the mean
+STANDARD DEVIATION          SC-LE Compute sample standard deviation
+STANDARD DEVIATION PLOT     CO-GR Generate standard dev (vs. subset) plot
+STAR                        AR-CH Set plot character to star
+STAR PLOT                   CO-GR Generate star plot (multivar anal)
+                                  SKIP 25; COLUMN LIMITS 20 132
+                                  READ AUTO83.DAT CAR Y1 TO Y5
+                                  LINES DOTTED ALL
+                                  LINES SOLID
+                                  LIMITS -1.5 1.5
+                                  STAR PLOT Y1 Y2 Y3 Y4 Y5 SUBSET CAR 1
+STAR()                      CH/SY Write/draw star
+STATUS                      CO-SU Print status of lines, char, var, par
+STEM-AND-LEAF DIAGRAM       CO-GR Generate stem-and-leaf diagram
+STOP                        CO-SU Exit from DATAPLOT (= EXIT, END, etc.)
+SUB()                       CH/SY Shift to subscript
+SUBS()                      CH/SY Write/draw subset
+SUBPLOT.DP                  MA-FI Macro to gen subseries plot of raw data
+SUBPLOTR.DP                 MA-FI Macro to gen subseries plot of residuals
+SUBSET                      KEYW  Qualifier denoting subset of interest
+SUBSTITUTION CHARACTER      SC-SE Define alternate substitution char (for \)
+SUM                         SC-LE Compute sum of elements in a variable
+SUM.DP                      FI-MM Menu macro to sum a list of numbers
+SUMD???                     SC-LE Compute XXX
+SUMM()                      CH/SY Write/draw summation
+SUMMARY                     CO-AN Compute summary statistics
+SUN
+SUP()                       CH/SY Shift to superscript
+SUPE()                      CH/SY Write/draw superset
+SYMBOL [not working]        CO-WC Define alternate special symbol to ()
+SYMMETRY PLOT               CO-GR Generate a symmetry plot
+SYSTEM
+ 
+----------------------------------------
+ 
+20
+Commands--T
+ 
+T PPCC PLOT                 CO-GR Generate t prob plot corr coef plot
+T PROBABILITY PLOT          CO-GR Generate t probability plot
+T RANDOM NUMBERS            SC-LE Generate t random num.
+T TEST                      CO-AN Carry out 1- or 2-sample t test
+TTEST.DP                    MM-FI Menu macro to perfrom t test on 2 var
+TABULATE                    CO-AN Tabulate counts, means, sd, ranges of data
+TAGUCHI SN... PLOT          CO-GR Generate Tag. sig-to-noise (vs. subset) plot
+TAGUCHI SN PLOT             CO-GR Gen Tag. S/N "target is better" (vs. subset) p
+TAGUCHI SNL PLOT            CO-GR Gen Tag. S/N "larger is better" (vs. subset) p
+TAGUCHI SNS PLOT            CO-GR Gen Tag. S/N "smaller is better" (vs. subset)
+TAGUCHI SN2 PLOT            CO-GR Gen Tag. S/N "target is better" (vs. subset) p
+TAU()                       CH/SY Write/draw Greek tau
+TEKTRONIX                   AR-FO Set font to Tektronix
+TEKTRONIX 4010              CO-GD Set dev 1 to Tekt 4010
+TEKTRONIX 4014              CO-GD Set dev 1 to Tekt 4014
+TEKTRONIX 4105              CO-GD Set dev 1 to Tekt 4105
+TEKTRONIX 4662              CO-GD Set dev 1 to Tekt 4662
+TERMINATOR CHARACTER        CO-SU Set character to terminate commands
+TEXT                        CO-WC Write out text
+TEXT BASE              ???  CO-WC Set base?? for TEXT
+TEXT BORDER COLOR      ???  CO-WC Set color of border for TEXT
+TEXT BORDER LINE       ???  CO-WC Set border line type for TEXT
+TEXT BORDER THICKNESS  ???  CO-WC Set border thickness for TEXT
+TEXT FILL              ???  CO-WC Set fill switch (ON/OFF) for TEXT
+TEXT FILL COLOR        ???  CO-WC Set fill color for TEXT
+TEXT PATTERN           ???  CO-WC Set fill pattern for TEXT
+TEXT PATTERN COLOR     ???  CO-WC Set pattern color for TEXT
+TEXT PATTERN LINE      ???  CO-WC Set pattern line type for TEXT
+TEXT PATTERN SPACING   ???  CO-WC Set pattern spacing for TEXT
+TEXT PATTERN THICKNESS ???  CO-WC Set pattern (line) thickness for TEXT
+THET()                      CH/SY Write/draw Greek theta
+THEX()                      CH/SY Write/draw there exists
+THFO()                      CH/SY Write/draw therefore
+THICKNESS                   CO-WC Set thickness of TEXT letters (0 to 100)
+THIRD CENTRAL MOME          SC-LE Compute sample third central moment
+...TIC                      CO-PC Set existence (ON/OFF) for tic marks
+...TIC COLOR                CO-PC Set color of tic marks on plots
+...TIC THICKNESS
+...TIC OFFSET
+...TIC OFFSET UNITS
+...TIC POSITION             CO-PC Set plot tic mark position (in/out/thru)
+...TIC SIZE                 CO-PC Set plot tic mark size
+...TIC LABEL                CO-PC Set switch (ON/OFF) for tic mark labels
+...TIC LABEL ANGLE
+...TIC LABEL CASE
+...TIC LABEL COLOR          CO-PC Set color for tic mark labels
+...TIC LABEL CONTENTS       CO-PC Specify (alphabetic) contents for tic labels
+...TIC LABEL DECIMALS       CO-PC Set number of decimals for plot tic labe
+...TIC LABEL DIRECTION
+...TIC LABEL FONT
+...TIC LABEL FORMAT         CO-PC Set format (alpha, exp, etc) for tic labels
+...TIC LABEL HW             CO-PC Set height/width of tic labels
+...TIC LABEL JUSTIFICATION
+...TIC LABEL SIZE           CO-PC Set tic mark label size (= height)
+...TIC LABEL THICKNESS
+TIC LABEL DECIMALS          CO-PC Set number of decimals for tic labels
+TIC LABEL HW                CO-PC Set tic label height & width
+TILD()                      CH/SY Write/draw tilda
+TIME         [not work]     CO-SU Display (wall clock) time & elapsed run time
+TIME()                      CH/SY Write/draw times sign
+TITLE                       CO-PC Set title at top of plot
+TITLE CASE
+TITLE COLOR                 CO-PC Set color for title on plots
+TITLE FONT
+TITLE SIZE                  CO-PC Set plot title size (height)
+TITLE THICKNESS
+TO                          KEYW  Set interval of values within a variable
+TRANSLATE                   CO-SU Define auto-translation of any graphics
+TRIA()                      CH/SY Write/draw triangle
+TRIANGLE                    AR-CH Set plot character to triangle
+TRIANGLE                    CO-WC Draw a triangle
+TRIANGULAR PROB PLOT        CO-GR Generate triangular probability plot
+TRIANGULAR RANDOM NUMBERS   SC-LE Generate triangular random num.
+TRIGONOMETRIC UNITS         CO-SU Set trigonometric units
+TRII()                      CH/SY Write/draw inverted triangle
+TRIMMED MEAN PLOT           CO-GR Generate trimmed mean (vs. subset) plot
+TRIPLEX                     AR-FO Set font to triplex
+TRIPLEX ITALIC              AR-FO Set font to triplex italic
+TRIWEIGHT                   SC-LE Compute triweight (robust) transformation
+TTEST.DP                    FI-MM Menu macro to perfrom t test on 2 var
+TUFTE BOX PLOT              AR-CH Set all plot characters for TUFTE BOX PLOT
+TUFTE BOX PLOT              AR-LI Set all plot lines for TUFTE BOX PLOT
+TUKEY LAMBDA PPCC PLOT      CO-GR Generate Tukey lambda prob plot cc plot
+TUKEY LAMBDA PROB PLOT      CO-GR Generate Tukey lambda probability plot
+TUKEY LAMBDA RANDOM NUMBERS SC-LE Generate Tukey lambda random num.
+ 
+----------------------------------------
+ 
+21
+Commands--U
+ 
+U CHART                     CO-GR Generate U control chart
+                                  SKIP 25; READ CCU.DAT X NUMDEF NUMTOT
+                                  LINES CONTROL CHART
+                                  CHARACTERS CONTROL CHART
+                                  U CHART NUMDEF NUMTOT X
+                                  LINES SOLID SOLID DOTTED
+                                  U CHART NUMDEF NUMTOT X
+                                  LET M = MEAN NUMDEF
+                                  SPIKE ON
+                                  SPIKE BASE M
+                                  U CHART NUMDEF NUMTOT X
+                                  LINES OFF
+                                  U CHART NUMDEF NUMTOT X
+                                  CHARACTER CIRCLE
+                                  CHARACTER FILL ON
+                                  U CHART NUMDEF NUMTOT X
+UARR()                      CH/SY Write/draw up arrow
+UC()                        CH/SY Shift to upper case
+UNIFORM ORDER STAT MEDIANS  SC-LE Generate uniform order statistic medians
+UNIFORM PROBABILITY PLOT    CO-GR Generate uniform probability plot
+UNIFORM RANDOM NUMBERS      SC-LE Generate uniform (0,1) random num.
+UNIO()                      CH/SY Write/draw union
+UNSB()                      CH/SY Shift to un-subscript
+UNSP()                      CH/SY Shift to un-superscript
+UPPER HINGE                 SC-LE Compute sample upper hinge
+UPPER HINGE PLOT            CO-GR Generate upper hinge (vs. subset) plot
+UPPER QUARTILE              SC-LE Compute sample upper quartile
+UPPER QUARTILE PLOT         CO-GR Generate upper quartile (vs. subset) plot
+UPSI()                      CH/SY Write/draw Greek upsilon
+ 
+----------------------------------------
+ 
+22
+Commands--V
+ 
+VALU()                      CH/SY Write actual value of succeeding param
+VARI()                      CH/SY Write/draw varies
+VARIANCE                    SC-LE Compute sample variance
+VARIANCE OF THE MEAN PLOT   CO-GR Generate var. of mean (vs. subset) plot
+VARIANCE PLOT               CO-GR Generate variance (vs. subset) plot
+VB                          AR-CH Set plot character to vertical bar
+VBAR()                      CH/SY Write/draw vertical bar
+VECTOR ADDITION             SC-LE Carry out vector addition
+VECTOR ANGLE                SC-LE Compute vector angle
+VECTOR DISTANCE             SC-LE Compute vector distance
+VECTOR DOT PRODUCT          SC-LE Carry out vector dot product
+VECTOR LENGTH               SC-LE Compute vector length
+VECTOR SUBTRACTION          SC-LE Carry out vector subtraction
+VERSUS                      KEYW  Used with PLOT, etc for multi-trace plot
+VERTICAL SPACING            CO-WC Set vert. spacing between lines (0 to 100)
+VERTICALLY                  KEYW  Rotate contents (but not frame) of plot
+VISIBLE    [future]         CO-PC Set 3-d bkgrd lines visibility (ON/OFF)
+ 
+----------------------------------------
+ 
+23
+Commands--W
+ 
+...WEIBULL SCALE            CO-PC Set scale for plots to be Weibull
+WEIBULL ADJUSTED RANKS      SC-LE Generate adj. ranks for Weibull analysis
+WEIBULL PLOT                CO-GR Generate Weibull plot
+WEIBULL PPCC PLOT           CO-GR Generate Weibull prob plot corr coef plot
+WEIBULL PROBABILITY PLOT    CO-GR Generate Weibull probability plot
+WEIBULL RANDOM NUMBERS      SC-LE Generate Weibull random numbers
+WEIGHTS      [not work]     CO-SU Set weights variable for FIT, PRE-FIT, etc
+WHITE                       AR-CO Set color to white
+WIDTH                       CO-WC Set width of letters (0 to 100)
+WINDOW COORDINATES          CO-PC Set graphics region coor. (0 to 100)
+WINDSORIZED MEAN PLOT       CO-GR Generate Winsorized mean (vs. subset) plot
+WORDCHAV.DP                 FI-MM Menu macro to gen centered vert wordchart
+WORDCHAH.DP                 FI-MM Menu macro to gen centered hor wordchart
+WRITE                       CO-IO Write (terminal/file) var, param, func
+WRITE "  "                  CO-IO Write (terminal/file) a literal text string
+WRITE DECIMALS              SC-SE Set num. decimals for WRITE output
+WRITE FORMAT                SC-SE Set format for WRITE output
+WRT                         KEYW  "With respect to"; used in LET for roots etc
+ 
+----------------------------------------
+ 
+24
+Commands--X
+ 
+XBAR CHART                  CO-GR Generate xbar (= mean) control chart plot
+                                  SKIP 25; READ CCXBAR.DAT X Y
+                                  LINES CONTROL CHART
+                                  CHARACTERS CONTROL CHART
+                                  XBAR CHART Y X
+                                  LINES SOLID SOLID DOTTED
+                                  XBAR CHART Y X
+                                  LET M = MEAN Y
+                                  SPIKE ON
+                                  SPIKE BASE M
+                                  XBAR CHART Y X
+                                  LINES OFF
+                                  XBAR CHART Y X
+                                  CHARACTER CIRCLE
+                                  CHARACTER FILL ON
+                                  XBAR CHART Y X
+XI()                        CH/SY Write/draw Greek xi
+                                  ERASE; FONT TRIPLEX
+                                  MOVE 50 50; TEXT LC() XI() UC() XI()
+X11
+ 
+----------------------------------------
+ 
+25
+Commands--Y
+ 
+YATES ANALYSIS              CO-AN Carry out Yates analysis
+                                  SKIP 25; READ BOXBISG.DAT Y
+                                  YATES ANALYSIS Y
+                                  YATES OUTPUT 2
+                                  YATES ANALYSIS Y
+                                  YATES OUTPUT 3
+                                  YATES ANALYSIS Y
+                                  YATES OUTPUT 23
+                                  YATES ANALYSIS Y
+YATES OUTPUT                CO-SU  Define Yates Section to Print
+                                  SKIP 25; READ BOXBISG.DAT Y
+                                  YATES ANALYSIS Y
+                                  YATES OUTPUT 2
+                                  YATES ANALYSIS Y
+                                  YATES OUTPUT 3
+                                  YATES ANALYSIS Y
+                                  YATES OUTPUT 13
+                                  YATES ANALYSIS Y
+YELLOW                      AR-CO Set color to yellow
+                                  COLOR YELLOW; TEXT ABC
+ 
+----------------------------------------
+ 
+26
+Commands--Z
+ 
+ZETA
+ZETA()                      CH/SY Write/draw Greek zeta
+                                  ERASE; FONT TRIPLEX
+                                  MOVE 50 50; TEXT LC() ZETA() UC() ZETA()
+ 
+----------------------------------------
+ 
+27
+Commands--Other
+ 
+23CUBE.DP                   FI-MM Menu macro to gen a 2**3 fact exp des cube
+3DPLOT.DP                   FI-MM Menu macro to gen a 3dplot with cube frame
+3-D PLOT                    CO-GR Generate 3-dimensional plot of var &/or func
+4-PLOT                      CO-GR Generate 4-plot univariate analysis plot
+                                  SKIP 25; READ LEW.DAT Y
+                                  4-PLOT Y
+/                           CO-SU Re-execute SAVEd commands.
+\                           CH/SY Write actual value of succeed. param or str
+&                           CH/SY Concatonate strings (used with \)
+...      [not work]         KEYW  Continue any statement onto next line
+()                          KEYW  Set math/Greek char in TEXT, LABEL, etc.
++-()                        CH/SY Write/draw + or -
+                                  ERASE; FONT TRIPLEX
+                                  MOVE 50 50; TEXT 20 +-() .04
+-+()                        CH/SY Write/draw - or +
+                                  ERASE; FONT TRIPLEX
+                                  MOVE 50 50; TEXT 20 -+() .04
+.                           CO-SU Insert a comment line in code
+                                  .
+                                  . STEP 1--READ IN THE DATA
+                                  .
+                                  SKIP 25; READ BERGER.DAT X Y
+                                  .
+                                  . STEP 2--PLOT THE DATA
+                                  .
+                                  PLOT Y X
+                                  CHAR X
+                                  PLOT Y X
+                                  .
+                                  . STEP 3--FIT THE DATA
+                                  .
+                                  LINEAR FIT Y X
+                                  .
+                                  . STEP 4--ANALYZE PREDICTED VALUES
+                                  .
+                                  CHAR X BLANK; LINES BLANK SOLID
+                                  PLOT Y PRED VS X
+                                  .
+                                  . STEP 5--ANALYZE RESIDUALS
+                                  .
+                                  4-PLOT RES
+                                  .
+;                           KEYW  Terminator character for a command
+                                  SKIP 25; READ LEW.DAT Y
+                                  PLOT Y; 4-PLOT Y
+<                           KEYW  "Less than"
+                                  SKIP 25
+                                  READ AUTO83.DAT MPG CYL DISP HP WT ACCTIME YEA
+                                  WRITE MPG WT YEAR COUNTRY SUBSET MPG < 10
+                                  BOX PLOT MPG COUNTRY
+                                  BOX PLOT MPG COUNTRY SUBSET ACCTIME < 12
+<=                          KEYW  "Less than or equal to"
+<>                          KEYW  "Not equal to"
+                                  SKIP 25
+                                  READ AUTO83.DAT MPG CYL DISP HP WT ACCTIME YEA
+                                  BOX PLOT MPG CYL
+                                  BOX PLOT MPG CYL SUBSET CYL <> 5
+=                           KEYW  "Equal"; used in FIT, PRE-FIT, FOR, etc
+>                           KEYW  "Greater than"
+                                  SKIP 25; READ LEW.DAT Y
+                                  LET X = SEQUENCE 1 1 200
+                                  4-PLOT Y
+                                  WRITE Y X SUBSET Y > 250
+>=                          KEYW  "Greater than or equal to"
+ 
+----------------------------------------

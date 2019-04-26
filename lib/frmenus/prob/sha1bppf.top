@@ -1,0 +1,27 @@
+----- <~prob\sha1bppf.top> PPF's for One Shape Parameter Continuous Distributions (M-Z)
+
+Compute PPF's (one shape parameters)
+
+Compute Percent Point Function for Continuous Distributions
+with One Shape Parameters
+
+McLeish                                   <xemf: ~prob\mclppf.men>
+Muth                                      <xemf: ~prob\mutppf.men>
+Ogive                                     <xemf: ~prob\ogippf.men>
+Power                                     <xemf: ~prob\powppf.men>
+Power Normal                              <xemf: ~prob\pnrppf.men>
+Reciprocal                                <xemf: ~prob\recppf.men>
+Reflected Power                           <xemf: ~prob\rpoppf.men>
+Skew Double Exponential (Skew Laplace)    <xemf: ~prob\sdeppf.men>
+Skew Normal                               <xemf: ~prob\snppf.men>
+Slope                                     <xemf: ~prob\sloppf.men>
+T                                         <xemf: ~prob\tppf.men>
+Topp and Leone                            <xemf: ~prob\topppf.men>
+Triangular                                <xemf: ~prob\trippf.men>
+Tukey-Lambda (symmetric)                  <xemf: ~prob\lamppf.men>
+Von Mises                                 <xemf: ~prob\vonppf.men>
+Wald                                      <xemf: ~prob\walppf.men>
+Weibull (minimum case)                    <xemf: ~prob\wei1ppf.men>
+Weibull (maximum case)                    <xemf: ~prob\wei2ppf.men>
+Wrapped Cauchy                            <xemf: ~prob\wcappf.men>
+

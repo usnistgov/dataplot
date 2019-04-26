@@ -1,0 +1,10 @@
+----- <~dataloex\ROSZMAN1.DP> Load & Execute ROSZMAN1.DAT
+
+. This is file    ROSZMAN1.DP
+
+DELETE Y
+SKIP 25
+READ ROSZMAN1.DAT Y
+TITLE ROSZMAN1.DAT
+/
+

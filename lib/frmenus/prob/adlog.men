@@ -1,0 +1,26 @@
+This is file adlog.men--Anderson-Darling Test for Logistic
+ 
+--------------------
+ 1. Anderson-Darling Test for Logistic Distribution
+ 2. LOGISTIC ANDERSON-DARLING GOODNESS OF FIT Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Value of Location Parameter:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Value of Scale Parameter:
+ 6. @CE 3 0 42 50 ? gui-variable
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Compute Anderson-Darling Logistic Test?
+--------------------
+GR FE
+LET KSLOC   = _2
+LET KSSCALE = _3
+LOGISTIC ANDERSON DARLING GOODNESS OF FTI _1 _4
+--------------------
+WEB HELP GOODNESS OF FIT
+--------------------

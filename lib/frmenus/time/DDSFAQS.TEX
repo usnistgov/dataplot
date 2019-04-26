@@ -1,0 +1,921 @@
+This is Dataplot file    ~time\ddsfaqs.tex
+ 
+Frequently-asked Questions:  Data-dependent Systems (DDS)
+ 
+ 
+All DDS FAQ answers were provided by
+   Sam Pandit   (906-487-2153) and
+   Gosham Joshi (701-231-8671)
+ 
+ 
+1. What is DDS?
+ 
+DDS stands for Data-dependent systems.
+We identify and understand the world surrounding
+us by discerning certain patterns or modes in
+space and time from sensory perception data, and
+referring them to the ones in our memory or
+subconscious, discerned at earlier times and
+possibly at different places.  This process of
+knowledge or understanding, which may broadly be
+called ``modal analysis,' may proceed by two
+distinct but not necessarily mutually exclusive
+ways.  One is to use our prior knowledge to form
+certain prejudices and assumptions and then fit
+the data to their consequences.  The other is to
+objectively analyze and decompose the data into
+certain basic modes and then select the once based
+on some predetermined criteria, including but not
+limited to similarity with the modes expected from
+prior knowledge.
+ 
+Our approach adopts the latter point of view,
+calling it the data dependent systems (DDS)
+approach to distinguish it from the former.  The
+approach is best learned in the context of modal
+analysis of temporal data from mechanical
+vibrations due to their elegant mathematical
+formulation and powerful illustrative potential.
+However, it can be and has been applied to data
+from such diverse fields as economics, machined
+surfaces, and image processing.
+ 
+A thorough understanding of the system is required
+before its mathematical model can be formulated by
+the scientific method.  However, many of the
+modern systems are too complex to idealize or to
+conjecture general laws about their microscopic or
+macroscopic behavior.  Modeling such systems
+becomes a problem.
+ 
+Not many of us possess the genius of Newton or
+Einstein to conjecture such laws.  But, thanks to
+their pioneering work, we do possess three
+significant advantages over them.  The electronic
+revolution ushered in by their work with others
+has given us instruments capable of providing far
+more precise and abundant data than ever before;
+such precise data can be collected even under
+uncontrolled real-life conditions and no longer
+necessarily require a controlled laboratory
+environment.  Mathematics has developed to an
+unprecedented degree in our time.  And finally, we
+have the computer, perhaps nearest to the
+replacement of a genius, which can digest and
+exploit the first two advantages.
+ 
+Although lack of understanding of the physical
+mechanism prevents us from formulating a
+mathematical model of the system, data properly
+recorded contain this missing knowledge relevant
+to the measured variables.  Therefore, a
+systematic analysis of the observed data should
+lead us to this missing knowledge.  System
+equations, which could not be derived from the
+unknown physical mechanism, should be obtainable
+from the observed data alone.  The system, as
+represented by the equations derived from and
+dependent upon the data, may be called a data
+ 
+dependent system (DDS), and the methodology for
+obtaining such equations or models from the data
+alone and using them for analysis, prediction,
+control, and design will be called the data
+dependent systems (DDS) methodology.
+ 
+Data Dependent Systems (DDS) methodology is an
+exploratory, educative, and application
+development tool based on the statistics of ARMA
+models and their connections to many physical
+systems.  The data from working systems is
+digested in the form of adequte ARMA models.  The
+analysis of such models reveals the simplified but
+non-trivial facets of otherwise complicated
+systems.  The results can be used for making
+informed improvements, focused/simplified analysis
+of subsystems, and eventual process/yield
+enhancement.  The virtue of analysing actual
+working systems keeps the practioners protected
+from the wrath of blind assumptions, faith, and
+beliefs which often hinder the progress of
+scientific or engineering endeavor.
+ 
+-----------------------------
+ 
+2. What are the 'deliverables' from DDS?
+ 
+The primary deliverable of DDS is a purely data
+based mathematical model in the form of stochastic
+difference equation, from which all the dynamic
+characteristics of underlying differential
+equation can be obtained.  This model provides the
+following:
+ 
+    1. Autoregressive moving average
+       (ARMA) model coefficients and residuals.
+ 
+    2. Characteristic roots or eigenvalues, with the
+       natural frequency and damping ratio for a complex
+       conjugate pair corresponding to oscillatory modes
+       in the data.
+ 
+    3. Green's function or impulse response
+       function with the accompanying modal components.
+       Identification of input-output transfer function.
+ 
+    4. Auto-and cross-spectra with their modal
+       components.
+ 
+    5. Auto- and cross-covariance with their
+       modal components.
+ 
+    6. Modal decomposition of variance/power.
+ 
+    7. Stochastic modal deconvolution for
+       enhancements and simplifications of data.
+ 
+    8. Smooth and easily understood plots of all these
+       characteristics backed by quantitative tables.
+ 
+    9. Equations for implementing prediction, forecast
+       and control using a microprocessor.
+ 
+   10. Model residuals, including outliers, to indica
+       presence of deterministic components in the data.
+ 
+   11. Reconstruction and plot of deterministic and
+       stochastic components of the data together with
+       the modal components of each if needed.
+ 
+   12. Separation of noise from the signal without prior
+       qualitative or quantitative assumptions of the
+       noise.
+ 
+   13. Identification of data as stationary or
+       non-stationary.
+ 
+   14. Identification and estimation of
+       trends and cycles.
+ 
+-----------------------------
+ 
+3. What are the math/stat components of DDS?
+ 
+    1. Autoregressive moving average (ARMA) els for possibly
+       nonstationary  data.
+ 
+    2. Sequential modeling strategy that  donot  use
+       indicators such as sample autocorrelations or sample spectra
+       for model specification.
+ 
+    3. Parameter estimation using   norm.
+ 
+    4. Standardized auto-correlations less t 2 and F-Test for model
+       adequacy.
+ 
+    5. State space formulation to facilitatedeling strategy and
+       analysis.
+ 
+    6. Spectral (eigenvalue-eigenvector) decosition of the state
+       matrix.
+ 
+    7. Solution of linear differential/diffece equations.
+ 
+    8. Fourier Transform applied to autocovance function to get
+       spectrum as an analytic function.
+ 
+    9. Minimum mean squared error forecastinnd control.
+ 
+   10. Convolution of desired residuals witdal components.
+ 
+   11. Modal/Wavelength decomposition.
+ 
+-----------------------------
+ 
+4. Intuitively, why does DDS work?
+ 
+The modeling strategy of DDS ensures that its
+adequate mathematical model captures all the
+information about the underlying system behavior
+reflected in the data, including the average,
+variability, and successive dependence,
+'correlation or ``color'.  The models sampled form
+of differential equations commonly encountered in
+science and engineering.  Thus a complicated
+sequence of data can be comprehensively
+represented and readily interpreted by means of
+characteristics of differential equations
+well-known in science and engineering.
+Characteristics such as impulse and frequency
+response or spectrum readily follow from the
+analystic functions derived from the models.
+Smooth plots of these characteristics are far
+clearer and easier to interpret using their
+precise quantitative forms compared to those
+commonly obtained via FFT applied to the original
+data.  This is because the randomness in the data
+or the ``noise' is effectively separated by
+modeling in characteristics whereas FFT confounds
+such noise and any amount of post-processing to
+smooth the resultant erratic forms merely shifts
+the confounding.
+ 
+The DDS methodology is equally applicable to
+deterministic as well as stochastic, stable as
+well as unstable, stationary as well as
+nonstationary, and single as well as multiple
+input-output systems, with or without feedback.
+No prior assumptions regarding these
+characteristics are necessary.  On the contrary,
+the methodology will itself reveal at the analysis
+stage whether the system is stable or unstable,
+with or without feedback, and so on.  The paucity
+of initial assumptions is indeed one of the most
+desirable features of the method.
+ 
+-----------------------------
+ 
+5. Who invented DDS? When? Where? Why?
+ 
+DDS was invented by Dr.  Sudhakar M. Pandit as a
+paradigm for data-based modeling, prediction, and
+control.  A precursor to its development was an
+attempt in his M. S. thesis at the Pennsylvania
+State University in 1970 to update the parameters
+of a given model using observed data.  The
+concept, the definition, and the formulation of
+the DDS methodology was first outlined in his Ph.
+D. preliminary report (dissertation proposal) in
+1972 at the University of Wisconsin-Madison, as an
+outgrowth of the 1970 M. S. thesis.  The resultant
+Ph.  D. dissertation, completed in 1973, was the
+central reference for DDS until the appearance of
+his 1991 book published by Wiley Interscience.
+The motivation of ``why'' for DDS is best
+described by the following excerpt from the
+preface of this book:
+ 
+``When I first became acquainted with the theory
+of relativity over 25 years ago, I was not only
+fascinated and charmed by its grandeur and beauty,
+but also puzzled and dismayed by its inherent and
+pervasive determinism.  Even without the benefit
+of quantum mechanics, a rudimentary knowledge of
+Indian philosophy shows that any description of
+causation in a physical reality in space-time is
+necessarily relative and uncertain or
+indeterminate.  A modern exposition of this
+ancient philosophy by Swami Vivekananda in the
+pre-relativity era, which I happened to read at
+the same time, made this quite clear: since the
+ultimate reality is one and undivided by (or
+beyond) space-time, its divided physical
+appearance in space-time must be causally related
+by a mathematical description expressing both
+relativity and uncertainty.  In the description of
+an ideally isolated system, when boundary
+conditions result in deterministic effects
+dominating the uncertainty, e.g., systems in
+classical celestial mechanics, relativistic
+mechanics with its consequent determinism alone
+may suffice as an approximation.  Otherwise the
+uncertainty of quantum mechanics prevails.
+ 
+The apparently divided physical reality is
+perceived by means of sensory data, which must
+reflect all the laws of its space-time relation
+captured by the sensory mechanism.  The classical
+scientific method conjectures such laws, expresses
+them in mathematical models, and establishes their
+validity by verifying the agreement of their
+consequences with the observed data.  Modern
+physics modifies these laws and models to get
+better agreement with more and more refined data,
+thus reducing the uncertainty.
+ 
+It is also possible to reverse the method,
+deriving the mathematical models directly from the
+data and using them in applications such as
+design, prediction, and control.  I have called a
+system represented by such a model from data alone
+as ``Data Dependent Systems' meth practical
+utility of an approach of this kind is obvious and
+is illustrated in this book.  But it also has
+theoretical utility in that it provides a rational
+method of decomposing the possibly complicated
+models obtained from data into simple parts, which
+can be utilized to confirm, deny, or modify
+well-known laws and even to conjecture new laws
+for the behavior of the underlying system.  In
+this sense the approach is fully complementary to
+the classical scientific method.'
+ 
+-----------------------------
+ 
+6. What are the best DDS literary references?
+ 
+   1. Pandit, S. M. (1970).  ``A Bayesian Approach  to
+      Time Series Analysis in Adaptive Control.' M. S.
+      Thesis.   The Pennsylvania State University,
+      State College, PA.
+ 
+   2. Pandit, S. M. (1973).  ``Data Dependent
+      Systems: Modeling, Analysis, and Optimal Control
+      Via Time Series.' Ph. D. Dissertation,
+      University of Wisconsin, Madison, WI.
+ 
+   3. Pandit, S. M. (1977a).  ``Analysis of
+      Vibration Records by Data Dependent Systems.' The
+      Shock & Vibration Bulletin , No. 47, pp. 161-174.
+ 
+   4. Pandit, S. M. (1977b).  ``Stochastic Linearization
+      by Data Dependent Systems.' ASME Journal of
+      Dynamic Systems Measurement and Control, 99G,
+      pp. 221-226.
+ 
+   5. Pandit, S. M., Modal and Spectrum Analysis:
+      Data Dependent Systems in State Space, Wiley
+      Interscience, 1991.
+ 
+-----------------------------
+ 
+7. What companies & organizations use DDS? For how long?
+ 
+   University of Wisconsin-Madison since 1972
+ 
+   Michigan Technological University since 1976
+ 
+   University of Illinois-Urbana Champaign since 180
+ 
+   University of Nebraska-Lincoln since 1982
+ 
+   University of Michigan-Ann Arbor since 1987
+ 
+   Rensselaer Polytechnic Institute since 1983
+ 
+   Oakland University, Rochester, MI since 1983
+ 
+These and several other schools have taught DDS in
+undergraduate and graduate courses and used it in
+research sponsored by numerous companies such as
+Ford, GM and IBM.
+ 
+-----------------------------
+ 
+8. Are there alternative names for DDS?
+ 
+Another name used since 1977 by some researchers
+(e.g. late Dr.  S. M. Wu) is ``Dynamic Data
+System', perhaps to emphasize the aspect of DDS m
+mechanistic features of the system from data.
+ 
+-----------------------------
+ 
+9. Closest Stat Technique to DDS
+ 
+Stepwise regression is perhaps the closest to the
+DDS modeling strategy in methodology.
+ 
+-----------------------------
+ 
+10. What underlying assumptions for DDS?
+ 
+The only assumption underlying DDS is that the
+data must be an ordered sequence.  Although its
+current computer programs are based on equi-spaced
+or uniformly sampled data, they can be modified
+for non-uniform sampling if the underlying process
+is continuous-time (or space).  As stressed in
+response to question 4, the paucity of assumptions
+is one of commendable features of the method.
+ 
+-----------------------------
+ 
+11. How is DDS affected by outliers?
+ 
+As has been pointed out by Barnett and Lewis in
+the third edition of their book ``Outliers in
+Statistical Data' pub Outliers exist as part of
+experimenter's reality and as part of analyst's
+inescapable responsibility .
+ 
+Outliers and missing observations in the data will
+distort the parameter estimates in DDS and would
+require additional computation to identify them
+and to minimize their influence.  Outliers in the
+residuals require changing the usual norm in model
+fitting, and also require considerable additional
+computation to correctly recover the resultant
+deterministic components.
+ 
+-----------------------------
+ 
+12. How is DDS affected by missing data?
+ 
+As has been pointed out by Barnett and Lewis in
+the third edition of their book ``Outliers in
+Statistical Data' pub Outliers exist as part of
+experimenter's reality and as part of analyst's
+inescapable responsibility .
+ 
+Outliers and missing observations in the data will
+distort the parameter estimates in DDS and would
+require additional computation to identify them
+and to minimize their influence.  Outliers in the
+residuals require changing the usual norm in model
+fitting, and also require considerable additional
+computation to correctly recover the resultant
+deterministic components.
+ 
+-----------------------------
+ 
+13. What are the underlying models used by DDS?
+ 
+Autoregressive Moving Average (ARMA) models.  The
+DDS modeling strategy initially uses a sequence of
+ARMA(2n, 2n-1), which arise as a uniformly sampled
+form of continuous time, stochastic differential
+equations.  The final adequate model may, however,
+be of arbitrary moving average order ARMA(n,m).
+ 
+-----------------------------
+ 
+14. What are the common criticisms of DDS?
+ 
+DDS ignores information about the system other
+than the data which might help simplify modeling .
+ 
+This leads to the concept of modal and model
+decomposition that is central to the DDS
+philosophy.  This concept is not so crucial in the
+usual system analysis based on classical
+scientific method because restrictive assumptions
+and/or controlled experiments are designed to
+ensure that only the modes of interest enter the
+data.  The DDS methodology avoids the trial and
+error inherent in such restrictions and
+assumptions.  Information not contained in the
+data, even though it may allow us to postulate a
+simple model, is not used in the modeling stage.
+Only after the model obtained by the DDS
+methodology using the data alone is decomposed, is
+this information used to see if the parts of the
+model are consistent with it and if the other
+parts are negligible.  If so, the simpler model
+based on such information is accepted.  Otherwise,
+either the information and the assumptions based
+on it are wrong, or the data has been improperly
+measured and collected.
+ 
+Thus, not requiring a priori assumptions before
+modeling is a strength of the DDS methodology in
+two ways.  First, it relieves the investigator of
+the tedious task of guessing such assumptions from
+the necessarily inadequate information available
+and thus avoids not only trial and error but also
+prejudicing of interpretations.  Second, it
+utilizes the observed data and other information
+more effectively by employing them as evidence
+from independent sources during the analysis
+stage, rather than mixing them before modeling to
+make modeling easier.  The DDS methodology
+possesses a simple, straightforward, and rational
+modeling procedure using data alone, it does not
+need assumptions to guess and simplify the
+modeling process.  Moreover, the analysis stage
+can suggest assumptions, which, if confirmed by
+other evidence, can often improve estimation,
+computational efficiency, and interpretation, and
+eventually provide simpler models for
+applications.
+ 
+-----------------------------
+ 
+15. DDS & Stat Terminology Mapping?
+ 
+DDS terminology is the same as common statistical
+terminology for statistical concepts.  Unified
+autocorrelations is a misnomer and should be
+changed to standardized autocorrelations.
+ 
+-----------------------------
+ 
+16. Is classical residual analysis essential to DDS?
+ 
+Classical residual analysis is only a tangential
+part of DDS required only when outliers are
+present.  Since the DDS applications generally
+involve modeling very large number of long ``large
+sample' classical residual analysis of each would
+become a stupendous task.
+ 
+-----------------------------
+ 
+17. DDS Advant./Disadvant./Benefits/Dangers
+ 
+    Advantages:
+       No prior assumptions are required.
+ 
+       No preprocessing, such as differencing or lo
+       transformation to make the data stationary,
+       necessary.
+ 
+       Adequate ARMA(n,m) model with m n can be obt
+       automatically and is useful for physical
+       interpretation by analogous differential
+       equations.
+ 
+       Special forms of models, such as differenced
+       or ARIMA, are indicated if appropriate.
+ 
+       System modeling, analysis, prediction, and c
+       is made rational, straightforward, and free from
+       trial and error ad-hoc procedures.
+ 
+    Disadvantages:
+       Computationally intensive.
+ 
+       The paradigm shift from the classical
+       assumptions - model - data to the EDA
+       'data - model - assumptions' is hard to get used
+ 
+       Advantages and benefits of DDS are hard to realize unless one uses it
+       in a real nontrivial application.
+ 
+   Benefits:
+       DDS can be successfully applied to any
+       system/process from which data can be obtained,
+       irrespective of whether it is simple or
+       complicated so that the classical scientific
+       method succeeds or fails.
+ 
+   Dangers:
+       To give up on DDS without thoroughly testing it.
+ 
+-----------------------------
+ 
+18. DDS value-added over other stat techniques
+ 
+A high order ARMA model that has the form of a
+sampled differential equation and can be utilized
+for the usual engineering system analysis.  All
+the deliverables on question 2, particularly with
+their modal components, are provided by DDS over
+and above existing time series analysis
+techniques.
+ 
+-----------------------------
+ 
+19. How does DDS compare to general EDA?
+ 
+DDS is an exploratory data analysis (EDA)
+technique.  The primary similarity is that the
+modeling and analysis is done based solely on
+data.  The DDS differs from EDA in its engineering
+application base, the connection with continuous
+domain differential equations, and the tools such
+as modal analysis familiar to engineers.  The
+results based on data from working systems has
+shown significant superiority, and the simulated
+data give comparable results.  The main drawback
+is that DDS implementation is not readily
+available or easily integrable with existing
+software.
+ 
+-----------------------------
+ 
+20. DDS versus ARMA Modeling
+ 
+DDS has a much better systematic procedure for
+possibly high order ARMA modeling compared to the
+ad-hoc trial-and-error methods used in the
+literature.
+ 
+-----------------------------
+ 
+21. DDS versus Box-Jenkins
+ 
+DDS is much better compared to the Box-Jenkins
+(B-J) model building based on the repetitive
+(circular) use of specification (identification)
+estimation diagnostic checking.  The first step in
+B-J procedure requires subjective determination of
+autoregressive order and moving average order of
+the models separately, based respectively on plots
+of (sample) autocorrelations and partial
+autocorrelations, which are very poor estimators
+of their theoretical counterparts.  At best, one
+can identify low order pure AR, pure MA, or very
+low order (2 or less) ARMA, from these plots.
+Similar difficulties arise when the specified
+model turns out to be wrong and diagnostic
+checking of residuals must be used to see how this
+could be corrected.  Since the B-J procedure
+requires stationarity, nonstationary data (so
+identified from sample autocorrelation plots!)
+must be transformed into stationary data by
+procedures such as differencing, removal of
+periodic components, and log transformation.  Such
+transformations are themselves hard to determine
+and may distort or destroy physically useful
+information in the data.  The B-J and DDS modeling
+results may not differ much for the simulated data
+sets, however, for data collected from working
+systems the DDS modeling will be far superior.
+ 
+All the compromises of the B-J procedure are
+avoided in the DDS modeling procedure.  Using DDS,
+very high order ARMA models, often necessary in
+data from complex systems are readily obtained
+without requiring any subjective examination of
+sample correlation plots.  Since stationarity is
+NOT required for DDS modeling, nonstationary data
+can be modelled quite easily without any
+distortion.  In fact, the nature of
+nonstationarity due to such physically important
+features as instability in the underlying system,
+periodicity, trends etc.  is preserved and
+quantitatively specified by the characteristic
+roots of the model provided by DDS.
+ 
+These aspects are further amplified by the
+enclosed passages from Pandit and Wu (1983):
+``Just like Green's/inverse function, the
+theoretical autocovariance function completely
+characterizes an ARMA model.  That is, given a
+model, we can find any of these functions, and
+given a form of these functions, we can find the
+ARMA model corresponding to it.  However, unlike
+the Green's/inverse function, the autocovariance
+function can be estimated from a sample of
+observations by Eqs (3.3.2) and (3.3.3), without
+knowing the model.  A large part of the existing
+time series literature therefore deals with the
+use of this estimated sample autocorrelation for
+the modeling and estimation of time series.
+ 
+Such use of the sample autocorrelation function
+would be appropriate if it was a good estimate of
+the theoretical autocorrelation.  Unfortunately,
+this is not the case.  In fact, sample
+autocorrelations are very poor estimates; they
+often have large variances and can be highly
+correlated with each other, presenting a distorted
+version of the true autocorrelations.  These
+discouraging properties of the estimated sample
+autocorrelation function and consequent dangers in
+the modeling procedures essentially based on them
+have been pointed out by Kendall (1945).
+As we will see in this section, for pure
+autoregressive and pure moving average models of
+low order (m,n 2), the theoretical autocorrelation
+function has rather simple forms.  Under fortunate
+circumstances, it is sometimes possible to discern
+these forms from their distorted version given by
+the estimated sample autocorrelation function.  It
+is then possible to make use of a plot of
+autocorrelations and partial autocorrelations
+(defined in Section 3.4) to guess the form of the
+model.  However, even in these simple cases, a
+modeling procedure based on sample autocorrelation
+ends up with trial and error when the guess is
+found to be wrong after fitting.  The only
+systematic method of modeling that remains is to
+try all the possible ARMA models of order (m,n )
+for etc.  As indicated in Chapter 2, a simpler and
+more straightforward modeling procedure is
+possible based on the ARMA(n, n-1) strategy, which
+does not involve the examination of sample
+autocorrelations.
+ 
+Similar remarks apply to checking the independence
+of 's for model adequacy by residual
+autocorrelations, that is, the autocorrelation
+estimates obtained from Eqs.  (3.3.2) and (3.3.3)
+replacing 's by the residuals 's obtained after
+fitting the model.  If 's were an actual
+uncorrelated or white noise series, their
+estimated autocorrelations would be distributed
+approximately normally with mean zero and variance
+(see Appendix A2.1.4).  Therefore, values smaller
+than may be considered insignificant in testing
+whether a given series is white noise or
+independent.  However, it is pointed out in Durbin
+(1970) that such a test is no longer appropriate
+for testin whether 's are uncorrelated or not,
+since the 's are estimated residuals obtained by
+using esitmated parameter values.  For this reason
+we will make use of the residual autocorrelation
+only as a supplementary criterion in checking.
+The main checking criterion will be based on
+reductions in the sum of squares of 's, as
+illustrated in Section 2.3.3.  Hence, neither the
+sample nor the residual autocorrelations play a
+significant role in our approach .
+ 
+In the preceding discussion, we have advocated the
+introduction of trend (differencing) or
+seasonality operators purely for the sake of
+parsimony after the adequate model has been found
+and its roots strongly suggest such operators.
+Throughout the book, we have discouraged the use
+of such operators on the data before modeling in
+order to reduce a seemingly nonstationary or
+unstable series to an apparently stationary stable
+series that is supposedly easier to model.
+ 
+The procedure of simplifying the series of data by
+differencing or seasonality operators before
+modeling is often recommended in the literature.
+In such cases, modeling is based on identifying
+the model, either from the data or from the plots
+of sample autocorrelations, spectra, etc.  When
+trends and seasonality are dominant in the data,
+the sample autocorrelations fail to damp out
+quickly, and the plots of spectra by the
+conventional methods are badly distorted, thus
+making it almost impossible to tentatively
+identify the model from their plots.  The only way
+to get them to forms, from which a low order AR or
+MA model can be guessed, is to apply differencing
+or seasonality operators (which, in turn, have to
+be guessed from the data, sample autocorrelations,
+or spectra).
+ 
+The danger of such indiscriminate operating or
+smoothing of the data simply for the sake of
+making it easier to analyze has been pointed out
+by Slutsky (1927).  SUch an operation itself may
+introduce spurious trends and periods in the
+resultant series that are absent in the original
+data.  The final fitted model, although
+statistically adequate and apparently
+parsimonious, may give a completely distorted
+picture of the structure of the original series.
+ 
+In particular when there are deterministic trends
+present in the data, they will be completely
+masked and an irrelevant model fitted to represent
+them.  As an example, a linear trend superimposed
+with an AR(2) model is shown in Fig.  9.8.  The
+linear trend was and the AR(2) data is the same as
+that for the grinding wheel profile in Appendix I,
+with and . If we ``simplify' the data and ``make
+it s differencing it and fit a model to the
+differenced series based on the estimated
+autocorrelation, we get an MA(3) model with
+ 
+  =0.107,   =0.357,   = 0.185
+ 
+that has no relation to the actual AR(2) model
+whatsoever.  Moreover, the valuable information
+contained in the linear trend in the original data
+is lost.  (On the other hand, the methods of
+Chapter 10 recommended for such data almost
+exactly estimate the linear trend and the AR(2)
+parameters).
+ 
+No such simplification of the data to guess a
+model form is needed in our modeling procedure
+described in Chapter 4. The procedure is robust
+enough to model data with trends and seasonality.
+If the adequate model naturally indicates trends
+by real roots and seasonality by complex roots
+close to one in absolute value, we can then
+introduce these operators ensuring that the
+original series is not distorted.
+ 
+When two or more roots are equal to or greater
+than one in absolute value with or without
+seasonality and the data has a smooth trend or a
+regular periodic behavior, the possibility of a
+deterministic component is indicated.  If the
+physical understanding of the underlying system
+justifies such a deterministic component, one can
+use the methods discussed subsequently in Chapter 10.
+ 
+-----------------------------
+ 
+22. DDS versus Fourier Analysis
+ 
+DDS is much better than Fourier or periodogram
+analysis as summarized on p. 76 of Pandit (1991):
+ 
+A comprehensive account of this literature has
+been given by Priestley (1981), who points out
+that in spite of its drawbacks, periodogram
+(sample spectrum) analysis remains entirely
+appropriate for the purpose for which it was
+designed, namely the analysis of processes with
+discrete spectra.  This should be clear even
+without statistics and is applicable also to the
+use of FFT on deterministic data, since, as
+pointed out in Section 2.9.3, the basic discrete
+(finite) Fourier series assumes the data to be a
+sample from a trigonometric polynomial, consisting
+of a sum of exponentials with imaginary exponents
+containing discrete frequencies that are multiples
+of a fundamental frequency.  These FFT-based
+techniques designed for a finite number of
+discrete frequencies becomes inappropriate when
+applied to a system requiring continuous functions
+of frequency, such as the frequency response or
+transfer function of even a one-degree-of-freedom
+damped system, and random functions with
+continuous spectra.  No (necessarily) finite
+amount of averaging or smoothing will solve the
+problem, it will merely lead to dichotomies such
+as a compromise between aliasing and resolution,
+or between variance and bias, discussed earlier.
+To put it differently, all these problems arise
+from a basic difficulty: a Fourier series does not
+exist for a nonperiodic function and certainly not
+for a random function!
+ 
+It is for such sytems whose frequency response,
+transfer functions or spectrum are functions of
+continuous frequencies that the DDS method becomes
+appropriate and necessary in spite of its
+increased computation and the FFT may provide at
+best, under fortunate circumstances, a qualitative
+visual indicator.  Notwithstanding its
+computational efficiency, the FFT is really useful
+only for detecting the presence of certain
+suspected discrete frequency peaks.
+ 
+Moreover, for most applications of system analysis
+in practice, a characteristic such as frequency
+response, transfer function, or spectrum is only
+an intermediate step.  One likes to use them
+subsequently for design, prediction, or control.
+For such quantitative analysis DDS is invaluable.
+It will be shown in Chapter 6 that for visual
+inspection, diagnostic monitoring, and other
+applications, DDS can provide much more
+quantitative information and insight, as well as
+plots of these characteristics that are far
+clearer and easier to interpret than the FFT.
+ 
+-----------------------------
+ 
+23. DDS versus Spectral Analysis
+ 
+DDS is much better than conventional spectral
+analysis becuase DDS provides far clearer plots of
+spectra without requiring the compromise between
+variance and bias necessary in the conventional
+methods.  Moreover, DDS provides precise
+quantitative estimates of all the important
+physical features of these plots such as peak
+frequencies, corresponding damping ratios, its
+contribution to the overall spectrum and plots of
+individual spectra corresponding to all peaks
+adding to the overall plot.
+ 
+-----------------------------
+ 
+24. DDS versus Complex Demodulation
+ 
+to be done
+ 
+-----------------------------
+ 
+25. How attach uncertainties to DDS estimates?
+ 
+The modeling program provides 95 confidence
+intervals, using the standard nonlinear least
+squares method, for the autoregressive and moving
+average parameters and the mean when it is
+estimated.
+ 
+-----------------------------
+ 
+26. What is DDS's most successful eng. application?
+ 
+Modeling, characterization, and computer control
+of electrical discharge machining process.
+ 
+-----------------------------
+ 
+27. What does DDS yield for pure sinusoidal data?
+ 
+The SIN.DAT data
+ 
+-----------------------------
+ 
+28. Future NIST Projects to Benefit from DDS
+ 
+  1. Choice of controller gain parameters based on data measured from working
+     systems. Preliminary work has been initiated for scanning probe microscopy
+      (SPM). The results can be extended to any system consisting of a controller
+      such as machine tool, and stylus profilometer.
+ 
+  2. HPCC effort for modeling of positioning errors of machine tools as a
+     function of working temperatures. In addition to the static calibration
+     DDS will be useful for the dynamic calibration and correction of machine
+     tool errors.
+ 
+  3. Incorporation of DDS in DataPlot will benefit larger user population
+     at NIST and elsewhere.
+ 
+-----------------------------

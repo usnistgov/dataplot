@@ -1,0 +1,50 @@
+DEFECTIVE MIRRORS
+DATE--JULY 1990
+NUMBER OF OBSERVATIONS = 25
+NUMBER OF VARIABLES = 3
+ORDER OF VARIABLES ON A LINE IMAGE--
+   1. NUMBER OF DEFECTIVE ITEMS IN SUB-GROUP
+   2. TOTAL NUMBER OF ITEMS IN SUB-GROUP (ALL = 100)
+   3. SUBGROUP ID (1 TO 25)
+STATISTICAL AREAS--PN CONTROL CHART
+                    P CONTROL CHART
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ CCPN.DAT NUMDEF NUMTOT X
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  NUMBER     NUMBER   SUB-GROUP
+DEFECTIVE    (TOTAL)
+-------------------------------
+    6         150         1
+    5         150         2
+    5         150         3
+    5         150         4
+    6         150         5
+    4         150         6
+    3         150         7
+    3         150         8
+    6         150         9
+    5         150        10
+    3         150        11
+    2         150        12
+    5         150        13
+    4         150        14
+    4         150        15
+    6         150        16
+    5         150        17
+    4         150        18
+    6         150        19
+    5         150        20
+    6         150        21
+    4         150        22
+    9         150        23
+   12         150        24
+   14         150        25

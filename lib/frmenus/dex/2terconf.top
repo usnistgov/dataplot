@@ -1,0 +1,24 @@
+----- <~dex\2terconf.top> 2-Term Confounding
+
+2-Term Confounding
+
+The confounding structure for the 3 2-term cross-products
+(interactions) of a 2**(3-1) design are
+
+   12 = 12 + 3
+   13 = 13 + 2
+   23 = 23 + 1
+
+This was determined by "multiplying" through the
+defining relation by 12 and 13 and 23, respectively,
+for example--
+
+   12 (I + 123)
+   = 12 + 11223
+   = 12 +     3
+
+and so X1*X2 has identical -+ settings as X3.
+Accordingly, the estimated effect estimate for the 12
+interaction has an (unknown) contribution from a main
+effect (3).
+

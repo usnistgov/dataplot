@@ -1,0 +1,8 @@
+----- <~dataload\CONCRETE.DP> Load CONCRETE.DAT
+
+. This is file    CONCRETE.DP
+
+DELETE Y X
+SKIP 25
+READ CONCRETE.DAT Y X
+

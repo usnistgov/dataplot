@@ -1,0 +1,70 @@
+This is file box.men--Draw a Box
+ 
+--------------------
+ 1. Draw a Box
+ 2. BOX X1 Y1 X2 Y2
+ 3.
+ 4. X Coordinate for One Corner:
+ 4. @CE 1 0 33 50 ?
+ 5. Y Coordinate for One Corner:
+ 5. @CE 2 0 33 50 ?
+ 6. X Coordinate for Other Corner:
+ 6. @CE 3 0 33 50 ?
+ 7. Y Coordinate for Other Corner:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Line Type for Box Border:
+ 9. @CE 5 0 42 50 * gui-line
+10. Line Color for Box Border:
+10. @CE 6 0 42 50 * gui-colo
+11. Line Thickness for Box Border:
+11. @CE 7 0 42 50 * gui-thic
+12.
+13. Solid Fill the Box?:
+13. @CE 9 0 42 50 * gui-ooff
+14. Color for Box Interior:
+14. @CE 10 0 42 50 * gui-colo
+15.
+16. Height for Box Shadow (0 for none):
+16. @CE 16 0 42 50 * gui-size
+17. Width for Box Shadow (0 for none):
+17. @CE 17 0 42 50 * gui-size
+18.
+19. Cross-Hatch Pattern for the Box:
+19. @CE 11 0 42 50 * gui-patt
+20. Line Style for Cross-Hatch Pattern:
+20. @CE 13 0 42 50 * gui-line
+21. Line Thickness for Cross-Hatch Pattern:
+21. @CE 14 0 42 50 * gui-thick
+22. Spacing Thickness for Cross-Hatch Pattern:
+22. @CE 15 0 42 50 *
+23.
+24. Coordinate System to Use:
+25. @CE 8 1 1 50 absolute 0 to 100 screen units
+26. @CE 8 2 1 50 absolute data units of last plot
+27. @CE 8 3 1 50 relative (to first point) 0 to 100 screen units
+28. @CE 8 4 1 50 relative (to first point) data units of last plot
+29.
+30.
+31. Draw the Box?:
+--------------------
+GR FE
+BOX PATTERN _5
+BOX COLOR _6
+BOX THICKNESS _7
+BOX FILL PATTERN _9
+@IF 11 0 BOX FILL PATTERN _11
+BOX FILL COLOR _10
+BOX FILL LINE _13
+BOX FILL THICKNESS _14
+BOX FILL GAP _15
+BOX SHADOW HW _16 _17
+LET STRING ZZZZSTR = BOX
+@IF 8 1 LET STRING ZZZZSTR = BOX
+@IF 8 2 LET STRING ZZZZSTR = BOX DATA
+@IF 8 3 LET STRING ZZZZSTR = BOX RELATIVE
+@IF 8 4 LET STRING ZZZZSTR = BOX DATA RELATIVE
+^ZZZZSTR  _1 _2 _3 _4
+--------------------
+WEB HELP BOX
+--------------------

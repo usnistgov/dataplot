@@ -1,0 +1,107 @@
+----------  *PERCENT POINT FUNCTIONS* ----------
+
+              Percent Point Functions
+     (Inverse Cumulative Distribution Functions)
+             for Various Distributions
+
+ - - - - - - - - - - - - - - - - - - - - - - - - -
+              Symmetric Distributions
+
+f(x) denotes probability density function
+G(p) denotes percent point function
+
+
+Uniform          f(x) = 1    with x in (0,1)
+Uniform          G(p) = 1
+
+Normal           f(x) = (1/sqrt(2pi)) * exp(-0.5*x**2)
+Normal           G(p) not in closed form
+
+Logistic         f(x) = exp(x) / (1 + exp(x))**2
+Logistic         G(p) = log(p/(1-p))
+
+Double Exp.      f(x) = 0.5 * exp(-x)
+Double Exp.       G(p) = log(2p)         for p <= 0.5
+Double Exp.            = -log(2(1-p))    for p  > 0.5
+
+Cauchy           f(x) = (1/pi) * 1/(1+x**2)
+Cauchy           G(p) = -cot(pi*p)
+
+Tukey Lambda     f(x) not in closed form
+Tukey Lambda     G(p) = (p**lambda - (1-p)**(1-lambda)) / lambda
+Tukey Lambda            if lambda not = 0
+Tukey Lambda          = log(p/(1-p))
+Tukey Lambda            if lambda = 0
+Tukey Lambda     f(x) not in closed form
+Tukey Lambda          lambda = 0.5 --U-shaped
+Tukey Lambda          lambda = 1.0 --exactly uniform
+Tukey Lambda          lambda = 0.14--approximately normal
+Tukey Lambda          lambda = 0.0 --exactly logistic
+Tukey Lambda          lambda = -1.0--approximately Cauchy
+
+Anglit           f(x) = sin(2x+pi/2)    with x in (-pi/4,pi/4)
+Anglit           G(p) = arcsin(sqrt(p)) - pi/4
+
+Triangular       f(x) = 1 - abs(x)   with x in (-1,1)
+Triangular       G(p) = -1 + sqrt(2p)       for p <= 0.5
+Triangular            = +1 - sqrt(2(1-p))   for p > 0.5
+
+Arcsin           f(x) = (1/pi) * 1 / sqrt(x(1-x))
+Arcsin           G(p) = (sin(pi*p/2))**2
+
+Student t        f(x) = c / [1 + (x*x/nu)]**((nu+1)/2)
+Student t        G(p) = no simple general closed form
+
+ - - - - - - - - - - - - - - - - - - - - - - - - -
+                Skewed Distributions
+
+Chi-squared      f(x) = c * [x**((nu/2)-1)] * exp(-x/2) with x >= 0
+Chi-squared             with x >= 0 and nu > 0
+Chi-squared             and where c = gamma function of nu/2
+Chi-squared      G(p) = no simple general closed form
+
+Gamma            f(x) = c * [x**(gamma-1)] * exp(-x) with x >= 0
+Gamma                   with x >= 0 and gamma > 0
+Gamma                   and where c = gamma function of gamma
+Gamma            G(p) = no simple general closed form
+
+Exponential      f(x) = exp(-x)       with x >= 0
+Exponential      G(p) = -log(1-p)
+
+Lognormal        f(x) = (1/(x*sqrt(2*pi))) * exp(-0.5*(log(x))**2)
+Lognormal        with x >= 0
+Lognormal        G(p) = exp(GN(p))
+Lognormal               where GN(p) is normal N(0,1) ppf
+
+Half-Normal      f(x) = (2/sqrt(2*pi)) * exp(-0.5*x**2)
+Half-Normal      with x >= 0
+Half-Normal      G(p) = GN((p+1)/2)
+Half-Normal             where GN(p) is normal N(0,1) ppf
+
+Extreme Value I  f(x) = exp(-x) * exp(-exp(-x))
+Extreme Value I  G(p) = -log(-log(p))
+
+Extreme Value II f(x) = gamma * x**(-gamma-1) * exp(-(x**(-gamma))
+Extreme Value II        with x >= 0 and gamma > 0
+Extreme Value II G(p) = (-log(p))**(-1/gamma)
+
+Weibull          f(x) = gamma * x**(gamma-1) * exp(-(x**gamma))
+Weibull                 with x > 0 and gamma > 0
+Weibull          G(p) = (-log(1-p))**(1/gamma)
+
+Pareto           f(x) = gamma / (x**(gamma+1))
+Pareto           G(p) = (1-p)**(-1/gamma)
+
+Beta             f(x) = c * x**(a-1) * (1-x)**(b-1) with x in (0,1)
+Beta                    where c = beta function of a and b
+Beta             G(p) = no simple closed form
+
+ - - - - - - - - - - - - - - - - - - - - - - - - -
+               Discrete Distributions
+
+Binomial
+
+Geometric
+
+Poisson
+

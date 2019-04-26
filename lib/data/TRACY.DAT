@@ -1,0 +1,40 @@
+This is Dataplot data file     TRACY.DAT
+Data from "Multivariate Control Charts for Individual Observations",
+Nola Tracy, John Young, and Robert Mason, Journal of Quality
+Technology, Vol. 24, No. 2, April, 1992, 88-95.
+Number of observations             = 15
+Number of variables per line image =   4
+Order of variables on a line image--
+   1. Response variable Y1 = Percent Impurities
+   2. Response variable Y2 = Temperature
+   3. Response variable Y3 = Concentration Strength
+   4. History              = Identifies observation as historical or
+                             future or discarded historical
+To read this file into Dataplot--
+   SKIP 25
+   READ TRACY.DAT Y1 Y2 Y3 HIST
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Y1       Y2      Y3     HIST
+-----------------------------
+14.92    85.77   42.26    -1
+16.90    83.77   43.44     0
+17.38    84.46   42.74     0
+16.90    86.27   43.60     0
+16.92    85.23   43.18     0
+16.71    83.81   43.72     0
+17.07    86.08   43.33     0
+16.93    85.85   43.41     0
+16.71    85.73   43.28     0
+16.88    86.27   42.59     0
+16.73    83.46   44.00     0
+17.07    85.81   42.78     0
+17.60    85.92   43.11     0
+16.90    84.23   43.48     0
+17.08    84.08   43.81     1

@@ -1,0 +1,15 @@
+----- <~dexcomp\clsdfile.top> Load: Latin Square Design
+ 
+Load Latin Square+ Designs
+ 
+ 3-by-3 Latin Square                   <xcf: ~dexcomp\LATSQ3.DP>
+ 4-by-4 Latin Square                   <xcf: ~dexcomp\LATSQ4.DP>
+ 5-by-5 Latin Square                   <xcf: ~dexcomp\LATSQ5.DP>
+ 
+ 3-by-3 Graeco-Latin                   <xcf: ~dexcomp\GRLATSQ3.DP>
+ 4-by-4 Graeco-Latin                   <xcf: ~dexcomp\GRLATSQ4.DP>
+ 5-by-5 Graeco-Latin                   <xcf: ~dexcomp\GRLATSQ5.DP>
+ 
+ 4-by-4 Hyper-Graeco-Latin Square      <xcf: ~dexcomp\HGRLATS4.DP>
+ 5-by-5 Hyper-Graeco-Latin Square      <xcf: ~dexcomp\HGRLATS5.DP>
+ 

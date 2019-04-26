@@ -1,0 +1,8 @@
+----- <~dataload\CONSUMPR.DP> Load CONSUMPR.DAT
+
+. This is file    CONSUMPR.DP
+
+DELETE YEAR CPI
+SKIP 25
+READ CONSUMPR.DAT YEAR CPI
+

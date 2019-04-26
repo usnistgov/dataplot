@@ -1,0 +1,63 @@
+This is file dextagpl.men--Generate DEX Taguchi Signal-to-Noise Plots
+ 
+--------------------line 3
+01. DEX Taguchi Signal-to-Noise Plots
+02. DEX <statistic> PLOT Y X1 X2 X3 X4 etc.
+03.
+04. Vertical   Axis Variable:
+04. @CE 1 0 33 50 ? gui-vari
+05.
+06. Horizontal Axis Variable  #1:
+06. @CE 2 0 33 50 ?
+07. Horizontal Axis Variable  #2:
+07. @CE 3 0 33 50 ?
+08. Horizontal Axis Variable  #3:
+08. @CE 4 0 33 50 ?
+09. Horizontal Axis Variable  #4:
+09. @CE 5 0 33 50 ?
+10. Horizontal Axis Variable  #5:
+10. @CE 6 0 33 50 ?
+11. Horizontal Axis Variable  #6:
+11. @CE 7 0 33 50 ?
+12. Horizontal Axis Variable  #7:
+12. @CE 8 0 33 50 ?
+13. Horizontal Axis Variable  #8:
+13. @CE 9 0 33 50 ?
+14. Horizontal Axis Variable  #9:
+14. @CE 10 0 33 50 ?
+15. Horizontal Axis Variable #10:
+15. @CE 11 0 33 50 ?
+16.
+17. Statistic (select one):
+18. @CE 12 1 3 25 Mean
+19. @CE 12 2 3 25 Standard Deviation
+20. @CE 12 3 3 25 S/N (Small  is good)
+21. @CE 12 4 3 25 S/N (Target is good)
+22. @CE 12 5 3 25 S/N (Large  is good)
+23.
+24. Character Type for Data:
+24. @CE 13 0 40 50 * gui-char
+25. Character Fill for Data:
+25. @CE 14 0 47 50 gui-ooff
+26. Line Type for Local  Stat Lines
+26. @CE 15 0 40 50 * gui-line
+27. Line Type for Global Stat Line?
+27. @CE 16 0 40 50 * gui-line
+28.
+29. Subset/Except/For Specification:
+30. @CE 17 0 1 50 *
+31.
+32. Generate the Taguchi Plot?:
+--------------------
+CHARACTERS _13
+CHARACTER FILL _14
+LINES _15 _16
+ 
+@IF 12 1 DEX MEAN PLOT _1 _2 _3 _4 _5 _6 _7 _8 _9 _10 _11 _17
+@IF 12 2 DEX SD PLOT _1 _2 _3 _4 _5 _6 _7 _8 _9 _10 _11 _17
+@IF 12 3 DEX SN- PLOT _1 _2 _3 _4 _5 _6 _7 _8 _9 _10 _11 _17
+@IF 12 4 DEX SN0 PLOT _1 _2 _3 _4 _5 _6 _7 _8 _9 _10 _11 _17
+@IF 12 5 DEX SN+ PLOT _1 _2 _3 _4 _5 _6 _7 _8 _9 _10 _11 _17
+--------------------last
+WEB HELP DEX PLOT
+--------------------last

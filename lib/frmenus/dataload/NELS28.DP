@@ -1,0 +1,8 @@
+----- <~dataload\NELS28.DP> Load NELS28.DAT
+
+. This is file    NELS28.DP
+
+DELETE Y X
+SKIP 25
+READ NELS28.DAT Y X
+

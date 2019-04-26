@@ -1,0 +1,87 @@
+This is file errorbar.men--Error Bar Plot
+ 
+--------------------
+ 1. Error Bar Plot
+ 2. ERROR BAR PLOT Y X
+ 3.
+ 4. Dataplot can generate error bars for both the horizontal and vertical
+ 5. directions.  The errors are specified as arrays the same size as the raw
+ 6. data with the values being the distance from the raw data point.  For
+ 7. symmetric error bars, specify the same variable for both the positive
+ 8. and negative error.
+ 9. 
+10. Vertical   Axis Variable:
+10. @CE 1 0 53 70 ? gui-vari
+11. Horizontal Axis Variable:
+11. @CE 2 0 53 70 ? gui-vari
+12. Postive Error for the Verical Axis Variable:
+12. @CE 3 0 53 70 ? gui-vari
+13. Negative Error for the Verical Axis Variable:
+13. @CE 4 0 53 70 ? gui-vari
+14. Postive Error for the Horizontal Axis Variable:
+14. @CE 5 0 53 70 ? gui-vari
+15. Negative Error for the Horizontal Axis Variable:
+15. @CE 6 0 53 70 ? gui-vari
+16.
+17. Line Type for Raw Data:
+17. @CE 7 0 53 70 * gui-line
+18. Line Type for Upper Vertical Error Values:
+18. @CE 8 0 53 70 * gui-line
+19. Line Type for Lower Vertical Error Values:
+19. @CE 9 0 53 70 * gui-line
+20. Line Type for Line Between Vertical Error Values:
+20. @CE 10 0 53 70 * gui-line
+21. Line Type for Line Between Horizontal Error Values:
+21. @CE 11 0 53 70 * gui-line
+22.
+23. Character Type for Raw Data:
+23. @CE 12 0 53 70 * gui-char
+24. Character Type for Upper Vertical Error Values:
+24. @CE 13 0 53 70 * gui-char
+25. Character Type for Lower Vertical Error Values:
+25. @CE 14 0 53 70 * gui-char
+26. Character Type for Left Horizontal Error Values:
+26. @CE 15 0 53 70 * gui-char
+27. Character Type for Right Horizontal Error Values:
+27. @CE 16 0 53 70 * gui-char
+28.
+29. Character Fill For Raw Data:
+29. @CE 17 0 53 70 * gui-ooff
+30. Character Fill for Upper Vertical Error Values:
+30. @CE 18 0 53 70 * gui-char
+31. Character Fill for Lower Vertical Error Values:
+31. @CE 19 0 53 70 * gui-char
+32. Character Fill for Left Horizontal Error Values:
+32. @CE 20 0 53 70 * gui-char
+33. Character Fill for Right Horizontal Error Values:
+33. @CE 21 0 53 70 * gui-char
+34.
+35. Subset/Except/For Specification:
+36. @CE 22 0 1 70 *
+37.
+38.
+39. Generate the Error Bar Plot?:
+--------------------
+GR FE
+LINES BL BL BL BL BL BL BL
+@IF 11 0 LINES BL BL BL BL BL BL _11
+@IF 10 0 LINES BL BL BL BL BL _10
+@IF 9 0 LINES BL BL _9
+@IF 8 0 LINES BL _8
+@IF 7 0 LINES _7
+CHARACTERS BL BL BL BL BL
+@IF 16 0 CHARACTER BL BL BL BL _16
+@IF 15 0 CHARACTER BL BL BL _15
+@IF 14 0 CHARACTER BL BL _14
+@IF 13 0 CHARACTER BL _13
+@IF 12 0 CHARACTER _12
+CHARACTER FILL OFF OFF OFF OFF OFF
+@IF 21 0 CHARACTER FILL OFF OFF OFF OFF _21
+@IF 20 0 CHARACTER FILL OFF OFF OFF _20
+@IF 19 0 CHARACTER FILL OFF OFF _19
+@IF 18 0 CHARACTER FILL OFF _18
+@IF 17 0 CHARACTER FILL _17
+ERROR BAR PLOT _1 _3 _4 _2 _5 _6 _22
+--------------------
+WEB HELP ERROR BAR PLOT
+--------------------

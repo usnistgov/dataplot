@@ -1,0 +1,31 @@
+----- <~dp\guicmdl.top> Command Line Window
+ 
+Command Line Window
+ 
+The Command Line window typically appears at the
+bottom.  This window is used to manually enter any
+valid Dataplot command.  Simply move the mouse into
+this window and start typing the command.  Either
+hit the carriage return or left-click the "OK"
+button to execute the command.
+
+If Dataplot is still executing a command initiated
+by one of the menus, the command line window may
+not accept any input.  The cursor will look like
+a circle (it is usually an arrow) if a menu command
+is still executing.
+
+This window allows Dataplot to incorporate both
+point and click menu operations and typed commands.
+Both methods of operation have their advantages, so
+we consider a seamless intermixing of menu and
+command line operation quite desirable.
+
+A few Dataplot commands don't function properly
+from the gui.  The details are provided under the
+"Performance" menu.
+
+The "Clear" button on this window erase any input that
+you may have already typed.  The "Variables" button
+brings up a list of currently defined Dataplot variables.
+

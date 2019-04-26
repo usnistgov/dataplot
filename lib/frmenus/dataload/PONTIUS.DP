@@ -1,0 +1,8 @@
+----- <~dataload\PONTIUS.DP> Load PONTIUS.DAT
+
+. This is file    PONTIUS.DP
+
+DELETE Y
+SKIP 25
+READ PONTIUS.DAT Y X
+

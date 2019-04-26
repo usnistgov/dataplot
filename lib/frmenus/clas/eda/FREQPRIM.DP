@@ -1,0 +1,10 @@
+----- <~dataloex\FREQPRIM.DP> Load & Execute FREQPRIM.DAT
+
+. This is file    FREQPRIM.DP
+
+DELETE Y X
+SKIP 25
+READ FREQPRIM.DAT Y X
+TITLE FREQPRIM.DAT
+/
+

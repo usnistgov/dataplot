@@ -1,0 +1,33 @@
+This is dataplot data file   boxreactor_5_8.dat  Chemical Reactor  2**(5-2) (k=5,n=8)
+Feed rate/cat/ag rate/temp/conc effect on chemical reactor efficiency
+Box, Hunter & Hunter (1978)
+Statistic for Experimenters
+Wiley, page 379 and 377
+2**(5-2) fractional factorial design
+Number of observations = 8
+Total number of variables per line image = 7
+   Response variable = % reacted
+   Factor 1 = feed rate       (2 levels-- 10 &  15 lit/min)
+   Factor 2 = catalyst        (2 levels--  1 &   2 %)
+   Factor 3 = agitation rate  (2 levels--100 & 120 rpm)
+   Factor 4 = temperature     (2 levels--140 & 180 deg c)
+   Factor 5 = concentration   (2 levels--  3 &   6 %)
+   Random order number in which data was collected
+To read this file into dataplot--
+   skip 25
+   read boxreactor_5_8.dat y x1 x2 x3 x4 x5 order
+
+
+
+
+
+ y   x1  x2  x3  x4  x5
+-------------------------
+44   -1  -1  -1  +1  +1
+53   +1  -1  -1  -1  -1
+70   -1  +1  -1  -1  +1
+93   +1  +1  -1  +1  -1
+66   -1  -1  +1  +1  -1
+55   +1  -1  +1  -1  +1
+54   -1  +1  +1  -1  -1
+82   +1  +1  +1  +1  +1

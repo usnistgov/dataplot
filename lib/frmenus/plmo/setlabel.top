@@ -1,0 +1,23 @@
+----- <~plmo\setlabel.top> Set Labels and Attributes
+ 
+Set Labels and Attributes
+ 
+Text for Labels                     <xemf: ~plmo\setlabel.men>
+
+Set All Axis Label Attributes    <xemf: ~plmo\setallab.men>
+Set First Bottom Axis Label Attributes    <xemf: ~plmo\setlabx1.men>
+Set Second Bottom Axis Label Attributes    <xemf: ~plmo\setlabx2.men>
+Set Third Bottom Axis Label Attributes    <xemf: ~plmo\setlabx3.men>
+Set Left Axis Label Attributes    <xemf: ~plmo\setlaby1.men>
+Set Right Axis Label Attributes    <xemf: ~plmo\setlaby2.men>
+
+Help for Label Attributes
+   LABEL AUTOMATIC    <xcl: HELP LABEL AUTOMATIC>
+   LABEL CASE         <xcl: HELP LABEL CASE>
+   LABEL COLOR        <xcl: HELP LABEL COLOR>
+   LABEL DISPLACEMENT <xcl: HELP LABEL DISPLACEMENT>
+   LABEL FONT         <xcl: HELP LABEL FONT>
+   LABEL FILL         <xcl: HELP LABEL FILL>
+   LABEL SIZE         <xcl: HELP LABEL SIZE>
+   LABEL THICKNESS    <xcl: HELP LABEL THICKNESS>
+

@@ -1,0 +1,16 @@
+----------  *WINDCHILL*  ----------
+
+               Wind Chill Factors
+
+Temperture                    Wind Speed
+   (F)                     (miles per hour)
+               0     5    15    20    25    30    35    40
+
+   30         30    27     9     4     1    -2    -4    -5
+   20         20    16    -5   -10   -15   -18   -20   -21
+   10         10     6   -18   -24   -29   -33   -35   -37
+    0          0    -5   -31   -39   -44   -49   -52   -53
+  -10        -10   -15   -45   -53   -59   -64   -67   -69
+  -20        -20   -26   -58   -67   -74   -79   -82   -84
+
+   Source--National Oceanic and Atmostpheric Administration

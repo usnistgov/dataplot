@@ -1,0 +1,21 @@
+This is file matr_der.men--Delete row of a matrix
+ 
+--------------------
+ 1. Delete Row of a Matrix
+ 2. LET M = MATRIX DELETE ROW M ROWID
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 42 50 ? gui-matrix
+ 5. Row to delete?:
+ 5. @CE 2 0 42 50 ?
+ 6.
+ 7.
+ 8. Delete the Row?:
+--------------------
+GR FE
+LET ZZZZA = 0
+LET ZZZZA = _2
+LET _1 = MATRIX DELETE ROW  _1 _2
+--------------------
+WEB HELP MATRIX DELETE ROW
+--------------------

@@ -1,0 +1,50 @@
+----- <~prob\shap2cdf.top> CDF's for Two Shape Parameter Continuous Distributions
+
+Compute CDF's (two shape parameters)
+
+Compute Cumulative Distribution Function for Continuous
+Distributions with Two Shape Parameters
+
+Beta                                      <xemf: ~prob\betcdf.men>
+Beta Normal                               <xemf: ~prob\bnocdf.men>
+Burr Type 3                               <xemf: ~prob\bu3cdf.men>
+Burr Type 4                               <xemf: ~prob\bu4cdf.men>
+Burr Type 5                               <xemf: ~prob\bu5cdf.men>
+Burr Type 6                               <xemf: ~prob\bu6cdf.men>
+Burr Type 9                               <xemf: ~prob\bu9cdf.men>
+Burr Type 12                              <xemf: ~prob\b12cdf.men>
+Doubly Pareto Uniform                     <xemf: ~prob\dpucdf.men>
+Exponentiated Weibull                     <xemf: ~prob\ewecdf.men>
+F                                         <xemf: ~prob\fcdf.men>
+Folded Cauchy                             <xemf: ~prob\fcacdf.men>
+Folded Normal                             <xemf: ~prob\fnrcdf.men>
+G-and-H                                   <xemf: ~prob\ghcdf.men>
+Generalized Asymmetric Laplace            <xemf: ~prob\galcdf.men>
+Generalized Gamma                         <xemf: ~prob\ggdcdf.men>
+Generalized Logistic (type 4)             <xemf: ~prob\gl4cdf.men>
+Generalized McLeish                       <xemf: ~prob\gmccdf.men>
+Generalized Topp and Leone                <xemf: ~prob\gtlcdf.men>
+Generalized Tukey-Lambda                  <xemf: ~prob\gldcdf.men>
+Gompertz                                  <xemf: ~prob\gomcdf.men>
+Gompertz Makeham                          <xemf: ~prob\makcdf.men>
+    (Meeker/Escobar 2-shape parameterization)
+Inverse Gaussian                          <xemf: ~prob\igcdf.men>
+Inverted Beta                             <xemf: ~prob\ibcdf.men>
+Johnson SB                                <xemf: ~prob\jsbcdf.men>
+Johnson SU                                <xemf: ~prob\jsucdf.men>
+Kumaraswamy                               <xemf: ~prob\kumcdf.men>
+Log Beta                                  <xemf: ~prob\lbecdf.men>
+Log Skew Normal                           <xemf: ~prob\lsncdf.men>
+Non-Central Chi-Square                    <xemf: ~prob\ncccdf.men>
+Non-Central T                             <xemf: ~prob\nctcdf.men>
+Pareto                                    <xemf: ~prob\parcdf.men>
+Pareto of the Second Kind                 <xemf: ~prob\pa2cdf.men>
+Power Lognormal                           <xemf: ~prob\plncdf.men>
+Reciprocal Inverse Gaussian               <xemf: ~prob\rigcdf.men>
+Reflected Generalized Topp and Leone      <xemf: ~prob\rgtcdf.men>
+Skew T                                    <xemf: ~prob\stcdf.men>
+Truncated Normal                          <xemf: ~prob\tnrcdf.men>
+Two-Sided Ogive                           <xemf: ~prob\tsocdf.men>
+Two-Sided Power                           <xemf: ~prob\tspcdf.men>
+Two-Sided Slope                           <xemf: ~prob\tsscdf.men>
+

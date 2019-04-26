@@ -1,0 +1,42 @@
+----- <~mvar\matrarit.top> Multivariate Techniques: Matrix Arithmetic
+ 
+Multivariate Analysis: Matrix Arithmetic
+
+The menus below operate on matrices.  The "Create Matrix"
+menu is used to create a matrix from a list of variables.
+
+Matrix operations can create a large number of columns.
+You may need to re-dimension your workspace to accomodate
+these columns.  You can also dimension the maximum number of
+rows or columns for your matrices.
+
+The matrix arithmetic commands can be used to develop
+multivariate analyses not supported directly by Dataplot.
+
+Re-Dimension Workspace                  <xemf: ~data\dimensio.men>
+Dimension Matrix                        <xemf: ~math\matr_dim.men>
+
+Matrix Arithmetic Useful for Multivariate Analysis
+    Create Matrix                       <xemf: ~math\matr_cre.men>
+    
+    Correlation Matrix                  <xemf: ~math\matr_cor.men>
+    Variance-Covariance Matrix          <xemf: ~math\matr_cov.men>
+    Pooled Variance-Covariance Matrix (2 matrices) <xemf: ~math\matr_pco.men>
+    Pooled Variance-Covariance Matrix (> 2 groups) <xemf: ~mvar\matr_pc2.men>
+    
+    Column Statistics of a Matrix       <xemf: ~math\matr_cst.men>
+    Row    Statistics of a Matrix       <xemf: ~math\matr_rst.men>
+    Group Means of Response Variables   <xemf: ~mvar\groupmea.men>
+    Group SD's of Response Variables    <xemf: ~mvar\groupsd.men>
+    Mean of a Matrix                    <xemf: ~math\matr_mea.men>
+    Scale a Matrix                      <xemf: ~math\matr_sca.men>
+    
+    Principal Components                <xemf: ~math\matr_prc.men>
+    Matrix Distances                    <~mvar\distance.top>
+
+    Quadratic Forms                     <xemf: ~math\matr_qfo.men>
+    Linear Combination of Vector and Matrix <xemf: ~math\matr_lco.men>
+    Vector Times Transpose (= Matrix)   <xemf: ~math\matr_vtt.men>
+    
+    General Matrix Operations           <~math\matrix.top>
+

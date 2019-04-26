@@ -1,0 +1,8 @@
+----- <~dataall\reg.top> View/etc. Built-in Regression Data Files
+
+View/Load/Print Built-in Regression Data Files
+
+1-Variable & Polynomial                  <~dataall\reg1p.top>
+1-Variable & Non-Linear                  <~dataall\reg1n.top>
+Multivariable                            <~dataall\regmv.top>
+

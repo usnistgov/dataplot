@@ -1,0 +1,43 @@
+----- <~time\dds17.top> DDS FAQ 17 Adv./Disadv./Ben./Dangers
+ 
+17. DDS Advant./Disadvant./Benefits/Dangers
+ 
+    Advantages:
+       No prior assumptions are required.
+ 
+       No preprocessing, such as differencing or lo
+       transformation to make the data stationary,
+       necessary.
+ 
+       Adequate ARMA(n,m) model with m n can be obt
+       automatically and is useful for physical
+       interpretation by analogous differential
+       equations.
+ 
+       Special forms of models, such as differenced
+       or ARIMA, are indicated if appropriate.
+ 
+       System modeling, analysis, prediction, and c
+       is made rational, straightforward, and free from
+       trial and error ad-hoc procedures.
+ 
+    Disadvantages:
+       Computationally intensive.
+ 
+       The paradigm shift from the classical
+       assumptions - model - data to the EDA
+       'data - model - assumptions' is hard to get used
+ 
+       Advantages and benefits of DDS are hard to realize unless one uses it
+       in a real nontrivial application.
+ 
+   Benefits:
+       DDS can be successfully applied to any
+       system/process from which data can be obtained,
+       irrespective of whether it is simple or
+       complicated so that the classical scientific
+       method succeeds or fails.
+ 
+   Dangers:
+       To give up on DDS without thoroughly testing it.
+ 

@@ -1,0 +1,8 @@
+----- <~dataall\FLICKER.top> FLICKER.DAT
+
+FLICKER.DAT
+
+View     <xcl: LIST FLICKER.DAT>
+Load     <xcf: ~dataload/FLICKER.DP>
+Print    <xccl: printfile C:\DATAPLOT\FLICKER.DAT>
+

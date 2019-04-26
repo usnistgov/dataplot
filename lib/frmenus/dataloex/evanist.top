@@ -1,0 +1,8 @@
+----- <~dataloex\evanist.top> Load & Execute Extreme Value Data: NIST
+
+Load & Execute Extreme Value Data: NIST
+
+SIMIU.DAT     Wind speeds                    <xcf: ~dataloex\SIMIU.DP>
+WASHDC.DAT    Washington DC wind speeds      <xcf: ~dataloex\WASHDC.DP>
+KEYWEST.DAT*  Key West wind speeds           <xcf: ~dataloex\KEYWEST.DP>
+

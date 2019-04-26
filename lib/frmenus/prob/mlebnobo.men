@@ -1,0 +1,138 @@
+This is file mlebno.men--Beta Normal MLE Estimates
+ 
+--------------------
+ 1. Beta Normal Maximum Likelihood Estimates
+ 2. BETA NORMAL MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Maximum likelihood point estimates for the shape
+ 5. parameters alpha and beta and the location and
+ 6. scale parameters can be obtained for uncensored
+ 7. data.  You can optionally request to have bootstrap
+ 8. confidence limits generated for the distribution
+ 9. parameters.
+10.
+11. Response Variable:
+11. @CE 1 0 42 50 ? gui-variable
+12.
+13. Number of bootstrap samples (0 to omit)?
+13. @CE 2 0 42 50 *
+14.
+15. Subset/Except/For Specification:
+16. @CE 3 0 1 50 *
+17.
+18.
+19. Compute Beta Normal MLE's?
+--------------------
+GR FE
+LET NUMBOOT = 0
+@IF 2 0 LET NUMBOOT = _2
+let numboot = min(1000,numboot)
+if numboot > 0
+   bootstrap samples numboot
+   set maximum likelihood percentiles default
+   device 1 font simplex
+   multiplot 2 3
+   multiplot corner coordinates 0 0 100 100
+   multiplot scale factor 2
+   label
+   title case asis
+   label case asis
+   case asis
+   title displacement 2
+   x2label displacement 13
+   x3label displacement 18
+   y1label Parameter Estimate
+   x1label
+   x2label Bootstrap Sample
+   title Bootstrap Plot
+   line color blue red green cyan
+   limits
+   bootstrap beta normal mle plot _1 _5
+   line color black all
+   .
+   delete aloc ascale ashape1 ashape2
+   skip 0
+   read dpst1f.dat aloc ascale ashape1 ashape2
+   y1label
+   x2label
+   title Location Parameter
+   let amed = median aloc
+   let amean = mean aloc
+   let asd = sd aloc
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram aloc
+   title Scale Parameter
+   let amed = median ascale
+   let amean = mean ascale
+   let asd = sd ascale
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram ascale
+   title Alpha Parameter
+   let amed = median ashape1
+   let amean = mean ashape1
+   let asd = sd ashape1
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram ashape1
+   title Beta Parameter
+   let amed = median ashape2
+   let amean = mean ashape2
+   let asd = sd ashape2
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram ashape2
+   x3label displacement
+   end of multiplot
+   .
+   let alpha = 0.05
+   let xqlow = alpha/2
+   let xqupp = 1 - alpha/2
+   .
+   let xq = xqlow
+   let loc95low = xq quantile aloc
+   let xq = xqupp
+   let loc95upp = xq quantile aloc
+   let xq = xqlow
+   let sca95low = xq quantile ascale
+   let xq = xqupp
+   let sca95upp = xq quantile ascale
+   let xq = xqlow
+   let sh195low = xq quantile ashape1
+   let xq = xqupp
+   let sh195upp = xq quantile ashape1
+   let xq = xqlow
+   let sh295low = xq quantile ashape2
+   let xq = xqupp
+   let sh295upp = xq quantile ashape2
+   .
+   device 1 font tektronix
+   window corner coordinates 68 0 100 50
+   justification left
+   height 3
+   move 5 90
+   text Confidence Interval for Location:
+   move 5 83
+   text (^loc95low,^loc95upp)
+   move 5 70
+   text Confidence Interval for Scale:
+   move 5 63
+   text (^sca95low,^sca95upp)
+   move 5 50
+   text Confidence Interval for Alpha:
+   move 5 43
+   text (^sh195low,^sh295upp)
+   move 5 30
+   text Confidence Interval for Beta:
+   move 5 23
+   text (^sh295low,^sh295upp)
+   window corner coordinates 0 0 100 100
+   height
+   title
+   label
+end of if
+BETA NORMAL MAXIMUM LIKELIHOOD _1 _5
+--------------------
+WEB HELP BNOPDF
+--------------------

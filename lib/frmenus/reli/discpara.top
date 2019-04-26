@@ -1,0 +1,41 @@
+-----<~reli\discpara.top> Discussion: System Reliability - Parallel Systems
+
+Discussion: System Reliability - Parallel Systems
+
+System Reliability: Parallel Systems
+
+A parallel model requires the following three assumptions:
+
+   1) All components operate independently of each
+      other in terms of reliability.
+
+   2) The system operates as long as at least one
+      component is still operating.  System failures
+      occurs at the time the last component fails.
+
+   3) The cumulative distribution function for each
+      component is known.
+
+When the parallel model assumptions hold, the following
+relationship applies:
+
+   1) F(s)(t) = PROD[i=1 to n][F(i)(t)]
+
+   2) R(s)(t) = 1 - PROD[i=1 to n][F(i)(t)]
+
+Failure rates are no longer additive.  They must be
+calculated using basic definitions.  For example, if
+2 identical components are setup in a parallel system,
+the CDF is F**2.  The failure rate is based on the
+relationship h(t) = f(t)/(1 - F(t)) where f is the PDF.
+The PDF in this example, by differentiating, is
+2*F(t)*f(t).  Therefore, we have
+
+   h(s) = 2*F*f/(1 - F**2)
+        = 2*F*f/((1+F)(1-F)) 
+        = (2*F/(1+F))*h
+
+Parallel systems are also known as redundant systems.
+They are typically employed when low failure rates are
+a higher priority than low component cost.
+

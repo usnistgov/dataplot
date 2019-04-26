@@ -1,0 +1,8 @@
+----- <~dataall\BAKER.top> BAKER.DAT
+
+BAKER.DAT
+
+View     <xcl: LIST BAKER.DAT>
+Load     <xcf: ~dataload/BAKER.DP>
+Print    <xccl: printfile C:\DATAPLOT\BAKER.DAT>
+

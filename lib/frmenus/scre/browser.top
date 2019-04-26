@@ -1,0 +1,22 @@
+----- <~scre\scre.top> Screen
+
+Browser
+
+
+This menu allows you to set the web browser you
+prefer to use.
+
+If you are using Netscape under Unix and a Netscape
+browser is already running, you can specify that
+Dataplot web requests use this browser by clicking on
+the "Use current Netscape browser" button below.
+
+Open the browser                              <xcl: web help dataplot>
+Use current Netscape browser                  <xcl: set netscape old>
+Use a new Netscape browser                    <xcl: set netscape new>
+
+Accessing Dataplot On-line Reference Manual   <~scre\manual.top>
+
+Specify the Web Browser                       <xemf: ~scre\browser.men>
+Specify Dataplot Web Pages Path               <xemf: ~scre\dppath.men>
+

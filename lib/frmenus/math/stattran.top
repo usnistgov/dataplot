@@ -1,0 +1,37 @@
+----- <~math\stattran.top> Statistical Transformations
+ 
+Statistical Transformations
+ 
+Sample Size                           <xemf: ~math\sample.men>
+
+Extremes and Percentiles
+   ... Decile                         <xemf: ~math\decile.men>
+   Extreme                            <xemf: ~math\extreme.men>
+   Lower Hinge                        <xemf: ~math\low_hing.men>
+   Lower Quartile                     <xemf: ~math\low_quar.men>
+   Maximum                            <xemf: ~math\maximum.men>
+   Minimum                            <xemf: ~math\minimum.men>
+   Percentile                         <xemf: ~math\percent.men>
+   Quantile                           <xemf: ~math\quantile.men>
+   Upper Hinge                        <xemf: ~math\upp_hing.men>
+   Upper Quartile                     <xemf: ~math\upp_quar.men>
+
+Quality Control
+   CP                                 <xemf: ~math\cp.men>
+   CPK                                <xemf: ~math\cpk.men>
+   Expected Loss                      <xemf: ~math\exp_loss.men>
+   Percent Defective                  <xemf: ~math\percdefe.men>
+   Taguchi SN-                        <xemf: ~math\tag_sn-.men>
+   Taguchi SN+                        <xemf: ~math\tag_sn+.men>
+   Taguchi SN0                        <xemf: ~math\tag_sn0.men>
+   Taguchi SN00                       <xemf: ~math\tag_sn00.men>
+
+Robustness Transformations
+   Biweight                           <xemf: ~math\biweight.men>
+   Tricube                            <xemf: ~math\tricube.men>
+
+Distributional Measures
+   Frequency Table                    <xemf: ~math\freqtabl.men>
+   Order Statistic Medians            <xemf: ~math\ord_stat.men>
+   Normal PPCC                        <xemf: ~math\normppcc.men>
+

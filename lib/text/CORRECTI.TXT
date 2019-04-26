@@ -1,0 +1,44 @@
+**pagenumber off
+**newpage
+September 18, 1992
+ 
+ 
+                    Dataplot Correction
+                 (Versions 92.5 and higher)
+ 
+ 
+If upon installing Dataplot, you encounter an
+immediate I/O error message/bomb when you try to
+execute Dataplot, with complaints about files
+ 
+      TCINCF, and
+      C:\TURBOC\FRONTEND\DPCOMF.TEX
+ 
+this is due to Dataplot trying to open a file in
+the non-existent directory:
+ 
+      C:\TURBOC\FRONTEND
+ 
+This action of subroutine TCINCF to open a file is
+in preparation for Dataplot's front end (not yet
+released).  To circumvent this error message/bomb,
+simply create the missing directory directly via
+ 
+      1) CD ..               go to root directory
+      2) MD TURBOC           create directory TURBOC
+      3) CD TURBOC           go to directory TURBOC
+      4) MD FRONTEND         create subdirectory c:\TURBOC\FRONTEND
+ 
+and then return to the Dataplot directory to
+execute Dataplot:
+ 
+      5) CD C:\DATAPLOT      go to directory C:\DATAPLOT
+      6) DP                  execute dataplot
+ 
+You should now be able to execute Dataplot normally.
+I apologize for any inconvenience.
+ 
+ 
+James J. Filliben
+NIST
+301-975-2855

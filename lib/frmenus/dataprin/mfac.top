@@ -1,0 +1,10 @@
+----- <~dataprin\mfac.top> Print (to Printer) Built-in Multifactor Data Files
+
+Print (to Printer) Built-in Multifactor Data Files
+
+1-factor data                            <xcf: ~dataprin\1fac.DP>
+2-factor data                            <xcf: ~dataprin\2fac.DP>
+3-factor data                            <xcf: ~dataprin\3fac.DP>
+4-factor data                            <xcf: ~dataprin\4fac.DP>
+>= 5-factor data                         <xcf: ~dataprin\5fac.DP>
+

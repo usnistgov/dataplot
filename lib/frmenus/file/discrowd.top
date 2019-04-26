@@ -1,0 +1,22 @@
+----- <~file\discrowd.top> Files: Reading Row Oriented Data
+
+File: Reading Row Oriented Data
+
+READING ROW ORIENTED DATA
+
+Dataplot assumes a column oriented format.  That is, a row of
+data represents a single record (or case) and a column of data 
+represents a variable.  If a data file has a row orientation, then
+this is reversed.  A row of data represents a variable and a column
+of data represents a record (or case).
+
+The following example shows one way of correctly reading the data
+into Dataplot.  Suppose that your data file contains five rows with
+each row corresponding to a single variable.  You can do the
+following:
+
+   LOOP FOR K = 1 1 5
+      ROW LIMITS K K
+      SERIAL READ FILE.DAT  X^K
+   END OF LOOP
+

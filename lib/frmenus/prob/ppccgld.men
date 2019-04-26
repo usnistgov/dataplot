@@ -1,0 +1,83 @@
+This is file ppccgld.men-- Generalized Tukey-Lambda PPCC Plot
+
+--------------------
+ 1. Generalized Tukey-Lambda PPCC Plot
+ 2. GENERALIZED TUKEY LAMBDA PPCC PLOT Y
+ 3.
+ 4. Your data can be either ungrouped (a single
+ 5. response variable) or grouped (a bin counts
+ 6. variable and a bin mid-points variable).
+ 7. 
+ 8. Response (or Bin Counts) Variable:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9. Optional Bin Mid-Points Variable:
+ 9. @CE 2 0 42 50 ? gui-variable
+10.
+11. Line Types:
+11. @CE 3 0 42 50 * gui-line
+12. Character Types:
+12. @CE 4 0 42 50 * gui-char
+13. Character Fill:
+13. @CE 5 0 42 50 * gui-ooff
+14.
+15. Title:
+15. @CE 6 0 22 50 *
+16. Left Axis Label:
+16. @CE 7 0 22 50 *
+17. Bottom Axis Label:
+17. @CE 8 0 22 50 *
+18.
+19. Minimum Value for lambda3 (omit for default):
+19. @CE 9 0 42 50 *
+20. Maximum Value for lambda3 (omit for default):
+20. @CE 10 0 42 50 *
+21. Minimum Value for lambda4 (omit for default):
+21. @CE 11 0 42 50 *
+22. Maximum Value for lambda4 (omit for default):
+22. @CE 12 0 42 50 *
+23.
+24. Select goodness of fit critierion:
+25. @CE 13 1 1 30 PPCC
+26. @CE 13 2 1 30 Kolmogorov-Smirnov
+27.
+28. Subset/Except/For Specification:
+29. @CE 14 0 1 50 *
+30.
+31.
+32. Generate the Generalized Tukey-Lambda PPCC Plot?
+--------------------
+GR FE
+TITLE CASE ASIS
+LABEL CASE ASIS
+CASE ASIS
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+DELETE LAMBDA31 LAMBDA32 LAMBDA41 LAMBDA42
+LET LAMBDA31 = _9
+LET LAMBDA32 = _10
+LET LAMBDA41 = _11
+LET LAMBDA34 = _12
+@IF 13 1 GENERALIZED TUKEY LAMBDA PPCC PLOT _1 _2 _14
+@IF 13 2 GENERALIZED TUKEY LAMBDA KS PLOT _1 _2 _14
+MOVE 50 5
+JUSTIFICATION CENTER
+IF AXISFLAG NOT EXIST
+   LET AXISFLAG = 0
+END OF IF
+IF AXISFLAG = 0
+   TEXT Lambda3 = ^shape1, Lambda4 = ^shape2
+ELSE
+   TEXT Lambda4 = ^shape1, Lambda3 = ^shape2
+END OF IF
+MOVE 50 2
+@IF 13 1 TEXT Maximum PPCC = ^maxppcc
+@IF 13 2 TEXT Minimum KS = ^minks
+TITLE
+LABEL
+--------------------
+WEB HELP PPCC PLOT
+--------------------

@@ -1,0 +1,8 @@
+----- <~datalist\NATR45.top> NATR45.DAT
+ 
+NATR45.DAT
+ 
+View     <xcl: LIST NATR45.DAT>
+Load     <x2cl: SKIP 25; READ NATR45.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\NATR45.DAT>
+ 

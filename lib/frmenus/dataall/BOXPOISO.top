@@ -1,0 +1,8 @@
+----- <~dataall\BOXPOISO.top> BOXPOISO.DAT
+
+BOXPOISO.DAT
+
+View     <xcl: LIST BOXPOISO.DAT>
+Load     <xcf: ~dataload/BOXPOISO.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXPOISO.DAT>
+

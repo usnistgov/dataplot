@@ -1,0 +1,8 @@
+----- <~dataload\SPN2O.DP> Load SPN2O.DAT
+
+. This is file    SPN2O.DP
+
+DELETE Y
+SKIP 25
+READ SPN2O.DAT Y
+

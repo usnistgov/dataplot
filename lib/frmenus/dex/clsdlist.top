@@ -1,0 +1,15 @@
+----- <~dex\clsdlist.top> Listing: Latin Square Design
+
+Listing of Latin Square+ Designs
+
+ 3-by-3 Latin Square                   <~dex\latsq3.dat.top>
+ 4-by-4 Latin Square                   <~dex\latsq4.dat.top>
+ 5-by-5 Latin Square                   <~dex\latsq5.dat.top>
+
+ 3-by-3 Graeco-Latin                   <~dex\grlatsq3.top>
+ 4-by-4 Graeco-Latin                   <~dex\grlatsq4.top>
+ 5-by-5 Graeco-Latin                   <~dex\grlatsq5.top>
+
+ 4-by-4 Hyper-Graeco-Latin Sq.         <~dex\hgrlats4.top>
+ 5-by-5 Hyper-Graeco-Latin Sq.         <~dex\hgrlats5.top>
+

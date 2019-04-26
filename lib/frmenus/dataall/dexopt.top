@@ -1,0 +1,9 @@
+----- <~dataall\dexopt.top> View/etc. Optimization Design Data
+
+View/Load/Print Optimization Design Data
+
+BOXCLEAN.DAT  2**(4-1)  Cleanser stability <~dataall\BOXCLEAN.top>
+
+BOXYIELD.DAT* 2**3 wcp  Yield & time, temp <~dataall\BOXYIELD.top>
+BOXYIEL2.DAT  2**3 wcp  Yield & time, temp <~dataall\BOXYIEL2.top>
+

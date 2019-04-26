@@ -1,0 +1,8 @@
+----- <~dataall\BOXREACT.top> BOXREACT.DAT
+
+BOXREACT.DAT
+
+View     <xcl: LIST BOXREACT.DAT>
+Load     <xcf: ~dataload/BOXREACT.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXREACT.DAT>
+

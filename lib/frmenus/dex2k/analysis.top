@@ -1,0 +1,16 @@
+----- <~dex2k\analysis.top> Analysis of 2**k Designs
+
+Analysis of 2**k Designs
+
+Analysis Goals                 <~dex2k\analgoal.top>
+NIST/SEMATECH Handbook         <xcl: web handbook dex analysis full factorial>
+EDA Approach
+      NIST/SEMATECH Handbook     <xcl: web handbook dex eda approach>
+      10-Step Screening Analysis <~dex2k\10step.top>
+
+Techniques to determine:
+      1. Ranked list of factors  <~dex2k\ranklifa.top>
+      2. Most important factors  <~dex2k\impofact.top>
+      3. Prediction equation     <~dex2k\predequa.top>
+      4. Best settings           <~dex2k\bestsett.top>
+

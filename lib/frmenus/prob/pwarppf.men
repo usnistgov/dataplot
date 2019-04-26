@@ -1,0 +1,61 @@
+This is file pwarppf.men--Plot Waring Percent Point
+ 
+--------------------
+ 1. Plot Waring Percent Point Function
+ 2. PLOT WARPPF(P,3,2) FOR P = 0.01 0.01 0.99
+ 3.
+ 4. If the a parameter is omitted, the Waring
+ 5. distribution becomes the Yule distribution.
+ 6.
+ 7. NOTE: Algorithm work is still needed for the
+ 8.       case where a and c are less than 1, so
+ 9.       these values should not be used.
+10.
+11. Shape Parameter c (required, c > 0, c > a):
+11. @CE 9 0 42 50 ?
+12. Optional Shape Parameter a (a > 1 for now):
+12. @CE 10 0 42 50 ?
+13.
+14. You can specify the range of values to plot either
+15. by providing an input vector containing the explicit
+16. input values or by providing the start, increment,
+17. and stop values.
+18.
+19. Input Variable (optional):
+19. @CE 1 0 42 50 ? gui-variable
+20.
+21. Start Value (> 0):
+21. @CE 2 0 42 50 ?
+22. Increment Value (defaults to 0.01):
+22. @CE 3 0 42 50 ?
+23. Stop Value (< 1):
+23. @CE 4 0 42 50 ?
+24.
+25. Variable to Store the Percent Point Values (optional):
+25. @CE 7 0 42 50 ?
+26.
+27.
+28. Plot the Waring Percent Point's?
+--------------------
+AN FE
+LET ZC = 3
+@IF 9 0 LET ZC = _9
+LET ZA = 1
+@IF 10 0 LET ZA = _10
+LET ZINC = 0.01
+@IF 3 0 LET ZINC = _3
+IF ZA > 1
+@IF 1 0 LET ZJUNK = WARPPF( _1 ,ZC,ZA)
+@IF 1 0 PLOT ZJUNK _1
+@IF 2 0 PLOT WARPPF( ZZZZ,ZC,ZA) FOR ZZZZ = _2 ZINC _4
+@IF 7 0 LET _7 = YPLOT
+END OF IF
+IF ZA <= 1
+@IF 1 0 LET ZJUNK = WARPPF( _1 ,ZC)
+@IF 1 0 PLOT ZJUNK _1
+@IF 2 0 PLOT WARPPF( ZZZZ,ZC) FOR ZZZZ = _2 ZINC _4
+@IF 7 0 LET _7 = YPLOT
+END OF IF
+--------------------
+WEB HELP WARPPF
+--------------------

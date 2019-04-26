@@ -1,0 +1,8 @@
+----- <~dataall\BOXINDUS.top> BOXINDUS.DAT
+
+BOXINDUS.DAT
+
+View     <xcl: LIST BOXINDUS.DAT>
+Load     <xcf: ~dataload/BOXINDUS.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXINDUS.DAT>
+

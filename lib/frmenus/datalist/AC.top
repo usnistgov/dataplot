@@ -1,0 +1,8 @@
+----- <~datalist\AC.top> AC.DAT
+ 
+AC.DAT
+ 
+View     <xcl: LIST AC.DAT>
+Load     <x2cl: SKIP 25; READ AC.DAT Y X1 TO X6>
+Print    <xccl: printfile C:\DATAPLOT\AC.DAT>
+ 

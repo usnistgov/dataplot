@@ -1,0 +1,29 @@
+----- <~reli\expomode.top>
+
+Reliability: Compute/Plot/Fit Exponential Model
+
+Compute Exponential Distribution Functions
+    Cumulative Distribution Function        <xemf: ~prob\expcdf.men>
+    Probability Density Function            <xemf: ~prob\exppdf.men>
+    Percent Point Function                  <xemf: ~prob\expppf.men>
+    Hazard Function                         <xemf: ~prob\exphaz.men>
+    Cumulative Hazard Function              <xemf: ~prob\expchaz.men>
+    
+Plot Exponential Distribution Functions
+    Cumulative Distribution Function        <xemf: ~prob\pexpcdf.men>
+    Probability Density Function            <xemf: ~prob\pexppdf.men>
+    Percent Point Function                  <xemf: ~prob\pexpppf.men>
+    Hazard Function                         <xemf: ~prob\pexphaz.men>
+    Cumulative Hazard Function              <xemf: ~prob\pexpchaz.men>
+    Average Failure Rate Function           <xemf: ~reli\pexpafr.men>
+
+Fit Exponential Distribution
+    Maximum Likelihood                      <xemf: ~reli\expomle4.men>
+    Probability Plot                        <xemf: ~reli\ppexp.men>
+
+Exponential Goodness of Fit
+    Anderson-Darling                        <xemf: ~reli\adexp.men>
+    Kolmogorov-Smirnov                      <xemf: ~reli\ksexp.men>
+    Histogram with Fitted PDF               <xemf: ~prob\exphispd.men>
+    Fitted CDF versus Empirical CDF         <xemf: ~reli\expecdf.men>
+

@@ -1,0 +1,10 @@
+----- <~dataexec\SMALL14.DP> Load & Execute SMALL14.DAT
+
+. This is file    SMALL14.DP
+
+DELETE X1 TO X3 Y
+SKIP 25
+READ SMALL14.DAT X1 X2 X3 Y
+TITLE SMALL14.DAT
+4-PLOT Y
+

@@ -1,0 +1,8 @@
+----- <~datalist\BOXYIELD.top> BOXYIELD.DAT
+ 
+BOXYIELD.DAT
+ 
+View     <xcl: LIST BOXYIELD.DAT>
+Load     <x2cl: SKIP 25; READ BOXYIELD.DAT Y X1 X2>
+Print    <xccl: printfile C:\DATAPLOT\BOXYIELD.DAT>
+ 

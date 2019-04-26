@@ -1,0 +1,13 @@
+----- <~dexmix\HARE.DP> Generate simplex Region Fill
+
+. This is file     HARE.DP
+
+LET X1MIN = 0
+LET X1MAX = 0.5
+LET X2MIN = 0.3
+LET X2MAX = 0.8
+LET X3MIN = 0.1
+LET X3MAX = 0.5
+LET GRIDINC = 0.1
+CALL SIMPLEXR.DP
+

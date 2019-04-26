@@ -1,0 +1,8 @@
+----- <~dataall\SOULEN0.top> SOULEN0.DAT
+
+SOULEN0.DAT
+
+View     <xcl: LIST SOULEN0.DAT>
+Load     <xcf: ~dataload/SOULEN0.DP>
+Print    <xccl: printfile C:\DATAPLOT\SOULEN0.DAT>
+

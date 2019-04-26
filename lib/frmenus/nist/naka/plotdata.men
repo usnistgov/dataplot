@@ -1,0 +1,40 @@
+This is file plotdata.men--Plot the Data
+
+--------------------
+ 1. Plot the Data
+ 2. PLOT Y X
+ 3.
+ 4. Vertical   Axis Variable (= Y)
+ 5. Horizontal Axis Variable (= X)
+ 6.
+ 7. Line Types (solid, dot, dash, ...)
+ 7. @CE 1 0 42 50 * gui-line
+ 8. Character Type (blank, x, circ, ...)
+ 8. @CE 2 0 42 50 * gui-char
+ 9. Character Fill (off, on)
+ 9. @CE 3 0 42 50 * gui-ooff
+10.
+11. Title:
+12. @CE 4 0 1 50 *
+13. Left Axis Label:
+14. @CE 5 0 22 50 *
+15. Bottom Axis Label:
+15. @CE 6 0 22 50 *
+16.
+17. Subset/Except/For Specification:
+18. @CE 7 0 1 50 *
+19.
+20.
+21. Generate the Plot?:
+--------------------
+GR FE
+LINES _1
+CHARACTERS _2
+CHARACTER FILL _3
+TITLE _4
+Y1LABEL _5
+X1LABEL _6
+PLOT Y X
+--------------------
+WEB HELP PLOT
+--------------------

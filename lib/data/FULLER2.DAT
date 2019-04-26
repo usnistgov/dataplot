@@ -1,0 +1,56 @@
+This is Dataplot data file     FULLER2.DAT
+Airplane Glass times to failure
+Ed Fuller
+December 1993
+Number of observations = 31
+Response variable = time to failure
+Total number of variables per line image = 1
+Order of variables on a line image--
+   Response variable Y = time to failure
+To read this into Dataplot--
+   SKIP 25
+   READ FULLER2.DAT Y
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  Y
+------
+18.830
+20.800
+21.657
+23.030
+23.230
+24.050
+24.321
+25.500
+25.520
+25.800
+26.690
+26.770
+26.780
+27.050
+27.670
+29.900
+31.110
+33.200
+33.730
+33.760
+33.890
+34.760
+35.750
+35.910
+36.980
+37.080
+37.090
+39.580
+44.045
+45.290
+45.381

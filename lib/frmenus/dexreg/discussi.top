@@ -1,0 +1,29 @@
+----- <~dexreg\discussi.top>  Regression Designs: Discussion
+ 
+Regression Designs: Discussion
+ 
+Regression designs are appropriate when
+you have a few factors (typically 1 to 3),
+these factors are continuous (but not
+proportions), and a mathematical model for
+the response as a function of the factor
+variables is desired.
+
+Regression designs fit a functional model
+of the form:
+
+   y = f(X1, x2, ..) + error
+
+The purpose of a regression design is:
+
+   1) estimate the functional form f
+   2) estimate the parameters of the
+      function f
+   3) validate that the function f is an
+      adequate model.
+
+Important issues for regression designs are:
+
+   1) How do we chose the values for the 
+      factor variables.
+

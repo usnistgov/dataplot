@@ -1,0 +1,14 @@
+----- <~plot\condplot.top> Conditioning Plot
+
+Conditioning Plot (Coplot)
+
+Discussion                         <~plot\coplot_d.top>
+
+Generate Conditioning Variable
+   Explicitly Enter Subset Values      <xemf: ~plot\subsetda.men>
+   Subsets Based on CODEx              <xemf: ~math\code.men>
+
+Set Most Common Options            <xemf: ~plot\coplot1.men>
+
+Generate the Conditioning Plot     <xemf: ~plot\coplot.men>
+

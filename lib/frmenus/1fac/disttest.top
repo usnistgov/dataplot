@@ -1,0 +1,20 @@
+----- <~1fac\disttest.top> Testing: Shift in Distribution
+
+Testing: Shift in Distribution
+
+Case 1: 1 level of data
+        Pre -mod: historical reference value
+        Post-mod: data
+        (click here for case 1)        <xemf: ~univ\tesdis11.men>
+
+Case 2: 2 levels of data
+        Pre -mod: data
+        Post-mod: data
+        (click here for case 2)        <xemf: ~1fac\tesdis12.men>
+
+Case 3: 3 or more levels of data
+        (click here for case 3)        <xemf: ~1fac\tesdis13.men>
+
+Assumptions
+Checking assumptions                   <xemf: ~1fac\4plot.men>
+

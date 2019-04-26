@@ -1,0 +1,141 @@
+FEEDBACK OFF
+.
+. THIS IS DATAPLOT MACRO    IRLS.DP
+.  This macro computes iteratively re-weighted least squares in
+.  DATAPLOT (via the WEIGHTS command).  See the article
+.  "Design of an S Function for Robust Regression Using Iteratively
+.  Rewighted Least Squares", by Heiberger and Becker in the
+.  Journal of Computational and Graphical Statistics (Volume 1,
+.  Number 2, 1992).
+.
+.  1) The parameter METHOD should be defined before caalling this
+.     macro.  It can have one of the following values:
+.
+.        1   = Andrew's method
+.        2   = Tukey's bisquare
+.        3   = Cauchy
+.        4   = Hampel
+.        5   = Huber
+.        6   = Logistic
+.        7   = median
+.        8   = Welsch
+.        9   = fair
+.       10   = Talworth
+.       11   = Tukey's approximation for least absolute deviation
+.
+.      The first 10 methods are taken from the Heiberger and Becker
+.      article.  Method 11 is from "Data Analysis and Regression"
+.      by Tukey and Mosteller.
+.
+.      You can modify this macro to include other methods as well.
+.      In addition, you can modify the tuning constant.  Most of
+.      these are chosen so that the method is 95% efficient for
+.      error terms that are in fact normally distributed.
+.
+.  2)  The following assumes that a string F has been defined before
+.      calling this macro to define the type of fit.  E.g.,
+.           LET STRING F = FIT Y X
+.      Basically, any fit or smooth in DATAPLOT that generates residual
+.      and predicted values can be used.
+ 
+.  3)  The convergence criterion and the maximum number of iterations
+.      can be modified.
+.
+.   4) The following algorithm is used:
+.      a) Perform an initial unweighted least squares estimate
+.      b) Scale the residuals:
+.            Ui = Ei/s
+.         where s = Median Absolute Deviation/0.6745
+.      c) Apply the specified weight function
+.      d) Check for convergence
+.
+WEIGHT
+^F
+LET MAXITER = 10
+LOOP FOR K = 1 1 MAXITER
+    LET RESOLD = RES
+    LET MED = MEDIAN RES
+    LET TEMP = ABS(RES - MED)
+    LET MAD = MEDIAN TEMP
+    LET S = MAD/0.6745
+    LET U = RES/S
+    IF METHOD = 1
+      LET C = 1.339
+      LET TAG = ABS(U/C)
+      LET WT = 1 SUBSET U = 0
+      LET WT = 0 SUBSET TAG > PI
+      LET WT = SIN(TAG)/TAG  SUBSET TAG <= PI
+    END OF IF
+    IF METHOD = 2
+      LET C = 4.685
+      LET TAG = ABS(U/C)
+      LET WT = 0 SUBSET TAG > 1
+      LET WT = (1 - TAG**2)**2  SUBSET TAG <= 1
+    END OF IF
+    IF METHOD = 3
+      LET C = 2.385
+      LET WT = 1/(1 + (u/c)**2)
+    END OF IF
+    IF METHOD = 4
+      LET C = 8
+      LET A = 2
+      LET B = 4
+      LET TAG = ABS(U)
+      LET WT = 1 SUBSET U <= A
+      LET WT = A/TAG  SUBSET TAG > A   SUBSET TAG <= B
+      LET WT = (A/TAG)*((C-TAG)/(C-B)) SUBSET TAG > B SUBSET TAG <= C
+      LET WT = 0 SUBSET U > C
+    END OF IF
+    IF METHOD = 5
+      LET C = 1.345
+      LET TAG = ABS(U)
+      LET WT = 1 SUBSET TAG <= C
+      LET WT = C/TAG  SUBSET TAG > C
+    END OF IF
+    IF METHOD = 6
+      LET C = 1.205
+      LET TAG = ABS(U/C)
+      LET WT = 1 SUBSET U = 0
+      LET WT = TANH(TAG)/TAG  SUBSET TAG <> 0
+    END OF IF
+    IF METHOD = 7
+      LET TAG = ABS(U)
+      LET WT = 1/0.000001 SUBSET U = 0
+      LET WT = 1/TAG SUBSET U <> 0
+    END OF IF
+    IF METHOD = 8
+      LET C = 2.985
+      LET TAG = (U/C)**2
+      LET WT = EXP(-0.5*TAG)
+    END OF IF
+    IF METHOD = 9
+      LET C = 1.4
+      LET WT = 1/(1 + (u/c))**2
+    END OF IF
+    IF METHOD = 10
+      LET C = 2.795
+      LET TAG = ABS(U)
+      LET WT = 1 SUBSET TAG <= C
+      LET WT = 0 SUBSET TAG > C
+    END OF IF
+    IF METHOD = 11
+      LET TEMP = ABS(RES)
+      LET C = MEDIAN TEMP
+      LET TAG = ABS(Y - PRED)
+      LET WT = C/TAG  SUBSET TAG > C
+      LET WT = 1 SUBSET TAG <= C
+    END OF IF
+    WEIGHTS WT
+    ^F
+    .
+    LET DELTA = (RESOLD - RES)**2
+    LET NUM = SUM DELTA
+    LET NUM = SQRT(NUM)
+    LET DELTA2 = RESOLD*RESOLD
+    LET DENOM = SUM DELTA2
+    LET CONV = NUM/DENOM
+    IF CONV <= 0.0001
+      BREAK LOOP
+    END OF IF
+END OF LOOP
+.

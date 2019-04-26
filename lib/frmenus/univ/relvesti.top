@@ -1,0 +1,10 @@
+----- <~univ\relvesti.top> Estimation: Univariate Relative Variation
+
+Estimation: Univariate Relative Variation
+
+Checking assumptions                     <xemf: ~univ\4plot.men>
+
+s/ybar, SD(s/ybar) and Confidence limits <xemf: ~univ\relscl.men>
+
+Bootstrap and/or Jacknife estimation     <~univ\relvboot.top>
+

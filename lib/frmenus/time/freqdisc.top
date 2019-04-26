@@ -1,0 +1,34 @@
+----- <~time\freqdisc.top> Discussion: Frequency-Domain
+ 
+Discussion: Frequency-Domain
+ 
+The following are the basic steps in analyzing data
+in the frequency domain.
+
+  1) The first step is model identification (i.e.,
+     the Structure Checking menu).
+
+     The primary tool in the frequency domain is
+     the spectrum plot which is essentially a smoothed
+     autocovariance function in the frequency
+     domain.  The periodogram is the unsmoothed
+     version.
+
+     The spectrum plot is used to identify the
+     number of peaks and whether these are low,
+     mid, or high frequency peaks.
+
+     For example, a single low frequency peak often
+     indicates a low order autoregressive model is
+     appropriate.  A mid-frequency peak is often
+     indicative of a sinusoidal model.  A relatively
+     flat spectrum with no dominant peaks indicates
+     that the data is essentially random.
+
+  2) Based on the spectrum plot, fit some appropriate
+     model.  This step is discussed under the modeling
+     menu.
+
+  3) Validate the model.  This is done using the standard
+     residual analysis.
+

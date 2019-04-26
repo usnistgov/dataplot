@@ -1,0 +1,52 @@
+----- <~dex\cs26m3.top> Confounding:  2**(6-3) Design
+
+Confounding:  2**(6-3) Design
+
+Name of Design      = 2**(6-3) Fractional Factorial Design
+
+Number of Factors k = 6
+Number of Obs.    n = 8
+
+Resolution          = 3 (Main effects confounded with
+                      2-term interactions and higher)
+
+Factor Definitions  : 4 = 12
+                      5 = 13
+                      6 = 23
+
+Defining Relation   : I +
+                      124 + 135 + 236 + 456 +
+                      1256 + 1346 + 2345
+
+Main Effect         : 1  =  1 + 24 + 35 +  *
+Confounding           2  =  2 + 14 + 36 +  *
+                      3  =  3 + 15 + 26 +  *
+                      4  =  4 + 12 + 56 +  *
+                      5  =  5 + 13 + 46 +  *
+                      6  =  6 + 23 + 45 +  *
+
+2-Term              : 12 = 12 +  4 + 56 +  *
+Confounding           13 = 13 +  5 + 46 +  *
+                      14 = 14 +  2 + 36 +  *
+                      15 = 15 +  3 + 26 +  *
+                      16 = 16 + 25 + 34 +  *
+                      23 = 23 +  6 + 45 +  *
+                      24 = 24 +  1 + 35 +  *
+                      25 = 25 + 16 + 34 +  *
+                      26 = 26 +  3 + 15 +  *
+                      34 = 34 + 25 + 16 +  *
+                      35 = 35 +  1 + 24 +  *
+                      36 = 36 +  2 + 14 +  *
+                      45 = 45 +  6 + 23 +  *
+                      46 = 46 +  5 + 13 +  *
+                      56 = 56 +  4 + 12 +  *
+
+Confounding Matrix:
+                          1   2   3   4   5   6
+                      .............................
+                      1 -     4   5   2   3  16
+                      2 -         6   1  16   3
+                      3 -            16   1   2
+                      4 -                 6   5
+                      5 -                     4
+

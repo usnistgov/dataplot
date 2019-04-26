@@ -1,0 +1,32 @@
+This is file tabulate.men--Tabulate
+ 
+--------------------
+ 1. Tabulate Data
+ 2. TABULATE MEANS Y1 TAG
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Group ID Variable:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6.
+ 7. Type of Tabulation
+ 8. @CE 3 1 5 40 Counts (no group id variable)
+ 9. @CE 3 2 5 40 Means
+10. @CE 3 3 5 40 Standard Deviations
+11. @CE 3 4 5 40 Ranges
+12.
+13. Subset/Except/For Specification:
+14. @CE 4 0 1 50 *
+15.
+16.
+17. Compute Tabulation?
+--------------------
+GR FE
+LET STRING ZZZZSTR = COUNTS
+@IF 3 2 LET STRING ZZZZSTR = MEANS
+@IF 3 3 LET STRING ZZZZSTR = SD
+@IF 3 4 LET STRING ZZZZSTR = RANGE
+TABULATE ^ZZZZSTR _1 _2 _4
+--------------------
+WEB HELP TABULATE
+--------------------

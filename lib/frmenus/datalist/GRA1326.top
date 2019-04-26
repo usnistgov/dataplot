@@ -1,0 +1,8 @@
+----- <~datalist\GRA1326.top> GRA1326.DAT
+ 
+GRA1326.DAT
+ 
+View     <xcl: LIST GRA1326.DAT>
+Load     <x2cl: SKIP 25; READ GRA1326.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\GRA1326.DAT>
+ 

@@ -1,0 +1,33 @@
+----- <~handbook\probdist.top> Probability Distributions
+
+Probability Distributions
+
+Compute
+   cdf's & tail probabilities      <~prob\cdftail.top>
+   pdf's                           <~prob\comppdf.top>
+   Percent points (quantiles)      <~prob\percpoin.top>
+
+Generate
+   Random numbers                  <~prob\randnumb.top>
+   Random permutations             <xemf: ~prob\genranpe.men>
+
+Plot
+   Histogram                          <xemf: ~univ\histogra.men>
+   Histogram & superimposed pdf plot  <~prob\histpdfp.top>
+   CDF Functions                   <~prob\plotcdf.top>
+   PDF Functions                   <~prob\plotpdf.top>
+   PPF Functions                   <~prob\plotppf.top>
+   Hazard Functions                <~prob\plothaz.top>
+   Cumulative Hazard Functions     <~prob\plotchaz.top>
+   Sparsity Functions              <~prob\plotsf.top>
+
+"Estimate" Distributions           <~univ\distesti.top>
+   Discussion                      <~prob\est_disc.top>
+   4-PLOT                          <xemf: ~univ\4plot.men>
+   Histogram                       <xemf: ~univ\histogra.men>
+   Frequency plot                  <xemf: ~plot\freqplot.men>
+   Probability plots               <~univ\probplot.top>
+   PPCC plots                      <~univ\ppccplot.top>
+   Maximum Likelihood              <~prob\mle.top>
+   Least Squares Estimate          <~prob\lsq.top>
+

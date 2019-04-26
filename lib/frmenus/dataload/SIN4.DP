@@ -1,0 +1,8 @@
+----- <~dataload\SIN4.DP> Load SIN4.DAT
+
+. This is file    SIN4.DP
+
+DELETE Y X
+SKIP 25
+READ SIN4.DAT Y X
+

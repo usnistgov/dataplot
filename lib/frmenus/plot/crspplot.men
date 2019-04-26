@@ -1,0 +1,74 @@
+This is file csspplot.men--Cross-Spectral Plot
+ 
+--------------------
+ 1. Cross-Spectral Plot
+ 2. CROSS-SPECTRAL PLOT Y
+ 3.
+ 4. First Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. Second Response Variable:
+ 5. @CE 2 0 33 50 ? gui-vari
+ 6.
+ 7. Type of Cross-Spectral Plot:
+ 8. @CE 12 1 5 30 cross-spectral (default)
+ 9. @CE 12 2 5 30 cospectral
+10. @CE 12 3 5 30 quadrature spectral
+11. @CE 12 4 5 30 coherency spectral
+12. @CE 12 5 5 30 amplitude spectral
+13. @CE 12 6 5 30 phase spectral
+14. @CE 12 7 5 30 gain spectral
+15. @CE 12 8 5 30 argand spectral
+16.
+17. Line Types (solid, dot, dash, ...)
+17. @CE 3 0 42 50 * gui-line
+18. Character Type (blank, x, circ, ...)
+18. @CE 4 0 42 50 * gui-char
+19. Character Fill (off, on)
+19. @CE 5 0 42 50 * gui-ooff
+20. Spike (off, on)
+20. @CE 10 0 42 50 * gui-ooff
+21. Log scale for Vertical Axis
+21. @CE 11 1 38 43 no
+21. @CE 11 2 45 50 yes
+22.
+23. Title:
+23. @CE 6 0 10 50 *
+24. Left Axis Label:
+24. @CE 7 0 22 50 *
+25. Bottom Axis Label:
+25. @CE 8 0 22 50 *
+26.
+27. Subset/Except/For Specification:
+28. @CE 9 0 1 50 *
+29.
+30.
+31. Generate the Spectral Plot?:
+--------------------
+GR FE
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+SPIKE _10
+BAR OFF
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+YLOG OFF
+LET STRING ZZZZSTR = CROSS-SPECTRAL
+@IF 12 1 LET STRING ZZZZSTR = CROSS-SPECTRAL
+@IF 12 2 LET STRING ZZZZSTR = COSPECTRAL
+@IF 12 3 LET STRING ZZZZSTR = QUADRATURE SPECTRAL
+@IF 12 4 LET STRING ZZZZSTR = COHERENCY SPECTRAL
+@IF 12 5 LET STRING ZZZZSTR = AMPLITUDE SPECTRAL
+@IF 12 6 LET STRING ZZZZSTR = PHASE SPECTRAL
+@IF 12 7 LET STRING ZZZZSTR = GAIN SPECTRAL
+@IF 12 8 LET STRING ZZZZSTR = ARGAND SPECTRAL
+@IF 11 2 DEVICE 1 OFF
+^ZZZZSTR PLOT _1 _2 _9
+@IF 11 2 DEVICE 1 ON
+@IF 11 2 YLOG ON
+@IF 11 2 PLOT YPLOT XPLOT TAGPLOT SUBSET YPLOT > 0
+@IF 11 2 YLOG OFF
+--------------------
+WEB HELP SPECTRAL PLOT
+--------------------

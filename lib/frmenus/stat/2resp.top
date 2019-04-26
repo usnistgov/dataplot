@@ -1,0 +1,14 @@
+----- <~stat\2resp.top> 2 Response Variables
+
+2 Response Variables:
+
+Confidence Interval for Difference Between 2 Means <xemf: ~stat\diffconf.men>
+Confidence Interval for Difference Between 2 Proportions <xemf: ~stat\diffprop.men>
+T Test for Shift in Location             <xemf: ~stat\1flotest.men>
+Sign Test for Paired Data                <xemf: ~stat\signtest.men>
+Wilcoxon Signed Rank Sum Test (Paired Data) <xemf: ~stat\wilcoxon.men>
+Wilcoxon Signed Rank U (= Mann-Whitney) Test<xemf: ~stat\mannwhit.men>
+F Test for Shift in Variation            <xemf: ~stat\1fvatest.men>
+Chi-Square 2 Sample Test                 <xemf: ~stat\chisq2s.men>
+Kolmogorov-Smirnov 2 Sample Test         <xemf: ~stat\ks2s.men>
+

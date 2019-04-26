@@ -1,0 +1,24 @@
+This is file binom.men--Compute Binomial Coefficients
+ 
+--------------------
+ 1. Binomial Coefficients
+ 2. LET Y = BINOM(N,M)
+ 3.
+ 4. Sample size variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Number of items to select variable:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 6 0 -5 50 *
+10.
+11.
+12. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = BINOM( _1 , _2 ) _6
+--------------------
+WEB HELP BINOMIAL
+--------------------

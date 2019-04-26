@@ -1,0 +1,8 @@
+----- <~dataload\EXP.DP> Load EXP.DAT
+
+. This is file    EXP.DP
+
+DELETE Y
+SKIP 25
+READ EXP.DAT Y
+

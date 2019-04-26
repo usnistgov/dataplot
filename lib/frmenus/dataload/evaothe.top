@@ -1,0 +1,10 @@
+----- <~dataload\evaothe.top> Load Extreme Value Data: Other
+
+Load Extreme Value Data: Other
+
+GEAR.DAT      Gear diameters (Ishikawa)   <xcf: ~dataload\GEAR.DP>
+CLEAR.DAT     Component clearances        <xcf: ~dataload\CLEAR.DP>
+
+RANDN.DAT     Normal random numbers       <xcf: ~dataload\RANDN.DP>
+RANDU.DAT     Uniform random numbers      <xcf: ~dataload\RANDU.DP>
+

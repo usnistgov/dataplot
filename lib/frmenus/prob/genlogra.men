@@ -1,0 +1,34 @@
+This is file genlogra.men--Generate Logistic Random Numbers
+ 
+--------------------
+ 1. Generate Logistic Random Numbers
+ 2. LET Y = LOGISTIC RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 41 50 ?
+ 5. Location Parameter:
+ 5. @CE 2 0 41 50 ?
+ 6. Scale Parameter (> 0):
+ 6. @CE 3 0 41 50 ?
+ 7.
+ 8. Optional random number generator seed (default=305):
+ 9.    (integer >= 305)
+ 9. @CE 4 0 41 50 ?
+10.
+11. Name of output variable;
+11. @CE 5 0 41 50 ?
+12.
+13.
+14. Generate the random numbers?
+--------------------
+AN FE
+@IF 4 0 SEED _4
+LET ZLOC = 0
+@IF 2 0 LET ZLOC = _2
+LET ZSCALE = 1
+@IF 3 0 LET ZSCALE = _3
+LET _5 = LOGISTIC RANDOM NUMBERS FOR I = 1 1 _1
+LET _5 = ZLOC + ZSCALE* _5
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

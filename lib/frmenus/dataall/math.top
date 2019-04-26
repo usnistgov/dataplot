@@ -1,0 +1,7 @@
+----- <~dataall\math.top> View/etc. Built-in Mathematics Data Files
+
+View/Load/Print Built-in Mathematics Data Files
+
+FREQPRIM.DAT  Frequency of prime numbers   <~dataall\FREQPRIM.top>
+PRIMESM.DAT   Mersenne prime numbers       <~dataall\PRIMESM.top>
+

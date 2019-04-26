@@ -1,0 +1,8 @@
+----- <~dataall\HAMAKER.top> HAMAKER.DAT
+
+HAMAKER.DAT
+
+View     <xcl: LIST HAMAKER.DAT>
+Load     <xcf: ~dataload/HAMAKER.DP>
+Print    <xccl: printfile C:\DATAPLOT\HAMAKER.DAT>
+

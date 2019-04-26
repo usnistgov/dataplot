@@ -1,0 +1,8 @@
+----- <~dataall\SWANSON1.top> SWANSON1.DAT
+
+SWANSON1.DAT
+
+View     <xcl: LIST SWANSON1.DAT>
+Load     <xcf: ~dataload/SWANSON1.DP>
+Print    <xccl: printfile C:\DATAPLOT\SWANSON1.DAT>
+

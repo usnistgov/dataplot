@@ -1,0 +1,31 @@
+This is file mlejsb.men--Johnson SB MLE Estimates
+ 
+--------------------
+ 1. Johnson SB Percentile Estimates
+ 2. JOHNSON SB PERCENTILE Y
+ 3.
+ 4. This menu estimates the parameters for the
+ 5. Johnson SB distribution using the percentile
+ 6. method.  This method depends on a percntile
+ 7. parameter that is typically set to a value
+ 8. between 0.5 and 1.  It is recommend that you
+ 9. try several different values of this parameter.
+10.
+11. Response Variable:
+11. @CE 1 0 42 50 ? gui-variable
+12.
+13. Percentile Value:
+13. @CE 2 0 42 50 ? gui-variable
+14.
+15. Subset/Except/For Specification:
+16. @CE 3 0 1 50 *
+17.
+18.
+19. Compute Johnson SB Estimates?
+--------------------
+GR FE
+@IF 2 0 LET Z = _2
+JOHNSON SB PERCENTILE _1 _3
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

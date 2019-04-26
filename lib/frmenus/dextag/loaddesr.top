@@ -1,0 +1,36 @@
+----- <~dextag\loaddesf.top> Load Taguchi Designs
+ 
+Load Taguchi Designs
+ 
+   INDEX OF TAGUCHI ORTHOGONAL EXPERIMENT DESIGNS
+         ORDERED BY FACTORS, RUNS, LEVELS
+
+
+           1. TAGUCHI ORTHOGONAL DESIGNS
+           (ORDERED BY NUMBER OF RUNS)
+
+ Name    Number   Number              Number
+  of       of       of                  of
+Design   Factors  Levels/              Runs
+            s     Factor
+...............................................................
+ 
+L4          3       2                    4   <xcf: ~dextag\L4.DP>
+L8          7       2                    8   <xcf: ~dextag\L8.DP>
+L9          4       3                    9   <xcf: ~dextag\L9.DP>
+L12        11       2                   12   <xcf: ~dextag\L12.DP>
+L16        15       2                   16   <xcf: ~dextag\L16.DP>
+L16B        5       4                   16   <xcf: ~dextag\L16B.DP>
+L18         7       6 FOR 1; 3 FOR 6    18   <xcf: ~dextag\L18.DP>
+L25         6       5                   25   <xcf: ~dextag\L25.DP>
+L27        13       2 FOR 1; 3 FOR 12   27   <xcf: ~dextag\L27.DP>
+L32        31       2                   32   <xcf: ~dextag\L32.DP>
+L32B       10       2 FOR 1; 4 FOR 9    32   <xcf: ~dextag\L32B.DP>
+L36        22       3                   36   <xcf: ~dextag\L36.DP>
+L36B       27       2 FOR 15; 3 FOR 12  36   <xcf: ~dextag\L36B.DP>
+L50        12       2 FOR 1; 5 FOR 11   50   <xcf: ~dextag\L50.DP>
+L54        26       2 FOR 1; 3 FOR 25   54   <xcf: ~dextag\L54.DP>
+L64        31       2                   64   <xcf: ~dextag\L64.DP>
+L64B       21       4                   64   <xcf: ~dextag\L64B.DP>
+L81        40       3                   81   <xcf: ~dextag\L81.DP>
+

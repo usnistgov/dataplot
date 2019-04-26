@@ -1,0 +1,21 @@
+This is file vect_len.men--Compute vector length of a variable
+ 
+--------------------
+ 1. Vector Length
+ 2. LET A = VECTOR LENGTH Y1 Y2
+ 3.
+ 4. Variable for which to compute the vector length:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the vector length:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -10 50 *
+ 9.
+10.
+11. Compute the Vector Length?:
+--------------------
+GR FE
+LET _2 = VECTOR LENGTH  _1 _3
+--------------------
+WEB HELP VECTOR LENGTH

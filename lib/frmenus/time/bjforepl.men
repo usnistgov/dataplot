@@ -1,0 +1,51 @@
+This is file bjforepl.men--Plot Forecasted Values
+ 
+--------------------
+ 1. Plot Forecasted Values
+ 2. PLOT Y VS X AND; PLOT YF YLCL YUCL VS XF
+ 3.
+ 4. This menu plots the data with the forecasted
+ 5. values from the most recent ARMA command.
+ 6. It plots the forecasts with the lower and upper
+ 7. 95% confidence bands.
+ 8
+ 9. The data is read from the files written by the
+10. ARMA command.
+11.
+12. Line Style for Original Data:
+12. @CE 1 0 42 50 ? gui-line
+13. Character Style for Original Data:
+13. @CE 2 0 42 50 ? gui-char
+14. Line Style for Forecast Data:
+14. @CE 3 0 42 50 ? gui-line
+15. Character Style for Forecast Data:
+15. @CE 4 0 42 50 ? gui-char
+16. Line Style for 95% Lower Confidence Level:
+16. @CE 5 0 42 50 ? gui-line
+17. Character Style for Lower Confidence Level:
+17. @CE 6 0 42 50 ? gui-char
+18. Line Style for 95% Upper Confidence Level:
+18. @CE 7 0 42 50 ? gui-line
+19. Character Style for Upper Confidence Level:
+19. @CE 8 0 42 50 ? gui-char
+20.
+21.
+22. Generate the Plot?
+--------------------
+GR FE
+DELETE ZZZZX ZZZZY ZZZZYF ZZZZXF ZZZZYFSD ZZZZYLCL ZZZZYUCL
+SKIP 6
+SET READ FORMAT 5X,E16.8
+READ DPST2F.DAT ZZZZY
+LET ZZZZN = SIZE ZZZZY
+LET ZZZZX = SEQUENCE 1 1 ZZZZN
+SKIP 0
+SET READ FORMAT
+READ DPST5F.DAT ZZZZXF ZZZZYF ZZZZYFSD ZZZZYLCL ZZZZYUCL
+LINE _1 _3 _5 _7
+CHARACTER _2 _4 _6 _8
+PLOT ZZZZY VS ZZZZX AND
+PLOT ZZZZYF ZZZZYLCL ZZZZYUCL VS ZZZZXF
+--------------------
+WEB HELP ARMA
+--------------------

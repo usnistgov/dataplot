@@ -1,0 +1,26 @@
+----- <~plot\map_disc.top> Maps
+ 
+Maps
+ 
+Dataplot does not support mapping directly.  However,
+if you have data files containing map coordinates,
+you can use the PLOT command to generate a map.
+
+If your data is one region (e.g., one state or one
+county), you can simply read in the (X,Y) pairs.  If
+you have multiple regions (e.g., all the counties in a
+given state), you should include a region identifier
+variable as well.  The key point is that all points with
+the same region identifier are treated as a single 
+trace (i.e., curve).
+
+You can use the various REGION commands to generate solid
+color filled or cross-hatched regions on the map.
+
+Dataplot does not currently provide any types of map
+projections.  
+
+Dataplot provides a few sample map files.  These are
+intended more for the purpose of examples than as map
+files that are intended to be useful.
+

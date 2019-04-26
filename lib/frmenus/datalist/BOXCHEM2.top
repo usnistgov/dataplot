@@ -1,0 +1,8 @@
+----- <~datalist\BOXCHEM2.top> BOXCHEM2.DAT
+ 
+BOXCHEM2.DAT
+ 
+View     <xcl: LIST BOXCHEM.DAT>
+Load     <x2cl: SKIP 25; READ BOXCHEM.DAT Y X1 X2>
+Print    <xccl: printfile C:\DATAPLOT\BOXCHEM.DAT>
+ 

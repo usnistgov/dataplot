@@ -1,0 +1,35 @@
+Name:   MCCOOL82.DAT
+Source: Page 238 of
+
+           McCool (2012), "Using the Weibull Distribution:
+           Reliability, Modeling, and Inference", Wiley.
+
+Description: Ordered rolling contact fatigue lives measured in
+             millions of revolutions using specimens from five
+             different types of steel.  Original source is
+
+                Brown and Potts (1997), "Evaluation of Powder
+                Processed Turbine Engine Ball Bearings", Air Force
+                Aero-Propulsion Laboratory, Wright Patterson
+                Airforce Base, AFAPL-TR-77-26.
+
+
+
+
+
+
+
+
+
+   Y1     Y2     Y3     Y4     Y5
+---------------------------------
+ 3.03   3.19   3.46   5.88   6.43
+ 5.53   4.26   5.22   6.74   9.97
+ 5.60   4.47   5.69   6.90  10.39
+ 9.30   4.53   6.54   6.98  13.55
+ 9.92   4.67   9.16   7.21  14.45
+12.51   4.69   9.40   8.14  14.72
+12.95   5.78  10.19   8.59  16.81
+15.21   6.79  10.71   9.80  18.39
+16.04   9.37  12.58  12.28  20.84
+16.84  12.75  13.41  25.46  21.51

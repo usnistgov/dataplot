@@ -1,0 +1,82 @@
+This is file qbihispd.men--Histogram & Superimposed Quasi-Binomial Type I pdf Plot
+
+--------------------
+ 1. Histogram & Superimposed Quasi-Binomial Type I pdf Plot
+ 2. HISTOGRAM Y; PLOT QBIPDF(X,P,PHI,M) FOR X = START INC STOP
+ 3.
+ 4. Your data can be either ungrouped (a single
+ 5. response variable) or grouped (a bin counts
+ 6. variable and a bin mid-points variable).
+ 7. 
+ 8. Response (or Bin Counts) Variable:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9. Optional Bin Mid-Points Variable:
+ 9. @CE 2 0 42 50 ? gui-variable
+10.
+11. Superimposed Quasi-Binomial Type I probability density function:
+12.    Shape parameter p:
+12. @CE 3 0 42 50 ?
+13.    Shape parameter Phi:
+13. @CE 4 0 42 50 ?
+14.    Number of trials parameter m:
+14. @CE 5 0 42 50 ?
+15.    Line type:
+15. @CE 6 0 42 50 ? gui-line
+16.    Line color:
+16. @CE 7 0 42 50 ? gui-color
+17.    Bar fill on/off:
+17. @CE 8 0 42 50 ?
+18.
+19. Title:
+19. @CE 9 0 20 50 *
+20. Left Axis Label:
+20. @CE 10 0 20 50 *
+21. Bottom Axis Label:
+21. @CE 11 0 20 50 *
+22.
+23.
+24. Generate the plot?
+--------------------
+AN FE
+TITLE _9
+Y1LABEL _10
+X1LABEL _11
+@IF 8 0 BAR FILL _8
+.
+LET ICASE = 0
+@IF 2 0 LET ICASE = 1
+IF ICASE = 0
+   LET ZMIN = MINIMUM _1
+   LET ZMAX = MAXIMUM _1
+   LET ZLOW = ZMIN - 0.5
+   LET ZUPP = ZMAX + 0.5
+   CLASS WIDTH 1
+   CLASS LOWER ZLOW
+   CLASS UPPER ZUPP
+   RELATIVE HISTOGRAM _1
+   LIMITS FREEZE
+ELSE
+   LET ZMIN = MINIMUM _2
+   LET ZMAX = MAXIMUM _2
+   LET ZLOW = ZMIN - 0.5
+   LET ZUPP = ZMAX + 0.5
+   RELATIVE HISTOGRAM _1 _2
+   LIMITS FREEZE
+END OF IF
+.
+CHARACTER BLANK
+@IF 6 0 LINES _6
+@IF 7 0 LINE COLOR _7
+LET ZSHAPE1 = _3
+LET ZSHAPE2 = _4
+LET ZSHAPE3 = _5
+PRE-ERASE OFF
+PLOT QBIPDF(X,ZSHAPE1,ZSHAPE2,ZSHAPE3) FOR X = ZMIN  1 ZMAX
+LIMITS
+PRE-ERASE ON
+CLASS WIDTH
+CLASS LOWER
+CLASS UPPER
+--------------------
+WEB HELP QBIPDF
+--------------------

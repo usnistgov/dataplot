@@ -1,0 +1,8 @@
+----- <~datalist\ASF11.top> ASF11.DAT
+ 
+ASF11.DAT
+ 
+View     <xcl: LIST ASF11.DAT>
+Load     <x2cl: SKIP 25; READ ASF11.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\ASF11.DAT>
+ 

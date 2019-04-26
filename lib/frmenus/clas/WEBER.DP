@@ -1,0 +1,12 @@
+----- <~dataloex\WEBER.DP> Load & Execute WEBER.DAT
+
+. This is file    WEBER.DP
+
+DELETE Y1 Y2 Y3 X1 TO X5
+DELETE Y
+SKIP 25
+READ WEBER.DAT Y1 Y2 Y3 X1 TO X5
+TITLE WEBER.DAT
+LET Y = Y1
+/
+

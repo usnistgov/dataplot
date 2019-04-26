@@ -1,0 +1,363 @@
+This is DATAPLOT file     DESIGNS.            7/93
+Purpose--Enumerate Dataplot's Experiment Design files.
+ 
+ 
+-----General--------------------------------------------
+ 
+Index of Design of Experiment Plans
+      1. Comparative Designs
+      2. Screening Designs
+      3. Regression Designs
+      4. Optimization (Response Surface) Designs
+ 
+ 
+-----1. Comparative Designs--------------------------------
+ 
+Index of Compartive Designs
+ 
+      1. Completely Randomized (none)
+      2. Randomized Block (none)
+      3. Latin Square, etc.
+ 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ 
+INDEX OF LATIN SQUARE AND GRAECO-LATIN SQUARE DESIGNS
+ 
+ 
+File             Name of                     Number of   Number of
+Name             Design                       Factors      Runs
+                                                 k           n
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+LATSQ3.DAT       3-by-3 Latin Square             3           9
+LATSQ4.DAT       4-by-4 Latin Square             3          16
+ 
+GRLATSQ3.DAT     3-by-3 Graeco-Latin Square      4           9
+GRLATSQ3.DAT     4-by-4 Graeco-Latin Square      4          16
+ 
+ 
+-----2. Screening Designs----------------------------------
+ 
+Index of Screening Designs
+      1. 2**k Full Factorial
+      2. 2**(k-p) Fractional Factorial
+      3. Taguchi
+ 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ 
+ 
+  INDEX OF 2**(K-P) ORTHOGONAL EXPERIMENT DESIGNS
+           (ORDERED BY NUMBER OF FACTORS)
+ 
+  DESIGN     # FACTOR S    # LEVELS/FACTOR        # RUNS
+(& FILE NAME)
+ 
+ 
+  2TO2.DAT       2            2                      4
+ 
+  2TO3M1         3            2                      4
+  2TO3           3            2                      8
+ 
+  2TO4M1         4            2                      8
+  2TO4           4            2                     16
+ 
+  2TO5M2         5            2                      8
+  2TO5M1         5            2                     16
+  2TO5           5            2                     32
+ 
+  2TO6M3         6            2                      8
+  2TO6M2         6            2                     16
+  2TO6M1         6            2                     32
+  2TO6           6            2                     64
+ 
+  2TO7M4         7            2                      8
+  2TO7M3         7            2                     16
+  2TO7M2         7            2                     32
+  2TO7M1         7            2                     64
+  2TO7           7            2                    128
+ 
+  2TO8M4         8            2                     16
+  2TO8M3         8            2                     32
+  2TO8M2         8            2                     64
+  2TO8M1         8            2                    128
+  2TO8           8            2                    256
+ 
+  2TO9M5         9            2                     16
+  2TO9M4         9            2                     32
+  2TO9M3         9            2                     64
+  2TO9M2         9            2                    128
+  2TO9           9            2                    512
+ 
+  2TO10M6       10            2                     16
+  2TO10M5       10            2                     32
+  2TO10M4       10            2                     64
+  2TO10M3       10            2                    128
+  2TO10         10            2                   1024
+ 
+  2TO11M7       11            2                     16
+  2TO11M6       11            2                     32
+  2TO11M5       11            2                     64
+  2TO11M4       11            2                    128
+ 
+  2TO15M11      15            2                     16
+ 
+  2TO31M26      31            2                     32
+ 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ 
+  INDEX OF 2**(K-P) ORTHOGONAL EXPERIMENT DESIGNS
+           (ORDERED BY NUMBER OF RUNS)
+ 
+  DESIGN     # FACTOR S    # LEVELS/FACTOR        # RUNS
+(& FILE NAME)
+ 
+  2TO2.DAT       2            2                      4
+  2TO3M1         3            2                      4
+ 
+  2TO3           3            2                      8
+  2TO4M1         4            2                      8
+  2TO5M2         5            2                      8
+  2TO6M3         6            2                      8
+  2TO7M4         7            2                      8
+ 
+  2TO4           4            2                     16
+  2TO5M1         5            2                     16
+  2TO6M2         6            2                     16
+  2TO7M3         7            2                     16
+  2TO8M4         8            2                     16
+  2TO9M5         9            2                     16
+  2TO10M6       10            2                     16
+  2TO11M7       11            2                     16
+  2TO15M11      15            2                     16
+ 
+  2TO5           5            2                     32
+  2TO6M1         6            2                     32
+  2TO7M2         7            2                     32
+  2TO8M3         8            2                     32
+  2TO9M4         9            2                     32
+  2TO10M5       10            2                     32
+  2TO11M6       11            2                     32
+  2TO31M26      31            2                     32
+ 
+  2TO6           6            2                     64
+  2TO7M1         7            2                     64
+  2TO8M2         8            2                     64
+  2TO9M3         9            2                     64
+  2TO10M4       10            2                     64
+  2TO11M5       11            2                     64
+ 
+  2TO7           7            2                    128
+  2TO8M1         8            2                    128
+  2TO9M2         9            2                    128
+  2TO10M3       10            2                    128
+  2TO11M4       11            2                    128
+ 
+  2TO8           8            2                    256
+ 
+  2TO9           9            2                    512
+ 
+  2TO10         10            2                   1024
+ 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ 
+INDEX OF MINIMAL-SAMPLE-SIZE RESOLUTION 4 2**(K-P) DESIGNS
+ 
+Index of Minimal-Sample-Size Resolution 4 2**(k-p) Designs
+ 
+How to use this table--
+   For a given number of factors k, the
+   following table gives the name of the
+   design, the associated minimal number
+   of runs, and the construction technique
+   in order to achieve a design which has
+   resolution 4 or higher.  All designs start
+   with the first k-p columns being the full
+   factorial design with n runs.  The remaining
+   columns in the design are given by the
+   rightmost entry in the table below.
+ 
+   Number of  Name of    No. of Resol.  Factor
+   Factors k  2**(k-p)    Runs    r     Definitions
+               Design      n
+   - - - - - - - - - - - - - - - - - - - - - - - - - - -
+       2      2**2         4     inf.   None--a full
+                                        factorial des.
+ 
+       3      2**3         8     inf.   None--a full
+                                        factorial des.
+ 
+       4      2**(4-1)     8      4     4=123
+ 
+       5      2**(5-1)    16      4     4=12 5=13
+ 
+       6      2**(6-2)    16      4     5=123 6=234
+ 
+       7      2**(7-3)    16      4     5=123 6=234
+                                        7=134
+ 
+       8      2**(8-4)    16      4     5=234 6=134
+                                        7=123 8=124
+ 
+       9      2**(9-4)    32      4     6=2345 7=1345
+                                        8=1245 9=1235
+ 
+      10      2**(10-5)   32      4     6=1234 7=1235
+                                        8=1245 9=1345
+                                        0=2345
+ 
+      11      2**(11-6)   32      4     6=123 7=234
+                                        8=345 9=134
+                                        0=145 A=245
+ 
+      12      2**(12-7)   32      4     6=123 7=124
+                                        8=125 9=134
+                                        0=135 A=145
+                                        B=234
+ 
+      13      2**(13-8)   32      4     6=123 7=124
+                                        8=125 9=134
+                                        0=135 A=145
+                                        B=234 C=235
+ 
+      14      2**(14-9)   32      4     6=123 7=124
+                                        8=125 9=134
+                                        0=135 A=145
+                                        B=234 C=235
+                                        D=245
+ 
+      15      2**(15-10)  32      4     6=123 7=124
+                                        8=125 9=134
+                                        0=135 A=145
+                                        B=234 C=235
+                                        D=245 E=345
+ 
+      16      2**(16-11)  32      4     6=123 7=124
+                                        8=125 9=134
+                                        0=135 A=145
+                                        B=234 C=235
+                                        D=245 E=345
+                                        F=12345
+ 
+      17      2**(17-11)  64      4     7=123 8=124
+                                        9=125 0=126
+                                        A=134 B=135
+                                        C=136 D=145
+                                        E=146 F=156
+                                        G=234
+ 
+      18-32   2**(k-p)    64      4     See Box,
+                                        Hunter &
+                                        Hunter, p.
+                                        412-413.
+ 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ 
+   INDEX OF TAGUCHI ORTHOGONAL EXPERIMENT DESIGNS
+         ORDERED BY FACTORS, RUNS, LEVELS
+ 
+ 
+           1. TAGUCHI ORTHOGONAL DESIGNS
+           (ORDERED BY NUMBER OF FACTORS)
+ 
+  DESIGN     # FACTOR S    # LEVELS/FACTOR        # RUNS
+(& FILE NAME)
+ 
+  L4.DAT         3            2                      4
+  L9             4            3                      9
+  L16B           5            4                     16
+  L25            6            5                     25
+  L8             7            2                      8
+  L18            7            6 FOR  1; 3 FOR   6   18
+  L32B          10            2 FOR  1; 4 FOR   9   32
+  L12           11            2                     12
+  L50           12            2 FOR  1; 5 FOR  11   50
+  L27           13            2 FOR  1; 3 FOR  12   27
+  L16           15            2                     16
+  L64B          21            4                     64
+  L36           22            3                     36
+  L54           26            2 FOR  1; 3 FOR  25   54
+  L36B          27            2 FOR 15; 3 FOR  12   36
+  L32           31            2                     32
+  L64           31            2                     64
+  L81           40            3                     81
+ 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ 
+   INDEX OF TAGUCHI ORTHOGONAL EXPERIMENT DESIGNS
+           (ORDERED BY NUMBER OF RUNS)
+ 
+  DESIGN     # FACTOR S    # LEVELS/FACTOR        # RUNS
+(& FILE NAME)
+ 
+  L4.DAT         3            2                      4
+  L8             7            2                      8
+  L9             4            3                      9
+  L12           11            2                     12
+  L16           15            2                     16
+  L16B           5            4                     16
+  L18            7            6 FOR  1; 3 FOR   6   18
+  L25            6            5                     25
+  L27           13            2 FOR  1; 3 FOR  12   27
+  L32           31            2                     32
+  L32B          10            2 FOR  1; 4 FOR   9   32
+  L36           22            3                     36
+  L36B          27            2 FOR 15; 3 FOR  12   36
+  L50           12            2 FOR  1; 5 FOR  11   50
+  L54           26            2 FOR  1; 3 FOR  25   54
+  L64           31            2                     64
+  L64B          21            4                     64
+  L81           40            3                     81
+ 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ 
+   INDEX OF TAGUCHI ORTHOGONAL EXPERIMENT DESIGNS
+          (ORDERED BY NUMBER OF LEVELS)
+ 
+  DESIGN     # FACTOR S    # LEVELS/FACTOR        # RUNS
+(& FILE NAME)
+ 
+  L4.DAT         3            2                      4
+  L8             7            2                      8
+  L12           11            2                     12
+  L16           15            2                     16
+  L32           31            2                     32
+  L64           31            2                     64
+ 
+  L9             4            3                      9
+  L36           22            3                     36
+  L81           40            3                     81
+ 
+  L16B           5            4                     16
+  L64B          21            4                     64
+ 
+  L25            6            5                     25
+ 
+  L32B          10            2 FOR  1; 4 FOR   9   32
+  L50           12            2 FOR  1; 5 FOR  11   50
+  L27           13            2 FOR  1; 3 FOR  12   27
+  L54           26            2 FOR  1; 3 FOR  25   54
+  L36B          27            2 FOR 15; 3 FOR  12   36
+ 
+  L18            7            6 FOR  1; 3 FOR   6   18
+ 
+ 
+-----3. Regression Designs---------------------------------
+ 
+None
+ 
+ 
+-----4. Optimization (Response Surface) Designs------------
+ 
+      INDEX OF OPTIMIZATION (RESPONSE SURFACE) DESIGNS
+ 
+File           Name of                    Number of   Number of
+Name           Design                      Factors   Observations
+                                              k           n
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+2TO2WCP.DAT    2**2 design with center point  2          5
+STAR2WCP.DAT   star design with center point  2          5
+CC2.DAT        2-factor composite design      2         10
+ 
+2TO3WCP.DAT    2**3 design with center point  3          9
+STAR3WCP.DAT   star design with center point  3          9
+CC3.DAT        3-factor composite design      3         18
+ 

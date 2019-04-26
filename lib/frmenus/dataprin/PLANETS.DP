@@ -1,0 +1,6 @@
+----- <~dataprin\PLANETS.DP> Print (to Printer) PLANETS.DAT
+
+. This is file    PLANETS.DP
+
+PRINT PLANETS.DAT
+

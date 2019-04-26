@@ -1,0 +1,34 @@
+This is Dataplot data file     CORNEL69.DAT
+Effect of Plastizers on Automobile Vinyl Thickness
+        3-Factor Constrained Mixture (Non-Simplex Region)
+        Extreme Vertex Design + Edge Points + Centroid
+Source--Cornell, John A. (1990).  ASQC Statistics
+        Division Volume 5:  How to Run Mixture Experiments
+        for Product Quality.  Page 69 (Table 13).
+Response Variable                  = vinyl thickness
+Number of observations             = 9
+Number of variables per line image = 5 (= 2 + 3)
+Order of variables per line image--
+   Response variable 1 = vinyl thickness (replication 1)
+   Response variable 2 = vinyl thickness (replication 2)
+   Factor 1            = plasticizer 1
+   Factor 2            = plasticizer 2
+   Factor 3            = plasticizer 3
+Project Question--What settings for the 3 plasticiers
+                  maximize the vinyl thickness?
+Statistical areas--mixture design of experiment
+To read this file into Dataplot--
+   SKIP 95; READ CORNELL62.DAT Y1 Y2 X1 X2 X3
+  Y1     Y2               X1          X2          X3
+Thickness Thickness   Plasticizer Plasticizer Plasticizer
+  Rep 1     Rep 2     1 (proport) 2 (proport) 3 (proport)
+---------------------------------------------------------
+    8         7         .8490       .0000       .1510
+    4         6         .7260       .0000       .2740
+   12        10         .4740       .2520       .2740
+   13        10         .5970       .2520       .1510
+   18        21         .6615       .1260       .2125
+   12       -99         .7875       .0000       .2125
+   13       -99         .6000       .1260       .2740
+   16       -99         .5355       .2520       .2125
+   14       -99         .7230       .1260       .1510

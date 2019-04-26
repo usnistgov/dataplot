@@ -1,0 +1,28 @@
+----- <~help\simpexam.top> A Simple Example
+
+A Simple Example
+
+A Simple Example
+
+
+Suppose that you have the following five observations
+
+     X    Y
+     1    1
+     2    3
+     3   15
+     4   18
+     5   30
+
+You would like to carry out the following operations
+
+   1. Compute the mean of the Y variable
+   2. Plot Y versus X with titles and labels
+   3. Perform a least squares fit of Y versus X
+   4. Generate a residual analysis of the fit
+   5. Generate a plot with the fitted values from
+      the fit on top of the raw data
+
+Perform these operations by entering commands    <~help\simpcomm.top>
+Perform these operations using the GUI           <~help\simpgui.top>
+

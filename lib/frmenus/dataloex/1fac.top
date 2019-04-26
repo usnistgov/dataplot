@@ -1,0 +1,9 @@
+----- <~dataloex\1fac.top> Load & Execute 1-Factor Data (incl. 2-Sample)
+
+Load & Execute 1-Factor Data (Including the "2-Sample" Problem)
+
+NIST data                 <~dataloex\1facnist.top>
+Natrella Data             <~dataloex\1facnatr.top>
+Sematech Data             <~dataloex\1facsema.top>
+Other data                <~dataloex\1facothe.top>
+

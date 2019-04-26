@@ -1,0 +1,10 @@
+----- <~dataloex\NELSON.DP> Load & Execute NELSON.DAT
+
+. This is file    NELSON.DP
+
+DELETE Y
+SKIP 25
+READ NELSON.DAT Y
+TITLE NELSON.DAT
+/
+

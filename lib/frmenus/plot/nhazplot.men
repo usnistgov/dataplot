@@ -1,0 +1,43 @@
+This is file nhazplot.men--Normal Hazard Plot
+ 
+--------------------
+1. Normal Hazard Plot
+2. NORMAL HAZARD PLOT Y TAG
+3.
+4. Response Variable:
+4. @CE 1 0 42 50 ? gui-variable
+5. Tag Variable (1=failure time, 0=censored time):
+5. @CE 2 0 42 50 * gui-variable
+6.
+7. Character type for failure times?:
+7. @CE 3 0 33 50 * gui-char
+8. Line type for fitted line?:
+8. @CE 4 0 33 50 * gui-line
+9.
+10. Title:
+10. @CE 5 0 18 50 *
+11. Left Axis Label:
+11. @CE 6 0 18 100 *
+12. Bottom Axis Label:
+12. @CE 7 0 18 100 *
+13.
+14. Subset/Except/For Specification: 
+15. @CE 8 0 1 50 *
+16.
+17.
+18. Generate the Normal Hazard Plot?:
+--------------------
+GR FE
+LINE SAVE
+CHARACTER SAVE
+LINE BLANK _4
+CHARACTER _3 BLANK
+TITLE _5
+Y1LABEL _6
+X1LABEL _7
+NORMAL HAZARD PLOT _1 _2 _8
+LINE RESTORE
+CHARACTER RESTORE
+--------------------
+WEB HELP NORMAL HAZARD PLOT
+--------------------

@@ -1,0 +1,71 @@
+This is file mleperc.men--Bootstrap-Based Confidence Intervals for Percentiles
+ 
+--------------------
+ 1. Bootstrap-Based Confidence Intervals
+ 2. BOOTSTRAP <dist> MLE PLOT Y
+ 3.
+ 4. This menu generates bootstrap confidence intervals for
+ 5. the quantiles of one of the following distributions:
+ 6.    1) Geometric Extreme Exponential
+ 7.    2) Inverse Gaussian
+ 8.    3) Fatigue Life
+ 9. It is assumed that you have already run the maximum
+10. likelihood estimation for one of these distributions
+11. and set the number of bootstrap samples > 0.
+12.
+13. Significance Level (default=0.05):
+13. @CE 1 0 42 50 ? *
+14.
+15.
+16. Generate the Percentile Confidence Intervals?
+--------------------
+GR FE
+let alpha = 0.05
+let alpha = _1
+if alpha <= 0
+   let alpha = 0.05
+end of if
+if alpha >= 1
+   let alpha = 0.05
+end of if
+if alpha > 0.5
+   let alpha = 1 - alpha
+end of if
+let xqlow = alpha/2
+let xqupp = 1 - alpha/2
+.
+.  Now generate confidence intervals for percentiles
+.
+let p = data 0.5 1 2.5 5 10 20 30 40 50 60 70 80 90 95 97.5 99 99.5
+let nperc = size p
+skip 1
+loop for k = 1 1 nperc
+    let nc1 = (k-1)*15+1
+    let nc2 = k*15
+    column limits nc1 nc2
+    read dpst4f.dat xqp
+    let xqptemp = p(k)
+    let amed = median xqp
+    let xqpmed(k) = amed
+    let xq = xqlow
+    let atemp = xq quantile xqp
+    let xq95low(k) = atemp
+    let xq = xqupp
+    let atemp = xq quantile xqp
+    let xq95upp(k) = atemp
+    delete xqp
+end of loop
+skip 0
+column limits
+set write rewind off
+write ZZZZMLE.OUT "Bootstrap-Based Confidence Intervals for Percentile"
+write ZZZZMLE.OUT " "
+write ZZZZMLE.OUT p xqpmed xq95low xq95upp
+set write rewind on
+write ZZZZMLE.OUT " "
+delete xqp xqpmed xq95low xq95upp
+.
+LIST ZZZZMLE.OUT
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

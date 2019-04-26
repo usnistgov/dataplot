@@ -1,0 +1,166 @@
+This is file bootbu2.men--Bootstrap Confidence Intervals for Burr Type 2
+ 
+--------------------
+ 1. Burr Type 2 Bootstrap Confidence Intervals
+ 2. BOOTSTRAP BURR TYPE 2 PLOT Y
+ 3.
+ 4. The burr type 2 PPCC/probability plot generates
+ 5. point estimates for the location, scale, and shape
+ 6. parameters.  This menu uses the bootstrap to generate
+ 7. confidence intervals for these parameters.  Both
+ 8. uncensored and censored data are supported.  Grouped
+ 9. data is not.  Censoring is only supported for the PPCC
+10. plot.
+11.
+12. If a censoring variable is specified, it should contain
+13. a value of 1 to signify a failure time and a value of 0
+14. to signify a censoring time.
+15.
+16. Response Variable:
+16. @CE 1 0 42 50 ? gui-variable
+17. Optional Censoring Variable:
+17. @CE 2 0 42 50 ? gui-variable
+18.
+19. Number of bootstrap samples:
+19. @CE 3 0 42 50 *
+20. Select goodness of fit critierion:
+21. @CE 4 1 1 30 PPCC
+22. @CE 4 2 1 30 Kolmogorov-Smirnov
+23. Minimum Value for r (omit for default):
+23. @CE 5 0 42 50 *
+24. Maximum Value for r (omit for default):
+24. @CE 6 0 42 50 *
+25.
+26. Significance Level (default=0.05):
+27. @CE 7 0 42 50 ? *
+28.
+29. Subset/Except/For Specification:
+30. @CE 8 0 1 50 *
+31.
+32.
+33. Compute Bootstrap Confidence Intervals?
+--------------------
+GR FE
+LET NUMBOOT = 100
+@IF 3 0 LET NUMBOOT = _3
+let numboot = min(1000,numboot)
+let numboot = max(100,numboot)
+let icensor = 1
+@IF 2 0 let icensor = 3
+@IF 4 2 let icensor = icensor + 1
+let alpha = 0.05
+let alpha = _7
+if alpha <= 0
+   let alpha = 0.05
+end of if
+if alpha >= 1
+   let alpha = 0.05
+end of if
+if alpha > 0.5
+   let alpha = 1 - alpha
+end of if
+let xqlow = alpha/2
+let xqupp = 1 - alpha/2
+delete r1 r2
+let r1 = _5
+let r2 = _6
+.
+bootstrap samples numboot
+set maximum likelihood percentiles default
+device 1 font simplex
+multiplot 2 3
+multiplot corner coordinates 0 0 100 100
+multiplot scale factor 2
+label
+title case asis
+label case asis
+case asis
+title displacement 2
+x2label displacement 13
+x3label displacement 18
+y1label Parameter Estimate
+x1label
+x2label Bootstrap Sample
+title Bootstrap Plot
+line color blue red green black
+limits
+if icensor = 1
+   bootstrap burr type 2 plot _1 _8
+end of if
+if icensor = 2
+   bootstrap burr type 2 ks plot _1 _8
+end of if
+if icensor = 3
+   bootstrap burr type 2 censored plot _1 _2 _8
+end of if
+if icensor = 4
+   bootstrap burr type 2 censored plot _1 _2 _8
+   . bootstrap burr type 2 ks censored plot _1 _2 _8
+end of if
+line color black all
+.
+delete aloc ascale ar
+skip 0
+read dpst1f.dat aloc ascale ar
+y1label
+x2label
+title Location Parameter
+let amed = median aloc
+let amean = mean aloc
+let asd = sd aloc
+x2label Median = ^amed, Mean = ^amean
+x3label SD = ^asd
+histogram aloc
+title Scale Parameter
+let amed = median ascale
+let amean = mean ascale
+let asd = sd ascale
+x2label Median = ^amed, Mean = ^amean
+x3label SD = ^asd
+histogram ascale
+title B Parameter
+let amed = median ar
+let amean = mean ar
+let asd = sd ar
+x2label Median = ^amed, Mean = ^amean
+x3label SD = ^asd
+histogram ar
+x3label displacement
+end of multiplot
+.
+let xq = xqlow
+let loc95low = xq quantile aloc
+let xq = xqupp
+let loc95upp = xq quantile aloc
+let xq = xqlow
+let sca95low = xq quantile ascale
+let xq = xqupp
+let sca95upp = xq quantile ascale
+let xq = xqlow
+let r95low = xq quantile ab
+let xq = xqupp
+let r95upp = xq quantile ab
+.
+device 1 font tektronix
+window corner coordinates 50 0 100 50
+justification left
+height 4
+move 5 70
+text Confidence Interval for Location:
+move 5 63
+text (^loc95low,^loc95upp)
+move 5 50
+text Confidence Interval for Scale:
+move 5 43
+text (^sca95low,^sca95upp)
+move 5 30
+text Confidence Interval for B:
+move 5 23
+text (^r95low,^r95upp)
+window corner coordinates 0 0 100 100
+height
+title
+label
+--------------------
+WEB HELP DISTRIBUTIONAL BOOTSTRAP
+--------------------

@@ -1,0 +1,128 @@
+This is file ademle.men--Asymmetric Laplace MLE Estimates
+ 
+--------------------
+ 1. Asymmetric Laplace (Double Exponential) ML Estimates
+ 2. ASYMMETRIC LAPLACE MLE Y
+ 3.
+ 4. Maximum likelihood point estimates for the shape,
+ 5. location, and scale parameters can be obtained for
+ 6. uncensored data.  You can optionally request to
+ 7. have bootstrap  confidence limits generated for
+ 8. the distribution parameters.
+ 9.
+10. Response Variable:
+10. @CE 1 0 42 50 ? gui-variable
+11.
+12. Number of bootstrap samples (0 to omit)?
+12. @CE 2 0 42 50 *
+13.
+14. Parameterization:
+14. @CE 3 1 32 40 k
+14. @CE 3 2 42 50 mu
+15.
+16. Subset/Except/For Specification:
+17. @CE 4 0 1 50 *
+18.
+19.
+20. Compute Asymmetric Laplace MLE's?
+--------------------
+GR FE
+SET ASYMMETRIC DOUBVLE EXPONENTIAL DEFINITION DEFAULT
+@IF 3 2 SET ASYMMETRIC DOUBVLE EXPONENTIAL DEFINITION MU
+LET NUMBOOT = 0
+@IF 2 0 LET NUMBOOT = _2
+let numboot = min(1000,numboot)
+if numboot > 0
+   bootstrap samples numboot
+   set maximum likelihood percentiles default
+   device 1 font simplex
+   multiplot 2 3
+   multiplot corner coordinates 0 0 100 100
+   multiplot scale factor 2
+   label
+   title case asis
+   label case asis
+   case asis
+   title displacement 2
+   x2label displacement 13
+   x3label displacement 18
+   y1label Parameter Estimate
+   x1label
+   x2label Bootstrap Sample
+   title Bootstrap Plot
+   line color blue red green black
+   limits
+   bootstrap asymmetric laplace mle plot _1 _4
+   line color black all
+   .
+   delete agamma ascale
+   skip 0
+   read dpst1f.dat ashape aloc ascale
+   y1label
+   x2label
+   title Shape Parameter
+   let amed = median ashape
+   let amean = mean ashape
+   let asd = sd ashape
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram ashape
+   title Location Parameter
+   let amed = median aloc
+   let amean = mean aloc
+   let asd = sd aloc
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram aloc
+   title Scale Parameter
+   let amed = median ascale
+   let amean = mean ascale
+   let asd = sd ascale
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram ascale
+   x3label displacement
+   end of multiplot
+   .
+   let alpha = 0.05
+   let xqlow = alpha/2
+   let xqupp = 1 - alpha/2
+   .
+   let xq = xqlow
+   let sha95low = xq quantile ashape
+   let xq = xqupp
+   let sha95upp = xq quantile ashape
+   let xq = xqlow
+   let sc95low = xq quantile ascale
+   let xq = xqupp
+   let sc95upp = xq quantile ascale
+   let xq = xqlow
+   let lo95low = xq quantile aloc
+   let xq = xqupp
+   let lo95upp = xq quantile aloc
+   .
+   device 1 font tektronix
+   window corner coordinates 66.6 0 100 50
+   justification left
+   height 2.5
+   move 5 70
+   text Confidence Interval for Shape:
+   move 5 63
+   text (^sha95low,^sha95upp)
+   move 5 50
+   text Confidence Interval for Location:
+   move 5 43
+   text (^lo95low,^lo95upp)
+   move 5 30
+   text Confidence Interval for Scale:
+   move 5 23
+   text (^sc95low,^sc95upp)
+   window corner coordinates 0 0 100 100
+   height
+   title
+   label
+end of if
+ASYMMETRIC LAPLACE MAXIMUM LIKELIHOOD _1 _3
+--------------------
+WEB HELP ADEPDF
+--------------------

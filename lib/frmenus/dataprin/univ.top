@@ -1,0 +1,9 @@
+----- <~dataprin\univ.top> Print (to Printer) Built-in Univariate Data Files
+
+Print (to Printer) Built-in Univariate Data Files
+
+NIST data                 <~dataprin\univnist.top>
+Natrella Data             <~dataprin\univnatr.top>
+Sematech Data             <~dataprin\univsema.top>
+Other data                <~dataprin\univothe.top>
+

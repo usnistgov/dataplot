@@ -1,0 +1,10 @@
+----- <~dataloex\ASF12.DP> Load & Execute ASF12.DAT
+
+. This is file    ASF12.DP
+
+DELETE Y
+SKIP 25
+READ ASF12.DAT Y
+TITLE ASF12.DAT
+/
+

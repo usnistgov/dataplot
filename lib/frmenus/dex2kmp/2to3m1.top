@@ -1,0 +1,20 @@
+----- <~dex2kmp\2to3m1.top> 2**(3-1) Design
+ 
+2**(3-1) Design
+ 
+   k = 3 factors
+   n = 4 runs
+   r = resolution 3
+       (main effects  ==  2-term interactions)
+ 
+          (12)
+   X1  X2  X3
+   ..........
+   -   -   +
+   +   -   -
+   -   +   -
+   +   +   +
+ 
+Click here to view confounding structure. <~dex2kmp\cs23m1.top>
+Click here to load design. <x2cl: SKIP 50; READ 2TO3M1.DAT X1 TO X3>
+ 

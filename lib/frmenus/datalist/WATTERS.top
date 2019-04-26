@@ -1,0 +1,8 @@
+----- <~datalist\WATTERS.top> WATTERS.DAT
+ 
+WATTERS.DAT
+ 
+View     <xcl: LIST WATTERS.DAT>
+Load     <x2cl: SKIP 25; READ WATTERS.DAT Y1 Y2 X REP>
+Print    <xccl: printfile C:\DATAPLOT\WATTERS.DAT>
+ 

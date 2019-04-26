@@ -1,0 +1,18 @@
+----- <~dexreg\expgoals.top>  Regression Designs: Experimental Goals
+ 
+Regression Designs: Experimental Goals
+ 
+If you have just a few (1 to 3)
+factors under investigation, and they
+are continuous (e.g., temperature and
+force, but not supplier and
+operator), and are not proportions
+(see question 5 below), and you wish
+to end up with a fitted mathematical
+model (theoretical or empirical) in
+hand, and the lead question is "What
+are the best (unbiased and minimum
+variance) estimates for the
+coefficients in that given model?",
+then you need a Regression Design.
+

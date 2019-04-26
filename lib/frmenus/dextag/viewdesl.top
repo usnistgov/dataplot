@@ -1,0 +1,41 @@
+----- <~dextag\viewdesf.top> View Taguchi Designs
+ 
+View Taguchi Designs
+ 
+   INDEX OF TAGUCHI ORTHOGONAL EXPERIMENT DESIGNS
+         ORDERED BY FACTORS, RUNS, LEVELS
+
+
+           1. TAGUCHI ORTHOGONAL DESIGNS
+           (ORDERED BY NUMBER OF LEVELS)
+
+ Name    Number   Number              Number
+  of       of       of                  of
+Design   Factors  Levels/              Runs
+            s     Factor
+...............................................................
+ 
+L4          3       2                    4   <xcl: LIST L4.DAT>
+L8          7       2                    8   <xcl: LIST L8.DAT>
+L12        11       2                   12   <xcl: LIST L12.DAT>
+L16        15       2                   16   <xcl: LIST L16.DAT>
+L32        31       2                   32   <xcl: LIST L32.DAT>
+L64        31       2                   64   <xcl: LIST L64.DAT>
+
+L9          4       3                    9   <xcl: LIST L9.DAT>
+L36        22       3                   36   <xcl: LIST L36.DAT>
+L81        40       3                   81   <xcl: LIST L81.DAT>
+
+L16B        5       4                   16   <xcl: LIST L16B.DAT>
+L64B       21       4                   64   <xcl: LIST L64B.DAT>
+
+L25         6       5                   25   <xcl: LIST L25.DAT>
+
+L32B       10       2 FOR 1; 4 FOR 9    32   <xcl: LIST L32B.DAT>
+L50        12       2 FOR 1; 5 FOR 11   50   <xcl: LIST L50.DAT>
+L27        13       2 FOR 1; 3 FOR 12   27   <xcl: LIST L27.DAT>
+L54        26       2 FOR 1; 3 FOR 25   54   <xcl: LIST L54.DAT>
+L36B       27       2 FOR 15; 3 FOR 12  36   <xcl: LIST L36B.DAT>
+
+L18         7       6 FOR 1; 3 FOR 6    18   <xcl: LIST L18.DAT>
+

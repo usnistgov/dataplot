@@ -1,0 +1,8 @@
+----- <~dataall\BENNETT.top> BENNETT.DAT
+
+BENNETT.DAT
+
+View     <xcl: LIST BENNETT.DAT>
+Load     <xcf: ~dataload/BENNETT.DP>
+Print    <xccl: printfile C:\DATAPLOT\BENNETT.DAT>
+

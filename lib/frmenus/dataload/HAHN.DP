@@ -1,0 +1,8 @@
+----- <~dataload\HAHN.DP> Load HAHN.DAT
+
+. This is file    HAHN.DP
+
+DELETE Y
+SKIP 25
+READ HAHN.DAT Y
+

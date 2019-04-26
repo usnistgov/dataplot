@@ -1,0 +1,8 @@
+----- <~datalist\LIN.top> LIN.DAT
+ 
+LIN.DAT
+ 
+View     <xcl: LIST LIN.DAT>
+Load     <x2cl: SKIP 25; READ LIN.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\LIN.DAT>
+ 

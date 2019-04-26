@@ -1,0 +1,117 @@
+. This is Dataplot macro   E691PLO3.DP
+. Purpose--Generate some prelimanry graphs for an interlab analysis
+.          based on the ASTM E691 standard.
+.
+. Updated--2015/08: Use new H CONSISTENCY PLOT to generate the plot
+.
+.          The following plot is generated:
+.
+.          1) Plot of h-consistency statistic: Laboratories
+.             within Materials
+.
+. Input --Y        = response variable
+.       --LABID    = lab ID variable
+.       --MATID    = material ID variable
+.       --E691TIT  = string containing title for analysis
+.
+.  Step 1: Determine number of materials
+.
+feedback save
+feedback off
+let nmat = unique matid
+let nlab = unique labid
+let ntot = nmat*nlab
+let matcode = code matid
+let labcode = code labid
+let alpha = 0.005
+.
+.  Step 2: Set plot control features
+.
+label case asis
+title case asis
+label
+y1label h - Consistency Statistic
+title ^e691tit: h - Laboratories within Materials
+spike on
+spike thickness 0.1
+spike base 0
+line solid all
+line blank
+line color black black red red
+char blank blank blank blank
+.
+xlimits  1 ntot
+major xtic mark number ntot
+minor xtic mark number 0
+tic offset units data
+xtic offset 1 1
+x1tic mark label off
+title offset 2
+legend 1 LAB:
+legend 2 MATERIAL:
+legend 1 justification right
+legend 2 justification right
+legend 1 coordinates 14 15
+legend 2 coordinates 14 12
+.
+.  Step 3: Generate the plot
+.
+set h consistency plot laboratories within materials
+h consistency plot y labcode matcode
+.
+.  Step 4: Add x-axis labels, grid lines
+.
+movesd 87 hcv
+justification left
+let hcv3 = round(hcv,2)
+text ^hcv3
+let hcv3 = -hcv3
+movesd 87 hcv3
+text ^hcv3
+.
+delete xcoor ycoor xcoor2
+let ycoor = 16
+let xcoor = 1
+justification center
+height 1.2
+if ntot > 50
+   height 1
+end of if
+.
+loop for k = 1 1 ntot
+    moveds xcoor ycoor
+    let ktemp = mod(k-1,nlab) + 1
+    text ^ktemp
+    let xcoor = xcoor + 1
+end of loop
+.
+line color red
+line dash
+height 1.5
+let ycoor = 12
+let xcoor = (nlab/2)+0.5
+loop for k = 1 1 nmat
+    moveds xcoor ycoor
+    text ^k
+    let xcoor = xcoor + nlab
+    if k < nmat
+       let xcoor2 = xcoor - (nlab/2)
+       drawdsds xcoor2 20 xcoor2 90
+    end of if
+end of loop
+.
+.  Step 5: Clean up
+.
+title
+label
+legend
+line solid all
+line color black all
+char blank all
+character color black all
+spike off all
+tic offset 0 0
+x1tic mark label on
+delete matcode labcode
+feedback restore
+.

@@ -1,0 +1,78 @@
+This is file jsbhispd.men--Histogram & Superimposed Johnson SB pdf Plot
+
+--------------------
+ 1. Histogram & Superimposed Johnson SB pdf Plot
+ 2. HISTOGRAM Y; PLOT JSBPDF(X,ALPHA1,ALPHA2) FOR X = START INC STOP
+ 4.
+ 5. Response variable: 
+ 5. @CE 1 0 42 50 ? gui-vari
+ 6.
+ 7. Relative histogram of data (leave blank for defaults):
+ 8.    Class width:
+ 8. @CE 2 0 42 50 ?
+ 9.    Lower limit of first class:
+ 9. @CE 3 0 42 50 ?
+10.    Upper limit of last class:
+10. @CE 4 0 42 50 ?
+11.    Bar fill on/off:
+11. @CE 5 0 42 50 ?
+12.
+13. Superimposed Johnson SB probability density function:
+14.    Shape (alpha1):
+14. @CE 6 0 42 50 ?
+15.    Shape (alpha2):
+15. @CE 7 0 42 50 ?
+16.    Lower limit a:
+16. @CE 8 0 42 50 ?
+17.    Upper limit b:
+17. @CE 9 0 42 50 ?
+18.    Start point:
+18. @CE 10 0 42 50 ?
+19.    Increment:
+19. @CE 11 0 42 50 ?
+20.    Stop point:
+20. @CE 12 0 42 50 ?
+21.    Line type:
+21. @CE 13 0 42 50 ? gui-line
+22.    Line color:
+22. @CE 14 0 42 50 ? gui-color
+23.
+24.
+25. Title:
+25. @CE 15 0 20 50 *
+26. Left Axis Label:
+26. @CE 16 0 20 50 *
+27. Bottom Axis Label:
+27. @CE 17 0 20 50 *
+28.
+29.
+30. Generate the plot?
+--------------------
+AN FE
+@IF 2 0 CLASS WIDTH _2
+@IF 3 0 CLASS LOWER _3
+@IF 4 0 CLASS UPPER _4
+@IF 5 0 BAR FILL _5
+TITLE _15
+Y1LABEL _16
+X1LABEL _17
+@IF 1 0 RELATIVE HISTOGRAM _1
+@IF 1 0 LIMITS FREEZE
+.
+@IF 13 0 LINES _13
+@IF 14 0 LINE COLOR _14
+PRE-ERASE OFF
+LET ZSHAPE1 = 1
+@IF 6 0 LET ZSHAPE1 = _6
+LET ZSHAPE2 = 1
+@IF 7 0 LET ZSHAPE2 = _7
+LET ZLOWLIM = 0
+LET ZUPPLIM = 1
+@IF 8 0 LET ZLOWLIM = _8
+@IF 9 0 LET ZUPPLIM = _9
+PLOT JSBPDF(X,ZSHAPE1,ZSHAPE2,ZLOWLIM,ZUPPLIM) FOR X = _10 _11 _12
+@IF 1 0 LIMITS
+PRE-ERASE ON
+--------------------
+WEB HELP JSBPDF
+--------------------

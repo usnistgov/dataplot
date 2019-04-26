@@ -1,0 +1,8 @@
+----- <~dataall\BOXCHEM2.top> BOXCHEM2.DAT
+
+BOXCHEM2.DAT
+
+View     <xcl: LIST BOXCHEM.DAT>
+Load     <xcf: ~dataload/BOXCHEM.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXCHEM.DAT>
+

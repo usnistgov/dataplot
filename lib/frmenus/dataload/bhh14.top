@@ -1,0 +1,18 @@
+----- <~dataload\bhh14.top> Chapter 14: Simple Modeling with Least Sqaures (Re
+ression)
+
+Chapter 14: Simple Modeling with Least Squares (Regression Analysis)
+
+1. 1-Parameter Model (Straight Line through the Origin)
+     Spray  (454) <~dataload\BOXSPRAY.DP>
+2. 2-parameter Model: Impurity Example
+     Chem.  (462) <~dataload\BOXCHEM2.DP>
+3. Straight Line Model: Welding Example
+     Welding(473) <~dataload\BOXWELD.DP>
+4. General Case for Models Linear int the Parameters
+5. Polynomial Model: Growth Rate example
+     Rats   (480) <~dataload\BOXRATS.DP>
+6. Nonlinear Model: Biochemical Oxygen Demand Example
+     Oxygen Demand (483)  <~dataload\BOXBOD.DP>
+7. Hazards of Fitting Regression Equations to Happenstance data
+

@@ -1,0 +1,30 @@
+This is Dataplot data file    FUNNEL5A.DAT
+Simulated Univariate Funnel data
+Number of observations             = 5
+Number of variables per line image = 1
+Order of Variables on a line image--
+   1. Response variable = traversal time (seconds)
+Reference--DEX notes, Chapter 5: Statistics
+           Univariate location  estimation & confidence limits
+           Univariate variation estimation & confidence limits
+To read this into Dataplot--
+   SKIP 25
+   READ FUNNEL5A.DAT Y
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Traversal Time
+---------------
+     9.3
+    10.4
+    11.1
+    10.7
+    10.7

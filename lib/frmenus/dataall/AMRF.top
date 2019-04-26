@@ -1,0 +1,8 @@
+----- <~dataall\AMRF.top> AMRF.DAT
+
+AMRF.DAT
+
+View     <xcl: LIST AMRD.DAT>
+Load     <xcf: ~dataload/AMRD.DP>
+Print    <xccl: printfile C:\DATAPLOT\AMRD.DAT>
+

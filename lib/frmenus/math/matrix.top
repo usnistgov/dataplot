@@ -1,0 +1,58 @@
+----- <~math\matrix.top> Matrix Operations
+ 
+Matrix Operations
+ 
+Discussion                            <~math\matr_dis.top>
+Read a Matrix (from a file)            <xemf: ~math\matr_rea.men>
+Create a Matrix (from a list of variables) <xemf: ~math\matr_cre.men>
+
+Systems of Equations, Determinants, Inverses
+   Determinant                         <xemf: ~math\matr_det.men>
+   Inverse                             <xemf: ~math\matr_inv.men>
+   Solve System of Linear Equations    <xemf: ~math\matr_sol.men>
+   Linear Programming (Simplex Method) <xemf: ~math\matr_sim.men>
+   Solve Triangular Linear Equations   <xemf: ~math\matr_tri.men>
+   Inverse of Triangular Matrix        <xemf: ~math\matr_itr.men>
+   Solve Tridiagonal Linear Equations  <xemf: ~math\matr_tdi.men>
+
+Eigenvalues and Eigenvectors
+   Eignevalues                         <xemf: ~math\matr_eig.men>
+   Eignevectors                        <xemf: ~math\matr_eiv.men>
+
+Matrix Decompositions
+   Choloesky Decomposition             <xemf: ~math\matr_cho.men>
+   Singular Values                     <xemf: ~math\matr_sva.men>
+   Singular Value Decomposition        <xemf: ~math\matr_svd.men>
+   Singular Value Factorization        <xemf: ~math\matr_svf.men>
+
+Matrix Arithmetic
+   Addition/Subtraction                <xemf: ~math\matr_add.men>
+   Multiplication                      <xemf: ~math\matr_mul.men>
+   Correlation                         <xemf: ~math\matr_cor.men>
+   Variance-Covariance Matrices        <xemf: ~math\matr_cov.men>
+   Pooled Variance-Covariance Matrix   <xemf: ~math\matr_pco.men>
+   Matrix Norms                        <xemf: ~math\matr_euc.men>
+   Principal Components                <xemf: ~math\matr_prc.men>
+   Quadratic Forms                     <xemf: ~math\matr_qfo.men>
+   Scale                               <xemf: ~math\matr_sca.men>
+
+Matrix Utility Operations
+   Dimension Matrix                    <xemf: ~math\matr_dim.men>
+   Matrix Rank                         <xemf: ~math\matr_ran.men>
+   Matrix Trace                        <xemf: ~math\matr_tra.men>
+   Matrix Transpose                    <xemf: ~math\matr_trn.men>
+
+   Create Diagonal Matrix              <xemf: ~math\matr_dia.men>
+   Extract Matrix Diagonal             <xemf: ~math\matr_edi.men>
+   Number of Rows and Columns          <xemf: ~math\matr_row.men>
+   Extract Row of Matrix               <xemf: ~math\matr_ext.men>
+   Extract Element of Matrix           <xemf: ~math\matr_exe.men>
+   Replace Row of Matrix               <xemf: ~math\matr_rep.men>
+   Replace Element of Matrix           <xemf: ~math\matr_ree.men>
+   Add Row to Matrix                   <xemf: ~math\matr_adr.men>
+   Delete Row of Matrix                <xemf: ~math\matr_der.men>
+
+   Matrix Adjoint                      <xemf: ~math\matr_adj.men>
+   Matrix Cofactors                    <xemf: ~math\matr_cof.men>
+   Matrix Minor                        <xemf: ~math\matr_min.men>
+

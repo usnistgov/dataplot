@@ -1,0 +1,34 @@
+This is file gencon1r.men--Generate Consul Random Numbers
+ 
+--------------------
+ 1. Generate Consul Random Numbers
+ 2. LET Y = CONSUL RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Shape Parameter (theta, 0 < theta < 1):
+ 5. @CE 2 0 42 50 ?
+ 6. Shape Parameter (m, 1 <= m <= 1/theta):
+ 6. @CE 3 0 42 50 ?
+ 7.
+ 8. Optional random number generator seed (default=305):
+ 9.    (integer >= 305)
+ 9. @CE 4 0 42 50 ?
+10.
+11. Name of output variable;
+11. @CE 5 0 42 50 ?
+12.
+13.
+14. Generate the random numbers?
+--------------------
+AN FE
+SET CONSUL DEFINITION THETA
+@IF 4 0 SEED _4
+LET THETA = 0.5
+@IF 2 0 LET THETA = _2
+LET M = 1.1
+@IF 3 0 LET M = _3
+LET _5 = CONSUL RANDOM NUMBERS FOR I = 1 1 _1
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

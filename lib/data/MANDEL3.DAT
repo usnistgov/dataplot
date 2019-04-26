@@ -1,0 +1,46 @@
+This is Dataplot data file     MANDEL3.DAT
+Glucose in Serum
+Source--
+   Mandel, John & Nanni, xx, p. 3
+Number of observations             =  20
+Number of variables per line image =   2
+Order of variables on a line image--
+   1. Response variable = glucose concentration
+   2. Factor 1          = Person Id (1 to 10)
+   3. Factor 2          = Replication (1 to 2)
+Statistical category--multifactor
+To read this file into Dataplot--
+   SKIP 25
+   READ MANDEL3.DAT Y PERSON REP
+
+
+
+
+
+
+
+
+    Y             X1            X2
+Glucose Conc.   Person      Replication
+----------------------------------------
+ 134.20           1              1
+ 119.60           2              1
+  91.90           3              1
+  96.60           4              1
+ 118.80           5              1
+ 105.20           6              1
+ 103.40           7              1
+ 112.10           8              1
+  97.00           9              1
+  96.90          10              1
+
+  88.20           1              2
+  82.00           2              2
+  96.00           3              2
+  94.10           4              2
+  96.30           5              2
+ 108.80           6              2
+ 106.30           7              2
+ 101.10           8              2
+  89.40           9              2
+ 101.70          10              2

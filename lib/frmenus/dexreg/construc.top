@@ -1,0 +1,22 @@
+----- <~dexreg\construc.top>  Regression Designs: Construction
+ 
+Regression Designs: Construction
+ 
+Regression designs do not have explicit designs.
+Designs in the regression context refers to how
+one selects the values for the points of the
+independent variables.
+
+Although there are not specific designs, there
+are several principles to use in selecting
+these points.
+
+  1) The points should be selected to minimize
+     the variance of the parameter estimates.
+
+
+
+  2) More points should be selected where the
+     variability in the dependent variable is
+     the greatest.  
+ 

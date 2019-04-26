@@ -1,0 +1,18 @@
+----- <~dataall\qualcoch.top> View/etc. Quality/SPC Data: Control Charts
+
+View/Load/Print Quality/SPC Data: Control Charts
+
+CCXBAR.DAT*   Silicon wafer thickness     <~dataall\CCXBAR.top>
+CCP.DAT       Number of defects           <~dataall\CCP.top>
+CCPN.DAT      Number of defects           <~dataall\CCPN.top>
+CCU.DAT       Wire cracks                 <~dataall\CCU.top>
+CCC.DAT       Surface defects             <~dataall\CCC.top>
+
+CROARKIN.DAT  Mass calibration            <~dataall\CROARKIN.top>
+CROARK2.DAT   SEM magnification standard  <~dataall\CROARKI2.top>
+CROARK3.DAT   NIST SEM line width SRM     <~dataall\CROARK3.top>
+DRAFT69B.DAT  Draft lottery               <~dataall\DRAFT69B.top>
+
+GEAR.DAT      Gear diameters (Ishikawa)   <~dataall\GEAR.top>
+CLEAR.DAT     Component clearances        <~dataall\CLEAR.top>
+

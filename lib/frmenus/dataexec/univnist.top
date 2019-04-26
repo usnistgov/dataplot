@@ -1,0 +1,25 @@
+----- <~dataexec\univnist.top> Load and Execute Univariate Data: NIST
+
+Load and Execute Univariate Data: NIST
+
+LEW.DAT       Beam deflections            <xcf: ~dataexec\LEW.DP>
+SOULEN0.DAT   Josephson junc cryothermom. <xcf: ~dataexec\SOULEN0.DP>
+SOULEN.DAT    Josephson junc cryothermom. <xcf: ~dataexec\SOULEN.DP>
+MARSHAK.DAT   Nuclear thermometry         <xcf: ~dataexec\MARSHAK.DP>
+
+SIMIU.DAT     Wind speeds                 <xcf: ~dataexec\SIMIU.DP>
+WASHDC.DAT    Washington DC wind speeds   <xcf: ~dataexec\WASHDC.DP>
+KEYWEST.DAT   Key West wind speeds        <xcf: ~dataexec\KEYWEST.DP>
+MAVRO.DAT*    Filter transmittance        <xcf: ~dataexec\MAVRO.DP>
+DZIUBA1.DAT   Standard resistor           <xcf: ~dataexec\DZIUBA.DP>
+ZARR13.DAT    Hear flow meter             <xcf: ~dataexec\ZARR13.DP>
+ZARR14.DAT    Hear flow meter             <xcf: ~dataexec\ZARR14.DP>
+ZARR15.DAT    Hear flow meter             <xcf: ~dataexec\ZARR15.DP>
+
+MORALES.DAT   Mass spec: sulfur exa-fluor <xcf: ~dataexec\MORALES.DP>
+MORALES2.DAT  Mass spec: sulfur exa-fluor <xcf: ~dataexec\MORALES2.DP>
+
+REHM.DAT      Asmathic air flow           <xcf: ~dataexec\REHM.DP>
+FUNNEL5A.DAT  Funnel data                 <xcf: ~dataexec\FUNNEL5A.DP>
+VANGEL1.DAT   Tensile Strength            <xcf: ~dataexec\VANGEL1.DP>
+

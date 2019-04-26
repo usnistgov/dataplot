@@ -1,0 +1,84 @@
+FEEDBACK SAVE
+FEEDBACK OFF
+. Name: CHECKSYS.DP
+. Purpose: Check the following:
+.          1) What OS?
+.          2) Has device 1 been set?
+.          3) Has device 2 been set?
+.          4) Are we running in GUI or command line mode
+.
+. Step 1: Check OS
+.
+.         computer = 1  => Windows
+.                  = 2  => Unix/Linux
+.
+let computer = 1
+probe iopsy1
+if probeval = 1
+   let computer = 2
+end of if
+.
+. Step 2: Check GUI status
+.
+.         guiflag   = 0  => Command line
+.                   = 1  => Running GUI
+.
+probe gui
+let guiflag = 0
+if probeval = 1
+   let guiflag = 0
+end of if
+.
+. Step 3: Check Device 1 status
+.
+.         Note that we only set device 1 if we are running in command
+.         line mode AND device 1 has not been set or has bee set to
+.         DISCRETE.
+.
+.         For PROBE IDMAN(1) or IDMAN(2), the following devices
+.         are recognized:
+.
+.         -1   = Unrecognized device (i.e., not set)
+.          1   = X11
+.          2   = QWIN
+.          4   = Tektronix
+.          7   = Postscript
+.         19   = Discrete
+.
+if guiflag = 0
+   set prompt advance on
+   probe idman(1)
+   .
+   if computer = 2
+      if probeval < 0
+         device 1 close
+         device 1 x11
+      end of if
+      if probeval = 19
+         device 1 close
+         device 1 x11
+      end of if
+      if probeval = 4
+         device 1 close
+         device 1 x11
+      end of if
+   end of if
+   if computer = 1
+      if probeval <> 2
+         device 1 close
+         device 1 qwin
+      end of if
+   end of if
+   .
+end of if
+.
+. Step 4: If Device 2 has not been set, open it as a Postscript
+.         device.
+.
+probe idman(2)
+if probeval < 0
+   device 2 postscript
+   device 2 color on
+end of if
+.
+FEEDBACK RESTORE

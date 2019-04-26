@@ -1,0 +1,13 @@
+----- <~data\viewprfu.top> View Built-in Functions: Probability
+
+View Built-in Functions: Probability
+
+Normal                                   <~data\normfunc.top>
+t Distribution                           <~data\tfunc.top>
+chi-squared                              <~data\chisfunc.top>
+F                                        <~data\ffunc.top>
+Weibull                                  <~data\weibfunc.top>
+Inverse Gaussian (Wald)                  <~data\invgfunc.top>
+Reciprocal Inverse Gaussian              <~data\reigfunc.top>
+Fatigue Life (Birnbaum-Saunders)         <~data\fatlfunc.top>
+

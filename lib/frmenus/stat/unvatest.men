@@ -1,0 +1,32 @@
+This is file unvatest.men--Formal t Test: Shift in Variation
+ 
+--------------------
+ 1. Formal Chi-squared Test: Shift in Variation
+ 2. CHI-SQUARED TEST Y SIGMA0
+ 3.
+ 4. Problem:    1) IF a process has a historical
+ 5.                precision (= st. dev.) = sigma0, &
+ 6.             2) IF an engineering mod is made, and
+ 7.             3) IF post-mod data is collected,
+ 8.             4) THEN can we conclude that
+ 9.                the process precision has improved?
+10.
+11. Conclusion: Yes/No?
+12.
+13.
+14. Response Variable:
+14. @CE 1 0 35 50 ?
+15. Historical Variation (sd) sigma0:
+15. @CE 2 0 35 50 ?
+16.
+17. Subset/Except/For Specification:
+18. @CE 3 0 1 50 *
+19.
+20.
+21. Do Chi-squared Test?
+--------------------
+GR FE
+CHI-SQUARED TEST _1 _2 _3
+--------------------
+WEB HELP CHI_SQUARE TEST
+--------------------

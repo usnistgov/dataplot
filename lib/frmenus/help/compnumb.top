@@ -1,0 +1,55 @@
+----- <~help\compnumb.top> Complex Numbers
+
+Complex Numbers
+
+Complex Numbers
+
+Complex Numbers Generally Not Allowed                            -
+
+    Dataplot operations and built-in functions assume
+    single precision floating point numbers.  In general,
+    these cannot be replaced with complex numbers.
+
+Commands That Operate On Complex Numbers
+
+    The following LET sub-commands specifically operate
+    on complex numbers (the complex numbers are provided
+    as a pair of real numbers):
+
+       COMPLEX ADDITION              <xcl: HELP COMPLEX ADDITION>
+       COMPLEX SUBTRACTION           <xcl: HELP COMPLEX SUBTRACTION>
+       COMPLEX MULTIPLICATION        <xcl: HELP COMPLEX MULTIPLICATION>
+       COMPLEX DIVISION              <xcl: HELP COMPLEX DIVISION>
+       COMPLEX EXPONENTIATION        <xcl: HELP COMPLEX EXPONENTIATION>
+       COMPLEX CONJUGATE             <xcl: HELP COMPLEX CONJUGATE>
+       COMPLEX ROOTS                 <xcl: HELP COMPLEX ROOTS>
+       COMPLEX SQUARE ROOT           <xcl: HELP COMPLEX SQUARE ROOT>
+
+Library Functions That Work With Complex Numbers
+
+    In addition, a number of built-in library functions
+    can work with complex numbers.  These can be somewhat
+    cumbersome since the real and complex component are
+    extracted with distinct functions.  For example, to
+    compute the complex sin of a complex number, enter
+    the following two commands:
+
+       LET AR = CSIN(-2,1)
+       LET AC = CSIN(-2,1)
+
+    The parameter AR will contain the real component and
+    the parameter AC will contain the complex component.
+
+    The following built-in functions support complex numbers:
+
+       CABS   (complex absolute value)              <xcl: HELP CABS>
+       CCOS   (complex cosine)                      <xcl: HELP CCOS>
+       CSIN   (complex sine)                        <xcl: HELP CSIN>
+       CEXP   (complex exponential)                 <xcl: HELP CEXP>
+       CLOG   (complex log)                         <xcl: HELP CLOG>
+       CSQRT  (complex log)                         <xcl: HELP CSQRT>
+       CBESSI (complex modified Bessel function)    <xcl: HELP CBESSI>
+       CBESSJ (complex Bessel function first kind)  <xcl: HELP CBESSJ>
+       CBESSY (complex Bessel function second kind) <xcl: HELP CBESSY>
+       CBESSK (complex Bessel function third kind)  <xcl: HELP CBESSK>
+

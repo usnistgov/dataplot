@@ -1,0 +1,18 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     WEIBPLOT.DP
+. PURPOSE--GENERATE A WEIBULL PLOT OF TIME-TO-FAILURE DATA
+.
+. -----START POINT-----------------------------------
+.
+TITLE ID Louver Cracker (Abernethy, 1983)
+Y1LABEL Cumulative Percent Failed
+X1LABEL Total Operating Cycles
+LEGEND 1 Reliability
+LEGEND 2 Weibull Plot
+.
+SKIP 25
+READ ABERNE17.DAT Y
+.
+CHAR X BLANK BLANK BLANK
+LINES BLANK SOLID DOT DOT
+.
+WEIBULL PLOT Y

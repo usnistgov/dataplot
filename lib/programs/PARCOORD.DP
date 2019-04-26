@@ -1,0 +1,57 @@
+.
+.  Generate a parallel coordinates plot
+.
+dimension 20 columns
+
+.  read data in file AUTO79.DAT
+.  to adapt code to other data sets, replace following section with
+.  read of your own data, be sure to define "p" equal to number of
+.  variables.
+.
+let p = 9
+row limits 26 50
+column limits 20 132
+read auto79.dat x1 to x^p
+.
+.  remaining code is independent of the data set.
+.
+let n = size x1
+let 2n = 2*n
+let temp = n + 1
+let y = 0 for i = 1 1 n
+let y = 1 for i = temp 1 2n
+let tag = sequence 1 1 n for i = 1 1 2n
+.  standardize data
+loop for k = 1 1 p
+   let m = mean x^k
+   let sd = standard deviation x^k
+   let x^k = (x^k - m)/sd
+end of loop
+. generate plot
+let temp = p - 1
+multiplot temp 1; multiplot corner coordinates 5 5 95 95
+frame corner coordinates 5 0 95 100
+yframe off
+tic labels off
+tic marks off
+ylimits 0 1
+xlimits -3.5 3.5
+legend 1 coordinates 4.9 98
+legend justification right
+legend size 8
+.
+loop for k = p -1 2
+   let a = k - 1
+   let b = k
+   let x = x^a
+   extend x x^b
+   legend 1 x^b
+   plot y x tag
+end of loop
+justification right; move 4.9 1.5; height 8; text x1
+end of multiplot
+.  
+height
+justification center
+move 50 97
+text parallel coordinates plot

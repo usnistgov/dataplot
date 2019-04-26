@@ -1,0 +1,10 @@
+----- <~prob\pmixppf.top> Plot Mixture ppf's
+
+Plot Mixture ppf Functions
+
+Plot Percent Point Function for
+Mixture Distributions
+
+Normal Mixture           <xemf: ~prob\pnormppf.men>
+Bi-Weibull               <xemf: ~prob\pbweppf.men>
+

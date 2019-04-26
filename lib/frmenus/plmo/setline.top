@@ -1,0 +1,13 @@
+----- <~plmo\setline.top> Set Lines and Attributes
+ 
+Set Lines and Attributes
+ 
+Set Line Types         <xemf: ~plmo\modiline.men>
+Set Line Colors        <xemf: ~plmo\linecolo.men>
+Set Line Thicknesses   <xemf: ~plmo\linethic.men>
+
+Help for Line Attributes
+   LINE              <xcl: HELP LINE>
+   LINE COLOR        <xcl: HELP LINE COLOR>
+   LINE THICKNESS    <xcl: HELP LINE THICKNESS>
+

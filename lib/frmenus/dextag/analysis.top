@@ -1,0 +1,11 @@
+----- <~dextag\analysis.top> Tech. for Analysis of Taguchi Designs
+ 
+Analysis Techniques: Taguchi Designs
+ 
+DEX scatter plot                  <xemf: ~plot\dexscatp.men>
+DEX mean plot (main effects plot) <xemf: ~plot\dexmeanp.men>
+DEX standard deviation plot       <xemf: ~plot\dexsdplo.men>
+DEX signal to noise (S/N)plots    <xemf: ~plot\dexsnplo.men>
+ 
+ANOVA of the S/N factors          <xemf: ~dextag\snanova.men>
+

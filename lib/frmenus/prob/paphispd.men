@@ -1,0 +1,79 @@
+This is file paphispd.men--Histogram & Superimposed Polya-Aeppli pdf Plot
+
+--------------------
+ 1. Histogram & Superimposed Polya-Aeppli pdf Plot
+ 2. HISTOGRAM Y; PLOT PAPPDF(X,THETA,P) FOR X = START INC STOP
+ 3.
+ 4. Your data can be either ungrouped (a single
+ 5. response variable) or grouped (a bin counts
+ 6. variable and a bin mid-points variable).
+ 7. 
+ 8. Response (or Bin Counts) Variable:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9. Optional Bin Mid-Points Variable:
+ 9. @CE 2 0 42 50 ? gui-variable
+10.
+11. Superimposed Polya-Aeppli probability density function:
+12.    Shape parameter Theta:
+12. @CE 3 0 42 50 ?
+13.    Shape parameter P:
+13. @CE 4 0 42 50 ?
+14.    Line type:
+14. @CE 5 0 42 50 ? gui-line
+15.    Line color:
+15. @CE 6 0 42 50 ? gui-color
+16.    Bar fill on/off:
+16. @CE 7 0 42 50 ?
+17.
+18. Title:
+18. @CE 8 0 20 50 *
+19. Left Axis Label:
+19. @CE 9 0 20 50 *
+20. Bottom Axis Label:
+20. @CE 10 0 20 50 *
+21.
+22.
+23. Generate the plot?
+--------------------
+AN FE
+TITLE _8
+Y1LABEL _9
+X1LABEL _10
+@IF 7 0 BAR FILL _7
+.
+LET ICASE = 0
+@IF 2 0 LET ICASE = 1
+IF ICASE = 0
+   LET ZMIN = MINIMUM _1
+   LET ZMAX = MAXIMUM _1
+   LET ZLOW = ZMIN - 0.5
+   LET ZUPP = ZMAX + 0.5
+   CLASS WIDTH 1
+   CLASS LOWER ZLOW
+   CLASS UPPER ZUPP
+   RELATIVE HISTOGRAM _1
+   LIMITS FREEZE
+ELSE
+   LET ZMIN = MINIMUM _2
+   LET ZMAX = MAXIMUM _2
+   LET ZLOW = ZMIN - 0.5
+   LET ZUPP = ZMAX + 0.5
+   RELATIVE HISTOGRAM _1 _2
+   LIMITS FREEZE
+END OF IF
+.
+CHARACTER BLANK
+@IF 5 0 LINES _5
+@IF 6 0 LINE COLOR _6
+LET ZSHAPE1 = _3
+LET ZSHAPE2 = _4
+PRE-ERASE OFF
+PLOT PAPPDF(X,ZSHAPE1,ZSHAPE2) FOR X = ZMIN  1 ZMAX
+LIMITS
+PRE-ERASE ON
+CLASS WIDTH
+CLASS LOWER
+CLASS UPPER
+--------------------
+WEB HELP PAPPDF
+--------------------

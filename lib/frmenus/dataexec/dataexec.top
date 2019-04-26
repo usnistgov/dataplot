@@ -1,0 +1,30 @@
+----- <~dataexec\dataexec.top> Load and Execute Built-in Dataplot data Files
+
+Load and Execute Built-in Dataplot Data Files
+
+Core data sets             <~dataexec\core.top>
+
+By Stat Category:
+   Quality/SPC             <~dataexec\qual.top>
+   Design of Experiment    <~dataexec\dex.top>
+   Regression              <~dataexec\reg.top>
+
+   Univariate              <~dataexec\univ.top>
+   Time Series             <~dataexec\time.top>
+   Multi-Factor            <~dataexec\mfac.top>
+   Multivariate            <~dataexec\mvar.top>
+   Uncertainty Analysis    <~dataexec\unce.top>
+
+   Probability             <~dataexec\prob.top>
+   Reliability             <~dataexec\reli.top>
+   Extreme Value Analysis  <~dataexec\eva.top>
+   Mathematics             <~dataexec\math.top>
+
+By Book:
+   Natrella                          <~dataexec\natrella.top>
+   Sematech                          <~dataexec\sematech.top>
+   Box, Hunter, & Hunter             <~dataexec\bhh.top>
+   Statistics for Scientists         <~dataexec\stsc.top>
+   Graybill/Iyer  I: Regression      <~dataexec\grayiye1.top>
+   Graybill/Iyer II: Inference       <~dataexec\grayiye2.top>
+

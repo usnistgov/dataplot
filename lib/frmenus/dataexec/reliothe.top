@@ -1,0 +1,21 @@
+----- <~dataexec\reliothe.top> Load and Execute Reliability Data: Other
+
+Load and Execute Reliability Data: Other
+
+ABERN17.DAT*  Compressor rivet failure    <xcf: ~dataexec\ABERN17.DP>
+ABERN35.DAT   Fatigue failure time        <xcf: ~dataexec\ABERN35.DP>
+ABERN43.DAT   Bearing cage failure time   <xcf: ~dataexec\ABERN43.DP>
+
+HAHN.DAT      Locomotive controls failure <xcf: ~dataexec\HAHN.DP>
+NELSON.DAT    Dial. brkdwn stren of insul <xcf: ~dataexec\NELSON.DP>
+
+GEAR.DAT      Gear diameters (Ishikawa)   <xcf: ~dataexec\GEAR.DP>
+CLEAR.DAT     Component clearances        <xcf: ~dataexec\CLEAR.DP>
+
+CASTILL6.DAT  Chain link strength         <xcf: ~dataexec\CASTILL6.DP>
+CASTILL7.DAT  Elect. insulation lifetime  <xcf: ~dataexec\CASTILL7.DP>
+CASTILL8.DAT  Wire cycles-to-failure      <xcf: ~dataexec\CASTILL8.DP>
+
+RANDN.DAT     Normal random numbers       <xcf: ~dataexec\RANDN.DP>
+RANDU.DAT     Uniform random numbers      <xcf: ~dataexec\RANDU.DP>
+

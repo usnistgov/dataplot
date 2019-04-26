@@ -1,0 +1,20 @@
+----- <~prob\pcdfsymm.top> Plot Symmetric cdf's
+
+Plot Symmetric CDF Functions
+
+Uniform                  <xemf: ~prob\punicdf.men>
+Normal                   <xemf: ~prob\pnorcdf.men>
+Logistic                 <xemf: ~prob\plogcdf.men>
+Double Exponential       <xemf: ~prob\pdexcdf.men>
+Double Weibull           <xemf: ~prob\pdwecdf.men>
+Double Gamma             <xemf: ~prob\pdgacdf.men>
+Cauchy                   <xemf: ~prob\pcaucdf.men>
+Tukey-Lambda             <xemf: ~prob\plamcdf.men>
+T                        <xemf: ~prob\ptcdf.men>
+Semi-Circular            <xemf: ~prob\psemcdf.men>
+Triangular               <xemf: ~prob\ptricdf.men>
+Von Mises                <xemf: ~prob\pvoncdf.men>
+Cosine                   <xemf: ~prob\pcoscdf.men>
+Anglit                   <xemf: ~prob\pangcdf.men>
+Hyperbolic Secant        <xemf: ~prob\phsecdf.men>
+

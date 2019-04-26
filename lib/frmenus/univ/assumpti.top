@@ -1,0 +1,21 @@
+-----<~univ\assumpti.top> Statistical Control & Assumptions
+
+Statistical Control & Assumptions
+
+A measurement process is "statistically in control"
+if the data from that process "behaves" like
+
+   1. Random drawings
+   2. Fixed location
+   3. Fixed variation
+   4. Fixed distribution
+
+If the above ideal is achieved, then the
+engineer gains predictability (the ability to
+make probability statements for both the past
+and the future). The above items constitute
+the 4 underlying assumptions of a measurement
+process. These 4 underlying assumptions are so
+important that they should be routinely checked
+(see 4-PLOT).
+

@@ -1,0 +1,27 @@
+----- <~prob\locscpdf.top> PDF's for Location-Scale Continuous Distributions
+
+Compute PDF's (no shape parameters)
+
+Compute Probability Density Function for Continuous Distributions
+with No Shape Parameters
+
+Anglit                                    <xemf: ~prob\angpdf.men>
+Arcsin                                    <xemf: ~prob\arspdf.men>
+Cauchy                                    <xemf: ~prob\caupdf.men>
+Cosine                                    <xemf: ~prob\cospdf.men>
+Double Exponential (Laplace)              <xemf: ~prob\dexpdf.men>
+Exponential                               <xemf: ~prob\exppdf.men>
+Extreme Value Type I(Gumbel)  - Minimum   <xemf: ~prob\ev11pdf.men>
+Extreme Value Type I(Gumbel)  - Maximum   <xemf: ~prob\ev12pdf.men>
+Half-Cauchy                               <xemf: ~prob\hfcpdf.men>
+Half-Logistic                             <xemf: ~prob\hflpdf.men>
+Half-Normal                               <xemf: ~prob\hfnpdf.men>
+Hyperbolic Secant                         <xemf: ~prob\hsepdf.men>
+Logistic                                  <xemf: ~prob\logpdf.men>
+Maxwell                                   <xemf: ~prob\maxpdf.men>
+Normal                                    <xemf: ~prob\norpdf.men>
+Rayleigh                                  <xemf: ~prob\raypdf.men>
+Semi-Circular                             <xemf: ~prob\sempdf.men>
+Slash                                     <xemf: ~prob\slapdf.men>
+Uniform                                   <xemf: ~prob\unipdf.men>
+

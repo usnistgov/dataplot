@@ -1,0 +1,8 @@
+----- <~datalist\ZARR15.top> ZARR15.DAT
+ 
+ZARR15.DAT
+ 
+View     <xcl: LIST ZARR15.DAT>
+Load     <x2cl: SKIP 25; READ ZARR15.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\ZARR15.DAT>
+ 

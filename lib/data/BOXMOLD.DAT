@@ -1,0 +1,41 @@
+This is Dataplot data file    BOXMOLD.DAT
+Factors affecting mold shrinkage
+Box, Hunter, & Hunter (1978)
+Statistics for Experimenters. Wiley, page 402.
+2**(8-4) Fractional Factorial Design
+ 
+Number of observations             = 16
+Number of variables per line image =  8
+Order of variables on a line--
+   1. Response variable = shrinkage within mold
+   2. Factor 1          = mold temperature
+   3. Factor 2          = moisture content
+   4. Factor 3          = holding pressure
+   5. Factor 4          = cavity thickness
+   6. Factor 5          = booster pressure
+   7. Factor 6          = cycle time
+   8. Factor 7          = gate size
+   9. Factor 8          = screw speed
+To read this file into Dataplot--
+   DIMENSION 20 VARIABLES
+   SKIP 25
+   READ BOXMOLD.DAT Y X1 TO X8
+Note--not in Yates order!
+ Y      X1 X2 X3 X4 X5 X6 X7 X8
+--------------------------------
+14.0    -1 -1 -1 +1 +1 +1 -1 +1
+16.8    +1 -1 -1 -1 -1 +1 +1 +1
+15.0    -1 +1 -1 -1 +1 -1 +1 +1
+15.4    +1 +1 -1 +1 -1 -1 -1 +1
+27.6    -1 -1 +1 +1 -1 -1 +1 +1
+24.0    +1 -1 +1 -1 +1 -1 -1 +1
+27.4    -1 +1 +1 -1 -1 +1 -1 +1
+22.6    +1 +1 +1 +1 +1 +1 +1 +1
+22.3    +1 +1 +1 -1 -1 -1 +1 -1
+17.1    -1 +1 +1 +1 +1 -1 -1 -1
+21.5    +1 -1 +1 +1 -1 +1 -1 -1
+17.5    -1 -1 +1 -1 +1 +1 +1 -1
+15.9    +1 +1 -1 -1 +1 +1 -1 -1
+21.9    -1 +1 -1 +1 -1 +1 +1 -1
+16.7    +1 -1 -1 +1 +1 -1 +1 -1
+20.3    -1 -1 -1 -1 -1 -1 -1 -1

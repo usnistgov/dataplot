@@ -1,0 +1,41 @@
+This is Dataplot data file    espina4.dat (large pipe only)
+Yates Mean Values for Exact Flow Dual Rotot Turbine Meters 0951 & 0952     12/04/01
+Pedro Espana & Don Ward.  Data collected November 2001.
+Number 0f observations                   = 16
+Total number of variables per line image = 5
+Order of variables on a line image--
+   Response variable 1 = Mean Strouhal
+   Factor 1            = Rotor ID              (-1 = upstream, +1 = downstream)
+   Factor 2            = Meter ID              (-1 = 0951, +1 = 0952)
+   Factor 3            = Meter Position        (-1 = upstream, +1 = downstream)
+   Factor 4            = Approximate Flow Rate (-1 = low flow, +1 = high flow)
+To read this file into Dataplot--
+   skip 25
+   read espina4.dat y x1 x2 x3 x4
+
+
+
+
+
+
+
+
+    Mean       Rotor       Meter      Meter        Flow
+  Strouhal   Position       ID       Position      Rate
+--------------------------------------------------------
+  26016.65      -1          -1          -1          -1
+  28254.84      +1          -1          -1          -1
+  27413.45      -1          +1          -1          -1
+  28556.40      +1          +1          -1          -1
+  26029.52      -1          -1          +1          -1
+  28270.20      +1          -1          +1          -1
+  27370.98      -1          +1          +1          -1
+  28542.62      +1          +1          +1          -1
+  30359.70      -1          -1          -1          +1
+  33191.74      +1          -1          -1          +1
+  31487.19      -1          +1          -1          +1
+  33111.07      +1          +1          -1          +1
+  30066.25      -1          -1          +1          +1
+  32868.95      +1          -1          +1          +1
+  31757.56      -1          +1          +1          +1
+  33437.95      +1          +1          +1          +1

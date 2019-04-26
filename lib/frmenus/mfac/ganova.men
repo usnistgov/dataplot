@@ -1,0 +1,39 @@
+This is file ganova.men--GANOVA Plot
+ 
+--------------------
+ 1. GANOVA = Graphical Analysis of Variance (3-factor data)
+ 2. Macro
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. First Factor Variable:
+ 5. @CE 2 0 42 50 ? gui-vari
+ 6. Second Factor Variable:
+ 6. @CE 3 0 42 50 ? gui-vari
+ 7. Third Factor Variable:
+ 7. @CE 4 0 42 50 ? gui-vari
+ 8.
+ 9. Title:
+ 9. @CE 5 0 20 50 *
+10. X Axis label:
+10. @CE 6 0 20 50 *
+11. Y Axis label:
+11. @CE 7 0 20 50 *
+12.
+13. Subset/Except/For Specification:
+14. @CE 8 0 1 50 *
+15.
+16.
+17. Generate the GANOVA?:
+--------------------
+GR FE
+TITLE _5
+X1LABEL _6
+Y1LABEL _7
+LINES SOLID SOLID DOT DOT DASH DASH
+CHARACTERS 1 2 1 2 1 2
+LET ZZZZTAG = 10* _4 + _3
+PLOT _1 _1 ZZZZTAG  _8
+--------------------
+WEB HELP PLOT
+--------------------

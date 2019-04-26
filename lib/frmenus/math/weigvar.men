@@ -1,0 +1,24 @@
+This is file weigvar.men--Compute weighted variance of a variable
+ 
+--------------------
+ 1. Weighted Variance
+ 2. LET A = WEIGHTED VARIANCE Y WEIGHTS
+ 3.
+ 4. Variable for which to compute the weighted variance:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable containing the weights:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Parameter to store the weighted variance:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -10 50 *
+10.
+11.
+12. Compute the Weighted Variance?:
+--------------------
+GR FE
+LET _3 = WEIGHTED VARIANCE  _1 _2 _4
+--------------------
+WEB HELP WEIGHTED VARIANCE
+--------------------

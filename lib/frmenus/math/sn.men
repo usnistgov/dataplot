@@ -1,0 +1,38 @@
+This is file sn.men--Compute Jacobian sn Elliptic Function
+ 
+--------------------
+ 1. Jacobian sn Elliptic Function
+ 2. LET Y = SN(U,K)
+ 3.
+ 4. Note that Dataplot takes the second argument as MC=1-K**2.
+ 5. Other packages may use either K or K**2 as the second argument.
+ 6. You can enter the commands
+ 7.   LET K = <value>
+ 8.   LET MC = 1 - K**2
+ 9. to tranlate the second argument to Dataplot's form.
+10.
+11. Horizontal axis variable:
+11. @CE 1 0 33 50 ? gui-variable
+12. MC (1-K**2) parameter:
+12. @CE 2 0 33 50 ? gui-none
+13. Variable to store the transformed result:
+13. @CE 3 0 33 50 ?
+14.
+15. Plot?:
+15. @CE 5 1 14 20 no
+15. @CE 5 2 22 28 yes
+16.
+17. Subset/Except/For Specification:
+18. @CE 6 0 -5 50 *
+19.
+20.
+21. Compute the Transformation?:
+--------------------
+GR FE
+LET ZZZZZZZA = _2
+LET _3 = SN( _1 , ZZZZZZZA ) _6
+DELETE ZZZZZZZA
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP SN
+--------------------

@@ -1,0 +1,39 @@
+----- <~file\dischead.top> Files: Header Lines
+
+File: Header Lines/Restricted Rows or Columns
+
+HEADER LINES/RESTRICTED ROWS OR COLUMNS
+
+Many data files contain header lines at the beginning of the
+file that provide a description of the file.  In order to
+skip over these lines, enter the command
+
+    SKIP N
+
+where N identifies how many lines to skip.
+
+Most of the sample data files that are distributed with Dataplot
+contain a line starting with hyphens ("---").  You can use the
+command 
+
+    SKIP AUTOMATIC
+
+for these files.  Dataplot will skip all lines until a line
+starting with three or more hypens is encoutered.
+ 
+In a related issue, if you want to restrict the read to certain
+rows in the file, you can enter the command
+
+    ROW LIMITS  N1  N2
+
+with N1 and N2 denoting the first and last rows to read,
+respectively. 
+
+You can also restrict the read to certain columns of the file
+using the command
+
+    COLUMN LIMITS  C1  C2
+
+with C1 denoting the first column to read and C2 the last column
+to read.
+

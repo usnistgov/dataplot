@@ -1,0 +1,10 @@
+----- <~prob\pcdfmske.top> Plot Miscellaneous Skewed cdf's
+
+Plot Miscellaneous Skewed CDF Functions
+
+Gompertz                 <xemf: ~prob\pgomcdf.men>
+Alpha                    <xemf: ~prob\palpcdf.men>
+Bradford                 <xemf: ~prob\pbracdf.men>
+Reciprocal               <xemf: ~prob\preccdf.men>
+Log Double Exponential   <xemf: ~prob\pldecdf.men>
+

@@ -1,0 +1,24 @@
+----- <~prob\psha3ppf.top> PPF's for 3+ Shape Parameter Continuous Distributions
+
+Plot PPF's (three or more shape parameters)
+
+Plot Percent Point Function for Continuous Distributions
+with Three (or more) Shape Parameters
+
+Doubly Non-Central F                      <xemf: ~prob\pdnfppf.men>
+Doubly Non-Central T                      <xemf: ~prob\pdntppf.men>
+Generalized Exponential                   <xemf: ~prob\pgexppf.men>
+Generalized Inverse Gaussian              <xemf: ~prob\pgigppf.men>
+Generalized Trapezoid                     <xemf: ~prob\pgtrppf.men>
+Gompertz-Makeham                          <xemf: ~prob\pmakappf.men>
+    (Meeker/Escobar 3-shape parameterization>
+Gompertz-Makeham (DLMF parameterization)  <xemf: ~prob\pmakbppf.men>
+Log Skew T                                <xemf: ~prob\plstppf.men>
+Meilke's Beta-Kappa                       <xemf: ~prob\pkapppf.men>
+Non-Central Beta                          <xemf: ~prob\pncbppf.men>
+Non-Central F                             <xemf: ~prob\pncfppf.men>
+Trapezoid                                 <xemf: ~prob\ptrappf.men>
+Truncated Exponential                     <xemf: ~prob\ptneppf.men>
+Uneven Two-Sided Power                    <xemf: ~prob\putsppf.men>
+Wakeby                                    <xemf: ~prob\pwakppf.men>
+

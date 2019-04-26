@@ -1,0 +1,10 @@
+----- <~dataloex\SOULEN0.DP> Load & Execute SOULEN0.DAT
+
+. This is file    SOULEN0.DP
+
+DELETE Y
+SKIP 25
+READ SOULEN0.DAT Y
+TITLE SOULEN0.DAT
+/
+

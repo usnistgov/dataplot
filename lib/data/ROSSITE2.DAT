@@ -1,0 +1,63 @@
+THIS IS DATAPLOT DATA FILE   ROSSITE2.DAT
+ASPHALT ROOFING VERTICAL PEEL TEST EXPERIMENT
+JIM LECHNER FOR WALT ROSSITER
+JULY 1993
+NUMBER OF OBSERVATIONS = 8 + 3 X 9 = 35
+NUMBER OF VARIABLES PER LINE IMAGE = 4
+ORDER OF VARIABLES ON A LINE IMAGE--
+   1. RESPONSE VARIABLE = HOURS TO FAILURE
+   2. FACTOR 1 = CONTAMINATION (2 LEVELS--30 AND 160)
+   3. FACTOR 2 = THICKNESS     (2 LEVELS--3 AND 6)
+   4. FACTOR 3 = SPECIMAN LOCATION
+NOTE--ALL CONTAMINATIONS & THICKNESSES HAD 9 SPECIMENS
+      (EXCEPT CONTAMINATION = 30, THICKNESS = 3, WHICH HAD 8).
+NOTE--THE EXPERIMENT WAS TERMINATED AT APPROXIMATELY 37000 HOURS,
+      THUS ANY DATA WITH Y = 37000 IMPLIES THAT
+      THE SPECIMENT DID NOT YET FAIL BY EXPERIMENT END.
+NOTE--THIS IS A 2**2 FULL FACTORIAL EXPERIMENT
+      WITH APPROXIMATELY 9 REPLICATIONS FOR EACH CONDITION.
+TO READ THIS INTO DATAPLOT--
+   SKIP 25
+   READ ROSSITE2.DAT Y X1 X2 LOC
+ 
+     HOURS     CONTAM. THICK.  LOC.
+   TO FAILURE
+----------------------------------
+     148.86      30       3    62
+     230.77      30       3    67
+     309.25      30       3    66
+     387.95      30       3    51
+     500.03      30       3    65
+    1151.96      30       3    49
+    1192.36      30       3    50
+    1747.41      30       3    47
+ 
+      66.78     160       3    41
+      95.39     160       3    21
+     100.16     160       3    20
+     110.87     160       3     3
+     113.25     160       3     9
+     123.01     160       3    39
+     134.69     160       3    23
+     154.99     160       3    22
+     193.56     160       3    26
+ 
+   16870.00      30       6    29
+   25383.00      30       6    57
+   26040.00      30       6    40
+   37000.00      30       6    40
+   37000.00      30       6    40
+   37000.00      30       6    40
+   37000.00      30       6    40
+   37000.00      30       6    40
+   37000.00      30       6    40
+ 
+     533.54     160       6    16
+     613.38     160       6    32
+    1129.48     160       6    29
+    1520.87     160       6    25
+    1630.99     160       6    44
+    4520.00     160       6    36
+    8600.00     160       6    11
+   17712.00     160       6    40
+   37000.00     160       6    40

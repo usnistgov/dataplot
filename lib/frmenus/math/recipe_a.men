@@ -1,0 +1,54 @@
+This is file recipe.men--Compute a recipe analysis
+ 
+--------------------
+ 1. Recipe
+ 2. RECIPE ANOVA Y X1 X2 BATCH
+ 3.
+ 4.
+ 5. Dependent variable for the RECIPE fit:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Independent variables for the RECIPE fit:
+ 6. @CE 2 0 33 50 ? gui-variable
+ 7. Batch variable (optional) for the RECIPE fit:
+ 7. @CE 3 0 33 50 * gui-variable
+ 8. Number of Independent Variables?:
+ 8. @CE 4 0 33 50 ?
+ 9. Value for the probability content (typically 0.90):
+ 9. @CE 6 0 33 50 ?
+10. Value for the confidence (typically 0.95):
+10. @CE 7 0 33 50 ?
+11. Use Satterthwaite approximation (usually on):
+11. @CE 8 0 33 50 gui-ooff
+12.
+13. The tolerance values will be plotted with
+14. the fitted curve and the raw data.
+15.
+16. Select the line style for the tolerance values:
+16. @CE 9 0 33 50 gui-line
+17. Select the line style for the fitted curve:
+17. @CE 10 0 33 50 gui-line
+18. Select the character symbol for the raw data:
+18. @CE 11 0 33 50 gui-character
+19. Fill the character symbol?:
+19. @CE 12 0 33 50 gui-ooff
+20.
+21. Subset/Except/For Specification:
+22. @CE 13 0 -12 50 *
+23.
+24.
+25. Perform the Recipe ANOVA?:
+--------------------
+GR FE
+RECIPE PROBABILITY CONTENT _6
+RECIPE CONFIDENCE _7
+RECIPE SATTERTHWAITE _8
+RECIPE ANOVA _1 _2 _3 _13
+CHARACTER _11 BLANK BLANK
+CHARACTER FILL _12 OFF OFF
+LINES BLANK _10 _9
+PLOT _1 PRED VS _2 _13 AND
+PLOT TOL _4
+--------------------
+WEB HELP RECIPE
+--------------------
+

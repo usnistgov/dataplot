@@ -1,0 +1,27 @@
+----- <~roadmap\percenti.top> Percentile
+
+Percentile
+
+Situation     : We have data collected under
+                fixed conditions.
+
+Question      : What is an estimated 5% percent point
+                for the process?
+
+Model         : Y = constant + random error
+
+Input         : a response variable Y
+                (a column of numbers)
+
+Output        : 1) an estimated percentile value;
+                2) a lower 1-sided tolerance value
+                   (= "design allowable").
+
+Stat Category : Univariate & Reliability
+
+Primary Tools : PPCC Plots        <~prob\ppccplot.top>
+                Probability Plots <~prob\probplot.top>
+                Tolerance Limits  <~reli\esttolli.top>
+
+Worked Example: FULLER2.DAT       <xcf: ~roadmap/FULLER2.DP>
+

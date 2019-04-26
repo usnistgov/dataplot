@@ -1,0 +1,31 @@
+This is file hypcdf.men--Compute hypergeometric cdf and tail probabilities
+ 
+--------------------
+ 1. Compute Hypergeometric cdf and Tail Prob.
+ 2. LET A = HYPCDF(X,KK,NN,MM)
+ 3.
+ 4. Input values:
+ 5.                x (x = 0, 1, 2, ..., kk):
+ 5. @CE 1 0 42 50 ?
+ 6.                          sample size kk:
+ 6. @CE 2 0 42 50 ?
+ 7.               number of marked items nn:
+ 7. @CE 3 0 42 50 ?
+ 8.        number of items in population mm:
+ 8. @CE 4 0 42 50 ?
+ 9.
+10. Output parameters:
+11.                  name for the cdf value:
+11. @CE 5 0 42 50 ?
+12.     name for the tail probability value:
+12. @CE 6 0 42 50 ?
+13.
+14.
+15. Compute the Probability?
+--------------------
+AN FE
+@IF 5 0 LET _5 = HYPCDF( _1 , _2 , _3 , _4 )
+@IF 6 0 LET _6 = 1 - HYPCDF( _1 , _2 , _3 , _4 )
+--------------------
+WEB HELP HYPCDF
+--------------------

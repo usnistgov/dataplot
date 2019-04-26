@@ -1,0 +1,24 @@
+----- <~prob\psha3cdf.top> CDF's for 3+ Shape Parameter Continuous Distributions
+
+Plot CDF's (three or more shape parameters)
+
+Plot Cumulative Distribution Function for Continuous Distributions
+with Three (or more) Shape Parameters
+
+Doubly Non-Central F                      <xemf: ~prob\pdnfcdf.men>
+Doubly Non-Central T                      <xemf: ~prob\pdntcdf.men>
+Generalized Exponential                   <xemf: ~prob\pgexcdf.men>
+Generalized Inverse Gaussian              <xemf: ~prob\pgigcdf.men>
+Generalized Trapezoid                     <xemf: ~prob\pgtrcdf.men>
+Gompertz-Makeham                          <xemf: ~prob\pmakacdf.men>
+    (Meeker/Escobar 3-shape parameterization>
+Gompertz-Makeham (DLMF parameterization)  <xemf: ~prob\pmakbcdf.men>
+Log Skew T                                <xemf: ~prob\plstcdf.men>
+Meilke's Beta-Kappa                       <xemf: ~prob\pkapcdf.men>
+Non-Central Beta                          <xemf: ~prob\pncbcdf.men>
+Non-Central F                             <xemf: ~prob\pncfcdf.men>
+Trapezoid                                 <xemf: ~prob\ptracdf.men>
+Truncated Exponential                     <xemf: ~prob\ptnecdf.men>
+Uneven Two-Sided Power                    <xemf: ~prob\putscdf.men>
+Wakeby                                    <xemf: ~prob\pwakcdf.men>
+

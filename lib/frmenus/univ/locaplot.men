@@ -1,0 +1,34 @@
+This is file locaplot.men--Graphical Test: Shift in Location
+
+--------------------
+ 1. Graphical Test: Shift in Location
+ 2. PLOT Y; DRAWDATA .5 MU0 1.5 MU0
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. Reference Location Value mu0:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Generate the Plot?
+--------------------
+GR FE
+LET ZN = SIZE _1
+LET ZDUMMY = 1 FOR I = 1 1 ZN
+LET ZMEAN = MEAN _1 _3
+CHARACTERS X BLANK
+LINES SOLID DOTTED
+XLIMITS .9 1.1
+PLOT _1 ZDUMMY _3
+LINES DASH
+DRAWDATA .96 ZMEAN 1.04 ZMEAN
+LINES SOLID SOLID
+CHARACTERS BLANK BLANK
+XLIMITS
+DRAWDATA .96 _2 1.04 _2
+--------------------
+WEB HELP PLOT
+--------------------

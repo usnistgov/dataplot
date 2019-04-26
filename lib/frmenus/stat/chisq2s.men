@@ -1,0 +1,22 @@
+This is file chisq2s.men--2 Sample Chi-Square Test: Common Distribution
+ 
+--------------------
+ 1. 2 Sample Chi-Square Test: Common Distribution
+ 2. 2 SAMPLE CHI-SQUARE TEST Y1 Y2
+ 3.
+ 4. First  Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Second Response Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Do Chi-Square Test?
+--------------------
+GR FE
+2 SAMPLE CHI-SQUARE TEST _1 _2 _3
+--------------------
+WEB HELP 2 SAMPLE CHI-SQUARE TEST
+--------------------

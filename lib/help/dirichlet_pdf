@@ -1,0 +1,112 @@
+-----DIRICHLET PDF-------------------------------
+ 
+DIRICHLET PDF
+ 
+Name:
+    DIRICHLET PDF
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the probability density function for a Dirichlet
+    distribution.
+ 
+Description:
+    If X(0), X(1), ..., X(k) are independent random variables where
+    each X(j) has a chi-square distribuiton with nu(j) degrees of
+    freedom (nu(j) must be positive, but it is not restricted to
+    integer values), then the joint distribution of Y(1), Y(2),
+    ..., Y(k) where
+
+       Y(j) = X(j)/SUM[i=1 to k][X(i)]
+
+    is a Dirichlet distribution with shape parameters a(0), a(1),
+    ..., a(k) where a(j) = (1/2)*nu(j).
+
+    This derivation is discussed in detail in Kotz, Balakrishnan,
+    and Kotz (see the Reference section below).
+
+    If k=1, the Dirichlet reduces to a beta distribution.  If
+    k > 1, the marginal distribution of Y(j) is a beta distribution
+    with parameters a(j) and SUM[i=0 to k][a(i) - a(j)].  For this
+    reason, the Dirichlet distribution is considered a multivariate
+    generalization of the beta distribution. 
+
+    The probability density function for the Dirichlet distribution
+    is defined as
+
+       p(x(1), x(2), ..., x(k)) =
+             PROD[i=1 to k][x(i)**(a(i)-1)*
+                           (1 - SUM[i=1 to k][x(i)])**(a(0)-1)]/
+             B(a(1), ...,a(k),a(0))
+             x(i) > 0, SUM[i=1 to k][x(i)] < 1, a(i) >= 1
+
+    with B denoting the beta function.
+
+Syntax 1:
+    LET <y> = DIRICHLET PDF <x> <a>
+    where <x> is a variable of length k;
+          <a> is a variable of length k+1 specifying the shape
+              parameters;
+    and where <y> is a parameter where the resulting Dirichlet
+              pdf is stored.
+ 
+Syntax 2:
+    LET <y> = DIRICHLET LOG PDF <x> <a>
+    where <x> is a variable of length k;
+          <a> is a variable of length k+1 specifying the shape
+              parameters;
+    and where <y> is a parameter where the resulting logarithm of
+              the Dirichlet pdf is stored.
+
+    This syntax computes the logarithm of the Dirichlet pdf.  This
+    can be useful when you want to minimize the possibility of
+    overflow.
+ 
+Examples:
+    LET X = DATA 0.1 0.2 0.5
+    LET A = 1.4  2.3  1.9 4
+    LET Y = DIRICHLET PDF X A
+ 
+Note:
+    Dataplot computes the Dirichlet pdf using a Fortran translation
+    of the "gsl_ran_Dirichlet_lnpdf" code (written by Gavin Crooks)
+    from the GNU GSL library.
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    DIRICHLET RANDOM NUMBERS    = Generate Dirichlet random numbers.
+    MULTINOMIAL RANDOM NUMBERS  = Generate Dirichlet random numbers.
+    MULTINOMIAL PDF             = Compute the multinomial probability
+                                  density function.
+    BETPDF                      = Compute the beta probability density
+                                  function.
+ 
+Reference:
+    "Continuous Multivariate Distributions--Volume 1: Models and
+    Applications", Second Edition, Kotz, Balakrishnan, and
+    Johnson, Wiley, 2000, chapter 49.
+
+    "Statistical Distributions: Third Edition", Evans, Hastings,
+    and Peacock, Wiley, 2000, pp. 62-63.
+ 
+Applications:
+    Distributional Modeling, Bayesian Analysis
+ 
+Implementation Date:
+    2003/5
+ 
+Program:
+    let p = data 0.2 0.1 0.2 0.3 0.2
+    let x = data 12 5 8 10 6
+    .
+    let a = dirichlet pdf x p
+    .
+    print a
+ 

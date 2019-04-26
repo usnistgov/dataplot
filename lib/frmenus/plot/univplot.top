@@ -1,0 +1,11 @@
+----- <~plot\univplot.top> Univariate Plots
+
+Univariate Plots
+
+Histogram               <xemf: ~univ\histogra.men>
+4-Plot                  <xemf: ~univ\4plot.men>
+Probability Plot        <~univ\probplot.top>
+PPCC Plot               <~univ\ppccplot.top>
+
+Influence Curves        <~univ\inflcurv.top>
+

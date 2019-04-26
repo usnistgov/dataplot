@@ -1,0 +1,40 @@
+This is file doall.men--Compute various Location Measures
+ 
+--------------------line 3
+ 1. Various Bootstrap Plots
+ 2. BOOTSTRAP MEAN PLOT Y X
+ 3.
+ 4. Response        Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. Horizontal Axis Variable:
+ 5. @CE 2 0 42 50 ? gui-vari
+ 6.
+ 7. Character Type for Data:
+ 7. @CE 3 0 42 50 * gui-char
+ 8. Line Type for Data:
+ 8. @CE 4 0 42 50 *
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 1 50 *
+12.
+13.
+14. Generate the Plot?
+--------------------
+CHARACTERS _3
+LINES _4
+MULTIPLOT CORNER COORDINATES 5 5 95 95
+MULTIPLOT 2 2
+TITLE AUTOMATIC
+BOOTSTRAP MEAN PLOT _1 _2 _5
+BOOTSTRAP MEDIAN PLOT _1 _2 _5
+BOOTSTRAP MIDMEAN PLOT _1 _2 _5
+END OF MULTIPLOT
+TITLE
+CAPTURE ZZZZJUNK.DAT
+LET ZZZZA = MEAN _1 _5
+SUMMARY _1 _5
+END OF CAPTURE
+LIST ZZZZJUNK.DAT
+--------------------
+WEB HELP BOOTSTRAP PLOT
+--------------------

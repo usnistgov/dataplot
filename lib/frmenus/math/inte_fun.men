@@ -1,0 +1,59 @@
+This is file inte_fun.men--Compute integral functions
+ 
+--------------------
+ 1. Integral Functions
+ 2. LET YNEW = LOGINT(X)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value.
+ 6.
+ 7. Variable  to operate on:
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8. Variable to store the transformed result:
+ 8. @CE 3 0 33 50 ?
+ 9.
+10. Operation to perform:
+11. @CE 2 1 10 48 logarithmic integral
+12. @CE 2 2 10 48 exponential integral (order 1)
+13. @CE 2 3 10 48 exponential integral (Ei type)
+14. @CE 2 4 10 48 exponential integral (integer order)
+15.               Enter the integer order:
+15. @CE 6 0 28 40 *
+16. @CE 2 5 10 48 sine integral
+17. @CE 2 6 10 48 cosine integral
+18. @CE 2 7 10 48 hyperbolic sine integral
+19. @CE 2 8 10 48 hyperbolic cosine integral
+20. @CE 2 9 10 48 Spence dilogarithm
+21. @CE 2 10 10 48 Fresnel sine integral
+22. @CE 2 11 10 48 Fresnel cosine integral
+23. @CE 2 12 10 48 Fresnel f auxillary integral
+24. @CE 2 13 10 48 Fresnel g auxillary integral
+25.
+26. Plot?:
+26. @CE 5 1 14 20 no
+26. @CE 5 2 22 28 yes
+27.
+28. Subset/Except/For Specification:
+29. @CE 4 0 -5 50 *
+30.
+31.
+32. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = LOGINT( _1 ) _4
+@IF 2 2 LET _3 = EXPINT1( _1 ) _4
+@IF 2 3 LET _3 = EXPINTE( _1 ) _4
+@IF 2 4 LET _3 = EXPINTN( _1 , _6 ) _4
+@IF 2 5 LET _3 = SININT( _1 ) _4
+@IF 2 6 LET _3 = COSINT( _1 ) _4
+@IF 2 7 LET _3 = SINHINT( _1 ) _4
+@IF 2 8 LET _3 = COSHINT( _1 ) _4
+@IF 2 9 LET _3 = SPENCE( _1 ) _4
+@IF 2 10 LET _3 = FRESNS( _1 ) _4
+@IF 2 11 LET _3 = FRESNC( _1 ) _4
+@IF 2 12 LET _3 = FRESNF( _1 ) _4
+@IF 2 13 LET _3 = FRESNG( _1 ) _4
+@IF 5 2 PLOT _3  _1  _4
+--------------------
+WEB HELP INTEGRAL FUNCTIONS
+--------------------

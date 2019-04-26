@@ -1,0 +1,27 @@
+----- <~prob\psh1bcdf.top> CDF's for One Shape Parameter Continuous Distributions
+
+Plot CDF's (one shape parameters)
+
+Plot Cumulative Distribution Function for Continuous Distributions
+with One Shape Parameters
+
+McLeish                                   <xemf: ~prob\pmclcdf.men>
+Muth                                      <xemf: ~prob\pmutcdf.men>
+Ogive                                     <xemf: ~prob\pogicdf.men>
+Power                                     <xemf: ~prob\ppowcdf.men>
+Power Normal                              <xemf: ~prob\ppnrcdf.men>
+Reciprocal                                <xemf: ~prob\preccdf.men>
+Reflected Power                           <xemf: ~prob\prpocdf.men>
+Skew Double Exponential (Skew Laplace)    <xemf: ~prob\psdecdf.men>
+Skew Normal                               <xemf: ~prob\psncdf.men>
+Slope                                     <xemf: ~prob\pslocdf.men>
+T                                         <xemf: ~prob\ptcdf.men>
+Topp and Leone                            <xemf: ~prob\ptopcdf.men>
+Triangular                                <xemf: ~prob\ptricdf.men>
+Tukey-Lambda (symmetric)                  <xemf: ~prob\plamcdf.men>
+Von Mises                                 <xemf: ~prob\pvoncdf.men>
+Wald                                      <xemf: ~prob\pwalcdf.men>
+Weibull (minimum case)                    <xemf: ~prob\pwei1cdf.men>
+Weibull (maximum case)                    <xemf: ~prob\pwei2cdf.men>
+Wrapped Cauchy                            <xemf: ~prob\pwcacdf.men>
+

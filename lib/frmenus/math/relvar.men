@@ -1,0 +1,22 @@
+This is file relvar.men--Compute relative variance of a variable
+ 
+--------------------
+ 1. Relative Variance
+ 2. LET A = RELATIVE VARIANCE Y
+ 3.
+ 4. Variable for which to compute the relative variance:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the relative variance:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -10 50 *
+ 9.
+10.
+11. Compute the Relative Variance?:
+--------------------
+GR FE
+LET _2 = RELATIVE VARIANCE  _1 _3
+--------------------
+WEB HELP RELATIVE VARIANCE
+--------------------

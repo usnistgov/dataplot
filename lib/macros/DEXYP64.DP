@@ -1,0 +1,74 @@
+. This is dataplot macro   dexyp64.dp     2/7/14
+. Purpose: Define the plot character depending
+.          on whether n >= 64 or n < 64
+. Date: 2/7/14
+. Input:
+.    n               (parameter) = number of runs
+.    argz            (parameter) = identifier for an effect
+.    con1, con2, ... (string)    = interaction string (optional)
+.    cop1, cop2, ... (string)    = interaction string (optional)
+.    concopsw        (parameter) = 1 (if want to use con) or 0 (if want to use cop)
+. Output:
+.    ch              (string)    = the desired plot character
+.
+. -----start point-----
+.
+let pause64 = 0
+.
+if pause64 = 1
+   print " "
+   print "At the beginning of dexyp64.dp"
+   print argz
+   print con1 con2
+   print cop1 cop2
+   print concopsw
+   pause
+end if
+.
+. -----Step xx: Error skip the rest   PATCH PATHC PATCH PATCH (8/6/14)-----
+.
+let string ch = 0
+let string ch = ^argz
+let skiprest = 1
+if skiprest = 0
+.
+let string stmacro = dexyp64.dp
+set check name output filliben
+feedback save; feedback on
+let iflag1 = check name n argz concopsw
+let iflag2 = check name con^argz cop^argz
+feedback restore
+.
+let string ch = 0
+.
+. -----Step 1: Do the   con   case-----
+.
+if concopsw = 1
+   if n <= 64
+      if con^argz exists
+         let string    ch = ^con^argz
+      else
+         let string    ch = ^argz
+      end if
+   else
+      let string       ch = ^argz
+   end if
+end if
+.
+. -----Step 2: Do the   cop   case-----
+.
+if concopsw = 2
+   if n <= 64
+      if cop^argz exists
+         let string ch = ^cop^argz
+      else
+         let string ch = ^argz
+      end if
+   else
+      let string ch = ^argz
+   end if
+end if
+.
+. -----step xx--complete skip
+.
+end if

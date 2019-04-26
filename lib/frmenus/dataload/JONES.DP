@@ -1,0 +1,8 @@
+----- <~dataload\JONES.DP> Load JONES.DAT
+
+. This is file    JONES.DP
+
+DELETE Y X
+SKIP 25
+READ JONES.DAT Y X
+

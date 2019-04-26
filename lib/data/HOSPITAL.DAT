@@ -1,0 +1,170 @@
+THIS IS DATAPLOT DATA FILE   HOSPITAL.DAT
+HOSPITAL DEATH RATES AT SELECTED WASHINGTON, D. C.-AREA HOSPITALS
+NUMBER OF OBSERVATIONS = 100
+RESPONSE VARIABLE = ADJUSTED DEATH RATE
+NUMBER OF VARIABLES PER LINE IMAGE = 3
+ORDER OF VARIABLES ON A LINE IMAGE--
+   1. ADJUSTED DEATH RATE
+   2. HOSPITAL
+         1 = HOLY CROSS
+         2 = JOHNS HOPKINS
+         3 = MONTGOMERY GENERAL
+         4 = SHADY GROVE
+         5 = SUBURBAN
+         6 = DC GENERAL
+         7 = GEORGE WASHINGTON UNIVERSITY
+         8 = SIBLEY
+         9 = FAIRFAX
+        10 = NATIONAL ORTHOPAEDICS
+   3. TYPE OF ILLNESS
+         1 = ACUTE MYOCARDIAL INFARCTION
+         2 = CONGESTIVE HEART FAILURE
+         3 = PNEUMONIA/INFLUENZA
+         4 = CHRONIC OBSTRUCTIVE PULMONARY DISORDER
+         5 = STROKE
+         6 = HIP FRACTURE
+         7 = SEPSIS (BLOOD POISONING)
+         8 = HIP REPLACEMENT/RECONSTRUCTION
+         9 = PROSTATECTOMY
+        10 = GALL BLADDER REMOVAL
+        11 = INITIAL PACEMAKER INSERTION
+        12 = ALL CASES
+SOURCE--WASHINGTON CONSUMERS' CHECKBOOK
+        VOLUME 8, NUMBER 3, (SEPTEMBER 1992)
+        CENTER FOR THE STUDY OF SERVICES
+        806 15TH STREET NW, SUITE 925
+        WASHINGTON, D.C. 20005
+TO READ THIS INTO DATAPLOT--
+   SKIP 50
+   READ HOSPITAL.DAT Y ILLNESS HOSPITAL
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ADJUSTED   HOSPITAL    ILLNESS
+ DEATH
+ RATE
+------------------------------
+  28         1           1
+  21         2           1
+  21         3           1
+  30         4           1
+  24         5           1
+  40         6           1
+  18         7           1
+  22         8           1
+  22         9           1
+  18        10           1
+  14         1           2
+  11         2           2
+  16         3           2
+  15         4           2
+  17         5           2
+  22         6           2
+  11         7           2
+  15         8           2
+  13         9           2
+   4        10           2
+  20         1           3
+  23         2           3
+  19         3           3
+  15         4           3
+  17         5           3
+  30         6           3
+  11         7           3
+  13         8           3
+  14         9           3
+  17        10           3
+  10         1           4
+  10         2           4
+  11         3           4
+   8         4           4
+  12         5           4
+  10         6           4
+   9         7           4
+   5         8           4
+   8         9           4
+  21        10           4
+  22         1           5
+  17         2           5
+  28         3           5
+  21         4           5
+  20         5           5
+  33         6           5
+  24         7           5
+  18         8           5
+  16         9           5
+  22        10           5
+   8         1           6
+   5         2           6
+  11         3           6
+   6         4           6
+   9         5           6
+   5         6           6
+   7         7           6
+   5         8           6
+   7         9           6
+   7        10           6
+  20         1           7
+  31         2           7
+  21         3           7
+  39         4           7
+  25         5           7
+  51         6           7
+  38         7           7
+  19         8           7
+  18         9           7
+  11        10           7
+  6.4        1           8
+  2.2        2           8
+  6.5        3           8
+  2.1        4           8
+  3.4        5           8
+  0.0        6           8
+  0.9        7           8
+  2.7        8           8
+  2.9        9           8
+  5.4       10           8
+  0.6        1           9
+  0.5        2           9
+  1.1        3           9
+  0.6        4           9
+  0.4        5           9
+  2.7        6           9
+  0.0        7           9
+  0.2        8           9
+  0.0        9           9
+  0.0       10           9
+  3.7        1           10
+  0.8        2           10
+  0.0        3           10
+  0.0        4           10
+  2.7        5           10
+  0.0        6           10
+  6.4        7           10
+  1.8        8           10
+  2.8        9           10
+  2.3       10           10
+  4.7        1           11
+  0.0        2           11
+  5.8        3           11
+  3.0        4           11
+  6.8        5           11
+  0.0        6           11
+  4.0        7           11
+  2.3        8           11
+  5.6        9           11
+  0.0       10           11
+  9.5        1           12
+  6.8        2           12
+  9.5        3           12
+  9.2        4           12
+  8.7        5           12
+  13.7       6           12
+  7.8        7           12
+  7.4        8           12
+  8.1        9           12
+  8.2       10           12

@@ -1,0 +1,43 @@
+----- <~scre\manual.top> Manual
+
+Accessing the Dataplot On-Line Reference Manual
+
+
+There is an on-line Dataplot Reference Manual that
+can be accessed from the Dataplot graphical user
+interface.  For example, the "Web Help" button tha
+is available on many of the menus goes to a specific
+page in this on-line manual.
+
+You need the following in order to view this
+on-line manual.
+
+   1) A web browser such as Netscape or Internet
+      Explorer.  Note that some old browsers such
+      as Mosaic (or text based browsers) do not
+      work well for this application.
+
+   2) A utility that allows you to read Portable
+      Document Format (PDF) files.  PDF is the format
+      used by the Adobe Acrobat software.  Adobe
+      provides a free, downloadable reader for PDF
+      files.  Ghostview is also capable of reading
+      PDF files.  The Dataplot web pages contain
+      links to the Adobe and Ghostview web sites where
+      the software can be downloaded.
+
+      For best results, the PDF reader should be
+      installed as a  plug-in application to your
+      browser.
+
+The Dataplot web pages and on-line reference manual
+reside on the NIST external web site.  We provide
+(or will in the near future) a version of this web
+site that can be installed on your local machine
+or accessed from a CD-ROM.  This will provide faster
+performance than accessing the NIST site.  If you
+do install these pages locally, then the "Specify
+Dataplot Web Pages Path" under the "Browser" menu
+can be used to specify the location of the Dataplot
+web pages.
+

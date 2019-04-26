@@ -1,0 +1,8 @@
+----- <~woch\workexamp.top> WWorked Examples
+ 
+Worked Examples Using Diagrammatic Graphics
+ 
+Show Some Math Operations             <xcl: CALL MATHOPER.DP>
+Normal Density with 1/2/3 Sigma Areas <xcl: CALL NORMDENS.DP>
+Curves with Labels                    <xcl: CALL TAGTRACE.DP>
+

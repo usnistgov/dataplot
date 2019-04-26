@@ -1,0 +1,53 @@
+-----<~reli\ppccopti.top> PPCC Plots: Options
+
+PPCC Plots: Options
+
+PPCC Plots: Options
+
+1. You can choose to find either the maximum PPCC (probability
+   plot correlation coefficient) or the minimum Kolmogorov-Smirnov
+   goodness of fit statistic.  We refer to these as the PPCC plot
+   and the KS plot, respectively.
+
+2. Your data can be either ungrouped (a single response variable)
+   or grouped (a bin counts variable and a bin mid-points
+   variable).  If you choose the KS plot and you have grouped
+   data, the chi-square goodness of fit statistic will be used.
+
+3. The KS plot is not implemented for censored data.
+
+4. You may want to generate two iterations of this plot.  The
+   first iteration can be used to identify a good "neighborhood"
+   for the optimal value of the shape parameter and the second
+   iteration can be used to obtain a more accurate estimate by
+   restricting the the range for the shape parameter.
+
+5. After determining the estimate of the shape parameter(s) via
+   the PPCC or KS plot,  you can obtain the estimates of location
+   and scale from the probability plot.
+
+6. In some cases, it may be advantagous to fix the values of the
+   location and scale parameters when generating  the KS plot (you
+   cannot do this for the PPCC plot).
+
+       Set location/scale value for KS plot <xemf: ~reli\ksscale.men>
+
+7. PPCC plots can generate many computations of the percent point
+   function (N*NSHAPE1*NSHAPE2 where N = number of data points
+   and NSHAPE1 and NSHAPE2 are the number of values for the the
+   first and second shape parameters, respectively).  If the
+   PPCC/KS plot takes too long to generate, there are two options
+   for speeding it up.
+
+   a. You can bin the data (this reduces the size of N).
+
+   b. You can generate the PPCC/KS plot on a fixed number of
+      equi-spaced percentiles of the data.  Our experience is
+      that this works somewhat better than binning.
+
+         Set number of percentiles to plot    <xemf: ~reli\numbperc.men>
+
+   We recommend using the full data set unless the the PPCC/KS
+   plot becomes too slow.  For the reliability menus, this should
+   only be an issue for the two shape parameter distributions.
+

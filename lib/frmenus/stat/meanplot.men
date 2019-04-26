@@ -1,0 +1,42 @@
+This is file meanplot.men--Generate Mean Plot
+ 
+--------------------line 3
+ 1. Mean Plots
+ 2. MEAN PLOT Y X
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Horizontal Axis Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Character Type for Data:
+ 7. @CE 3 0 40 50 * gui-char
+ 8. Character Fill for Data:
+ 8. @CE 4 1 40 44 off
+ 8. @CE 4 2 47 50 on
+ 9. Line Type for Data-connecting Line
+ 9. @CE 5 0 40 50 * gui-line
+10. Line Type for Global Mean Line?
+10. @CE 6 0 40 50 * gui-line
+11. Spike to Global Mean Line?
+11. @CE 7 1 40 44 off
+11. @CE 7 2 47 50 on
+12.
+13. Subset/Except/For Specification:
+14. @CE 8 0 1 50 *
+15.
+16. Generate the Mean Plot?:
+--------------------
+CHARACTERS _3
+CHARACTER FILL _4
+LINES _5 _6
+.
+@IF 7 1 SPIKE OFF
+@IF 7 2 SPIKE ON
+@IF 7 2 SPIKE BASE ZSTAT
+.
+BAR OFF OFF
+MEAN PLOT _1 _2 _8
+--------------------last
+WEB HELP MEAN PLOT
+--------------------last

@@ -1,0 +1,11 @@
+----- <~handbook\pmd_desi.top> PMD Designs
+
+Process Modeling Designs
+
+Comparative Designs                 <~dexcomp\dexcomp.top>
+Screening/Characterizing Designs
+   2**k Designs                     <~dex2k\dex2k.top>
+   2**(k-p) Designs                 <~dex2kmp\dex2kmp.top>
+Modeling Designs                    <~dexreg\dexreg.top>
+Optimizing Designs                  <~dexopt\dexopt.top>
+

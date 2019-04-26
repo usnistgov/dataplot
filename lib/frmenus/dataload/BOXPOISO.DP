@@ -1,0 +1,8 @@
+----- <~dataload\BOXPOISO.DP> Load BOXPOISO.DAT
+
+. This is file    BOXPOISO.DP
+
+DELETE Y X1 X2 REP
+SKIP 25
+READ BOXPOISO.DAT Y X1 X2 REP
+

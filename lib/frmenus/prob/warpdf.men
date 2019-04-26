@@ -1,0 +1,26 @@
+This is file warpdf.men--Compute Waring pdf
+ 
+--------------------
+ 1. Compute Waring pdf
+ 2. LET A = WARPDF(X,C,A)
+ 3.
+ 4. Input values:
+ 5.                            x:
+ 5. @CE 1 0 42 50 ?
+ 6.    shape parameter c (c > a):
+ 6. @CE 2 0 42 50 ?
+ 7.    shape parameter a (a > 0):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Output parameters:
+10.      name for the pdf  value:
+10. @CE 4 0 42 50 ?
+11.
+12.
+13. Compute the Probability?
+--------------------
+AN FE
+@IF 4 0 LET _4 = WARPDF( _1 , _2 , _3 )
+--------------------
+WEB HELP WARPDF
+--------------------

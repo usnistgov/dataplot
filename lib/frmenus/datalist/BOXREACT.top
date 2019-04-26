@@ -1,0 +1,8 @@
+----- <~datalist\BOXREACT.top> BOXREACT.DAT
+ 
+BOXREACT.DAT
+ 
+View     <xcl: LIST BOXREACT.DAT>
+Load     <x2cl: SKIP 25; READ BOXREACT.DAT Y X1 TO X5>
+Print    <xccl: printfile C:\DATAPLOT\BOXREACT.DAT>
+ 

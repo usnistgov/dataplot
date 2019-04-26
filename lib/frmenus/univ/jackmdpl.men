@@ -1,0 +1,27 @@
+This is file jackmdpl.men--Generate Jacknife Median Plot
+ 
+--------------------line 3
+ 1. Jacknife Median Plot
+ 2. JACKSTRAP MEDIAN PLOT Y X
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5.
+ 6. Character Type for Data (X)
+ 6. @CE 2 0 40 50 * gui-char
+ 7. Line Type for Data (SOLID)
+ 7. @CE 3 0 40 50 * gui-line
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 4 0 1 50 *
+11.
+12.
+13. Generate the Jacknife Plot?
+--------------------
+@IF 2 0 CHARACTERS _2
+@IF 3 0 LINES _3
+.
+JACKNIFE MEDIAN PLOT _1 _4
+--------------------last
+WEB HELP JACKNIFE PLOT
+--------------------last

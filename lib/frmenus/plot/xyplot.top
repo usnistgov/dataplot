@@ -1,0 +1,19 @@
+----- <~plot\xyplot.top> Plot
+
+X-Y and 3-D Plots
+
+Plot Y and Plot Y X          <xemf: ~stat\scatplot.men>
+Plot with  Replication       <xemf: ~stat\replplot.men>
+Youden Plot                  <xemf: ~stat\youdplot.men>
+Plot 1-Variable Function     <xemf: ~math\plotfunc.men>
+Plot Y X with overlaid Function <xemf: ~plot\plotdf2d.men>
+Scatter Plot Matrix          <xemf: ~plot\scatplma.men>
+
+Plot 2-Variable Function     <xemf: ~math\plotfun2.men>
+3D-Plot (Data)               <xemf: ~plot\3dplot.men>
+Contour Plot (Data)          <xemf: ~math\contour.men>
+Conditioning (and Level) Plot <~plot\condplot.top>
+
+Error Bar Plot               <xemf: ~plot\errorbar.men>
+Vector Plot                  <xemf: ~plot\vectplot.men>
+

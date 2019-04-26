@@ -1,0 +1,37 @@
+This is file seasinde.men--Generate a seasonal index variable
+ 
+--------------------
+ 1. Generate a Seasonal Index Variable
+ 2. Macro
+ 3.
+ 4. A seasonal index variable identifies the season.
+ 5. For example, quarterly data has a period of 4, so
+ 6. a seasonal index variable would look like
+ 7.    1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4 ...
+ 8. Several of the menus in this section require
+ 9. a seasonal index variable.
+10.
+11. Period (i.e., number of seasons):
+11. @CE 1 0 42 50 ?
+12. Size of series (i.e., N):
+12. @CE 2 0 42 50 ?
+13. Starting season (typically 1):
+13. @CE 3 0 42 50 ?
+14.
+15. Name for the seasonal index variable:
+15. @CE 4 0 42 50 ?
+16.
+17.
+18. Generate the Seasonal Index Variable?:
+--------------------
+GR FE
+LET ZZZZP = 12
+LET ZZZZS = 1
+LET ZZZZN = 100
+LET ZZZZP = _1
+LET ZZZZN = _2
+LET ZZZZS = _3
+LET ZZZZNTMP = ZZZZN + ZZZZS - 1
+LET _4 = SEQUENCE 1 1 ZZZZP FOR I = 1 1 ZZZZNTMP
+RETAIN _4 FOR I = ZZZZS 1 ZZZZNTMP
+--------------------

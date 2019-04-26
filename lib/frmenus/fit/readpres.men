@@ -1,0 +1,26 @@
+This is file readpres.men--Read (and plot) the Press statistic
+ 
+--------------------
+1. Compute Press Statistic
+2. SET READ FORMAT 64X,E15.7; READ DPST3F.DAT DELRES
+3.
+4. Parameter Name to Use: 
+4. @CE 1 0 42 50 ?
+5.
+6.
+7. Compute the Press Statistic?:
+--------------------
+GR FE
+SKIP 1
+SET READ FORMAT 64X,E15.7
+READ DPST3F.DAT ZZZZRES
+SKIP 0
+SET READ FORMAT
+LET ZZZZRES = ZZZZRES*ZZZZRES
+LET _1 = SUM ZZZZRES
+LET ZZZZJUNK = _1
+DELETE ZZZZRES
+PRINT "PRESS STATISTIC = ^ZZZZJUNK"
+--------------------
+WEB HELP FIT
+--------------------

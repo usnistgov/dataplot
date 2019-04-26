@@ -1,0 +1,9 @@
+----- <~dataloex\qual.top> Load & Execute Built-in Quality/SPC Data Files
+
+Load & Execute Built-in Quality/SPC Data Files
+
+7 Old Tools                              <xcf: ~dataloex\OLDTOOLS.DP>
+Control Charts                           <~dataloex\qualcoch.top>
+Process Capability Index                 <~dataloex\qualpci.top>
+Taguchi                                  <~dataloex\qualtag.top>
+

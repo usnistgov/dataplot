@@ -1,0 +1,40 @@
+This is file repstack.men--Replicated Stack
+ 
+--------------------
+ 1. Replicated Stack
+ 2. LET Y MATID LABID = REPLICATED STACK Y1 Y2 .. YK LAB
+ 3.
+ 4. This menu is used to convert data in the form:
+ 5.
+ 6.    MAT1 MAT2  .. MATK LAB
+ 7.
+ 8. to the form
+ 9.
+10.    Y  MATID  LABID
+11.
+12. That is, the result will be a single response
+13. variable and two group-id variables.
+14. 
+15. List of variables to stack:
+16. @CE 1 0 1 50 ? gui-variable
+17. Lab ID variable:
+17. @CE 2 0 42 50 ? gui-variable
+18. 
+19. Variable to store the stacked response data:
+19. @CE 3 0 42 50 ? gui-none
+20. Variable to store the material-id data:
+20. @CE 4 0 42 50 ? gui-none
+21. Variable to store the lab-id data:
+21. @CE 5 0 42 50 ? gui-none
+22.
+23. Subset/Except/For Specification:
+24. @CE 6 0 1 50 *
+25.
+26.
+27. Carry out the Replicated Stack?:
+--------------------
+GR FE
+LET _3 _4 _5 = REPLICATED STACK  _1 _2 _6
+--------------------
+WEB HELP REPLICATED STACK
+--------------------

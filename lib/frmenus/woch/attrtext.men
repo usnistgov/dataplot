@@ -1,0 +1,84 @@
+This is file attrtext.men--Set Text Attributes
+ 
+--------------------
+ 1. Set Text Attributes
+ 2. FONT SIMPLEX; JUSTIFICATION CENTER; COLOR BLUE
+ 3.
+ 4. You only need to specify the attributes you
+ 5. actually want to change.
+ 6. 
+ 7. Text Font:
+ 7. @CE 1 0 42 50 * gui-font
+ 8. Case for Text:
+ 9. @CE 2 1 5 17 all upper
+ 9. @CE 2 2 19 31 all lower
+ 9. @CE 2 3 33 50 case as typed
+10. Text Color:
+10. @CE 3 0 42 50 * gui-color
+11. Text Height (default = 2.0):
+11. @CE 4 0 42 50 *
+12. Text Width (default = 1.0):
+12. @CE 5 0 42 50 *
+13. Justification for Text:
+14. @CE 6 1 5 50 Horizontal - left; Vertical - bottom
+15. @CE 6 2 5 50 Horizontal - center; Vertical - bottom
+16. @CE 6 3 5 50 Horizontal - right; Vertical - bottom
+17. @CE 6 4 5 50 Horizontal - left; Vertical - center
+18. @CE 6 5 5 50 Horizontal - center; Vertical - center
+19. @CE 6 6 5 50 Horizontal - right; Vertical - center
+20. @CE 6 7 5 50 Horizontal - left; Vertical - top
+21. @CE 6 8 5 50 Horizontal - center; Vertical - top
+22. @CE 6 9 5 50 Horizontal - right; Vertical - top
+23. Fill special symbols:
+23. @CE 7 0 42 50 * gui-ooff
+24. Angle for Text (Software Fonts Only):
+24. @CE 8 0 42 50 *
+25. Line Thickness for Text (Software Fonts Only):
+25. @CE 9 0 42 50 * gui-thick
+26. Carriage Return After Text Command:
+26. @CE 10 0 42 50 * gui-ooff
+27. Line Feed After Text Command:
+27. @CE 11 0 42 50 * gui-ooff
+28. Vertical Spacing Between Text Lines (default=0.75):
+28. @CE 12 0 42 50 * gui-ooff
+29. Horizontal Spacing Between Characters (default=0.25):
+29. @CE 13 0 42 50 * gui-ooff
+30. X Coordinate (0 to 100 units) for Carriage Return:
+30. @CE 14 0 42 50 * gui-ooff
+31. Spacing for Text:
+31. @CE 15 1 22 35 proportional
+31. @CE 15 2 37 50 fixed
+32.
+33. 
+34. Set the Attributes?:
+--------------------
+GR FE
+FONT _1
+@IF 2 1 CASE UPPER
+@IF 2 2 CASE LOWER
+@IF 2 3 CASE ASIS
+COLOR _3
+HEIGHT _4
+WIDTH _5
+@IF 6 1 JUSTIFICATION LEFT
+@IF 6 2 JUSTIFICATION CENTER
+@IF 6 3 JUSTIFICATION TOP
+@IF 6 4 JUSTIFICATION LECE
+@IF 6 5 JUSTIFICATION CECE
+@IF 6 6 JUSTIFICATION RICE
+@IF 6 7 JUSTIFICATION LETO
+@IF 6 8 JUSTIFICATION CETO
+@IF 6 9 JUSTIFICATION RITO
+FILL _7
+ANGLE _8
+THICKNESS _9
+CR _10
+LF _11
+VERTICAL SPACING _12
+HORIZONTAL SPACING _13
+MARGIN _14
+@IF 15 1 SPACING PROPORTIONAL
+@IF 15 2 SPACING FIXED
+--------------------
+WEB HELP DIAGRAMMATIC GRAPHICS
+--------------------

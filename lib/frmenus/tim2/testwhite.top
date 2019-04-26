@@ -1,0 +1,19 @@
+----- <~tim2\testwhite.top> Testing White Noise
+ 
+Testing White Noise
+ 
+Discussion                     <~tim2\testwndi.top>
+ 
+Within a single series:
+   4-PLOT                         <xemf: ~univ\4plot.men>
+   Lag plot                       <xemf: ~time\lagplot.men>
+   Autocorrelation plot           <xemf: ~time\autocopl.men>
+   Partial autocorrelation plot   <xemf: ~time\partaucp.men>
+   Spectrum                       <xemf: ~time\spectrum.men>
+   Runs analysis                  <xemf: ~tim2\runsanal.men>
+ 
+Between the 2 series:
+   Cross-Lag plot                 <xemf: ~tim2\croslagp.men>
+   Cross-Correlation plot         <xemf: ~tim2\croscopl.men>
+   Cross-Spectrum                 <xemf: ~tim2\crosspec.men>
+ 

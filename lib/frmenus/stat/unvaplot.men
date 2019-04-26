@@ -1,0 +1,31 @@
+This is file unvaplot.men--Graphical Test: Shift in Variation
+NOTE--NOT WORK IF HAVE SUBSET   11/94
+--------------------
+ 1. Graphical Test: Shift in Variation
+ 2. PLOT Y; DRAWDATA .5 MU0 1.5 MU0
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5. Reference Variation Value sigma0:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Generate the Plot?
+--------------------
+GR FE
+LET ZDUMMY = (_1 ) - (_1 ) + 1
+LET ZMEAN = MEAN _1 _3
+CHARACTERS X BLANK
+LINES SOLID DOTTED
+XLIMITS .9 1.1
+PLOT _1 ZDUMMY AND
+PLOT ZMEAN FOR X = .96 .01 1.04
+LINES SOLID SOLID
+CHARACTERS BLANK BLANK
+XLIMITS
+--------------------
+WEB HELP PLOT
+--------------------

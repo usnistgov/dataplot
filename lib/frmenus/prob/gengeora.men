@@ -1,0 +1,36 @@
+This is file gengeora.men--Generate Geometric Random Numbers
+ 
+--------------------
+ 1. Generate Geometric Random Numbers
+ 2. LET Y = GEOMETRIC RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. The geometric distribution can be defined as
+ 5. either the number of trials before the first
+ 6. success or as the number of trial up to and
+ 7. including the first success.  This menu computes
+ 8. the first alternative (first success not counted).
+ 9.
+10. Number of random numbers to be generated:
+10. @CE 1 0 42 50 ?
+11. Shape Parameter (p, 0 < p < 1):
+11. @CE 2 0 42 50 ?
+12.
+13. Optional random number generator seed (default=305):
+14.    (integer >= 305)
+14. @CE 3 0 42 50 ?
+15.
+16. Name of output variable;
+16. @CE 4 0 42 50 ?
+17.
+18.
+19. Generate the random numbers?
+--------------------
+AN FE
+SET GEOMETRIC DEFINITION JOHNSON AND KOTZ
+@IF 3 0 SEED _3
+LET P = 0.5
+@IF 2 0 LET P = _2
+LET _4 = GEOMETRIC RANDOM NUMBERS FOR I = 1 1 _1
+--------------------
+WEB HELP GEOPDF
+--------------------

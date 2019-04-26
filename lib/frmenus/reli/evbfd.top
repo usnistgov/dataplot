@@ -1,0 +1,23 @@
+----- <~reli\evbfd.top> Best-Fit Dist. (Domain of Attraction)
+
+Distributional Fitting
+
+Discussion                               <~reli\fit_disc.top>
+
+Gumbel
+   Maximum Likelihood method             <xemf: ~reli\gumbmle.men>
+   Probability plot method               <xemf: ~reli\probgumb.men>
+   Least Squares                         <xemf: ~reli\lsqgumb.men>
+Frechet
+   PPCC method                           <xemf: ~reli\ppccfrec.men>
+   Least Squares                         <xemf: ~reli\lsqfrec.men>
+Weibull
+   PPCC method                           <xemf: ~reli\ppccweib.men>
+   Maximum Likelihood (2-parameter)      <xemf: ~reli\weibmle.men>
+   Least Squares                         <xemf: ~reli\lsqweib.men>
+Generalized Pareto
+   PPCC method                           <xemf: ~reli\ppccgpar.men>
+   Dehaan method                         <xemf: ~reli\dehaan.men>
+   CME method                            <xemf: ~reli\cme.men>
+   Least Squares                         <xemf: ~reli\lsqgpar.men>
+

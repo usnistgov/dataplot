@@ -1,0 +1,27 @@
+----- <~univ\discinfl.top> Influence Curves: Discussion
+ 
+Influence Curves: Discussion
+ 
+Influence curves graph the effect of adding a
+single observation to a given statistic.  This
+is useful in studying the "robustness" properties
+of a given statistic.
+
+Specifically, an x variable is created over
+a specified range.  Then we loop through the
+x variable.  For each value of the x variable,
+we compute the given statistic with the original
+data plus the additional value of the x variable.
+The influence curve is formed by plotting
+the computed value of the statistic on the
+y axis and the value of the x variable on the
+x axis.
+
+The influence curve shows how the value of the
+given statistic changes as the added point
+becomes more extreme. 
+
+Note that the influence curve in Dataplot is
+currently limited to statistics that are
+computed from a single response variable.
+

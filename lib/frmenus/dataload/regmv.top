@@ -1,0 +1,18 @@
+----- <~dataload\regmv.top> Load Regression Data: Multi-variable
+
+Load Regression Data: Multi-variable
+
+HALD647.DAT   Cement hard. heat (4-fact.)  <xcf: ~dataload\HALD647.DP>
+USADEBT.DAT   USA nat. debt (1947-1993)    <xcf: ~dataload\USADEBT.DP>
+NELSON.DAT    Insulation; accel. testing   <xcf: ~dataload\NELSON.DP>
+
+BOXCLEAN.DAT  Cleanser stab. (4 factors)   <xcf: ~dataload\BOXCLEAN.DP>
+BOXCHEM2.DAT  Cleanser stab. (2 factors)   <xcf: ~dataload\BOXCHEM2.DP>
+BOXYIELD.DAT  Time/temp eff on Yield       <xcf: ~dataload\BOXYIELD.DP>
+BOXYIEL2.DAT  Time/temp eff on Yield       <xcf: ~dataload\BOXYIEL2.DP>
+
+WAMPLER2.DAT  Multilinear fit test data    <xcf: ~dataload\WAMPLER2.DP>
+LONGLEY.DAT   Labor stat. fit test data    <xcf: ~dataload\LONGLEY.DP>
+
+ROSSIT15.DAT  Roof Tape Strength (4 Factors)  <xcf: ~dataload\ROSSIT15.DP>
+

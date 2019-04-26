@@ -1,0 +1,28 @@
+----- <~dex\crbdlist.top> Listing: Randomized Block Design
+
+Listing: Randomized Block Design
+
+The following is an example of a
+Randomized Block Design consisting of
+   k  = 2 factors (1 primary factor X1 &
+                   1 blocking factor X2)
+   l1 = 4 levels of factor X1
+   l2 = 3 levels of factor X2
+   r  = 1 replication per cell
+   n  = l1 * l2  =  4 * 3 = 12 runs
+
+    X1    X2
+   ............
+     1     1
+     1     2
+     1     3
+     1     4
+     2     1
+     2     2
+     2     3
+     2     4
+     3     1
+     3     2
+     3     3
+     3     4
+

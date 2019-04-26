@@ -1,0 +1,8 @@
+----- <~dataload\DDS16.DP> Load DDS16.DAT
+
+. This is file    DDS16.DP
+
+DELETE Y X
+SKIP 25
+READ DDS16.DAT Y X
+

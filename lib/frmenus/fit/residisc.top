@@ -1,0 +1,53 @@
+----- <~fit\residisc.top> Discussion: Residual Analysis
+
+Discussion: Model Validation
+
+After fitting a model, it is important to
+validate the model.  By validation, we mean
+that the model assumptions are satisfied.  If
+the assumptions are invalid, the inferences
+from the model will not be valid.
+
+Specifically, the fitted model is:
+
+   y = f(x1,x2,...,xp) + e
+
+where y is the depdendent variable,
+f(x1,x2,...,xp) is some model, and e is an
+error term.
+
+The basic assumptions for least squares fitting
+are:
+
+  1. Fixed Model
+  2. Randomness
+  3. Fixed Variation
+  4. Fixed Distribution
+  5. No Outliers
+
+A common assumption is that the error terms
+are independent, identically distributed normal
+random variables with fixed mean u and fixed
+standard deviation s.
+
+The primary tool for model validation is
+residual analysis.  Specifically, the residuals
+should be checked for common location, common
+scale, normality, and outliers.
+
+Normality can be verified via a normal probability
+plot of the residuals.  Common location, common scale,
+and no outliers can be verified by a run sequence
+plot of the residuals.  Independence is often
+verified by a lag plot or an autocorrelation plot
+of the residuals.  A 4-PLOT of the residuals is a
+convenient summary plot to test for all of these
+assumptions (it does a run sequence plot, a lag plot,
+a histogram, and a normal probability plot of the
+residuals on a single page).
+
+The residuals can also be plotted against the predicted
+values and against each of the independent variables.
+These plots can sometimes detect if there is remaining
+structure in the residuals.
+

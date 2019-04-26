@@ -1,0 +1,18 @@
+----- <~nist\naka\naka.top> Nakatani Modeling Cycle
+
+Nakatani Modeling Cycle
+
+The sequence for Nakatani modeling involves 7 steps:
+
+   1. List your data file   <xemf: ~nist\naka\listdata.men>
+   2. Read in the data      <xemf: ~nist\naka\readdata.men>
+   3. Plot the data         <xemf: ~nist\naka\plotdata.men>
+   4. Select a model        <xemf: ~nist\naka\selmodel.men>
+   5. Set model parameters  <xemf: ~nist\naka\setparam.men>
+   6. Set weights           <xemf: ~nist\naka\setweigh.men>
+   7. Do the fit            <xemf: ~nist\naka\fitmodel.men>
+   8. Validate the model    <xemf: ~nist\naka\valmodel.men>
+
+
+Worked Example #1          <xcf: ~nist\naka\NAKATAN1.DP>
+Worked Example #2          <xcf: ~nist\naka\NAKATAN2.DP>

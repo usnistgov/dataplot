@@ -1,0 +1,35 @@
+. This is dataplot program    sdigit.dp
+. Purpose: Create a multiplicative string
+.          e.g., 257 => X2 * X5 * X7
+. Used by dexyp.dp and other 10-step macros
+. Date: 1/26/15
+. Input:
+.    digitv (vector) = vector of digits (e.g., 2 5 7)
+. Output:
+.    sdigit  (string) = multiplicative form e.g., X2*X5*X7
+.
+. -----start point-----
+.
+. -----Step 1: Check input arguments-----
+.
+let string stmacro = sdigit.dp
+set check name output filliben
+feedback save; feedback on
+let iflag = check name digitv
+feedback restore
+.
+. -----Step 2: Form the multiplicative string (with base X)-----
+.
+let numdigit = number digitv
+let string sdigit = -999
+if numdigit >= 1
+   loop for jdigit = 1 1 numdigit
+      let digitj = digitv(jdigit)
+      let string stterm = X^digitj
+      if jdigit  = 1; let string sdigit = ^stterm       ; end if
+      if jdigit <> 1; let string sdigit = ^sdigit*^stterm; end if
+   end loop
+end if
+. print digitv
+. print sdigit
+.

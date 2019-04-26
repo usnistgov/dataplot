@@ -1,0 +1,22 @@
+This is file skip.men--Specify number of lines to skip in file
+ 
+--------------------
+ 1. Specify Number of Header Lines to Skip
+ 2. SKIP <n>
+ 3.
+ 4. Data files may have header lines that describe
+ 5. the contents of the data file.  This menu allows
+ 6. to specify the number of header lines to skip
+ 7. over when reading the file.
+ 8.
+ 9. Enter the number of header lines to skip:
+ 9. @CE 1 0 42 50 ?
+10.
+11.
+12. Define the Number of Header Lines?
+--------------------
+SU FE
+SKIP _1
+--------------------
+WEB HELP SKIP
+--------------------

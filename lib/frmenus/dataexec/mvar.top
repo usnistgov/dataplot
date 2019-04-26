@@ -1,0 +1,25 @@
+----- <~dataexec\mvar.top> Load and Execute Multivariate Data
+
+Load and Execute Multivariate Data
+
+AUTO83B.DAT*  EPA auto miles per gallon    <xcf: ~dataexec\AUTO83B.DP>
+UGIANSKY.DAT* Interlab stress corrosion    <xcf: ~dataexec\UGIANSKY.DP>
+
+AUTO83.DAT    EPA auto miles per gallon    <xcf: ~dataexec\AUTO83.DP>
+AUTO79.DAT    Auto characteristics         <xcf: ~dataexec\AUTO79.DP>
+BIOMED3.DAT   Biomedical data              <xcf: ~dataexec\BIOMED3.DP>
+GNP.DAT       Gross national product       <xcf: ~dataexec\GNP.DP>
+AC.DAT        2**(6-3)  A/C performance    <xcf: ~dataexec\AC.DP>
+KRASNY1.DAT   2**5  Cigarette flammab.     <xcf: ~dataexec\KRASNY1.DP>
+SMALL14.DAT   Atomic modeling              <xcf: ~dataexec\SMALL14.DP>
+
+IRIS.DAT*     Classic Fisher iris data     <xcf: ~dataexec\IRIS.DP>
+FLURY5.DAT    Swiss counterfeit notes      <xcf: ~dataexec\FLURY5.DP>
+PLANETS.DAT   Solar systems planets stat.  <xcf: ~dataexec\PLANETS.DP>
+CURRIE.DAT    Pollution source analysis    <xcf: ~dataexec\CURRIE.DP>
+PERIODIC.DAT  Chemistry periodic table     <xcf: ~dataexec\PERIODIC.DP>
+NEGIZ3.DAT    Aerosol particle size        <xcf: ~dataexec\NEGIZ3.DP>
+MORALES.DAT   Mass spec: sulfur exa-fluor  <xcf: ~dataexec\MORALES.DP>
+MORALES2.DAT  Mass spec: sulfur exa-fluor  <xcf: ~dataexec\MORALES2.DP>
+KAUL.DAT      Refridgerant analysis        <xcf: ~dataexec\KAUL.DP>
+

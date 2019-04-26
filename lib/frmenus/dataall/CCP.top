@@ -1,0 +1,8 @@
+----- <~dataall\CCP.top> CCP.DAT
+
+CCP.DAT
+
+View     <xcl: LIST CCP.DAT>
+Load     <xcf: ~dataload/CCP.DP>
+Print    <xccl: printfile C:\DATAPLOT\CCP.DAT>
+

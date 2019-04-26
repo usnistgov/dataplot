@@ -1,0 +1,8 @@
+----- <~dataload\DRAPS521.DP> Load DRAPS521.DAT
+
+. This is file    DRAPS521.DP
+
+DELETE Y X1 X2 RUN
+SKIP 25
+READ DRAPS521.DAT Y X1 X2 RUN
+

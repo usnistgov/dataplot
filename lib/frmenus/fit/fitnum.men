@@ -1,0 +1,39 @@
+This is file fitnum.men--Numerical Summaries
+ 
+--------------------
+ 1. Numerical Summaries
+ 2. PRINT RESSD RESDF
+ 3.
+ 4. Variables:
+ 5.    Response    Y:
+ 5. @CE 1 0 35 50 ? gui-variable
+ 6.    Independent X:
+ 6. @CE 2 0 35 50 ? gui-variable
+ 7.
+ 8. Character Type for Raw Data:
+ 8. @CE 3 0 42 50 ? gui-character
+ 9. Character Type for Predicted Values:
+ 9. @CE 4 0 42 50 ? gui-character
+10.
+11. Line     Type for Raw Data:
+11. @CE 5 0 42 50 ? gui-line
+12. Line     Type for Predicted Values:
+12. @CE 6 0 42 50 ? gui-line
+13.
+14. Subset/Except/For Specification:
+15. @CE 7 0 1 50 *
+16.
+17.
+18. Generate the Plot?
+--------------------
+GR FE
+CAPTURE ZZZZJUNK.DAT
+PRINT "RESIDUAL STANDARD DEVIATION    = ^RESSD "
+PRINT "RESIDUAL DEGREES OF FREEDOM    = ^RESDF "
+PRINT "REPLICATION STANDARD DEVIATION = ^RESSD "
+PRINT "REPLICATION DEGREES OF FREEDOM = ^RESSD "
+END OF CAPTURE
+LIST ZZZZJUNK.DAT
+--------------------
+WEB HELP FIT
+--------------------

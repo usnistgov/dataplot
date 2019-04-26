@@ -1,0 +1,10 @@
+----- <~dexmix\slmod81.top> Model for (k=8,d=1) Simplex-Lattice Design
+ 
+Model for (k=8,d=1) Simplex-Lattice Design
+ 
+k = 8 factors; d = degree 1
+n = 8 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 + B4*X4 +
+    B5*X5 + B6*X6 + B7*X7 + B8*X8
+ 

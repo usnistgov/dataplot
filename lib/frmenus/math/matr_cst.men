@@ -1,0 +1,98 @@
+This is file matr_cst.men--Generate Matrix Column Statistics
+ 
+--------------------line 3
+01. Matrix Column Statistics
+02. LET Y = MATRIX COLUMN MEANS M
+03.
+04. Name of Matrix:
+04. @CE 1 0 42 54 ? gui-matr
+05. Name of Variable to Store the Results:
+05. @CE 2 0 42 54 ? gui-matr
+06.
+07. Statistic:
+ 
+08. Location:
+09. @CE 3 3 5 20 mean
+09. @CE 3 4 22 37 median
+09. @CE 3 5 39 54 midrange
+ 
+10. @CE 3 6 5 20 midmean
+10. @CE 3 7 22 37 trimmed mean
+10. @CE 3 8 39 54 Winsorized mean
+ 
+11. Variation:
+12. @CE 3 9 5 20 standard deviation
+12. @CE 3 10 22 37 relative sd
+12. @CE 3 11 39 54 sd of mean
+13. @CE 3 12 5 20 variance
+13. @CE 3 13 22 37 relative varian
+13. @CE 3 14 39 54 varance of mean
+14. @CE 3 15 5  20 minimum
+14. @CE 3 16 22 37 maximum
+14. @CE 3 17 39 54 extreme
+15. @CE 3 18  5 20 range
+15. @CE 3 43 22 37 aad
+15. @CE 3 44 39 54 mad
+16. @CE 3 19  5 20 lower quartile
+16. @CE 3 20 22 37 upper quartile
+16. @CE 3 21 39 54 lower hinge
+17. @CE 3 22  5 20 upper hinge
+17. @CE 3 45 22 54 coefficient of variation
+ 
+18. Distribution:
+19. @CE 3 24  5 20 skewness
+19. @CE 3 25 22 37 kurtosis
+ 
+20. Randomness:
+21. @CE 3 27  5 20 autocorrelation
+21. @CE 3 41 22 37 autocovariance
+ 
+22. Math:
+23. @CE 3 38  5 20 sum
+23. @CE 3 39 22 37 product
+24.
+25. Subset/Except/For Specification:
+26. @CE 4 0 1 54 *
+27.
+28.
+29. Generate the Column Statistics?:
+--------------------
+LET STRING ZZZZSTR = MEAN
+@IF 3 3 LET STRING ZZZZSTR = MEAN
+@IF 3 4 LET STRING ZZZZSTR = MEDIAN
+@IF 3 5 LET STRING ZZZZSTR = MIDRANGE
+@IF 3 6 LET STRING ZZZZSTR = MIDMEAN
+@IF 3 7 LET P1 = 5
+@IF 3 7 LET P2 = 5
+@IF 3 7 LET STRING ZZZZSTR = TRIMMED MEAN
+@IF 3 8 LET P1 = 5
+@IF 3 8 LET P2 = 5
+@IF 3 8 LET STRING ZZZZSTR = WINSORIZED MEAN
+@IF 3 9 LET STRING ZZZZSTR = SD
+@IF 3 10 LET STRING ZZZZSTR = RELATIVE SD
+@IF 3 11 LET STRING ZZZZSTR = SD OF MEAN
+@IF 3 12 LET STRING ZZZZSTR = VARIANCE
+@IF 3 13 LET STRING ZZZZSTR = RELATIVE VARIANCE
+@IF 3 14 LET STRING ZZZZSTR = VARIANCE OF MEAN
+@IF 3 15 LET STRING ZZZZSTR = MINIMUM
+@IF 3 16 LET STRING ZZZZSTR = MAXIMUM
+@IF 3 17 LET STRING ZZZZSTR = EXTREME
+@IF 3 18 LET STRING ZZZZSTR = RANGE
+@IF 3 19 LET STRING ZZZZSTR = LOWER QUARTILE
+@IF 3 20 LET STRING ZZZZSTR = UPPER QUARTILE
+@IF 3 21 LET STRING ZZZZSTR = LOWER HINGE
+@IF 3 22 LET STRING ZZZZSTR = UPPER HINGE
+@IF 3 24 LET STRING ZZZZSTR = SKEWNESS
+@IF 3 25 LET STRING ZZZZSTR = KURTOSIS
+@IF 3 26 LET STRING ZZZZSTR = NORMAL PPCC
+@IF 3 27 LET STRING ZZZZSTR = AUTOCORRELATION
+@IF 3 38 LET STRING ZZZZSTR = SUM
+@IF 3 39 LET STRING ZZZZSTR = PRODUCT
+@IF 3 41 LET STRING ZZZZSTR = AUTOCOVARIANCE
+@IF 3 43 LET STRING ZZZZSTR = AAD
+@IF 3 44 LET STRING ZZZZSTR = MAD
+@IF 3 45 LET STRING ZZZZSTR = COEFFICIENT OF VARIATION
+LET _2 = MATRIX COLUMN ^ZZZZSTR _1 _4
+--------------------
+WEB HELP MATRIX COLUMN STATISTIC
+--------------------

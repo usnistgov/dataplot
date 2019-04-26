@@ -1,0 +1,35 @@
+----- <~dex\whichdis.top> General Discussion
+
+General Discussion
+
+The most important first step in the
+design process is to determine which
+general design cateogry your problem
+falls into.  There are 5 such general
+categories--
+
+   1) Comparative Designs
+        Completely Randomized Designs
+        Randomized Block Designs
+        Latin Square, etc. Designs
+   2) Screening Designs
+        2**k full Factorial Designs
+        2**(k-p) Fractional Factorial Designs
+        Taguchi Designs
+        Plackett-Burman Designs
+   3) Regression Designs
+   4) Response Surface Designs
+   5) Mixture Designs
+
+As to which cateogry you are in depends on
+the following general considerations--
+
+   1) What is the focus and purpose of
+      your experiment?
+   2) How many factors k do you wish
+      to examine?
+   3) How many runs can you afford?
+   4) Are interactions important?
+   5) Are you looking for best factors
+      or best settings of factors?
+

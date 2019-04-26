@@ -1,0 +1,50 @@
+----- <~clas\eda\explclas.top> Exploratory versus Classical -----
+
+Exploratory Versus Classical
+
+Exploratory data analysis (EDA) is a data analysis
+approach.  There are three popular data analysis
+approaches:
+
+  1) Classical
+  2) Exploratory (EDA)
+  3) Bayesian
+
+These 3 approaches are similar in that they all start
+with a general science/engineering problem and all
+yield science/engineering conclusions.  The difference
+is in the sequence and focus of the intermediate steps:
+
+For classical analysis, the sequence is:
+
+   Problem => Data => Model => Analysis => Conclusions
+
+For EDA, the sequence is:
+
+   Problem => Data => Analysis => Model => Conclusions
+
+For Bayesian the sequence is:
+
+   Problem => Data => Model => Prior Distribution => 
+              Analysis => Conclusions
+
+Thus for classical analysis, the data collection is followed
+by the imposition of a model (normality, linearity, etc.)
+and the analysis estimation and testing that follows is 
+focused on the parameters of that model.  For EDA, the data
+collection is not followed by model imposition; rather it is
+followed immediately by analysis whose goal is to infer what
+the proper model would be appropriate.  Finally, for a Bayesian
+analysis, the analyst attempts to incorporate scientific/
+engineering knowldege and expertise into the analysis by
+imposing a data-independent distribution on the parameters
+of the also imposed model; the analysis thus consists of
+formally combining both the prior distribution on the
+parameters and the collected data to jointly make inferences
+and/or do testing about the model parameters.
+
+In the real world, data analysts freely mix elements of all
+of the above 3 (and other approaches).  TYhe above distinctions
+were made to emphasize the major differences among the
+three approaches.
+

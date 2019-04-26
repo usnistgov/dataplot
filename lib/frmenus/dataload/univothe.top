@@ -1,0 +1,17 @@
+----- <~dataload\univothe.top> Load Univariate Data: Other
+
+Load Univariate Data: Other
+
+GEAR.DAT      Gear diameters (Ishikawa)     <xcf: ~dataload\GEAR.DP>
+CLEAR.DAT     Component clearances          <xcf: ~dataload\CLEAR.DP>
+MICHELSO.DAT  Michelson speed of light exp  <xcf: ~dataload\MICHELSO.DP>
+LIN.DAT       Polonium 209 SRM conc         <xcf: ~dataload\LIN.DP>
+
+RANDN.DAT     Normal random numbers         <xcf: ~dataload\RANDN.DP>
+RANDU.DAT     Uniform random numbers        <xcf: ~dataload\RANDU.DP>
+RANDWALK.DAT  Random walk                   <xcf: ~dataload\RANDWALK.DP>
+FLICKER.DAT   Flicker noise                 <xcf: ~dataload\FLICKER.DP>
+
+LOTTERY3.DAT  Maryland "pick 3" lott. #'s   <xcf: ~dataload\LOTTERY3.DP>
+LOTTERY4.DAT  Maryland "pick 4" lott. #'s   <xcf: ~dataload\LOTTERY4.DP>
+

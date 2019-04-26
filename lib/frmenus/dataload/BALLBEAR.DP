@@ -1,0 +1,8 @@
+----- <~dataload\BALLBEAR.DP> Load BALLBEAR.DAT
+
+. This is file    BALLBEAR.DP
+
+DELETE Y X
+SKIP 25
+READ BALLBEAR.DAT Y X
+

@@ -1,0 +1,57 @@
+----- <~reli\evdisc.top> Discussion--Extreme Values
+
+Discussion: Extreme Values
+
+Discussion: Extreme Values                                        -
+
+Extreme value analysis is the study of the extremes of some
+phenomonen of interest.  In particular, this often involves
+the study of the distribution of the minimum or maximum values
+of a the phenomonen.  One example is the study of extreme
+winds (this has application in building codes).
+
+There are two common approaches in modeling univariate
+extreme values.
+
+  1) Epochal Method
+
+     In the epochal method, we split the time interval into
+     equally spaced intervals.  We then pick the maximum (or
+     minimum) value in each interval.  For example, we could
+     split daily wind speeds for the last 30 years into 
+     30 yearly intervals and then extract the maximum wind
+     speed for each of the 30 years.
+
+  2) Peaks Over Threshold
+
+     In the Peaks Over Threshold (POT) method, we pick a
+     threshold and then extract all data that exceeds this
+     threshold.  For the 30 years of daily wind speeds example,
+     we could select a threshold of 60 MPH.  Note that in this
+     approach, some years might have no wind speeds exceeding
+     the threshold while other years might have multiple values
+     exceeding the threshold.
+
+In either approach, once we have extracted the extreme values
+of interest we typically want to develop a distributional model
+of the data.  The following distributions are the most commonly
+used in extreme value analysis:
+
+   1) Extreme Value Type 1 (Gumbel)
+   2) Extreme Value Type 2 (Frechet)
+   3) Weibull
+   4) Generalized Pareto
+   5) Generalized Extreme Value
+
+Theory has established that no matter what the underlying
+distribution is for the full data set, the distribution
+for the extremes of the parent distribution tend to one of
+the first 3 distributions.  The generalized Pareto and
+generalized extreme value are of interest because they
+contain the first 3 distributions as special cases.
+
+Dataplot provides several methods for estimating the
+parameters and quantiles of these distributions.  See
+the Discussion menu under Distributional Fitting for 
+further information.
+

@@ -1,0 +1,23 @@
+----- <~dataview\reg1n.top> View Regression Data: 1-Variable & Non-L.
+
+View Regression Data: 1-Variable & Non-Linear
+
+CHWIRUT1.DAT* Ultrasonic ref. block calib  <xcf: ~dataview\CHWIRUT1.DP>
+CHWIRUT2.DAT  Ultrasonic ref. block calib  <xcf: ~dataview\CHWIRUT2.DP>
+ECKERLE4.DAT  Circular interfer. transmit  <xcf: ~dataview\ECKERLE4.DP>
+HAHN1.DAT     Thermal expansion of copper  <xcf: ~dataview\HAHN1.DP>
+KIRBY2.DAT    Electron microsc line width  <xcf: ~dataview\KIRBY2.DP>
+LEW3.DAT      Concrete tensile strength    <xcf: ~dataview\LEW3.DP>
+MISRA1.DAT    Dental res. adsorbtion       <xcf: ~dataview\MISRA1.DP>
+ROSZMAN1.DAT  Quantum defects for sulfur   <xcf: ~dataview\ROSZMAN1.DP>
+THURBER.DAT   Semiconductor mobility       <xcf: ~dataview\THURBER.DP>
+BENNETT5.DAT  Superconductivity magnetiz.  <xcf: ~dataview\BENNETT5.DP>
+
+GRA1617.DAT  Visual response proportion    <xcf: ~dataview\GRA1617.DP>
+HABER1.DAT    Dens of 2-admiss numbers     <xcf: ~dataview\HABER1.DP>
+SWANSON1.DAT  Ozone spectroscopy           <xcf: ~dataview\SWANSON1.DP>
+USADEBT.DAT   USA nat. debt (1947-1993)    <xcf: ~dataview\USADEBT.DP>
+
+BOXBOD.DAT    Incub time & bio O2 demand   <xcf: ~dataview\BOXBOD.DP>
+NELSON.DAT    Insulation accel. testing    <xcf: ~dataview\NELSON.DP>
+

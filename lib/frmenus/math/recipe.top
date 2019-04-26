@@ -1,0 +1,31 @@
+----- <~math\recipe.top> Recipe
+ 
+MIL-Handbook 17 and Recipe
+ 
+Discussion                            <~math\recipe_d.top>
+RECIPE Web Page   <xcl: web http://www.itl.nist.gov/div898/software/recipe>
+
+MIL-Handbook 17 Procedures
+   2-Parameter Weibull MLE Estimates        <~stat\weibmle.men>
+   B-Basis Tolerance Limits                 <~stat\bbasis.men>
+   A-Basis Tolerance Limits                 <~stat\abasis.men>
+   Grubbs Test                              <~stat\grubb.men>
+   Levene Test for Homogeneous Variances    <~stat\levene.men>
+   F Test for Homogeneous Locations         <~stat\ftestloc.men>
+   Anderson-Darling 1-Sample Test           <~stat\andedarl.men>
+   Anderson-Darling k-Sample Test           <~stat\andedaks.men>
+
+Recipe Fit (1-factor models)          <xemf: ~math\recipe_f.men>
+Recipe Fit (multi-factor models)      <xemf: ~math\recipe_m.men>
+Recipe ANOVA (multi-factor models)    <xemf: ~math\recipe_a.men>
+
+Built-in Recipe Data Sets
+  View                                      <~dataview\recipe.top>
+  Load                                      <~dataload\recipe.top>
+
+Worked Examples
+   Example of Constant Model                <xcf: ~math\VANGEL31.DP>
+   Example of Recipe Fit                    <xcf: ~math\VANGEL32.DP>
+   Example of Recipe Anova (1-factor)       <xcf: ~math\VANGEL33.DP>
+   Example of Recipe Anova (2-factor)       <xcf: ~math\VANGEL34.DP>
+

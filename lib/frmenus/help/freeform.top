@@ -1,0 +1,57 @@
+----- <~help\freeform.top> Free Format Language
+
+Free-Format Language
+
+Free-Format Language
+
+Command statements appear free-format in columns
+1 to 80 of a program line.
+       
+Space Used as Separator Between Command Components
+
+    The usual separator between components of a
+    command line is one or more blanks.  Thus to
+    generate a plot of X**2 over the interva1 of x
+    values starting with x = -3, at increments of 0.1,
+    and ending with x = +3, the following is incorrect:
+
+       PLOTX**2FORX=-3.13
+
+    while the following is correct:
+
+       PLOT X**2 FOR X = -3 0.1 3
+
+    Note the spacing between PLOT, X**2, FOR, X, -3,
+    0.1, and 3.  The spacing here is one blank, but
+    optionally could have been any number of blanks.
+    The PLOT statement as given here starts in column
+    1, but optionally could have been any column.
+
+Packing of Characters Permitted in Functions
+
+    Packing of characters is permitted only in defining
+    and using functions. Thus
+
+       PLOT 3+2*EXP(-X) FOR X = 0 .1 6
+
+    is correct, as is
+
+       PLOT 3 + 2 + EXP(-X) FOR X = 0 .1 6
+
+    and other variations.
+
+One Continuation Line Allowed
+
+    If command statements are longrer than 80 characters,
+    then they may be extended onto the next line by
+    appending ... at the end of the first line, as in
+
+       PRE-FIT Y = A + B*EXP(-C*X) FOR A = 10 1 20  ...
+       FOR B = 1 .1 2 FOR C = .5 .01 .6
+
+    Command statements longer than two full lines
+    (160 characters) are not permitted.
+
+    NOTE: Continuation lines are not allowed in the
+          graphical interface and will cause it to hang.
+

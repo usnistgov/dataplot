@@ -1,0 +1,10 @@
+----- <~dataloex\HAHN.DP> Load & Execute HAHN.DAT
+
+. This is file    HAHN.DP
+
+DELETE Y TAG
+SKIP 25
+READ HAHN.DAT Y TAG
+TITLE HAHN.DAT
+TAIL AREA PLOT Y TAG
+

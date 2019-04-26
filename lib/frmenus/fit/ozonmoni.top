@@ -1,0 +1,48 @@
+----- <~fit\ozonmoni.top> Ozone Photometry
+
+Ozone Photometry
+
+Discussion                        <~fit\ozondisc.top>
+FAQs                              <xcl: LIST ~fit\ozonfaqs.tex>
+Calibration Procedure
+   1. Fit combined regression
+   2. Do individual fits +
+   3. Test: Is there a run-to-run effect?
+   4. Test: Is there a lack of fit at zero?
+   5. Test: Should zero be excluded from the fit?
+   6. Test: Is a linear model adequate over entire range?
+   7. Test: Is there a time trend within a run?
+   8. Test: Is there a time trend across runs?
+  11. Compute Final estimates & uncerrtainties for slope & intercept
+  12. Compute final estimate for resid. sd.
+  13. Compute final estimate for within-run variability
+  14. Compute final estimate for between-run variability
+  15. Compute final estimate for degrees of freedom
+  16. Compute final regression with runs eliminated
+  17. Compute final regression with zero eliminated
+Output:
+  1. The final Calibration Curve
+  2.  uncerrtainties for slope & intercept
+  3. resid. sd.
+  4. degrees of freedom
+  5. within-run variability
+  6. between-run variability
+   7. Problem Categorization & Test Results
+         Adequacy of linear model
+         Inclusion/exclusion of zero
+         Inclusion/exclusion of all runs
+         Run-to-run effect?
+         Within-run drift with time
+         Between-run drift with time
+Fitting & validation (including 0)
+     the stat summary table
+     residual vs. x plots for each run
+Fitting & validation (excluding 0)
+     the stat summary table (including 0)
+     residual vs. x plots for each run
+  10.  NIST = ... inverse calibration formula
+  20. residual vs. time plots for each run
+  21. residual character plot vs x for runs
+  2. The final inverse calibration curve
+    3. customer => NIST calibration table with uncertainties?
+

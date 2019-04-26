@@ -1,0 +1,75 @@
+This is the Dataplot data file        CHARACTERIZE-3_2_3_2.DAT
+Data provided by Barry Hembre of AMD.  This data set is used on
+page ppc232.htm of the e-Handbook to demonstrate two-way ANOVA.
+
+This is similar to CHARACTERIZE-3_2_3_1.DAT.  However, a
+"coolant" factor is added.  That is, the coolant A data is the
+same as CHARACTERIZE-3_2_3_1.DAT but the coolant B data is added.
+
+Number of observations                       = 50
+Number of observations per line image        = 3
+Order of variables on a line image--
+   1. Factor Variable COOLANT      = Coolant type (A or B)
+   2. Factor Variable MACHINE      = Machine Number (1 to 5)
+   3. Dependent Variable DIAMETER  = DIAMETER
+  
+To read this file into Dataplot--
+   SET CONVERT CHARACTER IGNORE OFF
+   SKIP 25
+   READ CHARACTERIZE-3_2_3_1.DAT MACHINE DIAMETER
+   LET COOL = CONVERT CHARACTER COOLANT
+
+
+
+COOLANT MACHINE  DIAMETER
+-------------------------
+A          1     0.125
+A          2     0.118
+A     3     0.123
+A     4     0.126
+A     5     0.118
+A     1     0.127
+A     2     0.122
+A     3     0.125
+A     4     0.128
+A     5     0.129
+A     1     0.125
+A     2     0.12
+A     3     0.125
+A     4     0.126
+A     5     0.127
+A     1     0.126
+A     2     0.124
+A     3     0.124
+A     4     0.127
+A     5     0.12
+A     1     0.128
+A     2     0.119
+A     3     0.126
+A     4     0.129
+A     5     0.121
+B     1     0.124
+B     2     0.116
+B     3     0.122
+B     4     0.126
+B     5     0.125
+B     1     0.128
+B     2     0.125
+B     3     0.121
+B     4     0.129
+B     5     0.123
+B     1     0.127
+B     2     0.119
+B     3     0.124
+B     4     0.125
+B     5     0.114
+B     1     0.126
+B     2     0.125
+B     3     0.126
+B     4     0.13
+B     5     0.124
+B     1     0.129
+B     2     0.12
+B     3     0.125
+B     4     0.124
+B     5     0.117

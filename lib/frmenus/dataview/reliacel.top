@@ -1,0 +1,15 @@
+----- <~dataview\reliacel.top> View Reliability Data: Accelerated Tests
+
+View Reliability Data: Accelerated Tests
+
+NELSON.DAT  Dialectric breakdown strength of insulation <xcf: ~dataview\NELSON.DP>
+NELS393.DAT Class-H insulation in motorettes     <xcf: ~dataview\NELS393.DP>
+NELS421.DAT Million dollar experiment            <xcf: ~dataview\NELS421.DP>
+
+TOB171.DAT  Temperature stress failure data      <xcf: ~dataview\TOB171.DP>
+TOB179.DAT  Temperature/voltage stress data      <xcf: ~dataview\TOB179.DP>
+TOB201.DAT  Temperature stress degradation       <xcf: ~dataview\TOB201.DP>
+TOB215.DAT  Temperature stress failure data      <xcf: ~dataview\TOB215.DP>
+TOB216A.DAT Temperature/voltage stress data      <xcf: ~dataview\TOB216A.DP>
+TOB216B.DAT Voltage stress degradation           <xcf: ~dataview\TOB216B.DP>
+

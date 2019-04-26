@@ -1,0 +1,26 @@
+This is file scatplot.men--Generate DEX Scatter Plot
+
+--------------------
+1. DEX Scatter Plot
+2. DEX SCATTER PLOT Y X1 X2 X3 X4 X5 ...
+3.
+4. Response Variable:
+4. @CE 1 0 33 50 ? gui-variable
+5. List of Factors/Variables:
+6. @CE 2 0 1 50 ? gui-variable
+7.
+8. Subset/Except/For Specification:
+9. @CE 3 0 1 50 *
+10.
+11.
+12. Generate the Plot?:
+--------------------
+GR FE
+CHARACTERS X BLANK
+LINES BLANK DOTTED
+DEX SCATTER PLOT _1 _2 _3
+CHARACTERS BLANK ALL
+LINES SOLID ALL
+--------------------
+WEB HELP DEX SCATTER PLOT
+--------------------

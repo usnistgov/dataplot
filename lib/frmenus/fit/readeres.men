@@ -1,0 +1,31 @@
+This is file readeres.men--Read (and plot) the externally studentized residuals
+ 
+--------------------
+1. Read Externally Studentized Residuals
+2. SET READ FORMAT 80X,E15.7; READ DPST3F.DAT ESTUDRES
+3.
+4. Variable Name to Use: 
+4. @CE 1 0 42 50 ?
+5.
+6. Plot?:
+6. @CE 2 1 42 45 yes
+6. @CE 2 2 46 49 no
+7. Character for plot symbol:
+7. @CE 3 0 42 50 gui-char
+8.
+9.
+10. Read the Externally Studentized Residuals?:
+--------------------
+GR FE
+SKIP 1
+SET READ FORMAT 80X,E15.7
+READ DPST3F.DAT _1
+SKIP 0
+SET READ FORMAT
+@IF 2 1 LINE BLANK
+@IF 2 1 CHARACTER _3
+@IF 2 1 PLOT _1
+@IF 2 1 LINE SOLID
+--------------------
+WEB HELP FIT
+--------------------

@@ -1,0 +1,20 @@
+Box-Cox Variance-Stabilizing Transformations
+ 
+Question--A common assumption in regression,
+          ANOVA, etc. is that sd(Y) is constant;
+          if sd(Y) is not constant,
+          then what transformation T(Y)
+          will yield sd(T(Y)) = constant.
+ 
+Answer--T(Y) = integral 1 / sd(Y)
+             = integral 1 / (Y*relsd(Y))
+ 
+resd(Y)          sd(Y)            T(Y)
+-----------------------------------------
+Y                Y**(2)           Y**(-1)
+Y**(1/2)         Y**(3/2)         Y**(-1/2)
+constant         Y                log(Y)
+Y**(-1/2)        Y**(1/2)         Y**(1/2)
+Y**(-1)          constant         Y (no trans.)
+Y**(-3/2)        Y**(-1/2)        Y**(3/2)
+Y**(-2)          Y**(-1)          Y**2

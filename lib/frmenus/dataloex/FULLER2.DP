@@ -1,0 +1,10 @@
+----- <~dataloex\FULLER2.DP> Load & Execute FULLER2.DAT
+
+. This is file    FULLER2.DP
+
+DELETE Y
+SKIP 25
+READ FULLER2.DAT Y
+TITLE FULLER2.DAT
+4-PLOT Y
+

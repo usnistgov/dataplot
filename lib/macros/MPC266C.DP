@@ -1,0 +1,29 @@
+reset data
+reset plot control
+reset i/o
+dimension 500 30
+label size 3
+read mpc262.dat run wafer probe mo day op hum y sr
+let df = sr - sr + 5.
+let s211 = standard deviation y subset probe 2362 subset run 1 subset wafer 138
+let s212 = standard deviation y subset probe 2362 subset run 1 subset wafer 139
+let s213 = standard deviation y subset probe 2362 subset run 1 subset wafer 140
+let s214 = standard deviation y subset probe 2362 subset run 1 subset wafer 141
+let s215 = standard deviation y subset probe 2362 subset run 1 subset wafer 142
+let wafer1=138
+let wafer2=139
+let wafer3=140
+let wafer4=141
+let wafer5=142
+let df211=5
+let df212=5
+let df213=5
+let df214=5
+let df215=5
+. level-2 standard deviations and df for 5 wafers - run 1
+        print wafer1 s211 df211
+        print wafer2 s212 df212
+        print wafer3 s213 df213
+        print wafer4 s214 df214
+        print wafer5 s215 df215
+. end of calculations

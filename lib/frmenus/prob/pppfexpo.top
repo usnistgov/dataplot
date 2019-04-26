@@ -1,0 +1,26 @@
+----- <~prob\ppffexpo.top> Plot Exponetialand Related  ppf's
+
+Plot Exponential, Weibull, Gamma, Extreme Value PPF Functions
+
+Exponential                   <xemf: ~prob\pexpppf.men>
+Truncated Exponential         <xemf: ~prob\ptneppf.men>
+Generalized Exponential       <xemf: ~prob\pgexppf.men>
+Power Exponential             <xemf: ~prob\ppexppf.men>
+Geometric Extreme Exponential <xemf: ~prob\pgeeppf.men>
+
+Weibull (for min)             <xemf: ~prob\pwei1ppf.men>
+Weibull (for max)             <xemf: ~prob\pwei2ppf.men>
+Exponentiated Weibull         <xemf: ~prob\peweppf.men>
+Inverted Weibull              <xemf: ~prob\piweppf.men>
+
+Extreme Value Type I (for min) <xemf: ~prob\pev11ppf.men>
+Extreme Value Type I (for max) <xemf: ~prob\pev12ppf.men>
+Extreme Value Type II (for min) <xemf: ~prob\pev21ppf.men>
+Extreme Value Type II (for max) <xemf: ~prob\pev22ppf.men>
+Generalized Extreme Value     <xemf: ~prob\pgevppf.men>
+
+Gamma                         <xemf: ~prob\pgamppf.men>
+Log Gamma                     <xemf: ~prob\plgappf.men>
+Inverted Gamma                <xemf: ~prob\pigappf.men>
+Generalized (and inverted) Gamma <xemf: ~prob\pggdppf.men>
+

@@ -1,0 +1,18 @@
+----- <~prob\ppccopt.top> Options for PPCC/KS Plots
+
+Options for PPCC/KS Plots
+
+There are several options you can set for PPCC and
+KS plots.
+
+   1) For distributions where it is expensive to
+      compute the percent point (or cumulative
+      distribution function), it may be helpful
+      to 
+
+   2) For the KS plot, you can fix the values for
+      the location and scale.
+
+
+   3) For heavy-tailed distributions, ....
+

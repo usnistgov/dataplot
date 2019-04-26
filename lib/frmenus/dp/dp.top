@@ -1,0 +1,37 @@
+----- <~dp\dp.top> Dataplot
+ 
+Dataplot
+ 
+About the Graphical Interface       <~dp\guihelp.top>
+
+Types of Help                       <~dp\typehelp.top>
+
+Introduction                        <~dp\introduc.top>
+Dataplot Run                        <~dp\dprun.top>
+Modes of Operation                  <~dp\modeoper.top>
+ 
+Help for a specific command         <xemf: ~dp\help.men>
+
+Data Objects                        <~dp\dataobje.top>
+ 
+Internal Worksheet                  <~dp\intework.top>
+ 
+Commands                            <~dp\commands.top>
+Subcommands under LET               <~dp\subclet.top>
+Subcommands for text strings        <~dp\subctext.top>
+Reserved Words & Characters         <~dp\resewoch.top>
+SUBSET/EXCEPT/FOR Qualifications    <~dp\subexcfo.top>
+Functions (Built-in)                <~dp\functions.top>
+Math Operators                      <~dp\mathoper.top>
+ 
+Files                               <~dp\files.top>
+ 
+Output (Graphics) Devices           <~plot\od.top>
+Plots                               <~dp\plots.top>
+ 
+News                                <xcl: LIST DPNEWF.TEX>
+Help                                <~dp\help.top>
+Glossary                            <~dp\glossary.top>
+
+Time & Date                         <~dp\timedate.top>
+ 

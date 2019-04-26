@@ -1,0 +1,9 @@
+----- <~univ\varitest.top> Test Shift in Variation from Reference sigma0
+
+Test Shift in Reference from Reference sigma0
+
+Checking assumptions                 <xemf: ~univ\4plot.men>
+
+Graphical test                       <xemf: ~univ\variplot.men>
+Formal chi-squared test              <xemf: ~univ\varitest.men>
+

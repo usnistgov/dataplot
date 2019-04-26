@@ -1,0 +1,8 @@
+----- <~dataload\AC.DP> Load AC.DAT
+
+. This is file    AC.DP
+
+DELETE Y X1 TO X6
+SKIP 25
+READ AC.DAT Y X1 TO X6
+

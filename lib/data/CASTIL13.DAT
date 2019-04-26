@@ -1,0 +1,79 @@
+This is Dataplot Data File     CASTIL13.DAT
+Men's Age Data--Oldest yearly death age for Swedish men (1905-1958)
+Engineering Goal--Predict/forecast oldest yearly ages in future
+Response Variable = oldest yearly death age
+Number of Observations = 55
+Number of Variables per line image = 1
+Order of variables per line image--
+   1. Response variable = olderst yearly death age
+Statistical Category--Extreme Value Analysis
+To read this into Dataplot--
+   SKIP 25
+   READ CASTIL13.DAT Y
+Source--Enrique Castillo (1988). Extreme Value Theory
+        in Engineering. Academic Press, San Diego, California,
+        p. 338-339.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Oldest yearly death age for Swedish men (pre-sorted)
+---------------------------------------------------------------
+101.50
+101.69
+102.12
+102.32
+102.54
+102.72
+102.78
+102.92
+103.14
+103.31
+103.38
+103.41
+103.46
+103.53
+103.56
+103.56
+103.77
+103.83
+103.86
+103.94
+103.97
+104.01
+104.12
+104.27
+104.33
+104.37
+104.40
+104.42
+104.46
+104.52
+104.71
+104.85
+104.87
+105.01
+105.01
+105.02
+105.03
+105.19
+105.32
+105.45
+105.64
+105.71
+105.83
+105.86
+105.87
+105.88
+105.98
+106.13
+106.15
+106.15
+106.52
+107.49
+107.89
+107.90

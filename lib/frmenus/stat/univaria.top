@@ -1,0 +1,37 @@
+----- <~stat\univaria.top> Common Statistical Tests - Univariate
+
+Univariate
+
+Summary Statistics for Univariate Data   <xemf: ~stat\summstat.men>
+
+Confidence Limits for Mean               <xemf: ~stat\conlimme.men>
+Confidence Limits for Biweight Location  <xemf: ~stat\biweconf.men>
+Confidence Limits for Trimmed Mean       <xemf: ~stat\trimconf.men>
+Confidence Limits for Median             <xemf: ~stat\mediconf.men>
+Confidence Limits for Proportion         <xemf: ~stat\conlimpr.men>
+1 Sample T Test                          <xemf: ~stat\ttest.men>
+
+Normal Tolerance Limits                  <xemf: ~stat\normtole.men>
+Chi-Square Test for Standard Deviation   <xemf: ~stat\chisqtst.men>
+
+Randomness
+   Runs Test                             <xemf: ~stat\runs.men>
+   Frequency Test                        <xemf: ~stat\frequenc.men>
+   Frequency Within a Block Test         <xemf: ~stat\freqbloc.men>
+   Cumulative Sum Randomness Test        <xemf: ~stat\cumsumra.men>
+   Ljung-Box Test                        <xemf: ~stat\ljung.men>
+
+Outliers
+   NIST/SEMATECH Handbook (Outliers)     <xcl: web handbook outliers>
+   Dixon Test (Small N)                  <xemf: ~stat\dixon.men>
+   Grubbs Test                           <xemf: ~stat\grubb.men>
+   Tietjen-Moore Test                    <xemf: ~stat\tietjen.men>
+   Extreme Studentized Deviate Test      <xemf: ~stat\esd.men>
+
+Distributional Goodness of Fit (Quantitative)
+   Discusion                             <~reli\goodfitq.top>
+   Set Options                           <~reli\goodfopt.top>
+   Anderson-Darling                      <~prob\andedarl.top>
+   Kolmogorov-Smirnov/Chi-Square         <~prob\ks.top>
+   Wilk-Shapiro Test for Normality       <xemf: ~stat\wilkshap.men>
+

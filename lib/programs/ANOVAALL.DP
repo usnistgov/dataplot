@@ -1,0 +1,188 @@
+. This is dataplot program file    anovaall.dp
+. Carry out ANOVA-like analysis for several data sets
+. in connection with Stefan's ANOVA class (June 2002)
+Date--June 2002
+.
+. -----start point-----
+.
+.  device 1 x11
+.  device 2 ps
+x3label automatic
+let string mark = anovaall.dp
+.
+. -----Case 1: New Car Interest Rate (1-Way) [newcar.dat]-----
+.
+skip 25
+read newcar.dat y x1
+let numfac = 1
+let string project = New Car Interest Rate (1-Way)
+let string sty = Interest Rate (%) for a New Car
+let string stx1 = City
+call anovasub.dp
+delete y x1
+.
+. -----Case 2: Smokers' Ages (2-Way & Unreplicated) [smokers.dat]-----
+.
+skip 25
+read smokers.dat y x1 x2
+let numfac = 2
+let string project = Smokers' Ages (2-Way & Unreplicated)
+let string sty = % of Population That Smokes
+let string stx1 = Family Income
+let string stx2 = Age
+call anovasub.dp
+delete y x1 x2
+.
+. -----Case 3: Rat Feed Growth (2-Way & Replicated) [ratfeed.dat]-----
+.
+skip 25
+read ratfeed.dat y x1 x2
+let numfac = 2
+let string project = Rat Feed Growth (2-Way & Replicated)
+let string sty = Rat Weight Gain (in gms)
+let string stx1 = Protein Source
+let string stx2 = Protein Level
+call anovasub.dp
+delete y x1 x2
+.
+. -----Case 4: Paper Smoothness (2-Way & Replicated) [paper.dat]-----
+.
+skip 25
+read paper.dat y x1 x2
+let numfac = 2
+let string project = Paper Smoothness (2-Way & Replicated)
+let string sty = Paper Smoothness
+let string stx1 = Material
+let string stx2 = Lab
+call anovasub.dp
+delete y x1 x2
+.
+. -----Case 5: ELISA Optical Density (2-Way & Nested) [elisa.dat]-----
+.
+skip 25
+read elisa.dat y x1 x2
+let numfac = 2
+let string project = ELISA Optical Density (2-Way & Nested)
+let string sty = Optical Density from ELISA
+let string stx1 = Lot
+let string stx2 = Run
+call anovasub.dp
+delete y x1 x2
+.
+. -----Case 6: Simulated Tumor Size (3-Way) [tumor.dat]-----
+.
+skip 25
+read tumor.dat y x1 x2 x3
+let numfac = 3
+let string project = Simulated Tumor Size (3-Way)
+let string sty = Estimated Area of Simulated Tumor
+let string stx1 = Oncologist
+let string stx2 = Material
+let string stx3 = Actual Area
+call anovasub.dp
+delete y x1 x2 x3
+.
+. -----Case 7: Cream Acidity (3-Way & Latin Square) [cream.dat]-----
+.
+skip 25
+read cream.dat y x1 x2 x3
+let numfac = 3
+let string project = Acidity of Sour Cream (3-Way & Latin Square)
+let string sty = Cream Acidity
+let string stx1 = Batch
+let string stx2 = Position
+let string stx3 = Starter
+call anovasub.dp
+delete y x1 x2 x3
+.
+. -----Case 8: Automobile Emissions (3-Way & Latin Square) [boxauto.dat]-----
+.
+skip 25
+read boxauto.dat y x1 x2 x3
+let numfac = 3
+let string project = Automobile Emissions (3-Way & Latin Square)
+let string sty = Automobile Reduction in Nitrogen Oxides
+let string stx1 = Gas Additive
+let string stx2 = Car
+let string stx3 = Driver
+call anovasub.dp
+delete y x1 x2 x3
+.
+. -----Case 9: Dental Gold HArdness (4-Way) [gold.dat]-----
+.
+skip 25
+read gold.dat y x1 x2 x3 x4
+let numfac = 4
+let string project = Dental Gold Hardness (4-Way)
+let string sty = Dental Gold Hardness
+let string stx1 = Dentist
+let string stx2 = Method
+let string stx3 =  Alloy
+let string stx4 = Temperature
+call anovasub.dp
+delete y x1 x2 x3 x4
+.
+. -----Case 10: Cake Taste (5-Way & 2-Level) [boxcake.dat]-----
+.
+skip 25
+read boxcake.dat y x1 x2 x3 x4 x5
+delete y x1 x2 x3 x4 x5 for i = 1 1 5
+let numfac = 5
+let string project = Cake Taste (5-Way & 2-Level)
+let string sty = Cake Taste
+let string stx1 = Eggs
+let string stx2 = Flour
+let string stx3 = Shortening
+let string stx4 = Oven Temp.
+let string stx5 = Oven Time
+call anovasub.dp
+delete y x1 x2 x3 x4 x5
+.
+. -----Case 21: Blood Coagulation Time (1-Way) [boxblood.dat]-----
+.
+skip 25
+read boxblood.dat y x1
+let numfac = 1
+let string project = Blood Coagulation Time (1-Way)
+let string sty = Blood Coagulation Time
+let string stx1 = Diet
+call anovasub.dp
+delete y x1 x2
+.
+. -----Case 22: Penicillin Yield (2-Way) [boxpenic.dat]-----
+.
+skip 25
+read boxpenic.dat y x1 x2
+let numfac = 2
+let string project = Penicillin Yield (2-Way)
+let string sty = Penicillin Yield
+let string stx1 = Formula
+let string stx2 = Batch
+call anovasub.dp
+delete y x1 x2
+.
+. -----Case 23: Shoe Wear (2-Way) [boxshoes.dat]-----
+.
+skip 25
+read boxshoes.dat y x1 x2
+let numfac = 2
+let string project = Boys' Shoe Wear (2-Way)
+let string sty = Shoe Wear
+let string stx1 = Material
+let string stx2 = Boy
+call anovasub.dp
+delete y x1 x2
+.
+. -----Case 24: Defective Springs (3-Way & 2-Level) [boxsprin.dat]-----
+.
+skip 25
+read boxsprin.dat y x1 x2 x3
+let numfac = 3
+let string project = Defective Springs (3-Way & 2-Level)
+let string sty = % Acceptable Springs
+let string stx1 = Oven Temp.
+let string stx2 = Carbon Conc.
+let string stx3 = Quench Temp.
+call anovasub.dp
+delete y x1 x2 x3
+.

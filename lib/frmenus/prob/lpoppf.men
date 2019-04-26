@@ -1,0 +1,39 @@
+This is file lpoppf.men--Compute Lagrange Poisson ppf
+ 
+--------------------
+ 1. Compute Lagrange Poisson ppf
+ 2. LET Y = LPOPPF(X,LAMBDA,THETA)
+ 3.
+ 4. Input values:
+ 5.                                p (0 <= p < 1):
+ 5. @CE 1 0 42 50 ?
+ 6.       shape parameter lambda (0 < lambda < 1):
+ 6. @CE 2 0 42 50 ?
+ 7.             shape parameter theta (theta > 0):
+ 7. @CE 3 0 42 50 
+ 8.
+ 9. Output parameters:
+10.                  name for the ppf value:
+10. @CE 4 0 42 50 ?
+11.
+12.
+13. Compute the Probability?
+--------------------
+AN FE
+LET ZLAMBDA = 0.5
+LET ZTHETA = 1
+@IF 2 0 LET ZLAMBDA = _2
+IF ZLAMBDA <= 0
+   LET ZLAMBDA = 0.5
+END OF IF
+IF ZLAMBDA >= 1
+   LET ZLAMBDA = 0.5
+END OF IF
+@IF 3 0 LET ZTHETA = _3
+IF ZTHETA <= 0
+   LET ZTHETA = 1
+END OF IF
+LET _4 = LPOPPF( _1 , ZLAMBDA , ZTHETA )
+--------------------
+WEB HELP LPOPPF
+--------------------

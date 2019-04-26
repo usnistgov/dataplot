@@ -1,0 +1,34 @@
+This is the data file   IMPROVE-5_5_3_1_1.DAT.
+Source: This example is used on page pri5311.htm of the e-Handbook
+        to demonstrate an optimization design.
+
+Description:  The response variable (Y) is the percentage yield of
+              a chemical process.  The two factor variables are
+              temperature (in degrees celcius) (X1) and the reaction
+              time (in minutes) (X2).
+
+
+To read into Dataplot, enter
+
+    SKIP 25
+    READ "IMPROVE-5_5_3_1_1.DAT" X1 X2 TEMP TIME Y
+
+
+
+
+
+
+
+
+
+X1    X2   TEMP   TIME    Y
+-----------------------------------
+-1    -1    170    150    32.79
+ 1    -1    230    150    24.07
+-1     1    170    250    48.94
+ 1     1    230    250    52.49
+ 0     0    200    200    38.89
+ 0     0    200    200    48.29
+ 0     0    200    200    29.68
+ 0     0    200    200    46.5
+ 0     0    200    200    44.15

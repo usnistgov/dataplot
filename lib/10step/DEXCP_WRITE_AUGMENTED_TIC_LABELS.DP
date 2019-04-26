@@ -1,0 +1,81 @@
+. This is dataplot macro     dexcp_write_augmented_tic_labels.dp
+. Purpose: Write augmented (real world) tic labels below (or to the left of)
+.          the coded -1 and +1 tic labels in a dex contour plot
+. Date: 1/26/15
+. Input:
+.    out1     (parameter or string) = the tic label to be written below/left the coded -1
+.    out2     (parameter or string) = the tic label to be written below/left the coded +1
+.    staxissw (string)              = h for the horizontal axis   or   v for the vertical axis
+.
+. -----start point-----
+.
+. print out1 out2 staxissw
+. pause
+.
+. -----Step 1: Check input arguments-----
+.
+let string stmacro = dexcp_write_augmented_tic_labels.dp
+. let string stall = out1 out2 staxissw
+set check name output filliben
+feedback save; feedback on
+let iflag = check name staxissw
+feedback restore
+.
+. -----Step 2: Write out the augmented tic labels-----
+.
+let type1 = type out1
+let type2 = type out2
+.
+if out1 exists and out2 exists
+   .
+   . -----Step 2.1: Treat the horizontal axis case-----
+   .
+   if staxissw = h
+      if type1 = PARAMETER and type2 = PARAMETER
+         let outv1 = ^out1
+         let outv2 = ^out2
+         let outv3 = (outv1 + outv2) / 2
+         let outv4 = outv1 - (outv2 - outv3)
+         let outv5 = outv2 + (outv2 - outv3)
+         .
+         moveds -1 12.5; just center; hw 2 1; text ^outv1
+         moveds +1 12.5; just center; hw 2 1; text ^outv2
+         moveds  0 12.5; just center; hw 2 1; text ^outv3
+         moveds -2 12.5; just center; hw 2 1; text ^outv4
+         moveds +2 12.5; just center; hw 2 1; text ^outv5
+         . print "outv4 outv1 outv3 outv2 outv5 = ^outv4 ^outv1 ^outv3 ^outv2 ^outv5"
+      end if
+      .
+      if type1 = FUNCTION and type2 = FUNCTION
+         moveds -1 12.5; just center; hw 2 1; text ^out1
+         moveds +1 12.5; just center; hw 2 1; text ^out2
+         . print "out1 out2 = ^out1 ^out2"
+      end if
+   end if
+   .
+   . -----Step 2.2: Treat the vertical axis case-----
+   .
+   if staxissw = v
+      if type1 = PARAMETER and type2 = PARAMETER
+         let outv1 = ^out1
+         let outv2 = ^out2
+         let outv3 = (outv1 + outv2) / 2
+         let outv4 = outv1 - (outv2 - outv3)
+         let outv5 = outv2 + (outv2 - outv3)
+         .
+         movesd 10 -1; just rice; hw 2 1; text ^outv1
+         movesd 10 +1; just rice; hw 2 1; text ^outv2
+         movesd 10  0; just rice; hw 2 1; text ^outv3
+         movesd 10 -2; just rice; hw 2 1; text ^outv4
+         movesd 10 +2; just rice; hw 2 1; text ^outv5
+         . print "outv4 outv1 outv3 outv2 outv5 = ^outv4 ^outv1 ^outv3 ^outv2 ^outv5"
+      end if
+      .
+      if type1 = FUNCTION and type2 = FUNCTION
+         movesd 10 -1; just rice; hw 2 1; text ^out1
+         movesd 10 +1; just rice; hw 2 1; text ^out2
+         . print "out1 out2 = ^out1 ^out2"
+      end if
+   end if
+   .
+end if

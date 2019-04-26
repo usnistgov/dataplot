@@ -1,0 +1,30 @@
+This is file stack.men--Stack column data into response and group id
+ 
+--------------------
+ 1. Stack Column Data into RESPONSE LABID Form
+ 2. LET Y LABID = STACK X1 X2 .. XK
+ 3.
+ 4. The CONSENSUS MEAN (and many other Dataplot) commands
+ 5. expect the data to be in the form of a response
+ 6. variable with an associated group id variable.
+ 7. However, the data is often in the form where each lab
+ 8. is a  separate column.  The STACK command provides a
+ 9. convenient way to automatically convert your data to
+10. the format Dataplot needs.
+11.
+12. Enter the name for the new Response Variable:
+12. @CE 1 0 42 50 ?
+13. Enter the name for the new Group-ID Variable:
+13. @CE 2 0 42 50 ?
+14.
+15. List of variables to stack:
+16. @CE 3 0 1 50 ?
+17.
+18.
+19. Create the Stacked Variables?
+--------------------
+AN FE
+LET _1 _2 = STACK _3
+--------------------
+WEB HELP STACK
+--------------------

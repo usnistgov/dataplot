@@ -1,0 +1,95 @@
+This is file chisgfsk.men--Chi-Square Goodness of Fit (Continuous Dist.)
+
+--------------------
+ 1. Chi-Square Goodness of Fit (Continuous Distributions)
+ 2. <Distribution> CHI-SQUARE GOODNESS OF FIT Y
+ 3.
+ 4. Variable:
+ 4. @CE 1 0 11 40 ? gui-variable
+ 5.
+ 6. Distribution:
+ 7. @CE 2 1 11 40 Lognormal
+ 8. @CE 2 2 11 40 Halfnormal
+ 9. @CE 2 3 11 40 Chi-Squared
+ 9.                                   nu =
+ 9. @CE 3 0 41 50 ?
+10. @CE 2 4 11 40 F
+10.                                   nu1 =
+10. @CE 4 0 41 50 ?
+11.                                   nu2 =
+11. @CE 5 0 41 50 ?
+12. @CE 2 5 11 40 Exponential
+13. @CE 2 6 11 40 Gamma
+13.                                   gamma =
+13. @CE 6 0 41 50 ?
+14. @CE 2 7 11 40 Beta
+14.                                   alpha =
+14. @CE 7 0 41 50 ?
+15.                                   beta =
+15. @CE 8 0 41 50 ?
+16. @CE 2 8 11 40 Weibull
+16.                                   gamma =
+16. @CE 9 0 41 50 ?
+17.                                   min(1) or max(2) =
+17. @CE 10 0 41 50 ?
+18. @CE 2 9 11 40 Extreme Value Type 1
+18.                                   min(1) or max(2) =
+18. @CE 11 0 41 50 ?
+19. @CE 2 10 11 40 Extreme Value Type 2
+19.                                   gamma =
+19. @CE 12 0 41 50 ?
+20.                                   min(1) or max(2) =
+20. @CE 13 0 41 50 ?
+21. @CE 2 11 11 40 Pareto
+21.                                   gamma =
+21. @CE 14 0 41 50 ?
+22. @CE 2 12 11 40 Inverse Gaussian
+22.                                   gamma =
+22. @CE 15 0 41 50 ?
+23. @CE 2 13 11 40 Wald
+24. @CE 2 14 11 40 Reciprocal Inverse Gaussian
+24.                                   gamma =
+24. @CE 16 0 41 50 ?
+25. @CE 2 15 11 40 Failure Time
+25.                                   gamma =
+25. @CE 17 0 41 50 ?
+26.
+27. Subset/Except/For Specification:
+28. @CE 18 0 -10 50 *
+29.
+30. Generate the Chi-Square Goodness of Fit?
+--------------------
+GR FE
+@IF 3 0 LET NU = _3
+@IF 4 0 LET NU1 = _4
+@IF 5 0 LET NU2 = _5
+@IF 6 0 LET GAMMA = _6
+@IF 7 0 LET ALPHA = _7
+@IF 8 0 LET BETA = _8
+@IF 9 0 LET GAMMA = _9
+@IF 10 0 SET MINMAX = _10
+@IF 11 0 SET MINMAX = _11
+@IF 12 0 LET GAMMA = _12
+@IF 13 0 SET MINMAX = _13
+@IF 14 0 LET GAMMA = _14
+@IF 15 0 LET GAMMA = _15
+@IF 16 0 LET GAMMA = _16
+@IF 17 0 LET GAMMA = _17
+@IF 2 1 LOGNORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 2 HALFNORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 3 CHI-SQUARE CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 4 F CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 5 EXPONENTIAL CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 6 GAMMA CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 7 BETA CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 8 WEIBULL CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 9 EXTREME VALUE TYPE 1 CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 10 EXTREME VALUE TYPE 2 CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 11 PARETO CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 12 INVERSE GAUSSIAN CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 13 WALD CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 14 RECIPROCAL INVERSE GAUSSIAN CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 15 FAILURE TIME CHI-SQUARE GOODNESS OF FIT _1 _18
+--------------------
+WEB HELP CHI-SQUARE GOODNESS OF FIT
+--------------------

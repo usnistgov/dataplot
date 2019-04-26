@@ -1,0 +1,44 @@
+This is file barttes4.men--Bartlett's Test on Quarters
+ 
+--------------------
+ 1. Bartlett's Test on Quarters
+ 2. BARTLETT TEST Y X
+ 3.
+ 4. Vertical   Axis Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Do Bartlett's Test?
+--------------------
+GR FE
+DELETE ZSEQ
+DELETE ZTAG
+LET ZN = NUMBER _1 _2
+LET ZSEQ = SEQUENCE 1 1 ZN _2
+LET ZTAG = CODE4 ZSEQ _2
+.
+BARTLETT TEST _1 ZTAG _2
+.
+LET ZUPPER = 1.5*CUTUPP99
+IF STATNU2 < 500
+   PLOT FPDF(X,STATNU1,STATNU2) FOR X = 0 .1 ZUPPER
+END IF
+IF STATNU2 >= 500
+   PLOT (1/STATNU1)*CHSPDF(STATNU1*X,STATNU1) FOR X = 0 .1 ZUPPER
+END IF
+.
+JUST CENTER
+MOVEDATA STATVAL 0
+TEXT X
+MOVEDATA CUTUPP95 0
+TEXT 95%
+DRAWDATA CUTUPP95 0 CUTUPP95 .01
+MOVEDATA CUTUPP99 0
+TEXT 99%
+DRAWDATA CUTUPP99 0 CUTUPP99 .01
+--------------------
+WEB HELP BARTLETT TEST
+--------------------

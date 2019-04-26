@@ -1,0 +1,8 @@
+----- <~dataload\BRAIN.DP> Load BRAIN.DAT
+
+. This is file    BRAIN.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ BRAIN.DAT Y X1 X2
+

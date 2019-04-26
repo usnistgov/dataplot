@@ -1,0 +1,325 @@
+. This is dataplot macro   DEXEP.DP
+. Purpose: Generate a DEX (absolute) effects plot
+.          (= ste p 7 of the DEXPLOT.DP 10-ste p DEX analysis procedure)
+. Date: May 2005
+. Input
+.    1. k (parameter)               = Total number of plot factors
+.    2. y (vector)                  = Response variable
+.    3. x1, x2, x3, . . . (vectors) = Factors
+.
+.    4. framet (parameter)          = top    frame line (in %) (optional) (default = 90)
+.    5. frameb (parameter)          = bottom frame line (in %) (optional) (default = 20)
+.    6. maxnumef
+.    7. dpep   (parameter)          = number of decimal places for effects and average (optional, default = ???)
+.
+. -----start point-----
+.
+. print " "
+. print "From (dexep.dp, start point)"
+. print y for i = 1 1 5
+. if ibatch not exist or ibatch = 0; . pause; . end if
+.
+feedback save
+feedback off
+printing off
+let bugswep = 0
+. let pausesw = 1
+.
+if bugswep = 1; print " "; print "--At beginning of DEX Ste p 7 (DEXEP.DP)"
+   print y x1 x2 x3
+   print "   numeff = ^numeff"
+   loop for jz = 1 1 numeff
+      let effj = eff(jz)
+      print "jz = ^jz   steft^jz = ^steft^jz   eff.. = ^effj    stefc^jz = ^stefc^jz"
+   end loop
+
+   . feedback on
+   . echo on
+   if pausesw = 1; pause; end if
+end if
+.
+. --------------------------------------------
+. -----Do Analysis Ste p 7: |Effects| Plot-----
+. --------------------------------------------
+.
+. -----Step 1.1: Check for missing input values-----
+.
+if bugswep = 1; print "--At (dexep.dp, step 1.1): check input"
+   if pausesw = 1; pause; end if
+end if
+.
+let string stmacro = dexep.dp
+if k not exist
+   call determine_k.dp
+end if
+set check name output filliben
+set check length output filliben
+feedback on
+let iflag = check name k y x1 to x^k
+let iflag = check equal length y x1 to x^k
+feedback off
+.
+. -----Step 1.2: Copy the user's original y and x1 to xk data out to file-----
+.                since y and x1 to xk may potentially be modified within this macro-----
+.
+if bugswep = 1; print "--At (dexep.dp, step 1.2): save original data"
+   if pausesw = 1; pause; end if
+end if
+.
+set write format 40f15.7
+write dex_original_data.dat y x1 to x^k
+set write format
+.
+. -----Step 1.3: Check/Extract 2 levels, and map into -1 and +1-----
+.                For this macro to work, the number of levels must be 1 or 2,
+.                and the 2 levels must be -1 and +1.  Check for this (and fix, if need be).-----
+.                If not 2 levels, then only the min and max will be used herein.-----
+.                If not -1 and +1, then min => -1 and max => +1-----
+.
+if bugswep = 1; print "--At (dexep.dp, step 1.3): normalitze to (-1,+1)"
+   if pausesw = 1; pause; end if
+end if
+.
+let string stcall = dexep.dp
+call check_and_fix_original_data_for_2_levels_and_m1_p1.dp
+.
+. -----Step 2: Define plot settings-----
+.
+if bugswep = 1; print "--At (dexep.dp, step 2): plot settings"
+   if pausesw = 1; pause; end if
+end if
+.
+call dexplotinit.dp
+.
+. -----Step 3: Compute effect estimates (ordered) and confounding-----
+.
+if bugswep = 1; print "--At (dexep.dp, step 3): confounding"
+   print "confsw = ^confsw"
+   if pausesw = 1; pause; end if
+end if
+.
+call compute_effect_estimates_and_confounding.dp
+.
+if bugswep = 1; print "--At end of step 3 of dexep.dp"
+   print "numeff = ^numeff"
+   loop for jzz = 1 1 numeff
+      print steft^jzz
+   end loop
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 4: Define characters, lines, spikes, and axis labels for upcoming
+.
+if bugswep = 1; print "--At (dexep.dp, step 4): char,lines,spikes,labels"
+   if pausesw = 1; pause; end if
+end if
+.
+title |Effects| Plot
+y1label |Effects|
+x1label Factor
+x3label
+label size labelsiz
+tic label size ticlabsi
+ygrid
+grid color blue
+if colorall exists; grid color ^colorall; end if
+x1tics off
+x1tic label off
+y1tic offset 10
+.
+char X
+call setcircle.dp
+.
+lines blank
+spike on
+let s = sd y
+.
+. -----Step 5: GENERATE THE PLOT-----
+.
+if bugswep = 1; print "--At (dexep.dp, step 5): GENERATE THE PLOT"
+   if pausesw = 1; pause; end if
+end if
+.
+delete index; let index = 1 1 numeff
+let eff2 = abs(eff)
+plot eff2 index
+.
+. -----Step 6: Write out the ordered factor IDs along the horizontal axis-----
+.
+if bugswep = 1; print "--At (dexep.dp, step 6): horiz axis ordered factor id's"
+   if pausesw = 1; pause; end if
+end if
+.
+. print index eff eff2 effindex effid1 effid2
+let x0pos = xplot for i = 1 1 numeff
+let y0pos = 27 for i = 1 1 numeff
+if n >= 10
+   let y0pos = 23 for i = 1 2 numeff
+end if
+delete tagzzz; let tagzzz = sequence 1 1 numeff
+character justification cece all
+character hw texth textw all
+if n > 35
+   character hw 1.5 0.75 all
+end if
+character color blue all
+spike color blue all
+if colorall exists
+   let coltemp = string word colorall 1
+   character color ^coltemp all
+   spike color ^coltemp all
+end if
+loop for j = 1 1 numeff
+   let plot character j = ^steft^j
+end loop
+drawds symbol x0pos y0pos tagzzz
+.
+. -----Step 7: write out the box (and contents) in upper right corner within the plot-----
+.
+if bugswep = 1; print "--At (dexep.dp, step 7): write box contents"
+   print "numeff = ^numeff"
+   loop for jz = 1 1 numeff
+      print "stefc^jz = ^stefc^jz"
+   end loop
+   if pausesw = 1; pause; end if
+end if
+.
+loop for jz = 1 1 numeff
+   if stefc^jz = -99; let string stefc^jz = -999; end if
+end loop
+.
+call dexep_box.dp
+. print "after the call to     dexep_box.dp"         ;. why not print??? 12/10/18
+. print "numeff = ^numeff     numeffp = ^numeffp"    ;. why not print??? 12/10/18
+. pause
+.
+. -----Step 8: Write out the grand mean above upper right corner of the plot-----
+.
+if bugswep = 1; print "--At (dexep.dp, step 8): write ybar"
+   if pausesw = 1; pause; end if
+end if
+.
+let ybar = average y
+let dpepz = 4
+if dpep exists; let dpepz = dpep; end if
+set write decimals dpepz; let stybar = number to string ybar
+.
+if colorall exists; color ^colorall; end if
+hw texth textw
+. justification left     these 4 lines were commented out 10/15/18
+. let y0 = 90 - texth
+. let x0 = 17
+. move x0 y0; . text Mean = ^stybar
+justification right
+let y0 = 91
+let x0 = 85
+move x0 y0; text Mean = ^stybar
+set write decimals
+justification left
+.
+. -----Step 9: Annotate the plot-----
+.
+if bugswep = 1; print "--At (dexep.dp, step 9): annotate"
+   if pausesw = 1; pause; end if
+end if
+.
+call dexknbox.dp
+.
+.
+if project exists
+   if projcol exists; color ^projcol; end if
+   call dexwriteproject.dp
+end if
+.
+if step exists
+   let step = step + 1; hw 2 1; just left; move 5 95
+   . text Step ^step
+   . call tagcorn.dp   9/17/18/
+   if stepprsw not exist
+      call tagcorn.dp
+   end if
+   if stepprsw exists; if stepprsw = 1
+      call tagcorn.dp
+   end if; end if
+end if
+.
+if annotate exists and annotate = 1
+   if colorall exists; color ^colorall; end if
+   call annotate.dp
+end if
+.
+. -----Step 10: Write out right margin factor and setting info-----
+.
+if bugswep = 1; print "--At (dexep.dp, step 10): right margin"
+   if pausesw = 1; pause; end if
+end if
+.
+if rightmsw exists and rightmsw = 1 or rightmsw not exist
+   if stx1 exists and stx1l exists
+      call dexrightmargin.dp
+   end if
+end if
+.
+. -----Step 11: If called for, write out customized upper left info-----
+if stcorn1 exists
+if bugswep = 1; print "--At (dexep.dp, step 11): upper left"
+   if pausesw = 1; pause; end if
+end if
+.
+   call upperleft.dp
+end if
+.
+. -----Step 98: Restore the user's original y and x1 to xk data from file-----
+.
+if bugswep = 1; print " "; print "---At (dexep.dp, step 98): restore orig. data (pre-restore)"
+   print y x1 to x^k
+   if pausesw = 1; pause; end if
+end if
+.
+delete y x1 to x^k
+set read format 40f15.7
+skip 0; read dex_original_data.dat y x1 to x^k
+set read format
+.
+if bugswep = 1; print " "; print "---At (dexep.dp, step 98): (post-restore)"
+   print y x1 to x^k
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 31: Form conclusions and write out to file-----
+.
+let step = 7
+call form_and_write_dex_10_step_conclusions.dp
+.
+. -----Step 99: Finish up-----
+.
+if bugswep = 1; print " "; print "---At end of dexep.dp . . ."
+   if pausesw = 1; pause; end if
+end if
+.
+box fill pattern off; box fill color g80
+grid off
+y1tic offset 5
+x1tics on
+x1tic label on
+char blank all
+char hw 2 1
+char offset 0 0 all
+char justification cece all
+lines solid all
+spike off
+just left
+title
+y1label
+x1label
+tic offset 5 5
+.
+. stat v
+. print y x1 x2 x3
+. pause
+feedback restore
+.
+if itime exists and itime = 1
+   cpu time
+   let t7 = cputime
+end if

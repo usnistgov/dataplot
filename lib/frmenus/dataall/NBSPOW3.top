@@ -1,0 +1,8 @@
+----- <~dataall\NBSPOW3.top> NBSPOW3.DAT
+
+NBSPOW3.DAT
+
+View     <xcl: LIST NBSPOW3.DAT>
+Load     <xcf: ~dataload/NBSPOW3.DP>
+Print    <xccl: printfile C:\DATAPLOT\NBSPOW3.DAT>
+

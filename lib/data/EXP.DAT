@@ -1,0 +1,41 @@
+This is Dataplot data file    EXP.DAT
+Sample data set from Example 12.2 of
+Karl Bury, "Statistical Distributions in Engineering",
+Cambridge University Press, 1999, pp. 200-201.
+
+Response variable = Newly designed inverter tested to failure under
+                    magnified vibratory loads (time in hours)
+Number of observations = 16
+Number of observations per line image = 1
+Order of observations per line image--
+   1. Response variable
+To read this file into Dataplot--
+   SKIP 25
+   READ EXP.DAT Y
+   SET MAXIMUM LIKELIHOOD PERCENTILE DEFAULT
+   EXPONENTIAL MAXIMUM LIKELIHOOD Y
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  Y
+------------------
+0.2
+0.5
+2.0
+2.3
+3.1
+4.5
+4.8
+7.0
+10.1
+11.4
+12.0
+13.9
+18.0
+20.1
+21.5
+33.7

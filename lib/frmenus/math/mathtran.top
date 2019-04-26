@@ -1,0 +1,37 @@
+----- <~math\mathtran.top> Mathematical Transformations
+ 
+Mathematical Transformations
+ 
+Basic Calculations (Data)
+   Summation                          <xemf: ~math\sum.men>
+   Cumulative Summation               <xemf: ~math\cum_sum.men>
+   Product                            <xemf: ~math\product.men>
+   Cumulative Product                 <xemf: ~math\cum_prod.men>
+   Frequency of Elements              <xemf: ~math\frequenc.men>
+   Distinct Elements                  <xemf: ~math\distinct.men>
+   First Difference                   <xemf: ~math\differ.men>
+   Interarrival Times                 <xemf: ~math\intarr.men>
+
+Fourier and Related Transforms
+   Fast Fourier Transform             <xemf: ~math/fft.men>
+   Inverse Fast Fourier Transform     <xemf: ~math/ifft.men>
+   Cosine Transform                   <xemf: ~math/cos_tran.men>
+   Sine Transform                     <xemf: ~math/sin_tran.men>
+
+Coding                                <xemf: ~math/code.men>
+Scaling
+   Z-Score                            <xemf: ~math/zscore.men>
+   U-Score                            <xemf: ~math/uscore.men>
+
+Sequences
+   Fibonnacci Numbers                 <xemf: ~math/fibonn.men>
+   Logistic Numbers                   <xemf: ~math/logistic.men>
+   Prime Numbers                      <xemf: ~math/prime.men>
+   Bernoulli Numbers                  <xemf: ~math/bernnumb.men>
+   Euler Numbers                      <xemf: ~math/eulenumb.men>
+
+Vector Operations                     <~math\vector.top>
+Matrix Operations                     <~math\matrix.top>
+Complex Operations                    <~math\compdata.top>
+Polynomial Operations                 <~math\polynomi.top>
+

@@ -1,0 +1,62 @@
+. This is Dataplot macro   ARL_P.DP
+. Purpose--Generate an Average Run Length (ARL) curve for a
+.          P (counts) Control Chart (equal sample sizes).
+.          This is based on the formula:
+.              ARL = 1/(1-BETA)
+.          where BETA is the Y coordinate of the OC curve.
+.          The OC is defined as:
+.            BINCDF(int(n*ucl),p,n) - BINCDF(int(n*lcl),p,n) versus p
+.          where 
+.            n      = total sample size
+.            ucl    = upper control limit
+.            lcl    = lower control limit
+.            p      = desired probabilities
+.
+.          The OC curve is essentiallty a plot of the type II (or Beta
+.          error (probability of incorrectly accepting the hypothesis
+.          of statistical control).  It measures the sensitivity of the
+.          control chart.
+.
+.          The ARL curve is the average number of runs it takes
+.          to generate an "out of control" signal.   Thus for p
+.          equal to the process mean, it gives the number of runs
+.          it takes to generate an out of control signal when
+.          in fact the process is in control.
+.
+.          For p not equal to the process mean, it indicates the
+.          average number of runs before the process is flagged
+.          out of control.
+.
+. Input --NG       = sample size for single group
+.       --Y        = vector containing number of defectives for each
+.                    group
+. Output--graph
+.       --N        = Total sample size
+.       --PBAR     = average number of defectives per group
+.       --UCL      = PBAR + 3*SQRT(PBAR*(1-PBAR)/N)
+.       --LCL      = PBAR - 3*SQRT(PBAR*(1-PBAR)/N)
+.
+delete zzzzp zzzzy zzzzarl
+.
+let numdef = sum y
+let ngroups = size y
+let n = ngroups*ng
+let pbar = numdef/(ngroups*ng)
+let ucl = pbar + 3*sqrt(pbar*(1-pbar)/n)
+let lcl = pbar - 3*sqrt(pbar*(1-pbar)/n)
+.
+let zzzzp = sequence 0.01 0.01 0.99
+let zzzza1 = int(n*ucl)
+let zzzza2 = int(n*lcl)
+.
+let zzzzy = bincdf(zzzza1,zzzzp,n) - bincdf(zzzza2,zzzzp,n)
+.
+let zzzzarl = zzzzy
+let zzzzarl = 1/(1-zzzzy) subset zzzzy <> 1
+let zzzzarl = 0 subset zzzzy = 1
+.
+y1label Runs
+x1label Probability
+title ARL Curve
+.
+plot zzzzarl vs zzzzp

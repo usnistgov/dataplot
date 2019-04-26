@@ -1,0 +1,45 @@
+This is file plotiden.men--Write an Identifying String
+ 
+--------------------
+ 1. Write a Plot Identification String
+ 2. TEXT Final Plot
+ 3.
+ 4. Enter identifying text for plot:
+ 5. @CE 1 0 1 50 ?
+ 6.
+ 7. If no position is entered, the string
+ 8. drawn at position (75,5).
+ 9. X Coordinate (0 to 100 scale):
+ 9. @CE 2 0 42 50 ?
+10. Y Coordinate (0 to 100 scale):
+10. @CE 3 0 42 50 ?
+11. Size of Text (0 to 100 scale, default = 2):
+11. @CE 4 0 42 50 ?
+12. Justification of Text (defalt = left):
+12. @CE 5 1 42 50 Left
+13. @CE 5 2 42 50 Center
+14. @CE 5 3 42 50 Right
+15. Case of Text (defalt = asis):
+15. @CE 6 1 42 50 ASIS
+16. @CE 6 2 42 50 UPPER
+17. @CE 6 3 42 50 LOWER
+18.
+19.
+20. Draw the Text?:
+--------------------
+GR FE
+CASE ASIS
+HEIGHT 2
+JUSTIFICATION LEFT
+MOVE 75 5
+.
+@IF 6 2 CASE UPPER
+@IF 6 3 CASE LOWER
+@IF 5 2 JUSTIFICATION CENTER
+@IF 5 3 JUSTIFICATION RIGHT
+HEIGHT _4
+MOVE _2 _3
+TEXT _1
+--------------------
+WEB HELP TEXT
+--------------------

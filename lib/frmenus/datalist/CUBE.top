@@ -1,0 +1,8 @@
+----- <~datalist\CUBE.top> CUBE.DAT
+ 
+CUBE.DAT
+ 
+View     <xcl: LIST CUBE.DAT>
+Load     <x2cl: SKIP 25; READ CUBE.DAT Y X1 X2>
+Print    <xccl: printfile C:\DATAPLOT\CUBE.DAT>
+ 

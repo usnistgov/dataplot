@@ -1,0 +1,71 @@
+This is file periodog.men--Periodogram
+ 
+--------------------
+ 1. Periodogram
+ 2. PERIODOGRAM
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Line Types (solid, dot, dash, ...)
+ 6. @CE 3 0 42 50 * gui-line
+ 7. Character Type (blank, x, circ, ...)
+ 7. @CE 4 0 42 50 * gui-char
+ 8. Character Fill (off, on)
+ 8. @CE 5 0 42 50 * gui-ooff
+ 9. Spike (off, on)
+ 9. @CE 10 0 42 50 * gui-ooff
+10. Log scale for Vertical Axis
+10. @CE 11 1 38 43 no
+10. @CE 11 2 45 50 yes
+11. Spectral Density (normalized)
+11. @CE 12 1 38 43 no
+11. @CE 12 2 45 50 yes
+12.
+13. Title:
+13. @CE 6 0 10 50 *
+14. Left Axis Label:
+14. @CE 7 0 22 50 *
+15. Bottom Axis Label:
+15. @CE 8 0 22 50 *
+16.
+17. Subset/Except/For Specification:
+18. @CE 9 0 1 50 *
+19.
+20.
+21. Generate the Periodogram?:
+--------------------
+GR FE
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+SPIKE _10
+BAR OFF
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+YLOG OFF
+LET ZZZZFLG1 = 0
+LET ZZZZFLG2 = 0
+@IF 11 2 LET ZZZZFLG1 = 1
+@IF 12 2 LET ZZZZFLG2 = 1
+DEVICE 1 OFF
+PERIODOGRAM _1 _9
+DEVICE 1 ON
+IF ZZZZFLG2 = 1
+  LET ZZZZFLG1 = 0
+  LET ZZZZTEMP = VARIANCE _1 _9
+  LET YPLOT = YPLOT/ZZZZTEMP
+END OF IF
+IF ZZZZFLG1 = 0
+  PLOT YPLOT XPLOT
+END OF IF
+IF ZZZZFLG1 = 1
+  YLOG ON
+  PLOT YPLOT XPLOT SUBSET YPLOT > 0
+  YLOG OFF
+END OF IF
+DELETE ZZZZFLG1 ZZZZFLG2
+--------------------
+WEB HELP PERIODOGRAM
+--------------------

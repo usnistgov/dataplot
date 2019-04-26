@@ -1,0 +1,124 @@
+This is file statplsc.men--Generate Statistic Plots (Scale)
+ 
+--------------------line 3
+01. Statistic Plots (Scale)
+02. <statistic> PLOT Y X
+03.
+04. Vertical   Axis Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Group ID        Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06.
+07. Scale Statistic (Select one):
+08. @CE 3 1 1 27 raw data
+08. @CE 3 2 29 57 average absolute deviation
+09. @CE 3 3 1 27 biweight midvariance
+09. @CE 3 4 29 57 biweight scale
+10. @CE 3 5 1 27 coefficient of variation
+10. @CE 3 6 29 57 interquartile range
+11. @CE 3 7 1 27 kurtosis
+11. @CE 3 8 29 57 median absosolute deviation
+12. @CE 3 9 1 27 percentage bend midvariance
+12. @CE 3 10 29 57 quantile standard error
+13. @CE 3 11 1 27  range
+13. @CE 3 12 29 57 relative standard deviation
+14. @CE 3 13 1 27 skewness
+14. @CE 3 14 29 57 standard deviation
+15. @CE 3 15 1 27 sd of the mean
+15. @CE 3 16 29 57 trimmed mean standard error
+16. @CE 3 17 1 27 variance
+16. @CE 3 18 29 57 variance of the mean
+17. @CE 3 19 1 27 Winsorized sd
+17. @CE 3 20 29 57 Winsorized variance
+18.
+19. Percentage of values to trim/Winsorize above?:
+19. @CE 4 0 42 50 ? 
+20. Percentage of values to trim/Winsorize below?:
+20. @CE 5 0 42 50 ?
+21. Quantile for quantile standard error (> 0, < 1):
+21. @CE 6 0 42 50 ?
+22. Beta for Percentage Bend (> 0, < 0.5):
+22. @CE 7 0 42 50 ?
+23.
+24. Character Type for Data
+24. @CE 8 0 42 50 * gui-char
+25. Character Fill for Data
+25. @CE 9 0 42 50 gui-ooff
+26. Line Type for Data-connecting Line
+26. @CE 10 0 42 50 * gui-line
+27. Line Type for Global Stat Line?
+27. @CE 11 0 42 50 * gui-line
+28. Spike to Global Stat Line?
+28. @CE 12 0 42 50 gui-ooff
+29.
+30. Title:
+30. @CE 13 0 10 50 *
+31. Left Axis Label:
+31. @CE 14 0 22 50 *
+32. Bottom Axis Label:
+32. @CE 15 0 22 50 *
+33.
+34. Subset/Except/For Specification:
+35. @CE 16 0 1 50 *
+36.
+37. Generate the Statistic Plot?:
+--------------------
+TITLE _13
+Y1LABEL _14
+X1LABEL _15
+CHARACTERS _8
+CHARACTER FILL _9
+LINES _10 _11
+LET P1 = 5
+LET P2 = 5
+LET P1 = _5
+LET P2 = _4
+LET XQ = _6
+LET BETA = _7
+.
+@IF 3 2 LET ZSTAT = AAD _1 _16
+@IF 3 3 LET ZSTAT = BIWEIGHT MIDVARIANCE _1 _16
+@IF 3 4 LET ZSTAT = BIWEIGHT SCALE _1 _16
+@IF 3 5 LET ZSTAT = COEFFICIENT OF VARIATION _1 _16
+@IF 3 6 LET ZSTAT = IQ RANGE _1 _16
+@IF 3 7 LET ZSTAT = KURTOSIS _1 _16
+@IF 3 8 LET ZSTAT = MAD _1 _16
+@IF 3 9 LET ZSTAT = PERCENTAGE BEND MIDVARIANCE _1 _16
+@IF 3 10 LET ZSTAT = QUANTILE STANDARD ERROR _1 _16
+@IF 3 11 LET ZSTAT = RANGE _1 _16
+@IF 3 12 LET ZSTAT = RANGE _1 _16
+@IF 3 13 LET ZSTAT = RELATIVE STANDARD DEVIATION _1 _16
+@IF 3 14 LET ZSTAT = SKEWNESS _1 _16
+@IF 3 15 LET ZSTAT = STANDARD DEVIATION _1 _16
+@IF 3 16 LET ZSTAT = SD OF THE MEAN _1 _16
+@IF 3 17 LET ZSTAT = TRIMMED MEAN STANDARD ERROR _1 _16
+@IF 3 18 LET ZSTAT = VARIANCE _1 _16
+@IF 3 19 LET ZSTAT = WINSORIZED SD _1 _16
+@IF 3 20 LET ZSTAT = WINSORIZED VARIANCE _1 _16
+SPIKE _11
+SPIKE BASE ZSTAT
+.
+BAR OFF OFF
+@IF 3 1 PLOT _1 _2 _2 _16
+@IF 3 2 AAD PLOT _1 _2 _16
+@IF 3 3 BIWEIGHT MIDVARIANCE PLOT _1 _2 _16
+@IF 3 4 BIWEIGHT SCALE PLOT _1 _2 _16
+@IF 3 5 COEFFICIENT OF VARIATION PLOT _1 _2 _16
+@IF 3 6 IQ RANGE PLOT _1 _2 _16
+@IF 3 7 KURTOSIS PLOT _1 _2 _16
+@IF 3 8 MAD PLOT _1 _2 _16
+@IF 3 9 PERCENTAGE BEND MIDVARIANCE PLOT _1 _2 _16
+@IF 3 10 QUANTILE STANDARD ERROR PLOT _1 _2 _16
+@IF 3 11 RANGE PLOT _1 _2 _16
+@IF 3 12 RELATIVE SD PLOT _1 _2 _16
+@IF 3 13 SKEWNESS PLOT _1 _2 _16
+@IF 3 14 STANDARD DEVIATION PLOT _1 _2 _16
+@IF 3 15 SD OF THE MEAN PLOT _1 _2 _16
+@IF 3 16 TRIMMED MEAN STANDARD ERROR PLOT _1 _2 _16
+@IF 3 17 VARIANCE PLOT _1 _2 _16
+@IF 3 18 VARIANCE OF THE MEAN PLOT _1 _2 _16
+@IF 3 19 WINSORIZED SD PLOT _1 _2 _16
+@IF 3 20 WINSORIZED VARIANCE PLOT _1 _2 _16
+--------------------
+WEB HELP STATISTICS PLOT
+--------------------

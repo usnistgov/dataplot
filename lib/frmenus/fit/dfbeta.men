@@ -1,0 +1,39 @@
+This is file dfbeta.men--Compute the DFBETA Statistics
+ 
+--------------------
+ 1. Compute DFBETA Statistics
+ 2. Macro ...
+ 3.
+ 4. Use the "Create Design Matrix" menu
+ 5. to create a design matrix from a list
+ 6. of independent variables.
+ 7.
+ 8. Note that this menu assumes that the
+ 9. fit has already been performed (and
+10. that it was the most recent fit performed).
+11.
+12. Name of the Design Matrix:
+12. @CE 1 0 42 50 ?
+13.
+14.
+15. Compute the DFBETA Statistics?:
+--------------------
+GR FE
+SKIP 1
+SET READ FORMAT E15.7,65X,E15.7
+READ DPST3F.DAT ZZZZHII ZZZZESTU
+SKIP 0
+SET READ FORMAT
+LET ZZZZSTR1 = CATCHER MATRIX _1
+LET ZZZZSTR2 = XTXINV MATRIX _1
+LET ZZZZP = MATRIX NUMBER OF COLUMNS _1
+LOOP FOR K = 1 1 ZZZZP
+    LET ZZZZDUMM = ZZZZSTR1^K
+    LET ZZZZDUM2 = ZZZZSTR2^K(K)
+    LET DFBETA^K = ZZZZDUMM*ZZZZESTU/SQRT(ZZZZDUM2*(1-ZZZZHII))
+END OF LOOP
+DELETE ZZZZESTU ZZZZHII ZZZZDUMM ZZZZDUM2 ZZZZP ZZZZSTR1 ZZZZSTR2
+PRINT "DFBETA's SAVED IN VARIABLES DFBETA1, DFBETA2, .. "
+--------------------
+WEB HELP FIT
+--------------------

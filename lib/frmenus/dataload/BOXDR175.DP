@@ -1,0 +1,8 @@
+----- <~dataload\BOXDR175.DP> Load BOXDR175.DAT
+
+. This is file    BOXDR175.DP
+
+DELETE Y X1 TO X24
+SKIP 25
+READ BOXDR175.DAT Y X1 TO X24
+

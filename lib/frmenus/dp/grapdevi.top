@@ -1,0 +1,20 @@
+----- <~dp\grapdevi.top> Output (Graphics) Devices
+ 
+Output (Graphics) Devices
+ 
+Device 1                      : Screen
+Device 2--Output Graphics File: DPPL1F.DAT
+Device 3--Output Graphics File: DPPL2F.DAT
+ 
+Allowable Device Formats:
+   TEKTRONIX 4010
+   TEKTRONIX 4014
+   TEKTRONIX 4105
+   TEKTRONIX 4662
+   POSTSCRIPT
+   REGIS
+   ...
+ 
+Specifying a Device Format:
+   DEVICE <#> <format>
+ 

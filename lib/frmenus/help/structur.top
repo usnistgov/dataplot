@@ -1,0 +1,40 @@
+----- <~help\structure.top> Structured Language
+
+Structured Language
+
+Structured Language
+
+Program Execution Flows from Top to Bottom
+
+    Program execution, whether in the main routine 
+    or within a subprogram, always flows from top to
+    bottom, and so Dataplot is by design a
+    structured language.  Dataplot does not have
+    statement labels and therefore is a
+    "GO-TO-less" language.  In practice, because of
+    the existence of higher-level graphics/analysis
+    commnands, and because of the Dataplot feature of
+    being able to append subset and conditionality
+    qualifiers at the end of any high-level graphics
+    and analysis command, the need for such branching
+    has been virtually eliminated. The net result is
+    a structured, top-to-bottom language structure
+    which greatly facilitates the writing and updating
+    of programs.
+     
+Subprograms Initiated with CALL Command
+
+    Branching between subprograms can be done via the
+
+        CALL                              <xcl: HELP CALL>
+
+    command.  For example,
+
+       CALL ANALYSIS.
+
+    where ANALYSIS. is the name of an analyst-created
+    file where the subprogram resides.  The period at
+    the end of the file name identifies ANALYSIS as a
+    file name as opposed to, for example, the name of
+    a parameter, variable, or function.
+

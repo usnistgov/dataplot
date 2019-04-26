@@ -1,0 +1,8 @@
+----- <~dataload\ELNINO.DP> Load ELNINO.DAT
+
+. This is file    ELNINO.DP
+
+DELETE Y X YEAR MONTH
+SKIP 25
+READ ELNINO.DAT Y X YEAR MONTH
+

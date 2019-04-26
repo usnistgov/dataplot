@@ -1,0 +1,82 @@
+This is Dataplot data file     CUMMING4.DAT
+Purpose--(This is a derived subset of the original data
+whose goal was to determine if a difference existed
+among 5 algorithms).  The current purpose
+is to determine which of 7 factors affects
+the response for the n = 32 run subset
+consisting of algorithm 1 (of 5)
+             ratios 1 and 3 (of 3) 1 
+             replicates 1 and 2 (of 3)
+This will yield a 2**(7-2) fractional factorial design.
+The design will not be Yates order and may not be of
+optimal resolution.
+Purpose--Comparison of 5 Peak Deconvolution Algorithms
+         for Analyzing Am-241 and Am-243 Alpha Spectra
+Run 1, Ratio 1, Replicate 1, Algorithm 1
+Data Source = Anna Berne (EML in NYC)
+Contact--Zhichao Lin and Elizabeth Cummings (NIST)
+Number of observations              = 360
+Number of variables per lines image = 10
+Order of variables on a line image --
+   1. Response Variable Y = Calculated Ratio of Am241 to Am243
+   2. Response Variable Y =  Relative Bias = 100 * (Ratio - NIST Standard) / (NIST Standard)
+   3. Response Variable Y = Bias = Ratio - NIST Standard
+   4. Factor 1            = Ratio             ( 2 levels)
+   5. Factor 2            = Replicate         ( 2 levels)
+   6. Factor 3            = Detector Size     ( 2 levels)
+   7. Factor 4            = Detector Distance ( 2 levels)
+   8. Factor 5            = Thickness         ( 2 levels)
+   9. Factor 6            = Resolution        ( 2 levels)
+  10. Factor 7            = Counts            ( 2 levels)
+To read this file into Dataplot--
+   SKIP 50; READ CUMMINS4.DAT Y1 TO Y3 X1 TO X7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Y1        Y2       Y3          X1   X2   X3   X4   X5   X6   X7
+   Calc.     Rel.     Bias       Ratio Rep  Det  Det  Thic Resol Counts
+   Ratio     Bias                           Size Dist
+---------------------------------------------------------------------
+ 1.08360   0.07530    7.47         -1   -1   -1   -1   -1   +1   -1  
+ 1.01020   0.00190    0.19         -1   -1   -1   -1   -1   +1   +1  
+ 1.04520   0.03690    3.66         -1   -1   -1   +1   +1   +1   -1  
+ 1.00880   0.00050    0.05         -1   -1   -1   +1   +1   +1   +1  
+ 0.95580  -0.05250   -5.21         -1   -1   +1   +1   -1   -1   -1  
+ 1.02200   0.01370    1.36         -1   -1   +1   +1   -1   -1   +1  
+ 0.93240  -0.07590   -7.53         -1   +1   +1   -1   +1   -1   -1  
+ 1.01970   0.01140    1.13         -1   +1   +1   -1   +1   -1   +1  
+ 0.97150  -0.03680   -3.65         -1   +1   -1   +1   -1   -1   -1  
+ 0.88740  -0.12090  -11.99         -1   +1   -1   +1   -1   -1   +1  
+ 1.02230   0.01400    1.39         -1   +1   +1   +1   +1   +1   -1  
+ 0.99490  -0.01340   -1.33         -1   +1   +1   +1   +1   +1   +1  
+ 0.87570  -0.13260  -13.15         -1   +1   -1   -1   +1   -1   -1  
+ 0.98340  -0.02490   -2.47         -1   +1   -1   -1   +1   -1   +1  
+ 1.05020   0.04190    4.16         -1   +1   +1   -1   -1   +1   -1  
+ 1.01520   0.00690    0.68         -1   +1   +1   -1   -1   +1   +1  
+ 8.57170  -0.84112   -8.94         +1   -1   -1   -1   +1   -1   -1  
+ 9.18390  -0.22892   -2.43         +1   -1   -1   -1   +1   -1   +1  
+10.21500   0.80218    8.52         +1   -1   +1   -1   -1   +1   -1  
+ 9.43870   0.02588    0.27         +1   -1   +1   -1   -1   +1   +1  
+ 9.52250   0.10968    1.17         +1   -1   +1   +1   +1   +1   -1  
+ 9.22010  -0.19272   -2.05         +1   -1   +1   +1   +1   +1   +1  
+ 9.24600  -0.16682   -1.77         +1   +1   -1   -1   -1   +1   -1  
+ 8.99120  -0.42162   -4.48         +1   +1   -1   -1   -1   +1   +1  
+ 9.03990  -0.37292   -3.96         +1   +1   +1   +1   -1   -1   -1  
+ 9.37560  -0.03722   -0.40         +1   +1   +1   +1   -1   -1   +1  
+ 8.78070  -0.63212   -6.72         +1   +1   +1   -1   +1   -1   -1  
+ 9.25240  -0.16042   -1.70         +1   +1   +1   -1   +1   -1   +1  
+ 9.13020  -0.28262   -3.00         +1   +1   -1   +1   -1   -1   -1  
+ 9.07430  -0.33852   -3.60         +1   +1   -1   +1   -1   -1   +1  
+ 9.20160  -0.21122   -2.24         +1   +1   -1   +1   +1   +1   -1  
+ 9.00910  -0.40372   -4.29         +1   +1   -1   +1   +1   +1   +1  

@@ -1,0 +1,8 @@
+----- <~dataload\USEDCARS.DP> Load USEDCARS.DAT
+
+. This is file    USEDCARS.DP
+
+DELETE Y X1 X2 x3
+SKIP 25
+READ USEDCARS.DAT Y X1 X2 X3
+

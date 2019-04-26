@@ -1,0 +1,6 @@
+----- <~dataprin\RANDU.DP> Print (to Printer) RANDU.DAT
+
+. This is file    RANDU.DP
+
+PRINT RANDU.DAT
+

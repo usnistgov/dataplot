@@ -1,0 +1,20 @@
+----- <~dp\grapdevd.top> Graphics Device Drivers
+ 
+Graphics Device Drivers
+ 
+DATAPLOT has its own stand-alone graphics
+subsystem with built-in graphics drivers for a wide
+assortment of graphics devices including:
+ 
+   X-Windows                 DEVICE 1 X11
+   Windows 95/NT             DEVICE 1 QWIN
+   Tektronix 4010/14         DEVICE 1 TEKTRONIX 4014
+   Dec VT 240-340            DEVICE 1 REGIS
+   HP-GL                     DEVICE 1 HP-GL
+   Laser Jet HP-GL           DEVICE 1 HP-GL LASERJET
+   Postscript                DEVICE 1 POSTSCRIPT
+   Encapsulated Postscript   DEVICE 1 ENCA POSTSCRIPT
+   Calcomp Library           DEVICE 1 CALCOMP
+   QMS                       DEVICE 1 QMS
+   Device-independent        DEVICE 1 GENERAL
+ 

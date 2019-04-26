@@ -1,0 +1,48 @@
+----- <~prob\shap1ks.top> KS Goodness of Fit for One Shape Parameter Continuous Distributions
+
+Perform Kolmogorov-Smirnov Goodness of Fit Test (one shape parameters)
+
+Perform Kolmogorov-Smirnov Goodness of Fit Test
+for Continuous Distributions with One Shape Parameter
+(Uncensored Case)
+
+Asymmetric Double Exponential (Laplace)   <xemf: ~prob\ksade.men>
+Bradford                                  <xemf: ~prob\ksbra.men>
+Chi                                       <xemf: ~prob\ksch.men>
+Chi-Square                                <xemf: ~prob\kschs.men>
+Double Gamma                              <xemf: ~prob\ksdga.men>
+Double Weibull                            <xemf: ~prob\ksdwe.men>
+Error (Subbotin)                          <xemf: ~prob\kssub.men>
+Fatigue Life                              <xemf: ~reli\ksfl.men>
+Folded T                                  <xemf: ~prob\ksft.men>
+Frechet (minimum case)                    <xemf: ~reli\ksev21.men>
+Frechet (maximum case)                    <xemf: ~reli\ksev22.men>
+Gamma                                     <xemf: ~reli\ksgam.men>
+Generalized Extreme Value (Minimum)       <xemf: ~reli\ksgev1.men>
+Generalized Extreme Value (Maximum)       <xemf: ~reli\ksgev2.men>
+Generalized Half-Logistic                 <xemf: ~prob\ksghfl.men>
+Generalized Logistic                      <xemf: ~prob\ksglo.men>
+Generalized Pareto                        <xemf: ~reli\ksgep.men>
+Geometric Extreme Exponential             <xemf: ~reli\ksgee.men>
+Inverted Gamma                            <xemf: ~reli\ksiga.men>
+Inverted Weibull                          <xemf: ~reli\ksiwe.men>
+Log Double Exponential (Log Laplace)      <xemf: ~prob\kslde.men>
+Log Gamma                                 <xemf: ~reli\kslga.men>
+Log Logistic                              <xemf: ~prob\ksllg.men>
+Lognormal                                 <xemf: ~reli\kslgn.men>
+Maxwell                                   <xemf: ~prob\ksmax.men>
+McLeish                                   <xemf: ~prob\ksmcl.men>
+Power Normal                              <xemf: ~reli\kspnr.men>
+Reciprocal                                <xemf: ~prob\ksrec.men>
+Skew Double Exponential (Skew Laplace)    <xemf: ~prob\kssde.men>
+Skew Normal                               <xemf: ~prob\kssn.men>
+T                                         <xemf: ~prob\kst.men>
+Topp and Leone                            <xemf: ~prob\kstop.men>
+Triangular                                <xemf: ~prob\kstri.men>
+Tukey-Lambda (symmetric)                  <xemf: ~prob\kslam.men>
+Von Mises                                 <xemf: ~prob\ksvon.men>
+Wald                                      <xemf: ~reli\kswal.men>
+Weibull (minimum case)                    <xemf: ~reli\kswei1.men>
+Weibull (maximum case)                    <xemf: ~reli\kswei2.men>
+Wrapped Cauchy                            <xemf: ~prob\kswca.men>
+

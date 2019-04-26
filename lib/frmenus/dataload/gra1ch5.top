@@ -1,0 +1,17 @@
+----- <~dataload\gra1ch5.top> Chapter 5: Diagnostic Procedures
+
+Chapter 5: Diagnostic Procedures
+
+ 1. Overview
+ 2. Outliers
+       Premiums (p-354)                  <xcf: ~dataload\PREMIUMS.DP>
+ 3. Leverage or Hat Values
+       Mammal Weights (p-366)            <xcf: ~dataload\MAMMALWT.DP>
+ 4. Influential Observations--Cook's Distance and DFFITS
+       TABLE541 (p-373)                  <xcf: ~dataload\TABLE541.DP>
+       TABLE542 (p-379)                  <xcf: ~dataload\TABLE542.DP>
+       TABLE543 (p-379)                  <xcf: ~dataload\TABLE543.DP>
+ 5. Ill-Conditioning and Multicollinearity
+ 6. Exercises
+       TABLE561 (p-399)                  <xcf: ~dataload\TABLE561.DP>
+

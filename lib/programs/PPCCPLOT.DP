@@ -1,0 +1,15 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     PPCCPLOT.DP
+. PURPOSE--GENERATE A PPCC PLOT
+.
+. -----START POINT-----------------------------------
+.
+grid on
+let lambda = 1.5
+y1label Ordered Data
+x1label Tukey (Lambda = +1.5) Order Statistic Medians
+y1label displacement 6
+Tukey Probability Plot Y
+box 15 92 85 99.5; hw 3 2; justification center; move 50 96.5
+text Distributional Modeling
+text Does a Pre-Specified Distribution Fit the Data?
+.

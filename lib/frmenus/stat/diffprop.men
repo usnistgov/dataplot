@@ -1,0 +1,29 @@
+This is file diffprop.men--Confidence Interval for Difference Between Proportions
+ 
+--------------------
+ 1. Confidence Interval for Difference Between 2 Proportions
+ 2. DIFFERENCE OF PROPORTIONS CONFIDENCE LIMITS Y1 Y2
+ 3.
+ 4. First  Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Second Response Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Lower Limit for Success (default=0.99):
+ 7. @CE 3 0 42 50 ?
+ 8. Upper Limit for Success (default=1.01):
+ 8. @CE 4 0 42 50 ?
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 1 50 *
+12.
+13.
+14. Generate Confidence Limits?
+--------------------
+GR FE
+ANOP LIMITS 0.99 1.01
+ANOP LIMITS _3 _4
+DIFFERENCE OF PROPORTIONS CONFIDENCE LIMITS _1 _2 _5
+--------------------
+WEB HELP DIFFERENCE OF MEANS CONFIDENCE LIMITS
+--------------------

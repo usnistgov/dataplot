@@ -1,0 +1,8 @@
+----- <~dataall\FREQPRIM.top> FREQPRIM.DAT
+
+FREQPRIM.DAT
+
+View     <xcl: LIST FREQPRIM.DAT>
+Load     <xcf: ~dataload/FREQPRIM.DP>
+Print    <xccl: printfile C:\DATAPLOT\FREQPRIM.DAT>
+

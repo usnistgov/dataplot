@@ -1,0 +1,8 @@
+----- <~dataload\ROSSITE2.DP> Load ROSSITE2.DAT
+
+. This is file    ROSSITE2.DP
+
+DELETE Y X1 X2 LOC
+SKIP 25
+READ ROSSITE2.DAT Y X1 X2 LOC
+

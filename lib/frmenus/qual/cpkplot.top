@@ -1,0 +1,13 @@
+----- <~qual\cpkplot.top> Process Capability Plot
+ 
+Process Capability Plots
+ 
+ 
+CP Plot                <xemf: ~qual\cp.men>
+CPK Plot               <xemf: ~qual\cpk.men>
+CNPK Plot              <xemf: ~qual\cnpk.men>
+CPM Plot               <xemf: ~qual\cpm.men>
+CC Plot                <xemf: ~qual\cc.men>
+Expected Loss Plot     <xemf: ~qual\exp_loss.men>
+Percent Defective Plot <xemf: ~qual\percdefe.men>
+ 

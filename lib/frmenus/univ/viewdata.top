@@ -1,0 +1,30 @@
+-----<~univ\viewdata.top> View the Data
+
+Graphical Techniques: Univariate
+
+NIST/SEMATECH Handbook (Graphics Techniques) <xcl: web handbook graphics gallery>
+
+Analysis on Full Data Set
+   Run sequence plot                    <xemf: ~univ\runseqpl.men>
+   4-Plot                               <xemf: ~univ\4plot.men>
+   Lag Plot                             <xemf: ~time\lagplot.men>
+   Histogram                            <xemf: ~univ\histogra.men>
+   Normal Probability Plot              <xemf: ~univ\normprpl.men>
+   Autocorrelation Plot                 <xemf: ~time\autocopl.men>
+   Spectrum                             <xemf: ~time\spectrum.men>
+
+Analysis on Halves:
+   Vertical line plot                <xemf: ~univ\vertplo2.men>
+   Box plot                          <xemf: ~univ\boxplot2.men>
+   Bihistogram                       <xemf: ~univ\bihist2.men>
+   Quantile-quantile plot            <xemf: ~univ\qqplot2.men>
+   Normal probability plot           <xemf: ~univ\normprp2.men>
+
+Analysis on Quarters:
+   Vertical line plot                <xemf: ~univ\vertplo4.men>
+   Box plot                          <xemf: ~univ\boxplot4.men>
+   Mean plot                         <xemf: ~univ\meanplo4.men>
+   SD plot                           <xemf: ~univ\sdplot4.men>
+   Relative SD plot                  <xemf: ~univ\relsplo4.men>
+   Normal probability plot           <xemf: ~univ\normprp4.men>
+

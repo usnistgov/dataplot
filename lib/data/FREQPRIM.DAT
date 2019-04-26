@@ -1,0 +1,35 @@
+This is Dataplot data file     FREQPRIM.DAT
+Frequency of Prime Numbers
+Number of observations             = 10
+Number of variables per line image =  2
+Order of variables on a line image--
+   1. Response variable = number of primes < n
+   2. Factor            = log10(n)
+Reference--Dence, T. (1980). The Fortran Cookbook, Tab Books, pp 68-70.
+Reference--Steen, L. A. (1978). Mathematics Today, Vintage, pp 44-53.
+Reference--Davis, P. J. & Hersh, Reuben (1981). The Mathematical
+           Experience, Houghton Mifflin, Boston, pp. 209-214.
+Note--Dence & Steen differ in value for 10**9: 50847534 vs. 50879478
+Note--The prime number freq. function is typically denoted as pi(n)
+      pi(n) = number of primes < n
+Note--Erdos gave a lower bound of log(n)/(2*log(2))
+Note--Gauss in his Prime Number Theorem showed: lim pi(n)/(n/log(n)) = 1
+      and thus Gauss's approx for pi(n) is n/log(n)
+Note--Legendre improved the approx. by pi(n) = n/(log(n)-1.08)
+Note--Riemann showed that a good approximation for pi(n) is
+      pi(n) = Li(n) - (1/2)*Li(n**0.5) - (1/3)*Li(n**.3333) - ...
+      where Li(x) is the logarithmic integral:
+      Li(x) = integral for 2 to x of 1/log(x)
+ 
+ pi(n)    log10(n)
+-------------------
+ 4            1
+ 25           2
+ 168          3
+ 1229         4
+ 9592         5
+ 78498        6
+ 664579       7
+ 5761455      8
+ 50847534     9
+ 455052512   10

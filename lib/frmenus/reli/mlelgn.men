@@ -1,0 +1,35 @@
+This is file mlelgn.men--Lognormal MLE Estimates
+ 
+--------------------
+ 1. Lognormal Maximum Likelihood Estimates
+ 2. LOGNORMAL MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Maximum likelihood estimates for the shape
+ 5. and scale parameters may be obtained for either
+ 6. uncensored or singly censored data.  If a
+ 7. censoring variable is specified, it should
+ 8. contain a 1 to signify a failure time and a 0
+ 9. to signify a censoring time.
+10.
+11. Response Variable:
+11. @CE 1 0 42 50 ? gui-variable
+12. Optional Censoring Variable:
+12. @CE 2 0 42 50 ? gui-variable
+13.
+14. Estimates for select percentiles?
+15. @CE 3 1 40 44 no
+15. @CE 3 2 47 50 yes
+16.
+17. Subset/Except/For Specification:
+18. @CE 4 0 1 50 *
+19.
+20.
+21. Compute Lognormal MLE's?
+--------------------
+GR FE
+@IF 3 1 SET MAXIMUM LIKELIHOOD PERCENTILES NONE
+@IF 3 2 SET MAXIMUM LIKELIHOOD PERCENTILES DEFAULT
+LOGNORMAL MAXIMUM LIKELIHOOD _1 _2 _4
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

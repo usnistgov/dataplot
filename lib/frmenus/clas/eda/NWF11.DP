@@ -1,0 +1,10 @@
+----- <~dataloex\NWF11.DP> Load & Execute NWF11.DAT
+
+. This is file    NWF11.DP
+
+DELETE Y
+SKIP 25
+READ NWF11.DAT Y
+TITLE NWF11.DAT
+/
+

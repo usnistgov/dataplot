@@ -1,0 +1,466 @@
+. This is dataplot macro   DEXIEM.DP
+. Purpose: Generate a DEX interaction effects matrix (of plots)
+.          (= ste p 4 of the DEXPLOT.DP 10-ste p DEX analysis procedure)
+. Date: May 2005,  8/18 (alan), 9/12/18, 9/24/18
+. Input
+.    1. k (parameter)               = Total number of plot factors
+.    2. y (vector)                  = Response variable
+.    3. x1, x2, x3, . . . (vectors) = Factors
+.
+.    4. y1displa (parameter)        = displacement for vertical axis label (opt.) (default= 15)
+.    5. yoffup   (parameter)        = offset for upper ytic offset (optional) (default = 5)
+.    6. cutoff   (parameter)        = cutoff value such that larger |effects| will be hihglighted in red (opt.) (def. = none)
+.
+.    7. framet (parameter)          = top    frame line (in %) (optional) (default = 90)
+.    8. frameb (parameter)          = bottom frame line (in %) (optional) (default = 20)
+.
+.    9. decplace (parameter)        = number of decimal places for the relative effects (default = 0 = no listing)
+.
+. Output:
+.    a 1 page matrix of plots
+.
+. Note (9/12/18): This routine requires the X's to be strictly 2 levels and (only) -1 and +1.
+.                 If not 2 levels, then only the 2 extremes will be used h_erein.
+.                 If not -1 and +1, then an internal conversion of these 2 extremes will be done.
+.
+. -----start point-----
+.
+. print " "
+. print "From (dexiem.dp, start point)"
+. print y for i = 1 1 5
+. pause
+.
+feedback save
+feedback off
+printing off
+let bugswiem = 0
+. let pausesw = 1
+.
+if bugswiem = 1; print " "; print "---At beginning of DEX Ste p 4 (DEXIEM.DP) . . ."
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 1.1: Check input values for existence and equivalent length-----
+.
+if bugswiem = 1; print "---At (dexiem.dp, step 1.1): check input"
+   if pausesw = 1; pause; end if
+end if
+.
+let string stmacro = dexiem.dp
+if k not exist
+   call determine_k.dp
+end if
+set check name output filliben
+set check equal length output filliben
+feedback on
+let iflag = check name k y x1 to x^k
+let iflag = check equal length y x1 to x^k
+feedback off
+.
+. -----Step 1.2: Copy the user's original y and x1 to xk data out to file-----
+.                since y and x1 to xk may potentially be modified within this macro-----
+.
+if bugswiem = 1; print "---At (dexiem.dp, step 1.2): save original y and xi"
+   if pausesw = 1; pause; end if
+end if
+.
+set write format 40f15.7
+write dex_original_data.dat y x1 to x^k
+set write format
+.
+. -----Step 1.3: Check/Extract 2 levels, and map into -1 and +1-----
+.                For this macro to work, the number of levels must be 1 or 2,
+.                and the 2 levels must be -1 and +1.  Check for this (and fix, if need be).-----
+.                If not 2 levels, then only the min and max will be used h_erein.-----
+.                If not -1 and +1, then min => -1 and max => +1-----
+.
+if bugswiem = 1; print "---At (dexiem.dp, step 1.3): normalize to (-1,+1)"
+   if pausesw = 1; pause; end if
+end if
+.
+let string stcall = dexiem.dp
+call check_and_fix_original_data_for_2_levels_and_m1_p1.dp
+.
+if bugswiem = 1; print "---At (dexiem.dp, end of step 1.3)"
+   print "k = ^k"
+   print y x1 to x^k
+   stat v
+   if pausesw = 1; pause; end if
+end if
+. -----Step 2: Define plot settings-----
+.
+if bugswiem = 1; print "---At (dexiem.dp, step 2): define tic specs"
+   if pausesw = 1; pause; end if
+end if
+.
+call dexplotinit.dp
+.
+tic offset units screen
+tic offset 5 5
+let yoffupz = 5
+if yoffup exists; let yoffupz = yoffup; end if
+ytic offset 5 yoffupz
+.
+. -----Step 3: plot type-----
+.
+if bugswiem = 1; print "---At (dexiem.dp, step 3): define plot type (= mean)"
+   if pausesw = 1; pause; end if
+end if
+.
+let kp1 = k+1
+.
+x1label;. patch may 20, 2004
+x3label;. patch august 10, 2007
+.
+if stat not exist
+   let string stat = MEAN
+end if
+.
+. -----Step 4: determine common plot limits-----
+.
+if bugswiem = 1; print "---At (dexiem.dp, step 4): limits"
+   if pausesw = 1; pause; end if
+end if
+.
+limits
+xlimits -2 2
+set frame limit offset on
+let xtemp = data -2 2
+let xleft xright = xframe xtemp
+delete xtemp
+.
+probe cpumax
+let cpumax = probeval
+probe cpumin
+let cpumin = probeval
+let yb = cpumax
+let yt = cpumin
+loop for j1z = 1 1 k
+   loop for j2z = j1z 1 k
+      delete xjunkz
+      if j2z = j1z; let xjunkz = x^j1z; end if
+      if j2z <> j1z; let xjunkz = x^j1z*x^j2z; end if
+      let ytemp    = cross tabulate ^stat y xjunkz
+      let ybt = minimum ytemp
+      let ytt = maximum ytemp
+      let yb  = min(ybt,yb)
+      let yt  = max(ytt,yt)
+      delete ytemp
+   end loop
+end loop
+delete xjunkz
+.
+set frame limit offset off
+let ytemp = data yb yt
+let ybottom ytop = yframe ytemp
+if yminiem exists; let ybottom = ^yminiem; end if
+if ymaxiem exists; let ytop    = ^ymaxiem; end if
+ylimits ybottom ytop
+set frame limit offset on
+let ytemp = data ybottom ytop
+let ybottom ytop = yframe ytemp
+delete ytemp
+.
+. ylim .75 1.25; . (for Antonio Possolo's problem when both main effects were 0)
+. ylim .031 .036;. 02/03/14
+.
+. -----Step 5: mean & # digits-----
+.
+if bugswiem = 1; print "---At (dexiem.dp, step 5): mean & number of digits"
+   if pausesw = 1; pause; end if
+end if
+.
+let ybar = mean y
+let ybar2 = abs(ybar)
+let lybar2 = log10(ybar2)
+if lybar2 >= 0; let lybar3 = int(lybar2); end if
+if lybar2 < 0; let lybar3 = -int(abs(lybar2))-1; end if
+if decplace not exist
+   let decplace = 3-lybar3
+   if decplace < 0; let decplace = 0; end if
+end if
+set write decimals decplace
+.
+. -----Step 6: define type of plot (= mean)-----
+.
+if bugswiem = 1; print "---At (dexiem.dp, step 6): type of plot"
+   if pausesw = 1; pause; end if
+end if
+.
+let statflag = 0
+if stat exists; let statflag = 1; let string statsave = ^stat; end if
+let string stat = mean
+.
+. -----Step 7: plot labels-----
+.
+if bugswiem = 1; print "---At (dexiem.dp, step 7): set labels"
+   if pausesw = 1; pause; end if
+end if
+.
+if stat = mean
+   let string s0 = Average Y
+   if cy exists; let string s0 = Average Y (^cy); end if
+else
+   let string s0 = ^stat Y
+   if cy exists; let string s0 = ^stat Y (^cy); end if
+end if
+.
+if ylabelsw exists and ylabelsw = 0
+   let string s0 = sp()
+end if
+variable label Y ^s0
+.
+loop for jz = 1 1 k
+   if stxshort not exist and stx^jz not exist
+      let string s^jz = X^jz
+   else if stxshort not exist and stx^jz exists
+      let string s^jz = X^jz(^stx^jz)
+   else if stxshort exists
+      let stjunk = string word stxshort jz
+      let string s^jz = X^jz(^stjunk)
+   end if
+end loop
+.
+. -----Step 8: define specs for dex interaction plot-----
+.
+if bugswiem = 1; print "---At (dexiem.dp, step 8): dex int. plot specs"
+   if pausesw = 1; pause; end if
+end if
+.
+. erase;. commented out for mills251.dp 2/15/12
+.
+. call dexstat2.dp
+.
+x1label displacement 110
+x2label displacement 3
+.
+if y1displa exists
+   let y1ldisp = y1displa
+else
+   let y1ldisp = 10 + 3*k
+end if
+y1label displacement ^y1ldisp
+.
+loop for jz = 1 1 k
+    variable label X^jz
+    if stx^jz exists
+       variable label X^jz X^Jz(^stx^jz)       ;. <============
+    end if
+end loop
+.
+set scatter plot matrix type dex ^stat interaction
+set scatter plot matrix labels on
+set scatter plot matrix y axis leto
+set scatter plot matrix x axis bottom
+set scatter plot matrix xtic off
+set scatter plot matrix xtic label off
+set scatter plot matrix lower diagonal off
+set scatter plot matrix x2label filliben
+set scatter plot matrix shaded diagonal on
+.
+subregion on
+subregion xlimits xleft xright
+subregion ylimits ybottom ytop
+region fill on
+region color g85
+.
+character circle blank
+let k2 = 1.5*k
+character hw k2 k
+character fill on
+character color blue
+if colorall exists; character color ^colorall; end if
+line solid dotted
+let k3 = 2*k
+let textexpz = 1
+if textexp exists; let textexpz = textexp; end if
+let k3 = k3*textexpz
+.
+tic label size k3
+. label size k3
+.
+. ---here here---
+.
+call label_location_and_size.dp
+
+. -----Step 9: GENERATE THE PLOTS-----
+.
+if bugswiem = 1; print "---At (dexiem.dp, step 9): GENERATE THE PLOTS"
+   if pausesw = 1; pause; end if
+end if
+.
+. xlim
+. ylim
+. tics on
+. tic labels on
+. ylim -30 30
+. xlim -5 5
+let x12 = x1*x2
+print junk.out y x1 x2 x12
+.
+. y1tic offset units screen; . y1tic offset 5 10
+.
+dex mean interaction effects plot y x1 to x^k     ;. <========================plot
+.
+subregion off
+.
+if statflag = 1; let string stat = ^statsave; end if
+if statflag = 0; delete stat; end if
+.
+. -----Step 10: write out the header (redundant with annotation below)-----
+.
+if bugswiem = 1; print "---At (dexiem.dp, step 10): header"
+   if pausesw = 1; pause; end if
+end if
+.
+if project exists
+   if projcol exists; color ^projcol; end if
+   call dexwriteproject.dp
+end if
+.
+. -----Step 11: write out title, Step ID, ybar, annotation-----
+.
+if bugswiem = 1; print "---At (dexiem.dp, step 11): title, ID, annotation"
+   if pausesw = 1; pause; end if
+end if
+.
+hw 2 1
+if titlesiz exists; let titleh = titlesiz; end if
+let titlew = titleh/2
+hw titleh titlew
+.
+justification center; hw 2.5 1.25
+move 50 91; text Interaction Effects Matrix
+.
+just left; hw 2 1
+move 15 23; text Diagonal (Shaded)
+move 33 23; text = Main Effects
+move 15 20; text Off-Diagonal
+move 33 20; text = 2-Term Interactions
+.
+if step exists
+   let step = step + 1; hw 2 1; just left; move 5 95
+   . text Step ^step
+   . call tagcorn.dp   9/17/18/
+   if stepprsw not exist
+      call tagcorn.dp
+   end if
+   if stepprsw exists; if stepprsw = 1
+      call tagcorn.dp
+   end if; end if
+end if
+.
+let ybar = mean y
+if decplacm not exist; set write decimals 4; end if
+if decplacm exists; set write decimals decplacm; end if
+let stybar = number to string ybar
+move 85 91; just right; hw 2 1; text Mean = ^stybar; just center
+.
+if annotate exists and annotate = 1
+   if colorall exists; color ^colorall; end if
+   call annotate.dp
+end if
+.
+. -----Step 12: write out right margin-----
+.
+if bugswiem = 1; print "---At (dexiem.dp, step 12): right margin"
+   if pausesw = 1; pause; end if
+end if
+.
+if rightmsw exists and rightmsw = 1 or rightmsw not exist
+   if stx1 exists and stx1l exists
+      call dexrightmargin.dp
+   end if
+end if
+.
+. -----Step 13: If called for, write out customized upper left info-----
+.
+if bugswiem = 1; print "---At (dexiem.dp, step 13): upper left"
+   if pausesw = 1; pause; end if
+end if
+.
+if stcorn1 exists
+   call upperleft.dp
+end if
+.
+. -----Step 98: Restore the user's original y and x1 to xk data from file-----
+.
+if bugswiem = 1; print " "; print "---At (dexiem.dp, step 98): restore orig. data (pre-restore)"
+   print y x1 to x^k
+   if pausesw = 1; pause; end if
+end if
+.
+delete y x1 to x^k
+set read format 40f15.7
+skip 0; read dex_original_data.dat y x1 to x^k
+set read format
+.
+if bugswiem = 1; print " "; print "---At (dexiem.dp, step 98): (post-restore)"
+   print y x1 to x^k
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 99: Finish up-----
+.
+if bugswiem = 1
+   print " "; print "---At end of dexiem.dp . . ."
+   if pausesw = 1; pause; end if
+end if
+.
+limits
+character blank all
+character hw 2 1 all
+character color blue all
+lines solid all
+.
+tic label size default
+x1tic marks on
+x1tic mark labels on
+.
+label justification default
+label coordinates default
+label size default
+.
+label displacement
+limits
+title
+x1label
+.
+char hw 2 1 all
+char offset 0 0 all
+char justification cece all
+.
+set scatter plot matrix type
+set scatter plot matrix labels off
+set scatter plot matrix y axis leto
+set scatter plot matrix x axis bottom
+set scatter plot matrix xtic off
+set scatter plot matrix xtic label off
+set scatter plot matrix lower diagonal off
+set scatter plot matrix x2label filliben
+set scatter plot matrix shaded diagonal off
+.
+subregion off
+subregion xlimits
+subregion ylimits
+. region color g85
+. region color white
+region fill off all   ;. <===========================needed 10/26/18
+.
+y1tic offset units screen; y1tic offset 5 5
+yxtic offset units screen; x1tic offset 5 5
+.
+feedback restore
+.
+if itime exists and itime = 1
+   cpu time
+   let t4 = cputime
+end of if
+.
+. region fill off all
+. limits
+. char X
+. lines solid
+. plot x**2 for x = 1 1 10
+. pause
+. stop

@@ -1,0 +1,73 @@
+This is file ppadece.men--Asymmetric Double Exponential Censored Probability Plot
+
+--------------------
+ 1. Asymmetric Double Expo Censored Prob Plot
+ 2. ASYMMETRIC DOUBLE EXPO CENSORED PROB PLOT Y X
+ 3.
+ 4. The censoring variable should contain a
+ 5. value of 1 to signify a failure time and
+ 6. a value of 0 to signify a censoring time.
+ 7. 
+ 8. Response Variable:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9. Censoring Variable:
+ 9. @CE 2 0 42 50 ? gui-variable
+10.
+11. Line Types:
+11. @CE 3 0 42 50 * gui-line
+12. Character Types:
+12. @CE 4 0 42 50 * gui-char
+13. Character Fill:
+13. @CE 5 0 42 50 * gui-ooff
+14.
+15. Title:
+15. @CE 6 0 22 50 *
+16. Left Axis Label:
+16. @CE 7 0 22 50 *
+17. Bottom Axis Label:
+17. @CE 8 0 22 50 *
+18.
+19. Value of the Shape Parameter (k or mu):
+19. @CE 9 0 42 50 *
+20.
+21. Which definition of asymmetric Laplace?:
+22. @CE 10 1 1 20 k
+23. @CE 10 2 1 20 mu
+24.
+25. Subset/Except/For Specification:
+26. @CE 11 0 1 50 *
+27.
+28.
+29. Generate the Asymmetric Double Expo Censored Prob Plot?
+--------------------
+GR FE
+@IF 10 1 SET ASYMMETRIC LAPLACE DEFINITION SIMIU
+@IF 10 2 SET ASYMMETRIC LAPLACE DEFINITION JOHNSON
+TITLE CASE ASIS
+LABEL CASE ASIS
+CASE ASIS
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+@IF 10 1 LET K = 1
+@IF 10 1 LET K = _9
+@IF 10 2 LET MU = 1
+@IF 10 2 LET MU = _9
+ASYMMETRIC DOUBLE EXPONENTIAL CENSORED PROBABILITY PLOT _1 _2 _11
+MOVE 50 5
+JUSTIFICATION CENTER
+TEXT Location = ^PPA0, Scale = ^PPA1
+MOVE 50 2
+@IF 10 1 TEXT K = ^K
+@IF 10 2 TEXT MU = ^MU
+MOVE 17 82
+JUSTIFICATION LEFT
+TEXT PPCC = ^PPCC
+TITLE
+LABEL
+--------------------
+WEB HELP PROBABILITY PLOT
+--------------------

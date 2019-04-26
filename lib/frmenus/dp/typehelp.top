@@ -1,0 +1,62 @@
+----- <~dp\typehelp.top> Types of Help in Dataplot GUI
+ 
+Types of Help in Dataplot GUI
+ 
+The Dataplot graphical front-end provides the following
+types of help:
+
+  1) Many of the menus, such as this one, are in fact
+     simply help screens.  These menu screens are typically
+     topic discussions rather than details of using
+     a specific Dataplot command.
+
+  2) Dataplot provides a built-in HELP command.  HELP
+     is typically used for documentation for a specific
+     Dataplot command, although some more generic topics
+     are also available.  This on-line help is contained
+     in ASCII text files that are included as part of the
+     standard Dataplot installation.
+
+     The built-in help can be accessed via:
+
+     a) The "HELP for a specific command" submenu under
+        this HELP menu.
+     b) You can enter the HELP command from the command
+        line window.
+     c) The command output and graphics windows have 
+        "Help" buttons that access the on-line help.
+     d) Most of the menus that actually generate 
+        Dataplot commands will have a "HELP" and
+        "WEB HELP" button.  The HELP button accesses
+        the on-line help.
+
+  3) The Dataplot Reference Manual is available on-line.
+     In order to use the on-line manual, you need a web
+     browser and a Portable Document Format (PDF) reader.
+     See the "Browser" and "Accessing Dataplot On-line
+     Reference Manual" for more details.
+
+     Although the Reference Manual provides similar
+     information to the on-line help, it has a better
+     appearance and provides more sample output for
+     sample programs.  The drawback is that it is slower
+     to access than the on-line help.
+
+     The WEB HELP buttons mentioned above access the
+     Reference Manual rather than the on-line help.
+     The "Manual" menu accesses the Reference Manual
+     as well.
+
+  4) Many of the menus contain links to the 
+     NIST/SEMATECH Engineering Statistics Handbook.  This
+     is a web based statistics handbook oriented towards
+     engineering applications.  Where the Dataplot on-line
+     help and Reference Manual is oriented to how you do
+     something in Dataplot, the NIST/SEMATECH is oriented
+     to the statistical techniques.
+
+     The handbook button takes you to the main handbook
+     homepage and to the individual chapters.  In addition,
+     individual menus contain links to specific pages in the
+     handbook that might be useful.
+

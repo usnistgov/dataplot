@@ -1,0 +1,22 @@
+This is file upp_hing.men--Compute upper hinge of a variable
+ 
+--------------------
+ 1. Extreme
+ 2. LET A = UPPER HINGE Y
+ 3.
+ 4. Variable for which to compute the upper hinge:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the upper hinge:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Upper Hinge?:
+--------------------
+GR FE
+LET _2 = UPPER HINGE  _1 _3
+--------------------
+WEB HELP UPPER HINGE
+--------------------

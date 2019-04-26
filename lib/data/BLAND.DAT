@@ -1,0 +1,55 @@
+Name:  BLAND.DAT
+Source: Giavarina (2015), "Understanding Bland Altman
+        Analysis", Biochemia Medica, Vol. 25, N0. 2, P. 143.
+Description: Data used to demonstrate the Bland Altman method
+             for paired data.  The Bland Altman plot is used to
+             compare the differences between two methods.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Y1          Y2
+------------------
+   1.0         8.0
+   5.0        16.0
+  10.0        30.0
+  20.0        24.0
+  50.0        39.0
+  40.0        54.0
+  50.0        40.0
+  60.0        68.0
+  70.0        72.0
+  80.0        62.0
+  90.0       122.0
+ 100.0        80.0
+ 150.0       181.0
+ 200.0       259.0
+ 250.0       275.0
+ 300.0       380.0
+ 350.0       320.0
+ 400.0       434.0
+ 450.0       479.0
+ 500.0       587.0
+ 550.0       626.0
+ 600.0       648.0
+ 650.0       738.0
+ 700.0       766.0
+ 750.0       793.0
+ 800.0       851.0
+ 850.0       871.0
+ 900.0       957.0
+ 950.0      1001.0
+1000.0       960.0

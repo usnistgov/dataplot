@@ -1,0 +1,16 @@
+----- <~univ\chisq.top> Chi-Square Goodness of Fit
+
+Chi-Square Goodness of Fit
+
+symmetric distributions                   <xemf: ~univ\chisgfsy.men>
+
+common skewed distributions               <xemf: ~univ\chisgfsk.men>
+normal, Cauchy and related distributions  <xemf: ~univ\chisgfno.men>
+exponential, Weibull, gamma, extreme value distributions <xemf: ~univ\chisgfex.men>
+Pareto and logistic distributions         <xemf: ~univ\chisgfpa.men>
+chi-square, beta, F and related distributions  <xemf: ~univ\chisgfch.men>
+non-central distributions                 <xemf: ~univ\chisgfnc.men>
+mixture distributions                     <xemf: ~univ\chisgfmx.men>
+miscellaneous skewed distributions        <xemf: ~univ\chisgfmi.men>
+
+discrete discributions                    <xemf: ~univ\chisgfdi.men>

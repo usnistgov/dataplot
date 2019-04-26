@@ -1,0 +1,25 @@
+----- <~dataprin\univnist.top> Print (to Printer) Univariate Data: NIST
+
+Print (to Printer) Univariate Data: NIST
+
+LEW.DAT       Beam deflections            <xcf: ~dataprin\LEW.DP>
+SOULEN0.DAT   Josephson junc cryothermom. <xcf: ~dataprin\SOULEN0.DP>
+SOULEN.DAT    Josephson junc cryothermom. <xcf: ~dataprin\SOULEN.DP>
+MARSHAK.DAT   Nuclear thermometry         <xcf: ~dataprin\MARSHAK.DP>
+
+SIMIU.DAT     Wind speeds                 <xcf: ~dataprin\SIMIU.DP>
+WASHDC.DAT    Washington DC wind speeds   <xcf: ~dataprin\WASHDC.DP>
+KEYWEST.DAT   Key West wind speeds        <xcf: ~dataprin\KEYWEST.DP>
+MAVRO.DAT*    Filter transmittance        <xcf: ~dataprin\MAVRO.DP>
+DZIUBA.DAT    Standard resistor           <xcf: ~dataprin\DZIUBA.DP>
+ZARR13.DAT    Hear flow meter             <xcf: ~dataprin\ZARR13.DP>
+ZARR14.DAT    Hear flow meter             <xcf: ~dataprin\ZARR14.DP>
+ZARR15.DAT    Hear flow meter             <xcf: ~dataprin\ZARR15.DP>
+
+MORALES.DAT   Mass spec: sulfur exa-fluor <xcf: ~dataprin\MORALES.DP>
+MORALES2.DAT  Mass spec: sulfur exa-fluor <xcf: ~dataprin\MORALES2.DP>
+
+REHM.DAT      Asmathic air flow           <xcf: ~dataprin\REHM.DP>
+FUNNEL5A.DAT  Funnel data                 <xcf: ~dataprin\FUNNEL5A.DP>
+VANGEL5.DAT   Strength at failure         <xcf: ~dataprin\VANGEL5.DP>
+

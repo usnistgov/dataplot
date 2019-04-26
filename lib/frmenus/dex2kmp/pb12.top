@@ -1,0 +1,26 @@
+----- <~dex2kmp\pb12.top> Plackett-Burman 12-run Design
+ 
+Plackett-Burman 12-run Designs
+ 
+   k = 11 factors
+   n =12 runs
+   r = resolution 3
+       (each main effect is equi-confounded with
+        45 2-term interactions)
+ 
+ X  X  X  X  X  X  X  X  X  X  X
+ 1  2  3  4  5  6  7  8  9 10 11
+.................................
+ +  -  +  -  -  -  +  +  +  -  +
+ +  +  -  +  -  -  -  +  +  +  -
+ -  +  +  -  +  -  -  -  +  +  +
+ +  -  +  +  -  +  -  -  -  +  +
+ +  +  -  +  +  -  +  -  -  -  +
+ +  +  +  -  +  +  -  +  -  -  -
+ -  +  +  +  -  +  +  -  +  -  -
+ -  -  +  +  +  -  +  +  -  +  -
+ -  -  -  +  +  +  -  +  +  -  +
+ +  -  -  -  +  +  +  -  +  +  -
+ -  +  -  -  -  +  +  +  -  +  +
+ -  -  -  -  -  -  -  -  -  -  -
+ 

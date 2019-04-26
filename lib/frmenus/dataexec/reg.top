@@ -1,0 +1,8 @@
+----- <~dataexec\reg.top> Load and Execute Built-in Regression Data Files
+
+Load and Execute Built-in Regression Data Files
+
+1-Variable & Polynomial                  <xcf: ~dataexec\reg1p.top>
+1-Variable & Non-Linear                  <xcf: ~dataexec\reg1n.top>
+Multivariable                            <xcf: ~dataexec\regmv.top>
+

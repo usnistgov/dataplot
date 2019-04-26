@@ -1,0 +1,21 @@
+----- <~plmo\setsegm.top> Set Segments and Attributes
+ 
+Set Segments and Attributes
+ 
+Segments are lines drawn on a plot in
+Dataplot 0 to 100 units.  Up to 100 such
+line segments can be specified.  The most
+common usage of SEGMENTS is in creating
+legend boxes to label data curves.
+
+Set All Segment Attributes                  <xemf: ~plmo\setalseg.men>
+Set Segment Attributes for a Single Segment <xemf: ~plmo\setseg1.men>
+
+Turn Off All Segments                       <xcl: SEGMENT COORDINATES>
+
+Help for Segment Attributes
+   SEGMENT COORDINATES <xcl: HELP SEGMENT COORDINATES>
+   SEGMENT COLOR       <xcl: HELP SEGMENT COLOR>
+   SEGMENT PATTERN     <xcl: HELP SEGMENT PATTERN>
+   SEGMENT THICKNESS   <xcl: HELP SEGMENT THICKNESS>
+

@@ -1,0 +1,10 @@
+----- <~dataloex\BOXYIELD.DP> Load & Execute BOXYIELD.DAT
+
+. This is file    BOXYIELD.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ BOXYIELD.DAT Y X1 X2
+TITLE BOXYIELD.DAT
+/
+

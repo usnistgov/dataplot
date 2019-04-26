@@ -1,0 +1,8 @@
+----- <~datalist\GNP.top> GNP.DAT
+ 
+GNP.DAT
+ 
+View     <xcl: LIST GNP.DAT>
+Load     <x2cl: SKIP 25; READ GNP.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\GNP.DAT>
+ 

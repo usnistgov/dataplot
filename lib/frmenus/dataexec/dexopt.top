@@ -1,0 +1,9 @@
+----- <~dataexec\dexopt.top> Load and Execute Optimization Design Data
+
+Load and Execute Optimization Design Data
+
+BOXCLEAN.DAT  2**(4-1)  Cleanser stability <xcf: ~dataexec\BOXCLEAN.DP>
+
+BOXYIELD.DAT* 2**3 wcp  Yield & time, temp <xcf: ~dataexec\BOXYIELD.DP>
+BOXYIEL2.DAT  2**3 wcp  Yield & time, temp <xcf: ~dataexec\BOXYIEL2.DP>
+

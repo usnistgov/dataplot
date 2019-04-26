@@ -1,0 +1,25 @@
+----- <~roadmap\bestsett.top> Best Settings
+
+Best Settings
+
+Question     : What are the best settings of the factors
+               X1, X2, X3, ..., Xk so as to optimize
+               the response?
+
+Model        : Y = f(X1,X2,X3,...,Xk) + random error
+
+Input        : 1) a response variable Y
+               2) a tag variable X1 containing X1 settings
+               3) a tag variable X2 containing X2 settings
+               4) a tag variable X3 containing X3 settings
+                  ...
+             k+1) a tag variable Xk containing Xk settings
+
+Output       : a vector of settings: (x1,x2,x3,...,xk)
+
+Stat Category: Optimization
+
+Primary Tools: DEX Mean Plot          <xemf: ~dex2k\meanplot.men>
+               DEX Scatter Plot       <xemf: ~dex2k\scatplot.men>
+               Response Surface Exp. Design <~dexopt\dexopt.top>
+

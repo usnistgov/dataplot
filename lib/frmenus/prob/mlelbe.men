@@ -1,0 +1,39 @@
+This is file mlelbe.men--Log Beta MLE Estimates
+ 
+--------------------
+ 1. Log Beta Maximum Likelihood Estimates
+ 2. LOG BETA MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Maximum likelihood point estimates for the shape
+ 5. parameters alpha and beta and the location and
+ 6. scale parameters can be obtained for uncensored
+ 7. data.
+ 8.
+ 9. Response Variable:
+ 9. @CE 1 0 42 50 ? gui-variable
+10.
+11. Optional Starting Value for Alpha:
+11. @CE 2 0 42 50 *
+12. Optional Starting Value for Beta:
+12. @CE 3 0 42 50 *
+13. Optional Starting Value for Lower Limit:
+13. @CE 4 0 42 50 *
+14. Optional Starting Value for Upper Limit:
+14. @CE 5 0 42 50 *
+15.
+16. Subset/Except/For Specification:
+17. @CE 3 0 1 50 *
+18.
+19.
+20. Compute Log Beta MLE's?
+--------------------
+GR FE
+DELETE ALPHASV BETASV CSV DSV
+@IF 2 0 LET ALPHASV = _2
+@IF 3 0 LET BETASV = _2
+@IF 4 0 LET CSV = _4
+@IF 5 0 LET DSV = _5
+LOG BETA MAXIMUM LIKELIHOOD _1 _6
+--------------------
+WEB HELP LBEPDF
+--------------------

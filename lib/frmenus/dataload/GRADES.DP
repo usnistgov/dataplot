@@ -1,0 +1,8 @@
+----- <~dataload\GRADES.DP> Load GRADES.DAT
+
+. This is file    GRADES.DP
+
+DELETE ID Y X
+SKIP 25
+READ GRADES.DAT ID Y X
+

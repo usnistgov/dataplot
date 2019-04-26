@@ -1,0 +1,553 @@
+**comment This is file dpworksh.tex--
+**comment Slides for Ford Dataplot Workshop
+**comment Tuesday-Wednesday, Jan. 21-22, 1992
+**comment pp spectral.tex 6 47 2
+ 
+**new page --------------------------------
+**magnify 1.5
+**lines per inch 6
+**center on
+ 
+Industry Training
+ 
+ 
+ 
+ 
+ 
+ 
+**magnify 3.0
+**shadebo2 300 2165 0.025 2
+Dataplot
+Engineering Workshop
+ 
+ 
+ 
+ 
+ 
+ 
+**magnify 1.4
+**lines per inch 4
+James J. Filliben
+ 
+ 
+8:00-4:30, Tuesday & Wednesday, January 21-22, 1992
+Ford Training Center
+Dearborn, Michigan
+ 
+ 
+ 
+ 
+**magnify 1.3
+**lines per inch 5
+Abstract
+ 
+**magnify 1.1
+**lines per inch 5
+**center off
+Dataplot is a command-driven, integrated software system with
+powerful capabilities in statistics, mathematics and graphics.
+The purpose of this workshop is to solve typical
+engineering/science problems by making use of and taking
+advantage of the wide range of Dataplot capabilities.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(pp dpworksh.tex 6 47 2)
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+Engineering
+Problems/Questions
+**magnify 2.0
+**center off
+ 
+      Filter Transmittance (Mavro)
+      Beam Deflections (Lu)
+      Thunderstorm Wind Velocities (Simiu)
+      G (Luther)
+      Density of 2-Admissible Numbers (Haber)
+      Sunspot Numbers (Wolf)
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 1
+Output (Carry Away)
+**magnify 2.0
+**lines per inch 3.0
+**center off
+ 
+   1. Pigeonholing Problems
+   2. Defining Solutions
+   3. Enumerating Tools
+            Intercomparison Between Tools
+            Appropriate
+            Detail Within a Tool
+            Definition
+            Assumptions
+            Dataplot Commands
+            Interpretation
+   4. Translating Conclusions
+   5. Application to Real Problems
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+Pigeonholing
+Engineering Problems
+**magnify 2.0
+**lines per inch 2.5
+**center off
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 3
+Pigeonholing
+Engineering Problems
+(Continued)
+**magnify 2.0
+**lines per inch 2.5
+**center off
+ 
+Univariate
+Time Series
+Regression
+Multi-Factor/ANOVA
+Multivariate/Multresponse
+Control Charts
+Pareto Analysis
+Reliability
+Error Bar Plotting
+3D Plotting & Contouring
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+1.1 Univariate
+Problems
+**magnify 2.0
+**lines per inch 2.5
+**center off
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+1.2 Univariate
+Data Sets
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+LEW.DAT       Steel-concrete beam def (Univarite; Time Ser.)
+SOULEN0.DAT   Josephson junc cryoth. (Univariate; Time Ser.)
+SOULEN.DAT    Josephson junc cryoth. (Univariate; Time Ser.)
+MARSHAK.DAT   Nuclear Thermometry    (Univariate; Dist. Anal.)
+SIMIU.DAT     Thunderstorm wind vel (Univariate; Time Ser.)
+KEYWEST.DAT   Key West max wind speed (Univariate; Dist. Anal.)
+WASHDC.DAT    Wash D.C. max wind speed (Univariate; Dist. Anal.)
+MAVRO.DAT     Filter transmittance (Univariate; Time Series)
+GEAR.DAT      Gear diameters (Univariate; Control Charts)
+CLEAR.DAT     Component clearance (Univar.; Dist. Anal.; CC)
+MICHELSO.DAT  Speed of Light (Univariate; 1-Way Anova, Reg)
+ 
+RANDN.DAT     Normal random numb (Univariate; Time Series)
+RANDU.DAT     Uniform random numb (Univariate; Time Series)
+LOTTERY3.DAT  Md. "Pick 3" Lottery (Univ; TS; 1-Way ANOVA; CC)
+LOTTERY4.DAT  Md. "Pick 4" Lottery (Univ; TS; 1-Way ANOVA; CC)
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+2.1 Time Series
+Problems
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+2.2 Time Series
+Data Sets (General)
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+LEW.DAT       Steel-concrete beam def (Univarite; Time Ser.)
+BAKER.DAT     Force calibration (Time Series)
+NBSPOW1.DAT   Power distrubance #1 at NBS (Time Series)
+NBSPOW2.DAT   Power distrubance #2 at NBS (Time Series)
+NBSPOW3.DAT   Power distrubance #3 at NBS (Time Series)
+DZIUBA1.DAT   Standard resistor (Time Series, Smoothing)
+HABER1.DAT    Dens of 2-admiss numb (Regression; Time Ser.)
+HAYES1.DAT    Fire research smoke obscuration (Time Series)
+LUTHER.DAT    Torsion pendulum exp. for G (Time Series)
+MAVRO.DAT     Filter transmittance (Univariate; Time Series)
+SIMIU.DAT     Thunderstorm wind vel (Univariate; Time Ser.)
+SOULEN0.DAT   Josephson junc cryoth. (Univariate; Time Ser.)
+SOULEN.DAT    Josephson junc cryoth. (Univariate; Time Ser.)
+SUNSPOT.DAT   Monthly sunspot (Time Series)
+SUNSPOT2.DAT  Yearly sunspot (Time Series)
+ 
+RANDN.DAT     Normal random numb (Univariate; Time Series)
+RANDU.DAT     Uniform random numb (Univariate; Time Series)
+LOTTERY3.DAT  Md. "Pick 3" Lottery (Univ; TS; 1-Way ANOVA; CC)
+LOTTERY4.DAT  Md. "Pick 4" Lottery (Univ; TS; 1-Way ANOVA; CC)
+RANDWALK.DAT  Random walk (Time Series)
+FLICKER.DAT   Flicker noise (Time Series)
+CONSUMPR.DAT  Consumer price index (by year )(Time Ser.)
+GNP.DAT       Gross Nat. Prod. (Multivariate; Time Series)
+OIL.DAT       Oil depth analysis (Time Series)
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+2.3 Time Series
+Data Sets (NOAA)
+(NOAA)
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+ASF11.DAT     Amer Samoa mon fre-11 (1977-86) (Time Ser.)
+ASF12.DAT     Amer Samoa mon fre-12 (1977-86) (Time Ser.)
+ASN2O.DAT     Amer Samoa mon N2O (1977-86) (Time Series)
+ASCO2.DAT     Amer Samoa mon CO2 (1973-86) (Time Series)
+MLF11.DAT     Mauna Loa mon freon-11 (1977-86) (Time Ser.)
+MLF12.DAT     Mauna Loa mon freon-12 (1977-86) (Time Ser.)
+MLN2O.DAT     Mauna Loa monthly N2O (1977-86) (Time Series)
+MLCO2.DAT     Mauna Loa monthly CO2 (1958-87) (Time Series)
+NWF11.DAT     Niwot Ridge mon freon-11 (1977-86) (Time Ser.)
+NWF12.DAT     Niwot Ridge mon freon-12 (1977-86) (Time Ser.)
+NWN2O.DAT     Niwot Ridge mon N2O (1977-86) (Time Series)
+PBF11.DAT     Pt. Barrow mon freon-11 (1977-86) (Time Ser.)
+PBF12.DAT     Pt. Barrow mon freon-12 (1977-86) (Time Ser.)
+PBN2O.DAT     Pt. Barrow mon N2O (1977-86) (Time Series)
+PBCO2.DAT     Pt. Barrow monthly CO2 (1973-86) (Time Series)
+SPF11.DAT     S. Pole monthly freon-11 (1977-86) (Time Ser.)
+SPF12.DAT     S. Pole monthly freon-12 (1977-86) (Time Ser.)
+SPN2O.DAT     South Pole monthly N2O (1977-86) (Time Ser.)
+SPCO2.DAT     South Pole monthly CO2 (1973-86) (Time Ser.)
+ELNINO.DAT    El Nino/Southern Oscillation (Time Series)
+MLCO2MON.DAT  Mauna Loa monthly co2 (1974-86) (Time Series)
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+3.1 Regression
+Problems
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 3
+3.2 Regression
+Data Sets
+(1 Variable & Polynomial)
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+WAMPLER1.DAT  Polynomial fitting test data (Regression)
+BERGER1.DAT   Alaska Pipeline radiographic cal (Lin Reg.)
+SPIEGEL.DAT   Nuclear tank calibration (Lin Regression)
+PONTIUS.DAT   Load cell calibration (Quad Regression)
+BOXSPRAY.DAT  Age eff on spray dispersion (Linear Regression)
+BOXWELD.DAT   Velocity eff on weld strength (Linear Reg)
+BOXRATS.DAT   Supplement amt eff on growth rate (Quad Reg)
+MICHELSO.DAT  Speed of Light (Univariate; 1-Way Anova, Reg)
+ 
+FREQPRIM.DAT  Frequency of prime numbers (Regression)
+PRIMESM.DAT   Mersenne prime numbers (Regression)
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 3
+3.3 Regression
+Data Sets
+(1 Variable & Non-Linear)
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+CHWIRUT1.DAT  Ultrasonic reference block calib (Non-Lin Reg)
+CHWIRUT2.DAT  Ultrasonic reference block calib (Non-Lin Reg)
+ECKERLE4.DAT  Circular interference transmit. (Non-Lin Reg)
+HAHN1.DAT     Thermal expansion of copper (Non-Lin Reg)
+KIRBY2.DAT    Electron microsc line width stan (Non-Lin Reg)
+LEW3.DAT      Concrete tensile strength (Non-Lin Reg)
+MISRA1.DAT    Dental res. monomolec. adsorbtion (Non-Lin Reg)
+ROSZMAN1.DAT  Quantum defects for sulfur 1 atom (Non-Lin Reg)
+THURBER.DAT   Semiconductor mobility modelling (Non-Lin Reg)
+BOXBOD.DAT    Incub time eff on bio ox demand (Non-lin Reg)
+NELSON.DAT    Insulation acc. testing (Regression-Arrhenius Eq.)
+ 
+HABER1.DAT    Dens of 2-admiss numb (Regression; Time Ser.)
+SWANSON1.DAT  Ozone spectroscopy (Spline Regression)
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 3
+3.4 Regression
+Data Sets
+(Multi-Variable)
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+WAMPLER2.DAT  Multilinear fitting test data (Regression)
+LONGLEY.DAT   Labor statistics fitting test data (Regression)
+BOXCHEM2.DAT  Mono/Dimer conc eff on chem impurity (Bi-Lin Reg)
+BOXCLEAN.DAT  C/c/c/t eff on cl stab (2**(4-1) & RS Des & Reg)
+BOXYIELD.DAT  Time/Temp eff on Yield (Resp Surf Des of Exp)
+BOXYIEL2.DAT  Time/Temp eff on Yield (Resp Surf Des of Exp)
+NELSON.DAT    Accelerated testing of insul. (Non-linear Reg.)
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+4.1 Multi-Factor/ANOVA
+Problems
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+4.2 Multi-Factor/ANOVA
+Data Sets
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+DRAFT69B.DAT  1969 Draft Lottery data rankings (1-factor ANOVA)
+LOTTERY3.DAT  Md. "Pick 3" Lottery (Univ; TS; 1-Way ANOVA; CC)
+LOTTERY4.DAT  Md. "Pick 4" Lottery (Univ; TS; 1-Way ANOVA; CC)
+USADEFIC.DAT  USA nat. def. (1980 to 1988) (1-factor ANOVA)
+PENTAGON.DAT  Pentagon expenditures by year (1-factor ANOVA)
+MICHELSO.DAT  Speed of Light (Univariate; 1-Way Anova, Reg)
+ 
+WRIGHT11.DAT  Wright broth. orig flight data (2-way ANOVA)
+CLARK0.DAT    Electrical connectors (2-Way ANOVA)
+PERIODIC.DAT  Chemistry periodic table (Multivar, BoxPl, Pareto)
+ 
+MANDEL.DAT    Specific Volume of rubber (3-way ANOVA)
+HAMAKER.DAT   Drill speed (3-way ANOVA)
+ 
+AUTO83.DAT    EPA auto miles per gallon (Multifactor, Multivar.)
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+5.1 Multivariate/Multiresponse
+Problems
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+5.2 Multivariate/Multiresponse
+Data Sets
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+AUTO83B.DAT   EPA auto miles per gallon (t Test, Multivariate)
+UGIANSKY.DAT  Interlab stress corr. (Youden plot; Multivar.)
+ 
+AUTO83.DAT    EPA auto miles per gallon (Multifactor, Multivar.)
+AUTO79.DAT    Auto charact. (1979) (Multivar, Multi-factor)
+BIOMED3.DAT   Biomedical (Multivariate)
+GNP.DAT       Gross Nat. Prod. (Multivariate; Time Series)
+AC.DAT        Factors aff A/C perf. (2**(6-4) Des of Exp & MV)
+KRASNY1.DAT   Cigarette flamm. (Multivariate & 2**5 Des of Exp)
+SMALL14.DAT   Atomic modelling (Multivariate)
+ 
+IRIS.DAT      And./Fisher taxonomy iris data (Multivariate)
+PLANETS.DAT   Solar system planet statistics (Multivariate)
+CURRIE.DAT    Pollution source analysis (Multivariate)
+FLURY.DAT     Forged Swiss bank notes (Multivariate)
+PERIODIC.DAT  Chemistry periodic table(2-Way ANOVA, Multivar)
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+6.1 Control Chart
+Problems
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+6.2 Control Chart
+Data Sets
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+CCXBAR.DAT    Shaft Diameters (Control Charts)
+CCP.DAT       Defective Motors (Control Charts)
+CCPN.DAT      Defective Mirrors (Control Charts)
+CCU.DAT       Cracks in Plastic Wire (Control Charts)
+CCC.DAT       Surface Defects (Control Charts)
+GEAR.DAT      Gear diameters (Univariate; Control Charts)
+CLEAR.DAT     Component clearance (Univar.; Dist. Anal.; CC)
+DRAFT69B.DAT  1969 Draft Lottery data rankings (1-factor ANOVA)
+MICHELSO.DAT  Speed of Light (Univariate; 1-Way Anova, Reg)
+LOTTERY3.DAT  Md. "Pick 3" Lottery (Univ; TS; 1-Way ANOVA; CC)
+LOTTERY4.DAT  Md. "Pick 4" Lottery (Univ; TS; 1-Way ANOVA; CC)
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+7.1 Pareto Analysis
+Problems
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+7.2 Pareto Analysis
+Data Sets
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+GASTAX86.DAT  Gasoline tax (by state) (Pareto Analysis)
+MURDER86.DAT  1986 murder rates (by state) (Pareto Analysis)
+NBSSOFTW.DAT  Software used at NBS (Pareto Analysis)
+NBSACTIV.DAT  Statist comp activ at NBS (Pareto Analysis)
+TRAFFIC.DAT   Auto traffic fatal. by state (Pareto Analysis)
+PERIODIC.DAT  Chemistry periodic table (Multivar, BoxPl, Pareto)
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+8.1 Reliability Analysis
+Problems
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+8.2 Reliability Analysis
+Data Sets
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+ABERNE17.DAT  Compressor rivet failure (Reliability; Dist Anal)
+HAHN.DAT      Locomotive controls failure (Reliability)
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+9.1 Error Bar Plotting
+Problems
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+9.2 Error Bar Plotting
+Data Sets
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+GARBOCZI.DAT  Building Mat. Percolation (Error Bar Plot)
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+10.1 3-D Plotting/Contouring
+Problems
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+**new page --------------------------------
+**center on
+**magnify 3.0
+**lines per inch 1.5
+**shadebo2 300 2165 0.025 2
+10.2 3-D Plotting/Contouring
+Data Sets
+**magnify 1.3
+**lines per inch 5.0
+**center off
+ 
+EHRSTEIN.DAT  Resistivity of semicond. wafers (3D Plotting)
+BENNETT.DAT   Fracture surface roughness (3D Plot)
+BRAIN.DAT     Brain wave analysis (3D Plot)
+CUBE.DAT      Vertices of a cube (3-D)
+ 

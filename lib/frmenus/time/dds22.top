@@ -1,0 +1,62 @@
+----- <~time\dds22.top> DDS FAQ 22 DDS vs. Fourier Analysis
+ 
+22. DDS versus Fourier Analysis
+ 
+DDS is much better than Fourier or periodogram
+analysis as summarized on p. 76 of Pandit (1991):
+ 
+A comprehensive account of this literature has
+been given by Priestley (1981), who points out
+that in spite of its drawbacks, periodogram
+(sample spectrum) analysis remains entirely
+appropriate for the purpose for which it was
+designed, namely the analysis of processes with
+discrete spectra.  This should be clear even
+without statistics and is applicable also to the
+use of FFT on deterministic data, since, as
+pointed out in Section 2.9.3, the basic discrete
+(finite) Fourier series assumes the data to be a
+sample from a trigonometric polynomial, consisting
+of a sum of exponentials with imaginary exponents
+containing discrete frequencies that are multiples
+of a fundamental frequency.  These FFT-based
+techniques designed for a finite number of
+discrete frequencies becomes inappropriate when
+applied to a system requiring continuous functions
+of frequency, such as the frequency response or
+transfer function of even a one-degree-of-freedom
+damped system, and random functions with
+continuous spectra.  No (necessarily) finite
+amount of averaging or smoothing will solve the
+problem, it will merely lead to dichotomies such
+as a compromise between aliasing and resolution,
+or between variance and bias, discussed earlier.
+To put it differently, all these problems arise
+from a basic difficulty: a Fourier series does not
+exist for a nonperiodic function and certainly not
+for a random function!
+ 
+It is for such sytems whose frequency response,
+transfer functions or spectrum are functions of
+continuous frequencies that the DDS method becomes
+appropriate and necessary in spite of its
+increased computation and the FFT may provide at
+best, under fortunate circumstances, a qualitative
+visual indicator.  Notwithstanding its
+computational efficiency, the FFT is really useful
+only for detecting the presence of certain
+suspected discrete frequency peaks.
+ 
+Moreover, for most applications of system analysis
+in practice, a characteristic such as frequency
+response, transfer function, or spectrum is only
+an intermediate step.  One likes to use them
+subsequently for design, prediction, or control.
+For such quantitative analysis DDS is invaluable.
+It will be shown in Chapter 6 that for visual
+inspection, diagnostic monitoring, and other
+applications, DDS can provide much more
+quantitative information and insight, as well as
+plots of these characteristics that are far
+clearer and easier to interpret than the FFT.
+ 

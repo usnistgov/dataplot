@@ -1,0 +1,8 @@
+----- <~dexmix\SIMCENT4.DP> Load SIMCENT4.DAT
+
+. This is file     SIMCENT4.DP
+
+DELETE X1 TO X4
+SKIP 25
+READ SIMCENT4.DAT X1 TO X4
+

@@ -1,0 +1,61 @@
+This is file runseq.men--Run Sequence Plot with Threshold
+ 
+--------------------
+ 1. Run Sequence Plot with Threshold
+ 2. RUN SEQUENCE PLOT Y
+ 3.
+ 4. This nenu will generate a run sequence plot of
+ 5. the response variable.  You can optionally
+ 6. specify two threshold lines.  The first line
+ 7. is drawn at the specified constant value.  The
+ 8. second option lets you specify how many points
+ 9. you would like above the threshold.  Leave these
+10. fields blank to omit the threshold lines.
+11.
+12 . Response Variable:
+12. @CE 1 0 42 50 ? gui-vari
+13.
+14. Line Types:
+14. @CE 2 0 42 50 * gui-line
+15. Character Types:
+15. @CE 3 0 42 50 * gui-char
+16. Character Fill:
+16. @CE 4 0 42 50 * gui-ooff
+17.
+18. Title:
+18. @CE 5 0 10 50 *
+19. Left Axis Label:
+19. @CE 6 0 22 50 *
+20. Bottom Axis Label:
+20. @CE 7 0 22 50 *
+21.
+22. Optional Threshold Value:
+22. @CE 8 0 42 50 *
+23. Optional Number of Points Above Threshold:
+23. @CE 9 0 42 50 *
+24.
+25. Subset/Except/For Specification:
+26. @CE 10 0 1 50 *
+27.
+28.
+29. Generate the Plot?:
+--------------------
+GR FE
+LINES _2
+CHARACTERS _3
+CHARACTER FILL _4
+TITLE _5
+Y1LABEL _6
+X1LABEL _7
+RUN SEQUENCE PLOT _1 _10
+LET ZZZZN = SIZE _1 _10
+LINE DASH
+@IF 8 0 DRAWDATA 1 _9 ZZZZN _8
+@IF 9 0 LET ZZZZY = SORT _1 _10
+@IF 9 0 LET ZZZZIN = ZZZZN - _9 + 1
+@IF 9 0 LET ZZZZTH = ZZZZY(ZZZZIN)
+@IF 9 0 DRAWDATA 1 ZZZZTH ZZZZN ZZZZTH
+LINE SOLID
+--------------------
+WEB HELP RUN SEQUENCE PLOT
+--------------------

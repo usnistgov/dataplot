@@ -1,0 +1,81 @@
+This is Dataplot data file    ALLERGEN.DAT
+Sample data set from ISO 13528 standard:
+
+   ISO 13528 (2005), "Statistical Methods for use in
+   proficiency testing by interlaboratory comparisons,"
+   Section 9.2.2.
+
+This data contains allergen concentrations for three allergens
+for 20 rounds of data.  There is a single z-score for each round.
+This example contains the data for a single laboratory.  In this
+case, allergen corresponds to a material.
+
+Number of observations = 60
+Number of observations per line image = 5
+Order of observations per line image--
+   1. z-score
+   2. Allergen (1 = d1, 2 = f1, 3 = e3)
+   3. Allergen 3 (e1)
+   4. Year
+   5. Quarter
+To read this file into Dataplot--
+   SKIP 25
+   READ ALLERGEN.DAT  Z  LABID  MATID  YEAR  QUARTER
+  Z  LABID  MATID  YEAR   QUARTER
+---------------------------------
+-1.4   1    1    1991    3
+-0.9   1    1    1991    4
+ 0.2   1    1    1992    1
+ 1.0   1    1    1992    2
+-0.4   1    1    1992    3
+ 0.0   1    1    1992    4
+ 0.9   1    1    1993    1
+ 2.0   1    1    1993    2
+ 1.7   1    1    1993    3
+-0.8   1    1    1993    4
+-1.0   1    1    1994    1
+-2.0   1    1    1994    2
+-1.6   1    1    1994    3
+ 1.5   1    1    1994    4
+ 0.1   1    1    1995    1
+-1.9   1    1    1995    2
+-0.7   1    1    1995    3
+ 0.3   1    1    1995    4
+-1.3   1    1    1996    1
+-0.4   1    1    1996    2
+-0.2   1    2    1991    3
+-1.3   1    2    1991    4
+ 1.6   1    2    1992    1
+-0.5   1    2    1992    2
+-1.2   1    2    1992    3
+ 0.3   1    2    1992    4
+-0.1   1    2    1993    1
+ 0.3   1    2    1993    2
+ 2.6   1    2    1993    3
+-1.3   1    2    1993    4
+ 1.6   1    2    1994    1
+ 0.8   1    2    1994    2
+ 4.0   1    2    1994    3
+ 1.1   1    2    1994    4
+ 0.3   1    2    1995    1
+ 0.1   1    2    1995    2
+ 1.2   1    2    1995    3
+-1.9   1    2    1995    4
+-1.1   1    2    1996    1
+ 1.9   1    2    1996    2
+-0.5   1    3    1991    3
+-1.0   1    3    1991    4
+ 1.0   1    3    1992    1
+-1.5   1    3    1992    3
+-0.8   1    3    1992    4
+-1.1   1    3    1993    1
+ 1.0   1    3    1993    2
+-0.6   1    3    1993    4
+ 0.4   1    3    1994    1
+ 0.4   1    3    1994    2
+-0.8   1    3    1994    3
+-1.5   1    3    1995    1
+-0.5   1    3    1995    2
+ 0.4   1    3    1995    3
+-0.8   1    3    1995    4
+ 0.0   1    3    1996    2

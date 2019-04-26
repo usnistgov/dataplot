@@ -1,0 +1,107 @@
+This is file mlefnr.men--2-Parameter Folded Normal MLE Estimates
+ 
+--------------------
+ 1. Folded Normal Maximum Likelihood Estimates
+ 2. FOLDED NORMAL MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Maximum likelihood point estimates for the shape
+ 5. parameter mu and the shape parameter sigma can be
+ 6. obtained for uncensored data.  You can optionally
+ 7. request to have bootstrap  confidence limits generated
+ 8. for the distribution parameters.
+ 9.
+10. Response Variable:
+10. @CE 1 0 42 50 ? gui-variable
+11.
+12. Number of bootstrap samples (0 to omit)?
+12. @CE 2 0 42 50 *
+13.
+14. Subset/Except/For Specification:
+15. @CE 3 0 1 50 *
+16.
+17.
+18. Compute Folded Normal MLE's?
+--------------------
+GR FE
+LET NUMBOOT = 0
+@IF 2 0 LET NUMBOOT = _2
+let numboot = min(1000,numboot)
+if numboot > 0
+   bootstrap samples numboot
+   set maximum likelihood percentiles default
+   device 1 font simplex
+   multiplot 2 2
+   multiplot corner coordinates 0 0 100 100
+   multiplot scale factor 2
+   label
+   title case asis
+   label case asis
+   case asis
+   title displacement 2
+   x2label displacement 13
+   x3label displacement 18
+   y1label Parameter Estimate
+   x1label
+   x2label Bootstrap Sample
+   title Bootstrap Plot
+   line color blue red green
+   limits
+   bootstrap folded normal mle plot _1 _3
+   line color black all
+   .
+   delete amu asigma
+   skip 0
+   read dpst1f.dat amu asigma
+   y1label
+   x2label
+   title Mu Parameter
+   let amed = median amu
+   let amean = mean amu
+   let asd = sd amu
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram amu
+   title Sigma Parameter
+   let amed = median asigma
+   let amean = mean asigma
+   let asd = sd asigma
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram asigma
+   x3label displacement
+   end of multiplot
+   .
+   let alpha = 0.05
+   let xqlow = alpha/2
+   let xqupp = 1 - alpha/2
+   .
+   let xq = xqlow
+   let mu95low = xq quantile amu
+   let xq = xqupp
+   let mu95upp = xq quantile amu
+   let xq = xqlow
+   let sig95low = xq quantile asigma
+   let xq = xqupp
+   let sig95upp = xq quantile asigma
+   .
+   device 1 font tektronix
+   window corner coordinates 50 0 100 50
+   justification left
+   height 4
+   move 5 70
+   text Confidence Interval for Mu:
+   move 5 63
+   text (^mu95low,^mu95upp)
+   move 5 50
+   text Confidence Interval for Sigma:
+   move 5 43
+   text (^sig95low,^sig95upp)
+   window corner coordinates 0 0 100 100
+   height
+   title
+   label
+end of if
+FOLDED NORMAL MAXIMUM LIKELIHOOD _1 _3
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

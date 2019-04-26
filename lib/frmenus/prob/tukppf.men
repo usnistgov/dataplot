@@ -1,0 +1,43 @@
+This is file tukppf.men--Compute Tukey lambda percent point
+ 
+--------------------
+ 1. Compute Tukey Lambda Percent Point
+ 2. LET A = TUKPPF(P,LAMBDA)
+ 3.
+ 4. pdf   : f(x;a,b)  = no closed form
+ 5. ppf   : G(p;u,s)  = u + s * G1(p)
+ 6.         with G1(p)= (p**lambda-(1-p)**lambda)
+ 7.                     / lambda
+ 8.                     for 0 < p < 1
+ 9. mean  : E(X)      = u
+10. st dev: SD(X)     = ...
+11.
+12. Input values:
+13.      probability p:                    0 < p < 1
+13. @CE 1 0 21 37 ?
+14. tail length lambda:
+14. @CE 2 0 21 37 ?
+15.         location u:
+15. @CE 3 0 21 37 ?
+16.            scale s:                    s > 0
+16. @CE 4 0 21 37 ?
+17.
+18. Output value:
+19.      name for the percent point:
+19. @CE 5 0 38 49 ?
+20.
+21.
+22. Compute the Percent Point?
+--------------------
+AN FE
+LET ZP = _1
+LET ZLAMBDA = _2
+LET ZLOC = 0
+@IF 3 0 LET ZLOC = _3
+LET ZSCALE = 1
+@IF 4 0 LET ZSCALE = _4
+LET ZZ = LAMPPF(ZP,ZLAMBDA)
+LET _5 = ZLOC + ZSCALE*ZZ
+--------------------
+WEB HELP LAMPPF
+--------------------

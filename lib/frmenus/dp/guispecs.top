@@ -1,0 +1,31 @@
+----- <~dp\guispecs.top> GUI Specifics
+ 
+GUI Specifics
+ 
+Advantages:
+   1. File-driven menu system (extensible, portable)
+   2. Multi-level user expertise (commands => menus)
+   3. Multi-entry: data/technique/goal
+   4. multi-SED-member expertise
+   5. optional (ignorable)
+   6. file-connectable (hypertext: submenu, menu, literature)
+   7. dovetails nicely with Alan documentation
+   8. some areas: quite extensive (e.g., probability)
+   9. some areas: unique, new techiques (block plot, DDS, DEX)
+  10. NIST-sensitive menu structure (cv, calibration)
+  11. Graphics-representation of results (e.g., t test conf. limits)
+  12. data-centric
+  13. data from books & courses
+  14. stat-specific menus (Windows generic menu top menus too general)
+  15. Graphics output (e.g., confidence distributions)
+  16. Engineering-based: sigma, not sigma squared
+  17. extensive data resources
+  18. high-level roadmaps (via rooms)
+  19. connectable to literature (e.g., Natrella)
+  20. built-in extensible point and click menus for techniques
+  21. Postscript-graphics-based
+ 
+Disadvantages:
+   1. Turbo-C (not Microsoft Windows)
+   2. Under construction items
+ 

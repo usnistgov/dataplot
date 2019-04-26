@@ -1,0 +1,34 @@
+-----  <~fit\fitexam.top> Load & Analyze Fit Data Files
+
+Worked Examples for Fit  Datasets
+
+1-Variable and Polynomial:
+    BERGER1.DAT  Alaskan pipeline data         <xcf: ~fit\BERGER1.DP>
+    LEW.DAT      Tensile strength of concrete  <xcf: ~fit\LEW.DP>
+    SPIEGEL.DAT  Nuclear safeguards tank calibration <xcf: ~fit\SPIEGEL.DP>
+
+    PONTIUS.DAT  Load cell calibration          <xcf: ~fit\PONTIUS.DP>
+
+1-Variable and Non-Linear
+    CHWIRUT.DAT  Ultrasonic reference block calibration <xcf: ~fit\CHWIRUT.DP>
+    MISRA1.DAT   Dental monomplecular absorption  <xcf: ~fit\MISRA.DP>
+    ROSZMAN.DAT  Quantum defects for sulfer    <xcf: ~fit\ROSZMAN.DP>
+
+Multivariable
+
+
+Rational Function Fitting
+    LEW4.DAT     Concrete pull-out bond strength  <xcf: ~fit\LEW4.DP>
+    HAHN1.DAT    Copper thermal expansion         <xcf: ~fit\HAHN1.DP>
+
+Spline Fitting
+    SPIEGEL.DAT  Nuclear safeguards tank calibration <xcf: ~fit\SPIEGEL2.DP>
+    SWANSON1.DAT                              <xcf: ~fit\SWANSON1.DP>
+
+Lowess Fitting
+    MAVRO.DAT    Filter transmittance         <xcf: ~fit\SPIEGEL2.DP>
+    HAYES1.DAT   Fire research obscuration   <xcf: ~fit\HAYES1.DP>
+
+Principal Components Fitting
+    HALD.DAT     Heat yield in hardening of Portland cement <xcf: ~fit\HALD.DP>
+

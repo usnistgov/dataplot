@@ -1,0 +1,99 @@
+This is Dataplot file    C:\DATAPLOT\HELP\MATHSYMB.
+ 
+Purpose: List the Math symbols available within Dataplot
+ 
+Example of usage:
+ 
+   TEXT SUMM() INTE() INFI()
+   TEXT LC() E SUP() PI() I UNSP() = -1
+ 
+Within Dataplot, this MATH SYMBOLS file may be
+viewed by entering:
+ 
+   LIST MATHSYMB.     (be sure to include the trailing .)
+ 
+Math symbols can be generated within any TEXT, TITLE,
+LABEL, or LEGEND command.  Note that the math symbols
+will appear ONLY when one of the Hershey fonts have
+been specified (via the FONTS command):
+ 
+   SIMPLEX                (e.g., FONT SIMPLEX)
+   DUPLEX
+   TRIPLEX
+   TRIPLEX ITALIC
+   COMPLEX
+   SIMPLEX SCRIPT
+   COMPLEX SCRIPT
+ 
+To indicate that a mathematics symbol should appear in
+some text string, simply enter the abbreviated (never
+more than 4 characters) name from the list below and
+append an open and closed parenthesis after the name,
+as in INTE(), SUMM(), and DOTP().  The () is a flag to
+DATAPLOT that the previous character sub-string is not
+to be printed literally but rather should be converted
+and drawn as a special symbol.
+ 
+The mathematics symbols are--
+ 
+   partial derivative       PART()
+   integral                 INTE()
+   circular integral        CINT()
+   summation                SUMM()
+   product                  PROD()
+   infinity                 INFI()
+   + or -                   +-()
+   - or +                   -+()
+   times                    TIME()
+   dot product              DOTP()
+ 
+   vector product           DEL()
+   division                 DIVI()
+   less than                LT()
+   greater than             GT()
+   less than or equal to    LTEQ()
+   greater than or equal to GTEQ()
+   not equal                NOT=()
+   approximately equal to   APPR()
+   equivalence              EQUI()
+   varies                   VARI()
+ 
+   tilda                    TILD()
+   carat                    CARA()
+   prime                    PRIM()
+   radical                  RADI()
+   large radical            LRAD()
+   larger radical           BRAD()
+   subset                   SUBS()
+   superset                 SUPE()
+   un-subset                UNSB()
+   un-superset              UNSP()
+ 
+   union                    UNIO()
+   intersection             INTR()
+   is an element of         ELEM()
+   there exists             THEX()
+   therefore                THFO()
+ 
+Example --Go to the middle of screen, and draw out summation,
+          integration, and infinity symbols in simplex font--
+ 
+             FONT SIMPLEX
+             MOVE 50 50
+             TEXT SUMM()INTE()INFI()
+ 
+Example --Go to the middle of screen, and write out
+             A union B
+          (a set theory notation) in upper case triplex font--
+ 
+             CASE UPPER
+             FONT TRIPLEX
+             MOVE 50 50
+             TEXT AUNIO()B
+ 
+ 
+Enter   --HELP CAPITALIZATION to list case (lower/upper) information.
+          HELP SUBSCIPTS to list sub/super-script information.
+          HELP GREEK SYMBOLS to list Greek characters.
+          HELP MISC SYMBOLS to list miscellaneous symbols.
+ 

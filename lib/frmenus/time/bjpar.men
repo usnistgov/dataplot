@@ -1,0 +1,31 @@
+This is file bjpar.men--Read in Parameters, SD of Parameters
+ 
+--------------------
+ 1. Read in ARMA Parameter Estimates
+ 2. READ DPST1F.DAT COEF COEFSD
+ 3.
+ 4. This menu reads in the parameters and the
+ 5. standard deviations of the parameters from
+ 6. the most recent ARMA fit.
+ 7. 
+ 8. The order of the parameters is:
+ 9.   1) The auto-regressive terms
+10.   2) The moving average terms
+11.   3) The overall constant term
+12.   4) The seasonal auto-regressive terms
+13.   5) The seasonal moving average terms
+14.
+15. Name for Parameters Variable:
+15. @CE 1 0 42 50 ?
+16. Name for Parameter Standard Deviations Variable:
+16. @CE 2 0 42 50 ?
+17.
+18.
+19. Read in Parameter Values?
+--------------------
+GR FE
+SKIP 0
+READ DPST1F.DAT _1 _2
+--------------------
+WEB HELP ARMA
+--------------------

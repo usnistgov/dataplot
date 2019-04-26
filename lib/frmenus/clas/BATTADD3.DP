@@ -1,0 +1,10 @@
+----- <~dataloex\BATTADD3.DP> Load & Execute BATTADD3.DAT
+
+. This is file    BATTADD3.DP
+
+DELETE Y X BATT
+SKIP 25
+READ BATTADD3.DAT Y X BATT
+TITLE BATTADD3.DAT
+/
+

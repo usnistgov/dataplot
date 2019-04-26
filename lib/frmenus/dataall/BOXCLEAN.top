@@ -1,0 +1,8 @@
+----- <~dataall\BOXCLEAN.top> BOXCLEAN.DAT
+
+BOXCLEAN.DAT
+
+View     <xcl: LIST BOXCLEAN.DAT>
+Load     <xcf: ~dataload/BOXCLEAN.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXCLEAN.DAT>
+

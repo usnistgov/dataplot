@@ -1,0 +1,11 @@
+----- <~dataloex\NATR26.DP> Load & Execute NATR26.DAT
+
+. This is file    NATR26.DP
+
+DELETE Y
+SKIP 25
+READ NATR26.DAT Y
+TITLE NATR26.DAT
+SUMMARY Y
+4-PLOT Y
+

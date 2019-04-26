@@ -1,0 +1,44 @@
+This is file plotdm2d.men--Plot Data (multi-char &/or multi-line) 2-D
+ 
+--------------------
+ 1. Plot Data (Multi-character &/or Multi-trace) 2-D
+ 2. PLOT Y X TAG
+ 3.
+ 4. Vertical   Axis Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. Horizontal Axis Variable:
+ 5. @CE 2 0 42 50 ? gui-vari
+ 6. Tag Variable
+ 6. @CE 3 0 42 50 ? gui-vari
+ 7.
+ 8. Line Types:
+ 9. @CE 4 0 1 50 * gui-line
+10. Character Type:
+11. @CE 5 0 1 50 * gui-char
+12. Character Fill:
+13. @CE 6 0 1 50 * gui-ooff
+14.
+15. Title:
+16. @CE 7 0 10 50 *
+17. Left Axis Label:
+18. @CE 8 0 22 50 *
+19. Bottom Axis Label:
+20. @CE 9 0 22 50 *
+21.
+22. Subset/Except/For Specification:
+23. @CE 10 0 6 50 *
+24.
+25.
+26. Generate the Plot?:
+--------------------
+GR FE
+LINES _4
+CHARACTERS _5
+CHARACTER FILL _6
+TITLE _7
+Y1LABEL _8
+X1LABEL _9
+PLOT _1 _2 _3 _10
+--------------------
+WEB HELP PLOT
+--------------------

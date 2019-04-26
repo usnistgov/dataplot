@@ -1,0 +1,20 @@
+-----<~reli\acelnota.top> Discussion: Acceleration Models Notation
+
+Discussion: Linear Acceleration - Notation
+
+Acceleration Models: Notation
+
+We use the following notation for acceleration models.
+
+    t(s)    = time-to-fail at stress
+    t(u)    = time-to-fail at use conditions
+
+    F(s)(t) = CDF at stress
+    F(u)(t) = CDF at use conditions
+
+    f(s)(t) = PDF at stress
+    f(u)(t) = PDF at use conditions
+
+    h(s)(t) = failure rate (or hazard) at stress
+    h(u)(t) = failure rate (or hazard) at use conditions
+

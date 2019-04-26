@@ -1,0 +1,25 @@
+This is file fitnl.men--Fitting (Nonlinear)
+ 
+--------------------
+1. Fitting: 1 or More Variables; Non-Linear Model
+2. FIT Y = <general function>
+3.
+4. Variables:
+5.    Response    Y:
+5. @CE 1 0 40 50 ?
+6.    Weights     W:
+6. @CE 2 0 40 50 *
+7.
+8. Non-Linear Function:
+9. @CE 3 0 1 50 *
+10.
+11. Subset/Except/For Specification:
+12. @CE 4 0 1 50 *
+13.
+14.
+15. Do the Fit?
+--------------------
+GR FE
+WEIGHTS _2
+FIT _1 = _3 _4
+--------------------

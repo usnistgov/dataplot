@@ -1,0 +1,27 @@
+This is file matr_sim.men--Linear programming (simplex method)
+ 
+--------------------
+ 1. Solve Linear Programming Problem
+ 2. LET X = MATRIX SIMPLEX SOLUTION F M; LET P = VECTOR DOT PRODUCT F X
+ 3.
+ 4. Variable containing objective function coefficients:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Constraints matrix:
+ 5. @CE 2 0 33 50 ? gui-matrix
+ 6. Variable to store the computed Xj values:
+ 6. @CE 3 0 33 50 ? 
+ 7. Parameter to store the simplex solution:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 -10 50 *
+11.
+12.
+13. Solve the Linear Programming Problem?:
+--------------------
+GR FE
+LET _3 = MATRIX SIMPLEX SOLUTION  _1 _2  _5
+LET _4 = VECTOR DOT PRODUCT  _1 _3
+--------------------
+WEB HELP MATRIX SIMPLEX SOLUTION
+--------------------

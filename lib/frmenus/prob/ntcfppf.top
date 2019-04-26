@@ -1,0 +1,9 @@
+----- <~prob\ntcfppf.top> Normal, t, chi-squared, F Percent Points
+
+Normal, t, chi-squared, F Percent Points
+
+Normal                   <xemf: ~prob\norppf.men>
+t                        <xemf: ~prob\tppf.men>
+chi-squared              <xemf: ~prob\chsppf.men>
+F                        <xemf: ~prob\fppf.men>
+

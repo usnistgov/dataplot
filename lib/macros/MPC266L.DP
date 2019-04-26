@@ -1,0 +1,19 @@
+reset data
+reset plot control
+reset i/o
+dimension 500 30
+label size 3
+read mpc266c.dat wafer probe a1 s1 b1 s2 a2 s3 b2 s4
+let diff1 = a1 - b1
+let diff2 = a2 - b2
+let d1 = average diff1
+let d2 = average diff2
+let s1 = standard deviation diff1
+let s2 = standard deviation diff2
+let t1 = (30.)**(1/2)*(d1/s1)
+let t2 = (30.)**(1/2)*(d2/s2)
+. Average config A-config B; std dev difference; t-statistic for run 1
+print d1 s1 t1
+. Average config A-config B; std dev difference; t-statistic for run 2
+print d2 s2 t2
+. end of calculations

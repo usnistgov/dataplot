@@ -1,0 +1,103 @@
+----- <~help\program.top> Programming with Dataplot
+
+Programming with Dataplot
+
+Programming with Dataplot
+
+Sequential and Structured
+
+    Dataplot programs proceed sequentially from the
+    beginning of the code to the end. The language is
+    structured. There are no "Go-To"-type statements
+    and no statement labels.
+       
+Low Level Commands
+
+    Like BASIC, FORTRAN, etc., Dataplot has a series
+    of low-level commands which specify to the
+    computer that certain elementary operations (such
+    as readinq, writing, looping, etc.) should be
+    performed.
+
+High Level Commands
+
+    In addition, Dataplot provides a set of high-level
+    commands (such as PLOT, FIT, HISTOGRAM, etc.) which
+    permit the analyst to perform a wide variety of
+    graphics, non-linear fitting, data analysis, and
+    mathematical operations directly.  Dataplot is an
+    interpretive language.  Although tbe language can
+    be used in a semi-interactive or batch mode by
+    running pre-stored programs, it was primarily
+    designed for, and is most effectively used in, an
+    interactive environment.
+
+Dataplot Programs Typically Short
+
+    Because of the existence of commonly-used high-level
+    graphical and analytical capabilities, the typical
+    Dataplot program is short (e.g., 5 to 20 lines).  Usually
+    there is only a main program with no need of subprograms.
+    If subprograms are desired, they are accessed via the
+
+        CALL                                 <xcl: HELP CALL>
+
+    command.
+
+Input and Output are Format Free
+
+    Input and output in Dataplot is format-free. The
+
+        READ                                 <xcl: HELP READ>
+
+    and
+
+        SERIAL READ                          <xcl: HELP SERIAL READ>
+
+    commands enter data into Dataplot while the 
+
+        WRITE                                <xcl: HELP WRITE>
+
+    (PRINT is a synonyn) command allows the writing of
+    data to the terminal screen or to an external file.
+
+Several Hundred Commands
+
+    The Dataplot command vocabulary consists of several
+    hundred commands.  The analyst may use any command at
+    any time.  A given program for a given application
+    typically makes use of a small subset of Dataplot commands
+    (10 to 15 commands).
+
+Three Most Important Commands
+
+    The three most important Dataplot commands are
+
+        PLOT                                 <xcl: HELP PLOT>
+        FIT                                  <xcl: HELP FIT>
+        LET                                  <xcl: HELP LET>
+
+    Other commonly-used commands are
+
+        CHARACTER                            <xcl: HELP CHARACTER>
+        LINE                                 <xcl: HELP LINE>
+        LABEL                                <xcl: HELP LABEL>
+        TITLE                                <xcl: HELP TITLE>
+        LEGEND                               <xcl: HELP LEGEND>
+        TEXT                                 <xcl: HELP TEXT>
+        ECHO                                 <xcl: HELP ECHO>
+        STATUS                               <xcl: HELP STATUS>
+
+Spaces are the Universal Separator in Dataplot
+
+    The universal separator between words on a Dataplot command
+    line is a blank (1 or more blanks).  The comma is never used
+    in any Dataplot command syntax; when in doubt, use a blank
+    rather than a comma, as in
+
+       WRITE A B C
+  
+    rather than
+
+       WRITE A,B,C
+

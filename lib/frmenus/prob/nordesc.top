@@ -1,0 +1,27 @@
+----- <~prob\nordesc.top> Normal Description
+
+*Normal Description
+
+pdf: f(x)     = constant * exp(-0.5*(x**2))        for all x
+pdf: f(x;u,s) = constant * exp(-0.5*((x-u)/s)**2)  for all x
+
+Moments   : E(X)  = u
+            SD(X) = s
+
+Type      : Continuous, symmetric, bell-shaped, moderate-tailed
+Domain    : -infinity to +infinity
+Synonym   : Gaussian
+Genesis   : DeMoivre (1733), LaPlace (1774), Gauss (1809)
+Definition: If the random variables X(i) have some
+            fixed distribution, finite/fixed mean,
+            and finite/fixed standard deviation,
+            then the random variable S(n) =
+            X(1) + X(2) + ... + X(n)
+            tends (as n approaches infinity)
+            to the normal distribution.
+            (The Central Limit Theorem)
+
+Reference : Johnson & Kotz,
+            Continuous Univariate Distributions-1,
+            Chapter 13 (pages 40-111).
+

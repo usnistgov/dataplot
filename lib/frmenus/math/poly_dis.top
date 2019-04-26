@@ -1,0 +1,20 @@
+----- <~math\poly_dis.top> Polynomial Operations
+ 
+Polynomial Operations
+
+
+An nth degree polynomial is defined as:
+
+   Pn = a0 + a1*x + a2*x**2 + ... + an*x**n
+
+Dataplot provides a number of commands
+specifically for working with polynomials.
+Dataplot represents polynomials by storing
+the polynomial coefficients (i.e., the a0,
+a1, .., an) in a variable.  For example,
+if P is the variable, P(1) = a0, P(2) = a1,
+..., P(n) = an.
+
+A number of specialized algorithms exist
+for working with polynomials, which are
+implemented in these polynomial operations.

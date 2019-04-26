@@ -1,0 +1,86 @@
+This is file potplot.men--Peaks Over Threshold Plot
+ 
+--------------------
+ 1. Peaks Over Threshold Plot
+ 2. PEAKS OVER THRESHOLD PLOT Y R
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. Optional Mean Return Interval Variable:
+ 5. @CE 2 0 42 50 ? gui-vari
+ 6.
+ 7. Generalized Pareto Estimation Method:
+ 7. @CE 3 1 42 50 de Haan
+ 8. @CE 3 2 42 50 CME
+ 9. @CE 3 3 42 50 PPCC
+10. Optional Initial Threshold:
+10. @CE 4 0 42 50 *
+11. Optional Initial Points Above Threshold:
+11. @CE 5 0 42 50 *
+12. Optional Threshold Increment (default: -1):
+12. @CE 6 0 42 50 *
+13. Optional Number of Iterations (default: 30):
+13. @CE 7 0 42 50 *
+14. X Axis:
+14. @CE 8 1 27 50 Points Above Threshold
+15. @CE 8 2 27 50 Threshold Value
+16. Compute Load Factors:
+16. @CE 9 0 42 50 * gui-ooff
+17.
+18. Line Types (solid, dot, dash, ...)
+18. @CE 10 0 42 50 * gui-line
+19. Character Type (blank, x, circ, ...)
+19. @CE 11 0 42 50 * gui-char
+20. Character Fill (off, on)
+20. @CE 12 0 42 50 * gui-ooff
+21.
+22. Title:
+22. @CE 13 0 10 50 *
+23. Left Axis Label:
+23. @CE 14 0 22 50 *
+24. Bottom Axis Label:
+24. @CE 15 0 22 50 *
+25.
+26. Save Tabls As:
+26. @CE 16 1 42 50 Screen
+27. @CE 16 2 42 50 ASCII
+28. @CE 16 3 42 50 HTML
+29. @CE 16 4 42 50 Latex
+30. @CE 16 5 42 50 RTF
+31.
+32. Subset/Except/For Specification:
+33. @CE 17 0 1 50 *
+34.
+35.
+36. Generate the Peaks Over Threshold Plot?:
+--------------------
+GR FE
+LINES _10
+CHARACTERS _11
+CHARACTER FILL _12
+TITLE _13
+Y1LABEL _14
+X1LABEL _15
+SET PEAKS OVER THRESHOLD METHOD DEHAAN
+@IF 3 2 SET PEAKS OVER THRESHOLD METHOD CME
+@IF 3 3 SET PEAKS OVER THRESHOLD METHOD PPCC
+@IF 4 0 SET PEAKS OVER THRESHOLD INITIAL THRESHOLD _4
+@IF 5 0 SET PEAKS OVER THRESHOLD INITIAL POINTS _5
+@IF 6 0 SET PEAKS OVER THRESHOLD INCREMENT _6
+@IF 7 0 SET PEAKS OVER THRESHOLD ITERATIONS _7
+SET PEAKS OVER THRESHOLD X AXIS POINTS
+@IF 8 2 SET PEAKS OVER THRESHOLD X AXIS THRESHOLD
+SET PEAKS OVER THRESHOLD LOAD FACTOR _9
+@IF 16 2 CAPTURE POT.OUT
+@IF 16 3 CAPTURE HTML POT.HTM
+@IF 16 4 CAPTURE LATEX POT.TEK
+@IF 16 5 CAPTURE RTF POT.RTF
+PEAKS OVER THRSHOLD PLOT _1 _2 _17
+@IF 16 2 END OF CAPTURE
+@IF 16 3 END OF CAPTURE
+@IF 16 4 END OF CAPTURE
+@IF 16 5 END OF CAPTURE
+@IF 16 2 LIST POT.OUT
+--------------------
+WEB HELP PEAKS OVER THRESHOLD PLOT
+--------------------

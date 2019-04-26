@@ -1,0 +1,32 @@
+THIS IS DATAPLOT DATA FILE     FUNNEL11.DAT
+FUNNEL EXPERIMENT (OPTIMIZATION DESIGN)
+2 FACTORS UNDER INVESTIGATION: VERTICAL ANGLE AND RISER BAR HEIGHT
+ALL OTHER FACTORS FIXED--
+   BALL                 = LARGE
+   FUNNEL               = BLUE (#12)
+   RAMP                 = ALUMINUM
+   HORIZONTAL ANGLE     = NEAR 0 DEGREES (BY EYE) ADJ. TO TANGENCY
+   STABILITY            = HELD
+   DROPPER              = JJF
+   TIMER & RECORDER     = ERIC          DATE = JUNE 16, 1995
+NUMBER OF OBSERVATIONS  = 7
+TOTAL NUMBER OF VARIABLES PER LINE IMAGE = 4
+ORDER OF VARIABLES ON A LINE IMAGE--
+   1. RESPONSE VARIABLE = TRAVERSAL TIME (SECONDS)
+   2. FACTOR 1          = VERTICAL ANGLE (2 LEVELS: 7 & 9 INCHES ABOVE BASE)
+   3. FACTOR 2          = RISER BAR HEIGHT (2 LEVELS: BAR+2 & BAR+4)
+   4. FACTOR 4          = RUN SEQUENCE
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25; READ FUNNEL11.DAT Y U1 U2 RUNSEQ
+ 
+ 
+  Y     VERTICAL    RISER BAR     RUN
+         ANGLE       HEIGHT     SEQUENCE
+-----------------------------------------
+15.78      -1          -1          5
+16.32      +1          -1          3
+13.38      -1          +1          2
+14.59      +1          +1          6
+15.40       0           0          1
+16.16       0           0          4
+16.87       0           0          7

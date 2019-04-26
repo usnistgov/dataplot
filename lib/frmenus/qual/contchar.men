@@ -1,0 +1,92 @@
+This is file contchar.men--Generate Control Charts
+ 
+--------------------line 3
+1. Control Chart
+2. <type of chart> CONTROL CHART Y X
+3.
+4. Vertical   Axis Variable:
+4. @CE 1 0 41 58 ? gui-variable
+5. Horizontal Axis Variable:
+5. @CE 2 0 41 58 ? gui-variable
+6.
+7. Chart Type (Horizontal variable optional for first column):
+8. @CE 3 8  5 20 ewma
+9. @CE 3 9  5 20 moving average
+10. @CE 3 10  5 20 moving sd
+11. @CE 3 11  5 20 moving range
+8. @CE 3 1 26 32 xbar
+9. @CE 3 2 26 32 s
+10. @CE 3 3 26 32 range
+8. @CE 3 4 38 46 p
+9. @CE 3 5 38 46 np
+8. @CE 3 6 52 58 c
+9. @CE 3 7 52 58 u
+12.
+13. Weighting parameter for EWMA chart (0 - 1):
+13. @CE 17 0 51 58 *
+14. Filter width for moving average/sd/range:
+14. @CE 18 0 51 58 *
+15.
+16. Engineering Values:             Target        LSL        USL
+17. @CE 4 0 20 30 *
+17. @CE 5 0 30 40 *
+17. @CE 6 0 40 50 *
+18.
+19. Line Types:
+20.    Connecting the Data:
+20. @CE 7 0 51 58 * gui-line
+21.    For Global Statistic Value Line:
+21. @CE 8 0 51 58 * gui-line
+22.    For 3 Sigma Limits:
+22. @CE 9 0 51 58 * gui-line
+23.    For Engineering Target Value Line:
+23. @CE 10 0 51 58 * gui-line
+24.    For Engineering Specification limits:
+24. @CE 11 0 51 58 * gui-line
+25.
+26. Character Type for Data
+26. @CE 12 0 51 58 * gui-char
+27. Character Fill for Data
+27. @CE 13 0 51 58 * gui-ooff
+28.
+29. Spike to Global Statistic Line?
+29. @CE 14 0 51 58 * gui-ooff
+30. Spike to Engineering Target Line?
+30. @CE 15 0 51 58 * gui-ooff
+31.
+32. Subset/Except/For Specification:
+33. @CE 16 0 1 58 *
+34.
+35. Generate the Chart?:
+--------------------
+LET TARGET = _4
+LET LSP = _5
+LET USP = _6
+LINES _7 _8 _9 _9 _10 _11 _11
+CHARACTER BLANK ALL
+CHAR _12
+CHAR FILL _13
+@IF 3 1 LET ZPARAM = MEAN _1 _16
+@IF 3 2 LET ZPARAM = STANDAND DEVIATION _1 _16
+@IF 3 3 LET ZPARAM = RANGE _1 _16
+SPIKE _14
+SPIKE BASE ZPARAM
+SPIKE _15
+SPIKE BASE _4
+LET NI = 1
+@IF 17 0 LET P = _17
+@IF 18 0 LET K = _17
+@IF 3 1 XBAR CONTROL CHART _1 _2 _16
+@IF 3 2 S CONTROL CHART _1 _2 _16
+@IF 3 3 RANGE CONTROL CHART _1 _2 _16
+@IF 3 4 P CONTROL CHART _1 _2 _16
+@IF 3 5 NP CONTROL CHART _1 _2 _16
+@IF 3 6 C CONTROL CHART _1 _2 _16
+@IF 3 7 U CONTROL CHART _1 _2 _16
+@IF 3 8 EWMA CONTROL CHART _1 _2 _16
+@IF 3 9 MOVING AVERAGE CONTROL CHART _1 _2 _16
+@IF 3 10 MOVING SD CONTROL CHART _1 _2 _16
+@IF 3 11 MOVING RANGE CONTROL CHART _1 _2 _16
+--------------------
+WEB HELP CONTROL CHART
+--------------------

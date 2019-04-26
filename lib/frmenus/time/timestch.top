@@ -1,0 +1,15 @@
+----- <~time\timestch.top> Time-Domain Structure Checking
+ 
+Time-Domain Structure Checking
+ 
+4-plot                              <xemf: ~univ\4plot.men>
+Run sequence plot                   <xemf: ~plot\runsplot.men>
+
+Lag plot                            <xemf: ~time\lagplot.men>
+
+Autocorrelation plot                <xemf: ~time\autocopl.men>
+Partial Autocorrelation plot        <xemf: ~time\partaucp.men>
+
+Complex demodulation amplitude plot <xemf: ~time\compdeap.men>
+Complex demodulation phase plot     <xemf: ~time\compdepp.men>
+

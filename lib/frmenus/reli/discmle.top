@@ -1,0 +1,59 @@
+-----<~reli\discmle.top> Discussion: Maximim Likelihood
+
+Discussion: Maximum Likelihood
+
+Maximum Likelihood
+
+The most popular quantitative technique for fitting
+distributional models is the method of maximum likelihood.
+
+Maximum likelihood estimators are obtained by maximizing
+a likelihood function.  In some cases, these maximization
+functions can be solved to provide straightforward formulas.
+In other cases, high quality software for function
+maximization or for solving simultaneous non-linear equations
+is requred.
+
+Maximum likelihood methods are popular because they
+generally have the following desirable asymptotic statistical
+properties:
+
+  1) They become unbiased minimum variance estimators as the
+     sample size increases.
+
+  2) They have approximate normal distributions and approximate
+     sample variances that can be calculated and used to
+     generate confidence bounds.
+
+  3) Likelihood functions can be used to test hypothesis
+     about models and parameters.
+
+Some drawbacks to maximum likelihood estimation are:
+
+  1) The likelihood equations, particularly for censored data,
+     can sometimes be complicated.  The good news is that
+     these equations have been worked out for a number of
+     distributions that are commonly used in reliability
+     applications.
+
+  2) There may be times when the maximum likelihood solution
+     does not exist or the solution of maximum likelihood
+     equations is not numerically stable.  For a number of
+     distributions commonly used in reliability (lognormal,
+     Weibull, gamma), the maximum likelihood estimates are
+     known to be unstable if the location parameter is
+     included (a practical solution is to subtract the data
+     minimum from the data and then use scale-shape parameter
+     equations).
+
+  3) For small samples, the large sample optimality properties
+     may not apply.
+
+  4) When solved numerically, the likelihood equations may
+     need reasonable starting values.  A common solution is
+     to use method of moments (or some other simple estimation
+     technique) estimates as starting values.
+
+In summary, when the maximum likelihood estimates are
+available, they tend to work quite well.
+

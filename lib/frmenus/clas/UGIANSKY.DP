@@ -1,0 +1,10 @@
+----- <~dataloex\UGIANSKY.DP> Load & Execute UGIANSKY.DAT
+
+. This is file    UGIANSKY.DP
+
+DELETE Y
+SKIP 25
+READ UGIANSKY.DAT Y
+TITLE UGIANSKY.DAT
+/
+

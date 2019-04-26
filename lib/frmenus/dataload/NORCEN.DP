@@ -1,0 +1,8 @@
+----- <~dataload\NORCEN.DP> Load NORCEN.DAT
+
+. This is file    NORCEN.DP
+
+DELETE Y X
+SKIP 25
+READ NORCEN.DAT Y X
+

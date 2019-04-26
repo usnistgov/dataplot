@@ -1,0 +1,65 @@
+This is Dataplot Data File     CASTIL12.DAT
+River Data (Hawkinsville)--Max yearly discharge (Ocmulgee River) (1910-1949)
+Engineering Goal--Design flood protection
+Response Variable = max yearly river discharge at Hawkinsville
+Number of Observations = 40
+Number of Variables per line image = 1
+Order of variables per line image--
+   1. Response variable = max yearly river discharge
+Statistical Category--Extreme Value Analysis
+To read this into Dataplot--
+   SKIP 25
+   READ CASTIL12.DAT Y
+Source--Enrique Castillo (1988). Extreme Value Theory
+        in Engineering. Academic Press, San Diego, California,
+        p. 338.
+Original Source--Gumbel, E. J. (1964).
+        Technische Anwendung der statistischen
+        Theorie der Extremwerte, Schweizer Archiv 30,
+        p. 33-47.
+ 
+ 
+ 
+ 
+Max yearly river discharge (at Hawkinsville) (1910-1949) (sorted)
+-----------------------------------------------------------------
+ 5.9
+ 5.9
+ 6.9
+ 7.6
+12.2
+13.3
+13.5
+14.3
+15.2
+16.2
+17.4
+18.8
+19.3
+19.9
+20.1
+25.8
+26.2
+27.0
+28.2
+30.0
+30.3
+33.0
+34.8
+35.4
+37.9
+40.0
+40.4
+41.6
+42.4
+44.0
+44.4
+45.2
+46.8
+50.0
+52.0
+57.0
+61.0
+68.0
+70.5
+79.0

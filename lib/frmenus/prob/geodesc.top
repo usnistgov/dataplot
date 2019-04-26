@@ -1,0 +1,28 @@
+----- <~prob\geodesc.top> Geometric Description
+
+*Geometric Description
+
+"pdf": f(x) = p * (1-p)**(x-1)   for x = 1, 2, 3, ...
+
+Moments   : E(X)  = p
+            SD(X) = sqrt(p*(1-p))
+
+Type      : Discrete, skewed family of distributions--
+            moderate to moderate/long-tailed.
+Domain    : 0 to infinity
+Synonym   : Pascal
+Genesis   :
+Definition: If the random variables X1, X2, X3, ...
+            represent the outcome of events 1, 2, 3, ...
+            and Xi takes on the values 0 (if failure)
+            or 1 (if success) with probabilities
+            1-p and p, respectively, and if tbe
+            events are independent of one another,
+            then the random variable N = the number
+            of events until the first success occurs
+            has a Geometric distribution.
+
+Reference : Johnson & Kotz,
+            Discrete Distributions,
+            pages 123-124.
+

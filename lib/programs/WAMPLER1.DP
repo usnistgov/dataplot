@@ -1,0 +1,25 @@
+  
+ LEAST SQUARES POLYNOMIAL FIT
+       SAMPLE SIZE N       =       21
+       DEGREE              =        5
+       NO REPLICATION CASE
+  
+  
+               PARAMETER ESTIMATES           (APPROX. ST. DEV.)    T VALUE
+        1  A0                   1.00000       (0.1384E-10)         0.72E+11
+        2  A1                   1.00000       (0.1520E-10)         0.66E+11
+        3  A2                   1.00000       (0.5013E-11)         0.20E+12
+        4  A3                   1.00000       (0.6527E-12)         0.15E+13
+        5  A4                   1.00000       (0.3631E-13)         0.28E+14
+        6  A5                   1.00000       (0.7224E-15)         0.14E+16
+  
+       RESIDUAL    STANDARD DEVIATION =         0.0000000000
+       RESIDUAL    DEGREES OF FREEDOM =          15
+  
+       COEF AND SD(COEF) WRITTEN OUT TO FILE DPST1F.DAT
+       SD(PRED),95LOWER,95UPPER,99LOWER,99UPPER
+                         WRITTEN OUT TO FILE DPST2F.DAT
+       REGRESSION DIAGNOSTICS WRITTEN OUT TO FILE DPST3F.DAT
+       PARAMETER VARIANCE-COVARIANCE MATRIX AND
+       INVERSE OF X-TRANSPOSE X MATRIX
+       WRITTEN OUT TO FILE DPST4F.DAT

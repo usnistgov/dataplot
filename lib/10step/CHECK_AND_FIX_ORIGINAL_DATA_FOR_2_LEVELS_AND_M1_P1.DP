@@ -1,0 +1,93 @@
+. This is dataplot macro     check_and_fix_original_factors_for_2_levels_and_m1_p1.dp    9/24/18
+. Motivation: Some DEX 10-step macros require factors to have exactly
+.             (only) 1 or 2 levels, for example, dexiem.dp .
+.             This macro checks for such, and if 3 or more levels are detected,
+.             then subset the factor Xi to 2 levels (and carry along Y)
+.             and then convert them to -1 and +1.
+. Date: 9/24/18
+. Input:
+.   Y         (vector)  = Response variable
+.   X1 to X^k (vectors) = Factors in original units
+.   stcall    (string)  = The name of the calling macro.
+. Output:
+.   Y         (vector)  = Response variable subsetted via the X's
+.   X1 to X^k (vectors) = Factors subsetted to 2 levels and transformed to -1 and +1.
+. Note: This macro assumes that the response and original vectors have already
+.       been safely copied out to file (in the calling program), for import after each DEX maxro is done.
+. Example of calling routine: dexiem.dp
+.
+. -----start point-----
+.
+let bugcfsw = 0
+.
+if bugcfsw = 1
+   print " "
+   print "-----At the beginning of check_and_fix_original_factors_for_2_levels_and_m1_p1.dp-----"
+   print "k = ^k"
+   print y x1 to x^k
+   if ibatch not exist or ibatch = 0; pause; end if
+end if
+.
+. -----Step 1: Loop through each of the k factors-----
+.
+loop for jz = 1 1 k
+   delete djunk; let djunk = distinct x^jz
+   let djunk = sort djunk
+   let ndjunk = number djunk
+   let xminzz = minimum x^jz
+   let xmaxzz = maximum x^jz
+   . print xminzz xmaxzz ndjunk
+   .
+   . -----Step 1.1: check for 2 levels, and if more than 2 levels,-----
+   .                then subset all to the min and max-----
+   .
+   if ndjunk >= 3
+      print " "
+      print "Note: The   ^stcall   macro requires all factors:"
+      print "      to have exactly 2 levels (and they must be -1 and +1)."
+      print "      Factor X^jz  has   ^ndjunk    levels:"
+      print djunk
+      print "      This factor will automatically be scaled back"
+      print "      to 2 levels (= the min and the max),"
+      print "      and will transform this min and max"
+      print "      to -1 and +1 (if need be)."
+      print " "
+      .
+      delete xzz; let xzz = x^jz
+      . retain y x1 to x^k subset xzz xminzz xmaxzz;. this does not work  9/24/18
+      . let stzz = string combine y x1 to x^k
+      . retain ^stzz subset xzzz xminzz xmaxzz
+      .
+      retain y subset xzz xminzz xmaxzz
+      loop for jzz = 1 1 k
+         retain x^jzz subset xzz xminzz xmaxzz
+      end loop
+      . print "after retain (jz = ^jz)"
+      . print y x1 to x^k
+      .
+   end if
+   .
+   . -----Step 1.2: check that the new 2 levels are -1 and +1, and-----
+   .                if not, then transform min to -1 and max to +1-----
+   .
+   . print " "
+   delete xzz; let xzz = x^jz
+   if xminzz <> -1
+      let x^jz = -1 subset xzz xminzz
+      . print "For factor X^jz, ^xminzz has been transformed to -1"
+   end if
+   if xmaxzz <> +1
+      let x^jz = +1 subset xzz xmaxzz
+      . print "For factor X^jz, ^xmaxzz has been transformed to +1"
+   end if
+end loop
+.
+. -----Step 99: Finish up-----
+.
+if bugcfsw = 1
+   print " "
+   print "-----At the end of check_and_fix_original_factors_for_2_levels_and_m1_p1.dp-----"
+   print y x1 to x^k
+   if ibatch not exist or ibatch = 0; pause; end if
+end if
+

@@ -1,0 +1,68 @@
+This is file expo2pp.men--Exponential Probability Plot
+
+--------------------
+ 1. Exponential Probability Plot
+ 2. EXPONENTIAL PROBABILITY PLOT Y
+ 3.
+ 4. Response Variable for Lower Stress Level:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Response Variable for Higher Stress Level:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Acceleration Factor?
+--------------------
+GR FE
+LINE SAVE
+CHARACTER SAVE
+MULTIPLOT 2 2
+MULTIPLOT CORNER COORDINATES 0 0 100 100
+MULTIPLOT SCALE FACTOR 2
+TITLE 
+LABEL
+. Y1LABEL Data
+. X1LABEL Theoretical
+. Y1LABEL DISPLACEMENT 15
+CHARACTER X
+LINES BLANK
+.
+EXPONENTIAL PROBABILITY PLOT _1 _3
+MOVE 50 6
+JUSTIFICATION CENTER
+TEXT Loc = ^PPA0, Scale = ^PPA1
+MOVE 50 1
+TEXT PPCC = ^PPCC
+LET SCALE1 = PPA1
+.
+EXPONENTIAL PROBABILITY PLOT _2 _3
+MOVE 50 6
+JUSTIFICATION CENTER
+TEXT Loc = ^PPA0, Scale = ^PPA1
+MOVE 50 1
+TEXT PPCC = ^PPCC
+LET SCALE2 = PPA1
+.
+LET AF = SCALE2/SCALE1
+PLOT
+. LABEL
+HEIGHT 3
+JUST LEFT
+CASE ASIS
+MOVE 20 75
+TEXT SCALE 1:             ^SCALE1
+MOVE 20 65
+TEXT SCALE 2:             ^SCALE2
+MOVE 20 55
+TEXT ACCELERATION FACTOR: ^AF
+END OF MULTIPLOT
+HEIGHT 2
+Y1LABEL DISPLACEMENT
+LABEL
+LINE RESTORE
+CHARACTER RESTORE
+--------------------
+WEB HELP PROBABILITY PLOT
+--------------------

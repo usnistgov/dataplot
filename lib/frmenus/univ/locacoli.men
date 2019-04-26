@@ -1,0 +1,72 @@
+This is file locacoli.men--Confidence Limits for Mean
+ 
+--------------------
+ 1. Confidence Limits for Mean
+ 2. CONFIDENCE LIMITS Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Confidence level (select one):
+ 7. @CE 2 1 3 23 95% limits
+ 8. @CE 2 2 3 23 99% limits
+ 9.
+10. Number of output decimal places:
+10. @CE 3 0 37 50 ?
+11.
+12. Subset/Except/For Specification:
+13. @CE 4 0 1 50 *
+14.
+15. Compute Confidence Limits?
+--------------------
+GR FE
+CONFIDENCE LIMITS _1 _4
+ 
+@IF 2 1 LET ZP = .95
+@IF 2 2 LET ZP = .99
+LET ZP2 = ZP+(1-ZP)/2
+LET ZPERC = 100*ZP
+ 
+LET ZN = NUMBER _1 _4
+LET ZDF = ZN-1
+LET ZPPF = TPPF(ZP2,ZDF)
+ 
+LET ZSTAT = MEAN _1 _4
+LET ZSDSTAT = SD MEAN _1 _4
+LET ZLOWER = ZSTAT-ZPPF*ZSDSTAT
+LET ZUPPER = ZSTAT+ZPPF*ZSDSTAT
+LET ZINC = (ZUPPER-ZLOWER)/200
+LET ZWIDTH4 = (ZUPPER-ZLOWER)/4
+LET ZLOWER2 = ZLOWER-ZWIDTH4
+LET ZUPPER2 = ZUPPER+ZWIDTH4
+ 
+LET FUNCTION ZF = TPDF((ZZ-ZSTAT)/ZSDSTAT,ZDF)
+PLOT ZF FOR ZZ = ZLOWER2 ZINC ZUPPER2 AND
+PLOT 0 FOR ZZ = ZLOWER2 ZINC ZUPPER2
+ 
+JUSTIFICATION CENTER
+LET ZZ = ZSTAT; LET ZPDFSTAT = ZF
+LET ZZ = ZLOWER; LET ZPDFLOWE = ZF
+LET ZZ = ZUPPER; LET ZPDFUPPE = ZF
+ 
+DRAWDDDS ZSTAT ZPDFSTAT ZSTAT 10
+DRAWDDDS ZLOWER ZPDFLOWE ZLOWER 5
+DRAWDDDS ZUPPER ZPDFUPPE ZUPPER 5
+ 
+MOVEDS ZSTAT 6; TEXT ^ZSTAT
+MOVEDS ZLOWER 1; TEXT ^ZLOWER
+MOVEDS ZUPPER 1; TEXT ^ZUPPER
+ 
+@IF 3 0 SET WRITE DECIMALS _3
+WRITE "^ZPERC Confidence Limits for Mean"
+WRITE " "
+WRITE "Number of Observations  = ^ZN"
+WRITE "Estimated Mean          = ^ZSTAT"
+WRITE "Estimated SD(Mean)      = ^ZSDSTAT"
+WRITE " "
+WRITE "Estimated Lower Limit   = ^ZLOWER"
+WRITE "Estimated Upper Limit   = ^ZUPPER"
+WRITE ZPERC ZN ZSTAT ZSDSTAT ZLOWER ZUPPER
+--------------------
+WEB HELP CONFIDENCE LIMITS
+--------------------

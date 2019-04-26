@@ -1,0 +1,19 @@
+----- <~time\seasadju.top> Time-Domain Seasonal Adjustment
+ 
+Time-Domain Seasonal Adjustment
+ 
+Discussion                          <~time\seasaddi.top>
+ 
+Create a Seasonal Index Variable    <xemf: ~time\seasinde.men>
+
+Identify Seasonal Effect
+   Seasonal Mean Plot               <xemf: ~time\seasmean.men>
+   Seasonal Subseries Plot          <xemf: ~time\seassubs.men>
+   Seasonal Boxplot Plot            <xemf: ~time\seasboxp.men>
+
+Estimate and Remove Seasonal Effect
+   Adjust for Seasonal Mean         <xemf: ~time\seasadj.men>
+   Seasonal Difference              <xemf: ~time\seasdiff.men>
+ 
+   Seasonal Loess                   <xemf: ~time\seasloes.men>
+

@@ -1,0 +1,8 @@
+----- <~dataall\SMALL14.top> SMALL14.DAT
+
+SMALL14.DAT
+
+View     <xcl: LIST SMALL14.DAT>
+Load     <xcf: ~dataload/SMALL14.DP>
+Print    <xccl: printfile C:\DATAPLOT\SMALL14.DAT>
+

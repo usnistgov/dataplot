@@ -1,0 +1,46 @@
+THIS IS DATAPLOT DATA FILE KIM.DAT
+ELECTRON MOBILITY ANALYSIS
+DATE--JUNE 1992
+NUMBER OF OBSERVATIONS = 21
+NUMBER OF VARIABLES PER LINE IMAGE = 3
+ORDER OF VARIABLES ON A LINE IMAGE--
+   1. X  = MAGNETIC FIELD STRENGTH
+   2. Y1 = REDUCED CONDUCTIVITY (TYPE 1)
+   3. Y2 = REDUCED CONDUCTIVITY (TYPE 2)
+PROBLEM TYPE--NON-LINEAR REGRESSION
+TO READ THIS INTO DATAPLOT (AND ANALYZE)--
+   SKIP 25
+   READ KIM.DAT X Y1 Y2
+   LET FUNCTION TERM1 = P/(1+(U1*X)**2)
+   LET FUNCTION TERM2 = (1-P)/(1+(U2*X)**2)
+   LET FUNCTION F1 = TERM1+TERM2
+   LET FUNCTION F2 = 2*X*(U1*TERM1+U2*TERM2)
+   LET P = .1; LET U1 = -.3; LET U2 = -15
+   FIT Y1 = F1
+   FIT Y2 = F2
+ 
+MAGNETIC      REDUCED       REDUCED
+  FIELD     CONDUCTIVITY  CONDUCTIVITY
+STRENGTH       TYPE 1        TYPE 2
+------------------------------------------
+ .0033         0.9980       -0.0827
+ .0018         0.9990       -0.0449
+ .0063         0.9930       -0.1570
+ .0097         0.9830       -0.2370
+ .0133         0.9690       -0.3200
+ .0178         0.9470       -0.4170
+ .0292         0.8700       -0.6230
+ .0396         0.7860       -0.7510
+ .0509         0.6950       -0.8340
+ .0668         0.5780       -0.8740
+ .0891         0.4490       -0.8420
+ .1189         0.3410       -0.7530
+ .1609         0.2630       -0.6350
+ .2165         0.2100       -0.5140
+ .2882         0.1780       -0.4160
+ .3996         0.1560       -0.3260
+ .5344         0.1440       -0.2680
+ .7150         0.1350       -0.2270
+ .9548         0.1270       -0.2010
+1.2162         0.1200       -0.1880
+1.4091         0.1150       -0.1830

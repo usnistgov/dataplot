@@ -1,0 +1,45 @@
+----- <~help\english.top> English-Syntax Language
+
+Enlish-Syntax Language
+
+Enlish-Syntax Language
+
+Dataplot is an English-syntax language.  Many of
+the command statements are identical to their
+English-language counterparts.  For example,
+
+    PLOT
+    FIT
+    HISTOGRAM
+    NORMAL PROBABILITY PLOT
+    ANOVA
+    SMOOTH
+    BOX PLOT
+       
+Examples of English Like Syntax
+
+    Thus to generate a plot of the function sin(x)/x
+    for the values starting with x = 0.1, at increments
+    of 0.2, and ending vith x = 12, one would enter 
+
+         PLOT SIN(X)/X FOR X = .1 .1 12 
+ 
+    And if the analyst has data in variables Y and X
+    and wishes to perform a least squares fit of Y on X
+    with the model y = a+b*exp(-c*x), one would enter
+
+         FIT Y = A+B*EXP(-C*X) 
+
+    And if the analyst has data in the variable X and
+    wishes to form the natural logarithm of X in a new
+    variable Y, one enters 
+
+         LET Y = LOG(X) 
+
+Dataplot Programs Easy to Write
+
+    The net result is that DATAPLOT programs are easy 
+    to write, easy to understand, and easy to update.
+    This is particularly important for the analyst 
+    with no prior programming experience. 
+

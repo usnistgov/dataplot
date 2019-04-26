@@ -1,0 +1,89 @@
+This is file ppccplsk.men--PPCC Plot (Skewed Dist. Family)
+
+--------------------
+ 1. PPCC Plot (Skewed Distributional Families)
+ 2. <Name of Distributional Family> PPCC PLOT Y
+ 3.
+ 4. Variable:
+ 4. @CE 1 0 11 35 ? gui-variable
+ 5.
+ 6. Distributional Family:
+ 7. @CE 2 1 11 40 Lognormal (for SD)
+ 8. @CE 2 2 11 40 Power Lognormal
+ 8.                               SD =
+ 8. @CE 6 0 63 70 ?
+ 9. @CE 2 3 11 40 Power Normal
+ 9.                               SD =
+ 9. @CE 7 0 63 70 ?
+10. @CE 2 4 11 40 Wrapped Up Cauchy
+11.
+12. @CE 2 5 11 40 Chi-squared
+13. @CE 2 6 11 40 Chi
+14. @CE 2 7 11 40 Gamma
+15. @CE 2 8 11 40 Log Gamma
+16. @CE 2 25 11 40 Inverted Gamma
+17. @CE 2 9 11 40 Weibull
+17.                             min(1) or max(2) =
+17. @CE 3 0 63 70 ?
+18. @CE 2 10 11 40 EV2 (Frechet)
+18.                             min(1) or max(2) =
+18. @CE 4 0 63 70 ?
+19. @CE 2 11 11 40 Generalized Extreme Value
+20.
+21. @CE 2 12 11 40 Pareto
+22. @CE 2 13 11 40 Pareto (2nd kind)
+23. @CE 2 14 11 40 Generalized Pareto
+24.
+25. @CE 2 15 11 40 Inverse Gaussian
+26. @CE 2 16 11 40 Reciprocal Inverse Gausssian
+27. @CE 2 17 11 40 Fatigue Life (Saunders)
+28. @CE 2 18 11 40 Wald
+29.
+30. @CE 2 19 11 40 Log Logistic
+31. @CE 2 20 11 40 Generalized Logistic
+32. @CE 2 21 11 40 Generalized Half Logistic
+33.
+34. @CE 2 22 11 40 Power Function
+35. @CE 2 23 11 40 Bradford
+36. @CE 2 24 11 40 Reciprocal
+37.
+38. Subset/Except/For Specification:
+39. @CE 5 0 -15 50 *
+40.
+41.
+42. Generate the PPCC Plot?
+--------------------
+GR FE
+@IF 3 0 SET MINMAX _3
+@IF 4 0 SET MINMAX _4
+@IF 6 0 LET SD = _6
+@IF 7 0 LET SD = _7
+@IF 2 1 LOGNORMAL PPCC PLOT _1 _5
+@IF 2 2 POWER LOGNORMAL PPCC PLOT _1 _5
+@IF 2 3 POWER NORMAL PPCC PLOT _1 _5
+@IF 2 4 WRAPPED CAUCHY PPCC PLOT _1 _5
+@IF 2 5 CHI-SQUARED PPCC PLOT _1 _5
+@IF 2 6 CHI PPCC PLOT _1 _5
+@IF 2 7 GAMMA PPCC PLOT _1 _5
+@IF 2 8 LOG GAMMA PPCC PLOT _1 _5
+@IF 2 9 WEIBULL PPCC PLOT _1 _5
+@IF 2 10 EV2 PPCC PLOT _1 _5
+@IF 2 11 GENERALIZED EXTREME VALUE PPCC PLOT _1 _5
+@IF 2 12 PARETO PPCC PLOT _1 _5
+@IF 2 13 PARETO TYPE 2 PPCC PLOT _1 _5
+@IF 2 14 GENERALIZED PARETO PPCC PLOT _1 _5
+@IF 2 15 INVERSE GAUSSIAN PPCC PLOT _1 _5
+@IF 2 16 RECIPROCAL INVERSE GAUSSIAN PPCC PLOT _1 _5
+@IF 2 17 FATIGUE LIFE PPCC PLOT _1 _5
+@IF 2 18 WALD PPCC PLOT _1 _5
+@IF 2 19 LOG LOGISTIC PPCC PLOT _1 _5
+@IF 2 20 GENERALIZED LOGISTIC PPCC PLOT _1 _5
+@IF 2 21 GENERALIZED HALF LOGISTIC PPCC PLOT _1 _5
+@IF 2 22 POWER FUNCTION PPCC PLOT _1 _5
+@IF 2 23 BRADFORD PPCC PLOT _1 _5
+@IF 2 24 RECIPROCAL PPCC PLOT _1 _5
+@IF 2 25 INVERTED GAMMA PPCC PLOT _1 _5
+WRITE MAXPPCC SHAPE
+--------------------
+WEB HELP PPCC PLOT
+--------------------

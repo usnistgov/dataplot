@@ -1,0 +1,22 @@
+This is file matr_cho.men--Cholesky Decomposition
+ 
+--------------------
+ 1. Cholesky Decomposition
+ 2. LET CHOL = CHOLESKY DECOMPOSITION M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Matrix to store the Cholesky decomposition:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Cholesky Decomposition?:
+--------------------
+GR FE
+LET _2 = CHOLESKY DECOMPOSITION  _1 _3
+--------------------
+WEB HELP CHOLESKY DECOMPOSITION
+--------------------

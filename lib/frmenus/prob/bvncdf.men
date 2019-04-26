@@ -1,0 +1,39 @@
+This is file bvncdf.men--Compute bivariate normal cdf and tail probability
+ 
+--------------------
+ 1. Compute Bivariate Normal cdf and Tail Prob.
+ 2. LET A = BVNCDF(X1,X2,CORR)
+ 3.
+ 4. Input values:
+ 5.                                         x1:
+ 5. @CE 1 0 42 50 ?
+ 6.                                         x2:
+ 6. @CE 2 0 42 50 ?
+ 7.     Correlation parameter p (-1 <= p <= 1):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Output parameters:
+10.                    name for the cdf  value:
+10. @CE 4 0 42 50 ?
+11.       name for the tail probability  value:
+11. @CE 5 0 42 50 ?
+12.
+13.
+14. Compute the Probability?
+--------------------
+AN FE
+LET ZX = _1
+LET ZY = _2
+LET ZP = 0
+@IF 3 0 LET ZP = _3
+IF ZP < -1
+   LET ZP = 0
+END OF IF
+IF ZP > 1
+   LET ZP = 0
+END OF IF
+@IF 4 0 LET _4 = BVNCDF( ZX , ZY , ZP )
+@IF 5 0 LET _5 = 1 - BVNCDF( ZX , ZY , ZP )
+--------------------
+WEB HELP BVNCDF
+--------------------

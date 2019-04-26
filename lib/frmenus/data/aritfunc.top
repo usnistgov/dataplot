@@ -1,0 +1,13 @@
+----- <~data\aritfunc.top> xx
+
+Arithmetic Functions
+
+ABS(X)            absolute value
+SQRT(X)           square root
+EXP(X)            exponential
+MOD(X,Y)          modulo (i.e., the remainder of x/y)
+MIN(X,Y)          minimum of two numbers
+MAX(X,Y)          maximum of two numbers
+DIM(X,Y)          positive difference (i.e., x-min(x,y))
+IND(X,Y)          mathematical indicator function
+

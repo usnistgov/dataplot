@@ -1,0 +1,10 @@
+----- <~dataloex\SPN2O.DP> Load & Execute SPN2O.DAT
+
+. This is file    SPN2O.DP
+
+DELETE Y
+SKIP 25
+READ SPN2O.DAT Y
+TITLE SPN2O.DAT
+/
+

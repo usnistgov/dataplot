@@ -1,0 +1,23 @@
+----- <~dp\menusubs.top> Dataplot Menu Subsystem
+ 
+Dataplot Menu Subsystem
+ 
+The experienced Dataplot user usually runs Dataplot
+in a command mode--entering commands and immediately
+seeing the output.  The beginning Dataplot user
+who has no familiarity with the Dataplot commands
+and/or conventions may profitably choose to execute
+Dataplot from a point-and-click menu mode.
+Aside from adding structure to the vast collection
+of Dataplot commands, running in the menu mode also
+automatically forms intermediate Dataplot commands
+and displays them to the analyst if interested.
+To enter the menu subsystem, enter
+ 
+      MENU or M
+ 
+To exit the menu subsystem and return to the
+usual command mode,
+ 
+   click on the upper-left exit box of the menu.
+ 

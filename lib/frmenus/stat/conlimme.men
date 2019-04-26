@@ -1,0 +1,20 @@
+This is file conlimme.men--Confidence Limits for Mean
+ 
+--------------------
+ 1. Confidence Limits for Mean
+ 2. CONFIDENCE LIMITS Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Compute Confidence Limits?
+--------------------
+GR FE
+CONFIDENCE LIMITS _1 _2
+--------------------
+WEB HELP CONFIDENCE LIMITS
+--------------------

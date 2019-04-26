@@ -1,0 +1,8 @@
+----- <~datalist\WAMPLER2.top> WAMPLER2.DAT
+ 
+WAMPLER2.DAT
+ 
+View     <xcl: LIST WAMPLER2.DAT>
+Load     <x2cl: SKIP 25; READ WAMPLER2.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\WAMPLER2.DAT>
+ 

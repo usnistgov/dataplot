@@ -1,0 +1,8 @@
+----- <~dataload\CO2.DP> Load CO2.DAT
+
+. This is file    CO2.DP
+
+DELETE Y
+SKIP 25
+SERIAL READ CO2.DAT Y
+

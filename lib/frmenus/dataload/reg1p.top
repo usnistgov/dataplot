@@ -1,0 +1,36 @@
+----- <~dataload\reg1p.top> Load Regression Data: 1-Variable & Poly.DP
+
+Load Regression Data: 1-Variable & Polynomial
+
+BERGER1.DAT   Alaska Pipeline cracks       <xcf: ~dataload\BERGER1.DP>
+SPIEGEL.DAT   Nuclear tank calibration     <xcf: ~dataload\SPIEGEL.DP>
+PONTIUS.DAT*  Load cell calibration        <xcf: ~dataload\PONTIUS.DP>
+LEIGH4.DAT    Coating Thickness SRM        <xcf: ~dataload\LEIGH4.DP>
+JONES.DAT     Density of water             <xcf: ~dataload\JONES.DP>
+ANSCOMBE.DAT  Anscombe Data Sets           <xcf: ~dataload\ANSCOMBE.DP>
+
+NATR511.DAT   Young's Modulus              <xcf: ~dataload\NATR511.DP>
+NATR522.DAT   Young's Modulus (with reps)  <xcf: ~dataload\NATR522.DP>
+NATR527.DAT   Colorimetry                  <xcf: ~dataload\NATR527.DP>
+NATR533.DAT   Tire Wear                    <xcf: ~dataload\NATR533.DP>
+NATR540.DAT   Tire Wear                    <xcf: ~dataload\NATR540.DP>
+NATR65.DAT    3-Variable                   <xcf: ~dataload\NATR65.DP>
+NATR627.DAT   Cubic                        <xcf: ~dataload\NATR627.DP>
+
+GRA1326.DAT  Blood Pressure                <xcf: ~dataload\GRA1326.DP>
+
+WAMPLER1.DAT  Polynomial fitting test data <xcf: ~dataload\WAMPLER1.DP>
+NORRIS6.DAT   Ozone Photometry             <xcf: ~dataload\NORRIS6.DP>
+
+BOXSPRAY.DAT  Age eff on spray dispersion  <xcf: ~dataload\BOXSPRAY.DP>
+BOXWELD.DAT   Velocity & weld strength     <xcf: ~dataload\BOXWELD.DP>
+BOXRATS.DAT   Supplement & growth rate     <xcf: ~dataload\BOXRATS.DP>
+
+MICHELSO.DAT  Speed of Light               <xcf: ~dataload\MICHELSO.DP>
+USADEBT.DAT   USA nat. debt (1947-1993)    <xcf: ~dataload\USADEBT.DP>
+MORALES.DAT   SO2 isotope analysis         <xcf: ~dataload\MORALES.DP>
+MORALES2.DAT  SO2 isotope analysis         <xcf: ~dataload\MORALES2.DP>
+
+FREQPRIM.DAT  Frequency of prime numbers   <xcf: ~dataload\FREQPRIM.DP>
+PRIMESM.DAT   Mersenne prime numbers       <xcf: ~dataload\PRIMESM.DP>
+

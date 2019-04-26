@@ -1,0 +1,8 @@
+----- <~dataload\BOXCLOT2.DP> Load BOXCLOT2.DAT
+
+. This is file    BOXCLOT2.DP
+
+DELETE Y X1 TO X5
+SKIP 30
+READ BOXCLOT2.DAT Y X1 TO X5
+

@@ -1,0 +1,10 @@
+----- <~dataloex\PBN2O.DP> Load & Execute PBN2O.DAT
+
+. This is file    PBN2O.DP
+
+DELETE Y
+SKIP 25
+READ PBN2O.DAT Y
+TITLE PBN2O.DAT
+/
+

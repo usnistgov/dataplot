@@ -1,0 +1,10 @@
+----- <~dataloex\SMALL14.DP> Load & Execute SMALL14.DAT
+
+. This is file    SMALL14.DP
+
+DELETE Y
+SKIP 25
+READ SMALL14.DAT Y
+TITLE SMALL14.DAT
+/
+

@@ -1,0 +1,77 @@
+This is file cppccjsu.men--Johnson SU Censored PPCC Plot
+
+--------------------
+ 1. Johnson SU Censored PPCC Plot
+ 2. JOHNSON SU CENSORED PPCC PLOT Y X
+ 3.
+ 4. The censoring variable should contain a
+ 5. value of 1 to signify a failure time and
+ 6. a value of 0 to signify a censoring time.
+ 7. 
+ 8. Response Variable:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9. Censoring Variable:
+ 9. @CE 2 0 42 50 ? gui-variable
+10.
+11. Line Types:
+11. @CE 3 0 42 50 * gui-line
+12. Character Types:
+12. @CE 4 0 42 50 * gui-char
+13. Character Fill:
+13. @CE 5 0 42 50 * gui-ooff
+14.
+15. Title:
+15. @CE 6 0 22 50 *
+16. Left Axis Label:
+16. @CE 7 0 22 50 *
+17. Bottom Axis Label:
+17. @CE 8 0 22 50 *
+18.
+19. Minimum Value for alpha1 (omit for default):
+19. @CE 9 0 42 50 *
+20. Maximum Value for alpha1 (omit for default):
+20. @CE 10 0 42 50 *
+21. Minimum Value for alpha2 (omit for default):
+21. @CE 11 0 42 50 *
+22. Maximum Value for alpha2 (omit for default):
+22. @CE 12 0 42 50 *
+23.
+24. Subset/Except/For Specification:
+25. @CE 13 0 1 50 *
+26.
+27.
+28. Generate the Johnson SU Censored PPCC Plot?
+--------------------
+GR FE
+TITLE CASE ASIS
+LABEL CASE ASIS
+CASE ASIS
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+DELETE ALPHA11 ALPHA12 ALPHA21 ALPHA22
+LET ALPHA11 = _9
+LET ALPHA12 = _10
+LET ALPHA21 = _11
+LET ALPHA22 = _12
+JOHNSON SU CENSORED PPCC PLOT _1 _2 _13
+JUSTIFICATION CENTER
+MOVE 50 5
+IF AXISFLAG NOT EXIST
+   LET AXISFLAG = 0
+END OF IF
+IF AXISFLAG = 0
+   TEXT Alpha1 = ^shape1, Alpha2 = ^shape2
+ELSE
+   TEXT Alpha2 = ^shape1, Alpha1 = ^shape2
+END OF IF
+MOVE 50 2
+TEXT Maximum PPCC = ^maxppcc
+TITLE
+LABEL
+--------------------
+WEB HELP PPCC PLOT
+--------------------

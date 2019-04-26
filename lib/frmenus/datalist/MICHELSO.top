@@ -1,0 +1,8 @@
+----- <~datalist\MICHELSO.top> MICHELSO.DAT
+ 
+MICHELSO.DAT
+ 
+View     <xcl: LIST MICHELSO.DAT>
+Load     <x2cl: SKIP 25; READ MICHELSO.DAT Y T D AMPM Set>
+Print    <xccl: printfile C:\DATAPLOT\MICHELSO.DAT>
+ 

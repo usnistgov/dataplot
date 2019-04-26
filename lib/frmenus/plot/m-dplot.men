@@ -1,0 +1,41 @@
+This is file m-dplot.men--Tukey Mean-Difference Plot
+ 
+--------------------
+1. Tukey Mean-Difference Plot
+2. TUKEY MEAN-DIFFERENCE PLOT Y1 Y2
+3.
+4. First Response Variable:
+4. @CE 1 0 42 50 ? gui-variable
+5. Second Response Variable:
+5. @CE 2 0 42 50 * gui-variable
+6.
+7. Line type for plot?:
+7. @CE 3 0 33 50 * gui-line
+8. Character type for plot?:
+8. @CE 4 0 33 50 * gui-character
+9. Line type for zero reference line?:
+9. @CE 9 0 33 50 * gui-line
+10.
+11. Title:
+11. @CE 5 0 18 50 *
+12. Left Axis Label:
+12. @CE 6 0 18 100 *
+13. Bottom Axis Label:
+13. @CE 7 0 18 100 *
+14.
+15. Subset/Except/For Specification: 
+16. @CE 8 0 1 50 *
+17.
+18.
+19. Generate the Tukey Mean-Difference Plot?:
+--------------------
+GR FE
+LINE _3 _9
+CHARACTER _4
+TITLE _5
+Y1LABEL _6
+X1LABEL _7
+TUKEY MEAN-DIFFERENCE PLOT _1 _2 _8
+--------------------
+WEB HELP TUKEY MEAN DIFFERENCE PLOT
+--------------------

@@ -1,0 +1,71 @@
+This is file setleg1.men--Set Legend Attributes for All Legends
+ 
+--------------------
+ 1. Set Legend Attributes for All Legends
+ 2.  LEGEND COLOR RED; LEGEND SIZE 3
+ 3.
+ 4. Color for Legend:
+ 4. @CE 4 0 42 50 * gui-color
+ 5. Font for Legend:
+ 5. @CE 5 0 42 50 * gui-font
+ 6. Height for Legend (0 to 100 units):
+ 6. @CE 6 0 42 50 * 
+ 7. Width for Legend (0 to 100 units):
+ 7. @CE 7 0 42 50 * 
+ 8. Fill Switch for Legend:
+ 8. @CE 8 0 42 50 * gui-ooff
+ 9. Case for Legend:
+10. @CE 9 1 5 17 all upper
+10. @CE 9 2 19 31 all lower
+10. @CE 9 3 33 45 as entered
+11. Direction for Legend:
+11. @CE 10 1 25 36 Horizontal
+11. @CE 10 2 38 49 Vertical
+12. Justification for Text:
+13. @CE 11 1 5 50 Horizontal - left; Vertical - bottom
+14. @CE 11 2 5 50 Horizontal - center; Vertical - bottom
+15. @CE 11 3 5 50 Horizontal - right; Vertical - bottom
+16. @CE 11 4 5 50 Horizontal - left; Vertical - center
+17. @CE 11 5 5 50 Horizontal - center; Vertical - center
+18. @CE 11 6 5 50 Horizontal - right; Vertical - center
+19. @CE 11 7 5 50 Horizontal - left; Vertical - top
+20. @CE 11 8 5 50 Horizontal - center; Vertical - top
+21. @CE 11 9 5 50 Horizontal - right; Vertical - top
+22. 
+23. The following attributes only apply if
+24. the legend is drawn with a software font.
+25. 
+26. Line Thickness for LEGEND:
+26. @CE 12 0 42 50 * gui-thick
+27. Angle (in degrees) for LEGEND:
+27. @CE 13 0 42 50 *
+28.
+29.
+30. Set Legend Attributes?
+--------------------
+PC FE
+@IF 4 0 LEGEND  COLOR _4
+@IF 5 0 LEGEND  FONT _5
+@IF 6 0 LEGEND  SIZE _6
+@IF 7 0 LEGEND  HW _6 _7
+@IF 8 0 LEGEND  FILL _8
+@IF 9 1 LEGEND  CASE UPPER
+@IF 9 2 LEGEND  CASE LOWER
+@IF 9 3 LEGEND  CASE ASIS
+@IF 10 1 LEGEND  DIRECTION HORIZONTAL
+@IF 10 2 LEGEND  DIRECTION VERTICAL
+@IF 12 0 LEGEND  THICKNESS _12
+@IF 11 1 LEGEND  JUSTIFICATION LEFT
+@IF 11 2 LEGEND  JUSTIFICATION CENTER
+@IF 11 3 LEGEND  JUSTIFICATION TOP
+@IF 11 4 LEGEND  JUSTIFICATION LECE
+@IF 11 5 LEGEND  JUSTIFICATION CECE
+@IF 11 6 LEGEND  JUSTIFICATION RICE
+@IF 11 7 LEGEND  JUSTIFICATION LETO
+@IF 11 8 LEGEND  JUSTIFICATION CETO
+@IF 11 9 LEGEND  JUSTIFICATION RITO
+@IF 13 0 DEGREES
+@IF 13 0 LEGEND _1 ANGLE _13
+--------------------
+WEB HELP LEGEND
+--------------------

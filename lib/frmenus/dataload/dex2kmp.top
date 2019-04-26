@@ -1,0 +1,26 @@
+----- <~dataload\dex2kmp.top> Load 2**(k-p) Fractional Factorial Design Data
+
+Load 2**(k-p) Fractional Factorial Design Data
+
+BOXSPRI2.DAT  2**(3-1)  Defective springs  <xcf: ~dataload\BOXSPRI2.DP>
+BOXSPRI3.DAT  2**(3-1)  Defective springs  <xcf: ~dataload\BOXSPRI3.DP>
+
+BOXCLEAN.DAT  2**(4-1)  Cleanser stab.     <xcf: ~dataload\BOXCLEAN.DP>
+
+BOXREAC2.DAT  2**(5-1)  Chem. reactor      <xcf: ~dataload\BOXREAC2.DP>
+
+AC.DAT        2**(6-3)  A/C performance    <xcf: ~dataload\AC.DP>
+
+BOXBIKE2.DAT  2**(7-4)  Bike speed         <xcf: ~dataload\BOXBIKE2.DP>
+BOXBIKE3.DAT  2**(7-3)  Bike speed         <xcf: ~dataload\BOXBIKE3.DP>
+BOXFILT.DAT*  2**(7-4)  Filtrat. time      <xcf: ~dataload\BOXFILT.DP>
+BOXFILT2.DAT  2**(7-3)  Filtrat. time      <xcf: ~dataload\BOXFILT2.DP>
+AMRF.DAT      2**(7-4)  AMRF work stat.    <xcf: ~dataload\AMRF.DP>
+ROSSIT16.DAT  2**(7-3)  Roofing Data       <xcf: ~dataload\ROSSIT16.DP>
+
+SCOTT.DAT     2**(8-4)  Electron Microspocy  <xcf: ~dataload\SCOTT.DP>
+
+VIBRATE.DAT   2**(9-5)  Vibration          <xcf: ~dataload\VIBRATE.DP>
+
+QUINLAN.DAT   2**(15-11) Speedom. noise    <xcf: ~dataload\QUINLAN.DP>
+

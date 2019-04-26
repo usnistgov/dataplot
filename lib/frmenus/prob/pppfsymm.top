@@ -1,0 +1,20 @@
+----- <~prob\pppfsymm.top> Plot Symmetric ppf's
+
+Plot Symmetric PPF Functions
+
+Uniform                  <xemf: ~prob\punippf.men>
+Normal                   <xemf: ~prob\pnorppf.men>
+Logistic                 <xemf: ~prob\plogppf.men>
+Double Exponential       <xemf: ~prob\pdexppf.men>
+Double Weibull           <xemf: ~prob\pdweppf.men>
+Double Gamma             <xemf: ~prob\pdgappf.men>
+Cauchy                   <xemf: ~prob\pcauppf.men>
+Tukey-Lambda             <xemf: ~prob\plamppf.men>
+T                        <xemf: ~prob\ptppf.men>
+Semi-Circular            <xemf: ~prob\psemppf.men>
+Triangular               <xemf: ~prob\ptrippf.men>
+Von Mises                <xemf: ~prob\pvonppf.men>
+Cosine                   <xemf: ~prob\pcosppf.men>
+Anglit                   <xemf: ~prob\pangppf.men>
+Hyperbolic Secant        <xemf: ~prob\phseppf.men>
+

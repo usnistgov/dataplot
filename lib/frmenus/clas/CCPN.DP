@@ -1,0 +1,10 @@
+----- <~dataloex\CCPN.DP> Load & Execute CCPN.DAT
+
+. This is file    CCPN.DP
+
+DELETE Y X
+SKIP 25
+READ CCPN.DAT Y X
+TITLE CCPN.DAT
+/
+

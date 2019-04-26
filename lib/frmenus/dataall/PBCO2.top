@@ -1,0 +1,8 @@
+----- <~dataall\PBCO2.top> PBCO2.DAT
+
+PBCO2.DAT
+
+View     <xcl: LIST PBCO2.DAT>
+Load     <xcf: ~dataload/PBCO2.DP>
+Print    <xccl: printfile C:\DATAPLOT\PBCO2.DAT>
+

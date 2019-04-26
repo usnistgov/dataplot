@@ -1,0 +1,32 @@
+----- <~dataload\timenoaa.top> Load Time Series Data: NOAA
+
+Load Time Series Data: NOAA
+
+ASF11.DAT     American Samoa freon-11     <xcf: ~dataload\ASF11.DP>
+ASF12.DAT     American Samoa freon-12     <xcf: ~dataload\ASF12.DP>
+ASN2O.DAT     American Samoa N2O          <xcf: ~dataload\ASN2O.DP>
+ASCO2.DAT     American Samoa CO2          <xcf: ~dataload\ASCO2.DP>
+
+MLF11.DAT     Mauna Loa freon-11          <xcf: ~dataload\MLF11.DP>
+MLF12.DAT     Mauna Loa freon-12          <xcf: ~dataload\MLF12.DP>
+MLN2O.DAT     Mauna Loa N2O               <xcf: ~dataload\MLN20.DP>
+MLCO2.DAT     Mauna Loa CO2               <xcf: ~dataload\MLCO2.DP>
+
+NWF11.DAT     Niwot Ridge, Col. freon-11  <xcf: ~dataload\NWF11.DP>
+NWF12.DAT     Niwot Ridge, Col. freon-12  <xcf: ~dataload\NWF12.DP>
+NWN2O.DAT     Niwot Ridge, Col. N2O       <xcf: ~dataload\NWN2O.DP>
+
+PBF11.DAT     Pt. Barrow, Alaska freon-11 <xcf: ~dataload\PBF11.DP>
+PBF12.DAT     Pt. Barrow, Alaska freon-12 <xcf: ~dataload\PBF12.DP>
+PBN2O.DAT     Pt. Barrow, Alaska N2O      <xcf: ~dataload\PBN2O.DP>
+PBCO2.DAT     Pt. Barrow, Alaska CO2      <xcf: ~dataload\PBCO2.DP>
+
+SPF11.DAT     South Pole freon-11         <xcf: ~dataload\SPF11.DP>
+SPF12.DAT     South Pole freon-12         <xcf: ~dataload\SPF12.DP>
+SPN2O.DAT     South Pole N2O              <xcf: ~dataload\SPN2O.DP>
+SPCO2.DAT     South Pole CO2              <xcf: ~dataload\SPCO2.DP>
+
+MLCO2MON.DAT  Mauna Loa CO2               <xcf: ~dataload\MLCO2MON.DP>
+ELNINO.DAT    El Nino/Southern Oscill.    <xcf: ~dataload\ELNINO.DP>
+QUASIBIE.DAT  Quasi-biennial Index        <xcf: ~dataload\QUASIBIE.DP>
+

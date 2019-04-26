@@ -1,0 +1,32 @@
+----- <~reli\acelerat.top>
+
+Reliability: Accelerated Tests
+
+Reliability: Accelerated Tests
+    NIST/SEMATECH Handbook
+        Modeling Physical Acceleration   <xcl: web handbook modeling physical acceleration>
+        Acceleration Models              <xcl: web handbook acceleration models>
+    Discussion
+        Overview                         <~reli\discacel.top>
+        Assumptions                      <~reli\acelassu.top>
+        Notation                         <~reli\acelnota.top>
+        Relationships                    <~reli\acelrela.top>
+
+Exponential Acceleration                 <~reli\acelexpm.top>
+Weibull Acceleration                     <~reli\acelweim.top>
+Lognormal Acceleration                   <~reli\acellgnm.top>
+
+NOTE: The Regression Model menus are still under
+      development and are incomplete.
+
+Regression Models
+    Discussion
+        Overview                         <~reli\regrover.top>
+        Models                           <~reli\regrmode.top>
+    Arrenhuis Models                     <~reli\arrenh.top>
+    Eyring Models                        <~reli\eyring.top>
+
+Built-in Data Sets
+    View                                 <~dataview\reliacel.top>
+    Load                                 <~dataload\reliacel.top>
+

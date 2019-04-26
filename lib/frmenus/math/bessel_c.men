@@ -1,0 +1,52 @@
+This is file bessel_c.men--Compute Bessel Functions (complex argument)
+ 
+--------------------
+ 1. Bessel Functions (complex arguments)
+ 2. LET YR = CBESSJR(XR,XC,2); LET YC = CBESSJI(XR,XC,2)
+ 3.
+ 4. These functions accept 3 arguments.  The first two are the
+ 5. real and complex component of the argument for the horizontal axis
+ 6. variable (i.e., the X value) and the third argument is the order of
+ 7. the Bessel function.  All of these values can be a variable,
+ 8. parameter, or simply a constant.  However, the order is typically
+ 9. a parameter or constant as opposed to a variable.  The complex
+10. component of the argument is stored as a separate real variable
+11. and the real and complex components of the result are stored in
+12. separate real variables.
+13.
+14. Real component of the horizontal axis variable:
+14. @CE 1 0 33 50 ? gui-variable
+15. Complex component of the horizontal axis variable:
+15. @CE 2 0 33 50 ? gui-variable
+16. Order of the Bessel function:
+16. @CE 3 0 33 50 ? gui-none
+17. Variable to store the real component of the transformed result:
+17. @CE 4 0 33 50 ? gui-none
+18. Variable to store the complex component of the transformed result:
+18. @CE 5 0 33 50 ? gui-none
+19.
+20. Operation to perform:
+21. @CE 6 1 10 45 Jn (Bessel function first kind)
+22. @CE 6 2 10 45 Yn (Bessel function second kind)
+23. @CE 6 3 10 45 In (modified Bessel function, first kind)
+24. @CE 6 4 10 45 Kn (modified Bessel function, third kind)
+25.
+26.
+27. Subset/Except/For Specification:
+28. @CE 7 0 -20 50 *
+29.
+30.
+31. Compute the Transformation?:
+--------------------
+GR FE
+@IF 6 1 LET _4 = CBESSJR( _1 , _2 , _3 ) _7
+@IF 6 1 LET _5 = CBESSJI( _1 , _2 , _3 ) _7
+@IF 6 2 LET _4 = CBESSYR( _1 , _2 , _3 ) _7
+@IF 6 2 LET _5 = CBESSYI( _1 , _2 , _3 ) _7
+@IF 6 3 LET _4 = CBESSIR( _1 , _2 , _3 ) _7
+@IF 6 3 LET _5 = CBESSII( _1 , _2 , _3 ) _7
+@IF 6 4 LET _4 = CBESSKR( _1 , _2 , _3 ) _7
+@IF 6 4 LET _5 = CBESSKI( _1 , _2 , _3 ) _7
+--------------------
+WEB HELP CBESSJ
+--------------------

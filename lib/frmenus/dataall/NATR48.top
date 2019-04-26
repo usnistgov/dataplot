@@ -1,0 +1,8 @@
+----- <~dataall\NATR48.top> NATR48.DAT
+
+NATR48.DAT
+
+View     <xcl: LIST NATR48.DAT>
+Load     <xcf: ~dataload/NATR48.DP>
+Print    <xccl: printfile C:\DATAPLOT\NATR48.DAT>
+

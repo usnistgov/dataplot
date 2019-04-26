@@ -1,0 +1,6 @@
+----- <~dataprin\OIL.DP> Print (to Printer) OIL.DAT
+
+. This is file    OIL.DP
+
+PRINT OIL.DAT
+

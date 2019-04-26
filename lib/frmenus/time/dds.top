@@ -1,0 +1,16 @@
+----- <~time\dds.top> DDS Modeling
+ 
+DDS (Data Dependent Systems) Modeling
+ 
+Frequently Asked Questions     <~time\ddsfaqs.top>
+Discussion                     <~time\ddsdisc.top>
+ 
+Fit DDS Model                  <xemf: ~time\dds.men>
+Validate DDS Model             <xemf: ~time\ddsplots.men>
+
+Built-In Data Sets
+    View                       <~dataview\timedds.top>
+    Load                       <~dataload\timedds.top>
+
+Worked Examples                <~time\ddsexam.top>
+

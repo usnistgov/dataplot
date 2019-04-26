@@ -1,0 +1,8 @@
+----- <~dataall\DZIUBA.top> DZIUBA.DAT
+
+DZIUBA.DAT
+
+View     <xcl: LIST DZIUBA.DAT>
+Load     <xcf: ~dataload/DZIUBA.DP>
+Print    <xccl: printfile C:\DATAPLOT\DZIUBA.DAT>
+

@@ -1,0 +1,35 @@
+This is Dataplot data file     PUNCH2.DAT
+Mixture Experiment Example
+Source--Huor, S. S., Ahmed, E. M., Rao, P. V., and Cornell, J. A.
+        (1980).  Formulation and sensory evaluation of a fruit punch
+        containing watermelon juice.  Journal of Food Science 45,, 809-813.
+Response Variable = taste
+Number of observations = 10 
+Number of variables per line image = 4
+Order of variables per line image--
+   Response variable = average (over 3 reps) taste
+   Factor 1 = watermelon %
+   Factor 2 = pineapple %
+   Factor 3 = orange %
+Project Question--What settings for the 3 ingredients
+                  maximize the taste?
+Statistical areas--mixture design of experiment
+To read this file into Dataplot--
+      SKIP 25
+      READ PUNCH2.DAT Y W P O
+      LET X1 = (W-30)/70
+      LET X2 = P/70
+      LET X3 = O/70
+  Y              X1            X2            X3
+Taste       % Watermelon  % Pineapple    % Orange
+--------------------------------------------------
+ 4.60            100             0             0
+ 6.07             65            35             0
+ 6.33             30            70             0
+ 6.17             30            35            35
+ 7.10             30             0            70
+ 6.17             65             0            35
+ 6.07             54            23            23
+ 5.93             80            10            10
+ 5.43             40            40            20
+ 6.00             40            20            40

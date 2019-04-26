@@ -1,0 +1,112 @@
+----------  *2KINDEX.DAT*  ----------
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+
+  INDEX OF 2**(K-P) ORTHOGONAL EXPERIMENT DESIGNS
+         ORDERED BY FACTORS, RUNS, LEVELS
+
+
+            2**(K-P) ORTHOGONAL DESIGNS
+           (ORDERED BY NUMBER OF FACTORS)
+
+DESIGN       # FACTOR S    # LEVELS/FACTOR        # RUNS
+
+
+  2TO2           2            2                      4
+
+  2TO3M1         3            2                      4
+  2TO3           3            2                      8
+
+  2TO4M1         4            2                      8
+  2TO4           4            2                     16
+
+  2TO5M2         5            2                      8
+  2TO5M1         5            2                     16
+  2TO5           5            2                     32
+
+  2TO6M3         6            2                      8
+  2TO6M2         6            2                     16
+  2TO6M1         6            2                     32
+  2TO6           6            2                     64
+
+  2TO7M4         7            2                      8
+  2TO7M3         7            2                     16
+  2TO7M2         7            2                     32
+  2TO7M1         7            2                     64
+  2TO7           7            2                    128
+
+  2TO8M4         8            2                     16
+  2TO8M3         8            2                     32
+  2TO8M2         8            2                     64
+  2TO8M1         8            2                    128
+
+  2TO9M5         9            2                     16
+  2TO9M4         9            2                     32
+  2TO9M3         9            2                     64
+  2TO9M2         9            2                    128
+
+  2TO10M6       10            2                     16
+  2TO10M5       10            2                     32
+  2TO10M4       10            2                     64
+  2TO10M3       10            2                    128
+
+  2TO11M7       11            2                     16
+  2TO11M6       11            2                     32
+  2TO11M5       11            2                     64
+  2TO11M4       11            2                    128
+
+  2TO15M11      15            2                     16
+
+  2TO31M26      31            2                     32
+
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+
+  INDEX OF 2**(K-P) ORTHOGONAL EXPERIMENT DESIGNS
+           (ORDERED BY NUMBER OF RUNS)
+
+DESIGN       # FACTOR S    # LEVELS/FACTOR        # RUNS
+
+  2TO2           2            2                      4
+  2TO3M1         3            2                      4
+
+  2TO3           3            2                      8
+  2TO4M1         4            2                      8
+  2TO5M2         5            2                      8
+  2TO6M3         6            2                      8
+  2TO7M4         7            2                      8
+
+  2TO4           4            2                     16
+  2TO5M1         5            2                     16
+  2TO6M2         6            2                     16
+  2TO7M3         7            2                     16
+  2TO8M4         8            2                     16
+  2TO9M5         9            2                     16
+  2TO10M6       10            2                     16
+  2TO11M7       11            2                     16
+  2TO15M11      15            2                     16
+
+  2TO5           5            2                     32
+  2TO6M1         6            2                     32
+  2TO7M2         7            2                     32
+  2TO8M3         8            2                     32
+  2TO9M4         9            2                     32
+  2TO10M5       10            2                     32
+  2TO11M6       11            2                     32
+  2TO31M26      31            2                     32
+
+  2TO6           6            2                     64
+  2TO7M1         7            2                     64
+  2TO8M2         8            2                     64
+  2TO9M3         9            2                     64
+  2TO10M4       10            2                     64
+  2TO11M5       11            2                     64
+
+  2TO7           7            2                    128
+  2TO8M1         8            2                    128
+  2TO9M2         9            2                    128
+  2TO10M3       10            2                    128
+  2TO11M4       11            2                    128
+

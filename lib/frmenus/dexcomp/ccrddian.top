@@ -1,0 +1,35 @@
+----- <~dexcomp\ccrddian.top> Discussion: Completely Randomized Designs Analysis
+ 
+Discussion: Completely Randomized Designs - Analysis
+ 
+A typical analysis sequence for a completely
+randomized design might be as follows.
+
+   1) As a first step, graph the data.  A
+      scatter plot with the x-axis representing
+      the levels of the factor variable and the
+      y-axis the  response variable.
+
+      If there are a large number of replications,
+      you may want to use a box plot or mean/standard
+      deviation plot instead of the scatter plot.
+
+      These plots should give a reasonable indication
+      of differences in location/scale between the
+      different levels of the factor variable.
+
+   2) The primary quantitative tool is a one-factor
+      analysis of variance (ANOVA).  Note that the
+      Dataplot ANOVA command assumes balanced data
+      (i.e., each level of the factor variable has
+      the same number of replications).  
+
+      ANOVA assumes that the residuals are indepedent
+      and identically distributed that follow a
+      normal distribution.  This assumption should be
+      checked.
+
+      If the ANOVA assumptions are not valid, an
+      alternative is to use the nonparametric
+      Kruskal-Wallis test.
+

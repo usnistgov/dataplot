@@ -1,0 +1,56 @@
+This is file crosplot.men--Cross-correlation Plot
+ 
+--------------------
+ 1. Cross-correlation Plot
+ 2. CROSS-CORRELATION PLOT Y1 Y2
+ 3.
+ 4. First Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. Second Response Variable:
+ 5. @CE 2 0 33 50 ? gui-vari
+ 6.
+ 7. Line Type for Cross-correlations
+ 7. @CE 3 0 42 50 * gui-line
+ 8. Line Type for Zero Reference Line
+ 8. @CE 12 0 42 50 * gui-line
+ 9. Line Type for Confidence Reference Lines
+ 9. @CE 13 0 42 50 * gui-line
+10. Character Type for Cross-correlations
+10. @CE 4 0 42 50 * gui-char
+11. Character Fill (off, on)
+11. @CE 5 0 42 50 * gui-ooff
+12. Spike for Cross-correlations
+12. @CE 10 0 42 50 * gui-ooff
+13. Bar for Cross-correlations
+13. @CE 11 0 42 50 * gui-ooff
+14.
+15. Title:
+15. @CE 6 0 10 50 *
+16. Left Axis Label:
+16. @CE 7 0 22 50 *
+17. Bottom Axis Label:
+17. @CE 8 0 22 50 *
+18.
+19. Subset/Except/For Specification:
+20. @CE 9 0 1 50 *
+21.
+22.
+23. Generate the Cross-Correlation Plot?:
+--------------------
+GR FE
+LINES SOLID SOLID _13 _13 _13 _13
+LINES SOLID _12
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+SPIKE _10
+BAR _11
+@IF 10 0 SPIKE BASE 0
+@IF 11 0 BAR BASE 0
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+CROSS-CORRELATION PLOT _1 _2 _9
+--------------------
+WEB HELP CORRELATION PLOT
+--------------------

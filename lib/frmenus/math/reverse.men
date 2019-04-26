@@ -1,0 +1,29 @@
+This is file reverse.men--Reverse (flip) a variable
+ 
+--------------------
+ 1. Reverse
+ 2. LET Y2 = REVERSE Y
+ 3.
+ 4. This command reverses the order of a
+ 5. variable.  That is, Y2(1)=Y(N),
+ 6. Y2(2)=Y(N-1), and so on.  It is useful
+ 7. for sorting from high to low (do a
+ 8. standard sort first, then reverse it)
+ 9. or getting reverse ranks.
+10.
+11. Variable to reverse:
+11. @CE 1 0 33 50 ? gui-variable
+12. Variable to store the sorted data:
+12. @CE 2 0 33 50 ? gui-none
+13.
+14. Subset/Except/For Specification:
+15. @CE 4 0 -10 50 *
+16.
+17.
+18. Carry out the Reversal?:
+--------------------
+GR FE
+LET _2 = REVERSE  _1 _4
+--------------------
+WEB HELP REVERSE
+--------------------

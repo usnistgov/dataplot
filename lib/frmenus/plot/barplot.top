@@ -1,0 +1,11 @@
+----- <~plot\barplot.top> Bar Plots
+
+Bar (and Related) Plots
+
+Pareto Plot                  <xemf: ~plot\pareplot.men>
+
+Bar Plot Ungrouped)          <xemf: ~plot\barplot.men>
+Bar Plot                     <xemf: ~plot\gbarplot.men>
+
+Dot Plot (1-Factor)          <xemf: ~math\dot1plot.men>
+Dot Plot (2-Factor)          <xemf: ~math\dot2plot.men>

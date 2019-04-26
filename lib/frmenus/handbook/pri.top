@@ -1,0 +1,34 @@
+----- <~handbook\pri.top> Process Improvement
+ 
+Process Improvement
+ 
+This menu provides links to the NIST/SEMATECH
+Engineering Statistics Handbook that discuss issues
+of process improvement (design of experiments =  DEX).
+
+NIST/SEMATECH Handbook (Process Improvement) <xcl: web handbook dex>
+
+NIST/SEMATECH Handbook (DEX Introduction) <xcl: web handbook dex introduction>
+ 
+NIST/SEMATECH Handbook (DEX Assumptions) <xcl: web handbook DEX assumptions>
+ 
+NIST/SEMATECH Handbook (DEX Choosing and Running a Design) <xcl: web handbook dex choosing design>
+   Experiment Design Summary Sheet       <~dex\dexsumsh.top>
+   Choosing a Design                     <~dex\choosede.top>
+ 
+NIST/SEMATECH Handbook (DEX Analysis) <xcl: web handbook dex analysis>
+
+    Screening Designs
+    
+    1. 2**k Full Factorial Designs        <~dex2k\dex2k.top>
+    2. 2**(k-p) Fractional Factorial Designs  <~dex2kmp\dex2kmp.top>
+    3. Taguchi Fractional Factorial Designs   <~dextag\dextag.top>
+    4. Plackett-Burman Designs            <~dexpb\dexpb.top>
+    
+    Regression Designs                    <~dexreg\dexreg.top>
+    Response Surface Designs              <~dexopt\dexopt.top>
+
+NIST/SEMATECH Handbook (DEX Advanced Topics) <xcl: web handbook dex advanced topics>
+
+NIST/SEMATECH Handbook (DEX Case Studies) <xcl: web handbook dex case studies>
+ 

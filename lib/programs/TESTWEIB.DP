@@ -1,0 +1,11 @@
+loop for k = 1 1 10
+read weib^k&.dat y
+let gamma1 = 1
+let gamma2 = 5
+weibull ppcc plot y
+let gamma = shape
+weibull prob plot y
+let sh(k)=shape
+let loc(k)=ppa0
+let scale(k)=ppa1
+end loop

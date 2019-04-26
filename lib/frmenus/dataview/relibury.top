@@ -1,0 +1,19 @@
+----- <~dataview\relibury.top> View Reliability Data: From Karl Bury
+
+Karl Bury (1999), "Statistical Distributions in Engineering"
+
+Uncensored Data Sets
+   EXP.DAT       Newly designed inverter  <xcf: ~dataview\EXP.DP>
+   WEIBBURY.DAT  Engineering material     <xcf: ~dataview\WEIBBURY.DP>
+   LGN.DAT       Composite material       <xcf: ~dataview\LGN.DP>
+   NOR.DAT       Matching process         <xcf: ~dataview\NOR.DP>
+   GAMMA.DAT     Annual maximum discharge <xcf: ~dataview\GAMMA.DP>
+
+Censored Data Sets
+   EXPCEN.DAT  Integrated circuit chip    <xcf: ~dataview\EXPCEN.DP>
+   EXPCEN2.DAT Electronic component       <xcf: ~dataview\EXPCEN2.DP>
+   WEICEN.DAT  6-Ton turret mount         <xcf: ~dataview\WEICEN.DP>
+   LGNCEN.DAT  Composite material         <xcf: ~dataview\LGNCEN.DP>
+   NORCEN.DAT  Truck tires                <xcf: ~dataview\NORCEN.DP>
+   GAMCEN.DAT  Multilayer coating         <xcf: ~dataview\GAMCEN.DP>
+

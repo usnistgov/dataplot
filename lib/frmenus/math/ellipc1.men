@@ -1,0 +1,33 @@
+This is file ellipc1.men--Compute complete elliptic integral (first kind)
+ 
+--------------------
+ 1. Legendre's Complete Elliptic Integral of the First Kind
+ 2. LET Y = ELLIPC1(M)
+ 3.
+ 4. Note that there are several alternative ways for specifying
+ 5. the input parameters.  Check the help for details.
+ 6.
+ 7. The input values can be variables, parameters, or simply
+ 8. enter a constant.
+ 9. 
+10. M value (0,1):
+10. @CE 1 0 42 50 ? gui-variable
+11. Variable to store the transformed result:
+11. @CE 2 0 42 50 ?
+12.
+13. Plot?:
+13. @CE 3 1 14 20 no
+13. @CE 3 2 22 28 yes
+14.
+15. Subset/Except/For Specification:
+16. @CE 4 0 -5 50 *
+17.
+18.
+19. Compute the Transformation?:
+--------------------
+GR FE
+LET _2 = ELLIPC1( _1 ) _4
+@IF 3 2 PLOT _2  _1  _4
+--------------------
+WEB HELP ELLIPC1
+--------------------

@@ -1,0 +1,36 @@
+This is file compdeap.men--Complex Demod. Amplitude Plot
+ 
+--------------------
+ 1. Complex Demodulation Amplitude Plot
+ 2. DEMOD FREQ F; COMPLEX DEMODULATION AMPLITUDE PLOT Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5. Demodulation Frequency (0 to .5)
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Character Type:
+ 7. @CE 3 0 33 50 *
+ 8. Line Type:
+ 8. @CE 4 0 33 50 *
+ 9. Spike on/off
+ 9. @CE 5 0 33 50 *
+10. Bar on/off:
+10. @CE 6 0 33 50 *
+11.
+12. Subset/Except/For Specification:
+13. @CE 7 0 1 50 *
+14.
+15.
+16. Generate the Plot?
+--------------------
+GR FE
+DEMODULATION FREQUENCY _2
+@IF 3 0 CHARACTERS _3
+@IF 4 0 LINES _4
+@IF 5 0 SPIKE _5
+@IF 6 0 BAR _6
+COMPLEX DEMODULATION AMPLITUDE PLOT _1 _7
+--------------------
+WEB HELP COMPLEX DEMODULATION PLOT
+--------------------

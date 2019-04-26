@@ -1,0 +1,10 @@
+----- <~dataexec\qual.top> Load and Execute Built-in Quality/SPC Data Files
+
+Load and Execute Built-in Quality/SPC Data Files
+
+7 Old Tools                              <xcf: ~dataexec\OLDTOOLS.DP>
+Control Charts                           <~dataexec\qualcoch.top>
+EWMA                                     <xcl: LIST QUALEWMA.TEX>
+Process Capability Index                 <xcl: LIST QUALPCI.TEX>
+Taguchi                                  <~dataexec\qualtag.top>
+

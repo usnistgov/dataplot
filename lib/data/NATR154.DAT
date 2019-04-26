@@ -1,0 +1,35 @@
+This is Dataplot data file     NATR154.DAT
+Capacity of batteries, two independent sets of measurements
+Question: Do the products a and B differ in average performance?
+
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 15-4
+Number of observations = 10
+Number of variables per line image = 2
+Order of variables on a line image--Y1 Y2
+   1. Y1 = Battery type A
+   2. Y2 = Battery type B
+
+
+
+
+
+
+
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR154.DAT Y1 Y2
+     Y1                              Y2
+ Set A                             Set B
+----------------------------------------
+ 138                                140
+ 143                                141
+ 136                                139
+ 141                                143
+ 140                                138
+ 142                                140
+ 142                                142
+ 146                                139
+ 137                                141
+ 135                                138

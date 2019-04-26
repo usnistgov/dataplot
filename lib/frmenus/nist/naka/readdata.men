@@ -1,0 +1,40 @@
+This is file readdata.men--Read Variables from File
+
+--------------------
+1. Read Intensity Data from a File
+2. READ <filename> <list of variables>
+3.
+4. What is the complete name of your data file?
+5. @CE 1 0 1 60 ?
+6.
+7. How many header (= pre-data text) lines to skip?
+7. @CE 2 0 45 50 *
+8.
+9. What is the order of the variables on a line image?
+10. @CE 3 1 10 50  Intensity     Angle           SD(Wavelength)
+11. @CE 3 2 10 50  Angle             Intensity   SD(Wavelength)
+12.
+13. Omit data from lines ... to ... ?
+14.       Number of data values to omit at beginning
+14. @CE 4 0 40 60
+15.       Number of data values to omit at end
+15. @CE 5 0 40 60
+16.
+17.
+18. Do the Read?
+--------------------
+SU FE
+DELETE Y X SDY
+SKIP _2
+@IF 3 1 READ _1 Y X SDY
+@IF 3 2 READ _1 X Y SDY
+LET STRING DATAFILE = _1
+@IF 5 0 LET N = NUMBER Y
+@IF 5 0 LET N2 = N - _5 + 1
+@IF 5 0 DELETE Y X SDY FOR I = N2 1 N
+@IF 4 0 DELETE Y X SDY FOR I = 1 1 _4
+LET N = NUMBER Y
+PLOT Y X
+--------------------last
+WEB HELP READ
+--------------------last

@@ -1,0 +1,27 @@
+----- <~roadmap\typval.top> Typical Value
+
+Typical Value
+
+Situation     : We have data collected under
+                fixed conditions.
+
+Question      : What is a typical value
+                for the process?  With what uncertainty?
+
+Model         : Y = constant + random error
+
+Input         : a response variable Y
+                (a column of numbers)
+
+Output        : a value c representing the "center"
+                of the response distribution
+
+Stat Category : Univariate
+
+Primary Tools : 4-plot             <xemf: ~univ\4plot.men>
+                PPCC Plot          <~prob\ppccplot.top>
+                Estimate           <xemf: ~univ\locaesti.men>
+                Confidence Limits  <xemf: ~univ\locacoli.men>
+
+Worked Example: MAVRO.DAT          <xcf: ~roadmap/MAVRO.DP>
+

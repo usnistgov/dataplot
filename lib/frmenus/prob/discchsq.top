@@ -1,0 +1,31 @@
+----- <~prob\discchsq.top> Discussion: PPCC/Chi-Square Plot for Discrete Distributions
+
+PPCC and Chi-Square Plots for Discrete Distributions
+
+PPCC and Chi-Square Plots for Discrete Distributions
+
+1) The PPCC plot was developed for use with continuous
+   distributions.  Although we can apply the PPCC
+   criterion to discrete data, there are a few complications
+   to be aware of.
+
+   a) Since discrete distributions take integer values,
+      the percent point function is a step function.  This
+      results in a non-smooth PPCC plot.
+
+   b) Discrete distributions do not have location or scale
+      parameters.
+
+2) The Kolmogorov-Smirnov goodness of fit critierion
+   only applies to continuois distributions.  For
+   discrete distributions, we substitute the chi-square
+   goodness of fit criterion.
+
+   Note that since the chi-square criterion depends on
+   binning the data, a moderately large sample size is
+   required in order for the chi-square plot to generate
+   reasonable results.
+
+The use of the PPCC/Chi-Square plot is still considered
+experimental for discrete distributions.
+

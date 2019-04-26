@@ -1,0 +1,10 @@
+----- <~dataloex\BOXREAC2.DP> Load & Execute BOXREAC2.DAT
+
+. This is file    BOXREAC2.DP
+
+DELETE Y X1 TO X5
+SKIP 25
+READ BOXREAC2.DAT Y X1 TO X5
+TITLE BOXREAC2.DAT
+/
+

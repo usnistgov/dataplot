@@ -1,0 +1,37 @@
+----- <~dex2kmp\conffrfd.top> Confounding in Frac. Fact. Designs
+ 
+Confounding in Fractional Factorial Designs
+ 
+Full factorial designs allow the estimation of main
+effects, 2-term interactions, 3-term interactions,
+..., and so on up to k-term interactions . Such
+estimates are free and clear of one another, that
+is, with no correlation and "confounding" between
+estimated effects.
+ 
+Desirable as this property may be, it does not--
+unfortunately--carry over to the fractional
+factorial designs.  All fractional factorial
+factorial designs.  It is a fact of life that all
+fractional factorial designs have some degree of
+"confounding"--the property whereby estimated
+effects of certain factors represents not only the
+contribution from the factor of interest, but also
+contributions from other factors (usually
+interactions).  When two factors are confounded,
+they are correlated and inextricably entangled
+with the net effect that the individual
+contributions cannot be separated out except by
+engineering judgment, assumptions, or additional
+experimentation.  On the other hand, if such
+confounding is between a main effect and, say, a
+5-term interaction, then in practice it is much
+more likely ("nature is simple") that the true
+source of the effect is from the main factor as
+opposed to the 5-term cross-product factor.  With
+this in mind, it is seen that the drastically
+reduced sample size allowed by fractional
+factorial designs is more than worth the remote
+risk that some 5-term interaction may be real but
+misinterpreted.
+ 

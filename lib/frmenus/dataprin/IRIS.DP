@@ -1,0 +1,6 @@
+----- <~dataprin\IRIS.DP> Print (to Printer) IRIS.DAT
+
+. This is file    IRIS.DP
+
+PRINT IRIS.DAT
+

@@ -1,0 +1,34 @@
+----- <~roadmap\interlab.top> Interlaboratory
+
+Interlaboratory
+
+Situation     : We have a set of data collected on 2 materials
+                distributed across a set of laboratories.
+
+Question      : Are all laboratories in an interlab experiment
+                equivalent?
+
+Model         : Y = f(Lab) + random error
+
+Input         : 1) a response variable Y
+                2) a tag variable Lab containing lab identifiers
+
+Output        : 1) a partitioning of the labs into 3 clusters:
+                      1) those which are "well-behaved"/acceptable
+                          (low bias and low variability);
+                      2) those which are unacceptable
+                         due to excessive bias;
+                      3) those which are unacceptable
+                         due to excessive variability; and/or
+                2) a common "typical value" that is valid
+                   across all acceptable labs; and/or
+                3) a common "variability value" that is valid
+                   across all acceptable labs.
+
+Stat Category : Interlab Analysis
+
+Primary Tools : Youden Plot             <xemf: ~stat\youdplot.men>
+                Block Plot              <xemf: ~1fac\blockplo.men>
+
+Worked Example: UGIANSKY.DAT            <xcf: ~roadmap\UGIANSKY.DP>
+

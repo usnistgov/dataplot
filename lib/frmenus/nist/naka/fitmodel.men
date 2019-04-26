@@ -1,0 +1,22 @@
+This is file fitmodel.men--Fit Model
+
+--------------------
+1. Fit Model
+2. FIT Y = F
+3.
+4. Variables:
+5.    Intensity    (= Y)
+6.    Wavelength   (= X)
+7.    Weights      (= W)
+8.
+9. Subset/Except/For Specification:
+10. @CE 1 0 1 50 *
+11.
+12.
+13. Do the Fit?
+--------------------
+GR FE
+FIT Y = F
+--------------------
+WEB HELP FIT
+--------------------

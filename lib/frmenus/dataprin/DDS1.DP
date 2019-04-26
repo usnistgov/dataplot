@@ -1,0 +1,6 @@
+----- <~dataprin\DDS1.DP> Print (to Printer) DDS1.DAT
+
+. This is file    DDS1.DP
+
+PRINT DDS1.DAT
+

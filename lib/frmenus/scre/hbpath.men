@@ -1,0 +1,26 @@
+This is file browser.men--SET HANDBOOK URL
+ 
+--------------------
+ 1. Set Handbook URL
+ 2. SET HANDBOOK URL http://www.itl.nist.gov/div898/handbook/
+ 3.
+ 4. If you are accessing the NIST/SEMATRECH Engineering
+ 5. Statistics Handbook from the NIST web site, you do not
+ 6. need to specify the path.  If you wish to access it from
+ 7. a more local site (maybe your organization has downloaded
+ 8. the handbook), you can set the location here.  The default
+ 9. handbook URL is:
+10.
+11.     http://www.itl.nist.gov/div898/handbook/
+12. 
+13. Enter the Handbook URL (up to 80 characters):
+14. @CE 1 0 1 70 ?
+15.
+16.
+17. Set the Handbook URL?:
+--------------------
+SU FE
+SET HANDBOOK URL _1
+--------------------
+WEB HELP SET HANDBOOK URL
+--------------------

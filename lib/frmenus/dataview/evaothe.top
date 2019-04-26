@@ -1,0 +1,10 @@
+----- <~dataview\evaothe.top> View Extreme Value Data: Other
+
+View Extreme Value Data: Other
+
+GEAR.DAT      Gear diameters (Ishikawa)   <xcf: ~dataview\GEAR.DP>
+CLEAR.DAT     Component clearances        <xcf: ~dataview\CLEAR.DP>
+
+RANDN.DAT     Normal random numbers       <xcf: ~dataview\RANDN.DP>
+RANDU.DAT     Uniform random numbers      <xcf: ~dataview\RANDU.DP>
+

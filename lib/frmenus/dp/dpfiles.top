@@ -1,0 +1,25 @@
+----- <~dp\dpfiles.top> Built-in Dataplot Files
+ 
+Built-in Dataplot Files
+ 
+These are read-only ASCII files that the analyst may
+access (LIST, SEARCH) at any time (either inside
+or outside of Dataplot):
+ 
+   Dictionary of Commands : COMMANDS.
+   Syntax for Commands    : SYNTAX.
+   LET Subcommands        : SUBCOMMANDS.
+   Inline text Subcommands: INLINE.
+   Mathematics Functions  : FUNCTIONS.
+ 
+   Tutorial Programs      : PROGRAMS.
+   Available Macros       : MACROS.
+ 
+   Tutorial Data Sets     : DATASETS.
+   Experiment Designs     : DESIGNS.
+   Prob. Distributions    : DISTRIBUTIONS.
+ 
+ 
+Example: LIST COMMANDS.
+         SEARCH COMMANDS LABEL
+ 

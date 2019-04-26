@@ -1,0 +1,686 @@
+**comment chapter 7 (comparative designs)
+**pagenumber off
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 950 1600 0.025 1
+Outline
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+ 
+Introduction
+      Comparative Designs
+      Construction vs. Analysis
+      Applications
+ 
+Construction
+      Bad Designs / Good Designs
+      Randomization
+      Blocking
+      Design Types
+ 
+Analysis
+      Block Plots
+      ANOVA
+      Complete Analysis
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 750 1800 0.025 1
+Comparative Designs
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+**box 0675 1500 1875 2700 0.0
+**draw 1275 1500 1275 2700 0.0
+**draw 0675 2100 1875 2100 0.0
+ 
+ 
+**move 0375 1200
+Focus:
+ 
+Goal:
+ 
+ 
+ 
+Reference: Box, Hunter & Hunter:
+      Chapter 4 (pages 93-106)
+      Chapter 6 (pages 165-207)
+      Chapter 7 (pages 208-244)
+      Chapter 8 (pages 245-287)
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 750 1800 0.025 1
+Applications
+**center off
+**magnify 1.5
+**lines per inch 4
+ 
+ 
+Garden Tomato Fertilizer Comparison
+BHH, pages 94-97
+ 
+Boys Shoe Wear
+BHH, pages 97-101 (Chapter 4)
+ 
+Farm Egg Diet Comparison
+BHH, page 159
+ 
+Auto MPG Gas Additive Comparison
+ 
+Auto Emissions Gas Additive Comparison
+BHH, pages 245-250 (Chapter 8)
+ 
+Film Developer Comparison
+Barker, page 99, 275
+ 
+Gas/Gasahol Comnparison
+Barker, pages 100-101, 273
+ 
+Comparing 3 Copying Machines
+ 
+Comparison of 2 Suppliers
+ 
+Effect of Diet on Blood Coagulation
+BHH, pages 165-207 (Chapter 6)
+ 
+Steel Mill Heat Treatments
+ 
+Comparing Penicillin Formulae
+BHH, pages 209-232 (Chapter 7)
+ 
+**newpage
+**magnify 1.5
+**lines per inch 4
+ 
+ 
+ 
+ 
+Ethidium Usage/Non-Usage in DNA Electrophoresis
+ 
+Training Set Comparison in OCR
+ 
+Re-bar Comparison in Earthquake-resistent Columns
+ 
+Algorithmic Comparison in Voice Recognition Systems
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 600 1950 0.025 1
+Construction vs. Analysis
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+ 
+ 
+**movewrite 0500 2400 Construction
+**movewrite 1600 2400 Analysis
+**draw 1275 2400 1275 0300 0.0
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 650 1900 0.025 1
+Part 1:  Construction
+ 
+ 
+**shadebo2 450 2100 0.025 1
+Bad Designs / Good Designs
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+Experiment #1:
+ 
+Response Variable Y:
+Focus (Primary Factor):
+Nuisance Factors:
+ 
+Sample Size n:
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 450 2100 0.025 2
+Bad Designs / Good Designs
+(Continued)
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+Experiment #2:
+ 
+Response Variable Y:
+Focus (Primary Factor):
+Nuisance Factors:
+ 
+Sample Size n:
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 450 2100 0.025 2
+Bad Designs / Good Designs
+(Continued)
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+Experiment #3:
+ 
+Response Variable Y:
+Focus (Primary Factor):
+Nuisance Factors:
+ 
+Sample Size n:
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 450 2100 0.025 2
+Bad Designs / Good Designs
+(Continued)
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+Experiment #4:
+ 
+Response Variable Y:
+Focus (Primary Factor):
+Nuisance Factors:
+ 
+Sample Size n:
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 450 2100 0.025 2
+Bad Designs / Good Designs
+(Continued)
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+Experiment #5:
+ 
+Response Variable Y:
+Focus (Primary Factor):
+Nuisance Factors:
+ 
+Sample Size n:
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 450 2100 0.025 2
+Bad Designs / Good Designs
+(Continued)
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+Experiment #6:
+ 
+Response Variable Y:
+Focus (Primary Factor):
+Nuisance Factors:
+ 
+Sample Size n:
+ 
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 450 2100 0.025 2
+Bad Designs / Good Designs
+(Continued)
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+Experiment #7:  Tomato Plant  (BHH, page 94ff)
+ 
+Response Variable Y:
+Focus (Primary Factor):
+Nuisance Factors:
+ 
+Sample Size n:
+ 
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 450 2100 0.025 2
+Bad Designs / Good Designs
+(Continued)
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+Experiment #8:  Boys Shoes (BHH, page 97ff)
+ 
+Response Variable Y:
+Focus (Primary Factor):
+Nuisance Factors:
+ 
+Sample Size n:
+ 
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 450 2100 0.025 2
+Bad Designs / Good Designs
+(Continued)
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+Experiment #9:  Blood Coagulation, page 165ff)
+ 
+Response Variable Y:
+Focus (Primary Factor):
+Nuisance Factors:
+ 
+Sample Size n:
+ 
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 450 2100 0.025 2
+Bad Designs / Good Designs
+(Continued)
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+Experiment #10:  Penicillin Yield (BHH, page 209ff)
+ 
+Response Variable Y:
+Focus (Primary Factor):
+Nuisance Factors:
+ 
+Sample Size n:
+ 
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 450 2100 0.025 2
+Bad Designs / Good Designs
+(Continued)
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+Experiment #11:  Auto Emissions (BHH, pages 245ff)
+ 
+Response Variable Y:
+Focus (Primary Factor):
+Nuisance Factors:
+ 
+Sample Size n:
+ 
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 450 2100 0.025 2
+Bad Designs / Good Designs
+(Continued)
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+Experiment #2:
+ 
+Response Variable Y:
+Focus (Primary Factor):
+Nuisance Factors:
+ 
+Sample Size n:
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 650 1900 0.025 1
+Construction Summary
+**center off
+**magnify 1.75
+**lines per inch 3
+ 
+ 
+Goal:
+   Unambiguous, Crisp Conclusions
+   about Primary Factor
+ 
+Strategy:
+   1) Avoid ...
+   2) Increase Sensitivity
+ 
+Tools:
+   1)
+   2)
+ 
+Types:
+   1)
+   2)
+   3)
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 600 1950 0.025 2
+Representation of
+Comparative Designs
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+ 
+ 
+**movewrite 0700 2600 Vector
+**movewrite 1600 2600 Matrix
+**draw 1275 2700 1275 0300 01
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 800 1750 0.025 1
+Part 2:  Analysis
+**center off
+**magnify 1.75
+**lines per inch 3
+ 
+ 
+1. Block Plot Analysis
+ 
+2. Analysis of Variance
+ 
+3. Complete Analysis
+ 
+ 
+**magnify 1.5
+**lines per inch 4
+ 
+Examples
+ 
+1. Blood Coag. Time   BHH, Ch. 6 (165ff)    Diet
+2. Boys Shoe Wear     BHH, Ch. 4 (97ff)      Material, Boy
+3. Penicillin Yield        BHH, Ch. 7 (208ff)    Formula, Batch
+4. Lightbulb Defects   Sheesley                   Weld, Plant, Speed, Shift
+5. Auto Emissions       BHH, Ch. 8 (245 ff)   Additive, Car, Drive
+6. Funnel Time                                               Ball, Funnel, Ramp
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 750 1800 0.025 1
+Block Plot
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+The Block Plot is a graphical technique
+for testing factor significance.
+ 
+ 
+ 
+Reference: JJF
+ 
+ 
+ 
+Vertical Axis:
+ 
+Horizontal Axis:
+ 
+Plot Character:
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 750 1800 0.025 2
+Analysis of Variance
+(ANOVA)
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+The Analysis of Variance is a quantitative
+technique for testing factor significance.
+ 
+ 
+Reference: Fisher
+ 
+ 
+Box, Hunter, & Hunter ANOVA:
+   General: pp. 170-173, 187-190, 241-244
+   Blood Coagulation Time: pp. 170-182
+   Penicillin Yield: pp. 210-215
+   Auto Emissions: pp. 248-249
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 750 1800 0.025 2
+ANOVA
+Identities
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 350 2200 0.025 2
+ANOVA
+Tables, Decision Rules, & Assumptions
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 550 2000 0.025 2
+ANOVA
+Advantages/Disadvantages
+**center off
+**magnify 1.7
+**lines per inch 4
+ 
+ 
+ 
+ 
+**movewrite 0500 2600 Advantages
+**movewrite 1600 2600 Disadvantages
+**draw 1275 2700 1275 0300 0.0
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 800 1750 0.025 1
+Complete Analysis
+**center off
+**magnify 1.75
+**lines per inch 4
+ 
+ 
+... a combination of graphical and quantitative
+techniques for:
+ 
+   1) testing factor significance
+   2) selecting models
+   3) estimating model parameters
+   4) validating models
+ 
+ 
+ 
+Analysis Cycle:
+ 
+ 
+**newpage
+**center on
+**magnify 2.0
+**lines per inch 3
+**shadebo2 500 2050 0.025 2
+Analysis of
+Comparative Designs
+**center off
+**magnify 1.0
+**lines per inch 6
+ 
+1 Primary Factor
+0, 1, 2, 3, ... Nuisance Factors
+Analysis: Graphical & Quantitative
+ 
+**setx 0800
+Data from DEX Plan
+ 
+**setx 0600
+Plot Data:
+      1) Factor Plots
+      2) Run Sequence Plot
+      3) Block Plot
+ 
+Define Model:
+ 
+Estimate Parameters:
+      1)
+      2)
+      3)
+      4)
+ 
+Plot Estimated Parameters:
+ 
+Generate Predicted Values & Residuals:
+      1) Predicted Values:
+      2) Residuals:
+ 
+Analyze Residuals:
+      1) Computer Residuals S.D.
+      2) Factor Plot of Residuals
+      3) Run Sequence Plot of Residuals
+      4) Normal Probability Plot of Residuals
+ 
+Test Statistical Significance of Factors:
+      H  :
+      H  :
+      H  :
+      Decision Rile: If calculated test statistic > 95% point
+                              of reference distribution, then conclude:
+                                    factor is significant
+ 
+Summarize Conclusions:
+ 
+      Factor    Significant?    Est. Effects    Range of Est. Eff.
+        X            yes/no
+        X            yes/no
+        X            yes/no
+ 
+        S    of additive mode =
+ 
+**newpage
+**center on
+ 
+ 
+ 
+ 
+ 
+8
+**magnify 1.25
+**lines per inch 3
+**shadebo2 500 2050 0.025 1
+Analysis of Comparative Designs (Funnel Experiment)
+**center off
+**magnify 1.25
+**lines per inch 4
+ 
+-1. DEX
+ 
+0. Data
+ 
+1. Plot Data:
+ 
+2. Define Model:
+ 
+3. Estimate Parameters:
+ 
+4. Plot Estimated Parameters:
+ 
+5. Compute Predicted Values & Residuals:
+ 
+6. Analyze Residuals:
+ 
+7. Test Significance of Factors:
+ 
+8. Summarize Conclusions:
+ 
+ 
+**newpage
+**magnify 1.25
+**lines per inch 4
+Source        df          SS        MS     F-value
+--------------------------------------------------
+Total(adj.)   19        112.01
+Material       1          0.84     0.84      11.21
+Boy            9        110.49    12.28     163.81
+Residual       9          0.67     0.075
+ 
+ 
+s    =   0.075   = .274

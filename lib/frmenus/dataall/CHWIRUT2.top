@@ -1,0 +1,8 @@
+----- <~dataall\CHWIRUT2.top> CHWIRUT2.DAT
+
+CHWIRUT2.DAT
+
+View     <xcl: LIST CHWIRUT2.DAT>
+Load     <xcf: ~dataload/CHWIRUT2.DP>
+Print    <xccl: printfile C:\DATAPLOT\CHWIRUT2.DAT>
+

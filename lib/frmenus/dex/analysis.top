@@ -1,0 +1,18 @@
+----- <~dex\analysis.top> Analysis
+
+Analysis
+
+Discussion                            <~dex\analdisc.top>
+
+Comparative Designs                   <~dex\acomdesi.top>
+Screening Designs                     <~dex\ascrdesi.top>
+
+   2**k designs                       <~dex\a2kdesig.top>
+   2**(k-p) designs                   <~dex\a2kmpdes.top>
+   Taguchi designs                    <~dex\atagdesi.top>
+   Plackett-Burman Designs            <~dex\apbdesig.top>
+
+Regression Designs                    <~dex\aregdesi.top>
+Response Surface Designs              <~dex\arsdesig.top>
+Mixture Designs                       <~dex\amixdesi.top>
+

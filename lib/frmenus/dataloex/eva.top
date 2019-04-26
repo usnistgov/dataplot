@@ -1,0 +1,9 @@
+----- <~dataloex\eva.top> Load & Execute Built-in Extreme Value Analysis Data 
+iles
+
+Load & Execute Built-in Extreme Value Analysis Data Files
+
+NIST data                                <~dataloex\evanist.top>
+Castillo data                            <~dataloex\evacast.top>
+Other data                               <~dataloex\evaothe.top>
+

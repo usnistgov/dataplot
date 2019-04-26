@@ -1,0 +1,8 @@
+----- <~dataload\EXPCEN.DP> Load EXPCEN.DAT
+
+. This is file    EXPCEN.DP
+
+DELETE Y X
+SKIP 25
+READ EXPCEN.DAT Y X
+

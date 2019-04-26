@@ -1,0 +1,21 @@
+----- <~roadmap\distmod.top> Distributional Model
+
+Distributional Model
+
+Question     : What distribution describes the
+               natural variation of the process?
+
+Model        : Y = constant + random error
+
+Input        : a response variable Y
+               (a column of numbers)
+
+Output       : a probability distribution
+               with fitted parameters
+
+Stat Category: Univariate
+
+Primary Tools: 4-plot            <xemf: ~univ\4plot.men>
+               PPCC Plots        <~prob\ppccplot.top>
+               Probability Plots <~prob\probplot.top>
+

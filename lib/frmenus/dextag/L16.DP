@@ -1,0 +1,8 @@
+----- <~dextag\L16.DP> Load  L16.DAT
+
+. This is file    L16.DP
+
+DELETE X1 TO X15
+SKIP 25
+READ L16.DAT X1 TO X15
+

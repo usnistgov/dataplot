@@ -1,0 +1,26 @@
+----- <~prob\shap2mle.top> MLE for Two Shape Parameter Continuous Distributions
+
+Perform MLE (two shape parameters)
+
+Perform Maximum Likelihood Estimation for Continuous Distributions
+with Two Shape Parameters
+
+2-Parameter Beta                          <xemf: ~prob\mlebet.men>
+4-Parameter Beta (Moments)                <xemf: ~prob\mlebe4.men>
+Beta Normal                               <xemf: ~prob\mlebno.men>
+Folded Normal                             <xemf: ~prob\mlefnr.men>
+Gompertz
+    Unbinned Data                         <xemf: ~prob\mlegom.men>
+    Binned Data                           <xemf: ~prob\mlegom2.men>
+Inverse Gaussian                          <xemf: ~reli\mleig.men>
+Johnson SB                                <xemf: ~prob\mlejsb.men>
+Johnson SU                                <xemf: ~prob\mlejsu.men>
+Log Beta                                  <xemf: ~prob\mlelbe.men>
+Pareto                                    <xemf: ~prob\mlepar.men>
+Reflected Generalized Topp and Leone
+    Unbinned Data                         <xemf: ~prob\mlergt.men>
+    Binned Data                           <xemf: ~prob\mlergt2.men>
+Two-Sided Power                           <xemf: ~prob\mletsp.men>
+
+Bootstrap Confidence Intervals for Percentiles  <xemf: ~prob\mleperc.men>
+

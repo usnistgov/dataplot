@@ -1,0 +1,19 @@
+----- <~time\dds28.top> DDS FAQ 28 Future NIST Projects
+ 
+28. Future NIST Projects to Benefit from DDS
+ 
+  1. Choice of controller gain parameters based on data measured from working
+     systems. Preliminary work has been initiated for scanning probe microscop
+
+      (SPM). The results can be extended to any system consisting of a control
+er
+      such as machine tool, and stylus profilometer.
+ 
+  2. HPCC effort for modeling of positioning errors of machine tools as a
+     function of working temperatures. In addition to the static calibration
+     DDS will be useful for the dynamic calibration and correction of machine
+     tool errors.
+ 
+  3. Incorporation of DDS in DataPlot will benefit larger user population
+     at NIST and elsewhere.
+ 

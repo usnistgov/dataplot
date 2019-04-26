@@ -1,0 +1,9 @@
+----- <~dp\subctext.top> Subcommands for text strings
+ 
+Subcommands for text strings
+ 
+Built-in file of subcommands: INLINE.
+   List                     : LIST    INLINE.
+   Search for string        : SEARCH  INLINE. [string]
+                     Example: SEARCH  INLINE. GREEK
+ 

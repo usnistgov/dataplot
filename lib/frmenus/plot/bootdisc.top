@@ -1,0 +1,40 @@
+----- <~plot\bootdisc.top> Bootstrap/Jacknife: Discussion
+ 
+Bootstrap/Jacknife: Discussion
+ 
+The bootstrap and jacknife are techniques for
+investigating the sampling distribution of a
+statistic.
+
+For the jacknife, the given statistic is
+computed by deleting each observation.  So if
+there are 50 observations, there will be 50
+jacknife estimats of the statistic.
+
+In the bootstrap, we compute the given statistic
+for a bootstrap sample of the data.  A bootstrap
+sample is obtained by sampling the original
+observations with replacement.  If there are
+50 observations, the bootstrap sample will
+also contain 50 observations (some observations
+will be omitted and some will be duplicated in
+any given bootstrap sample).  The statistic is
+computed for a number of bootstrap samples
+(typically between 100 and 2,000 bootstrap
+samples are used).
+
+Generally, the bootstrap is preferred to the
+jacknife (the jacknife was used more when
+computers were less powerful and the amount
+of computation involved in the bootstrap was
+more prohibitive).
+
+The bootstrap and jacknife plots simply plot
+the statistic for the bootstrap/jacknife samples.
+This plot is typically followed up with some
+type of distributional plot such as a histogram
+or kernel density plot.  Confidence intervals
+for the statistic can be computed from appropriate
+percentiles (note that Dataplot saves a number of
+these automatically).
+

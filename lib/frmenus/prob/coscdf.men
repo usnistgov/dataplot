@@ -1,0 +1,40 @@
+This is file coscdf.men--Compute cosine cdf and tail probability
+ 
+--------------------
+ 1. Compute Cosine cdf and tail probability
+ 2. LET A = COSCDF(X,LOC,SCALE)
+ 3.
+ 4. The input argument, x, can be either a
+ 5. single number, the name of a parameter,
+ 6. or the name of a variable.
+ 7.  
+ 8. Input values:
+ 9.                x (-pi <= (x-u)/s <= pi):
+ 9. @CE 1 0 42 50 ?
+10.                              location u:
+10. @CE 2 0 42 50 ?
+11.                         scale s (s > 0):
+11. @CE 3 0 42 50 ?
+12.
+13. Output parameters:
+14.                  name for the cdf value:
+14. @CE 4 0 42 50 ?
+15.     name for the tail probability value:
+15. @CE 5 0 42 50 ?
+16.
+17.
+18. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 2 0 LET ZLOC = _2
+LET ZSCALE = 1
+@IF 3 0 LET ZSCALE = _3
+IF ZSCALE <= 0
+   LET ZSCALE = 1
+END OF IF
+@IF 4 0 LET _4 = COSCDF( _1 ,ZLOC,ZSCALE)
+@IF 5 0 LET _5 = 1 - COSCDF( _1 ,ZLOC,ZSCALE)
+--------------------
+WEB HELP COSCDF
+--------------------

@@ -1,0 +1,8 @@
+----- <~dataload\PBCO2.DP> Load PBCO2.DAT
+
+. This is file    PBCO2.DP
+
+DELETE YEAR MONTH Y
+SKIP 25
+READ PBCO2.DAT YEAR MONTH Y
+

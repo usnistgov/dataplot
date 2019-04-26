@@ -1,0 +1,10 @@
+----- <~dataview\mfac.top> View Built-in Multifactor Data Files
+
+View Built-in Multifactor Data Files
+
+1-factor data                            <~dataview\1fac.top>
+2-factor data                            <~dataview\2fac.top>
+3-factor data                            <~dataview\3fac.top>
+4-factor data                            <~dataview\4fac.top>
+>= 5-factor data                         <~dataview\5fac.top>
+

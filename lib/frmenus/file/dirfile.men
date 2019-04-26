@@ -1,0 +1,26 @@
+This is file dirfile.men--Directory of files
+ 
+----------------------
+1. Directory of files
+2. system dir
+3.
+4: User-specified file:
+4. @CE 1 0 25 50 ?
+5.
+6. Directory of Dataplot summary files:
+7.    commands.      (List of commands)
+8.    syntax.        (Command syntaxes)
+9.    subcommands.   (Subcommands under LET command)
+10.    inline.        (Subcommands under TEXT & XLABEL)
+11.    functions.     (Math & probability functions)
+12.    programs.      (Complete programs)
+13.    macros.        (Subprograms)
+14.    datasets.      (Data sets)
+15.    designs.       (Experiment designs)
+16.    distributions. (Probability distributions)
+17.
+18.
+19. Do the Directory?
+--------------------
+SU FE
+@IF 1 0 system dir

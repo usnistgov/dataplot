@@ -1,0 +1,29 @@
+----- <~qual\discussi.top> Quality/SPC: Discussion
+ 
+Quality/SPC: Discussion
+ 
+Quality refers to the general topic of
+improving the quality of a process or product.
+
+Statistical Process Control (SPC) is set of tools
+that are designed to achieve stability in a process
+and to reduce the variability of the process.
+
+There are two components of SPC.  The first is the
+technical tools, such as Pareto charts and control
+charts, to achieve better quality.  The second
+is the approach of an organiziation to improving
+the quality of products and processes.  Dataplot
+provides some of the technical tools for SPC.  See
+the Ryan and Montgomery texts (listed in the
+References menus) for a more detailed discussion of
+underlying phiosphy of SPC.
+
+SPC emphasizes detection of problems while a process
+is active and building quality into a process
+as oppossed to inspecting for quality after the fact.
+
+Quality covers traditional acceptance sampling
+(i.e., after the fact quality control) as well as
+SPC and other techniques and approaches.
+

@@ -1,0 +1,59 @@
+This is file efclplot.men--Generate Effects (with Confidence Limits) Plot
+
+--------------------
+ 1. Effects (with Confidence Limits) Plot
+ 2. YATES Y        (Yates order assumed)
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Mininimum Engineering Significant Difference
+ 6. @CE 2 0 33 50 *
+ 7.
+ 8. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Generate the plot?
+--------------------
+GR FE
+YATES _1 _3
+SKIP 0
+READ DPST1F.DAT TAG COEF TCOEF RSD CUMRSD
+LET COEFABS = ABS(COEF)
+.
+LET NUMCOEF = NUMBER COEF
+LET ZZZINDEX = SEQUENCE 1 1 NUMCOEF
+LET TAGSORT = SORT TAG 
+.
+PRE-ERASE OFF
+ERASE
+.
+CHARACTERS AUTOMATIC TAG
+CHARACTER OFFSET 2 0 ALL
+LINES BLANK ALL
+SPIKE ON ALL
+PLOT COEFABS ZZZINDEX TAGSORT
+YLIMITS FREEZE
+.
+LET CUTOFF = _2
+.
+IF CUTOFF EXIST
+   CHARACTER BLANK ALL
+   CHARACTER OFFSET 0 0 ALL
+   SPIKE OFF ALL
+   .
+   LINES SOLID
+   PLOT 0 FOR X = 1 1 NUMCOEF
+   .
+   LINES DOTTED
+   PLOT CUTOFF FOR X = 1 1 NUMCOEF
+END IF
+.
+PRE-ERASE ON
+YLIMITS
+CHARACTERS BLANK ALL
+LINES SOLID ALL
+--------------------
+WEB HELP YATES
+--------------------

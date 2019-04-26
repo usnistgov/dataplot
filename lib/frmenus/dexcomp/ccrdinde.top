@@ -1,0 +1,28 @@
+----- <~dexcomp\ccrdinde.top> Index: Completely Randomized Designs
+ 
+Index: Completely Randomized Designs
+ 
+Because of their intrinsic simplicity (only 1 factor and no
+blocking factors) and their ease of construction, there is
+no formal index of Completely Randomized Designs.
+ 
+All completely randomized designs are defined by 3 specs:
+ 
+     k  = number of factors
+          (= 1 for completely randomized designs)
+     l1 = number of levels
+     r  = number of replications
+ 
+Thus the total sample size (number of runs) is
+ 
+     n = k x l1 x r
+ 
+Balance dictates that the number of replications be the same
+at each level of the factor (this will maximize the
+sensitivity of subsequent t (or F) testing).
+ 
+We present two simple examples of completely randomized designs.
+ 
+     Example 1:                 <~dexcomp\ccrdind2.top>
+     Example 2:                 <~dexcomp\ccrdind3.top>
+ 

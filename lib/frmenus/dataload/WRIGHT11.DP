@@ -1,0 +1,8 @@
+----- <~dataload\WRIGHT11.DP> Load WRIGHT11.DAT
+
+. This is file    WRIGHT11.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ WRIGHT11.DAT Y X1 X2
+

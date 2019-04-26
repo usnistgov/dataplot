@@ -1,0 +1,22 @@
+----- <~prob\fdesc.top> F Description
+
+*F Description
+
+pdf: ...
+
+Moments   : E(X)  =
+            SD(X) =
+
+Type      : Continuous, skewed family of distributions--
+            moderate-tailed to long-tailed.
+Domain    : 0 to +infinity
+Synonym   :
+Genesis   : Fisher (1924)
+Definition: If X1 is Chi-squared (nu1)
+            and X2 is Chi-squared (nu2),
+            then X1/X2 is F (nu1,nu2).
+
+Reference : Johnson & Kotz,
+            Continuous Univariate Distributions-2,
+            Chapter 26 (pages 75-93).
+

@@ -1,0 +1,54 @@
+This is file consplot.men--Compute Consensus Means Plot
+ 
+--------------------line 3
+ 1. Consensus Means Plot
+ 2. CONSENSUS MEAN PLOT Y X
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Lab ID Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10. Generate the Consensus Means Plot?:
+--------------------
+CHARACTER FONT SIMPLEX ALL
+CHARACTER SIZE 4 ALL
+CHARACTER BLANK HBAR HBAR HBAR BLANK
+LINE DOTTED BLANK BLANK BLANK SOLID
+.
+LABEL CASE ASIS
+TIC MARK LABEL CASE ASIS
+Y1LABEL Consensus Mean
+LET ZZZZDIST = DISTINCT _2
+LET NGROUP = SIZE ZZZZDIST
+IF NGROUP <= 5
+  XLIMITS 1 7
+  MAJOR XTIC MARK NUMBER 7
+  MINOR XTIC MARK NUMBER 0
+  XTIC OFFSET 0.5 0.5
+  X1TIC MARK LABEL FORMAT ALPHA
+X1TIC MARK LABEL CONTENT Global MP Modifiedcr()MP ML Meansp()ofcr()Means SE BOB
+  X3LABEL Estimation Method
+END OF IF
+IF NGROUP > 5
+  XLIMITS 1 6
+  MAJOR XTIC MARK NUMBER 6
+  MINOR XTIC MARK NUMBER 0
+  XTIC OFFSET 0.5 0.5
+  X1TIC MARK LABEL FORMAT ALPHA
+X1TIC MARK LABEL CONTENT Global MP Modifiedcr()MP ML Meansp()ofcr()Means SE
+  X3LABEL Estimation Method
+END OF IF
+CONSENSUS MEAN PLOT _1 _2 _3
+XLIMITS
+MAJOR XTIC MARK NUMBER
+MINOR XTIC MARK NUMBER
+XTIC OFFSET 0 0
+X1TIC MARK FORMAT REAL
+DELETE ZZZZDIST
+--------------------last
+WEB HELP CONSENSUS MEAN PLOT
+--------------------last

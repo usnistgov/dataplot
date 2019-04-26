@@ -1,0 +1,9 @@
+----- <~dp\subclet.top> Subcommands under LET
+ 
+Subcommands under LET
+ 
+Built-in file of subcommands: SUBCOMMANDS.
+   List                     : LIST    SUBCOMMANDS.
+   Search for string        : SEARCH  SUBCOMMANDS. [string]
+              Example       : SEARCH  SUBCOMMANDS. INTEGRAL
+ 

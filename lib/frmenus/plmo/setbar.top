@@ -1,0 +1,41 @@
+----- <~plmo\setbar.top> Set Bars and Attributes
+ 
+Set Bars and Attributes
+ 
+Set Bar Types         <xemf: ~plmo\modibar.men>
+
+Set Bar Base          <xemf: ~plmo\barbase.men>
+Set Bar Width         <xemf: ~plmo\barwidt.men>
+Set Bar Dimension     <xemf: ~plmo\bardime.men>
+Set Bar Direction     <xemf: ~plmo\bardire.men>
+
+Set Bar Border Color  <xemf: ~plmo\barbcolo.men>
+Set Bar Border Line   <xemf: ~plmo\barbline.men>
+Set Bar Border Thickness <xemf: ~plmo\barbthic.men>
+
+Set Bar Fill          <xemf: ~plmo\barfill.men>
+Set Bar Fill Color    <xemf: ~plmo\barfillc.men>
+
+Set Bar Pattern       <xemf: ~plmo\barpatt.men>
+Set Bar Pattern Color <xemf: ~plmo\barpcolo.men>
+Set Bar Pattern Line Type <xemf: ~plmo\barpline.men>
+Set Bar Pattern Spacing   <xemf: ~plmo\barpspac.men>
+Set Bar Pattern Thickness <xemf: ~plmo\barpthic.men>
+
+Help for Bar Attributes
+   BAR                        <xcl: HELP BAR>
+   BAR BASE                   <xcl: HELP BAR BASE>
+   BAR BORDER COLOR           <xcl: HELP BAR BORDER COLOR>
+   BAR BORDER LINE            <xcl: HELP BAR BORDER LINE>
+   BAR BORDER THICKNESS       <xcl: HELP BAR BORDER THICKNESS>
+   BAR DIMENSION              <xcl: HELP BAR DIMENSION>
+   BAR DIRECTION              <xcl: HELP BAR DIRECTION>
+   BAR FILL                   <xcl: HELP BAR FILL>
+   BAR FILL COLOR             <xcl: HELP BAR FILL COLOR>
+   BAR PATTERN                <xcl: HELP BAR PATTERN>
+   BAR PATTERN COLOR          <xcl: HELP BAR PATTERN COLOR>
+   BAR PATTERN LINE TYPE      <xcl: HELP BAR PATTERN LINE TYPE>
+   BAR PATTERN SPACING        <xcl: HELP BAR PATTERN SPACING>
+   BAR PATTERN THICKNESS      <xcl: HELP BAR PATTERN THICKNESS>
+   BAR WIDTH                  <xcl: HELP BAR WIDTH>
+

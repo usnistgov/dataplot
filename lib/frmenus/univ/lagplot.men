@@ -1,0 +1,30 @@
+This is file lagplot.men--Lag Plot
+ 
+--------------------
+ 1. Lag Plot
+ 2. LAG PLOT Y    and    LAG <lag> PLOT Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5. Lag:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Character Type:
+ 7. @CE 3 0 33 50 *
+ 8. Lines on/off?:
+ 8. @CE 4 0 33 50 *
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 1 50 *
+12.
+13.
+14. Generate the Lag Plot?
+--------------------
+GR FE
+CHARACTERS _3
+LINES _4
+@IF 2 0 LAG _2 PLOT _1 _5
+@IFNE 2 0 LAG PLOT _1 _5
+CHARACTERS
+LINES SOLID
+--------------------

@@ -1,0 +1,8 @@
+----- <~datalist\FREQPRIM.top> FREQPRIM.DAT
+ 
+FREQPRIM.DAT
+ 
+View     <xcl: LIST FREQPRIM.DAT>
+Load     <x2cl: SKIP 25; READ FREQPRIM.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\FREQPRIM.DAT>
+ 

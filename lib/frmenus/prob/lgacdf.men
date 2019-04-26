@@ -1,0 +1,36 @@
+This is file lgacdf.men--Compute log-gamma cdf & tail Prob.
+ 
+--------------------
+ 1. Compute Log-Gamma cdf & Tail Probabilities
+ 2. LET A = LGACDF(X,GAMMA)
+ 3.
+ 4. Input values:
+ 5.                 x:                         x > u
+ 5. @CE 1 0 20 37 ?
+ 6.       shape gamma:                     gamma > 0
+ 6. @CE 2 0 20 37 ?
+ 7.     lower bound u:
+ 7. @CE 3 0 20 37 ?
+ 8.           scale s:                     s > 0
+ 8. @CE 4 0 20 37 ?
+ 9.
+10. Output parameters:
+11.      name for the cdf  value:
+11. @CE 5 0 38 49 ?
+12.      name for the tail prob. value:
+12. @CE 6 0 38 49 ?
+13.
+14.
+15. Compute the Probability?
+--------------------
+AN FE
+LET ZGAMMA = _2
+LET ZLOC = 0
+@IF 3 0 LET ZLOC = _3
+LET ZSCALE = 1
+@IF 4 0 LET ZSCALE = _4
+@IF 5 0 LET _5 = LGACDF(( _1 - ZLOC)/ZSCALE, ZGAMMA )
+@IF 6 0 LET _6 = 1 - LGACDF(( _1 - ZLOC)/ZSCALE,ZGAMMA)
+--------------------
+WEB HELP LGACDF
+--------------------

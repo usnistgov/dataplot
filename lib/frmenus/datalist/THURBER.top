@@ -1,0 +1,8 @@
+----- <~datalist\THURBER.top> THURBER.DAT
+ 
+THURBER.DAT
+ 
+View     <xcl: LIST THURBER.DAT>
+Load     <x2cl: SKIP 25; READ THURBER.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\THURBER.DAT>
+ 

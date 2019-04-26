@@ -1,0 +1,11 @@
+----- <~fit\modelval.top> Model Validation: Residual Analysis
+
+Model Validation: Residual Analysis
+
+Discussion                   <~fit\residisc.top>
+
+Plot superimposed predicted values   <xemf: ~fit\plotpred.men>
+Scatter plot of residuals            <xemf: ~fit\plotres.men>
+Normal probability plot of residuals <xemf: ~fit\norppres.men>
+6-PLOT                               <xemf: ~fit\6plot.men>
+

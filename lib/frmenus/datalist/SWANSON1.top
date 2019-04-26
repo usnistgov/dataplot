@@ -1,0 +1,8 @@
+----- <~datalist\SWANSON1.top> SWANSON1.DAT
+ 
+SWANSON1.DAT
+ 
+View     <xcl: LIST SWANSON1.DAT>
+Load     <x2cl: SKIP 25; READ SWANSON1.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\SWANSON1.DAT>
+ 

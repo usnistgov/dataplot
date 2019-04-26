@@ -1,0 +1,45 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     2TO7M4.DP
+. PURPOSE--GENERATE A 2**(7-4) DESIGN TABLE
+.
+. -----START POINT-----------------------------------
+.
+LET COLOR = 1
+LET WINDSIZE = 2
+CALL SETCOLOR.DP
+.
+. ERASE
+BOX 0 0 100 100
+LET STRING MARK = 2TO7M4.DP
+.
+SET POSTSCRIPT FONT HELVETICA BOLD
+JUSTIFICATION CENTER
+HW 6 4
+MOVE 50 92
+TEXT Industrial Filtration Time (BHH)
+TEXT
+.
+JUSTIFICATION LEFT
+HW 4 2
+MARGIN 5
+MOVE 5 85
+TEXT Constructing Designs
+TEXT On-Line Design Files
+TEXT
+.
+SET POSTSCRIPT FONT COURIER BOLD
+TEXT    2**(7-4) Fractional Factorial Design:
+TEXT    (7 Factors, 8 Runs, Resolution III)
+TEXT
+TEXT        X1  X2  X3  X4  X5  X6  X7
+TEXT        --------------------------
+TEXT        -1  -1  -1  +1  +1  +1  -1
+TEXT        +1  -1  -1  -1  -1  +1  +1
+TEXT        -1  +1  -1  -1  +1  -1  +1
+TEXT        +1  +1  -1  +1  -1  -1  -1
+TEXT        -1  -1  +1  +1  -1  -1  +1
+TEXT        +1  -1  +1  -1  +1  -1  -1
+TEXT        -1  +1  +1  -1  -1  +1  -1
+TEXT        +1  +1  +1  +1  +1  +1  +1
+.
+CALL MARK2.DP
+EXIT

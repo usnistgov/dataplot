@@ -1,0 +1,9 @@
+----- <~dataview\1fac.top> View 1-Factor Data (incl. 2-Sample)
+
+View 1-Factor Data (Including the "2-Sample" Problem)
+
+NIST data                 <~dataview\1facnist.top>
+Natrella Data             <~dataview\1facnatr.top>
+Sematech Data             <~dataview\1facsema.top>
+Other data                <~dataview\1facothe.top>
+

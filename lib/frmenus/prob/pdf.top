@@ -1,0 +1,20 @@
+----- <~prob\pdf.top> Probability Density Functions
+
+*Probability Density Functions
+
+Normal N(0,1)      NORPDF(X)
+t                  TPDF(X,NU)               NU > 0
+Chi-squared        CHSPDF(X,NU)     X >= 0  NU > 0
+F                  FPDF(X,NU1,NU2)  X >= 0  NU1,NU2 > 0
+
+Weibull (min)      SET MINMAX MIN
+                   WEIPDF(X,GAMMA)  X >= 0  GAMMA > 0
+Weibull (max)      SET MINMAX MAX
+                   WEIPDF(X,GAMMA)  X <= 0  GAMMA > 0
+Inverse Gaussian   IGPDF(X,GAMMA)   X >= 0  GAMMA > 0
+Wald               WALPDF(X)        X >= 0
+Recip. Inv. Gauss. RIGPDF(X,GAMMA)  X >= 0  GAMMA > 0
+Fatigue Life       FLPDF(X,GAMMA)   X >= 0  GAMMA > 0
+
+Generalized Pareto GEPPDF(X,GAMMA)
+

@@ -1,0 +1,8 @@
+----- <~datalist\NEGIZ3.top> NEGIZ3.DAT
+ 
+NEGIZ3.DAT
+ 
+View     <xcl: LIST NEGIZ3.DAT>
+Load     <x2cl: SKIP 25; READ NEGIZ3.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\NEGIZ3.DAT>
+ 

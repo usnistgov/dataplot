@@ -1,0 +1,22 @@
+This is file chisqind.men--Chi-square Test for Independence
+ 
+--------------------
+ 1. Chi-Square Test for Independence
+ 2. CROSS TABULATE CHI-SQUARE TAG1 TAG2
+ 3.
+ 4. First Group ID Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Second Group ID Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute Chi-Square Test?
+--------------------
+AN FE
+CROSS TABULATE CHI-SQUARE  _1 _2 _3
+--------------------
+WEB HELP CROSS TABULATE
+--------------------

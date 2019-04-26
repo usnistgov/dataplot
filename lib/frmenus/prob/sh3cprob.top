@@ -1,0 +1,24 @@
+----- <~prob\sh3cprob.top> Probability Plot (Three+ Shape Parameters)
+
+Probability Plots for Distributions with Three (or more)  Shape Parameters
+
+Generate Probability Plots for Continuous Distributions
+with Three (or more) Shape Parameters (Censored Case)
+
+Doubly Non-Central F                      <xemf: ~prob\ppdnfce.men>
+Doubly Non-Central T                      <xemf: ~prob\ppdntce.men>
+Generalized Exponential                   <xemf: ~prob\ppgexce.men>
+Generalized Inverse Gaussian              <xemf: ~prob\ppgigce.men>
+Generalized Trapezoid                     <xemf: ~prob\ppgtrce.men>
+Gompertz-Makeham                          <xemf: ~prob\ppmakace.men>
+    (Meeker/Escobar 3-shape parameterization>
+Gompertz-Makeham (DLMF parameterization)  <xemf: ~prob\ppmakbce.men>
+Log Skew T                                <xemf: ~prob\pplstce.men>
+Meilke's Beta-Kappa                       <xemf: ~prob\ppkapce.men>
+Non-Central Beta                          <xemf: ~prob\ppncbce.men>
+Non-Central F                             <xemf: ~prob\ppncfce.men>
+Trapezoid                                 <xemf: ~prob\pptrace.men>
+Truncated Exponential                     <xemf: ~prob\pptnece.men>
+Uneven Two-Sided Power                    <xemf: ~prob\pputsce.men>
+Wakeby                                    <xemf: ~prob\ppwakce.men>
+

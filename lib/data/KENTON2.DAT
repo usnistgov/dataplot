@@ -1,0 +1,48 @@
+This is Dataplot data file     KENTON.DAT
+Effect of Design on Kenton Food Company Sales
+Source--Neter, J.; Kutner, M.; Nachtsheim, C; and Wasserman, W.
+        Applied Linear Statistical Models, Fourth Edition,
+        Irwin, Chicago, page 677.
+Response Variable                  = number of cases of food sold
+Number of observations             = 19
+Number of variables per line image = 3
+Order of variables per line image--
+   Response variable = number of cases of food sold
+   Factor 1          = package design (4 levels)
+Note--20 random stores were chosen for the experiment.
+      A given design (of the 4) appeared in 5 randomly-chosen stores.
+      Due to a fire, design 3 only showed up in 4 stores.
+Statistical area--Multifactor
+Problem Type    --Comparative
+Design type     --Randomized Block
+To read this file into Dataplot--
+      SKIP 25; READ KENTON.DAT Y X1
+
+    Y       X1
+ Number   Package
+of Cases  Design
+  Sold
+-----------------
+   11       1
+   17       1
+   16       1
+   14       1
+   15       1
+
+   12       2
+   10       2
+   15       2
+   19       2
+   11       2
+
+   23       3
+   20       3
+   18       3
+   17       3
+
+   27       4
+   33       4
+   22       4
+   26       4
+   28       4
+

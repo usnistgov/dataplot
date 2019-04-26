@@ -1,0 +1,8 @@
+----- <~dataload\SIMIU.DP> Load SIMIU.DAT
+
+. This is file    SIMIU.DP
+
+DELETE Y
+SKIP 25
+READ SIMIU.DAT Y
+

@@ -1,0 +1,43 @@
+----- <~prob\ksdisc.top> Discrete Distribution Chi-Square Goodness of Fit
+
+Discrete Distribution Chi-Square Goodness of Fit
+
+Perform a Chi-Square Goodness of Fit Test
+for Discrete Distributions
+
+Beta-Binomial                                  <xemf: ~prob\ksbbn.men>
+Beta-Geometric                                 <xemf: ~prob\ksbge.men>
+Beta-Negative Binomial                         <xemf: ~prob\ksbnb.men>
+Binomial                                       <xemf: ~prob\ksbin.men>
+Borel-Tanner                                   <xemf: ~prob\ksbta.men>
+Classical Matching                             <xemf: ~prob\ksmat.men>
+Consul
+    (Theta parameterization)                   <xemf: ~prob\kscon1.men>
+    (Mu parameterization)                      <xemf: ~prob\kscon2.men>
+Discrete Uniform                               <xemf: ~prob\ksdun.men>
+Discrete Weibull                               <xemf: ~prob\ksdiw.men>
+Geeta
+    (Theta parameterization)                   <xemf: ~prob\ksget1.men>
+    (Mu parameterization)                      <xemf: ~prob\ksget2.men>
+Generalized Logarithmic Series                 <xemf: ~prob\ksgls.men>
+Generalized Lost Games                         <xemf: ~prob\ksglg.men>
+Generalized Negative Binomial                  <xemf: ~prob\ksgnb.men>
+Geometric
+    (number of trials before first success)    <xemf: ~prob\ksgeoa.men>
+    (number of trials including first success) <xemf: ~prob\ksgeob.men>
+Hermite                                        <xemf: ~prob\ksher.men>
+Hypergeometric                                 <xemf: ~prob\kshyp.men>
+Katz                                           <xemf: ~prob\kskat.men>
+Lagrange Poisson                               <xemf: ~prob\kslpo.men>
+Leads in Coin Tossing                          <xemf: ~prob\kslct.men>
+Logarithmic Series                             <xemf: ~prob\ksdlg.men>
+Lost Games                                     <xemf: ~prob\kslos.men>
+Negative Binomial                              <xemf: ~prob\ksnb.men>
+Poisson                                        <xemf: ~prob\kspoi.men>
+Polya-Aeppli                                   <xemf: ~prob\kspap.men>
+Quasi-Binomial Type I                          <xemf: ~prob\ksqbi.men>
+Yule                                           <xemf: ~prob\ksyul.men>
+Waring                                         <xemf: ~prob\kswar.men>
+Zeta                                           <xemf: ~prob\kszet.men>
+Zipf                                           <xemf: ~prob\kszip.men>
+

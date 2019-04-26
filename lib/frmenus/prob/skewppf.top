@@ -1,0 +1,24 @@
+----- <~prob\skewppf.top> Skewed Distribution Percent Points
+
+Skewed Distribution Percent Points
+
+Lognormal                               <xemf: ~prob\lgnppf.men>
+Halfnormal                              <xemf: ~prob\hfnppf.men>
+Chi-Squared                             <xemf: ~prob\chsppf.men>
+F                                       <xemf: ~prob\fppf.men>
+
+Exponential                             <xemf: ~prob\expppf.men>
+Gamma                                   <xemf: ~prob\gamppf.men>
+Beta                                    <xemf: ~prob\betppf.men>
+Weibull                       (for min) <xemf: ~prob\wei1ppf.men>
+Weibull                       (for max) <xemf: ~prob\wei2ppf.men>
+Ext. Value Type 1 (= Gumbel)  (for min) <xemf: ~prob\ev11ppf.men>
+Ext. Value Type 1 (= Gumbel)  (for max) <xemf: ~prob\ev12ppf.men>
+Ext. Value Type 2 (= Frechet) (for min) <xemf: ~prob\ev21ppf.men>
+Ext. Value Type 2 (= Frechet) (for max) <xemf: ~prob\ev22ppf.men>
+Pareto                                  <xemf: ~prob\parppf.men>
+Inverse Gaussian                        <xemf: ~prob\igppf.men>
+Reciprocal Inverse Gaussian             <xemf: ~prob\rigppf.men>
+Wald                                    <xemf: ~prob\walppf.men>
+Fatigue Life                            <xemf: ~prob\flppf.men>
+

@@ -1,0 +1,32 @@
+----- <~dex\desitabu.top> Design: Tabulation vs. Construction
+
+Design: Tabulation vs. Construction
+
+The avoidance of such complexity leads us to the first
+purpose of this catalog--to augment the construction
+procedure for full and fractional factorial designs
+with a simple tabulation of the more popular of such
+designs.  For the interested reader, the details of
+such construction are described in many experiment
+design texts, but one of the earliest (and one of the
+best) such descriptions is given in "Statistics for
+Experimenters" by George Box, Bill Hunter, and Stu
+Hunter (Wiley, 1978, New York).  In particular, page
+410 of that texts is an excellent summary page which
+provides an easy-to-use starting point which translates
+the analyst's constraints on
+
+   1) how many observations n?
+   2) how many factors k?
+
+into a particular design from the 2-level full and
+fractional factorial family.  Page 410 of Box, Hunter,
+and Hunter serves as the base for this catalog; all
+designs thereinin are included herein.  The - + coded
+notation used here for the various 2-level designs
+refers to the "low" (-) and "high" (+) levels (=
+settings) for a given factor.  It is at the
+experimentalist's discretion, of course, as to what
+setting of each factor is coded as "low" and what is
+coded as "high".
+

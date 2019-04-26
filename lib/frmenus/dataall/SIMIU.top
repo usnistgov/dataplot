@@ -1,0 +1,8 @@
+----- <~dataall\SIMIU.top> SIMIU.DAT
+
+SIMIU.DAT
+
+View     <xcl: LIST SIMIU.DAT>
+Load     <xcf: ~dataload/SIMIU.DP>
+Print    <xccl: printfile C:\DATAPLOT\SIMIU.DAT>
+

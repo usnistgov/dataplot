@@ -1,0 +1,8 @@
+----- <~dataload\DORKO4.DP> Load DORKO4.DAT
+
+. This is file    DORKO4.DP
+
+DELETE Y LAB RUN DAY TOD
+SKIP 25
+READ DORKO4.DAT Y LAB RUN DAY TOD
+

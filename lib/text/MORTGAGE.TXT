@@ -1,0 +1,29 @@
+----------  *MORTGAGE*  ----------
+
+           30-Year Mortgage Rates
+     (Washington, D. C., December 1987)
+
+       Lender                 Rate     Points
+
+First Federal Mortgage        10.5      2.75
+Investors Home Mortgage       10.375    3
+Perpetual Mortgage Co.        10.5      3
+Sovran Mortgage               10.5      3.25
+First Western Mortgage        10.25     2.75
+Goldome Realty                10.54     3
+Standard Federal S&L          10.375    3.75
+Carey Winston Co.             10.25     3.5
+First Southern Mortgage       10.5      3
+Paine Webber Mortgage         10.5      3.25
+GMAC Mortgage Co.             10.625    3
+Dominion Bankshares Mtge.     10.5      3
+American Home Funding         10.5      2.75
+Inland Mortgage Co.           11        1
+Citicorp Mortgage             10.875    3.875
+Kissell Mortgage Co.          10.375    3.25
+Dominion Federal S&L          10.5      3
+Ameribanc Savings             10.5      3
+B. F. Saul Mortgage Co.       10.5      2.5
+Weaver Brothers               10.5      3
+
+   Source--Washington Post, December 19, 1987.

@@ -1,0 +1,76 @@
+----- <~help\graphdev.top> Graphical Output Devices
+
+Graphical Output Devices
+
+
+DATAPLOT supports 3 graphical output devices:                       -
+
+ 1) DEVICE 1
+
+    DEVICE 1 output is used to generate screen graphics
+    and is set automatically by the GUI.
+
+    Under Unix/Lunix, the GUI sets DEVICE 1 to X11.  Under
+    Windows, DEVICE 1 is set to a metafile.  The Tcl/Tk
+    scripts then read this metafile to create the screen
+    graphics.
+
+    On Unix/Linux platforms, you can switch from X11 to
+    the Tcl/Tk generated graphics by selecting the
+    "File" menu in the Graph window and then selecting
+    "Software Graphics".
+
+ 2) DEVICE 2
+
+    DEVICE 2 is off by default.  To save subsequent plots in
+    Postscript format, enter the command
+
+       DEVICE 2 POSTSCRIPT
+
+    These Postscript plots will be saved to the file
+    "dppl1f.dat" in the current directory.  Any previous
+    plots in "dppl1f.dat" will be overwritten.
+
+   
+    If you are generating many plots, you may want to
+    selectively save the plots.  The DEVICE 2 ON and
+    DEVICE 2 OFF commands allow you to do this.  DEVICE 2 OFF
+    suppresses the graphics output to device 2 for subsequent
+    plots until a DEVICE 2 ON is entered.  These commands do
+    not open or close the dppl1f.dat file, they merely
+    suppress (or re-activate) output going to this file.
+    The command DEVICE 2 CLOSE closes the dppl1f.dat file
+    (you then need to enter the DEVICE 2 POSTSCRIPT command
+    to re-activate it).
+
+    Once you exit Dataplot, you can view/print the Postscript
+    output contained in dppl1f.dat.
+
+ 3) DEVICE 3
+
+    DEVICE 3 output is sent to the file dppl2f.dat in the
+    current directory.  However, it only contains the most
+    recent plot.  Dataplot automatically opens and closes the
+    dppl2f.dat file.  The graphs are created in Postscript
+    format.  DEVICE 3  is provided to allow convenient
+    printing of the current plot.
+
+    The dppl2f.dat file is used in conjunction with the
+    PP command.  Entering the command PP will print the
+    graph contained in dppl2f.dat.
+
+    The "Print" button on the Graph window issues a PP
+    command to print the current plot.
+
+    In order for the PP command to work correctly, your
+    default printer may need to be configured correctly.
+    This is discussed in the "Printing Your Graphs" menu.
+
+Note that Dataplot treats these 3 devices independently.
+That is, when you generate a plot, you can generate the
+plot on all 3 of these devices or any subset of them
+that is useful.
+
+
+Menus for controlling Graphics Output Devices    <~plot\od.top>
+

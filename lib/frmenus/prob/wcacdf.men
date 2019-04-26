@@ -1,0 +1,32 @@
+This is file wcacdf.men--Compute Wrapped Cauchy cdf & tail Prob.
+ 
+--------------------
+ 1. Compute Wrapped Cauchy cdf & Tail Probabilities
+ 2. LET A = WCACDF(X)
+ 3.
+ 4. Input values:
+ 5.                 x:             0 <= x <= 2*PI
+ 5. @CE 1 0 20 37 ?
+ 6.           shape p:                      p > 0
+ 6. @CE 2 0 20 37 ?
+ 7.        location u:
+ 7. @CE 3 0 20 37 ?
+ 8.
+ 9. Output parameters:
+10.      name for the cdf  value:
+10. @CE 4 0 38 49 ?
+11.      name for the tail prob. value:
+11. @CE 5 0 38 49 ?
+12.
+13.
+14. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 3 0 LET ZLOC = _3
+LET ZP = _2
+@IF 4 0 LET _4 = WCACDF(( _1 - ZLOC),ZP)
+@IF 5 0 LET _5 = 1 - WCACDF(( _1 - ZLOC),ZP)
+--------------------
+WEB HELP WCACDF
+--------------------

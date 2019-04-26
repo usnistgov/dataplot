@@ -1,0 +1,22 @@
+This is file normppcc.men--Compute normal ppcc of a variable
+ 
+--------------------
+ 1. Normal PPCC
+ 2. LET A = NORMAL PPCC Y
+ 3.
+ 4. Variable for which to compute the normppcc:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the normppcc:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -3 50 *
+ 9.
+10.
+11. Compute the Normal PPCC?:
+--------------------
+GR FE
+LET _2 = NORMAL PPCC  _1 _3
+--------------------
+WEB HELP NORMAL PPCC
+--------------------

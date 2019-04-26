@@ -1,0 +1,12 @@
+----- <~dataall\time.top> View/etc. Built-in Time Series Data Files
+
+View/Load/Print Built-in Time Series Data Files
+
+NIST data                                <~dataall\timenist.top>
+NOAA data                                <~dataall\timenoaa.top>
+Box-Jenkins data                         <~dataall\timebj.top>
+Pandit DDS data                          <~dataall\timedds.top>
+Other data                               <~dataall\timeothe.top>
+Bivariate data                           <~dataall\timebj.top>
+Image analysis data                      <~dataall\imag.top>
+

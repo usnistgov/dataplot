@@ -1,0 +1,8 @@
+----- <~datalist\ROSZMAN1.top> ROSZMAN1.DAT
+ 
+ROSZMAN1.DAT
+ 
+View     <xcl: LIST ROSZMAN1.DAT>
+Load     <x2cl: SKIP 25; READ ROSZMAN1.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\ROSZMAN1.DAT>
+ 

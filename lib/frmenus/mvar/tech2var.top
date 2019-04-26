@@ -1,0 +1,10 @@
+----- <~mvar\tech2var.top> Multivariate Statistical Techniques: 2 Variables
+ 
+Quantitative Techniques: 2 Response Variables
+
+F Test for Shift in Variation            <xemf: ~stat\1fvatest.men>
+T Test for Shift in Location             <xemf: ~stat\1flotest.men>
+Sign Test for Paired Data                <xemf: ~stat\signtest.men>
+Wilcoxon Signed Rank Sum Test (Paired Data) <xemf: ~stat\wilcoxon.men>
+Wilcoxon Signed Rank U (= Mann-Whitney) Test<xemf: ~stat\mannwhit.men>
+

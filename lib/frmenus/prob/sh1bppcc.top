@@ -1,0 +1,29 @@
+----- <~prob\sha1ppcc.top> PPCC Plot for One Shape Parameter Continuous Distributions
+
+Generate PPCC (or KS) Plot (one shape parameters)
+
+Generate PPCC (or KS) Plot for Continuous Distributions
+with One Shape Parameters (Uncensored Case)
+
+McLeish                                   <xemf: ~prob\mclppcc.men>
+Muth                                      <xemf: ~prob\mutppcc.men>
+Ogive                                     <xemf: ~prob\ogippcc.men>
+Pareto                                    <xemf: ~prob\parppcc.men>
+Pareto Second Kind                        <xemf: ~prob\pa2ppcc.men>
+Power                                     <xemf: ~prob\powppcc.men>
+Power Normal                              <xemf: ~reli\ppccpnr.men>
+Reciprocal                                <xemf: ~prob\recppcc.men>
+Reflected Power                           <xemf: ~prob\rpoppcc.men>
+Skew Double Exponential (Skew Laplace)    <xemf: ~prob\sdeppcc.men>
+Skew Normal                               <xemf: ~prob\snppcc.men>
+Slope                                     <xemf: ~prob\sloppcc.men>
+T                                         <xemf: ~prob\tppcc.men>
+Topp and Leone                            <xemf: ~prob\topppcc.men>
+Triangular                                <xemf: ~prob\trippcc.men>
+Tukey-Lambda (symmetric)                  <xemf: ~prob\lamppcc.men>
+Von Mises                                 <xemf: ~prob\vonppcc.men>
+Wald                                      <xemf: ~reli\ppccwal.men>
+Weibull (minimum case)                    <xemf: ~reli\ppccwei1.men>
+Weibull (maximum case)                    <xemf: ~reli\ppccwei2.men>
+Wrapped Cauchy                            <xemf: ~prob\wcappcc.men>
+

@@ -1,0 +1,24 @@
+This is file aad.men--Compute average absolute deviation of a variable
+ 
+--------------------
+ 1. Average Absolute Deviation
+ 2. LET A = AVERAGE ABSOLUTE DEVIATION Y
+ 3.
+ 4. Variable for which to compute the
+ 5.    average absolute deviation:
+ 5. @CE 1 0 33 50 ? gui-vari
+ 6. Parameter to store the average
+ 7.    absolute deviation:
+ 7. @CE 2 0 33 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 3 0 1 50 *
+11.
+12.
+13. Compute the Average Absolute Deviation?:
+--------------------
+GR FE
+LET _2 = AVERAGE ABSOLUTE DEVIATION  _1 _3
+--------------------
+WEB HELP AVERAGE ABSOLUTE DEVIATION
+--------------------

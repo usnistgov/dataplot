@@ -1,0 +1,8 @@
+----- <~datalist\BOXBOD.top> BOXBOD.DAT
+ 
+BOXBOD.DAT
+ 
+View     <xcl: LIST BOXBOD.DAT>
+Load     <x2cl: SKIP 25; READ BOXBOD.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\BOXBOD.DAT>
+ 

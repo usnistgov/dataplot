@@ -1,0 +1,37 @@
+This is file comp_squ.men--Compute complex square root
+ 
+--------------------
+ 1. Complex Square Root
+ 2. LET YR YC = COMPLEX SQUARE ROOT XR XC
+ 3. @CE 6 1 64 70 Help
+ 3.
+ 4. Variable containing real component 
+ 5. for which to compute the complex square root:
+ 5. @CE 1 0 33 50 ?
+ 6. Variable containing complex component
+ 7. for which to compute the complex square root:
+ 7. @CE 2 0 33 50 *
+ 8. Variable to store the real component
+ 9. of the complex square root:
+ 9. @CE 3 0 33 50 ?
+10. Variable to store the complex component
+11. of the complex square root:
+11. @CE 4 0 33 50 ?
+12.
+13. Subset/Except/For Specification:
+14. @CE 5 0 -10 50 *
+15.
+16.
+17. Compute the Complex Square Root?:
+--------------------
+GR FE
+LET ZZZZFLAG = 0
+@IF 6 1 LET ZZZZFLAG = 1
+IF ZZZZFLAG = 1
+  WEB HELP COMPLEX SQUARE ROOT
+END OF IF
+IF ZZZZFLAG = 0
+LET _3 _4 = COMPLEX SQUARE ROOT  _1 _2 _5
+END OF IF
+DELETE ZZZZFLAG
+--------------------

@@ -1,0 +1,30 @@
+This is Dataplot data file     CORNELL4.DAT
+Effect of Juice Composition on Lemonade Flavor
+        2-Factor Unconstrined Mixture
+        (2,4) Simplex Lattice Design
+Source--Cornell, John A. (1990).
+        ASQC Statistics Division Volume 5:
+        How to Run Mixture Exeriments for Product Quality.
+        Page 4 (Table 1).
+Response Variable                  = flavor rating
+Number of observations             = 5
+Number of variables per line image = 3
+Order of variables per line image--
+   Response variable = lemon flavor rating (large => good)
+   Factor 1          = juice A proprotion (0 to 1)
+   Factor 2          = juice B proprotion (0 to 1)
+Project Question--What settings for the 2 ingredients
+                  maximize the lemonade flavor rating?
+Statistical area--mixture design of experiment
+To read this file into Dataplot--
+      SKIP 25
+      READ CORNELL4.DAT Y X1 X2
+ Y           X1           X2
+Flavor     Juice A     Juice B
+Rating    Proportion  Proportion
+---------------------------------
+ 8.0          1           0
+ 8.2          .75         .25
+ 7.4          .50         .50
+ 4.7          .25         .75
+ 2.0          0           1

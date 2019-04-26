@@ -1,0 +1,49 @@
+This is file eweppf.men--Compute Exponentiated Weibull ppf
+ 
+--------------------
+ 1. Compute Exponentiated Weibull ppf
+ 2. LET A = EWEPPF(P,SHAPE1,SHAPE2,LOC,SCALE)
+ 3.
+ 4. The input argument, p, can be either a
+ 5. single number, the name of a parameter,
+ 6. or the name of a variable.
+ 7.  
+ 8. Input values:
+ 9.                   p (0 < p < 1):
+ 9. @CE 1 0 42 50 ?
+10.         shape gamma (gamma > 0):
+10. @CE 2 0 42 50 ?
+11.         shape theta (theta > 0):
+11. @CE 3 0 42 50 ?
+12.                      location u:
+12. @CE 4 0 42 50 ?
+13.                 scale s (s > 0):
+13. @CE 5 0 42 50 ?
+14.
+15. Output parameters:
+16.          name for the ppf value:
+16. @CE 6 0 42 50 ?
+17.
+18.
+19. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 4 0 LET ZLOC = _4
+LET ZSCALE = 1
+@IF 5 0 LET ZSCALE = _5
+IF ZSCALE <= 0
+   LET ZSCALE = 1
+END OF IF
+@IF 2 0 LET ZSHAPE1 = _2
+IF ZSHAPE1 <= 0
+   LET ZSHAPE1 = 1
+END OF IF
+@IF 3 0 LET ZSHAPE2 = _3
+IF ZSHAPE2 <= 0
+   LET ZSHAPE2 = 1
+END OF IF
+@IF 6 0 LET _6 = EWEPPF( _1 ,ZSHAPE1,ZSHAPE2,ZLOC,ZSCALE)
+--------------------
+WEB HELP EWEPPF
+--------------------

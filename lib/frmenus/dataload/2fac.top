@@ -1,0 +1,12 @@
+----- <~dataload\2fac.top> Load 2-Factor Data
+
+Load 2-Factor Data
+
+BATTADD3.DAT  Battery addditive comparison <xcf: ~dataload\BATTADD3.DP>
+CHOLEST1.DAT  Cholesterol in human serum   <xcf: ~dataload\CHOLEST1.DP>
+WATTERS.DAT   NIST SRM 2704                <xcf: ~dataload\WATTERS.DP>
+
+WRIGHT11.DAT  Wright brothers data         <xcf: ~dataload\WRIGHT11.DP>
+CLARK0.DAT    Electrical connectors        <xcf: ~dataload\CLARK0.DP>
+PERIODIC.DAT  Chemistry periodic table     <xcf: ~dataload\PERIODIC.DP>
+

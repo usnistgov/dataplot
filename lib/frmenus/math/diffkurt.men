@@ -1,0 +1,24 @@
+This is file diffkurt.men--Compute difference of kurtosiss
+ 
+--------------------
+ 1. Difference of Kurtosiss
+ 2. LET A = DIFFERENCE OF KURTOSISS Y1 Y2
+ 3.
+ 4. First Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Second Response Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Parameter to store the difference:
+ 6. @CE 3 0 42 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Compute the Difference of Kurtosiss?:
+--------------------
+GR FE
+LET _3 = DIFFERENCE OF KURTOSISS  _1 _2 _4
+--------------------
+WEB HELP DIFFERENCE OF KURTOSIS
+--------------------

@@ -1,0 +1,11 @@
+----- <~univ\variesti.top> Estimation: Univariate Variation
+
+Estimation: Univariate Variation
+
+Checking assumptions                 <xemf: ~univ\4plot.men>
+
+Summary statistics                   <xemf: ~univ\summstat.men>
+s and confidence limits for sigma    <xemf: ~univ\varicoli.men>
+
+Bootstrap and/or Jacknife estimation   <~univ\variboot.top>
+

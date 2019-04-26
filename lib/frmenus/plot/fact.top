@@ -1,0 +1,10 @@
+----- <~plot\fact.top> Factor Plot
+
+Factor Plot
+
+Discussion                         <~plot\factpl_d.top>
+
+Set Most Common Options            <xemf: ~plot\factplo1.men>
+
+Generate the Factor Plot           <xemf: ~plot\factplot.men>
+

@@ -1,0 +1,23 @@
+----- <~dataload\dexmix.top> Load Mixture Design Data
+
+Load Mixture Design Data
+
+2-Factor Unconstrained Mixture
+CORNELL4.DAT Juice composition on lemonade flavor   <xcf: ~dataload\CORNELL4.DP>
+
+3-Factor Unconstrained Mixture
+CORNELL9.DAT Fish components on fish patties texture <xcf: ~dataload\CORNELL9.DP>
+CORNEL35.DAT Pesticide composition on mite survival <xcf: ~dataload\CORNEL35.DP>
+CORNEL62.DAT Reduction of gasoline octane           <xcf: ~dataload\CORNEL62.DP>
+
+3-Factor Constrained Mixture
+CORNEL23.DAT Fruit proportions on punch taste  <xcf: ~dataload\CORNEL23.DP>
+PUNCH.DAT    Fruit proportions on punch taste  <xcf: ~dataload\PUNCH.DP>
+PUNCH2.DAT   Fruit proportions on punch taste  <xcf: ~dataload\PUNCH2.DP>
+CORNEL43.DAT ?                                 <xcf: ~dataload\CORNEL43.DP>
+CORNEL69.DAT Plastizaers on automobile vinyl thickness  <xcf: ~dataload\CORNEL69.DP>
+CORNEL78.DAT ?                                 <xcf: ~dataload\CORNEL78.DP>
+
+6-Factor Constrained Mixture
+SIMON.DAT    Cement data                       <xcf: ~dataload\SIMON.DP>
+

@@ -1,0 +1,38 @@
+This is file plotfunc.men--Plot a 1-variable function
+ 
+--------------------
+ 1. Plot a 1-variable Function
+ 2. PLOT F1 FOR X = 0 0.01 10
+ 3.
+ 4. Name of previously created function (or enter a functional expression):
+ 5. @CE 1 0 -10 50 ?
+ 6. Variable on which to plot the function:
+ 6. @CE 2 0 42 50 ? gui-variable
+ 7. Lower range for the plot:
+ 7. @CE 3 0 42 50 ?
+ 8. Increment between plot points:
+ 8. @CE 4 0 42 50 ?
+ 9. Upper range for the plot:
+ 9. @CE 5 0 42 50 ?
+10.
+11. Select the line style for the plot curve:
+11. @CE 6 0 42 50 gui-line
+12. Select the character symbol for the plot curve:
+12. @CE 7 0 42 50 gui-character
+13. Fill the character symbol?:
+13. @CE 8 0 42 50 gui-ooff
+14.
+15. Subset/Except/For Specification:
+16. @CE 9 0 -10 50 *
+17.
+18.
+19. Plot the Function?:
+--------------------
+GR FE
+CHARACTER _7
+CHARACTER FILL _8
+LINES _6
+PLOT _1 FOR _2 = _3  _4 _5  _9
+--------------------
+WEB HELP PLOT
+--------------------

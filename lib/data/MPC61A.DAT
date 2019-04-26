@@ -1,0 +1,50 @@
+This is the data file   MPC61A.DAT.
+Source: This example is used on page mpc612.htm of the e-Handbook.
+        This is a case study of a gauge study for resistivity
+        measurements.  Data is from Carroll Croakin.
+
+Description:  The data file MPC61.DAT contains resistivity measurements.
+              This file contains the differences from the mean (by wafer
+              and probe) for both runs 1 and 2.  See the header for
+              MPC61.DAT for more background on the original data.
+
+              This file is used to study the biases in the data.
+
+Data:         Column 1:   Wafer ID (check standards 138, 139, 140, 141, 142)
+              Column 2:   Probe (1, 281, 283 2062, 2362)
+              Column 3:   Difference from the mean for Run 1
+              Column 4:   Difference from the mean for Run 2
+
+To read into Dataplot, enter
+
+    SKIP 25
+    READ MPC61A.DAT WAFER PROBE D1 D2
+
+
+ WAFER  PROBE     D1        D2
+---------------------------------
+   138.    1.    0.0248   -0.0119
+   138.  281.    0.0108    0.0323
+   138.  283.    0.0193   -0.0258
+   138. 2062.   -0.0175    0.0561
+   138. 2362.   -0.0372   -0.0507
+   139.    1.   -0.0036   -0.0007
+   139.  281.    0.0394    0.0050
+   139.  283.    0.0057    0.0239
+   139. 2062.   -0.0323    0.0373
+   139. 2362.   -0.0094   -0.0657
+   140.    1.    0.0400    0.0109
+   140.  281.    0.0187    0.0106
+   140.  283.   -0.0201    0.0003
+   140. 2062.   -0.0126    0.0182
+   140. 2362.   -0.0261   -0.0398
+   141.    1.    0.0394    0.0324
+   141.  281.   -0.0107   -0.0037
+   141.  283.    0.0246   -0.0191
+   141. 2062.   -0.0280    0.0436
+   141. 2362.   -0.0252   -0.0534
+   142.    1.    0.0062    0.0093
+   142.  281.    0.0376    0.0174
+   142.  283.   -0.0044    0.0192
+   142. 2062.   -0.0011    0.0008
+   142. 2362.   -0.0383   -0.0469

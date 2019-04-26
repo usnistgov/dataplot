@@ -1,0 +1,42 @@
+This is Dataplot data file    NATR1333.DAT
+Temperature reference cells (4 chemical cells, 4 thermometers,
+4 runs on separate days).
+
+Question: Are there differences among treatments?
+
+Latin square experiment
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 13-33
+Number of observations                   =  16
+Total number of variables per line image =  4
+Order of variables on a line image--
+   Y  = Response 16
+   X1 = Cell Number
+   X2 = Thermometers
+   X3 = Day
+
+
+
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR1333.DAT Y X1 X2 X3
+  Y       X1       X2        X3
+-------------------------------
+ 36        1        1         1
+ 17        2        1         3
+ 30        3        1         2
+ 30        4        1         4
+ 38        1        2         2
+ 18        2        2         4
+ 39        3        2         3
+ 45        4        2         1
+ 36        1        3         3
+ 26        2        3         1
+ 41        3        3         4
+ 38        4        3         2
+ 30        1        4         4
+ 17        2        4         2
+ 34        3        4         1
+ 33        4        4         3
+

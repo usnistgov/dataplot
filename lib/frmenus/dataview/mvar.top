@@ -1,0 +1,26 @@
+----- <~dataview\mvar.top> View Multivariate Data
+
+View Multivariate Data
+
+AUTO83B.DAT*  EPA auto miles per gallon    <xcf: ~dataview\AUTO83B.DP>
+UGIANSKY.DAT* Interlab stress corrosion    <xcf: ~dataview\UGIANSKY.DP>
+
+AUTO83.DAT    EPA auto miles per gallon    <xcf: ~dataview\AUTO83.DP>
+AUTO79.DAT    Auto characteristics         <xcf: ~dataview\AUTO79.DP>
+BIOMED3.DAT   Biomedical data              <xcf: ~dataview\BIOMED3.DP>
+GNP.DAT       Gross national product       <xcf: ~dataview\GNP.DP>
+AC.DAT        2**(6-3)  A/C performance    <xcf: ~dataview\AC.DP>
+KRASNY1.DAT   2**5  Cigarette flammab.     <xcf: ~dataview\KRASNY1.DP>
+SMALL14.DAT   Atomic modeling              <xcf: ~dataview\SMALL14.DP>
+
+IRIS.DAT*     Classic Fisher iris data     <xcf: ~dataview\IRIS.DP>
+FISH2POP.DAT  Hemophilia data from Johnson <xcf: ~dataview\FISH2POP.DP>
+FLURY5.DAT    Swiss counterfeit notes      <xcf: ~dataview\FLURY5.DP>
+PLANETS.DAT   Solar systems planets stat.  <xcf: ~dataview\PLANETS.DP>
+CURRIE.DAT    Pollution source analysis    <xcf: ~dataview\CURRIE.DP>
+PERIODIC.DAT  Chemistry periodic table     <xcf: ~dataview\PERIODIC.DP>
+NEGIZ3.DAT    Aerosol particle size        <xcf: ~dataview\NEGIZ3.DP>
+MORALES.DAT   Mass spec: sulfur exa-fluor  <xcf: ~dataview\MORALES.DP>
+MORALES2.DAT  Mass spec: sulfur exa-fluor  <xcf: ~dataview\MORALES2.DP>
+KAUL.DAT      Refridgerant analysis        <xcf: ~dataview\KAUL.DP>
+

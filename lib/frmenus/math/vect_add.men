@@ -1,0 +1,24 @@
+This is file vect_add.men--Compute vector addition of a variable
+ 
+--------------------
+ 1. Vector Addition
+ 2. LET A = VECTOR ADDITION Y1 Y2
+ 3.
+ 4. First variable for which to compute the vector addition:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Second variable for which to compute the vector addition:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable to store the vector addition:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -20 50 *
+10.
+11.
+12. Compute the Vector Addition?:
+--------------------
+GR FE
+LET _3 = VECTOR ADDITION  _1 _2 _4
+--------------------
+WEB HELP VECTOR ADDITION
+--------------------

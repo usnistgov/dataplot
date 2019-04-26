@@ -1,0 +1,22 @@
+This is file commchar.men--Specify comment character for data files
+ 
+--------------------
+ 1. Specify Comment Character for Data Files
+ 2. COMMENT CHARACTER <char>
+ 3.
+ 4. You may find it convenient to insert comments
+ 5. in a data file.  This menu allows you to specify
+ 6. the character (must be found in column 1) that
+ 7. specifies the line is a comment rather than data.
+ 8.
+ 9. Enter the comment character (default="."):
+ 9. @CE 1 0 42 50 ?
+10.
+11.
+12. Define the Comment Character?
+--------------------
+SU FE
+COMMENT CHARACTER _1
+--------------------
+WEB HELP COMMENT CHARACTER
+--------------------

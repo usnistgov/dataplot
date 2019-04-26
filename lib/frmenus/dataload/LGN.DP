@@ -1,0 +1,8 @@
+----- <~dataload\LGN.DP> Load LGN.DAT
+
+. This is file    LGN.DP
+
+DELETE Y
+SKIP 25
+READ LGN.DAT Y
+

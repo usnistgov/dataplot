@@ -1,0 +1,44 @@
+This is file linearfi.men--Compute a linear fit across time
+ 
+--------------------
+ 1. Linear fit across time
+ 2. FIT Y TIME
+ 3.
+ 4. Vertical  axis variable for the linear fit:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Optional horizontal axis variable for the linear fit:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Variable to save residuals:
+ 6. @CE 3 0 42 50 *
+ 7.
+ 8. Line style for the linear fit curve:
+ 8. @CE 4 0 42 50 gui-line
+ 9. Character symbol for the raw data:
+ 9. @CE 5 0 42 50 gui-character
+10. Fill the character symbol?:
+10. @CE 6 0 42 50 gui-ooff
+11.
+12. Subset/Except/For Specification:
+13. @CE 7 0 -5 50 *
+14.
+15.
+16. Perform the Linear Fit?:
+--------------------
+GR FE
+MULTIPLOT CORNER COORDINATES 5 5 95 95
+MULTIPLOT 2 1
+LET ZZZZN = SIZE _1
+LET ZZZZX = SEQUENCE 1 1 ZZZZN
+@IF 2 0 DELETE ZZZZX
+@IF 2 0 LET ZZZZX = _2
+PLOT _1 ZZZZX _7
+FIT _1 ZZZZX  _7
+CHARACTER _5 BLANK
+CHARACTER FILL _6 OFF
+LINES BLANK _5
+PLOT _1 PRED VS ZZZZX _7
+END OF MULTIPLOT
+LET _3 = RES
+--------------------
+WEB HELP FIT
+--------------------

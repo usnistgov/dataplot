@@ -1,0 +1,39 @@
+This is file bgecdf.men--Compute Beta-Geometric cdf and tail probability
+ 
+--------------------
+ 1. Compute Beta-Geometric cdf and Tail Probability
+ 2. LET Y = BGECDF(X,ALPHA,BETA)
+ 3.
+ 4. Input values:
+ 5.                       x (x = 1, 2, ...):
+ 5. @CE 1 0 42 50 ?
+ 6.       shape parameter alpha (alpha > 0):
+ 6. @CE 2 0 42 50 ?
+ 7.         shape parameter beta (beta > 0):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Output parameters:
+10.                  name for the cdf value:
+10. @CE 4 0 42 50 ?
+11.     name for the tail probability value:
+11. @CE 5 0 42 50 ?
+12.
+13.
+14. Compute the Probability?
+--------------------
+AN FE
+LET ZA = 1
+LET ZB = 1
+@IF 2 0 LET ZA = _2
+IF ZA <= 0
+   LET ZA = 1
+END OF IF
+@IF 3 0 LET ZB = _3
+IF ZB <= 0
+   LET ZB = 1
+END OF IF
+@IF 4 0 LET _4 = BGECDF( _1 , ZA , ZB )
+@IF 5 0 LET _5 = 1 - BGECDF( _1 , ZA , ZB )
+--------------------
+WEB HELP BGECDF
+--------------------

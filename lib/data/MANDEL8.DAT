@@ -1,0 +1,75 @@
+This is Dataplot data file     MANDEL8.DAT
+Source--Mandel, John (1991), "Evaluation and Control of Measurements",
+        Marcel Dekker, p. 118 (Table 7.1).
+Response Variable                  = compressive strength of timber
+Number of observations             = 50
+Number of variables per line image = 3
+Order of variables per line image--
+   Response variable = compressive strength of timber
+   Factor 1          = tree     (10 levels)
+   Factor 2          = temperature in Celcius ( 5 levels)
+Note that each measurement is the average of 2 measurements
+Statistical area--Multifactor Interlab
+                  (Mandel's row linear model for two-factor tables)
+Problem Type    --Comparative
+Design type     --Randomized Block
+To read this file into Dataplot--
+   skip 25
+   read mandel8.dat y tree temp
+
+
+
+
+Stress   Lab  Material
+  Y       X1    X2
+----------------------
+6570       1   -20
+7950       2   -20
+6695       3   -20
+7755       4   -20
+7765       5   -20
+7630       6   -20
+7530       7   -20
+7605       8   -20
+8450       9   -20
+7725      10   -20
+6230       1     0
+7055       2     0
+6160       3     0
+6840       4     0
+6580       5     0
+6820       6     0
+6625       7     0
+6770       8     0
+7615       9     0
+7030      10     0
+4715       1    20
+5650       2    20
+4825       3    20
+5165       4    20
+5145       5    20
+5175       6    20
+5280       7    20
+5230       8    20
+5970       9    20
+5370      10    20
+3815       1    40
+4780       2    40
+3950       3    40
+4135       4    40
+4335       5    40
+4335       6    40
+4050       7    40
+4150       8    40
+4670       9    40
+3875      10    40
+3170       1    60
+3635       2    60
+3205       3    60
+3530       4    60
+3340       5    60
+3310       6    60
+3075       7    60
+3045       8    60
+3130       9    60
+3145      10    60

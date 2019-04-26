@@ -1,0 +1,85 @@
+This is file setx2tcl.men--Set X2TIC MARK LABEL Attributes
+ 
+--------------------
+ 1. Set X2TIC MARK LABEL Attributes
+ 2. X2TIC MARK LABEL COLOR RED; X2TIC MARK LABEL SIZE 3
+ 3.
+ 4. X2 Tic Mark Labels:
+ 4. @CE 1 0 42 50 * gui-ooff
+ 5. Angle for X2 Tic Mark Labels:
+ 5. @CE 2 0 42 50 *
+ 6. Case for X2 Tic Mark Labels:
+ 7. @CE 3 1  5 15 upper
+ 7. @CE 3 2 17 27 lower
+ 7. @CE 3 3 29 39 asis
+ 8. Color for X2 Tic Mark Labels:
+ 8. @CE 4 0 42 50 * gui-color
+ 9. Decimals for X2 Tic Mark Labels:
+ 9. @CE 5 0 42 50 *
+10. Direction for X2 Tic Mark Labels:
+10. @CE 6 1 25 37 horizontal
+10. @CE 6 2 39 50 vertical
+11. Displacement for X2 Tic Mark Labels:
+11. @CE 7 0 42 50 *
+12. Font for X2 Tic Mark Labels (0 to 100 units):
+12. @CE 8 0 42 50 * gui-font
+13. Format for X2 Tic Mark Labels (0 to 100 units):
+14. @CE 9 1  5 10 real
+14. @CE 9 2 12 24 exponential
+14. @CE 9 3 26 34 power
+14. @CE 9 4 36 43 alpha
+15. Justification for X2 Tic Mark Labels:
+16. @CE 10 1 5 50 Horizontal - left; Vertical - bottom
+17. @CE 10 2 5 50 Horizontal - center; Vertical - bottom
+18. @CE 10 3 5 50 Horizontal - right; Vertical - bottom
+19. @CE 10 4 5 50 Horizontal - left; Vertical - center
+20. @CE 10 5 5 50 Horizontal - center; Vertical - center
+21. @CE 10 6 5 50 Horizontal - right; Vertical - center
+22. @CE 10 7 5 50 Horizontal - left; Vertical - top
+23. @CE 10 8 5 50 Horizontal - center; Vertical - top
+24. @CE 10 9 5 50 Horizontal - right; Vertical - top
+25. Size for X2 Tic Mark Labels (0 to 100 units):
+25. @CE 11 0 42 50 * 
+26. Thickness for X2 Tic Mark Labels:
+26. @CE 12 0 42 50 * gui-thick
+27.
+28. If you specified "alpha" for the tic label
+29. format, enter the alphanumeric labels here
+30. (separated by spaces):
+31. @CE 13 0 -20 50 *
+32.
+33.
+34. Set X2TIC MARK LABEL Attributes?
+--------------------
+PC FE
+@IF 1 0 X2TIC MARK LABELS _1
+@IF 2 0 X2TIC MARK LABELS ANGLE _2
+@IF 3 1 X2TIC MARK LABELS CASE UPPER
+@IF 3 2 X2TIC MARK LABELS CASE LOWER
+@IF 3 3 X2TIC MARK LABELS CASE ASIS
+@IF 4 0 X2TIC MARK LABELS COLOR _4
+@IF 5 0 X2TIC MARK LABELS DECIMALS _5
+@IF 6 1 X2TIC MARK LABELS DIRECTION HORIZONTAL
+@IF 6 2 X2TIC MARK LABELS DIRECTION VERTICAL
+@IF 7 0 X2TIC MARK LABELS DISPLACEMENT _7
+@IF 8 0 X2TIC MARK LABELS FONT _8
+@IF 9 1 X2TIC MARK LABELS FORMAT REAL
+@IF 9 2 X2TIC MARK LABELS FORMAT EXPONENTIAL
+@IF 9 3 X2TIC MARK LABELS FORMAT POWER
+@IF 9 4 X2TIC MARK LABELS FORMAT ALPHA
+@IF 10 0 X2TIC MARK LABELS JUSTIFICATION _10
+@IF 10 1 X2TIC MARK LABELS JUSTIFICATION LEFT
+@IF 10 2 X2TIC MARK LABELS JUSTIFICATION CENTER
+@IF 10 3 X2TIC MARK LABELS JUSTIFICATION TOP
+@IF 10 4 X2TIC MARK LABELS JUSTIFICATION LECE
+@IF 10 5 X2TIC MARK LABELS JUSTIFICATION CECE
+@IF 10 6 X2TIC MARK LABELS JUSTIFICATION RICE
+@IF 10 7 X2TIC MARK LABELS JUSTIFICATION LETO
+@IF 10 8 X2TIC MARK LABELS JUSTIFICATION CETO
+@IF 10 9 X2TIC MARK LABELS JUSTIFICATION RITO
+@IF 11 0 X2TIC MARK LABELS SIZE _11
+@IF 12 0 X2TIC MARK LABELS THICKNESS _12
+@IF 13 0 X2TIC MARK LABELS CONTENT _13
+--------------------
+WEB HELP TIC MARK LABELS
+--------------------

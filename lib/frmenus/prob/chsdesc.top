@@ -1,0 +1,21 @@
+----- <~prob\chsdesc.top> Chi-Squared Description
+
+*Chi-Squared Description
+
+pdf: f(x;nu) = constant * (x**((nu/2)-1)) * exp(-x/2)   for x >= 0
+
+Moments   : E(X)  =
+            SD(X) =
+
+Type      : Continuous, skewed family of distributions--
+            moderate-tailed to moderate/long-tailed.
+Domain    : 0 to +infinity
+Synonym   :
+Genesis   :
+Definition: If X1, X2, X3, ... are normal N(0,1),
+            then X1**2 + X2**2 + ... + Xk**2 is Chi-squared (k).
+
+Reference : Johnson & Kotz,
+            Continuous Univariate Distributions-2,
+            Chapter 17 (pages 166-206).
+

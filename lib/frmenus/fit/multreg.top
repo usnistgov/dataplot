@@ -1,0 +1,14 @@
+----- <~fit\multreg.top> Multiple Regression
+
+Multiple Regression
+
+Discussion          <~fit\mrdisc.top>
+NIST/SEMATECH Handbook (Least Squares) <xcl: web handbook linear least squares>
+
+Do the Fit          <xemf: ~fit\fitmult.men>
+Do Model Validation <~fit\modelval.top>
+Built-in Datasets
+   View             <~dataview\regmv.top>
+   Load             <~dataload\regmv.top>
+References          <~fit\referenc.top>
+

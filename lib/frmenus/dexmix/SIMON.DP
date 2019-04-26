@@ -1,0 +1,36 @@
+. Analysis of FHA concrete
+.
+. -----start point-----
+.
+dimension 100 variables
+skip 25
+read simon.dat y1 y2 y3 y4 y5 x1 x2 x3 x4 x5 x6
+skip 0
+let x6 = 1-x1-x2-x3-x4-x5
+.
+let string sy1 = slump
+let string sy2 = strength (1)
+let string sy3 = strength (28)
+let string sy4 = RCP (28)
+let string sy5 = cost
+.
+let string sx1 = water
+let string sx2 = cement
+let string sx3 = microsilica
+let string sx4 = HTWRA
+let string sx5 = course aggregate
+let string sx6 = fine aggregate
+.
+characters x
+lines blank
+multiplot corner coordinates 5 5 95 95
+multiplot 5 6
+   frame corner coordinates 0 0 100 100
+   tics off
+   tic labels off
+   loop for r = 1 1 5
+      loop for f = 1 1 6
+         plot y^r x^f
+      end loop
+   end loop
+multiplot off

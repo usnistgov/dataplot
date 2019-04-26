@@ -1,0 +1,38 @@
+This is file matr_rea.men--Read Matrix from File
+ 
+--------------------
+ 1. Read Matrix from File
+ 2. READ MATRIX.DAT M
+ 3.
+ 4. Each row of the data file should contain a single
+ 5. row of the matrix.  The number of columns of the matrix
+ 6. is automatically determined from the number of data elements
+ 7. on each line.
+ 8.
+ 9. User file:
+10. @CE 1 0 -10 50 ? gui-none
+11.
+12. Name of matrix to read:
+12. @CE 2 0 33 50 ? gui-none
+13.
+14. Number of header lines to skip:
+14. @CE 3 0 33 50 *
+15.
+16. Format (Optional and Fortran-like):
+17. @CE 5 0 -10 50 *
+18.
+19. Subset/Except/For Specification:
+20. @CE 6 0 -10 50 *
+21.
+22.
+23. Peform the Read?
+--------------------
+SU FE
+SET FILE NAME QUOTE ON
+SKIP _3
+SET READ FORMAT _5
+READ MATRIX _1 _2 _6
+SET FILE NAME QUOTE OFF
+--------------------
+WEB HELP READ MATRIX
+--------------------

@@ -1,0 +1,8 @@
+----- <~dataload\TRACY.DP> Load TRACY.DAT
+
+. This is file    TRACY.DP
+
+DELETE Y1 Y2 Y3 HIST
+SKIP 25
+READ TRACY.DAT Y1 Y2 Y3 HIST
+

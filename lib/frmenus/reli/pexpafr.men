@@ -1,0 +1,48 @@
+This is file pexpafr.men--Plot Exponential Average Failure Rate Function
+ 
+--------------------
+ 1. Plot an Exponential Average Failure Rate Function
+ 2. PLOT EXPAFR(0,X) FOR X = 0  0.01  3
+ 3.
+ 4. Scale Parameter b (b > 0):
+ 4. @CE 1 0 42 50 ?
+ 5.
+ 6. You can specify the range of values to plot either
+ 7. by providing an input vector containing the explicit
+ 8. input values or by providing the start, increment,
+ 9. and stop values.  You can also specify the beginning
+10. time (this remains fixed and defaults to 0).
+11.
+12. Beginning Time (default = 0):
+12. @CE 2 0 42 50 *
+13.
+14. Input Variable (optional):
+14. @CE 3 0 42 50 ? gui-variable
+15.
+16. Start Value (> Beginning Time):
+16. @CE 4 0 42 50 ?
+17. Increment Value (defaults to 0.1):
+17. @CE 5 0 42 50 ?
+18. Stop Value:
+18. @CE 6 0 42 50 ?
+19.
+20. Optional variable to store computed AFR values:
+20. @CE 7 0 42 50 ?
+21.
+22.
+23. Plot the Exponential Average Failure Rate Function?
+--------------------
+AN FE
+LET ZSCALE = 1
+@IF 1 0 LET ZSCALE = _1
+LET ZZZZSTAR = 0
+@IF 2 0 LET ZZZZSTAR = _2
+LET ZINC = 0.1
+@IF 5 0 LET ZINC = _5
+@IF 3 0 LET ZZZZAFR = EXPAFR(ZZZZSTAR, _3 ,ZLOC,ZSCALE)
+@IF 3 0 PLOT ZZZZAFR _3
+@IF 4 0 PLOT EXPAFR( ZZZZSTAR,ZZ,ZSCALE) FOR ZZ = _4 ZINC _6
+@IF 7 0 LET _7 = YPLOT
+--------------------
+WEB HELP EXPAFR
+--------------------

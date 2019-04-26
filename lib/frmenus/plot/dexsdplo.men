@@ -1,0 +1,56 @@
+This is file dexsdplo.men--Generate DEX SD Plot
+ 
+--------------------
+1. DEX SD Plot
+2. DEX SD PLOT Y X1 X2 X3 X4 X5 ...
+3.
+4. Response Variable:
+4. @CE 1 0 33 50 ? gui-variable
+5. List of Factors/Variables:
+6. @CE 2 0 1 50 ? gui-variable
+7.
+8. Line type connecting the data:
+8. @CE 4 0 33 50 * gui-line
+9. Line type for global mean:
+9. @CE 5 0 33 50 * gui-line
+10. Character type for data:
+10. @CE 6 0 33 50 * gui-character
+11. Character fill for data:
+11. @CE 7 0 33 50 gui-ooff
+12. Spike to global mean:
+12. @CE 8 0 33 50 gui-ooff
+13. Use variable names as X axis labels?
+13. @CE 9 1 40 45 yes
+13. @CE 9 2 47 52 no
+14.       Number of Factors?:
+14. @CE 10 0 47 54 *
+15.
+16. Subset/Except/For Specification:
+17. @CE 3 0 1 50 *
+18.
+19.
+20. Generate the DEX SD Plot?:
+--------------------
+GR FE
+@IF 4 0 LINES _4 _5
+@IF 6 0 CHAR _6
+CHAR FILL _7
+SPIKE _8
+@IF 8 0 LET ZM = STANDARD DEVIATION _1 _3
+@IF 8 0 SPIKE BASE ZM
+@IF 9 1 LET ZTEMP = _10 + 1
+@IF 9 1 XLIMITS 0 ZTEMP
+@IF 9 1 LET ZTEMP= _10 + 2
+@IF 9 1 MAJOR XTIC MARK NUMBER ZTEMP
+@IF 9 1 MINOR XTIC MARK NUMBER 0
+@IF 9 1 X1TIC MARK LABEL FORMAT ALPHA
+@IF 9 1 X1TIC MARK LABEL CONTENT SP() _2 SP()
+DEX SD PLOT _1 _2 _3
+@IF 9 1 XLIMITS
+@IF 9 1 MAJOR XTIC MARK NUMBER
+@IF 9 1 MINOR XTIC MARK NUMBER
+@IF 9 1 X1TIC MARK LABEL FORMAT 
+@IF 9 1 X1TIC MARK LABEL CONTENT
+--------------------
+WEB HELP DEX PLOT
+--------------------

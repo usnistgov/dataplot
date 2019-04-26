@@ -1,0 +1,8 @@
+----- <~dataall\CASTILL8.top> CASTILL8.DAT
+
+CASTILL8.DAT
+
+View     <xcl: LIST CASTILL8.DAT>
+Load     <xcf: ~dataload/CASTILL8.DP>
+Print    <xccl: printfile C:\DATAPLOT\CASTILL8.DAT>
+

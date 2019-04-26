@@ -1,0 +1,8 @@
+----- <~dataall\AC.top> AC.DAT
+
+AC.DAT
+
+View     <xcl: LIST AC.DAT>
+Load     <xcf: ~dataload/AC.DP>
+Print    <xccl: printfile C:\DATAPLOT\AC.DAT>
+

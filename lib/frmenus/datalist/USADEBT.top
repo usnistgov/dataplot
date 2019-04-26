@@ -1,0 +1,8 @@
+----- <~datalist\USADEBT.top> USADEBT.DAT
+ 
+USADEBT.DAT
+ 
+View     <xcl: LIST USADEBT.DAT>
+Load     <x2cl: SKIP 25; READ USADEBT.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\USADEBT.DAT>
+ 

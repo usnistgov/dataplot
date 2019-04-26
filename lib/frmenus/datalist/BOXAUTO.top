@@ -1,0 +1,8 @@
+----- <~datalist\BOXAUTO.top> BOXAUTO.DAT
+ 
+BOXAUTO.DAT
+ 
+View     <xcl: LIST BOXAUTO.DAT>
+Load     <x2cl: SKIP 25; READ BOXAUTO.DAT Y X1 X2 X3>
+Print    <xccl: printfile C:\DATAPLOT\BOXAUTO.DAT>
+ 

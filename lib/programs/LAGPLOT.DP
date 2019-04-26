@@ -1,0 +1,22 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     LAGPLOT.DP
+. PURPOSE--GENERATE A LAG PLOT
+.
+. -----START POINT-----------------------------------
+.
+TITLE Steel-Concrete Beam Deflection Analysis
+Y1LABEL Deflection at Time i
+X1LABEL Deflection at Time i-1
+LEGEND 1 Autocorrelation Analysis
+LEGEND 2 Lag Plot
+.
+SKIP 25
+READ LEW.DAT Y
+.
+CHAR TIME()
+LINES
+YMAX 500
+XMAX 500
+.
+LAG PLOT Y
+.
+LIMITS

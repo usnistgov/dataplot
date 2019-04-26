@@ -1,0 +1,61 @@
+This is file kapcdf.men--Compute Mielke's Beta-Kappa cdf and tail probability
+ 
+--------------------
+ 1. Compute Mielke's Beta-Kappa cdf, Tail Prob.
+ 2. LET A = KAPCDF(X,SHAPE1,SHAPE2,SHAPE3,LOC,SCALE)
+ 3.
+ 4. The input argument, x, can be either a
+ 5. single number, the name of a parameter,
+ 6. or the name of a variable.
+ 7.  
+ 8. Input values:
+ 9.                               x (x > u):
+ 9. @CE 1 0 42 50 ?
+10.                         shape k (k > 0):
+10. @CE 2 0 42 50 ?
+11.                   shape beta (beta > 0):
+11. @CE 3 0 42 50 ?
+12.                 shape theta (theta > 0):
+12. @CE 4 0 42 50 ?
+13.                              location u:
+13. @CE 5 0 42 50 ?
+14.                         scale s (s > 0):
+14. @CE 6 0 42 50 ?
+15.
+16. Output parameters:
+17.                  name for the cdf value:
+17. @CE 7 0 42 50 ?
+18.     name for the tail probability value:
+18. @CE 8 0 42 50 ?
+19.
+20.
+21. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 5 0 LET ZLOC = _5
+LET ZSCALE = 1
+@IF 6 0 LET ZSCALE = _6
+IF ZSCALE <= 0
+   LET ZSCALE = 1
+END OF IF
+LET ZSHAPE1 = 1
+LET ZSHAPE2 = 1
+LET ZSHAPE3 = 1
+@IF 2 0 LET ZSHAPE1 = _2
+IF ZSHAPE1 <= 0
+   LET ZSHAPE1 = 1
+END OF IF
+@IF 3 0 LET ZSHAPE2 = _3
+IF ZSHAPE2 <= 0
+   LET ZSHAPE2 = 1
+END OF IF
+@IF 4 0 LET ZSHAPE3 = _4
+IF ZSHAPE3 <= 0
+   LET ZSHAPE3 = 1
+END OF IF
+@IF 7 0 LET _7 = KAPCDF( _1 ,ZSHAPE1,ZSHAPE2,ZSHAPE3,ZLOC,ZSCALE)
+@IF 8 0 LET _8 = 1 - KAPCDF( _1 ,ZSHAPE1,ZSHAPE2,ZSHAPE3,ZLOC,ZSCALE)
+--------------------
+WEB HELP KAPCDF
+--------------------

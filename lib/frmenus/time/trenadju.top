@@ -1,0 +1,16 @@
+----- <~time\trenadju.top> Time-Domain Trend Adjustment
+ 
+Time-Domain Trend Adjustment
+ 
+Discussion                    <~time\trenaddi.top>
+ 
+Check for trends
+   Run sequence plot          <xemf: ~plot\runsplot.men>
+   Autocorrelation plot matrix  <xemf: ~time\autocpma.men>
+ 
+Estimate and remove trend
+   Compute first difference   <xemf: ~time\differ.men>
+   Lowess fit                 <xemf: ~time\lowess.men>
+   Linear fit over time       <xemf: ~time\linearfi.men>
+   Quadratic fit over time    <xemf: ~time\quadfit.men>
+ 

@@ -1,0 +1,224 @@
+This is file scatplma.men--Scatter Plot Matrix
+ 
+--------------------
+ 1. Scatter Plot Matrix
+ 2. Macro
+ 3.
+ 4. This menu generates a scatter plot matrix of
+ 5. up to 10 dependent variables.  To allow maximum
+ 6. space for the plots, no tic marks or tic mark labels
+ 7. are drawn.
+ 8.
+ 9. Variable 1:
+ 9. @CE 1 0 42 50 ? gui-variable
+10. Variable 2:
+10. @CE 2 0 42 50 ? gui-variable
+11. Variable 3:
+11. @CE 3 0 42 50 ? gui-variable
+12. Variable 4:
+12. @CE 4 0 42 50 ? gui-variable
+13. Variable 5:
+13. @CE 5 0 42 50 ? gui-variable
+14. Variable 6:
+14. @CE 6 0 42 50 ? gui-variable
+15. Variable 7:
+15. @CE 7 0 42 50 ? gui-variable
+16. Variable 8:
+16. @CE 8 0 42 50 ? gui-variable
+17. Variable 9:
+17. @CE 9 0 42 50 ? gui-variable
+18. Variable 10:
+18. @CE 10 0 42 50 ? gui-variable
+19.
+20. Fit a Lowess curve to each plot?:
+20. @CE 11 1 42 45 yes
+20. @CE 11 2 46 48 no
+21. Lowess fraction (default = 0.3):
+21. @CE 12 0 42 50 *
+22. Plot Diagonal As:
+22. @CE 13 1 18 24 blank
+22. @CE 13 2 25 32 histogram
+22. @CE 13 3 33 40 box plot
+22. @CE 13 4 41 48 scatter
+23.
+24. Plot Symbol:
+24. @CE 14 0 42 50 ? gui-char
+25. Plot Symbol Size (default = 2):
+25. @CE 15 0 42 50 ? 
+26. Plot Title:
+27. @CE 16 0 1 50 *
+28. Label and Tic Label Size (default=3):
+28. @CE 17 0 42 50 ? 
+29.
+30. Subset/Except/For Specification: 
+31. @CE 18 0 1 50 *
+32.
+33.
+34. Generate the Scatter Plot Matrix?:
+--------------------
+GR FE
+LET ZZZZNVAR = 0
+@IF 1 0 LET STRING ZZZZS1 = _1
+@IF 1 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 2 0 LET STRING ZZZZS2 = _2
+@IF 2 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 3 0 LET STRING ZZZZS3 = _3
+@IF 3 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 4 0 LET STRING ZZZZS4 = _4
+@IF 4 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 5 0 LET STRING ZZZZS5 = _5
+@IF 5 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 6 0 LET STRING ZZZZS6 = _6
+@IF 6 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 7 0 LET STRING ZZZZS7 = _7
+@IF 7 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 8 0 LET STRING ZZZZS8 = _8
+@IF 8 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 9 0 LET STRING ZZZZS9 = _9
+@IF 9 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 10 0 LET STRING ZZZZS10 = _10
+@IF 10 0 LET ZZZZNVAR = ZZZZNVAR + 1
+LET STRING ZZZZSUBS = SP()
+LET STRING ZZZZSUBS = _18
+.
+LET IHIST= 1
+@IF 13 2 LET IHIST= 2
+@IF 13 3 LET IHIST= 3
+@IF 13 4 LET IHIST= 4
+IF IHIST = 3
+  LET ZZZZN = SIZE ^ZZZZS1
+  LET ZZZZX = 1 FOR I = 1 1 ZZZZN
+END OF IF
+LET ILOWESS = 0
+@IF 11 1 LET ILOWESS = 1
+LOWESS FRACTION 0.3
+LOWESS FRACTION _12
+.
+CHARACTER X BLANK
+CHARACTER _14
+CHARACTER SIZE _15
+LINE BLANK SOLID
+CASE ASIS
+TIC LABEL SIZE 3
+LABEL SIZE 3
+TIC LABEL SIZE _17
+LABEL SIZE _17
+TITLE SIZE _17
+LEGEND SIZE _17
+LEGEND 1 COORDINATES 50 50
+LEGEND 1 JUSTIFICATION CENTER
+TIC MARK OFFSET UNITS SCREEN
+XTIC MARK OFFSET 3 3
+YTIC MARK OFFSET 3 3
+.
+DEVICE 1 FONT SIMPLEX
+FRAME CORNER COORDINATES 0 0 100 100
+MULTIPLOT CORNER COORDINATES 10 10 90 90
+MULTIPLOT ZZZZNVAR ZZZZNVAR
+.
+LOOP FOR I = 1 1 ZZZZNVAR
+    LOOP FOR J = 1 1 ZZZZNVAR
+        CHARACTER SAVE
+        LINE SAVE
+        LET TEMP1 = MOD(J,2)
+        LET TEMP2 = MOD(I,2)
+.
+        XTIC MARKS OFF
+        XTIC MARK LABELS OFF
+        XLABEL
+        LEGEND 1
+        IF I = ZZZZNVAR
+          IF TEMP1 = 0
+            X1TIC MARKS ON
+            X1TIC MARK LABELS ON
+            IF IHIST <> 1
+              X1LABEL ^ZZZZS^J
+            END OF IF
+            LABEL DISPLACEMENT 9
+          END OF IF
+        END OF IF
+        IF I = 1
+          IF TEMP1 = 1
+            X2TIC MARKS ON
+            X2TIC MARK LABELS ON
+            IF IHIST <> 1
+              TITLE ^ZZZZS^J
+            END OF IF
+          END OF IF
+        END OF IF
+.
+        YTIC MARKS OFF
+        YTIC MARK LABELS OFF
+        YLABEL
+        IF J = 1
+          IF TEMP2 = 1
+            LABEL DISPLACEMENT 10
+            Y1TIC MARKS ON
+            Y1TIC MARK LABELS ON
+            IF IHIST <> 1
+              Y1LABEL ^ZZZZS^I
+            END OF IF
+          END OF IF
+        END OF IF
+        IF J = ZZZZNVAR
+          IF TEMP2 = 0
+            LABEL DISPLACEMENT 13
+            Y2TIC MARKS ON
+            Y2TIC MARK LABELS ON
+            IF IHIST <> 1
+              Y2LABEL ^ZZZZS^I
+            END OF IF
+          END OF IF
+        END OF IF
+.
+        IF I <> J
+          IF ILOWESS = 0
+            PLOT ^ZZZZS^I ^ZZZZS^J
+          END OF IF
+          IF ILOWESS = 1
+            LOWESS ^ZZZZS^I ^ZZZZS^J
+            PLOT ^ZZZZS^I PRED VERSUS ^ZZZZS^J
+          END OF IF
+        END OF IF
+        IF I = J
+          IF IHIST = 1
+            LEGEND 1 ^ZZZZS^I
+            CHARACTER BLANK
+            PLOT ^ZZZZS^I ^ZZZZS^J
+            LEGEND 1
+          END OF IF
+          IF IHIST = 2
+            HISTOGRAM ^ZZZZS^I
+          END OF IF
+          IF IHIST = 3
+            CHARACTERS BOX PLOT
+            LINE BOX PLOT
+            FENCES ON 
+            BOX PLOT ^ZZZZS^I ZZZZX
+          END OF IF
+          IF IHIST = 4
+            PLOT ^ZZZZS^I ZZZZS^J
+          END OF IF
+        END OF IF
+        IF I = 1
+          IF TEMP1 = 1
+            MOVE 50 110
+            JUSTIFICATION CENTER
+            TEXT ^ZZZZ^S^J
+          END OF IF
+        END OF IF
+        CHARACTER RESTORE
+        LINE RESTORE
+        TITLE
+    END OF LOOP
+END OF LOOP
+MULTIPLOT OFF
+MOVE 50 97
+HEIGHT
+JUSTIFICATION CENTER
+TEXT _16
+DEVICE 1 FONT TEKTRONIX
+RESET PLOT CONTROL
+--------------------
+WEB HELP MULTIPLOT
+--------------------

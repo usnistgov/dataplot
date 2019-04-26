@@ -1,0 +1,15 @@
+----- <~dexmix\simplex.top>  Generate Simplex Grids for Mixture Designs
+ 
+Generate Simplex Triangular Grids for Mixture Designs
+ 
+Superimposed Data
+    Without Grid Lines       <~dexmix\simplex.men>
+    With    Grid Lines       <~dexmix\simplexd.men>
+Constraint Regions           <~dexmix\simplexr.men>
+Axis Lines Through Centroid  <~dexmix\simplex1.men>
+ 
+Worked Examples
+   Data without grid lines (PUNCH2.DAT) <xcf: ~dexmix\PUNCH2.DP>
+   Data with grid lines (PUNCH2.DAT)    <xcf: ~dexmix\GPUNCH2.DP>
+   Draw constraint regions              <xcf: ~dexmix\HARE.DP>
+

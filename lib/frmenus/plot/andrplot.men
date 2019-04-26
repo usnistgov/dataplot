@@ -1,0 +1,35 @@
+This is file andrplot.men--Andrews Plot
+ 
+--------------------
+1. Andrews Plot
+2. ANDREWS PLOT Y1 TO Y10
+3.
+4. List of Response Variables:
+5. @CE 1 0 1 50 ? gui-variable
+6.
+7. Line types for plot?:
+8. @CE 3 0 1 50 * gui-line
+9.
+10. Title:
+10. @CE 5 0 18 50 *
+11. Left Axis Label:
+11. @CE 6 0 18 100 *
+12. Bottom Axis Label:
+12. @CE 7 0 18 100 *
+13.
+14. Subset/Except/For Specification: 
+15. @CE 8 0 1 50 *
+16.
+17.
+18. Generate the Andrews Plot?:
+--------------------
+GR FE
+LINE _3
+CHARACTER BLANK ALL
+TITLE _5
+Y1LABEL _6
+X1LABEL _7
+ANDREWS PLOT _1 _8
+--------------------
+WEB HELP ANDREWS PLOT
+--------------------

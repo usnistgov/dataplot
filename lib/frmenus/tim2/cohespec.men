@@ -1,0 +1,40 @@
+This is file cohespec.men--Coherency-spectrum
+ 
+--------------------
+ 1. Coherency-spectrum
+ 2. COHERENCY-SPECTRUM Y1 Y2
+ 3.
+ 4. Definition: Coherency-spectrum = num/den with
+ 5.     num = cross-spec**2 + quadrature-spec**2
+ 6.     den = spectrum1 * spectrum2
+ 7.     0  <= coherency-spectrum  <= 1
+ 8.
+ 9. Vertical   axis = coherency
+10. Horizontal axis = frequency (0 to .5)
+11.
+12. Question being addressed:
+13.     Which frequencies in the 2 series are
+14.     most highly correlated?
+15.
+16. Reference: Granger & Hatanaka, pages 77, 78, 106.
+17.
+18. Response Variable   #1:
+18. @CE 1 0 33 50 ? gui-variable
+19. Response Variable   #2:
+19. @CE 2 0 33 50 ? gui-variable
+21.
+22. Line type:
+23. @CE 3 0 33 50 * gui-line
+24.
+25. Subset/Except/For Specification:
+26. @CE 4 0 6 50 *
+27.
+28.
+29. Generate the Coherency-spectrum?:
+--------------------
+GR FE
+LINES _3
+COHERENCY-SPECTRUM _1 _2 _4
+--------------------
+WEB HELP SPECTRUM
+--------------------

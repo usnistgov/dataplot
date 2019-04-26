@@ -1,0 +1,8 @@
+----- <~dataload\HAZE.DP> Load HAZE.DAT
+
+. This is file    HAZE.DP
+
+DELETE Y X
+SKIP 25
+READ HAZE.DAT Y X
+

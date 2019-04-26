@@ -1,0 +1,13 @@
+----- <~dataload\1facnist.top> Load 1-Factor Data: OTHER
+
+Load 1-Factor Data: OTHER
+
+USADEFIC.DAT  USA nat. def. (1980-1988)    <xcf: ~dataload\USADEFIC.DP>
+USADEBT.DAT   USA nat. debt (1947-1993)    <xcf: ~dataload\USADEBT.DP>
+PENTAGON.DAT  Pentagon expenditures        <xcf: ~dataload\PENTAGON.DP>
+
+LOTTERY3.DAT  Md. "Pick 3" Lottery         <xcf: ~dataload\LOTTERY3.DP>
+LOTTERY4.DAT  Md. "Pick 4" Lottery         <xcf: ~dataload\LOTTERY4.DP>
+
+MICHELSO.DAT  Speed of Light               <xcf: ~dataload\MICHELSO.DP>
+

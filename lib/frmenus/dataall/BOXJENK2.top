@@ -1,0 +1,8 @@
+----- <~dataall\BOXJENK2.top> BOXJENK2.DAT
+
+BOXJENK2.DAT
+
+View     <xcl: LIST BOXJENK2.DAT>
+Load     <xcf: ~dataload/BOXJENK2.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXJENK2.DAT>
+

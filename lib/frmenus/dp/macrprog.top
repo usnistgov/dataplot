@@ -1,0 +1,13 @@
+----- <~dp\macrprog.top> Macros & Programs
+ 
+Macros & Programs
+ 
+The analyst may create ASCII (script) files (via any
+editor) consisting of Dataplot commands that will
+carry out any sequence of Dataplot operations.
+ 
+   Create & Edit: EDIT [file name]
+   Run          : CALL [file name]
+   .dp          : typical file extension for
+                  Dataplot macros & programs
+ 

@@ -1,0 +1,46 @@
+This is file genadera.men--Generate Asymmetric Double Exponential Random Numbers
+ 
+--------------------
+ 1. Generate Asymmetric Double Exponential Random Numbers
+ 2. LET Y = ASYMMETRIC DOUBLE EXPO RAND NUMB FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 41 50 ?
+ 5. Shape Parameter (k or mu):
+ 5. @CE 2 0 41 50 ?
+ 6. Location Parameter:
+ 6. @CE 3 0 41 50 ?
+ 7. Scale Parameter (> 0):
+ 7. @CE 4 0 41 50 ?
+ 8.
+ 9. Which definition of asymmetric double exponential?:
+ 9. @CE 5 1 41 45 k
+ 9. @CE 5 2 46 50 mu
+10.
+11. Optional random number generator seed (default=305):
+12.    (integer >= 305)
+12. @CE 6 0 41 50 ?
+13.
+14. Name of output variable:
+14. @CE 7 0 41 50 ?
+15.
+16.
+17. Generate the random numbers?
+--------------------
+AN FE
+@IF 6 0 SEED _6
+@IF 5 1 SET ASYMMETRIC DOUBLE EXPONENTIAL DEFINITION K
+@IF 5 2 SET ASYMMETRIC DOUBLE EXPONENTIAL DEFINITION MU
+LET K = 1
+@IF 2 0 LET K = _2
+LET MU = 0
+@IF 2 0 LET MU = _2
+LET ZLOC = 0
+@IF 3 0 LET ZLOC = _3
+LET ZSCALE = 1
+@IF 4 0 LET ZSCALE = _4
+LET _7 = ASYMMETRIC DOUBLE EXPONENTIAL RANDOM NUMBERS FOR I = 1 1 _1
+LET _7 = ZLOC + ZSCALE* _7
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

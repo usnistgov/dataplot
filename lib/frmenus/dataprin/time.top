@@ -1,0 +1,12 @@
+----- <~dataprin\time.top> Print (to Printer) Built-in Time Series Data Files
+
+Print (to Printer) Built-in Time Series Data Files
+
+NIST data                                <xcf: ~dataprin\timenist.DP>
+NOAA data                                <xcf: ~dataprin\timenoaa.DP>
+Box-Jenkins data                         <xcf: ~dataprin\timebj.DP>
+Pandit DDS data                          <xcf: ~dataprin\timedds.DP>
+Other data                               <xcf: ~dataprin\timeothe.DP>
+Bivariate data                           <xcf: ~dataprin\timebj.DP>
+Image analysis data                      <xcf: ~dataprin\imag.DP>
+

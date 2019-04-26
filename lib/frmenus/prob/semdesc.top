@@ -1,0 +1,19 @@
+----- <~prob\semdesc.top> Semi-Circular Description
+
+*Semi-Circular Description
+
+pdf: f(x)     = 2*SQRT(1 - x**2)/PI
+pdf: f(x;u,r) = 2*SQRT(r**2 - (x-u)**2)/(PI*R**2)
+
+Moments   : E(X)  = u
+            SD(X) =
+
+Type      : Continuous, symmetric, circular-shaped, short-tailed
+Domain    : u - r <= x <= u + r
+Synonym   :
+Genesis   :
+Definition: If
+            then
+
+Reference :
+

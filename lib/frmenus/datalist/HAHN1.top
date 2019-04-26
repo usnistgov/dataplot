@@ -1,0 +1,8 @@
+----- <~datalist\HAHN1.top> HAHN1.DAT
+ 
+HAHN1.DAT
+ 
+View     <xcl: LIST HAHN1.DAT>
+Load     <x2cl: SKIP 25; READ HAHN1.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\HAHN1.DAT>
+ 

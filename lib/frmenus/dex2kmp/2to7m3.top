@@ -1,0 +1,33 @@
+----- <~dex2kmp\2to7m3.top> 2**(7-3) Design
+ 
+2**(7-3) Design
+ 
+   k = 7 factors
+   n = 16 runs
+   r = resolution 4
+       (main effects  ==  3-term interactions)
+ 
+                     (234)
+                 (123)   (134)
+   X1  X2  X3  X4  X5  X6  X7
+   ..........................
+   -   -   -   -   -   -   -
+   +   -   -   -   +   -   +
+   -   +   -   -   +   +   -
+   +   +   -   -   -   +   +
+   -   -   +   -   +   +   +
+   +   -   +   -   -   +   -
+   -   +   +   -   -   -   +
+   +   +   +   -   +   -   -
+   -   -   -   +   -   +   +
+   +   -   -   +   +   +   -
+   -   +   -   +   +   -   +
+   +   +   -   +   -   -   -
+   -   -   +   +   +   -   -
+   +   -   +   +   -   -   +
+   -   +   +   +   -   +   -
+   +   +   +   +   +   +   +
+ 
+Click here to view confounding structure. <~dex2kmp\cs27m3.top>
+Click here to load design. <x2cl: SKIP 75; READ 2TO7M3.DAT X1 TO X7>
+ 

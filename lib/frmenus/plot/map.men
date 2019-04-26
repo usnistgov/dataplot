@@ -1,0 +1,68 @@
+This is file map.men--Maps
+ 
+--------------------
+ 1. Map
+ 2. PLOT Y X REGID
+ 3.
+ 4. Y-Coordinate Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. X-Coordinate Variable:
+ 5. @CE 2 0 33 50 ? gui-vari
+ 6. Optional Region ID Variable:
+ 6. @CE 3 0 33 50 ? gui-vari
+ 7.
+ 8. Color for Region Borders:
+ 8. @CE 4 0 33 50 * gui-colo
+ 9. Line Type for Region Borders:
+ 9. @CE 5 0 33 50 * gui-line
+10. Line Thickness for Region Borders:
+10. @CE 6 0 33 50 * gui-thic
+11.
+12. Solid Filled Map?:
+12. @CE 7 0 33 50 * gui-ooff
+13.
+14. For the following attributes, specify one
+15. setting for each region.  That is, if your
+16. contains 5 regions, you need to specify 5
+17. colors.
+18.
+19. Colors for Region Interiors:
+20. @CE 8 0 1 50 * gui-colo
+21.
+22. Cross-Hatch Patterns:
+23. @CE 9 0 1 50 * gui-patt
+24. Line Types for Cross-Hatch Patterns:
+25. @CE 10 0 1 50 * gui-line
+26. Line Thicknesses for Cross-Hatch Patterns:
+27. @CE 12 0 1 50 * gui-thic
+28. Spacings for Cross-Hatch Patterns:
+29. @CE 13 0 1 50 *
+30.
+31.
+32. Generate the Map?:
+--------------------
+GR FE
+LINE SAVE
+CHARACTER SAVE
+LINE _5
+LINE COLOR _4
+LINE THICKNESS _6
+CHARACTER BLANK ALL
+SPIKE OFF ALL
+BAR OFF ALL
+@IF 7 0 REGION BASE POLYGON
+@IF 7 0 REGION FILL _7 ALL
+REGION FILL COLOR _8
+REGION PATTERN COLOR _8
+REGION PATTERN _9
+REGION PATTERN LINE _10
+REGION PATTERN SPACING _11
+REGION PATTERN THICKNESS _12
+FRAME OFF
+PLOT _1 _2 _3
+LINE RESTORE
+CHARACTER RESTORE
+FRAME ON
+--------------------
+WEB HELP REGION BASE
+--------------------

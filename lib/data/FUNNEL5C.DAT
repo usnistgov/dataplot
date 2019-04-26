@@ -1,0 +1,30 @@
+This is Dataplot data file    FUNNEL5C.DAT
+Simulated 2-experiment Funnel data
+(same as FUNNEL12.DAT except here split into 2 columns)
+Number of observations             = 5
+Number of variables per line image = 2
+Order of Variables on a line image--
+   1. Response variable 1 = traversal time (pre-mod)
+   2. Response variable 2 = traversal time (post-mod)
+Reference--DEX notes, Chapter 5: Statistics
+           2-sample location  shift testing
+           2-sample variation shift testing
+To read this into Dataplot--
+   SKIP 25
+   READ FUNNEL5C.DAT Y1 Y2
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Traversal Time     Traversal Time
+     Y1                 Y2
+----------------------------------
+     8.8               10.8
+     9.9               11.0
+    10.6               11.5
+    10.2               10.4
+    10.2               11.6

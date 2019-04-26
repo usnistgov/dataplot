@@ -1,0 +1,76 @@
+This is file slopcoli.men--Confidence Limits for Slope
+ 
+--------------------
+ 1. Confidence Limits for Slope in Linear Fit
+ 2. LET UPPER = A1+TPPF(.975,RESDF)*SDA1
+ 3.
+ 4. Variables:
+ 5.    Response    Y:
+ 5. @CE 1 0 35 50 ? gui-vari
+ 6.    Independent X:
+ 6. @CE 2 0 35 50 ? gui-vari
+ 7.
+ 8. Confidence level (select one):
+ 9. @CE 3 1 3 23 95% limits
+10. @CE 3 2 3 23 99% limits
+11.
+12. Subset/Except/For Specification:
+13. @CE 4 0 1 50 *
+14.
+15.
+16. Compute Confidence Limits?
+--------------------
+GR FE
+LINEAR FIT _1 _2 _4
+ 
+LET ZN = NUMBER _1 _4
+ 
+@IF 3 1 LET ZP = .95
+@IF 3 2 LET ZP = .99
+LET ZP2 = ZP+(1-ZP)/2
+LET ZPPF = TPPF(ZP2,RESDF)
+LET ZPERC = 100*ZP
+ 
+LET ZSTAT = A1
+SKIP 0
+READ DPST1F.DAT COEF SDCOEF
+LET ZSDSTAT = SDCOEF(2)
+LET ZLOWER = ZSTAT-ZPPF*ZSDSTAT
+LET ZUPPER = ZSTAT+ZPPF*ZSDSTAT
+ 
+CAPTURE ZZZZJUNK.DAT
+WRITE "^ZPERC Confidence Limits for Slope"
+WRITE " "
+WRITE "Number of Observations  = ^ZN"
+WRITE "Estimated Slope         = ^ZSTAT"
+WRITE "Estimated SD(Slope)     = ^ZSDSTAT"
+WRITE " "
+WRITE "Estimated Lower Limit   = ^ZLOWER"
+WRITE "Estimated Upper Limit   = ^ZUPPER"
+END OF CAPTURE
+ 
+LET ZINC = (ZUPPER-ZLOWER)/200
+LET ZWIDTH4 = (ZUPPER-ZLOWER)/4
+LET ZLOWER2 = ZLOWER-ZWIDTH4
+LET ZUPPER2 = ZUPPER+ZWIDTH4
+ 
+PLOT TPDF((X-ZSTAT)/ZSDSTAT,RESDF) FOR X = ZLOWER2 ZINC ZUPPER2 AND
+PLOT 0 FOR X = ZLOWER2 ZINC ZUPPER2
+ 
+JUSTIFICATION CENTER
+LET ZPDFSTAT = TPDF(0,RESDF)
+LET ZPDFLOWE = TPDF((ZLOWER-ZSTAT)/ZSDSTAT,RESDF)
+LET ZPDFUPPE = TPDF((ZUPPER-ZSTAT)/ZSDSTAT,RESDF)
+ 
+DRAWDDDS ZSTAT ZPDFSTAT ZSTAT 10
+DRAWDDDS ZLOWER ZPDFLOWE ZLOWER 5
+DRAWDDDS ZUPPER ZPDFUPPE ZUPPER 5
+ 
+MOVEDS ZSTAT 6; TEXT ^ZSTAT
+MOVEDS ZLOWER 1; TEXT ^ZLOWER
+MOVEDS ZUPPER 1; TEXT ^ZUPPER
+ 
+LIST ZZZZJUNK.DAT
+--------------------
+WEB HELP FIT
+--------------------

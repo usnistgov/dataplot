@@ -1,0 +1,10 @@
+----- <~dataloex\CASTILL2.DP> Load & Execute CASTILL2.DAT
+
+. This is file    CASTILL2.DP
+
+DELETE Y
+SKIP 25
+READ CASTILL2.DAT Y
+TITLE CASTILL2.DAT
+PLOT Y
+

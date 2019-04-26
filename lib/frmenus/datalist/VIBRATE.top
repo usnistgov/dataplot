@@ -1,0 +1,8 @@
+----- <~datalist\VIBRATE.top> VIBRATE.DAT
+ 
+VIBRATE.DAT
+ 
+View     <xcl: LIST VIBRATE.DAT>
+Load     <x2cl: SKIP 25; READ VIBRATE.DAT Y X1 TO X7>
+Print    <xccl: printfile C:\DATAPLOT\VIBRATE.DAT>
+ 

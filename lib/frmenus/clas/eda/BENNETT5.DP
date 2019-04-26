@@ -1,0 +1,10 @@
+----- <~dataloex\BENNETT5.DP> Load & Execute BENNETT5.DAT
+
+. This is file    BENNETT5.DP
+
+DELETE Y
+SKIP 25
+READ BENNETT5.DAT Y
+TITLE BENNETT5.DAT
+/
+

@@ -1,0 +1,25 @@
+This is file browser.men--SET BROWSER
+ 
+--------------------
+ 1. Set Dataplot URL
+ 2. SET DATAPLOT URL (url)
+ 3.
+ 4. By default, Dataplot accesses the Dataplot web
+ 5. pages from the NIST external web site.  For performance
+ 6. reasons, your site may have downloaded a copy of
+ 7. these web pages to a local web server.  If so, you
+ 8. can specify the web path here.  The default web path is:
+ 9.
+10.     http://www.itl.nist.gov/div898/software/dataplot/homepage.htm
+11. 
+12. Enter Dataplot URL:
+13. @CE 1 0 1 70 ?
+14.
+15.
+16. Set the URL?:
+--------------------
+SU FE
+SET DATAPLOT URL _1
+--------------------
+WEB HELP DATAPLOT URL
+--------------------

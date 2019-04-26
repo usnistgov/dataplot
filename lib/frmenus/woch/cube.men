@@ -1,0 +1,80 @@
+This is file cube.men--Draw a Cube
+ 
+--------------------
+ 1. Draw a Cube
+ 2. CUBE X1 Y1 X2 Y2
+ 3.
+ 4. X Coordinate for One Corner End Point:
+ 4. @CE 1 0 33 50 ?
+ 5. Y Coordinate for One Corner End Point:
+ 5. @CE 2 0 33 50 ?
+ 6. X Coordinate for Other Corner End Point:
+ 6. @CE 3 0 33 50 ?
+ 7. Y Coordinate for Other Corner End Point:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Line Type for Cube Border:
+ 9. @CE 5 0 42 50 * gui-line
+10. Line Color for Cube Border:
+10. @CE 6 0 42 50 * gui-colo
+11. Line Thickness for Cube Border:
+11. @CE 7 0 42 50 * gui-thic
+12.
+13. Type of Solid Fill for the Cube?:
+14. @CE 9 1 1 23 top and side
+14. @CE 9 2 25 48 interior
+15. @CE 9 3 1 23 side face
+15. @CE 9 4 25 48 top face
+16. @CE 9 5 1 23 front and side
+16. @CE 9 6 25 48 front and top
+17. @CE 9 7 1 23 no fill
+18. Color for Solid Fill:
+18. @CE 10 0 42 50 * gui-color
+19.
+20. Cross-Hatch Pattern for the Cube:
+20. @CE 11 0 42 50 * gui-patt
+21. Color for Cross-Hatch Pattern:
+21. @CE 12 0 42 50 * gui-colo
+22. Line Style for Cross-Hatch Pattern:
+22. @CE 13 0 42 50 * gui-line
+23. Line Thickness for Cross-Hatch Pattern:
+23. @CE 14 0 42 50 * gui-thick
+24. Spacing Thickness for Cross-Hatch Pattern:
+24. @CE 15 0 42 50 *
+25.
+26. Coordinate System to Use:
+27. @CE 8 1 1 50 absolute 0 to 100 screen units
+28. @CE 8 2 1 50 absolute data units of last plot
+29. @CE 8 3 1 50 relative (to first point) 0 to 100 screen units
+30. @CE 8 4 1 50 relative (to first point) data units of last plot
+31.
+32.
+33. Draw the Cube?:
+--------------------
+GR FE
+LINE _5
+LINE COLOR _6
+LINE THICKNESS _7
+REGION FILL ONFT
+@IF 9 1 REGION FILL ONTS
+@IF 9 2 REGION FILL ONF
+@IF 9 3 REGION FILL ONS
+@IF 9 4 REGION FILL ONT
+@IF 9 5 REGION FILL ONFS
+@IF 9 6 REGION FILL ONFT
+@IF 9 7 REGION FILL OFF
+REGION FILL COLOR _10
+REGION PATTERN _11
+REGION PATTERN COLOR _12
+REGION PATTERN LINE TYPE _13
+REGION PATTERN THICKNESS _14
+REGION PATTERN SPACING _15
+LET STRING ZZZZSTR = CUBE
+@IF 8 1 LET STRING ZZZZSTR = CUBE
+@IF 8 2 LET STRING ZZZZSTR = CUBE DATA
+@IF 8 3 LET STRING ZZZZSTR = CUBE RELATIVE
+@IF 8 4 LET STRING ZZZZSTR = CUBE DATA RELATIVE
+^ZZZZSTR  _1 _2 _3 _4
+--------------------
+WEB HELP CUBE
+--------------------

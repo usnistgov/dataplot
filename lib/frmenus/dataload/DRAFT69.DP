@@ -1,0 +1,7 @@
+----- <~dataload\DRAFT69.DP> Load DRAFT69.DAT
+
+. This is file    DRAFT69.DP
+DELETE Y DAY MONTH
+SKIP 25
+READ DRAFT69.DAT Y DAY MONTH
+

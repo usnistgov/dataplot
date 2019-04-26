@@ -1,0 +1,57 @@
+This is file carl.men--Generate C Average Run Length Chart
+ 
+--------------------line 3
+1. C Average Run Length Chart
+2. Macro
+3.
+4. Response Variable:
+4. @CE 1 0 42 50 ? gui-variable
+5.
+6. Start value for c (default = 0.1):
+6. @CE 2 0 42 50 ?
+7. Increment for c (default = 0.1):
+7. @CE 3 0 42 50 ?
+8. Stop value for k (default = 50):
+8. @CE 4 0 42 50 ?
+9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 1 50 *
+12.
+13.
+14. Generate the Chart?:
+--------------------
+DELETE ZZZZC ZZZZY ZZZZARL
+.
+LET NUMDEF = SUM _1 _5
+LET NGROUPS = SIZE _1 _5
+LET CBAR = NUMDEF/NGROUPS
+LET UCL = CBAR + 3*SQRT(CBAR)
+LET LCL = CBAR - 3*SQRT(CBAR)
+LET LCL = MAX(0,LCL)
+.
+LET CSTART = 0.1
+LET CINC = 0.1
+LET CSTOP = 50
+LET CSTART = _2
+LET CINC = _3
+LET CSTOP = _4
+.
+LET ZZZZC = SEQUENCE CSTART CINC CSTOP
+LET ZZZZA1 = INT(UCL)
+LET ZZZZA2 = INT(LCL)
+.
+LET ZZZZY = POICDF(ZZZZA1,ZZZZC) - POICDF(ZZZZA2,ZZZZC)
+LET ZZZZARL = ZZZZY
+.
+Y1LABEL Average Run Length
+X1LABEL Poisson Parameter Value
+TITLE ARL Curve for C Control Chart
+.
+LET ZZZZARL = 1/(1-ZZZZY) SUBSET ZZZZY <> 1
+LET ZZZZARL = 0 SUBSET ZZZZY = 1
+PLOT ZZZZARL VS ZZZZC
+TITLE
+LABEL
+--------------------
+WEB HELP C CHART
+--------------------

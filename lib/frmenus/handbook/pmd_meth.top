@@ -1,0 +1,9 @@
+----- <~handbook\pmd_meth.top> PMD Methods
+
+Process Modeling Methods
+
+Linear Least Squares Fitting        <xemf: ~fit\fitmult.men>
+Weighted Least Squares Fitting      <xemf: ~fit\fitmult.men>
+Non-Linear Least Squares Fitting    <xemf: ~fit\fitnl.men>
+Loess                               <xemf: ~math\lowess.men>
+

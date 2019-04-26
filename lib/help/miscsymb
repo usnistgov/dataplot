@@ -1,0 +1,96 @@
+This is Dataplot file    C:\DATAPLOT\HELP\MISCSYMB.
+ 
+Purpose: List the Miscellaneous symbols available
+         within Dataplot
+ 
+Example of usage:
+ 
+   TEXT LCBR() ABCDEF RCBR()
+   TEXT Temperature = 120 DEGR() C
+ 
+Within Dataplot, this MISCELLANEOUS SYMBOLS file may be
+viewed by entering
+ 
+   LIST MISCSYMB.     (be sure to include the trailing .)
+ 
+Miscellaneous symbols can be generated within any TEXT,
+TITLE, LABEL, or LEGEND command.  Note that the
+Miscellaneous symbols will appear ONLY when one of the
+Hershey fonts have been specified (via the FONTS
+command):
+ 
+   SIMPLEX                (e.g., FONT SIMPLEX)
+   DUPLEX
+   TRIPLEX
+   TRIPLEX ITALIC
+   COMPLEX
+   SIMPLEX SCRIPT
+   COMPLEX SCRIPT
+ 
+To indicate that a Miscellaneous symbol should appear in
+some text string, simply enter the abbreviated (never
+more than 4 characters) name from the list below and
+append an open and closed parenthesis after the name,
+as in INTE(), SUMM(), and DOTP().  The () is a flag to
+DATAPLOT that the previous character sub-string is not
+to be printed literally but rather should be converted
+and drawn as a special symbol.
+ 
+The miscellaneous symbols are--
+ 
+   left apostrophe          LAPO()
+   right apostrophe         RAPO()
+   left bracket             LBRA()
+   right bracket            RBRA()
+   left curly bracket       LCBR()
+   right curly bracket      RCBR()
+   left elbow               LELB()
+   right elbow              RELB()
+   right accent             RACC()
+   left accent              LACC()
+ 
+   breve                    BREV()
+   right quote              RQUO()
+   left quote               LQUO()
+   nasp                     NASP()
+   inverted nasp            IASP()
+   right arrow              RARR()
+   left arrow               LARR()
+   up arrow                 UARR()
+   down arrow               DARR()
+   paragraph                PARA()
+ 
+   dagger                   DAGG()
+   double dagger            DDAG()
+   vertical bar             VBAR()
+   double vertical bar      DVBA()
+   long vertical bar        LVBA()
+   horizontal bar           HBAR()
+   long horizontal bar      LHBA()
+   bar                      BAR()
+   degree                   DEGR()
+ 
+EXAMPLE --Go to the middle of screen, and draw out ABC
+          surrounded by curly brackets with ABC in
+          upper case simplex font--
+ 
+             CASE UPPER
+             FONT SIMPLEX
+             MOVE 50 50
+             TEXT LCBR()ABCRCBR()
+ 
+EXAMPLE --Go to the middle of screen, and write out x
+          surrounded by 2 vertical bars (a mathematics
+          notation for the absolute value of x) where X
+          is in lower case triplex font--
+ 
+             CASE LOWER
+             FONT TRIPLEX
+             MOVE 50 50
+             TEXT VBAR()XVBAR()
+ 
+Enter   --HELP CAPITALIZATION to list case (lower/upper) information.
+          HELP SUBSCIPTS to list sub/super-script information.
+          HELP GREEK SYMBOLS to list Greek characters.
+          HELP MATH SYMBOLS to list mathematics symbols.
+ 

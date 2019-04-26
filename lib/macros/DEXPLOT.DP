@@ -1,0 +1,109 @@
+. This is Dataplot program file    DEXPLOT.DP
+. Purpose--Generate 10 plots essential to the analysis
+.          of 2-level factorial designs
+. Date--December 2000
+. Updated--November 2003
+. Updated--September 2007
+. 6 macros are needed--dexplotsub.dp (where the 10 plots are generated)
+.                      dexcase.dp    (I/O for built-in examples)
+.                      confound.dp   (derive confounding structure)
+.                      digit.dp      (extract digits)
+.                      dexstat2.dp   (generate dex scatter & mean plots)
+.                      dexcont.dp    (generate contour plot)
+.
+. Assumptions:
+.    1. Data is in the vector Y
+.    2. Factors are in the vectors X1, X2, X3, ...
+.    3. Total number of factors is in the parameter K
+.
+. Note 1: If the user wants to run the 10-step analysis on
+.         a built-in dataplot data set (as defined in dexcase.dp),
+.         then the user should pre-define the parameter    case
+.         (via       let case = 31   (for example))
+.         before calling dexplot.dp
+.
+. Note 2: If the users wants to run the 10-step analysis
+.         on his own data,
+.         then he/she should pre-define y, x1, x2, ..., and k
+.         before calling dexplot.dp, or else
+.         dexplot.dp will interrogate the user with questions
+.         about which file contains the data, about how many factors k there are, etc.
+.         before carrying out the 10-step analysis.
+.
+. Note 3: For demonstration purposes (or for debugging purposes),
+.         it is sometimes convenient to have a pause after every plot.
+.         The pausing is controlled by the parameter    pausesw.
+.         To have no pausing, do nothing--no pause is the default.
+.         To have pausing, then pre-define (before calling dexplot) pausesw to 1
+.         by pre-entering the following:     let pausesw = 1
+.
+call dexplothistory.dp
+.
+. -----start point-----
+.
+dimension 100 variables
+feedback off
+.
+. -----Step 1: Define your computer (1 = pc and 2 = unix)-----
+.
+let computer = 1; . activate this line if running on a pc
+. let computer = 2; . activate this line if running on unix machines
+probe iopsy1
+if probeval = 1
+   let computer = 2
+end of if
+.
+if computer = 1; device 1 qwin; end if
+if computer = 2; device 1 x11; end if
+.
+if computer = 1
+   device 2 ps
+   device 2 color on
+end if
+if computer = 2
+   device 2 ps
+   device 2 color on
+end if
+.
+. -----Step 2: Define the height for the project header
+.                     the height for the title,-----
+.                     the height for the labels,-----
+.                     the title displacement,-----
+.                     and other plot appearance specs-----
+.
+call dexplotinit.dp
+.
+.
+. -----Step 3: Check to see if    case    exists.-----
+.              (By default,    case     will not exist -----
+.              In any event, get data and problem specs.-----
+.              Also, check pausesw.-----
+.              Finally, call the 10-step procedure (dexplotsub.dp)-----
+.
+if case not exist
+   if y not exist
+      if x1 not exist
+         if k not exist
+            call dexplotinterrogate.dp
+         end if
+      end if
+   end if
+end if
+.
+if case exist
+   call dexcase.dp
+end if
+.
+if pausesw not exist
+   let pausesw = 0
+end if
+.
+write "case = ^case"
+write "pausesw = ^pausesw"
+. stat v
+. write y x1 x2 x3 x4 x5
+. pause
+. stop
+.
+call dexplotsub.dp
+.

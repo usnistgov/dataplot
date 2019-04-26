@@ -1,0 +1,45 @@
+This is file prefit.men--Pre-Fitting (Nonlinear)
+ 
+--------------------
+1. Pre-Fitting: 1 or More Variables; Non-Linear Model
+2. PRE-FIT Y = <general function>
+3.
+4. Variables:
+5.    Response    Y:
+5. @CE 1 0 40 50 ? gui-vari
+6.    Weights     W:
+6. @CE 2 0 40 50 * gui-vari
+7.
+8. Non-Linear Function:
+9. @CE 3 0 1 50 *
+10.
+11. The syntax for entering the
+12. pre-fit range is:
+13.
+14.   FOR <NAME> = <START> <INC> <STOP>
+15.
+16. where <NAME> is the name of the parameter,
+17. <START> is the starting value, <INC> is
+18. the increment, and <STOP> is the stopping
+19. value.  For example,
+20.
+21.   FOR A = 10 10 100
+22.
+23. Up to 3 such FOR statements may be entered.
+24.
+25. First FOR Specification:
+26. @CE 4 0 1 50 *
+27. Second FOR Specification:
+28. @CE 5 0 1 50 *
+29. Third FOR Specification:
+30. @CE 6 0 1 50 *
+31.
+32.
+33. Do the Pre-Fit?
+--------------------
+GR FE
+WEIGHTS _2
+PRE-FIT _1 = _3 _4 _5 _6
+--------------------
+WEB HELP PRE-FIT
+--------------------

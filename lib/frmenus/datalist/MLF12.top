@@ -1,0 +1,8 @@
+----- <~datalist\MLF12.top> MLF12.DAT
+ 
+MLF12.DAT
+ 
+View     <xcl: LIST MLF12.DAT>
+Load     <x2cl: SKIP 25; READ MLF12.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\MLF12.DAT>
+ 

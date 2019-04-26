@@ -1,0 +1,2501 @@
+MENU FILE #1 (DATAPLOT GENERAL)
+ 
+14                 0       167
+Hardware, CPU's, Operating Systems, etc.
+0                  0       300
+DATAPLOT
+1                397         0
+Overview
+2                497         0
+Numbers, Parameters, Variables, Matrices, Functions/Strings
+2.1              497        11
+Numbers (named scalars)
+2.1.1            497        20
+Storage of Numbers
+2.1.2            497        27
+Conventions for Writing Numbers
+2.1.3            497        49
+Operating on Numbers via the LET Command
+2.1.4            497        59
+The Use of Numbers in Analyses
+2.2              497        71
+Parameters (named scalars)
+2.2.1            497        88
+Naming Conventions for Parameters
+2.2.2            497       103
+Storage of Parameter Values
+2.2.3            497       110
+Creating Parameters via the LET Command
+2.2.4            497       120
+Creating Parameters via the READ PARAMETER Command
+2.2.5            497       135
+Writing Parameters to Screen & File via the WRITE Command
+2.2.6            497       146
+Neat Writing of Parameters via SET WRITE DECIMALS Command
+2.2.7            497       169
+Text/Title/Label/Legend Writing of Parameters via ^
+2.2.7.1          497       185
+Text Output via WRITE
+2.2.7.2          497       192
+General Text Output via TEXT
+2.2.7.3          497       202
+Title Output on Plots via TITLE
+2.2.7.4          497       213
+Horizontal or Vertical Label Output on Plots via ...LABEL
+2.2.7.5          497       227
+Legend Output on Plots via LEGEND
+2.2.8            497       241
+Neat Text/Title/Label/Legend Writing of Parameters via ROUND()
+2.2.8.1          497       256
+Text Output via WRITE
+2.2.8.2          497       266
+General Text Output via TEXT
+2.2.8.3          497       278
+Title Output on Plots via TITLE
+2.2.8.4          497       290
+Horizontal or Vertical Label Output on Plots via ...LABEL
+2.2.8.5          497       307
+Legend Output on Plots via LEGEND
+2.2.9            497       324
+Changing Values of Parameters via the LET Command
+2.2.10           497       340
+Deleting Parameters--Not Doable.
+2.2.11           497       350
+Automatically-Provided Parameters--PI and INFININTY
+2.2.12           497       361
+The Use of Parameters in DATAPLOT Analyses
+2.3              497       383
+Variables (named vectors = 1-dimensional arrays)
+3               1032         0
+Files, Data Files, Plot Files, etc.
+4               1132         0
+Mathematical and Relational Operators
+5               1232         0
+Commands
+5.1             1232         9
+Core Commands--PLOT, FIT & LET
+5.2             1232        14
+Grouped Alphabetically
+5.3             1232        33
+Grouped by Function
+5.4             1232        45
+Grouped By Discipline
+6               1332         0
+Subcommands Under LET
+6.1             1332        10
+Statistics & Probability
+6.2             1332        33
+Mathematics/General
+6.3             1332        57
+Mathematics/Transforms
+6.4             1332        68
+Mathematics/Vector, Matrix, Complex, Polynomial, etc.
+6.5             1332        79
+Other
+7               1432         0
+Reserved Words & Qualifiers
+8               1532         0
+Macros & Programs
+9               1632         0
+Built-in Functions
+10              1638         0
+Text Subcommands
+11              1644         0
+Auxiliary Files
+11.1            1644        12
+Reference Files
+11.1.1          1644        27
+Chemistry/Physics
+11.1.2          1644        38
+Geometry Formulae
+11.1.3          1644        48
+Probability Functions
+11.1.4          1644        57
+Ascii Numeric Equivalents
+11.1.5          1644        65
+Dataplot Default Settings
+11.1.6          1644        73
+Phone & Mail
+11.1.7          1644        85
+Business
+11.1.8          1644       100
+Quality Improvement/Taguchi/Japan
+11.1.9          1644       119
+Latitude of U.S. Cities
+11.1.10         1644       127
+Weather
+11.2            1644       138
+Data Files
+Map Files       1644       144
+   Dataplot has a few relatively coarse map data files.
+11.4            1644       166
+Design of Experiment Files
+11.5            1644       172
+Fractal Art Files
+11.6            1644       195
+Macro Files
+11.7            1644       200
+Menu Macro Files
+11.7.1.         1644       207
+What is a Menu Macro File and How Use?
+11.7.2.         1644       228
+List of Available Menu Macro Files
+12              1992         0
+Tutorial
+----------      1992         6
+ 
+14              2092         0
+Hardware, CPU's, Operating Systems, etc.
+15              2193         0
+Graphics Drivers/Devices, Postscript, X-Windows, etc.
+16              2294         0
+Installation & Tailoring Hints
+17              2395         0
+Default Settings
+18              2496         0
+On-Line/Off-Line Help & Documentation
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------
+ 
+0
+DATAPLOT
+   1. Overview
+   2. Numbers, Parameters, Variables, Matrices, Functions/Strings
+   3. Files, Data Files, Plot Files, etc.
+   4. Mathematical and Relational Operators
+   5. Commands           (Go to top menu--enter T or TOP)
+   6. Subcommands Under LET
+   7. Reserved Words & Qualifiers
+   8. Macros & Programs
+   9. Built-in Functions (Go to top menu--enter T or TOP)
+  10. Text Subcommands   (Go to top menu--enter T or TOP)
+  11. Auxiliary Files
+  12. Tutorial           (Go to top menu--enter T or TOP)
+  13. Shortcuts/Saving Keystrokes
+  14. Hardware, CPU's, Operating Systems, etc.
+  15. Graphics Drivers/Devices, Postscript, X-Windows, etc.
+  16. Installation & Tailoring Hints
+  17. Default Settings
+  18. On-Line/Off-Line Help & Documentation
+ 
+----------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------  *OVERVIEW*  -------------------------
+ 
+1
+Overview
+DATAPLOT is a powerful, flexible, interactive language/
+system designed for use in a scientific/engineering
+environement.  DATAPLOT is an interactive, command-driven
+system with extensive core capabilities in
+ 
+      1) graphics
+ 
+and broad related capabilities in
+ 
+      2) fitting /modeling
+      3) general data analysis;
+      4) mathematics.
+ 
+DATAPLOT's areas of focus include raw graphics (2D,
+3D, contour), analysis graphics, presentation graphics,
+summary graphics, diagrammatic graphics, business graphics,
+word charts, graphical data analysis, exploratory data
+analysis, time series analysis, smoothing, fitting, data
+analysis, statistics, probability, multivariate analysis,
+design of experiment, statistical process control,
+reliability, and mathematics.
+ 
+DATAPLOT commands are high-level, English-syntax,
+easy-to-learn, and self-descriptive, such as
+ 
+      PLOT Y X
+      PLOT EXP(-X**2) FOR X = -3 .1 3
+      FIT Y = A+B*EXP(-ALPHA*X)
+      BOX PLOT Y X
+      ANOVA Y X1 X2 X3
+      LET A = ROOTS SIN(X**2)+EXP(-X) FOR X = 0 TO 5
+ 
+The 3 most important commands are PLOT, FIT, and LET.
+The "average" analyst commonly uses about 20 commands.
+The language as a whole consists of over 400 commands.
+These 400+ commands are in 8 command categories--
+ 
+   1) Graphics
+   2) Diagrammatic Graphics
+   3) Quantitative Analysis
+   4) Plot Control
+   5) Output Devices
+   6) Input/Output
+   7) Support
+   8) Reserved Words
+ 
+For syntax, default, etc.  information about an individual
+command the analyst may--at any time--enter HELP
+followed by the command name, as in
+ 
+      HELP PLOT
+      HELP FIT
+      HELP LET
+ 
+DATAPLOT's underlying code is 100% Fortran 77; it runs
+on virtually all mainframes, minis, workstations, and
+larger micros (386 PC's) including VAX/VMS, UNIX, DOS,
+etc.  DATAPLOT has its own stand-alone graphics
+subsystem with built-in graphics drivers for a wide
+assortment of graphics devices including Tektronix,
+HP-GL, POSTSCRIPT, X-Windows, etc.
+ 
+DATAPLOT was written and developed at the National Institute
+of Standards and Technology.  It was first implemented in
+1977 and has had the benefit of continuous improvement &
+enhancements in this superb scientific/engineering/research
+environment.  The authors wish to thank the many NIST
+scientists and engineers for their excellent suggestions
+over the years in regard to DATAPLOT enhancements.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------  *NUMBERS, PARAMETERS, ETC.*  ---------------------
+ 
+2
+Numbers, Parameters, Variables, Matrices, Functions/Strings
+   DATAPLOT operates on the following 5 elements--
+      1. Numbers (unnamed scalars)
+      2. Parameters (named scalars)
+      3. Variables (named vectors = 1-dimensional arrays)
+      4. Matrices (named 2-dimensional arrays)
+      5. Functions (named character strings)
+ 
+----------------------------------------
+ 
+2.1
+Numbers (named scalars)
+   1. Storage of Numbers
+   2. Conventions for Writing Numbers
+   3. Operating on Numbers via the LET Command
+   4. The Use of Numbers in Analyses
+ 
+----------------------------------------
+ 
+2.1.1
+Storage of Numbers
+   1. All numbers are stored internally in single precision.
+   2. Key intermediate calculations are in double precision.
+ 
+----------------------------------------
+ 
+2.1.2
+Conventions for Writing Numbers
+   1. A trailing decimal is optional and has no effect.
+         LET A = 3.0
+         LET A = 3.
+         LET A = 3
+         PLOT X FOR X = 1 1 10
+   2. Trailing decimal zeros are optional and have no effect.
+         LET B = 3.6500
+         LET B = 3.650
+         LET B = 3.65
+         DEMODULATION FREQUENCY .4
+   3. Leading zeros are optional and have no effect;
+         LET C = 09.24
+         LET C = 9.24
+         FILTER WIDTH 9
+   4. Define exponentiated numbers via the multiplication form.
+         LET C = 3.01*10**6 ;. (for 3.01 times 10 to the 6)
+         LET D = 1.23*10**-5 ;. (for 1.23 time 10 to the -5)
+ 
+----------------------------------------
+ 
+2.1.3
+Operating on Numbers via the LET Command
+   The LET command is frequently used for operating on numbers.
+      LET A = 25
+      LET B = 2/3
+      LET C = ((2+3)*6)/(7-3)
+      LET D = SQRT(10)
+ 
+----------------------------------------
+ 
+2.1.4
+The Use of Numbers in Analyses
+   PLOT SIN(X) FOR X = -3 .1 3
+   PLOT X**2.3 FOR X = 1 1 10
+   .
+   SKIP 25; READ LEW.DAT
+   SPECTRUM Y
+   DEMODULATION FREQUENCY .3
+   COMPLEX DEMODULATION FREQUENCY PLOT Y
+ 
+----------------------------------------
+ 
+2.2
+Parameters (named scalars)
+   1. Naming Conventions for Parameters
+   2. Storage of Parameter Values
+   3. Creating Parameters via the LET Command
+   4. Creating Parameters via the READ PARAMETER Command
+   5. Writing Parameters to Screen & File via the WRITE Command
+   6. Neat Writing of Parameters via SET WRITE DECIMALS Command
+   7. Text/Title/Label/Legend Writing of Parameters via ^
+   8. Neat Text/Title/Label/Legend Writing of Parameters via ROUND()
+   9. Changing Values of Parameters via the LET Command
+  10. Deleting Parameters--Not Doable.
+  11. Automatically-Provided Parameters--PI and INFININTY
+  12. The Use of Parameters in DATAPLOT Analyses
+ 
+----------------------------------------
+ 
+2.2.1
+Naming Conventions for Parameters
+   1. Parameter names must start with an alphabetic character.
+         LET A = 23
+   2. Parameter names may start with any alphabetic character.
+         LET OMEGA = 45
+   3. Parameter names may contain any character except
+         LET AB_CD = 4.65
+      the mathematical and relational operators.
+   4. Parameter names may be of any length but only the
+      first 8 characters are internally stored.
+         LET TEMPERATURE = 98.5
+ 
+----------------------------------------
+ 
+2.2.2
+Storage of Parameter Values
+   1. Parameter values are stored internally in single precision.
+   2. Key intermediate calculations are in double precision.
+ 
+----------------------------------------
+ 
+2.2.3
+Creating Parameters via the LET Command
+   The LET command is frequently used for defining parameters.
+      LET A = 3
+      LET B = 9.24
+      LET C = 3.01*10**6 ;. (for 3.01 times 10 to the 6)
+      LET D = 1.23*10**-5 ;. (for 1.23 time 10 to the -5)
+ 
+----------------------------------------
+ 
+2.2.4
+Creating Parameters via the READ PARAMETER Command
+   The READ PARAMETER command is used to read parameters
+   from keyboard or from file.
+      READ PARAMETER A
+      67.3
+      WRITE A
+      .
+      LIST LEW.DAT FOR I = 1 1 30
+      SKIP 25
+      READ PARAMETER LEW.DAT. B
+      WRITE B
+ 
+----------------------------------------
+ 
+2.2.5
+Writing Parameters to Screen & File via the WRITE Command
+   The WRITE command is used to write parameter values
+   to screen or to file.
+      LET A = 24
+      LET B = SQRT(A)
+      WRITE A B
+      WRITE OUT. A B
+ 
+----------------------------------------
+ 
+2.2.6
+Neat Writing of Parameters via SET WRITE DECIMALS Command
+   The SET WRITE DECIMALS command is used in conjunction
+   with the WRITE command to neatly write parameter values
+   to screen or to file.
+ 
+   Syntax:  SET WRITE DECIMALS    <# decimal places to retain>
+   Note:    The result will have been rounded--not truncated.
+ 
+   Example--
+      LET A = 24
+      LET B = SQRT(A)
+      WRITE A B
+      WRITE OUT. A B
+      SET WRITE DECIMALS 4
+      WRITE A B
+      WRITE OUT. A B
+      SET WRITE DECIMALS 2
+      WRITE A B
+      WRITE OUT. A B
+ 
+----------------------------------------
+ 
+2.2.7
+Text/Title/Label/Legend Writing of Parameters via ^
+   The ^ character
+   followed immediately (that is, no space)
+   by a parameter name of interest,
+   followed in turn by a trailing space,
+   will allow the current value of a parameter to be inserted
+   into any text as in
+      1. Text Output via WRITE
+      2. General Text Output via TEXT
+      3. Title Output on Plots via TITLE
+      4. Horizontal or Vertical Label Output on Plots via ...LABEL
+      5. Legend Output on Plots via LEGEND
+ 
+----------------------------------------
+ 
+2.2.7.1
+Text Output via WRITE
+      WRITE "THE VALUE OF PI IS ^PI "
+      WRITE OUT. "THE VALUE OF PI IS ^PI "
+ 
+----------------------------------------
+ 
+2.2.7.2
+General Text Output via TEXT
+      LET C = 100
+      LET F = 32 + (9/5)*C
+      TEXT THE FAHRENHEIT BOILING TEMPERATURE IS ^F
+      FONT TRIPLEX
+      TEXT THE FAHRENHEIT BOILING TEMPERATURE IS ^F
+ 
+----------------------------------------
+ 
+2.2.7.3
+Title Output on Plots via TITLE
+      MULTIPLOT 2 2
+      LOOP FOR K = 1 1 4
+      TITLE X**^K
+      PLOT X**K FOR X = 0 .1 1
+      END OF LOOP
+      MULTIPLOT OFF
+ 
+----------------------------------------
+ 
+2.2.7.4
+Horizontal or Vertical Label Output on Plots via ...LABEL
+      SKIP 25
+      READ BERGER1.DAT X Y
+      FIT Y = A+B*X
+      X1LABEL THE INTERCEPT IS ^A
+      X2LABEL THE SLOPE IS ^B
+      X3LABEL THE RESIDUAL STANDARD DEVIATION IS ^RESSD
+      CHAR X BLANK
+      LINES BLANK SOLID
+      PLOT Y PRED VERSUS X
+ 
+----------------------------------------
+ 
+2.2.7.5
+Legend Output on Plots via LEGEND
+      SKIP 25
+      READ BERGER1.DAT X Y
+      FIT Y = A+B*X
+      LEGEND 1 THE INTERCEPT IS ^A
+      LEGEND 2 THE SLOPE IS ^B
+      LEGEND 3 THE RESIDUAL STANDARD DEVIATION IS ^RESSD
+      CHAR X BLANK
+      LINES BLANK SOLID
+      PLOT Y PRED VERSUS X
+ 
+----------------------------------------
+ 
+2.2.8
+Neat Text/Title/Label/Legend Writing of Parameters via ROUND()
+   The ROUND(.,.) function in conjunction
+   with the ^ character
+   will allow the current value (to whatever neat number
+   of decimal places the analyst desires) of a parameter
+   to be inserted into any text as in
+      1. Text Output via WRITE
+      2. General Text Output via TEXT
+      3. Title Output on Plots via TITLE
+      4. Horizontal or Vertical Label Output on Plots via ...LABEL
+      5. Legend Output on Plots via LEGEND
+ 
+----------------------------------------
+ 
+2.2.8.1
+Text Output via WRITE
+      WRITE "THE VALUE OF PI IS ^PI "
+      WRITE OUT. "THE VALUE OF PI IS ^PI "
+      LET PI2 = ROUND(PI,4)
+      WRITE "THE VALUE OF PI IS ^PI2 "
+      WRITE OUT. "THE VALUE OF PI IS ^PI2 "
+ 
+----------------------------------------
+ 
+2.2.8.2
+General Text Output via TEXT
+      LET C = 100
+      LET F = 32 + (9/5)*C
+      TEXT THE FAHRENHEIT BOILING TEMPERATURE IS ^F
+      FONT TRIPLEX
+      TEXT THE FAHRENHEIT BOILING TEMPERATURE IS ^F
+      LET F = ROUND(F,2)
+      TEXT THE FAHRENHEIT BOILING TEMPERATURE IS ^F
+ 
+----------------------------------------
+ 
+2.2.8.3
+Title Output on Plots via TITLE
+      MULTIPLOT 2 2
+      LOOP FOR K = 1 1 4
+      LET K2 = ROUND(K,1)
+      TITLE X**^K2
+      PLOT X**K FOR X = 0 .1 1
+      END OF LOOP
+      MULTIPLOT OFF
+ 
+----------------------------------------
+ 
+2.2.8.4
+Horizontal or Vertical Label Output on Plots via ...LABEL
+      SKIP 25
+      READ BERGER1.DAT X Y
+      FIT Y = A+B*X
+      LET A = ROUND(A,3)
+      LET B = ROUND(B,3)
+      LET RESSD = ROUND(RESSD,4)
+      X1LABEL THE INTERCEPT IS ^A
+      X2LABEL THE SLOPE IS ^B
+      X3LABEL THE RESIDUAL STANDARD DEVIATION IS ^RESSD
+      CHAR X BLANK
+      LINES BLANK SOLID
+      PLOT Y PRED VERSUS X
+ 
+----------------------------------------
+ 
+2.2.8.5
+Legend Output on Plots via LEGEND
+      SKIP 25
+      READ BERGER1.DAT X Y
+      FIT Y = A+B*X
+      LET A = ROUND(A,1)
+      LET B = ROUND(B,1)
+      LET RESSD = ROUND(RESSD,2)
+      LEGEND 1 THE INTERCEPT IS ^A
+      LEGEND 2 THE SLOPE IS ^B
+      LEGEND 3 THE RESIDUAL STANDARD DEVIATION IS ^RESSD
+      CHAR X BLANK
+      LINES BLANK SOLID
+      PLOT Y PRED VERSUS X
+ 
+----------------------------------------
+ 
+2.2.9
+Changing Values of Parameters via the LET Command
+      LET A = 3
+      LET B = 7
+      LET C = (A+B*2)/3.6
+      WRITE A B C
+      .
+      LET SUM = 0
+      LOOP FOR K = 1 1 6
+      LET TERM = (1/2)**K
+      LET SUM = SUM + TERM
+      WRITE "LOOP ITERATION ^K --   SUM = ^SUM "
+      END OF LOOP
+ 
+----------------------------------------
+ 
+2.2.10
+Deleting Parameters--Not Doable.
+   Once a parameter name is defined, it cannot be deleted
+   and changed, say, into a variable or a function.
+   The DELETE command does not work with parameters.
+   Of course the value of a parameter may be changed;
+   but the parameter itself may not be deleted.
+ 
+----------------------------------------
+ 
+2.2.11
+Automatically-Provided Parameters--PI and INFININTY
+   2 built-in automatic parameters--
+      PI (= 3.1415926)
+      INFINITY  (= max floating point value)
+ 
+   Example of Usage--
+      PLOT(2*PI*0.3*X) FOR X = 0 .1 10
+ 
+----------------------------------------
+ 
+2.2.12
+The Use of Parameters in DATAPLOT Analyses
+ 
+      LET AMP = 5
+      LET FREQ = .25
+      LET PHASE = .33
+      PLOT AMP*SIN(2*PI*FREQ*X+PHASE) FOR X = 0 .1 10
+      .
+      SKIP 25; READ BERGER1.DAT X Y
+      LINEAR FIT Y X
+      WRITE A0 A1
+      .
+      LET GAMMA = 3
+      LET Y = WEIBULL RANDOM NUMBERS FOR I = 1 1 25
+      MULTIPLOT 3 3
+      LOOP FOR GAMMA = 1 .5 4
+      LEGEND 1 GAMMA = ^GAMMA
+      WEIBULL PROBABILITY PLOT Y
+      END OF LOOP
+ 
+----------------------------------------
+ 
+2.3
+Variables (named vectors = 1-dimensional arrays)
+   1. Naming Conventions for Variables
+   2. Storage of Parameter Values
+   3. Creating Variables via the LET Command
+   4. Creating Variables via the READ PARAMETER Command
+   5. Writing Variables to Screen & File via the WRITE Command
+   6. Neat Writing of Variables via SET WRITE DECIMALS Command
+   7. Text/Title/Label/Legend Writing of Variables via ^
+   8. Neat Text/Title/Label/Legend Writing of Variables via ROUND()
+   9. Changing Values of Variables via the LET Command
+  10. Deleting Variables--Not Doable.
+  11. Automatically-Provided Variables--PI and INFININTY
+  12. The Use of Variables in DATAPLOT Analyses
+ 
+2.3
+Variables (named vectors = 1-dimensional arrays)
+   Rules--
+      1. Variable names must start with an alphabetic character;
+      2. Variable names may start with any alphabetic character;
+      3. Variable names may contain any character except
+         the mathematical and relational operators.
+      4. Variable names may be of any length but only the
+         first 8 characters are internally stored.
+      5. All values are stored internally in single precision;
+      6. Key intermediate calculations are in double precision.
+      7. Max number of allowable variables is
+         installation-dependent.  A common maximum is
+         10 variables by 2048 observations/variable.
+         To determine your maximum, note the log-on banner,
+         or enter the STATUS command.
+     8. To change the max number of variables, use the
+        DIMENSION command as in DIMENSION 20 VARIABLES .
+        But if increase the default number of variables,
+        then will automatically decrease the allowable
+        number of observations per variable (say from 2048
+     10 (say from 2048 Variables may be deleted via DELETE
+     11 (say from 2048 Variables may be renamed via RENAME
+     12 (say from 2048 Variables may be read in via READ and SERIAL READ
+     13 (say from 2048 Variables may be written out via WRITE
+      9 (say from 2048 The LET command is frequently used for defining variables
+.
+      8 (say from 2048 Automatically provided variables--
+            After any FIT, ANOVA, SMOOTH--
+               PRED (= predicted values)
+               RES (= residual values = Y - predicted)
+            After any plot of any kind--
+               YPLOT = vertical axis trace coordinates
+               XPLOT = horizontal axis trace coordinates
+               X2PLOT = other horizontal axis trace coor (for 3-D)
+               TAGPLOT = trace identification coded values (1, 2, 3,  (say from
+2048..)
+      9. The above automatically-provided variables may
+         be used like any other variable in any DATAPLOT
+         command; e.g., PLOT Y PRED VS X   .
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------  *FILES*  -------------------------
+ 
+3
+Files, Data Files, Plot Files, etc.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------  *OPERATORS*  -------------------------
+ 
+4
+Mathematical and Relational Operators
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------  *COMMANDS*  -------------------------
+ 
+5
+Commands
+   1. Core Commands
+   2. Grouped Alphabetically (Go to top menu--enter T or TOP)
+   3. Grouped By Function (Go to top menu--enter T or TOP)
+   4. Grouped By Discipline (Go to top menu--enter T or TOP)
+ 
+----------------------------------------
+ 
+5.1
+Core Commands--PLOT, FIT & LET
+ 
+----------------------------------------
+ 
+5.2
+Grouped Alphabetically
+   1. A-B
+   2. C-D
+   3. E-F
+   4. G-H
+   5. I-J
+   6. K-L
+   7. M-N
+   8. O-P
+   9. Q-R
+  10. S-T
+  11. U-V
+  12. W-X
+  13. Y-Z
+  14. Other
+ 
+----------------------------------------
+ 
+5.3
+Grouped by Function
+   1. Graphics
+   2. Word Charts/Diagrams
+   3. Quantitative Analysis
+   4. Plot Control/Plot Appearance
+   5. Graphics Output Devices
+   6. Input/Output
+   7. Support
+ 
+----------------------------------------
+ 
+5.4
+Grouped By Discipline
+   1. Graphics
+   2. Statistics
+   3. Probability
+   4. Mathematics
+   5. Design of Experiment
+   6. Business
+   7. Other
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------  *SUBCOMMANDS UNDER LET*  -----------------------
+ 
+6
+Subcommands Under LET
+   1. Statistics and Probability
+   2. Mathematics/General
+   3. Mathematics/Transforms
+   4. Mathematics/Vector, Matrix, Complex, Polynomial, etc.
+   5. Other
+ 
+----------------------------------------
+ 
+6.1
+Statistics & Probability
+   Compute Summary & Descriptive Statistics
+   Sort the Data in a Variable
+   Sort the Data in a Variable & Carry Along Other Variables
+   Extract the Distinct Values in a Variable
+   Compute Frequencies and Counts
+   Carry Out a User-Defined Transformation of the Data in a Var.
+   Compute Ranks (Distribution-Free Statistics)
+   Integer-Code (2, 3, ..., 10 parts) the Data in a Variable
+   Compute First Differences (Autocorrelation Analysis)
+   Compute Cumulative Sums
+   Generate Uniform & Normal Order Statistic Medians
+   Generate Weibull Adjusted Ranks (Reliability Analysis)
+   Create Biweight & Tricube Weights (Robust Regression)
+   Compute Principle Components (Multivariate Analysis)
+   Compute Variance-Covariance Matrix of a Data Matrix
+   Compute Correlation Matrix of a Data matrix
+   Generate Random Numbers, Permutations, Indices, and Subsamples
+   Generate Bootstrap Indices and Sample
+ 
+----------------------------------------
+ 
+6.2
+Mathematics/General
+ 
+   Perform a "Desk Calculator" Evaluation of a Math Expression
+   Create a User-Defined Parameter
+   Carry Out a User-Defined Transformation of the Parameter
+   Create a Variable with User-Defined Data
+   Carry Out a User-Defined Transformation of the Data in a Var.
+   Create User-Defined Functions
+   Evaluate User-Defined Functions
+ 
+   Compute the Sum, Product, and Integral of a Variable
+   Generate First Differences from a Variable
+   Generate Cumulative Sums, Products & Integrals from a Var.
+   Find Roots of a Function
+   Perform Numerical Differentiation & Integration of Data
+   Perform Analytical Differentiation of a Function
+   Perform Cubic Spline Interpolation of Data in Variables
+   Perform Convolution & Deconvolution of 2 Variables
+ 
+   Generate Prime, Fibonnacci, Logistic, Cantor Numbers
+ 
+----------------------------------------
+ 
+6.3
+Mathematics/Transforms
+   Carry Out a User-Defined Transformation of the Data in a Var.
+   Perform Sine Transform of a Variable
+   Perform Cosine Transform of a Variable
+   Perform Laplace & Inverse Laplace Transform of a Variable
+   Perform Fourier & Inverse Fourier Transform of a Variable
+   Perform FFT & Inverse FFt Transform of a Variable
+ 
+----------------------------------------
+ 
+6.4
+Mathematics/Vector, Matrix, Complex, Polynomial, etc.
+   Perform Vector Operations on Variables
+   Perform Matrix Operations on Matrices
+   Perform Complex Number Operations on Variables
+   Perform Set Operations on Variables
+   Perform Logical Operations on Variables
+   Perform Polynomial Arithmetic Operations on Variables
+ 
+----------------------------------------
+ 
+6.5
+Other
+   Create a Variable with User-Defined Data
+   Create a Variable with a User-Defined Data Sequence
+   Create a Variable with a User-Defined Data Pattern
+ 
+   Sort the Data in a Variable
+   Rank the Data in a Variable
+ 
+   Sort the Data in a Variable & Carry Along Other Variables
+   Extract the Distinct Values in a Variable
+   Integer-Code (1 = min, 2 = ...) the Distinct Data in a Var.
+   Carry Out a User-Defined Transformation of the Data in a Var.
+ 
+   Extract the Distinct Values of Data in a Variable
+ 
+ 
+ 
+ 
+----------  *RESERVED WORDS AND QUALIFIERS*  --------------
+ 
+7
+Reserved Words & Qualifiers
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------  *MACROS AND PROGRAMS*  ------------------------
+ 
+8
+Macros & Programs
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------  *BUILT-IN FUNCTIONS*  ------------------------
+ 
+9
+Built-in Functions
+   Go to top menu--enter T or TOP
+ 
+----------  *TEXT SUBCOMMANDS*  -------------------------
+ 
+10
+Text Subcommands
+   Go to top menu--enter T or TOP
+ 
+----------  *AUXILIARY FILES*  -------------------------
+ 
+11
+Auxiliary Files
+   1. Reference Files
+   2. Data Files  (Go to top menu--enter T or TOP)
+   3. Map Files
+   4. Design of Experiment Files
+   5. Fractal Art Files
+   6. Macro Files
+   7. Macro Menu Files
+ 
+----------------------------------------
+ 
+11.1
+Reference Files
+   1. Chemistry/Physics
+   2. Geometry Formulae
+   3. Probability Functions
+   4. Ascii Numeric Equivalents
+   5. Dataplot Default Settings
+   6. Phone & Mail
+   7. Business
+   8. Quality Improvement/Taguchi/Japan
+   9. Latitude of U.S. Cities
+   10. Weather
+ 
+----------------------------------------
+ 
+11.1.1
+Chemistry/Physics
+      ATOMS.TEX     Relative num of atoms of elements in univ
+      CONSTANT.TEX  Math, physical, & engineering constants
+      CONVFACT.TEX  Conversion factors between metrics/units
+      SPECTRUM.TEX  Electromagnetic Spectrum (by frequency)
+ 
+ 
+ 
+----------------------------------------
+ 
+11.1.2
+Geometry Formulae
+      AREAS.TEX     Area formulae for geometric figures
+      PERIM.TEX     Perimeter formulae for geometric figures
+      VOLUMES.TEX   Volume formulae for geometric figures
+ 
+ 
+ 
+----------------------------------------
+ 
+11.1.3
+Probability Functions
+      PDF.TEX       Probability density functions for dist
+      PPF.TEX       Percent point functions for distributions
+ 
+ 
+ 
+----------------------------------------
+ 
+11.1.4
+Ascii Numeric Equivalents
+      ASCII.TEX     ASCII numeric equivalents
+ 
+ 
+ 
+----------------------------------------
+ 
+11.1.5
+Dataplot Default Settings
+      DEFAULTS.TEX  DATAPLOT default settings
+ 
+ 
+ 
+----------------------------------------
+ 
+11.1.6
+Phone & Mail
+      AREACODE.TEX  U. S. phone area codes (alphabet. by state)
+      AREACOD2.TEX  U. S. phone area codes (ordered numeric.)
+      POSTCODE.TEX  U. S. postal state codes (alphabetically)
+      POSTRATE.TEX  April 1988 postal rates for various weights
+      PHONE.TEX     Misc. phone numbers (update locally)
+ 
+ 
+ 
+----------------------------------------
+ 
+11.1.7
+Business
+      TAX1979.TEX   1979 federal income tax rates
+      TAX1987.TEX   1987 federal income tax rates
+      TIMEMANA.TEX  6 techniques for time management
+      CALENDAR.TEX  Calendars for the years 1988 and 1989
+      FEDPAY88.TEX  U. S Federal salary scale for 1988
+      MORTGAGE.TEX  Wash. D. C. 30-yr mortgage rates (Dec/87)
+      JOBS.TEX      Fastest growing jobs requiring a college deg
+      WORKSTAT.TEX  Top 10 computer workstations (1986)
+ 
+ 
+ 
+----------------------------------------
+ 
+11.1.8
+Quality Improvement/Taguchi/Japan
+      DEMING14.TEX  Demings's 14 "deadly diseases" (ind. qual.)
+      DEMING7.TEX   Demings's 7 "dreadful diseases" (ind. qual.)
+      ISHIKAW4.TEX  The 4 usual "M" components in Ishikawa Diag.
+      JAPANU.TEX    Japan's 3  U's to be eliminated in work area.
+      JAPANW.TEX    Japan's 5 W's (& 1 H) for component analysis
+      JAPAN6.TEX    Japan's 6-point program for quality manufac.
+      JAPAN3.TEX    The 3 modern concepts in Japanese industry
+      KACKER.TEX    Kacker's 7 summary points of Taguchi philos.
+      NEWTOOLS.TEX  The "7 New Tools" for quality control
+      OLDTOOLS.TEX  The "7 Old Tools" for quality control
+      QUALCOST.TEX  Japan's def and 4 comp of "quality cost"
+      TAGREF.TEX    The 2 primary Tag. reference books for quality
+ 
+ 
+ 
+----------------------------------------
+ 
+11.1.9
+Latitude of U.S. Cities
+      LATITUDE.TEX  Latitude & longitude of U. S. cities
+ 
+ 
+ 
+----------------------------------------
+ 
+11.1.10
+Weather
+      HOT.TEX       10 hottest places in the U. S.
+      SNOWY.TEX     10 snowiest places in the U. S.
+      WINDCHIL.TEX  Windchill factor curves
+ 
+ 
+ 
+ 
+----------------------------------------
+ 
+11.2
+Data Files
+   Go to top menu--enter T or TOP
+ 
+----------------------------------------
+11.3
+Map Files
+   Dataplot has a few relatively coarse map data files.
+   These will be updated in the future from high-resolution
+   map files (e.g., from other government agencies).
+ 
+      CHINA.DAT       Map coordinates for China (Map)
+      NBSPART1.DAT    Map of middle of NBS campus (Map)
+      TEXAS.DAT       Map coordinates for Texas (Map)
+      USA.DAT         Map coordinates for USA (crude resolu.) (Map)
+      USA3.DAT        Map coordinates for USA (Map)
+ 
+      Example of usage--
+      SKIP 25; READ TEXAS.DAT X Y
+      PRE-SORT OFF; PLOT Y X
+      GRID ON; PLOT Y X
+      PLOT Y X SUBSET X 200 TO 300 SUBSET Y 0 TO 100
+      SAVE 1
+      FRAME OFF
+      /
+ 
+----------------------------------------
+ 
+11.4
+Design of Experiment Files
+   Go to top menu--enter T or TOP
+ 
+----------------------------------------
+ 
+11.5
+Fractal Art Files
+      FRACBRAN.DAT  Fractal Data to generate a branch
+      FRACCHRI.DAT  Data to gen a fractal Christmas tree
+      FRACCLOU.DAT  Fractal Data to generate a cloud
+      FRACFERN.DAT  Data to generate a fractal fern
+      FRACFRON.DAT  Data to generate a fractal frond
+      FRACGALA.DAT  Data to generate a fractal galaxy
+      FRACPENT.DAT  Data to generate a fractal pentagon
+      FRACSPIR.DAT  Data to generate a fractal spiral
+      FRACSQUA.DAT  Data to generate a fractal square
+      FRACTRIA.DAT  Data to generate a fractal triangle
+ 
+      Example of usage (generate a triangle)--
+      LIST FRACTRIA.DAT ;. (to get file reading instructions)
+      SKIP 25; READ FRACBRAN.DAT Y1 TO Y7
+      LINES
+      CHARACTERS *
+      FRAME OFF
+      FRACTAL PLOT Y1 Y2 Y3 Y4 Y5 Y6 Y7
+ 
+----------------------------------------
+ 
+11.6
+Macro Files
+ 
+----------------------------------------
+ 
+11.7
+Menu Macro Files
+   1. What is a Menu Macro File and How Use?
+   2. List of Available Menu Macro Files
+ 
+----------------------------------------
+ 
+11.7.1.
+What is a Menu Macro File and How Use?
+      A menu macro file is a file containing a Dataplot
+      macro (= subprogram) which, when executed, will
+         1) generate menu questions to the user;
+         2) take in keyboard responses to those questions;
+         3) after all questions have been answered,
+            carry out the prescrived operation/plot/fit/etc.
+ 
+      To execute any of these macros, enter CALL followed by
+      To execute a menu macro, enter (while in Dataplot)
+      CALL followed by the desired menu macro file name
+      as in
+            CALL PLOTSIN.DP
+      These menu macros are provided so as to illustrate how
+      the user may construct/tailor similar question/answer
+      menus for his/her particular application.  The simplest
+      menu macro is PLOTSIN.DAT--look at this one first.
+ 
+----------------------------------------
+ 
+11.7.2.
+List of Available Menu Macro Files
+      PLOTSIN.DP    Menu macro (elementary) to plot sin function
+      PLOTFUNC.DP   Menu macro to plot a function
+      PLOT1VAR.DP   Menu macro (elementary) to read & plot 1 var
+      PLOT2VAR.DP   Menu macro (elementary) to read & plot 2 var
+      CONNDOTS.DP   Menu macro to connect dots via cross-hair
+      INVMAT.DP     Menu macro to invert a matrix
+      ISHIKAWA.DP   Menu macro to gen an Ishikawa diagram
+      MULTTEXT.DP   Menu macro to position text via cross-hair
+      NORMHIST.DP   Menu macro to gen hist + normal density
+      PARETO.DP     Menu macro to generate a Pareto plot
+      PIECHART.DP   Menu macro to generate labelled pie chart
+      RANDSAMP.DP   Menu macro to gen stratified random sample
+      SIMPMETH.DP   Menu macro to compute simplex sol (lin prog)
+      SORT.DP       Menu macro to sort alpha list via priorities
+      SUM.DP        Menu macro to sum a list of numbers
+      TTEST.DP      Menu macro to perfrom t test on 2 var
+      WORDCHAV.DP   Menu macro to gen centered vert wordchart
+      WORDCHAH.DP   Menu macro to gen centered hor wordchart
+      23CUBE.DP     Menu macro to gen a 2**3 fact exp des cube
+      3DPLOT.DP     Menu macro to gen a 3dplot with cube frame
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------  *TUTORIAL*  ------------------
+ 
+12
+Tutorial
+   Go to top menu--enter T or TOP
+ 
+----------------------------------------
+ 
+----------  *SHORTCUTS*  -------------------------
+ 
+13
+Shortcuts/Saving Keystrokes
+ 
+----------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------  *HARDWARE*  -------------------------
+ 
+14
+Hardware, CPU's, Operating Systems, etc.
+ 
+----------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------  *GRAPHICS DRIVERS*  ------------------------
+ 
+15
+Graphics Drivers/Devices, Postscript, X-Windows, etc.
+ 
+ 
+----------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------  *INSTALLATION AND TAILORING HINTS*  -----------
+ 
+16
+Installation & Tailoring Hints
+ 
+----------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------  *DEFAULT SETTINGS*  -------------------------
+ 
+17
+Default Settings
+ 
+----------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------  *HELP AND DOCUMENTATION*  --------------
+ 
+18
+On-Line/Off-Line Help & Documentation
+ 
+--------------------------------------------------

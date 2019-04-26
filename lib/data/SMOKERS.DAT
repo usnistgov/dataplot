@@ -1,0 +1,44 @@
+This is Dataplot data file     SMOKERS.DAT
+Cigarette Smokers
+Source--Hoaglin, D., Mosteller, F., and Tukey, J. (1991).
+        Fundamentals of Exploratory Analysis of Variance.
+        Wiley, New York, page xx.
+Response Variable                  = % of population that smokes
+Number of observations             = 15 (= 5 incomes x 3 ages)
+Number of variables per line image = 3
+Order of variables per line image--
+   Response variable = percentage of population that smokes
+   Factor 1          = family income (5 levels)
+   Factor 2          = age           (3 levels)
+Statistical areas--Multifactor
+Design type      --Randomized Block
+To read this file into Dataplot--
+      SKIP 25
+      READ SMOKERS.DAT Y X1 X2
+
+
+
+
+
+ % Smokers   Income  Age
+     Y         X1    X2
+--------------------------
+    38         1      1
+    42         1      2
+    14         1      3
+
+    41         2      1
+    41         2      2
+    16         2      3
+
+    36         3      1
+    39         3      2
+    18         3      3
+
+    32         4      1
+    36         4      2
+    15         4      3
+
+    28         5      1
+    33         5      2
+    17         5      3

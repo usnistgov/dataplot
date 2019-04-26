@@ -1,0 +1,8 @@
+----- <~dataall\SPIEGEL.top> SPIEGEL.DAT
+
+SPIEGEL.DAT
+
+View     <xcl: LIST SPIEGEL.DAT>
+Load     <xcf: ~dataload/SPIEGEL.DP>
+Print    <xccl: printfile C:\DATAPLOT\SPIEGEL.DAT>
+

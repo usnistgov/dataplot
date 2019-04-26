@@ -1,0 +1,41 @@
+This is dataplot data file     SPAGON1.DAT
+Pat Spagon (Sematech) semi-conductor wafer film thickness
+Source--Hurwitz, Arnon and Spagon, Pat (19xx).
+        Statistical Methods for Test Procedures
+        Sematech Report. Section 1.3.1.1
+ 
+Number of observations             = 16
+Number of variables per line image =  1
+Order of variables on a line image--
+   1. Response variable Y = wafer thickness
+Statistics category--univariate analysis
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ SPAGON1.DAT Y
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+      Y
+wafer thickness
+---------------
+     2987
+     3238
+     3459
+     3361
+     3487
+     2884
+     3405
+     3034
+     3281
+     3258
+     3039
+     3191
+     3086
+     3300
+     2980
+     3210

@@ -1,0 +1,12 @@
+----- <~fit\pcreg.top> Principal Components Regression
+
+Principal Components Regression
+
+Discussion                              <~fit\pcdisc.top>
+Do the Principal Components Regression  <xemf: ~fit\fitpc.men>
+Built-in Datasets                       <~dataload\regmv.top>
+References                              <~fit\refpcreg.top>
+
+Worked Example
+   Hald Data                            <xcf: ~fit\HALD.DP>
+

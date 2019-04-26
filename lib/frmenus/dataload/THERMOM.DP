@@ -1,0 +1,8 @@
+----- <~dataload\THERMOM.DP> Load THERMOM.DAT
+
+. This is file    THERMOM.DP
+
+DELETE Y X
+SKIP 25
+READ THERMOM.DAT Y X
+

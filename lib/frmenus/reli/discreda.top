@@ -1,0 +1,39 @@
+-----<~reli\discreda.top> Discussion: Repairable Systems - Data
+
+Discussion: Repairable Systems - Data
+
+Repairable Systems: Data
+
+For repair data, we need to consider the
+following.
+
+   1) Repair data can come from either a single
+      system (e.g., a prototype model) or multiple
+      identical systems (e.g., field data).
+
+   2) For each system, the test can either end at
+      the last repair time (referred to as failure
+      censored data) or it can terminate at a
+      pre-specified time (time censored data).
+
+      For time censored repair times, we need to
+      consider the time between the last failure
+      time and the end of the test.  That is, 
+      we can have a single censoring time for each
+      system being analyzed.
+
+In Dataplot, we typically have 1 to 3 data columns:
+
+   Column 1  - this column contains the failure (repair)
+               and censoring times
+
+   Column 2  - this column contains the system ID
+               corresponding to each failure/censoring
+               time.
+
+   Column 3 - this column indicates whether the corresponding
+              value in column 1 specifies a failure time
+              or a censoring time.  Dataplot uses the
+              convention that a "1" indicates a failure
+              time while a "0" indicates a censoring time.
+

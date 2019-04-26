@@ -1,0 +1,27 @@
+----- <~dexcomp\crbdmode.top> Models: Randomized Block Designss
+ 
+Models: Randomized Block Designss
+ 
+The following is the model for a completely randomized
+design where there is one factor of primary interest
+(the "trwatment") and one blocking variable:
+
+   Y(i,j) = MU + T(i) + B(j) + random error
+ 
+where
+ 
+   Y(i,j) is any observation for which X1 = i and X2 = j
+          X1 is the primary factor
+          X2 is the blocking FACTOR
+   MU is the general location parameter
+   T(i) is the effect for being in treatment i
+   B(j) is the effect for being in block j
+ 
+Estimates--
+ 
+   Estimate for MU:   ybarall = the average of all the data
+   Estimate for T(i): ybar(i) - ybarall
+                      ybar(i) = average of all Y for which X1 = i
+   Estimate for B(j): ybar(j) - ybarall
+                      ybar(j) = average of all Y for which X2 = j
+ 

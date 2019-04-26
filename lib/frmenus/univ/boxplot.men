@@ -1,0 +1,29 @@
+This is file boxplot.men--Box Plot
+ 
+--------------------
+1. Box Plot
+2. BOX PLOT Y X
+3.
+4. Vertical   Axis Variable:
+4. @CE 1 0 30 50 ?
+5. Horizontal Axis Variable:
+5. @CE 2 0 30 50 ?
+6.
+7. Line & Character Settings (Select one):
+8. @CE 3 1 3 25 Standard Box Plot
+9. @CE 3 2 3 25 Tufte Box Plot
+10. @CE 3 3 3 25 No Change
+11.
+12. Subset/Except/For Specification:
+13. @CE 4 0 1 50 *
+14.
+15.
+16. Generate the Box Plot?:
+--------------------
+GR FE
+@IF 3 1 CHARACTERS BOX PLOT
+@IF 3 1 LINES BOX PLOT
+@IF 3 2 CHARACTERS TUFTE BOX PLOT
+@IF 3 2 LINES TUFTE BOX PLOT
+BOX PLOT _1 _2 _4
+--------------------

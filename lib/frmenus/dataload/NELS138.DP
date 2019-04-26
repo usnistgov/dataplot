@@ -1,0 +1,8 @@
+----- <~dataload\NELS138.DP> Load NELS138.DAT
+
+. This is file    NELS138.DP
+
+DELETE Y CENS ID
+SKIP 25
+READ NELS138.DAT Y CENS ID
+

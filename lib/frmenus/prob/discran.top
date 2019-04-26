@@ -1,0 +1,42 @@
+----- <~prob\discran.top> Discrete Distribution Random Numbers
+
+Discrete Distribution Random Numbers
+
+Generate Random Numbers for Discrete Distributions
+
+Beta-Binomial                                   <xemf: ~prob\genbbnra.men>
+Beta-Geometric                                  <xemf: ~prob\genbgera.men>
+Beta-Negative Binomial                          <xemf: ~prob\genbnbra.men>
+Binomial                                        <xemf: ~prob\genbinra.men>
+Borel-Tanner                                    <xemf: ~prob\genbtara.men>
+Classical Matching                              <xemf: ~prob\genmatra.men>
+Consul
+    (Theta parameterization)                    <xemf: ~prob\gencon1r.men>
+    (Mu parameterization)                       <xemf: ~prob\gencon2r.men>
+Discrete Uniform                                <xemf: ~prob\gendisra.men>
+Discrete Weibull                                <xemf: ~prob\gendiwra.men>
+Geeta
+    (Theta parameterization)                    <xemf: ~prob\genget1r.men>
+    (Mu parameterization)                       <xemf: ~prob\genget2r.men>
+Generalized Logarithmic Series                  <xemf: ~prob\genglsra.men>
+Generalized Lost Games                          <xemf: ~prob\genglgra.men>
+Generalized Negative Binomial                   <xemf: ~prob\gengnbra.men>
+Geometric
+    (number of trials before first success)     <xemf: ~prob\gengeora.men>
+    (number of trials including first success)  <xemf: ~prob\gengeo2r.men>
+Hermite                                         <xemf: ~prob\genherra.men>
+Hypergeometric                                  <xemf: ~prob\genhypra.men>
+Katz                                            <xemf: ~prob\genkatra.men>
+Lagrange Poisson                                <xemf: ~prob\genlpora.men>
+Leads in Coin Tossing                           <xemf: ~prob\genlctra.men>
+Logarithmic Series                              <xemf: ~prob\gendlgra.men>
+Lost Games                                      <xemf: ~prob\genlosra.men>
+Negative Binomial                               <xemf: ~prob\gennbra.men>
+Poisson                                         <xemf: ~prob\genpoira.men>
+Polya-Aeppli                                    <xemf: ~prob\genpapra.men>
+Quasi-Binomial Type I                           <xemf: ~prob\genqbira.men>
+Yule                                            <xemf: ~prob\genyulra.men>
+Waring                                          <xemf: ~prob\genwarra.men>
+Zeta                                            <xemf: ~prob\genzetra.men>
+Zipf                                            <xemf: ~prob\genzipra.men>
+

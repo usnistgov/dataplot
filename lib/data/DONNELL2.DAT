@@ -1,0 +1,46 @@
+This is the Dataplot data file        DONNELL2.DAT
+Volume fraction of nitrogen required to extinguish flame on
+the surface of a plastic cylinder.
+Contact--Michelle Donnelly, Fire Research Division, BFRL, NIST
+Number of observations                       = 21
+Number of observations per line image        = 1
+Order of variables on a line image--
+   1. Dependent variable X = measurements of flux
+Analysis:
+   This data set is used in conjunction with DONNELLY.DAT.  The
+   data in DONNELLY.DAT are used to compute a calibration curve.
+   These data consist of new measurements of flux (and we use
+   the calibration curve to make estimates and compute standard
+   deviations of those estimates).  See
+       http://www.itl.nist.gov/div898/handbook/mpc/section6/mpc65.htm
+   for details.
+The variable BALL is an additional measurement.  It is
+not used in the case study (it is used for plotting).
+
+To read this file into Dataplot--
+   SKIP 25
+   READ DONNELL2.DAT X  BALL
+   Flux        Ball
+    (X)         (X2)
+-------------------
+     26.        9.3
+     30.       10.0
+     27.        9.6
+     44.       19.3
+     16.        4.3
+     21.        5.0
+     14.        4.6
+     24.        5.0
+     22.        5.4
+     43.       19.3
+     41.       17.0
+     47.       21.4
+     45.       21.4
+     42.       30.0
+     14.        2.1
+     14.        1.8
+     32.       12.9
+     29.       12.5
+     47.       24.3
+     44.       25.7
+     47.       27.1

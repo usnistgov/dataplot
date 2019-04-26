@@ -1,0 +1,33 @@
+This is the Dataplot data file        DRAPS521.DAT
+This is the data set from exercise I on page 521 of
+Draper and Smith "Applied Regression Analysis: 2nd Edition".
+This is the data used in the ODRPACK manual as a sample.  We
+have included it here to calibrate the Dataplot implementation
+of the ODRPACK package.  Data are from a simulated planned experiment.
+The proposed model is:
+    Y = EXP{-theta1*X1*EXP[-theta2*((1/X2) - (1/620))]} + E
+this other than the data is from a planned experiment.
+Contact--Alan Heckert, NIST
+Number of observations                       = 8
+Number of observations per line image        = 4
+Order of variables on a line image--
+   1. Dependent Variable Y  = fraction of original materail remaining
+   2. Factor Variable X1    = reaction time (minutes)
+   3. Factor Variable X2    = temperature (degrees Kelvin)
+   4. Run Number
+  
+To read this file into Dataplot--
+   SKIP 25
+   READ DRAPS521.DAT Y X1 X2 RUN
+
+
+Y     X1      X2       RUN
+--------------------------
+0.912   109   600        1
+0.382    65   640        2
+0.397  1180   600        3
+0.376    66   640        4
+0.342  1270   600        5
+0.358    69   640        6
+0.348  1230   600        7
+0.376    68   640        8

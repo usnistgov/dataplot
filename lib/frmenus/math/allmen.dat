@@ -1,0 +1,5902 @@
+$$$$$$$$$$$$$$$$$$
+math/aad.men
+This is file aad.men--Compute average absolute deviation of a variable
+ 
+--------------------
+ 1. Average Absolute Deviation
+ 2. LET A = AVERAGE ABSOLUTE DEVIATION Y
+ 3.
+ 4. Variable for which to compute the
+ 5.    average absolute deviation:
+ 5. @CE 1 0 33 50 ? gui-vari
+ 6. Parameter to store the average
+ 7.    absolute deviation:
+ 7. @CE 2 0 33 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 3 0 1 50 *
+11.
+12.
+13. Compute the Average Absolute Deviation?:
+--------------------
+GR FE
+LET _2 = AVERAGE ABSOLUTE DEVIATION  _1 _3
+--------------------
+WEB HELP AVERAGE ABSOLUTE DEVIATION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/abram.men
+This is file abram.men--Compute Abramowitz Function
+ 
+--------------------
+ 1. Abramowitz Function
+ 2. LET Y = ABRAM(X,ORD)
+ 3.
+ 4. The input values can be variables, parameters, or simply
+ 5. enter a constant.
+ 6. 
+ 7. Input Argument:
+ 7. @CE 1 0 42 50 ? gui-variable
+ 8. Order (integer from 0 to 100):
+ 8. @CE 2 0 42 50 ? gui-variable
+ 9. Variable to store the transformed result:
+ 9. @CE 3 0 42 50 ?
+10.
+11. Subset/Except/For Specification:
+12. @CE 4 0 -5 50 *
+13.
+14.
+15. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = ABRAM( _1 , _2  ) _4
+--------------------
+WEB HELP ABRAM
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/airy.men
+This is file airy.men--Compute Airy Functions
+ 
+--------------------
+ 1. Airy Functions
+ 2. LET YNEW = AIRY(X); LET YNEW = BAIRY(X)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value.
+ 6.
+ 7. Variable  to operate on:
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8.
+ 9. Operation to perform:
+10. @CE 2 1 10 40 Airy (first kind)
+11. @CE 2 2 10 40 Bairy (second kind)
+12.
+13. Variable to store the transformed result:
+13. @CE 3 0 33 50 ?
+14.
+15. Plot?:
+15. @CE 5 1 14 20 no
+15. @CE 5 2 22 28 yes
+16.
+17. Subset/Except/For Specification:
+18. @CE 4 0 -5 50 *
+19.
+20.
+21. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = AIRY( _1 ) _4
+@IF 2 2 LET _3 = BAIRY( _1 ) _4
+@IF 5 2 PLOT _3  _1  _4
+--------------------
+WEB HELP AIRY
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/arithm.men
+This is file arithm.men--Compute common arithmetic transformations
+ 
+--------------------
+ 1. Arithmentic Operations
+ 2. LET YNEW = Y**2
+ 3.
+ 4. This menu performs an elementary arithmetic operation, such
+ 5. as addition, on two variables (or one variable for the
+ 6. negation operation) and stores the result in a third variable.
+ 7. You can substitute a scaler value (either a previously defined
+ 8. parameter or enter a numeric value) for either of the two input
+ 9. variables.
+10.
+11. First variable to operate on:
+11. @CE 1 0 33 50 ? gui-variable
+12. Operation to perform:
+13. @CE 2 1 14 24 addition 
+13. @CE 2 2 26 40 subtraction 
+13. @CE 2 3 42 56 multiplication 
+14. @CE 2 4 14 24 division 
+14. @CE 2 5 26 40 exponentiation 
+14. @CE 2 6 42 56 negation 
+15. Second variable to operate on:
+15. @CE 3 0 33 50 * gui-variable
+16. Variable to store the transformed result:
+16. @CE 4 0 33 50 ?
+17.
+18. Subset/Except/For Specification:
+19. @CE 5 0 -2 50 *
+20.
+21.
+22. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _4 = _1 + _3 _5
+@IF 2 2 LET _4 = _1 - _3 _5
+@IF 2 3 LET _4 = _1 * _3 _5
+@IF 2 4 LET _4 = _1 / _3  _5
+@IF 2 5 LET _4 = _1 + _3 _5
+@IF 2 6 LET _4 = - _1 _5
+--------------------
+WEB HELP LET
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/arithm1.men
+This is file arithm1.men--Compute elementary 1-variable transformations
+ 
+--------------------
+ 1. 1-Variable Elementary Operations
+ 2. LET YNEW = ABS(X)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value.
+ 6.
+ 7. Variable  to operate on:
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8. Operation to perform:
+ 9. @CE 2 1 10 34 absolute value 
+ 9. @CE 2 2 36 60 square root 
+10. @CE 2 3 10 34 sign 
+10. @CE 2 4 36 60 fractional part 
+11. @CE 2 5 10 34 integer 
+11. @CE 2 6 36 60 round
+12. @CE 2 7 10 34 floor
+12. @CE 2 8 36 60 ceiling
+13. @CE 2 9 10 34 most significant digit
+13. @CE 2 10 36 60 greatest common divisor
+14. Variable to store the transformed result:
+14. @CE 3 0 33 50 ?
+15.
+16. Subset/Except/For Specification:
+17. @CE 4 0 -5 50 *
+18.
+19.
+20. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = ABS( _1 ) _4
+@IF 2 2 LET _3 = SQRT( _1 ) _4
+@IF 2 3 LET _3 = SIGN( _1 ) _4
+@IF 2 4 LET _3 = FRACT( _1 ) _4
+@IF 2 5 LET _3 = INT( _1 ) _4
+@IF 2 6 LET _3 = ROUND( _1 ) _4
+@IF 2 7 LET _3 = MSD( _1 ) _4
+@IF 2 8 LET _3 = CEIL( _1 ) _4
+@IF 2 9 LET _3 = FLOOR( _1 ) _4
+@IF 2 10 LET _3 = GCD( _1 ) _4
+--------------------
+WEB HELP MATHEMATICAL LIBRARY FUNCTIONS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/arithm2.men
+This is file arithm2.men--Compute elementary 2-variable transformations
+ 
+--------------------
+ 1. 1-Variable Elementary Operations
+ 2. LET YMAX = MAX(X1,X2)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value for the input variables.
+ 6.
+ 7. First variable to operate on:
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8. Second variable to operate on:
+ 8. @CE 2 0 33 50 ? gui-variable
+ 9. Operation to perform:
+10. @CE 3 1 10 34 dim (x - min(x,y))
+10. @CE 3 2 36 60 indicator function
+11. @CE 3 3 10 34 maximum
+11. @CE 3 4 36 60 minimum
+12. @CE 3 5 10 34 mod function
+13. Variable to store the transformed result:
+14. @CE 4 0 33 50 ?
+15.
+16. Subset/Except/For Specification:
+17. @CE 5 0 -5 50 *
+18.
+19.
+20. Compute the Transformation?:
+--------------------
+GR FE
+@IF 3 1 LET _4 = DIM( _1 , _2 ) _5
+@IF 3 2 LET _4 = IND( _1 , _2 ) _5
+@IF 3 3 LET _4 = MAX( _1 , _2 ) _5
+@IF 3 4 LET _4 = MIN( _1 , _2 ) _5
+@IF 3 5 LET _4 = MOD( _1 , _2 ) _5
+--------------------
+WEB HELP MATHEMATICAL LIBRARY FUNCTIONS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/autocorr.men
+This is file autocorr.men--Compute autocorrelation of a variable
+ 
+--------------------
+ 1. Autocorrelation
+ 2. LET A = AUTOCORRELATION Y
+ 3.
+ 4. Variable for which to compute the autocorrelation:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the autocorrelation:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -8 50 *
+ 9.
+10.
+11. Compute the Autocorrelation?:
+--------------------
+GR FE
+LET _2 = AUTOCORRELATION  _1 _3
+--------------------
+WEB HELP AUTOCORRELATION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/autocova.men
+This is file autocova.men--Compute autocovariance of a variable
+ 
+--------------------
+ 1. Autocovariance
+ 2. LET A = AUTOCOVARIANCE Y
+ 3.
+ 4. Variable for which to compute the autocovariance:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the autocovariance:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -8 50 *
+ 9.
+10.
+11. Compute the Autocovariance?:
+--------------------
+GR FE
+LET _2 = AUTOCOVARIANCE  _1 _3
+--------------------
+WEB HELP AUTOCOVARIANCE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/bernnum2.men
+This is file bernnum2.men--Compute Bernoulli Number
+ 
+--------------------
+ 1. Bernoulli Numbers
+ 2. LET Y = BN(N)
+ 3.
+ 4. Order of the Bernoulli polynomial (max = 65):
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the transformed result:
+ 5. @CE 3 0 33 50 ?
+ 6.
+ 7. Plot?:
+ 7. @CE 5 1 14 20 no
+ 7. @CE 5 2 22 28 yes
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 6 0 -5 50 *
+11.
+12.
+13. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = BN( _1 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP BN
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/bernnumb.men
+This is file bernnumb.men--Generate a sequence of Bernoulli numbers
+ 
+--------------------
+ 1. Bernoulli Numbers
+ 2. LET Y = BERNOULLI NUMBERS FOR I = 1 1 N
+ 3.
+ 4. Bernoulli numbers overflow at a relatively small number.
+ 5. For single precision 32-bit machines (i.e., most), the
+ 6. maximum N before overflow occurs is about 65.  The start and
+ 7. increment values are almost always set to 1.
+ 8.
+ 9. Start value (a positive integer):
+ 9. @CE 1 0 33 50 ?
+10. Stop value (a positive integer):
+10. @CE 2 0 33 50 ?
+11. Increment (a positive integer):
+11. @CE 3 0 33 50 ?
+12. Variable to store the prime numbers:
+12. @CE 5 0 33 50 ? gui-none
+13.
+14. Subset/Except/For Specification:
+15. @CE 6 0 1 50 *
+16.
+17.
+18. Generate the Bernoulli Numbers?:
+--------------------
+GR FE
+LET _5 = BERNOULLI NUMBERS FOR I = _1 _3 _2  _6
+--------------------
+WEB HELP BERNOULLI NUMBERS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/bernpoly.men
+This is file bernpoly.men--Compute Bernoulli Functions
+ 
+--------------------
+ 1. Bernoulli Polynomials
+ 2. LET Y = BN(X,5)
+ 3.
+ 4. Horizontal axis variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Order of the Bernoulli polynomial (max = 65):
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7.
+ 8. Plot?:
+ 8. @CE 5 1 14 20 no
+ 8. @CE 5 2 22 28 yes
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 6 0 -5 50 *
+12.
+13.
+14. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = BN( _1 , _2 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP BN
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/bessel.men
+This is file igamma.men--Compute incomplete gamma and related functions
+ 
+--------------------
+ 1. Incomplete Gamma (and Related) Functions
+ 2. LET YNEW = GAMMAI(X,A)
+ 3.
+ 4. These functions accept 2 arguments.  The first is the
+ 5. argument for the horizontal axis variable (i.e., the
+ 6. X value) and the second argument is a shape parameter.
+ 7. Both of these values can be a variable, parameter, or
+ 8. simply a constant.  However, the shape parameter is typically
+ 9. a parameter or constant as opposed to a variable.
+10.
+11. Horizontal axis variable:
+11. @CE 1 0 33 50 ? gui-variable
+12. Shape parameter:
+12. @CE 6 0 33 50 ? gui-none
+13.
+14. Operation to perform:
+15. @CE 2 1 10 45 incomplete gamma function
+16. @CE 2 2 10 45 incomplete gamma function ratio
+17. @CE 2 3 10 45 complementary incomplete gamma function
+18. @CE 2 4 10 45 Tricomi's incomplete gamma function
+19. @CE 2 5 10 45 Pochhammer's generalized symbol
+20. @CE 2 6 10 45 Pochhammer's generalized symbol (first order)
+21.
+22. Variable to store the transformed result:
+22. @CE 3 0 33 50 ?
+23.
+24. Plot?:
+24. @CE 5 1 14 20 no
+24. @CE 5 2 22 28 yes
+25.
+26. Subset/Except/For Specification:
+27. @CE 4 0 -5 50 *
+28.
+29.
+30. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = GAMMAI( _1 , _6 ) _4
+@IF 2 2 LET _3 = GAMMAIP( _1 , _6 ) _4
+@IF 2 3 LET _3 = GAMMAIC( _1 , _6 ) _4
+@IF 2 4 LET _3 = TRICOMI( _1 , _6 ) _4
+@IF 2 5 LET _3 = POCH( _1 , _6 ) _4
+@IF 2 6 LET _3 = POCH1( _1 , _6 ) _4
+@IF 5 2 PLOT _3  _1  _4
+--------------------
+WEB HELP GAMMA FUNCTIONS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/bessel_c.men
+This is file bessel_c.men--Compute Bessel Functions (complex argument)
+ 
+--------------------
+ 1. Bessel Functions (complex arguments)
+ 2. LET YR = CBESSJR(XR,XC,2); LET YC = CBESSJI(XR,XC,2)
+ 3.
+ 4. These functions accept 3 arguments.  The first two are the
+ 5. real and complex component of the argument for the horizontal axis
+ 6. variable (i.e., the X value) and the third argument is the order of
+ 7. the Bessel function.  All of these values can be a variable,
+ 8. parameter, or simply a constant.  However, the order is typically
+ 9. a parameter or constant as opposed to a variable.  The complex
+10. component of the argument is stored as a separate real variable
+11. and the real and complex components of the result are stored in
+12. separate real variables.
+13.
+14. Real component of the horizontal axis variable:
+14. @CE 1 0 33 50 ? gui-variable
+15. Complex component of the horizontal axis variable:
+15. @CE 2 0 33 50 ? gui-variable
+16. Order of the Bessel function:
+16. @CE 3 0 33 50 ? gui-none
+17. Variable to store the real component of the transformed result:
+17. @CE 4 0 33 50 ? gui-none
+18. Variable to store the complex component of the transformed result:
+18. @CE 5 0 33 50 ? gui-none
+19.
+20. Operation to perform:
+21. @CE 6 1 10 45 Jn (Bessel function first kind)
+22. @CE 6 2 10 45 Yn (Bessel function second kind)
+23. @CE 6 3 10 45 In (modified Bessel function, first kind)
+24. @CE 6 4 10 45 Kn (modified Bessel function, third kind)
+25.
+26.
+27. Subset/Except/For Specification:
+28. @CE 7 0 -20 50 *
+29.
+30.
+31. Compute the Transformation?:
+--------------------
+GR FE
+@IF 6 1 LET _4 = CBESSJR( _1 , _2 , _3 ) _7
+@IF 6 1 LET _5 = CBESSJI( _1 , _2 , _3 ) _7
+@IF 6 2 LET _4 = CBESSYR( _1 , _2 , _3 ) _7
+@IF 6 2 LET _5 = CBESSYI( _1 , _2 , _3 ) _7
+@IF 6 3 LET _4 = CBESSIR( _1 , _2 , _3 ) _7
+@IF 6 3 LET _5 = CBESSII( _1 , _2 , _3 ) _7
+@IF 6 4 LET _4 = CBESSKR( _1 , _2 , _3 ) _7
+@IF 6 4 LET _5 = CBESSKI( _1 , _2 , _3 ) _7
+--------------------
+WEB HELP CBESSJ
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/bessel_r.men
+This is file bessel_r.men--Compute Bessel Functions (real argument)
+ 
+--------------------
+ 1. Bessel Functions (real arguments)
+ 2. LET YNEW = BESSJN(X,2)
+ 3.
+ 4. These functions accept 2 arguments.  The first is the
+ 5. argument for the horizontal axis variable (i.e., the X value)
+ 6. and the second argument is the order of the Bessel function.
+ 7. Both of these values can be a variable, parameter, or
+ 8. simply a constant.  However, the order is typically
+ 9. a parameter or constant as opposed to a variable.
+10.
+11. Horizontal axis variable:
+11. @CE 1 0 33 50 ? gui-variable
+12. Order of the Bessel function:
+12. @CE 6 0 33 50 ? gui-none
+13. Variable to store the transformed result:
+13. @CE 3 0 33 50 ?
+14.
+15. Operation to perform:
+16. @CE 2 1 10 45 Jn (Bessel function first kind)
+17. @CE 2 2 10 45 Yn (Bessel function second kind)
+18. @CE 2 3 10 45 In (modified Bessel function, first kind)
+19. @CE 2 4 10 45 In (exponentially scaled version)
+20. @CE 2 5 10 45 Kn (modified Bessel function, third kind)
+21. @CE 2 6 10 45 Kn (exponentially scaled version)
+22. @CE 2 7 10 45 Struve function
+23. @CE 2 8 10 45 modified Struve function
+24. @CE 2 9 10 45 Lambda function
+25.
+26. Plot?:
+26. @CE 5 1 14 20 no
+26. @CE 5 2 22 28 yes
+27.
+28. Subset/Except/For Specification:
+29. @CE 4 0 -5 50 *
+30.
+31.
+32. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = BESSJN( _1 , _6 ) _4
+@IF 2 2 LET _3 = BESSYN( _1 , _6 ) _4
+@IF 2 3 LET _3 = BESSIN( _1 , _6 ) _4
+@IF 2 4 LET _3 = BESSINE( _1 , _6 ) _4
+@IF 2 5 LET _3 = BESSKN( _1 , _6 ) _4
+@IF 2 6 LET _3 = BESSKNE( _1 , _6 ) _4
+@IF 2 7 LET _3 = HV( _1 , _6 ) _4
+@IF 2 8 LET _3 = LV( _1 , _6 ) _4
+@IF 2 9 LET _3 = LAMBDA( _1 , _6 ) _4
+@IF 5 2 PLOT _3  _1  _4
+--------------------
+WEB HELP BESSEL FUNCTIONS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/beta.men
+This is file beta.men--Compute beta and related functions
+ 
+--------------------
+ 1. Beta (and Related) Functions
+ 2. LET YNEW = BETA(A,B)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value for the 2 arguements.
+ 6.
+ 7. First shape parameter (A):
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8. Second shape parameter (B):
+ 8. @CE 2 0 33 50 ? gui-variable
+ 9.
+10. Operation to perform:
+11. @CE 3 1 10 40 beta
+12. @CE 3 2 10 40 log beta
+13.
+14. Variable (or parameter) to store the result:
+14. @CE 4 0 33 50 ?
+15.
+16. Subset/Except/For Specification:
+17. @CE 6 0 -5 50 *
+18.
+19.
+20. Compute the Transformation?:
+--------------------
+GR FE
+@IF 3 1 LET _4 = BETA( _1 , _2 ) _6
+@IF 3 2 LET _4 = LNBETA( _1 , _2 ) _6
+--------------------
+WEB HELP BETA
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/binom.men
+This is file binom.men--Compute Binomial Coefficients
+ 
+--------------------
+ 1. Binomial Coefficients
+ 2. LET Y = BINOM(N,M)
+ 3.
+ 4. Sample size variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Number of items to select variable:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 6 0 -5 50 *
+10.
+11.
+12. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = BINOM( _1 , _2 ) _6
+--------------------
+WEB HELP BINOMIAL
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/bivarin2.men
+This is file bivarin2.men--Perform a bivariate interpolation
+ 
+--------------------
+ 1. Bivariate Interpolation (non-gridded data)
+ 2. LET Z2 = 2D INTERPOLATION Z1 Y1 X1 Y2 X2
+ 3.
+ 4. Z axis variable with original data:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Y axis variable with original data:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. X axis variable with original data:
+ 6. @CE 3 0 33 50 ? gui-variable
+ 7. Y axis variable containing points at
+ 8.    which to interpolate:
+ 8. @CE 4 0 33 50 ? gui-var
+ 9. X axis variable containing points at
+10.    which to interpolate:
+10. @CE 5 0 33 50 ? gui-variable
+11. Variable to store the interpolated values:
+11. @CE 6 0 33 50 ? gui-none
+12. 
+13. Subset/Except/For Specification:
+14. @CE 7 0 -3 50 *
+15.
+16.
+17. Perform the interpolation?:
+--------------------
+GR FE
+LET _6 = 2D INTERPOLATION _1 _2 _3 _4 _5  _7
+--------------------
+WEB HELP 2D INTERPOLATION
+--------------------
+
+$$$$$$$$$$$$$$$$$$
+math/bivarint.men
+This is file bivarint.men--Perform a bivariate interpolation
+ 
+--------------------
+ 1. Bivariate Interpolation (gridded data)
+ 2. LET Z2 = BIVARIATE INTERPOLATION Z1 Y1 X1 Y2 X2
+ 3.
+ 4. Z axis variable with original data:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Y axis variable with original data:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. X axis variable with original data:
+ 6. @CE 3 0 33 50 ? gui-variable
+ 7. Y axis variable containing points at
+ 8.    which to interpolate:
+ 8. @CE 4 0 33 50 ? gui-variable
+ 9. X axis variable containing points at
+10.    which to interpolate:
+10. @CE 5 0 33 50 ? gui-variable
+11. Variable to store the interpolated values:
+11. @CE 6 0 33 50 ? gui-none
+12. Interpolation Method:
+13. @CE 7 1 14 25 Bi-linear
+13. @CE 7 2 27 38 B-Spline
+14. 
+15. Subset/Except/For Specification:
+16. @CE 8 0 -3 50 *
+17.
+18.
+19. Perform the Interpolation?:
+--------------------
+GR FE
+@IF 7 1 LET _6 = BILINEAR INTERPOLATION _1 _2 _3 _4 _5  _8
+@IF 7 2 LET _6 = BIVARIATE INTERPOLATION _1 _2 _3 _4 _5  _8
+--------------------
+WEB HELP BIVARIATE INTERPOLATION
+--------------------
+
+$$$$$$$$$$$$$$$$$$
+math/biweight.men
+This is file biweight.men--Compute biweight of a variable
+ 
+--------------------
+ 1. Biweight
+ 2. LET A = BIWEIGHT Y
+ 3.
+ 4. Variable for which to compute the biweight:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the biweights:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Biweight?:
+--------------------
+GR FE
+LET _2 = BIWEIGHT  _1 _3
+--------------------
+WEB HELP BIWEIGHT
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/cabs.men
+This is file cabs.men--Compute complex absolute value
+ 
+--------------------
+ 1. Complex Absolute Value Function
+ 2. LET Y = CABS(XR,XC)
+ 3.
+ 4. Variable for real component of input argument:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable for complex component of input argument:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable to store the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 6 0 -5 50 *
+10.
+11.
+12. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = CABS( _1 , _2 ) _6
+--------------------
+WEB HELP CABS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/cbeta.men
+This is file cbeta.men--Compute complex beta functions
+ 
+--------------------
+ 1. Complex Beta Function
+ 2. LET YR = CBETA(XR,XC); LET YC = CBETAI(XR,XC)
+ 3.
+ 4. Variable for real component of first shape parameter:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable for complex component of first shape parameter:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable for real component of second shape parameter:
+ 6. @CE 7 0 33 50 ? gui-variable
+ 7. Variable for complex component of second shape parameter:
+ 7. @CE 8 0 33 50 ? gui-variable
+ 8. Variable to store real component of the transformed result:
+ 8. @CE 3 0 33 50 ?
+ 9. Variable to store complex component of the transformed result:
+ 9. @CE 4 0 33 50 ?
+10.
+11. Operation to perform:
+12. @CE 5 1 10 30 complex beta
+13. @CE 5 2 10 30 complex log beta
+14.
+15. Subset/Except/For Specification:
+16. @CE 6 0 -20 50 *
+17.
+18.
+19. Compute the Transformation?:
+--------------------
+GR FE
+@IF 5 1 LET _3 = CBETA( _1 , _2 , _7 , _8 ) _6
+@IF 5 1 LET _4 = CBETAI( _1 , _2 , _7 , _8 ) _6
+@IF 5 2 LET _3 = CLNBETA( _1 , _2 , _7 , _8 ) _6
+@IF 5 2 LET _4 = CLNBETAI( _1 , _2 , _7 , _8 ) _6
+--------------------
+WEB HELP CBETA
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/cc.men
+This is file cc.men--Compute cc of a variable
+ 
+--------------------
+ 1. Cc
+ 2. LET A = CC Y
+ 3.
+ 4. Variable for which to compute the Cc:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Value for the upper specification limit?:
+ 5. @CE 2 0 33 50 ? 
+ 6. Value for the lower specification limit?:
+ 6. @CE 3 0 33 50 ?
+ 7. Value for the target limit?:
+ 7. @CE 4 0 33 50 ?
+ 8. Parameter to store the Cc:
+ 8. @CE 5 0 33 50 ? gui-none
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 6 0 -1 50 *
+12.
+13.
+14. Compute the Cc?:
+--------------------
+GR FE
+LET USL = _2
+LET LSL = _3
+LET TARGET = _4
+LET _5 = CC  _1 _6
+--------------------
+WEB HELP CC
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/cgamma.men
+This is file cgamma.men--Compute complex gamma functions
+ 
+--------------------
+ 1. Complex Gamma Function
+ 2. LET YR = CGAMMA(XR,XC); LET YC = CGAMMAI(XR,XC)
+ 3.
+ 4. Variable for real component of input argument:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable for complex component of input argument:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable to store real component of the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7. Variable to store complex component of the transformed result:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Operation to perform:
+10. @CE 5 1 10 30 complex gamma
+11. @CE 5 2 10 30 complex log gamma
+12. @CE 5 3 10 30 complex psi
+13.
+14. Subset/Except/For Specification:
+15. @CE 6 0 -20 50 *
+16.
+17.
+18. Compute the Transformation?:
+--------------------
+GR FE
+@IF 5 1 LET _3 = CGAMMA( _1 , _2 ) _6
+@IF 5 1 LET _4 = CGAMMAI( _1 , _2 ) _6
+@IF 5 2 LET _3 = CLNGAM( _1 , _2 ) _6
+@IF 5 2 LET _4 = CLNGAMI( _1 , _2 ) _6
+@IF 5 3 LET _3 = CPSI( _1 , _2 ) _6
+@IF 5 3 LET _4 = CPSII( _1 , _2 ) _6
+--------------------
+WEB HELP CGAMMA
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/cheby.men
+This is file cheby.men--Compute Chebychev Functions
+ 
+--------------------
+ 1. Chebychev Functions
+ 2. LET Y = CHEBT(X,2); LET Y = CHEBU(X,2)
+ 3.
+ 4. Horizontal axis variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Order of the Chebychev function:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7.
+ 8. Operation to perform:
+ 9. @CE 4 1 10 35 Chebychev T function
+10. @CE 4 2 10 35 Chebychev U function
+11.
+12. Plot?:
+12. @CE 5 1 14 20 no
+12. @CE 5 2 22 28 yes
+13.
+14. Subset/Except/For Specification:
+15. @CE 6 0 -5 50 *
+16.
+17.
+18. Compute the Transformation?:
+--------------------
+GR FE
+@IF 4 1 LET _3 = CHEBT( _1 , _2 ) _6
+@IF 4 2 LET _3 = CHEBU( _1 , _2 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP CHEBYCHEV FUNCTIONS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/clausn.men
+This is file clausn.men--Compute Clausen Integral
+ 
+--------------------
+ 1. Clausen Integral
+ 2. LET Y = CLAUSN(X)
+ 3.
+ 4. The input values can be variables, parameters, or simply
+ 5. enter a constant.
+ 6. 
+ 7. Input Argument:
+ 7. @CE 1 0 42 50 ? gui-variable
+ 8. Variable to store the transformed result:
+ 8. @CE 2 0 42 50 ?
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 3 0 -5 50 *
+12.
+13.
+14. Compute the Transformation?:
+--------------------
+GR FE
+LET _2 = CLAUSN( _1 ) _3
+--------------------
+WEB HELP CLAUSN
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/clog.men
+This is file clog.men--Compute complex log functions
+ 
+--------------------
+ 1. Complex Trigonometric Function
+ 2. LET YR = CLOG(XR,XC); LET YC = CLOG(XR,XC)
+ 3.
+ 4. Variable for real component of input argument:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable for complex component of input argument:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable to store real component of the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7. Variable to store complex component of the transformed result:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Operation to perform:
+10. @CE 5 1 10 30 complex log
+11. @CE 5 2 10 30 complex exponential
+12.
+13. Subset/Except/For Specification:
+14. @CE 6 0 -20 50 *
+15.
+16.
+17. Compute the Transformation?:
+--------------------
+GR FE
+@IF 5 1 LET _3 = CLOG( _1 , _2 ) _6
+@IF 5 1 LET _4 = CLOGI( _1 , _2 ) _6
+@IF 5 2 LET _3 = CEXP( _1 , _2 ) _6
+@IF 5 2 LET _4 = CEXPI( _1 , _2 ) _6
+--------------------
+WEB HELP CLOG
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/cn.men
+This is file cn.men--Compute Jacobian cn elliptic function
+ 
+--------------------
+ 1. Jacobian cn Elliptic Function
+ 2. LET Y = CN(U,K)
+ 3.
+ 4. Note that Dataplot takes the second argument as MC=1-K**2.
+ 5. Other packages may use either K or K**2 as the second argument.
+ 6. You can enter the commands
+ 7.   LET K = <value>
+ 8.   LET MC = 1 - K**2
+ 9. to tranlate the second argument to Dataplot's form.
+10.
+11. Horizontal axis variable:
+11. @CE 1 0 33 50 ? gui-variable
+12. MC (1-K**2) parameter:
+12. @CE 2 0 33 50 ? gui-none
+13. Variable to store the transformed result:
+13. @CE 3 0 33 50 ?
+14.
+15. Plot?:
+15. @CE 5 1 14 20 no
+15. @CE 5 2 22 28 yes
+16.
+17. Subset/Except/For Specification:
+18. @CE 6 0 -5 50 *
+19.
+20.
+21. Compute the Transformation?:
+--------------------
+GR FE
+LET ZZZZZZZA = _2
+LET _3 = CN( _1 , ZZZZZZZA ) _6
+DELETE ZZZZZZZA
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP CN
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/cnpk.men
+This is file cnpk.men--Compute cnpk of a variable
+ 
+--------------------
+ 1. Cnpk
+ 2. LET A = CNPK Y
+ 3.
+ 4. Variable for which to compute the Cnpk:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Value for the upper specification limit?:
+ 5. @CE 2 0 33 50 ?
+ 6. Value for the lower specification limit?:
+ 6. @CE 3 0 33 50 ?
+ 7. Parameter to store the Cnpk:
+ 7. @CE 4 0 33 50 ? gui-none
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 -1 50 *
+11.
+12.
+13. Compute the Cnpk?:
+--------------------
+GR FE
+LET USL = _2
+LET LSL = _3
+LET _4 = CNPK  _1 _5
+--------------------
+WEB HELP CNPK
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/code.men
+This is file code.men--Generate coded values for a variable
+ 
+--------------------
+ 1. Coding
+ 2. LET YCODED = CODE Y
+ 3.
+ 4. Variable to code:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the coded values:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Code by:
+ 7. @CE 3 1 5 50 distinct values (1 = min, N = max)
+ 8. @CE 3 2 5 50 median (1 - below median, 2 - above median)
+ 9. @CE 3 3 5 50 quartiles (1 - lowest 25%, 4 - highest 25%)
+10. @CE 3 4 5 50 octiles (1 - lowest 12.5%, 8 - highest 12.5%)
+11. @CE 3 5 5 50 deciles (1 - lowest 10%, 10 - highest 10%)
+12.
+13. Subset/Except/For Specification:
+14. @CE 4 0 1 50 *
+15.
+16.
+17. Perform the Coding?:
+--------------------
+GR FE
+@IF 3 1 LET _2 = CODE _1 _4
+@IF 3 2 LET _2 = CODE2 _1 _4
+@IF 3 3 LET _2 = CODE4 _1 _4
+@IF 3 4 LET _2 = CODE8 _1 _4
+@IF 3 5 LET _2 = CODE10 _1 _4
+--------------------
+WEB HELP CODE
+--------------------
+
+$$$$$$$$$$$$$$$$$$
+math/coefvar.men
+This is file coefvar.men--Compute coefficient of variation of a variable
+ 
+--------------------
+ 1. Coefficient of Variation
+ 2. LET A = COEFFICIENT OF VARIATION Y
+ 3.
+ 4. Variable for which to compute the coefficient of
+ 5.    variation:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Parameter to store the coefficient of variation:
+ 6. @CE 2 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 3 0 -10 50 *
+10.
+11.
+12. Compute the Coefficient of Variation?:
+--------------------
+GR FE
+LET _2 = COEFFICIENT OF VARIATION  _1 _3
+--------------------
+WEB HELP COEFFICIENT OF VARIATION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/comb_fun.men
+This is file comb_fun.men--Combine user-defined functions
+ 
+--------------------
+ 1. Combine User Defined Functions
+ 2. LET FUNCTION F = F1+F2
+ 3.
+ 4. Name of the first function (or enter a functional expression):
+ 5. @CE 1 0 -10 50 ? gui-function
+ 6. Name of the second function (or enter a functional expression):
+ 7. @CE 2 0 -10 50 ? gui-function
+ 8.
+ 9. Operation to perform?:
+ 9. @CE 4 1 20 24 +
+ 9. @CE 4 2 26 30 -
+ 9. @CE 4 3 32 34 *
+ 9. @CE 4 4 36 40 /
+ 9. @CE 4 5 42 46 **
+10.
+11. Name of the resulting function:
+11. @CE 3 0 33 50 ? gui-none
+12.
+13. Combine the Functions?:
+--------------------
+GR FE
+@IF 4 1 LET FUNCTION _3 = ( _1 ) + ( _2 )
+@IF 4 2 LET FUNCTION _3 = ( _1 ) - ( _2 )
+@IF 4 3 LET FUNCTION _3 = ( _1 ) * ( _2 )
+@IF 4 4 LET FUNCTION _3 = ( _1 ) / ( _2 )
+@IF 4 5 LET FUNCTION _3 = ( _1 ) ** ( _2 )
+--------------------
+WEB HELP LET FUNCTION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/comove.men
+This is file comove.men--Compute comovement of a variable
+ 
+--------------------
+ 1. Comovement
+ 2. LET A = COMOVEMENT Y1 Y2
+ 3.
+ 4. First variable for which to compute the comovement:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Second variable for which to compute the comovement:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Parameter to store the comovement:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -10 50 *
+10.
+11.
+12. Compute the Comovement?:
+--------------------
+GR FE
+LET _3 = COMOVEMENT  _1 _2 _4
+--------------------
+WEB HELP COMOVEMENT
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/comp_add.men
+This is file comp_add.men--Compute complex addition
+ 
+--------------------
+ 1. Complex Addition
+ 2. LET Y5 Y6 = COMPLEX ADDITION Y1 Y2 Y3 Y4
+ 3.
+ 4. Real component of first variable for which
+ 5.    to compute the complex addition:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Complex component of first variable for which
+ 7.    which to compute the complex addition:
+ 7. @CE 2 0 33 50 * gui-variable
+ 8. Real component of the second  variable for which
+ 9.    which to compute the complex addition:
+ 9. @CE 3 0 33 50 ? gui-variable
+10. Complex component of the second variable for which
+11.    which to compute the complex addition:
+11. @CE 4 0 33 50 * gui-variable
+12. Variable to store the real component of the
+13.    complex addition:
+13. @CE 5 0 33 50 ? gui-none
+14. Variable to store the complex component of the
+15.    complex addition:
+15. @CE 6 0 33 50 ? gui-none
+16.
+17. Subset/Except/For Specification:
+18. @CE 7 0 -10 50 *
+19.
+20.
+21. Compute the Complex Addition?:
+--------------------
+GR FE
+LET _5 _6 = COMPLEX ADDITION  _1 _2 _3 _4 _7
+--------------------
+WEB HELP COMPLEX ADDITION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/comp_con.men
+This is file comp_con.men--Compute complex conjugate
+ 
+--------------------
+ 1. Complex Conjugate
+ 2. LET YR YC = COMPLEX CONJUGATE XR XC
+ 3.
+ 4. Real component for which to compute the
+ 5.    complex conjugate:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Complex component for which to compute the
+ 7.    complex conjugate:
+ 7. @CE 2 0 33 50 * gui-variable
+ 8. Variable to store the real component of the
+ 9.    complex conjugate:
+ 9. @CE 3 0 33 50 ? gui-none
+10. Variable to store the complex component of
+11.    the complex conjugate:
+11. @CE 4 0 33 50 ? gui-none
+12.
+13. Subset/Except/For Specification:
+14. @CE 5 0 -10 50 *
+15.
+16.
+17. Compute the Complex Conjugate?:
+--------------------
+GR FE
+LET _3 _4 = COMPLEX CONJUGATE  _1 _2 _5
+--------------------
+WEB HELP COMPLEX CONJUGATE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/comp_div.men
+This is file comp_div.men--Compute complex division
+ 
+--------------------
+ 1. Complex Division
+ 2. LET YR YC = COMPLEX DIVISION XR XC
+ 3.
+ 4. Real component of the first variable for
+ 5.    which to compute the complex division:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Complex component of the first variable for
+ 7.    which to compute the complex division:
+ 7. @CE 2 0 33 50 * gui-variable
+ 8. Real component of the second variable for
+ 9.    which to compute the complex division:
+ 9. @CE 3 0 33 50 ? gui-variable
+10. Complex component of the second variable for
+11.    which to compute the complex division:
+11. @CE 4 0 33 50 * gui-variable
+12. Variable to store the real component of
+13.    the complex division:
+13. @CE 5 0 33 50 ?
+14. Variable to store the complex component of
+15.    the complex division:
+15. @CE 6 0 33 50 ?
+16.
+17. Subset/Except/For Specification:
+18. @CE 7 0 -10 50 *
+19.
+20.
+21. Compute the Complex Division?:
+--------------------
+GR FE
+LET _5 _6 = COMPLEX DIVISION  _1 _2 _3 _4 _7
+--------------------
+WEB HELP COMPLEX DIVISION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/comp_exp.men
+This is file comp_exp.men--Compute complex exponentation
+ 
+--------------------
+ 1. Complex Exponentiation
+ 2. LET YR YC = COMPLEX EXPONENTATION XR XC
+ 3. @CE 6 1 64 70 Help
+ 3.
+ 4. Variable containing real component for which
+ 5.    to compute the complex exponentation:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Variable containing complex component for which
+ 7.    to compute the complex exponentation:
+ 7. @CE 2 0 33 50 * gui-variable
+ 8. Variable to store the real component of
+ 9.    the complex exponentation:
+ 9. @CE 3 0 33 50 ? gui-none
+10. Variable to store the complex component of
+11.    the complex exponentation:
+11. @CE 4 0 33 50 ? gui-none
+12.
+13. Subset/Except/For Specification:
+14. @CE 5 0 -10 50 *
+15.
+16.
+17. Compute the Complex Exponentiation?:
+--------------------
+GR FE
+LET _3 _4 = COMPLEX EXPONENTATION  _1 _2 _5
+--------------------
+WEB HELP COMPLEX EXPONENTATION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/comp_mul.men
+This is file comp_mul.men--Compute complex multiplication
+ 
+--------------------
+ 1. Complex Multiplication
+ 2. LET YR YC = COMPLEX MULTIPLICATION XR XC
+ 3.
+ 4. Real component of the first  variable for
+ 5.    which to compute the complex multiplication:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Complex component of the first variable for
+ 7.    which to compute the complex multiplication:
+ 7. @CE 2 0 33 50 * gui-variable
+ 8. Real component of the second variable for
+ 9.    which to compute the complex multiplication:
+ 9. @CE 3 0 33 50 ? gui-variable
+10. Complex component of the second variable for
+11.    which to compute the complex multiplication:
+11. @CE 4 0 33 50 * gui-variable
+12. Variable to store the real component of
+13.    the complex multiplication:
+13. @CE 5 0 33 50 ? gui-none
+14. Variable to store the complex component of
+15.    the complex multiplication:
+15. @CE 6 0 33 50 ? gui-none
+16.
+17. Subset/Except/For Specification:
+18. @CE 7 0 -10 50 *
+19.
+20.
+21. Compute the Complex Multiplication?:
+--------------------
+GR FE
+LET _5 _6 = COMPLEX MULTIPLICATION  _1 _2 _3 _4 _7
+--------------------
+WEB HELP COMPLEX MULTIPLICATION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/comp_roo.men
+This is file comp_roo.men--Compute complex roots
+ 
+--------------------
+ 1. Complex Roots
+ 2. LET YR YC = COMPLEX ROOTS XR XC
+ 3.
+ 4. Real component for which to compute
+ 5. the complex roots:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Complex component for which to compute
+ 7. the complex roots:
+ 7. @CE 2 0 33 50 * gui-variable
+ 8. Variable to store the real component of
+ 9.    the complex roots:
+ 9. @CE 3 0 33 50 ? gui-none
+10. Variable to store the complex component of
+11.    the complex roots:
+11. @CE 4 0 33 50 ?
+12.
+13. Subset/Except/For Specification:
+14. @CE 5 0 -5 50 *
+15.
+16.
+17. Compute the Complex Roots?:
+--------------------
+GR FE
+LET _3 _4 = COMPLEX ROOTS  _1 _2 _5
+--------------------
+WEB HELP COMPLEX ROOTS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/comp_squ.men
+This is file comp_squ.men--Compute complex square root
+ 
+--------------------
+ 1. Complex Square Root
+ 2. LET YR YC = COMPLEX SQUARE ROOT XR XC
+ 3. @CE 6 1 64 70 Help
+ 3.
+ 4. Variable containing real component 
+ 5. for which to compute the complex square root:
+ 5. @CE 1 0 33 50 ?
+ 6. Variable containing complex component
+ 7. for which to compute the complex square root:
+ 7. @CE 2 0 33 50 *
+ 8. Variable to store the real component
+ 9. of the complex square root:
+ 9. @CE 3 0 33 50 ?
+10. Variable to store the complex component
+11. of the complex square root:
+11. @CE 4 0 33 50 ?
+12.
+13. Subset/Except/For Specification:
+14. @CE 5 0 -10 50 *
+15.
+16.
+17. Compute the Complex Square Root?:
+--------------------
+GR FE
+LET ZZZZFLAG = 0
+@IF 6 1 LET ZZZZFLAG = 1
+IF ZZZZFLAG = 1
+  WEB HELP COMPLEX SQUARE ROOT
+END OF IF
+IF ZZZZFLAG = 0
+LET _3 _4 = COMPLEX SQUARE ROOT  _1 _2 _5
+END OF IF
+DELETE ZZZZFLAG
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/comp_sub.men
+This is file comp_sub.men--Compute complex subtraction
+ 
+--------------------
+ 1. Complex Subtraction
+ 2. LET Y5 Y6 = COMPLEX SUBTRACTION Y1 Y2 Y3 Y4
+ 3.
+ 4. Real component of the first variable for
+ 5. which to compute the complex subtraction:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Complex component of the first variable for
+ 7.    which to compute the complex subtraction:
+ 7. @CE 2 0 33 50 * gui-variable
+ 8. Real component of the second variable for
+ 9.    which to compute the complex subtraction:
+ 9. @CE 3 0 33 50 ? gui-variable
+10. Complex component of the second variable for
+11.    which to compute the complex subtraction:
+11. @CE 4 0 33 50 * gui-variable
+12. Variable to store the real component of
+13.    the complex subtraction:
+13. @CE 5 0 33 50 ? gui-none
+14. Variable to store the complex component of
+15.    the complex subtraction:
+15. @CE 6 0 33 50 ? gui-none
+16.
+17. Subset/Except/For Specification:
+18. @CE 7 0 -10 50 *
+19.
+20.
+21. Compute the Complex Subtraction?:
+--------------------
+GR FE
+LET _5 _6 = COMPLEX SUBTRACTION  _1 _2 _3 _4 _7
+--------------------
+WEB HELP COMPLEX SUBTRACTION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/contour.men
+This is file contour.men--Contour Plot
+ 
+--------------------
+ 1. Contour Plot (Data)
+ 2. CONTOUR PLOT Z X Y Z0
+ 3.
+ 4. Z Axis Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. X Axis Variable:
+ 5. @CE 2 0 33 50 ? gui-vari
+ 6. Y Axis Variable:
+ 6. @CE 3 0 33 50 ? gui-vari
+ 7.
+ 8. You can specify the desired contour levels either
+ 9. by entering a the name of a previously created
+10. variable or by entering the desired values directly.
+11.
+12. Contour Levels Variable:
+12. @CE 5 0 33 50 * gui-vari
+13. Enter values for desired contour levels:
+14. @CE 4 0 1 50 ?
+15.
+16. Subset/Except/For Specification:
+17. @CE 6 0 1 50 *
+18.
+19.
+20. Generate the Contour Plot?:
+--------------------
+GR FE
+LINES SOLID ALL
+CHARACTERS BLANK ALL
+@IF 4 0 DELETE ZLEVELS
+@IF 4 0 LET ZLEVELS = DATA _4
+@IF 4 0 CONTOUR PLOT _1 _2 _3 ZLEVELS _6
+@IF 5 0 CONTOUR PLOT _1 _2 _3 _5 _6
+--------------------
+WEB HELP CONTOUR PLOT
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/convol.men
+This is file convol.men--Compute convolution of a variable
+ 
+--------------------
+ 1. Convolution
+ 2. LET Y = CONVOLUTION X1 X2
+ 3.
+ 4. Variable containing the data stream:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable containing the response variable:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable to store the convolution:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -3 50 *
+10.
+11.
+12. Compute the Convolution?:
+--------------------
+GR FE
+LET _3 = CONVOLUTION  _1 _2 _4
+--------------------
+WEB HELP CONVOLUTION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/correlat.men
+This is file correlat.men--Compute correlation of a variable
+ 
+--------------------
+ 1. Correlation
+ 2. LET A = CORRELATION Y1 Y2
+ 3.
+ 4. First variable for which to compute the correlation:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Second variable for which to compute the correlation:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Parameter to store the correlation:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -10 50 *
+10.
+11.
+12. Compute the Correlation?:
+--------------------
+GR FE
+LET _3 = CORRELATION  _1 _2 _4
+--------------------
+WEB HELP CORRELATION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/cos_tran.men
+This is file cos_tran.men--Compute discrete cosine transform of a variable
+ 
+--------------------
+ 1. Discrete Cosine Transform
+ 2. LET Y = COSINE TRANSFORM X
+ 3.
+ 4. Variable for which to compute the
+ 5.    cosine transform:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Variable to store the cosine transform:
+ 6. @CE 2 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 3 0 -10 50 *
+10.
+11.
+12. Compute the Cosine Transform?:
+--------------------
+GR FE
+LET _2 = COSINE TRANSFORM  _1 _3
+--------------------
+WEB HELP COSINE TRANSFORM
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/covarian.men
+This is file covarian.men--Compute covariance of a variable
+ 
+--------------------
+ 1. Covariance
+ 2. LET A = COVARIANCE Y1 Y2
+ 3.
+ 4. First variable for which to compute the covariance:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Second variable for which to compute the covariance:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Parameter to store the covariance:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -10 50 *
+10.
+11.
+12. Compute the Covariance?:
+--------------------
+GR FE
+LET _3 = COVARIANCE  _1 _2 _4
+--------------------
+WEB HELP COVARIANCE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/cp.men
+This is file cp.men--Compute cp of a variable
+ 
+--------------------
+ 1. Cp
+ 2. LET A = CP Y
+ 3.
+ 4. Variable for which to compute the Cp:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Value for the upper specification limit?:
+ 5. @CE 2 0 33 50 ? 
+ 6. Value for the lower specification limit?:
+ 6. @CE 3 0 33 50 ?
+ 7. Parameter to store the Cp:
+ 7. @CE 4 0 33 50 ? gui-none
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 -1 50 *
+11.
+12.
+13. Compute the Cp?:
+--------------------
+GR FE
+LET USL = _2
+LET LSL = _3
+LET _4 = CP  _1 _5
+--------------------
+WEB HELP CP
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/cpk.men
+This is file cpk.men--Compute cpk of a variable
+ 
+--------------------
+ 1. Cpk
+ 2. LET A = CPK Y
+ 3.
+ 4. Variable for which to compute the Cpk:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Value for the upper specification limit?:
+ 5. @CE 2 0 33 50 ?
+ 6. Value for the lower specification limit?:
+ 6. @CE 3 0 33 50 ?
+ 7. Parameter to store the Cpk:
+ 7. @CE 4 0 33 50 ? gui-none
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 -1 50 *
+11.
+12.
+13. Compute the Cpk?:
+--------------------
+GR FE
+LET USL = _2
+LET LSL = _3
+LET _4 = CPK  _1 _5
+--------------------
+WEB HELP CPK
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/cpm.men
+This is file cpm.men--Compute cpm of a variable
+ 
+--------------------
+ 1. Cpm
+ 2. LET A = CPM Y
+ 3.
+ 4. Variable for which to compute the Cpm:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Value for the upper specification limit?:
+ 5. @CE 2 0 33 50 ? 
+ 6. Value for the lower specification limit?:
+ 6. @CE 3 0 33 50 ?
+ 7. Value for the target limit?:
+ 7. @CE 4 0 33 50 ?
+ 8. Parameter to store the Cpm:
+ 8. @CE 5 0 33 50 ? gui-none
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 6 0 -1 50 *
+12.
+13.
+14. Compute the Cpm?:
+--------------------
+GR FE
+LET USL = _2
+LET LSL = _3
+LET TARGET = _4
+LET _5 = CPM  _1 _6
+--------------------
+WEB HELP CPM
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/crea_fun.men
+This is file crea_fun.men--Create a user-defined function
+ 
+--------------------
+ 1. Create a User-Defined Function
+ 2. LET FUNCTION F = A*EXP(1-X)/X
+ 3.
+ 4. Name for the function:
+ 4. @CE 1 0 33 50 ?
+ 5. Enter the functional expression:
+ 6. @CE 2 0 -20 50 ? gui-none
+ 7.
+ 8. Create the Function?:
+--------------------
+GR FE
+LET FUNCTION _1 = _2
+--------------------
+WEB HELP LET FUNCTION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/csin.men
+This is file csin.men--Compute complex trig functions
+ 
+--------------------
+ 1. Complex Trigonometric Function
+ 2. LET YR = CSIN(XR,XC); LET YC = CSIN(XR,XC)
+ 3.
+ 4. Variable for real component of input argument:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable for complex component of input argument:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable to store real component of the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7. Variable to store complex component of the transformed result:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Operation to perform:
+10. @CE 5 1 10 30 complex sine
+11. @CE 5 2 10 30 complex cosine
+12.
+13. Subset/Except/For Specification:
+14. @CE 6 0 -20 50 *
+15.
+16.
+17. Compute the Transformation?:
+--------------------
+GR FE
+@IF 5 1 LET _3 = CSIN( _1 , _2 ) _6
+@IF 5 1 LET _4 = CSINI( _1 , _2 ) _6
+@IF 5 2 LET _3 = CCOS( _1 , _2 ) _6
+@IF 5 2 LET _4 = CCOSI( _1 , _2 ) _6
+--------------------
+WEB HELP CSIN
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/csqrt.men
+This is file csqrt.men--Compute complex square root
+ 
+--------------------
+ 1. Complex Square Root Function
+ 2. LET YR = CSQRT(XR,XC); LET YC = CSQRT(XR,XC)
+ 3.
+ 4. Variable for real component of input argument:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable for complex component of input argument:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable to store real component of the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7. Variable to store complex component of the transformed result:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 6 0 -20 50 *
+11.
+12.
+13. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = CSQRT( _1 , _2 ) _6
+LET _4 = CSQRTI( _1 , _2 ) _6
+--------------------
+WEB HELP CSQRT
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/cum_prod.men
+This is file cum_prod.men--Compute cumulative product of a variable
+ 
+--------------------
+ 1. Cumulative Product
+ 2. LET A = CUMULATIVE PRODUCT Y
+ 3.
+ 4. Variable for which to compute the cumulative product:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the cumulative product:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -10 50 *
+ 9.
+10.
+11. Compute the Cumulative Product?:
+--------------------
+GR FE
+LET _2 = CUMULATIVE PRODUCT _1 _3
+--------------------
+WEB HELP CUMULATIVE PRODUCT
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/cum_sum.men
+This is file cum_cumulative sum.men--Compute sum of a variable
+ 
+--------------------
+ 1. Cumulative Sum
+ 2. LET A = CUMULATIVE SUM Y
+ 3.
+ 4. Variable for which to compute the cumulative sum:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the cumulative sum:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -10 50 *
+ 9.
+10.
+11. Compute the Cumulative Sum?:
+--------------------
+GR FE
+LET _2 = CUMULATIVE SUM _1 _3
+--------------------
+WEB HELP CUMULATIVE SUM
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/cummean.men
+This is file cummean.men--Compute cumulative mean of a variable
+ 
+--------------------
+ 1. Cumulative Mean
+ 2. LET A = CUMULATIVE MEAN Y
+ 3.
+ 4. Variable for which to compute the mean:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the cumulative mean:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Cumulative Mean?:
+--------------------
+GR FE
+LET _2 = CUMULATIVE MEAN  _1 _3
+--------------------
+WEB HELP CUMULATIVE MEAN
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/debye.men
+This is file debye.men--Compute Debye Function
+ 
+--------------------
+ 1. Debye Function
+ 2. LET Y = DEBYE(X,ORD)
+ 3.
+ 4. The input values can be variables, parameters, or simply
+ 5. enter a constant.
+ 6. 
+ 7. Input Argument:
+ 7. @CE 1 0 42 50 ? gui-variable
+ 8. Order:
+ 9. @CE 2 1 11 15 1
+ 9. @CE 2 2 16 20 2
+ 9. @CE 2 3 21 25 3
+ 9. @CE 2 4 26 30 4
+10.
+11. Variable to store the transformed result:
+11. @CE 3 0 42 50 ?
+12.
+13. Subset/Except/For Specification:
+14. @CE 4 0 -5 50 *
+15.
+16.
+17. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = DEBYE( _1 , 1  ) _4
+@IF 2 2 LET _3 = DEBYE( _1 , 2  ) _4
+@IF 2 3 LET _3 = DEBYE( _1 , 3  ) _4
+@IF 2 4 LET _3 = DEBYE( _1 , 4  ) _4
+--------------------
+WEB HELP DEBYE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/decile.men
+This is file decile.men--Compute decile of a variable
+ 
+--------------------
+ 1. Decile
+ 2. LET A = DECILE Y
+ 3.
+ 4. The first decile is the 10th percentile (i.e., 10%
+ 5. of the observations are below this value), the second
+ 6. decile is the 20th percentile, and so on.
+ 7.
+ 8. Variable for which to compute the decile:
+ 8. @CE 1 0 33 50 ? gui-variable
+ 9. Parameter to store the decile:
+ 9. @CE 2 0 33 50 ? gui-none
+10. Decile to compute:
+11. @CE 3 1 14 22 first
+11. @CE 3 2 24 32 second
+11. @CE 3 3 34 42 third
+12. @CE 3 4 14 22 fourth
+12. @CE 3 5 24 32 fifth
+12. @CE 3 6 34 42 sixth
+13. @CE 3 7 14 22 seventh
+13. @CE 3 8 24 32 eigth
+13. @CE 3 9 34 42 ninth
+14. 
+15. Subset/Except/For Specification:
+16. @CE 4 0 -5 50 *
+17.
+18.
+19. Compute the Decile?:
+--------------------
+GR FE
+@IF 3 1 LET _2 = FIRST DECILE  _1 _4
+@IF 3 2 LET _2 = SECOND DECILE  _1 _4
+@IF 3 3 LET _2 = THIRD DECILE  _1 _4
+@IF 3 4 LET _2 = FOURTH DECILE  _1 _4
+@IF 3 5 LET _2 = FIFTH DECILE  _1 _4
+@IF 3 6 LET _2 = SIXTH DECILE  _1 _4
+@IF 3 7 LET _2 = SEVENTH DECILE  _1 _4
+@IF 3 8 LET _2 = EIGHTH DECILE  _1 _4
+@IF 3 9 LET _2 = NINTH DECILE  _1 _4
+--------------------
+WEB HELP DECILE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/deconvol.men
+This is file deconvol.men--Compute deconvolution of variables
+ 
+--------------------
+ 1. Deconvolution
+ 2. LET Y = DECONVOLUTION X1 X2
+ 3.
+ 4. Variable containing the data stream:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable containing the response variable:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable to store the deconvolution:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Compute the Deconvolution?:
+--------------------
+GR FE
+LET _3 = DECONVOLUTION  _1 _2 _4
+--------------------
+WEB HELP DECONVOLUTION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/deriv_d.men
+This is file deriv_d.men--Compute the derivative function at given points
+ 
+--------------------
+ 1. Derivative of a Function
+ 2. LET Y = DERIVATIVE F1 FOR WRT X
+ 3.
+ 4. Name of previously created function (or enter a functional expression):
+ 5. @CE 1 0 -7 50 ?
+ 6. Variable for which derivative is computed:
+ 6. @CE 2 0 33 50 ? gui-variable
+ 8. Variable to store derivative values:
+ 8. @CE 3 0 33 50 ? gui-none
+ 9.
+10.
+11. Compute the Derivative?:
+--------------------
+GR FE
+LET _3 = DERIVATIVE _1 WRT _2
+--------------------
+WEB HELP DERIVATIVE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/deriv_f.men
+This is file deriv_f.men--Compute the derivative function
+ 
+--------------------
+ 1. Derivative of a Function
+ 2. LET FUNCTION F2 = DERIVATIVE F1 FOR WRT X
+ 3.
+ 4. Name of previously created function (or enter a functional expression):
+ 5. @CE 1 0 -7 50 ?
+ 6. Variable for which derivative is computed:
+ 6. @CE 2 0 33 50 ? gui-variable
+ 7. Name for derivative function:
+ 7. @CE 3 0 33 50 ?
+ 8.
+ 9.
+10. Compute the Derivative Function?:
+--------------------
+GR FE
+LET FUNCTION _3 = DERIVATIVE _1 WRT _2
+--------------------
+WEB HELP DERIVATIVE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/differ.men
+This is file differ.men--Compute first difference of a variable
+ 
+--------------------
+ 1. First Difference
+ 2. LET YD = SEQUENTIAL DIFFERENCE Y
+ 3.
+ 4. Variable for which to compute the
+ 5.    first difference:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Variable to store the first difference:
+ 6. @CE 2 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 3 0 1 50 *
+10.
+11.
+12. Compute the First Difference?:
+--------------------
+GR FE
+LET _2 = SEQUENTIAL DIFFERENCE  _1 _3
+--------------------
+WEB HELP SEQUENTIAL DIFFERENCE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/distinct.men
+This is file distinct.men--Compute distinct elements of a variable
+ 
+--------------------
+ 1. Distinct
+ 2. LET YD = DISTINCT Y
+ 3.
+ 4. Variable for which to compute the
+ 5.    distinct elements:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Variable to store the distinct elements:
+ 6. @CE 2 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 3 0 1 50 *
+10.
+11.
+12. Compute the Distinct Elements?:
+--------------------
+GR FE
+LET _2 = DISTINCT  _1 _3
+--------------------
+WEB HELP DISTINCT
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/dn.men
+This is file dn.men--Compute Jacobian dn elliptic function
+ 
+--------------------
+ 1. Jacobian dn Elliptic Function
+ 2. LET Y = DN(U,K)
+ 3.
+ 4. Note that Dataplot takes the second argument as MC=1-K**2.
+ 5. Other packages may use either K or K**2 as the second argument.
+ 6. You can enter the commands
+ 7.   LET K = <value>
+ 8.   LET MC = 1 - K**2
+ 9. to tranlate the second argument to Dataplot's form.
+10.
+11. Horizontal axis variable:
+11. @CE 1 0 33 50 ? gui-variable
+12. MC (1-K**2) parameter:
+12. @CE 2 0 33 50 ? gui-none
+13. Variable to store the transformed result:
+13. @CE 3 0 33 50 ?
+14.
+15. Plot?:
+15. @CE 5 1 14 20 no
+15. @CE 5 2 22 28 yes
+16.
+17. Subset/Except/For Specification:
+18. @CE 6 0 -5 50 *
+19.
+20.
+21. Compute the Transformation?:
+--------------------
+GR FE
+LET ZZZZZZZA = _2
+LET _3 = DN( _1 , ZZZZZZZA ) _6
+DELETE ZZZZZZZA
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP DN
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/ellip1.men
+This is file ellip1.men--Compute elliptic integral (first kind)
+ 
+--------------------
+ 1. Legendre's Elliptic Integral of the first kind
+ 2. LET Y = ELLIP1(PHI,ALPHA)
+ 3.
+ 4. Note that there are several alternative ways for specifying
+ 5. the input parameters.  Check the help for details.
+ 6.
+ 7. The input values can be variables, parameters, or simply
+ 8. enter a constant.
+ 9. 
+10. Phi value (0,PI/2):
+10. @CE 1 0 42 50 ? gui-variable
+11. Alpha value:
+11. @CE 3 0 42 50 ? gui-variable
+12. Variable to store the transformed result:
+12. @CE 4 0 42 50 ?
+13.
+14. Subset/Except/For Specification:
+15. @CE 5 0 -5 50 *
+16.
+17.
+18. Compute the Transformation?:
+--------------------
+GR FE
+LET _4 = ELLIP1( _1 , _2 , _3 ) _5
+--------------------
+WEB HELP ELLIP1
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/ellip2.men
+This is file ellip2.men--Compute elliptic integral (second kind)
+ 
+--------------------
+ 1. Legendre's Elliptic Integral of the Second kind
+ 2. LET Y = ELLIP2(PHI,ALPHA)
+ 3.
+ 4. Note that there are several alternative ways for specifying
+ 5. the input parameters.  Check the help for details.
+ 6.
+ 7. The input values can be variables, parameters, or simply
+ 8. enter a constant.
+ 9. 
+10. Phi value (0,PI/2):
+10. @CE 1 0 42 50 ? gui-variable
+11. Alpha value:
+11. @CE 3 0 42 50 ? gui-variable
+12. Variable to store the transformed result:
+12. @CE 4 0 42 50 ?
+13.
+14. Subset/Except/For Specification:
+15. @CE 5 0 -5 50 *
+16.
+17.
+18. Compute the Transformation?:
+--------------------
+GR FE
+LET _4 = ELLIP2( _1 , _2 , _3 ) _5
+--------------------
+WEB HELP ELLIP2
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/ellip3.men
+This is file ellip3.men--Compute elliptic integral (third kind)
+ 
+--------------------
+ 1. Legendre's Elliptic Integral of the third kind
+ 2. LET Y = ELLIP3(PHI,N,ALPHA)
+ 3.
+ 4. Note that there are several alternative ways for specifying
+ 5. the input parameters.  Check the help for details.
+ 6.
+ 7. The input values can be variables, parameters, or simply
+ 8. enter a constant.
+ 9. 
+10. Phi value (0,PI/2):
+10. @CE 1 0 42 50 ? gui-variable
+11. N value:
+11. @CE 2 0 42 50 ? gui-variable
+12. Alpha value:
+12. @CE 3 0 42 50 ? gui-variable
+13. Variable to store the transformed result:
+13. @CE 4 0 42 50 ?
+14.
+15. Subset/Except/For Specification:
+16. @CE 5 0 -5 50 *
+17.
+18.
+19. Compute the Transformation?:
+--------------------
+GR FE
+LET _4 = ELLIP3( _1 , _2 , _3 ) _5
+--------------------
+WEB HELP ELLIP3
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/ellipc1.men
+This is file ellipc1.men--Compute complete elliptic integral (first kind)
+ 
+--------------------
+ 1. Legendre's Complete Elliptic Integral of the First Kind
+ 2. LET Y = ELLIPC1(M)
+ 3.
+ 4. Note that there are several alternative ways for specifying
+ 5. the input parameters.  Check the help for details.
+ 6.
+ 7. The input values can be variables, parameters, or simply
+ 8. enter a constant.
+ 9. 
+10. M value (0,1):
+10. @CE 1 0 42 50 ? gui-variable
+11. Variable to store the transformed result:
+11. @CE 2 0 42 50 ?
+12.
+13. Plot?:
+13. @CE 3 1 14 20 no
+13. @CE 3 2 22 28 yes
+14.
+15. Subset/Except/For Specification:
+16. @CE 4 0 -5 50 *
+17.
+18.
+19. Compute the Transformation?:
+--------------------
+GR FE
+LET _2 = ELLIPC1( _1 ) _4
+@IF 3 2 PLOT _2  _1  _4
+--------------------
+WEB HELP ELLIPC1
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/ellipc2.men
+This is file ellipc2.men--Compute complete elliptic integral (second kind)
+ 
+--------------------
+ 1. Legendre's Complete Elliptic Integral of the Second Kind
+ 2. LET Y = ELLIPC2(M)
+ 3.
+ 4. Note that there are several alternative ways for specifying
+ 5. the input parameters.  Check the help for details.
+ 6.
+ 7. The input values can be variables, parameters, or simply
+ 8. enter a constant.
+ 9. 
+10. M value (0,1):
+10. @CE 1 0 42 50 ? gui-variable
+11. Variable to store the transformed result:
+11. @CE 2 0 42 50 ?
+12.
+13. Plot?:
+13. @CE 3 1 14 20 no
+13. @CE 3 2 22 28 yes
+14.
+15. Subset/Except/For Specification:
+16. @CE 4 0 -5 50 *
+17.
+18.
+19. Compute the Transformation?:
+--------------------
+GR FE
+LET _2 = ELLIPC2( _1 ) _4
+@IF 3 2 PLOT _2  _1  _4
+--------------------
+WEB HELP ELLIPC2
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/error.men
+This is file error.men--Compute error and related functions
+ 
+--------------------
+ 1. Error (and Related) Functions
+ 2. LET YNEW = ERF(Y)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value.
+ 6.
+ 7. Variable  to operate on:
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8. Operation to perform:
+ 9. @CE 2 1 10 40 error function
+10. @CE 2 2 10 40 complementary error function
+11. @CE 2 3 10 40 Dawson's integral
+12. Variable to store the transformed result:
+12. @CE 3 0 33 50 ?
+13.
+14. Plot?:
+14. @CE 5 1 14 20 no
+14. @CE 5 2 14 20 yes
+15.
+16. Subset/Except/For Specification:
+17. @CE 4 0 -5 50 *
+18.
+19.
+20. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = ERF( _1 ) _4
+@IF 2 2 LET _3 = ERFC( _1 ) _4
+@IF 2 3 LET _3 = DAWSON( _1 ) _4
+@IF 5 2 PLOT _3 _1 _4
+--------------------
+WEB HELP ERF
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/eulenum2.men
+This is file eulepoly.men--Compute Euler Numbers
+ 
+--------------------
+ 1. Euler Numbers
+ 2. LET Y = EN(5)
+ 3.
+ 4. Order of the Euler number (max = 39):
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the transformed result:
+ 5. @CE 3 0 33 50 ?
+ 6.
+ 7. Plot?:
+ 7. @CE 5 1 14 20 no
+ 7. @CE 5 2 22 28 yes
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 6 0 -5 50 *
+11.
+12.
+13. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = EN( _1 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP EN
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/eulenumb.men
+This is file eulenumb.men--Generate a sequence of Euler numbers
+ 
+--------------------
+ 1. Euler Numbers
+ 2. LET Y = EULER NUMBERS FOR I = 1 1 N
+ 3.
+ 4. Euler numbers overflow at a relatively small number.
+ 5. For single precision 32-bit machines (i.e., most), the
+ 6. maximum N before overflow occurs is about 39.  The start and
+ 7. increment values are almost always set to 1.
+ 8.
+ 9. Start value (a positive integer):
+ 9. @CE 1 0 33 50 ?
+10. Stop value (a positive integer):
+10. @CE 2 0 33 50 ?
+11. Increment (a positive integer):
+11. @CE 3 0 33 50 ?
+12. Variable to store the prime numbers:
+12. @CE 5 0 33 50 ? gui-none
+13.
+14. Subset/Except/For Specification:
+15. @CE 6 0 1 50 *
+16.
+17.
+18. Generate the Euler Numbers?:
+--------------------
+GR FE
+LET _5 = EULER NUMBERS FOR I = _1 _3 _2  _6
+--------------------
+WEB HELP EULER NUMBERS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/eulepoly.men
+This is file eulepoly.men--Compute Euler Polynomials
+ 
+--------------------
+ 1. Euler Polynomials
+ 2. LET Y = EN(X,5)
+ 3.
+ 4. Horizontal axis variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Order of the Euler polynomial (max = 39):
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7.
+ 8. Plot?:
+ 8. @CE 5 1 14 20 no
+ 8. @CE 5 2 22 28 yes
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 6 0 -5 50 *
+12.
+13.
+14. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = EN( _1 , _2 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP EN
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/eva1_fun.men
+This is file eva1_fun.men--Evaluate a 1-D user-defined function
+ 
+--------------------
+ 1. Evaluate a 1-D User Defined Function
+ 2. LET FY = F
+ 3.
+ 4. Name of the function (or enter a functional expression):
+ 5. @CE 1 0 -10 50 ? gui-function
+ 6. Variable for which the function is defined:
+ 6. @CE 2 0 33 50 ? gui-variable
+ 7. Variable to store the computed values:
+ 7. @CE 7 0 33 50 ? gui-none
+ 8.
+ 9. Method for defining points at which to evaluate the function:
+10. @CE 3 1 10 50 variable specified above already defined
+11.
+12. @CE 3 2 10 50 define an equally spaced sequence
+13.              Start value:
+13. @CE 4 0 33 50 * 
+14.              Stop value:
+14. @CE 5 0 33 50 * 
+15.              Increment:
+15. @CE 6 0 33 50 * 
+16.
+17. @CE 3 3 10 50 list of points (enter in box below):
+18. @CE 5 0 -10 50 * 
+19.
+20.
+21. Evaluate the Function?:
+--------------------
+GR FE
+@IF 3 1 LET _7 = _1
+@IF 3 2 LET _7 = _1  FOR _2 = _4 _5 _6
+@IF 3 3 DELETE _2 _5
+@IF 3 3 LET _2 = DATA _5
+@IF 3 3 LET _7 = _1
+--------------------
+WEB HELP LET FUNCTION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/eva2_fun.men
+This is file eva2_fun.men--Evaluate a 2-D user-defined function
+ 
+--------------------
+ 1. Evaluate a 2-D User Defined Function
+ 2. LET FY = F
+ 3.
+ 4. Name of the function (or enter a functional expression):
+ 5. @CE 1 0 -10 50 ? gui-function
+ 6. First variable for which the function is defined:
+ 6. @CE 2 0 33 50 ? gui-variable
+ 7. Second variable for which the function is defined:
+ 7. @CE 8 0 33 50 ? gui-variable
+ 8. Variable to store the computed values:
+ 8. @CE 7 0 33 50 ? gui-none
+ 9.
+10. Method for defining points at which to evaluate the function:
+11. @CE 3 1 10 60 variables specified above already defined
+12.
+13. @CE 3 2 10 60 define an equally spaced sequence
+14.              Start value for first variable:
+14. @CE 4 0 33 50 * 
+15.              Stop value for first variable:
+15. @CE 5 0 33 50 * 
+16.              Increment for first variable:
+16. @CE 6 0 33 50 * 
+17.              Start value for second variable:
+17. @CE 9 0 33 50 * 
+18.              Stop value for second variable:
+18. @CE 10 0 33 50 * 
+19.              Increment for second variable:
+19. @CE 11 0 33 50 * 
+20.
+21. @CE 3 3 10 60 list of points (same number of points for both variables):
+22.              Values for first variable:
+23. @CE 12 0 -10 50 * 
+24.              Values for second variable (same number as first):
+25. @CE 13 0 -10 50 * 
+26.
+27.
+28. Evaluate the Function?:
+--------------------
+GR FE
+@IF 3 1 LET _7 = _1
+@IF 3 2 LET _2 = SEQUENCE _4 _5 _6
+@IF 3 2 LET ZZZZZZN1 = SIZE _2
+@IF 3 2 LET _8 = SEQUENCE _9 ZZZZZZN1 _10 _11
+@IF 3 2 LET ZZZZZZN2 = SIZE _8
+@IF 3 2 LET _2 = SEQUENCE _4 _5 _6 FOR I = 1 1 ZZZZZZN2
+@IF 3 2 DELETE ZZZZZZN1 ZZZZZZN2
+@IF 3 2 LET _7 = _1
+@IF 3 3 DELETE _2 _8
+@IF 3 3 LET _2 = DATA _12
+@IF 3 3 LET _8 = DATA _13
+@IF 3 3 LET _7 = _1
+--------------------
+WEB HELP LET FUNCTION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/exp3.men
+This is file lobach.men--Compute Cubic Exponential Integral
+ 
+--------------------
+ 1. Cubic Exponential Integral
+ 2. LET Y = EXP3(X)
+ 3.
+ 4. The input values can be variables, parameters, or simply
+ 5. enter a constant.
+ 6. 
+ 7. Input Argument:
+ 7. @CE 1 0 42 50 ? gui-variable
+ 8. Variable to store the transformed result:
+ 8. @CE 2 0 42 50 ?
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 3 0 -5 50 *
+12.
+13.
+14. Compute the Transformation?:
+--------------------
+GR FE
+LET _2 = EXP3( _1 ) _3
+--------------------
+WEB HELP EXP3
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/exp_loss.men
+This is file exp_loss.men--Compute expected loss of a variable
+ 
+--------------------
+ 1. Expected Loss
+ 2. LET A = EXPECTED LOSS Y
+ 3.
+ 4. Variable for which to compute the expected loss:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Value for the upper specification limit?:
+ 5. @CE 2 0 33 50 ?
+ 6. Value for the lower specification limit?:
+ 6. @CE 3 0 33 50 ?
+ 7. Value for the cost?:
+ 7. @CE 4 0 33 50 ?
+ 8. Parameter to store the expected loss:
+ 8. @CE 5 0 33 50 ? gui-none
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 6 0 -7 50 *
+12.
+13.
+14. Compute the Expected Loss?:
+--------------------
+GR FE
+LET USL = _2
+LET LSL = _3
+LET USLCOST = _4
+LET _5 = EXPECTED LOSS  _1 _6
+--------------------
+WEB HELP EXPECTED LOSS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/extreme.men
+This is file extreme.men--Compute extreme of a variable
+ 
+--------------------
+ 1. Extreme
+ 2. LET A = EXTREME Y
+ 3.
+ 4. Variable for which to compute the extreme:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the extreme:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Extreme?:
+--------------------
+GR FE
+LET _2 = EXTREME  _1 _3
+--------------------
+WEB HELP EXTREME
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/fft.men
+This is file fft.men--Compute discrete fast Fourier transform of a variable
+ 
+--------------------
+ 1. Discrete Fast Fourier Transform (FFT)
+ 2. LET YR YC = FFT Y
+ 3.
+ 4. Variable containing real component for which to compute the FFT:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable containing complex component for which to compute the
+ 6.    FFT (optional):
+ 6. @CE 2 0 33 50 * gui-variable
+ 7. Variable to store the real component of the FFT:
+ 7. @CE 3 0 33 50 ? gui-none
+ 8. Variable to store the complex component of the FFT:
+ 8. @CE 4 0 33 50 ? gui-none
+ 9.
+10. Plot FFT?:
+11. @CE 5 1 5 10 yes
+12. @CE 5 2 5 10 no
+13.
+14. Subset/Except/For Specification:
+15. @CE 6 0 -20 50 *
+16.
+17.
+18. Compute the FFT?:
+--------------------
+GR FE
+LET _3 _4 = FFT  _1 _2 _6
+LET ZZZZFLAG = 0
+@IF 5 1 LET ZZZZFLAG = 1
+IF ZZZZFLAG = 1
+  MULTIPLOT CORNER COORDINATES 2 2 98 98
+  MULTIPLOT 2 1
+  TITLE REAL COMPONENT
+  PLOT _3
+  TITLE COMPLEX COMPONENT 
+  PLOT _4
+END OF IF
+--------------------
+WEB HELP FFT
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/fibonn.men
+This is file fibonn.men--Generate a Fibonnacci of Fibonnacci numbers
+ 
+--------------------
+ 1. Fibonnacci Numbers
+ 2. LET Y = FIBONNACCI NUMBERS FOR I = 1 1 100
+ 3.
+ 4. Start value (a positive integer):
+ 4. @CE 1 0 33 50 ?
+ 5. Stop value (a positive integer):
+ 5. @CE 2 0 33 50 ?
+ 6. Increment (a positive integer):
+ 6. @CE 3 0 33 50 ?
+ 7. Variable to store the Fibonnacci numbers:
+ 7. @CE 5 0 33 50 ? gui-none
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 6 0 1 50 *
+11.
+12.
+13. Generate the Fibonnacci Numbers?:
+--------------------
+GR FE
+LET _5 = FIBONNACCI NUMBERS FOR I = _1 _3 _2  _6
+--------------------
+WEB HELP FIBONNACCI NUMBERS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/freqtabl.men
+This is file freqtabl.men--Frequency Table
+ 
+--------------------
+1. Frequency Table
+2. LET Y = BINNED X
+3.
+4. Response Variable:
+4. @CE 1 0 42 50 ? gui-variable
+5. Variable to store the frequencies:
+5. @CE 2 0 42 50 ? gui-variable
+6. Variable to store the bin mid-points:
+6. @CE 3 0 42 50 ? gui-variable
+7.
+8. Class Width (0.3*s):
+8. @CE 4 0 33 50 *
+9. Lower Limit of First Class:
+9. @CE 5 0 33 50 *
+10. Upper Limit of Last Class:
+10. @CE 6 0 33 50 *
+11.
+12. Type of Frequencies:
+13. @CE 7 1 10 45 counts
+14. @CE 7 2 10 45 relative frequency
+15. For Relative Frequency:
+16. @CE 8 1 10 45 area sums to 1
+17. @CE 8 2 10 45 frequencies sum to 1
+18.
+19. Subset/Except/For Specification: 
+20. @CE 9 0 1 50 *
+21.
+22.
+23. Compute the Frequency Table?:
+--------------------
+GR FE
+CLASS WIDTH _4
+CLASS LOWER _5
+CLASS UPPER _6
+@IF 8 1 SET RELATIVE HISTOGRAM AREA
+@IF 8 2 SET RELATIVE HISTOGRAM PERCENT
+LET STRING ZZZZSTR = BINNED
+@IF 7 2 LET STRING ZZZZSTR = RELATIVE BINNED HISTOGRAM
+LET _2 _3 = ^ZZZZSTR  _1 _9
+--------------------
+WEB HELP BINNED
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/frequenc.men
+This is file frequenc.men--Compute frequency of distinct elements of a variable
+ 
+--------------------
+ 1. Frequency of Distinct Elements
+ 2. LET YD = FREQUENCY Y DISTINCT
+ 3.
+ 4. Variable for which to compute the frequency elements:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the frequency:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -10 50 *
+ 9.
+10.
+11. Compute the Frequency of Distinct Elements?:
+--------------------
+GR FE
+LET ZZZZTEMP = DISTINCT  _1 _3
+LET _2 = FREQUENCY  _1 ZZZZTEMP _3
+DELETE ZZZZTEMP
+--------------------
+WEB HELP FREQUENCY
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/gamma.men
+This is file gamma.men--Compute gamma and related functions
+ 
+--------------------
+ 1. Gamma (and Related) Functions
+ 2. LET YNEW = GAMMA(X)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value.
+ 6.
+ 7. Variable  to operate on:
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8. Operation to perform:
+ 9.
+10. @CE 2 1 10 40 gamma
+11. @CE 2 2 10 40 log gamma
+12. @CE 2 3 10 40 reciprocal gamma
+13. @CE 2 4 10 40 digamma
+14.
+15. Variable to store the transformed result:
+15. @CE 3 0 33 50 ?
+16.
+17. Plot?:
+17. @CE 5 1 14 20 no
+17. @CE 5 2 22 28 yes
+18.
+19. Subset/Except/For Specification:
+20. @CE 4 0 -5 50 *
+21.
+22.
+23. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = GAMMA( _1 ) _4
+@IF 2 2 LET _3 = LNGAMMA( _1 ) _4
+@IF 2 3 LET _3 = GAMMAR( _1 ) _4
+@IF 2 4 LET _3 = DIGAMMA( _1 ) _4
+@IF 5 2 PLOT _3  _1  _4
+--------------------
+WEB HELP GAMMA FUNCTIONS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/goodst.men
+This is file goodst.men--Compute Goodwin and Stanton Integral
+ 
+--------------------
+ 1. Goodwin and Stanton Integral
+ 2. LET Y = GOODST(X)
+ 3.
+ 4. The input values can be variables, parameters, or simply
+ 5. enter a constant.
+ 6. 
+ 7. Input Argument:
+ 7. @CE 1 0 42 50 ? gui-variable
+ 8. Variable to store the transformed result:
+ 8. @CE 2 0 42 50 ?
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 3 0 -5 50 *
+12.
+13.
+14. Compute the Transformation?:
+--------------------
+GR FE
+LET _2 = GOODST( _1 ) _3
+--------------------
+WEB HELP GOODST
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/hermite.men
+This is file hermite.men--Compute Hermite Polynomials
+ 
+--------------------
+ 1. Hermite Polynomials
+ 2. LET Y = HERMITE(X,2)
+ 3.
+ 4. Horizontal axis variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Order of the Hermite polynomial:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7.
+ 8. Plot?:
+ 8. @CE 5 1 14 20 no
+ 8. @CE 5 2 22 28 yes
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 6 0 -5 50 *
+12.
+13.
+14. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = HERMITE( _1 , _2 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP HERMITE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/hype_fun.men
+This is file hype_fun.men--Compute confluent hypergeometric functions
+ 
+--------------------
+ 1. Confluent hypergeometric functions
+ 2. LET YNEW = CHU(X,A,B); LET YNEW = CHM(X,A,B)
+ 3.
+ 4. This functions accepts 3 arguments.  The first is the
+ 5. argument for the horizontal axis variable (i.e., the
+ 6. X value) and the second and third arguments are shape parameters.
+ 7. All of these values can be a variable, parameter, or
+ 8. simply a constant.  However, the shape parameters are typically
+ 9. a parameter or constant as opposed to a variable.
+10.
+11. Horizontal axis variable:
+11. @CE 1 0 33 50 ? gui-variable
+12. Shape parameter (A):
+12. @CE 2 0 33 50 ? gui-none
+13. Shape parameter (B):
+13. @CE 3 0 33 50 ? gui-none
+14.
+15. Operation to perform:
+16. @CE 4 1 5 60 M confluent hypergeometric function
+17. @CE 4 2 5 60 U (logarithmic) confluent hypergeometric function
+18.
+19. Variable to store the transformed result:
+19. @CE 5 0 33 50 ?
+20.
+21. Plot?:
+21. @CE 6 1 14 20 no
+21. @CE 6 2 22 28 yes
+22.
+23. Subset/Except/For Specification:
+24. @CE 7 0 -5 50 *
+25.
+26.
+27. Compute the Transformation?:
+--------------------
+GR FE
+@IF 4 1 LET _5 = CHM( _1 , _2 , _3 ) _7
+@IF 4 2 LET _5 = CHU( _1 , _2 , _3 ) _7
+@IF 6 2 PLOT _5 _1 _7
+--------------------
+WEB HELP CHU
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/ibeta.men
+This is file ibeta.men--Compute incomplete beta and related functions
+ 
+--------------------
+ 1. Incomplete Beta (and Related) Functions
+ 2. LET YNEW = BETAI(X,A)
+ 3.
+ 4. This functions accepts 3 arguments.  The first is the
+ 5. argument for the horizontal axis variable (i.e., the
+ 6. X value) and the second and third arguments are  shape parameters.
+ 7. All of these values can be a variable, parameter, or
+ 8. simply a constant.  However, the shape parameters are typically
+ 9. a parameter or constant as opposed to a variable.
+10.
+11. Horizontal axis variable:
+11. @CE 1 0 33 50 ? gui-variable
+12. Shape parameter (A):
+12. @CE 6 0 33 50 ? gui-none
+13. Shape parameter (B):
+13. @CE 7 0 33 50 ? gui-none
+14.
+15. Variable to store the transformed result:
+16. @CE 3 0 33 50 ?
+17.
+18. Plot?:
+18. @CE 5 1 14 20 no
+18. @CE 5 2 22 28 yes
+19.
+20. Subset/Except/For Specification:
+21. @CE 4 0 -5 50 *
+22.
+23.
+24. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = BETAI( _1 , _6 , _7) _4
+--------------------
+WEB HELP BETAI
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/ifft.men
+This is file ifft.men--Compute discrete inverse fast Fourier transform
+ 
+--------------------
+ 1. Inverse Discrete Fast Fourier Transform (FFT)
+ 2. LET YR YC = INVERSE FFT XR XC
+ 3.
+ 4. Variable containing real component for which to
+ 5.     compute the inverse FFT:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Variable containing complex component for which to
+ 7.     compute the inverse FFT (optional):
+ 7. @CE 2 0 33 50 ? gui-variable
+ 8. Variable to store the real component of the inverse FFT:
+ 8. @CE 3 0 33 50 ? gui-none
+ 9. Variable to store the complex component of the inverse FFT:
+ 9. @CE 4 0 33 50 ? gui-none
+10.
+11. Subset/Except/For Specification:
+12. @CE 5 0 -20 50 *
+13.
+14.
+15. Compute the inverse FFT?:
+--------------------
+GR FE
+LET _3 _4 = INVERSE FFT  _1 _2 _5
+--------------------
+WEB HELP INVERSE FFT
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/igamma.men
+This is file igamma.men--Compute incomplete gamma and related functions
+ 
+--------------------
+ 1. Incomplete Gamma (and Related) Functions
+ 2. LET YNEW = GAMMAI(X,A)
+ 3.
+ 4. These functions accept 2 arguments.  The first is the
+ 5. argument for the horizontal axis variable (i.e., the
+ 6. X value) and the second argument is a shape parameter.
+ 7. Both of these values can be a variable, parameter, or
+ 8. simply a constant.  However, the shape parameter is typically
+ 9. a parameter or constant as opposed to a variable.
+10.
+11. Horizontal axis variable:
+11. @CE 1 0 33 50 ? gui-variable
+12. Shape parameter:
+12. @CE 6 0 33 50 ? gui-none
+13.
+14. Operation to perform:
+15. @CE 2 1 10 45 incomplete gamma function
+16. @CE 2 2 10 45 incomplete gamma function ratio
+17. @CE 2 3 10 45 complementary incomplete gamma function
+18. @CE 2 4 10 45 Tricomi's incomplete gamma function
+19. @CE 2 5 10 45 Pochhammer's generalized symbol
+20. @CE 2 6 10 45 Pochhammer's generalized symbol (first order)
+21.
+22. Variable to store the transformed result:
+22. @CE 3 0 33 50 ?
+23.
+24. Plot?:
+24. @CE 5 1 14 20 no
+24. @CE 5 2 22 28 yes
+25.
+26. Subset/Except/For Specification:
+27. @CE 4 0 -5 50 *
+28.
+29.
+30. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = GAMMAI( _1 , _6 ) _4
+@IF 2 2 LET _3 = GAMMAIP( _1 , _6 ) _4
+@IF 2 3 LET _3 = GAMMAIC( _1 , _6 ) _4
+@IF 2 4 LET _3 = TRICOMI( _1 , _6 ) _4
+@IF 2 5 LET _3 = POCH( _1 , _6 ) _4
+@IF 2 6 LET _3 = POCH1( _1 , _6 ) _4
+@IF 5 2 PLOT _3  _1  _4
+--------------------
+WEB HELP GAMMA FUNCTIONS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/intarr.men
+This is file intarr.men--Compute interarrival times of a variable
+ 
+--------------------
+ 1. Interarrival Times
+ 2. LET Y2 = INTERARRIVAL TIMES Y
+ 3.
+ 4. Variable to compute the interarrival times for:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Variable to store the interrival times:
+ 5. @CE 2 0 42 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Interrival Times?:
+--------------------
+GR FE
+LET _2 = INTERARRIVAL TIMES  _1 _3
+--------------------
+WEB HELP INTERARRIVAL TIMES
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/inte_fun.men
+This is file inte_fun.men--Compute integral functions
+ 
+--------------------
+ 1. Integral Functions
+ 2. LET YNEW = LOGINT(X)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value.
+ 6.
+ 7. Variable  to operate on:
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8. Variable to store the transformed result:
+ 8. @CE 3 0 33 50 ?
+ 9.
+10. Operation to perform:
+11. @CE 2 1 10 48 logarithmic integral
+12. @CE 2 2 10 48 exponential integral (order 1)
+13. @CE 2 3 10 48 exponential integral (Ei type)
+14. @CE 2 4 10 48 exponential integral (integer order)
+15.               Enter the integer order:
+15. @CE 6 0 28 40 *
+16. @CE 2 5 10 48 sine integral
+17. @CE 2 6 10 48 cosine integral
+18. @CE 2 7 10 48 hyperbolic sine integral
+19. @CE 2 8 10 48 hyperbolic cosine integral
+20. @CE 2 9 10 48 Spence dilogarithm
+21. @CE 2 10 10 48 Fresnel sine integral
+22. @CE 2 11 10 48 Fresnel cosine integral
+23. @CE 2 12 10 48 Fresnel f auxillary integral
+24. @CE 2 13 10 48 Fresnel g auxillary integral
+25.
+26. Plot?:
+26. @CE 5 1 14 20 no
+26. @CE 5 2 22 28 yes
+27.
+28. Subset/Except/For Specification:
+29. @CE 4 0 -5 50 *
+30.
+31.
+32. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = LOGINT( _1 ) _4
+@IF 2 2 LET _3 = EXPINT1( _1 ) _4
+@IF 2 3 LET _3 = EXPINTE( _1 ) _4
+@IF 2 4 LET _3 = EXPINTN( _1 , _6 ) _4
+@IF 2 5 LET _3 = SININT( _1 ) _4
+@IF 2 6 LET _3 = COSINT( _1 ) _4
+@IF 2 7 LET _3 = SINHINT( _1 ) _4
+@IF 2 8 LET _3 = COSHINT( _1 ) _4
+@IF 2 9 LET _3 = SPENCE( _1 ) _4
+@IF 2 10 LET _3 = FRESNS( _1 ) _4
+@IF 2 11 LET _3 = FRESNC( _1 ) _4
+@IF 2 12 LET _3 = FRESNF( _1 ) _4
+@IF 2 13 LET _3 = FRESNG( _1 ) _4
+@IF 5 2 PLOT _3  _1  _4
+--------------------
+WEB HELP INTEGRAL FUNCTIONS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/integra2.men
+This is file integra2.men--Compute the definite integral of data
+ 
+--------------------
+ 1. Definte Integral of Data
+ 2. LET A = INTEGRAL Y X
+ 3.
+ 4. Vertical axis variable:
+ 4. @CE 2 0 33 50 ? gui-variable
+ 5. Horizontal axis variable:
+ 5. @CE 3 0 33 50 ? gui-variable
+ 6. Parameter  to store computed integral:
+ 6. @CE 1 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Compute the Definite Integral?:
+--------------------
+GR FE
+LET _1 = INTEGRAL _2 _3 _4
+--------------------
+WEB HELP INTEGRAL
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/integral.men
+This is file integral.men--Compute the definite integral of a function
+ 
+--------------------
+ 1. Definte Integral of a Function
+ 2. LET Y = INTEGRAL X**2 FOR WRT X FOR X = 0 TO 10
+ 3.
+ 4. Name of previously created function (or enter a functional expression):
+ 5. @CE 2 0 -7 50 ?
+ 6. Variable for which integral is computed:
+ 6. @CE 3 0 33 50 ? gui-variable
+ 7. Lower range for integral:
+ 7. @CE 4 0 33 50 ?
+ 8. Upper range for integral:
+ 8. @CE 5 0 33 50 *
+ 9. Parameter  to store computed integral:
+ 9. @CE 1 0 33 50 ? gui-none
+10.
+11. Subset/Except/For Specification:
+12. @CE 6 0 -7 50 *
+13.
+14.
+15. Compute the Definite Integral?:
+--------------------
+GR FE
+LET _1 = INTEGRAL _2 WRT _3 FOR _3 = _4 TO _5  _6
+--------------------
+WEB HELP INTEGRAL
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/interpol.men
+This is file interpol.men--Perform an interpolation
+ 
+--------------------
+ 1. Cubic Spline Interpolation
+ 2. LET Y2 = INTERPOLATION Y1 X1 X2
+ 3.
+ 4. Vertical  axis variable with original data:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Horizontal axis variable with original data:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Horizontal axis variable containing points
+ 7.    at which to interpolate:
+ 7. @CE 3 0 33 50 ? gui-variable
+ 8. Variable to store the interpolated values:
+ 8. @CE 4 0 33 50 ? gui-none
+ 9. 
+10. The interpolated curve will be plotted with the raw data.
+11.
+12. Select the line style for the spline curve:
+12. @CE 6 0 33 50 gui-line
+13. Select the character symbol for the raw data:
+13. @CE 7 0 33 50 gui-character
+14. Fill the character symbol?:
+14. @CE 8 0 33 50 gui-ooff
+15.
+16. Subset/Except/For Specification:
+17. @CE 5 0 -5 50 *
+18.
+19.
+20. Perform the Interpolation?:
+--------------------
+GR FE
+LET _4 = INTERPOLATION _1 _2 _3   _5
+CHARACTER _7 BLANK
+CHARACTER FILL _8 OFF
+LINES BLANK _6
+PLOT _1 VS _2  _5  AND
+PLOT _4 _3
+--------------------
+WEB HELP INTERPOLATION
+--------------------
+
+$$$$$$$$$$$$$$$$$$
+math/jacobi.men
+This is file jacobi.men--Compute Jacobi Polynomial
+ 
+--------------------
+ 1. Jacobi Polynomial
+ 2. LET Y = JACOBIP(X,N,A,B)
+ 3.
+ 4. Horizontal axis variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Order of the Jacobi Polynomial (integer from 0 to 25):
+ 5. @CE 2 0 42 50 ? gui-none
+ 6. First shape parameter (A):
+ 6. @CE 3 0 42 50 ? gui-none
+ 7. Second shape parameter (B):
+ 7. @CE 4 0 42 50 ? gui-none
+ 8. Variable to store the transformed result:
+ 8. @CE 5 0 42 50 ?
+ 9.
+10. Plot?:
+10. @CE 6 1 14 20 no
+10. @CE 6 2 22 28 yes
+11.
+12. Subset/Except/For Specification:
+13. @CE 7 0 -5 50 *
+14.
+15.
+16. Compute the Transformation?:
+--------------------
+GR FE
+LET _5 = JACOBIP( _1 , _2 , _3 , _4 ) _7
+@IF 6 2 PLOT _5  _1  _7
+--------------------
+WEB HELP JACOBIP
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/kelvin.men
+This is file kelvin.men--Compute Kelvin Functions (real argument)
+ 
+--------------------
+ 1. Kelvin Functions
+ 2. LET YR = BER(X); LET YC = BERI(X)
+ 3.
+ 4. Horizontal axis variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the transformed result:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Operation to perform:
+ 8. @CE 3 1 10 60 ber (Kelvin function first kind, real component)
+ 9. @CE 3 2 10 60 bei (Kelvin function first kind, complex component)
+10. @CE 3 3 10 60 ber' (derivative of ber, real component)
+11. @CE 3 4 10 60 bei' (derivative of ber, complex component)
+12. @CE 3 5 10 60 ker (Kelvin function second kind, real component)
+13. @CE 3 6 10 60 kei (Kelvin function second kind, ccomplex component)
+14. @CE 3 7 10 60 ker' (derivative of ker, real component)
+15. @CE 3 8 10 60 ker' (derivative of ker, complex component)
+16.
+17. Plot?:
+17. @CE 4 1 14 20 no
+17. @CE 4 2 22 28 yes
+18.
+19. Subset/Except/For Specification:
+20. @CE 5 0 -5 50 *
+21.
+22.
+23. Compute the Transformation?:
+--------------------
+GR FE
+@IF 3 1 LET _2 = BER( _1 ) _5
+@IF 3 2 LET _2 = BERI( _1 ) _5
+@IF 3 3 LET _2 = BER1( _1 ) _5
+@IF 3 4 LET _2 = BERI1( _1 ) _5
+@IF 3 5 LET _2 = KER( _1 ) _5
+@IF 3 6 LET _2 = KERI( _1 ) _5
+@IF 3 7 LET _2 = KER1( _1 ) _5
+@IF 3 8 LET _2 = KERI1( _1 ) _5
+@IF 4 2 PLOT _2  _1  _5
+--------------------
+WEB HELP KELVIN FUNCTIONS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/kurtosis.men
+This is file kurtosis.men--Compute kurtosis of a variable
+ 
+--------------------
+ 1. Kurtosis
+ 2. LET A = KURTOSIS Y
+ 3.
+ 4. Variable for which to compute the kurtosis:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the kurtosis:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Kurtosis?:
+--------------------
+GR FE
+LET _2 = KURTOSIS  _1 _3
+--------------------
+WEB HELP KURTOSIS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/laguerre.men
+This is file laguerre.men--Compute Laguerre Polynomials
+ 
+--------------------
+ 1. Laguerre Polynomials
+ 2. LET Y = LAGUERRE(X,2)
+ 3.
+ 4. Horizontal axis variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Order of the Laguerre polynomial:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7. Normalize?:
+ 7. @CE 4 1 14 20 no
+ 7. @CE 4 2 22 28 yes
+ 8.
+ 9. Plot?:
+ 9. @CE 5 1 14 20 no
+ 9. @CE 5 2 22 28 yes
+10.
+11. Subset/Except/For Specification:
+12. @CE 6 0 -5 50 *
+13.
+14.
+15. Compute the Transformation?:
+--------------------
+GR FE
+@IF 4 1 LET _3 = LAGUERRE( _1 , _2 ) _6
+@IF 4 2 LET _3 = NRMLAG( _1 , _2 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP LAGUERRE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/laguerrl.men
+This is file laguerre.men--Compute Laguerre Polynomials
+ 
+--------------------
+ 1. Laguerre Polynomials
+ 2. LET Y = LAGUERRE(X,2)
+ 3.
+ 4. Horizontal axis variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Order of the Laguerre polynomial:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Shape parameter:
+ 6. @CE 3 0 33 50 gui-none
+ 7. Variable to store the transformed result:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Plot?:
+ 9. @CE 5 1 14 20 no
+ 9. @CE 5 2 22 28 yes
+10.
+11. Subset/Except/For Specification:
+12. @CE 6 0 -5 50 *
+13.
+14.
+15. Compute the Transformation?:
+--------------------
+GR FE
+LET _4 = LAGUERRE( _1 , _2 , _3 ) _6
+@IF 5 2 PLOT _4  _1  _6
+--------------------
+WEB HELP LAGUERRE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/legendr2.men
+This is file legendr2.men--Compute Associated Legendre Polynomials
+ 
+--------------------
+ 1. Associatyed Legendre Polynomials and Functions
+ 2. LET Y = LEGENDRE(X,2,3)
+ 3.
+ 4. Horizontal axis variable (-PI,PI):
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Order of the Legendre polynomial:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Degree of the Legendre polynomial:
+ 6. @CE 7 0 33 50 ? gui-none
+ 7. Variable to store the transformed result:
+ 7. @CE 3 0 33 50 ?
+ 8. Operation to perform?:
+ 9. @CE 4 1 10 65 associated Legendre polynomial (not normalized)
+10. @CE 4 2 10 65 associated Legendre polynomial (normalized)
+11. @CE 4 3 10 65 associated Legendre function first kind (normalized)
+12. @CE 4 4 10 65 associated Legendre function second kind (normalized)
+13.
+14. Plot?:
+14. @CE 5 1 14 20 no
+14. @CE 5 2 22 28 yes
+15.
+16. Subset/Except/For Specification:
+17. @CE 6 0 -10 50 *
+18.
+19.
+20. Compute the Transformation?:
+--------------------
+GR FE
+@IF 4 1 LET _3 = LEGENDRE( _1 , _2 , _7 ) _6
+@IF 4 2 LET _3 = NRMLEG( _1 , _2 , _7 ) _6
+@IF 4 3 LET _3 = LEGP( _1 , _2 , _7 ) _6
+@IF 4 4 LET _3 = LEGQ( _1 , _2 , _7 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP LEGENDRE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/legendre.men
+This is file legendre.men--Compute Legendre Polynomials
+ 
+--------------------
+ 1. Legendre Polynomials
+ 2. LET Y = LEGENDRE(X,2)
+ 3.
+ 4. Horizontal axis variable (-PI,PI):
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Order of the Legendre polynomial:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7. Operation to perform?:
+ 8. @CE 4 1 10 55 Legendre polynomial (not normalized)
+ 9. @CE 4 2 10 55 Legendre polynomial (normalized)
+10. @CE 4 3 10 55 Legendre function first kind (normalized)
+11. @CE 4 4 10 55 Legendre function second kind (normalized)
+12.
+13. Plot?:
+13. @CE 5 1 14 20 no
+13. @CE 5 2 22 28 yes
+14.
+15. Subset/Except/For Specification:
+16. @CE 6 0 -5 50 *
+17.
+18.
+19. Compute the Transformation?:
+--------------------
+GR FE
+@IF 4 1 LET _3 = LEGENDRE( _1 , _2 ) _6
+@IF 4 2 LET _3 = NRMLEG( _1 , _2 ) _6
+@IF 4 3 LET _3 = LEGP( _1 , _2 ) _6
+@IF 4 4 LET _3 = LEGQ( _1 , _2 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP LEGENDRE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/lin_fit.men
+This is file lin_fit.men--Compute a linear least squares fit
+ 
+--------------------
+ 1. Linear Fit
+ 2. FIT Y X
+ 3.
+ 4. Dependent variable for the fit:
+ 4. @CE 1 0 42 50 gui-variable
+ 5. Independent variable for the fit:
+ 5. @CE 2 0 42 50 gui-variable
+ 6. 
+ 7. Order of fit:
+ 8. @CE 3 1 14 23 Linear
+ 8. @CE 3 2 25 34 Quadratic
+ 8. @CE 3 3 36 45 Cubic
+ 9. @CE 3 4 14 23 Quartic
+ 9. @CE 3 5 25 34 Quintic
+ 9. @CE 3 6 36 45 Sextic
+10. @CE 3 7 14 23 Septic
+10. @CE 3 8 25 34 Octic
+10. @CE 3 9 36 45 Nonic
+11. @CE 3 10 14 23 Dexic
+12.
+13. The fitted line wil be plotted with the raw
+14. data and several residual plots will be generated.
+15.
+16. Select the line style for the fitted curve:
+16. @CE 4 0 42 50 gui-line
+17. Select the character symbol for the raw data:
+17. @CE 5 0 42 50 gui-character
+18. Fill the character symbol?:
+18. @CE 6 0 42 50 gui-ooff
+19.
+20. Subset/Except/For Specification:
+21. @CE 7 0 1 50 *
+22.
+23.
+24. Perform the Fit?:
+--------------------
+GR FE
+CAPTURE ZZZJUNK.DAT
+@IF 3 1 LINEAR FIT _1 _2 _7
+@IF 3 2 QUADRATIC FIT _1 _2 _7
+@IF 3 3 CUBIC FIT _1 _2 _7
+@IF 3 4 QUARTIC FIT _1 _2  _7
+@IF 3 5 QUINTIC FIT _1 _2  _7
+@IF 3 6 SEXTIC FIT _1 _2  _7
+@IF 3 7 SEPTIC FIT _1 _2  _7
+@IF 3 8 OCTIC FIT _1 _2  _7
+@IF 3 9 NONIC FIT _1 _2  _7
+@IF 3 10 DEXIC FIT _1 _2  _7
+END OF CAPTURE
+X3LABEL AUTOMATIC
+MULTIPLOT 2 2
+MULTIPLOT CORNER COORDINATES 5 5 95 95
+CHARACTER _5 BLANK
+CHARACTER FILL _6 OFF
+LINES BLANK _4
+PLOT _1 VS _2 _7
+PLOT _1 PRED VS _2 _7
+PLOT RES VS _2 _7
+NORMAL PROBABILITY PLOT RES
+END OF MULTIPLOT
+X3LABEL
+LIST ZZZJUNK.DAT
+--------------------
+WEB HELP FIT
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/lininter.men
+This is file lininter.men--Perform a linear interpolation
+ 
+--------------------
+ 1. Linear Interpolation
+ 2. LET Y2 = LINEAR INTERPOLATION Y1 X1 X2
+ 3.
+ 4. Vertical  axis variable with original data:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Horizontal axis variable with original data:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Horizontal axis variable containing points at which
+ 7.    to interpolate:
+ 7. @CE 3 0 33 50 ? gui-variable
+ 8. Variable to store the interpolated values:
+ 8. @CE 4 0 33 50 ? gui-none
+ 9. 
+10. The interpolated curve will be plotted with the original data.
+11.
+12. Select the line style for the interpolated curve:
+12. @CE 6 0 33 50 gui-line
+13. Select the character symbol for the original data:
+13. @CE 7 0 33 50 gui-character
+14. Fill the character symbol?:
+14. @CE 8 0 33 50 gui-ooff
+15.
+16. Subset/Except/For Specification:
+17. @CE 5 0 -10 50 *
+18.
+19.
+20. Perform the interpolation?:
+--------------------
+GR FE
+LET _4 = LINEAR INTERPOLATION _1 _2 _3   _5
+CHARACTER _7 BLANK
+CHARACTER FILL _8 OFF
+LINES BLANK _6
+PLOT _1 VS _2  _5  AND
+PLOT _4 _3
+--------------------
+WEB HELP LINEAR INTERPOLATION
+--------------------
+
+$$$$$$$$$$$$$$$$$$
+math/lobach.men
+This is file lobach.men--Compute Lobachevshi's Integral
+ 
+--------------------
+ 1. Lobachevski's Integral
+ 2. LET Y = LOBACH(X)
+ 3.
+ 4. The input values can be variables, parameters, or simply
+ 5. enter a constant.
+ 6. 
+ 7. Input Argument:
+ 7. @CE 1 0 42 50 ? gui-variable
+ 8. Variable to store the transformed result:
+ 8. @CE 2 0 42 50 ?
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 3 0 -5 50 *
+12.
+13.
+14. Compute the Transformation?:
+--------------------
+GR FE
+LET _2 = LOBACH( _1 ) _3
+--------------------
+WEB HELP LOBACH
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/log.men
+This is file log.men--Compute exp and log functions
+ 
+--------------------
+ 1. Exponential and Logarithmic Functions
+ 2. LET YNEW = EXP(Y)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value.
+ 6.
+ 7. Variable  to operate on:
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8. Operation to perform:
+ 9. @CE 2 1 10 26 exp
+ 9. @CE 2 2 28 44 log (base e)
+10. @CE 2 3 10 26 log (base 10) 
+10. @CE 2 4 28 44 log (base 2)
+11. Variable to store the transformed result:
+11. @CE 3 0 33 50 ?
+12.
+13. Plot?:
+13. @CE 5 1 14 20 no
+13. @CE 5 2 14 20 yes
+14.
+15. Subset/Except/For Specification:
+16. @CE 4 0 -5 50 *
+17.
+18.
+19. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = EXP( _1 ) _4
+@IF 2 2 LET _3 = LOG( _1 ) _4
+@IF 2 3 LET _3 = LOG10( _1 ) _4
+@IF 2 4 LET _3 = LOG2( _1 ) _4
+@IF 5 2 PLOT _3 _1 _4
+--------------------
+WEB HELP MATHEMATICAL LIBRARY FUNCTIONS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/logistic.men
+This is file logistic.men--Generate a logistic of logistic numbers
+ 
+--------------------
+ 1. Logistic Numbers
+ 2. LET Y = LOGISTIC NUMBERS FOR I = 1 1 100
+ 3.
+ 4. Start value (a positive intger):
+ 4. @CE 1 0 33 50 ?
+ 5. Stop value (a positive integer):
+ 5. @CE 2 0 33 50 ?
+ 6. Increment (a positive integer):
+ 6. @CE 3 0 33 50 ?
+ 7. Value for X0 (between 0 and 1):
+ 7. @CE 4 0 33 50 ?
+ 8. Value for K (between 0 and 4):
+ 8. @CE 5 0 33 50 ?
+ 9. Variable to store the logistic numbers:
+ 9. @CE 6 0 33 50 ? gui-none
+10.
+11. Subset/Except/For Specification:
+12. @CE 7 0 1 50 *
+13.
+14.
+15. Generate the Logistic Numbers?:
+--------------------
+GR FE
+LET X0 = _4
+LET K = _5
+LET _6 = LOGISTIC NUMBERS FOR I = _1 _3 _2  _7
+--------------------
+WEB HELP LOGISTIC NUMBERS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/low_hing.men
+This is file low_hing.men--Compute lower hinge of a variable
+ 
+--------------------
+ 1. Lower Hinge
+ 2. LET A = LOWER HINGE Y
+ 3.
+ 4. Variable for which to compute the lower hinge:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the lower hinge:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Lower Hinge?:
+--------------------
+GR FE
+LET _2 = LOWER HINGE  _1 _3
+--------------------
+WEB HELP LOWER HINGE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/low_quar.men
+This is file low_quar.men--Compute lower quartile of a variable
+ 
+--------------------
+ 1. Lower Quartile
+ 2. LET A = LOWER QUARTILE Y
+ 3.
+ 4. Variable for which to compute the lower quartile:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the lower quartile:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -7 50 *
+ 9.
+10.
+11. Compute the Lower Quartile?:
+--------------------
+GR FE
+LET _2 = LOWER QUARTILE  _1 _3
+--------------------
+WEB HELP LOWER QUARTILE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/lowess.men
+This is file lowess.men--Compute a lowess smooth of a variable
+ 
+--------------------
+ 1. Lowess (Locally Weighted Least Squares)
+ 2. LOWESS Y X
+ 3.
+ 4. Vertical  axis variable for the lowess:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Horizontal axis variable for the lowess:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Lowess fraction (a number between 0 and 1):
+ 6. @CE 3 0 33 50 *
+ 7. Lowess degree:
+ 8. @CE 4 1 14 25 linear
+ 8. @CE 4 2 27 38 quadratic
+ 9.
+10. The lowess curve will be plotted with the raw data.
+11.
+12. Select the line style for the lowess curve:
+12. @CE 6 0 33 50 gui-line
+13. Select the character symbol for the raw data:
+13. @CE 7 0 33 50 gui-character
+14. Fill the character symbol?:
+14. @CE 8 0 33 50 gui-ooff
+15.
+16. Subset/Except/For Specification:
+17. @CE 5 0 -5 50 *
+18.
+19.
+20. Perform the Lowess Smooth?:
+--------------------
+GR FE
+LOWESS FRACTION _3
+@IF 4 1 LOWESS DEGREE 1
+@IF 4 2 LOWESS DEGREE 2
+LOWESS _1 _2  _5
+CHARACTER _7 BLANK
+CHARACTER FILL _8 OFF
+LINES BLANK _6
+PLOT _1 PRED VS _2 _5
+--------------------
+WEB HELP LOWESS SMOOTH
+--------------------
+
+$$$$$$$$$$$$$$$$$$
+math/mad.men
+This is file mad.men--Compute median absolute deviation of a variable
+ 
+--------------------
+ 1. Median Absolute Deviation
+ 2. LET A = MEDIAN ABSOLUTE DEVIATION Y
+ 3.
+ 4. Variable for which to compute the median absolute deviation:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the median absolute deviation:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -15 50 *
+ 9.
+10.
+11. Compute the Median Absolute Deviation?:
+--------------------
+GR FE
+LET _2 = MEDIAN ABSOLUTE DEVIATION  _1 _3
+--------------------
+WEB HELP MEDIAN ABSOLUTE DEVIATION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_1ho.men
+This is file matr_1ho.men--1-Sample Hotelling T Square Test
+ 
+--------------------
+ 1. Hotelling 1-Sample T Square Test
+ 2. LET A = 1-SAMPLE HOTELLING T-SQUARE M Y
+ 3.
+ 4. The 1-sample Hotelling t square test is:
+ 5.    H0: U=U0
+ 6. where U0 is a vector of population means.  That
+ 7. is, it is testing the columns means of the matrix
+ 8. against a vector of hypothesized values.
+ 9. 
+10. Name of Data Matrix:
+10. @CE 1 0 42 50 ? gui-matr
+11. Name of Variable Containing Hypothesized Means:
+11. @CE 2 0 42 50 ? gui-vari
+12. Name of scalar to store the results:
+12. @CE 3 0 42 50 ?
+13.
+14. Subset/Except/For Specification:
+15. @CE 4 0 1 50 *
+16.
+17.
+18. Perform the Hotelling T Square Test?:
+--------------------
+GR FE
+LET _3 = HOTELLING 1 SAMPLE T SQUARE  _1 _2  _4
+CAPTURE ZZZZJUNK.DAT
+PRINT "HO: U = U0"
+PRINT "HA: U <> U0"
+PRINT " "
+PRINT "HOTELLING T-SQUARE STATISTIC   = ^ZZZZA"
+PRINT "90%   CRITICAL VALUE           = ^B90"
+PRINT "95%   CRITICAL VALUE           = ^B90"
+PRINT "99%   CRITICAL VALUE           = ^B90"
+PRINT "99.5% CRITICAL VALUE           = ^B90"
+END OF CAPTURE
+LIST ZZZZJUNK.DAT
+--------------------
+WEB HELP 1 SAMPLE T SQUARE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_2ho.men
+This is file matr_2ho.men--2-Sample Hotelling T Square Test
+ 
+--------------------
+ 1. Hotelling 2-Sample T Square Test
+ 2. LET A = 2-SAMPLE HOTELLING T-SQUARE X Y
+ 3.
+ 4. The 2-sample Hotelling t square test is:
+ 5.    H0: U1=U2
+ 6. where U1 and U2 are the vector of population means.
+ 7. That is, it is testing whether the population means
+ 8. from 2 different samples are equal.
+ 9. 
+10. Name of First Data Matrix:
+10. @CE 1 0 42 50 ? gui-matr
+11. Name of Second Data Matrix:
+11. @CE 2 0 42 50 ? gui-vari
+12. Name of scalar to store the results:
+12. @CE 3 0 42 50 ?
+13.
+14. Subset/Except/For Specification:
+15. @CE 4 0 1 50 *
+16.
+17.
+18. Perform the Hotelling T Square Test?:
+--------------------
+GR FE
+LET _3 = HOTELLING 2 SAMPLE T SQUARE  _1 _2  _4
+LET ZZZZU1 = MATRIX COLUMN MEANS _1 _4
+LET ZZZZU2 = MATRIX COLUMN MEANS _2 _4
+LET ZZZZN1 = MATRIX NUMBER OF ROWS _1 _4
+LET ZZZZN2 = MATRIX NUMBER OF ROWS _2 _4
+CAPTURE ZZZZJUNK.DAT
+PRINT "HO: U1 = U2"
+PRINT "HA: U1 <> U2"
+PRINT " "
+PRINT "SAMPLE SIZE FOR MATRIX 1       = ^ZZZZN1"
+PRINT "SAMPLE SIZE FOR MATRIX 2       = ^ZZZZN2"
+PRINT " "
+PRINT "SAMPLE MEANS:"
+PRINT ZZZZU1 ZZZZU2
+PRINT " "
+PRINT "HOTELLING T-SQUARE STATISTIC   = ^ZZZZA"
+PRINT "90%   CRITICAL VALUE           = ^B90"
+PRINT "95%   CRITICAL VALUE           = ^B90"
+PRINT "99%   CRITICAL VALUE           = ^B90"
+PRINT "99.5% CRITICAL VALUE           = ^B90"
+END OF CAPTURE
+LIST ZZZZJUNK.DAT
+--------------------
+WEB HELP 2 SAMPLE T SQUARE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_add.men
+This is file matr_add.men--Matrix addition
+ 
+--------------------
+ 1. Matrix addition
+ 2. LET MNEW = MATRIX ADDITION MA MB
+ 3.
+ 4. The first argument should be a matrix.  The second
+ 5. argument can be either a matrix, a vector, or a
+ 6. parameter (or constant).  If a parameter is given,
+ 7. that value is added to each element of the first matrix.
+ 8. If a variable is given, the addition is performed by
+ 9. adding each column of the matrix to the given variable.
+10. If a matrix is given, the corresponding elements of both
+11. matrices are added.
+12.
+15. Name of first matrix:
+15. @CE 1 0 33 50 ? gui-matrix
+16. Name of second matrix/variable/parameter:
+16. @CE 2 0 33 50 ? gui-matrix
+17. Name of matrix to store the results:
+17. @CE 3 0 33 50 ? gui-matrix
+18.
+19. Operation to perform:
+19. @CE 4 1 24 36 addition
+19. @CE 4 2 38 50 subtraction
+20.
+21. Subset/Except/For Specification:
+22. @CE 5 0 -1 50 *
+23.
+24.
+25. Perform the Matrix Addition?:
+--------------------
+GR FE
+@IF 4 1 LET _3 = MATRIX ADDITION  _1 _2  _5
+@IF 4 2 LET _3 = MATRIX SUBTRACTION  _1 _2  _5
+--------------------
+WEB HELP MATRIX ADDITION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_adj.men
+This is file matr_adj.men--Adjoint of a matrix
+ 
+--------------------
+ 1. Adjoint of a Matrix
+ 2. LET ADJOINT = MATRIX ADJOINT M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Matrix  to store the adjoint:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Find the Adjoint?:
+--------------------
+GR FE
+LET _2 = MATRIX ADJOINT  _1 _3
+--------------------
+WEB HELP MATRIX ADJOINT
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_adr.men
+This is file matr_adr.men--Add row to a matrix
+ 
+--------------------
+ 1. Add Row to a Matrix
+ 2. LET M = MATRIX ADD ROW M Y
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 42 50 ? gui-matrix
+ 5. Variable containing new row:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7.
+ 8. Add the Row?:
+--------------------
+GR FE
+LET _1 = MATRIX ADD ROW  _1 _2
+--------------------
+WEB HELP MATRIX ADD ROW
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_aug.men
+This is file matr_aug.men--Append 1 matrix to another
+ 
+--------------------
+ 1. Combine 2 Matrices
+ 2. LET M = MATRIX AUGMENT M  MNEW
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Matrix  to append to the original matrix:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Combine the Matrices?:
+--------------------
+GR FE
+LET _1 = MATRIX AUGMENT  _1 _2 _3
+--------------------
+WEB HELP MATRIX AUGMENT
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_bld.men
+This is file matr_bld.men--Matrix Block Distance
+ 
+--------------------
+ 1. Block Distance
+ 2. LET MDIST = BLOCK ROW DISTANCE M
+ 3.
+ 4. Name of Original Matrix:
+ 4. @CE 1 0 42 50 ? gui-matr
+ 5. Name of Matrix to Store Block Distances:
+ 5. @CE 2 0 42 50 ? 
+ 6.
+ 7. Compute Block Distances for (pick one):
+ 8. @CE 3 1 10 20 rows
+ 8. @CE 3 2 21 31 columns
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 4 0 1 50 *
+12.
+13.
+14. Compute the Block Distances?:
+--------------------
+GR FE
+@IF 3 1 LET ZZZZN = MATRIX NUMBER OF ROWS _1
+@IF 3 1 DIMENSION MATRIX COLUMNS ZZZZN
+@IF 3 1 LET _2 = BLOCK ROW DISTANCE _1 _4
+@IF 3 2 LET _2 = BLOCK COLUMN DISTANCE _1 _4
+--------------------
+WEB HELP BLOCK DISTANCE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_chd.men
+This is file matr_chd.men--Matrix Chebychev Distance
+ 
+--------------------
+ 1. Chebychev Distance
+ 2. LET MDIST = CHEBYCHEV ROW DISTANCE M
+ 3.
+ 4. Name of Original Matrix:
+ 4. @CE 1 0 42 50 ? gui-matr
+ 5. Name of Matrix to Store Chebychev Distances:
+ 5. @CE 2 0 42 50 ? 
+ 6.
+ 7. Compute Chebychev Distances for (pick one):
+ 8. @CE 3 1 10 20 rows
+ 8. @CE 3 2 21 31 columns
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 4 0 1 50 *
+12.
+13.
+14. Compute the Chebychev Distances?:
+--------------------
+GR FE
+@IF 3 1 LET ZZZZN = MATRIX NUMBER OF ROWS _1
+@IF 3 1 DIMENSION MATRIX COLUMNS ZZZZN
+@IF 3 1 LET _2 = CHEBYCHEV ROW DISTANCE _1 _4
+@IF 3 2 LET _2 = CHEBYCHEV COLUMN DISTANCE _1 _4
+--------------------
+WEB HELP CHEBYCHEV DISTANCE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_cho.men
+This is file matr_cho.men--Cholesky Decomposition
+ 
+--------------------
+ 1. Cholesky Decomposition
+ 2. LET CHOL = CHOLESKY DECOMPOSITION M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Matrix to store the Cholesky decomposition:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Cholesky Decomposition?:
+--------------------
+GR FE
+LET _2 = CHOLESKY DECOMPOSITION  _1 _3
+--------------------
+WEB HELP CHOLESKY DECOMPOSITION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_cof.men
+This is file matr_cof.men--Cofactor of a matrix
+ 
+--------------------
+ 1. Cofactor of a Matrix
+ 2. LET COFACT = MATRIX COFACTOR M ROWID COLID
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Row for which to compute the cofactor:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Column for which to compute the cofactor:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7. Parameter  to store the cofactor:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 1 50 *
+11.
+12.
+13. Compute the Cofactor?:
+--------------------
+GR FE
+LET _4 = MATRIX COFACTOR  _1 _2 _3 _5
+--------------------
+WEB HELP MATRIX COFACTOR
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_cor.men
+This is file matr_cor.men--Corrleation matrix
+ 
+--------------------
+ 1. Compute Correlation Matrix
+ 2. LET CORR = CORRELATION MATRIX M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Matrix  to store the correlation matrix:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Correlation Matrix?:
+--------------------
+GR FE
+LET _2 = CORRELATION MATRIX  _1 _3
+--------------------
+WEB HELP CORRELATION MATRIX
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_cov.men
+This is file matr_cov.men--Covariance matrix
+ 
+--------------------
+ 1. Compute Variance-Covariance Matrix
+ 2. LET COVA = VARIANCE-COVARIANCE MATRIX M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Matrix  to store the covariance matrix:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Covariance Matrix?:
+--------------------
+GR FE
+LET _2 = VARIANCE-COVARIANCE MATRIX  _1 _3
+--------------------
+WEB HELP VARIANCE-COVARIANCE MATRIX
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_cre.men
+This is file matr_cre.men--Convert a list of variables into a matrix
+ 
+--------------------
+1. Convert a List of Variables to a Matrix
+2. READ MATRIX ZZZZJUNK.DAT M
+3.
+4. List of Response Variables:
+5. @CE 1 0 1 50 ? gui-variable
+6.
+7. Name of Matrix:
+7. @CE 2 0 42 50 ?
+8.
+9. Subset/Except/For Specification: 
+10. @CE 3 0 1 50 *
+11.
+12.
+13. Create the Matrix?:
+--------------------
+GR FE
+DELETE _2
+WRITE ZZZZJUNK.DAT _1 _3
+READ MATRIX ZZZZJUNK.DAT _2
+--------------------
+WEB HELP READ MATRIX
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_cst.men
+This is file matr_cst.men--Generate Matrix Column Statistics
+ 
+--------------------line 3
+01. Matrix Column Statistics
+02. LET Y = MATRIX COLUMN MEANS M
+03.
+04. Name of Matrix:
+04. @CE 1 0 42 54 ? gui-matr
+05. Name of Variable to Store the Results:
+05. @CE 2 0 42 54 ? gui-matr
+06.
+07. Statistic:
+ 
+08. Location:
+09. @CE 3 3 5 20 mean
+09. @CE 3 4 22 37 median
+09. @CE 3 5 39 54 midrange
+ 
+10. @CE 3 6 5 20 midmean
+10. @CE 3 7 22 37 trimmed mean
+10. @CE 3 8 39 54 Winsorized mean
+ 
+11. Variation:
+12. @CE 3 9 5 20 standard deviation
+12. @CE 3 10 22 37 relative sd
+12. @CE 3 11 39 54 sd of mean
+13. @CE 3 12 5 20 variance
+13. @CE 3 13 22 37 relative varian
+13. @CE 3 14 39 54 varance of mean
+14. @CE 3 15 5  20 minimum
+14. @CE 3 16 22 37 maximum
+14. @CE 3 17 39 54 extreme
+15. @CE 3 18  5 20 range
+15. @CE 3 43 22 37 aad
+15. @CE 3 44 39 54 mad
+16. @CE 3 19  5 20 lower quartile
+16. @CE 3 20 22 37 upper quartile
+16. @CE 3 21 39 54 lower hinge
+17. @CE 3 22  5 20 upper hinge
+17. @CE 3 45 22 54 coefficient of variation
+ 
+18. Distribution:
+19. @CE 3 24  5 20 skewness
+19. @CE 3 25 22 37 kurtosis
+ 
+20. Randomness:
+21. @CE 3 27  5 20 autocorrelation
+21. @CE 3 41 22 37 autocovariance
+ 
+22. Math:
+23. @CE 3 38  5 20 sum
+23. @CE 3 39 22 37 product
+24.
+25. Subset/Except/For Specification:
+26. @CE 4 0 1 54 *
+27.
+28.
+29. Generate the Column Statistics?:
+--------------------
+LET STRING ZZZZSTR = MEAN
+@IF 3 3 LET STRING ZZZZSTR = MEAN
+@IF 3 4 LET STRING ZZZZSTR = MEDIAN
+@IF 3 5 LET STRING ZZZZSTR = MIDRANGE
+@IF 3 6 LET STRING ZZZZSTR = MIDMEAN
+@IF 3 7 LET P1 = 5
+@IF 3 7 LET P2 = 5
+@IF 3 7 LET STRING ZZZZSTR = TRIMMED MEAN
+@IF 3 8 LET P1 = 5
+@IF 3 8 LET P2 = 5
+@IF 3 8 LET STRING ZZZZSTR = WINSORIZED MEAN
+@IF 3 9 LET STRING ZZZZSTR = SD
+@IF 3 10 LET STRING ZZZZSTR = RELATIVE SD
+@IF 3 11 LET STRING ZZZZSTR = SD OF MEAN
+@IF 3 12 LET STRING ZZZZSTR = VARIANCE
+@IF 3 13 LET STRING ZZZZSTR = RELATIVE VARIANCE
+@IF 3 14 LET STRING ZZZZSTR = VARIANCE OF MEAN
+@IF 3 15 LET STRING ZZZZSTR = MINIMUM
+@IF 3 16 LET STRING ZZZZSTR = MAXIMUM
+@IF 3 17 LET STRING ZZZZSTR = EXTREME
+@IF 3 18 LET STRING ZZZZSTR = RANGE
+@IF 3 19 LET STRING ZZZZSTR = LOWER QUARTILE
+@IF 3 20 LET STRING ZZZZSTR = UPPER QUARTILE
+@IF 3 21 LET STRING ZZZZSTR = LOWER HINGE
+@IF 3 22 LET STRING ZZZZSTR = UPPER HINGE
+@IF 3 24 LET STRING ZZZZSTR = SKEWNESS
+@IF 3 25 LET STRING ZZZZSTR = KURTOSIS
+@IF 3 26 LET STRING ZZZZSTR = NORMAL PPCC
+@IF 3 27 LET STRING ZZZZSTR = AUTOCORRELATION
+@IF 3 38 LET STRING ZZZZSTR = SUM
+@IF 3 39 LET STRING ZZZZSTR = PRODUCT
+@IF 3 41 LET STRING ZZZZSTR = AUTOCOVARIANCE
+@IF 3 43 LET STRING ZZZZSTR = AAD
+@IF 3 44 LET STRING ZZZZSTR = MAD
+@IF 3 45 LET STRING ZZZZSTR = COEFFICIENT OF VARIATION
+LET _2 = MATRIX COLUMN ^ZZZZSTR _1 _4
+--------------------
+WEB HELP MATRIX COLUMN STATISTIC
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_der.men
+This is file matr_der.men--Delete row of a matrix
+ 
+--------------------
+ 1. Delete Row of a Matrix
+ 2. LET M = MATRIX DELETE ROW M ROWID
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 42 50 ? gui-matrix
+ 5. Row to delete?:
+ 5. @CE 2 0 42 50 ?
+ 6.
+ 7.
+ 8. Delete the Row?:
+--------------------
+GR FE
+LET ZZZZA = 0
+LET ZZZZA = _2
+LET _1 = MATRIX DELETE ROW  _1 _2
+--------------------
+WEB HELP MATRIX DELETE ROW
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_det.men
+This is file matr_det.men--Compute determinant of a matrix
+ 
+--------------------
+ 1. Matrix Determinant
+ 2. LET A = MATRIX DETERMINANT M
+ 3.
+ 4. Matrix for which to compute the determinant:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Parameter to store the determinant:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Matrix Determinant?:
+--------------------
+GR FE
+LET _2 = MATRIX DETERMINANT  _1 _3
+--------------------
+WEB HELP MATRIX DETERMINANNT
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_dia.men
+This is file matr_dia.men--Create a dioagonal matrix
+ 
+--------------------
+ 1. Create a Diagonal Matrix
+ 2. LET DIAG = DIAGONAL MATRIX V
+ 3.
+ 4. Variable containing diagonal elements
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Matrix to store the diagnal matrix:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Generate the Diagonal Matrix?:
+--------------------
+GR FE
+LET _2 = DIAGONAL MATRIX _1 _3
+--------------------
+WEB HELP DIAGONAL MATRIX
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_dim.men
+This is file matr_dim.men--Dimension Matrix Workspace
+ 
+--------------------
+ 1. Dimension Matrix Workspace
+ 2. DIMENSION MATRIX ROWS 200
+ 3. 
+ 4. The Dataplot matrix commands utilize
+ 5. various temporary matrices.  The available
+ 6. space for a single scratch matrix is
+ 7. 46*MAXOBV/3 where MAXOBV is the maximum
+ 8. number of rows per variable (20,000 for
+ 9. most installations).  This can be divided
+10. among the row and column dimensions as
+11. needed.  Typically, you would specify the
+12. number of rows in your original matrix and
+13. let Dataplot determine the maximum number of
+14. columns available for the scratch matrices.
+15.
+16. Note that this command only applies to scratch
+17. matrices.  It can be changed as often as you
+18. like during a Dataplot session.  Unlike the 
+19. normal DIMENSION command, it does not
+20. re-initialize your data space.
+21.
+22. Enter the number of matrix rows:
+22. @CE 1 0 42 50 ?
+23.
+24.
+25. Specify the Matrix Dimensions?:
+--------------------
+SU FE
+DIMENSION MATRIX ROWS _1
+--------------------
+WEB HELP DIMENSION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_dme.men
+This is file matr_dme.men--Distance from Mean
+ 
+--------------------
+ 1. Distance from Mean
+ 2. LET Y = DISTANCE FROM MEAN M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 42 50 ? gui-matrix
+ 5. Variable to save the distances:
+ 5. @CE 2 0 42 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -1 50 *
+ 9.
+10.
+11.
+12. Compute the Distances from the Mean?:
+--------------------
+GR FE
+LET _2 = DISTANCE FROM MEAN  _1 _3
+--------------------
+WEB HELP DISTANCE FROM MEAN
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_edi.men
+This is file matr_edi.men--Extract diagonal of a matrix
+ 
+--------------------
+ 1. Extract Diagonal of a Matrix
+ 2. LET DIAG = MATRIX DIAGONAL M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Variable  to store the diagonal:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Extract the Diagonal?:
+--------------------
+GR FE
+LET _2 = MATRIX DIAGONAL  _1 _3
+--------------------
+WEB HELP MATRIX DIAGONAL
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_eig.men
+This is file matr_eig.men--Eigenvalues of a matrix
+ 
+--------------------
+ 1. Eigenvalues of a Matrix
+ 2. LET EVAL = MATRIX EIGENVECTORS M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Variable to store the eigenvalues:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Find the Eigenvalues?:
+--------------------
+GR FE
+LET _2 = MATRIX EIGENVALUES  _1 _3
+--------------------
+WEB HELP MATRIX EIGENVALUES
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_eiv.men
+This is file matr_eiv.men--Eigenvectors of a matrix
+ 
+--------------------
+ 1. Eigenvectors of a Matrix
+ 2. LET EVECT = MATRIX EIGENVECTORS M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Matrix  to store the eigenvectors:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Find the Eigenvectors?:
+--------------------
+GR FE
+LET _2 = MATRIX EIGENVECTORS  _1 _3
+--------------------
+WEB HELP MATRIX EIGENVECTORS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_euc.men
+This is file matr_nor.men--Compute norms of a matrix
+ 
+--------------------
+ 1. Matrix Norms
+ 2. LET A = MATRIX EUCLIDEAN NORM M
+ 3.
+ 4. Matrix for which to compute the norm:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Parameter to store the norm:
+ 5. @CE 2 0 33 50 ?
+ 6. Type of norm to compute:
+ 7. @CE 3 1 14 30 euclidean norm
+ 8. @CE 3 2 14 30 spectral norm
+ 9. @CE 3 3 14 30 spectral radius
+10.
+11. Subset/Except/For Specification:
+12. @CE 4 0 1 50 *
+13.
+14.
+15. Compute the Matrix Norm?:
+--------------------
+GR FE
+@IF 3 1 LET _2 = MATRIX EUCLIDEAN NORM  _1 _4
+@IF 3 2 LET _2 = MATRIX SPECTRAL NORM  _1 _4
+@IF 3 3 LET _2 = MATRIX SPECTRAL RADIUS  _1 _4
+--------------------
+WEB HELP MATRIX EUCLIDEAN NORM
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_eud.men
+This is file matr_eud.men--Matrix Euclidean Distance
+ 
+--------------------
+ 1. Euclidean Distance
+ 2. LET MDIST = EUCLIDEAN ROW DISTANCE M
+ 3.
+ 4. Name of Original Matrix:
+ 4. @CE 1 0 42 50 ? gui-matr
+ 5. Name of Matrix to Store Euclidean Distances:
+ 5. @CE 2 0 42 50 ? 
+ 6.
+ 7. Compute Euclidean Distances for (pick one):
+ 8. @CE 3 1 10 20 rows
+ 8. @CE 3 2 21 31 columns
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 4 0 1 50 *
+12.
+13.
+14. Compute the Euclidean Distances?:
+--------------------
+GR FE
+@IF 3 1 LET ZZZZN = MATRIX NUMBER OF ROWS _1
+@IF 3 1 DIMENSION MATRIX COLUMNS ZZZZN
+@IF 3 1 LET _2 = EUCLIDEAN ROW DISTANCE _1 _4
+@IF 3 2 LET _2 = EUCLIDEAN COLUMN DISTANCE _1 _4
+--------------------
+WEB HELP EUCLIDEAN DISTANCE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_exe.men
+This is file matr_ext.men--Extract element of a matrix
+ 
+--------------------
+ 1. Extract Element of a Matrix
+ 2. LET R = MATRIX ELEMENT M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Row of matrix to extract:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Column of matrix to extract:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7. Parameter to store the element:
+ 7. @CE 4 0 33 50 ? gui-none
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 1 50 *
+11.
+12.
+13. Extract the Element?:
+--------------------
+GR FE
+LET _4 = MATRIX ELEMENT  _1 _2 _3 _5
+--------------------
+WEB HELP MATRIX ELEMENT
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_ext.men
+This is file matr_ext.men--Extract row of a matrix
+ 
+--------------------
+ 1. Extract Row of a Matrix
+ 2. LET R = MATRIX ROW M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Row of matrix to extract:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the row:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Extract the Row?:
+--------------------
+GR FE
+LET _3 = MATRIX ROW  _1 _2 _4
+--------------------
+WEB HELP MATRIX ROW
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_inv.men
+This is file matr_inv.men--Inverse of a matrix
+ 
+--------------------
+ 1. Inverse of a Matrix
+ 2. LET MP = MATRIX INVERSE M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Matrix  to store the matrix inverse:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Find the Matrix Inverse?:
+--------------------
+GR FE
+LET _2 = MATRIX INVERSE  _1 _3
+--------------------
+WEB HELP MATRIX INVERSE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_itr.men
+This is file matr_itr.men--Invert a triangular matrix
+ 
+--------------------
+ 1. Invert Triangular Matrix
+ 2. LET MP = TRIANGULAR INVERSE M
+ 3.
+ 4. Name of coefficient matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Variable  to store the matrix inverse:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Invert the Triangular Matrix?:
+--------------------
+GR FE
+LET _2 = TRIANGULAR INVERSE  _1 _3
+--------------------
+WEB HELP TRIANGULAR INVERSE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_lco.men
+This is file matr_lco.men--Matrix Linear Combination
+ 
+--------------------
+ 1. Linear Combination of Matrix and Vector
+ 2. LET Y = LINEAR COMBINATION M X
+ 3.
+ 4. The linear combination of a matrix M and vector
+ 5. X is:
+ 6.    Y = X(1)*M1 + X(2)*M2 + X(3)*M3 + ...
+ 7. where M1, M2, ... are the columns of the matrix.
+ 8. The output is a vector with the same number of
+ 9. rows as M.
+10.
+11. Name of matrix:
+11. @CE 1 0 42 50 ?  gui-matr
+12. Name of vector
+12. @CE 2 0 42 50 ? gui-vari
+13. Name of variable to store the results:
+13. @CE 3 0 42 50 ?
+14.
+15. Subset/Except/For Specification:
+16. @CE 4 0 1 50 *
+17.
+18.
+19. Perform the Linear Combination?:
+--------------------
+GR FE
+LET _3 = LINEAR COMBINATION  _1 _2  _4
+--------------------
+WEB HELP LINEAR COMBINATION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_mad.men
+This is file matr_mad.men--Matrix Mahalanobis Distance
+ 
+--------------------
+ 1. Mahalanobis Distance
+ 2. LET MDIST = MAHALANOBIS ROW DISTANCE M
+ 3.
+ 4. Name of Original Matrix:
+ 4. @CE 1 0 42 50 ? gui-matr
+ 5. Name of Matrix to Store Mahalanobis Distances:
+ 5. @CE 2 0 42 50 ? 
+ 6.
+ 7. Compute Mahalanobis Distances for (pick one):
+ 8. @CE 3 1 10 20 rows
+ 8. @CE 3 2 21 31 columns
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 4 0 1 50 *
+12.
+13.
+14. Compute the Mahalanobis Distances?:
+--------------------
+GR FE
+@IF 3 1 LET ZZZZN = MATRIX NUMBER OF ROWS _1
+@IF 3 1 DIMENSION MATRIX COLUMNS ZZZZN
+@IF 3 1 LET _2 = MAHALANOBIS ROW DISTANCE _1 _4
+@IF 3 2 LET _2 = MAHALANOBIS COLUMN DISTANCE _1 _4
+--------------------
+WEB HELP MAHALANOBIS DISTANCE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_mea.men
+This is file matr_mea.men--Mean of a Matrix
+ 
+--------------------
+ 1. Mean of a Matrix
+ 2. LET A = MATRIX MEAN M
+ 3.
+ 4. Name of matrix:
+ 4. @CE 1 0 42 50 ?  gui-matrix
+ 5. Name of parameter to save mean:
+ 5. @CE 2 0 42 50 *
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Matrix Mean?:
+--------------------
+GR FE
+LET ZZZZA = MATRIX MEAN  _1 _3
+LET _2 = ZZZZA
+--------------------
+WEB HELP MATRIX MEAN
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_mid.men
+This is file matr_min.men--Matrix Minkowsky Distance
+ 
+--------------------
+ 1. Minkowsky Distance
+ 2. LET MDIST = MINKOWSKY ROW DISTANCE M
+ 3.
+ 4. Name of Original Matrix:
+ 4. @CE 1 0 42 50 ? gui-matr
+ 5. Name of Matrix to Store Minkowsky Distances:
+ 5. @CE 2 0 42 50 ? 
+ 6.
+ 7. Compute Minkowsky Distances for (pick one):
+ 8. @CE 3 1 10 20 rows
+ 8. @CE 3 2 21 31 columns
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 4 0 1 50 *
+12.
+13.
+14. Compute the Minkowsky Distances?:
+--------------------
+GR FE
+@IF 3 1 LET ZZZZN = MATRIX NUMBER OF ROWS _1
+@IF 3 1 DIMENSION MATRIX COLUMNS ZZZZN
+@IF 3 1 LET _2 = MINKOWSKY ROW DISTANCE _1 _4
+@IF 3 2 LET _2 = MINKOWSKY COLUMN DISTANCE _1 _4
+--------------------
+WEB HELP MINKOWSKY DISTANCE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_min.men
+This is file matr_min.men--Minor of a matrix
+ 
+--------------------
+ 1. Minor of a Matrix
+ 2. LET MINOR = MATRIX MINOR M ROWID COLID
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Row for which to compute the minor:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Column for which to compute the minor:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7. Parameter  to store the minor:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 1 50 *
+11.
+12.
+13. Compute the Minor?:
+--------------------
+GR FE
+LET _4 = MATRIX MINOR  _1 _2 _3 _5
+--------------------
+WEB HELP MATRIX MINOR
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_mul.men
+This is file matr_mul.men--Matrix multiplication
+ 
+--------------------
+ 1. Matrix multiplication
+ 2. LET MNEW = MATRIX MULTIPLICATION MA MB
+ 3.
+ 4. The first argument should be a matrix.  The second
+ 5. argument can be either a matrix, a vector, or a
+ 6. parameter (or constant).  If a parameter is given,
+ 7. that value is multiplied by each element of the first matrix.
+ 8. If a variable is given, the multiplication is performed by
+ 9. multiplying (row-wise) each column of the matrix with the given
+10. variable.  If a matrix is given, standard matrix multiplication
+11. is performed.
+12.
+15. Name of first matrix:
+15. @CE 1 0 33 50 ? gui-matrix
+16. Name of second matrix/variable/parameter:
+16. @CE 2 0 33 50 ? gui-matrix
+17. Name of matrix to store the results:
+17. @CE 3 0 33 50 ? gui-matrix
+18.
+19. Subset/Except/For Specification:
+20. @CE 5 0 -1 50 *
+21.
+22.
+23. Perform the Matrix Multiplication?:
+--------------------
+GR FE
+LET _3 = MATRIX MULTIPLICATION  _1 _2  _5
+--------------------
+WEB HELP MATRIX MULTIPLICATION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_pco.men
+This is file matr_pco.men--Pooled Covariance matrix
+ 
+--------------------
+ 1. Compute Pooled Variance-Covariance Matrix
+ 2. LET MPOOL = POOLED VARIANCE-COVARIANCE MATRIX MA MB
+ 3.
+ 4. Name of first matrix:
+ 4. @CE 1 0 42 50 ? gui-matrix
+ 5. Name of second matrix:
+ 5. @CE 2 0 42 50 ? gui-matrix
+ 6. Matrix  to store the pooled covariance matrix:
+ 6. @CE 3 0 42 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Compute the Pooled Variance-Covariance Matrix?:
+--------------------
+GR FE
+LET _3 = POOLED VARIANCE-COVARIANCE MATRIX  _1 _2 _4
+--------------------
+WEB HELP POOLED VARIANCE-COVARIANCE MATRIX
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_prc.men
+This is file matr_prc.men--Principle Components of a matrix
+ 
+--------------------
+ 1. Princple Components of a Matrix
+ 2. LET PC = PRINCIPAL COMPONENTS M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Matrix  to store the principle components:
+ 5. @CE 2 0 33 50 ?
+ 6. Matrix  to store the principle components eigenvectors:
+ 6. @CE 3 0 33 50 ?
+ 7. Variable  to store the principle components eigenvalues:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. The original data matrix can be raw data, a covariance matrix,
+10. or a correlation matrix.  The principal components can be
+11. calculated from either a covariance matrix or a correlation
+12. matrix.  Select one of the following:
+13. @CE 5 1 14 50 input - raw data, use - covariance
+14. @CE 5 2 14 50 input - raw data, use - correlation
+15. @CE 5 3 14 50 input - covariance, use - covariance
+16. @CE 5 4 14 50 input - covariance, use - correlation
+17. @CE 5 5 14 50 input - correlation, use - correlation
+18. 
+19. Subset/Except/For Specification:
+20. @CE 6 0 -13 50 *
+21.
+22.
+23. Compute Principal Components?:
+--------------------
+GR FE
+@IF 5 1 PRINCIPAL COMPONENTS TYPE DATA COVARIANCE
+@IF 5 2 PRINCIPAL COMPONENTS TYPE DATA CORRELATION
+@IF 5 3 PRINCIPAL COMPONENTS TYPE COVARIANCE COVARIANCE
+@IF 5 4 PRINCIPAL COMPONENTS TYPE COVARIANCE CORRELATION
+@IF 5 5 PRINCIPAL COMPONENTS TYPE CORRELATION CORRELATION
+LET _2 = PRINCIPAL COMPONENETS  _1 _6
+LET _3 = PRINCIPAL COMPONENETS EIGENVECTORS _1 _6
+LET _4 = PRINCIPAL COMPONENETS EIGENVALUES _1 _6
+--------------------
+WEB HELP PRINCIPAL COMPONENTS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_qfo.men
+This is file matr_qfo.men--Matrix Quadratic Form
+ 
+--------------------
+ 1. Matrix Quadratic Form
+ 2. LET A = QUADRATIC FORM M Y
+ 3.
+ 4. The quadratic form is A = Y'MY where M is a
+ 5. square matrix and Y is a vector.  The result
+ 6. is a scalar.
+ 7.
+ 8. Name of matrix:
+ 8. @CE 1 0 42 50 ? 
+ 9. Name of vector
+ 9. @CE 2 0 42 50 ? gui-vari
+10. Name of scalar to store the results:
+10. @CE 3 0 42 50 ?
+11.
+12. Subset/Except/For Specification:
+13. @CE 4 0 1 50 *
+14.
+15.
+16. Perform the Quadratic Form Multiplication?:
+--------------------
+GR FE
+LET _3 = QUADRATIC FORM  _1 _2  _4
+--------------------
+WEB HELP QUADRATIC FORM
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_ran.men
+This is file matr_ran.men--Compute rank of a matrix
+ 
+--------------------
+ 1. Matrix Rank
+ 2. LET A = MATRIX RANK M
+ 3.
+ 4. Matrix for which to compute the rank:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Parameter to store the rank:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Matrix Rank?:
+--------------------
+GR FE
+LET _2 = MATRIX RANK  _1 _3
+--------------------
+WEB HELP MATRIX RANK
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_rea.men
+This is file matr_rea.men--Read Matrix from File
+ 
+--------------------
+ 1. Read Matrix from File
+ 2. READ MATRIX.DAT M
+ 3.
+ 4. Each row of the data file should contain a single
+ 5. row of the matrix.  The number of columns of the matrix
+ 6. is automatically determined from the number of data elements
+ 7. on each line.
+ 8.
+ 9. User file:
+10. @CE 1 0 -10 50 ? gui-none
+11.
+12. Name of matrix to read:
+12. @CE 2 0 33 50 ? gui-none
+13.
+14. Number of header lines to skip:
+14. @CE 3 0 33 50 *
+15.
+16. Format (Optional and Fortran-like):
+17. @CE 5 0 -10 50 *
+18.
+19. Subset/Except/For Specification:
+20. @CE 6 0 -10 50 *
+21.
+22.
+23. Peform the Read?
+--------------------
+SU FE
+SKIP _3
+SET READ FORMAT _5
+READ MATRIX _1 _2 _6
+--------------------
+WEB HELP READ MATRIX
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_ree.men
+This is file matr_ree.men--Replace element of a matrix
+ 
+--------------------
+ 1. Replace Element of a Matrix
+ 2. LET R = MATRIX REPLACE ELEMENT M ROWID COLID PAR
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Row of matrix to replace:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Column of matrix to replace:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7. Parameter containing new element:
+ 7. @CE 4 0 33 50 ? gui-none
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 1 50 *
+11.
+12.
+13. Replace the Element?:
+--------------------
+GR FE
+LET _1 = MATRIX REPLACE ELEMENT  _1 _2 _3 _4 _5
+--------------------
+WEB HELP MATRIX REPLACE ELEMENT
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_rep.men
+This is file matr_rep.men--Replace row of a matrix
+ 
+--------------------
+ 1. Replace Row of a Matrix
+ 2. LET R = MATRIX REPLACE ROW M VAR ROWID
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Row of matrix to replace:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable containing new elements for row:
+ 6. @CE 3 0 33 50 ? gui-variable
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Replace the Row?:
+--------------------
+GR FE
+LET _1 = MATRIX REPLACE ROW  _1 _3 _2 _4
+--------------------
+WEB HELP MATRIX REPLACE ROW
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_row.men
+This is file matr_row.men--Compute number of rows and columns of a matrix
+ 
+--------------------
+ 1. Matrix Number of Rows and Columns
+ 2. LET A = MATRIX NUMBER OF ROWS M; LET B = MATRIX NUMBER OF COLUMNS M
+ 3.
+ 4. Matrix for which to compute the number of rows and columns:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Parameter to store the number of rows:
+ 5. @CE 2 0 33 50 ?
+ 6. Parameter to store the number of columns:
+ 6. @CE 3 0 33 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -15 50 *
+10.
+11.
+12. Compute the Number of Rows and Columns?:
+--------------------
+GR FE
+LET _2 = MATRIX NUMBER OF ROWS  _1 _4
+LET _3 = MATRIX NUMBER OF COLUMNS  _1 _4
+--------------------
+WEB HELP MATRIX NUMBER OF ROWS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_rst.men
+This is file matr_rst.men--Generate Matrix Row Statistics
+ 
+--------------------line 3
+01. Matrix Row Statistics
+02. LET Y = MATRIX ROW MEANS M
+03.
+04. Name of Matrix:
+04. @CE 1 0 42 54 ? gui-matr
+05. Name of Variable to Store the Results:
+05. @CE 2 0 42 54 ? gui-matr
+06.
+07. Statistic:
+ 
+08. Location:
+09. @CE 3 3 5 20 mean
+09. @CE 3 4 22 37 median
+09. @CE 3 5 39 54 midrange
+ 
+10. @CE 3 6 5 20 midmean
+10. @CE 3 7 22 37 trimmed mean
+10. @CE 3 8 39 54 Winsorized mean
+ 
+11. Variation:
+12. @CE 3 9 5 20 standard deviation
+12. @CE 3 10 22 37 relative sd
+12. @CE 3 11 39 54 sd of mean
+13. @CE 3 12 5 20 variance
+13. @CE 3 13 22 37 relative varian
+13. @CE 3 14 39 54 varance of mean
+14. @CE 3 15 5  20 minimum
+14. @CE 3 16 22 37 maximum
+14. @CE 3 17 39 54 extreme
+15. @CE 3 18  5 20 range
+15. @CE 3 43 22 37 aad
+15. @CE 3 44 39 54 mad
+16. @CE 3 19  5 20 lower quartile
+16. @CE 3 20 22 37 upper quartile
+16. @CE 3 21 39 54 lower hinge
+17. @CE 3 22  5 20 upper hinge
+17. @CE 3 45 22 54 coefficient of variation
+ 
+18. Distribution:
+19. @CE 3 24  5 20 skewness
+19. @CE 3 25 22 37 kurtosis
+ 
+20. Randomness:
+21. @CE 3 27  5 20 autocorrelation
+21. @CE 3 41 22 37 autocovariance
+ 
+22. Math:
+23. @CE 3 38  5 20 sum
+23. @CE 3 39 22 37 product
+24.
+25. Subset/Except/For Specification:
+26. @CE 4 0 1 54 *
+27.
+28.
+29. Generate the Row Statistics?:
+--------------------
+LET STRING ZZZZSTR = MEAN
+@IF 3 3 LET STRING ZZZZSTR = MEAN
+@IF 3 4 LET STRING ZZZZSTR = MEDIAN
+@IF 3 5 LET STRING ZZZZSTR = MIDRANGE
+@IF 3 6 LET STRING ZZZZSTR = MIDMEAN
+@IF 3 7 LET P1 = 5
+@IF 3 7 LET P2 = 5
+@IF 3 7 LET STRING ZZZZSTR = TRIMMED MEAN
+@IF 3 8 LET P1 = 5
+@IF 3 8 LET P2 = 5
+@IF 3 8 LET STRING ZZZZSTR = WINSORIZED MEAN
+@IF 3 9 LET STRING ZZZZSTR = SD
+@IF 3 10 LET STRING ZZZZSTR = RELATIVE SD
+@IF 3 11 LET STRING ZZZZSTR = SD OF MEAN
+@IF 3 12 LET STRING ZZZZSTR = VARIANCE
+@IF 3 13 LET STRING ZZZZSTR = RELATIVE VARIANCE
+@IF 3 14 LET STRING ZZZZSTR = VARIANCE OF MEAN
+@IF 3 15 LET STRING ZZZZSTR = MINIMUM
+@IF 3 16 LET STRING ZZZZSTR = MAXIMUM
+@IF 3 17 LET STRING ZZZZSTR = EXTREME
+@IF 3 18 LET STRING ZZZZSTR = RANGE
+@IF 3 19 LET STRING ZZZZSTR = LOWER QUARTILE
+@IF 3 20 LET STRING ZZZZSTR = UPPER QUARTILE
+@IF 3 21 LET STRING ZZZZSTR = LOWER HINGE
+@IF 3 22 LET STRING ZZZZSTR = UPPER HINGE
+@IF 3 24 LET STRING ZZZZSTR = SKEWNESS
+@IF 3 25 LET STRING ZZZZSTR = KURTOSIS
+@IF 3 26 LET STRING ZZZZSTR = NORMAL PPCC
+@IF 3 27 LET STRING ZZZZSTR = AUTOCORRELATION
+@IF 3 38 LET STRING ZZZZSTR = SUM
+@IF 3 39 LET STRING ZZZZSTR = PRODUCT
+@IF 3 41 LET STRING ZZZZSTR = AUTOCOVARIANCE
+@IF 3 43 LET STRING ZZZZSTR = AAD
+@IF 3 44 LET STRING ZZZZSTR = MAD
+@IF 3 45 LET STRING ZZZZSTR = COEFFICIENT OF VARIATION
+LET _2 = MATRIX ROW ^ZZZZSTR _1 _4
+--------------------
+WEB HELP MATRIX ROW STATISTIC
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_sca.men
+This is file matr_sca.men--Scale a Matrix
+ 
+--------------------
+ 1. Scale a Matrix
+ 2. SET MATRIX SCALE ZSCORE; LET MOUT = MATRIX SCALE M
+ 3.
+ 4. This command scales a matrix by one of the
+ 5. following methods:
+ 6.    1) divide by the standard deviation
+ 7.    2) divide by the range
+ 8.    3) z score (subtract mean, divide by sd)
+ 9. The scaling can be performed either over
+10. rows or columns.
+11.
+12. Name of matrix:
+13. @CE 1 0 42 50 ? 
+14.
+15. Type of scaling (pick one):
+16. @CE 2 1 10 30 standard deviation
+16. @CE 2 2 31 40 range
+17. @CE 2 3 10 30 z score
+17. @CE 2 4 31 40 mean
+18. Scale over (pick one):
+19. @CE 3 1 10 20 columns
+19. @CE 3 2 21 31 rows
+20.
+21. Name of saved scaled matrix (can be same as original)
+21. @CE 4 0 42 50 *
+22.
+23. Subset/Except/For Specification:
+24. @CE 5 0 1 50 *
+25.
+26.
+27. Perform the Matrix Scaling?:
+--------------------
+GR FE
+SET MATRIX SCALE ZSCORE
+@IF 2 1 SET MATRIX SCALE STANDARD DEVIATION
+@IF 2 2 SET MATRIX SCALE RANGE
+@IF 2 3 SET MATRIX SCALE ZSCORE
+@IF 2 4 SET MATRIX SCALE MEAN
+@IF 3 1 LET _4 = MATRIX COLUMN SCALE  _1 _5
+@IF 3 2 LET _4 = MATRIX ROW SCALE  _1 _5
+--------------------
+WEB HELP QUADRATIC FORM
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_sim.men
+This is file matr_sim.men--Linear programming (simplex method)
+ 
+--------------------
+ 1. Solve Linear Programming Problem
+ 2. LET X = MATRIX SIMPLEX SOLUTION F M; LET P = VECTOR DOT PRODUCT F X
+ 3.
+ 4. Variable containing objective function coefficients:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Constraints matrix:
+ 5. @CE 2 0 33 50 ? gui-matrix
+ 6. Variable to store the computed Xj values:
+ 6. @CE 3 0 33 50 ? 
+ 7. Parameter to store the simplex solution:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 -10 50 *
+11.
+12.
+13. Solve the Linear Programming Problem?:
+--------------------
+GR FE
+LET _3 = MATRIX SIMPLEX SOLUTION  _1 _2  _5
+LET _4 = VECTOR DOT PRODUCT  _1 _3
+--------------------
+WEB HELP MATRIX SIMPLEX SOLUTION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_sol.men
+This is file matr_sol.men--Solve system of linear equations
+ 
+--------------------
+ 1. Solve System of Linear Equations
+ 2. LET B = MATRIX SOLUTION X A
+ 3.
+ 4. Name of coefficient matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Name of constants variable:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable  to store the matrix solution:
+ 6. @CE 3 0 33 50 ?
+ 7. Apply Iterative refinement?:
+ 8. @CE 4 1 14 20 no
+ 8. @CE 4 2 22 28 yes
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 -5 50 *
+12.
+13.
+14. Solve the System of Equations?:
+--------------------
+GR FE
+@IF 4 1 LET _3 = MATRIX SOLUTION  _1 _2 _5
+@IF 4 2 LET _3 = MATRIX ITERATIVE SOLUTION  _1 _2 _5
+--------------------
+WEB HELP MATRIX SOLUTION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_sva.men
+This is file matr_sva.men--Singular Values of a matrix
+ 
+--------------------
+ 1. Singular Values of a Matrix
+ 2. LET SVAL = SINGULAR VALUES M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Variable to store the singular values:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Find the Singular Values?:
+--------------------
+GR FE
+LET _2 = SINGULAR VALUES  _1 _3
+--------------------
+WEB HELP SINGULAR VALUES
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_svd.men
+This is file matr_svd.men--Singular Value Decomposition of a matrix
+ 
+--------------------
+ 1. Singular Value Decomposition of a Matrix
+ 2. LET U S V = SINGULAR VALUE DECOMPOSITION M
+ 3.
+ 4. The singular value decomposition returns 2 matrices
+ 5. U and V.  Note that the U matrix is nxn.  The Dataplot
+ 6. limit on the number of matrix columns is currently 100 for
+ 7. most implementations.  That means that in Dataplot the
+ 8. singular value decomposition is typically limited to
+ 9. matrices with 100 or less rows.
+10.
+11. Name of original matrix:
+11. @CE 1 0 33 50 ? gui-matrix
+12. Variable to store the singular values:
+12. @CE 2 0 33 50 ? gui-none
+13. Matrix to store the U matrix:
+13. @CE 3 0 33 50 ? gui-matrix
+14. Matrix to store the V matrix:
+14. @CE 4 0 33 50 ? gui-matrix
+15.
+15. Subset/Except/For Specification:
+16. @CE 5 0 -10 50 *
+17.
+18.
+19. Compute the Singular Value Decomposition?:
+--------------------
+GR FE
+LET _3 _2 _4 = SINGULAR VALUE DECOMPOSITION  _1 _5
+--------------------
+WEB HELP SINGULAR VALUE DECOMPOSITION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_svf.men
+This is file matr_svf.men--Singular Value Factorization of a matrix
+ 
+--------------------
+ 1. Singular Value Factorization of a Matrix
+ 2. LET U S V = SINGULAR VALUE FACTORIZATION M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Variable to store the singular values:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Matrix to store the U matrix:
+ 6. @CE 3 0 33 50 ? gui-matrix
+ 7. Matrix to store the V matrix:
+ 7. @CE 4 0 33 50 ? gui-matrix
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 -5 50 *
+11.
+12.
+Compute the Singular Value Factorization?:
+--------------------
+GR FE
+LET _3 _2 _4 = SINGULAR VALUE FACTORIZATION  _1 _5
+--------------------
+WEB HELP SINGULAR VALUE FACTORIZATION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_tdi.men
+This is file matr_tdi.men--Solve a tridiagonal system of linear equations
+ 
+--------------------
+ 1. Solve Tridiagonal System of Linear Equations
+ 2. LET X = TRIDIAGONAL SOLUTION ASUB ADIAG ASUP B
+ 3.
+ 4. Subdiagonal variable:
+ 4. @CE 1 0 33 50 ? gui-variable:
+ 5. Diagonal variable:
+ 5. @CE 2 0 33 50 ? gui-variable:
+ 6. Superdiagonal variable:
+ 6. @CE 3 0 33 50 ? gui-variable:
+ 7. Constants variable:
+ 7. @CE 4 0 33 50 ? gui-variable
+ 8. Variable  to store the tridiagonal solution:
+ 8. @CE 5 0 33 50 ?
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 6 0 -5 50 *
+12.
+13.
+14. Solve the Tridiagonal System of Equations?:
+--------------------
+GR FE
+LET _5 = TRIDIAGONAL SOLUTION  _1 _2 _3 _4 _6
+--------------------
+WEB HELP TRIDIAGONAL SOLUTION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_tra.men
+This is file matr_tra.men--Compute trace of a matrix
+ 
+--------------------
+ 1. Matrix Trace
+ 2. LET A = MATRIX TRACE M
+ 3.
+ 4. Matrix for which to compute the trace:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Parameter to store the trace:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Matrix Trace?:
+--------------------
+GR FE
+LET _2 = MATRIX TRACE  _1 _3
+--------------------
+WEB HELP MATRIX TRACE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_tri.men
+This is file matr_tri.men--Solve a triangular system of linear equations
+ 
+--------------------
+ 1. Solve Triangular System of Linear Equations
+ 2. LET B = TRIANGULAR SOLUTION X A
+ 3.
+ 4. Name of coefficient matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Name of constants variable:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable  to store the matrix solution:
+ 6. @CE 3 0 33 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 5 0 -5 50 *
+10.
+11.
+12. Solve the Triangular System of Equations?:
+--------------------
+GR FE
+LET _3 = TRIANGULAR SOLUTION  _1 _2 _5
+--------------------
+WEB HELP TRIANGULAR SOLUTION
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_trn.men
+This is file matr_eiv.men--Transpose of a matrix
+ 
+--------------------
+ 1. Transpose of a Matrix
+ 2. LET MT = MATRIX TRANSPOSE M
+ 3.
+ 4. For most installations, Dataplot limits the number of
+ 5. columns in a matrix to 100.  This means you cannot
+ 6. generate the matrix transpose if the original matrix
+ 7. has more than 100 rows.
+ 8.
+ 9. Name of original matrix:
+ 9. @CE 1 0 33 50 ? gui-matrix
+10. Matrix  to store the transpose:
+10. @CE 2 0 33 50 ?
+11.
+12. Subset/Except/For Specification:
+13. @CE 3 0 1 50 *
+14.
+15.
+16. Generate the Matrix Transpose?:
+--------------------
+GR FE
+LET _2 = MATRIX TRANSPOSE  _1 _3
+--------------------
+WEB HELP MATRIX TRANSPOSE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/matr_vtt.men
+This is file matr_vtt.men--Vector times its Transpose
+ 
+--------------------
+ 1. Vector Times its Transpose
+ 2. LET M = VECTOR TIMES TRANSPOSE Y
+ 3.
+ 4. Name of Variable:
+ 4. @CE 1 0 42 50 ?  gui-vari
+ 5. Name of matrix to save result:
+ 5. @CE 2 0 42 50 *
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Vector Times its Transpose?:
+--------------------
+GR FE
+LET _2 = VECTOR TIMES TRANSPOSE _1 _3
+--------------------
+WEB HELP VECTGOR TIMES TRANSPOSE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/maximum.men
+This is file maximum.men--Compute maximum of a variable
+ 
+--------------------
+ 1. Maximum
+ 2. LET A = MAXIMUM Y
+ 3.
+ 4. Variable for which to compute the maximum:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the maximum:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Maximum?:
+--------------------
+GR FE
+LET _2 = MAXIMUM  _1 _3
+--------------------
+WEB HELP MAXIMUM
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/mean.men
+This is file mean.men--Compute mean of a variable
+ 
+--------------------
+ 1. Mean
+ 2. LET A = MEAN Y
+ 3.
+ 4. Variable for which to compute the mean:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the mean:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Mean?:
+--------------------
+GR FE
+LET _2 = MEAN  _1 _3
+--------------------
+WEB HELP MEAN
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/median.men
+This is file median.men--Compute median of a variable
+ 
+--------------------
+ 1. Median
+ 2. LET A = MEDIAN Y
+ 3.
+ 4. Variable for which to compute the median:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the median:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Median?:
+--------------------
+GR FE
+LET _2 = MEDIAN  _1 _3
+--------------------
+WEB HELP MEDIAN
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/midmean.men
+This is file midmean.men--Compute midmean of a variable
+ 
+--------------------
+ 1. Midmean
+ 2. LET A = MIDMEAN Y
+ 3.
+ 4. Variable for which to compute the midmean:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. Parameter to store the midmean:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Midmean?:
+--------------------
+GR FE
+LET _2 = MIDMEAN  _1 _3
+--------------------
+WEB HELP MIDMEAN
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/midrange.men
+This is file midrange.men--Compute midrange of a variable
+ 
+--------------------
+ 1. Midrange
+ 2. LET A = MIDRANGE Y
+ 3.
+ 4. Variable for which to compute the midrange:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the midrange:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Midrange?:
+--------------------
+GR FE
+LET _2 = MIDRANGE  _1 _3
+--------------------
+WEB HELP MIDRANGE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/minimum.men
+This is file minimum.men--Compute minimum of a variable
+ 
+--------------------
+ 1. Minimum
+ 2. LET A = MINIMUM Y
+ 3.
+ 4. Variable for which to compute the minimum:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the minimum:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Minimum?:
+--------------------
+GR FE
+LET _2 = MINIMUM  _1 _3
+--------------------
+WEB HELP MINIMUM
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/nl_fit.men
+This is file nl_fit.men--Compute a non-linear least squares fit
+ 
+--------------------
+ 1. Non-Linear Fit
+ 2. FIT Y = F1
+ 3.
+ 4. Dependent variable for the fit:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Dependent variable for the fit:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Name of previously defined function (or enter a functional expression):
+ 7. @CE 3 0 -7 50 ?
+ 8. 
+ 9. The fitted line wil be plotted with the raw
+10. data and several residual plots will be generated.
+11.
+12. Select the line style for the fitted curve:
+12. @CE 4 0 33 50 gui-line
+13. Select the character symbol for the raw data:
+13. @CE 5 0 33 50 gui-character
+14. Fill the character symbol?:
+14. @CE 6 0 33 50 gui-ooff
+15.
+16. Subset/Except/For Specification:
+17. @CE 7 0 -7 50 *
+18.
+19.
+20. Perform the fit?:
+--------------------
+GR FE
+CAPTURE ZZZZJUNK.DAT
+FIT _1 =  _3 _7
+END OF CAPTURE
+TITLE AUTOMATIC
+MULTIPLOT 2 2
+MULTIPLOT CORNER COORDINATES 5 5 95 95
+CHARACTER _5 BLANK
+CHARACTER FILL _6 OFF
+LINES BLANK _4
+PLOT _1 VS _2 _7
+PLOT _1 PRED VS _2 _7
+PLOT RES VS _2 _7
+NORMAL PROBABILITY PLOT RES
+END OF MULTIPLOT
+MULTIPLOT CORNER COORDIANTES
+TITLE
+LISTZZZZJUNK.DAT
+--------------------
+WEB HELP FIT
+--------------------
+
+$$$$$$$$$$$$$$$$$$
+math/normppcc.men
+This is file normppcc.men--Compute normal ppcc of a variable
+ 
+--------------------
+ 1. Normal PPCC
+ 2. LET A = NORMAL PPCC Y
+ 3.
+ 4. Variable for which to compute the normppcc:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the normppcc:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -3 50 *
+ 9.
+10.
+11. Compute the Normal PPCC?:
+--------------------
+GR FE
+LET _2 = NORMAL PPCC  _1 _3
+--------------------
+WEB HELP NORMAL PPCC
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/opt-1.men
+This is file opt-1.men--Compute the minimum of a function (1-var case)
+ 
+--------------------
+ 1. 1-Variable Unconstrained Optimization (Minimum)
+ 2. LET Y = OPTIMIZE F1 WRT X FOR X = 0 TO 10
+ 3.
+ 4. Name of previously created function (or enter a functional expression):
+ 5. @CE 2 0 -7 50 ?
+ 6. Variable on which to optimize:
+ 6. @CE 3 0 33 50 ? gui-variable
+ 7. Lower range for root:
+ 7. @CE 4 0 33 50 ?
+ 8. Upper range for root:
+ 8. @CE 5 0 33 50 *
+ 9. Optimization tolerance (optional):
+ 9. @CE 7 0 33 50 * 
+10. Parameter  to store the roots:
+10. @CE 1 0 33 50 ? gui-none
+11.
+12. Subset/Except/For Specification:
+13. @CE 6 0 -7 50 *
+14.
+15.
+16. Compute the Optimization?:
+--------------------
+GR FE
+OPTIMIZATION TOLERANCE _7
+LET _1 = OPTIMIZE _2 WRT _3 FOR _3 = _4 TO _5  _6
+--------------------
+WEB HELP OPTIMIZE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/optimize.men
+This is file optimize.men--Compute the maximum of a function (multi-variable case)
+ 
+--------------------
+ NOTE: This capability still under construction
+ 1. Multi-Variable Unconstrained Optimization
+ 2. LET Y = OPTIMIZE F1 WRT X FOR X = 0 TO 10
+ 3.
+ 4. Name of previously created function (or enter a functional expression):
+ 5. @CE 2 0 -7 50 ?
+ 6. Variable on which to optimize:
+ 6. @CE 3 0 33 50 ? gui-variable
+ 7. Lower range for root:
+ 7. @CE 4 0 33 50 ?
+ 8. Upper range for root:
+ 8. @CE 5 0 33 50 *
+ 9. Optimization tolerance (optional):
+ 9. @CE 7 0 33 50 * 
+10. Parameter  to store the roots:
+10. @CE 1 0 33 50 ? gui-none
+10.
+11. Subset/Except/For Specification:
+12. @CE 6 0 -7 50 *
+13.
+14.
+15. Compute the Optimization?:
+--------------------
+GR FE
+OPTIMIZATION TOLERANCE _7
+LET _1 = OPTIMIZE _2 WRT _3 FOR _3 = _4 TO _5  _6
+--------------------
+WEB HELP OPTIMIZE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/ord_stat.men
+This is file ord_stat.men--Generate order statistic medians
+ 
+--------------------
+ 1. Order Statistic Medians
+ 2. LET Y = NORMAL ORDER STATISTIC MEDIANS FOR I = 1 1 100
+ 3.
+ 4. Start value (a positive integer):
+ 4. @CE 1 0 42 50 ?
+ 5. Stop value (a positive integer):
+ 5. @CE 2 0 42 50 ?
+ 6. Increment (a positive integer):
+ 6. @CE 3 0 42 50 ?
+ 7. Variable to store the order statistic medians:
+ 7. @CE 5 0 42 50 ? gui-none
+ 8. Distribution:
+ 9. @CE 6 1 10 25 Normal
+10. @CE 6 2 10 25 Uniform
+11. @CE 6 3 10 25 Half Normal
+12. @CE 6 4 10 25 EV1 (Gumbel)
+13. @CE 6 5 10 25 EV2 (Frechet)
+14. @CE 6 6 10 25 Weibull
+15.
+16. Subset/Except/For Specification:
+17. @CE 7 0 1 50 *
+18.
+19.
+20. Generate the Order Statistic Medians?:
+--------------------
+GR FE
+LET STRING ZZZZSTR = NORMAL
+@IF 6 2 LET STRING ZZZZSTR = UNIFORM
+@IF 6 3 LET STRING ZZZZSTR = HALF NORMAL
+@IF 6 4 LET STRING ZZZZSTR = EV1
+@IF 6 5 LET STRING ZZZZSTR = EV2
+@IF 6 6 LET STRING ZZZZSTR = WEIBULL
+LET _5 = ^ZZZZSTR ORDER STATISTIC MEDIANS FOR I = _1 _3 _2  _7
+--------------------
+WEB HELP ORDER STATISTIC MEDIANS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/parabol.men
+This is file parabol.men--Compute Parabolic Cylinder Functions
+ 
+--------------------
+ 1. Parabolic Cylinder Functions
+ 2. LET Y = PBDV(X,2)
+ 3.
+ 4. Horizontal axis variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Order of the parabolic cylinder function:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7.
+ 8. Operation to perform:
+ 9. @CE 4 1 10 40 Dv function
+10. @CE 4 2 10 40 derivative of Dv function
+11. @CE 4 3 10 40 Vv function
+12. @CE 4 4 10 40 derivative of Vv function
+13. @CE 4 5 10 40 Wa function (only for X < 5)
+14. @CE 4 6 10 40 derivative of Wa function (only for X < 5)
+15.
+16. Plot?:
+16. @CE 5 1 14 20 no
+16. @CE 5 2 22 28 yes
+17.
+18. Subset/Except/For Specification:
+19. @CE 6 0 -5 50 *
+20.
+21.
+22. Compute the Transformation?:
+--------------------
+GR FE
+@IF 4 1 LET _3 = PBDV( _1 , _2 ) _6
+@IF 4 2 LET _3 = PBDV1( _1 , _2 ) _6
+@IF 4 3 LET _3 = PBVV( _1 , _2 ) _6
+@IF 4 4 LET _3 = PBVV1( _1 , _2 ) _6
+@IF 4 5 LET _3 = PBWA( _1 , _2 ) _6
+@IF 4 6 LET _3 = PBWA1( _1 , _2 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP PARABOLIC CYLINDER FUNCTIONS
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/percdefe.men
+This is file percdefe.men--Compute percent defective of a variable
+ 
+--------------------
+ 1. Percent Defective
+ 2. LET A = PERCENT DEFECTIVE Y
+ 3.
+ 4. Variable for which to compute the percent defective:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Value for the upper specification limit?:
+ 5. @CE 2 0 33 50 ?
+ 6. Value for the lower specification limit?:
+ 6. @CE 3 0 33 50 ?
+ 7. Parameter to store the percent defective:
+ 7. @CE 4 0 33 50 ? gui-none
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 -10 50 *
+11.
+12.
+13. Compute the Percent Defective?:
+--------------------
+GR FE
+LET USL = _2
+LET LSL = _3
+LET _4 = PERCENT DEFECTIVE  _1 _5
+--------------------
+WEB HELP PERCENT DEFECTIVE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/percent.men
+This is file percentile.men--Compute percentile of a variable
+ 
+--------------------
+ 1. Percentile
+ 2. LET A = 50 PERCENTGILE Y
+ 3.
+ 4. Variable for which to compute the percentile:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Parameter to store the percentile:
+ 5. @CE 2 0 42 50 ? gui-none
+ 6. Percentile to compute (between 0 and 100):
+ 6. @CE 3 0 42 50 *
+ 7. 
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 0 50 *
+10.
+11.
+12. Compute the Percentile?:
+--------------------
+GR FE
+LET _2 = _3  PERCENTILE  _1 _4
+--------------------
+WEB HELP PERCENTILE
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/plotfun2.men
+This is file plotfun2.men--Plot a 2-variable function
+ 
+--------------------
+ 1. Plot a 2-variable Function
+ 2. PLOT F1 FOR X = -3 0.1 3 FOR Y = -3 0.1 3
+ 3.
+ 4. Name of previously created function (or enter a functional expression):
+ 5. @CE 1 0 -10 50 ?
+ 6. First variable (X) on which to plot the function:
+ 6. @CE 2 0 42 50 ? gui-none
+ 7. Lower range for the X variable:
+ 7. @CE 3 0 42 50 ?
+ 8. Increment between X points:
+ 8. @CE 4 0 42 50 ?
+ 9. Upper range for the X variable:
+ 9. @CE 5 0 42 50 ?
+10. Second variable (Y) on which to plot the function:
+10. @CE 6 0 42 50 ? gui-none
+11. Lower range for the Y variable:
+11. @CE 7 0 42 50 ?
+12. Increment between Y points:
+12. @CE 8 0 42 50 ?
+13. Upper range for the Y variable:
+13. @CE 9 0 42 50 ?
+14.
+15. Select 3D frame:
+16. @CE 10 1 14 60 no 3d frame
+17. @CE 10 2 14 60  prong (axes from min to max, common origin)
+18. @CE 10 3 14 60  xz and yz planes
+19. @CE 10 4 14 60  cube
+20. @CE 10 5 14 60  zigzag (similar to prong but no common origin)
+21.
+22. X, Y, Z viewing coordinates (optional):
+23. @CE 11 0 -10 50 *
+24.
+25. Subset/Except/For Specification:
+26. @CE 13 0 -10 50 *
+27.
+28.
+29. Plot the Function?:
+--------------------
+GR FE
+EYE COORDINATES _11
+@IF 10 1 3DFRAME OFF
+@IF 10 2 3DFRAME PRONG
+@IF 10 3 3DFRAME 3PLANE
+@IF 10 4 3DFRAME BOX
+@IF 10 5 3DFRAME ZIGZAG
+3D-PLOT _1 FOR _2 = _3  _4 _5 FOR _6 = _7 _8 _9 _13
+--------------------
+WEB HELP 3D-PLOT
+--------------------
+$$$$$$$$$$$$$$$$$$
+math/plotfunc.men

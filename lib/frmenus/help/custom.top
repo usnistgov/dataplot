@@ -1,0 +1,58 @@
+----- <~help\custom.top> Dataplot Startup Files
+
+Dataplot Startup Files                            
+
+You can customize Dataplot using the following            -
+two startup files:
+
+    dpsysf.tex
+    dplogf.tex
+
+The dpsysf.tex file is intended to set defaults
+for all users of Dataplot on a given platform.
+The dplogf.tex is intended to set defaults for
+an individual user.  The dpsysf.tex file is
+processed before the dplogf.tex file (i.e., user
+set defaults can override system wide defaults).
+
+Both of these files are simply ASCII files
+containing Dataplot commands.
+
+
+UNIX/LINUX Platforms
+
+    The default location for dpsysf.tex is 
+
+        /usr/local/lib/dataplot
+
+    When Dataplot is first installed, this file
+    will not typically contain any active commands.
+    However, the dpsysf.tex file is an ideal way to
+    set site wide defaults.
+
+    The above directory will also contain a dummy
+    version of dplogf.tex.  If you would like to
+    create personal defaults, you should create
+    a dplogf.tex file in your home directory (Dataplot
+    will look for dplogf.tex in your home address
+    first and only if it doesn't find it will it
+    look in /usr/local/lib/dataplot).
+
+Windows Platforms
+
+    The default location for both dpsysf.tex and
+    dplogf.tex is 
+
+        C:\Program Files\NIST\DATAPLOT
+
+    For Windows, the dpsysf.tex file typically
+    contains no active commands.  However, the
+    dplogf.tex file does contain a number of commands.
+
+    For Windows, we recommend that you make any
+    desired edits to the dplogf.tex file.
+
+
+View Your Current dpsysf.tex File         <xcl: LIST DPSYSF.TEX>
+View Your Current dplogf.tex File         <xcl: LIST DPLOGF.TEX>
+

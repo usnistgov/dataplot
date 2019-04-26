@@ -1,0 +1,25 @@
+-----<~reli\discgrow.top> Discussion: Reliability Growth Models
+
+Discussion: Reliability Growth Models
+
+Reliability Growth Models
+
+Reliability growth models are used in the early
+stages of developing and prototyping complex systems.
+
+In these early stages, reliability will typically
+not be up to customer requirements.  During this stage,
+failures are studied to determine root causes with the
+goal of improving the design and assembly of the
+product.  This should ideally lead to a decreasing
+repair rate model.
+
+These growth models are commonly modeled using either
+the NHPP Power Law Model or the NHPP Exponential Law
+Model.  In particular, the Power Law Model underlies
+the Duane plot.
+
+It is generally recommended that the Power Law Model
+be tried first.  If this model is inadequate, then
+try the exponential law model.
+

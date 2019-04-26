@@ -1,0 +1,227 @@
+      SUBROUTINE EDINIT
+C
+C     PURPOSE--INITIALIZE ALL VALUES IN COMMON
+C
+C     ORIGINAL VERSION--JANUARY 19,1985
+C     UPDATED         --APRIL     1990
+C     UPDATED         --AUGUST    1992.  CHANGES FOR SPACE AND
+C                                        PORTABILITY (ALAN)
+C     UPDATED         --APRIL     1993.  MOVE IMASK TO EDMAI2.FOR
+C     UPDATED         --JULY      1993.  DATAPLOT SWITCH AS INPUT ARG
+C     UPDATED         --JULY      1993.  MODIFY FOR ALAN MERGE
+C
+C------------------------------------------------------------------------------
+C
+      CHARACTER*20 ICJUNK
+C
+CCCCC CHARACTER*4 ISUBN1
+CCCCC CHARACTER*4 ISUBN2
+CCCCC CHARACTER*4 ISTEPN
+C
+C-----COMMON VARIABLES (EDITING)-----------------------------------------------
+C
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCONP.INC'
+      INCLUDE 'EDCOMM.INC'
+C
+C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+C
+C-----START POINT-------------------------------------------
+C
+      IPRISW='OFF'
+      IMODE='EDIT'
+      IALL='OFF'
+C
+      IINFIN='*'
+C
+CCCCC INUMSW='OFF'
+      INUMSW='ON'
+      IFEESW='ON'
+      ITRASW='OFF'
+      IPROSW='ON'
+      IPROMN='ON'
+C
+CCCCC THE FOLLOWING 2 LINES WERE COMMENTED OUT             APRIL 1993
+CCCCC SO AS TO MOVE THE DEFINITION OF    IMASK             APRIL 1993
+CCCCC TO EDMAI2.FOR (TO SIMPLIFY UNIX \\ PROBLEM)          APRIL 1993
+CCCCC IMASK='\'
+CCCCC IF(IOPSY1.EQ.'UNIX')IMASK='\\'
+C
+      ISPACH='EQUA'
+      ISPACV='SING'
+      IJUST='LEFT'
+      ITRANS='NEAT'
+C
+      IBUGMA='OFF'
+      IBUGTY='OFF'
+      IBUGED='OFF'
+      IBUGE2='OFF'
+      IBUGE3='OFF'
+      IBUGFI='OFF'
+      IBUGT1='OFF'
+      IBUGT2='OFF'
+      IBUGWR='OFF'
+      ICURLN=0
+      IDELSW='OFF'
+      IDELLN=(-999)
+C
+C -------------------------------------------------------
+C
+C     1. DEFINE MAXEDC = MAXIMUM NUMBER OF CHARACTERS.    AUGUST 1992
+C     2. DEFINE MAXEDL = MAXIMUM NUMBER OF LINES.         AUGUST 1992
+C     3. DEFINE MAXROW = MAXIMUM NUMBER OF ROWS.          AUGUST 1992
+C     4. DEFINE MAXCMN = MAXIMUM NUMBER OF COMMANDS???    AUGUST 1992
+C     (FOR DATAPLOT, THE DEFINITION OF MAXEDC, MAXEDL,    AUGUST 1992
+C     AND MAXCMN   IS NOW DONE IN DPCOPA.INC              AUGUST 1992
+C     DONE IN    DPCOPA.INC    AS PART OF   EDCOMM.INC)   AUGUST 1992
+C
+      NUMCHA=0
+CCCCC MAXEDC=500000  NOW DONE IN DPCOPA.INC   AUGUST 1993
+      NUMLIN=0
+CCCCC MAXEDL=25000   NOW DONE IN DPCOPA.INC   AUGUST 1992
+      NUMROW=0
+      MAXROW=MAXEDL
+      NUMCOM=3
+CCCCC MAXCMN=100     NOW DONE IN DPCOPA.INC   AUGUST 1992
+C
+      DO1200I=1,MAXCMN
+CCCCC THE FOLLOWING LINE WAS FIXED APRIL 1990
+CCCCC ICOM3(I)='        '
+      ICOM3(I)='    '
+CCCCC THE FOLLOWING LINE WAS FIXED APRIL 1990
+CCCCC ICOM4(I)='                     '
+      ICOM4(I)='    '
+      NCCOM3(I)=0
+      NCCOM4(I)=0
+CCCCC THE FOLLOWING LINE WAS FIXED APRIL 1990
+CCCCC INLIN3(I)='                     '
+      INLIN3(I)='                    '
+CCCCC THE FOLLOWING LINE WAS FIXED APRIL 1990
+CCCCC INLIN4(I)='                     '
+      INLIN4(I)='                    '
+      NCINL3(I)=0
+      NCINL4(I)=0
+ 1200 CONTINUE
+C
+C     DEFINE USER-COMMANDS
+C     (CHANGEABLE VIA THE    SET COMMAND   COMMAND)
+C     3 SUCH BUILT-IN COMMANDS ARE PROVIDED
+C        1) ERASE
+C        2) EJECT
+C        3) SPLM (= SET PRINTER'S LEFT MARGIN)
+C
+C     DEFINE COMMAND 1 = ERASE = ESCAPE FORMFEED
+C
+      ICOM3(1)='ERASE   '
+      NCCOM3(1)=5
+      ICJUNK='                    '
+      ICJUNK(1:1)=CHAR(27)
+      ICJUNK(2:2)=CHAR(12)
+      ICOM4(1)=ICJUNK
+      NCCOM4(1)=2
+C
+C     DEFINE COMMAND 2 = EJECT = FORMFEED
+C
+      ICOM3(2)='EJECT   '
+      NCCOM3(2)=5
+      ICJUNK='                    '
+      ICJUNK(1:1)=CHAR(12)
+      ICOM4(2)=ICJUNK
+      NCCOM4(2)=1
+C
+C     DEFINE COMMAND 3 =  (= SET PRINTER'S LEFT MARGIN) = ESCAPE 9
+C
+      ICOM3(3)='SPLM    '
+      NCCOM3(3)=4
+      ICJUNK='                    '
+      ICJUNK(1:1)=CHAR(27)
+      ICJUNK(2:2)=CHAR(57)
+      ICOM4(3)=ICJUNK
+      NCCOM4(3)=2
+C
+      IOLDLN=ICURLN
+      NCHAOL=NUMCHA
+      NUMLOL=NUMLIN
+      NUMROL=NUMROW
+C
+      NUMCLS=0
+      NUMCFS=0
+      NUMCCS=0
+C
+      NCHH1=0
+      NCHH2=0
+      NCHH3=0
+      NCHH4=0
+      NCHH5=0
+      NCHH6=0
+      NCHH7=0
+      NCHH8=0
+      NCHH9=0
+      NCHH10=0
+C
+      DO1100I=1,240
+      IHOLS1(I:I)=' '
+      IHOLS2(I:I)=' '
+      IHOLS3(I:I)=' '
+      IHOLS4(I:I)=' '
+      IHOLS5(I:I)=' '
+      IHOLS6(I:I)=' '
+      IHOLS7(I:I)=' '
+      IHOLS8(I:I)=' '
+      IHOLS9(I:I)=' '
+      IHOL10(I:I)=' '
+ 1100 CONTINUE
+C
+      ICLIM1=1
+      ICLIM2=240
+      IPLIM1=1
+      IPLIM2=240
+      ILLIM1=1
+      ILLIM2=240
+      IMLIM1=1
+      IMLIM2=60
+      IVWIN1=1
+      IVWIN2=100000
+      IHWIN1=1
+      IHWIN2=240
+C
+      IINDEC=240
+      ICENTC=30
+      ITRUNC=240
+      ITABC=1
+C
+      ISCRO1=1
+      ISCRO2=24
+      ISCCO1=1
+      ISCCO2=80
+C
+      IPRRO1=1
+      IPRRO2=50
+      IPRCO1=1
+      IPRCO2=60
+C
+      ICXQT='OFF'
+      IXQT=(-999)
+      ICCALL='OFF'
+C
+C     DEFINE LOOP COUNTER, STRING & NUMBER OF CHAR. IN STRING MAY 1993
+      LOOPCT=0
+      LOOPST=' '
+      LOOPIW=0
+ 
+C     DEFINE    CHANGE-, LOCATE-, AND BOTTOM-    STATUS SETTINGS
+      CHANGE='NO'
+      LOCATE='NO'
+      BOTTOM='NO'
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      RETURN
+      END

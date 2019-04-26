@@ -1,0 +1,112 @@
+. This is Dataplot macro    SIMPLEX1
+.
+. Purpose--Generate a mixtrue design triangle with
+.          dotted "axis lines" running through the centroid
+.          and with labels at the corners.
+.          (note--no data displayed or needed)
+.          (note--used by Eric & Marcia for FHA analysis)
+.
+. Date   --March  1997
+.
+. Input  --the following items must pre-exist:
+.          1. S1      = element 1 name (a string)
+.          2. S2      = element 2 name (a string)
+.          3. S3      = element 3 name (a string)
+.
+. Output --a triangular simplex grid
+.          with the region highlighted
+.
+. Example--(see LAGERGREN.DP)
+.          LET STRING S1 = X1
+.          LET STRING S2 = X2
+.          LET STRING S3 = X3
+.          CALL SIMPLEX1.DP
+.
+. -----START POINT-----
+.
+FEEDBACK OFF
+ERASE
+.
+. ----Step 1--Define horizontal and vertical percentage units-----
+.         for the landscape orientation image
+.
+LET PXMIN = 20
+LET PXMAX = 80
+LET PYMIN = 18
+LET PYMAX = 88
+.
+LET PXRANGE = PXMAX-PXMIN
+LET PYRANGE = PYMAX-PYMIN
+.
+. ----Step 2--Check for existence of grid incrment-----
+.             (default = no grid)
+.
+IF GRIDINC NOT EXIST
+   LET GRIDINC = 1
+END IF
+
+. ----Step 3--Generate the triangle (with no grid)-----
+.
+LOOP FOR XDUMMY = 0 GRIDINC 1
+   LET PXSTART = PXMIN + 0.5*PXRANGE*XDUMMY
+   LET PYSTART = PYMIN + PYRANGE*XDUMMY
+   LET PXSTOP = PXMAX - (PXSTART-PXMIN)
+   LET PYSTOP = PYSTART
+   DRAW PXSTART PYSTART PXSTOP PYSTOP
+END LOOP
+.
+LOOP FOR XDUMMY = 0 GRIDINC 1
+   LET PXSTART = PXMAX - PXRANGE*XDUMMY
+   LET PYSTART = PYMIN
+   LET PXSTOP = PXSTART - 0.5*PXRANGE*(1-XDUMMY)
+   LET PYSTOP = PYSTART + PYRANGE*(1-XDUMMY)
+   DRAW PXSTART PYSTART PXSTOP PYSTOP
+END LOOP
+.
+LOOP FOR XDUMMY = 0 GRIDINC 1
+   LET PXSTART = PXMIN + PXRANGE*XDUMMY
+   LET PYSTART = PYMIN
+   LET PXSTOP = PXSTART + 0.5*PXRANGE*(1-XDUMMY)
+   LET PYSTOP = PYSTART + PYRANGE*(1-XDUMMY)
+   DRAW PXSTART PYSTART PXSTOP PYSTOP
+END LOOP
+.
+. ----Step 4--Annotate the plot-----
+.
+HW 2 1
+JUSTIFICATION CENTER
+LET PXHALF = (PXMIN+PXMAX)/2
+LET PYHALF = (PYMIN+PYMAX)/2
+LET PXTHIRD = PXMIN + (PXMAX-PXMIN)/3
+LET PX2THIRD = PXMIN + 2*(PXMAX-PXMIN)/3
+LET PYTHIRD = PYMIN + (PYMAX-PYMIN)/3
+LET PXMINM = PXMIN-4
+LET PXMAXP = PXMAX+4
+LET PYMINM = PYMIN-2
+LET PYMINM2 = PYMIN-5
+LET PYMAXP = PYMAX+2
+LET PYMAXP2 = PYMAX+4
+MOVE PXHALF PYMAXP; TEXT ^S1
+MOVE PXMINM PYMINM2; TEXT ^S2
+MOVE PXMAXP PYMINM2; TEXT ^S3
+.
+. ----Step 5--Draw "axis" lines through centroid----
+.
+LET PX25 = PXMIN + .25*(PXMAX-PXMIN)
+LET PX75 = PXMIN + .75*(PXMAX-PXMIN)
+LINES DOTTED
+DRAW PXHALF PYMIN PXHALF PYMAX
+DRAW PXMIN PYMIN PX75 PYHALF
+DRAW PXMAX PYMIN PX25 PYHALF
+.
+. ----Step n--Finish----
+.
+THICKNESS DEFAULT
+MOVE 90 3
+HW 1 .5
+JUST LEFT
+TEXT SIMPLEX1.DP
+HW 2 1
+.
+LINES SOLID ALL
+FEEDBACK ON

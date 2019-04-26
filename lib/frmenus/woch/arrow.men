@@ -1,0 +1,52 @@
+This is file arc.men--Draw An Arrow
+ 
+--------------------
+ 1. Draw An Arrow
+ 2. ARROW X1 Y1 X2 Y2
+ 3.
+ 4. X Coordinate for the Start Point:
+ 4. @CE 1 0 33 50 ?
+ 5. Y Coordinate for the Start Point:
+ 5. @CE 2 0 33 50 ?
+ 6. X Coordinate for the Stop Point:
+ 6. @CE 3 0 33 50 ?
+ 7. Y Coordinate for the Stop Point:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Line Type:
+ 9. @CE 5 0 42 50 * gui-line
+10. Arrow Color:
+10. @CE 6 0 42 50 * gui-colo
+11. Line Thickness:
+11. @CE 7 0 42 50 * gui-thic
+12. Fill the Arrow Head?:
+12. @CE 9 0 42 50 * gui-ooff
+13. Width of Base of Arrow Head:
+13. @CE 10 0 42 50 *
+14. Height from Arrow Base to Tip:
+14. @CE 11 0 42 50 *
+15.
+16. Coordinate System to Use:
+17. @CE 8 1 1 50 absolute 0 to 100 screen units
+18. @CE 8 2 1 50 absolute data units of last plot
+19. @CE 8 3 1 50 relative (to first point) 0 to 100 screen units
+20. @CE 8 4 1 50 relative (to first point) data units of last plot
+21.
+22.
+23. Draw the Arrow?:
+--------------------
+GR FE
+ARROW PATTERN _5
+ARROW COLOR _6
+ARROW THICKNESS _7
+REGION FILL _9
+HW _10 _11
+LET STRING ZZZZSTR = ARROW
+@IF 8 1 LET STRING ZZZZSTR = ARROW
+@IF 8 2 LET STRING ZZZZSTR = ARROW DATA
+@IF 8 3 LET STRING ZZZZSTR = ARROW RELATIVE
+@IF 8 4 LET STRING ZZZZSTR = ARROW DATA RELATIVE
+^ZZZZSTR  _1 _2 _3 _4
+--------------------
+WEB HELP ARROW
+--------------------

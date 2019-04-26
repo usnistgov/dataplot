@@ -1,0 +1,195 @@
+. This is the dataplot macro file     dexcont.dp
+. Purpose: Generate a dex contour plot for 2-level designs
+.          this macro generates a contour plot
+.          of y versus u1 and u2
+.          at isolines as given in ycont.
+. Input:
+.    1. y      (vector)    = the response variable
+.    2. u1     (vector)    = desired horizontal axis factor (as -1 and +1)
+.    3. u2     (vector)    = desired vertical axis factor (as -1 and +1)
+.    4. ycont  (vector)    = desired contour line values
+.    5. dpcont (parameter) = number of dec. places for the corner means (optional) (def. = 3)
+.    6. qual   (string)    = a subset/except qualification
+. Output:
+.    A contour plot
+.
+. Note: The contour plot will range for -2 to 2
+.       in both u1 and u2 directions.
+. Note: The input u1 and u2 vectors usually consist
+.       of only -1 and +1 values, but may in fact
+.       have other values other than -1 and +1
+.       (e.g., center point values of (0,0)).
+.       note however that any u1 and u2 values other
+.       than -1 and +1 will    not    be used in the computation
+.       of the model coefficients
+.       and the subsequent contour lines.
+. Updated: June 1995, April 2007, 11/18/15
+.
+. Note: This macro creates several intermediate variables.
+.       Note that a common cause for this macro to fail is that the user    ******
+.       has an internal dataplot worksheet that is dimensioned
+.       (max number of variables)
+.       too small (for example, the default dimension
+.       on some computers may allow a max of 10 variables only).
+.       to adjust for this, the analyst may "manually"
+.       increase the max number of variables in the main program
+.       via the dimension statement, as in:
+.          dimension 50 variables
+. Example:
+.       dimension 50 variables
+.       skip 25
+.       read boxyield.dat y x1 x2
+.       let u1 = x1
+.       let u2 = x2
+.       let ycont = sequence 50 2 70
+.       call dexcont.dp
+.
+. -----start point-------------------
+.
+feedback save; feedback off
+printing off
+.
+let bugswcon = 0
+. let pausesw = 1
+.
+if bugswcon = 1; print " "; print "--At beginning of    dexcont.dp"
+print y u1 u2
+pause
+print ycont
+pause
+print qual
+pause
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 1: Check input arguments for existence-----
+.
+if bugswcon = 1; print "--At (dexcont.dp, step 1): check input"
+   if pausesw = 1; pause; end if
+end if
+.
+let string stmacro = dexcont.dp
+set check name output filliben
+feedback on
+let iflag = check name y u1 u2
+feedback off
+.
+limits -2 2
+if plotleft exists and plotrigh exits; xlimits plotleft plotrigh; end if
+if plotbott exists and plottop exists; ylimits plotbott plottop; end if
+.
+tic offset units screen
+tic offset 0 0
+.
+. -----Step 2: Extract only the corner points of the design
+.              (ignore center points, for example)-----
+.
+if bugswcon = 1; print "--At (dexcont.dp, step 2): extract corner points"
+   if pausesw = 1; pause; end if
+end if
+.
+let dpcontz = 3
+if dpcont exists; let dpcontz = dpcont; end if
+.
+color blue
+line color blue all
+character color blue all
+if colorall exists
+   color ^colorall
+   character color ^colorall all
+   line color ^colorall all
+end if
+line solid all
+character blank all
+character fill blank all
+x3label
+character hw 2.2 1.9 all
+.
+let fudge = 1.5      ;. these 5 lines were the original alan code
+if texth exists and textw exists
+   let texthz = fudge*texth
+   let textwz = fudge*textw
+end if
+let fudgec = 2   ;. inserted by jjf 5/2/18
+let texthcz = fudgec*1.1
+let textwcz = fudgec*0.9
+. character hw texthz textwz all
+char hw texthz textwz texthz textwz texthcz textwcz texthcz textwcz
+.
+let ncenter = number y subset u1 0 subset u2 0
+if ncenter > 1.5
+   line blank blank blank
+   character zval zval circle circle
+   character fill off off on on
+   character justification right left cece
+else
+   line blank blank
+   character zval zval circle
+   character fill off off on
+   character justification right left cece
+end if
+.
+set parameter expand digits ^dpcontz
+if ycont not exist
+   dex contour plot y u1 u2 ^qual
+else
+   dex contour plot y u1 u2 ycont ^qual
+end if
+set parameter expand digits
+.
+. -----Step 3: Check for replicated center points.
+.              if have replicated center points,
+.              then do curvature check via t test-----
+.
+if bugswcon = 1; print "--At (dexcont.dp, step 3): rep cp & curvature t test"
+   if pausesw = 1; pause; end if
+end if
+.
+.  Note: mcenter, sdcenter, teststat, ndf, and cutoff automatically
+.        saved by dex contour plot
+if ncenter > 1.5
+   . let mcenter = mean yprime subset u1prime 0 subset u2prime 0
+   . let sdcenter = sd yprime subset u1prime 0 subset u2prime 0
+   . let nedge = number yprime subset u1prime -1 +1 subset u2prime -1 +1
+   . let medge = mean yprime subset u1prime -1 +1 subset u2prime -1 +1
+   . let statnum = medge-mcenter
+   . let statden = sdcenter*sqrt((1/nedge)+(1/ncenter))
+   . let teststat = statnum/statden
+     let teststat = abs(teststat)
+   . let ndf = ncenter-1
+   . let cutoff = tppf(.975,ndf)
+   let teststat = abs(statval)
+   let ndf = statnu
+   let cutoff = cutupp95
+   .
+   let string tconclus = The center point is stat. equiv. to edge points ==> no curvature
+   if teststat > cutoff
+      let string tconclus = The center point stat. differs from edge points ==> curvature
+   end if
+   .
+   just center; hw 2 1
+   move 50 9
+   text Center: Number of Observations = ^ncenter    Average = ^mcenter    SD(data) = ^sdcenter
+   move 50 6.5
+   text Edge   : Number of Observations = ^nedge    Average = ^medge
+   move 50 4
+   text Curvature Check:  |t test stat value| = ^teststat     t^ndf cutoff = ^cutoff
+   move 50 1.5
+   text Conclusion: ^tconclus
+end if
+.
+. -----Step 99: Finish up-----
+.
+if bugswcon = 1; print "--At end of dexcont.dp"
+   if pausesw = 1; pause; end if
+end if
+.
+limits
+tic offset units screen
+tic offset 5 5
+lines solid all
+characters blank all
+character fill off
+pre-sort on
+.
+feedback restore

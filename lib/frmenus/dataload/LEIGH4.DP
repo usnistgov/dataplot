@@ -1,0 +1,8 @@
+----- <~dataload\LEIGH4.DP> Load LEIGH4.DAT
+
+. This is file    LEIGH4.DP
+
+DELETE Y X
+SKIP 25
+READ LEIGH4.DAT Y X
+

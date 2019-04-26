@@ -1,0 +1,18 @@
+This is file setbackc.men--Set Background Color
+ 
+--------------------
+ 1. Set Background Color
+ 2. BACKGROUND COLOR
+ 3.
+ 4. Background Color:
+ 4. @CE 1 0 42 50 ? gui-color
+ 5.
+ 6.
+ 7. Set Background Color?
+--------------------
+PC FE
+@IF 1 0 BACKGROUND COLOR _1
+@IF 1 0 ERASE
+--------------------
+WEB HELP BACKGROUND COLOR
+--------------------

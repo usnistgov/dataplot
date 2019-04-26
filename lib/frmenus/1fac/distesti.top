@@ -1,0 +1,14 @@
+----- <~1fac\distesti.top> Estimation: Distribution
+
+Estimation: Distribution
+
+To "estimate" grand distribution:
+   Plot grand histogram                <xemf: ~univ\histogra.men>
+
+To estimate group distributions:
+   Box plot                            <xemf: ~stat\boxplot.men>
+   Plot group skewness                 <xemf: ~1fac\skewplot.men>
+   Plot group tail length
+
+Checking assumptions                   <xemf: ~univ\4plot.men>
+

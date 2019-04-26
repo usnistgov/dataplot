@@ -1,0 +1,62 @@
+This is file ksgtl.men--Kolmogorov-Smirnov Test for Generalized Topp and Leone
+ 
+--------------------
+ 1. Kolmogorov-Smirnov Test for Generalized Topp and Leone Distribution
+ 2. GENERALIZED TOPP AND LEONE KOLMOGROV-SMIRNOV GOODNESS OF FIT Y
+ 3.
+ 4. Your data can be either ungrouped (a single
+ 5. response variable) or grouped (a bin counts
+ 6. variable and a bin mid-points variable).
+ 7. For ungrouped data, a Kolmogorov-Smirnov
+ 8. goodness-of-fit test is performed.  For grouped
+ 9. data, a chi-square goodness-of-fit test is performed.
+10.
+11. Response (or Bin Counts) Variable:
+11. @CE 1 0 42 50 ? gui-variable
+12. Optional Bin Mid-Points Variable:
+12. @CE 2 0 42 50 ? gui-variable
+13.
+14. Value of Lower Limit Parameter:
+14. @CE 3 0 42 50 ?
+15. Value of Upper Limit Parameter:
+15. @CE 4 0 42 50 ?
+16. Value of Shape Parameter (0 < alpha <= 2):
+16. @CE 5 0 42 50 ?
+17. Value of Shape Parameter (beta > 0):
+17. @CE 6 0 42 50 ?
+18.
+19. Minimum frequency for chi-square (default=5):
+19. @CE 7 0 42 50 ?
+20.
+21. Subset/Except/For Specification:
+22. @CE 8 0 1 50 *
+23.
+24.
+25. Compute Kolmogorov-Smirnov Generalized Topp and Leone Test?
+--------------------
+GR FE
+LET ALPHA = _5
+LET BETA = _6
+LET ICASE = 0
+@IF 2 0 LET ICASE = 1
+IF ICASE = 0
+   DELETE KSLOC KSSCALE
+   LET KSLOC = _3
+   LET KSSCALE = _4
+   LET STRING ZZZZCOMM = KOLMOGOROV-SMIRNOV
+   LET STRING ZZZZARGS = _1 _8
+ELSE
+   DELETE CHSLOC CHSSCALE
+   LET CHSLOC = _3
+   LET CHSSCALE = _4
+   LET MINSIZE = 5
+   LET MINSIZE = _7
+   DELETE ZZZZY ZZZZXLOW ZZZZXUP
+   LET ZZZZY ZZZZXLOW ZZZZXUP = COMBINE FREQUENCY TABLE _1 _2 _8
+   LET STRING ZZZZCOMM = CHI-SQUARE
+   LET STRING ZZZZARGS = ZZZZY ZZZZXLOW ZZZZXUP
+END OF IF
+GENERALIZED TOPP AND LEONE ^ZZZZCOMM GOODNESS OF FIT ^ZZZZARGS
+--------------------
+WEB HELP KOLMOGOROV SMIRNOV GOODNESS OF FIT
+--------------------

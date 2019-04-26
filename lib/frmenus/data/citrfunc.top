@@ -1,0 +1,22 @@
+----- <~data\citrfunc.top> Hyperbolic Trig Functions
+
+Hyperbolic Trig Functions
+
+Hyperbolic Trigonometric Functions
+
+SINH(X)           hyperbolic sine
+COSH(X)           hyperbolic cosine
+TANH(X)           hyperbolic tangent
+COTH(X)           hyperbolic cotangent
+SECH(X)           hyperbolic secant
+CSCH(X)           hyperbolic cosecant
+
+Inverse Hyperbolic Trigonometric Functions
+
+ARCSINH(X)        inverse hyperbolic sine
+ARCCOSH(X)        inverse hyperbolic cosine
+ARCTANH(X)        inverse hyperbolic tangent
+ARCCOTH(X)        inverse hyperbolic cotangent
+ARCSECH(X)        inverse hyperbolic secant
+ARCCSCH(X)        inverse hyperbolic cosecant
+

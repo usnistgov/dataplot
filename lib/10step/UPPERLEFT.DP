@@ -1,0 +1,252 @@
+. This is dataplot macro    upperleft.dp
+. Write 1, 2, 3, 4, or 5 short text strings in upper left corner of plot page
+. Date: February 2, 2009 ==> June 23, 2011
+. Input: stcorn1 = first  string to be printed out
+.        stcorn2 = second string to be printed out     (optional)
+.        stcorn3 = third  string to be printed out     (optional)
+.        stcorn4 = fourth string to be printed out     (optional)
+.        stcorn5 = fifth  string to be printed out     (optional)
+.
+.        cornh   = height of character                 (parameter) (default = 4)
+.        cornw   = width  of character                 (parameter) (default = 2)
+.        cornxp  = center horizontal point of the text (parameter) (default = 2)
+.        cornyp  = bottom vertical   point of the text (parameter) (default = 100-cornh+2)
+.
+.        corncol = text color                           (string)    (default = blue)
+.        corncol1 = text color for line 1               (string)    (default = blue)
+.        corncol2 = text color for line 2               (string)    (default = blue)
+.        corncol3 = text color for line 3               (string)    (default = blue)
+.        corncol4 = text color for line 4               (string)    (default = blue)
+.        corncol5 = text color for line 5               (string)    (default = blue)
+.
+. Macros needed: 0
+.
+. Example of calling routine: fenimore42.dp
+.       let string stcorn1 = Ylim = ^case
+.       let string stcorn2 = Src = ^jsource
+.       if case = 1; . let string corncol = blue; . end if
+.       if case = 2; . let string corncol = red; . end if
+.       if case = 3; . let string corncol = cyan; . end if
+.       if case = 4; . let string corncol = ^darkgree; . end if
+.       let cornyp = 97
+.       let cornxp = 6.5
+.       call upperleft.dp
+.       call annotate.dp
+.
+. -----start point-----
+.
+. print "at beginning of macro     upperleft.dp"
+. pause
+.
+just center
+.
+. -----Step 1: Check input arguments for existence errors:"
+.
+. if stcorn not exist
+.    if stcorn1 not exist
+.       print " "
+.       print "===================================="
+.       print "Input Error in macro   upperleft.dp:"
+.       print "   Neither stcorn nor stcorn1 exists"
+.       print "   In pause mode . . ."
+.       print "===================================="
+.       pause
+.    end if
+. end if
+.
+. -----Step 2: Define character height and width-----
+.
+. let cornhz = 6     commented out 11/15/17
+. let cornwz = 3     commented out 11/15/17
+let cornhz = 4
+let cornwz = 2
+if cornh exists; let cornhz = cornh; end if
+if cornw exists; let cornwz = cornw; end if
+.
+. hw cornhz cornwz;. bug--not working 2/27/14
+height cornhz
+width cornwz
+.
+. print cornh cornw cornhz cornwz
+. pause
+.
+. -----Step 3: Define character color-----
+.
+let string corncolz = blue
+if corncol exists; let string corncolz = ^corncol; end if
+color ^corncolz
+.
+. -----Step 4: Define string positions-----
+.
+if stcorn exists
+   . let cornxpz = 5
+   let cornxpz = 2
+   . let cornypz = 100 - cornhz
+   let cornypz = 100 - cornhz + 2
+   if cornxp exists; let cornxpz = cornxp; end if
+   if cornyp exists; let cornypz = cornyp; end if
+   move cornxpz cornypz; text ^stcorn
+. print "cornxpz = ^cornxpz     cornypz = ^cornypz     stcorn = ^stcorn"
+. pause
+end if
+.
+. -----Step 11: If existent, then write out line 1-----
+.
+. print "---In upperleft.dp, at beginning of step 11---"
+. pause
+.
+. if pagecsw1 exists
+.    if pagecsw1 = 1
+.       let pagecop1 = pagecoun + 1
+.       let string stcorn1 = ^pagecop1
+.    end if
+. end if
+.
+. print "stcorn1 = ^stcorn1"
+. pause
+if stcorn1 exists
+   let cornxpz = 5
+   if cornxp exists; let cornxpz = cornxp; end if
+   let cornypz = 100 - cornhz
+. print cornypz cornhz
+. pause
+   if cornxp exists; let cornxpz = cornxp; end if
+   if cornyp exists; let cornypz = cornyp; end if
+   if corncol exists; color ^corncol; end if
+   if corncol1 exists; color ^corncol1; end if
+   move cornxpz cornypz; text ^stcorn1
+. print "cornxpz = ^cornxpz     cornypz = ^cornypz     stcorn1 = ^stcorn1"
+. pause
+end if
+.
+. -----Step 12: If existent, then write out line 2-----
+.
+. print "---In upperleft.dp, at beginning of step 12---"
+. pause
+.
+. if pagecsw2 exists
+.    if pagecsw2 = 1
+.       let pagecop1 = pagecoun + 1
+.       let string stcorn2 = ^pagecop1
+.    end if
+. end if
+.
+if stcorn2 exists
+   let cornypz = cornypz - cornhz
+   if corncol exists; color ^corncol; end if
+   if corncol2 exists; color ^corncol2; end if
+   move cornxpz cornypz; text ^stcorn2
+end if
+.
+. -----Step 13: If existent, then write out line 3-----
+.
+. print "---In upperleft.dp, at beginning of step 13---"
+. pause
+.
+. if pagecsw3 exists
+.    if pagecsw3 = 1
+.       let pagecop3 = pagecoun + 1
+.       let string stcorn1 = ^pagecop1
+.    end if
+. end if
+.
+if stcorn3 exists
+   let cornypz = cornypz - cornhz
+   . color navy
+   if corncol exists; color ^corncol; end if
+   if corncol3 exists; color ^corncol3; end if
+   move cornxpz cornypz; text ^stcorn3
+end if
+.
+. -----Step 14: If existent, then write out line 4-----
+.
+. if pagecsw4 exists
+.    if pagecsw4 = 1
+.       let pagecop1 = pagecoun + 1
+.       let string stcorn4 = ^pagecop1
+.    end if
+. end if
+.
+if stcorn4 exists
+   let cornypz = cornypz - cornhz
+   . color navy
+   if corncol exists; color ^corncol; end if
+   if corncol4 exists; color ^corncol4; end if
+   move cornxpz cornypz; text ^stcorn4
+end if
+.
+. -----Step 15: If existent, then write out line 5-----
+.
+. if pagecsw5 exists
+.    if pagecsw5 = 1
+.       let pagecop5 = pagecoun + 1
+.       let string stcorn1 = ^pagecop1
+.    end if
+. end if
+.
+if stcorn5 exists
+   let cornypz = cornypz - cornhz
+   . color navy
+   if corncol exists; color ^corncol; end if
+   if corncol5 exists; color ^corncol5; end if
+   move cornxpz cornypz; text ^stcorn5
+end if
+.
+. -----Step 16: If existent, then write out line 6-----
+.
+. if pagecsw6 exists
+.    if pagecsw6 = 1
+.       let pagecop6 = pagecoun + 1
+.       let string stcorn1 = ^pagecop1
+.    end if
+. end if
+.
+if stcorn6 exists
+   let cornypz = cornypz - cornhz
+   . color navy
+   if corncol exists; color ^corncol; end if
+   if corncol6 exists; color ^corncol6; end if
+   move cornxpz cornypz; text ^stcorn6
+end if
+.
+. -----Step 17: If existent, then write out line 7-----
+.
+if stcorn7 exists
+   let cornypz = cornypz - cornhz
+   . color navy
+   if corncol exists; color ^corncol; end if
+   if corncol7 exists; color ^corncol7; end if
+   move cornxpz cornypz; text ^stcorn7
+end if
+.
+. -----Step 18: If existent, then write out line 8-----
+.
+if stcorn8 exists
+   let cornypz = cornypz - cornhz
+   . color navy
+   if corncol exists; color ^corncol; end if
+   if corncol8 exists; color ^corncol8; end if
+   move cornxpz cornypz; text ^stcorn8
+end if
+.
+. -----Step 19: If existent, then write out line 9-----
+.
+if stcorn9 exists
+   let cornypz = cornypz - cornhz
+   . color navy
+   if corncol exists; color ^corncol; end if
+   if corncol9 exists; color ^corncol9; end if
+   move cornxpz cornypz; text ^stcorn9
+end if
+.
+. -----Step 99: Finish up-----
+.
+. box color ^corncol
+. box 0.5 96.25 18 99.75
+.
+color blue
+hw 2 1
+just left
+.
+height 2
+width 1

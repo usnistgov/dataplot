@@ -1,0 +1,23 @@
+----- <~dex\construc.top> Construction
+
+Construction
+
+Discussion                            <~dex\consdisc.top>
+
+Experiment Design Summary Sheet       <~dex\dexsumsh.top>
+Choosing a Design                     <~dex\choosede.top>
+
+Comparative Designs                   <~dexcomp\ccomdesi.top>
+Screening Designs                     <~dexscr\cscrdesi.top>
+
+  2**k Full Factorial Designs        <~dex2k\c2kdesig.top>
+  2**(k-p) Fractional Fact. Designs  <~dex2kmp\c2kmpdes.top>
+  Taguchi Fractional Fact. designs   <~dextag\ctagdesi.top>
+  Plackett-Burman Designs            <~dexpb\cpbdesig.top>
+
+Regression Designs                    <~dexreg\cregdesi.top>
+Response Surface Designs              <~dexopt\crsdesig.top>
+Mixture Designs                       <~dexmix\cmixdesi.top>
+
+Random Run Sequences                  <~dex\randruns.top>
+

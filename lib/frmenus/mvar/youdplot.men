@@ -1,0 +1,44 @@
+This is file youdplot.men--Youden Plot
+ 
+--------------------
+ 1. Youden Plot
+ 2. Youden Y1 Y2 LAB
+ 3.
+ 4. Vertical   Axis Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. Horizontal Axis Variable:
+ 5. @CE 2 0 42 50 ? gui-vari
+ 6. Group Identifier Variable:
+ 6. @CE 3 0 42 50 ? gui-vari
+ 7.
+ 8. Line Types:
+ 9. @CE 4 0 1 50 * gui-line
+10. Character Types:
+11. @CE 5 0 1 50 * gui-char
+12. Character Fill:
+13. @CE 6 0 1 50 * gui-ooff
+14.
+15. Title:
+15. @CE 7 0 10 50 *
+16. Left Axis Label:
+16. @CE 8 0 22 50 *
+17. Bottom Axis Label:
+17. @CE 9 0 22 50 *
+18.
+19. Subset/Except/For Specification:
+20. @CE 10 0 1 50 *
+21.
+22.
+23. Generate the Youden Plot?:
+--------------------
+GR FE
+LINES _4
+CHARACTERS _5
+CHARACTER FILL _6
+TITLE _7
+Y1LABEL _8
+X1LABEL _9
+YOUDEN PLOT _1 _2 _3 _10
+--------------------
+WEB HELP YOUDEN PLOT
+--------------------

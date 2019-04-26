@@ -1,0 +1,15 @@
+----- <~dataview\1facnist.top> View 1-Factor Data: NIST
+
+View 1-Factor Data: NIST
+
+BATTADD1.DAT  Battery addditive comparison   <xcf: ~dataview\BATTADD1.DP>
+BATTADD2.DAT  Battery addditive comparison   <xcf: ~dataview\BATTADD2.DP>
+
+SCHANTZ.DAT   Consensus means                <xcf: ~dataview\SPLETT2.DP>
+SPLETT2.DAT   Charpy V-NIST notch testing    <xcf: ~dataview\SPLETT2.DP>
+VANGEL2.DAT   Tension and shear data         <xcf: ~dataview\VANGEL2.DP>
+ZARR94.DAT    Thermal Conductivity Interlab  <xcf: ~dataview\ZARR94.DP>
+
+FUNNEL5B.DAT  Simulated funnel data          <xcf: ~dataview\FUNNEL5B.DP>
+FUNNEL5C.DAT  Simulated funnel data          <xcf: ~dataview\FUNNEL5C.DP>
+

@@ -1,0 +1,5971 @@
+500.      0           0. Initial Menu
+1000.     1               1. Univariate Analysis
+1028.     1.1                   1. General Discussion
+1037.     1.2                   2. Computing Summary/Descriptive Statistics
+1051.     1.2.1                       1. Location Estimation
+1078.     1.2.2                       2. Variation (Scale) Estimation
+1106.     1.2.3                       3. Skewness Estimation
+1133.     1.2.4                       4. Tail Length Estimation
+1156.     1.2.5                       5. Autocorrelation estimation
+1182.     1.3                   3. Determining General Distributional Characteri
+1201.     1.3.1                       1. Frequency Tabulation
+490.      1.3.2                       2. Histograms and Cumulative Histograms
+490.      1.3.3                       3. Stem and Leaf Diagrams
+490.      1.3.4                       4. Frequency Plots and Cumulative Frequenc
+490.      1.3.5                       5. Percent Point Plots
+490.      1.3.6                       6. Pie Charts
+490.      1.4                   4. Selecting a "Good-Fitting" Distribution
+490.      1.4.1                       1. Probability Plots
+490.      1.4.2                       2. PPCC Plots
+490.      1.4.3                       3. Maximum Likelihood Estimation
+490.      1.5                   5. Estimating the Parameters of the Distribution
+490.      1.5.1                       1. Maximum Likelihood Estimation
+490.      1.5.2                       2. Robust Estimates
+490.      1.6                   6. Assessing the Goodness of Fit of a Distributi
+490.      1.6.1                       1. Superimposing Probability Density Funct
+490.      1.6.2                       2. Superimposing Root Density Function and
+490.      1.6.3                       3. Probability Plot
+490.      1.6.4                       4. Chi-Squared Test
+490.      1.6.5                       5. Kolmogorov-Smirnoff Test
+490.      1.7                   7. Testing Underlying Assumptions
+490.      1.7.1                       1. 4-Plot Analysis
+490.      1.8                   8. Testing for Randomness
+490.      1.8.1                       1. Lag Plot
+490.      1.8.2                       2. Runs Analysis
+490.      1.8.3                       3. Distribution-Free Tests
+490.      1.8.4                       4. Autocorrelation Plot
+490.      1.8.5                       5. Spectral Plot
+490.      1.9                   9. Testing for Fixed Location (No Shifts in Loca
+490.      1.9.1                       1. t Test
+490.      1.9.2                       2. Distribution-Free Tests
+490.      1.10                 10. Testing for Fixed Variation (Homoscedasticity
+490.      1.10.1                      1. Homoscedasticity Plot
+490.      1.11                 11. Transforming to Homoscedasticity
+490.      1.11.1                      1. Box-Cox Homoscedasticity Plot
+490.      1.11.2                      2. Chi-squared Tests
+490.      1.12                 12. Testing for Fixed Distribution
+490.      1.12.1                      1. Bihistogram
+490.      1.12.2                      2. 4-Plot Analysis
+490.      1.12.3                      3. Distribution-Free Tests
+490.      1.12.4                      4. Homoscedasticity Plot
+490.      1.13                 13. Testing for Symmetry
+490.      1.13.1                      1. Symmetry Plot
+490.      1.14                 14. Transforming to Symmetry
+490.      1.14.1                      1. Box-Cox Symmetry Plot
+490.      1.15                 15. Testing for Normality
+490.      1.15.1                      1. Normal Probability Plot
+490.      1.15.2                      2. Tukey PPCC Plot
+490.      1.15.3                      3. t PPCC Plot
+490.      1.16                 16. Transforming to Normality
+490.      1.16.1                      1. Box-Cox Normality Plot
+490.      1.17                 17. Testing for Normal Outliers
+490.      1.18                 18. Computing Confidence Limits for Distributiona
+490.      1.19                 19. Hypothesis Testing on Distributional Paramete
+1500.     2               2. Time Series Analysis (1 Variable)
+490.      2.1                   1. General discussion
+490.      2.2                   2. Checking for Time-Domain Structure
+490.      2.2.1                       1. Run Sequence Plot
+490.      2.2.2                       2. Lag Plot
+490.      2.2.3                       3. Autocorrelation Plot
+490.      2.2.4                       4. Partial-Autocorrelation Plot
+490.      2.2.5                       5. Complex Demodulation Plots
+490.      2.3                   3. Checking for Frequency-Domain Structure
+490.      2.3.1                       1. Spectral Plot
+490.      2.3.2                       2. Periodogram
+490.      2.4                   4. Checking for Time and Frequency Domain Struct
+490.      2.4.1                       1. 4-Plot Analysis
+490.      2.5                   5. Testing White Noise (Randomness)
+490.      2.5.1                       1. Lag Plot
+490.      2.5.2                       2. Runs Analysis
+490.      2.5.3                       3. Distribution-Free Tests
+490.      2.5.4                       4. Autocorrelation Plot
+490.      2.5.5                       5. Spectral Plot
+490.      2.5.6                       6. 4-Plot Analysis
+490.      2.6                   6. Checking for Trends
+490.      2.6.1                       1. Run Sequence Plot
+490.      2.6.2                       2. Correlation With Time
+490.      2.6.3                       3. Linear Fit Over Time
+490.      2.7                   7. Fitting Box-Jenkins Models
+490.      2.7.1                       1. Lag Plot
+490.      2.7.2                       2. Autocorrelation Plot
+490.      2.7.3                       3. Partial Autocorrelation Plot
+490.      2.8                   8. Smoothing
+490.      2.8.1                       1. Moving Average Smoothing
+490.      2.8.2                       2. Least Squares Smoothing
+490.      2.8.3                       3. Median Smoothing
+490.      2.8.4                       4. Robust Smoothing
+490.      2.8.5                       5. Exponential Smoothing
+490.      2.8.6                       6. Assessing the Goodness of the Smoothing
+490.      2.8.6.1                           1. Residual Standard Deviation
+490.      2.8.6.2                           2. Superimposing Raw Data and Fitted
+490.      2.8.6.3                           3. Scatter Plots of Residuals
+490.      2.8.6.4                           4. Normal Probability Plot of Residu
+490.      2.8.6.5                           5. 5-Plot of Residuals
+490.      2.9                   9. Filtering
+490.      2.9.1                       1. Low-Pass Filters
+490.      2.9.2                       2. High-Pass Filters
+490.      2.9.3                       3. Assessing the Goodness of the Filtering
+1700.     3               3. Time Series Analysis--2 Variables
+490.      3.1                   1. General Discussion
+490.      3.2                   2. Checking for Time-Domain Structure
+490.      3.2.1                       1. Scatter Plot
+490.      3.2.2                       2. Multi-Trace Plots
+490.      3.2.3                       3. Cross-Spectral Plot
+490.      3.2.4                       4. Bihistogram
+490.      3.3                   3. Checking for Frequency-Domain Structure
+490.      3.3.1                       1. Cross-Spectrum
+490.      3.3.2                       2. Coherency Spectrum
+490.      3.3.3                       3. Quadrature Spectrum
+490.      3.3.4                       4. Co-Spectrum
+490.      3.3.5                       5. Gain Spectrum
+490.      3.3.6                       6. Argand Spectrum
+490.      3.4                   4. Checking for Time and Frequency Domain Struct
+490.      3.4.1                       1. 4-Plot Analysis
+1800.     4               4. Correlation Analysis
+490.      4.1                   1. General Discussion
+490.      4.2                   2. Multi-Scatter Plots
+490.      4.3                   3. Multi-ANOP Plots
+490.      4.4                   4. Multi-Box Plots
+490.      4.5                   5. Cross-Correlation Tabulation
+490.      4.6                   6. Transforming Variables
+490.      4.7                   7. Distribution-free Tests
+1900.     5               5. Fitting (1 Independent Variable)
+1917.     5.1                   1. General discussion
+1954.     5.2                   2. Selecting a Model
+1979.     5.2.1                       1. Plotting the Data
+2009.     5.2.2                       2. Generate Reference Data Plots
+2562.     5.2.2.1                           1. Shape 1--Quadratic
+2592.     5.2.2.2                           2. Shape 2--Monotonic up
+2622.     5.2.2.3                           3. Shape 3--Monotonic up
+2652.     5.2.2.4                           4. Shape 4--S-Shaped
+2682.     5.2.2.5                           5. Shape 5--Quadratic
+2712.     5.2.2.6                           6. Shape 6--Linear
+2742.     5.2.2.7                           7. Shape 7--Square Root
+2772.     5.2.2.8                           8. Shape 8--Asymptote
+2802.     5.2.2.9                           9. Shape 9--Cubic
+2832.     5.2.2.10                         10. Shape 10--Monotonic
+2862.     5.2.2.11                         11. Shape 11--Logarithm
+2892.     5.2.2.12                         12. Shape 12--Asymptote
+2922.     5.2.2.13                         13. Shape 13--Skewed
+2952.     5.2.2.14                         14. Shape 14--Skewed
+2982.     5.2.2.15                         15. Shape 15--Quadratic
+3012.     5.2.2.16                         16. Shape 16--Skewed
+3042.     5.2.2.17                         17. Shape 17--Bell-Shaped
+3072.     5.2.2.18                         18. Shape 18--Hyberbolic
+3102.     5.2.2.19                         19. Shape 19--Neg. Exponential
+3132.     5.2.2.20                         20. Shape 20--Z-Shaped
+3162.     5.3                   3. Fitting a Model
+3174.     5.3.1                       1. Fitting Linear Models
+490.      5.3.2                       2. Fitting Polynomial Models
+490.      5.3.3                       3. Fitting Non-Linear Models
+490.      5.3.4                       4. Fitting Rational Functions
+3218.     5.3.5                       5. Fitting Splines
+3254.     5.4                   4. Assessing the Goodness of Fit of the Model
+490.      5.4.1                       1. Residual Standard Deviation
+490.      5.4.2                       2. Lack of Fit F Tests
+3297.     5.4.3                       3. Superimposing Raw Data and Fitted Curve
+3330.     5.4.4                       4. 4-Plot of Residuals
+3366.     5.4.5                       5. Scatter Plots of Residuals
+3399.     5.4.5.1                           1. Reference Scatter Plots of Residu
+490.      5.4.5.1.1                               1  Residual Scatter Plot--Idea
+490.      5.4.5.1.2                               2  Residual Scatter Plot--Wedg
+490.      5.4.5.1.3                               3  Residual Scatter Plot--Wedg
+490.      5.4.5.1.4                               4  Residual Scatter Plot--Wedg
+490.      5.4.5.1.5                               5  Residual Scatter Plot--Line
+490.      5.4.5.1.6                               6  Residual Scatter Plot--Quad
+490.      5.4.5.1.7                               7  Residual Scatter Plot--Quad
+3670.     5.4.5.1.8                               8  Residual Scatter Plot--Spli
+490.      5.4.6                       6. Lag Plot of Residuals
+490.      5.4.7                       7. Histograms of Residuals
+490.      5.4.8                       8. Normal Probability Plot of Residuals
+490.      5.5                   5. Improving the Model
+490.      5.5.1                       1. Transforming to Simplify the Model
+490.      5.5.2                       2. Transforming to Achieve Homogeneity
+490.      5.5.3                       3. Transforming to Achieve Normality
+490.      5.5.4                       4. Adding New Variables
+490.      5.5.5                       5. Changing the Form of the Model
+490.      5.6                   6. Fitting With Weights
+490.      5.7                   7. Fitting With Constraints
+490.      5.7                   8. Fitting With Other Criteria (e.g., L1 Fitting
+4000.     6               6. Fitting (2 or More Independent Variable)
+4018.     6.1                   1. General discussion
+490.      6.2                   2. Selecting Variables for To Be Included in the
+490.      6.2.1                       1. Multi-Run Sequence Plots
+490.      6.2.2                       2. Multi-Histograms
+490.      6.2.3                       3. Multi-Scatter Plots
+490.      6.2.4                       4. Multi-ANOP Plots
+490.      6.2.5                       5. Cross-Correlation Tabulation
+490.      6.2.6                       6. Box Plots
+490.      6.2.7                       7. Cp Plot
+490.      6.3                   3. Selecting a Model
+490.      6.3.1                       1. Plotting the Data
+490.      6.3.2                       2. Making Use of Reference Curves
+490.      6.4                   4. Fitting a Model
+490.      6.4.1                       1. Fitting Multi-Linear Models
+490.      6.4.2                       2. Fitting Non-Linear Models
+490.      6.5                   5. Assessing the Goodness of Fit of the Model
+490.      6.5.1                       1. Residual Standard Deviation
+490.      6.5.2                       2. Lack of Fit F Tests
+490.      6.5.3                       3. Superimposing Raw Data and Fitted Curve
+490.      6.5.4                       4. Scatter Plots of Residuals
+490.      6.5.5                       5. Normal Probability Plot of Residuals
+490.      6.5.6                       6. 4-Plot of Residuals
+490.      6.6                   6. Improving the Model
+490.      6.6.1                       1. Transforming to Simplify the Model
+490.      6.6.2                       2. Transforming to Achieve Homogeneity
+490.      6.6.3                       3. Transforming to Achieve Normality
+490.      6.6.4                       4. Adding New Variables
+490.      6.6.5                       5. Changing the Form of the Model
+490.      6.7                   7. Fitting With Weights
+490.      6.8                   8. Fitting With Constraints
+490.      6.8                   8. Fitting With Other Criteria (e.g., L1 Fitting
+4200.     7               7. ANOVA Modeling
+490.      7.1                   1. General discussion
+490.      7.2                   2. Selecting Variables for To Be Included in the
+490.      7.2.1                       1. Multi-Run Sequence Plots
+490.      7.2.2                       2. Multi-Histograms
+490.      7.2.3                       3. Multi-Scatter Plots
+490.      7.2.4                       4. Multi-ANOP Plots
+490.      7.3                   3. Examining 1-Factor Models
+490.      7.3.1                       1. 1-Way ANOVA
+490.      7.3.2                       2. 1-Way GANOVA
+490.      7.3.3                       3. Scatter Plots
+490.      7.3.4                       4. Box Plot
+490.      7.3.5                       5. ANOP Line Plot
+490.      7.3.6                       6. ANOP Character Plot
+490.      7.3.7                       7. I Plot
+490.      7.3.8                       8. Distribution-free Tests
+490.      7.3.9                       9. Correlation
+490.      7.3.10                     10. Categorical Data Analauysis
+490.      7.3.11                     11. Cross-Corrleation
+490.      7.3.12                     12. Discrete Contour Plot
+490.      7.3.13                     13. Frequency Tabulation
+490.      7.3.14                     14. Cross-Tabulation
+490.      7.3.15                     15. Chi-squared
+490.      7.4                   4. Examining 2-Factor Models
+490.      7.4.1                       1. 2-Way ANOVA
+490.      7.4.2                       2. 2-Way GANOVA
+490.      7.4.3                       3. Median Polish
+490.      7.4.4                       4. Multi-Trace Plots
+490.      7.4.5                       5. 3-D Plot
+490.      7.4.6                       6. Spike Plots
+490.      7.5                   5. Examining 3-Factor Models
+490.      7.5.1                       1. 3-Way ANOVA
+490.      7.5.2                       2. 3-Way GANOVA
+490.      7.5.3                       3. Multi-Cell Plots
+490.      7.6                   6. Examining 4-factor Models
+490.      7.6.1                       1. 4-Way ANOVA
+490.      7.6.2                       2. Multi-Plot 2-Way GANOVA
+490.      7.6.3                       3. Multi-Plot 3-Way GANOVA
+490.      7.7                   7. Examining 5-Factor Models
+490.      7.7.1                       1. 5-Way ANOVA
+490.      7.7.2                       2. Multi-Plot 3-Way GANOVA
+490.      7.8                   8. Examining 1-Factor Models With Only 2 Treatme
+490.      7.8.1                       1. 1-Way ANOVA
+490.      7.8.2                       2. t Test
+490.      7.8.3                       3. Bihistogram
+490.      7.9                   9. Examining 2**k Models
+490.      7.9.1                       1. Square Plots, Cube Plots, etc.
+490.      7.10                 10. Assessing the Goodness of Fit of the Model
+490.      7.10.1                      1. Residual Standard Deviation
+490.      7.10.2                      2. Lack of Fit F Tests
+490.      7.10.3                      3. GANOVA, Parallelism, and Non-Additivity
+490.      7.10.4                      4. Superimposing Raw Data and Fitted Curve
+490.      7.10.5                      5. Scatter Plots of Residuals
+490.      7.10.6                      6. Normal Probability Plot of Residuals
+490.      7.10.7                      7. 4-Plot of Residuals
+490.      7.11                 11. Improving the Model
+490.      7.11.1                      1. Residual Standard Deviations For Sub-Mo
+490.      7.11.2                      2. F Tests For Sub-Models
+490.      7.11.3                      3. Transforming to Simplify the Model
+490.      7.11.4                      4. Transforming to Achieve Additivity
+490.      7.11.5                      5. Transforming to Achieve Homogeneity
+490.      7.11.6                      6. Transforming to Achieve Normality
+490.      7.11.7                      7. Omitting Variables From the Model
+490.      7.11.7.1                          1. F Tests for Sub-Models
+490.      7.11.8                      8. Selecting Additional Variables For the
+490.      7.11.8.1                          1. Scatter Plots of Residuals on New
+490.      7.11.8.2                          2. Box Plots of Residuals on New Var
+490.      7.11.9                      9. Changing the Form of the Model
+4600.     8               8. Multivariate Analysis
+490.      8.1                   1. General Discussion
+490.      8.2                   2. Cluster Analysis
+490.      8.3                   3. Discriminant Analysis
+490.      8.4                   4. Principal Component Analysis
+490.      8.5                   5. Canonical Analysis
+490.      8.6                   6. Testing Multivariate Normality--Q-Q Plot
+490.      8.5
+4700.     9               9. Probability Analysis
+490.      9.1                   1. General Discussion
+490.      9.2                   2. Generating Random Numbers/Simulation/Monte Ca
+490.      9.3                   3. Computing Percent Points
+490.      9.4                   4. Computing Probability Density Functions
+490.      9.5                   5. Computing Cumulative Distribution Functions
+490.      9.6                   6. Plotting Percent Points
+490.      9.7                   7. Plotting Probability Density Functions
+490.      9.8                   8. Plotting Cumulative Distribution Functions
+490.      9.9                   9. Superimposing Probability Density Funtions on
+4800.     10             10. Quality Control
+490.      10.1                  1. General Discussion
+490.      10.2                  2. Testing for Trends
+490.      10.2.1                      1. Run Sequence Plot
+490.      10.2.2                      2. Mean Control Chart
+490.      10.3                  3. Testing for Shifts in Location
+490.      10.3.1                      1. Run Sequence Plot
+490.      10.3.2                      2. Mean Control Chart
+490.      10.4                  4. Testing for Shifts in Variation
+490.      10.4.1                      1. Range Control Chart
+490.      10.4.2                      2. Standard Deviation Control Chart
+490.      10.5                  5. Testing for Outliers
+490.      10.6                  6. Interlaboratory Testing
+490.      10.6.1                      1. Youden Plots
+4900.     11             11. Distribution-Free Analysis
+490.      11.1                  1. General Discussion
+490.      11.2                  2. Testing for Randomness
+490.      11.2.1                      1. Runs Analysis
+490.      11.2.2                      2. Sign Test
+490.      11.2.3                      3. Median Test
+490.      11.3                  2. Testing for Fixed Location (No Shifts)
+490.      11.3.1                      1. Sign Test
+490.      11.4                  3. Testing for Fixed Variation (Homoscedasticity
+490.      11.4.1                      1. Sign Test on First Differences
+490.      11.5                  4. Testing for Goodness of Fit of a Distribution
+490.      11.5.1                      1. Kolmogorov-Smirnoff Test
+490.      11.6                  5. Testing for Correlation
+490.      11.6.1                      1. Rank Correlation Coefficient
+490.      11.7                  6. ANOVA Modeling
+490.      11.7.1                      1. ANOVA On Ranks
+490.      11.7.2                      2. Mann-Whitney Tests
+5000.     12             12. Robust Analysis
+490.      12.1                  1. General Discussion
+490.      12.2                  2. Univariate Estimation
+490.      12.2.1                      1. Robust Location Estimation
+490.      12.2.2                      2. Robust Scale Estimation
+490.      12.3                  2. Smoothing
+490.      12.3.1                      1. Median Smoothing
+490.      12.3.2                      2. Robust Smoothing
+490.      12.4                  4. Fitting
+490.      12.4.1                      1. L1 Fitting
+490.      12.5                  5. ANOVA Modeling
+490.      12.5.1                      1. ANOVA On Ranks
+490.      12.5.2                      2. Median Polish
+5100.     13             13. Exploratory Data Analysis
+490.      13.1                  1. General Discussion
+490.      13.2                  2. Run Sequence Plots
+490.      13.3                  3. Lag Plots
+490.      13.4                  4. Stem and Leaf Diagrams
+490.      13.5                  5. Histograms
+490.      13.6                  6. Normal Probability Plots
+490.      13.7                  7. Scatter Plots
+490.      13.8                  8. Box Plots
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------
+
+No menu item available.
+Please enter -1 to revert
+to the previous menu.
+
+
+
+
+
+----------  *INITIAL MENU FOR DATA ANALYSIS*  ------------
+
+0--DATA ANALYSIS
+
+                    DATA ANALYSIS MENU
+
+Type of data analysis problem = ?
+
+   1. Univariate Analysis (= the Analysis of 1 Variable)
+   2. Time Series Analysis (1 Variable)
+   3. Time Series Analysis (2 Variable)
+   4. Correlation Analysis
+   5. Fitting (1 Independent Variable)
+   6. Fitting (2 or More Independent Variables)
+   7. ANOVA Modeling
+   8. Multivariate Analysis
+   9. Probability Analysis
+  10. Quality Control
+  11. Distribution-Free Analysis
+  12. Robust Analysis
+  13. Exploratory Data Analysis
+
+To select a menu item, enter 1 through 13.
+
+To regenerate the same menu at any time, enter 0;
+to regenerate previous menus, enter -1, -2, etc.
+
+Note that all menus within the system are uniquely
+numbered.  If you do not wish to follow the
+natural progression of menus as presented, you may
+at any time jump to any other menu in the system.
+Do this by entering EXPERT followed by the
+explicit menu identifier number, as in
+EXPERT 1.3.1    and    EXPERT 5.2.2.11     .
+
+----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------  *UNIVARIATE ANALYSIS*  -----------------------
+
+1--UNIVARIATE ANALYSIS
+
+The sub-categories are--
+
+   1. General Discussion
+   2. Computing Summary/Descriptive Statistics
+   3. Determining General Distributional Characteristics
+   4. Selecting a "Good-Fitting" Distribution
+   5. Estimating the Parameters of the Distribution
+   6. Assessing the Goodness of Fit of a Distribution
+   7. Testing Underlying Assumptions
+   8. Testing for Randomness
+   9. Testing for Fixed Location (No Shifts in Location)
+  10. Testing for Fixed Variation (Homoscedasticity)
+  11. Transforming to Homoscedasticity
+  12. Testing for Fixed Distribution
+  13. Testing for Symmetry
+  14. Transforming to Symmetry
+  15. Testing for Normality
+  16. Transforming to Normality
+  17. Testing for Normal Outliers
+  18. Computing Confidence Limits for Distributional Parameters
+  19. Hypothesis Testing on Distributional Parameters
+
+To select a menu item, enter 1 to 19.
+
+----------------------------------------------------------
+
+1.1--GENERAL DISCUSSION
+
+
+
+
+
+
+----------------------------------------------------------
+
+1.2--COMPUTING SUMMARY/DESCRIPTIVE STATISTICS
+
+Type of estimation = ?
+
+   1. Location Estimation
+   2. Variation (Scale) Estimation
+   3. Skewness Estimation
+   4. Tail Length Estimation
+   5. Autocorrelation estimation
+
+To select a menu item, enter 1 through 5.
+
+----------------------------------------------------------
+
+1.2.1--LOCATION ESTIMATION
+
+To compute individual statistics, use the LET
+command, as in
+
+   LET A = MEAN Y
+   LET B = MEDIAN Y
+   LET C = MIDRANGE Y
+   LET D = MIDMEAN Y
+
+To compute a battery of location statistics
+(as well as statistics for scale, skewness,
+tail length, and autocorrelation), use the
+SUMMARY command, as in
+
+   SUMMARY Y
+
+Note that the choice of the optimal location
+estimator is heavily dependent on the actual
+underlying distribution for the data.  For
+guidance on how to check for the underlying
+distribution, revert to the second-previous
+menu (enter -2), and select the menu items
+dealing with distributional estimating/checking.
+
+----------------------------------------------------------
+
+1.2.2--VARIATION (SCALE) ESTIMATION
+
+To compute individual statistics, use the LET
+command, as in
+
+   LET A = RANGE Y
+   LET B = VARIANCE Y
+   LET C = STANDARD DEVIATION Y
+   LET D = RELATIVE STANDARD DEVIATION
+   LET E = STANDARD DEVIATION OF THE MEAN Y
+
+To compute a battery of scale statistics
+(as well as statistics for location, skewness,
+tail length, and autocorrelation), use the
+SUMMARY command, as in
+
+   SUMMARY Y
+
+Note that the choice of the optimal scale
+estimator is heavily dependent on the actual
+underlying distribution for the data.  For
+guidance on how to check for the underlying
+distribution, revert to the second-previous
+menu (enter -2), and select the menu items
+dealing with distributional estimating/checking.
+
+----------------------------------------------------------
+
+1.2.3--SKEWNESS ESTIMATION
+
+To compute individual statistics, use the LET
+command, as in
+
+   LET A = THIRD CENTRAL MOMENT Y
+   LET B = SKEWNESS Y
+
+To compute a battery of location, scale,
+skewness, tail length, and autocorrelation
+statistics, use the SUMMARY command, as in
+
+   SUMMARY Y
+
+For guidance on how to test for symmetry,
+and how to transform to symmetry, revert
+to the second previous menu (enter -2).
+
+The skewness statistics give information
+about only one aspect of the underlying
+distribution of the data.  For guidance on
+how to check for other aspects of the
+distribution, see also the second
+previous menu.
+
+----------------------------------------------------------
+
+1.2.4--TAIL LENGTH ESTIMATION
+
+To compute individual statistics, use the LET
+command, as in
+
+   LET A = FOURTH CENTRAL MOMENT Y
+   LET B = KURTOSIS Y
+
+To compute a battery of location, scale,
+skewness, tail length, and autocorrelation
+statistics, use the SUMMARY command, as in
+
+   SUMMARY Y
+
+The tail length statistics give information
+about an important aspect of the underlying
+distribution of the data.  For guidance on
+how to further check on what the underlying
+distribution is, see the second previous
+menu.
+
+----------------------------------------------------------
+
+1.2.5--AUTOCORRELATION ESTIMATION
+
+To compute individual statistics, use the LET
+command, as in
+
+   LET A = AUTOCORRELATION Y
+   LET B = AUTOCOVARIANCE Y
+
+To compute a battery of location, scale,
+skewness, tail length, and autocorrelation
+statistics, use the SUMMARY command, as in
+
+   SUMMARY Y
+
+The autocorrelation statistics give information
+about an important aspect (randomness) of the
+data set.  For guidance on how to check further
+on the the randomness assumption, see the
+second previous menu.  If the randomness
+assumption does fail, then a time series analysis
+of the data may be appropriate.  For guidance
+on how to carry out such a time series analysis,
+see the second previous menu.
+
+----------------------------------------------------------
+
+1.3--DETERMINING GENERAL DISTRIBUTIONAL CHARACTERISTICS
+
+There are several data analysis techniques
+which are available for giving the analyst
+a "feel" for the general distributional
+characteristics of the data.  Which technique
+do you wish to use?
+
+   1. Frequency Tabulation
+   2. Histograms and Cumulative Histograms
+   3. Stem and Leaf Diagrams
+   4. Frequency Plots and Cumulative Frequency Plots
+   5. Percent Point Plots
+   6. Pie Charts
+
+To select a menu item, enter 1 through 6.
+
+----------------------------------------------------------
+
+1.3.1--FREQUENCY TABULATION
+
+To generate a frequency tabulation of the
+data in the variable Y, use the LET command,
+as in
+
+   LET F = FREQUENCY Y
+
+The default class width will be set to .3*s
+where s is the sample standard deviation.
+The first class will have lower boundary
+xbar-6*s where xbar is the sample mean.
+The last class will have upper boundary
+xbar+6*s.  The resulting frequencies (counts)
+will be automatically stored in the
+variable F.
+
+If you wish to override the default classes,
+then define a variable (M, say) which contains
+the desired midpoints.  This is most easily
+done via the SERIAL READ command, as in
+
+   SERIAL READ M
+   .1 .2 .3 .4 .5 .6 .7
+   END OF DATA
+
+which would define the desired class midpoints
+as .1, .2, through .7.  If the midpoints are
+equi-spaced, then the class width will also be;
+if the midpoints are not equi-spaced, then the
+class widths will be variable.
+After the midpoint variable is defined,
+then use the LET command again, as in
+
+   LET F = FREQUENCY Y M
+
+To get a frequency tabulation for the
+distinct values in Y, then enter
+
+   LET M = DISTINCT Y
+   LET F = FREQUENCY Y M
+
+For guidance on how to carry out other
+techniques for gaining general information
+about the distribution of the data, see
+the second previous menu.
+
+----------------------------------------------------------
+
+1.3.2--HISTOGRAMS AND CUMULATIVE HISTOGRAMS
+
+----------------------------------------------------------
+
+1.3.3--STEM AND LEAF DIAGRAMS
+
+----------------------------------------------------------
+
+1.3.4--FREQUENCY PLOTS AND CUMULATIVE FREQUENC
+
+----------------------------------------------------------
+
+1.3.5--PERCENT POINT PLOTS
+
+----------------------------------------------------------
+
+1.3.6--PIE CHARTS
+
+----------------------------------------------------------
+
+1.4--SELECTING A "GOOD-FITTING" DISTRIBUTION
+
+----------------------------------------------------------
+
+1.4.1--PROBABILITY PLOTS
+
+----------------------------------------------------------
+
+1.4.2--PPCC PLOTS
+
+----------------------------------------------------------
+
+1.4.3--MAXIMUM LIKELIHOOD ESTIMATION
+
+----------------------------------------------------------
+
+1.5--ESTIMATING THE PARAMETERS OF THE DISTRIBUTION
+
+----------------------------------------------------------
+
+1.5.1--MAXIMUM LIKELIHOOD ESTIMATION
+
+----------------------------------------------------------
+
+1.5.2--ROBUST ESTIMATES
+
+----------------------------------------------------------
+
+1.6--ASSESSING THE GOODNESS OF FIT OF A DISTRIBUTION
+
+----------------------------------------------------------
+
+1.6.1--SUPERIMPOSING PROBABILITY DENSITY FUNCTIONS
+
+----------------------------------------------------------
+
+1.6.2--SUPERIMPOSING ROOT DENSITY FUNCTION AND
+
+----------------------------------------------------------
+
+1.6.3--PROBABILITY PLOT
+
+----------------------------------------------------------
+
+1.6.4--CHI-SQUARED TEST
+
+----------------------------------------------------------
+
+1.6.5--KOLMOGOROV-SMIRNOFF TEST
+
+----------------------------------------------------------
+
+1.7--TESTING UNDERLYING ASSUMPTIONS
+
+----------------------------------------------------------
+
+1.7.1--4-PLOT ANALYSIS
+
+----------------------------------------------------------
+
+1.8--TESTING FOR RANDOMNESS
+
+----------------------------------------------------------
+
+1.8.1--LAG PLOT
+
+----------------------------------------------------------
+
+1.8.2--RUNS ANALYSIS
+
+----------------------------------------------------------
+
+1.8.3--DISTRIBUTION-FREE TESTS
+
+----------------------------------------------------------
+
+1.8.4--AUTOCORRELATION PLOT
+
+----------------------------------------------------------
+
+1.8.5--SPECTRAL PLOT
+
+----------------------------------------------------------
+
+1.9--TESTING FOR FIXED LOCATION (NO SHIFTS IN LOCATION
+
+----------------------------------------------------------
+
+1.9.1--T TEST
+
+----------------------------------------------------------
+
+1.9.2--DISTRIBUTION-FREE TESTS
+
+----------------------------------------------------------
+
+1.10--TESTING FOR FIXED VARIATION (HOMOSCEDASTICITY)
+
+----------------------------------------------------------
+
+1.10.1--HOMOSCEDASTICITY PLOT
+
+----------------------------------------------------------
+
+1.11--TRANSFORMING TO HOMOSCEDASTICITY
+
+----------------------------------------------------------
+
+1.11.1--BOX-COX HOMOSCEDASTICITY PLOT
+
+----------------------------------------------------------
+
+1.11.2--CHI-SQUARED TESTS
+
+----------------------------------------------------------
+
+1.12--TESTING FOR FIXED DISTRIBUTION
+
+----------------------------------------------------------
+
+1.12.1--BIHISTOGRAM
+
+----------------------------------------------------------
+
+1.12.2--4-PLOT ANALYSIS
+
+----------------------------------------------------------
+
+1.12.3--DISTRIBUTION-FREE TESTS
+
+----------------------------------------------------------
+
+1.12.4--HOMOSCEDASTICITY PLOT
+
+----------------------------------------------------------
+
+1.13--TESTING FOR SYMMETRY
+
+----------------------------------------------------------
+
+1.13.1--SYMMETRY PLOT
+
+----------------------------------------------------------
+
+1.14--TRANSFORMING TO SYMMETRY
+
+----------------------------------------------------------
+
+1.14.1--BOX-COX SYMMETRY PLOT
+
+----------------------------------------------------------
+
+1.15--TESTING FOR NORMALITY
+
+----------------------------------------------------------
+
+1.15.1--NORMAL PROBABILITY PLOT
+
+----------------------------------------------------------
+
+1.15.2--TUKEY PPCC PLOT
+
+----------------------------------------------------------
+
+1.15.3--T PPCC PLOT
+
+----------------------------------------------------------
+
+1.16--TRANSFORMING TO NORMALITY
+
+----------------------------------------------------------
+
+1.16.1--BOX-COX NORMALITY PLOT
+
+----------------------------------------------------------
+
+1.17--TESTING FOR NORMAL OUTLIERS
+
+----------------------------------------------------------
+
+1.18--COMPUTING CONFIDENCE LIMITS FOR DISTRIBUTIONA
+
+----------------------------------------------------------
+
+1.19--HYPOTHESIS TESTING ON DISTRIBUTIONAL PARAMETERS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------  *TIME SERIES ANALYSIS (1 VARIABLE)*  ---------
+
+2--TIME SERIES ANALYSIS (1 VARIABLE)
+
+The sub-categories are--
+
+   1. General Discussion
+   2. Checking for Time-Domain Structure
+   3. Checking for Frequency-Domain Structure
+   4. Checking for Time and Frequency Domain Struct
+   5. Testing White Noise (Randomness)
+   6. Checking for Trends
+   7. Fitting Box-Jenkins Models
+   8. Smoothing
+   9. Filtering
+
+To select a menu item, enter 1 to 9.
+
+----------------------------------------------------------
+
+2.1--GENERAL DISCUSSION
+
+----------------------------------------------------------
+
+2.2--CHECKING FOR TIME-DOMAIN STRUCTURE
+
+----------------------------------------------------------
+
+2.2.1--RUN SEQUENCE PLOT
+
+----------------------------------------------------------
+
+2.2.2--LAG PLOT
+
+----------------------------------------------------------
+
+2.2.3--AUTOCORRELATION PLOT
+
+----------------------------------------------------------
+
+2.2.4--PARTIAL-AUTOCORRELATION PLOT
+
+----------------------------------------------------------
+
+2.2.5--COMPLEX DEMODULATION PLOTS
+
+----------------------------------------------------------
+
+2.3--CHECKING FOR FREQUENCY-DOMAIN STRUCTURE
+
+----------------------------------------------------------
+
+2.3.1--SPECTRAL PLOT
+
+----------------------------------------------------------
+
+2.3.2--PERIODOGRAM
+
+----------------------------------------------------------
+
+2.4--CHECKING FOR TIME AND FREQUENCY DOMAIN STRUCTURE
+
+----------------------------------------------------------
+
+2.4.1--4-PLOT ANALYSIS
+
+----------------------------------------------------------
+
+2.5--TESTING WHITE NOISE (RANDOMNESS)
+
+----------------------------------------------------------
+
+2.5.1--LAG PLOT
+
+----------------------------------------------------------
+
+2.5.2--RUNS ANALYSIS
+
+----------------------------------------------------------
+
+2.5.3--DISTRIBUTION-FREE TESTS
+
+----------------------------------------------------------
+
+2.5.4--AUTOCORRELATION PLOT
+
+----------------------------------------------------------
+
+2.5.5--SPECTRAL PLOT
+
+----------------------------------------------------------
+
+2.5.6--4-PLOT ANALYSIS
+
+----------------------------------------------------------
+
+2.6--CHECKING FOR TRENDS
+
+----------------------------------------------------------
+
+2.6.1--RUN SEQUENCE PLOT
+
+----------------------------------------------------------
+
+2.6.2--CORRELATION WITH TIME
+
+----------------------------------------------------------
+
+2.6.3--LINEAR FIT OVER TIME
+
+----------------------------------------------------------
+
+2.7--FITTING BOX-JENKINS MODELS
+
+----------------------------------------------------------
+
+2.7.1--LAG PLOT
+
+----------------------------------------------------------
+
+2.7.2--AUTOCORRELATION PLOT
+
+----------------------------------------------------------
+
+2.7.3--PARTIAL AUTOCORRELATION PLOT
+
+----------------------------------------------------------
+
+2.8--SMOOTHING
+
+----------------------------------------------------------
+
+2.8.1--MOVING AVERAGE SMOOTHING
+
+----------------------------------------------------------
+
+2.8.2--LEAST SQUARES SMOOTHING
+
+----------------------------------------------------------
+
+2.8.3--MEDIAN SMOOTHING
+
+----------------------------------------------------------
+
+2.8.4--ROBUST SMOOTHING
+
+----------------------------------------------------------
+
+2.8.5--EXPONENTIAL SMOOTHING
+
+----------------------------------------------------------
+
+2.8.6--ASSESSING THE GOODNESS OF THE SMOOTHING
+
+----------------------------------------------------------
+
+2.8.6.1--RESIDUAL STANDARD DEVIATION
+
+----------------------------------------------------------
+
+2.8.6.2--SUPERIMPOSING RAW DATA AND FITTED VALUES
+
+----------------------------------------------------------
+
+2.8.6.3--SCATTER PLOTS OF RESIDUALS
+
+----------------------------------------------------------
+
+2.8.6.4--NORMAL PROBABILITY PLOT OF RESIDUALS
+
+----------------------------------------------------------
+
+2.8.6.5--5-PLOT OF RESIDUALS
+
+----------------------------------------------------------
+
+2.9--FILTERING
+
+----------------------------------------------------------
+
+2.9.1--LOW-PASS FILTERS
+
+----------------------------------------------------------
+
+2.9.2--HIGH-PASS FILTERS
+
+----------------------------------------------------------
+
+2.9.3--ASSESSING THE GOODNESS OF THE FILTERING
+
+
+
+
+
+
+
+
+
+
+
+----------  *TIME SERIES ANALYSIS (2 VARIABLES)*  --------
+
+3--TIME SERIES ANALYSIS--2 VARIABLES
+
+The sub-categories are--
+
+   1. General discussion
+   2. Checking for time-domain structure
+   3. Checking for frequency-domain structure
+   4. Checking for time- & freq.-domain structure
+
+To select a menu item, enter 1 to 4.
+
+----------------------------------------------------------
+
+3.1--GENERAL DISCUSSION
+
+----------------------------------------------------------
+
+3.2--CHECKING FOR TIME-DOMAIN STRUCTURE
+
+----------------------------------------------------------
+
+3.2.1--SCATTER PLOT
+
+----------------------------------------------------------
+
+3.2.2--MULTI-TRACE PLOTS
+
+----------------------------------------------------------
+
+3.2.3--CROSS-SPECTRAL PLOT
+
+----------------------------------------------------------
+
+3.2.4--BIHISTOGRAM
+
+----------------------------------------------------------
+
+3.3--CHECKING FOR FREQUENCY-DOMAIN STRUCTURE
+
+----------------------------------------------------------
+
+3.3.1--CROSS-SPECTRUM
+
+----------------------------------------------------------
+
+3.3.2--COHERENCY SPECTRUM
+
+----------------------------------------------------------
+
+3.3.3--QUADRATURE SPECTRUM
+
+----------------------------------------------------------
+
+3.3.4--CO-SPECTRUM
+
+----------------------------------------------------------
+
+3.3.5--GAIN SPECTRUM
+
+----------------------------------------------------------
+
+3.3.6--ARGAND SPECTRUM
+
+----------------------------------------------------------
+
+3.4--CHECKING FOR TIME AND FREQUENCY DOMAIN STRUCTURE
+
+----------------------------------------------------------
+
+3.4.1--4-PLOT ANALYSIS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------  *CORRELATION ANALYSIS*  ----------------------
+
+4--CORRELATION ANALYSIS
+
+The sub-categories are--
+
+   1. General discussion
+   2. Multi-scatter plots
+   3. Multi-ANOP plots
+   4. Multi-box plots
+   5. Cross-correlation tabulation
+   6. Transforming variables
+   7. Distribution-free tests
+
+To select a menu item, enter 1 to 7.
+
+----------------------------------------------------------
+
+4.1--GENERAL DISCUSSION
+
+----------------------------------------------------------
+
+4.2--MULTI-SCATTER PLOTS
+
+----------------------------------------------------------
+
+4.3--MULTI-ANOP PLOTS
+
+----------------------------------------------------------
+
+4.4--MULTI-BOX PLOTS
+
+----------------------------------------------------------
+
+4.5--CROSS-CORRELATION TABULATION
+
+----------------------------------------------------------
+
+4.6--TRANSFORMING VARIABLES
+
+----------------------------------------------------------
+
+4.7--DISTRIBUTION-FREE TESTS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------  *FITTING (1 INDEPENDENT VARIABLE)*  ----------
+
+5--FITTING (1 INDEPENDENT VARIABLE)
+
+The sub-categories are--
+
+   1. General Discussion
+   2. Selecting a Model
+   3. Fitting a Model
+   4. Assessing the Goodness of Fit of a Model
+   5. Improving the Model
+   6. Fitting with Weights
+   7. Fitting with Constraints
+   8. Fitting with Other Criteria (e.g., L1 Fitting)
+
+To select a menu item, enter 1 through 8.
+
+----------------------------------------------------------
+
+5.1 GENERAL DISCUSSION
+
+Fitting (= regression = model-buiding) is the
+process of determining a mathematical function
+which relates the primary variable of interest
+(also called the response variable or the
+dependent variable) to a second variable (also
+called the independent variable).  In a plot of
+the 2 variables, the response variable usually
+appears on the vertical axis, and the independent
+variable on the horizontal axis.  Most fitting is
+done using the least squares criteria (minimizing
+the sum of squared deviations).
+
+The fitting process consists of 4 distinct
+steps--selecting the model, fitting the model,
+assessing the goodness of fit of a model, and
+improving the model.
+
+A typical DATAPLOT command sequence for the above
+is
+
+   PLOT Y X
+   FIT Y = <some model>
+   CHARACTERS X BLANK
+   LINES BLANK SOLID
+   PLOT Y PRED VERSUS X
+   4-PLOT RES X
+
+Other aspects of model fitting may include
+fitting with weights, fitting with constraints,
+and fitting with non-least squares criteria.
+
+Enter -1 to revert to the previous menu.
+
+----------------------------------------------------------
+
+5.2--SELECTING A MODEL (1 INDEPENDENT VARIABLE)
+
+Model selection is the process of deciding on
+the functional form of the equation to relate Y with X.
+No amount of least squares fitting will make
+up for a poorly-chosen model, so careful
+selection of the model is of prime importance.
+
+Some models suggest themselves from physical
+theory; others must be determined from the data.
+If your model is known, then revert to the previous
+menu for instructions on fitting the model.
+If your model is unknown then the first step
+is always to plot the data, and the second step
+is to compare the plotted data with reference
+curves to arrive at allowable mathematical
+functions.
+
+   1) plot Y versus X
+   2) generate Y versus X reference curves
+
+To select a menu item, enter 1 or 2
+
+----------------------------------------------------------
+
+5.2.1--PLOT Y VERSUS X
+
+To generate a plot of variable Y versus variable X
+(a scatter plot), use the PLOT command, as in
+
+   PLOT Y X
+
+The variable Y will be plotted vertically;
+the variable X, horizontally.  The current
+DATAPLOT character, line, color, etc. settings
+will be in effect.
+
+Note the general shape of the resulting plot.
+The primary question to be addressed is
+what mathematical function has any chance
+at all of fitting the shape of the data?
+A given mathematical function usually has only a
+limited range of shapes that it can fit.
+Some mathematical functions (e.g., rational
+functions) are more flexible than others.
+The principle of parsimony dictates that we choose
+the simplest function that is adequate.
+
+To generate a set of reference shapes with which
+to compare our data plot, revert to the
+previous menu (enter -1) and select the
+menu item to do so.
+
+----------------------------------------------------------
+
+5.2.2--GENERATE Y VERSUS X REFERENCE CURVES
+
+ `
+ `5hg$E
+ 7af!S
+ `
+ 5hg$E1
+ 7af!S
+ 
+ `
+ `1n|#F1n|#J1b}#N1c}#R1k}#V1l}#[1d~#_1l~$C1i$G2e`$K2aa$O2bb$S2bc$W2cd$[
+ `2cd$[2ge$_2kf%C2lg%H2di%L2mj%P2il%T2an%X2no%\2nq&@2ns&D2ou&H2ow&L2`z&Q
+ `2`z&Q2d|&U2l~&Y3ea&]3mc'A3jf'E3fi'I3bl'M3co'Q3cr'U3cu'Y3dx'^3h{(B3m~(F
+ `3m~(F4eb(J4me(N4fi(R4bm(V4np(Z4kt(^4kx)B4h|)G5l`)K5`e)O5ei)S
+ `
+ `1n|#F1m|)S
+ `
+ `1m|)S5a)S
+ `
+ `5a)S5b#F
+ `
+ `5b#F1n|#F
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `5hg*R
+ 7af!S
+ `
+ 5hg*R2
+ 7af!S
+ 
+ `
+ `1m|)S1a})W1j})[1j~)_1n*C2ca*G2kb*K2gd*O2`f*T2lg*X2mi*\2mk+@2mm+D2no+H
+ `2no+H2br+L2gt+P2gv+T2kx+X2lz+]2d},A2h,E3ma,I3ad,M3jf,Q3nh,U3fk,Y3km,]
+ `3km,]3cp-A3hr-F3lt-J3dw-N3my-R3e|-V3m~-Z4fa-^4jc.B4cf.F4kh.J4ck.N4hm.S
+ `4hm.S4`p.W4ir.[4au._4iw/C4bz/G4j|/K4b/O5ka/S5gd/W5lf/\5di0@
+ `
+ `1m|)S1l|0@
+ `
+ `1l|0@5`0@
+ `
+ `5`0@5a)S
+ `
+ `5a)S1m|)S
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `5kg0^
+ 7af!S
+ `
+ 5kg0^3
+ 7af!S
+ 
+ `
+ `1l|0D1a}0H1m}0L1j~0P1n0T2ba0X2ob0\2kd1@2gf1D2dh1I2dj1M2il1Q2in1U2mp1Y
+ `2mp1Y2bs1]2fu2A2kw2E2oy2I2c|2M2d~2R3d`2V3hb2Z3md2^3ag3B3bi3F3fk3J3jm3N
+ `3jm3N3ko3R3kq3V3ls3[3lu3_3lw4C3my4G3m{4K3m}4O3n4S4ja4W4kc4[4ge4_4gg5C
+ `4gg5C4`i5H4`k5L4ml5P4in5T4ep5X4br5\4ns6@4ju6D4gw6H4cy6L
+ `
+ `1l|0@1o|6L
+ `
+ `1o|6L5c6L
+ `
+ `5c6L5`0@
+ `
+ `5`0@1l|0@
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `5jg7K
+ 7af!S
+ `
+ 5jg7K4
+ 7af!S
+ 
+ `
+ `1k}6L1o}6N1l}6Q1`~6S1`~6U1d~6W1d~6Y1i~6[1m~6]1m~6_1a7A1e7C1j7E1n7G
+ `1n7G2f`7I2j`7K2ba7M2fa7O2oa7Q2gb7S2cc7U2kc7W2gd7Y2`e7\2le7^2hf8@2hg8B
+ `2hg8B2hh8D2mi8F2ak8H2el8J2mm8L2eo8N2np8P2jr8R2jt8T2jv8V2jx8X2nz8Z2g}8\
+ `2g}8\2o8^3gb9@3ce9B3ch9D3lj9G3`n9I3`q9K3dt9M3dw9O3iz9Q3m}9S4aa9U4ed9W
+ `4ed9W4ig9Y4nj9[4nm9]4np9_4ns:A4jv:C4gy:E4c|:G4k~:I5o`:K5cc:M5ge:O5dg:R
+ `5dg:R5`i:T5lj:V5hl:X5`n:Z5io:\5mp:^5ar;@5as;B5at;D5bu;F5bv;H5nv;J5jw;L
+ `5jw;L5bx;N5ox;P5gy;R5oy;T5gz;V5oz;X5`{;[5h{;]5l{;_5`|<A5d|<C5h|<E5m|<G
+ `5m|<G5a}<I5e}<K5e}<M5i}<O5j}<Q5n}<S5n}<U5b~<W5b~<Y
+ `
+ `1o|6L1n|<Y
+ `
+ `1n|<Y5b<Y
+ `
+ `5b<Y5c6L
+ `
+ `5c6L1o|6L
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `1de$E
+ 7af!S
+ `
+ 1de$E5
+ 7af!S
+ 
+ `
+ `-jz#F.ha#[.ai$O.gq%C.iz%X/od&L/ap'A/k|'U0ej(J0ky(^1ij)S
+ `
+ `-jz#F-iz)S
+ `
+ `-iz)S1m|)S
+ `
+ `1m|)S1n|#F
+ `
+ `1n|#F-jz#F
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `1de*R
+ 7af!S
+ `
+ 1de*R6
+ 7af!S
+ 
+ `
+ `-iz)S.it*\/ln,E0lh-N1lb.W1l|0@
+ `
+ `-iz)S-hz0@
+ `
+ `-hz0@1l|0@
+ `
+ `1l|0@1m|)S
+ `
+ `1m|)S-iz)S
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `1ge0^
+ 7af!S
+ `
+ 1ge0^7
+ 7af!S
+ 
+ `
+ `-hz0@.hg0B.`m0D.aq0F.it0H.mw0J.iz0L.a}0N.j0P/ja0R/nc0T/ne0V/ng0X/ji0Z
+ `/ji0Z/gk0\/cm0^/on1@/gp1B/oq1D/ds1G/lt1I/dv1K/hw1M/`y1O/ez1Q/m{1S/a}1U
+ `/a}1U/e~1W/i1Y0n`1[0na1]0bc1_0fd2A0fe2C0kf2E0kg2G0oh2I0oi2K0oj2M0ok2O
+ `0ok2O0`m2R0`n2T0`o2V0`p2X0`q2Z0ar2\0mr2^0ms3@0mt3B0mu3D0jv3F0jw3H0jx3J
+ `0jx3J0fy3L0fz3N0c{3P0c|3R0o|3T0o}3V0k~3X0h3[1d`3]1`a3_1`b4A1lb4C1hc4E
+ `1hc4E1ed4G1ae4I1af4K1mf4M1ig4O1fh4Q1bi4S1ni4U1jj4W1fk4Y1cl4[1ol4]1km4_
+ `1km4_1gn5A1co5C1lo5F1hp5H1dq5J1lq5L1hr5N1es5P1at5R1mt5T1eu5V1av5X1mv5Z
+ `1mv5Z1jw5\1bx5^1nx6@1jy6B1bz6D1oz6F1k{6H1c|6J1o|6L
+ `
+ `-hz0@-kz6L
+ `
+ `-kz6L1o|6L
+ `
+ `1o|6L1l|0@
+ `
+ `1l|0@-hz0@
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `1fe7K
+ 7af!S
+ `
+ 1fe7K8
+ 7af!S
+ 
+ `
+ `-kz6L.`g6Q.dr6U.d|6Y/ie6]/mm7A/fu7E/b|7I0fb7M0og7Q0ol7U0kq7Y0hu7^0dy8B
+ `0dy8B0m|8F0m8J1ib8N1be8R1fg8V1fi8Z1ck8^1ol9B1dn9G1lo9K1`q9O1ar9S1as9W
+ `1as9W1bt9[1nt9_1ju:C1gv:G1ov:K1kw:O1`x:T1hx:X1mx:\1ey;@1iy;D1ny;H1bz;L
+ `1bz;L1gz;P1kz;T1oz;X1`{;]1d{<A1d{<E1i{<I1i{<M1n{<Q1n{<U1n{<Y
+ `
+ `-kz6L-jz<Y
+ `
+ `-jz<Y1n|<Y
+ `
+ `1n|<Y1o|6L
+ `
+ `1o|6L-kz6L
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `-dc$E
+ 7af!S
+ `
+ -dc$E9
+ 7af!S
+ 
+ `
+ `)jx#F)fz#G)f|#H)b~#I*b`#J*na#K*jc#L*fe#M*nf#N*jh#O*cj#P*kk#Q*gm#R*on#S
+ `*on#S*cp#T*kq#U*cs#V*gt#W*ku#X*cw#Y*dx#[*hy#\*hz#]*l{#^*`}#_*`~$@*`$A
+ `*`$A+d`$B+da$C+db$D+dc$E+ad$F+ae$G+af$H+mf$I+ig$J+ih$K+ei$L+aj$M+mj$N
+ `+mj$N+ik$O+bl$P+nl$Q+jm$R+bn$S+nn$T+fo$U+no$V+fp$W+np$X+fq$Y+nq$Z+gr$[
+ `+gr$[+or$\+gs$]+ks$^+ct$_+gt%@+ot%A+cu%B+gu%C+ku%D+`v%F+dv%G+hv%H+lv%I
+ `+lv%I+`w%J+dw%K+dw%L+hw%M+lw%N+`x%O+ax%P+ex%Q+ex%R+ix%S+ix%T+mx%U+mx%V
+ `+mx%V+ay%W+ay%X+ay%Y+ay%Z+fy%[+fy%\+fy%]+fy%^+fy%_+fy&@+jy&A+jy&B+jy&C
+ `+jy&C+jy&D+ky&E+ky&F+ky&G+ky&H+ky&I+ky&J+ky&K+ky&L+ky&M+ky&N+ky&O+hy&Q
+ `+hy&Q+hy&R+hy&S+hy&T+hy&U+hy&V+hy&W+hy&X+hy&Y+ly&Z+my&[+my&\+my&]+my&^
+ `+my&^+my&_+az'@+az'A+az'B+ez'C+ez'D+jz'E+jz'F+nz'G+nz'H+b{'I+b{'J+f{'K
+ `+f{'K+j{'L+j{'M+n{'N+b|'O+g|'P+k|'Q+o|'R+c}'S+g}'T+o}'U+c~'V+g~'W+o~'X
+ `+o~'X+c'Y+h'[+l'\,d`'],l`'^,da'_,ha(@,`b(A,lb(B,dc(C,lc(D,dd(E,ae(F
+ `,ae(F,ie(G,ef(H,mf(I,ig(J,eh(K,ai(L,mi(M,ij(N,ek(O,fl(P,bm(Q,bn(R,nn(S
+ `,nn(S,no(T,np(U,nq(V,nr(W,ns(X,bu(Y,bv(Z,gw([,gx(\,ky(],oz(^,c|(_,g})@
+ `,g})@,o~)A-c`)B-ka)C-cc)D-dd)F-le)G-dg)H-`i)I-hj)J-dl)K-lm)L-ho)M-dq)N
+ `-dq)N-`s)O-au)P-mv)Q-mx)R-iz)S
+ `
+ `)jx#F)ix)S
+ `
+ `)ix)S-iz)S
+ `
+ `-iz)S-jz#F
+ `
+ `-jz#F)jx#F
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `-dc*R
+ 7af!S
+ `
+ -dc*R10
+ 7af!S
+ 
+ `
+ `*dg)Z*ks*@*c~*G+bg*N+mn*U+iu*\+h{+C,o`+I,ke+P,ni+W,mm+^,dq,E,dt,L,gw,R
+ `,gw,R,bz,Y,j|-@,m~-G-`a-N-`c-U-od-[-jf.B-fh.I-mi.P-dk.W-kl.]-cn/D-fo/K
+ `-fo/K-ep/R-iq/Y-hr0@
+ `
+ `)ix)S)hx0@
+ `
+ `)hx0@-hz0@
+ `
+ `-hz0@-iz)S
+ `
+ `-iz)S)ix)S
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `-gc0^
+ 7af!S
+ `
+ -gc0^11
+ 7af!S
+ 
+ `
+ `*hj0D*i|0H+eg0L+nn0P+jt0T+fy0X+g}0\,o`1@,oc1D,hf1I,`i1M,ek1Q,em1U,eo1Y
+ `,eo1Y,bq1],nr2A,gt2E,ou2I,gw2M,hx2R,ly2V,`{2Z,e|2^,e}3B,f~3F,j3J-f`3N
+ `-f`3N-ga3R-gb3V-`c3[-`d3_-ld4C-ie4G-ef4K-ag4O-ng4S-jh4W-gi4[-cj4_-kj5C
+ `-kj5C-dk5H-lk5L-il5P-am5T-mm5X-fn5\-nn6@-fo6D-oo6H-kp6L
+ `
+ `)hx0@)kx6L
+ `
+ `)kx6L-kz6L
+ `
+ `-kz6L-hz0@
+ `
+ `-hz0@)hx0@
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `-fc7K
+ 7af!S
+ `
+ -fc7K12
+ 7af!S
+ 
+ `
+ `)hx6Q+hy6U,do6Y,az6]-i`7A-nd7E-bh7I-fj7M-cl7Q-km7U-on7Y-lo7^-hp8B-eq8F
+ `-eq8F-ar8J-ir8N-bs8R-fs8V-ns8Z-ct8^-gt9B-lt9G-`u9K-du9O-eu9S-iu9W-nu9[
+ `-nu9[-bv9_-bv:C-gv:G-gv:K-kv:O-hv:T-lv:X-mv:\-aw;@-aw;D-fw;H-fw;L-gw;P
+ `-gw;P-kw;T-kw;X-hw;]-hw<A-lw<E-mw<I-mw<M-nw<Q-bx<U-bx<Y
+ `
+ `)kx6L)jx<Y
+ `
+ `)jx<Y-jz<Y
+ `
+ `-jz<Y-kz6L
+ `
+ `-kz6L)kx6L
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `)`a$E
+ 7af!S
+ `
+ )`a$E13
+ 7af!S
+ 
+ `
+ `%fv#F%fx#H%f}#J&nd#L&jm#N&gw#P'ca#R'ck#T'kt#V'o}#X(`f#[(hm#](dt#_(dz$A
+ `(dz$A(`$C)dc$E)ef$G)mh$I)ij$K)ek$M)mk$O)jk$Q)jj$S)fi$U)jg$W)je$Y)gc$[
+ `)gc$[)k`$](o}$_(kz%A(kw%C(dt%F(lp%H(dm%J(`j%L(hf%N(ac%P'm%R'e|%T'ay%V
+ `'ay%V'mu%X'mr%Z'jo%\'nl%^'ni&@'bg&B'jd&D'oa&F&g&H&c}&J&oz&L&ox&N&hv&Q
+ `&hv&Q&lt&S&lr&U&`q&W&ho&Y&mm&[&el&]&ak&_&ii'A&eh'C&fg'E&bf'G&be'I&bd'K
+ `&bd'K&bc'M&fb'O&ka'Q&o`'S&c`'U%g'W%o~'Y%`~'\%h}'^%`}(@%h|(B%`|(D%m{(F
+ `%m{(F%e{(H%a{(J%iz(L%ez(N%bz(P%ny(R%jy(T%fy(V%by(X%nx(Z%kx(\%kx(^%gx)@
+ `%gx)@%cx)B%cx)D%lw)G%lw)I%hw)K%hw)M%hw)O%ew)Q%ew)S
+ `
+ `%fv#F%ev)S
+ `
+ `%ev)S)ix)S
+ `
+ `)ix)S)jx#F
+ `
+ `)jx#F%fv#F
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `)`a*R
+ 7af!S
+ `
+ )`a*R14
+ 7af!S
+ 
+ `
+ `%ev)S&ms)U'ik)W'i~)Y(jm)[(by)])ja)_)fg*A)fk*C)gm*E)cn*G)km*I)ok*K)ki*M
+ `)ki*M)kf*O)dc*R(d*T(d{*V(`w*X(lr*Z(en*\(aj*^(ie+@(ea+B'a}+D'by+F'bu+H
+ `'bu+H'fq+J'nm+L'fj+N'of+P'oc+R'o`+T&o}+V&g{+X&lx+[&dv+]&`t+_&`r,A&`p,C
+ `&`p,C&`n,E&el,G&mj,I&ei,K&mg,M&if,O&fe,Q&fd,S&bc,U&bb,W&fa,Y&g`,[%k,]
+ `%k,]%o~,_%g~-A%k}-C%`}-F%h|-H%`|-J%h{-L%`{-N%mz-P%ez-R%az-T%my-V%iy-X
+ `%iy-X%ey-Z%by-\%nx-^%jx.@%fx.B%fx.D%cx.F%ow.H%ow.J%kw.L%kw.N%dw.Q%dw.S
+ `%dw.S%dw.U%`w.W%`w.Y%aw.[%aw.]%mv._%mv/A%mv/C%nv/E%nv/G%nv/I%jv/K%jv/M
+ `%jv/M%jv/O%kv/Q%kv/S%kv/U%kv/W%kv/Y%hv/\%hv/^%hv0@
+ `
+ `%ev)S%dv0@
+ `
+ `%dv0@)hx0@
+ `
+ `)hx0@)ix)S
+ `
+ `)ix)S%ev)S
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `)ca0^
+ 7af!S
+ `
+ )ca0^15
+ 7af!S
+ 
+ `
+ `%dv0@%lx0A%h{0B%`~0C&h`0D&`c0E&ie0F&mg0G&ej0H&il0I&ao0J&eq0K&is0L&av0M
+ `&av0M&ex0N&ez0O&j|0P&n~0Q'ba0R'bc0S'be0T'fg0U'fi0V'fk0W'fm0X'fo0Y'bq0Z
+ `'bq0Z'cs0['cu0\'ov0]'kx0^'kz0_'g|1@'c~1A'o1B(ka1C(cc1D(ld1F(df1G(`h1H
+ `(`h1H(hi1I(`k1J(hl1K(`n1L(ho1M(`q1N(hr1O(ms1P(eu1Q(iv1R(mw1S(ey1T(iz1U
+ `(iz1U(m{1V(m|1W(a~1X(e1Y)e`1Z)ja1[)jb1\)jc1])jd1^)je1_)jf2@)jg2A)jh2B
+ `)jh2B)fi2C)fj2D)ck2E)cl2F)ol2G)km2H)gn2I)co2J)ko2K)gp2L)cq2M)kq2N)cr2O
+ `)cr2O)lr2Q)ds2R)ls2S)dt2T)lt2U)`u2V)hu2W)lu2X)dv2Y)hv2Z)mv2[)aw2\)ew2]
+ `)ew2])iw2^)mw2_)ax3@)ax3A)ex3B)ex3C)ex3D)jx3E)jx3F)jx3G)fx3H)fx3I)fx3J
+ `)fx3J)bx3K)bx3L)nw3M)jw3N)fw3O)cw3P)ov3Q)kv3R)gv3S)ou3T)ku3U)cu3V)ot3W
+ `)ot3W)gt3X)os3Y)ds3[)lr3\)`r3])hq3^)`q3_)dp4@)ho4A)`o4B)dn4C)hm4D)ll4E
+ `)ll4E)al4F)ak4G)ej4H)ei4I)ih4J)ig4K)if4L)ie4M)id4N)ic4O)jb4P)ja4Q)f`4R
+ `)f`4R(f4S(b~4T(n|4U(n{4V(jz4W(fy4X(nw4Y(jv4Z(gu4[(os4\(kr4](cq4^(ko4_
+ `(ko4_(cn5@(kl5A(ck5B(ki5C(ch5D(df5F(ld5G(`c5H(ha5I'l5J'`~5K'd|5L'hz5M
+ `'hz5M'hx5N'lv5O'au5P'as5Q'aq5R'eo5S'em5T'ek5U'ei5V'eg5W'ae5X'ac5Y'aa5Z
+ `'aa5Z&n~5[&j|5\&fz5]&fx5^&bv5_&js6@&fq6A&bo6B&jl6C&fj6D&og6E&ke6F&cc6G
+ `&cc6G&k`6H%c~6I%k{6J%ox6K%gv6L
+ `
+ `%dv0@%gv6L
+ `
+ `%gv6L)kx6L
+ `
+ `)kx6L)hx0@
+ `
+ `)hx0@%dv0@
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `)ba7K
+ 7af!S
+ `
+ )ba7K16
+ 7af!S
+ 
+ `
+ `%gv6L'dz6Q(hs6U)dc6Y)il6])aq7A)nq7E)bp7I)jl7M)ch7Q)ob7U(g}7Y(lw7^(dr8B
+ `(dr8B(am8F(ah8J(ec8N'b8R'b{8V'bw8Z'ks8^'gp9B'dm9G'hj9K'`h9O'ie9S'ec9W
+ `'ec9W'fa9[&f9_&j}:C&o{:G&gz:K&ox:O&hw:T&`v:X&mt:\&ms;@&mr;D&jq;H&np;L
+ `&np;L&oo;P&co;T&cn;X&dm;]&hl<A&`l<E&ek<I&ij<M&bj<Q&ji<U&bi<Y
+ `
+ `%gv6L%fv<Y
+ `
+ `%fv<Y)jx<Y
+ `
+ `)jx<Y)kx6L
+ `
+ `)kx6L%gv6L
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `$l~$E
+ 7af!S
+ `
+ $l~$E17
+ 7af!S
+ 
+ `
+ `!by#F!fy#H!jy#J!ny#L!bz#N!gz#P!kz#R!oz#T!c{#V!k{#X!l{#[!`|#]!h|#_!`}$A
+ `!`}$A!h}$C!`~$E!i~$G!a$I!m$K"e`$M"aa$O"bb$Q"nb$S"nc$U"nd$W"bf$Y"gg$[
+ `"gg$["oh$]"gj$_"gl%A"cn%C"dp%F"lr%H"hu%J"lx%L"`|%N#a`%P#id%R#ii%T#ao%V
+ `#ao%V#eu%X#a|%Z$jc%\$jk%^$ns&@$f|&B%fd&D%kk&F%gq&H%cu&J%gv&L%cu&N%dq&Q
+ `%dq&Q%hk&S%dd&U$d|&W$ls&Y$ik&[$ic&]#a|&_#eu'A#ao'C#ji'E#jd'G#b`'I"b|'K
+ `"b|'K"nx'M"ju'O"or'Q"gp'S"cn'U"gl'W"gj'Y"lh'\"dg'^"`f(@"ld(B"lc(D"mb(F
+ `"mb(F"ab(H"aa(J"e`(L!m(N!b(P!j~(R!b~(T!j}(V!b}(X!j|(Z!c|(\!o{(^!k{)@
+ `!k{)@!c{)B!oz)D!hz)G!dz)I!`z)K!ly)M!hy)O!ey)Q!ay)S
+ `
+ `!bt#F!at)S
+ `
+ `!at)S%ev)S
+ `
+ `%ev)S%fv#F
+ `
+ `%fv#F!bt#F
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `$l~*R
+ 7af!S
+ `
+ $l~*R18
+ 7af!S
+ 
+ `
+ `%ev)S%ai)W$f~)[$nt)_$bm*C$cf*G$c`*K#oz*O#`v*T#lq*X#an*\#ij+@#eg+D#jd+H
+ `#jd+H#na+L"k+P"g}+T"g{+X"dy+]"hw,A"lu,E"et,I"mr,M"jq,Q"fp,U"bo,Y"om,]
+ `"om,]"ol-A"lk-F"lj-J"li-N"ai-R"ah-V"eg-Z"jf-^"ne.B"ce.F"kd.J"oc.N"`c.S
+ `"`c.S"hb.W"ab.["ia._"aa/C"j`/G"b`/K!j/O!c/S!k~/W!`~/\!l}0@
+ `
+ `!at)S!`t0@
+ `
+ `!`t0@%dv0@
+ `
+ `%dv0@%ev)S
+ `
+ `%ev)S!at)S
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `$o~0^
+ 7af!S
+ `
+ $o~0^19
+ 7af!S
+ 
+ `
+ `%dv0@%ih0J$b|0T$op0^$hf1I#e}1S#bu1]#km2G#hf2R#i`2\"nz3F"ou3P"dq3["`m4E
+ `"`m4E"ei4O"ne4Y"ob5C"``5N!i}5X!f{6B!gy6L
+ `
+ `!`t0@!ct6L
+ `
+ `!ct6L%gv6L
+ `
+ `%gv6L%dv0@
+ `
+ `%dv0@!`t0@
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `$n~7K
+ 7af!S
+ `
+ $n~7K20
+ 7af!S
+ 
+ `
+ `%gu6L%gu6N%du6Q%`u6S%`u6U%lt6W%lt6Y%it6[%et6]%at6_%at7A%ms7C%js7E%bs7G
+ `%bs7G%nr7I%jr7K%br7M%jq7O%gq7Q%kp7S%cp7U%ko7W%on7Y%`n7\%dm7^%dl8@%hk8B
+ `%hk8B%dj8D%ei8F%ah8H%mf8J%ee8L%mc8N%fb8P%f`8R$j~8T$j|8V$fz8X$bx8Z$ou8\
+ `$ou8\$gs8^$kp9@$cn9B$ck9D$`h9G$`e9I$`b9K#l~9M#l{9O#ix9Q#eu9S#ar9U#mn9W
+ `#mn9W#ik9Y#fh9[#fe9]#fb9_"f:A"j|:C"oy:E"cw:G"kt:I"gr:K"cp:M"om:O"lk:R
+ `"lk:R"`j:T"dh:V"hf:X"`e:Z"ic:\"eb:^"aa;@"a`;B!a;D!b~;F!b};H!f|;J!j{;L
+ `!j{;L!nz;N!gz;P!oy;R!gy;T!ox;V!gx;X!`x;[!hw;]!dw;_!`w<A!lv<C!hv<E!ev<G
+ `!ev<G!av<I!mu<K!mu<M!iu<O!fu<Q!fu<S!fu<U!bu<W!bu<Y
+ `
+ `!ct6L!bt<Y
+ `
+ `!bt<Y%fv<Y
+ `
+ `%fv<Y%gv6L
+ `
+ `%gv6L!ct6L
+ `
+ `
+` jw#F
+7af!S
+8
+`
+:
+ jw#FWHICH OF THE ABOVE PLOTS IS CLOSEST IN APPEARANCE TO YOUR DATA?
+7af!S
+8
+`
+:
+ ni#FENTER 1 TO 20 TO SELECT A PLOT.
+
+
+----------------------------------------------------------
+
+5.2.2.1--CURVE 1 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+         (QUADRATIC)
+
+This curve was generated by
+
+   PLOT X**2 FOR X = 0 .1 5
+
+Characteristics--
+   monotonic up
+   no inflection point
+   for small x, function approaches 0
+   for small x, slope    approaches 0
+   for large x, function approaches infinity
+   for large x, slope    approaches infinity
+
+Suggested models--
+   y = a0 + a1*x + a2*x**2
+   y = a0 + a1*x + a2*x**2 + a3*x**3
+   y = exp(x)
+
+To fit a given model, use the FIT command
+as in FIT Y = A0 + A1*X + A2*X**2
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+
+----------------------------------------------------------
+
+5.2.2.2--CURVE 2 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+         (MONOTONIC)
+
+This curve was generated by
+
+   PLOT X**2 / (1+X) FOR X = 0 .1 5
+
+Characteristics--
+   monotonic up
+   no inflection point
+   for small x, function approaches 0
+   for small x, slope    approaches 0
+   for large x, function approaches infinity
+   for large x, slope    approaches constant
+
+Suggested models--
+   y = a2*x**2 / (1+b1*x)
+   y = quadratic / linear
+   y = cubic / quadratic
+
+To fit a given model, use the FIT command
+as in FIT Y = A2*X**2 / (1+B1*X)
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+
+----------------------------------------------------------
+
+5.2.2.3--CURVE 3 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+         (MONOTONIC)
+
+This curve was generated by
+
+   PLOT X**3 / (1+X)**2.5 FOR X = .1 .1 5
+
+Characteristics--
+   monotonic up
+   1 inflection point
+   for small x, function approaches 0
+   for small x, slope    approaches 0
+   for large x, function approaches infinity
+   for large x, slope    approaches constant
+
+Suggested models--
+   y = a0*x**3 / (1+b1*x)**2.5
+
+To fit a given model, use the FIT command
+as in FIT Y = A0*X**3 / (1+B1*X)**2.5
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+
+
+
+----------------------------------------------------------
+
+5.2.2.4--CURVE 4 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+         (S-SHAPED)
+
+This curve was generated by
+
+   PLOT 1 / (1+EXP(-X)) FOR X = -5 .1 5
+
+Characteristics--
+   monotonic up
+   1 inflection point
+   for small x, function approaches 0
+   for small x, slope    approaches 0
+   for large x, function approaches constant
+   for large x, slope    approaches 0
+
+Suggested models--
+   y = a0 / (1+b1*exp(-x))
+   y = a2*x**2 / (1 + b2*x**2)
+   y = quadratic / quadratic
+   y = cubic / cubic
+
+To fit a given model, use the FIT command
+as in FIT Y = A2 / (1+B2*EXP(-X))
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+----------------------------------------------------------
+
+5.2.2.5--CURVE 5 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+         (QUADRATIC)
+
+This curve was generated by
+
+   PLOT EXP(-X) FOR X = 0 .1 1
+
+Characteristics--
+   monotonic up
+   no inflection point
+   for small x, function approaches 0
+   for small x, slope    approaches constant
+   for large x, function approaches infinity
+   for large x, slope    approaches infinity
+
+Suggested models--
+   y = a0 + a1*exp(-a2*x)  with a2 > 0
+   y = quadratic
+   y = cubic
+   y = quartic
+
+To fit a given model, use the FIT command
+as in FIT Y = A0 + A1*EXP(-A2*X)
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+----------------------------------------------------------
+
+5.2.2.6--CURVE 6 SELECTED FROM Y VERSUS X REFERENCE CURVES
+         (LINEAR)
+
+This curve was generated by
+
+   PLOT X FOR X = 0 1 5
+
+Characteristics--
+   monotonic up
+   no inflection point
+   for small x, function approaches -infinity
+   for all   x, slope    is         constant
+   for large x, function approaches infinity
+
+Suggested models--
+   y = a0 + a1*x
+   y = a0 + a1*x**a2
+   log(y) = a0 + a1*log(x)
+
+To fit a given model, use the FIT command
+as in FIT Y = A0 + A1*X
+For more details on fitting, revert back 3 menus
+(enter -3) and select the menu item on
+fitting a model.
+
+
+
+
+----------------------------------------------------------
+
+5.2.2.7--CURVE 7 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+         (SQUARE ROOT)
+
+This curve was generated by
+
+   PLOT SQRT(X) FOR X = 0 .01 1
+
+Characteristics--
+   monotonic up
+   no inflection point
+   convex down
+   for small x, function approaches 0
+   for small x, slope    approaches constant
+   for large x, function approaches infinity
+   for large x, slope    approaches infinity
+
+Suggested models--
+   y = a0 + a1*sqrt(x)
+   y = a0 + a1*(x**a2)
+   y = a0 + a1*log(x+1)
+   y = a0 + a1*log(x+a2)
+
+To fit a given model, use the FIT command
+as in FIT Y = A0 + A1*SQRT(X)
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+----------------------------------------------------------
+
+5.2.2.8--CURVE 8 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+         (ASYMPTOTE)
+
+This curve was generated by
+
+   PLOT 1 - EXP(-X) FOR X = 0 .1 5
+
+Characteristics--
+   monotonic up
+   no inflection point
+   for small x, function approaches 0
+   for small x, slope    approaches constant
+   for large x, function approaches constant
+   for large x, slope    approaches 0
+
+Suggested models--
+   y = a0 + a1*exp(-a2*x)    with a1 < 0 and a2 > 0
+   y = a0*x / (1+b1*x)
+   y = quadratic /quadratic
+
+To fit a given model, use the FIT command
+as in FIT Y = A0 + A1*EXP(-A2*X)
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+
+----------------------------------------------------------
+
+5.2.2.9--CURVE 9 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+         (CUBIC)
+
+This curve was generated by
+
+   PLOT X**3 FOR X = -10 .1 10
+
+Characteristics--
+   monotonic up
+   1 inflection point
+   for small x, function approaches -infinity
+   for small x, slope    approaches -infinity
+   for large x, function approaches infinity
+   for large x, slope    approaches infinity
+
+Suggested models--
+   y = a0 + a1*x**3
+   y = a0 + a1*x + a2*x**2 + a3*x**3
+
+To fit a given model, use the FIT command
+as in FIT Y = A0 + A1*X**3
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+
+
+----------------------------------------------------------
+
+5.2.2.10--CURVE 10 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+
+This curve was generated by
+
+   PLOT 1 / (1 + 1/X) FOR X = 0 .1 3   APPROX
+
+Characteristics--
+   monotonic up
+   no inflection point
+   for small x, function approaches 0
+   for small x, slope    approaches -infinity
+   for large x, function approaches infinity
+   for large x, slope    approaches constant
+
+Suggested models--
+   y = xxx
+
+To fit a given model, use the FIT command
+as in FIT Y = XXX
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+
+
+
+
+----------------------------------------------------------
+
+5.2.2.11--CURVE 11 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+          (LOGARITHM)
+
+This curve was generated by
+
+   PLOT LOG(X) FOR X = .1 .1 5
+
+Characteristics--
+   monotonic up
+   no inflection point
+   convex down
+   for small x, function approaches -infinity
+   for small x, slope    approaches -infinity
+   for large x, function approaches infinity
+   for large x, slope    approaches infinity
+
+Suggested models--
+   y = a0 + a1*log(x)
+   y = a0 + a1*log(x+a2)
+   y = a0 + a1*sqrt(x)
+   y = a0 + a1*x**a2     with a2 < 1
+
+To fit a given model, use the FIT command
+as in FIT Y = A0 + A1*LOG(X)
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+----------------------------------------------------------
+
+5.2.2.12--CURVE 12 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+          (ASYMPTOTE)
+
+This curve was generated by
+
+   PLOT 1 - 1/X FOR X = .1 .1 5
+
+Characteristics--
+   monotonic up
+   no inflection point
+   for small x, function approaches 0, constant, or -infinity
+   for small x, slope    approaches -infinity
+   for large x, function approaches constant
+   for large x, slope    approaches 0
+
+Suggested models--
+   y = a0 + a1/x     with a1 < 0
+   y = a0 + a1/x**2     with a1 < 0
+   y = a0 + a1/x**a2     with a1 < 0 and a2 >0
+
+To fit a given model, use the FIT command
+as in FIT Y = A0 + A1/X
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+
+----------------------------------------------------------
+
+5.2.2.13--CURVE 13 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+          (SKEWED)
+
+This curve was generated by
+
+   PLOT X**2*EXP(-X) FOR X = 0 .1 10
+
+Characteristics--
+   non-monotonic
+   convex down
+   skewed
+   for small x, function approaches 0
+   for small x, slope    approaches 0
+   for large x, function approaches 0
+   for large x, slope    approaches 0
+
+Suggested models--
+   y = a0 * x**2 * exp(-x)
+   y = a0 * x**a1 * exp(-x)
+
+To fit a given model, use the FIT command
+as in  FIT Y = A0 * X**2 * EXP(-X)
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+
+----------------------------------------------------------
+
+5.2.2.14--CURVE 14 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+          (SKEWED)
+
+This curve was generated by
+
+   PLOT X*EXP(-X) for X = 0 .1 10
+
+Characteristics--
+   non-monotonic
+   convex down
+   unimodal
+   skewed
+   for small x, function approaches 0
+   for small x, slope    approaches constant
+   for large x, function approaches constant
+   for large x, slope    approaches 0
+
+Suggested models--
+   y = a0*x * exp(-a1*x)
+   y = a0*x**b1 * exp(-a1*x)
+
+To fit a given model, use the FIT command
+as in FIT Y = A0*X * EXP(-A1*X)
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+----------------------------------------------------------
+
+5.2.2.15--CURVE 15 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+          (QUADRATIC)
+
+This curve was generated by
+
+   PLOT -X**2 FOR X = -10 .1 10
+
+Characteristics--
+   non-monotonic
+   convex down
+   unimodal
+   symmetric
+   for small x, function approaches -infinity
+   for small x, slope    approaches -infinity
+   for large x, function approaches infinity
+   for large x, slope    approaches infinity
+
+Suggested models--
+   y = a0 + a1*x + a2*x**2
+
+To fit a given model, use the FIT command
+as in FIT Y = A0 + A1*X + A2*X**2
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+
+----------------------------------------------------------
+
+5.2.2.16--CURVE 16 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+          (SKEWED)
+
+This curve was generated by
+
+   PLOT SQRT(X) / (1 + X**2) FOR X = 0 .1 5
+
+Characteristics--
+   non-monotonic
+   convex down
+   unimodal
+   skewed
+   for small x, function approaches 0, constant, or -infinity
+   for small x, slope    approaches -infinity
+   for large x, function approaches 0
+   for large x, slope    approaches 0
+
+Suggested models--
+   y = a0*sqrt(x) / (1 + b2*x**2)
+
+To fit a given model, use the FIT command
+as in FIT Y = A0*SQRT(X) / (1 + B2*X**2)
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+
+----------------------------------------------------------
+
+5.2.2.17--CURVE 17 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+          (BELL-SHAPED)
+
+This curve was generated by
+
+   PLOT 1 / (1+X**2) FOR X = -5 .1 5
+
+Characteristics--
+   no inflection point
+   convex down
+   symmetric
+   for small x, function approaches 0
+   for small x, slope    approaches 0
+   for large x, function approaches 0
+   for large x, slope    approaches 0
+
+Suggested models--
+   y = a0 / (1+a2*x**2)
+   y = a0 * exp(-a2*x**2)
+   y = a0*exp(-a1*x) / (1 + a2*exp(-a1*x))
+
+To fit a given model, use the FIT command
+as in FIT Y = A0 / (1 + A2*X**2)
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+----------------------------------------------------------
+
+5.2.2.18--CURVE 18 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+          (HYPERBOLIC)
+
+This curve was generated by
+
+   PLOT 1 / (1+X) FOR X = 0 .1 5
+
+Characteristics--
+   monotonic down
+   no inflection point
+   convex up
+   for small x, function approaches constant or infinity
+   for small x, slope    approaches constant or infinity
+   for large x, function approaches 0
+   for large x, slope    approaches 0
+
+Suggested models--
+   y = a0 / (1 + a1*x)
+   y = a0 * exp(-a2*x)
+   y = constant / quadratic
+   y = constant / cubic
+
+To fit a given model, use the FIT command
+as in FIT Y = A0 / (1 + A1*X)
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+----------------------------------------------------------
+
+5.2.2.19--CURVE 19 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+          (NEGATIVE EXPONENTIAL)
+
+This curve was generated by
+
+   PLOT EXP(-X) FOR X = 0 .1 2
+
+Characteristics--
+   monotonic decreasing
+   convex up
+   for small x, function approaches constant
+   for small x, slope    approaches constant
+   for large x, function approaches 0
+   for large x, slope    approaches 0
+
+Suggested models--
+   y = a0 + a1*exp(-a2*x)     with a1 > 0 and a2 > 0
+
+To fit a given model, use the FIT command
+as in FIT Y = A0 + A1*EXP(-A2*X)
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+
+
+
+----------------------------------------------------------
+
+5.2.2.20--CURVE 20 SELECTED FROM Y VERSUS X REFERENCE PLOTS
+          (Z-SHAPED)
+
+This curve was generated by
+
+   PLOT 1 / (1+EXP(X)) FOR X = -5 .1 5
+
+Characteristics--
+   monotonic down
+   1 inflection point
+   for small x, function approaches constant
+   for small x, slope    approaches 0
+   for large x, function approaches 0
+   for large x, slope    approaches 0
+
+Suggested models--
+   y = a0 / (1 + b1*exp(-b2*x))
+
+To fit a given model, use the FIT command
+as in FIT Y = A0 / (1 + B1*EXP(-B2*X))
+For more details on fitting, revert back 2 menus
+(enter -2) and select the menu item on
+fitting a model.
+
+
+
+
+
+----------------------------------------------------------
+
+5.3--FITTING A MODEL (1 INDEPENDENT VARIABLE)
+
+   1. Fitting Linear Models
+   2. Fitting Polynomial Models
+   3. Fitting Non-Linear Models
+   4. Fitting Rational Functions
+   5. Spline Fitting
+
+To select a menu item, enter 1 through 5.
+
+----------------------------------------------------------
+
+5.3.1--FITTING LINEAR MODELS
+
+To fit a linear model, use the FIT command , as in
+
+   FIT Y = A+B*X
+
+or
+
+   LINEAR FIT Y X
+
+FIT output is generated.  In addition, the
+predicted values (= fitted values)
+from the fit are automatically stored in the
+variable PRED, and the residuals (= deviations)
+are automatically stored in the variable RES.
+Both PRED and RES may be used by the analyst
+in any fashion (e.g., plotting) for further
+examination of the model.
+
+Before accepting the linear model as valid,
+it is critically important that the
+residuals (= raw data - predicted values)
+be examined in detail (this is referred to
+as "residual analysis".  For guidance on how to
+carry out such model-validation procedures,
+revert back 2 menus (enter -2) and select
+the menu item dealing with assessing the
+goodness of fit of the model.
+
+----------------------------------------------------------
+
+5.3.2--FITTING POLYNOMIAL MODELS
+
+----------------------------------------------------------
+
+5.3.3--FITTING NON-LINEAR MODELS
+
+
+----------------------------------------------------------
+
+5.3.4 FITTING RATIONAL FUNCTIONS
+
+----------------------------------------------------------
+
+5.3.5--SPLINE FITTING
+
+To carry out a spline fit, use the SPLINE FIT
+command, as in
+
+   LINEAR SPLINE FIT Y X K
+   QUADRATIC SPLINE FIT Y X K
+   CUBIC SPLINE FIT Y X K
+   etc.
+
+In the above, Y is the response variable,
+X is the independent variable, and K is
+the variable containing the desired knots.
+
+Spline fit output is generated.  In addition, the
+predicted values (= fitted values)
+from the fit are automatically stored in the
+variable PRED, and the residuals (= deviations)
+are automatically stored in the variable RES.
+Both PRED and RES may be used by the analyst
+in any fashion (e.g., plotting) for further
+examination of the model.
+
+Before accepting the spline model as valid,
+it is critically important that the
+residuals (= raw data - predicted values)
+be examined in detail (this is referred to
+as "residual analysis".  For guidance on how to
+carry out such model-validation procedures,
+revert back 2 menus (enter -2) and select
+the menu item dealing with assessing the
+goodness of fit of the model.
+
+
+----------------------------------------------------------
+
+5.4--ASSESSING THE GOODNESS OF FIT OF A MODEL
+
+There are several statistical criteria
+that come to bear in determining if the
+model we have chosen adequately fits the data--
+
+   o Is the amount of variation left over
+     after the fit as small as we expected?
+   o If we had replication in the data, is
+     our (model-dependent) residual variation comparable to
+     our (model-free) replication standard deviation?
+   o Are the fitted values about the same as the
+     raw data values?
+   o Are the residuals free of any functional
+     dependency on X or any other variable?
+   o Is the variation in the residuals about
+     the same over the entire range of X?
+   o Are our residuals random in appearance?
+   o Are our residuals normally distributed?
+
+These above questions are addressed in the following--
+
+   1. Residual Standard Deviation
+   2. Lack of Fit F Tests
+   3. Superimposing Raw Data and Fitted Curve
+   4. 4-Plot of Residuals
+   5. Scatter Plot of Residuals
+   6. Lag Plot of Residuals
+   7. Histogram of Residuals
+   8. Normal Probability Plot of Residuals
+
+Enter 1 to 8 to select a menu item.
+
+----------------------------------------------------------
+
+5.4.1--RESIDUAL STANDARD DEVIATION
+
+----------------------------------------------------------
+
+5.4.2--LACK OF FIT F TESTS
+
+----------------------------------------------------------
+
+5.4.3--SUPERIMPOSE RAW DATA AND FITTED CURVE
+
+The superimposed plot of raw data and predicted
+values is a convenient graphical technique for
+assessing the goodness of a fitted model.
+To generate a superimposed plot of the raw data
+(in Y) and the predicted values (in PRED)
+versus the independent variable (in X),
+use the PLOT command, as in
+
+   CHARACTERS X BLANK
+   LINES BLANK SOLID
+   PLOT Y PRED VERSUS X
+
+(The predicted values from the last fit have
+automatically been stored in the DATAPLOT
+variable PRED).  The X's on the plot are
+the raw data; the solid line is the
+predicted values.  For a good fit, the
+solid line should overlay the data points
+over the entire domain of the data.
+Search in particular for regions of poor fit
+which indicates that the model is not
+adequate over the entire domain.
+
+A more thorough assessment of model adequacy
+is obtained via various residual plots.
+Revert back to the previous menu (enter -1)
+and select the menu items dealing with
+plotting residuals.
+
+----------------------------------------------------------
+
+5.4.4--4-PLOT OF RESIDUALS
+
+The 4-plot of the residuals is a convenient
+1-page graphical summary of the residuals.
+To generate a 4-plot, use the 4-PLOT command,
+as in
+
+   4-PLOT RES X
+
+(The residuals from the fit have automatically
+been stored in the DATAPLOT variable RES).
+The 4-plots to appear are
+
+   1) scatter plot (RES versus X)
+   2) lag plot (RES(i) versus RES(i-1))
+   3) histogram of RES
+   4) normal probability plot of RES
+
+Plots 1 and 2 should be structureless.
+Plot 3 should be bell-shaped, and plot 4
+should be linear.
+
+For comparison, the residuals from an ideal fit
+may be generated by entering
+
+   LET N = NUMBER X
+   LET Z = NORMAL RANDOM NUMBERS FOR I = 1 1 N
+   4-PLOT Z X
+
+For guidance on how to interpret each of the
+4 plots, revert to the previous menu (enter -1)
+and select the menu item dealing with the
+specific plot.
+
+----------------------------------------------------------
+
+5.4.5--SCATTER PLOT OF RESIDUALS
+
+A scatter plot of the residuals is the single
+most important plot for testing model adequacy.
+To generate a scatter plot of the residuals
+(in RES) versus any other variable (say, X),
+use the PLOT command, as in
+
+   PLOT RES X
+
+(The residuals from the fit have automatically
+been stored in the DATAPLOT variable RES).
+If the model is adequate then the plot
+should be structureless and random in
+appearance.  Any structure or pattern is a
+signal to the analyst that the underlying
+assumptions to carry out the fit have
+been violated, and/or the current model
+is inadequate and may be improved upon.
+
+For comparison, a scatter plot of "ideal" residuals
+may be generated by entering
+
+   LET N = NUMBER X
+   LET Z = NORMAL RANDOM NUMBERS FOR I = 1 1 N
+   PLOT Z X
+
+To generate a set of reference residual scatter
+plots, enter 1.  To revert to the previous menu,
+enter -1.
+
+----------------------------------------------------------
+
+5.4.5.1--GENERATE REFERENCE RESIDUAL SCATTER PLOTS
+ a
+ a5hg$E
+ 7af!S
+ `
+ 5hg$E1
+ 7af!S
+ 
+ a
+ a0lh$F0oh$U0nh%E0mh%U0lh&E0oh&T0nh'D0mh'T0lh(D0oh(S
+ a
+ a3lp$F3op$U3np%E3mp%U3lp&E3op&T3np'D3mp'T3lp(D3op(S
+ `
+ `-jz#F-iz)S
+ `
+ `-iz)S5a)S
+ `
+ `5a)S5b#F
+ `
+ `5b#F-jz#F
+ `
+ `
+ `
+ `
+ 7af!S
+ a
+ a5hg*R
+ 7af!S
+ `
+ 5hg*R2
+ 7af!S
+ 
+ a
+ a2gt*R2j~+B3ai+R3hs,B3o},Q4fh-A4mr-Q4`}.A5kg.P5br/@
+ a
+ a1gr*R1bh+B0i}+R0`s,B0oh,Q/f~-A/ms-Q/hi.A.c.P.jt/@
+ `
+ `-iz)S-hz0@
+ `
+ `-hz0@5`0@
+ `
+ `5`0@5a)S
+ `
+ `5a)S-iz)S
+ `
+ `
+ `
+ `
+ 7af!S
+ a
+ a5kg0^
+ 7af!S
+ `
+ 5kg0^3
+ 7af!S
+ 
+ a
+ a5jt0_5aj1O4l1_4gu2N4nj2^4i`3N3`v3^3kk4M3fa4]2mv5M
+ a
+ a.be0_.io1O.ly1_/gd2N/nn2^/ay3N0hc3^0om4M0fx4]1mb5M
+ `
+ `-hz0@-kz6L
+ `
+ `-kz6L5c6L
+ `
+ `5c6L5`0@
+ `
+ `5`0@-hz0@
+ `
+ `
+ `
+ `
+ 7af!S
+ a
+ a5jg7K
+ 7af!S
+ `
+ 5jg7K4
+ 7af!S
+ 
+ a
+ a/ia7L0``7\0ou8K1nb8[1ag9K1lb9[0ou:J0b`:Z/ia;J
+ a
+ a4mw7L3hy7\3oc8K2nv8[2ir9K2lv9[3oc:J3jy:Z4mw;J
+ `
+ `-kz6L-jz<Y
+ `
+ `-jz<Y5b<Y
+ `
+ `5b<Y5c6L
+ `
+ `5c6L-kz6L
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `-dc$E
+ 7af!S
+ `
+ -dc$E5
+ 7af!S
+ 
+  
+ &fi$@X
+ 'ec$PX
+ 'd}%@X
+ (gw%OX
+ )jq%_X
+ *ik&OX
+ +he&_X
+ +k'NX
+ ,jy'^X
+ `
+ `%fv#F%ev)S
+ `
+ `%ev)S-iz)S
+ `
+ `-iz)S-jz#F
+ `
+ `-jz#F%fv#F
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `-dc*R
+ 7af!S
+ `
+ -dc*R6
+ 7af!S
+ 
+  
+ %mq*MX
+ %ly*]X
+ &of+LX
+ &by+\X
+ 'ep,LX
+ (`m,\X
+ )on-KX
+ *nu-[X
+ ,ab.KX
+ `
+ `%ev)S%dv0@
+ `
+ `%dv0@-hz0@
+ `
+ `-hz0@-iz)S
+ `
+ `-iz)S%ev)S
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `-gc0^
+ 7af!S
+ `
+ -gc0^7
+ 7af!S
+ 
+  
+ 'd}0ZX
+ )cz1IX
+ +je1YX
+ +i2IX
+ ,dh2YX
+ +k3HX
+ +je3XX
+ )az4HX
+ 'd}4XX
+ `
+ `%dv0@%gv6L
+ `
+ `%gv6L-kz6L
+ `
+ `-kz6L-hz0@
+ `
+ `-hz0@%dv0@
+ `
+ `
+ `
+ `
+ 7af!S
+ `
+ `-fc7K
+ 7af!S
+ `
+ -fc7K8
+ 7af!S
+ 
+  
+ &gv7FX
+ 'f}7VX
+ )ed8FX
+ *hk8VX
+ +kr9EX
+  
+ *jk9UX
+ )ed:EX
+ 'd}:UX
+ &gv;DX
+ `
+ `%gv6L%fv<Y
+ `
+ `%fv<Y-jz<Y
+ `
+ `-jz<Y-kz6L
+ `
+ `-kz6L%gv6L
+ `
+ `
+ `
+ `
+ 7af!S
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+`
+:
+ jw#FWHICH OF THE ABOVE PLOTS IS CLOSEST IN APPEARANCE TO YOUR DATA?
+7af!S
+8
+`
+:
+ ni#FENTER 1 TO 8 TO SELECT A PLOT.
+
+
+
+----------------------------------------------------------
+
+5.4.5.1.1--RESIDUAL PLOT--IDEAL
+
+----------------------------------------------------------
+
+5.4.5.1.2--RESIDUAL PLOT--WEDGE UP
+
+----------------------------------------------------------
+
+5.4.5.1.3--RESIDUAL PLOT--WEDGE DOWN
+
+----------------------------------------------------------
+
+5.4.5.1.4--RESIDUAL PLOT--WEDGE MIDDLE
+
+----------------------------------------------------------
+
+5.4.5.1.5--RESIDUAL PLOT--LINEAR TERM
+
+----------------------------------------------------------
+
+5.4.5.1.6--RESIDUAL PLOT--QUADRATIC TERM
+
+----------------------------------------------------------
+
+5.4.5.1.7--RESIDUAL PLOT--QUADRATIC TERM 2
+
+----------------------------------------------------------
+
+5.4.5.1.8--RESIDUAL PLOT--RESIDUAL PLOT--SPLINE
+
+Residual scatter plots with this sharp break
+are usually indicative of a model inadequacy
+which may be corrected by use of a linear
+spline fit model.
+
+To carry out a linear spline fit,
+use the SPLINE FIT command as in
+
+   SPLINE FIT Y X K
+
+where K is a variable containing
+the desired "knot" points.
+
+For more details on spline fitting,
+go to menu 5.2.5 (by entering EXPERT 5.2.5)
+
+----------------------------------------------------------
+
+5.4.6--LAG PLOT OF RESIDUALS
+
+
+----------------------------------------------------------
+
+5.4.7--HISTOGRAM OF RESIDUALS
+
+
+----------------------------------------------------------
+
+5.4.8--NORMAL PROBABILITY PLOT OF RESIDUALS
+
+
+----------------------------------------------------------
+
+5.5--IMPROVING THE MODEL
+
+----------------------------------------------------------
+
+5.5.1--TRANSFORMING TO SIMPLIFY THE MODEL
+
+----------------------------------------------------------
+
+5.5.2--TRANSFORMING TO ACHIEVE HOMOGENEITY
+
+----------------------------------------------------------
+
+5.5.3--TRANSFORMING TO ACHIEVE NORMALITY
+
+----------------------------------------------------------
+
+5.5.4--ADDING NEW VARIABLES
+
+----------------------------------------------------------
+
+5.5.5--CHANGING THE FORM OF THE MODEL
+
+----------------------------------------------------------
+
+5.6--FITTING WITH WEIGHTS
+
+----------------------------------------------------------
+
+5.7--FITTING WITH CONSTRAINTS
+
+----------------------------------------------------------
+
+5.8--FITTING WITH OTHER CRITERIA (E.G., L1 FITTING)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------  *FITTING (2 OR MORE IND. VARIABLES)*  --------
+
+6--FITTING (2 OR MORE INDEPENDENT VARIABLES)
+
+The sub-categories are--
+
+   1. General Discussion
+   2. Selecting Variables to be Included in the Model
+   3. Selecting a Model
+   4. Fitting a Model
+   5. Assessing the Goodness of Fit of a Model
+   6. Improving the Model
+   7. Fitting with Weights
+   8. Fitting with Constraints
+   9. Fitting with Other Criteria (e.g., L1 Fitting)
+
+To select a menu item, enter 1 through 8.
+
+----------------------------------------------------------
+
+6.1 GENERAL DISCUSSION
+
+Fitting (= regression = model-building) with 2 or
+more independent variables is the process of
+determining a mathematical function which relates
+the primary variable of interest (also called the
+response variable or the dependent variable) to
+the set of secondary variables (also called
+independent variables).  In a plot of the
+variables, the response variable usually appears
+on the vertical axis, and some independent
+variable on the horizontal axis.  A synonym for
+fitting is regression.  Most fitting is done using
+the least squares criteria (minimizing the sum of
+squared deviations).
+
+The fitting (or model-building) process consists
+of 5 distinct steps--selecting variables to be included
+in the model, selecting the model, fitting the model,
+assessing the goodness of fit of a model, and
+improving the model.  Other aspects include
+fitting with weights, fitting with constraints,
+and fitting with non-least squares criteria.
+
+----------------------------------------------------------
+
+6.1--SELECTING VARIABLES FOR TO BE INCLUDED IN THE MODEL
+
+----------------------------------------------------------
+
+6.2.1--MULTI-RUN SEQUENCE PLOTS
+
+----------------------------------------------------------
+
+6.2.2--MULTI-HISTOGRAMS
+
+----------------------------------------------------------
+
+6.2.3--MULTI-SCATTER PLOTS
+
+----------------------------------------------------------
+
+6.2.4--MULTI-ANOP PLOTS
+
+----------------------------------------------------------
+
+6.2.5--CROSS-CORRELATION TABULATION
+
+----------------------------------------------------------
+
+6.2.6--BOX PLOTS
+
+----------------------------------------------------------
+
+6.2.7--CP PLOT
+
+----------------------------------------------------------
+
+6.3--SELECTING A MODEL
+
+----------------------------------------------------------
+
+6.3.1--PLOTTING THE DATA
+
+----------------------------------------------------------
+
+6.3.2--MAKING USE OF REFERENCE CURVES
+
+----------------------------------------------------------
+
+6.4--FITTING A MODEL
+
+----------------------------------------------------------
+
+6.4.1--FITTING MULTI-LINEAR MODELS
+
+----------------------------------------------------------
+
+6.4.2--FITTING NON-LINEAR MODELS
+
+----------------------------------------------------------
+
+6.5--ASSESSING THE GOODNESS OF FIT OF THE MODEL
+
+----------------------------------------------------------
+
+6.5.1--RESIDUAL STANDARD DEVIATION
+
+----------------------------------------------------------
+
+6.5.2--LACK OF FIT F TESTS
+
+----------------------------------------------------------
+
+6.5.3--SUPERIMPOSING RAW DATA AND FITTED CURVE
+
+----------------------------------------------------------
+
+6.5.4--SCATTER PLOTS OF RESIDUALS
+
+----------------------------------------------------------
+
+6.5.5--NORMAL PROBABILITY PLOT OF RESIDUALS
+
+----------------------------------------------------------
+
+6.5.6--4-PLOT OF RESIDUALS
+
+----------------------------------------------------------
+
+6.6--IMPROVING THE MODEL
+
+----------------------------------------------------------
+
+6.6.1--TRANSFORMING TO SIMPLIFY THE MODEL
+
+----------------------------------------------------------
+
+6.6.2--TRANSFORMING TO ACHIEVE HOMOGENEITY
+
+----------------------------------------------------------
+
+6.6.3--TRANSFORMING TO ACHIEVE NORMALITY
+
+----------------------------------------------------------
+
+6.6.4--ADDING NEW VARIABLES
+
+----------------------------------------------------------
+
+6.6.5--CHANGING THE FORM OF THE MODEL
+
+----------------------------------------------------------
+
+6.7--FITTING WITH WEIGHTS
+
+----------------------------------------------------------
+
+6.8--FITTING WITH CONSTRAINTS
+
+----------------------------------------------------------
+
+6.9--FITTING WITH OTHER CRITERIA (E.G., L1 FITTING)
+
+----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------  *ANOVA MODELING*  -----------------------
+
+7--ANOVA MODELING
+
+The sub-categories are--
+
+   1. General discussion
+   2. Selecting variables to be included
+   3. Examining 1-factor models
+   4. Examining 2-factor models
+   5. Examining 3-factor models
+   6. Examining 4-factor models
+   7. Examining 5-factor models
+   8. Examining 1-factor models with only  2 treatments
+   9. Examining 2**k models
+  10. Assessing the goodness of fit of the model
+  11. Improving the model
+
+To select a menu item, enter 1 to 11.
+
+----------------------------------------------------------
+
+7.1--GENERAL DISCUSSION OF ANOVA
+
+----------------------------------------------------------
+
+7.2--SELECTING VARIABLES FOR TO BE INCLUDED IN THE MODEL
+
+----------------------------------------------------------
+
+7.2.1--MULTI-RUN SEQUENCE PLOTS
+
+----------------------------------------------------------
+
+7.2.2--MULTI-HISTOGRAMS
+
+----------------------------------------------------------
+
+7.2.3--MULTI-SCATTER PLOTS
+
+----------------------------------------------------------
+
+7.2.4--MULTI-ANOP PLOTS
+
+----------------------------------------------------------
+
+7.3--EXAMINING 1-FACTOR MODELS
+
+----------------------------------------------------------
+
+7.3.1--1-WAY ANOVA
+
+----------------------------------------------------------
+
+7.3.2--1-WAY GANOVA
+
+----------------------------------------------------------
+
+7.3.3--SCATTER PLOTS
+
+----------------------------------------------------------
+
+7.3.4--BOX PLOT
+
+----------------------------------------------------------
+
+7.3.5--ANOP LINE PLOT
+
+----------------------------------------------------------
+
+7.3.6--ANOP CHARACTER PLOT
+
+----------------------------------------------------------
+
+7.3.7--I PLOT
+
+----------------------------------------------------------
+
+7.3.8--DISTRIBUTION-FREE TESTS
+
+----------------------------------------------------------
+
+7.3.9--CORRELATION
+
+----------------------------------------------------------
+
+7.3.10--CATEGORICAL DATA ANALYSIS
+
+----------------------------------------------------------
+
+7.3.11--CROSS-CORRLEATION
+
+----------------------------------------------------------
+
+7.3.12--DISCRETE CONTOUR PLOT
+
+----------------------------------------------------------
+
+7.3.13--FREQUENCY TABULATION
+
+----------------------------------------------------------
+
+7.3.14--CROSS-TABULATION
+
+----------------------------------------------------------
+
+7.3.15--CHI-SQUARED
+
+----------------------------------------------------------
+
+7.4--EXAMINING 2-FACTOR MODELS
+
+----------------------------------------------------------
+
+7.4.1--2-WAY ANOVA
+
+----------------------------------------------------------
+
+7.4.2--2-WAY GANOVA
+
+----------------------------------------------------------
+
+7.4.3--MEDIAN POLISH
+
+----------------------------------------------------------
+
+7.4.4--MULTI-TRACE PLOTS
+
+----------------------------------------------------------
+
+7.4.5--3-D PLOT
+
+----------------------------------------------------------
+
+7.4.6--SPIKE PLOTS
+
+----------------------------------------------------------
+
+7.5--EXAMINING 3-FACTOR MODELS
+
+----------------------------------------------------------
+
+7.5.1--3-WAY ANOVA
+
+----------------------------------------------------------
+
+7.5.2--3-WAY GANOVA
+
+----------------------------------------------------------
+
+7.5.3--MULTI-CELL PLOTS
+
+----------------------------------------------------------
+
+7.6--EXAMINING 4-FACTOR MODELS
+
+----------------------------------------------------------
+
+7.6.1--4-WAY ANOVA
+
+----------------------------------------------------------
+
+7.6.2--MULTI-PLOT 2-WAY GANOVA
+
+----------------------------------------------------------
+
+7.6.3--MULTI-PLOT 3-WAY GANOVA
+
+----------------------------------------------------------
+
+7.7--EXAMINING 5-FACTOR MODELS
+
+----------------------------------------------------------
+
+7.7.1--5-WAY ANOVA
+
+----------------------------------------------------------
+
+7.7.2--MULTI-PLOT 3-WAY GANOVA
+
+----------------------------------------------------------
+
+7.8--EXAMINING 1-FACTOR MODELS WITH ONLY 2 TREATMENTS
+
+----------------------------------------------------------
+
+7.8.1--1-WAY ANOVA
+
+----------------------------------------------------------
+
+7.8.2--T TEST
+
+----------------------------------------------------------
+
+7.8.3--BIHISTOGRAM
+
+----------------------------------------------------------
+
+7.9--EXAMINING 2**K MODELS
+
+----------------------------------------------------------
+
+7.9.1--SQUARE PLOTS, CUBE PLOTS, ETC.
+
+----------------------------------------------------------
+
+7.10--ASSESSING THE GOODNESS OF FIT OF THE MODEL
+
+----------------------------------------------------------
+
+7.10.1--RESIDUAL STANDARD DEVIATION
+
+----------------------------------------------------------
+
+7.10.2--LACK OF FIT F TESTS
+
+----------------------------------------------------------
+
+7.10.3--GANOVA, PARALLELISM, AND NON-ADDITIVITY
+
+----------------------------------------------------------
+
+7.10.4--SUPERIMPOSING RAW DATA AND FITTED CURVE
+
+----------------------------------------------------------
+
+7.10.5--SCATTER PLOTS OF RESIDUALS
+
+----------------------------------------------------------
+
+7.10.6--NORMAL PROBABILITY PLOT OF RESIDUALS
+
+----------------------------------------------------------
+
+7.10.7--4-PLOT OF RESIDUALS
+
+----------------------------------------------------------
+
+7.11--IMPROVING THE MODEL
+
+----------------------------------------------------------
+
+7.11.1--RESIDUAL STANDARD DEVIATIONS FOR SUB-MODELS
+
+----------------------------------------------------------
+
+7.11.2--F TESTS FOR SUB-MODELS
+
+----------------------------------------------------------
+
+7.11.3--TRANSFORMING TO SIMPLIFY THE MODEL
+
+----------------------------------------------------------
+
+7.11.4--TRANSFORMING TO ACHIEVE ADDITIVITY
+
+----------------------------------------------------------
+
+7.11.5--TRANSFORMING TO ACHIEVE HOMOGENEITY
+
+----------------------------------------------------------
+
+7.11.6--TRANSFORMING TO ACHIEVE NORMALITY
+
+----------------------------------------------------------
+
+7.11.7--OMITTING VARIABLES FROM THE MODEL
+
+----------------------------------------------------------
+
+7.11.7.1--F TESTS FOR SUB-MODELS
+
+----------------------------------------------------------
+
+7.11.8--SELECTING ADDITIONAL VARIABLES FOR THE MODEL
+
+----------------------------------------------------------
+
+7.11.8.1--SCATTER PLOTS OF RESIDUALS ON NEW
+
+----------------------------------------------------------
+
+7.11.8.2--BOX PLOTS OF RESIDUALS ON NEW VAR
+
+----------------------------------------------------------
+
+7.11.9--CHANGING THE FORM OF THE MODEL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------  *MULTIVARIATE ANALYSIS*  -----------------------
+
+8--MULTIVARIATE ANALYSIS
+
+The sub-categories are--
+
+   1. General discussion
+   2. Cluster analysis
+   3. Discriminant analysis
+   4. Principal component analysis
+   5. Canonical analysis
+   6. Testing multivariate normality--Q-Q plot
+
+To select a menu item, enter 1 to 6.
+
+----------------------------------------------------------
+
+8.1--GENERAL DISCUSSION
+
+----------------------------------------------------------
+
+8.2--CLUSTER ANALYSIS
+
+----------------------------------------------------------
+
+8.3--DISCRIMINANT ANALYSIS
+
+----------------------------------------------------------
+
+8.4--PRINCIPAL COMPONENT ANALYSIS
+
+----------------------------------------------------------
+
+8.5--CANONICAL ANALYSIS
+
+----------------------------------------------------------
+
+8.6--TESTING MULTIVARIATE NORMALITY--Q-Q PLOT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------  *PROBABILITY ANALYSIS*  ----------------------
+
+9--PROBABILITY ANALYSIS
+
+The sub-categories are--
+
+   1. General discussion
+   2. Generating random numbers/simulation/Monte Carlo
+   3. Computing percent points
+   4. Computing probability density functions
+   5. Computing cumulative distribution functions
+   6. Plotting percent points
+   7. Plotting probability density functions
+   8. Plotting cumulative distribution functions
+   9. Superimposing Prob. density function on histograms
+
+To select a menu item, enter 1 to 9.
+
+----------------------------------------------------------
+
+9.1--GENERAL DISCUSSION
+
+----------------------------------------------------------
+
+9.2--GENERATING RANDOM NUMBERS/SIMULATION/MONTE CARLO
+
+----------------------------------------------------------
+
+9.3--COMPUTING PERCENT POINTS
+
+----------------------------------------------------------
+
+9.4--COMPUTING PROBABILITY DENSITY FUNCTIONS
+
+----------------------------------------------------------
+
+9.5--COMPUTING CUMULATIVE DISTRIBUTION FUNCTIONS
+
+----------------------------------------------------------
+
+9.6--PLOTTING PERCENT POINTS
+
+----------------------------------------------------------
+
+9.7--PLOTTING PROBABILITY DENSITY FUNCTIONS
+
+----------------------------------------------------------
+
+9.8--PLOTTING CUMULATIVE DISTRIBUTION FUNCTIONS
+
+----------------------------------------------------------
+
+9.9--SUPERIMPOSING PROBABILITY DENSITY FUNTIONS ON HISTOGRAMS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------  *QUALITY CONTROL*  -----------------------
+
+10--QUALITY CONTROL
+
+The sub-categories are--
+
+   1. General discussion
+   2. Testing for trends
+   3. Testing for shifts in location
+   4. Testinf for shifts in variation
+   5. Testing for outliers
+   6. Interlaboratory testing
+
+To select a menu item, enter 1 to 6.
+
+----------------------------------------------------------
+
+10.1--GENERAL DISCUSSION
+
+----------------------------------------------------------
+
+10.2--TESTING FOR TRENDS
+
+----------------------------------------------------------
+
+10.2.1--RUN SEQUENCE PLOT
+
+----------------------------------------------------------
+
+10.2.2--MEAN CONTROL CHART
+
+----------------------------------------------------------
+
+10.3--TESTING FOR SHIFTS IN LOCATION
+
+----------------------------------------------------------
+
+10.3.1--RUN SEQUENCE PLOT
+
+----------------------------------------------------------
+
+10.3.2--MEAN CONTROL CHART
+
+----------------------------------------------------------
+
+10.4--TESTING FOR SHIFTS IN VARIATION
+
+----------------------------------------------------------
+
+10.4.1--RANGE CONTROL CHART
+
+----------------------------------------------------------
+
+10.4.2--STANDARD DEVIATION CONTROL CHART
+
+----------------------------------------------------------
+
+10.5--TESTING FOR OUTLIERS
+
+----------------------------------------------------------
+
+10.6--INTERLABORATORY TESTING
+
+----------------------------------------------------------
+
+10.6.1--YOUDEN PLOTS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------  *DISTRIBUTION-FREE ANALYSIS*  ----------------
+
+11--DISTRIBUTION-FREE ANALYSIS
+
+The sub-categories are--
+
+   1. General discussion
+   2. testing for randomness
+   3. Testing for fixed location (no shifts)
+   4. Testing for fixed variation (homoscedasticity)
+   5. Testing for goodness of fit of a distribution
+   6. Testing for correlation
+   7. ANOVA modeling
+
+To select a menu item, enter 1 to 7.
+
+----------------------------------------------------------
+
+11.1--GENERAL DISCUSSION
+
+----------------------------------------------------------
+
+11.2--TESTING FOR RANDOMNESS
+
+----------------------------------------------------------
+
+11.2.1--RUNS ANALYSIS
+
+----------------------------------------------------------
+
+11.2.2--SIGN TEST
+
+----------------------------------------------------------
+
+11.2.3--MEDIAN TEST
+
+----------------------------------------------------------
+
+11.3--TESTING FOR FIXED LOCATION (NO SHIFTS)
+
+----------------------------------------------------------
+
+11.3.1--SIGN TEST
+
+----------------------------------------------------------
+
+11.4--TESTING FOR FIXED VARIATION (HOMOSCEDASTICITY)
+
+----------------------------------------------------------
+
+11.4.1--SIGN TEST ON FIRST DIFFERENCES
+
+----------------------------------------------------------
+
+11.5--TESTING FOR GOODNESS OF FIT OF A DISTRIBUTION
+
+----------------------------------------------------------
+
+11.5.1--KOLMOGOROV-SMIRNOFF TEST
+
+----------------------------------------------------------
+
+11.6--TESTING FOR CORRELATION
+
+----------------------------------------------------------
+
+11.6.1--RANK CORRELATION COEFFICIENT
+
+----------------------------------------------------------
+
+11.7--ANOVA MODELING
+
+----------------------------------------------------------
+
+11.7.1--ANOVA ON RANKS
+
+----------------------------------------------------------
+
+11.7.2--MANN-WHITNEY TESTS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------  *ROBUST ANALYSIS*  -----------------------
+
+12--ROBUST ANALYSIS
+
+The sub-categories are--
+
+   1. General discussion
+   2. Univariate estimation
+   3. Smoothing
+   4. Fitting
+   5. Anova modeling
+
+To select a menu item, enter 1 to 5.
+
+----------------------------------------------------------
+
+12.1--GENERAL DISCUSSION
+
+----------------------------------------------------------
+
+12.2--UNIVARIATE ESTIMATION
+
+----------------------------------------------------------
+
+12.2.1--ROBUST LOCATION ESTIMATION
+
+----------------------------------------------------------
+
+12.2.2--ROBUST SCALE ESTIMATION
+
+----------------------------------------------------------
+
+12.3--SMOOTHING
+
+----------------------------------------------------------
+
+12.3.1--MEDIAN SMOOTHING
+
+----------------------------------------------------------
+
+12.3.2--ROBUST SMOOTHING
+
+----------------------------------------------------------
+
+12.4--FITTING
+
+----------------------------------------------------------
+
+12.4.1--L1 FITTING
+
+----------------------------------------------------------
+
+12.5--ANOVA MODELING
+
+----------------------------------------------------------
+
+12.5.1--ANOVA ON RANKS
+
+----------------------------------------------------------
+
+12.5.2--MEDIAN POLISH
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------  *EXPLORATORY DATA ANALYSIS*  -----------------
+
+13--EXPLORATORY DATA ANALYSIS
+
+The sub-categories are--
+
+   1. General discussion
+   2. Run sequence plots
+   3. Lag plots
+   4. Stem and leaf diagrams
+   5. Histograms
+   6. Normal probability plots
+   7. Scatter plots
+   8. Box plots
+
+To select a menu item, enter 1 to 8.
+
+----------------------------------------------------------
+
+13.1--GENERAL DISCUSSION
+
+----------------------------------------------------------
+
+13.2--RUN SEQUENCE PLOTS
+
+----------------------------------------------------------
+
+13.3--LAG PLOTS
+
+----------------------------------------------------------
+
+13.4--STEM AND LEAF DIAGRAMS
+
+----------------------------------------------------------
+
+13.5--HISTOGRAMS
+
+----------------------------------------------------------
+
+13.6--NORMAL PROBABILITY PLOTS
+
+----------------------------------------------------------
+
+13.7--SCATTER PLOTS
+
+----------------------------------------------------------
+
+13.8--BOX PLOTS
+
+----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------  *OPTIMAL ESTIMATION (NOT CURRENTLY USED)*  ---
+THE FOLLOWING IS FOR OPTIMAL ESTIMATION (NOT CURRECTLY USED)
+
+
+
+SSSSS  *1$ MENU FOR UNIVARIATE ANALYSIS*  ------------------
+
+
+
+
+SSSSS  *SDE1$ SPECIFY DISTRIBUTION FOR LOC. & SCALE ESTIMATION*
+
+
+
+The best estimator for the location and scale
+parameters depends on the distribution of the data.
+What distribution does your data have?
+
+   1. normal                 14. exponential
+   2. uniform                15. gamma
+   3. logistic               16. beta
+   4. double exponential     17. Weibull
+   5. Cauchy                 18. extreme value type 1
+   6. Tukey lambda           19. extreme value type 2
+   7. semi-circular          20. Pareto
+   8. triangular
+                             21. binomial
+   9. lognormal              22. geometric
+  10. halfnormal             23. Poisson
+  11. t                      24. negative binomial
+  12. chi-squared
+  13. F                      25. unknown
+SSSSS
+
+
+25.
+E1NO$
+E1UN$
+E1LO$
+E1DE$
+E1CA$
+S3TU$
+E1SC$
+E1TR$
+E1LN$
+E1HN$
+E1ST$
+E1CS$
+E1SF$
+E1EX$
+S3GA$
+E1BE$
+S3WE$
+E1E1$
+S3E2$
+S3PA$
+E1BI$
+E1GE$
+E1PO$
+E1NB$
+EDDF$
+
+SSSSS  *E1NO$ ESTIMATE LOC. & SCALE FOR NORMAL DISTRIBUTION
+
+
+
+The normal distribution has density function
+
+   f(x) = (1/(sqrt(2*pi)*b)) * exp(-0.5*z**2)
+          where z = (x-a)/b
+
+The optimal estimate for the location parameter a
+is the sample mean.
+The near-optimal estimate for the scale parameter b
+is the sample standard deviation.
+To compute them, use the ... MAXIMUM LIKELIHOOD
+ESTIMATION command, as in
+
+   NORMAL MAXIMUM LIKELIHOOD ESTIMATION Y
+
+To compute other estimates of location and
+scale, use the SUMMARY command, as in
+
+   SUMMARY Y
+
+After computing the above, enter    EXPERT NEXT
+for further questions regarding the validity
+of the estimate.
+SSSSS
+
+
+1.0
+CVE1$
+
+SSSSS  *E1UN$ ESTIMATE LOC. & SCALE FOR UNIFORM DISTRIBUTION
+
+
+
+The uniform distribution has density function
+
+   f(x) = 1/b   for a-(b/2) <= x <= a+(b/2)
+        = 0     for x outside of this interval
+
+The optimal estimate for the location parameter a
+is the sample midrange = (min + max)/2.
+The optimal estimate for the scale parameter b
+is the sample range = max - min.
+To compute them, use the ... MAXIMUM LIKELIHOOD
+ESTIMATION command, as in
+
+   UNIFORM MAXIMUM LIKELIHOOD ESTIMATION Y
+
+To compute other estimates of location and
+scale, use the SUMMARY command, as in
+
+   SUMMARY Y
+
+After computing the above, enter    EXPERT NEXT
+for further questions regarding the validity
+of the estimates.
+SSSSS
+
+
+1.0
+CVE1$
+
+SSSSS  *E1LO$ ESTIMATE LOC. & SCALE FOR LOGISTIC DISTRIBUTION
+
+
+
+The logistic distribution has density function
+
+   f(x) = (1/b) * exp(z) / (1+exp(z))
+          where z = (x-a)/b
+
+To compute optimal estimates for the location
+parameter a and the scale parameter b,
+use the ... MAXIMUM LIKELIHOOD ESTIMATION
+command, as in
+
+   LOGISTIC MAXIMUM LIKELIHOOD ESTIMATION Y
+
+To compute other estimates of location and
+scale, use the SUMMARY command, as in
+
+   SUMMARY Y
+
+After computing the above, enter    EXPERT NEXT
+for further questions regarding the validity
+of the estimate.
+SSSSS
+
+
+1.0
+CVE1$
+
+SSSSS  *E1DE$ ESTIMATE LOC. & SCALE FOR DOUBLE EXPONENTIAL DISTRIBUTION
+
+
+
+The double exponential (= Laplace) distribution has
+density function
+
+   f(x) = (1/b) * 0.5 * exp(-abs(z))
+          where z = (x-a)/b
+
+To compute optimal estimates for the location
+parameter a and the scale parameter b,
+use the ... MAXIMUM LIKELIHOOD ESTIMATION
+command, as in
+
+   DOUBLE EXPONENTIAL MAXIMUM LIKELIHOOD ESTIMATION Y
+
+To compute other estimates of location and
+scale, use the SUMMARY command, as in
+
+   SUMMARY Y
+
+After computing the above, enter    EXPERT NEXT
+for further questions regarding the validity
+of the estimate.
+SSSSS
+
+
+1.0
+CVE1$
+
+SSSSS  *E1CA$ ESTIMATE LOC. & SCALE FOR CAUCHY DISTRIBUTION
+
+
+
+The Cauchy distribution has density function
+
+   f(x) = (1/b) * (1/pi) * 1/(1 + z**2)
+          where z = (x-a)/b
+
+To compute optimal estimates for the location
+parameter a and the scale parameter b,
+use the ... MAXIMUM LIKELIHOOD ESTIMATION
+command, as in
+
+   CAUCHY MAXIMUM LIKELIHOOD ESTIMATION Y
+
+To compute other estimates of location and
+scale, use the SUMMARY command, as in
+
+   SUMMARY Y
+
+After computing the above, enter    EXPERT NEXT
+for further questions regarding the validity
+of the estimate.
+SSSSS
+
+
+1.0
+CVE1$
+
+SSSSS  *S3TU$ SPECIFY TAIL LENGTH PARAMETER FOR TUKEY LAMBDA DISTRIBUTION
+
+
+
+The Tukey lambda distribution has no simple closed-
+form density function.  It has percent point function
+(= inverse cumulative distribution function)
+
+   G(p) = a + b * [(p**lambda - (1-p)**lambda) / lambda]
+          where z = (x-a)/b
+
+The optimal estimate for the location parameter a
+and the scale parameter b depends on the value
+of the tail length parameter lambda.
+
+Do you have a value for lambda?
+
+   If yes, then enter YES, Y, or 1
+   if no,  then enter NO,  N, or 2
+SSSSS
+
+
+2.0
+E1TU$
+E3TU$
+
+SSSSS  *E1TU$ ESTIMATE LOC. & SCALE FOR TUKEY LAMBDA DISTRIBUTION
+
+
+
+The Tukey lambda distribution has no simple closed-
+form density function.  It has percent point function
+(= inverse cumulative distribution function)
+
+   G(p) = a + b * [(p**lambda - (1-p)**lambda) / lambda]
+          where z = (x-a)/b
+
+The near-optimal estimate for the location parameter a
+is the sample xxx.
+The optimal estimate for the scale parameter b
+is the sample xxx.
+To compute them, use the LET command, as in
+
+   LET A = XXX Y
+   LET B = XXX Y
+
+To compute other estimates of location and
+scale, use the SUMMARY command, as in
+
+   SUMMARY Y
+
+After computing the above, enter    EXPERT NEXT
+for further questions regarding the validity
+of the estimate.
+SSSSS
+
+
+1.0
+CVE1$
+
+SSSSS  *E3TU$ ESTIMATE TAIL LENGTH FOR TUKEY LAMBDA DISTRIBUTION
+
+
+
+To graphically estimate the value of lambda
+for your data, use a PPCC plot (= Probability
+Plot Correlation Coefficient plot).  To generate
+a PPCC plot, use the PPCC PLOT command, as in
+
+   TUKEY LAMBDA PPCC PLOT Y
+
+The resulting horizontal axis will be values of lambda
+(with default range from -2 to +2).  Each value
+of lambda represents a different member of the
+Tukey lambda distributional family.
+
+The vertical axis is a measure of how good a
+distributional fit each value of lambda provides
+(for details enter HELP PPCC PLOT).
+
+The graphical estimate of lambda is the value on
+the horizontal axis where the trace attains a max.
+
+After generating the above plot, enter    EXPERT NEXT
+for further questions.
+SSSSS
+
+
+1.0
+E4TU$
+
+SSSSS  *E4TU$ CHANGE PPCC LIMITS FOR TUKEY LAMBDA DISTRIBUTION
+
+
+
+The default range of lambda values on the
+horizontal axis of the Tukey PPCC plot is -2 to +2.
+If this range is inappropriate, or if you wish
+to gain an "extra decimal place" in the graphical
+estimate by blowing up the region around the max,
+then this may be done via the LET command, as in
+
+   LET LAMBDA1 = 0.1
+   LET LAMBDA2 = 0.2
+   TUKEY PPCC PLOT Y
+
+After generating the above plot, enter    EXPERT NEXT
+for further questions.
+SSSSS
+
+
+1.0
+SBE4$
+
+SSSSS  *CVE1$ CHECK VALIDITY OF LOC. & SCALE ESTIMATOR
+
+
+
+The validity of the estimator and the validity
+of the uncertainty attached to the estimator
+is dependent on various underlying
+assumptions.  Which underlying assumptions
+do you wish to check?
+
+   1. Randomness
+      Are the data uncorrelated?
+
+   2. Correct model
+      Are your sure    response = constant + error ?
+
+   3. Fixed variation (scale)
+      Is the variation in the response the
+      same for all data points?
+
+   4. Fixed, correct distribution--
+      Does the data follow only one distribution?
+      Is it the distribution you specified?
+
+   5. None
+SSSSS
+
+
+5.
+CVRA$
+CVLA$
+CVVA$
+CVDA$
+SBE1$
+
+SSSSS  *SBE1$ SPECIFY BRANCH AFTER LOC. & SCALE ESTIMATION
+
+
+
+Do you wish further consulting questions?
+You may resume the consulting session at any of
+the following points in the consulting "tree"--
+
+   1. Check validity of underlying assumptions
+
+   2. Specify another dist. for loc./scale estimation
+
+   3. Specify another type of univariate analysis
+
+   4. Specify another type of data analysis
+
+   5. None of the above--exit out of consulting mode.
+SSSSS
+
+
+5.
+CVUA$
+SDE1$
+STUA$
+STDA$
+DONE$
+
+SSSSS  *SBE4$ SPECIFY BRANCH AFTER TAIL LENGTH ESTIMATION
+
+
+
+Do you wish further consulting questions?
+You may resume the consulting session at any of
+the following points in the consulting "tree"--
+
+   1. Estimate location/scale for this distribution
+
+   2. Specify another dist. for loc./scale estimation
+
+   3. Check validity of underlying assumptions
+
+   4. Specify another type of univariate analysis
+
+   5. Specify another type of data analysis
+
+   6. None of the above--exit out of consulting mode.
+SSSSS
+
+
+6.
+E1XX$
+SDE1$
+CVUA$
+STUA$
+STDA$
+DONE$
+
+-ENDSSSSS*-----
+
+
+////////////
+Univariate Analysis
+   Computing Summary/Descriptive Statistics
+      Location Estimation
+      Variation (Scale) Estimation
+      Skewness Estimation
+      Tail Length Estimation
+      Autocorrelation estimation
+   Determining General Distributional Characteristics
+      Frequency Tabulation
+      Histograms and Cumulative Histograms
+      Stem and Leaf Diagrams
+      Frequency Plots and Cumulative Frequency Plots
+      Percent Point Plots
+      Pie Charts
+   Selecting a "Good-Fitting" Distribution
+      Probability Plots
+      PPCC Plots
+      Maximum Likelihood Estimation
+   Estimating the Parameters of the Distribution
+      Maximum Likelihood Estimation
+      Robust Estimates
+   Assessing the Goodness of Fit of a Distribution
+      Superimposing Probability Density Function and Histogram
+      Superimposing Root Density Function and Rootogram
+      Probability Plot
+      Chi-Squared Test
+      Kolmogorov-Smirnoff Test
+   Testing Underlying Assumptions
+      4-Plot Analysis
+   Testing for Randomness
+      Lag Plot
+      Runs Analysis
+      Distribution-Free Tests
+      Autocorrelation Plot
+      Spectral Plot
+   Testing for Fixed Location (No Shifts in Location)
+      t Test
+      Distribution-Free Tests
+   Testing for Fixed Variation (Homoscedasticity)
+      Homoscedasticity Plot
+   Transforming to Homoscedasticity
+      Box-Cox Homoscedasticity Plot
+      Chi-squared Tests
+   Testing for Fixed Distribution
+      Bihistogram
+      4-Plot Analysis
+      Distribution-Free Tests
+      Homoscedasticity Plot
+   Testing for Symmetry
+      Symmetry Plot
+   Transforming to Symmetry
+      Box-Cox Symmetry Plot
+   Testing for Normality
+      Normal Probability Plot
+      Tukey PPCC Plot
+      t PPCC Plot
+   Transforming to Normality
+      Box-Cox Normality Plot
+   Testing for Normal Outliers
+   Determining Confidence Limits for Distributional Parameters
+   Hypothesis Testing on Distributional Parameters
+   Probit Analysis???
+
+Time Series Analysis (1 Variable)
+   Checking for Time-Domain Structure
+      Run Sequence Plot
+      Lag Plot
+      Autocorrelation Plot
+      Partial-Autocorrelation Plot
+      Complex Demodulation Plots
+   Checking for Frequency-Domain Structure
+      Spectral Plot
+      Periodogram
+   Checking for Time and Frequency Domain Structure
+      4-Plot Analysis
+   Testing White Noise (Randomness)
+      Lag Plot
+      Runs Analysis
+      Distribution-Free Tests
+      Autocorrelation Plot
+      Spectral Plot
+      4-Plot Analysis
+   Checking for Trends
+      Run Sequence Plot
+      Correlation With Time
+      Linear Fit Over Time
+   Fitting Box-Jenkins Models
+      Lag Plot
+      Autocorrelation Plot
+      Partial Autocorrelation Plot
+   Smoothing
+      Moving Average Smoothing
+      Least Squares Smoothing
+      Median Smoothing
+      Robust Smoothing
+      Exponential Smoothing
+      Assessing the Goodness of the Smoothing
+         Residual Standard Deviation
+         Superimposing Raw Data and Fitted Curve
+         Scatter Plots of Residuals
+         Normal Probability Plot of Residuals
+         4-Plot of Residuals
+   Filtering
+      Low-Pass Filters
+      High-Pass Filters
+      Assessing the Goodness of the Filtering
+
+Time Series Analysis--2 Variables
+   Checking for Time-Domain Structure
+      Scatter Plot
+      Multi-Trace Plots
+      Cross-Spectral Plot
+      Bihistogram
+   Checking for Frequency-Domain Structure
+      Cross-Spectrum
+      Coherency Spectrum
+      Quadrature Spectrum
+      Co-Spectrum
+      Gain Spectrum
+      Argand Spectrum
+   Checking for Time and Frequency Domain Structure
+      4-Plot Analysis
+
+Correlation Analysis
+   Multi-Scatter Plots
+   Multi-ANOP Plots
+   Multi-Box Plots
+   Cross-Correlation Tabulation
+   Transforming Variables
+   Distribution-free Tests
+
+Fitting (1 Independent Variable)
+   Selecting a Model
+      Plotting the Data
+      Making Use of Reference Curves
+   Fitting a Model
+      Fitting Linear Models
+      Fitting Polynomial Models
+      Fitting Non-Linear Models
+      Fitting Splines
+      Fitting Rational Functions
+   Assessing the Goodness of Fit of the Model
+      Residual Standard Deviation
+      Lack of Fit F Tests
+      Superimposing Raw Data and Fitted Curve
+      Scatter Plots of Residuals
+      Normal Probability Plot of Residuals
+      4-Plot of Residuals
+   Improving the Model
+      Transforming to Simplify the Model
+      Transforming to Achieve Homogeneity
+      Transforming to Achieve Normality
+      Adding New Variables
+      Changing the Form of the Model
+   Fitting With Weights
+   Fitting With Constraints
+   Fitting With Other Criteria (e.g., L1 Fitting)
+
+Fitting (2 or More Independent Variable)
+   Selecting Variables for To Be Included in the Model
+      Multi-Run Sequence Plots
+      Multi-Histograms
+      Multi-Scatter Plots
+      Multi-ANOP Plots
+      Cross-Correlation Tabulation
+      Box Plots
+      Cp Plot
+   Selecting a Model
+      Plotting the Data
+      Making Use of Reference Curves
+   Fitting a Model
+      Fitting Multi-Linear Models
+      Fitting Non-Linear Models
+   Assessing the Goodness of Fit of the Model
+      Residual Standard Deviation
+      Lack of Fit F Tests
+      Superimposing Raw Data and Fitted Curve
+      Scatter Plots of Residuals
+      Normal Probability Plot of Residuals
+      4-Plot of Residuals
+   Improving the Model
+      Transforming to Simplify the Model
+      Transforming to Achieve Homogeneity
+      Transforming to Achieve Normality
+      Adding New Variables
+      Changing the Form of the Model
+   Fitting With Weights
+   Fitting With Constraints
+   Fitting With Other Criteria (e.g., L1 Fitting)
+
+ANOVA Modeling
+   Selecting Variables for To Be Included in the Model
+      Multi-Run Sequence Plots
+      Multi-Histograms
+      Multi-Scatter Plots
+      Multi-ANOP Plots
+   Examining 1-Factor Models
+      1-Way ANOVA
+      1-Way GANOVA
+      Scatter Plots
+      Box Plot
+      ANOP Line Plot
+      ANOP Character Plot
+      I Plot
+      Distribution-free Tests
+      Correlation
+      Categorical Data Analauysis
+      Cross-Corrleation
+      Discrete Contour Plot
+      Frequency Tabulation
+      Cross-Tabulation
+      Chi-squared
+   Examining 2-Factor Models
+      2-Way ANOVA
+      2-Way GANOVA
+      Median Polish
+      Multi-Trace Plots
+      3-D Plot
+      Spike Plots
+   Examining 3-Factor Models
+      3-Way ANOVA
+      3-Way GANOVA
+      Multi-Cell Plots
+   Examining 4-factor Models
+      4-Way ANOVA
+      Multi-Plot 2-Way GANOVA
+      Multi-Plot 3-Way GANOVA
+   Examining 5-Factor Models
+      5-Way ANOVA
+      Multi-Plot 3-Way GANOVA
+   Examining 1-Factor Models With Only 2 Treatments
+      1-Way ANOVA
+      t Test
+      Bihistogram
+   Examining 2**k Models
+      Square Plots, Cube Plots, etc.
+   Assessing the Goodness of Fit of the Model
+      Residual Standard Deviation
+      Lack of Fit F Tests
+      GANOVA, Parallelism, and Non-Additivity
+      Superimposing Raw Data and Fitted Curve
+      Scatter Plots of Residuals
+      Normal Probability Plot of Residuals
+      4-Plot of Residuals
+   Improving the Model
+      Residual Standard Deviations For Sub-Models
+      F Tests For Sub-Models
+      Transforming to Simplify the Model
+      Transforming to Achieve Additivity
+      Transforming to Achieve Homogeneity
+      Transforming to Achieve Normality
+      Omitting Variables From the Model
+         F Tests for Sub-Models
+      Selecting Additional Variables For the Model
+         Scatter Plots of Residuals on New Variables
+         Box Plots of Residuals on New Variables
+      Changing the Form of the Model
+
+Multivariate Analysis
+   Cluster Analysis
+   Discriminant Analysis
+   Principal Component Analysis
+   Canonical Analysis
+   Testing Multivariate Normality--Q-Q Plot
+
+Probability Analysis
+   Generating Random Numbers/Simulation/Monte Carlo
+   Computing Percent Points
+   Computing Probability Density Functions
+   Computing Cumulative Distribution Functions
+   Plotting Percent Points
+   Plotting Probability Density Functions
+   Plotting Cumulative Distribution Functions
+   Superimposing Probability Density Funtions on Histograms
+
+Quality Control
+   Testing for Trends
+      Run Sequence Plot
+      Mean Control Chart
+   Testing for Shifts in Location
+      Run Sequence Plot
+      Mean Control Chart
+   Testing for Shifts in Variation
+      Range Control Chart
+      Standard Deviation Control Chart
+   Testing for Outliers
+   Interlaboratory Testing
+      Youden Plots
+
+Exploratory Data Analysis
+   Run Sequence Plots
+   Lag Plots
+   Stem and Leaf Diagrams
+   Histograms
+   Normal Probability Plots
+   Scatter Plots
+   Box Plots
+
+Robust Analysis
+   Univariate Estimation
+      Robust Location Estimation
+      Robust Scale Estimation
+   Smoothing
+      Median Smoothing
+      Robust Smoothing
+   Fitting
+      L1 Fitting
+   ANOVA Modeling
+      ANOVA On Ranks
+      Median Polish
+
+Distribution-Free Analysis
+   Testing for Randomness
+      Runs Analysis
+      Sign Test
+      Median Test
+   Testing for Fixed Location (No Shifts)
+      Sign Test
+   Testing for Fixed Variation (Homoscedasticity)
+      Sign Test on First Differences
+   Testing for Goodness of Fit of a Distribution
+      Kolmogorov-Smirnoff Test
+   Testing for Correlation
+      Rank Correlation Coefficient
+   ANOVA Modeling
+      ANOVA On Ranks
+      Mann-Whitney Tests
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

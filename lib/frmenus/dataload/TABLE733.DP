@@ -1,0 +1,8 @@
+----- <~dataload\TABLE733.DP> Load TABLE733.DAT
+
+. This is file    TABLE733.DP
+
+DELETE Y X1 TO X6
+SKIP 25
+READ TABLE733.DAT Y X1 TO X6
+

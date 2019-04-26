@@ -1,0 +1,152 @@
+This is DATAPLOT file     INLINE.               1/94
+Purpose--Enumerate Dataplot's in-line text subcommands
+         These in-line text subcommands may be used with any
+         TEXT TITLE X2LABEL X3LABEL LEGEND etc. commands
+            Example:  TEXT ALPH()BETA()GAMM()
+ 
+-----(x)Greek Characters
+ 
+Greek Characters
+ 
+ALPH()  : Greek alpha
+BETA()  : Greek beta
+CHI()   : Greek chi
+DELT()  : Greek delta
+EPSI()  : Greek epsilon
+ETA()   : Greek eta
+GAMM()  : Greek gamma
+IOTA()  : Greek iota
+KAPP()  : Greek kappa
+LAMB()  : Greek lambda
+MU()    : Greek mu
+NU()    : Greek nu
+OMEG()  : Greek omega
+OMIC()  : Greek omicon
+PHI()   : Greek phi
+PI()    : Greek pi
+PSI()   : Greek psi
+RHO()   : Greek rho
+SIGM()  : Greek sigma
+TAU()   : Greek tau
+THET()  : Greek theta
+UPSI()  : Greek upsilon
+XI()    : Greek xi
+ZETA()  : Greek zeta
+ 
+-----(x)Geometric
+ 
+Geometric
+ 
+CIRC()  : circle
+CUBE()  : cube
+DIAM()  : diamond
+PYRA()  : pyramid
+SQUA()  : square
+STAR()  : star
+TRIA()  : triangle
+TRII()  : inverted triangle
+ 
+-----(x)Shift
+ 
+Shift
+ 
+LC()    : Shift to lower case
+UC()    : Shift to upper case
+ 
+SUB()   : Shift to subscript
+SUP()   : Shift to superscript
+ 
+UNSB()  : Shift to un-subscript
+UNSP()  : Shift to un-superscript
+ 
+-----(x)Math
+ 
+Math
+ 
+PART()  : partial derivative
+INTE()  : integral
+CINT()  : circular integral
+SUMM()  : summation
+PROD()  : product
+ 
+INFI()  : infinity
+ 
++-()    : + or -
+TIME()  : times sign
+DOTP()  : dot product
+DEL()   : vector product
+DIVI()  : division
+ 
+LT()    : less than
+GT()    : greater than
+LTEQ()  : less than or equal to
+GTEQ()  : greater than or equal to
+NOT=()  : not equal
+APPR()  : approximatly equal to
+EQUI()  : equivalence
+VARI()  : varies
+ 
+TILD()  : tilda
+CARA()  : carot
+PRIM()  : prime
+ 
+RADI()  : radical
+LRAD()  : large radiacal
+BRAD()  : larger radical
+ 
+UNIO()  : union
+INTR()  : intersection
+ELEM()  : is an element of
+ 
+THEX()  : there exists
+THFO()  : therefore
+ 
+----(x)Miscellaneous
+ 
+Miscellaneous
+ 
+ARRD()  : arrow pointing down
+ARRL()  : arrow pointing left
+ARRR()  : arrow pointing right
+ARRU()  : arrow pointing up
+ 
+BAR()   : bar
+BARH()  : horizontal bar
+BARV()  : vertical bar
+ 
+BASL()  : backslash
+BREV()  : breve
+DAGG()  : dagger
+DARR()  : down arrow
+DDAG()  : double dagger
+DVBA()  : double vertical bar
+HASP()  : Move a half-space
+HBAR()  : horizontal bar
+IASP()  : inverted nasp
+ 
+LACC()  : left accent
+LAPO()  : left apostrophe
+LARR()  : left arrow
+LBRA()  : left bracket
+LCBR()  : left curly bracket
+LELB()  : left elbow
+LQUO()  : left quote
+RACC()  : right accent
+RAPO()  : right apostrophe
+RARR()  : right arrow
+RBRA()  : right bracket
+RCBR()  : right curly bracket
+RELB()  : right elbow
+RQUO()  : right quote
+ 
+LHBA()  : long horizontal bar
+LVBA()  : long vertical bar
+NASP()  : nasp
+UARR()  : up arrow
+VBAR()  : vertical bar
+ 
+-----(x)Replace with Value
+ 
+Replace with Value
+ 
+VALU()  : Write actual value of succeeding param

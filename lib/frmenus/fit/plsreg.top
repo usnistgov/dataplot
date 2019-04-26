@@ -1,0 +1,10 @@
+----- <~fit\plsreg.top> Partial Least Squares Regression
+
+Partial Least Squares Regression
+
+Discussion          <~fit\plsrdisc.top>
+Do the Fit          <xemf: ~fit\fitpls.men>
+Do Model Validation <xemf: ~fit\modelval.men>
+Built-in Datasets   <~fit\plsrdata.top>
+References          <~fit\plsrref.top>
+

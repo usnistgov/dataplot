@@ -1,0 +1,10 @@
+----- <~dataexec\BOWEN.DP> Load & Execute BOWEN.DAT
+
+. This is file    BOWEN.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ BOWEN.DAT Y X1 X2 X3
+TITLE BOWEN.DAT
+DEX MEAN PLOT Y X1 X2 X3
+

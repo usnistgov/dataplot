@@ -1,0 +1,16 @@
+----- <~reli\meanldef.top> Mean Life (Definition)
+
+Mean Life (Definition)
+
+The Mean Life M = that time value M which serves
+as the centroid balance point of the distribution
+of population failure times.
+The mean life M is defined as
+
+   M = integral y*f(y) dy
+
+Synonym: Mean Life
+Synonym: Average Life
+Synonym: Mean Time to Failure MTTF
+Synonym: Mean Time between Failures MTBF
+

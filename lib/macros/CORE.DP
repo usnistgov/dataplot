@@ -1,0 +1,93 @@
+. This is dataplot macro   core.dp
+. Purpose: Determine the core vectors spanning the (n-1) space (or a large part of it)
+.          for effect estimation calculations by the    est.dp    macro
+.          Domain: a general 2-level design--in Yates order or not.
+. Date: 3/5/15
+. Input:
+.    k                      (parameter) = number of design factors
+.    x1, x2, etc.           (vectors)   = (-1,+1) vectors in the design
+. Output:
+.    numcore  (parameter)  = number of orthogonal core vectors
+.    corefac1 (vector)     = id for the   1st   factor of the core vector
+.    corefac2 (vector)     = id for the   2nd   factor of the core factor (where -999 => main effect)
+.    corefac3 (vector)     = id for the   3rd   factor of the core factor (where -999 => main effect)
+.    corefac4 (vector)     = id for the   4th   factor of the core factor (where -999 => main effect)
+.    corefac5 (vector)     = id for the   5th   factor of the core factor (where -999 => main effect)
+.    coredone  (parameter) = (0,1) indicator as to whether this routine has (ever) been executed (default = not exist)
+.
+. -----start point-----
+.
+let maxnoco = 100
+.
+let pausecor = 0
+feedback off
+printing off
+.
+if pausecor = 1
+   print " "
+   print "At the beginning of    core.dp"
+   print "k = ^k"
+   if k <= 15
+      print x1 to x^k
+   end if
+   print "maxnoco = ^maxnoco"
+end if
+.
+print " "
+print "2. Orthogonal core elements are now being determined . . ."
+print " "
+.
+. -----Step 0: Check input arguments-----
+.
+let string stmacro = core.dp
+let string stall = k
+call checkinput.dp
+.
+if k exists
+   loop for j = 1 1 k
+      let string stall = x^j
+   call checkinput.dp
+   end loop
+end if
+.
+let string stall = x1
+let string space = sp()
+loop for j = 2 1 k
+    let string sttemp = x^j
+    let stall = string concatenate stall space sttemp
+end of loop
+.
+let corefac = dex core ^stall
+let corefac1 = corefa1
+let corefac2 = corefa2
+let corefac3 = corefa3
+let corefac4 = corefa4
+let corefac5 = corefa5
+let numcore = number corefac1
+if pausecor = 1
+   print "stall = ^stall"
+   print "numcore = ^numcore"
+   pause
+end if
+.
+. -----Step 5: Since the core effect determination is now done,
+. -----        set a switch to indicate that-----
+.
+if pausecor = 1; print "--At core.dp step 5"; pause; end if
+print ". . . . ."
+.
+let coredone = 1
+.
+. -----Step 9: All done-----
+.
+if pausecor = 1; print "--At core.dp step 9: All done"; pause; end if
+print ". . . . . ."
+.
+if pausecor = 1
+   let numcore = number corefac1
+   print corefac1 corefac2 corefac3 corefac4 corefac5
+   print "Number of core elements (final)     numcore = ^numcore"
+   print "k = ^k   n = ^n"
+   pause
+end if
+.

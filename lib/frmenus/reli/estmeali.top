@@ -1,0 +1,22 @@
+This is file estmeali.men--Compute Mean Life
+ 
+--------------------
+ 1. Mean Life
+ 2. LET A = MEAN Y
+ 3.
+ 4. Variable to compute the mean life for:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Parameter to store the mean life:
+ 5. @CE 2 0 42 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Mean Life?:
+--------------------
+GR FE
+LET _2 = MEAN  _1 _3
+--------------------
+WEB HELP MEAN
+--------------------

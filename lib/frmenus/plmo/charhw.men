@@ -1,0 +1,67 @@
+This is file charhw.men--Set Character Height and Width
+ 
+--------------------
+ 1. Character Height and Widths
+ 2. CHARACTER HW <list of character height and widths>
+ 3.
+ 4. The height and width is entered as 2
+ 5. distinct numbers (separated by a space).
+ 6.
+ 7. Character Height and Width for ALL Traces:
+ 7. @CE 1 0 33 50 * 
+ 8.
+ 9. Use the following menus to set character heights and widths
+10. individually.  The character heights and widths are sequential.
+11. If you set the character height and width width for trace 5, you
+12. must also set them for traces 1, 2, 3, and 4.
+13.
+14. Character Height and Width for Trace 1:
+14. @CE 2 0 33 50 * 
+15. Character Height and Width for Trace 2:
+15. @CE 3 0 33 50 * 
+16. Character Height and Width for Trace 3:
+16. @CE 4 0 33 50 * 
+17. Character Height and Width for Trace 4:
+17. @CE 5 0 33 50 * 
+18. Character Height and Width for Trace 5:
+18. @CE 6 0 33 50 * 
+19. Character Height and Width for Trace 6:
+19. @CE 7 0 33 50 * 
+20. Character Height and Width for Trace 7:
+20. @CE 8 0 33 50 * 
+21. Character Height and Width for Trace 8:
+21. @CE 9 0 33 50 * 
+22. Character Height and Width for Trace 9:
+22. @CE 10 0 33 50 * 
+23. Character Height and Width for Trace 10:
+23. @CE 11 0 33 50 * 
+24. Character Height and Width for Trace 11:
+24. @CE 12 0 33 50 * 
+25. Character Height and Width for Trace 12:
+25. @CE 13 0 33 50 * 
+26. Character Height and Width for Trace 13:
+26. @CE 14 0 33 50 * 
+27. Character Height and Width for Trace 14:
+27. @CE 15 0 33 50 * 
+28. Character Height and Width for Trace 15:
+28. @CE 16 0 33 50 * 
+29. Character Height and Width for Trace 16:
+29. @CE 17 0 33 50 * 
+30. Character Height and Width for Trace 17:
+30. @CE 18 0 33 50 * 
+31. Character Height and Width for Trace 18:
+31. @CE 19 0 33 50 * 
+32. Character Height and Width for Trace 19:
+32. @CE 20 0 33 50 * 
+33. Character Height and Width for Trace 20:
+33. @CE 21 0 33 50 * 
+34.
+35.
+36. Set the Character Height and Widths?
+--------------------
+PC FE
+CHARACTER HW _2 _3 _4 _5 _6 _7 _8 _9 _10 _11 _12 _13 _14 _15 _16 _17 _18 _19 _20 _21
+@IF 1 0 CHARACTER HW _1 ALL
+--------------------
+WEB HELP CHARACTER HW
+--------------------

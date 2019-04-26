@@ -1,0 +1,15 @@
+----- <~plot\crosfact.top> Statistics for Grouped Data Plots
+
+Statistics for Grouped Data (Two Group Variables)
+
+Statistics for Grouped Data (Two Group Variables)
+   Location Statistics                     <xemf: ~stat\crospllo.men>
+   Scale Statistics                        <xemf: ~stat\crosplsc.men>
+   Extremes and Percentiles                <xemf: ~stat\crosplpe.men>
+   Quality Control                         <xemf: ~stat\crosplqc.men>
+   Correlation/Fitting Statistics          <xemf: ~stat\crosplco.men>
+   Miscellaneous Statistics                <xemf: ~stat\crosplms.men>
+   Difference of Location Statistics       <xemf: ~stat\croslodi.men>
+   Difference of Scale Statistics          <xemf: ~stat\crosscdi.men>
+   Difference of Extremes/Quantiles        <xemf: ~stat\crosqudi.men>
+

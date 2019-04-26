@@ -1,0 +1,49 @@
+This is Dataplot Data File     CASTIL10.DAT
+Norway Wave Data--Maximum signif. wave height in Myken-Skomvaer
+Engineering Goal--Design of sea structures
+Response Variable = Maximum signif.? yearly wave height
+Number of Observations = 24
+Number of Variables per line image = 1
+Order of variables per line image--
+   1. Response variable = max yearly sign. wave height
+Statistical Category--Extreme Value Analysis
+To read this into Dataplot--
+   SKIP 25
+   READ CASTIL10.DAT Y
+Source--Enrique Castillo (1988). Extreme Value Theory
+        in Engineering. Academic Press, San Diego, California,
+        p. 338.
+Original Source--Houmb, O. G. and Overvik, J. (1977).
+        On the statistical properties of 115 wave records
+        from the Norwegian Continental Shelf.
+        Division of Ports and Ocean Engineering.
+        The Univ. of Trondheim, Norway.
+ 
+ 
+ 
+Maximum yearly significant wave height (M-S, Norway) (sorted)
+-------------------------------------------------------------------
+  5.60
+  6.55
+  6.65
+  7.35
+  7.80
+  7.90
+  8.00
+  8.50
+  9.05
+  9.15
+  9.40
+  9.60
+  9.80
+  9.90
+ 10.85
+ 10.90
+ 11.10
+ 11.30
+ 11.30
+ 11.55
+ 11.75
+ 12.85
+ 12.90
+ 13.40

@@ -1,0 +1,8 @@
+----- <~dataload\REHM.DP> Load REHM.DAT
+
+. This is file    REHM.DP
+
+DELETE Y1 Y2 X PATIENT
+SKIP 25
+READ REHM.DAT Y1 Y2 X PATIENT
+

@@ -1,0 +1,29 @@
+----- <~reli\estpppar.top> Estimate Percent Points (Parametric)
+
+Estimate Percent Points (Parametric approach)
+
+Discussion                                 <~reli\epppardi.top>
+
+Normal                                     <xemf: ~prob\norppf.men>
+Lognormal                                  <xemf: ~prob\lgnppf.men>
+Power Normal                               <xemf: ~prob\pnrppf.men>
+Power Lognormal                            <xemf: ~prob\plnppf.men>
+
+Exponential                                <xemf: ~prob\expppf.men>
+Geometric Extreme Exponential              <xemf: ~prob\geeppf.men>
+
+Weibull (Minimum)                          <xemf: ~prob\wei1ppf.men>
+Weibull (Maximum)                          <xemf: ~prob\wei2ppf.men>
+Inverted Weibull                           <xemf: ~prob\iweppf.men>
+Exponentiated Weibull                      <xemf: ~prob\eweppf.men>
+Bi-Weibull                                 <xemf: ~prob\bweppf.men>
+
+Wald                                       <xemf: ~prob\walppf.men>
+Inverse Gaussian                           <xemf: ~prob\igppf.men>
+Reciprocal Inverse Gaussian                <xemf: ~prob\rigppf.men>
+Fatigue Life                               <xemf: ~prob\flppf.men>
+
+Gamma                                      <xemf: ~prob\gamppf.men>
+Log Gamma                                  <xemf: ~prob\lgappf.men>
+Inverted Gamma                             <xemf: ~prob\igappf.men>
+

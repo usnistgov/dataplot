@@ -1,0 +1,8 @@
+-----  <~dexcomp\ccrdload.top> Load Completely Randomized Designs
+
+Completely Randomized Designs Data Sets: Load
+
+   BOXTOMAT.DAT  Tomato Yield             <xcf: ~dataload\BOXTOMAT.DP>
+   BOXBLOOD.DAT  Blood Coagulation Time: Diet Effect <xcf: ~dataload\BOXBLOOD.DP>
+   BATTADD3.DAT  Watt Hours: Additive Type, Battery ID <xcf: ~dataload\BATTADD3.DP>
+

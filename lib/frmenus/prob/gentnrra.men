@@ -1,0 +1,41 @@
+This is file genghra.men--Generate Truncated Normal Random Numbers
+ 
+--------------------
+ 1. Generate Truncated Normal Random Numbers
+ 2. LET Y = TRUNCATED NORMAL RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 41 50 ?
+ 5. Shape Parameter (mu):
+ 5. @CE 2 0 41 50 ?
+ 6. Shape Parameter (sigma, sigma > 0):
+ 6. @CE 3 0 41 50 ?
+ 7. Lower Limit Parameter:
+ 7. @CE 4 0 41 50 ?
+ 8. Upper Limit Parameter):
+ 8. @CE 5 0 41 50 ?
+ 9.
+10. Optional random number generator seed (default=305):
+11.    (integer >= 305)
+11. @CE 6 0 41 50 ?
+12.
+13. Name of output variable;
+13. @CE 7 0 41 50 ?
+14.
+15.
+16. Generate the random numbers?
+--------------------
+AN FE
+@IF 6 0 SEED _6
+LET MU = 0
+@IF 2 0 LET MU = _2
+LET SD = 1
+@IF 3 0 LET SD = _3
+LET A = 0
+@IF 4 0 LET A = _4
+LET B = 1
+@IF 5 0 LET B = _5
+LET _7 = TRUNCATED NORMAL RANDOM NUMBERS FOR I = 1 1 _1
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

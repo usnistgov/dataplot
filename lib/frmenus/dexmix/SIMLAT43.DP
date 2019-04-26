@@ -1,0 +1,8 @@
+----- <~dexmix\SIMLAT43.DP> Load SIMLAT43.DAT
+
+. This is file     SIMLAT43.DP
+
+DELETE X1 TO X4
+SKIP 25
+READ SIMLAT43.DAT X1 TO X4
+

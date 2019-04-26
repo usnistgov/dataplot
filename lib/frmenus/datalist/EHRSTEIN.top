@@ -1,0 +1,8 @@
+----- <~datalist\EHRSTEIN.top> EHRSTEIN.DAT
+ 
+EHRSTEIN.DAT
+ 
+View     <xcl: LIST EHRSTEIN.DAT>
+Load     <x2cl: SKIP 25; READ EHRSTEIN.DAT Y X1 X2>
+Print    <xccl: printfile C:\DATAPLOT\EHRSTEIN.DAT>
+ 

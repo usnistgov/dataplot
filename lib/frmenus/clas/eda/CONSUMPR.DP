@@ -1,0 +1,10 @@
+----- <~dataloex\CONSUMPR.DP> Load & Execute CONSUMPR.DAT
+
+. This is file    CONSUMPR.DP
+
+DELETE Y
+SKIP 25
+READ CONSUMPR.DAT Y
+TITLE CONSUMPR.DAT
+/
+

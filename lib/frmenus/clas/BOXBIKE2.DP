@@ -1,0 +1,10 @@
+----- <~dataloex\BOXBIKE2.DP> Load & Execute BOXBIKE2.DAT
+
+. This is file    BOXBIKE2.DP
+
+DELETE Y X1 TO X7
+SKIP 25
+READ BOXBIKE2.DAT Y X1 TO X7
+TITLE BOXBIKE2.DAT
+/
+

@@ -1,0 +1,1098 @@
+MENU FILE #4 (FUNCTIONS)
+ 
+0                200         0
+Built-in Functions
+1                200        19
+Sign, Integer, Fraction, Round, Mod, & MSD Functions
+1.1              200        30
+Sign Function SIGN(X)
+1.2              200        48
+Integer Function INT(X)
+1.3              200        66
+Fraction Function FRACT(X)
+1.4              200        84
+Round Function ROUND(X,NDP)
+1.5              200       106
+Modulus Function MOD(X,BASE)
+1.6              200       124
+Most Significant Digit Function MSD(X)
+2                200       143
+Min, Max, & Positive Difference Functions
+2.1              200       151
+Minimum Function MIN(X,Y)
+2.2              200       170
+Maximum Function MAX(X,Y)
+2.3              200       189
+Positive Difference Function DIM(X,Y)
+3                200       208
+Absolute Value, Square Root, Exponential, & Log Functions
+3.1              200       217
+Absolute Value Function ABS(X)
+3.2              200       235
+Square Root Function SQRT(X)
+3.3              200       253
+Exponential Function EXP(X)
+3.4              200       271
+Logarithmic Functions LOG(X), LOG10(X), LOG2(X)
+4                200       294
+Error & Gamma Functions
+4.1              200       303
+Error Function ERF(X)
+4.2              200       323
+Complementary Error Function ERFC(X)
+4.3              200       343
+Gamma Function GAMMA(X)
+4.4              200       363
+Log (to base e) Gamma Function LOGGAMMA(X)
+5                200       383
+Chebychev & Bessel Functions
+5.1              200       390
+Chebychev Functions CHEB0(X) to CHEB10(X)
+5.2              200       412
+Bessel Functions BESS0(X) AND BESS1(X)
+6                200       433
+Trig Functions (Circular)
+7                200       458
+Inverse Trig Functions (Circular)
+8                200       484
+Trig Functions (Hyperbolic)
+9                200       503
+Inverse Trig Functions (Hyperbolic)
+10               200       522
+Octal/Decimal Conversion Functions
+11               200       540
+Probability Functions
+11.1             200       554
+Normal Distribution
+11.2             200       578
+t Distribution
+11.3             200       600
+Chi-squared Distribution
+11.4             200       622
+F Distribution
+11.5             200       645
+Weibull Distribution
+11.6             200       667
+Inverse Gaussian Distribution
+11.7             200       689
+Wald Distribution
+11.8             200       711
+Reciprocal Inverse Gaussian Distribution
+11.9             200       734
+Fatigue Life Distribution
+12               200       756
+Indicator Function IND(X,TAG)
+13               200       776
+Binary Pattern Function BINPAT(X,K)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------  *BUILT-IN FUNCTIONS*  ------------------------
+ 
+0
+Built-in Functions
+   1. Sign, Integer, Fraction, Round, Mod, & MSD Functions
+   2. Min, Max, & Positive Difference Functions
+   3. Absolute Value, Square Root, Exponential, & Log Functions
+   4. Error & Gamma Functions
+   5. Chebychev & Bessel Functions
+   6. Trig Functions (Circular)
+   7. Inverse Trig Functions (Circular)
+   8. Trig Functions (Hyperbolic)
+   9. Inverse Trig Functions (Hyperbolic)
+  10. Octal/Decimal Conversion Functions
+ 
+  11. Probability Functions
+  12. Indicator Function IND(X,TAG)
+  13. Binary Pattern Function BINPAT(X,K)
+ 
+----------------------------------------
+ 
+1
+Sign, Integer, Fraction, Round, Mod, & MSD Functions
+   1. Sign Function SIGN(X)
+   2. Integer Function INT(X)
+   3. Fraction Function FRACT(X)
+   4. Round Function ROUND(X,NDP)
+   5. Modulus Function MODULUS(X,BASE)
+   6. Most Significan Digit Function MSD(X)
+ 
+----------------------------------------
+ 
+1.1
+Sign Function SIGN(X)
+      LET A = -7.2
+      LET B = SIGN(A)
+      LET C = 8.6
+      LET D = SIGN(D)
+      WRITE A B C D
+      .
+      LET X = DATA -2 -5 3 15 -6
+      LET Y = SIGN(X)
+      WRITE X Y
+      SET WRITE DECIMALS 1
+      WRITE X Y
+      .
+      PLOT SIGN(X) FOR X = -10 1 10
+ 
+----------------------------------------
+ 
+1.2
+Integer Function INT(X)
+      LET A = -7.265
+      LET B = INT(A)
+      LET C = 8.61
+      LET D = INT(D)
+      WRITE A B C D
+      SET WRITE DECIMALS 4
+      WRITE A B C D
+      .
+      LET X = DATA 3.1415 2.718 -1.77 2.9979
+      LET Y = INT(X)
+      WRITE X Y
+      .
+      PLOT INT(X) FOR X = -3 .1 3
+ 
+----------------------------------------
+ 
+1.3
+Fraction Function FRACT(X)
+      LET A = -7.265
+      LET B = FRACT(A)
+      LET C = 8.61
+      LET D = FRACT(D)
+      WRITE A B C D
+      SET WRITE DECIMALS 4
+      WRITE A B C D
+      .
+      LET X = DATA 3.1415 2.718 -1.77 2.9979
+      LET Y = FRACT(X)
+      WRITE X Y
+      .
+      PLOT FRACT(X) FOR X = -3 .1 3
+ 
+----------------------------------------
+ 
+1.4
+Round Function ROUND(X,NDP)
+      LET A = 3.141592
+      LET B0 = ROUND(A,0)
+      LET B1 = ROUND(A,1)
+      LET B2 = ROUND(A,2)
+      LET B3 = ROUND(A,3)
+      LET B4 = ROUND(A,4)
+      WRITE A B0 B1 B2 B3 B4
+      SET WRITE DECIMALS 5
+      WRITE A B0 B1 B2 B3 B4
+      WRITE "THE VALUE OF PI IS ^A "
+      WRITE "THE VALUE OF PI TO 4 DECIMAL PLACES IS ^B4 "
+      .
+      LET X = NORMAL RANDOM NUMBERS FOR I = 1 1 10
+      LET Y = ROUND(X,2)
+      WRITE X Y
+      .
+      PLOT ROUND(X,1) FOR X = -1 .01 1
+ 
+----------------------------------------
+ 
+1.5
+Modulus Function MOD(X,BASE)
+      LET A = 4
+      LET B2 = MOD(A,2)
+      LET B3 = MOD(A,3)
+      LET B4 = MOD(A,4)
+      WRITE A B2 B3 B4 B5
+      SET WRITE DECIMALS 0
+      WRITE A B2 B3 B4 B5
+      .
+      LET X = SEQUENCE 1 1 10
+      LET Y = MOD(X,8)
+      WRITE X Y
+      .
+      PLOT MOD(X,2) FOR X = -5 .1 5
+ 
+----------------------------------------
+ 
+1.6
+Most Significant Digit Function MSD(X)
+      LET A = 38.2
+      LET B = MSD(A)
+      LET C = -123.456
+      LET D = MSD(D)
+      SET WRITE DECIMALS 3
+      WRITE A B C D E F
+      .
+      LET X = UNIFORM RANDOM NUMBERS FOR I = 1 1 100
+      LET Y = MSD(X)
+      SET WRITE DECIMALS 3
+      WRITE X Y
+      TABULATE Y
+      .
+      PLOT MSD(X) FOR X = -5 .1 5
+ 
+----------------------------------------
+ 
+2
+Min, Max, & Positive Difference Functions
+   1. Minimum Function MIN(X,Y)
+   2. Maximum Function MAX(X,Y)
+   3. Positive Difference Function DIM(X,Y)
+ 
+----------------------------------------
+ 
+2.1
+Minimum Function MIN(X,Y)
+ 
+LET A = 3
+LET B = 5
+LET C = MIN(A,B)
+WRITE A B C
+SET WRITE DECIMALS 0
+WRITE A B C
+.
+LET X1 = NORMAL RANDOM NUMBERS FOR I = 1 1 10
+LET X2 = NORMAL RANDOM NUMBERS FOR I = 1 1 10
+LET Y = MIN(X1,X2)
+WRITE X1 X2 Y
+.
+PLOT MIN(X,1) FOR X = -5 1 5
+ 
+----------------------------------------
+ 
+2.2
+Maximum Function MAX(X,Y)
+ 
+LET A = 3
+LET B = 5
+LET C = MAX(A,B)
+WRITE A B C
+SET WRITE DECIMALS 0
+WRITE A B C
+.
+LET X1 = NORMAL RANDOM NUMBERS FOR I = 1 1 10
+LET X2 = NORMAL RANDOM NUMBERS FOR I = 1 1 10
+LET Y = MAX(X1,X2)
+WRITE X1 X2 Y
+.
+PLOT MAX(X,1) FOR X = -5 1 5
+ 
+----------------------------------------
+ 
+2.3
+Positive Difference Function DIM(X,Y)
+Note--The Positive Difference of x and y = x - min(x,y)
+      LET A = 3
+      LET B = 5
+      LET C = DIM(A,B)
+      WRITE A B C
+      SET WRITE DECIMALS 0
+      WRITE A B C
+      .
+      LET X1 = NORMAL RANDOM NUMBERS FOR I = 1 1 10
+      LET X2 = NORMAL RANDOM NUMBERS FOR I = 1 1 10
+      LET Y = DIM(X1,X2)
+      WRITE X1 X2 Y
+      .
+      PLOT DIM(X,1) FOR X = -5 1 5
+ 
+----------------------------------------
+ 
+3
+Absolute Value, Square Root, Exponential, & Log Functions
+   1. Absolute Value Function ABS(X)
+   2. Square Root Function SQRT(X)
+   3. Exponential Function EXP(X)
+   4. Logarithmic Functions LOG(X), LOG10(X), LOG2(X)
+ 
+----------------------------------------
+ 
+3.1
+Absolute Value Function ABS(X)
+      LET A = -7.2
+      LET B = ABS(A)
+      LET C = 8.6
+      LET D = ABS(D)
+      WRITE A B C D
+      .
+      LET X = DATA -2 -5 3 15 -6
+      LET Y = ABS(X)
+      WRITE X Y
+      SET WRITE DECIMALS 1
+      WRITE X Y
+      .
+      PLOT ABS(X) FOR X = -10 1 10
+ 
+----------------------------------------
+ 
+3.2
+Square Root Function SQRT(X)
+      LET A = 2
+      LET B = SQRT(A)
+      LET C = -2
+      LET D = SQRT(C)
+      WRITE A B C D
+      .
+      LET X = SEQUENCE 1 1 10
+      LET Y = SQRT(X)
+      WRITE X Y
+      SET WRITE DECIMALS 3
+      WRITE X Y
+      .
+      PLOT SQRT(X) FOR X = 0 .1 10
+ 
+----------------------------------------
+ 
+3.3
+Exponential Function EXP(X)
+      LET A = 2
+      LET B = EXP(A)
+      LET C = -2
+      LET D = EXP(C)
+      WRITE A B C D
+      .
+      LET X = SEQUENCE 1 .1 3
+      LET Y = EXP(X)
+      WRITE X Y
+      SET WRITE DECIMALS 3
+      WRITE X Y
+      .
+      PLOT EXP(X) FOR X = -5 .1 5
+ 
+----------------------------------------
+ 
+3.4
+Logarithmic Functions LOG(X), LOG10(X), LOG2(X)
+Note--LOG(X) is the natural logarithm.
+      LN(X) and LOGE(X) are synonyms of LOG(X).
+    --LOG10(X) is the logarithm to the base 10.
+    --LOG2(X)  is the logarithm to the base 2.
+ 
+      LET A = 2
+      LET LE = LOG(A)
+      LET L10 = LOG10(A)
+      LET L2 = LOG2(A)
+      WRITE A LE L10 L2
+      .
+      LET X = SEQUENCE 1 1 10
+      LET YE = LOG(X)
+      LET Y10 = LOG10(X)
+      LET Y2 = LOG2(X)
+      WRITE X YE Y10 Y2
+      .
+      PLOT LOG(X) FOR X = .1 .1 10
+ 
+----------------------------------------
+ 
+4
+Error & Gamma Functions
+   1. Error Function ERF(X)
+   2. Complementary Error Function ERFC(X)
+   3. Gamma Function GAMMA(X)
+   4. Log (to base e) Gamma Function LOGGAMMA(X)
+ 
+----------------------------------------
+ 
+4.1
+Error Function ERF(X)
+      LET A = 1.5
+      LET B = ERF(A)
+      LET C = -1.5
+      LET D = ERF(C)
+      WRITE A B C D
+      .
+      LET X = SEQUENCE -2 .1 2
+      LET Y = ERF(X)
+      WRITE X Y
+      SET WRITE DECIMALS 3
+      WRITE X Y
+      .
+      LINES SOLID DOTTED
+      PLOT ERF(X) FOR X = -3 .1 3 AND
+      PLOT ERFC(X) FOR X = -3 .1 3
+ 
+----------------------------------------
+ 
+4.2
+Complementary Error Function ERFC(X)
+      LET A = 1.5
+      LET B = ERFC(A)
+      LET C = -1.5
+      LET D = ERFC(C)
+      WRITE A B C D
+      .
+      LET X = SEQUENCE -2 .1 2
+      LET Y = ERFC(X)
+      WRITE X Y
+      SET WRITE DECIMALS 3
+      WRITE X Y
+      .
+      LINES SOLID DOTTED
+      PLOT ERF(X) FOR X = -3 .1 3 AND
+      PLOT ERFC(X) FOR X = -3 .1 3
+ 
+----------------------------------------
+ 
+4.3
+Gamma Function GAMMA(X)
+      LET A = 1.5
+      LET B = GAMMA(A)
+      LET C = -1.5
+      LET D = GAMMA(C)
+      WRITE A B C D
+      .
+      LET X = SEQUENCE .1 .1 4
+      LET Y = GAMMA(X)
+      WRITE X Y
+      SET WRITE DECIMALS 3
+      WRITE X Y
+      .
+      LINES SOLID DOTTED
+      PLOT GAMMA(X) FOR X = .1 .1 4 AND
+      PLOT LOGGAMMA(X) FOR X = .1 .1 4
+ 
+----------------------------------------
+ 
+4.4
+Log (to base e) Gamma Function LOGGAMMA(X)
+      LET A = 1.5
+      LET B = LOGGAMMA(A)
+      LET C = -1.5
+      LET D = LOGGAMMA(C)
+      WRITE A B C D
+      .
+      LET X = SEQUENCE .1 .1 4
+      LET Y = LOGGAMMA(X)
+      WRITE X Y
+      SET WRITE DECIMALS 3
+      WRITE X Y
+      .
+      LINES SOLID DOTTED
+      PLOT GAMMA(X) FOR X = .1 .1 4 AND
+      PLOT LOGGAMMA(X) FOR X = .1 .1 4
+ 
+----------------------------------------
+ 
+5
+Chebychev & Bessel Functions
+   1. Chebychev Functions CHEB0(X) to CHEB10(X)
+   2. Bessel Functions BESS0(X) and BESS1(X)
+ 
+----------------------------------------
+ 
+5.1
+Chebychev Functions CHEB0(X) to CHEB10(X)
+Note--These are Chebychev Polynomials of First Kind--T0(x) to T10(x)
+      LET A = 1.5
+      LET C0 = CHEB0(A)
+      LET C1 = CHEB1(A)
+      LET C6 = CHEB6(A)
+      WRITE A C0 C1 C6
+      .
+      LET X = SEQUENCE .1 .1 4
+      LET Y0 = CHEB0(X)
+      LET Y2 = CHEB2(X)
+      LET Y7 = CHEB7(X)
+      WRITE X Y0 Y2 Y7
+      .
+      LINES SOLID DASHED DOTTED
+      PLOT CHEB0(X) FOR X = -1 .01 1 AND
+      PLOT CHEB1(X) FOR X = -1 .01 1 AND
+      PLOT CHEB2(X) FOR X = -1 .01 1
+ 
+----------------------------------------
+ 
+5.2
+Bessel Functions BESS0(X) AND BESS1(X)
+Note--These are the Bessel Functions of order 0--J0(x) and J1(x)
+      LET A = 1.5
+      LET B0 = BESS0(A)
+      LET B1 = BESS1(A)
+      WRITE A B0 B1
+      .
+      LET X = SEQUENCE .1 .1 4
+      LET J0 = BESS0(X)
+      LET J1 = BESS1(X)
+      LET NU = 1
+      LET J2 = (2*NU/X)*J1-J0
+      WRITE X J0 J1 J2
+      .
+      LINES SOLID DASHED DOTTED
+      PLOT BESS0(X) FOR X = .1 .1 10 AND
+      PLOT BESS1(X) FOR X = .1 .1 10
+ 
+----------------------------------------
+ 
+6
+Trig Functions (Circular)
+      RADIANS;. (set the trig units to radians (= the default))
+      LET A = PI/6
+      LET B1 = SIN(A); LET B2 = COS(A); LET B3 = TAN(A)
+      LET B4 = COT(A); LET B5 = SEC(A); LET B6 = CSC(A)
+      DEGREES;. (change the trig units to degrees)
+      LET C = 30
+      LET D1 = SIN(C); LET D2 = COS(C); LET D3 = TAN(C)
+      LET D4 = COT(C); LET D5 = SEC(C); LET D6 = CSC(C)
+      WRITE A B1 B2 B3 B4 B5 B6
+      WRITE C D1 D2 D3 D4 D5 D6
+      .
+      DEGREES; LET THETA = SEQUENCE 0 10 1440
+      LET X = THETA*COS(THETA); LET Y = THETA*SIN(THETA)
+      PRE-SORT OFF; PLOT Y X
+      LET X2 = SIN(THETA); LET Y2 = SIN(1.5*THETA); PLOT Y2 X2
+      .
+      RADIANS;. (change the trig units back to radians)
+      PLOT SIN(X)*EXP(-X/10) FOR X = 0 .1 10
+      SPIKE ON
+      PLOT SIN(X)*EXP(-X/10) FOR X = 0 .1 10
+ 
+----------------------------------------
+ 
+7
+Inverse Trig Functions (Circular)
+      RADIANS;. (set the trig units to radians (= the default))
+      LET A = 0.5
+      LET B1 = ARCSIN(A); LET B2 = ARCCOS(A); LET B3 = ARCTAN(A)
+      LET B4 = ARCCOT(A); LET B5 = ARCSEC(A); LET B6 = ARCCSC(A)
+      DEGREES;. (change the trig units to degrees)
+      LET C1 = ARCSIN(A); LET C2 = ARCCOS(A); LET C3 = ARCTAN(A)
+      LET C4 = ARCCOT(A); LET C5 = ARCSEC(A); LET C6 = ARCCSC(A)
+      WRITE A B1 B2 B3 B4 B5 B6
+      WRITE A C1 C2 C3 C4 C5 C6
+      .
+      RADIANS;. (change the trig units back to radians)
+      LET X = SEQUENCE -1 .1 1
+      LET Y = ARCSIN(X); WRITE X Y
+      .
+      LINES SOLID DASHED DOTTED
+      PLOT ARCSIN(X) FOR X = -1 .1 1 AND
+      PLOT ARCCOS(X) FOR X = -1 .1 1 AND
+      PLOT ARCTAN(X) FOR X = -3 .1 3
+      .
+     . THE FOLLOWING 2-ARGUMENT ARCTAN FUNCTION IS FROM FORTRAN--
+      LET E1 = ATAN2(1,.5); LET E2 = ATAN2(1,1); WRITE E1 E2
+ 
+----------------------------------------
+ 
+8
+Trig Functions (Hyperbolic)
+      LET A = 1.5
+      LET B1 = SINH(A); LET B2 = COSH(A); LET B3 = TANH(A)
+      LET B4 = COTH(A); LET B5 = SECH(A); LET B6 = CSCH(A)
+      WRITE A B1 B2 B3 B4 B5 B6
+      .
+      LET X = SEQUENCE -2 .1 2
+      LET Y1 = SINH(X)
+      LET Y2 = COSH(X)
+      WRITE X Y1 Y2
+      .
+      LINES SOLID DASHED DOTTED
+      PLOT SINH(X) FOR X = -3 .1 3 AND
+      PLOT COSH(X) FOR X = -3 .1 3 AND
+      PLOT TANH(X) FOR X = -3 .1 3
+ 
+----------------------------------------
+ 
+9
+Inverse Trig Functions (Hyperbolic)
+      LET A = 0.5
+      LET B1 = ARCSINH(A); LET B2 = ARCCOSH(A); LET B3 = ARCTANH(A)
+      LET B4 = ARCCOTH(A); LET B5 = ARCSECH(A); LET B6 = ARCCSCH(A)
+      WRITE A B1 B2 B3 B4 B5 B6
+      .
+      LET X = SEQUENCE -2 .1 2
+      LET Y = ARCSINH(X)
+      WRITE X Y
+      .
+      LINES SOLID DASHED DASHED DOTTED
+      PLOT ARCSINH(X) FOR X = -3 .1 3 AND
+      PLOT ARCCOSH(X) FOR X = -3 .1 1 AND
+      PLOT ARCCOSH(X) FOR X = 1 .1 3 AND
+      PLOT ARCTANH(X) FOR X = -.95 .1 .95
+ 
+----------------------------------------
+ 
+10
+Octal/Decimal Conversion Functions
+      LET A = 10
+      LET B = OCTDEC(A)
+      LET C = DECOCT(A)
+      SET WRITE DECIMALS 0
+      WRITE A B C
+      .
+      LET D = SEQUENCE 1 1 20
+      LET O = DECOCT(D)
+      WRITE D O
+      .
+      LET O = DATA 1 2 3 4 5 6 7 10 11 12 13 14 15 16 17 20 21
+      LET D = OCTDEC(O)
+      WRITE O D
+ 
+----------------------------------------
+ 
+11
+Probability Functions
+   1. Normal Distribution
+   2. t Distribution
+   3. Chi-squared Distribution
+   4. F Distribution
+   5. Weibull Distribution
+   6. Inverse Gaussian Distribution
+   7. Wald Distribution
+   8. Reciprocal Inverse Gaussian Distribution
+    Fatigue Life Distribution
+ 
+----------------------------------------
+ 
+11.1
+Normal Distribution
+      LET A = 2
+      LET B = NORPPF(2); LET C = NORCDF(A)
+      LET C = NORPPF(.975)
+      .
+      LET X = -2 .1 2
+      LET PDF = NORPDF(X)
+      LET CDF = NORCDF(X)
+      LET P = .01 .01 .99
+      LET PPF = NORPPF(P)
+ 
+      PLOT NORPDF(X) FOR X = -2 .1 2 AND
+      PLOT NORCDF(X) FOR X = -2 .1 2
+      PLOT NORPPF(P) FOR P = .01 .01.99
+      .
+      READ MARSHAK.DAT Y
+      LET XBAR = MEAN Y; LET S = STANDARD DEVIATION Y
+      XLIMITS 21000 24000; YLIMITS 0 .4; PRE-ERASE OFF; ERASE
+      HISTOGRAM Y
+      PLOT NORPDF((X-XBAR)/S) FOR X = 21000 10 24000
+ 
+----------------------------------------
+ 
+11.2
+t Distribution
+      LET A = TPDF(2,5)
+      LET B = TCDF(2,5)
+      LET C = TPPF(.975,5)
+      LET D = TPPF(.975,100)
+      .
+      LET X = SEQUENCE -5 .1 5
+      LET Y1 = TPDF(X,1)
+      LET Y2 = TPDF(X,2)
+      LET Y3 = TPDF(X,3)
+      PLOT Y1 Y2 Y3 VERSUS X
+      .
+      LET NU = SEQUENCE 1 1 30
+      LET Y = TPPF(.975,NU)
+      PLOT Y NU
+      .
+      PLOT TPDF(X,3) FOR X = -5 .1 5
+      PLOT TPPF(.975,NU) FOR NU = 1 1 30
+ 
+----------------------------------------
+ 
+11.3
+Chi-squared Distribution
+      LET A = CHSPDF(2,5)
+      LET B = CHSCDF(2,5)
+      LET C = CHSPPF(.95,5)
+      LET D = CHSPPF(.95,100)
+      .
+      LET X = SEQUENCE -5 .1 5
+      LET Y1 = CHSPDF(X,1)
+      LET Y2 = CHSPDF(X,2)
+      LET Y3 = CHSPDF(X,3)
+      PLOT Y1 Y2 Y3 VERSUS X
+      .
+      LET NU = SEQUENCE 1 1 30
+      LET Y = CHSPPF(.95,NU)
+      PLOT Y NU
+      .
+      PLOT CHSPDF(X,3) FOR X = -5 .1 5
+      PLOT CHSPPF(.95,NU) FOR NU = 1 1 30
+ 
+----------------------------------------
+ 
+11.4
+F Distribution
+      LET A = FPDF(2,5,7)
+      LET B = FCDF(2,5,7)
+      LET C = FPPF(.95,5,7)
+      LET D = FPPF(.95,100,7)
+      .
+      LET X = SEQUENCE -5 .1 5
+      LET Y1 = FPDF(X,1,4)
+      LET Y2 = FPDF(X,2,4)
+      LET Y3 = FPDF(X,3,4)
+      PLOT Y1 Y2 Y3 VERSUS X
+      .
+      LET NU1 = SEQUENCE 1 1 30
+      LET NU2 = 5
+      LET Y = FPPF(.95,NU1,NU2)
+      PLOT Y NU1
+      .
+      PLOT FPDF(X,3,5) FOR X = -5 .1 5
+      PLOT FPPF(.95,NU1,10) FOR NU1 = 1 1 30
+ 
+----------------------------------------
+ 
+11.5
+Weibull Distribution
+      LET A = WEIPDF(2,5); LET B = WEICDF(2,5)
+      LET C = WEIPPF(.95,5); LET D = WEIPPF(.95,100)
+      .
+      LET X = SEQUENCE .1 .1 5
+      LET Y1 = WEIPDF(X,1)
+      LET Y2 = WEIPDF(X,2)
+      LET Y3 = WEIPDF(X,3)
+      PLOT Y1 Y2 Y3 VERSUS X
+      .
+      LET GAMMA = SEQUENCE 1 1 30
+      LET Y = WEIPPF(.95,GAMMA)
+      PLOT Y GAMMA
+      .
+      PLOT WEIPDF(X,3) FOR X = .1 .1 5
+      PLOT WEIPPF(.95,GAMMA) FOR GAMMA = 1 1 30
+      LET T0 = 50; LET SCALE = 10
+      PLOT T0+SCALE*WEIPPF(P,3) FOR X = 50 1 100
+ 
+----------------------------------------
+ 
+11.6
+Inverse Gaussian Distribution
+      LET A = IGPDF(2,5); LET B = IGCDF(2,5)
+      LET C = IGPPF(.95,5); LET D = IGPPF(.95,100)
+      .
+      LET X = SEQUENCE .1 .1 5
+      LET Y1 = IGPDF(X,1)
+      LET Y2 = IGPDF(X,2)
+      LET Y3 = IGPDF(X,3)
+      PLOT Y1 Y2 Y3 VERSUS X
+      .
+      LET GAMMA = SEQUENCE 1 1 30
+      LET Y = IGPPF(.95,GAMMA)
+      PLOT Y GAMMA
+      .
+      PLOT IGPDF(X,3) FOR X = .1 .1 5
+      PLOT IGPPF(.95,GAMMA) FOR GAMMA = 1 1 30
+      LET T0 = 50; LET SCALE = 10
+      PLOT T0+SCALE*IGPPF(P,3) FOR X = 50 1 100
+ 
+----------------------------------------
+ 
+11.7
+Wald Distribution
+      LET A = WALPDF(2,5); LET B = WALCDF(2,5)
+      LET C = WALPPF(.95,5); LET D = WALPPF(.95,100)
+      .
+      LET X = SEQUENCE .1 .1 5
+      LET Y1 = WALPDF(X,1)
+      LET Y2 = WALPDF(X,2)
+      LET Y3 = WALPDF(X,3)
+      PLOT Y1 Y2 Y3 VERSUS X
+      .
+      LET GAMMA = SEQUENCE 1 1 30
+      LET Y = WALPPF(.95,GAMMA)
+      PLOT Y GAMMA
+      .
+      PLOT WALPDF(X,3) FOR X = .1 .1 5
+      PLOT WALPPF(.95,GAMMA) FOR GAMMA = 1 1 30
+      LET T0 = 50; LET SCALE = 10
+      PLOT T0+SCALE*WALPPF(P,3) FOR X = 50 1 100
+ 
+----------------------------------------
+ 
+11.8
+Reciprocal Inverse Gaussian Distribution
+      LET A = RIGPDF(2,5); LET B = RIGCDF(2,5)
+      LET C = RIGPPF(.95,5); LET D = RIGPPF(.95,100)
+      .
+      LET X = SEQUENCE .1 .1 5
+      LET Y1 = RIGPDF(X,1)
+      LET Y2 = RIGPDF(X,2)
+      LET Y3 = RIGPDF(X,3)
+      PLOT Y1 Y2 Y3 VERSUS X
+      .
+      LET GAMMA = SEQUENCE 1 1 30
+      LET Y = RIGPPF(.95,GAMMA)
+      PLOT Y GAMMA
+      .
+      PLOT RIGPDF(X,3) FOR X = .1 .1 5
+      PLOT RIGPPF(.95,GAMMA) FOR GAMMA = 1 1 30
+      LET T0 = 50; LET SCALE = 10
+      PLOT T0+SCALE*RIGPPF(P,3) FOR X = 50 1 100
+ 
+ 
+----------------------------------------
+ 
+11.9
+Fatigue Life Distribution
+      LET A = FLPDF(2,5); LET B = FLCDF(2,5)
+      LET C = FLPPF(.95,5); LET D = FLPPF(.95,100)
+      .
+      LET X = SEQUENCE .1 .1 5
+      LET Y1 = FLPDF(X,1)
+      LET Y2 = FLPDF(X,2)
+      LET Y3 = FLPDF(X,3)
+      PLOT Y1 Y2 Y3 VERSUS X
+      .
+      LET GAMMA = SEQUENCE 1 1 30
+      LET Y = FLPPF(.95,GAMMA)
+      PLOT Y GAMMA
+      .
+      PLOT FLPDF(X,3) FOR X = .1 .1 5
+      PLOT FLPPF(.95,GAMMA) FOR GAMMA = 1 1 30
+      LET T0 = 50; LET SCALE = 10
+      PLOT T0+SCALE*FLPPF(P,3) FOR X = 50 1 100
+ 
+----------------------------------------
+ 
+12
+Indicator Function IND(X,TAG)
+Note--IND(X,TAG) is useful for fitting simultaneous equations
+      when 1) wish to have a common fitted additive constant
+      across all equations, and 2) not all fitted equations
+      have the same number of data points being fitted.
+ 
+      LET X   = DATA 1   2   3   4   5      1   2   3
+      LET Y   = DATA 1.0 2.1 2.9 4.1 5.0    0.5 1.0 1.5
+      LET TAG = DATA 1   1   1   1   1       2   2   2
+      CHARACTERS 1 2
+      PLOT Y X TAG
+      LET X1 = X*IND(TAG,1)
+      LET X2 = X*IND(TAG,2)
+      FIT Y X1 X2
+      PLOT Y X TAG AND
+      PLOT PRED X TAG
+ 
+----------------------------------------
+ 
+13
+Binary Pattern Function BINPAT(X,K)
+Note--This function may be used in the generation of 2**k
+      factorial designs after run sequence randomization.
+ 
+      LET SEQ = SEQUENCE 1 1 16
+      LET X1 = BINPAT(SEQ,1)
+      LET X2 = BINPAT(SEQ,2)
+      LET X3 = BINPAT(SEQ,3)
+      LET X4 = BINPAT(SEQ,4)
+      SET WRITE DECIMALS 0
+      WRITE SEQ X1 X2 X3 X4
+      .
+      LET SEQ = RANDOM PERMUTATION FOR I = 1 1 16
+      LET X1 = BINPAT(SEQ,1)
+      LET X2 = BINPAT(SEQ,2)
+      LET X3 = BINPAT(SEQ,3)
+      LET X4 = BINPAT(SEQ,4)
+      WRITE SEQ X1 X2 X3 X4
+ 
+----------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,22 @@
+This is file powerest.men--Fit Power Law Model
+ 
+--------------------
+ 1. Fit Power Law Model (Single System)
+ 2. POWER LAW MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Failure Times Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Optional Censoring Time:
+ 5. @CE 2 0 42 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10. Estimate the Power Law Model?:
+--------------------
+AN FE
+@IF 2 LET TEND = _2
+POWER LAW MLE _1 _3
+---------------------
+WEB HELP POWER LAW
+---------------------

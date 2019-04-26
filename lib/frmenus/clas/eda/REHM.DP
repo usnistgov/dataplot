@@ -1,0 +1,10 @@
+----- <~dataloex\REHM.DP> Load & Execute REHM.DAT
+
+. This is file    REHM.DP
+
+DELETE Y
+SKIP 25
+READ REHM.DAT Y
+TITLE REHM.DAT
+/
+

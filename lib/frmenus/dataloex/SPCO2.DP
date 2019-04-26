@@ -1,0 +1,10 @@
+----- <~dataloex\SPCO2.DP> Load & Execute SPCO2.DAT
+
+. This is file    SPCO2.DP
+
+DELETE YEAR MONTH Y
+SKIP 25
+READ SPCO2.DAT YEAR MONTH Y
+TITLE SPCO2.DAT
+PLOT Y SUBSET Y > 0
+

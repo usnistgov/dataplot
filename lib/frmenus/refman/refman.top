@@ -1,0 +1,49 @@
+----- <~refman\refman.top> Dataplot
+ 
+Dataplot Reference Manual
+ 
+What You Need to Access On-line Reference Manual  <~scre\manual.top>
+Browser Set-up                      <~scre\browser.top>
+
+Dataplot Home Page                  <xcl: web help dataplot>
+
+Volume I                            <xcl: web help volume 1>
+Volume I Introduction               <xcl: web help volume 1 introduction>
+Volume I Abstract                   <xcl: web help volume 1 abstract>
+Volume I Disclaimer                 <xcl: web help volume 1 disclaimer>
+Volume I Preface                    <xcl: web help volume 1 preface>
+Volume I Table of Contents          <xcl: web help volume 1 table of contents>
+Volume I Index                      <xcl: web help volume 1 index>
+
+Volume II                           <xcl: web help volume 2>
+Volume II Introduction              <xcl: web help volume 2 introduction>
+Volume II Abstract                  <xcl: web help volume 2 abstract>
+Volume II Disclaimer                <xcl: web help volume 2 disclaimer>
+Volume II Preface                   <xcl: web help volume 2 preface>
+Volume II Table of Contents         <xcl: web help volume 2 table of contents>
+Volume II Index                     <xcl: web help volume 2 index>
+
+Graphics Commands                   <xcl: web help graphics commands>
+Analysis Commands                   <xcl: web help analysis commands>
+Plot Control Commands               <xcl: web help plot control commands>
+Support Commands                    <xcl: web help support commands>
+Diagrammatic Graphics Commands      <xcl: web help diagrammatic graphics commands>
+Output Devices Commands             <xcl: web help output devices>
+Keywords                            <xcl: web help keywords>
+I/O Commands                        <xcl: web help I/O commands>
+SET Commands                        <xcl: web help set subcommands>
+Color                               <xcl: web help color>
+Graphic Attributes                  <xcl: web help graphic attributes>
+Text Attributes                     <xcl: web help text attributes>
+Dataplot Reference Files            <xcl: web help dataplot reference files>
+
+Statistics LET Subcommands          <xcl: web help statistics commands>
+Mathematics LET Subcommands         <xcl: web help mathematics commands>
+Matrix LET Subcommands              <xcl: web help matrix commands>
+Random Numbers                      <xcl: web help random numbers>
+Mathematical Library Functions      <xcl: web help mathematical functions>
+Trigonometric Library Functions     <xcl: web help trigonometric functions>
+Probability Library Functions       <xcl: web help probability functions>
+ 
+Manual pages for a specific command <xemf: ~refman\command.men>
+

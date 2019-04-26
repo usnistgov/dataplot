@@ -1,0 +1,96 @@
+This is file newpts.men--Compute Regression Function for New Points
+ 
+--------------------
+ 1. Compute Regression Function for New Points
+ 2. Macro
+ 3.
+ 4. Dependent Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Independent Variable 1:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Independent Variable 2:
+ 6. @CE 3 0 42 50 ? gui-variable
+ 7. Independent Variable 3:
+ 7. @CE 4 0 42 50 ? gui-variable
+ 8. Independent Variable 4:
+ 8. @CE 5 0 42 50 ? gui-variable
+ 9. Independent Variable 5:
+ 9. @CE 6 0 42 50 ? gui-variable
+10. Independent Variable 6:
+10. @CE 7 0 42 50 ? gui-variable
+11. Independent Variable 7:
+11. @CE 8 0 42 50 ? gui-variable
+12. Independent Variable 8:
+12. @CE 9 0 42 50 ? gui-variable
+13. Independent Variable 9:
+13. @CE 10 0 42 50 ? gui-variable
+14.
+15. New Values for Independent Variable 1:
+15. @CE 11 0 42 50 ? gui-variable
+16. New Values for Independent Variable 2:
+16. @CE 12 0 42 50 ? gui-variable
+17. New Values for Independent Variable 3:
+17. @CE 13 0 42 50 ? gui-variable
+18. New Values for Independent Variable 4:
+18. @CE 14 0 42 50 ? gui-variable
+19. New Values for Independent Variable 5:
+19. @CE 15 0 42 50 ? gui-variable
+20. New Values for Independent Variable 6:
+20. @CE 16 0 42 50 ? gui-variable
+21. New Values for Independent Variable 7:
+21. @CE 17 0 42 50 ? gui-variable
+22. New Values for Independent Variable 8:
+22. @CE 18 0 42 50 ? gui-variable
+23. New Values for Independent Variable 9:
+23. @CE 19 0 42 50 ? gui-variable
+24.
+25. Subset/Except/For Specification:
+26. @CE 20 0 1 50 *
+27.
+28.
+29. Compute the Regression Function at New Points?:
+--------------------
+GR FE
+LET ZZZZNVAR = 0
+@IF 2 0 LET STRING ZZZZS2 = _2
+@IF 2 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 3 0 LET STRING ZZZZS3 = _3
+@IF 3 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 4 0 LET STRING ZZZZS4 = _4
+@IF 4 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 5 0 LET STRING ZZZZS5 = _5
+@IF 5 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 6 0 LET STRING ZZZZS6 = _6
+@IF 6 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 7 0 LET STRING ZZZZS7 = _7
+@IF 7 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 8 0 LET STRING ZZZZS8 = _8
+@IF 8 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 9 0 LET STRING ZZZZS9 = _9
+@IF 9 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 10 0 LET STRING ZZZZS10 = _10
+@IF 10 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 11 0 LET ZZZZ1 = _11
+@IF 12 0 LET ZZZZ2 = _12
+@IF 13 0 LET ZZZZ3 = _13
+@IF 14 0 LET ZZZZ4 = _14
+@IF 15 0 LET ZZZZ5 = _15
+@IF 16 0 LET ZZZZ6 = _16
+@IF 17 0 LET ZZZZ7 = _17
+@IF 18 0 LET ZZZZ8 = _18
+@IF 19 0 LET ZZZZ9 = _19
+FIT _1 _2 _3 _4 _5 _6 _7 _8 _9 _10 _20
+SKIP 0
+READ DPST1F.DAT COEF COEFSD
+LET ZZZZP = SIZE COEF
+LET FUNCTION ZZZZF = A0
+LOOP FOR K = 2 1 ZZZZP
+    LET K2 = K - 1
+    LET ZZZZA^K2 = COEF(K)
+    LET FUNCTION ZZZZF = ZZZZF + ZZZZA^K2*ZZZZ^K2
+END OF LOOP
+LET ZZZZYNEW = ZZZZF
+PRINT ZZZZYNEW _11 _12 _13 _14 _15 _16 _17 _18 _19
+--------------------
+WEB HELP FIT
+--------------------

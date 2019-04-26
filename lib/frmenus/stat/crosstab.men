@@ -1,0 +1,38 @@
+This is file crosstab.men--Cross Tabulate
+ 
+--------------------
+ 1. Cross Tabulate Data
+ 2. CROSS TABULATE MEANS Y1 TAG1 TAG2
+ 3.
+ 4. Response Variable (not for counts or chi-square):
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. First Group ID Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Second Group ID Variable:
+ 6. @CE 5 0 42 50 ? gui-variable
+ 7.
+ 8. Type of Cross Tabulation
+ 9. @CE 3 1 5 40 Counts
+10. @CE 3 2 5 40 Means
+11. @CE 3 3 5 40 Standard Deviations
+12. @CE 3 4 5 40 Ranges
+13. @CE 3 5 5 40 Sums
+14. @CE 3 6 5 40 Chi-square test for independence
+15.
+16. Subset/Except/For Specification:
+17. @CE 4 0 1 50 *
+18.
+19.
+20. Compute Cross Tabulation?
+--------------------
+AN FE
+LET STRING ZZZZSTR = COUNTS
+@IF 3 2 LET STRING ZZZZSTR = MEANS
+@IF 3 3 LET STRING ZZZZSTR = RANGE
+@IF 3 4 LET STRING ZZZZSTR = SD
+@IF 3 5 LET STRING ZZZZSTR = SUMS
+@IF 3 6 LET STRING ZZZZSTR = CHI-SQUARE
+CROSS TABULATE ^ZZZZSTR _1 _2 _5 _4
+--------------------
+WEB HELP CROSS TABULATE
+--------------------

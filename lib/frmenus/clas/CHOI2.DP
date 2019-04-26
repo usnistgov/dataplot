@@ -1,0 +1,10 @@
+----- <~dataloex\CHOI2.DP> Load & Execute CHOI2.DAT
+
+. This is file    CHOI2.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ CHOI2.DAT Y1 Y2
+TITLE CHOI2.DAT
+/
+

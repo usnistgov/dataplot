@@ -1,0 +1,8 @@
+----- <~dataload\CARBMON.DP> Load CARBMON.DAT
+
+. This is file    CARBMON.DP
+
+DELETE Y X
+SKIP 25
+READ CARBMON.DAT Y X
+

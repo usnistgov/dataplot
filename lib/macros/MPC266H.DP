@@ -1,0 +1,44 @@
+reset data
+reset plot control
+reset i/o
+dimension 500 30
+label size 3
+read mpc262.dat run wafer probe mo day op hum y sr
+let df = sr - sr + 5.
+let m3 = y - y
+let ybar = average y subset run 1 subset wafer 138
+let m3 = m3 + ybar subset run 1 subset wafer 138
+let ybar = average y subset run 1 subset wafer 139
+let m3 = m3 + ybar subset run 1 subset wafer 139
+let ybar = average y subset run 1 subset wafer 140
+let m3 = m3 + ybar subset run 1 subset wafer 140
+let ybar = average y subset run 1 subset wafer 141
+let m3 = m3 + ybar subset run 1 subset wafer 141
+let ybar = average y subset run 1 subset wafer 142
+let m3 = m3 + ybar subset run 1 subset wafer 142
+let ybar = average y subset run 2 subset wafer 138
+let m3 = m3 + ybar subset run 2 subset wafer 138
+let ybar = average y subset run 2 subset wafer 139
+let m3 = m3 + ybar subset run 2 subset wafer 139
+let ybar = average y subset run 2 subset wafer 140
+let m3 = m3 + ybar subset run 2 subset wafer 140
+let ybar = average y subset run 2 subset wafer 141
+let m3 = m3 + ybar subset run 2 subset wafer 141
+let ybar = average y subset run 2 subset wafer 142
+let m3 = m3 + ybar subset run 2 subset wafer 142
+let d = y - m3
+y1label ohm.cm
+x1label differences from the wafer average for each probe
+x2label probe legend: 1=#1; 2=#281; 3=#283; 4=#2062; 5=#2362
+let t = sequence 1 1 300
+x3label run 1
+characters 1 2 3 4 5
+lines dotted all
+xlimits 0 150
+plot d t probe subset run 1
+x3label run 2
+xlimits 150 300
+plot d t probe subset run 2
+
+
+. end of calculations

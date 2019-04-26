@@ -1,0 +1,35 @@
+----- <~reli\evprpl.top> Probability Plots
+
+Probability Plots
+
+Probability Plots
+
+
+Uncensored Data (Ungrouped or Grouped)
+   Extreme Value Type 1 (Gumbel) (Minimum)   <xemf: ~reli\ppev11.men>
+   Extreme Value Type 1 (Gumbel) (Maximum)   <xemf: ~reli\ppev12.men>
+
+   Extreme Value Type 2 (Frechet) (Minimum)  <xemf: ~reli\ppev21.men>
+   Extreme Value Type 2 (Frechet) (Maximum)  <xemf: ~reli\ppev22.men>
+
+   Weibull (Minimum)                         <xemf: ~reli\ppwei1.men>
+   Weibull (Maximum)                         <xemf: ~reli\ppwei2.men>
+
+   Generalized Pareto                        <xemf: ~reli\ppgep.men>
+   Generalized Extreme Value (Minimum)       <xemf: ~reli\ppgev1.men>
+   Generalized Extreme Value (Maximum)       <xemf: ~reli\ppgev2.men>
+
+Censored Data (Ungrouped)
+   Extreme Value Type 1 (Gumbel) (Minimum)   <xemf: ~reli\ppev11ce.men>
+   Extreme Value Type 1 (Gumbel) (Maximum)   <xemf: ~reli\ppev12ce.men>
+
+   Extreme Value Type 2 (Frechet) (Minimum)  <xemf: ~reli\ppev21ce.men>
+   Extreme Value Type 2 (Frechet) (Maximum)  <xemf: ~reli\ppev22ce.men>
+
+   Weibull (Minimum)                         <xemf: ~reli\ppwei1ce.men>
+   Weibull (Maximum)                         <xemf: ~reli\ppwei2ce.men>
+
+   Generalized Pareto                        <xemf: ~reli\ppgepce.men>
+   Generalized Extreme Value (Minimum)       <xemf: ~reli\ppgev1ce.men>
+   Generalized Extreme Value (Maximum)       <xemf: ~reli\ppgev2ce.men>
+

@@ -1,0 +1,26 @@
+----- <~time\smoodisc.top> Discussion: Smoothing and Filtering
+ 
+Discussion: Smoothing and Filtering
+ 
+Smoothing and filtering generally refer to decomposing
+a time series into a "signal" component and a "noise"
+component.  That is,
+
+    y(t) = s(t) + e(t)
+
+where e(t) is a random variable with constant location
+and scale and a fixed (often assumed to be the
+normal distribution).
+
+The S(t) can be thought of as a fit.  However, it is a
+non-parametric fit as oppossed to a parameteric fit.  That
+is, standard least squares fits a specific model to the
+data (e.g., Y = A0 + A1*X).  Smoothing techniques return
+predicted values,  but they do not generate a parameteric
+model.
+
+Smoothing can be performed in either
+
+  The Time Domain                   <~time\tsmodisc.top>
+  The Frequency Domain              <~time\fsmodisc.top>
+

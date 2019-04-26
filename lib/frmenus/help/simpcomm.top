@@ -1,0 +1,57 @@
+----- <~help\simpcomm.top> Simple Example: Dataplot Commands
+
+Simple Example: Dataplot Commands
+
+Simple Example: Dataplot Commands                      -
+
+
+This simple example can be performed by entering the
+following Dataplot command:
+
+.  Step 0--Read the Data
+.
+READ X Y
+1    1
+2    3
+3   15
+4   18
+5   30
+END OF DATA
+.
+.  Step 1--Compute the Mean
+.
+LET A = MEAN Y
+.
+.  Step 2--Plot the Data
+.
+TITLE CASE ASIS
+TITLE Calibration Analysis
+LABEL CASE ASIS
+Y1LABEL Response
+X1LABEL Force
+CHARACTER X BLANK
+LINE SOLID
+TIC OFFSET UNITS SCREEN
+TIC OFFSET 3 3
+PLOT Y X
+.
+.  Step 3--Fit The Data
+.
+FIT Y X
+.
+.  Step 4--Residual Analysis
+.
+TITLE AUTOMATIC
+LABEL
+LINE SOLID
+CHARACTER BLANK
+4-PLOT RES
+.
+.  Step 5--Plot Predicted Data
+.
+CHARACTER X BLANK
+LINE BLANK SOLID
+PLOT Y PRED VERSUS X
+
+
+

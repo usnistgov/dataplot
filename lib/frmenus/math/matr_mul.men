@@ -1,0 +1,33 @@
+This is file matr_mul.men--Matrix multiplication
+ 
+--------------------
+ 1. Matrix multiplication
+ 2. LET MNEW = MATRIX MULTIPLICATION MA MB
+ 3.
+ 4. The first argument should be a matrix.  The second
+ 5. argument can be either a matrix, a vector, or a
+ 6. parameter (or constant).  If a parameter is given,
+ 7. that value is multiplied by each element of the first matrix.
+ 8. If a variable is given, the multiplication is performed by
+ 9. multiplying (row-wise) each column of the matrix with the given
+10. variable.  If a matrix is given, standard matrix multiplication
+11. is performed.
+12.
+15. Name of first matrix:
+15. @CE 1 0 33 50 ? gui-matrix
+16. Name of second matrix/variable/parameter:
+16. @CE 2 0 33 50 ? gui-matrix
+17. Name of matrix to store the results:
+17. @CE 3 0 33 50 ? gui-matrix
+18.
+19. Subset/Except/For Specification:
+20. @CE 5 0 -1 50 *
+21.
+22.
+23. Perform the Matrix Multiplication?:
+--------------------
+GR FE
+LET _3 = MATRIX MULTIPLICATION  _1 _2  _5
+--------------------
+WEB HELP MATRIX MULTIPLICATION
+--------------------

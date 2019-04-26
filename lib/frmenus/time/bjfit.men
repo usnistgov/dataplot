@@ -1,0 +1,58 @@
+This is file bjfit.men--Estimate a Box-Jenkins Model
+ 
+--------------------
+ 1. Fit ARMA Model
+ 2. ARMA Y 1 0 1
+ 3.
+ 4. Time Series Variable:
+ 4. @CE 1 0 42 50 gui-variable
+ 5.
+ 6. Non-Seasonal Component
+ 7.   Order of Autoregressive Terms:
+ 7.   @CE 2 0 42 50 *
+ 8.   Order of Moving Average Terms:
+ 8.   @CE 3 0 42 50 *
+ 9.   Number of Differences to Apply:
+ 9.   @CE 4 1 42 44 0
+ 9.   @CE 4 2 45 47 1
+ 9.   @CE 4 3 48 50 2
+10.
+11. Seasonal Component
+12.   Order of Autoregressive Terms:
+12.   @CE 5 0 42 50 *
+13.   Order of Moving Average Terms:
+13.   @CE 6 0 42 50 *
+14.   Number of Seasonal Differences to Apply:
+14.   @CE 7 1 42 44 0
+14.   @CE 7 2 45 47 1
+14.   @CE 7 3 48 50 2
+15.   Seasonal Period:
+15.   @CE 8 0 42 50 *
+16.
+17. Subset/Except/For Specification:
+18. @CE 9 0 1 50 *
+19.
+20.
+21. Estimate ARMA Model?
+--------------------
+GR FE
+LET ARORDER = 1
+LET ZDIFF = 0
+LET MAORDER = 0
+LET SARORDER = 0
+LET ZSDIFF = 0
+LET SMAORDER = 0
+LET ZPERI = 12
+LET ARORDER = _2
+LET MAORDER = _3
+@IF 4 2 LET ZDIFF = 1
+@IF 4 3 LET ZDIFF = 2
+LET SARORDER = _5
+LET SMAORDER = _6
+@IF 7 2 LET ZSDIFF = 1
+@IF 7 3 LET ZSDIFF = 2
+LET ZPERI = _8
+ARMA _1 ^ARORDER ^ZDIFF ^MAORDER ^SARORDER ^ZSDIFF ^SMAORDER ^ZPERI _9
+--------------------
+WEB HELP ARMA
+--------------------

@@ -1,0 +1,42 @@
+This is file simplexd.men--Draw Simplex Triangle with grid, data
+ 
+--------------------
+ 1. Draw Simplex Triangle (Grid, Data)
+ 2. Macro
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 gui-vari
+ 5. Factor Variable 1:
+ 5. @CE 2 0 42 50 gui-vari
+ 6. Factor Variable 2:
+ 6. @CE 3 0 42 50 gui-vari
+ 7. Factor Variable 3:
+ 7. @CE 4 0 42 50 gui-vari
+ 8.
+ 9. Increment for Grid (0 to 1):
+ 9. @CE 5 0 42 50 *
+10.
+11. Label for Factor Variable 1:
+11. @CE 6 0 33 50 *
+12. Label for Factor Variable 2:
+12. @CE 7 0 33 50 *
+13. Label for Factor Variable 3:
+13. @CE 7 0 33 50 *
+14. 
+15.
+16. Draw the Simplex Triangle?:
+--------------------
+GR FE
+LET Y = _1
+LET X1 = _2
+LET X2 = _3
+LET X3 = _4
+LET GRIDINC = _5
+LET STRING S1 = X1
+LET STRING S2 = X2
+LET STRING S3 = X3
+LET STRING S1 = _6
+LET STRING S2 = _7
+LET STRING S3 = _8
+CALL SIMPLEXD.DP
+--------------------

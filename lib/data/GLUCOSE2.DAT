@@ -1,0 +1,49 @@
+This is Dataplot data file    GLUCOSE.DAT
+Sample data set from Table 1, p. 4, of
+"Standard Practice for Conducting an Interlaboratory Study to
+Determine the Precision of a Test Method",
+ASTM International, 100 Barr Harbor Drive, PO BOX C700,
+West Conshohoceken, PA 19428-2959, USA.
+This document is in support of ASTM Standard E 691 - 99.
+
+This data represents an example Interlaboratory Study (ILS)
+Response variable   = Glucose in Serum ILS
+Number of observations = 24
+Number of observations per line image = 6
+Order of observations per line image--
+   1. Lab IDS
+   2. Response variable for Material A
+   3. Response variable for Material B
+   4. Response variable for Material C
+   5. Response variable for Material D
+   6. Response variable for Material E
+To read this file into Dataplot--
+   SKIP 25
+   READ GLLUCOSE.DAT LABID MAT1 MAT2 MAT3 MAT4 MAT5
+ 
+ LABID   MAT1     MAT2     MAT3     MAT4     MAT5
+-------------------------------------------------
+   1    41.03    78.28   132.66   193.71   292.78
+   1    41.45    78.18   133.83   193.59   294.09
+   1    41.37    78.49   133.10   193.65   292.89
+   2    41.17    77.78   132.92   190.88   292.27
+   2    42.00    80.38   136.90   200.14   309.40
+   2    41.15    79.54   136.40   194.30   295.08
+   3    41.01    79.18   132.61   192.71   295.53
+   3    40.68    79.72   135.80   193.28   290.14
+   3    42.66    80.81   135.36   190.28   292.34
+   4    39.37    84.08   138.50   195.85   295.19
+   4    42.37    78.60   148.30   196.36   295.44
+   4    42.63    81.92   135.69   199.43   296.83
+   5    41.88    78.16   131.90   192.59   293.93
+   5    41.19    79.58   134.14   191.44   292.48
+   5    41.32    78.33   133.76   195.12   294.28
+   6    43.28    78.66   137.21   195.34   297.74
+   6    40.50    79.27   135.14   198.26   296.80
+   6    42.28    81.75   137.50   198.13   290.33
+   7    41.08    79.76   130.97   194.66   287.29
+   7    41.27    81.45   131.59   191.99   293.76
+   7    39.02    77.35   134.92   187.13   289.36
+   8    43.36    80.44   135.46   197.56   298.46
+   8    42.65    80.80   135.14   195.99   295.28
+   8    41.72    79.80   133.63   200.82   296.12

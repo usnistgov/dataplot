@@ -1,0 +1,39 @@
+-----<~reli\replppcc.top> Discussion: Replicated PPCC Plot
+
+Discussion: Replicated PPCC Plot
+
+Replicated PPCC Plot
+
+For Weibull and lognormal acceleration models, if
+linear acceleration holds the shape parameter of the
+underlying Weibull (or lognormal) distribution must
+have the same shape parameter.
+
+The replicated PPCC plot can be used to determine if
+this assumption of a common shape parameter is reasonable.
+For this plot, we overlay separate PPCC plots on the same
+plot.  There is one PPCC plot for each group.  In 
+addition, there is a PPCC plot for all of the data, although
+this overall PPCC curve is not meaningful in this context
+since each group will presumably have a different value of
+the scale parameter.
+This plot is supported for both uncensored data (either
+ungrouped or grouped) and censored data (currently only
+for ungrouped data).
+
+Dataplot expects the data in the form
+
+    Y  X
+
+where Y is the response variable and X is the group id
+variable.  If your data consists of
+
+    Y1 Y2 ... YK
+
+(i.e., each group is in a separate variable), use the
+"Convert Data to: Response Groupid" menu to convert it to
+the form required by Dataplot.
+
+Note that this graphical method does not provide a formal
+test of equality between the shape parameters.
+

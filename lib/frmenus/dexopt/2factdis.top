@@ -1,0 +1,40 @@
+----- <~dexopt\2factdis.top>  Discussion of 2-Factor Models
+
+Discussion: 2-Factor Models
+
+Two factor models are common in response surface
+methodology.  A typical sequence for the analysis
+of these models is:
+
+ 1) View the design points.  This is simply a plot
+    of the value of the response variable at the
+    design points.  Dataplot generates this plot
+    with a cross tabulate plot.
+
+ 2) Perform a least squares fit of the linear model
+     
+        Y = B0 + B1*X1 + B2*X2 +B12*X1*X2 + Error
+
+    This can be done using the FIT command.
+
+ 3) This linear model should be checked for curvature.
+    This can be done with the curvature test and the
+    linear dex contour plot.
+
+ 4) If there is significant curvature, you can
+    try to fit the quadratic model
+    
+        Y = B0 + B1*X1 + B2*X2 +B12*X1*X2 + 
+            B3*X1**2 +B4*X2**2 + B5*(X1*X2)**2 + Error
+
+    This can be done using the FIT command.  Note that you
+    may not be able to fit this model if you do not have a
+    sufficient number of points.
+
+    A dex contour plot can be generated for this quadratic
+    model.
+
+ 5) The dex contour plots indicate the direction of steepest
+    ascent.  This indicates where the next design points
+    should be taken.
+

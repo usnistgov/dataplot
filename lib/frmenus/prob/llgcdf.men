@@ -1,0 +1,29 @@
+This is file llgcdf.men--Compute Log-Logistic cdf & tail Prob.
+ 
+--------------------
+ 1. Compute Log-Logistic cdf & Tail Probabilities
+ 2. LET Y = LLGCDF(X,DELTA)
+ 3.
+ 4. Input values:
+ 5.                 x:                     x > 0
+ 5. @CE 1 0 20 37 ?
+ 6.       shape delta:                 delta > 0
+ 6. @CE 2 0 20 37 ?
+ 7.
+ 8. Output parameters:
+ 9.      name for the cdf  value:
+ 9. @CE 3 0 38 49 ?
+10.      name for the tail prob. value:
+10. @CE 4 0 38 49 ?
+11.
+12.
+13. Compute the Probability?
+--------------------
+AN FE
+LET ZDELTA = 1
+@IF 2 0 LET ZDELTA =  _2
+@IF 3 0 LET _3 = LLGCDF( _1 ,ZDELTA)
+@IF 4 0 LET _4 = 1 - LLGCDF( _1 ,ZDELTA)
+--------------------
+WEB HELP LLGCDF
+--------------------

@@ -1,0 +1,107 @@
+2**(7-2) FRACTIONAL FACTORIAL DESIGN
+NUMBER OF LEVELS FOR EACH FACTOR =  2
+NUMBER OF FACTORS                =  7
+NUMBER OF OBSERVATIONS           = 32
+RESOLUTION                       =  4 (THEREFORE NO MAIN EFFECTS ARE
+                                       CONFOUNDED WITH ANY 2-FACTOR INTERACTIONS;
+                                       MAIN EFFECTS ARE CONFOUNDED WITH
+                                       3-FACTOR INTERACTIONS)
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ FACTOR    DEFINITION         CONFOUNDING STRUCTURE
+   1           1                1 + 2346 + 2457 +  13567 
+   2           2                2 + 1346 + 1457 +  23567 
+   3           3                3 +  567 + 1246 + 123457
+   4           4                4 + 1236 + 1257 +  34567 
+   5           5                5 +  367 + 1247 + 123456
+   6        1234                6 +  357 + 1234 + 124567
+   7        1245                7 +  356 + 1245 + 123467
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  12                           12 + Higher
+  13                           13 + Higher
+  14                           14 + Higher 
+  15                           15 + Higher 
+  16                           16 + Higher 
+  17                           16 + Higher
+  23                           23 + Higher 
+  24                           24 + Higher 
+  25                           25 + Higher 
+  26                           26 + Higher 
+  27                           27 + Higher 
+  34                           34 + Higher 
+  35                           35 + 67 + Higher 
+  36                           36 + 57 + Higher 
+  37                           37 + 56 + Higher 
+  45                           45 + Higher 
+  46                           46 + Higher 
+  47                           47 + Higher 
+  56                           56 + 37 + Higher 
+  57                           57 + 36 + Higher 
+  67                           67 + 35 + Higher 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+DEFINING RELATION =             I + 12346 + 12457 + 3567
+REFERENCE--BOX, HUNTER & HUNTER, STAT. FOR EXP., PAGE 410,
+NOTE--IF POSSIBLE, THIS (AS WITH ALL EXPERIMENT DESIGNS) SHOULD BE
+      RUN IN RANDOM ORDER (SEE DATAPLOT'S RANDOM PERMUTATION FILES).
+NOTE--TO READ THIS FILE INTO DATAPLOT--
+      SKIP 75
+      READ 2TO7M2.DAT X1 TO X7
+DATE--DECEMBER 1988
+NOTE--IN THE DESIGN BELOW, "-1" REPRESENTS THE "LOW"  SETTING OF A FACTOR
+                           "+1" REPRESENTS THE "HIGH" SETTING OF A FACTOR
+NOTE--ALL FACTOR EFFECT ESTIMATES WILL BE OF THE FORM
+      AVERAGE OF THE "HIGH" - AVERAGE OF THE "LOW"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   X1  X2  X3  X4  X5  X6  X7
+   --------------------------
+   -1  -1  -1  -1  -1  +1  +1
+   +1  -1  -1  -1  -1  -1  -1
+   -1  +1  -1  -1  -1  -1  -1
+   +1  +1  -1  -1  -1  +1  +1
+   -1  -1  +1  -1  -1  -1  +1
+   +1  -1  +1  -1  -1  +1  -1
+   -1  +1  +1  -1  -1  +1  -1
+   +1  +1  +1  -1  -1  -1  +1
+   -1  -1  -1  +1  -1  -1  -1
+   +1  -1  -1  +1  -1  +1  +1
+   -1  +1  -1  +1  -1  +1  +1
+   +1  +1  -1  +1  -1  -1  -1
+   -1  -1  +1  +1  -1  +1  -1
+   +1  -1  +1  +1  -1  -1  +1
+   -1  +1  +1  +1  -1  -1  +1
+   +1  +1  +1  +1  -1  +1  -1
+   -1  -1  -1  -1  +1  +1  -1
+   +1  -1  -1  -1  +1  -1  +1
+   -1  +1  -1  -1  +1  -1  +1
+   +1  +1  -1  -1  +1  +1  -1
+   -1  -1  +1  -1  +1  -1  -1
+   +1  -1  +1  -1  +1  +1  +1
+   -1  +1  +1  -1  +1  +1  +1
+   +1  +1  +1  -1  +1  -1  -1
+   -1  -1  -1  +1  +1  -1  +1
+   +1  -1  -1  +1  +1  +1  -1
+   -1  +1  -1  +1  +1  +1  -1
+   +1  +1  -1  +1  +1  -1  +1
+   -1  -1  +1  +1  +1  +1  +1
+   +1  -1  +1  +1  +1  -1  -1
+   -1  +1  +1  +1  +1  -1  -1
+   +1  +1  +1  +1  +1  +1  +1

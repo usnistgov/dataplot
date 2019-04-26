@@ -1,0 +1,55 @@
+This is file normxpdf.men--Compute normal mixture pdf
+ 
+--------------------
+ 1. Compute Normal Mixture pdf
+ 2. LET A = NORMXPDF(X,U1,SD1,U2,SD2,P)
+ 3.
+ 4. Input values:
+ 5.                                       x:
+ 5. @CE 1 0 42 50 ?
+ 6.                             location u1:
+ 6. @CE 2 0 42 50 ?
+ 7.                       scale s1 (s1 > 0):
+ 7. @CE 3 0 42 50 ?
+ 8.                             location u2:
+ 8. @CE 4 0 42 50 ?
+ 9.                       scale s2 (s2 > 0):
+ 9. @CE 5 0 42 50 ?
+10.         mixing proportion p (0 < p < 1):
+10. @CE 6 0 42 50 ?
+11.
+12. Output parameters:
+13.                 name for the pdf  value:
+13. @CE 7 0 42 50 ?
+14.
+15.
+16. Compute the Probability?
+--------------------
+AN FE
+LET ZZ = _1
+LET ZU1 = 0
+LET ZU2 = 0
+LET ZSD1 = 1
+LET ZSD2 = 1
+LET ZP = 0.5
+@IF 2 0 LET ZU1 = _2
+@IF 3 0 LET ZSD1 = _3
+IF ZSD1 <= 0
+   LET ZSD1 = 1
+END OF IF
+@IF 4 0 LET ZU2 = _4
+@IF 5 0 LET ZSD2 = _5
+IF ZSD2 <= 0
+   LET ZSD2 = 1
+END OF IF
+@IF 6 0 LET ZP = _6
+IF ZP <= 0
+   LET ZP = 0.5
+END OF IF
+IF ZP >= 1
+   LET ZP = 0.5
+END OF IF
+@IF 7 0 LET _7 = NORMXPDF(ZZ,ZU1,ZSD1,ZU2,ZSD2,ZP)
+--------------------
+WEB HELP NORMXPDF
+--------------------

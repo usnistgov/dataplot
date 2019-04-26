@@ -1,0 +1,8 @@
+----- <~dataload\NOR.DP> Load NOR.DAT
+
+. This is file    NOR.DP
+
+DELETE Y
+SKIP 25
+READ NOR.DAT Y
+

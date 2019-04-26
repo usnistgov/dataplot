@@ -1,0 +1,39 @@
+-----<~reli\acellogn.top> Discussion: Lognormal Acceleratin
+
+Discussion: Lognormal Acceleration
+
+Lognormal Acceleration
+
+The lognormal acceleration model is similar to the
+Weibull acceleration model.  That is, if linear acceleation
+holds and the life distribution at one stress level is
+lognormal, then the life distribution at any other stress
+level or use condition (where linear acceleation holds) is
+also lognormal and 
+
+    1) The shape parameter is equal at all stress levels
+       (i.e., sigma(s) = sigma(u)).
+
+    2) The scale factor is multiplied by the acceleration
+       factor (i.e., scale(u) = AF*scale(s)).
+
+So the following tasks are needed:
+
+   1) Check that the data at each stress level can be
+      reasonably modeled with a lognormal distribution.
+
+   2) Estimate the shape/scale parameters at each  stress
+      level.
+
+   3) Determine if the shape parameters at each stress level
+      are sufficently close.  If so, then the lognormal
+      acceleration model can be considered reasonable.  If
+      not, then either the linear acceleration assumption or
+      the lognormal distribution assumption is not valid.
+
+   4) If the lognormal acceleration model is reasonable, then
+      we can estimate the acceleration factor based on:
+
+          Scale(u) = AF*Scale(stress)
+          AF = Scale(u)/Scale(stress)
+

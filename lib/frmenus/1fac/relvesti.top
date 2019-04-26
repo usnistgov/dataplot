@@ -1,0 +1,12 @@
+----- <~1fac\relvesti.top> Estimation: Relative Variation
+
+Estimation: Relative Variation
+
+To estimate grand relative standard deviation:
+   Compute grand relative standard deviation <xemf: ~math\relsd.men>
+   Plot bootstrap relative standard deviation <xemf: ~1fac\bootrlsd.men>
+To estimate group relative standard deviations:
+   Plot group relative standard deviations   <xemf: ~1fac\rlsdplot.men>
+
+Checking assumptions                   <xemf: ~univ\4plot.men>
+

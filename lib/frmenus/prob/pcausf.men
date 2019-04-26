@@ -1,0 +1,46 @@
+This is file pcausf.men--Plot Cauchy Sparsity Function
+ 
+--------------------
+ 1. Plot a Cauchy Sparsity Function
+ 2. PLOT CAUSF(P) FOR P = 0.01 0.01 0.99
+ 3.
+ 4. Location Parameter u:
+ 4. @CE 5 0 42 50 ?
+ 5. Scale Parameter s (s > 0):
+ 5. @CE 6 0 42 50 ?
+ 6.
+ 7. You can specify the range of values to plot either
+ 8. by providing an input vector containing the explicit
+ 9. input values or by providing the start, increment,
+10. and stop values.
+11.
+12. Input Variable (optional):
+12. @CE 1 0 42 50 ? gui-variable
+13.
+14. Start Value (> 0):
+14. @CE 2 0 42 50 ?
+15. Increment Value (defaults to 0.01):
+15. @CE 3 0 42 50 ?
+16. Stop Value (< 1):
+16. @CE 4 0 42 50 ?
+17.
+18. Variable to Store the PPF Values (optional):
+18. @CE 7 0 42 50 ?
+19.
+20.
+21. Plot the Cauchy Sparsity Function?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 5 0 LET ZLOC = _5
+LET ZSCALE = 1
+@IF 6 0 LET ZSCALE = _6
+LET ZINC = 0.01
+@IF 3 0 LET ZINC = _3
+@IF 1 0 LET ZJUNK = ZLOC + ZSCALE*CAUSF( _1 )
+@IF 1 0 PLOT ZJUNK _1
+@IF 2 0 PLOT ZLOC + ZSCALE*CAUSF(ZZZZ) FOR ZZZZ = _2 ZINC _4
+@IF 7 0 LET _7 = YPLOT
+--------------------
+WEB HELP CAUSF
+--------------------

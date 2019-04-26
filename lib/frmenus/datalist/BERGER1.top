@@ -1,0 +1,8 @@
+----- <~datalist\BERGER1.top> BERGER1.DAT
+ 
+BERGER1.DAT
+ 
+View     <xcl: LIST BERGER1.DAT>
+Load     <x2cl: SKIP 25; READ BERGER1.DAT Y X BATCH>
+Print    <xccl: printfile C:\DATAPLOT\BERGER1.DAT>
+ 

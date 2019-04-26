@@ -1,0 +1,8 @@
+----- <~datalist\CONSUMPR.top> CONSUMPR.DAT
+ 
+CONSUMPR.DAT
+ 
+View     <xcl: LIST CONSUMPR.DAT>
+Load     <x2cl: SKIP 25; READ CONSUMPR.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\CONSUMPR.DAT>
+ 

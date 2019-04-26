@@ -1,0 +1,32 @@
+This is file tcdf.men--Generate t cdf & tail Probabilities
+ 
+--------------------
+ 1. Compute t cdf & Tail Probabilities
+ 2. LET A = TCDF(X,4)
+ 3.
+ 4. pdf   : f(x;nu)  = c / (1 + x*x/nu)**((nu+1)/2)
+ 5. cdf   : F(x;nu)  = no closed form
+ 6. mean  : E(X)     = 0                   nu must > 1
+ 7. st dev: SD(X)    = sqrt(nu/ (nu-2))    nu must > 2
+ 8.
+ 9. Input values:
+10.                 x:
+10. @CE 1 0 20 37 ?
+11.                nu:                     nu = 1, 2, ...
+11. @CE 2 0 20 37 ?
+12.
+13. Output parameters:
+14.      name for the cdf  value:
+14. @CE 3 0 38 49 ?
+15.      name for the tail prob. value:
+15. @CE 4 0 38 49 ?
+16.
+17.
+18. Compute the Probability?
+--------------------
+AN FE
+@IF 3 0 LET _3 = TCDF( _1 , _2 )
+@IF 4 0 LET _4 = 1 - TCDF( _1 , _2 )
+--------------------
+WEB HELP TCDF
+--------------------

@@ -1,0 +1,38 @@
+.
+.  Perform a non-parameteric sign test for a paired sample.
+.  This test can be easily adapted to a one-sample hypothesis test
+.  that the mean (or median) is equal to a given value.
+.  Data from "Probability and Statistics for Engineers and
+.  Scientists" by Walpole and Myers (example 13.3 on page 483).
+.
+LET X1 = DATA 4.2 4.7 6.6 7.0 6.7 4.5 5.7 6.0 7.4 4.9 6.1 5.2
+LET X2 = DATA 4.1 4.9 6.2 6.9 6.8 4.4 5.7 5.8 6.9 4.7 6.0 4.9
+.
+.  SET D0 TO CONSTANT YOU WANT TO TEST AGAINST.
+.  THAT IS D0 = 0 TESTS U1 = U2 (OR U1 - U2 = 0)
+.  WHILE D0 = 5 TESTS U1 - U2 =5.
+LET D0 = 0
+.
+LET DIFF = X1 - X2 - D0
+LET N = SIZE DIFF SUBSET DIFF <> 0
+LET RPLUS = SIZE DIFF SUBSET DIFF > 0
+LET RMINUS = SIZE DIFF SUBSET DIFF < 0
+LET R = MIN(RPLUS,RMINUS)
+LET P =0.5
+.
+FEEDBACK OFF
+LET ALPHA = 0.05
+LET CRITICAL = BINPPF(ALPHA,0.5,N)
+CAPTURE SIGN_OUT.DAT
+PRINT " "
+PRINT "H0: U1 - U2 = ^D0"
+PRINT "HA: U1 - U2 <> ^D0"
+PRINT "SIGN STATISTIC = ^R"
+PRINT "BINOMIAL CRITICAL VALUE = ^CRITICAL"
+IF R >= CRITICAL
+  PRINT "ACCEPT NULL HYPOTHESIS AT THE ^ALPHA SIGNIFICANCE LEVEL"
+END OF IF
+IF R < CRITICAL
+  PRINT "REJECT NULL HYPOTHESIS AT THE ^ALPHA SIGNIFICANCE LEVEL"
+END OF IF
+QUIT

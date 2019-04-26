@@ -1,0 +1,42 @@
+----- <~reli\reli.top>
+
+Reliability
+
+Discussion                             <~reli\relitopi.top>
+NIST/SEMATECH Handbook                 <~reli\handbook.top>
+Reliability Flowchart                  <xcl: web handbook reliability flow chart>
+
+Graph the Data
+     NIST/SEMATECH Handbook              <xcl: web handbook reliability plot>
+     Histogram                           <xemf: ~stat\histogra.men>
+     Kernel Density Plot                 <xemf: ~plot\kernplot.men>
+     Tail Area Plot                      <xemf: ~plot\tailplot.men>
+     Kaplan-Meier Plot                   <xemf: ~plot\kaplplot.men>
+     Empirical CDF Plot                  <xemf: ~plot\ecdfplot.men>
+     Repair Plot                         <xemf: ~reli\repaplot.men>
+
+Reliability Probability Distributions
+     Compute                             <~reli\compute.top>
+     Plot CDF Functions                  <~reli\plotcdf.top>
+     Plot PDF Functions                  <~reli\plotpdf.top>
+     Plot PPF Functions                  <~reli\plotppf.top>
+     Plot Hazard Functions               <~reli\plothaz.top>
+     Plot Cumulative Hazard Functions    <~reli\plotchaz.top>
+     Plot Average Failure Rates          <~reli\plotafr.top>
+     Simulation (Random Numbers)         <~reli\relirand.top>
+
+Nonrepairable Systems
+     Discussion                          <~reli\nonrep.top>
+     Univariate Distributional Modeling  <~reli\distmode.top>
+Repairable Systems                       <~reli\repair.top>
+
+System Reliability                       <~reli\system.top>
+Accelerated Testing                      <~reli\acelerat.top>
+Growth Models                            <~reli\growth.top>
+Compare Two Exponentials                 <xemf: ~reli\comp2exp.men>
+MIL-Handbook 17                          <~math\recipe.top>
+
+Built-in Data Sets
+   View                                  <~dataview\reli.top>
+   Load                                  <~dataload\reli.top>
+

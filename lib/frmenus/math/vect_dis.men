@@ -1,0 +1,24 @@
+This is file vect_dis.men--Compute vector distance of a variable
+ 
+--------------------
+ 1. Vector Distance
+ 2. LET A = VECTOR DISTANCE Y1 Y2
+ 3.
+ 4. First variable for which to compute the vector distance:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Second variable for which to compute the vector distance:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Parameter to store the vector distance:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -10 50 *
+10.
+11.
+12. Compute the Vector Distance?:
+--------------------
+GR FE
+LET _3 = VECTOR DISTANCE  _1 _2 _4
+--------------------
+WEB HELP VECTOR DISTANCE
+--------------------

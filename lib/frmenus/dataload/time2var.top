@@ -1,0 +1,9 @@
+----- <~dataload\time2var.top> Load Time Series Data: Bivariate
+
+Load Time Series Data: Bivariate
+
+SINSIN.DAT    Multiple sine curves     <xcf: ~dataload\SINSIN.DP>
+
+CHOI.DAT      Fire research (n = 4000) <xcf: ~dataload\CHOI.DP>
+CHOI2.DAT     Fire research (n = 1000) <xcf: ~dataload\CHOI2.DP>
+

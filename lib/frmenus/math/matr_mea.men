@@ -1,0 +1,23 @@
+This is file matr_mea.men--Mean of a Matrix
+ 
+--------------------
+ 1. Mean of a Matrix
+ 2. LET A = MATRIX MEAN M
+ 3.
+ 4. Name of matrix:
+ 4. @CE 1 0 42 50 ?  gui-matrix
+ 5. Name of parameter to save mean:
+ 5. @CE 2 0 42 50 *
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Matrix Mean?:
+--------------------
+GR FE
+LET ZZZZA = MATRIX MEAN  _1 _3
+LET _2 = ZZZZA
+--------------------
+WEB HELP MATRIX MEAN
+--------------------

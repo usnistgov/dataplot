@@ -1,0 +1,7 @@
+----- <~dataexec\reli.top> Load and Execute Built-in Reliability Data Files
+
+Load and Execute Built-in Reliability Data Files
+
+NIST data                                <xcf: ~dataexec\relinist.DP>
+Other data                               <xcf: ~dataexec\reliothe.DP>
+

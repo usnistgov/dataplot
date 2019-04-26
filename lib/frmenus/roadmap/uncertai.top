@@ -1,0 +1,32 @@
+----- <~roadmap\uncertai.top> Uncertainty
+
+Uncertainty
+
+Question     : How does one attach an uncertainty value
+               to a computed\derived quantity?
+
+Model        : Y = f(X1,X2, X3,...,Xk)
+                  where some Xi are fixed ("without error");
+                  while other Xi have bias; and
+                  yet other Xi are intrinsically variable or
+                     are measured with imprecision.
+
+Input        : 1) the function f;
+               2) the "typical value" for each Xi;
+               3) the bias for each Xi;
+               4) the random variation for each Xi.
+
+Output       : 1) the best-estimate "typical value" for Y;
+               2) the bias in Y;
+               3) the random variation in Y;
+               4) a combined uncertainty value for Y;
+               5) a combined uncertainty value
+                  for the "typical value" for Y.
+
+Stat Category: Uncertainty Analysis
+
+Primary Tools: Bootstrap Analysis       <xemf: ~univ\bootmepl.men>
+               Jacknife Analysis        <xemf: ~univ\jackmepl.men>
+               Propagation of Error     <xemf: ~unce\properro.men>
+               ISO Uncertainty Analysis <xemf: ~unce\isoanaly.men>
+

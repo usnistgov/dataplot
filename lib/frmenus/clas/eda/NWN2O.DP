@@ -1,0 +1,10 @@
+----- <~dataloex\NWN2O.DP> Load & Execute NWN2O.DAT
+
+. This is file    NWN2O.DP
+
+DELETE Y
+SKIP 25
+READ NWN20.DAT Y
+TITLE NWN20.DAT
+/
+

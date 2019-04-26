@@ -1,0 +1,127 @@
+. This is dataplot macro   dexwritelevelcoded.dp
+. Purpose: Write out the ^caz'th SINGLE level (of a single factor) in coded form (-, +, 0, 1, 2, etc.)
+. Note: The positioning of this single level has already been specified
+.       via a    move    in the calling routine (dexwritelevel.dp)
+.       thus this current routine only does a (selective)    text   command
+. Date: 02/06/14
+. Input:
+.    caz      (parameter) = coded level ID within this factor (1, 2, . . .)
+.    numlevfa (parameter) = number of levels for this factor
+. Output:
+     A text string gets written out
+. Called by: dexwritelevel.dp
+.
+. -----start point-----
+.
+let pausedwl = 0
+if pausedwl = 1
+   print "At the beginning of dexwritelevelscoded.dp:"
+   print "numlevfa = ^numlevfa"
+   print "caz = ^caz"
+   if ibatch not exist or ibatch = 0; pause; end if
+end if
+.
+if numlevfa = 2
+   if caz = 1; text -; end if
+   if caz = 2; text +; end if
+end if
+.
+if numlevfa = 3
+   if caz = 1; text -; end if
+   if caz = 2; text 0; end if
+   if caz = 3; text +; end if
+end if
+.
+if numlevfa = 1
+   text 0
+end if
+.
+if numlevfa = 4
+   if caz = 1 or caz = 2; text ^caz; end if
+   if caz = 3 or caz = 4; text ^caz; end if
+end if
+.
+if numlevfa = 5
+   if caz = 1 or caz = 3; text ^caz; end if
+   if caz = 5; text ^caz; end if
+end if
+.
+if numlevfa = 6
+   if caz = 1 or caz = 6; text ^caz; end if
+   if caz = 3 or caz = 4; text .; end if
+end if
+.
+if numlevfa = 7
+   if caz = 1 or caz = 3; text ^caz; end if
+   if caz = 5 or caz = 7; text ^caz; end if
+end if
+.
+if numlevfa = 8
+   if caz = 1 or caz = 8; text ^caz; end if
+   if caz = 4 or caz = 5; text .; end if
+end if
+.
+if numlevfa = 9
+   if caz = 1 or caz = 5; text ^caz; end if
+   if caz = 9; text ^caz; end if
+end if
+if numlevfa = 10
+   if caz = 1 or caz = 4; text ^caz; end if
+   if caz = 7 or caz = 10; text ^caz; end if
+end if
+.
+if numlevfa = 11
+   if caz = 1 or caz = 6; text ^caz; end if
+   if caz = 11; text ^caz; end if
+end if
+.
+if numlevfa = 12
+   if caz = 1 or caz = 5; text ^caz; end if
+   if caz = 8 or caz = 12; text ^caz; end if
+end if
+.
+if numlevfa = 13
+   if caz = 1 or caz = 7; text ^caz; end if
+   if caz = 13; text ^caz; end if
+end if
+.
+if numlevfa = 14
+   if caz = 1 or caz = 5; text ^caz; end if
+   if caz = 10 or caz = 14; text ^caz; end if
+end if
+.
+if numlevfa = 15
+   if caz = 1 or caz = 8; text ^caz; end if
+   if caz = 15; text ^caz; end if
+end if
+.
+if numlevfa = 16
+   if caz = 1 or caz = 16; text ^caz; end if
+   if caz = 6 or caz = 8; text .; end if
+   if caz = 10; text .; end if
+end if
+.
+. print "   1. jz = ^jz   caz = ^caz   numlevfa = ^numlevfa"
+. echo on
+. printing on
+.
+if numlevfa >= 17
+   if caz = 1 or caz = numlevfa; text ^caz; end if
+   .
+   let evodd = mod(numlevfa,2)
+   . print "   2. jz = ^jz   caz = ^caz   evodd = ^evodd"
+   . pause
+   if evodd = 1
+      let midcaz = (numlevfa + 1)/2
+      if caz = midcaz; text ^caz; end if
+   end if
+   if evodd = 0
+      let midcazm = numlevfa/2
+      let midcazp = midcazm + 1
+      if caz = midcazm; text .; end if
+      if caz = midcazp; text .; end if
+   end if
+end if
+.
+. print " "
+. print "exiting out of   dextestlevelscoded.dp"

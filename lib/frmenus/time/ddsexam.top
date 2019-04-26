@@ -1,0 +1,10 @@
+----- <~time\ddsexam.top> DDS Examples
+
+Examples of DDS Analysis
+
+Sinusoidal data                          <xcf: ~time\DDSSIN.DP>
+H. S. Lew beam deflection data           <xcf: ~time\DDSLEW.DP>
+Gabe Luther gravitational constant data  <xcf: ~time\DDSLUTH.DP>
+Yearly sunspot data (1749 1947)          <xcf: ~time\DDSSUNS2.DP>
+Density of 2-admissable numbers          <xcf: ~time\DDSHABER.DP>
+

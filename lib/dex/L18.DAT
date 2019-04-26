@@ -1,0 +1,43 @@
+TAGUCHI L18 ORTHOGONAL DESIGN
+NUMBER OF FACTORS                =  7
+NUMBER OF LEVELS FOR EACH FACTOR =  6 FOR 1 FACTOR
+                                    3 FOR 6 FACTORS
+NUMBER OF OBSERVATIONS           = 18
+REFERENCE--TAGUCHI, SYS. OF EXP. DES., VOL. 2, PAGE 1153.
+NOTE--IF POSSIBLE, THIS (AS WITH ALL EXPERIMENT DESIGNS)
+      SHOULD BE RUN IN RANDOM ORDER
+      (TO ASSIST IN THIS RANDOMIZATION,
+      SEE DATAPLOT'S REFERENCE FILES OF
+      RANDOM PERMUTATIONS).
+NOTE--TO READ THIS FILE INTO DATAPLOT--
+      SKIP 25
+      READ L18.DAT X1 TO X7
+DATE--JUNE 1988
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+X1 X2 X3 X4 X5 X6 X7
+--------------------
+ 1  1  1  1  1  1  1
+ 1  2  2  2  2  2  2
+ 1  3  3  3  3  3  3
+ 2  1  1  2  2  3  3
+ 2  2  2  3  3  1  1
+ 2  3  3  1  1  2  2
+ 3  1  2  1  3  2  3
+ 3  2  3  2  1  3  1
+ 3  3  1  3  2  1  2
+ 4  1  3  3  2  2  1
+ 4  2  1  1  3  3  2
+ 4  3  2  2  1  1  3
+ 5  1  2  3  1  3  2
+ 5  2  3  1  2  1  3
+ 5  3  1  2  3  2  1
+ 6  1  3  2  3  1  2
+ 6  2  1  3  1  2  3
+ 6  3  2  1  2  3  1

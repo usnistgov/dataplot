@@ -1,0 +1,8 @@
+----- <~dataall\SPLETT2.top> SPLETT2.DAT
+
+SPLETT2.DAT
+
+View     <xcl: LIST SPLETT2.DAT>
+Load     <xcf: ~dataload/SPLETT2.DP>
+Print    <xccl: printfile C:\DATAPLOT\SPLETT2.DAT>
+

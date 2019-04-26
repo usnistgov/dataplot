@@ -1,0 +1,8 @@
+----- <~datalist\HAYES1.top> HAYES1.DAT
+ 
+HAYES1.DAT
+ 
+View     <xcl: LIST HAYES1.DAT>
+Load     <x2cl: SKIP 25; READ HAYES1.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\HAYES1.DAT>
+ 

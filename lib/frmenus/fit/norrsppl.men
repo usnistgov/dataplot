@@ -1,0 +1,20 @@
+This is file norrsppl.men--Specify Vertical Plot Limits for Residual Plots
+
+--------------------
+ 1. Specify Vertical Plot Limits for Residual Plots
+ 2. YLIMITS .. ..
+ 3.
+ 4. Vertical Axis:
+ 5.    Min
+ 5. @CE 1 0 20 30 ?
+ 6.    Max
+ 6. @CE 2 0 20 30 ?
+ 7.
+ 8.
+ 9. Done?
+--------------------
+GR FE
+TIC OFFSET UNITS SCREEN
+TIC OFFSET 5 5
+YLIMITS _1 _2
+--------------------

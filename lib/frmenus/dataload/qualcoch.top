@@ -1,0 +1,22 @@
+----- <~dataload\qualcoch.top> Load Quality/SPC Data: Control Charts
+
+Load Quality/SPC Data: Control Charts
+
+CCXBAR.DAT*   Silicon wafer thickness     <xcf: ~dataload\CCXBAR.DP>
+CCP.DAT       Number of defects           <xcf: ~dataload\CCP.DP>
+CCPN.DAT      Number of defects           <xcf: ~dataload\CCPN.DP>
+CCU.DAT       Wire cracks                 <xcf: ~dataload\CCU.DP>
+CCC.DAT       Surface defects             <xcf: ~dataload\CCC.DP>
+
+CROARKIN.DAT  Mass calibration            <xcf: ~dataload\CROARKIN.DP>
+CROARK2.DAT   SEM magnification standard  <xcf: ~dataload\CROARK2.DP>
+CROARK3.DAT   NIST SEM line width SRM     <xcf: ~dataload\CROARK3.DP>
+DRAFT69B.DAT  Draft lottery               <xcf: ~dataload\DRAFT69B.DP>
+
+GEAR.DAT      Gear diameters (Ishikawa)   <xcf: ~dataload\GEAR.DP>
+CLEAR.DAT     Component clearances        <xcf: ~dataload\CLEAR.DP>
+
+MONTGOME.DAT  Multivariate (Montgomery 2001) <xcf: ~dataload\MONTGOME.DP>
+T2CC.DAT      Multivariate (Ryan 1989)       <xcf: ~dataload\T2CC.DP>
+TRACY.DAT     Multivariate (Tracy 1992)      <xcf: ~dataload\TRACY.DP>
+

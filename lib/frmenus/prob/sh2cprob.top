@@ -1,0 +1,49 @@
+----- <~prob\sh2cprob.top> Probability Plot (Two Shape Parameters)
+
+Probability Plots for Distributions with Two Shape Parameters
+
+Generate Probability Plots for Continuous Distributions
+with Two Shape Parameters (Censored Case)
+
+Beta                                      <xemf: ~prob\ppbetce.men>
+Beta Normal                               <xemf: ~prob\ppbnoce.men>
+Burr Type 3                               <xemf: ~prob\ppbu3ce.men>
+Burr Type 4                               <xemf: ~prob\ppbu4ce.men>
+Burr Type 5                               <xemf: ~prob\ppbu5ce.men>
+Burr Type 6                               <xemf: ~prob\ppbu6ce.men>
+Burr Type 9                               <xemf: ~prob\ppbu9ce.men>
+Burr Type 12                              <xemf: ~prob\ppb12ce.men>
+Doubly Pareto Uniform                     <xemf: ~prob\ppdpuce.men>
+Exponentiated Weibull                     <xemf: ~prob\ppewece.men>
+F                                         <xemf: ~prob\ppfce.men>
+Folded Cauchy                             <xemf: ~prob\ppfcace.men>
+Folded Normal                             <xemf: ~prob\ppfnrce.men>
+G-and-H                                   <xemf: ~prob\ppghce.men>
+Generalized Asymmetric Laplace            <xemf: ~prob\ppgalce.men>
+Generalized Gamma                         <xemf: ~prob\ppggdce.men>
+Generalized Logistic (type 4)             <xemf: ~prob\ppgl4ce.men>
+Generalized McLeish                       <xemf: ~prob\ppgmcce.men>
+Generalized Topp and Leone                <xemf: ~prob\ppgtlce.men>
+Generalized Tukey-Lambda                  <xemf: ~prob\ppgldce.men>
+Gompertz                                  <xemf: ~prob\ppgomce.men>
+Gompertz Makeham                          <xemf: ~prob\ppmakce.men>
+    (Meeker/Escobar 2-shape parameterization)
+Inverse Gaussian                          <xemf: ~prob\ppigce.men>
+Inverted Beta                             <xemf: ~prob\ppibce.men>
+Johnson SB                                <xemf: ~prob\ppjsbce.men>
+Johnson SU                                <xemf: ~prob\ppjsuce.men>
+Kumaraswamy                               <xemf: ~prob\ppkumce.men>
+Log Beta                                  <xemf: ~prob\pplbece.men>
+Log Skew Normal                           <xemf: ~prob\pplsnce.men>
+Non-Central Chi-Square                    <xemf: ~prob\ppnccce.men>
+Non-Central T                             <xemf: ~prob\ppnctce.men>
+Pareto                                    <xemf: ~prob\ppparce.men>
+Pareto of the Second Kind                 <xemf: ~prob\pppa2ce.men>
+Power Lognormal                           <xemf: ~prob\ppplnce.men>
+Reciprocal Inverse Gaussian               <xemf: ~prob\pprigce.men>
+Skew T                                    <xemf: ~prob\ppstce.men>
+Truncated Normal                          <xemf: ~prob\pptnrce.men>
+Two-Sided Ogive                           <xemf: ~prob\pptsoce.men>
+Two-Sided Power                           <xemf: ~prob\pptspce.men>
+Two-Sided Slope                           <xemf: ~prob\pptssce.men>
+

@@ -1,0 +1,15 @@
+----- <~dp\loginfil.top> Dataplot Login Files
+ 
+Dataplot Login Files
+ 
+These are the 2 Dataplot macros that are automatically
+executed immediately upon entering Dataplot.
+These ASCII files consist of Dataplot commands.
+If you wish certain commands to be automatically
+executed (e.g., specifying an output device),
+then enter the appropriate Dataplot command in
+on of these 2 files (usually DPLOGF.TEX).
+ 
+   DPSYSF.TEX
+   DPLOGF.TEX
+ 

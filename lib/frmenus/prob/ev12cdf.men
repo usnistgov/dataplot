@@ -1,0 +1,42 @@
+This is file ev12cdf.men--Compute EV1 (= Gumbel) (for max) cdf and tail probability
+ 
+--------------------
+ 1. Compute EV1 (= Gumbel) (for max) cdf/tail prob.
+ 2. SET MAXMAX MAX; LET A = EV1CDF(X,LOC,SCALE)
+ 3.
+ 4. Note: The Gumbel distribution can be based on either
+ 5.       the maximum or the maximum order statistic.
+ 6.       This menu computes the maximum case.
+ 7.       Example: maximum breaking strength of a chain.
+ 9.
+10. Input values:
+11.                                       x:
+11. @CE 1 0 42 50 ?
+12.                              location u:
+12. @CE 2 0 42 50 ?
+13.                         scale s (s > 0):
+13. @CE 3 0 42 50 ?
+14.
+15. Output parameters:
+16.                  name for the cdf value:
+16. @CE 4 0 42 50 ?
+17.     name for the tail probability value:
+17. @CE 5 0 42 50 ?
+18.
+19.
+20. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 2 0 LET ZLOC = _2
+LET ZSCALE = 1
+@IF 3 0 LET ZSCALE = _3
+IF ZSCALE <= 0
+   LET ZSCALE = 1
+END OF IF
+SET MINMAX MAX
+@IF 4 0 LET _4 = EV1CDF( _1 ,ZLOC,ZSCALE)
+@IF 5 0 LET _5 = 1 - EV1CDF( _1 ,ZLOC,ZSCALE)
+--------------------
+WEB HELP EV1CDF
+--------------------

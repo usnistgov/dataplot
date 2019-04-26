@@ -1,0 +1,47 @@
+This is file intaplot.men--Interarrival Times vs Repair Times Plot
+ 
+--------------------
+ 1. Interarrival Times vs Repair Times Plot
+ 2. PLOT INTARR VS REPTIME
+ 3.
+ 4. Repair Times Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5.
+ 6. Character type:
+ 6. @CE 2 0 42 50 * gui-char
+ 7. Character fill:
+ 7. @CE 3 0 42 50 * gui-ooff
+ 8.
+ 9. Title:
+ 9. @CE 4 0 10 50 *
+10. Left Axis Label:
+10. @CE 5 0 22 50 *
+11. Bottom Axis Label:
+11. @CE 6 0 22 50 *
+12.
+13. Subset/Except/For Specification:
+14. @CE 7 0 1 50 *
+15.
+16.
+17. Generate the Repair Plot?:
+--------------------
+GR FE
+LINE SAVE
+CHARACTER SAVE
+LINE SOLID ALL
+CHARACTER BLANK
+CHARACTER _2
+CHARACTER FILL _3
+LINES BLANK
+TITLE _4
+Y1LABEL _5
+X1LABEL _6
+LET ZZZZREP = _1
+RETAIN ZZZZREP _9
+LET ZZZZINT = INTERARRIVAL TIMES ZZZZREP
+PLOT ZZZZINT ZZZZREP
+LINE RESTORE
+CHARACTER RESTORE
+--------------------
+WEB HELP INTERARRIVAL TIMES
+--------------------

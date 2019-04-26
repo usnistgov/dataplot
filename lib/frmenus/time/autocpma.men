@@ -1,0 +1,88 @@
+This is file autocpma.men--Autocorrelation plot matrix
+ 
+--------------------
+ 1. Autocorrelation Plot Matrix
+ 2. MULTIPLOT 2 2 and AUTOCORRELATION PLOT Y SUBSET ...
+ 3.
+ 4. Definition: Autocorrelation(at lag h) =
+ 5.     correlation of Y(i) with Y(i-lag)
+ 6.     -1  <= autocorrelation  <= +1
+ 7.
+ 8. Vertical   axis = autocorrelation at lag h
+ 9. Horizontal axis = lag h
+10.
+11. Question being addressed:
+12.     Is the series stationary; in particular,
+13.     is the autocorrelation structure the same
+14.     across the first, second, third, & fourth
+15.     quarters of the series?
+16.
+17. Reference: Granger & Hatanaka, page 59.
+18.
+19. Response Variable:
+19. @CE 1 0 42 50 ? gui-vari
+20.
+21. Line Type:
+21. @CE 2 0 42 50 gui-line
+22. Character type:
+22. @CE 3 0 42 50 gui-char
+23. Character fill:
+23. @CE 4 0 42 50 gui-ooff
+24. Spike:
+24. @CE 5 0 42 50 gui-ooff
+25.
+26. Number of intervals to use (pick one):
+26. @CE 6 1 35 38 2
+26. @CE 6 2 39 42 4
+26. @CE 6 3 43 46 8
+26. @CE 6 4 47 50 9
+27.
+28. Subset/Except/For Specification:
+29. @CE 7 0 1 50 *
+30.
+31.
+32. Generate the Plot?:
+--------------------
+GR FE
+@IF 2 0 LINES _2
+@IF 3 0 CHARACTERS _3
+@IF 4 0 CHARACTER FILL _4
+@IF 5 0 SPIKE _5
+@IF 5 0 SPIKE BASE 0
+.
+LET ZZZZNROW = 2
+LET ZZZZNCOL = 2
+LET ZZZZNPLT = 4
+@IF 6 1 LET ZZZZNPLT = 2
+@IF 6 3 LET ZZZZNPLT = 8
+@IF 6 4 LET ZZZZNPLT = 9
+@IF 6 1 LET ZZZZNROW = 2
+@IF 6 1 LET ZZZZNCOL = 1
+@IF 6 3 LET ZZZZNROW = 2
+@IF 6 3 LET ZZZZNCOL = 4
+@IF 6 4 LET ZZZZNROW = 3
+@IF 6 4 LET ZZZZNCOL = 3
+LET ZN = NUMBER _1
+LET ZN = NUMBER _1 _7
+LET ZJUNK = SEQUENCE 1 1 ZN
+LET ZJUNK = SEQUENCE 1 1 ZN _7
+LET ZJUNKTAG = CODE4 ZJUNK
+LET ZJUNKTAG = CODE4 ZJUNK _7
+@IF 6 1 LET ZJUNKTAG = CODE2 ZJUNK
+@IF 6 1 LET ZJUNKTAG = CODE2 ZJUNK _7
+@IF 6 3 LET ZJUNKTAG = CODE8 ZJUNK
+@IF 6 3 LET ZJUNKTAG = CODE8 ZJUNK _7
+@IF 6 4 LET ZJUNKTAG = CODE9 ZJUNK
+@IF 6 4 LET ZJUNKTAG = CODE9 ZJUNK _7
+MULTIPLOT CORNER COORDINATES 5 5 95 95
+MULTIPLOT ZZZZNROW ZZZZNCOL
+   LOOP FOR K = 1 1 ZZZZNPLT
+      AUTOCORRELATION PLOT _1 _7 SUBSET ZJUNKTAG K
+   END LOOP
+MULTIPLOT OFF
+LINES SOLID
+CHARACTERS BLANK
+SPIKE OFF
+--------------------
+WEB HELP AUTOCORRELATION PLOT
+--------------------

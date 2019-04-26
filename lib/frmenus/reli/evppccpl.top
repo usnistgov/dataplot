@@ -1,0 +1,30 @@
+----- <~reli\evppccpl.top> PPCC Plot/Probability Plot Estimation
+
+Parameter Estimation via PPCC Plot/Probability Plot
+
+Discussion: PPCC Plot Options                <~reli\ppccopti.top>
+
+Uncensored Data (Ungrouped or Grouped)
+  Extreme Value Type 2 (Frechet) (Minimum)   <xemf: ~reli\ppccev21.men>
+  Extreme Value Type 2 (Frechet) (Maximum)   <xemf: ~reli\ppccev22.men>
+
+  Weibull (Minimum)                          <xemf: ~reli\ppccwei1.men>
+  Weibull (Maximum)                          <xemf: ~reli\ppccwei2.men>
+
+  Generalized Extreme Value (Minimum)        <xemf: ~reli\ppccgev1.men>
+  Generalized Extreme Value (Maximum)        <xemf: ~reli\ppccgev2.men>
+
+  Generalized Pareto                         <xemf: ~reli\ppccgep.men>
+
+Censored Data (Ungrouped)
+  Extreme Value Type 2 (Frechet) (Minimum)   <xemf: ~reli\ppcce21c.men>
+  Extreme Value Type 2 (Frechet) (Maximum)   <xemf: ~reli\ppcce22c.men>
+
+  Weibull (Minimum)                          <xemf: ~reli\ppccwe1c.men>
+  Weibull (Maximum)                          <xemf: ~reli\ppccwe2c.men>
+
+  Generalized Extreme Value (Minimum)        <xemf: ~reli\ppccge1c.men>
+  Generalized Extreme Value (Maximum)        <xemf: ~reli\ppccge2c.men>
+
+  Generalized Pareto                         <xemf: ~reli\ppccgepc.men>
+

@@ -1,0 +1,23 @@
+This is file relitren.men--Reliability Trend Tests
+ 
+--------------------
+ 1. Reliability Trends Test
+ 2. RELIABILITY TREND TEST Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Value for the Censoring Time:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute Reliability Trends Tests?:
+--------------------
+GR FE
+LET TEND = _2
+RELIABILITY TRENDS TEST _1 _3
+--------------------
+WEB HELP RELIABILITY TREND TEST
+--------------------

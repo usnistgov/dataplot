@@ -1,0 +1,8 @@
+----- <~dataload\SHEESLEY.DP> Load SHEESLEY.DAT
+
+. This is file    SHEESLEY.DP
+
+DELETE Y X1 TO X5
+SKIP 25
+READ SHEESLEY.DAT Y X1 TO X5
+

@@ -1,0 +1,68 @@
+. THIS IS DATAPLOT PROGRAM   NORRIS5.DP
+. PURPOSE--READ JIM NORRIS FILES FROM 1991, 1992, AND 1993
+.          AND MERGE INTO ONE LONG (Y,X) FILE
+.
+. -----START POINT-----
+.
+row limits 27 35
+read norris5.dat junk y1 to y8
+row limits 38 46
+read norris5.dat junk y21 to y32
+row limits 49 60
+read norris5.dat junk y41 to y52
+.
+let y = y1
+extend y y1
+extend y y1
+extend y y5
+extend y y5
+extend y y5
+.
+let x = y2
+extend x y3
+extend x y4
+extend x y6
+extend x y7
+extend x y8
+.
+extend y y21
+extend y y21
+extend y y21
+extend y y25
+extend y y25
+extend y y25
+extend y y29
+extend y y29
+extend y y29
+.
+extend x y22
+extend x y23
+extend x y24
+extebd x y26
+extend x y27
+extend x y28
+extend x y30
+extend x y31
+extend x y32
+.
+extend y y41
+extend y y41
+extend y y41
+extend y y45
+extend y y45
+extend y y45
+extend y y49
+extend y y49
+extend y y49
+.
+extend x y42
+extend x y43
+extend x y44
+extend x y46
+extend x y47
+extend x y48
+extend x y50
+extend x y51
+extend x y52
+.
+print y x

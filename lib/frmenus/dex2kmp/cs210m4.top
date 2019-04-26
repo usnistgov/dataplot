@@ -1,0 +1,39 @@
+----- <~dex2kmp\cs210m4.top> Confounding:  2**(10-4) Design
+ 
+Confounding:  2**(10-4) Design
+ 
+Name of Design      = 2**(10-4) Fractional Factorial Design
+ 
+Number of Factors k = 10
+Number of Obs.    n = 64
+ 
+Resolution          = 4 (Main effects confounded with
+                      3-term interactions and higher;
+                      no main effects are confounded
+                      with any 2-term interactions)
+ 
+Factor Definitions  : 7 = 2346
+                      8 = 1346
+                      9 = 1245
+                      0 = 1235
+ 
+Defining Relation   : I +
+                      23467 + 13468 + 12459 + 12350 +
+                      1278 + 135679 + 145670 + 235689 +
+                      245680 + 3490 +
+                      45789 + 35780 + 26790 + 16890 +
+                      12347890
+ 
+Main Effect         : 1  =  1 +  *
+Confounding           2  =  2 +  *
+                      3  =  3 +  *
+                      4  =  4 +  *
+                      5  =  5 +  *
+                      6  =  6 +  *
+                      7  =  7 +  *
+                      8  =  8 +  *
+                      9  =  9 +  *
+                      0  =  0 +  *
+ 
+Click here to view 2-term confounding  <~dex2kmp\2t210m4.top>
+ 

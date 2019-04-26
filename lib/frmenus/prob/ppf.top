@@ -1,0 +1,20 @@
+----- <~prob\ppf.top> Percent Point Functions
+
+*Percent Point Functions (0 < P < 1)
+
+Normal N(0,1)      NORPPF(P)
+t                  TPPF(P,NU)                 NU > 0
+Chi-squared        CHSPPF(P,NU)               NU > 0
+F                  FPPF(P,NU1,NU2)            NU1,NU2 > 0
+
+Weibull (min)      SET MINMAX MIN
+                   WEIPPF(P,GAMMA)            GAMMA > 0
+Weibull (max)      SET MINMAX MAX
+                   WEIPPF(P,GAMMA)            GAMMA > 0
+Inverse Gaussian   IGPPF(P,GAMMA)             GAMMA > 0
+Wald               WALPPF(P)
+Recip. Inv. Gauss. RIGPPF(P,GAMMA)            GAMMA > 0
+Fatigue Life       FLPPF(P,GAMMA)             GAMMA > 0
+
+Generalized Pareto GEPPPF(P,GAMMA)
+

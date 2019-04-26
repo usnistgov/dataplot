@@ -1,0 +1,8 @@
+----- <~data\weibfunc.top> Functions: Weibull Distribution
+
+Weibull Distribution
+
+WEICDF(X,GAMMA)   Weibull cumulative distribution function
+WEICDF(X,GAMMA)   Weibull probability density function
+WEICDF(X,GAMMA)   Weibull percent point function
+

@@ -1,0 +1,69 @@
+This is file scatplo2.men--Scatter Plot Matrix Options
+ 
+--------------------
+ 1. Scatter Plot Matrix Options
+ 2. SET ...
+ 3.
+ 4. This menu lets you set some less frequently used options
+ 5. for the scatter plot matrix.
+ 6.
+ 7. Plot Frame:
+ 8. @CE 1 1 5 25 Conncected
+ 9. @CE 1 2 5 25 Conncected, but small gap
+10. @CE 1 3 5 25 Not connected
+11.
+12. You can enter axis limits for the variables.  These
+13. limits should be specified in pairs (lower  and upper
+14. limits) and should be entered in the order that the
+15. variables will be plotted.  Similarly, if you have defined
+16. plot subregions (HELP SUBREGIONS), you can specify
+17. limits for these.
+18.
+19. Enter Variable Limits:
+20. @CE 2 0 1 60 *
+21. Enter Variable Subregion Limits:
+22. @CE 3 0 1 60 *
+23.
+24. Dataplot allows some special X2LABELS to be placed
+25. on the plot (HELP SCATTER PLOT MATRIX for details).
+26. 
+27. X2LABEL:
+28. @CE 4 1 5 30 Correlation
+29. @CE 4 2 5 30 Percent Correlation
+30. @CE 4 3 5 30 Effect
+31. @CE 4 4 5 30 Percent Accept
+32. @CE 4 5 5 30 Number Accept
+33. @CE 4 6 5 30 Accept Total
+34. @CE 4 7 5 30 Accept Total Percent
+35. Prefix for X2Label:
+35. @CE 5 0 52 60 ?
+36. Suffix for X2Label:
+36. @CE 6 0 52 60 ?
+37. Vertical Displacement for X2LABEL:
+37. @CE 7 0 52 60 ?
+38. Horizontal Offset for X2LABEL:
+38. @CE 8 0 52 60 ?
+39.
+40. Set the Scatter Plot Matrix Options?:
+--------------------
+GR FE
+@IF 1 1 SET SCATTER PLOT MATRIX FRAME DEFAULT
+@IF 1 2 SET SCATTER PLOT MATRIX FRAME CONNECTED
+@IF 1 2 FRAME CORNER COORDINATES 3 3 97 97
+@IF 1 3 SET SCATTER PLOT MATRIX FRAME USER
+SET SCATTER PLOT MATRIX LIMITS _2
+SET SCATTER PLOT MATRIX SUBREGION LIMITS _3
+@IF 4 1 SET SCATTER PLOT MATRIX X2LABEL CORRELATION
+@IF 4 2 SET SCATTER PLOT MATRIX X2LABEL PERCENT CORRELATION
+@IF 4 3 SET SCATTER PLOT MATRIX X2LABEL EFFECT
+@IF 4 4 SET SCATTER PLOT MATRIX X2LABEL PERCENT ACCEPT
+@IF 4 5 SET SCATTER PLOT MATRIX X2LABEL NUMBER ACCEPT
+@IF 4 6 SET SCATTER PLOT MATRIX X2LABEL ACCEPT TOTAL
+@IF 4 7 SET SCATTER PLOT MATRIX X2LABEL ACCEPT TOTAL PERCENT
+SET SCATTER PLOT MATRIX X2LABEL PREFIX _5
+SET SCATTER PLOT MATRIX X2LABEL SUFFIX _6
+X2LABEL DISPLACEMENT _7
+X2LABEL OFFSET _8
+--------------------
+WEB HELP SCATTER PLOT MATRIX
+--------------------

@@ -1,0 +1,24 @@
+This is file covarian.men--Compute covariance of a variable
+ 
+--------------------
+ 1. Covariance
+ 2. LET A = COVARIANCE Y1 Y2
+ 3.
+ 4. First variable for which to compute the covariance:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Second variable for which to compute the covariance:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Parameter to store the covariance:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -10 50 *
+10.
+11.
+12. Compute the Covariance?:
+--------------------
+GR FE
+LET _3 = COVARIANCE  _1 _2 _4
+--------------------
+WEB HELP COVARIANCE
+--------------------

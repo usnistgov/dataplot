@@ -1,0 +1,26 @@
+----- <~dex2kmp\definiti.top> Definition: 2**(k-p) Frac. Fact. Designs
+ 
+Definition: 2**(k-p) Fractional Factorial Designs
+ 
+The class of 2**(k-p) fractional factorial designs
+consists of those k-factor, 2-level designs which
+are orthogonal subsets of 2**k full factorial
+designs.  The number n of runs in a 2**(k-p)
+design is n = 2**(k-p).  The k factors may be
+continuous or discrete.  The 2**(k-p) fractional
+factorial designs is very popular--especially for
+k = 4 or more factors.
+ 
+If one is examining k 2-level factors, then our
+recommended initial default design is the 2**k
+full factorial design.  On the other hand, once
+the requisite number of runs for such full
+factorial designs n = 2**k) exceeds time/money
+budget, then the experimentalist should revert to
+the appropriate fractional factorial design.  The
+recommended best single literature source for the
+construction of the best 2**(k-p) fractional
+factorial design is of Box, Hunter, & Hunter:
+Statistics for Experimentalists, with page 410
+being of special interest.
+ 

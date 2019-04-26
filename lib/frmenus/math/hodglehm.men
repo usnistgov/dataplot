@@ -1,0 +1,22 @@
+This is file hodglehm.men--Compute Hodge-Lehman estimate of a variable
+ 
+--------------------
+ 1. Hodges Lehman Location Estimate
+ 2. LET A = HODGES LEHMAN Y
+ 3.
+ 4. Variable for which to compute the Hodges-Lehman estimate:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Parameter to store the median:
+ 5. @CE 2 0 42 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Hodges Lehman Estimate?:
+--------------------
+GR FE
+LET _2 = HODGES LEHMAN  _1 _3
+--------------------
+WEB HELP HODGES LEHMAN
+--------------------

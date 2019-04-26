@@ -1,0 +1,53 @@
+This is file avplot.men--Allan Variance Plot
+ 
+--------------------
+ 1. Allan Variance Plot
+ 2. ALLAN VARIANCE PLOT Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Line Types (solid, dot, dash, ...)
+ 6. @CE 3 0 42 50 * gui-line
+ 7. Character Type (blank, x, circ, ...)
+ 7. @CE 4 0 42 50 * gui-char
+ 8. Character Fill (off, on)
+ 8. @CE 5 0 42 50 * gui-ooff
+ 9. Spike on/off
+ 9. @CE 12 0 42 50 * gui-ooff
+10. Bar on/off:
+10. @CE 13 0 42 50 * gui-ooff
+11. Log scale for Vertical Axis
+11. @CE 10 0 42 50 * gui-ooff
+12. Log scale for Horizontal Axis
+12. @CE 11 0 42 50 * gui-ooff
+13.
+14. Title:
+14. @CE 6 0 10 50 *
+15. Left Axis Label:
+15. @CE 7 0 22 50 *
+16. Bottom Axis Label:
+16. @CE 8 0 22 50 *
+17.
+18. Subset/Except/For Specification:
+19. @CE 9 0 1 50 *
+20.
+21.
+22. Generate the Allan Variance Plot?:
+--------------------
+GR FE
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+@IF 10 0 YLOG _10
+@IF 11 0 XLOG _11
+SPIKE _12
+BAR _13
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+ALLAN VARIANCE PLOT _1 _9
+LOG OFF
+--------------------
+WEB HELP ALLAN VARIANCE PLOT
+--------------------

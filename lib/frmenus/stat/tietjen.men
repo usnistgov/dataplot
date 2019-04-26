@@ -1,0 +1,31 @@
+This is file tietjen.men--Tietjen-Moore Outlier Test
+ 
+--------------------
+ 1. Tietjen-Moore Test for Outliers
+ 2. LET K = 2; TIETJEN MOORE TEST Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Number of Outliers to Test For:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6.
+ 7. Type of Test:
+ 8. @CE 2 1  5 15 Two-Sided
+ 8. @CE 2 2 20 30 Minimum
+ 8. @CE 2 3 35 45 Maximum
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 3 0 1 50 *
+12.
+13.
+14. Compute Tietjen Moore Test?
+--------------------
+GR FE
+LET K = _2
+TIETJEN MOORE TEST _1 _3
+@IF 2 1 TIETJEN MOORE TEST _1 _3
+@IF 2 2 TIETJEN MOORE TEST _1 _3
+@IF 2 3 TIETJEN MOORE TEST _1 _3
+--------------------
+WEB HELP TIETJEN MOORE TEST
+--------------------

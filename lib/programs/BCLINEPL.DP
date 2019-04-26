@@ -1,0 +1,17 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     BCLINEPL.DP
+. PURPOSE--GENERATE A BOX-COX LINEARITY PLOT
+.
+. -----START POINT-----------------------------------
+.
+skip 25
+read berger1.dat y x
+let y = log(y)
+y1label Correlation Coefficient
+x1label Box-Cox Lambda
+Box-Cox Linearity Plot Y X
+box 15 92 85 99.5; hw 3 2; justification center; move 50 96.5
+text Deterministic Modeling
+text What is the Best Transformation to Linearity?
+delete x y
+grid off
+.

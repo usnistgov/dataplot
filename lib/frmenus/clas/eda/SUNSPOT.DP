@@ -1,0 +1,10 @@
+----- <~dataloex\SUNSPOT.DP> Load & Execute SUNSPOT.DAT
+
+. This is file    SUNSPOT.DP
+
+DELETE Y
+SKIP 25
+READ SUNSPOT.DAT Y
+TITLE SUNSPOT.DAT
+/
+

@@ -1,0 +1,27 @@
+-----<~reli\discppbo.top> Discussion: Bootstrap Intervals
+
+Discussion: Bootstrap Intervals
+
+Discussion: Bootstrap Intervals
+
+For the PPCC (or KS) plot/probability plot method of
+distributional modeling, Dataplot can use the bootstrap
+to generate confidence intervals for the following:
+
+   1) Parameters of the distribution
+
+   2) Selected percentiles
+
+The menus in this section generate the confidence intervals
+for the distribution parameters.
+
+There is a separate menu for generating the confidence
+intervals for the percentiles for all these
+distributions.  You should run the specific distribution
+menu first and then run the menu for generating the
+percentile intervals.
+
+The number of bootstrap samples should be at least 100.
+The menus in the GUI will truncate the maximum number of
+bootstrap samples at 1,000.
+

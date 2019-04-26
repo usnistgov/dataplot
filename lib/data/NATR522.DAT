@@ -1,0 +1,49 @@
+This is Dataplot data file     NATR522.DAT
+Young's Modulus (Linear Regression Example)
+ 
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Pages 5-22 to 5-26.
+ 
+Number of observations             = 24
+Number of variables per line image =  2
+Order of variables on a line image--
+   1. Response Variable Y = Young's Modulus
+   2. Factor 1            = Temperature (degrees C)
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR522.DAT Y X
+ 
+ 
+ 
+ 
+ 
+ 
+      Y                 X
+Young's Modulus     Temperature
+--------------------------------
+     3328              500
+     3296              550
+     3266              600
+     3260              603
+     3244              603
+     3240              650
+     3232              650
+     3213              650
+     3204              700
+     3203              700
+     3184              700
+     3174              750
+     3175              750
+     3154              750
+     3152              800
+     3146              800
+     3124              800
+     3117              850
+     3094              850
+     3097              900
+     3061              900
+     3038              950
+     3030             1000
+     3005             1000

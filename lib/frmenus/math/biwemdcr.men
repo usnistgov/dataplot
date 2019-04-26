@@ -1,0 +1,24 @@
+This is file biwemdcr.men--Compute biweight midcorrelation of a variable
+ 
+--------------------
+ 1. Biweight Midcorrelation
+ 2. LET A = BIWEIGHT MIDCORRELATION Y1 Y2
+ 3.
+ 4. First variable for which to compute the biweight midcorrelation:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Second variable for which to compute the biweight midcorrelation:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Parameter to store the biweight midcorrelation:
+ 6. @CE 3 0 42 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Compute the Biweight Midcorrelation?:
+--------------------
+GR FE
+LET _3 = BIWEIGHT MIDCORRELATION  _1 _2 _4
+--------------------
+WEB HELP BIWEIGHT MIDCORRELATION
+--------------------

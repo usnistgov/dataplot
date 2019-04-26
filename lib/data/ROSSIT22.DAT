@@ -1,0 +1,57 @@
+This is Dataplot data file    ROSSIT22.DAT
+...
+Walt Rossiter & Blaza Toman
+July 2001
+Number 0f observations                   = 32 (2**5 DEX)
+Total number of variables per line image = 6
+Order of variables on a line image--
+   Response variable = recovered
+   Factor 1          = sonic
+   Factor 2          = temp
+   Factor 3          = time
+   Factor 4          = mass
+   Factor 5          = psize
+Stat Classification: 2**5 Full Factorial Design
+To read this file into Dataplot--
+   skip 25
+   read ROSSIT22.DAT y x1 x2 x3 x4 x5
+
+
+
+
+
+
+  Y     X1  X2  X3  X4  X5
+---------------------------
+90.71   -1  -1  -1  -1  -1
+96.53   +1  -1  -1  -1  -1
+95.99   -1  +1  -1  -1  -1
+87.94   +1  +1  -1  -1  -1
+90.13   -1  -1  +1  -1  -1
+97.53   +1  -1  +1  -1  -1
+88.52   -1  +1  +1  -1  -1
+92.46   +1  +1  +1  -1  -1
+86.73   -1  -1  -1  +1  -1
+88.69   +1  -1  -1  +1  -1
+91.89   -1  +1  -1  +1  -1
+90.89   +1  +1  -1  +1  -1
+93.33   -1  -1  +1  +1  -1
+92.82   +1  -1  +1  +1  -1
+91.96   -1  +1  +1  +1  -1
+88.12   +1  +1  +1  +1  -1
+49.73   -1  -1  -1  -1  +1
+46.95   +1  -1  -1  -1  +1
+70.26   -1  +1  -1  -1  +1
+81.79   +1  +1  -1  -1  +1
+58.65   -1  -1  +1  -1  +1
+62.10   +1  -1  +1  -1  +1
+85.32   -1  +1  +1  -1  +1
+86.07   +1  +1  +1  -1  +1
+47.85   -1  -1  -1  +1  +1
+46.47   +1  -1  -1  +1  +1
+69.11   -1  +1  -1  +1  +1
+77.47   +1  +1  -1  +1  +1
+69.01   -1  -1  +1  +1  +1
+68.46   +1  -1  +1  +1  +1
+86.04   -1  +1  +1  +1  +1
+91.44   +1  +1  +1  +1  +1

@@ -1,0 +1,43 @@
+This is the data file   LINEWID.DAT
+Source: This example is used on page mpc371.htm of the e-Handbook
+        to demonstrate control charts for instrument calibration.
+        Data is from Carroll Croarkin.
+
+Description:  Line widths of three photomask reference standards (at
+              the low, middle and high end of the calibration line) were
+              measured on six days with an optical imaging system that
+              had been calibrated from similar measurements on 10
+              reference artifacts. 
+
+To read into Dataplot, enter
+
+    SKIP 25
+    READ LINEWID.DAT  DAY POSITION X Y
+
+
+
+
+
+
+
+
+DAY POSITION    X        Y
+--------------------------
+ 1    L       0.76    1.12
+ 1    M       3.29    3.49
+ 1    U       8.89    9.11
+ 2    L       0.76    0.99
+ 2    M       3.29    3.53
+ 2    U       8.89    8.89
+ 3    L       0.76    1.05
+ 3    M       3.29    3.46
+ 3    U       8.89    9.02
+ 4    L       0.76    0.76
+ 4    M       3.29    3.75
+ 4    U       8.89    9.30
+ 5    L       0.76    0.96
+ 5    M       3.29    3.53
+ 5    U       8.89    9.05
+ 6    L       0.76    1.03
+ 6    M       3.29    3.52
+ 6    U       8.89    9.02

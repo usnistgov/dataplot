@@ -1,0 +1,8 @@
+----- <~dataload\NATR511.DP> Load NATR511.DAT
+
+. This is file    NATR511.DP
+
+DELETE Y X
+SKIP 25
+READ NATR511.DAT Y X
+

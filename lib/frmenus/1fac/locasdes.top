@@ -1,0 +1,19 @@
+----- <~1fac\locasdes.top> Standard Deviation(Location Estimate)
+
+Standard Deviation(Location Estimate)
+
+To estimate SD(grand average):
+   Compute classical s/sqrt(n)             <xemf: ~1fac\compsdme.men>
+   Compute from bootstrap plot of averages <xemf: ~1fac\bootmepl.men>
+
+To estimate SD(grand midmean):
+   Compute from bootstrap plot of midmeans <xemf: ~1fac\bootmmpl.men>
+
+To estimate SD(grand median):
+   Compute from bootstrap plot of medians  <xemf: ~1fac\bootmdpl.men>
+
+To estimate SD(group averages):
+   Plot SD(group averages) plot            <xemf: ~1fac\sdmeplot.men>
+
+Checking assumptions                       <xemf: ~univ\4plot.men>
+

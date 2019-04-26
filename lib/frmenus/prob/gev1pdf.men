@@ -1,0 +1,44 @@
+This is file gev1pdf.men--Compute Generalized Extreme Value (for mimimum) pdf
+ 
+--------------------
+ 1. Compute Generalized Extreme Value (for mimimum) pdf
+ 2. SET MINMIN MIN; LET A = GEVPDF(X,SHAPE,LOC,SCALE)
+ 3.
+ 4. Note: The generalized extreme value distribution can
+ 5. be based on either the mimimum or the maximum order
+ 6. statistic.  This menu computes the mimimum case.
+ 7. Example: mimimum breaking strength of a chain.
+ 9.
+10. Input values:
+11.       x (gamma > 0:  -1/gamma < (x-mu)/s) < inf):
+12.       x (gamma < 0: -inf < (x-mu)/s) < -1/gamma):
+12. @CE 1 0 42 50 ?
+13.                                      shape gamma:
+13. @CE 2 0 42 50 ?
+14.                                       location u:
+14. @CE 3 0 42 50 ?
+15.                                  scale s (s > 0):
+15. @CE 4 0 42 50 ?
+16.
+17. Output parameters:
+18.                           name for the pdf value:
+18. @CE 5 0 42 50 ?
+19.
+20.
+21. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 3 0 LET ZLOC = _3
+LET ZSCALE = 1
+@IF 3 0 LET ZSCALE = _4
+IF ZSCALE <= 0
+   LET ZSCALE = 1
+END OF IF
+LET ZSHAPE = 0
+@IF 2 0 LET ZSHAPE = _2
+SET MINMAX MIN
+@IF 5 0 LET _5 = GEVPDF( _1 ,ZSHAPE,ZLOC,ZSCALE)
+--------------------
+WEB HELP GEVPDF
+--------------------

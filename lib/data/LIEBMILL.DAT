@@ -1,0 +1,40 @@
+This is dataplot data file     LIEBMILL.DAT
+Lieberman & Miller Confidence Limits Example
+Source--Lieberman, Gerald J. and Miller, Rupert G.
+ 
+Number of observations             = 15
+Number of variables per line image =  2
+Order of variables on a line image--
+   1. Response variable Y  = speed (miles/hour)
+   2. Factor X             = orifice opening (inches)
+Statistics category--regression
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ LIEBMILL.DAT Y X
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+      Y               X
+    speed      orifice opening
+--------------------------------
+    4360            1.310
+    4590            1.313
+    4520            1.320
+    4770            1.322
+    4760            1.338
+    5070            1.340
+    5230            1.347
+    5080            1.355
+    5550            1.360
+    5390            1.364
+    5670            1.373
+    5490            1.376
+    5810            1.384
+    6060            1.395
+    5940            1.400

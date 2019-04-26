@@ -1,0 +1,8 @@
+----- <~dataload\NATR96.DP> Load NATR96.DAT
+
+. This is file    NATR96.DP
+
+DELETE POS BATCH X1 TO X7
+SKIP 25
+READ NATR96.DAT BATCH X1 TO X8
+

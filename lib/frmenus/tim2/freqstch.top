@@ -1,0 +1,12 @@
+----- <~tim2\freqstch.top> Frequency-Domain Structure Checking
+ 
+Frequency-Domain Structure Checking
+ 
+Cross-Spectrum              <xemf: ~tim2\crosspec.men>
+Co-Spectrum                 <xemf: ~tim2\cospectr.men>
+Quadrature-Spectrum         <xemf: ~tim2\quadspec.men>
+Coherency-Spectrum          <xemf: ~tim2\cohespec.men>
+Phase-Spectrum              <xemf: ~tim2\phasspec.men>
+Argand-Spectrum             <xemf: ~tim2\argaspec.men>
+Gain-Spectrum               <xemf: ~tim2\gainspec.men>
+ 

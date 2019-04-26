@@ -1,0 +1,53 @@
+THIS IS DATAPLOT DATA FILE    ROSSIT11.DAT
+ROOFING FAILURES
+JULY 1993
+notes on Rossiter/Martin experiment:
+I have defined a "COND" (= condition) variable, as follows:
+COND  Walt's ID  Contam.  Thickness  # failed  out of
+1       1P(eel)   30        3         8         8
+2       2P        30        6         3         9 (all following)
+3       3P        160       3         9
+4       4P        160       6         8
+5       1S(hear)  30        3         0
+6       2S        30        6         0
+7       3S       160        3         5
+8       4S       160        6         0
+.
+I also have defined MODE, = 1 for peel testing, 2 for shear testing.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+---------------------------------
+ 3             66.780         41
+ 3             95.390         21
+ 3            100.160         20
+ 3            110.870          3
+ 3            113.250          9
+ 3            123.010         39
+ 3            134.690         23
+ 3            154.990         22
+ 3            193.560         26
+ 1            148.860         62
+ 1            230.770         67
+ 1            309.250         66
+ 1            387.950         51
+ 1            500.030         65
+ 1           1151.960         49
+ 1           1192.360         50
+ 1           1747.410         47
+ 4            533.540         16
+ 4            613.380         32
+ 4           1129.480         29
+ 4           1520.870         25
+ 4           1630.990         44
+ 4           4520.000         36
+ 4           8600.000         11
+ 4          17712.000         40
+ 2          16870.000         29
+ 2          25383.000         57
+ 2          26040.000         40

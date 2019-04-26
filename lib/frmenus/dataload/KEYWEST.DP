@@ -1,0 +1,8 @@
+----- <~dataload\KEYWEST.DP> Load KEYWEST.DAT
+
+. This is file    KEYWEST.DP
+
+DELETE Y YEAR
+SKIP 25
+READ KEYWEST.DAT Y YEAR
+

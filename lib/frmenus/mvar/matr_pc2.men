@@ -1,0 +1,37 @@
+This is file matr_pc2.men--Pooled Variance-Covariance Matrix
+ 
+--------------------
+ 1. Pooled Variance-Covariance Matrix
+ 2. LET SPOOL = POOLED VARIANCE-COVARIANCE MATRIX M TAG
+ 3.
+ 4. This menu calculates the pooled variance-covariance
+ 5. matrix of a list of variables.  That is, there are p
+ 6. variables and k groups.  A group id variable identifies
+ 7. which group that each row of the data belongs to.
+ 8. A pxp pooled variance-covariance matrix is returned.
+ 9.
+10. List of Response Variables:
+11. @CE 1 0 1 50 gui-variable
+12. Group ID Variable:
+12. @CE 2 0 42 50 gui-variable
+13.
+14. Name for Matrix to Store Pooled Variance-Covariance Matrix:
+14. @CE 3 0 42 50 ?
+15.
+16. Subset/Except/For Specification: 
+17. @CE 4 0 1 50 *
+18.
+19.
+20. Generate the Pooled Variance-Covariance Matrix?:
+--------------------
+GR FE
+DELETE ZZZZX ZZZZTAG
+WRITE ZZZZJUNK.DAT _1 _4
+SKIP 0
+READ MATRIX ZZZZJUNK.DAT ZZZZX
+LET ZZZZTAG = _2
+RETAIN ZZZZTAG _4
+LET _3 = POOLED VARIANCE-COVARIANCE MATRIX ZZZZX ZZZZTAG
+--------------------
+WEB HELP POOLED VARIANCE-COVARIANCE MATRIX
+--------------------

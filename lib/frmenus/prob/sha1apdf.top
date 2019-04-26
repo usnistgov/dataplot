@@ -1,0 +1,44 @@
+----- <~prob\sha1bpdf.top> PDF's for One Shape Parameter Continuous Distributions
+
+Compute PDF's (one shape parameters)
+
+Compute Probability Density Function for Continuous Distributions
+with One Shape Parameters
+
+Alpha                                     <xemf: ~prob\alppdf.men>
+Asymmetric Double Exponential (Laplace)   <xemf: ~prob\adepdf.men>
+Bradford                                  <xemf: ~prob\brapdf.men>
+Burr Type 2                               <xemf: ~prob\bu2pdf.men>
+Burr Type 7                               <xemf: ~prob\bu7pdf.men>
+Burr Type 8                               <xemf: ~prob\bu8pdf.men>
+Burr Type 10                              <xemf: ~prob\b10pdf.men>
+Burr Type 11                              <xemf: ~prob\b11pdf.men>
+Chi                                       <xemf: ~prob\chpdf.men>
+Chi-Square                                <xemf: ~prob\chspdf.men>
+Double Gamma                              <xemf: ~prob\dgapdf.men>
+Double Weibull                            <xemf: ~prob\dwepdf.men>
+Error (Subbotin)                          <xemf: ~prob\subpdf.men>
+Exponential Power                         <xemf: ~prob\pexpdf.men>
+Fatigue Life                              <xemf: ~prob\flpdf.men>
+Folded T                                  <xemf: ~prob\ftpdf.men>
+Frechet (minimum case)                    <xemf: ~prob\ev21pdf.men>
+Frechet (maximum case)                    <xemf: ~prob\ev22pdf.men>
+Gamma                                     <xemf: ~prob\gampdf.men>
+Generalized Extreme Value (Minimum)       <xemf: ~prob\gev1pdf.men>
+Generalized Extreme Value (Maximum)       <xemf: ~prob\gev2pdf.men>
+Generalized Half-Logistic                 <xemf: ~prob\ghflpdf.men>
+Generalized Logistic (type 1)             <xemf: ~prob\glopdf.men>
+Generalized Logistic (type 2)             <xemf: ~prob\gl2pdf.men>
+Generalized Logistic (type 3)             <xemf: ~prob\gl3pdf.men>
+Generalized Logistic (Hosking)            <xemf: ~prob\gl5pdf.men>
+Generalized Pareto (Maximum)              <xemf: ~prob\geppdf.men>
+Generalized Pareto (Minimum)              <xemf: ~prob\gep2pdf.men>
+Geometric Extreme Exponential             <xemf: ~prob\geepdf.men>
+Inverted Gamma                            <xemf: ~prob\igapdf.men>
+Inverted Weibull                          <xemf: ~prob\iwepdf.men>
+Log Double Exponential (Log Laplace)      <xemf: ~prob\ldepdf.men>
+Log Gamma                                 <xemf: ~prob\lgapdf.men>
+Logistic-Exponential                      <xemf: ~prob\lexpdf.men>
+Log Logistic                              <xemf: ~prob\llgpdf.men>
+Lognormal                                 <xemf: ~prob\lgnpdf.men>
+

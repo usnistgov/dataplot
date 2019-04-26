@@ -1,0 +1,59 @@
+This is file kslde.men--Kolmogorov-Smirnov Test for Log Double Exponential
+ 
+--------------------
+ 1. Kolmogorov-Smirnov Test for Log Double Exponential Distribution
+ 2. LOG DOUBLE EXPONENTIAL KOLMOGROV-SMIRNOV GOODNESS OF FIT Y
+ 3.
+ 4. Your data can be either ungrouped (a single
+ 5. response variable) or grouped (a bin counts
+ 6. variable and a bin mid-points variable).
+ 7. For ungrouped data, a Kolmogorov-Smirnov
+ 8. goodness-of-fit test is performed.  For grouped
+ 9. data, a chi-square goodness-of-fit test is performed.
+10.
+11. Response (or Bin Counts) Variable:
+11. @CE 1 0 42 50 ? gui-variable
+12. Optional Bin Mid-Points Variable:
+12. @CE 2 0 42 50 ? gui-variable
+13.
+14. Value of Location Parameter:
+14. @CE 3 0 42 50 ?
+15. Value of Scale Parameter:
+15. @CE 4 0 42 50 ?
+16. Value of Shape Parameter (alpha):
+16. @CE 5 0 42 50 ?
+17.
+18. Minimum frequency for chi-square (default=5):
+18. @CE 6 0 42 50 ?
+19.
+20. Subset/Except/For Specification:
+21. @CE 7 0 1 50 *
+22.
+23.
+24. Compute Kolmogorov-Smirnov Log Double Exponential Test?
+--------------------
+GR FE
+LET ALPHA = _5
+LET ICASE = 0
+@IF 2 0 LET ICASE = 1
+IF ICASE = 0
+   DELETE KSLOC KSSCALE
+   LET KSLOC = _3
+   LET KSSCALE = _4
+   LET STRING ZZZZCOMM = KOLMOGOROV-SMIRNOV
+   LET STRING ZZZZARGS = _1 _7
+ELSE
+   DELETE CHSLOC CHSSCALE
+   LET CHSLOC = _3
+   LET CHSSCALE = _4
+   LET MINSIZE = 5
+   LET MINSIZE = _6
+   DELETE ZZZZY ZZZZXLOW ZZZZXUP
+   LET ZZZZY ZZZZXLOW ZZZZXUP = COMBINE FREQUENCY TABLE _1 _2 _7
+   LET STRING ZZZZCOMM = CHI-SQUARE
+   LET STRING ZZZZARGS = ZZZZY ZZZZXLOW ZZZZXUP
+END OF IF
+LOG DOUBLE EXPONENTIAL ^ZZZZCOMM GOODNESS OF FIT ^ZZZZARGS
+--------------------
+WEB HELP KOLMOGOROV SMIRNOV GOODNESS OF FIT
+--------------------

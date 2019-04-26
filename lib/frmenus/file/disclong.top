@@ -1,0 +1,32 @@
+----- <~file\disclong.top> Files: Long Data Records
+
+File: Long Data Records
+
+LONG DATA RECORDS
+
+When reading from the keyboard, Dataplot restricts a single record
+to a maximum of 80 columns.  Note that reading from the keyboard
+is not permitted within the GUI.  For small amounts of data, it
+is recommended that you either enter the data directly into the
+spreadsheet or go to the command line and enter the command
+
+   LET Y = DATA val1 val2 val3 . . .
+
+When reading from a file, Dataplot previously restricted a single
+record to a maximum of 132 columns.  The March, 2003 version raised
+the default limit to 255 characters.  In addition, the following
+command was added:
+
+   SET MAXIMUM RECORD LENGTH  N
+
+with N denoting the size of the largest record to be read.
+
+Dataplot accepts values of N up to 9999.  However, be aware
+that some Fortran compilers may impose their own limit.  These
+limits tend not to be well documented, but with modern compilers
+they tend to be sufficiently large that this should not be a
+problem in practice.
+
+If you specify a SET READ FORMAT command, you do not need to
+specify the maximum record length.
+

@@ -1,0 +1,55 @@
+This is file bessel_r.men--Compute Bessel Functions (real argument)
+ 
+--------------------
+ 1. Bessel Functions (real arguments)
+ 2. LET YNEW = BESSJN(X,2)
+ 3.
+ 4. These functions accept 2 arguments.  The first is the
+ 5. argument for the horizontal axis variable (i.e., the X value)
+ 6. and the second argument is the order of the Bessel function.
+ 7. Both of these values can be a variable, parameter, or
+ 8. simply a constant.  However, the order is typically
+ 9. a parameter or constant as opposed to a variable.
+10.
+11. Horizontal axis variable:
+11. @CE 1 0 33 50 ? gui-variable
+12. Order of the Bessel function:
+12. @CE 6 0 33 50 ? gui-none
+13. Variable to store the transformed result:
+13. @CE 3 0 33 50 ?
+14.
+15. Operation to perform:
+16. @CE 2 1 10 45 Jn (Bessel function first kind)
+17. @CE 2 2 10 45 Yn (Bessel function second kind)
+18. @CE 2 3 10 45 In (modified Bessel function, first kind)
+19. @CE 2 4 10 45 In (exponentially scaled version)
+20. @CE 2 5 10 45 Kn (modified Bessel function, third kind)
+21. @CE 2 6 10 45 Kn (exponentially scaled version)
+22. @CE 2 7 10 45 Struve function
+23. @CE 2 8 10 45 modified Struve function
+24. @CE 2 9 10 45 Lambda function
+25.
+26. Plot?:
+26. @CE 5 1 14 20 no
+26. @CE 5 2 22 28 yes
+27.
+28. Subset/Except/For Specification:
+29. @CE 4 0 -5 50 *
+30.
+31.
+32. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = BESSJN( _1 , _6 ) _4
+@IF 2 2 LET _3 = BESSYN( _1 , _6 ) _4
+@IF 2 3 LET _3 = BESSIN( _1 , _6 ) _4
+@IF 2 4 LET _3 = BESSINE( _1 , _6 ) _4
+@IF 2 5 LET _3 = BESSKN( _1 , _6 ) _4
+@IF 2 6 LET _3 = BESSKNE( _1 , _6 ) _4
+@IF 2 7 LET _3 = HV( _1 , _6 ) _4
+@IF 2 8 LET _3 = LV( _1 , _6 ) _4
+@IF 2 9 LET _3 = LAMBDA( _1 , _6 ) _4
+@IF 5 2 PLOT _3  _1  _4
+--------------------
+WEB HELP BESSEL FUNCTIONS
+--------------------

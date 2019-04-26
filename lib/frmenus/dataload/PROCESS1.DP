@@ -1,0 +1,8 @@
+----- <~dataload\PROCESS1.DP> Load PROCESS1.DAT
+
+. This is file    PROCESS1.DP
+
+DELETE Y X
+SKIP 25
+READ PROCESS1.DAT Y X
+

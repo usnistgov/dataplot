@@ -1,0 +1,31 @@
+This is file ultrasp.men--Compute Ultraspherical Polynomial
+ 
+--------------------
+ 1. Ultraspherical Polynomial
+ 2. LET Y = ULTRASP(X,N,A,B)
+ 3.
+ 4. Horizontal axis variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Order of the Ultraspherical Polynomial (integer from 0 to 25):
+ 5. @CE 2 0 42 50 ? gui-none
+ 6. Shape parameter:
+ 6. @CE 3 0 42 50 ? gui-none
+ 7. Variable to store the transformed result:
+ 7. @CE 4 0 42 50 ?
+ 8.
+ 9. Plot?:
+ 9. @CE 5 1 14 20 no
+ 9. @CE 5 2 22 28 yes
+10.
+11. Subset/Except/For Specification:
+12. @CE 6 0 -10 50 *
+13.
+14.
+15. Compute the Transformation?:
+--------------------
+GR FE
+LET _4 = ULTRASPH( _1 , _2 , _3 ) _6
+@IF 5 2 PLOT _4  _1  _6
+--------------------
+WEB HELP ULTRASPH
+--------------------

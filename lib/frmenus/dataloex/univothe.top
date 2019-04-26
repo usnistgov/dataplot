@@ -1,0 +1,17 @@
+----- <~dataloex\univothe.top> Load & Execute Univariate Data: Other
+
+Load & Execute Univariate Data: Other
+
+GEAR.DAT      Gear diameters (Ishikawa)     <xcf: ~dataloex\GEAR.DP>
+CLEAR.DAT     Component clearances          <xcf: ~dataloex\CLEAR.DP>
+MICHELSO.DAT  Michelson speed of light exp  <xcf: ~dataloex\MICHELSO.DP>
+LIN.DAT       Polonium 209 SRM conc         <xcf: ~dataloex\LIN.DP>
+
+RANDN.DAT     Normal random numbers         <xcf: ~dataloex\RANDN.DP>
+RANDU.DAT     Uniform random numbers        <xcf: ~dataloex\RANDU.DP>
+RANDWALK.DAT  Random walk                   <xcf: ~dataloex\RANDWALK.DP>
+FLICKER.DAT   Flicker noise                 <xcf: ~dataloex\FLICKER.DP>
+
+LOTTERY3.DAT  Maryland "pick 3" lott. #'s   <xcf: ~dataloex\LOTTERY3.DP>
+LOTTERY4.DAT  Maryland "pick 4" lott. #'s   <xcf: ~dataloex\LOTTERY4.DP>
+

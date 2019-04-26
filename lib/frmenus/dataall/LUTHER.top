@@ -1,0 +1,8 @@
+----- <~dataall\LUTHER.top> LUTHER.DAT
+
+LUTHER.DAT
+
+View     <xcl: LIST LUTHER.DAT>
+Load     <xcf: ~dataload/LUTHER.DP>
+Print    <xccl: printfile C:\DATAPLOT\LUTHER.DAT>
+

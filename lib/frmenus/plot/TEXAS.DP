@@ -1,0 +1,8 @@
+----- <~plot\TEXAS.DP> Load TEXAS.DAT
+
+. This is file    TEXAS.DP
+
+DELETE X Y
+SKIP 25
+READ TEXAS.DAT X Y
+

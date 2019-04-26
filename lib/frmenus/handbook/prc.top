@@ -1,0 +1,23 @@
+----- <~handbook\prc.top> Product and Process Comparisons
+ 
+Product and Process Comparisons
+ 
+This menu provides links to the NIST/SEMATECH
+Engineering Statistics Handbook that discuss issues
+of product and process comparisons.
+
+NIST/SEMATECH Handbook (Product Comparisons) <xcl: web handbook prc>
+
+NIST/SEMATECH Handbook (Product Comparisons Introduction) <xcl: web handbook prc introduction>
+  Documentation for Various Tests            <~handbook\prc_comm.top>
+  Summary Techniques                         <~handbook\prc_intr.top>
+
+NIST/SEMATECH Handbook (Product Comparisons One Process) <xcl: web handbook one process>
+  One Process                                <~handbook\prc_one.top>
+
+NIST/SEMATECH Handbook (Product Comparisons Two Processes) <xcl: web handbook two processes>
+  Two Processes                              <~handbook\prc_two.top>
+
+NIST/SEMATECH Handbook (Product Comparisons Three or More Processes) <xcl: web handbook three processes>
+  Three or More Processes                    <~handbook\prc_thre.top>
+

@@ -1,0 +1,36 @@
+This is Dataplot data file     MITCHEL2.DAT
+Temperature/Flow Rate/Tube Length Effect on SO2 Permeation Tube Mass Loss
+(with tube length => normalized tube length)
+Jerry Mitchell / Stefan Leigh
+2**3 FULL FACTORIAL DESIGN + REPLICATED CENTER POINTS
+RESPONSE VARIABLE         = (normalized) SO2 Permeation Tube Mass Loss
+NUMBER OF OBSERVATIONS    = 8 + 2 = 10
+TOTAL NUMBER OF VARIABLES = 4
+   RESPONSE VARIABLE = (normalized) SO2 Permeation Tube Mass Loss
+   FACTOR 1 = Temperature            (2 levels--26.5 and 36.5)
+   FACTOR 2 = Flow Rate              (2 levels--100 and 1000)
+   FACTOR 3 = Normalized Tube Length (2 levels--10.2 and 20.9)
+TO READ THIS INTO DATAPLOT--
+   SKIP 25
+   READ MITCHEL2.DAT Y X1 X2 X3 FOR I = 1 1 8
+Note--2 "center points" were collected at (31.5,450,14.9)
+      which corresponds to (0,-.22,0)
+      The 2 measured values are y = .343 and y = .345
+
+
+
+
+
+  Y      X1  X2  X3
+--------------------
+0.185    -1  -1  -1
+0.443    +1  -1  -1
+0.173    -1  +1  -1
+0.437    +1  +1  -1
+0.198    -1  -1  +1
+0.407    +1  -1  +1
+0.195    -1  +1  +1
+0.422    +1  +1  +1
+
+0.343     0   0   0
+0.345     0   0   0

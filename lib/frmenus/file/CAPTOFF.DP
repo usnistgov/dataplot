@@ -1,0 +1,9 @@
+----- <~file\CAPTOFF.DP> Turn off capture to ASCII file
+
+. This is file    CAPTOFF.DP
+IF CAPTSWIT EXISTS
+   IF CAPTSWIT > 0
+      END OF CAPTURE
+   END OF IF
+END OF IF
+LET CAPTSWIT = 0

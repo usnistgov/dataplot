@@ -1,0 +1,8 @@
+----- <~datalist\BOXFILT2.top> BOXFILT2.DAT
+ 
+BOXFILT2.DAT
+ 
+View     <xcl: LIST BOXFILT2.DAT>
+Load     <x2cl: SKIP 25; READ BOXFILT2.DAT Y X1 TO X7>
+Print    <xccl: printfile C:\DATAPLOT\BOXFILT2.DAT>
+ 

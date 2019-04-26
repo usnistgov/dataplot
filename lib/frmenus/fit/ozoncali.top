@@ -1,0 +1,18 @@
+----- <~fit\ozoncali.top> NIST Ozone Photometer Calibration
+
+NIST Ozone Photometry Calibration Procedure (Jim Norris)
+
+Discussion      <~fit\ozondisc.top>
+FAQs            <xcl: LIST ~fit\ozonfaqs.tex>
+Data
+   View         <xcl: LIST NORRIS13.DAT>
+   Load         <x2cl: SKIP 25; READ NORRIS13.DAT Y X RUN>
+
+Design of Experiment         <~fit\norrdex.top>
+General Analysis Approach    <~fit\norrgeaa.top>
+Flowchart                    <~fit\norrflow.top>
+Testing                      <~fit\norrtest.top>
+Output                       <~fit\norroutp.top>
+
+Step-by-Step Analysis        <~fit\norrstep.top>
+

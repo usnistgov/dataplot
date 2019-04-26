@@ -1,0 +1,36 @@
+This is Dataplot data file     STATEAS2.DAT
+Factors affecting homemade bread   (stateaser article june 2001)
+Goal: Maximize bread taste
+Response variable                  =  taste
+Number of observations             = 8+3 = 11
+Order of variables on a line image--
+   1. Response variable = Taste  (0 to 10)
+   2. Factor 1          = Liquid (1 = water, 2 = milk)
+   3. Factor 2          = Oil    (1 = butter; 2 = margerine)
+   4. Factor 3          = Flour  (1 = regular; 2 = bread)
+   5. Factor 4          = Yeast  (1 = regular; 2 = bread)
+Statistical Category:  Screening
+Reference:  Mark Anderson, "Using DOE to Make Bread, Not Bricks
+(or How to Bake Like a Pro), Stateaser, June 2001, page 1-3.
+To read this data file into Dataplot--
+   SKIP 25
+   READ STATEAS2.DAT Y X1 X2 X3 X4
+
+
+
+
+
+    Taste        Liquid     Oil       Flour     Yeast
+      Y            X1        X2        X3        X4
+-------------------------------------------------------
+     4.7           -1        -1        -1        -1
+     6.5           +1        -1        -1        +1
+     5.0           -1        +1        -1        +1
+     5.5           +1        +1        -1        -1
+     5.8           -1        -1        +1        +1
+     5.0           +1        -1        +1        -1
+     5.3           -1        +1        +1        -1
+     5.2           +1        +1        +1        +1
+     5.5           -1        -1        -1        -1
+     6.2           +1        -1        -1        +1
+     5.2           -1        +1        -1        +1

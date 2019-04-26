@@ -1,0 +1,44 @@
+This is file lowess.men--Compute a lowess smooth of a variable
+ 
+--------------------
+ 1. Lowess (Locally Weighted Least Squares)
+ 2. LOWESS Y X
+ 3.
+ 4. Vertical  axis variable for the lowess:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Horizontal axis variable for the lowess:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Lowess fraction (a number between 0 and 1):
+ 6. @CE 3 0 33 50 *
+ 7. Lowess degree:
+ 8. @CE 4 1 14 25 linear
+ 8. @CE 4 2 27 38 quadratic
+ 9.
+10. The lowess curve will be plotted with the raw data.
+11.
+12. Select the line style for the lowess curve:
+12. @CE 6 0 33 50 gui-line
+13. Select the character symbol for the raw data:
+13. @CE 7 0 33 50 gui-character
+14. Fill the character symbol?:
+14. @CE 8 0 33 50 gui-ooff
+15.
+16. Subset/Except/For Specification:
+17. @CE 5 0 -5 50 *
+18.
+19.
+20. Perform the Lowess Smooth?:
+--------------------
+GR FE
+LOWESS FRACTION _3
+@IF 4 1 LOWESS DEGREE 1
+@IF 4 2 LOWESS DEGREE 2
+LOWESS _1 _2  _5
+CHARACTER _7 BLANK
+CHARACTER FILL _8 OFF
+LINES BLANK _6
+PLOT _1 PRED VS _2 _5
+--------------------
+WEB HELP LOWESS SMOOTH
+--------------------
+

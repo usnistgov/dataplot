@@ -1,0 +1,23 @@
+----- <~plot\timeplot.top> Time Series Plots
+
+Time Series Plots
+
+4-Plot                   <xemf: ~univ\4plot.men>
+Run Sequence Plot        <xemf: ~plot\runsplot.men>
+
+1-Variable Lag Plot      <xemf: ~plot\lagplot.men>
+2-Variable Lag Plot      <xemf: ~plot\lag2plot.men>
+
+Autocorrelation Plot     <xemf: ~plot\autoplot.men>
+Partial Autocorrelation Plot  <xemf: ~plot\partplot.men>
+Cross-Correlation Plot   <xemf: ~plot\crosplot.men>
+
+Spectral Plot            <xemf: ~plot\specplot.men>
+Cross-Spectral Plot      <xemf: ~plot\crspplot.men>
+Periodogram              <xemf: ~plot\periodog.men>
+Complex Demodulation Amplitude Plot  <xemf: ~time\compdeap.men>
+Complex Demodulation Phase Plot  <xemf: ~time\compdepp.men>
+
+Allan Variance Plot      <xemf: ~plot\avplot.men>
+Allan Standard Deviation Plot  <xemf: ~plot\asdplot.men>
+

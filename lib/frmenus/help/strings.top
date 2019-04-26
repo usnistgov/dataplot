@@ -1,0 +1,88 @@
+----- <~help\strings.top> Strings
+
+Strings
+
+Strings
+
+Dataplot Provides Some Limited String Support                      -
+
+    Dataplot provides limited support for strings.  The
+    most common usage of strings is in labeling plots.
+    Strings can be particularly useful in this regard for
+    reading titles and labels from a file in general purpose
+    macros.  Another common usage is building file names in
+    loops.  For example, suppose you want to perform the
+    same analysis on the files CALIB1.DAT to CALIB100.DAT.
+    This can be encapsulated in a loop as follows:
+
+       LET STRING BASE = CALIB
+       LET STRING EXT  = .DAT
+       LOOP FOR K = 1 1 100
+           LET STRING NUMBER = ^K
+           LET STRING FILE = ^BASE&^NUMBER&^EXT
+           READ ^FILE  X1 TO X10
+             ...  REST OF ANALYSIS
+       END OF LOOP
+
+The "^" And "&" Operators
+
+    The above loop demonstrates the two operators that
+    Dataplot provides for manipulating and using strings.
+ 
+         ^                          <xcl: HELP SUBSTITUTE CHARACTER>
+         &                          <xcl: HELP &>
+
+    The "^" character is the Dataplot substitution character.
+    It replaces the succeeding string or parameter with the
+    value of that string or paramaeter.  This substitution is
+    done before the command is parsed, so it is very general.
+
+    The "&" character is the Dataplot concatenation character.
+    It is used by Dataplot to concatenate two strings.  At
+    this time, Dataplot does not support any functions for
+    extracting a subset of a string.
+
+Commands For Creating Strings
+
+    There are two commands for creating strings in
+    Dataplot.
+
+        READ STRING                  <xcl: HELP READ STRING>
+        LET  STRING                  <xcl: HELP LET STRING>
+
+    The READ STRING command is used to read a string from
+    a file.  The LET STRING command, demonstrated in the
+    loop above, can also be used.  Both of these commands
+    preserve the case of the string as entered.
+
+Emulating Arrays Of Strings
+
+    Dataplot does not currently support arrays of strings.
+    However, this capability can be emulated somewhat with
+    the use of the substitute character (^).  For example,
+    suppose you have the 50 state names in a file, one state
+    per line.  You can read these into the strings S1 to S50
+    as follows:
+
+       LOOP FOR K = 1 1 50
+           LET NSKIP = K - 1
+           SKIP NSKIP
+           READ STATES.DAT S^K
+       END OF LOOP<br>
+
+    The following example shows how to loop through the
+    strings and print them out.
+
+       LET XPOS = 50
+       LET YPOS = 97
+       LET YINC = 3
+       LOOP FOR K = 1 1 50
+
+          MOVE XPOS YPOS
+          TEXT ^S^K
+          LET YPOS = YPOS - YINC
+          IF YPOS < 5
+             YPOS = 97
+          END OF IF
+        END OF LOOP
+

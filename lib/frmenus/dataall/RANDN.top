@@ -1,0 +1,8 @@
+----- <~dataall\RANDN.top> RANDN.DAT
+
+RANDN.DAT
+
+View     <xcl: LIST RANDN.DAT>
+Load     <xcf: ~dataload/RANDN.DP>
+Print    <xccl: printfile C:\DATAPLOT\RANDN.DAT>
+

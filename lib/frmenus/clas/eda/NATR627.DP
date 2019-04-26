@@ -1,0 +1,10 @@
+----- <~dataloex\NATR627.DP> Load & Execute NATR627.DAT
+
+. This is file    NATR627.DP
+
+DELETE Y X
+SKIP 25
+READ NATR627.DAT Y X
+TITLE NATR627.DAT
+/
+

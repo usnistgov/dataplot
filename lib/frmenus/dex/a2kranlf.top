@@ -1,0 +1,10 @@
+----- <~dex\a2kranlf.top> Analysis Goal 1: Ranked List of Factors
+
+Analysis Goal 1: Ranked list of factors
+
+DEX scatter plot               <xemf: ~dex\scatplot.men>
+DEX mean plot (main eff plot)  <xemf: ~dex\meanplot.men>
+Block plots                    <xemf: ~dex\blocplot.men>
+Interaction effects matrix     <xemf: ~dex\inteffma.men>
+Estimate effects (ranked)      <xemf: ~dex\yates.men>
+

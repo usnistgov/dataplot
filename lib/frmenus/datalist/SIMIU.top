@@ -1,0 +1,8 @@
+----- <~datalist\SIMIU.top> SIMIU.DAT
+ 
+SIMIU.DAT
+ 
+View     <xcl: LIST SIMIU.DAT>
+Load     <x2cl: SKIP 25; READ SIMIU.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\SIMIU.DAT>
+ 

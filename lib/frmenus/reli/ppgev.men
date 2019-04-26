@@ -1,0 +1,64 @@
+This is file ppgep.men--Generalized Extreme Value Probability Plot
+
+--------------------
+ 1. Generalized Extreme Value Probability Plot
+ 2. GENERALIZED EXTREME VALUE PROBABILITY PLOT Y
+ 3.
+ 4. Your data can be either ungrouped (a single
+ 5. response variable) or grouped (a bin counts
+ 6. variable and a bin mid-points variable).
+ 7. 
+ 8. Response (or Bin Counts) Variable:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9. Optional Bin Mid-Points Variable:
+ 9. @CE 2 0 42 50 ? gui-variable
+10.
+11. Line Types:
+11. @CE 3 0 42 50 * gui-line
+12. Character Types:
+12. @CE 4 0 42 50 * gui-char
+13. Character Fill:
+13. @CE 5 0 42 50 * gui-ooff
+14.
+15. Title:
+15. @CE 6 0 22 50 *
+16. Left Axis Label:
+16. @CE 7 0 22 50 *
+17. Bottom Axis Label:
+17. @CE 8 0 22 50 *
+18.
+19. Value of the Shape Parameter (gamma):
+19. @CE 9 0 42 50 *
+20.
+21. Subset/Except/For Specification:
+22. @CE 10 0 1 50 *
+23.
+24.
+25. Generate the Generalized Extreme Value Probability Plot?
+--------------------
+GR FE
+TITLE CASE ASIS
+LABEL CASE ASIS
+CASE ASIS
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+LET GAMMA = 1
+LET GAMMA = _9
+GENERALIZED EXTREME VALUE PROBABILITY PLOT _1 _2 _10
+MOVE 50 5
+JUSTIFICATION CENTER
+TEXT Location = ^PPA0, Scale = ^PPA1
+MOVE 50 2
+TEXT Gamma = ^GAMMA
+MOVE 17 82
+JUSTIFICATION LEFT
+TEXT PPCC = ^PPCC
+TITLE
+LABEL
+--------------------
+WEB HELP PROBABILITY PLOT
+--------------------

@@ -1,0 +1,8 @@
+----- <~fit\flowmode.top> Flowchart: Test Model
+
+Flowchart: Test Model
+
+1.  Test for adequacy of linear model
+    If linear ok    : ideal; proceed
+    If linear not ok: report and do alternate model
+

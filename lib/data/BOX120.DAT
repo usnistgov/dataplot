@@ -1,0 +1,31 @@
+This is Dataplot data file     BOX120.DAT
+Simulated Data to Illustrate Confidence Limits for sigma
+ 
+Source--Box, G.E.P., Hunter, William G., and Hunter, J. Stuart
+        (1978). Statistics for Experimenters: An Introduction
+        to Design, Data Analysis, and Model Building.
+        Wiley, New York, page 120.
+Note--This data was simulated so as to
+      have a variance of exactly 13 as specified
+      in the example on page 120 of BHH.
+ 
+Number of observations             =  6
+Number of variables per line image =  1
+Order of variables on a line image--
+   1. Y = Response Variable = simulated response
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ BOX120.DAT Y
+ 
+ 
+ 
+     Y
+ Response
+-----------
+ 1.9272481
+ 3.8544962
+ 5.7817445
+ 7.7089925
+ 9.6362410
+11.5634890

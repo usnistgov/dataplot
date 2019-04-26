@@ -1,0 +1,8 @@
+----- <~dexopt\CC2.DP> Load CC2.DP
+
+. This is file    CC2.DP
+
+DELETE X1 X2
+SKIP 50
+READ CC2.DAT X1 X2
+

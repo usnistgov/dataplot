@@ -1,0 +1,21 @@
+-----  <~dexcomp\compexam.top> Load & Analyze DEX Data Files
+
+Worked Examples: Comparative Designs
+
+Completely Randomized Designs
+   BOXTOMAT.DAT  Tomato Yield             <xcf: ~clas\anov\BOXTOMAT.DP>
+   BOXBLOOD.DAT  Blood Coagulation Time: Diet Effect <xcf: ~clas\anov\BOXBLOOD.DP>
+   BATTADD3.DAT  Watt Hours: Additive Type, Battery ID <xcf: ~clas\eda\BATTADD3.DP>
+
+Completely Randomized Block Designs
+   BOXSHOES.DAT  Boys' Shoe Material      <xcf: ~clas\anov\BOXSHOES.DP>
+   BOXPENIC.DAT  Penicillin Yield         <xcf: ~clas\anov\BOXPENIC.DP>
+   BOXPOISO.DAT  Poison antidote          <xcf: ~clas\anov\BOXPOISO.DP>
+
+Latin Square Designs
+   BOXAUTO.DAT   Auto Emission            <xcf: ~clas\anov\BOXAUTO.DP>
+
+Graeco-Latin Square Designs
+   BOXCLOTH.DAT  Cloth wear (replicate I only) <xcf: ~clas\anov\BOXCLOTH.DP>
+   BOXCLOT2.DAT  Cloth wear (full data)   <xcf: ~clas\anov\BOXCLOT2.DP>
+

@@ -1,0 +1,20 @@
+This is file weibmle.men--Weibull 2-Parameter MLE Estimates
+ 
+--------------------
+ 1. 2-Parameter Weibull Maximum Likelihood Estimates
+ 2. WEIBULL MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Compute 2-Parameter Weibull MLE's?
+--------------------
+GR FE
+WEIBULL MAXIMUM LIKELIHOOD _1 _2
+--------------------
+WEB HELP WEIBULL MAXIMUM LIKELIHOOD
+--------------------

@@ -1,0 +1,25 @@
+This is file dds.men--DDS
+ 
+--------------------
+ 1. DDS
+ 2. DDS Y ARORDER MAORDER
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5.
+ 6. Order of autoregressive component
+ 6. @CE 2 0 42 50 ?
+ 7. Order of moving average component
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 4 0 1 50 *
+11.
+12.
+13. Do the DDS?
+--------------------
+GR FE
+DDS  _1 _2 _3 _4
+--------------------
+WEB HELP DDS
+--------------------

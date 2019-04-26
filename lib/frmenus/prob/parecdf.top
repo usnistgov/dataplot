@@ -1,0 +1,13 @@
+----- <~prob\parecdf.top> Plot Pareto and Logistic cdf's
+
+Plot Pareto and Logistic CDF Functions
+
+Pareto                   <xemf: ~prob\parcdf.men>
+Generalized Pareto       <xemf: ~prob\gepcdf.men>
+Pareto Type 2            <xemf: ~prob\pa2cdf.men>
+Logistic                 <xemf: ~prob\logcdf.men>
+Generalized Logistic     <xemf: ~prob\glocdf.men>
+Log-Logistic             <xemf: ~prob\llgcdf.men>
+Half-Logistic            <xemf: ~prob\hflcdf.men>
+Generalized Half-Logistic <xemf: ~prob\ghflcdf.men>
+

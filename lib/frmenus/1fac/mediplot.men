@@ -1,0 +1,42 @@
+This is file mediplot.men--Generate Median Plot
+ 
+--------------------
+ 1. Median Plot
+ 2. MEDIAN PLOT Y X
+ 3.
+ 4. Vertical   Axis Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. Horizontal Axis Variable:
+ 5. @CE 2 0 42 50 ? gui-vari
+ 6.
+ 7. Line Types:
+ 8.    Connecting the Data:        (solid)
+ 8. @CE 3 0 42 50 * gui-line
+ 9.    For Global Median Value Line: (solid)
+ 9. @CE 4 0 42 50 * gui-line
+10.
+11. Character Type for Data:
+11. @CE 5 0 42 50 * gui-char
+12. Character Fill for Data:
+12. @CE 6 0 42 50 * gui-ooff
+13.
+14. Spike to Global Median Line?
+14. @CE 7 0 42 50 * gui-ooff
+15.
+16. Subset/Except/For Specification:
+17. @CE 8 0 1 50 *
+18.
+19.
+20. Generate the Median Plot?
+--------------------
+LINES _3 _4
+CHARACTER BLANK ALL
+@IF 5 0 CHAR _5
+@IF 6 0 CHAR FILL _6
+LET ZMEDIAN = MEDIAN _1 _8
+@IF 7 0 SPIKE _7
+@IF 7 0 SPIKE BASE ZMEDIAN
+MEDIAN PLOT _1 _2 _8
+--------------------
+WEB HELP MEDIAN PLOT
+--------------------

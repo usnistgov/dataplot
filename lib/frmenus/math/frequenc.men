@@ -1,0 +1,24 @@
+This is file frequenc.men--Compute frequency of distinct elements of a variable
+ 
+--------------------
+ 1. Frequency of Distinct Elements
+ 2. LET YD = FREQUENCY Y DISTINCT
+ 3.
+ 4. Variable for which to compute the frequency elements:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the frequency:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -10 50 *
+ 9.
+10.
+11. Compute the Frequency of Distinct Elements?:
+--------------------
+GR FE
+LET ZZZZTEMP = DISTINCT  _1 _3
+LET _2 = FREQUENCY  _1 ZZZZTEMP _3
+DELETE ZZZZTEMP
+--------------------
+WEB HELP FREQUENCY
+--------------------

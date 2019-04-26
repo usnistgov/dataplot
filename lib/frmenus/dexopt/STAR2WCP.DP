@@ -1,0 +1,8 @@
+----- <~dexopt\STAR2WCP.DP> Load STAR2WCP.DP
+
+. This is file    STAR2WCP.DP
+
+DELETE X1 X2
+SKIP 25
+READ STAR2WCP.DAT X1 X2
+

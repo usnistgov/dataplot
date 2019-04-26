@@ -1,0 +1,54 @@
+This is Dataplot data file     NATR341.DAT
+Breaking Strength of Cement Briquettes: 5 Groups
+(Location Shift Example (with sigmas assumed equal)
+Question: Is breaking strength the same across all 5 groups?
+ 
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 3-41 to 3-42.
+ 
+Number of observations             = 5 x 5 = 25
+Number of variables per line image = 2
+Order of variables on a line image--
+   1. Response Variable Y = Breaking Strength
+   2. Factor 1 = Group Id (1 to 5)
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR341.DAT Y X
+   ANOVA Y X
+ 
+ 
+ 
+        Y               X
+Breaking Strength     Group
+----------------------------
+       518              1
+       560              1
+       538              1
+       510              1
+       544              1
+ 
+       508              2
+       574              2
+       528              2
+       534              2
+       538              2
+ 
+       554              3
+       598              3
+       579              3
+       538              3
+       544              3
+ 
+       555              4
+       567              4
+       550              4
+       535              4
+       540              4
+ 
+       536              5
+       492              5
+       528              5
+       572              5
+       506              5

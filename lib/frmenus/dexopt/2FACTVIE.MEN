@@ -1,0 +1,37 @@
+This is file 2factvie.men--View 2-Factor Model
+ 
+--------------------
+1. View: 2 Variable First Order Model
+2. CROSS TABULATE PLOT Y X1 X2
+3.
+4. Variables:
+5.    Response    Y:
+5. @CE 1 0 40 50 ? gui-variable
+6.    First Independent X:
+6. @CE 2 0 40 50 ? gui-variable
+7.    Second Independent Variable:
+7. @CE 3 0 40 50 * gui-variable
+8.
+9. Subset/Except/For Specification:
+10. @CE 4 0 1 50 *
+11.
+12.
+13. Generate the Plot?
+--------------------
+GR FE
+SET CROSS TABULATE PLOT DIMENSION 2
+LIMITS  -1 1
+MAJOR TIC MARK NUMBER 2
+MINOR TIC MARK NUMBER 0
+TIC OFFSET UNITS DATA
+TIC OFFSET 0.2 0.2
+CROSS TABULATE MEAN PLOT _1 _2 _3 _4
+SET CROSS TABULATE PLOT DIMENSION 1
+TIC OFFSET UNITS
+TIC OFFSET
+MAJOR TIC MARK NUMBER
+MINOR TIC MARK NUMBER
+LIMITS
+--------------------
+WEB HELP CROSS TABULATE PLOT
+--------------------

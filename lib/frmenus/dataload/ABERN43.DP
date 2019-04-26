@@ -1,0 +1,8 @@
+----- <~dataload\ABERN43.DP> Load ABERN43.DAT
+
+. This is file    ABERN43.DP
+
+DELETE Y
+SKIP 25
+READ ABERN43.DAT Y
+

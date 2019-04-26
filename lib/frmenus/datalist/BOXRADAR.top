@@ -1,0 +1,8 @@
+----- <~datalist\BOXRADAR.top> BOXRADAR.DAT
+ 
+BOXRADAR.DAT
+ 
+View     <xcl: LIST BOXRADAR.DAT>
+Load     <x2cl: SKIP 25; READ BOXRADAR.DAT Y X1 X2 X3>
+Print    <xccl: printfile C:\DATAPLOT\BOXRADAR.DAT>
+ 

@@ -1,0 +1,8 @@
+----- <~datalist\NWF12.top> NWF12.DAT
+ 
+NWF12.DAT
+ 
+View     <xcl: LIST NWF12.DAT>
+Load     <x2cl: SKIP 25; READ NWF12.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\NWF12.DAT>
+ 

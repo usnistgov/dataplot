@@ -1,0 +1,68 @@
+This is Dataplot data file     ATKINSON.DAT
+Chimpanzee Sign Time
+Source:
+   Atkinson, A. C. (1987)
+   Plots, Transformations, and Regression.
+   Oxford Statistical Science Series. Clarendon Press, Oxford.
+      Brown, B. W. and Hollander, M. (1977)
+      Statistics: A Biomedical Introduction. Wiley, New York.
+         Fouts, R. S. (1973).
+         Acquisition and Testing of Gestural Signs in Four
+         Young Chimpanzees. Science, 180, pages 978-980.
+Response Variable = time (in minutes) to teach a chimp a sign
+Number of observations             = 4 x 10 = 40
+Number of variables per line image =  3
+Order of variables per line image--
+   1. Response variable = time (in minutes)
+   2. Factor 1          = Sign (10 levels)
+   3. Factor 2          = Chimpanzee (4 levels)
+Statistical areas--2-factor analysis
+                 --comparative designs
+To read this file into Dataplot--
+      SKIP 25
+      READ ATKINSON.DAT Y X1 X2
+   Time            Sign      Chimp
+--------------------------------------
+    178              1         1
+     60              2         1
+    177              3         1
+     36              4         1
+    225              5         1
+    345              6         1
+     40              7         1
+      2              8         1
+    287              9         1
+     14             10         1
+ 
+     78              1         2
+     14              2         2
+     80              3         2
+     15              4         2
+     10              5         2
+    115              6         2
+     10              7         2
+     12              8         2
+    129              9         2
+     80             10         2
+ 
+     99              1         3
+     18              2         3
+     20              3         3
+     25              4         3
+     15              5         3
+     54              6         3
+     25              7         3
+     10              8         3
+    476              9         3
+     56             10         3
+ 
+    297              1         4
+     20              2         4
+    195              3         4
+     18              4         4
+     24              5         4
+    420              6         4
+     40              7         4
+     15              8         4
+    372              9         4
+    190             10         4

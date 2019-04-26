@@ -1,0 +1,8 @@
+----- <~datalist\LUTHER.top> LUTHER.DAT
+ 
+LUTHER.DAT
+ 
+View     <xcl: LIST LUTHER.DAT>
+Load     <x2cl: SKIP 25; READ LUTHER.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\LUTHER.DAT>
+ 

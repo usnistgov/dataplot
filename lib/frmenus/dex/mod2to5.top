@@ -1,0 +1,27 @@
+----- <~dex\mod2to5.top> Model:  2**5 Design
+
+Model:  2**5 Design
+
+k = 5 factors
+n = 32 runs
+
+Y = MU +
+    0.5*( B1*X1 + B2*X2 + B3*X3 +
+          B4*X4 + B5*X5 +
+          B12*X1*X2 + B13*X1*X3 +
+          B14*X1*X4 + B15*X1*X5 +
+          B23*X2*X3 + B24*X2*X4 +
+          B25*X2*X5 + B34*X3*X4 +
+          B35*X3*X5 + B45*X4*X5 +
+          B123*X1*X2*X3 + B124*X1*X2*X4 +
+          B125*X1*X2*X5 + B134*X1*X3*X4 +
+          B135*X1*X3*X5 + B145*X1*X4*X5 +
+          B234*X2*X3*X4 + B235*X2*X3*X5 +
+          B245*X2*X4*X5 + B345*X3*X4*X5 +
+          B1234*X1*X2*X3*X4 +
+          B1235*X1*X2*X3*X5 +
+          B1245*X1*X2*X4*X5 +
+          B1345*X1*X3*X4*X5 +
+          B2345*X2*X3*X4*X5 +
+          B12345*X1*X2*X3*X4*X5 )
+

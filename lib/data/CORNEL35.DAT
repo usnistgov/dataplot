@@ -1,0 +1,32 @@
+This is Dataplot data file     CORNEL35.DAT
+Effect of Pesticide Composition on Mite Survival
+        3-Factor Unconstrined Mixture Experiment
+        Simplex-Centroid
+Source--Cornell, John A. (1990).  ASQC Statistics
+        Division Volume 5:  How to Run Mixture Experiments
+        for Product Quality.  Page 35 (Table 10).
+Response Variable                  = mite survival %
+Number of observations             = 7
+Number of variables per line image = 4 (= 1 + 3)
+Order of variables per line image--
+   Response variable = mite survival % (small % => good)
+   Factor 1          = pesticide component 1 proportion
+   Factor 2          = pesticide component 2 proportion
+   Factor 3          = pesticide component 3 proportion
+Project Question--What settings for the 3 ingredients
+                  minimize the mite survival percentage?
+Statistical area--mixture design of experiment
+To read this file into Dataplot--
+      SKIP 25
+      READ CORNEL35.DAT Y X1 X2 X3
+  Y                  X1           X2           X3
+ Survival        Component 1  Component 2  Component 3
+Percentage       Proportion   Proportion   Proportion
+------------------------------------------------------
+25.4                 1            0            0
+28.6                 0            1            0
+ 3.4                 .5           .5           0
+38.5                 0            0            1
+37.4                 .5           0            .5
+10.7                 0            .5           .5
+11.1                 .333         .333         .333

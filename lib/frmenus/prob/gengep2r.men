@@ -1,0 +1,46 @@
+This is file gengepra.men--Generate Generalized Pareto (Minimum) Random Numbers
+ 
+--------------------
+ 1. Generate Generalized Pareto (Minimum) Random Numbers
+ 2. LET Y = GENERALIZED PARETO RANDOM NUMBERS FOR I = START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 41 50 ?
+ 5. Shape Parameter (gamma):
+ 5. @CE 2 0 41 50 ?
+ 6. Location Parameter:
+ 6. @CE 3 0 41 50 ?
+ 7. Scale Parameter (> 0):
+ 7. @CE 4 0 41 50 ?
+ 8.
+ 9. Which definition of generalized Pareto?:
+10. @CE 5 1 1 20 Default
+11. @CE 5 2 1 20 Reverse Sign
+12.
+13. Optional random number generator seed (default=305):
+14.    (integer >= 305)
+14. @CE 6 0 41 50 ?
+15.
+16. Name of output variable:
+16. @CE 7 0 41 50 ?
+17.
+18.
+19. Generate the random numbers?
+--------------------
+AN FE
+SET MINMAX 1
+@IF 6 0 SEED _6
+@IF 5 1 SET GENERALIZED PARETO DEFINITION SIMIU
+@IF 5 2 SET GENERALIZED PARETO DEFINITION JOHNSON
+LET GAMMA = 1
+@IF 2 0 LET GAMMA = _2
+LET ZLOC = 0
+@IF 3 0 LET ZLOC = _3
+LET ZSCALE = 1
+@IF 4 0 LET ZSCALE = _4
+LET _7 = GENERALIZED PARETO RANDOM NUMBERS FOR I = 1 1 _1
+LET _7 = ZLOC + ZSCALE* _7
+SET MINMAX 0
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

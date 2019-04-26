@@ -1,0 +1,35 @@
+This is file exposmoo.men--Exponential Smoothing
+ 
+--------------------
+ 1. Exponential Smoothing
+ 2. Macro
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. X Axis Variable (optional, for plotting only):
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Smoothing Parameter (0 < alpha < 1):
+ 6. @CE 3 0 42 50 ?
+ 7. Variable to Save Smoothed Values:
+ 7. @CE 4 0 42 50 ?
+ 8.
+ 9.
+10. Compute the Exponential Smooth?:
+--------------------
+GR FE
+CHARACTERS SAVE
+LINE SAVE
+CHARACTERS X BLANK
+LINES BLANK SOLID
+LET ZZZZN = SIZE _1
+LET ZZZZX = SEQUENCE 1 1 ZZZZN
+@IF 2 0 LET ZZZZX = _2
+LET ZZZZALPH = 0.3
+LET ZZZZALPH = _3
+LET _4 = EXPONENTIAL SMOOTH _1 _3
+PLOT _1 _4 VS ZZZZX
+CHARACTERS RESTORE
+LINES RESTORE
+--------------------
+WEB HELP EXPONENTIAL SMOOTHING
+--------------------

@@ -1,0 +1,8 @@
+----- <~dataload\ABERN17.DP> Load ABERN17.DAT
+
+. This is file    ABERN17.DP
+
+DELETE Y TAG X
+SKIP 25
+READ ABERN17.DAT Y TAG X
+

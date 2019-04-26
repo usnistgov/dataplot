@@ -1,0 +1,14 @@
+----- <~dex\2to2.top> 2**2 Design
+
+2**2 Design
+
+   k = 2 factors
+   n = 4 runs
+
+   X1  X2
+   ......
+   -   -
+   +   -
+   -   +
+   +   +
+

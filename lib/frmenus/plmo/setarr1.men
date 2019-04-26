@@ -1,0 +1,35 @@
+This is file setarr1.men--Set Arrow Attributes for Single Arrow
+ 
+--------------------
+ 1. Set Arrow Attributes for a Single Arrow
+ 2. ARROW 1 COLOR RED; ARROW 1 PATTERN DASH
+ 3.
+ 4. Arrow Number to Set Attributes For:
+ 4. @CE 1 0 42 50 ?
+ 5. X Coordinate for Start of Arrow:
+ 5. @CE 2 0 42 50 ?
+ 6. Y Coordinate for Start of Arrow:
+ 6. @CE 3 0 42 50 ?
+ 7. X Coordinate for End of Arrow:
+ 7. @CE 4 0 42 50 ?
+ 8. Y Coordinate for End of Arrow:
+ 8. @CE 5 0 42 50 ?
+ 9.
+10. Color for Arrow:
+10. @CE 6 0 42 50 * gui-color
+11. Line Type for Arrow:
+11. @CE 7 0 42 50 * gui-line
+12. Line Thickness for Arrow:
+12. @CE 8 0 42 50 * gui-thick
+13.
+14.
+15. Set Arrow Attributes?
+--------------------
+PC FE
+ARROW _1 COORDINATES _2 _3 _4 _5
+@IF 6 0 ARROW _1 COLOR _6
+@IF 7 0 ARROW _1 PATTERN _7
+@IF 8 0 ARROW _1 THICKNESS _8
+--------------------
+WEB HELP ARROW COORDINATES
+--------------------

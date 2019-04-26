@@ -1,0 +1,16 @@
+----- <~reli\andedarl.top> Anderson-Darling Goodness of Fit
+
+Anderson-Darling Goodness of Fit
+
+Normal                                     <xemf: ~reli\adnorm.men>
+Uniform (0,1)                              <xemf: ~prob\aduni.men>
+Logistic                                   <xemf: ~prob\adlog.men>
+Exponential                                <xemf: ~reli\adexp.men>
+Double Exponential                         <xemf: ~prob\addex.men>
+Extreme Value Type 1 (Gumbel) (Minimum)    <xemf: ~reli\adev11.men>
+Extreme Value Type 1 (Gumbel) (Maximum)    <xemf: ~reli\adev12.men>
+
+Lognormal                                  <xemf: ~reli\adlogn.men>
+Weibull (Minimum)                          <xemf: ~reli\adweib.men>
+Generalized Pareto                         <xemf: ~reli\adgep.men>
+

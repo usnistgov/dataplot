@@ -1,0 +1,34 @@
+----- <~dexopt\analysis.top>  Analysis of Optimization Designs
+
+Response Surface Designs: Analysis
+
+1-Factor Models 
+     Linear                        <xemf: ~fit\fitline.men>
+     Quadratic                     <xemf: ~fit\fitquad.men>
+
+2-Factor Models 
+     Discussion                     <~dexopt\2factdis.top>
+     View Model                     <xemf: ~dexopt\2factvie.men>
+     Fit Bilinear Model             <xemf: ~dexopt\2factlin.men>
+     Curvature Test                 <xemf: ~dexopt\effework.men>
+     DEX Contour Plot (Bilinear)
+         Center Point               <xemf: ~dex2k\contplot.men>
+         No Center Point            <xemf: ~dex2k\contplo2.men>
+     Fit Biquadratic                <xemf: ~dexopt\2factqua.men>
+     DEX Contour Plot (BiQuadratic) <xemf: ~dexopt\contqplo.men>
+
+3-Factor Models 
+     Fit Trilinear Model            <xemf: ~dexopt\3factlin.men>
+     Fit Triquadratic Model         <xemf: ~dexopt\3factqua.men>
+     DEX Pairwise Contour Plots (Linear)  <xemf: ~dex2k\contmapl.men>
+
+Fit General Linear Model            <~fit\multreg.top>
+Fit General Non-Linear Model        <~fit\nlreg.top>
+
+Model Validation                    <~fit\modelval.top>
+
+DEX Mean Plot                       <xemf: ~plot\dexmeanp.men>
+DEX SD Plot                         <xemf: ~plot\dexsdplo.men>
+DEX Interaction Effects Plot        <xemf: ~plot\dexeffep.men>
+DEX Pairwise Contour Plots          <xemf: ~dex2k\contmapl.men>
+

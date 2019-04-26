@@ -1,0 +1,9 @@
+----- <~prob\ntcfpdf.top> Normal, t, chi-squared, F pdf
+
+Normal, t, chi-squared, F pdf
+
+Normal                   <xemf: ~prob\norpdf.men>
+t                        <xemf: ~prob\tpdf.men>
+chi-squared              <xemf: ~prob\chspdf.men>
+F                        <xemf: ~prob\fpdf.men>
+

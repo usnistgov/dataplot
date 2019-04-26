@@ -1,0 +1,8 @@
+----- <~dataload\FUNNEL5B.DP> Load FUNNEL5B.DAT
+
+. This is file    FUNNEL5B.DP
+
+DELETE Y TAG
+SKIP 25
+READ FUNNEL5B.DAT Y TAG
+

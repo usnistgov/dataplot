@@ -1,0 +1,57 @@
+This is file consplo2.men--Compute Consensus Means Plot
+ 
+--------------------line 3
+ 1. Consensus Means Plot (Summary Data)
+ 2. CONSENSUS MEAN PLOT YMEAN YSD YN
+ 3.
+ 4. Means Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Standard Deviation Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Sample Size Variable:
+ 6. @CE 3 0 42 50 ? gui-variable
+ 7.
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 4 0 1 50 *
+11.
+12. Generate the Consensus Means Plot?:
+--------------------
+CHARACTER FONT SIMPLEX ALL
+CHARACTER SIZE 4 ALL
+CHARACTER BLANK HBAR HBAR HBAR BLANK
+LINE DOTTED BLANK BLANK BLANK SOLID
+.
+LABEL CASE ASIS
+TIC MARK LABEL CASE ASIS
+Y1LABEL Consensus Mean
+LET ZZZZDIST = DISTINCT _2
+LET NGROUP = SIZE ZZZZDIST
+IF NGROUP <= 5
+  XLIMITS 1 7
+  MAJOR XTIC MARK NUMBER 7
+  MINOR XTIC MARK NUMBER 0
+  XTIC OFFSET 0.5 0.5
+  X1TIC MARK LABEL FORMAT ALPHA
+X1TIC MARK LABEL CONTENT Global MP Modifiedcr()MP ML Meansp()ofcr()Means SE BOB
+  X3LABEL Estimation Method
+END OF IF
+IF NGROUP > 5
+  XLIMITS 1 6
+  MAJOR XTIC MARK NUMBER 6
+  MINOR XTIC MARK NUMBER 0
+  XTIC OFFSET 0.5 0.5
+  X1TIC MARK LABEL FORMAT ALPHA
+X1TIC MARK LABEL CONTENT Global MP Modifiedcr()MP ML Meansp()ofcr()Means SE
+  X3LABEL Estimation Method
+END OF IF
+CONSENSUS MEAN PLOT _1 _2 _3 _4
+XLIMITS
+MAJOR XTIC MARK NUMBER
+MINOR XTIC MARK NUMBER
+XTIC OFFSET 0 0
+X1TIC MARK FORMAT REAL
+DELETE ZZZZDIST
+--------------------last
+WEB HELP CONSENSUS MEAN PLOT
+--------------------last

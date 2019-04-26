@@ -1,0 +1,607 @@
+----- <~data\data.top> Data
+ 
+Data
+ 
+Dataplot files
+   View/Load/Print   <~dataview\vilodpda.top>
+ 
+User files
+   View                <xemf: ~file\viewfile.men>
+   Load                <xemf: ~file\readvafi.men>
+ 
+Internal data
+   View                       <~data\viewdata.top>
+   Rename                     <xemf: ~data\rename.men>
+   Generate                   <~data\genedata.top>
+   Transform                  <~data\trandata.top>
+   Delete parts of variables  <xemf: ~data\delete.men>
+   Pack   parts of variables  <xemf: ~data\pack.men>
+   Write variables to file    <xemf: ~file\writvafi.men>
+ 
+   Delete all variables       <xcl: RESET VARIABLES>
+| Edit                        <xemf: ~data\edit.men>
+| Manipulate                  <xemf: ~data\manipula.men>
+ 
+| Print    => printer      <xemf: ~file\prindapr.men>
+ 
+----- <~data\viewdata.top> View Data
+ 
+View Data
+ 
+Names of all internal Dataplot data objects:
+   All Variables               <xcl: STATUS VARIABLES>
+   All Parameters              <xcl: STATUS PARAMETERS>
+   All Functions               <xcl: STATUS FUNCTIONS>
+   All Matrices                <xcl: STATUS MATRICES>
+   All                         <xcl: STATUS>
+ 
+Values/Contents of an individual Dataplot data object:
+   A variable                  <xcl: view.men>
+   A parameter                 <xcl: view.men>
+   A function                  <xcl: view.men>
+   A matrix                    <xcl: view.men>
+ 
+----- <~data\genedata.top> Generate Data
+ 
+Generate Data
+ 
+Arbitrary list of #'s   <xemf: ~data\gendata.men>
+Sequence                <xemf: ~data\genseq.men>
+Pattern                 <xemf: ~data\genpatt.men>
+Math sequence           <xemf: ~data\genmath.men>
+ 
+Random numbers
+   Normal                 <xemf: ~prob\gennorra.men>
+   Symmetric/Continuous   <xemf: ~prob\gensymrn.men>
+   Skewed/Continuous      <xemf: ~prob\genskern.men>
+   Discrete               <xemf: ~prob\gendisrn.men>
+ 
+Math sequences
+   prime     numbers      <xemf: ~math\genprime.men>
+   Fibonacci numbers      <xemf: ~math\genfibon.men>
+ 
+----- <~data\trandata.top> Transform Data
+ 
+Transform Data
+ 
+View Built-in Functions
+   Mathematical               <~data\viewmafu.top>
+   Probability                <~data\viewprfu.top>
+Do Transformation             <xemf: ~data\transfor.men>
+| View Stat Operations        <~data\viewoper.top>
+ 
+----- <~data\viewmafu.top> View Built-in Functions: Mathematical
+ 
+View Built-in Functions: Mathematical
+ 
+Arithmetic Functions                     <~data\aritfunc.top>
+Logarithmic Functions                    <~data\logfunct.top>
+Trigonometric Functions                  <~data\trigfunc.top>
+Conversion Functions                     <~data\convfunc.top>
+Error Functions                          <~data\errofunc.top>
+Gamma Functions                          <~data\gammfunc.top>
+Chebychev Polynomials of the First Kind  <~data\chebfunc.top>
+Bessel Functions                         <~data\bessfunc.top>
+ 
+----- <~data\aritfunc.top> xx
+ 
+Arithmetic Functions
+ 
+ABS(X)            absolute value
+SQRT(X)           square root
+EXP(X)            exponential
+MOD(X,Y)          modulo (i.e., the remainder of x/y)
+MIN(X,Y)          minimum of two numbers
+MAX(X,Y)          maximum of two numbers
+DIM(X,Y)          positive difference (i.e., x-min(x,y))
+IND(X,Y)          mathematical indicator function
+ 
+----- <~data\logfunct.top> xx
+ 
+Logarithmic Functions
+ 
+LN(X)             natural logarithm of a number
+LOG(X)            natural logarithm of a number
+LOG10(X)          base 10 logarithm of a number
+LOG2(X)           base 2 logarithm of a number
+ 
+----- <~data\trigfunc.top> Trigonometric Functions
+ 
+Trigonometric Functions
+ 
+Circular Trig Functions
+Hyperbolic Trig Functions
+ 
+----- <~data\citrfunc.top> Circular Trig Functions
+ 
+Circular Trig Functions
+ 
+Trigonometric Functions
+ 
+SIN(X)            sine
+COS(X)            cosine
+TAN(X)            tangent
+COT(X)            cotangent
+SEC(X)            secant
+CSC(X)            cosecant
+ 
+Inverse Trigonometric Functions
+ 
+ARCSIN(X)         inverse sine
+ARCCOS(X)         inverse cosine
+ARCTAN(X)         inverse tangent
+ARCCOT(X)         inverse cotangent
+ARCSEC(X)         inverse secant
+ARCCSC(X)         inverse cosecant
+ 
+----- <~data\citrfunc.top> Hyperbolic Trig Functions
+ 
+Hyperbolic Trig Functions
+ 
+Hyperbolic Trigonometric Functions
+ 
+SINH(X)           hyperbolic sine
+COSH(X)           hyperbolic cosine
+TANH(X)           hyperbolic tangent
+COTH(X)           hyperbolic cotangent
+SECH(X)           hyperbolic secant
+CSCH(X)           hyperbolic cosecant
+ 
+Inverse Hyperbolic Trigonometric Functions
+ 
+ARCSINH(X)        inverse hyperbolic sine
+ARCCOSH(X)        inverse hyperbolic cosine
+ARCTANH(X)        inverse hyperbolic tangent
+ARCCOTH(X)        inverse hyperbolic cotangent
+ARCSECH(X)        inverse hyperbolic secant
+ARCCSCH(X)        inverse hyperbolic cosecant
+ 
+----- <~data\convfunc.top> xx
+ 
+Conversion Functions
+ 
+SIGN(X)           sign of a number
+INT(X)            integer portion of a number
+FRACT(X)          fractional portion of a number
+ROUND(X,D)        round to D decimals places
+LSD(X)            least significant digit of a number
+ 
+OCTDEC(X)         octal to decimal conversion
+DECOCT(X)         decimal to octal conversion
+ 
+----- <~data\errofunc.top> xx
+ 
+Error Functions
+ 
+ERF(X)            error function
+ERFC(X)           complementary error function
+ 
+----- <~data\gammfunc.top> xx
+ 
+Gamma Functions
+ 
+GAMMA(X)          gamma function
+LOGGAMMA(X)       log (to the base e) gamma function
+ 
+----- <~data\chebfunc.top> xx
+ 
+Chebychev Polynomials of the First Kind
+ 
+CHEB0(X)          Chebychev polynomial of order 0
+CHEB1(X)          Chebychev polynomial of order 1
+CHEB2(X)          Chebychev polynomial of order 2
+CHEB3(X)          Chebychev polynomial of order 3
+CHEB4(X)          Chebychev polynomial of order 4
+CHEB5(X)          Chebychev polynomial of order 5
+CHEB6(X)          Chebychev polynomial of order 6
+CHEB7(X)          Chebychev polynomial of order 7
+CHEB8(X)          Chebychev polynomial of order 8
+CHEB9(X)          Chebychev polynomial of order 9
+CHEB10(X)         Chebychev polynomial of order 10
+ 
+----- <~data\bessfunc.top> xx
+ 
+Bessel Functions
+ 
+BESS0(X)          Bessel function of first kind and order 0
+BESS1(X)          Bessel function of first kind and order 1
+ 
+----- <~data\viewprfu.top> View Built-in Functions: Probability
+ 
+View Built-in Functions: Probability
+ 
+Normal                                   <~data\normfunc.top>
+t Distribution                           <~data\tfunc.top>
+chi-squared                              <~data\chisfunc.top>
+F                                        <~data\ffunc.top>
+Weibull                                  <~data\weibfunc.top>
+Inverse Gaussian (Wald)                  <~data\invgfunc.top>
+Reciprocal Inverse Gaussian              <~data\reigfunc.top>
+Fatigue Life (Birnbaum-Saunders)         <~data\fatlfunc.top>
+ 
+----- <~data\normfunc.top> Functions: Normal Distribution
+ 
+Functions: Normal Distribution
+ 
+Standard Normal Distribution (Mean = 0, Standard Deviation = 1)
+ 
+NORCDF(X)         normal cumulative distribution function
+NORPDF(X)         normal probability density function
+NORPPF(P)         normal percent point function
+ 
+----- <~data\tfunc.top> Functions: t Distribution
+ 
+Functions: t Distribution
+ 
+TCDF(X,NU)        t cumulative distribution function
+TPDF(X,NU)        t probability density function
+TPPF(P,NU)        t percent point function
+ 
+----- <~data\chisfunc.top> Functions: chi-squared Distribution
+ 
+Functions: chi-squared Distribution
+ 
+ 
+CHSCDF(X,NU)      chi-squared cumulative distribution function
+CHSPDF(X,NU)      chi-squared probability density function
+CHSPPF(P,NU)      chi-squared percent point function
+ 
+----- <~data\ffunc.top> Functions: F Distribution
+ 
+Functions: F Distribution
+ 
+FCDF(X,NU1,NU2)   F cumulative distribution function
+FPDF(X,NU1,NU2)   F probability density function
+FPPF(P,NU1,NU2)   F percent point function
+ 
+----- <~data\weibfunc.top> Functions: Weibull Distribution
+ 
+Weibull Distribution
+ 
+WEICDF(X,GAMMA)   Weibull cumulative distribution function
+WEICDF(X,GAMMA)   Weibull probability density function
+WEICDF(X,GAMMA)   Weibull percent point function
+ 
+----- <~data\invgfunc.top> Functions: Inverse Gaussian Distribution
+ 
+Functions: Inverse Gaussian Distribution
+ 
+IGCDF(X,GAMMA)    inverse Gaussian cumulative dist. function
+IGCDF(X,GAMMA)    inverse Gaussian probability density function
+IGCDF(X,GAMMA)    inverse Gaussian percent point function
+ 
+----- <~data\reigfunc.top> Functions: Reciprocal Inv. Gauusian Distributions
+ 
+Functions: Reciprocal Inverse Gaussian Distribution
+ 
+RIGCDF(X,GAMMA)   reciprical inverse Gaussian cum. dist. func.
+RIGCDF(X,GAMMA)   reciprical inverse Gaussian prob. dens. func.
+RIGCDF(X,GAMMA)   reciprical inverse Gaussian percent point func.
+ 
+----- <~data\fatlfunc.top> Functions: Fatigue Life Distribution
+ 
+Functions: Fatigue Life Distribution
+ 
+FLCDF(X,GAMMA)    fatigue Life cumulative distribution function
+FLCDF(X,GAMMA)    fatigue Life probability density function
+FLCDF(X,GAMMA)    fatigue Life percent point function
+ 
+--------------------last line
+/////
+Manipulation
+ 
+----- <~data\xx.top> Built-in Data
+ 
+Built-in Data
+ 
+Generate normal  random numbers
+Generate uniform random numbers
+Generate prime          numbers
+Generate Fibonacci     numbers
+Math constant: pi
+Built-in DATASETS.
+ 
+----- <~data\xx.top> Generate normal random numbers
+ 
+Generate normal random numbers
+ 
+entry menu file--gennorra.men
+ 
+----- <~data\xx.top> Generate uniform random numbers
+ 
+Generate uniform random numbers
+ 
+entry menu file--genunira.men
+ 
+----- <~data\xx.top> Generate prime numbers
+ 
+Generate prime numbers
+ 
+entry menu file--genprime.men
+ 
+----- <~data\xx.top> Generate Fibonnacci numbers
+ 
+Generate Fibonnacci numbers
+ 
+entry menu file--genfibon.men
+ 
+----- <~data\xx.top> Math constant: pi
+ 
+Math constant: pi
+ 
+execute line--WRITE PI
+ 
+----- <~data\xx.top> Built-in DATASETS.
+ 
+Built-in DATASETS.
+ 
+----- <~data\xx.top> Dataplot Worksheet
+ 
+Dataplot Worksheet
+ 
+----- <~data\xx.top> Variables
+ 
+Variables
+ 
+----- <~data\xx.top> Parameters
+ 
+Parameters
+ 
+----- <~data\xx.top> Functions
+ 
+Functions
+ 
+----- <~data\xx.top> Matrices
+ 
+Matrices
+ 
+----- <~data\xx.top> Manipulation
+Manipulation
+ 
+3. Data
+ 
+Built-in Data
+   Math constants--pi
+   FIBONNACCI NUMBERS
+   PRIME NUMBERS
+   NORMAL RANDOM NUMBERS
+   UNIFORM RANDOM NUMBERS
+   RANDOM PERMUTATIONS
+   DATASETS.
+ 
+Dataplot Worksheet
+   Status of
+   Redimension
+   Reset entire
+ 
+Variables
+   Show list of
+   View contents of
+   Read from file
+      READ                 CO-IO Read variables serially
+      SERIAL READ                 CO-IO Read variables serially
+      ROW LIMITS                  CO-IO Set row limts for READ and SERIAL READ
+      column limits
+      SKIP                        CO-IO Set num of header lines to skip for READ
+      READ FORMAT                 SC-SE Set format for (fast) READ
+   Create
+      random numbers
+      NORMAL ORDER STAT MEDIANS
+      UNIFORM ORDER STAT MEDIANS
+   Write to screen
+   Write to file
+   Transform
+      rank
+      code
+      code2
+      code4
+      code8
+      code10
+      codeH
+      ...
+      COCODE
+      COCOPY
+      BIWEIGHT
+      TRICUBE
+      SUBSAMPLE
+      BOOTSTRAP SAMPLE
+      Fourier Transform
+         SINE TRANSFORM
+         INVERSE SINE TRANSFORM
+         FOURIER TRANSFORM
+         INVERSE FOURIER TRANSFORM
+         FOURIER EXPONENT
+         FFT
+         INVERSE FFT
+         LAPLACE TRANSFORM ?
+         INVERSE LAPLACE TRANSFORM ?
+   Delete some
+   Delete all
+   Pack
+ 
+Parameters
+   Show list of
+   View contents of
+   Read from file
+   Create
+   Write to screen
+   Write to file
+   Transform
+   Delete some
+   Delete all
+ 
+Functions
+   Show list of
+   View contents of
+   Read from file
+   Create
+   Write to screen
+   Write to file
+   Transform
+   Delete some
+   Delete all
+ 
+Matrices
+   Show list of
+   View contents of
+   Read from file
+   Create
+   Write to screen
+   Write to file
+   Transform
+   Delete some
+   Delete all
+ 
+Manipulation
+   distinct
+   code
+   sort
+   sort & carry
+   RETAIN
+   extend
+   append
+   delete
+   pack
+   transform
+      rank
+      code
+      code2
+      code4
+      code8
+      code10
+      codeH
+      ...
+      COCODE
+      COCOPY
+      BIWEIGHT
+      TRICUBE
+      SUBSAMPLE
+      BOOTSTRAP SAMPLE
+      Fourier Transform
+         SINE TRANSFORM
+         INVERSE SINE TRANSFORM
+         FOURIER TRANSFORM
+         INVERSE FOURIER TRANSFORM
+         FOURIER EXPONENT
+         FFT
+         INVERSE FFT
+         LAPLACE TRANSFORM ?
+         INVERSE LAPLACE TRANSFORM ?
+ 
+   Plot Statistics
+   Block Plot
+ 
+Variables
+   Show list of
+   View contents of
+   Read from file
+      READ                 CO-IO Read variables serially
+      SERIAL READ                 CO-IO Read variables serially
+      ROW LIMITS                  CO-IO Set row limts for READ and SERIAL READ
+      column limits
+      SKIP                        CO-IO Set num of header lines to skip for READ
+      READ FORMAT                 SC-SE Set format for (fast) READ
+   Create
+      random numbers
+      NORMAL ORDER STAT MEDIANS
+      UNIFORM ORDER STAT MEDIANS
+   Write to screen
+   Write to file
+   Transform
+      rank
+      code
+      code2
+      code4
+      code8
+      code10
+      codeH
+      ...
+      COCODE
+      COCOPY
+      BIWEIGHT
+      TRICUBE
+      SUBSAMPLE
+      BOOTSTRAP SAMPLE
+      Fourier Transform
+         SINE TRANSFORM
+         INVERSE SINE TRANSFORM
+         FOURIER TRANSFORM
+         INVERSE FOURIER TRANSFORM
+         FOURIER EXPONENT
+         FFT
+         INVERSE FFT
+         LAPLACE TRANSFORM ?
+         INVERSE LAPLACE TRANSFORM ?
+   Delete some
+   Delete all
+   Pack
+ 
+Parameters
+   Show list of
+   View contents of
+   Read from file
+   Create
+   Write to screen
+   Write to file
+   Transform
+   Delete some
+   Delete all
+ 
+Functions
+   Show list of
+   View contents of
+   Read from file
+   Create
+   Write to screen
+   Write to file
+   Transform
+   Delete some
+   Delete all
+ 
+Matrices
+   Show list of
+   View contents of
+   Read from file
+   Create
+   Write to screen
+   Write to file
+   Transform
+   Delete some
+   Delete all
+ 
+Manipulation
+   distinct
+   code
+   sort
+   sort & carry
+   RETAIN
+   extend
+   append
+   delete
+   pack
+   transform
+      rank
+      code
+      code2
+      code4
+      code8
+      code10
+      codeH
+      ...
+      COCODE
+      COCOPY
+      BIWEIGHT
+      TRICUBE
+      SUBSAMPLE
+      BOOTSTRAP SAMPLE
+      Fourier Transform
+         SINE TRANSFORM
+         INVERSE SINE TRANSFORM
+         FOURIER TRANSFORM
+         INVERSE FOURIER TRANSFORM
+         FOURIER EXPONENT
+         FFT
+         INVERSE FFT
+         LAPLACE TRANSFORM ?
+         INVERSE LAPLACE TRANSFORM ?
+ 

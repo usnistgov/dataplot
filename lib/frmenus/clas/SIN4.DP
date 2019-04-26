@@ -1,0 +1,10 @@
+----- <~dataloex\SIN4.DP> Load & Execute SIN4.DAT
+
+. This is file    SIN4.DP
+
+DELETE Y
+SKIP 25
+READ SIN4.DAT Y
+TITLE SIN4.DAT
+/
+

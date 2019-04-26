@@ -1,0 +1,18 @@
+----- <~time\dds19.top> DDS FAQ 19 DDS vs. EDA
+ 
+19. How does DDS compare to general EDA?
+ 
+DDS is an exploratory data analysis (EDA)
+technique.  The primary similarity is that the
+modeling and analysis is done based solely on
+data.  The DDS differs from EDA in its engineering
+application base, the connection with continuous
+domain differential equations, and the tools such
+as modal analysis familiar to engineers.  The
+results based on data from working systems has
+shown significant superiority, and the simulated
+data give comparable results.  The main drawback
+is that DDS implementation is not readily
+available or easily integrable with existing
+software.
+ 

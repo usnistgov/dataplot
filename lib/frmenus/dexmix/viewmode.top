@@ -1,0 +1,30 @@
+----- <~dexmix\viewmode.top> Models:  Mixture Designs
+
+View Models:  Mixture Designs
+
+(k=3,d=1) Simplex-Lattice     <~dexmix\slmod31.top>
+(k=3,d=2) Simplex-Lattice     <~dexmix\slmod32.top>
+(k=3,d=3) Simplex-Lattice     <~dexmix\slmod33.top>
+(k=3,d=4) Simplex-Lattice     <~dexmix\slmod34.top>
+(k=3)     Simplex-Centroid    <~dexmix\scmodel3.top>
+ 
+(k=4,d=1) Simplex-Lattice     <~dexmix\slmod41.top>
+(k=4,d=2) Simplex-Lattice     <~dexmix\slmod42.top>
+(k=4,d=3) Simplex-Lattice     <~dexmix\slmod43.top>
+(k=4,d=4) Simplex-Lattice     <~dexmix\slmod44.top>
+(k=4)     Simplex-Centroid    <~dexmix\scmodel4.top>
+ 
+(k=5,d=1) Simplex-Lattice     <~dexmix\slmod51.top>
+(k=5,d=2) Simplex-Lattice     <~dexmix\slmod52.top>
+(k=5,d=3) Simplex-Lattice     <~dexmix\slmod53.top>
+(k=5)     Simplex-Centroid    <~dexmix\scmodel5.top>
+ 
+(k=6,d=1) Simplex-Lattice     <~dexmix\slmod61.top>
+(k=6,d=2) Simplex-Lattice     <~dexmix\slmod62.top>
+ 
+(k=7,d=1) Simplex-Lattice     <~dexmix\slmod71.top>
+(k=7,d=2) Simplex-Lattice     <~dexmix\slmod72.top>
+ 
+(k=8,d=1) Simplex-Lattice     <~dexmix\slmod81.top>
+(k=8,d=2) Simplex-Lattice     <~dexmix\slmod82.top>
+ 

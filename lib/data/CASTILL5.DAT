@@ -1,0 +1,85 @@
+This is Dataplot Data File     CASTILL5.DAT
+Epicenter data--Distance (miles) from earthquake epicenter to nuclear plant
+Engineering Goal--Determine nuclear plant earhquake risk
+Response Variable = distance of epicenter to nuclear plant
+Number of Observations = 60
+Number of Variables per line image = 1
+Order of variables per line image--
+   1. Response variable = distance of epicenter to nuclear plant
+Statistical Category--Extreme Value Analysis
+To read this into Dataplot--
+   SKIP 25
+   READ CASTILL5.DAT Y
+Note--closest fault is known to be 50 miles away
+Source--Enrique Castillo (1988). Extreme Value Theory
+        in Engineering. Academic Press, San Diego, California,
+        p. 335-336.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Distance from epicenter to nuclear plant (miles) (sorted)
+-------------------------------------------------------------------
+  58.20
+  58.20
+  59.50
+  61.80
+  65.80
+  67.80
+  68.50
+  70.90
+  73.70
+  77.00
+  80.80
+  83.70
+  84.30
+  89.00
+  97.60
+  98.30
+  99.60
+ 101.40
+ 105.10
+ 105.80
+ 106.70
+ 119.10
+ 119.50
+ 119.90
+ 121.90
+ 125.70
+ 128.40
+ 146.10
+ 153.90
+ 154.60
+ 155.80
+ 157.40
+ 157.70
+ 163.70
+ 172.70
+ 173.90
+ 174.20
+ 175.10
+ 176.00
+ 178.70
+ 179.10
+ 179.50
+ 180.70
+ 182.10
+ 182.70
+ 186.70
+ 187.50
+ 191.00
+ 192.60
+ 193.00
+ 199.40
+ 211.60
+ 212.10
+ 216.80
+ 222.90
+ 227.30
+ 229.40
+ 234.50
+ 236.80
+ 238.90

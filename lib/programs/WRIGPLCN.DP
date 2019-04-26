@@ -1,0 +1,189 @@
+. Name:    WRIGPLCN.DP
+. Purpose: Define plot control options for CHARACTER TABULATION PLOT for
+.          the Wright brothers data.
+.
+.          This macro assumes that the row/column marginal values for
+.          the statistic (ROWMEAN and COLMEAN variables) have already
+.          been defined.
+.
+FEEDBACK SAVE
+FEEDBACK OFF
+.
+.  Step 1: Define string SSIZE to character size height and width for
+.          each contouring level
+.
+let string stemp1 = ^charh1
+let string stemp2 = ^charw1
+let ssize = string concatenate stemp1 sp stemp2
+loop for k = 2 1 nlevel2
+    let ssize = string concatenate ssize sp stemp1 sp stemp2
+end of loop
+let string stemp1 = ^charh2
+let string stemp2 = ^charw2
+loop for k = 1 1 nlevel2
+    let ssize = string concatenate ssize sp stemp1 sp stemp2
+end of loop
+.
+if minmax > 0
+   let string stemp1 = ^charh1
+   let string stemp2 = ^charw1
+   let ssize = string concatenate ssize sp stemp1 sp stemp2
+   let ssize = string concatenate ssize sp stemp1 sp stemp2
+end of if
+.
+.  Step 2: Title Options
+.
+title case asis
+title offset 7.5
+title size 2.5
+title ^stitle (Unsorted)
+if sortflag = 1
+   title ^stitle (Sorted by Row)
+else if sortflag = 2
+   title ^stitle (Sorted by Column)
+else if sortflag = 3
+   title ^stitle (Sorted by Row/Column)
+end of if
+.
+.  Step 3: Label and Tic Mark Label Options
+.
+label case asis
+legend 1 ^sxlab
+legend 1 justification center
+legend 1 coordinates 50 94
+y1label ^sylab
+y1label displacement 10
+tic offset units data
+tic mark size 1
+tic mark label displacement 1.5
+.
+x1limits 1 nx
+major xtic mark number nx
+minor xtic mark number 0
+xtic mark offset 0.8 0.8
+x1tic mark label off
+x2tic mark on
+x2tic mark label on
+.
+.  Step 4a: Define tic mark labels for top x axis
+.
+x2tic mark label format group label
+if icol = 0  ; .  Unsorted case - just need to flip if descending
+   if direcol = 1
+      loop for k = 1 1 nx
+          let k2 = nx - k + 1
+          let string sxrev^k = ^sx^k2
+      end of loop
+      loop for k = 1 1 nx
+          let string sx^k = ^sxrev^k
+      end of loop
+   end of if
+   let igx = group label sx1 to sx^nx
+else         ; .  Sorted case
+   .
+   if direcol = 1
+      loop for k = 1 1 nx
+           let krank = colmeanr(k)
+           let krank = nx - krank + 1
+           let string sxnew^krank = ^sx^k
+      end of loop
+   end of if
+   if direcol = 0
+      loop for k = 1 1 nx
+          let krank = colmeanr(k)
+          let string sxnew^krank = ^sx^k
+       end of loop
+   end of if
+   .
+   let igx = group label sxnew1 to sxnew^nx
+end of if
+x2tic mark label content igx
+.
+.  Step 4b: Define tic mark labels for left y axis
+.
+ylimits 1 ny
+major ytic mark number ny
+minor ytic mark number 0
+ytic mark offset 0.8 0.8
+y2tic mark on
+y2tic mark label off
+y1tic mark label format group label
+y1tic mark label format group label
+if irow = 0  ; .  Unsorted case - just need to flip if descending
+   if direrow = 1
+      loop for k = 1 1 ny
+          let k2 = ny - k + 1
+          let string syrev^k = ^sy^k2
+      end of loop
+      loop for k = 1 1 ny
+          let string sy^k = ^syrev^k
+      end of loop
+   end of if
+   let igy = group label sy1 to sy^ny
+else         ; .  Sorted case
+   .
+   if direrow = 1
+      loop for k = 1 1 ny
+           let krank = rowmeanr(k)
+           let krank = ny - krank + 1
+           let string synew^krank = ^sy^k
+      end of loop
+   end of if
+   if direrow = 0
+      loop for k = 1 1 ny
+          let krank = rowmeanr(k)
+          let string synew^krank = ^sy^k
+       end of loop
+   end of if
+   .
+   let igy = group label synew1 to synew^ny
+end of if
+y1tic mark label content igy
+.
+.  Step 5: Set CHARACTER attributes based on options set in WRIGOPTI.DP
+.
+if highflag = 1
+  let string scolor = ^color1
+  loop for k = 2 1 nlevel2
+      let string stemp = ^color^k
+      let scolor = string concatenate scolor sp stemp
+  end of loop
+  let string sstyle = ^style1
+  loop for k = 2 1 nlevel2
+      let string stemp = ^style^k
+      let sstyle = string concatenate sstyle sp stemp
+  end of loop
+else
+  let string sstyle = blank
+  loop for k = 2 1 nlevel2
+      let string stemp = blank
+      let sstyle = string concatenate sstyle sp stemp
+  end of loop
+  let string stemp = black
+  let string scolor = ^stemp
+  loop for k = 2 1 nlevel2
+      let scolor = string concatenate scolor sp stemp
+  end of loop
+end of if
+.
+if minmax > 0
+   let string sstyle = blank
+   loop for k = 2 1 nlevel2
+       let string stemp = blank
+       let sstyle = string concatenate sstyle sp stemp
+   end of loop
+   let sstyle = string concatenate sstyle sp sstyle
+   let sstyle = string concatenate sstyle sp style1 sp style^nlevel2
+   let string scolor = ^color1
+   loop for k = 2 1 nlevel2
+       let string stemp = ^color^k
+       let scolor = string concatenate scolor sp stemp
+   end of loop
+   let scolor = string concatenate scolor sp scolor
+   let scolor = string concatenate scolor sp color1 sp color^nlevel2
+else
+   let scolor = string concatenate scolor sp scolor
+end of if
+.
+FEEDBACK RESTORE
+.

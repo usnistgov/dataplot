@@ -1,0 +1,50 @@
+----- <~plot\factpl_d.top> Factor Plot Discussion
+
+Factor Plot
+
+
+The factor plot is similar in appearance to the condition
+plot.  But where the condition plot essentially does something
+like
+
+     MULTIPLOT 2 2
+     PLOT Y X SUBSET TAG = 1
+     PLOT Y X SUBSET TAG = 2
+     PLOT Y X SUBSET TAG = 3
+     PLOT Y X SUBSET TAG = 4
+     END OF MULTIPLOT
+
+the factor plot does something like
+
+     MULTIPLOT 2 2
+     PLOT Y X1
+     PLOT Y X2
+     PLOT Y X3
+     PLOT Y X4
+     END OF MULTIPLOT
+
+That is, the factor plot generates a scatter plot of a
+response variable against a number of different
+factor (or inddependent) variables on a single page.
+
+The factor plots need not be limited to scatter plots.
+Dataplot allows you to generate factor plots for
+a number of different plot types (and additional plot
+types will be added in future implementations).  You can
+also specify multiple response variables.  In this case,
+the plot is split into rows (response variables) and
+columns (factor variables).
+
+There are a number of alternatives for the appearance of this
+plot.  Dataplot tries to balance simplicity with flexibility
+by using default settings, but providing numerous SET commands
+to control the appearance of the plot.
+
+There is a separate menu for setting the options for the
+factor plot.  Note that these options stay set until you
+explicitly change them.  That is, you can set your favorite
+options once and then use the generate menu for subsequent plots.
+A few options are currently only available from the command line. 
+Also, regular plot control options (PlotMod Menu) can be set
+to control the appearance of the plot.
+

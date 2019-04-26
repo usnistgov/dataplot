@@ -1,0 +1,10 @@
+----- <~dataloex\CHWIRUT1.DP> Load & Execute CHWIRUT1.DAT
+
+. This is file    CHWIRUT1.DP
+
+DELETE Y X
+SKIP 25
+READ CHWIRUT1.DAT Y X
+TITLE CHWIRUT1.DAT
+/
+

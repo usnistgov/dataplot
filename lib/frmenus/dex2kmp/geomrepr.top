@@ -1,0 +1,42 @@
+----- <~dex2kmp\geomrepr.top> A Geometric Representation of the Design
+ 
+A Geometric Representation of the Design
+ 
+A 2**3 and a 2**(3-1) design are schematically
+represented in k = 3 dimensions, with 2 points (low and
+high) in each 3 dimensions--hence a cube.  For a 2**3
+full factorial design, n = 8 and hence all 8 vertices
+of the cube are highlighted.  For a 2**(3-1) fractional
+factorial design, n= 4 runs and so only 4 out of the 8
+vertices are highlighed.  The geometric representation
+of this design clearly illustrates the balance and
+symmetry of the 2-level factorial designs:
+
+
+           0 - - - - - - 0                     - - - - - - - 0
+         / .           / |                   / .           / |
+       /   .         /   |                 /   .         /   |
+     0 - - - - - - 0     |               0 - - - - - - -     |
+     |     .       |     |               |     .       |     |
+     |     .       |     |               |     .       |     |
+  X2 |     0 . . . | . . 0            X2 |     0 . . . | . . |
+     |  X3.        |    /                |  X3.        |    /
+     |  .          |  /                  |  .          |  /
+     0 _ _ _ _ _ _ 0                     | _ _ _ _ _ _ 0
+            X1                                  X1
+ 
+         2**(3-1)                              2**3
+
+
+For the 2**(3-1) design, note that the usual axis
+representation is for factor 1 to be horizontally
+across the page, factor 2 is vertically up the page,
+and factor 3 to be the axis into the page.
+ 
+Note also for the 2**(3-1) design the projectibility
+characteristic of the design--namely, if you project
+the design from 3 dimensions into any 2 dimensions, you
+will get a balanced, symmetric 2**2 full factorial
+design.  This flows from the orthogonal nature of this
+design and is true of all designs in this catalog.
+ 

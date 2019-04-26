@@ -1,0 +1,8 @@
+----- <~datalist\MANDEL.top> MANDEL.DAT
+ 
+MANDEL.DAT
+ 
+View     <xcl: LIST MANDEL.DAT>
+Load     <x2cl: SKIP 25; READ MANDEL.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\MANDEL.DAT>
+ 

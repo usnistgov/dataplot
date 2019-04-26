@@ -1,0 +1,55 @@
+This is Dataplot data file     PUNCH.DAT
+Mixture Experiment Example
+Source--Huor, S. S., Ahmed, E. M., Rao, P. V., and Cornell, J. A.
+        (1980).  Formulation and sensory evaluation of a fruit punch
+        containing watermelon juice.  Journal of Food Science 45,, 809-813.
+Response Variable = taste
+Number of observations = 30 = 10 conditions x 3 reps
+Number of variables per line image = 4
+Order of variables per line image--
+   Response variable = taste
+   Factor 1 = watermelon %
+   Factor 2 = pineapple %
+   Factor 3 = orange %
+Project Question--What settings for the 3 ingredients
+                  maximize the taste?
+Statistical areas--mixture design of experiment
+To read this file into Dataplot--
+      SKIP 25
+      READ PUNCH.DAT Y W P O
+      LET X1 = (W-30)/70
+      LET X2 = P/70
+      LET X3 = O/70
+  Y              X1            X2            X3
+Taste       % Watermelon  % Pineapple    % Orange
+--------------------------------------------------
+ 4.3            100             0             0
+ 4.7            100             0             0
+ 4.8            100             0             0
+ 6.3             65            35             0
+ 5.8             65            35             0
+ 6.1             65            35             0
+ 6.5             30            70             0
+ 6.2             30            70             0
+ 6.3             30            70             0
+ 6.2             30            35            35
+ 6.2             30            35            35
+ 6.1             30            35            35
+ 6.9             30             0            70
+ 7.0             30             0            70
+ 7.4             30             0            70
+ 6.1             65             0            35
+ 6.5             65             0            35
+ 5.9             65             0            35
+ 6.0             54            23            23
+ 5.8             54            23            23
+ 6.4             54            23            23
+ 5.4             80            10            10
+ 5.8             80            10            10
+ 6.6             80            10            10
+ 5.7             40            40            20
+ 5.0             40            40            20
+ 5.6             40            40            20
+ 5.2             40            20            40
+ 6.4             40            20            40
+ 6.4             40            20            40

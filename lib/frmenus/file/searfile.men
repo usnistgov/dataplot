@@ -1,0 +1,56 @@
+This is file searfile.men--Search a File for a String
+ 
+--------------------
+ 1. Search a File for a String
+ 2. SEARCH <filename> <string>
+ 3.
+ 4: 1. User file:
+ 5. @CE 1 0 4 50 ?
+ 6.
+ 7. 2. Dataplot summary file:
+ 8. @CE 2 1 4 20 commands.
+ 9. @CE 2 2 4 20 syntax.
+10. @CE 2 3 4 20 subcommands.
+11. @CE 2 4 4 20 inline.
+12. @CE 2 5 4 20 functions.
+13. @CE 2 6 4 20 programs.
+14. @CE 2 7 4 20 macros.
+15. @CE 2 8 4 20 datasets.
+16. @CE 2 9 4 20 designs.
+17. @CE 2 10 4 20 distributions.
+18. @CE 2 11 4 20 defaults.
+19.
+20. String to be searched for:
+20. @CE 3 0 28 50 ?
+21.
+22. Type of search:
+23. @CE 4 1 4 45 all occurences
+24. @CE 4 2 4 45 first occurence
+25. @CE 4 3 4 45 from first occurence to next blank line
+26. @CE 4 4 4 45 from first occurence to next "---" line
+27.
+28. Search for the String?
+--------------------
+SU FE
+SET FILE NAME QUOTE ON
+LET STRING ZZZZSTR = SEARCH
+@IF 4 1 LET STRING ZZZZSTR = SEARCH
+@IF 4 2 LET STRING ZZZZSTR = SEARCH1
+@IF 4 3 LET STRING ZZZZSTR = SEARCHB
+@IF 4 4 LET STRING ZZZZSTR = SEARCHDA
+@IF 1 0 ^ZZZZSTR _1 _3
+@IF 2 1 ^ZZZZSTR _2 _3
+@IF 2 2 ^ZZZZSTR _2 _3
+@IF 2 3 ^ZZZZSTR _2 _3
+@IF 2 4 ^ZZZZSTR _2 _3
+@IF 2 5 ^ZZZZSTR _2 _3
+@IF 2 6 ^ZZZZSTR _2 _3
+@IF 2 7 ^ZZZZSTR _2 _3
+@IF 2 8 ^ZZZZSTR _2 _3
+@IF 2 9 ^ZZZZSTR _2 _3
+@IF 2 10 ^ZZZZSTR _2 _3
+@IF 2 11 ^ZZZZSTR _2 _3
+SET FILE NAME QUOTE OFF
+--------------------
+WEB HELP SEARCH
+--------------------

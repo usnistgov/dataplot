@@ -1,0 +1,8 @@
+----- <~dataload\HALD647.DP> Load HALD647.DAT
+
+. This is file    HALD647.DP
+
+DELETE Y X1 X2 X3 X4
+SKIP 25
+READ HALD647.DAT Y X1 X2 X3 X4
+

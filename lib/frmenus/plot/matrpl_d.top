@@ -1,0 +1,30 @@
+----- <~plot\matrpl_d.top> Matrix Plot Discussion
+
+Scatter Plot Matrix (Matrix Plot)
+
+
+A scatter plot matrix of Y1, Y2, ... , Yk is a matrix of
+all the pairwise scatter plots between Y1, Y2, ...., Yk.
+This is a simple, but powerful, technique for viewing all
+the pairwise relationships between the variables.
+
+The pairwise plots need not be limited to scatter plots.
+Dataplot allows you to generate the pairwise plots for
+approximately 10 different plot types (and additional plot
+types will be added in future implementations).
+
+There are a number of alternatives for the appearance of this
+plot.  Dataplot tries to balance simplicity with flexibility
+by using default settings, but providing numerous SET commands
+to control the appearance of the plot.
+
+There are 2 menus for setting options for the scatter plot
+matrix.  One sets the most common options while the other
+sets some of the infrequently used options.  Note that
+these options stay set until you explicitly change them.
+That is, you can set your favorite options once and then
+use the generate menu for subsequent plots.  A few options
+are currently only available from the command line.  Also,
+regular plot control options (PlotMod Menu) can be set
+to control the appearance of the plot.
+

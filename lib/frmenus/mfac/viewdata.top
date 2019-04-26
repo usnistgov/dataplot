@@ -1,0 +1,35 @@
+----- <~mfac\viewdata.top> m-Factor Analysis: Graphical Techniques
+ 
+Multi-Factor Analysis: Graphical Techniques
+
+1 Response, 1 Factor
+   Scatter Plot                      <xemf: ~stat\scatplot.men>
+   Scatter Plot with Vertical Lines  <xemf: ~stat\vertplot.men>
+
+   Box Plot                          <xemf: ~stat\boxplot.men>
+
+   Mean plot                         <xemf: ~1fac\meanplot.men>
+   SD plot                           <xemf: ~1fac\sdplot.men>
+   Statistics for Grouped Data       <xemf: ~stat\statplot.men>
+
+2 Response Variables
+   Bihistogram                       <xemf: ~plot\bihist.men>
+   Quantile-Quantile Plot            <xemf: ~plot\q-qplot.men>
+   Youden Plot                       <xemf: ~mvar\youdplot.men>
+
+2 Factors
+   Character Plot               <xemf: ~mfac\charplot.men>
+   Line Plot                    <xemf: ~mfac\lineplot.men>
+   3D Plot (Data)               <xemf: ~plot\3dplot.men>
+   Contour Plot (Data)          <xemf: ~math\contour.men>
+
+3 Factors
+   GANOVA Graphical Analysis of Variance  <xemf: ~mfac\ganova.men>
+          (= character + line plot)       <xemf: ~mfac\ganova.men>
+
+General (2+ Factors)
+   Block Plot                   <xemf: ~stat\blockplo.men>
+   DEX Plots                    <~plot\dexplots.top>
+   Taguchi Plots                <~qual\tagplot.top>
+   Scatter Plot Matrix          <xemf: ~plot\scatplma.men>
+

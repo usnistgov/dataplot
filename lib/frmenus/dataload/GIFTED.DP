@@ -1,0 +1,8 @@
+----- <~dataload\GIFTED.DP> Load GIFTED.DAT
+
+. This is file    GIFTED.DP
+
+DELETE Y X1 TO X7
+SKIP 25
+READ GIFTED.DAT Y X1 TO X7
+

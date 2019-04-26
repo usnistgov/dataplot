@@ -1,0 +1,36 @@
+----- <~plot\mp_disc.top> Multiplotting
+
+Multiplotting
+
+
+Generating multiplot plots per page is an extremely
+important exploratory data analysis tool.  It is
+frequently used to examine 1 variable by many
+different techniques.  It is also frequently
+used to examine many variables using the same plot
+technique.
+
+In Dataplot, the MULTIPLOT command can be used to
+easily generate multiple plots per page.  The
+MULTIPLOT command does all the behind the scenes
+scaling of plots, the screen erase for the first
+plot, and the non-erase for subsequent plots.
+
+The MULTIPLOT command works by dividing the plot
+area into equal size rows and columns.  As the next
+plot is generated, it is moved into the next row
+and column position (Dataplot moves across rows
+to determine the next position).  The sub-area
+(i.e., the current row and column position) is
+given its own 0 to 100 coordinate system.  This
+means that all sizes and positions based on the
+Dataplot 0 to 100 scale are automatically scaled
+for this reduced area.
+
+By default, Dataplot generates the multiple plots
+in the default plot area.  This area has corners
+at (15,20) and (85,90) in the original Dataplot 0
+to 100 scale.  The MULTIPLOT CORNER COORDINATES
+command can be used to specify the area of the screen
+to use when generating multiplots.
+

@@ -1,0 +1,150 @@
+This is Dataplot data file     NASA.DAT
+NASA Composite Material Strength
+Source--
+   Reese, Charles and Sorem Jr., James (1981)
+   Statistical Distribution of Mechanical Properties
+   for Three Graphite-Epoxy Material Systems
+   Charles Reese and James Sorem Jr.
+   NASA Contractor Report 165736
+   July, 1981
+   Langley Research Ceter, Hampton VA, 23665
+Number of observations             = 125
+Number of variables per line image =   1
+Order of variables on a line image--
+   Response variable = strength
+Statistical category--Univariate, Reliability
+To read this data file into DATAPLOT--
+   SKIP 25
+   READ REESE.DAT Y
+
+
+
+
+    Y
+ Strength
+-----------
+    42.41
+    54.76
+    69.94
+    58.3
+    64.86
+    49.41
+    60.56
+    61.14
+    62.63
+    58.7
+    65.42
+    60.89
+    61.39
+    57.54
+    61.01
+    62.06
+    61.39
+    61.35
+    59.35
+    63.66
+    67.97
+    65.31
+    60.37
+    69.93
+    66.28
+    72.34
+    68.54
+    64.01
+    67.12
+    56.37
+    59.1
+    68.62
+    59.11
+    66.28
+    67.22
+    66.55
+    75.27
+    59.09
+    75.99
+    69.66
+    67.9
+    65.3
+    68.95
+    69.93
+    62.73
+    68.39
+    66.28
+    66.75
+    70.31
+    73.76
+    62
+    65.71
+    73.22
+    70.99
+    61.39
+    71.6
+    77.64
+    70.08
+    74.05
+    68.31
+    67.99
+    75.64
+    71.77
+    81.13
+    66.28
+    63.93
+    76.35
+    74.19
+    71.81
+    57.68
+    80.25
+    71.92
+    64.17
+    64.94
+    73.88
+    76.41
+    83.25
+    73.88
+    79.79
+    70.52
+    78.11
+    66.58
+    73.76
+    77.33
+    80.61
+    43.4
+    35.23
+    68.16
+    61.87
+    58.73
+    45.06
+    62.06
+    50.21
+    74.33
+    65.31
+    76.88
+    70.68
+    51.08
+    69.23
+    70.68
+    79.37
+    67.97
+    71.75
+    75.51
+    64.08
+    63.27
+    61.47
+    56.33
+    53.88
+    67.35
+    69.39
+    70.21
+    47.05
+    38.7
+    69.93
+    61.39
+    72.63
+    71.49
+    58.96
+    71.54
+    62.58
+    60.5
+    66.52
+    65.16
+    59.95

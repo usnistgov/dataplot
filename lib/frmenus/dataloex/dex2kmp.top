@@ -1,0 +1,23 @@
+----- <~dataloex\dex2kmp.top> Load & Execute 2**(k-p) Fractional Factorial Design Data
+
+Load & Execute 2**(k-p) Fractional Factorial Design Data
+
+BOXSPRI2.DAT  2**(3-1)  Defective springs  <xcf: ~dataloex\BOXSPRI2.DP>
+BOXSPRI3.DAT  2**(3-1)  Defective springs  <xcf: ~dataloex\BOXSPRI3.DP>
+
+BOXCLEAN.DAT  2**(4-1)  Cleanser stab.     <xcf: ~dataloex\BOXCLEAN.DP>
+
+BOXREAC2.DAT  2**(5-1)  Chem. reactor      <xcf: ~dataloex\BOXREAC2.DP>
+
+AC.DAT        2**(6-3)  A/C performance    <xcf: ~dataloex\AC.DP>
+
+BOXBIKE2.DAT  2**(7-4)  Bike speed         <xcf: ~dataloex\BOXBIKE2.DP>
+BOXBIKE3.DAT  2**(7-3)  Bike speed         <xcf: ~dataloex\BOXBIKE3.DP>
+BOXFILT.DAT*  2**(7-4)  Filtrat. time      <xcf: ~dataloex\BOXFILT.DP>
+BOXFILT2.DAT  2**(7-3)  Filtrat. time      <xcf: ~dataloex\BOXFILT2.DP>
+AMRF.DAT      2**(7-4)  AMRF work stat.    <xcf: ~dataloex\AMRF.DP>
+
+VIBRATE.DAT   2**(9-5)  Vibration          <xcf: ~dataloex\VIBRATE.DP>
+
+QUINLAN.DAT   2**(15-11) Speedom. noise    <xcf: ~dataloex\QUINLAN.DP>
+

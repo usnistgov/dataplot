@@ -1,0 +1,8 @@
+----- <~datalist\BOWEN.top> BOWEN.DAT
+ 
+BOWEN.DAT
+ 
+View     <xcl: LIST BOWEN.DAT>
+Load     <x2cl: SKIP 25; READ BOWEN.DAT Y X1 X2 X3>
+Print    <xccl: printfile C:\DATAPLOT\BOWEN.DAT>
+ 

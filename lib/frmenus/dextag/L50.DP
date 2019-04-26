@@ -1,0 +1,8 @@
+----- <~dextag\L50.DP> Load  L4.DAT
+
+. This is file    L50.DP
+
+DELETE X1 TO X12
+SKIP 25
+READ L50.DAT X1 TO X12
+

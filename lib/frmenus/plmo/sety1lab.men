@@ -1,0 +1,39 @@
+This is file sety1lab.men--Set Y1LABEl Attributes
+ 
+--------------------
+ 1. Set Y1LABEl Attributes
+ 2.  Y1LABEl COLOR RED; X1LABEL SIZE 3
+ 3.
+ 4. Color for X1 Label:
+ 4. @CE 1 0 42 50 * gui-color
+ 5. Font for Y1LABEl:
+ 5. @CE 2 0 42 50 * gui-font
+ 6. Size for Y1LABEl (0 to 100 units):
+ 6. @CE 3 0 42 50 * 
+ 7. Displacement for Y1LABEl:
+ 7. @CE 4 0 42 50 * 
+ 8. Case for Y1LABEl:
+ 9. @CE 5 1 5 17 all upper
+ 9. @CE 5 2 19 31 all lower
+ 9. @CE 5 3 33 45 as entered
+10. Fill Switch for Y1LABEl:
+10. @CE 6 0 42 50 * gui-ooff
+11. Software Fonts - Line Thickness for Y1LABEl:
+11. @CE 7 0 42 50 * gui-thick
+12.
+13.
+14. Set Y1LABEl Attributes?
+--------------------
+PC FE
+@IF 1 0 Y1LABEl COLOR _1
+@IF 2 0 Y1LABEl FONT _2
+@IF 3 0 Y1LABEl SIZE _3
+@IF 4 0 Y1LABEl DISPLACEMENT _4
+@IF 5 1 Y1LABEl CASE UPPER
+@IF 5 2 Y1LABEl CASE LOWER
+@IF 5 3 Y1LABEl CASE ASIS
+@IF 6 0 Y1LABEl FILL _6
+@IF 7 0 Y1LABEl THICKNESS _7
+--------------------
+WEB HELP LABEL
+--------------------

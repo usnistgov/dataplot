@@ -1,0 +1,42 @@
+This is file seasboxp.men--Seasonal Box Plot
+ 
+--------------------
+ 1. Box Plot
+ 2. BOX PLOT Y X
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Seasonal Index Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Line & Character Settings (Select one):
+ 8. @CE 3 1 10 32 Standard Box Plot
+ 9. @CE 3 2 10 32 Tufte Box Plot
+10. @CE 3 3 10 32 No Change
+11.
+12. Fences:
+12. @CE 5 0 33 50 gui-ooff
+13. Orientation of the boxes:
+14. @CE 6 1 10 32 Vertical (default)
+15. @CE 6 2 10 32 Horizontal
+16.
+17. Subset/Except/For Specification:
+18. @CE 4 0 1 50 *
+19.
+20.
+21. Generate the Box Plot?:
+--------------------
+GR FE
+@IF 3 1 CHARACTERS BOX PLOT
+@IF 3 1 LINES BOX PLOT
+@IF 3 2 CHARACTERS TUFTE BOX PLOT
+@IF 3 2 LINES TUFTE BOX PLOT
+FENCES _5
+@IF 6 1 HORIZONTAL SWITCH OFF
+@IF 6 2 HORIZONTAL SWITCH ON
+BOX PLOT _1 _2 _4
+LINES SOLID ALL
+CHARACTER BLANK ALL
+--------------------
+WEB HELP BOX PLOT
+--------------------

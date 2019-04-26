@@ -1,0 +1,13 @@
+----- <~file\captasci.top> Files: Capture Options (ASCII)
+
+Generate Dataplot Output to ASCII File
+
+Options for Generating Dataplot Output to an ASCII file:
+
+Generate Dataplot Output to an ASCII File     <xemf: ~file\asciion.men>
+Revert Dataplot Output to Text Output Window  <xcf: ~file\CAPTOFF.DP>
+View the ASCII File                           <xcf: ~file\CAPTVIEW.DP>
+
+Turn the ECHO Switch ON                       <xcl: ECHO ON>
+Turn the ECHO Switch OFF                      <xcl: ECHO OFF>
+

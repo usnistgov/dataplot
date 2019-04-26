@@ -1,0 +1,46 @@
+This is Dataplot data file    BENNETT.DAT
+Electron mobility for p-type AlGaAs
+Herb Bennett
+October 1998
+Reference--Figure 3 of Journal of Applied Physics 80
+           page 3851, 1996
+Response variable                  = electron mobility for p-type AlGaAs
+Number of observations             = 21
+Number of variables per line image = 8
+Order of variables on a line image--
+   1. Response variable 1 = mobility for AlAs mole fraction = .00
+   2. Response variable 2 = mobility for AlAs mole fraction = .05
+   3. Response variable 3 = mobility for AlAs mole fraction = .10
+   4. Response variable 4 = mobility for AlAs mole fraction = .15
+   5. Response variable 5 = mobility for AlAs mole fraction = .20
+   6. Response variable 6 = mobility for AlAs mole fraction = .25
+   7. Response variable 7 = mobility for AlAs mole fraction = .30
+   8. Factor 1            = coded acceptor density (in cm**-3)
+                            (true density = coded density x 10**13)
+To read this file into Dataplot--
+   SKIP 25
+   READ BENNETT.DAT Y1 Y2 Y3 Y4 Y5 Y6 Y7 X
+
+   Y1       Y2       Y3       Y4       Y5       Y6       Y7           X
+------------------------------------------------------------------------
+ 5.7420   5.1360   4.5520   4.0030   3.5000   3.0510   2.6580         1
+ 5.1060   4.5840   4.0810   3.6060   3.1710   2.7790   2.4340         2
+ 4.7180   4.2440   3.7880   3.3570   2.9610   2.6040   2.2880         3
+ 4.2250   3.8100   3.4110   3.0340   2.6860   2.3710   2.0920         5
+ 3.9030   3.5240   3.1610   2.8180   2.5010   2.2140   1.9590         7
+ 3.5650   3.2240   2.8970   2.5880   2.3030   2.0450   1.8140        10
+ 2.9260   2.6540   2.3940   2.1480   1.9210   1.7150   1.5300        20
+ 2.5690   2.3340   2.1100   1.8990   1.7030   1.5250   1.3660        30
+ 2.1450   1.9530   1.7710   1.5990   1.4410   1.2960   1.1650        50
+ 1.8890   1.7210   1.5640   1.4160   1.2790   1.1540   1.0410        70
+ 1.6430   1.4990   1.3640   1.2390   1.1230   1.0160   0.9198       100
+ 1.2580   1.1500   1.0500   0.9575   0.8725   0.7948   0.7241       200
+ 1.1010   1.0060   0.9191   0.8397   0.7670   0.7007   0.6403       300
+ 0.9936   0.9046   0.8249   0.7530   0.6880   0.6292   0.5760       500
+ 0.9901   0.8971   0.8152   0.7420   0.6764   0.6175   0.5647       700
+ 1.0680   0.9601   0.8660   0.7832   0.7097   0.6449   0.5873      1000
+ 1.5390   1.3720   1.2270   1.0980   0.9863   0.8881   0.8013      2000
+ 1.9640   1.7460   1.5560   1.3900   1.2430   1.1150   1.0020      3000
+ 2.4890   2.2120   1.9680   1.7530   1.5630   1.3970   1.2500      5000
+ 2.6920   2.3920   2.1250   1.8920   1.6870   1.5060   1.3470      7000
+ 2.7200   2.4180   2.1520   1.9180   1.7110   1.5280   1.3680     10000

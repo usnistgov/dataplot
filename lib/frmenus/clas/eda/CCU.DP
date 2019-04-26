@@ -1,0 +1,10 @@
+----- <~dataloex\CCU.DP> Load & Execute CCU.DAT
+
+. This is file    CCU.DP
+
+DELETE Y X
+SKIP 25
+READ CCU.DAT Y X
+TITLE CCU.DAT
+/
+

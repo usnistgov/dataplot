@@ -1,0 +1,57 @@
+This is DATAPLOT file     MACROS.                 7/93
+Purpose--Enumerate the names of built-in DATAPLOT macros.
+(Note--macros with * are especially important & commonly used)
+ 
+ 
+DEXSCAT1.DP   Form Des. of Exp. matrix of plots (main effects only)
+DEXSCAT2.DP  *Form Des. of Exp. matrix of plots (main eff. & 2-term)
+DEXSTAT1.DP   Form Des. of Exp. matrix of stat. plots (main effects)
+DEXSTAT2.DP  *Form Des. of Exp. matrix of stat. plots (main & 2-term int)
+DEXSTAT3.DP   Form Des. of Exp. matrix of stat. plots (main, 2, 3)
+DEXFACT2.DP   Create Des. of Exp. interaction variables (2-term only)
+DEXFACT3.DP   Create Des. of Exp. interaction variables (2 & 3-term)
+DEXCONT.DP   *Form Des. of Exp. contour plot
+DEXCONT2.DP   Form Des. of Exp. contour plot with SUBSET specs
+DEXCONTQ.DP   Form Des. of Exp. contour plot
+ 
+HOTELL.DP     Compute Hotelling (simult) conf lim
+SDPRED.DP     Compute linear fit conf lim for obs
+SUBPLOT.DP    Generate subseries plot of raw data
+SUBPLOTR.DP   Generate subseries plot of residuals
+PLOTTEXT.DP   Superimpose text strings
+SHADEBOX.DP   Draw a shaded box
+ 
+MARK.DP      *Write name of DATAPLOT macro in lower right corner
+MARK2.DP      Write name of DATAPLOT macro in lower right corner
+ 
+LOGO.DP       Write DATAPLOT logo in lower right corner (variation 1)
+LOGO2.DP      Write DATAPLOT logo in lower right corner (variation 2)
+LOGO3.DP      Write DATAPLOT logo in lower right corner (variation 3)
+LOGO3B.DP     Write DATAPLOT logo in lower right corner (variation 4)
+LOGO4.DP      Write DATAPLOT logo in lower right corner (variation 5)
+ 
+PLOTSIN.DP    Menu macro (elementary) to plot sin function
+PLOT1VAR.DP   Menu macro (elementary) to read & plot 1 var
+PLOT2VAR.DP   Menu macro (elementary) to read & plot 2 var
+CONNDOTS.DP   Menu macro to connect dots via cross-hair
+INVMAT.DP     Menu macro to invert a matrix
+ISHIKAWA.DP   Menu macro to generate an Ishikawa diagram
+ISHIKAW2.DP   Menu macro to generate an Ishikawa diagram
+MULTTEXT.DP   Menu macro to position text via cross-hair
+NORMHIST.DP   Menu macro to generate hist + normal density
+PARETO.DP     Menu macro to generate a Pareto plot
+PIECHART.DP   Menu macro to generate labelled pie chart
+PLOTFUNC.DP   Menu macro to plot a function
+RANDSAMP.DP   Menu macro to generate stratified random sample
+SIMPMETH.DP   Menu macro to compute simplex sol (lin prog)
+SORT.DP       Menu macro to sort alpha list via priorities
+SUM.DP        Menu macro to sum a list of numbers
+TTEST.DP      Menu macro to perfrom t test on 2 var
+WORDCHAV.DP   Menu macro to generate centered vert wordchart
+WORDCHAH.DP   Menu macro to generate centered hor wordchart
+3DPLOT.DP     Menu macro to generate a 3dplot with cube frame
+DEXCUBE.DP   *Menu macro to generate a 2**3 data cube
+DEXSQUAR.DP   Menu macro to generate a 2**2 data square
+DEXPARET.DP   Menu macro to generate a DEX Pareto diagram
+ 
+SETCOLOR.DP   Set typical (postscript) color settings

@@ -1,0 +1,8 @@
+----- <~datalist\CCP.top> CCP.DAT
+ 
+CCP.DAT
+ 
+View     <xcl: LIST CCP.DAT>
+Load     <x2cl: SKIP 25; READ CCP.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\CCP.DAT>
+ 

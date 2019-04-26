@@ -1,0 +1,73 @@
+This is Dataplot data file    FRIEDMAN.DAT
+Sample data set from Conover (1999), "Practical Nonparameteric
+Statistics," Third Edition, Wiley, p. 372.
+This is used to demonstrate the Friedman test.
+
+In this data set, 12 homeowners planted 4 types of
+grasses in their yards and then provided a ranking of
+which grass they preferred.
+
+Number of Observations                  = 48
+Number of Observations per line image   = 3
+Order of variables on a line image--
+    1. Rank
+    2. Homeowner
+    3. Grass
+
+To perform Friedman's test on this data:
+
+    SKIP 25
+    READ FRIEDMAN.DAT Y X1 X2
+    FRIEDMAN TEST Y X1 X2
+
+
+RANK    HOMEOWNER  GRASS
+------------------------
+ 4         1          1
+ 3         1          2
+ 2         1          3
+ 1         1          4
+ 4         2          1
+ 2         2          2
+ 3         2          3
+ 1         2          4
+ 3         3          1
+ 1.5       3          2
+ 1.5       3          3
+ 4         3          4
+ 3         4          1
+ 1         4          2
+ 2         4          3
+ 4         4          4
+ 4         5          1
+ 2         5          2
+ 1         5          3
+ 3         5          4
+ 2         6          1
+ 2         6          2
+ 2         6          3
+ 4         6          4
+ 1         7          1
+ 3         7          2
+ 2         7          3
+ 4         7          4
+ 2         8          1
+ 4         8          2
+ 1         8          3
+ 3         8          4
+ 3.5       9          1
+ 1         9          2
+ 2         9          3
+ 3.5       9          4
+ 4        10          1
+ 1        10          2
+ 3        10          3
+ 2        10          4
+ 4        11          1
+ 2        11          2
+ 3        11          3
+ 1        11          4
+ 3.5      12          1
+ 1        12          2
+ 2        12          3
+ 3.5      12          4

@@ -1,0 +1,9 @@
+----- <~prob\ppfplots.top> Generate ppf plots
+
+Generate ppf plots
+
+Normal, t, Chi-squared, F     <~prob\ntcfppfp.top>
+Symmetric                     <~prob\symmppfp.top>
+Skewed                        <~prob\skewppfp.top>
+Discrete                      <~prob\discppfp.top>
+

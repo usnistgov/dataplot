@@ -1,0 +1,132 @@
+This is file blockplo.men--Generate Block Plot
+ 
+--------------------
+1. Block Plot
+2. PLOT Y XB XP
+3.
+4. Response Variable:
+4. @CE 2 0 48 65 ? gui-variable
+5. Primary Factor:
+5. @CE 3 0 48 65 ? gui-variable
+6. List of Nuisance/Blocking Factors:
+7. @CE 4 0 1 65 ? gui-variable
+8.
+9. Type of block plot:
+10. @CE 1  1  3 19 data
+10. @CE 1  2 21 37 mean
+10. @CE 1  3 39 55 median
+11. @CE 1  4  3 19 midmean
+11. @CE 1  8 21 37 standard deviat
+11. @CE 1  9 39 55 variance
+12. @CE 1 10  3 19 range
+12. @CE 1 11 21 37 midrange
+12. @CE 1 12 39 55 aad
+13. @CE 1 13  3 19 mad
+13. @CE 1 17 21 37 number
+13. @CE 1 18 39 55 minimum
+14. @CE 1 19  3 19 maximum
+14. @CE 1 20 21 37 sum
+14. @CE 1 21 39 55 product
+15. @CE 1 35  3 19 skewness
+15. @CE 1 36 21 37 kurtosis
+15. @CE 1 37 39 55 autocorrelation
+16. @CE 1 38  3 19 autocovariance
+17. @CE 1 41  3 33 Taguchi S/N (target, dependent)
+17. @CE 1 44 35 65 Taguchi S/N (target, independent)
+18. @CE 1 42  3 33 Taguchi S/N (larger)
+18. @CE 1 43 35 65 Taguchi S/N (smaller)
+19.
+20. Number of levels of the primary factor:
+21. @CE 6 1 3 10 2
+21. @CE 6 2 13 20 3
+21. @CE 6 3 23 30 4
+21. @CE 6 4 33 40 5
+21. @CE 6 5 43 50 6
+22. @CE 6 6 3 10 7
+22. @CE 6 7 13 20 8
+22. @CE 6 8 23 30 9
+22. @CE 6 9 33 40 10
+22. @CE 6 10 43 50 11
+23. @CE 6 11 3 10 12
+23. @CE 6 12 13 20 13
+23. @CE 6 13 23 30 14
+23. @CE 6 14 33 40 15
+23. @CE 6 15 43 50 16
+24. Character Types for primary factor levels:
+25. @CE 7 0 1 65 gui-character
+26. Line Types for the blocks:
+27. @CE 8 0 1 65 gui-line
+28.
+29. Subset/Except/For Specification:
+30. @CE 5 0 1 65 *
+31.
+32.
+33. Generate the Block Plot?:
+--------------------
+GR FE
+CHAR _7
+@IF 8 0 LINES _8 ALL
+@IF 6  1 LINES BL BL
+@IF 6  2 LINES BL BL BL
+@IF 6  3 LINES BL BL BL BL
+@IF 6  4 LINES BL BL BL BL BL
+@IF 6  5 LINES BL BL BL BL BL BL
+@IF 6  6 LINES BL BL BL BL BL BL BL
+@IF 6  7 LINES BL BL BL BL BL BL BL BL
+@IF 6  8 LINES BL BL BL BL BL BL BL BL BL
+@IF 6  9 LINES BL BL BL BL BL BL BL BL BL BL
+@IF 6 10 LINES BL BL BL BL BL BL BL BL BL BL BL
+@IF 6 11 LINES BL BL BL BL BL BL BL BL BL BL BL BL
+@IF 6 12 LINES BL BL BL BL BL BL BL BL BL BL BL BL BL
+@IF 6 13 LINES BL BL BL BL BL BL BL BL BL BL BL BL BL BL
+@IF 6 14 LINES BL BL BL BL BL BL BL BL BL BL BL BL BL BL BL
+@IF 1 1 BLOCK PLOT _2 _4 _3 _5
+@IF 1 2 MEAN BLOCK PLOT _2 _4 _3 _5
+@IF 1 3 MEDIAN BLOCK PLOT _2 _4 _3 _5
+@IF 1 4 MIDMEAN BLOCK PLOT _2 _4 _3 _5
+@IF 1 6 LET P1 = 5
+@IF 1 6 LET P2 = 5
+@IF 1 6 TRIMMED MEAN BLOCK PLOT _2 _4 _3 _5
+@IF 1 7 LET P1 = 5
+@IF 1 7 LET P2 = 5
+@IF 1 7 WINSORIZED MEAN BLOCK PLOT _2 _4 _3 _5
+@IF 1 8 SD BLOCK PLOT _2 _4 _3 _5
+@IF 1 9 VARIANCE BLOCK PLOT _2 _4 _3 _5
+@IF 1 10 RANGE BLOCK PLOT _2 _4 _3 _5
+@IF 1 11 MIDRANGE BLOCK PLOT _2 _4 _3 _5
+@IF 1 12 AAD BLOCK PLOT _2 _4 _3 _5
+@IF 1 13 MAD BLOCK PLOT _2 _4 _3 _5
+@IF 1 14 RELATIVE SD BLOCK PLOT _2 _4 _3 _5
+@IF 1 15 VARIANCE OF MEAN BLOCK PLOT _2 _4 _3 _5
+@IF 1 16 SD OF MEAN BLOCK PLOT _2 _4 _3 _5
+@IF 1 17 NUMBER BLOCK PLOT _2 _4 _3 _5
+@IF 1 18 MINIMUM BLOCK PLOT _2 _4 _3 _5
+@IF 1 19 MAXIMUM BLOCK PLOT _2 _4 _3 _5
+@IF 1 20 SUM BLOCK PLOT _2 _4 _3 _5
+@IF 1 21 PRODUCT BLOCK PLOT _2 _4 _3 _5
+@IF 1 22 LOWER QUARTILE BLOCK PLOT _2 _4 _3 _5
+@IF 1 23 UPPER QUARTILE BLOCK PLOT _2 _4 _3 _5
+@IF 1 24 LOWER HINGE BLOCK PLOT _2 _4 _3 _5
+@IF 1 25 UPPER HINGE BLOCK PLOT _2 _4 _3 _5
+@IF 1 26 FIRST DECILE BLOCK PLOT _2 _4 _3 _5
+@IF 1 27 SECOND DECILE BLOCK PLOT _2 _4 _3 _5
+@IF 1 28 THIRD DECILE BLOCK PLOT _2 _4 _3 _5
+@IF 1 29 FOURTH DECILE BLOCK PLOT _2 _4 _3 _5
+@IF 1 30 FIFTH DECILE BLOCK PLOT _2 _4 _3 _5
+@IF 1 31 SIXTH DECILE BLOCK PLOT _2 _4 _3 _5
+@IF 1 32 SEVENTH DECILE BLOCK PLOT _2 _4 _3 _5
+@IF 1 33 EIGHTH DECILE BLOCK PLOT _2 _4 _3 _5
+@IF 1 34 NINTH DECILE BLOCK PLOT _2 _4 _3 _5
+@IF 1 35 SKEWNESS BLOCK PLOT _2 _4 _3 _5
+@IF 1 36 KURTOSIS BLOCK PLOT _2 _4 _3 _5
+@IF 1 37 AUTOCORR BLOCK PLOT _2 _4 _3 _5
+@IF 1 38 AUTOCOVA BLOCK PLOT _2 _4 _3 _5
+@IF 1 39 SINE FREQUENCY BLOCK PLOT _2 _4 _3 _5
+@IF 1 40 SINE AMPLITUDE BLOCK PLOT _2 _4 _3 _5
+@IF 1 41 SN0 BLOCK PLOT _2 _4 _3 _5
+@IF 1 42 SN+ BLOCK PLOT _2 _4 _3 _5
+@IF 1 43 SN- BLOCK PLOT _2 _4 _3 _5
+@IF 1 44 SN00 BLOCK PLOT _2 _4 _3 _5
+--------------------
+WEB HELP BLOCK PLOT
+--------------------

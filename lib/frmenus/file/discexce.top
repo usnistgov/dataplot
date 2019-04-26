@@ -1,0 +1,45 @@
+----- <~file\discexce.top> Files: Excel Files
+
+File: Excel Files
+
+EXCEL FILES
+
+At the current time (1/2004), Dataplot does not support the
+direct reading of Excel data files.  We are planning to add
+this capability in a future release of Dataplot.  Until that
+time, you need to save the data in Excel to an ASCII file and
+read that ASCII file into Dataplot.
+ 
+Excel provides the following options for writing ASCII data
+files:
+
+  1. Formatted text (space delimited) (.PRN extension)
+
+     This format will use consistent columns for the data fields.
+     The variable form of the COLUMN LIMITS command can be used
+     when the data columns have unequal length.
+
+     Character fields will often not have the separating space.  The
+     variable form of the COLUMN LIMITS command can be used in this
+     case as well.
+
+  2. CSV (Comma delimited) (.CSV extension)
+
+     This format will separate data fields with a single comma.
+     Missing data is represented with successive commas.  Dataplot
+     can now (as of the January 2004 version) handle this correctly.
+
+  3. Text (Tab delimited) (.TXT extension)
+     Text (MS-DOS) (.TXT extension)
+
+     These files will separate data fields with a tab character.
+     Note that Dataplot converts all non-printing characters
+     (including tabs) to a single space character.  This format
+     is acceptable as long as the columns of data are of equal
+     length (i.e., there is no missing data).
+
+     This format is not appropriate for data containing variables
+     with unequal lengths since it will not generate consistent
+     columns for the data fields.  Use either the space delimited
+     or comma delimited file for that case.
+

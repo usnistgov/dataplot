@@ -1,0 +1,29 @@
+This is file difflpsd.men--Compute difference of SD of Lp Location
+ 
+--------------------
+ 1. Difference of SD of Lp Locations
+ 2. LET A = DIFFERENCE OF SD OF LP LOCATIONS Y1 Y2
+ 3.
+ 4. First Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Second Response Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Parameter to store the difference:
+ 6. @CE 3 0 42 50 ?
+ 7.
+ 8. Value for p:
+ 8. @CE 4 0 42 50 ?
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 1 50 *
+12.
+13.
+14. Compute the Difference of SD of Lp Locations?:
+--------------------
+GR FE
+LET P = 1.5
+LET P = _4
+LET _3 = DIFFERENCE OF SD OF LP LOCATIONS  _1 _2 _5
+--------------------
+WEB HELP DIFFERENCE OF SD OF LP LOCATIONS
+--------------------

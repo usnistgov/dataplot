@@ -1,0 +1,46 @@
+This is file qqplot4.men--Quantile-quantile Plot on Quarters
+ 
+--------------------
+ 1. Quantile-quantile Plot on Halves
+ 2. QUANTILE-QUANTILE PLOT Y X
+ 3.
+ 4. Response       Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Line  Type for Data:
+ 6. @CE 2 0 33 50 * gui-line
+ 7. Character Type for Data:
+ 7. @CE 3 0 33 50 * gui-char
+ 8. Character Fill for Data:
+ 8. @CE 4 0 33 50 * gui-ooff
+ 9. Line Type for 45 degree reference line
+ 9. @CE 5 0 33 50 * gui-line
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 6 0 1 50 *
+12.
+13.
+14. Generate the Quantile-quantile Plot?
+--------------------
+GR FE
+DELETE ZSEQ
+DELETE ZTAG
+DELETE ZY1
+DELETE ZY2
+LET ZN = NUMBER _1 _6
+LET ZSEQ = SEQUENCE 1 1 ZN _6
+LET ZTAG = CODE4 ZSEQ _6
+LET ZY1 = _1 _6
+LET ZY2 = _1 _6
+RETAIN ZY1 SUBSET ZTAG 1 _6
+RETAIN ZY2 SUBSET ZTAG 2 _6
+.
+@IF 3 0 CHARACTERS _3
+@IF 4 0 CHARACTER FILL _4
+@IF 5 0 LINES _5 _5
+@IF 2 0 LINES _2
+.
+QUANTILE-QUANTILE PLOT ZY1 ZY2
+--------------------
+WEB HELP QUANTILE-QUANTILE PLOT
+--------------------

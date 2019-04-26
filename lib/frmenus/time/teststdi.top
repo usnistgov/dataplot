@@ -1,0 +1,42 @@
+----- <~time\teststdi.top> Discussion: Testing Stationarity
+ 
+Discussion: Testing Stationarity
+ 
+Stationarity is a common assumption in
+time series analysis.  Intuitively, it means
+that the time series has constant location and
+scale.
+
+More specifically, a weakly stationary time
+serie is one in which:
+
+  1) E(X(t)) is constant;
+  2) E(X(t)*X(u)) depends only on t-u.
+ 
+where x(t) is the data series and E() is the
+expected value (i.e., location).
+
+Since the E(X(t)) is a constant, a common practice
+is to subtract the estimated mean from the series
+to obtain a series with a location value 0.
+
+The second property implies that the variance of
+X(t) is constant and that 
+
+     C(r) = Covariance(X(t),X(t+r) = C(-r)
+
+does not depend on t.
+
+Testing for stationarity then reduces to testing
+that the location and scale are constant for the
+time series.
+
+The "Mean plot" and "SD plot" menus divide the 
+time series into several (2, 4, 8, or 10) equal sized
+intervals and calculates the mean (or standard deviation)
+for each interval.  If stationarity holds, these means and
+standard deviations should be nearly the same.  For
+autocorrelation, a multiplot is generated with each
+plot containing an autocorrelation plot for one of the
+intervals.
+

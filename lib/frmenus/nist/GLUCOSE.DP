@@ -1,0 +1,11 @@
+----- <~nist\GLUCOSE.DP> Load GLUCOSE.DAT
+
+. This is file    GLUCOSE.DP
+
+DELETE LABID MATID LAB Y
+SKIP 25
+READ GLUCOSE.DAT Y LAB MATID
+SKIP 0
+.
+SET TABLE TITLE "Glucose in Serum"
+.

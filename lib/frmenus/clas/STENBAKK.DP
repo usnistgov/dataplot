@@ -1,0 +1,10 @@
+----- <~dataloex\STENBAKK.DP> Load & Execute STENBAKK.DAT
+
+. This is file    STENBAKK.DP
+
+DELETE Y X1 TO X10
+SKIP 25
+READ STENBAKK.DAT Y X1 TO X10
+TITLE STENBAKK.DAT
+/
+

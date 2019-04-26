@@ -1,0 +1,35 @@
+This is file plotfu3d.men--Plot a 3-d Function
+ 
+--------------------
+1. Plot a 3-d Function
+2. 3D-PLOT F FOR X = X1 XINC X2 FOR Y = Y1 YINC Y2
+3.
+4. Function:
+4. @CE 1 0 12 100 ?
+5.
+6. First Variate (X):
+6. @CE 2 0 33 100 ?
+7. Start Point:
+7. @CE 3 0 33 100 ?
+8. Increment:
+8. @CE 4 0 33 100 ?
+9. Stop Point:
+9. @CE 5 0 33 100 ?
+10.
+11. Second Variate (Y):
+11. @CE 6 0 33 100 ?
+12. Start Point:
+12. @CE 7 0 33 100 ?
+13. Increment:
+13. @CE 8 0 33 100 ?
+14. Stop Point:
+14. @CE 9 0 33 100 ?
+15.
+16.
+17. Plot the Function?:
+--------------------
+GR FE
+3DPLOT _1 FOR _2 = _3 _4 _5 FOR _6 = _7 _8 _9
+--------------------
+WEB HELP 3D-PLOT
+--------------------

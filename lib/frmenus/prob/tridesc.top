@@ -1,0 +1,19 @@
+----- <~prob\tridesc.top> Triangular Description
+
+*Triangular Description
+
+pdf: f(x)     = 1 - |x|                       -1 <= x <= 1
+pdf: f(x;u,s) = (1/s) * (1 - |(x-u)/s|)      u-s <= x <= u+s
+
+Moments   : E(X)  =
+            SD(X) =
+
+Type      : Continuous, symmetric, triangular-shaped, short-tailed
+Domain    :
+Synonym   :
+Genesis   :
+Definition: If X1 and X2 are uniform,
+            then X1+X2 is triangular.
+
+Reference :
+

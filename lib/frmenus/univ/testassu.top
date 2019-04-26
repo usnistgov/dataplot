@@ -1,0 +1,12 @@
+-----<~univ\testassu.top> Test Assumptions
+
+Test Assumptions
+
+NIST/SEMATECH Handbook (Test EDA Asuumptions) <xcl: web handbook eda test assumptions>
+NIST/SEMATECH Handbook (4-Plot Interpretation) <xcl: web handbook eda 4-plot interpretation>
+
+Randomness                        <~univ\testrand.top>
+Fixed location                    <~univ\testfilo.top>
+Fixed variation                   <~univ\testfiva.top>
+Fixed distribution                <~univ\testfidi.top>
+

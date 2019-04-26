@@ -1,0 +1,34 @@
+-----<~reli\discacel.top> Discussion: Acceleration Models
+
+Discussion: Acceleration Models
+
+Acceleration Models
+
+With highly reliable components, it is often impractical
+to collect failure data at normal use conditions.
+
+To address this, we force components to fail by testing
+the components at much higher stresses than is anticipated
+for normal use.  The failure data at higher stress is
+extrapolated to predict failure behavior at normal use
+conditions.  Typical stress factors are temperature,
+voltage, and humidity.
+
+This approach is referred to as accelerated testing
+and the models used to analyze this data are referred to
+as  acceleration models.
+
+The advantage of this approach is that it allows us to
+collect failure data with relatively small samples and
+practical test times.
+
+The disadvantage is that fairly strong assumptions are
+made about the relation between failure at high stress
+conditions and failure at normal use conditions.
+
+Due to these strong assumptions, it is recommended that
+accelerated tests be used only when there is a reasonable
+understanding of the underlying failure mechanisms.
+Typically, a limited number of stress factors are applied
+for a given test.
+

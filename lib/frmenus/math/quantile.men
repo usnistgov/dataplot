@@ -1,0 +1,31 @@
+This is file quantile.men--Compute quantile of a variable
+ 
+--------------------
+ 1. Quantile
+ 2. LET A = 0.50 QUANTILE Y
+ 3.
+ 4. Variable for which to compute the quantile:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Parameter to store the quantile:
+ 5. @CE 2 0 42 50 ? gui-none
+ 6. Quantile to compute (between 0 and 1.0):
+ 6. @CE 3 0 42 50 *
+ 7. Quantile Method:
+ 8. @CE 4 1 10 25 Order Statistic
+ 9. @CE 4 2 10 25 Herrell-Davis
+10. 
+11. Subset/Except/For Specification:
+12. @CE 5 0 0 50 *
+13.
+14.
+15. Compute the Quantile?:
+--------------------
+GR FE
+LET STRING ZZZZSTR = ORDER STATISTIC
+@IF 4 1 LET STRING ZZZZSTR = ORDER STATISTIC
+@IF 4 2 LET STRING ZZZZSTR = HERRELL DAVIS
+SET QUANTILE METHOD ^ZZZZSTR
+LET _2 = _3  QUANTILE  _1 _5
+--------------------
+WEB HELP QUANTILE
+--------------------

@@ -1,0 +1,10 @@
+----- <~fit\data1var.top> Fitting 1 Variable: y = f(x)
+
+Fitting 1 Variable: y = f(x)
+
+Linear                 Regression          <~fit\linreg.top>
+Quadratic              Regression          <~fit\quadreg.top>
+Polynomial             Regression          <~fit\polyreg.top>
+Lowess                 Regression          <~fit\lowess.top>
+Non-Linear             Regression          <~fit\nlreg.top>
+

@@ -1,0 +1,56 @@
+This is file pwei2afr.men--Plot Weibull Average Failure Rate Function
+ 
+--------------------
+ 1. Plot a Weibull (Maximum) Average Failure Rate Function
+ 2. PLOT WEIAFR(0,X,GAMMA,LOC,SCALE) FOR X = -3 0.01 0
+ 3.
+ 4. Shape Parameter gamma (gamma > 0):
+ 4. @CE 1 0 42 50 ?
+ 5. Location Parameter:
+ 5. @CE 2 0 42 50 ?
+ 6. Scale Parameter (> 0):
+ 6. @CE 3 0 42 50 ?
+ 7.
+ 8. You can specify the range of values to plot either
+ 9. by providing an input vector containing the explicit
+10. input values or by providing the start, increment,
+11. and stop values.  You can also specify the beginning
+12. time (this remains fixed and defaults to 0).
+13.
+14. Beginning Time (default = 0):
+14. @CE 4 0 42 50 *
+15.
+16. Input Variable (optional):
+16. @CE 5 0 42 50 ? gui-variable
+17.
+18. Start Value (> Beginning Time):
+18. @CE 6 0 42 50 ?
+19. Increment Value (defaults to 0.1):
+19. @CE 7 0 42 50 ?
+20. Stop Value:
+20. @CE 8 0 42 50 ?
+21.
+22. Optional variable to store computed AFR values:
+22. @CE 9 0 42 50 ?
+23.
+24.
+25. Plot the Weibull Average Failure Rate Function?
+--------------------
+AN FE
+SET MINMAX 2
+LET GAMMA = _1
+LET ZLOC = 0
+@IF 2 0 LET ZLOC = _2
+LET ZSCALE = 1
+@IF 3 0 LET ZSCALE = _3
+LET ZZZZSTAR = 0
+@IF 4 0 LET ZZZZSTAR = _4
+LET ZINC = 0.1
+@IF 7 0 LET ZINC = _7
+@IF 5 0 LET ZZZZAFR = WEIAFR(ZZZZSTAR, _5 ,ZLOC,ZSCALE)
+@IF 5 0 PLOT ZZZZAFR _5
+@IF 6 0 PLOT WEIAFR( ZZZZSTAR,ZZ,SIGMA,ZLOC,ZSCALE) FOR ZZ = _6 ZINC _8
+@IF 9 0 LET _9 = YPLOT
+--------------------
+WEB HELP WEIAFR
+--------------------

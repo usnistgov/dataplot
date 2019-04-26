@@ -1,0 +1,8 @@
+----- <~dataload\CCU.DP> Load CCU.DAT
+
+. This is file    CCU.DP
+
+DELETE Y SIZE X
+SKIP 25
+READ CCU.DAT Y SIZE X
+

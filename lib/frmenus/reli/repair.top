@@ -1,0 +1,32 @@
+----- <~reli\repair.top>
+
+Reliability: Repairable Systems
+
+Reliability: Repairable Systems
+
+NIST/SEMATECH Handbook
+    Overview                         <xcl: web handbook repariable versus nonrepairable>
+    Models for Repairable Systems    <xcl: web handbook models for repairable systems>
+    Repair Rates                     <xcl: web handbook repair rate>
+Discussion
+    Overview                         <~reli\discrepa.top>
+    Data for Repairable Systems      <~reli\discreda.top>
+    Plotting Repair Times            <~reli\discrepl.top>
+    Checking for Trends              <~reli\disctren.top>
+
+Compute Interrrival Times            <xemf: ~reli\intarr.men>
+Plot Repair Times                    <xemf: ~reli\repaplot.men>
+Mean Repair Function Plot            <xemf: ~reli\mrfplot.men>
+
+Check for Trend
+    NIST/SEMATECH Handbook           <xcl: web handbook trend test>
+    Cumulative Number of Repairs vs repair times   <xemf: ~reli\cumrplot.men>
+    Interarrival Times vs Repair Times             <xemf: ~reli\intaplot.men>
+    Reciprocal Interarrival Times vs Repair Times  <xemf: ~reli\arrplot.men>
+    4-Plot of Interarrival Times                   <xemf: ~reli\4plot.men>
+    Reliability Trend Tests (Single System)        <xemf: ~reli\relitren.men>
+    Reliability Trend Tests (Multiple Systems)     <xemf: ~reli\relitre2.men>
+
+Renewal Processes                    <~reli\renewal.top>
+Nonrenewal Processes                 <~reli\nonrenew.top>
+

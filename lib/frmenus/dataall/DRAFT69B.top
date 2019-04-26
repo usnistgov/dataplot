@@ -1,0 +1,8 @@
+----- <~dataall\DRAFT69B.top> DRAFT69B.DAT
+
+DRAFT69B.DAT
+
+View     <xcl: LIST DRAFT69B.DAT>
+Load     <xcf: ~dataload/DRAFT69B.DP>
+Print    <xccl: printfile C:\DATAPLOT\DRAFT69B.DAT>
+

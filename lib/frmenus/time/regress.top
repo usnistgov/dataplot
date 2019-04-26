@@ -1,0 +1,20 @@
+----- <~time\regress.top> Regression Modeling
+ 
+Regression Modeling
+ 
+In order to use the Dataplot fitting
+capabilites, a pair of properly lagged
+variables need to be created from the
+original data series.
+
+For example, given the series
+    X(1), X2, ..., XN,
+to create a lag 1 fit you need to
+create the 2 series:
+   X(2), X(3), ..., X(N)
+   X(1), X(2), ..., X(N-1)
+
+
+Create Lagged Variables          <xemf: ~time\lagvar.men>
+Linear and Non-Linear Regression <~time\data1var.top>
+ 

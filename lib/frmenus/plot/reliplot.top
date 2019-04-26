@@ -1,0 +1,19 @@
+----- <~plot\reliplot.top> Reliability Plots
+
+Reliability/Extreme Value Plots
+
+Tail Area Plot                      <xemf: ~plot\tailplot.men>
+Kaplan-Meier Plot                   <xemf: ~plot\kaplplot.men>
+Empirical CDF Plot                  <xemf: ~plot\ecdfplot.men>
+Duane Plot with Trend Plots         <xemf: ~plot\trenplot.men>
+Duane Plot                          <xemf: ~plot\duanplot.men>
+
+Probability Plots                   <~prob\probplot.top>
+PPCC Plots                          <~prob\ppcc.top>
+Weibull Plot                        <xemf: ~plot\weibplot.men>
+Normal Plot                         <xemf: ~plot\normplot.men>
+Exponential Hazard Plot             <xemf: ~plot\ehazplot.men>
+Weibull Hazard Plot                 <xemf: ~plot\whazplot.men>
+
+Conditional Mean Exceedance Plot    <xemf: ~plot\cmeplot.men>
+

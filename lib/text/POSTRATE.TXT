@@ -1,0 +1,53 @@
+----------  *POSTALRATES*  ----------
+
+      Postal Rates (April 1988)
+
+
+Weight        First Class      Third Class       Express
+(ounces)        Postage          Postage           Mail
+                  ($)              ($)
+
+ 1 oz.           .25                               8.75
+ 2 oz.           .45                               8.75
+ 3 oz.           .65                               8.75
+ 4 oz.           .85                               8.75
+ 5 oz.          1.05                               8.75
+ 6 oz.          1.25                               8.75
+ 7 oz.          1.45                               8.75
+ 8 oz.          1.65                               8.75
+ 9 oz.          1.85                              12.00
+10 oz.          2.05                              12.00
+11 oz.          2.25                              12.00
+12 oz.          2.40                              12.00
+13 oz.          2.40                              12.00
+14 oz.          2.40                              12.00
+15 oz.          2.40                              12.00
+16 oz.          2.40                              12.00
+
+
+Weight        First Class      Fourth Class      Express
+(pounds)        Postage          Postage          Mail
+            (Zones 1, 2, 3)      Zone 1          Zone 1
+
+ 1 lb.          2.40             1.69             12.00
+ 2 lb.          2.40             1.69             12.00
+ 3 lb.          2.74             1.78             15.25
+ 4 lb.          3.18             1.86             15.25
+ 5 lb.          3.61             1.95             15.25
+ 6 lb.          4.15             2.04
+ 7 lb.          4.58             2.12
+ 8 lb.          5.00             2.21
+ 9 lb.          5.43             2.30
+10 lb.          5.85             2.38
+15 lb.          7.97             2.75
+20 lb.         10.09             2.98
+30 lb.         14.33             3.37
+50 lb.         22.81             4.03
+70 lb.         31.29             4.61
+
+Certified Mail          --Postage + .85
+Certified Mail + Return --Postage + .95
+
+Note--If weight of item is 12 or more ounces,
+      then Postal Service refers to "First Class Mail"
+      as "Priority Mail".

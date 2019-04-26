@@ -1,0 +1,8 @@
+----- <~dataload\CANS.DP> Load CANS.DAT
+
+. This is file    CANS.DP
+
+DELETE Y X
+SKIP 25
+READ CANS.DAT Y X
+

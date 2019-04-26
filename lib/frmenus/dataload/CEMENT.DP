@@ -1,0 +1,8 @@
+----- <~dataload\CEMENT.DP> Load CEMENT.DAT
+
+. This is file    CEMENT.DP
+
+DELETE Y X
+SKIP 25
+READ CEMENT.DAT Y X
+

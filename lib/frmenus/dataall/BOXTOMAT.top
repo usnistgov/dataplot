@@ -1,0 +1,8 @@
+----- <~dataall\BOXTOMAT.top> BOXTOMAT.DAT
+
+BOXTOMAT.DAT
+
+View     <xcl: LIST BOXTOMAT.DAT>
+Load     <xcf: ~dataload/BOXTOMAT.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXTOMAT.DAT>
+

@@ -1,0 +1,43 @@
+This is Dataplot data file    EXPCEN2.DAT
+Sample data set from Example 12.4 of
+Karl Bury, "Statistical Distributions in Engineering",
+Cambridge University Press, 1999, pp. 203-204.
+
+Response variable   = Redesigned electronic component tested under a
+                      multiple of the maximum design voltage, test
+                      terminated at 12th failure
+Censoring variable  = 1 implies failure time, 0 implies censoring time
+Number of observations = 18
+Number of observations per line image = 2
+Order of observations per line image--
+   1. Response variable
+   2. Censoring variable
+To read this file into Dataplot--
+   SKIP 25
+   READ EXPCEN2.DAT Y X
+   SET MAXIMUM LIKELIHOOD PERCENTILE DEFAULT
+   SET CENSORING TYPE 2
+   EXPONENTIAL MAXIMUM LIKELIHOOD Y X
+
+
+
+ Y   X
+------
+  2  1
+ 10  1
+ 11  1
+ 29  1
+ 43  1
+ 68  1
+ 81  1
+ 82  1
+ 99  1
+122  1
+141  1
+169  1
+169  0
+169  0
+169  0
+169  0
+169  0
+169  0

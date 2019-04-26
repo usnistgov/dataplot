@@ -1,0 +1,8 @@
+----- <~dataload\VANGEL31.DP> Load VANGEL31.DAT
+
+. This is file    VANGEL31.DP
+
+DELETE Y
+SKIP 25
+READ VANGEL31.DAT Y
+

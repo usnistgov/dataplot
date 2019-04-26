@@ -1,0 +1,8 @@
+----- <~dataload\MOUSE.DP> Load MOUSE.DAT
+
+. This is file    MOUSE.DP
+
+DELETE C T Y X1 X2
+SKIP 25
+READ MOUSE.DAT C T Y X1 X2
+

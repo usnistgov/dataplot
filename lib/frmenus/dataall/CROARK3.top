@@ -1,0 +1,8 @@
+----- <~dataall\CROARK3.top> CROARK3.DAT
+
+CROARK3.DAT
+
+View     <xcl: LIST CROARK3.DAT>
+Load     <xcf: ~dataload/CROARK3.DP>
+Print    <xccl: printfile C:\DATAPLOT\CROARK3.DAT>
+

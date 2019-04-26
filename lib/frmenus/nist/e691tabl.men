@@ -1,0 +1,60 @@
+This is file e691tabl.men--Compute E691 Interlab
+ 
+--------------------
+ 1. E691 Interlab
+ 2. E691 INTERLAB Y MATID LABID
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Material ID Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Lab ID Variable:
+ 6. @CE 3 0 42 50 ? gui-variable
+ 7. Title for the Data Set:
+ 8. @CE 4 0 1 50 ? 
+ 9.
+10. In addition to the standard ASCII output, you can
+11. optionally save the file in one of the following
+12. formats (omit for ASCII only):
+13. @CE 5 1 10 25 RTF (Word)
+14. @CE 5 2 10 25 HTML
+15. @CE 5 3 10 25 Latex
+16.
+17. Subset/Except/For Specification:
+18. @CE 6 0 1 50 *
+19.
+20. Perform the E691 Interlab Analysis?:
+--------------------
+FEEDBACK OFF
+LET STRING ZZZZFORM = ASCII
+@IF 5 1 LET STRING ZZZZFORM RTF
+@IF 5 2 LET STRING ZZZZFORM HTML
+@IF 5 3 LET STRING ZZZZFORM LATEX
+LET STRING E691TIT = _4
+CAPTURE E691.ASC
+E691 INTERLAB _1 _2 _3 _6
+END OF CAPTURE
+.
+IF ZZZZFORM = RTF
+   CAPTURE RTF E691.RTF
+   E691 INTERLAB _1 _2 _3 _6
+   END OF CAPTURE
+   PRINT "RTF version of tables written to file:  E691.RTF"
+END OF IF
+IF ZZZZFORM = HTML
+   CAPTURE HTML E691.HTM
+   E691 INTERLAB _1 _2 _3 _6
+   END OF CAPTURE
+   PRINT "HTML version of tables written to file:  E691.HTM"
+END OF IF
+IF ZZZZFORM = LATEX
+   CAPTURE LATEX E691.TEX
+   E691 INTERLAB _1 _2 _3 _6
+   END OF CAPTURE
+   PRINT "Latex version of tables written to file:  E691.TEX"
+END OF IF
+FEEDBACK ON
+LIST E691.ASC
+--------------------
+WEB HELP E691 INTERLAB
+--------------------

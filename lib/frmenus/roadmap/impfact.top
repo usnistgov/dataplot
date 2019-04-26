@@ -1,0 +1,25 @@
+----- <~roadmap\impfact.top> Important Factor (Y/N)
+
+Important Factor (Y/N)
+
+Situation     : We have response data collected at several 
+                (3 or more) settings of a factor
+
+Question      : Does the factor have an effect?
+                Is the factor important/significant?
+
+Model         : Y = f(X) + random error
+
+Input         : 1) a response variable Y
+                2) a tag variable X containing factor settings
+
+Output        : a conclusion (yes\no)
+                about the importance of factor X
+
+Stat Category : Comparative (= 1-Factor Analysis)
+
+Primary Tools : Scatter Plot           <xemf: ~stat\scatplot.men>
+                Box Plot               <xemf: ~1fac\boxplot.men>
+                Block Plot             <xemf: ~1fac\blockplo.men>
+
+Worked Example: DRAFT69.DAT             <xcf: ~roadmap/DRAFT69.DP>

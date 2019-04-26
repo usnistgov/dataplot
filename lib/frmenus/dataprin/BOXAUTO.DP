@@ -1,0 +1,6 @@
+----- <~dataprin\BOXAUTO.DP> Print (to Printer) BOXAUTO.DAT
+
+. This is file    BOXAUTO.DP
+
+PRINT BOXAUTO.DAT
+

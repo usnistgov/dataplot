@@ -1,0 +1,317 @@
+%!PS-Adobe-2.0
+%%Creator: Dataplot
+%%Title: Dataplot Postscript File
+%%CreationDate: NULL
+%%Pages: (atend)
+%%DocumentFonts: Times-Roman Times-Bold Times-Italic Times-BoldItalic
+%%+ Helvetica Helvetica-Bold Helvetica-Oblique Helvetica-BoldOblique Courier
+%%+ Courier-Bold Courier-Oblique  Courier-BoldOblique
+%%+ AvantGarde-Book AvantGarde-BookOblique AvantGarde-Demi AvantGarde-DemiOblique
+%%+ Bookman-Demi Bookman-DemiItalic       Bookman-Light Bookman-LightItalic      
+%%+ Helvetica-Narrow Helvetica-Narrow-Bold Helvetica-Narrow-BoldOblique          
+%%+ Helvetica-Narrow-Oblique              NewCentury-Schlbk-Bold                 
+%%+ NewCentury-Schlbk-Italic              NewCenturySchlbk-BoldItalic            
+%%+ Palatino-Roman Palatino-Bold          Palatino-Italic Palatino-BoldItalic    
+%%+ ZapfChancery-MediumItalic  Symbol                                            
+%%BoundingBox: 0 0 792 792
+% DATAPLOT POSTSCRIPT DRIVER, JANUARY, 1990
+% PROLOG SECTION: DATAPLOT DEFINITIONS     
+%DEFINE PROCEDURE "rightshow" TO PRINT RIGHT JUSTIFIED STRING.  CALL BY:
+%  /IX <XCOOR> def /IY <YCOOR> def 
+% (STRING) rightshow
+/rightshow
+  {dup stringwidth pop
+   IX exch sub
+   IY moveto
+   show} def
+%DEFINE PROCEDURE "centshow" TO PRINT CENTER JUSTIFIED STRING.  CALL BY:
+%  /IX <XCOOR> def /IY <YCOOR> def 
+% (STRING) centshow
+/centshow
+  {dup stringwidth pop
+   2 div
+   IX exch sub
+   IY moveto
+   show} def
+%DEFINE PROCEDURE "leftshow" TO PRINT LEFT   JUSTIFIED STRING.  CALL BY:
+%  /IX <XCOOR> def /IY <YCOOR> def 
+% (STRING) leftshow
+/leftshow
+  {IX IY moveto show} def
+%DEFINE PROCEDURE "vrightshow" TO PRINT RIGHT JUSTIFIED VERTICAL STRING.  CALL BY:
+%  /IX <XCOOR> def /IY <YCOOR> def 
+% newpath IX IY moveto gsave
+% (STRING) vrightshow grestore
+/vrightshow
+  {dup stringwidth pop
+   IY exch sub
+   IX exch moveto
+    90 rotate
+   show} def
+%DEFINE PROCEDURE "vcentshow" TO PRINT CENTER JUSTIFIED VERTICAL STRING.  CALL BY:
+%  /IX <XCOOR> def /IY <YCOOR> def 
+% newpath IX IY moveto gsave
+% (STRING) vcentshow grestore
+/vcentshow
+  {dup stringwidth pop
+   2 div
+   IY exch sub
+   IX exch moveto
+     90 rotate
+   show} def
+%DEFINE PROCEDURE "vleftshow" TO PRINT LEFT   JUSTIFIED VERTICAL STRING.  CALL BY:
+%  /IX <XCOOR> def /IY <YCOOR> def 
+% newpath IX IY moveto gsave
+% (STRING) vleftshow grestore
+/vleftshow
+  {IX IY moveto 90 rotate show} def 
+%DEFINE PROCEDURE "setpsfont" TO DEFINE THE POSTSCRIPT FONT NAME AND SIZE.  CALL BY:
+%  /PSFONT <FONTNAME> def /PSSIZE <FONTSIZE> def setpsfont
+/setpsfont
+  {PSFONT  findfont  PSSIZE  scalefont  setfont} def
+%DEFINE PROCEDURE "psstringwidthr" TO MOVE THE STARTING POSITION OF A RIGHT JUSTIFIED STRING.
+%CALL BY:
+%  (STRING) psstringwidthr
+/psstringwidthr
+  {dup stringwidth pop 0 exch sub 0 rmoveto} def
+%DEFINE PROCEDURE "psstringwidthc" TO MOVE THE STARTING POSITION OF A CENTER JUSTIFIED STRING.
+%CALL BY:
+%  (STRING) psstringwidthc
+/psstringwidthc
+  {dup stringwidth pop 2 div 0 exch sub 0 rmoveto}  def
+%DEFINE PROCEDURE "psstringwidthtv" TO MOVE THE STARTING POSITION OF A TOP JUSTIFIED VERTICA STRING.
+%CALL BY:
+%  (STRING) psstringwidthtv
+/psstringwidthtv
+  {dup stringwidth pop 0 exch sub 0 exch    rmoveto} def
+%DEFINE PROCEDURE "psstringwidthcv" TO MOVE THE STARTING POSITION OF A CENTER JUSTIFIEDVERTICAL STRING.
+%CALL BY:
+%  (STRING) psstringwidthcv
+/psstringwidthcv
+  {dup stringwidth pop 2 div 0 exch sub 0 exch rmoveto} def
+%DEFINE PROCEDURE "leftshow2" TO PRINT LEFT  JUSTIFIED STRING AT CURRENT POSITION.  CALL BY: 
+% (STRING) leftshow2
+/leftshow2
+  {show} def
+%DEFINE PROCEDURE "vleftshow2" TO PRINT BOTTOM  JUSTIFIED VERTICAL STRING.  CALL BY:
+% (STRING) vleftshow2
+/vleftshow2
+  {90 rotate show -90 rotate} def
+% DEFINE PROCEDURE "l" AS ABBREVIATION OF lineto    
+/l {lineto} def
+% DEFINE PROCEDURE "m" AS ABBREVIATION OF moveto    
+/m {moveto} def
+/Helvetica-Bold                           findfont  47 scalefont setfont
+gsave    % SAVE INITIAL GRAPHICS STATE   
+%%EndProlog
+%%Page: 1 1
+0 0 moveto    0.24000    0.24000 scale  2465    85 translate 90 rotate 
+0.00000 0.00000 0.00000 setrgbcolor
+    2 setlinewidth
+/Helvetica-Bold                           findfont    95 scalefont setfont
+/IX   689 def /IY   557 def (1) centshow 
+/IX   952 def /IY   536 def (1) centshow 
+/IX  1510 def /IY   522 def (1) centshow 
+/IX  2036 def /IY   493 def (1) centshow 
+/IX  2376 def /IY   506 def (1) centshow 
+[ ] 0 setdash
+    2 setlinewidth
+0.00000 0.00000 0.00000 setrgbcolor
+newpath   689   605 m   952   584 l  1510   569 l  2036   540 l  2376   554 l stroke
+0.00000 0.00000 0.00000 setrgbcolor
+    2 setlinewidth
+/IX   689 def /IY   796 def (1) centshow 
+/IX   952 def /IY   754 def (1) centshow 
+/IX  1510 def /IY   731 def (1) centshow 
+/IX  2036 def /IY   719 def (1) centshow 
+/IX  2376 def /IY   754 def (1) centshow 
+[    17     8 ] 0 setdash
+    2 setlinewidth
+0.00000 0.00000 0.00000 setrgbcolor
+newpath   689   844 m   952   801 l  1510   778 l  2036   767 l  2376   801 l stroke
+0.00000 0.00000 0.00000 setrgbcolor
+    2 setlinewidth
+/IX   689 def /IY  1062 def (1) centshow 
+/IX   952 def /IY  1046 def (1) centshow 
+/IX  1510 def /IY   981 def (1) centshow 
+/IX  2036 def /IY  1107 def (1) centshow 
+/IX  2376 def /IY  1154 def (1) centshow 
+[     8    17 ] 0 setdash
+    2 setlinewidth
+0.00000 0.00000 0.00000 setrgbcolor
+newpath   689  1109 m   952  1094 l  1510  1028 l  2036  1155 l  2376  1201 l stroke
+0.00000 0.00000 0.00000 setrgbcolor
+    2 setlinewidth
+/IX   689 def /IY   630 def (2) centshow 
+/IX   952 def /IY   576 def (2) centshow 
+/IX  1510 def /IY   544 def (2) centshow 
+/IX  2036 def /IY   531 def (2) centshow 
+/IX  2376 def /IY   546 def (2) centshow 
+[ ] 0 setdash
+    2 setlinewidth
+0.00000 0.00000 0.00000 setrgbcolor
+newpath   689   677 m   952   624 l  1510   592 l  2036   578 l  2376   594 l stroke
+0.00000 0.00000 0.00000 setrgbcolor
+    2 setlinewidth
+/IX   689 def /IY   846 def (2) centshow 
+/IX   952 def /IY   797 def (2) centshow 
+/IX  1510 def /IY   788 def (2) centshow 
+/IX  2036 def /IY   885 def (2) centshow 
+/IX  2376 def /IY   923 def (2) centshow 
+[    17     8 ] 0 setdash
+    2 setlinewidth
+0.00000 0.00000 0.00000 setrgbcolor
+newpath   689   894 m   952   845 l  1510   836 l  2036   932 l  2376   970 l stroke
+0.00000 0.00000 0.00000 setrgbcolor
+    2 setlinewidth
+/IX   689 def /IY  1281 def (2) centshow 
+/IX   952 def /IY  1234 def (2) centshow 
+/IX  1510 def /IY  1301 def (2) centshow 
+/IX  2036 def /IY  1419 def (2) centshow 
+/IX  2376 def /IY  1933 def (2) centshow 
+[     8    17 ] 0 setdash
+    2 setlinewidth
+0.00000 0.00000 0.00000 setrgbcolor
+newpath   689  1329 m   952  1281 l  1510  1349 l  2036  1467 l  2376  1981 l stroke
+[ ] 0 setdash
+    2 setlinewidth
+0.00000 0.00000 0.00000 setrgbcolor
+newpath   470   476 m  2661   476 l stroke
+[ ] 0 setdash
+    2 setlinewidth
+0.00000 0.00000 0.00000 setrgbcolor
+newpath  2661   476 m  2661  2142 l stroke
+[ ] 0 setdash
+    2 setlinewidth
+0.00000 0.00000 0.00000 setrgbcolor
+newpath  2661  2142 m   470  2142 l stroke
+[ ] 0 setdash
+    2 setlinewidth
+0.00000 0.00000 0.00000 setrgbcolor
+newpath   470  2142 m   470   476 l stroke
+[ ] 0 setdash
+    2 setlinewidth
+0.00000 0.00000 0.00000 setrgbcolor
+newpath   470   428 m   470   476 l stroke
+newpath   689   428 m   689   476 l stroke
+newpath   908   428 m   908   476 l stroke
+newpath  1127   428 m  1127   476 l stroke
+newpath  1346   428 m  1346   476 l stroke
+newpath  1565   428 m  1565   476 l stroke
+newpath  1784   428 m  1784   476 l stroke
+newpath  2003   428 m  2003   476 l stroke
+newpath  2222   428 m  2222   476 l stroke
+newpath  2441   428 m  2441   476 l stroke
+newpath  2661   428 m  2661   476 l stroke
+newpath   579   452 m   579   476 l stroke
+newpath   798   452 m   798   476 l stroke
+newpath  1017   452 m  1017   476 l stroke
+newpath  1236   452 m  1236   476 l stroke
+newpath  1455   452 m  1455   476 l stroke
+newpath  1675   452 m  1675   476 l stroke
+newpath  1894   452 m  1894   476 l stroke
+newpath  2113   452 m  2113   476 l stroke
+newpath  2332   452 m  2332   476 l stroke
+newpath  2551   452 m  2551   476 l stroke
+0.00000 0.00000 0.00000 setrgbcolor
+newpath   422   476 m   470   476 l stroke
+newpath   422  1031 m   470  1031 l stroke
+newpath   422  1587 m   470  1587 l stroke
+newpath   422  2142 m   470  2142 l stroke
+newpath   446   754 m   470   754 l stroke
+newpath   446  1309 m   470  1309 l stroke
+newpath   446  1864 m   470  1864 l stroke
+[ ] 0 setdash
+    2 setlinewidth
+0.00000 0.00000 0.00000 setrgbcolor
+/Helvetica-Bold                           findfont    48 scalefont setfont
+/IX   470 def /IY   357 def
+(0)
+centshow 
+/IX   689 def /IY   357 def
+(100)
+centshow 
+/IX   908 def /IY   357 def
+(200)
+centshow 
+/IX  1127 def /IY   357 def
+(300)
+centshow 
+/IX  1346 def /IY   357 def
+(400)
+centshow 
+/IX  1565 def /IY   357 def
+(500)
+centshow 
+/IX  1784 def /IY   357 def
+(600)
+centshow 
+/IX  2003 def /IY   357 def
+(700)
+centshow 
+/IX  2222 def /IY   357 def
+(800)
+centshow 
+/IX  2441 def /IY   357 def
+(900)
+centshow 
+/IX  2661 def /IY   357 def
+(1000)
+centshow 
+0.00000 0.00000 0.00000 setrgbcolor
+/IX   391 def /IY   452 def
+(0)
+rightshow
+/IX   391 def /IY  1007 def
+(500)
+rightshow
+/IX   391 def /IY  1563 def
+(1000)
+rightshow
+/IX   391 def /IY  2118 def
+(1500)
+rightshow
+[ ] 0 setdash
+0.00000 0.00000 0.00000 setrgbcolor
+    2 setlinewidth
+/IX  1565 def /IY  2309 def
+(DRILL THRUST FORCE ANALYSIS \(HAMAKER\))
+centshow 
+[ ] 0 setdash
+0.00000 0.00000 0.00000 setrgbcolor
+    2 setlinewidth
+/IX  1565 def /IY   238 def
+(DRILL SPEED)
+centshow 
+[ ] 0 setdash
+0.00000 0.00000 0.00000 setrgbcolor
+    2 setlinewidth
+/IX  1565 def /IY   167 def
+(CHARACTER = MATERIAL       LINE = FEED RATE)
+centshow 
+[ ] 0 setdash
+0.00000 0.00000 0.00000 setrgbcolor
+    2 setlinewidth
+/IX   211 def /IY  1309 def newpath IX IY moveto gsave
+(THRUST FORCE)
+vcentshow 
+grestore
+[ ] 0 setdash
+0.00000 0.00000 0.00000 setrgbcolor
+    2 setlinewidth
+/IX   626 def /IY  1999 def
+(3-FACTOR MODELING)
+leftshow 
+[ ] 0 setdash
+0.00000 0.00000 0.00000 setrgbcolor
+    2 setlinewidth
+/IX   626 def /IY  1904 def
+(GANOVA)
+leftshow 
+newpath   157  2261 moveto stroke
+newpath   157  2237 moveto stroke
+showpage
+grestore
+%%Trailer
+%%Pages:     1
+% END OF DATAPLOT POSTSCRIPT FILE

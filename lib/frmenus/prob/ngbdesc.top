@@ -1,0 +1,28 @@
+----- <~prob\ngbdesc.top> Negative Binomial Description
+
+*Negative Binomial Description
+
+"pdf":
+
+Moments   : E(X)  = k * p
+            SD(X) = sqrt(k*p*(1-p))
+
+Type      : Discrete, skewed family of distributions--
+            moderate to moderate/long-tailed.
+Domain    : 0 to infinity
+Synonym   :
+Genesis   :
+Definition: If the random variables X1, X2, X3, ...
+            represent the outcome of events 1, 2, 3, ...
+            and Xi takes on the values 0 (if failure)
+            or 1 (if success) with probabilities
+            1-p and p, respectively, and if tbe
+            events are independent of one another,
+            then the random variable N = the number
+            of events until k successess occurs
+            has a Negative Binomial distribution.
+
+Reference : Johnson & Kotz,
+            Discrete Distributions,
+            Chapter 5 (pages 122-142).
+

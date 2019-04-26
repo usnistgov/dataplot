@@ -1,0 +1,80 @@
+. This is Dataplot macro   E691PLO7.DP
+. Purpose--Generate some prelimanry graphs for an interlab analysis
+.          based on the ASTM E691 standard.
+.
+.          The following plot is generatred:
+.          1) Plot of repeatability sd and reproducibility sd
+.             versus average for each material
+.
+. Input --Y        = response variable
+.       --LABID    = lab ID variable
+.       --MATID    = material ID variable
+.       --E691TIT  = string containing title for analysis
+.
+. Output--graph
+.
+.  Step 1: Compute repeatability standard deviations,
+.          reproducibility standard deviations, and material means
+.
+skip 1
+tabulate repeatability standard deviation y labid matid
+read dpst1f.dat junk repeat
+tabulate reproducibility standard deviation y labid matid
+read dpst1f.dat junk reprod
+tabulate mean y matid
+read dpst1f.dat junk xbarall
+skip 0
+delete junk
+.
+.  Step 2: Set plot control features
+.
+label
+legend
+title ^e691tit
+y1label Standard Deviations
+x1label Averages
+spike off all
+line blank blank
+character circ circ
+character hw 1.0 0.75 1.0 0.75
+character fill on off
+limits
+major tic mark number
+minor tic mark number
+tic offset units screen
+tic offset 3 3
+.
+.  Step 3: Generate the plot
+.
+plot repeat reprod vs xbarall
+.
+justification left
+font simplex
+hw 1.0 0.75
+move 17 85
+text circ()
+fill on
+move 17 81
+text circ()
+fill off
+font tektronix
+hw 2 1
+move 20 85.5
+text Reproducibility
+move 20 81.5
+text Repeatability
+.
+.  Step 4: Clean up (reset plot control to default)
+.
+title
+legend
+label
+line solid all
+character blank all
+character hw
+character fill
+spike off all
+tic offset 0 0
+delete junk repeat reprod xbarall
+feedback on
+.

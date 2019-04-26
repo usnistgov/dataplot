@@ -1,0 +1,15 @@
+----- <~dex\10step.top> 10-Step Screening Analysis
+
+10-Step Screening Analysis
+
+ 1. DEX scatter plot               <xemf: ~dex\scatplot.men>
+ 2. DEX mean plot (main eff plot)  <xemf: ~dex\meanplot.men>
+ 3. Interaction effects matrix     <xemf: ~dex\inteffma.men>
+ 4. Block plots                    <xemf: ~dex\blocplot.men>
+ 5. Estimate effects (ranked)      <xemf: ~dex\yates.men>
+ 6. Normal prob plot of effects    <xemf: ~dex\norppeff.men>
+ 7. Halfnormal prob plot |effects| <xemf: ~dex\hfnppeff.men>
+ 8. Cumulative res. st. dev. plot  <xemf: ~dex\crsdplot.men>
+ 9. 95% confidence int. on effects <xemf: ~dex\confinte.men>
+10. Contour plot (2 most imp. fac) <xemf: ~dex\contplot.men>
+

@@ -1,0 +1,22 @@
+This is file commchec.men--Check data files for comments
+ 
+--------------------
+ 1. Specify Whether Data Files are Checked for Comments
+ 2. CHECK COMMENT <on/off>
+ 3.
+ 4. By default, Datalot does not check data files for
+ 5. comments.  If your data file contains comments, use
+ 6. this menu to tell Dataplot to check if the first
+ 7. character in the line is a comment character.
+ 8.
+ 9. Check for Comments (on/off):
+ 9. @CE 1 0 42 50 * gui-ooff
+10.
+11.
+12. Check Data Files for Comments?
+--------------------
+SU FE
+COMMENT CHECK _1
+--------------------
+WEB HELP COMMENT CHECK
+--------------------

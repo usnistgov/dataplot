@@ -1,0 +1,35 @@
+This is Dataplot data file     NATR41.DAT
+Battery Capacity
+(Variation Shift Example (with known reference sigma0 = 1.66))
+Question: Does variability of capacity of new batteries
+          differ from 1.66 ampere-hours?
+ 
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 4-1 to 4-5.
+ 
+Number of observations             = 10
+Number of variables per line image =  1
+Order of variables on a line image--
+   1. Response Variable Y = battery capacity (in ampere-hours)
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR41.DAT Y
+   LET SIGMA0 = 1.66
+   CHI-SQUARED TEST Y SIGMA0
+ 
+ 
+       Y
+Battery Capacity
+----------------
+      146
+      141
+      135
+      142
+      140
+      143
+      138
+      137
+      142
+      136

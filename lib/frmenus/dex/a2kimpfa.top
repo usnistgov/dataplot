@@ -1,0 +1,13 @@
+----- <~dex\a2kimpfa.top> Analysis Goal 2: Important Factors
+
+Analysis Goal 2: Important Factors
+
+DEX scatter plot               <xemf: ~dex\scatplot.men>
+DEX mean plot (main eff plot)  <xemf: ~dex\meanplot.men>
+Interaction effects matrix     <xemf: ~dex\inteffma.men>
+Estimate effects (ranked)      <xemf: ~dex\yates.men>
+Normal prob plot of effects    <xemf: ~dex\norppeff.men>
+Halfnormal prob plot |effects| <xemf: ~dex\hfnppeff.men>
+Cumulative res. st. deviations <xemf: ~dex\cumressd.men>
+95% confidence int. on effects <xemf: ~dex\confinte.men>
+

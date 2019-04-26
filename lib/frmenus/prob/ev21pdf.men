@@ -1,0 +1,46 @@
+This is file ev21pdf.men--Compute Frechet (for minimum) pdf
+ 
+--------------------
+ 1. Compute Frechet (for minimum) pdf
+ 2. SET MINMAX MIN; LET A = EV2PDF(X,SHAPE,LOC,SCALE)
+ 3.
+ 4. Note: The Frechet (extreme value type 2) distribution
+ 5. can be based on either the minimum or the maximum
+ 6. order statistic.  This menu computes the minimum case.
+ 7. Example: minimum breaking strength of a chain.
+ 8.
+ 9. Input values:
+10.                 x (x >= mu):
+10. @CE 1 0 42 50 ?
+11.     shape gamma (gamma > 0):
+11. @CE 2 0 42 50 ?
+12.                  location u:
+12. @CE 3 0 42 50 ?
+13.             scale s (s > 0):
+13. @CE 4 0 42 50 ?
+14.
+15. Output parameters:
+16.      name for the pdf value:
+16. @CE 5 0 42 50 ?
+17.
+18.
+19. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 3 0 LET ZLOC = _3
+LET ZSCALE = 1
+@IF 3 0 LET ZSCALE = _4
+IF ZSCALE <= 0
+   LET ZSCALE = 1
+END OF IF
+LET ZSHAPE = 1
+@IF 2 0 LET ZSHAPE = _2
+IF ZSHAPE <= 0
+   LET ZSHAPE = 1
+END OF IF
+SET MINMAX MIN
+@IF 5 0 LET _5 = EV2PDF( _1 ,ZSHAPE,ZLOC,ZSCALE)
+--------------------
+WEB HELP EV2PDF
+--------------------

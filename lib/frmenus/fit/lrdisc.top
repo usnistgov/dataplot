@@ -1,0 +1,11 @@
+----- <~fit\lrdisc.top> Linear Regression
+ 
+Linear Regression
+
+Linear regression is the simplest case.  It
+fits the following model:
+
+    Y = A0 + A1*X + Error
+
+That is, it fits a straight line to the data.
+

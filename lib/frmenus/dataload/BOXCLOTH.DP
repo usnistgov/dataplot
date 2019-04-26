@@ -1,0 +1,8 @@
+----- <~dataload\BOXCLOTH.DP> Load BOXCLOTH.DAT
+
+. This is file    BOXCLOTH.DP
+
+DELETE Y X1 TO X5
+SKIP 30
+READ BOXCLOTH.DAT Y X1 TO X5
+

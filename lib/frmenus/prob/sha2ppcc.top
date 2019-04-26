@@ -1,0 +1,35 @@
+----- <~prob\sha2ppc.top> PPCC Plot (Two Shape Parameters)
+
+PPCC Plots for Distributions with Two Shape Parameters
+
+Generate PPCC Plots for Continuous Distributions
+with Two Shape Parameters (Uncensored Case)
+
+Beta                                      <xemf: ~prob\ppccbet.men>
+Beta Normal                               <xemf: ~prob\ppccbno.men>
+Burr Type 3                               <xemf: ~prob\ppccbu3.men>
+Burr Type 5                               <xemf: ~prob\ppccbu5.men>
+Burr Type 6                               <xemf: ~prob\ppccbu6.men>
+Burr Type 9                               <xemf: ~prob\ppccbu9.men>
+Burr Type 12                              <xemf: ~prob\ppccb12.men>
+Doubly Pareto Uniform                     <xemf: ~prob\ppccdpu.men>
+Exponentiated Weibull                     <xemf: ~prob\ppccewe.men>
+F                                         <xemf: ~prob\ppccf.men>
+Folded Cauchy                             <xemf: ~prob\ppccfca.men>
+Folded Normal                             <xemf: ~prob\ppccfnr.men>
+G-and-H                                   <xemf: ~prob\ppccgh.men>
+Generalized Topp and Leone                <xemf: ~prob\ppccgtl.men>
+Generalized Tukey-Lambda                  <xemf: ~prob\ppccgld.men>
+Gompertz                                  <xemf: ~prob\ppccgom.men>
+Inverse Gaussian                          <xemf: ~prob\ppccig.men>
+Johnson SB                                <xemf: ~prob\ppccjsb.men>
+Johnson SU                                <xemf: ~prob\ppccjsu.men>
+Kumaraswamy                               <xemf: ~prob\ppcckum.men>
+Power Lognormal                           <xemf: ~prob\ppccpln.men>
+Reciprocal Inverse Gaussian               <xemf: ~prob\ppccrig.men>
+Reflected Generalized Topp and Leone      <xemf: ~prob\ppccrgt.men>
+Truncated Normal                          <xemf: ~prob\ppcctnr.men>
+Two-Sided Ogive                           <xemf: ~prob\ppcctso.men>
+Two-Sided Power                           <xemf: ~prob\ppcctsp.men>
+Two-Sided Slope                           <xemf: ~prob\ppcctss.men>
+

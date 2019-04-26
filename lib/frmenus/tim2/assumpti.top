@@ -1,0 +1,17 @@
+-----<~tim2\assumpti.top> Assumptions: Time Series
+ 
+Assumptions: Time Series
+ 
+For a given data set consisting of 2 time series,
+2 assumption cases are common:
+ 
+Case 1: White noise (most stringent & least common):
+   1. series 1 is white noise
+   2. series 2 is white noise
+   3. series 1 is independent of series 2
+ 
+Case 2: Stationary (less stringent & most common):
+   1. series 1 is stationary
+   2. series 2 is stationary
+   3. series 1 and 2 are cross-stationary
+ 

@@ -1,0 +1,8 @@
+----- <~datalist\REHM.top> REHM.DAT
+ 
+REHM.DAT
+ 
+View     <xcl: LIST REHM.DAT>
+Load     <x2cl: SKIP 25; READ REHM.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\REHM.DAT>
+ 

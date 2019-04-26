@@ -1,0 +1,39 @@
+This is file setallab.men--Set LABEL Attributes
+ 
+--------------------
+ 1. Set LABEL Attributes
+ 2. LABEL COLOR RED; LABEL SIZE 3
+ 3.
+ 4. Color for LABEL
+ 4. @CE 1 0 42 50 * gui-color
+ 5. Font for LABEL:
+ 5. @CE 2 0 42 50 * gui-font
+ 6. Size for LABEL (0 to 100 units):
+ 6. @CE 3 0 42 50 * 
+ 7. Displacement for LABEL:
+ 7. @CE 4 0 42 50 * 
+ 8. Case for LABEL:
+ 9. @CE 5 1 5 17 all upper
+ 9. @CE 5 2 19 31 all lower
+ 9. @CE 5 3 33 45 as entered
+10. Fill Switch for LABEL:
+10. @CE 6 0 42 50 * gui-ooff
+11. Software Fonts - Line Thickness for LABEL:
+11. @CE 7 0 42 50 * gui-thick
+12.
+13.
+14. Set LABEL Attributes?
+--------------------
+PC FE
+@IF 1 0 LABEL COLOR _1
+@IF 2 0 LABEL FONT _2
+@IF 3 0 LABEL SIZE _3
+@IF 4 0 LABEL DISPLACEMENT _4
+@IF 5 1 LABEL CASE UPPER
+@IF 5 2 LABEL CASE LOWER
+@IF 5 3 LABEL CASE ASIS
+@IF 6 0 LABEL FILL _6
+@IF 7 0 LABEL THICKNESS _7
+--------------------
+WEB HELP LABEL
+--------------------

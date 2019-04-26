@@ -1,0 +1,27 @@
+This is file 2factlin.men--Fit 2-Factor Linear Model
+ 
+--------------------
+1. Fitting: 2 Variable First Order Model
+2. LINEAR FIT Y X
+3.
+4. Variables:
+5.    Response    Y:
+5. @CE 1 0 40 50 ? gui-variable
+6.    First Independent X:
+6. @CE 2 0 40 50 ? gui-variable
+7.    Second Independent Variable:
+7. @CE 3 0 40 50 * gui-variable
+8.
+9. Subset/Except/For Specification:
+10. @CE 4 0 1 50 *
+11.
+12.
+13. Do the Fit?
+--------------------
+GR FE
+DELETE ZZZZX12
+LET ZZZZX12 = _2 * _3
+FIT _1 _2 _3 ZZZZX12 _4
+--------------------
+WEB HELP FIT
+--------------------

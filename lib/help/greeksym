@@ -1,0 +1,93 @@
+This is Dataplot file    C:\DATAPLOT\HELP\GREEKSYMB.
+ 
+Purpose: List the Greek symbols available within Dataplot
+ 
+Example of usage:
+ 
+   TEXT LC() ALPH() BETA() GAMMA()
+   TEXT ALPH() BETA() GAMM()
+ 
+Within Dataplot, this GREEK SYMBOLS file may be
+viewed by entering:
+ 
+   LIST GREEKSYMB.     (be sure to include the trailing .)
+ 
+Greek symbols can be generated within any TEXT, TITLE,
+LABEL, or LEGEND command whenever the Hershey fonts
+(simplex, duplex, triplex, triplex Note that the Greek
+symbols will appear ONLY when the Hershey fonts :
+ 
+   SIMPLEX
+   DUPLEX
+   TRIPLEX
+   TRIPLEX ITALIC
+   COMPLEX
+   SIMPLEX SCRIPT
+   COMPLEX SCRIPT
+ 
+have been specified (via the FONT command).
+Both lower and upper case Greek symbols are available (see
+the CASE command).
+ 
+To indicate that a Greek symbol should appear in some
+text string, simply enter the English name of the
+desired Greek letter and append an open and closed
+parenthesis after the name, as in PI(), RHO(), and
+TAU().  The () is a flag to DATAPLOT that the previous
+character sub-string is not to be printed literally but
+rather should be converted and drawn as a special
+symbol.  Greek names longer than 4 letters should be
+truncated to 4 letters, as in ALPH(), GAMM(), and
+OMEG().
+ 
+The Greek symbols are--
+ 
+   alpha          ALPH()
+   beta           BETA()
+   gamma          GAMM()
+   delta          DELT()
+   epsilon        EPSI()
+   zeta           ZETA()
+   eta            ETA()
+   theta          THET()
+   iota           IOTA()
+   kappa          KAPP()
+   lambda         LAMB()
+   mu             MU()
+   nu             NU()
+   xi             XI()
+   omicon         OMIC()
+   pi             PI()
+   rho            RHO()
+   sigma          SIGM()
+   tau            TAU()
+   upsilon        UPSI()
+   phi            PHI()
+   chi            CHI()
+   psi            PSI()
+   omega          OMEG()
+ 
+Example --Go to the middle of screen, and write out the
+          first 3 Greek letters in lower case simplex
+          font--
+ 
+             CASE LOWER
+             FONT SIMPLEX
+             MOVE 50 50
+             TEXT ALPH()BETA()GAMM()
+ 
+Example --Go to the middle of screen, and write out the
+          value of pi = 3.1415926 in lower case triplex
+          font--
+ 
+             CASE LOWER
+             FONT TRIPLEX
+             MOVE 50 50
+             TEXT THE VALUE OF PI() = 3.1415926
+ 
+ 
+Enter   --HELP CAPITALIZATION to list case (lower/upper) information.
+          HELP SUBSCIPTS to list sub/super-script information.
+          HELP MATH SYMBOLS to list mathematics symbols.
+          HELP MISC SYMBOLS to list miscellaneous symbols.
+ 

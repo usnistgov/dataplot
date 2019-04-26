@@ -1,0 +1,85 @@
+This is file probplch.men--Probability Plot (Continuous Dist.)
+
+--------------------
+ 1. Probability Plot (Chi-Square, F, Beta Distributions)
+ 2. <Name of Distribution> PROBABILITY PLOT Y
+ 3.
+ 4. Variable:
+ 4. @CE 1 0 11 35 ? gui-variable
+ 5.
+ 6. Distribution:
+ 7. @CE 2 1 11 35 Non-Central F
+ 8.                  nu1 =
+ 8. @CE 3 0 41 50 ?
+ 9.                  nu2 =
+ 9. @CE 4 0 41 50 ?
+10.                  lambda =
+10. @CE 5 0 41 50 ?
+11. @CE 2 2 11 35 Doubly NonCentral F
+12.                  nu1 =
+12. @CE 6 0 41 50 ?
+13.                  nu2 =
+13. @CE 7 0 41 50 ?
+14.                  lambda1 =
+14. @CE 8 0 41 50 ?
+15.                  lambda2 =
+15. @CE 9 0 41 50 ?
+16. @CE 2 3 11 35 Non-Central Beta
+17.                  alpha =
+17. @CE 10 0 41 50 ?
+18.                  beta =
+18. @CE 11 0 41 50 ?
+19.                  lambda =
+19. @CE 12 0 41 50 ?
+20. @CE 2 4 11 35 NonCentral Chi-Square
+21.                                   nu =
+21. @CE 13 0 41 50 ?
+22.                                   lambda =
+22. @CE 14 0 41 50 ?
+23. @CE 2 5 11 35 Non-Central t
+24.                                   nu =
+24. @CE 15 0 41 50 ?
+25.                                   lambda =
+25. @CE 16 0 41 50 ?
+26. @CE 2 6 11 35 Doubly NonCentral t
+27.                                   nu1 =
+27. @CE 17 0 41 50 ?
+28.                                   nu1 =
+28. @CE 18 0 41 50 ?
+29.                                   lambda =
+29. @CE 19 0 41 50 ?
+30.
+31. Subset/Except/For Specification:
+32. @CE 20 0 -10 50 *
+33.
+34. Generate the Probability Plot?
+--------------------
+GR FE
+@IF 3 0 LET NU1 = _3
+@IF 4 0 LET NU2 = _4
+@IF 5 0 LET LAMBDA = _5
+@IF 6 0 LET NU1 = _6
+@IF 7 0 LET NU2 = _7
+@IF 8 0 LET LAMBDA1 = _8
+@IF 9 0 LET LAMBDA2 = _9
+@IF 10 0 LET ALPHA = _10
+@IF 11 0 LET BETA = _11
+@IF 12 0 LET LAMBDA = _12
+@IF 13 0 LET NU = _13
+@IF 14 0 LET LAMBDA = _14
+@IF 15 0 LET NU = _15
+@IF 16 0 LET LAMBDA = _16
+@IF 17 0 LET NU1 = _17
+@IF 18 0 LET NU2 = _18
+@IF 19 0 LET LAMBDA = _19
+@IF 2 1 NON-CENTRAL F PROBABILITY PLOT _1 _20
+@IF 2 2 DOUBLY NON-CENTRAL F PROBABILITY PLOT _1 _20
+@IF 2 3 NON-CENTRAL BETA PROBABILITY PLOT _1 _20
+@IF 2 4 NON-CENTRAL CHI-SQUARE PROBABILITY PLOT _1 _20
+@IF 2 5 NON-CENTRAL T PROBABILITY PLOT _1 _20
+@IF 2 6 DOUBLY NON-CENTRAL T PROBABILITY PLOT _1 _20
+SET WRITE DECIMALS 4
+WRITE PPCC PPA0 PPA1 SDPPA0 SDPPA1
+--------------------
+WEB HELP PROBABILITY PLOT
+--------------------

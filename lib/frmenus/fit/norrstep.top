@@ -1,0 +1,25 @@
+----- <~fit\norrstep.top> Ozone Calibration Step-by-Step Analysis
+
+Ozone Calibration Step-by-Step Analysis
+
+   1. Data file
+      1. Specify file name                <xemf: ~fit\norrspdf.men>
+      2. View data file                   <xcl: LIST ^FILENAME>
+      3. Load data file                   <xcl: CALL NORRREDF.DP>
+      4. Print data file                  <xcl: PRINT ^FILENAME>
+
+   2. Set-by-set analysis
+      1. Specify run id (1, 2, 3, ...)    <xemf: ~fit\norrspru.men>
+      2. Do the linear fit                <xcl: CALL NORRFITR.DP>
+      3. Show list of stand. residuals    <xcl: CALL NORRSTRE.DP>
+      4. Specify plot limits              <xemf: ~fit\norrsppl.men>
+      5. Plot residuals vs. run sequence  <xcl: CALL NORRPLR1.DP>
+      6. Plot residuals vs. concentration <xcl: CALL NORRPLR2.DP>
+
+   3. Global (= all data) analysis
+      1. Do the linear fit                <xcl: CALL NORRFITA.DP>
+      2. Show list of stand. residuals    <xcl: CALL NORRSTRA.DP>
+      3. Specify plot limits              <xemf: ~fit\norrsppl.men>
+      4. Plot residuals vs. run sequence  <xcl: CALL NORRPLR3.DP>
+      5. Plot residuals vs. concentration <xcl: CALL NORRPLR4.DP>
+

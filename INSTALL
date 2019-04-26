@@ -1,0 +1,279 @@
+This file contains installation instructions for Linux/Unix
+platforms.  For MacOS platforms, see
+
+   https://www.itl.nist.gov/div898/software/dataplot/ftp/homepage.htm
+
+and select the link for your version of MacOS.
+
+For Windows 7/8/10 platforms, see
+
+   https://www.itl.nist.gov/div898/software/dataplot/ftp/win_vista/homepage.htm
+
+
+
+INSTALLATION FROM PACKAGES
+
+ 1. Red Hat Package Manager (RHPM):
+
+      ... add instructions here ...
+
+    Thanks to Chris Schanzle for putting this package together.
+
+Package managers for other systems (e.g., Debian/Ubuntu)
+are under consideration but are not yet available.
+
+SOURCE BASED INSTALLATION
+
+If you are installing Dataplot on a system for which you cannot
+use the RHPM file, you can build Dataplot from source.  It is
+assumed that you have gfortran/gcc already installed.
+
+ 1. Download the tar file
+
+    Download the Dataplot tar file to a convenient location.
+    For the sake of discussion, we assume the tar file is named
+
+       dataplot-20190410.tar.gz
+
+    The date portion of this name may vary.
+
+ 2. Unpack the file
+
+       gunzip dataplot-20190410.tar.gz
+       tar -xf dataplot-20190410.tar
+
+    After the files are unpacked, you should have a "src"
+    directory and a "lib" directory.
+
+ 3. Build from source
+
+    There is a Makefile in the "src" directory.
+
+    You should check the "PREFIX=..." and the "FEATURES=..." line.  The
+    following comments in this section give more detail, but most users
+    should be able to just check those 2 lines before running make.
+
+     i. The line
+
+          PREFIX=...
+
+        should be set to the directory where you want to
+        install Dataplot.  If you have super user permissions,
+        you typically want to set this to either "/usr" or
+        "/usr/local".  If you do not have super user permissions,
+        you would typically set this to either "$HOME" or
+        "/var/tmp".
+
+    ii. The line
+
+           FEATURES = GD TIFF CAIRO X11 READLINE NCURSES
+
+        specifies external dependencies that Dataplot can utilize.
+        Specifically,
+
+        a. READLINE - this enables the readline library for command
+                      history and editing.  If you enable this feature,
+                      you need to enter the following command in Dataplot
+                      to activate this 
+
+                         SET READ LINE ON
+
+                      If you enable READLINE, you should also include
+                      NCURSES on the FEATURES line.
+
+        b. GD - this enables the GD graphics library.  This allows
+                Dataplot to generate graphs in JPEG, PNG, GIF, BMP,
+                and, optionally, TIFF and webp formats.  You can
+                also read images in these formats.
+
+                Note that the addition of the TIFF and webp formats
+                is relatively recent.  Enterprise versions of Linux
+                may have an older version the GD library that does
+                not include support for TIFF and VPX.
+
+                To enable TIFF, you need to include TIFF on the
+                FEATURES line.  To enable webp, include VPX on the
+                FEATURES line.
+
+                Dataplot does not currently utilize the TIFF and VPX
+                libraries independent of GD.
+
+        c. CAIRO - this enables the Cairo graphics library.
+
+                   The Cairo device in Dataplot should be considered
+                   "beta".  
+
+        d. X11 - this enables the X11 graphics library.
+
+                 The Dataplot X11 device driver only uses the
+                 libX11 library, so this feature only loads that
+                 specific library.  The CAIRO and PLOT features
+                 will add a number of additional X11 libraries.
+
+        e. PLOT - this enables the libplot (plotutils) graphics
+                  library.  This adds several device drivers not
+                  otherwise available in Dataplot (Adobe Illustrator,
+                  binary CGM, netPBM image format).
+
+        f. OPENGL - this enables the OpenGL device driver.  This driver
+                    is still under development, so this feature should
+                    NOT be enabled at this time.
+
+        f. GKS - this enables a GKS device driver.  This feature should
+                 NOT be enabled.  This driver is unlikely to ever
+                 be activated for production versions of Dataplot.
+
+        g. AQUA - this enables the Aquaterm device driver for MacOS.
+                  This feature should NOT be enabled for non-MacOS
+                  systems.
+
+        These features should only be enabled if the appropriate
+        libraries are installed on your system.  In particular, you
+        will need the developer versions installed (default Linux
+        installations will typically have most of these libraries
+        installed, but the developer libraries may not be).  The
+        method for installing the developer libraries will depend on
+        what variant of Linux you are running.  For Ubuntu (and other
+        systems that use the apt package manager) systems, you can
+        install the relevant developer libraries with
+
+            sudo apt install libx11-dev; # For X11
+
+            sudo apt install libgd-dev; # For GD
+            sudo apt install libfreetype6
+            sudo apt install libfreetype6-dev
+
+            sudo apt install libplot2c2; # For PLOT
+            sudo apt install libplot-dev
+
+            sudo apt install readline6; # For READLINE
+            sudo apt install readline6-dev
+
+            sudo apt install libcairo-dev; # For CAIRO
+
+        If your platform uses a different package manager, you
+        will need to do something similar.  If you are not
+        familiar with how to do that, you can just use
+
+            FEATURES = X11
+
+        Although the other features provide useful capabilities, none
+        are essential to running Dataplot.
+
+   iii. The line
+
+           DP1FLAGS = -DDDOUBLE -DINTEGER32 -DHAVE_ISNAN -DHAVE_EXECUTE_COMMAND_LINE -DDPLIBDIR=\'$(DPLIBDIR)\'
+
+        contains compilation switches for the file that contains
+        Dataplot's operating system dependent code.  If you have older
+        versions (say 4.6 or older) of gcc/gfortran, you should remove
+        "-DHAVE_EXECUTE_COMMAND_LINE".  If you have really old versions
+        of gcc/gfortran (say 4.2 or older), you should remove
+        "-DHAVE_ISNAN".
+
+    iv. The lines FFLAGS and CCFLAGS define the default compilation
+        options for gfortran and gcc, respectively.
+
+        The default for gfortran is
+
+           -O2 -DLINUX -fdefault-real-8 -fdefault-double-8
+
+        The -O2 sets the optimization level.  You can remove this
+        if you want to turn the optimization off.  The -DLINUX
+        option activates Linux specific code in the source and
+        should be left on.  The "-fdefault-real-8 -fdefault-double-8"
+        defines both single precision and double precision to be
+        64-bits.  On 64-bit machines, we advise against promoting
+        double precision to 128-bits due to the fact that certain
+        special function routines from the CMLIB/SLATEC libraries
+        do not work correctly in 128-bit mode.  We hope to correct
+        this in a subsequent release so that double precision can
+        use the full 128-bit capability.
+
+        The default for gcc is
+
+           -O2
+
+     v. Dataplot's default workspace is 10 columns by 1,500,000
+        rows.  You can re-dimension to obtain more columns at the
+        expense of fewer rows.  If your local machine has sufficient
+        memory, say 16GB or more, and you would like to increase the
+        maximum number of rows, then you can do the following
+
+          1. Edit the following line in the file DPCOPA.INC:
+
+                PARAMETER (MAXOBV=1500000)
+
+             to specify the maximum number of rows.  How high
+             you can go will be dependent on how much memory
+             you actually have.
+
+          2. Add the following option to both FFLAGS and CFLAGS
+
+               -mcmodel=medium
+
+    After you have made any needed modifications to the Makefile, enter
+
+        make
+        make install
+
+    If you are installing Dataplot to "/usr" or "/usr/local", then use
+
+        sudo make install
+
+    If the "bin" directory for Dataplot is not in your current path,
+    then add it to your path.  For those who use the Bourne shell, do
+    something like (typically this can be added to your .bashrc file)
+
+       export PATH=$PATH:/usr/local/bin
+
+    For the c-shell, do something like (typically this can be added
+    to your .cshrc file)
+
+        set path=($path /usr/local/bin)
+
+ 4. To test the command line version of Dataplot, enter
+
+       dataplot
+       device 1 x11
+       call minitest.dp
+       quit
+
+    To test the GUI version of Dataplot, enter
+
+       xdataplot
+
+ 5. There are two configuration files that you may want to edit
+    at some point.
+
+       a. The "/usr/local/lib/dplogf.tex" file contains a
+          startup file that will be executed when you initiate
+          Dataplot.  This is an ASCII file containing Dataplot
+          commands that is useful for specifying your own defaults
+          for Dataplot.  The default version for Linux is essentially
+          a place holder (i.e., it doesn't really do anything).
+
+          If you would like to create your own custom file , then
+          do the following
+
+             cp /usr/local/lib/dplogf.tex ~/dplogf.tex
+
+          Then edit ~/dplogf.tex using any ASCII editor.  If you
+          have a dplogf.tex file in your home directory, this will
+          override the system version.
+
+          How much you would like to utilize dplogf.tex is a
+          personal preference.
+
+       b. The "/usr/local/lib/frscript/xdpConfig" file is a
+          configuration file for the GUI.  In general, you will not
+          need to edit this file.  However, if you would like to
+          create your own custom version, then
+
+             cp /usr/local/lib/frscript ~/xdpConfig
+
+          This is an ASCII file.  As with dplogf.tex, a copy of
+          xdpConfig in your home directory will override the
+          system version.  See the comments in xdpConfig for
+          guidance in editing this file.
+

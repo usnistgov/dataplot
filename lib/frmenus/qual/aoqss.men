@@ -1,0 +1,52 @@
+This is file aoqss.men--Generate Single Sample AOQ Chart
+ 
+--------------------line 3
+1. Single Sample AOQ Chart
+2. Macro
+3.
+4. Acceptance Number for Defectives:
+4. @CE 1 0 42 50 ?
+5. Sample size:
+5. @CE 2 0 42 50 ?
+6. Lot Size:
+6. @CE 3 0 42 50 ?
+7.
+8. Start value for p (default = 0.001):
+8. @CE 4 0 42 50 ?
+9. Increment for p (default = 0.001):
+9. @CE 5 0 42 50 ?
+10. Stop value for p (default = 0.20):
+10. @CE 6 0 42 50 ?
+11.
+12.
+13. Generate the Chart?:
+--------------------
+DELETE ZZZZP ZZZZY
+.
+LET ZZZZC = _1
+LET ZZZZN = _2
+LET ZZZZNNNN = _3
+.
+LET PSTART = 0.001
+LET PINC = 0.001
+LET PSTOP = 0.20
+LET PSTART = _4
+LET PINC = _5
+LET PSTOP = _6
+.
+LET ZZZZP = SEQUENCE PSTART PINC PSTOP
+LET ZZZZY = BINCDF(ZZZZC,ZZZZP,ZZZZN)
+LET ZZZZY = ZZZZY*ZZZZP*(ZZZZNNNN-ZZZZN)/ZZZZNNNN
+.
+LABEL CASE ASIS
+TITLE CASE ASIS
+Y1LABEL Probability of Acceptance, Pa
+X1LABEL Lot Fraction Defective, p
+TITLE AOQ Single Sample (^ZZZZN, ^ZZZZC) Curve
+.
+PLOT ZZZZY VS ZZZZP
+LABEL
+TITLE
+--------------------
+
+--------------------

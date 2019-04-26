@@ -1,0 +1,42 @@
+This is file numbperc.men--Number of Percentiles for PPCC Plots
+ 
+--------------------
+ 1. Specify Number of Percentiles for PPCC Plots
+ 2. SET PPCC PLOT DATA POINTS
+ 3.
+ 4. PPCC plots ultimately depend on the computation
+ 5. of the percent point function.  If the computation
+ 6. of the percent point function is relatively slow
+ 7. (e.g., numerically inverting the CDF function), this
+ 8. can result in  a relatively long time to generate the
+ 9. PPCC plot for moderate to large data sets or for
+10. distributions with two shape parameters (this
+11. essentially squares the number of underlying
+12. probability plots that need to be generated).
+13.
+14. One option is to bin the data (resulting in fewer
+15. computations of the percent point function).  An
+16. alternative to binning which we have found to work
+17. somewhat better is to generate the PPCC/KS plot on
+18. a fixed number of equi-spaced percentiles of the data.
+19.
+20. We recommend a choice somewhere between 50 and 200
+21. with 100 providing a good default option.  If your
+22. data set is smaller than the number of selected
+23. percentiles, the full data set is used.
+24.
+25. To clear any previously set values, simply leave
+26. the following fields blank.
+27.
+28. Number of percentile values to use:
+28. @CE 1 0 42 50 ? *
+29.
+30.
+31. Set the Number of Percentiles for PPCC/KS Plots?
+--------------------
+GR FE
+SET PPCC PLOT DATA POINTS 0
+@IF 1 0 SET PPCC PLOT DATA POINTS 0
+--------------------
+WEB HELP PPCC PLOT
+--------------------

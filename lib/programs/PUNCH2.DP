@@ -1,0 +1,27 @@
+. This is dataplot test program PUNCH2.DP
+.
+. Purpose--Test Simplex Data Display Program  SIMPLEXD.DP
+.
+. Date--December 1996
+.
+. -----START POINT-----
+.
+DEVICE 2 POSTSCRIPT
+.
+SKIP 25
+READ PUNCH2.DAT Y W P O
+LET X1 = (W-30)/70
+LET X2 = P/70
+LET X3 = O/70
+.
+LET STRING S1 = Watermelon
+LET STRING S2 = Pineapple
+LET STRING S3 = Orange
+.
+CALL SIMPLEXD.DP
+.
+FIT Y = A1*X1+A2*X2+A3*X3+A12*X1*X2+A13*X1*X3+A23*X2*X3
+.
+LET YCONT = SEQUENCE 4.6 .1 7.2
+. CALL SIMPLEX3.DP
+.

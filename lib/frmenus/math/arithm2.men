@@ -1,0 +1,37 @@
+This is file arithm2.men--Compute elementary 2-variable transformations
+ 
+--------------------
+ 1. 1-Variable Elementary Operations
+ 2. LET YMAX = MAX(X1,X2)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value for the input variables.
+ 6.
+ 7. First variable to operate on:
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8. Second variable to operate on:
+ 8. @CE 2 0 33 50 ? gui-variable
+ 9. Operation to perform:
+10. @CE 3 1 10 34 dim (x - min(x,y))
+10. @CE 3 2 36 60 indicator function
+11. @CE 3 3 10 34 maximum
+11. @CE 3 4 36 60 minimum
+12. @CE 3 5 10 34 mod function
+13. Variable to store the transformed result:
+14. @CE 4 0 33 50 ?
+15.
+16. Subset/Except/For Specification:
+17. @CE 5 0 -5 50 *
+18.
+19.
+20. Compute the Transformation?:
+--------------------
+GR FE
+@IF 3 1 LET _4 = DIM( _1 , _2 ) _5
+@IF 3 2 LET _4 = IND( _1 , _2 ) _5
+@IF 3 3 LET _4 = MAX( _1 , _2 ) _5
+@IF 3 4 LET _4 = MIN( _1 , _2 ) _5
+@IF 3 5 LET _4 = MOD( _1 , _2 ) _5
+--------------------
+WEB HELP MATHEMATICAL LIBRARY FUNCTIONS
+--------------------

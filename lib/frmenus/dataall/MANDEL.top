@@ -1,0 +1,8 @@
+----- <~dataall\MANDEL.top> MANDEL.DAT
+
+MANDEL.DAT
+
+View     <xcl: LIST MANDEL.DAT>
+Load     <xcf: ~dataload/MANDEL.DP>
+Print    <xccl: printfile C:\DATAPLOT\MANDEL.DAT>
+

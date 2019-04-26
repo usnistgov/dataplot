@@ -1,0 +1,31 @@
+----- <~reli\relidisc.top> Discussion--Reliability
+
+Discussion--Reliability
+
+Reliability analysis is the data analysis of
+failures times of items sampled from a target
+population of interest.  The purpose of
+reliability analysis is to make inferences (based
+on the sample) about the target population.  Such
+inferences involve the estimation of
+
+   1) mean life
+   2) percentiles
+   3) tail probabilities
+   4) predicted distribution values
+   5) best-fit distribution identification
+   6) best-fit distributional parameters
+   7) best-fit distributional functions
+
+and the attachment of uncertainty values and/or
+uncertainty limits for the above estimates.
+
+Reliability analysis methodology falls into 2 categories:
+   1) non-parametric (not using best-fit distributions)
+      e.g., Kaplan-Meier estimation of cumulative
+      distribution function
+   2) parameters (using best-fit distributions)
+      e.g., exponential probability plotting
+
+Synonyms: Survival analysis, lifetime analysis
+

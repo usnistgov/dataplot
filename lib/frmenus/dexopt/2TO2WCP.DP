@@ -1,0 +1,8 @@
+----- <~dexopt\2TO2WCP.DP> Load 2TO2WCP.DP
+
+. This is file    2TO2WCP.DP
+
+DELETE X1 X2
+SKIP 50
+READ 2TO2WCP.DAT X1 X2
+

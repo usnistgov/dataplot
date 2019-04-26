@@ -1,0 +1,12 @@
+----- <~dexpb\analysis.top> Analysis of Plackett Burman Designs
+ 
+Analysis of Plackett Burman Designs
+ 
+Analysis Goals                            <~dex2kmp\analgoal.top>
+ 
+Techniques to determine:
+  1. Ranked list of factors              <~dex2kmp\ranklifa.top>
+  2. Most important factors              <~dex2kmp\impofact.top>
+  3. Prediction equation                 <~dex2kmp\predequa.top>
+  4. Best settings                       <~dex2kmp\bestsett.top>
+ 

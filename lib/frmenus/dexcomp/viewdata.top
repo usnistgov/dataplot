@@ -1,0 +1,38 @@
+----- <~dexcomp\viewdata.top> Comparative Designs: Graphical Techniques
+
+Comparative Designs: Graphical Techniques
+
+Comparative designs have 1 primary factor.  In
+addition, they may have 1 or more nusiance factors.
+The most useful graphical technique for comparative
+designs is the block plot.
+
+General (2+ Factors, see DEX Plots above)
+   Block Plot                   <xemf: ~stat\blockplo.men>
+   Taguchi Plots                <xemf: ~qual\tagplot.men>
+   Scatter Plot Matrix          <xemf: ~plot\scatplma.men>
+
+DEX Plots
+    DEX Mean Plot            <xemf: ~plot\dexmeanp.men>
+    DEX SD Plot              <xemf: ~plot\dexsdplo.men>
+    DEX stat Plot            <xemf: ~plot\dexstatp.men>
+    DEX Scatter Plot         <xemf: ~plot\dexscatp.men>
+
+1 Response Variable, 1 Factor Variable
+    Scatter Plot                      <xemf: ~stat\scatplot.men>
+    Scatter Plot with Vertical Lines  <xemf: ~stat\vertplot.men>
+    Box Plot                          <xemf: ~stat\boxplot.men>
+    Mean Plot                         <xemf: ~1fac\meanplot.men>
+    SD Plot                           <xemf: ~1fac\sdplot.men>
+    Statistics for Grouped Data       <xemf: ~stat\statplot.men>
+
+2 Factor Variables
+   Character Plot               <xemf: ~mfac\charplot.men>
+   Line Plot                    <xemf: ~mfac\lineplot.men>
+   3D Plot (Data)               <xemf: ~plot\3dplot.men>
+   Contour Plot (Data)          <xemf: ~math\contour.men>
+
+3 Factors
+   GANOVA Graphical Analysis of Variance  <xemf: ~mfac\ganova.men>
+          (= character + line plot)       <xemf: ~mfac\ganova.men>
+

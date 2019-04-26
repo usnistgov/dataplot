@@ -1,0 +1,8 @@
+----- <~dataall\KAUL.top> KAUL.DAT
+
+KAUL.DAT
+
+View     <xcl: LIST KAUL.DAT>
+Load     <xcf: ~dataload/KAUL.DP>
+Print    <xccl: printfile C:\DATAPLOT\KAUL.DAT>
+

@@ -1,0 +1,22 @@
+This is file kruskal.men--Kruskall-Wallis 1-Factor Anova
+ 
+--------------------
+ 1. Kruskal-Wallis 1-Factor Analysis of Variance
+ 2. KRUSKAL WALLIS TEST Y X
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Group ID Variable:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute Kruskal-Wallis ANOVA?
+--------------------
+AN FE
+KRUSKAL WALLIS TEST _1 _2 _3
+--------------------
+WEB HELP KRUSKAL WALLIS
+--------------------

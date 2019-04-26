@@ -1,0 +1,8 @@
+----- <~dataall\FULLER2.top> FULLER2.DAT
+
+FULLER2.DAT
+
+View     <xcl: LIST FULLER2.DAT>
+Load     <xcf: ~dataload/FULLER2.DP>
+Print    <xccl: printfile C:\DATAPLOT\FULLER2.DAT>
+

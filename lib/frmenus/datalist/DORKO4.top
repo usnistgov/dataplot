@@ -1,0 +1,8 @@
+----- <~datalist\DORKO4.top> DORKO4.DAT
+ 
+DORKO4.DAT
+ 
+View     <xcl: LIST DORKO.DAT>
+Load     <x2cl: SKIP 25; READ DORKO.DAT Y LAB RUN DAY TOD>
+Print    <xccl: printfile C:\DATAPLOT\DORKO.DAT>
+ 

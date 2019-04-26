@@ -1,0 +1,29 @@
+This is file gendisra.men--Generate Discrete Uniform Random Numbers
+ 
+--------------------
+ 1. Generate Discrete Uniform Random Numbers
+ 2. LET Y = DISCRETE UNIFORM RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Shape Parameter (n, n = 1, 2, ...):
+ 5. @CE 2 0 42 50 ?
+ 6.
+ 7. Optional random number generator seed (default=305):
+ 8.    (integer >= 305)
+ 8. @CE 3 0 42 50 ?
+ 9.
+10. Name of output variable;
+10. @CE 4 0 42 50 ?
+11.
+12.
+13. Generate the random numbers?
+--------------------
+AN FE
+@IF 3 0 SEED _3
+LET N = 0
+@IF 2 0 LET N = _2
+LET _4 = DISCRETE UNIFORM RANDOM NUMBERS FOR I = 1 1 _1
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

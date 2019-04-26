@@ -1,0 +1,23 @@
+This is file matr_dme.men--Distance from Mean
+ 
+--------------------
+ 1. Distance from Mean
+ 2. LET Y = DISTANCE FROM MEAN M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 42 50 ? gui-matrix
+ 5. Variable to save the distances:
+ 5. @CE 2 0 42 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -1 50 *
+ 9.
+10.
+11.
+12. Compute the Distances from the Mean?:
+--------------------
+GR FE
+LET _2 = DISTANCE FROM MEAN  _1 _3
+--------------------
+WEB HELP DISTANCE FROM MEAN
+--------------------

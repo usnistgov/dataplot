@@ -1,0 +1,35 @@
+This is Dataplot data file     SNED103.DAT
+Snedecor & Cochran Univariate Example:
+   Reduction in Bee Syrup Concentration After 1/2 Mile Flight
+Question: Is there a difference in the 2 groups?
+Question: Is there a difference in variability in the 2 groups?
+ 
+Source--Snedecore, George W. and Cochran , William G. (1937).
+        Statistical Methods. Sixth Edition.
+        The Iowa State University Press, Ames, Iowa, page 103.
+ 
+Number of observations             = 10
+Number of variables per line image =  2
+Order of variables on a line image--
+   1. Response Variable Y1 = reduction in syrup conc. for 20% group
+   2. Response Variable Y2 = reduction in syrup conc. for 65% group
+ 
+To read this into Dataplot--
+   SKIP 25
+   READ SNED103.DAT Y1 Y2
+ 
+      Y1            Y2
+    Syrup         Syrup
+  Reduction     Reduction
+   Group 1       Group 2
+---------------------------
+     0.7           1.7
+     0.5           2.8
+     0.4           2.2
+     0.7           1.4
+     0.5           1.3
+     0.4           2.1
+     0.7           0.8
+     0.4           3.4
+     0.2           1.9
+     0.5           1.4

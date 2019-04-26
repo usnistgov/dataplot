@@ -1,0 +1,31 @@
+----- <~dataload\timeothe.top> Load Time Series Data: Other
+
+Load Time Series Data: Other
+
+SUNSPOT.DAT*  Monthly sunspot             <xcf: ~dataload\SUNSPOT.DP>
+SUNSPOT2.DAT  Yearly sunspot              <xcf: ~dataload\SUNSPOT2.DP>
+
+GEAR.DAT      Gear diameters (Ishikawa)   <xcf: ~dataload\GEAR.DP>
+CLEAR.DAT     Component clearances        <xcf: ~dataload\CLEAR.DP>
+MICHELSO.DAT  Michelson speed of light exp <xcf: ~dataload\MICHELSO.DP>
+LIN.DAT       Polonium 209 SRM conc       <xcf: ~dataload\LIN.DP>
+
+SIN1.DAT      Sinusoidal (freq = .1)      <xcf: ~dataload\SIN1.DP>
+SIN2.DAT      Sinusoidal (freq = .2)      <xcf: ~dataload\SIN2.DP>
+SIN3.DAT      Sinusoidal (freq = .3)      <xcf: ~dataload\SIN3.DP>
+SIN4.DAT      Sinusoidal (freq = .4)      <xcf: ~dataload\SIN4.DP>
+SINNOISE.DAT  Sinusoidal with noise       <xcf: ~dataload\SINNOISE.DP>
+
+RANDN.DAT     Normal random numbers       <xcf: ~dataload\RANDN.DP>
+RANDU.DAT     Uniform random numbers      <xcf: ~dataload\RANDU.DP>
+RANDWALK.DAT  Random walk                 <xcf: ~dataload\RANDWALK.DP>
+FLICKER.DAT   Flicker noise               <xcf: ~dataload\FLICKER.DP>
+LOTTERY3.DAT  Maryland "pick 3" lott. #'s <xcf: ~dataload\LOTTERY3.DP>
+LOTTERY4.DAT  Maryland "pick 4" lott. #'s <xcf: ~dataload\LOTTERY4.DP>
+
+CONSUMPR.DAT  Consumer price index        <xcf: ~dataload\CONSUMPR.DP>
+GNP.DAT       Gross national product      <xcf: ~dataload\GNP.DP>
+OIL.DAT       Oil depth analysis          <xcf: ~dataload\OIL.DP>
+
+CO2.DAT       CO2 Concentrations          <xcf: ~dataload\CO2.DP>
+

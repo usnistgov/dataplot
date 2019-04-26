@@ -1,0 +1,27 @@
+This is file anova.men--ANOVA Values from Fit
+ 
+--------------------
+1. ANOVA Values From Fit
+2. Macro
+3.
+4. Variables:
+5.    Response Variable:
+5. @CE 1 0 40 50 ? gui-variable
+6.    List of Independent Variables:
+7. @CE 2 0  1 50 ? gui-variable
+8.    Weights W:
+8. @CE 3 0 40 50 * gui-variable
+9.
+10. Subset/Except/For Specification:
+11. @CE 4 0 1 50 *
+12.
+13.
+14. Do the Multi-Linear Fit?
+--------------------
+GR FE
+WEIGHTS _3
+FIT _1 _2 _4
+LIST DPST5F.DAT
+--------------------
+WEB HELP FIT
+--------------------

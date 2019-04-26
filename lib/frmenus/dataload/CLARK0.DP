@@ -1,0 +1,8 @@
+----- <~dataload\CLARK0.DP> Load CLARK0.DAT
+
+. This is file    CLARK0.DP
+
+DELETE Y
+SKIP 25
+READ CLARK0.DAT Y
+

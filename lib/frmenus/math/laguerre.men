@@ -1,0 +1,33 @@
+This is file laguerre.men--Compute Laguerre Polynomials
+ 
+--------------------
+ 1. Laguerre Polynomials
+ 2. LET Y = LAGUERRE(X,2)
+ 3.
+ 4. Horizontal axis variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Order of the Laguerre polynomial:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7. Normalize?:
+ 7. @CE 4 1 14 20 no
+ 7. @CE 4 2 22 28 yes
+ 8.
+ 9. Plot?:
+ 9. @CE 5 1 14 20 no
+ 9. @CE 5 2 22 28 yes
+10.
+11. Subset/Except/For Specification:
+12. @CE 6 0 -5 50 *
+13.
+14.
+15. Compute the Transformation?:
+--------------------
+GR FE
+@IF 4 1 LET _3 = LAGUERRE( _1 , _2 ) _6
+@IF 4 2 LET _3 = NRMLAG( _1 , _2 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP LAGUERRE
+--------------------

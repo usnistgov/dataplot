@@ -1,0 +1,24 @@
+This is file integra2.men--Compute the definite integral of data
+ 
+--------------------
+ 1. Definte Integral of Data
+ 2. LET A = INTEGRAL Y X
+ 3.
+ 4. Vertical axis variable:
+ 4. @CE 2 0 33 50 ? gui-variable
+ 5. Horizontal axis variable:
+ 5. @CE 3 0 33 50 ? gui-variable
+ 6. Parameter  to store computed integral:
+ 6. @CE 1 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Compute the Definite Integral?:
+--------------------
+GR FE
+LET _1 = INTEGRAL _2 _3 _4
+--------------------
+WEB HELP INTEGRAL
+--------------------

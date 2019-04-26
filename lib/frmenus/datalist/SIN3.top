@@ -1,0 +1,8 @@
+----- <~datalist\SIN3.top> SIN3.DAT
+ 
+SIN3.DAT
+ 
+View     <xcl: LIST SIN3.DAT>
+Load     <x2cl: SKIP 25; READ SIN3.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\SIN3.DAT>
+ 

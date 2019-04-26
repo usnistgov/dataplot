@@ -1,0 +1,298 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     MINITEST.DP
+. PURPOSE--EXECUTE 23 SELECTED DATAPLOT TEST PROBLEMS
+.          USED FOR IMPLEMENTATION TESTING AND TIME TRIALS.
+. PARTICIPATING COMPUTERS--
+.    CDC 855    (NOS/VE)--MINNEAPOLIS
+.    VAX 11/785 (VMS)   --CAM VAX
+.    CDC 855    (NOS-2) --GAITHERSBURG MAINFRAME
+.    CDC 205    (VSOS)  --GAITHERSBURG SUPER-COMPUTER
+. DATE--AUGUST 13, 1986
+.
+. -----START POINT---------------
+.
+. CREATE THE     ER     COMMAND WHICH WILL (ON A PC)--
+.    1) ERASE THE SCREEN
+.    2) LEAVE/PUT THE TERMINAL IN ALPHA MODE
+DEFINE ER ESC FF
+X3LABEL AUTOMATIC
+.
+ER
+ 
+. -------------------------------------------------
+.
+ECHO
+. YOU ARE NOW EXECUTING DATAPLOT MACRO   MINITEST.DP
+. THIS MACRO WILL STEP THROUGH 22 REPRESENTATIVE OPERATIONS.
+. WHENEVER    PAUSE    APPEARS ON THE SCREEN,
+. ENTER    CARRIAGE RETURN    TO CONTINUE RUNNING THE MACRO.
+PAUSE
+.
+. -------------------------------------------------
+ER
+. PROBLEM  1 = SMOOTHING (N = 1000)
+PAUSE
+.
+LET Z = NORMAL RANDOM NUMBERS FOR i = 1 1 1000
+SMOOTH Z
+PAUSE
+DELETE Z
+.
+. -------------------------------------------------
+ER
+. PROBLEM  2 = PLOT 5 TRACES (N = 100 EACH)
+PAUSE
+.
+PLOT X FOR X = 0 .01 1 AND
+PLOT X**2 FOR X = 0 .01 1 AND
+PLOT X**3 FOR X = 0 .01 1 AND
+PLOT X**4 FOR X = 0 .01 1 AND
+PLOT X**5 FOR X = 0 .01 1
+PAUSE
+.
+. -------------------------------------------------
+ER
+. PROBLEM  3 = WRITE OUT 10 VAR. (N = 100 EACH)
+PAUSE
+.
+LET X1 = SEQUENCE 1 1 100
+LET X2 = X1
+LET X3 = X1
+LET X4 = X1
+LET X5 = X1
+LET X6 = X1
+LET X7 = X1
+LET X8 = X1
+LET X9 = X1
+LET X10 = X1
+WRITE JUNK1. X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
+PAUSE
+DELETE X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
+.
+. -------------------------------------------------
+ER
+. PROBLEM  4 = PLOT SIN(X**2), SOLID, NO CHAR (N = 100)
+PAUSE
+.
+LINES SOLID
+CHAR BLANK
+PLOT SIN(X**2) FOR X = .1 .1 10
+PAUSE
+.
+. -------------------------------------------------
+ER
+. PROBLEM  5 = ANOVA (1 VAR., 10 LEVELS, N = 1000)
+PAUSE
+.
+LET X = SEQUENCE 0 1 999
+LET X = X/100
+LET X = INT(X)+1
+LET Z = NORMAL RANDOM NUMBERS FOR I = 1 1 1000
+ANOVA Z X
+PAUSE
+DELETE X Z
+.
+. -------------------------------------------------
+ER
+. PROBLEM  6 = PLOT SIN(X**2), SOLID, X (N = 100)
+PAUSE
+.
+LINES SOLID
+CHAR X
+PLOT SIN(X**2) FOR X = .1 .1 10
+PAUSE
+CHAR
+.
+. -------------------------------------------------
+ER
+. PROBLEM  7 = PLOT SIN(X**2), SOLID, SPIKE (N = 100)
+PAUSE
+.
+LINES SOLID
+SPIKE ON
+PLOT SIN(X**2) FOR X = .1 .1 10
+PAUSE
+SPIKE OFF
+.
+. -------------------------------------------------
+ER
+. PROBLEM  8 = BOX PLOT, 10 LEVELS (N = 1000)
+PAUSE
+.
+LET X = SEQUENCE 0 1 999
+LET X = X/100
+LET X = INT(X)+1
+LET Z = NORMAL RANDOM NUMBERS FOR I = 1 1 1000
+CHARACTERS BOX PLOT
+LINES BOX PLOT
+BOX PLOT Z X
+PAUSE
+DELETE X Z
+LINES SOLID ALL
+CHAR BLANK ALL
+.
+. -------------------------------------------------
+ER
+. PROBLEM  9 = WRITE OUT 10 VAR. (N = 1000 EACH)
+PAUSE
+.
+LET X1 = SEQUENCE 1 1 1000
+LET X2 = X1
+LET X3 = X1
+LET X4 = X1
+LET X5 = X1
+LET X6 = X1
+LET X7 = X1
+LET X8 = X1
+LET X9 = X1
+LET X10 = X1
+WRITE JUNK2. X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
+PAUSE
+DELETE X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
+.
+. -------------------------------------------------
+ER
+. PROBLEM 10 = READ IN 10 VAR. (N = 100 EACH)
+PAUSE
+.
+READ JUNK1. X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
+PAUSE
+DELETE X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
+.
+. -------------------------------------------------
+ER
+. PROBLEM 11 = 4-PLOT (N = 100)
+PAUSE
+.
+LET Z = NORMAL RANDOM NUMBERS FOR I = 1 1 100
+4-PLOT Z
+PAUSE
+DELETE Z
+.
+. -------------------------------------------------
+ER
+. PROBLEM 12 = ROOTS SIN(X**2) (0 TO 10)
+PAUSE
+.
+LET R = ROOTS SIN(X**2) WRT X FOR X = 0 TO 10
+PAUSE
+DELETE R
+.
+. -------------------------------------------------
+ER
+. PROBLEM 13 = 3D-PLOT SIN(X**2+Y**2) (N = 400)
+PAUSE
+.
+3D-PLOT SIN(X**2+Y**2) FOR X = -2 .2 2 FOR Y = -2 .2 2
+PAUSE
+.
+. -------------------------------------------------
+ER
+. PROBLEM 14 = 3D-PLOT EXP(-X**2-Y**2) (N = 400)
+PAUSE
+.
+3D-PLOT EXP(-X**2-Y**2) FOR X = -2 .2 2 FOR Y = -2 .2 2
+PAUSE
+.
+. -------------------------------------------------
+ER
+. PROBLEM 15 = PLOT 2 TRACES (N = 500 EACH)
+PAUSE
+.
+LET X = SEQUENCE .002 .002 1
+LET Y1 = X
+LET Y2 = X*X
+LINES SOLID DOT
+CHAR BLANK BLANK
+PLOT Y1 Y2 VERSUS X
+PAUSE
+DELETE X Y1 Y2
+.
+. -------------------------------------------------
+ER
+. PROBLEM 16 = PLOT SIN(X**2), SOLID, NO CHAR (N = 1000)
+PAUSE
+.
+LINES SOLID
+CHAR BLANK
+PLOT SIN(X**2) FOR X = .01 .01 10
+PAUSE
+.
+. -------------------------------------------------
+ER
+. PROBLEM 17 = INTEGRAL SIN(X**2) (0 TO 10)
+PAUSE
+.
+LET INTEG = INTEGRAL SIN(X**2) WRT X FOR X = 0 TO 10
+PAUSE
+DELETE INTEG
+.
+. -------------------------------------------------
+ER
+. PROBLEM 18 = PLOT SIN(X**2), SOLID, X (N = 1000)
+PAUSE
+.
+LINES SOLID
+CHAR X
+PLOT SIN(X**2) FOR X = .01 .01 10
+PAUSE
+CHAR
+.
+. -------------------------------------------------
+ER
+. PROBLEM 19 = PLOT SIN(X**2), SOLID, SPIKE (N = 1000)
+PAUSE
+.
+LINES SOLID
+CHAR
+SPIKE ON
+PLOT SIN(X**2) FOR X = .01 .01 10
+PAUSE
+SPIKE OFF
+.
+. -------------------------------------------------
+ER
+. PROBLEM 20 = 4-PLOT (N = 1000)
+PAUSE
+.
+LINES SOLID
+CHAR
+LET Z = NORMAL RANDOM NUMBERS FOR I = 1 1 1000
+4-PLOT Z
+PAUSE
+DELETE Z
+.
+. -------------------------------------------------
+ER
+. PROBLEM 21 = QUADRATIC FIT (N = 100)
+PAUSE
+.
+LET X = SEQUENCE 1 1 100
+LET Y = X**2
+QUADRATIC FIT Y X
+PAUSE
+.
+. -------------------------------------------------
+ER
+. PROBLEM 22 = READ IN 10 VAR. (N = 1000 EACH)
+PAUSE
+.
+READ JUNK2. X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
+PAUSE
+.
+. -------------------------------------------------
+ER
+. PROBLEM 23 = QUADRATIC FIT (N = 1000)
+PAUSE
+.
+LET X = SEQUENCE 1 1 1000
+LET Y = X**2
+QUADRATIC FIT Y X
+PAUSE
+DELETE X Y
+.
+. -------------------------------------------------
+.
+. NOTE--YOU HAVE JUST COMPLETED THE EXECUTION OF
+.       THE DATAPLOT MACRO (= SCRIPT FILE) MINITEST.DP
+.       TO RUN THE FILE AGAIN,          TYPE    CALL MINITEST.DP
+.       TO VIEW (BUT NOT RUN) THE FILE, TYPE    LIST MINITEST.DP

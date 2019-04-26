@@ -1,0 +1,22 @@
+This is file cum_cumulative sum.men--Compute sum of a variable
+ 
+--------------------
+ 1. Cumulative Sum
+ 2. LET A = CUMULATIVE SUM Y
+ 3.
+ 4. Variable for which to compute the cumulative sum:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the cumulative sum:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -10 50 *
+ 9.
+10.
+11. Compute the Cumulative Sum?:
+--------------------
+GR FE
+LET _2 = CUMULATIVE SUM _1 _3
+--------------------
+WEB HELP CUMULATIVE SUM
+--------------------

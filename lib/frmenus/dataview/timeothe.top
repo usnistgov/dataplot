@@ -1,0 +1,31 @@
+----- <~dataview\timeothe.top> View Time Series Data: Other
+
+View Time Series Data: Other
+
+SUNSPOT.DAT*  Monthly sunspot             <xcf: ~dataview\SUNSPOT.DP>
+SUNSPOT2.DAT  Yearly sunspot              <xcf: ~dataview\SUNSPOT2.DP>
+
+GEAR.DAT      Gear diameters (Ishikawa)   <xcf: ~dataview\GEAR.DP>
+CLEAR.DAT     Component clearances        <xcf: ~dataview\CLEAR.DP>
+MICHELSO.DAT  Michelson speed of light exp <xcf: ~dataview\MICHELSO.DP>
+LIN.DAT       Polonium 209 SRM conc       <xcf: ~dataview\LIN.DP>
+
+SIN1.DAT      Sinusoidal (freq = .1)      <xcf: ~dataview\SIN1.DP>
+SIN2.DAT      Sinusoidal (freq = .2)      <xcf: ~dataview\SIN2.DP>
+SIN3.DAT      Sinusoidal (freq = .3)      <xcf: ~dataview\SIN3.DP>
+SIN4.DAT      Sinusoidal (freq = .4)      <xcf: ~dataview\SIN4.DP>
+SINNOISE.DAT  Sinusoidal with noise       <xcf: ~dataview\SINNOISE.DP>
+
+RANDN.DAT     Normal random numbers       <xcf: ~dataview\RANDN.DP>
+RANDU.DAT     Uniform random numbers      <xcf: ~dataview\RANDU.DP>
+RANDWALK.DAT  Random walk                 <xcf: ~dataview\RANDWALK.DP>
+FLICKER.DAT   Flicker noise               <xcf: ~dataview\FLICKER.DP>
+LOTTERY3.DAT  Maryland "pick 3" lott. #'s <xcf: ~dataview\LOTTERY3.DP>
+LOTTERY4.DAT  Maryland "pick 4" lott. #'s <xcf: ~dataview\LOTTERY4.DP>
+
+CONSUMPR.DAT  Consumer price index        <xcf: ~dataview\CONSUMPR.DP>
+GNP.DAT       Gross national product      <xcf: ~dataview\GNP.DP>
+OIL.DAT       Oil depth analysis          <xcf: ~dataview\OIL.DP>
+
+CO2.DAT       CO2 Concentrations          <xcf: ~dataview\CO2.DP>
+

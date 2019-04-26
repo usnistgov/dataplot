@@ -1,0 +1,50 @@
+This is Dataplot data file    GAM3BURY.DAT
+Sample data set from Example 13.5 of
+Karl Bury, "Statistical Distributions in Engineering",
+Cambridge University Press, 1999, p. 232-233.
+
+Response variable = 25 random numbers from a 3-parameter Gamma
+                    distribution with
+
+                       loc    = 40
+                       scale  = 10
+                       shape  = 1.65
+
+Number of observations = 25
+Number of observations per line image = 1
+Order of observations per line image--
+   1. Response variable
+To read this file into Dataplot--
+   SKIP 25
+   READ GAM3BURY.DAT Y
+   3-PARAMETER GAMMA MAXIMUM LIKELIHOOD Y
+
+
+
+  Y
+----
+ 56.8
+ 55.2
+ 51.4
+ 56.7
+ 50.0
+ 47.9
+ 72.0
+ 78.1
+ 68.4
+ 52.2
+ 67.4
+ 63.0
+ 45.1
+ 50.3
+ 47.6
+ 47.8
+ 52.9
+ 66.6
+ 58.5
+ 84.9
+ 63.1
+ 64.0
+ 81.9
+ 44.9
+ 43.3

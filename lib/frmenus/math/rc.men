@@ -1,0 +1,24 @@
+This is file rc.men--Compute Carlson's RC elliptic integral
+ 
+--------------------
+ 1. Carlson's Degnerate Elliptic Integral (RC)
+ 2. LET Y = RC(X,Y)
+ 3.
+ 4. X-axis variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Y-axis variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Variable to store the transformed result:
+ 6. @CE 5 0 42 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 6 0 -5 50 *
+10.
+11.
+12. Compute the Transformation?:
+--------------------
+GR FE
+LET _5 = RC( _1 , _2 ) _6
+--------------------
+WEB HELP RC
+--------------------

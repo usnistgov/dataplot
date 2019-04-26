@@ -1,0 +1,90 @@
+----- <~dex\2kmpres4.top> Index: Minimal Resolution 4 2**(k-p) Designs
+
+Index: Minimal Resolution 4 2**(k-p) Designs
+
+How to use this table--
+   For a given number of factors k, the
+   following table gives the name of the
+   design, the associated minimal number
+   of runs, and the construction technique
+   in order to achieve a design which has
+   resolution 4 or higher.  All designs start
+   with the first k-p columns being the full
+   factorial design with n runs.  The remaining
+   columns in the design are given by the
+   rightmost entry in the table below.
+
+   Number of  Name of    No. of Resol.  Factor
+   Factors k  2**(k-p)    Runs    r     Definitions
+               Design      n
+   .....................................................
+       2      2**2         4     inf.   None--a full
+                                        factorial des.
+
+       3      2**3         8     inf.   None--a full
+                                        factorial des.
+
+       4      2**(4-1)     8      4     4=123
+
+       5      2**(5-1)    16      4     4=12 5=13
+
+       6      2**(6-2)    16      4     5=123 6=234
+
+       7      2**(7-3)    16      4     5=123 6=234
+                                        7=134
+
+       8      2**(8-4)    16      4     5=234 6=134
+                                        7=123 8=124
+
+       9      2**(9-4)    32      4     6=2345 7=1345
+                                        8=1245 9=1235
+
+      10      2**(10-5)   32      4     6=1234 7=1235
+                                        8=1245 9=1345
+                                        0=2345
+
+      11      2**(11-6)   32      4     6=123 7=234
+                                        8=345 9=134
+                                        0=145 A=245
+
+      12      2**(12-7)   32      4     6=123 7=124
+                                        8=125 9=134
+                                        0=135 A=145
+                                        B=234
+
+      13      2**(13-8)   32      4     6=123 7=124
+                                        8=125 9=134
+                                        0=135 A=145
+                                        B=234 C=235
+
+      14      2**(14-9)   32      4     6=123 7=124
+                                        8=125 9=134
+                                        0=135 A=145
+                                        B=234 C=235
+                                        D=245
+
+      15      2**(15-10)  32      4     6=123 7=124
+                                        8=125 9=134
+                                        0=135 A=145
+                                        B=234 C=235
+                                        D=245 E=345
+
+      16      2**(16-11)  32      4     6=123 7=124
+                                        8=125 9=134
+                                        0=135 A=145
+                                        B=234 C=235
+                                        D=245 E=345
+                                        F=12345
+
+      17      2**(17-11)  64      4     7=123 8=124
+                                        9=125 0=126
+                                        A=134 B=135
+                                        C=136 D=145
+                                        E=146 F=156
+                                        G=234
+
+      18-32   2**(k-p)    64      4     See Box,
+                                        Hunter &
+                                        Hunter, p.
+                                        412-413.
+

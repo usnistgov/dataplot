@@ -1,0 +1,126 @@
+This is Dataplot data file    BIRBSAUN.DAT
+
+Source: Birnbaum, Z. W. and Saunders, S. C. (1958), A Statistical Model
+        for Life-Length of Materials, Journal of the American Statistical
+        Association, 53(281), pp. 151-160. 
+
+Response variable = measurements of fatigue life (thousands of cycles until
+                    rupture) of rectangular strips of 6061-T6 aluminum
+                    sheeting, subjected to periodic loading with maximum
+                    stress of 21,000 psi (pounds per square inch)
+Number of observations = 101
+Number of observations per line image = 1
+Order of observations per line image--
+   1. Response variable = fatigue life
+
+To read this file into Dataplot--
+
+   SKIP 25
+   READ BIRNSAUN.DAT Y
+
+
+
+
+   Y
+----------------------
+  370
+ 1016
+ 1235
+ 1419
+ 1567
+ 1820
+  706
+ 1018
+ 1238
+ 1420
+ 1578
+ 1868
+  716
+ 1020
+ 1252
+ 1420
+ 1594
+ 1881
+  746
+ 1055
+ 1258
+ 1450
+ 1602
+ 1890
+  785
+ 1085
+ 1262
+ 1452
+ 1604
+ 1893
+  797
+ 1102
+ 1269
+ 1475
+ 1608
+ 1895
+  844
+ 1102
+ 1270
+ 1478
+ 1630
+ 1910
+  855
+ 1108
+ 1290
+ 1481
+ 1642
+ 1923
+  858
+ 1115
+ 1293
+ 1485
+ 1674
+ 1940
+  886
+ 1120
+ 1300
+ 1502
+ 1730
+ 1945
+  886
+ 1134
+ 1310
+ 1505
+ 1750
+ 2023
+  930
+ 1140
+ 1313
+ 1513
+ 1750
+ 2100
+  960
+ 1199
+ 1315
+ 1522
+ 1763
+ 2130
+  988
+ 1200
+ 1330
+ 1522
+ 1768
+ 2215
+  990
+ 1200
+ 1355
+ 1530
+ 1781
+ 2268
+ 1000
+ 1203
+ 1390
+ 1540
+ 1782
+ 2440
+ 1010
+ 1222
+ 1416
+ 1560
+ 1792

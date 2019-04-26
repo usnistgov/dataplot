@@ -1,0 +1,9 @@
+----- <~dataview\qual.top> View Built-in Quality/SPC Data Files
+
+View Built-in Quality/SPC Data Files
+
+7 Old Tools                              <xcf: ~dataview\OLDTOOLS.DP>
+Control Charts                           <~dataview\qualcoch.top>
+Process Capability Index                 <~dataview\qualpci.top>
+Taguchi                                  <~dataview\qualtag.top>
+

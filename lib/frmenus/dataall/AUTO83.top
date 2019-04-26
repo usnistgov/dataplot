@@ -1,0 +1,8 @@
+----- <~dataall\AUTO83.top> AUTO83.DAT
+
+AUTO83.DAT
+
+View     <xcl: LIST AUTO83.DAT>
+Load     <xcf: ~dataload/AUTO83.DP>
+Print    <xccl: printfile C:\DATAPLOT\AUTO83.DAT>
+

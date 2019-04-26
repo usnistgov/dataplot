@@ -1,0 +1,24 @@
+This is file disppf.men--Compute Discrete Uniform ppf
+ 
+--------------------
+ 1. Compute Discrete Uniform ppf
+ 2. LET A = DISPPF(P,N)
+ 3.
+ 4. Input values:
+ 5.               p (0 <= p <= 1):
+ 5. @CE 1 0 42 50 ?
+ 6.                 upper limit n:
+ 6. @CE 2 0 42 50 ?
+ 7.
+ 8. Output parameters:
+ 9.        name for the ppf value:
+ 9. @CE 3 0 42 50 ?
+10.
+11.
+12. Compute the Probability?
+--------------------
+AN FE
+@IF 3 0 LET _3 = DISPPF( _1 , _2 )
+--------------------
+WEB HELP DISPPF
+--------------------

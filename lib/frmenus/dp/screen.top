@@ -1,0 +1,10 @@
+----- <~dp\screen.top> Screen
+ 
+Screen
+ 
+Erase & go to graphics    mode: ERASE
+Erase & go to text scroll mode: ER
+ 
+Copy the last plot            : PP
+Copy text output              : ??
+ 

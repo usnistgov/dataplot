@@ -1,0 +1,62 @@
+This is file tukhispd.men--Histogram & Superimposed Tukey pdf Plot
+
+--------------------
+ 1. Histogram & Superimposed Tukey pdf Plot
+ 2. HIST Y; PLOT TUKPDF(X,LAMBDA) FOR X=START INC STOP
+ 3.
+ 4. pdf   : f(x;lambda)  = no general closed form
+ 5. mean  : E(X)     = u
+ 6. st dev: SD(X)    = ...
+ 7.
+ 8. Relative histogram of data:
+ 9.    Name of data variable:
+ 9. @CE 1 0 31 49 ? gui-vari
+10.    Class width:
+10. @CE 2 0 31 49 ?
+11.    Lower limit of 1st  class:
+11. @CE 3 0 31 49 ?
+12.    Upper limit of last class:
+12. @CE 4 0 31 49 ?
+13.    Bar fill on/off:
+13. @CE 5 0 31 49 ?
+14.
+15. Superimposed Tukey probability density function:
+16.    Tail length lambda:
+16. @CE 6 0 31 49 ?
+17.    Location u:
+17. @CE 7 0 31 49 ?
+18.    Scale s:
+18. @CE 8 0 31 49 ?
+19.    Start point:
+19. @CE 9 0 31 49 ?
+20.    Increment:
+20. @CE 10 0 31 49 ?
+21.    Stop point:
+21. @CE 11 0 31 49 ?
+22.    Line type:
+22. @CE 12 0 31 49 gui-line
+23.
+24.
+25. Generate the plot?
+--------------------
+AN FE
+@IF 2 0 CLASS WIDTH _2
+@IF 3 0 CLASS LOWER _3
+@IF 4 0 CLASS UPPER _4
+@IF 1 0 RELATIVE HISTOGRAM _1
+@IF 1 0 LIMITS FREEZE
+.
+PRE-ERASE OFF
+@IF 5 0 BAR FILL _5
+LET ZLAMBDA = _6
+LET ZLOC = 0
+@IF 7 0 LET ZLOC = _7
+LET ZSCALE = 1
+@IF 8 0 LET ZSCALE = _8
+@IF 12 0 LINES _12
+PLOT (1/ZSCALE) * LAMPDF((X-ZLOC)/ZSCALE,ZLAMBDA) FOR X = _9 _10 _11
+@IF 1 0 LIMITS
+PRE-ERASE ON
+--------------------
+WEB HELP LAMPDF
+--------------------

@@ -1,0 +1,29 @@
+This is Dataplot Data file    ZARR4.DAT
+temperature-voltage calibration curve
+ 
+Goal: Develop a calibration curve so that a user
+      can deduce temperature from voltage.
+The data below was gotten from NIST
+experiments in which
+   temperature was set
+   voltage was measured
+The non-NIST user will
+   measure voltage
+   and deduce temperature
+ 
+Concern 1: Calibration or inverse calibration?
+Concern 2: Linear, quadratic, or sqrt
+Concern 3: Is (0,0) a measured point or theoretical?
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+temperature    voltage
+-----------------------
+-25       -936
+0          0
+2.5        96
+30        1196

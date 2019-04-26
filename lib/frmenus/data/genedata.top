@@ -1,0 +1,30 @@
+----- <~data\genedata.top> Generate Data
+
+Generate Data
+
+Arbitrary List of Numbers           <xemf: ~data\gendata.men>
+Sequence                            <xemf: ~data\genseq.men>
+Pattern                             <xemf: ~data\genpatt.men>
+
+Sort                                <~math\sort.men>
+Rank                                <~math\rank.men>
+Convert Data to:
+   Response Group-ID                <~data\stack.men>
+   Response LabID  MatID            <~data\repstack.men>
+
+Math Transformations and Functions  <~math\datatran.top>
+Math Calculations                   <~math\mathtran.top>
+
+Location and Scale Calculations     <~math\locatran.top>
+Other Statistical Transformations   <~math\stattran.top>
+
+Random numbers                      <~prob\randnumb.top>
+   Normal N(mu,sigma)               <xemf: ~prob\gennorrn.men>
+   Symmetric                        <xemf: ~prob\gensymrn.men>
+   Skewed                           <xemf: ~prob\genskern.men>
+   Discrete                         <xemf: ~prob\gendisrn.men>
+
+Math Sequences
+   Prime     numbers                <xemf: ~math\prime.men>
+   Fibonacci numbers                <xemf: ~math\fibonn.men>
+

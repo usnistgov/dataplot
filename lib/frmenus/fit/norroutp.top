@@ -1,0 +1,25 @@
+----- <~fit\norroutp.top> Output: Jim Norris Calibration Procedure
+
+Output: Jim Norris Calibration Procedure
+
+1. Case designation
+     Model      : linear adequate?
+     Runs       : outliers?
+                  homogeneous?
+                  constant variance?
+                  within-run time drift?
+                  across-run time drift?
+     Data points: outliers (zero)?
+2. Assumptions
+3. Compute fit statistics for all individual runs:
+     n, int, sd(int), slope, sd(slope), ressd
+4. Compute final statistics:
+     intercept: est., sd(est.), df
+     slope    : est., sd(est.), df
+     res. sd  : est., sd(est.), df
+5. Final calibration curve
+6. Final inverse calibration curve
+7. Compute inv. calibration table & uncertainty intervals
+8. Interpretation
+9. Recommendations for Customers
+

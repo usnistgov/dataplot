@@ -1,0 +1,56 @@
+This is file vectplot.men--Vector Plot
+ 
+--------------------
+ 1. Vector Plot
+ 2. VECTOR PLOT Y X
+ 3.
+ 4. Vector plots connect 2 pairs of (x,y) points with an arrow.  The first
+ 5. set of points identify the starting points of the arrows and the
+ 6. second set of points define the stopping points.  Optionally, the
+ 7. second set of points can define a distance (i.e., change in x and
+ 8. change in y relative to the first point) or they define an angle
+ 9. and distance relative to the first point.
+10. 
+11. Vertical   Axis Variable for Start Point:
+11. @CE 1 0 53 70 ? gui-vari
+12. Horizontal Axis Variable for Start Point:
+12. @CE 2 0 53 70 ? gui-vari
+13. Vertical   Axis Variable for Stop Point 
+14.    (or y displacement or angle):
+14. @CE 3 0 53 70 ? gui-vari
+15. Horizontal Axis Variable for Stop Point
+16.    (or x displacement or distance):
+16. @CE 4 0 53 70 ? gui-vari
+17.
+18. Type of Data for Second Set of Points:
+19. @CE 5 1  5 20 Stop point
+19. @CE 5 2 22 42 x and y displacement
+19. @CE 5 3 44 64 angle and distance
+20. 
+21. Scale Size of Vector Head:
+21. @CE 6 1 35 40 Yes
+21. @CE 6 2 42 47 No
+22. Height of Arrow Head (typical value = 0.3):
+22. @CE 8 0 53 70 *
+23. Width of Arrow Head (typical value = 0.6):
+23. @CE 9 0 53 70 *
+24.
+25. Subset/Except/For Specification:
+26. @CE 7 0 1 70 *
+27.
+28.
+29. Generate the Vector Plot?:
+--------------------
+GR FE
+CHARACTER VECTOR ALL
+CHARACTER HW _8 _9 ALL
+VECTOR ARROW OPEN
+@IF 6 1 VECTOR ARROW VARIABLE
+@IF 6 2 VECTOR ARROW FIXED
+@IF 5 1 VECTOR FORMAT POINT
+@IF 5 2 VECTOR FORMAT DELTA
+@IF 5 3 VECTOR FORMAT ANGLE
+VECTOR PLOT _1 _2 _3 _4 _7
+--------------------
+WEB HELP VECTOR PLOT
+--------------------

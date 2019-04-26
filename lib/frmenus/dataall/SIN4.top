@@ -1,0 +1,8 @@
+----- <~dataall\SIN4.top> SIN4.DAT
+
+SIN4.DAT
+
+View     <xcl: LIST SIN4.DAT>
+Load     <xcf: ~dataload/SIN4.DP>
+Print    <xccl: printfile C:\DATAPLOT\SIN4.DAT>
+

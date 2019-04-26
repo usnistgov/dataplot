@@ -1,0 +1,8 @@
+----- <~dataall\NELSON.top> NELSON.DAT
+
+NELSON.DAT
+
+View     <xcl: LIST NELSON.DAT>
+Load     <xcf: ~dataload/NELSON.DP>
+Print    <xccl: printfile C:\DATAPLOT\NELSON.DAT>
+

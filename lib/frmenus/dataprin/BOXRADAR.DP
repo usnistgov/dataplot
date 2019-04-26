@@ -1,0 +1,6 @@
+----- <~dataprin\BOXRADAR.DP> Print (to Printer) BOXRADAR.DAT
+
+. This is file    BOXRADAR.DP
+
+PRINT BOXRADAR.DAT
+

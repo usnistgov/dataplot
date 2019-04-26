@@ -1,0 +1,70 @@
+This is file bihist.men--Bihistogram
+ 
+--------------------
+1. Bihistogram
+2. BIHISTOGRAM Y1 Y2
+3.
+4. First Horizontal Axis Variable:
+4. @CE 1 0 33 50 ? gui-variable
+5. Second Horizontal Axis Variable:
+5. @CE 14 0 33 50 ? gui-variable
+6.
+7. Class Width (0.3*s):
+7. @CE 2 0 33 50 *
+8. Lower Limit of First Class:
+8. @CE 3 0 33 50 *
+9. Upper Limit of Last Class:
+9. @CE 4 0 33 50 *
+10.
+11. Bar Width for Data:
+11. @CE 5 0 33 50 *
+12. Bar Fill for Data (off, on):
+12. @CE 6 0 33 50 * gui-ooff
+13. Bar Dimension (2d, 3d):
+13. @CE 7 1 32 36 2d
+13. @CE 7 2 38 42 3d
+14.
+15. Title:
+15. @CE 8 0 18 50 *
+16. Left Axis Label:
+16. @CE 9 0 18 100 *
+17. Bottom Axis Label:
+17. @CE 10 0 18 100 *
+18.
+19. Type of Bihistogram:
+20. @CE 12 1 10 45 counts (default)
+21. @CE 12 2 10 45 cumulative counts
+22. @CE 12 3 10 45 relative
+23. @CE 12 4 10 45 cumulative relative
+24. For Relative Bihistogram:
+25. @CE 13 1 10 45 area under bihistogram sums to 1
+26. @CE 13 2 10 45 heights of bihistogram bars sum to 1
+27.
+28. Subset/Except/For Specification: 
+29. @CE 11 0 1 50 *
+30.
+31.
+32. Generate the Bihistogram?:
+--------------------
+GR FE
+CLASS WIDTH _2
+CLASS LOWER _3
+CLASS UPPER _4
+BAR FILL _5
+BAR WIDTH _6
+@IF 7 1 BAR DIMENSION 2
+@IF 7 2 BAR DIMENSION 3
+TITLE _8
+Y1LABEL _9
+X1LABEL _10
+@IF 13 1 SET RELATIVE HISTOGRAM AREA
+@IF 13 2 SET RELATIVE HISTOGRAM PERCENT
+LET STRING ZZZZSTR = BIHISTOGRAM
+@IF 12 2 LET STRING ZZZZSTR = CUMULATIVE BIHISTOGRAM
+@IF 12 3 LET STRING ZZZZSTR = RELATIVE BIHISTOGRAM
+@IF 12 4 LET STRING ZZZZSTR = CUMULATIVE RELATIVE BIHISTOGRAM
+^ZZZZSTR  _1 _14 _11
+DELETE ZZZZSTR
+--------------------
+WEB HELP BIHISTOGRAM
+--------------------

@@ -1,0 +1,78 @@
+This is Dataplot data file     MANDE131.DAT
+Strength of Cotton Yarn
+Source--Mandel, John (1964).
+        The Statistical Analysis of Experimental Data.?????
+        Wiley, New York, page 131.
+Response Variable                  = Strength (= Breaking Load)
+Number of observations             = 48 (= 2 x 6 x 4)
+Number of variables per line image = 3
+Order of variables per line image--
+   Response variable = strength  (= breaking load)
+   Factor 1          = yarn type (2 levels)
+   Factor 2          = bobbin    (6 levels)
+Statistical area--Multifactor
+Problem Type    --Comparative
+Design type     --Randomized Block
+To read this file into Dataplot--
+      SKIP 25
+      READ MANDE131.DAT Y X1 X2
+
+
+
+
+Strength     Yarn     Bobbin
+   Y          X1        X2
+----------------------------
+  15.0         1         1
+  17.0         1         1
+  13.8         1         1
+  15.5         1         1
+  18.2         2         1
+  16.8         2         1
+  18.1         2         1
+  17.0         2         1
+
+  15.7         1         2
+  15.6         1         2
+  17.6         1         2
+  17.1         1         2
+  17.2         2         2
+  18.5         2         2
+  15.0         2         2
+  16.2         2         2
+
+  14.8         1         3
+  15.8         1         3
+  18.2         1         3
+  16.0         1         3
+  15.2         2         3
+  15.9         2         3
+  14.5         2         3
+  14.2         2         3
+
+  14.9         1         4
+  14.2         1         4
+  15.0         1         4
+  12.8         1         4
+  15.6         2         4
+  16.0         2         4
+  15.2         2         4
+  14.9         2         4
+
+  13.0         1         5
+  16.2         1         5
+  16.4         1         5
+  14.8         1         5
+  19.2         2         5
+  18.0         2         5
+  17.0         2         5
+  16.9         2         5
+
+  15.9         1         6
+  15.6         1         6
+  15.0         1         6
+  15.5         1         6
+  16.2         2         6
+  15.9         2         6
+  14.9         2         6
+  15.5         2         6

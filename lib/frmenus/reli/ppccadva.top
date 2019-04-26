@@ -1,0 +1,51 @@
+-----<~reli\ppccadva.top> PPCC Plots: Advantages
+
+PPCC Plots: Advantages
+
+PPCC Plots: Advantages
+
+The PPCC plot/probability plot method has a number
+of attractive features.
+
+   1) The PPCC plot is based on two well understood
+      ideas:
+
+      a. The linearity of the probability plot is
+         a good measure of distributional fit.
+
+      b. The correlation coefficient is a good measure
+         of the linearity of the probability plot.
+
+   2) The method is generic, so it can easily be applied
+      to a wide range of distributions.  For
+      distributions with either a single shape parameter
+      or no shape parameter, you can easily implement
+      this method as long as you can compute the
+      percent point function.
+
+      The computational efficiency of this method is
+      directly tied to the efficiency of the percent
+      point function.  If the percent point function is
+      fast (e.g., it exists in simple, closed form),
+      generating PPCC plots is also quite fast even for
+      large data sets.  If the percent point function
+      is expensive, the method slows down.  However, it
+      is still a practical method for most distributions
+      with one or fewer shape parameters.
+
+   3) The probability plot is invariant with respect to
+      location and scale parameters.  The practical
+      effect of this is that this method handles location
+      and scale parameters in a convenioent manner (maximum
+      likelihood methods often break down numerically when
+      including location parameters).
+
+   4) This method can sometimes work in regions of the
+      parameter space where maximum likelihood methods
+      don't exist.
+
+   5) The PPCC plot provides a good indication of the
+      sensitivity of the shape parameter.  That is, we can
+      easily see how quickly the maximum correlation coefficient
+      declines in the neighborhood of the maximum value.
+

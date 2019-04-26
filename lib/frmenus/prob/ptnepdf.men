@@ -1,0 +1,50 @@
+This is file ptnepdf.men--Plot Truncated Exponential PDF
+ 
+--------------------
+ 1. Plot a Truncated Exponential PDF Function
+ 2. PLOT TNEPDF(X,4,1,2) FOR X = 1.01 0.01 3.99
+ 3.
+ 4. You can specify the range of values to plot either
+ 5. by providing an input vector containing the explicit
+ 6. input values or by providing the start, increment,
+ 7. and stop values.
+ 8.
+ 9. Input Variable (optional):
+ 9. @CE 1 0 42 50 ? gui-variable
+10.
+11. Start Value (> u):
+11. @CE 2 0 42 50 ?
+12. Increment Value (defaults to 0.1):
+12. @CE 3 0 42 50 ?
+13. Stop Value (< x0):
+13. @CE 4 0 42 50 ?
+14.
+15. Variable to Store the PDF Values (optional):
+15. @CE 5 0 42 50 ?
+16.
+17. Truncation Level Parameter x0 (> u):
+17. @CE 6 0 42 50 ?
+18. Location Parameter u:
+18. @CE 7 0 42 50 ?
+19. Shape Parameter s (> 0):
+19. @CE 8 0 42 50 ?
+20.
+21.
+22. Plot the Truncated Exponential PDF's?
+--------------------
+AN FE
+LET ZSH1 = 1
+LET ZSH2 = 1
+LET ZSH3 = 1
+@IF 6 0 LET ZSH1 = _6
+@IF 7 0 LET ZSH2 = _7
+@IF 8 0 LET ZSH3 = _8
+LET ZINC = 0.1
+@IF 3 0 LET ZINC = _3
+@IF 1 0 LET ZJUNK = TNEPDF( _1  ,ZSH1,ZSH2,ZSH3)
+@IF 1 0 PLOT ZJUNK _1
+@IF 2 0 PLOT TNEPDF( ZZZZ ,ZSH1,ZSH2,ZSH3) FOR ZZZZ = _2 ZINC _4
+@IF 5 0 LET _5 = YPLOT
+--------------------
+WEB HELP TNEPDF
+--------------------

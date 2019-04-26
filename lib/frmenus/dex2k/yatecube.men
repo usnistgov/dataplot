@@ -1,0 +1,30 @@
+This is file yatecube.men--Generate Yates Cube Plot
+
+--------------------
+ 1. Yates Cube Plot
+ 2. YATES CUBE PLOT Y X1 X2 X3
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. List 3 Factor Variables:
+ 6. @CE 2 0 1 50 ? gui-vari
+ 7.
+ 8. Plot Title:
+ 9. @CE 3 0 1 50 *
+10.
+11. Subset/Except/For Specification: 
+12. @CE 4 0 1 50 *
+13.
+14.
+15. Generate the Yates Cube Plot?:
+--------------------
+GR FE
+DEVICE 1 FONT SIMPLEX
+. FRAME CORNER COORDINATES 5 5 95 95
+TITLE _3
+YATES CUBE PLOT _1 _2  _4
+FRAME CORNER COORDINATES
+DEVICE 1 FONT TEKTRONIX
+--------------------
+WEB HELP YATES CUBE PLOT
+--------------------

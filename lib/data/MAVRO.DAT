@@ -1,0 +1,75 @@
+This is Dataplot data file     MAVRO.DAT
+NIST filter transmittance experiment
+NIST experimentalist--Mavrodineaunu
+Date--1970's
+Response variable = transmittance of a filter
+                    (nominal value = 2)
+Number of observations = 50
+Number of variables per line image = 1
+Order of variables on a line image--
+Response variable = transmittance
+Note--data collected by automatic data acquisition system
+      at 10 observations per second; thus these
+      50 observations were collected in 5 seconds.
+      The sampling rate is controllable by Mavro.
+Question--what value to assign to the filter?
+          with what uncertainty?
+Statistical areas--univariate analysis
+                   time series analysis
+                   4-PLOT
+To read this file into Dataplot--
+   SKIP 25
+   READ MAVRO.DAT Y
+ 
+Transmittance
+--------------
+   2.00180
+   2.00170
+   2.00180
+   2.00190
+   2.00180
+   2.00170
+   2.00150
+   2.00140
+   2.00150
+   2.00150
+   2.00170
+   2.00180
+   2.00180
+   2.00190
+   2.00190
+   2.00210
+   2.00200
+   2.00160
+   2.00140
+   2.00130
+   2.00130
+   2.00150
+   2.00150
+   2.00160
+   2.00150
+   2.00140
+   2.00130
+   2.00140
+   2.00150
+   2.00140
+   2.00150
+   2.00160
+   2.00150
+   2.00160
+   2.00190
+   2.00200
+   2.00200
+   2.00210
+   2.00220
+   2.00230
+   2.00240
+   2.00250
+   2.00270
+   2.00260
+   2.00260
+   2.00260
+   2.00270
+   2.00260
+   2.00250
+   2.00240

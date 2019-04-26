@@ -1,0 +1,46 @@
+----- <~fit\discorth.top> Orthogonal Distance Fitting
+ 
+Orthogonal Distance Fitting
+
+Orthogonal distance fitting is a technique for
+fitting when there are errors in the independent
+variable as the independent variable.  This is
+commonly referred to as the "errors in variables"
+model.  This model is useful for the case when
+there is signifiant measurement error in the
+indpependent variables.
+
+A complete discussion is not possible here.  We
+strongly recommend that you view the complete
+on-line help for a more complete discussion of
+the available options for Dataplot's implementation
+of orthogonal distance regression (Dataplot uses
+the ODRPACK library).
+
+In brief, you can specify:
+
+ 1) The response variable and a corresponding
+    weight variable for the response.
+ 2) A function to fit with its associated 
+    independent variables.
+    a) Each indpendent variable can be 
+       specified as fixed (i.e., no errors) or
+       with errors.
+    b) Each independent variable can have a
+       weight variable.  Weights only used if
+       the indpependent variable is not fixed.
+
+
+You can use the LET command to specify starting values
+for the model parameters.
+
+The orthogonal distance fit returns predicted (and
+residual) values for the response variable.  In 
+addition, it returns predicted values (and residuals,
+called deltas) for the independent variables that
+are not fixed.
+
+As a side benefit, the orthogonal distance fit can
+also fit implicit models (i.e., F(X;B) = 0)) and
+models with multiple response variables.
+

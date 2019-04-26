@@ -1,0 +1,8 @@
+----- <~datalist\WASHDC.top> WASHDC.DAT
+ 
+WASHDC.DAT
+ 
+View     <xcl: LIST WASHDC.DAT>
+Load     <x2cl: SKIP 25; READ WASHDC.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\WASHDC.DAT>
+ 

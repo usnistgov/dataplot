@@ -1,0 +1,59 @@
+This is file utsppf.men--Compute Uneven Two-Sided Power ppf
+ 
+--------------------
+ 1. Compute Uneven Two-Sided Power ppf
+ 2. LET A = UTSPPF(P,A,B,D,NU1,NU3,ALPHA)
+ 3.
+ 4. The input argument, p, can be either a
+ 5. single number, the name of a parameter,
+ 6. or the name of a variable.
+ 7.  
+ 8. Input values:
+ 9.                         p (0 <= p <= 1):
+ 9. @CE 1 0 42 50 ?
+10.                           lower limit a:
+10. @CE 2 0 42 50 ?
+11.                 threshold b (a < b < d):
+11. @CE 3 0 42 50 ?
+12.                           upper limit d:
+12. @CE 4 0 42 50 ?
+13.                       shape n1 (n1 > 0):
+13. @CE 5 0 42 50 ?
+14.                       shape n3 (n3 > 0):
+14. @CE 6 0 42 50 ?
+15.                 shape alpha (alpha > 0):
+15. @CE 7 0 42 50 ?
+16.
+17. Output parameters:
+18.                  name for the ppf value:
+18. @CE 8 0 42 50 ?
+19.
+20.
+21. Compute the Probability?
+--------------------
+AN FE
+LET ZA = 0
+LET ZD = 1
+LET ZB = 0.5
+LET ZSHAPE1 = 1
+LET ZSHAPE2 = 1
+LET ZSHAPE3 = 1
+@IF 2 0 LET ZA = _2
+@IF 3 0 LET ZB = _3
+@IF 4 0 LET ZD = _4
+@IF 5 0 LET ZSHAPE1 = _5
+@IF 6 0 LET ZSHAPE2 = _6
+@IF 7 0 LET ZSHAPE3 = _7
+IF ZSHAPE1 <= 0
+   LET ZSHAPE1 = 1
+END OF IF
+IF ZSHAPE2 <= 0
+   LET ZSHAPE2 = 1
+END OF IF
+IF ZSHAPE3 <= 0
+   LET ZSHAPE3 = 1
+END OF IF
+@IF 8 0 LET _8 = UTSPPF( _1 ,ZA,ZB,ZD,ZSHAPE1,ZSHAPE2,ZSHAPE3)
+--------------------
+WEB HELP UTSPPF
+--------------------

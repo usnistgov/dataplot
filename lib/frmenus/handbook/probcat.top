@@ -1,0 +1,39 @@
+----- <~handbook\probcat.top> Problem Categories
+
+EDA Problem Categories
+
+Univariate
+   4-Plot                       <xemf: ~univ\4plot.men>
+   Probability Plot             <~univ\probplot.top>
+   PPCC Plot                    <~univ\ppccplot.top>
+
+Control
+   Control Charts               <~qual\contchar.top>
+
+Comparative
+   Block Plot                   <xemf: ~stat\blockplo.men>
+   Box Plot                     <xemf: ~stat\boxplot.men>
+   Scatter Plot                 <xemf: ~stat\scatplot.men>
+
+Screening
+   Block Plot                   <xemf: ~stat\blockplo.men>
+   Probability Plot             <~univ\probplot.top>
+   Bihistogram                  <xemf: ~plot\bihist.men>
+
+Optimization 
+   Block Plot                   <xemf: ~stat\blockplo.men>
+   Least Squares Fitting        <~fit\fit.top>
+   Contour Plot                 <xemf: ~plot\contplda.men>
+
+Regression
+   Least Squares Fitting        <~fit\fit.top>
+   Scatter Plot                 <xemf: ~stat\scatplot.men>
+   6-Plot                       <xemf: ~stat\6plot.men>
+
+Time Series
+   Graphical Techniques         <~time\viewdata.top>
+   ARIMA Models                 <~time\arma.top>
+
+Multivariate
+   Graphical Techniques         <~plot\multplot.top>
+

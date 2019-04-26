@@ -1,0 +1,10 @@
+----- <~dataprin\qual.top> Print (to Printer) Built-in Quality/SPC Data Files
+
+Print (to Printer) Built-in Quality/SPC Data Files
+
+7 Old Tools                              <~dataprin\qual7old.top>
+Control Charts                           <~dataprin\qualcoch.top>
+EWMA                                     <~dataprin\qualewma.top>
+Process Capability Index                 <~dataprin\qualpci.top>
+Taguchi                                  <~dataprin\qualtag.top>
+

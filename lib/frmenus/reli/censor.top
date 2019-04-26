@@ -1,0 +1,36 @@
+----- <~reli\censor.top> Reliability--Censoring
+
+Discussion--Types of Censoring in Reliability
+
+For practical considerations, we often cannot let
+all items in a test run to failure.  There are two
+common approaches to this problem.
+
+   1) We run the test until a pre-specified amount
+      of time has elapsed.
+
+      This is referred to as Type I censoring.
+
+      If all units are placed in service at the
+      same time, then all items that have not failed
+      at the end end of the test have the same
+      censoring time.  This is referred to as
+      singly censored data.  Tests conducted in a
+      laboratory are likely to be singly censored.
+
+      On the other hand, units may be placed into
+      service at different times.  In this case,
+      the censoring times will not necesssarily be
+      identical.  This is referred to as multiply
+      censored data.  Multiply censored data is
+      frequently encountered when collecting data
+      from the field.
+
+   2) We run the test until a pre-specified number
+      of items fail.
+
+      This is referred to as Type II censoring.
+
+In practice, Type I censoring is the more common
+approach.
+

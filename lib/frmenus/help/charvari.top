@@ -1,0 +1,26 @@
+----- <~help\charvari.top> Character Variables
+
+Character Variables
+
+Character Variables
+
+By default, Dataplot treats character data as an error
+when reading variables.  However, Dataplot does provide
+some limited support for reading and using character
+data.  For more information
+
+
+To read character data:
+
+     CONVERT CHARACTER             <xcl: HELP CONVERT CHARACTER>
+     READ ROW LABEL                <xcl: HELP READ ROW LABEL>
+
+To use character data:
+
+     CHARACTER CODE                <xcl: HELP CHARACTER CODE>
+     ALPHABETIC CHARACTER CODE     <xcl: HELP ALPHABETIC CHARACTER CODE>
+     ROWLABEL                      <xcl: HELP ROWLABEL>
+     GROUP LABELS                  <xcl: HELP GROUP LABELS>
+     TIC MARK LABEL FORMAT         <xcl: HELP TIC MARK LABEL FORMAT>
+     TIC MARK LABEL CONTENT        <xcl: HELP TIC MARK LABEL CONTENT>
+

@@ -1,0 +1,29 @@
+----- <~dp\3corecom.top> 3 Core Commands: PLOT, FIT, and LET
+ 
+3 Core Commands: PLOT, FIT, and LET
+ 
+The 3 most important commands are PLOT, FIT, and LET:
+ 
+   PLOT: comprehensive plotting
+   FIT : general fitting/regression
+   LET : variety of analysis and data manipulation
+ 
+The "average" analyst commonly uses about 20
+commands.  The language as a whole consists
+of over 400 commands.  These 400+ commands
+are in 8 command categories--
+ 
+   1) Graphics                  5) Output Devices
+   2) Diagrammatic Graphics     6) Input/Output
+   3) Quantitative Analysis     7) Support
+   4) Plot Control              8) Reserved Words
+ 
+For syntax, default, etc.  information about
+an individual command the analyst may--at any
+time--enter HELP followed by the command
+name, as in
+ 
+   HELP PLOT
+   HELP FIT
+   HELP LET
+ 

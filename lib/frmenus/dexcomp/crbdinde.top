@@ -1,0 +1,45 @@
+----- <~dexcomp\crbdinde.top> Index: Randomized Block Designss
+ 
+Index: Randomized Block Designss
+ 
+    Name of      Number of      Number of
+    Design        Factors         Runs
+                     k              n
+    ...................................................
+    2-factor RBD     2           l1 * l2
+    3-factor RBD     3           l1 * l2 * l3
+    4-factor RBD     4           l1 * l2 * l3 * l4
+    .                .           .
+    k-factor RBD     k           l1 * l2 * ... * lk
+ 
+where
+    l2 = number of levels (settings) of factor 2
+    l3 = number of levels (settings) of factor 3
+    l4 = number of levels (settings) of factor 4
+    lk = number of levels (settings) of factor k
+
+
+The following is an example of a
+Randomized Block Design consisting of
+   k  = 2 factors (1 primary factor X1 &
+                   1 blocking factor X2)
+   l1 = 4 levels of factor X1
+   l2 = 3 levels of factor X2
+   r  = 1 replication per cell
+   n  = l1 * l2  =  4 * 3 = 12 runs
+ 
+    X1    X2
+   ............
+     1     1
+     1     2
+     1     3
+     1     4
+     2     1
+     2     2
+     2     3
+     2     4
+     3     1
+     3     2
+     3     3
+     3     4
+ 

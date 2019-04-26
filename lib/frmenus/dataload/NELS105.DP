@@ -1,0 +1,8 @@
+----- <~dataload\NELS105.DP> Load NELS105.DAT
+
+. This is file    NELS105.DP
+
+DELETE Y VOLTAGE
+SKIP 25
+READ NELS105.DAT Y VOLTAGE
+

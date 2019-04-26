@@ -1,0 +1,15 @@
+----- <~dataload\stsceda1.top> Chapter 1: EDA I
+
+Chapter 1: Exploratory Data Analysis I
+
+ 1. Anscombe Data                       <xcf: ~dataload\ANSCOMBE.DP>
+ 2. 500 Normal Random Numbers           <xcf: ~dataload\RANDN.DP>
+ 3. 500 Uniform Random Numbers          <xcf: ~dataload\RANDU.DP>
+ 4. Random Walk Data                    <xcf: ~dataload\RANDWALK.DP>
+ 5. Flicker Data                        <xcf: ~dataload\FLICKER.DP>
+ 6. Soulen Josephson Junction Data      <xcf: ~dataload\SOULEN.DP>
+ 7. Lew Concrete Beam Deflection Data   <xcf: ~dataload\LEW.DP>
+ 8. Simiu Extreme Wind Speed Data       <xcf: ~dataload\SIMIU.DP>
+ 9. Mavro Filter Transmittance Data     <xcf: ~dataload\MAVRO.DP>
+10. Dziuba Standard Resistor Data       <xcf: ~dataload\DZIUBA.DP>
+

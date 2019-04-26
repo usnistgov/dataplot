@@ -1,0 +1,8 @@
+----- <~dataload\BOXBIKE3.DP> Load BOXBIKE3.DAT
+
+. This is file    BOXBIKE3.DP
+
+DELETE Y X1 TO X7
+SKIP 25
+READ BOXBIKE3.DAT Y X1 TO X7
+

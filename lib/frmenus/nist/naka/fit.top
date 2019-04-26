@@ -1,0 +1,40 @@
+----- <~fit\fit.top> Fit----------------------------
+
+Fit
+
+Discussion                      <~fit\discussi.top>
+Assumptions                     <~fit\assumpti.top>
+
+Detecting (Linear) Relationships: Correlation Coefficient
+   Estimation                      <xemf: ~fit\esticorr.men>
+   Confidence limits               <xemf: ~fit\corrcoli.men>
+   Testing non-zero correlation    <xemf: ~fit\testcorr.men>
+
+The Modeling Cycle:             <~fit\modelcyc.top>
+   1. Select   Model            <~fit\modelsel.top>
+   2. Fit      Model                  <~fit\modelfit.top>
+        1. y = f(x)                   <~fit\data1var.top>
+        2. y = f(x1,x2,...)           <~fit\datamvar.top>
+        3. (y1,y2,...) = f(x1,x2,...) <~fit\datamres.top>
+   3. Validate Model            <~fit\modelval.top>
+
+Inferences from the model-fitting:
+   Linear fit:  confidence limits for interc.<xemf: ~fit\intecoli.men>
+   Linear fit:  confidence limits for slope <xemf: ~fit\slopcoli.men>
+   Single-use   confidence limits for Yhat  <xemf: ~fit\yhatcoli.men>
+   Simultaneous confidence limits for Yhat  <xemf: ~fit\yhatwhcl.men>
+   Single-use   prediction limits for Y     <xemf: ~fit\dataprli.men>
+   Simultaneous tolerance  limits for Y     <xemf: ~fit\datatoli.men>
+
+Special Topics
+   Linear calibration           <~fit\linecali.top>
+   Geometric Fitting            <~fit\geomfitt.top>
+   Transformations              <~fit\transfor.top>
+   Pre-fitting                  <~fit\prefitti.top>
+   NIST Ozone calibration       <~fit\ozoncali.top>
+
+Built-in Data Sets
+   View/Load/Print              <~dataview\reg.top>
+
+References                      <xcl: LIST ~fit\referenc.tex>
+

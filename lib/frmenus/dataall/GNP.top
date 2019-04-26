@@ -1,0 +1,8 @@
+----- <~dataall\GNP.top> GNP.DAT
+
+GNP.DAT
+
+View     <xcl: LIST GNP.DAT>
+Load     <xcf: ~dataload/GNP.DP>
+Print    <xccl: printfile C:\DATAPLOT\GNP.DAT>
+

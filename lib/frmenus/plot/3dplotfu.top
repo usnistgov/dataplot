@@ -1,0 +1,7 @@
+----- <~plot\3dplotfu.top> 3-D Function Plot
+
+3-D Function Plot
+
+1-trace              <xemf: ~plot\plotfu3d.men>
+Multi-trace          <xemf: ~plot\plotfm3d.men>
+

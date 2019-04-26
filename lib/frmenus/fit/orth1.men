@@ -1,0 +1,33 @@
+This is file orth.men--Orthogonal Distance Fitting
+ 
+--------------------
+1. Orthogonal Distance Fitting: Explicit Model
+2. ORTHOGONAL DISTANCE FIT Y = F
+3.
+4. Response Variable:
+4. @CE 1 0 52 60 ? gui-variable
+5. Weight Variable for the Response Variable:
+5. @CE 2 0 52 60 * gui-variable
+6.
+7. Linear/Nonlinear Function:
+8. @CE 3 0  1 60 *
+9.
+10. Variable(s) Specifying Which Variables Fixed/Not Fixed:
+11. @CE 4 0 1 60 ? gui-variable
+12. Weight Variable(s) for the Independent Variable(s):
+13. @CE 5 0 1 60 * gui-variable
+14.
+15. Subset/Except/For Specification:
+16. @CE 6 0 1 60 *
+17.
+18.
+19. Do the Orthogonal Distance Fit?
+--------------------
+GR FE
+WEIGHTS _2
+ORTHOGONAL DISTANCE ERROR _4
+ORTHOGONAL DISTANCE DELTA WEIGHTS _5
+ORTHOGONAL DISTANCE FIT _1 = _3 _6
+--------------------
+WEB HELP ORTHOGONAL DISTANCE FIT
+--------------------

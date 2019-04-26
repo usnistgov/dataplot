@@ -1,0 +1,8 @@
+----- <~datalist\LOTTERY3.top> LOTTERY3.DAT
+ 
+LOTTERY3.DAT
+ 
+View     <xcl: LIST LOTTERY3.DAT>
+Load     <x2cl: SKIP 25; READ LOTTERY3.DAT Y MON DAY YEAR>
+Print    <xccl: printfile C:\DATAPLOT\LOTTERY3.DAT>
+ 

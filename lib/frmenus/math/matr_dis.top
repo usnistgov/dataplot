@@ -1,0 +1,26 @@
+----- <~math\matr_dis.top> Matrix
+ 
+Matrix Operations
+ 
+Dataplot supports a number of matrix operations.  Note that
+matrices are NOT a fundamental data type in Dataplot.  That is,
+matrix operations are limited to a number of specific commands
+that explicitly expect matrices.
+
+The columns of a matrix can be manipulated as variables.  If the
+matrix name is M, the columns of the matrix can be accessed 
+by the names M1, M2, M3 and so on.
+
+For the default workspace size in Dataplot (20,000 rows by 10
+columns), the corresponding limits for matrices are a maximum
+of 1,500 rows and 100 columns.  A few commands (e.g., the
+transpose and the singular value decomposition) which generate
+result matrices with the number of columns equal to the number
+of rows of the original matrix are thus limited to original
+matrices with 100 rows or less.
+
+The most common application of matrices in Dataplot is to
+implement various multivariate techniques in macros.  For
+example, we have written macros to perform canonical correlation,
+Fisher's discriminant analysis, and to generate Gabriel's
+biplots.

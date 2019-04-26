@@ -1,0 +1,47 @@
+This is file fishdesc.men--Fisher Discriminant Analysis: Classify
+ 
+--------------------
+1. Fisher Classification
+2. Macro
+3.
+4. This macro assumes that you have already run the
+5. Fisher discriminant analysis (and the discriminant
+6. functions are stored in EVECT1, EVECT2, etc.).
+7. This menu uses certain values that were computed
+8. in the Fisher discrimination menu.
+9.
+10. What you specify to this menu is the number of
+11. discriminant functions to use in classification
+12. (typically 2 or 3) and the new points.  There
+13. should be one variable containing the new points
+14. corresponding to each response variable in the
+15. original data.
+16. 
+17. List of Variables Containing the New Points:
+18. @CE 1 0 1 50 ? gui-variable
+19. Number of Discriminant Functions to Use:
+19. @CE 2 0 42 50 ?
+20.
+21. Plot the Classified Points (against first 2 discriminants)?:
+22. @CE 3 1 5 10 yes
+22. @CE 3 2 11 16 no
+23.
+24. Subset/Except/For Specification: 
+25. @CE 4 0 1 50 *
+26.
+27.
+28. Run the Fisher Classification Analysis?:
+--------------------
+GR FE
+DELETE ZZZZX
+WRITE ZZZZJUNK.DAT _1 _4
+SKIP 0
+READ MATRIX ZZZZJUNK.DAT XNEW
+LET NR = 2
+LET NR = _2
+LET PLOTFLAG = 0
+@IF 3 2 LET PLOTFLAG = 1
+CALL FISHCLAS.DP
+--------------------
+WEB HELP VARIANCE-COVARIANCE MATRIX
+--------------------

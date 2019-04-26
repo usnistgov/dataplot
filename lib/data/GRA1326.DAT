@@ -1,0 +1,54 @@
+This is Dataplot data file    GRA1326.DAT
+Blood Pressure versus Age Analysis
+Source--Graybill & Iyer (1994). Regression Analysis:
+        Concepts and Applications, Duxbury, page 326.
+Note--This data file GRA1326.DAT has equivalent contents
+      to the Grabill-Iyer data file BP.DAT
+ 
+Response variable = blood pressure
+Number of observations = 25
+Number of variables per line image = 2
+Order of variables on a line image--
+   1. Response variable = blood pressure
+   2. Factor 1          = age (in years)
+Statistical category--Regression
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ GRA1326.DAT Y X
+ 
+ 
+ 
+ 
+ 
+Blood Pressure     Age
+------------------------
+     104            25
+     107            25
+     113            25
+     109            25
+ 
+     114            30
+     114            30
+     114            30
+     118            30
+     112            30
+ 
+     127            35
+     125            35
+     127            35
+     117            35
+     114            35
+     121            35
+ 
+     132            40
+     132            40
+     133            40
+     134            40
+     136            40
+     138            40
+ 
+     141            45
+     145            45
+     145            45
+     137            45

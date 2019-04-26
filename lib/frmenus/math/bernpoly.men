@@ -1,0 +1,29 @@
+This is file bernpoly.men--Compute Bernoulli Functions
+ 
+--------------------
+ 1. Bernoulli Polynomials
+ 2. LET Y = BN(X,5)
+ 3.
+ 4. Horizontal axis variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Order of the Bernoulli polynomial (max = 65):
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7.
+ 8. Plot?:
+ 8. @CE 5 1 14 20 no
+ 8. @CE 5 2 22 28 yes
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 6 0 -5 50 *
+12.
+13.
+14. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = BN( _1 , _2 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP BN
+--------------------

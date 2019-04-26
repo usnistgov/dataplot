@@ -1,0 +1,22 @@
+----- <~dataview\qualcoch.top> View Quality/SPC Data: Control Charts
+
+View Quality/SPC Data: Control Charts
+
+CCXBAR.DAT*   Silicon wafer thickness     <xcf: ~dataview\CCXBAR.DP>
+CCP.DAT       Number of defects           <xcf: ~dataview\CCP.DP>
+CCPN.DAT      Number of defects           <xcf: ~dataview\CCPN.DP>
+CCU.DAT       Wire cracks                 <xcf: ~dataview\CCU.DP>
+CCC.DAT       Surface defects             <xcf: ~dataview\CCC.DP>
+
+CROARKIN.DAT  Mass calibration            <xcf: ~dataview\CROARKIN.DP>
+CROARK2.DAT   SEM magnification standard  <xcf: ~dataview\CROARK2.DP>
+CROARK3.DAT   NIST SEM line width SRM     <xcf: ~dataview\CROARK3.DP>
+DRAFT69B.DAT  Draft lottery               <xcf: ~dataview\DRAFT69B.DP>
+
+GEAR.DAT      Gear diameters (Ishikawa)   <xcf: ~dataview\GEAR.DP>
+CLEAR.DAT     Component clearances        <xcf: ~dataview\CLEAR.DP>
+
+MONTGOME.DAT  Multivariate (from Montgomery 2001) <xcf: ~dataview\MONTGOME.DP>
+T2CC.DAT      Multivariate (from Ryan 1989)       <xcf: ~dataview\T2CC.DP>
+TRACY.DAT     Multivariate (from Tracy 1992)      <xcf: ~dataview\TRACY.DP>
+

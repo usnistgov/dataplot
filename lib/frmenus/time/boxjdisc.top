@@ -1,0 +1,102 @@
+----- <~time\boxjdisc.top> Discussion: Box-Jenkins Modeling
+ 
+Discussion: Box-Jenkins Modeling
+ 
+For time series data that are stationary, that
+is they have constant location and scale, the
+most common methods are based on autoregressive
+models (AR models) and moving average (MA) methods
+or a combination of these methods.  Stationarity
+means that the trend and seasonal components have
+already been removed.  For example, you might use
+a seasonal loess to separate trend and seasonality
+effects and then use AR and MA methods to model any
+remaining structure in the residuals.  There are
+other methods, such as differencing, to remove
+trend and seasonality effects.
+
+Box and Jenkins popularized an approach to using a
+combination of AR and MA methods.  This approach is
+commonly called ARIMA (AutoRegressive Integrated Moving
+Averages) or simply Box-Jenkins modeling.  Dataplot
+now supports an ARIMA modeling capability (using the
+STARPAC library developed by Janet Rodgers and Peter
+Tyron).
+
+The basic Box-Jenkins approach can be broken down
+into the following steps:
+
+  1) Remove trend so that the series is stationary.
+     In Box-Jenkins modeling, this is usually
+     accomplished by differencing the data.  Usually,
+     one differencing is enough.  Sometime two
+     differencings are required.  More than this is
+     almost never used in practice.
+
+  2) The next step is model identification.  The primary
+     tools are the autocorrelation plot and the 
+     partial autocorrelation plot.  The patterns of these
+     plots indicate an appropriate model.  A full
+     discussion of how to interpret these plots is more
+     than we can do here.  Consult an appropriate
+     time series text that covers Box-Jenkins
+     methodology for more information.
+
+     Dataplot supports the generation of both autocorrelation
+     and partial autocorrelation plots.
+
+  3) The next step is fitting the model.  Dataplot uses
+     the following command:
+
+       ARMA Y AR DIFF MA SAR SDIFF SMA PERIOD
+
+     where
+          Y = the time series variable
+         AR = the order of the autoregressive terms
+       DIFF = the number of differences to apply
+         MA = the order of the moving average terms
+        SAR = the order of the seasonal autoregressive terms
+      SDIFF = the number of seasonal differences to apply
+        SMA = the order of the seasonal moving average terms
+       PERI = the seasonal period
+
+     Although the software Dataplot uses to estimate the
+     ARMA model supports multiple seasonal periods, Dataplot
+     currently restricts the estimation to one non-seasonal
+     component and one seasonal component.  The seasonal
+     components can be omitted if you do not want to estimate
+     any seasonality.
+
+     You can optionally specify 2 additional variables for the
+     ARMA estimation:
+
+        ARPAR  = this variable contains starting values.
+                 The ARMA output lists the order of the
+                 parameters.  Dataplot uses 1 for all the
+                 parameters (except the constant term which
+                 is set to zero) by default.  Sometimes
+                 starting values can help improve convergence.
+       ARFIXED = 0 to estimate the parameter and 1 to leave the
+                 starting value (as specified by ARPAR) fixed.
+                 The most common use of this is to set certain
+                 parameters to zero.  For example, if you want
+                 to estimate the AR(2) term but not the AR(1)
+                 term, you would use ARPAR to set the value for
+                 AR(1) to zero and define it as fixed.
+
+  4) The final step is model validation.  This
+     involves the normal residual and diagnostic
+     checking that is performed in ordinary
+     linear and non-linear fitting.
+
+     If the model validation indicates that the
+     model is not adequate, then we go back to
+     step 2 and try to identify a more appropriate
+     model.  Several iterations may be required to
+     generate an adequate model.
+
+Once an adequate model is fit, it can be used for
+forecasting future data.  The Dataplot ARMA command 
+writes out forecasts for (N/10) + 1 future observations to
+a file.
+

@@ -1,0 +1,10 @@
+----- <~dataloex\ABERN17.DP> Load & Execute ABERN17.DAT
+
+. This is file    ABERN17.DP
+
+DELETE Y TAG X
+SKIP 25
+READ ABERN17.DAT Y TAG X
+TITLE ABERN17.DAT
+/
+

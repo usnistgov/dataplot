@@ -1,0 +1,25 @@
+----- <~fit\orthdist.top> Orthogonal Distance Fitting
+ 
+Orthogonal Distance Fitting
+ 
+Discussion                            <~fit\discorth.top>
+
+Assign a Value to a Parameter                    <xemf: ~math\assign.men>
+User Defined Functions                           <~math\user_fun.top>
+Pre-Fit (for starting values)                    <~fit\prefitti.top>
+
+Orthogonal Distance FIt (Explicit Model)         <xemf: ~fit\orth1.men>
+Orthogonal Distance FIt (Implicit Model)         <xemf: ~fit\orth2.men>
+
+Do Model Validation                   <~fit\modelval.top>
+
+Built-in Data Sets
+   View                         <~dataview\orthdist.top>
+   Load                         <~dataload\orthdist.top>
+
+Worked Examples
+   Fuller Compression Velocity          <xcl: CALL FULLODR1.DP>
+   Fuller X-Ray (Implicit Model)        <xcl: CALL FULLODR2.DP>
+   Draper and Smith Remaining Material  <xcl: CALL DRAPS521.DP>
+   Draper and Smith Saturated Steam     <xcl: CALL DRAPS518.DP>
+

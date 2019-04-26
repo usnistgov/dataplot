@@ -1,0 +1,8 @@
+----- <~dataall\BATTADD2.top> BATTADD2.DAT
+
+BATTADD2.DAT
+
+View     <xcl: LIST BATTADD2.DAT>
+Load     <xcf: ~dataload/BATTADD2.DP>
+Print    <xccl: printfile C:\DATAPLOT\BATTADD2.DAT>
+

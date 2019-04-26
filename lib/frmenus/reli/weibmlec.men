@@ -1,0 +1,32 @@
+This is file weibmlec.men--Weibull MLE Estimates
+ 
+--------------------
+ 1. Weibull Maximum Likelihood Estimates (censoring)
+ 2. WEIBULL MAXIMUM LIKELIHOOD Y TAG
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Optional Censoring Variable (1=failure, 0=censored):
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute Weibull MLE's?
+--------------------
+GR FE
+WEIBULL MAXIMUM LIKELIHOOD _1 _2 _3
+RELATIVE HISTOGRAM _1 _3 SUBSET _2 >= 0.5
+LIMITS FREEZE
+PRE-ERASE OFF
+LET ZZZZ1 = MINIMUM _1 _3
+LET ZZZZ2 = MAXIMUM _1 _3
+LET ZZZZINC = (ZZZZ2 - ZZZZ1)/1000
+SET MINMAX 1
+PLOT WEIPDF(ZZZZX,GAMMA,U2,B2) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+LIMITS
+PRE-ERASE ON
+--------------------
+WEB HELP WEIBULL MAXIMUM LIKELIHOOD
+--------------------

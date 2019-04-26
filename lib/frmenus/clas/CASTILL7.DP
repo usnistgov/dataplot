@@ -1,0 +1,10 @@
+----- <~dataloex\CASTILL7.DP> Load & Execute CASTILL7.DAT
+
+. This is file    CASTILL7.DP
+
+DELETE Y
+SKIP 25
+READ CASTILL7.DAT Y
+TITLE CASTILL7.DAT
+/
+

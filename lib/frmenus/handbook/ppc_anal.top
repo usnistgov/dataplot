@@ -1,0 +1,40 @@
+----- <~handbook\ppc_asu.top> PPC Assumptions
+
+Production Process Characterization Assumptions
+
+Graphical Techniques
+   Histogram                                  <xemf: ~univ\histogra.men>
+   Normal Probability Plot                    <xemf: ~univ\normprpl.men>
+   Scatter Plot                               <xemf: ~stat\scatplot.men>
+   Statistics for Grouped Data Plot           <~plot\statplot.top>
+   Statistics for Cross Tabulated  Data Plot  <~plot\crosplot.top>
+
+   Box Plot                                   <xemf: ~stat\boxplot.men>
+   Block Plot                                 <xemf: ~stat\blockplo.men>
+
+   Scatter Plot Matrix                        <~plot\matrplot.top>
+   Condition Plot                             <~plot\condplot.top>
+
+   Autocorrelation Plot                       <xemf: ~plot\autoplot.men>
+
+Analytic Techniques
+   Summary Statistics                         <xemf: ~stat\summstat.men>
+   Capability Analysis                        <xemf: ~stat\capabili.men>
+
+   Screening Designs
+     1. 2**k Full Factorial Designs           <~dex2k\dex2k.top>
+     2. 2**(k-p) Fractional Factorial Designs <~dex2kmp\dex2kmp.top>
+     3. Taguchi Fractional Factorial Designs  <~dextag\dextag.top>
+     4. Plackett-Burman Designs               <~dexpb\dexpb.top>
+   Response Surface Designs                   <~dexopt\dexopt.top>
+
+   Analysis of Variance (ANOVA)               <xemf: ~stat\anova.men>
+   Chi-Square Test for Independence           <xemf: ~stat\chisqind.men>
+   Linear/Non-Linear Fitting 
+      The Modeling Cycle:                     <~fit\modelcyc.top>
+         1. Select   Model                    <~fit\modelsel.top>
+         2. Fit      Model                    <~fit\modelfit.top>
+            1. y = f(x)                       <~fit\data1var.top>
+            2. y = f(x1,x2,...)               <~fit\datamvar.top>
+         3. Validate Model                    <~fit\modelval.top>
+

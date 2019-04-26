@@ -1,0 +1,8 @@
+----- <~dataload\NELSON.DP> Load NELSON.DAT
+
+. This is file    NELSON.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ NELSON.DAT Y X1 X2
+

@@ -1,0 +1,9 @@
+----- <~tim2\timestch.top> Time-Domain Structure Checking
+ 
+Time-Domain Structure Checking
+ 
+Dual-trace plot             <~tim2\dualplot.men>
+Scatter plot                <~stat\scatplot.men>
+Cross-Lag plot              <xemf: ~tim2\croslagp.men>
+Cross-Correlation plot      <xemf: ~tim2\croscopl.men>
+ 

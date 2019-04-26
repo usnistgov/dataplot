@@ -1,0 +1,10 @@
+----- <~dataloex\KEYWEST.DP> Load & Execute KEYWEST.DAT
+
+. This is file    KEYWEST.DP
+
+DELETE Y
+SKIP 25
+READ KEYWEST.DAT Y
+TITLE KEYWEST.DAT
+/
+

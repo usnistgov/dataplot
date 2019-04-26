@@ -1,0 +1,45 @@
+----- <~prob\shap1ks.top> KS Goodness of Fit for One Shape Parameter Continuous Distributions
+
+Perform Kolmogorov-Smirnov Goodness of Fit Test (one shape parameters)
+
+Perform Kolmogorov-Smirnov Goodness of Fit Test
+for Continuous Distributions with One Shape Parameter
+(Uncensored Case)
+
+Alpha                                     <xemf: ~prob\ksalp.men>
+Asymmetric Double Exponential (Laplace)   <xemf: ~prob\ksade.men>
+Bradford                                  <xemf: ~prob\ksbra.men>
+Burr Type 2                               <xemf: ~prob\ksbu2.men>
+Burr Type 7                               <xemf: ~prob\ksbu7.men>
+Burr Type 8                               <xemf: ~prob\ksbu8.men>
+Burr Type 10                              <xemf: ~prob\ksb10.men>
+Burr Type 11                              <xemf: ~prob\ksb11.men>
+Chi                                       <xemf: ~prob\ksch.men>
+Chi-Square                                <xemf: ~prob\kschs.men>
+Double Gamma                              <xemf: ~prob\ksdga.men>
+Double Weibull                            <xemf: ~prob\ksdwe.men>
+Error (Subbotin)                          <xemf: ~prob\kssub.men>
+Exponential Power                         <xemf: ~reli\kspex.men>
+Fatigue Life                              <xemf: ~reli\ksfl.men>
+Folded T                                  <xemf: ~prob\ksft.men>
+Frechet (minimum case)                    <xemf: ~reli\ksev21.men>
+Frechet (maximum case)                    <xemf: ~reli\ksev22.men>
+Gamma                                     <xemf: ~reli\ksgam.men>
+Generalized Extreme Value (Minimum)       <xemf: ~reli\ksgev1.men>
+Generalized Extreme Value (Maximum)       <xemf: ~reli\ksgev2.men>
+Generalized Half-Logistic                 <xemf: ~prob\ksghfl.men>
+Generalized Logistic (type 1)             <xemf: ~prob\ksglo.men>
+Generalized Logistic (type 2)             <xemf: ~prob\ksgl2.men>
+Generalized Logistic (type 3)             <xemf: ~prob\ksgl3.men>
+Generalized Logistic (Hosking)            <xemf: ~prob\ksgl5.men>
+Generalized Pareto (Maximum)              <xemf: ~reli\ksgep.men>
+Generalized Pareto (Minimum)              <xemf: ~reli\ksgep2.men>
+Geometric Extreme Exponential             <xemf: ~reli\ksgee.men>
+Inverted Gamma                            <xemf: ~reli\ksiga.men>
+Inverted Weibull                          <xemf: ~reli\ksiwe.men>
+Log Double Exponential (Log Laplace)      <xemf: ~prob\kslde.men>
+Log Gamma                                 <xemf: ~reli\kslga.men>
+Logistic-Exponential                      <xemf: ~prob\kslex.men>
+Log Logistic                              <xemf: ~prob\ksllg.men>
+Lognormal                                 <xemf: ~reli\kslgn.men>
+

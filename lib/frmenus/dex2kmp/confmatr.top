@@ -1,0 +1,25 @@
+----- <~dex2kmp\confmatr.top> Confounding Matrix
+ 
+Confounding Matrix
+ 
+The confounding matrix summarizes in a succinct fashion
+the main effect and 2-term confounding structure.  The
+confounding matrix for the 2**(3-1) design is
+ 
+                          1   2   3
+                      ...............
+                      1 -     3   2
+                      2 -         1
+ 
+The confounding matrix is interpreted as follows--If
+row r and column c has entry e, then the 2-term
+interaction rc is confounded with e.  For this design--
+ 
+   1) row 1 and column 2 has entry 3 ,
+      and thus 12 and 3 are confounded;
+   2) row 1 and column 3 has entry 2 ,
+      and thus 13 and 2 are confounded;
+   3) row 2 and column 3 has entry 1 ,
+      and thus 23 and 1 are confounded.
+ 
+ 

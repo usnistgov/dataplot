@@ -1,0 +1,20 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     YOUDPLOT.DP
+. PURPOSE--GENERATE A YOUDEN PLOT OF INTERLAB CORROSION DATA
+.
+. -----START POINT-----------------------------------
+.
+TITLE Stress Corrosion Analysis
+Y1LABEL Material 1 Log Time to Failure
+X1LABEL Material 2 Log Time to Failure
+LEGEND 1 Interlab Analysis
+LEGEND 2 Youden Plot
+.
+SKIP 25
+READ UGIANSKY.DAT Y1 Y2 LAB
+.
+LINES BLANK ALL
+CHARACTERS 1 2 3 4 5 6 7 8 9
+CHARACTER SIZE 4 ALL
+LIMITS 0 5.5
+.
+PLOT Y1 Y2 LAB

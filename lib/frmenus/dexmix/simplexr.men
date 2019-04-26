@@ -1,0 +1,48 @@
+This is file simplexr.men--Draw Simplex Triangle with Constraint Region
+ 
+--------------------
+ 1. Draw Simplex Triangle (Constraint Region)
+ 2. Macro
+ 3.
+ 4. Minimum for Axis 1 (>= 0):
+ 4. @CE 1 0 42 50 ?
+ 5. Maximum for Axis 1 (<= 1):
+ 5. @CE 2 0 42 50 ?
+ 6. Minimum for Axis 2 (>= 0):
+ 6. @CE 3 0 42 50 ?
+ 7. Maximum for Axis 2 (<= 1):
+ 7. @CE 4 0 42 50 ?
+ 8. Minimum for Axis 3 (>= 0):
+ 8. @CE 5 0 42 50 ?
+ 9. Maximum for Axis 3 (<= 1):
+ 9. @CE 6 0 42 50 ?
+10.
+11. Increment for Grid (0 to 1):
+12. @CE 7 0 42 50 *
+13.
+14. Label for Factor Variable 1:
+14. @CE 8 0 33 50 *
+15. Label for Factor Variable 2:
+15. @CE 9 0 33 50 *
+16. Label for Factor Variable 3:
+16. @CE 10 0 33 50 *
+17. 
+18.
+19. Draw the Simplex Triangle?:
+--------------------
+GR FE
+LET X1MIN = _1
+LET X1MAX = _2
+LET X2MIN = _3
+LET X2MAX = _4
+LET X3MIN = _5
+LET X3MAX = _6
+LET GRIDINC = _7
+LET STRING S1 = X1
+LET STRING S2 = X2
+LET STRING S3 = X3
+LET STRING S1 = _8
+LET STRING S2 = _9
+LET STRING S3 = _10
+CALL SIMPLEXR.DP
+--------------------

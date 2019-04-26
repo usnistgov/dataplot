@@ -1,0 +1,27 @@
+----- <~prob\genshap1ran.top> Random numbers for One Shape Parameter Continuous Distributions
+
+Generate Random Numbers (one shape parameters)
+
+Generate Random Numbers for Continuous Distributions
+with One Shape Parameters
+
+McLeish                                   <xemf: ~prob\genmclra.men>
+Muth                                      <xemf: ~prob\genmutra.men>
+Ogive                                     <xemf: ~prob\genogira.men>
+Power                                     <xemf: ~prob\genpowra.men>
+Power Normal                              <xemf: ~prob\genpnrra.men>
+Reciprocal                                <xemf: ~prob\genrecra.men>
+Reflected Power                           <xemf: ~prob\genrpora.men>
+Skew Double Exponential (Skew Laplace)    <xemf: ~prob\gensdera.men>
+Skew Normal                               <xemf: ~prob\gensnra.men>
+Slope                                     <xemf: ~prob\genslora.men>
+T                                         <xemf: ~prob\gentra.men>
+Topp and Leone                            <xemf: ~prob\gentopra.men>
+Triangular                                <xemf: ~prob\gentrira.men>
+Tukey-Lambda (symmetric)                  <xemf: ~prob\genlamra.men>
+Von Mises                                 <xemf: ~prob\genvonra.men>
+Wald                                      <xemf: ~prob\genwalra.men>
+Weibull (minimum case)                    <xemf: ~prob\genwe1ra.men>
+Weibull (maximum case)                    <xemf: ~prob\genwe2ra.men>
+Wrapped Cauchy                            <xemf: ~prob\genwcara.men>
+

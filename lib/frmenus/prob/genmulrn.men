@@ -1,0 +1,29 @@
+This is file genmulrn.men--Generate Multinomial Random Numbers
+
+--------------------
+ 1. Generate Multinomial Random Numbers
+ 2. LET M = MULTINOMIAL RANDOM NUMBERS MU SIGMA N
+ 3.
+ 4. Before generating the multinomial random numbers,
+ 5. you need to define a vector that contains the
+ 6. probabilities (these should sum to 1).
+ 7.
+ 8. Vector Containing Probabilities:
+ 8. @CE 1 0 42 50 gui-vari
+ 9. Enter the number of events:
+ 9. @CE 2 0 42 50 gui-vari
+10.
+11. Number of Rows to generate:
+11. @CE 3 0 42 50 ?
+12. Name of Output Matrix:
+12. @CE 4 0 42 50 ?
+13.
+14.
+15. Generate the Random Numbers?
+--------------------
+AN FE
+LET NCAT = SIZE _1
+LET _4 = MULTINOMIAL RANDOM NUMBERS _1 _2 NCAT _3
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

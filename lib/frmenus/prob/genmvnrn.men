@@ -1,0 +1,29 @@
+This is file genmvnrn.men--Generate Multivariate Normal Random Numbers
+
+--------------------
+ 1. Generate Multivariate Normal Random Numbers
+ 2. LET M = MULTIVARIATE NORMAL RANDOM NUMBERS MU SIGMA N
+ 3.
+ 4. Before generating the multivariate normal random
+ 5. numbers, you need to define a vector that contains
+ 6. the p means and a pxp variance-covariance matrix
+ 7. of the columns.  A nxp matrix is returned.
+ 8.
+ 9. Vector of Desired Means:
+ 9. @CE 1 0 42 50 gui-vari
+10. Variance-Covariance matrix:
+10. @CE 2 0 42 50 gui-vari
+11.
+12. Number of Rows to generate:
+12. @CE 3 0 42 50 ?
+13. Name of Output Matrix:
+13. @CE 4 0 41 50 ?
+14.
+15.
+16. Generate the Random Numbers?
+--------------------
+AN FE
+LET _4 = MULTIVARIATE NORMAL RANDOM NUMBERS _1 _2 _3
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

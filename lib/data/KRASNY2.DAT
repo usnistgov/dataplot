@@ -1,0 +1,70 @@
+This is Dataplot Data File     KRASNY2.DAT
+Cig. Type / Substrate Material / Lab effect on # of Ignitions
+Keith Eberhardt December 1992
+Number of Observations = 45
+Total Number of Variables = 4
+   Response Variable = # of Ignitions out of 48 reps
+   Factor 1 = Cigarette Type (5 types)
+   Factor 2 = Substrate Material (3 materials)
+   Factor 3 = Laboratory (3 Labs)
+To read this into DATAPLOT--
+   SKIP 25
+   READ KRASNY2.DAT Y X1 X2 X3
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   Y           X1      X2      X3
+  # of        Cig.  Substrate  Lab
+Ignitions     Type     Mat.
+-----------------------------------
+   48           1       1       1
+   40           1       1       2
+   36           1       1       3
+   48           1       2       1
+   48           1       2       2
+   48           1       2       3
+   48           1       3       1
+   48           1       3       2
+   48           1       3       3
+   47           2       1       1
+   35           2       1       2
+   42           2       1       3
+   48           2       2       1
+   48           2       2       2
+   48           2       2       3
+   48           2       3       1
+   48           2       3       2
+   48           2       3       3
+    0           3       1       1
+    0           3       1       2
+    0           3       1       3
+    3           3       2       1
+    0           3       2       2
+    3           3       2       3
+   13           3       3       1
+    8           3       3       2
+   21           3       3       3
+    0           4       1       1
+    0           4       1       2
+    0           4       1       3
+    0           4       2       1
+    0           4       2       2
+    0           4       2       3
+    0           4       3       1
+    0           4       3       2
+    1           4       3       3
+    4           5       1       1
+    0           5       1       2
+    3           5       1       3
+   45           5       2       1
+   37           5       2       2
+   46           5       2       3
+   47           5       3       1
+   45           5       3       2
+   47           5       3       3

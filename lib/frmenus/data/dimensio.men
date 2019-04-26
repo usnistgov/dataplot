@@ -1,0 +1,36 @@
+This is file diemnsio.men--Dimension Workspace
+ 
+--------------------
+ 1. Dimension Workspace
+ 2. DIMENSION 50 COLUMNS
+ 3. 
+ 4. By default, Dataplot provides 10
+ 5. columns with 20,000 rows each for
+ 6. a total of 200,000 points.  Within
+ 7. certain limits, the number of
+ 8. rows and columns can be re-dimensioned
+ 9. to more convenient values.  Note that
+10.
+11.  1) Re-dimensioning the work space
+12.     re-initializes the current data
+13.     space (i.e., all variables are 
+14.     deleted).
+15.
+16.  2) The maximum of 20,000 rows cannot
+17.     be increased (at least not without
+18.     re-compiling Dataplot).  That is,
+19.     re-dimensioning is used to create
+20.     more columns of data (with fewer
+21.     allowable rows).
+22.
+23. Enter the number of data columns:
+23. @CE 1 0 42 50 ?
+25.
+26.
+27. Re-dimension the Workspace?
+--------------------
+SU FE
+@IF 1 0 DIMENSION _1 COLUMNS
+--------------------
+WEB HELP RENAME
+--------------------

@@ -1,0 +1,8 @@
+----- <~dataall\WEBER.top> WEBER.DAT
+
+WEBER.DAT
+
+View     <xcl: LIST WEBER.DAT>
+Load     <xcf: ~dataload/WEBER.DP>
+Print    <xccl: printfile C:\DATAPLOT\WEBER.DAT>
+

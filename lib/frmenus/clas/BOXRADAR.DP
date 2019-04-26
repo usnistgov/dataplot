@@ -1,0 +1,10 @@
+----- <~dataloex\BOXRADAR.DP> Load & Execute BOXRADAR.DAT
+
+. This is file    BOXRADAR.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ BOXRADAR.DAT Y X1 X2 X3
+TITLE BOXRADAR.DAT
+/
+

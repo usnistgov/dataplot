@@ -1,0 +1,22 @@
+This is file tag_sn00.men--Compute Taguchi SN00 of a variable
+ 
+--------------------
+ 1. Taguchi SN00
+ 2. LET A = TAGUCHI SN00 Y
+ 3.
+ 4. Variable for which to compute the Taguchi SN00:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the Taguchi SN00:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Taguchi SN00?:
+--------------------
+GR FE
+LET _2 = TAGUCHI SN00  _1 _3
+--------------------
+WEB HELP TAGUCHI SN00
+--------------------

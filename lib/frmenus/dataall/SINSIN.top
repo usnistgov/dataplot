@@ -1,0 +1,8 @@
+----- <~dataall\SINSIN.top> SINSIN.DAT
+
+SINSIN.DAT
+
+View     <xcl: LIST SINSIN.DAT>
+Load     <xcf: ~dataload/SINSIN.DP>
+Print    <xccl: printfile C:\DATAPLOT\SINSIN.DAT>
+

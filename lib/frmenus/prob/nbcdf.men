@@ -1,0 +1,29 @@
+This is file nbcdf.men--Compute negative binomial cdf and tail probabilities
+ 
+--------------------
+ 1. Compute Negative Binomial cdf and Tail Prob.
+ 2. LET A = NBCDF(X,N,P)
+ 3.
+ 4. Input values:
+ 5.                    x (x = 0, 1, 2, ...):
+ 5. @CE 1 0 42 50 ?
+ 6.       probability success p (0 < p < 1):
+ 6. @CE 2 0 42 50 ?
+14.      number successes k (k = 1, 2, ...):
+14. @CE 3 0 42 50 ?
+15.
+16. Output parameters:
+17.                  name for the cdf value:
+17. @CE 4 0 42 50 ?
+18.     name for the tail probability value:
+18. @CE 5 0 42 50 ?
+19.
+20.
+21. Compute the Probability?
+--------------------
+AN FE
+@IF 4 0 LET _4 = NBCDF( _1 , _2 , _3 )
+@IF 5 0 LET _5 = 1 - NBCDF( _1 , _2 , _3 )
+--------------------
+WEB HELP NBCDF
+--------------------

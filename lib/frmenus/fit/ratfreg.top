@@ -1,0 +1,13 @@
+----- <~fit\ratfreg.top> Rational Function Regression
+
+Rational Function Regression
+
+Do the Fit               <xemf: ~fit\fitrat.men>
+
+Discussion               <~fit\discratf.top>
+Do Model Validation      <~fit\modelval.top>
+Built-in Datasets        <~dataload\rfrdata.top>
+
+Worked Examples
+   Lew  data (linear/linear)          <xcf: ~fit\LEW4.DP>
+   Hahn data (quadratic/quadratic)    <xcf: ~fit\HAHN1.DP>

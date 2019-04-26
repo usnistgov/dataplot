@@ -1,0 +1,152 @@
+----------  *CONVERSIONS*  ----------
+ 
+         Conversion Factors for
+Science, Engineering, and Industrial Terms
+ 
+Length--
+   1 angstrom   = 10**-10  meters
+   1 nanometer  = 10**-9   meters
+   1 micron     = 10**-6   meters
+   1 millimeter = 10**-3   meters
+   1 inch       = 0.0254   meters
+   1 foot       = 0.3048   meters
+   1 yard       = 0.9144   meters
+   1 kilometer  = 1000     meters
+   1 mile       = 1609     meters
+ 
+   1 centimeter = 10    millimeters
+   1 centimeter = .3937 inches
+   1 centimeter = .01   meters
+ 
+   1 meter      = 39.37  inches
+   1 meter      = 3.282? feet
+   1 meter      = 1.094  yards
+   1 meter      = .001   kilometers
+ 
+   1 mil        = 0.001    inches
+   1 point      = 0.013837 inches
+   1 hand       = 4        inches
+   1 foot       = 12       inches
+   1 yard       = 36       inches
+   1 fathom     = 72       inches
+   1 rod        = 198      inches
+   1 mile       = 63360    inches
+ 
+   1 yard       = 3        feet
+   1 fathom     = 6        feet
+   1 rod        = 16.5     feet
+   1 furlong    = 660      feet (1/8 mile)
+   1 mile       = 5280     feet
+   1 league     = 15840    feet (3 miles)
+ 
+   1 yard = 91.44 centimeters
+   1 yard = 36    inches
+   1 yard = 3     feet
+   1 yard = .9144 meters
+ 
+   1 mile = 63360 inches
+   1 mile = 5280  feet
+   1 mile = 1760  yards
+   1 mile = 1609  meters
+   1 mile = 1.609 kilometers
+ 
+Area--
+   1 acre       = 43560 square feet
+   1 acre       = 4840  square yards
+   1 acre       = 4047  square meters
+   1 acre       = .0016 square miles
+ 
+   1 hectare = 2.471 acres
+ 
+Volume--
+   1 gallon = 3785  cubic centimeters
+   1 gallon = 231   cubic inches
+   1 gallon = 8     pints
+   1 gallon = 4     quarts
+   1 gallon = 3.785 liters
+   1 gallon = .1337 cubic feet
+   1 gallon = .0038 cubic meters
+ 
+   1 liter  = 61.02 cubic inches
+   1 liter  = 1.057 quarts
+ 
+Weight--
+   1 gram = 980.7 dynes
+   1 gram = 15.43 grains
+   1 gram = .0353 ounces
+   1 gram = .0322 ounces (Troy)
+   1 gram = .0022 pounds
+ 
+   1 kilogram = 980665 dynes
+   1 kilogram = 2.205  pounds
+ 
+   1 ton        = 2000 pounds
+   1 metric ton = 1.1 tons (approx.)
+ 
+   1 gallon of water weighs 8.34 pounds of water
+ 
+Pressure--
+   1 atmosphere = 76.0  centemeters mercury
+   1 atmosphere = 29.92 inches mercury
+   1 atmosphere = 14.70 pounds/square inch
+   1 atmosphere = 1.058 tons/square foot
+ 
+   1 centimeter of mercury = 136.0 kilograms/square meter
+   1 centimeter of mercury = 27.85 pounds/square foot
+   1 centimeter of mercury = .4460 feet of water (4 deg. C)
+   1 centimeter of mercury = .1934 pounds/square inch
+   1 centimeter of mercury = .0132 atmospheres
+ 
+Time & Frequency & Speed--
+   1 mile/hour = 88     feet/second
+   1 mile/hour = 44.70  centimeters/second
+   1 mile/hour = 26.82  meters/minute
+   1 mile/hour = 1.609  kilometers/hour
+   1 mile/hour = 1.467  feet/second
+   1 mile/hour = 0.8690 knots
+ 
+   1 barrel of oil = 42 gallons of oil
+ 
+Electrical Current--
+   1 watt = .7377 foot-pounds/second
+   1 watt = .0586 BTU(mean)/minute
+   1 watt = .0013 horsepower
+   1 watt = .001  kilowatts
+ 
+Plane Angle--
+   1 radian = 3438  minutes
+   1 radian = 57.30 degrees
+   1 radian = .637  quadrants
+ 
+Temperature Conversions--
+   (F = Farenheit, C = Centigrade, K = Kelvin)
+      F = 32 + (9/5) * C
+      F = 32 + (9/5) * (K - 273.16)
+      C = (5/9) * (F - 32)
+      C = K - 273.16
+      K = 273.16 + (5/9) * (F - 32)
+      K = C + 273.16
+ 
+----------
+ 
+Length--meter
+   Area
+   Volume
+Mass--kg
+   Pressure
+   Work and Energy
+   Power
+Time--sec
+   Frequency
+   Speed
+   Acceleration
+Electrical Current--ampere
+   Voltage
+   Resistance
+Temperature--kelvin
+Amount of Substance--mole
+   Concentration
+Luminous Intensity--candela
+   Light Flux
+Plane Angle--radian
+   Solid Angle

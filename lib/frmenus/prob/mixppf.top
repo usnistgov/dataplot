@@ -1,0 +1,10 @@
+----- <~prob\mixppf.top> Compute Mixture ppf's
+
+Compute Mixture ppf Functions
+
+Compute Percent Point Function for
+Mixture Distributions
+
+Normal Mixture           <xemf: ~prob\normxppf.men>
+Bi-Weibull               <xemf: ~prob\bweppf.men>
+

@@ -1,0 +1,35 @@
+This is file expomle1.men--Exponential MLE Estimates
+ 
+--------------------
+ 1. Exponential Maximum Likelihood Estimates (type 1 censoring)
+ 2. EXPONENTIAL MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Optional Censoring Variable (1=failure, 0=censored):
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Censoring Time:
+ 6. @CE 3 0 42 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Compute Exponential MLE's?
+--------------------
+GR FE
+SET CENSORING TYPE 1
+LET TEND = _3
+EXPONENTIAL MAXIMUM LIKELIHOOD _1 _2 _4
+RELATIVE HISTOGRAM _1 _4 SUBSET _1 < TEND
+LIMITS FREEZE
+PRE-ERASE OFF
+LET ZZZZ1 = MINIMUM _1 _4
+LET ZZZZ2 = MAXIMUM _1 _4
+LET ZZZZINC = (ZZZZ2 - ZZZZ1)/1000
+PLOT EXPPDF(ZZZZX,U2,B2) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+LIMITS
+PRE-ERASE ON
+--------------------
+WEB HELP EXPONENTIAL MAXIMUM LIKELIHOOD
+--------------------

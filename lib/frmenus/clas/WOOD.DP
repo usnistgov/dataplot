@@ -1,0 +1,13 @@
+----- <~edac\WOOD.DP> Load WOOD.DATA & generate 4-PLOT
+
+. This is file    WOOD.DP (data file missing)
+
+DELETE Y
+TITLE
+.
+LIST WOOD.DAT
+SKIP 25
+READ WOOD.DAT Y
+.
+TITLE WOOD.DAT
+4-PLOT Y

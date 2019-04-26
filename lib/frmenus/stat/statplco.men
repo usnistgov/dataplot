@@ -1,0 +1,112 @@
+This is file statplco.men--Generate Statistic Plots (Correlation)
+ 
+--------------------line 3
+01. Statistic Plots (Correlation/Fitting)
+02. <statistic> PLOT Y X
+03.
+04. First Vertical   Axis Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Second Vertical   Axis Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06. Group ID        Variable:
+06. @CE 3 0 37 54 ? gui-vari
+07.
+08. Correlation/Fitting Statistic (Select one):
+09. @CE 4 1 1 27 biweight midcorrelation
+09. @CE 4 2 29 57 biweight midcovariance
+10. @CE 4 3 1 27 comovement
+10. @CE 4 4 29 57 correlation
+11. @CE 4 5 1 27 covariance
+11. @CE 4 6 29 57 linear correlation
+12. @CE 4 7 1 27 linear intercept
+12. @CE 4 8 29 57 linear ressd
+13. @CE 4 9 1 27 linear slope
+13. @CE 4 10 29 57 percentage bend correlation
+14. @CE 4 11 1 27 rank comovement
+14. @CE 4 12 29 57 rank correlation
+15. @CE 4 13 1 27 rank covariance
+15. @CE 4 14 29 57 Winsorized correlation
+16. @CE 4 15 1 27 Winsorized covariance
+17.
+18. Percentage of values to Winsorize above?:
+18. @CE 5 0 42 50 ? 
+19. Percentage of values to Winsorize below?:
+19. @CE 6 0 42 50 ?
+20. Beta for percentage bend (0 < beta < 0.5):
+20. @CE 7 0 42 50 ?
+21.
+22. Character Type for Data
+22. @CE 8 0 42 50 * gui-char
+23. Character Fill for Data
+23. @CE 9 0 42 50 gui-ooff
+24. Line Type for Data-connecting Line
+24. @CE 10 0 42 50 * gui-line
+25. Line Type for Global Stat Line?
+25. @CE 11 0 42 50 * gui-line
+26. Spike to Global Stat Line?
+26. @CE 12 0 42 50 gui-ooff
+27.
+28. Title:
+28. @CE 13 0 10 50 *
+29. Left Axis Label:
+29. @CE 14 0 22 50 *
+30. Bottom Axis Label:
+30. @CE 15 0 22 50 *
+31.
+32. Subset/Except/For Specification:
+33. @CE 16 0 1 50 *
+34.
+35. Generate the Statistic Plot?:
+--------------------
+TITLE _13
+Y1LABEL _14
+X1LABEL _15
+CHARACTERS _8
+CHARACTER FILL _9
+LINES _10 _11
+LET P1 = 5
+LET P2 = 5
+LET P1 = _6
+LET P2 = _5
+LET BETA = _7
+.
+@IF 4 1 LET ZSTAT = BIWEIGHT MIDCOCORRELATION _1 _2 _16
+@IF 4 2 LET ZSTAT = BIWEIGHT MIDCOVARIANCE _1 _2 _16
+@IF 4 3 LET ZSTAT = COMOVEMENT SCALE _1 _2 _16
+@IF 4 4 LET ZSTAT = CORRELATION _1 _2 _16
+@IF 4 5 LET ZSTAT = COVARIANCE _1 _2 _16
+@IF 4 6 LET ZSTAT = CORRELATION _1 _2 _16
+@IF 4 7 LINEAR FIT _1 _2 _16
+@IF 4 7 LET ZSTAT = A0
+@IF 4 8 LINEAR FIT _1 _2 _16
+@IF 4 8 LET ZSTAT = RESSD
+@IF 4 9 LINEAR FIT _1 _2 _16
+@IF 4 9 LET ZSTAT = A1
+@IF 4 10 LET ZSTAT = PERCENTAGE BEND CORRELATION _1 _2 _16
+@IF 4 11 LET ZSTAT = RANK COMOVEMENT _1 _2 _16
+@IF 4 12 LET ZSTAT = RANK CORRELATION _1 _2 _16
+@IF 4 13 LET ZSTAT = RANK COVARIANCE _1 _2 _16
+@IF 4 14 LET ZSTAT = WINSORIZED CORRELATION _1 _2 _16
+@IF 4 15 LET ZSTAT = WINSORIZED COVARIANCE _1 _2 _16
+SPIKE _12
+SPIKE BASE ZSTAT
+.
+BAR OFF OFF
+@IF 4 1 BIWEIGHT MIDCORRELATION PLOT _1 _2 _3 _16
+@IF 4 2 BIWEIGHT MIDCOVARIANCE PLOT _1 _2 _3 _16
+@IF 4 3 COMOVEMENT PLOT _1 _2 _3 _16
+@IF 4 4 CORRELATION PLOT _1 _2 _3 _16
+@IF 4 5 COVARIANCE PLOT _1 _2 _3 _16
+@IF 4 6 LINEAR CORRELATION PLOT _1 _2 _3 _16
+@IF 4 7 LINEAR INTERCEPT PLOT _1 _2 _3 _16
+@IF 4 8 LINEAR RESSD PLOT _1 _2 _3 _16
+@IF 4 9 LINEAR SLOPE PLOT _1 _2 _3 _16
+@IF 4 10 PERCENTAGE BEND CORRELATION PLOT _1 _2 _3 _16
+@IF 4 11 RANK COMOVEMENT PLOT _1 _2 _3 _16
+@IF 4 12 RANK CORRELATION PLOT _1 _2 _3 _16
+@IF 4 13 RANK COVARIANCE PLOT _1 _2 _3 _16
+@IF 4 14 WINSORIZED CORRELATION PLOT _1 _2 _3 _16
+@IF 4 15 WINSORIZED COVARIANCE PLOT _1 _2 _3 _16
+--------------------
+WEB HELP STATISTICS PLOT
+--------------------

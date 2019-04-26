@@ -1,0 +1,11 @@
+----- <~time\dds16.top> DDS FAQ 16 Residual Analysis
+ 
+16. Is classical residual analysis essential to DDS?
+ 
+Classical residual analysis is only a tangential
+part of DDS required only when outliers are
+present.  Since the DDS applications generally
+involve modeling very large number of long ``large
+sample' classical residual analysis of each would
+become a stupendous task.
+ 

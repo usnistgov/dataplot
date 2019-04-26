@@ -1,0 +1,21 @@
+----- <~scre\chanscbc.top> Change Screen Background Color
+
+Change Screen Background Color
+
+black                   <xccl: set screbackcolor BLACK>
+blue                    <xccl: set screbackcolor BLUE>
+green                   <xccl: set screbackcolor GREEN>
+cyan                    <xccl: set screbackcolor CYAN>
+red                     <xccl: set screbackcolor RED>
+magenta                 <xccl: set screbackcolor MAGENTA>
+brown                   <xccl: set screbackcolor BROWN>
+lightgray               <xccl: set screbackcolor LIGHTGRAY>
+darkgray                <xccl: set screbackcolor DARKGRAY>
+lightblue (default)     <xccl: set screbackcolor LIGHTBLUE>
+lightgreen              <xccl: set screbackcolor LIGHTGREEN>
+lightcyan               <xccl: set screbackcolor LIGHTCYAN>
+lightred                <xccl: set screbackcolor LIGHTRED>
+lightmagenta            <xccl: set screbackcolor LIGHTMAGENTA>
+yellow                  <xccl: set screbackcolor YELLOW>
+white                   <xccl: set screbackcolor WHITE>
+

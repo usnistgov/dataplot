@@ -1,0 +1,63 @@
+. This is dataplot macro   tagcorn.dp
+. Purpose: write out a tag (an id) in the upper left corner
+.          of each plot of the dexplot.dp procedure.
+. Date: October 9, 2008
+. Input:
+.   tagcorn (string) = desired string to be written out
+. Output:
+.   The contents of   tagcorn   written out in upper left corner
+.
+. Note: the string variable    tagcorn   must be defined in the
+.       program that calls    dexplotsub.dp
+.       Example:   let string tagcorn = 1
+. Example of usage: white1.dp
+.
+. -----start point-----
+.
+color blue
+if tagcolor exists; color ^tagcolor; end if
+.
+hw 6 3
+if hwcorn exists; hw ^hwcorn; end if
+.
+. -----write out line 1-----
+.
+if tagcorn exists and step exists
+   let string tagcornp = ^tagcorn&.^step
+end if
+if tagcorn exists and step not exists
+   let string tagcornp = ^tagcorn
+end if
+if tagcorn not exists and step exists
+   let string tagcornp = ^step
+end if
+if tagcorn not exists and step not exists
+   let string tagcornp = sp()
+end if
+.
+let x1cornp = 4
+if x0corn exists; let x1cornp = x0corn; end if
+if x1corn exists; let x1cornp = x1corn; end if
+.
+let y1cornp = 97.5
+if y1corn exists; let y1cornp = y1corn; end if
+.
+just center; move x1cornp y1cornp; text ^tagcornp
+.
+. -----write out line 2-----
+.
+let x2cornp = 4
+if x0corn exists; let x2cornp = x0corn; end if
+if x2corn exists; let x2cornp = x2corn; end if
+.
+let y2cornp = 95
+if y2corn exists; let y2cornp = y2corn; end if
+.
+if tagcorn2 exists
+   hw 2 1
+   if hwcorn2 exists; hw ^hwcorn2; end if
+   just center; move x2cornp y2cornp; text ^tagcorn2
+end if
+.
+hw 2 1
+just center; color blue

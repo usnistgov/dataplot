@@ -1,0 +1,8 @@
+----- <~datalist\BRAIN.top> BRAIN.DAT
+ 
+BRAIN.DAT
+ 
+View     <xcl: LIST BRAIN.DAT>
+Load     <x2cl: SKIP 25; READ BRAIN.DAT Y X1 X2>
+Print    <xccl: printfile C:\DATAPLOT\BRAIN.DAT>
+ 

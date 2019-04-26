@@ -1,0 +1,10 @@
+----- <~dataloex\DDS16.DP> Load & Execute DDS16.DAT
+
+. This is file    DDS16.DP
+
+DELETE Y X
+SKIP 25
+READ DDS16.DAT Y X
+TITLE DDS16.DAT
+PLOT Y X
+

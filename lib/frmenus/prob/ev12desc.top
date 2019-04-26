@@ -1,0 +1,24 @@
+----- <~prob\ev12desc.top> Ext. Val. 1 (= Gumbel) (for Max) Desc.
+
+*Ext. Value Type 1 (= Gumbel) (for Maximum) Description
+
+to be fixed
+pdf: f(x)     = exp(-x) * exp(-exp(-x))      for all x
+pdf: f(x,u,s) = exp(-z) * exp(-exp(-z))      for all x
+                with z = (x-u)/s
+
+Moments   : E(X)  =
+            SD(X) =
+
+Type      : Continuous, skewed, moderate-tail length
+Domain    : 0 to +infinity
+Synonym   :
+Genesis   : Bortkiewicz (1922), Mises (1923), Dodd (1923)
+            Frechet (1927)
+Definition: If
+            then
+
+Reference : Johnson & Kotz,
+            Continuous Univariate Distributions-2,
+            Chapter 21 (pages 272-295).
+

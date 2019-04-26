@@ -1,0 +1,14 @@
+----- <~time\testwhite.top> Testing White Noise
+ 
+Testing White Noise
+ 
+Discussion                     <~time\testwndi.top>
+ 
+4-PLOT                         <xemf: ~univ\4plot.men>
+Lag plot                       <xemf: ~time\lagplot.men>
+Autocorrelation plot           <xemf: ~time\autocopl.men>
+Partial autocorrelation plot   <xemf: ~time\partaucp.men>
+Spectrum                       <xemf: ~time\spectrum.men>
+Runs analysis                  <xemf: ~time\runsanal.men>
+Distribution-free tests        <xemf: ~time\distfree.men>
+ 

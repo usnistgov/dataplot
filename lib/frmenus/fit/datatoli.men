@@ -1,0 +1,88 @@
+This is file datatoli.men--Plot Tolerance Limits at a Single Point
+ 
+--------------------
+ 1. Plot Tolerance Limits at a Single Point
+ 2. PLOT Y PRED UPPER LOWER VERSUS X
+ 3. Note--(Lieberman-Miller Tolerance Limits)
+ 4.
+ 5. Variables:
+ 6.    Response    Y:
+ 6. @CE 1 0 35 50 ? gui-vari
+ 7.    Independent X:
+ 7. @CE 2 0 35 50 ? gui-vari
+ 8.
+ 9. Confidence level (select one):
+10. @CE 3 1 3 23 95% limits
+11. @CE 3 2 3 23 99% limits
+12.
+13. Proportion of Population to Capture (select one):
+14. @CE 4 1 3 23 95% of population
+15. @CE 4 2 3 23 99% of population
+16.
+17. Character Type for Raw Data:
+17. @CE 5 0 42 50 ? gui-char
+18. Character Type for Predicted Values:
+18. @CE 6 0 42 50 ? gui-char
+19. Character Type for Tolerance Limits:
+19. @CE 7 0 42 50 ? gui-char
+20.
+21. Line     Type for Raw Data:
+21. @CE 8 0 42 50 ? gui-line
+22. Line     Type for Predicted Values:
+22. @CE 9 0 42 50 ? gui-line
+23. Line     Type for Tolerance Limits:
+23. @CE 10 0 42 50 ? gui-line
+24.
+25. Subset/Except/For Specification:
+26. @CE 11 0 1 50 *
+27.
+28.
+29. Generate the Plot?
+--------------------
+GR FE
+DELETE ZN ZNPAR PPF ZXMIN ZXMAX ZXINC ZX2 ZXRAW ZMEAN ZNUM ZXDEL ZDEN
+DELETE PPFN PPFC ZTERM1 ZTERM2 ZFACTOR ZPRED2 ZLOWER ZUPPER
+
+LINEAR FIT _1 _2 _11
+ 
+LET ZN = NUMBER _1 _11
+LET ZNPAR = ZN-RESDF
+ 
+@IF 3 1 LET PPFF = FPPF(.975,ZNPAR,RESDF)
+@IF 3 2 LET PPFF = FPPF(.995,ZNPAR,RESDF)
+ 
+@IF 3 1 LET PPFN = NORPPF(.975)
+@IF 3 2 LET PPFN = NORPPF(.995)
+ 
+@IF 4 1 LET PPFC = CHSPPF(.025,ZNPAR,RESDF)
+@IF 4 2 LET PPFC = CHSPPF(.005,ZNPAR,RESDF)
+ 
+CHARACTERS _5 _6 _7 _7
+LINES _8 _9 _10 _10
+ 
+LET ZXMIN = MINIMUM _2 _11
+LET ZXMAX = MAXIMUM _2 _11
+LET ZXINC = (ZXMAX-ZXMIN)/200
+LET ZX2 = SEQUENCE ZXMIN ZXINC ZXMAX
+ 
+LET ZXRAW = _2
+LET ZMEAN = MEAN _2 _11
+LET ZNUM = (ZX2-ZMEAN)**2
+LET ZXDEL = (ZXRAW-ZMEAN)**2
+LET ZDEN = SUM ZXDEL
+ 
+LET ZTERM1 = SQRT((1/ZN)+(ZNUM/ZDEN))
+LET ZTERM2 = SQRT(RESDF/PPFC)
+LET ZFACTOR = (SQRT(ZNPAR*PPFF)*ZTERM1) + PPFN*ZTERM2
+ 
+LET ZPRED2 = A0+A1*ZX2
+LET ZLOWER = ZPRED2-RESSD*ZFACTOR
+LET ZUPPER = ZPRED2+RESSD*ZFACTOR
+ 
+PLOT _1 _2 _11 AND
+PLOT ZPRED2 ZLOWER ZUPPER VERSUS ZX2
+ 
+PRINT ZX2 ZLOWER ZPRED2 ZUPPER
+--------------------
+WEB HELP FIT
+--------------------

@@ -1,0 +1,8 @@
+----- <~fit\flowdata.top> Flowchart: Test Data
+
+Flowchart: Test Data
+
+3.  Test for outlying data (zero)
+    If no outlier: ideal; proceed
+    If outlier   : report and omit
+

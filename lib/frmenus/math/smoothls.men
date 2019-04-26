@@ -1,0 +1,61 @@
+This is file smoothls.men--Compute a least squares smooth of a variable
+ 
+--------------------
+ 1. Least Squares Smoothing
+ 2. SMOOTH Y
+ 3.
+ 4. Variable to smooth:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5.
+ 6. Degree of smoothing:
+ 7. @CE 2 1 10 19 Constant
+ 7. @CE 2 2 21 30 Linear
+ 7. @CE 2 3 32 41 Quadratic
+ 8. @CE 2 4 10 19 Cubic
+ 8. @CE 2 5 21 30 Quartic
+ 8. @CE 2 6 32 41 Quintic
+ 9. Filter width (odd integer, default = 3):
+ 9. @CE 3 0 33 50 *
+10.
+11. The smoothed curve will be plotted with the raw data.
+12.
+13. Select the line style for the smooth curve:
+13. @CE 4 0 33 50 gui-line
+14. Select the character symbol for the raw data:
+14. @CE 5 0 33 50 gui-character
+15. Fill the character symbol?:
+15. @CE 6 0 33 50 gui-ooff
+16.
+17. Subset/Except/For Specification:
+18. @CE 7 0 -5 50 *
+19.
+20.
+21. Perform the Smooth?:
+--------------------
+GR FE
+@IF 2 1 POLYNOMIAL DEGREE 0
+@IF 2 2 POLYNOMIAL DEGREE 1
+@IF 2 3 POLYNOMIAL DEGREE 2
+@IF 2 4 POLYNOMIAL DEGREE 3
+@IF 2 5 POLYNOMIAL DEGREE 4
+@IF 2 6 POLYNOMIAL DEGREE 5
+@IF 2 1 TITLE CONSTANT SMOOTH
+@IF 2 2 TITLE LINEAR SMOOTH
+@IF 2 3 TITLE QUADRATIC SMOOTH
+@IF 2 4 TITLE CUBIC SMOOTH
+@IF 2 5 FOURTH DEGREE SMOOTH
+@IF 2 6 FIFTH DEGREE SMOOTH
+FILTER WIDTH _3
+SMOOTH _1  _7
+CHARACTER _5 BLANK
+CHARACTER FILL _6 OFF
+LINES BLANK _4
+LET ZZZZN = SIZE _1 _7
+DELETE ZZZZX
+LET ZZZZX = SEQUENCE 1 1 ZZZZN
+PLOT _1 PRED VS ZZZZX _7
+TITLE
+--------------------
+WEB HELP SMOOTH
+--------------------
+

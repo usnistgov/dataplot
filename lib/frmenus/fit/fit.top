@@ -1,0 +1,40 @@
+----- <~fit\fit.top> Fit----------------------------
+
+Fit
+
+Discussion                      <~fit\discussi.top>
+NIST/SEMATECH Handbook          <~handbook\pmd.top>
+Assumptions                     <~fit\assumpti.top>
+
+Detecting (Linear) Relationships: Correlation Coefficient
+   Estimation                      <xemf: ~fit\esticorr.men>
+   Confidence limits               <xemf: ~fit\corrcoli.men>
+   Testing non-zero correlation    <xemf: ~fit\testcorr.men>
+
+The Modeling Cycle:             <~fit\modelcyc.top>
+   1. Select   Model            <~fit\modelsel.top>
+   2. Fit      Model                  <~fit\modelfit.top>
+        1. y = f(x)                   <~fit\data1var.top>
+        2. y = f(x1,x2,...)           <~fit\datamvar.top>
+   3. Validate Model            <~fit\modelval.top>
+
+Inferences from linear, multi-linear model-fitting <~fit\inferenc.top>
+
+Special Topics
+   Transformations              <~fit\datatran.top>
+   Linear/Quadratic Calibration <~nist\calib.top>
+   Regression Diagnostics       <~fit\regrdiag.top>
+   Pre-fitting                  <~fit\prefitti.top>
+   Smoothing and Interpolation  <~fit\smooth.top>
+   Iteratively Re-Weighted Least Squares  <~fit\irls.top>
+   Orthogonal Distance Fitting  <~fit\orthdist.top>
+
+Built-in Data Sets
+   View                         <~dataview\reg.top>
+   Load                         <~dataload\reg.top>
+
+Worked Examples                 <~fit\fitexam.top>
+NIST/SEMATECH Handbook (Case Studies) <xcl: web handbook fit case studies>
+
+References                      <~fit\referenc.top>
+

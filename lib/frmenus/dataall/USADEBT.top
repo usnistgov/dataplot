@@ -1,0 +1,8 @@
+----- <~dataall\USADEBT.top> USADEBT.DAT
+
+USADEBT.DAT
+
+View     <xcl: LIST USADEBT.DAT>
+Load     <xcf: ~dataload/USADEBT.DP>
+Print    <xccl: printfile C:\DATAPLOT\USADEBT.DAT>
+

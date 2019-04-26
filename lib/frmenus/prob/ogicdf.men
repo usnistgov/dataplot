@@ -1,0 +1,40 @@
+This is file ogicdf.men--Compute Ogive cdf and tail probabilities
+ 
+--------------------
+ 1. Compute Ogive cdf and Tail Probability
+ 2. LET A = OGICDF(X,SHAPE,LOC,SCALE)
+ 3.
+ 4. The input argument, x, can be either a
+ 5. single number, the name of a parameter,
+ 6. or the name of a variable.
+ 7.  
+ 8. Input values:
+ 9.                         x (a <= x <= b):
+ 9. @CE 1 0 42 50 ?
+10.                      shape n (n >= 0.5):
+10. @CE 2 0 42 50 ?
+11.                           lower limit a:
+11. @CE 3 0 42 50 ?
+12.                           upper limit b:
+12. @CE 4 0 42 50 ?
+13.
+14. Output parameters:
+15.                  name for the cdf value:
+15. @CE 5 0 42 50 ?
+16.     name for the tail probability value:
+16. @CE 6 0 42 50 ?
+17.
+18.
+19. Compute the Probability?
+--------------------
+AN FE
+LET ZLOWLIM = -1
+@IF 3 0 LET ZLOWLIM = _3
+LET ZUPPLIM = 1
+@IF 4 0 LET ZUPPLIM = _4
+@IF 2 0 LET ZSHAPE = _2
+@IF 5 0 LET _5 = OGICDF( _1 ,ZSHAPE,ZLOWLIM,ZUPPLIM)
+@IF 6 0 LET _6 = 1 - OGICDF( _1 ,ZSHAPE,ZLOWLIM,ZUPPLIM)
+--------------------
+WEB HELP OGICDF
+--------------------

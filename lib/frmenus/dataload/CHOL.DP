@@ -1,0 +1,8 @@
+----- <~dataload\CHOL.DP> Load CHOL.DAT
+
+. This is file    CHOL.DP
+
+DELETE Y X
+SKIP 25
+READ CHOL.DAT Y X
+

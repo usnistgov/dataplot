@@ -1,0 +1,8 @@
+----- <~dataall\LEW3.top> LEW3.DAT
+
+LEW3.DAT
+
+View     <xcl: LIST LEW3.DAT>
+Load     <xcf: ~dataload/LEW3.DP>
+Print    <xccl: printfile C:\DATAPLOT\LEW3.DAT>
+

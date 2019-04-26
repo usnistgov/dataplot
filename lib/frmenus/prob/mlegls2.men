@@ -1,0 +1,22 @@
+This is file mlegls2.men--Generalized Logarithmic Series MLE Estimates
+ 
+--------------------
+ 1. Generalized Logarithmic Series Maximum Likelihood Estimates
+ 2. GENERALIZED LOGARITHMIC SERIES MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Frequency Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Bin Mid-Points Variable:
+ 5. @CE 1 0 42 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute Generalized Logarithmic Series MLE's?
+--------------------
+GR FE
+GENERALIZED LOGARITHMIC SERIES MAXIMUM LIKELIHOOD _1 _2 _3
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

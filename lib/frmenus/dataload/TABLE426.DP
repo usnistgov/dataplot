@@ -1,0 +1,8 @@
+----- <~dataload\TABLE426.DP> Load TABLE426.DAT
+
+. This is file    TABLE426.DP
+
+DELETE ID Y X1 X2 E
+SKIP 25
+READ TABLE426.DAT ID Y X1 X2 E
+

@@ -1,0 +1,26 @@
+This is file wilcoxon.men--Wilcoxon Signed Rank Test for Paired Data
+ 
+--------------------
+ 1. Wilcoxon Signed Rank Test for Paired Data
+ 2. Macro
+ 3.
+ 4. First Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Second Response Variable (or parameter):
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Value to test against (defaults to 0):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 4 0 1 50 *
+11.
+12. Compute Wilcoxon Signed Rank Test?
+--------------------
+AN FE
+LET ZZZZD0 = 0
+LET ZZZZD0 = _3
+SIGNED RANK TEST _1 _2 ZZZZD0 _4
+--------------------
+WEB HELP SIGNED RANK TEST
+--------------------

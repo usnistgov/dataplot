@@ -1,0 +1,43 @@
+This is file settitle.men--Set Title and Attributes
+ 
+--------------------
+ 1. Set Title
+ 2.  TITLE <...>
+ 3.
+ 4. If you enter AUTOMATIC for the title, the
+ 5. plot command itself will be used as the title.
+ 6.
+ 7. Title:
+ 8. @CE 1 0 1 50 ?
+ 9.
+10. Color for the Title:
+10. @CE 2 0 42 50 * gui-color
+11. Font for the Title:
+11. @CE 3 0 42 50 * gui-font
+12. Size for the Title (0 to 100 units):
+12. @CE 4 0 42 50 * 
+13. Displacement for the Title:
+13. @CE 5 0 42 50 * 
+14. Case for the Title:
+15. @CE 6 1 5 17 all upper
+15. @CE 6 2 19 31 all lower
+15. @CE 6 3 33 45 as entered
+16. Software Fonts - Title Line Thickness:
+16. @CE 7 0 42 50 * gui-thick
+17.
+18.
+19. Set Title & Attributes?
+--------------------
+PC FE
+@IF 2 0 TITLE COLOR _2
+@IF 3 0 TITLE FONT _3
+@IF 4 0 TITLE SIZE _4
+@IF 5 0 TITLE DISPLACEMENT _5
+@IF 6 1 TITLE CASE UPPER
+@IF 6 2 TITLE CASE LOWER
+@IF 6 3 TITLE CASE ASIS
+@IF 7 0 TITLE THICKNESS _7
+@IF 1 0 TITLE _1
+--------------------
+WEB HELP TITLE
+--------------------

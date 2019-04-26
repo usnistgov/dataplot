@@ -1,0 +1,28 @@
+----- <~dex2kmp\viewdes9.top> View 2**(k-p) Frac. Fact. Des. (k >= 9)
+ 
+View 2**(k-p) Designs (k = 9 to 31 Factors)
+ 
+ Name    Number   Number Resolution
+  of       of       of
+Design   Factors   Runs
+            k       n
+........................................
+2**(9-2)    9     128       6   <~dex2kmp\2to9m2.top>
+2**(9-3)    9      64       4   <~dex2kmp\2to9m3.top>
+2**(9-4)    9      32       4   <~dex2kmp\2to9m4.top>
+2**(9-5)    9      16       3   <~dex2kmp\2to9m5.top>
+ 
+2**(10-3)  10     128       5   <~dex2kmp\2to10m3.top>
+2**(10-4)  10      64       4   <~dex2kmp\2to10m4.top>
+2**(10-5)  10      32       4   <~dex2kmp\2to10m5.top>
+2**(10-6)  10      16       3   <~dex2kmp\2to10m6.top>
+ 
+2**(11-4)  11     128       5   <~dex2kmp\2to11m4.top>
+2**(11-5)  11      64       4   <~dex2kmp\2to11m5.top>
+2**(11-6)  11      32       4   <~dex2kmp\2to11m6.top>
+2**(11-7)  11      16       3   <~dex2kmp\2to11m7.top>
+ 
+2**(15-11) 15      16       3   <~dex2kmp\2to15m11.top>
+ 
+2**(31-26) 31      32       3   <~dex2kmp\2to31m26.top>
+ 

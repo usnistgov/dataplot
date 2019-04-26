@@ -1,0 +1,14 @@
+----- <~dataload\reliothe.top> Load Reliability Data: Other
+
+Load Reliability Data: Other
+
+ABERN17.DAT   Compressor rivet failure    <xcf: ~dataload\ABERN17.DP>
+ABERN35.DAT   Fatigue failure time        <xcf: ~dataload\ABERN35.DP>
+ABERN43.DAT   Bearing cage failure time   <xcf: ~dataload\ABERN43.DP>
+
+HAHN.DAT      Locomotive controls failure <xcf: ~dataload\HAHN.DP>
+
+CASTILL6.DAT  Chain link strength         <xcf: ~dataload\CASTILL6.DP>
+CASTILL7.DAT  Elect. insulation lifetime  <xcf: ~dataload\CASTILL7.DP>
+CASTILL8.DAT  Wire cycles-to-failure      <xcf: ~dataload\CASTILL8.DP>
+

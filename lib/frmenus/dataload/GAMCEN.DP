@@ -1,0 +1,8 @@
+----- <~dataload\GAMCEN.DP> Load GAMCEN.DAT
+
+. This is file    GAMCEN.DP
+
+DELETE Y X
+SKIP 25
+READ GAMCEN.DAT Y X
+

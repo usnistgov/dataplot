@@ -1,0 +1,10 @@
+----- <~dataall\imag.top> View/etc. Time Series Data: Image Analysis
+
+View/Load/Print Time Series Data: Image Analysis
+
+EHRSTEIN.DAT  Semicond. wafer resistiv.  <~dataall\EHRSTEIN.top>
+BENNETT.DAT   Fracture surface roughness <~dataall\BENNETT.top>
+BRAIN.DAT     Brain wave analysis        <~dataall\BRAIN.top>
+CUBE.DAT      Vertices of a cube         <~dataall\CUBE.top>
+WOOLLEY.DAT   Optical disk errors        <~dataall\WOOLLEY.top>
+

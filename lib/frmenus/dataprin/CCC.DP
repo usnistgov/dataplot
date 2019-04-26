@@ -1,0 +1,6 @@
+----- <~dataprin\CCC.DP> Print (to Printer) CCC.DAT
+
+. This is file    CCC.DP
+
+PRINT CCC.DAT
+

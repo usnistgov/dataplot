@@ -1,0 +1,8 @@
+----- <~dextag\L64.DP> Load  L64.DAT
+
+. This is file    L64.DP
+
+DELETE X1 TO X31
+SKIP 25
+READ L64.DAT X1 TO X31
+

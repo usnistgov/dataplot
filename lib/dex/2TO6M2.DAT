@@ -1,0 +1,66 @@
+THIS IS DATAPLOT DESIGN-OF-EXPERIMENT FILE   2TO6M2.DAT
+2**(6-2) FRACTIONAL FACTORIAL DESIGN
+NUMBER OF LEVELS FOR EACH FACTOR =  2
+NUMBER OF FACTORS                =  6
+NUMBER OF OBSERVATIONS           = 16
+RESOLUTION                       =  4  (THEREFORE NO MAIN EFFECTS ARE
+                                       CONFOUNDED WITH ANY 2-FACTOR INTERACTIONS;
+                                       MAIN EFFECTS ARE CONFOUNDED WITH
+                                       3-FACTOR INTERACTIONS)
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ FACTOR    DEFINITION       CONFOUNDING STRUCTURE
+   1           1                1 + 235 + 456 + 12346
+   2           2                2 + 135 + 346 + 12456
+   3           3                3 + 125 + 246 + 13456
+   4           4                4 + 156 + 236 + 12345
+   5         123                5 + 123 + 146 + 23456
+   6         234                6 + 145 + 234 + 12356
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  12                           12 + 35 + 1346 + 2456
+  13                           13 + 25 + 1246 + 3456
+  14                           14 + 56 + 1236 + 2345
+  15                           15 + 23 +   46 + 123456
+  16                           16 + 45 + 1234 + 2356
+  23                           23 + 15 +   46 + 123456
+  24                           24 + 36 + 1256 + 1345
+  25                           25 + 13 + 1246 + 3456
+  26                           26 + 34 + 1245 + 1356
+  34                           34 + 26 + 1245 + 1356
+  35                           35 + 12 + 1346 + 2456
+  36                           36 + 24 + 1256 + 1345
+  45                           45 + 16 + 1234 + 2356
+  46                           46 + 15 +   23 + 123456
+  56                           56 + 14 + 1236 + 2345
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+DEFINING RELATION =             I + 1235 + 2346 + 1456
+REFERENCE--BOX, HUNTER & HUNTER, STAT. FOR EXP., PAGE 410,
+NOTE--IF POSSIBLE, THIS (AS WITH ALL EXPERIMENT DESIGNS) SHOULD BE
+      RUN IN RANDOM ORDER (SEE DATAPLOT'S RANDOM PERMUTATION FILES).
+NOTE--TO READ THIS FILE INTO DATAPLOT--
+      SKIP 50
+      READ 2TO6M2.DAT X1 TO X6
+DATE--DECEMBER 1988
+NOTE--IN THE DESIGN BELOW, "-1" REPRESENTS THE "LOW"  SETTING OF A FACTOR
+                           "+1" REPRESENTS THE "HIGH" SETTING OF A FACTOR
+NOTE--ALL FACTOR EFFECT ESTIMATES WILL BE OF THE FORM
+      AVERAGE OF THE "HIGH" - AVERAGE OF THE "LOW"
+ 
+ 
+   X1  X2  X3  X4  X5  X6
+   ----------------------
+   -1  -1  -1  -1  -1  -1
+   +1  -1  -1  -1  +1  -1
+   -1  +1  -1  -1  +1  +1
+   +1  +1  -1  -1  -1  +1
+   -1  -1  +1  -1  +1  +1
+   +1  -1  +1  -1  -1  +1
+   -1  +1  +1  -1  -1  -1
+   +1  +1  +1  -1  +1  -1
+   -1  -1  -1  +1  -1  +1
+   +1  -1  -1  +1  +1  +1
+   -1  +1  -1  +1  +1  -1
+   +1  +1  -1  +1  -1  -1
+   -1  -1  +1  +1  +1  -1
+   +1  -1  +1  +1  -1  -1
+   -1  +1  +1  +1  -1  +1
+   +1  +1  +1  +1  +1  +1

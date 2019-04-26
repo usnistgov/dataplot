@@ -1,0 +1,18 @@
+----- <~reli\gammmode.top>
+
+Reliability: Compute/Plot Gamma Model
+
+Compute Gamma Distribution Functions
+    Cumulative Distribution Function        <xemf: ~prob\gamcdf.men>
+    Probability Density Function            <xemf: ~prob\gampdf.men>
+    Percent Point Function                  <xemf: ~prob\gamppf.men>
+    Hazard Function                         <xemf: ~prob\gamhaz.men>
+    Cumulative Hazard Function              <xemf: ~prob\gamchaz.men>
+    
+Plot Gamma Distribution Functions
+    Cumulative Distribution Function        <xemf: ~prob\pgamcdf.men>
+    Probability Density Function            <xemf: ~prob\pgampdf.men>
+    Percent Point Function                  <xemf: ~prob\pgamppf.men>
+    Hazard Function                         <xemf: ~prob\pgamhaz.men>
+    Cumulative Hazard Function              <xemf: ~prob\pgamchaz.men>
+

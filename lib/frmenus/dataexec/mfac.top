@@ -1,0 +1,10 @@
+----- <~dataexec\mfac.top> Load and Execute Built-in Multifactor Data Files
+
+Load and Execute Built-in Multifactor Data Files
+
+1-factor data                            <xcf: ~dataexec\1fac.DP>
+2-factor data                            <xcf: ~dataexec\2fac.DP>
+3-factor data                            <xcf: ~dataexec\3fac.DP>
+4-factor data                            <xcf: ~dataexec\4fac.DP>
+>= 5-factor data                         <xcf: ~dataexec\5fac.DP>
+

@@ -1,0 +1,8 @@
+----- <~dataload\LIN.DP> Load LIN.DAT
+
+. This is file    LIN.DP
+
+DELETE Y
+SKIP 25
+READ LIN.DAT Y
+

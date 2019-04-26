@@ -1,0 +1,8 @@
+----- <~datalist\SPAGON4.top> SPAGON4.DAT
+ 
+SPAGON4.DAT
+ 
+View     <xcl: LIST SPAGON4.DAT>
+Load     <x2cl: SKIP 25; READ SPAGON4.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\SPAGON4.DAT>
+ 

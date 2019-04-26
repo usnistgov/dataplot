@@ -1,0 +1,17 @@
+----- <~dex2kmp\mod2to4.top> Model:  2**4 Design
+ 
+Model:  2**4 Design
+ 
+k = 4 factors
+n = 16 runs
+ 
+Y = MU +
+    0.5*( B1*X1 + B2*X2 + B3*X3 +
+          B4*X4 +
+          B12*X1*X2 + B13*X1*X3 +
+          B14*X1*X4 + B23*X2*X3 +
+          B24*X2*X4 + B34*X3*X4 +
+          B123*X1*X2*X3 + B124*X1*X2*X4 +
+          B134*X1*X3*X4 + B234*X2*X3*X4 +
+          B1234*X1*X2*X3*X4 )
+ 

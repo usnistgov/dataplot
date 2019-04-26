@@ -1,0 +1,90 @@
+This is file e691llate.men--E691 Interlab Analysis to Latek
+ 
+--------------------
+ 1. E691 Interlab
+ 2. E691 INTERLAB Y MATID LABID
+ 3.
+ 4. This menu will generate the E691 tables and will
+ 5. additionally generate the associated graphs.  The
+ 6. tables and graphs will be saved in an Latek file
+ 7. named E691PLOT.TEX (in the current directory).
+ 8.
+ 9. Response Variable:
+ 9. @CE 1 0 42 50 ? gui-variable
+10. Material ID Variable:
+10. @CE 2 0 42 50 ? gui-variable
+11. Lab ID Variable:
+11. @CE 3 0 42 50 ? gui-variable
+12. Title for the Data Set:
+13. @CE 4 0 1 50 ? 
+14.
+15. Format for h- and k-consistency statistic plots:
+16. @CE 5 1 35 50 Original E691
+17. @CE 5 2 35 50 Dot Plots
+18. @CE 5 3 35 50 Box Plots
+19.
+20. Subset/Except/For Specification:
+21. @CE 6 0 1 50 *
+22.
+23. NOTE: To avoid extraneous output in the Latex file,
+24.       the "No UPDATE" on the Spreadsheet window. 
+25.       You can turn it back on after the macro complets.
+26.
+27.
+28. Perform the E691 Interlab Analysis?:
+--------------------
+FEEDBACK OFF
+LET STRING ZZZZH1 = E691PLO3.DP
+LET STRING ZZZZH2 = E691PLO5.DP
+LET STRING ZZZZK1 = E691PLO4.DP
+LET STRING ZZZZK2 = E691PLO6.DP
+@IF 5 2 LET STRING ZZZZH1 = E691DOH1.DP
+@IF 5 2 LET STRING ZZZZH2 = E691DOH2.DP
+@IF 5 2 LET STRING ZZZZK1 = E691DOK1.DP
+@IF 5 2 LET STRING ZZZZK2 = E691DOK2.DP
+@IF 5 3 LET STRING ZZZZH1 = E691BPH1.DP
+@IF 5 3 LET STRING ZZZZH2 = E691BPH2.DP
+@IF 5 3 LET STRING ZZZZK1 = E691BPK1.DP
+@IF 5 3 LET STRING ZZZZK2 = E691BPK2.DP
+LET STRING E691TIT = _4
+PRINT OFF
+FEEDBACK OFF
+DEVICE 2 CLOSE
+CAPTURE LATEK E691.TEX
+E691 INTERLAB _1 _2 _3 _6
+SET IPL1NA E691PLO1.PS
+DEVICE 2 POSTSCRIPT
+CALL E691PLO1.DP
+DEVICE 2 CLOSE
+SET IPL1NA E691PLO2.PS
+DEVICE 2 POSTSCRIPT
+CALL E691PLO2.DP
+DEVICE 2 CLOSE
+SET IPL1NA E691PLO3.PS
+DEVICE 2 POSTSCRIPT
+CALL ^ZZZZH1
+DEVICE 2 CLOSE
+SET IPL1NA E691PLO4.PS
+DEVICE 2 POSTSCRIPT
+CALL ^ZZZZH2
+DEVICE 2 CLOSE
+SET IPL1NA E691PLO5.PS
+DEVICE 2 POSTSCRIPT
+CALL ^ZZZZK1
+DEVICE 2 CLOSE
+SET IPL1NA E691PLO6.PS
+DEVICE 2 POSTSCRIPT
+CALL ^ZZZZK2
+DEVICE 2 CLOSE
+SET IPL1NA E691PLO7.PS
+DEVICE 2 POSTSCRIPT
+CALL E691PLO7.DP
+DEVICE 2 CLOSE
+END OF CAPTURE
+SET IPL1NA dppl1f.dat
+.
+FEEDBACK ON
+PRINT ON
+--------------------
+WEB HELP E691 INTERLAB
+--------------------

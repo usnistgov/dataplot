@@ -1,0 +1,24 @@
+This is file friedman.men--Friedman 2-Factor Anova
+ 
+--------------------
+ 1. Friedman 2-Factor Analysis of Variance
+ 2. FRIEDMAN TEST Y X1 X2
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. First Group ID Variable (Blocking):
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Second Group ID Variable (Treatment):
+ 7. @CE 3 0 33 50 ? gui-variable
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 4 0 1 50 *
+11.
+12.
+13. Compute Friedman ANOVA?
+--------------------
+AN FE
+FRIEDMAN TEST _1 _2 _3 _4
+--------------------
+WEB HELP FRIEDMAN TEST
+--------------------

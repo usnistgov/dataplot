@@ -1,0 +1,667 @@
+This is file RELDEF.TEX     6/1/94
+Reliability Analysis Definitions
+ 
+ 
+Acceleration Factors
+   The physical factors which are used in accelerated
+   testing to hasten the occurance of failures.  Common
+   stress variables include: temperature, load, load
+   cycling, chemical contaminants, chemical concentrations,
+   speed, solar radiation, etc.
+   Synonym: Stress variables
+   Reference: Nelson, Accelerated Testing, p. 11-12.
+ 
+Accelerated Testing
+   Tests which are carried out at high stress (e.g., high
+   temperature) conditions so as to yield failures quickly.
+   The underlying assumption is that such high-stress
+   testing yields useful information about product life at
+   (normal-stress) design conditions.  The fundamental
+   problem in analyzing accelerated testing data is how to
+   validly map such high-stress lifetimes into normal-stress
+   lifetimes.
+   Reference: Nelson, Accelerated Testing, p. xi.
+ 
+Censored Item
+   An item whose true failure time is unknown, but is known
+   to have failed before / after a specified cutoff value.
+ 
+Censored Data Point
+   The failure time "assigned" to an item which failed before / after
+   a cutoff time (and thus the true failure time is unknown).
+   The assigned value is not the true (unknown) failure
+   time t, but rather is simply designated as "<c" / ">c".
+ 
+Censored Sample
+   The set of data that results when
+      1) the entire target population is available
+         to be sampled from;
+      2) the experiment design has a cutoff time before / after
+         which the failure time was unknown or not recorded;
+      3) one or more items failed before / after the cutoff time.
+ 
+Censor Time for a Test
+   The test cutoff time at which
+      1) failure times start to be recorded (for left-censoring)
+      2) failure times stop  being recorded (for right-censoring)
+ 
+CME Function
+   Synonym: Mean residual life function (see write-up)
+   Synonym: Life expectance function
+   Synonym: Conditional mean exceedance function
+   Synonym: CME function
+ 
+Complete Sample
+   A sample with no censored items; that is, all of the items
+   failed within the time span of the test.
+ 
+Competing Risks
+   Synonym: Failure modes (see write-up)
+ 
+Conditional Mean Exceedance Function
+   Synonym: Mean residual life function (see write-up)
+   Synonym: Life expectancy function
+   Synonym: CME function
+ 
+Confidence Interval
+   [a,b] is a 95% confidence interval for a parameter
+   if the data analysis leads the analyst to be 95%
+   confident that the true value of the parameter lies
+   in the interval [a,b]; that is
+ 
+      Prob[ a < parameter < b ] = .95
+ 
+   a and b are said to be the "confidence limits".
+   Strictly speaking, a confidence interval is a random
+   interval--the interval itself will change randomly
+   from one data sample to the next.  The 95%
+   confidence interval from a procedure (for example:
+   t, chi-squared, F, etc.) has the property that 95%
+   of these random intervals obtained in this
+   systematic way from (conceptually) repeated samples
+   will have the property that they cover the true,
+   unknown (and will always be unknown), fixed value of
+   the parameter.
+ 
+Cumulative Distribution Function F(y)
+   F(y) = The probability of an item failing before age y
+          (a monotonically-increasing function).
+        = Prob(Y <= y)
+   Reference: Nelson, Applied Life Data Analysis, p. 19.
+ 
+Cumulative Hazard Function H(y)
+   H(y) = The cumulative integral of the hazard function h(y).
+        = a monotonically-increasing function.
+        = integral h(y)
+        = -log(R(y))
+        = -log(1 - F(y))
+   Reference: Nelson, Applied Life Data Analysis, p. 27.
+ 
+Cumulative Hazard Rate Function
+   Synonym: cumulative hazard function
+ 
+Degradation Mechanisms
+   The physical mechanisms which cause an item to fail.
+   They include: fatigue, creep, cracking, wear, corrosion,
+   oxidation, weathering, etc.
+ 
+Distribution (of a Random Variable)
+   A probability model which describes the relative
+   frequency (likelihood of occurance) of failure times
+   of (target) population items.
+   Common reliability analysis distributions include
+   exponential, lognormal, logistic, normal, Weibull, etc.
+ 
+Distribution Parameters
+   Numbers which describe the location,
+   the spread, and the shape of a distribution.
+ 
+Durability
+   to be done
+ 
+Exponential Distribution
+   A distribution with z = (x-mu)/sigma   and   y>= mu
+      f(y)   = (1/sigma) * exp(-z)
+      F(y)   = 1 - exp(-z)
+      ppf(p) = mu + sigma * log(1/(1-p))
+      R(y)   = exp(-z)
+      h(y)   = 1/sigma
+      H(y)   = y/sigma
+      CME(y) = ???
+ 
+Experiment Design
+   The organization, planning, and execution of the testing
+   so as to carry out the engineering objectives of the project.
+ 
+Failure Modes
+   This term is applicable only for items or systems which
+   can fail due to multiple physical failure mechanisms.
+   Each different potential failure mechanism is referred to
+   as a different "failure mode" or (equivalently) a
+   different "competing risk".
+   Synonym: Competing risks
+ 
+Failure Rate Function
+   Synonym: Hazard function h(y)  (See write-up)
+   Synonym: Hazard rate
+   Synonym: Mortality rate
+   Synonym: Force of mortality
+ 
+Failure Time (of an Item) Y
+   The time at which an item under test did in fact fail/die.
+   Synonym: Lifetime
+ 
+Force of Mortality (Function)
+   Synonym: Hazard function h(y)  (See write-up)
+   Synonym: Hazard rate (function)
+   Synonym: Failure rate function
+   Synonym: Mortality rate (function)
+   Synonym: Intensity function
+ 
+Hazard Function h(y)
+   h(y) = The instantaneous failure rate of an item at age y.
+        = The propensity to failure as a function of age.
+        = The prob. of failure at age y given survival to age y.
+        = The (conditional) probability of failure at age y.
+        = Prob(Y = y) / Prob(Y > y)
+        = f(y) / (1 - F(y))
+        = f(y) / R(y)
+   Interpretation: h(y) decreasing? increasing?
+   Synonym: Hazard rate (function)
+   Synonym: Failure rate function
+   Synonym: Mortality rate (function)
+   Synonym: Force of mortality (function)
+   Synonym: Intensity function
+   Reference: Nelson, Applied Life Data Analysis, p. 25.
+ 
+Hazard Plot
+   A methodology for determining the best-fit distribution
+   for lifetime data.  Each individual distribution has its own
+   hazard plot.  For a given data set, an exponential
+   hazard plot will appear different than a normal hazard
+   plot, a Weibull hazard plot, etc.  Hazard plots are
+      1) graphical;
+      2) parametric (i.e., output = a distribution);
+      3) similar to probability plotting;
+      4) usable for both complete and incomplete samples;
+      5) easy to interpret--a linear hazard plot
+         implies a good distributional fit.
+ 
+Hazard Rate (Function)
+   Synonym: Hazard function h(y)  (See write-up)
+   Synonym: Failure rate function
+   Synonym: Mortality rate (function)
+   Synonym: Force of mortality (function)
+   Synonym: Intensity function
+ 
+Incomplete Sample
+   A sample with one or more censored items; that is, some item
+   failed outside of the time span of the test.
+ 
+Interval Censored Item
+   An item whose exact failure time is unknown, but is
+   known to have failed in the time interval spanned
+   by 2 known cutoff values.
+ 
+Intensity Function
+   Synonym: Hazard function h(y)  (See write-up)
+   Synonym: Hazard rate (function)
+   Synonym: Failure rate function
+   Synonym: Mortality rate (function)
+   Synonym: Force of mortality (function)
+   Synonym: Intensity function
+ 
+Item
+   The physical object whose time to failure is the focus of study.
+   Synonym: Test Item
+   Synonym: Unit
+ 
+Kaplan-Meier Estimation
+   A non-parametric method for estimating the values of the
+   cumulative distribution function at the observed sample
+   values.  It may be used for both complete and for incomplete
+   samples.
+   Reference: Nelson, Applied Life Data Analysis, p. 149.
+ 
+Left-Censored Item
+   An item whose true failure time is unknown, but is
+   known to have failed before a specified cutoff value.
+ 
+Left-Censored Data Point
+   The failure time "assigned" to an item which failed before
+   a cutoff time (and thus the true failure time is unknown).
+   The assigned value is not the true (unknown) failure
+   time t, but rather is simply designated as "<c".
+ 
+Left-Censored Sample
+   The set of data that results when
+      1) the entire target population is available
+         to be sampled from;
+      2) the experiment design has a cutoff time before
+         which the failure time was unknown or not recorded;
+      3) one or more items failed before the cutoff time.
+ 
+Left-Truncated item
+ 
+Left-Truncated data point
+ 
+Left-Truncated sample
+ 
+Life Expectancy Function
+   Synonym: Mean residual life function (see write-up)
+   Synonym: Life expectance function
+   Synonym: Conditional mean exceedance function
+   Synonym: CME function
+ 
+Lifetime (of an Item) Y
+   Synonym: Failure Time (see write-up)
+ 
+Lifetime Analysis
+   Synonym: Reliability analysis (see write-up)
+   Synonym: Survival analysis
+ 
+Location of a Distribution
+   A number (= a parameter) which describes "where" a
+   distribution is positioned on the response variable axis.
+   For some distributions (e.g., normal), this number
+   describes the "middle" of the distribution.  For other
+   distribution (e.g., exponential and Weibull), this number
+   may describe where the distribution "starts".
+ 
+Lognormal Distribution
+   A distribution with z = (x-mu)/sigma   and   y>= mu
+      f(y)   =
+      F(y)   =
+      ppf(p) =
+      R(y)   =
+      h(y)   =
+      H(y)   =
+      CME(y) = ???
+ 
+Martingale
+ 
+Maximum Likelihood Estimation
+   A general parametric method for estimating the parameters
+   of a distribution.  The maximum likelihood estimators of
+   the distributional parameters are those values which
+   maximize the likelihood function (= product of density
+   functions).  A vast body of literature exists for maximum
+   likelihood estimation.  It may be used for both complete
+   and incomplete samples.
+   Reference: Nelson, Applied Life Data Analysis, p. 313ff.
+ 
+Maximum PPCC Estimation
+   A parametric method for estimating the shape and/or tail
+   length parameter of a distributional family (e.g.,
+   Weibull).  The maximum PPCC (PPCC = probability plot
+   correlation coefficient) estimator of the distributional
+   family shape and/or tail length parameter is the value
+   which maximizes the linearity of the probability plot of
+   the distribution.  It may be used for both complete and
+   incomplete samples.
+   Reference: Filliben...
+ 
+Mean Life M
+   That time value M which serves as the centroid balance point
+   of the distribution of population failure times.
+   The mean life M is defined as
+      M = integral y*f(y) dy
+   Synonym: Mean Life (see write-up)
+   Synonym: Mean Time to Failure MTTF
+   Synonym: Mean Time between Failures MTBF
+ 
+Mean Residual Life Function
+   MRL(y) = The typical remaining time to failure as a function of age.
+          = The average remaining life at age y given survival to age y.
+          = The (conditional) mean time to failure beyond age y.
+          = integral y*h(y) dy ???
+          = (integral (y,infinity) y*f(y) dy) / (1 - F(y))  ???
+   Synonym: Life expectancy function
+   Synonym: Conditional mean exceedance function
+   Synonym: CME function
+ 
+Mean Time to Failure MTTF
+   Synonym: Mean Life (see write-up)
+   Synonym: Mean Time between Failures MTBF
+ 
+Mean Time Between Failures MTBF
+   Synonym: Mean Life (see write-up)
+   Synonym: Mean Time to Failure MTTF
+ 
+Median Life
+   That time value for which exactly 50% of the population
+   failure times fall below (and necessarily 50% fall above).
+   Reference: Nelson, Applied Life Data Analysis, p. 22.
+ 
+Mortality Rate (Function)
+   Synonym: Hazard function h(y)  (See write-up)
+   Synonym: Hazard rate (function)
+   Synonym: Failure rate function
+   Synonym: Force of mortality (function)
+   Synonym: Intensity function
+ 
+Multiply-Censored Sample
+   A (usually) right-censored sample in which
+      1) different items go "on test" at different times;
+      2) there was only a single stop (censor time);
+      3) at least one item was censored.
+   The net effect is that the resulting sample is intermixed
+   with known life times for some items which exceed bounded
+   life times for other items.  Distributional estimation
+   of multiply-censored samples may be done via hazard plotting.
+ 
+Nelson-Aalen Estimator (of chf)
+ 
+Non-parametric Methods
+   In a reliability analysis context, any statistical
+   estimation procedure which yields estimated
+      1) mean lifes
+      2) quantiles
+      3) predicted distribution/reliability/hazard/etc. values
+   without having to resort to intermediate specific
+   best-fit distribution functions (such as normal,
+   exponential, Weibull, etc.) An example of a
+   non-parametric methods is the Kaplan-Meier estimate of
+   cumulative distribution function values.
+ 
+Normal Distribution
+   A distribution with z = (x-mu)/sigma
+      f(y)   = (1/sqrt(2*pi)*sigma) * exp(-0.5*z**2)
+      F(y)   =
+      ppf(p) =
+      R(y)   =
+      h(y)   =
+      H(y)   =
+      CME(y) =
+ 
+On Test
+   To initiate the life testing of the item under study.
+ 
+Parameter of a Distribution
+   Numbers which characterize the
+      1) location,
+      2) variation,
+      3) shape, or
+      4) tail-length
+   of the distribution.
+ 
+Parametric Methods
+   In a reliability analysis context, any statistical
+   estimation procedure which yields estimated
+      1) mean lifes
+      2) quantiles
+      3) predicted distribution/reliability/hazard/etc. values
+      4) distribution/reliability/hazard/etc. functions
+      5) distribution/reliabilit/hazard/etc. function parameters
+   by means of first estimating the best-fit distribution
+   function (e.g., normal, exponential, Weibull, etc.)
+   and the parameters of that best-fit distribution.
+   Examples of parametric methods is normal hazard plotting,
+   exponential hazard plotting, and Weibull hazard plotting.
+ 
+Percent Point Function
+ 
+Percentile
+   Synonym: Quantile
+ 
+Population (= target population)
+   1. The set of items for which the analyst wishes
+      to make conclusions about; or
+   2. The failure times of those items for which the
+      analyst wishes to make conclusions about.
+ 
+PPCC Plotting
+ 
+Probability Density Function f(y)
+   f(y) = The instantaneous probability of failure at age y.
+        = The (unconditional) probability of failure at age y.
+        = Prob(Y = y)
+   Interpretation: f(y) decreasing? increasing?
+   Reference: Nelson, Applied Life Data Analysis, p. 16.
+ 
+Probability Plot
+   A methodology for determining the best-fit distribution
+   for lifetime data.  Each individual distribution has its own
+   probability plot.  For a given data set, an exponential
+   probability plot will appear different than a normal probability
+   plot, a Weibull probability plot, etc.  Probability plots are
+      1) graphical;
+      2) parametric (i.e., output = a distribution);
+      3) similar to hazard plotting;
+      4) usable for both complete and incomplete samples;
+      5) easy to interpret--a linear probability plot
+         implies a good distributional fit.
+ 
+Probability Plot Estimation
+   A parametric method for estimating the location and scale
+   parameters of a distribution (e.g., normal or
+   exponential), or for a member of a distributional family
+   (e.g., Weibull with shape parameter 2.5, or gamma with
+   shape parameter 6).  The probability plot estimates of
+   the location and scale parameters are the estimated
+   intercept and slope from the least squares linear fit of
+   the probability plot.  Probability plot estimation may be
+   used for both complete and incomplete samples.
+   Reference: Filliben...
+ 
+ 
+Product Life Estimation
+   A general non-parametric method for estimating the values
+   of the cumulative distribution function (and other
+   distribution functions such as the reliability function)
+   at the observed sample values.  The Kaplan-Meier
+   estimation method is a special case of the product-limit
+   estimation method.  The product-limit method may be used
+   for both complete and for incomplete samples.
+   Reference: Nelson, Applied Life Data Analysis, p. 149.
+ 
+Quantile
+   Synonym: Percentile
+ 
+Random Variable Y
+ 
+Reliability Analysis
+   The data analysis of age data whose purpose is to make
+   inferences about a target population of items; such
+   inferences involve the estimation of
+      1) mean life
+      2) quantiles
+      3) predicted distribution values
+      4) best-fit distribution identification
+      5) best-fit distributional parameters
+      6) best-fit distributional functions
+   and the attachment of uncertainty values and/or
+   uncertainty limits for the above estimates.
+   Synonym: Survival analysis
+   Synonym: Lifetime analysis
+ 
+Reliability Function R(y)
+   R(y) = the probability of an item surviving beyond age y
+          (a monotonically-decreasing function).
+        = Prob(Y > y)
+        = 1 - Prob(Y <= y)
+        = 1 - cdf(y)
+        = 1 - F(y)
+   Synonym: Survival function
+   Synonym: Survivorship function
+   Reference: Nelson, Applied Life Data Analysis, p. 21.
+ 
+Right-Censored Item
+   An item whose true failure time is unknown, but is
+   known to have failed only after a specified cutoff value.
+ 
+Right-Censored Data Point
+   The failure time "assigned" to an item which failed after
+   a cutoff time (and thus the true failure time is unknown).
+   The assigned value is not the true (unknown) failure
+   time t, but rather is simply designated as ">c".
+ 
+Right-Censored Sample
+   The set of data that results when
+      1) the entire target population is available
+         to be sampled from;
+      2) the experiment design has a cutoff time after
+         which the failure time was unknown or not recorded;
+      3) one or more items failed after the cutoff time.
+ 
+Right-Truncated sample
+ 
+Right-Truncated Data Point
+ 
+Right-Truncated Sample
+ 
+Sample
+   The set of lifetime data values collected during a test.
+ 
+Shape of a Distribution
+   A number (= a parameter) which describes whether a
+   distribution is symmetric (with probability density
+   function being a mirror-image about a center point, such
+   as the normal distribution), or skewed (non-symmetric,
+   such as the exponential, lognormal, and Weibull
+   distributions).
+ 
+Singly-Censored Sample
+   A (usually) right-censored sample in which
+      1) all items were started on test at the same time;
+      2) there was only a single stop (censor time);
+      3) at least one item was censored.
+   Distributional estimation of singly-censored samples may
+   be done via probability plotting.
+ 
+Spread of a Distribution
+   Synonym: Variation of a distribution (see write-up)
+ 
+Standard Deviation
+   The standard deviation of a random variable or a statistic is a
+   number which describes how "spread out" (how "variable")
+   the distribution of the random variable or statistic is.
+   The standard deviation is defined as the
+      square root of the integral of (x-mu)**2 * f(x) dx
+   where mu is the mean of the random variable and
+   f(x) is the probability density function of the random
+   variable.  The standard deviation of a random variable or a
+   statistic is identically the square root of the variance
+   of the random variable or the statistic.  In choosing
+   between the standard deviation or the variance to
+   describe the spread of a distribution, we recommend
+   the use of the standard deviation (which is in units of
+   the data) as opposed to the variance (which is
+   artifically in squared units of the data).
+ 
+Stress Variables
+   Synonym: Acceleration factors   (see write-up)
+ 
+Survival Analysis
+   Synonym: Reliability analysis (see write-up)
+   Synonym: Lifetime analysis
+ 
+Survival Function
+   Synonym: Reliability function  (see write-up)
+   Synonym: Survivorship function
+ 
+Survivorship Function
+   Synonym: Reliability function  (see write-up)
+   Synonym: Survival function
+ 
+Survival Distribution Function
+ 
+Tail-Length of a Distribution
+   A number (= a parameter) which describes the propensity
+   of a spread-standardized distribution to yield
+   "outlying-appearing" values.  Short-tailed distributions
+   (such as the uniform distribution) have finite-domain and
+   so no "tails" and thus yield no "outliers".
+   Moderate-tailed distributions (such as the normal
+   distribution) have infinite-domain probability density
+   functions but which rapidly approach zero and so have
+   small probability of "outliers".  Long-tailed
+   distributions (such as the Cauchy distribution) have
+   infinite-domain probability density functions but which
+   approach zero only slowly and so have high probability of
+   "outliers".
+ 
+Test
+   The process of executing a lifetime experiment and
+   recording failure times from such an experiment.  If the
+   experiment is carried out under higher-than-normal stress
+   levels so as to hasten failures and thus shorten the
+   total elapsed time of the test, then such a test is
+   referred to as an "accelerated test".
+ 
+Test Item
+   Synonym: Item (see write-up)
+   Synonym: Unit
+ 
+Tolerance Limits
+ 
+Truncated Data Point
+ 
+Truncated Sample
+   The set of data that results when a certain subset
+   of the target population is unavailable to be put on test.
+ 
+Type I Censored Sample
+   A censored sample in which the cutoff time is pre-fixed,
+   and thus the actual number of censored items will be random.
+   Example--stop the test at 100 days.
+   Type I censoring is quite common in practice.
+ 
+Type II Censored Sample
+   A censored sample in which the cutoff time is not fixed
+   but rather is defined via the actual number of failures
+   or the proportion of failures.  Thus the cutoff time is
+   random and the number (or proprotion) of failed is fixed.
+   Example--stop the test when 90% of the items have failed.
+   Type II censoring is less common in practice.
+ 
+Unit
+   Synonym: Item (see write-up)
+   Synonym: Test item
+ 
+Variance
+   The variance of a random variable or a statistic is a
+   number which describes how "spread out" (how "variable")
+   the distribution of the random variable or statistic is.
+   The variance is defined as the
+      integral of (x-mu)**2 * f(x) dx
+   where mu is the mean of the random variable and
+   f(x) is the probability density function of the random
+   variable.  The variance of a random variable or a
+   statistic is identically the squared standard deviation
+   of the random variable or the statistic.  In choosing
+   between the standard deviation or the variance to
+   describe the spread of a distribution, we recommend
+   the use of the standard deviation (which is in units of
+   the data) as opposed to the variance (which is
+   artifically in squared units of the data).
+ 
+Variation of a Distribution
+   A number (= a parameter) which describes "how spread out" a
+   distribution is along the response variable axis.
+   Synonym: Spread of a distribution
+ 
+Warranty
+   to be done
+ 
+Weibull Distribution
+   This is a commonly-employed probability model for failure
+   times.  "The" Weibull distribution is a misnomer-- it is
+   really a family of distributions--ranging over a wide
+   variety of shapes.  The most commonly-employed form of
+   the Weibull distribution has the following distributional
+   function forms (with z = (x-mu)/sigma and y>= mu):
+ 
+      f(y)   = gamma * (x**(gamma-1)) * exp(-(x**gamma))
+      F(y)   = 1 - exp(-(x**gamma))
+      ppf(p) = mu + sigma * (log(1/(1-p)))**(1/gamma)
+      R(y)   =
+      h(y)   =
+      H(y)   =
+      CME(y) = ???
+   The above general representation of the Weibull family is
+   referred to as the "3-parameter" Weibull distribution.
+   It is extremely common (but yields less-flexible
+   probability models) in the lifetime literature to set mu
+   = 0--this is referred to as the "2-parameter" Weibull
+   distribution.

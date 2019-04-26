@@ -1,0 +1,8 @@
+----- <~data\tfunc.top> Functions: t Distribution
+
+Functions: t Distribution
+
+TCDF(X,NU)        t cumulative distribution function
+TPDF(X,NU)        t probability density function
+TPPF(P,NU)        t percent point function
+

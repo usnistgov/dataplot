@@ -1,0 +1,74 @@
+----- <~file\discname.top> Files: File Name Restrictions
+
+File: File Name Restrictions
+
+FILE NAME RESTRICTIONS
+
+A few comments on file names.
+
+  1. File names are limited to 80 characters or less (this includes
+     the path name if given).
+
+     Note that there are also restrictions on the length of the
+     command line.  This means that the number of characters
+     for the file name plus the variable names can also present a
+     problem.
+
+     There are a few things that can help in this regard.
+
+     a. The shortcut for the Dataplot GUI allows you to define the
+        default directory.  That is, file names can be specified
+        relative to this directory.  One recommendation is to
+        create a folder to store Dataplot files (you may want to
+        create separate sub-folders for data files and Dataplot
+        macros, but this is personal preference).  Then to set this
+        folder as the default, right click on the GUI shortcut,
+        select Properties, and then define the folder in the
+        "Start-In" or "Working" field (the terminology varies a
+        bit depending on which version of Windows your are running).
+
+     b. Dataplot supports a TO syntax on the READ command.  For
+        example,
+
+            READ FILE.DAT Y X1 TO X5
+
+        This can also be used in conjunction with the NAME
+        command to define an alias.  For example,
+
+            READ FILE.DAT Y X1 TO X5
+            NAME X1 TEMP
+            NAME X2 PRESSURE
+
+     c. Some versions of Dataplot let you define the current directory
+        with the command
+
+             CD  name-of-directory
+
+        This is not supported under the GUI version of Dataplot
+        on Windows.
+
+  2. If the file name contains either spaces or hypens, it
+     should be enclosed in double quotes.  For example,
+
+       READ "C:\My Documents\SAMPLE.DAT"  Y X1 X2
+
+  3. The file name should be a valid file name on the local
+     operating system.
+
+  4. The file name must contain a period "." in the file name itself
+     or as a trailing character.  Dataplot strips off trailing periods
+     on those systems where it is appropriate to do so.  On systems
+     where trailing periods can be a valid file name (e.g., Unix),
+     Dataplot opens the file with the trailing period.
+ 
+  5. On systems where file names are case sensitive (i.e., Unix),
+     Dataplot first tries to open the file name as given.  If the
+     file is not found, it then tries to match the file name
+     after converting the name to all upper case characters.  If
+     it is still not found, it will convert the file name to all
+     lower case characters
+
+     If your file name contains a mixture of upper and lower case
+     characters, then you need to enter the case for the file name
+     correctly on the READ command.
+

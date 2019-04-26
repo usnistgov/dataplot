@@ -1,0 +1,55 @@
+----- <~file\discauto.top> Files: Automatic Variable Names
+
+File: Automatic Variable Names
+
+AUTOMATIC VARIABLE NAMES
+
+Dataplot normally reads variable names on the READ command.
+However, many ASCII files will have the name of the variables
+given directly in the file or Dataplot can assign the variable
+names automatically.
+
+Specific methods include the following.
+
+  1. Many of the sample files provided in the Dataplot 
+     installation use a syntax like
+
+         Y     X1   X2
+        ----------------
+           <data values>
+
+     For these files, you can enter the commands
+
+         SKIP AUTOMATIC
+         READ FILE.DAT
+
+     In this case, Dataplot will skip all lines until a line
+     starting with three or more hypens is encountered.  It
+     will then backspace to the previous line and read the
+     variable names from that line.
+
+  2. Many ASCII data files will have the variable names on
+     the first line of the file.  For these files, you can
+     enter the commands
+
+        SET VARIABLE LABELS ON
+        READ FILE.DAT
+
+  3. If you would like Dataplot to simply assign the variable
+     names, enter the command
+
+         READ FILE.DAT
+
+     Dataplot will read the first line of the file to determine
+     the number of variables.  It will then assign the names
+     X1, X2, and so on to the variable names.
+
+Note that Dataplot's usual rules for variable names still apply.
+That is, a maximum of eight characters will be used and spaces will
+delimit variable names.  The use of special (i.e., not a number and
+not an alphabetic character) characters is discouraged.  You may
+need to edit the file if the variable names do not follow these
+rules (more than eight characters will simply be ignored, so the
+issue is more one of duplicate variable names in the first eight
+characters).
+

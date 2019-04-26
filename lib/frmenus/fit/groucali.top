@@ -1,0 +1,18 @@
+----- <~fit\groucali.top> When Group/Subset Effects Exist...
+
+When Group/Subset Effects Exist...
+
+Discussion                            <~fit\grcadisc.top>
+Detect a group/subset effect          <~fit\grcadete.top>
+Differences in input  to   the fit    <~fit\grcaindi.top>
+Differences in output from the fit    <~fit\grcaoudi.top>
+
+Doing the fit
+   Discussion: 4 common methods       <~fit\grcacome.top>
+   Recommendations: What not to do    <~fit\grcawhno.top>
+   Recommendations: What to do        <~fit\grcawhto.top>
+   Do fit via method 1: fit raw data  <xemf: ~fit\fitrawda.men>
+   Do fit via method 2: average coefs <xemf: ~fit\avecoefs.men>
+   Do fit via method 3: ANOCOV        <xemf: ~fit\anocov.men>
+   Do fit via method 4: weighted fit  <xemf: ~fit\weilinfi.men>
+

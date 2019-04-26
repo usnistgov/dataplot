@@ -1,0 +1,11 @@
+----- <~data\viewdata.top> View Data
+
+View Internal Data
+
+Names of all internal Dataplot data objects:
+   All Variables               <xcl: STATUS VARIABLES>
+   All Parameters              <xcl: STATUS PARAMETERS>
+   All Functions               <xcl: STATUS FUNCTIONS>
+   All Matrices                <xcl: STATUS MATRICES>
+   All                         <xcl: STATUS>
+

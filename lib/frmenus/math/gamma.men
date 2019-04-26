@@ -1,0 +1,40 @@
+This is file gamma.men--Compute gamma and related functions
+ 
+--------------------
+ 1. Gamma (and Related) Functions
+ 2. LET YNEW = GAMMA(X)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value.
+ 6.
+ 7. Variable  to operate on:
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8. Operation to perform:
+ 9.
+10. @CE 2 1 10 40 gamma
+11. @CE 2 2 10 40 log gamma
+12. @CE 2 3 10 40 reciprocal gamma
+13. @CE 2 4 10 40 digamma
+14.
+15. Variable to store the transformed result:
+15. @CE 3 0 33 50 ?
+16.
+17. Plot?:
+17. @CE 5 1 14 20 no
+17. @CE 5 2 22 28 yes
+18.
+19. Subset/Except/For Specification:
+20. @CE 4 0 -5 50 *
+21.
+22.
+23. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = GAMMA( _1 ) _4
+@IF 2 2 LET _3 = LNGAMMA( _1 ) _4
+@IF 2 3 LET _3 = GAMMAR( _1 ) _4
+@IF 2 4 LET _3 = DIGAMMA( _1 ) _4
+@IF 5 2 PLOT _3  _1  _4
+--------------------
+WEB HELP GAMMA FUNCTIONS
+--------------------

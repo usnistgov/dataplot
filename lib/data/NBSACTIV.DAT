@@ -1,0 +1,37 @@
+THIS IS DATAPLOT DATA FILE    NBSACTIV.DAT
+STATISTICAL COMPUTING ACTIVITIES
+(FROM 1986 NBS SURVEY)
+RESPONSE = % OF SURVEY RESPONDANTS
+           WHO REGULARLY CARRY OUT A
+           GIVEN TYPE OF ACTIVITY.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+------------------------------------------
+   Linear Least Squares                63
+   Data Summarization                  57
+   Nonlinear Least Squares             51
+   Statistical Greaphics               37
+   Stat. Function Evaluation           24
+   Multivariate Analysis               21
+   Design of Experiments               18
+   Time Series Analysis                15
+   Random Number Generation            13
+   Reliability                         12
+   Robust Statistics                    3
+   "Other"                              3

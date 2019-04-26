@@ -1,0 +1,90 @@
+This is file dot1plot.men--Dot Plot
+ 
+--------------------
+ 1. Dot Plot
+ 2. SPIKE ON; PLOT Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. Optional Horizontal Axis Variable:
+ 5. @CE 2 0 33 50 ? gui-vari
+ 6.
+ 7. Title:
+ 7. @CE 18 0 10 50 *
+ 8. Left Axis Label:
+ 8. @CE 19 0 22 50 *
+ 9. Bottom Axis Label:
+ 9. @CE 20 0 22 50 *
+10.
+11. Base for Spikes (typically 0):
+11. @CE 3 0 33 50 *
+12. Line Style For Spikes:
+12. @CE 4 0 33 50 * gui-line
+13. Color For Spikes:
+13. @CE 10 0 33 50 * gui-color
+14. Line Thickness for Spikes:
+14. @CE 15 0 33 50 * gui-thick
+15. Character Type:
+15. @CE 5 0 33 50 * gui-character
+16. Character Fill:
+16. @CE 16 0 33 50 * gui-ooff
+17.
+18. Spike Direction:
+18. @CE 7 1 25 35 Vertical
+18. @CE 7 2 37 47 Horizontal
+19.
+20. Enter Axis Labels (use SP() for blank labels):
+21. @CE 17 0 -10 50 *
+22.
+23. Subset/Except/For Specification:
+24. @CE 21 0 -10 50 *
+25.
+26. Generate the Dot Plot?:
+--------------------
+GR FE
+LINE SAVE
+CHARACTER SAVE
+LINE BLANK
+CHARACTER _5
+CHARACTER FILL _16
+SPIKE ON
+BAR OFF
+SPIKE BASE _3
+SPIKE LINE _4
+SPIKE COLOR _10
+SPIKE THICKNESS _15
+HORIZONTAL SWITCH OFF
+@IF 7 2 HORIZONTAL SWITCH ON
+LET ZZZZDIR = 1
+@IF 7 2 LET ZZZZDIR = 2
+@IF 17 0 LET ZZZZN = SIZE Y
+IF ZZZZDIR = 1
+@IF 17 0 MAJOR XTIC MARK NUMBER ZZZZN
+@IF 17 0 MINOR XTIC MARK NUMBER 0
+@IF 17 0 XLIMITS 1 ZZZZN
+@IF 17 0 XTIC OFFSET 0.5 0.5
+@IF 17 0 XTIC LABEL FORMAT ALPHA
+@IF 17 0 XTIC LABEL CONTENT _17
+END OF IF
+IF ZZZZDIR = 2
+@IF 17 0 MAJOR YTIC MARK NUMBER ZZZZN
+@IF 17 0 MINOR YTIC MARK NUMBER 0
+@IF 17 0 YLIMITS 1 ZZZZN
+@IF 17 0 YTIC OFFSET 0.5 0.5
+@IF 17 0 YTIC LABEL FORMAT ALPHA
+@IF 17 0 YTIC LABEL CONTENT _17
+END OF IF
+TITLE _18
+Y1LABEL _19
+X1LABEL _20
+PLOT _1 _2 _21
+LINE RESTORE
+CHARACTER RESTORE
+@IF 17 0 LIMITS
+@IF 17 0 TIC OFFSET
+@IF 17 0 MAJOR TIC MARK NUMBER
+@IF 17 0 MINOR TIC MARK NUMBER
+@IF 17 0 TIC MARK LABEL FORMAT
+--------------------
+WEB HELP SPIKE
+--------------------

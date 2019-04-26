@@ -1,0 +1,10 @@
+----- <~dataloex\IRIS.DP> Load & Execute IRIS.DAT
+
+. This is file    IRIS.DP
+
+DELETE Y1 TO Y4 TAG
+SKIP 25
+READ IRIS.DAT Y1 TO Y4 TAG
+TITLE IRIS.DAT
+/
+

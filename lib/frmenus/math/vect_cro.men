@@ -1,0 +1,26 @@
+This is file vect_cro.men--Compute vector cross product of a variable
+ 
+--------------------
+ 1. Vector Cross Product
+ 2. LET A = VECTOR CROSS PRODUCT Y1 Y2
+ 3.
+ 4. First variable for which to compute the
+ 5.    vector cross product (should have 3 values):
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Second variable for which to compute the
+ 7.    vector cross product (should have 3 values):
+ 7. @CE 2 0 33 50 ? gui-variable
+ 8. Variable to store the vector cross product:
+ 8. @CE 3 0 33 50 ? gui-none
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 4 0 -10 50 *
+12.
+13.
+14. Compute the Vector Cross Product?:
+--------------------
+GR FE
+LET _3 = VECTOR CROSS PRODUCT  _1 _2 _4
+--------------------
+WEB HELP VECTOR CROSS PRODUCT
+--------------------

@@ -1,0 +1,31 @@
+This is file pooled.men--Pooled Variance-Covariance Matrix
+ 
+--------------------
+ 1. Pooled Variance-Covariance Matrix
+ 2. LET SPOOL = POOLED VARIANCE-COVARIANCE MATRIX M TAG
+ 3.
+ 4. List of Response Variables:
+ 5. @CE 1 0 1 50 gui-variable
+ 6. Gropup ID Variable:
+ 6. @CE 2 0 42 50 gui-variable
+ 7.
+ 8. Name of Matrix to Store Pooled Variance-Covariance Matrix:
+ 8. @CE 3 0 42 50 ?
+ 9.
+10. Subset/Except/For Specification: 
+11. @CE 4 0 1 50 *
+12.
+13.
+14. Generate the Pooled Covariance Matrix?:
+--------------------
+GR FE
+DELETE ZZZZX ZZZZTAG
+WRITE ZZZZJUNK.DAT _1 _4
+SKIP 0
+READ MATRIX ZZZZJUNK.DAT ZZZZX
+LET ZZZZTAG = _2
+RETAIN ZZZZTAG _4
+LET _3 = POOLED VARIANCE-COVARIANCE MATRIX ZZZZX ZZZZTAG
+--------------------
+WEB HELP POOLED VARIANCE-COVARIANCE MATRIX
+--------------------

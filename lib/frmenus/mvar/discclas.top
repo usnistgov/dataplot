@@ -1,0 +1,17 @@
+----- <~mvar\discclas.top> Discrimination/Classicification
+ 
+Discriminant/Classiciation Analysis
+ 
+
+Discussion                         <~mvar\discdisc.top>
+
+ECM Discriminant Analysis (p > 2)    <xemf: ~mvar\ecmdisp.men>
+ECM Discriminant Analysis (p = 2)    <xemf: ~mvar\ecmdis2.men>
+
+Fisher Discriminant Analysis (p > 2) <xemf: ~mvar\fishdisp.men>
+Fisher Discriminant Analysis (p = 2) <xemf: ~mvar\fishdis2.men>
+
+Worked Examples
+    Fisher Iris Data                    <xcl: CALL FISHIRIS.DP>
+    2 Population Example (Fisher)       <xcl: CALL FISH2POP.DP>
+

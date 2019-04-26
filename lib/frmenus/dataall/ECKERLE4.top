@@ -1,0 +1,8 @@
+----- <~dataall\ECKERLE4.top> ECKERLE4.DAT
+
+ECKERLE4.DAT
+
+View     <xcl: LIST ECKERLE4.DAT>
+Load     <xcf: ~dataload/ECKERLE4.DP>
+Print    <xccl: printfile C:\DATAPLOT\ECKERLE4.DAT>
+

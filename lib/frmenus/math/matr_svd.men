@@ -1,0 +1,33 @@
+This is file matr_svd.men--Singular Value Decomposition of a matrix
+ 
+--------------------
+ 1. Singular Value Decomposition of a Matrix
+ 2. LET U S V = SINGULAR VALUE DECOMPOSITION M
+ 3.
+ 4. The singular value decomposition returns 2 matrices
+ 5. U and V.  Note that the U matrix is nxn.  The Dataplot
+ 6. limit on the number of matrix columns is currently 100 for
+ 7. most implementations.  That means that in Dataplot the
+ 8. singular value decomposition is typically limited to
+ 9. matrices with 100 or less rows.
+10.
+11. Name of original matrix:
+11. @CE 1 0 33 50 ? gui-matrix
+12. Variable to store the singular values:
+12. @CE 2 0 33 50 ? gui-none
+13. Matrix to store the U matrix:
+13. @CE 3 0 33 50 ? gui-matrix
+14. Matrix to store the V matrix:
+14. @CE 4 0 33 50 ? gui-matrix
+15.
+15. Subset/Except/For Specification:
+16. @CE 5 0 -10 50 *
+17.
+18.
+19. Compute the Singular Value Decomposition?:
+--------------------
+GR FE
+LET _3 _2 _4 = SINGULAR VALUE DECOMPOSITION  _1 _5
+--------------------
+WEB HELP SINGULAR VALUE DECOMPOSITION
+--------------------

@@ -1,0 +1,19 @@
+----- <~dataload\evacast.top> Load Extreme Value Data: Castillo
+
+Load Extreme Value Data: Castillo
+
+CASTILL1.DAT  Max yearly wind speeds       <xcf: ~dataload\CASTILL1.DP>
+CASTILL2.DAT  Max yearly river discharge   <xcf: ~dataload\CASTILL2.DP>
+CASTILL3.DAT  Max yearly wave height       <xcf: ~dataload\CASTILL3.DP>
+CASTILL4.DAT  Between-phone-call wait time <xcf: ~dataload\CASTILL4.DP>
+CASTILL5.DAT  Earthquake epicenter dist.   <xcf: ~dataload\CASTILL5.DP>
+CASTILL6.DAT  Chain link strength          <xcf: ~dataload\CASTILL6.DP>
+CASTILL7.DAT  Elect. insulation lifetime   <xcf: ~dataload\CASTILL7.DP>
+CASTILL8.DAT  Wire cycles-to-failure       <xcf: ~dataload\CASTILL8.DP>
+CASTILL9.DAT  Philadelphia yearly precip.  <xcf: ~dataload\CASTILL9.DP>
+CASTIL10.DAT  Max wave height (Norway)     <xcf: ~dataload\CASTIL10.DP>
+CASTIL11.DAT  Max yearly riv disch (Macon) <xcf: ~dataload\CASTIL11.DP>
+CASTIL12.DAT  Max yearly riv disch (Hawk.) <xcf: ~dataload\CASTIL12.DP>
+CASTIL13.DAT  Oldest man's age in Sweden   <xcf: ~dataload\CASTIL13.DP>
+CASTIL14.DAT  Oldest woman's age in Sweden <xcf: ~dataload\CASTIL14.DP>
+

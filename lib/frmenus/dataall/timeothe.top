@@ -1,0 +1,28 @@
+----- <~dataall\timeothe.top> View/etc. Time Series Data: Other
+
+View/Load/Print Time Series Data: Other
+
+SUNSPOT.DAT*  Monthly sunspot             <~dataall\SUNSPOT.top>
+SUNSPOT2.DAT  Yearly sunspot              <~dataall\SUNSPOT2.top>
+
+GEAR.DAT      Gear diameters (Ishikawa)   <~dataall\GEAR.top>
+CLEAR.DAT     Component clearances        <~dataall\CLEAR.top>
+MICHELSO.DAT  Michelson speed of light exp <~dataall\MICHELSO.top>
+LIN.DAT       Polonium 209 SRM conc       <~dataall\LIN.top>
+
+SIN1.DAT   Sinusoidal (freq = .1)         <~dataall\SIN1.top>
+SIN2.DAT   Sinusoidal (freq = .2)         <~dataall\SIN2.top>
+SIN3.DAT   Sinusoidal (freq = .3)         <~dataall\SIN3.top>
+SIN4.DAT   Sinusoidal (freq = .4)         <~dataall\SIN4.top>
+
+RANDN.DAT     Normal random numbers       <~dataall\RANDN.top>
+RANDU.DAT     Uniform random numbers      <~dataall\RANDU.top>
+RANDWALK.DAT  Random walk                 <~dataall\RANDWALK.top>
+FLICKER.DAT   Flicker noise               <~dataall\FLICKER.top>
+LOTTERY3.DAT  Maryland "pick 3" lott. #'s <~dataall\LOTTERY3.top>
+LOTTERY4.DAT  Maryland "pick 4" lott. #'s <~dataall\LOTTERY4.top>
+
+CONSUMPR.DAT  Consumer price index        <~dataall\CONSUMPR.top>
+GNP.DAT       Gross national product      <~dataall\GNP.top>
+OIL.DAT       Oil depth analysis          <~dataall\OIL.top>
+

@@ -1,0 +1,106 @@
+This is file yulppcc.men-- Yule PPCC Plot
+
+--------------------
+ 1. Yule KS Plot
+ 2. YULE KS PLOT Y X
+ 3.
+ 4. Your data can be either ungrouped (a single
+ 5. response variable) or grouped (a bin counts
+ 6. variable and a bin mid-points variable).
+ 7. 
+ 8. Response (or Bin Counts) Variable:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9. Optional Bin Mid-Points Variable:
+ 9. @CE 2 0 42 50 ? gui-variable
+10.
+11. Line Types:
+11. @CE 3 0 42 50 * gui-line
+12. Character Types:
+12. @CE 4 0 42 50 * gui-char
+13. Character Fill:
+13. @CE 5 0 42 50 * gui-ooff
+14.
+15. Title:
+15. @CE 6 0 22 50 *
+16. Left Axis Label:
+16. @CE 7 0 22 50 *
+17. Bottom Axis Label:
+17. @CE 8 0 22 50 *
+18.
+19. Minimum Value for P (default = 0.5):
+19. @CE 9 0 42 50 *
+20. Maximum Value for P (default = 5):
+20. @CE 10 0 42 50 *
+21.
+22. For the Yule distribution, only the
+23. chi-square goodness of fit plot will
+24. be generated.
+25.
+26. Maximum Value for Y Axis for Chi-Square Plot:
+26. @CE 11 0 42 50 *
+27. Minimum Class Size for Chi-Square:
+27. @CE 12 0 42 50 *
+28.
+29. Subset/Except/For Specification:
+30. @CE 13 0 1 50 *
+31.
+32.
+33. Generate the Yule PPCC Plot?
+--------------------
+GR FE
+TITLE CASE ASIS
+LABEL CASE ASIS
+CASE ASIS
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+DELETE LAMBDA1 LAMBDA2
+LET P1 = _9
+LET P2 = _10
+SET CHISQUARE LIMIT _11
+LET MINSIZE = 5
+LET MINSIZE = _12
+LET ICASE1 = 2
+LET ICASE2 = 1
+@IF 2 0 LET ICASE2 = 2
+IF ICASE1 = 1
+   YULE PPCC PLOT _1 _2 _13
+END OF IF
+IF ICASE1 = 2
+   IF ICASE2 = 1
+      DELETE ZZZZY2 ZZZZX2 ZZZZY ZZZZXL ZZZZXH
+      LET ZZZZMIN = MINIMUM _1 _13
+      LET ZZZZMIN = ZZZZMIN - 0.5
+      LET ZZZZMAX = MAXIMUM _1 _13
+      LET ZZZZMAX = ZZZZMAX + 0.5
+      CLASS WIDTH 1
+      CLASS LOWER ZZZZMIN
+      CLASS UPPER ZZZZMAX
+      LET ZZZZY2 ZZZZX2 = BINNED _1 _13
+      LET ZZZZY ZZZZXL ZZZZXH = COMBINE FREQUENCY TABLE ZZZZY2 ZZZZX2
+      YULE KS PLOT ZZZZY ZZZZXL ZZZZXH
+      DELETE ZZZZY2 ZZZZX2 ZZZZY ZZZZXL ZZZZXH
+   ELSE
+      DELETE ZZZZY ZZZZXL ZZZZXH
+      LET ZZZZY ZZZZXL ZZZZXH = COMBINE FREQUENCY TABLE _1 _2 _13
+      YULE KS PLOT ZZZZY ZZZZXL ZZZZXH
+      DELETE ZZZZY ZZZZXL ZZZZXH
+   END OF IF
+END OF IF
+MOVE 50 5
+JUSTIFICATION CENTER
+TEXT Optimal Value of P = ^shape
+MOVE 50 2
+IF ICASE1 = 1
+   TEXT Maximum PPCC = ^maxppcc
+ELSE
+   TEXT Minimum Chi-Square = ^minks
+END OF IF
+TITLE
+LABEL
+--------------------
+WEB HELP PPCC PLOT
+--------------------

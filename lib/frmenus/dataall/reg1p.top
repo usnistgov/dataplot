@@ -1,0 +1,33 @@
+----- <~dataall\reg1p.top> View/etc. Regression Data: 1-Variable & Poly.
+
+View/Load/Print Regression Data: 1-Variable & Polynomial
+
+BERGER1.DAT   Alaska Pipeline cracks       <~dataall\BERGER1.top>
+SPIEGEL.DAT   Nuclear tank calibration     <~dataall\SPIEGEL.top>
+PONTIUS.DAT*  Load cell calibration        <~dataall\PONTIUS.top>
+
+NATR511.DAT   Young's Modulus              <~dataall\NATR511.top>
+NATR522.DAT   Young's Modulus (with reps)  <~dataall\NATR522.top>
+NATR527.DAT   Colorimetry                  <~dataall\NATR527.top>
+NATR533.DAT   Tire Wear                    <~dataall\NATR533.top>
+NATR540.DAT   Tire Wear                    <~dataall\NATR540.top>
+NATR65.DAT    3-Variable                    <~dataall\NATR65.top>
+NATR627.DAT   Cubic                        <~dataall\NATR627.top>
+
+GRA1326.DAT  Blood Pressure                <~dataall\GRA1326.top>
+
+WAMPLER1.DAT  Polynomial fitting test data <~dataall\WAMPLER1.top>
+NORRIS6.DAT   Ozone Photometry             <~dataall\NORRIS6.top>
+
+BOXSPRAY.DAT  Age eff on spray dispersion  <~dataall\BOXSPRAY.top>
+BOXWELD.DAT   Velocity & weld strength     <~dataall\BOXWELD.top>
+BOXRATS.DAT   Supplement & growth rate     <~dataall\BOXRATS.top>
+
+MICHELSO.DAT  Speed of Light               <~dataall\MICHELSO.top>
+USADEBT.DAT   USA nat. debt (1947-1993)    <~dataall\USADEBT.top>
+MORALES.DAT   SO2 isotope analysis         <~dataall\MORALES.top>
+MORALES2.DAT  SO2 isotope analysis         <~dataall\MORALES2.top>
+
+FREQPRIM.DAT  Frequency of prime numbers   <~dataall\FREQPRIM.top>
+PRIMESM.DAT   Mersenne prime numbers       <~dataall\PRIMESM.top>
+

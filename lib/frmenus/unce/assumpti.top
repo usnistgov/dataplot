@@ -1,0 +1,28 @@
+----- <~unce\assumpti.top> Uncertainty Statement: Assumptions
+ 
+Uncertainty Statement: Assumptions
+ 
+   The response variable Y has the model
+      1. Y        = f(X1, X2, ...)
+         output   = f(input)
+ 
+   The functional form f(.)
+      2. is correct in mathmatical form;
+      3. is fixed (the model holds over the range
+         of all components);
+ 
+   The input variables Xi
+      4. are complete (all relevant Xi have been included);
+      5. are random;
+      6. have an unchanging distribution--
+         the distribution of Xi (normal,
+         Weibull, etc.) is unchanging;
+      7. have an unchanging variation--
+         SD(Xi) is unchanging; and
+      8. have unchanging correlation with other
+         components--CORR(Xi,Xj) is unchanging.
+ 
+   The data have
+      9. no outliers;
+         (that is, all data came from the above model).
+ 

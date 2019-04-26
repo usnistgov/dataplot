@@ -1,0 +1,32 @@
+----- <~dextag\discussi.top> Discussion:  Taguchi Designs
+ 
+Discussion:  Taguchi Designs
+ 
+Taguchi designs were developed by the Japanese
+engineer Genichi Taguchi using statistically planned
+experiments (SPE/DEX) to reduce variation.
+
+Taguchi has applied his techniques to Japanese industry
+and laboratories for 40 years and introduced his techniques
+to the United States in 1980
+
+Taguchi designs are based on "orthogonal arrays".  In fact,
+Taguchi designs are equivalent to certain types of
+fractional factorial designs (the details are discussed
+in the paper by Kacker, Lagergren, and Filliben listed
+in the References menu), although the terminology is
+different.
+
+As highly fractionated designs, Taguchi designs are
+useful for the following situations;
+
+  1) Screening experiments
+  2) When main effects are larger than interaction effects
+  3) Only a few of many factors are likely to be strong
+  4) Results can be considered tentative subject to 
+     verification by follow up experiments.
+
+Taguchi designs are not useful when detailed information
+on the underlying relationship is needed, as in scientific
+work.
+

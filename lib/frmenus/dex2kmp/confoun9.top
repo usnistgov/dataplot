@@ -1,0 +1,25 @@
+----- <~dex2kmp\confoun9.top> Confounding of 2**(k-p) Designs (k >= 9)
+ 
+Confounding of 2**(k-p) Designs (9 to 31 Factors)
+ 
+Confounding of 2**(k-p) Designs (9 to 31 Factors)
+ 
+2**(9-2)           <~dex2kmp\cs29m2.top>
+2**(9-3)           <~dex2kmp\cs29m3.top>
+2**(9-4)           <~dex2kmp\cs29m4.top>
+2**(9-5)           <~dex2kmp\cs29m5.top>
+ 
+2**(10-3)          <~dex2kmp\cs210m3.top>
+2**(10-4)          <~dex2kmp\cs210m4.top>
+2**(10-5)          <~dex2kmp\cs210m5.top>
+2**(10-6)          <~dex2kmp\cs210m6.top>
+ 
+2**(11-4)          <~dex2kmp\cs211m4.top>
+2**(11-5)          <~dex2kmp\cs211m5.top>
+2**(11-6)          <~dex2kmp\cs211m6.top>
+2**(11-7)          <~dex2kmp\cs211m7.top>
+ 
+2**(15-11)         <~dex2kmp\cs215m11.top>
+ 
+2**(31-26)         <~dex2kmp\cs231m26.top>
+ 

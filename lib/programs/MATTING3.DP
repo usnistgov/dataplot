@@ -1,0 +1,86 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     MATTING3.DP
+. PURPOSE--GEOREGE MATTINGLY FLOW METER INTERLAB ANALYSIS
+. INTERLAB / YOUDEN ANALYSIS
+.
+. -----START POINT-----
+.
+LET STRING MARK = MATTING3.DP
+.
+. ------------------------
+. STEP 1--READ IN THE DATA
+. ------------------------
+.
+SKIP 25
+READ MATTINGL.DAT Y1 Y2 LAB
+.
+. -----------------------------------------------
+. STEP 2--COMPUTE RESIDUALS FROM THE LOCAL MEDIAN
+. -----------------------------------------------
+.
+LET M1 = MEDIAN Y1
+LET M2 = MEDIAN Y2
+LET Y1 = Y1-M1
+LET Y2 = Y2-M2
+.
+. ----------------------------
+. STEP 3--SET UP THE MULTIPLOT
+. ----------------------------
+.
+MULTIPLOT 2 2
+FEEDBACK OFF
+LABEL SIZE 3
+TIC LABEL SIZE 3
+CHAR SIZE 3 ALL
+.
+. --------------------------------
+. STEP 4--GENERATE THE YOUDEN PLOT
+. --------------------------------
+.
+CHAR B C D F G H I J K L M N O P Q R S *
+LINES
+X2LABEL YOUDEN PLOT OF THE 2 RESPONSES
+YOUDEN PLOT Y1 Y2 LAB
+.
+. --------------------------------------------------------
+. STEP 5--GENERATE THE NORMAL PROBABILITY PLOT OF THE SUMS
+. --------------------------------------------------------
+.
+LET SUM = Y1+Y2
+LET LAB2 = LAB
+LET SUM2 = SORTC SUM LAB2
+LET N = NUMBER SUM
+LET Z = NORMAL ORDER STATISTIC MEDIANS FOR I = 1 1 N
+X2LABEL NORMAL PROBABILITY PLOT OF THE SUM
+PLOT SUM2 Z LAB2
+.
+. ---------------------------------------------------------------
+. STEP 6--GENERATE THE NORMAL PROBABILITY PLOT OF THE DIFFERENCES
+. ---------------------------------------------------------------
+LET DEL = Y1-Y2
+LET LAB2 = LAB
+LET DEL2 = SORTC DEL LAB2
+X2LABEL NORMAL PROBABILITY PLOT OF THE DIFFERENCE
+PLOT DEL2 Z LAB2
+.
+. -------------------------------------------------------------------
+. STEP 7--GENERATE THE NORMAL PROBABILITY PLOT OF THE ABS(DIFERENCES)
+. -------------------------------------------------------------------
+.
+LET ABSDEL = ABS(DEL)
+LET LAB2 = LAB
+LET ABSDEL2 = SORTC ABSDEL LAB2
+LET H = HALFNORMAL ORDER STATISTIC MEDIANS FOR I = 1 1 N
+X2LABEL HALFNORMAL PROBABILITY PLOT OF THE |DIFFERENCE|
+PLOT ABSDEL2 H LAB2
+.
+. ------------------------------
+. STEP 8--WRITE OUT A PAGE TITLE
+. ------------------------------
+.
+MULTIPLOT OFF
+MOVE 50 92
+HW 3 2
+JUSTIFICATION CENTER
+TEXT FLOW METER INTERLAB ANALYSIS (BASED ON RESIDUALS)
+.
+CALL MARK.DP

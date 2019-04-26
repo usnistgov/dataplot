@@ -1,0 +1,21 @@
+This is file asciion.men--Redirect Dataplot Output to ASCII File
+
+--------------------
+ 1. Redirect Dataplot Output to an ASCII File
+ 2. CAPTURE <filename>
+ 3.
+ 4. Enter name of file where Dataplot output will be sent:
+ 5. @CE 1 0 4 50 ?
+ 6.
+ 7.
+ 8. Redirect Dataplot Output to File?
+--------------------
+SU FE
+SET FILE NAME QUOTE ON
+@IF 1 0 CAPTURE _1
+@IF 1 0 LET CAPTSWIT = 1
+@IF 1 0 LET STRING CAPTNAME = _1
+SET FILE NAME QUOTE OFF
+--------------------
+WEB HELP CAPTURE
+--------------------

@@ -1,0 +1,22 @@
+This is file sd.men--Compute standard deviation of a variable
+ 
+--------------------
+ 1. Standard Deviation
+ 2. LET A = STANDARD DEVIATION Y
+ 3.
+ 4. Variable for which to compute the standard deviation:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the standard deviation:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -10 50 *
+ 9.
+10.
+11. Compute the Standard Deviation?:
+--------------------
+GR FE
+LET _2 = STANDARD DEVIATION  _1 _3
+--------------------
+WEB HELP STANDARD DEVIATION
+--------------------

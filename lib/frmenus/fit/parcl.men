@@ -1,0 +1,81 @@
+This is file parcl.men--Confidence Limtis for Parameters
+ 
+--------------------
+ 1. Non-Simultaneous Confidence Limits for Parameters
+ 2. Macro
+ 3.
+ 4. Dependent Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Independent Variable 1:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Independent Variable 2:
+ 6. @CE 3 0 42 50 ? gui-variable
+ 7. Independent Variable 3:
+ 7. @CE 4 0 42 50 ? gui-variable
+ 8. Independent Variable 4:
+ 8. @CE 5 0 42 50 ? gui-variable
+ 9. Independent Variable 5:
+ 9. @CE 6 0 42 50 ? gui-variable
+10. Independent Variable 6:
+10. @CE 7 0 42 50 ? gui-variable
+11. Independent Variable 7:
+11. @CE 8 0 42 50 ? gui-variable
+12. Independent Variable 8:
+12. @CE 9 0 42 50 ? gui-variable
+13. Independent Variable 9:
+13. @CE 10 0 42 50 ? gui-variable
+14.
+15. Select Confidence Level:
+15. @CE 11 1 35 39 90%
+15. @CE 11 2 40 44 95%
+15. @CE 11 3 46 50 99%
+16.
+17. Subset/Except/For Specification:
+18. @CE 12 0 1 50 *
+19.
+20.
+21. Compute the Bonferoni Joint Confidence Limits?:
+--------------------
+GR FE
+LET ZZZZNVAR = 0
+@IF 2 0 LET STRING ZZZZS2 = _2
+@IF 2 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 3 0 LET STRING ZZZZS3 = _3
+@IF 3 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 4 0 LET STRING ZZZZS4 = _4
+@IF 4 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 5 0 LET STRING ZZZZS5 = _5
+@IF 5 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 6 0 LET STRING ZZZZS6 = _6
+@IF 6 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 7 0 LET STRING ZZZZS7 = _7
+@IF 7 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 8 0 LET STRING ZZZZS8 = _8
+@IF 8 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 9 0 LET STRING ZZZZS9 = _9
+@IF 9 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 10 0 LET STRING ZZZZS10 = _10
+@IF 10 0 LET ZZZZNVAR = ZZZZNVAR + 1
+FIT _1 _2 _3 _4 _5 _6 _7 _8 _9 _10 _12
+SKIP 0
+READ DPST1F.DAT COEF COEFSD
+LET ZZZZP = SIZE COEF
+LET ALPHA = 0.05
+@IF 11 1 LET ALPHA = .10
+@IF 11 3 LET ALPHA = .01
+LET ZZZZB = TPPF(1-ALPHA/2,RESDF)
+DELETE ZLOWER ZUPPER
+LOOP FOR K = 1 1 ZZZZP
+    LET K2 = K - 1
+    LET ZZZZA^K2 = COEF(K)
+    LET ZZZZTEMP = COEFSD(K)
+    LET ZZZZTMP2 = ZZZZA^K2 + ZZZZB*ZZZZTEMP
+    LET ZUPPER(K) = ZZZZTMP2
+    LET ZZZZTMP2 = ZZZZA^K2 - ZZZZB*ZZZZTEMP
+    LET ZLOWER(K) = ZZZZTMP2
+END OF LOOP
+DELETE ZZZZTEMP ZZZZTMP2
+PRINT ZLOWER COEF ZUPPER
+--------------------
+WEB HELP FIT
+--------------------

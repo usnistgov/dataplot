@@ -1,0 +1,8 @@
+----- <~datalist\CASTILL9.top> CASTILL9.DAT
+ 
+CASTILL9.DAT
+ 
+View     <xcl: LIST CASTILL9.DAT>
+Load     <x2cl: SKIP 25; READ CASTILL9.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\CASTILL9.DAT>
+ 

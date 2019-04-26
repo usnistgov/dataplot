@@ -1,0 +1,28 @@
+This is file integral.men--Compute the definite integral of a function
+ 
+--------------------
+ 1. Definte Integral of a Function
+ 2. LET Y = INTEGRAL X**2 FOR WRT X FOR X = 0 TO 10
+ 3.
+ 4. Name of previously created function (or enter a functional expression):
+ 5. @CE 2 0 -7 50 ?
+ 6. Variable for which integral is computed:
+ 6. @CE 3 0 33 50 ? gui-variable
+ 7. Lower range for integral:
+ 7. @CE 4 0 33 50 ?
+ 8. Upper range for integral:
+ 8. @CE 5 0 33 50 *
+ 9. Parameter  to store computed integral:
+ 9. @CE 1 0 33 50 ? gui-none
+10.
+11. Subset/Except/For Specification:
+12. @CE 6 0 -7 50 *
+13.
+14.
+15. Compute the Definite Integral?:
+--------------------
+GR FE
+LET _1 = INTEGRAL _2 WRT _3 FOR _3 = _4 TO _5  _6
+--------------------
+WEB HELP INTEGRAL
+--------------------

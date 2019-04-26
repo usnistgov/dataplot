@@ -1,0 +1,30 @@
+----- <~plot\distplot.top> Distributional Plots
+
+Distributional Plots
+
+4-Plot                   <xemf: ~univ\4plot.men>
+
+Histogram                <xemf: ~univ\histogra.men>
+Bihistogram              <xemf: ~plot\bihist.men>
+Frequency Plot           <xemf: ~plot\freqplot.men>
+Rootogram                <xemf: ~plot\rootogra.men>
+Stem and Leaf Plot       <xemf: ~plot\stemleaf.men>
+Kernel Density Plot      <xemf: ~plot\kernplot.men>
+
+Probability Plot         <~prob\probplot.top>
+PPCC Plot                <~prob\ppcc.top>
+Normal Plot              <xemf: ~plot\normplot.men>
+Weibull Plot             <xemf: ~plot\weibplot.men>
+
+Box-Cox Normality Plot   <xemf: ~plot\bcnoplot.men>
+Box-Cox Linearity Plot   <xemf: ~plot\bcliplot.men>
+Box-Cox Homoscedasticity Plot <xemf: ~plot\bchoplot.men>
+
+Percent Point Plot       <xemf: ~plot\percplot.men>
+Quantile-Quantile Plot   <xemf: ~plot\q-qplot.men>
+Tukey Mean-Difference Plot <xemf: ~plot\m-dplot.men>
+Shift Plot                <xemf: ~plot\shiftplo.men>
+Symmetry Plot            <xemf: ~plot\symmplot.men>
+
+Pie Chart                <xemf: ~plot\piechart.men>
+

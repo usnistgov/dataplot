@@ -1,0 +1,49 @@
+This is file kslocsca.men--Specify Location/Scale for PPCC/KS Plot
+ 
+--------------------
+ 1. Specify Location/Scale for KS Plot
+ 2. LET KSLOC = 0; LET KSSCALE = 1
+ 3.
+ 4. An important distinction between the PPCC and
+ 5. KS plots is that the PPCC plot is invariant to
+ 6. location and scale while the KS plot is not.
+ 7. This invariance means that we can estimate the
+ 8. shape parameter(s) independent of location and
+ 9. scale.  Although this is usually a desirable
+10. property, we can sometimes use the lack of
+11. invariance for the KS plot to our advantage.
+12.
+13. For example,
+14.
+15.   1) Setting the location and scale to 0 and 1
+16.      fits the standard form of the distribution.
+17.
+18.   2) For bounded distributions, we may know
+19.      what the lower and upper limits are.
+20.
+21.   3) If the shape parameter(s) are highly correlated
+22.      with the scale parameter, setting the location
+23.      parameter to the data minimum or data mode and
+24.      setting the scale parameter to 1 may be worth
+25.      trying.
+26.
+27. Note that if you set the location and scale, these
+28. values stay in effect for all subsequent KS plots
+29. until you change them again (leave the fields off to
+30. turn this option off).
+31.
+32. Enter the Value for the Location Parameter
+32. @CE 1 0 42 50 ? gui-variable
+33. Enter the Value for the Scale Parameter
+33. @CE 1 0 42 50 ? gui-variable
+34.
+35.
+36. Specify the Location/Scale Parameters?
+--------------------
+GR FE
+DELETE KSLOC KSSCALE
+LET KSLOC = _1
+LET KSSCALE = _2
+--------------------
+WEB HELP PPCC PLOT
+--------------------

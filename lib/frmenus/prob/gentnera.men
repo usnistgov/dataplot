@@ -1,0 +1,37 @@
+This is file gentnera.men--Generate Truncated Exponential Random Numbers
+ 
+--------------------
+ 1. Generate Truncated Exponential Random Numbers
+ 2. LET Y = TRUNCATED EXPONENTIAL RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Truncation Level Parameter (x0, x0 > u):
+ 5. @CE 2 0 42 50 ?
+ 6. Location Parameter (u):
+ 6. @CE 3 0 42 50 ?
+ 7. Shape Parameter (s, s > 0):
+ 7. @CE 4 0 42 50 ?
+ 8.
+ 9. Optional random number generator seed (default=305):
+10.    (integer >= 305)
+10. @CE 5 0 42 50 ?
+11.
+12. Name of output variable;
+12. @CE 6 0 42 50 ?
+13.
+14.
+15. Generate the random numbers?
+--------------------
+AN FE
+@IF 5 0 5EED _5
+LET X0 = 10
+@IF 2 0 LET X0 = _2
+LET U = 0
+@IF 3 0 LET U = _3
+LET S = 1
+@IF 4 0 LET S = _4
+LET _6 = TRUNCATED EXPONENTIAL RANDOM NUMBERS FOR I = 1 1 _1
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

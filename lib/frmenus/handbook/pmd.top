@@ -1,0 +1,31 @@
+----- <~handbook\pmd.top> Process Modeling
+ 
+Process Modeling
+ 
+This menu provides links to the NIST/SEMATECH
+Engineering Statistics Handbook that discuss issues
+of process modeling.
+
+NIST/SEMATECH Handbook (Process Modeling) <xcl: web handbook pmd>
+
+NIST/SEMATECH Handbook (Process Modeling Introduction) <xcl: web handbook pmd introduction>
+   Process Modeling Methods            <~handbook\pmd_meth.top>
+ 
+NIST/SEMATECH Handbook (Process Modeling Assumptions) <xcl: web handbook pmd assumptions>
+   4-Plot                              <xemf: ~univ\4plot.men>
+ 
+NIST/SEMATECH Handbook (Process Modeling Design) <xcl: web handbook pmd design>
+   Process Modeling Design             <~handbook\pmd_desi.top>
+ 
+NIST/SEMATECH Handbook (Process Modeling Analysis) <xcl: web handbook pmd analysis>
+   Process Modeling Analysis           <~handbook\pmd_anal.top>
+
+NIST/SEMATECH Handbook (Process Modeling Interpretation) <xcl: web handbook pmd interpretation>
+   Process Modeling Interpretation     <~fit\inferenc.top>
+
+NIST/SEMATECH Handbook (Process Modeling Case Studies) <xcl: web handbook pmd case studies>
+   Load Cell            <xcl: web handbook load cell case study>
+   Alaska Pipeline      <xcl: web handbook alaska pipeline case study>
+   Ultrasonic Reference Block  <xcl: web handbook ultrasonic reference case study>
+   Thermal Expansion of Copper <xcl: web handbook thermal expansion  case study>
+ 

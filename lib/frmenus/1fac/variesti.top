@@ -1,0 +1,14 @@
+----- <~1fac\variesti.top> Estimation: Variation
+
+Estimation: Variation
+
+To estimate grand standard deviation:
+   Compute grand standard deviation    <xemf: ~math\sd.men>
+   Plot bootstrap standard deviations  <xemf: ~1fac\bootmepl.men>
+
+To estimate group standard deviations:
+   Compute group standard deviations   <xemf: ~1fac\tabusd.men>
+   Plot group standard deviations      <xemf: ~1fac\sdplot.men>
+
+Checking assumptions                   <xemf: ~univ\4plot.men>
+

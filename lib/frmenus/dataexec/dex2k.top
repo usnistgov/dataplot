@@ -1,0 +1,25 @@
+----- <~dataexec\dex2k.top> Load and Execute 2**k Full Factorial Design Data
+
+Load and Execute 2**k Full Factorial Design Data
+
+BOXSPRIN.DAT* 2**3  Defective springs   <xcf: ~dataexec\BOXSPRIN.DP>
+BOXPILOT.DAT  2**3  Pilot plant yield   <xcf: ~dataexec\BOXPILOT.DP>
+BOXRADAR.DAT  2**3  Radar acquis. time  <xcf: ~dataexec\BOXRADAR.DP>
+BOWEN.DAT     2**3  Dental adhesion     <xcf: ~dataexec\BOWEN.DP>
+SUPERCON.DAT  2**3  Superconduct. temp. <xcf: ~dataexec\SUPERCON.DP>
+NUT.DAT       2**3  Nut strength        <xcf: ~dataexec\NUT.DP>
+SPLETT3.DAT   2**3  Eddy Current        <xcf: ~dataexec\SPLETT3.DP>
+
+BOXCHEM.DAT   2**4  Chemical yield      <xcf: ~dataexec\BOXCHEM.DP>
+BOXSOLAR.DAT  2**4  Solar collector eff <xcf: ~dataexec\BOXSOLAR.DP>
+SPLETT4.DAT   2**4  Eddy Current        <xcf: ~dataexec\SPLETT4.DP>
+
+BOXREACT.DAT  2**5  Chem. reactor eff   <xcf: ~dataexec\BOXREACT.DP>
+KRASNY1.DAT   2**5  Cigarette flammab.  <xcf: ~dataexec\KRASNY1.DP>
+WEBER.DAT     2**5  Hospital energy     <xcf: ~dataexec\WEBER.DP>
+
+STENBAKK.DAT  2**10 DAC Converter       <xcf: ~dataexec\STENBAKK.DP>
+
+BOXCAKE.DAT   2**5 wcp Cake taste       <xcf: ~dataexec\BOXCAKE.DP>
+BOXCAKE2.DAT  2**3 wcp Cake taste       <xcf: ~dataexec\BOXCAKE2.DP>
+

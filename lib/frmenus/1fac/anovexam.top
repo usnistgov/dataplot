@@ -1,0 +1,9 @@
+----- <~1fac\anovexam.top> Multi-Factor Examples
+
+Load and Analyze ANOVA Class Datasets
+
+1-Factor
+   NEWCAR.DAT    New Car Interest Rates: City Effect  <xcf: ~clas\anov\NEWCAR.DP>
+   KENTON.DAT    Food Cases Sold: Design Effect       <xcf: ~clas\anov\KENTON.DP>
+   DRAFT69.DAT   1969 Draft Lottery: Month Effect     <xcf: ~clas\anov\DRAFT69.DP>
+

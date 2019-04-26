@@ -1,0 +1,8 @@
+----- <~datalist\SMALL14.top> SMALL14.DAT
+ 
+SMALL14.DAT
+ 
+View     <xcl: LIST SMALL14.DAT>
+Load     <x2cl: SKIP 25; READ SMALL14.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\SMALL14.DAT>
+ 

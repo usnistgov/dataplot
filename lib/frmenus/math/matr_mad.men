@@ -1,0 +1,29 @@
+This is file matr_mad.men--Matrix Mahalanobis Distance
+ 
+--------------------
+ 1. Mahalanobis Distance
+ 2. LET MDIST = MAHALANOBIS ROW DISTANCE M
+ 3.
+ 4. Name of Original Matrix:
+ 4. @CE 1 0 42 50 ? gui-matr
+ 5. Name of Matrix to Store Mahalanobis Distances:
+ 5. @CE 2 0 42 50 ? 
+ 6.
+ 7. Compute Mahalanobis Distances for (pick one):
+ 8. @CE 3 1 10 20 rows
+ 8. @CE 3 2 21 31 columns
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 4 0 1 50 *
+12.
+13.
+14. Compute the Mahalanobis Distances?:
+--------------------
+GR FE
+@IF 3 1 LET ZZZZN = MATRIX NUMBER OF ROWS _1
+@IF 3 1 DIMENSION MATRIX COLUMNS ZZZZN
+@IF 3 1 LET _2 = MAHALANOBIS ROW DISTANCE _1 _4
+@IF 3 2 LET _2 = MAHALANOBIS COLUMN DISTANCE _1 _4
+--------------------
+WEB HELP MAHALANOBIS DISTANCE
+--------------------

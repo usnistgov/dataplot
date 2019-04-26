@@ -1,0 +1,8 @@
+----- <~dataload\CABBAGE.DP> Load CABBAGE.DAT
+
+. This is file    CABBAGE.DP
+
+DELETE Y X
+SKIP 25
+READ CABBAGE.DAT Y X
+

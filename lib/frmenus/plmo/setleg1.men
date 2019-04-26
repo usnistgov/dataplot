@@ -1,0 +1,79 @@
+This is file setleg1.men--Set Legend Attributes for Single Legend
+ 
+--------------------
+ 1. Set Legend Attributes for a Single Legend
+ 2.  LEGEND 1 COLOR RED; LEGEND 1 SIZE 3
+ 3.
+ 4. Legend Number to Set Attributes For:
+ 4. @CE 1 0 42 50 ?
+ 5. X Coordinate for Legend (0 to 100 units):
+ 5. @CE 2 0 42 50 ?
+ 6. Y Coordinate for Legend (0 to 100 units):
+ 6. @CE 3 0 42 50 ?
+ 7.
+ 8. Color for Legend:
+ 8. @CE 4 0 42 50 * gui-color
+ 9. Font for Legend:
+ 9. @CE 5 0 42 50 * gui-font
+10. Height for Legend (0 to 100 units):
+10. @CE 6 0 42 50 * 
+11. Width for Legend (0 to 100 units):
+11. @CE 7 0 42 50 * 
+12. Fill Switch for LEGEND:
+12. @CE 8 0 42 50 * gui-ooff
+13. Case for Legend:
+14. @CE 9 1 5 17 all upper
+14. @CE 9 2 19 31 all lower
+14. @CE 9 3 33 45 as entered
+15. Direction for Legend:
+15. @CE 10 1 25 36 Horizontal
+15. @CE 10 2 38 49 Vertical
+16. Justification for Text:
+17. @CE 11 1 5 50 Horizontal - left; Vertical - bottom
+18. @CE 11 2 5 50 Horizontal - center; Vertical - bottom
+19. @CE 11 3 5 50 Horizontal - right; Vertical - bottom
+20. @CE 11 4 5 50 Horizontal - left; Vertical - center
+21. @CE 11 5 5 50 Horizontal - center; Vertical - center
+22. @CE 11 6 5 50 Horizontal - right; Vertical - center
+23. @CE 11 7 5 50 Horizontal - left; Vertical - top
+24. @CE 11 8 5 50 Horizontal - center; Vertical - top
+25. @CE 11 9 5 50 Horizontal - right; Vertical - top
+26. 
+27. The following attributes only apply if
+28. the legend is drawn with a software font.
+29. 
+30. Line Thickness for LEGEND:
+30. @CE 12 0 42 50 * gui-thick
+31. Angle (in degrees) for LEGEND:
+31. @CE 13 0 42 50 *
+32.
+33.
+34. Set Legend Attributes?
+--------------------
+PC FE
+LEGEND _1 COORDINATES _2 _3
+@IF 4 0 LEGEND _1 COLOR _4
+@IF 5 0 LEGEND _1 FONT _5
+@IF 6 0 LEGEND _1 SIZE _6
+@IF 7 0 LEGEND _1 HW _6 _7
+@IF 8 0 LEGEND _1 FILL _8
+@IF 9 1 LEGEND _1 CASE UPPER
+@IF 9 2 LEGEND _1 CASE LOWER
+@IF 9 3 LEGEND _1 CASE ASIS
+@IF 10 1 LEGEND _1 DIRECTION HORIZONTAL
+@IF 10 2 LEGEND _1 DIRECTION VERTICAL
+@IF 12 0 LEGEND _1 THICKNESS _12
+@IF 11 1 LEGEND _1 JUSTIFICATION LEFT
+@IF 11 2 LEGEND _1 JUSTIFICATION CENTER
+@IF 11 3 LEGEND _1 JUSTIFICATION TOP
+@IF 11 4 LEGEND _1 JUSTIFICATION LECE
+@IF 11 5 LEGEND _1 JUSTIFICATION CECE
+@IF 11 6 LEGEND _1 JUSTIFICATION RICE
+@IF 11 7 LEGEND _1 JUSTIFICATION LETO
+@IF 11 8 LEGEND _1 JUSTIFICATION CETO
+@IF 11 9 LEGEND _1 JUSTIFICATION RITO
+@IF 13 0 DEGREES
+@IF 13 0 LEGEND _1 ANGLE _13
+--------------------
+WEB HELP LEGEND
+--------------------

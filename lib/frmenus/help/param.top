@@ -1,0 +1,138 @@
+----- <~help\param.top> Numbers
+
+Parameters
+
+Parameters
+
+Parameters Are Named Scalars                                      -
+
+    A parameter is a named scalar and can be defined
+    via the LET command, as in 
+
+       LET A = 27.26
+       LET B = 3.97
+       LET C = -5.38
+       LET D = 2.4*10**(-8)
+       LET E = B**2-4*A*C
+       LET F = MEAN X
+
+Internally Defined Parameters
+
+    Two internally-provided parameters which the
+    analyst can use are 
+
+       PI
+       INFINITY
+
+    PI has the value 3.14159265 and INFINITY has the
+    value of the largest floating point number which
+    the user's computer can store (that is, INFINITY
+    = machine infinity).  PI and INFINITY can be used
+    at any time and like any other user-defined parameter.
+    For example, 
+
+       PLOT (1/SQRT(2*PI))*EXP(-0.5*X**2) FOR X = -3 .1 3
+       FIT Y = A+B*X**C EXCEPT X 100 TO INFINITY
+
+    A number of Dataplot commands create and save
+    additional parameters automatically.  As with PI and
+    INFINITY, these automatically generated parameters
+    can be used anywhere that a user-defined parameter can
+    be used.  The command
+
+         STATUS PARAMETERS                   <xcl: STATUS PARAMETERS>
+
+    lists all currently defined parameters.
+
+Caution When Using Built-In Parameters With FIT
+
+    Be wary of the use of PI (and other automatically
+    created parameters) in FIT and PRE-FIT expressions;
+    like all parameters, Dataplot will attempt to
+    determine least squares estimates for it.  Thus
+    rather than use 
+
+       FIT Y = AMP * SIN(2*PI*F*X) 
+
+    one should use 
+
+       FIT F = AMP * SIN(2*^PI*F*X) 
+
+    The "^" operator substitutes the value of the
+    parameter before the command is parsed by the FIT
+    command.  This is equivalent to explicitly entering
+    the value of PI as a number (and it is less likely
+    to result in a typing error).
+
+Parameters Can Be Substituted For Numbers
+
+    With the exception of the above-mentioned FIT and
+    PRE-FIT exclusion, parameters can be substituted
+    anywhere that numbers appear.  For example, suppose
+    the analyst wished to override the usual plot frame
+    coordinates and specify that all succeeding plots have
+    lower left corner at (20,50) and for the plot to be 30
+    units wide and 30 units high (that is, have the upper
+    right corner at (50,80).  This can be done explicitly by
+
+       FRAME CORNER COORDINATES 20 50 50 80 
+
+    or alternatively 
+
+       LET X1 = 20
+       LET Y1 = 50
+       LET X2 = 50
+       LET Y2 = 80
+       FRAME CORNER COORDINATES X1 Y1 X2 Y2
+
+    or 
+
+       LET X1 = 20
+       LET Y1 = 50
+       LET X2 = X1+30
+       LET Y2 = Y1+30
+       FRAME CORNER COORDINATES X1 Y1 X2 Y2
+
+Use Of Paramters With The Cross-Hair Command
+
+    This capability of substituting parameters for
+    numbers is especially convenient for diagram
+    construction on terminals which have bui1t-in
+    hardware for inputting screen coordinates via
+    mouse, cross-hair, 1ight-pen, or equivalent.
+    Suppose it is desired to draw a line betveen two
+    points on the screen which the analyst will
+    interactively specify via the cross-hair.  One
+    way is to
+
+       1. raise the cross-hair (via CROSS-HAIR);
+       2. position it to the first point (via the
+          thumbwheels or mouse);
+       3. input and print the coordinates via hitting
+          any key on Tektronix terminals, clicking the
+          appropriate mouse button on X11 terminals, or
+          by hitting some predesignated key on other
+          terminals;
+       4. raise the cross-hair (via CROSS-HAIR);
+       5. position it to the second point (via the
+          thumbwheels or mouse);
+       6. print the coordinates (via hitting the appropriate
+          key as described above);
+       7. drav the line (via, for example,
+          DRAW 20.4 35.3 78.4 80.5).
+
+    An easier way which replaces the handling of absolute
+    numbers with the handling of symbolic parameter names is
+
+         1. raise the cross-hair (via CROSS-HAIR X1 Y1);
+         2. position it to the first point (via the
+            thumbwheels or mouse);
+         3. copy the coordinates into X1 and Y1 (via hitting
+            the appropriate key);
+         4. raise the cross-hair (via CROSS-HAIR X2 Y2);
+         5. position it to the second point (via
+            thumbwheels or mouse);
+         6. copy the coordinates into X2 and Y2 (via hitting
+            the appropriate key);
+         7. draw the line (via DRAW X1 Y1 X2 Y2).
+

@@ -1,0 +1,64 @@
+. This is dataplot macro file    dexplotinterrogate.dp
+. Purpose: carry out DEX 10-step analysis for a single data set
+. Date: September 2007
+.
+. -----start point-----
+.
+feedback off
+.
+. -----Step 1: Define the number of factors k-----
+.
+let string stparam = k
+let string stparam2 = the number of factors
+call alertp.dp
+.
+. -----Step 2: Define the name of your input data file-----
+.
+let string stst = filename
+let string stst2 = the name of your data file (with a    .   )
+call alertst.dp
+.
+. -----Step 3: Define the number of lines to skip over in the data file-----
+.
+let string stparam = iskip
+let string stparam2 = the number of pre-data lines to skip over  in the data file
+call alertp.dp
+.
+. -----Step 4: Define the order of data on each line-----
+.
+let string stparam = iorder
+let string stparam2 = Specify the order of your data on your data file line image:
+let string stparam3 =      Enter 1 for form      y   x1 x2 x3 . . . xk
+let string stparam4 =      Enter 2 for form     x1 x2 x3 . . . xk   y
+call alertp2.dp
+.
+. -----step 5: read in your experiment design and your response-----
+.              with the format      x1 x2 . . . xk y
+.
+skip iskip
+if iorder = 1
+   read ^filename y x1 to x^k
+end if
+if iorder = 2
+   read ^filename x1 to x^k y
+end if
+.
+print x1 to x^k y
+print " "
+.
+. -----Step 6: Define the page header and subheader-----
+.
+let string stst = project
+let string stst2 = the title across top of each page
+call alertst.dp
+.
+let string stst = project2
+let string stst2 = the sub-title across top of each page
+call alertst.dp
+.
+print " "
+print "The dexplot 10-step graphical DEX analysis"
+print "    is now being executed . . ."
+print " "
+.
+.

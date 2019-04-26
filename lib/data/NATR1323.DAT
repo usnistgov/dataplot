@@ -1,0 +1,45 @@
+This is Dataplot data file    NATR1323.DAT
+Spectographic determinations of nickel content of 42 rods prepared from
+the same ignot.
+Question: Are there differences among treatments?
+Chain Block Plan
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 13-23
+Number of observations                   =  18
+Total number of variables per line image =  3
+Order of variables on a line image--
+  See Natrella for discussion of the layout of
+  chain block designs 
+
+ 
+
+
+
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR1323.DAT X1 X2 X3
+ 
+   X1      X2      X3
+Plate 1  Plate 2 Plate 3
+------------------------
+    8       4      -1
+    7       3       0
+   14      10      -3
+    9       6      -8
+
+   13       5       1
+   15       7       5
+   12       2       2
+    9       6       0
+
+   11      10       5 
+    5       9      -1
+   17       6      -3
+   14       7      -6
+   12       6       2
+   13       4      -2
+   14       7      -2
+   12       7       0
+    8       9       1
+   21      10       2

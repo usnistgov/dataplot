@@ -1,0 +1,32 @@
+-----<~reli\discrn.top> Discussion: System Reliability - R Out of N Systems
+
+Discussion: System Reliability - R Out of N Systems
+
+System Reliability: R Out of N Systems
+
+An "r out of n" system is one that has n components that
+operate or fail independently and the system will function
+as long as at least r of the components are operating. 
+System failure occurs when the (n -r +1)the component
+failure occurs.  We consider the simplest case where
+all components identical.
+
+The assumptions for this "r out of n" model are:
+
+   1) All components have identical reliability function.
+
+   2) All components operate independently of each
+      other in terms of failure.
+
+   3) The system operates as long as at least r
+      components are operating.  System failure
+      occurs at the (n-r+1)th component failure.
+
+System reliability is given by the formula
+
+   R(s)(t) = SUM[i=r to n][(n  i)*p**i*(1-p)**(n-i)]
+
+where (n  i) is the binomial coefficient and
+
+   p = R(t)
+

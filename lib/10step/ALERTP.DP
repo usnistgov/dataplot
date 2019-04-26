@@ -1,0 +1,22 @@
+. This is dataplot macro    alertp.dp
+. Purpose: Send alert message and receive keyboard input to define a parameter
+. Date: September 2007
+.
+. -----start point-----
+.
+if ibatch not exist or ibatch = 0
+   write " "
+   write "_________________________________________________________"
+   write "Define     ^stparam     (^stparam2)"
+   write "Enter      ^stparam      from the keyboard now . . .          "
+   set io terminal
+   read parameter ^stparam
+   write "You entered    ^stparam = ^^stparam"
+   set io
+else
+   write " "
+   write "_________________________________________________________"
+   write "^stparam     (^stparam2)"
+   write "not defined.  Dataplot session will be terminated."
+   quit
+end of if

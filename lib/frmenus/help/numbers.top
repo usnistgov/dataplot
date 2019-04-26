@@ -1,0 +1,134 @@
+----- <~help\numbers.top> Numbers
+
+Numbers
+
+Numbers
+
+Numbers are Unnamed Scalars                                       -
+
+    Numbers are unnamed scalars.  They may appear
+    in a variety of different kinds of commands.
+    For example, note the 20 and 50 in 
+
+       BOX 20 20 50 50
+
+    Note the 0, 0.1 and 10 in 
+
+       PLOT SIN(X) FOR X = 0 0.1 10 
+
+    Note the 2.5 in 
+
+       LET Y = X+2.5
+
+    Note the 2 in 
+
+       FIT F = A+B*X+C+X**2 
+
+General Rule: A Parameter Can Be Used In Place of
+a Number in a Command Line
+
+    With the exception of the FIT and PRE-FIT commands,
+    the general rule in Dataplot is that anywhere a number
+    appears in a command line, it could equally well have
+    been replaced by a parameter, as in the following analogues
+    to the above:
+
+       LET X1 = 20
+       LET Y1 = 20
+       LET X2 = 50
+       LET Y2 = 50
+       BOX X1 Y1 X2 Y2
+
+       LET START = 0
+       LET INC = .1
+       LET STOP = 10
+       PLOT SIN(X) FOR X = START INC STOP
+
+       LET A = 2.5
+       LET Y = X+A
+
+Expressions Not Necessarily Interchangeable with Numbers
+and Parameters
+
+    However, expressions involving numbers and parameters
+    are not necessarily interchangeable with numbers and
+    parameters.  For example, the following is NOT valid
+
+       BOX X1+20 Y1-10 X2+5 Y2-3
+
+    This should be coded in Dataplot as fullows
+
+       LET X1 = X1+20
+       LET Y1 = Y1-10
+       LET X2 = X2+5
+       LET Y2 = Y2-3
+       BOX X1 Y1 X2 Y2
+
+FIT and PRE-FIT Are An Exception
+
+    The FIT and PRE-FIT commands are an exception
+    because the command lines
+
+       LET D =2
+       FIT Y = A+B*X+C*X**D
+
+    will not be treated in the same manner as
+
+       FIT Y = A+B*X+C*X**2
+
+    In the first case, Dataplot realizes that D is a
+    parameter and so (like all parameters appearing in
+    a fit) will determine the least squares estimate for
+    the parameter D along with the other parameters A,
+    B, and C.  However, in the second case
+    (FIT Y = A+B*X+C*X**2), Dataplot notes the scalar
+    number 2 and fits for the parameters A, B, and C only.
+    Be aware of this distinction in carrying out fits and
+    pre-fits.
+
+Numbers are Stored Internally As Single Precision
+Floating Point
+
+    All numbers are stored internally in Dataplot as
+    single precision floating point.  If the analyst wishes
+    to specify a decimal number, as in
+
+       LET Y = X*2.378
+
+    then the decimal point and trailing decimal digit should
+    of course be included.  However, if the number happens to
+    be an integer, then the analyst has the choice of including
+    or excluding the trailing decimal point, and including or
+    excluding any trailing zeros.  Thus the following are all
+    equivalent:
+
+       LET Y = X**2
+       LET Y = X**2.
+       LET Y = X**2.0
+       LET Y = X**2.00
+
+    All such expressions are stored and processed internally
+    by Dataplot in an identical fashion.  The analyst gains
+    nothing by including the trailing decimal point and zeros.
+    Simplicity dictates that the first form be used, but if
+    the analyst prefers to use other forms, the results will be
+    identical.
+
+Defining Numbers With Large Exponents
+
+    To define numbers with large exponents (for example, 7.4
+    raised to the 15th power), the analyst should use the
+    ** (exponentiation) operator directly, as in
+
+       LET A = 7.4**15
+
+    The E format (as occurs in FORTRAN) is not permitted; thus
+
+       LET A = 7.4E15
+
+    is not a valid Dataplot command.
+
+    Negative exponents are handled in a similar fashion, as in
+
+       LET B = 7.4**(-15)
+

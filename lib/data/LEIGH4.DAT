@@ -1,0 +1,49 @@
+This is Dataplot data file   LEIGH4.DAT
+Coating Thicknesss SRM: Cu/Cr Electroplating Thickness on Steel Substrate
+Carlos Beauchamp (NIST Metallury)
+Stefan Leigh SRM Calibration Curve    8/98
+Number of observations                = 24
+Number of variables per line image    = 2
+Order of observations on a line image--
+   1. Response variable = Thickness (microns) via atomic absorption
+   2. Factor 1          = Single-probe magnetic induction value
+Stat Area--Regression
+Goal--Determine a parsimonious model such that
+      all relative residuals < 5%
+Solution--1/Linear model
+To read this into Dataplot (and analyze)--
+   SKIP 25; READ LEIGH4.DAT Y X
+   BOX-COX LINEARITY PLOT X Y
+   LET Y2 = 1/Y
+   LINEAR FIT Y2 X
+   FIT Y = 1/(A0+A1*X)
+   PLOT Y PRED VS X
+   PLOT RES X
+   LET RELRES = RES/PRED
+   PLOT RELRES X
+    Y             X
+---------------------
+ 367.379   0.83030289
+ 327.021   0.81068247
+ 386.781   0.83720713
+ 379.889   0.83696039
+ 414.922   0.84849264
+ 451.881   0.8623614
+ 480.008   0.87134367
+ 514.020   0.88220196
+ 338.611   0.81816272
+ 618.048   0.9053566
+ 661.356   0.91460116
+ 648.071   0.91225092
+ 730.756   0.92683943
+ 912.933   0.94707392
+ 891.030   0.94599709
+1722.670   0.98660367
+ 979.463   0.95336039
+1104.299   0.96305923
+1180.490   0.96683255
+2273.673   0.99479287
+1265.843   0.97208103
+1428.039   0.97808204
+1586.373   0.98244523
+1898.103   0.98923412

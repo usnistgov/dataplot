@@ -1,0 +1,57 @@
+----- <~file\discuneq.top> Files: Reading Variables of Unequal Length
+
+File: Reading Variables of Unequal Length
+
+READING VARIABLES OF UNEQUAL LENGTH
+
+Dataplot normally expects all variables to be of equal length.
+If some variables have missing rows, this can have undesired
+results.  Dataplot will assign the first value read to the
+first variable name, the second value to second variable and
+so on.  If fewer values than variables are specified, then variables
+that have no data values are not read at all (even if they have
+values for other rows).
+
+If you have a data file where the columns have unequal lengths,
+you can do one of the following things.
+
+   1. Pick some value to represent a missing value and fill
+      in missing data points with that value.  After reading
+      the data, you can use a RETAIN command to remove them.
+      For example, if you use -99 to signify a missing value,
+      you can enter
+
+          RETAIN Y SUBSET Y > -99
+
+      Alternatively, you can use a SUBSET clause on subsequent
+      plot and analysis commands.
+
+   2. Use the variable form of the COLUMN LIMITS command as
+      described above.  By default, when a blank field is
+      encountered, it is set to zero.  You can specify the
+      value to use by entering the command
+
+        SET READ MISSING VALUE  value
+
+      This option depends on having consistent columns for
+      each of the data fields.
+
+   3. If your data has both columns of unequal length and
+      inconsistent columns for given data fields, an alternative
+      is to use a comma delimited data file.  That is, separate
+      data values with a comma.  If there is no data data between
+      successive commas, this is treated as a missing value.  The
+      default is to assign a value of zero.  Alternatively, you
+      can use the SET READ MISSING VALUE command described above.
+
+      You can specify a delimiter other than a comma with the
+      command
+
+          SET READ DELIMITER  character
+
+      The variable form of the COLUMN LIMITS, the
+      SET READ MISSING VALUE, and the SET READ DELIMITER commands
+      were introduced in the January, 2004 version.  The
+      interpretation of successive commas as a missing value was
+      also introduced in the January, 2004 version.
+

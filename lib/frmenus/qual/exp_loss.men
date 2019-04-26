@@ -1,0 +1,51 @@
+This is file exp_loss.men--Generate Expected Loss Plots
+ 
+--------------------line 3
+01. Expected Loss Plot
+02. EXPECTED LOSS PLOT Y X
+03.
+04. Vertical   Axis Variable:
+04. @CE 1 0 33 50 ? gui-vari
+05. Group ID        Variable:
+05. @CE 2 0 33 50 ? gui-vari
+06.
+07. Value for the upper specification limit?:
+07. @CE 3 0 33 50 ? 
+08. Value for the lower specification limit?:
+08. @CE 4 0 33 50 ?
+09. Value for the cost?:
+09. @CE 11 0 33 50 ?
+10.
+11. Character Type for Data
+11. @CE 5 0 33 50 * gui-char
+12. Character Fill for Data
+12. @CE 6 0 33 50 gui-ooff
+13. Line Type for Data-connecting Line
+13. @CE 7 0 33 50 * gui-line
+14. Line Type for Global Stat Line?
+14. @CE 8 0 33 50 * gui-line
+15. Spike to Global Stat Line?
+15. @CE 9 0 33 50 gui-ooff
+16.
+17. Subset/Except/For Specification:
+18. @CE 10 0 1 50 *
+19.
+20.
+21. Generate the Expected Loss Plot?:
+--------------------
+CHARACTERS _5
+CHARACTER FILL _6
+LINES _7 _8
+.
+LET USL = _3
+LET LSL = _4
+LET USLCOST = _11
+LET ZSTAT = CP _1 _10
+SPIKE _9
+SPIKE BASE ZSTAT
+.
+BAR OFF OFF
+EXPECTED LOSS PLOT _1 _2 _10
+--------------------
+WEB HELP EXPECTED LOSS PLOT
+--------------------

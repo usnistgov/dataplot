@@ -1,0 +1,46 @@
+This is file plamsf.men--Plot Tukey-Lambda Sparsity Function
+ 
+--------------------
+ 1. Plot a Tukey-Lambda Sparsity Function
+ 2. LET LAMBDA = 0.5; PLOT LAMSF(P) FOR P = 0.01 0.01 0.99
+ 3.
+ 4. Shape Parameter lambda (required):
+ 4. @CE 8 0 42 50 ?
+ 5.
+ 6. You can specify the range of values to plot either
+ 7. by providing an input vector containing the explicit
+ 8. input values or by providing the start, increment,
+ 9. and stop values.
+10.
+11. Input Variable (optional):
+11. @CE 1 0 42 50 ? gui-variable
+12.
+13. Start Value (> 0):
+13. @CE 2 0 42 50 ?
+14. Increment Value (defaults to 0.01):
+14. @CE 3 0 42 50 ?
+15. Stop Value (< 1):
+15. @CE 4 0 42 50 ?
+16.
+17. Variable to Store the Sparsity Values (optional):
+17. @CE 7 0 42 50 ?
+18.
+19.
+20. Plot the Tukey-Lambda Sparsity Function?
+--------------------
+AN FE
+LET ZLAMBDA = 1
+@IF 8 0 LET ZLAMBDA = _8
+LET ZLOC = 0
+@IF 5 0 LET ZLOC = _5
+LET ZSCALE = 1
+@IF 6 0 LET ZSCALE = _6
+LET ZINC = 0.01
+@IF 3 0 LET ZINC = _3
+@IF 1 0 LET ZJUNK = ZLOC + ZSCALE*LAMSF( _1 ,ZLAMBDA)
+@IF 1 0 PLOT ZJUNK _1
+@IF 2 0 PLOT ZLOC + ZSCALE*LAMSF(ZZZZ,ZLAMBDA) FOR ZZZZ = _2 ZINC _4
+@IF 7 0 LET _7 = YPLOT
+--------------------
+WEB HELP LAMSF
+--------------------

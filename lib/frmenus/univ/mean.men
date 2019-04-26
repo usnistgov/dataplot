@@ -1,0 +1,29 @@
+This is file mean.men--Mean
+ 
+--------------------
+ 1. Mean
+ 2. LET A = MEAN Y
+ 3.
+ 4. Input :
+ 5.    Response Variable:
+ 5.    @CE 1 0 30 50 ?
+ 6.
+ 7. Output:
+ 8.    Name for computed mean:
+ 8.    @CE 2 0 33 50 ?
+ 9.
+10. Number of output decimal places:
+10. @CE 3 0 33 50 ?
+11.
+12. Subset/Except/For Specification:
+13. @CE 4 0 1 50 *
+14.
+15.
+16. Compute the sample mean?
+--------------------
+GR FE
+@IF 3 0 SET WRITE DECIMALS _3
+LET _2 = MEAN _1 _4
+--------------------
+WEB HELP MEAN
+--------------------

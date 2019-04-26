@@ -1,0 +1,10 @@
+----- <~prob\mskepdf.top> Plot Miscellaneous Skewed pdf's
+
+Plot Miscellaneous Skewed PDF Functions
+
+Gompertz                 <xemf: ~prob\gompdf.men>
+Alpha                    <xemf: ~prob\alppdf.men>
+Bradford                 <xemf: ~prob\brapdf.men>
+Reciprocal               <xemf: ~prob\recpdf.men>
+Log Double Exponential   <xemf: ~prob\ldepdf.men>
+

@@ -1,0 +1,57 @@
+----- <~handbook\graphtec.top> Graphical Techniques
+
+EDA Graphical Technqiues
+
+Univariates
+   Run Sequence Plot            <xemf: ~univ\runseqpl.men>
+   Lag Plot                     <xemf: ~univ\lagplot.men>
+   Histogram                    <xemf: ~univ\histogra.men>
+   Normal Probability Plot      <xemf: ~univ\normprpl.top>
+   4-Plot                       <xemf: ~univ\4plot.men>
+   PPCC Plot                    <~univ\ppccplot.top>
+   Weibull Plot                 <xemf: ~plot\weibplot.top>
+   Probability Plot             <~univ\probplot.top>
+   Box-Cox Normality Plot       <xemf: ~plot\bcnoplot.top>
+   Bootstrap Plot               <xemf: ~plot\bootplot.men>
+
+Time Series
+   Run Sequence Plot            <xemf: ~univ\runseqpl.men>
+   Spectrum                     <xemf: ~time\spectrum.men>
+   Autocorrelation Plot         <xemf: ~univ\autocopl.men>
+   Complex Demodulation Amplitude Plot <xemf: ~time\compdeap.men>
+   Complex Demodulation Phase Plot     <xemf: ~time\compdepp.men>
+
+1-Factor 
+   Scatter Plot                 <xemf: ~stat\scatplot.men>
+   Box Plot                     <xemf: ~stat\boxplot.men>
+   Bihistogram                  <xemf: ~plot\bihist.men>
+   Quantile-Quantile Plot       <xemf: ~plot\q-qplot.men>
+   Mean Plot                    <xemf: ~stat\statplot.men>
+   Standard Deviation Plot      <xemf: ~stat\statplot.men>
+   Box-Cox Linearity Plot       <xemf: ~plot\bcliplot.top>
+
+Multi-Factor/Comparative
+   Block Plot                   <xemf: ~stat\blockplo.men>
+
+Multi-Factor/Screening
+   Dex Mean Plot                <xemf: ~plot\dexmeanp.men>
+   Dex Scatter Plot             <xemf: ~plot\dexscatp.men>
+   Dex Standard Deviation Plot  <xemf: ~plot\dexstatp.men>
+   Contour Plot (Data)          <xemf: ~math\contour.men>
+
+Regression
+   Scatter Plot                 <xemf: ~stat\scatplot.men>
+   6-Plot                       <xemf: ~fit\6plot.men>
+   Linear Correlation Plot      <xemf: ~stat\statplot.men>
+   Linear Intercept Plot        <xemf: ~stat\statplot.men>
+   Linear Slope Plot            <xemf: ~stat\statplot.men>
+   Linear RESSD Plot            <xemf: ~stat\statplot.men>
+
+Interlab
+   Youden Plot                  <xemf: ~stat\youdplot.top>
+
+Multivariate Graphical Techniques <~plot\multplot.top>
+    Scatter Plot Matrix         <~plot\matrplot.top>
+    Conditioning Plot           <~plot\condplot.top>
+    Star Plot                   <xemf: ~plot\starplot.men>
+

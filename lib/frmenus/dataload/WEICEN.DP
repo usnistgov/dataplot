@@ -1,0 +1,8 @@
+----- <~dataload\WEICEN.DP> Load WEICEN.DAT
+
+. This is file    WEICEN.DP
+
+DELETE Y X
+SKIP 25
+READ WEICEN.DAT Y X
+

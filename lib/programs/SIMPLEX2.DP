@@ -1,0 +1,136 @@
+. This is Dataplot macro    SIMPLEX2
+.
+. Purpose--Generate a mixtrue design triangle
+.          and superimpose design points
+.          (note--used by Eric/Marcia for FHA Analysis)
+.
+. Date   --March  1997
+.
+. Input  --the following items must pre-exist:
+.          1. X1      = vector of element 1 proportions (0 to 1)
+.          2. X2      = vector of element 2 proportions (0 to 1)
+.          3. X3      = vector of element 3 proportions (0 to 1)
+.          4. S1      = element 1 name (a string)
+.          5. S2      = element 2 name (a string)
+.          6. S3      = element 3 name (a string)
+.
+. Output --a triangular simplex grid
+.          with the design points superimposed
+.
+. Example--(see LAGERGREN.DP)
+.          SKIP 25
+.          READ DESIGN.DAT X1 X2 X3
+.          LET STRING S1 = X1
+.          LET STRING S2 = X2
+.          LET STRING S3 = X3
+.          CALL SIMPLEX2.DP
+.
+. -----START POINT-----
+.
+FEEDBACK OFF
+.
+. ----Step 1--Define horizontal and vertical percentage units-----
+.         for the landscape orientation image
+.
+LET PXMIN = 20
+LET PXMAX = 80
+LET PYMIN = 18
+LET PYMAX = 88
+.
+LET PXRANGE = PXMAX-PXMIN
+LET PYRANGE = PYMAX-PYMIN
+.
+. ----Step 2--Check for existence of grid incrment-----
+.             (default = no grid)
+.
+IF GRIDINC NOT EXIST
+   LET GRIDINC = 1
+END IF
+
+. ----Step 3--Generate the grid-----
+.
+LOOP FOR XDUMMY = 0 GRIDINC 1
+   LET PXSTART = PXMIN + 0.5*PXRANGE*XDUMMY
+   LET PYSTART = PYMIN + PYRANGE*XDUMMY
+   LET PXSTOP = PXMAX - (PXSTART-PXMIN)
+   LET PYSTOP = PYSTART
+   DRAW PXSTART PYSTART PXSTOP PYSTOP
+END LOOP
+.
+LOOP FOR XDUMMY = 0 GRIDINC 1
+   LET PXSTART = PXMAX - PXRANGE*XDUMMY
+   LET PYSTART = PYMIN
+   LET PXSTOP = PXSTART - 0.5*PXRANGE*(1-XDUMMY)
+   LET PYSTOP = PYSTART + PYRANGE*(1-XDUMMY)
+   DRAW PXSTART PYSTART PXSTOP PYSTOP
+END LOOP
+.
+LOOP FOR XDUMMY = 0 GRIDINC 1
+   LET PXSTART = PXMIN + PXRANGE*XDUMMY
+   LET PYSTART = PYMIN
+   LET PXSTOP = PXSTART + 0.5*PXRANGE*(1-XDUMMY)
+   LET PYSTOP = PYSTART + PYRANGE*(1-XDUMMY)
+   DRAW PXSTART PYSTART PXSTOP PYSTOP
+END LOOP
+.
+. ----Step 4--Annotate the plot-----
+.
+HW 2 1
+JUSTIFICATION CENTER
+LET PXHALF = (PXMIN+PXMAX)/2
+LET PYHALF = (PYMIN+PYMAX)/2
+LET PXTHIRD = PXMIN + (PXMAX-PXMIN)/3
+LET PX2THIRD = PXMIN + 2*(PXMAX-PXMIN)/3
+LET PYTHIRD = PYMIN + (PYMAX-PYMIN)/3
+LET PXMINM = PXMIN-4
+LET PXMAXP = PXMAX+4
+LET PYMINM = PYMIN-2
+LET PYMINM2 = PYMIN-5
+LET PYMAXP = PYMAX+2
+LET PYMAXP2 = PYMAX+4
+MOVE PXHALF PYMAXP; TEXT ^S1
+MOVE PXMINM PYMINM2; TEXT ^S2
+MOVE PXMAXP PYMINM2; TEXT ^S3
+.
+. ----Step 5--Superimpose the Design Points-----
+.
+LET K2 = SQRT(2)
+LET K6 = SQRT(6)
+.
+HW 1.5 1
+FILL ON
+JUSTIFICATION LEFT
+.
+LET N = NUMBER X1
+LOOP FOR K = 1 1 N
+   LET YK = Y(K)
+   LET X1K = X1(K)
+   LET X2K = X2(K)
+   LET X3K = X3(K)
+   .
+   LET H = (1/K2) * (X3K - X2K)
+   LET V = (1/K6) * (2 - 3*X2K - 3*X3K)
+   .
+   LET PX = PXHALF  + ((PXRANGE)/(2/K2)) * H
+   LET PY = PYTHIRD + ((PYRANGE)/(3/K6)) * V
+   .
+   MOVE PX PY
+   JUSTIFICATION CECE
+   TEXT CIRC()
+   .
+   MOVE PX PY
+   JUSTIFICATION LECE
+   TEXT  ^YK
+END LOOP
+.
+. ----Step n--Finish----
+.
+THICKNESS DEFAULT
+MOVE 90 3
+HW 1 .5
+JUST LEFT
+. TEXT SIMPLEXR.DP
+HW 2 1
+.
+LINES SOLID ALL
+FEEDBACK ON

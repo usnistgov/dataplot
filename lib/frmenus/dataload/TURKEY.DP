@@ -1,0 +1,8 @@
+----- <~dataload\TURKEY.DP> Load TURKEY.DAT
+
+. This is file    TURKEY.DP
+
+DELETE Y X
+SKIP 25
+READ TURKEY.DAT Y X
+

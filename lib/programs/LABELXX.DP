@@ -1,0 +1,31 @@
+. This is Dataplot macro     LABELXX.DP
+. Purpose--Put same vertical axis and horizontal axis
+.          labels around a NUMROW by NUMCOL multiplot.
+. Date--April 1997
+. The following must pre-exist:
+.    NUMROW = number of rows in the MULTIPLOT
+.    NUMCOL = number of columns in the MULTIPLOT
+.    SX1    = first  horizontal (and vertical) axis label
+.    SX2    = second horizontal (and vertical) axis label
+.    SX3    = third  horizontal (and vertical) axis label
+.    etc.
+.
+. -----start point-----
+.
+justification right; hw 2 1
+let xp = 13; let dely = 70/numrow; let yp = 90 - dely/2
+let yp = yp + dely
+loop for k = 1 1 numrow
+   let yp = yp - dely
+   move xp yp
+   text X^k = ^sx^k
+end loop
+.
+justification center; hw 2 1
+let yp = 15; let delx = 70/numcol; let xp = 15 + delx/2
+let xp = xp - delx
+loop for k = 1 1 numcol
+   let xp = xp + delx
+   move xp yp
+   text X^k = ^sx^k
+end loop

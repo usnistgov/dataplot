@@ -1,0 +1,74 @@
+This is file b11hispd.men--Histogram & Superimposed Burr Type 11 pdf Plot
+
+--------------------
+ 1. Histogram & Superimposed Burr Type 11 pdf Plot
+ 2. HISTOGRAM Y; PLOT B11PDF(X,R) FOR X = START INC STOP
+ 4.
+ 5. Response variable: 
+ 5. @CE 1 0 42 50 ? gui-vari
+ 6.
+ 7. Relative histogram of data (leave blank for defaults):
+ 8.    Class width:
+ 8. @CE 2 0 42 50 ?
+ 9.    Lower limit of first class:
+ 9. @CE 3 0 42 50 ?
+10.    Upper limit of last class:
+10. @CE 4 0 42 50 ?
+11.    Bar fill on/off:
+11. @CE 5 0 42 50 ?
+12.
+13. Superimposed Burr Type 11 probability density function:
+14.    Shape (beta):
+14. @CE 6 0 42 50 ?
+15.    Location u:
+15. @CE 7 0 42 50 ?
+16.    Scale s:
+16. @CE 8 0 42 50 ?
+17.    Start point:
+17. @CE 9 0 42 50 ?
+18.    Increment:
+18. @CE 10 0 42 50 ?
+19.    Stop point:
+19. @CE 11 0 42 50 ?
+20.    Line type:
+20. @CE 12 0 42 50 ? gui-line
+21.    Line color:
+21. @CE 13 0 42 50 ? gui-color
+22.
+23.
+24. Title:
+24. @CE 14 0 20 50 *
+25. Left Axis Label:
+25. @CE 15 0 20 50 *
+26. Bottom Axis Label:
+26. @CE 16 0 20 50 *
+27.
+28.
+29. Generate the plot?
+--------------------
+AN FE
+@IF 2 0 CLASS WIDTH _2
+@IF 3 0 CLASS LOWER _3
+@IF 4 0 CLASS UPPER _4
+@IF 5 0 BAR FILL _5
+TITLE _14
+Y1LABEL _15
+X1LABEL _16
+@IF 1 0 RELATIVE HISTOGRAM _1
+@IF 1 0 LIMITS FREEZE
+.
+@IF 12 0 LINES _12
+@IF 13 0 LINE COLOR _13
+PRE-ERASE OFF
+LET ZSHAPE = 1
+@IF 6 0 LET ZSHAPE = _6
+LET ZLOC = 0
+@IF 7 0 LET ZLOC = _7
+LET ZSCALE = 1
+@IF 8 0 LET ZSCALE = _8
+PLOT B11PDF(X,ZSHAPE,ZLOC,ZSCALE) FOR X = _9 _10 _11
+@IF 1 0 LIMITS
+PRE-ERASE ON
+--------------------
+WEB HELP B11PDF
+--------------------

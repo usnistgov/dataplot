@@ -1,0 +1,58 @@
+This is file pncbppf.men--Plot Non-Central Beta PPF
+ 
+--------------------
+ 1. Plot a Non-Central Beta PPF Function
+ 2. PLOT NCBPPF(P,2,0.5,0.3) FOR P = 0.01 0.01 0.99
+ 3.
+ 4. You can specify the range of values to plot either
+ 5. by providing an input vector containing the explicit
+ 6. input values or by providing the start, increment,
+ 7. and stop values.
+ 8.
+ 9. Input Variable (optional):
+ 9. @CE 1 0 42 50 ? gui-variable
+10.
+11. Start Value (> 0):
+11. @CE 2 0 42 50 ?
+12. Increment Value (defaults to 0.1):
+12. @CE 3 0 42 50 ?
+13. Stop Value (< 1):
+13. @CE 4 0 42 50 ?
+14.
+15. Variable to Store the PPF Values (optional):
+15. @CE 5 0 42 50 ?
+16.
+17. Shape Parameter alpha (> 0):
+17. @CE 6 0 42 50 ?
+18. Shape Parameter beta (> 0):
+18. @CE 7 0 42 50 ?
+19. Shape Parameter lambda (>= 0):
+19. @CE 8 0 42 50 ?
+20. Lower Limit Parameter:
+20. @CE 9 0 42 50 ?
+21. Upper Limit Parameter:
+21. @CE 10 0 42 50 ?
+22.
+23.
+24. Plot the Non-Central Beta PPF's?
+--------------------
+AN FE
+LET ZSH1 = 1
+LET ZSH2 = 1
+LET ZSH3 = 1
+LET ZLOWLIM = 0
+LET ZUPPLIM = 1
+@IF 6 0 LET ZSH1 = _6
+@IF 7 0 LET ZSH2 = _7
+@IF 8 0 LET ZSH3 = _8
+@IF 9 0 LET ZLOWLIM = _9
+@IF 10 0 LET ZUPPLIM = _10
+LET ZINC = 0.1
+@IF 3 0 LET ZINC = _3
+@IF 1 0 LET ZJUNK = NCBPPF( _1  ,ZSH1,ZSH2,ZSH3,ZLOWLIM,ZUPPLIM)
+@IF 1 0 PLOT ZJUNK _1
+@IF 2 0 PLOT NCBPPF( ZZZZ ,ZSH1,ZSH2,ZSH3,ZLOWLIM,ZUPPLIM) FOR ZZZZ = _2 ZINC _4
+@IF 5 0 LET _5 = YPLOT
+--------------------
+WEB HELP NCBPPF
+--------------------

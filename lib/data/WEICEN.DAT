@@ -1,0 +1,43 @@
+This is Dataplot data file    WEICEN.DAT
+Sample data set from Example 17.3 of
+Karl Bury, "Statistical Distributions in Engineering",
+Cambridge University Press, 1999, pp. 342-343.
+
+Response variable   = Accelerated life test for 6-ton turret mount
+Censoring variable  = 1 implies a failure time, 0 implies a censor time
+Number of observations = 18
+Number of observations per line image = 2
+Order of observations per line image--
+   1. Response variable
+   2. Censoring variable
+To read this file into Dataplot--
+   SKIP 25
+   READ WEICEN.DAT Y X
+   SET MAXIMUM LIKELIHOOD PERCENTILE DEFAULT
+   SET WEIBULL BIAS CORRECTED ON
+   WEIBULL MAXIMUM LIKELIHOOD Y X
+ 
+ 
+ 
+ 
+ 
+ Y    X
+--------
+211   1
+397   1
+461   1
+500   0
+576   1
+640   0
+812   1
+854   1
+943   1
+1000  0
+1000  0
+1211  1
+1482  1
+1487  1
+1500  0
+1822  1
+2103  1
+2585  1

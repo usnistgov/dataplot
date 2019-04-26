@@ -1,0 +1,15 @@
+----- <~file\captlate.top> Files: Capture Options (Latek)
+
+Generate Dataplot Output to Latek File
+
+Options for Generating Dataplot Output to a Latek:
+
+Generate Dataplot Output to a LATEX File      <xemf: ~file\latexon.men>
+Revert Dataplot Output to Text Output Window  <xcf: ~file\CAPTOFF.DP>
+
+Note; For Latex output, it is generally desirable
+to turn off the normal feedback messages.
+
+Turn the FEEDBACK Switch OFF                      <xcl: FEEDBACK OFF>
+Turn the FEEDBACK Switch ON                       <xcl: FEEDBACK ON>
+

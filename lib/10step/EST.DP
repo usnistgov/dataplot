@@ -1,0 +1,407 @@
+. This is dataplot macro    est.dp
+. Purpose: Estimate factor effects corresponding to orthongal core elements
+.          Domain: a general 2-level design--in Yates order or not.
+. Date: 3/5/15
+.
+. Input:
+.    y                (vector)    = response variable
+.    k                (parameter) = number of factors = number of columns in the design "matrix"
+.    x1 x2 x3 . . .   (vectors)   = vectors in the design matrix
+.    corefac1         (vector)    = vector of   1st   factor in the core vector (from pre-run of   est.dp)
+.    corefac2         (vector)    = vector of   2nd   factor in the core vector (where -999 => none)
+.    corefac2         (vector)    = vector of   3rd   factor in the core vector (where -999 => none)
+.    corefac2         (vector)    = vector of   4th   factor in the core vector (where -999 => none)
+.    corefac2         (vector)    = vector of   5th   factor in the core vector (where -999 => none)
+.    conftag1         (vector)    = vector of   1st   factors                   (from conf.dp)
+.    conftag2         (vector)    = vector of second factors                   (from conf.dp)
+.    stt1, stt2, etc. (strings)   = primary tags for the confounding list      (from conf.dp)
+.    stc1, stc2, etc. (strings)   = corresponding confounding for these tags   (from conf.dp)
+.
+. Output:
+.    ybar     (parameter) = grand mean of the n responses
+.    eff      (vector)    = sorted (by magnitude) vector of effect estimates for factors and interactions.  **
+.    steft1, steft2, etc. (strings) = primary tags for the ordered effects                                  **
+.    stefc1, stefc2, etc. (strings) = corresponding confounding strings for the primary tags                **
+.
+.    meanh    (vector)    = carry-along vector of high-side means of the main factors and interactions
+.    meanl    (vector)    = carry-along vector of low-side  means for the factors and interacctions
+.    releff   (vector)    = carry-along relative (to the mean) effects (%)
+.    sdeff    (vector)    = carry-along vector of sd(effects)
+.    teff     (vector)    = carry-along vector of t values for effects
+.    rsd      (vector)    = carry-along vector of residual standard deviations
+.    cumrsd   (vector)    = carry-along vector of cumulative residual standard deviations
+.    estdone  (parameter) = (0,1) indicator as to whether this routine has (ever) been executed (default = 0 = no)
+.
+. -----start point-----
+.
+. capture junk.
+feedback save; feedback off
+printing off
+.
+. here   5/31/17 number of elements in conftag1 = 0
+let bugswest = 0
+. let pausesw = 1
+.
+if bugswest = 1
+   print " "
+   print "At the beginning of   est.dp"
+   print "k = ^k"
+   if k <= 15
+      print y x1 to x^k
+   end if
+   if pausesw exists and pausesw = 1; pause; end if
+   .
+   print corefac1 corefac2 corefac3 corefac4 corefac5
+   let numcore = number corefac1
+   print "numcore = ^numcore"
+   if pausesw exists and pausesw = 1; pause; end if
+   .
+   print conftag1 conftag2
+   let numconf = number conftag1
+   print "numconf = ^numconf"
+   if pausesw exists and pausesw = 1; pause; end if
+   .
+   loop for j = 1 1 numconf
+      print "j = ^j      stt^j   = ^stt^j      stc^j   = ^stc^j  "
+   end loop
+end if
+.
+print " "
+print "3. Factor and interaction effects  are now being computed . . ."
+print " "
+.
+. -----Step 0: Check input arguments-----
+.
+if bugswest = 1; print "--At est.dp step 0"
+   if pausesw exists and pausesw = 1; pause; end if
+end if
+.
+let string stmacro = est.dp
+set check name output filliben
+feedback on
+let iflag = check name k x1 to x^k
+feedback off
+.
+let n = number x1
+.
+if k >= n
+   print "Error in macro   est.dp:"
+   print "   The number of factors k must not exceed the number of observations"
+   print "   k = ^k  n = ^n"
+   if pausesw exists and pausesw = 1; pause; end if
+   exit
+end if
+.
+let nexp = log2(n)
+let intnexp = int(nexp)
+let delnexp = nexp - intnexp
+if delnexp <> 0
+   print " "
+   print "------------------------------"
+   print "Fatal error in macro   est.dp:"
+   print "   The number of observations n was not a power of 2"
+   print "   n = ^n"
+   print "   delnexp = ^delnexp"
+   if ibatch not exist or ibatch = 0; pause; end if
+   .
+   stat v
+   if ibatch not exist or ibatch = 0; pause; end if
+   .
+   printing on
+   capture dpjunk.out
+      print y x1 to x^k
+      .
+      loop for jfact = 1 1 k
+         tabulate x^jfact
+      end loop
+      .
+      let km1 = k - 1
+      loop for jfact = 1 1 km1
+         let jfactp1 = jfact + 1
+         loop for jfact2 = jfactp1 1 k
+            tabulate x^jfact x^jfact2
+         end loop
+      end loop
+   end capture
+   .
+   print " "
+   print "The   est.dp   macro requires the sample size n to be a power of 2."
+   print "Since n (= ^n) is not a power of 2,"
+   print "the DEX 10-step will terminate."
+   print "y and x1 to x^k as well as diagnostic info have been written out"
+   print "to the junk file   dpjunk.out   for perusal."
+   if ibatch not exist or ibatch = 0; pause; end if
+   stop
+end if
+.
+. -----Step 1: Compute effect estimates and residual SDs-----
+.
+if bugswest = 1; print "--At est.dp step 1"
+   if pausesw exists and pausesw = 1; pause; end if
+end if
+.
+let effid1 = corefac1
+let effid2 = corefac2
+let effid3 = corefac3
+let effid4 = corefac4
+let effid5 = corefac5
+let numcore = number corefac1
+.
+let numeff = min(numcore,32)
+let effindex = 1 1 numeff
+. retain effindex effid1 effid2 for i = 1 1 numeff   NOT WORK   BUG BUG BUG *******
+retain effindex for i = 1 1 numeff
+retain effid1 effid2 for i = 1 1 numeff
+.
+if bugswest = 1
+   print " "
+   print effindex effid1 effid2
+   print "numeff = ^numeff"
+   if pausesw exists and pausesw = 1; pause; end if
+end if
+let ybar = mean y
+.
+loop for j = 1 1 numeff
+   delete prod
+   let j1 = effid1(j)
+   let j2 = effid2(J)
+   let j3 = effid3(J)
+   let j4 = effid4(J)
+   let j5 = effid5(J)
+   let string stcore^j = X^j1
+   if j2 <> -999
+      let string stcore^j = X^j1 * X^j2
+      if j3 <> -999
+         let string stcore^j = X^j1 * X^j2 * X^j3
+         if j4 <> -999
+            let string stcore^j = X^j1 * X^j2 * X^j3 * X^j4
+            if j5 <> -999
+               let string stcore^j = X^j1 * X^j2 * X^j3 * X^j4 * X^j5
+            end if
+         end if
+      end if
+   end if
+   let prod = ^stcore^j
+   let string sttemp^j = ^stcore^j
+   .
+   let mhj = mean y subset prod +1
+   let mlj = mean y subset prod -1
+   .
+   let pred = ybar + 0.5*(mhj - mlj)*^stcore^j
+   let res = y - pred
+   let rsdj = sd res
+   .
+   let meanh(j) = mhj
+   let meanl(j) = mlj
+   let rsd(j) = rsdj
+   .
+end loop
+let eff = meanh - meanl
+let rsd = (sqrt((n-1)/(n-2))) * rsd
+let releff = 100*(eff/ybar)
+let sdeff  = 2*rsd/sqrt(n)
+let teff   = 0 for i = 1 1 numeff
+let teff   = eff/sdeff  subset sdeff > 0
+.
+if bugswest = 1
+   print "effindex effid1 effid2 effid3 effid4 effid5 meanh meanl eff releff sdeff teff rsd"
+   set write format 14f10.4
+   print effindex effid1 effid2 effid3 effid4 effid5 meanh meanl eff releff sdeff teff rsd
+   print effindex effid1 effid2 effid3 effid4 effid5
+   if pausesw exists and pausesw = 1; pause; end if
+   set write format
+end if
+.
+. -----Step 2: Sort the effects vector (based on magnitude) & carry all else----
+.
+if bugswest = 1; print "--At est.dp step 2"
+   if pausesw exists and pausesw = 1; pause; end if
+end if
+.
+let effabs = abs(eff)
+set sort direction descending
+let temp1 = effabs
+let temp2 = sortc temp1 meanh meanl eff releff sdeff teff rsd
+let temp2 = sortc temp1 effindex effid1 effid2 effid3 effid4 effid5
+let effabs = temp2
+set sort direction
+.
+if bugswest = 1
+   print "effindex effid1 effid2 effid3 effid4 effid5 meanh meanl eff releff sdeff teff rsd"
+   set write format 15f10.4
+   print effindex effid1 effid2 effid3 effid4 effid5 meanh meanl eff releff sdeff teff rsd
+   print effindex effid1 effid2 effid3 effid4 effid5
+   set write format
+   if pausesw exists and pausesw = 1; pause; end if
+end if
+.
+. print " "
+. print "1. pre:"
+. loop for j = 1 1 numeff
+.     print "stcore^j = ^stcore^j      stconf^j = ^stconf^j"
+. end loop
+. print effindex
+. if pausesw exists and pausesw = 1; . pause; . end if
+.
+. -----Step 3: Carry along stcore-----
+.
+if bugswest = 1; print "--At est.dp step 3 stcore"
+   if pausesw exists and pausesw = 1; pause; end if
+end if
+.
+loop for j = 1 1 numeff
+   let j2 = effindex(j)
+   let string stcore^j = ^sttemp^j2
+   if bugswest = 1; print "j = ^j    stcore^j = ^stcore^j"; end if
+end loop
+if bugswest = 1 and pausesw exists and pausesw = 1; pause; end if
+.
+. -----Step 4: Carry along confounding vectors and strings from conf.dp-----
+.
+if bugswest = 1; print "--From est.dp, at start of step 4: stconf, create stmain, steft, and stefc"
+   print eff effindex effid1 effid2 effid3 effid4 effid5 conftag1 conftag2
+   if pausesw exists and pausesw = 1; pause; end if
+end if
+.
+let numconf = number conftag1
+.
+loop for j = 1 1 numeff
+   let j1 = effid1(j)
+   let j2 = effid2(J)
+   let j3 = effid3(J)
+   let j4 = effid4(J)
+   let j5 = effid5(J)
+   . print "line 243: j=^j: ^j1 ^j2 ^j3 ^j4 ^j5"                                        ;. jim 9/28/18
+   . pause                                                                              ;. jim 9/28/18
+   let string stmain^j = ^j1
+   if j2 <> -999
+      let string stmain^j = ^j1&^j2
+      if j3 <> -999
+         let string stmain^j = ^j1&^j2&^j3
+         if j4 <> -999
+            let string stmain^j = ^j1&^j2&^j3&^j4
+            if j5 <> -999
+               let string stmain^j = ^j1&^j2&^j3&^j4&^j5
+                  . print "j=^j: mid-ifs: ^j1 ^j2 ^j3 ^j4 ^j5 stmain^j = ^stmain^j"    ;. jim 9/28/18
+                  . pause                                                              ;. jim 9/28/18
+            end if
+         end if
+      end if
+   end if
+   .
+   . ////////////////////////////////                                                  ;. jim 9/28/18
+   . The following 2 lines are a fix for sumnona sarkar's 2**(8-2) confounding problem ;. jim 9/28/18
+let patch = 1
+if patch = 1
+   delete imain; let imain = ^stmain^j                                                 ;. jim 9/28/18
+   if imain > 10000; let imain = imain/1000; let string stmain^j = ^imain; end if      ;. jim 9/28/18
+end if
+   . print "j=^j: repaired: stmain^j => ^stmain^j"                                     ;. jim 9/28/18
+   . pause                                                                             ;. jim 9/28/18
+   . ////////////////////////////////                                                  ;. jim 9/28/18
+   .
+end loop
+.
+if bugswest = 1
+   print "from est.dp, at middle of step 4"                                                                                                 ;. jim 9/28/18
+   loop for j = 1 1 numeff
+      print "j = ^j   stmain^j = ^stmain^j"
+   end loop
+   if pausesw exists and pausesw = 1; pause; end if
+end if
+.
+. loop for j1 = 1 1 numeff
+.    let j2 = indz(j1)
+.    let string steft^j1 = ^stt^j2
+.    let string stefc^j1 = ^stc^j2
+.    print "j1 = ^j1   j2 = ^j2   steft^j1 = ^steft^j1   stefc^j1 = ^stefc^j1"
+.    if pausesw exists and pausesw = 1; . pause; . end if
+. end loop
+.
+.
+loop for j1 = 1 1 numeff
+   let string steft^j1 = ^stmain^j1
+   delete prod^j1; let prod^j1 = ^stcore^j1
+   .
+   let string stefc^j1 = -999
+   let stefc^j1 = string compare and replace stmain^j1 stc stt1 to stt^numconf
+   . print "j1: ^j1,  stefc^j1: ^stefc^j1"
+end loop
+.
+. -----Step 5: Carry along cumrsd-----
+.
+if bugswest = 1; print "--At est.dp step 5 cumrsd"
+   if pausesw exists and pausesw = 1; pause; end if
+end if
+.
+let string stcum = prod1
+fit y ^stcum
+let cumrsd(1) = ressd
+loop for j = 2 1 numeff
+    let string stcum = ^stcum prod^j
+    fit y ^stcum
+    let cumrsd(j) = ressd
+end loop
+.
+. -----Step 6: Since the effect estimations is now done,
+. -----        set a switch to indicate that-----
+.
+if bugswest = 1; print "--At est.dp step 6"
+   if pausesw exists and pausesw = 1; pause; end if
+end if
+.
+let estdone = 1
+.
+. -----Step 8: Finish up-----
+.
+if bugswest = 1; print "--At est.dp step 8 print"
+   if pausesw exists and pausesw = 1; pause; end if
+end if
+.
+if bugswest = 1
+   yates y
+   . print "(k,n) = (^k,^n)"
+   set write format 12f10.4
+   print "   effindex    effid1 effid2 effid3    meanh     meanl       eff     releff     sdeff      teff      rsd    cumrsd"
+   print "   . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+   print effindex effid1 effid2 effid3 meanh meanl eff releff sdeff teff rsd cumrsd
+   set write format
+   if pausesw exists and pausesw = 1; pause; end if
+   .
+   printing on
+   yates y
+   .
+   print "(k,n) = (^k,^n)"
+   print " "
+   loop for j = 1 1 numeff
+      let effid1j = effid1(j)
+      let effid2j = effid2(j)
+      let effid3j = effid3(j)
+      let effj = eff(j)
+      . print "^j        ^effid1j     ^effid2j    ^effid3j        ^stcore^j        ^stconf^j         ^effj"
+   end loop
+   .
+   loop for j = 1 1 numeff
+      let effj = eff(j)
+      . print "j = ^j      effj = ^effj     steft^j = ^steft^j     stefc^j = ^stefc^j"
+   end loop
+pause ;. today
+end if
+.
+. loop for j = 1 1 numeff
+.    let effj = eff(j)
+.    print "j = ^j      effj = ^effj     steft^j = ^steft^j     stefc^j = ^stefc^j"
+. end loop
+.
+loop for j = 1 1 numeff
+   delete prod^j
+end loop
+delete prod temp1 temp2
+.
+if bugswest = 1
+   print " "
+   print "This is the near-last line of est.dp"
+end if
+.
+feedback restore
+. end capture

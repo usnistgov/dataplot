@@ -1,0 +1,30 @@
+This is Dataplot data file    NATR134.DAT
+Conversion gain of 4 resistors measured against 6 test sets
+(conversion gain = ratio of available current-noise power
+to applied direct-current power in decibel units)
+Question: Are there differences in among treatments (test sets) and
+          blocks (resistors)
+Randomized block experiment
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 13-4
+Number of observations                   =  4
+Total number of variables per line image =  6
+Order of variables on a line image--
+   Resisitor = Resistor ID
+   X1 = Set 1463
+   X2 = Set 1506
+   X3 = Set 1938
+   X4 = Set 1946
+   X5 = Set 1948
+   X6 = Set 2140
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR134.DAT R X1 TO X6
+  R       X1       X2        X3      X4       X5       X6
+---------------------------------------------------------
+  3    138.0    141.6     137.5   141.8    138.6    139.6
+  4    152.2    152.2     152.1   152.2    152.0    152.8
+  5    153.6    154.0     153.8   153.6    153.2    153.6
+  6    141.4    141.5     142.6   142.2    141.1    141.9
+

@@ -1,0 +1,9 @@
+----- <~reli\plotafr.top> Plot Average Failure Rate Functions
+
+Plot Average Failure Rate Functions
+
+Exponential                        <xemf: ~reli\pexpafr.men>
+Lognormal                          <xemf: ~reli\plgnafr.men>
+Weibull (Minimum)                  <xemf: ~reli\pwei1afr.men>
+Weibull (Maximum)                  <xemf: ~reli\pwei2afr.men>
+

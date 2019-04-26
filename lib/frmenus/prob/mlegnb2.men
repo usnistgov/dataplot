@@ -1,0 +1,22 @@
+This is file mlegnb2.men--Generalized Negative Binomial MLE Estimates
+ 
+--------------------
+ 1. Generalized Negative Binomial Maximum Likelihood Estimates
+ 2. GENERALIZED NEGATIVE BINOMIAL MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Frequency Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Bin Mid-Points Variable:
+ 5. @CE 1 0 42 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+1. Compute Generalized Negative Binomial MLE's?
+--------------------
+GR FE
+GENERALIZED NEGATIVE BINOMIAL MAXIMUM LIKELIHOOD _1 _2 _3
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

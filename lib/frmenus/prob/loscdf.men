@@ -1,0 +1,42 @@
+This is file loscdf.men--Compute Lost Games cdf and tail probability
+ 
+--------------------
+ 1. Compute Lost Games cdf and Tail Probability
+ 2. LET Y = LOSCDF(X,P,R)
+ 3.
+ 4. Input values:
+ 5.                          x (x = r, r+1, ...):
+ 5. @CE 1 0 42 50 ?
+ 6.              shape parameter p (0.5 < p < 1):
+ 6. @CE 2 0 42 50 ?
+ 7.         shape parameter r (r = 0, 1, 2, ...):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Output parameters:
+10.                  name for the cdf value:
+10. @CE 4 0 42 50 ?
+11.     name for the tail probability value:
+11. @CE 5 0 42 50 ?
+12.
+13.
+14. Compute the Probability?
+--------------------
+AN FE
+LET ZP = 0.75
+LET ZR = 1
+@IF 2 0 LET ZP = _2
+IF ZP <= 0.5
+   LET ZP = 0.75
+END OF IF
+IF ZP >= 1
+   LET ZP = 0.75
+END OF IF
+@IF 3 0 LET ZR = _3
+IF ZR <= 0
+   LET ZR = 1
+END OF IF
+@IF 4 0 LET _4 = LOSCDF( _1 , ZP , ZR )
+@IF 5 0 LET _5 = 1 - LOSCDF( _1 , ZP , ZR )
+--------------------
+WEB HELP LOSCDF
+--------------------

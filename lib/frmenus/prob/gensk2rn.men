@@ -1,0 +1,137 @@
+This is file gensk2rn.men--Generate Additional Skewed Random Numbers
+ 
+--------------------
+ 1. Generate Skewed Random Numbers
+ 2. LET Y = ... RANDOM NUMBERS FOR I = START INC STOP
+ 3.
+ 4. Distribution (Select one):
+ 5. @CE 1 1 4 30 Inverted Weibull
+ 5.                                 gamma =
+ 5. @CE 2 0 41 50 ?
+ 6. @CE 1 2 4 30 Geometric Extreme Expo
+ 6.                                 gamma =
+ 6. @CE 3 0 41 50 ?
+ 7. @CE 1 3 4 30 Inverted Gamma
+ 7.                                 gamma =
+ 7. @CE 4 0 41 50 ?
+ 8. @CE 1 4 4 30 Log Gamma
+ 8.                                 gamma =
+ 8. @CE 5 0 41 50 ?
+ 9. @CE 1 5 4 30 Generalized Extreme Value
+ 9.                                 gamma =
+ 9. @CE 6 0 41 50 ?
+10. @CE 1 6 4 30 Log Double Exponential
+10.                                 alpha =
+10. @CE 7 0 41 50 ?
+11. @CE 1 7 4 30 Log Logistic
+11.                                 delta =
+11. @CE 8 0 41 50 ?
+12. @CE 1 8 4 30 Bradford
+12.                                 beta =
+12. @CE 9 0 41 50 ?
+13. @CE 1 9 4 30 Reciprocal
+13.                                 b =
+13. @CE 10 0 41 50 ?
+14. @CE 1 10 4 30 Half-Logistic
+15. @CE 1 11 4 30 Power Normal
+15.                                 p =
+15. @CE 11 0 41 50 ?
+16. @CE 1 12 4 30 Power Lognormal
+16.                                 p =
+16. @CE 12 0 41 50 ?
+17.                                 sd =
+17. @CE 13 0 41 50 ?
+18. @CE 1 13 4 30 Gompertz
+18.                                 c =
+18. @CE 14 0 41 50 ?
+19.                                 b =
+19. @CE 15 0 41 50 ?
+20. @CE 1 14 4 30 Power Exponential
+20.                                 alpha =
+20. @CE 16 0 41 50 ?
+21.                                 beta =
+21. @CE 17 0 41 50 ?
+22. @CE 1 15 4 30 Alpha
+22.                                 alpha =
+22. @CE 18 0 41 50 ?
+23.                                 beta =
+23. @CE 19 0 41 50 ?
+24. @CE 1 16 4 30 Exponentiated Weibull
+24.                                 gamma =
+24. @CE 20 0 41 50 ?
+25.                                 theta =
+25. @CE 21 0 41 50 ?
+26. @CE 1 17 4 30 Johnson SB
+26.                                 alpha1 =
+26. @CE 22 0 41 50 ?
+27.                                 alpha2 =
+27. @CE 23 0 41 50 ?
+28. @CE 1 18 4 30 Johnson SB
+28.                                 alpha1 =
+28. @CE 24 0 41 50 ?
+29.                                 alpha2 =
+29. @CE 25 0 41 50 ?
+30.
+31. Number of Random Numbers:
+31. @CE 26 0 41 50 ?
+32. Optional Location Parameter:
+32. @CE 27 0 41 50 ?
+33. Optional Scale Parameter:
+33. @CE 28 0 41 50 ?
+34. Name of Output Variable :
+34. @CE 29 0 41 50 ?
+35.
+36.
+37. Generate the Random Numbers?
+--------------------
+AN FE
+@IF 1 1 LET GAMMA = _2
+@IF 1 1 LET _29 = INVERTED WEIBULL RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 2 LET GAMMA = _3
+@IF 1 2 LET _29 = GEOMETRIC EXTREME EXPO RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 3 LET GAMMA = _4
+@IF 1 3 LET _29 = INVERTED GAMMA RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 4 LET GAMMA = _5
+@IF 1 4 LET _29 = LOG GAMMA RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 5 LET GAMMA = _6
+@IF 1 5 LET _29 = GENERALIZED EXTRE VALU RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 6 LET ALPHA = _7
+@IF 1 6 LET _29 = LOG DOUBLE EXPONENTIAL RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 7 LET DELTA = _8
+@IF 1 7 LET _29 = LOG LOGISTIC RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 8 LET BETA = _9
+@IF 1 8 LET _29 = BRADFORD RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 9 LET B = _10
+@IF 1 9 LET _29 = RECIPROCAL RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 10 LET _29 = HALF LOGISTIC RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 11 LET P = _11
+@IF 1 11 LET _29 = POWER NORMAL RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 12 LET P = _12
+@IF 1 12 LET P = _13
+@IF 1 12 LET _29 = POWER LOGNORMAL RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 13 LET B = _14
+@IF 1 13 LET C = _15
+@IF 1 13 LET _29 = GOMPERTZ RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 14 LET ALPHA = _16
+@IF 1 14 LET BETA = _17
+@IF 1 14 LET _29 = POWER EXPONENTIAL RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 15 LET ALPHA = _18
+@IF 1 15 LET BETA = _19
+@IF 1 15 LET _29 = ALPHA RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 16 LET GAMMA = _20
+@IF 1 16 LET THETA = _21
+@IF 1 16 LET _29 = EXPONENTIATED WEIBULL RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 17 LET ALPHA1 = _22
+@IF 1 17 LET ALPHA2 = _23
+@IF 1 17 LET _29 = JOHNSON SB RANDOM NUMBERS FOR I = 1 1 _26
+@IF 1 18 LET ALPHA1 = _22
+@IF 1 18 LET ALPHA2 = _23
+@IF 1 18 LET _29 = JOHNSON SU RANDOM NUMBERS FOR I = 1 1 _26
+LET ZLOC = 0
+LET ZSD = 1
+@IF 27 0 LET ZLOC = _27
+@IF 28 0 LET ZSD = _28
+LET _29 = ZLOC + ZSD* _29
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

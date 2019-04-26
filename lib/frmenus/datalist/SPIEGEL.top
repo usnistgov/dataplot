@@ -1,0 +1,8 @@
+----- <~datalist\SPIEGEL.top> SPIEGEL.DAT
+ 
+SPIEGEL.DAT
+ 
+View     <xcl: LIST SPIEGEL.DAT>
+Load     <x2cl: SKIP 25; READ SPIEGEL.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\SPIEGEL.DAT>
+ 

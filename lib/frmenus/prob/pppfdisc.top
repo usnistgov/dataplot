@@ -1,0 +1,14 @@
+----- <~prob\pppfdisc.top> Plot Discrete ppf's
+
+Plot Discrete PPF Functions
+
+Binomial                 <xemf: ~prob\pbinppf.men>
+Geometric                <xemf: ~prob\pgeoppf.men>
+Poisson                  <xemf: ~prob\ppoippf.men>
+Negative Binomial        <xemf: ~prob\pnbppf.men>
+Discrete Uniform         <xemf: ~prob\pdisppf.men>
+Hypergeometric           <xemf: ~prob\phypppf.men>
+Logarithmic Series       <xemf: ~prob\pdlgppf.men>
+Beta Binomial            <xemf: ~prob\pbbnppf.men>
+Waring                   <xemf: ~prob\pwarppf.men>
+

@@ -1,0 +1,24 @@
+----- <~fit\modelval.top> Model Validation: Residual Analysis
+
+Model Validation: Residual Analysis
+
+Discussion                   <~fit\residisc.top>
+NIST/SEMATECH Handbook (Model Validation) <xcl: web handbook fit model validation>
+NIST/SEMATECH Handbook (Model Improvement) <xcl: web handbook fit model improvement>
+
+Values of RESSD, RESDF, REPSD, REPDF <xcf: ~fit\NUMSUM.DP>
+ANOVA Values (Multi-Linear Fits)     <xcf: ~fit\anova.men>
+
+Plot superimposed predicted values   <xemf: ~fit\plotpred.men>
+
+Scatter plot of residuals            <xemf: ~fit\plotres.men>
+Normal probability plot of residuals <xemf: ~fit\norppres.men>
+4-PLOT of Residuals                  <xcl: 4-PLOT RES>
+6-PLOT                               <xemf: ~fit\6plot.men>
+
+Plot residuals versus predicted              <xcf: ~fit\RESVPRED.DP>
+Plot residuals versus independent variables  <xemf: ~fit\resvsx.men>
+Plot depdendent variable versus predicted    <xemf: ~fit\yvspred.men>
+
+Regression Diagnostocs               <~fit\regrdiag.top>
+

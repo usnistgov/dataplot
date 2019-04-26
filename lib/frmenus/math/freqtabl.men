@@ -1,0 +1,45 @@
+This is file freqtabl.men--Frequency Table
+ 
+--------------------
+1. Frequency Table
+2. LET Y = BINNED X
+3.
+4. Response Variable:
+4. @CE 1 0 42 50 ? gui-variable
+5. Variable to store the frequencies:
+5. @CE 2 0 42 50 ? gui-variable
+6. Variable to store the bin mid-points:
+6. @CE 3 0 42 50 ? gui-variable
+7.
+8. Class Width (0.3*s):
+8. @CE 4 0 33 50 *
+9. Lower Limit of First Class:
+9. @CE 5 0 33 50 *
+10. Upper Limit of Last Class:
+10. @CE 6 0 33 50 *
+11.
+12. Type of Frequencies:
+13. @CE 7 1 10 45 counts
+14. @CE 7 2 10 45 relative frequency
+15. For Relative Frequency:
+16. @CE 8 1 10 45 area sums to 1
+17. @CE 8 2 10 45 frequencies sum to 1
+18.
+19. Subset/Except/For Specification: 
+20. @CE 9 0 1 50 *
+21.
+22.
+23. Compute the Frequency Table?:
+--------------------
+GR FE
+CLASS WIDTH _4
+CLASS LOWER _5
+CLASS UPPER _6
+@IF 8 1 SET RELATIVE HISTOGRAM AREA
+@IF 8 2 SET RELATIVE HISTOGRAM PERCENT
+LET STRING ZZZZSTR = BINNED
+@IF 7 2 LET STRING ZZZZSTR = RELATIVE BINNED HISTOGRAM
+LET _2 _3 = ^ZZZZSTR  _1 _9
+--------------------
+WEB HELP BINNED
+--------------------

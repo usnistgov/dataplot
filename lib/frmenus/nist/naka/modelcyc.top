@@ -1,0 +1,23 @@
+----- <~fit\modelcyc.top> The Modeling Cycle
+
+The Modeling Cycle
+
+The general cycle for modeling involves 3 steps:
+
+   1. selecting a model
+   2. fitting the parameters of the mode
+   3. validating the model.
+
+The most important Dataplot command for selecting
+a model is the PLOT command; the most important
+command for fitting a model is FIT; the most
+important command for validating the model is
+6-PLOT.  Thus a typical sequence for a simple
+quadratic fit to data in Y and X would be:
+
+   PLOT Y X
+   QUADRATIC FIT Y X
+   CHARACTERS X BLANK
+   LINES BLANK SOLID
+   6-PLOT RES X
+

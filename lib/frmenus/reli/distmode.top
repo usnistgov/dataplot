@@ -1,0 +1,24 @@
+----- <~reli\distmode.top>
+
+Reliability: Univariate Distributional Modeling
+
+Univarate Distributional Modeling
+    Discussion                                 <~reli\rfitdisc.top>
+    NIST/SEMATECH Handbook                     <xcl: web handbook reliability best fit>
+    Distributional Descriptions                <~reli\relidesc.top>
+    Estimate Parameters/Quantiles
+        Maximum Likelihood                     <~reli\mle.top>
+        PPCC (or KS) Plot/Probability Plot     <~reli\ppccplot.top>
+        PPCC/KS/PP with Bootstrap Intervals    <~reli\ppccboot.top>
+        Weibull Plot                           <xemf: ~plot\weibplot.men>
+        Normal Plot                            <xemf: ~plot\normplot.men>
+    Assess Goodness of Fit (Graphical)
+        Discussion: Graphical Methods          <~reli\goodfitg.top>
+        Histogram & superimposed distribution  <~reli\histpdfp.top>
+        Probability Plots                      <~reli\reliprpl.top>
+    Assess Goodness of Fit (Quantitative)
+        Discussion: Quantitative Methods       <~reli\goodfitq.top>
+        Anderson-Darling                       <~reli\andedarl.top>
+        Kolmogorov-Smirnov/Chi-Square          <~reli\reliks.top>
+     Complete Fit Analysis                     <~reli\relicfit.top>
+

@@ -1,0 +1,15 @@
+----- <~clas\eda\eda.top> Problem Categories ----------------------
+
+Problem Categories
+
+There are 8 general problem categories:
+
+  1) Univariate:  y = c + e  where c is a constant
+  2) Time Series: y = f(t) + e where f(t) is a function of time
+  3) 1 Factor:    y = f(x) + e
+  4) Multi-Factor/Comparative: y = f(xp, x1, x2, ...,xk) + e
+  5) Multi-Factor/Screening:   y = f(xp, x1, x2, ...,xk) + e
+  6) Regression: y = f(x1, x2, ..., xk) + e
+  7) Interlab:   (y1, y2) = f(x) + e
+  8) Multivariate: (y1, y2, ..., yp)
+

@@ -1,0 +1,12 @@
+----- <~dataloex\SINSIN.DP> Load & Execute SINSIN.DAT
+
+. This is file    SINSIN.DP
+
+DELETE X Y1 TO Y6
+DELETE Y
+SKIP 25
+READ SINSIN.DAT X Y1 TO Y6
+TITLE SINSIN.DAT
+LET Y = Y1
+/
+

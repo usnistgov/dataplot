@@ -1,0 +1,30 @@
+-----<~reli\discseri.top> Discussion: System Reliability - Series Systems
+
+Discussion: System Reliability - Series Systems
+
+System Reliability: Series Systems
+
+A series model requires the following three assumptions:
+
+   1) Each component operates or fails independently
+      (at least until the first component fails).
+
+   2) The system fails when the first component
+      failure occurs.
+
+   3) Each of the n (not necessarily identical)
+      components in the system has a known life
+      distribution model F(i)(t).
+
+When the series model assumptions hold, the following
+relationships apply:
+
+   1) R(s)(t) = PROD[i=1 to n][R(i)(t)]
+
+   2) F(s)(t) = 1 - PROD[i=1 to n][1 - F(i)(t)]
+
+   3) h(s)(t) = SUM[i=1 to n][h(i)(t)]
+
+In summary, for a series model, reliabities are
+multiplied while failure rates are summed.
+

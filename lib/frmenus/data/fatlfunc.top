@@ -1,0 +1,8 @@
+----- <~data\fatlfunc.top> Functions: Fatigue Life Distribution
+
+Functions: Fatigue Life Distribution
+
+FLCDF(X,GAMMA)    fatigue Life cumulative distribution function
+FLCDF(X,GAMMA)    fatigue Life probability density function
+FLCDF(X,GAMMA)    fatigue Life percent point function
+

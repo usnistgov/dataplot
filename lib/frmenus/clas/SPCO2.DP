@@ -1,0 +1,10 @@
+----- <~dataloex\SPCO2.DP> Load & Execute SPCO2.DAT
+
+. This is file    SPCO2.DP
+
+DELETE Y
+SKIP 25
+READ SPCO2.DAT Y
+TITLE SPCO2.DAT
+/
+

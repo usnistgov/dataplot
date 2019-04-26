@@ -1,0 +1,30 @@
+This is Dataplot data file     VANGEL2.DAT
+2-sample Coefficient of Variation Example
+Mark Vangel, NIST
+Question--Do the 2 samples have same relative variation?
+ 
+Response variables = Tension and Shear
+Number of observations             = 5
+Number of variables per line image = 2
+Order of variables on a line image--
+   Response variable 1 = specimen tension
+   Response variable 2 = specimen shear
+Statistical areas--multi-factor analyis (2-sample)
+                   multivariate analysis
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ VANGEL2.DAT Y1 Y2
+ 
+ 
+ 
+ 
+ 
+ 
+Tension    Shear
+-----------------
+  326       9.7
+  302       9.6
+  307       9.4
+  299       9.4
+  329      10.9

@@ -1,0 +1,37 @@
+----- <~handbook\apr.top> Product Reliability
+ 
+Assessing Product Reliability
+ 
+This menu provides links to the NIST/SEMATECH
+Engineering Statistics Handbook that discuss issues
+of assessing product reliability.
+
+NIST/SEMATECH Handbook (Product Reliability) <xcl: web handbook apr>
+
+NIST/SEMATECH Handbook (Product Reliability Introduction) <xcl: web handbook apr introduction>
+   Estimation for Reliability Distributions  <~reli\estimate.top>
+   Determine Best Fit for Reliability Distributions  <~reli\bestfitd.top>
+   Random Numbers for Reliability Distributions  <~reli\relisimu.top>
+   Graphical Techniques for Reliability <~reli\plot.top>
+   Quantitative Techniques for Reliability <~reli\test.top>
+ 
+NIST/SEMATECH Handbook (Product Reliability Assumptions) <xcl: web handbook apr assumptions>
+   Weibull Hazard Plot                <xemf: ~plot\whazplot.men>
+   Lognormal Hazard Plot              <xemf: ~plot\lhazplot.men>
+   Normal Hazard Plot                 <xemf: ~plot\nhazplot.men>
+   Exponential Hazard Plot            <xemf: ~plot\ehazplot.men>
+   Probability Plots                  <~univ\probplot.top>
+   Empirical CDF Plot                  <xemf: ~plot\ecdfplot.men>
+   Kaplan-Meier Plot                   <xemf: ~plot\kaplplot.men>
+   Duane Plot with Trend Plots         <xemf: ~plot\trenplot.men>
+   Duane Plot                          <xemf: ~plot\duanplot.men>
+   Reliability Trend Tests            <xemf: ~reli\relitren.men>
+   Chi-Square                         <~univ\chisq.top>
+   Kolomogorov-Smirnov                <~univ\ks.top>
+
+NIST/SEMATECH Handbook (Product Reliability Data Collection) <xcl: web handbook apr data collection>
+ 
+NIST/SEMATECH Handbook (Product Reliability Data Analysis) <xcl: web handbook apr analysis>
+   Graphical Techniques for Reliability <~reli\plot.top>
+   Quantitative Techniques for Reliability <~reli\test.top>
+

@@ -1,0 +1,74 @@
+THIS IS DATAPLOT DESIGN OF EXPERIMENT FILE     PB24.DAT
+PLACKETT-BURMAN 24-RUN DESIGN
+NUMBER OF LEVELS FOR EACH FACTOR =  2
+NUMBER OF FACTORS                = 23
+NUMBER OF RUNS                   = 24 (A SATURATED DESIGN)
+RESOLUTION                       =  3 (CAUTION! MAIN EFFECTS
+                                      COUNFOUNDED WITH 2-TERM
+                                      INTERACTIONS)
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CONFOUNDING STRUCTURE--
+   AN 23-FACTOR DESIGN HAS 23*22/2 = 253 2-TERM INTERACTIONS.
+   THE CONFOUNDING FOR THIS DESIGN IS SEVERE--
+   EACH MAIN EFFECT IS EQUI-CONFOUNDED WITH ALL
+   253-22 = 231 2-TERM INTERACTIONS NOT INVOLVING THE
+   FACTOR ITSELF;  THUS, FOR EXAMPLE, THE ESTIMATED FACTOR 1
+   EFFECT IS EQUI-CONFOUNDED WITH ALL 253 2-TERM INTERACTIONS
+   EXCEPT FOR THOSE 22 WHICH INVOLVE FACTOR 1
+   (NAMELY, 1x2, 1x3, ..., 1x23).
+ 
+   CONVERSELY, IF A GIVEN 2-TERM INTERACTION IS REAL & LARGE,
+   THEN IT WILL EQUI-CONFOUND/CONTAMINATE 21 OF THE 23
+   MAIN EFFECTS.
+ 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+REFERENCE--TAGUCHI, SYS. OF EXP. DES., VOL. 2, PAGE XXXX.
+NOTE--THIS DESIGN IS EQUIVALENT TO A
+      TAGUCHI L24 DESIGN
+NOTE--IF POSSIBLE, THIS (AS WITH ALL EXPERIMENT DESIGNS)
+      DESIGN SHOULD BE RUN IN RANDOM ORDER.
+NOTE--TO READ THIS FILE INTO DATAPLOT--
+      DIMENSION 30 VARIABLES
+      SKIP 50
+      READ PB24.DAT X1 TO X23
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X
+ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+--------------------------------------------------------------------
+ 1 -1 -1 -1 -1  1 -1  1 -1 -1  1  1 -1 -1  1  1 -1  1 -1  1  1  1  1
+ 1  1 -1 -1 -1 -1  1 -1  1 -1 -1  1  1 -1 -1  1  1 -1  1 -1  1  1  1
+ 1  1  1 -1 -1 -1 -1  1 -1  1 -1 -1  1  1 -1 -1  1  1 -1  1 -1  1  1
+ 1  1  1  1 -1 -1 -1 -1  1 -1  1 -1 -1  1  1 -1 -1  1  1 -1  1 -1  1
+ 1  1  1  1  1 -1 -1 -1 -1  1 -1  1 -1 -1  1  1 -1 -1  1  1 -1  1 -1
+-1  1  1  1  1  1 -1 -1 -1 -1  1 -1  1 -1 -1  1  1 -1 -1  1  1 -1  1
+ 1 -1  1  1  1  1  1 -1 -1 -1 -1  1 -1  1 -1 -1  1  1 -1 -1  1  1 -1
+-1  1 -1  1  1  1  1  1 -1 -1 -1 -1  1 -1  1 -1 -1  1  1 -1 -1  1  1
+ 1 -1  1 -1  1  1  1  1  1 -1 -1 -1 -1  1 -1  1 -1 -1  1  1 -1 -1  1
+ 1  1 -1  1 -1  1  1  1  1  1 -1 -1 -1 -1  1 -1  1 -1 -1  1  1 -1 -1
+-1  1  1 -1  1 -1  1  1  1  1  1 -1 -1 -1 -1  1 -1  1 -1 -1  1  1 -1
+-1 -1  1  1 -1  1 -1  1  1  1  1  1 -1 -1 -1 -1  1 -1  1 -1 -1  1  1
+ 1 -1 -1  1  1 -1  1 -1  1  1  1  1  1 -1 -1 -1 -1  1 -1  1 -1 -1  1
+ 1  1 -1 -1  1  1 -1  1 -1  1  1  1  1  1 -1 -1 -1 -1  1 -1  1 -1 -1
+-1  1  1 -1 -1  1  1 -1  1 -1  1  1  1  1  1 -1 -1 -1 -1  1 -1  1 -1
+-1 -1  1  1 -1 -1  1  1 -1  1 -1  1  1  1  1  1 -1 -1 -1 -1  1 -1  1
+ 1 -1 -1  1  1 -1 -1  1  1 -1  1 -1  1  1  1  1  1 -1 -1 -1 -1  1 -1
+-1  1 -1 -1  1  1 -1 -1  1  1 -1  1 -1  1  1  1  1  1 -1 -1 -1 -1  1
+ 1 -1  1 -1 -1  1  1 -1 -1  1  1 -1  1 -1  1  1  1  1  1 -1 -1 -1 -1
+-1  1 -1  1 -1 -1  1  1 -1 -1  1  1 -1  1 -1  1  1  1  1  1 -1 -1 -1
+-1 -1  1 -1  1 -1 -1  1  1 -1 -1  1  1 -1  1 -1  1  1  1  1  1 -1 -1
+-1 -1 -1  1 -1  1 -1 -1  1  1 -1 -1  1  1 -1  1 -1  1  1  1  1  1 -1
+-1 -1 -1 -1  1 -1  1 -1 -1  1  1 -1 -1  1  1 -1  1 -1  1  1  1  1  1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1

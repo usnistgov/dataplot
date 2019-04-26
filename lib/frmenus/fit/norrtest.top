@@ -1,0 +1,15 @@
+----- <~fit\norrtest.top> Testing: Jim Norris Calibration Procedure
+
+Testing: Jim Norris Calibration Procedure
+
+1. Model:
+     Adequacy of linear model over entire range?
+2. Runs:
+     Outlying runs?
+     Run-to-run effect--shift in location?
+     Run-to-run effect--shift in variation?
+     Time drift within a run
+     Time drift across runs
+3. NIST data points:
+     Outlying (lack of linear fit) data points (zero?)
+

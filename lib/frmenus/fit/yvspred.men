@@ -1,0 +1,30 @@
+This is file yvspred.men--Plot Y VS Predicted Values
+ 
+--------------------
+ 1. Plot Y Versus Predicted Values
+ 2. PLOT Y VERSUS PRED
+ 3.
+ 4. Variables:
+ 5.    Response    Y:
+ 5. @CE 1 0 35 50 ? gui-variable
+ 6.
+ 7. Character Type:
+ 7. @CE 2 0 42 50 ? gui-character
+ 8. Line Type:
+ 8. @CE 3 0 42 50 ? gui-line
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 4 0 1 50 *
+12.
+13.
+14. Generate the Plot?
+--------------------
+GR FE
+CHARACTERS _2
+LINES _3
+X1LABEL PREDICTED VALUES
+Y1LABEL _1
+PLOT _1 VERSUS PRED _4
+--------------------
+WEB HELP PRED
+--------------------

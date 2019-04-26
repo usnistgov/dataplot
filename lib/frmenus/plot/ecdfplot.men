@@ -1,0 +1,41 @@
+This is file ecdfplot.men--Empirical CDF Plot
+ 
+--------------------
+ 1. Empirical CDF Plot
+ 2. EMPIRICAL CDF PLOT Y
+ 3.
+ 4. The data can either be raw data or
+ 5. frequency data.  For raw data, simply
+ 6. omit the frequency variable.
+ 7.
+ 8. Response Variable:
+ 8. @CE 1 0 42 50 ? gui-vari
+ 9. Optional Frequency Variable:
+ 9. @CE 2 0 42 50 ? gui-vari
+10.
+11. Variable to store the Empirical CDF estimate:
+11. @CE 3 0 42 50 *
+12.
+13. Title:
+13. @CE 4 0 10 50 *
+14. Left Axis Label:
+14. @CE 5 0 22 50 *
+15. Bottom Axis Label:
+15. @CE 6 0 22 50 *
+16.
+17. Subset/Except/For Specification:
+18. @CE 9 0 1 50 *
+19.
+20.
+21. Generate the Empirical CDF Plot?:
+--------------------
+GR FE
+LINES SOLID
+TITLE _4
+Y1LABEL _5
+X1LABEL _6
+EMPIRICAL CDF PLOT _1  _2 _9
+LET _3 = YPLOT
+--------------------
+WEB HELP EMPIRICAL CDF PLOT
+--------------------

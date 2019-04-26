@@ -1,0 +1,25 @@
+----- <~prob\sha3hisd.top> Histogram with Overlaid PDF (3+ Shape Parameters)
+
+Histogran with Overlaid PDF (3+ Shape Parameters)
+
+Generate a relative histogram and overlay the
+specified probability density function for
+distributions with 3 (or more) shape parameters.
+
+Doubly Non-Central F                      <xemf: ~prob\dnfhispd.men>
+Doubly Non-Central T                      <xemf: ~prob\dnthispd.men>
+Generalized Exponential                   <xemf: ~prob\gexhispd.men>
+Generalized Inverse Gaussian              <xemf: ~prob\gighispd.men>
+Generalized Trapezoid                     <xemf: ~prob\gtrhispd.men>
+Gompertz-Makeham                          <xemf: ~prob\makahisp.men>
+    (Meeker/Escobar 3-shape parameterization>
+Gompertz-Makeham (DLMF parameterization)  <xemf: ~prob\makbhisp.men>
+Log Skew T                                <xemf: ~prob\lsthispd.men>
+Meilke's Beta-Kappa                       <xemf: ~prob\kaphispd.men>
+Non-Central Beta                          <xemf: ~prob\ncbhispd.men>
+Non-Central F                             <xemf: ~prob\ncfhispd.men>
+Trapezoid                                 <xemf: ~prob\trahispd.men>
+Truncated Exponential                     <xemf: ~prob\tnehispd.men>
+Uneven Two-Sided Power                    <xemf: ~prob\utshispd.men>
+Wakeby                                    <xemf: ~prob\wakhispd.men>
+

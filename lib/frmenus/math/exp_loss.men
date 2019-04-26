@@ -1,0 +1,31 @@
+This is file exp_loss.men--Compute expected loss of a variable
+ 
+--------------------
+ 1. Expected Loss
+ 2. LET A = EXPECTED LOSS Y
+ 3.
+ 4. Variable for which to compute the expected loss:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Value for the upper specification limit?:
+ 5. @CE 2 0 33 50 ?
+ 6. Value for the lower specification limit?:
+ 6. @CE 3 0 33 50 ?
+ 7. Value for the cost?:
+ 7. @CE 4 0 33 50 ?
+ 8. Parameter to store the expected loss:
+ 8. @CE 5 0 33 50 ? gui-none
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 6 0 -7 50 *
+12.
+13.
+14. Compute the Expected Loss?:
+--------------------
+GR FE
+LET USL = _2
+LET LSL = _3
+LET USLCOST = _4
+LET _5 = EXPECTED LOSS  _1 _6
+--------------------
+WEB HELP EXPECTED LOSS
+--------------------

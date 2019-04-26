@@ -1,0 +1,24 @@
+----- <~roadmap\signal.top> Signal
+
+Signal
+
+Situation     : We have a set of data collected
+                equi-spaced in time.
+Question      : What is the underlying signal in
+                a time series?
+
+Model         : Y = f(time) + random error
+
+Input         : a response variable Y equispaced in time
+
+Output        : 1) a vector of estimated signal values; or
+                2) a function representing the signal.
+
+Stat Category : Time Series
+
+Primary Tools : 4-Plot                <xemf: ~univ\4plot.men>
+                Autocorrelation Plot  <xemf: ~time\autocopl.men>
+                Spectral Plot         <xemf: ~time\spectrum.men>
+
+Worked example: LEW.DAT               <xcf: ~roadmap\LEW.DP>
+

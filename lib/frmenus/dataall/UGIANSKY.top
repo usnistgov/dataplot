@@ -1,0 +1,8 @@
+----- <~dataall\UGIANSKY.top> UGIANSKY.DAT
+
+UGIANSKY.DAT
+
+View     <xcl: LIST UGIANSKY.DAT>
+Load     <xcf: ~dataload/UGIANSKY.DP>
+Print    <xccl: printfile C:\DATAPLOT\UGIANSKY.DAT>
+

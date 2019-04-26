@@ -1,0 +1,8 @@
+----- <~dataload\WEBER.DP> Load WEBER.DAT
+
+. This is file    WEBER.DP
+
+DELETE Y X1 TO X5
+SKIP 25
+READ WEBER.DAT Y X1 TO X5
+

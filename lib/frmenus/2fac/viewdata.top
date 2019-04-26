@@ -1,0 +1,13 @@
+----- <~2fac\viewdata.top> 2-Factor Analysis: View Data
+ 
+2-Factor Analysis: View the Data
+ 
+Bihistogram                  <xemf: ~plot\bihist.men>
+Quantile-Quantile            <xemf: ~plot\q-qplot.men>
+
+Box Plot                     <xemf: ~stat\boxplot.men>
+Block Plot                   <xemf: ~stat\blockplo.men>
+Statistics for Grouped Data  <xemf: ~stat\statplot.men>
+ 
+DEX Plots                    <~plot\dexplots.top>
+

@@ -1,0 +1,19 @@
+----- <~dexcomp\a2kindda.top> Index: Built-in Data Files
+ 
+Index: Built-in Data Files
+ 
+BOXSPRIN.DAT  2**3  Defective springs   <xcl: LIST ~boxsprin.dat>
+BOXPILOT.DAT  2**3  Pilot plant yield   <xcl: LIST ~boxpilot.dat>
+BOXRADAR.DAT  2**3  Radar acquis. time  <xcl: LIST ~boxradar.dat>
+BOXSPRI2.DAT  2**3  Defective xx.datgs  <xcl: LIST ~boxspri2.dat>
+BOWEN.DAT     2**3  Dental adhesion     <xcl: LIST ~bowen.dat>
+ 
+BOXCHEM.DAT   2**4  Chemical yield      <xcl: LIST ~boxchem.dat>
+BOXSOLAR.DAT  2**4  Solar collector eff <xcl: LIST ~boxsolar.dat>
+ 
+BOXREACT.DAT  2**5  Chem. reactor eff   <xcl: LIST ~boxreact.dat>
+KRASNY1.DAT   2**5  Cigarette flammab.  <xcl: LIST ~krasny1.dat>
+WEBER.DAT     2**5  Hospital energy     <xcl: LIST ~weber.dat>
+ 
+STENBAKK.DAT  2**10 DAC Converter       <xcl: LIST ~stenbakk.dat>
+ 

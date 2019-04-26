@@ -1,0 +1,48 @@
+This is file raymle.men--Rayleigh MLE Estimates
+ 
+--------------------
+ 1. Rayleigh Maximum Likelihood Estimates
+ 2. RAYLEIGH MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. This mneu will generate the maximum likelihood
+ 5. estimate for the scale parameter for uncensored
+ 6. data.  You can optionally request to have bootstrap
+ 7. confidence limits generated for the distribution
+ 8. parameters.
+ 9.
+10. Response Variable:
+10. @CE 1 0 42 50 ? gui-variable
+11.
+12. Number of bootstrap samples (0 to omit)?
+12. @CE 2 0 42 50 *
+13.
+14. Subset/Except/For Specification:
+15. @CE 3 0 1 50 *
+16.
+17.
+18. Compute Rayleigh MLE's?
+--------------------
+GR FE
+LET NUMBOOT = 0
+@IF 2 0 LET NUMBOOT = _2
+let numboot = min(1000,numboot)
+if numboot > 0
+   bootstrap samples numboot
+   set maximum likelihood percentiles default
+   label
+   title case asis
+   label case asis
+   case asis
+   y1label Parameter Estimate
+   x1label Bootstrap Sample
+   title Bootstrap Plot
+   line color black
+   limits
+end of if
+RAYLEIGH MAXIMUM LIKELIHOOD _1 _3
+if numboot > 0
+   bootstrap rayleigh maximum likelihood plot _1 _3
+end of if
+--------------------
+WEB HELP RAYPDF
+--------------------

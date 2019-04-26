@@ -1,0 +1,8 @@
+----- <~dataall\BOXAUTO.top> BOXAUTO.DAT
+
+BOXAUTO.DAT
+
+View     <xcl: LIST BOXAUTO.DAT>
+Load     <xcf: ~dataload/BOXAUTO.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXAUTO.DAT>
+

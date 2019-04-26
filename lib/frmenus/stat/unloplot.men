@@ -1,0 +1,30 @@
+This is file unloplot.men--Graphical Test: Shift in Location
+NOTE--NOT WORK IF HAVE SUBSET   11/94
+--------------------
+ 1. Graphical Test: Shift in Location
+ 2. PLOT Y; DRAWDATA .5 MU0 1.5 MU0
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5. Reference Location Value mu0:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Generate the Plot?
+--------------------
+GR FE
+LET ZDUMMY = ( _1 ) - ( _1 ) + 1
+CHARACTERS X BLANK
+LINES SOLID DOTTED
+XLIMITS .9 1.1
+PLOT _1 ZDUMMY AND
+PLOT _2 FOR X = .96 .01 1.04
+LINES SOLID SOLID
+CHARACTERS BLANK BLANK
+XLIMITS
+--------------------
+WEB HELP PLOT
+--------------------

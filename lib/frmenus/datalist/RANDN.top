@@ -1,0 +1,8 @@
+----- <~datalist\RANDN.top> RANDN.DAT
+ 
+RANDN.DAT
+ 
+View     <xcl: LIST RANDN.DAT>
+Load     <x2cl: SKIP 25; READ RANDN.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\RANDN.DAT>
+ 

@@ -1,0 +1,44 @@
+----- <~prob\comphaz.top> Compute Hazard Functions
+
+Compute Hazard Functions
+
+These menus are used to compute a single value
+for a hazard function.
+
+NIST/SEMATECH Handbook                    <xcl: web handbook hazard function>
+
+Uniform                                   <xemf: ~prob\unihaz.men>
+Normal                                    <xemf: ~prob\norhaz.men>
+Lognormal                                 <xemf: ~prob\lgnhaz.men>
+Power Normal                              <xemf: ~prob\pnrhaz.men>
+Power Lognormal                           <xemf: ~prob\plnhaz.men>
+
+Exponential                               <xemf: ~prob\exphaz.men>
+Geometric Extreme Exponential             <xemf: ~prob\geehaz.men>
+Weibull (for min)                         <xemf: ~prob\wei1haz.men>
+Weibull (for max)                         <xemf: ~prob\wei2haz.men>
+Inverted Weibull                          <xemf: ~prob\iwehaz.men>
+Bi-Weibull                                <xemf: ~prob\bwehaz.men>
+Exponentiated Weibull                     <xemf: ~prob\ewehaz.men>
+
+Extreme Value Type I (for min)            <xemf: ~prob\ev11haz.men>
+Extreme Value Type I (for max)            <xemf: ~prob\ev12haz.men>
+Extreme Value Type II (for min)           <xemf: ~prob\ev21haz.men>
+Extreme Value Type II (for max)           <xemf: ~prob\ev22haz.men>
+Generalized Pareto                        <xemf: ~prob\gephaz.men>
+Pareto                                    <xemf: ~prob\parhaz.men>
+
+Gamma                                     <xemf: ~prob\gamhaz.men>
+Inverted Gamma                            <xemf: ~prob\igahaz.men>
+Generalized Gamma                         <xemf: ~prob\ggdhaz.men>
+
+Inverse Gaussian                          <xemf: ~prob\ighaz.men>
+Wald                                      <xemf: ~prob\walhaz.men>
+Reciprocal Inverse Gaussian               <xemf: ~prob\righaz.men>
+Fatigue Life                              <xemf: ~prob\flhaz.men>
+
+Alpha                                     <xemf: ~prob\alphaz.men>
+Exponential Power                         <xemf: ~prob\pexhaz.men>
+Logistic-Exponential                      <xemf: ~prob\lexhaz.men>
+Muth                                      <xemf: ~prob\muthaz.men>
+

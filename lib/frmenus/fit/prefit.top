@@ -1,0 +1,40 @@
+----- <~fit\prefit.top> Pre-Fitting
+ 
+Pre-Fitting
+
+Pre-fitting is used to determine the "best fit"
+coefficients for a model, where the search is
+restricted to the points of a user-defined lattice.
+
+Pre-fitting is infrequently used in Dataplot.
+It is typically used in the following 2 contexts:
+
+  1) immediately before the ... FIT command when the model
+     is non-linear, when the starting values are unknown, and
+     when the analyst is interested in gathering some
+     preliminary information about the nature of the sum of
+     squares surface.
+
+     Dataplot does not require starting values for 
+     non-linear fits.  In most cases, the non-linear fit
+     will converge without problems.  However, some
+     non-linear fits do require reasonable starting values.
+     In most cases, the analyst has some prior knowledge to
+     assign these reasonable starting values.  However,
+     if this prior knowledge is not adequate, pre-fitting
+     can be performed to find better starting values.
+
+     The PRE-FIT command can be rather slow if the lattice
+     contains a lot of points.  A good strategy is to
+     generate a wide but sparse lattice.  You are only
+     trying to get in the right neighborhood.  It is better
+     to do 2 iterations of the PRE-FIT with a few values for
+     each parameter rather than 1 PRE-FIT with a lot of
+     values for each parameter.
+
+  2) immediately after the ...FIT command when a least squares
+     fit has been carried out, and the analyst is interested in
+     examining the nature of the Lp surface (for p not = 2) in
+     the vicinity of the least squares estimate.  In this context,
+     the FIT POWER command is also used.
+

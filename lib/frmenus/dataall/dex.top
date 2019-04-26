@@ -1,0 +1,11 @@
+----- <~dataall\dex.top> View/etc. Built-in Design of Experiment Data Files
+
+View/Load/Print Built-in Design of Experiment Data Files
+
+Comparative data                         <~dataall\dexcomp.top>
+2**k full factorial data                 <~dataall\dex2k.top>
+2**k-p fractional factorial data         <~dataall\dex2kmp.top>
+Taguchi Ln data                          <~dataall\dextag.top>
+Optimization/response surface data       <~dataall\dexopt.top>
+Mixture data                             <~dataall\dexmix.top>
+

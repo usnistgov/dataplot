@@ -1,0 +1,33 @@
+This is file code.men--Generate coded values for a variable
+ 
+--------------------
+ 1. Coding
+ 2. LET YCODED = CODE Y
+ 3.
+ 4. Variable to code:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the coded values:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Code by:
+ 7. @CE 3 1 5 50 distinct values (1 = min, N = max)
+ 8. @CE 3 2 5 50 median (1 - below median, 2 - above median)
+ 9. @CE 3 3 5 50 quartiles (1 - lowest 25%, 4 - highest 25%)
+10. @CE 3 4 5 50 octiles (1 - lowest 12.5%, 8 - highest 12.5%)
+11. @CE 3 5 5 50 deciles (1 - lowest 10%, 10 - highest 10%)
+12.
+13. Subset/Except/For Specification:
+14. @CE 4 0 1 50 *
+15.
+16.
+17. Perform the Coding?:
+--------------------
+GR FE
+@IF 3 1 LET _2 = CODE _1 _4
+@IF 3 2 LET _2 = CODE2 _1 _4
+@IF 3 3 LET _2 = CODE4 _1 _4
+@IF 3 4 LET _2 = CODE8 _1 _4
+@IF 3 5 LET _2 = CODE10 _1 _4
+--------------------
+WEB HELP CODE
+--------------------
+

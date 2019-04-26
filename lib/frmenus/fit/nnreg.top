@@ -1,0 +1,10 @@
+----- <~fit\nnreg.top> Neural Net Regression
+
+Neural Net Regression
+
+Discussion          <~fit\nnrdisc.top>
+Do the Fit          <xemf: ~fit\fitnn.men>
+Do Model Validation <xemf: ~fit\modelval.men>
+Built-in Datasets   <~dataload\reg1n.top>
+References          <~fit\refernn.top>
+

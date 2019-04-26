@@ -1,0 +1,20 @@
+----- <~mvar\canncorr.top> Cannonical Correlation
+ 
+Cannonical Correlation
+
+NOTE: These menus are still under 
+      development/debugging and should not
+      be used yet.
+
+The macro for computing cannonical correlation
+uses a number of matrix commands which generates
+a lot of columns of data.  You may need to enter
+a dimension command before running the cannonical
+correlation.
+
+Discussion                         <~mvar\disccann.top>
+
+Dimension Workspace                <xemf: ~data\dimensio.men>
+Perform a Cannonical Correlation   <xemf: ~mvar\canncorr.men>
+Worked Example                     <xcl: CALL CANNCORR.DP>
+

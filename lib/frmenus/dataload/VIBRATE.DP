@@ -1,0 +1,8 @@
+----- <~dataload\VIBRATE.DP> Load VIBRATE.DAT
+
+. This is file    VIBRATE.DP
+
+DELETE Y X1 TO X7
+SKIP 25
+READ VIBRATE.DAT Y X1 TO X7
+

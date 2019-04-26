@@ -1,0 +1,30 @@
+----- <~woch\woch.top> Word Charts
+ 
+Diagrammatic Graphics
+ 
+Discussion                <~woch\disc.top>
+
+Erase Graphics Window     <xcl: ERASE>
+
+Write a Horizontal Text String  <xemf: ~woch\writtext.men>
+Write a Vertical Text String    <xemf: ~woch\vwritext.men>
+Set Text Attributes       <xemf: ~woch\attrtext.men>
+
+Draw a Line               <xemf: ~woch\drawdata.men>
+Set Current Position      <xemf: ~woch\movedata.men>
+ 
+Geometric  Symbols               <~woch\drawgeom.top>
+Electrical Symbols               <~woch\drawelec.top>
+
+Help for Text Subcommands
+   Subscripts/Superscripts <xcl: HELP SUBSCRIPTS>
+   Greek Symbols           <xcl: HELP GREEK SYMBOLS>
+   Math Symbols            <xcl: HELP MATH SYMBOLS>
+   Miscellaneous Symbols   <xcl: HELP MISCELLANEOUS SYMBOLS>
+    
+
+Show Examples of Software Fonts    <xcl: WEB HELP FONT>
+Show Examples of Text Subcommands  <xcl: WEB HELP TEXT ATTRIBUTES>
+
+Worked Examples             <~woch\workexam.top>
+

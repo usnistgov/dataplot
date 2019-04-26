@@ -1,0 +1,82 @@
+----- <~help\arith.top> Arithmetic Operators
+
+Arithmetic Operators
+
+Arithmetic Operators
+
+Supported Symbols for Arithmetic Operations
+
+Dataplot uses the following symbols for arithmetic
+operations:
+      
+    +          addition
+    -          subtraction
+    *          multiplication
+    /          division
+    **         exponentiation (the ^ symbol does
+               not work for exponentiation and it
+               has a distinct function as a
+               substitution character in Dataplot)
+
+Priority of Operations
+
+    Arithmetic operations are performed left to right
+    with priorities defined in a fashion identical to
+    Fortran:
+
+         exponentiation
+         multiplication and division
+         addition and subtraction
+
+Use of Parentheses
+
+    The order of operations can be altered by the
+    use of parentheses.  Operations in parentheses
+    are performed first.
+
+
+Use of Arithmetic Operations with the Three Most
+Important Dataplot Commands
+
+    The three most important Dataplot commands are
+
+        PLOT
+        FIT
+        LET
+
+    These three commands also have the most common
+    occurrence of arithmetic operations.   For example
+
+        PLOT 10+X**2 FOR X = 1 1 10
+
+    generates a plot of 10+X**2 for the values of X = 1,
+    at increments of 1, up to 10 (that is
+    X = 1, 2, ..., 10).  The command
+
+         FIT Y = A + B*LOG(C+X**2)
+
+    performs a non-linear fit of Y on X with the model
+    A + B*LOG(C+X**2).  The command
+
+         LET A = X*Y + Z**2
+
+    computes the parameter or variable A from the
+    parameters or variables X, Y, and Z.  If X, Y, and
+    Z were all parameters, then A would become a parameter.
+    If any of the X, Y, or Z were variables, then A would
+    become a variable.
+
+Arithmetic Operations Used in Function Defitions
+
+    Arithmetic operations are also used in the definition of
+    functions.  For example
+
+         LET FUNCTION F = X**2
+         LET FUNCTION G = 10*Y
+         LET FUNCTION H = A+F/G
+
+    results in the creation of the functions F, G, and
+    H where F = X**2, G = 10*Y, and H = A+(X**2)/(10*Y).
+    Dataplot automatically provides the needed parantheses
+    in the definition of H.
+

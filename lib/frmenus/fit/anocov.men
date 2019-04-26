@@ -1,0 +1,52 @@
+This is file anocov.men--Do ANOCOV
+ 
+--------------------
+ 1. Do ANOCOV (Analysis of Covariance)
+ 2. (= do multi-fit with constraint of common slope)
+ 3. LINEAR FIT Y X
+ 4.
+ 5. Variables:
+ 6.    Less-Precise Variable Y:
+ 6. @CE 1 0 40 50 ? gui-variable
+ 7.    More-Precise Variable X:
+ 7. @CE 2 0 40 50 ? gui-variable
+ 8.    Group Variable      TAG:
+ 8. @CE 3 0 40 50 ? gui-variable
+ 9.    Weights               W:
+ 9. @CE 4 0 40 50 * gui-variable
+10.
+11. Subset/Except/For Specification:
+12. @CE 5 0 1 50 *
+13.
+14.
+15. Do the ANOCOV?
+--------------------
+GR FE
+WEIGHTS _4
+LINEAR FIT _1 _2 _5
+LET ZTAG = DISTINCT _3 _5
+LET ZNZTAG = NUMBER ZTAG
+LOOP FOR ZK = 1 1 ZNZTAG
+   LET ZJUNK = ZTAG(ZK)
+   LET ZU^ZK = 0
+   LET ZU^ZK = 1 SUBSET _3 ZJUNK _5
+END LOOP
+ 
+IF ZNZTAG = 2
+   FIT _1 ZU1 ZU2 _2 _5
+END IF
+IF ZNZTAG = 3
+   FIT _1 ZU1 ZU2 ZU3 _2 _5
+END IF
+IF ZNZTAG = 4
+   FIT _1 ZU1 ZU2 ZU3 ZU4 _2 _5
+END IF
+IF ZNZTAG = 5
+   FIT _1 ZU1 ZU2 ZU3 ZU4 ZU5 _2 _5
+END IF
+IF ZNZTAG = 6
+   FIT _1 ZU1 ZU2 ZU3 ZU4 ZU5 ZU6 _2 _5
+END IF
+--------------------
+WEB HELP FIT
+--------------------

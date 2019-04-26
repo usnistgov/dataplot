@@ -1,0 +1,30 @@
+This is file setlabel.men--Set Axis Labels
+ 
+--------------------
+ 1. Set Axis Labels
+ 2.  X1LABEL <...>; Y1LABEL <...>
+ 3.
+ 4. Bottom Axis Label #1:
+ 4. @CE 1 0 20 50 ?
+ 5. Bottom Axis Label #2:
+ 5. @CE 2 0 20 50 ?
+ 6. Bottom Axis Label #3:
+ 6. @CE 3 0 20 50 ?
+ 7. Left   Axis Label   :
+ 7. @CE 4 0 20 50 ?
+ 8. Right  Axis Label   :
+ 8. @CE 5 0 20 50 ?
+ 9.
+10.
+11.
+12. Set Axis Labels:
+--------------------
+PC FE
+@IF 1 0 X1LABEL _1
+@IF 2 0 X2LABEL _2
+@IF 3 0 X3LABEL _3
+@IF 4 0 Y1LABEL _4
+@IF 5 0 Y2LABEL _5
+--------------------
+WEB HELP LABEL
+--------------------

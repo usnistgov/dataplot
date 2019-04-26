@@ -1,0 +1,138 @@
+This is file probplex.men--Probability Plot (Continuous Dist.)
+
+--------------------
+ 1. Probability Plot (Exponential, Weibull, Gamma, Extreme Value)
+ 2. <Name of Distribution> PROBABILITY PLOT Y
+ 3.
+ 4. Variable:
+ 4. @CE 1 0 11 40 ? gui-variable
+ 5.
+ 6. Distribution:
+ 7. @CE 2 1 11 40 Exponential
+ 8. @CE 2 2 11 40 Truncated Exponential
+ 9.                     m =
+ 9. @CE 3 0 41 50 ?
+10.                     sd =
+10. @CE 4 0 41 50 ?
+11.                     x0 =
+11. @CE 5 0 41 50 ?
+12. @CE 2 3 11 40 Generalized Exponential
+13.                     lambda1 =
+13. @CE 6 0 41 50 ?
+14.                     lambda2 =
+14. @CE 7 0 41 50 ?
+15.                     s =
+15. @CE 8 0 41 50 ?
+16. @CE 2 4 11 40 Power Exponential
+17.                     alpha =
+17. @CE 9 0 41 50 ?
+18.                     beta =
+18. @CE 10 0 41 50 ?
+19.
+20. @CE 2 5 11 40 Weibull
+21.                     gamma =
+21. @CE 11 0 41 50 ?
+22.                     min(1) or max(2) =
+22. @CE 12 0 41 50 ?
+23. @CE 2 6 11 40 Exponentiated Weibull
+24.                     gamma =
+24. @CE 13 0 41 50 ?
+25.                     theta =
+25. @CE 21 0 41 50 ?
+26.
+27. @CE 2 7 11 40 Extreme Value Type I
+28. @CE 2 8 11 40 Extreme Value Type II
+29.                     gamma =
+29. @CE 14 0 41 50 ?
+30.                     min(1) or max(2) =
+30. @CE 15 0 41 50 ?
+31. @CE 2 9 11 40 Generalized Extreme Value
+31.                                       gamma =
+31. @CE 16 0 41 50 ?
+32.
+33. @CE 2 10 11 40 Gamma
+33.                                       gamma =
+33. @CE 17 0 41 50 ?
+34. @CE 2 11 11 40 Log Gamma
+34.                                       gamma =
+34. @CE 18 0 41 50 ?
+35. @CE 2 12 11 40 Generalized Gamma
+36.                     gamma =
+36. @CE 19 0 41 50 ?
+37.                     c =
+37. @CE 20 0 41 50 ?
+38. @CE 2 13 11 40 Inverted Gamma
+38.                     gamma =
+38. @CE 22 0 41 50 ?
+39. @CE 2 14 11 40 Inverted Weibull
+39.                     gamma =
+39. @CE 24 0 41 50 ?
+40. @CE 2 15 11 40 Geometric Extreme Expo
+40.                     gamma =
+40. @CE 25 0 41 50 ?
+41. @CE 2 16 11 40 Bi-Weibull
+42.                     scale1 =
+42. @CE 26 0 41 50 ?
+43.                     gamma1 =
+43. @CE 27 0 41 50 ?
+44.                     loc2
+44. @CE 28 0 41 50 ?
+45.                     scale2 =
+45. @CE 29 0 41 50 ?
+46.                     gamma2 =
+46. @CE 30 0 41 50 ?
+47.
+48. Subset/Except/For Specification:
+49. @CE 23 0 -20 50 *
+50.
+51. Generate the Probability Plot?
+--------------------
+GR FE
+@IF 3 0 LET M = _3
+@IF 4 0 LET SD = _4
+@IF 5 0 LET X0 = _5
+@IF 6 0 LET LAMBDA1 = _6
+@IF 7 0 LET LAMBDA2 = _7
+@IF 8 0 LET S = _8
+@IF 9 0 LET ALPHA = _9
+@IF 10 0 LET BETA = _10
+@IF 11 0 LET GAMMA = _11
+@IF 12 0 LET GAMMA = _12
+@IF 13 0 SET MINMAX = _13
+@IF 14 0 LET GAMMA = _14
+@IF 15 0 SET MINMAX _15
+@IF 16 0 LET GAMMA = _16
+@IF 17 0 LET GAMMA = _17
+@IF 18 0 LET GAMMA = _18
+@IF 19 0 LET GAMMA = _19
+@IF 20 0 LET C = _20
+@IF 21 0 LET THETA = _21
+@IF 22 0 LET GAMMA = _22
+@IF 24 0 LET GAMMA = _24
+@IF 25 0 LET GAMMA = _25
+@IF 26 0 LET SCALE1 = _26
+@IF 27 0 LET GAMMA1 = _27
+@IF 28 0 LET LOC2 = _28
+@IF 29 0 LET SCALE2 = _29
+@IF 30 0 LET GAMMA2 = _30
+@IF 2 1 EXPONENTIAL  PROBABILITY PLOT _1 _23
+@IF 2 2 TRUNCATED EXPONENTIAL  PROBABILITY PLOT _1 _23
+@IF 2 3 GENERALIZED EXPONENTIAL  PROBABILITY PLOT _1 _23
+@IF 2 4 POWER EXPONENTIAL  PROBABILITY PLOT _1 _23
+@IF 2 5 WEIBULL PROBABILITY PLOT _1 _23
+@IF 2 6 EXPONENTIATED WEIBULL PROBABILITY PLOT _1 _23
+@IF 2 7 EXTREME VALUE TYPE I  PROBABILITY PLOT _1 _23
+@IF 2 8 EXTREME VALUE TYPE II  PROBABILITY PLOT _1 _23
+@IF 2 9 GENERALIZED EXTREME VALUE  PROBABILITY PLOT _1 _23
+@IF 2 10 GAMMA PROBABILITY PLOT _1 _23
+@IF 2 11 LOG GAMMA PROBABILITY PLOT _1 _23
+@IF 2 12 GENERALIZED GAMMA PROBABILITY PLOT _1 _23
+@IF 2 13 INVERTED GAMMA PROBABILITY PLOT _1 _23
+@IF 2 14 INVERTED WEIBULL PROBABILITY PLOT _1 _23
+@IF 2 15 GEOMETRIC EXTREME EXPONENTIAL PROBABILITY PLOT _1 _23
+@IF 2 16 BIWEIBULL PROBABILITY PLOT _1 _23
+SET WRITE DECIMALS 4
+WRITE PPCC PPA0 PPA1 SDPPA0 SDPPA1
+--------------------
+WEB HELP PROBABILITY PLOT
+--------------------

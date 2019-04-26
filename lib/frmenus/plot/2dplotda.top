@@ -1,0 +1,7 @@
+----- <~plot\2dplotda.top> 2-D Data Plot
+
+2-D Data Plot
+
+1-trace              <xemf: ~stat\scatplot.men>
+Multi-trace          <xemf: ~plot\plotdm2d.men>
+

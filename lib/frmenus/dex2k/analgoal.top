@@ -1,0 +1,24 @@
+----- <~dex2k\analgoal.top> Analysis Goals
+
+Analysis Goals
+
+There are typically 4 goals in the construction and
+analysis of screening designs in general
+and 2**k full factorial designs in particular:
+
+   1. Determine the ranked list of factors
+      (including interactions) which drive
+      the process.
+
+   2. Determine the most important factors
+      in that ranked list.
+
+   3. Form a prediction equation based on
+      those most important factors.
+
+   4. Determine the best settings--
+      those factor levels which
+      optimize (maximize, minimize, or
+      achieve target) the response
+      over the executed design space.
+

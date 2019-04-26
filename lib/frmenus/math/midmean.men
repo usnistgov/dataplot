@@ -1,0 +1,22 @@
+This is file midmean.men--Compute midmean of a variable
+ 
+--------------------
+ 1. Midmean
+ 2. LET A = MIDMEAN Y
+ 3.
+ 4. Variable for which to compute the midmean:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. Parameter to store the midmean:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Midmean?:
+--------------------
+GR FE
+LET _2 = MIDMEAN  _1 _3
+--------------------
+WEB HELP MIDMEAN
+--------------------

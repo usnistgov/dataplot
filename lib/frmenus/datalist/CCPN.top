@@ -1,0 +1,8 @@
+----- <~datalist\CCPN.top> CCPN.DAT
+ 
+CCPN.DAT
+ 
+View     <xcl: LIST CCPN.DAT>
+Load     <x2cl: SKIP 25; READ CCPN.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\CCPN.DAT>
+ 

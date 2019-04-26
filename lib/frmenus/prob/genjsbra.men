@@ -1,0 +1,43 @@
+This is file gentspra.men--Generate Johnson SB Random Numbers
+ 
+--------------------
+ 1. Generate Johnson SB Random Numbers
+ 2. LET Y = JOHNSON SB RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 41 50 ?
+ 5. Shape Parameter (alpha1):
+ 5. @CE 2 0 41 50 ?
+ 6. Shape Parameter (alpha2, alpha2 > 0):
+ 6. @CE 3 0 41 50 ?
+ 7. Lower Limit Parameter:
+ 7. @CE 4 0 41 50 ?
+ 8. Upper Limit Parameter):
+ 8. @CE 5 0 41 50 ?
+ 9.
+10. Optional random number generator seed (default=305):
+11.    (integer >= 305)
+11. @CE 6 0 41 50 ?
+12.
+13. Name of output variable;
+13. @CE 7 0 41 50 ?
+14.
+15.
+16. Generate the random numbers?
+--------------------
+AN FE
+@IF 6 0 SEED _6
+LET ALPHA1 = 0
+@IF 2 0 LET ALPHA1 = _2
+LET ALPHA2 = 1
+@IF 3 0 LET ALPHA2 = _3
+LET ZLOWLIM = 0
+@IF 4 0 LET ZLOWLIM = _4
+LET ZUPPLIM = 1
+@IF 5 0 LET ZUPPLIM = _5
+LET ZSCALE = ZUPPLIM - ZLOWLIM
+LET _7 = JOHNSON SB RANDOM NUMBERS FOR I = 1 1 _1
+LET _7 = ZLOWLIM + (ZUPPLIM - ZLOWLIM)* _7
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

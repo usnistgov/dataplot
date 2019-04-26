@@ -1,0 +1,17 @@
+----- <~prob\plotsf.top> Plot sf's
+
+Plot Sparsity Functions
+
+These menus are used to plot the
+sparsity function.  The sparsity function
+is the derivative of the percent point
+function.
+
+Normal                                    <~prob\pnorsf.men>
+Cauchy                                    <~prob\pcausf.men>
+Uniform                                   <~prob\punisf.men>
+Exponential                               <~prob\pexpsf.men>
+Double Exponential                        <~prob\pdexsf.men>
+Logistic                                  <~prob\plogsf.men>
+Tukey-Lambda                              <~prob\plamsf.men>
+

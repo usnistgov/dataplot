@@ -1,0 +1,31 @@
+----- <~math\datatran.top> Data Transformations
+ 
+Data Transformations
+ 
+Arithmetic Operations (+,-,/,*,**)    <xemf: ~math\arithm.men>
+1-Variable Elementary Operations      <xemf: ~math\arithm1.men>
+2-Variable Elementary Operations      <xemf: ~math\arithm2.men>
+Trigonometric Functions               <xemf: ~math\trig.men>
+
+Probability Functions (cdf, pdf, ppf) <~math\probfunc.top>
+
+Exponential and Logarithmic Functions <xemf: ~math\log.men>
+Error Functions                       <xemf: ~math\error.men>
+
+Gamma (and related) Functions         <xemf: ~math\gamma.men>
+Incomplete Gamma (and related) Functions <xemf: ~math\igamma.men>
+Beta (and related) Functions          <xemf: ~math\beta.men>
+Incomplete Beta (and related) Functions <xemf: ~math\ibeta.men>
+
+Orthogonal Polynomials                <~math\orthpoly.top>
+Bernoulli and Euler Polynomials       <~math\bernpoly.top>
+Binomial Coefficients                 <xemf: ~math\binom.men>
+
+Bessel Functions                      <~math\bessel.top>
+
+Integral Functions                    <xemf: ~math\inte_fun.men>
+Elliptic Integrals                    <~math\elliptic.top>
+Confluent Hypergeometric Functions    <xemf: ~math\hype_fun.men>
+Miscellaneous Functions               <~math\miscfunc.top>
+
+Complex Functions                     <~math\complex.top>

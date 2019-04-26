@@ -1,0 +1,38 @@
+This is file simulati.men--Critical Values Simulated/Tables
+ 
+--------------------
+ 1. Goodness of Fit Critical Values Simulated/Tables
+ 2. SET ANDERSON DARLING CRITICAL VALUES TABLE
+ 3.
+ 4. For the Anderson Darling goodness of fit test, you
+ 5. can specify whether the critical values are generated
+ 6. dynamically by simulation or taken from published
+ 7. tables for the following distributions (other
+ 8. distributions always use simulation).
+ 9.
+10.    normal, lognormal, Weibull, generalized Pareto,
+11.    gamma, Frechet, uniform, exponential, Cauchy,
+12.    logistic, double exponential
+13.
+14. You can also request whether K-S critical values
+15. are generated dynamically or taken from tables
+16. (this assumes parameters are known).
+17.
+18. Anderson-Darling Critical Values:
+19. @CE 1 1 5 35 TABLES
+20. @CE 1 2 5 35 SIMULATION
+21.
+22. Kolmogorov-Smirnov Critical Values:
+23. @CE 2 1 5 35 TABLES
+24. @CE 2 2 5 35 SIMULATION
+25.
+26. Specify Critical Values Option?
+--------------------
+GR FE
+@IF 1 1 SET ANDERSON DARLING CRITICAL VALUES TABLE
+@IF 1 2 SET ANDERSON DARLING CRITICAL VALUES SIMULATION
+@IF 2 1 SET KOLMOGOROV SMIRNOV CRITICAL VALUES TABLE
+@IF 2 2 SET KOLMOGOROV SMIRNOV CRITICAL VALUES SIMULATION
+--------------------
+WEB HELP GOODNESS OF FIT
+--------------------

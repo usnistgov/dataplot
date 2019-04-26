@@ -1,0 +1,9 @@
+----- <~prob\cdfplots.top> Generate cdf plots
+
+Generate cdf plots
+
+Normal, t, Chi-squared, F     <~prob\ntcfcdfp.top>
+Symmetric                     <~prob\symmcdfp.top>
+Skewed                        <~prob\skewcdfp.top>
+Discrete                      <~prob\disccdfp.top>
+

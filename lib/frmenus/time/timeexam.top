@@ -1,0 +1,16 @@
+-----  <~time\timeexam.top> Load & Analyze Time Series Data Files
+
+Worked Examples for Time Series  Datasets
+
+Multiplot: Run Sequence Plot, Lag Plot,
+           Autocorrelation Plot, and Spectrum
+    FLICKER.DAT   Flicker Noise                   <xcf: ~time\FLICKER.DP>
+    SOULEN.DAT    Josephson Junction Cryothermometry <xcf: ~time\SOULEN.DP>
+    MAVRO.DAT     Filter Transmittance            <xcf: ~time\MAVRO.DP>
+
+Plots plus Fit AR(1) Model
+    RANDWALK.DAT  Random Walk                     <xcf: ~time\RANDWALK.DP>
+
+Plots plus Non-Linear Fitting of Time Series
+    LEW.DAT       Beam Deflections                <xcf: ~time\LEW.DP>
+

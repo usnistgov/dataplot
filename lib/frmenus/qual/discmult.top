@@ -1,0 +1,63 @@
+----- <~qual\discmult.top> Discussion: Multivariate Control Chart
+ 
+Discussion: Multivariate Control Charts
+ 
+6) Hotelling, Principal Components
+
+   The other control charts in this menu assume
+   a single response variable.  These control
+   charts are used for multiple response variables.
+
+   a) Hotelling Control Chart
+
+      The Hotelling control chart computes a 1-sample
+      Hotelling T-square statistic for each sub-group.
+      The resulting T-square statistics are plotted
+      and compared to a control limit based on the
+      F statistic for the Hotelling 1-sample test.
+   
+      The Hotelling 1-sample test is a test that the
+      vector of sample means of p response variables
+      is equal to some hypothesized vector of means.
+      In the context of control charts, this means that
+      the vector of sample means for a sub-group is tested
+      against the vector of sample means based on the entire
+      sample.
+
+   b) Principal Component Control Chart
+
+      Principal components is a general multivariate
+      technique for transforming p response variables
+      to a new set of p linearly independent response
+      variables.  In addition, the transformation
+      is performed in such a way that maximizes the variance
+      of the original data as much as possible for each
+      principal component.  The basic idea is to explain as
+      much of the variation in the original data as possible
+      utilizing only the first few principal components.
+      That is, it is a dimension reduction technique.
+
+      In the context of control charts, a standard principal
+      components is performed.  Then the standard univariate
+      control charts are applied using the principal component
+      variables rather than the original response variables.
+      Generally, this will be the first principal 
+      component, but it may be the second or third as well.
+      It would be rare to go beyond the second or third
+      principal component (since if most of the variation
+      is not explained in the first 2 or 3 principal 
+      components, there is not much advantage to this
+      technique).
+
+      The primary advantage of using principal components
+      is that it is sometimes capable of reducing a rather
+      large set of variables to a more manageable size that
+      can be analyzed using standard univariate techniques.
+      The disadvantage is that you are working on an artificial
+      scale, not the original data scales.  This can
+      make interpretation more difficult.  In addition, if
+      the first 2 or 3 principal components do not explain
+      the majority of variation in the original data, there
+      is little to be gained by using the principal components
+      instead of the original data.
+  

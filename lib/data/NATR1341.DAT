@@ -1,0 +1,46 @@
+This is Dataplot data file    NATR1341.DAT
+Intercomparison of seven thermometers.  
+
+
+Question: Are there differences among thermometers?
+
+Youden square design
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 13-41
+Number of observations                   =  21
+Total number of variables per line image =  4
+Order of variables on a line image--
+   Y  = Response
+   X1 = Set (1 to 7)
+   X2 = Thermometers (1 to 7)
+
+
+
+
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR1341.DAT Y X1 X2
+  Y       X1       X2
+---------------------
+ 56        1        1
+ 16        1        5
+ 41        1        2
+ 46        2        6
+ 54        2        3
+ 34        2        7
+ 50        3        4
+ 31        3        2
+ 41        3        6
+ 53        4        3
+ 32        4        7
+ 43        4        4
+ 68        5        1
+ 32        5        5
+ 35        5        4
+ 58        6        1
+ 24        6        5
+ 46        6        2
+ 50        7        5
+ 60        7        3
+ 38        7        7

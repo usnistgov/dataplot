@@ -1,0 +1,84 @@
+This is Dataplot data file     NEWCAR.DAT
+New Car Interest rates
+Source--Hoaglin, D., Mosteller, F., and Tukey, J. (1991).
+        Fundamentals of Exploratory Analysis of Variance.
+        Wiley, New York, page 71.
+Response Variable                  = interest rate
+Number of observations             = 54 (= 9 x 6 cities)
+Number of variables per line image = 2
+Order of variables per line image--
+   Response variable = interest rate (%)
+   Factor 1          = city (6 levels: 1 to 6:
+                             1 = Atlanta   2 = Chicago
+                             3 = Houston   4 = Memphis
+                             5 = New York  6 = Philadelphia)
+Statistical areas--Multifactor
+Design type      --Randomized Block
+To read this file into Dataplot--
+      SKIP 25
+      READ NEWCAR.DAT Y X
+
+
+
+ Rate        City
+  Y           X
+-----------------
+ 13.75        1
+ 13.75        1
+ 13.50        1
+ 13.50        1
+ 13.00        1
+ 13.00        1
+ 13.00        1
+ 12.75        1
+ 12.50        1
+
+ 14.25        2
+ 13.00        2
+ 12.75        2
+ 12.50        2
+ 12.50        2
+ 12.40        2
+ 12.30        2
+ 11.90        2
+ 11.90        2
+
+ 14.00        3
+ 14.00        3
+ 13.51        3
+ 13.50        3
+ 13.50        3
+ 13.25        3
+ 13.00        3
+ 12.50        3
+ 12.50        3
+
+ 15.00        4
+ 14.00        4
+ 13.75        4
+ 13.59        4
+ 13.25        4
+ 12.97        4
+ 12.50        4
+ 12.25        4
+ 11.89        4
+
+ 14.50        5
+ 14.00        5
+ 14.00        5
+ 13.90        5
+ 13.75        5
+ 13.25        5
+ 13.00        5
+ 12.50        5
+ 12.45        5
+
+ 13.50        6
+ 12.25        6
+ 12.25        6
+ 12.00        6
+ 12.00        6
+ 12.00        6
+ 12.00        6
+ 11.90        6
+ 11.90        6

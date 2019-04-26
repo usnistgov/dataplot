@@ -1,0 +1,40 @@
+. This is dataplot program   washburn_4_16     2**4     ~7/15/03
+. Purpose: Analyze Washburn Knee Cartilege Regeneration (k=4,n=16) via 10-step analysis   ~7/15/2003
+. Design = 2**4 full factorial
+. Date: ~7/15/2003
+.
+. -----start point-----
+.
+dimension 100 variables
+.
+. -----Step 1: Read in the data and define strings-----
+.
+let k = 4
+skip 25; read   washburn_4_16.dat   y1 y2 x1 to x^k
+let y = y1
+.
+let string header = Factors Promoting Knee Cartilege Regeneration
+let string header2 = Design: 2**4 (k=4,n=16)
+let string trailer = washburn_4_16.dp
+let string trailer2 = washburn_4_16.dat
+let string currdate = 7/15/2003
+let string sty = Increase in # Knee Cartilege Cells
+.
+let string stx1 = IGF
+let string stx2 = TGF-b
+let string stx3 = FGF
+let string stx4 = # Starter Cells
+
+.
+let string stx1l = 1 100
+let string stx2l = .01 1
+let string stx3l = .1 10
+let string stx4l = 1000 10000
+.
+let string stbest = up
+let string colorl = red blue
+.
+. -----Step 2: Generate 10-step DEX analysis-----
+.
+call dex10stepanalysis.dp
+.

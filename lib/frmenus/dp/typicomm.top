@@ -1,0 +1,14 @@
+----- <~dp\typicomm.top> Typical Commands
+ 
+Typical Commands
+ 
+DATAPLOT commands are high-level, English-syntax,
+easy-to-learn, and self-descriptive, such as
+ 
+   PLOT Y X
+   PLOT EXP(-X**2) FOR X = -3 .1 3
+   FIT Y = A+B*EXP(-ALPHA*X)
+   BOX PLOT Y X
+   ANOVA Y X1 X2 X3
+   LET A = ROOTS SIN(X**2)+EXP(-X) FOR X = 0 TO 5
+ 

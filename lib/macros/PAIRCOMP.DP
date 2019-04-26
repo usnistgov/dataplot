@@ -1,0 +1,77 @@
+. This is Dataplot macro     PAIRCOMP.DP
+. Purpose--Do all possible 1-way ANOVA paired-comparisons
+. Note   --called by the anova.dp macro
+.        --paircomp.dp calls intchar.dp
+. Date   --July 2002
+. Input  --Y (= response variable)
+.        --target (= an integer indicating which single factor is being examined
+.                 (e. g.,   2 => X2     4 => X4)
+.        --X^target (= the desired single factor being examined in the anova)
+.        --l^target (= the integer number of distinct levels within factor X^target)
+. Output --steq1 (= string consisting of all levels equivalent to level 1 of factor X^target)
+.        --steq2 (= string consisting of all levels equivalent to level 2 of factor X^target)
+.          . . .
+.        --steq^l^target (= string consisting of all levels equivalent to the last level)
+.
+. -----start point-----
+.
+let xcode = coded x^target
+.
+skip 0
+let k = 0
+delete out1 out2
+let i1max = l^target
+let i2max = l^target
+loop for i1 = 1 1 i1max
+   loop for i2 = i1 1 i2max
+      if i2 = i1
+         let k = k+1
+         let out1(k) = i1
+         let out2(k) = i2
+      end if
+      if i2 <> i1
+         anova y xcode subset xcode i1 i2
+         read parameter dpst1f.dat j1 j2 j3 j4 j5 fcdf
+         if fcdf < 95
+            let k = k+1
+            let out1(k) = i1
+            let out2(k) = i2
+            let k = k+1
+            let out1(k) = i2
+            let out2(k) = i1
+         end if
+      end if
+   end loop
+end loop
+. echo
+. print out1 out2
+. print k
+. pause
+.
+let out1 = sortc out1 out2
+print out1 out2
+.
+let jmax = l^target
+loop for j = 1 1 jmax
+   let out2 = sort out2 subset out1 j
+end loop
+.
+let jmax = l^target
+loop for j = 1 1 jmax
+   let out3 = out2
+   retain out3 subset out1 j
+   let nout3 = number out3
+   loop for k = 1 1 nout3
+      let out3k = out3(k)
+      let targint = out3k; call intchar.dp; end if
+      let string stout3k = ^outchar
+      print j k steq^j out3k stout3k
+      if k = 1; let string steq = ^stout3k&cr(); end if
+      if k >= 2; let string steq = ^steq&^stout3k&cr(); end if
+      print j k steq out3k stout3k
+   end loop
+   let string steq^j = ^steq
+   print j k steq steq^j
+. pause
+end loop
+.

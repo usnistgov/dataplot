@@ -1,0 +1,22 @@
+This is file autocova.men--Compute autocovariance of a variable
+ 
+--------------------
+ 1. Autocovariance
+ 2. LET A = AUTOCOVARIANCE Y
+ 3.
+ 4. Variable for which to compute the autocovariance:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the autocovariance:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -8 50 *
+ 9.
+10.
+11. Compute the Autocovariance?:
+--------------------
+GR FE
+LET _2 = AUTOCOVARIANCE  _1 _3
+--------------------
+WEB HELP AUTOCOVARIANCE
+--------------------

@@ -1,0 +1,8 @@
+----- <~dataall\MORALES.top> MORALES.DAT
+
+MORALES.DAT
+
+View     <xcl: LIST MORALES.DAT>
+Load     <xcf: ~dataload/MORALES.DP>
+Print    <xccl: printfile C:\DATAPLOT\MORALES.DAT>
+

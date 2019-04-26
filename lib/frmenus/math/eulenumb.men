@@ -1,0 +1,31 @@
+This is file eulenumb.men--Generate a sequence of Euler numbers
+ 
+--------------------
+ 1. Euler Numbers
+ 2. LET Y = EULER NUMBERS FOR I = 1 1 N
+ 3.
+ 4. Euler numbers overflow at a relatively small number.
+ 5. For single precision 32-bit machines (i.e., most), the
+ 6. maximum N before overflow occurs is about 39.  The start and
+ 7. increment values are almost always set to 1.
+ 8.
+ 9. Start value (a positive integer):
+ 9. @CE 1 0 33 50 ?
+10. Stop value (a positive integer):
+10. @CE 2 0 33 50 ?
+11. Increment (a positive integer):
+11. @CE 3 0 33 50 ?
+12. Variable to store the prime numbers:
+12. @CE 5 0 33 50 ? gui-none
+13.
+14. Subset/Except/For Specification:
+15. @CE 6 0 1 50 *
+16.
+17.
+18. Generate the Euler Numbers?:
+--------------------
+GR FE
+LET _5 = EULER NUMBERS FOR I = _1 _3 _2  _6
+--------------------
+WEB HELP EULER NUMBERS
+--------------------

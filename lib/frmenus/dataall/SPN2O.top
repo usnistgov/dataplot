@@ -1,0 +1,8 @@
+----- <~dataall\SPN2O.top> SPN2O.DAT
+
+SPN2O.DAT
+
+View     <xcl: LIST SPN2O.DAT>
+Load     <xcf: ~dataload/SPN2O.DP>
+Print    <xccl: printfile C:\DATAPLOT\SPN2O.DAT>
+

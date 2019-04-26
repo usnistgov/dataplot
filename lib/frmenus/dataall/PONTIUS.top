@@ -1,0 +1,8 @@
+----- <~dataall\PONTIUS.top> PONTIUS.DAT
+
+PONTIUS.DAT
+
+View     <xcl: LIST PONTIUS.DAT>
+Load     <xcf: ~dataload/PONTIUS.DP>
+Print    <xccl: printfile C:\DATAPLOT\PONTIUS.DAT>
+

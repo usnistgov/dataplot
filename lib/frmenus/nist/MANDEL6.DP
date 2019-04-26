@@ -1,0 +1,11 @@
+----- <~nist\MANDEL6.DP> Load MANDEL6.DAT
+
+. This is file    MANDEL6.DP
+
+DELETE LABID MATID LAB Y
+SKIP 25
+READ MANDEL6.DAT Y LABID MATID
+SKIP 0
+.
+SET TABLE TITLE "Pentosans in Wood Pulp"
+.

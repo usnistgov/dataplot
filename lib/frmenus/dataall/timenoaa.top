@@ -1,0 +1,32 @@
+----- <~dataall\timenoaa.top> View/etc. Time Series Data: NOAA
+
+View/Load/Print Time Series Data: NOAA
+
+ASF11.DAT     American Samoa freon-11     <~dataall\ASF11.top>
+ASF12.DAT     American Samoa freon-12     <~dataall\ASF12.top>
+ASN2O.DAT     American Samoa N2O          <~dataall\ASNO2.top>
+ASCO2.DAT     American Samoa CO2          <~dataall\ASCO2.top>
+
+MLF11.DAT     Mauna Loa freon-11          <~dataall\MLF11.top>
+MLF12.DAT     Mauna Loa freon-12          <~dataall\MLF12.top>
+MLN2O.DAT     Mauna Loa N2O               <~dataall\MLN20.top>
+MLCO2.DAT     Mauna Loa CO2               <~dataall\MLCO2.top>
+
+NWF11.DAT     Niwot Ridge, Col. freon-11  <~dataall\NWF11.top>
+NWF12.DAT     Niwot Ridge, Col. freon-12  <~dataall\NWF12.top>
+NWN2O.DAT     Niwot Ridge, Col. N2O       <~dataall\NWN2O.top>
+
+PBF11.DAT     Pt. Barrow, Alaska freon-11 <~dataall\PBF11.top>
+PBF12.DAT     Pt. Barrow, Alaska freon-12 <~dataall\PBF12.top>
+PBN2O.DAT     Pt. Barrow, Alaska N2O      <~dataall\PBN20.top>
+PBCO2.DAT     Pt. Barrow, Alaska CO2      <~dataall\PBCO2.top>
+
+SPF11.DAT     South Pole freon-11         <~dataall\SPF11.top>
+SPF12.DAT     South Pole freon-12         <~dataall\SPF12.top>
+SPN2O.DAT     South Pole N2O              <~dataall\SPN2O.top>
+SPCO2.DAT     South Pole CO2              <~dataall\SPCO2.top>
+
+MLCO2MON.DAT  Mauna Loa CO2               <~dataall\MLCO2MON.top>
+ELNINO.DAT    El Nino/Southern Oscill.    <~dataall\ELNINO.top>
+QUASIBIE.DAT  Quasi-biennial Index        <~dataall\QUASIBIE.top>
+

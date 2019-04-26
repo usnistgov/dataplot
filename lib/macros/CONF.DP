@@ -1,0 +1,372 @@
+. This is dataplot program   conf.dp
+. Purpose: Compute confounding structure  for arbitrary 2-level orhtogonal des
+. Date: 3/2/15 => 3/4/15 => 11/2/17
+. Input:
+.    k                      (parameter) = number of design factors
+.    x1, x2, etc.           (vectors)   = (-1,+1) vectors in the design
+. Output:
+.    me                     (vector)    = the tags for the k main effects
+.    2trow                  (vector)    = the first  component tags of the 2-term interactions
+.    2tcol                  (vector)    = the second component tags of the 2-term interactions
+.    conftag1               (vector)    = merged first  component of ME and 2TI                   (used by dexest.dp)
+.    conftag2               (vector)    = merged second component of ME and 2TI (= -999 for ME)   (used by dexest.dp)
+.
+.    x2t1, x2t2, etc.       (vectors)   = 2-term (= cross-product) vectors
+.
+.    stme1,   stme2,  etc.  (strings)   = primary tag for k           main effects
+.    stmec1,  stmec2, etc.  (strings)   = confounding for k           main effects
+.    st2t1,   st2t2,  etc.  (strings)   = primary tag for k-choose-2  2-term interactions
+.    st2tc1,  st2tc2, etc.  (strings)   = confounding for k-choose-2  2-term interactions
+.    stt1,    stt2,   etc.  (strings)   = merged strings for primary tags                         (used by dexest.dp)
+.    stc1,    stc2,   etc.  (strings)   = merged strings for confounding                          (used by dexest.dp)
+.    confdone  (parameter) = (0,1) indicator as to whether this routine has (ever) been executed (default = not exist)
+.
+.    confme.out = output file containing main effect        confounding
+.    conf2t.out = output file containing 2-term interaction confounding
+.
+. -----start point-----
+.
+let pausecon = 0
+feedback off
+printing off
+.
+if pausecon = 1
+   print " "
+   print "At the beginning of    conf.dp"
+   print "k = ^k"
+   if k <= 15
+      print x1 to x^k
+   end if
+end if
+.
+print " "
+print "1. Factor and interaction confounding is now being determined . . ."
+print " "
+.
+. -----Step 0: Check input arguments-----
+.
+let string stmacro = conf.dp
+let string stall = k
+call checkinput.dp
+.
+if k exists
+   loop for j = 1 1 k
+      let string stall = x^j
+   call checkinput.dp
+   end loop
+end if
+.
+. -----Step 1: Check for balance in each of the k factors-----
+.
+let balsw = 1
+loop for j = 1 1 k
+   tabulate x^j
+   skip 1; read dpst1f.dat xdzz nzz
+   let nrefzz = nzz(1)
+   let ndz = number xdzz
+   loop for j2 = 1 1 ndz
+      let nzzj2 = nzz(j2)
+      if nzzj2 <> nrefzz
+         print " "
+         print "==============================="
+         print "Error in conf.dp"
+         print "   Factor X^j is not balanced and"
+         print "   hence this design is not orthogonal."
+         printing on
+         tabulate x^j
+         printing off
+         let balsw = 0
+         pause
+      end if
+   end loop
+end loop
+.
+. -----Step 2: Compute all   k-choose-2   2-term cross-product vectors: x2txx-----
+.              Note: if k = 7, # = 21    if k = 15, # = 105    if k = 20, # = 190-----
+.
+if pausecon = 1; print "--At conf.dp step 1: Compute 2TI"; pause; end if
+print "."
+.
+. feedback off
+let count = 0
+let km1 = k-1
+loop for j1 = 1 1 km1
+   let j1p1 = j1+1
+   loop for j2 = j1p1 1 k
+      let count = count+1
+      let row(count) = j1
+      let col(count) = j2
+      .
+      . echo on
+      . print "j1 j2 count = ^j1 ^j2 ^count"
+      . print x^j1 x^j2 x2t^count
+      . print junk^count.out x^j1 x^j2 x2t^count
+      . pause
+      let x2t^count = x^j1 * x^j2
+      . echo off
+      .
+   end loop
+end loop
+let nx2t = count
+. print "nx2t = ^nx2t"
+if pausecon = 1; pause; end if
+. stat v
+.
+. -----Step 2: Determine confounding for each of the    k    main effects-----
+.
+if pausecon = 1; print "--At conf.dp step 2: Determine confounding for each ME"; pause; end if
+print ". ."
+.
+. -----Step 2.1: Initialize the output strings stmexx, stmecxx and vector me(xx)-----
+.
+if pausecon = 1; print "--At conf.dp step 2.1: Initialize"; pause; end if
+
+let string stplus = +
+let count = 0
+.
+loop for j1 = 1 1 k
+   let me(j1) = j1
+   let string stme^j1 = ^j1
+   if j1 >= 10; let string stme^j1 = (^j1); end if
+   let string stmec^j1 = -999
+end loop
+.
+. -----Step 2.2: Step through each main effect and compare to all other main effects-----
+.
+if pausecon = 1; print "--At conf.dp step 2.2: Compare ME to ME"; pause; end if
+.
+loop for j1 = 1 1 k
+   let rj1 = range x^j1
+   loop for j2 = 1 1 k
+      let rj2 = range x^j2
+      let rj1j2 = rj1*rj2
+      if rj1j2 <> 0
+         if j1 <> j2
+            let cj1j2 = corr x^j1 x^j2
+            let cj1j2abs = abs(cj1j2)
+            if cj1j2abs = 1
+               let count = count + 1
+               let rowj = j1
+               let colj = j2
+               let string strowj = ^rowj
+               let string stcolj = ^colj
+               if rowj >= 10; let string strowj = (^strowj); end if
+               if colj >= 10; let string stcolj = (^stcolj); end if
+               if stmec^j1 <> -999; let stmec^j1 = string concatonate stmec^j1 stplus stcolj; end if
+               if stmec^j1 =  -999; let string stmec^j1 = ^stcolj; end if
+            end if
+         end if
+      end if
+   end loop
+end loop
+.
+. -----Step 2.3: Step through each main effect and compare to all 2-term vectors-----
+.
+if pausecon = 1; print "--At conf.dp step 2.3: Compare ME to 2TI"; pause; end if
+.
+loop for j1 = 1 1 k
+   let rj1 = range x^j1
+   loop for j2 = 1 1 nx2t
+      let rj2 = range x2t^j2
+      let rj1j2 = rj1*rj2
+      if rj1j2 <> 0
+         let cj1j2 = corr x^j1 x2t^j2
+         let cj1j2abs = abs(cj1j2)
+         if cj1j2abs = 1
+            let count = count + 1
+            let rowj = row(j2)
+            let colj = col(j2)
+            let string strowj = ^rowj
+            let string stcolj = ^colj
+            if rowj >= 10; let string strowj = (^strowj); end if
+            if colj >= 10; let string stcolj = (^stcolj); end if
+            if stmec^j1 <> -999; let stmec^j1 = string concatonate stmec^j1 stplus strowj stcolj; end if
+            if stmec^j1 =  -999; let string stmec^j1 = ^strowj&^stcolj; end if
+         end if
+      end if
+   end loop
+end loop
+.
+loop for j1 = 1 1 k
+   . if stmec^j1 = -999; . let string stmec^j1 = sp(); . end if
+end loop
+.
+.
+. capture confme.out
+.    loop for j1 = 1 1 k
+.       print "^stme^j1: ^stmec^j1"
+.    end loop
+.    print me
+. end capture
+.
+.
+. feedback off
+.
+. here
+. -----Step 3: Determine confounding for each of the    k-choose-2    2-term interactions-----
+.
+if pausecon = 1; print "--At conf.dp step 3: Determine confounding for each 2TI"; pause; end if
+print ". . ."
+.
+. -----Step 3.1: Initialize the output strings st2txx, st2tcxx and vector 2trow(xx) and 2tcol(xx)-----
+.
+if pausecon = 1; print "--At conf.dp step 3.1: Initialize"; pause; end if
+.
+let count = 0
+let km1 = k - 1
+loop for j1 = 1 1 km1
+   let string stj1 = ^j1
+   if j1 >= 10; let string stj1 = (^j1); end if
+   let j1p1 = j1+1
+   loop for j2 = j1p1 1 k
+      let string stj2 = ^j2
+      if j2 >= 10; let string stj2 = (^j2); end if
+      let count = count + 1
+	 let 2trow(count) = j1
+	 let 2tcol(count) = j2
+      let string stj1 = ^j1
+      let string stj2 = ^j2
+      if j1 >= 10; let string stj1 = (^j1); end if
+      if j2 >= 10; let string stj2 = (^j2); end if
+      let string st2t^count = ^stj1&^stj2
+	 let string st2tc^count = -999
+   end loop
+end loop
+.
+. -----Step 3.2: Step through each 2-term vector and compare to the k main effects-----
+.
+if pausecon = 1; print "--At conf.dp step 3.2: Compare 2=2TI to 2=ME"; pause; end if
+
+loop for j1 = 1 1 nx2t
+   let rj1 = range x2t^j1
+   loop for j2 = 1 1 k
+      let rj2 = range x^j2
+      let rj1j2 = rj1*rj2
+      if rj1j2 <> 0
+         let cj1j2 = corr x2t^j1 x^j2
+         let cj1j2abs = abs(cj1j2)
+         if cj1j2abs = 1
+            let count = count + 1
+            let string stj2 = ^j2
+   		 if j2 >= 10; let string stj2 = (^j2); end if
+   		 if st2tc^j1 <> -999; let st2tc^j1 = string concatonate st2tc^j1 stplus stj2; end if
+            if st2tc^j1 =  -999; let string st2tc^j1 = ^stj2; end if
+         end if
+      end if
+   end loop
+end loop
+.
+. -----Step 3.3: Step through each 2-term vector and compare to all other 2-term vectors-----
+.
+if pausecon = 1; print "--At conf.dp step 3.3: Compare 2TI to 2TI"; pause; end if
+
+loop for j1 = 1 1 nx2t
+   let rj1 = range x2t^j1
+   loop for j2 = 1 1 nx2t
+      let rj2 = range x2t^j2
+      let rj1j2 = rj1*rj2
+      if rj1j2 <> 0
+         if j1 <> j2
+            let cj1j2 = corr x2t^j1 x2t^j2
+            let cj1j2abs = abs(cj1j2)
+            if cj1j2abs = 1
+               let count = count + 1
+               let rowj = row(j2)
+               let colj = col(j2)
+               let string strowj = ^rowj
+               let string stcolj = ^colj
+               if rowj >= 10; let string strowj = (^strowj); end if
+               if colj >= 10; let string stcolj = (^stcolj); end if
+               if st2tc^j1 <> -999; let st2tc^j1 = string concatonate st2tc^j1 stplus strowj stcolj; end if
+               if st2tc^j1 =  -999; let string st2tc^j1 = ^strowj&^stcolj; end if
+            end if
+         end if
+      end if
+   end loop
+end loop
+.
+. print " "
+. print "at end of step 3.3 for 2-term interactions"
+loop for j1 = 1 1 nx2t
+   . if st2tc^j1 = -999; . let string st2tc^j1 = sp(); . end if
+end loop
+.
+loop for j1 = 1 1 nx2t
+   . print "j1 = ^j1   ^st2t^j1: ^st2tc^j1"
+end loop
+. print 2trow 2tcol
+. pause
+.
+.
+. capture conf2t.out
+.    loop for j1 = 1 1 nx2t
+.       print "j1 = ^j1   ^st2t^j1: ^st2tc^j1"
+.    end loop
+.    print 2trow 2tcol
+. end capture
+.
+.
+. feedback off
+.
+. -----Step 4: Merge the ME and 2TI output vectors into a single pair of output vectors-----
+.
+if pausecon = 1; print "--At conf.dp step 4: Merge ME and 2TI into one pair"; pause; end if
+print ". . . ."
+.
+let count = 0
+loop for j = 1 1 k
+   let count = count + 1
+   let conftag1(count) = me(j)
+   let conftag2(count) = -999
+   let string stt^count = ^stme^j
+   let string stc^count = ^stmec^j
+   . print "j = ^j    count = ^count   stt^count = ^stt^count    stc^count = ^stc^count"
+   . pause
+end loop
+.
+loop for j = 1 1 nx2t
+   let count = count + 1
+   let conftag1(count) = 2trow(j)
+   let conftag2(count) = 2tcol(j)
+   let string stt^count = ^st2t^j
+   let string stc^count = ^st2tc^j
+   . print "j = ^j    count = ^count   stt^count = ^stt^count    stc^count = ^stc^count"
+   . pause
+end loop
+.
+let numconf = number conftag1
+loop for j = 1 1 numconf
+   . print "j = ^j      stt^j = ^stt^j     stc^j = ^stc^j"
+end loop
+. print conftag1 conftag2
+. pause
+.
+. -----Step 5: Since the effect confounding is now done,
+. -----        set a switch to indicate that-----
+.
+if pausecon = 1; print "--At est.dp step 5"; pause; end if
+print ". . . . ."
+.
+let confdone = 1
+.
+. -----Step 9: All done-----
+.
+if pausecon = 1; print "--At conf.dp 9: All done"; pause; end if
+print ". . . . . ."
+.
+. list confme.out
+. list conf2t.out
+.
+. print " "
+. print "Output files: confme.out and conf2t.out"
+. print " "
+.
+. list confme.out
+. pause
+. list conf2t.out
+.
+loop for j = 1 1 nx2t
+   let jrev = nx2t - j + 1
+   delete x2t^jrev
+end loop
+.

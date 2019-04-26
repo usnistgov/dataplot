@@ -1,0 +1,22 @@
+This is file matr_eig.men--Eigenvalues of a matrix
+ 
+--------------------
+ 1. Eigenvalues of a Matrix
+ 2. LET EVAL = MATRIX EIGENVECTORS M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Variable to store the eigenvalues:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Find the Eigenvalues?:
+--------------------
+GR FE
+LET _2 = MATRIX EIGENVALUES  _1 _3
+--------------------
+WEB HELP MATRIX EIGENVALUES
+--------------------

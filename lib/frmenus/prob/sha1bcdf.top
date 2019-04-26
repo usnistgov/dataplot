@@ -1,0 +1,27 @@
+----- <~prob\sha1bcdf.top> PDF's for One Shape Parameter Continuous Distributions (M-Z)
+
+Compute CDF's and Tail Probabilities (one shape parameters)
+
+Compute Cumualtive Distribution and Tail Proability Functions
+for Continuous Distributions with One Shape Parameters
+
+McLeish                                   <xemf: ~prob\mclcdf.men>
+Muth                                      <xemf: ~prob\mutcdf.men>
+Ogive                                     <xemf: ~prob\ogicdf.men>
+Power                                     <xemf: ~prob\powcdf.men>
+Power Normal                              <xemf: ~prob\pnrcdf.men>
+Reciprocal                                <xemf: ~prob\reccdf.men>
+Reflected Power                           <xemf: ~prob\rpocdf.men>
+Skew Double Exponential (Skew Laplace)    <xemf: ~prob\sdecdf.men>
+Skew Normal                               <xemf: ~prob\sncdf.men>
+Slope                                     <xemf: ~prob\slocdf.men>
+T                                         <xemf: ~prob\tcdf.men>
+Topp and Leone                            <xemf: ~prob\topcdf.men>
+Triangular                                <xemf: ~prob\tricdf.men>
+Tukey-Lambda (symmetric)                  <xemf: ~prob\lamcdf.men>
+Von Mises                                 <xemf: ~prob\voncdf.men>
+Wald                                      <xemf: ~prob\walcdf.men>
+Weibull (minimum case)                    <xemf: ~prob\wei1cdf.men>
+Weibull (maximum case)                    <xemf: ~prob\wei2cdf.men>
+Wrapped Cauchy                            <xemf: ~prob\wcacdf.men>
+

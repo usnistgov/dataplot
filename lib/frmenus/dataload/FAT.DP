@@ -1,0 +1,8 @@
+----- <~dataload\FAT.DP> Load FAT.DAT
+
+. This is file    FAT.DP
+
+DELETE Y X
+SKIP 25
+READ FAT.DAT Y X
+

@@ -1,0 +1,32 @@
+This is Dataplot data file     MANDEL30.DAT
+Amount of Pentosan in Paper Pulp
+Source--
+   Mandel, John (1991)
+   Evaluation and Control of Measurements.
+   p. 30, Marcel Decker, New York
+Number of observations             =   7
+Number of variables per line image =   3
+Order of variables on a line image--
+   1. Response variable 1 = pentosan measurement for pulp #1
+   2. Response variable 2 = pentosan measurement for pulp #2
+   3. Factor 1            = Laboratory (7 levels: 1 to 7)
+Statistical category--regression & correlation
+To read this file into Dataplot--
+   SKIP 25
+   READ MANDEL30.DAT Y1 Y2 LAB
+
+
+
+
+
+    Y1              Y2             LAB
+Pentosan in     Pentosan in     Laboratory
+  Pulp #1         Pulp #2
+-------------------------------------------
+  10.757          16.750            1          
+   9.980          16.083            2          
+  10.117          16.010            3          
+  10.723          16.770            4          
+  10.377          15.607            5          
+   9.587          14.940            6          
+  11.267          18.367            7          

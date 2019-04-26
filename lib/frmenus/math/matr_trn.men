@@ -1,0 +1,27 @@
+This is file matr_eiv.men--Transpose of a matrix
+ 
+--------------------
+ 1. Transpose of a Matrix
+ 2. LET MT = MATRIX TRANSPOSE M
+ 3.
+ 4. For most installations, Dataplot limits the number of
+ 5. columns in a matrix to 100.  This means you cannot
+ 6. generate the matrix transpose if the original matrix
+ 7. has more than 100 rows.
+ 8.
+ 9. Name of original matrix:
+ 9. @CE 1 0 33 50 ? gui-matrix
+10. Matrix  to store the transpose:
+10. @CE 2 0 33 50 ?
+11.
+12. Subset/Except/For Specification:
+13. @CE 3 0 1 50 *
+14.
+15.
+16. Generate the Matrix Transpose?:
+--------------------
+GR FE
+LET _2 = MATRIX TRANSPOSE  _1 _3
+--------------------
+WEB HELP MATRIX TRANSPOSE
+--------------------

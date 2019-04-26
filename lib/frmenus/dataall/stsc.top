@@ -1,0 +1,20 @@
+----- <~dataall\stsc.top> Statistics for Scientists Course
+
+Statistics for Scientists Course
+
+    Introduction                           <~dataall\stscintr.top>
+
+ 1. Exploratory Data Analysis I            <~dataall/stsceda1.top>
+ 2. Exploratory Data Analysis II           <~dataall/stsceda2.top>
+ 3. Sampling Distributions                 <~dataall/stscsamp.top>
+ 4. Hypothesis Testing                     <~dataall/stschypo.top>
+ 5. Statistical Intervals                  <~dataall/stscinte.top>
+ 6. Model Fitting I (Linear Models)        <~dataall/stscfit1.top>
+ 7. Model Fitting II (Multi/Non-Linear)    <~dataall/stscfit2.top>
+ 8. Design of Experiment I                 <~dataall/stscdex1.top>
+ 9. Design of Experiment II                <~dataall/stscdex2.top>
+10. ANOVA I                                <~dataall/stscano1.top>
+11. ANOVA II & Control Charts II           <~dataall/stscano2.top>
+12. Control Charts                         <~dataall\stsccont.top>
+13. Computationally Intensive Methods      <~dataall/stsccomp.top>
+

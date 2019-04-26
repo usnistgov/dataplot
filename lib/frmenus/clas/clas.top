@@ -1,0 +1,10 @@
+----- <~clas/clas.top> Classes----------------------------
+
+
+NIST Classes
+
+DEX   (Design of Experiment)           <~clas/dex.top>
+EDA   (Exploratory Data Analysis)      <~clas/eda/eda.top>
+ANOVA (Analysis of Variance)           <~clas/anov/anov.top>
+
+Test   <xcf: ~clas/BOXSPRIN.DP>

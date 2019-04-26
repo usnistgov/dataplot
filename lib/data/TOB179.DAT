@@ -1,0 +1,67 @@
+TOB179.DAT
+LOGNORMAAL TEMPERATURE/VOLTAGE STRESS FAILURE DATA.
+THREE DISTINCT TEMPERATURES, THREE VOLTAGES, 6 OF THE
+9 POSSIBLE COMBINATIONS USED, 50 SEMICONDUCTOR MODULES
+WERE COUNTED AT 9 READOUT TIMES.
+NUMBER OF OBSERVATIONS = 9
+NUMBER OF VARIABLES PER LINE IMAGE = 4
+ORDER OF VARIABLES ON A LINE IMAGE--
+   T     = TIME
+   X1    = TEMPERATURE (DEGREES CELCIUS)
+   X2    = VOLTAGE
+   Y     = NUMBER OF NEW FAILURES
+SOURCE--TOBIAS AND TRINDADE (1981).  "APPLIED RELIABILITY",
+        SECOND EDITION, CHAPMAN & HALL/CRC, P. 179.
+STATISTICAL AREA = RELIABILITY (LOGNORMAL DISTRIBUTION)
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ TOB179.DAT X Y1 Y2 Y3
+ 
+ 
+
+
+ 
+TIME       TEMP   VOLT    Y
+---------------------------
+  24       125     8      0
+  24       125    12      0
+  24       105    12      0
+  24       105    16      0
+  24        85    12      0
+  24        85    16      0
+ 100       125     8      1
+ 100       125    12      4
+ 100       105    12      0
+ 100       105    16      0
+ 100        85    12      0
+ 100        85    16      0
+ 150       125     8      6
+ 150       125    12      3
+ 150       105    12      1
+ 150       105    16      8
+ 150        85    12      0
+ 150        85    16      0
+ 250       125     8      6
+ 250       125    12     23
+ 250       105    12      3
+ 250       105    16     10
+ 250        85    12      1
+ 250        85    16      8
+ 500       125     8     23
+ 500       125    12     13
+ 500       105    12     19
+ 500       105    16     21
+ 500        85    12      1
+ 500        85    16      5
+ 750       125     8      9
+ 750       125    12      5
+ 750       105    12     15
+ 750       105    16     10
+ 750        85    12     16
+ 750        85    16     15
+1000       125     8      3
+1000       125    12      1
+1000       105    12      6
+1000       105    16      5
+1000        85    12      5
+1000        85    16      6

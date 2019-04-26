@@ -1,0 +1,42 @@
+This is file lininter.men--Perform a linear interpolation
+ 
+--------------------
+ 1. Linear Interpolation
+ 2. LET Y2 = LINEAR INTERPOLATION Y1 X1 X2
+ 3.
+ 4. Vertical  axis variable with original data:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Horizontal axis variable with original data:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Horizontal axis variable containing points at which
+ 7.    to interpolate:
+ 7. @CE 3 0 33 50 ? gui-variable
+ 8. Variable to store the interpolated values:
+ 8. @CE 4 0 33 50 ? gui-none
+ 9. 
+10. The interpolated curve will be plotted with the original data.
+11.
+12. Select the line style for the interpolated curve:
+12. @CE 6 0 33 50 gui-line
+13. Select the character symbol for the original data:
+13. @CE 7 0 33 50 gui-character
+14. Fill the character symbol?:
+14. @CE 8 0 33 50 gui-ooff
+15.
+16. Subset/Except/For Specification:
+17. @CE 5 0 -10 50 *
+18.
+19.
+20. Perform the interpolation?:
+--------------------
+GR FE
+LET _4 = LINEAR INTERPOLATION _1 _2 _3   _5
+CHARACTER _7 BLANK
+CHARACTER FILL _8 OFF
+LINES BLANK _6
+PLOT _1 VS _2  _5  AND
+PLOT _4 _3
+--------------------
+WEB HELP LINEAR INTERPOLATION
+--------------------
+

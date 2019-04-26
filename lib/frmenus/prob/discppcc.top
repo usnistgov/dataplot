@@ -1,0 +1,36 @@
+----- <~prob\discppcc.top> Discrete Distribution PPCC
+
+Discrete Distribution PPCC Plot
+
+Generate PPCC (or CHI-SQUARE) Plot for
+Discrete Distributions
+
+Discussion                        <~prob\discchsq.top>
+
+Beta-Binomial                                   <xemf: ~prob\bbnppcc.men>
+Beta-Geometric                                  <xemf: ~prob\bgeppcc.men>
+Borel-Tanner                                    <xemf: ~prob\btappcc.men>
+Consul
+    (Theta paramererization)                    <xemf: ~prob\con1ppcc.men>
+    (Mu paramererization)                       <xemf: ~prob\con2ppcc.men>
+Discrete Weibull                                <xemf: ~prob\diwppcc.men>
+Geeta
+    (Theta paramererization)                    <xemf: ~prob\get1ppcc.men>
+    (Mu paramererization)                       <xemf: ~prob\get2ppcc.men>
+Generalized Logarithmic Series                  <xemf: ~prob\glsppcc.men>
+Generalized Lost Games                          <xemf: ~prob\glgppcc.men>
+Geometric
+    (number of trials before first success)     <xemf: ~prob\geo1ppcc.men>
+    (number of trials including first success)  <xemf: ~prob\geo1ppcc.men>
+Hermite                                         <xemf: ~prob\herppcc.men>
+Katz                                            <xemf: ~prob\katppcc.men>
+Lagrange Poisson                                <xemf: ~prob\lpoppcc.men>
+Logarithmic Series                              <xemf: ~prob\dlgppcc.men>
+Lost Games                                      <xemf: ~prob\losppcc.men>
+Negative Binomial                               <xemf: ~prob\nbppcc.men>
+Poisson                                         <xemf: ~prob\poippcc.men>
+Polya-Aeppli                                    <xemf: ~prob\papppcc.men>
+Yule                                            <xemf: ~prob\yulppcc.men>
+Zeta                                            <xemf: ~prob\zetppcc.men>
+Zipf                                            <xemf: ~prob\zipppcc.men>
+

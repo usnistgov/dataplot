@@ -1,0 +1,10 @@
+----- <~dataloex\RANDWALK.DP> Load & Execute RANDWALK.DAT
+
+. This is file    RANDWALK.DP
+
+DELETE Y
+SKIP 25
+READ RANDWALK.DAT Y
+TITLE RANDWALK.DAT
+4-PLOT Y
+

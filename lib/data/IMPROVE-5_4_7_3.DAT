@@ -1,0 +1,36 @@
+This is the data file   IMPROVE-5_4_7_3.DAT.
+Source: Czitrom and Spagon (1997), "Statistical Case Studies
+        for Industrial Process Improvement", Philadelphia, PA
+        ASA-SIAM Series on Statistics and Applied Probability.
+
+        This example is used on page pri473.htm of the e-Handbook
+        to demonstrate a response surface design.
+
+Description:  The goal of the experiment was to fit response surface
+              models to the two responses
+                 1) Deposition Layer Uniformity
+                 2) Deposition Layer Stress
+
+              with two controllable factors
+                 1) Pressure
+                 2) Ratio of the Gaseous Reactants H2 and WF6
+                    (called H2/WF6)
+
+To read into Dataplot, enter
+
+    SKIP 25
+    READ "IMPROVE-5_4_7_3.DAT" RUN PRESSURE H2WF6 UNIF STRESS CODPRESS CODH2WF6
+
+Run  Pressure  H2/WF6  Uniformity  Stress  CodedPress  CodedH2/WF6
+------------------------------------------------------------
+1    80        6       4.6         8.04     1           0
+2    42        6       6.2         7.78     0           0
+3    68.87     3.17    3.4         7.58     0.71       -0.71
+4    15.13     8.83    6.9         7.27    -0.71        0.71
+5     4        6       7.3         6.49    -1           0
+6    42        6       6.4         7.69     0           0
+7    15.13     3.17    8.6         6.66    -0.71       -0.71
+8    42        2       6.3         7.16     0          -1 
+9    68.87     8.83    5.1         8.33     0.71        0.71
+10   42       10       5.4         8.19     0           1
+11   42        6       5           7.9      0           0

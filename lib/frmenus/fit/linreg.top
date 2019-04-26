@@ -1,0 +1,18 @@
+----- <~fit\linreg.top> Linear Regression
+
+Linear Regression
+
+Do the Fit          <xemf: ~fit\fitline.men>
+
+Discussion          <~fit\lrdisc.top>
+NIST/SEMATECH Handbook (Least Squares) <xcl: web handbook linear least squares>
+
+Do Model Validation <~fit\modelval.top>
+Confidence Ellipse for intercept and slope  <~fit\ellipse.top>
+Built-in Datasets   <~dataload\reg1p.top>
+
+Worked Examples
+   Berger  data            <xcf: ~fit\BERGER1.DP>
+   Lew     data            <xcf: ~fit\LEW.DP>
+   Spiegel data            <xcf: ~fit\SPIEGEL.DP>
+

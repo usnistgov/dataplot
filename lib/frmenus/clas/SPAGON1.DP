@@ -1,0 +1,10 @@
+----- <~dataloex\SPAGON1.DP> Load & Execute SPAGON1.DAT
+
+. This is file    SPAGON1.DP
+
+DELETE Y
+SKIP 25
+READ SPAGON1.DAT Y
+TITLE SPAGON1.DAT
+/
+

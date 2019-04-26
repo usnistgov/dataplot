@@ -1,0 +1,25 @@
+This is file powersim.men--Simulate Power Law Failure Times
+ 
+--------------------
+ 1. Simulated Power Law Failure Times
+ 2. LET Y = POWER LAW RANDOM NUMBERS FOR I = 1 1 N
+ 3.
+ 4. Value for Alpha (> 0):
+ 4. @CE 1 0 42 50 ?
+ 5. Value for Beta (> 0):
+ 5. @CE 2 0 42 50 ?
+ 6. Number of Failure Times to Generate:
+ 6. @CE 3 0 42 50 ?
+ 7.
+ 8. Variable to Store the Failure Times:
+ 8. @CE 4 0 42 50 ?
+ 9.
+10. Generate Power Law Failure Times?:
+--------------------
+AN FE
+LET ALPHA = _1
+LET BETA  = _2
+LET _4 = POWER LAW RANDOM NUMBERS FOR I = 1 1 _3
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

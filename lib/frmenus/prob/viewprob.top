@@ -1,0 +1,46 @@
+----- <~prob\viewprob.top> View Probability Definitions
+
+View Distributional Definitions
+
+NIST/SEMATECH Handbook Links
+   Gallery of Distributions          <xcl: web handbook probability distributions gallery>
+   Distribution Tables               <xcl: web handbook tables for probability distributionsgallery>
+
+List supported probability distributions      <xcl: LIST DISTRIBUTIONS.>
+
+Descriptions of some common distributions
+   Symmetric:
+      Uniform                                  <~prob\unidesc.top>
+      Normal                                   <~prob\nordesc.top>
+      Logistic                                 <~prob\logdesc.top>
+      Double Exponential                       <~prob\dexdesc.top>
+      Cauchy                                   <~prob\caudesc.top>
+      Tukey                                    <~prob\tukdesc.top>
+      t (df NU)                                <~prob\tdesc.top>
+      Triangular                               <~prob\tridesc.top>
+   Skewed:
+      Lognormal                                <~prob\lgndesc.top>
+      Halfnormal                               <~prob\hfndesc.top>
+      Chi-Squared                              <~prob\chsdesc.top>
+      F                                        <~prob\fdesc.top>
+      Exponential                              <~prob\expdesc.top>
+      Gamma                                    <~prob\gamdesc.top>
+      Beta                                     <~prob\betdesc.top>
+      Weibull                       (for min)  <~prob\wei1desc.top>
+      Weibull                       (for max)  <~prob\wei2desc.top>
+      Extreme Value Type 1 (= Gumbel)  (for min)  <~prob\ev11desc.top>
+      Extreme Value Type 1 (= Gumbel)  (for max)  <~prob\ev12desc.top>
+      Extreme Value Type 2 (= Frechet) (for min)  <~prob\ev21desc.top>
+      Extreme Value Type 2 (= Frechet) (for max)  <~prob\ev22desc.top>
+      Pareto                                   <~prob\pardesc.top>
+   Discrete:
+      Binomial                                 <~prob\bindesc.top>
+      Geometric                                <~prob\geodesc.top>
+      Poisson                                  <~prob\poidesc.top>
+      Negative Binomial                        <~prob\ngbdesc.top>
+
+Sample syntax for a few commn distributions
+    pdf's                                     <~prob\pdf.top>
+    cdf's                                     <~prob\cdf.top>
+    ppf's                                     <~prob\ppf.top>
+

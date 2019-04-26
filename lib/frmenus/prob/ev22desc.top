@@ -1,0 +1,24 @@
+----- <~prob\ev22desc.top> Ext. Value 2 (= Frechet) (for Max) Desc.
+
+*Ext. Value Type 2 (= Frechet) (for Max) Description
+
+pdf: f(x)     = gamma * x**(-gamma-1) * exp(-(x**(-gamma)))   for x >= 0
+pdf: f(x,u,s) = gamma * z**(gamma-1) * exp(-(z**gamma))
+                with z = (x-u)/s   for x >= u
+
+Moments   : E(X)  =
+            SD(X) =
+
+Type      : Continuous, skewed family of distributions--
+            moderate-tailed to long-tailed.
+Domain    : 0 to +infinity
+Synonym   :
+Genesis   : Bortkiewicz (1922), Mises (1923), Dodd (1923)
+            Frechet (1927)
+Definition: If
+            then
+
+Reference : Johnson & Kotz,
+            Continuous Univariate Distributions-2,
+            Chapter 21 (pages 272-295).
+

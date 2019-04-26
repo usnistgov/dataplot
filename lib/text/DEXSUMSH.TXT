@@ -1,0 +1,43 @@
+                                     DEX Summary Sheet
+ 
+Project/Problem Title:
+ 
+Researcher & Date:
+Background & Importance:
+ 
+ 
+ 
+Goal:
+      Project (General):
+      Statistical (Specific):
+ 
+ 
+ 
+Scope of Conclusions:
+ 
+DEX Essentials:
+      Response Variable Y:
+      Values for Y--
+            Current Typical Value for Y:
+            Project Target Value for Y:
+            Current Replication Stand. Dev. for Y:
+            Destructive or Non-destructive Experiment?
+            Project Minimal Eng. Signif. Diff. for Y:
+            Project Minimal Eng. Residual SD (Fitting):
+      Run Time & Cost per Observation:
+      Constraint--Max Number of Runs n:
+ 
+Factors & Factor Levels (Number of Factors k =       ):
+      X1:
+      X2:
+      X3:
+      X4:
+      X5:
+      X6:
+      X7:
+      X8:
+      X9:
+     X10:
+ 
+General DEX Category:
+Specific DEX Plan:

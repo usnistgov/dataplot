@@ -1,0 +1,42 @@
+----- <~dex\resoluti.top> Resolution
+
+Resolution
+
+All fractional factorial designs have confounding.  The
+"resolution" of a design is an index which indicates
+whether main effects are confounded with low order
+interactions (low resolution) or high order
+interactions (high resolution).  In general, the
+resolution of a design is one more than the
+smallest-order interaction that some main effect is
+confounded with.  If main effects are confounded with
+2-term interactions (undesirable), then the resolution
+is 3. If main effects are confounded with no 2-term
+interactions but with some 3-term interactions
+(better), then the resolution is 4. If main effects are
+confounded with no 2-term interactions and no 3-term
+interactions but with some 4-term interactions
+(excellent), then the resolution is 5.
+
+Since main effects are going to be confounded with some
+interaction, then it is better that they be confounded
+with interactions that are more likely in nature to be
+null (namely, high-order interactions) than real
+(namely, low-order interactions).  In short, therefore,
+it is desirable to have the resolution of a design as
+high as possible.  This, however, must be balanced with
+practical constraints on the total number n of
+affordable runs.  The best design is one which
+counterbalances the opposing experimental demands of
+high resolution and small sample size.  Part 2 of the
+Table of Contents of this catalog provides a good
+starting point as to what subset of designs are
+"admissible" for a given combination of resolution and
+sample size.  Note that although the concept of
+resolution applies only to fractional factorial designs
+and not to full factorial designs, the table of
+contents has the entry "infinity" as the resolution of
+the various full factorial designs--this is not to be
+taken literally but is only an indication that for full
+factorial designs, all confounding vanishes.
+

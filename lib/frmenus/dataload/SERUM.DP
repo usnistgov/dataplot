@@ -1,0 +1,8 @@
+----- <~dataload\SERUM.DP> Load SERUM.DAT
+
+. This is file    SERUM.DP
+
+DELETE Y X
+SKIP 25
+READ SERUM.DAT Y X
+

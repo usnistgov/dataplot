@@ -1,0 +1,44 @@
+This is Dataplot data file    LGN.DAT
+Sample data set from Example 11.1 of
+Karl Bury, "Statistical Distributions in Engineering",
+Cambridge University Press, 1999, pp. 167-168.
+
+Response variable = Specimens of a newly designed composite material
+                    tested for rupture strength in tension (1,000 psi)
+Number of observations = 19
+Number of observations per line image = 1
+Order of observations per line image--
+   1. Response variable
+To read this file into Dataplot--
+   SKIP 25
+   READ LGN.DAT Y
+   SET MAXIMUM LIKELIHOOD PERCENTILE DEFAULT
+   LOGNORMAL MAXIMUM LIKELIHOOD Y
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Y
+------------------
+137
+122
+116
+116
+135
+117
+120
+120
+139
+125
+122
+131
+109
+130
+126
+147
+105
+113
+116

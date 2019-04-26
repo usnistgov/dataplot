@@ -1,0 +1,12 @@
+----- <~prob\ncdippf.top> Plot Non-Central ppf's
+
+Plot Non-Central PPF Functions
+
+Non-Central Chi-Squared              <xemf: ~prob\nccppf.men>
+Non-Central Beta                     <xemf: ~prob\ncbppf.men>
+Non-Central F                        <xemf: ~prob\ncfppf.men>
+Non-Central T                        <xemf: ~prob\nctppf.men>
+
+Doubly Non-Central F                 <xemf: ~prob\dnfppf.men>
+Doubly Non-Central T                 <xemf: ~prob\dntppf.men>
+

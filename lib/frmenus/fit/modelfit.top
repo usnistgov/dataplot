@@ -1,0 +1,46 @@
+----- <~fit\modelfit.top> Model Fitting: Least Squares
+
+Model Fitting: Least Squares
+
+Dataplot supports 2 broad classes of least
+squares fits:
+
+   1) Linear and Mulit-Linear Fits
+
+      Linear fits include the following types
+      of models:
+
+         Y = A0 + A1*X
+         Y = A0 + A1*X1 + A2*X1**2
+         Y = A0 + A1*X1 + A2*X2 + A3*X3
+         Y = A0 + A1*X1 + A2*X1**2 + A3*X2
+
+     Linear fits can be based on a single independent
+     variable (the y= f(x) case) or on multiple 
+     independent variables (the y=f(x1,x2,...) case).
+
+  2) Non-Linear Fits
+
+     Non-linear fitting fits a generic function.
+     For example,
+
+         Y = A + B*EXP(-C*X)
+
+     where X is an indepdendent variable, Y is
+     the dependent variable, and A, B, and C
+     are parameters.
+
+     Linear models can also be fit with the
+     non-linear algorithm.  The results should
+     be similar (will probably be a bit of rounding
+     error since the non-linear fit uses an
+     iterative rather than an exact fit).  In
+     addition, the non-linear algorithm does not
+     provide some of the advanced regression 
+     diagnostics available with the exact linear
+     fit.
+
+     Nonlinear fits can be based on a single independent
+     variable (the y= f(x) case) or on multiple 
+     independent variables (the y=f(x1,x2,...) case).
+

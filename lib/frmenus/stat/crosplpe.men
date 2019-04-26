@@ -1,0 +1,84 @@
+This is file crosplpe.men--Generate Cross Tab Statistic Plots (Percentiles)
+ 
+--------------------line 3
+01. Cross Tabulated Statistic Plots (Percentiles and Extremes)
+02. CROSS TABULATE <statistic> PLOT Y X1 X2
+03.
+04. Vertical Axis Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Group One ID Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06. Group Two ID Variable:
+06. @CE 3 0 37 54 ? gui-vari
+07.
+08. Statistic (Select one):
+09. @CE 4 1 5 25 minimum
+09. @CE 4 2 30 50 maximum
+10. @CE 4 3 5 25 extreme
+10. @CE 4 4 30 50 decile
+11. @CE 4 5 5 25 lower hinge
+11. @CE 4 6 30 50 upper hinge
+12. @CE 4 7 5 25 lower quartile
+12. @CE 4 8 30 50 upper quartile
+13. @CE 4 9 5 25 percentile
+13. @CE 4 10 30 50 quantile
+14.
+15. Desired percentile (>0, < 100):
+15. @CE 5 0 42 50 ? 
+16. Desired quantile (> 0, < 1)):
+16. @CE 6 0 42 50 ?
+17. Desired decile (first, second, ..., ninth):
+17. @CE 7 0 42 50 ?
+18.
+19. Character Type for Data
+19. @CE 8 0 42 50 * gui-char
+20. Character Fill for Data
+20. @CE 9 0 42 50 gui-ooff
+21. Line Type for Group 1 Global Stat Line?
+21. @CE 10 0 42 50 * gui-line
+22. Line Type for Global Stat Line?
+22. @CE 11 0 42 50 * gui-line
+23.
+24. Title:
+24. @CE 12 0 10 50 *
+25. Left Axis Label:
+25. @CE 13 0 22 50 *
+26. Bottom Axis Label:
+26. @CE 14 0 22 50 *
+27.
+28. Subset/Except/For Specification:
+29. @CE 15 0 1 50 *
+30.
+31. Generate the Cross Tabulated Statistic Plot?:
+--------------------
+TITLE _12
+Y1LABEL _13
+X1LABEL _14
+CHARACTER SAVE
+LINE SAVE
+CHARACTER X BLANK BLANK
+LINE BLANK SOLID SOLID
+CHARACTERS _8
+CHARACTER FILL _9
+LINES _10 ALL
+LINES BLANK _11
+SPIKE OFF OFF OFF
+BAR OFF OFF OFF
+LET XQ = _6
+LET P100 = _5
+.
+@IF 4 1 CROSS TABULATE MINIMUM PLOT _1 _2 _3 _15
+@IF 4 2 CROSS TABULATE MAXIMUM PLOT _1 _2 _3 _15
+@IF 4 3 CROSS TABULATE EXTREME PLOT _1 _2 _3 _15
+@IF 4 4 CROSS TABULATE _6 DECILE PLOT _1 _2 _3 _15
+@IF 4 5 CROSS TABULATE LOWER HINGE PLOT _1 _2 _3 _15
+@IF 4 6 CROSS TABULATE UPPER HINGE PLOT _1 _2 _3 _15
+@IF 4 7 CROSS TABULATE LOWER QUARTILE PLOT _1 _2 _3 _15
+@IF 4 8 CROSS TABULATE UPPER QUARTILE PLOT _1 _2 _3 _15
+@IF 4 9 CROSS TABULATE PERCENTILE PLOT _1 _2 _3 _15
+@IF 4 10 CROSS TABULATE QUANTILE PLOT _1 _2 _3 _15
+CHARACTER RESTORE
+LINE RESTORE
+--------------------
+WEB HELP CROSS TABULATE PLOT
+--------------------

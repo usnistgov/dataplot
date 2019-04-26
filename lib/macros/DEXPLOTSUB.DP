@@ -1,0 +1,85 @@
+. This is Dataplot program file    DEXPLOTSUB.DP
+. Purpose--Subroutine needed by DEXPLOT to generate 10 plots essential to the analysis
+.       of 2-level factorial designs
+. Date--December 2000
+. 5 macros are needed--dexcase.dp    (I/O for built-in examples)
+.                      confound.dp   (derive confounding structure)
+.                      digit.dp      (extract digits)
+.                      dexstat2.dp   (generate dex scatter & mean plots)
+.                      dexcont.dp    (generate contour plot)
+.
+. Assumptions:
+.    1. Data is in Y
+.    2. Factors are in X1, X2, X3, ...
+.    3. Total number of factors is in K
+.
+. -----start point-----
+.
+write " "
+write "At the Beginning of DEXPLOTSUB.DP . . ."
+write " "
+write "case = ^case"
+.
+if pausesw not exist; let pausesw = 0; end if
+if pausesw = 1; pause; end if
+.
+feedback off
+.
+x3label
+.
+let step = 0
+let kp1 = k+1
+let kp2 = k+2
+let k2 = 2*k
+let n = number y
+let index = 1 1 n
+call confound.dp
+.
+feedback off
+. printing off
+. feedback on
+. printing on
+.
+. -----step 1: ordered data plot-----
+.
+call dexodp.dp
+.
+. -----step 2: dex scatter plot-----
+.
+call dexsp.dp
+.
+. -----step 3: dex mean plot-----
+.
+call dexmp.dp
+.
+. -----step 4: interaction effects matrix-----
+.
+call dexiem.dp
+.
+. -----step 5: block plot-----
+.
+call dexbp.dp
+.
+. -----step 6: Youden plot-----
+.
+call dexyp.dp
+.
+. -----step 7: |effects| plot-----
+.
+call dexep.dp
+.
+. -----step 8: halfnormal probability plot-----
+.
+call dexhpp.dp
+.
+. -----step 9: cumulative residual sd plot-----
+.
+call dexcrsdp.dp
+.
+. -----step 10: contour plot-----
+.
+call dexcp.dp
+.
+. -----finish up-----
+
+. reset variables

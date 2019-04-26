@@ -1,0 +1,115 @@
+This is the Dataplot data file        COMPARE-7_1_6.DAT.
+This data set is used on page prc16.htm of the e-Handbook to
+demonstrate outliers.
+
+Number of observations                       = 90
+Number of observations per line image        = 1
+Order of variables on a line image--
+   1. Response Variable = Y
+  
+To read this file into Dataplot--
+
+   SKIP 25
+   READ COMPARE-7_1_6.DAT.DAT Y
+
+
+
+
+
+
+
+
+
+
+Y
+-----------------
+30 
+171 
+184 
+201 
+212 
+250 
+265 
+270 
+272 
+289 
+305 
+306 
+322 
+322 
+336 
+346 
+351 
+370 
+390 
+404 
+409 
+411 
+436 
+437 
+439 
+441 
+444 
+448 
+451 
+453 
+470 
+480 
+482 
+487 
+494 
+495 
+499 
+503 
+514 
+521 
+522 
+527 
+548 
+550 
+559 
+560 
+570 
+572 
+574 
+578 
+585 
+592 
+592 
+607 
+616 
+618 
+621 
+629 
+637 
+638 
+640 
+656 
+668 
+707 
+709 
+719 
+737 
+739 
+752 
+758 
+766 
+792 
+792 
+794 
+802 
+818 
+830 
+832 
+843 
+858 
+860 
+869 
+918 
+925 
+953 
+991 
+1000 
+1005 
+1068 
+1441

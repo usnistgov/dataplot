@@ -1,0 +1,25 @@
+. This is dataplot macro    alertk.dp
+. Purpose: Send alert message and receive keyboard input
+.
+if ibatch not exist or ibatch = 0
+   write " "
+   write " _________________________________________________________"
+   write " Alert:  You forgot to define k (= the number of factors)."
+   write "         Enter   k   from the keyboard now . . .          "
+   write " _________________________________________________________"
+   write " "
+   set io terminal
+   read parameter k
+   write "        You entered    k = ^k"
+   write " _________________________________________________________"
+   write " "
+   set io
+else
+   write " "
+   write " _________________________________________________________"
+   write " Alert:  You forgot to define k (= the number of factors)."
+   write "         Dataplot session will be terminated."
+   write " _________________________________________________________"
+   write " "
+   quit
+end of if

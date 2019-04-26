@@ -1,0 +1,28 @@
+----------  *ATOMS*  ----------
+
+Relative Number of Atoms of Various Elements
+      in the Universe (Phosphorus = 1)
+
+
+Substance         Symbol     Rel. Number
+                              of Atoms
+
+Hydrogen            H          4000000
+Helium              He          310000
+Oxygen              O             2150
+Neon                Ne             860
+Nitrogen            Ni             660
+Carbon              C              350
+Silicon             Si             100
+Magnesium           Mg              91
+Iron                Fe              60
+Sulfur              Su              38
+Argon               Ar              15
+Aluminum            Al              10
+Calcium             Ca               5
+Sodium              Na               4
+Nickel              Ni               3
+Phosphorus          K                1
+
+     Source--Asimov, Isaac.  Jupiter.
+             Ace Books, 1975, page 204.

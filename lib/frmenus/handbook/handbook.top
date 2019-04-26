@@ -1,0 +1,34 @@
+----- <~handbook\handbook.top> NIST/SEMATECH Handbook
+ 
+NIST/SEMATECH Engineering Statistics Internet Handbook
+ 
+The NIST/SEMATECH Engineering Statistics Internet Handbook
+is a web based statistics handbook developed jointly
+by the NIST Statistical Engineering Division and the
+SEMATECH Statistical Methods Group.
+
+A Beta version of the handbok is now available (some
+pages are still not available pending the NIST review
+process).
+
+Browser Set-Uo                 <~scre\browser.top>
+
+Handbook Homepage  <xcl: web handbook>
+Configuring Your Browser to Run Dataplot <xcl: web handbook configure>
+
+Handbook Chapters
+   Exploratory Data Analysis             <~handbook\eda.top>
+   Measurement Process Characterization  <~qual\mpc.top>
+   Production Process Characterization   <~handbook\ppc.top>
+   Process Modeling                      <~handbook\pmd.top>
+   Process Improvement                   <~handbook\pri.top>
+   Process Monitoring                    <~handbook\pmc.top>
+   Process Comparisons                   <~handbook\prc.top>
+   Product Reliability                   <~handbook\apr.top>
+
+Search Handbook                          <xcl: web handbook search>
+
+Specify Handbook Web Pages Path          <xemf: ~scre\hbpath.men>
+List Available Keywords for WEB HANDBOOK command <xcl: list handbk.tex>
+Enter Keyword for Handbook               <xemf: ~handbook\keyword.men>
+

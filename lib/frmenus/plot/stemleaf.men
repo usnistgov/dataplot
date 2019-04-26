@@ -1,0 +1,23 @@
+This is file stemleaf.men--Stem and Leaf Plot
+ 
+--------------------
+1. Stem and Leaf Plot
+2. STEM AND LEAF PLOT Y
+3.
+4. The output for the stem and leaf plot is directed to
+5. the alphanumeric output window, not the graphics window.
+6.
+7. Horizontal Axis Variable:
+7. @CE 1 0 33 50 ? gui-variable
+8.
+9. Subset/Except/For Specification: 
+10. @CE 2 0 1 50 *
+11.
+12.
+13. Generate the Stem and Leaf Plot?:
+--------------------
+GR FE
+STEM AND LEAF PLOT _1 _2
+--------------------
+WEB HELP STEM AND LEAF PLOT
+--------------------

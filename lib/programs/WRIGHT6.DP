@@ -1,0 +1,148 @@
+.  Name:    WRIGHT6.DP
+.  Purpose: demonstrate "character tabulation" plot for Wright brothers
+.           data
+.
+.           This calls a number of macros in the "programs" directory:
+.
+.           WRIGLEVE.DP  - define the contour levels and associated
+.                          attributes
+.           WRIGOPTI.DP  - define the desired options for the
+.                          CHARACTER TABULATION PLOT
+.
+.           WRIGLEGE.DP  - create the legend for the contour levels
+.           WRIGMARG.DP  - generate row/column margin values for the
+.                          specified statistic
+.           WRIGPLCN.DP  - define plot control options
+.
+.           If you want to modify what options to apply to the
+.           CHARACTER TABULATION PLOT, make the appropriate edits
+.           in WRIGOPTI.DP (this is primarily commenting or uncommenting
+.           certain lines that activate or deactivate the options).
+.           If you want to modify the contour levels, modify WRIGLEVE.DP.
+.
+.           If you want to adapt this macro to your own data, do
+.           the following:
+.
+.               1) Modify "Step 1" to read your data and define the
+.                  strings for the titles, axis labels, and tic mark
+.                  labels for your data.
+.
+.               2) Modify WRIGLEVE.DP to define the appropriate contour
+.                  levels and to define the colors you want to use.
+.
+.               3) Modify WRIGOPTI.DP to define what options you want
+.                  to use for the CHARACTER TABULATION PLOT.
+.
+.  Step 0: Initialize device
+.
+dimension 40 columns
+probe iopsy1
+if probeval = 1
+   device 1 x11
+end of if
+set ipl1na wright6.ps
+device 2 postscript
+device 2 color on
+.
+.  Step 1: Read the Wright brothers data and define title, axis labels,
+.          and tic mark labels
+.
+skip 25
+read wright11.dat y x1 x2
+.
+let x1d = distinct x1
+let ny = size x1d
+let x2d = distinct x2
+let nx = size x2d
+let string stitle = Wright Brothers Pressure Data
+let string sylab = uc()Alc()ngle
+let string sxlab = Wing Type
+.
+let string sy1 = 0
+let string sy2 = 2.5
+let string sy3 = 5
+let string sy4 = 7.5
+let string sy5 = 10
+let string sy6 = 12.5
+let string sy7 = 15
+let string sy8 = 17.5
+let string sy9 = 20
+let string sy10 = 25
+let string sy11 = 30
+let string sy12 = 35
+let string sy13 = 40
+let string sy14 = 45
+.
+loop for k = 1 1 13
+    let string sx^k = ^k
+end of loop
+let string sx14 = 15
+let string sx15 = 16
+let string sx16 = 17
+.
+.  Step 2: Define the contouring levels and associated attributes
+.
+call wrigleve.dp
+.
+.  Step 3: Define desired options for the CHARACTER TABULATION PLOT
+.
+call wrigopti.dp
+.
+.  Step 3: Define row/column marginal values for statistic
+.
+set let cross tabulate collapse
+let rowmean = cross tabulate ^zzzzstat y x1
+let colmean = cross tabulate ^zzzzstat y x2
+let rowmeanr = rank index rowmean
+let colmeanr = rank index colmean
+.
+.  Step 4: Set plot control options
+.
+call wrigplcn.dp
+.
+.  Step 5: Generate the character tabulation plot
+.
+.          Box around lowest and highest levels
+.
+if sortflag = 1
+   set tabulation plot sort row
+else if sortflag = 2
+   set tabulation plot sort column
+else if sortflag = 3
+   set tabulation plot sort on
+end of if
+if direrow = 1
+   set tabulation plot row sort direction descending
+end of if
+if direcol = 1
+   set tabulation plot column sort direction descending
+end of if
+.
+.          Row/Column Minimum/Maximum Option
+.
+if minmax = 1
+   set tabulation plot row minmax on
+end of if
+if minmax = 2
+   set tabulation plot column minmax on
+end of if
+.
+character color ^scolor
+character hw ^ssize
+character ^sstyle
+line blank all
+.
+character tabulation mean plot y x1 x2 ylevel
+.
+.  Step 6: Draw row/column marginal values and legend
+.
+if margflag = 1
+   call wrigmarg.dp
+end of if
+.
+if legeflag = 1
+   call wriglege.dp
+end of if
+.
+device 2 close
+.

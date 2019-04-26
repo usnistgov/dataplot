@@ -1,0 +1,38 @@
+This is file windowcc.men--Set Window Coordinates
+ 
+--------------------
+ 1. Set Area of Graphics Screen to Use
+ 2. WINDOW CORNER COORDINATES 0 50 50 100
+ 3.
+ 4. By default, Dataplot defines a 0 to 100
+ 5. scale in both the horizontal and 
+ 6. vertical directions.  This scale is mapped
+ 7. over the entire physical area of a given
+ 8. graphics device.  You can specify that
+ 9. this mapping take place over a subset of
+10. the graphics device (this is equivalent to
+11. setting the "viewport" in other packages).
+12. The most common purpose for doing this is
+13. in generating multiple plots per page.  The
+14. MULTIPLOT command allows this to be done
+15. automatically.  However, there are some
+16. special situations where it is desirable to
+17. do this by setting the window instead.
+18.
+19. X Coordinate for Lower Corner:
+19. @CE 1 0 42 50 *
+20. Y Coordinate for Lower Corner:
+20. @CE 2 0 42 50 *
+21. X Coordinate for Upper Corner:
+21. @CE 3 0 42 50 *
+22. Y Coordinate for Upper Corner:
+22. @CE 4 0 42 50 *
+23.
+24.
+25. Set the Window?:
+--------------------
+PC FE
+WINDOW CORNER COORDINATES _1 _2 _3 _4
+--------------------
+WEB HELP WINDOW CORNER COORDINATES
+--------------------

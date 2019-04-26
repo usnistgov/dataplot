@@ -1,0 +1,25 @@
+----- <~dataload\univnist.top> Load Univariate Data: NIST
+
+Load Univariate Data: NIST
+
+LEW.DAT       Beam deflections            <xcf: ~dataload\LEW.DP>
+SOULEN0.DAT   Josephson junc cryothermom. <xcf: ~dataload\SOULEN0.DP>
+SOULEN.DAT    Josephson junc cryothermom. <xcf: ~dataload\SOULEN.DP>
+MARSHAK.DAT   Nuclear thermometry         <xcf: ~dataload\MARSHAK.DP>
+
+SIMIU.DAT     Wind speeds                 <xcf: ~dataload\SIMIU.DP>
+WASHDC.DAT    Washington DC wind speeds   <xcf: ~dataload\WASHDC.DP>
+KEYWEST.DAT   Key West wind speeds        <xcf: ~dataload\KEYWEST.DP>
+MAVRO.DAT*    Filter transmittance        <xcf: ~dataload\MAVRO.DP>
+DZIUBA.DAT    Standard resistor           <xcf: ~dataload\DZIUBA.DP>
+ZARR13.DAT    Hear flow meter             <xcf: ~dataload\ZARR13.DP>
+ZARR14.DAT    Hear flow meter             <xcf: ~dataload\ZARR14.DP>
+ZARR15.DAT    Hear flow meter             <xcf: ~dataload\ZARR15.DP>
+
+MORALES.DAT   Mass spec: sulfur exa-fluor <xcf: ~dataload\MORALES.DP>
+MORALES2.DAT  Mass spec: sulfur exa-fluor <xcf: ~dataload\MORALES2.DP>
+
+REHM.DAT      Asmathic air flow           <xcf: ~dataload\REHM.DP>
+FUNNEL5A.DAT  Funnel data                 <xcf: ~dataload\FUNNEL5A.DP>
+VANGEL5.DAT   Strength at failure         <xcf: ~dataload\VANGEL5.DP>
+

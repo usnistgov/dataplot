@@ -1,0 +1,8 @@
+----- <~dataall\WASHDC.top> WASHDC.DAT
+
+WASHDC.DAT
+
+View     <xcl: LIST WASHDC.DAT>
+Load     <xcf: ~dataload/WASHDC.DP>
+Print    <xccl: printfile C:\DATAPLOT\WASHDC.DAT>
+

@@ -1,0 +1,6 @@
+----- <~dataprin\FREQPRIM.DP> Print (to Printer) FREQPRIM.DAT
+
+. This is file    FREQPRIM.DP
+
+PRINT FREQPRIM.DAT
+

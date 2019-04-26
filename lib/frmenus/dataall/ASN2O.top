@@ -1,0 +1,8 @@
+----- <~dataall\ASN2O.top> ASN2O.DAT
+
+ASN2O.DAT
+
+View     <xcl: LIST ASN20.DAT>
+Load     <xcf: ~dataload/ASN20.DP>
+Print    <xccl: printfile C:\DATAPLOT\ASN20.DAT>
+

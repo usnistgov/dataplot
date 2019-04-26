@@ -1,0 +1,10 @@
+----- <~dataloex\BIOMED3.DP> Load & Execute BIOMED3.DAT
+
+. This is file    BIOMED3.DP
+
+DELETE Y
+SKIP 25
+READ BIOMED3.DAT Y
+TITLE BIOMED3.DAT
+/
+

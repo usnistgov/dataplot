@@ -1,0 +1,64 @@
+This is file barpline.men--Set Bar Pattern Lines
+ 
+--------------------
+ 1. Bars
+ 2. BAR PATTERN LINE <list of bar pattern lines>
+ 3.
+ 4. Bar Pattern Line for ALL Traces:
+ 4. @CE 1 0 42 50 * gui-line
+ 5.
+ 6. Use the following menus to set bar pattern lines for
+ 7. traces individually.  The bar pattern lines are sequential.
+ 8. If you set the bar pattern lines for trace 5, you
+ 9. must also set them for traces 1, 2, 3, and 4.
+10.
+11. Bar Pattern Line for Trace 1:
+11. @CE 2 0 42 50 * gui-line
+12. Bar Pattern Line for Trace 2:
+12. @CE 3 0 42 50 * gui-line
+13. Bar Pattern Line for Trace 3:
+13. @CE 4 0 42 50 * gui-line
+14. Bar Pattern Line for Trace 4:
+14. @CE 5 0 42 50 * gui-line
+15. Bar Pattern Line for Trace 5:
+15. @CE 6 0 42 50 * gui-line
+16. Bar Pattern Line for Trace 6:
+16. @CE 7 0 42 50 * gui-line
+17. Bar Pattern Line for Trace 7:
+17. @CE 8 0 42 50 * gui-line
+18. Bar Pattern Line for Trace 8:
+18. @CE 9 0 42 50 * gui-line
+19. Bar Pattern Line for Trace 9:
+19. @CE 10 0 42 50 * gui-line
+20. Bar Pattern Line for Trace 10:
+20. @CE 11 0 42 50 * gui-line
+21. Bar Pattern Line for Trace 11:
+21. @CE 12 0 42 50 * gui-line
+22. Bar Pattern Line for Trace 12:
+22. @CE 13 0 42 50 * gui-line
+23. Bar Pattern Line for Trace 13:
+23. @CE 14 0 42 50 * gui-line
+24. Bar Pattern Line for Trace 14:
+24. @CE 15 0 42 50 * gui-line
+25. Bar Pattern Line for Trace 15:
+25. @CE 16 0 42 50 * gui-line
+26. Bar Pattern Line for Trace 16:
+26. @CE 17 0 42 50 * gui-line
+27. Bar Pattern Line for Trace 17:
+27. @CE 18 0 42 50 * gui-line
+28. Bar Pattern Line for Trace 18:
+28. @CE 19 0 42 50 * gui-line
+29. Bar Pattern Line for Trace 19:
+29. @CE 20 0 42 50 * gui-line
+30. Bar Pattern Line for Trace 20:
+30. @CE 21 0 42 50 * gui-line
+31.
+32.
+33. Set the Bar Pattern Lines?
+--------------------
+PC FE
+BAR PATTERN LINE _2 _3 _4 _5 _6 _7 _8 _9 _10 _11 _12 _13 _14 _15 _16 _17 _18 _19 _20 _21
+@IF 1 0 BAR PATTERN LINE _1 ALL
+--------------------
+WEB HELP BAR PATTERN LINE
+--------------------

@@ -1,0 +1,24 @@
+-----<~univ\testfiva.top> Test Fixed Variation
+
+Test Fixed Variation
+
+Run sequence plot                    <xemf: ~univ\runseqpl.men>
+4-Plot                               <xemf: ~univ\4plot.men>
+
+Analysis on halves:
+   Vertical line plot                <xemf: ~univ\vertplo2.men>
+   Standard Deviation plot           <xemf: ~univ\sdplot2.men>
+   Range plot                        <xemf: ~univ\rangplo2.men>
+   Box plot                          <xemf: ~univ\boxplot2.men>
+   Bihistogram                       <xemf: ~univ\bihist2.men>
+   Quantile-quantile plot            <xemf: ~univ\qqplot2.men>
+   Formal F test                     <xemf: ~univ\ftest2.men>
+
+Analysis on quarters:
+   Vertical line plot                <xemf: ~univ\vertplo4.men>
+   Standard Deviation plot           <xemf: ~univ\sdplot4.men>
+   Range plot                        <xemf: ~univ\rangplo4.men>
+   Box plot                          <xemf: ~univ\boxplot4.men>
+   Quantile-quantile plot            <xemf: ~univ\qqplot4.men>
+   Formal Bartlett's test            <xemf: ~univ\barttes4.men>
+

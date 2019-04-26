@@ -1,0 +1,10 @@
+----- <~dataloex\BAKER.DP> Load & Execute BAKER.DAT
+
+. This is file    BAKER.DP
+
+DELETE Y
+SKIP 25
+READ BAKER.DAT Y
+TITLE BAKER.DAT
+/
+

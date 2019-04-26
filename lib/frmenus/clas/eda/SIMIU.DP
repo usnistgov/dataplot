@@ -1,0 +1,13 @@
+----- <~edac\SIMIU.DP> Load SIMIU.DATA & generate 4-PLOT
+
+. This is file    SIMIU.DP
+
+DELETE Y
+TITLE
+.
+LIST SIMIU.DAT
+SKIP 25
+READ SIMIU.DAT Y
+.
+TITLE SIMIU.DAT
+4-PLOT Y

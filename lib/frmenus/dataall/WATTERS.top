@@ -1,0 +1,8 @@
+----- <~dataall\WATTERS.top> WATTERS.DAT
+
+WATTERS.DAT
+
+View     <xcl: LIST WATTERS.DAT>
+Load     <xcf: ~dataload/WATTERS.DP>
+Print    <xccl: printfile C:\DATAPLOT\WATTERS.DAT>
+

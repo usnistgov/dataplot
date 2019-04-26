@@ -1,0 +1,57 @@
+This is file eva2_fun.men--Evaluate a 2-D user-defined function
+ 
+--------------------
+ 1. Evaluate a 2-D User Defined Function
+ 2. LET FY = F
+ 3.
+ 4. Name of the function (or enter a functional expression):
+ 5. @CE 1 0 -10 50 ? gui-function
+ 6. First variable for which the function is defined:
+ 6. @CE 2 0 33 50 ? gui-variable
+ 7. Second variable for which the function is defined:
+ 7. @CE 8 0 33 50 ? gui-variable
+ 8. Variable to store the computed values:
+ 8. @CE 7 0 33 50 ? gui-none
+ 9.
+10. Method for defining points at which to evaluate the function:
+11. @CE 3 1 10 60 variables specified above already defined
+12.
+13. @CE 3 2 10 60 define an equally spaced sequence
+14.              Start value for first variable:
+14. @CE 4 0 33 50 * 
+15.              Stop value for first variable:
+15. @CE 5 0 33 50 * 
+16.              Increment for first variable:
+16. @CE 6 0 33 50 * 
+17.              Start value for second variable:
+17. @CE 9 0 33 50 * 
+18.              Stop value for second variable:
+18. @CE 10 0 33 50 * 
+19.              Increment for second variable:
+19. @CE 11 0 33 50 * 
+20.
+21. @CE 3 3 10 60 list of points (same number of points for both variables):
+22.              Values for first variable:
+23. @CE 12 0 -10 50 * 
+24.              Values for second variable (same number as first):
+25. @CE 13 0 -10 50 * 
+26.
+27.
+28. Evaluate the Function?:
+--------------------
+GR FE
+@IF 3 1 LET _7 = _1
+@IF 3 2 LET _2 = SEQUENCE _4 _5 _6
+@IF 3 2 LET ZZZZZZN1 = SIZE _2
+@IF 3 2 LET _8 = SEQUENCE _9 ZZZZZZN1 _10 _11
+@IF 3 2 LET ZZZZZZN2 = SIZE _8
+@IF 3 2 LET _2 = SEQUENCE _4 _5 _6 FOR I = 1 1 ZZZZZZN2
+@IF 3 2 DELETE ZZZZZZN1 ZZZZZZN2
+@IF 3 2 LET _7 = _1
+@IF 3 3 DELETE _2 _8
+@IF 3 3 LET _2 = DATA _12
+@IF 3 3 LET _8 = DATA _13
+@IF 3 3 LET _7 = _1
+--------------------
+WEB HELP LET FUNCTION
+--------------------

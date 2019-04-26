@@ -1,0 +1,51 @@
+This is file setticof.men--Set Tic Offset
+ 
+--------------------
+ 1. Set Tic Offset
+ 2. TIC OFFSET UNITS SCREEN;   TIC OFFSET 5 5
+ 3.
+ 4. The Tic offset is the distance of the
+ 5. first and last major tic marks to the
+ 6. end of the frame.
+ 7.
+ 8. Tic marks can be specified in either
+ 9. Dataplot 0 to 100 screen units (i.e.,
+10. as a percentage) or in units of the data.
+11. For screen units, an offset of 5% of the
+12. screen width often works well (i.e., enter
+13. 5 for the value).
+14.
+14. Units for Tic Offsets:
+15. @CE 1 1 5 20 screen units
+15. @CE 1 2 5 20 data units
+16.
+17. Set lower (or left) tic offset:
+17. @CE 2 0 42 50 ?
+18. Set upper (or right) tic offset:
+18. @CE 3 0 42 50 ?
+19.
+20. Axis for Which to Set the Tic Offset:
+21. @CE 4 1 5 25 bottom
+22. @CE 4 2 5 25 top
+23. @CE 4 3 5 25 left
+24. @CE 4 4 5 25 right
+25. @CE 4 5 5 25 bottom and top
+26. @CE 4 6 5 25 left and right
+27. @CE 4 7 5 25 all
+28.
+29.
+30. Set the Tic Offset?
+--------------------
+PC FE
+@IF 1 1 TIC OFFSET UNITS SCREEN
+@IF 1 2 TIC OFFSET UNITS DATA
+@IF 4 1 X1TIC OFFSET _2 _3
+@IF 4 2 X2TIC OFFSET _2 _3
+@IF 4 3 Y1TIC OFFSET _2 _3
+@IF 4 4 Y2TIC OFFSET _2 _3
+@IF 4 5 XTIC OFFSET _2 _3
+@IF 4 6 YTIC OFFSET _2 _3
+@IF 4 7 TIC OFFSET _2 _3
+--------------------
+WEB HELP TIC OFFSET
+--------------------

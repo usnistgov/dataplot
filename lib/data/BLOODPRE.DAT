@@ -1,0 +1,37 @@
+THIS IS DATAPLOT DATA FILE BLOODPRE.DAT
+BLOOD PRESSURE READINGS
+"EXPERIMENT"--TAKE 12 BLOOD PRESSURE READINGS
+              IN SUCCESSION ON JJF 8/21/92
+NUMBER OF OBSERVATIONS = 12
+NUMBER OF VARIABLES = 2
+ORDER OF VARIABLES ON A LINE IMAGE--
+   1. SYSTOLIC BLOOD PRESSURING
+   2. DIASTOLIC BLOOD PRESSURE READING
+   3. PULSE RATE
+TO READ THIS INTO DATAPLOT--
+   SKIP 25
+   READ BLOODPRE.DAT Y1 Y2 Y3
+NOTE--NORMAL IS     139 / 89 AND LOWER
+      BORDERLINE IS 140-159 / 90-94
+      HIGH IS       160 / 95 AND HIGHER
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+SYSTOLIC  DIASTOLIC   PULSE
+---------------------------
+   123       84        -99
+   120       89        -99
+   124       88        -99
+   119       92         67
+   118       90         67
+   120       93         67
+   114       94         70
+   132       87         64
+   120       90         67
+   127       95         65
+   130       89         65
+   128       92         67

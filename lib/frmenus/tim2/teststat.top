@@ -1,0 +1,14 @@
+----- <~tim2\teststat.top> Testing Stationarity & Cross-Stationarity
+ 
+Testing Stationarity & Cross-Stationarity
+ 
+Discussion                 <~tim2\teststdi.top>
+ 
+Within a single series:
+   Mean plots                     <xemf: ~time\meanplot.men>
+   SD plots                       <xemf: ~time\sdplot.men>
+   Autocorrelation plot matrix    <xemf: ~time\autocpma.men>
+ 
+Between the 2 series:
+   Cross-correlation plot matrix  <xemf: ~tim2\croscpma.men>
+ 

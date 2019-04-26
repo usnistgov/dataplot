@@ -1,0 +1,24 @@
+This is file esticorr.men--Estimate Correlation
+ 
+--------------------
+ 1. Estimate Correlation Coefficient
+ 2. LET C = CORRELATION Y X
+ 3. Reference: Snedecor & Cochran, page 180
+ 4.
+ 5. Variables:
+ 6.    Response    Y:
+ 6. @CE 1 0 35 50 ? gui-variable
+ 7.    Independent X:
+ 7. @CE 2 0 35 50 ? gui-variable
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 3 0 1 50 *
+11.
+12.
+13. Compute Correlation?
+--------------------
+GR FE
+LET ZCORR = CORRELATION _1 _2 _4
+--------------------
+WEB HELP CORRELATION
+--------------------

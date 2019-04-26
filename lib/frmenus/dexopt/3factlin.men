@@ -1,0 +1,32 @@
+This is file 3factlin.men--Fit 3-Factor Linear Model
+ 
+--------------------
+1. Fitting: 3 Variable First Order Model
+2. FIT Y X1 X2 X3 X12 X13 X23 X123
+3.
+4. Variables:
+5.    Response    Y:
+5. @CE 1 0 40 50 ? gui-variable
+6.    First Independent X:
+6. @CE 2 0 40 50 ? gui-variable
+7.    Second Independent Variable:
+7. @CE 3 0 40 50 * gui-variable
+8.    Third Independent Variable:
+8. @CE 4 0 40 50 * gui-variable
+9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 1 50 *
+12.
+13.
+14. Do the Fit?
+--------------------
+GR FE
+DELETE ZZZZX12 ZZZZX13 ZZZZX23 ZZZZX123
+LET ZZZZX12 = _2 * _3
+LET ZZZZX13 = _2 * _4
+LET ZZZZX23 = _3 * _4
+LET ZZZZX123 = _2 * _3 * _4
+FIT _1 _2 _3 _4 ZZZZX12 ZZZZX13 ZZZZX23 ZZZZX123 _5
+--------------------
+WEB HELP FIT
+--------------------

@@ -1,0 +1,211 @@
+. This is Dataplot macro    SIMPLEX3.DP
+.
+. Purpose--Generate a mixture experiment simplex triangular grid.
+.          Display the grid.
+.          Display the region.
+.          (note--no data displayed or needed)
+.
+. Date   --March 1997
+.
+. Input  --the following items must pre-exist:
+.          1. X1MIN   = element 1 lower limit
+.          2. X1MAX   = element 1 upper limit
+.          3. X2MIN   = element 2 lower limit
+.          4. X2MAX   = element 2 upper limit
+.          5. X3MIN   = element 3 lower limit
+.          6. X3MAX   = element 3 upper limit
+.
+.          7. GRIDINC = .grid line increment (0 to 1)
+.
+.          8. S1      = element 1 name (a string)
+.          9. S2      = element 2 name (a string)
+.         10. S3      = element 3 name (a string)
+.
+. Output --a triangular simplex grid
+.          with the region highlighted
+.
+. Example--(see SNYDER.DP)
+.          LET X1MIN = .10
+.          LET X1MAX = .30
+.          LET X2MIN = .47
+.          LET X2MAX = .69
+.          LET X3MIN = .16
+.          LET X3MAX = .30
+.
+.          LET GRIDINC = .1
+.
+.          LET STRING S1 = Aggregate
+.          LET STRING S2 = Cement
+.          LET STRING S3 = Water
+.
+.          CALL SIMPLEX3.DP
+.
+. -----START POINT-----
+.
+FEEDBACK OFF
+.
+. ----Step 1--Define horizontal and vertical percentage units-----
+.         for the landscape orientation image
+.
+LET PXMIN = 20
+LET PXMAX = 80
+LET PYMIN = 18
+LET PYMAX = 88
+.
+LET PXRANGE = PXMAX-PXMIN
+LET PYRANGE = PYMAX-PYMIN
+.
+. ----Step 2--Check for existence of grid increment-----
+.             (default = no grid)
+.
+IF GRIDINC NOT EXIST
+   LET GRIDINC = 1
+END IF
+
+. ----Step 3--Generate the grid-----
+.
+LOOP FOR XDUMMY = 0 GRIDINC 1
+   LET PXSTART = PXMIN + 0.5*PXRANGE*XDUMMY
+   LET PYSTART = PYMIN + PYRANGE*XDUMMY
+   LET PXSTOP = PXMAX - (PXSTART-PXMIN)
+   LET PYSTOP = PYSTART
+   DRAW PXSTART PYSTART PXSTOP PYSTOP
+END LOOP
+.
+LOOP FOR XDUMMY = 0 GRIDINC 1
+   LET PXSTART = PXMAX - PXRANGE*XDUMMY
+   LET PYSTART = PYMIN
+   LET PXSTOP = PXSTART - 0.5*PXRANGE*(1-XDUMMY)
+   LET PYSTOP = PYSTART + PYRANGE*(1-XDUMMY)
+   DRAW PXSTART PYSTART PXSTOP PYSTOP
+END LOOP
+.
+LOOP FOR XDUMMY = 0 GRIDINC 1
+   LET PXSTART = PXMIN + PXRANGE*XDUMMY
+   LET PYSTART = PYMIN
+   LET PXSTOP = PXSTART + 0.5*PXRANGE*(1-XDUMMY)
+   LET PYSTOP = PYSTART + PYRANGE*(1-XDUMMY)
+   DRAW PXSTART PYSTART PXSTOP PYSTOP
+END LOOP
+.
+. ----Step 4--Annotate the plot-----
+.
+HW 2 1
+JUSTIFICATION CENTER
+LET PXHALF = (PXMIN+PXMAX)/2
+LET PYHALF = (PYMIN+PYMAX)/2
+LET PXTHIRD = PXMIN + (PXMAX-PXMIN)/3
+LET PX2THIRD = PXMIN + 2*(PXMAX-PXMIN)/3
+LET PYTHIRD = PYMIN + (PYMAX-PYMIN)/3
+LET PXMINM = PXMIN-4
+LET PXMAXP = PXMAX+4
+LET PYMINM = PYMIN-2
+LET PYMINM2 = PYMIN-5
+LET PYMAXP = PYMAX+2
+LET PYMAXP2 = PYMAX+4
+MOVE PXHALF PYMAXP; TEXT ^S1
+MOVE PXMINM PYMINM2; TEXT ^S2
+MOVE PXMAXP PYMINM2; TEXT ^S3
+.
+. ----Step 5--Highlight the region-----
+.
+THICKNESS .5
+.
+LET XDUMMY = X1MIN
+LET PXSTART = PXMIN+0.5*PXRANGE*XDUMMY
+LET PYSTART = PYMIN+PYRANGE*XDUMMY
+LET PXSTOP = PXMAX-(PXSTART-PXMIN)
+LET PYSTOP = PYSTART
+DRAW PXSTART PYSTART PXSTOP PYSTOP
+.
+LET XDUMMY = X1MAX
+LET PXSTART = PXMIN + 0.5*PXRANGE*XDUMMY
+LET PYSTART = PYMIN + PYRANGE*XDUMMY
+LET PXSTOP = PXMAX - (PXSTART-PXMIN)
+LET PYSTOP = PYSTART
+DRAW PXSTART PYSTART PXSTOP PYSTOP
+.
+LET XDUMMY = X2MIN
+LET PXSTART = PXMAX - PXRANGE*XDUMMY
+LET PYSTART = PYMIN
+LET PXSTOP = PXSTART - 0.5*PXRANGE*(1-XDUMMY)
+LET PYSTOP = PYSTART + PYRANGE*(1-XDUMMY)
+DRAW PXSTART PYSTART PXSTOP PYSTOP
+.
+LET XDUMMY = X2MAX
+LET PXSTART = PXMAX - PXRANGE*XDUMMY
+LET PYSTART = PYMIN
+LET PXSTOP = PXSTART - 0.5*PXRANGE*(1-XDUMMY)
+LET PYSTOP = PYSTART + PYRANGE*(1-XDUMMY)
+DRAW PXSTART PYSTART PXSTOP PYSTOP
+.
+LET XDUMMY = X3MIN
+LET PXSTART = PXMIN + PXRANGE*XDUMMY
+LET PYSTART = PYMIN
+LET PXSTOP = PXSTART + 0.5*PXRANGE*(1-XDUMMY)
+LET PYSTOP = PYSTART + PYRANGE*(1-XDUMMY)
+DRAW PXSTART PYSTART PXSTOP PYSTOP
+.
+LET XDUMMY = X3MAX
+LET PXSTART = PXMIN + PXRANGE*XDUMMY
+LET PYSTART = PYMIN
+LET PXSTOP = PXSTART + 0.5*PXRANGE*(1-XDUMMY)
+LET PYSTOP = PYSTART + PYRANGE*(1-XDUMMY)
+DRAW PXSTART PYSTART PXSTOP PYSTOP
+.
+. ----Step 6--Shade in the region-----
+.
+LET HINC = .02
+LET VINC = .02
+LET K2 = SQRT(2)
+LET K6 = SQRT(6)
+.
+. LET ARG1 = 1-X3MIN
+. LET X2HIT = MAX(ARG1,X2MAX)
+. LET HMIN = (1/K2)*((1-X2HIT)-X2HIT)
+LET HMIN = (1/K2) * (X3MIN-X2MAX)
+.
+. LET ARG2 = 1-X3MAX
+. LET X2HIT = MIN(ARG2,X2MIN)
+. LET HMAX = (1/K2)*((1-X2HIT)-X2HIT)
+LET HMAX = (1/K2) * (X3MAX-X2MIN)
+.
+LET VMIN = -(1/K6) + 3*(1/K6)*X1MIN
+.
+LET VMAX = -(1/K6) + 3*(1/K6)*X1MAX
+.
+. WRITE HMIN HMAX VMIN VMAX
+. PAUSE
+LOOP FOR H = HMIN HINC HMAX
+   LOOP FOR V = VMIN VINC VMAX
+      LET X2DUMMY = (2 - K6*V - 3*K2*H) / 6
+      LET X3DUMMY = (2 - K6*V + 3*K2*H) / 6
+      LET X1DUMMY = 1 - X2DUMMY - X3DUMMY
+      LET SUM = 0
+      IF X1MIN < X1DUMMY; LET SUM = SUM + 1; END IF
+      IF X1DUMMY < X1MAX; LET SUM = SUM + 1; END IF
+      IF X2MIN < X2DUMMY; LET SUM = SUM + 1; END IF
+      IF X2DUMMY < X2MAX; LET SUM = SUM + 1; END IF
+      IF X3MIN < X3DUMMY; LET SUM = SUM + 1; END IF
+      IF X3DUMMY < X3MAX; LET SUM = SUM + 1; END IF
+      LET SUM = INT(SUM+0.5)
+      IF SUM = 6;
+         LET PX = PXHALF  + ((PXRANGE)/(2/K2)) * H
+         LET PY = PYTHIRD + ((PYRANGE)/(3/K6)) * V
+         LET PXPRIME = PX + 0.1
+         DRAW PX PY PXPRIME PY
+      END IF
+. WRITE H V X1 X2 X3 SUM
+. PAUSE
+   END LOOP
+END LOOP
+.
+THICKNESS DEFAULT
+MOVE 90 3
+HW 1 .5
+JUST LEFT
+. TEXT SIMPLEXR.DP
+HW 2 1
+.
+LINES SOLID ALL
+FEEDBACK ON

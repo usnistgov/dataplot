@@ -1,0 +1,9 @@
+----- <~dataload\univ.top> Load Built-in Univariate Data Files
+
+Load Built-in Univariate Data Files
+
+NIST data                 <~dataload\univnist.top>
+Natrella Data             <~dataload\univnatr.top>
+Sematech Data             <~dataload\univsema.top>
+Other data                <~dataload\univothe.top>
+

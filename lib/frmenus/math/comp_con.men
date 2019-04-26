@@ -1,0 +1,30 @@
+This is file comp_con.men--Compute complex conjugate
+ 
+--------------------
+ 1. Complex Conjugate
+ 2. LET YR YC = COMPLEX CONJUGATE XR XC
+ 3.
+ 4. Real component for which to compute the
+ 5.    complex conjugate:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Complex component for which to compute the
+ 7.    complex conjugate:
+ 7. @CE 2 0 33 50 * gui-variable
+ 8. Variable to store the real component of the
+ 9.    complex conjugate:
+ 9. @CE 3 0 33 50 ? gui-none
+10. Variable to store the complex component of
+11.    the complex conjugate:
+11. @CE 4 0 33 50 ? gui-none
+12.
+13. Subset/Except/For Specification:
+14. @CE 5 0 -10 50 *
+15.
+16.
+17. Compute the Complex Conjugate?:
+--------------------
+GR FE
+LET _3 _4 = COMPLEX CONJUGATE  _1 _2 _5
+--------------------
+WEB HELP COMPLEX CONJUGATE
+--------------------

@@ -1,0 +1,29 @@
+----- <~dp\plots.top> Plots
+ 
+Plots
+ 
+Most Important Plot Commands: PLOT, 4-PLOT, 6-PLOT
+ 
+Macro for 25 typical plots: PLOT25.DP
+Macro for reference plot  : REFPLOT.DP
+Macro for available colors: PLOTCOLOR.DP
+ 
+Trace Attributes
+   Characters
+   Lines
+   Spikes
+   Bars
+ 
+Laserprint the last plot  : PP
+ 
+Color
+   Available colors       : PLOTCOLOR.DP
+ 
+Fonts
+   SIMPLEX
+   SIMPLEX SCRIPT
+   DUPLEX
+   TRIPLEX
+   TRIPLEX SCRIPT
+   COMPLEX
+ 

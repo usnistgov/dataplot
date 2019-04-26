@@ -1,0 +1,58 @@
+This is file gephispd.men--Histogram & Superimposed GENERALIZED EXTREME VALUE pdf Plot
+
+--------------------
+ 1. Histogram & Superimposed Generalized Extreme Value pdf Plot
+ 2. HIST Y; PLOT GEVPDF(X,GAMMA) FOR X=START INC STOP
+ 3.
+ 4. Relative histogram of data:
+ 5.    Name of data variable:
+ 5. @CE 1 0 31 49 ? gui-vari
+ 6.    Class width:
+ 6. @CE 2 0 31 49 ?
+ 7.    Lower limit of 1st  class:
+ 7. @CE 3 0 31 49 ?
+ 8.    Upper limit of last class:
+ 8. @CE 4 0 31 49 ?
+ 9.    Bar fill on/off:
+ 9. @CE 5 0 31 49 ?
+10.
+11. Superimposed generalized Extreme Value pdf:
+12.    Shape gamma:
+12. @CE 6 0 31 49 ?
+13.    Location u:
+13. @CE 7 0 31 49 ?
+14.    Scale s:
+14. @CE 8 0 31 49 ?
+15.    Start point:
+15. @CE 9 0 31 49 ?
+16.    Increment:
+16. @CE 10 0 31 49 ?
+17.    Stop point:
+17. @CE 11 0 31 49 ?
+18.    Line type:
+18. @CE 12 0 31 49 gui-line
+19.
+20.
+21. Generate the plot?
+--------------------
+AN FE
+@IF 2 0 CLASS WIDTH _2
+@IF 3 0 CLASS LOWER _3
+@IF 4 0 CLASS UPPER _4
+@IF 1 0 RELATIVE HISTOGRAM _1
+@IF 1 0 LIMITS FREEZE
+.
+PRE-ERASE OFF
+@IF 5 0 BAR FILL _5
+LET ZGAMMA = _6
+LET ZLOC = 0
+@IF 7 0 LET ZLOC = _7
+LET ZSCALE = 1
+@IF 8 0 LET ZSCALE = _8
+@IF 12 0 LINES _12
+PLOT GEVPDF(X,ZGAMMA,ZLOC,ZSCALE) FOR X = _9 _10 _11
+@IF 1 0 LIMITS
+PRE-ERASE ON
+--------------------
+WEB HELP GEVPDF
+--------------------

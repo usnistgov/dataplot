@@ -1,0 +1,22 @@
+This is file 4plot.men--4-plot
+ 
+--------------------
+ 1. 4-Plot
+ 2. 4-PLOT Y
+ 3.
+ 4. Vertical   Axis Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. Horizontal Axis Variable (usually omitted):
+ 5. @CE 2 0 33 50 * gui-vari
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Generate the 4-Plot?
+--------------------
+GR FE
+4-PLOT _1 _2 _3
+--------------------
+WEB HELP 4-PLOT
+--------------------

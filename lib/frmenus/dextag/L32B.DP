@@ -1,0 +1,8 @@
+----- <~dextag\L32B.DP> Load  L32B.DAT
+
+. This is file    L32B.DP
+
+DELETE X1 TO X10
+SKIP 25
+READ L32B.DAT X1 TO X10
+

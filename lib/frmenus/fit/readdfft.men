@@ -1,0 +1,38 @@
+This is file readdfft.men--Read (and plot) the DFFIT's
+ 
+--------------------
+1. Read DFFIT's
+2. SET READ FORMAT 112X,E15.7; READ DPST3F.DAT COOK
+3.
+4. Variable Name to Use: 
+4. @CE 1 0 42 50 ?
+5.
+6. Plot?:
+6. @CE 2 1 42 45 yes
+6. @CE 2 2 46 49 no
+7. Character for plot symbol:
+7. @CE 3 0 42 50 gui-char
+8.
+9.
+10. Read the DFFIT's Values?:
+--------------------
+GR FE
+SKIP 1
+SET READ FORMAT 112X,E15.7
+READ DPST3F.DAT _1
+SKIP 0
+SET READ FORMAT
+@IF 2 1 READ DPST1F.DAT ZZZZCOEF
+@IF 2 1 LET ZZZZP = SIZE ZZZZCOEF
+@IF 2 1 LINE BLANK
+@IF 2 1 CHARACTER _3
+@IF 2 1 PLOT _1
+@IF 2 1 LET ZZZZN = SIZE _1
+@IF 2 1 LINE SOLID
+@IF 2 1 LET ZZZZDUMM = 1
+@IF 2 1 DRAWDATA 1 ZZZZDUMM ZZZZN ZZZZDUMM
+@IF 2 1 LET ZZZZDUMM = 2*SQRT(ZZZZP/ZZZZN)
+@IF 2 1 DRAWDATA 1 ZZZZDUMM ZZZZN ZZZZDUMM
+--------------------
+WEB HELP FIT
+--------------------

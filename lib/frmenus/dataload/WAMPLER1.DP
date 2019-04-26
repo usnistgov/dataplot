@@ -1,0 +1,8 @@
+----- <~dataload\WAMPLER1.DP> Load WAMPLER1.DAT
+
+. This is file    WAMPLER1.DP
+
+DELETE X Y1 Y2
+SKIP 25
+READ WAMPLER1.DAT X Y1 Y2
+

@@ -1,0 +1,22 @@
+----- <~dex2kmp\2t25m1.top> 2-Term Confounding:  2**(5-1) Design
+ 
+2-Term Interaction Confounding:  2**(5-1) Design
+ 
+2-Term              : 12 = 12 +  *
+Confounding           13 = 13 +  *
+                      14 = 14 +  *
+                      15 = 15 +  *
+                      23 = 23 +  *
+                      24 = 24 +  *
+                      25 = 34 +  *
+                      34 = 34 +  *
+                      35 = 35 +  *
+                      45 = 45 +  *
+ 
+Confounding Matrix:
+                      Empty; thus
+                      no main effects are confounded
+                      with any 2-term interactions;
+                      no 2-term interactions are confounded
+                      with any other 2-term interactions.
+ 

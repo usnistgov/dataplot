@@ -1,0 +1,41 @@
+This is Dataplot data file    EXPCEN.DAT
+Sample data set from Example 12.1 of
+Karl Bury, "Statistical Distributions in Engineering",
+Cambridge University Press, 1999, pp. 199-200.
+
+Response variable   = Integrated circuit chip
+                      (time in hours)
+Censoring variable  = 1 implies failure time, 0 implies censoring time
+Number of observations = 16
+Number of observations per line image = 2
+Order of observations per line image--
+   1. Response variable
+   2. Censoring variable
+To read this file into Dataplot--
+   SKIP 25
+   READ EXPCEN.DAT Y X
+   SET EXPONENTIAL BIAS CORRECTED ON
+   SET MAXIMUM LIKELIHOOD PERCENTILE DEFAULT
+   SET CENSORING TYPE 1
+   EXPONENTIAL MAXIMUM LIKELIHOOD Y X
+
+
+
+ Y   X
+------
+ 16  1
+ 27  0
+ 35  0
+ 36  1
+ 41  1
+ 51  1
+ 76  0
+ 79  1
+ 84  1
+121  1
+125  1
+166  1
+179  1
+212  0
+264  1
+378  0

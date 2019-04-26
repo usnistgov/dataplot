@@ -1,0 +1,81 @@
+This is file inteffma.men--Generate DEX Interaction Effects (Plot) Matrix
+
+--------------------
+ 1. DEX Interaction Effects Plot Matrix
+ 2. CALL DEXSTAT2.DP
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. List of Factors/Variables:
+ 6. @CE 2 0 1 50 ? gui-vari
+ 7.
+ 8. Number of factors/variables
+ 8. @CE 3 0 41 50 ?
+ 9. Vertical axis (response variable) lower plot limit
+ 9. @CE 4 0 41 50 ?
+10. Vertical axis (response variable) upper plot limit
+10. @CE 5 0 41 50 ?
+11. Number of decimals places for estimated effects
+11. @CE 6 0 41 50 ?
+12.
+13. Subset/Except/For Specification:
+14. @CE 7 0 1 50 *
+15.
+16. Line type connecting the data:
+16. @CE 8 0 43 50 * gui-line
+17. Line type for global mean:
+17. @CE 9 0 43 50 * gui-line
+18. Character type for data:
+18. @CE 10 0 43 50 * gui-char
+19. Character fill for data:
+19. @CE 11 0 43 50 * gui-ooff
+20. Spike to global mean:
+20. @CE 12 0 43 50 * gui-ooff
+21.
+22. Title
+22. @CE 13 0 10 50 *
+23. Vertical axis label
+23. @CE 14 0 22 50 *
+24. Horizontal axis label for factors:
+25.  X1              X2               X3
+25. @CE 15 0 5 15 *
+25. @CE 16 0 22 32 *
+25. @CE 17 0 39 49 *
+26.  X4              X5               X6
+26. @CE 18 0 5 15 *
+26. @CE 19 0 22 32 *
+26. @CE 20 0 39 49 *
+27.  X7              X8               X9
+27. @CE 21 0 5 15 *
+27. @CE 22 0 22 32 *
+27. @CE 23 0 39 49 *
+28. X10             X11              X12
+28. @CE 24 0 5 15 *
+28. @CE 25 0 22 32 *
+28. @CE 26 0 39 49 *
+29.
+30. Generate the Plot?:
+--------------------
+GR FE
+LET ZY = _1
+LET NUMFAC = _3
+LET STRING STAT = MEAN
+YMINIMUM _4
+YMAXIMUM _5
+LET NUMDECPL = _6
+@IF 14 0 LET STRING S0 = _14
+@IF 15 0 LET STRING S1 = _15
+@IF 16 0 LET STRING S2 = _16
+@IF 17 0 LET STRING S3 = _17
+@IF 18 0 LET STRING S4 = _18
+@IF 19 0 LET STRING S5 = _19
+@IF 20 0 LET STRING S6 = _20
+@IF 21 0 LET STRING S7 = _21
+@IF 22 0 LET STRING S8 = _22
+@IF 23 0 LET STRING S9 = _23
+@IF 24 0 LET STRING S10 = _24
+@IF 25 0 LET STRING S11 = _25
+@IF 26 0 LET STRING S12 = _26
+CALL DEXSTAT2.DP
+LIMITS
+--------------------

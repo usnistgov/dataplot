@@ -1,0 +1,46 @@
+This is file pgephaz.men--Plot generalized Pareto Hazard Function
+ 
+--------------------
+ 1. Plot a generalized Pareto Hazard Function
+ 2. PLOT GEPHAZ(X,2) FOR X = 1 0.01 5
+ 3.
+ 4. Shape Parameter Gamma (required):
+ 4. @CE 8 0 42 50 ?
+ 5. Scale Parameter b:
+ 5. @CE 5 0 42 50 ?
+ 6.
+ 7. You can specify the range of values to plot either
+ 8. by providing an input vector containing the explicit
+ 9. input values or by providing the start, increment,
+10. and stop values.
+11.
+12. Input Variable (optional):
+12. @CE 1 0 42 50 ? gui-variable
+13.
+14. Start Value (x >= 0):
+14. @CE 2 0 42 50 ?
+15. Increment Value (defaults to 0.1):
+15. @CE 3 0 42 50 ?
+16. Stop Value:
+16. @CE 4 0 42 50 ?
+17.
+18. Variable to Store the Hazard Function Values (optional):
+19. @CE 7 0 42 50 ?
+20.
+21.
+22. Plot the generalized Pareto Hazard Function?
+--------------------
+AN FE
+LET ZGAMMA = 1
+@IF 8 0 LET ZGAMMA = _8
+LET ZSCALE = 1
+@IF 5 0 LET ZSCALE = _5
+LET ZINC = 0.1
+@IF 3 0 LET ZINC = _3
+@IF 1 0 LET ZJUNK = GEPHAZ( _1 ,ZGAMMA,ZSCALE)
+@IF 1 0 PLOT ZJUNK _1
+@IF 2 0 PLOT GEPHAZ( ZZZZ ,ZGAMMA,ZSCALE) FOR ZZZZ = _2 ZINC _4
+@IF 7 0 LET _7 = YPLOT
+--------------------
+WEB HELP GEPHAZ
+--------------------

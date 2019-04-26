@@ -1,0 +1,36 @@
+----- <~dex2kmp\definrel.top> The Defining Relation
+ 
+The Defining Relation
+ 
+The defining Relation for the 2**(3-1) design is I + 123.
+ 
+The defining relation of a design is an algebraic
+expression which is the core component on needs
+to determine what the confounding structure is for any
+particular factor.  Once one has the defining relation,
+then the confounding structure is determined via a
+specialized algebraic multiplication (squared terms
+vanish) peculiar to these designs.  For this design,
+the defining relation is I+123 (that is, the identitiy
+plus the 123 cross-product factor).  To determine what
+factor 1 is confounded with, simply "multiply" the
+defining relation by 1, as in
+ 
+   1 (I + 123)
+   = 1 + 1123
+   = 1 + 1 23
+ 
+and omit any squared terms to yield
+ 
+   1 + 23
+ 
+This final expression is to be interpreted as saying
+factor 1 is confounded with itself (of course) but also
+with the factor 2 & factor 3 cross-product (interaction);
+i.e., any time X1 is low (-1), then X1*X2 is also low (-1),
+and anytime X1 is high (+1), then X1*X2 is also high
+(+1).  In this light, it is clear that factors X1 and
+X2*X3 have settings "in concert" and so the resulting
+estimated effects for X1 and X2*X3 (namely, betahat1
+and betahat23) will be inextricably confounded.
+ 

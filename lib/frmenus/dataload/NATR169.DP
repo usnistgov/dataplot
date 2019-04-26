@@ -1,0 +1,7 @@
+----- <~dataload\NATR169.DP> Load NATR169.DAT
+
+. This is file    NATR169.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ NATR169.DAT Y1 Y2

@@ -1,0 +1,19 @@
+----- <~fit\nlreg.top> Non-Linear Regression
+
+Non-Linear Regression
+
+Discussion          <~fit\nlrdisc.top>
+NIST/SEMATECH Handbook (Nonlinear Least Squares) <xcl: web handbook nonlinear least squares>
+
+Do the Fit          <xemf: ~fit\fitnl.men>
+Do Model Validation <~fit\modelval.top>
+Built-in Datasets
+   View             <~dataview\reg1n.top>
+   Load             <~dataload\reg1n.top>
+References          <~fit\refnonli.top>
+
+Worked Examples
+   Chwirut data (exponential/linear)       <xcf: ~fit\CHWIRUT.DP>
+   Misra   data (compare 4 models)         <xcf: ~fit\MISRA.DP>
+   Roszman data (fit theoretical model)    <xcf: ~fit\ROSZMAN.DP>
+

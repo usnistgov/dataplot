@@ -1,0 +1,91 @@
+2**(9-5) FRACTIONAL FACTORIAL DESIGN
+NUMBER OF LEVELS FOR EACH FACTOR =  2
+NUMBER OF FACTORS                =  9
+NUMBER OF OBSERVATIONS           = 16
+RESOLUTION                       =  3  (CAUTION!  MAIN EFFECTS ARE
+                                       CONFOUNDED WITH 2-TERM INTERACTIONS)
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ FACTOR    DEFINITION       CONFOUNDING STRUCTURE
+   1           1                1 + Higher
+   2           2                2 + Higher
+   3           3                3 + Higher
+   4           4                4 + Higher
+   5         123                5 + Higher
+   6         234                6 + Higher
+   7         134                7 + Higher
+   8         124                8 + Higher
+   9        1234                9 + Higher
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  12                           12 + Two Factor + Higher
+  13                           13 + Two Factor + Higher
+  14                           14 + Two Factor + Higher
+  15                           15 + Two Factor + Higher
+  16                           16 + Two Factor + Higher
+  17                           17 + Two Factor + Higher
+  18                           18 + Two Factor + Higher
+  19                           19 + Higher
+  23                           23 + Two Factor + Higher
+  24                           24 + Two Factor + Higher
+  25                           25 + Two Factor + Higher
+  26                           26 + Two Factor + Higher
+  27                           27 + Higher
+  28                           28 + Two Factor + Higher
+  29                           29 + Higher
+  34                           34 + Two Factor + Higher
+  35                           35 + Two Factor + Higher
+  36                           36 + Two Factor + Higher
+  37                           37 + Two Factor + Higher
+  38                           38 + Higher
+  39                           39 + Higher
+  45                           45 + Higher
+  46                           46 + Two Factor + Higher
+  47                           47 + Two Factor + Higher
+  48                           48 + Two Factor + Higher
+  49                           49 + Higher
+  56                           56 + Higher
+  57                           57 + Higher
+  58                           58 + Higher
+  59                           59 + Higher
+  67                           67 + Higher
+  68                           68 + Higher
+  69                           69 + Higher
+  78                           78 + Higher
+  79                           79 + Higher
+  89                           89 + Higher
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+DEFINING RELATION =             I +
+REFERENCE--BOX, HUNTER & HUNTER, STAT. FOR EXP., PAGE 410,
+NOTE--IF POSSIBLE, THIS (AS WITH ALL EXPERIMENT DESIGNS) SHOULD BE
+      RUN IN RANDOM ORDER (SEE DATAPLOT'S RANDOM PERMUTATION FILES).
+NOTE--TO READ THIS FILE INTO DATAPLOT--
+      SKIP 75
+      READ 2TO9M5.DAT X1 TO X9
+DATE--DECEMBER 1988
+NOTE--IN THE DESIGN BELOW, "-1" REPRESENTS THE "LOW"  SETTING OF A FACTOR
+                           "+1" REPRESENTS THE "HIGH" SETTING OF A FACTOR
+NOTE--ALL FACTOR EFFECT ESTIMATES WILL BE OF THE FORM
+      AVERAGE OF THE "HIGH" - AVERAGE OF THE "LOW"
+
+
+
+
+
+
+   X1  X2  X3  X4  X5  X6  X7  X8  X9
+   ----------------------------------
+   -1  -1  -1  -1  -1  -1  -1  -1  +1
+   +1  -1  -1  -1  +1  -1  +1  +1  -1
+   -1  +1  -1  -1  +1  +1  -1  +1  -1
+   +1  +1  -1  -1  -1  +1  +1  -1  +1
+   -1  -1  +1  -1  +1  +1  +1  -1  -1
+   +1  -1  +1  -1  -1  +1  -1  +1  +1
+   -1  +1  +1  -1  -1  -1  +1  +1  +1
+   +1  +1  +1  -1  +1  -1  -1  -1  -1
+   -1  -1  -1  +1  -1  +1  +1  +1  -1
+   +1  -1  -1  +1  +1  +1  -1  -1  +1
+   -1  +1  -1  +1  +1  -1  +1  -1  +1
+   +1  +1  -1  +1  -1  -1  -1  +1  -1
+   -1  -1  +1  +1  +1  -1  -1  +1  +1
+   +1  -1  +1  +1  -1  -1  +1  -1  -1
+   -1  +1  +1  +1  -1  +1  -1  -1  -1
+   +1  +1  +1  +1  +1  +1  +1  +1  +1

@@ -1,0 +1,50 @@
+This is file gendnfra.men--Generate Doubly Noncentral F Random Numbers
+ 
+--------------------
+ 1. Generate Doubly Noncentral F Random Numbers
+ 2. LET Y = DOUBLY NONCENTRAL F RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Degrees of Freedom Parameter (nu1, nu1 = 1, 2, ...):
+ 5. @CE 2 0 42 50 ?
+ 6. Degrees of Freedom Parameter (nu2, nu2 = 1, 2, ...):
+ 6. @CE 3 0 42 50 ?
+ 7. Noncentraility Parameter (lambda1, lambda1 >= 0):
+ 7. @CE 4 0 42 50 ?
+ 8. Noncentraility Parameter (lambda2, lambda2 >= 0):
+ 8. @CE 5 0 42 50 ?
+ 9. Location Parameter:
+ 9. @CE 6 0 42 50 ?
+10. Scale Limit Parameter):
+10. @CE 7 0 42 50 ?
+11.
+12. Optional random number generator seed (default=305):
+13.    (integer >= 305)
+13. @CE 8 0 42 50 ?
+14.
+15. Name of output variable;
+15. @CE 9 0 42 50 ?
+16.
+17.
+18. Generate the random numbers?
+--------------------
+AN FE
+@IF 8 0 SEED _8
+LET NU1 = 1
+@IF 2 0 LET NU1 = _2
+LET NU2 = 1
+@IF 3 0 LET NU2 = _3
+LET LAMBDA1 = 0
+@IF 4 0 LET LAMBDA1 = _4
+LET LAMBDA2 = 0
+@IF 5 0 LET LAMBDA2 = _5
+LET ZLOC = 0
+@IF 6 0 LET ZLOC = _6
+LET ZSCALE = 1
+@IF 7 0 LET ZSCALE = _6
+LET _9 = DOUBLY NONCENTRAL F RANDOM NUMBERS FOR I = 1 1 _1
+LET _9 = ZLOC + ZSCALE* _9
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

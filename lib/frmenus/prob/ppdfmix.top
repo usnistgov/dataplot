@@ -1,0 +1,7 @@
+----- <~prob\ppdfmix.top> Plot Mixture pdf's
+
+Plot Mixture PDF Functions
+
+Normal Mixture           <xemf: ~prob\pnormpdf.men>
+Bi-Weibull               <xemf: ~prob\pbwepdf.men>
+

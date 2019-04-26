@@ -1,0 +1,42 @@
+This is file gennccra.men--Generate Non-Central Chi-Square Numbers
+ 
+--------------------
+ 1. Generate Noncentral Chisquare Numbers
+ 2. LET Y = NONCENTRAL CHISQUARE RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 41 50 ?
+ 5. Degrees of Freedom Parameter (nu, nu = 1, 2, ...):
+ 5. @CE 2 0 41 50 ?
+ 6. Non-Centrality Parameter (alpha, alpha >= 0):
+ 6. @CE 3 0 41 50 ?
+ 7. Location Parameter:
+ 7. @CE 4 0 41 50 ?
+ 8. Scale Parameter (> 0):
+ 8. @CE 5 0 41 50 ?
+ 9.
+10. Optional random number generator seed (default=305):
+11.    (integer >= 305)
+11. @CE 6 0 41 50 ?
+12.
+13. Name of output variable;
+13. @CE 7 0 41 50 ?
+14.
+15.
+16. Generate the random numbers?
+--------------------
+AN FE
+@IF 6 0 SEED _6
+LET NU = 5
+@IF 2 0 LET NU = _2
+LET LAMBDA = 0
+@IF 3 0 LET LAMBDA = _3
+LET ZLOC = 0
+@IF 4 0 LET ZLOC = _4
+LET ZSCALE = 1
+@IF 5 0 LET ZSCALE = _5
+LET _7 = NONCENTRAL CHISQUARE RANDOM NUMBERS FOR I = 1 1 _1
+LET _7 = ZLOC + ZSCALE* _7
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

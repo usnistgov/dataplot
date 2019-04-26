@@ -1,0 +1,32 @@
+(k=3,d=2) Simplex-Lattice Design
+ 
+(k=3,d=2) Simplex-Lattice Design
+ 
+k = 3 factors; d = degree 2
+n = 6 runs
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    X1   X2   X3
+  ----------------
+   1.0  0.0  0.0
+   0.0  1.0  0.0
+   0.0  0.0  1.0
+   0.5  0.5  0.0
+   0.5  0.0  0.5
+   0.0  0.5  0.5
+ 

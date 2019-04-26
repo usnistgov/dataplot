@@ -1,0 +1,8 @@
+----- <~datalist\KRASNY1.top> KRASNY1.DAT
+ 
+KRASNY1.DAT
+ 
+View     <xcl: LIST KRASNY1.DAT>
+Load     <x2cl: SKIP 25; READ KRASNY1.DAT Y X1 TO X5>
+Print    <xccl: printfile C:\DATAPLOT\KRASNY1.DAT>
+ 

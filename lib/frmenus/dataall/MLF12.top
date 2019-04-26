@@ -1,0 +1,8 @@
+----- <~dataall\MLF12.top> MLF12.DAT
+
+MLF12.DAT
+
+View     <xcl: LIST MLF12.DAT>
+Load     <xcf: ~dataload/MLF12.DP>
+Print    <xccl: printfile C:\DATAPLOT\MLF12.DAT>
+

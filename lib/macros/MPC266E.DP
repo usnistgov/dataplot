@@ -1,0 +1,34 @@
+reset data
+reset plot control
+reset i/o
+dimension 500 30
+label size 3
+read mpc262.dat run wafer probe mo day op hum y sr
+let df = sr - sr + 5.
+let s211 = standard deviation y subset probe 2362 subset run 1 subset wafer 138
+let s212 = standard deviation y subset probe 2362 subset run 1 subset wafer 139
+let s213 = standard deviation y subset probe 2362 subset run 1 subset wafer 140
+let s214 = standard deviation y subset probe 2362 subset run 1 subset wafer 141
+let s215 = standard deviation y subset probe 2362 subset run 1 subset wafer 142
+let s221 = standard deviation y subset probe 2362 subset run 2 subset wafer 138
+let s222 = standard deviation y subset probe 2362 subset run 2 subset wafer 139
+let s223 = standard deviation y subset probe 2362 subset run 2 subset wafer 140
+let s224 = standard deviation y subset probe 2362 subset run 2 subset wafer 141
+let s225 = standard deviation y subset probe 2362 subset run 2 subset wafer 142
+let df211=5
+let df212=5
+let df213=5
+let df214=5
+let df215=5
+let df221=5
+let df222=5
+let df223=5
+let df224=5
+let df225=5
+let s21=((s211**2+s212**2+s213**2+s214**2+s215**2)/5.)
+let s22=((s221**2+s222**2+s223**2+s224**2+s225**2)/5.)
+let s2=((s21+s22)/2.)**(1/2)
+let df2=df211+df212+df213+df214+df215+df221+df222+df223+df224+df225
+. pooled level-2 standard deviation and df across wafers and runs
+print s2 df2
+. end of calculations

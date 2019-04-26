@@ -1,0 +1,8 @@
+----- <~dataload\BOXSPRAY.DP> Load BOXSPRAY.DAT
+
+. This is file    BOXSPRAY.DP
+
+DELETE Y X RUNSEQ
+SKIP 25
+READ BOXSPRAY.DAT Y X RUNSEQ
+

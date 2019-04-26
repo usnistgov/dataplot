@@ -1,0 +1,41 @@
+This is Dataplot data file     washburn_4_16.dat       ~7/15/2003
+Purpose--Knee Cartilege Growth (2**4 DEX)
+         Case 2: Matrix = Collagen Gel
+Goal: Determine factors affecting (= promoting) knee cartilege growth
+Date: 7/15/2003
+Response variable                  = The change (= increase) in the number of cartilege cells
+Number of observations             = 16
+Order of variables on a line image--
+   1. Response variable 1 = the average (over 3 reps) increase in # cartilege cells
+   2. Response variable 3 = the average (over 3 reps) % increase in # cartelege cells
+   3. Factor 1            = growth factor 1 conc. : IGF        (2 levels: 1    and 100   ng/mL)
+   4. Factor 2            = growth factor 2 conc. : TGF-b      (2 levels: .01  and 1     ng/mL)
+   5. Factor 3            = growth factor 3 conc. : FGF        (2 levels: .1   and 10    ng/mL)
+   6. Factor 4            = number of starter cartilege cells  (2 levels: 1000 and 10000 ng/mL)
+To read this data file into Dataplot--
+   skip 50; read washburn_4_16.dat y1 y2 x1 x2 x3 x4
+
+
+
+
+
+
+   Cell Inc. % Cell Inc.   IGF   TGF-b        FGF     Cell0
+      Y1         Y2        X1        X2        X3        X4
+------------------------------------------------------------
+    263.99     26.40       -1        -1        -1        -1 
+    984.54     98.45        1        -1        -1        -1 
+    950.54     95.05       -1         1        -1        -1 
+    804.34     80.43        1         1        -1        -1 
+    647.17     64.72       -1        -1         1        -1 
+    901.58     90.16        1        -1         1        -1 
+    624.52     62.45       -1         1         1        -1 
+   1140.30    114.03        1         1         1        -1 
+   4440.79     44.41       -1        -1        -1         1 
+   8074.45     80.74        1        -1        -1         1 
+   5163.06     51.63       -1         1        -1         1 
+   7427.45     74.27        1         1        -1         1 
+   3594.45     35.94       -1        -1         1         1 
+   5457.02     54.57        1        -1         1         1 
+   4900.81     49.01       -1         1         1         1 
+    739.17      7.39        1         1         1         1 

@@ -1,0 +1,51 @@
+This is file maxmle.men--2-Parameter Maxwell MLE Estimates
+ 
+--------------------
+ 1. 2-Parameter Maxwell Maximum Likelihood Estimates
+ 2. 2-PARAMETER MAXWELL MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. This menu will generate the maximum likelihood
+ 5. estimate for the location and scale parameters for
+ 6. uncensored data.  You can optionally request to have
+ 7. bootstrap confidence limits generated for the parameters.
+ 8.
+ 9. Response Variable:
+ 9. @CE 1 0 42 50 ? gui-variable
+10. Number of bootstrap samples (0 to omit)?
+11. @CE 2 0 42 50 *
+12.
+13. Subset/Except/For Specification:
+14. @CE 3 0 1 50 *
+15.
+16.
+17. Compute Maxwell MLE's?
+--------------------
+GR FE
+LET NUMBOOT = 0
+@IF 2 0 LET NUMBOOT = _2
+let numboot = min(1000,numboot)
+if numboot > 0
+   bootstrap samples numboot
+   set maximum likelihood percentiles default
+   label
+   title case asis
+   label case asis
+   case asis
+   title displacement 2
+   x2label displacement 13
+   x3label displacement 18
+   y1label Parameter Estimate
+   x1label
+   x2label Bootstrap Sample
+   title Bootstrap Plot
+   line color blue red
+   limits
+end of if
+TWO PARAMETER MAXWELL MAXIMUM LIKELIHOOD _1 _3
+if numboot > 0
+   bootstrap two parameter maxwell maximum likelihood plot _1 _3
+   line color black all
+end of if
+--------------------
+WEB HELP MAXPDF
+--------------------

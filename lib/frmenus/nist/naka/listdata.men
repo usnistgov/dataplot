@@ -1,0 +1,17 @@
+This is file listdata.men--List your Data File
+
+--------------------
+1. List Your Data File
+2. LIST <filename>
+3.
+4. What is the complete name of your data file?
+5. @CE 1 0 1 60 ?
+6.
+7.
+8. Do the List?
+--------------------
+SU FE
+@IF 1 0 LIST _1
+--------------------last
+WEB HELP LIST
+--------------------last

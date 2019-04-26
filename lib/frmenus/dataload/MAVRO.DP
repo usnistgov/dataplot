@@ -1,0 +1,8 @@
+----- <~dataload\MAVRO.DP> Load MAVRO.DAT
+
+. This is file    MAVRO.DP
+
+DELETE Y
+SKIP 25
+READ MAVRO.DAT Y
+

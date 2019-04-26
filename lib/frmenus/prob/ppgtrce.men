@@ -1,0 +1,81 @@
+This is file ppgtrce.men-- Generalized Trapezoid Censored Probability Plot
+
+--------------------
+ 1. Generalized Trapezoid Censored Probability Plot
+ 2. GENERALIZED TRAPEZOID CENSORED PROBABILITY PLOT Y X
+ 3.
+ 4. The censoring variable should contain a
+ 5. value of 1 to signify a failure time and
+ 6. a value of 0 to signify a censoring time.
+ 7. 
+ 8. Response Variable:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9. Censoring Variable:
+ 9. @CE 2 0 42 50 ? gui-variable
+10.
+11. Line Types:
+11. @CE 3 0 42 50 * gui-line
+12. Character Types:
+12. @CE 4 0 42 50 * gui-char
+13. Character Fill:
+13. @CE 5 0 42 50 * gui-ooff
+14.
+15. Title:
+15. @CE 6 0 22 50 *
+16. Left Axis Label:
+16. @CE 7 0 22 50 *
+17. Bottom Axis Label:
+17. @CE 8 0 22 50 *
+18.
+19. Value of the Lower Limit Parameter (A):
+19. @CE 9 0 42 50 *
+20. Value of the Threshold Parameter (B, B > A):
+20. @CE 10 0 42 50 *
+21. Value of the Threshold Parameter (C, C > A):
+21. @CE 11 0 42 50 *
+22. Value of the Upper Limit Parameter (D, D > C):
+22. @CE 12 0 42 50 *
+23. Value of the Shape Parameter (NU1 > 0):
+23. @CE 13 0 42 50 *
+24. Value of the Shape Parameter (NU3 > 0):
+24. @CE 14 0 42 50 *
+25. Value of the Shape Parameter (Alpha > 0):
+25. @CE 15 0 42 50 *
+26.
+27. Subset/Except/For Specification:
+28. @CE 16 0 1 50 *
+29.
+30.
+31. Generate the Generalized Trapezoid Censored Probability Plot?
+--------------------
+GR FE
+TITLE CASE ASIS
+LABEL CASE ASIS
+CASE ASIS
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+LET A = _9
+LET B = _10
+LET C = _11
+LET D = _12
+LET NU1 = _13
+LET NU3 = _14
+LET ALPHA = _15
+GENERALIZED TRAPEZOID CENSORED PROBABILITY PLOT _1 _2 _16
+MOVE 50 5
+JUSTIFICATION CENTER
+TEXT A = ^A, B = ^B, C = ^C, D = ^D
+MOVE 50 2
+TEXT NU1 = ^NU1, NU3 = ^NU3, ALPHA = ^ALPHA
+MOVE 17 82
+JUSTIFICATION LEFT
+TEXT PPCC = ^PPCC
+TITLE
+LABEL
+--------------------
+WEB HELP PROBABILITY PLOT
+--------------------

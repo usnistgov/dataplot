@@ -1,0 +1,25 @@
+-----<~time\typquest.top> Time Series: Typical Questions
+ 
+Time Series: Typical Questions
+ 
+Typical questions that a time series analysis tries
+to answer are:
+
+   1) Are the data random?
+
+   2) Are the data white noise?
+
+   3) What is the underlying trend of the data?
+
+   4) Are there seasonal or cyclic effects in the data?
+
+   5) What is the typical value after removing trend and
+      cyclic effects?
+
+   6) What is the uncertainty of the typical value?
+
+   7) Is the current data point dependent on prior data
+
+   8) Can reasonable predictions (i.e., forecasts) be made
+      about future observations?
+

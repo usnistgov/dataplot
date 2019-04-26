@@ -1,0 +1,30 @@
+----- <~dp\specs.top> Specs
+ 
+Specs
+ 
+The IBM-PC Windows NT version of Dataplot has
+the following specs:
+ 
+   Lines of code             : 800,000
+   Written in                : Fortran 77
+   Size of Executable        : 17M
+   Minimum Main Memory       : 8M
+   Auxiliary files           : 10M
+   Additional software needed: None for the command line
+                               version.  Tcl/Tk version
+                               8.0 is required for
+                               the GUI
+ 
+The Unix version of Dataplot has
+the following specs:
+ 
+   Lines of code             : 800,000
+   Written in                : Fortran 77
+                               X11 driver in C
+   Size of Executable        : typically 17MB - 22MB
+   Minimum Main Memory       : N/A
+   Auxiliary files           : 10M
+   Additional software needed: None for the command line
+                               version.  Tcl/Tk version
+                               8.0 and Expect version 5.19
+                               are required for the GUI

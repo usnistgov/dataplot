@@ -1,0 +1,43 @@
+This is file genrgtra.men--Generate Reflected Generalized Topp and Leone Random Numbers
+ 
+--------------------
+ 1. Generate Reflected Generalized Topp and Leone Random Numbers
+ 2. LET Y = REFLECT GENERAL TOPP LEONE RAND NUMB FOR I= START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Shape Parameter (0 < alpha <= 2):
+ 5. @CE 2 0 42 50 ?
+ 6. Shape Parameter (beta > 0):
+ 6. @CE 3 0 42 50 ?
+ 7. Lower Limit Parameter:
+ 7. @CE 4 0 42 50 ?
+ 8. Upper Limit Parameter):
+ 8. @CE 5 0 42 50 ?
+ 9.
+10. Optional random number generator seed (default=305):
+11.    (integer >= 305)
+11. @CE 6 0 42 50 ?
+12.
+13. Name of output variable;
+13. @CE 7 0 42 50 ?
+14.
+15.
+16. Generate the random numbers?
+--------------------
+AN FE
+@IF 6 0 SEED _6
+LET ALPHA = 1
+@IF 2 0 LET ALPHA = _2
+LET BETA = 1
+@IF 3 0 LET BETA = _3
+LET ZLOWLIM = 0
+@IF 4 0 LET ZLOWLIM = _4
+LET ZUPPLIM = 1
+@IF 5 0 LET ZUPPLIM = _5
+LET ZSCALE = ZUPPLIM - ZLOWLIM
+LET _7 = REFLECTED GENERALIZED TOPP LEONE RANDOM NUMBERS FOR I = 1 1 _1
+LET _7 = ZLOWLIM + ZSCALE* _7
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

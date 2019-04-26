@@ -1,0 +1,38 @@
+This is file ppccpl2p.men--PPCC Plot (2-parameter Dist. Family)
+
+--------------------
+ 1. PPCC Plot (2-Parameter Distributional Families)
+ 2. <Name of Distributional Family> PPCC PLOT Y
+ 3.
+ 4. Variable:
+ 4. @CE 1 0 11 35 ? gui-variable
+ 5.
+ 6. Distributional Family:
+ 7. @CE 2 1 11 40 Gompertz
+ 8. @CE 2 2 11 40 Alpha
+ 9. @CE 2 3 11 40 Exponential Power
+10. @CE 2 4 11 40 Exponentiated Weibull
+11. @CE 2 5 11 40 Johnson SB
+12. @CE 2 6 11 40 Johnson SU
+13. @CE 2 7 11 40 Beta
+14. @CE 2 8 11 40 Two-Sided Power
+15.
+16. Subset/Except/For Specification:
+17. @CE 3 0 -15 50 *
+18.
+19.
+20. Generate the PPCC Plot?
+--------------------
+GR FE
+@IF 2 1 GOMPERTZ PPCC PLOT _1 _3
+@IF 2 2 ALPHA PPCC PLOT _1 _3
+@IF 2 3 EXPONENTIAL POWER PPCC PLOT _1 _3
+@IF 2 4 EXPONENTIATED WEIBULL PPCC PLOT _1 _3
+@IF 2 5 JOHNSON SB PPCC PLOT _1 _3
+@IF 2 6 JOHNSON SU PPCC PLOT _1 _3
+@IF 2 7 BETA PPCC PLOT _1 _3
+@IF 2 8 TWO SIDED POWER PPCC PLOT _1 _3
+WRITE MAXPPCC SHAPE1 SHAPE2
+--------------------
+WEB HELP PPCC PLOT
+--------------------

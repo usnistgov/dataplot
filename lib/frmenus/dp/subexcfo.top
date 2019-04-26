@@ -1,0 +1,27 @@
+----- <~dp\subexcfo.top> SUBSET/EXCEPT/FOR Qualifications
+ 
+SUBSET/EXCEPT/FOR Qualifications
+ 
+An important data analysis capability is the ability to
+restrict the effect of any graphics command (PLOT, 4-PLOT,
+HISTOGRAM, etc.) and any analysis command (FIT, ANOVA,
+SMOOTH, LET, etc.)  to analyst-defined subsets.
+This "subsetting" in Dataplot by end-of-the-line qualifiers
+ 
+   PLOT Y X
+      will plot Y versus X for all data in Y and X,
+ 
+   PLOT Y X SUBSET LAB 10 TO 30
+      will include in the plot only those points in Y and X
+      corresponding to LAB values between 10 and 30.
+ 
+   PLOT Y X EXCEPT LAB 10 TO 30
+      will include in the plot all points in Y and X
+      except for LAB values between 10 and 30
+ 
+   PLOT Y X FOR I = 1 1 50
+      will include in the plot only rows 1 (increment of 1)
+      up to element 50 of the variables Y and X
+      (in other words, only the first 50 elements in the
+      Y and X variables will be included in the plot).
+ 

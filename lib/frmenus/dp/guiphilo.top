@@ -1,0 +1,18 @@
+----- <~dp\guiphilo.top> GUI Philosophy
+ 
+GUI Philosophy
+ 
+GUI Design Philosphy regarding "power" centers:
+   1. Data-centric (easy link to 400 data files)
+   2. Literature-centric (connection to classic stat literature data sets)
+   3. Graphics-centric (graphs usually are better than numbers)
+           (e.g., confidence distributions improve confidence limits)
+   4. Problem-centric (some analysts need general problem "roadmaps")
+           (thus GUI structured to guide/teach as well as be used)
+   5. Technique-centric (some analysts want specific techniques)
+           (thus GUI designed to allow quick access to techniques)
+ 
+Further, the GUI menu system has been designed as:
+   1. Extensible/Editable (therefore GUI menus are entirely file-driven)
+   2. Multi-path menu solutions (thus menu files are hypertext)
+ 

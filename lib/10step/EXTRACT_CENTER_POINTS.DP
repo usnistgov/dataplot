@@ -1,0 +1,64 @@
+. This is dataplot macro     extract_center_points.dp     9/25/18 => 10/16/18
+. Purpose: Determine if center points exist in the user's (original) dataset.
+. Method:  Compute the median of the distinct values for each factor,
+.          and then tag those data rows which have that median distinct value.
+.          (This will automatically include any datasets with an odd number of distinct
+.          values, and exclude any datasets with an even number of distinct values.)
+.          If any of the data rows are tagged, then extract
+.          the response values for this center point.
+. Date: 9/25/18 => 10/16/18
+. Input: k, y, x1 to xk
+. Output: ycent, ncent
+.
+. -----start point-----
+. echo on
+. feedback off
+let bugswecp = 0
+. let pausesw = 1
+.
+if bugswecp = 1; print " "; print "--At beginning of    extract_center_points.dp"
+   . echo on
+   . feedback on
+   print "k = ^k"
+   print y x1 to x^k
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 1: Tag those data rows that have center points (if any)-----
+.
+if bugswecp = 1; print "At (extract_center_points.dp, step 1): tag cp rows"
+   if pausesw = 1; pause; end if
+end if
+.
+delete stall; let stall = string combine x1 to x^k
+delete tagcent; let tagcent = dex check center points ^stall
+let ncent = size tagcent subset tagcent 0
+.
+if bugswecp = 1
+   print "At the end of step 1 of    extract_center_points.dp"
+   print tagcent
+   print "ncent = ^ncent"
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 2: If any, extract the center point responses-----
+.
+if bugswecp = 1; print "At (extract_center_points.dp, step 2): extr cp y's
+   if pausesw = 1; pause; end if
+end if
+.
+let ycent = y
+.
+if ncent > 0
+   retain ycent subset tagcent = 0
+else
+   delete ycent
+end if
+.
+. -----Step 99: Finish up-----
+.
+if bugswecp = 1; print " "; print "---At end of dexcp.dp . . ."
+   print ncent ycent
+   if pausesw = 1; pause; end if
+end if
+.

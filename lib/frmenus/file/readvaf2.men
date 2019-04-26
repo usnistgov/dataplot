@@ -1,0 +1,33 @@
+This is file readvafi.men--Read Variables from File
+ 
+--------------------
+ 1. Read Variables from File
+ 2. SERIAL READ <filename> <variable>
+ 3.
+ 4. This menu is used to read data from a file.
+ 5. This is used for the case where all columns of
+ 6. the data (in all rows) are read into a single
+ 7. variable name.
+ 8.
+ 9. User file:
+10. @CE 1 0 1 50 ?
+11.
+12. Variable name to be read:
+13. @CE 2 0 1 50 ?
+14.
+15. Number of header lines to skip:
+15. @CE 3 0 42 50 *
+16.
+17.
+18. Do the Read?
+--------------------
+SU FE
+SET FILE NAME QUOTE ON
+SKIP 0
+SKIP _3
+SERIAL READ _1 _2
+SKIP 0
+SET FILE NAME QUOTE OFF
+--------------------
+WEB HELP READ
+--------------------

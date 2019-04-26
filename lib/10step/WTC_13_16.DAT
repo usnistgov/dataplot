@@ -1,0 +1,67 @@
+This is dataplot data file    wtc_13_16.dat
+Purpose--ARA Experiment #1: Engine Impact Analysis on Core Columns
+Date: March 5, 2004
+Design: 2**(13-9) + center point (Resolution 3)
+Number of observations = 16 + 1
+Order of variables on a line image:
+   1. Response var. = ...
+   2. Factor 1      = Impact Speed at Core Column
+                      (2 levels: 175 and 250 mph) cp = 223
+   3. Factor 2      = Impact location (vertical)
+                      (2 levels: 0 and 620 ...)
+   4. Factor 3      = Impact location (horizontal)
+                      (2 levels: 0 and 914 ...)
+   5. Factor 4      = Engine Assignment Set
+                      (2 levels: 1 and 2) cp = 1
+   6. Factor 5      = Engine strength
+                      (2 levels: -35% and +35%)
+   7. Factor 6      = Engine failure strain
+                      (2 levels: -50% and +50%)
+   8. Factor 7      = Engine strain rate effects
+                      (2 levels: 0 and 10 ...)
+   9. Factor 8      = Core column strength
+                      (2 levels: -15% and +15%)
+  10. Factor 9      = Core column failure strain
+                      (2 levels: -50% and +50%)
+  11. Factor 10     = Core column strain rate effects
+                      (2 levels: 0 and 10 ...)
+  12. Factor 11     = Model erosion parameter
+                      (2 levels: 1 and 2) cp = 1
+  13. Factor 12     = Model contact parameter
+                      (2 levels: 1 and 2) cp = 1
+  14. Factor 13     = Model friction coefficient
+                      (2 levels: 0 and 0.6) cp = 0.3
+Primary Question: What is the relative importance
+                  of the 13 factors? (Screening)
+To read this data file into dataplot:
+   skip 50
+   read wtc_13_16.dat y x1 to x13
+
+
+
+
+
+
+
+
+
+   Y    IS ILV ILH EAS  ES EFS ESRE CS CFS CSRE MEP MCP MFC
+   Y    X1  X2  X3  X4  X5  X6  X7  X8  X9  X10 X11 X12 X13
+------------------------------------------------------------
+ 0.313   1   1  -1   1   1  -1  -1   1   1  -1  -1  -1   1
+ 0.154   1   1  -1  -1  -1   1   1  -1  -1   1   1  -1   1
+ 0.162   1  -1  -1   1  -1   1  -1   1  -1   1  -1   1  -1
+ 0.449   1  -1  -1  -1   1  -1   1  -1   1  -1   1   1  -1
+ 0.295  -1   1   1   1   1   1  -1  -1  -1  -1   1  -1  -1
+ 0.015  -1   1   1  -1  -1  -1   1   1   1   1  -1  -1  -1
+ 0.019  -1  -1   1   1  -1  -1  -1  -1   1   1   1   1   1
+ 0.424  -1  -1   1  -1   1   1   1   1  -1  -1  -1   1   1
+ 0.280   0   0   0   0   0   0   0   0   0   0   0   0   0
+ 0.080   1   1   1   1  -1   1   1  -1   1  -1  -1   1  -1
+ 0.035   1   1   1  -1   1  -1  -1   1  -1   1   1   1  -1
+ 0.043   1  -1   1   1   1  -1   1  -1  -1   1  -1  -1   1
+ 0.095   1  -1   1  -1  -1   1  -1   1   1  -1   1  -1   1
+ 0.288  -1   1  -1   1  -1  -1   1   1  -1  -1   1   1   1
+ 0.067  -1   1  -1  -1   1   1  -1  -1   1   1  -1   1   1
+ 0.063  -1  -1  -1   1   1   1   1   1   1   1   1  -1  -1
+ 0.301  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1

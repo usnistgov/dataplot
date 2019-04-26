@@ -1,0 +1,17 @@
+----- <~prob\histpdfp.top> Histogram & superimposed pdf plot
+
+Histogram & Superimposed pdf Plot
+
+These menus will generate a relative histogram
+and overlay the specified probability density
+function.
+
+Uncensored Data (Ungrouped or Grouped)
+   No Shape Parameters (e.g., Normal)           <~prob\locshisp.top>
+   One Shape Parameter (A-L) (e.g., Lognormal)  <~prob\sh1ahisp.top>
+   One Shape Parameter (M-Z) (e.g., Weibull)    <~prob\sh1bhisp.top>
+   Two Shape Parameters (e.g., Beta)            <~prob\sha2hisp.top>
+   Three Shape Parameters                       <~prob\sha3hisp.top>
+
+   Discrete Distributions                       <~prob\dischisp.top>
+

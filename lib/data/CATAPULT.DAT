@@ -1,0 +1,70 @@
+This is the Dataplot data file        CATAPULT.DAT
+Data from a catapult experiment (SEMATECH uses this as a
+"hands on" student experiment much as NIST uses funnel experiment).
+Contact--Ledi Trutna, private consultant, formerly of AMD
+Number of observations                       = 20
+Number of observations per line image        = 13
+Order of variables on a line image--
+   1. Dependent variable Y = Distance (inches) ball travels
+   2. Factor Variable Z1   = Band Height (height in inches of pivot
+                             point for rubber bands), 2.25, 3.5, 4.75
+   3. Factor Variable Z2   = Start Angle (location of arm when
+                             operator releases), 0, 10, 20 degrees
+   4. Factor Variable Z3   = Number of Rubber Bands, 1 or 2
+   5. Factor Variable Z4   = Arm Length (distance the arm is
+                             extended in inches), 0, 2, 4
+   6. Factor Variable Z5   = Stop Angle (location of the arm when
+                             arm is stopped) 45, 62, 80 degrees
+   7. Factor Variable X1   = Z1 coded as -1, 0, 1
+   8. Factor Variable X2   = Z2 coded as -1, 0, 1
+   9. Factor Variable X3   = Z3 coded as -1, 1
+  10. Factor Variable X4   = Z4 coded as -1, 0, 1
+  11. Factor Variable X5   = Z5 coded as -1, 0, 1
+  12. Variable SEQ         = Run sequence order for observation
+  13. Variable CENT        = 0 - not center point
+                             1 - center point (rubber band = 1)
+                             2 - center point (rubber band = 2)
+  Last column is an alphanumeric description of pattern.
+Analysis:
+   This is a 2**(5-1) design.  See
+       http://www.itl.nist.gov/div898/handbook/pri/section6/pri63.htm
+   for a detailed analysis.
+
+Note:
+   The data has been organized into Yates order rather
+   than run sequence order so that a YATES analysis can
+   be performed.
+  
+To read this file into Dataplot--
+   DIMENSION 50 VARIABLES
+   SKIP 50
+   READ CATAPULT.DAT Y Z1 Z2 Z3 Z4 Z5 X1 X2 X3 X4 X5 SEQ CENT
+
+
+
+
+
+
+                                                 RUN  CENT
+     Y    Z1  Z2  Z3  Z4  Z5  X1  X2  X3  X4  X5 SEQ POINT  PATTERN
+-------------------------------------------------------------------
+ 28.00  3.25   0   1   0  80  -1  -1  -1  -1   1   1     0    ----+
+ 35.00  4.75   0   1   0  45   1  -1  -1  -1  -1   6     0    +----
+  8.00  3.25  20   1   0  45  -1   1  -1  -1  -1  10     0    -+---
+ 28.25  4.75  20   1   0  80   1   1  -1  -1   1   8     0    ++--+
+ 33.50  3.25   0   2   0  45  -1  -1   1  -1  -1  15     0    --+--
+ 84.00  4.75   0   2   0  80   1  -1   1  -1   1  17     0    +-+-+
+ 36.00  3.25  20   2   0  80  -1   1   1  -1   1  16     0    -++-+
+ 28.50  4.75  20   2   0  45   1   1   1  -1  -1  14     0    +++--
+ 33.00  3.25   0   1   4  45  -1  -1  -1   1  -1  12     0    ---+-
+ 85.00  4.75   0   1   4  80   1  -1  -1   1   1   9     0    +--++
+ 45.00  3.25  20   1   4  80  -1   1  -1   1   1  18     0    -+-++
+ 36.50  4.75  20   1   4  45   1   1  -1   1  -1  11     0    ++-+-
+106.00  3.25   0   2   4  80  -1  -1   1   1   1  20     0    --+++
+126.50  4.75   0   2   4  45   1  -1   1   1  -1   4     0    +-++-
+ 45.00  3.25  20   2   4  45  -1   1   1   1  -1   5     0    -+++-
+126.50  4.75  20   2   4  80   1   1   1   1   1   3     0    +++++
+ 99.00  4.00  10   2   2  62   0   0   1   0   0   2     2    00+00
+ 45.00  4.00  10   1   2  62   0   0  -1   0   0   7     1    00-00
+ 84.50  4.00  10   2   2  62   0   0   1   0   0  13     2    00+00
+ 37.50  4.00  10   1   2  62   0   0  -1   0   0  19     1    00-00

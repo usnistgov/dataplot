@@ -1,0 +1,24 @@
+----- <~prob\psha3pdf.top> PDF's for 3+ Shape Parameter Continuous Distributions
+
+Plot PDF's (three or more shape parameters)
+
+Plot Probability Density Function for Continuous Distributions
+with Three (or more) Shape Parameters
+
+Doubly Non-Central F                      <xemf: ~prob\pdnfpdf.men>
+Doubly Non-Central T                      <xemf: ~prob\pdntpdf.men>
+Generalized Exponential                   <xemf: ~prob\pgexpdf.men>
+Generalized Inverse Gaussian              <xemf: ~prob\pgigpdf.men>
+Generalized Trapezoid                     <xemf: ~prob\pgtrpdf.men>
+Gompertz-Makeham                          <xemf: ~prob\pmakapdf.men>
+    (Meeker/Escobar 3-shape parameterization>
+Gompertz-Makeham (DLMF parameterization)  <xemf: ~prob\pmakbpdf.men>
+Log Skew T                                <xemf: ~prob\plstpdf.men>
+Meilke's Beta-Kappa                       <xemf: ~prob\pkappdf.men>
+Non-Central Beta                          <xemf: ~prob\pncbpdf.men>
+Non-Central F                             <xemf: ~prob\pncfpdf.men>
+Trapezoid                                 <xemf: ~prob\ptrapdf.men>
+Truncated Exponential                     <xemf: ~prob\ptnepdf.men>
+Uneven Two-Sided Power                    <xemf: ~prob\putspdf.men>
+Wakeby                                    <xemf: ~prob\pwakpdf.men>
+

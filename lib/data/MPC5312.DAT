@@ -1,0 +1,30 @@
+This is the data file   MPC5312.DAT.
+Source: This example is used on page mpc5312.htm of the e-Handbook.
+        This data is used in the discussion of uncertainty analysis.
+        The data was provided by Carroll Croakin.
+Description:  Measurements of resistivity (ohm.cm) for 5 probes and
+              5 wafers. 
+
+Data:         Column 1:   Probe ID
+              Column 2:   Average of 5 measurement for Wafer 138
+              Column 3:   Average of 5 measurement for Wafer 139
+              Column 4:   Average of 5 measurement for Wafer 140
+              Column 5:   Average of 5 measurement for Wafer 141
+              Column 6:   Average of 5 measurement for Wafer 142
+
+              The standard deviations for the 5 wafers are
+              0.02643  0.02612  0.02826   0.03038  0.02711.
+
+To read into Dataplot, enter
+
+    SKIP 25
+    READ MPC5312.DAT PROBE W138 W139 W140 W141 W142
+    LET WSD = DATA 0.02643  0.02612  0.02826   0.03038  0.02711
+
+  PROBE     W138     W139     W140      W141     W142
+-------------------------------------------------------
+     1     95.1548  99.3118  96.1018  101.1248  94.2593
+   281     95.1408  99.3548  96.0805  101.0747  94.2907
+   283     95.1493  99.3211  96.0417  101.1100  94.2487
+  2062     95.1125  99.2831  96.0492  101.0574  94.2520
+  2362     95.0928  99.3060  96.0357  101.0602  94.2148

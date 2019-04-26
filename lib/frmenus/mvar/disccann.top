@@ -1,0 +1,25 @@
+----- <~mvar\disccann.top> Cannonical Correlation
+ 
+Multivariate Analysis: Cannonical Correlation
+ 
+Cannonical correlation divides a set of response
+variables into 2 groups.  It then finds the correlation
+between a linear combination of the first set of
+variables and a linear combination of the second set
+of variables.   The pair with the largest correlation
+is sought.  Successive pairs of linear combinations
+are sought that both maximize the correlation and are
+independent of prior pairs of linear combinations.
+
+The pairs of linear combinations are referred to as
+cannonical variables and the corresponding correaltions
+are referred to as canonical correlations.
+
+The goal of canonical correlation analysis is to find
+a few pairs of canonical variables that explain most of
+the correlation between the 2 sets of variables.
+
+Although Dataplot does not compute canonical correlations
+directly, the built-in matrix commands can be ued to
+compute a canonical correlation analysis.
+

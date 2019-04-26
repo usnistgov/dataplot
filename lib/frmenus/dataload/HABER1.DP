@@ -1,0 +1,8 @@
+----- <~dataload\HABER1.DP> Load HABER1.DAT
+
+. This is file    HABER1.DP
+
+DELETE Y
+SKIP 25
+READ HABER1.DAT Y
+

@@ -1,0 +1,8 @@
+----- <~data\ffunc.top> Functions: F Distribution
+
+Functions: F Distribution
+
+FCDF(X,NU1,NU2)   F cumulative distribution function
+FPDF(X,NU1,NU2)   F probability density function
+FPPF(P,NU1,NU2)   F percent point function
+

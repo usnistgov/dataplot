@@ -1,0 +1,131 @@
+This is file locatest.men--Formal 2-sample t Test: Shift in Location
+ 
+--------------------
+ 1. Formal 2-sample t Test: Shift in Location
+ 2. T TEST Y1 Y2
+ 3. (Assumption: sigma1 = sigma2)
+ 4. (Use F Test to test this assumption)
+ 5.
+ 6. The Problem: 1) IF   a process has no historical
+ 7.                 reference value existing;
+ 8.                 but does have historical
+ 9.                 (= pre-mod) data existing, &
+10.              2) IF   an engineering mod is made, &
+11.              3) IF   post-mod data is collected,
+12.              4) THEN can we conclude that
+13.                 the process has improved?
+14.
+15. The Engineering Deliverable: A Yes/No Conclusion
+16.
+17. Pre-mod  Response Variable:
+17. @CE 1 0 33 50 ?
+18. Post-mod Response Variable:
+18. @CE 2 0 33 50 ?
+19.
+20. Define "improvement" (select one):
+21.    The process has "improved" if
+22.    location(post-mod) ... location(pre-mod)
+23. @CE 3 1 4 16 less than
+23. @CE 3 2 20 32 greater than
+23. @CE 3 3 36 50 differs from
+24.
+25. Alpha (= Type I) error (select one):
+26. @CE 4 1 4 8 5%
+26. @CE 4 2 20 24 1%
+27.
+28. Subset/Except/For Specification:
+29. @CE 5 0 1 50 *
+30.
+31. Do t Test?
+--------------------
+GR FE
+T TEST _1 _2 _5
+ 
+LET ZMU0 = _2
+ 
+LET ZN1 = NUMBER _1 _5
+LET ZN2 = NUMBER _2 _5
+LET ZDF = (ZN1-1)+(ZN2-1)
+ 
+LET ZMEAN1 = MEAN _1 _5
+LET ZMEAN2 = MEAN _2 _5
+LET ZSD1 = SD _1 _5
+LET ZSD2 = SD _2 _5
+LET ZNUM = (ZN1-1)*ZSD1*ZSD1 + (ZN2-1)*ZSD2*ZSD2
+LET ZPOOLSD = SQRT(ZNUM/ZDF)
+LET ZSTAT = ZMEAN1-ZMEAN2
+LET ZSDSTAT = ZPOOLSD*SQRT((1/ZN1)+(1/ZN2))
+LET ZTESTSTA = ZSTAT/ZSDSTAT
+ 
+LET ZP = .95
+@IF 4 2 LET ZP = .99
+LET ZQ = 1-ZP
+LET ZP2 = ZP+(1-ZP)/2
+LET ZQ2 = 1-ZP2
+LET ZPERC = 100*ZP
+LET ZALPHA = 100*ZQ
+ 
+@IF 3 1 LET ZCUT1 = TPPF(.001,ZDF)
+@IF 3 1 LET ZCUT2 = TPPF(ZP,ZDF)
+@IF 3 2 LET ZCUT1 = TPPF(ZQ,ZDF)
+@IF 3 2 LET ZCUT2 = TPPF(.999,ZDF)
+@IF 3 3 LET ZCUT1 = TPPF(ZQ2,ZDF)
+@IF 3 3 LET ZCUT2 = TPPF(ZP2,ZDF)
+ 
+LET Z80 = TPPF(.80,ZDF)
+LET ZLOWER = TPPF(.001,ZDF)
+LET ZUPPER = TPPF(.999,ZDF)
+LET ZLOWER2 = MIN(ZTESTSTA,ZLOWER)
+LET ZUPPER2 = MAX(ZUPPER,ZTESTSTA)
+ 
+LET FUNCTION ZF = TPDF(ZZ,ZDF)
+PLOT ZF FOR ZZ = ZLOWER2 .1 ZUPPER2 AND
+PLOT 0 FOR ZZ = ZLOWER2 .1 ZUPPER2
+ 
+JUSTIFICATION CENTER
+LET ZZ = ZTESTSTA; LET ZPDFSTAT = ZF
+LET ZZ = ZLOWER; LET ZPDFLOWE = ZF
+LET ZZ = ZUPPER; LET ZPDFUPPE = ZF
+LET ZZ = ZCUT1; LET ZPDFCUT1 = ZF
+LET ZZ = ZCUT2; LET ZPDFCUT2 = ZF
+LET ZZ = Z80; LET ZPDF80 = ZF
+ 
+DRAWDSDS ZTESTSTA 25 ZTESTSTA 10
+MOVEDS ZTESTSTA 26; TEXT TSV
+MOVEDS ZTESTSTA 26; TEXT TSV
+MOVEDS ZTESTSTA 6; TEXT ^ZTESTSTA
+MOVEDS ZTESTSTA 6; TEXT ^ZTESTSTA
+ 
+@IF 3 1 DRAWDDDS ZCUT2 ZPDFCUT2 ZCUT2 5
+@IF 3 1 DRAWDSDS ZCUT2 85 ZCUT2 5
+@IF 3 1 DRAWDSDS ZCUT2 85 ZLOWER2 85
+@IF 3 1 LET ZLOWER2P = ZLOWER2+(ZCUT2-ZLOWER2)/20
+@IF 3 1 DRAWDSDS ZLOWER2P 86 ZLOWER2 85 ZLOWER2P 84
+@IF 3 1 MOVEDS ZCUT2 1; TEXT ^ZCUT2
+ 
+@IF 3 2 DRAWDDDS ZCUT1 ZPDFCUT1 ZCUT1 5
+@IF 3 2 DRAWDSDS ZCUT1 85 ZCUT1 5
+@IF 3 2 DRAWDSDS ZCUT1 85 ZUPPER2 85
+@IF 3 2 LET ZUPPER2P = ZUPPER2-(ZUPPER2-ZCUT1)/20
+@IF 3 2 DRAWDSDS ZUPPER2P 86 ZUPPER2 85 ZUPPER2P 84
+@IF 3 2 MOVEDS ZCUT1 1; TEXT ^ZCUT1
+ 
+@IF 3 3 DRAWDDDS ZCUT1 ZPDFCUT1 ZCUT1 5
+@IF 3 3 DRAWDSDS ZCUT1 85 ZCUT1 5
+@IF 3 3 DRAWDDDS ZCUT2 ZPDFCUT2 ZCUT2 5
+@IF 3 3 DRAWDSDS ZCUT2 85 ZCUT2 5
+@IF 3 3 DRAWDSDS ZCUT1 85 ZCUT2 85
+@IF 3 3 MOVEDS ZCUT1 1; TEXT ^ZCUT1
+@IF 3 3 MOVEDS ZCUT2 1; TEXT ^ZCUT2
+ 
+LET ZHALF = (ZCUT1+ZCUT2)/2
+MOVEDS ZHALF 80; TEXT NO
+MOVEDS ZHALF 75; TEXT IMPROVEMENT
+MOVEDS ZHALF 70; TEXT REGION
+ 
+JUSTIFICATION LEFT
+MOVEDD Z80 ZPDF80
+TEXT t(^ZDF)
+ 
+WRITE ZALPHA ZN1 ZN2 ZDF ZSTAT ZSDSTAT ZTESTSTA ZCUT1 ZCUT2
+--------------------

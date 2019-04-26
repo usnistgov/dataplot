@@ -1,0 +1,45 @@
+Name:     RINNE2.DAT
+Source:   Horst Rinne (2009) "The Weibull Distribution: A Handbook",
+          Chapman & Hall/CRC, p. 348.
+
+          These data are 20 simulated observations from a 3-parameter
+          Weibull distribution with location parameter 15, scale
+          parameter 30 and shape parameter 2.5.
+
+          Use these to compare Dataplot computations to those in
+          Rinne book.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Y
+-------------
+ 22.8
+ 26.3
+ 28.8
+ 30.9
+ 32.4
+ 34.4
+ 35.6
+ 37.3
+ 38.5
+ 39.9
+ 41.6
+ 43.5
+ 44.7
+ 46.2
+ 48.4
+ 49.5
+ 52.0
+ 53.8
+ 57.3
+ 66.4

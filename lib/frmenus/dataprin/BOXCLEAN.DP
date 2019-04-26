@@ -1,0 +1,6 @@
+----- <~dataprin\BOXCLEAN.DP> Print (to Printer) BOXCLEAN.DAT
+
+. This is file    BOXCLEAN.DP
+
+PRINT BOXCLEAN.DAT
+

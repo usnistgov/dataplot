@@ -1,0 +1,222 @@
+. This is Dataplot program file    statgrap.dp
+. Purpose--Generate 'Statistical Graphics' graphics
+. May 1994
+.
+. -----start point-----
+.
+device 2 Postscirpt
+.
+. -----univariate-----
+.
+x3label automatic
+label size 3
+tic label size 3
+box thickness .3
+vertical spacing 0
+.
+skip 25
+read lew.dat y
+4-plot Y
+box fill pattern on; box fill color G75
+box 15 96 85 99.5; hw 3 2; justification center; move 50 96.7
+text Univariate Analysis: Is the Process in Statistical Control?
+move 50 3
+text 4-Plot Y
+.
+grid on
+let lambda = 1.5
+y1label Ordered Data
+x1label Tukey (Lambda = +1.5) Order Statistic Medians
+y1label displacement 6
+Tukey Probability Plot Y
+box fill pattern on; box fill color G75
+box 15 93 85 99.5; hw 3 2; justification center; move 50 96.7
+text Distributional Modeling
+text Does a Specified Distribution Fit the Data?
+.
+grid on
+y1label Probability Plot Correlation Coefficient
+x1label Tukey Lambda (Tail Length Parameter)
+PPCC Plot Y
+box fill pattern on; box fill color G75
+box 15 93 85 99.5; hw 3 2; justification center; move 50 96.7
+text Distributional Modeling
+text What is the Best-Fit Distribution for the Data?
+.
+y1label Probability Plot Correlation Coefficient
+x1label Generalized Pareto Gamma (Shape)
+Generalized Pareto PPCC Plot Y
+box fill pattern on; box fill color G75
+box 15 93 85 99.5; hw 3 2; justification center; move 50 96.7
+text Distributional Modeling of Extrema
+text What is the Best-Fit Distribution for the Extrema?
+.
+y1label Normal Prob. Plot Corr. Coef.
+x1label Box-Cox Lambda
+Box-Cox Normality Plot Y
+box fill pattern on; box fill color G75
+box 15 93 85 99.5; hw 3 2; justification center; move 50 96.7
+text Distributional Modeling
+text What is the Best Transformation to Normality?
+delete y
+.
+. -----regression-----
+.
+skip 25
+read berger1.dat y x
+let y = log(y)
+y1label Correlation Coefficient
+x1label Box-Cox Lambda
+Box-Cox Linearity Plot Y X
+box fill pattern on; box fill color G75
+box 15 93 85 99.5; hw 3 2; justification center; move 50 96.7
+text Deterministic Modeling
+text What is the Best Transformation to Linearity?
+delete x y
+grid off
+.
+read gravity.dat y x1 x2 x3
+x3label Call Dexboxco.dp
+y1label Normalized Yates Coefficients
+x1label Box-Cox Lambda
+call dexboxco.dp
+box fill pattern on; box fill color G75
+box 15 93 85 99.5; hw 3 2; justification center; move 50 96.7
+text Deterministic Modeling
+text What is the Best Transformation to Eliminate Interactions?
+grid off
+lines solid all
+char blank all
+delete y x1 x2 x3
+x3label
+label
+.
+read spiegel.dat x y
+linear fit y x
+x3label automatic
+6-Plot Y X
+box fill pattern on; box fill color G75
+box 15 93 85 99.5; hw 3 2; justification center; move 50 96.7
+text Deterministic Modeling
+text Does a Specified Model Fit the Data?
+delete y x
+move 50 5
+text 6-Plot Y X
+.
+. -----comparative-----
+.
+skip 25
+read sheesle2.dat y x1 x2 x3 x4
+char 1 2
+lines blank blank
+y1label Defectives per Hour
+x1label Plant x Speed x Shift
+x3label automatic
+Block Plot Y X2 X3 X4 X1
+box fill pattern on; box fill color G75
+box 15 93 85 99.5; hw 3 2; justification center; move 50 96.7
+text Comparative Experimentation
+text Is a Factor Important (Over Other Factors in the System)?
+delete y x1 x2 x3 x4
+char bl all
+lines solid all
+label
+.
+. -----screening-----
+.
+skip 25
+read boxreac2.dat y x1 x2 x3 x4 x5
+let numfac = 5
+let dp = 1
+let string stat = mean
+let string s0 = Yield
+let string s1 = X1
+let string s2 = X2
+let string s3 = X3
+let string s4 = X4
+let string s5 = X5
+ylimits 50 90
+x3label
+call dexstat2.dp
+box fill pattern on; box fill color G75
+box 15 93 85 99.5; hw 3 2; justification center; move 50 96.7
+text Screening Experimentation
+text What Factors and 2-Term Interactions are Important?
+ylimits
+delete y x1 x2 x3 x4 x5
+move 50 10
+text Call Dexstat2.dp
+move 50 5
+text Dex Interaction Plot Matrix
+.
+. -----quality-----
+.
+x3label automatic
+skip 25
+read paper.dat Y X
+let lsl = .065
+let target = .075
+let usl = .085
+y1label Thickness Cpk
+x1label Operator
+x2label lsl = ^lsl   target = ^target   usl = ^usl
+let a = Cpk Y
+lines blank dotted
+spike base a
+spike on
+y1label Cpk
+x1label Operator
+label size 3
+tic label size 3
+Cpk Plot Y X
+box fill pattern on; box fill color G75
+box 15 93 85 99.5; hw 3 2; justification center; move 50 96.7
+text Statistical Process Control
+text Do Percent Defectives Vary Over Time?
+spike off
+.
+y1label Midmean
+x1label Bootstrap Sample Index
+lines solid all
+Bootstrap Midmean Plot Y
+box fill pattern on; box fill color G75
+box 15 93 85 99.5; hw 3 2; justification center; move 50 96.7
+text Uncertainty Analysis
+text What Uncertainty Do I Attach to a Specified Statistic?
+////
+. This is Dataplot program file    statgrap.dp
+. Purpose--Generate 'Statistical Graphics' graphics
+. May 1994
+.
+. -----start point-----
+.
+device 2 Postscirpt
+.
+. -----univariate-----
+.
+x3label automatic
+label size 3
+tic label size 3
+box thickness .3
+vertical spacing 0
+.
+skip 25
+read lew.dat y
+4-plot Y
+box fill pattern on; box fill color G75
+box 15 96 85 99.5; hw 3 2; justification center; move 50 96.7
+text Univariate Analysis: Is the Process in Statistical Control?
+move 50 3
+text 4-Plot Y
+.
+grid on
+let lambda = 1.5
+y1label Ordered Data
+x1label Tukey (Lambda = +1.5) Order Statistic Medians
+y1label displacement 6
+Tukey Probability Plot Y
+box fill pattern on; box fill color G75
+box 15 93 85 99.5; hw 3 2; justification center; move 50 96.7
+text Distributional Modeling
+text Does a Specified Distribution Fit the Data?
+.

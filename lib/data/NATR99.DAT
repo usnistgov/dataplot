@@ -1,0 +1,27 @@
+This is Dataplot data file     NATR99.DAT
+Vacum tube failures
+Question: Is the type of tube failure associated with position
+          in the shell?
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 9-9
+Number of observations = 2
+Number of variables per line image = 4
+Order of variables on a line image--
+   1. POS   = Position in shell (1 - Top Block, 2 - Bottom Block)
+   2. X1    = Type of Failure A
+   3. X2    = Type of Failure B
+   4. X3    = Type of failure C
+
+
+
+
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR99.DAT POS X1 X2 X3
+ 
+
+ POS     X1  X2  X3
+-------------------
+   1     75  10  15
+   2     40  30  10

@@ -1,0 +1,8 @@
+----- <~dexpb\PB12.DP> Load  PB12.DAT
+
+. This is file    PB12.DP
+
+DELETE X1 TO X11
+SKIP 50
+READ PB12.DAT X1 TO X11
+

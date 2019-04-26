@@ -1,0 +1,8 @@
+----- <~dataload\CCPN.DP> Load CCPN.DAT
+
+. This is file    CCPN.DP
+
+DELETE Y SIZE X
+SKIP 25
+READ CCPN.DAT Y SIZE X
+

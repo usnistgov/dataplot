@@ -1,0 +1,68 @@
+This is file meansdcl.men--Mean, SD, and Conf. Limits
+ 
+--------------------
+ 1. Mean, Standard Deviation, & Confidence Limits
+ 2. LET M = MEAN Y; LET SDM = SD MEAN Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5.
+ 6. Output (all names required):
+ 7.    Name for sample size:
+ 7.    @CE 2 0 33 50 ?
+ 8.    Name for computed mean:
+ 8.    @CE 3 0 33 50 ?
+ 9.    Name for computed stan. dev.:
+ 9.    @CE 4 0 33 50 ?
+10.    Name for computed sd(mean)
+10.    @CE 5 0 33 50 ?
+11.    95% confidence limits:
+12.       half width:
+12.       @CE 6 0 33 50 ?
+13.       lower limit:
+13.       @CE 7 0 33 50 ?
+14.       upper limit:
+14.       @CE 8 0 33 50 ?
+15.    99% confidence limits:
+16.       half width:
+16.       @CE 9 0 33 50 ?
+17.       lower limit:
+17.       @CE 10 0 33 50 ?
+18.       upper limit:
+18.       @CE 11 0 33 50 ?
+19.
+20. Number of output decimal places:
+20.       @CE 12 0 33 50 ?
+21.
+22. Subset/Except/For Specification:
+23. @CE 13 0 1 50 *
+24.
+25.
+26. Compute Statistics & Limits?
+--------------------
+GR FE
+LET ZN  = NUMBER _1 _13
+LET _2 = ZN
+LET ZMEAN  = MEAN _1 _13
+LET _3 = ZMEAN
+LET ZS  = SD _1 _13
+LET _4 = ZS
+LET ZSDM  = SD MEAN _1 _13
+LET _5 = ZSDM
+LET ZNU = ZN-1
+.
+LET ZT = TPPF(.975,ZNU)
+LET ZHALF = ZT*ZSDM
+LET _6 = ZHALF
+LET _7 = ZMEAN - ZHALF
+LET _8 = ZMEAN + ZHALF
+.
+LET ZT = TPPF(.995,ZNU)
+LET ZHALF = ZT*ZSDM
+LET _9 = ZHALF
+LET _10 = ZMEAN - ZHALF
+LET _11 = ZMEAN + ZHALF
+.
+@IF 12 0 SET WRITE DECIMALS _12
+WRITE _2 _3 _4 _5 _6 _7 _8 _9 _10 _11
+--------------------

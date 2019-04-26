@@ -1,0 +1,13 @@
+----- <~edac\RANDN.DP> Load RANDN.DATA & generate 4-PLOT
+
+. This is file    RANDN.DP
+
+DELETE Y
+TITLE
+.
+LIST RANDN.DAT
+SKIP 25
+SERIAL READ RANDN.DAT Y
+.
+TITLE RANDN.DAT
+4-PLOT Y

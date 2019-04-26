@@ -1,0 +1,607 @@
+This is Dataplot file     FUNCTIONS.           5/96
+Purpose--Enumerate internal Dataplot function library
+ 
+ 
+--------------------Mathematics--------------------
+ 
+Elementary Functions
+   ABS(X)            absolute value
+   CABS(XR,XC)       absolute value of a complex number
+   SQRT(X)           square root
+   CSQRT(XR,XC)      square root of a complex number (real component)
+   CSQRTI(XR,XC)     square root of complex number (complex component)
+   MOD(X,Y)          modulo (i.e., the remainder of x/y)
+   MIN(X,Y)          minimum of two numbers
+   MAX(X,Y)          maximum of two numbers
+   DIM(X,Y)          positive difference (i.e., x-min(x,y))
+   IND(X,Y)          mathematical indicator function
+ 
+Exponential and Logarithmic Functions
+   EXP(X)            exponential
+   LN(X)             natural logarithm of a number
+   LOG(X)            natural logarithm of a number
+   LOG10(X)          base 10 logarithm of a number
+   LOG2(X)           base 2 logarithm of a number
+   CEXP(XR,XC)       exponential of a complex number (real component)
+   CEXPI(XR,XC)      exponential of complex number (complex component)
+   CLOG(XR,XC)       logarithm of a complex number (real component)
+   CLOGI(XR,XC)      logarithm of a complex number (complex component)
+ 
+Trigonometric Functions
+   SIN(X)            sine
+   COS(X)            cosine
+   TAN(X)            tangent
+   COT(X)            cotangent
+   SEC(X)            secant
+   CSC(X)            cosecant
+   CCOS(XR,XC)       real component of cosine of a complex number
+   CCOSI(XR,XC)      complex component of cosine of a complex number
+   CSIN(XR,XC)       real component of sine of a complex number
+   CSINI(XR,XC)      complex component of sine of a complex number
+ 
+Inverse Trigonometric Functions
+   ARCSIN(X)         inverse sine
+   ARCCOS(X)         inverse cosine
+   ARCTAN(X)         inverse tangent
+   ARCCOT(X)         inverse cotangent
+   ARCSEC(X)         inverse secant
+   ARCCSC(X)         inverse cosecant
+ 
+Hyperbolic Trigonometric Functions
+   SINH(X)           hyperbolic sine
+   COSH(X)           hyperbolic cosine
+   TANH(X)           hyperbolic tangent
+   COTH(X)           hyperbolic cotangent
+   SECH(X)           hyperbolic secant
+   CSCH(X)           hyperbolic cosecant
+ 
+Inverse Hyperbolic Trigonometric Functions
+   ARCSINH(X)        inverse hyperbolic sine
+   ARCCOSH(X)        inverse hyperbolic cosine
+   ARCTANH(X)        inverse hyperbolic tangent
+   ARCCOTH(X)        inverse hyperbolic cotangent
+   ARCSECH(X)        inverse hyperbolic secant
+   ARCCSCH(X)        inverse hyperbolic cosecant
+ 
+Conversion Functions
+   SIGN(X)           sign of a number
+   INT(X)            integer portion of a number
+   FRACT(X)          fractional portion of a number
+   ROUND(X,D)        round to D decimals places
+   LSD(X)            least significant digit of a number
+ 
+Base Conversion Functions
+   OCTDEC(X)         octal to decimal conversion
+   DECOCT(X)         decimal to octal conversion
+ 
+Error Functions
+   ERF(X)            error function
+   ERFC(X)           complementary error function
+   DAWSON(X)         Dawson's integral
+ 
+Gamma and Beta Functions
+   GAMMA(X)          gamma function
+   LOGGAMMA(X)       log (to the base e) gamma function
+   GAMMAI(X,A)       incomplete Gamma function
+   GAMMAIP(X,A)      alternate incomplete Gamma function
+   GAMMAIC(X,A)      complementary incomplete Gamma function
+   GAMMAR(X)         reciprocal Gamma function
+   DIGAMMA(X)        digamma (or Psi) function
+   TRICOMI(X,A)      Tricomi's incomplete Gamma function
+   BETA(A,B)         Beta function
+   BETAI(X,A,B)      incomplete Beta function
+   LNBETA(A,B)       log (to the base e) Beta function
+   POCH(X,A)         Pochhammer's generalized symbol
+   POCH1(X,A)        Pochhammer's generalized symbol of the first order
+ 
+Chebychev Polynomials
+   CHEB0(X)          Chebychev polynomial of order 0
+   CHEB1(X)          Chebychev polynomial of order 1
+   CHEB2(X)          Chebychev polynomial of order 2
+   CHEB3(X)          Chebychev polynomial of order 3
+   CHEB4(X)          Chebychev polynomial of order 4
+   CHEB5(X)          Chebychev polynomial of order 5
+   CHEB6(X)          Chebychev polynomial of order 6
+   CHEB7(X)          Chebychev polynomial of order 7
+   CHEB8(X)          Chebychev polynomial of order 8
+   CHEB9(X)          Chebychev polynomial of order 9
+   CHEB10(X)         Chebychev polynomial of order 10
+ 
+ORTHOGONAL POLYNOMIALS
+   LEGENDRE(X,N)     Legendre polynomial of order n
+   LEGENDRE(X,N,M)   associated Legendre polynomial of order n and
+                     degree m
+   NRMLEG(X,N)       normalized Legendre polynomial of order n
+   NRMLEG(X,N,M)     associated normalized Legendre polynomial of order
+                     n and degree m
+   LEGP(X,N)         Legendre function of first kind of order n
+   LEGP(X,N,M)       associated Legendre function of the first kind of
+                     order n and degree m
+   LEGQ(X,N)         Legendre function of the second kind of order N
+   LEGQ(X,N,M)       associated Legendre function of the second kind of
+                     order n and degree m
+   SPHRHRMR(X,P,N,M) real component of the spherical harmonic function
+   SPHRHRMC(X,P,N,M) complex component of the spherical harmonic
+                     function
+   LAGUERRE(X,N)     Laguerre polynomial of order n
+   LAGUERRL(X,N,A)   generalized Laguerre polynomial of order n
+   NRMLAG(X,N)       normalized Laguerre polynomial of order n
+   CHEBT(X,N)        Chebyshev T (first kind) polynomial of order n
+   CHEBU(X,N)        Chebyshev U (second kind) polynomial of order n
+   JACOBIP(X,N,A,B)  Jacobi polynomial of order n
+   ULTRASPH(X,N,A)   Ultraspherical (or Gegenbauer) polynomial of
+                     order n
+   HERMITE(X,N)      Hermite polynomial of order n
+   LNHERMIT(X,N)     log of the absolute value of the Hermite
+                     polynomial of order n
+   HERMSGN(X,N)      sign of the Hermite polynomial (1 for positive,
+                     -1 for negative, 0 for zero)
+
+Bessel Functions
+   BESS0(X)          Bessel function of first kind and order 0
+   BESS1(X)          Bessel function of first kind and order 1
+   BESSJN(X,N)       Bessel function of first kind and order n
+                     (n can be fractional)
+   CBESSJR(X,N)      Bessel function of first kind, order n (n can be
+                     fractional), and complex argument (real component)
+   CBESSJI(X,N)      Bessel function of first kind, order n (n can be
+                     fractional), complex argument (complex component)
+   BESSY0(X)         Bessel function of second kind and order 0
+   BESSY1(X)         Bessel function of second kind and order 1
+   BESSYN(X,N)       Bessel function of second kind and order n (n can
+                     be fractional)
+   CBESSYR(X,N)      Bessel function of second kind, order n (n can be
+                     fractional), and complex argument (real component)
+   CBESSYI(X,N)      Bessel function of second kind, order n (n can be
+                     fractional), complex argument (complex component)
+   BESSI0(X)         modified Bessel function of first kind and order 0
+   BESSI0E(X)        exponentially scaled modified Bessel function of
+                     first kind and order 0
+   BESSI1(X)         modified Bessel function of first kind and order 1
+   BESSI1E(X)        exponentially scaled modified Bessel function of
+                     first kind and order 1
+   BESSIN(X,N)       modified Bessel function of first kind and order n
+                     (n can be fractional)
+   BESSINE(X,N)      exponentially scaled modified Bessel function of
+                     first kind and order n (n can be fractional)
+   CBESSIR(X,N)      modified Bessel function of order n (n can be
+                     fractional) and complex argument (real component)
+   CBESSII(X,N)      modified Bessel function of order n (n can be
+                     fractional) complex argument (complex component)
+   BESSK0(X)         modified Bessel function of third kind and order 0
+   BESSK0E(X)        exponentially scaled modified Bessel function of
+                     third kind and order 0
+   BESSK1(X)         modified Bessel function of third kind and order 1
+   BESSK1E(X)        exponentially scaled modified Bessel function of
+                     third kind and order 1
+   BESSKN(X,N)       modified Bessel function of third kind and order n
+                     (n can be fractional)
+   BESSKNE(X,N)      exponentially scaled modified Bessel function of
+                     third kind and order n (n can be fractional)
+   CBESSKR(X,N)      modified Bessel function of the third kind, order
+                     n (n can be fractional), and complex argument
+                     (real component)
+   CBESSKI(X,N)      modified Bessel function of the third kind, order
+                     n (n can be fractional), and complex argument
+                     (complex component)
+   AIRY(X)           Airy function
+   BAIRY(X)          Airy function of the second kind
+ 
+Integral Functions
+   LOGINT(X)         logarithmic integral
+   EXPINT1(X)        exponential integral
+   EXPINTE(X)        exponential integral
+   EXPINTN(X,N)      exponential integral of integer order
+   SININT(X)         sine integral
+   COSINT(X)         cosine integral
+   SINHINT(X)        hyperbolic sine integral
+   COSHINT(X)        hyperbolic cosine integral
+   FRESNS(X)         Fresnel sine integral
+   FRESNC(X)         Fresnel cosine integral
+   FRESNF(X)         Fresnel auxillary function f integral
+   FRESNG(X)         Fresnel auxillary function g integral
+   SPENCE(X)         Spence dilogarithm function
+
+Experiment Design Functions
+   BINPAT(X)         Used to generate binary Yates design matrices
+ 
+Elliptic Functions and Integrals
+   ELLIPC1(X)        Legendre complete elliptic integral of first kind
+   ELLIPC2(X)        Legendre complete elliptic integral of second kind
+   ELLIP1(PHI,K)     Legendre elliptic integral of the first kind
+   ELLIP2(PHI,K)     Legendre elliptic integral of the second kind
+   ELLIP3(P,N,K)     Legendre elliptic integral of the third kind
+   RC(X,Y)           Carlson's degenerate elliptic integral
+   RD(X,Y,Z)         Carlson's elliptic integral of the second kind
+   RF(X,Y,Z)         Carlson's elliptic integral of the first kind
+   RJ(X,Y,Z,P)       Carlson's elliptic integral of the third kind
+   SN(X,M)           Jacobian elliptic sn function
+   CN(X,M)           Jacobian elliptic cn function
+   DN(X,M)           Jacobian elliptic dn function
+   PEQ(XR,XI)        real component of the Weierstrass elliptic
+                     function (equianharmomic case)
+   PEQI(XR,XI)       complex component of the Weierstrass elliptic
+                     function (equianharmomic case)
+   PEQ1(XR,XI)       real component of the first derivative of the
+                     Weierstrass elliptic function (equianharmomic case)
+   PEQ1I(XR,XI)      complex component of the first derivative of the
+                     Weierstrass elliptic function (equianharmomic case)
+   PLEM(XR,XI)       real component of the Weierstrass elliptic
+                     function (lemniscatic case)
+   PLEMI(XR,XI)      complex component of the Weierstrass elliptic
+                     function (lemniscatic case)
+   PLEM1(XR,XI)      real component of the first derivative of the
+                     Weierstrass elliptic function (lemniscatic case)
+   PLEM1I(XR,XI)     complex component of the first derivative of the
+                     Weierstrass elliptic function (lemniscatic case)
+
+
+--------------------Probability--------------------
+ 
+Standard Normal Distribution (Mean = 0, Standard Deviation = 1)
+   NORCDF(X)         normal cumulative distribution function
+   NORPDF(X)         normal probability density function
+   NORPPF(P)         normal percent point function
+ 
+t Distribution
+   TCDF(X,NU)        t cumulative distribution function
+   TPDF(X,NU)        t probability density function
+   TPPF(P,NU)        t percent point function
+ 
+F Distribution
+   FCDF(X,NU1,NU2)   F cumulative distribution function
+   FPDF(X,NU1,NU2)   F probability density function
+   FPPF(P,NU1,NU2)   F percent point function
+ 
+Weibull Distribution
+   WEICDF(X,GAMMA)   Weibull cumulative distribution function
+   WEICDF(X,GAMMA)   Weibull probability density function
+   WEICDF(X,GAMMA)   Weibull percent point function
+ 
+Alpha Distribution
+   ALPCDF(X,A,B)     alpha cumulative distribution function
+   ALPPDF(X,A,B)     alpha probability density function
+   ALPPPF(X,A,B)     alpha percent point function
+ 
+Anglit Distribution
+   ANGCDF(X)         anglit cumulative distribution function
+   ANGPDF(X)         anglit probability density function
+   ANGPPF(X)         anglit percent point function
+ 
+Arc-sine Distribution
+   ARSCDF(X)         arc-sine cumulative distribution function
+   ARSPDF(X)         arc-sine probability density function
+   ARSPPF(X)         arc-sine percent point function
+ 
+Beta-binomial Distribution
+   BBNCDF(X,A,B,N)   Beta-binomial cumulative distribution function
+   BBNPDF(X,A,B,N)   Beta-binomial probability density function
+   BBNPPF(X,A,B,N)   Beta-binomial percent point function
+ 
+Beta Distribution
+   BETCDF(X,A,B)     Beta cumulative distribution function
+   BETPDF(X,A,B)     Beta probability density function
+   BETPPF(X,A,B)     Beta percent point function
+ 
+Bivariate Normal Distribution
+   BVNCDF(X1,X2,CORR) bivariate normal cumulative distribution function
+
+Binomial Distribution
+   BINCDF(X,P,N)     binomial cumulative distribution function
+   BINPDF(X,P,N)     binomial probability density function
+   BINPPF(X,P,N)     binomial percent point function
+ 
+Bradford Distribution
+   BRACDF(X,A,B)     Bradford cumulative distribution function
+   BRAPDF(X,A,B)     Bradford probability density function
+   BRAPPF(X,A,B)     Bradford percent point function
+ 
+Cauchy Distribution
+   CAUCDF(X)         Cauchy cumulative distribution function
+   CAUPDF(X)         Cauchy probability density function
+   CAUPPF(P)         Cauchy percent point function
+   CAUSF(P)          Cauchy sparsity function
+ 
+Chi Distribution
+   CHCDF(X,NU)       chi cumulative distribution function
+   CHPDF(X,NU)       chi probability density function
+   CHPPF(P,NU)       chi percent point function
+ 
+chi-squared Distribution
+   CHSCDF(X,NU)      chi-squared cumulative distribution function
+   CHSPDF(X,NU)      chi-squared probability density function
+   CHSPPF(P,NU)      chi-squared percent point function
+ 
+Cosine Distribution
+   COSCDF(X)          Compute the cosine cumulative distribution
+                      function
+   COSPDF(X)          Compute the cosine probability density function
+   COSPPF(P)          Compute the cosine percent point function
+ 
+Double Exponential (or Laplace) Distribution
+   DEXCDF(X)         double exponential cumulative distribution function
+   DEXPDF(X)         double exponential probability density function
+   DEXPPF(P)         double exponential percent point function
+   DEXSF(P)          double exponential sparsity function
+
+Double Gamma Distribution
+   DGACDF(X,G)       double gamma cumulative distribution function
+   DGAPDF(X,G)       double gamma probability density function
+   DGAPPF(P,G)       double gamma percent point function
+
+Discrete Uniform Distribution
+   DISCDF(X,N)       discrete uniform cumulative distribution function
+   DISPDF(X,N)       discrete uniform probability density function
+   DISPPF(P,N)       discrete uniform percent point function
+
+Logarithmic Series Distribution
+   DLGCDF(X,C)       logarithmic series cumulative distribution function
+   DLGPDF(X,C)       logarithmic series probability density function
+   DLGPPF(P,C)       logarithmic series percent point function
+
+Doubly Non-Central F Distribution
+   DNFCDF(X,N1,N2,A,B) doubly non-central F cumulative distribution
+                       function
+   DNFPPF(P,N1,N2,A,B) doubly non-central F percent point function
+ 
+Doubly Non-Central t Distribution
+   DNTCDF(X,N1,A,B)    doubly non-central t cumulative distribution
+                       function
+   DNTPPF(P,N1,A,B)    doubly non-central F percent point function
+ 
+Double Weibull Distribution
+   DWECDF(X,G)       double Weibull cumulative distribution function
+   DWEPDF(X,G)       double Weibull probability density function
+   DWEPPF(P,G)       double Weibull percent point function
+
+Extreme Value Type I (or Frechet) Distributions
+   EV1CDF(X)         Frechet cumulative distribution function
+   EV1PDF(X)         Frechet probability density function
+   EV1PPF(P)         Frechet percent point function
+ 
+Extreme Value Type II (or Gumbel) Distribution
+   EV2CDF(X,G)       Gumbel cumulative distribution function
+   EV2PDF(X,G)       Gumbel probability density function
+   EV2PPF(P,G)       Gumbel percent point function
+ 
+Exponentiated Weibull Distribution
+   EWECDF(X,G,T)     exponentiated Weibull cumulative distribution function
+   EWEPDF(X,G,T)     exponentiated Weibull probability density function
+   EWEPPF(P,G,T)     exponentiated Weibull percent point function
+
+Exponential Distribution
+   EXPCDF(X)         exponential cumulative distribution function
+   EXPPDF(X)         exponential probability density function
+   EXPPPF(P)         exponential percent point function
+   EXPSF(P)          exponential sparsity function
+ 
+Folded Cauchy Distribution
+   FCACDF(X,U,SD)    folded Cauchy cumulative distribution function
+   FCAPDF(X,U,SD)    folded Cauchy probability density function
+   FCAPPF(P,U,SD)    folded Cauchy percent point function
+ 
+Fatigue Life Distribution
+   FLCDF(X,GAMMA)    fatigue Life cumulative distribution function
+   FLCDF(X,GAMMA)    fatigue Life probability density function
+   FLCDF(X,GAMMA)    fatigue Life percent point function
+ 
+Folded Normal Distribution
+   FNRCDF(X,U,SD)    folded Normal cumulative distribution function
+   FNRPDF(X,U,SD)    folded Normal probability density function
+   FNRPPF(P,U,SD)    folded Normal percent point function
+ 
+Gamma Distribution
+   GAMCDF(X,GAMMA)   Gamma cumulative distribution function
+   GAMPDF(X,GAMMA)   Gamma probability density function
+   GAMPPF(P,GAMMA)   Gamma percent point function
+ 
+Geometric Distribution
+   GEOCDF(X,P)       geometric cumulative distribution function
+   GEOPDF(X,P)       geometric probability density function
+   GEOPPF(X,P)       geometric percent point function
+ 
+Generalized Pareto Distribution
+   GEPCDF(X,GAMMA)   generalized Pareto cumulative distribution function
+   GEPCDF(X,GAMMA)   generalized Pareto probability density function
+   GEPCDF(P,GAMMA)   generalized Pareto percent point function
+ 
+Generalized Exponential Distribution
+   GEXCDF(X,L1,L2,S) generalized exponential cumulative distribution function
+   GEXPDF(X,L1,L2,S) generalized exponential probability density function
+   GEXPPF(P,L1,L2,S) generalized exponential percent point function
+ 
+Generalized Extreme Value Distribution
+   GEVCDF(X,GAMMA)   generalized extreme value cumulative distribution function
+   GEVPDF(X,GAMMA)   generalized extreme value probability density function
+   GEVPPF(P,GAMMA)   generalized extreme value percent point function
+ 
+Generalized Gamma Distribution (includes inverted gamma)
+   GGDCDF(X,ALPHA,C) generalized gamma cumulative distribution function
+   GGDPDF(X,ALPHA,C) generalized gamma probability density function
+   GGDPPF(P,ALPHA,C) generalized gamma percent point function
+ 
+Generalized Logistic Distribution
+   GLOCDF(X,ALPHA)   generalized logistic cumulative distribution function
+   GLOPDF(X,ALPHA)   generalized logistic probability density function
+   GLOPPF(P,ALPHA)   generalized logistic percent point function
+ 
+Gompertz Distribution
+   GOMCDF(X,C,B)     Gompertz cumulative distribution function
+   GOMPDF(X,C,B)     Gompertz probability density function
+   GOMPPF(P,C,B)     Gompertz percent point function
+ 
+Half-Cauchy Distribution
+   HFCCDF(X)         half-Cauchy cumulative distribution function
+   HFCPDF(X)         half-Cauchy probability density function
+   HFCPPF(P)         half-Cauchy percent point function
+ 
+Half-Logistic and Generalized Half-Logistic Distributions
+   HFLCDF(X,GAMMA)   half-logistic and generalized half-logistic
+                     cumulative distribution function
+   HFLPDF(X,GAMMA)   half-logistic and generalized half-logistic
+                     probability density function
+   HFLPPF(P,GAMMA)   half-logistic and generalized half-logistic
+                     percent point function
+ 
+Half-Normal Distribution
+   HFNCDF(X)         half-normal cumulative distribution function
+   HFNPDF(X)         half-normal probability density function
+   HFNPPF(P)         half-normal percent point function
+ 
+Hyperbolic Secant Distribution
+   HSECDF(X)         hyperbolic secant cumulative distribution function
+   HSEPDF(X)         hyperbolic secant probability density function
+   HSEPPF(P)         hyperbolic secant percent point function
+ 
+Hypergeometric Distribution
+   HYPCDF(L,K,N,M)   hypergeometric cumulative distribution function
+   HYPPDF(L,K,N,M)   hypergeometric probability density function
+   HYPPPF(L,K,N,M)   hypergeometric percent point function
+ 
+Inverse Gaussian Distribution
+   IGCDF(X,GAMMA)    inverse Gaussian cumulative distribution function
+   IGCDF(X,GAMMA)    inverse Gaussian probability density function
+   IGCDF(X,GAMMA)    inverse Gaussian percent point function
+ 
+Mielke's Betta-Kappa Distribution
+   KAPCDF(X,K,B,T)   Mielke's beta-kappa cumulative distribution function
+   KAPCDF(X,K,B,T)   Mielke's beta-kappa probability density function
+   KAPCDF(X,K,B,T)   Mielke's beta-kappa percent point function
+ 
+Tukey-Lambda Distribution
+   LAMCDF(X,LAMBDA)  Tukey-Lambda cumulative distribution function
+   LAMPDF(X,LAMBDA)  Tukey-Lambda probability density function
+   LAMPPF(P,LAMBDA)  Tukey-Lambda percent point function
+   LAMSF(P,LAMBDA)   Tukey-Lambda sparsity function
+ 
+Log-Gamma Distribution
+   LGACDF(X,GAMMA)   log-gamma cumulative distribution function
+   LGAPDF(X,GAMMA)   log-gamma probability density function
+   LGAPPF(P,GAMMA)   log-gamma percent point function
+ 
+Log-Normal Distribution
+   LGNCDF(X)         log-normal cumulative distribution function
+   LGNPDF(X)         log-normal probability density function
+   LGNPPF(P)         log-normal percent point function
+ 
+Log-Logistic Distribution
+   LLGCDF(X,DELTA)   log-logistic cumulative distribution function
+   LLGPDF(X,DELTA)   log-logistic probability density function
+   LLGPPF(P,DELTA)   log-logistic percent point function
+ 
+Logistic Distribution
+   LOGCDF(X)         logistic cumulative distribution function
+   LOGPDF(X)         logistic probability density function
+   LOGPPF(P)         logistic percent point function
+   LOGSF(P)          logistic sparsity function
+ 
+Negative Binomial Distribution
+   NBCDF(X,P,N)      negative binomial cumulative distribution function
+   NBPDF(X,P,N)      negative binomial probability density function
+   NBPPF(X,P,N)      negative binomial percent point function
+ 
+Non-Central Beta Distribution
+   NCBCDF(X,A,B,LAM) non-central Beta cumulative distribution function
+   NCBPPF(P,A,B,LAM) non-central Beta percent point function
+ 
+Non-Central Chi-Square Distribution
+   NCCCDF(X,N1,ALPHA) non-central chi-square cumulative distribution
+                      function
+   NCCPPF(P,N1,ALPHA) non-central chi-square percent point function
+ 
+Non-Central F Distribution
+   NCFCDF(X,N1,N2,A,B) non-central F cumulative distribution function
+   NCFPPF(P,N1,N2,A,B) non-central F percent point function
+ 
+Non-Central t Distribution
+   NCTCDF(X,N1,ALPHA) non-central t cumulative distribution function
+   NCTPDF(X,N1,ALPHA) non-central t probability density function
+   NCTPPF(P,N1,ALPHA) non-central t percent point function
+ 
+Pareto Distribution (first kind)
+   PARCDF(X,GAMMA)   Pareto cumulative distribution function
+   PARCDF(X,GAMMA)   Pareto probability density function
+   PARCDF(X,GAMMA)   Pareto percent point function
+ 
+Pareto Distribution (second kind)
+   PA2CDF(X,GAMMA)   Pareto cumulative distribution function
+   PA2PDF(X,GAMMA)   Pareto probability density function
+   PA2PPF(X,GAMMA)   Pareto percent point function
+ 
+Exponential Power Distribution
+   PEXCDF(X,A,B)     exponential power cumulative distribution function
+   PEXPDF(X,A,B)     exponential power probability density function
+   PEXPPF(X,A,B)     exponential power percent point function
+ 
+Poisson Distribution
+   PEXCDF(X,P,N)     Poisson cumulative distribution function
+   PEXPDF(X,P,N)     Poisson probability density function
+   PEXPPF(X,P,N)     Poisson percent point function
+ 
+Power Log-Normal Distribution
+   PLNCDF(X,P,SD)    power log-normal cumulative distribution function
+   PLNPDF(X,P,SD)    power log-normal probability density function
+   PLNPPF(P,P,SD)    power log-normal percent point function
+ 
+Power Normal Distribution
+   PNRCDF(X,P,SD)    power normal cumulative distribution function
+   PNRPDF(X,P,SD)    power normal probability density function
+   PNRPPF(P,P,SD)    power normal percent point function
+
+Power Function Distribution
+   POWCDF(X,C)       power function cumulative distribution function
+   POWPDF(X,C)       power function probability density function
+   POWPPF(P,C)       power function percent point function
+
+Reciprocal Inverse Gaussian Distribution
+   RIGCDF(X,GAMMA)   reciprocal inverse Gaussian cumulative
+                     distribution func.
+   RIGCDF(X,GAMMA)   reciprocal inverse Gaussian probability density
+                     function
+   RIGCDF(X,GAMMA)   reciprocal inverse Gaussian percent point function
+
+Semi-Circular Distribution
+   SEMCDF(X)         semi-circular cumulative distribution function
+   SEMPDF(X)         semi-circular probability density function
+   SEMPPF(P)         semi-circular percent point function
+
+Truncated Exponential Distribution
+   TNECDF(X,X0,U,SD) truncated exponential cumulative distribution function
+   TNEPDF(X,X0,U,SD) truncated exponential probability density function
+   TNEPPF(P,X0,U,SD) truncated exponential percent point function
+
+Truncated Normal Distribution
+   TNRCDF(X,A,B,U,S) truncated normal cumulative distribution function
+   TNRPDF(X,A,B,U,S) truncated normal probability density function
+   TNRPPF(P,A,B,U,S) truncated normal percent point function
+
+Triangular Distribution
+   TRICDF(X,C)       triangular cumulative distribution function
+   TRIPDF(X,C)       triangular probability density function
+   TRIPPF(P,C)       triangular percent point function
+
+Uniform Distribution
+   UNICDF(X)         uniform cumulative distribution function
+   UNIPDF(X)         uniform probability density function
+   UNIPPF(P)         uniform percent point function
+
+Von Mises Distribution
+   VONCDF(X,B)       Von Mises cumulative distribution function
+   VONPDF(X,B)       Von Mises probability density function
+   VONPPF(P,B)       Von Mises percent point function
+
+Wald Distribution
+   WALCDF(X,GAMMA)   Wald cumulative distribution function
+   WALCDF(X,GAMMA)   Wald probability density function
+   WALCDF(X,GAMMA)   Wald percent point function
+ 
+Waring Distribution (includes Yule if A parameter omitted)
+   WARCDF(X,C,A)     Waring cumulative distribution function
+   WARPDF(X,C,A)     Waring probability density function
+   WARPPF(P,C,A)     Waring percent point function
+
+Wrapped Cauchy Distribution
+   WCACDF(X,P)       wrapped Cauchy cumulative distribution function
+   WCAPDF(X,P)       wrapped Cauchy probability density function
+   WCAPPF(P,P)       wrapped Cauchy percent point function
+

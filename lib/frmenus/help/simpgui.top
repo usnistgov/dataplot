@@ -1,0 +1,52 @@
+----- <~help\simpgui.top> Simple Example: Using the GUI
+
+Simple Example: Using the GUI
+
+Simple Example: Using the GUI
+
+
+This simple example can be performed using the              -
+GUI as follows:
+
+  1) Read the Data
+
+     Since this is a small amount of data, you can
+     insert the data directly into the spreadsheet.
+     Alternatively, you can select the "Files/Data"
+     menu and then select the "Enter a Small Number
+     of Values" menu.
+
+  2) Compute the Mean
+
+     Select the "Math" menu.  Then select the
+     "Location" menu (beneath the Statistical
+     Calculations" header.  Then select the "Mean"
+     menu.
+
+  3) Plot the Data
+
+     Select the "Plot" menu.  Then select the
+     "PLOT Y and PLOT Y X" menu.  This menu allows
+     you to specify the titles and labels and the
+     lines and character settings.
+
+  4) Fit the Data
+
+     Select the "Fit" menu.  Under the "The Modeling
+     Cyle/2. Fit Model" heading, select the "y = f(x)"
+     menu.  Select the "Linear" menu and then select
+     "Do the Fit".
+
+  5) Plot the Residuals
+
+     Select the "Plot" menu.  Under the "Basic Plots"
+     heading, select the "4-Plot" menu.  Enter RES
+     as the vertical axis variable (omit the horizontal
+     axis variable).
+
+  6) Plot the Predicted Values
+
+     Select the "Plot" menu.  Under the "Regression
+     Plots" heading, select the "Plot Data and Predicted"
+     menu.
+

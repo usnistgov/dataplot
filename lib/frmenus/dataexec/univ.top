@@ -1,0 +1,9 @@
+----- <~dataexec\univ.top> Load and Execute Built-in Univariate Data Files
+
+Load and Execute Built-in Univariate Data Files
+
+NIST data                 <~dataexec\univnist.DP>
+Natrella Data             <~dataexec\univnatr.DP>
+Sematech Data             <~dataexec\univsema.DP>
+Other data                <~dataexec\univothe.DP>
+

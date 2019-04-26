@@ -1,0 +1,116 @@
+This is file scatplo1.men--Scatter Plot Matrix Options
+ 
+--------------------
+ 1. Scatter Plot Matrix Options
+ 2. SET ...
+ 3.
+ 4. This menu lets you set the most common options for a
+ 5. scatter plot matrix.  Note that these options stay
+ 6. set for all subequent scatter plot matrix plots until
+ 7. explicitly changed.
+ 8.
+ 9. Select Plot Type:
+10. @CE 1 1 5 15 Plot
+10. @CE 1 2 16 26 Q-Q Plot
+10. @CE 1 3 27 37 Bihistogram
+10. @CE 1 4 38 48 Cross-Corr
+11. @CE 1 5 5 15 Cross-Lag
+11. @CE 1 6 16 26 Cross-Spectrum
+11. @CE 1 7 27 37 Youden
+11. @CE 1 8 38 48 Dex Contour
+12. @CE 1 9 5 15 Dex Interaction
+12. @CE 1 10 16 26 Cross Tabulate
+13. Enter Statistic (if any) for Dex Interaction, Cross Tabulate:
+14. @CE 2 0 1 50 *
+15.
+16. Select Label Type:
+17. @CE 3 1 5 15 X and Y
+17. @CE 3 2 16 26 X only
+17. @CE 3 3 27 37 Y only
+17. @CE 3 4 38 48 None
+18. Location of X Axis Tics and Labels:
+19. @CE 4 1 5 15 Bottom
+19. @CE 4 2 16 26 Top
+19. @CE 4 3 27 37 Alternate
+20. Location of Y Axis Tics and Labels:
+21. @CE 5 1 5 15 Left
+21. @CE 5 2 16 26 Right
+21. @CE 5 3 27 37 Alternate
+22.
+23. Fit a Lowess curve to each plot?:
+23. @CE 6 1 42 45 yes
+23. @CE 6 2 46 48 no
+24. Lowess fraction (default = 0.6):
+24. @CE 7 0 42 50 *
+25.
+26. Plot Diagonal As:
+26. @CE 8 1 18 24 blank
+26. @CE 8 2 25 32 histogram
+26. @CE 8 3 33 40 box plot
+26. @CE 8 4 41 48 scatter
+27. Plot Lower Diagonal Plots?
+27. @CE 9 1 42 45 yes
+27. @CE 9 2 46 48 no
+28.
+29. Treat Last Variable as Group ID Variable?
+29. @CE 10 1 42 45 yes
+29. @CE 10 2 46 48 no
+30.
+31. Tic Offset Units:
+31. @CE 11 1 25 34 Screen Units
+31. @CE 11 2 35 44 Data Units
+32. Tic Offset Y Axis (lower upper):
+32. @CE 12 0 42 50 ? 
+33. Tic Offset X Axis (left right):
+33. @CE 13 0 42 50 ? 
+34. Y Axis Label Displacement:
+34. @CE 14 0 42 50 ?
+35. X Axis Label Displacement:
+35. @CE 15 0 42 50 ?
+36.
+37. Set the Scatter Plot Matrix Options?:
+--------------------
+GR FE
+SET SCATTER PLOT MATRIX TYPE PLOT
+@IF 1 2 SET SCATTER PLOT MATRIX TYPE QUANTILE-QUANTILE
+@IF 1 3 SET SCATTER PLOT MATRIX TYPE BIHISTOGRAM
+@IF 1 4 SET SCATTER PLOT MATRIX TYPE CORRELATION
+@IF 1 5 SET SCATTER PLOT MATRIX TYPE LAG
+@IF 1 6 SET SCATTER PLOT MATRIX TYPE SPECTRUM
+@IF 1 7 SET SCATTER PLOT MATRIX TYPE YOUDEN
+@IF 1 8 SET SCATTER PLOT MATRIX TYPE DEX CONTOUR
+@IF 1 9 SET SCATTER PLOT MATRIX TYPE DEX INTERACTION
+@IF 1 10 SET SCATTER PLOT MATRIX TYPE CROSS TABULATE
+SET SCATTER PLOT MATRIX STATISTIC _2
+.
+SET SCATTER PLOT MATRIX LABELS ON
+@IF 3 2 SET SCATTER PLOT MATRIX LABELS XON
+@IF 3 3 SET SCATTER PLOT MATRIX LABELS YON
+@IF 3 4 SET SCATTER PLOT MATRIX LABELS OFF
+SET SCATTER PLOT MATRIX X AXIS ALTERNATE
+@IF 4 1 SET SCATTER PLOT MATRIX X AXIS BOTTOM
+@IF 4 2 SET SCATTER PLOT MATRIX X AXIS TOP
+SET SCATTER PLOT MATRIX Y AXIS ALTERNATE
+@IF 5 1 SET SCATTER PLOT MATRIX Y AXIS LEFT
+@IF 5 2 SET SCATTER PLOT MATRIX Y AXIS RIGHT
+SET SCATTER PLOT MATRIX FIT NONE
+@IF 6 1 SET SCATTER PLOT MATRIX FIT LOWESS
+LOWESS FRACTION 0.6
+LOWESS FRACTION _7
+SET SCATTER PLOT MATRIX DIAGONAL BLANK
+@IF 8 2 SET SCATTER PLOT MATRIX DIAGONAL HISTOGRAM
+@IF 8 3 SET SCATTER PLOT MATRIX DIAGONAL BOX PLOT
+@IF 8 4 SET SCATTER PLOT MATRIX DIAGONAL LINE
+SET SCATTER PLOT MATRIX LOWER DIAGONAL ON
+@IF 9 2 SET SCATTER PLOT MATRIX LOWER DIAGONAL OFF
+SET SCATTER PLOT MATRIX TAG OFF
+@IF 10 1 SET SCATTER PLOT MATRIX TAG ON
+@IF 11 1 TIC OFFSET UNITS SCREEN
+@IF 11 2 TIC OFFSET UNITS DATA
+YTIC OFFSET _12
+XTIC OFFSET _13
+YLABEL DISPLACEMENT _14
+X1LABEL DISPLACEMENT _15
+--------------------
+WEB HELP SCATTER PLOT MATRIX
+--------------------

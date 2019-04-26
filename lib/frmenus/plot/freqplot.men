@@ -1,0 +1,51 @@
+This is file freqplot.men--Frequency Plot
+ 
+--------------------
+1. Frequency Plot
+2. FREQUENCY PLOT Y
+3.
+4. Horizontal Axis Variable:
+4. @CE 1 0 33 50 ? gui-variable
+5.
+6. Class Width (0.3*s):
+6. @CE 2 0 33 50 *
+7. Lower Limit of First Class:
+7. @CE 3 0 33 50 *
+8. Upper Limit of Last Class:
+8. @CE 4 0 33 50 *
+9.
+10. Title:
+10. @CE 8 0 18 50 *
+11. Left Axis Label:
+11. @CE 9 0 18 100 *
+12. Bottom Axis Label:
+12. @CE 10 0 18 100 *
+13.
+14. Type of Frequency Plot:
+15. @CE 12 1 10 45 counts (typical)
+16. @CE 12 2 10 45 cumulative counts
+17. @CE 12 3 10 45 relative
+18. @CE 12 4 10 45 cumulative relative
+19.
+20. Subset/Except/For Specification: 
+21. @CE 11 0 1 50 *
+22.
+23.
+24. Generate the Frequency Plot?:
+--------------------
+GR FE
+CLASS WIDTH _2
+CLASS LOWER _3
+CLASS UPPER _4
+TITLE _8
+Y1LABEL _9
+X1LABEL _10
+LET STRING ZZZZSTR = FREQUENCY PLOT
+@IF 12 2 LET STRING ZZZZSTR = CUMULATIVE FREQUENCY PLOT
+@IF 12 3 LET STRING ZZZZSTR = RELATIVE FREQUENCY PLOT
+@IF 12 4 LET STRING ZZZZSTR = CUMULATIVE RELATIVE FREQUENCY PLOT
+^ZZZZSTR  _1 _11
+DELETE ZZZZSTR
+--------------------
+WEB HELP FREQUENCY PLOT
+--------------------

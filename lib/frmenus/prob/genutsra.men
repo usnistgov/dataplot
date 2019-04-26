@@ -1,0 +1,49 @@
+This is file genutsra.men--Generate Uneven Two-Sided Power Random Numbers
+ 
+--------------------
+ 1. Generate Uneven Two-Sided Power Random Numbers
+ 2. LET Y = UNEVEN TWO-SIDED POWER RANDOM NUMBERS FOR I = START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Lower Limit Parameter (A):
+ 5. @CE 2 0 42 50 ?
+ 6. Threshold Parameter (B, B > A):
+ 6. @CE 3 0 42 50 ?
+ 7. Upper Limit Parameter (D, D > B):
+ 7. @CE 4 0 42 50 ?
+ 8. Shape Parameter (NU1, NU1 > 0):
+ 8. @CE 5 0 42 50 ?
+ 9. Shape Parameter (NU3, NU3 > 0):
+ 9. @CE 6 0 42 50 ?
+10. Shape Parameter (Alpha, Alpha > 0):
+10. @CE 7 0 42 50 ?
+11.
+12. Optional random number generator seed (default=305):
+13.    (integer >= 305)
+13. @CE 8 0 42 50 ?
+14.
+15. Name of output variable;
+15. @CE 9 0 42 50 ?
+16.
+17.
+18. Generate the random numbers?
+--------------------
+AN FE
+@IF 8 0 SEED _8
+LET A = 0
+LET B = 0.5
+LET D = 1
+LET NU1 = 1
+LET NU3 = 1
+LET ALPHA = 1
+@IF 2 0 LET A = _2
+@IF 3 0 LET B = _3
+@IF 4 0 LET D = _4
+@IF 5 0 LET NU1 = _5
+@IF 6 0 LET NU3 = _6
+@IF 7 0 LET ALPHA = _7
+LET _9 = UNEVEN TWO-SIDED POWER RANDOM NUMBERS FOR I = 1 1 _1
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

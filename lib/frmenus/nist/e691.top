@@ -1,0 +1,46 @@
+----- <~nist\e691.top> Interlaboratory Analysis (E691 Standard)
+ 
+Interlaboratory Analysis (E691 Standard)
+ 
+Discussion                              <~nist\e691disc.top>
+ 
+Convert Data to:
+   Response LabID  MatID                <~data\repstack.men>
+
+Generate E691 Tables                     <xemf: ~nist\e691tabl.men>
+Generate E691 Tables and Graphs (ASCII)  <xemf: ~nist\e691asci.men>
+Generate E691 Tables and Graphs (HTML)   <xemf: ~nist\e691html.men>
+Generate E691 Tables and Graphs (Latex)  <xemf: ~nist\e691late.men>
+ 
+Generate E691 Graphs
+   Summary Plots
+      Lab Means and SD's                <xemf: ~nist\e691plo1.men>
+      Means, sd, repeatability sd and reproducatbility
+             sd for each material       <xemf: ~nist\e691plo2.men>
+      Repeatability and Reproducability
+             SD's verus Average         <xemf: ~nist\e691plo7.men>
+
+   h-consistency statistic
+       Laboratories within Materials
+          E691                          <xemf: ~nist\e691plo3.men>
+          Dot Plot                      <xemf: ~nist\e691doh1.men>
+          Box Plot                      <xemf: ~nist\e691bph1.men>
+       Materials within Laboratories
+          E691                          <xemf: ~nist\e691plo5.men>
+          Dot Plot                      <xemf: ~nist\e691doh2.men>
+          Box Plot                      <xemf: ~nist\e691bph2.men>
+
+   k-consistency statistic
+       Laboratories within Materials
+          E691                          <xemf: ~nist\e691plo4.men>
+          Dot Plot                      <xemf: ~nist\e691dok1.men>
+          Box Plot                      <xemf: ~nist\e691bpk1.men>
+       Materials within Laboratories
+          E691                          <xemf: ~nist\e691plo6.men>
+          Dot Plot                      <xemf: ~nist\e691dok2.men>
+          Box Plot                      <xemf: ~nist\e691bpk2.men>
+
+Load Built-In Data Files
+   GLUCOSE.DAT  Glucose in Serum           <xcf: ~nist\GLUCOSE.DP>
+   MANDEL6.DAT  Pentosans in Wood Pulp     <xcf: ~nist\MANDEL6.DP>
+

@@ -1,0 +1,26 @@
+This is file cummean.men--Compute cumulative mean time between failure
+ 
+--------------------
+ 1. Cumulative Mean Time Between Failures
+ 2. LET Y2 = CUMULATIVE MEAN Y
+ 3.
+ 4. The cumulative mean time between failures
+ 5. is simply the cumulative mean of the
+ 6. failure times.
+ 7. 
+ 8. Response Variable:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9. Variable to store the Cumulative Means:
+ 9. @CE 2 0 42 50 ? gui-none
+10.
+11. Subset/Except/For Specification:
+12. @CE 3 0 1 50 *
+13.
+14.
+15. Compute the Cumulative Means?:
+--------------------
+GR FE
+LET _2 = CUMULATIVE MEAN _1 _3
+--------------------
+WEB HELP CUMULATIVE MEAN
+--------------------

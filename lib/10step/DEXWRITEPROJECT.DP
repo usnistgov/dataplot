@@ -1,0 +1,29 @@
+. This is dataplot macro   dexwriteproject.dp
+. Purpose: write out the project (and subproject) strings at the top
+.          of the dexplot.dp 10 plots
+. Date: May 2005
+.
+. -----start point-----
+.
+. print project
+. print project2
+. print projecth projectw projech2 projecw2
+.
+let projhz = 3
+let projwz = 1.5
+if projecth exists; let projhz = projecth; end if
+if projectw exists; let projwz = projectw; end if
+if project exists
+   move 50 97; just center; hw projhz projwz; text ^project
+end if
+. print projhz projwz
+. pause
+.
+let projhz = 3
+let projwz = 1.5
+if projech2 exists; let projhz = projech2; end if
+if projecw2 exists; let projwz = projecw2; end if
+if project2 exists
+   move 50 94; just center; hw projhz projwz; text ^project2
+end if
+.

@@ -1,0 +1,20 @@
+This is file varlabel.men--Variable Labels
+ 
+--------------------
+ 1. Specify Whether First Line Contains Variable Names
+ 2. SET VARIABLE LABELS <on/off>
+ 3.
+ 4. Some data files contain the names for the variables
+ 5. in the first line of the data file.
+ 6.
+ 7. First Line Contains Variable Names (on/off):
+ 7. @CE 1 0 42 50 * gui-ooff
+ 8.
+ 9.
+10. Check Data Files for Comments?
+--------------------
+SU FE
+SET READ VARIABLE LABELS _1
+--------------------
+WEB HELP READ VARIABLE LABELS
+--------------------

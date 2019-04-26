@@ -1,0 +1,55 @@
+This is Dataplot data file    NELS.DAT
+Temperature Rise of Electric Motor Bobbin Coil
+Response variable = temperature rise (degrees C)
+Engineering spec: Mean temperature rise must be <= 46 degrees C.
+Number of observations = 30
+Number of variables per line image = 1
+Order of variables on a line image--
+   1. Response variable = temperature rise of coil (degrees C)
+Source--
+   Nelson, Wayne (1986). How to Analyze Data with
+   Simple Plots.  The ACQC Basic References in Quality
+   Control: Statistical Techniques.  Volume 1.  American
+   Society for Quality Control, Milwaukee, Wisconsin, p. 6.
+Statistical area = Univariate
+To read this file into Dataplot--
+   SKIP 25
+   READ NELS6.DAT Y
+ 
+ 
+ 
+ 
+ 
+ 
+Temperature Rise
+----------------
+     44.7
+     44.7
+     45.0
+     45.1
+     45.3
+     45.3
+     45.4
+     45.7
+     45.8
+     45.8
+     45.9
+     45.9
+     45.9
+     46.0
+     46.0
+     46.1
+     46.2
+     46.2
+     46.3
+     46.4
+     46.5
+     46.5
+     46.5
+     46.7
+     46.7
+     47.0
+     47.2
+     47.4
+     48.1
+     50.6

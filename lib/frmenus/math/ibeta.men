@@ -1,0 +1,38 @@
+This is file ibeta.men--Compute incomplete beta and related functions
+ 
+--------------------
+ 1. Incomplete Beta (and Related) Functions
+ 2. LET YNEW = BETAI(X,A)
+ 3.
+ 4. This functions accepts 3 arguments.  The first is the
+ 5. argument for the horizontal axis variable (i.e., the
+ 6. X value) and the second and third arguments are  shape parameters.
+ 7. All of these values can be a variable, parameter, or
+ 8. simply a constant.  However, the shape parameters are typically
+ 9. a parameter or constant as opposed to a variable.
+10.
+11. Horizontal axis variable:
+11. @CE 1 0 33 50 ? gui-variable
+12. Shape parameter (A):
+12. @CE 6 0 33 50 ? gui-none
+13. Shape parameter (B):
+13. @CE 7 0 33 50 ? gui-none
+14.
+15. Variable to store the transformed result:
+16. @CE 3 0 33 50 ?
+17.
+18. Plot?:
+18. @CE 5 1 14 20 no
+18. @CE 5 2 22 28 yes
+19.
+20. Subset/Except/For Specification:
+21. @CE 4 0 -5 50 *
+22.
+23.
+24. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = BETAI( _1 , _6 , _7) _4
+--------------------
+WEB HELP BETAI
+--------------------

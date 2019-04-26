@@ -1,0 +1,31 @@
+----- <~dex2kmp\cs23m1.top> Confounding:  2**(3-1) Design
+ 
+Confounding:  2**(3-1) Design
+ 
+Name of Design      = 2**(3-1) Fractional Factorial Design
+ 
+Number of Factors k = 3
+Number of Obs.    n = 4
+ 
+Resolution          = 3 (Main effects confounded with
+                      2-term interactions and higher)
+ 
+Factor Definitions  : 3 = 12
+ 
+Defining Relation   : I +
+                      123
+ 
+Main Effect         : 1  =  1 + 23
+Confounding           2  =  2 + 13
+                      3  =  3 + 12
+ 
+2-Term              : 12 = 12 +  3
+Confounding           13 = 13 +  2
+                      23 = 23 +  1
+ 
+Confounding Matrix:
+                          1   2   3
+                      ...............
+                      1 -     3   2
+                      2 -         1
+ 

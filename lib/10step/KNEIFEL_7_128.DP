@@ -1,0 +1,47 @@
+. This is dataplot program    kneifel_7_128.dp     2/27/14
+. Purpose: Sensitivity Analysis of Josh Kneifel's NIST Net-Zero House Yearly Energy Consumption (k=7,n=128)
+.          via 10-step analysis
+. Contact: Josh Kneifel and Bill Healy (NIST)
+. Design : 2**7 full factorial (k=7,n=128)
+. Date   : 2/27/14
+.
+. -----start point-----
+.
+dimension 100 variables
+.
+. -----Step 1: Read in the data and define strings-----
+.
+let k = 7
+skip 25; read   kneifel_7_128.dat   y x1 x2 x3 x4 x5 x6 x7
+.
+let string header = Sensitivity Analysis of Energy Usage for the NIST Net-Zero House
+let string header2 = Design: 2**7 (k=7,n=128)
+let string trailer = kneifel_7_128.dp
+let string trailer2 = Datafile: kneifel_7_128.dat
+let string currdate = 2/27/14
+.
+let string sty = Annual Energy Usage
+.
+let string stx1 = Building Design
+let string stx2 = Weather
+let string stx3 = Orientation
+let string stx4 = Air Leakage
+let string stx5 = Occupancy Activity
+let string stx6 = Heating Setpoint
+let string stx7 = Cooling Setpoint
+.
+let string stx1l = 2012IECC NZERTF
+let string stx2l = EMY TMY
+let string stx3l = South Southwest
+let string stx4l = 0.61 7.00
+let string stx5l = 50% 200%
+let string stx6l = 19.1 21.1
+let string stx7l = 23.9 25.9
+.
+let string stbest = down
+let string colorl = red blue
+.
+. -----Step 2: Generate 10-step DEX analysis-----
+.
+call dex10stepanalysis.dp
+

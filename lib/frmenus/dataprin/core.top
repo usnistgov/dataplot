@@ -1,0 +1,35 @@
+----- <~dataprin\core.top> Print (to Printer) Built-in Core data Files
+
+Print (to Printer) Built-in Core Data Files
+
+Univariate
+   LEW.DAT       Beam deflections            <xcf: ~dataprin\LEW.DP>
+   MAVRO.DAT     Filter transmittance        <xcf: ~dataprin\MAVRO.DP>
+   SUNSPOT2.DAT  Monthly sunspot             <xcf: ~dataprin\SUNSPOT2.DP>
+   SINSIN.DAT    Multiple sine curves        <xcf: ~dataprin\SINSIN.DP>
+
+Regression
+   BERGER1.DAT   Alaska Pipeline cracks       <xcf: ~dataprin\BERGER1.DP>
+   PONTIUS.DAT   Load cell calibration        <xcf: ~dataprin\PONTIUS.DP>
+   SPIEGEL.DAT   Nuclear tank calibration     <xcf: ~dataprin\SPIEGEL.DP>
+
+Multi-factor
+   BATTADD2.DAT  Battery Additive (2-level)   <xcf: ~dataprin\BATTADD2.DP>
+   SPLETT2.DAT   Charpy testing (4-level)     <xcf: ~dataprin\SPLETT2.DP>
+   DRAFT69B.DAT  1969 draft lottery           <xcf: ~dataprin\DRAFT69B.DP>
+   SHEESLE2.DAT  Defective lighbulbs          <xcf: ~dataprin\SHEESLE2.DP>
+
+DEX: Design of Experiment
+   BOXSPRIN.DAT  2**3  Defective springs      <xcf: ~dataprin\BOXSPRIN.DP>
+   SPLETT3.DAT   2**3  Eddy Current           <xcf: ~dataprin\SPLETT3.DP>
+   SPLETT4.DAT   2**4  Eddy Current           <xcf: ~dataprin\SPLETT4.DP>
+
+Multivariate
+   AUTO83B.DAT   EPA auto miles per gallon    <xcf: ~dataprin\AUTO83B.DP>
+   IRIS.DAT      Classic Fisher iris data     <xcf: ~dataprin\IRIS.DP>
+   AUTO83.DAT    EPA auto miles per gallon    <xcf: ~dataprin\AUTO83.DP>
+
+Quality & SPC: Statistical Process Control
+   CROARK3.DAT   NIST SEM line width SRM      <xcf: ~dataprin\CROARK3.DP>
+   UGIANSKY.DAT  Interlab stress corrosion    <xcf: ~dataprin\UGIANSKY.DP>
+

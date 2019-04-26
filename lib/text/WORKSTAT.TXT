@@ -1,0 +1,24 @@
+----------  *WORKSTATIONS10*  ----------
+ 
+   Top 10 Workstations
+         (1986)
+ 
+                       Sales
+                 (in millions of $)
+ 1. Apollo              392
+ 2. Sun                 341
+ 3. HP                  307
+ 4. DEC                 203
+ 5. Symbolics           115
+ 6. Silicon Graphics     59
+ 7. IBM                  38
+ 8. Data General         32
+ 9. TI                   29
+10. Xerox                28
+ 
+The 1986 total for all workstations (the
+above 10 plus others) = $1563 million.
+ 
+   Source--Leibowitz, Michael R.  "Workstation Wars:
+   The Battle of the Big 7".  High Technology Business.
+   November, 1987, pages 22-29.

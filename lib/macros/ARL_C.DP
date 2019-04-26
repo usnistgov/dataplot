@@ -1,0 +1,78 @@
+. This is Dataplot macro   ARL_C.DP
+. Purpose--Generate an Average Run Length (ARL) curve for a
+.          C (proportions) Control Chart.
+.          This is based on the formula:
+.              ARL = 1/(1-BETA)
+.          where BETA is the Y coordinate of the OC curve.
+.          The OC is defined as:
+.            POICDF(int(ucl),c) - POICDF(int(lcl),c) versus c
+.          where 
+.            cbar   = total number of defectives/number of groups
+.            ucl    = upper control limit
+.            lcl    = lower control limit
+.            c      = value of Poisson parameter
+.
+.          The OC is essentiallty a plot of the type II (or Beta error)
+.          (probability of incorrectly accepting the hypothesis of
+.          statistical control).  It measures the sensitivity of the
+.          control chart.
+.
+.          The ARL curve is the average number of runs it takes
+.          to generate an "out of control" signal.   Thus for c
+.          equal to cbar, it gives the number of runs
+.          it takes to generate an out of control signal when
+.          in fact the process is in control.
+.
+.          For c not equal to cbar, it indicates the
+.          average number of runs before the process is flagged
+.          out of control.
+.
+. Input --Y        = vector containing number of defectives for each
+.                    group
+.       --CSTART   = start value for c
+.       --CINC     = increment value for c
+.       --CSTOP    = stop value for c
+.       CSTART, CINC, and CSTOP are optional (default to .1, .1, 50)
+. Output--graph
+.       --N        = Total sample size
+.       --CBAR     = average number of defectives per group
+.       --UCL      = CBAR + 3*SQRT(cbar)
+.       --LCL      = CBAR - 3*SQRT(cbar)
+.
+delete zzzzc zzzzy
+.
+let numdef = sum y
+let ngroups = size y
+let cbar = numdef/ngroups
+let ucl = cbar + 3*sqrt(cbar)
+let lcl = cbar - 3*sqrt(cbar)
+let lcl = max(0,lcl)
+.
+let cstartt = 0.1
+let cinct = 0.1
+let cstopt = 50
+if cstart exists
+  let cstartt = cstart
+end of if
+if cinc exists
+  let cinct = cinc
+end of if
+if cstop exists
+  let cstopt = cstop
+end of if
+.
+let zzzzc = sequence cstartt cinct cstopt
+let zzzza1 = int(ucl)
+let zzzza2 = int(lcl)
+.
+let zzzzy = poicdf(zzzza1,zzzzc) - poicdf(zzzza2,zzzzc)
+.
+let zzzzarl = zzzzy
+let zzzzarl = 1/(1-zzzzy) subset zzzzy <> 1
+let zzzzarl = 0 subset zzzzy = 1
+.
+y1label Runs
+x1label Poisson Parameter Value
+title ARL Curve for C Control Chart
+.
+plot zzzzarl vs zzzzc

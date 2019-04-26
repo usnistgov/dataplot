@@ -1,0 +1,10 @@
+----- <~dataloex\PLANETS.DP> Load & Execute PLANETS.DAT
+
+. This is file    PLANETS.DP
+
+DELETE Y
+SKIP 25
+READ PLANETS.DAT Y
+TITLE PLANETS.DAT
+/
+

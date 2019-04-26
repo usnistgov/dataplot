@@ -1,0 +1,41 @@
+This is file anopplot.men--Analysis of Proportions Plot
+ 
+--------------------
+ 1. Analysis of Proportions Plot
+ 2. ANOP PLOT Y X
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Factor Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Line Type for Proportions:
+ 7. @CE 3 0 42 50 gui-line
+ 8. Character Type for Proportions:
+ 8. @CE 4 0 42 50 gui-char
+ 9. Character Fill for Proportions:
+ 9. @CE 5 0 42 50 gui-ooff
+10. Line Type for Reference Line:
+10. @CE 6 0 42 50 gui-line
+11.
+12. Lower Limit for Defining a Success:
+12. @CE 7 0 42 50 *
+13. Upper Limit for Defining a Success:
+13. @CE 8 0 42 50 *
+14.
+15. Subset/Except/For Specification:
+16. @CE 9 0 1 50 *
+17.
+18.
+19. Generate the ANOP Plot?:
+--------------------
+GR FE
+LINE _3 _6
+CHARACTER _4
+CHARACTER FILL _5
+ANOP LIMITS 0.99 1.01
+ANOP LIMITS _7 _8
+ANOP PLOT _1 _2 _9
+--------------------
+WEB HELP ANOP PLOT
+--------------------

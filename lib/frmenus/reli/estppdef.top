@@ -1,0 +1,22 @@
+----- <~reli\estppdef.top> Percent Points (Definition)
+
+Percent Points (Definition)
+
+The 100p percent point X' = that time value X' in which
+exactly 100p percent of the population failure time
+distribution is less than.
+Example 1: the 5 percent point X' is that time value X'
+           for which 5% of the population is less than.
+Example 2: the 50 percent point X' is that time value X'
+           for which 50% of the population is less than
+           (Note: the 50 percent point = the median).
+
+If the random variable X is the failure time, and
+if    Prob    represents probability,
+then X' is the 100p percent point of the distribution
+if and only if
+
+   Prob( X <= X' ) = p
+
+Synonym: Quantile
+

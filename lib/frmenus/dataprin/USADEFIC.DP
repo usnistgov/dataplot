@@ -1,0 +1,6 @@
+----- <~dataprin\USADEFIC.DP> Print (to Printer) USADEFIC.DAT
+
+. This is file    USADEFIC.DP
+
+PRINT USADEFIC.DAT
+

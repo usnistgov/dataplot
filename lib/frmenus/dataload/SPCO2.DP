@@ -1,0 +1,8 @@
+----- <~dataload\SPCO2.DP> Load SPCO2.DAT
+
+. This is file    SPCO2.DP
+
+DELETE MONTH YEAR Y
+SKIP 25
+READ SPCO2.DAT YEAR MONTH Y
+

@@ -1,0 +1,8 @@
+----- <~dataload\MONTGOME.DP> Load MONTGOME.DAT
+
+. This is file    MONTGOME.DP
+
+DELETE Y1 Y2 Y3
+SKIP 25
+READ MONTGOME.DAT Y1 Y2 Y3
+

@@ -1,0 +1,24 @@
+This is file vect_ang.men--Compute vector angle of a variable
+ 
+--------------------
+ 1. Vector Angle
+ 2. LET A = VECTOR ANGLE Y1 Y2
+ 3.
+ 4. First variable for which to compute the vector angle:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Second variable for which to compute the vector angle:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Parameter to store the vector angle:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -10 50 *
+10.
+11.
+12. Compute the Vector Angle?:
+--------------------
+GR FE
+LET _3 = VECTOR ANGLE  _1 _2 _4
+--------------------
+WEB HELP VECTOR ANGLE
+--------------------

@@ -1,0 +1,26 @@
+----- <~prob\pardesc.top> Pareto Description
+
+*Pareto Description
+
+pdf: f(x)     = gamma / (x**(gamma+1))           for x >= 0
+pdf: f(x;u,s) = gamma / (((z-u)/s)**(gamma+1))   for x >= u
+
+Moments   : E(X)  = u + s*gamma/(gamma-1)
+                    (note--E(X) finite only if gamma > 1)
+            SD(X) = s * num / den
+                    where num = sqrt(gamma)
+                    and   den = (gamma-1)*sqrt(gamma-2)
+                    (note--SD(X) finite only if gamma > 2)
+
+Type      : Continuous, skewed family of distributions--
+            moderate-tailed to long-tailed.
+Domain    : 0 to +infinity
+Synonym   :
+Genesis   : Pareto (1897)
+Definition: If
+            then
+
+Reference : Johnson & Kotz,
+            Continuous Univariate Distributions-2,
+            Chapter 19 (pages 233-249).
+

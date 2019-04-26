@@ -1,0 +1,14 @@
+----- <~prob\pcdfdisc.top> Plot Discrete cdf's
+
+Plot Discrete CDF Functions
+
+Binomial                 <xemf: ~prob\pbincdf.men>
+Geometric                <xemf: ~prob\pgeocdf.men>
+Poisson                  <xemf: ~prob\ppoicdf.men>
+Negative Binomial        <xemf: ~prob\pnbcdf.men>
+Discrete Uniform         <xemf: ~prob\pdiscdf.men>
+Hypergeometric           <xemf: ~prob\phypcdf.men>
+Logarithmic Series       <xemf: ~prob\pdlgcdf.men>
+Beta Binomial            <xemf: ~prob\pbbncdf.men>
+Waring                   <xemf: ~prob\pwarcdf.men>
+

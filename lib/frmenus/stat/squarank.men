@@ -1,0 +1,22 @@
+This is file squarank.men--Squared Rank Test for Equal Variances
+ 
+--------------------
+ 1. Squared Ranks Test for Equal Variances
+ 2. SQUARED RANK TEST Y X
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ?
+ 5. Group-ID Variable:
+ 5. @CE 2 0 42 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Perform Squared Ranks Test?
+--------------------
+GR FE
+SQUARED RANKS TEST _1 _2 _3
+--------------------
+HELP SQUARED RANKS TEST
+--------------------

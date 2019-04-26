@@ -1,0 +1,32 @@
+This is file ar1fit.men--Generate AR(1) Model
+ 
+--------------------
+ 1. Fit AR(1) Model
+ 2. FIT Y1 Y2
+ 3.
+ 4. Time Series Variable:
+ 4. @CE 1 0 42 50 gui-variable
+ 5. Order of Fit:
+ 6. @CE 2 1 5 20 Linear
+ 7. @CE 2 2 5 20 Quadratic
+ 8. @CE 2 3 5 20 Cubic
+ 9.
+10.
+11. Perform the AR(1) Fit?
+--------------------
+GR FE
+DELETE ZZZZY1 ZZZZY2
+LET ZZZZN = SIZE _1
+LET ZZZZY1 = _1
+LET ZZZZY2 = _1
+RETAIN ZZZZY1 FOR I = 2 1 ZZZZN
+LET ZZZZSTOP = ZZZZN - 1
+RETAIN ZZZZY2 FOR I = 1 1 ZZZZSTOP
+.
+LET STRING ZZZZSTR = LINEAR
+@IF 2 2 LET STRING ZZZZSTR = QUADRATIC
+@IF 2 3 LET STRING ZZZZSTR = CUBIC
+^ZZZZSTR FIT ZZZZY1 ZZZZY2
+--------------------
+WEB HELP FIT
+--------------------

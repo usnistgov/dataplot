@@ -1,0 +1,33 @@
+. This is Dataplot program file     BENNETT6.DP
+. Larry Bennett Superconducitivy modeling
+. May 1994
+.
+. -----start point-----
+.
+. dimension 5000 observations
+dimension 2500 observations
+.
+skip 25
+read bennett6.dat y x tag temp
+let tag = code tag
+.
+. multiplot 3 4
+. loop for k = 1 1 10
+.    plot y x subset tag k
+. end loop
+.
+let function f = m0*(1+a*x)**(-1/mu)
+.
+retain y x tag subset tag 1
+.
+LET FUNCTION F = 1/(X-X0)
+LET PASS = 0
+LOOP FOR X0 = -100 1 6
+   LET PASS = PASS+1
+   LET Y2 = F
+   LET C = CORRELATION Y Y2
+   LET H(PASS) = X0
+   LET V(PASS) = C
+END LOOP
+PLOT V H
+SAVE 9 TO 1

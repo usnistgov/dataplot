@@ -1,0 +1,8 @@
+----- <~datalist\HABER1.top> HABER1.DAT
+ 
+HABER1.DAT
+ 
+View     <xcl: LIST HABER1.DAT>
+Load     <x2cl: SKIP 25; READ HABER1.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\HABER1.DAT>
+ 

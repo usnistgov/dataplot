@@ -1,0 +1,7 @@
+----- <~dexcomp\crbdfile.top> Built-in Files: Randomized Block Designss
+ 
+Built-in Files:  Randomized Block Designss
+ 
+SKIP 25; BARKCHEM.DAT Y X1 TO X3 SEQ
+SKIP 25; BARKMPG.DAT Y X1 TO X3
+ 

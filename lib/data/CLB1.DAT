@@ -1,0 +1,76 @@
+This is the Dataplot data file        CLB1.DAT
+Source: This data set is used in the discussion of capibration in the
+        Process Modeling Chapter of the e-Handbook (first given on
+        pmd133.htm).  This data set was provided by Will Guthrie.
+Description:  Thermocouples are a common type of temperature measurement
+              device that is often more practical than a thermometer for
+              temperature assessment. Thermocouples measure temperature in
+              terms of voltage, however, rather than directly on a
+              temperature scale. In addition, the response of a particular
+              thermocouple depends on the exact formulation of the metals
+              used to construct it, meaning two thermocouples will respond
+              somewhat differently under identical measurement conditions.
+              As a result, thermocouples need to be calibrated to produce
+              interpretable measurement information. The calibration curve
+              for a thermocouple is often constructed by comparing
+              thermocouple output to relatively precise thermometer data.
+Data:  This data is a simulated data set (distinct simulation from CLB2.DAT)
+       1. Column 1 = Temperature (X)
+       2. Column 2 = Observed Voltage (Y)
+       3. Column 3 = Predicted values from quadratic loess
+To read this file into Dataplot--
+   SKIP 25
+   READ CLB1.DAT X Y PRED
+ X      Y         PRED
+-------------------------
+100   33.14269   33.09845
+110   42.69237   42.70840
+120   53.37345   53.40986
+130   65.13426   65.20137
+140   78.14743   78.08459
+150   92.02897   92.05909
+160  107.12636  107.12084
+170  123.26571  123.27320
+180  140.52200  140.51459
+190  158.85228  158.83355
+200  178.16609  178.23613
+210  198.77873  198.72225
+220  220.25010  220.27129
+230  242.89348  242.89068
+240  266.54112  266.57117
+250  291.37102  291.30428
+260  317.06099  317.08915
+270  343.89418  343.91788
+280  371.83636  371.79609
+290  400.68258  400.70987
+300  430.69047  430.66310
+310  461.65421  461.65791
+320  493.63800  493.67778
+330  526.73634  526.72403
+340  560.81987  560.79960
+350  595.89490  595.89048
+360  632.02204  632.00253
+370  669.10657  669.12874
+380  707.21450  707.26915
+390  746.42178  746.41315
+400  786.58694  786.55103
+410  827.74941  827.69188
+420  869.77501  869.81446
+430  912.89683  912.92176
+440  956.98581  957.01649
+450 1002.09584 1002.07703
+460 1048.11660 1048.10560
+470 1095.16733 1095.10685
+480 1143.04919 1143.06281
+490 1191.94896 1191.97561
+500 1241.82289 1241.84852
+510 1292.63121 1292.66518
+520 1344.47822 1344.43576
+530 1397.18922 1397.15834
+540 1450.77303 1450.79835
+550 1505.35741 1505.35028
+560 1560.85111 1560.82663
+570 1617.278   1617.220
+580 1674.569   1674.529
+590 1732.762   1732.756
+600 1791.852   1791.902

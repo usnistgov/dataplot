@@ -1,0 +1,20 @@
+----- <~dexcomp\clsdinde.top> Index: Latin Square Designss
+ 
+Index of Latin Square+ Designs
+ 
+Name of                     Number of   Number of
+Design                       Factors      Runs
+                                k           n
+...................................................
+3-by-3 Latin Square             3           9    <~dexcomp\latsq3.top>
+4-by-4 Latin Square             3          16    <~dexcomp\latsq4.top>
+5-by-5 Latin Square             3          25    <~dexcomp\latsq5.top>
+ 
+3-by-3 Graeco-Latin Square      4           9    <~dexcomp\grlatsq3.top>
+4-by-4 Graeco-Latin Square      4          16    <~dexcomp\grlatsq4.top>
+5-by-5 Graeco-Latin Square      4          25    <~dexcomp\grlatsq5.top>
+ 
+3-by-3 Hyper-Graeco-Latin Sq.   Not exist
+4-by-4 Hyper-Graeco-Latin Sq.   5          16    <~dexcomp\hgrlats4.top>
+5-by-5 Hyper-Graeco-Latin Sq.   5          25    <~dexcomp\hgrlats5.top>
+ 

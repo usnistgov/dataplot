@@ -1,0 +1,54 @@
+This is the data file   MPC536.DAT
+Source: This example is used on page mpc536.htm and mpc455.htm of the
+        e-Handbook.  This data is used in the discussion of gauge
+        R & R studies, and in particular, the study of instrument bias.
+        This data was provided by Carroll Croarkin.
+
+Description:  Measurements were made on six wafers over six days (except
+              for 5 measurements on wafer 39) with probe #2062 wired in
+              two configurations. This sequence of measurements was
+              repeated after about a month resulting in two runs.
+
+Data: Column 1 = Wafer ID (WAFER)
+      Column 2 = Day (DAY)
+      Column 3 = Probe ID (PROBE)
+      Column 4 = Measurements for runs on day 1 (D1)
+      Column 5 = Measurements for runs on day 2 (D2)
+
+To read into Dataplot, enter
+
+    SKIP 25
+    READ MPC536.DAT WAFER DAY PROBE D1 D2
+
+
+WAFER DAY    PROBE     D1        D2
+--------------------------------------
+ 17.   1      2062.   -0.0108    0.0088
+ 17.   2      2062.   -0.0111    0.0062
+ 17.   3      2062.   -0.0062    0.0074
+ 17.   4      2062.    0.0020    0.0047
+ 17.   5      2062.    0.0018    0.0049
+ 17.   6      2062.    0.0002    0.0000
+ 39.   1      2062.   -0.0089    0.0075
+ 39.   3      2062.   -0.0040   -0.0016
+ 39.   4      2062.   -0.0022    0.0052
+ 39.   5      2062.   -0.0012    0.0085
+ 39.   6      2062.   -0.0034   -0.0018
+ 63.   1      2062.   -0.0016    0.0092
+ 63.   2      2062.   -0.0111    0.0040
+ 63.   3      2062.   -0.0059    0.0067
+ 63.   4      2062.   -0.0078    0.0016
+ 63.   5      2062.   -0.0007    0.0020
+ 63.   6      2062.    0.0006    0.0017
+103.   1      2062.   -0.0050    0.0076
+103.   2      2062.   -0.0140    0.0002
+103.   3      2062.   -0.0048    0.0025
+103.   4      2062.    0.0018    0.0045
+103.   5      2062.    0.0016   -0.0025
+103.   6      2062.    0.0044    0.0035
+125.   1      2062.   -0.0056    0.0099
+125.   2      2062.   -0.0155    0.0123
+125.   3      2062.   -0.0010    0.0042
+125.   4      2062.   -0.0014    0.0098
+125.   5      2062.    0.0003    0.0032
+125.   6      2062.   -0.0017    0.0115

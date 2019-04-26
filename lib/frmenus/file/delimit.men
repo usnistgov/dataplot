@@ -1,0 +1,23 @@
+This is file delimit.men--Specify read delimiter
+ 
+--------------------
+ 1. Specify Character that is Delimiter for Data Fields
+ 2. SET READ DELIMITER <char>
+ 3.
+ 4. This menu allows you to specify a character
+ 5. that serves as a delimiter between data
+ 6. fields.  Successive values of the delimiter
+ 7. indicate a missing data.  The most common
+ 8. delimiter is a comma (this is the default).
+ 9.
+10. Enter the value to use as the delimiter:
+10. @CE 1 0 42 50 ?
+11.
+12.
+13. Define the Delimiter?
+--------------------
+SU FE
+SET READ DELIMITER _1
+--------------------
+WEB HELP READ DELIMITER
+--------------------

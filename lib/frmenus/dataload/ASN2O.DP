@@ -1,0 +1,8 @@
+----- <~dataload\ASN2O.DP> Load ASN2O.DAT
+
+. This is file    ASN2O.DP
+
+DELETE Y
+SKIP 25
+READ ASN20.DAT Y
+

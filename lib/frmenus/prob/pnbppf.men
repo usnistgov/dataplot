@@ -1,0 +1,55 @@
+This is file pnbppf.men--Plot Negative Binomial PPF
+ 
+--------------------
+ 1. Plot an Negative Binomial PPF Function
+ 2. PLOT NBPPF(X,0.5,25) FOR X = 0 0.01 1
+ 3.
+ 4. You can specify the range of values to plot either
+ 5. by providing an input vector containing the explicit
+ 6. input values or by providing the start, increment,
+ 7. and stop values.
+ 8.
+ 9. Input Variable (optional):
+ 9. @CE 1 0 42 50 ? gui-variable
+10.
+11. Start Value (>= 0):
+11. @CE 2 0 42 50 ?
+12. Increment Value (defaults to 1):
+12. @CE 3 0 42 50 ?
+13. Stop Value (< 1, defaults to 0.99):
+13. @CE 4 0 42 50 ?
+14.
+15. Variable to Store the PPF Values (optional):
+15. @CE 5 0 42 50 ?
+16.
+17. Probability of Success Parameter p (required, 0 < p < 1):
+17. @CE 6 0 42 50 ?
+18. Number of Trials Parameter n (required):
+18. @CE 7 0 42 50 ?
+19.
+20.
+21. Plot the Negative Binomial PPF's?
+--------------------
+AN FE
+LET ZP = 0.5
+LET ZN = 25
+@IF 6 0 LET ZP = _6
+@IF 7 0 LET ZN = _7
+LET ZSTART = 0
+LET ZINC = 0.1
+LET ZSTOP = 0.99
+@IF 2 0 LET ZSTART = _2
+@IF 3 0 LET ZINC = _3
+@IF 4 0 LET ZSTOP = _4
+LET ZZZZFLAG = 0
+@IF 1 0 LET ZZZZFLAG =1
+IF ZZZZFLAG = 1
+   LET ZJUNK = NBPPF( _1 ,ZP,ZN)
+   PLOT ZJUNK _1
+ELSE
+   PLOT NBPPF(ZZZZ,ZP,ZN) FOR ZZZZ = ZSTART ZINC ZSTOP
+END OF IF
+@IF 5 0 LET _5 = YPLOT
+--------------------
+WEB HELP NBPPF
+--------------------

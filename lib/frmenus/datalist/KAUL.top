@@ -1,0 +1,8 @@
+----- <~datalist\KAUL.top> KAUL.DAT
+ 
+KAUL.DAT
+ 
+View     <xcl: LIST KAUL.DAT>
+Load     <x2cl: SKIP 25; READ KAUL.DAT X TAG Y1 TO Y12>
+Print    <xccl: printfile C:\DATAPLOT\KAUL.DAT>
+ 

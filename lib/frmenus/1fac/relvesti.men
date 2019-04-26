@@ -1,0 +1,23 @@
+This is file relvesti.men--Estimate Shift in Rel. Variation
+ 
+--------------------
+ 1. Estimate Shift in Relative Variation
+ 2. LET RSD = RELATIVE SD Y1; LET RSD2 = RELATIVE SD Y2
+ 3.        LET RATIO = RSD2/RSD1
+ 4.
+ 5. Pre-mod  Response Variable:
+ 5. @CE 1 0 33 50 ?
+ 6. Post-mod Response Variable:
+ 6. @CE 2 0 33 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 3 0 1 50 *
+10.
+11.
+12. Estimate Relative Variation Shift?
+--------------------
+GR FE
+LET ZRSD1 = RSD Y1
+LET ZRSD2 = RSD Y2
+LET ZRATIO = ZRSD2/ZRSD1
+--------------------

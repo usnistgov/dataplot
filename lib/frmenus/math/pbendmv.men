@@ -1,0 +1,25 @@
+This is file pbendmv.men--Compute percentage bend midvariance of a variable
+ 
+--------------------
+ 1. Percentage Bend Midvariance
+ 2. LET A = PERCENTAGE BEND MIDVARIANCE Y
+ 3.
+ 4. Variable for which to compute the percentage bend midvariance:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Parameter to store the percentage bend midvariance:
+ 5. @CE 2 0 42 50 ? gui-none
+ 6. Value of beta (0 < beta < 0.5):
+ 6. @CE 3 0 42 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Compute the Percentage Bend Midvariance?:
+--------------------
+GR FE
+LET BETA = _3
+LET _2 = PERCENTAGE BEND MIDVARIANCE  _1 _4
+--------------------
+WEB HELP PERCENTAGE BEND MIDVARIANCE
+--------------------

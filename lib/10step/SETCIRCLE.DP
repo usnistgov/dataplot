@@ -1,0 +1,51 @@
+. This is dataplot macro   setcircle.dp
+. Purpose: define circle as the plot character
+. Date: 8/1/14 => 2/25/16
+. Input:
+.    circlesw (parameter) = circle switch (0 = no, 1 = yes) (optional) (default = 0)
+.    circleh  (parameter) = circle height                   (optional) (default = 1)
+.    circlew  (parameter) = circle width                    (optional) (default = 1)
+.    colorcha (string)    = character color                 (optional) (default = blue)
+.
+. -----start point-----
+.
+. print circleh circlew colorcha
+.
+.  For dex scatter plot, set the circle/line settings
+.  for the total number of levels (which is computed
+.  in dexsp.dp).
+.
+if stmacro = dexsp.dp and numlevto exists
+   char circle blank; char fill on off
+   .
+   char hw 1.1 0.9
+   if circleh exists and circlew exists
+      char hw ^circleh ^circlew
+   end if
+   .
+   char color blue
+   if colorcha exists
+      char color ^colorcha
+   end if
+   line solid dotted
+   line color blue blue
+   if colorcha exists
+      line color ^colorcha ^colorcha
+   end if
+   .
+else
+   char circle; char fill on
+   .
+   . char hw 1 1
+   char hw 1.1 0.9
+   . char offset 0 -.33
+   if circleh exists and circlew exists
+      char hw ^circleh ^circlew
+   end if
+   .
+   char color blue
+   if colorcha exists
+      char color ^colorcha
+   end if
+   .
+end if

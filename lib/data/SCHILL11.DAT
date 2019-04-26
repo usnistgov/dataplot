@@ -1,0 +1,43 @@
+This is Dataplot data file     SCHILL11.DAT
+Solvent Extraction of Carotenoids
+Example for ANOVA Class
+Number of observations = 18
+Number of variables per line image = 2
+order of variables on a line image--
+   1. Response variable = relative area of PK1
+   2. Factor 1 = Process (3 levels)
+To read this into Dataplot--
+   SKIP 25
+   READ SCHILLER.DAT Y X
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Relative Area     Process
+--------------------------
+    .908             1
+    .927             1
+    .849             1
+    .848             1
+    .855             1
+    .825             1
+   1.010             2
+    .959             2
+    .939             2
+    .904             2
+    .944             2
+    .969             2
+    .978             3
+   1.110             3
+   1.063             3
+    .998             3
+   1.033             3
+   1.088             3

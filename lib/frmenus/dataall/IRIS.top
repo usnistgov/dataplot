@@ -1,0 +1,8 @@
+----- <~dataall\IRIS.top> IRIS.DAT
+
+IRIS.DAT
+
+View     <xcl: LIST IRIS.DAT>
+Load     <xcf: ~dataload/IRIS.DP>
+Print    <xccl: printfile C:\DATAPLOT\IRIS.DAT>
+

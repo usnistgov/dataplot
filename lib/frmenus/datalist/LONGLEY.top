@@ -1,0 +1,8 @@
+----- <~datalist\LONGLEY.top> LONGLEY.DAT
+ 
+LONGLEY.DAT
+ 
+View     <xcl: LIST LONGLEY.DAT>
+Load     <x2cl: SKIP 25; READ LONGLEY.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\LONGLEY.DAT>
+ 

@@ -1,0 +1,99 @@
+This is file resvsx.men--Plot RES Versus each Independent Variable
+ 
+--------------------
+ 1. Plot RES versus each independent variable
+ 2. Macro
+ 3.
+ 4. This menu generates a multiplot of the
+ 5. residuals versus each independent variable.
+ 6. It is assumed that you have already done the
+ 7. fit (the residuals are saved in the internal
+ 8. variable RES).
+ 9.
+10. Independent Variable 1:
+10. @CE 1 0 42 50 ? gui-variable
+11. Independent Variable 2:
+11. @CE 2 0 42 50 ? gui-variable
+12. Independent Variable 3:
+12. @CE 3 0 42 50 ? gui-variable
+13. Independent Variable 4:
+13. @CE 4 0 42 50 ? gui-variable
+14. Independent Variable 5:
+14. @CE 5 0 42 50 ? gui-variable
+15. Independent Variable 6:
+15. @CE 6 0 42 50 ? gui-variable
+16. Independent Variable 7:
+16. @CE 7 0 42 50 ? gui-variable
+17. Independent Variable 8:
+17. @CE 8 0 42 50 ? gui-variable
+18. Independent Variable 9:
+18. @CE 9 0 42 50 ? gui-variable
+19.
+20. Fit a Lowess curve to each plot?:
+20. @CE 11 1 42 45 yes
+20. @CE 11 2 46 48 no
+21.
+22. Plot Symbol:
+22. @CE 12 0 42 50 ? gui-char
+23.
+24. Subset/Except/For Specification: 
+25. @CE 13 0 1 50 *
+26.
+27.
+28. Generate the Residual Plots?:
+--------------------
+GR FE
+LET ZZZZNVAR = 0
+@IF 1 0 LET STRING ZZZZS1 = _1
+@IF 1 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 2 0 LET STRING ZZZZS2 = _2
+@IF 2 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 3 0 LET STRING ZZZZS3 = _3
+@IF 3 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 4 0 LET STRING ZZZZS4 = _4
+@IF 4 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 5 0 LET STRING ZZZZS5 = _5
+@IF 5 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 6 0 LET STRING ZZZZS6 = _6
+@IF 6 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 7 0 LET STRING ZZZZS7 = _7
+@IF 7 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 8 0 LET STRING ZZZZS8 = _8
+@IF 8 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 9 0 LET STRING ZZZZS9 = _9
+@IF 9 0 LET ZZZZNVAR = ZZZZNVAR + 1
+LET STRING ZZZZSUBS = SP()
+LET STRING ZZZZSUBS = _13
+MULTIPLOT CORNER COORDINATES 2 2 98 98
+LET ZZZZNPLT = INT(SQRT(ZZZZNVAR)+1.001)
+DEVICE 1 FONT SIMPLEX
+MULTIPLOT ZZZZNPLT ZZZZNPLT
+LOWESS FRACTION 0.3
+LET ZZZZFLAG = 0
+@IF 11 1 LET ZZZZFLAG = 1
+LINE BLANK SOLID
+CHARACTER X BLANK
+CHARACTER _12
+IF ZZZZFLAG = 1
+  LINE BLANK SOLID
+  CHARACTER _12 BLANK
+END OF IF
+LOOP FOR K = 1 1 ZZZZNVAR
+    IF ZZZZFLAG = 0
+      PLOT RES VS ^ZZZZS^K ^ZZZZSUBS
+    END OF IF
+    IF ZZZZFLAG = 1
+      LET ZZZZRES = RES
+      LOWESS RES ^ZZZZS^K  ^ZZZZSUBS
+      PLOT ZZZZRES PRED VS ^ZZZZS^K   ^ZZZZSUBS
+    END OF IF
+END OF LOOP
+IF ZZZZFLAG = 1
+   DELETE ZZZZRES
+END OF IF
+END OF MULTIPLOT
+DEVICE 1 FONT TEKTRONIX
+RESET PLOT CONTROL
+--------------------
+WEB HELP PLOT
+--------------------

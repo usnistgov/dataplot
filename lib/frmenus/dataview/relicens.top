@@ -1,0 +1,21 @@
+----- <~dataview\relicens.top> View Reliability Data: Failure Rates (Censored)
+
+View Reliability Data: Failure Rates (Censored)
+
+ABERN17.DAT  Compressor rivet failure        <xcf: ~dataview\ABERN17.DP>
+EXPCEN.DAT   Integrated circuit chip         <xcf: ~dataview\EXPCEN.DP>
+EXPCEN2.DAT  Electronic component            <xcf: ~dataview\EXPCEN2.DP>
+GAMCEN.DAT   Multilayer coating              <xcf: ~dataview\GAMCEN.DP>
+HAHN.DAT     Locomotive controls failure     <xcf: ~dataview\HAHN.DP>
+LGNCEN.DAT   Composite material              <xcf: ~dataview\LGNCEN.DP>
+NELS138.DAT  Transformer failure             <xcf: ~dataview\NELS138.DP>
+NELS144.DAT  Generator field windings        <xcf: ~dataview\NELS144.DP>
+NORCEN.DAT   Truck tires                     <xcf: ~dataview\NORCEN.DP>
+TOB99.DAT    Capicator data                  <xcf: ~dataview\TOB99.DP>
+TOB128.DAT   Component data                  <xcf: ~dataview\TOB128.DP>
+TOB150.DAT   Component data                  <xcf: ~dataview\TOB150.DP>
+TOB152.DAT   Dielectric breakdown strength   <xcf: ~dataview\TOB152.DP>
+TOB159.DAT   Transistor failure times        <xcf: ~dataview\TOB159.DP>
+TOB161.DAT   Multiply censored failure times <xcf: ~dataview\TOB161.DP>
+WEICEN.DAT   6-Ton turret mount              <xcf: ~dataview\WEICEN.DP>
+

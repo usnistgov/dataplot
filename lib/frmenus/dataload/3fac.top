@@ -1,0 +1,8 @@
+----- <~dataload\3fac.top> Load 3-Factor Data
+
+Load 3-Factor Data
+
+HAMAKER.DAT*  Drill speed                  <xcf: ~dataload\HAMAKER.DP>
+MANDEL.DAT    Specific Volume of rubber    <xcf: ~dataload\MANDEL.DP>
+SPLETT3.DAT   Boulder eddy current probe  <xcf: ~dataload\SPLETT3.DP>
+

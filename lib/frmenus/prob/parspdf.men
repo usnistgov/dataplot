@@ -1,0 +1,46 @@
+This is file parspdf.men--Plot Arcsine PDF
+ 
+--------------------
+ 1. Plot a Arcsine PDF Function
+ 2. PLOT ARSPDF(X,LOC,SCALE) FOR X = 0.01 0.01 0.99
+ 3.
+ 4. You can specify the range of values to plot either
+ 5. by providing an input vector containing the explicit
+ 6. input values or by providing the start, increment,
+ 7. and stop values.
+ 8.
+ 9. Input Variable (optional):
+ 9. @CE 1 0 42 50 ? gui-variable
+10.
+11. Start Value:
+11. @CE 2 0 42 50 ?
+12. Increment Value (defaults to 0.1):
+12. @CE 3 0 42 50 ?
+13. Stop Value:
+13. @CE 4 0 42 50 ?
+14.
+15. Location Parameter u:
+15. @CE 5 0 42 50 ?
+16. Scale Parameter s (s > 0):
+16. @CE 6 0 42 50 ?
+17.
+18. Variable to Store the PDF Values (optional):
+18. @CE 7 0 42 50 ?
+19.
+20.
+21. Plot the Arcsine PDF's?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 5 0 LET ZLOC = _5
+LET ZSCALE = 1
+@IF 6 0 LET ZSCALE = _6
+LET ZINC = 0.1
+@IF 3 0 LET ZINC = _3
+@IF 1 0 LET ZJUNK = ARSPDF( _1 ,ZLOC,ZSCALE)
+@IF 1 0 PLOT ZJUNK _1
+@IF 2 0 PLOT ARSPDF(ZZZZ,ZLOC,ZSCALE) FOR ZZZZ = _2 ZINC _4
+@IF 7 0 LET _7 = YPLOT
+--------------------
+WEB HELP ARSPDF
+--------------------

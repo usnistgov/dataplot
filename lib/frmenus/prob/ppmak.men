@@ -1,0 +1,75 @@
+This is file ppmak.men--Gompertz-Makeham Probability Plot
+
+--------------------
+ 1. Gompertz-Makeham Probability Plot
+ 2. GOMPERTZ-MAKEHAM PROBABILITY PLOT Y
+ 3.
+ 4. Your data can be either ungrouped (a single
+ 5. response variable) or grouped (a bin counts
+ 6. variable and a bin mid-points variable).
+ 7. 
+ 8. This menu computes the Meeker-Escobar
+ 9. parameterization with two shape parameters.
+10. Dataplot supports two additional
+11. parameterizations with 3 shape parameters
+12. (click on HELP for details).
+13.
+14. Response (or Bin Counts) Variable:
+14. @CE 1 0 42 50 ? gui-variable
+15. Optional Bin Mid-Points Variable:
+15. @CE 2 0 42 50 ? gui-variable
+16.
+17. Line Types:
+17. @CE 3 0 42 50 * gui-line
+18. Character Types:
+18. @CE 4 0 42 50 * gui-char
+19. Character Fill:
+19. @CE 5 0 42 50 * gui-ooff
+20.
+21. Title:
+21. @CE 6 0 22 50 *
+22. Left Axis Label:
+22. @CE 7 0 22 50 *
+23. Bottom Axis Label:
+23. @CE 8 0 22 50 *
+24.
+25. Value of the Shape Parameter (zeta):
+25. @CE 9 0 42 50 *
+26. Value of the Shape Parameter (eta):
+26. @CE 10 0 42 50 *
+27.
+28. Subset/Except/For Specification:
+29. @CE 11 0 1 50 *
+30.
+31.
+32. Generate the Gompertz-Makeham Probability Plot?
+--------------------
+GR FE
+SET GOMPERTZ MAKEHAM DEFINITION REPARAMETERIZED MEEKER
+TITLE CASE ASIS
+LABEL CASE ASIS
+CASE ASIS
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+LET ZETA = 1
+LET ZETA = _9
+LET ETA = 1
+LET ETA = _10
+GOMPERTZ-MAKEHAM PROBABILITY PLOT _1 _2 _11
+MOVE 50 5
+JUSTIFICATION CENTER
+TEXT Location = ^PPA0, Scale = ^PPA1
+MOVE 50 2
+TEXT Zeta = ^ZETA, Eta = ^ETA
+MOVE 17 82
+JUSTIFICATION LEFT
+TEXT PPCC = ^PPCC
+TITLE
+LABEL
+--------------------
+WEB HELP PROBABILITY PLOT
+--------------------

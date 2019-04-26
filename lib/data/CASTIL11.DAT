@@ -1,0 +1,65 @@
+This is Dataplot Data File     CASTIL11.DAT
+River Data (Macon)--Max yearly discharge (Ocmulgee River) (1910-1949)
+Engineering Goal--Design flood protection
+Response Variable = max yearly river discharge at Macon
+Number of Observations = 40
+Number of Variables per line image = 1
+Order of variables per line image--
+   1. Response variable = max yearly river discharge
+Statistical Category--Extreme Value Analysis
+To read this into Dataplot--
+   SKIP 25
+   READ CASTIL11.DAT Y
+Source--Enrique Castillo (1988). Extreme Value Theory
+        in Engineering. Academic Press, San Diego, California,
+        p. 338.
+Original Source--Gumbel, E. J. (1964).
+        Technische Anwendung der statistischen
+        Theorie der Extremwerte, Schweizer Archiv 30,
+        p. 33-47.
+ 
+ 
+ 
+ 
+Max yearly river discharge (at Macon) (1910-1949) (sorted)
+-----------------------------------------------------------------
+  4.8
+  7.3
+  7.9
+  8.5
+ 10.7
+ 14.2
+ 14.3
+ 16.9
+ 19.0
+ 19.1
+ 19.6
+ 21.0
+ 22.7
+ 24.0
+ 25.4
+ 28.3
+ 28.3
+ 28.8
+ 31.0
+ 31.0
+ 32.6
+ 33.3
+ 33.9
+ 37.0
+ 40.4
+ 44.8
+ 44.8
+ 47.1
+ 47.8
+ 50.2
+ 51.0
+ 57.6
+ 64.4
+ 65.3
+ 66.2
+ 72.5
+ 73.4
+ 73.4
+ 78.6
+ 84.0

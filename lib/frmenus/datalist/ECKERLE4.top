@@ -1,0 +1,8 @@
+----- <~datalist\ECKERLE4.top> ECKERLE4.DAT
+ 
+ECKERLE4.DAT
+ 
+View     <xcl: LIST ECKERLE4.DAT>
+Load     <x2cl: SKIP 25; READ ECKERLE4.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\ECKERLE4.DAT>
+ 

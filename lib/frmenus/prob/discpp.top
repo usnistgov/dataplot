@@ -1,0 +1,26 @@
+-----<~prob\discpp.top> Discussion: Probability Plot
+
+Discussion: Probability Plots
+
+Discussion: Probability Plots
+
+
+Probability plots provide an excellent tool for visually
+assessing the goodness of fit.  The straighter the
+probability plot, the stronger the evidence of a good
+distributional fit.
+
+One advantage of probability plots is that if the
+distributional fit is not good, the plot can provide
+some guidance as to how the distributional model could
+be improved.
+
+The correlation coefficient of points on the probability
+plot (i.e., the PPCC value) provides a quantitative
+measure of the linearity of the probability plot.  This
+can be used as a ranking critierion for comparing
+distributional models.
+
+Dataplot probability plots can be applied to both
+grouped data and censored data.
+

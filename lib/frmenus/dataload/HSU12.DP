@@ -1,0 +1,8 @@
+----- <~dataload\HSU12.DP> Load HSU12.DAT
+
+. This is file    HSU12.DP
+
+DELETE Y X BATCH
+SKIP 25
+READ HSU12.DAT Y X BATCH
+

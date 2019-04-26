@@ -1,0 +1,7 @@
+----- <~dataprin\prob.top> Print (to Printer) Built-in Probability Data Files
+
+Print (to Printer) Built-in Probability Data Files
+
+RANDN.DAT     Normal random numbers         <xcf: ~dataprin\RANDN.DP>
+RANDU.DAT     Uniform random numbers        <xcf: ~dataprin\RANDU.DP>
+

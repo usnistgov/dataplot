@@ -1,0 +1,20 @@
+----- <~dextag\dextag.top>  Taguchi Designs
+ 
+Taguchi Designs
+ 
+Discussion
+     Experimental Goals         <~dextag\expgoals.top>
+     Overview                   <~dextag\discussi.top>
+     Advantages                 <~dextag\advantag.top>
+     Disadvantages              <~dextag\disadvan.top>
+     Confounding                <~dextag\confound.top>
+     References                 <~dextag\refer.top>
+NIST/SEMATECH Handbook          <xcl: web handbook taguchi designs>
+ 
+Construction                    <~dextag\construc.top>
+Analysis                        <~dextag\analysis.top>
+ 
+Built-in Data Files
+     View                       <~dataview\dextag.top>
+     Load                       <~dataload\dextag.top>
+

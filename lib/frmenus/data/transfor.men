@@ -1,0 +1,21 @@
+This is file transfor.men--Transform Variable(s)
+ 
+--------------------
+1. Transform Variable(s)
+2. LET Y = <expression> <SUBSET/EXCEPT/FOR qual.>
+3.
+4. Name of Output Variable (e.g.,  Y):
+4. @CE 1 0 40 50 ?
+5.
+6. User-defined transformation (e.g., LOG(X+10)):
+7. @CE 2 0 1 50 ?
+8.
+9. Subset/Except/For Specification:
+10. @CE 6 0 1 50 ?
+11.
+12.
+13. Carry out Transformation?
+--------------------
+AN FE
+LET _1 = _2 _3
+--------------------

@@ -1,0 +1,8 @@
+----- <~dexcomp\HGRLATS4.DP> Load HGRLATS4.DP
+
+. This is file    HGRLATS4.DP
+
+DELETE X1 TO X5
+SKIP 50
+READ HGRLATS4.DAT X1 TO X5
+

@@ -1,0 +1,35 @@
+----- <~dexcomp\grlatsq4.top> 4-by-4 Graeco-Latin Square Design
+ 
+4-by-4 Graeco-Latin Square Design
+ 
+   k  = 4 factors (3 blocking factors &
+                   1 primary factor)
+   l1 = 4 levels of factor X1 (block)
+   l2 = 4 levels of factor X2 (block)
+   l3 = 4 levels of factor X3 (block)
+   l4 = 4 levels of factor X4 (primary)
+   n  = l1 * l2 = 16 runs
+   Ref.--Box, Hunter, Hunter, & p. 255
+ 
+     X1        X2        X3        X4
+    row      column   blocking  treatment
+  blocking  blocking   factor    factor
+   factor    factor
+   ........................................
+      1         1         1         1
+      1         2         2         2
+      1         3         3         3
+      1         4         4         4
+      2         1         2         4
+      2         2         1         3
+      2         3         4         2
+      2         4         3         1
+      3         1         3         2
+      3         2         4         1
+      3         3         1         4
+      3         4         2         3
+      4         1         4         3
+      4         2         3         4
+      4         3         2         1
+      4         4         1         2
+ 

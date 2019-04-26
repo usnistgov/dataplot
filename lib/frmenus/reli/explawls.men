@@ -1,0 +1,68 @@
+This is file explawls.men--Exponential Law Least Squares
+ 
+--------------------
+ 1. Exponential Law Least Squares
+ 2. PLOT LNCUMREP VS TIME
+ 3.
+ 4. Repair Times Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 7.
+ 8. Character type for data:
+ 8. @CE 2 0 42 50 * gui-char
+ 9. Character fill for data:
+ 9. @CE 3 0 42 50 * gui-ooff
+10. Line type for fitted line:
+10. @CE 4 0 42 50 * gui-line
+11.
+12. Title:
+12. @CE 5 0 10 50 *
+13. Left Axis Label:
+13. @CE 6 0 22 50 *
+14. Bottom Axis Label:
+14. @CE 7 0 22 50 *
+15.
+16. Subset/Except/For Specification:
+17. @CE 8 0 1 50 *
+18.
+19.
+20. Generate the Plot and Least Squares Fit?:
+--------------------
+GR FE
+LINE SAVE
+CHARACTER SAVE
+.
+DELETE ZZZZY ZZZZT ZZZZN
+LET ZZZZY = _1
+@IF 8 RETAIN ZZZZY _8
+LET ZZZZN = SIZE ZZZZY
+LET ZZZZT = SEQUENCE 1 1 ZZZZN
+LET ZZZZT = LOG(ZZZZT)
+.
+FIT ZZZZT ZZZZY
+LET ZZZZA = EXP(A0)
+LET ZZZZB = A1
+LET ZZZZRES = RES
+.
+LINE SOLID ALL
+CHARACTER BLANK ALL
+CHARACTER X
+CHARACTER _2
+CHARACTER FILL _3
+LINES BLANK _4
+TITLE Least Squares Fit of Exponential Law Model
+Y1LABEL Log(Cumulative Number of Repairs)
+X1LABEL Repair Times
+TITLE _5
+Y1LABEL _6
+X1LABEL _7
+X3LABEL Mhat(t) = ^ZZZZA*EXP(^ZZZZB*t)
+PLOT ZZZZT PRED VS ZZZZY
+.
+TITLE
+LABEL
+CHARACTER FILL OFF
+LINE RESTORE
+CHARACTER RESTORE
+--------------------
+WEB HELP FIT
+--------------------

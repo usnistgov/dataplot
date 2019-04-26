@@ -1,0 +1,28 @@
+----- <~dex2k\confound.top> Confounding: 2**k Full Factorial Designs
+
+Confounding: 2**k Full Factorial Designs
+
+Confounding is a term which designates the degree
+to which estimated main effects from a design are
+contaminated/correlated with estimated 2-term
+interactions, 3-term interactions, etc.  from the
+design.  The confounding characteristics of
+estimators from a design are completely dictated
+and fixed by the actual design plan being
+executed.
+
+One of the advantages of 2**k full factorial
+designs is that the estimated effects and
+interactions are in fact free and clear of one
+another.  In particular, the estimated main
+effects of 2**k full factorial designs are not
+confounded/contaminated/ correlated with any
+estimated 2-level interaction, 3-level
+interaction, ..., k-level interaction.  In the
+language of Box, Hunter, and Hunter, full
+factorial designs thus have infinite resolution.
+In simplest terms, full factorial designs are said
+to be unconfounded, as opposed to fractional
+factorial designs--which have various degrees of
+confounding.
+

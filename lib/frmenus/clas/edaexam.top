@@ -1,0 +1,38 @@
+-----  <~clas\edaexam.top> Load & Plot EDA Class Data Files
+
+Load & Plot EDA Class Datasets
+
+Univariate
+   RANDN.DAT     Rand Normal Random Numbers   <xcf: ~clas\eda\RANDN.DP>
+   RANDU.DAT     Rand Uniform Random Numbers  <xcf: ~clas\eda\RANDU.DP>
+   RANDWALK.DAT  Random Walk                  <xcf: ~clas\eda\RANDWALK.DP>
+   FLICKER.DAT   Flicker Noise                <xcf: ~clas\eda\FLICKER.DP>
+   SOULEN.DAT    Josephson junc cryothermom.  <xcf: ~clas\eda\SOULEN.DP>
+   LEW.DAT       Beam deflections             <xcf: ~clas\eda\LEW.DP>
+   MAVRO.DAT     Filter Transmittance         <xcf: ~clas\eda\MAVRO.DP>
+   ZARR13.DAT    Heat flow meter              <xcf: ~clas\eda\ZARR13.DP>
+   ZARR14.DAT    Heat flow meter              <xcf: ~clas\eda\ZARR14.DP>
+   ZARR15.DAT    Heat flow meter              <xcf: ~clas\eda\ZARR15.DP>
+   DZIUBA.DAT    Standard Reistor             <xcf: ~clas\eda\DZIUBA.DP>
+   NORMAL.DAT    Normal Random Numbers        <xcf: ~clas\eda\NORMAL.DP>
+   FULLER2.DAT   Airplane Glass Failure Time  <xcf: ~clas\eda\FULLER2.DP>
+   VANGEL5.DAT   Strength at failure          <xcf: ~clas\eda\VANGEL5.DP>
+
+Comparative
+   DRAFT69.DAT   1969 Draft Lottery           <xcf: ~clas\eda\DRAFT69.DP>
+   MLCO2.DAT     NOAA Ozone Study             <xcf: ~clas\eda\MLCO2.DP>
+   SPRING.DAT    ASTM Sulfur Trioxide         <xcf: ~clas\eda\SPRING.DP>
+   BOXSHOES.DAT  Boys' Shoe Material (BHH)    <xcf: ~clas\eda\BOXSHOES.DP>
+   SHEESLE2.DAT  Defective Light Bulbs        <xcf: ~clas\eda\SHEESLE2.DP>
+   HOSPITAL.DAT  Hospital Death Rates         <xcf: ~clas\eda\HOSPITAL.DP>
+   ELECT92.DAT   1992 PresidentiaL Election   <xcf: ~clas\eda\ELECT92.DP>
+   OLYMPICS.DAT  1994 Olympic Skating         <xcf: ~clas\eda\OLYMPICS.DP>
+
+Screening
+   HAMAKER.DAT Drill Thrust Force             <xcf: ~clas\eda\HAMAKER.DP>
+   BOWEN.DAT Dental Polysac Adhesion          <xcf: ~clas\eda\BOWEN.DP>
+   BOXREAC2.DAT Chemical Reaction Yield (BHH) <xcf: ~clas\eda\BOXREAC2.DP>
+   SRBSN.DAT Ceramics Strength                <xcf: ~clas\eda\SRBSN.DP>
+
+Multivariate
+   PLANETS.DAT Planets                        <xcf: ~clas\eda\PLANETS.DP>

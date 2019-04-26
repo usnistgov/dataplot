@@ -1,0 +1,21 @@
+----- <~plmo\setticm.top> Set Tic Mark Attributes
+ 
+Set Tic Mark Attributes
+ 
+Set Bottom         Axis Tic Mark Attributes <xemf: ~plmo\setx1tcm.men>
+Set Top            Axis Tic Mark Attributes <xemf: ~plmo\setx2tcm.men>
+Set Left           Axis Tic Mark Attributes <xemf: ~plmo\sety1tcm.men>
+Set Right          Axis Tic Mark Attributes <xemf: ~plmo\sety2tcm.men>
+Set Bottom and Top Axis Tic Mark Attributes <xemf: ~plmo\setxtcm.men>
+Set Left and Right Axis Tic Mark Attributes <xemf: ~plmo\setytcm.men>
+Set All            Axis Tic Mark Attributes <xemf: ~plmo\setaltcm.men>
+ 
+Help for Tic Mark Commands
+   TIC MARK COLOR        <xcl: HELP TIC MARK COLOR>
+   TIC MARK OFFSET       <xcl: HELP TIC MARK OFFSET>
+   TIC MARK POSITION     <xcl: HELP TIC MARK POSITION>
+   TIC MARK SIZE         <xcl: HELP TIC MARK SIZE>
+   TIC MARK THICKNESS    <xcl: HELP TIC MARK THICKNESS>
+   MAJOR TIC MARK NUMBER <xcl: HELP MAJOR TIC MARK NUMBER>
+   MINOR TIC MARK NUMBER <xcl: HELP MINOR TIC MARK NUMBER>
+

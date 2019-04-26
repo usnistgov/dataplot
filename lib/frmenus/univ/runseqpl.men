@@ -1,0 +1,20 @@
+This is file runseqpl.men--Run Sequence Plot
+ 
+--------------------
+ 1. Run Sequence Plot
+ 2. PLOT Y
+ 3.
+ 4. Vertical   Axis Variable:
+ 4. @CE 1 0 33 50 ?
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Generate the Plot?
+--------------------
+GR FE
+PLOT _1 _2
+--------------------
+WEB HELP RUN SEQUENCE PLOT
+--------------------

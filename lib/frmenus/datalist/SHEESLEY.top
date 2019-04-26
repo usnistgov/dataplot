@@ -1,0 +1,8 @@
+----- <~datalist\SHEESLEY.top> SHEESLEY.DAT
+ 
+SHEESLEY.DAT
+ 
+View     <xcl: LIST SHEESLEY.DAT>
+Load     <x2cl: SKIP 25; READ SHEESLEY.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\SHEESLEY.DAT>
+ 

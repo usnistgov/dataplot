@@ -1,0 +1,11 @@
+----- <~dexcomp\ccomdesi.top> Construction:  Comparative Designs
+
+Construction:  Comparative Designs
+
+Design Types:
+   Completely Randomized Designs       <~dexcomp\ccrd.top>
+   Randomized Block Designs            <~dexcomp\crbd.top>
+   Latin Square+ Designs               <~dexcomp\clsd.top>
+
+References                             <~dexcomp\ccomdref.top>
+

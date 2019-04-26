@@ -1,0 +1,15 @@
+----- <~dex2kmp\predequa.top> Tech. for Analysis Goal 3: Prediction Equation
+ 
+Techniques: Goal 3: Prediction Equation
+ 
+Discussion                         <~dex2kmp\preqdisc.top>
+ 
+DEX scatter plot                   <xemf: ~plot\dexscatp.men>
+DEX mean plot (main effects plot)  <xemf: ~plot\dexmeanp.men>
+Interaction effects matrix         <xemf: ~dex2k\inteffma.men>
+Estimate effects (Yates analysis)  <xemf: ~dex2k\yates.men>
+Normal probability plot of effects <xemf: ~dex2k\normppef.men>
+Halfnormal probability plot |effects| <xemf: ~dex2k\hanoppef.men>
+Cumulative residual standard deviations <xemf: ~dex2k\crsdplot.men>
+95% confidence interval on effects <xemf: ~dex2k\efclplot.men>
+ 

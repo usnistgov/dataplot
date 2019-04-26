@@ -1,0 +1,32 @@
+This is file comb_fun.men--Combine user-defined functions
+ 
+--------------------
+ 1. Combine User Defined Functions
+ 2. LET FUNCTION F = F1+F2
+ 3.
+ 4. Name of the first function (or enter a functional expression):
+ 5. @CE 1 0 -10 50 ? gui-function
+ 6. Name of the second function (or enter a functional expression):
+ 7. @CE 2 0 -10 50 ? gui-function
+ 8.
+ 9. Operation to perform?:
+ 9. @CE 4 1 20 24 +
+ 9. @CE 4 2 26 30 -
+ 9. @CE 4 3 32 34 *
+ 9. @CE 4 4 36 40 /
+ 9. @CE 4 5 42 46 **
+10.
+11. Name of the resulting function:
+11. @CE 3 0 33 50 ? gui-none
+12.
+13. Combine the Functions?:
+--------------------
+GR FE
+@IF 4 1 LET FUNCTION _3 = ( _1 ) + ( _2 )
+@IF 4 2 LET FUNCTION _3 = ( _1 ) - ( _2 )
+@IF 4 3 LET FUNCTION _3 = ( _1 ) * ( _2 )
+@IF 4 4 LET FUNCTION _3 = ( _1 ) / ( _2 )
+@IF 4 5 LET FUNCTION _3 = ( _1 ) ** ( _2 )
+--------------------
+WEB HELP LET FUNCTION
+--------------------

@@ -1,0 +1,31 @@
+----- <~dataview\timenist.top> View Time Series Data: NIST
+
+View Time Series Data: NIST
+
+LEW.DAT*      Beam deflections            <xcf: ~dataview\LEW.DP>
+SOULEN0.DAT   Josephson junc cryothermom. <xcf: ~dataview\SOULEN0.DP>
+SOULEN.DAT    Josephson junc cryothermom. <xcf: ~dataview\SOULEN.DP>
+MARSHAK.DAT   Nuclear thermometry         <xcf: ~dataview\MARSHAK.DP>
+BAKER.DAT     Force calibration           <xcf: ~dataview\BAKER.DP>
+MAVRO.DAT     Filter transmittance        <xcf: ~dataview\MAVRO.DP>
+DZIUBA.DAT    Standard resistor           <xcf: ~dataview\DZIUBA.DP>
+HABER1.DAT    Dens of 2-admiss. numbers   <xcf: ~dataview\HABER1.DP>
+HAYES1.DAT    Fire res. smoke obscuration <xcf: ~dataview\HAYES1.DP>
+LUTHER.DAT    Torsion pendulum exp. for G <xcf: ~dataview\LUTHER.DP>
+NEGIZ3.DAT    Aerosol particle size       <xcf: ~dataview\NEGIZ3.DP>
+ZARR13.DAT    Heat flow meter             <xcf: ~dataview\ZARR13.DP>
+ZARR14.DAT    Heat flow meter             <xcf: ~dataview\ZARR14.DP>
+ZARR15.DAT    Heat flow meter             <xcf: ~dataview\ZARR15.DP>
+
+SIMIU.DAT     Wind speeds                 <xcf: ~dataview\SIMIU.DP>
+WASHDC.DAT    Washington DC wind speeds   <xcf: ~dataview\WASHDC.DP>
+KEYWEST.DAT   Key West wind speeds        <xcf: ~dataview\KEYWEST.DP>
+
+NBSPOW1.DAT   Power disturbance #1 at NBS <xcf: ~dataview\NBSPOW1.DP>
+NBSPOW2.DAT   Power disturbance #2 at NBS <xcf: ~dataview\NBSPOW2.DP>
+NBSPOW3.DAT   Power disturbance #3 at NBS <xcf: ~dataview\NBSPOW3.DP>
+
+FUNNEL5A.DAT  Funnel data                 <xcf: ~dataview\FUNNEL5A.DP>
+
+REHM.DAT      Biomedical air flow         <xcf: ~dataview\REHM.DP>
+

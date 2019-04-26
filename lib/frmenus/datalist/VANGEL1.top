@@ -1,0 +1,8 @@
+----- <~datalist\VANGEL1.top> VANGEL1.DAT
+ 
+VANGEL1.DAT
+ 
+View     <xcl: LIST VANGEL1.DAT>
+Load     <x2cl: SKIP 25; READ VANGEL1.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\VANGEL1.DAT>
+ 

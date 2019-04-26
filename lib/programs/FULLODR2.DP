@@ -1,0 +1,23 @@
+.  FILE: FULLODR2.DP
+.  Performs an orthogonal distance analysis of example from
+.  Wayne Fuller's book (see header of FULLODR2.DAT for reference).
+.  This is example 2 from version 2.01 of ODRPACK User's Guide.
+.
+.  Note that this is an example of fitting an implicit function.
+.
+skip 25
+read fullodr2.dat v h
+let n = size v
+.
+let b1 = 0.09
+let b2 = -1.0
+let b3 = 0.02
+let b4 = -3.0
+let b5 = 0.08
+let function f1 = b1*(v-b2)**2
+let function f2 = 2*b3*(v-b2)*(h-b4)
+let function f3 = b5*(h-b4)**2
+let function f = f1 + f2 + f3 - 1.0
+.
+orthogonal distance fit f
+.

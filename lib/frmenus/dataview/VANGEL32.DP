@@ -1,0 +1,8 @@
+----- <~dataload\VANGEL32.DP> Load VANGEL32.DAT
+
+. This is file    VANGEL32.DP
+
+DELETE Y X BATCH
+SKIP 25
+READ VANGEL32.DAT Y X BATCH
+

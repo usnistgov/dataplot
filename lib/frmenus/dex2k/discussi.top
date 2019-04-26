@@ -1,0 +1,20 @@
+----- <~dex2k\discussi.top> Discussion:  2**k Full Factorial Designs
+
+Discussion:  2**k Full Factorial Designs
+
+The class of 2**k full factorial designs consists
+of those designs consisting of all possible
+combinations of all k factors--whereby each factor
+has exactly 2 levels.  The number n of runs = 2**k.
+The k factors may be continuous or discrete.  The
+class of 2**k full factorial designs is very
+popular--expecially for the k = 3 and k = 4
+cases.
+
+If one is examining k 2-level factors, then our
+recommended initial default design is the 2**k
+full factorial design.  In general, one should set
+aside such a design only if the requisite sample
+size (n = 2**k) is beyond the experimentalist's
+financial and time budget.
+

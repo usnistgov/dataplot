@@ -1,0 +1,20 @@
+This is file runs.men--Runs Test for Randomness
+ 
+--------------------
+ 1. Runs Test for Randomness
+ 2. RUNS Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Compute Runs Test?
+--------------------
+GR FE
+RUNS _1 _2
+--------------------
+WEB HELP RUNS
+--------------------

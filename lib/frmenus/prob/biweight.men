@@ -1,0 +1,37 @@
+This is file biweight.men--Set Biweight Option for KS Plot
+ 
+--------------------
+ 1. Set Biweight Option for KS Plot
+ 2. SET PPCC PLOT LOCATION SCALE BIWEIGHT
+ 3.
+ 4. Data with long tails may bias the probability
+ 5. plot.  For heavy tails, it may be helpful to
+ 6. use the estimates of intercept and slope (i.e.,
+ 7. the estimates of location and scale) based on a
+ 8. biweight fit rather than the standard least
+ 9. squares fit.  The biweight option has minimal
+10. effect for well-behaved and even moderately
+11. heavy tails.  However, it can has a dramatic
+12. effect for heavy tails (basically, the more
+13. pathological the tail behavior, the more the
+14. the biweight option helps.  Since the PPCC plot
+15. is invariant to location and scale, this
+16. option does not apply to the PPCC plot.
+17.
+18. Note that if you set the biweight option here,
+19. it stays in effect for all subsequent KS plots
+20. until you change it again.
+21.
+22. Select Biweight Option for Location/Scale:
+23. @CE 1 1 1 30 No
+24. @CE 1 2 1 30 Yes-Smirnov
+25.
+26.
+27. Specify the Biweight Option?
+--------------------
+GR FE
+SET PPCC PLOT LOCATION SCALE DEFAULT
+@IF 1 2 SET PPCC PLOT LOCATION SCALE BIWEIGHT
+--------------------
+WEB HELP PPCC PLOT
+--------------------

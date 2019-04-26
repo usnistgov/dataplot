@@ -1,0 +1,28 @@
+This is file conssumm.men--Compute Consensus Means
+ 
+--------------------
+ 1. Consensus Means for Summary Data
+ 2. CONSENSUS MEAN YMEAN YSD YN
+ 3.
+ 4. At times, only summary data may be available.
+ 5. In this case, you need one column for the lab
+ 6. means, one column for the lab standard
+ 7. deviations, and one column for the sample sizes.
+ 8.
+ 9. Means Variable:
+ 9. @CE 1 0 42 50 ? gui-variable
+10. Standard Deviations Variable:
+10. @CE 2 0 42 50 ? gui-variable
+11. Sample Size Variable:
+11. @CE 3 0 42 50 ? gui-variable
+12.
+13. Subset/Except/For Specification:
+14. @CE 4 0 1 50 *
+15.
+16.
+17. Compute the Consensus Means?:
+--------------------
+CONSENSUS MEAN _1 _2 _3 _4
+--------------------
+WEB HELP CONSENSUS MEAN
+--------------------

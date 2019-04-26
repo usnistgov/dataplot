@@ -1,0 +1,55 @@
+This is file bestcp.men--Best CP (Best subsets regression)
+ 
+--------------------
+1. Best CP: Best Subsets Regression
+2. BEST CP Y X1 X2 X3 X4 X5 X6 X7
+3.
+4. Response Variable:
+4. @CE 1 0 42 50 ? gui-variable
+5. List of Independent Variables:
+6. @CE 2 0  1 50 ? gui-variable
+7.
+8. Display Best CP results Graphically?
+9. @CE 3 1 5 15 yes
+9. @CE 3 2 5 15 no
+10.
+11. Subset/Except/For Specification:
+12. @CE 4 0 1 50 *
+13.
+14.
+15. Perform the Best CP Analysis?
+--------------------
+GR FE
+LET IPLOT = 0
+@IF 3 1 LET IPLOT = 1
+CAPTURE ZZZZJUNK.DAT
+BEST CP _1 _2 _4
+END OF CAPTURE
+IF IPLOT = 1
+   LINE SAVE
+   CHARACTER SAVE
+   DELETE ZP ZCP
+   SKIP 0
+   READ DPST1F.DAT ZP ZCP
+   READ ROW LABELS DPST2F.DAT
+   TITLE CASE ASIS
+   LABEL CASE ASIS
+   CHARACTER ROWLABELS
+   LINE BLANK
+   TIC OFFSET UNITS SCREEN
+   TIC OFFSET 5 5
+   LET ZMAXP = MAXIMUM ZP
+   MAJOR XTIC MARK NUMBER ZMAXP
+   XLIMITS 1 ZMAXP
+   X1LABEL P
+   Y1LABEL C(p) 
+   PLOT ZCP ZP
+   LINE SOLID
+   DRAW DATA 1 1 ZMAXP ZMAXP
+   LINE RESTORE
+   CHARACTER RESTORE
+END OF IF
+LIST ZZZZJUNK.DAT
+--------------------
+WEB HELP BEST CP
+--------------------

@@ -1,0 +1,83 @@
+2**(7-4) FRACTIONAL FACTORIAL DESIGN
+NUMBER OF LEVELS FOR EACH FACTOR = 2
+NUMBER OF FACTORS                = 7
+NUMBER OF OBSERVATIONS           = 8 (A SATURATED DESIGN)
+RESOLUTION                       = 3  (CAUTION!  MAIN EFFECTS ARE
+                                      CONFOUNDED WITH 2-TERM INTERACTIONS)
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ FACTOR    DEFINITION         CONFOUNDING STRUCTURE
+   1           1                1 + 24 + 35 + 67 + HIGHER-ORDER INTERACTIONS
+   2           2                2 + 14 + 36 + 57 + HIGHER-ORDER INTERACTIONS
+   3           3                3 + 15 + 26 + 47 + HIGHER-ORDER INTERACTIONS
+   4          12                4 + 12 + 37 + 56 + HIGHER-ORDER INTERACTIONS
+   5          13                5 + 13 + 27 + 46 + HIGHER-ORDER INTERACTIONS
+   6          23                6 + 17 + 23 + 45 + HIGHER-ORDER INTERACTIONS
+   7         123                7 + 16 + 25 + 34 + HIGHER-ORDER INTERACTIONS
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  12                           12 +  4 + 37 + 56 + HIGHER-ORDER INTERACTIONS
+  13                           13 +  5 + 27 + 46 + HIGHER-ORDER INTERACTIONS
+  14                           14 +  2 + 36 + 57 + HIGHER-ORDER INTERACTIONS
+  15                           15 +  3 + 26 + 47 + HIGHER-ORDER INTERACTIONS
+  16                           16 +  7 + 25 + 34 + HIGHER-ORDER INTERACTIONS
+  17                           17 +  6 + 23 + 45 + HIGHER-ORDER INTERACTIONS
+  23                           23 +  6 + 17 + 45 + HIGHER-ORDER INTERACTIONS
+  24                           24 +  1 + 35 + 67 + HIGHER-ORDER INTERACTIONS
+  25                           25 +  7 + 16 + 34 + HIGHER-ORDER INTERACTIONS
+  26                           26 +  3 + 15 + 47 + HIGHER-ORDER INTERACTIONS
+  27                           27 +  5 + 13 + 46 + HIGHER-ORDER INTERACTIONS
+  34                           34 +  7 + 16 + 25 + HIGHER-ORDER INTERACTIONS
+  35                           35 +  1 + 24 + 67 + HIGHER-ORDER INTERACTIONS
+  36                           36 +  2 + 14 + 57 + HIGHER-ORDER INTERACTIONS
+  37                           37 +  4 + 12 + 56 + HIGHER-ORDER INTERACTIONS
+  45                           45 +  6 + 17 + 23 + HIGHER-ORDER INTERACTIONS
+  46                           46 +  5 + 13 + 27 + HIGHER-ORDER INTERACTIONS
+  47                           47 +  3 + 15 + 26 + HIGHER-ORDER INTERACTIONS
+  56                           56 +  4 + 12 + 37 + HIGHER-ORDER INTERACTIONS
+  57                           57 +  2 + 14 + 36 + HIGHER-ORDER INTERACTIONS
+  67                           67 +  1 + 24 + 35 + HIGHER-ORDER INTERACTIONS
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+DEFINING RELATION       = I + 124 + 135 + 236 + 347 + 257 + 167 + 456
+DEFINING RELATION (CONT.)   + 1237 + 2345 + 1346 + 1256 + 1457
+DEFINING RELATION (CONT.)   + 3567 + 1234567
+REFERENCE--BOX, HUNTER & HUNTER, STAT. FOR EXP., PAGE 410, 391, 392.
+NOTE--THIS DESIGN IS EQUIVALENT TO A TAGUCHI L8 DESIGN
+      REFERENCE--TAGUCHI, SYS. OF EXP. DES., VOL. 2, PAGE XX.
+NOTE--IF POSSIBLE, THIS (AS WITH ALL EXPERIMENT DESIGNS) SHOULD BE
+      RUN IN RANDOM ORDER (SEE DATAPLOT'S RANDOM PERMUTATION FILES).
+NOTE--TO READ THIS FILE INTO DATAPLOT--
+      SKIP 75
+      READ 2TO7M4.DAT X1 TO X7
+DATE--DECEMBER 1988
+NOTE--IN THE DESIGN BELOW, "-1" REPRESENTS THE "LOW"  SETTING OF A FACTOR
+                           "+1" REPRESENTS THE "HIGH" SETTING OF A FACTOR
+NOTE--ALL FACTOR EFFECT ESTIMATES WILL BE OF THE FORM
+      AVERAGE OF THE "HIGH" - AVERAGE OF THE "LOW"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   X1  X2  X3  X4  X5  X6  X7
+   --------------------------
+   -1  -1  -1  +1  +1  +1  -1
+   +1  -1  -1  -1  -1  +1  +1
+   -1  +1  -1  -1  +1  -1  +1
+   +1  +1  -1  +1  -1  -1  -1
+   -1  -1  +1  +1  -1  -1  +1
+   +1  -1  +1  -1  +1  -1  -1
+   -1  +1  +1  -1  -1  +1  -1
+   +1  +1  +1  +1  +1  +1  +1

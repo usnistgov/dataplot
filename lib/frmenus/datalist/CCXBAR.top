@@ -1,0 +1,8 @@
+----- <~datalist\CCXBAR.top> CCXBAR.DAT
+ 
+CCXBAR.DAT
+ 
+View     <xcl: LIST CCXBAR.DAT>
+Load     <x2cl: SKIP 25; READ CCXBAR.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\CCXBAR.DAT>
+ 

@@ -1,0 +1,26 @@
+----- <~dataprin\timedds.top> Print (to Printer) Time Series Data: DDS
+
+Print (to Printer) Time Series Data: DDS
+
+DDS1.DAT   Papermaking gate opening      <xcf: ~dataprin\DDS1.DP>
+DDS2.DAT   Yearly sunspot numbers        <xcf: ~dataprin\DDS2.DP>
+DDS3.DAT   IBM stock prices              <xcf: ~dataprin\DDS3.DP>
+DDS4.DAT   Mech. vibratory system displ. <xcf: ~dataprin\DDS4.DP>
+DDS5.DAT   Grinding wheel profile dev.   <xcf: ~dataprin\DDS5.DP>
+DDS6.DAT   Machine part diameter 1       <xcf: ~dataprin\DDS6.DP>
+DDS7.DAT   Machine part diameter 2       <xcf: ~dataprin\DDS7.DP>
+DDS8.DAT   U.S. treasure Securities      <xcf: ~dataprin\DDS8.DP>
+DDS9.DAT   Money market rates            <xcf: ~dataprin\DDS9.DP>
+DDS10.DAT   Hospital in-patient counts   <xcf: ~dataprin\DDS10.DP>
+DDS11.DAT   U.S. consumer price index    <xcf: ~dataprin\DDS11.DP>
+DDS12.DAT   U.S. wholesale price index   <xcf: ~dataprin\DDS12.DP>
+DDS13.DAT   Airline passenger counts     <xcf: ~dataprin\DDS13.DP>
+DDS14.DAT   Nuclear plant crack lengths  <xcf: ~dataprin\DDS14.DP>
+DDS15.DAT   Wood surface height          <xcf: ~dataprin\DDS15.DP>
+DDS16.DAT   Papermaking machine I/O data <xcf: ~dataprin\DDS16.DP>
+DDS17.DAT   Chemical Concentration       <xcf: ~dataprin\DDS17.DP>
+DDS18.DAT   U.S. gross national product  <xcf: ~dataprin\DDS18.DP>
+DDS19.DAT   U.S durables expenditures    <xcf: ~dataprin\DDS19.DP>
+DDS20.DAT   Papermaking machine I/O      <xcf: ~dataprin\DDS20.DP>
+DDS21.DAT   Wood pulping machine I/O     <xcf: ~dataprin\DDS21.DP>
+

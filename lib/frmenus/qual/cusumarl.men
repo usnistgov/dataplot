@@ -1,0 +1,46 @@
+This is file cusumarl.men--Generate Cusum ARL Charts
+ 
+--------------------line 3
+1. Cusum Average Run Length (ARL) Chart
+2. LET Y = CUSUM ARL DELTA
+3.
+4. The ARL curve is a plot of the average number
+5. of runs it takes to detect an out of control process.
+6. Delta is a variable containing values for the difference
+7. between the target value and the true value of the response.
+8. Values for delta and parameters below are in standard
+9. deviation units.
+10.
+11. Variable containing delta values:
+11. @CE 1 0 42 50 ? gui-vari
+12. Initial Sum (defaults to zero):
+12. @CE 2 0 42 50 *
+13. K (= Difference to detect/2,defaults to 0.5):
+13. @CE 3 0 42 50 *
+14. Value signifying out of control (defaults to 5):
+14. @CE 4 0 42 50 *
+15.
+16.
+17. Generate the (two-sided) ARL Chart?:
+--------------------
+LET S0 = 0
+LET K = 0.5
+LET H = 0.5
+LET S0 = _2
+LET K = _3
+LET H = _4
+LINE SOLID
+CHARACTER BLANK
+SPIKE OFF
+BAR OFF
+LABEL CASE ASIS
+Y1LABEL Average Run Length
+X1LABEL Magnitude to Detect (in standard deviation units)
+TITLE ARL Curve for Cusum Control Chart
+LET ZZZZARL = CUSUM ARL _1
+PLOT ZZZZARL _1
+LABEL
+TITLE
+--------------------
+WEB HELP CUSUM ARL
+--------------------

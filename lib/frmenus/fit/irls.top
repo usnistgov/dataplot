@@ -1,0 +1,10 @@
+----- <~fit\irls.top> Iteratively Re-Weighted Least Squares
+ 
+IRLS
+ 
+Discussion                            <~fit\discirls.top>
+Perform An IRLS                       <xemf: ~fit\irls.men>
+Do Model Validation                   <~fit\modelval.top>
+
+Worked Example                        <xcl: CALL WEIGHTS.DP>
+

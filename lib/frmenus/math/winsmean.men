@@ -1,0 +1,28 @@
+This is file winsmean.men--Compute Winsorized mean of a variable
+ 
+--------------------
+ 1. Winsorized Mean
+ 2. LET A = WINSORIZED MEAN Y
+ 3.
+ 4. Variable for which to compute the Winsorized mean:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Percentage of values to Winsorize above?:
+ 5. @CE 2 0 33 50 ? 
+ 6. Percentage of values to Winsorize below?:
+ 6. @CE 3 0 33 50 ?
+ 7. Parameter to store the Winsorized mean:
+ 7. @CE 4 0 33 50 ? gui-none
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 -10 50 *
+11.
+12.
+13. Compute the Winsorized Mean?:
+--------------------
+GR FE
+LET P1 = _3
+LET P2 = _2
+LET _4 = WINSORIZED MEAN  _1 _5
+--------------------
+WEB HELP WINSORIZED MEAN
+--------------------

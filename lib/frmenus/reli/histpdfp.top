@@ -1,0 +1,30 @@
+----- <~reli\histpdfp.top> Histogram & superimposed pdf plot
+
+Histogram and Superimposed PDF Plot
+
+Normal                                     <xemf: ~prob\norhispd.men>
+Lognormal                                  <xemf: ~prob\lgnhispd.men>
+Power Normal                               <xemf: ~prob\pnrhispd.men>
+Power Lognormal                            <xemf: ~prob\plnhispd.men>
+
+Exponential                                <xemf: ~prob\exphispd.men>
+Geometric Extreme Exponential              <xemf: ~prob\geehispd.men>
+
+Weibull (Minimum)                          <xemf: ~prob\wei1hispd.men>
+Weibull (Maximum)                          <xemf: ~prob\wei2hispd.men>
+Inverted Weibull                           <xemf: ~prob\iwehispd.men>
+Exponentiated Weibull                      <xemf: ~prob\ewehispd.men>
+Bi-Weibull                                 <xemf: ~prob\bwehispd.men>
+
+Wald                                       <xemf: ~prob\walhispd.men>
+Inverse Gaussian                           <xemf: ~prob\ighispd.men>
+Reciprocal Inverse Gaussian                <xemf: ~prob\righispd.men>
+Fatigue Life                               <xemf: ~prob\flhispd.men>
+
+Gamma                                      <xemf: ~prob\gamhispd.men>
+Log Gamma                                  <xemf: ~prob\lgahispd.men>
+Inverted Gamma                             <xemf: ~prob\igahispd.men>
+
+Alpha                                      <xemf: ~prob\alphispd.men>
+Exponential Power                          <xemf: ~prob\pexhispd.men>
+

@@ -1,0 +1,8 @@
+----- <~datalist\GARBOCZI.top> GARBOCZI.DAT
+ 
+GARBOCZI.DAT
+ 
+View     <xcl: LIST GARBOCZI.DAT>
+Load     <x2cl: SKIP 25; READ GARBOCZI.DAT X Y DELX DELY>
+Print    <xccl: printfile C:\DATAPLOT\GARBOCZI.DAT>
+ 

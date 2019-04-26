@@ -1,0 +1,49 @@
+#  This file contains the font specifications for xdp.
+
+#  The font specifications allow a system administrator or user to easily
+#  change the fonts used by xdp to their tastes or limitations of the hardware.
+
+#  This file can exist in several locations.  It is searched for in several
+#  directories and the first occurance of the file is the one that will be
+#  used.  This way a user can have a different set of fonts than the default
+#  values.
+
+#  The order of the directories where xdp looks for this file is:
+#  (1) the current directory, (2) the user's home directory, (3) the system
+#  directory for the xdp Tcl files.  The file can be names xdpfont or .xdpfont
+
+#  The first field contains the name of the platform (window, unix) or
+#  operating system (IRIX, AIX, HP-UX, SunOS, etc.).  The operating system
+#  is usually only specified for unix platforms.  Font specifications based
+#  on operating system must appear after those specified by platform.
+
+#  The second field contains only the strings variable, fixed_small, or
+#  fixed_large.  These refer to the 3 different types of fonts used in xdp.
+#  The variable font is used for buttons and menus.  The fixed fonts are used
+#  for forms, some menus, entries, and text output.
+
+#  The third field contains the font in Tcl format.  Each font contains 
+#  three fields.  The first is the font family.  If the family name
+#  contains blanks, then it must be enclosed in braces.  The second field
+#  contains the point size of the font.  A + or - can be in front of the point
+#  size.  This tells xdp that if a font with that point size cannot be found, 
+#  then either increment or decrement the point size to find one that matches.  
+#  The third field contains the string bold or normal.  The entire font 
+#  specification must be enclosed in braces.
+
+windows variable    {{MS Sans Serif} 8 normal}
+windows fixed_small {{Courier New} 8 normal}
+windows fixed_large {{MS Sans Serif} 8 normal}
+
+unix variable    {Helvetica -12 bold}
+unix fixed_small {fixed +10 bold}
+unix fixed_large {fixed +11 bold}
+
+#IRIX variable    {Rock 10 bold}
+IRIX variable    {Helvetica -12 bold}
+IRIX fixed_small {screen +10 bold}
+IRIX fixed_large {screen +13 bold}
+
+HP-UX variable    {Helvetica +12 bold}
+HP-UX fixed_small {fixed +11 bold}
+HP-UX fixed_large {fixed +12 bold}

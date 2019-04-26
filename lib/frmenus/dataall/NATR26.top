@@ -1,0 +1,8 @@
+----- <~dataall\NATR26.top> NATR26.DAT
+
+NATR26.DAT
+
+View     <xcl: LIST NATR26.DAT>
+Load     <xcf: ~dataload/NATR26.DP>
+Print    <xccl: printfile C:\DATAPLOT\NATR26.DAT>
+

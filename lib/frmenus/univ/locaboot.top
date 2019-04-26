@@ -1,0 +1,16 @@
+----- <~univ\locaboot.top> Bootstrap &/or Jacknife: Location
+
+Bootstrap &/or Jacknife Estimates of Location
+
+Bootstrap
+   Mean                              <xemf: ~univ\bootmepl.men>
+   Median                            <xemf: ~univ\bootmdpl.men>
+   Midmean                           <xemf: ~univ\bootmmpl.men>
+   Midrange                          <xemf: ~univ\bootmrpl.men>
+
+Jacknife
+   Mean                              <xemf: ~univ\jackmepl.men>
+   Median                            <xemf: ~univ\jackmdpl.men>
+   Midmean                           <xemf: ~univ\jackmmpl.men>
+   Midrange                          <xemf: ~univ\jackmrpl.men>
+

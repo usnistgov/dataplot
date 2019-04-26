@@ -1,0 +1,65 @@
+THIS IS DATA FILE     NELS393.DAT
+TURNING FAILURE TIMES OF CLASS-H INSULATION IN MOTORETTES
+WAYNE NELSON BOOK
+NUMBER OF OBSERVATIONS = 40
+NUMBER OF VARIABLES PER LINE IMAGE = 4
+ORDER OF VARIABLES ON A LINE IMAGE--
+   Y = HOURS TO (TURN) FAILURE
+   TAG = FAILURE TAG (1 = FAILURE, 2 = NO FAILURE)
+   X1 = TEMPERATURE(4 LEVELS--190, 220, 240, AND 260 DEG C)
+   X2 = MOTOR IDENTIFICATION (1 TO 40)
+SOURCE--NELSON, WAYNE (1990).  ACCELERATED TESTING
+   TABLE 5.1, PAGE 393, WILEY, NEW YORK.
+STATISTICAL AREA = RELIABILITY
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ NELS393.DAT Y TAG TEMP MOTOR
+ 
+ 
+ 
+ 
+ 
+ 
+HOURS TO    FAIL/NO-FAIL   TEMPERATURE   MOTOR
+ FAILURE     INDICATOR                    ID
+----------------------------------------------
+   7228          1            190          1
+   7228          1            190          2
+   7228          1            190          3
+   8448          1            190          4
+   9167          1            190          5
+   9167          1            190          6
+   9167          1            190          7
+   9167          1            190          8
+  10511          1            190          9
+  10511          1            190         10
+   1764          1            220         11
+   2436          1            220         12
+   2436          1            220         13
+   2436          1            220         14
+   2436          1            220         15
+   2436          1            220         16
+   3108          1            220         17
+   3108          1            220         18
+   3108          1            220         19
+   3108          1            220         20
+   1175          1            240         21
+   1881          2            240         22
+   1521          1            240         23
+   1569          1            240         24
+   1617          1            240         25
+   1665          1            240         26
+   1665          1            240         27
+   1713          1            240         28
+   1761          1            240         29
+   1953          1            240         30
+   1632          2            260         31
+   1632          2            260         32
+   1632          2            260         33
+   1632          2            260         34
+   1632          2            260         35
+   1128          1            260         36
+   1512          1            260         37
+   1464          1            260         38
+   1608          1            260         39
+   1896          1            260         40

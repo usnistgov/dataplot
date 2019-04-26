@@ -1,0 +1,20 @@
+----- <~prob\ppdfsymm.top> Plot Symmetric pdf's
+
+Plot Symmetric PDF Functions
+
+Uniform                  <xemf: ~prob\punipdf.men>
+Normal                   <xemf: ~prob\pnorpdf.men>
+Logistic                 <xemf: ~prob\plogpdf.men>
+Double Exponential       <xemf: ~prob\pdexpdf.men>
+Double Weibull           <xemf: ~prob\pdwepdf.men>
+Double Gamma             <xemf: ~prob\pdgapdf.men>
+Cauchy                   <xemf: ~prob\pcaupdf.men>
+Tukey-Lambda             <xemf: ~prob\plampdf.men>
+T                        <xemf: ~prob\ptpdf.men>
+Semi-Circular            <xemf: ~prob\psempdf.men>
+Triangular               <xemf: ~prob\ptripdf.men>
+Von Mises                <xemf: ~prob\pvonpdf.men>
+Cosine                   <xemf: ~prob\pcospdf.men>
+Anglit                   <xemf: ~prob\pangpdf.men>
+Hyperbolic Secant        <xemf: ~prob\phsepdf.men>
+

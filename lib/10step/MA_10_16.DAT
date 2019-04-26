@@ -1,0 +1,42 @@
+This is dataplot data file     ma_10_16.dat    6/29/15
+Purpose  : Additive Manufacturing: Factors Affecting the Peak Temperature After Laser Scanning
+Scientist: Li Ma (Materials Scientist) 2057
+Date: 6/29/15
+Design   : 2**(10-6) (with center point) Orthogonal Fractional Factorial Design
+Number of Observations             = 16 + 1 = 17
+Number of Variables per Line Image = 1 + 10 = 11
+Order of Variables on a Line Image--
+   Response Variable = Peak Temperature after laser scanning
+   Factor  1 = Emissivity E          (2 levels: 0.37    +- 10%)
+   Factor  2 = Convection hc         (2 levels: 0.05    +- 10%
+   Factor  3 = PreheatTemperature Ti (2 levels: 353     +- 1%)
+   Factor  4 = Absorption Ab         (2 levels: 0.12    +- 0.5%)
+   Factor  5 = Density Rho           (2 levels: 7.27e-9 +- 1%)
+   Factor  6 = SpecificHeat Cp       (2 levels: 550e6   +- 3%)
+   Factor  7 = ThermalConductivity   (2 levels: 18.1    +- 3%)
+   Factor  8 = PowderPorosity Dp     (2 levels: 0.5     +- 10%)
+   Factor  9 = LaserPower P          (2 levels: 195     +- 3%)
+   Factor 10 = ScanSpeed V           (2 levels: 800     +- 5%)
+
+To read this file into dataplot--
+   skip 25; read ma_10_16.dat y x1 x2 x3 x4 x5 x6 x7 x8 x9 x10
+
+  Y         X1  X2  X3  X4  X5  X6  X7  X8  X9  X10
+----------------------------------------------------
+2636.1      -1  -1  -1  -1  -1  -1  -1  -1  +1  +1
+2526.3      +1  -1  -1  -1  +1  -1  +1  +1  -1  -1
+2514.9      -1  +1  -1  -1  +1  +1  -1  +1  -1  -1
+2517.9      +1  +1  -1  -1  -1  +1  +1  -1  +1  +1
+2416.0      -1  -1  +1  -1  +1  +1  +1  -1  -1  +1
+2603.7      +1  -1  +1  -1  -1  +1  -1  +1  +1  -1
+2611.3      -1  +1  +1  -1  -1  -1  +1  +1  +1  -1
+2501.1      +1  +1  +1  -1  +1  -1  -1  -1  -1  +1
+2372.7      -1  -1  -1  +1  -1  +1  +1  +1  -1  +1
+2675.7      +1  -1  -1  +1  +1  +1  -1  -1  +1  -1
+2686.7      -1  +1  -1  +1  +1  -1  +1  -1  +1  -1
+2462.3      +1  +1  -1  +1  -1  -1  -1  +1  -1  +1
+2569.2      -1  -1  +1  +1  +1  -1  -1  +1  +1  +1
+2614.7      +1  -1  +1  +1  -1  -1  +1  -1  -1  -1
+2600.2      -1  +1  +1  +1  -1  +1  -1  -1  -1  -1
+2478.2      +1  +1  +1  +1  +1  +1  +1  +1  +1  +1
+2537.7       0   0   0   0   0   0   0   0   0   0

@@ -1,0 +1,19 @@
+----- <~dataload\relibury.top> View Reliability Data: From Karl Bury
+
+Karl Bury (1999), "Statistical Distributions in Engineering"
+
+Uncensored Data Sets
+   EXP.DAT       Newly designed inverter  <xcf: ~dataload\EXP.DP>
+   WEIBBURY.DAT  Engineering material     <xcf: ~dataload\WEIBBURY.DP>
+   LGN.DAT       Composite material       <xcf: ~dataload\LGN.DP>
+   NOR.DAT       Matching process         <xcf: ~dataload\NOR.DP>
+   GAMMA.DAT     Annual maximum discharge <xcf: ~dataload\GAMMA.DP>
+
+Censored Data Sets
+   EXPCEN.DAT  Integrated circuit chip    <xcf: ~dataload\EXPCEN.DP>
+   EXPCEN2.DAT Electronic component       <xcf: ~dataload\EXPCEN2.DP>
+   WEICEN.DAT  6-Ton turret mount         <xcf: ~dataload\WEICEN.DP>
+   LGNCEN.DAT  Composite material         <xcf: ~dataload\LGNCEN.DP>
+   NORCEN.DAT  Truck tires                <xcf: ~dataload\NORCEN.DP>
+   GAMCEN.DAT  Multilayer coating         <xcf: ~dataload\GAMCEN.DP>
+

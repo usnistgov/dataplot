@@ -1,0 +1,53 @@
+This is file pareplot.men--Pareto Plot
+ 
+--------------------
+ 1. Pareto Plot
+ 2. PARETO PLOT Y
+ 3.
+ 4. Vertical   Axis Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Line Types (solid, dot, dash, ...)
+ 7. @CE 3 0 42 50 * gui-line
+ 8. Character Type (blank, x, circ, ...)
+ 8. @CE 4 0 42 50 * gui-char
+ 9. Character Fill (off, on)
+ 9. @CE 5 0 42 50 * gui-ooff
+10. Spike (off, on)
+10. @CE 12 0 42 50 * gui-ooff
+11. Bar (off, on)
+11. @CE 13 0 42 50 * gui-ooff
+12.
+13. Sort by horizontal axis variable (typically ON):
+13. @CE 10 0 42 50 * gui-ooff
+14. Clear screen before plot (typically ON):
+14. @CE 11 0 42 50 * gui-ooff
+15.
+16. Title:
+16. @CE 6 0 10 50 *
+17. Left Axis Label:
+17. @CE 7 0 22 50 *
+18. Bottom Axis Label:
+18. @CE 8 0 22 50 *
+19.
+20. Subset/Except/For Specification:
+21. @CE 9 0 1 50 *
+22.
+23.
+24. Generate the Pareto Plot?:
+--------------------
+GR FE
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+SPIKE _12
+BAR _13
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+@IF 10 0 PRE-SORT _10
+@IF 11 0 PRE-ERASE _11
+PLOT _1 _2 _9
+--------------------
+WEB HELP PARETO PLOT
+--------------------

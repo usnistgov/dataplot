@@ -1,0 +1,22 @@
+This is file extreme.men--Compute extreme of a variable
+ 
+--------------------
+ 1. Extreme
+ 2. LET A = EXTREME Y
+ 3.
+ 4. Variable for which to compute the extreme:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the extreme:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Extreme?:
+--------------------
+GR FE
+LET _2 = EXTREME  _1 _3
+--------------------
+WEB HELP EXTREME
+--------------------

@@ -1,0 +1,22 @@
+This is file iqrange.men--Compute interquartile range of a variable
+ 
+--------------------
+ 1. Interquartile Range
+ 2. LET A = INTERQUARTILE RANGE Y
+ 3.
+ 4. Variable for which to compute the interquartile range:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the interquartile range:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -15 50 *
+ 9.
+10.
+11. Compute the Interquartile Range?:
+--------------------
+GR FE
+LET _2 = INTERQUARTILE RANGE  _1 _3
+--------------------
+WEB HELP INTERQUARTILE RANGE
+--------------------

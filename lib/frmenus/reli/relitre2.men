@@ -1,0 +1,24 @@
+This is file relitren.men--Reliability Trend Tests
+ 
+--------------------
+ 1. Reliability Trends Test (Multiple Systems)
+ 2. RELIABILITY TREND TEST Y
+ 3.
+ 4. Repair Times Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. System ID Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Censoring Variable:
+ 6. @CE 3 0 42 50 ? gui-variable
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Compute Reliability Trends Tests?:
+--------------------
+GR FE
+RELIABILITY TRENDS TEST _1 _2 _3 _4
+--------------------
+WEB HELP RELIABILITY TREND TEST
+--------------------

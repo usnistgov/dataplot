@@ -1,0 +1,38 @@
+TOB150.DAT
+FAILURE TIMES OF COMPONENTS.
+NUMBER OF OBSERVATIONS = 13
+NUMBER OF VARIABLES PER LINE IMAGE = 3
+ORDER OF VARIABLES ON A LINE IMAGE--
+   X     = MID-POINT OF FAILURE TIME INTERVAL
+   Y     = FREQUENCY OF FAILURES IN INTERVAL
+   CENS  = CENSORING VARIABLE (1 = FAILURE TIME,
+                               0 = CENSORING TIME)
+SOURCE--TOBIAS AND TRINDADE (1981).  "APPLIED RELIABILITY",
+        SECOND EDITION, CHAPMAN & HALL/CRC, P. 150.
+STATISTICAL AREA = RELIABILITY
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ TOB150.DAT X Y CENS
+ 
+ 
+ 
+ 
+
+
+
+ 
+   X        Y     CENS
+----------------------
+  25       29      1
+  75       21      1
+ 125       11      1
+ 175       10      1
+ 225        4      1
+ 275        8      1
+ 325        6      1
+ 375        3      1
+ 425        1      1
+ 475        3      1
+ 525        1      1
+ 575        1      1
+ 600        2      0

@@ -1,0 +1,25 @@
+----- <~dataprin\dex2k.top> Print (to Printer) 2**k Full Factorial Design Data
+
+Print (to Printer) 2**k Full Factorial Design Data
+
+BOXSPRIN.DAT* 2**3  Defective springs   <xcf: ~dataprin\BOXSPRIN.DP>
+BOXPILOT.DAT  2**3  Pilot plant yield   <xcf: ~dataprin\BOXPILOT.DP>
+BOXRADAR.DAT  2**3  Radar acquis. time  <xcf: ~dataprin\BOXRADAR.DP>
+BOWEN.DAT     2**3  Dental adhesion     <xcf: ~dataprin\BOWEN.DP>
+SUPERCON.DAT  2**3  Superconduct. temp. <xcf: ~dataprin\SUPERCON.DP>
+NUT.DAT       2**3  Nut strength        <xcf: ~dataprin\NUT.DP>
+SPLETT3.DAT   2**3  Eddy Current        <xcf: ~dataprin\SPLETT3.DP>
+
+BOXCHEM.DAT   2**4  Chemical yield      <xcf: ~dataprin\BOXCHEM.DP>
+BOXSOLAR.DAT  2**4  Solar collector eff <xcf: ~dataprin\BOXSOLAR.DP>
+SPLETT4.DAT   2**4  Eddy Current        <xcf: ~dataprin\SPLETT4.DP>
+
+BOXREACT.DAT  2**5  Chem. reactor eff   <xcf: ~dataprin\BOXREACT.DP>
+KRASNY1.DAT   2**5  Cigarette flammab.  <xcf: ~dataprin\KRASNY1.DP>
+WEBER.DAT     2**5  Hospital energy     <xcf: ~dataprin\WEBER.DP>
+
+STENBAKK.DAT  2**10 DAC Converter       <xcf: ~dataprin\STENBAKK.DP>
+
+BOXCAKE.DAT   2**5 wcp Cake taste       <xcf: ~dataprin\BOXCAKE.DP>
+BOXCAKE2.DAT  2**3 wcp Cake taste       <xcf: ~dataprin\BOXCAKE2.DP>
+

@@ -1,0 +1,8 @@
+----- <~dataall\CCC.top> CCC.DAT
+
+CCC.DAT
+
+View     <xcl: LIST CCC.DAT>
+Load     <xcf: ~dataload/CCC.DP>
+Print    <xccl: printfile C:\DATAPLOT\CCC.DAT>
+

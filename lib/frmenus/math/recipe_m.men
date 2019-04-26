@@ -1,0 +1,41 @@
+This is file recipe.men--Compute a multi-factor recipe fit analysis
+ 
+--------------------
+ 1. Recipe
+ 2. RECIPE FIT Y X1 X2 X3  BATCH XP1 XP2 XP3
+ 3.
+ 4.
+ 5. Dependent variable for the RECIPE fit:
+ 5. @CE 1 0 42 50 ? gui-variable
+ 6. List of independent variables for the RECIPE fit:
+ 7. @CE 2 0 1 50 ? gui-variable
+ 8. Batch variable (optional) for the RECIPE fit:
+ 8. @CE 3 0 42 50 ? gui-variable
+ 9. List of variables containing points at which tolerance computed:
+10. @CE 4 0 1 50 ? gui-variable
+11.
+12. Number of independent variables (between 1 and 9):
+12. @CE 5 0 42 50 *
+13. Value for the probability content (typically 0.90):
+13. @CE 6 0 42 50 ?
+14. Value for the confidence (typically 0.95):
+14. @CE 7 0 42 50 ?
+15. Use Satterthwaite approximation (usually on):
+15. @CE 8 0 42 50 gui-ooff
+16.
+17. Subset/Except/For Specification:
+18. @CE 13 0 -12 50 *
+19.
+20.
+21. Perform the Recipe Fit?:
+--------------------
+GR FE
+RECIPE PROBABILITY CONTENT _6
+RECIPE CONFIDENCE _7
+RECIPE SATTERTHWAITE _8
+RECIPE FIT FACTORS _5
+RECIPE FIT _1 _2 _3 _4 _13
+--------------------
+WEB HELP RECIPE
+--------------------
+

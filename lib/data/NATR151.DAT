@@ -1,0 +1,35 @@
+This is Dataplot data file     NATR151.DAT
+Depth of penetration (cms) for rounds fired into a target
+Question: Does the average of a new product differ from a standard?
+
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 15-1
+Number of observations = 10
+Number of variables per line image = 1
+Order of variables on a line image--Y
+   1. Y = depth of penetration (in cms)
+
+
+
+
+
+
+
+
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR151.DAT Y
+     Y
+ Depth
+------
+ 10.0
+  9.8
+ 10.2
+ 10.5
+ 11.4
+ 10.8
+  9.8
+ 12.2
+ 11.6
+  9.9

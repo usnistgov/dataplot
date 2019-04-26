@@ -1,0 +1,27 @@
+----- <~dex2kmp\dex2kmp.top>  2**(k-p) Fractional Factorial Designs
+ 
+2**(k-p) Fractional Factorial Designs
+ 
+Discussion
+     Experimental Goals             <~dex2kmp\expgoals.top>
+     Overview                       <~dex2kmp\discussi.top>
+     Advantages                     <~dex2kmp\advantag.top>
+     Disadvantages                  <~dex2kmp\disadvan.top>
+     Confounding                    <~dex2kmp\confound.top>
+     References                     <~dex2kmp\refer.top>
+NIST/SEMATECH Handbook              <xcl: web handbook fractional factorial designs>
+ 
+Construction                        <~dex2kmp\construc.top>
+Analysis                            <~dex2kmp\analysis.top>
+ 
+Built-in Data Files
+     Discussion                     <~dex2kmp\dafidisc.top>
+     View                           <~dataview\dex2k.top>
+     Load                           <~dataload\dex2k.top>
+NIST DEX Course Data Files
+     View                           <~dex2kmp\viewdex8.top>
+     Load                           <~dex2kmp\loaddex8.top>
+
+Worked Examples                     <~dex2kmp\2kmpexam.top>
+NIST/SEMATECH Handbook Case Study   <xcl: web handbook light intensity study>
+

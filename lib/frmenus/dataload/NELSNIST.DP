@@ -1,0 +1,8 @@
+----- <~dataload\NELSNIST.DP> Load NELSNIST.DAT
+
+. This is file    NELSNIST.DP
+
+DELETE Y
+SKIP 25
+READ NELSNIST.DAT Y
+

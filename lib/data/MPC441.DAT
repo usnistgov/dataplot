@@ -1,0 +1,37 @@
+This is the data file   MPC441.DAT
+Source: This example is used on page mpc441.htm of the e-Handbook
+        to demonstrate an optimization design.  Data is from Carroll
+        Croarkin.
+
+Description:  This data is a subset of data collected in a nested design
+              for one check standard (#140) and one probe (#2362).  The
+              measurements are resistivity (ohm.cm) readings with six
+              repetitions per day. The individual level-1
+              standard deviations from the six repetitions and degrees
+              of freedom are recorded in the last two columns of the
+              database. 
+
+
+To read into Dataplot, enter
+
+    SKIP 25
+    READ MPC441.DAT RUN WAFER PROBE MONTH DAY OPER TEMP AVERAGE STDDEV DF
+
+
+
+
+
+Run  Wafer  Probe  Month  Day  Op  Temp    Average  Stddev  df
+--------------------------------------------------------------
+ 1    140    2362    3    15   1   23.08   96.0771  0.1024  5
+ 1    140    2362    3    17   1   23.00   95.9976  0.0943  5
+ 1    140    2362    3    18   1   23.01   96.0148  0.0622  5
+ 1    140    2362    3    22   1   23.27   96.0397  0.0702  5
+ 1    140    2362    3    23   2   23.24   96.0407  0.0627  5
+ 1    140    2362    3    24   2   23.13   96.0445  0.0622  5
+ 2    140    2362    4    12   1   22.88   96.0793  0.0996  5
+ 2    140    2362    4    18   2   22.76   96.1115  0.0533  5
+ 2    140    2362    4    19   2   22.79   96.0803  0.0364  5
+ 2    140    2362    4    19   1   22.71   96.0411  0.0768  5
+ 2    140    2362    4    20   2   22.84   96.0988  0.1042  5
+ 2    140    2362    4    21   1   22.94   96.0482  0.0868  5

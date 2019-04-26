@@ -1,0 +1,10 @@
+----- <~dataall\evaothe.top> View/etc. Extreme Value Data: Other
+
+View/Load/Print Extreme Value Data: Other
+
+GEAR.DAT      Gear diameters (Ishikawa)   <~dataall\GEAR.top>
+CLEAR.DAT     Component clearances        <~dataall\CLEAR.top>
+
+RANDN.DAT     Normal random numbers       <~dataall\RANDN.top>
+RANDU.DAT     Uniform random numbers      <~dataall\RANDU.top>
+

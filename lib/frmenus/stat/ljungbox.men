@@ -1,0 +1,20 @@
+This is file ljungbox.men--Ljung-Box Test for Randomness
+ 
+--------------------
+ 1. Ljung-Box Test for Randomness
+ 2. LJUNG BOX TEST Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Compute Ljung-Box Test?
+--------------------
+GR FE
+LJUNG BOX TEST _1 _2
+--------------------
+WEB HELP LJUNG BOX TEST
+--------------------

@@ -1,0 +1,27 @@
+----- <~dextag\expgoals.top> Experimental Goals:  Taguchi Designs
+
+Experimental Goals: Taguchi Designs
+ 
+The typical experimental goal which the analyst is
+entertaining while considering the use of
+Taguchi designs is that he/she would like to determine
+the most important factors which drive a process.  Other
+related goals can also be accomodated with Taguchi
+designs--such as determining best factor settings, but the
+main focus which allows such designs to be profitably used
+is the desire on behalf of the analyst to uncover the most
+important factors in a process.
+ 
+The overriding experimental aspects which dictate
+the use of Taguchi designs over full factorial designs is
+that with Taguchi designs the experimentalist:
+ 
+   1) has budget and time constraints and so must
+      keep the total sample size small;
+ 
+   2) believes that the primary driving factors
+      are main effects and (perhaps) some few
+      2-term interactions, and so the analyst
+      implictly assumes that high-order
+      interactions are (in nature) near-zero.
+ 

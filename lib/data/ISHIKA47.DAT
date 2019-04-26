@@ -1,0 +1,32 @@
+This is Dataplot Data File     ISHIKA47.DAT
+Ishikawa, Kaoru (1982).  Guide to Quality Control.
+Asian Productivity Organization, Tokyo,
+Unipub Quality Resources, White Plains, New York, p. 47.
+Response Variable = Repair Time
+Number of Observations = 7
+Number of Variables per line image = text + 1
+Order of variables per line image--
+   1. Cause of repair (text)
+   2. Response variable = repair time
+Statistical Category--SPC & Pareto Diagram
+To read this into Dataplot--
+   SKIP 25
+   COLUMN LIMITS 1 30;  READ STRING VARIABLE ISHIKA47.DAT   CAUSE
+   COLUMN LIMITS 31 40; READ ISHIKA47.DAT   Y
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   Reason for               Repair
+     Repair                  Time
+-----------------------------------
+Oil pressure line             17
+Hilyard clutch                 6
+Finishing table                5
+Kick level & hydro-cushion     4.5
+Replacing cutting tool         4
+Bogey & carriage               3
+Noiseless chain & belt         2

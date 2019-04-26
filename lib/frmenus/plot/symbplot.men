@@ -1,0 +1,53 @@
+This is file symbplot.men--Symbol Plot
+ 
+--------------------
+1. Symbol Plot
+2. SYMBOL PLOT Y X SIZE SYMBOL COLOR FILL
+3.
+4. This plot is a Y vs X plot.  However, additional
+5. variables can be used to control the size, type
+6. of symbol, the color of the symbol, and whether
+7. the plot symbol is filled.
+8.
+9. Dependent Variable:
+9. @CE 1 0 42 50 ? gui-variable
+10. Independent Variable:
+10. @CE 2 0 42 50 ? gui-variable
+11.
+12. The following variables are optional.  However, if
+13. one of them is specificed, all the ones that precede
+14. it must also be specified (e.g., if you want to
+15. control the symbol type, but not the size, then
+16. create a dummy size variable with all elements equal
+17. to 1).
+18.
+19. Size Variable:
+19. @CE 3 0 42 50 ? gui-variable
+20. Symbol Type Variable:
+20. @CE 4 0 42 50 ? gui-variable
+21. Symbol Color Variable:
+21. @CE 5 0 42 50 ? gui-variable
+22. Symbol Fill Variable:
+22. @CE 6 0 42 50 ? gui-variable
+23.
+24. Title:
+24. @CE 7 0 18 50 *
+25. Left Axis Label:
+25. @CE 8 0 18 100 *
+26. Bottom Axis Label:
+26. @CE 9 0 18 100 *
+27.
+28. Subset/Except/For Specification: 
+29. @CE 10 0 1 50 *
+30.
+31.
+32. Generate the Symbol Plot?:
+--------------------
+GR FE
+TITLE _7
+Y1LABEL _8
+X1LABEL _9
+SYMBOL PLOT _1 _2 _3 _4 _5 _6 _10
+--------------------
+WEB HELP SYMBOL PLOT
+--------------------

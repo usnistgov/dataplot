@@ -1,0 +1,28 @@
+This is file ppccpls2.men--PPCC Plot (Skewed Dist. Family)
+
+--------------------
+ 1. PPCC Plot (Skewed Distributional Families)
+ 2. <Name of Distributional Family> PPCC PLOT Y
+ 3.
+ 4. Variable:
+ 4. @CE 1 0 11 35 ? gui-variable
+ 5.
+ 6. Distributional Family:
+ 7. @CE 2 1 11 40 Geometric Extreme Expo
+ 8. @CE 2 2 11 40 Inverted Weibull
+ 9. @CE 2 3 11 40 Log Double Exponential
+10.
+11. Subset/Except/For Specification:
+12. @CE 3 0 -15 50 *
+13.
+14.
+15. Generate the PPCC Plot?
+--------------------
+GR FE
+@IF 2 1 GEOMETRIC EXTREME EXPONENTIAL PPCC PLOT _1 _3
+@IF 2 2 INVERTED WEIBULL PPCC PLOT _1 _3
+@IF 2 3 LOG DOUBLE EXPONENTIAL PPCC PLOT _1 _3
+WRITE MAXPPCC SHAPE
+--------------------
+WEB HELP PPCC PLOT
+--------------------

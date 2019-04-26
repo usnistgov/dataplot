@@ -1,0 +1,90 @@
+----- <~help\function.top> Functions
+
+Functions
+
+Functions
+
+Functions Are Named Character Strings                                    -
+
+    A function is a named character string, and may be
+    defined via the LET FUNCTION command, as in 
+
+         LET FUNCTION F = EXP(-0.5*X**2)
+         LET FUNCTION G = SIN(2*PI*W*T)
+         LET FUNCTION H = F+LOG(G)
+         LET FUNCTION F2 = DERIVATIVE F WRT X
+
+Functions Can Be Concatenated
+
+    Functions can be concatenated and built-up
+    piece-by-piece, as in 
+
+         LET FUNCTION NUM = EXP(-ALPHA*X)
+         LET FUNCTION DENOM = A+B*X
+         LET FUNCTION RATIO = NUM/DENOM
+
+    which is equivalent to
+
+         LET FUNCTION RATIO = EXP(-ALPHA+X)/(A+B X) 
+
+Parameters and Variables Need Not Be Defined First
+
+    Functions can be defined before (or after) the
+    parameters and variables contained in them are created,
+    as in the following example involving a variable
+    transformation:
+  
+         LET FUNCTION F = X**2
+         .
+         SERIAL READ X
+         1  2  3
+         END OF DATA
+         .
+         LET Y = F
+ 
+    This last statement (LET Y = F) is equivalent to 
+
+         LET Y = X**2 
+
+    and will (upon execution) result in the Y variable 
+    having the values 1, 4, and 9. 
+
+    A more common example of functions being defined prior
+    to use is in fitting:
+
+         LET FUNCTION Fl = A1+B1*SQRT(X)
+         LET FUNCTION F2 = A2+82*LOG(X)
+         .
+         READ X Y
+         1 1
+         2 1.5
+         3 2
+         4 2.3
+         5 2.5
+         END OP DATA
+         .
+         FIT Y = F1
+         FIT F = F2
+
+Defining Functions Using the GUI
+
+    To define a function in the GUI, you can
+
+    1) Go to the command line and enter a LET FUNCTION
+       command.
+    2) Select the "Math" menu and then select the
+       "User Defined Function" menu.
+
+    Note that you still have to enter the function
+    manually.  At this time, we do not have a
+    point and click function builder.
+
+Built-In Functions
+
+    Dataplot provides a large number of built-in functions
+    that can be used in user-defined functions.
+
+          Built-in Functions                 <xcl: HELP FUNCTIONS>
+
+Evaluating Functions                         <~help\evalfunc.top>
+

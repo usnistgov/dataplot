@@ -1,0 +1,10 @@
+----- <~dataexec\MAVRO.DP> Load & Execute MAVRO.DAT
+
+. This is file    MAVRO.DP
+
+DELETE Y
+SKIP 25
+READ MAVRO.DAT Y
+TITLE MAVRO.DAT
+4-PLOT Y
+

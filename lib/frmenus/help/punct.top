@@ -1,0 +1,101 @@
+----- <~help\punct.top> Punctuation
+
+Punctuation
+
+Punctuation
+
+Spaces are Universal Separator in Dataplot                     -
+
+    The universal separator for components in a 
+    Dataplot command line is the space (= blank).  A 
+    blank between the words of a command line are
+    important because Dataplot uses such spaces as a 
+    separator.  Spaces around relational operators 
+    (e.g., =, <, <=, etc.), arithmetic operators (+, -, 
+    *, and **), and within arithmetic expressions
+    (e.g., B**2-4*A*C) may be included or excluded at
+    the preference of the analyst. Readability
+    considerations suggest that spaces be included around
+    such operators and in such expressions, but it is
+    not required. 
+
+Commas Serve No Purpose
+
+    Commas serve no purpose in Dataplot and may at 
+    times be the cause of syntax errors. There are no
+    commands which call for the use of commas in
+    Dataplot.  When in doubt, leave a space rather than
+    a comma.  Blanks and spaces within mathematica1 and
+    functional expressions are solely for visual
+    convenience and may be included or excluded at the
+    discretion of the analyst.  For example
+
+       LET Y = A+B*EXP(-ALPBA+BETA*X)
+       LET Y = A + B*EXP(-ALPHA + BETA*X)
+
+
+Command Statements are Free Format
+
+    Command statements appear free-format in columns 1
+    to 80 of a program line. If a statement is longer
+    than this, it may be continued onto the next line
+    by appending a ... at the end of the first line.
+    Statements longer than two full lines (160 characters)
+    are not permitted.
+
+    NOTE: Continuation lines are currently not supported
+          in the graphical interface and in fact will
+          cause it to hang.  We hope to correct this in
+          a future release.
+
+No Punctuation in Data Files
+
+    Dataplot also expects no punctuation in data files
+    which are read via the READ and SERIAL READ
+    commands.  Adjacent numbers on a line image may be
+    free-format but should be separated by at least
+    one blank.  Commas and other non-printing characters
+    (e.g., tabs) are treated as spaces.  In particular, a
+    tab is treated as a single space.
+
+    You can optionally choose to define a comment
+    character for data files:
+
+        COMMENT CHARACTER             <xcl: HELP COMMENT CHARACTER>
+        COMMENT CHECK                 <xcl: HELP COMMENT CHECK>
+
+Restricting Rows and Columns When Reading Data Files
+
+    Alphabetic information at the beginning of a data
+    file can be skipped over using the
+
+        SKIP                          <xcl: HELP SKIP>
+
+    command.  For example,
+
+       SKIP 5
+
+    will cause subsequent READ and SERLAL READ commands to
+    skip over all information on lines 1 to 5 of the file.
+
+    The
+
+        ROW LIMITS                    <xcl: HELP ROW LIMITS>
+
+    command allows the analyst to focus only on specified
+    lines of a file, as in
+
+       ROW LIMITS 6 100
+
+    The
+
+        COLUMN LIMITS                 <xcl: HELP COLUMN LIMITS>
+
+    command allows the analyst to focus only on certain
+    column limits in reading a file.  For example,
+
+       COLUMN LIMITS 1 50
+
+    omits non-numeric (or numeric) information beyond
+    column 50.
+

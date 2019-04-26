@@ -1,0 +1,38 @@
+This is Dataplot data file     NATR323.DAT
+Latent Heat of Fusion of Ice
+(Location Shift Example (with sigma1 assumed = sigma2))
+Question: Are the 2 methods the same?
+ 
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 3-23 to 3-26.
+ 
+Number of observations             = 13 + 8 = 21
+Number of variables per line image =  2
+Order of variables on a line image--
+   1. Y1 = Response Variable 1 = Latent Heat (Method 1: Electrical)
+   2. Y2 = Response Variable 2 = Latent Heat (Method 2: Mixtures)
+Note--In the data set below, -99 indicates a missing value
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR323.DAT Y1 Y2
+   DELETE Y2 SUBSET Y2 -99
+   T TEST Y1 Y2
+ 
+     Y1             Y2
+Latent Heat    Latent Heat
+  Method 1       Method 2
+----------------------------
+   79.98          80.02
+   80.04          79.94
+   80.02          79.98
+   80.04          79.97
+   80.03          79.97
+   80.03          80.03
+   80.04          79.95
+   79.97          79.97
+   80.05           -99
+   80.03           -99
+   80.02           -99
+   80.00           -99
+   80.02           -99

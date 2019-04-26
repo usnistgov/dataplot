@@ -1,0 +1,10 @@
+----- <~dataloex\DDS10.DP> Load & Execute DDS10.DAT
+
+. This is file    DDS10.DP
+
+DELETE Y X
+SKIP 25
+READ DDS10.DAT Y X
+TITLE DDS10.DAT
+/
+

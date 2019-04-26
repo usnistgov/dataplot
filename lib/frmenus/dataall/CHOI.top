@@ -1,0 +1,8 @@
+----- <~dataall\CHOI.top> CHOI.DAT
+
+CHOI.DAT
+
+View     <xcl: LIST CHOI.DAT>
+Load     <xcf: ~dataload/CHOI.DP>
+Print    <xccl: printfile C:\DATAPLOT\CHOI.DAT>
+

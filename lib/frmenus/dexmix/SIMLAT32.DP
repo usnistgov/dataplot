@@ -1,0 +1,8 @@
+----- <~dexmix\SIMLAT32.DP> Load SIMLAT32.DAT
+
+. This is file     SIMLAT32.DP
+
+DELETE X1 TO X3
+SKIP 25
+READ SIMLAT32.DAT X1 TO X3
+

@@ -1,0 +1,8 @@
+----- <~dataall\BOXYIEL2.top> BOXYIEL2.DAT
+
+BOXYIEL2.DAT
+
+View     <xcl: LIST BOXYIEL2.DAT>
+Load     <xcf: ~dataload/BOXYIEL2.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXYIEL2.DAT>
+

@@ -1,0 +1,8 @@
+----- <~dataall\SPCO2.top> SPCO2.DAT
+
+SPCO2.DAT
+
+View     <xcl: LIST SPCO2.DAT>
+Load     <xcf: ~dataload/SPCO2.DP>
+Print    <xccl: printfile C:\DATAPLOT\SPCO2.DAT>
+

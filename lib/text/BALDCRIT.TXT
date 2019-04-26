@@ -1,0 +1,71 @@
+This is Dataplot file   BALDCRIT.TEX
+ 
+ 
+Malcolm Baldrige National Quality Award
+1995 Examination Categories/Items
+ 
+                                                     Points
+1.0 Leadership
+    1.1 Senior Executive Leadership                      45
+    1.2 Leadership System and Organization               25
+    1.3 Public Responsibility & Corporate Citizenship    20
+                                                       -----
+                                                         90
+ 
+2.0 Information and Analysis
+    2.1 Management of Information and Data               20
+    2.2 Competitive Comparisons and Benchmarking         15
+    2.3 Analysis and Use of Company-Level Data           40
+                                                       -----
+                                                         75
+ 
+3.0 Strategic Planning
+    3.1 Strategy Develpment                              35
+    3.2 Strategy Deployment                              20
+                                                       -----
+                                                         55
+ 
+4.0 Human Resource Development & Management
+    4.1 Human Resource Planning and Evaluation           20
+    4.2 High Performance Work Systems                    45
+    4.3 Employee Education, Training, and Development    50
+    4.4 Employee Well-Being and Satisfaction             25
+                                                       -----
+                                                        140
+ 
+5.0 Process Management
+    5.1 Design & Intro. of Products & Services           40
+    5.2 Process Management: Prod. & Serv. Prod. & Deliv. 40
+    5.3 Process Management: Support Services             30
+    5.4 Management of Supplier Performance               30
+                                                       -----
+                                                        140
+ 
+6.0 Business Results
+    6.1 Product and Service Quality Results              75
+    6.2 Company Operational and Financial Results       130
+    6.3 Supplier Performance Results                     45
+                                                       -----
+                                                        250
+ 
+7.0 Customer Focus and Satisfaction
+    7.1 Customer and Market Knowledge                    30
+    7.2 Customer Relationship Management                 30
+    7.3 Customer Satisfaction Determination              30
+    7.4 Customer Satisfaction Results                   100
+    7.5 Customer Satisfaction Comparison                 60
+                                                       -----
+                                                        250
+ 
+                                                  ----------
+                                        Total Points   1000
+ 
+ 
+Reference--Malcolm Baldrige National Quality Award
+           1995 Award Criteria
+           National Institute of Standards and Technology
+           Route 270 and Quince Orchard Road
+           Administration Building, Room A537
+           Gaithersburg, Maryland 20899-0001
+           Page 20.
+ 

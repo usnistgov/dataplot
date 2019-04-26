@@ -1,0 +1,19 @@
+----- <~dexopt\loaddesi.top> Load Response Surface Designs
+ 
+Load Response Surface Designs
+ 
+   INDEX OF RESPONSE SURFACE EXPERIMENT DESIGNS
+
+ Name                         Number   Number
+  of                            of       of 
+Design                        Factors  Runs
+..............................................
+ 
+2**2 Design with Center Point   2        5  <xcf: ~dexopt\2TO2WCP.DP>
+Star Design with Center Point   2        5  <xcf: ~dexopt\STAR2WCP.DP>
+2-Factor Composite              2       12  <xcf: ~dexopt\CC2.DP>
+
+2**3 Design with Center Point   3        9  <xcf: ~dexopt\2TO3WCP.DP>
+Star Design with Center Point   3        9  <xcf: ~dexopt\STAR3WCP.DP>
+3-Factor Composite              3       20  <xcf: ~dexopt\CC3.DP>
+

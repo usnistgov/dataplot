@@ -1,0 +1,39 @@
+This is file lpopdf.men--Compute Lagrange Poisson pdf
+ 
+--------------------
+ 1. Compute Lagrange Poisson pdf
+ 2. LET Y = LPOPDF(X,LAMBDA,THETA)
+ 3.
+ 4. Input values:
+ 5.                             x (x = 0, 1, ...):
+ 5. @CE 1 0 42 50 ?
+ 6.       shape parameter lambda (0 < lambda < 1):
+ 6. @CE 2 0 42 50 ?
+ 7.             shape parameter theta (theta > 0):
+ 7. @CE 3 0 42 50 
+ 8.
+ 9. Output parameters:
+10.                  name for the pdf value:
+10. @CE 4 0 42 50 ?
+11.
+12.
+13. Compute the Probability?
+--------------------
+AN FE
+LET ZLAMBDA = 0.5
+LET ZTHETA = 1
+@IF 2 0 LET ZLAMBDA = _2
+IF ZLAMBDA <= 0
+   LET ZLAMBDA = 0.5
+END OF IF
+IF ZLAMBDA >= 1
+   LET ZLAMBDA = 0.5
+END OF IF
+@IF 3 0 LET ZTHETA = _3
+IF ZTHETA <= 0
+   LET ZTHETA = 1
+END OF IF
+LET _4 = LPOPDF( _1 , ZLAMBDA , ZTHETA )
+--------------------
+WEB HELP LPOPDF
+--------------------

@@ -1,0 +1,8 @@
+----- <~dataload\PUMPKIN.DP> Load PUMPKIN.DAT
+
+. This is file    PUMPKIN.DP
+
+DELETE Y X1 TO X5
+SKIP 25
+READ PUMPKIN.DAT Y X1 TO X5
+

@@ -1,0 +1,7 @@
+----- <~dataexec\relinist.top> Load and Execute Reliability Data: NIST
+
+Load and Execute Reliability Data: NIST
+
+FULLER2.DAT*  Airplane glass failure time <xcf: ~dataexec\FULLER2.DP>
+VANGEL2.DAT   Strength at failure         <xcf: ~dataexec\VANGEL2.DP>
+

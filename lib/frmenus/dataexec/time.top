@@ -1,0 +1,12 @@
+----- <~dataexec\time.top> Load and Execute Built-in Time Series Data Files
+
+Load and Execute Built-in Time Series Data Files
+
+NIST data                                <xcf: ~dataexec\timenist.DP>
+NOAA data                                <xcf: ~dataexec\timenoaa.DP>
+Box-Jenkins data                         <xcf: ~dataexec\timebj.DP>
+Pandit DDS data                          <xcf: ~dataexec\timedds.DP>
+Other data                               <xcf: ~dataexec\timeothe.DP>
+Bivariate data                           <xcf: ~dataexec\timebj.DP>
+Image analysis data                      <xcf: ~dataexec\imag.DP>
+

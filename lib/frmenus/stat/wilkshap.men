@@ -1,0 +1,20 @@
+This is file wilkshap.men--Wilk_shapiro Normality Test
+ 
+--------------------
+ 1. Wilk-Shapiro Test for Normality
+ 2. WILK-SHAPIRO TEST Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Compute Wilk-Shapiro Test?
+--------------------
+GR FE
+WILK-SHAPIRO TEST _1 _2
+--------------------
+WEB HELP WILK_SHAPIRO TEST
+--------------------

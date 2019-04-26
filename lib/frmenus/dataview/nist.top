@@ -1,0 +1,31 @@
+----- <~nist\nist.top> Nist
+
+NIST
+
+Discussion                             <~nist\sedproj.top>
+
+NIST Classes
+   EDA   (Exploratory Data Analysis)   <~clas/eda/eda.top>
+   ANOVA (Analysis of Variance)        <~clas/anov/anov.top>
+   Test                                <xcf: ~clas/BOXSPRIN.DP>
+
+NIST Workshops (Outlines):
+   Design of Experiment                <~nist\dexworks.top>
+   Statistics for Scientists           <~nist\statscie.top>
+
+Sematech/NIST Stat Handbook            <xccl: web http://www.nist.gov/itl/div898/handbook/>
+
+Nakatani Modeling                      <~nist\naka\naka.top>
+NIST Ozone calibration                 <~fit\ozoncali.top>
+
+
+-------------------------------------
+
+
+Guide
+   to NIST           <xccl: web http://www.nist.gov/>
+   to NIST/ITL (Information Technology Laboratory)  <xccl: web http://www.itl.nist.gov/>
+   to NIST/ITL/SED (Statistical Engineering Division) <xccl: web http://www.itl.nist.gov/div898/>
+
+Baldrige National Quality Award        <~qual\baldrige.top>
+

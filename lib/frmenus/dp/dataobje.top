@@ -1,0 +1,110 @@
+----- <~dp\dataobje.top> Data Objects
+ 
+Data Objects
+ 
+Dataplot supports the following types of data
+objects:
+
+
+  1) Parameters (= Scalars)
+ 
+     Parameters are single values.  They are
+     typically created with the command
+ 
+       LET A = [value]
+
+  2) Variables  (= Vectors)
+
+     A variable is a single column of one or
+     more values.  There are numerous ways of
+     creating variables in Dataplot.  A few of
+     the more common ways are:
+
+     a) The READ command can be used to read variables
+        from either a file or the keyboard.
+     b) The command LET Y = DATA [list of values] can
+        be used if there are a small number of values.
+     c) LET Y = SEQUENCE [start] [inc] [stop] can
+        be used to create an equispaced variable.
+
+  3) Functions  (= Strings)
+
+     Internally, functions and strings are equivalent.
+     They differ primarily in how they are used.  Strings
+     are used primarily as labels on plots or as filenames.
+     Functions are used to define mathematical functions
+     which can be used in plotting and fitting.
+
+     Strings are created with the LET STRING or
+     READ STRING command.  Functions are created with the
+     LET FUNCTION command.
+    
+     Dataplot does not support arrays of strings.  This
+     can be mimiced somewhat using the "^" character.
+     For exaple, if K = 12, S^K is S12, if K = 18, S^K is
+     S18.  This feature can be combined with looping
+     to emulate an array of strings.
+
+  4) Matrices
+
+     A matrix is a table (i.e., n rows by p columns) of
+     values.  The individual columns of the matrix can
+     be operated on as variable.  However, matrix 
+     data can only be used by commands that specifically
+     handle matrices.  The matrix operations are under
+     the "Math"/"Mathematical Calculations"/
+     "Matrix Operations" menu.  They are also under the
+     "Stat"/"Multivatiate" menu.
+
+Dataplot supports a maximum of 2,500 names.
+ 
+Create Data
+    Data is typically created with either a LET command
+    or a READ command.
+
+Naming Conventions for Data
+   Parameter, variable, matrix, and string names
+   are limited to 8 characters in Dataplot.  Names should
+   contain either alphabetic or numeric characters but
+   no special characters.  Names are always converted to
+   upper case.
+
+View Status of Data
+   The currently defined parameter, string, variable,
+   and matrix names can be viewed with the commands:
+       STATUS PARAMTERS
+       STATUS STRINGS
+       STATUS VARIABLES
+       STATUS MATRICES
+
+Write Data to Screen
+    To print the values of a currently defined parameter,
+    string, variable, or matrix, enter the command
+        WRITE [list]
+    where [list] is a list of names, each separated by
+    a space.  Using commas or other punctuation as a
+    separator results in an error message.
+
+Write Data to File
+    To print the values of a currently defined parameter,
+    string, variable, or matrix, enter the command
+        WRITE [filename] [list]
+    where [filename] is the desired file and [list] is a
+    list of names, each separated by a space.  Using commas
+    or other punctuation as a separator results in an error
+    message.  File names can be up to 80 characters long.
+    The first name is identified as a file if it contains
+    a "." somewhere in the name.  Otherwise, it is
+    interpreted as a parameter or variable name.
+
+Delete Data 
+    To delete a parameter, variable, or matrix, enter the
+    command
+        DELETE [list]
+    where [list] is a list of names separated by spaces.
+
+Reset (Delete) All Data
+    To reinitialize your data worksheet, i.e., to
+    delete all variables, parameters, and matrices, enter
+        RESET  DATA
+ 

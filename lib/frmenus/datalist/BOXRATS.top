@@ -1,0 +1,8 @@
+----- <~datalist\BOXRATS.top> BOXRATS.DAT
+ 
+BOXRATS.DAT
+ 
+View     <xcl: LIST BOXRATS.DAT>
+Load     <x2cl: SKIP 25; READ BOXRATS.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\BOXRATS.DAT>
+ 

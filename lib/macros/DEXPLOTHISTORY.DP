@@ -1,0 +1,176 @@
+. This is dataplot macro    dexplothistory.dp
+. Purpose: This is a no-op macro which contains a history/list
+.         of some of the more interesting cases used by dexplot.dp in the past.
+. Date: September 21, 2007
+.
+. -----start point-----
+.
+. Contents (1/26/05):
+.    case = 23     klouda2.dat
+.    case = 24     klouda2.dat
+.    case = 25     klouda2.dat
+.    case = 26     klouda2.dat
+.    case = 27     espina3.dat
+.    case = 28     espina3.dat
+
+.    case = 31     boxsprin.dat
+.    case = 32     splett.dat
+.    case = 33     mitchel1.dat
+.    case = 34     mitchel2.dat
+.    case = 35     tang.dat
+.    case = 36     klouda2.dat
+.    case = 37     evans.dat
+.    case = 38     evans.dat
+.    case = 39     evans.dat
+.    case = 310    summerb.dat
+.    case = 311    summerg.dat
+.    case = 312    espina3.dat
+.    case = 313    espina4.dat
+.    case = 314    espina4.dat
+.    case = 315    starnes.dat
+.    case = 316    starnes.dat
+.    case = 317    combichem.dat
+.    case = 318    washburn1.dat
+.    case = 319    washburn1.dat
+.    case = 320    liang2.dat
+.    case = 321    nut.dat
+.    case = 322    prasad3.dat
+.    case = 323    mcguiggan8.dat
+
+.    case = 41     boxchem.dat
+.    case = 42     boxclean.dat
+.    case = 43     espina4.dat
+.    case = 44     washburn1.dat
+.    case = 45     washburn2.dat
+.    case = 46     washburn3.dat
+.    case = 47     washburn5.dat
+.    case = 48     stateas2.dat
+
+.    case = 51     boxreact.dat
+.    case = 52     boxreac2.dat
+.    case = 53     boxreac3.dat
+.    case = 54     boxreac4.dat
+.    case = 55     jahanmi5.dat
+.    case = 55     jahanmi5.dat
+.    case = 56     tang2.dat
+.    case = 57     tang3.dat
+.    case = 58     krasny1.dat
+.    case = 59     rossit22.dat
+.    case = 510    guttman2.dat
+.    case = 511    guttman2.dat
+.    case = 512    guttman2.dat
+.    case = 513    basuk.dat
+.    case = 514    guttman8.dat
+.    case = 515    mcgratt1.dat
+
+.    case = 61     healy1.dat
+.    case = 62     healy1.dat
+.    case = 63     prasad.dat
+.    case = 64     prasad.dat
+
+.    case = 71     boxbike2.dat
+.    case = 72     boxbike3.dat
+.    case = 73     boxfilt.dat
+.    case = 74     boxfilt2.dat
+.    case = 75     test7.dat
+.    case = 76     inn.dat
+.    case = 77     cumming4.dat
+.    case = 78     boxfilt3.dat
+.    case = 79     inn11.dat
+.    case = 710    inn11.dat
+.    case = 711    inn11.dat
+
+.    case = 81     ochoa2.dat
+.    case = 82     scott.dat
+.    case = 83     inn2.dat
+.    case = 84     inn12.dat
+.    case = 85     inn12.dat
+.    case = 86     inn12.dat
+
+.    case = 91     inn13.dat
+.    case = 92     inn13.dat
+.    case = 93     inn13.dat
+
+.    case = 1301   wtcara2.dat
+.    case = 1302   wtcara2.dat
+.
+. -----
+.
+. let case = 78
+. let case = 72
+. let case = 0
+. let case = 57
+. let case = 76
+. let case = 31; . Box Springs
+. let case = 311
+
+. let case = 313
+. let case = 27
+. let case = 28
+. let case = 43
+. let case = 314
+. let case = 315
+. let case = 43
+. let case = 57
+. let case = 73;. bhh industrial filtration
+. let case = 1
+. let case = 316
+. let case = 317
+. let case = 31
+. let case = 318
+. let case = 52;. bhh chemcial reactor 2**(5-1)
+. let case = 44
+. let case = 45
+. let case = 46
+. let case = 47
+. let case = 63
+. let case = 64
+
+. let case = 319
+. let case = 320
+. let case = 319
+. let case = 320
+. let case = 510
+. let case = 511
+. let case = 512
+. let case = 53
+. let case = 53;. bhh chemical reactor 2**(5-2)
+. let case = 54
+. let case = 321;. liang
+. let case = 82:. scott
+. let case = 317; .starnes
+. let case = 512;. guttman
+. let case = 73;. bhh industrial filtration
+. let case = 58;. krasny
+. let case = 57;. tang
+. let case = 57;. tang
+. let case = 63;. prasad
+. let case = 322;. prasad
+. let case = 513;. basuk
+. let case = 323;. prasad3
+. let case = 0
+. let case = 52
+. let case = 514;. guttman
+. let case = 1301
+. let case = 1302
+. let case = 515;. mcgrattan
+. let case = 31; . B&B defective springs
+. let case = 41; . BHH chemcial conversion yield
+. let case = 51; . BHH chemical reactor efficiency
+. let case = 1302; . ARA impact
+. let case = 83; .  Plutonium Contamination   Robert Radford 8/04
+. let case = 79; .  Pu-239 Store Clean Up Model (Ken Inn) 9/04
+. let case = 710; .  Sr-90 Store Clean Up Model (Ken Inn) 9/04
+. let case = 711; .  Cs-137 Store Clean Up Model (Ken Inn) 9/04
+. let case = 84; .  Pu-239 Rubble & Debris Clean Up Model (Ken Inn) 9/04
+. let case = 85; .  Sr-90 Rubble & Debris Clean Up Model (Ken Inn) 9/04
+. let case = 86; .  Cs-137 Rubble & Debris Clean Up Model (Ken Inn) 9/04
+. let case = 91; .  Pu-239 Urban Soil Clean Up Model (Ken Inn) 9/04
+. let case = 92; .  Sr-90 Urban Soil Clean Up Model (Ken Inn) 9/04
+. let case = 93; .  Cs-137 Urban Soil Clean Up Model (Ken Inn) 9/04
+. let case = 324; .  Cominatorial Chemistry Tape Peal (Patty McGuiggan) 1/05
+.
+. let case = 1302
+. let case = 1002; . Optimization of Dual Processing Line (dennis leber) 3/07
+. let case = 211;. jeff fong cylinder crush optimization
+.

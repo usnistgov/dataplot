@@ -1,0 +1,76 @@
+----------  *PROBABILITY DENSITY FUNCTIONS* ----------
+
+          Probability Density Functions
+            for Various Distributions
+
+ - - - - - - - - - - - - - - - - - - - - - - - - -
+              Symmetric Distributions
+
+
+Uniform          f(x) = 1    with x in (0,1)
+
+Normal           f(x) = (1/sqrt(2pi)) * exp(-0.5*x**2)
+
+Logistic         f(x) = exp(x) / (1 + exp(x))**2
+
+Double Exp.      f(x) = 0.5 * exp(-x)
+
+Cauchy           f(x) = (1/pi) * 1/(1+x**2)
+
+Tukey Lambda     f(x) not in closed form          
+Tukey Lambda          lambda = 0.5 --U-shaped
+Tukey Lambda          lambda = 1.0 --exactly uniform
+Tukey Lambda          lambda = 0.14--approximately normal
+Tukey Lambda          lambda = 0.0 --exactly logistic
+Tukey Lambda          lambda = -1.0--approximately Cauchy
+
+Anglit           f(x) = sin(2x+pi/2)    with x in (-pi/4,pi/4)
+
+Triangular       f(x) = 1 - abs(x)   with x in (-1,1)
+
+Arcsin           f(x) = (1/pi) * 1 / sqrt(x(1-x))
+
+Student t        f(x) = c / [1 + (x*x/nu)]**((nu+1)/2)
+
+ - - - - - - - - - - - - - - - - - - - - - - - - -
+                Skewed Distributions
+
+Chi-squared      f(x) = c * [x**((nu/2)-1)] * exp(-x/2) 
+Chi-squared             with x >= 0 and nu > 0
+Chi-squared             and where c = gamma function of nu/2
+
+Gamma            f(x) = c * [x**(gamma-1)] * exp(-x) 
+Gamma                   with x >= 0 and gamma > 0
+Gamma                   and where c = gamma function of gamma
+
+Exponential      f(x) = exp(-x)       with x >= 0
+
+Lognormal        f(x) = (1/(x*sqrt(2*pi))) * exp(-0.5*(log(x))**2)
+Lognormal        with x >= 0
+
+Half-Normal      f(x) = (2/sqrt(2*pi)) * exp(-0.5*x**2)
+Half-Normal      with x >= 0
+Half-Normal             where GN(p) is normal N(0,1) ppf
+
+Extreme Value I  f(x) = exp(-x) * exp(-exp(-x))
+
+Extreme Value II f(x) = gamma * x**(-gamma-1) * exp(-(x**(-gamma))
+Extreme Value II        with x >= 0 and gamma > 0
+
+Weibull          f(x) = gamma * x**(gamma-1) * exp(-(x**gamma))
+Weibull                 with x > 0 and gamma > 0
+
+Pareto           f(x) = gamma / (x**(gamma+1))
+
+Beta             f(x) = c * x**(a-1) * (1-x)**(b-1) with x in (0,1)
+Beta                    where c = beta function of a and b
+
+ - - - - - - - - - - - - - - - - - - - - - - - - -
+               Discrete Distributions
+
+Binomial
+
+Geometric
+
+Poisson
+

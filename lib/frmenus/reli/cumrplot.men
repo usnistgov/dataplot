@@ -1,0 +1,59 @@
+This is file cumrplot.men--Cumulative Number of Repairs vs Repair Times Plot
+ 
+--------------------
+ 1. Cumulative Number of Repairs vs Repair Times Plot
+ 2. PLOT CUMREP VS REPTIME
+ 3.
+ 4. Repair Times Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5.
+ 6. Character type:
+ 6. @CE 2 0 42 50 * gui-char
+ 7. Character fill:
+ 7. @CE 3 0 42 50 * gui-ooff
+ 8. Line type:
+ 8. @CE 4 0 42 50 * gui-line
+ 9.
+10. Title:
+10. @CE 5 0 10 50 *
+11. Left Axis Label:
+11. @CE 6 0 22 50 *
+12. Bottom Axis Label:
+12. @CE 7 0 22 50 *
+13.
+14. Subset/Except/For Specification:
+15. @CE 8 0 1 50 *
+16.
+17.
+18. Generate the Repair Plot?:
+--------------------
+GR FE
+LINE SAVE
+CHARACTER SAVE
+DELETE ZZZZREP ZZZZCUMR ZZZZCUM2
+LINE BLANK _4
+CHARACTER _2 BLANK
+CHARACTER FILL _3
+TITLE _5
+Y1LABEL _6
+X1LABEL _7
+LET ZZZZREP = _1
+RETAIN ZZZZREP _8
+LET ZZZZN  = SIZE ZZZZREP
+LET ZZZZCUMR = SEQUENCE 1 1 ZZZZN
+LET ZZZZREP2 = ZZZZREP
+LET ZZZZCUM3 = ZZZZCUMR
+print zzzzn zzzzcumr zzzzrep
+LET ZZZZNM1  = ZZZZN - 1
+LET ZZZZCUM2 = SEQUENCE 0 1 ZZZZNM1
+EXTEND ZZZZREP2 ZZZZREP
+EXTEND ZZZZCUM3 ZZZZCUM2
+LET ZZZZCUM3 = SORT ZZZZCUM3
+LET ZZZZREP2 = SORT ZZZZREP2
+PLOT ZZZZCUMR VS ZZZZREP AND
+PLOT ZZZZCUM3 ZZZZREP2
+LINE RESTORE
+CHARACTER RESTORE
+--------------------
+WEB HELP INTERARRIVAL TIMES
+--------------------

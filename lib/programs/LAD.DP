@@ -1,0 +1,62 @@
+FEEDBACK OFF
+.
+.  This macro computes Least Absolute Deviations (LAD) and other
+.  Lp fits for powers between 1 and 2 using iteratively re-weighted
+.  least squares.
+.
+.  1)  The following assumes that a string F has been defined before
+.      calling this macro to define the type of fit.  E.g., 
+.           LET STRING F = FIT Y X
+.      Basically, any fit or smooth in DATAPLOT that generates residual
+.      and predicted values can be used.  The power of the fit is
+.      specified with the following command before calling this macro:
+.           LET P = <VALUE>
+.
+.  2)  The convergence criterion and the maximum number of iterations
+.      can be modified.
+.
+.  3)  The following algorithm is used:
+.      a) Perform an initial unweighted least squares estimate
+.      b) Scale the residuals:
+.            Ui = Ei/s
+.         where s = Median Absolute Deviation/0.6745
+.      c) Apply the specified weight function
+.      d) Check for convergence
+.
+WEIGHT
+^F
+IF P > 2
+  LET P = 2
+END OF IF
+IF P < 1
+  LET P = 1
+END OF IF
+LET MAXITER = 10
+LOOP FOR K = 1 1 MAXITER
+    LET RESOLD = RES
+    LET MED = MEDIAN RES
+    LET TEMP = ABS(RES - MED)
+    LET MAD = MEDIAN TEMP
+    LET S = MAD/0.6745
+    LET U = RES/S
+    LET TEMP = ABS(RES)
+    LET C = MEDIAN TEMP
+    LET TAG = ABS(Y - PRED)**(2-P)
+    LET WT = C/TAG  SUBSET TAG > C
+    LET WT = 1 SUBSET TAG <= C
+    WEIGHTS WT
+    ECHO ON; FEEDBACK ON
+    ^F
+    ECHO OFF; FEEDBACK OFF
+    .
+    LET DELTA = (RESOLD - RES)**2
+    LET NUM = SUM DELTA
+    LET NUM = SQRT(NUM)
+    LET DELTA2 = RESOLD*RESOLD
+    LET DENOM = SUM DELTA2
+    LET CONV = NUM/DENOM
+    IF CONV <= 0.0001 
+      BREAK LOOP
+    END OF IF
+END OF LOOP
+.

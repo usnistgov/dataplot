@@ -1,0 +1,64 @@
+This is file modispik.men--Set Spike Types
+ 
+--------------------
+ 1. Spikes
+ 2. SPIKES <list of spike types>
+ 3.
+ 4. Spike Type for ALL Traces:
+ 4. @CE 1 0 42 50 * gui-ooff
+ 5.
+ 6. Use the following menus to set spike types for
+ 7. traces individually.  The spiek types are sequential.
+ 8. If you set the spike type for trace 5, you
+ 9. must also set them for traces 1, 2, 3, and 4.
+10.
+11. Spike Type for Trace 1:
+11. @CE 2 0 42 50 * gui-ooff
+12. Spike Type for Trace 2:
+12. @CE 3 0 42 50 * gui-ooff
+13. Spike Type for Trace 3:
+13. @CE 4 0 42 50 * gui-ooff
+14. Spike Type for Trace 4:
+14. @CE 5 0 42 50 * gui-ooff
+15. Spike Type for Trace 5:
+15. @CE 6 0 42 50 * gui-ooff
+16. Spike Type for Trace 6:
+16. @CE 7 0 42 50 * gui-ooff
+17. Spike Type for Trace 7:
+17. @CE 8 0 42 50 * gui-ooff
+18. Spike Type for Trace 8:
+18. @CE 9 0 42 50 * gui-ooff
+19. Spike Type for Trace 9:
+19. @CE 10 0 42 50 * gui-ooff
+20. Spike Type for Trace 10:
+20. @CE 11 0 42 50 * gui-ooff
+21. Spike Type for Trace 11:
+21. @CE 12 0 42 50 * gui-ooff
+22. Spike Type for Trace 12:
+22. @CE 13 0 42 50 * gui-ooff
+23. Spike Type for Trace 13:
+23. @CE 14 0 42 50 * gui-ooff
+24. Spike Type for Trace 14:
+24. @CE 15 0 42 50 * gui-ooff
+25. Spike Type for Trace 15:
+25. @CE 16 0 42 50 * gui-ooff
+26. Spike Type for Trace 16:
+26. @CE 17 0 42 50 * gui-ooff
+27. Spike Type for Trace 17:
+27. @CE 18 0 42 50 * gui-ooff
+28. Spike Type for Trace 18:
+28. @CE 19 0 42 50 * gui-ooff
+29. Spike Type for Trace 19:
+29. @CE 20 0 42 50 * gui-ooff
+30. Spike Type for Trace 20:
+30. @CE 21 0 42 50 * gui-ooff
+31.
+32.
+33. Set the Spikes?
+--------------------
+PC FE
+SPIKES _2 _3 _4 _5 _6 _7 _8 _9 _10 _11 _12 _13 _14 _15 _16 _17 _18 _19 _20 _21
+@IF 1 0 SPIKES _1 ALL
+--------------------
+WEB HELP SPIKE
+--------------------

@@ -1,0 +1,22 @@
+This is file matr_tra.men--Compute trace of a matrix
+ 
+--------------------
+ 1. Matrix Trace
+ 2. LET A = MATRIX TRACE M
+ 3.
+ 4. Matrix for which to compute the trace:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Parameter to store the trace:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Matrix Trace?:
+--------------------
+GR FE
+LET _2 = MATRIX TRACE  _1 _3
+--------------------
+WEB HELP MATRIX TRACE
+--------------------

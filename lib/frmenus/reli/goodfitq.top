@@ -1,0 +1,14 @@
+-----<~reli\goodfitq.top> Goodness of Fit: Quantitative Methods
+
+Goodness-of-Fit: Quantitative Methods
+
+Goodness-of-Fit: Quantitative Methods
+
+Dataplot provides several quantitative methods for assessing
+goodness-of-fit.
+
+Kolmogorov-Smirnov (K-S) test        <~reli\goodks.top>
+Anderson-Darling (AD)  test          <~reli\goodad.top>
+Chi-Square test                      <~reli\goodchsq.top>
+PPCC test                            <~reli\goodppcc.top>
+

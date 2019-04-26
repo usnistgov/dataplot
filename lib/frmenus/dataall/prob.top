@@ -1,0 +1,7 @@
+----- <~dataall\prob.top> View/etc. Built-in Probability Data Files
+
+View/Load/Print Built-in Probability Data Files
+
+RANDN.DAT     Normal random numbers         <~dataall\RANDN.top>
+RANDU.DAT     Uniform random numbers        <~dataall\RANDU.top>
+

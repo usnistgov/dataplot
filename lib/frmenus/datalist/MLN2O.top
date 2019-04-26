@@ -1,0 +1,8 @@
+----- <~datalist\MLN2O.top> MLN2O.DAT
+ 
+MLN2O.DAT
+ 
+View     <xcl: LIST MLN2O.DAT>
+Load     <x2cl: SKIP 25; READ MLN2O.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\MLN2O.DAT>
+ 

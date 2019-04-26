@@ -1,0 +1,124 @@
+This is file varitest.men--Formal t Test: Shift in Variation
+ 
+--------------------
+ 1. Formal Chi-squared Test: Shift in Variation
+ 2. CHI-SQUARED TEST Y SIGMA0
+ 3.
+ 4. The Problem: 1) IF   a process has a pre-mod
+ 5.                 reference st. dev. = sigma0, &
+ 6.              2) IF   an engineering mod is made, &
+ 7.              3) IF   post-mod data is collected,
+ 8.              4) THEN can we conclude that
+ 9.                 the process st. dev. has improved
+10.                 (the post-mode sigma < sigma0)?
+11.
+12. The Engineering Deliverable: A Yes/No Conclusion
+13.
+14.
+15.
+16. Pre -mod Reference sigma0 (%):
+16. @CE 1 0 35 50 ?
+17. Post-mod Response  Variable  :
+17. @CE 2 0 35 50 ? gui-variable
+18.
+19. Define "improvement" (select one):
+20.    The process has "improved" if the
+21.    post-mod sigma .?. pre-mod sigma
+22. @CE 3 1  4 16 is < than
+22. @CE 3 2 20 32 is > than
+22. @CE 3 3 36 48 differs from
+23.
+24. Alpha (= Type I) error (select one):
+25. @CE 4 1  4  8 5%
+25. @CE 4 2 20 24 1%
+26.
+27. Subset/Except/For Specification:
+28. @CE 5 0 1 50 *
+29.
+30. Do Chi-squared Test?
+--------------------
+GR FE
+CHI-SQUARED TEST _2 _1 _5
+ 
+LET ZSIGMA0 = _1
+ 
+LET ZN = NUMBER _2 _5
+LET ZDF = ZN-1
+ 
+LET ZSTAT = SD _2 _5
+LET ZTESTSTA = (ZN-1)*(ZSTAT**2)/(ZSIGMA0**2)
+ 
+LET ZP = .95
+@IF 4 2 LET ZP = .99
+LET ZQ = 1-ZP
+LET ZP2 = ZP+(1-ZP)/2
+LET ZQ2 = 1-ZP2
+LET ZPERC = 100*ZP
+LET ZALPHA = 100*ZQ
+ 
+@IF 3 2 LET ZCUT1 = 0
+@IF 3 2 LET ZCUT2 = CHSPPF(ZP,ZDF)
+@IF 3 1 LET ZCUT1 = CHSPPF(ZQ,ZDF)
+@IF 3 1 LET ZCUT2 = CHSPPF(.99,ZDF)
+@IF 3 3 LET ZCUT1 = CHSPPF(ZQ2,ZDF)
+@IF 3 3 LET ZCUT2 = CHSPPF(ZP2,ZDF)
+ 
+LET Z80 = CHSPPF(.80,ZDF)
+LET ZLOWER = 0
+LET ZUPPER = CHSPPF(.99,ZDF)
+LET ZLOWER2 = MIN(ZTESTSTA,ZLOWER)
+LET ZUPPER2 = MAX(ZUPPER,ZTESTSTA)
+ 
+LET FUNCTION ZF = CHSPDF(ZZ,ZDF)
+PLOT ZF FOR ZZ = ZLOWER2 .1 ZUPPER2 AND
+PLOT 0 FOR ZZ = ZLOWER2 .1 ZUPPER2
+ 
+JUSTIFICATION CENTER
+LET ZZ = ZTESTSTA; LET ZPDFSTAT = ZF
+LET ZZ = ZLOWER; LET ZPDFLOWE = ZF
+LET ZZ = ZUPPER; LET ZPDFUPPE = ZF
+LET ZZ = ZCUT1; LET ZPDFCUT1 = ZF
+LET ZZ = ZCUT2; LET ZPDFCUT2 = ZF
+LET ZZ = Z80; LET ZPDF80 = ZF
+ 
+DRAWDSDS ZTESTSTA 25 ZTESTSTA 10
+MOVEDS ZTESTSTA 26; TEXT TSV
+MOVEDS ZTESTSTA 26; TEXT TSV
+MOVEDS ZTESTSTA 6; TEXT ^ZTESTSTA
+MOVEDS ZTESTSTA 6; TEXT ^ZTESTSTA
+ 
+@IF 3 2 DRAWDDDS ZCUT2 ZPDFCUT2 ZCUT2 5
+@IF 3 2 DRAWDSDS ZCUT2 85 ZCUT2 5
+@IF 3 2 DRAWDSDS ZCUT2 85 ZLOWER2 85
+@IF 3 2 LET ZLOWER2P = ZLOWER2+(ZCUT2-ZLOWER2)/20
+@IF 3 2 DRAWDSDS ZLOWER2P 86 ZLOWER2 85 ZLOWER2P 84
+@IF 3 2 MOVEDS ZCUT2 1; TEXT ^ZCUT2
+ 
+@IF 3 1 DRAWDDDS ZCUT1 ZPDFCUT1 ZCUT1 5
+@IF 3 1 DRAWDSDS ZCUT1 85 ZCUT1 5
+@IF 3 1 DRAWDSDS ZCUT1 85 ZUPPER2 85
+@IF 3 1 LET ZUPPER2P = ZUPPER2-(ZUPPER2-ZCUT1)/20
+@IF 3 1 DRAWDSDS ZUPPER2P 86 ZUPPER2 85 ZUPPER2P 84
+@IF 3 1 MOVEDS ZCUT1 1; TEXT ^ZCUT1
+ 
+@IF 3 3 DRAWDDDS ZCUT1 ZPDFCUT1 ZCUT1 5
+@IF 3 3 DRAWDSDS ZCUT1 85 ZCUT1 5
+@IF 3 3 DRAWDDDS ZCUT2 ZPDFCUT2 ZCUT2 5
+@IF 3 3 DRAWDSDS ZCUT2 85 ZCUT2 5
+@IF 3 3 DRAWDSDS ZCUT1 85 ZCUT2 85
+@IF 3 3 MOVEDS ZCUT1 1; TEXT ^ZCUT1
+@IF 3 3 MOVEDS ZCUT2 1; TEXT ^ZCUT2
+ 
+LET ZHALF = (ZCUT1+ZCUT2)/2
+MOVEDS ZHALF 80; TEXT NO
+MOVEDS ZHALF 75; TEXT IMPROVEMENT
+MOVEDS ZHALF 70; TEXT REGION
+ 
+JUSTIFICATION LEFT
+MOVEDD Z80 ZPDF80
+TEXT Chi-sq(^ZDF)
+ 
+WRITE ZALPHA ZSIGMA0 ZN ZSTAT ZTESTSTA ZCUT1 ZCUT2
+--------------------
+WEB HELP CHI-SQUARED TEST
+--------------------

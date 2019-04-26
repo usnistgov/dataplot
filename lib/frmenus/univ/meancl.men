@@ -1,0 +1,88 @@
+This is file meancl.men--Mean, SD, and Conf. Limits for mu
+ 
+--------------------
+ 1. Mean, Standard Deviation, & Confidence Limits for mu
+ 2. LET M = MEAN Y; LET SDM = SD MEAN Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5.
+ 6. Output (all names required):
+ 7.    Name for sample size:
+ 7.    @CE 2 0 33 50 ?
+ 8.    Name for computed mean:
+ 8.    @CE 3 0 33 50 ?
+ 9.    Name for computed stan. dev.:
+ 9.    @CE 4 0 33 50 ?
+10.    Name for computed sd(mean)
+10.    @CE 5 0 33 50 ?
+11.
+12. Names for 95% confidence limits for mu:
+13.                          lower      upper
+14.    2-sided:
+14.    @CE 6 0 22 35 ?
+14.    @CE 7 0 37 50 ?
+15.    1-sided:
+15.    @CE 8 0 22 35 0
+15.    @CE 9 0 37 50 ?
+16.    1-sided:
+16.    @CE 10 0 22 35 ?
+16.    @CE 11 0 37 50 infinity
+17.
+18. Names for 99% confidence limits for sigma:
+19.                          lower      upper
+20.    2-sided:
+20.    @CE 12 0 22 35 ?
+20.    @CE 13 0 37 50 ?
+21.    1-sided:
+21.    @CE 14 0 22 35 0
+21.    @CE 15 0 37 50 ?
+22.    1-sided:
+22.    @CE 16 0 22 35 ?
+22.    @CE 17 0 37 50 infinity
+23.
+24. Number of output decimal places:
+24.       @CE 18 0 37 50 ?
+25.
+26. Subset/Except/For Specification:
+27. @CE 19 0 1 50 *
+28.
+29.
+30. Compute Statistics & Limits?
+--------------------
+GR FE
+LET ZN  = NUMBER _1 _13
+@IF 2 0 LET _2 = ZN
+LET ZMEAN  = MEAN _1 _13
+@IF 3 0 LET _3 = ZMEAN
+LET ZS  = SD _1 _13
+@IF 4 0 LET _4 = ZS
+LET ZSDM  = SD MEAN _1 _13
+@IF 5 0 LET _5 = ZSDM
+LET ZNU = ZN-1
+.
+LET Z025 = TPPF(.025,ZNU)
+LET Z975 = TPPF(.975,ZNU)
+LET Z05 = TPPF(.05,ZNU)
+LET Z95 = TPPF(.95,ZNU)
+@IF 6 0 LET _6 = ZMEAN+Z025*ZSDM
+@IF 7 0 LET _7 = ZMEAN+Z975*ZSDM
+@IF 8 0 LET _8 = 0
+@IF 9 0 LET _9 = ZMEAN+Z95*ZSDM
+@IF 10 0 LET _10 = ZMEAN+Z05*ZSDM
+@IF 11 0 LET _11 = 10**10
+.
+LET Z005 = TPPF(.005,ZNU)
+LET Z995 = TPPF(.995,ZNU)
+LET Z01 = TPPF(.01,ZNU)
+LET Z99 = TPPF(.99,ZNU)
+@IF 12 0 LET _12 = ZMEAN+Z005*ZSDM
+@IF 13 0 LET _13 = ZMEAN+Z995*ZSDM
+@IF 14 0 LET _14 = 0
+@IF 15 0 LET _15 = ZMEAN+Z99*ZSDM
+@IF 16 0 LET _16 = ZMEAN+Z01*ZSDM
+@IF 17 0 LET _17 = 10**10
+.
+@IF 18 0 SET WRITE DECIMALS _18
+WRITE _2 _3 _4 _5 BL _6 _7 _8 _9 _10 _11 BL _12 _13 _14 _15 _16 _17
+--------------------

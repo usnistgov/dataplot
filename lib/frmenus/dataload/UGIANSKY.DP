@@ -1,0 +1,8 @@
+----- <~dataload\UGIANSKY.DP> Load UGIANSKY.DAT
+
+. This is file    UGIANSKY.DP
+
+DELETE Y1 Y2 LAB
+SKIP 25
+READ UGIANSKY.DAT Y1 Y2 LAB
+

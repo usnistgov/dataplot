@@ -1,0 +1,22 @@
+% This is a sample header for Dataplot generated Latex files.
+% You can use the command
+%     SET LATEX HEADER FILE  filename.tex
+% to specify your own header file.
+%
+\documentclass[12pt]{article}
+
+\usepackage{epsfig}
+\usepackage{epic,eepic}
+\usepackage{graphics,color}
+
+\newcommand {\PGRAPHIC}[1]{\begin{figure}[h]
+                       \epsfig{file=#1,width=6.0in}
+                       \end{figure}\newpage}
+\newcommand {\LGRAPHIC}[1]{\begin{figure}[h]
+                       \epsfig{file=#1,angle=-90,width=6.0in}
+                       \end{figure}\newpage}
+
+\begin{document}
+
+\begin{verbatim}
+

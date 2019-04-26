@@ -1,0 +1,8 @@
+----- <~dataall\CLARK0.top> CLARK0.DAT
+
+CLARK0.DAT
+
+View     <xcl: LIST CLARK0.DAT>
+Load     <xcf: ~dataload/CLARK0.DP>
+Print    <xccl: printfile C:\DATAPLOT\CLARK0.DAT>
+

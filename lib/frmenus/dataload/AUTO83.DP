@@ -1,0 +1,8 @@
+----- <~dataload\AUTO83.DP> Load AUTO83.DAT
+
+. This is file    AUTO83.DP
+
+DELETE Y X1 TO X7
+SKIP 25
+READ AUTO83.DAT Y X1 TO X7
+

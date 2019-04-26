@@ -1,0 +1,55 @@
+This is file geohispd.men--Histogram & Superimposed Geometric pdf Plot
+
+--------------------
+ 1. Histogram & Superimposed Geometric pdf Plot
+ 2. HIST Y; PLOT GEOPDF(X,P) FOR X=START INC STOP
+ 3.
+ 4. pdf   : f(x;p)   = p * (1-p)**(x-1)
+ 5.                    for x = 1, 2, ...
+ 6. loc.  : E(X)     = 1/p
+ 7. st dev: SD(X)    = (1/p) * sqrt(1-p)
+ 8.
+ 9. Relative histogram of data:
+10.    Name of data variable:
+10. @CE 1 0 31 49 ? gui-vari
+11.    Class width:
+11. @CE 2 0 31 49 ?
+12.    Lower limit of 1st  class:
+12. @CE 3 0 31 49 ?
+13.    Upper limit of last class:
+13. @CE 4 0 31 49 ?
+14.    Bar fill on/off:
+14. @CE 5 0 31 49 ?
+15.
+16. Superimposed geometric probability density function:
+17.    Prob. success p:
+17. @CE 6 0 31 49 ?
+18.    Start point:
+18. @CE 7 0 31 49 ?
+19.    Increment:
+19. @CE 8 0 31 49 ?
+20.    Stop point:
+20. @CE 9 0 31 49 ?
+21.    Line type:
+21. @CE 10 0 31 49 gui-line
+22.
+23.
+24. Generate the plot?
+--------------------
+AN FE
+@IF 2 0 CLASS WIDTH _2
+@IF 3 0 CLASS LOWER _3
+@IF 4 0 CLASS UPPER _4
+@IF 1 0 RELATIVE HISTOGRAM _1
+@IF 1 0 LIMITS FREEZE
+.
+PRE-ERASE OFF
+@IF 5 0 BAR FILL _5
+LET ZP = _6
+@IF 10 0 LINES _10
+PLOT GEOPDF(X,ZP) FOR X = _7 _8 _9
+@IF 1 0 LIMITS
+PRE-ERASE ON
+--------------------
+WEB HELP GEOPDF
+--------------------

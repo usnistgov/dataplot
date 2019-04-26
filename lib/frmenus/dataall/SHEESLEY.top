@@ -1,0 +1,8 @@
+----- <~dataall\SHEESLEY.top> SHEESLEY.DAT
+
+SHEESLEY.DAT
+
+View     <xcl: LIST SHEESLEY.DAT>
+Load     <xcf: ~dataload/SHEESLEY.DP>
+Print    <xccl: printfile C:\DATAPLOT\SHEESLEY.DAT>
+

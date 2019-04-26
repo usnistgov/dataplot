@@ -1,0 +1,48 @@
+This is file percdefe.men--Generate Percent Defective Plots
+ 
+--------------------line 3
+01. Percent Defective Plot
+02. PERCENT DEFECTIVE PLOT Y X
+03.
+04. Vertical   Axis Variable:
+04. @CE 1 0 33 50 ? gui-vari
+05. Group ID        Variable:
+05. @CE 2 0 33 50 ? gui-vari
+06.
+07. Value for the upper specification limit?:
+07. @CE 3 0 33 50 ? 
+08. Value for the lower specification limit?:
+08. @CE 4 0 33 50 ?
+09.
+10. Character Type for Data
+10. @CE 5 0 33 50 * gui-char
+11. Character Fill for Data
+11. @CE 6 0 33 50 gui-ooff
+12. Line Type for Data-connecting Line
+12. @CE 7 0 33 50 * gui-line
+13. Line Type for Global Stat Line?
+13. @CE 8 0 33 50 * gui-line
+14. Spike to Global Stat Line?
+14. @CE 9 0 33 50 gui-ooff
+15.
+16. Subset/Except/For Specification:
+17. @CE 10 0 1 50 *
+18.
+19.
+20. Generate the Percent Defective Plot?:
+--------------------
+CHARACTERS _5
+CHARACTER FILL _6
+LINES _7 _8
+.
+LET USL = _3
+LET LSL = _4
+LET ZSTAT = PERCENT DEFECTIVE _1 _10
+SPIKE _9
+SPIKE BASE ZSTAT
+.
+BAR OFF OFF
+PERCENT DEFECTIVE PLOT _1 _2 _10
+--------------------
+WEB HELP PERCENT DEFECTIVE PLOT
+--------------------

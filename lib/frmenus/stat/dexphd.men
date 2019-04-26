@@ -1,0 +1,22 @@
+This is file dexphd.men--DEX PHD Analysis
+ 
+--------------------
+ 1. DEX PHD Analysis
+ 2. DEX PHD Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Group ID Variable (for replication case):
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute DEX PHD Analysis?
+--------------------
+GR FE
+DEX PHD _1 _2 _3
+--------------------
+WEB HELP DEX PHD
+--------------------

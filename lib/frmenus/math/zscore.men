@@ -1,0 +1,31 @@
+This is file zscore.men--Generate z-scores for a variable
+ 
+--------------------
+ 1. Z-Score Standardization
+ 2. LET Y2 = ZSCORE Y GROUP1 GROUP2
+ 3.
+ 4. A z-score standardizes a variable by
+ 5. subtracting the mean and dividing by
+ 6. the standard deviation.
+ 7.
+ 8. Variable to standardize:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9. Variable to store the standardized values:
+ 9. @CE 2 0 42 50 ? gui-none
+10. First Group Variable (optional):
+10. @CE 3 0 42 50 ? gui-variable
+11. Second Group Variable (optional):
+11. @CE 4 0 42 50 ? gui-variable
+12.
+13. Subset/Except/For Specification:
+14. @CE 5 0 1 50 *
+15.
+16.
+17. Perform the Standardization?:
+--------------------
+GR FE
+LET _2 = ZSCORE _1 _3 _4 _5
+--------------------
+WEB HELP STANDARDIZE
+--------------------
+

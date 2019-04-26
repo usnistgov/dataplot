@@ -1,0 +1,53 @@
+. This is dataplot macro file    anovasub.dp (Called by anovaall.dp)
+. Carry out ANOVA-like analysis for several data sets
+. in connection with Stefan's ANOVA class (June 2002)
+. Date--June 2002
+.
+. -----start point-----
+.
+lines solid dotted
+char circle blank
+char fill on off
+.
+let numfacp1 = numfac+1
+let numfacp2 = numfac+2
+major xtic number numfacp2
+minor xtic number 0
+xlim 0 numfacp1
+.
+. -----Step 1: Generate the DEX Mean Plot-----
+.
+title ^project
+y1label ^sty
+if numfac  = 1; dex mean plot y x1; end if
+if numfac >= 2; dex mean plot y x1 to x^numfac; end if
+call mark3.dp
+loop for j = 1 1 numfac
+   moveds j 10; just center; text ^stx^j
+end loop
+.
+. -----Step 2: Carry out the ANOVA-----
+.
+if numfac = 1; anova y x1; end if
+if numfac = 2; anova y x1 x2; end if
+if numfac = 3; anova y x1 x2 x3; end if
+if numfac = 4; anova y x1 x2 x3 x4; end if
+if numfac = 5; anova y x1 x2 x3 x4 x5; end if
+.
+. -----Step 3: Superimpose the ANOVA F Stat cdf Value onto the DEX Mean Plot-----
+.
+skip 0
+read dpst1f.dat col1 col2 col3 col4 col5 col6
+delete col1 col2 col3 col4 col5
+loop for j = 1 1 numfac
+   let ppf = col6(j); let ppf2 = round(ppf,3)
+   moveds j 21; just center
+   if ppf2 <  95; text ^ppf2; end if
+   if ppf2 >= 95
+      if ppf2 <  99; text ^ppf2 *; end if
+      if ppf2 >= 99; text ^ppf2 **; end if
+   end if
+end loop
+move 16 21; just left; text F cdf:
+delete col6
+.

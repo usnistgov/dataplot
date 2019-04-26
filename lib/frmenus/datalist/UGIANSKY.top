@@ -1,0 +1,8 @@
+----- <~datalist\UGIANSKY.top> UGIANSKY.DAT
+ 
+UGIANSKY.DAT
+ 
+View     <xcl: LIST UGIANSKY.DAT>
+Load     <x2cl: SKIP 25; READ UGIANSKY.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\UGIANSKY.DAT>
+ 

@@ -1,0 +1,33 @@
+This is Dataplot data file JONES.DAT
+(Sample 8 only of Patterson & Morris)
+Density of Water as a Function of Temperature
+Frank Jones, June 1998
+Response variable      = density of water
+Number of observations = 8
+Order of variables on a line image--
+   1. Response variable = water denisty (kg/m**3)
+   2. Factor 1          =   temperature (degreees C)
+Source--Patterson & Morris (Sample 8 only)
+        via Frank Jones
+To read this file into Dataplot--
+   SKIP 25
+   READ JONES.DAT Y X
+
+
+
+
+
+
+
+
+Density    Temperature
+   Y           X
+------------------------
+999.97209      4
+999.69940     10
+999.10000     15
+998.20463     20
+997.04491     25
+995.64896     30
+994.03309     35
+992.21463     40

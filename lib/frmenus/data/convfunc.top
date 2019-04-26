@@ -1,0 +1,13 @@
+----- <~data\convfunc.top> xx
+
+Conversion Functions
+
+SIGN(X)           sign of a number
+INT(X)            integer portion of a number
+FRACT(X)          fractional portion of a number
+ROUND(X,D)        round to D decimals places
+LSD(X)            least significant digit of a number
+
+OCTDEC(X)         octal to decimal conversion
+DECOCT(X)         decimal to octal conversion
+

@@ -1,0 +1,34 @@
+This is file contplot.men--Generate DEX Contour Plot
+
+--------------------
+ 1. DEX Contour Plot
+ 2. CALL DEXCONT.DP
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. Most Important Factor/Variable:
+ 6. @CE 2 0 1 50 ? gui-vari
+ 7. 2nd Most Important Factor/Variable:
+ 8. @CE 3 0 1 50 ? gui-vari
+ 9. Desired List of Contour Line Values:
+10. @CE 4 0 1 50 ?
+11.
+12. Title
+13. @CE 5 0 10 50 *
+14. Vertical axis label (most important factor)
+15. @CE 6 0 10 50 *
+16. Horizontal axis label (2nd most important factor)
+17. @CE 7 0 10 50 *
+18.
+19. Generate the Contour Plot?:
+--------------------
+GR FE
+LET Y = _1
+LET U1 = _2
+LET U2 = _3
+LET YCONT = DATA _4
+TITLE _5
+Y1LABEL _6
+X1LABEL _7
+CALL DEXCONT.DP
+--------------------

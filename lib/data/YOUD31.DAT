@@ -1,0 +1,144 @@
+This is Dataplot data file    YOUD31.DAT
+Paper Thickness
+Source--Youden, William John (Jack) (1962).
+        Experimentation and Measurement.
+        National Science Teachers Association.
+        Vistas of Science
+        1201 16th St., NW, Washington, DC
+        Table 2, page 31.
+ 
+Number of observations             = 96
+Number of variables per line iamge =  3
+Order of variables on a line image--
+   1. Response Variable = Thickness (in mm)
+   2. Factor 1 = Measurer/Operator/Girl (1 to 24)
+   3. Factor 2 = Replication (1 to 4)
+Statistical Categories--Univariate
+                        Distributional Analysis
+                        Comparative
+                        Control Charts
+To read this file into Dataplot--
+   SKIP 25
+   READ YOUD31.DAT Y X
+ 
+Thickness    Girl  Replication
+------------------------------
+ .0757        1        1
+ .0762        1        2
+ .0769        1        3
+ .0746        1        4
+ 
+ .0808        2        1
+ .0793        2        2
+ .0781        2        3
+ .0821        2        4
+ 
+ .0811        3        1
+ .0772        3        2
+ .0770        3        3
+ .0756        3        4
+ 
+ .0655        4        1
+ .0683        4        2
+ .0714        4        3
+ .0746        4        4
+ 
+ .0741        5        1
+ .0710        5        2
+ .0748        5        3
+ .0711        5        4
+ 
+ .0756        6        1
+ .0772        6        2
+ .0776        6        3
+ .0759        6        4
+ 
+ .0775        7        1
+ .0785        7        2
+ .0760        7        3
+ .0761        7        4
+ 
+ .0747        8        1
+ .0765        8        2
+ .0735        8        3
+ .0776        8        4
+ 
+ .0719        9        1
+ .0762        9        2
+ .0802        9        3
+ .0713        9        4
+ 
+ .0734       10        1
+ .0833       10        2
+ .0833       10        3
+ .0783       10        4
+ 
+ .0755       11        1
+ .0740       11        2
+ .0714       11        3
+ .0743       11        4
+ 
+ .0788       12        1
+ .0817       12        2
+ .0794       12        3
+ .0766       12        4
+ 
+ .0731       13        1
+ .0716       13        2
+ .0726       13        3
+ .0714       13        4
+ 
+ .0833       14        1
+ .0794       14        2
+ .0783       14        3
+ .0788       14        4
+ 
+ .0767       15        1
+ .0775       15        2
+ .0765       15        3
+ .0793       15        4
+ 
+ .0787       16        1
+ .0798       16        2
+ .0864       16        3
+ .0817       16        4
+ 
+ .0784       17        1
+ .0799       17        2
+ .0789       17        3
+ .0802       17        4
+ 
+ .0784       18        1
+ .0820       18        2
+ .0796       18        3
+ .0818       18        4
+ 
+ .0830       19        1
+ .0796       19        2
+ .0778       19        3
+ .0767       19        4
+ 
+ .0741       20        1
+ .0680       20        2
+ .0733       20        3
+ .0723       20        4
+ 
+ .0759       21        1
+ .0766       21        2
+ .0772       21        3
+ .0466       21        4
+ 
+ .0810       22        1
+ .0812       22        2
+ .0789       22        3
+ .0776       22        4
+ 
+ .0777       23        1
+ .0759       23        2
+ .0795       23        3
+ .0790       23        4
+ 
+ .0784       24        1
+ .0786       24        2
+ .0797       24        3
+ .0859       24        4

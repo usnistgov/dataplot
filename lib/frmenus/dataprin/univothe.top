@@ -1,0 +1,21 @@
+----- <~dataprin\univothe.top> Print (to Printer) Univariate Data: Other
+
+Print (to Printer) Univariate Data: Other
+
+GEAR.DAT      Gear diameters (Ishikawa)     <xcf: ~dataprin\GEAR.DP>
+CLEAR.DAT     Component clearances          <xcf: ~dataprin\CLEAR.DP>
+MICHELSO.DAT  Michelson speed of light exp  <xcf: ~dataprin\MICHELSO.DP>
+LIN.DAT       Polonium 209 SRM conc         <xcf: ~dataprin\LIN.DP>
+
+RANDN.DAT     Normal random numbers         <xcf: ~dataprin\RANDN.DP>
+RANDU.DAT     Uniform random numbers        <xcf: ~dataprin\RANDU.DP>
+RANDWALK.DAT  Random walk                   <xcf: ~dataprin\RANDWALK.DP>
+FLICKER.DAT   Flicker noise                 <xcf: ~dataprin\FLICKER.DP>
+
+LOTTERY3.DAT  Maryland "pick 3" lott. #'s   <xcf: ~dataprin\LOTTERY3.DP>
+LOTTERY4.DAT  Maryland "pick 4" lott. #'s   <xcf: ~dataprin\LOTTERY4.DP>
+
+
+      .....time series.....
+
+

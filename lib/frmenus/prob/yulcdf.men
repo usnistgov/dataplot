@@ -1,0 +1,32 @@
+This is file yulcdf.men--Compute Yule cdf and tail probability
+ 
+--------------------
+ 1. Compute Yule cdf and Tail Probability
+ 2. LET A = YULCDF(X,P)
+ 3.
+ 4. Input values:
+ 5.                    x (x = 0, 1, 2, ...):
+ 5. @CE 1 0 42 50 ?
+ 6.               shape parameter p (p > 0):
+ 6. @CE 2 0 42 50 ?
+ 7.
+ 8. Output parameters:
+ 9.                  name for the cdf value:
+ 9. @CE 3 0 42 50 ?
+10.     name for the tail probability value:
+10. @CE 4 0 42 50 ?
+11.
+12.
+13. Compute the Probability?
+--------------------
+AN FE
+LET ZP = 1
+@IF 2 0 LET ZP = _2
+IF ZP <= 0
+   LET ZP = 1
+END OF IF
+@IF 3 0 LET _3 = YULCDF( _1 ,ZP)
+@IF 4 0 LET _4 = 1 - YULCDF( _1 ,ZP)
+--------------------
+WEB HELP YULCDF
+--------------------

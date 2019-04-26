@@ -1,0 +1,8 @@
+----- <~datalist\RANDWALK.top> RANDWALK.DAT
+ 
+RANDWALK.DAT
+ 
+View     <xcl: LIST RANDWALK.DAT>
+Load     <x2cl: SKIP 25; READ RANDWALK.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\RANDWALK.DAT>
+ 

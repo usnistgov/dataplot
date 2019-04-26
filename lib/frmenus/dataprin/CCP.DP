@@ -1,0 +1,6 @@
+----- <~dataprin\CCP.DP> Print (to Printer) CCP.DAT
+
+. This is file    CCP.DP
+
+PRINT CCP.DAT
+

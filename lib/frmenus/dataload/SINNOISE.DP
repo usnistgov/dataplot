@@ -1,0 +1,8 @@
+----- <~dataload\SINNOISE.DP> Load SINNOISE.DAT
+
+. This is file    SINNOISE.DP
+
+DELETE Y X
+SKIP 25
+READ SINNOISE.DAT Y X
+

@@ -1,0 +1,43 @@
+----- <~time\dds4.top> DDS FAQ 4 Why Does DDS Work?
+ 
+4. Intuitively, why does DDS work?
+ 
+The modeling strategy of DDS ensures that its
+adequate mathematical model captures all the
+information about the underlying system behavior
+reflected in the data, including the average,
+variability, and successive dependence,
+'correlation or ``color'.  The models sampled form
+of differential equations commonly encountered in
+science and engineering.  Thus a complicated
+sequence of data can be comprehensively
+represented and readily interpreted by means of
+characteristics of differential equations
+well-known in science and engineering.
+Characteristics such as impulse and frequency
+response or spectrum readily follow from the
+analystic functions derived from the models.
+Smooth plots of these characteristics are far
+clearer and easier to interpret using their
+precise quantitative forms compared to those
+commonly obtained via FFT applied to the original
+data.  This is because the randomness in the data
+or the ``noise' is effectively separated by
+modeling in characteristics whereas FFT confounds
+such noise and any amount of post-processing to
+smooth the resultant erratic forms merely shifts
+the confounding.
+ 
+The DDS methodology is equally applicable to
+deterministic as well as stochastic, stable as
+well as unstable, stationary as well as
+nonstationary, and single as well as multiple
+input-output systems, with or without feedback.
+No prior assumptions regarding these
+characteristics are necessary.  On the contrary,
+the methodology will itself reveal at the analysis
+stage whether the system is stable or unstable,
+with or without feedback, and so on.  The paucity
+of initial assumptions is indeed one of the most
+desirable features of the method.
+ 

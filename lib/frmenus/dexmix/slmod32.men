@@ -1,0 +1,23 @@
+This is file slmod32.men--Fit Simplex-Lattice (k=3, d=2) Design
+ 
+--------------------
+ 1. Fit Simplex-Lattice (k=3, d=2) Design
+ 2. FIT Y = ...
+ 3.
+ 4. This menu assumes that you have already loaded
+ 5. the appropriate Simplex-Lattice design.
+ 6.
+ 7. Response Variable:
+ 7. @CE 1 0 42 50 gui-vari
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 2 0 1 50 *
+11. 
+12.
+13. Fit Simplex-Lattice Design?:
+--------------------
+GR FE
+FIT _1 = B1*X1 + B2*X2 +B3*X3 + B12*X1*X2 + B13*X1*X3 + B23*X2*X3 _2
+--------------------
+WEB HELP FIT
+--------------------

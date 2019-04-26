@@ -1,0 +1,48 @@
+This is file ray2mle.men--Rayleigh MLE Estimates
+ 
+--------------------
+ 1. Rayleigh Maximum Likelihood Estimates
+ 2. 2-PARAMETER RAYLEIGH MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. This mneu will generate the maximum likelihood
+ 5. estimates for the location and scale parameters
+ 6. for uncensored data.  You can optionally request
+ 7. to have bootstrap confidence limits generated for
+ 8. the distribution parameters.
+ 9.
+10. Response Variable:
+10. @CE 1 0 42 50 ? gui-variable
+11.
+12. Number of bootstrap samples (0 to omit)?
+12. @CE 2 0 42 50 *
+13.
+14. Subset/Except/For Specification:
+15. @CE 3 0 1 50 *
+16.
+17.
+18. Compute Rayleigh MLE's?
+--------------------
+GR FE
+LET NUMBOOT = 0
+@IF 2 0 LET NUMBOOT = _2
+let numboot = min(1000,numboot)
+if numboot > 0
+   bootstrap samples numboot
+   set maximum likelihood percentiles default
+   label
+   title case asis
+   label case asis
+   case asis
+   y1label Parameter Estimate
+   x1label Bootstrap Sample
+   title Bootstrap Plot
+   line color black
+   limits
+end of if
+2-PARAMETER RAYLEIGH MAXIMUM LIKELIHOOD _1 _3
+if numboot > 0
+   bootstrap 2-parameter rayleigh maximum likelihood plot _1 _3
+end of if
+--------------------
+WEB HELP RAYPDF
+--------------------

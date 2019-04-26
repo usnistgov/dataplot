@@ -1,0 +1,35 @@
+----- <~dataloex\core.top> Load & Execute Built-in Core data Files
+
+Load & Execute Built-in Core Data Files
+
+Univariate
+   LEW.DAT       Beam deflections            <xcf: ~dataloex\LEW.DP>
+   MAVRO.DAT     Filter transmittance        <xcf: ~dataloex\MAVRO.DP>
+   SUNSPOT2.DAT  Monthly sunspot             <xcf: ~dataloex\SUNSPOT2.DP>
+   SINSIN.DAT    Multiple sine curves        <xcf: ~dataloex\SINSIN.DP>
+
+Regression
+   BERGER1.DAT   Alaska Pipeline cracks       <xcf: ~dataloex\BERGER1.DP>
+   PONTIUS.DAT   Load cell calibration        <xcf: ~dataloex\PONTIUS.DP>
+   SPIEGEL.DAT   Nuclear tank calibration     <xcf: ~dataloex\SPIEGEL.DP>
+
+Multi-factor
+   BATTADD2.DAT  Battery Additive (2-level)   <xcf: ~dataloex\BATTADD2.DP>
+   SPLETT2.DAT   Charpy testing (4-level)     <xcf: ~dataloex\SPLETT2.DP>
+   DRAFT69B.DAT  1969 draft lottery           <xcf: ~dataloex\DRAFT69B.DP>
+   SHEESLE2.DAT  Defective lighbulbs          <xcf: ~dataloex\SHEESLE2.DP>
+
+DEX: Design of Experiment
+   BOXSPRIN.DAT  2**3  Defective springs      <xcf: ~dataloex\BOXSPRIN.DP>
+   SPLETT3.DAT   2**3  Eddy Current           <xcf: ~dataloex\SPLETT3.DP>
+   SPLETT4.DAT   2**4  Eddy Current           <xcf: ~dataloex\SPLETT4.DP>
+
+Multivariate
+   AUTO83B.DAT   EPA auto miles per gallon    <xcf: ~dataloex\AUTO83B.DP>
+   IRIS.DAT      Classic Fisher iris data     <xcf: ~dataloex\IRIS.DP>
+   AUTO83.DAT    EPA auto miles per gallon    <xcf: ~dataloex\AUTO83.DP>
+
+Quality & SPC: Statistical Process Control
+   CROARK3.DAT   NIST SEM line width SRM      <xcf: ~dataloex\CROARK3.DP>
+   UGIANSKY.DAT  Interlab stress corrosion    <xcf: ~dataloex\UGIANSKY.DP>
+

@@ -1,0 +1,43 @@
+This is file fishdesc.men--Fisher Discriminant Analysis
+ 
+--------------------
+1. Fisher Discriminant Analysis
+2. Macro
+3.
+4. This macro generates a plot of the first
+5. discriminant against the second discriminant.
+6. Each group in the original data is plotted
+7. with a separate character symbol (1, 2, 3, ...
+8. by default).  The discriminant functions are
+9. saved in the  matrix EVECT which can be used in further
+10. analyses (e.g., to classify new points).
+11. 
+12. List of Response Variables:
+13. @CE 1 0 1 50 ? gui-variable
+14. Group ID Variable:
+14. @CE 2 0 42 50 ? gui-variable
+15.
+16. Character Types:
+17. @CE 3 0 1 50 gui-char
+18. Character Fill:
+19. @CE 4 0 1 50 gui-ooff
+20.
+21. Subset/Except/For Specification: 
+22. @CE 5 0 1 50 *
+23.
+24.
+25. Run the Fisher Discriminant Analysis?:
+--------------------
+GR FE
+DELETE ZZZZX
+WRITE ZZZZJUNK.DAT _1 _5
+SKIP 0
+READ MATRIX ZZZZJUNK.DAT ZZZZX
+LET ZTAG = _2 _5
+RETAIN ZTAG _5
+CHARACTER _3
+CHARACTER FILL _4
+CALL FISHDISC.DP
+--------------------
+WEB HELP VARIANCE-COVARIANCE MATRIX
+--------------------

@@ -1,0 +1,24 @@
+This is file poly_div.men--Compute polynomial division of a variable
+ 
+--------------------
+ 1. Polynomial Division
+ 2. LET A = POLYNOMIAL DIVISION Y1 Y2
+ 3.
+ 4. First variable for the polynomial division:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Second variable for the polynomial division:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable to store the polynomial division:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -5 50 *
+10.
+11.
+12. Compute the Polynomial Division?:
+--------------------
+GR FE
+LET _3 = POLYNOMIAL DIVISION  _1 _2 _4
+--------------------
+WEB HELP POLYNOMIAL DIVISION
+--------------------

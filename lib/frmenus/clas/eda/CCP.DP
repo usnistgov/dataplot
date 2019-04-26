@@ -1,0 +1,10 @@
+----- <~dataloex\CCP.DP> Load & Execute CCP.DAT
+
+. This is file    CCP.DP
+
+DELETE Y X
+SKIP 25
+READ CCP.DAT Y X
+TITLE CCP.DAT
+/
+

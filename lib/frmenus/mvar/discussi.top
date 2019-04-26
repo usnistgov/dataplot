@@ -1,0 +1,40 @@
+----- <~mvar\discussi.top> Multivariate Analysis
+ 
+Multivariate Analysis
+
+Multivariate analysis is the analysis of data
+that consists of multiple response variables
+Y1, Y2, ..., Yp.
+
+This is distinguished from multi-factor data,
+where there is typically a single response
+variable and multiple factor variables.
+Factor variables are generally fixed.  For
+example, in a designed experiment, several
+variables may be assigned fixed values for a
+run and another variable is measured during the
+experiment.  The response variable is the
+measured variable.
+
+Multivariate analysis gets increasingly
+difficult as the number of variables and
+observations grow.
+
+Typical questions that a multivariate
+analysis tries to answer are:
+
+  1) What data points (i.e., rows) are
+     similar to each other?  Can we group
+     like data points into discrete clusters?
+
+  2) Are some variables redundant?  That is,
+     can we reduce the dimensionality of the
+     data without significant loss of information?
+
+  3) Are the data from a multivariate normal
+     population?
+
+  4) Do the data contain outliers?
+
+  5) ?
+

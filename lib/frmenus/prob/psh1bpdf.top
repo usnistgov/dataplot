@@ -1,0 +1,27 @@
+----- <~prob\psh1bpdf.top> PDF's for One Shape Parameter Continuous Distributions
+
+Plot PDF's (one shape parameters)
+
+Plot Probability Density Function for Continuous Distributions
+with One Shape Parameters
+
+McLeish                                   <xemf: ~prob\pmclpdf.men>
+Muth                                      <xemf: ~prob\pmutpdf.men>
+Ogive                                     <xemf: ~prob\pogipdf.men>
+Power                                     <xemf: ~prob\ppowpdf.men>
+Power Normal                              <xemf: ~prob\ppnrpdf.men>
+Reciprocal                                <xemf: ~prob\precpdf.men>
+Reflected Power                           <xemf: ~prob\prpopdf.men>
+Skew Double Exponential (Skew Laplace)    <xemf: ~prob\psdepdf.men>
+Skew Normal                               <xemf: ~prob\psnpdf.men>
+Slope                                     <xemf: ~prob\pslopdf.men>
+T                                         <xemf: ~prob\ptpdf.men>
+Topp and Leone                            <xemf: ~prob\ptoppdf.men>
+Triangular                                <xemf: ~prob\ptripdf.men>
+Tukey-Lambda (symmetric)                  <xemf: ~prob\plampdf.men>
+Von Mises                                 <xemf: ~prob\pvonpdf.men>
+Wald                                      <xemf: ~prob\pwalpdf.men>
+Weibull (minimum case)                    <xemf: ~prob\pwei1pdf.men>
+Weibull (maximum case)                    <xemf: ~prob\pwei2pdf.men>
+Wrapped Cauchy                            <xemf: ~prob\pwcapdf.men>
+

@@ -1,0 +1,31 @@
+----- <~dex\thedesig.top> The Design
+
+The Design
+
+The 2**(3-1) design is (see file 2TO3M1.DAT)
+
+   -  -  +
+   +  -  -
+   -  +  -
+   +  +  +
+
+which translates (- = low and + = high) into
+
+             factor  factor  factor
+                1       2       3
+              .......................
+   run 1:      low     low    high
+   run 2:     high     low     low
+   run 3:      low    high     low
+   run 4:     high    high    high
+
+Thus run 1 of the design consists of factor 1 at the
+low setting, factor 2 at the low setting, and factor 3
+at the high setting; run 2 consists of factor 1 at the
+high setting, factor 2 at the low setting, and factor 3
+at the low setting; etc.  It is an arbitrary
+experimentalist choice as to which physical variables
+get equated to factor 1, factor 2, and factor 3. It is
+also arbitrary as to what levels (settings) of each
+factor get mapped into - (low) and + (high).
+

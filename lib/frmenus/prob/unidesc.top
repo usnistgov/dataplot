@@ -1,0 +1,22 @@
+----- <~prob\unidesc.top> Uniform Description
+
+*Uniform Description
+
+pdf: f(x)     = 1            for 0 <= x <= 1
+pdf: f(x;a,b) = 1/(b-a)      for a <= x <= b
+
+Moments   : E(X)  = (a+b)/2
+            SD(X) = (b-a) / sqrt(12) = (b-a) * 0.288675134
+
+Type      : Continuous, symmetric, flat-topped, short-tailed
+Domain    : a to b
+Synonym   : Rectangular
+            Tukey lambda distribution with lambda = 1 (and 2)
+Genesis   : ...
+Definition: If
+            then
+
+Reference : Johnson & Kotz,
+            Continuous Univariate Distributions-2,
+            Chapter 25 (pages 57-74).
+

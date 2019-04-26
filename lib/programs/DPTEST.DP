@@ -1,0 +1,10 @@
+tics off
+tic labels off
+frame off
+lines blank
+.
+multiplot 2 2
+char x
+plot x for x = 1 1 3
+char y
+plot x**2 for x = 1 1 5

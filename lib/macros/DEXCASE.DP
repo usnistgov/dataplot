@@ -1,0 +1,1805 @@
+. This is Dataplot macro    DEXCASE.DP (Note: case is defined in dexinput.dat)
+. Purpose--Do the I/O for the variety of special cases (example)
+.          used for testing and illustration by the DEXPLOT.DP program.
+. Date--April 2001
+. Called by--DEXPLOT.DP
+.
+. -----start point-----
+.
+write " "
+write "At the Beginning of DEXCASE.DP . . ."
+write " "
+write "case = ^case"
+. pause
+if pausesw = 1; pause; end if
+let pagecoun = -99
+.
+feedback off
+.
+. -----case = 0-----
+.
+. if case = 0
+.    skip 25; read 2to3.dat x1 x2 x3
+.    let y = data 2 4 6 8 1 3 5 7
+.    let k = 3
+.    let string project = (Simplified) Funnel (from DEXCASE.DP)
+. end if
+.
+. -----case = 2002 (used for DEX 2002 class)-----
+.
+if case = 2002
+   call dexclass2002.dp
+end if
+.
+. -----case = 2007 (used for DEX 2007 class)-----
+.
+if case = 2007
+   call dexclass2007.dp
+end if
+feedback off
+.
+. -----------------------
+. -----k = 2 factors-----
+. -----------------------
+.
+. -----case = 23 (k = 2, n = 4): Klouda Albuquerque C14-----
+.
+if case = 23
+   skip 25; read KLOUDA2.DAT Y1 Y2 X1 X2 X3
+   let y = y1
+   delete y1 y2
+   retain y x1 x2 x3 for i = 1 1 8
+   retain y x1 x2 x3 subset x2 -1
+   let x2 = x3
+   let k = 2
+   let string project = Radiocarbon (14C) Measurements of Albuquerque Carbon Monoxide (Dynamic only) (Klouda/Connolly)
+end if
+.
+. -----case = 24 (k = 2, n = 4): Klouda Albuquerque C14-----
+.
+if case = 24
+   skip 25; read KLOUDA2.DAT Y1 Y2 X1 X2 X3
+   let y = y1
+   delete y1 y2
+   retain y x1 x2 x3 for i = 1 1 8
+   retain y x1 x2 x3 subset x2 +1
+   let x2 = x3
+   let k = 2
+   let string project = Radiocarbon (14C) Measurements of Albuquerque Carbon Monoxide (Stagnant only) (Klouda/Connolly)
+end if
+.
+. -----case = 25 (k = 2, n = 4): Klouda Albuquerque C14-----
+.
+if case = 25
+   skip 25; read KLOUDA2.DAT Y1 Y2 X1 X2 X3
+.    let y = y1
+   let y = y2
+. let y = y1*y2
+   delete y1 y2
+   retain y x1 x2 x3 for i = 1 1 8
+   retain y x1 x2 x3 subset x3 -1
+   let k = 2
+   let string project = Radiocarbon (14C) Meas. of Albuquerque Carbon Monoxide (Klouda/Connolly):  Response 2 = Fraction (Downtown)
+end if
+.
+. -----case = 26 (k = 2, n = 4): Klouda Albuquerque C14-----
+.
+if case = 26
+   skip 25; read KLOUDA2.DAT Y1 Y2 X1 X2 X3
+.    let y = y1
+   let y = y2
+. let y = y1*y2
+   delete y1 y2
+   retain y x1 x2 x3 for i = 1 1 8
+   retain y x1 x2 x3 subset x3 +1
+   let k = 2
+   let string project = Radiocarbon (14C) Meas. of Albuquerque Carbon Monoxide (Klouda/Connolly):  Response 2 = Fraction (Residential)
+end if
+.
+. -----case = 27 (k = 2, n = 4): Espina Flow-----
+.
+if case = 27
+   comment 2**2
+   skip 25; read ESPINA3.DAT Y X1 X2
+   retain y x1 x2 for i = 1 1 4
+   let k = 2
+   let string project = Espina/Ward 2**3 Flow Experiment (But Low Flow Only)
+end if
+.
+. -----case = 28 (k = 2, n = 4): Espina Flow-----
+.
+if case = 28
+   comment 2**2
+   skip 25; read ESPINA3.DAT Y X1 X2
+   retain y x1 x2 for i = 5 1 8
+   let k = 2
+   let string project = Espina/Ward 2**3 Flow Experiment (But High Flow Only)
+end if
+.
+. -----case = 29 (k = 2, n = 4): Uncertainty Cases V = I*R)-----
+.
+if case = 29
+   comment 2**2
+   skip 0
+   read Y X1 X2
+   16   -1   -1
+   24   +1   -1
+   32   -1   +1
+   48   +1   +1
+   end of data
+.
+   let k = 2
+   let string project = V = IR Uncertainty Analysis Example (I = 3 +- 2, R = 10 +- 4)
+end if
+.
+. -----case = 210 (k = 2, n = 4): Antonio Possolo Anti-Derivative Uncertainty Analysis Example (k = 2, n = 4)
+.
+if case = 210
+   comment 2**2 wcp
+   skip 25
+   read possolo.dat y x1 x2
+   let k = 2
+   let string project = Antonio Possolo Uncertainty Analysis Example (k = 2, n = 4)
+   let string suv1 = X1
+   let string suv2 = X2
+end if
+.
+. -----case = 211 (k = 2, n = 4): Jeff Fong Cylinder Crush Optimization-----
+.
+if case = 211
+   comment 2**2 wcp
+   .
+   let subcase = 1
+   . let subcase = 2
+   .
+   skip 0
+   read Y1 Y2 X1 X2
+       42  24    -1   -1
+       68  44    +1   -1
+      105  75    -1   +1
+      103 188    +1   +1
+       90  62     0    0
+   end of data
+   .
+   retain y1 y2 x1 x2 for i = 1 1 4
+   if subcase = 1; let y = y1; end if
+   if subcase = 2; let y = y2; end if
+   .
+   let k = 2
+   let string project = Cylinder Crush Optimization (k = 2, n = 4+1)
+   if subcase = 1; let string cy = Energy; end if
+   if subcase = 2; let string cy = Force; end if
+   let string cx1 = Radius
+   let string cx2 = Thickness
+end if
+.
+. -----------------------
+. -----k = 3 factors-----
+. -----------------------
+.
+. -----case = 31 (k = 3, n = 8): Box/Bisgaard Defective Springs-----
+.
+if case = 31
+   comment 2**3
+   skip 25; read BOXSPRIN.DAT Y X1 X2 X3
+   let k = 3
+   let string project = Defective Springs: % Acceptable (Box & Bisgaard)
+   let string cy = % Acceptable Springs
+   let string cx1 = Oven Temperature
+   let string cx2 = Carbon Concentration
+   let string cx3 = Quench Temperature
+end if
+.
+. -----case = 32 (k = 3, n = 8): Splett-----
+.
+if case = 32
+   skip 25; read SPLETT.DAT Y X1 X2 X3
+   let k = 3
+   let string project = Eddy Current Probe Sensitivity (Splett)
+end if
+.
+. -----case = 33 (k = 3, n = 8): Mitchell-----
+.
+if case = 33
+   skip 25; read MITCHEL1.DAT Y X1 X2 X3
+   retain y x1 x2 x3 for i = 1 1 8
+   let k = 3
+   let string project = SO2 Permeation Tube Mass Loss Study (Mitchell)
+end if
+.
+. -----case = 34 (k = 3, n = 8): Mitchell-----
+.
+if case = 34
+   skip 25; read MITCHEL2.DAT Y X1 X2 X3
+   retain y x1 x2 x3 for i = 1 1 8
+   let k = 3
+   let string project = SO2 Permeation Tube Mass Loss Study II (Mitchell)
+end if
+.
+. -----case = 35 (k = 3, n = 8): Tang-----
+.
+if case = 35
+   skip 25; read TANG.DAT Y X1 X2 X3
+   retain y x1 x2 x3 for i = 1 1 8
+   let k = 3
+   let string project = Apache-Linux Net Processing Time (Tang)
+end if
+.
+. -----case = 36 (k = 3, n = 8): Klouda-----
+.
+if case = 36
+   skip 25; read KLOUDA2.DAT Y1 Y2 X1 X2 X3
+.    let y = y1
+.    let y = y2
+let y = y1*y2
+   delete y1 y2
+   retain y x1 x2 x3 for i = 1 1 8
+   let k = 3
+   let string project = Radiocarbon (14C) Measurements of Albuquerque Carbon Monoxide (Klouda/Connolly):  Response 3 (CO from Wood)
+end if
+.
+. -----case = 37 (k = 3, n = 8): Evans-----
+.
+if case = 37
+   skip 25; read EVANS.DAT Y1 Y2 Y3 X1 X2 X3
+   let y = y1
+   delete y1 y2 y3
+   retain y x1 x2 x3 for i = 1 1 8
+   let k = 3
+.    let string project = Balanced Design Study: $ Loss (Residential)
+   let string project = Fire Safety Study: $ Loss in Residential Fires (Evans)
+end if
+.
+. -----case = 38 (k = 3, n = 8): Evans-----
+.
+if case = 38; . error--need wider limits on interaction effects matrix
+   skip 25; read EVANS.DAT Y1 Y2 Y3 X1 X2 X3
+   let y = y2
+   delete y1 y2 y3
+   retain y x1 x2 x3 for i = 1 1 8
+   let k = 3
+.    let string project = Balanced Design Study: Loss Reduction Fraction (Commercial)
+   let string project = Fire Safety Study II: Loss Reduction Factor in Commercial Fires (Evans)
+end if
+.
+. -----case = 39 (k = 3, n = 8): Evans-----
+.
+if case = 39; . error--need wider limits on interaction effects matrix
+   skip 25; read EVANS.DAT Y1 Y2 Y3 X1 X2 X3
+   let y = y3
+   delete y1 y2 y3
+   retain y x1 x2 x3 for i = 1 1 8
+   let k = 3
+.    let string project = Balanced Design Study: Loss Reduction Fraction (Institutional)
+   let string project = Fire Safety Study III: Loss Reduction Factor in Institutional Fires (Evans)
+end if
+.
+. -----case = 310 (k = 3, n = 8): Summer Boys-----
+.
+if case = 310
+   comment 2**3
+   skip 25; read SUMMERB.DAT Y X1 X2 X3
+   let k = 3
+   let string project = 2001 Summer Intern Funnel Experiment (Team B)
+end if
+.
+. -----case = 311 (k = 3, n = 8): Summer Girls-----
+.
+if case = 311
+   comment 2**3
+   skip 25; read SUMMERG.DAT Y X1 X2 X3
+   let k = 3
+   let string project = 2001 Summer Intern Funnel Experiment (Team G)
+end if
+.
+. -----case = 312 (k = 3, n = 8): Espina-----
+.
+if case = 312
+   comment 2**3
+   skip 25; read ESPINA3.DAT Y X1 X2 X3
+   let k = 3
+   let string project = Espina/Ward 2**3 Flow Experiment
+end if
+.
+. -----case = 313 (k = 3, n = 8): Espina-----
+.
+if case = 313
+   comment 2**3
+   skip 25; read ESPINA4.DAT Y X1 X2 X3 X4
+   retain y x1 x2 x3 subset x4 -1
+   let k = 3
+   let string project = Espina/Ward 2**4 Flow Experiment (But Low Flow Only)
+end if
+.
+. -----case = 314 (k = 3, n = 8): Espina-----
+.
+if case = 314
+   comment 2**3
+   skip 25; read ESPINA4.DAT Y X1 X2 X3 X4
+   retain y x1 x2 x3 subset x4 +1
+   let k = 3
+   let string project = Espina/Ward 2**4 Flow Experiment (But High Flow Only)
+end if
+.
+. -----case = 315 (k = 3, n = 8): Starnes-----
+.
+if case = 315
+   comment 2**3
+   skip 25; read STARNES.DAT Y1 Y2 X1 X2 X3
+   retain y1 y2 x1 x2 x3 for i = 1 1 8
+   let y = y1
+   let k = 3
+   let string project = Starnes 2**3 Tomographic Flaw Detection in Polymer-Bonded Concrete
+end if
+.
+. -----case = 316 (k = 3, n = 8): Starnes-----
+.
+if case = 316
+   comment 2**3
+   skip 25; read STARNES.DAT Y1 Y2 X1 X2 X3
+   retain y1 y2 x1 x2 x3 for i = 1 1 8
+   let y = y2
+   let k = 3
+   let string project = Starnes 2**3 Tomographic Flaw Detection in Polymer-Bonded Concrete
+end if
+.
+. -----case = 317 (k = 3, n = 8): Combichem-----
+.
+if case = 317
+   comment 2**3
+   skip 25; read combichem.dat y1 y2 y3 x1 x2 x3
+   let y = y2
+   let k = 3
+   let string project =  Lutz: Optimization of a Scintinalltion Proximity Assay (Paper)
+end if
+.
+. -----case = 318 (k = 3, n = 8): Washburn-----
+.
+if case = 318
+   comment 2**3
+   skip 50; read WASHBURN1.DAT Y1 Y2 Y3 X1 X2 X3 X4
+   let y = y3
+   delete y1 y2 y3
+   retain y x1 x2 x3 x4 subset x2 -1
+   let x2 = x3
+   let x3 = x4
+   let k = 3
+   let string project = Washburn 2**3 Cartilege Regen. (Subset: TGF-b = .01) (Matrix = Alginate)
+end if
+.
+. -----case = 319 (k = 3, n = 8): Washburn-----
+.
+if case = 319
+   comment 2**3
+   skip 50; read WASHBURN1.DAT Y1 Y2 Y3 X1 X2 X3 X4
+   let y = y3
+   delete y1 y2 y3
+   retain y x1 x2 x3 x4 subset x2 +1
+   let x2 = x3
+   let x3 = x4
+   let k = 3
+   let string project = Washburn 2**3 Cartilege Regen. (Subset: TGF-b = 1) (Matrix = Alginate)
+end if
+.
+. -----case = 320 (k = 3, n = 8): Liang-----
+.
+if case = 320
+   comment 2**3
+   skip 25; read LIANG2.DAT Y1 Y2 T1 T2 X1 X2 X3
+.  let y = y1
+.  let y = y2
+  let y = y1-y2
+.  let y = 100*(y1-y2)/y2
+   let k = 3
+.  let string project = Liang/Lin Remote Radiation/Thermal Sensing (Y = Remote Temperature)
+.  let string project = Liang/Lin Remote Radiation/Thermal Sensing (Y = Surface Temperature)
+  let string project = Liang/Lin Remote Radiation/Thermal Sensing (Y = Surface-Remote Temperature)
+.  let string project = Liang/Lin Remote Radiation/Thermal Sensing (Y = Relative Temp. Difference)
+end if
+.
+. -----case = 321 (k = 3, n = 8): Clement-----
+.
+if case = 321
+   comment 2**3
+   skip 25; read NUT.DAT Y X1 X2 X3
+   let k = 3
+   let string project = Breaking Force of a Mechanical Component
+end if
+.
+. -----case = 322 (k = 3, n = 8): Prasad-----
+.
+if case = 322
+   comment 2**3
+.    let t = 1800
+.    let pos = 1
+   delete y1 y2 y3 y4 y5 x1 x2 x3 temp run
+   skip 25; read PRASAD3.DAT y1 y2 y3 y4 y5 x1 x2 x3 temp run
+   let y = y^pos
+   delete y1 y2 y3 y4 y5
+   retain y x1 x2 x3 subset temp ^t
+   let k = 3
+   let string project = ^prascase.:  WTC Insulation Analysis (Time = ^t, Position = ^pos)
+end if
+.
+. -----case = 323 (k = 3, n = 8): McGuiggan-----
+.
+if case = 323
+   comment 2**3
+   skip 25; read MCGUIGGAN8.DAT y x1 x2 x3 runseq
+   let k = 3
+   let string project = Combinatorial Chemistry Tape Peel (Set 2) (Mcguiggan)
+end if
+.
+. -----case = 324 (k = 3, n = 8): DeWit-----
+.
+if case = 324
+   comment 2**3
+   skip 25; read DEWIT.DAT y1 y2 x1 x2 x3
+   retain y1 y2 x1 x2 x3 for i = 1 1 8
+   let k = 3
+   .
+   let y = y1
+   let string cy = E1
+   let string project = Nanocantilever Elastic Constant #1 & Compliance Coefficients (Dewit/Fong/Gates)
+   .
+.    let y = y2
+.    let string cy = E2
+.    let string project = Nanocantilever Elastic Constant #2 & Compliance Coefficients (Dewit/Fong/Gates)
+   .
+   let string cx1 = c11
+   let string cx2 = c12
+   let string cx3 = c44
+end if
+.
+. -----case = 325 (k = 3, n = 8 + 1): Outola-----
+.
+if case = 325;
+   skip 25; read outola21.dat y x1 x2 x3
+   let ydatacen = y(9)
+   retain y x1 x2 x3 for i = 1 1 8
+   print y x1 x2 x3
+   let k = 3
+   let string project = Soil Leeching Sequenctial Extraction Optimizatopm (Uranium) (Iisa Outola)
+   let string cy = % Uranium Leeched
+   let string cx1 = Temperature
+   let string cx2 = Concentration
+   let string cx3 = Time
+end if
+.
+. -----case = 326 (k = 3, n = 8 + 1): Outola-----
+.
+if case = 326;
+   .
+   let element = 13
+   .
+   skip 25; read outola22.dat y tag x1 x2 x3
+   retain y tag x1 x2 x3 subset tag element
+   let ydatacen = y(9)
+   retain y x1 x2 x3 for i = 1 1 8
+   print y x1 x2 x3
+stat v
+. pause
+   let k = 3
+   let string st1 = U
+   let string st2 = Al
+   let string st3 = Ba
+   let string st4 = Ca
+   let string st5 = Co
+   let string st6 = Fe
+   let string st7 = K
+   let string st8 = Sr
+   let string st9 = Mn
+   let string st10 = Ti
+   let string st11 = V
+   let string st12 = Zn
+   let string st13 = Si
+   let string project = Soil Leeching Sequenctial Extraction Optimization (^st^element) (Iisa Outola)
+   let string cy = % ^st^element Leeched
+   let string cx1 = Temperature
+   let string cx2 = Concentration
+   let string cx3 = Time
+end if
+.
+. -----case = 327 (k = 3, n = 8): Ray Bowen Dental Materials-----
+.
+if case = 327
+   comment 2**3
+   skip 25; read BOWEN.DAT Y X1 X2 X3
+   let k = 3
+   let string project = Dental Polysac Adhesion Study
+   let string cy = Adhesion
+   let string cx1 = Agent
+   let string cx2 = Cleanser
+   let string cx3 = Mordant
+end if
+.
+. -----case = 328 (k = 3, n = 8): Dave Duewer Uncertainty Analysis Example: Y = A*B*C (k = 3, n = 8)-----
+.
+if case = 328
+   comment 2**3 wcp
+   skip 25
+   read duewer.dat y x1 x2 x3
+   let k = 3
+   let string project = Dave Duewer Uncertainty Analysis Example: Y = A*B*C (k = 3, n = 8)
+   let string suv1 = A
+   let string suv2 = B
+   let string suv3 = C
+end if
+.
+. -----case = 329 (k = 3, n = 8): Saltelli (p. 146) Bungee Cord Distance (k = 3, n = 8)
+.
+if case = 329
+   comment 2**3 wcp
+   skip 25
+   read saltelli.dat y x1 x2 x3
+   let k = 3
+   let string project = Saltelli (p. 146) Bungee Cord Distance Y = H - (2*M*g)/(kel*sig) (k = 3, n = 8)
+   let string suv1 = H
+   let string suv2 = M
+   let string suv3 = sig
+end if
+.
+. -----case = 330 (k = 3, n = 8): McKenna Polymer Swelling (k=3, n = 8)-----
+.
+if case = 330
+   comment 2**3
+   skip 25
+   read mckenna.dat y x1 x2 x3
+   let k = 3
+   let string project = McKenna Polymer Swelling (k = 3, n = 8)
+   let string cy = Swelling
+   let string cx1 = Affinity
+   let string cx2 = Mol. Vol.
+   let string cx3 = Sat. Vap. Pres.
+end if
+.
+. -----case = 331 (k = 3, n = 8): NIST Teachers Conference Funnel (k=3,n=8)-----
+.
+if case = 331
+   comment 2**3
+   skip 25
+   read nistfunnelteachers.dat y1 y2 y3 y4 y5 x1 x2 x3
+   let k = 3
+.
+   let subcase = 5
+.
+   if subcase = 1
+      let y = y1
+      let string project = NIST Teachers' Institute Funnel Experiment Team 1: John & Stephanie
+   end if
+   if subcase = 2
+      let y = y2
+      let string project = NIST Teachers' Institute Funnel Experiment Team 2: Jane & Lindsey
+   end if
+   if subcase = 3
+      let y = y3
+      let string project = NIST Teachers' Institute Funnel Experiment Team 3: Jyll & Janae
+   end if
+   if subcase = 4
+      let y = y4
+      let string project = NIST Teachers' Institute Funnel Experiment Team 4: Jackie & Jamie
+   end if
+   if subcase = 5
+      let y = y5
+      let string project = NIST Teachers' Institute Funnel Experiment Team 5: Donna, Jennifer, & Jennifer
+   end if
+   let string cy = Time
+   let string cx1 = Ball
+   let string cx2 = Funnel
+   let string cx3 = Ramp
+end if
+.
+. -----case = 332 (k = 3, n = 8): Zarr Hot Plate Conductivity (k = 3, n = 8)
+.
+if case = 332
+   skip 25
+   read zarr95.dat y x1 x2 x3
+   let k = 3
+   let string project = Zarr Hot Plate Analysis (k = 3, n = 8)
+   let string sy = Qm
+   let string sx1 = Vgap
+   let string sx2 = DTc2
+   let string sx3 = Ta-T
+end if
+.
+. -----------------------
+. -----k = 4 factors-----
+. -----------------------
+.
+. -----case = 40 (k = 4, n = 8): BHH Chemical Reaction-----
+.
+if case = 40
+skip 25
+read 2to4m1.dat x1 x2 x3 x4
+   skip 25; read DEXCLASS.DAT Y
+   let k = 4
+   let string project = Chemical Conversion Yield (BHH)
+   let string cy = Chemical Yield
+   let string cx1 = Catalyst Charge
+   let string cx2 = Temperature
+   let string cx3 = Pressure
+   let string cx4 = Concentration
+end if
+.
+. -----case = 41 (k = 4, n = 16): BHH Chemical Reaction-----
+.
+if case = 41
+   skip 25; read BOXCHEM.DAT Y X1 X2 X3 X4
+   let k = 4
+   let string project = Chemical Conversion Yield (BHH)
+   let string cy = Chemical Yield
+   let string cx1 = Catalyst Charge
+   let string cx2 = Temperature
+   let string cx3 = Pressure
+   let string cx4 = Concentration
+end if
+.
+. -----case = 42 (k = 4, n = 8): BHH Household Cleanser Stability-----
+.
+if case = 42
+   skip 25; read BOXCLEAN.DAT Y X1 X2 X3 X4
+   let k = 4
+   let string project = Household Cleanser Stability (BHH)
+   let string cy = Stability
+   let string cx1 = Acid Conc
+   let string cx2 = Catalyst Conc
+   let string cx3 = Temperature
+   let string cx4 = Monomer Conc
+end if
+.
+. -----case = 43 (k = 4, n = 16): Espina-----
+.
+if case = 43
+   comment 2**4
+   skip 25; read ESPINA4.DAT Y X1 X2 X3 X4
+   let k = 4
+   let string project = Espina/Ward 2**4 Flow Experiment
+end if
+. -----case = 44 (k = 4, n = 16): Washburn-----
+.
+if case = 44
+   comment 2**4
+   skip 50; read WASHBURN1.DAT Y1 Y2 Y3 X1 X2 X3 X4
+   let y = y3
+   delete y1 y2 y3
+   let k = 4
+   let string project = Washburn 2**4 Cartilege Regeneration (Matrix = Alginate Gel)
+end if
+.
+. -----case = 45 (k = 4, n = 16): Washburn-----
+.
+if case = 45
+   comment 2**4
+   skip 50; read WASHBURN2.DAT Y1 Y2 X1 X2 X3 X4
+   let y = y2
+   delete y1 y2
+   let k = 4
+   let string project = Washburn 2**4 Cartilege Regeneration (Matrix = Collagen Gel)
+end if
+.
+. -----case = 46 (k = 4, n = 16): Washburn-----
+.
+if case = 46
+   comment 2**4
+   skip 50; read WASHBURN3.DAT Y1 Y2 X1 X2 X3 X4
+   let y = y2
+   delete y1 y2
+   let k = 4
+   let string project = Washburn 2**4 Cartilege Regeneration (Matrix = Alginate + Collagen)
+end if
+.
+. -----case = 47 (k = 4, n = 16): Washburn-----
+.
+if case = 47
+   comment 2**4
+   skip 50; read WASHBURN5.DAT Y1 Y2 Y3 X1 X2 X3 X4
+   let y = y1
+   delete y1 y2 y3
+   let k = 4
+   let string project = Washburn 2**4 Cartilege Regeneration (Matrix = Alginate + Collagen)
+end if
+.
+. -----case = 48 (k = 4, n = 16): Stat Ease-----
+.
+if case = 48
+   comment 2**3???
+   skip 25; read STATEAS2.DAT Y X1 X2 X3 X4
+   retain y x1 x2 x3 x4 for i = 1 1 8
+   let k = 4
+   let string project = St.ez
+end if
+.
+. -----case = 49 (k = 4, n = 8): Scott-----
+.
+if case = 49
+   comment 2**(4-1) wcp
+   skip 25; read scott10.dat y1 y2 x1 x2 x3 x4
+   let y = y2
+   delete y1 y2
+   retain y x1 x2 x3 x4 for i = 1 1 8
+   let k = 4
+   let string project = J. H. Scott 3D Nanoscale Chemical Imaging (Cu-Au) (Exp. #1)
+end if
+.
+. -----case = 410 (k = 4, n = 8): Tom Vetter NAOH KHP Titration-----
+.
+if case = 410
+   comment 2**4 wcp
+   skip 25
+   read vetter10.dat y x1 x2 x3 x4
+   let k = 4
+   let string project = Tom Vetter Example: Titration of NAOH with KHP (k = 4, n = 8)
+   let string suv1 = MassKHP
+   let string suv2 = PurityKHP
+   let string suv3 = MolWtKHP
+   let string suv4 = TitrVolNaOH
+end if
+.
+. -----------------------
+. -----k = 5 factors-----
+. -----------------------
+.
+. -----case = 51 (k = 5, n = 32): BHH Chemical Reactor-----
+.
+if case = 51
+   comment 2**5
+   skip 25; read BOXREACT.DAT Y X1 X2 X3 X4 X5
+   let k = 5
+   let string project = Chemical Reactor Efficiency (BHH)
+   let string cy = Yield
+   let string cx1 = Feed Rate
+   let string cx2 = Catalyst
+   let string cx3 = Agitation Rate
+   let string cx4 = Temperature
+   let string cx5 = Concentration
+end if
+.
+. -----case = 52 (k = 5, n = 16): BHH Chemical Reactor-----
+.
+if case = 52
+   comment 2**(5-1)
+   skip 25; read BOXREAC2.DAT Y X1 X2 X3 X4 X5
+   let k = 5
+   let string project = Chemical Reactor Efficiency (BHH)  2**(5-1)
+   let string cy = Yield
+   let string cx1 = Feed Rate
+   let string cx2 = Catalyst
+   let string cx3 = Agitation Rate
+   let string cx4 = Temperature
+   let string cx5 = Concentration
+end if
+.
+. -----case = 53 (k = 5, n = 8): BHH Chemical Reactor-----
+.
+if case = 53
+   comment 2**(5-2)
+   skip 25; read BOXREAC3.DAT Y X1 X2 X3 X4 X5
+   let k = 5
+   let string project = Chemical Reactor Efficiency (BHH)  2**(5-2) (Derived)
+end if
+.
+. -----case = 54 (k = 5, n = 6): BHH Chemical Reactor (1-FAT)-----
+.
+if case = 54
+   skip 25; read BOXREAC4.DAT Y X1 X2 X3 X4 X5
+   let k = 5
+   let string project = Chemical Reactor Efficiency (BHH)  1-FAT (Derived)
+end if
+.
+. -----case = 55 (k = 5, n = 32): Jahanmir-----
+.
+if case = 55
+   skip 25; read JAHANMI5.DAT Y X1 X2 X3 X4 X5
+   let k = 5
+   let string project = Ceramic Machining Strength (Jahanmir)
+end if
+.
+. -----case = 56 (k = 5, n = 16): Tang-----
+.
+if case = 56; . good example of the need for logs
+   skip 25; read TANG2.DAT Y X1 X2 X3 X4 X5
+   retain y x1 x2 x3 x4 x5 for i = 1 1 16
+   let y = log(y)
+   let k = 5
+   let string project = Apache-Linux Net Processing Time II (Tang)
+end if
+.
+. -----case = 57 (k = 5, n = 16): Tang-----
+.
+if case = 57; . good example
+   skip 25; read TANG3.DAT Y X1 X2 X3 X4 X5
+   retain y x1 x2 x3 x4 x5 for i = 1 1 16
+   let k = 5
+   let string project = Apache-Linux Net Processing Time III (Tang)
+end if
+.
+. -----case = 58 (k = 5, n = 32): Krasny-----
+.
+if case = 58;
+   comment 2**5
+   skip 25; read KRASNY1.DAT Y1 TO Y9 X1 TO X5
+.    let y = y5
+   let y = y3
+   delete y1 y2 y3 y4 y5 y6 y7 y8 y9
+   let k = 5
+   let string project = Fire Safety: Bedding Material Cigarette Ignition Propensity
+end if
+.
+. -----case = 59 (k = 5, n = 32): Rossiter-----
+.
+if case = 59;
+   skip 25; read ROSSIT22.DAT Y X1 TO X5
+   let k = 5
+   let string project = Rossiter HUD Lead Paint Extraction
+end if
+.
+. -----case = 510 (k = 5, n = 16): Guttman-----
+.
+if case = 510;
+   skip 25; read GUTTMAN2.DAT Y1 Y2 Y3 X1 X2 X3 X4 X5 RUNSEQ
+   retain y1 y2 y3 x1 x2 x3 x4 x5 runseq for i = 1 1 16
+   let y = y1
+   let k = 5
+   let string project = MALDI Time-of-Flight Mass Spectrometry: Mean (Guttman)
+end if
+.
+. -----case = 511 (k = 5, n = 16): Guttman-----
+.
+if case = 511;
+   skip 25; read GUTTMAN2.DAT Y1 Y2 Y3 X1 X2 X3 X4 X5 RUNSEQ
+   retain y1 y2 y3 x1 x2 x3 x4 x5 runseq for i = 1 1 16
+   let y = y2
+   let k = 5
+   let string project = MALDI Time-of-Flight Mass Spectrometry: Resolution (Guttman)
+end if
+.
+. -----case = 512 (k = 5, n = 16): Guttman-----
+.
+if case = 512;
+   skip 25; read GUTTMAN2.DAT Y1 Y2 Y3 X1 X2 X3 X4 X5 RUNSEQ
+   retain y1 y2 y3 x1 x2 x3 x4 x5 runseq for i = 1 1 16
+   let y = y3
+   let k = 5
+   let string project = MALDI Time-of-Flight Mass Spectrometry: Signal-to-Noise (Guttman)
+end if
+.
+. -----case = 513 (k = 5, n = 32): Basuk-----
+.
+if case = 513;
+   comment 2**5
+   skip 25; read BASUK.DAT y x1 x2 x3 x4 x5
+   let k = 5
+   let string project = Fire Safety: Soft Materials Cigarette Ignition Propensity (NIST SP 851, pp. 9-10)
+end if
+.
+. -----case = 514 (k = 5, n = 16): Guttman-----
+.
+if case = 514;
+   skip 25; read GUTTMAN8.DAT Y X1 X2 X3 X4 X5 RUNSEQ
+   retain y x1 x2 x3 x4 x5 runseq for i = 1 1 16
+   let k = 5
+   let string project = MALDI Time-of-Flight Mass Spectrometry: Signal-to-Noise (Guttman)
+end if
+.
+. -----case = 515 (k = 5, n = 8): McGrattan-----
+.
+if case = 515;
+. feedback on
+echo on
+   skip 50; read MCGRATT1.DAT Y TRUTH TIME FACE RUN X1 X2 X3 X4 X5
+   retain y time face x1 x2 x3 x4 x5 run subset run 1 to 8
+   retain y x1 x2 x3 x4 x5 time run face subset face 1
+   retain y x1 x2 x3 x4 x5 face run time subset time 2
+print y x1 x2 x3 x4 x5
+. pause
+   let k = 5
+   let string project = WTC FDS Sensitivity Analysis
+end if
+.
+. -----case = 516 (k = 5, n = 8 + 1): Fong (m-12) (ANSYS Only)-----
+.
+if case = 516;
+   skip 25; read fong52.dat y1 y2 x1 x2 x3 x4 x5
+   let y = y1
+   let ydatacen = y(9)
+   retain y y1 y2 x1 x2 x3 x4 x5 for i = 1 1 8
+   print y x1 x2 x3 x4 x5
+   let k = 5
+   let string project = FEA Cantilever Sensitivity Analysis (m-12) (ANSYS)
+   let string cy = Freq-1
+   let string cx1 = Length
+   let string cx2 = Thickness
+   let string cx3 = c11
+   let string cx4 = c12
+   let string cx5 = c44
+end if
+.
+. -----case = 517 (k = 5, n = 8 + 1): Fong (m-12) (LS-DYNA Only)-----
+.
+if case = 517;
+   skip 25; read fong52.dat y1 y2 x1 x2 x3 x4 x5
+   let y = y2
+   let ydatacen = y(9)
+   retain y y1 y2 x1 x2 x3 x4 x5 for i = 1 1 8
+   print y x1 x2 x3 x4 x5
+   let k = 5
+   let string project = FEA Cantilever Sensitivity Analysis (m-12) (LS-DYNA)
+   let string cy = Freq-1
+   let string cx1 = Length
+   let string cx2 = Thickness
+   let string cx3 = c11
+   let string cx4 = c12
+   let string cx5 = c44
+end if
+.
+. -----case = 518 (k = 5, n = 8 + 1): Fong (m-12) (ANSYS - LSDYNA Difference)-----
+.
+if case = 518;
+   skip 25; read fong52.dat y1 y2 x1 x2 x3 x4 x5
+   let y = y1-y2
+   let ydatacen = y(9)
+   retain y y1 y2 x1 x2 x3 x4 x5 for i = 1 1 8
+   print y x1 x2 x3 x4 x5
+   let k = 5
+   let string project = FEA Cantilever Sensitivity Analysis (m-12) (ANSYS - LS-DYNA)
+   let string cy = Delta Freq-1
+   let string cx1 = Length
+   let string cx2 = Thickness
+   let string cx3 = c11
+   let string cx4 = c12
+   let string cx5 = c44
+end if
+.
+. -----case = 519 (k = 5, n = 8 + 1): Fong (m-infinity) (ANSYS Only)-----
+.
+if case = 519;
+   skip 25; read fong54.dat y1 y2 x1 x2 x3 x4 x5
+   let y = y1
+   let ydatacen = y(9)
+   retain y y1 y2 x1 x2 x3 x4 x5 for i = 1 1 8
+   print y x1 x2 x3 x4 x5
+   let k = 5
+   let string project = FEA Cantilever Sensitivity Analysis (m-infinity) (ANSYS)
+   let string cy = Freq-1
+   let string cx1 = Length
+   let string cx2 = Thickness
+   let string cx3 = c11
+   let string cx4 = c12
+   let string cx5 = c44
+end if
+.
+. -----case = 520 (k = 5, n = 8 + 1): Fong (m-infinity) (LS-DYNA Only)-----
+.
+if case = 520;
+   skip 25; read fong54.dat y1 y2 x1 x2 x3 x4 x5
+   let y = y2
+   let ydatacen = y(9)
+   retain y y1 y2 x1 x2 x3 x4 x5 for i = 1 1 8
+   print y x1 x2 x3 x4 x5
+   let k = 5
+   let string project = FEA Cantilever Sensitivity Analysis (m-infinity) (LS-DYNA)
+   let string cy = Freq-1
+   let string cx1 = Length
+   let string cx2 = Thickness
+   let string cx3 = c11
+   let string cx4 = c12
+   let string cx5 = c44
+end if
+.
+. -----case = 521 (k = 5, n = 8 + 1): Fong (M-infininity) (ANSYS - LSDYNA Difference)-----
+.
+if case = 521;
+   skip 25; read fong54.dat y1 y2 x1 x2 x3 x4 x5
+   let y = y1-y2
+   let ydatacen = y(9)
+   retain y y1 y2 x1 x2 x3 x4 x5 for i = 1 1 8
+   print y x1 x2 x3 x4 x5
+   let k = 5
+   let string project = FEA Cantilever Sensitivity Analysis (m-infinity) (ANSYS - LS-DYNA)
+   let string cy = Delta Freq-1
+   let string cx1 = Length
+   let string cx2 = Thickness
+   let string cx3 = c11
+   let string cx4 = c12
+   let string cx5 = c44
+end if
+.
+. -----case = 522 (k = 5, n = 16 + 2 + 8): Holbrook & Kline (Carbon Nanotube Reduction)-----
+.
+if case = 522;
+   skip 50
+   read holbrook16.dat y1 y2 y3 y4 y5 y6 x1 x2 x3 x4 x5 day tod runseq index
+   let y = y5
+   delete y x1 x2 x3 x4 x5 for i = 17 1 18
+.    retain y x1 x2 x3 x4 x5 for i = 1 1 16
+   print y x1 x2 x3 x4 x5
+   pause
+   let k = 5
+.    let string project = CNT Removal (Control + Surfactant + CNT) (k=5,n=16)
+   let string project = CNT Removal (Control + Surfactant + CNT) (k=5,n=16+8)
+   let string project2 = Case 1: Optimal Coagulant Dosage
+   let string cy = CNT Removal (%)
+   let string cx1 = Clay Conc
+   let string cx2 = NOM Conc
+   let string cx3 = Bio Conc
+   let string cx4 = Coag Type
+   let string cx5 = CNT Conc
+end if
+.
+. -----case = 523 (k = 5, n = 16 + 2 + 8): Holbrook & Kline (Turbidity Reduction)-----
+.
+if case = 523;
+   skip 50
+   read holbrook16.dat y1 y2 y3 y4 y5 y6 x1 x2 x3 x4 x5 day tod runseq index
+   let y = y6
+   delete y x1 x2 x3 x4 x5 for i = 17 1 18
+.    retain y x1 x2 x3 x4 x5 for i = 1 1 16
+   print y x1 x2 x3 x4 x5
+   pause
+   let k = 5
+.    let string project = Turbidity Reduction (Control + Surfactant + CNT) (k=5,n=16)
+   let string project = Turbidity Reduction (Control + Surfactant + CNT) (k=5,n=16+8)
+   let string project2 = Case 1: Optimal Coagulant Dosage
+   let string cy = Turbidity Reduction (%)
+   let string cx1 = Clay Conc
+   let string cx2 = NOM Conc
+   let string cx3 = Bio Conc
+   let string cx4 = Coag Type
+   let string cx5 = CNT Conc
+end if
+.
+. -----case = 524 (k = 5, n = 16 + 2): Holbrook & Kline (Carbon Nanotube Reduction)-----
+.
+if case = 524;
+   skip 50
+   read holbrook16b.dat y1 y2 y3 y4 y5 y6 x1 x2 x3 x4 x5 day tod runseq index
+   let y = y5
+   print y x1 x2 x3 x4 x5
+pause
+   let y = 0 subset y < 0
+   delete y x1 x2 x3 x4 x5 for i = 17 1 18
+   print y x1 x2 x3 x4 x5
+   pause
+   let k = 5
+   let string project = CNT Removal (Control + Surfactant + CNT) (k=5,n=16)
+   let string project2 = Case 2: Suboptimal Coagulant Dosage
+   let string cy = CNT Removal (%)
+   let string cx1 = Clay Conc
+   let string cx2 = NOM Conc
+   let string cx3 = Bio Conc
+   let string cx4 = Coag Type
+   let string cx5 = CNT Conc
+end if
+.
+. -----case = 525 (k = 5, n = 16 + 2): Holbrook & Kline (Turbidity Reduction)-----
+.
+if case = 525;
+   skip 50
+   read holbrook16b.dat y1 y2 y3 y4 y5 y6 x1 x2 x3 x4 x5 day tod runseq index
+   let y = y6
+   print y x1 x2 x3 x4 x5
+pause
+   let y = 0 subset y < 0
+   delete y x1 x2 x3 x4 x5 for i = 17 1 18
+   print y x1 x2 x3 x4 x5
+   pause
+   let k = 5
+   let string project = Turbidity Reduction (Control + Surfactant + CNT) (k=5,n=16)
+   let string project2 = Case 2: Suboptimal Coagulant Dosage
+   let string cy = Turbidity Reduction (%)
+   let string cx1 = Clay Conc
+   let string cx2 = NOM Conc
+   let string cx3 = Bio Conc
+   let string cx4 = Coag Type
+   let string cx5 = CNT Conc
+end if
+.
+. -----------------------
+. -----k = 6 factors-----
+. -----------------------
+.
+. -----case = 61 (k = 6, n = 16): Healy-----
+.
+if case = 61; . (not working yet)
+   skip 25; read HEALY1.DAT Y1 Y2 X1 X2 X3 X4 X5 X6
+   let y = y1
+   delete y1 y2
+   retain y x1 x2 x3 x4 x5 x6 for i = 1 1 16
+   let k = 6
+   let string project = ANSYS Hot Plate Conductivity Error (Healy)
+end if
+.
+. -----case = 62 (k = 6, n = 16): Healy-----
+.
+if case = 62; . (not working yet)
+   skip 25; read HEALY1.DAT Y1 Y2 X1 X2 X3 X4 X5 X6
+   let y = y2
+   delete y1 y2
+   retain y x1 x2 x3 x4 x5 x6 for i = 1 1 16
+   let k = 6
+   let string project = ANSYS Hot Plate Temperature Differential (Healy)
+end if
+.
+. -----case = 63 (k = 6, n = 16): Prasad-----
+.
+if case = 63
+   comment 2**(6-2) but only resolution 3
+   skip 50; read PRASAD.DAT y1 y2 x1 x2 x3 x4 x5 x6
+   let y = y1
+   delete y1 y2
+   let k = 6
+   let string project = Prasad 2**(6-2) (Res. 3) Thermal FEA (Max Steel Temp.)
+end if
+.
+. -----case = 64 (k = 6, n = 16): Prasad-----
+.
+if case = 64
+   comment 2**(6-2) but only resolution 3
+   skip 50; read PRASAD.DAT y1 y2 x1 x2 x3 x4 x5 x6
+   let y = y2
+   delete y1 y2
+   let k = 6
+   let string project = Prasad 2**(6-2) (Res. 3) Thermal FEA (Max Concrete Temp.)
+end if
+.
+. -----case = 65 (k = 6, n = 32+3): Polvani-----
+.
+if case = 65
+   comment 2**(6-1) w3cp
+   skip 25; read POLVANI.DAT y1 y2 x1 x2 x3 x4 x5 x6 seq
+   delete y1 y2 x1 x2 x3 x4 x5 x6 seq subset x6 0
+   let k = 6
+.    let y = y1
+.    let y = y2
+   let y = (y1+y2)/2
+.    let string project = Polvani 2**(6-1) SMS: Smart Machining Systems (Run 1: Ra)
+.    let string project = Polvani 2**(6-1) SMS: Smart Machining Systems (Run 2: Ra)
+   let string project = Polvani 2**(6-1) SMS: Smart Machining Systems ((Ra1 + Ra2)/2)
+end if
+.
+. -----case = 66 (k = 6, n = 32+3): Polvani1-----
+.
+if case = 66
+   comment 2**(6-1) w3cp
+   skip 25; read POLVANI1.DAT y x1 to x6 tag
+   let x = 1 1 35
+   let y1 = y; retain y1 subset tag 1
+   let y2 = y; retain y2 subset tag 2
+   let y3 = y; retain y3 subset tag 3
+   delete y
+   retain x1 x2 x3 x4 x5 x6 subset tag 1
+   delete y1 y2 y3 x1 x2 x3 x4 x5 x6 x subset x6 0
+.    let y = y1
+.    let y = y2
+.    let y = y3
+let y = (y1+y2+y3)/3
+   let k = 6
+.    let string project = Polvani 2**(6-1) SMS: Smart Machining Systems (Run 3, Y = Ra)
+   let string project = Polvani 2**(6-1) SMS: Smart Machining Systems (Ave. Ra over 3 Runs)
+end if
+.
+. -----case = 67 (k = 6, n = 32+3): Polvani2-----
+.
+if case = 67
+   comment 2**(6-1) w3cp
+   skip 50; read POLVANI2.DAT y1 to y9 x1 to x6 seq
+   delete y1 to y2 subset x6 0
+   delete seq x1 to x6 subset x6 0
+   let y = y1
+   let k = 6
+   let string project = Polvani 2**(6-1) SMS: Smart Machining Systems (Run 2 and Y = xxx)
+end if
+.
+. -----------------------
+. -----k = 7 factors-----
+. -----------------------
+.
+. -----case = 71 (k = 7, n = 8): BHH Bike Speed-----
+.
+if case = 71
+   skip 25; read BOXBIKE2.DAT Y X1 X2 X3 X4 X5 X6 X7
+   let k = 7
+   let string project = Bike Travel Time (BHH)
+end if
+.
+. -----case = 72 (k = 7, n = 16): BHH Bike Speed-----
+.
+if case = 72
+   skip 25; read BOXBIKE3.DAT Y X1 X2 X3 X4 X5 X6 X7
+   let k = 7
+   let string project = Bike Travel Time (BHH)
+end if
+.
+. -----case = 73 (k = 7, n = 8): BHH Industrial Filtration Time-----
+.
+if case = 73
+   skip 25; read BOXFILT.DAT Y X1 X2 X3 X4 X5 X6 X7
+   let k = 7
+   let string project = Industrial Filtration Time (BHH)
+   let string cy = Filtration Time
+   let string cx1 = Water Supply
+   let string cx2 = Raw Material
+   let string cx3 = Temperature
+   let string cx4 = Recycle
+   let string cx5 = Caustic Soda
+   let string cx6 = Filter Cloth
+   let string cx7 = Holdup Time
+end if
+.
+. -----case = 74 (k = 7, n = 16): BHH Industrial Filtration Time-----
+.
+if case = 74
+   skip 25; read BOXFILT2.DAT Y X1 X2 X3 X4 X5 X6 X7
+   let k = 7
+   let string project = Industrial Filtration Time (BHH)
+   let string cy = Filtration Time
+   let string cx1 = Water Supply
+   let string cx2 = Raw Material
+   let string cx3 = Temperature
+   let string cx4 = Recycle
+   let string cx5 = Caustic Soda
+   let string cx6 = Filter Cloth
+   let string cx7 = Holdup Time
+end if
+.
+. -----case = 75 (k = 7, n = 8): Test7-----
+.
+if case = 75
+   skip 25; read TEST7.DAT Y X1 X2 X3 X4 X5 X6 X7
+   let k = 7
+   let string project = Manufacturing: % Defects
+end if
+.
+. -----case = 76 (k = 7, n = 16): Inn-----
+.
+if case = 76; . (error--fix data file inn.dat k = 7 => k = 8)
+   skip 25; read INN.DAT Y X1 X2 X3 X4 X5 X6 X7
+   let k = 7
+   let string project = Sonoluminescent Light Intensity (Inn/Wilcox)
+end if
+.
+. -----case = 77 (k = 7, n = 32): Inn-Cummings-----
+.
+if case = 77; . (to be worked on more; not a BHH design)
+   skip 50; read CUMMING4.DAT Y1 Y2 Y3 X1 X2 X3 X4 X5 X6 X7
+   let y = y3
+   delete y1 y2 y3
+   let k = 7
+   let string project = Am-241/3 Peak Deconvolution Algorithm Accuracy (Inn/Cummings)
+end if
+.
+. -----case = 78 (k = 7, n = 16): BHH Industrial Filtration Time-----
+.
+if case = 78
+   skip 25; read BOXFILT3.DAT Y X1 X2 X3 X4 X5 X6 X7
+   let k = 7
+   let string project = Industrial Filtration Time (BHH)
+end if
+.
+. -----case = 79 (k = 7, n = 16): Inn-----
+.
+if case = 79
+   skip 25; read inn11.dat y1 y2 y3 x1 to x7
+   let y = y1
+.    let y = sqrt(y)
+   let k = 7
+   let string project = Store273Pu239:  Plutonium 239, Stores, 2^(7-3) Design   Raw Data    (Inn)
+end if
+.
+. -----case = 710 (k = 7, n = 16): Inn-----
+.
+if case = 710
+   skip 25; read inn11.dat y1 y2 y3 x1 to x7
+   let y = y2
+.    let y = sqrt(y)
+   let k = 7
+   let string project = Store273Sr90:  Strontium 90, Stores, 2^(7-3) Design   Raw Data    (Inn)
+end if
+.
+. -----case = 711 (k = 7, n = 16): Inn-----
+.
+if case = 711
+   skip 25; read inn11.dat y1 y2 y3 x1 to x7
+   let y = y3
+.    let y = sqrt(y)
+   let k = 7
+   let string project = Store273Cs137:  Cesium 137, Stores, 2^(7-3) Design   Raw Data    (Inn)
+end if
+.
+. -----case = 712 (k = 8, n = 16): Paule/Ullman-----
+.
+if case = 712
+   skip 25; read pauleullman.dat y x1 x2 x3 x4 x5 x6 x7 x8
+   let k = 8
+   let string project = Paule/Ullman E-11 Ruggedness Testing 2^(7-3) Design
+   let string cy = Reaction Time
+   let string cx1 = Temp
+   let string cx2 = Stirring
+   let string cx3 = Dilution
+   let string cx4 = Depth
+   let string cx5 = NaNO3
+   let string cx6 = KCl
+   let string cx7 = Time
+   let string cx8 = Day
+end if
+.
+. -----------------------
+. -----k = 8 factors-----
+. -----------------------
+.
+. -----case = 81 (k = 8, n = 32): Ochoa-----
+.
+if case = 81; . (to be worked on more; not a BHH design)
+   skip 50; read OCHOA2.DAT Y1 TO Y8 X1 X2 X3 X4 X5 X6 X7 X8
+   let y = y1
+   delete y1 to y8
+   retain y x1 x2 x3 x4 x5 x6 x7 x8 for i = 1 1 32
+   let k = 8
+   let string project = Gas metal Arc Welding Spatter (Ochoa-Salvidor)
+end if
+.
+. -----case = 82 (k = 8, n = 16): Scott-----
+.
+if case = 82;. by John Henry Scott 2/02
+   skip 25; read SCOTT.DAT Y X1 X2 X3 X4 X5 X6 X7 X8
+   let k = 8
+   let string project = HRTEM Error in Gate Dialectric SiO2 Thickness
+end if
+.
+. -----case = 83 (k = 8, n = 16): Inn-----
+.
+if case = 83;
+   skip 25; read INN2.DAT Y X1 to X8
+   let k = 8
+   let string project = Plutonium Contamination (Radford/Inn)
+end if
+.
+. -----case = 84 (k = 8, n = 16): Inn-----
+.
+if case = 84
+   skip 25; read inn12.dat y1 y2 y3 x1 to x8
+   let y = y1
+.    let y = sqrt(y)
+   let k = 8
+   let string project = RubbleDebris273Pu239:  Plutonium 239, Rubble and Debris, 2^(8-4) Design   Raw Data    (Inn)
+end if
+.
+. -----case = 85 (k = 8, n = 16): Inn-----
+.
+if case = 85
+   skip 25; read inn12.dat y1 y2 y3 x1 to x8
+   let y = y2
+.    let y = sqrt(y)
+   let k = 8
+   let string project = RubbleDebris273Sr90:  Strontium 90, Rubble and Debris, 2^(8-4) Design   Raw Data    (Inn)
+end if
+.
+. -----case = 86 (k = 8, n = 16): Inn-----
+.
+if case = 86
+   skip 25; read inn12.dat y1 y2 y3 x1 to x8
+   let y = y3
+.    let y = sqrt(y)
+   let k = 8
+   let string project = RubbleDebris273Cs137:  Cesium 137, Rubble and Debris, 2^(8-4) Design   Raw Data    (Inn)
+end if
+.
+. -----case = 87 (k = 8, n = 32): Random-----
+.
+if case = 87;
+   skip 25; read RANDOM8.DAT Y1 Y2 X1 X2 X3 X4 X5 X6 X7 X8
+   let y = y1
+   delete y1 to y2
+   retain y x1 x2 x3 x4 x5 x6 x7 x8 for i = 1 1 32
+   let k = 8
+   let string project = 8-Factor Random
+end if
+.
+. -----case = 88 (k = 8, n = 32): Soto-----
+.
+if case = 88;
+   skip 25; read SOTO0.DAT Y1 Y2 Y3 X1 X2 X3 X4 X5 X6 X7 X8
+   let y = y1
+.    let y = y3
+   let y = 0 subset y < 0
+   delete y1 y2 y3
+   retain y x1 x2 x3 x4 x5 x6 x7 x8 for i = 1 1 32
+   let k = 8
+.    let string project = Scatterfield Microscopy (Norm. Max Intensity) (Exp. #1) (Silver/Postek)
+   let string project = Scatterfield Microscopy (Focus Position) (Exp. #1) (Silver/Postek)
+end if
+.
+. -----case = 89 (k = 8, n = 32): Soto (Experiment 2)-----
+.
+if case = 89;
+   skip 25; read SOTO2.DAT Y1 Y2 Y3 X1 X2 X3 X4 X5 X6 X7 X8
+   let y = y3
+.    let y = y1
+   delete y1 y2 y3
+   retain y x1 x2 x3 x4 x5 x6 x7 x8 for i = 1 1 32
+   let k = 8
+   let string project = Scatterfield Microscopy (Norm. Max Intensity) (Exp. #2) (Silver/Postek)
+.    let string project = Scatterfield Microscopy (Focus Position) (Exp. #2) (Silver/Postek)
+end if
+.
+. -----case = 810 (k = 8, n = 32): Soto (Experiment 3)-----
+.
+if case = 810;
+   skip 25; read SOTO3.DAT Y1 Y2 Y3 X1 X2 X3 X4 X5 X6 X7 X8
+   let y = y3
+.    let y = y1
+   delete y1 y2 y3
+   retain y x1 x2 x3 x4 x5 x6 x7 x8 for i = 1 1 32
+   let k = 8
+   let string project = Scatterfield Microscopy (Norm. Max Intensity) (Exp. #3) (Silver/Postek)
+.    let string project = Scatterfield Microscopy (Focus Position) (Exp. #3) (Silver/Postek)
+end if
+.
+. -----case = 811 (k = 8, n = 32): Soto (Experiment 4)-----
+.
+if case = 811;
+   skip 25; read SOTO4.DAT Y1 Y2 Y3 X1 X2 X3 X4 X5 X6 X7 X8
+   let y = y3
+.    let y = y1
+   delete y1 y2 y3
+   retain y x1 x2 x3 x4 x5 x6 x7 x8 for i = 1 1 32
+   let k = 8
+   let string project = Scatterfield Microscopy (Norm. Max Intensity) (Exp. #4) (Silver/Postek)
+.    let string project = Scatterfield Microscopy (Focus Position) (Exp. #4) (Silver/Postek)
+end if
+.
+. -----case = 812 (k = 8, n = 32): Soto (Experiment 5)-----
+.
+if case = 812;
+   skip 25; read SOTO5.DAT Y1 Y2 Y3 X1 X2 X3 X4 X5 X6 X7 X8
+   let y = y3
+.    let y = y1
+   delete y1 y2 y3
+   retain y x1 x2 x3 x4 x5 x6 x7 x8 for i = 1 1 32
+   let k = 8
+   let string project = Scatterfield Microscopy (Norm. Max Intensity) (Exp. #5) (Silver/Postek)
+.    let string project = Scatterfield Microscopy (Focus Position) (Exp. #5) (Silver/Postek)
+end if
+.
+. -----case = 813 (k = 8, n = 32): Soto (Experiment 6)-----
+.
+if case = 813;
+   skip 25; read SOTO6.DAT Y1 Y2 Y3 X1 X2 X3 X4 X5 X6 X7 X8
+   let y = y3
+.    let y = y1
+   delete y1 y2 y3
+   retain y x1 x2 x3 x4 x5 x6 x7 x8 for i = 1 1 32
+   let k = 8
+   let string project = Scatterfield Microscopy (Norm. Max Intensity) (Exp. #6) (25 and 75%) (Silver)
+.    let string project = Scatterfield Microscopy (Focus Position) (Exp. #6) (Silver)
+end if
+.
+. -----case = 814 (k = 8, n = 32): Soto (Experiment 7)-----
+.
+if case = 814;
+   skip 25; read SOTO7.DAT Y1 Y2 Y3 X1 X2 X3 X4 X5 X6 X7 X8
+   let y = y3
+.    let y = y1
+   delete y1 y2 y3
+   retain y x1 x2 x3 x4 x5 x6 x7 x8 for i = 1 1 32
+   let k = 8
+   let string project = Scatterfield Microscopy (Norm. Max Intensity) (Exp. #7) (10 and 90%) (Silver)
+.    let string project = Scatterfield Microscopy (Focus Position) (Exp. #7) (Silver)
+end if
+.
+. -----------------------
+. -----k = 9 factors-----
+. -----------------------
+.
+. -----case = 91 (k = 9, n = 16): Inn-----
+.
+if case = 91
+   skip 25; read inn13.dat y1 y2 y3 x1 to x9
+   let y = y1
+   let y = sqrt(y)
+   let k = 9
+   let string project = UrbanSoil273Pu239:  Plutonium 239, Urban Soil, 2^(9-5) Design   Raw Data    (Inn)
+end if
+.
+. -----case = 92 (k = 9, n = 16): Inn-----
+.
+if case = 92
+   skip 25; read inn13.dat y1 y2 y3 x1 to x9
+   let y = y2
+   let y = sqrt(y)
+   let k = 9
+   let string project = UrbanSoil273Sr90:  Strontium 90, Urban Soil, 2^(9-5) Design   Raw Data    (Inn)
+end if
+.
+. -----case = 93 (k = 9, n = 16): Inn-----
+.
+if case = 93
+   skip 25; read inn13.dat y1 y2 y3 x1 to x9
+   let y = y3
+   let y = sqrt(y)
+   let k = 9
+   let string project = UrbanSoil273Cs137:  Cesium 137, Urban Soil, 2^(9-5) Design   Raw Data    (Inn)
+end if
+.
+. ------------------------
+. -----k = 10 factors-----
+. ------------------------
+.
+. -----case = 1001 (k = 10, n = 129): Jean-Louis Vigouroux Genetic Algorithm Optimization-----
+.
+. <not work: ugly>
+.
+if case = 1001
+   skip 100; read vigouroux.dat y1 to y10 x1 to x10
+   let y = y1
+   let k = 10
+   let string project = Genetic Algorithm Machine Tool Optimization (k = 10, n = 129) (Vigouroux)
+   let string suv1 = vcmin
+   let string suv2 = vcmax
+   let string suv3 = fmin
+   let string suv4 = fmax
+   let string suv5 = ap
+   let string suv6 = Kc
+   let string suv7 = Pu
+   let string suv8 = Dav
+   let string suv9 = Lc
+   let string suv10 = Raspc
+   let decplace = 2
+end if
+.
+. -----case = 1002 (k = 10, n = 1024): Dennis Leber thesis-----
+.
+if case = 1002
+   skip 25; read 2to10.dat x1 to x10
+   skip 25; read leber11.dat y1 y2 y3
+   let y = y3
+   let k = 10
+   let string project = Optimzation of Dual-Processing Job Line (k = 10, n = 128)
+   let decplace = 4
+end if
+.
+. -----case = 1003 (k = 10, n = 32): Kevin Mills Abilene Network Sensitivity Analysis-----
+.
+if case = 1003
+   skip 25; read mills21.dat y1junk y2junk y1 y2 y3 y4 x1 to x10
+   let casemill = 4
+   if casemill = 1; let y = y1; end if
+   if casemill = 2; let y = y2; end if
+   if casemill = 3; let y = y3; end if
+   if casemill = 4; let y = y4; end if
+   let k = 10
+   let string project = Abilene Network Model Sensitivity Analysis (k = 10, n = 32) (Kevin Mills) (05/22/07)
+   if casemill = 1; let string cy = Average Active Flows per Interval; end if
+   if casemill = 2; let string cy = Average Packets In per Interval; end if
+   if casemill = 3; let string cy = Average Packets Out per Interval; end if
+   if casemill = 4; let string cy = Average Loss Rate per Interval; end if
+   let string project2 = ^casemill. Response = ^cy
+   let string cx1 = PropD1
+   let string cx2 = RSp12
+   let string cx3 = RSp23
+   let string cx4 = QSiz3
+   let string cx5 = QSiz2
+   let string cx6 = QSiz1
+   let string cx7 = UFSPM
+   let string cx8 = UFSPS
+   let string cx9 = UThTM
+   let string cx10 = StMix
+   let decplace = 2
+   call darkblue.dp
+end if
+.
+. ------------------------
+. -----k = 13 factors-----
+. ------------------------
+.
+. -----case = 1301 (k = 13, n = 16): ARA-----
+.
+if case = 1301;
+   skip 50; read WTCARA2.DAT Y X1 TO X13
+   delete y x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 for i = 9 1 17
+.    delete y x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 for i = 8 1 1
+   let k = 13
+   let string project = ARA Engine Core Column Impact (k = 13, n = 8)
+   let string suv1 = Speed
+   let string suv2 = Vertcr()Loc
+   let string suv3 = Horcr()Loc
+   let string suv4 = Engcr()Set
+   let string suv5 = Engcr()Stren
+   let string suv6 = Engcr()FS
+   let string suv7 = Engcr()SRE
+   let string suv8 = Colcr()Stren
+   let string suv9 = Colcr()FS
+   let string suv10 = Colcr()SRE
+   let string suv11 = Eroscr()Param
+   let string suv12 = Congcr()Param
+   let string suv13 = Friccr()Coef
+   let decplace = 2
+end if
+.
+. -----case = 1302 (k = 13, n = 16): ARA-----
+.
+if case = 1302;
+   skip 50; read WTCARA2.DAT Y X1 TO X13
+   delete y x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 for i = 9 1 9
+   let k = 13
+   let string project = ARA Engine Core Column Impact (k = 13, n = 16)
+   let string suv1 = Speed
+   let string suv2 = Vertcr()Loc
+   let string suv3 = Horcr()Loc
+   let string suv4 = Engcr()Set
+   let string suv5 = Engcr()Stren
+   let string suv6 = Engcr()FS
+   let string suv7 = Engcr()SRE
+   let string suv8 = Colcr()Stren
+   let string suv9 = Colcr()FS
+   let string suv10 = Colcr()SRE
+   let string suv11 = Eroscr()Param
+   let string suv12 = Congcr()Param
+   let string suv13 = Friccr()Coef
+   let decplace = 2
+end if
+.
+. -----case = 1303 (k = 13, n = 16): Nour/Mille-----
+.
+if case = 1303;
+   skip 75; read nour31.dat y sdy x1 to x13
+   let subcase = 1
+.  let subcase = 2
+.  let subcase = 3
+.  let subcase = 4
+.  let subcase = 5
+.  let subcase = 6
+.  let subcase = 7
+.  let subcase = 8
+.  let subcase = 9
+.
+   if subcase = 1; let k1 = -1; let k2 = -1; end if
+   if subcase = 2; let k1 = -1; let k2 =  0; end if
+   if subcase = 3; let k1 = -1; let k2 = +1; end if
+   if subcase = 4; let k1 =  0; let k2 = -1; end if
+   if subcase = 5; let k1 =  0; let k2 =  0; end if
+   if subcase = 6; let k1 =  0; let k2 = +1; end if
+   if subcase = 7; let k1 = +1; let k2 = -1; end if
+   if subcase = 8; let k1 = +1; let k2 =  0; end if
+   if subcase = 9; let k1 = +1; let k2 = +1; end if
+.    retain y sdy x1 to x13 subset x1 ^k1 subset x2 ^k2
+   retain y sdy x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 subset x1 ^k1 subset x2 ^k2
+   let string q = (GRE = ^k1 DD = ^k2)
+   let k = 13
+   let string project = Gamma Ray Emitter Efficiency ^q (k = 13, n = 16)
+   let string suv1 = GamRaycr()Eff
+   let string suv2 = Distcr()Det
+   let string suv3 = Vertcr()Det
+   let string suv4 = Horizcr()Det
+   let string suv5 = PolyPlcr()Dens
+   let string suv6 = AirDencr()Lab
+   let string suv7 = AirDencr()BOMAB
+   let string suv8 = Solutcr()Dens
+   let string suv9 = Solutcr()Height
+   let string suv10 = Plat
+   let string suv11 = MagLaycr()Width
+   let string suv12 = Aircr()BOMAB
+   let string suv13 = SourBicr()Card
+   let decplace = 4
+end if
+.
+. ------------------------
+. -----k = 15 factors-----
+. ------------------------
+.
+. -----case = 1501 (k = 15, n = 16): Quinlan Speedometer Cabling-----
+.
+if case = 1501;
+   skip 50; read QUINLAN.DAT    x1 to x15   y1 to y4
+   let y = (y1+y2+y3+y4)/4
+   let k = 15
+   let string project = Quinlan Speedometer Cable Wear (k = 15, n = 16)
+end if
+.
+. -----write the input data out (if called for)-----
+.
+write "Case = ^case"
+write "Project = ^project"
+write "k = ^k"
+write y x1 to x^k
+. pause
+.
+. -----summary of contents (1/26/05)-----
+.
+.    case = 23     klouda2.dat
+.    case = 24     klouda2.dat
+.    case = 25     klouda2.dat
+.    case = 26     klouda2.dat
+.    case = 27     espina3.dat
+.    case = 28     espina3.dat
+
+.    case = 31     boxsprin.dat
+.    case = 32     splett.dat
+.    case = 33     mitchel1.dat
+.    case = 34     mitchel2.dat
+.    case = 35     tang.dat
+.    case = 36     klouda2.dat
+.    case = 37     evans.dat
+.    case = 38     evans.dat
+.    case = 39     evans.dat
+.    case = 310    summerb.dat
+.    case = 311    summerg.dat
+.    case = 312    espina3.dat
+.    case = 313    espina4.dat
+.    case = 314    espina4.dat
+.    case = 315    starnes.dat
+.    case = 316    starnes.dat
+.    case = 317    combichem.dat
+.    case = 318    washburn1.dat
+.    case = 319    washburn1.dat
+.    case = 320    liang2.dat
+.    case = 321    nut.dat
+.    case = 322    prasad3.dat
+.    case = 323    mcguiggan8.dat
+
+.    case = 41     boxchem.dat
+.    case = 42     boxclean.dat
+.    case = 43     espina4.dat
+.    case = 44     washburn1.dat
+.    case = 45     washburn2.dat
+.    case = 46     washburn3.dat
+.    case = 47     washburn5.dat
+.    case = 48     stateas2.dat
+
+.    case = 51     boxreact.dat
+.    case = 52     boxreac2.dat
+.    case = 53     boxreac3.dat
+.    case = 54     boxreac4.dat
+.    case = 55     jahanmi5.dat
+.    case = 55     jahanmi5.dat
+.    case = 56     tang2.dat
+.    case = 57     tang3.dat
+.    case = 58     krasny1.dat
+.    case = 59     rossit22.dat
+.    case = 510    guttman2.dat
+.    case = 511    guttman2.dat
+.    case = 512    guttman2.dat
+.    case = 513    basuk.dat
+.    case = 514    guttman8.dat
+.    case = 515    mcgratt1.dat
+
+.    case = 61     healy1.dat
+.    case = 62     healy1.dat
+.    case = 63     prasad.dat
+.    case = 64     prasad.dat
+.    case = 65     polvani.dat
+.    case = 66     polvani1.dat
+.    case = 67     polvani2.dat
+
+.    case = 71     boxbike2.dat
+.    case = 72     boxbike3.dat
+.    case = 73     boxfilt.dat
+.    case = 74     boxfilt2.dat
+.    case = 75     test7.dat
+.    case = 76     inn.dat
+.    case = 77     cumming4.dat
+.    case = 78     boxfilt3.dat
+.    case = 79     inn11.dat
+.    case = 710    inn11.dat
+.    case = 711    inn11.dat
+
+.    case = 81     ochoa2.dat
+.    case = 82     scott.dat
+.    case = 83     inn2.dat
+.    case = 84     inn12.dat
+.    case = 85     inn12.dat
+.    case = 86     inn12.dat
+.    case = 87     random8.dat
+.    case = 88     soto.dat
+.    case = 89     soto2.dat
+.    case = 810    soto3.dat
+.    case = 811    soto4.dat
+.    case = 812    soto5.dat
+
+.    case = 91     inn13.dat
+.    case = 92     inn13.dat
+.    case = 93     inn13.dat
+
+.    case = 1301   wtcara2.dat
+.    case = 1302   wtcara2.dat
+.

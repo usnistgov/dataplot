@@ -1,0 +1,20 @@
+----- <~prob\cdf.top> Cumulative Distribution Functions
+
+*Cumulative Distribution Functions
+
+Normal N(0,1)      NORCDF(X)
+t                  TCDF(X,NU)               NU > 0
+Chi-squared        CHSCDF(X,NU)     X >= 0  NU > 0
+F                  FCDF(X,NU1,NU2)  X >= 0  NU1,NU2 > 0
+
+Weibull (min)      SET MINMAX MIN
+                   WEICDF(X,GAMMA)  X >= 0  GAMMA > 0
+Weibull (max)      SET MINMAX MAX
+                   WEICDF(X,GAMMA)  X <= 0  GAMMA > 0
+Inverse Gaussian   IGCDF(X,GAMMA)   X >= 0  GAMMA > 0
+Wald               WALCDF(X)        X >= 0
+Recip. Inv. Gauss. RIGCDF(X,GAMMA)  X >= 0  GAMMA > 0
+Fatigue Life       FLCDF(X,GAMMA)   X >= 0  GAMMA > 0
+
+Generalized Pareto GEPCDF(X,GAMMA)
+

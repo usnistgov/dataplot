@@ -1,0 +1,23 @@
+This is file keyword.men--web handbook keyword
+ 
+--------------------
+ 1. On-line NIST/SEMATECH Handbook
+ 2. WEB HANDBOOK keyword
+ 3.
+ 4. Keyword (see List Keyword menu for choices):
+ 5. @CE 1 0 1 50 ?
+ 6.
+ 7. Use a currently open Netscape session
+ 8. @CE 2 1  5 10 yes
+ 9. @CE 2 2  5 10 no
+10.
+11.
+12. Access NIST/SEMATECH Handbook?
+--------------------
+GR FE
+@IF 2 1 SET NETSCAPE OLD
+@IF 2 1 SET NETSCAPE NEW
+WEB HANDBOOK _1
+--------------------
+WEB HELP WEB HANDBOOK
+--------------------

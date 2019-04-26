@@ -1,0 +1,8 @@
+-----  <~dexcomp\crbdload.top> Load Completely Randomized Block Designs
+
+Load Data Sets: Completely Randomized Block Designs
+
+   BOXSHOES.DAT  Boys' Shoe Material      <xcf: ~dataload\BOXSHOES.DP>
+   BOXPENIC.DAT  Penicillin Yield         <xcf: ~dataload\BOXPENIC.DP>
+   BOXPOISO.DAT  Poison antidote          <xcf: ~dataload\BOXPOISO.DP>
+

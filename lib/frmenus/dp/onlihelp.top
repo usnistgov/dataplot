@@ -1,0 +1,34 @@
+----- <~dp\onlihelp.top> On-line Help
+ 
+On-line Help
+ 
+To get an overview of DATAPLOT, enter
+ 
+   HELP
+ 
+To get help information about a command, enter
+ 
+   HELP [command]
+ 
+The following files are useful built-in
+reference files:
+ 
+   Dictionary of Commands  : COMMANDS.
+   Syntax for Commands     : SYNTAX.
+   LET Subcommands         : SUBCOMMANDS.
+   Inline text Subcommands : INLINE.
+   Mathematics Functions   : FUNCTIONS.
+ 
+   Tutorial Programs       : PROGRAMS.
+   Available Macros        : MACROS.
+ 
+   Tutorial Data Sets      : DATASETS.
+   Experiment Designs      : DESIGNS.
+   Prob. Distributions     : DISTRIBUTIONS.
+ 
+To view/list an entire above file,
+   enter LIST [file name]
+ 
+To search a file for a string,
+   enter SEARCH [file name] [string]
+ 

@@ -1,0 +1,89 @@
+This is file dexcubep.men--Generate DEX Cube Plot
+ 
+--------------------
+DEX Cube Plot
+CALL DEXCUBE2.DP
+ 
+Labels: Horizontal    Axis:
+        Vertical      Axis:
+        Front-to-Back Axis:
+ 
+Tic Labels: Horizontal    Axis: Left:
+            Horizontal    Axis: Right:
+            Vertical      Axis: Bottom:
+            Vertical      Axis: Top:
+            Front-to-Back Axis: Front:
+            Front-to-Back Axis: Back:
+Data:
+   1. Left   Bottom  Front:
+   2. Right  Bottom  Front:
+   3. Left   Top     Front:
+   4. Right  Top     Front:
+   5. Left   Bottom  Back :
+   6. Right  Bottom  Back :
+   7. Left   Top     Back :
+   8. Right  Top     Back :
+ 
+Title:
+Subtitle:
+Base-Title:
+Base-Sub-Title:
+ 
+ 
+Generate the Cube?:
+--------------------
+0
+0
+0
+25 100 ?
+25 100 ?
+25 100 ?
+0
+32 100 ?
+32 100 ?
+32 100 ?
+32 100 ?
+32 100 ?
+32 100 ?
+0
+32 100 ?
+32 100 ?
+32 100 ?
+32 100 ?
+32 100 ?
+32 100 ?
+32 100 ?
+32 100 ?
+0
+10 100 ?
+10 100 ?
+10 100 ?
+10 100 ?
+0
+0
+0
+--------------------
+GR FE
+LET A1 = _1
+LET A2 = _2
+LET A3 = _3
+LET TL1 = _4
+LET TL2 = _5
+LET TL3 = _6
+LET TL4 = _7
+LET TL5 = _8
+LET TL6 = _9
+LET D1 = _10
+LET D2 = _11
+LET D3 = _12
+LET D4 = _13
+LET D5 = _14
+LET D6 = _15
+LET D7 = _16
+LET D8 = _17
+LET STRING T = _18
+LET STRING ST = _19
+LET STRING BT = _20
+LET STRING SBT = _21
+CALL DEXCUBE2.DP
+--------------------

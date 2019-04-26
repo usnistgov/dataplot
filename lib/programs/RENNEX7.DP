@@ -1,0 +1,37 @@
+. THIS IS DATAPLOT PROGRAM FILE     RENNEX7.DP
+. OXYGEN IN SILICON SRM
+. MARCH 1994 (YELLOW BOOK)
+.
+. -----START POINT-----
+.
+skip 25
+read rennex.dat y18 y20 ycontrol y27 set group
+.
+label size 4
+multiplot 2 3
+x3label automatic
+lines so so do so
+y1label FTIR (All)
+x1label Set
+y1label FTIR (All); plot y18 y20 ycontrol y27 versus set
+y1label FTIR (Ingot 27); plot y27
+y1label FTIR (Control Ingot); plot ycontrol
+.
+let mc = mean ycontrol
+let fudge = mc/ycontrol
+let y27corr = y27*fudge
+y1label FTIR (Corrected Ingot 27); plot y27corr set
+.
+y1label Bootstrap Mean FTIR (Corrected Ingot 27)
+bootstrap mean plot y27corr
+let bootmean = yplot
+y1label
+x1label Bootstrap Mean FTIR (Corrected Ingot 27); histogram bootmean
+.
+multiplot off
+move 50 93; hw 3 2; justification center
+text Oxygen in Silicon SRM
+.
+hw 1 1; justification right
+move 81.5 5; text Dataplot
+move 81.5 3; text rennex7.dp

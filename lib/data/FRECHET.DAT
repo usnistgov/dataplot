@@ -1,0 +1,41 @@
+This is Dataplot data file    FRECHET.DAT
+Sample data set from Example 16.1 of
+Karl Bury, "Statistical Distributions in Engineering",
+Cambridge University Press, 1999, p. 305.
+
+Response variable = Maximum yearly snow load (coded data) on a
+                    proposed stadium roof has been calculated on
+                    the basis of a 16-year precipitation record
+Number of observations = 16
+Number of observations per line image = 1
+Order of observations per line image--
+   1. Response variable
+To read this file into Dataplot--
+   SKIP 25
+   READ GUMBEL.DAT Y
+   SET MINMAX 2
+   GUMBEL MAXIMUM LIKELIHOOD Y
+
+Bury models this a 2-parameter Frechet (maximum)
+
+Note that observation 15 is given as 28.8 on page
+304 but as 25.8 on page 305.  As it appears 25.8 is
+used in his calculations, we use that value.
+  Y
+------------------
+13.1
+14.8
+17.0
+18.2
+15.3
+14.9
+14.0
+16.8
+32.1
+22.8
+21.1
+15.3
+15.7
+21.0
+25.8
+21.6

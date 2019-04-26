@@ -1,0 +1,44 @@
+----- <~math\userfu_d.top> User Defined Functions
+ 
+User Defined Functions
+ 
+Dataplot allows you to create your own functions.  User defined
+functions can be plotted, evaluated at a given set of points, 
+used for fitting and finding roots, and numerous other operations.
+
+An example of a user defined function is:
+
+     LET A0 = 2
+     LET A1 = 1.5
+     LET A2 = 3
+     LET FUNCTION F = A0 + A1*X + A2 *X**2
+
+F is the name of the function.  A0, A1, and A2 are parameters
+and X is the argument of the function.  X can be either a
+dummy argument are a variable.  An example of using X as a
+dummy argument is:
+
+    PLOT F FOR X = -3 0.1 3
+
+Here we are plotting the funtion on the interval from -3 to 3
+at increments of 0.1.  On the other hand, we could do the
+following:
+
+   LET X = SEQUENCE -3 0.1 3
+   LET FY = F
+   PLOT FY X
+
+This creates the variable X with a set of points from -3 to 3 in
+increments of 0.1.  The command LET FY = F then evaulates that
+function at these points.
+
+The values for X and A0, A1, and A2 can be changed at any time.
+Whenever a command that uses the function in invoked, the current
+values are used.
+
+The standard arithmetic operators (+, -, *, /, **) can be used in
+defining functions.  Note that "^" cannot be used for exponentiation.
+In addition, Dataplot provides a large number of built-in functions
+that can be used in creating your own functions.  The
+"Built-In Functions" takes you to the web page documenting these
+functions.

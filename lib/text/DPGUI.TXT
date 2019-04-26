@@ -1,0 +1,78 @@
+Dataplot Graphical User Interface   (Spring, 1995)
+James J. Filliben, Statistical Engineering Division, CAML
+ 
+Dataplot Menu Subsystem
+ 
+The experienced Dataplot user usually runs Dataplot
+in a command mode--sequentially entering commands, generating
+output, and repeating as needed.
+The beginning Dataplot user
+who has no familiarity with the Dataplot commands
+and/or conventions may alternatively choose to execute
+Dataplot from a parallel point-and-click GUI menu mode.
+Aside from adding structure to the vast collection
+of Dataplot commands, running in the menu mode also
+automatically forms intermediate Dataplot commands
+and displays them to the analyst if interested.
+To enter the menu subsytem while at the usual Dataplot prompt,
+the analyst simply enters MENU.
+ 
+The GUI is written in Turbo-C;
+Dataplot's historic Fortran base has been only minimally
+distrubed with but a single link bridging the Fortran and C.
+In effect, the front end and back end are independent of one another.
+Design Philosophy:
+   The front end must be independent of the back end
+   The GUI must be easily extensible
+      (=> file-driven)
+      The GUI must be data-centric
+         (400+ data files on-line)
+      The GUI must be literature-based
+         (links to texts)
+   The GUI must be graphical:
+      Every quantitative solution has a better graphical alternative
+         (confidence limits => confidence distributions)
+The menu system must self-teach by its structure
+Not all users are the same, therefore
+   the menu system must be both problem-centric
+   and technique-centric
+Hypertext file structure
+Stat-specific menus
+Engineering unit based: sigma, not sigma-squared
+ 
+Advantages
+   1. File-driven menu system (extensible, portable)
+   2. Multi-level user expertise (commands => menus)
+   3. Multi-entry: data/technique/goal
+   4. multi-SED-member expertise
+   5. optional (ignorable)
+   6. file-connectable (hypertext: submenu, menu, literature)
+   7. dovetails nicely with Alan documentation
+   8. some areas: quite extensive (e.g., probability)
+   9. some areas: unique, new techiques (block plot, DDS, DEX)
+  10. NIST-sensitive menu structure (cv, calibration)
+  11. Graphics-representation of results (e.g., t test conf. limits)
+  12. data-centric
+  13. data from books & courses
+  14. stat-specific menus (Windows generic menu top menus too general)
+  15. Graphics output (e.g., confidence distributions)
+  16. Engineering-based: sigma, not sigma squared
+ 
+  17. extensive data resources
+  18. high-level roadmaps (via rooms)
+  19. connectable to literature (e.g., Natrella)
+  20. built-in extensible point and click menus for techniques
+  21. Postscript-graphics-based
+ 
+Disadvantages
+   1. Turbo-C (not Microsoft Windows)
+   2. Under construction items
+ 
+Links with other NIST projects:
+   1. HPCC/SIMA
+   2. Coatings Consortium
+   3. SEMATECH electronic handbook
+   4. DEX Workshops
+   5. future Stat for Scientist Courses
+   6. Graybill/Iyer textbook
+   7. Jeff Fong Multimedian conferencing via SCOOT

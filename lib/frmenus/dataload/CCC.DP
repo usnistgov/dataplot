@@ -1,0 +1,8 @@
+----- <~dataload\CCC.DP> Load CCC.DAT
+
+. This is file    CCC.DP
+
+DELETE Y SIZE X
+SKIP 25
+READ CCC.DAT Y SIZE X
+

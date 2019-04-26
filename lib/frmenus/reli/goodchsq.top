@@ -1,0 +1,28 @@
+-----<~reli\goodchsq.top> Goodness of Fit: Chi-Square Method
+
+Goodness-of-Fit: Chi-Square Method
+
+Goodness-of-Fit: Chi-Square Method
+
+NIST/SEMATECH Handbook          <xcl: web handbook chi-square gof test>
+
+The chi-square goodness of fit test is based on binned data.
+The observed counts are compared to the expected number of
+counts for the specified distribution.  Like the K-S test,
+the chi-square test is not dependent on the specific
+distribution being tested.  It can also be applied to
+discrete distributions and grouped data.
+
+Some drawbacks of the chi-square test are:
+
+   1. It requires relatively large samples for the chi-square
+      approximation to be accurate.
+
+   2. It is dependent on the binning method used.
+
+   3. It is typically less powerful than the Anderson-Darling
+      and K-S tests.
+
+In general, the Anderson-Darling and K-S tests are recommended
+unless you have pre-binned data or a discrete distribution.
+

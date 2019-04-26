@@ -1,0 +1,10 @@
+----- <~dataloex\imag.top> Load & Execute Time Series Data: Image Analysis
+
+Load & Execute Time Series Data: Image Analysis
+
+EHRSTEIN.DAT  Semicond. wafer resistiv.  <xcf: ~dataloex\EHRSTEIN.DP>
+BENNETT.DAT   Fracture surface roughness <xcf: ~dataloex\BENNETT.DP>
+BRAIN.DAT     Brain wave analysis        <xcf: ~dataloex\BRAIN.DP>
+CUBE.DAT      Vertices of a cube         <xcf: ~dataloex\CUBE.DP>
+WOOLLEY.DAT   Optical disk errors        <xcf: ~dataloex\WOOLLEY.DP>
+

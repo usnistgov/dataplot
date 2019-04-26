@@ -1,0 +1,65 @@
+This is file contplot.men--Generate DEX Contour Plot
+
+--------------------
+ 1. DEX Contour Plot (no center point)
+ 2. DEX CONTOUR PLOT Y X1 X2 YCONT
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. Most Important Factor/Variable:
+ 5. @CE 2 0 42 50 ? gui-vari
+ 6. 2nd Most Important Factor/Variable:
+ 6. @CE 3 0 42 50 ? gui-vari
+ 7.
+ 8. For the contour levels, you can either enter a
+ 9. list of values OR the name of a previusly created
+10. variable (enter one of the following).
+11.
+12. Desired List of Contour Line Values:
+13. @CE 4 0 1 50 ?
+14. Variable Containing Contour Line Values:
+14. @CE 5 0 42 50 gui-vari
+15.
+16. Type of Optimization:
+16. @CE 6 1 35 42 Maximum
+16. @CE 6 2 43 49 Minimum
+17.
+18. The traces for the Dex Contour Plot are defined by:
+19.   trace 1        - edge points (set automatically)
+20.   trace 2        - edge point square
+21.   trace 3 and up - contour lines
+22. 
+23. Line Style (start with trace 2):
+24. @CE 7 0 1 50 gui-line
+25. Line Thickness (start with trace 2):
+26. @CE 8 0 1 50 gui-thickness
+27. Line Color (start with trace 1):
+28. @CE 9 0 1 50 gui-color
+29.
+30. Title
+31. @CE 10 0 10 50 *
+32. Vertical axis label (most important factor)
+33. @CE 11 0 10 50 *
+34. Horizontal axis label (2nd most important factor)
+35. @CE 12 0 10 50 *
+36.
+37. Generate the Contour Plot?:
+--------------------
+GR FE
+@IF 4 0 LET YCONT = DATA _4
+@IF 5 0 LET YCONT = _5
+SET DEX CONTOUR  PLOT DIRECTION MAXIMUM
+SET DEX CONTOUR  PLOT DIRECTION _6
+LINE BLANK BLANK _7 
+LINE THICKNESS  0.1 0.1 0.3
+LINE THICKNESS  0.1 _8
+LINE COLOR _9
+TITLE _10
+Y1LABEL _11
+X1LABEL _12
+DEX CONTOUR PLOT _1 _2 _3 YCONT
+LINE SOLID ALL
+LINE THICKNESS 0.1 ALL
+--------------------
+WEB HELP DEX CONTOUR PLOT
+--------------------

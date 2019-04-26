@@ -1,0 +1,8 @@
+----- <~datalist\STENBAKK.top> STENBAKK.DAT
+ 
+STENBAKK.DAT
+ 
+View     <xcl: LIST STENBAKK.DAT>
+Load     <x2cl: SKIP 25; READ STENBAKK.DAT Y X1 TO X10>
+Print    <xccl: printfile C:\DATAPLOT\STENBAKK.DAT>
+ 

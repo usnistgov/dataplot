@@ -1,0 +1,21 @@
+----- <~fit\mrdisc.top> Multivariate Linear Regression
+ 
+Multivariate Linear Regression
+
+Multivariate linear regression fits the following model:
+
+    Y = A0 + A1*X1 + A2*X2 + ... + AP*XP + Error
+
+where Y is the dependent variable and X1, X2, ..., XP
+are the independent variables.  Dataplot can fit up to
+35 independent variables, although 1 to 5 independent
+variables are the most common.
+
+If you want to fit polynomial and interaction terms, 
+you can do so in a straightforward manner as follows:
+
+     LET X12 = X1*X2
+     LET X1SQ = X1**2
+     LET X2SQ = X2**2
+     FIT Y X1 X2 X12 X1SQ X2SQ
+

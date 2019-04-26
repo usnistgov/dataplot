@@ -1,0 +1,16 @@
+----- <~qual\7oldtool.top> 7 Old Tools
+ 
+7 Old Tools
+ 
+Discussion               <xcl: LIST OLDTOOLS.TXT>
+ 
+Checksheet               <~qual\checksh.top>
+Pareto Chart             <xemf: ~plot\pareplot.men>
+Ishikawa Diagram         <~qual\ishikawa.top>
+Histogram                <xemf: ~stat\histogram.men>
+Stratified Histogram     <xemf: ~plot\bihist.men>
+Scatter Plot             <xemf: ~stat\scatplot.men>
+Control Charts           <~qual\contchar.top>
+ 
+References               <~qual\7oldrefe.top>
+ 

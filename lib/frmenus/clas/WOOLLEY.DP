@@ -1,0 +1,10 @@
+----- <~dataloex\WOOLLEY.DP> Load & Execute WOOLLEY.DAT
+
+. This is file    WOOLLEY.DP
+
+DELETE Y
+SKIP 25
+SERIAL READ WOOLLEY.DAT Y
+TITLE WOOLLDY.DAT
+/
+

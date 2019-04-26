@@ -1,0 +1,171 @@
+----- <~reli\potdisc.top> Discussion--Peaks Over Threshold
+
+Discussion: Peaks Over Threshold Analysis of Extreme Values
+
+Discussion: Peaks Over Threshold Analysis of Extreme Values
+
+In the Peaks Over Threshold (POT) method, we pick a threshold
+and then extract all data that exceeds this threshold.
+
+The generalized Pareto distribution provides a useful
+distributional model for univariate extreme value data since
+it indicates what type of extreme value model is appropriate:
+
+   1) gamma = 0   - this is equivalent to an extreme value
+                    type I (Gumbel) distribution.
+   2) gamma > 0   - this is equivalent to an extreme value
+                    type II (Frechet) distribution.
+   3) gamma < 0   - this is equivalent to a reverse Weibull
+                    distribution (in Dataplot, this is a
+                    Weibull with SET MINMAX MINIMUM).  The
+                    shape parameter for the reverse Weibull
+                    is -1/gamma.
+
+The purpose of the PEAKS OVER THRESHOLD PLOT is to see
+how the estimated value of gamma changes as the threshold
+is changed.  Specifically, the plot is generated as follows:
+
+   1) Define an initial threshold.  In Dataplot, you can
+      specify either the starting number of points above the
+      threshold or a particular value for the threshold.
+
+      To specify the intial number of points above the
+      threshold, enter the command
+
+          SET PEAKS OVER THRESHOLD INITIAL POINTS <value>
+
+      To specify a starting value for the threshold, enter
+      the command
+
+          SET PEAKS OVER THRESHOLD INITIAL THRESHOLD <value>
+
+      If neither command is given, Dataplot will start
+      with a threshold that gives 2.5% of the data set.
+      If both are specified, the INITIAL THRESHOLD takes
+      precedence over the INITIAL POINTS.
+
+   2) For the points above the threshold, estimate the
+      parameters for the generalized Pareto distribution
+      (see the Note section below for details on how this
+      is done).
+
+      In addition, calculate a confidence interval for
+      the shape parameter.  For the de Haan and CME methods
+      (see the Note section below), we compute the standard
+      deviation of the estimate of gamma.  We then use
+      gamma +/- 2*sd(gamma) as an estimate of the confidence
+      interval.  For the PPCC plot method, the confidence
+      interval is computed using bootstrapping.
+
+   3) Decrement the threshold.  To specify how much to
+      decrement the threshold at each interval, enter the
+      command
+
+          SET PEAKS OVER THRESHOLD INCREMENT <value>
+
+      The default increment is -1.
+
+   4) This is repeated for a pre-specified number of
+      iterations.  The default number of iterations is 30.
+      To change the number of iterations, enter the command
+
+          SET PEAKS OVER THRESHOLDS ITERATIONS <value>
+
+The plot then consists of three curves:
+
+   1) The point estimates of gamma.
+   2) The lower confidence limit for gamma.
+   3) The upper confidence limit for gamma.
+
+Each of these is plotted against the number of points above
+the threshold.  To have the actual threshold plotted on the
+horizontal axis, enter the command
+
+   SET PEAKS OVER THRESHOLD X AXIS THRESHOLD
+
+To restore the default of the number of points above the
+threshold, enter the command
+
+   SET PEAKS OVER THRESHOLD X AXIS POINTS
+
+The basic interpretation of this plot is:
+
+    When the threshold is high, few points are included so
+    the variance of gamma is also high (and so the resulting
+    confidence intervals are wide).  As the threshold
+    decreases (and more points are included), the variance
+    of gamma decreases with resulting narrower confidence
+    intervals.  However, as the number of points increases,
+    the bias of the estimate of gamma increases.  This will
+    often be indicated by a downward slope of the graph.
+    Over intervals where the bias error is small, the
+    graph will be nearly horizontal.  When choosing a
+    reasonable value of gamma from the graph, it should
+    be noted that larger estimates of gamma imply a
+    longer tail and are therefore conservative from a
+    structural engineering point of view.
+
+In addition to the plot, this command will also generate
+the following tables at each iteration.
+
+    1) The first table contains the threshold, the number
+       of points above the threshold, and the parameter
+       estimates.
+
+    2) In engineering applications, the mean recurrence
+       interval (this is also referred to as the return
+       interval or recurrence interval) is of interest.
+
+       The return interval of a given wind speed, in years, is
+       defined as the inverse of the probability that the wind
+       speed will be exceeded in any one year.  It is defined as
+
+          1/(1 - F(x))
+
+       with F(x) denoting the cumulative distribution function.
+       Mean recurrence intervals are discussed in more detail
+       in Simiu and Scanlon (see References section below).
+
+       More often, we would like to compute the wind speed
+       that corresponds to a given return interval.  The
+       solution to this is given by solving the above
+       equation for x.
+
+          X(R) = G(1 - (1/R))
+
+       with G and R denoting the percent point function and
+       the desired mean recurrence interval, respectively.
+
+       The above formula is for the case of a single yearly
+       maximum.  If lambda is the mean number of threshold
+       crossings per year, the formula is
+
+          X(R) = G(1 - (1/(lambda*R)))
+
+       In the Dataplot PEAKS OVER THRESHOLD PLOT command, you
+       can optionally give a second variable that specifies the
+       desired mean recurrence intervals.  If you specify mean
+       return intervals, Dataplot will print a table showing
+       the mean return interval along with the corresponding
+       wind speed (called XR).
+
+    3) In wind engineering applications, the load factor is
+       also of interest.  This is commonly computed as
+ 
+           (XMAX/XR(50))**2
+ 
+       with XMAX denoting the maximum value of the fitted
+       generalized Pareto distribution (the generalized
+       Pareto is bounded above if the shape parameter is
+       negative) and XR(50) denoting the wind speed 
+       corresponding to a mean recurrence interval of 50
+       years.
+ 
+       To print the value of the maximum wind speed and the
+       load factor, enter the command
+ 
+           SET PEAKS OVER THRESHOLD LOAD FACTOR OFF
+ 
+       Since this is specific to extreme wind applications,
+       it is OFF by default.
+

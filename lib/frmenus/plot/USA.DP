@@ -1,0 +1,7 @@
+----- <~plot\USA.DP> Load USA.DAT
+
+. This is file    USA.DP
+
+DELETE X Y
+READ USA.DAT X Y
+

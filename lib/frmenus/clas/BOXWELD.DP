@@ -1,0 +1,10 @@
+----- <~dataloex\BOXWELD.DP> Load & Execute BOXWELD.DAT
+
+. This is file    BOXWELD.DP
+
+DELETE Y X
+SKIP 25
+READ BOXWELD.DAT Y X
+TITLE BOXWELD.DAT
+/
+

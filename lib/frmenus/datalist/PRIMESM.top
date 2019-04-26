@@ -1,0 +1,8 @@
+----- <~datalist\PRIMESM.top> PRIMESM.DAT
+ 
+PRIMESM.DAT
+ 
+View     <xcl: LIST PRIMESM.DAT>
+Load     <x2cl: SKIP 25; READ PRIMESM.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\PRIMESM.DAT>
+ 

@@ -1,0 +1,8 @@
+----- <~datalist\CLEAR.top> CLEAR.DAT
+ 
+CLEAR.DAT
+ 
+View     <xcl: LIST CLEAR.DAT>
+Load     <x2cl: SKIP 25; READ CLEAR.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\CLEAR.DAT>
+ 

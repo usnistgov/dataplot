@@ -1,0 +1,100 @@
+This is file crosplco.men--Generate Cross Tab Statistic Plots (Correlation)
+ 
+--------------------line 3
+01. Cross Tabulated Statistic Plots (Correlation/Fitting)
+02. CROSS TABULATE <statistic> PLOT Y1 Y2 X1 X2
+03.
+04. First Vertical Axis Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Second Vertical Axis Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06. Group One ID Variables:
+06. @CE 3 0 37 54 ? gui-vari
+07. Group Two ID Variables:
+07. @CE 4 0 37 54 ? gui-vari
+08.
+09. Correlation/Fitting Statistic (Select one):
+10. @CE 5 1 1 27 biweight midcorrelation
+10. @CE 5 2 29 57 biweight midcovariance
+11. @CE 5 3 1 27 comovement
+11. @CE 5 4 29 57 correlation
+12. @CE 5 5 1 27 covariance
+12. @CE 5 6 29 57 linear correlation
+13. @CE 5 7 1 27 linear intercept
+13. @CE 5 8 29 57 linear ressd
+14. @CE 5 9 1 27 linear slope
+14. @CE 5 10 29 57 percentage bend correlation
+15. @CE 5 11 1 27 rank comovement
+15. @CE 5 12 29 57 rank correlation
+16. @CE 5 13 1 27 rank covariance
+16. @CE 5 14 29 57 Winsorized correlation
+17. @CE 5 15 1 27 Winsorized covariance
+18.
+19. Percentage of values to Winsorize above?:
+19. @CE 6 0 42 50 ? 
+20. Percentage of values to Winsorize below?:
+20. @CE 7 0 42 50 ?
+21. Beta for percentage bend (0 < beta < 0.5):
+21. @CE 8 0 42 50 ?
+22.
+23. Character Type for Data
+23. @CE 9 0 42 50 * gui-char
+24. Character Fill for Data
+24. @CE 10 0 42 50 gui-ooff
+25. Line Type for Group 1 Global Stat Line?
+25. @CE 11 0 42 50 * gui-line
+26. Line Type for Global Stat Line?
+26. @CE 12 0 42 50 * gui-line
+27.
+28. Title:
+28. @CE 13 0 10 50 *
+29. Left Axis Label:
+29. @CE 14 0 22 50 *
+30. Bottom Axis Label:
+30. @CE 15 0 22 50 *
+31.
+32. Subset/Except/For Specification:
+33. @CE 16 0 1 50 *
+34.
+35. Generate the Cross Tabulated Statistic Plot?:
+--------------------
+TITLE _13
+Y1LABEL _14
+X1LABEL _15
+CHARACTER SAVE
+LINE SAVE
+CHARACTER X BLANK BLANK
+LINE BLANK SOLID SOLID
+CHARACTERS _9
+CHARACTER FILL _10
+LINES _11 ALL
+LINES BLANK _12
+SPIKE OFF OFF OFF
+BAR OFF OFF OFF
+.
+LET P1 = 5
+LET P2 = 5
+LET P1 = _7
+LET P2 = _6
+LET BETA = _8
+.
+@IF 5 1 CROSS TABULATE BIWEIGHT MIDCORRELATION PLOT _1 _2 _3 _4 _16
+@IF 5 2 CROSS TABULATE BIWEIGHT MIDCOVARIANCE PLOT _1 _2 _3 _4 _16
+@IF 5 3 CROSS TABULATE COMOVEMENT PLOT _1 _2 _3 _4 _16
+@IF 5 4 CROSS TABULATE CORRELATION PLOT _1 _2 _3 _4 _16
+@IF 5 5 CROSS TABULATE COVARIANCE PLOT _1 _2 _3 _4 _16
+@IF 5 6 CROSS TABULATE LINEAR CORRELATION PLOT _1 _2 _3 _4 _16
+@IF 5 7 CROSS TABULATE LINEAR INTERCEPT PLOT _1 _2 _3 _4 _16
+@IF 5 8 CROSS TABULATE LINEAR RESSD PLOT _1 _2 _3 _4 _16
+@IF 5 9 CROSS TABULATE LINEAR SLOPE PLOT _1 _2 _3 _4 _16
+@IF 5 10 CROSS TABULATE PERCENTAGE BEND CORRELATION PLOT _1 _2 _3 _4 _16
+@IF 5 11 CROSS TABULATE RANK COMOVEMENT PLOT _1 _2 _3 _4 _16
+@IF 5 12 CROSS TABULATE RANK CORRELATION PLOT _1 _2 _3 _4 _16
+@IF 5 13 CROSS TABULATE RANK COVARIANCE PLOT _1 _2 _3 _4 _16
+@IF 5 14 CROSS TABULATE WINSORIZED CORRELATION PLOT _1 _2 _3 _4 _16
+@IF 5 15 CROSS TABULATE WINSORIZED COVARIANCE PLOT _1 _2 _3 _4 _16
+CHARACTER RESTORE
+LINE RESTORE
+--------------------
+WEB HELP CROSS TABULATE PLOT
+--------------------

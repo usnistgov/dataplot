@@ -1,0 +1,8 @@
+----- <~dataall\ABERN17.top> ABERN17.DAT
+
+ABERN17.DAT
+
+View     <xcl: LIST ABERN17.DAT>
+Load     <xcf: ~dataload/ABERN17.DP>
+Print    <xccl: printfile C:\DATAPLOT\ABERN17.DAT>
+

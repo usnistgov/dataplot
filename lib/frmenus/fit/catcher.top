@@ -1,0 +1,24 @@
+----- <~fit\catcher.top> Regression Diagnostics  (Catcher Matrix)
+
+Regression Diagnostics Based on Catcher Matrix
+
+Discussion                                   <~fit\disccatc.top>
+
+Note: most of these menus require that
+the independent variables be provided in
+a matrix form.  Do this using the
+"Create a Design Matrix" menu.
+
+Create a Design Matrix                       <xemf: ~fit\creatdes.men>
+Compute the Catcher Matrix                   <xemf: ~fit\catcher.men>
+Compute the XTXINV Matrix                    <xemf: ~fit\xtxinv.men>
+
+Condition Indices                            <xemf: ~fit\condind.men>
+Variance Inflation Factors                   <xemf: ~fit\vif.men>
+
+Partial Residual Plots                       <xemf: ~fit\partresp.men>
+Partial Regression (= Added Variable) Plots  <xemf: ~fit\partregr.men>
+Partial Leverage Plots                       <xemf: ~fit\partlevp.men>
+
+DFBETA                                       <xemf: ~fit\dfbeta.men>
+

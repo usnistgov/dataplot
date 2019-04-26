@@ -1,0 +1,8 @@
+----- <~math\probfunc.top> Probability Functions
+ 
+Probability Functions
+ 
+Plot CDF FUnctions            <~prob\plotcdf.top>
+Plot PDF FUnctions            <~prob\plotpdf.top>
+Plot PPF FUnctions            <~prob\plotppf.top>
+ 

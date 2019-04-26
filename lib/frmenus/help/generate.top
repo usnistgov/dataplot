@@ -1,0 +1,88 @@
+----- <~help\generate.top> Help: Generating Data
+ 
+Help: Discussion/Generating Data
+
+In addition to reading data from files and entering
+data directly into the data spreadsheet, Dataplot
+contains a number of commands for generating data.
+A few of the more common cases are described here.
+
+1) To create a scalar value, you can enter a command
+   like the following:
+
+      LET A = 2
+
+   From the GUI, select "Files/Data" and the select
+   "Define a Parameter".
+
+2) To create a variable with a small number of values,
+   you can use the LET ... DATA command.  For example,
+
+      LET Y = DATA 1 2 3 4 5
+
+   From the GUI, select "Files/Data" and the select
+   "Enter a Small Number of Values".
+
+3) To create a variable that contains 100 elements
+   all equal to 1, enter the command
+
+         LET Y = 1 FOR I = 1  1  100
+
+   The FOR sequence defines a start row (1), an
+   increment (1), and a stop row (100).
+
+4) The SEQUENCE command is used to generate sequences
+   that have specific patterns.
+
+   a.  The most common usage of the SEQUENCE command is:
+
+          LET Y = SEQUENCE  start  inc stop
+
+       For example,
+
+          LET Y = SEQUENCE 1 1 5
+
+       creates the variable Y containing 1, 2, 3, 4, and 5.
+
+    b. To repeat the above sequence 20 times, you would
+       enter the command
+
+          LET Y = SEQUENCE 1 1 5 FOR I = 1 1 100
+
+       This repeats the values 1, 2, 3, 4, and 5 for 100 rows.
+
+    c. Sometines you would like a sequence like
+
+          1 1 1 2 2 2 3 3 3 4 4 4 5 5 5
+
+       This sequence can be generated with the command
+
+          LET Y = SEQUENCE 1 3 1 5
+
+       In this syntax, you specify a start value, a repeat
+       value (in this example, each number is repeated 3 times),
+       an increment, and a stop value.
+
+    Note that Dataplot does not restrict start, increment, and
+    stop values to integers.  That is, you can do something like
+
+         LET Y = SEQUENCE   0.5 0.5 4.5
+
+    to create the values 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, and 4.5.
+
+    From the GUI, select "Math" and then select
+    "Sequence Generation".
+
+5) Dataplot can generate random numbers for 90+ distributions.
+   For example, to generate 100 random numbers, enter the command
+
+       LET Y = NORMAL RANDOM NUMBERS FOR I = 1 1 100
+
+   To generate 100 Weibull random numbers with shape parameter 2,
+   enter
+
+       LET GAMMA = 2
+       LET Y = WEIBULL RANDOM NUMBERS FOR I = 1 1 100
+
+   From the GUI, select "Prob" and then select "Random numbers".
+

@@ -1,0 +1,107 @@
+. This is Dataplot macro   FTESTLOC.DP
+. Purpose--Carry out F Test for 1-way Shift in Location
+. Input --Y        = vector of observations
+.       --X        = vector of group tags
+. Output--statval  = value of F statistic
+.         statvalc = cdf value (0.0 to 1.0) of statval
+.                    (values larger that .95 => signficance)
+.
+feedback off
+.
+. Step 1--Compute counts
+.
+let n = number y
+let xdis = distinct x
+let k = number xdis
+.
+. Step 2--Comute means
+.
+let ybar = mean y
+let ybarv = ybar for i = 1 1 n
+loop for i = 1 1 k
+   let xi = xdis(i)
+   let mi = mean y subset x xi
+   let ybariv = mi subset x xi
+end loop
+.
+. Step 3--Compute the F statistic
+.
+let numdel = (ybariv - ybarv)**2
+let numssq = sum numdel
+let numdf = k-1
+let numms = numssq/numdf
+.
+let dendel = (y - ybariv)**2
+let denssq = sum dendel
+let dendf = n-k
+let denms = denssq/dendf
+.
+let statval = numms/denms
+let statvalc = fcdf(statval,numdf,dendf)
+.
+. Step 4--Compute percent point values from the reference F distribution
+.
+let km1 = k-1
+let nmk = n-k
+let cutoff0 = 0
+let cutoff50 = fppf(.50,km1,nmk)
+let cutoff75 = fppf(.75,km1,nmk)
+let cutoff90 = fppf(.90,km1,nmk)
+let cutoff95 = fppf(.95,km1,nmk)
+let cutoff99 = fppf(.99,km1,nmk)
+let cutof999 = fppf(.999,km1,nmk)
+.
+. Step 5--Write everything out
+.
+write " "
+write "          ____________________________"
+write " "
+write "          F Test for Shift in Location"
+write "            (Assumption: Normality)"
+write "               CALL FTESTLOC.DP"
+write "          ____________________________"
+set write decimals 6
+write " "
+write " 1. Statistics"
+write "       Number of Observations             = ^n"
+write "       Number of Groups                   = ^k"
+write " "
+write "       Shift-in-Location F Test Statistic = ^statval "
+.
+write " "
+write " 2. Percent Points of the Reference Distribution"
+write "    for the Shift-in-Location F Statistic:"
+write "       0         % Point:   ^cutoff0"
+write "       50        % Point:   ^cutoff50"
+write "       75        % Point:   ^cutoff75"
+write "       90        % Point:   ^cutoff90"
+write "       95        % Point:   ^cutoff95"
+write "       99        % Point:   ^cutoff99"
+write "       99.9      % Point:   ^cutof999"
+write " "
+let cdf2 = 100*statvalc
+let cdf2 = round(cdf2,6)
+write "       ^cdf2  % Point:   ^statval"
+.
+write " "
+write " 3. Conclusion (at the 5% level):"
+if statval < cutoff95
+   write "       There is no shift in location."
+   write "       Thus: Homogenous wrt location."
+end if
+if statval >= cutoff95
+   write "       There is a shift in location."
+   write "       Thus: Not homogenous wrt location."
+end if
+write " "
+.
+. Step 6--Do housekeeping--delete intermediate parameters and variables
+.
+delete cutoff0 cutoff50 cutoff75 cutoff90 cutoff95 cutoff99 cutof999
+delete n k ybar i xi mi
+delete numssq numdf numms
+delete denssq dendf denms
+delete km1 nmk
+delete numdel dendel xdis ybarv ybariv
+.
+feedback on

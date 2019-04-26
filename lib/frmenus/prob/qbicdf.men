@@ -1,0 +1,46 @@
+This is file qbicdf.men--Compute Quasi-Binomial Type I cdf
+ 
+--------------------
+ 1. Compute Quasi-Binomial Type I cdf and Tail Probability
+ 2. LET Y = QBICDF(X,P,PHI,M)
+ 3.
+ 4. Input values:
+ 5.                         x (x = 0, 1, 2, ..., m):
+ 5. @CE 1 0 42 50 ?
+ 6.                 shape parameter p (0 <= p <= 1):
+ 6. @CE 2 0 42 50 ?
+ 7.     shape parameter phi (-p/m < phi < (1-p)/m):
+ 7. @CE 3 0 42 50 ?
+ 8.                       shape parameter m (m > 0):
+ 8. @CE 4 0 42 50 ?
+ 9.
+10. Output parameters:
+11.                  name for the cdf value:
+11. @CE 5 0 42 50 ?
+12.     name for the tail probability value:
+12. @CE 6 0 42 50 ?
+13.
+14.
+15. Compute the Probability?
+--------------------
+AN FE
+LET ZP = 0.5
+LET ZPHI = 1
+LET ZM = 1
+@IF 2 0 LET ZP = _2
+IF ZP < 0
+   LET ZP = 0.5
+END OF IF
+IF ZP > 1
+   LET ZP = 0.5
+END OF IF
+@IF 3 0 LET ZPHI = _3
+@IF 4 0 LET ZM = _4
+IF ZM <= 0
+   LET ZM = 1
+END OF IF
+@IF 5 0 LET _5 = QBICDF( _1 , ZP , ZPHI, ZM )
+@IF 6 0 LET _6 = 1 - QBICDF( _1 , ZP , ZPHI, ZM )
+--------------------
+WEB HELP QBICDF
+--------------------

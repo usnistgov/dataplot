@@ -1,0 +1,20 @@
+This is file randruns.men--Random Run Sequences
+ 
+--------------------
+ 1. Generate Random RunSequences
+ 2. LET R = RANDOM PERMUTATIONS FOR I = 1 1 N
+ 3.
+ 4. Number of Run Sequences?:
+ 4. @CE 1 0 42 50 ?
+ 5.
+ 6. Name of Variable to Store Random Run Sequences:
+ 6. @CE 2 0 42 50 ?
+ 7.
+ 8.
+ 9. Compute Random Run Sequences?:
+--------------------
+GR FE
+LET _2 = RANDOM PERMUTATIONS FOR I = 1 1 _1
+--------------------
+WEB HELP RANDOM PERMUTATIONS
+--------------------

@@ -1,0 +1,16 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     BIHIST.DP
+. PURPOSE--GENERATE A BIHISTOGRAM OF AUTO DATA
+.
+. -----START POINT-----------------------------------
+.
+TITLE 1983 Automobile Analysis
+Y1LABEL Frequency:  Japan & USA
+X1LABEL Miles per Gallon
+LEGEND 1 Comparing 2 Distributions
+LEGEND 2 Bihistogram
+.
+SKIP 25
+READ AUTO83B.DAT Y1 Y2
+DELETE Y2 SUBSET Y2 < 0
+.
+BIHISTOGRAM Y1 Y2

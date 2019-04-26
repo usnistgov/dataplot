@@ -1,0 +1,27 @@
+----- <~prob\loccppcc.top> Probablity Plot Parameter Estimation for Loc/Scale
+
+Perform Parameter Estimation using Probability Plot
+
+Perform Parameter Estimation for Distributions
+with No Shape Parameters for Censored Data
+
+Anglit                                    <xemf: ~prob\ppangce.men>
+Arcsin                                    <xemf: ~prob\pparsce.men>
+Cauchy                                    <xemf: ~prob\ppcauce.men>
+Cosine                                    <xemf: ~prob\ppcosce.men>
+Double Exponential (Laplace)              <xemf: ~prob\ppdexce.men>
+Exponential                               <xemf: ~reli\ppexpce.men>
+Extreme Value Type I(Gumbel)  - Minimum   <xemf: ~reli\ppev11ce.men>
+Extreme Value Type I(Gumbel)  - Maximum   <xemf: ~reli\ppev12ce.men>
+Half-Cauchy                               <xemf: ~prob\pphfcce.men>
+Half-Logistic                             <xemf: ~prob\pphflce.men>
+Half-Normal                               <xemf: ~prob\pphfnce.men>
+Hyperbolic Secant                         <xemf: ~prob\pphsece.men>
+Logistic                                  <xemf: ~prob\pplogce.men>
+Maxwell                                   <xemf: ~prob\ppmaxce.men>
+Normal                                    <xemf: ~reli\ppnorce.men>
+Rayleigh                                  <xemf: ~prob\pprayce.men>
+Semi-Circular                             <xemf: ~prob\ppsemce.men>
+Slash                                     <xemf: ~prob\ppslace.men>
+Uniform                                   <xemf: ~prob\ppunice.men>
+

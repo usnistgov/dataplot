@@ -1,0 +1,12 @@
+----- <~dex\resolut2.top> The Resolution
+
+The Resolution
+
+The 2**(3-1) design has resolution 3 which means that
+some main effects are confounded with 2-term (2 = 3-1)
+interactions.  In general, resolution 3 designs are to
+be used with extreme caution due to the possibility of
+a researcher mistakenly deducing from the analysis that a
+main effect is important whereas in reality it may be
+a masked 2-term interaction effect which is important.
+

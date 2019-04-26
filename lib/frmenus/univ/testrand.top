@@ -1,0 +1,13 @@
+-----<~univ\testrand.top> Test Randomness
+
+Test Randomness
+
+Lag Plot                             <xemf: ~time\lagplot.men>
+Autocorrelation Plot                 <xemf: ~time\autocopl.men>
+Spectrum                             <xemf: ~time\spectrum.men>
+Periodogram                          <xemf: ~time\periodogram.men>
+Complex Demodulation Amplitude Plot  <xemf: ~time\compdeap.men>
+Complex Demodulation Phase Plot      <xemf: ~time\compdepp.men>
+Allan Standard Deviation Plot        <xemf: ~plot\asdplot.men>
+Allan Variance Plot                  <xemf: ~plot\avplot.men>
+ 

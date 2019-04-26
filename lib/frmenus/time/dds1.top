@@ -1,0 +1,97 @@
+----- <~time\dds1.top> DDS FAQ 1 What is FAQ?
+ 
+1. What is DDS?
+ 
+All DDS FAQ answers were provided by
+   Sam Pandit   (906-487-2153) and
+   Gosham Joshi (701-231-8671)
+ 
+We identify and understand the world surrounding
+us by discerning certain patterns or modes in
+space and time from sensory perception data, and
+referring them to the ones in our memory or
+subconscious, discerned at earlier times and
+possibly at different places.  This process of
+knowledge or understanding, which may broadly be
+called ``modal analysis,' may proceed by two
+distinct but not necessarily mutually exclusive
+ways.  One is to use our prior knowledge to form
+certain prejudices and assumptions and then fit
+the data to their consequences.  The other is to
+objectively analyze and decompose the data into
+certain basic modes and then select the once based
+on some predetermined criteria, including but not
+limited to similarity with the modes expected from
+prior knowledge.
+ 
+Our approach adopts the latter point of view,
+calling it the data dependent systems (DDS)
+approach to distinguish it from the former.  The
+approach is best learned in the context of modal
+analysis of temporal data from mechanical
+vibrations due to their elegant mathematical
+formulation and powerful illustrative potential.
+However, it can be and has been applied to data
+from such diverse fields as economics, machined
+surfaces, and image processing.
+ 
+A thorough understanding of the system is required
+before its mathematical model can be formulated by
+the scientific method.  However, many of the
+modern systems are too complex to idealize or to
+conjecture general laws about their microscopic or
+macroscopic behavior.  Modeling such systems
+becomes a problem.
+ 
+Not many of us possess the genius of Newton or
+Einstein to conjecture such laws.  But, thanks to
+their pioneering work, we do possess three
+significant advantages over them.  The electronic
+revolution ushered in by their work with others
+has given us instruments capable of providing far
+more precise and abundant data than ever before;
+such precise data can be collected even under
+uncontrolled real-life conditions and no longer
+necessarily require a controlled laboratory
+environment.  Mathematics has developed to an
+unprecedented degree in our time.  And finally, we
+have the computer, perhaps nearest to the
+replacement of a genius, which can digest and
+exploit the first two advantages.
+ 
+Although lack of understanding of the physical
+mechanism prevents us from formulating a
+mathematical model of the system, data properly
+recorded contain this missing knowledge relevant
+to the measured variables.  Therefore, a
+systematic analysis of the observed data should
+lead us to this missing knowledge.  System
+equations, which could not be derived from the
+unknown physical mechanism, should be obtainable
+from the observed data alone.  The system, as
+represented by the equations derived from and
+dependent upon the data, may be called a data
+ 
+dependent system (DDS), and the methodology for
+obtaining such equations or models from the data
+alone and using them for analysis, prediction,
+control, and design will be called the data
+dependent systems (DDS) methodology.
+ 
+Data Dependent Systems (DDS) methodology is an
+exploratory, educative, and application
+development tool based on the statistics of ARMA
+models and their connections to many physical
+systems.  The data from working systems is
+digested in the form of adequte ARMA models.  The
+analysis of such models reveals the simplified but
+non-trivial facets of otherwise complicated
+systems.  The results can be used for making
+informed improvements, focused/simplified analysis
+of subsystems, and eventual process/yield
+enhancement.  The virtue of analysing actual
+working systems keeps the practioners protected
+from the wrath of blind assumptions, faith, and
+beliefs which often hinder the progress of
+scientific or engineering endeavor.
+ 

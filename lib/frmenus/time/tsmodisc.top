@@ -1,0 +1,52 @@
+----- <~time\tsmodisc.top> Discussion: Smoothing In the Time Domain
+ 
+Discussion: Smoothing in the Time Domain
+ 
+Dataplot supports the following time domain based
+smoothing techniques.
+
+  1) Moving average smoothers
+
+     For these smoothers, a running moving average
+     is computed.  That is, for a filter width of
+     3, the smoothed value for y(t) is 
+     (y(t-1) + y(t) + y(t+1))/3.  You can specify the
+     filter width to be longer if you wish.  Dataplot
+     also allows a number of other statistics, such as
+     the median or midmean, to be used instead of the
+     mean.  However, the underlying principle is the
+     same.
+
+  2) Tukey robust smoother
+
+     John Tukey suggested a number of refinements to the
+     moving average smooth to make it more robust.
+     These refinements have been incroporated into the
+     ROBUST SMOOTH command.
+
+  3) Least squares smoothing
+
+     Least squares smoothing fits a polynomial (Dataplot
+     supoorts up to 5th degree polynomial, although cubic
+     is the most common choice) over a local range of the
+     data (the FILTER WIDTH command allows you to set the
+     number of points used) to obtain the smoothed value.
+
+  4) Exponential smoothing
+
+     Exponetial smoothing uses the formula
+
+         Y(t) = alpha*y(t) + (1-alpha)*y(t-1)
+
+  5) Locally weighted least squares (LOWESS)
+
+     Locally weighted least squares is similar to least
+     squares fitting in that it generates a least squares
+     fit in the neighborhood of a given point.  However, it
+     uses a weighting scheme.  That is, standard least squares
+     techniques use all the points in the designated
+     neighborhood with equal weight.  Lowess weights the points
+     in the neighborhood based on their distance from the 
+     point being smoothed.  One advantage of LOWESS is that it
+     does not require equi-spaced points.
+

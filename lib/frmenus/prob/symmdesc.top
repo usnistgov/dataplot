@@ -1,0 +1,14 @@
+----- <~prob\symmdesc.top> Distributional Descriptions: Symmetric
+
+Distributional Descriptions: Symmetric
+
+Uniform                  <~prob\unidesc.top>
+Normal                   <~prob\nordesc.top>
+Logistic                 <~prob\logdesc.top>
+Double Exponential       <~prob\dexdesc.top>
+Cauchy                   <~prob\caudesc.top>
+Tukey                    <~prob\tukdesc.top>
+t (df NU)                <~prob\tdesc.top>
+Semi-Circular            <~prob\semdesc.top>
+Triangular               <~prob\tridesc.top>
+

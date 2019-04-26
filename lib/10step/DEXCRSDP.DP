@@ -1,0 +1,324 @@
+. This is dataplot macro   DEXCRSDP.DP
+. Purpose: Generate a DEX cumulative residual standard deviation plot
+.          (= ste p 9 of the DEXPLOT.DP 10-ste p DEX analysis procedure)
+. Date: May 2005
+. Input
+.    1. k (parameter)               = Total number of plot factors
+.    2. y (vector)                  = Response variable
+.    3. x1, x2, x3, . . . (vectors) = Factors
+.
+.    4. framet (parameter)          = top    frame line (in %) (optional) (default = 90)
+.    5. frameb (parameter)          = bottom frame line (in %) (optional) (default = 20)
+.
+. -----start point-----
+.
+feedback save
+feedback off
+printing off
+let bugswcrs = 0
+. let pausesw = 1
+.
+if bugswcrs = 1; print " "; print "--At beginning of DEX Ste p 9 (DEXCRSDP.DP)"
+   if pausesw = 1; pause; end if
+end if
+.
+. ---------------------------------------------------------
+. -----Do Analysis Ste p 9: Cumulative Residual SD Plot-----
+. ---------------------------------------------------------
+.
+. -----Step 1.1: Check for missing input values-----
+.
+if bugswcrs = 1; print "--At (dexcsdp.dp, step 1.1): check input"
+   if pausesw = 1; pause; end if
+end if
+.
+let string stmacro = dexcrsdp.dp
+if k not exist
+   call determine_k.dp
+end if
+set check name output filliben
+set check length output filliben
+feedback on
+let iflag = check name k y x1 to x^k
+let iflag = check equal length y x1 to x^k
+feedback off
+.
+. -----Step 1.2: Copy the user's original y and x1 to xk data out to file-----
+.                since y and x1 to xk may potentially be modified within this macro-----
+.
+if bugswcrs = 1; print "--At (dexcsdp.dp, step 1.2): save original data"
+   if pausesw = 1; pause; end if
+end if
+.
+set write format 40f15.7
+write dex_original_data.dat y x1 to x^k
+set write format
+.
+. -----Step 1.3: Check/Extract 2 levels, and map into -1 and +1-----
+.                For this macro to work, the number of levels must be 1 or 2,
+.                and the 2 levels must be -1 and +1.  Check for this (and fix, if need be).-----
+.                If not 2 levels, then only the min and max will be used herein.-----
+.                If not -1 and +1, then min => -1 and max => +1-----
+.
+if bugswcrs = 1; print "--At (dexcsdp.dp, step 1.3): Normalize to [-1,+1]"
+   if pausesw = 1; pause; end if
+end if
+.
+let string stcall = dexcrsdp.dp
+call check_and_fix_original_data_for_2_levels_and_m1_p1.dp
+.
+. -----Step 2: Define Plot settings-----
+.
+if bugswcrs = 1; print "--At (dexcsdp.dp, step 2): plot settings"
+   if pausesw = 1; pause; end if
+end if
+.
+call dexplotinit.dp
+
+. -----Step 3: Compute effect estimates (ordered) and confounding-----
+.
+if bugswcrs = 1; print "--At (dexcrsdp.dp, step 3): confounding"
+   print "confsw = ^confsw"
+   if pausesw = 1; pause; end if
+end if
+.
+call compute_effect_estimates_and_confounding.dp
+.
+if bugswcrs = 1; print "--At end of step 3 of dexcrsdp.dp"
+   print "numeff = ^numeff"
+   loop for jzz = 1 1 numeff
+      print steft^jzz
+   end loop
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 4: GENERATE THE PLOT-----
+.
+if bugswcrs = 1; print "--At (dexcsdp.dp, step 4): GENERATE THE PLOT"
+   if pausesw = 1; pause; end if
+end if
+.
+title Cumulative Residual SD Plot
+y1label Residual SD
+x1label Cumulative Model
+x3label
+label size labelsiz
+tic label size ticlabsi
+ygrid
+grid color blue
+if colorall exists; grid color ^colorall; end if
+x1tics off
+x1tic label off
+y1tic offset 10
+.
+char X
+call setcircle.dp
+.
+lines blank
+.
+delete vertv horv
+let vertv = cumrsd
+let horv = 1 1 numeff
+. print vertv horv effid
+. pause
+.
+spike on
+if colorall exists; spike color ^colorall; end if
+let numeffp1 = numeff+1
+let s = sd y
+let vertv(numeffp1) = s
+let horv(numeffp1) = 0
+plot vertv horv
+let yplotsv = yplot
+.
+. print vertv horv
+. pause
+. print cumrsd index2
+. stop
+.
+. -----Step 5: Write ordered factor ids along horizontal axis-----
+.
+if bugswcrs = 1; print "--At (dexcsdp.dp, step 5): ordered horiz. axis factors"
+   if pausesw = 1; pause; end if
+end if
+.
+character hw 2 1 all
+if n > 20; character hw 1.5 .75 all; end if
+character justificiation cece all
+character blank all
+character color blue all
+if colorall exists; character color ^colorall all; end if
+let cadd = 0
+if frameb exists; let cadd = 20 - frameb; end if
+.
+delete xpos ypos tagzj
+let xpos = xplot
+retain xpos for i = 1 1 numeff
+let ypos = pattern 23 27 for i = 1 1 numeff
+if n < 10; let ypos = 27 for i = 1 1 numeff; end if
+let tagzj = sequence 1 1 numeff
+let ypos = ypos - cadd
+loop for j = 1 1 numeff
+   let plot character j = ^steft^j
+end loop
+drawds symbol xpos ypos tagzj
+.
+. -----Step 6: Write confounding along right margin-----
+.
+if bugswcrs = 1; print "--At (dexcsdp.dp, step 6): right margin confounding"
+   if pausesw = 1; pause; end if
+end if
+.
+hw 2 1
+just lece
+color blue
+if colorall exists; color ^colorall; end if
+.
+let numyplot = number yplot
+let numyplm1 = numyplot-1
+loop for j = 1 1 numyplm1
+   let yplotj = yplotsv(j)
+   .
+   let string ch = ^steft^j
+   movesd 86 yplotj
+   text ^ch&:
+   .
+   let string ch = ^stefc^j
+   if ch = -999; let string ch = sp(); end if
+   movesd 90 yplotj
+   text ^ch
+end loop
+.
+let j = numyplot
+let yplotj = yplotsv(j)
+movesd 86 yplotj
+text Average
+let frametz = 90
+if framet exists; let frametz = framet; end if
+move 86 89.6
+text Factor: Confounding
+.
+just cece
+let ypz = 27 - cadd
+moveds 0 ypz
+if n <= 20; text Average; end if
+if n > 20; text Ave.; end if
+.
+. -----Step 7: Write the mean value in the upper right corner of the plot----
+.
+if bugswcrs = 1; print "--At (dexcsdp.dp, step 7): mean"
+   if pausesw = 1; pause; end if
+end if
+.
+let ybar = average y
+let dpmeanz = 4
+if dpmean exists; let dpmeanz = dpmean; end if
+set write decimals dpmeanz; let stybar = number to string ybar
+if colorall exists; color ^colorall; end if
+hw texth textw
+justification left
+move 85 91; just right; hw 2 1; text Mean = ^stybar; just center
+.
+. -----Step 8: write out the box (and contents) in upper right corner within the plot-----
+.
+if bugswep = 1; print "--At (dexep.dp, step 8): write ybar"
+   print "numeff = ^numeff"
+   print cumrsd
+   if pausesw = 1; pause; end if
+end if
+.
+call dexcrsdp_box.dp
+.
+. -----Step 9: write out project, (k,n), step, and annotation-----
+.
+if bugswcrs = 1; print "--At (dexcsdp.dp, step 9): proj,(k,n),step,annotate"
+   if pausesw = 1; pause; end if
+end if
+.
+if project exists
+   if projcol exists; color ^projcol; end if
+   call dexwriteproject.dp
+end if
+.
+call dexknbox.dp
+.
+if step exists
+   let step = step + 1; hw 2 1; just left; move 5 95
+   . text Step ^step
+   . call tagcorn.dp   9/17/18/
+   if stepprsw not exist
+      call tagcorn.dp
+   end if
+   if stepprsw exists; if stepprsw = 1
+      call tagcorn.dp
+   end if; end if
+end if
+.
+if annotate exists and annotate = 1
+   if colorall exists; color ^colorall; end if
+   call annotate.dp
+end if
+.
+. -----Step 10: If called for, write out customized upper left info-----
+.
+if bugswcrs = 1; print "--At (dexcsdp.dp, step 10): upper left"
+   if pausesw = 1; pause; end if
+end if
+.
+if stcorn1 exists
+   call upperleft.dp
+end if
+.
+. -----Step 31: Form conclusions and write out to file-----
+.
+let step = 9
+call form_and_write_dex_10_step_conclusions.dp
+.
+. -----Step 98: Restore the user's original y and x1 to xk data from file-----
+.
+if bugswcrs = 1; print " "; print "---At (dexcrsdp.dp, step 98): restore orig. data (pre-restore)"
+   print y x1 to x^k
+   if pausesw = 1; pause; end if
+end if
+.
+delete y x1 to x^k
+set read format 40f15.7
+skip 0; read dex_original_data.dat y x1 to x^k
+set read format
+.
+if bugswcrs = 1; print " "; print "---At (dexcrsdp.dp, step 98): (post-restore)"
+   print y x1 to x^k
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 99: Finish up-----
+.
+if bugswcrs = 1; print " "; print "---At end of dexcrsdp.dp . . ."
+   if pausesw = 1; pause; end if
+end if
+.
+grid off
+y1tic offset 5
+x1tics on
+x1tic label on
+char blank all
+char hw 2 1
+char offset 0 0 all
+char justification cece all
+lines solid all
+spike off
+just left
+title
+y1label
+x1label
+tic offset 5 5
+hw 2 1
+.
+delete vertv horv
+.
+feedback restore
+.
+if itime exists and itime = 1
+   cpu time
+   let t9 = cputime
+end of if

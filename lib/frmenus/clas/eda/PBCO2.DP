@@ -1,0 +1,10 @@
+----- <~dataloex\PBCO2.DP> Load & Execute PBCO2.DAT
+
+. This is file    PBCO2.DP
+
+DELETE Y
+SKIP 25
+READ PBCO2.DAT Y
+TITLE PBCO2.DAT
+/
+

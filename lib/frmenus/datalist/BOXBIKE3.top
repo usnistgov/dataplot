@@ -1,0 +1,8 @@
+----- <~datalist\BOXBIKE3.top> BOXBIKE3.DAT
+ 
+BOXBIKE3.DAT
+ 
+View     <xcl: LIST BOXBIKE3.DAT>
+Load     <x2cl: SKIP 25; READ BOXBIKE3.DAT Y X1 TO X7>
+Print    <xccl: printfile C:\DATAPLOT\BOXBIKE3.DAT>
+ 

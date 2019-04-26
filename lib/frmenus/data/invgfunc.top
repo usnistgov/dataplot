@@ -1,0 +1,8 @@
+----- <~data\invgfunc.top> Functions: Inverse Gaussian Distribution
+
+Functions: Inverse Gaussian Distribution
+
+IGCDF(X,GAMMA)    inverse Gaussian cumulative dist. function
+IGCDF(X,GAMMA)    inverse Gaussian probability density function
+IGCDF(X,GAMMA)    inverse Gaussian percent point function
+

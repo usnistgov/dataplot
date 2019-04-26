@@ -1,0 +1,6 @@
+----- <~dataprin\BOXSHOES.DP> Print (to Printer) BOXSHOES.DAT
+
+. This is file    BOXSHOES.DP
+
+PRINT BOXSHOES.DAT
+

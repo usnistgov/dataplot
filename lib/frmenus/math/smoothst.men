@@ -1,0 +1,67 @@
+This is file smoothst.men--Compute a moving <stat> smooth of a variable
+ 
+--------------------
+ 1. Moving Average (or some other statistic) Smoothing
+ 2. MOVING AVERAGE SMOOTH Y
+ 3.
+ 4. Variable to smooth:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Statistic to use:
+ 6. @CE 2 1 10 25 mean
+ 6. @CE 2 2 27 42 median
+ 7. @CE 2 3 10 25 midmean
+ 7. @CE 2 4 27 42 midrange
+ 8. @CE 2 5 10 25 upper quartile
+ 8. @CE 2 6 27 42 lower quartile
+ 9. @CE 2 7 10 25 maximum
+ 9. @CE 2 8 27 42 minimum
+10. @CE 2 9 10 25 triangle
+10. @CE 2 10 27 42 hamming
+11.
+12. The smoothed curve will be plotted with the raw data.
+13.
+14. Select the line style for the smooth curve:
+14. @CE 6 0 33 50 gui-line
+15. Select the character symbol for the raw data:
+15. @CE 7 0 33 50 gui-character
+16. Fill the character symbol?:
+16. @CE 8 0 33 50 gui-ooff
+17.
+18. Subset/Except/For Specification:
+19. @CE 3 0 -5 50 *
+20.
+21.
+22. Perform the smooth?:
+--------------------
+GR FE
+@IF 2 1 MOVING AVERAGE SMOOTH _1  _3
+@IF 2 1 TITLE MOVING AVERAGE SMOOTH
+@IF 2 2 MOVING MEDIAN SMOOTH _1  _3
+@IF 2 2 TITLE MOVING MEDIAN SMOOTH
+@IF 2 3 MOVING MIDMEAN SMOOTH _1  _3
+@IF 2 3 TITLE MOVING MIDMEAN SMOOTH
+@IF 2 4 MOVING MIDRANGE SMOOTH _1  _3
+@IF 2 4 TITLE MOVING MIDRANGE SMOOYH
+@IF 2 5 MOVING UPPER QUARTILE SMOOTH _1  _3
+@IF 2 5 TITLE MOVING UPPER QUARTILE SMOOTH
+@IF 2 6 MOVING LOWER QUARTILE SMOOTH _1  _3
+@IF 2 6 TITLE MOVING LOWER QUARTILE SMOOTH
+@IF 2 7 MOVING MAXIMUM SMOOTH _1  _3
+@IF 2 7 TITLE MOVING MAXIMUM SMOOTH
+@IF 2 8 MOVING MINIMUM SMOOTH _1  _3
+@IF 2 8 TITLE MOVING MINIMUM SMOOTH
+@IF 2 9 MOVING TRIANGLE SMOOTH _1  _3
+@IF 2 9 TITLE MOVING TRIANGLE SMOOTH
+@IF 2 10 MOVING HAMMING SMOOTH _1  _3
+@IF 2 10 TITLE MOVING HAMMING SMOOTH
+CHARACTER _7 BLANK
+CHARACTER FILL _8 OFF
+LINES BLANK _6
+LET ZZZZN = SIZE _1 _3
+DELETE ZZZZX
+LET ZZZZX = SEQUENCE 1 1 ZZZZN
+PLOT _1 PRED VS ZZZZX _3 
+--------------------
+WEB HELP SMOOTH
+--------------------
+

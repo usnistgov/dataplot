@@ -1,0 +1,82 @@
+----- <~qual\disccumu.top> Discussion: CUSUM Control Chart
+ 
+Discussion: CUSUM Control Charts
+ 
+5) Cumulative sums (CUSUM)
+
+   Cumulative sum (CUSUM) techniques can be applied to
+   mean, range, standard deviation, n, pn, u, and c
+   control charts.  However, we will limit this
+   discussion to the most common case of mean cusum
+   charts for detecting shifts in the location of a
+   process.
+
+   CUSUM mean charts are an alternative to the
+   standard xbar control charts.  CUSUM charts
+   are particularly effective for detecting small
+   shifts in location (e.g., 1 sigma shifts).
+
+   There are a number of variations for computing
+   the CUSUM charts.  Dataplot uses the technique
+   laid out in the Ryan "Statistical Methods for
+   Quality Improvement".  Although there are a number
+   of variations in computing CUSUM charts, the basic
+   ideas are similar.
+
+   The technique is to:
+
+    a) Compute the following 2 sums for each sub-group:
+
+       SH(I) = MAX[0,(Zi - k) + SH(i-1)]
+       SL(I) = MAX[0,(Zi - k) + SL(i-1)]
+
+       where zi is the z-score for the ith sub-group.
+       That is, it is the ith sub-group mean minus the
+       overall mean divided by the standard deviation of
+       the overall mean.  The value of k is typically
+       set to one half the value of the smallest sigma
+       shift you wish to detect.  Since CUSUM charts are
+       best for detecting small shifts, k is typically set
+       to 0.5 (i.e., to detect 1 sigma shifts).
+
+       Dataplot plots the negative of the SL(i).  That is,
+       the positvie shifts are plotted above the 0 line and
+       negative shifts are plotted below the 0 line.  This
+       is simply to avoid overlap and confusion between
+       the 2 sums on the plot.
+
+       In Dataplot, the command LET K = VALUE
+       can be used to specify a different value for K.
+
+    b) There are various methods for plotting the
+       control limits for CUSUM charts.  Dataplot follows
+       the recommendation of Ryan and simply plots the
+       control limits at the value H where H is typically
+       set to either 4 or 5.  In Dataplot, the command
+       LET H = VALUE can be used to specify the control
+       limit.  The default value in Dataplot is 5.
+
+       An alternative is to compute a V-mask.  There are
+       numerous variations on this which implement slightly
+       different decision criterion.  According to Ryan,
+       using the simpler method in conjunction with an
+       xbar chart having control limits set to 3.5 sigma)
+       yields similar results.  It has the advantage of
+       being simpler to understand.
+
+    c) One variation of the CUSUM chart is called the
+       Fast Initial Response (or FIR).  In this case,
+       the initial sums are not set to zero.  The most
+       common choice is H/2 where H is the control limit.
+       This is commonly used when restarting a control
+       chart and it is not clear whether or not all
+       assignable causes have been located.  In Dataplot,
+       to use this method, do the following:
+
+          LET H = VALUE
+          LET SHI = H/2
+          LET SLI = H/2
+
+       You can set the SLI and SHI initial sums based on
+       whatever criterion you chose.
+

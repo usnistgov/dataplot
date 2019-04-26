@@ -1,0 +1,66 @@
+This is file jackqudi.men--Generate Jacknife Plots (Diff of Quantiles)
+ 
+--------------------line 3
+01. Jacknife Plots (Difference of Extremes/Quantiles)
+02. JACKNIFE DIFFERENCE OF <statistic> PLOT Y1 Y2
+03.
+04. First Response Variables:
+04. @CE 1 0 42 50 ? gui-vari
+05. Second Response Variables:
+05. @CE 2 0 42 50 ? gui-vari
+06. Variable to Save Computed Jacknife Values:
+06. @CE 3 0 42 50 ?
+07. Optional Group ID Variable:
+07. @CE 4 0 42 50 ? gui-vari
+08.
+09. Extreme/Quantile Statistic (Select One):
+10. @CE 5 1 1 27 minimum
+10. @CE 5 2 29 57 maximum
+11. @CE 5 3 1 27 extreme
+11. @CE 5 4 29 57 qauntile
+12.
+13. Desired quantile (> 0, < 1):
+13. @CE 6 0 42 50 ? 
+14.
+15. Character Type for Data
+15. @CE 7 0 42 50 * gui-char
+16. Character Fill for Data
+16. @CE 8 0 42 50 gui-ooff
+17. Line Type for Data-connecting Line
+17. @CE 9 0 42 50 * gui-line
+18.
+19. Title:
+19. @CE 10 0 10 50 *
+20. Left Axis Label:
+20. @CE 11 0 22 50 *
+21. Bottom Axis Label:
+21. @CE 12 0 22 50 *
+22.
+23. Subset/Except/For Specification:
+24. @CE 13 0 1 50 *
+25.
+26. Generate the Jacknife Plot?:
+--------------------
+TITLE _10
+Y1LABEL _11
+X1LABEL _12
+CHARACTER SAVE
+LINE SAVE
+CHARACTERS _7
+CHARACTER FILL _8
+LINES _9
+@IF 3 0 CHARACTERS _7 ALL
+@IF 3 0 CHARACTER FILL _8 ALL
+@IF 3 0 LINES _9 ALL
+LET XQ = _6
+.
+@IF 5 1 JACKNIFE DIFFERENCE OF MINIMUM PLOT _1 _2 _4 _13
+@IF 5 2 JACKNIFE DIFFERENCE OF MAXIMUM PLOT _1 _2 _4 _13
+@IF 5 3 JACKNIFE DIFFERENCE OF EXTREME PLOT _1 _2 _4 _13
+@IF 5 4 JACKNIFE DIFFERENCE OF QUANTILE PLOT _1 _2 _4 _13
+CHARACTER RESTORE
+LINE RESTORE
+LET _3 = YPLOT
+--------------------
+WEB HELP JACKNIFE PLOT
+--------------------

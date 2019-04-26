@@ -1,0 +1,8 @@
+----- <~dataall\SUNSPOT2.top> SUNSPOT2.DAT
+
+SUNSPOT2.DAT
+
+View     <xcl: LIST SUNSPOT2.DAT>
+Load     <xcf: ~dataload/SUNSPOT2.DP>
+Print    <xccl: printfile C:\DATAPLOT\SUNSPOT2.DAT>
+

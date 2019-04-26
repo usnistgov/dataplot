@@ -1,0 +1,37 @@
+-----<~univ\univanal.top> Univariate  Analysis
+
+Univariate Analysis
+
+Discussion                            <~univ\discussi.top>
+Statistical Control and Assumptions   <~univ\assumpti.top>
+NIST/SEMATECH Handbook (One Process)  <xcl: web handbook compare one process>
+
+Graphical Techniques                  <~univ\viewdata.top>
+Quantitative Techniques               <~univ\stattech.top>
+
+Test Assumptions                      <~univ\testassu.top>
+Compute Summary Statistics            <xemf: ~math\summary.men>
+Core questions                        <~univ\coreques.top>
+
+Characterization/estimation/testing
+   Location             mu            <~univ\location.top>
+   Variation            sigma         <~univ\variatio.top>
+   Relative variation   100*(s/mu)    <~univ\relvaria.top>
+   Distribution                       <~univ\distribu.top>
+
+Testing Product/Process Performance   <~univ\performa.top>
+   1. Location Shift: Pre-Existing Reference Value <xemf: ~univ\locatest.men>
+   2. Variation Shift: Pre-Existing Reference Value <xemf: ~univ\varitest.men>
+   3. Location Shift: Pre-Existing Data         <xemf: ~1fac\locatest.men>
+   4. Variation Shift: Pre-Existing Data        <xemf: ~1fac\varitest.men>
+
+
+Built-in Data Sets:
+   View                               <~dataview\univ.top>
+   Load                               <~dataload\univ.top>
+
+Worked Examples                       <~univ\workexam.top>
+NIST/SEMATECH Handbook (EDA Case Studies)  <xcl: web handbook eda case studies>
+
+References                            <~univ\referenc.top>
+

@@ -1,0 +1,41 @@
+----- <~prob\disccdf.top> Discrete Distribution cdf & Tail Prob.
+
+Discrete Distribution cdf & Tail Probabilities
+
+Compute Cumulative Distribution and Tail Probability
+Functions for Discrete Distributions
+
+Beta-Binomial                   <xemf: ~prob\bbncdf.men>
+Beta-Geometric                  <xemf: ~prob\bgecdf.men>
+Beta-Negative Binomial          <xemf: ~prob\bnbcdf.men>
+Binomial                        <xemf: ~prob\bincdf.men>
+Borel-Tanner                    <xemf: ~prob\btacdf.men>
+Classical Matching              <xemf: ~prob\matcdf.men>
+Consul
+    (theta parameterization)    <xemf: ~prob\con1cdf.men>
+    (mu parameterization)       <xemf: ~prob\con2cdf.men>
+Discrete Uniform                <xemf: ~prob\discdf.men>
+Discrete Weibull                <xemf: ~prob\diwcdf.men>
+Geeta
+    (theta parameterization)    <xemf: ~prob\get1cdf.men>
+    (mu parameterization)       <xemf: ~prob\get2cdf.men>
+Generalized Logarithmic Series  <xemf: ~prob\glscdf.men>
+Generalized Lost Games          <xemf: ~prob\glgcdf.men>
+Generalized Negative Binomial   <xemf: ~prob\gnbcdf.men>
+Geometric                       <xemf: ~prob\geocdf.men>
+Hermite                         <xemf: ~prob\hercdf.men>
+Hypergeometric                  <xemf: ~prob\hypcdf.men>
+Katz                            <xemf: ~prob\katcdf.men>
+Lagrange Poisson                <xemf: ~prob\lpocdf.men>
+Leads in Coin Tossing           <xemf: ~prob\lctcdf.men>
+Logarithmic Series              <xemf: ~prob\dlgcdf.men>
+Lost Games                      <xemf: ~prob\loscdf.men>
+Negative Binomial               <xemf: ~prob\nbcdf.men>
+Poisson                         <xemf: ~prob\poicdf.men>
+Polya-Aeppli                    <xemf: ~prob\papcdf.men>
+Quasi-Binomial Type I           <xemf: ~prob\qbicdf.men>
+Yule                            <xemf: ~prob\yulcdf.men>
+Waring                          <xemf: ~prob\warcdf.men>
+Zeta                            <xemf: ~prob\zetcdf.men>
+Zipf                            <xemf: ~prob\zipcdf.men>
+

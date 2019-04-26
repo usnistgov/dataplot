@@ -1,0 +1,40 @@
+This is file trenplot.men--Trend Plots with Duane Plot
+ 
+--------------------
+ 1. Trend and Duane Plots
+ 2. DUANE PLOT Y
+ 3.
+ 4. Failure Times Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Generate the Duane Plot?:
+--------------------
+GR FE
+LINE SAVE
+LINE SOLID
+MULTIPLOT 2 2
+MULTIPLOT CORNER COORDINATES 0 0 100 100
+TITLE CUMULATIVE FAILURES VS TIME
+LET ZZZZN = SIZE _1
+LET ZZZZY = SEQUENCE 1 1 ZZZZN
+LET ZZZZY = CUMULATIVE SUM ZZZZY
+PLOT ZZZZY VS _1 _2
+TITLE INTERARRIVAL TIMES
+LET ZZZZY = INTERARRIVAL TIMES _1
+PLOT ZZZZY _1 _2
+TITLE RECIPROCAL OF INTERARRIVAL TIMES
+LET ZZZZY = 1/ZZZZY
+PLOT ZZZZY _1 _2
+TITLE DUANE PLOT
+DUANE PLOT _1  _2
+END OF MULTIPLOT
+DELETE ZZZZY
+LINE RESTORE
+TITLE
+--------------------
+WEB HELP DUANE PLOT
+--------------------

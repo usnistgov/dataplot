@@ -1,0 +1,72 @@
+This is Dataplot data file   VANGEL32.DAT
+Compressive Strength for Graphite/Epoxy Tape
+Source--Vangel, Mark, G. Design Allowables from Regression Models
+        Using Data from Several Batches", ASTM STP 1274, 1996.
+      --Shyprykevich, ASTM STP 1003, 1989.
+Number of observations            = 45
+Number of varibles per line image = 32
+Order of variables on a line image--
+   1. Response variable = strength (MPa)
+   2. Factor 1          = temperature (degrees F)
+   3. Factor 2          = batch (3 levels)
+Statistical Classification--Regression, Tolerance Limits
+Engineering question--What are the B-basis (= lower 95% confidence
+                      for 10% point) values based on a linear fit?
+To read this file into Dataplot (and do RECIPE tolerance limits)--
+   SKIP 25
+   READ VANGEL32.DAT Y X B
+   RECIPE CONTENT 90
+   RECIPE CONFIDENCE 95
+   RECIPE DEGREE 1
+   LET X2 = SEQUENCE -75 35 200
+   RECIPE FIT Y X B X2
+Strength  Temperature  Batch
+    Y          X         B
+-----------------------------------------
+ 1349.80      -75        1
+ 1196.70      -75        1
+ 1457.10      -75        1
+ 1368.60      -75        1
+ 1310.30      -75        1
+  863.60       75        1
+  991.50       75        1
+  991.50       75        1
+ 1254.90       75        1
+  921.90       75        1
+  846.00      200        1
+  949.80      200        1
+  845.50      200        1
+  912.00      200        1
+  903.60      200        1
+
+ 1069.60      -75        2
+ 1074.70      -75        2
+ 1084.20      -75        2
+ 1009.70      -75        2
+ 1079.70      -75        2
+  968.90       75        2
+  966.50       75        2
+  975.70       75        2
+  934.90       75        2
+  944.70       75        2
+  855.30      200        2
+  856.00      200        2
+  842.20      200        2
+  806.50      200        2
+  814.30      200        2
+
+ 1145.70      -75        3
+ 1250.10      -75        3
+ 1340.70      -75        3
+ 1346.90      -75        3
+ 1074.70      -75        3
+ 1046.80       75        3
+ 1145.70       75        3
+ 1032.80       75        3
+ 1024.80       75        3
+ 1000.40       75        3
+  872.90      200        3
+  816.40      200        3
+  824.30      200        3
+  898.50      200        3
+  832.80      200        3

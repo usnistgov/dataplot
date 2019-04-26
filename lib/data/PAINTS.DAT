@@ -1,0 +1,37 @@
+This is Dataplot data file     PAINTS.DAT
+Lifetime of Street Paints
+Source--Hoaglin, D., Mosteller, F., and Tukey, J. (1991).
+        Fundamentals of Exploratory Analysis of Variance.
+        Wiley, New York, page xx.   ?????
+Response Variable                  = Lifetime of paints (in weeks)
+Number of observations             = 12 (= 2 x 2 x 3)
+Number of variables per line image = 4
+Order of variables per line image--
+   Response variable = mean lifetime of paint (in weeks)
+   Factor 1          = manufacturer   (2 levels)
+   Factor 2          = color          (2 levels: 1 = yellow;
+                                                 2 = white)
+   Factor 3          = paving surface (3 levels: 1 = asphalt I;
+                                                 2 = asphalt II;
+                                                 3 = concrete)
+Statistical areas--Multifactor
+Design type      --Randomized Block
+To read this file into Dataplot--
+      SKIP 25
+      READ PAINTS.DAT Y X1 X2 X3
+  Mean      Manufacturer    Color       Paving
+Lifetime                               Surface
+    Y           X1           X2           X3
+------------------------------------------------
+   15            1            1            1 
+   27            2            1            1
+   17            1            1            2
+   30            2            1            2
+   32            1            1            3
+   20            2            1            3
+   30            1            2            1
+   34            2            2            1
+   28            1            2            2
+   35            2            2            2
+   29            1            2            3
+   36            2            2            3

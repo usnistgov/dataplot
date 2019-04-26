@@ -1,0 +1,37 @@
+This is file legendre.men--Compute Legendre Polynomials
+ 
+--------------------
+ 1. Legendre Polynomials
+ 2. LET Y = LEGENDRE(X,2)
+ 3.
+ 4. Horizontal axis variable (-PI,PI):
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Order of the Legendre polynomial:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7. Operation to perform?:
+ 8. @CE 4 1 10 55 Legendre polynomial (not normalized)
+ 9. @CE 4 2 10 55 Legendre polynomial (normalized)
+10. @CE 4 3 10 55 Legendre function first kind (normalized)
+11. @CE 4 4 10 55 Legendre function second kind (normalized)
+12.
+13. Plot?:
+13. @CE 5 1 14 20 no
+13. @CE 5 2 22 28 yes
+14.
+15. Subset/Except/For Specification:
+16. @CE 6 0 -5 50 *
+17.
+18.
+19. Compute the Transformation?:
+--------------------
+GR FE
+@IF 4 1 LET _3 = LEGENDRE( _1 , _2 ) _6
+@IF 4 2 LET _3 = NRMLEG( _1 , _2 ) _6
+@IF 4 3 LET _3 = LEGP( _1 , _2 ) _6
+@IF 4 4 LET _3 = LEGQ( _1 , _2 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP LEGENDRE
+--------------------

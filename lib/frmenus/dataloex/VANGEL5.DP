@@ -1,0 +1,10 @@
+----- <~dataloex\VANGEL5.DP> Load & Execute VANGEL5.DAT
+
+. This is file    VANGEL5.DP
+
+DELETE Y
+SKIP 25
+READ VANGEL5.DAT Y
+TITLE VANGEL5.DAT
+4-PLOT Y
+

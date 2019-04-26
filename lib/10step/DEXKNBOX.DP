@@ -1,0 +1,114 @@
+. This is dataplot macro   DEXKNBOX.DP
+. Purpose: Write out k = ...  n = ... is upper left  corner of plot frame
+. Note   : Used by DEXPLOT.DP macros
+. Date   : March 2, 2005
+. Input:
+.    y      (vector)    = response variable
+.    k      (parameter) = number of plot factors (usually = number of real factors)
+.    k0     (parameter) = number of factors (no interactions) (optional) (default = k)
+.    n      (parameter) = total number of observations in y
+.    textboxh  (parameter) = desired height for text box annotation (in %)
+.    textboxw  (parameter) = desired width for text box annotation (in %)
+.    framet (parameter) = top    frame line (in %) (optional) (default = 90)
+.    frameb (parameter) = bottom frame line (in %) (optional) (default = 20)
+.
+. -----start point-----
+.
+let bugswknb = 0
+. let pausesw = 1
+.
+if bugswknb = 1; print " "; print "---At beginning of dexknbox.dp"
+   print "k  ^k   n = ^n"
+   print "textboxh = ^textboxh   textboxw = ^textboxw"
+   print "framet = ^framet   frameb = ^frameb"
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 1: define settings-----
+.
+if bugswknb = 1; print "--At (dexknbox.dp, step 1): define settings"
+   if pausesw = 1; pause; end if
+end if
+.
+delete njunk
+let njunk = number y
+.
+let texthzzz = 2
+if textboxh exists; let texthzzz = textboxh; end if
+let textwzzz = texthzzz/2
+if textboxw exists; let textwzzz = textboxw; end if
+.
+. print texthzzz textwzzz
+. pause
+let frametz = 90
+let framebz = 20
+if framet exists; let frametz = framet; end if
+if frameb exists; let framebz = frameb; end if
+.
+if bugswknb = 1; print "--At end of (dexknbox.dp,step 1)"
+   print framet frameb frametz framebz
+   print textwzzz
+   print boxright
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 2: draw box-----
+.
+if bugswknb = 1; print "--At (dexknbox.dp, step 2): draw box"
+   if pausesw = 1; pause; end if
+end if
+.
+let boxright = 19 + 5*textwzzz
+if njunk <= 999; let boxright = 17 + 5*textwzzz; end if
+. if njunk <= 99;. let boxright = 15 + 5*textwzzz;. end if
+if njunk <= 99; let boxright = 16 + 5*textwzzz; end if
+.
+if forecol2 exists
+   box color ^colorall
+   box fill pattern solid
+   box fill color 67  
+.    box fill color skbl
+end if
+if brfudge exists
+   let boxright = boxright + brfudge
+end if
+.
+let boxtop = frametz
+let boxbot = boxtop - 2*texthzzz - 0.25
+lines solid; box 15 boxbot boxright boxtop;.      <======================
+.
+if bugswknb = 1; print "--At end of (dexknbox.dp,step 2)"
+   print "textwzzz = ^textwzzz"
+   print boxright boxtop boxbot
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 3: Write text-----
+.
+if bugswknb = 1; print "--At (dexknbox.dp, step 3): write text"
+   if pausesw = 1; pause; end if
+end if
+color blue
+if leecolor exists; color ^leecolor; end if
+.
+. let ypz = 87.75
+if texthzzz = 2; let ypz = 90 - texthzzz + 0.15; end if
+if texthzzz = 3; let ypz = 90 - texthzzz + 0.50; end if
+if framet exists; let ypz = ypz - (90 - framet); end if
+if k0 exists
+   hw texthzzz textwzzz; just left; move 16 ypz; text k = ^k0
+end if
+if k0 not exist
+   hw texthzzz textwzzz; just left; move 16 ypz; text k = ^k
+end if
+.
+. let ypz = 85.75
+if texthzzz = 2; let ypz = 90 - 2*texthzzz + 0.40; end if
+if texthzzz = 3; let ypz = 90 - 2*texthzzz + 0.50; end if
+if framet exists; let ypz = ypz - (90 - framet); end if
+move 16 ypz; text n = ^njunk
+.
+. -----Step 99: Finish up-----
+.
+box fill pattern blank; box fill color g80
+.

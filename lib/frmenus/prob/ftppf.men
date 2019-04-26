@@ -1,0 +1,45 @@
+This is file ftppf.men--Compute folded t ppf
+ 
+--------------------
+ 1. Compute Folded T ppf
+ 2. LET A = FTPPF(P,SHAPE,LOC,SCALE)
+ 3.
+ 4. The input argument, p, can be either a
+ 5. single number, the name of a parameter,
+ 6. or the name of a variable.
+ 7.  
+ 8. Input values:
+ 9.                          p (0 <= p < 1):
+ 9. @CE 1 0 42 50 ?
+10.              shape nu  (nu = 1, 2, ...):
+10. @CE 2 0 42 50 ?
+11.                              location u:
+11. @CE 3 0 42 50 ?
+12.                         scale s (s > 0):
+12. @CE 4 0 42 50 ?
+13.
+14. Output parameters:
+15.                  name for the ppf value:
+15. @CE 5 0 42 50 ?
+16.
+17.
+18. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 3 0 LET ZLOC = _3
+LET ZSCALE = 1
+@IF 4 0 LET ZSCALE = _4
+IF ZSCALE <= 0
+   LET ZSCALE = 1
+END OF IF
+LET ZSHAPE = 1
+@IF 2 0 LET ZSHAPE = _2
+LET ZSHAPE = INT(ZSHAPE + 0.5)
+IF ZSHAPE  < 1
+   LET ZSHAPE = 1
+END OF IF
+@IF 5 0 LET _5 = FTPPF( _1 ,ZSHAPE,ZLOC,ZSCALE)
+--------------------
+WEB HELP FTPPF
+--------------------

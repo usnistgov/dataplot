@@ -1,0 +1,34 @@
+----- <~dex\factdefi.top> The Factor Definitions
+
+The Factor Definitions
+
+The factor definition for this 2**(3-1) design is 3 = 12.
+This notation does not mean that factor 3 has been
+physically equated to the interaction of factors 1 and
+2; rather, it means that the settings of factor 3 have
+been derived from factors 1 and 2.
+
+In particular, to construct this fractional factorial
+design, one starts off with a n = 4 = 2**2 = 2**2 full
+factorial design to determine the n = 4 settings for
+factors 1 and 2, and then determines the settings for
+factor 3 via the factor definition 3 = 12.  3 = 12
+means that the settings for factor 3 are computed by
+multiplying the settings for factors 1 and 2. Inasmuch
+as the settings for factors 1 and 2 are - and + (that
+is, -1 and +1), then the product will also be -1 and
++1:
+
+   run 1:   -1 x -1 = +1
+   run 2:   +1 x -1 = -1
+   run 3:   -1 x +1 = -1
+   run 4:   +1 x +1 = +1
+
+and so the 4 settings for factor 3 are
+
+   run 1:  +
+   run 2:  -
+   run 3:  -
+   run 4:  +
+
+

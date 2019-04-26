@@ -1,0 +1,71 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     HAMAKER.DP
+. PURPOSE--HAMAKER DRILL THRUST FORCE ANALYSIS (GANOVA)
+.
+. -----START POINT-----
+.
+LET STRING MARK = HAMAKER.DP
+.
+. ------------------------
+. STEP 1--READ IN THE DATA
+. ------------------------
+.
+SKIP 25
+READ HAMAKER.DAT Y X1 X2 X3
+.
+. ----------------------------
+. STEP 2--SET UP THE MULTIPLOT
+. ----------------------------
+.
+MULTIPLOT 2 2
+FEEDBACK OFF
+LABEL SIZE 3
+TIC LABEL SIZE 3
+CHAR SIZE 3 ALL
+Y1LABEL THRUST FORCE
+X1LABEL DRILL SPEED (X1)
+X3LABEL AUTOMATIC
+YLIMITS 0 1500
+.
+. --------------------------------
+. STEP 3--GENERATE A SCATTER PLOT
+. --------------------------------
+.
+CHAR X
+LINES BLANK ALL
+PLOT Y X1
+.
+. ---------------------------------
+. STEP 4--GENERATE A CHARACTER PLOT
+. ---------------------------------
+.
+CHAR 1 2
+PLOT Y X1 X2
+.
+. ----------------------------
+. STEP 5--GENERATE A LINE PLOT
+. ----------------------------
+.
+LET TAG = 10*X3+X2
+CHAR BLANK ALL
+LINES SOLID SOLID DOT DOT DASH2 DASH2
+PLOT Y X1 TAG
+.
+. -------------------------------------------------
+. STEP 6--GENERATE A CHARACTER & LINE PLOT (GANOVA)
+. -------------------------------------------------
+.
+CHARACTERS 1 2 1 2 1 2
+LINES SOLID SOLID DOT DOT DASH2 DASH2
+PLOT Y X1 TAG
+.
+. ------------------------------
+. STEP 7--WRITE OUT A PAGE TITLE
+. ------------------------------
+.
+MULTIPLOT OFF
+MOVE 50 92
+HW 3 2
+JUSTIFICATION CENTER
+TEXT HAMAKER DRILL THRUST FORCE ANALYSIS
+.
+CALL MARK.DP

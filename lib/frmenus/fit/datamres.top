@@ -1,0 +1,8 @@
+----- <~fit\datamres.top> Fitting Multi-response
+
+Fitting Multi-response (y1,y2,...) = f(x1,x2,...)
+
+Ridge                  Regression (RR)     <~fit\rreg.top>
+Sing. Value Decomp.    Regression (PCR)    <~fit\svdreg.top>
+HELP (Hwang-Liu)          <~fit\help.top>
+

@@ -1,0 +1,62 @@
+-----<~reli\ppccdisa.top> PPCC Plots: Disadvantages
+
+PPCC Plots: Disadvantages
+
+PPCC Plots: Disadvantages
+
+Some disadvantages of the PPCC plot/probability plot
+method are:
+
+   1) The method does not support censored data.
+
+      NOTE: In Dataplot, we have adapted the probability
+            plot to support censored probability plots.
+            We use the method described on pp. 45-46 of
+            Karl Bury (1999), "Statistical Distributions
+            in Engineering", Cambridge University Press.
+
+            The PPCC plot is adapted to censored data by
+            plotting the correlation coefficient of the
+            censored probability plot.
+
+   2) The method does not generate confidence intervals
+      for parameter estimates or quantiles of the
+      distribution.
+
+      NOTE: In Dataplot, we have addressed this issue
+            using the bootstrap.  Bootstrap distributional
+            plots are supported for 50+ distributions.
+            For details
+
+            Bootstrap Distributional Plots    <xcl: help bootstrap distributional plot>
+
+   3) The method does not extend well to distributions
+      with more than one shape parameter.
+
+      We have in fact extended this method to distributions
+      with two shape parameters.  This does increase the
+      computational burden (we are essentially squaring
+      the number of probability plots).  Our experience
+      indicates that the Kolmogorov-Smirnov alternative
+      discriminates better than the PPCC method for most
+      distributions with two shape parameters.
+
+   4) The method sometimes does not perform well for
+      heavy-tailed distributions.
+
+      In these cases, using the Kolmogorov-Smirnov alternative
+      may work better.
+
+   5) For some distributions, the shape parameter sometimes
+      behaves much like a scale or location parameter.  In
+      these cases, the PPCC plot does not discriminate well
+      since the value of the scale parameter essentially
+      compensates for changes in the shape parameter.  The
+      Maxwell distribution is a good example of this.
+
+      In these cases, we can fix the value of the location
+      and scale parameters and use the Kolmogorov-Smirnov
+      method rather than the PPCC method.  A good default
+      choice is to set the scale parameter to 1 and the
+      location parameter to 0 or to the data minimum.
+

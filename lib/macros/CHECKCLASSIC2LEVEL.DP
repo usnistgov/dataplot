@@ -1,0 +1,46 @@
+. This is dataplot macro   checkclassic2level.dp
+.
+. DANGER: This code is probably wrong--nothing after the end of loop  2/5/14
+.
+. Purpose: For a given row to be printed out horizontally,
+.          check to see if have a classic 2-level design (with or without center points)
+. Date   : March 4, 2013
+. Input:
+.   k (parameter) = number of factors
+.     z1, z2, z3, etc. (parameters) = xxx
+.
+. -----start point-----
+.
+. -----Step 1: Check input arguments for errors-----
+.
+let string stmacro = checkclassic2level.dp
+let string stall = k
+call checkinput.dp
+.
+loop for jz = 1 1 k
+   let string stall = z^jz
+   call checkinput.dp
+end loop
+.
+. -----Step 2: Check for the 2-level case-----
+.
+let classic = 1
+loop for jz = 1 1 k
+   delete dztemp
+   .
+   . stat v
+   . print z^jz  jz
+   . pause
+   .
+   let dztemp = z^jz
+   if dztemp exists; delete dztemp subset dztemp -1; end if
+   if dztemp exists; delete dztemp subset dztemp  1; end if
+   if dztemp exists; delete dztemp subset dztemp  0; end if
+   .
+   let ndztemp = 0
+   if dztemp exists; let ndztemp = number dztemp; end if
+   if ndztemp >= 1; let classic = 0; end if
+end loop
+.
+. print "classic = ^classic"
+. pause

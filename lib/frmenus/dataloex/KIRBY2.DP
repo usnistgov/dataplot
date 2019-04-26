@@ -1,0 +1,10 @@
+----- <~dataloex\KIRBY2.DP> Load & Execute KIRBY2.DAT
+
+. This is file    KIRBY2.DP
+
+DELETE Y X
+SKIP 25
+READ KIRBY2.DAT Y X
+TITLE KIRBY2.DAT
+PLOT Y X
+

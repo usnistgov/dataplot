@@ -1,0 +1,9 @@
+----- <~data\logfunct.top> xx
+
+Logarithmic Functions
+
+LN(X)             natural logarithm of a number
+LOG(X)            natural logarithm of a number
+LOG10(X)          base 10 logarithm of a number
+LOG2(X)           base 2 logarithm of a number
+

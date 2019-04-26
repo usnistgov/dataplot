@@ -1,0 +1,208 @@
+. Name:    WRIGMARG.DP
+. Purpose: Generate row/column margin values for the specified statistic.
+.          This macro assumes that WRIGOPTI.DP has been called.
+.
+FEEDBACK SAVE
+FEEDBACK OFF
+.
+.  Step 1: Draw the marginal labels
+.
+box shadow hw 0 0
+if margflag = 1
+   let xinc = charh1/2
+   let yinc = charw1/2
+   let ndigit = 1
+   let xmean = ^zzzzstat y
+   let rowmin  = minimum rowmean
+   let rowmax  = maximum rowmean
+   let colmin  = minimum colmean
+   let colmax  = maximum colmean
+   if irow = 1
+      let rowmean = sort rowmean
+   end of if
+   if icol = 1
+      let colmean = sort colmean
+   end of if
+   .
+   justification right
+   let ycoor1 = 16
+   move 15 ycoor1
+   color black
+   text ^zzzzstat
+   justification center
+   let colmean2 = colmean
+   if direcol = 1
+      let colmean2 = flip colmean
+   end of if
+   .
+   .  Step 2a: Draw the X direction labels
+   .
+   loop for k = 1 1 nx
+       moveds k ycoor1
+       let atemp = colmean2(k)
+       let flagmnmx = 0
+       if atemp = colmin
+          let flagmnmx = 1
+       end of if
+       if atemp = colmax
+          let flagmnmx = 1
+       end of if
+       let atemp = round(atemp,ndigit)
+       if highflag = 1
+          color ^color1
+          let string style = ^style1
+          box color ^color1
+       end of if
+       if minmaxla = 1
+          color ^color1
+          box color ^color1
+          let string style = ^style1
+       end of if
+       loop for l = 1 1 nlevel
+           let l2 = l+1
+           let atempu = ylevel(l)
+           let flagtemp = max(highflag,minmaxla)
+           if flagtemp = 1
+              if atemp >= atempu
+                 color ^color^l2
+                 let string style = ^style^l2
+                 box color ^color^l2
+              end of if
+           end of if
+       end of loop
+       text ^atemp
+       .
+       .  Currently, only support unfilled "box", but could add other
+       .  styles if needed.
+       .
+       let pxmin = 15
+       let pxmax = 85
+       probe fx1min
+       let fx1min = probeval
+       probe fx1max
+       let fx1max = probeval
+       let btemp = pxmin + (pxmax - pxmin)*(k - fx1min)/(fx1max - fx1min)
+       let xcoora = btemp - 1.75
+       let xcoorb = btemp + 1.75
+       let ycoora = 15
+       let ycoorb = 18
+       .
+       if minmaxla = 1
+          if flagmnmx = 1
+             box xcoora ycoora xcoorb ycoorb
+          end of if
+       else if highflag = 1
+          box xcoora ycoora xcoorb ycoorb
+       end of if
+   end of loop
+   .
+   justification left
+   move 86 90
+   color black
+   text ^zzzzstat
+   justification lece
+   let xcoor1 = 87
+   let rowmean2 = rowmean
+   if direrow = 1
+      let rowmean2 = flip rowmean
+   end of if
+   .
+   .  Step 2b: Draw the Y direction labels
+   .
+   loop for k = 1 1 ny
+       movesd xcoor1 k
+       let xinc = charh1/2
+       let yinc = charw1/2
+       let atemp = rowmean2(k)
+       let flagmnmx = 0
+       if atemp = rowmin
+          let flagmnmx = 1
+       end of if
+       if atemp = rowmax
+          let flagmnmx = 1
+       end of if
+       let atemp = round(atemp,ndigit)
+       if highflag = 1
+          color ^color1
+          let string style = ^style1
+          box color ^color1
+       end of if
+       if minmaxla = 1
+          color ^color1
+          box color ^color1
+          let string style = ^style1
+       end of if
+       loop for l = 1 1 nlevel
+           let l2 = l+1
+           let atempu = ylevel(l)
+           let flagtemp = max(highflag,minmaxla)
+           if flagtemp = 1
+              if atemp >= atempu
+                color ^color^l2
+                let string style = ^style^l2
+                box color ^color^l2
+              end of if
+           end of if
+       end of loop
+       text ^atemp
+       .
+       .  Currently, only support unfilled "box", but could add other
+       .  styles if needed.
+       .
+       let pymin = 20
+       let pymax = 90
+       probe fy1min
+       let fy1min = probeval
+       probe fy1max
+       let fy1max = probeval
+       let btemp = pymin + (pymax - pymin)*(k - fy1min)/(fy1max - fy1min)
+       let ycoora = btemp - 1.75
+       let ycoorb = btemp + 1.75
+       let xcoora = 86.5
+       let xcoorb = 91
+       .
+       if minmaxla = 1
+          if flagmnmx = 1
+             box xcoora ycoora xcoorb ycoorb
+          end of if
+       else if highflag = 1
+          box xcoora ycoora xcoorb ycoorb
+       end of if
+   end of loop
+   .
+   . Step 2c: 
+   .
+   move 87 16
+   justification left
+   let atemp = round(xmean,ndigit)
+   if highflag = 1
+      color ^color1
+      let string style = ^style1
+      box color ^color1
+   end of if
+   loop for l = 1 1 nlevel
+       let l2 = l+1
+       let atempu = ylevel(l)
+       if highflag = 1
+          if atemp >= atempu
+             color ^color^l2
+             let string style = ^style^l2
+             box color ^color^l2
+          end of if
+       end of if
+   end of loop
+   text ^atemp
+   if style = box
+      let xcoor1 = 86
+      let ycoor1 = 15
+      let xcoora = xcoor1
+      let xcoorb = xcoor1 + 2*xinc
+      let ycoora = ycoor1
+      let ycoorb = ycoor1 + 2*yinc
+      box xcoora ycoora xcoorb ycoorb
+   end of if
+   color black
+end of if
+.
+FEEDBACK RESTORE
+.

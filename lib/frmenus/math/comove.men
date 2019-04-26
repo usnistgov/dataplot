@@ -1,0 +1,24 @@
+This is file comove.men--Compute comovement of a variable
+ 
+--------------------
+ 1. Comovement
+ 2. LET A = COMOVEMENT Y1 Y2
+ 3.
+ 4. First variable for which to compute the comovement:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Second variable for which to compute the comovement:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Parameter to store the comovement:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -10 50 *
+10.
+11.
+12. Compute the Comovement?:
+--------------------
+GR FE
+LET _3 = COMOVEMENT  _1 _2 _4
+--------------------
+WEB HELP COMOVEMENT
+--------------------

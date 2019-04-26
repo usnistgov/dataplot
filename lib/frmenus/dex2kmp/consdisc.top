@@ -1,0 +1,24 @@
+----- <~dex2kmp\consdisc.top> Discussion: Construction of 2**(k-p) Designs
+ 
+Discussion:  Construction of 2**(k-p) Fract. Fact. Des.
+ 
+The recommended procedure for the construction of
+2**(k-p) fractional factorial designs in k factors
+and n runs is as follows:
+ 
+   1) given that we can afford n runs,
+      write down the full factorial
+      in n runs; this will consume
+      a subset of the k factors;
+ 
+   2) based on the factor definitions of the
+      optimal fractional designs (e.g., as
+      given on page 410 of Box, Hunter, and Hunter)
+      fill in the remain factor settings.
+ 
+Alternatively, for commonly-used fractional
+factorial designs, one can avoid the formal
+construction by simply using the tabulated version
+of the designs as displayed elsewhere in this
+menu system.
+ 

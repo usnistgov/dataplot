@@ -1,0 +1,23 @@
+----- <~prob\pcdfskew.top> Plot Common Skewed cdf's
+
+Plot Common Skewed CDF Functions
+
+Lognormal                <xemf: ~prob\plgncdf.men>
+Half-Normal              <xemf: ~prob\phfncdf.men>
+Chi-Squared              <xemf: ~prob\pchscdf.men>
+F                        <xemf: ~prob\pfcdf.men>
+Exponential              <xemf: ~prob\pexpcdf.men>
+Gamma                    <xemf: ~prob\pgamcdf.men>
+Beta                     <xemf: ~prob\pbetcdf.men>
+Weibull (for min)        <xemf: ~prob\pwei1cdf.men>
+Weibull (for max)        <xemf: ~prob\pwei2cdf.men>
+Extreme Value Type I (for min) <xemf: ~prob\pev11cdf.men>
+Extreme Value Type I (for max) <xemf: ~prob\pev12cdf.men>
+Extreme Value Type II (for min) <xemf: ~prob\pev21cdf.men>
+Extreme Value Type II (for max) <xemf: ~prob\pev22cdf.men>
+Pareto                   <xemf: ~prob\pparcdf.men>
+Inverse Gaussian         <xemf: ~prob\pigcdf.men>
+Wald                     <xemf: ~prob\pwalcdf.men>
+Reciprocal Inverse Gaussian   <xemf: ~prob\prigcdf.men>
+Fatigue-Life             <xemf: ~prob\pflcdf.men>
+

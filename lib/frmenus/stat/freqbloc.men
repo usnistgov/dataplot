@@ -1,0 +1,23 @@
+This is file freqbloc.men--Frequency Within A Block Test for Randomness
+ 
+--------------------
+ 1. Frequency Block Test for Randomness
+ 2. FREQUENCY BLOCK TEST Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5. Block Length:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute Frequency Block Test?
+--------------------
+GR FE
+LET M = _2
+FREQUENCY BLOCK TEST _1 _3
+--------------------
+WEB HELP FREQUENCY TEST
+--------------------

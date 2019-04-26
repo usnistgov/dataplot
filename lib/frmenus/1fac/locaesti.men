@@ -1,0 +1,23 @@
+This is file locaesti.men--Estimate Shift in Location
+ 
+--------------------
+ 1. Estimate Shift in Location
+ 2. LET M1 = MEAN Y1; LET M2 = MEAN Y2
+ 3.        LET DELTA = M1-M2
+ 4.
+ 5. Pre-mod  Response Variable:
+ 5. @CE 1 0 33 50 ?
+ 6. Post-mod Response Variable:
+ 6. @CE 2 0 33 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 3 0 1 50 *
+10.
+11.
+12. Estimate Location Shift?
+--------------------
+GR FE
+LET ZM1 = MEAN Y1
+LET ZM2 = MEAN Y2
+LET ZDELTA = ZM1-ZM2
+--------------------

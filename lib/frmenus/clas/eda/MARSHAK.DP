@@ -1,0 +1,10 @@
+----- <~dataloex\MARSHAK.DP> Load & Execute MARSHAK.DAT
+
+. This is file    MARSHAK.DP
+
+DELETE Y
+SKIP 25
+READ MARSHAK.DAT Y
+TITLE MARSHAK.DAT
+/
+

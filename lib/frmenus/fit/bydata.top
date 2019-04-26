@@ -1,0 +1,10 @@
+----- <~fit\bydata.top> By Data & Problem Type
+
+By Data & Problem Type
+
+Discussion                                <~fit\datadisc.top>
+
+1 Variable    : y = f(x)                   <~fit\data1var.top>
+Multi-variable: y = f(x1,x2,...)           <~fit\datamvar.top>
+Multi-response: (y1,y2,...) = f(x1,x2,...) <~fit\datamres.top>
+

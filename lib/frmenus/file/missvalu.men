@@ -1,0 +1,26 @@
+This is file missvalu.men--Specify value for missing values
+ 
+--------------------
+ 1. Specify Value for Missing Values
+ 2. SET READ MISSING VALUE <val>
+ 3.
+ 4. When reading comma separated data files,
+ 5. successive commas with no data in between
+ 6. are interpreted as a missing value.  Also,
+ 7. if you use COLUMN LIMITS with multiple
+ 8. values, blank fields are treated as missing
+ 9. data.  You can use this menu to specify what
+10. value will be inserted if a missing data field
+11. is encountered.
+12.
+13. Enter the value to use for missing values:
+13. @CE 1 0 42 50 ?
+14.
+15.
+16. Define the Value to use for Missing Data?
+--------------------
+SU FE
+SET READ MISSING VALUE _1
+--------------------
+WEB HELP READ MISSING VALUE
+--------------------

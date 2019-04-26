@@ -1,0 +1,38 @@
+This is Dataplot data file     TECHRISK.DAT
+Perceived Risk of Technologies
+Source--Gould, L. C., Gardner, G. T. , DeLuca, D. R. Tiemann, A. R.,
+        Doob, L. W., and Stolwijl, J. A. J (1988).
+        Perceptions of Technological Risks and Benefits.
+        New York, Russell Sage Foundation, Table 5.2, page 76.
+Response Variable                  = Average Perceived Risk (Danger)
+Number of observations             = 12 (= 6 x 2)
+Number of variables per line image = 3
+Order of variables per line image--
+   Response variable = average perceived risk (danger) (1 to 7 scale)
+   Factor 1          = technology (6 levels:
+                                   1 = Nuclear Weapons 2 = Handguns
+                                   3 = Industrial Chem 4 = Nuclear Power
+                                   5 = Auto Travel     6 = Air Travel)
+   Factor 2          = state      (2 levels:
+                                   1 = Connecticut     2 = Arizona)
+Statistical area--Multifactor
+Problem Type    --Comparative
+Design type     --Randomized Block
+To read this file into Dataplot--
+      SKIP 25; READ TECHRISK.DAT Y X1 X2
+  Risk    Technology   State
+    Y         X1         X2
+----------------------------
+   6.7        1          1
+   6.5        2          1
+   5.7        3          1
+   5.1        4          1
+   5.0        5          1
+   4.0        6          1
+
+   6.4        1          2
+   5.6        2          2
+   5.4        3          2
+   5.0        4          2
+   4.7        5          2
+   3.6        6          2

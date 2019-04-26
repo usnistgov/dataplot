@@ -1,0 +1,220 @@
+-----Windows 95/NT Questions-----
+
+1. Dos Help
+2. MS-DOS Icon
+3. Reprogramming Keys
+4. Nuisance Alt Key
+5. MS-DOS HotKey
+6. Exiting from MS-DOS Window
+7. E-mailing Multiple Files
+
+
+
+1. Dos Help
+   Why doesn't DOSHELP work?
+   In the MS-DOS Window, DOSHELP has been replaced simply by
+      HELP
+   and
+      HELP <desired command>
+
+2. MS-DOS Icon
+   How to create the MS-DOS icon in the Program Manager window?
+
+3. Reprogramming Keys
+   How to reprogram keys?
+
+4. Nuisance Alt Key
+   How deactivate the alt key to make it a space bar?
+
+5. MS-DOS HotKey
+   How define a hot key for the dos-prompt window?
+   1. highlight the msprompt icon
+   2. click on properties
+   3. in the short-cut key winbow, enter the desired letter
+      (e.g., P)
+      thus ctrl-alt-P will launch open the ms-dos window
+
+6. Exiting from MS-DOS Window
+
+   How do I get out of the MS-DOS windows back to Windows NT?
+      type    EXIT
+
+7. E-mailing Multiple Files
+   How do I use Eudora or otherwise
+   to EASILY e-mail 10 files to Alan?
+
+
+-----Dataplot Questions-----
+
+ 1. Error Bomb at Launch
+ 2. Dataplot HotKey
+ 3. Automatic Graphics Window
+ 4. Non-Overlapping Graphics Window
+ 5. Larger Text and Graphics Windows
+ 6. Dataplot Icon
+ 7. Large Text & Graphics Windows for Super-VGA
+ 8. Small Text & Graphics Windows for VGA
+ 9. Exiting out of Dataplot
+10. Automatic Post-Graphics Cursor into Text Window
+11. Smaller Font in Text Window
+12. Graphics Window Resizing
+13. Text Window Scrolling Problems
+14. Text & Graphics Window Names
+15. Print Graphics Window
+
+
+
+1. Error Bomb at Launch
+   I installed the dataplot code onto my
+   Windows 95/NT as directed in the ftp file
+
+       /PUB/DATAPLOT/PD/README.MSF
+
+   at the ftp site
+
+      scf.nist.gov
+
+   and it bombed immediately at launch
+   with the run-time error message:
+
+      F6416: OPEN() file note found
+
+   What should I do?
+   To correct this problem,
+   create (via the MS-DOS Window command MKDIR)
+   the subdirectory
+
+       C:\TURBOC\FRONTEND
+
+   and then relaunch dataplot.
+
+   <Alan--I would like to move printpos.exe
+          from C:\TURBOC\FRONTEND
+          to   C:\DATAPLOT
+          What do you think? >
+
+2. Dataplot HotKey
+   How define a hot key to launch dataplot?
+   1. highlight the dataplot icon
+   2. click on properties
+   3. in the short-cut key window, enter the desired letter
+      (e.g., D)
+      thus ctrl-alt-D will launch dataplot
+
+3. Automatic Graphics Window
+   How get dataplot graphics window to appear automatically upon launch?
+   In the file dplogf.tex, enter the line    DEVICE 1 QWIN
+
+4. Non-Overlapping Graphics Window
+   How get dataplot graphics window to non-overlap the text window?
+
+5. Larger Text and Graphics Windows
+   How get larger text and graphics windows for Dataplot?
+
+6. Dataplot Icon
+   How define an icon to launch dataplot?
+
+7. Large Text & Graphics Windows for Super-VGA
+   I have super-vga
+    and I want the larger text and graphics windows
+    how do I do that?
+    In c:\dataplot\dp.bat,   make sure that the  -svga option
+    is on the execution line as follows:
+       C:\DATAPLOT\DATAPLOT.EXE -SVGA
+
+8. Small Text & Graphics Windows for VGA
+   I do not have super-vga,
+   how should I get vga text and graphics windows?
+   In c:\dataplot\dp.bat,  omit the -svga option
+   so that the execution line therein will be thus become
+      C:\DATAPLOT\DATAPLOT.EXE
+
+9. Exiting out of Dataplot
+   how do I get out of dataplot and back to windows-nt
+   In the dataplot text window, enter any of the following:
+      EXIT STOP HALT END BYE QUIT
+
+10. Automatic Post-Graphics Cursor into Text Window
+    After I generate a plot in dataplot,
+    the cursor & focus is in the upper left corner
+    of the graphics window and I cannot enter the next command
+    until I click in the text window;
+    how do I get the cursor & focus to automatically go
+    to the text window after a plot is generated?
+    Ans. Enter manually the command
+            DEVICE 1 FOCUS TEXT
+         which instructs the cursor / focus
+         to automatically go to the text window
+         after plots.
+         This command need be manually entered only
+         at the beginning of a dataplot run;
+         or better yet, enter (via any editor)
+         this command line into Dataplot's login file:
+            C:DATAPLOT\DPLOGF.TEX
+          so that it will automatically executed upon launch
+
+11. Smaller Font in Text Window
+    How do I get smaller characters in the
+    Dataplot text window?
+
+12. Graphics Window Resizing
+    I notice that when I resize my graphics window,
+    the plot does not expand or contract accordingly;
+    what can I do?
+
+13. Text Window Scrolling Problems
+    I notice that the text window does not scroll in a predictable
+    fashion--I sometimes do not see the bottom of the text output,
+    and when I enter commands, I sometimes do not see what I
+    am entering?  What can I do?
+
+    <Alan--I think the scrolling is being dictated
+           by the totla frame window height as opposed
+           to the text window height.  I experimented a bit
+           and I think a good choice for the text and graphics
+           windows (for super vga) would be to make the
+           text and graphics windows to split the screen
+           50-50 left right (text on left half and graphics
+           on right half) with the text window being full
+           frame height top to bottom, and the graphics window
+           being about 3/4 frame height bottom to top with
+           the graphics window being positioned in the
+           bottom 3/4 of the right half of the screen.
+           What are your thoughts on this? >
+
+14. Text & Graphics Window Names
+    Alan--could you change the text window name from
+
+             Graphic1 => Text
+
+          and the name of the graphics window from
+
+             Dataplot_graphicsw => Graphics
+
+    Also, I have copied the executable
+    from   DPMSFORT.EXE
+    to     Dataplot.EXE
+    where the upper/lower case mixture in D a t a p l o t
+    was deliberate so that the Windows 95/NT title
+    in the title bar will in fact be
+       Dataplot
+    as opposed to
+       DATAPLOT
+    or
+       DPMSFORT
+
+15. Print Graphics Window
+    When I type in
+
+       PP
+
+    to print (to a postscript laser printer)
+    the current graphics window contents
+    I get the error message
+
+       THE PRINT FILE CAPABILITY NOT SUPPORTED
+       ON HOST IBM-
+       CONTACT YOUR SITE INSTALLER
+
+    What should I do?
+

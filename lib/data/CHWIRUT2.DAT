@@ -1,0 +1,79 @@
+ULTRASONIC CALIBRATION
+CONTACT--DAN CHWIRUT (NIST)
+NON-LINEAR MODEL--EXPONENTIAL/LINEAR MODEL
+NUMBER OF OBSERVATIONS = 54
+TOTAL NUMBER OF VARIABLES PER LINE IMAGE = 3
+   1. RESPONSE VARIABLE Y = ULTRASONIC RESPONSE
+   2. X                   = METAL DISTANCE
+   3. TAG                 = CODED METAL DISTANCE
+NOTE--MODEL--Y = EXP(-ALPHA*X)/(A+B*X)
+      WITH STARTING VALUES--ALPHA = .1   A = .01   B = .01
+NOTE--THIS FILE IS A SUBSET OF CHWIRUT1.DAT
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ CHWIRUT2.DAT Y X
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  Y        X       TAG
+----------------------
+92.9      0.5       1
+57.1      1.0       1
+31.05     1.75      1
+11.5875   3.75      1
+8.025     5.75      1
+63.6      0.875     2
+21.4      2.25      2
+14.25     3.25      2
+8.475     5.25      2
+63.8      0.75      3
+26.8      1.75      3
+16.4625   2.75      3
+7.125     4.75      3
+67.3      0.625     4
+41.0      1.25      4
+21.15     2.25      4
+8.175     4.25      4
+ 81.50     .50      5.
+ 13.12    3.00      6.
+ 59.90     .75      8.
+ 14.62    3.00     10.
+ 32.90    1.50     11.
+  5.44    6.00     13.
+ 12.56    3.00     14.
+  5.44    6.00     16.
+ 32.00    1.50     17.
+ 13.95    3.00     17.
+ 75.80     .50     18.
+ 20.00    2.00     18.
+ 10.42    4.00     18.
+ 59.50     .75     19.
+ 21.67    2.00     19.
+  8.55    5.00     19.
+ 62.00     .75     20.
+ 20.20    2.25     20.
+  7.76    3.75     20.
+  3.75    5.75     20.
+ 11.81    3.00     24.
+ 54.70     .75     27.
+ 23.70    2.50     27.
+ 11.55    4.00     27.
+ 61.30     .75     28.
+ 17.70    2.50     28.
+  8.74    4.00     28.
+ 59.20     .75     29.
+ 16.30    2.50     29.
+  8.62    4.00     29.
+ 81.00     .50     31.
+  4.87    6.00     31.
+ 14.62    3.00     34.
+ 81.70     .50     37.
+ 17.17    2.75     37.
+ 81.30     .50     39.
+ 28.90    1.75     40.

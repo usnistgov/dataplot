@@ -1,0 +1,131 @@
+This is file barplot.men--Grouped Bar Plot
+ 
+--------------------
+ 1. Grouped Bar Plot (1, 2, or 3 groups)
+ 2. BAR ON ALL; PLOT Y1 X1 AND; PLOT Y2 X2
+ 3.
+ 4. The data for each group should be stored in
+ 5. a separate variable.  The horizontal axis
+ 6. variables will be created automatically.
+ 7.
+ 8. First Response Variable:
+ 8. @CE 1 0 33 50 ? gui-vari
+ 9. Second Response Variable:
+ 9. @CE 2 0 33 50 ? gui-vari
+10. Third Response Variable:
+10. @CE 3 0 33 50 ? gui-vari
+11.
+12. Title:
+12. @CE 4 0 10 50 *
+13. Left Axis Label:
+13. @CE 5 0 22 50 *
+14. Bottom Axis Label:
+14. @CE 6 0 22 50 *
+15.
+16. For the following selections, enter 1 value
+17. for each group.  For example, if there are 3
+18. groups you could enter RED BLUE GREEN for the
+19. Bar Color item.  If all groups will have the
+20. same setting, you can enter 1 item followed by
+21. the word ALL (e.g., RED ALL).
+22.
+23. Base for Bars (typically 0):
+23. @CE 7 0 25 50 *
+24. Solid Filled Bars?:
+24. @CE 8 0 25 50 * gui-ooff
+25. Color for Solid Filled Bars?:
+25. @CE 9 0 25 50 * gui-color
+26.
+27. Color for Bar Border:
+27. @CE 10 0 25 50 * gui-color
+28. Line Type for Bar Border:
+28. @CE 11 0 25 50 * gui-line
+29. Line Thickness for Bar Border:
+29. @CE 12 0 25 50 * gui-thick
+30.
+31. Bar Direction:
+31. @CE 13 1 25 35 Vertical
+31. @CE 13 2 37 47 Horizontal
+32.
+33. Enter Bar Labels (use SP() for blank labels):
+34. @CE 14 0 -10 50 *
+35.
+36. Subset/Except/For Specification:
+37. @CE 15 0 -10 50 *
+38.
+39. Generate the Bar Plot?:
+--------------------
+GR FE
+LINE SAVE
+CHARACTER SAVE
+LINE BLANK
+CHARACTER BLANK
+SPIKE OFF
+BAR ON ALL
+BAR BASE _7
+BAR FILL _8
+BAR FILL COLOR _9
+HORIZONTAL SWITCH OFF
+@IF 13 2 HORIZONTAL SWITCH ON
+BAR BORDER COLOR _10
+BAR BORDER LINE _11
+BAR BORDER THICKNESS _12
+LET ZZZZY = _1
+RETAIN ZZZZY _15
+LET ZZZZY2 = _2
+RETAIN ZZZZY2 _15
+@IF 2 0 EXTEND ZZZZY ZZZZY2
+LET ZZZZY2 = _3
+RETAIN ZZZZY2 _15
+@IF 3 0 EXTEND ZZZZY ZZZZY2
+@IF 2 0 DELETE ZZZZY2
+LET ZZZZN = SIZE _1
+LET ZZZZDIR = 1
+@IF 13 2 LET ZZZZDIR = 2
+IF ZZZZDIR = 1
+@IF 14 0 MAJOR XTIC MARK NUMBER ZZZZN
+@IF 14 0 MINOR XTIC MARK NUMBER 0
+@IF 14 0 XLIMITS 1 ZZZZN
+@IF 14 0 XTIC OFFSET 0.5 0.5
+@IF 14 0 XTIC LABEL FORMAT ALPHA
+@IF 14 0 XTIC LABEL CONTENT _14
+END OF IF
+IF ZZZZDIR = 2
+@IF 14 0 MAJOR YTIC MARK NUMBER ZZZZN
+@IF 14 0 MINOR YTIC MARK NUMBER 0
+@IF 14 0 YLIMITS 1 ZZZZN
+@IF 14 0 YTIC OFFSET 0.5 0.5
+@IF 14 0 YTIC LABEL FORMAT ALPHA
+@IF 14 0 YTIC LABEL CONTENT _14
+END OF IF
+TITLE _4
+Y1LABEL _5
+X1LABEL _6
+LET ZZZZGRPS = 1
+@IF 2 0 LET ZZZZGRPS = 2
+@IF 3 0 LET ZZZZGRPS = 3
+LET ZZZZWIDT = 0.8/ZZZZGRPS
+BAR WIDTH ZZZZWIDT ALL
+LET ZZZZTAG1 = SEQUENCE 1 ZZZZN 1 ZZZZGRPS
+LET ZZZZSTOP = ZZZZGRPS*ZZZZN
+LET ZZZZX = SEQUENCE 1 1 ZZZZN FOR I = 1 1 ZZZZSTOP
+IF ZZZZGRPS = 2
+  LET ZZZZX = ZZZZX - 0.5*ZZZZWIDT SUBSET ZZZZTAG1 = 1
+  LET ZZZZX = ZZZZX + 0.5*ZZZZWIDT SUBSET ZZZZTAG1 = 2
+END OF IF
+IF ZZZZGRPS = 3
+  LET ZZZZX = ZZZZX - ZZZZWIDT SUBSET ZZZZTAG1 = 1
+  LET ZZZZX = ZZZZX + ZZZZWIDT SUBSET ZZZZTAG1 = 3
+END OF IF
+PLOT ZZZZY ZZZZX ZZZZTAG1
+DELETE ZZZZY ZZZZX ZZZZTAG1 ZZZZN ZZZZGRPS ZZZZWIDT
+LINE RESTORE
+CHARACTER RESTORE
+@IF 14 0 LIMITS
+@IF 14 0 TIC OFFSET
+@IF 14 0 MAJOR TIC MARK NUMBER
+@IF 14 0 MINOR TIC MARK NUMBER
+@IF 14 0 TIC MARK LABEL FORMAT
+--------------------
+WEB HELP BAR
+--------------------

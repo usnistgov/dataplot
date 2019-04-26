@@ -1,0 +1,10 @@
+----- <~dataexec\CLEAR.DP> Load & Execute CLEAR.DAT
+
+. This is file    CLEAR.DP
+
+DELETE Y X
+SKIP 25
+SERIAL READ CLEAR.DAT Y
+TITLE CLEAR.DAT
+4-PLOT Y
+

@@ -1,0 +1,6 @@
+----- <~dataprin\LIN.DP> Print (to Printer) LIN.DAT
+
+. This is file    LIN.DP
+
+PRINT LIN.DAT
+

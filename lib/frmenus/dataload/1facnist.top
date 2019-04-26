@@ -1,0 +1,15 @@
+----- <~dataload\1facnist.top> Load 1-Factor Data: NIST
+
+Load 1-Factor Data: NIST
+
+BATTADD1.DAT  Battery addditive comparison <xcf: ~dataload\BATTADD1.DP>
+BATTADD2.DAT  Battery addditive comparison <xcf: ~dataload\BATTADD2.DP>
+
+SCHANTZ.DAT   Consensus means              <xcf: ~dataload\SCHANTZ.DP>
+SPLETT2.DAT   Charpy V-NIST notch testing  <xcf: ~dataload\SPLETT2.DP>
+VANGEL2.DAT   Tension and shear data       <xcf: ~dataload\VANGEL2.DP>
+ZARR94.DAT    Thermal conductivity         <xcf: ~dataload\ZARR94.DP>
+
+FUNNEL5B.DAT  Simulated funnel data        <xcf: ~dataload\FUNNEL5B.DP>
+FUNNEL5C.DAT  Simulated funnel data        <xcf: ~dataload\FUNNEL5C.DP>
+

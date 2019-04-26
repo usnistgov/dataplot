@@ -1,0 +1,37 @@
+----- <~qual\mpc.top> Measurement Process Characterization
+ 
+Measurement Measurement Process Characterization
+ 
+This menu provides links to the NIST/SEMATECH
+Engineering Statistics Handbook that discuss issues
+of measurement processes.  This includes topics such
+as gauge studies, check standards, and uncertainty
+analyses.
+
+NIST/SEMATECH Handbook (Measurement Processes) <xcl: web handbook mpc>
+
+NIST/SEMATECH Handbook (Characterization) <xcl: web handbook mpc characterization>
+NIST/SEMATECH Handbook (Check Standards) <xcl: web handbook check standards>
+   Histogram                           <xemf: ~univ\histogra.men>
+   Probability Plot                    <xemf: ~univ\probplot.men>
+   Lag Plot                            <xemf: ~plot\lagplot.men>
+   4-Plot                              <xemf: ~univ\4plot.men>
+
+NIST/SEMATECH Handbook (Statistical Control) <xcl: web handbook mpc statistical control>
+   Control Charts                      <~qual\contchar.top>
+
+NIST/SEMATECH Handbook (Calibration) <xcl: web handbook mpc calibration>
+   Plot Y vs X                         <xemf: ~stat\scatplot.men>
+   Least Squares Fitting (1 Variable)  <~fit\data1var.top>
+   Linear Calibration                  <~fit\linecali.top>
+
+NIST/SEMATECH Handbook (Gauge Studies) <xcl: web handbook gauge studies>
+   Plot Y vs X                         <xemf: ~stat\scatplot.men>
+   Least Squares Fitting (1 Variable)  <~fit\data1var.top>
+   Control Charts                      <~qual\contchar.top>
+ 
+
+NIST/SEMATECH Handbook (Uncertainty Analysis)   <xcl: web handbook uncertainty analysis>
+ 
+NIST/SEMATECH Handbook (Case Studies) <xcl: web handbook pmc case studies>
+ 

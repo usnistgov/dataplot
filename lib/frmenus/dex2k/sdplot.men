@@ -1,0 +1,44 @@
+This is file sdplot.men--Generate DEX Standard Deviation Plot
+ 
+--------------------
+1. DEX Standard Deviation Plot
+2. DEX SD PLOT Y X1 X2 X3 X4 X5 ...
+3.
+4. Response Variable:
+4. @CE 1 0 33 50 ? gui-vari
+5. List of Factors/Variables:
+6. @CE 2 0 1 50 ? gui-vari
+7.
+8. Subset/Except/For Specification:
+9. @CE 3 0 1 50 *
+10.
+11.
+12. Line type connecting the data:
+12. @CE 4 0 33 50 * gui-line
+13. Line type for global sd:
+13. @CE 5 0 33 50 * gui-line
+14. Character type for data:
+14. @CE 6 0 33 50 * gui-char
+15.
+16. Character fill for data:
+16. @CE 7 0 33 40 * gui-ooff
+17. Spike to global sd:
+17. @CE 8 0 33 40 * gui-ooff
+18.
+19.
+20. Generate the DEX SD Plot?:
+--------------------
+GR FE
+@IF 4 0 LINES _4 _5
+@IF 6 0 CHAR BLANK ALL
+@IF 6 0 CHAR _6
+@IF 7 1 CHAR FILL ON
+@IF 7 2 CHAR FILL OFF
+@IF 8 1 LET ZM = SD _1 _3
+@IF 8 1 SPIKE ON
+@IF 8 1 SPIKE BASE ZM
+@IF 8 2 SPIKE OFF
+DEX SD PLOT _1 _2 _3
+--------------------
+WEB HELP DEX PLOT
+--------------------

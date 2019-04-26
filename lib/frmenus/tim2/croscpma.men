@@ -1,0 +1,62 @@
+This is file croscpma.men--Cross-Correlation plot matrix
+ 
+--------------------
+ 1. Cross-Correlation Plot Matrix
+ 2. MULTIPLOT 2 2 and CROSS-CORRELATION PLOT Y1 Y2 SUBSET ...
+ 3.
+ 4. Definition: Cross-Correlation(at lag h) =
+ 5.     correlation of Y1(i) with Y2(i-lag)
+ 6.     -1  <= cross-correlation  <= +1
+ 7.
+ 8. Vertical   axis = cross-correlation at lag h
+ 9. Horizontal axis = lag h
+10.
+11. Question being addressed:
+12.     Are the series cross-stationary; in particular,
+13.     is the cross-correlation structure the same
+14.     across the first, second, third, & fourth
+15.     quarters of the series?
+16.
+17. Reference:
+18.
+19. Response Variable    #1:
+19. @CE 1 0 33 50 ? gui-variable
+20. Response Variable    #2:
+20. @CE 2 0 33 50 ? gui-variable
+21.
+22. Line Type:
+22. @CE 3 0 33 50 * gui-line
+23. Character type:
+23. @CE 4 0 33 50 ? gui-char
+24. Character fill on/off?:
+24. @CE 5 0 33 50 ? gui-ooff
+25. Spike on/off
+25. @CE 6 0 33 50 * gui-ooff
+26.
+27. Subset/Except/For Specification:
+28. @CE 7 0 6 50 *
+29.
+30.
+31. Generate the Plot?:
+--------------------
+GR FE
+@IF 3 0 LINES _3
+@IF 4 0 CHARACTERS _4
+@IF 5 0 CHARACTER FILL _5
+@IF 6 0 SPIKE _6
+@IF 6 0 SPIKE BASE 0
+.
+LET ZN = NUMBER _1 _7
+LET ZJUNK = SEQUENCE 1 1 ZN _7
+LET ZJUNKTAG = CODE4 ZJUNK
+MULTIPLOT 2 2
+   LOOP FOR K = 1 1 4
+      CROSS-CORRELATION PLOT _1 _2 _7 SUBSET ZJUNKTAG K
+   END LOOP
+MULTIPLOT OFF
+LINES SOLID
+CHARACTERS BLANK
+SPIKE OFF
+--------------------
+WEB HELP CORRELATION PLOT
+--------------------

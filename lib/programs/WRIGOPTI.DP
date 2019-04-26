@@ -1,0 +1,137 @@
+. Name:    WRIGOPTI.DP
+. Purpose: Define options for CHARACTER TABULATION PLOT for
+.          the Wright brothers data.  Modify these to modify
+.          what type of plot is drawn.  Note that certain options
+.          are incompatible, so some options may override others.
+.
+.          margflag = 1    => Print marginal (i.e., row and column)
+.                             values of statistic on right and bottom axes
+.                   = 0    => Omit these marginal statistics
+.          legeflag = 1    => Print a legend defining color labels
+.                   = 0    => Omit this legend
+.          sortflag = 0    => Unsorted
+.                   = 1    => Sort on rows only
+.                   = 2    => Sort on columns only
+.                   = 3    => Sort on both rows and columns
+.          minmax   = 1    => Highlight row minimum and maximum cells
+.                     2    => Highlight column minimum and maximum cells
+.                     0    => Do not highlight row/column minimum and
+.                             maximum cells
+.                             If "1" or "2", then turn off row/column sort
+.          highflag = 1    => Highlighting turned on
+.                   = 0    => Highlighting turned off
+.          direrow  = 0    => Row direction ascending
+.                   = 1    => Row direction descending
+.          direcol  = 0    => Column direction ascending
+.                   = 1    => Column direction descending
+.          seprow   = 0    => Omit lines separating rows
+.                   = 1    => Draw horizontal lines to separate rows
+.          sepcol   = 0    => Omit lines separating columns
+.                   = 1    => Draw lines separating columns
+.          minmaxla = 0    => Do not highlight row/column minmax
+.                             tic mark labels
+.                   = 1    => Highlight row/column minmax tic mark labels
+.          cpuflag  = 1    => Print CPU time on plot
+.                   = 0    => Do not print cpu time on plot
+.          zzzzstat =      => String defining desired statistic to plot
+.                             (typically the mean for this type of plot)
+.
+FEEDBACK SAVE
+FEEDBACK OFF
+.
+.  Step 1: Define which options you want
+.
+.          If the parameter exists (i.e., user sets before calling),
+.          then use that value.  Otherwise, use the default value.
+.
+if margflag not exist
+   . let margflag = 0
+   let margflag = 1
+end of if
+.
+if legeflag not exist
+   . let legeflag = 0
+   let legeflag = 1
+end of if
+.
+if highflag not exist
+   . let highflag = 0
+   let highflag = 1
+end of if
+if highflag = 0
+   let legeflag = 0
+end of if
+.
+if sortflag not exist
+   let sortflag = 0
+   . let sortflag = 1
+   . let sortflag = 2
+   . let sortflag = 3
+end of if
+.
+if direrow not exist
+   let direrow = 0
+   . let direrow = 1
+end of if
+.
+if direcol not exist
+   let direcol = 0
+   . let direcol = 1
+end of if
+.
+if seprow not exist
+   let seprow = 0
+   . let seprow = 1
+end of if
+.
+if sepcol not exist
+   let sepcol = 0
+   . let sepcol = 1
+end of if
+.
+if minmaxla not exist
+   let minmaxla = 0
+   . let minmaxla = 1
+end of if
+if margflag = 0
+   let minmaxla = 0
+end of if
+.
+if minmax not exist
+   let minmax = 0
+   . let minmax = 1
+   . let minmax = 2
+end of if
+.
+if cpuflag not exist
+   let cpuflag = 0
+   . let cpuflag = 1
+end of if
+.
+if minmax > 0
+   let sortflag = 0
+   let highflag = 0
+end of if
+.
+let irow = 0
+if sortflag =  1
+   let irow = 1
+end of if
+if sortflag =  3
+   let irow = 1
+end of if
+let icol = 0
+if sortflag =  2
+   let icol = 1
+end of if
+if sortflag =  3
+   let icol = 1
+end of if
+.
+if zzzzstat not exist
+   let string zzzzstat = MEAN
+end of if
+let string sp = sp()
+.
+FEEDBACK RESTORE
+.

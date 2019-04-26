@@ -1,0 +1,83 @@
+This is Dataplot data file    HICHO4.DAT
+Yield Strength versus Magnetic Sensing
+Predictive Power of JSR Magnetic Sensing for Yield Strength
+UCL Steel = Ultra Low Carbon Steel
+George Hicho, Stefan Leigh,  April 1995
+Question: Is the correlation between JSR and Yield Strength
+          affected by various factors
+Question: Will a single prediction equation for Yield Strength
+          as a function of JSR suffice?
+ 
+Response variable 1 = NIST Gold standard yield stress
+Response variable 2 =  JSR (Jump Sum Rating) Magnetic reading
+Number of observations             = 16
+Number of variables per line image =  5
+Order of variables on a line--
+   1. Response Var.   1 = NIST gold standard yield stress (destructive)
+   2. Response Var.   2 = NIST  JSR reading (non-destructive)
+   3. Factor 1          = Heat (= Chem = Composit.) (2 levels: 1 & 2)
+   4. Factor 2          = Cold Reduction (2 levels: 70 & 80)
+   5. Factor 3          = Annealing Temp (2 levels: 780 & 820 deg. C)
+   6. Factor 4          = Temperature Elongation (2 levels: .5 & 1.5&)
+   7. Factor 5          = Lab (2 levels: NIST & LTV)
+Statistical Classification--DEX
+ 
+To read this data file into Dataplot--
+   SKIP 50
+   READ HICHO4.DAT Y1 Y2 X1 TO X5
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   Y1       Y2         X1    X2    X3    X4    X5
+ Yield      JSR       Heat  Cold  Anneal Temp  Lab
+ Stress                     Reduc  Temp  Elong
+--------------------------------------------------
+  21.77     2.41       -1    -1    -1    -1    -1
+  22.21     2.07        1    -1    -1    -1    -1
+  22.50     2.89       -1     1    -1    -1    -1
+  23.66     2.70        1     1    -1    -1    -1
+  19.59     2.36       -1    -1     1    -1    -1
+  19.59     2.43        1    -1     1    -1    -1
+  22.21     2.41       -1     1     1    -1    -1
+  21.04     2.59        1     1     1    -1    -1
+  23.51     2.82       -1    -1    -1     1    -1
+  26.27     2.83        1    -1    -1     1    -1
+  26.12     2.97       -1     1    -1     1    -1
+  26.12     3.18        1     1    -1     1    -1
+  23.51     2.37       -1    -1     1     1    -1
+  24.96     2.58        1    -1     1     1    -1
+  26.42     3.08       -1     1     1     1    -1
+  23.37     2.78        1     1     1     1    -1
+ 
+  21.20     2.53       -1    -1    -1    -1     1
+  22.90     2.55        1    -1    -1    -1     1
+  20.50     3.02       -1     1    -1    -1     1
+  21.90     2.83        1     1    -1    -1     1
+  20.30     2.50       -1    -1     1    -1     1
+  18.70     2.29        1    -1     1    -1     1
+  20.00     3.00       -1     1     1    -1     1
+  20.60     2.97        1     1     1    -1     1
+  24.60     2.90       -1    -1    -1     1     1
+  26.90     2.88        1    -1    -1     1     1
+  26.10     3.10       -1     1    -1     1     1
+  24.80     3.10        1     1    -1     1     1
+  24.20     2.50       -1    -1     1     1     1
+  23.90     2.53        1    -1     1     1     1
+  24.70     2.97       -1     1     1     1     1
+  24.70     2.66        1     1     1     1     1

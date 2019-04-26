@@ -1,0 +1,30 @@
+This is file bjpredsd.men--Read in Standard Deviations of Predicted Values
+ 
+--------------------
+ 1. Read in ARMA SD of Predicted Values
+ 2. READ DPST2F.DAT Z1 Z2 Z3 PREDSD Z4 STDRES
+ 3.
+ 4. The ARMA command saves the predicted values
+ 5. and the residuals in the internal variables
+ 6. PRED and RES.  In addition, it writes the
+ 7. standard deviation of the predicted values and
+ 8. the standardized residuals to the file dpst2f.dat.
+ 9. This menu reads these variables into variables.
+10.
+11. Name for SD of Predicted Values Variable:
+11. @CE 1 0 42 50 ?
+12. Name for Standardized Residuals Variable:
+12. @CE 2 0 42 50 ?
+13.
+14.
+15. Read in Variables?
+--------------------
+GR FE
+SKIP 6
+SET READ FORMAT 21X,E16.8,33X,F7.2
+READ DPST2F.DAT _1 _2
+SET READ FORMAT
+SKIP 0
+--------------------
+WEB HELP ARMA
+--------------------

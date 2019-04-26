@@ -1,0 +1,8 @@
+----- <~dataall\MAVRO.top> MAVRO.DAT
+
+MAVRO.DAT
+
+View     <xcl: LIST MAVRO.DAT>
+Load     <xcf: ~dataload/MAVRO.DP>
+Print    <xccl: printfile C:\DATAPLOT\MAVRO.DAT>
+

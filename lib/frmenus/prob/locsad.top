@@ -1,0 +1,27 @@
+----- <~prob\locsad.top> Anderson-Darling Goodness of Fit for Loc/Scale
+
+Perform Anderson-Darling Goodness of Fit Test
+
+Perform Anderson-Darling Goodness of Fit Test
+for Distributions with No Shape Parameters
+
+Anglit                                    <xemf: ~prob\adang.men>
+Arcsin                                    <xemf: ~prob\adars.men>
+Cauchy                                    <xemf: ~prob\adcau.men>
+Cosine                                    <xemf: ~prob\adcos.men>
+Double Exponential (Laplace)              <xemf: ~prob\addex.men>
+Exponential                               <xemf: ~reli\adexp.men>
+Extreme Value Type I(Gumbel)  - Minimum   <xemf: ~reli\adev11.men>
+Extreme Value Type I(Gumbel)  - Maximum   <xemf: ~reli\adev12.men>
+Half-Cauchy                               <xemf: ~prob\adhfc.men>
+Half-Logistic                             <xemf: ~prob\adhfl.men>
+Half-Normal                               <xemf: ~prob\adhfn.men>
+Hyperbolic Secant                         <xemf: ~prob\adhse.men>
+Logistic                                  <xemf: ~prob\adlog.men>
+Maxwell                                   <xemf: ~prob\admax.men>
+Normal                                    <xemf: ~reli\adnor.men>
+Rayleigh                                  <xemf: ~prob\adray.men>
+Semi-Circular                             <xemf: ~prob\adsem.men>
+Slash                                     <xemf: ~prob\adsla.men>
+Uniform                                   <xemf: ~prob\aduni.men>
+

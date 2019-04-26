@@ -1,0 +1,10 @@
+----- <~dataloex\MLCO2.DP> Load & Execute MLCO2.DAT
+
+. This is file    MLCO2.DP
+
+DELETE Y YEAR MONTH
+SKIP 25
+READ MLCO2.DAT YEAR MONTH Y
+TITLE MLCO2.DAT
+4-PLOT Y SUBSET Y > 0
+

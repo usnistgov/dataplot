@@ -1,0 +1,28 @@
+This is file diffpbmv.men--Compute difference of percentage bend midv
+ 
+--------------------
+ 1. Difference of Percentage Bend Midvariance
+ 2. LET A = DIFFERENCE OF PERCENTAGE BEND MIDVARIANCE Y1 Y2
+ 3.
+ 4. First Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Second Response Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Desired bending constant (between 0 and 0.5, default = 0.1):
+ 6. @CE 3 0 42 50 ?
+ 7. Parameter to store the trimmed mean:
+ 7. @CE 4 0 42 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 1 50 *
+11.
+12.
+13. Compute the Difference of Percentage Bend Midvariance?:
+--------------------
+GR FE
+LET BETA = 0.1
+LET BETA = _3
+LET _4 = DIFFERENCE OF PERCENTAGE BEND MIDVARIANCE  _1 _2 _5
+--------------------
+WEB HELP DIFFERENCE OF PERCENTAGE BEND MIDVARIANCE
+--------------------

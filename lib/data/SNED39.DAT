@@ -1,0 +1,42 @@
+This is Dataplot data file     SNED39.DAT
+Snedecor & Cochran Univariate Example:
+   Vitamin C Content of Tomato Juice
+Question: What is a typical value?
+Question: What is a measure of variation?
+ 
+Source--Snedecor, George W. and Cochran , William G. (1937).
+        Statistical Methods. Sixth Edition.
+        The Iowa State University Press, Ames, Iowa, page 39.
+ 
+Number of observations             = 17
+Number of variables per line image =  1
+Order of variables on a line image--
+   1. Response Variable Y = vitamin C concentration (mg/100 gm)
+ 
+To read this into Dataplot--
+   SKIP 25
+   READ SNED39.DAT Y
+ 
+ 
+ 
+ 
+      Y
+Concentration
+--------------
+     16
+     22
+     21
+     20
+     23
+     21
+     19
+     15
+     13
+     23
+     17
+     20
+     29
+     18
+     22
+     16
+     25

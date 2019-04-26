@@ -1,0 +1,103 @@
+----- <~file\discchar.top> Files: Reading Data with Character Fields
+
+File: Reading Data with Character Fields
+
+Dataplot has not previously supported character data.  The one
+execption is that you could read row labels with the READ ROW LABEL
+command (enter HELP READ ROW LABEL for details).  If encountered,
+Dataplot would generate an error message and not read the data file
+correctly. 
+
+With the January 2004 version, we have introduced some limited
+support for character data.  Specifically, we have added the command
+
+     SET CONVERT CHARACTER   ON/IGNORE/ERROR
+
+Setting this to ERROR will continue the current Dataplot action of
+reporting character data as an error.  This is recommended for the
+case when a file is suppossed to contain only numeric data and the
+presence of character data is in fact indicative of an error in the
+data file.
+
+Setting this to IGNORE will instruct Dataplot to simply ignore any
+fields containing character data.  This can be useful if you simply
+want to extract the numeric data fields in the file without
+entering COLUMN LIMITS or SET READ FORMAT commands.
+
+Setting this to ON will read character fields and write them to the
+file "dpzchf.dat".  Note that Dataplot saves numeric data
+"in memory" for fast access.  Since character data has limited
+use in Dataplot, we have decided to save character data 
+externally to minimize memory requirements.  Dataplot keeps a
+separate name table for the character data fields (the names for
+character variables are stored in the file "dpzchf.dat").
+
+There are some restrictions on when Dataplot will try to
+read character data:
+
+   1) This only applies to the variable read case.  That
+      is, READ PARAMETER and READ MATRIX will ignore
+      character fields or treat them as an error.
+
+   2) Dataplot will only try to read character data from
+      a file.  When reading from the keyboard (i.e., when
+      READ is specified with no file name), character data
+      will be ignored when a SET CONVERT CHARACTER ON is
+      specified.
+
+   3) This capability is not supported for the SERIAL READ
+      case.
+
+   4) The SET READ FORMAT command does not accept the
+      "A" format specification for reading character
+      fields.
+
+   5) A maximum of 20 character variables will be saved.
+
+   6) A maximum of 24 characters for each character variable
+      will be saved.
+
+   7) The character variables from at most one data file
+      will be saved in a given session.
+
+Some of these restrictions may be addressed in subsequent
+releases of Dataplot.
+
+Currently, Dataplot has limited support for character variables.
+Specifically,
+
+   1) The row label can be used for the plot character by
+      entering the command
+
+        CHARACTER ROWLABEL
+
+   2) You can convert a character variable to a coded numeric
+      variable with the command
+
+        LET Y = CHARACTER CODE IX
+        LET Y = ALPHABETIC CHARACTER CODE IX
+
+      with IX denoting the name of the character variable.  These
+      command assigns a numeric value for each unique name in
+      the character variable.
+
+      For the CHARACTER CODE case, the coding is from 1 to K where
+      K is the number of unique values.  The order is based on
+      the order these values are found in the file.
+
+      For the ALPHABETIC CHARACTER CODE case, the coding is from
+      1 to K where K is the number of unique values.  The order is
+      performed in alpabetical order.
+
+We anticipate additional use of character variables in subsequent
+releases of Dataplot.
+
+If your character fields contain non-numeric/non-alphabetic
+characters, then it is recommended that the character fields be
+enclosed in quotes.  When Dataplot encounters a quote (either a
+single or double quote), it interprets everything until a matching
+quote is found as part of that character field.  If the quotes are
+not used, then spaces, tabs, parenthesis, brackets, colons, and
+semi-colons are interpreted as delimiters that signify the end of
+that data item.
+

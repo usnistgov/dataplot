@@ -1,0 +1,10 @@
+----- <~univ\relvboot.top> Bootstrap &/or Jacknife: Relative Variation
+
+Bootstrap and/or Jacknife Estimates of Relative Variation
+
+Bootstrap
+   Relative Standard Deviation       <xemf: ~univ\bootrspl.men>
+
+Jacknife
+   Relative Standard Deviation       <xemf: ~univ\jackrspl.men>
+

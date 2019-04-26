@@ -1,0 +1,8 @@
+----- <~dataload\BOXCHEM2.DP> Load BOXCHEM2.DAT
+
+. This is file    BOXCHEM2.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ BOXCHEM2.DAT Y X1 X2
+

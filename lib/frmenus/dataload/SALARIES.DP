@@ -1,0 +1,8 @@
+----- <~dataload\SALARIES.DP> Load SALARIES.DAT
+
+. This is file    SALARIES.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ SALARIES.DAT Y X1 X2
+

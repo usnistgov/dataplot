@@ -1,0 +1,77 @@
+This is file 3dplot.men--3d-plot (data)
+ 
+--------------------
+ 1. 3D-Plot (Data)
+ 2. PLOT Z X Y TAG 
+ 3.
+ 4. Note: For 3d plots it is often helpful to scale your
+ 5.       data so that the ranges on all 3 axes are 
+ 6.       reasonably similar.  One common technique is to
+ 7.       divide each axis by a suitable factor of 10 so
+ 8.       that the data for each axis range from -1 to 1.
+ 9.       For example, if the Z axis variable ranges from
+10.       0 to 950, you could enter LET ZNEW = Z/10**4.
+11.
+12. Z Axis Variable:
+12. @CE 1 0 43 60 ?
+13. X Axis Variable:
+13. @CE 2 0 43 60 ?
+14. Y Axis Variable:
+14. @CE 3 0 43 60 ?
+15. Tag    Variable (Optional):
+15. @CE 4 0 43 60 ?
+16.
+17. Select 3D frame:
+18. @CE 5 1 14 60 no 3d frame
+19. @CE 5 2 14 60  prong (axes from min to max, common origin)
+20. @CE 5 3 14 60  xz and yz planes
+21. @CE 5 4 14 60  cube
+22. @CE 5 5 14 60  zigzag (similar to prong but no common origin)
+23.
+24. Type of 3D plot:
+25. @CE 8 1 14 60 Data points as cross-hatched lines
+26. @CE 8 2 14 60 Use tag variable to connect lines
+27. @CE 8 3 14 60 Draw data as distinct characters
+28. @CE 8 4 14 60 Draw data as spikes
+29.
+30. Character type:
+30. @CE 9 0 52 60 * gui-char
+31. Character fill:
+31. @CE 10 0 52 60 * gui-ooff
+32.
+33. X, Y, Z viewing coordinates (optional):
+34. @CE 6 0 1 60 *
+35.
+36. Subset/Except/For Specification:
+37. @CE 7 0 1 60 *
+38.
+39.
+40. Plot the Function?:
+--------------------
+GR FE
+EYE COORDINATES _6
+@IF 5 1 3DFRAME OFF
+@IF 5 2 3DFRAME PRONG
+@IF 5 3 3DFRAME 3PLANE
+@IF 5 4 3DFRAME BOX
+@IF 5 5 3DFRAME ZIGZAG
+@IF 8 1 LINES SOLID ALL
+@IF 8 1 CHARACTERS BLANK ALL
+@IF 8 2 LINES SOLID ALL
+@IF 8 2 CHARACTERS BLANK ALL
+@IF 8 3 LINES BLANK ALL
+@IF 8 3 CHARACTERS _9
+@IF 8 3 CHARACTER FILL _10
+@IF 8 4 LINES BLANK ALL
+@IF 8 4 CHARACTERS _9
+@IF 8 4 CHARACTER FILL _10
+@IF 8 4 SPIKE ON
+@IF 8 4 SPIKE BASE 0
+@IF 8 1 3D-PLOT _1 _2 _3 _2 _7 AND
+@IF 8 1 3D-PLOT _1 _2 _3 _3 _7
+@IF 8 2 3D-PLOT _1 _2 _3 _4 _7
+@IF 8 3 3D-PLOT _1 _2 _3 _7
+@IF 8 4 3D-PLOT _1 _2 _3 _7
+--------------------
+WEB HELP 3D-PLOT
+--------------------

@@ -1,0 +1,41 @@
+This is file matr_1ho.men--1-Sample Hotelling T Square Test
+ 
+--------------------
+ 1. Hotelling 1-Sample T Square Test
+ 2. LET A = 1-SAMPLE HOTELLING T-SQUARE M Y
+ 3.
+ 4. The 1-sample Hotelling t square test is:
+ 5.    H0: U=U0
+ 6. where U0 is a vector of population means.  That
+ 7. is, it is testing the columns means of the matrix
+ 8. against a vector of hypothesized values.
+ 9. 
+10. Name of Data Matrix:
+10. @CE 1 0 42 50 ? gui-matr
+11. Name of Variable Containing Hypothesized Means:
+11. @CE 2 0 42 50 ? gui-vari
+12. Name of scalar to store the results:
+12. @CE 3 0 42 50 ?
+13.
+14. Subset/Except/For Specification:
+15. @CE 4 0 1 50 *
+16.
+17.
+18. Perform the Hotelling T Square Test?:
+--------------------
+GR FE
+LET _3 = HOTELLING 1 SAMPLE T SQUARE  _1 _2  _4
+CAPTURE ZZZZJUNK.DAT
+PRINT "HO: U = U0"
+PRINT "HA: U <> U0"
+PRINT " "
+PRINT "HOTELLING T-SQUARE STATISTIC   = ^ZZZZA"
+PRINT "90%   CRITICAL VALUE           = ^B90"
+PRINT "95%   CRITICAL VALUE           = ^B90"
+PRINT "99%   CRITICAL VALUE           = ^B90"
+PRINT "99.5% CRITICAL VALUE           = ^B90"
+END OF CAPTURE
+LIST ZZZZJUNK.DAT
+--------------------
+WEB HELP 1 SAMPLE T SQUARE
+--------------------

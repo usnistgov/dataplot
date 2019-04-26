@@ -1,0 +1,70 @@
+THIS IS DATAPLOT DESIGN OF EXPERIMENT FILE     PB20.DAT
+PLACKETT-BURMAN 20-RUN DESIGN
+NUMBER OF LEVELS FOR EACH FACTOR =  2
+NUMBER OF FACTORS                = 19
+NUMBER OF RUNS                   = 20 (A SATURATED DESIGN)
+RESOLUTION                       =  3 (CAUTION! MAIN EFFECTS
+                                      COUNFOUNDED WITH 2-TERM
+                                      INTERACTIONS)
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+CONFOUNDING STRUCTURE--
+   AN 19-FACTOR DESIGN HAS 19*18/2 = 171 2-TERM INTERACTIONS.
+   THE CONFOUNDING FOR THIS DESIGN IS SEVERE--
+   EACH MAIN EFFECT IS EQUI-CONFOUNDED WITH ALL
+   171-18 = 153 2-TERM INTERACTIONS NOT INVOLVING THE
+   FACTOR ITSELF;  THUS, FOR EXAMPLE, THE ESTIMATED FACTOR 1
+   EFFECT IS EQUI-CONFOUNDED WITH ALL 171 2-TERM INTERACTIONS
+   EXCEPT FOR THOSE 18 WHICH INVOLVE FACTOR 1
+   (NAMELY, 1x2, 1x3, ..., 1x19).
+ 
+   CONVERSELY, IF A GIVEN 2-TERM INTERACTION IS REAL & LARGE,
+   THEN IT WILL EQUI-CONFOUND/CONTAMINATE 17 OF THE 19
+   MAIN EFFECTS.
+ 
+   DETAILS OF THE CONFOUNDING STRUCTURE ARE FOUND
+   IN THE DATAPLOT FILE  PB20CONF.DAT
+   (WITH THANKS TO MY NIST COLLEAGUE ERIC LAGERGREN).
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+REFERENCE--TAGUCHI, SYS. OF EXP. DES., VOL. 2, PAGE XXXX.
+NOTE--THIS DESIGN IS EQUIVALENT TO A
+      TAGUCHI L20 DESIGN
+NOTE--IF POSSIBLE, THIS (AS WITH ALL EXPERIMENT DESIGNS)
+      DESIGN SHOULD BE RUN IN RANDOM ORDER.
+NOTE--TO READ THIS FILE INTO DATAPLOT--
+      DIMENSION 30 VARIABLES
+      SKIP 50
+      READ PB20.DAT X1 TO X19
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X
+ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19
+---------------------------------------------------------
+ 1 -1  1  1 -1 -1 -1 -1  1 -1  1 -1  1  1  1  1 -1 -1  1
+ 1  1 -1  1  1 -1 -1 -1 -1  1 -1  1 -1  1  1  1  1 -1 -1
+-1  1  1 -1  1  1 -1 -1 -1 -1  1 -1  1 -1  1  1  1  1 -1
+-1 -1  1  1 -1  1  1 -1 -1 -1 -1  1 -1  1 -1  1  1  1  1
+ 1 -1 -1  1  1 -1  1  1 -1 -1 -1 -1  1 -1  1 -1  1  1  1
+ 1  1 -1 -1  1  1 -1  1  1 -1 -1 -1 -1  1 -1  1 -1  1  1
+ 1  1  1 -1 -1  1  1 -1  1  1 -1 -1 -1 -1  1 -1  1 -1  1
+ 1  1  1  1 -1 -1  1  1 -1  1  1 -1 -1 -1 -1  1 -1  1 -1
+-1  1  1  1  1 -1 -1  1  1 -1  1  1 -1 -1 -1 -1  1 -1  1
+ 1 -1  1  1  1  1 -1 -1  1  1 -1  1  1 -1 -1 -1 -1  1 -1
+-1  1 -1  1  1  1  1 -1 -1  1  1 -1  1  1 -1 -1 -1 -1  1
+ 1 -1  1 -1  1  1  1  1 -1 -1  1  1 -1  1  1 -1 -1 -1 -1
+-1  1 -1  1 -1  1  1  1  1 -1 -1  1  1 -1  1  1 -1 -1 -1
+-1 -1  1 -1  1 -1  1  1  1  1 -1 -1  1  1 -1  1  1 -1 -1
+-1 -1 -1  1 -1  1 -1  1  1  1  1 -1 -1  1  1 -1  1  1 -1
+-1 -1 -1 -1  1 -1  1 -1  1  1  1  1 -1 -1  1  1 -1  1  1
+ 1 -1 -1 -1 -1  1 -1  1 -1  1  1  1  1 -1 -1  1  1 -1  1
+ 1  1 -1 -1 -1 -1  1 -1  1 -1  1  1  1  1 -1 -1  1  1 -1
+-1  1  1 -1 -1 -1 -1  1 -1  1 -1  1  1  1  1 -1 -1  1  1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1

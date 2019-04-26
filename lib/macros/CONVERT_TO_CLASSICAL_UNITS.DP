@@ -1,0 +1,29 @@
+. This is dataplot macro   convert_to_classical_units.dp
+. Purpose: If needed, convert the entire design matrix X to (-1,+1)
+. Date: 3/9/15
+. Input:
+.     k           (parameter) = Number of factors
+.     x1, x2, etc (vectors)   = 2-Level factors with levels in original (numeric) units
+. Output:
+.     x1save, x2save, etc (vectors) = the saved original factors
+.     x1, x2, etc (vectors)         = 2-Level factors with levels overwritten to (-1,+1) values
+      xorigval    (vector)          = sequential list of original values (length = 2k)
+.
+. -----start point-----
+.
+. -----Step 1: Check input arguments-----
+.
+let string stmacro = code_to_classical_units.dp
+set check name output filliben
+feedback save; feedback on
+let iflag = check name k x1 to x^k
+feedback restore
+.
+. -----Step 2: Save the k factors and code each factor from original (a,b)
+.              to (-1,+1)-----
+.
+loop for j = 1 1 k
+   let x^j&orig = x^j
+   let x^j = code dex x^j&orig
+end loop
+.

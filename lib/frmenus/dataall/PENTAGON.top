@@ -1,0 +1,8 @@
+----- <~dataall\PENTAGON.top> PENTAGON.DAT
+
+PENTAGON.DAT
+
+View     <xcl: LIST PENTAGON.DAT>
+Load     <xcf: ~dataload/PENTAGON.DP>
+Print    <xccl: printfile C:\DATAPLOT\PENTAGON.DAT>
+

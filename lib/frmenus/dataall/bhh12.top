@@ -1,0 +1,22 @@
+----- <~dataall\bhh12.top> Chapter 12: Fractional Factorial Designs at 2 Level
+
+
+Chapter 12: Fractional Factorial Designs at 2 Levels
+
+1. Redundancy
+2. A Half-Fraction of a 2**5 Design: Reactor Example
+     Reactor(377) <~dataall\BOXREACT.top>
+     Reactor(379) <~dataall\BOXREAC2.top>
+3. Construction & Analysis of Half-Fractions: Reactor Example
+4. The Concept of Design Resolution: Reactor Example
+5. Resolution III Designs: Bicycle Example
+     Bike   (391) <~dataall\BOXBIKE2.top>
+     Bike   (394) <~dataall\BOXBIKE3.top>
+6. Resolution IV Designs: Injection Molding Example
+     Mold   (402) <~dataall\BOXMOLD.top>
+7. Elimination of Block Effects in Fractional Designs
+8. Designs of Resolution V and Higher
+9. Summary
+     Solar  (441) <~dataall\BOXSOLAR.top>
+     Radar  (442) <~dataall\BOXRADAR.top>
+

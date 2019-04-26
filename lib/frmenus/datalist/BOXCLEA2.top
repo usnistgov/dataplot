@@ -1,0 +1,8 @@
+----- <~datalist\BOXCLEA2.top> BOXCLEA2.DAT
+ 
+BOXCLEA2.DAT
+ 
+View     <xcl: LIST BOXCLEA2.DAT>
+Load     <x2cl: SKIP 25; READ BOXCLEA2.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\BOXCLEA2.DAT>
+ 

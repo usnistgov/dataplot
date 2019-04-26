@@ -1,0 +1,61 @@
+This is file expecdf.men--Fitted CDF versus Sorted Interarrival Times
+
+--------------------
+ 1. Fitted Exponential CDF versus Interarrival Times
+ 2. ECDF PLOT Y; PLOT EXPCDF(X,LOC,SCALE) FOR X = AMIN AINC AMAX
+ 4.
+ 5. Response Variable: 
+ 5. @CE 1 0 42 50 ? gui-vari
+ 6.
+ 7. Superimposed Exponential Cumulative Distribution Function:
+ 8.    Location u:
+ 8. @CE 2 0 42 50 ?
+ 9.    Scale s:
+ 9. @CE 3 0 42 50 ?
+10.    Line Type for Fitted Line:
+10. @CE 4 0 42 50 ? gui-line
+11.    Line Color for Fitted Line:
+11. @CE 5 0 42 50 ? gui-color
+12.
+13. Title:
+13. @CE 6 0 20 50 *
+14. Left Axis Label:
+14. @CE 7 0 20 50 *
+15. Bottom Axis Label:
+15. @CE 8 0 20 50 *
+16.
+17.
+18. Generate the plot?
+--------------------
+AN FE
+LINE SAVE
+CHARACTER SAVE
+.
+LINE SOLID
+CHARACTER BLANK
+ECDF PLOT _1
+.
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+LINE COLOR BLUE
+@IF 4 0 LINES _4
+@IF 5 0 LINE COLOR _5
+PRE-ERASE OFF
+LIMITS FREEZE
+LET ZMIN = MINIMUM _1
+LET ZMAX = MAXIMUM _1
+LET ZINC = (ZMAX-ZMIN)/100
+LET ZLOC = 0
+@IF 2 0 LET ZLOC = _2
+LET ZSCALE = 1
+@IF 3 0 LET ZSCALE = _3
+PLOT EXPCDF(X,ZLOC,ZSCALE) FOR X = ZMIN ZINC ZMAX
+LIMITS
+PRE-ERASE ON
+LINE COLOR BLACK
+LINE RESTORE
+CHARACTER RESTORE
+--------------------
+WEB HELP ECDF PLOT
+--------------------

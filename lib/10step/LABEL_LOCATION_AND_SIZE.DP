@@ -1,0 +1,47 @@
+. This is dataplot macro     label_location_and_size.dp        10/30/18
+. Purpose: For dexiem.dp (= Ste_p 4) and for a given number of factors k
+.          determine the most visually appealing settings (location and size) for
+.             the horizontal axis labels           (controlled by x1label), and
+.             the upper left factor effects string (controlled by x2label)
+. Date: 10/30/18
+. Input: 
+.    k (parameter) = number of factors == number of rows of subplots in interaction effects matrix
+. Output:
+.    x1label specs get set (this controls the horizontal axis label location and size), and
+.    x2label specs get set (this controls the upper left      label location and size.
+.
+. -----start point-----
+.
+x1label justification cece
+x2label justification left
+delete xp1z yp1z x1sizez     xp2z yp2z x2sizez
+.
+let xp1z = 50; let yp1z = 0; let x1sizez = 3*k
+let xp2z = 02; let yp2z = 100; let x2sizez = 3*k
+.
+if k = 2; let xp1z = 50; let yp1z = 0; let x1sizez = 3*k
+          let xp2z = 02; let yp2z = 100; let x2sizez = 3*k; end if
+
+if k = 3; let xp1z = 50; let yp1z = 0; let x1sizez = 3*k
+          let xp2z = 02; let yp2z = 100; let x2sizez = 3*k; end if
+.
+if k = 4; let xp1z = 50; let yp1z = 0; let x1sizez = 2.8*k
+          let xp2z = 02; let yp2z = 100; let x2sizez = 2.8*k; end if
+.
+if k = 5; let xp1z = 50; let yp1z = 0; let x1sizez = 2.6*k
+          let xp2z = 03; let yp2z = 100; let x2sizez = 2.6*k; end if
+.
+if k = 6; let xp1z = 50; let yp1z = 0; let x1sizez = 2.4*k
+          let xp2z = 03; let yp2z = 100; let x2sizez = 2.4*k; end if
+.
+if k = 7; let xp1z = 50; let yp1z = 0; let x1sizez = 2.2*k
+          let xp2z = 03.5; let yp2z = 100; let x2sizez = 2.3*k; end if
+.
+if k = 8; let xp1z = 50; let yp1z = 0; let x1sizez = 2*k
+          let xp2z = 04; let yp2z = 100; let x2sizez = 2.2*k; end if
+
+
+x1label coordinates xp1z yp1z; x1label size x1sizez
+x2label coordinates xp2z yp2z; x2label size x2sizez
+                               y1label size x1sizez
+.

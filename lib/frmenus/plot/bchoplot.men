@@ -1,0 +1,39 @@
+This is file bcliplot.men--Box-Cox Homoscedasticity Plot
+ 
+--------------------
+1. Box-Cox Homoscedasticity Plot
+2. BOX-COX HOMOSCEDASTICITY PLOT Y TAG
+3.
+4. Vertical Axis Variable:
+4. @CE 1 0 33 50 ? gui-variable
+5. Horizontal Axis Variable:
+5. @CE 2 0 33 50 ? gui-variable
+6.
+7. Line type for plot?:
+7. @CE 3 0 33 50 * gui-line
+8. Character type for plot?:
+8. @CE 4 0 33 50 * gui-character
+9.
+10. Title:
+10. @CE 5 0 18 50 *
+11. Left Axis Label:
+11. @CE 6 0 18 100 *
+12. Bottom Axis Label:
+12. @CE 7 0 18 100 *
+13.
+14. Subset/Except/For Specification: 
+15. @CE 8 0 1 50 *
+16.
+17.
+18. Generate the Box-Cox Homoscedasticity Plot?:
+--------------------
+GR FE
+LINE _3
+CHARACTER _4
+TITLE _5
+Y1LABEL _6
+X1LABEL _7
+BOX-COX HOMOSCEDASTICITY PLOT _1 _2 _8
+--------------------
+WEB HELP BOX-COX HOMOSCEDASTICITY PLOT
+--------------------

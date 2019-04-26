@@ -1,0 +1,49 @@
+This is file irls.men--IRLS Fitting
+ 
+--------------------
+1. Iteratively Reweighted Least Squares
+2. CALL IRLS.DP
+3.
+4. You need to enter the FIT command you
+5. wish to apply the IRLS to.  The entire
+6. FIT line should be entered.  For example:
+7.     FIT Y X
+8.     FIT Y = A + B*EXP(-C*X)
+9.     FIT Y X1 X2  SUBSET X1 > 0
+10. Enter the FIT command:
+11. @CE 1 0 1 50 ?
+12.
+13. Method to use:
+14. @CE 2 1 14 23 Andrew's
+14. @CE 2 2 25 34 Bisquare
+14. @CE 2 3 36 48 Cauchy
+15. @CE 2 4 14 23 Hampel
+15. @CE 2 5 25 34 Huber
+15. @CE 2 6 36 48 Logistic
+16. @CE 2 7 14 23 Median
+16. @CE 2 8 25 34 Welsch
+16. @CE 2 9 36 48 Fair
+17. @CE 2 10 14 23 Talworth
+17. @CE 2 11 25 50 Least Absolute Deviations
+18.
+19.
+20. Do the IRLS Fit?
+--------------------
+GR FE
+LET IMETHOD = 2
+@IF 2 1 LET IMETHOD = 1
+@IF 2 2 LET IMETHOD = 2
+@IF 2 3 LET IMETHOD = 3
+@IF 2 4 LET IMETHOD = 4
+@IF 2 5 LET IMETHOD = 5
+@IF 2 6 LET IMETHOD = 6
+@IF 2 7 LET IMETHOD = 7
+@IF 2 8 LET IMETHOD = 8
+@IF 2 9 LET IMETHOD = 9
+@IF 2 10 LET IMETHOD = 10
+@IF 2 11 LET IMETHOD = 11
+LET STRING F = _1
+CALL IRLS.DP
+--------------------
+WEB HELP WEIGHTS
+--------------------

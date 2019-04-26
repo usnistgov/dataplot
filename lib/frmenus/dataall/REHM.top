@@ -1,0 +1,8 @@
+----- <~dataall\REHM.top> REHM.DAT
+
+REHM.DAT
+
+View     <xcl: LIST REHM.DAT>
+Load     <xcf: ~dataload/REHM.DP>
+Print    <xccl: printfile C:\DATAPLOT\REHM.DAT>
+

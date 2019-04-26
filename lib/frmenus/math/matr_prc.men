@@ -1,0 +1,43 @@
+This is file matr_prc.men--Principle Components of a matrix
+ 
+--------------------
+ 1. Princple Components of a Matrix
+ 2. LET PC = PRINCIPAL COMPONENTS M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Matrix  to store the principle components:
+ 5. @CE 2 0 33 50 ?
+ 6. Matrix  to store the principle components eigenvectors:
+ 6. @CE 3 0 33 50 ?
+ 7. Variable  to store the principle components eigenvalues:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. The original data matrix can be raw data, a covariance matrix,
+10. or a correlation matrix.  The principal components can be
+11. calculated from either a covariance matrix or a correlation
+12. matrix.  Select one of the following:
+13. @CE 5 1 14 50 input - raw data, use - covariance
+14. @CE 5 2 14 50 input - raw data, use - correlation
+15. @CE 5 3 14 50 input - covariance, use - covariance
+16. @CE 5 4 14 50 input - covariance, use - correlation
+17. @CE 5 5 14 50 input - correlation, use - correlation
+18. 
+19. Subset/Except/For Specification:
+20. @CE 6 0 -13 50 *
+21.
+22.
+23. Compute Principal Components?:
+--------------------
+GR FE
+@IF 5 1 PRINCIPAL COMPONENTS TYPE DATA COVARIANCE
+@IF 5 2 PRINCIPAL COMPONENTS TYPE DATA CORRELATION
+@IF 5 3 PRINCIPAL COMPONENTS TYPE COVARIANCE COVARIANCE
+@IF 5 4 PRINCIPAL COMPONENTS TYPE COVARIANCE CORRELATION
+@IF 5 5 PRINCIPAL COMPONENTS TYPE CORRELATION CORRELATION
+LET _2 = PRINCIPAL COMPONENETS  _1 _6
+LET _3 = PRINCIPAL COMPONENETS EIGENVECTORS _1 _6
+LET _4 = PRINCIPAL COMPONENETS EIGENVALUES _1 _6
+--------------------
+WEB HELP PRINCIPAL COMPONENTS
+--------------------

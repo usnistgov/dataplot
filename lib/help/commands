@@ -1,0 +1,1163 @@
+This is DATAPLOT file     COMMANDS.               7/93
+Purpose--Enumerate the names of DATAPLOT commands and functions.
+ 
+-----A--------------------------------------------------
+ 
+ABS(X)                 Function: Compute absolute value
+                       LET Y = ABS(X)
+                       PLOT ABS(X) FOR X = -1 .1 1
+ 
+ALLAN STAN DEVI PLOT   Generate an Allan stand. dev. plot
+                       ALLAN STANDARD DEVIATION PLOT Y
+ 
+ALLAN VARIANCE PLOT    Generate an Allan variance plot
+                       ALLAN VARIANCE PLOT Y
+ 
+ALPH()                 Symbol: Write/draw Greek alpha
+                       FONT TRIPLEX; TEXT ALPH()BETA()GAMM()
+ 
+AMPLIFIER              Draw an amplifier
+                       AMPLIFIER 20 20 50 20
+ 
+AMPLITUDE SPEC PLOT    Generate amplitude spectral plot
+                       AMPLITUDE SPECTRAL PLOT Y
+ 
+AND                    Draw an and box
+                       AND 50 50 60 50
+ 
+AND                    Keyword: Used with PLOT, etc for multi-trace plot
+ANGLE                  Set angle for TEXT strings
+ANGLE UNITS            Define angle units for ANGLE command
+ANOP LIMITS            Set limits for region in ANOP Plot
+ANOP PLOT              Generate ANOP plot
+ANOVA                  Perform analysis of variance
+APPEND                 Append one var to end of another var
+APPR()                 Symbol: Write/draw approximatly equal to
+ARC                    Draw an arc
+ARCCOS(X)              Function: Compute arccosine
+ARCCOSH(X)             Function: Compute hyperbolic arccosine
+ARCCOT(X)              Function: Compute arccotangent
+ARCCOTH(X)             Function: Compute hyperbolic arccotangent
+ARCCSC(X)              Function: Compute arccosecant
+ARCCSCH(X)             Function: Compute hyperbolic arccosecant
+ARCSEC(X)              Function: Compute arcsecant
+ARCSECH(X)             Function: Compute hyperbolic arcsecant
+ARCSIN(X)              Function: Compute arcsine
+ARCSINH(X)             Function: Compute hyperbolic arcsine
+ARCTAN(X)              Function: Compute arctangent
+ARCTANH(X)             Function: Compute hyperbolic arctangent
+ARGAND SPECTRAL PLOT   Generate argand spectral plot
+ARRD()                 Symbol: Write/draw arrow pointing down
+ARRL()                 Symbol: Write/draw arrow pointing left
+ARROW                  Draw an arrow
+ARROW ... COLOR        Set colors for arrows on plots
+ARROW ... COORDINATES  Set location of arrows on plots
+ARROWD                 Set plot character to arrow down
+ARROWU                 Set plot character to arrow up
+ARRR()                 Symbol: Write/draw arrow pointing right
+ARRU()                 Symbol: Write/draw arrow pointing up
+AUTOCORRELATION        LET: Compute sample autocorrelation
+AUTOCORRELATION PLOT   Generate autocorrelation plot
+AUTOCORR STAT PLOT     Generate autocorrelation (vs. subset) plot
+AUTOCOVARIANCE         LET: Compute sample autocovariance
+AUTOMATIC              Keyword: Set a switch to "automatic" position
+AUTOPLOT ???(OBS)      Set switch (ON/OFF) for auto-plot-regen
+AUTOSPECTRAL PLOT      Generate autospectral plot
+ 
+-----B--------------------------------------------------
+ 
+B...                   Keyword: Params with comput. WEIBULL PLOT percent pts
+BACKGROUND COLOR       Set color of background (= inside frame)
+BACKGROUND COLOR       Set color of background after next ERASE
+BAR                    Set switch (ON/OFF) for bars on plots
+BAR BASE               Set base location for bars on plots
+BAR BORDER COLOR       Set color of border on bars
+BAR BORDER LINE        Set line type for border on bars
+BAR BORDER THICKNESS   Set thickness of border on bars
+BAR DIMENSION          Set bar dimension to 2d or 3d
+BAR DIRECTION          Set bar dirction (H/V)
+BAR FILL               Set switch (ONXX/OFF) for bar fill subregion
+BAR FILL COLOR         Set (background) color of bar fill
+BAR PATTERN            Set type of pattern for bar fill
+BAR PATTERN COLOR      Set line color in bar fill pattern
+BAR PATTERN LINE       Set pattern line type within bars
+BAR PATTERN LINE TYPE  Set line type in fill pattern
+BAR PATTERN SPACING    Set line spacing in bar fill pattern
+BAR PATTERN THICKNESS  Set line thickness in bar fill pattern
+BAR WIDTH              Set width for bars on plots
+BAR()                  Symbol: Write/draw bar
+BARH()                 Symbol: Write/draw horizontal bar
+BARV()                 Symbol: Write/draw vertical bar
+BASL()                 Symbol: Write/draw backslash
+BATCH                  Set dev 1 to 130-char alpha dev
+BAUD RATE              Set baud rate
+BELL                   Set automatic pre-plot bell (ON/OFF)
+BESS0(X)               Function: Compute Bessel func 1st kind & order 0
+BESS1(X)               Function: Compute Bessel func 1st kind & order 1
+BETA PROBABILITY PLOT  Generate beta probability plot
+BETA RANDOM NUMBERS    LET: Generate beta random num.
+BETA()                 Symbol: Write/draw Greek beta
+BINOMIAL PROB PLOT     Generate binomial probability plot
+BINIAL RANDOM NUMBERS  LET: Generate binomial random num.
+BIWEIGHT               LET: Compute biweight (robust) transformation
+BLACK                  Argument: Set color to black
+BLANK                  Argument: Set plot character to blank
+BLANK                  Argument: Set line type to blank (= none)
+BLUE                   Argument: Set color to blue
+BOOT INDEX             LET: Generate bootstrap index (rand samp w repl)
+BOOT SAMPLE            LET: Generate bootstrap sample (rand samp w repl)
+BOOT MEAN PLOT         Generate bootstrap mean plot
+BOOT MIDMEAN PLOT      Generate bootstrap midmean plot
+BOOT MEDIAN PLOT       Generate bootstrap median plot
+BOOT SD PLOT           Generate bootstrap standard deviation plot
+BOOT VARIANCE PLOT     Generate bootstrap variance plot
+BOOT RELATIVE SD PLOT  Generate bootstrap relative st. dev. plot
+BOOT RANGE PLOT        Generate bootstrap range plot
+BOOT MINIMUM PLOT      Generate bootstrap minimum plot
+BOOT MAXIMUM PLOT      Generate bootstrap maximum plot
+BOOT SKEWNESS PLOT     Generate bootstrap skewness plot
+BOOT KURTOSIS PLOT     Generate bootstrap kurtosis plot
+BOOT AUTOCORR PLOT     Generate bootstrap autocorrelation plot
+BOOT SD OF MEAN PLOT   Generate bootstrap st. dev. of the mean plot
+BOOT AUTOCOV PLOT      Generate bootstrap autocovariance plot
+BOOT RANK COVAR PLOT   Generate bootstrap rank covariance plot
+BOOT LOWER HINGE PLOT  Generate bootstrap lower hinge plot
+BOOT UPPER HINGE PLOT  Generate bootstrap upper hinge plot
+BOOT LOWER QUAR PLOT   Generate bootstrap lower quartile plot
+BOOT UPPER QUAR PLOT   Generate bootstrap upper quartile plot
+BOOT TRIMMED MEAN PLOT Generate bootstrap trimmed mean plot
+BOOT WIND MEAN PLOT    Generate bootstrap Windsorized mean plot
+BOOT ... DECILE PLOT   Generate bootstrap ... decile plots
+BOOT SINE FREQ PLOT    Generate bootstrap sine frequency plot
+BOOT SINE AMPL PLOT    Generate bootstrap sine amplitude plot
+BOOT LINEAR INTE PLOT  Generate bootstrap linear intercept plot
+BOOT LINEAR SLOPE PLOT Generate bootstrap linear slope plot
+BOOT LINEAR RESSD PLOT Generate bootstrap linear resid. s.d. plot
+BOOT LINEAR CORR PLOT  Generate bootstrap linear correlation plot
+BOOT TAGUCHI SN.. PLOT Generate bootstrap Taguchi S/N plots
+BOX                    Draw a box
+BOX ... COLOR          Set colors for box frame on plots
+BOX ... COORDINATES    Set location of boxes on plots
+BOX COX LINEARITY PLOT Generate linearity plot (Box-Cox family)
+BOX PLOT               Set all plot characters for BOX PLOT
+BOX PLOT               Set all plot lines for BOX PLOT
+BOX PLOT               Generate box plot
+BOX-COX HOMOSCED PLOT  Generate homosced. plot (Box-Cox family)
+BOX-COX NORMALITY PLOT Generate normality plot (Box-Cox family)
+BRAD()                 Symbol: Write/draw larger radical
+BREV()                 Symbol: Write/draw breve
+BS() <make work>       Symbol: Move 1 backspace
+BUGS                   List known bugs
+BUILT-IN CHAR/SYMBOL   All b-i char/sym may be used for plot char
+BYE                    Exit from DATAPLOT (= EXIT, STOP, etc.)
+ 
+-----C--------------------------------------------------
+ 
+C CHART                Generate C control chart
+CALL                   Execute a DATAPLOT subprgm from file
+CAPACITOR              Draw a capacitor
+CARA()                 Symbol: Write/draw carot
+CASE                   Set case of letters (UPPER, LOWER)
+CAUCHY PROB PLOT       Generate Cauchy probability plot
+CAUCHY RANDOM NUMBERS  LET: Generate Cauchy random num.
+CENTER                 Argument for JUST: Set justif. to center
+CH                     Activate and read cross-hair (0 to 100)
+CHARACTER ANGLE        Set angle (in deg) for characters on plot
+CHARACTER COLORS       Set colors for characters on plots
+CHARACTER FILL         Set fill switch (ON/OFF) for char. on plot
+CHARACTER HW ...       Set height and width for char on plot
+CHARACTER JUST         Set justification for characters on plot
+CHARACTER OFFSET ...   Set offset (displacement) for char on plot
+CHARACTER SIZES        Set size (height) for characters on plot
+CHARACTER WIDTH        Set width for characters on plots
+CHARACTERS             Set plot character types (X, SQUARE, etc)
+CHEB0(X)               Function: Compute Chebychev poly 1st kind & ord 0
+CHEB1(X)               Function: Compute Chebychev poly 1st kind & ord 1
+CHEB10(X)              Function: Compute Chebychev poly 1st kind & ord 10
+CHEB2(X)               Function: Compute Chebychev poly 1st kind & ord 2
+CHEB3(X)               Function: Compute Chebychev poly 1st kind & ord 3
+CHEB4(X)               Function: Compute Chebychev poly 1st kind & ord 4
+CHEB5(X)               Function: Compute Chebychev poly 1st kind & ord 5
+CHEB6(X)               Function: Compute Chebychev poly 1st kind & ord 6
+CHEB7(X)               Function: Compute Chebychev poly 1st kind & ord 7
+CHEB8(X)               Function: Compute Chebychev poly 1st kind & ord 8
+CHEB9(X)               Function: Compute Chebychev poly 1st kind & ord 9
+CHEB10(X)              Function: Compute Chebychev poly 1st kind & ord 10
+CHI()                  Symbol: Write/draw Greek chi
+CHI-SQUARED PPCC PLOT  Generate chi-squared prob plot corr cf plot
+CHI-SQUARED PROB PLOT  Generate chi-squared probability plot
+CHI-SQUARED RAND NUMB  LET: Generate chi-squared random num.
+CHSCDF(X,NU)           Function: Compute chi-squared cumulative dist func
+CHSPDF(X,NU)           Function: Compute chi-squared prob density func
+CHSPPF(P,NU)           Function: Compute chi-squared percent point func
+CINT()                 Symbol: Write/draw circular integral
+CIRC()                 Symbol: Write/draw circle
+CIRCLE                 Set plot character to circle
+CIRCLE                 Draw a circle
+CLASS ...LOWER         Spec. first class lower lim for HISTOGRAM
+CLASS ...UPPER         Spec. last class upper lim for HISTOGRAM
+CLASS ...WIDTH         Set class width for HISTOGRAM
+CO-SPECTRAL PLOT       Generate co-spectral plot
+CODE                   LET: Code the elements in a variable
+CODE...                LET: Carry out binary, quartile,... coding
+CODE2                  LET: Carry out binary coding
+CODE4                  LET: Carry out quartile coding
+CODE8                  LET: Carry out octile coding
+CODEH ???              LET: Code the data
+CODEN ???              LET: Code the data
+COEF                   Keyword: Var where FIT, ANOVA, etc coef stored
+COEFSD                 Keyword: Var where FIT, ANOVA, etc coef sd stored
+COHERENCY SPEC PLOT    Generate coherency spectral plot
+COLOR                  Set color of TEXT letters (RED, BLUE, etc)
+COLUMN LIMITS          Set col limts for READ & SERIAL READ
+COMMENT                Insert a comment line in code
+COMMUNICATIONS LINK    Set link (phone, network, etc.) for host
+COMPLEX                Set font to complex
+COMPLEX ADDITION       LET: Carry out complex addition
+COMPLEX CONJUGATE      LET: Carry out complex conjugate
+COMP DEMOD AMPL PLOT   Generate complex demodulation amp. plot
+COMP DEMOD PHASE PLOT  Generate complex demodulation phase plot
+COMPLEX DIVISION       LET: Carry out complex division
+COMPLEX EXPONENTIATION LET: Carry out complex exponentiation
+COMPLEX MULTIPLICATION LET: Carry out complex multiplication
+COMPLEX ROOTS          LET: Compute complex roots
+COMPLEX SCRIPT         Set font to complex script
+COMPLEX SQUARE ROOT    LET: Carry out complex square root
+COMPLEX SUBTRACTION    LET: Carry out complex subtraction
+CONCLUSIONS            Keyword: Symbolic name for DATAPLOT's Conclus. file
+CONFIDENCE LIMITS MEAN Compute confidence limits for mean
+CONTOUR PLOT           Generate contour plot
+... CONTROL CHART      Generate mean, sd, or range control chart
+CONTROL CHART          Set all plot characters for CONTROL CHART
+CONTROL CHART          Set all plot lines for CONTROL CHART
+CONVOLUTION            LET: Compute convolution of elts in 2 var
+COPY                   Copy the current scr onto local hardcopier
+... CORRELATION PLOT   Generate auto- or cross-correlation plot
+CORRELATION            LET: Compute sample correlation
+COS(X)                 Function: Compute cosine
+COSH(X)                Function: Compute hyperbolic cosine
+COT(X)                 Function: Compute cotangent
+COTH(X)                Function: Compute hyperbolic cotangent
+COUNTS PLOT            Generate counts (vs. subset) plot
+COVARIANCE             LET: Compute sample covariance
+CP                     LET: Compute sample Cp statistic
+CP PLOT                Generate Cp (vs. subset) plot
+CPK                    LET: Compute sample Cpk statistic
+CPK PLOT               Generate Cpk (vs. subset) plot
+CR                     Set automatic carriage return after TEXT
+CREATE                 Create a subprogram
+CRLF                   Set auto carr return/line feed after TEXT
+CROSS-CORRELATION PLOT Generate cross-correlation plot
+CROSS-HAIR (or CH)     Activate and read cross-hair (0 to 100)
+CROSS-PERIODOGRAM      Generate cross-periodogram
+CROSS-SPECTRAL PLOT    Generate cross-spectral plot
+CSC(X)                 Function: Compute cosecant
+CSCH(X)                Function: Compute hyperbolic cosecant
+CUBE                   Set plot character to cube
+CUBE                   Draw a cube
+CUBE()                 Symbol: Write/draw cube
+CUMULATIVE INTEGRAL    LET: Compute cum. integrals of elts in a var
+CUMULATIVE PRODUCT     LET: Compute cum. products of elts in a var
+CUMULATIVE SUM         LET: Compute cum. sums of elts in a var
+CURSOR COORDINATES     Set cursor coor loc after PLOT, ERASE, etc
+CURSOR SIZE            Set cursor size after a plot
+CURSOR SPACING works?  Set cursor spacing after a plot
+CYAN                   Argument: Set color to cyan
+ 
+-----D--------------------------------------------------
+ 
+DAGG()                 Symbol: Write/draw dagger
+DARR()                 Symbol: Write/draw down arrow
+DASHED or DASH or DA   Argument: Set line type to dash
+DASH1 or DA1           Argument: Set line type to dashed type 1
+DASH2 or DA2           Argument: Set line type to dashed type 2
+DASH3 or DA3           Argument: Set line type to dashed type 3
+DASH4 or DA4           Argument: Set line type to dashed type 4
+DATA                   LET: Generate a set of data values
+DDAG()                 Symbol: Write/draw double dagger
+... DECILE             LET: Compute decile
+... DECILE PLOT        Generate decile (vs. subset) plot
+DECOCT(X)              Function: Compute decimal to octal conversion
+DEFAULT                Keyword: Set a switch to "default" position
+DEFINE                 Define general ASCII string commands
+DEFINE POSTHELP        Define terminal string to succeed HELP
+DEFINE PREHELP         Define terminal string to precede HELP
+DEGREES                Set degrees for trig calculations (ON/OFF)
+DEL()                  Symbol: Write/draw vector product
+DELETE                 Delete var or elements of a var
+DELT()                 Symbol: Write/draw Greek delta
+DEMODF                 Keyword: Param with updated complex demodulation freq
+DEMODF                 Keyword: Param with updated demod freq. (COMP DEMOD)
+DEMODULATION FREQUENCY Set frequency for COMP DEMOD ... PLOT/
+DERIVATIVE             LET: Compute derivative of a function
+DEVICE ...             Set dev 1/2/3 manufacturer
+DEVICE ... COLOR       Set dev 1/2/3 color (ON/OFF)
+DEVICE ... GENERAL     Set dev 1/2/3 to dev-indep
+DEVICE ... GENE CODE   Set dev 1/2/3 to coded dev-indep
+DEVICE ... HP 2623     Set dev 1/2/3 to HP 2623
+DEVICE ... HP 7221     Set dev 1/2/3 to HP 7221
+DEVICE ... HP-GL       Set dev 1/2/3 to HP-GL
+DEVICE ... PICT POIN   Set dev 1/2/3 num of picture points
+DEVICE ... POWER       Set dev 1/2/3 power (ON/OFF)
+DEVICE ... REGIS       Set dev 1/2/3 to DEC REGIS
+DEVICE ... TEKT 4010   Set dev 1/2/3 to Tekt 4010
+DEVICE ... TEKT 4014   Set dev 1/2/3 to Tekt 4014
+DEVICE ... TEKT 4105   Set dev 1/2/3 to Tekt 4105
+DEVICE ... TEKT 4662   Set dev 1/2/3 to Tekt 4662
+DEVICE ... UNIT NUMB?? Set dev 1/2/3 unit num ident
+DEX SCATTER PLOT (NOT A STATISTIC)
+DEX SIGN PLOT (NOT A STATISTIC)
+DEX MEAN XXX YYY  PLOT
+DEX MIDM XXX YYY  PLOT
+DEX MEDI XXX YYY  PLOT
+DEX SD XXX YYY  PLOT
+DEX VARI XXX YYY  PLOT
+DEX RSD XXX YYY  PLOT
+DEX RANG XXX YYY  PLOT
+DEX MINI XXX YYY  PLOT
+DEX MAXI XXX YYY  PLOT
+DEX SKEW XXX YYY  PLOT
+DEX KURT XXX YYY  PLOT
+DEX AUC R XXX YYY PLOT
+DEX SDM XXX YYY  PLOT
+DEX AUC V XXX YYY PLOT
+DEX RAC V XXX YYY PLOT
+DEX LOWH XXX YYY  PLOT
+DEX UPPH XXX YYY  PLOT
+DEX LOWQ XXX YYY  PLOT
+DEX UPPQ XXX YYY  PLOT
+DEX TRIM XXX YYY  PLOT
+DEX WINM XXX YYY  PLOT
+DEX MIDQ XXX YYY  PLOT
+DEX 1DEC  XXX YYY PLOT
+DEX 2DEC  XXX YYY PLOT
+DEX 3DEC  XXX YYY PLOT
+DEX 4DEC  XXX YYY PLOT
+DEX 5DEC XXX YYY PLOT
+DEX 6DEC XXX YYY PLOT
+DEX 7DEC XXX YYY PLOT
+DEX 8DEC XXX YYY PLOT
+DEX 9DEC XXX YYY PLOT
+DEX SINE FREQUENCY XXX YYY PLOT
+DEX SINE AMPLITUDE XXX YYY PLOT
+DEX LINEAR INTERCEPT XXX YYY PLOT
+DEX LINEAR SLOPE XXX YYY PLOT
+DEX LINEAR RESSD XXX YYY PLOT
+DEX LINEAR CORRELATION XXX YYY PLOT
+DEX TAGUCHI SIGNAL-TO-NOISE XXX YYY PLOTS
+DEX 2-LEVEL ... PLOT
+DEX 3-LEVEL ... PLOT
+DEX PROPORTION XXX YYY PLOT
+DEX PROPORTION XXX YYY PLOT
+DEX CP XXX YYY PLOT
+DEX CPK XXX YYY PLOT
+DEX PERCENT DEFECTIVE XXX YYY PLOT
+DEX EXPECTED LOSS XXX YYY PLOT
+    WHERE XXX MAY BE
+       (OMITTED)
+       EFFECTS
+       ABSOLUTE EFFECTS
+    AND WHERE YYY MAY BE
+       (OMITTED)
+       PARETO
+       YOUDEN
+DEX ... PARETO PLOT
+DEX ... YOUDEN PLOT (2**K DESIGNS ONLY)
+DIAM()                 Symbol: Write/draw diamond
+DIAMOND                Argument: Set plot character to diamond
+DIAMOND                Draw a diamond
+DICTIONARY             Keyword: Symbolic name for DATAPLOT's Dictionary (1000+
+DIM(X,YU)              Function: Compute positive difference-- x-min(x,y)
+DIMENSION              Set dimensions of internal data storage
+DIRECTORY              Keyword: Symbolic name for DATAPLOT's Directory of file
+DISCRETE               Set dev 1 to  70-char alpha dev
+DISC UNIF RAND NUMB    LET: Generate discrete uniform rand num.
+DISTINCT               LET: Extract distinct elements from a var
+DIVI()                 Symbol: Write/draw division
+DOTP()                 Symbol: Write/draw dot product
+DOTTED or DOT or DO    Argument: Set line type to dotted
+DOUBLE EXPO PROB PLOT  Generate double exp. probability plot
+DOUBLE EXPO RAND NUMB  LET: Generate double exponential random num.
+DRAW                   Draw a line
+DUPLEX                 Argument: Set font to duplex
+DVBA()                 Symbol: Write/draw double vertical bar
+ 
+-----E--------------------------------------------------
+ 
+ECHO                   Set auto echo of command lines (ON/OFF)
+ELEM()                 Symbol: Write/draw is an element of
+ELLIPSE                Draw an ellipse
+END                    Exit from DATAPLOT (= STOP, EXIT, etc.)
+END OF CREATE          End CREATion of a subprogram
+END OF DATA            Define end data for READ & SERIAL READ
+END OF IF              Define end of condit-executed commands
+END OF LOOP            Terminate a loop
+EPSI()                 Symbol: Write/draw Greek epsilon
+EQUI()                 Symbol: Write/draw equivalence
+ERASE                  Erase the current screen
+ERASE DELAY            Set delay factor for ERASE
+ERF(X)                 Function: Compute error function
+ERFC(X)                Function: Compute complementary error function
+ERROR BAR PLOT         Generate error bar plot
+ETA()                  Symbol: Write/draw Greek eta
+EXACT ... RATIONAL FIT Perform exact rational function fit
+EXCEPT                 Keyword: Qualifier denoting excepted subset
+EXIT                   Exit from DATAPLOT (= STOP, END, etc.)
+EXP(X)                 Function: Compute exponential function
+EXPECTED LOSS          LET: Compute sample Expected Loss statistic
+EXPECTED LOSS PLOT     Generate Expected Loss (vs. subset) plot
+EXPERT                 Invoke expert subsystem
+EXPONENTIAL PROB PLOT  Generate exponential probability plot
+EXPONENTIAL RAND NUMB  LET: Generate exponential random num.
+EXTEND                 Extend one var by (attaching) another var
+EXTR VALUE 1 RAND NUMB LET: Generate extreme value type 1 ran num
+EXTR VALUE 2 RAND NUMB LET: Generate extreme value type 2 ran num
+EXTR VALUE TYPE 1 PROB PLOT Generate ext. val. type 1 probability plot
+EXTR VALUE TYPE 2 PPCC PLOT Generate ext. val. type 2 prob plot cc plot
+EXTR VALUE TYPE 2 PROB PLOT Generate ext. val. type 2 probability plot
+EYE COORDINATES        Set eye position for 3-dimensional plot
+ 
+-----F--------------------------------------------------
+ 
+F PROBABILITY PLOT     Generate F probability plot
+F RANDOM NUMBERS       LET: Generate F random num.
+FCDF(X,NU1,NU2)        Function: Compute F cumulative dist func
+FEEDBACK               Allow/suppress feedback printing (ON/OFF)
+FENCE                  Set fence switch (ON/OFF) for BOX PLOT
+FFT                    LET: Compute fast Fourier transform
+FIBONNACCI NUMBERS     LET: Generate Fibonnacci numbers
+FILL                   Set fill switch (ON/OFF) for TEXT figure
+FILTER WIDTH           Set filter width for SMOOTH
+... FIT                Perform lst sq lin/poly/multilin/non-lin fit
+FIT CONS [not wk]      Set constraints for FIT & PRE-FIT
+FIT ITERATIONS         Set upper bound on iterations for FIT
+FIT POWER>>PRE-FIT     Set fit criterion power for PRE-FIT
+FIT STANDARD DEVIATION Set lower bound on res sd for FIT
+FONT                   Set font for letters (TRIPLEX, COMPLEX, etc)
+FOR                    Keyword: Qualifier denoting elts or var of interest
+FOURIER EXPONENT       Set Fourier exponent
+FOURIER TRANSFORM      LET: Compute Fourier transform
+FOURTH CENTR MOME      LET: Compute sample 4th central moment
+FPDF(X,NU1,NU2)        Function: Compute F probability density func
+FPPF(P,NU1,NU2)        Function: Compute F percent point function
+FRACT(X)               Function: Compute fractional portion
+FRACTAL                LET: Compute values of fractal curve
+FRACTAL PLOT           Generate fractal plot
+FRAME COORDINATES      Set plot frame location and shape
+...FRAME               Set switch (ON/OFF) for frames on plots
+...FRAME COLOR         Set colors for frame on plots
+... FREQUENCY PLOT     Generate frequency plot--cum/rel/cum rel
+FREQUENCY              LET: Compute frequencies of distinct values
+ 
+-----G--------------------------------------------------
+ 
+GAIN SPECTRAL PLOT     Generate gain spectral plot
+GAMM()                 Symbol: Write/draw Greek gamma
+GAMMA PPCC PLOT        Generate gamma prob plot corr coef plot
+GAMMA PROBABILITY PLOT Generate gamma probability plot
+GAMMA RANDOM NUMBERS   LET: Generate gamma random num.
+GAMMA(X)               Function: Compute gamma function
+GENERAL                Set dev 1 to device-indep
+GENERAL (CODED)        Set dev 1 to coded device-indep
+GEOMETRIC PPCC PLOT    Generate geometric prob plot corr coef plot
+GEOMETRIC PROB PLOT    Generate geometric probability plot
+GEOMETRIC RAND NUMB    LET: Generate geometric random num.
+GRADS                  Set grads for trig calculations (ON/OFF)
+GREEN                  Argument: Set color to green
+...GRID                Set swtch (ON/OFF) for (major) grid on plots
+GRID COLOR             Set color for grid on plots
+GRID PATTERN           Set line type for grid on plots
+GROUND                 Darw a ground
+GT()                   Symbol: Write/draw greater than
+GTEQ()                 Symbol: Write/draw greater than or equal to
+ 
+-----H--------------------------------------------------
+ 
+HALFNORMAL PROB PLOT   Generate halfnormal probability plot
+HALFNORMAL RAND NUMB   LET: Generate halfnormal random num.
+HALT                   Exit from DATAPLOT (= STOP, END, etc.)
+HARDCOPY               Set auto copy of plots to loc hdcpy (ON/OFF)
+HARDCOPY DELAY         Set delay factor for hardcopy
+HASP()                 Symbol: Move a half-space
+HAT()                  CH&SY Write/draw hat (= high carat)
+HBAR()                 Symbol: Write/draw horizontal bar
+HEIGHT                 Set height of letters (0 to 100)
+HELP                   Print short documentation for a command
+HELP LINES             Set number of lines/screen for HELP
+HEXAGON                Draw a hexagon
+HHBA()  ???            Symbol: Write/draw xx
+... HINGE PLOT         Generate lower/upper hinge (vs. subset) plot
+... HISTOGRAM          Generate histogram--cum/rel/cum rel
+HOMOSCEDASTICITY PLOT  Generate homoscedasticity plot.
+HORIZONTAL SPACING     Set horiz. spacing between char (0 to 100)
+HOTELL.DP              Macro to compute Hotelling (simult) conf lim
+HOST                   Set host computer
+HP 2623                Set dev 1 to HP 2623
+HP 7221                Set dev 1 to HP 7221
+HP-GL                  Set dev 1 to HP-GL
+HW                     Set height and width of letters
+ 
+-----I--------------------------------------------------
+ 
+I                      Keyword: Var denoting dummy index; used in FOR
+I PLOT                 Set all plot characters for I PLOT
+I PLOT                 Set all plot lines for I PLOT
+I PLOT                 Generate I plot
+IASP()                 Symbol: Write/draw inverted nasp
+IF                     Define start of condit-executed commands
+IMPLEMENT              Activ local chg to DTPLT. implement. (obs)
+INDUCTOR               Draw an inductor
+INFI()                 Symbol: Write/draw infinity
+INFINITY               Keyword: Parameter with value "infinity"
+INT(X)                 Function: Compute Integer portion
+INTE()                 Symbol: Write/draw integral
+INTR()                 Symbol: Write/draw intersection
+INTEGRAL               LET: Function: Compute definite integral of a function
+INTEGRAL               LET: Compute integral of elements in a var
+INTERPOLATION          LET: Compute (cubic spline) interpolated values
+INVERSE FFT            LET: Compute inverse fast Fourier transform
+INVERSE FOURIER TRAN   LET: Compute inverse Fourier transform
+IO                     Set IO source for menu macros
+IOTA()                 Symbol: Write/draw Greek iota
+IPR                    Set log unit num for printed output
+IRD                    Set log unit num for input
+ 
+-----J--------------------------------------------------
+ 
+JACK MEAN PLOT         Generate jacknife mean plot
+JACK MIDMEAN PLOT      Generate jacknife midmean plot
+JACK MEDIAN PLOT       Generate jacknife median plot
+JACK SD PLOT           Generate jacknife standard deviation plot
+JACK VARIANCE PLOT     Generate jacknife variance plot
+JACK RELATIVE SD PLOT  Generate jacknife relative st. dev. plot
+JACK RANGE PLOT        Generate jacknife range plot
+JACK MINIMUM PLOT      Generate jacknife minimum plot
+JACK MAXIMUM PLOT      Generate jacknife maximum plot
+JACK SKEWNESS PLOT     Generate jacknife skewness plot
+JACK KURTOSIS PLOT     Generate jacknife kurtosis plot
+JACK AUTOCORR PLOT     Generate jacknife autocorrelation plot
+JACK SD OF MEAN PLOT   Generate jacknife st. dev. of the mean plot
+JACK AUTOCOV PLOT      Generate jacknife autocovariance plot
+JACK RANK COVAR PLOT   Generate jacknife rank covariance plot
+JACK LOWER HINGE PLOT  Generate jacknife lower hinge plot
+JACK UPPER HINGE PLOT  Generate jacknife upper hinge plot
+JACK LOWER QUAR PLOT   Generate jacknife lower quartile plot
+JACK UPPER QUAR PLOT   Generate jacknife upper quartile plot
+JACK TRIMMED MEAN PLOT Generate jacknife trimmed mean plot
+JACK WIND MEAN PLOT    Generate jacknife Windsorized mean plot
+JACK ... DECILE PLOT   Generate jacknife ... decile plots
+JACK SINE FREQ PLOT    Generate jacknife sine frequency plot
+JACK SINE AMPL PLOT    Generate jacknife sine amplitude plot
+JACK LINEAR INTE PLOT  Generate jacknife linear intercept plot
+JACK LINEAR SLOPE PLOT Generate jacknife linear slope plot
+JACK LINEAR RESSD PLOT Generate jacknife linear resid. s.d. plot
+JACK LINEAR CORR PLOT  Generate jacknife linear correlation plot
+JACK TAGUCHI SN.. PLOT Generate jacknife Taguchi S/N plots
+JUSTIFICATION          Set justif of text (LEFT, CENTER, RIGHT)
+ 
+-----K--------------------------------------------------
+ 
+KAPP()                 Symbol: Write/draw Greek kappa
+KEYBOARD CHARACTER     All keybd char may be used for plot char
+KNOTS                  Set knots variable for SPLINE
+KURTOSIS               LET: Compute sample kurt (stand 4th cent mom)
+KURTOSIS PLOT          Generate kurtosis (vs. subset) plot
+ 
+-----L--------------------------------------------------
+ 
+...LABEL               Set labels at sides & bottom of plot
+...LABEL COLOR         Set colors for labels on plots
+...LABEL SIZE          Set size (height) for labels on plots
+LACC()                 Symbol: Write/draw left accent
+... LAG PLOT           Generate lag plot for a given lag number
+LAMB()                 Symbol: Write/draw Greek lambda
+LAPO()                 Symbol: Write/draw left apostrophe
+LARR()                 Symbol: Write/draw left arrow
+LATTICE                Draw a lattice
+LBRA()                 Symbol: Write/draw left bracket
+LC()                   Symbol: Shift to lower case
+LCBR()                 Symbol: Write/draw left curly bracket
+LEFT                   Argument for JUST: Set justif. to left
+LEGEND ...             Set text for plot legends
+LEGEND ... COLOR       Set color for legends on plots
+LEGEND ... COOR        Set plot legend positioning
+LEGEND HW  --          Set legend height & width
+LEGEND ... SIZE        Set size (height) for legends on plots
+LELB()                 Symbol: Write/draw left elbow
+LET                    Define var & param; calc stat; roots/dif etc
+LET FUNCTION           Define & operate on func; differentiate
+LF                     Set automatic line feed after TEXT
+LHBA()                 Symbol: Write/draw long horizontal bar
+...LIMITS              Set limits (min and max) for plot frame
+LINE COLORS            Set colors for lines (plots & figures)
+LINE THICKNESS         Set thicknesses of lines (plots & figures)
+LINE THICKNESS         Set thickness of lines (0 to 100)
+LINEAR CORR PLOT       Generate linear corr (vs. subset) plot
+LINEAR INTERCEPT PLOT  Generate linear intercept (vs. subset) plot
+LINEAR RESSD PLOT      Generate linear res. sd. (vs. subset) plot
+LINEAR SLOPE PLOT      Generate linear slope (vs. subset) plot
+LINES                  Set line types (SOLID, DOT, etc.) on plots
+LINES                  Set line type for figures (SOLID, DOT, etc)
+LIST                   List last 20 (or more) commands entered
+LIST <file name>       List contents of a file
+LIST CONCLUSIONS       List DATAPLOT's Conclusions file
+LIST DEFINITIONS       List current user-defined definit (DEFINE)
+LIST LINES             Change number of commands for LISTing
+LIST DICTIONARY        List DATAPLOT's Dictionary (1000+ lines)
+LIST DIRECTORY         List DATAPLOT's Directory of files
+LIST SAVE              List current Saved-Commands file (SAVE)
+LN(X)                  Function: Compute logarithm (natural)
+LOFCDF                 Keyword: Param with lack of fit cdf val from FIT, etc
+...LOG                 Set switch (ON/OFF) for log scale on plots
+LOG(X)                 Function: Compute logarithm (natural)
+LOG10(X)               Function: Compute logarithm (base 10)
+LOG2(X)                Function: Compute logarithm (base 2)
+LOGGAMMA(X)            Function: Compute log (to the base e) gamma func
+LOGICAL AND            LET: Carry out logical and
+LOGICAL IFF            LET: Carry out logical iff
+LOGICAL IFTHEN         LET: Carry out logical ifthen
+LOGICAL NAND           LET: Carry out logical nand
+LOGICAL NOR            LET: Carry out logical nor
+LOGICAL NOT            LET: Carry out logical not
+LOGICAL OR             LET: Carry out logical or
+LOGICAL XOR            LET: Carry out logical xor
+LOGISTIC PROB PLOT     Generate logistic probability plot
+LOGISTIC RAND NUMB     LET: Generate logistic random num.
+LOGNORMAL PROB PLOT    Generate lognormal probability plot
+LOGNORMAL RAND NUMB    LET: Generate lognormal random num.
+LOOP                   Initiate a loop
+LOWER HINGE            LET: Compute sample lower hinge
+LOWER HINGE PLOT       Generate lower hinge (vs. subset) plot
+LOWER QUARTILE         LET: Compute sample lower quartile
+LOWER QUARTILE PLOT    Generate lower quartile (vs. subset) plot
+LOWESS SMOOTH          Perform lowess smoothing
+LOWESS FRACTION        Set 0.0 to 1.0 width for lowess smooth
+LOWESS PERCENTAGE      Set 0 to 100% width for lowess smooth
+LQUO()                 Symbol: Write/draw left quote
+LRAD()                 Symbol: Write/draw large radiacal
+LT()                   Symbol: Write/draw less than
+LTEQ()                 Symbol: Write/draw less than or equal to
+LVBA()                 Symbol: Write/draw long vertical bar
+ 
+-----M--------------------------------------------------
+ 
+MAGENTA                Argument: Set color to magenta
+MAIL                   Print message from DATAPLOT service org
+MAJOR ...TIC NUMBER    Set number of major tics on plots
+MARGIN                 Set posit (0 to 100) for carr ret after TEXT
+MARGIN COLOR           Set color of margin (= outside frame)
+MATRIX ADDITION        LET: Carry out matrix addition
+MATRIX COFACTOR        LET: Compute matrix cofactor
+MATRIX DEFINITION      LET: Set matrix definition
+MATRIX DETERMINANT     LET: Compute matrix determinant
+MATRIX EIGENVALUES     LET: Compute matrix eigenvalues
+MATRIX EIGENVECTORS    LET: Compute matrix eigenvectors
+MATRIX EUCLIDEAN NORM  LET: Compute matrix Euclidean norm
+MATRIX INVERSE         LET: Compute matrix inverse
+MATRIX MINOR           LET: Compute matrix minor
+MATRIX MULTIPLICATION  LET: Carry out matrix multiplication
+MATRIX NUMB OF COLU    LET: Compute matrix number of columns
+MATRIX NUMBER OF ROWS  LET: Compute matrix number of rows
+MATRIX SIMPLEX SOLU    LET: Compute matrix simplex solution
+MATRIX SOLUTION        LET: Compute matrix solution
+MATRIX SPECTRAL NORM   LET: Compute matrix spectral norm
+MATRIX SPECTRAL RADIUS LET: Compute matrix spectral radius
+MATRIX SUBMATRIX       LET: Define matrix submatrix
+MATRIX SUBTRACTION     LET: Carry out matrix subtraction
+MATRIX TRACE           LET: Compute matrix trace
+MATRIX TRANSPOSE       LET: Compute matrix transpose
+MAX(X,Y)               Function: Compute maximum
+...MAXIMUM             Set maxima to appear on plot frame
+MAXIMUM                LET: Compute sample maximum
+MAXIMUM PLOT           Generate maxima (vs. subset) plot
+MEAN                   LET: Compute sample mean
+MEAN CONTROL CHART     Generate mean control chart
+MEAN PLOT              Generate mean (vs. subset) plot
+MEDIAN                 LET: Compute sample median
+MEDIAN PLOT            Generate median (vs. subset) plot
+MEDIAN POLISH          Perform analysis of variance
+MESSAGE  [not work]    Write message to DATAPLOT service org
+MIDMEAN                LET: Compute sample midmean
+MIDMEAN PLOT           Generate midmean (vs. subset) plot
+MIDRANGE               LET: Compute sample midrange
+MIDRANGE PLOT          Generate midrange (vs. subset) plot
+MIMIMUM                LET: Compute sample minimum
+MIN(X,Y)               Function: Compute minimum
+...MINIMUM             Set minima to appear on plot frame
+MINIMUM PLOT           Generate minima (vs. subset) plot
+MINOR GRID             Set switch (ON/OFF) for minor grid on plots
+MINOR ...TIC NUMBER    Set number of minor tics on plots
+MOD(X,Y)               Function: Compute modulo
+MOVE                   Move to a point
+MOVEDATA               Move to a point (using last-plot data units)
+MSD(X)                 Function: Compute most significant digit
+MU()                   Symbol: Write/draw Greek mu
+MULTIPLOT              Set number of rows & columns for multiplot
+MULTIPLOT COORDINATES  Change default global coor. for MULTIPLOT
+ 
+-----N--------------------------------------------------
+ 
+NAME                   Assign (equate) additional names to a var
+NAND       [not work]  Draw a nand box
+NASP()                 Symbol: Write/draw nasp
+NEGATE                 Set switch (ON/OFF) to negate vert. plot
+NEGA BINO PROB PLOT    Generate neg. bin. probability plot
+NEGA BINO RAND NUMB    LET: Generate negative binomial random num.
+NEWS                   Print general news from DATAPLOT service org
+NOR                    Draw a nor box
+NORCDF(X)              Function: Compute normal N(0,1) cumulative dist func
+NORM ORDER STAT MEDI   LET: Generate normal order statistic medians
+NORMAL PROB PLOT       Generate normal probability plot
+NORMAL RANDOM NUMBERS  LET: Generate normal N(0,1) random num.
+NORPDF(X)              Function: Compute normal N(0,1) prob density func
+NORPPF(P)              Function: Compute normal N(0,1) percent point func
+NOT=()                 Symbol: Write/draw not equal
+NP CHART               Generate Np control chart
+NU()                   Symbol: Write/draw Greek nu
+ 
+-----O--------------------------------------------------
+ 
+OCTDEC(X)              Function: Compute octal to decimal conversion
+OFF                    Keyword: Set a switch to "off" position
+OMEG()                 Symbol: Write/draw Greek omega
+OMIC()                 Symbol: Write/draw Greek omicon
+ON                     Keyword: Set a switch to "on" position
+OPERATOR  [not work]   Send a message to host console oper. (obs)
+OR                     Draw an or box
+ORIGIN COORDINATES     Set reference origin for 3-dimensional plot
+ORTHOGONAL FIT [fut.]  Carry out a least squares orthogonal fit
+OVAL                   Draw an oval
+ 
+-----P--------------------------------------------------
+ 
+P CHART                Generate P control chart
+PARA()                 Symbol: Write/draw paragraph
+PARETO PLOT            Generate Pareto plot
+PARETO PPCC PLOT       Generate Pareto prob plot corr coef plot
+PARETO PROB PLOT       Generate Pareto probability plot
+PARETO RANDOM NUMBERS  LET: Generate Pareto random num.
+PART()                 Symbol: Write/draw partial derivative
+PATTERN                LET: Generate a patterned seq within a var
+PATTERN COLOR    ???   Set (general) pattern color
+PATTERN HEIGHT   ???   Set (general) pattern height??
+PATTERN LINE     ???   Set (general) pattern line type
+PATTERN SPACING  ???   Set (general) pattern spacing
+PATTERN THIC ???       Set (general) pattern thickness
+PATTERN WIDTH    ???   Set (general) pattern (line) width
+PAUSE                  Stop execution (of a macro) until CR entered
+PEDESTAL [not work]    Set switch (ON/OFF) for pedestal on 3d-plot
+PEDESTAL COLOR[not wk] Set color of pedestal on 3d-plots
+PEDESTAL HEIGHT        Set height for 3-d pedestal
+PEDE SIZE[not work]    Set size for pedestal on 3d-plots
+PERCENT DEFECTIVE      LET: Compute sample Percent Defective stat.
+PERCENT DEFECTIVE PLOT Generate Percent Defective (vs. subset) plot
+PERCENT POINT PLOT     Generate percent point plot
+... PERIODOGRAM        Generate auto- or cross-periodogram
+PERIODOGRAM            Generate auto-periodogram
+PHASE SPECTRAL PLOT    Generate phase spectral plot
+PHI()                  Symbol: Write/draw Greek phi
+PI                     Keyword: Parameter with value 3.1415926
+PI()                   Symbol: Write/draw Greek pi
+PICT POINTS (or PP)    Set dev 1 num of picture points
+PIE CHART              Generate pie chart
+PLOT                   Generate plot of var &/or func
+POINCARE PLOT          Generate Poincare plot
+POINT                  Draw a point
+POISSON PPCC PLOT      Generate Poisson prob plot corr coef plot
+POISSON PROB PLOT      Generate Poisson probability plot
+POISSON RAND NUMB      LET: Generate Poisson random num.
+POLYNOMIAL ADDITION    LET: Carry out polynomial addition
+POLYNOMIAL DEGREE      Set degree of polynomial in smoothing; (obs)
+POLYNOMIAL DIVISION    LET: Carry out polynomial division
+POLYNOMIAL EVAL        LET: Carry out polynomial evaluation
+POLYNOMIAL MULT        LET: Carry out polynomial multiplication
+POLYNOMIAL SQUARE      LET: Carry out polynomial square
+POLYNOMIAL SUBT        LET: Carry out polynomial subtraction
+POSTSCRIPT SHOW FONTS  Show available postscript fonts
+... PPCC PLOT          Generate prob plot corr coef plot (9 fam)
+PPCC PLOT              Generate (Tukey lambda) prob plot cc pl
+PRE-ERASE              Set switch (ON/OFF) for auto-erase bef plots
+... PRE-FIT            Perform pre-fit analysis for starting values
+PRE-SORT               Set automatic pre-plot sort (ON/OFF)
+PRED                   Keyword: Var with predicted values from FIT, etc
+PREPLOT                Set graphics device for pre-plot strings
+PREPLOT                Define gr dev for PREPLOT/POSTPLOT str
+PRIM()                 Symbol: Write/draw prime
+PRIME NUMBERS          LET: Generate prime numbers
+PRINT                  Write (terminal/file) var, param, func
+PRINTING               Allow/suppress analysis printing (ON/OFF)
+... PROBABILITY PLOT   Generate probability plot (24 dist)
+PROBE                  Examine code settings (used by implementor)
+PROD()                 Symbol: Write/draw product
+PRODUCT                LET: Compute product of elements in a var
+PROFILE PLOT           Generate profile plot (multivar anal)
+PROMPT                 Set switch (ON/OFF) for prompt
+PSI()                  Symbol: Write/draw Greek psi
+PYRA()                 Symbol: Write/draw pyramid
+PYRAMID                Argument: Set plot character to pyramid
+PYRAMID                Draw a pyramid
+ 
+-----Q--------------------------------------------------
+ 
+QUADRATURE SPEC PLOT   Generate quadrature spectral plot
+QUANTILE-QUANTILE PLOT Generate quantile-quantile plot
+... QUARTILE PLOT      Generate lower/upper quart (vs. subset) plot
+QUERY                  Send query line to DATAPLOT consultant file
+QUIT                   Exit from DATAPLOT (= STOP, END, etc.)
+ 
+-----R--------------------------------------------------
+ 
+R                      Re-execute one previous command
+R CHART                Generate range control chart plot
+RACC()                 Symbol: Write/draw right accent
+RADI()                 Symbol: Write/draw radical
+RADIANS                Set radians for trig calculations (ON/OFF)
+RANDOM PERMUTATION     LET: Generate random permutation
+RANDOM SAMPLE          LET: Generate random sample (with replacement)
+RANGE                  LET: Compute sample range
+RANGE CONTROL CHART    Generate range control chart
+RANGE PLOT             Generate range (vs. subset) plot
+RANK                   LET: Rank the elements in a variable
+RANK CORRELATION       LET: Compute sample rank correlation
+RANK COVARIANCE        LET: Compute sample rank covariance
+RAPO()                 Symbol: Write/draw right apostrophe
+RARR()                 Symbol: Write/draw right arrow
+RBRA()                 Symbol: Write/draw right bracket
+RCBR()                 Symbol: Write/draw right curly bracket
+READ                   Read variables
+READ FORMAT            Set format for (fast) READ
+READ FUNCTION          Read 1 line of functions (= READ STRING)
+READ MATRIX            Read in a matrix
+READ PARAMETER         Read one line of parameters.
+READ STRING            Read one line of strings (= READ FUNCTION)
+RED                    Argument: Set color to red
+REFPLOT.DP             Macro to gen DATAPLOT tutorial ref plot
+REGION BASE ???        Set region base??
+REGION BORDER COLOR??? Set region border color
+REGION BORDER LINE???  Set region border line type
+REGION BORDER THIC???  Set region border (line) thickness
+REGION FILL            Set fill switch (ONXX/OFF) for reg (& 3d)
+REGION FILL ???        Set region fill switch (ON/OFF)
+REGION FILL COLOR ???  Set region fill color
+REGION PATTERN???      Set region pattern
+REGION PATT COLOR???   Set region pattern color
+REGION PATT LINE???    Set region pattern line type
+REGION PATT SPAC???    Set region pattern spacing
+REGION PATT THICK???   Set region pattern (line) thickness
+REGIS                  Set dev 1 to DEC Regis
+RELATIVE SD PLOT       Generate relative st. dev. (vs. subset) plot
+RELATIVE STAN DEVI     LET: Compute sample relative stand dev
+RELB()                 Symbol: Write/draw right elbow
+RENAME                 Assign a different name to a variable
+REPDF                  Keyword: Param with rep deg of freedom from FIT etc
+REPEAT (or R)          Re-execute one previous command
+REPSD                  Keyword: Param with replic. sd from FIT, ANOVA, etc
+RES                    Keyword: Var with residuals from FIT, ANOVA, etc
+RESDF                  Keyword: Param with res deg of freedom from FIT etc
+RESET                  "Zero-out" var &/or param &/or func, etc
+RESET VARIABLES        Delete all user variables
+RESET PARAMETERS       Delete all user parameters
+RESET FUNCTIONS        Delete all user functions
+RESET CLSB             Reset all plot char., lines, spikes, & bars
+RESET LIMITS           Reset all plot limits
+RESET GRAPHICS         Reset all graphics settings
+RESET SUPPORT          Reset all support settings
+RESET I/O              Reset all I/O
+RESET ALL              Reset all to sign-on settings
+RESISTOR               Draw a resistor
+RESSD                  Keyword: Param with res sd from FIT, ANOVA, etc
+RESTORE MEMORY         Restore all saved var/param/func from file
+RETAIN                 Retain var or elements of a var
+REVTRI                 Set plot character to reverse triangle
+RHO()                  Symbol: Write/draw Greek rho
+RIGHT                  Argument for JUST: Set justif. to right
+RING BELL              Ring the bell
+ROOT ACCURACY          Set accuracy for ROOT subcommand under LET
+ROOTOGRAM              Generate rootogram
+ROOTS                  LET: Compute roots of a function
+ROTATE EYE             Rotate eye for 3-D plots
+ROUND(X)               Function: Compute rounded value (to closest int)
+ROW LIMITS             Set row limts for READ and SERIAL READ
+RQUO()                 Symbol: Write/draw right quote
+RUN SEQUENCE PLOT      Generate run sequence plot
+RUNGE-KUTTA            LET: Compute Runge-Kutta diff. eq. solution
+RUNS                   Carry out runs analysis
+RUNS PLOT (FUTURE)     Generate runs plot
+ 
+-----S--------------------------------------------------
+ 
+S CHART                Generate st. dev. control chart plot
+SAVE                   Save selected LISTed commands
+SAVE                   Keyword: Symbolic name for DTPLT SAVEd-command file
+SAVE MEMORY            Save all var/param/func to file
+SDPRED.DP              Macro to compute linear fit conf lim for obs
+SEARCH                 Search a file for all occurrances of string
+SEARCH DICTIONARY      Search DATAPLOT Dict file for all occ of str
+SEARCH DIRECTORY       Search DATAPLOT Direc file for all occ of str
+SEARCH1                Search file for 1st occurrance of string
+SEARCH1 DICTIONARY     Search DATAPLOT Dict file for 1st occ of str
+SEARCH1 DIRECTORY      Search DATAPLOT Direc file for 1st occ of str
+SEC(X)                 Function: Compute secant
+SECH(X)                Function: Compute hyperbolic secant
+SEED                   Set seed for random number generators
+SEGMENT ... COLOR      Set colors for line segments on plots
+SEGMENT ... COOR       Set location of line segments on plots
+SEMI-CIRC RAND NUMB    LET: Generate semi-circular random num.
+SEMI-CIRCLE            Draw a semi-circle
+SEMI-CIRC PROB PLOT    Generate semi-circ. probability plot
+SEQUENCE               Set auto-seq-numbering for plots (ON/OFF)
+SEQUENCE               LET: Generate a sequence within a var
+SEQUENTIAL DIFFERENCE  LET: Compute seq. differences of elts in a var
+SERIAL READ            Read variables serially
+SET                    Specify settings for certain commands
+SET CARDINALITY        LET: Compute set cardinality
+SET CARTESIAN PRODUCT  LET: Carry out set cartesian product
+SET COMPLEMENT         LET: Carry out set complement
+SET DISTINCT           LET: Extract distinct elements of a set
+SET INTERSECTION       LET: Carry out set intersection
+SET UNION              LET: Carry out set union
+SHOW COLORS            Show available Dataplot colors
+SHOW POSTSCRIPT COLORS Show available postscript colors
+SIGM()                 Symbol: Write/draw Greek sigma
+SIGN(X)                Function: Compute sign
+SIMPLEX                Set font to simplex
+SIMPLEX SCRIPT         Set font to simplex script
+SIN(X)                 Function: Compute sine
+SINE AMPLITUDE PLOT    Generate sine amplitude (vs. subset) plot
+SINE FREQUENCY PLOT    Generate sine freq. (vs. subset) plot
+SINH(X)                Function: Compute hyperbolic sine
+SIZE                   LET: Compute sample size (number of observ)
+SKEWNESS               LET: Compute sample skew (stand 3rd cent mom)
+SKEWNESS PLOT          Generate skewness (vs. subset) plot
+SKIP                   Set num of header lines to skip for READ
+... SMOOTH             Perform smoothing of equi-spaced data
+SOLID or SO            Argument: Set line type to solid
+SORT                   LET: Sort the elements in a variable
+SORTC                  LET: Sort elem in 1 var & carry another var
+SPACING                Set spacing (equal/proportional) for TEXT
+... SPECTRAL PLOT      Generate auto-, cross-, etc spectral plot)
+SPECTRAL PLOT          Generate (auto-) spectral plot
+SPIKE                  Set switch (ON/OFF) for spikes on plots
+SPIKE BASE             Set base location for spikes on plots
+SPIKE COLOR            Set color for spikes
+SPIKE DIRECTION        Set spike direction (H/V)
+SPIKE LINE             Set line types for spikes on plots
+SPIKE PATTERN          Set line pattern for spikes
+SPIKE THICKNESS        Set thickness for spikes
+... SPLINE FIT         Perform spline fit
+SQRT(X)                Function: Compute square root
+SQUA()                 Symbol: Write/draw square
+SQUARE                 Set plot character to square
+STAN DEVI CONT CHART   Generate stan. dev. control chart
+STAN DEVI OF THE MEAN PLOTGenerate sd of mean (vs. subset) plot
+STAN DEVI OF THE MEAN  LET: Compute standard deviation of the mean
+STANDARD DEVIATION     LET: Compute sample standard deviation
+STAN DEVI PLOT         Generate standard dev (vs. subset) plot
+STAR                   Set plot character to star
+STAR PLOT              Generate star plot (multivar anal)
+STAR()                 Symbol: Write/draw star
+STATUS                 Print status of lines, char, var, par
+STATUS VARIABLES       Print status of user variables
+STATUS PARAMETERS      Print status of user parameters
+STATUS FUNCTIONS       Print status of user functions
+STATUS MATRICES        Print status of user matrices
+STATUS CHARACTERS      Print status of plot characters
+STATUS LINES           Print status of plot lines
+STATUS SPIKES          Print status of plot spikes
+STATUS BARS            Print status of plot bars
+STATUS ARROWS          Print status of arrows
+STATUS SEGMENTS        Print status of segments
+STATUS LEGENDS         Print status of plot legends
+STATUS BOXES           Print status of plot boxes
+STATUS DIMENSION       Print status of dimension
+STATUS HOST            Print status of host parameters
+STATUS FILE            Print status of internal Dataplot files
+STEM-AND-LEAF DIAG     Generate stem-and-leaf diagram
+STOP                   Exit from DATAPLOT (= EXIT, END, etc.)
+SUB()                  Symbol: Shift to subscript
+SUBS()                 Symbol: Write/draw subset
+SUBPLOT.DP             Macro to gen subseries plot of raw data
+SUBPLOTR.DP            Macro to gen subseries plot of residuals
+SUBSET                 Keyword: Qualifier denoting subset of interest
+SUBSTITUTION CHAR      Define alternate substitution char (for \)
+SUM                    LET: Compute sum of elements in a variable
+SUMD???                LET: Compute XXX
+SUMM()                 Symbol: Write/draw summation
+SUMMARY                Compute summary statistics
+SUP()                  Symbol: Shift to superscript
+SUPE()                 Symbol: Write/draw superset
+SYMBOL [not work]      Define alternate special symbol to ()
+SYMMETRY PLOT          Generate a symmetry plot
+ 
+-----T--------------------------------------------------
+ 
+T PPCC PLOT            Generate t prob plot corr coef plot
+T PROBABILITY PLOT     Generate t probability plot
+T RANDOM NUMBERS       LET: Generate t random num.
+T TEST                 Carry out 1- or 2-sample t test
+TABULATE               Tabulate counts, means, sd, ranges of data
+TAGUCHI SN... PLOT     Generate Tag. sig-to-noise (vs. subset) plot
+TAGUCHI SN0 PLOT       Gen Tag. S/N "target is better" (vs. subset) p
+TAGUCHI SN+ PLOT       Gen Tag. S/N "larger is better" (vs. subset) p
+TAGUCHI SN- PLOT       Gen Tag. S/N "smaller is better" (vs. subset)
+TAN(X)                 Function: Compute tangent
+TANH(X)                Function: Compute hyperbolic tangent
+TAU()                  Symbol: Write/draw Greek tau
+TCDF(X,NU)             Function: Compute t cumulative dist func
+TEKTRONIX              Set font to Tektronix
+TEKTRONIX 4010         Set dev 1 to Tekt 4010
+TEKTRONIX 4014         Set dev 1 to Tekt 4014
+TEKTRONIX 4105         Set dev 1 to Tekt 4105
+TEKTRONIX 4662         Set dev 1 to Tekt 4662
+TERMINATOR CHARACTER   Set character to terminate commands
+TEXT                   Write out text
+TEXT BASE     ???      Set base?? for TEXT
+TEXT BORDER COLOR???   Set color of border for TEXT
+TEXT BORDER LINE ???   Set border line type for TEXT
+TEXT BORDER THIC???    Set border thickness for TEXT
+TEXT FILL ???          Set fill switch (ON/OFF) for TEXT
+TEXT FILL COLOR ???    Set fill color for TEXT
+TEXT PATTERN ???       Set fill pattern for TEXT
+TEXT PATTERN COLOR ??? Set pattern color for TEXT
+TEXT PATTERN LINE ???  Set pattern line type for TEXT
+TEXT PATTERN SPAC???   Set pattern spacing for TEXT
+TEXT PATTERN THIC???   Set pattern (line) thickness for TEXT
+THET()                 Symbol: Write/draw Greek theta
+THEX()                 Symbol: Write/draw there exists
+THFO()                 Symbol: Write/draw therefore
+THICKNESS              Set thickness of TEXT letters (0 to 100)
+THIRD CENTRAL MOME     LET: Compute sample third central moment
+...TIC                 Set existence (ON/OFF) for tic marks
+...TIC COLOR           Set color of tic marks on plots
+...TIC LABEL           Set switch (ON/OFF) for tic mark labels
+...TIC LABEL COLOR     Set color for tic mark labels
+...TIC LABEL CONTENTS  Specify (alphabetic) contents for tic labels
+...TIC LABEL DECIMALS  Set number of decimals for plot tic labe
+...TIC LABEL FORMAT    Set format (alpha, exp, etc) for tic labels
+...TIC LABEL HW        Set height/width of tic labels
+...TIC LABEL SIZE      Set tic mark label size (= height)
+TIC LABEL DECIMALS     Set number of decimals for tic labels
+TIC LABEL HW           Set tic label height & width
+...TIC POSITION        Set plot tic mark position (in/out/thru)
+...TIC SIZE            Set plot tic mark size
+TILD()                 Symbol: Write/draw tilda
+TIME                   Display (wall clock) time & elapsed run time
+TIME()                 Symbol: Write/draw times sign
+TITLE                  Set title at top of plot
+TITLE COLOR            Set color for title on plots
+TITLE SIZE             Set plot title size (height)
+TO                     Keyword: Set interval of values within a variable
+TPDF(X,NU)             Function: Compute t probability density func
+TPPF(P,NU)             Function: Compute t percent point function
+TRANSLATE              Define auto-translation of any graphics
+TRIA()                 Symbol: Write/draw triangle
+TRIANGLE               Argument: Set plot character to triangle
+TRIANGLE               Draw a triangle
+TRIANGULAR PROB PLOT   Generate triangular probability plot
+TRIANGULAR RAND NUMB   LET: Generate triangular random num.
+TRIGONOMETRIC UNITS    Set trigonometric units
+TRII()                 Symbol: Write/draw inverted triangle
+TRIMMED MEAN PLOT      Generate trimmed mean (vs. subset) plot
+TRIPLEX                Set font to triplex
+TRIPLEX ITALIC         Set font to triplex italic
+TRIWEIGHT              LET: Compute triweight (robust) transformation
+TUFTE BOX PLOT         Set all plot characters for TUFTE BOX PLOT
+TUFTE BOX PLOT         Set all plot lines for TUFTE BOX PLOT
+TUKEY LAMB PPCC PLOT   Generate Tukey lambda prob plot cc plot
+TUKEY LAMB PROB PLOT   Generate Tukey lambda probability plot
+TUKEY LAMB RAND NUMB   LET: Generate Tukey lambda random num.
+ 
+-----U--------------------------------------------------
+ 
+U CHART                Generate U control chart
+UARR()                 Symbol: Write/draw up arrow
+UC()                   Symbol: Shift to upper case
+UNIF ORDER STAT MEDI   LET: Generate uniform order statistic medians
+UNIFORM PROB PLOT      Generate uniform probability plot
+UNIFORM RAND NUMB      LET: Generate uniform (0,1) random num.
+UNIO()                 Symbol: Write/draw union
+UNSB()                 Symbol: Shift to un-subscript
+UNSP()                 Symbol: Shift to un-superscript
+UPPER HINGE            LET: Compute sample upper hinge
+UPPER HINGE PLOT       Generate upper hinge (vs. subset) plot
+UPPER QUARTILE         LET: Compute sample upper quartile
+UPPER QUARTILE PLOT    Generate upper quartile (vs. subset) plot
+UPSI()                 Symbol: Write/draw Greek upsilon
+ 
+-----V--------------------------------------------------
+ 
+VALU()                 Symbol: Write actual value of succeeding param
+VARI()                 Symbol: Write/draw varies
+VARIANCE               LET: Compute sample variance
+VARI OF THE MEAN PLOT  Generate var. of mean (vs. subset) plot
+VARIANCE PLOT          Generate variance (vs. subset) plot
+VB                     Set plot character to vertical bar
+VBAR()                 Symbol: Write/draw vertical bar
+VECTOR ADDITION        LET: Carry out vector addition
+VECTOR ANGLE           LET: Compute vector angle
+VECTOR DISTANCE        LET: Compute vector distance
+VECTOR CROSS PRODUCT   LET: Carry out vector cross-product
+VECTOR DOT PRODUCT     LET: Carry out vector dot product
+VECTOR LENGTH          LET: Compute vector length
+VECTOR SUBTRACTION     LET: Carry out vector subtraction
+VERSUS                 Keyword: Used with PLOT, etc for multi-trace plot
+VERTICAL SPACING       Set vert. spacing between lines (0 to 100)
+VERTICALLY             Keyword: Rotate contents (but not frame) of plot
+VISIBLE    [future]    Set 3-d bkgrd lines visibility (ON/OFF)
+ 
+-----W--------------------------------------------------
+ 
+...WEIBULL SCALE       Set scale for plots to be Weibull
+WEIB ADUSTED RANKS     LET: Generate adj. ranks for Weibull analysis
+WEIBULL PLOT           Generate Weibull plot
+WEIBULL PPCC PLOT      Generate Weibull prob plot corr coef plot
+WEIBULL PROB PLOT      Generate Weibull probability plot
+WEIBULL RAND NUMB      LET: Generate Weibull random numbers
+WEICDF(X,GAMMA)        Function: Compute Weibull cum distribution func
+WEIGHTS                Set weights variable for FIT, PRE-FIT, etc
+WEIPDF(X,GAMMA)        Function: Compute Weibull prob density func
+WEIPPF(P,GAMMA)        Function: Compute Weibull percent point function
+WHITE                  Argument: Set color to white
+WIDTH                  Set width of letters (0 to 100)
+WINDOW COORDINATES     Set graphics region coor. (0 to 100)
+WINDSORIZED MEAN PLOT  Generate Winsorized mean (vs. subset) plot
+WRITE                  Write (terminal/file) var, param, func
+WRITE "  "             Write (terminal/file) a literal text string
+WRITE DECIMALS         Set num. decimals for WRITE output
+WRITE FORMAT           Set format for WRITE output
+WRT                    Keyword: "With respect to"; used in LET for roots etc
+ 
+-----X--------------------------------------------------
+ 
+XBAR CHART             Generate xbar (= mean) control chart plot
+XI()                   Symbol: Write/draw Greek xi
+ 
+-----Y--------------------------------------------------
+ 
+YATES ANALYSIS Y       Carry out Yates analysis
+YELLOW                 Argument: Set color to yellow
+ 
+-----Z--------------------------------------------------
+ 
+ZETA()                 Symbol: Write/draw Greek zeta
+ 
+-----MISCELLANEOUS--------------------------------------------------
+ 
+3-D PLOT               Generate 3-dimensional plot of var &/or func
+3DFRAME                Set frame type for 3-D plots
+4-PLOT                 Generate 4-plot univariate analysis plot
+/                      Re-execute SAVEd commands.
+\                      Symbol: Write actual value of succeed. param or str
+&                      Symbol: Concatonate strings (used with \)
+...      [not work]    Keyword: Continue any statement onto next line
+()                     Keyword: Set math/Greek char in TEXT, LABEL, etc.
++-()                   Symbol: Write/draw + or -
+-+()                   Symbol: Write/draw - or +
+.                      Insert a comment line in code
+;                      Keyword: Terminator character for a command
+<                      Keyword: "Less than"
+<=                     Keyword: "Less than or equal to"
+<>                     Keyword: "Not equal to"
+=                      Keyword: "Equal"; used in FIT, PRE-FIT, FOR, etc
+>                      Keyword: "Greater than"
+>=                     Keyword: "Greater than or equal to"

@@ -1,0 +1,28 @@
+----- <~prob\locshisp.top> Histogram with Overlaid PDF
+
+Generate a Relative Histogram with an Overlaid PDF
+
+Generate a relative histogram and overlay the
+specified probability density function for
+distributions with no shape parameters.
+
+Anglit                                    <xemf: ~prob\anghispd.men>
+Arcsin                                    <xemf: ~prob\arshispd.men>
+Cauchy                                    <xemf: ~prob\cauhispd.men>
+Cosine                                    <xemf: ~prob\coshispd.men>
+Double Exponential (Laplace)              <xemf: ~prob\dexhispd.men>
+Exponential                               <xemf: ~prob\exphispd.men>
+Extreme Value Type I(Gumbel)  - Minimum   <xemf: ~prob\ev11hisp.men>
+Extreme Value Type I(Gumbel)  - Maximum   <xemf: ~prob\ev12hisp.men>
+Half-Cauchy                               <xemf: ~prob\hfchispd.men>
+Half-Logistic                             <xemf: ~prob\hflhispd.men>
+Half-Normal                               <xemf: ~prob\hfnhispd.men>
+Hyperbolic Secant                         <xemf: ~prob\hsehispd.men>
+Logistic                                  <xemf: ~prob\loghispd.men>
+Maxwell                                   <xemf: ~prob\maxhispd.men>
+Normal                                    <xemf: ~prob\norhispd.men>
+Rayleigh                                  <xemf: ~prob\rayhispd.men>
+Semi-Circular                             <xemf: ~prob\semhispd.men>
+Slash                                     <xemf: ~prob\slahispd.men>
+Uniform                                   <xemf: ~prob\unihispd.men>
+

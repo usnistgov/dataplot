@@ -1,0 +1,27 @@
+This is file plotres.men--Plot Residuals
+ 
+--------------------
+ 1. Plot Residuals
+ 2. PLOT RES X
+ 3.
+ 4. Horizontal Axis Variable X:
+ 4. @CE 1 0 35 50 ? gui-variable
+ 5.
+ 6. Character type for     plot points:
+ 6. @CE 2 0 38 50 * gui-char
+ 7. Line      type between plot points:
+ 7. @CE 3 0 38 50 * gui-line
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 4 0 1 50 *
+11.
+12.
+13. Generate the Plot?:
+--------------------
+GR FE
+CHARACTERS _2
+LINES _3
+PLOT RES _1 _4
+--------------------
+WEB HELP RES
+--------------------

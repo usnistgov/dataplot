@@ -1,0 +1,25 @@
+----- <~qual\discewma.top> Discussion: EWMA Control Chart
+ 
+Discussion: EWMA Control Charts
+
+3) Exponentially weighted moving average (EWMA)
+
+   EWMA charts can be used for either grouped or ungrouped
+   data.  EWMA charts are an alternative to the mean
+   control chart.  EWMA charts plot an exponetially weighted
+   moving average of either the grouped or ungrouped means.
+   A weight parameter, between 0 and 1, specificies the
+   weighting between the current value and prior values.
+   The higher the value of the weight parameter, the less
+   prior data points effect the currently plotted point.
+
+   Some analysts prefer EWMA charts to xbar control charts
+   because EWMA charts can detect out of control processes
+   quicker than the mean control chart for small shifts
+   in the location parameter (e.g., 1 sigma shifts).
+   In this regard, they are similar to CUSUM control
+   charts.  That is, when it is desirable to detect rather
+   small shifts in location, EWMA and CUSUM control charts
+   provide better performance than the standard xbar
+   control charts.
+

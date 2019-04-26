@@ -1,0 +1,118 @@
+. This is Dataplot macro   E691PLO1.DP
+. Purpose--Generate some prelimanry graphs for an interlab analysis
+.          based on the ASTM E691 standard.
+.
+.          For each material:
+.          1) Plot of Lab Means
+.          2) Plot of Lab Standard Deviations
+.
+. Input --Y        = response variable
+.       --LABID    = lab ID variable
+.       --MATID    = material ID variable
+.       --E691TIT  = string containing title for analysis
+.
+.  Step 1: Determine number of labs and number of materials
+.
+if y not exist
+   print "Response variable y not defined"
+   call exit
+end of if
+if labid not exist
+   print "Lab-id variable labid not defined"
+   call exit
+end of if
+if matid not exist
+   print "Material-id variable matid not defined"
+   call exit
+end of if
+.
+let n = size y
+let labcode = code labid
+let nlab = unique labid
+let matcode = code matid
+let nmat = unique matid
+.
+.  Step 2: Set some plot control features
+.
+multiplot nmat 2
+multiplot corner coordinates 5 5 95 93
+frame corner coordinates 15 20 90 95
+let afact = 0.75*nmat
+multiplot scale factor afact 2
+title case asis
+label case asis
+case asis
+.
+character X blank
+line blank solid
+xlimits  1 nlab
+major xtic mark number 1 nlab
+minor xtic mark number 0
+tic offset units screen
+tic offset 5 5
+tic mark label size 1.5
+title offset 2
+x3label displacement 18
+.
+.  Step 3: Generate the plots
+.
+loop for irow = 1 1 nmat
+    title
+    if irow = 1
+       title Mean vs. Lab ID
+    end of if
+    mean plot y labcode  subset matcode = irow
+    if irow = 1
+       title SD vs. Lab ID
+    end of if
+    set statistic plot reference line mean
+    sd plot y labcode  subset matcode = irow
+    set statistic plot reference line overall
+end of loop
+end of multiplot
+.
+height 2.5
+justification center
+move 50 97
+text ^e691tit
+.
+height 2
+move 46 1
+text Laboratory ID
+.
+justification left
+move 92 97
+text Material
+let yinc = (95 - 5)/nmat
+let ystrt = 95 - (yinc/2)
+let xcoort = 95
+let ycoor = sequence ystrt yinc 5
+let matidsvd = distinct matid
+let matidsvd = sort matidsvd
+.
+loop for k = 1 1 nmat
+    let ycoort = ycoor(k)
+    let ival = matidsvd(k)
+    move xcoort ycoort
+    text ^ival
+end of loop
+delete ycoort matidsvd
+direction vertical
+move 3 50
+text Mean
+move 50 50
+text SD
+direction horizontal
+.
+.  Step 4: Clean up
+.
+frame corner coordinates 15 20 85 90
+multiplot scale factor
+title
+label
+line solid all
+char blank all
+tic mark offset 0 0
+tic mark label size
+delete labcode matcode
+.

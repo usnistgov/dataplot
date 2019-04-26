@@ -1,0 +1,8 @@
+----- <~datalist\MLCO2.top> MLCO2.DAT
+ 
+MLCO2.DAT
+ 
+View     <xcl: LIST MLCO2.DAT>
+Load     <x2cl: SKIP 25; READ MLCO2.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\MLCO2.DAT>
+ 

@@ -1,0 +1,35 @@
+. This is dataplot macro     2column.dp
+. Purpose  --Generate a graphics version of a 2-column table
+. Input    --numrow = number of rows
+.            numcol = number of columns
+.            ytop   = top edge of surrounding box
+.            ydel   = delta between rows
+.            xleft  = left edge of surrounding box
+.            xc1    = left edge of column 1
+.            xc2    = left edge of column 2
+.            str11, str12, str.. = strings in the table
+. Output   --a 2-column graphics table
+. Called By--conflimi.dp from testcoli.dp (for example)
+. Date--April 2002
+.
+. -----start point-----
+.
+erase
+.
+just left
+let y0del = ydel
+loop for col = 1 1 numcol
+   let y0 = ytop-3
+   let y0 = y0+y0del
+   let x0 = xc^col
+   loop for row = 1 1 numrow
+      let y0 = y0-y0del; move x0 y0; text ^str^row&^col
+   end loop
+end loop
+.
+let xright = 100-xleft
+let ybottom = ytop - numrow*y0del
+draw xleft ybottom xright ybottom
+draw xleft ytop xright ytop
+draw xleft ybottom xleft ytop
+draw xright ybottom xright ytop

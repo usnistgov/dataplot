@@ -1,0 +1,17 @@
+----- <~dexpb\loaddesi.top> Load Plackett-Burman Designs
+ 
+Load Placket-Burman Designs
+ 
+   INDEX OF PLACKETT-BURMAN EXPERIMENT DESIGNS
+
+ Name    Number   Number
+  of       of       of 
+Design   Factors  Runs
+.........................
+ 
+PB12       11      12             <xcf: ~dexpb\PB12.DP>
+PB20       19      20             <xcf: ~dexpb\PB20.DP>
+PB24       23      24             <xcf: ~dexpb\PB24.DP>
+PB28       27      28             <xcf: ~dexpb\PB28.DP>
+PB36       35      36             <xcf: ~dexpb\PB36.DP>
+

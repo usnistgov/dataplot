@@ -1,0 +1,8 @@
+----- <~dataload\CLEAR.DP> Load CLEAR.DAT
+
+. This is file    CLEAR.DP
+
+DELETE Y
+SKIP 25
+SERIAL READ CLEAR.DAT Y
+

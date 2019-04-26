@@ -1,0 +1,8 @@
+----- <~dataload\CASTILL6.DP> Load CASTILL6.DAT
+
+. This is file    CASTILL6.DP
+
+DELETE Y
+SKIP 25
+READ CASTILL6.DAT Y
+

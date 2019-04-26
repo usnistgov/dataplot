@@ -1,0 +1,32 @@
+This is Dataplot data file     BARNETT.DAT
+Airline On-time Arrival Performance
+Project Question--Which airline has better on-time performance?
+Number of observations             =   6
+Number of variables per line image =   4
+Order of variables on a line image--
+   1. Response variable 1 =  % on time          Alaska Airlines
+   2. Response variable 2 =  number of arrivals Alaska Airlines
+   3. Response variable 3 =  % on time          America West
+   4. Response variable 4 =  number of arrivals America West
+Note--Example of Simpson's Paradox
+To read this file into Dataplot--
+   SKIP 25
+   READ BARNETT.DAT Y1 N1 Y2 N2
+
+
+
+
+
+
+
+       Alaska Airlines         America West Airlines           Destination
+ % Arrivals    Number of          %Arrivals    Number of
+   on Time      Arrivals           on Time      Arrivals
+----------------------------------------------------------------------------
+    88.9          559               85.6          811          Los Angeles
+    94.8          233               92.1        5,255          Phoenix   
+    91.4          232               85.5          488          San Diego
+    83.1          605               71.3          449          San Francisco
+    85.8        2,146               76.7          262          Seattle
+
+    86.7        3,775               89.1        7,225          Total

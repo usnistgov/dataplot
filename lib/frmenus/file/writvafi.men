@@ -1,0 +1,29 @@
+This is file writvafi.men--Write Variables to a File
+ 
+--------------------
+ 1. Write Variables to a File
+ 2. WRITE <filename> <list of variables>
+ 3.
+ 4. File name:
+ 5. @CE 1 0 1 50 ?
+ 6.
+ 7. List of variables to be written out:
+ 8. @CE 2 0 1 50 ?
+ 9.
+10. Format (Fortran-like; optional)
+11. @CE 3 0 1 50 *
+12.
+13. Subset/Except/For Specification (optional):
+14. @CE 4 0 1 50 *
+15.
+16.
+17. Do the Write?
+--------------------
+SU FE
+SET FILE NAME QUOTE ON
+@IF 3 0 SET WRITE FORMAT _3
+WRITE _1 _2 _4
+SET FILE NAME QUOTE OFF
+--------------------
+WEB HELP WRITE
+--------------------

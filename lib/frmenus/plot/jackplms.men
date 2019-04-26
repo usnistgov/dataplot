@@ -1,0 +1,62 @@
+This is file jackplms.men--Generate Jacknife Plots (Miscellaneous)
+ 
+--------------------line 3
+01. Jacknife Plots (Miscellanous Statistics)
+02. JACKNIFE <statistic> PLOT Y
+03.
+04. Response Variable:
+04. @CE 1 0 42 50 ? gui-vari
+05. Variable to Save Computed Jacknife Values:
+05. @CE 2 0 42 50 ?
+06. Optional Group ID Variable:
+06. @CE 3 0 42 50 ? gui-vari
+07.
+08. Statistic (Select one):
+09. @CE 4 1 5 25 autocorrelation
+09. @CE 4 2 30 50 autocovariance
+10. @CE 4 3 5 25 sine amplitude
+10. @CE 4 4 30 50 sine frequency
+11. @CE 4 5 5 25 normal PPCC
+12.
+13. Character Type for Data
+13. @CE 5 0 42 50 * gui-char
+14. Character Fill for Data
+14. @CE 6 0 42 50 gui-ooff
+15. Line Type for Data-connecting Line
+15. @CE 7 0 42 50 * gui-line
+16.
+17. Title:
+17. @CE 8 0 10 50 *
+18. Left Axis Label:
+18. @CE 9 0 22 50 *
+19. Bottom Axis Label:
+19. @CE 10 0 22 50 *
+20.
+21. Subset/Except/For Specification:
+22. @CE 11 0 1 50 *
+23.
+24. Generate the Jacknife Plot?:
+--------------------
+TITLE _8
+Y1LABEL _9
+X1LABEL _10
+CHARACTERS SAVE
+LINE SAVE
+CHARACTERS _5
+CHARACTER FILL _6
+LINES _7
+@IF 3 0 CHARACTERS _5 ALL
+@IF 3 0 CHARACTER FILL _6 ALL
+@IF 3 0 LINES _7 ALL
+.
+@IF 4 1 JACKNIFE AUTOCORRELATION STATISTIC PLOT _1 _3 _11
+@IF 4 2 JACKNIFE AUTOCOvARIANCE STATISTIC PLOT _1 _3 _11
+@IF 4 3 JACKNIFE SIN AMPLITUDE PLOT _1 _3 _11
+@IF 4 4 JACKNIFE SIN FREQUENCY PLOT _1 _3 _11
+@IF 4 5 JACKNIFE NORMAL PPCC PLOT _1 _3 _11
+CHARACTERS RESTORE
+LINE RESTORE
+LET _2 = YPLOT
+--------------------
+WEB HELP JACKNIFE PLOT
+--------------------

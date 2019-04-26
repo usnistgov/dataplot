@@ -1,0 +1,19 @@
+reset data
+reset plot control
+reset i/o
+dimension 500 30
+label size 3
+read mpc266d.dat s a df
+let c = a*s*s
+let d = c*c
+let e = d/(df)
+let sume = sum e
+let u = sum c
+let u = u**(1/2)
+let effdf=(u**4)/sume
+let tvalue=tppf(.975,effdf)
+let expu=tvalue*u
+
+. uncertainty, effective degrees of freedom, tvalue and expanded uncertainty
+print u effdf tvalue expu
+. end of calculations

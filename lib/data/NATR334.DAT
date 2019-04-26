@@ -1,0 +1,32 @@
+This is Dataplot data file     NATR334.DAT
+Surface Hardness of Steel Plates
+(Location Shift Example (no info on sigma)
+Question: Does surface preparation affect hardness?
+ 
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 3-34 to 3-38.
+ 
+Number of observations             = 7 + 5 = 12
+Number of variables per line image = 2
+Order of variables on a line image--
+   1. Y1 = Response Variable 1 = Hardness with no polishing
+   2. Y2 = Response Variable 2 = Hardness after light polishing
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR334.DAT Y1 Y2
+   T TEST Y1 Y2
+ 
+ 
+      Y1                Y2
+   Hardness          Hardness
+ No Polishing      With Polishing
+-----------------------------------
+     187               157
+     157               152
+     152               148
+     164               158
+     159               161
+     164               -99
+     172               -99

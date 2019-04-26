@@ -1,0 +1,20 @@
+This is file cumsumra.men--Cusum Test for Randomness
+ 
+--------------------
+ 1. Cusum Test for Randomness
+ 2. CUSUM TEST Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Compute Cusum Test?
+--------------------
+GR FE
+CUSUM TEST _1 _2
+--------------------
+WEB HELP CUSUM TEST
+--------------------

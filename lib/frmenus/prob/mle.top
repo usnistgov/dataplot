@@ -1,0 +1,22 @@
+----- <~prob\mle.top> Maximum Likelihhod Estimates
+
+MLE Estimation
+
+These menus are used to perform
+maximum likelihood estimation
+
+Discussion                                    <~prob\mle_disc.top>
+NIST/SEMATECH Handbook                 <xcl: web handbook maximum likelihood>
+Discussion: Bootstrap Intervals               <~reli\mleboot.top>
+
+Continuous Distributions
+   No Shape Parameters (e.g., Normal)         <~prob\locscmle.top>
+   One Shape Parameters (e.g., Weibull)       <~prob\shap1mle.top>
+   Two Shape Parameters (e.g., Beta)          <~prob\shap2mle.top>
+
+Normal Mixture Distribution                   <xemf: ~prob\mlenormx.men>
+
+Discrete Distributions
+    Unbinned Data                             <~prob\discmle.top>
+    Binned Data                               <~prob\discmle2.top>
+

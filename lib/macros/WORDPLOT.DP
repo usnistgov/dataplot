@@ -1,0 +1,74 @@
+. This is dataplot macro file   WORDPLOT.DP
+.
+. Purpose   : Simplify the creation of a series of eps 
+.             (= encapsulated postscript) plots
+.             for ready inclusion in a Microsoft Word document
+.             by automatic formation of the plot file name, and
+.             by automatic incrementing of the plot file name index.
+.
+. How to use: Simply insert     CALL WORDPLOT.DP     before each plot
+.
+. Note      : If the scalar    plotnumb    is defined in the calling routing,
+.             then this macro will increment it by 1.
+.             If plotnumb is not defined in the calling routine,
+.             then this macro will create it with value 0, and then increment it by 1.
+.
+. Note      : If the string    base    is defined in the calling routing,
+.             then this macro will use it.
+.             If base is not defined in the calling routine,
+.             then this macro will create it as   plot   .
+.
+. Output    : A series of eps files, which by default will be named
+.             plot1.eps, plot2,eps, plot3.eps, etc.
+.             but may have user-defined names and start values
+.             as dictated by the user in the calling routine
+.             via the definition of
+.                1. the string   base
+.                2. the scalar   plotnumb
+.             in the calling routine.
+.
+. Example 1 :
+.             call wordplot.dp
+.             plot x for x = 1 1 10
+.             call wordplot.dp
+.             plot x**2 for x = 1 1 10
+.             (this will result in the auto-creation of 2 eps files:
+.             plot1.eps and plot2.eps)
+.
+. Example 2 :
+.             let string base = calibration
+.             let plotnumb = 10
+.             call wordplot.dp
+.             plot x for x = 1 1 10
+.             call wordplot.dp
+.             plot x**2 for x = 1 1 10
+.             (this will result in the auto-creation of 2 eps files:
+.             calibration11.eps and calibration12.eps)
+.
+. Date      : August 2003
+.
+. -----start point-----
+.
+if base exist
+else
+   let string base = plot
+end if
+.
+if plotnumb exist
+else
+   let plotnumb = 0
+end if
+.
+let plotnumb = plotnumb+1
+.
+device 2 close
+let string filename = ^base&^plotnumb.eps
+set ipl1na ^filename
+device 2 eps
+orientation landscape wordperfect
+device 2 color on
+.
+write " "
+write "-----The eps plot file   ^filename   has just been opened-----"
+write " "
+.

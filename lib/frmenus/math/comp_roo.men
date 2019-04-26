@@ -1,0 +1,30 @@
+This is file comp_roo.men--Compute complex roots
+ 
+--------------------
+ 1. Complex Roots
+ 2. LET YR YC = COMPLEX ROOTS XR XC
+ 3.
+ 4. Real component for which to compute
+ 5. the complex roots:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Complex component for which to compute
+ 7. the complex roots:
+ 7. @CE 2 0 33 50 * gui-variable
+ 8. Variable to store the real component of
+ 9.    the complex roots:
+ 9. @CE 3 0 33 50 ? gui-none
+10. Variable to store the complex component of
+11.    the complex roots:
+11. @CE 4 0 33 50 ?
+12.
+13. Subset/Except/For Specification:
+14. @CE 5 0 -5 50 *
+15.
+16.
+17. Compute the Complex Roots?:
+--------------------
+GR FE
+LET _3 _4 = COMPLEX ROOTS  _1 _2 _5
+--------------------
+WEB HELP COMPLEX ROOTS
+--------------------

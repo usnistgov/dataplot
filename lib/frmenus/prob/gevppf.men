@@ -1,0 +1,35 @@
+This is file gevppf.men--Compute generalized extreme value percent point
+ 
+--------------------
+ 1. Compute Generalized Extreme Value Percent Point
+ 2. LET A = GEVPPF(P,GAMMA)
+ 3.
+ 4. Input values:
+ 5.      probability p:                    0 < p < 1
+ 5. @CE 1 0 21 37 ?
+ 6.  tail length gamma:
+ 6. @CE 2 0 21 37 ?
+ 7.         location u:
+ 7. @CE 3 0 21 37 ?
+ 8.            scale s:                    s > 0
+ 8. @CE 4 0 21 37 ?
+ 9.
+10. Output value:
+11.      name for the percent point:
+11. @CE 5 0 38 49 ?
+12.
+13.
+14. Compute the Percent Point?
+--------------------
+AN FE
+LET ZP = _1
+LET ZGAMMA = _2
+LET ZLOC = 0
+@IF 3 0 LET ZLOC = _3
+LET ZSCALE = 1
+@IF 4 0 LET ZSCALE = _4
+LET ZZ = GEVPPF(ZP,ZGAMMA)
+LET _5 = ZLOC + ZSCALE*ZZ
+--------------------
+WEB HELP GEVPPF
+--------------------

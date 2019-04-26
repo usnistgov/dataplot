@@ -1,0 +1,6 @@
+----- <~dataprin\GNP.DP> Print (to Printer) GNP.DAT
+
+. This is file    GNP.DP
+
+PRINT GNP.DAT
+

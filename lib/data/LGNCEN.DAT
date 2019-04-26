@@ -1,0 +1,43 @@
+This is Dataplot data file    LGNCEN.DAT
+Sample data set from Example 11.3 of
+Karl Bury, "Statistical Distributions in Engineering",
+Cambridge University Press, 1999, p. 170.
+
+Response variable   = Fatigue life in stress cycles X 1000
+                      of a composite material
+Censoring variable  = 1 specifies failure time, 0 specified censor time
+Number of observations = 18
+Number of observations per line image = 2
+Order of observations per line image--
+   1. Response variable
+   2. Censoring variable
+To read this file into Dataplot--
+   SKIP 25
+   READ LGNCEN.DAT Y X
+   SET MAXIMUM LIKELIHOOD PERCENTILE DEFAULT
+   LOGNORMAL MAXIMUM LIKELIHOOD Y X
+ 
+ 
+ 
+ 
+ 
+  Y    X
+------------------
+ 32.4  1
+ 42.8  1
+ 49.8  1
+ 52.7  1
+ 56.8  1
+ 58.9  1
+ 59.0  1
+ 66.3  1
+ 72.1  1
+ 77.9  1
+ 86.4  1
+115.0  1
+120.8  1
+154.8  1
+169.7  1
+180.0  0
+180.0  0
+180.0  0

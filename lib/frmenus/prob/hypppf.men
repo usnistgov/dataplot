@@ -1,0 +1,28 @@
+This is file hypppf.men--Compute hypergeometric ppf
+ 
+--------------------
+ 1. Compute Hypergeometric ppf
+ 2. LET A = HYPPPF(P,KK,NN,MM)
+ 3.
+ 4. Input values:
+ 5.                      p (0 <= p <= 1):
+ 5. @CE 1 0 42 50 ?
+ 6.                       sample size kk:
+ 6. @CE 2 0 42 50 ?
+ 7.            number of marked items nn:
+ 7. @CE 3 0 42 50 ?
+ 8.     number of items in population mm:
+ 8. @CE 4 0 42 50 ?
+ 9.
+10. Output parameters:
+11.               name for the ppf value:
+11. @CE 5 0 42 50 ?
+12.
+13.
+14. Compute the Probability?
+--------------------
+AN FE
+@IF 5 0 LET _5 = HYPPPF( _1 , _2 , _3 , _4 )
+--------------------
+WEB HELP HYPPPF
+--------------------

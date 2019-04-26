@@ -1,0 +1,13 @@
+----- <~plmo\defaults.top> Reset Plot Control Defaults
+ 
+Reset Plot Control Defaults
+
+ 
+Reset All Graphics                   <xcl: RESET GRAPHICS>
+Reset All Plot Control Attributes    <xcl: RESET PLOT CONTROL>
+Characters           <x2cl: CHAR BLANK ALL; CHAR FILL OFF ALL>
+Lines                      <xcl: LINES SOLID ALL>
+Spikes                     <xcl: SPIKES OFF ALL>
+Bars                       <x2cl: BAR OFF ALL; BAR FILL OFF ALL>
+Chars/lines/spikes/bars    <xcf: DEFAGRAP.TOP>
+

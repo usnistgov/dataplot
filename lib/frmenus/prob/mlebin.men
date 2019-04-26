@@ -1,0 +1,33 @@
+This is file mlebin.men--Binomial MLE Estimates
+ 
+--------------------
+ 1. Binomial Maximum Likelihood Estimates
+ 2. LET N = 10; BINOMIAL MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. The binomial distribution has two parameters:
+ 5. n = the number of trials and p = the
+ 6. probability of success for one trial.  The
+ 7. binomial maximum likelihood procedure assumes
+ 8. that n is fixed and known and returns an
+ 9. estimate for the p parameter.
+10.
+11. Response Variable:
+11. @CE 1 0 42 50 ? gui-variable
+12.
+13. Value for the Number of Trials Parameter:
+13. @CE 2 0 42 50 *
+14.
+15. Subset/Except/For Specification:
+16. @CE 3 0 1 50 *
+17.
+18.
+19. Compute Binomial MLE's?
+--------------------
+GR FE
+DELETE N
+LET N = 1
+@IF 2 0 LET N = _2
+BINOMIAL MAXIMUM LIKELIHOOD _1 _3
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

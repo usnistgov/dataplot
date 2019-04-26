@@ -1,0 +1,431 @@
+#!/usr/bin/env wish
+#
+#  Note: xdataplot.wish is a graphical user interface (GUI) for Dataplot
+#        implemented using Tcl/Tk scripts.  These Tcl/Tk scripts were
+#        written by
+#
+#           Robert Lipman
+#           National Institute of Standards and Technology
+#           Building and Fire Research Laboratory
+#           Computer-Integrated Construction Group
+#           100 Bureau Drive, Stop 8630
+#           Gaithersburg, MD  20899-8630
+#           (301) 975-3829
+#           robert.lipman@nist.gov
+#
+#        If you have questions about the GUI, contact Alan Heckert
+#        at alan.heckert@nist.gov.
+#
+#        The Tcl/Tk scripts were originally implemented to use
+#        Expect to handle the communications between Tcl/Tk and
+#        Dataplot.  When these scripts were ported to Windows,
+#        the Tcl/Tk scripts were updated so that these communications
+#        could be handled without using Expect (Expect was not yet
+#        available for Windows).  However, the Expect option can
+#        still be used under Linux/Unix.  For most users, we advise
+#        that you just go ahead and use the Tcl/Tk only version of
+#        the scripts.  However, if you would like to experiment with
+#        the Expect based version, replace the first line in this
+#        script with
+#
+#             #!/usr/bin/env expectk
+#
+#  Note: For integration with the NIST/SEMATECH Engineering
+#        Statistics Handbook, convert from send to dde
+#        package.  dde is PC specific, but send does not properly
+#        keep track of previously running xdp scripts, which we
+#        need for the Handbook.
+#
+#  Note: 12/2002 - Windows default location now under
+#        "C:\Program Files".  The space in the path name required
+#        a number of changes to xdp(DP_*) variables (basically,
+#        need to quote when value of these variables needed).
+#        Also, add a "-noupdate" option to turn off data spreadsheet
+#        from command line.
+#
+#----------------------------------------------------------------------
+
+
+global xdp env tcl_platform
+global cmdLin fileIndex topBnam topBact
+
+option add *Dialog.msg.wrapLength 750
+option add *foreground		  black
+
+
+#  check version of tcl
+
+set minTcl 8.0
+if {[info tclversion] < $minTcl} {
+   puts "\nWrong version of Tcl"
+   puts "Found Tcl [info tclversion], expecting at least Tcl $minTcl"
+   exit
+}
+set xdp(TCL) [info patchlevel]
+
+
+#  initialize
+
+set xdp(DSUPDATE)   0   ;#  0 or 1
+set xdp(DEBUG)      0   ;#  0 or 1
+set xdp(DEBUG_MENU) 0   ;#  0 or 1
+set xdp(DEBUG_FORM) 0   ;#  0 or 1
+set xdp(INDEX_FILE) 0
+set xdp(PLATFORM) $tcl_platform(platform)
+set xdp(OS) $tcl_platform(os)
+set xdp(OSVERSION) $tcl_platform(osVersion)
+set os4 [string range $xdp(OS) 0 3]
+if {$os4 == "IRIX"} {set xdp(OS) $os4}
+
+
+#  under Unix use the X11 graphics driver in Dataplot and use Expect to
+#  communicate between xdp and Dataplot
+
+if {$xdp(PLATFORM) == "unix"} {
+   #set xdp(GRAPHICS) x11   ;#  x11 or soft
+   #set xdp(COMM) expect    ;#  expect or pipe or file
+   set xdp(GRAPHICS) soft   ;#  x11 or soft
+   set xdp(COMM) expect     ;#  expect or pipe or file
+
+
+#  under Windows use the software graphics driver in xdp and try to use Expect 
+#  to communicate between xdp and Dataplot, if Expect is not available the
+#  a command pipeline will be tried
+
+} elseif {$xdp(PLATFORM) == "windows"} {
+   catch {console show}
+   set xdp(GRAPHICS) soft
+   set xdp(COMM) expect
+   package require dde; # 4/2000: Need for dde on PC
+}
+
+
+#  screen resolution
+
+set xdp(HGT,screen) [winfo screenheight .]
+set xdp(WID,screen)  [winfo screenwidth .]
+if {$xdp(HGT,screen) >= 800} {set xdp(GRAPHRES) hi} else {set xdp(GRAPHRES) lo}
+set xdp(TOPPOS) "center"
+
+
+#  usage message
+
+set usageTxt "\nUsage: xdataplot.wish \[OPTIONS\] \[FILENAME\]
+ FILENAME is an optional Dataplot macro file
+ OPTIONS can be any of the following:
+  -debug : turn debugging messages on
+  -lo    : size graphics window for low screen resolution
+  -pipe  : use pipe to communicate with Dataplot instead of Expect
+  -file  : use pipe/file to communicate with Dataplot instead of Expect
+  -soft  : use the software graphics device driver (default for non-Unix)
+  -right : positions top menu on right (default is centered)
+  -left  : positions top menu on left  (default is centered)
+  -pc    : same as -soft and -pipe
+  -noupdate : turn off updating of the data spreadsheet
+  -help  : this message\n"
+
+
+#  command line arguments
+
+set inFile $argv
+foreach arg $argv {
+   if {$arg == "-debug"} {
+      set xdp(DEBUG) 1
+   } elseif {$arg == "-lo"} {
+      set xdp(GRAPHRES) lo
+   } elseif {$arg == "-pipe"} {
+      set xdp(COMM) pipe
+   } elseif {$arg == "-file"} {
+      set xdp(COMM) file
+   } elseif {$arg == "-soft" || $arg == "-sw"} {
+      set xdp(GRAPHICS) soft
+   } elseif {$arg == "-pc"} {
+      set xdp(GRAPHICS) soft
+      set xdp(COMM) pipe
+   } elseif {$arg == "-right"} {
+      set xdp(TOPPOS) right
+   } elseif {$arg == "-left"} {
+      set xdp(TOPPOS) left
+   } elseif {$arg == "-noupdate" || $arg == "-nospreadsheet"} {
+      set xdp(DSUPDATE) 1
+   } elseif {$arg == "-help" || $arg == "-h"} {
+      puts $usageTxt
+      exit
+   } else {
+      if {[string range $arg 0 0] == "-"} {
+	 tk_messageBox -type ok -message "Unknown command line argument: $arg\n$usageTxt" \
+	    -icon error -title Error
+      }
+   }
+   if {[string range $arg 0 0] == "-"} {set inFile [lreplace $inFile 0 0]}
+}
+set inFile [join [string trim $inFile] " "]
+
+
+#  Check if xdp has already been started with [tk appname], 
+#  then use the Tk `send' commands to existing xdp.  This was setup for the 
+#  handbook so clicking on subsequent macros would send them to the existing 
+#  instance of xdp.
+#
+#  The send command only works under Unix for Tcl 8.0 and lower.  In Tcl 8.1
+#  the send command has been updated to work with Windows.
+# \
+# April, 2000: Convert windows applications to use dde package
+#              instead of send.
+#
+
+set nsnderr 0
+set xdpmatch 0
+if {$xdp(PLATFORM) == "windows"} {
+  set servers {}
+  foreach server [dde services TclEval {}] {
+      set service [lindex $server 0]
+      set topic [lindex $server 1]
+      # puts "service = $service \n"
+      # puts "topic = $topic \n"
+      if {$topic == "xdp"} {
+         set xdpmatch 1
+         set xdp_topic $topic
+         # puts "Found a match! \n"
+      } 
+      if {[string equal $service TclEval]} {
+         lappend servers $topic
+      }
+  }
+  if {$xdpmatch == "0"} { ; # Case where no previous xdp
+     dde servername [tk appname]
+     set appname [tk appname]
+     # puts "First time, appname = $appname"
+  } else {                ; # Case where previous xdp is found
+     set appname $xdp_topic
+     # puts "appname = $appname \n"
+     foreach w {. .textout .graph .cmdhist .data .input} {
+        catch {dde eval $appname [list raise $w]}
+        # puts "in catch dde eval loop \n"
+     }
+     if {$inFile != ""} {
+        if {[file exists $inFile]} {
+           puts "\nSending commands to existing $appname"
+           set f [open "$inFile" r]
+           while {[gets $f line] >= 0} {
+              if {[catch {dde eval $appname [list sendDP $line]} cmdout] != 0} {
+                 incr nsnderr
+                 if {$nsnderr == 1} {
+                 puts "\nERROR sending Dataplot commands to existing xdataplot.wish\n$cmdout"
+                 }
+              }
+           }
+           close $f
+        }
+        exit
+     }
+  }
+} else { ; # Non-Windows Case (i.e., Unix, use send)
+
+  set pound [string first # [tk appname]]
+  if {$pound != -1} {
+     set appname [string range [tk appname] 0 [expr {$pound - 2}]]
+     foreach w {. .textout .graph .cmdhist .data .input} {
+        catch {send $appname [list raise $w]}
+     }
+     if {$inFile != ""} {
+        if {[file exists $inFile]} {
+  	 puts "\nSending commands to existing $appname"
+  	 set f [open "$inFile" r]
+  	 while {[gets $f line] >= 0} {
+  	    if {[catch {send $appname [list sendDP $line]} cmdout] != 0} {
+  	       incr nsnderr
+  	       if {$nsnderr == 1} {
+  		  puts "\nERROR sending Dataplot commands to existing xdataplot.wish\n$cmdout"
+  	       }
+  	    }
+  	 }
+  	 close $f
+        }
+        exit
+     }
+  }
+}
+
+
+#  check environment variables
+#  XDP_FILE - directory with the *.top files
+#  XDP_CODE - directory with the Tcl files for xdp
+
+foreach i {XDP_FILE XDP_CODE} {
+   if {![info exists env($i)]} {
+      set msg "$i environment variable has not been set"
+      puts $msg
+      tk_messageBox -type ok -message $msg -icon error -title Error
+      exit
+   } elseif {($i == "XDP_FILE" && [file exists [file join $env($i) top.top]] == 0)} {
+      set msg "$i environment variable: cannot find directory $env($i) OR file top.top in $env($i)"
+      puts $msg
+      tk_messageBox -type ok -message $msg -icon error -title Error
+      exit
+   } elseif {($i == "XDP_CODE" && [file exists [file join $env($i) tclIndex]] == 0)} {
+      set msg "$i environment variable: cannot find directory $env($i) OR file tclIndex in $env($i)"
+      puts $msg
+      tk_messageBox -type ok -message $msg -icon error -title Error
+      exit
+   }
+}
+
+set xdp(DP_FEND) [file native "$env(XDP_FILE)"]
+regsub -all {\\} "$xdp(DP_FEND)" / xdp(DP_FEND)
+set xdp(DP_TCL) [file native "$env(XDP_CODE)"]
+
+set auto_path [linsert $auto_path 0 "$env(XDP_CODE)"]
+
+
+#  message if vertical screen resolution is too small
+
+if {$xdp(HGT,screen) < 768} {
+   set msg "Screen resolution of $xdp(WID,screen) x $xdp(HGT,screen) is too small."
+   append msg "\nOn a PC, from the Control Panel, go to Display and"
+   append msg "\nincrease the window resolution."
+   tk_messageBox -type ok -message $msg -icon error -title Error
+}
+
+
+#  adjust screen height on a PC to account for the taskbar
+
+if {$xdp(PLATFORM) == "windows"} {
+   set xdp(HGT,screen) [expr {$xdp(HGT,screen) - $xdp(HGT,screen)/25}]
+} 
+
+
+#  set lots of Tk window parameters and lots of other variables
+
+winParam
+
+
+#  open windows
+
+topMenuBar
+commandLine
+foreach w {.pixmap .graph} {graphPixmap $w}
+foreach w {.textout .cmdhist .help .list} {pageWin $w}
+dataSheet
+graphSet .gset1
+foreach w {. .textout .graph .cmdhist .data} {raise $w} 
+raise $cmdLin(win)
+update idletasks
+
+
+#  read index file if it exists.  The index file system groups together
+#  many of the hundreds of menu files into only a few files.
+
+set index [file join $xdp(DP_FEND) index.mas]
+if {[file exists $index]} {
+   set f [open $index r]
+   while {[gets $f line] >= 0} {
+      set ind "/"
+      append ind [lindex $line 0]
+      set fileIndex($ind) [lindex $line 1]
+   }
+   close $f
+   set xdp(INDEX_FILE) 1
+}
+
+
+#  spawn dataplot
+spawnDataplot
+
+
+#  save state of graph settings
+graphSetSaveState
+
+
+#  if command line macro file exists, open file and send commands
+
+if {$inFile != ""} {
+   if {[file exists $inFile]} {
+      set msg "Reading macro file: [file tail $inFile]"
+      puts $msg
+      pageWrite .textout $msg
+      set f [open "$inFile" r]
+      while {[gets $f line] >= 0} {sendDP $line}
+      close $f
+
+#  file not found
+   } else {
+      set errMsg "ERROR: Dataplot macro file not found: $inFile"
+      errorMsg $errMsg
+      tk_messageBox -type ok -message $errMsg -icon error -title Error
+   }
+}
+
+
+#  binds
+
+foreach w {. .graph .pixmap .cmdhist .textout .help .list .data .gset1 .input} {
+   if {[winfo exists $w]} {
+      bind $w <Control-h> {wm deiconify .help}
+      bind $w <Control-l> {wm deiconify .list}
+      bind $w <Control-t> {wm deiconify .textout}
+      bind $w <Control-c> {wm deiconify .cmdhist}
+      bind $w <Control-g> {wm deiconify .gset1}
+      bind $w <Control-r> {sendDP "REPLOT"}
+      bind $w <Button-3>  {pullDownShow}
+      if {$xdp(GRAPHICS) == "x11"} {bind $w <Control-f> {sendDP "."}}
+   }
+}
+
+
+#  bind all keys to opening input window and sending entry to dataplot
+#  loop on all the key in keys and windows in winlst
+
+set keys "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/.<Up>"
+set winlst {. .graph .pixmap .cmdhist .textout .help .list}
+
+foreach w $winlst {
+   if {[winfo exists $w]} {
+      for {set i 0} {$i < [string length $keys]} {incr i} {
+	 set key [string index $keys $i]
+	 if {$key == "<"} {
+	    if {[string index $keys [expr {$i+1}]] == "U"} {
+	       set key <Up>
+	       incr i 3
+	    }
+	 }
+
+#  bind all winlst to key
+	 bind $w $key {
+	    raise $cmdLin(win)
+
+#  cmdInput is the variable of the entry
+	    set cmdInput %K
+
+#  put whatever is typed in the window, / is a special case
+	    if {$cmdInput != "slash"} {
+	       set ins %K
+	       if {$ins == "Up"} {set ins ""; focus $cmdLin(entry)}
+	       if {$ins == "period"} {set ins "."}
+	       $cmdLin(entry) delete 0 end
+	       $cmdLin(entry) insert 0 $ins
+	    } else {
+	       $cmdLin(entry) delete 0 end
+	       set cmdInput "/"
+	    }
+	    focus $cmdLin(entry)
+
+	    $cmdLin(entry) xview 0
+	    update idletasks
+	 }
+      }
+   }
+}
+
+
+#  enable menu buttons
+
+foreach j [array names topBnam] {
+   if {[string first "~" $topBact($j)] != -1} {$topBnam($j) configure -state normal}
+}      
+
+
+#  configure cursor in the windows
+
+cursorConfig arrow
+$cmdLin(ok) configure -state normal

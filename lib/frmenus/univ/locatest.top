@@ -1,0 +1,9 @@
+----- <~univ\locatest.top> Test Shift in Location from Reference mu0
+
+Test Shift in Location from Reference mu0
+
+Checking assumptions                 <xemf: ~univ\4plot.men>
+
+Graphical test                       <xemf: ~univ\locaplot.men>
+Formal t test                        <xemf: ~univ\locatest.men>
+

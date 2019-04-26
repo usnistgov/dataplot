@@ -1,0 +1,8 @@
+----- <~dataload\LARCH.DP> Load LARCH.DAT
+
+. This is file    LARCH.DP
+
+DELETE Y X1 TO X4
+SKIP 25
+READ LARCH.DAT Y X1 TO X4
+

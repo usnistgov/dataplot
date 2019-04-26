@@ -1,0 +1,6 @@
+----- <~dataprin\SIN3.DP> Print (to Printer) SIN3.DAT
+
+. This is file    SIN3.DP
+
+PRINT SIN3.DAT
+

@@ -1,0 +1,8 @@
+----- <~dataall\SPLETT4.top> SPLETT4.DAT
+
+SPLETT4.DAT
+
+View     <xcl: LIST SPLETT4.DAT>
+Load     <xcf: ~dataload/SPLETT4.DP>
+Print    <xccl: printfile C:\DATAPLOT\SPLETT4.DAT>
+

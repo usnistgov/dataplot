@@ -1,0 +1,8 @@
+----- <~dataall\MLCO2.top> MLCO2.DAT
+
+MLCO2.DAT
+
+View     <xcl: LIST MLCO2.DAT>
+Load     <xcf: ~dataload/MLCO2.DP>
+Print    <xccl: printfile C:\DATAPLOT\MLCO2.DAT>
+

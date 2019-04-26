@@ -1,0 +1,28 @@
+----- <~math\comp_dis.top> Complex Operations
+ 
+Complex Operations
+
+
+Dataplot normally works with real numbers.
+However, there a few commands specifically
+for doing complex arithmetic.
+
+These commands accept either 1 or 2 arrays of
+complex numbers as input and return a complex
+array as output.  In Dataplot, the real and
+complex components are handled simply be
+specifying each array independently, with
+each containing real numbers.
+
+A few built-in library functions also 
+support complex arguments.  In this case,
+Dataplot provides separate functions for
+returning the real component and the
+complex component.  For example, to compute
+a complex sine, you would enter
+
+     LET YR = CSIN(XR,XC)
+     LET YC = CSINI(XR,XC)
+
+In this case, CSIN returns the real component
+and YC returns the complex component.

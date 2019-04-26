@@ -1,0 +1,9 @@
+----- <~dataload\reg.top> Load Built-in Regression Data Files
+
+Load Built-in Regression Data Files
+
+1-Variable & Polynomial                  <~dataload\reg1p.top>
+1-Variable & Non-Linear                  <~dataload\reg1n.top>
+Multivariable                            <~dataload\regmv.top>
+Graybill and Iyer Data Sets              <~dataload\grayiye1.top>
+

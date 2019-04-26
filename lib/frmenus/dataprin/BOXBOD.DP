@@ -1,0 +1,6 @@
+----- <~dataprin\BOXBOD.DP> Print (to Printer) BOXBOD.DAT
+
+. This is file    BOXBOD.DP
+
+PRINT BOXBOD.DAT
+

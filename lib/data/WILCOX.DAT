@@ -1,0 +1,37 @@
+This is Dataplot data file    WILCOX.DAT
+Sample data set from Conover (1999), "Practical Nonparameteric
+Statistics," Third Edition, Wiley, p. 355.
+This is used to demonstrate the Wilcoxon signed rank test.
+
+In this data set, 12 sets of identical twins were given psychological
+tests to measure aggression.  Hypothesis of interest is whether first
+born twin tends to be more aggressive (higher score indicates more
+aggessive).
+
+Number of Observations                  = 12
+Number of Observations per line image   = 2
+Order of variables on a line image--
+    1. Measure for first born twin
+    2. Measure for second born twin
+
+To perform Wilcoxon signed rank test on this data:
+
+    SKIP 25
+    READ WILCOX.DAT Y1 Y2
+    WILCOXON SIGNED RANK TEST Y1 Y2
+
+
+ Y1       Y2
+------------------------
+ 86       88
+ 71       77
+ 77       76
+ 68       64
+ 91       96
+ 72       72
+ 77       65
+ 91       90
+ 70       65
+ 71       80
+ 88       81
+ 87       72

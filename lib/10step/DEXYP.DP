@@ -1,0 +1,404 @@
+. This is dataplot macro   DEXYP.DP
+. Purpose: Generate a DEX Youden plot
+.          (= ste p 6 of the DEXPLOT.DP 10-ste p DEX analysis procedure)
+. Date: May 2005 ==> February 2015
+. Input
+.    1. k (parameter)               = Total number of plot factors
+.    2. y (vector)                  = Response variable
+.    3. x1, x2, x3, . . . (vectors) = Factors
+.    4. confsw (parameter)    = a (0,1) switch dictating whether confounding should be done (optional) (default =  not exist)
+.
+.    4. framet (parameter)          = top    frame line (in %) (optional) (default = 90)
+.    5. frameb (parameter)          = bottom frame line (in %) (optional) (default = 20)
+.
+. -----start point-----
+.
+. print " "
+. print "From (dexyp.dp, start point)"
+. print y for i = 1 1 5
+. pause
+.
+feedback save
+feedback off
+printing off
+let bugswyp = 0
+. let pausesw = 1
+.
+. print "start: bugswyp = ^bugswyp"
+. pause
+if bugswyp = 1; print " "; print "--At beginning of DEX Ste p 6 (DEXYP.DP)"
+   let n = number y
+   print "   k = ^k"
+   print "   n = ^n"
+   print y x1 to x^k  for i = 1 1 10
+   if pausesw = 1; pause; end if
+end if
+.
+. -----------------------------------------
+. -----Do Analysis Ste p 6: Youden Plot-----
+. -----------------------------------------
+.
+. -----Step 1.1: Check for missing input values-----
+.
+if bugswyp = 1; print "--At (dexyp.dp, step 1.1): check input"
+   if pausesw = 1; pause; end if
+end if
+.
+. print "project = ^project"
+.
+let string stmacro = dexyp.dp
+if k not exist
+   call determine_k.dp
+end if
+set check name output filliben
+set check length output filliben
+feedback on
+let iflag = check name k y x1 to x^k
+let iflag = check equal length y x1 to x^k
+feedback off
+.
+. -----Step 1.2: Copy the user's original y and x1 to xk data out to file-----
+.                since y and x1 to xk may potentially be modified within this macro-----
+.
+if bugswyp = 1; print "--At (dexyp.dp, step 1.2): save original data"
+   if pausesw = 1; pause; end if
+end if
+.
+set write format 40f15.7
+write dex_original_data.dat y x1 to x^k
+set write format
+.
+. -----Step 1.3: Check/Extract 2 levels, and map into -1 and +1-----
+.                For this macro to work, the number of levels must be 1 or 2,
+.                and the 2 levels must be -1 and +1.  Check for this (and fix, if need be).-----
+.                If not 2 levels, then only the min and max will be used herein.-----
+.                If not -1 and +1, then min => -1 and max => +1-----
+.
+if bugswyp = 1; print "--At (dexyp.dp, step 1.3): normalize to (-1,+1)"
+   if pausesw = 1; pause; end if
+end if
+.
+let string stcall = dexyp.dp
+call check_and_fix_original_data_for_2_levels_and_m1_p1.dp
+.
+. stat v
+. pause
+.
+. -----Step 2: Define plot settings-----
+.
+if bugswyp = 1; print "--At (dexyp.dp, step 2): plot settings"
+   if pausesw = 1; pause; end if
+end if
+.
+. print "project = ^project"
+.
+call dexplotinit.dp
+call dexplotdefplotset.dp
+.
+. -----Step 3: Compute effect estimates (ordered) and confounding-----
+.
+if bugswyp = 1; print "--At (dexyp.dp, step 3): confounding"
+   print "confsw = ^confsw"
+   if pausesw = 1; pause; end if
+end if
+.
+call compute_effect_estimates_and_confounding.dp
+.
+if bugswyp = 1; print "--At end of step 3 of dexyp.dp"
+   print "numeff = ^numeff"
+   loop for jzz = 1 1 numeff
+      print steft^jzz
+   end loop
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 4.1: Generate a hidden dex mean plot to get plot limits-----
+.
+if bugswyp = 1; print "--At (dexyp.dp, step 4.1); generate hidden plot =>limits"
+   if pausesw = 1; pause; end if
+end if
+.
+if ibatch not exist or ibatch = 0
+   device 1 off
+end of if
+device 2 off; device 3 off
+dex mean plot y x1 to x^k
+if ibatch not exist or ibatch = 0
+   device 1 on
+end of if
+device 2 on; device 3 on
+.
+. -----Step 4.2: Compute automatic plot limits-----
+.
+if bugswyp = 1; print "--At (dexyp.dp, step 4.2): compute plot limits"
+   if pausesw = 1; pause; end if
+end if
+.
+probe fy1min; let ybottom = probeval
+probe fy1max; let ytop = probeval
+. let leftz = 50
+. let rightz = 80
+let ydel = ytop-ybottom
+. print "ytop = ^ytop   ybottom = ^ybottom"
+. print "ydel = ^ydel"
+. pause
+.
+. patch 2/5/16 from dex class
+let ymeanz = mean y
+let ydel1 = ymeanz - ybottom
+let ydel2 = ytop - ymeanz
+let ytop2 = ytop
+let ybottom2 = ybottom
+if ydel1 > ydel2; let ytop2 = ymeanz + ydel1; end if
+if ydel1 < ydel2; let ybottom2 = ymeanz - ydel2; end if
+let ydel = ydel1
+if ydel2 > ydel1; let ydel = ydel2; end if
+let ydel = 2*ydel
+. print "ymeanz = ^ymeanz"
+. print "ydel1 = ^ydel1   ydel2 = ^ydel2"
+. print "ytop = ^ytop   ybottom = ^ybottom"
+. print "ytop2 = ^ytop2   ybottom2 = ^ybottom2"
+. print "ydel = ^ydel"
+. pause
+.
+let leftz = ybottom2 + (1/14)*ydel; . 1/14 is correct for offset 5 5
+let rightz = ytop2 - (1/14)*ydel
+let dpz = 0
+if ydel >= 1 and ydel <= 10
+   let dpz = 1
+else if ydel >= 0.1 and ydel <= 1
+   let dpz = 2
+else if ydel >= 0.01 and ydel <= .1
+   let dpz = 3
+else if ydel >= 0.001 and ydel <= .01
+   let dpz = 4
+else if ydel >= 0.0001 and ydel <= .001
+   let dpz = 5
+else if ydel >= 0.00001 and ydel <= .0001
+   let dpz = 6
+else if ydel >= 0.000001 and ydel <= .00001
+   let dpz = 7
+else if ydel >= 0.0000001 and ydel <= .000001
+   let dpz = 8
+end if
+let leftzz = round(leftz,dpz)
+let rightzz = round(rightz,dpz)
+. print "ydel = ^ydel"
+. print "leftz = ^leftz    rightz = ^rightz"
+. print "leftzz = ^leftzz    rightzz = ^rightzz"
+. print "dpz = ^dpz"
+. pause
+ylimits leftzz rightzz
+xlimits leftzz rightzz
+if yminyp exists; ymin ^yminyp; xmin ^yminyp; end if
+if ymaxyp exists; ymax ^ymaxyp; xmax ^ymaxyp; end if
+.
+. -----Step 5: Define labels and generate the blank background plot-----
+.
+if bugswyp = 1; print "--At (dexyp.dp, step 5): labels, blank background plot"
+   if pausesw = 1; pause; end if
+end if
+.
+char bl all
+lines blank all
+title Youden Plot
+y1label Average Response for  +  Setting
+x3label
+if cy not exist; y1label Response Y for  +  Setting; end if
+if cy exists; y1label Response Y (^cy) for  +  Setting; end if
+if cy not exist; x1label Response Y for  -  Setting; end if
+if cy exists; x1label Response Y (^cy) for  -  Setting; end if
+label size labelsiz
+tic label size ticlabsi
+.
+. print meanh meanl effindex
+. pause
+plot meanh meanl effindex
+.
+. -----Step 6: Determine plot characters and individually plot them out (GENERATE THE PLOT)-----
+.
+if bugswyp = 1; print "--At (dexyp.dp, step 6): plot char one by one"
+   if pausesw = 1; pause; end if
+end if
+.
+character justification cece all
+loop for j = 1 1 numeff
+   let plot character j = ^steft^j
+end loop
+let tagzj = sequence 1 1 numeff
+drawdd symbol meanl meanh tagzj
+delete tagzj
+.
+. -----Step 7: Draw a dotted cross-hair at (grand mean, grand mean)-----
+.
+if bugswyp = 1; print "--At (dexyp.dp, step 7): cross-hair"
+   if pausesw = 1; pause; end if
+end if
+.
+. print "project = ^project"
+.
+lines solid
+let ybar = mean y
+. draw data ybar a ybar b
+. draw data a ybar b ybar
+.
+let frametz = 90
+let framebz = 20
+if framet exists; let frametz = framet; end if
+if frameb exists; let framebz = frameb; end if
+drawdsds ybar framebz ybar frametz
+.
+drawsdsd 15 ybar 85 ybar
+.
+. -----Step 8: Write out confounding structure in the right margin-----
+.
+if bugswyp = 1; print "--At (dexyp.dp, step 8): write confounding"
+   if pausesw = 1; pause; end if
+end if
+.
+if confsw2 = 1
+   if bugswyp = 1; print "--At (dexyp.dp, step 10.2): inside if"
+      print "confsw2 = ^confsw2"
+      if pausesw = 1; pause; end if
+   end if
+   .
+   . print "project = ^project"
+   . . feedback on
+   hw 2 1;. new 5/11/05
+   character justification lece all
+   character blank all
+   delete xpos ypos tagzj
+   let ypos = combine yplot yplot
+   let jstop = 2*numeff
+   let xpos = 90 for i = 1 1 jstop
+   let xpos = 86 for i = 1 1 numeff
+   let tagzj = sequence 1 1 jstop
+   loop for j = 1 1 numeff
+      let plot character j = ^steft^j:
+      .
+      let icnt2 = numeff + j
+      let string ch = ^stefc^j
+      if ch <> -999
+         let plot character icnt2 = ^stefc^j
+      end if
+   end loop
+   drawsd symbol xpos ypos tagzj
+   .
+   hw 2 1
+   let ypz = 89.6
+   if framet exists; let ypz = ypz - (90 - framet); end if
+   move 86 ypz; just lece
+   text Factor: Confounding
+   .
+end if
+.
+. -----Step 9: Write ID's at important plot points-----
+.
+if bugswyp = 1; print "--At (dexyp.dp, step 9): write IDs at impt. points"
+   if pausesw = 1; pause; end if
+end if
+.
+. print "project = ^project"
+.
+. -----Step 10: draw crosshairs at (gmeanz,gmeanz)-----
+.
+if bugswyp = 1; print "--At (dexyp.dp, step 10): cross-hairs (why needed?)"
+   if pausesw = 1; pause; end if
+end if
+.
+let gmeanz = mean y
+.
+. line color red
+lines dotted
+drawdsds gmeanz framebz gmeanz frametz
+drawsdsd 15 gmeanz 85 gmeanz
+lines bl
+.
+. -----Step 11: Write out the mean above upper right corner-----
+.
+if bugswyp = 1; print "--At (dexyp.dp, step 11): mean"
+   if pausesw = 1; pause; end if
+end if
+.
+let ybar = mean y
+if decplacm not exist; set write decimals 4; end if
+if decplacm exists; set write decimals decplacm; end if
+let stybar = number to string ybar
+move 85 91; just right; hw 2 1; text Mean = ^stybar; just center
+.
+. -----Step 12: Annotate the plot-----
+.
+if bugswyp = 1; print "--At (dexyp.dp, step 12): annotate"
+   if pausesw = 1; pause; end if
+end if
+.
+call dexwriteproject.dp
+call dexknbox.dp
+.
+if step exists
+   let step = step + 1; hw 2 1; just left; move 5 95
+   . text Step ^step
+   . call tagcorn.dp   9/17/18/
+   if stepprsw not exist
+      call tagcorn.dp
+   end if
+   if stepprsw exists; if stepprsw = 1
+      call tagcorn.dp
+   end if; end if
+end if
+.
+if annotate exists and annotate = 1
+   if colorall exists; color ^colorall; end if
+   call annotate.dp
+end if
+.
+if stcorn1 exists
+   call upperleft.dp
+end if
+.
+if bugswyp = 1
+   end capture
+end if
+.
+. -----Step 98: Restore the user's original y and x1 to xk data from file-----
+.
+if bugswyp = 1; print " "; print "---At (dexyp.dp, step 98): restore orig. data (pre-restore)"
+   print y x1 to x^k
+   if pausesw = 1; pause; end if
+end if
+.
+delete y x1 to x^k
+set read format 40f15.7
+skip 0; read dex_original_data.dat y x1 to x^k
+set read format
+.
+if bugswyp = 1; print " "; print "---At (dexyp.dp, step 98): (post-restore)"
+   print y x1 to x^k
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 99: Finish up-----
+.
+if bugswyp = 1; print " "; print "---At end of dexyp.dp . . ."
+   if pausesw = 1; pause; end if
+end if
+.
+xlimits
+ylimits
+title
+y1label
+x1label
+char hw 2 1 all
+char offset 0 0 all
+char justification cece all
+.
+if bugswyp = 1; print "--At dexyp.dp final line"
+   if pausesw = 1; pause; end if
+end if
+.
+feedback restore
+.
+if itime exists and itime = 1
+   cpu time
+   let t6 = cputime
+end if

@@ -1,0 +1,33 @@
+This is file gennbra.men--Generate Negative Binomial Random Numbers
+ 
+--------------------
+ 1. Generate Negative Binomial Random Numbers
+ 2. LET Y = NEGATIUE BINOMIAL RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Probability of Success Parameter (p, 0 < p < 1):
+ 5. @CE 2 0 42 50 ?
+ 6. Number of Successes Parameter (k, k = 1, 2, ...):
+ 6. @CE 3 0 42 50 ?
+ 7.
+ 8. Optional random number generator seed (default=305):
+ 9.    (integer >= 305)
+ 9. @CE 4 0 42 50 ?
+10.
+11. Name of output variable;
+11. @CE 5 0 42 50 ?
+12.
+13.
+14. Generate the random numbers?
+--------------------
+AN FE
+@IF 4 0 SEED _4
+LET P = 1
+@IF 2 0 LET P = _2
+LET K = 1
+@IF 3 0 LET K = _3
+LET _5 = NEGATIUE BINOMIAL RANDOM NUMBERS FOR I = 1 1 _1
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

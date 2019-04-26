@@ -1,0 +1,22 @@
+This is file varmean.men--Compute variance of the mean of a variable
+ 
+--------------------
+ 1. Variance of the Mean
+ 2. LET A = VARIANCE OF THE MEAN Y
+ 3.
+ 4. Variable for which to compute the variance of the mean:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the variance of the mean:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -12 50 *
+ 9.
+10.
+11. Compute the variance of the mean?:
+--------------------
+GR FE
+LET _2 = VARIANCE OF THE MEAN  _1 _3
+--------------------
+WEB HELP VARIANCE OF THE MEAN
+--------------------

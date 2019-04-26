@@ -1,0 +1,67 @@
+----- <~help\evalfunc.top> EvaluatingFunctions
+
+Evaluating Functions
+
+Evaluating Functions
+
+Distinction Between LET FUNCTION and LET                              -
+
+    The LET FUNCTION command and the LET command
+    perform two distinctly different operations.  The
+    LET FUNCTION command allows the analyst to create
+    functions; the LET command allows the analyst to
+    carry out function evaluations.
+
+Example of the Distinction
+
+    For example, suppose it is desired to evaluate the
+    function sqrt(1-0.3*x**2) over the region x = 0 (.01) 2.
+    This may be done in a number of ways.  The most direct
+    way is
+
+         LET X = SEQUENCE 0 .01 1
+         LET Y = SQRT(1-0.3*X**2)
+         WRITE X Y
+         PLOT Y X
+
+    The first LET command makes use of the SEQUENCE
+    sub-capability of the LET command to create the variable
+    X vith a sequence of 101 values in it--.00, .01, .02, 03,
+    ..., .99, 1.00.  The second LET command creates a variable
+    Y (also with 101 elements) which has the desired function
+    evalution va1ues in it.  The WRITE command generates a list
+    of X and Y values.  The PLOT command will generate a plot
+    of Y (vertically) versus X (horizontally).
+
+    A second way to evaluate the function would be
+
+       LET X = SEQUENCE 0 .01 1
+       LET FUNCTION F = SQRT(1-0.3*X**2)
+       LET Y = F
+       WRITE X Y
+       PLOT Y X
+
+    As before, the first LET statement would create the
+    variable X with the specified sequence of 101 values.  The
+    LET FUNCTION command would then create the function F
+    consisting of the following 16 characters--SQRT(1-0.3*X**2).
+    Note that the LET FUNCTION does not perform a function
+    evaluation--it merely creates a function.  The LET Y = F
+    command would then recognize F as a pre-defined function,
+    replace the name F with the specified 16-character string,
+    and perform the function evaluation.  As before, the WRITE
+    command prints out the results of the function evaluation
+    and the PLOT command plots out the results of the function
+    evaluation.
+
+    If our ultimate objective is to simply plot the function
+    (rather than creating variables containing evaluated values
+    of the function), then the above code could be shortened to
+
+       PLOT SQRT(1-0.3+X**2) FOR X = 0 .01 1
+
+    or
+
+       LET FUNCTION F =  SQRT(1-0.3+X**2)
+       PLOT F FOR X = 0 .01 1
+

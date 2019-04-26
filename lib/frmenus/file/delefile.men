@@ -1,0 +1,22 @@
+This is file delefile.men--Delete a File
+ 
+--------------------
+1. Delete a File
+2. DELETE <filename>
+3.
+4: File:
+4. @CE 1 0 15 50 ?
+5.
+6.
+7. Delete the File?
+--------------------
+SU FE
+PROBE IOPSY1
+LET OPERSYST = PROBEVAL
+IF OPERSYST = 1
+   SYSTEM rm _1
+ENDIF
+IF OPERSYST = 2
+   SYSTEM ERASE _1
+END OF IF
+--------------------

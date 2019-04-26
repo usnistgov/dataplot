@@ -1,0 +1,24 @@
+-----  <~dex2k\2kexam.top> Load & Analyze DEX Data Files
+
+Screening Designs: Full Factorial Designs:
+
+   BOXSPRIN.DAT  2**3 Defective springs  <xcf: ~clas\eda\BOXSPRIN.DP>
+   BOXPILOT.DAT  2**3 Pilot plant yield  <xcf: ~clas\eda\BOXPILOT.DP>
+   BOXRADAR.DAT  2**3 Radar aquisition time <xcf: ~clas\eda\BOXRADAR.DP>
+   BOWEN.DAT     2**3 Radar aquisition time <xcf: ~clas\anov\BOWEN.DP>
+   NUT.DAT       2**3 Nut strength          <xcf: ~clas\eda\NUT.DP>
+   SPLETT3.DAT   2**3 Eddy current          <xcf: ~clas\eda\SPLETT3.DP>
+
+   BOXCHEM.DAT   2**4 Chemical yield       <xcf: ~clas\eda\BOXCHEM.DP>
+   BOXSOLAR.DAT  2**4 Solar collector efficiency <xcf: ~clas\eda\BOXSOLAR.DP>
+   SPLETT4.DAT   2**4 Eddy current          <xcf: ~clas\eda\SPLETT4.DP>
+
+   BOXREACT.DAT  2**5 Reactor Efficienty      <xcf: ~clas\eda\BOXREACT.DP>
+   KRASNY1.DAT   2**5 Cigarette flammability <xcf: ~clas\eda\KRASNY1.DP>
+   WEBER.DAT     2**5 Hospital energy     <xcf: ~clas\eda\WEBER.DP>
+
+   STENBAKK.DAT  2**10 DAC converter      <xcf: ~clas\eda\STENBAKK.DP>
+
+   BOXCAKE.DAT   2**5 wcp Cake taste      <xcf: ~clas\eda\BOXCAKE.DP>
+   BOXCAKE2.DAT  2**5 wcp Cake taste      <xcf: ~clas\eda\BOXCAKE2.DP>
+

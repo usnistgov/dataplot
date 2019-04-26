@@ -1,0 +1,8 @@
+----- <~dataload\QUINLAN.DP> Load QUINLAN.DAT
+
+. This is file    QUINLAN.DP
+
+DELETE Y X1 TO X15
+SKIP 25
+READ QUINLAN.DAT Y X1 TO X15
+

@@ -1,0 +1,14 @@
+----- <~dataloex\BENNETT.DP> Load & Execute BENNETT.DAT
+
+. This is file    BENNETT.DP
+
+DELETE Y Y2 X TAG
+SKIP 25
+READ BENNETT.DAT Y Y2 X TAG
+TITLE BENNETT.DAT
+LET A = 0
+LET B = 200
+LET C = -100
+FIT Y = A + B/(X-C)
+6-PLOT Y X
+

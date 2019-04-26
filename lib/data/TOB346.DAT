@@ -1,0 +1,42 @@
+TOB346.DAT
+REPAIR TIMES FOR MULTIPLE SYSTEMS
+NUMBER OF OBSERVATIONS = 17
+NUMBER OF VARIABLES PER LINE IMAGE = 3
+ORDER OF VARIABLES ON A LINE IMAGE--
+   Y     = REPAIR TIME (HOURS)
+   X     = SYSTEM ID
+   CENS  = CENSORING VARIABLE (1 = REPAIR TIME,
+                               0 = CENSORING TIME)
+SOURCE--TOBIAS AND TRINDADE (1981).  "APPLIED RELIABILITY",
+        SECOND EDITION, CHAPMAN & HALL/CRC, P. 346.
+STATISTICAL AREA = RELIABILITY (NONRENEWAL PROCESS)
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ TOB346.DAT Y X CENS
+ 
+
+
+ 
+ 
+
+
+ 
+  Y       X   CENS
+------------------
+  98      1      1
+ 248      1      1
+ 285      1      1
+ 347      1      1
+ 362      1      1
+ 375      1      0
+  15      2      1
+  92      2      1
+ 188      2      1
+ 202      2      1
+ 214      2      1
+ 220      2      0
+  55      3      1
+ 135      3      1
+ 183      3      1
+ 220      3      1
+ 225      3      0

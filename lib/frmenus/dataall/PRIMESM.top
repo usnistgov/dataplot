@@ -1,0 +1,8 @@
+----- <~dataall\PRIMESM.top> PRIMESM.DAT
+
+PRIMESM.DAT
+
+View     <xcl: LIST PRIMESM.DAT>
+Load     <xcf: ~dataload/PRIMESM.DP>
+Print    <xccl: printfile C:\DATAPLOT\PRIMESM.DAT>
+

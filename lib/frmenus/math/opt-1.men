@@ -1,0 +1,31 @@
+This is file opt-1.men--Compute the minimum of a function (1-var case)
+ 
+--------------------
+ 1. 1-Variable Unconstrained Optimization (Minimum)
+ 2. LET Y = OPTIMIZE F1 WRT X FOR X = 0 TO 10
+ 3.
+ 4. Name of previously created function (or enter a functional expression):
+ 5. @CE 2 0 -7 50 ?
+ 6. Variable on which to optimize:
+ 6. @CE 3 0 33 50 ? gui-variable
+ 7. Lower range for root:
+ 7. @CE 4 0 33 50 ?
+ 8. Upper range for root:
+ 8. @CE 5 0 33 50 *
+ 9. Optimization tolerance (optional):
+ 9. @CE 7 0 33 50 * 
+10. Parameter  to store the roots:
+10. @CE 1 0 33 50 ? gui-none
+11.
+12. Subset/Except/For Specification:
+13. @CE 6 0 -7 50 *
+14.
+15.
+16. Compute the Optimization?:
+--------------------
+GR FE
+OPTIMIZATION TOLERANCE _7
+LET _1 = OPTIMIZE _2 WRT _3 FOR _3 = _4 TO _5  _6
+--------------------
+WEB HELP OPTIMIZE
+--------------------

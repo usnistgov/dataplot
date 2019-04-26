@@ -1,0 +1,25 @@
+----- <~qual\disccoun.top> Discussion: Count and Proportion Control Chart
+
+Discussion: Count and Proportion Control Charts
+
+4) P, NP, C, U
+
+   These control charts are used when the response
+   variable is a count or a proportion.
+  
+   a) P control charts are used when the response is the
+      number of defective items in a sub-group.  The
+      control limits are based on a binomial distribution.
+
+   b) NP control charts are used when the response is the
+      proportion of defective items in a sub-group.  The
+      control limits are based on a binomial distribution.
+
+   c) C control charts are used when the response is the
+      number of defective items in a sub-group.  The
+      control limits are based on a Poisson distribution.
+
+   d) U control charts are used when the response is the
+      proportion of defective items in a sub-group.  The
+      control limits are based on a Poisson distribution.
+

@@ -1,0 +1,27 @@
+This is file trans.men--Compute Transport Integrals
+ 
+--------------------
+ 1. Transport Integrals
+ 2. LET Y = TRANS(X,ORD)
+ 3.
+ 4. The input values can be variables, parameters, or simply
+ 5. enter a constant.
+ 6. 
+ 7. Input Argument:
+ 7. @CE 1 0 42 50 ? gui-variable
+ 8. Order (integer from 2 to 9):
+ 8. @CE 2 0 42 50 ? gui-variable
+ 9. Variable to store the transformed result:
+ 9. @CE 3 0 42 50 ?
+10.
+11. Subset/Except/For Specification:
+12. @CE 4 0 -5 50 *
+13.
+14.
+15. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = TRAN( _1 , _2  ) _4
+--------------------
+WEB HELP TRAN
+--------------------

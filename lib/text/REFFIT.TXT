@@ -1,0 +1,50 @@
+This is file ~\fit\reference.tex
+References: Fitting
+ 
+ 
+Graybill, Franklin A. and Iyer, Hariharan K. (1994)
+Regression Analysis: Concepts and Applications.
+Duxbury Press, Belmont, Califronia.
+(Beautifully written; includes SAS & MINITAB code, insightful
+client-statistician dialogues, & concrete author recommendations)
+ 
+Draper, N. R. and Smith, H. (1968).
+Applied Regression Analysis.
+Wiley, New York.
+(The classic)
+ 
+Neter, John, Wasserman, William, and Kutner, Michael H. (1985).
+Applied Linear Statistical Models: Regression, Analysis
+of Variance, and Experimental Designs. Irwin, Homewood, Illinois.
+Well-written; good diagnostics, good comments on corrective action.
+ 
+Hamilton, Lawrence C. (1992).
+Regression with Graphics: A Second Course in
+Applied Statistics.
+Brooks/Cole Publishing, Pacific Grove, California.
+(copious graphics)
+ 
+References
+ 
+Graybill, Franklin A. and Iyer, Hariharan K. (1994)
+Regression Analysis: Concepts and Applications.
+Duxbury Press, Belmont, Califronia.
+(Beautifully written; includes SAS & MINITAB code, insightful
+client-statistician dialogues, & concrete author recommendations.
+ 
+Draper, N. R. and Smith, H. (1968).
+Applied Regression Analysis.
+Wiley, New York.
+(The classic)
+ 
+Neter, John, Wasserman, William, and Kutner, Michael H. (1985).
+Applied Linear Statistical Models: Regression, Analysis
+of Variance, and Experimental Designs. Irwin, Homewood, Illinois.
+Well-written; good diagnostics, good comments on corrective action.
+ 
+Hamilton, Lawrence C. (1992).
+Regression with Graphics: A Second Course in
+Applied Statistics.
+Brooks/Cole Publishing, Pacific Grove, California.
+(copious graphics)
+ 

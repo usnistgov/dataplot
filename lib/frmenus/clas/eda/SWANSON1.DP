@@ -1,0 +1,10 @@
+----- <~dataloex\SWANSON1.DP> Load & Execute SWANSON1.DAT
+
+. This is file    SWANSON1.DP
+
+DELETE Y
+SKIP 25
+READ SWANSON1.DAT Y
+TITLE SWANSON1.DAT
+/
+

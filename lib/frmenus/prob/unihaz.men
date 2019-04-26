@@ -1,0 +1,39 @@
+This is file unihaz.men--Compute uniform hazard
+ 
+--------------------
+ 1. Compute Uniform hazard
+ 2. LET A = UNIHAZ(X,A,B)
+ 3.
+ 4. The input argument, x, can be either a
+ 5. single number, the name of a parameter,
+ 6. or the name of a variable.
+ 7.  
+ 8. Input values:
+ 9.             x (a <= x <= b):
+ 9. @CE 1 0 42 50 ?
+10.               lower bound a:
+10. @CE 2 0 42 50 ?
+11.               upper bound b:
+11. @CE 3 0 42 50 ?
+12.
+13. Output parameters:
+14.   name for the hazard value:
+14. @CE 4 0 42 50 ?
+15.
+16.
+17. Compute the Hazard?
+--------------------
+AN FE
+LET ZLOW = 0
+@IF 2 0 LET ZLOW = _2
+LET ZUPP = 1
+@IF 3 0 LET ZUPP = _3
+IF ZUPP < ZLOW
+   LET ZTEMP = ZLOW
+   LET ZUPP = ZLOW
+   LET ZLOW = ZTEMP
+END OF IF
+@IF 4 0 LET _4 = UNIHAZ( _1 ,ZLOW,ZUPP)
+--------------------
+WEB HELP UNIHAZ
+--------------------

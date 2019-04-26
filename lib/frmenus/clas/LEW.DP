@@ -1,0 +1,13 @@
+----- <~edac\LEW.DP> Load LEW.DATA & generate 4-PLOT
+
+. This is file    LEW.DP
+
+DELETE Y
+TITLE
+.
+LIST LEW.DAT
+SKIP 25
+READ LEW.DAT Y
+.
+TITLE LEW.DAT
+4-PLOT Y

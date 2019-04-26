@@ -1,0 +1,9 @@
+----- <~prob\discdesc.top> Distributional Descriptions: Discrete
+
+Distributional Descriptions: Discrete
+
+Binomial               <~prob\bindesc.top>
+Geometric              <~prob\geodesc.top>
+Poisson                <~prob\poidesc.top>
+Negative Binomial      <~prob\ngbdesc.top>
+

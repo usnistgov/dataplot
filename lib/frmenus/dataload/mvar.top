@@ -1,0 +1,26 @@
+----- <~dataload\mvar.top> Load Multivariate Data
+
+Load Multivariate Data
+
+AUTO83B.DAT*  EPA auto miles per gallon    <xcf: ~dataload\AUTO83B.DP>
+UGIANSKY.DAT* Interlab stress corrosion    <xcf: ~dataload\UGIANSKY.DP>
+
+AUTO83.DAT    EPA auto miles per gallon    <xcf: ~dataload\AUTO83.DP>
+AUTO79.DAT    Auto characteristics         <xcf: ~dataload\AUTO79.DP>
+BIOMED3.DAT   Biomedical data              <xcf: ~dataload\BIOMED3.DP>
+GNP.DAT       Gross national product       <xcf: ~dataload\GNP.DP>
+AC.DAT        2**(6-3)  A/C performance    <xcf: ~dataload\AC.DP>
+KRASNY1.DAT   2**5  Cigarette flammab.     <xcf: ~dataload\KRASNY1.DP>
+SMALL14.DAT   Atomic modeling              <xcf: ~dataload\SMALL14.DP>
+
+IRIS.DAT*     Classic Fisher iris data     <xcf: ~dataload\IRIS.DP>
+FISH2POP.DAT  Hemophilia Data from Johnson <xcf: ~dataload\FISH2POP.DP>
+FLURY5.DAT    Swiss counterfeit notes      <xcf: ~dataload\FLURY5.DP>
+PLANETS.DAT   Solar systems planets stat.  <xcf: ~dataload\PLANETS.DP>
+CURRIE.DAT    Pollution source analysis    <xcf: ~dataload\CURRIE.DP>
+PERIODIC.DAT  Chemistry periodic table     <xcf: ~dataload\PERIODIC.DP>
+NEGIZ3.DAT    Aerosol particle size        <xcf: ~dataload\NEGIZ3.DP>
+MORALES.DAT   Mass spec: sulfur exa-fluor  <xcf: ~dataload\MORALES.DP>
+MORALES2.DAT  Mass spec: sulfur exa-fluor  <xcf: ~dataload\MORALES2.DP>
+KAUL.DAT      Refridgerant analysis        <xcf: ~dataload\KAUL.DP>
+

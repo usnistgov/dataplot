@@ -1,0 +1,35 @@
+----- <~nist\statscie.top> Stat for Scientists Workshop
+ 
+Stat for Scientists Workshop
+ 
+Discussion                                  <~nist\stscdisc.top>
+Goal                                        <~nist\stscgoal.top>
+Input                                       <~nist\stscinpu.top>
+Output                                      <~nist\stscoutp.top>
+General Approach                            <~nist\stscappr.top>
+FAQs                                        <~nist\stscfaqs.top>
+ 
+Data Sets
+   View                                     <~dataview\stsc.top>
+   Load                                     <~dataload\stsc.top>
+
+Do Analysis
+   Discussion                                     <~nist\stscandi.top>
+   Chapter  1: Exploratory Data Analysis I         <~nist/stscch1.top>
+   Chapter  2: Exploratory Data Analysis II        <~nist/stscch2.top>
+   Chapter  3: Sampling Distributions              <~nist/stscch3.top>
+   Chapter  4: Hyp. Testing & Control Charts I     <~nist/stscch4.top>
+   Chapter  5: Statistical Intervals               <~nist/stscch5.top>
+   Chapter  6: Model Fitting I (Linear Models)     <~nist/stscch6.top>
+   Chapter  7: Model Fitting II (Multi/Non-Linear) <~nist/stscch7.top>
+   Chapter  8: ANOVA I                             <~nist/stscch8.top>
+   Chapter  9: ANOVA II & Control Charts II        <~nist/stscch9.top>
+   Chapter 10: Design of Experiment I              <~nist/stscch10.top>
+   Chapter 11: Design of Experiment II             <~nist/stscch11.top>
+   Chapter 12: Computationally Intensive Methods   <~nist/stscch12.top>
+ 
+Tutorial                                    <~nist\stsctuto.top>
+Glossary                                    <~nist\stscglos.top>
+References                                  <~nist\stscrefe.top>
+NIST Contacts                               <~nist\stscnico.top>
+ 

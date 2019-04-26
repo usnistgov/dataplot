@@ -1,0 +1,8 @@
+----- <~dataload\CORNEL62.DP> Load CORNEL62.DAT
+
+. This is file    CORNEL62.DP
+
+DELETE Y1 Y2 X1 X2 X3
+SKIP 25
+READ CORNEL62.DAT Y1 Y2 X1 TO X3
+

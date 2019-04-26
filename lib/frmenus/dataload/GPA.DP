@@ -1,0 +1,8 @@
+----- <~dataload\GPA.DP> Load GPA.DAT
+
+. This is file    GPA.DP
+
+DELETE ID Y X1 X2 X3 X4
+SKIP 25
+READ GPA.DAT ID Y X1 X2 X3 X4
+

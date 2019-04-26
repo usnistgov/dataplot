@@ -1,0 +1,21 @@
+. This is dataplot macro    alertst.dp
+. Purpose: Send alert message and receive keyboard input to define a string
+. Date: September 2007
+.
+. -----start point-----
+.
+if ibatch not exist or ibatch = 0
+   write " "
+   write "_________________________________________________________"
+   write "Define     ^stst     (^stst2)"
+   write "Enter      ^stst      from the keyboard now . . .          "
+   set io terminal
+   read string ^stst
+   write "You entered    ^stst = ^^stst"
+   set io
+else
+   write " "
+   write "_________________________________________________________"
+   write "^stst     (^stst2)    not defined"
+   write "Dataplot session will be terminated."
+end of if

@@ -1,0 +1,29 @@
+----- <~plmo\setbox.top> Set Boxes and Attributes
+ 
+Set Boxes and Attributes
+ 
+Up to 100 boxes can be drawn on
+subsequent plots (although only
+rarely are more than 1 or 2 boxes
+drawn).  Boxes are drawn on a plot in
+Dataplot 0 to 100 units.  The most
+common usage of boxes is in creating
+legend boxes to label data curves.
+
+Set All Box Attributes                  <xemf: ~plmo\setalbox.men>
+Set Box Attributes for a Single Box     <xemf: ~plmo\setbox1.men>
+
+Turn Off All Boxes                      <xcl: BOX COORDINATES>
+
+Help for Box Attributes
+   BOX COORDINATES    <xcl: HELP BOX COORDINATES>
+   BOX COLOR          <xcl: HELP BOX COLOR>
+   BOX PATTERN        <xcl: HELP BOX PATTERN>
+   BOX THICKNESS      <xcl: HELP BOX THICKNESS>
+   BOX FILL COLOR     <xcl: HELP BOX FILL COLOR>
+   BOX FILL GAP       <xcl: HELP BOX FILL GAP>
+   BOX FILL LINE      <xcl: HELP BOX FILL LINE>
+   BOX FILL PATTERN   <xcl: HELP BOX FILL PATTERN>
+   BOX FILL THICKNESS <xcl: HELP BOX FILL THICKNESS>
+   BOX SHADOW HW      <xcl: HELP BOX SHADOW HW>
+

@@ -1,0 +1,592 @@
+February 1994.
+
+
+Alan Heckert
+Scientific Computing Environments Division
+Rm B-146, Technology Building
+National Institute Of Standards and Technology
+Gaithersburg, Md. 20899
+(301) 975-2899 or FTS 879-2855
+heckert@cam.nist.gov
+
+Dr. Jim Filliben
+Statistical Engineering Division
+Rm A-336, Admin Building
+National Institute Of Standards and Technology
+Gaithersburg, Md. 20899
+(301) 975-2855 or FTS 879-2855
+
+These notes are divided into 3 sections:
+
+    1) PC version
+    2) UNIX version
+    3) other versions
+
+Some comments at the end regarding device drivers and documentation
+are applicable to all versions.
+
+
+
+SECTION 1: PC VERSION FROM FLOPPIES (requires 386 or higher)
+
+The PC version is distributed in executable form.  Send Dr. Filliben
+5 3 1/2" formatted floppies.  His mailing address is given above.
+
+An install program is provided on the disk.  In addition, a set of
+instructions specifically for the PC are provided.
+
+Although there is no charge for DATAPLOT itself, a program called 
+PLOTDEV is required if you want graphics on the screen.  This program
+converts Tektronix 4014 code to the PC screen.  This limitation will
+go away when the graphical user interface is ready to publically 
+release. This package costs about $50.  You can run DATAPLOT without
+it, although your screen graphics are limited to "character" type 
+plots.  Postscript and HP-GL output for printers is available without
+PLOTDEV.
+
+The information Dr. Filliben sends you includes the vendor address and
+phone number for PLOTDEV.
+
+DATAPLOT uses the OTG compiler.  The advantage of this compiler is
+that it has a built-in virtual memory manager.  This allows DATAPLOT to
+run on PC's with as little as 2MB of RAM.  The disadvantage is that
+the memory manager is not compatible with Microsoft Windows and many
+utility programs that reside in higher memory.  This means that 
+DATAPLOT has to be run from DOS.  Special batch files are provided
+to run DATAPLOT with the proper AUTOEXEC and CONFIG files.  Hopefully,
+future versions of the OTG compiler will not have this limitation.
+
+The hardware requirement is to have sufficient hard disk space.  The
+DATAPLOT executable is approximately 11 MB.  A "swap" file used to run
+DATAPLOT in a virtual memory like manner is approximately 10MB. The
+on-line auxiliary files require about 2 MB additional space (although
+DATAPLOT can run even if these are not installed).
+
+DATAPLOT supports Postscript and LaserJet III (through the HP-GL
+driver) printers.  It does not support LaserJet II type printers
+directly (although you can purchase Postscript cartridges or HP-GL
+translators for them).  
+
+The PC version is now also available via an anonymous ftp account.
+Enter the following commands:
+
+     ftp tiber.nist.gov  (129.6.23.23)
+     user>anonymous
+     password>guest
+     cd pub/dataplot/pc
+     get READ.ME READ.ME
+     quit
+
+The file READ.ME contains the instructions for carrying out the ftp
+installation.
+
+
+SECTION 2: UNIX VERSIONS
+
+Both the source and executable files are available via anonymous ftp.
+If you do not have access to external ftp (or if your access is 
+through a phone line), you can send a 9-track or disk cartridge tape
+to Alan Heckert and we will create a tar format tape for you.
+
+At NIST, Alan Heckert supports DATAPLOT on a Sun SPARC, an SGI, an
+IBM RS-6000, a CONVEX 3820, and a CRAY Y-MP.  Other known Unix
+installations include an HP-9000 and a DEC workstation.  Unix 
+installations for other platforms should present no particular 
+problems as long as a Fortran compiler (and a C compiler for X11
+support) and sufficient memory are available.  Executables for the
+Sun SPARC, SGI, Convex, and the IBM RS-6000 are maintained and updated
+on a fairly regular basis.  The Cray executable is not saved on the
+anonymous ftp account.  Executables are also saved for the DEC
+workstation and the HP workstation.  However, these were provided by
+users, so they are not updated as regularly as the other executables.
+
+Note that executables may sometimes not work due to different levels
+of the operating system, special hardware, and the like.  Our site
+tends to keep fairly current with operating systems, so sites that
+tend to lag may in particular have problems.  In any event, it is
+usually straight-forward to build DATAPLOT from the source code on
+a Unix system if you have a problem with the executable file.
+
+Executable files are saved in compressed form.  The source files are
+saved in 3 tar files (which are also compressed).  The first file
+contains the Fortran and C source files and the include files for the
+Fortran source.  The second file contains the on-line auxillary files
+(the on-line help, sample data and macro files, etc.).  The third file
+contains sample make files and script files.
+
+
+NOTE: The files are identified with a date (e.g., _2_94) that
+      identifies when the files were created.  Replace the "mon_yr" in
+      files below with the actual month and date.
+
+      1) From your local machine, create the following directories:
+
+         mkdir /usr/local/lib/dataplot
+         mkdir /usr/local/src/dataplot
+         mkdir /usr/local/bin
+
+         The auxillary files will go into /usr/local/lib/dataplot, the
+         source will go into /usr/local/src/dataplot, and the
+         executable will go into /usr/local/bin.  You can actually
+         put the source and executable in other directories if that is
+         more convenient for you.  However, if you put the auxillary
+         files somewhere other than /usr/local/lib/dataplot, you will
+         need to make some changes to the DATAPLOT source code.
+
+         On some systems, you may need to be super user to create these
+         directories.
+
+      2) Use ftp to copy the files to that directory.
+
+         ftp tiber.nist.gov (or ftp 129.6.23.23)
+         user>anonymous
+         password>guest
+         ftp>cd pub/dataplot
+
+         Enter the following command to get the date on the files
+         (and replace 2_94 with the correct date):
+
+         ftp>dir
+
+         Copy the source and reference files:
+
+         ftp>binary
+         ftp>get dataplot_source_2_94.tar.Z 
+                /usr/local/src/dataplot/dataplot_source.tar.Z
+         ftp>get dataplot_command_2_94.tar.Z \
+                /usr/local/src/dataplot/dataplot_command.tar.Z
+         ftp>get dataplot_reference_2_94.tar.Z \
+                /usr/local/lib/dataplot/dataplot_reference.tar.Z
+
+         Copy any of the executable files that you need:
+
+         ftp>get dataplot_sun_2_94.tar.Z      /usr/local/bin/dataplot.Z
+         ftp>get dataplot_sgi_2_94.tar.Z      /usr/local/bin/dataplot.Z
+         ftp>get dataplot_rs6000_2_94.tar.Z   /usr/local/bin/dataplot.Z
+         ftp>quit
+
+      3) Uncompress and tar the files
+     
+         After ftp'ing the files, do the following (can skip some steps
+         if you retrieved either source only or executables only):
+
+         cd /usr/local/src/dataplot
+         uncompress dataplot_source_2_94.tar.Z
+         tar -xvf dataplot_source_2_94.tar
+         uncompress dataplot_command_2_94.tar.Z
+         tar -xvf dataplot_command_2_94.tar
+
+         cd /usr/local/lib/dataplot
+         uncompress dataplot_reference_2_94.tar.Z
+         tar -xvf dataplot_reference_2_94.tar
+         chmod 775 *
+ 
+         cd /usr/local/bin
+         uncompress dataplot.Z
+         chmod 775 dataplot
+ 
+        chmod 775 dataplot
+
+      4) Make required code changes to DATAPLOT source 
+
+         NOTE: This step can be skipped if you copied an executable
+               file.
+
+         a) The size data sets that DATAPLOT can handle is determined
+            by several PARAMETER statements in the include file
+            "DPCOPA.INC".  Specifically, the following limits are
+            defined:
+
+            MAXOBV - maximum number of observations per variable
+                     (default = 10,000)
+            MAXOBW - maximum number of observations total (default =
+                     100,000) 
+            MAXPOP - maximum number of points per plot (default =
+                     20,000)  
+                 
+            The executable for the SGI uses values of 20000, 200000,
+            and 40000 respectively.  The other executables use values
+            of 10000, 100000, and 20000 respectively.
+
+            If you want to change these values, read the comments in
+            DPCOPA.INC for details.
+
+         b) DATAPLOT is written in standard Fortran.  The one
+            exception is the use of INCLUDE files which is supported by
+            Unix Fortran compilers.
+
+         c) The machine dependent code for DATAPLOT is isolated in the 
+            file "dp1.f".  For convenience, several versions of this file
+            are available with changes already made for a particular
+            machine.  This includes the following:
+
+            dp1.f         - default, set-up for the Sun
+            dp1_sun.f     - set-up for the Sun Sparc workstation
+                            (32-bit Unix workstations that use IEEE
+                            arithmetic can use this version without
+                            modification) 
+            dp1_convex.f  - set-up for the Convex
+            dp1_cray.f    - set-up for the Cray Y-MP (UNICOS)
+            dp1_rs6000.f  - set-up for the RS-6000
+
+           The desired file should be copied to dp1.f.
+
+           Even if your machine is not listed, the required changes can
+           typically be made in about 15 minutes.  Machines that use
+           the standard Unix Fortran compiler typically require no 
+           changes from the Sun version.  Machines that use their own
+           compilers (e.g., the Cray and Convex are vector machines)
+           are more likely to require a few changes.  The following are
+           the relevant changes for Unix machines:
+
+              The routine INITMC contains machine constants.  As long
+              as your host uses 32-bit IEEE arithmetic, the Sun 
+              machine constants can be used without modification.  If
+              not, INITMC needs to be modifies (the Convex and Cray
+              machines have their own machine constants defined).
+
+              The DPTIME routine returns the current date and time.
+              Unix hosts use the "fdate" library routine for this.
+              The Cray uses a different call (which is activated in
+              dp1_cray.f) and the RS-6000 does not support fdate (the
+              dp1_rs6000.f simply comments out the fdate call, there is
+              undoubtedly a comparable call, I just haven't bothered to
+              track it down).  All other Unix hosts we have tried 
+              support the fdate call.
+
+              The routine DPSYS2 activates the SYSTEM command (which
+              allows you to make a call to the operating system).  Unix
+              uses the "system" library call for this.  This call is
+              de-activated for the Cray.  It is supported by all other
+              Unix hosts that we have tried so far.
+
+              The routine CKCLAR extracts arguments from the command
+              line.  Unix uses the getarg library call.  The Cray uses
+              a different library call.  All other Unix hosts we have
+              tried support the getarg routine.
+
+        d) If the auxillary files are in /usr/local/lib/dataplot, then
+           the routine INITFO does not need modification.  If they are
+           stored in another directory, read the comments in the INITFO
+           routine and make the appropriate changes.
+
+        e) The file dp2.f contains additional routines that you may
+           want to modify locally.  However, these implement some bells
+           and whistles that are not essential to running DATAPLOT.  We
+           recommend that you not worry about these routines on the
+           first pass.  You may want to take a quick look after
+           DATAPLOT is running.
+
+        f) Several of the device drivers (X11, Sun CGI, IBM/PC, and
+           Calcomp) require special installation.  Fortunately, no
+           source code changes are required.  What is required is
+           linking the proper object files.  The comments in "makefile"
+           give the details.
+
+        g) The next step is to create a command script to compile and
+           link DATAPLOT. For Unix systems, you can either use a
+           makefile or a command script.  The file "makefile" is a make
+           file for the Sun Sparc.  Makefiles are included for a few
+           other systems as well.  One of these files should be easily
+           adapted to other Unix systems.
+
+           The file "build_sun" is a sample command script for the Sun.
+           There are sample script files for other systems as well. 
+           One of these build files can be easily adapted to other Unix
+           systems (primarily change the line that sets the compile
+           options).
+
+           The command script is probably easier to use if you do not
+           plan on making local modifications to DATAPLOT.
+       
+  5) Test DATAPLOT with the following macro:
+
+         dataplot 
+         device 1 x11  (or some other relevant device)
+         call minitest.dp
+         exit
+
+One final note is that a C version of the source code is available
+on the anonymous ftp account.  This was created using the f2c
+program.  This has been tested on our Sun SPARC (using the gcc
+compiler).  The size of the executable file and the performance seem
+to be comparable to the Fortran version.  However, it has not been as
+thoroughly tested as the Fortran version.
+
+The C version is basically provided for sites where no executable
+file is available and neither is a Fortran compiler.  The 
+automatically generated C source code seems to work amazingly well.
+However, be aware that the generated code does tend to be rather
+unreadable (at least for the DATAPLOT source).
+
+If you need to use the C source, get a copy of the f2c program
+for your partiuclar computer (it is available via various ftp sites).
+Although the f2c program has already been run, an f2c library,
+specific to a given machine, is required during the link.
+
+
+
+SECTION 3: INSTALLING DATAPLOT FOR NON-PC AND NON-UNIX HOSTS
+
+For non-Unix hosts, the source and auxillary files can be transferred
+via anonymous ftp.  If your system does not support ftp, mail Alan
+Heckert a 9-track tape and he can create an ASCII fixed record length
+tape.  We can also create Sun disk cartridge tapes or 3 1/2 inch IBM PC
+floppies (probably need to send about 15 or so formatted disks).  We do
+not have the means for creating device specific cartidge tapes other
+than the kind supported by Sun.  In summary, we prefer either 9-track
+or disk cartridge tapes, but we can handle PC floppies or 8MM tape if
+that is all you have.
+
+With the exception of VAX/VMS, we do not provide executables for
+non-Unix hosts.  The VAX executable was provided by one of our users,
+so it is not updated routinely as the Unix executables are.  However,
+the DATAPLOT code is very portable (the required source changes
+typically take 15-30 minutes) as long as you have sufficient memory and
+a standard Fortran 77 compiler.  DATAPLOT has been installed on 
+VAX/VMS, UNIVAC, and CDC NOS/VE systems (as well as several others).
+We do not recommend installing DATAPLOT on CDC NOS systems (although
+this is essentially an obsolete system).  We have not tried installing
+it on either the MacIntosh or the Next systems, although we would be
+interested if some user wants to try it.
+
+      1) From your local machine, create a directory where you want to
+         store the DATAPLOT source and move to that directory.
+
+      2) Use ftp to copy the files.
+
+         ftp enh.nist.gov (or ftp 129.6.16.1)
+         user>anonymous
+         password>guest
+         ftp>cd [.DATAPLOT]
+         ftp>cd [.SOURCE]
+         ftp>prompt off
+         ftp>mget *.C
+         ftp>mget *.F
+         ftp>mget *.INC
+         ftp>mget make*
+         ftp>mget source_changes.tex
+         ftp>get MINITEST.DP minitest.dp
+
+         Get the following three files only if you are running VAX/VMS.
+         They contain scripts for compiling, linking and updating 
+         DATAPLOT under VAX/VMS.  The compile script will automatically
+         rename ".F" files to ".FOR" files.  You may also want to use
+         them as a guide for creating build scripts for other systems.
+
+         ftp>get dpcompile_vax.com
+         ftp>get dplink_vax.com
+         ftp>get dpupdate.com
+         ftp>quit
+
+         This directory contains about 50 Fortran source files, about
+         25 INCLUDE files, and about 3 C source files.
+
+         Once the files are copied to your local machine, you may need
+         to copy them to match the file extensions and names used on
+         your local machine.
+
+         The source is approximately 15 megabytes.  This can vary
+         somewhat  depending on what system you are on.
+
+      3) From your local machine, create a directory where you want to
+         store the DATAPLOT source and move to that directory.
+
+      4) Use ftp to copy the auxillary files.
+
+         ftp enh.nist.gov (or ftp 129.6.16.1)
+         user>anonymous
+         password>guest
+         ftp>cd [DATAPLOT.REFERENCE]
+         ftp>prompt off
+
+         If you only want to copy the auxillary files needed by
+         DATAPLOT, use the following line:
+
+         ftp>mget DP*F.TEX
+
+         If you want to copy all of the reference files, use the
+         following line:
+
+         ftp>mget *
+
+         ftp>quit
+
+      5) Set the proper permissions for these files.
+
+         The reference files take about 2 MB total (most of this is the
+         on-line help files).
+
+      6) Make the required code changes to DATAPLOT source
+
+         a) Copy dp1_vax.f to dp1.f.  Make the required changes to
+            dp1.f.
+
+         b) See the notes for making the code changes for Unix hosts.
+            Many of these comments apply to non-Unix hosts as well.
+            For the listed routines (DPTIME, DPSYS2, CKCLAR), you may
+            need to comment out a few Vax specific calls (comments 
+            clearly identify these).  After you get DATAPLOT running,
+            you can look at these routines a little closer to see about
+            supporting them on your system (none of these is crucial
+            for running DATAPLOT).
+
+         c) The routines INITMC and INITFO are the 2 crucial routines
+            in dp1.f that need to be modified.  These specify the 
+            machine constants and the location of DATAPLOT's auxillary
+            files.  See the comments in the code to make the changes.
+
+         d) DATAPLOT is written in standard Fortran.  The one execption
+            is the use of INCLUDE files.  If your system does not
+            support this extension, the following program (included
+            with the source), will process your files and replace the
+            INCLUDE lines with the actual source:
+
+                INCLUDE.FOR
+
+            Simply compile, link, and execute this program in the
+            standard way for your system.  It will generate new
+            versions of the source files that do not use the INCLUDE
+            statement.
+
+            Very few Fortran compilers do not support INCLUDE.
+
+      7) The next step is to create a command script to compile and
+         link DATAPLOT. 
+
+         a) For VAX/VMS, use the files listed above (in the section for
+            copying source files).  These are straight forward command
+            files that can be easily modified if needed.
+
+         b) Other systems should use either the VAX command files or
+            the SGI script file as a model.  If you need assistance,
+            contact Alan Heckert.
+
+      8) For the Vax version, have users enter the following line into 
+         their login.com file:
+
+              $!ASSIGN <dataplot directory> DATAPLO$
+              $!DATAPLOT=="RUN <dataplot directory>DATAPLOT.EXE"
+
+         For example,
+
+             $!ASSIGN DISK$STAT:[FILLIB.DATAPLOT] DATAPLO$
+             $!DATAPLOT=="RUN DISK$STAT:[FILLIB.DATAPLOT]DATAPLOT.EXE
+
+         These commands identify the location of the DATAPLOT
+         executable file and corresponding auxillary files and provide
+         an alias for running DATAPLOT.
+
+      9) Test DATAPLOT with the following macro:
+
+            dataplot 
+            device 1 <insert proper device here>
+            call minitest.dp
+            exit
+
+
+
+
+The remaining sections are generic comments that apply to all versions.
+
+DEVICE DRIVER NOTES
+
+DATAPLOT supports the following built-in device drivers:
+
+    Tektronix    - most models (4010, 4014, 4105, 4113, 4027, 4663, and
+                   related devices)
+    REGIS        - for DEC terminals (VT-240, VT-340)
+    HP-GL        - Hewlett-Packard plotters (widely emulated by many 
+                   other plotter vendors, can use with the LaserJet III)
+    HP 2622      - Hewlett-Packard terminal, also includes many related
+                   models (2623, 2647, and others)
+    POSTSCRIPT   - used by many laser printers
+    QUIC         - protocol used by QMS (and some Talaris) laser printers
+    HP 7221      - Hewlett-Packard 7221 plotter
+    GENERAL      - DATAPLOT specific metafile
+    CGM          - Computer Graphics Metafile (ANSI standard metafile).
+                   DATAPLOT currently only supports the clear text encoding.
+                   A binary encoding is planned, but is not yet available.
+
+Many devices support either Tektronix, Postscript, or HP-GL emulation.
+
+In addition, the following devices are available, but require some
+local installation (usually linking the proper device library).  The
+notes in the file "makefile" give instructions for installing these
+devices (when the appropriate vendor library is available).
+
+    X11          - MIT windowing system, supported on most Unix based
+                   workstations.  Has been tested on Sun, SGI, HP-9000,
+                   VAX workstation, IBM RS-6000.
+    Sun CGI      - available on the Sun only.  Uses the CGI library and
+                   runs in a gfxtool or suntool window.  Sun is phasing
+                   the CGI library (CGI was a proposed ANSI standard,
+                   Sun is dropping support for this standard).  Sun is
+                   switching to an Open Look based windowing system
+                   (which uses the X driver).  If none of your users
+                   use SunView, you can build the Sun version without
+                   this driver (i.e., use dp37.f, dp38.f, dp39.f rather
+                   than dp37_sun.f, dp38_sun.f, dp39_sun.f).
+       
+    Calcomp      - uses the standard Calcomp library.  Note that many
+                   vendors, particularly plotters, support this library.
+    Zeta         - uses a slightly modified version of Calcomp library
+                   (routine for dashed lines is different).
+    IBM PC       - available for PC only.  If you are simply using a
+                   PC as a terminal for a version of DATAPLOT on another
+                   host, find a communications package that provides 
+                   either Tektronix, REGIS, or HP 26xx emulation.
+         
+There is also a post-processor available for DATAPLOT.  This will read
+either DATAPLOT metafiles (i.e., the GENERAL device) or Tektronix 4014
+format files.  There are currently 2 versions available.  One uses the
+Disspla subroutine library while the other uses the Template subroutine
+library.  If you have one of these commercial libraries available, this
+is a way to provide support for additional libraries.  Note that this
+works fairly well for off-line devices such as film recorders or plotters,
+but is not very useful for terminals.
+
+If you are interested in the post processor, contact Alan Heckert.
+
+The CGM metafile can be used if you have a local post-processor that
+reads CGM format files.  Note that DATAPLOT currently only generates
+clear text ecoded CGM files.  Some post-processors will only read binary
+encoded CGM files.
+
+
+DATAPLOT DOCUMENTATION
+
+The following on-line files are useful:
+
+      dpnewf.tex  - the DATAPLOT news file.  Many newer features are only
+                    documented here.
+      dpdirf.tex  - the command dictionary grouped by category.  This 
+                    can be useful for finding out if DATAPLOT supports
+                    a certain capability, but the description is typically
+                    limited to a single line.
+
+      dphe1f.tex  - these are the DATAPLOT help files.
+      dphe2f.tex
+      dphe3f.tex
+      dphe4f.tex
+      dphe5f.tex
+      dphe6f.tex
+
+I recommend printing the news and directory files for all users (they
+are standard text files).  I don't normally print the help files, but
+you can if you wish (about 50,000 lines overall).
+
+To receive the hard copy DATAPLOT documentation, contact Alan Heckert
+and she can mail it to you.  You are free to make as many copies as you
+wish of the documentation.
+
+The documentation is the process of being upgraded.  A hardcopy
+reference manual should be completed soon.  The on-line help files are
+also being significantly upgraded.
+
+NIST users can request the current copies of the new reference manual
+(with the understanding that it is not complete or reviewed at this 
+time).  We are not allowed to distribute it to non-NIST users until it
+has passed the review process.  We will try to contact users when the
+official copies are available (in the meantime, feel free to call and
+check on the status).

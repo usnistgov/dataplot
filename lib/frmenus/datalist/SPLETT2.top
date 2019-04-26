@@ -1,0 +1,8 @@
+----- <~datalist\SPLETT2.top> SPLETT2.DAT
+ 
+SPLETT2.DAT
+ 
+View     <xcl: LIST SPLETT2.DAT>
+Load     <x2cl: SKIP 25; READ SPLETT2.DAT Y MACHINE>
+Print    <xccl: printfile C:\DATAPLOT\SPLETT2.DAT>
+ 

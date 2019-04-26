@@ -1,0 +1,33 @@
+This is file readvafi.men--Read Variables from File
+ 
+--------------------
+ 1. Read Variables from File
+ 2. READ <filename> <list of variables>
+ 3.
+ 4. This menu is used to read data from a file.  It
+ 5. is assumed that variables are represented by
+ 6. columns of data.  See the Discussion/Help menu
+ 7. for more information about reading files.
+ 8.
+ 9. User file:
+10. @CE 1 0 1 50 ?
+11.
+12. List of variables to be read:
+13. @CE 2 0 1 50 ?
+14.
+15. Number of header lines to skip:
+15. @CE 3 0 42 50 *
+16.
+17.
+18. Do the Read?
+--------------------
+SU FE
+SET FILE NAME QUOTE ON
+SKIP 0
+SKIP _3
+READ _1 _2
+SET FILE NAME QUOTE OFF
+SKIP 0
+--------------------
+WEB HELP READ
+--------------------

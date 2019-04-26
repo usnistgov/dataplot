@@ -1,0 +1,8 @@
+----- <~dataall\PBF11.top> PBF11.DAT
+
+PBF11.DAT
+
+View     <xcl: LIST PBF11.DAT>
+Load     <xcf: ~dataload/PBF11.DP>
+Print    <xccl: printfile C:\DATAPLOT\PBF11.DAT>
+

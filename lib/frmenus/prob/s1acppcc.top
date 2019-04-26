@@ -1,0 +1,44 @@
+----- <~prob\sh1cppcc.top> PPCC Plot for One Shape Parameter Continuous Distributions
+
+Generate PPCC Plot (one shape parameters), Censored Data
+
+Generate PPCC Plot for Continuous Distributions
+with One Shape Parameters (Censored Case)
+
+Alpha                                     <xemf: ~reli\ppccalpc.men>
+Asymmetric Double Exponential (Laplace)   <xemf: ~prob\adeppccc.men>
+Bradford                                  <xemf: ~prob\brappccc.men>
+Burr Type 2                               <xemf: ~prob\bu2ppccc.men>
+Burr Type 7                               <xemf: ~prob\bu7ppccc.men>
+Burr Type 8                               <xemf: ~prob\bu8ppccc.men>
+Burr Type 10                              <xemf: ~prob\b10ppccc.men>
+Burr Type 11                              <xemf: ~prob\b11ppccc.men>
+Chi                                       <xemf: ~prob\chppccc.men>
+Chi-Square                                <xemf: ~prob\chsppccc.men>
+Double Gamma                              <xemf: ~prob\dgappccc.men>
+Double Weibull                            <xemf: ~prob\dweppccc.men>
+Error (Subbotin)                          <xemf: ~prob\subppccc.men>
+Exponential Power                         <xemf: ~reli\ppccpexc.men>
+Fatigue Life                              <xemf: ~reli\ppccflce.men>
+Folded T                                  <xemf: ~prob\ftppccc.men>
+Frechet (Minimum) (Extreme Value Type 2)  <xemf: ~reli\ppcce21c.men>
+Frechet (Maximum) (Extreme Value Type 2)  <xemf: ~reli\ppcce22c.men>
+Gamma                                     <xemf: ~reli\ppccgamc.men>
+Generalized Extreme Value (Minimum)       <xemf: ~reli\ppccge1c.men>
+Generalized Extreme Value (Maximum)       <xemf: ~reli\ppccge2c.men>
+Generalized Half-Logistic                 <xemf: ~prob\ghfppccc.men>
+Generalized Logistic (Type 1)             <xemf: ~prob\gloppccc.men>
+Generalized Logistic (Type 2)             <xemf: ~prob\gl2ppccc.men>
+Generalized Logistic (Type 3)             <xemf: ~prob\gl3ppccc.men>
+Generalized Logistic (Hosking)            <xemf: ~prob\gl5ppccc.men>
+Generalized Pareto (Maximum)              <xemf: ~reli\ppccgepc.men>
+Generalized Pareto (Minimum)              <xemf: ~reli\ppcgep2c.men>
+Geometric Extreme Exponential             <xemf: ~reli\ppccgeec.men>
+Inverted Gamma                            <xemf: ~reli\ppccigac.men>
+Inverted Weibull                          <xemf: ~reli\ppcciwec.men>
+Log Double Exponential (Log Laplace)      <xemf: ~prob\ldeppccc.men>
+Log Gamma                                 <xemf: ~reli\ppcclgac.men>
+Logistic-Exponential                      <xemf: ~prob\lexppccc.men>
+Log Logistic                              <xemf: ~prob\llgppccc.men>
+Lognormal                                 <xemf: ~reli\ppcclgnc.men>
+

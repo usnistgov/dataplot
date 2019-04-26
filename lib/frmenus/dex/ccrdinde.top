@@ -1,0 +1,68 @@
+----- <~dex\ccrdinde.top> Index: Completely Randomized Designs
+
+Index: Completely Randomized Designs
+
+Because of their intrinsic simplicity (only 1 factor
+and no blocking factors) and their ease of construction,
+there is no formal index of Completely Randomized Designs.
+
+All completely randomized designs are defined by 3 specs:
+
+   k = number of factors (= 1 for completely randomized designs)
+   l1 = number of levels
+   r = number of replications
+
+thus the total sample size (number of runs) is
+
+   n = k x l1 x r
+
+Balance dictates that the number of replications be the same
+at each level of the factor (this will maximize the
+sensitivity of subsequent t (or F) testing).
+
+We present 2 simple examples of completely randomized designs:
+
+Example 1:
+   The most trivial Completely Randomized Design would consist
+   off the following:
+
+      k = 1 factor (X1)
+      l = 2 levels of that single factor
+      r = 1 replications per level
+      n = 2 levels * 1 rep. per level = 2 runs
+
+       X1
+      .....
+        1
+        2
+
+   Such a design is not usually run because it has no replication
+   and therefore no measure of "within" variability.  It is
+   a priori impossible to determine if the 2 levels have a
+   statistically significant effect on the response
+   unless we have a handle on the nature variation of the data.
+
+Example 2:
+   A more typical example of a completely
+   randomized design is the following:
+
+      k = 1 factor (X1)
+      l = 4 levels of that single factor
+      r = 3 replications per level
+      n = 4 levels * 3 rep. per level = 12 runs
+
+       X1
+      .....
+        1
+        1
+        1
+        2
+        2
+        2
+        3
+        3
+        3
+        4
+        4
+        4
+

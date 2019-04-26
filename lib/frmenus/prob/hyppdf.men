@@ -1,0 +1,28 @@
+This is file hyppdf.men--Compute hypergeometric pdf
+ 
+--------------------
+ 1. Compute Hypergeometric pdf
+ 2. LET A = HYPPDF(X,KK,NN,MM)
+ 3.
+ 4. Input values:
+ 5.             x (x = 0, 1, 2, ..., kk):
+ 5. @CE 1 0 42 50 ?
+ 6.                       sample size kk:
+ 6. @CE 2 0 42 50 ?
+ 7.            number of marked items nn:
+ 7. @CE 3 0 42 50 ?
+ 8.     number of items in population mm:
+ 8. @CE 4 0 42 50 ?
+ 9.
+10. Output parameters:
+11.               name for the pdf value:
+11. @CE 5 0 42 50 ?
+12.
+13.
+14. Compute the Probability?
+--------------------
+AN FE
+@IF 5 0 LET _5 = HYPPDF( _1 , _2 , _3 , _4 )
+--------------------
+WEB HELP HYPPDF
+--------------------

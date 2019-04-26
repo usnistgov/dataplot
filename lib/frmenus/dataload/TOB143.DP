@@ -1,0 +1,8 @@
+----- <~dataload\TOB143.DP> Load TOB143.DAT
+
+. This is file    TOB143.DP
+
+DELETE Y
+SKIP 25
+READ TOB143.DAT Y
+

@@ -1,0 +1,22 @@
+----------  *AREAS*  ----------
+
+    Areas of Geometric Figures
+
+Square                side**2
+Rectangle             length * width
+Parallelogram         base * height
+Triangle              base * height / 2
+Regular n-polygon     (1/4) * n * side**2 * cot(pi/n)
+Trapezoid             height * (base1 + base2) / 2
+
+Circle                pi * radius**2
+Ellipse               pi * radius1 * radius2
+
+Sphere (surface)      4 * pi * radius**2
+Cylinder (surface)    2 * pi * radius * height
+Cone (surface)        pi * radius * side
+Torus (surface)       pi**2 * (radius2**2 - radius1**2)
+
+   Source--Spiegel, Murray R.  Mathematical Handbook of Formulas
+           and Tables.  Schaum's Outline series in Mathematics.
+           McGraw-Hill Book Co., 1968.

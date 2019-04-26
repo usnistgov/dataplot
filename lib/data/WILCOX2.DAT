@@ -1,0 +1,55 @@
+This is Dataplot data file    WILCOX2.DAT
+Sample data set from Conover (1999), "Practical Nonparameteric
+Statistics," Third Edition, Wiley, p. 356-357.
+This is used to demonstrate the one sample Wilcoxon signed rank test.
+
+There is no description of what this data set actually is.  We include
+it as a test for the "exact" version of the test.
+
+
+Number of Observations                  = 30
+Number of Observations per line image   = 1
+
+To perform Wilcoxon signed rank test on this data:
+
+    SKIP 25
+    READ WILCOX2.DAT Y
+    LET D0 = 30
+    WILCOXON SIGNED RANK TEST Y D0
+
+
+
+
+
+ Y
+------------------------
+ 23.8
+ 26.0
+ 26.9
+ 27.4
+ 28.0
+ 30.3
+ 30.7
+ 35.9
+ 36.1
+ 36.4
+ 36.6
+ 37.2
+ 37.3
+ 37.9
+ 31.2
+ 31.3
+ 32.8
+ 33.2
+ 33.9
+ 34.3
+ 34.9
+ 35.0
+ 38.2
+ 39.6
+ 40.6
+ 41.1
+ 42.3
+ 42.8
+ 44.0
+ 45.8

@@ -1,0 +1,22 @@
+This is file matr_vtt.men--Vector times its Transpose
+ 
+--------------------
+ 1. Vector Times its Transpose
+ 2. LET M = VECTOR TIMES TRANSPOSE Y
+ 3.
+ 4. Name of Variable:
+ 4. @CE 1 0 42 50 ?  gui-vari
+ 5. Name of matrix to save result:
+ 5. @CE 2 0 42 50 *
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Vector Times its Transpose?:
+--------------------
+GR FE
+LET _2 = VECTOR TIMES TRANSPOSE _1 _3
+--------------------
+WEB HELP VECTGOR TIMES TRANSPOSE
+--------------------

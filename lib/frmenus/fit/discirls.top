@@ -1,0 +1,57 @@
+----- <~fit\discirls.top> IRLS
+ 
+IRLS
+
+Least squares fitting generates optimal fits
+given independent normally distributed errors with
+constant variance.  However, if the errors do not
+satisfy these assumptions, then the least squares
+estimates may be unduly affected.  Robust fitting
+methods attempt to generate good fits for a range of
+error distributions.  In particular, they protect
+against heavy tailed distributions which have outliers
+relative to a normal distribution.  Robust estimates
+should be stable if a few values are changed
+significantly or if a large number of values are changed
+by a small amount.
+
+There are several approaches to robust estimation.
+These include:
+  1) M-estimators are maximum likelihood estimators that
+     minimize the sum of a function of the residuals.
+  2) R-estimators are based on ranks.
+  3) L-estimators are linear functions of the sample order
+     statistics (this includes least median squares
+     regression).
+M-estimators can be approximated through a technique
+called iteratively re-weighted least squares (or IRLS).
+The basic algorithm is to start with a least squares fit,
+weight the residuals by some formula, and then apply a
+weighted fit.  The new residuals are then weighted by the
+same formula.  This continues until the residuals reach
+some type of convergence criterion.  The Heiberger and Becker
+article "Design of an S Function for Robust Regression
+Using Iteratively Reweighted Least Squares", Journal of
+Computational and Graphical Statistics, 1992, describes
+a function for doing this with the S statistical package.
+However, the basic steps can be applied to any program that
+supports weighted least squares.  The Dataplot macro for
+IRLS is based on this article.
+
+There is no single weighting scheme that works best in
+all cases.  Various weighting schemes have been proposed and
+used.  The Heiberger and Becker article gives 10 of the more
+popular ones.
+
+DATAPLOT does not support R and L robust estimation at
+this time.
+
+Least absolute deviations (LAD) is another robust method.
+This method minimizes:
+    ABSOLUTE VALUE(Y - YPRED)
+Although LAD is usually estimated with linear programming
+techniques, it can also be estimated with the IRLS algorithm
+using a method of John Tukey.  This method gives small
+residuals a weight of 1 (otherwise small residuals tend to
+have unduly large weights).
+

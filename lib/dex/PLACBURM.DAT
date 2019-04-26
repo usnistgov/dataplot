@@ -1,0 +1,37 @@
+PLACKETT-BURMAN ORTHOGONAL DESIGN
+NUMBER OF FACTORS                = 11
+NUMBER OF LEVELS FOR EACH FACTOR =  2
+NUMBER OF OBSERVATIONS           = 12
+REFERENCE--BOX, HUNTER & HUNTER, STAT. FOR EXP., PAGES 398.
+NOTE--THIS DESIGN IS EQUIVALENT TO A
+      TAGUCHI L12 ORTHOGONAL DESIGN
+NOTE--IF POSSIBLE, THIS (AS WITH ALL EXPERIMENT DESIGNS)
+      SHOULD BE RUN IN RANDOM ORDER
+      (TO ASSIST IN THIS RANDOMIZATION,
+      SEE DATAPLOT'S REFERENCE FILES OF
+      RANDOM PERMUTATIONS).
+NOTE--TO READ THIS FILE INTO DATAPLOT--
+      DIMENSION 20 VARIABLES
+      SKIP 25
+      READ PLACBURM.DAT X1 TO X11
+DATE--SEPTEMBER 1988
+
+
+
+
+
+
+   X1  X2  X3  X4  X5  X6  X7  X8  X9 X10 X11
+   ------------------------------------------
+   +1  -1  +1  -1  -1  -1  +1  +1  +1  -1  +1
+   +1  +1  -1  +1  -1  -1  -1  +1  +1  +1  -1
+   -1  +1  +1  -1  +1  -1  -1  -1  +1  +1  +1
+   +1  -1  +1  +1  -1  +1  -1  -1  -1  +1  +1
+   +1  +1  -1  +1  +1  -1  +1  -1  -1  -1  +1
+   +1  +1  +1  -1  +1  +1  -1  +1  -1  -1  -1
+   -1  +1  +1  +1  -1  +1  +1  -1  +1  -1  -1
+   -1  -1  +1  +1  +1  -1  +1  +1  -1  +1  -1
+   -1  -1  -1  +1  +1  +1  -1  +1  +1  -1  +1
+   +1  -1  -1  -1  +1  +1  +1  -1  +1  +1  -1
+   -1  +1  -1  -1  -1  +1  +1  +1  -1  +1  +1
+   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1

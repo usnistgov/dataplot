@@ -1,0 +1,54 @@
+. This is dataplot program   dex10stepanalysis_scott_8_16.dp     5/31/06 => 1/8/18
+. Purpose: Analyze Apache/Linux processing time (k=5,n=16) via 10-step analysis
+. Design = 2**(8-4) full factorial  (k=8,n=16)
+. Date: 5/31/06 => 1/8/18
+.
+. -----start point-----
+.
+dimension 100 variables
+.
+. -----Step 1: Read in the data-----
+.
+let k = 8
+skip 25
+read scott_8_16.dat y x1 to x^k
+
+. -----Step 2: Define strings for plot annotation-----
+.
+let string project = Factors Affecting HRTEM for Measuring the Ultrathin (Nanotechnology)
+let string project2 = Amorphous SiO2 Layer in CPU/Memory Gate Dielectrics  (k=8,n=16): 2**(8-4) Orth. Fract. Fact. Des.
+let string trailer = dex10stepanalysis_scott_8_16.dp
+let string trailer2 = Datafile: scott_8_16.dat
+.
+let string sty = Error in SiO2 Layer Thickness
+.
+let string stx1 = Beam Tilt
+let string stx2 = Tilt Azimuth
+let string stx3 = Beam Thickness
+let string stx4 = Film Thickness
+let string stx5 = Defocus
+let string stx6 = Astig. Mag.
+let string stx7 = Astig. Azimuth
+let string stx8 = Vibration Amp.
+.
+let string stx1l = 0 25
+let string stx2l = 0 25
+let string stx3l = 1.2 1.9
+let string stx4l = 1.5 2.0
+let string stx5l = -58.4 -48.4
+let string stx6l = 0 .08
+let string stx7l = 0 25
+let string stx8l = 0 .04
+.
+let string colorl = red blue
+.
+. -----Step 3: Generate 10-step DEX analysis on the original data-----
+.
+let ibatch = 0
+let itime = 1
+let projech2 = 3
+let projecw2 = 1.5
+. let ycont = sequence -1.6  0.2 1.6
+call dex10stepanalysis.dp
+.
+feedback on

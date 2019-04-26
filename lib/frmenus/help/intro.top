@@ -1,0 +1,35 @@
+----- <~help\intro.top> Introduction to Dataplot
+
+Introduction to Dataplot
+
+Introduction to Dataplot
+
+The Dataplot language was designed with the goals
+of providing scientists and engineers with
+
+    1) graphics;
+    2) fitting (especially non-linear);
+    3) operations with functions.
+
+The Dataplot command language provides a high-level,
+English-syntax, and self-descriptive language to
+perform these functions.
+
+Although Dataplot has a large number of commands,
+there are three core Dataplot commands for providing
+the above capabilities:
+
+    PLOT (graphics)                           <xcl: HELP PLOT>
+    FIT  (for linear and non-linear fitting)  <xcl: HELP FIT>
+    LET  (for function operations)            <xcl: HELP LET>
+
+Some specific features of the Dataplot language include:
+
+    Programming with Dataplot                 <~help\program.top>
+    English-Syntax Language                   <~help\english.top>
+    Free-Format Language                      <~help\freeform.top>
+    Declaration-Free Language                 <~help\declare.top>
+    Structured Language                       <~help\structur.top>
+    Punctuation                               <~help\punct.top>
+    Language Components                       <~help\comp.top>
+

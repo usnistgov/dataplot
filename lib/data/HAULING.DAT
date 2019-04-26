@@ -1,0 +1,110 @@
+HAULING.dat
+Sample data set from Table 1.2, page 19, of
+Kotz and Van Dorp (2004), "Beyond Beta: Other Continuous
+Families of Distributions with Bounded Support and Applications",
+World Scientific.
+
+Response Variable = hauling times
+Number of Observations per line image = 1
+
+To read this file into Dataplot--
+SKIP 25
+READ HAULING.DAT Y
+TRIANGULAR MAXIMUM LIKELIHOOD Y
+TWO-SIDED POWER MAXIMUM LIKELIHOOD Y
+
+
+
+
+
+
+
+
+
+
+---------------------------------------
+4.79
+4.75
+5.40
+4.70
+6.50
+5.30
+6.00
+5.90
+4.80
+6.70
+6.00
+4.95
+7.90
+5.40
+3.50
+4.54
+6.90
+5.80
+5.40
+5.70
+8.00
+5.40
+5.60
+7.50
+7.00
+4.60
+3.20
+3.90
+5.90
+3.40
+5.20
+5.90
+4.40
+5.20
+7.40
+5.70
+6.00
+3.60
+6.20
+5.70
+5.80
+5.90
+6.00
+5.15
+6.00
+4.82
+5.90
+6.00
+7.30
+7.10
+4.73
+5.90
+3.60
+6.30
+7.00
+5.10
+6.00
+6.60
+4.40
+6.80
+5.60
+5.90
+5.90
+8.60
+6.00
+5.80
+5.40
+6.50
+4.80
+6.40
+4.15
+4.90
+6.50
+8.20
+7.00
+8.50
+5.90
+4.40
+5.80
+4.30
+5.10
+5.90
+4.70
+3.50
+6.80

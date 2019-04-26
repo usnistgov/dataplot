@@ -1,0 +1,41 @@
+This is Dataplot data file    MANSFIELD.DAT
+Factors affecting semiconductor bond strength
+Corrine Mansfield (Philadelphia) Dec. 1997 Industry DEX Class
+2**(8-4) Fractional Factorial Design
+ 
+Number of observations             = 16
+Number of variables per line image =  8
+Order of variables on a line--
+   1. Response variable = bond strength
+   2. Factor 1          = surface roughness
+   3. Factor 2          = cleaning agent
+   4. Factor 3          = glue dilution proportion
+   5. Factor 4          = molding condition
+   6. Factor 5          = glue-to-mold time
+   7. Factor 6          = blast-to-glue time
+   8. Factor 7          = pre-heat time
+   9. Factor 8          = protective coat
+To read this file into Dataplot--
+   DIMENSION 20 VARIABLES
+   SKIP 25
+   READ MANSFIELD.DAT Y X1 TO X8
+
+
+Y     X1  X2  X3  X4  X5  X6  X7  X8
+-------------------------------------
+654   -1  -1  -1  -1  -1  -1  -1  -1
+737   +1  -1  -1  -1  -1  +1  +1  +1
+713   -1  +1  -1  -1  +1  -1  +1  +1
+509   +1  +1  -1  -1  +1  +1  -1  -1
+568   -1  -1  +1  -1  +1  +1  +1  -1
+727   +1  -1  +1  -1  +1  -1  -1  +1
+760   -1  +1  +1  -1  -1  +1  -1  +1
+722   +1  +1  +1  -1  -1  -1  +1  -1
+690   -1  -1  -1  +1  +1  +1  -1  +1
+810   +1  -1  -1  +1  +1  -1  +1  -1
+700   -1  +1  -1  +1  -1  +1  +1  -1
+722   +1  +1  -1  +1  -1  -1  -1  +1
+627   -1  -1  +1  +1  -1  -1  +1  +1
+719   +1  -1  +1  +1  -1  +1  -1  -1
+740   -1  +1  +1  +1  +1  -1  -1  -1
+649   +1  +1  +1  +1  +1  +1  +1  +1

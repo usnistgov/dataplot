@@ -1,0 +1,28 @@
+----- <~help\import.top> Importing Dataplot Graphs into Word/PPT
+
+Importing Dataplot Graphics into Word/PPT
+
+Importing Dataplot Graphics into Word/PPT
+
+
+It is common to want to import Dataplot graphics into
+external programs such as Word and Power Point for the
+purposes of writing reports and giving presentations.
+
+To import graphics into Word/Excel/Power Point, there are
+several points to consider.
+
+What is the procedure for importing graphics?
+    Word/Excel/Power Point                <~help\extproc.top>
+    Latex                                 <~help\latproc.top>
+
+What Graphics Formats are supported?
+    Word/Excel/Power Point                <~help\suppform.top>
+    Latex                                 <~help\latproc.top>
+
+What is the Dataplot Procedure for Creating the Graph?
+    Create each graph in a separate file  <~help\dpproc1.top>
+    Recommended approach                  <~help\dpproc2.top>
+    Some alternative approaches           <~help\dpproc3.top>
+    Issues regaring importing Postscript  <~help\epsproc.top>
+

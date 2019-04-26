@@ -1,0 +1,31 @@
+----- <~roadmap\multivar.top> Multivariate Structure
+
+Multivariate Structure
+
+Question     : What underlying structure relates the
+               components of a multivariate response?
+
+Model        : (Y1,Y2,Y3,...,Yk) = (c1,c2,c3,...,ck) + random error
+
+Input        : 1) a response variable Y1
+               2) a response variable Y2
+               3) a response variable Y3
+                  ...
+               k) a response variable Yk
+
+Output       : 1) a ranked list of orthogonal k-dimensional
+                  linear functions that describe the underlying
+                  structure (= "signal") (most explanatory to
+                  least explanatory); and/or
+               2) a set of k-dimensional clusters (= partitions)
+                  defining "like-behaving" distinct sub-regions;
+                  and/or
+               3) (ideally), a k-dimensional function or vector
+                  trace that defines the underlying "signal"
+                  in the k-dimensional point cloud.
+
+Stat Category: Multivariate Analysis
+
+Primary Tools: Principal Components Analysis <xemf: ~math\matr_prc.men>
+               Multivariate Analysis         <~mvar\mvaranal.top>
+

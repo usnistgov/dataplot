@@ -1,0 +1,73 @@
+This is the Dataplot data file        WATTODR3.DAT
+This is the data set from page 280 of Bates and Watts 
+book "Nonlinear Regression Analysisand its Applications", John Wiley,
+1988.  This is one of the data sets used in the version 2.01 ODRPACK
+manual.  We have included it here to calibrate the Dataplot
+implementation of the ODRPACK package.  The response consists of the
+real and imaginary parts of complex impedance measurements of a
+polymer.  The indpendent variable (real) is frequency.
+
+The proposed model is:
+    Y1 = B2 + (B1-B2)*R**B5*COS(B5*PHI)   (real part)
+    Y2 = (B1-B2)*R**B5*SIN(B5*PHI)        (complex part)
+where
+    R**2 = [1 + (2*PI*X/B3)**B4*COS(PI*B4/2)]**2 +
+           [(2*PI*X/B3)**B4*SIN(PI*B4/2)]**2
+    PHI  = ARCTAN[((2*PI*X/B3)**B4*SIN(PI*B4/2))/
+                  (1 + (2*PI*X/B3)**B4*COS(PI*B4/2))]
+
+Note that this requires fitting a multiple response model.
+
+Number of observations                       = 23
+Number of observations per line image        = 3
+Order of variables on a line image--
+   1. Independent Variable          = X (Frequency)
+   2. Real Component of Response    = Y1
+   3. Complex Component of Response = Y2
+
+To read this file into Dataplot--
+
+   SKIP 50
+   READ WATTODR3.DAT X Y1 Y2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         X     Y1     Y2
+------------------------
+      30.0  4.220  0.136
+      50.0  4.167  0.167
+      70.0  4.132  0.188
+     100.0  4.038  0.212
+     150.0  4.019  0.236
+     200.0  3.956  0.257
+     300.0  3.884  0.276
+     500.0  3.784  0.297
+     700.0  3.713  0.309
+    1000.0  3.633  0.311
+    1500.0  3.540  0.314
+    2000.0  3.433  0.311
+    3000.0  3.358  0.305
+    5000.0  3.258  0.289
+    7000.0  3.193  0.277
+   10000.0  3.128  0.255
+   15000.0  3.059  0.240
+   20000.0  2.984  0.218
+   30000.0  2.934  0.202
+   50000.0  2.876  0.182
+   70000.0  2.838  0.168
+  100000.0  2.798  0.153
+  150000.0  2.759  0.139

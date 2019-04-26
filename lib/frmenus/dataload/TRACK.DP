@@ -1,0 +1,8 @@
+----- <~dataload\TRACK.DP> Load TRACK.DAT
+
+. This is file    TRACK.DP
+
+DELETE Y X
+SKIP 25
+READ TRACK.DAT Y X
+

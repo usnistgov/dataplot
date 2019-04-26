@@ -1,0 +1,29 @@
+This is file writvpsf.men--Write Var/Par/Str to a File
+ 
+--------------------
+1. Write Variables/Parameters/Strings to a File
+2. WRITE <filename> <list>
+3.
+4. File name:
+5. @CE 1 0 1 50 ?
+6.
+7. List of variables/parameters/strings to write:
+8. @CE 2 0 1 50 ?
+9.
+10. Number of header lines to skip:
+11. @CE 3 0 1 6 *
+12.
+13. Format (Fortran-like):
+14. @CE 4 0 1 50 *
+15.
+16. Subset/Except/For Specification:
+17. @CE 5 0 1 50 *
+18.
+19.
+20. Do the Write?
+--------------------
+SU FE
+SKIP _3
+SET WRITE FORMAT _4
+READ _1 _2 _5
+--------------------

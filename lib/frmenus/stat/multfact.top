@@ -1,0 +1,11 @@
+----- <~stat\multfact.top> General Multi-Factor
+
+General Multi-Factor
+
+Analysis of Variance (Balanced)          <xemf: ~stat\anova.men>
+Analysis of Variance (Balanced, with Graphics) <xemf: ~stat\anovag.men>
+Median Polish                            <xemf: ~stat\medpol.men>
+Median Polish (with Graphics)            <xemf: ~stat\medpolg.men>
+Yates Analysis                           <xemf: ~stat\yates.men>
+Yates Analysis Principle Hessian Directions <xemf: ~stat\dexphd.men>
+

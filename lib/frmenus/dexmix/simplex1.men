@@ -1,0 +1,25 @@
+This is file simplex.men--Draw Simplex Triangle with Axis Lines
+ 
+--------------------
+ 1. Draw Simplex Triangle (Axis Lines)
+ 2. Macro
+ 3.
+ 4. Label for Axis 1:
+ 4. @CE 1 0 33 50 *
+ 5. Label for Axis 2:
+ 5. @CE 2 0 33 50 *
+ 6. Label for Axis 3:
+ 6. @CE 3 0 33 50 *
+ 7. 
+ 8.
+ 9. Draw the Simplex Triangle?:
+--------------------
+GR FE
+LET STRING S1 = X1
+LET STRING S2 = X2
+LET STRING S3 = X3
+LET STRING S1 = _1
+LET STRING S2 = _2
+LET STRING S3 = _3
+CALL SIMPLEX1.DP
+--------------------

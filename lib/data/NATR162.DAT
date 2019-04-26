@@ -1,0 +1,35 @@
+This is Dataplot data file     NATR162.DAT
+Reverse-Bias Collector Current of Ten transistors (in microamperes)
+Question: Does the average of a new product differ from a standard?
+
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 16-2
+Number of observations = 10
+Number of variables per line image = 2
+Order of variables on a line image--
+   1. Y = reverse -bias collector current recorded in microamperes
+   2. X = Transistor number
+The standard value = 0.28
+
+
+
+
+
+
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR162.DAT Y X
+     Y
+ ICBO           Transistor
+--------------------------
+   0.28             1
+   0.18             2
+   0.24             3
+   0.30             4
+   0.40             5
+   0.36             6
+   0.15             7
+   0.42             8
+   0.23             9
+   0.48            10

@@ -1,0 +1,21 @@
+----- <~prob\normcdf.top> Plot Symmetric cdf's
+
+Plot Symmetric CDF Functions
+
+Normal                   <xemf: ~prob\norcdf.men>
+Half-Normal              <xemf: ~prob\hfncdf.men>
+Power-Normal             <xemf: ~prob\pnrcdf.men>
+Folded Normal            <xemf: ~prob\fnrcdf.men>
+Truncated Normal         <xemf: ~prob\tnrcdf.men>
+
+Log-Normal               <xemf: ~prob\lgncdf.men>
+Power-Lognormal          <xemf: ~prob\plncdf.men>
+
+Cauchy                   <xemf: ~prob\caucdf.men>
+Half-Cauchy              <xemf: ~prob\hfccdf.men>
+Wrapped-Cauchy           <xemf: ~prob\wcacdf.men>
+Folded-Cauchy            <xemf: ~prob\fcacdf.men>
+
+Johnson SB               <xemf: ~prob\jsbcdf.men>
+Johnson SU               <xemf: ~prob\jsucdf.men>
+

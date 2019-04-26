@@ -1,0 +1,102 @@
+This is file chisgfno.men--Chi-Square Goodness of Fit (Continuous Dist.)
+
+--------------------
+ 1. Chi-Square Goodness of Fit (Normal, Cauchy, and Related
+ 2. <Distribution> CHI-SQUARE GOODNESS OF FIT Y
+ 3.
+ 4. Variable:
+ 4. @CE 1 0 11 30 ? gui-variable
+ 5.
+ 6. Distribution:
+ 7. @CE 2 1 11 30 Normal
+ 8. @CE 2 2 11 30 Halfnormal
+ 9. @CE 2 3 11 30 Lognormal
+ 9.                               sd (defaults to 1) =
+ 9. @CE 3 0 41 50 ?
+10. @CE 2 4 11 30 Power Normal
+11.                     p =
+11. @CE 4 0 41 50 ?
+12.                     sd =
+12. @CE 5 0 41 50 ?
+13. @CE 2 5 11 30 Power Lognormal
+14.                     p =
+14. @CE 6 0 41 50 ?
+15.                     sd =
+15. @CE 7 0 41 50 ?
+16. @CE 2 6 11 30 Folded Normal
+17.                     u =
+17. @CE 8 0 41 50 ?
+18.                     sd =
+18. @CE 9 0 41 50 ?
+19. @CE 2 7 11 30 Truncated Normal
+20.                     u =
+20. @CE 10 0 41 50 ?
+21.                     sd =
+21. @CE 11 0 41 50 ?
+22.                     a =
+22. @CE 12 0 41 50 ?
+23.                     b =
+23. @CE 13 0 41 50 ?
+24. @CE 2 12 11 30 Mixture of 2 Normals
+25.                    u1 =
+25. @CE 17 0 41 50 ?
+26.                   sd1 =
+26. @CE 18 0 41 50 ?
+27.                    u2 =
+27. @CE 19 0 41 50 ?
+28.                   sd2 =
+28. @CE 20 0 41 50 ?
+29.                     p =
+29. @CE 21 0 41 50 ?
+30.
+31. @CE 2 8 11 30 Cauchy
+32. @CE 2 9 11 30 Half Cauchy
+33. @CE 2 10 11 30 Wrapped Cauchy
+33.                                   p =
+33. @CE 14 0 41 50 ?
+34. @CE 2 11 11 30 Folded Cauchy
+35.                     m =
+35. @CE 15 0 41 50 ?
+36.                     sd =
+36. @CE 16 0 41 50 ?
+37.
+38. Subset/Except/For Specification:
+39. @CE 18 0 -5 50 *
+40.
+41. Generate the Chi-Square Goodness of Fit?
+--------------------
+GR FE
+@IF 3 0 LET SD = _3
+@IF 4 0 LET P = _4
+@IF 5 0 LET SD = _5
+@IF 6 0 LET P = _6
+@IF 7 0 LET SD = _7
+@IF 8 0 LET U = _8
+@IF 9 0 LET SD = _9
+@IF 10 0 LET U = _10
+@IF 11 0 LET SD = _11
+@IF 12 0 LET A = _12
+@IF 13 0 LET B = _13
+@IF 14 0 LET P = _14
+@IF 15 0 LET M = _15
+@IF 16 0 LET SD = _16
+@IF 17 0 LET U1 = _17
+@IF 18 0 LET SD1 = _18
+@IF 19 0 LET U2 = _19
+@IF 20 0 LET SD2 = _20
+@IF 21 0 LET P = _21
+@IF 2 1 NORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 2 HALFNORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 3 LOGNORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 4 POWER NORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 5 POWER LOGNORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 6 FOLDED NORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 7 TRUNCATED NORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 8 CAUCHY CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 9 HALF CAUCHY CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 10 WRAPPED CAUCHY CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 11 FOLDED CAUCHY CHI-SQUARE GOODNESS OF FIT _1 _18
+@IF 2 12 NORMAL MIXTURE CHI-SQUARE GOODNESS OF FIT _1 _18
+--------------------
+WEB HELP CHI-SQUARE GOODNESS OF FIT
+--------------------

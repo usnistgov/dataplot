@@ -1,0 +1,42 @@
+This is Dataplot data file    HEALY1.DAT
+Optimization of Hot Plate Gap Parameters via ANSYS (Computer Experiment)
+Bill Healy (NIST)
+2**(6-2) fractional factorial Design + center point
+Response variable = apparent thermal conductivity
+Number of observations             = 17 (= 16 + 1)
+Number of variables per line image = 8
+Order of variables on a line image--
+   1. Response variable 1 = Relative error in conductivity
+   2. Response variable 2 = Gap temperature difference
+   3. Factor 1            = Gap size                (2 levels: .001 and .002)
+   4. Factor 2            = Gap insulation material (2 levels: .001 and .200)
+   5. Factor 3            = Insulation thickness    (2 levels:  .01 and  .11)
+   6. Factor 4            = Insulation conductivity (2 levels: .002 and .500)
+   7. Factor 5            = Plate conductivity      (2 levels:  100 and  400)
+   8. Factor 6            = Surface temperature     (2 levels:    5 and   45)
+To read this file into Dataplot--
+   SKIP 25
+   READ HEALY1.DAT Y1 Y2 X1 X2 X3 X4 X5 X6
+
+
+
+
+    Y1         Y2          X1    X2    X3    X4    X5    X6
+------------------------------------------------------------
+   -0.008   4.00E-05       -1    -1    -1    -1    -1    -1  
+ -0.05597    0.00038       +1    -1    -1    -1    +1    -1  
+ 0.002222          0       -1    +1    -1    -1    +1    +1  
+ 0.002222          0       +1    +1    -1    -1    -1    +1  
+        0          0       -1    -1    +1    -1    +1    +1  
+ -0.00444   2.22E-05       +1    -1    +1    -1    -1    +1  
+        0          0       -1    +1    +1    -1    -1    -1  
+        0          0       +1    +1    +1    -1    +1    -1  
+ -0.02666   0.000422       -1    -1    -1    +1    -1    +1  
+ -0.11321   0.000867       +1    -1    -1    +1    +1    +1  
+   -0.006   8.00E-05       -1    +1    -1    +1    +1    -1  
+ -0.05797     0.0005       +1    +1    -1    +1    -1    -1  
+   -0.002   2.00E-05       -1    -1    +1    +1    +1    -1  
+   -0.012    0.00014       +1    -1    +1    +1    -1    -1  
+ 0.002222          0       -1    +1    +1    +1    -1    +1  
+ -0.00444   4.44E-05       +1    +1    +1    +1    +1    +1  
+   -0.004   4.00E-05        0     0     0     0     0     0

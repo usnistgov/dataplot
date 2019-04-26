@@ -1,0 +1,10 @@
+----- <~dataloex\LUTHER.DP> Load & Execute LUTHER.DAT
+
+. This is file    LUTHER.DP
+
+DELETE Y
+SKIP 25
+READ LUTHER.DAT Y
+TITLE LUTHER.DAT
+/
+

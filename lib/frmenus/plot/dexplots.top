@@ -1,0 +1,18 @@
+----- <~plot\dexplots.top> Experiment Design Plots
+
+Experiment Design Plots
+
+DEX Mean Plot            <xemf: ~plot\dexmeanp.men>
+DEX ...  Plot            <xemf: ~plot\dexstatp.men>
+DEX Scatter Plot         <xemf: ~plot\dexscatp.men>
+DEX Sign Plot            <xemf: ~plot\dexsignp.men>
+DEX ...  Effects Plot    <xemf: ~plot\dexeffep.men>
+DEX ...  Youden Plot     <xemf: ~plot\dexyoudp.men>
+
+DEX Contour Plot              <xemf: ~dex2k\contplot.men>
+Pairwise DEX Contour Plots    <xemf: ~dex2k\contmapl.men>
+
+Yates Cube Plot (2**3)   <xemf: ~dex2k\yatecube.men>
+Yates Cube Plot (2**4)   <xemf: ~dex2k\yatecub2.men>
+Yates Cube Plot (2**5)   <xemf: ~dex2k\yatecub3.men>
+

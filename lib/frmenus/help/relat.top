@@ -1,0 +1,51 @@
+----- <~help\relat.top> Relational Operators
+
+Relational Operators
+
+Relational Operators
+
+Six Relational Operators
+
+    Dataplot has six relational operators:
+
+        =               equality
+        <>              inequality
+        <               less than
+        >               greater than
+        <= or =<        less than or equal to
+        >= or =>        greater than or equal to
+
+Do Not Include Spaces Within a Relational Operator
+
+      The spacing within such operators is important.
+      For example, using > = instead of >= will lead
+      to a syntax error or possible erroneous results.
+      Thus to generate a plot of Y versus X but with
+      the plot restricted to those X and Y values for
+      which the LAB variable is 7 or greater, the proper
+      entry is
+
+         PLOT Y X SUBSET LAB >= 7
+
+      while
+
+         PLOT Y X SUBSET LAB > = 7
+
+      is incorrect.
+
+Spacing Around Relational Operators is Optional
+
+    Spacing around such relational operators is optional
+    and at the analyst's discretion.  Using spaces around
+    relational operators generally provides better human
+    readability.  The following are equivalent:
+
+         PLOT Y X SUBSET LAB >= 7
+         PLOT Y X SUBSET LAB>=7
+
+         FIT Y = A+B/X
+         FIT Y=A+B/X
+
+         LET Y = (X**LAMBDA)/(LAMBDA+1)
+         LET Y=(X**LAMBDA)/(LAMBDA+1)
+

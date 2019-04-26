@@ -1,0 +1,14 @@
+----- <~univ\inflcurv.top> Influence Curves
+
+Influence Curves
+
+Discussion                               <~univ\discinfl.top>
+
+Create XSEQ Variable                     <~univ\creaxseq.men>
+Influence Curves
+   Location Statistics                   <xemf: ~univ\inflloca.men>
+   Scale Statistics                      <xemf: ~univ\inflscal.men>
+   Extreme and Percentile Statistics     <xemf: ~univ\inflperc.men>
+   Quality Control Statistics            <xemf: ~univ\inflqc.men>
+   Miscellaneous Statistics              <xemf: ~univ\inflmisc.men>
+

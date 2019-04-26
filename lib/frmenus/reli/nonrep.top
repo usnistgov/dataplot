@@ -1,0 +1,24 @@
+-----<~reli\nonrep.top> Discussion: Nonrepairable Systems
+
+Discussion: Nonrepairable Systems
+
+Nonrepairable Systems
+
+In reliability applications, a distinction is
+made between nonrepairable and repairable systems.
+In a nonrepairable system, failed items are simply
+removed from service.  In a repairable system, failed
+items are repaired and returned to service.
+
+The key assumption for nonrepairable systems is that
+failure times are independent and identically
+distributed (iid).  This means that failure times
+can be combined for analysis and that the order of
+ocurrence can be ignored.
+
+The primary tool for analyzing nonrepairable systems
+is univariate distributional modeling.  In practice,
+the most commonly used distributions are the exponential,
+Weibull, and lognormal.  However, other distributions
+can be used.
+

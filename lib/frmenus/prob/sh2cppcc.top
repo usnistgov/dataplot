@@ -1,0 +1,35 @@
+----- <~prob\sha2ppc.top> PPCC Plot (Two Shape Parameters)
+
+PPCC Plots for Distributions with Two Shape Parameters
+
+Generate PPCC Plots for Continuous Distributions
+with Two Shape Parameters (Uncensored Case)
+
+Beta                                      <xemf: ~prob\cppccbet.men>
+Beta Normal                               <xemf: ~prob\cppccbno.men>
+Burr Type 3                               <xemf: ~prob\cppccbu3.men>
+Burr Type 5                               <xemf: ~prob\cppccbu5.men>
+Burr Type 6                               <xemf: ~prob\cppccbu6.men>
+Burr Type 9                               <xemf: ~prob\cppccbu9.men>
+Burr Type 12                              <xemf: ~prob\cppccb12.men>
+Doubly Pareto Uniform                     <xemf: ~prob\cppccdpu.men>
+Exponentiated Weibull                     <xemf: ~prob\cppccewe.men>
+F                                         <xemf: ~prob\cppccf.men>
+Folded Cauchy                             <xemf: ~prob\cppccfca.men>
+Folded Normal                             <xemf: ~prob\cppccfnr.men>
+G-and-H                                   <xemf: ~prob\cppccgh.men>
+Generalized Topp and Leone                <xemf: ~prob\cppccgtl.men>
+Generalized Tukey-Lambda                  <xemf: ~prob\cppccgld.men>
+Gompertz                                  <xemf: ~prob\cppccgom.men>
+Inverse Gaussian                          <xemf: ~prob\cppccig.men>
+Johnson SB                                <xemf: ~prob\cppccjsb.men>
+Johnson SU                                <xemf: ~prob\cppccjsu.men>
+Kumaraswamy                               <xemf: ~prob\cppcckum.men>
+Power Lognormal                           <xemf: ~prob\cppccpln.men>
+Reciprocal Inverse Gaussian               <xemf: ~prob\cppccrig.men>
+Reflected Generalized Topp and Leone      <xemf: ~prob\cppccrgt.men>
+Truncated Normal                          <xemf: ~prob\cppcctnr.men>
+Two-Sided Ogive                           <xemf: ~prob\cppcctso.men>
+Two-Sided Power                           <xemf: ~prob\cppcctsp.men>
+Two-Sided Slope                           <xemf: ~prob\cppcctss.men>
+

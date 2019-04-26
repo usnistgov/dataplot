@@ -1,0 +1,57 @@
+.
+. Generate a spread-location plot.  This plot is an alternative to
+. the HOMOSCEDASTICITY PLOT that is based on more robust statistics.
+. The following steps are taken:
+. 1) Fit the median to each group in the data.
+. 2) Form residuals by taking absolute value of response minus median
+. 3) Plot square roots of these medians against the medians.
+. 4) Draw a line connecting the medians of the residuals.
+.
+. Several variations of this plot are possible (and straightforward
+. to implement in DATAPLOT):
+. 1) You can use a different fit (e.g., in a regression, or some other
+.    type of fit, problem you can use PRED on the x-axis and the 
+.    square root of the absolute values of RES on the y-axis.
+. 2) You can fit some type of LOWESS curve to the resulting plot.
+.
+. PURPOSE--GENERATE A S-L PLOT OF POINT BARROW FREON-11 DATA
+.
+DIMENSION 20 VARIABLES
+.
+.  READ DATA.  FOR OTHER DATA SETS, REPLACE THIS SECTION WITH
+.  YOU OWN DATA READ
+.
+SKIP 50
+SET READ FORMAT 3F4.0,F5.0,F6.0,F3.0,2F9.0
+READ PBF11.DAT YEAR DAY BOT SD F11 FLAG WV CO2
+RETAIN YEAR DAY BOT SD F11 WV CO2 FLAG SUBSET FLAG 0
+LET TAG=INT(DAY/30.25)+1
+LET Y = WV
+.
+.  THE REMAINING SECTIONS ARE NOT DATA DEPENDENT
+.
+LET N = SIZE Y
+LET MED = 0 FOR I = 1 1 N
+LET RES = 0 FOR I = 1 1 N
+LET TEMP = DISTINCT TAG
+LET NGROUP = SIZE TEMP
+LOOP FOR K = 1 1 NGROUP
+    LET TAGID = TEMP(K)
+    LET ATEMP = MEDIAN Y SUBSET TAG = TAGID
+    LET MED = ATEMP SUBSET TAG = TAGID
+    LET RES = ABS(Y-MED) SUBSET TAG = TAGID
+    LET GROUPMD(K) = ATEMP
+    LET ATEMP = MEDIAN RES SUBSET TAG = TAGID
+    LET MAD(K) = SQRT(ATEMP)
+END OF LOOP
+.
+LET RES = SQRT(RES)
+.
+TITLE SPREAD-LOCATION PLOT
+Y1LABEL SQUARE ROOT ABSOLUTE RESIDUAL VW
+X1LABEL MEDIAN VW
+CHARACTER CIRCLE BLANK
+CHARACTER SIZE 1.2
+LINE BLANK SOLID
+PLOT RES MED AND
+PLOT MAD GROUPMD

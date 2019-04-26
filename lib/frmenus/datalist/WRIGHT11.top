@@ -1,0 +1,8 @@
+----- <~datalist\WRIGHT11.top> WRIGHT11.DAT
+ 
+WRIGHT11.DAT
+ 
+View     <xcl: LIST WRIGHT11.DAT>
+Load     <x2cl: SKIP 25; READ WRIGHT11.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\WRIGHT11.DAT>
+ 

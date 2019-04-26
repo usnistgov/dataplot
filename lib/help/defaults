@@ -1,0 +1,158 @@
+----------  *DEFAULTS*  ----------
+ 
+                  Selected DATAPLOT Defaults
+ 
+---------------------------------------------------------------------
+Worksheet & Data Dimensions
+ 
+   Max number of observations per variable:                20,000
+   Max number of variables:                                10
+   Max worksheets size (obs/var x number of variables):    200,000
+   Max number of characters (all functions & strings):     10,000
+ 
+   Max number of rows    in a matrix:                      1000
+   Max number of columns in a matrix:                      100
+   Max number of commands saved:                           200
+   Max number of command lines within a LOOP:              200
+   Max number of terms in multilinear FIT:                 35
+   Max number of names (variables, parameters, functions): 500
+ 
+   Note--Use STATUS    command to definitely check defaults
+         Use DIMENSION command to increase default number of variables
+ 
+---------------------------------------------------------------------
+Characters Appearing at Data Points within a Plot
+ 
+   Attibute         Default             Command to Change/Example
+ 
+   Type             blank               CHARACTER X
+   Height           2                   CHARACTER SIZE 3
+                                        (CHARACTER SIZE command always
+                                        resets width to height/2).
+   Width            1                   CHARACTER WIDTH 1.5
+                                        (CHARACTER WIDTH command may be
+                                        used to independently set width
+                                        without affecting height).
+   Angle            0                   CHARACTER ANGLE 45
+   Offset           0 0                 CHARACTER OFFSET 2 4
+   Justification    left                CHARACTER JUSTIFICATION CENTER
+   Font             Tektronix           FONT SIMPLEX
+   Color            black               CHARACTER COLOR BLUE
+ 
+---------------------------------------------------------------------
+Lines Connecting Data Points within a Plot
+ 
+   Attibute         Default             Command to Change/Example
+ 
+   Type             solid               LINE DOTTED
+   Thickness        .1                  LINE THICKNESS .3
+   Color            black               LINE COLOR BLUE
+ 
+---------------------------------------------------------------------
+Spikes Dropping from Data Points Within a Plot
+ 
+   Attibute         Default             Command to Change/Example
+ 
+   On/Off           Off                 SPIKE ON
+   Type             solid               SPIKE LINE DOTTED
+   Base             0                   SPIKE BASE 500
+   Thickness        .1                  SPIKE THICKNESS .3
+   Color            black               SPIKE COLOR BLUE
+ 
+---------------------------------------------------------------------
+Bars Dropping from Data Points Within a Plot
+ 
+   Attibute         Default             Command to Change/Example
+ 
+   On/Off           Off                 BAR ON
+   Filled?          not filled          BAR FILL ON
+   Fill Pattern     solid (if on)       BAR PATTERN DDDU
+   Type of border   solid               BAR BORDER LINE DOTTED
+   Base             0                   BAR BASE 500
+   Thickness        .1                  BAR BORDER THICKNESS .3
+   Color            black               BAR BORDER COLOR BLUE
+ 
+---------------------------------------------------------------------
+Title Appearing above a Plot
+ 
+   Attibute         Default             Command to Change/Example
+ 
+   Contents         blank               TITLE CALIBRATION ANALYSIS
+   Height           2                   TITLE SIZE 3
+                                        (TITLE SIZE command always
+                                        resets width to height/2).
+   Font             Tektronix           FONT SIMPLEX
+   Color            black               TITLE COLOR BLUE
+ 
+---------------------------------------------------------------------
+Labels Appearing around a Plot
+ 
+   Attibute         Default             Command to Change/Example
+ 
+   Contents         blank               XLABEL TIME
+   Height           2                   LABEL SIZE 3
+                                        (LABEL SIZE command always
+                                        resets width to height/2).
+   Width            1                   LABEL HW 3 2
+                                        (LABEL HW command allows
+                                        independent setting of both
+                                        height and width).
+   Font             Tektronix           FONT SIMPLEX
+   Color            black               LABEL COLOR BLUE
+ 
+---------------------------------------------------------------------
+Legends Appearing in a Plot
+ 
+   Attibute         Default             Command to Change/Example
+ 
+   Contents         blank               LEGEND 1 U = USA
+   Location         20% over & 80% up   LEGEND 1 COORDINATES 70 30
+   Height           2                   LEGEND 1 SIZE 3
+                                        (LEGEND 1 SIZE command always
+                                        resets width to height/2).
+   Width            1                   LEGEND 1 HW 3 2
+                                        (LEGEND 1 HW command allows
+                                        independent setting of both
+                                        height and width).
+   Font             Tektronix           FONT SIMPLEX
+   Color            black               LEGEND 1 COLOR BLUE
+ 
+---------------------------------------------------------------------
+Tic Labels Appearing around a Plot
+ 
+   Attibute         Default             Command to Change/Example
+ 
+   Value of         automatic from data LIMITS 0 100
+                    and LIMITS
+   Decimal Places   automatic           TIC LABEL DECIMALS 2
+   Height           2                   TIC LABEL SIZE 3
+                                        (TIC LABEL SIZE command always
+                                        resets width to height/2).
+   Width            1                   TIC LABEL HW 3 2
+                                        (TIC LABEL HW command allows
+                                        independent setting of both
+                                        height and width).
+   Font             Tektronix           FONT SIMPLEX
+   Color            black               TIC LABEL COLOR BLUE
+ 
+---------------------------------------------------------------------
+Frame (Axis) Appearing Around a Plot
+ 
+   Attibute         Default             Command to Change/Example
+ 
+   On/OFF           on                  FRAME OFF
+   Color            black               FRAME COLOR BLUE
+ 
+---------------------------------------------------------------------
+Tic Marks Appearing around a Plot
+ 
+   Attibute         Default             Command to Change/Example
+ 
+   On/Off           On                  TICS OFF
+   In/Out/Thru      Out                 TIC LOCATION INSIDE
+   Length           ??                  TIC LENGTH .3
+   Number of        automatic from data MAJOR TIC NUMBER 11
+                                        MINOR TIC NUMBER 0
+   Font             Tektronix           FONT SIMPLEX
+   Color            black               TIC LABEL COLOR BLUE
+ 

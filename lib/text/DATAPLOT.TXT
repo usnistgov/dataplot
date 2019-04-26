@@ -1,0 +1,63 @@
+Dataplot Enhancements and Graphical User Interface    (Spring, 1995)
+James J. Filliben, Statistical Engineering Division, CAML
+Alan Herkert, Scientific Computing Environments Division, CAML
+ 
+The Dataplot software system continues to serve as a
+communication and application forum for the development and
+dissemination of statistical methodology to the scientific and
+engineering community.  Some of the more significant enhancements
+over the last year are as follows:
+ 
+1. Documentation: Alan Heckert has produced 2 volumes (1000 pages
+   & 700 pages) of documentation.  The documentation was produced
+   with framemaker.  It is currently in WERB review.
+ 
+2. Probability Distributions: The collection of built-in
+   distribution functions (pdf's, cdf's, ppf's, random number
+   generation, probability plotting) has been expanded (Alan) and
+   now exceeds 30 distributions--exceeding most/all such
+   capabilities of commercial packages.
+ 
+3. Matrix Operations: The quality of the underlying matrix
+   operations has been enhanced (Alan) by the inclusion of many
+   LINPACK and EISPACK routines.
+ 
+4. Special Functions: Over 75 special functions which are
+   commonly needed in scientific applications have been added
+   (Alan); they were drawn mainly from the SLATEC library.
+ 
+5. Statistics Procedures: Enhancements (Alan & Jim) include:
+   DEX PHD (Design of Experiment Principal Hessian Direction) (Li)
+   Lowess extended from linear to quadratic
+   DDS (Data-Dependent Systems): command & extensive FAQ file (Pandit)
+   Lieberman-Miller Regression Tolerance Limits
+   Testing & confidence limits for coef. of variation (Vangel)
+   Confidence Distribitions
+ 
+6. Data File Augmentations: (Jim) The collection of
+   interesting on-line data sets now approximates 250.
+ 
+7. Front-end Menu Subsystem and Graphical User Interface:
+   A Turbo-C GUI for the PC is near completion (Jim).  It was
+   demonstrated in the SED Software Seminar Series (April 10).
+   Design philosophy for the GUI involves many "power" centers:
+   Data-centric (easy link to 250 data files) Literature-centric
+   (connection to classic stat literature data sets)
+   Graphics-centric (graphs usually are better than numbers)
+   (e.g., confidence distributions improve confidence limits)
+   Problem-centric (some analysts need general problem
+   "roadmaps") (thus GUI structured to guide/teach as well as be
+   used) Technique-centric (some analysts want specific
+   techniques) (thus GUI designed to allow quick access to
+   techniques) Further, the GUI menu system has been designed as:
+   Extensible/Editable (therefore GUI menus are entirely
+   file-driven) Multi-path menu solutions (thus menu files are
+   hypertext)
+ 
+8. Dataplot Links with Other NIST Programs:
+   1. HPCC/SIMA
+   2. Coatings Consortium
+   3. NIST Design of Experiment Workshops
+   4. Multimedia Conferencing via SCOOT (Jeff Fong)
+   5. SEMATECH Electronic Handbook
+ 

@@ -1,0 +1,8 @@
+----- <~datalist\BOXCAKE2.top> BOXCAKE2.DAT
+ 
+BOXCAKE2.DAT
+ 
+View     <xcl: LIST BOXCAKE2.DAT>
+Load     <x2cl: SKIP 25; READ BOXCAKE2.DAT Y X1 TO X5>
+Print    <xccl: printfile C:\DATAPLOT\BOXCAKE2.DAT>
+ 

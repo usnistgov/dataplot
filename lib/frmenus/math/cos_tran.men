@@ -1,0 +1,23 @@
+This is file cos_tran.men--Compute discrete cosine transform of a variable
+ 
+--------------------
+ 1. Discrete Cosine Transform
+ 2. LET Y = COSINE TRANSFORM X
+ 3.
+ 4. Variable for which to compute the
+ 5.    cosine transform:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Variable to store the cosine transform:
+ 6. @CE 2 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 3 0 -10 50 *
+10.
+11.
+12. Compute the Cosine Transform?:
+--------------------
+GR FE
+LET _2 = COSINE TRANSFORM  _1 _3
+--------------------
+WEB HELP COSINE TRANSFORM
+--------------------

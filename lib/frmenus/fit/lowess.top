@@ -1,0 +1,16 @@
+----- <~fit\lowess.top> LOWESS
+
+LOWESS (Locally Weighted Least Squares)
+
+Do the Fit          <xemf: ~math\lowess.men>
+
+Discussion          <~fit\disclowe.top>
+NIST/SEMATECH Handbook (Lowess) <xcl: web handbook lowess>
+
+Do Model Validation <~fit\modelval.top>
+Built-in Datasets   <~dataload\reg1p.top>
+
+Worked Examples
+   Mavro  data (linear)      <xcf: ~fit\MAVRO.DP>
+   Hayes  data (quadratic)   <xcf: ~fit\HAYES1.DP>
+

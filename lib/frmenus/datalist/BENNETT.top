@@ -1,0 +1,8 @@
+----- <~datalist\BENNETT.top> BENNETT.DAT
+ 
+BENNETT.DAT
+ 
+View     <xcl: LIST BENNETT.DAT>
+Load     <x2cl: SKIP 25; READ BENNETT.DAT Y X1 X2>
+Print    <xccl: printfile C:\DATAPLOT\BENNETT.DAT>
+ 

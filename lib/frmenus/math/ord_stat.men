@@ -1,0 +1,39 @@
+This is file ord_stat.men--Generate order statistic medians
+ 
+--------------------
+ 1. Order Statistic Medians
+ 2. LET Y = NORMAL ORDER STATISTIC MEDIANS FOR I = 1 1 100
+ 3.
+ 4. Start value (a positive integer):
+ 4. @CE 1 0 42 50 ?
+ 5. Stop value (a positive integer):
+ 5. @CE 2 0 42 50 ?
+ 6. Increment (a positive integer):
+ 6. @CE 3 0 42 50 ?
+ 7. Variable to store the order statistic medians:
+ 7. @CE 5 0 42 50 ? gui-none
+ 8. Distribution:
+ 9. @CE 6 1 10 25 Normal
+10. @CE 6 2 10 25 Uniform
+11. @CE 6 3 10 25 Half Normal
+12. @CE 6 4 10 25 EV1 (Gumbel)
+13. @CE 6 5 10 25 EV2 (Frechet)
+14. @CE 6 6 10 25 Weibull
+15.
+16. Subset/Except/For Specification:
+17. @CE 7 0 1 50 *
+18.
+19.
+20. Generate the Order Statistic Medians?:
+--------------------
+GR FE
+LET STRING ZZZZSTR = NORMAL
+@IF 6 2 LET STRING ZZZZSTR = UNIFORM
+@IF 6 3 LET STRING ZZZZSTR = HALF NORMAL
+@IF 6 4 LET STRING ZZZZSTR = EV1
+@IF 6 5 LET STRING ZZZZSTR = EV2
+@IF 6 6 LET STRING ZZZZSTR = WEIBULL
+LET _5 = ^ZZZZSTR ORDER STATISTIC MEDIANS FOR I = _1 _3 _2  _7
+--------------------
+WEB HELP ORDER STATISTIC MEDIANS
+--------------------

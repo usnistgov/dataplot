@@ -1,0 +1,21 @@
+----- <~file\discwork.top> Files: Workspace Dimenstions
+
+File: Workspace Dimensions
+
+DATAPLOT WORKSPACE DIMENSIONS
+
+By default, Dataplot splits its data workspace into a rectangular
+grid of 10 columns by N rows.  N is typically 100,000 under Unix
+and for the command line version of Dataplot under Windows.  N is
+currently 20,000 for the Windows GUI version of Dataplot.
+
+You may redimension this default workspace to obtain more columns
+(at the expense of fewer rows).  This can be done under the
+"Re-dimension Workspace" menu.
+
+If you need more rows, you need to run a version of Dataplot that
+has been compiled to accomodate more rows.  If you need this, then
+contact Alan Heckert at
+
+     alan.heckert@nist.gov
+

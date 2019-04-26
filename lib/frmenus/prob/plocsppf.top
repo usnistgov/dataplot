@@ -1,0 +1,27 @@
+----- <~prob\plocsppf.top> Plot PPF's for Location-Scale Continuous Distributions
+
+Plot PPF's (no shape parameters)
+
+Plot Percent Point Function for Continuous Distributions
+with No Shape Parameters
+
+Anglit                                    <xemf: ~prob\pangppf.men>
+Arcsin                                    <xemf: ~prob\parsppf.men>
+Cauchy                                    <xemf: ~prob\pcauppf.men>
+Cosine                                    <xemf: ~prob\pcosppf.men>
+Double Exponential (Laplace)              <xemf: ~prob\pdexppf.men>
+Exponential                               <xemf: ~prob\pexpppf.men>
+Extreme Value Type I(Gumbel)  - Minimum   <xemf: ~prob\pev11ppf.men>
+Extreme Value Type I(Gumbel)  - Maximum   <xemf: ~prob\pev12ppf.men>
+Half-Cauchy                               <xemf: ~prob\phfcppf.men>
+Half-Logistic                             <xemf: ~prob\phflppf.men>
+Half-Normal                               <xemf: ~prob\phfnppf.men>
+Hyperbolic Secant                         <xemf: ~prob\phseppf.men>
+Logistic                                  <xemf: ~prob\plogppf.men>
+Maxwell                                   <xemf: ~prob\pmaxppf.men>
+Normal                                    <xemf: ~prob\pnorppf.men>
+Rayleigh                                  <xemf: ~prob\prayppf.men>
+Semi-Circular                             <xemf: ~prob\psemppf.men>
+Slash                                     <xemf: ~prob\pslappf.men>
+Uniform                                   <xemf: ~prob\punippf.men>
+

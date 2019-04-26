@@ -1,0 +1,30 @@
+. This is dataplot macro   DEXKNBOXLEE.DP  (= variant of dexlnbox.dp for yooyoung)
+. Purpose: Write out k = ...  n = ... is upper left  corner of plot frame
+. Note   : Used by DEXPLOT.DP macros
+. Date   : September 16, 2011
+. Input  : k, n, texth, textw, norig
+.
+. -----start point-----
+.
+if texth not exist; let texth = 2; end if
+if textw not exist; let textw = texth/2; end if
+.
+let boxright = 19 + 5*textw
+if n <= 999; let boxright = 17 + 5*textw; end if
+. if n <= 99;. let boxright = 15 + 5*textw;. end if
+if n <= 99; let boxright = 16 + 5*textw; end if
+.
+let boxright = boxright + 4
+.
+if foreground exists
+   box color ^foreground
+   box fill pattern solid
+   box fill color 67
+end if
+lines solid; box 15 85 boxright 90
+.
+if leecolor exists; color ^leecolor; end if
+.
+hw texth textw; just left; move 16 87.75; text k = ^k
+move 16 85.75; text n = ^n / ^norig
+box fill pattern blank; box fill color g80

@@ -1,0 +1,39 @@
+This is file glscdf.men--Compute Generalized Logarithmic Series cdf and tail probability
+ 
+--------------------
+ 1. Compute Generalized Logarithmic Series cdf and Tail Probability
+ 2. LET Y = GLSCDF(X,THETA,BETA)
+ 3.
+ 4. Input values:
+ 5.                              x (x = 1, 2, ...):
+ 5. @CE 1 0 42 50 ?
+ 6.          shape parameter theta (0 < theta < 1):
+ 6. @CE 2 0 42 50 ?
+ 7.     shape parameter beta (1 <= beta < 1/theta):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Output parameters:
+10.                  name for the cdf value:
+10. @CE 4 0 42 50 ?
+11.     name for the tail probability value:
+11. @CE 5 0 42 50 ?
+12.
+13.
+14. Compute the Probability?
+--------------------
+AN FE
+LET ZTHETA = 1
+LET ZBETA = 1
+@IF 2 0 LET ZTHETA = _2
+IF ZTHETA <= 0
+   LET ZTHETA = 1
+END OF IF
+@IF 3 0 LET ZBETA = _3
+IF ZBETA <= 0
+   LET ZBETA = 1
+END OF IF
+@IF 4 0 LET _4 = GLSCDF( _1 , ZTHETA , ZBETA )
+@IF 5 0 LET _5 = 1 - GLSCDF( _1 , ZTHETA , ZBETA )
+--------------------
+WEB HELP GLSCDF
+--------------------

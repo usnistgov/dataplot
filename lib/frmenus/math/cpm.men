@@ -1,0 +1,31 @@
+This is file cpm.men--Compute cpm of a variable
+ 
+--------------------
+ 1. Cpm
+ 2. LET A = CPM Y
+ 3.
+ 4. Variable for which to compute the Cpm:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Value for the upper specification limit?:
+ 5. @CE 2 0 33 50 ? 
+ 6. Value for the lower specification limit?:
+ 6. @CE 3 0 33 50 ?
+ 7. Value for the target limit?:
+ 7. @CE 4 0 33 50 ?
+ 8. Parameter to store the Cpm:
+ 8. @CE 5 0 33 50 ? gui-none
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 6 0 -1 50 *
+12.
+13.
+14. Compute the Cpm?:
+--------------------
+GR FE
+LET USL = _2
+LET LSL = _3
+LET TARGET = _4
+LET _5 = CPM  _1 _6
+--------------------
+WEB HELP CPM
+--------------------

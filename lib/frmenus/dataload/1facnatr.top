@@ -1,0 +1,13 @@
+----- <~dataload\1facnatr.top> Load 1-Factor Data: NATRELLA
+
+Load 1-Factor Data: Natrella
+
+NATR323.DAT  Latent heat of fusion         <xcf: ~dataload\NATR323.DP>
+NATR326.DAT  Compressive strength of concrete <xcf: ~dataload\NATR326.DP>
+NATR332.DAT  Battery capacity              <xcf: ~dataload\NATR332.DP>
+NATR334.DAT  Surface hardness of steel plates <xcf: ~dataload\NATR334.DP>
+NATR338.DAT  Molecular weight of dextron   <xcf: ~dataload\NATR338.DP>
+NATR341.DAT  Breaking strength of cement briquettes <xcf: ~dataload\NATR341.DP>
+
+NATR48.DAT   Dive bombing methods          <xcf: ~dataload\NATR48.DP>
+

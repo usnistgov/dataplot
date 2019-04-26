@@ -1,0 +1,10 @@
+----- <~time\dds25.top> DDS FAQ 25 DDS Estimate Uncertainties
+ 
+25. How attach uncertainties to DDS estimates?
+ 
+The modeling program provides 95 confidence
+intervals, using the standard nonlinear least
+squares method, for the autoregressive and moving
+average parameters and the mean when it is
+estimated.
+ 

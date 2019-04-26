@@ -1,0 +1,33 @@
+This is file boxplot2.men--Box Plot on Halves
+ 
+--------------------
+ 1. Box Plot on Halves
+ 2. BOX PLOT Y X
+ 3.
+ 4. Vertical   Axis Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Generate the Box Plot?
+--------------------
+GR FE
+DELETE ZSEQ
+DELETE ZTAG
+LET ZN = NUMBER _1 _2
+LET ZSEQ = SEQUENCE 1 1 ZN _2
+LET ZTAG = CODE2 ZSEQ _2
+.
+CHARACTER SAVE
+LINE SAVE
+CHARACTERS BOX PLOT
+LINES BOX PLOT
+.
+BOX PLOT _1 ZTAG _2
+CHARACTER RESTORE
+LINE RESTORE
+--------------------
+WEB HELP BOX PLOT
+--------------------

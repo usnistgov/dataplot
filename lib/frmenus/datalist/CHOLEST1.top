@@ -1,0 +1,8 @@
+----- <~datalist\CHOLEST1.top> CHOLEST1.DAT
+ 
+CHOLEST1.DAT
+ 
+View     <xcl: LIST CHOLEST1.DAT>
+Load     <x2cl: SKIP 25; READ CHOLEST1.DAT Y X REP>
+Print    <xccl: printfile C:\DATAPLOT\CHOLEST1.DAT>
+ 

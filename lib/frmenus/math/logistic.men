@@ -1,0 +1,32 @@
+This is file logistic.men--Generate a logistic of logistic numbers
+ 
+--------------------
+ 1. Logistic Numbers
+ 2. LET Y = LOGISTIC NUMBERS FOR I = 1 1 100
+ 3.
+ 4. Start value (a positive intger):
+ 4. @CE 1 0 33 50 ?
+ 5. Stop value (a positive integer):
+ 5. @CE 2 0 33 50 ?
+ 6. Increment (a positive integer):
+ 6. @CE 3 0 33 50 ?
+ 7. Value for X0 (between 0 and 1):
+ 7. @CE 4 0 33 50 ?
+ 8. Value for K (between 0 and 4):
+ 8. @CE 5 0 33 50 ?
+ 9. Variable to store the logistic numbers:
+ 9. @CE 6 0 33 50 ? gui-none
+10.
+11. Subset/Except/For Specification:
+12. @CE 7 0 1 50 *
+13.
+14.
+15. Generate the Logistic Numbers?:
+--------------------
+GR FE
+LET X0 = _4
+LET K = _5
+LET _6 = LOGISTIC NUMBERS FOR I = _1 _3 _2  _7
+--------------------
+WEB HELP LOGISTIC NUMBERS
+--------------------

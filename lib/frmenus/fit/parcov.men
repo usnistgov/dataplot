@@ -1,0 +1,29 @@
+This is file parcov.men--Compute the Parameter Variance-Covariance Matrix
+ 
+--------------------
+ 1. Compute the Parameter Variance-Covariance Matrix
+ 2. Macro ...
+ 3.
+ 4. Name for the parameter variance-covariance matrix:
+ 4. @CE 1 0  42 50 ?
+ 5.
+ 6.
+ 7. Compute the Parameter Variance-Covariance Matrix?:
+--------------------
+GR FE
+DELETE ZZZZ
+SKIP 0
+READ DPST4F.DAT ZZZZTEMP
+LET ZZZZN = SIZE ZZZZTEMP
+LET ZZZZP = INT(SQRT(ZZZZN) + 0.1)
+LET ZZZZTAG = SEQUENCE 1 ZZZZP 1 ZZZZP
+LOOP FOR K = 1 1 ZZZZP
+    LET ZZZZXT^K = ZZZZTEMP
+    RETAIN ZZZZXT^K SUBSET ZZZZTAG = K
+END OF LOOP
+WRITE ZZZZJUNK.DAT ZZZZXT1 TO ZZZZXT^ZZZZP
+DELETE  ZZZZTAG ZZZZXT1 TO ZZZZXT^ZZZZP ZZZZTEMP ZZZZN ZZZZP
+READ MATRIX ZZZZJUNK.DAT _1
+--------------------
+WEB HELP FIT
+--------------------

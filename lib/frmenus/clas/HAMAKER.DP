@@ -1,0 +1,10 @@
+----- <~dataloex\HAMAKER.DP> Load & Execute HAMAKER.DAT
+
+. This is file    HAMAKER.DP
+
+DELETE Y
+SKIP 25
+READ HAMAKER.DAT Y
+TITLE HAMAKER.DAT
+/
+

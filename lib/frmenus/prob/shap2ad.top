@@ -1,0 +1,50 @@
+----- <~prob\ksshap2ks.top> Kolmogorov-Smirnov Goodness of Fit Test (2 Shape Parameters)
+
+Perform Kolmogorov-Smirnov Goodness of Fit Test (two shape parameters)
+
+Perform Kolmogorov-Smirnov Goodness of Fit Test
+for Continuous Distributions with Two Shape Parameter
+(Uncensored Case)
+
+Beta                                      <xemf: ~prob\ksbet.men>
+Beta Normal                               <xemf: ~prob\ksbno.men>
+Burr Type 3                               <xemf: ~prob\ksbu3.men>
+Burr Type 4                               <xemf: ~prob\ksbu4.men>
+Burr Type 5                               <xemf: ~prob\ksbu5.men>
+Burr Type 6                               <xemf: ~prob\ksbu6.men>
+Burr Type 9                               <xemf: ~prob\ksbu9.men>
+Burr Type 12                              <xemf: ~prob\ksb12.men>
+Doubly Pareto Uniform                     <xemf: ~prob\ksdpu.men>
+Exponentiated Weibull                     <xemf: ~prob\ksewe.men>
+F                                         <xemf: ~prob\ksf.men>
+Folded Cauchy                             <xemf: ~prob\ksfca.men>
+Folded Normal                             <xemf: ~prob\ksfnr.men>
+G-and-H                                   <xemf: ~prob\ksgh.men>
+Generalized Asymmetric Laplace            <xemf: ~prob\ksgal.men>
+Generalized Gamma                         <xemf: ~prob\ksggd.men>
+Generalized McLeish                       <xemf: ~prob\ksgmc.men>
+Generalized Topp and Leone                <xemf: ~prob\ksgtl.men>
+Generalized Tukey-Lambda                  <xemf: ~prob\ksgld.men>
+Gompertz                                  <xemf: ~prob\ksgom.men>
+Gompertz Makeham                          <xemf: ~prob\ksmak.men>
+    (Meeker/Escobar 2-shape parameterization)
+Inverse Gaussian                          <xemf: ~prob\ksig.men>
+Inverted Beta                             <xemf: ~prob\ksib.men>
+Johnson SB                                <xemf: ~prob\ksjsb.men>
+Johnson SU                                <xemf: ~prob\ksjsu.men>
+Kumaraswamy                               <xemf: ~prob\kskum.men>
+Log Beta                                  <xemf: ~prob\kslbe.men>
+Log Skew Normal                           <xemf: ~prob\kslsn.men>
+Non-Central Chi-Square                    <xemf: ~prob\ksncc.men>
+Non-Central T                             <xemf: ~prob\ksnct.men>
+Pareto                                    <xemf: ~prob\kspar.men>
+Pareto of the Second Kind                 <xemf: ~prob\kspa2.men>
+Power Lognormal                           <xemf: ~prob\kspln.men>
+Reciprocal Inverse Gaussian               <xemf: ~prob\ksrig.men>
+Reflected Generalized Topp and Leone      <xemf: ~prob\ksrgt.men>
+Skew T                                    <xemf: ~prob\ksst.men>
+Truncated Normal                          <xemf: ~prob\kstnr.men>
+Two-Sided Ogive                           <xemf: ~prob\kstso.men>
+Two-Sided Power                           <xemf: ~prob\kstsp.men>
+Two-Sided Slope                           <xemf: ~prob\kstss.men>
+

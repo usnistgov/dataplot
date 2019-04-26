@@ -1,0 +1,8 @@
+----- <~datalist\SOULEN0.top> SOULEN0.DAT
+ 
+SOULEN0.DAT
+ 
+View     <xcl: LIST SOULEN0.DAT>
+Load     <x2cl: SKIP 25; READ SOULEN0.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\SOULEN0.DAT>
+ 

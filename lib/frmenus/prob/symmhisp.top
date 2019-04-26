@@ -1,0 +1,14 @@
+----- <~prob\symmhisp.top> Symmetric Dist. pdf Plots
+
+Symmetric Distribution pdf Plots
+
+Uniform                  <xemf: ~prob\unihispd.men>
+Normal                   <xemf: ~prob\norhispd.men>
+Logistic                 <xemf: ~prob\loghispd.men>
+Double Exponential       <xemf: ~prob\dexhispd.men>
+Cauchy                   <xemf: ~prob\cauhispd.men>
+Tukey                    <xemf: ~prob\tukhispd.men>
+t (df NU)                <xemf: ~prob\thispd.men>
+Semi-Circular            <xemf: ~prob\semhispd.men>
+Triangular               <xemf: ~prob\trihispd.men>
+

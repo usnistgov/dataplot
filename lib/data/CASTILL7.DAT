@@ -1,0 +1,55 @@
+This is Dataplot Data File     CASTILL7.DAT
+Electical Insulation Data--Lifetime of insulation (pre-sorted)
+Engineering Goal--Determine min life characteristics of insulation
+Response Variable = lifetime of electrical insulation (hours)
+Number of Observations = 30
+Number of Variables per line image = 1
+Order of variables per line image--
+   1. Response variable = lifetime of electrical insulation (hrs)
+Statistical Category--Extreme Value Analysis
+To read this into Dataplot--
+   SKIP 25
+   READ CASTILL7.DAT Y
+Source--Enrique Castillo (1988). Extreme Value Theory
+        in Engineering. Academic Press, San Diego, California,
+        p. 336-337.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Lifetime of electical insulation (hours) (pre-sorted)
+----------------------------------------------------------------
+   744
+   822
+   847
+   885
+   920
+   948
+   968
+   985
+  1010
+  1018
+  1019
+  1028
+  1029
+  1031
+  1040
+  1047
+  1071
+  1074
+  1097
+  1134
+  1147
+  1170
+  1174
+  1209
+  1251
+  1273
+  1320
+  1383
+  1388
+  1462

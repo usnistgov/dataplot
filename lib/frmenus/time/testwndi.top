@@ -1,0 +1,29 @@
+----- <~time\testwndi.top> Discussion: Testing White Noise
+ 
+Discussion: Testing White Noise
+ 
+A series of independent errors is called
+white noise.  That is, the series of data
+points are random.  Random data should
+
+   1) independent (i.e., no autocorrelation);
+   2) fixed location;
+   3) fixed scale;
+   4) fixed distribution.
+
+Tests for white noise are used in two ways.
+
+   1) They are used to test if the original
+      series appears to be white noise.  If so,
+      no further analysis is likely to be
+      helpful.
+
+   2) The residuals from a good time series model
+      should be random, i.e. white noise.  Testing
+      the residuals for white noise should be a
+      routine part of the model validation stage for
+      any time series analysis.
+
+The 4-PLOT is an excellent graphical technique for
+assessing randomness.
+

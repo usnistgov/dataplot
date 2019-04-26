@@ -1,0 +1,28 @@
+This is file roots.men--Compute the roots of a function
+ 
+--------------------
+ 1. Roots
+ 2. LET Y = ROOTS F1 WRT X FOR X = 0 TO 10
+ 3.
+ 4. Name of previously created function (or enter a functional expression):
+ 5. @CE 2 0 -7 50 ?
+ 6. Variable on which to find root:
+ 6. @CE 3 0 33 50 ? gui-variable
+ 7. Lower range for root:
+ 7. @CE 4 0 33 50 ?
+ 8. Upper range for root:
+ 8. @CE 5 0 33 50 *
+ 9. Variable  to store the roots:
+ 9. @CE 1 0 33 50 ? gui-none
+10.
+11. Subset/Except/For Specification:
+12. @CE 6 0 -7 50 *
+13.
+14.
+15. Compute the Roots?:
+--------------------
+GR FE
+LET _1 = ROOTS _2 WRT _3 FOR _3 = _4 TO _5  _6
+--------------------
+WEB HELP ROOTS
+--------------------

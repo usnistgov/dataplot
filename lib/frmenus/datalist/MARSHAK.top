@@ -1,0 +1,8 @@
+----- <~datalist\MARSHAK.top> MARSHAK.DAT
+ 
+MARSHAK.DAT
+ 
+View     <xcl: LIST MARSHAK.DAT>
+Load     <x2cl: SKIP 25; READ MARSHAK.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\MARSHAK.DAT>
+ 

@@ -1,0 +1,8 @@
+----- <~datalist\BOXPOISO.top> BOXPOISO.DAT
+ 
+BOXPOISO.DAT
+ 
+View     <xcl: LIST BOXPOISO.DAT>
+Load     <x2cl: SKIP 25; READ BOXPOISO.DAT Y X1 X2 REP>
+Print    <xccl: printfile C:\DATAPLOT\BOXPOISO.DAT>
+ 

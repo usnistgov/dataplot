@@ -1,0 +1,24 @@
+This is file matr_pco.men--Pooled Covariance matrix
+ 
+--------------------
+ 1. Compute Pooled Variance-Covariance Matrix
+ 2. LET MPOOL = POOLED VARIANCE-COVARIANCE MATRIX MA MB
+ 3.
+ 4. Name of first matrix:
+ 4. @CE 1 0 42 50 ? gui-matrix
+ 5. Name of second matrix:
+ 5. @CE 2 0 42 50 ? gui-matrix
+ 6. Matrix  to store the pooled covariance matrix:
+ 6. @CE 3 0 42 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Compute the Pooled Variance-Covariance Matrix?:
+--------------------
+GR FE
+LET _3 = POOLED VARIANCE-COVARIANCE MATRIX  _1 _2 _4
+--------------------
+WEB HELP POOLED VARIANCE-COVARIANCE MATRIX
+--------------------

@@ -1,0 +1,13 @@
+----- <~dataview\dexreg.top> View Regression Design Data
+
+View Regression Design Data
+
+1 independent variable
+   BOXBOD.DAT   Oxygen demand        <xcf: ~dataview\BOXBOD.DP>
+   BOXRATS.DAT  Rat growth rate      <xcf: ~dataview\BOXRATS.DP>
+   BOXWELD.DAT  Breaking strength    <xcf: ~dataview\BOXWELD.DP>
+
+2 independent variables
+   BOXCHEM2.DAT Chemical impurity         <xcf: ~dataview\BOXCHEM2.DP>
+   BOXSPRAY.DAT Aerosol spray dispersion  <xcf: ~dataview\BOXSPRAY.DP>
+

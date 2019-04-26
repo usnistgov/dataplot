@@ -1,0 +1,62 @@
+This is file valmodel.men--Validate Model
+
+--------------------line 3
+1. Validate Model
+2. LET FUNCTION F = .
+3.
+4. Variables:
+5.    Intensity         (= Y)
+6.    Wavelength        (= X)
+7.    Weights           (= W)
+8.    Predicted Values  (= PRED)
+9.    Residuals         (= RES)
+10.
+11. Page Title
+12. @CE 1 0 1 50 *
+13.
+14. Subset/Except/For Specification:
+15. @CE 2 0 1 50 *
+16.
+17.
+18. Validate the Model?
+--------------------
+GR FE
+CHARACTERS X BLANK
+LINES BLANK SOLID
+MULTIPLOT CORNER COORDINATES 5 5 95 90
+MULTIPLOT 2 2
+   PLOT
+   JUSTIFICATION LEFT
+   HW 4 3
+   LET N = NUMBER Y
+   MOVE 15 85
+   TEXT Data : ^DATAFILE
+   MOVE 15 75
+   TEXT Model: ^MODEL
+   MOVE 15 65
+   TEXT n = ^N
+   MOVE 15 50
+   TEXT a1 = ^A1
+   MOVE 15 40
+   TEXT a2 = ^A2
+   MOVE 15 30
+   TEXT a3 = ^A3
+   MOVE 15 15
+   TEXT Residual SD = ^RESSD
+   HW 2 1
+   X3LABEL AUTOMATIC
+   PLOT Y PRED VERSUS X
+   LET ZZERO = Y-Y
+   PLOT RES ZZERO VERSUS X
+   NORMAL PROBABILITY PLOT RES
+MULTIPLOT OFF
+X3LABEL
+HW 3 2
+MOVE 50 93
+JUSTIFICATION CENTER
+TEXT _1
+HW 2 1
+JUSTIFICATION LEFT
+--------------------
+WEB HELP FIT
+--------------------

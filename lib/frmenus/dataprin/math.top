@@ -1,0 +1,7 @@
+----- <~dataprin\math.top> Print (to Printer) Built-in Mathematics Data Files
+
+Print (to Printer) Built-in Mathematics Data Files
+
+FREQPRIM.DAT  Frequency of prime numbers   <xcf: ~dataprin\FREQPRIM.DP>
+PRIMESM.DAT   Mersenne prime numbers       <xcf: ~dataprin\PRIMESM.DP>
+

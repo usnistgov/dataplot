@@ -1,0 +1,9 @@
+----- <~dex2kmp\loaddex8.top> Load NIST DEX Course Ch. 8 Files
+ 
+Load NIST DEX Course Chapter 8 Files
+ 
+BOXSPRIN.DAT  2**3  <x2cl: SKIP 25; READ BOXSPRIN.DAT Y X1 X2 X3>
+BOXPILOT.DAT  2**3  <x2cl: SKIP 25; READ BOXPILOT.DAT Y X1 X2 X3>
+BOXCHEM.DAT   2**4  <x2cl: SKIP 25; READ BOXCHEM.DAT Y X1 TO X4>
+BOXREACT.DAT  2**5  <x2cl: SKIP 25; READ BOXREACT.DAT Y X1 TO X5>
+ 

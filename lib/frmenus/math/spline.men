@@ -1,0 +1,58 @@
+This is file spline.men--Compute a spline fit of a variable
+ 
+--------------------
+ 1. Spline Fit
+ 2. SPLINE FIT Y X KNOTS
+ 3.
+ 4. Vertical  axis variable for the spline fit:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Horizontal axis variable for the spline fit:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Knots variable:
+ 6. @CE 3 0 33 50 ? gui-variable
+ 7. 
+ 8. Order of fit:
+ 9. @CE 4 1 14 23 Linear
+ 9. @CE 4 2 25 34 Quadratic
+ 9. @CE 4 3 36 45 Cubic
+10. @CE 4 4 14 23 Quartic
+10. @CE 4 5 25 34 Quintic
+10. @CE 4 6 36 45 Sextic
+11. @CE 4 7 14 23 Septic
+11. @CE 4 8 25 34 Octic
+11. @CE 4 9 36 45 Nonic
+12. @CE 4 10 14 23 Dexic
+13.
+14. The fitted spline curve will be plotted with the raw data.
+15.
+16. Select the line style for the spline curve:
+16. @CE 6 0 33 50 gui-line
+17. Select the character symbol for the raw data:
+17. @CE 7 0 33 50 gui-character
+18. Fill the character symbol?:
+18. @CE 8 0 33 50 gui-ooff
+19.
+20. Subset/Except/For Specification:
+21. @CE 5 0 -5 50 *
+22.
+23.
+24. Compute the spline fit?:
+--------------------
+GR FE
+@IF 4 1 LINEAR SPLINE FIT _1 _2 _3 _5
+@IF 4 2 QUADRATIC SPLINE FIT _1 _2 _3 _5
+@IF 4 3 CUBIC SPLINE FIT _1 _2 _3 _5
+@IF 4 4 QUARTIC SPLINE FIT _1 _2 _3  _5
+@IF 4 5 QUINTIC SPLINE FIT _1 _2 _3  _5
+@IF 4 6 SEXTIC SPLINE FIT _1 _2 _3  _5
+@IF 4 7 SEPTIC SPLINE FIT _1 _2 _3  _5
+@IF 4 8 OCTIC SPLINE FIT _1 _2 _3  _5
+@IF 4 9 NONIC SPLINE FIT _1 _2 _3  _5
+@IF 4 10 DEXIC SPLINE FIT _1 _2 _3  _5
+CHARACTER _7 BLANK
+CHARACTER FILL _8 OFF
+LINES BLANK _6
+PLOT _1 PRED VS _2 _5
+--------------------
+WEB HELP SPLINE FIT
+--------------------

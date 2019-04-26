@@ -1,0 +1,56 @@
+This is file ksgfsk.men--Kolmogorov-Smirnov Goodness of Fit (Continuous Dist.)
+
+--------------------
+ 1. Kolmogorov-Smirnov Goodness of Fit (Continuous Distributions)
+ 2. <Distribution> KOLMOGOROV-SMIRNOV GOODNESS OF FIT Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5.
+ 6. Distribution:
+ 7. @CE 2 1 11 35 Pareto
+ 7.                                   gamma =
+ 7. @CE 3 0 41 50 ?
+ 8. @CE 2 2 11 35 Generalized Pareto
+ 9.                       gamma =
+ 9. @CE 4 0 41 50 ?
+10.                       min(1) or max(2) =
+10. @CE 5 0 41 50 ?
+11. @CE 2 3 11 35 Pareto Type 2
+11.                                   gamma =
+11. @CE 6 0 41 50 ?
+12.
+13. @CE 2 4 11 35 Logistic
+14. @CE 2 5 11 35 Log Logistic
+14.                                   delta =
+14. @CE 7 0 41 50 ?
+15. @CE 2 6 11 35 Half-Logistic
+16.                   gamma (optional, generalized case if given) =
+16. @CE 8 0 41 50 *
+17. @CE 2 7 11 35 Generalized Logistic
+17.                                   alpha =
+17. @CE 9 0 41 50 ?
+18.
+19. Subset/Except/For Specification:
+20. @CE 10 0 -10 50 *
+21.
+22. Generate the Kolmogorov-Smirnov Goodness of Fit?
+--------------------
+GR FE
+@IF 3 0 LET GAMMA = _3
+@IF 4 0 LET GAMMA = _4
+@IF 5 0 SET MINMAX = _5
+@IF 6 0 LET GAMMA = _6
+@IF 7 0 LET DELTA = _7
+@IF 8 0 LET GAMMA = _8
+@IF 9 0 LET ALPHA = _9
+@IF 2 1 PARETO KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _10
+@IF 2 2 GENERALIZED PARETO KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _10
+@IF 2 3 PARETO TYPE 2 KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _10
+@IF 2 4 LOGISTIC KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _10
+@IF 2 5 LOG LOGISTIC KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _10
+@IF 2 6 HALF-LOGISTIC KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _10
+@IF 2 7 GENERALIZED LOGISTIC KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _10
+--------------------
+WEB HELP KOLMOGOROV-SMIRNOV GOODNESS OF FIT
+--------------------

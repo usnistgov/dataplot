@@ -1,0 +1,29 @@
+----- <~reli\plothaz.top> Plot Hazard Functions
+
+Plot Hazard Functions
+
+Normal                               <xemf: ~prob\pnorhaz.men>
+Lognormal                            <xemf: ~prob\plgnhaz.men>
+Power Normal                         <xemf: ~prob\ppnrhaz.men>
+Power Lognormal                      <xemf: ~prob\pplnhaz.men>
+
+Exponential                          <xemf: ~prob\pexphaz.men>
+Geometric Extreme Exponential        <xemf: ~prob\pgeehaz.men>
+
+Weibull (Minimum)                    <xemf: ~prob\pwei1haz.men>
+Weibull (Maximum)                    <xemf: ~prob\pwei2haz.men>
+Inverted Weibull                     <xemf: ~prob\piwehaz.men>
+Exponentiated Weibull                <xemf: ~prob\pewehaz.men>
+Bi-Weibull                           <xemf: ~prob\pbwehaz.men>
+
+Wald                                 <xemf: ~prob\pwalhaz.men>
+Inverse Gaussian                     <xemf: ~prob\pighaz.men>
+Reciprocal Inverse Gaussian          <xemf: ~prob\prighaz.men>
+Fatigue Life                         <xemf: ~prob\pflhaz.men>
+
+Gamma                                <xemf: ~prob\pgamhaz.men>
+Inverted Gamma                       <xemf: ~prob\pigahaz.men>
+
+Alpha                                <xemf: ~prob\palphaz.men>
+Exponential Power                    <xemf: ~prob\ppexhaz.men>
+

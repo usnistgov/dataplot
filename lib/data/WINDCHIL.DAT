@@ -1,0 +1,78 @@
+This is Dataplot data file     WINDCHIL.DAT
+Wind Chill Factors
+(= apparent coldness as a function of temperature & wind speed)
+Source--National Oceanic and Atmostpheric Administration
+ 
+Response Variable = apparent coldness
+Number of observations = 8 x 6 = 48
+Number of variables per line image = 3
+Order of variables per line image--
+   1. Response variable = apparent coldness
+   2. Factor 1          = temperature (6 levels) (deg. F)
+   3. Factor 2          = wind speed  (8 levels) (mph)
+Statistical areas--regression
+                   2-factor analysis
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ WINDCHIL.DAT Y TEMP WIND
+ 
+ 
+ 
+ 
+Apparent   Temperature   Windspeed
+Coldness       (F)         (mph)
+-----------------------------------
+   30          30             0
+   27          30             5
+    9          30            15
+    4          30            20
+    1          30            25
+   -2          30            30
+   -4          30            35
+   -5          30            40
+ 
+   20          20             0
+   16          20             5
+   -5          20            15
+  -10          20            20
+  -15          20            25
+  -18          20            30
+  -20          20            35
+  -21          20            40
+ 
+   10          10             0
+   6           10             5
+  -18          10            15
+  -24          10            20
+  -29          10            25
+  -33          10            30
+  -35          10            35
+  -37          10            40
+ 
+    0           0             0
+   -5           0             5
+  -31           0            15
+  -39           0            20
+  -44           0            25
+  -49           0            30
+  -52           0            35
+  -53           0            40
+ 
+  -10         -10             0
+  -15         -10             5
+  -45         -10            15
+  -53         -10            20
+  -59         -10            25
+  -64         -10            30
+  -67         -10            35
+  -69         -10            40
+ 
+  -20         -20             0
+  -26         -20             5
+  -58         -20            15
+  -67         -20            20
+  -74         -20            25
+  -79         -20            30
+  -82         -20            35
+  -84         -20            40

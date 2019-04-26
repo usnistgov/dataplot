@@ -1,0 +1,107 @@
+This is file btappcc.men-- Borel-Tanner PPCC Plot
+
+--------------------
+ 1. Borel-Tanner PPCC Plot
+ 2. BOREL-TANNER PPCC PLOT Y
+ 3.
+ 4. Your data can be either ungrouped (a single
+ 5. response variable) or grouped (a bin counts
+ 6. variable and a bin mid-points variable).
+ 7. 
+ 8. Response (or Bin Counts) Variable:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9. Optional Bin Mid-Points Variable:
+ 9. @CE 2 0 42 50 ? gui-variable
+10.
+11. Line Types:
+11. @CE 3 0 42 50 * gui-line
+12. Character Types:
+12. @CE 4 0 42 50 * gui-char
+13. Character Fill:
+13. @CE 5 0 42 50 * gui-ooff
+14.
+15. Title:
+15. @CE 6 0 22 50 *
+16. Left Axis Label:
+16. @CE 7 0 22 50 *
+17. Bottom Axis Label:
+17. @CE 8 0 22 50 *
+18.
+19. Value of K:
+19. @CE 9 0 42 50 *
+20. Minimum Value for Lambda1 (default = 0.2):
+20. @CE 10 0 42 50 *
+21. Maximum Value for Lambda2 (default = 0.95):
+21. @CE 11 0 42 50 *
+22.
+23. Select Goodness of Fit Critierion:
+24. @CE 12 1 1 30 PPCC
+25. @CE 12 2 1 30 Chi-Square
+26.
+27. Maximum Value for Y Axis for Chi-Square Plot:
+27. @CE 13 0 42 50 *
+28. Minimum Class Size for Chi-Square:
+28. @CE 14 0 42 50 *
+29.
+30. Subset/Except/For Specification:
+31. @CE 15 0 1 50 *
+32.
+33.
+34. Generate the Borel-Tanner PPCC Plot?
+--------------------
+GR FE
+TITLE CASE ASIS
+LABEL CASE ASIS
+CASE ASIS
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+DELETE P1 P2
+LET K = _9
+LET LAMBDA1 = _10
+LET LAMBDA2 = _11
+SET CHISQUARE LIMIT _13
+LET MINSIZE = 5
+LET MINSIZE = _14
+LET ICASE1 = 1
+LET ICASE2 = 1
+@IF 12 2 LET ICASE1 = 2
+@IF 2 0 LET ICASE2 = 2
+IF ICASE1 = 1
+   BOREL-TANNER PPCC PLOT _1 _2 _15
+END OF IF
+IF ICASE1 = 2
+   IF ICASE2 = 1
+      DELETE ZZZZY2 ZZZZX2 ZZZZY ZZZZXL ZZZZXH
+      LET ZZZZMIN = MINIMUM _1 _15
+      LET ZZZZMIN = ZZZZMIN - 0.5
+      LET ZZZZMAX = MAXIMUM _1 _15
+      LET ZZZZMAX = ZZZZMAX + 0.5
+      CLASS WIDTH 1
+      CLASS LOWER ZZZZMIN
+      CLASS UPPER ZZZZMAX
+      LET ZZZZY2 ZZZZX2 = BINNED _1 _15
+      LET ZZZZY ZZZZXL ZZZZXH = COMBINE FREQUENCY TABLE ZZZZY2 ZZZZX2
+      BOREL-TANNER KS PLOT ZZZZY ZZZZXL ZZZZXH
+      DELETE ZZZZY2 ZZZZX2 ZZZZY ZZZZXL ZZZZXH
+   ELSE
+      DELETE ZZZZY ZZZZXL ZZZZXH
+      LET ZZZZY ZZZZXL ZZZZXH = COMBINE FREQUENCY TABLE _1 _2 _15
+      BOREL-TANNER KS PLOT ZZZZY ZZZZXL ZZZZXH
+      DELETE ZZZZY ZZZZXL ZZZZXH
+   END OF IF
+END OF IF
+MOVE 50 5
+JUSTIFICATION CENTER
+TEXT Optimal Value of P = ^shape
+MOVE 50 2
+@IF 12 1 TEXT Maximum PPCC = ^maxppcc
+@IF 12 2 TEXT Minimum Chi-Square = ^minks
+TITLE
+LABEL
+--------------------
+WEB HELP PPCC PLOT
+--------------------

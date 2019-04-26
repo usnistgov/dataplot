@@ -1,0 +1,15 @@
+----- <~reli\growth.top>
+
+Reliability: Reliability Growth Models
+
+Reliability: Reliability Growth Models
+    Discussion                          <~reli\discgrow.top>
+    NIST/SEMATECH Handbook
+        Overview                        <xcl: web handbook modeling reliability growth>
+        Duane Plot                      <xcl: web handbook duane plot>
+        Trend and Growth Plots          <xcl: web handbook trend and growth plotting>
+        Power Law                       <xcl: web handbook power law>
+
+Duane Plot with Trend Plots             <xemf: ~plot\trenplot.men>
+Duane Plot                              <xemf: ~plot\duanplot.men>
+

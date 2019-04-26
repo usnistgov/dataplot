@@ -1,0 +1,64 @@
+This is file pmakappf.men--Plot Gompertz-Makeham PPF
+ 
+--------------------
+ 1. Plot a Gompertz-Makeham PPF Function
+ 2. PLOT MAKPPF(P,2,3,1) FOR P = 0.01 0.01 0.99
+ 3.
+ 4. This menu computes the Meeker-Escobar
+ 5. parameterization with three shape parameters.
+ 6. Dataplot supports two additional
+ 7. parameterizations (click on HELP for details).
+ 8.
+ 9. You can specify the range of values to plot either
+10. by providing an input vector containing the explicit
+11. input values or by providing the start, increment,
+12. and stop values.
+13.
+14. Input Variable (optional):
+14. @CE 1 0 42 50 ? gui-variable
+15.
+16. Start Value (> 0):
+16. @CE 2 0 42 50 ?
+17. Increment Value (defaults to 0.1):
+17. @CE 3 0 42 50 ?
+18. Stop Value (< 1):
+18. @CE 4 0 42 50 ?
+19.
+20. Variable to Store the PPF Values (optional):
+20. @CE 5 0 42 50 ?
+21.
+22. Shape Parameter gamma (> 0):
+22. @CE 6 0 42 50 ?
+23. Shape Parameter k (> 0):
+23. @CE 7 0 42 50 ?
+24. Shape Parameter lambda (> 0):
+24. @CE 8 0 42 50 ?
+25. Location Parameter:
+25. @CE 9 0 42 50 ?
+26. Scale Parameter (> 0):
+26. @CE 10 0 42 50 ?
+27.
+28.
+29. Plot the Gompertz-Makeham PPF's?
+--------------------
+AN FE
+SET GOMPERTZ MAKEHAM DEFINITION MEEKER
+LET ZSH1 = 1
+LET ZSH2 = 1
+LET ZSH3 = 1
+LET ZLOC = 0
+LET ZSCALE = 1
+@IF 6 0 LET ZSH1 = _6
+@IF 7 0 LET ZSH2 = _7
+@IF 8 0 LET ZSH3 = _8
+@IF 9 0 LET ZLOC = _9
+@IF 10 0 LET ZSCALE = _10
+LET ZINC = 0.1
+@IF 3 0 LET ZINC = _3
+@IF 1 0 LET ZJUNK = MAKPPF( _1  ,ZSH1,ZSH2,ZSH3,ZLOC,ZSCALE)
+@IF 1 0 PLOT ZJUNK _1
+@IF 2 0 PLOT MAKPPF( ZZZZ ,ZSH1,ZSH2,ZSH3,ZLOC,ZSCALE) FOR ZZZZ = _2 ZINC _4
+@IF 5 0 LET _5 = YPLOT
+--------------------
+WEB HELP MAKPPF
+--------------------

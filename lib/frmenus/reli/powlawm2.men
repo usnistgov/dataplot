@@ -1,0 +1,24 @@
+This is file powlawm2.men--Fit Power Law Model
+ 
+--------------------
+ 1. Fit Power Law Model (Multiple System)
+ 2. POWER LAW MAXIMUM LIKELIHOOD Y X CENS
+ 3.
+ 4. Failure Times Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. System ID Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Censoring Variable:
+ 6. @CE 3 0 42 50 ? gui-variable
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Estimate the Power Law Model?:
+--------------------
+AN FE
+POWER LAW MLE _1 _2 _3 _4
+---------------------
+WEB HELP POWER LAW
+---------------------

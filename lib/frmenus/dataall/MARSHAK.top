@@ -1,0 +1,8 @@
+----- <~dataall\MARSHAK.top> MARSHAK.DAT
+
+MARSHAK.DAT
+
+View     <xcl: LIST MARSHAK.DAT>
+Load     <xcf: ~dataload/MARSHAK.DP>
+Print    <xccl: printfile C:\DATAPLOT\MARSHAK.DAT>
+

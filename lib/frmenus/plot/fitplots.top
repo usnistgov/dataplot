@@ -1,0 +1,8 @@
+----- <~plot\fitplots.top> Fitting & Plots
+
+Fitting & Plots
+
+6-Plot (Residual Analysis)   <xemf: ~fit\6plot.men>
+Plot Data & Predicted        <xemf: ~fit\plotpred.men>
+Plot Residuals               <xemf: ~fit\plotres.men>
+

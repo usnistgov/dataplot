@@ -1,0 +1,24 @@
+----- <~prob\skewdesc.top> Distributional Descriptions: Skewed
+
+Distributional Descriptions: Skewed
+
+Lognormal                                <~prob\lgndesc.top>
+Halfnormal                               <~prob\hfndesc.top>
+Chi-Squared                              <~prob\chsdesc.top>
+F                                        <~prob\fdesc.top>
+
+Exponential                              <~prob\expdesc.top>
+Gamma                                    <~prob\gamdesc.top>
+Beta                                     <~prob\betdesc.top>
+Weibull                       (for min)  <~prob\wei1desc.top>
+Weibull                       (for max)  <~prob\wei2desc.top>
+Ext. Value Type 1 (= Gumbel)  (for min)  <~prob\ev11desc.top>
+Ext. Value Type 1 (= Gumbel)  (for max)  <~prob\ev12desc.top>
+Ext. Value Type 2 (= Frechet) (for min)  <~prob\ev21desc.top>
+Ext. Value Type 2 (= Frechet) (for max)  <~prob\ev22desc.top>
+Pareto                                   <~prob\pardesc.top>
+Inverse Gaussian                         <~prob\ingdesc.top>
+Reciprocal Inverse Gaussian              <~prob\rigdesc.top>
+Wald                                     <~prob\walesc.top>
+Fatigue Life                             <~prob\ftldesc.top>
+

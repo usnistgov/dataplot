@@ -1,0 +1,15 @@
+----- <~dex2k\mod2to6.top> Model:  2**6 Design
+
+Model:  2**6 Design
+
+k = 6 factors
+n = 64 runs
+
+Y = MU +
+    0.5*(  6 main effects +
+          15 2-term interations +
+          20 3-term interations +
+          15 4-term interations +
+           6 5-term interations +
+           1 6-term interations )
+

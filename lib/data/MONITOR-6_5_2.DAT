@@ -1,0 +1,67 @@
+This is the data file   MONITOR-6_5_2.DAT.
+Source: This example is used on page pmc52.htm of the e-Handbook
+        to demonstrate the Box-Cox normality transformation.
+        The original source is
+
+           Johnson, R. A. and Wichern, D. W. (1998), "Applied Multivariate
+           Statistical Analysis, Fourth Ed., Prentice Hall, Upper
+           Saddle River, NJ (example 4.14).
+
+Description:  The observations are microwave radiation measurements.
+
+
+To read into Dataplot, enter
+
+    SKIP 25
+    READ "MONITOR-6_5_2.DAT" Y
+
+
+
+
+
+
+
+MicrowaveRadiation
+------------------
+0.15
+0.09
+0.18
+0.1
+0.05
+0.12
+0.08
+0.05
+0.08
+0.1
+0.07
+0.02
+0.01
+0.1
+0.1
+0.1
+0.02
+0.1
+0.01
+0.4
+0.1
+0.05
+0.03
+0.05
+0.15
+0.1
+0.15
+0.09
+0.08
+0.18
+0.1
+0.2
+0.11
+0.3
+0.02
+0.2
+0.2
+0.3
+0.3
+0.4
+0.3
+0.05

@@ -1,0 +1,20 @@
+----- <~interp\dummy.top> Dummy
+
+Typical Value
+
+Question     : What is a typical value
+               for the process?
+
+Model        : Y = constant + random error
+
+Input        : a response variable Y
+               (a column of numbers)
+
+Output       : a value c representing the "center"
+               of the response distribution
+
+Stat Category: Univariate
+
+Primary Tools: 4-plot            <xemf: ~/univ/4plot.men>
+               PPCC Plot         <xemf: ~/prob/ppccplot.men>
+

@@ -1,0 +1,8 @@
+----- <~dataload\SULFURIC.DP> Load SULFURIC.DAT
+
+. This is file    SULFURIC.DP
+
+DELETE Y X
+SKIP 25
+READ SULFURIC.DAT Y X
+

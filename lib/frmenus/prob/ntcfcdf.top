@@ -1,0 +1,9 @@
+----- <~prob\ntcfcdf.top> Normal, t, chi-squared, F cdf & tail Prob
+
+Normal, t, chi-squared, F cdf & Tail Probabilities
+
+Normal                   <xemf: ~prob\norcdf.men>
+t                        <xemf: ~prob\tcdf.men>
+chi-squared              <xemf: ~prob\chscdf.men>
+F                        <xemf: ~prob\fcdf.men>
+

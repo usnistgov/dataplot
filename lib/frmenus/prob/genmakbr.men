@@ -1,0 +1,52 @@
+This is file genmakbr.men--Generate Gompertz-Makeham Random Numbers
+ 
+--------------------
+ 1. Generate Gompertz-Makeham Random Numbers
+ 2. LET Y = GOMPERTZ-MAKEHAM RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. This menu computes the Digital Library of
+ 5. Mathematical Functions (DLMF) parameterization.
+ 6. Dataplot supports two additional
+ 7. parameterizations (click on HELP for details).
+ 8.
+ 9. Number of random numbers to be generated:
+ 9. @CE 1 0 42 50 ?
+10. Shape Parameter (xi, xi > 0):
+10. @CE 2 0 42 50 ?
+11. Shape Parameter (lambda, lambda > 0):
+11. @CE 3 0 42 50 ?
+12. Shape Parameter (theta, theta > 0):
+12. @CE 4 0 42 50 ?
+13. Location Parameter:
+13. @CE 5 0 42 50 ?
+14. Scale Limit Parameter):
+14. @CE 6 0 42 50 ?
+15.
+16. Optional random number generator seed (default=305):
+17.    (integer >= 305)
+17. @CE 7 0 42 50 ?
+18.
+19. Name of output variable;
+19. @CE 8 0 42 50 ?
+20.
+21.
+22. Generate the random numbers?
+--------------------
+AN FE
+SET GOMPERTZ MAKEHAM DEFINITION DLMF
+@IF 7 0 SEED _7
+LET XI = 1
+@IF 2 0 LET XI = _2
+LET LAMBDA = 1
+@IF 3 0 LET LAMBDA = _3
+LET THETA = 1
+@IF 4 0 LET THETA = _4
+LET ZLOC = 0
+@IF 5 0 LET ZLOC = _5
+LET ZSCALE = 1
+@IF 6 0 LET ZSCALE = _6
+LET _8 = GOMPERTZ-MAKEHAM RANDOM NUMBERS FOR I = 1 1 _1
+LET _8 = ZLOC + ZSCALE* _8
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

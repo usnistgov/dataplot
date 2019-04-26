@@ -1,0 +1,65 @@
+Name:    lgn2.dat
+Source:  Ulf Olsson (2005), "Confidence Intervals for the Mean
+         of a Log-Normal Distribution", Journal of Statistics
+         Education, Vol. 13, No. 1.
+
+Purpose: A sample of log-normal random numbers used to test
+         log-normal based confidence intervals for the mean.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Y
+------
+ 914.9
+  44.1
+ 905.6
+ 390.8
+  60.3
+1568.3
+ 331.7
+ 155.4
+ 483.5
+ 506.9
+  50.5
+ 139.3
+ 138.1
+  62.6
+ 221.8
+  94.1
+ 115.6
+  95.2
+ 128.5
+ 112.5
+ 199.5
+  38.4
+  75.2
+  81.5
+  93.7
+  23.8
+ 357.1
+ 275.0
+ 218.5
+ 199.3
+  70.5
+ 725.9
+ 401.1
+ 308.2
+ 210.6
+ 213.1
+ 253.2
+ 653.8
+  41.2
+  39.2

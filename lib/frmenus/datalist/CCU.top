@@ -1,0 +1,8 @@
+----- <~datalist\CCU.top> CCU.DAT
+ 
+CCU.DAT
+ 
+View     <xcl: LIST CCU.DAT>
+Load     <x2cl: SKIP 25; READ CCU.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\CCU.DAT>
+ 

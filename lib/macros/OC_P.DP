@@ -1,0 +1,45 @@
+. This is Dataplot macro   OC_P.DP
+. Purpose--Generate an Operating Characteristic curve for a
+.          P (counts) Control Chart (with equal size groups).
+.          The OC is defined as:
+.            BINCDF(int(n*ucl),p,n) - BINCDF(int(n*lcl),p,n) versus p
+.          where 
+.            n      = total sample size
+.            ucl    = upper control limit
+.            lcl    = lower control limit
+.            p      = desired probabilities
+.
+.          It is essentiallty a plot of the type II (or Beta error)
+.          (probability of incorrectly accepting the hypothesis of
+.          statistical control).  It measures the sensitivity of the
+.          control chart.
+. Input --NG       = sample size for single group
+.       --Y        = vector containing number of defectives for each
+.                    group
+. Output--graph
+.       --N        = Total sample size
+.       --PBAR     = average number of defectives per group
+.       --UCL      = PBAR + 3*SQRT(PBAR*(1-PBAR)/N)
+.       --LCL      = PBAR - 3*SQRT(PBAR*(1-PBAR)/N)
+.
+delete zzzzp zzzzy
+.
+let numdef = sum y
+let ngroups = size y
+let n = ngroups*ng
+let pbar = numdef/(ngroups*ng)
+let ucl = pbar + 3*sqrt(pbar*(1-pbar)/n)
+let lcl = pbar - 3*sqrt(pbar*(1-pbar)/n)
+.
+let zzzzp = sequence 0.01 0.01 0.99
+let zzzza1 = int(n*ucl)
+let zzzza2 = int(n*lcl)
+.
+let zzzzy = bincdf(zzzza1,zzzzp,n) - bincdf(zzzza2,zzzzp,n)
+.
+y1label Beta
+x1label Probability
+title OC Curve
+.
+plot zzzzy vs zzzzp
+.

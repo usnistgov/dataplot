@@ -1,0 +1,46 @@
+----- <~math\scaltran.top> Scale Transformations
+ 
+Scale Transformations
+ 
+Calculate various measures of
+scale.  These commands calculate
+the requested statistic for the
+data in a variable and store the
+resulting statistic in a parameter.
+
+
+Measures of Scale
+   Average Absolute Deviation         <xemf: ~math\aad.men>
+   Biweight Midvariance               <xemf: ~math\biwemidv.men>
+   Biweight Scale                     <xemf: ~math\biwescal.men>
+   Coefficient of Variation           <xemf: ~math\coefvar.men>
+   Geometric Standard Deviation       <xemf: ~math\geomsd.men>
+   H10 Scale                          <xemf: ~math\h10scal.men>
+   H12 Scale                          <xemf: ~math\h12scal.men>
+   H15 Scale                          <xemf: ~math\h15scal.men>
+   H17 Scale                          <xemf: ~math\h17scal.men>
+   H20 Scale                          <xemf: ~math\h20scal.men>
+   Interquartile Range                <xemf: ~math\iqrange.men>
+   Kurtosis                           <xemf: ~math\kurtosis.men>
+   Median Absolute Deviation          <xemf: ~math\mad.men>
+   Percentage Bend Midvariance        <xemf: ~math\pbendmv.men>
+   QN Scale                           <xemf: ~math\qnscale.men>
+   Quantile Standard Error            <xemf: ~math\quantse.men>
+   Range                              <xemf: ~math\range.men>
+   Relative Standard Deviation        <xemf: ~math\relsd.men>
+   Relative Variance                  <xemf: ~math\relvar.men>
+   Root Mean Square Error             <xemf: ~math\rms.men>
+   Skewness                           <xemf: ~math\skewness.men>
+   SN Scale                           <xemf: ~math\snscale.men>
+   Standard Deviation                 <xemf: ~math\sd.men>
+   Standard Deviation of Lp Location  <xemf: ~math\sdlploca.men>
+   Standard Deviation of the Mean     <xemf: ~math\sd_mean.men>
+   Trimmed Mean Standard Error        <xemf: ~math\trimmese.men>
+   Weighted Standard Deviation        <xemf: ~math\weigsd.men>
+   Variance                           <xemf: ~math\variance.men>
+   Variance of Lp Location            <xemf: ~math\valploca.men>
+   Variance of the Mean               <xemf: ~math\varmean.men>
+   Weighted Variance                  <xemf: ~math\weigvar.men>
+   Winsorized Standard Deviation      <xemf: ~math\winssd.men>
+   Winsorized Variance                <xemf: ~math\winsvari.men>
+

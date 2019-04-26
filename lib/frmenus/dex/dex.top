@@ -1,0 +1,36 @@
+----- <~dex\dex.top> DEX (Design of Experiment)
+
+DEX (Design of Experiment)
+
+Discussion
+     What is Design of Experiment?      <~dex\whatisde.top>
+     Which Design for Your Problem?     <~dex\whichdis.top>
+     Five Pigeonhole Questions          <~dex\which5pq.top>
+     Experiment Design Summary Sheet    <~dex\dexsumsh.top>
+NIST/SEMATECH Handbook 
+     Design of Experiments Chapter      <xcl: web handbook pri>
+     Introduction                       <xcl: web handbook dex introduction>
+     Definition                         <xcl: web handbook dex definition>
+     Uses                               <xcl: web handbook dex uses>
+     Assumptions                        <xcl: web handbook dex assumptions>
+     Choosing a Design                  <xcl: web handbook dex choosing design>
+
+Comparative Designs                     <~dexcomp\dexcomp.top>
+Screening Designs
+     2**k Full Factorial                <~dex2k\dex2k.top>
+     2**(k-p) Fractional Factorial      <~dex2kmp\dex2kmp.top>
+     Taguchi                            <~dextag\dextag.top>
+     Plackett-Burman                    <~dexpb\dexpb.top>
+Regression Designs                      <~dexreg\dexreg.top>
+Response Surface Designs                <~dexopt\dexopt.top>
+Mixture Designs                         <~dexmix\dexmix.top>
+
+Generate Random Run Sequence            <~dex\randruns.men>
+
+Built-in Data Sets
+     View                               <~dataview\dex.top>
+     Load                               <~dataload\dex.top>
+
+Worked Examples                         <~dex\dexexam.top>
+NIST/SEMATECH Handbook Case Studies     <xcl: web handbook dex case studies>
+

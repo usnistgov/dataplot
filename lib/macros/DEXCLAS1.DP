@@ -1,0 +1,63 @@
+. This is dataplot macro file    DEXCLAS1.DP
+. Define NIST dex class table funnel data for 2**3 full factorial design   2/7/02
+. Note--string variable    table   assumed to pre-exist before call to dexplot
+. Note--this routine is called by dexcase.dp (when case = 1)
+. Note--For this to happen, you should (via your editor),
+.       activate the following line (in DEXPLOT.DP):
+.              let case = 1
+.
+. For example, to do the analysis for, say, table 3's data,
+. the following command sequence would be typical (on a pc):
+.
+.     dataplot            (to execute dataplot)
+.     let table = 3       (to specify that we are interested in analyzing table 3's data)
+.     call dexplot.dp     (to execute the dexplot.dp macro)
+.     exit                (to exit out of dataplot and close the output graphics file (dppl1f.dat)
+.     copy dppl1f.dat prn (to send the graphics file to your (postscript) laser printer)
+.
+. -----start point-----
+.
+let k = 3
+skip 25
+read 2to3.dat x1 x2 x3
+.
+if table = 1
+   let string project = Table 1 (Standard Deviants)
+   let y = data 6.78 7.38 7.66 8.19 6.40 7.88 8.72 9.90
+end if
+.
+if table = 2
+   let string project = Table 2 (Table II)
+   let y = data 9.31 12.25 10.12 13.41 12.25 17.56 13.47 18.50
+end if
+.
+if table = 3
+   let string project = Table 3 (Five Sigmas)
+   let y = data 6.12 8.15 6.34 8.25 6.97 8.28 7.53 8.72
+end if
+.
+if table = 4
+   let string project = Table 4 (Free Cookies)
+   let y = data 5.65 8.47 5.03 10.75 7.53 9.47 7.65 12.84
+end if
+.
+if table = 5
+   let string project = Table 5 (Table V)
+   let y = data 8.25 9.94 5.10 6.75 7.91 10.66 5.96 7.59
+end if
+.
+if table = 6
+   let string project = Table 6 (Table Sicks)
+   let y = data 12.19 16.31 8.32 11.72 9.47 15.28 7.03 10.25
+end if
+.
+if table = 7
+   let string project = Table 7 (Rocket Science)
+   let y = data 8.1 9.9 10.9 13.1 8.8 11.1 11.0 16.8
+end if
+.
+if table = 8
+   let string project = Table 8 (The Deviants)
+   let y = data 10.10 12.4 8.12 10.5 9.53 11.84 7.91 9.66
+end if
+.

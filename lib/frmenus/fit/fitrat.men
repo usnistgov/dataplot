@@ -1,0 +1,37 @@
+This is file fitrat.men--Fitting (Rational Function)
+ 
+--------------------
+1. Fitting: 1 Variable; Rational Function Model
+2. EXACT <numerator deg. / denom. deg.> FIT Y2 X2 Y X
+3.
+4. Variables (for full data set):
+5.    Response      Y:
+5. @CE 1 0 35 50 ? gui-variable
+6.    Independent   X:
+6. @CE 2 0 35 50 ? gui-variable
+7.
+8. Degree of Numerator   (0 to 10):
+8. @CE 3 0 35 50 ?
+9. Degree of Denominator (0 to 10):
+9. @CE 4 0 35 50 ?
+10.
+11. Variables (for exact-fit subset):
+12.    Response    Y2:
+12. @CE 5 0 35 50 ? gui-variable
+13.    Independent X2:
+13. @CE 6 0 35 50 ? gui-variable
+14.    (Note--number of points in Y2 (and X2) must =
+15.           numerator deg. + denominator deg. + 1)
+16.           For example, if quadratic /quadratic,
+17.           then number of points = 2 + 2 +1 = 5
+18. Subset/Except/For Specification:
+19. @CE 7 0 1 50 *
+20.
+21.
+22. Do the Fit?
+--------------------
+GR FE
+EXACT _3 / _4 RATIONAL FIT _5 _6 _1 _2 _7
+--------------------
+WEB HELP EXACT RATIONAL FIT
+--------------------

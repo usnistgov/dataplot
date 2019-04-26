@@ -1,0 +1,43 @@
+This is file fitsplin.men--Fitting (Spline)
+
+--------------------
+ 1. Fitting: 1 Variable; Spline Model
+ 2. <Degree> SPLINE FIT Y X K
+ 3.
+ 4. Variables:
+ 5.    Response    Y:
+ 5. @CE 1 0 30 50 ? gui-variable
+ 6.    Independent X:
+ 6. @CE 2 0 30 50 ? gui-variable
+ 7.
+ 8. Knots:
+ 9.    List of knot values:
+ 9. @CE 3 0 30 50 ?
+10.    Name of knot variable:
+10. @CE 4 0 30 50 ? gui-variable
+11.
+12. Degree of Polynomial:
+13. @CE 5 1 4 14 Linear
+14. @CE 5 2 4 14 Quadratic
+15. @CE 5 3 4 14 Cubic
+16. @CE 5 4 4 14 Quartic
+17. @CE 5 5 4 14 Quintic
+13. @CE 5 6 20 30 Sextic
+14. @CE 5 7 20 30 Septic
+15. @CE 5 8 20 30 Octic
+16. @CE 5 9 20 30 Nonic
+17. @CE 5 10 20 30 Dexic
+18.
+19. Subset/Except/For Specification:
+20. @CE 6 0 1 50 *
+21.
+22.
+23. Do the Spline Fit?
+--------------------
+GR FE
+@IF 3 0 LET ZKNOTS = DATA _3
+@IF 3 0 _5 SPLINE FIT _1 _2 ZKNOTS _6
+@IF 4 0 _5 SPLINE FIT _1 _2 _4 _6
+--------------------
+WEB HELP SPLINE FIT
+--------------------

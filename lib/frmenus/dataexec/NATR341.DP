@@ -1,0 +1,11 @@
+----- <~dataexec\NATR341.DP> Load & Execute NATR341.DAT
+
+. This is file    NATR341.DP
+
+DELETE Y X
+SKIP 25
+READ NATR341.DAT Y X
+TITLE NATR341.DAT
+ANOVA Y X
+PLOT Y X X
+

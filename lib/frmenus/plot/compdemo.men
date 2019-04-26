@@ -1,0 +1,49 @@
+This is file compdemo.men--Complex Demodulation Plot
+ 
+--------------------
+ 1. Complex Demodulation Plot
+ 2. COMPLEX DEMODULATION AMPLITUDE PLOT Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Type of demodulation:
+ 6. @CE 10 1 30 40 amplitude
+ 6. @CE 10 2 42 50 phase
+ 7. Demodulation Frequency:
+ 7. @CE 11 0 42 50 ?
+ 8.
+ 9. Line Types (solid, dot, dash, ...)
+ 9. @CE 3 0 42 50 * gui-line
+10. Character Type (blank, x, circ, ...)
+10. @CE 4 0 42 50 * gui-char
+11. Character Fill (off, on)
+11. @CE 5 0 42 50 * gui-ooff
+12.
+13. Title:
+13. @CE 6 0 10 50 *
+14. Left Axis Label:
+14. @CE 7 0 22 50 *
+15. Bottom Axis Label:
+15. @CE 8 0 22 50 *
+16.
+17. Subset/Except/For Specification:
+18. @CE 9 0 1 50 *
+19.
+20.
+21. Generate the Complex Demodulation Plot?:
+--------------------
+GR FE
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+SPIKE OFF
+BAR OFF
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+DEMODULATION FREQUENCY _11
+COMPLEX DEMODULATION _10 PLOT _1 _9
+--------------------
+WEB HELP COMPLEX DEMODULATION PLOT
+--------------------

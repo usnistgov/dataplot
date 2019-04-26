@@ -1,0 +1,50 @@
+This is file ptppf.men--Plot T Percent Point
+ 
+--------------------
+ 1. Plot a T Percent Point Function
+ 2. PLOT TPPF(P,5) FOR P = 0.01 0.01 0.99
+ 3.
+ 4. You can specify the range of values to plot either
+ 5. by providing an input vector containing the explicit
+ 6. input values or by providing the start, increment,
+ 7. and stop values.
+ 8.
+ 9. Input Variable (optional):
+ 9. @CE 1 0 42 50 ? gui-variable
+10.
+11. Start Value (> 0):
+11. @CE 2 0 42 50 ?
+12. Increment Value (defaults to 0.01):
+12. @CE 3 0 42 50 ?
+13. Stop Value (< 1):
+13. @CE 4 0 42 50 ?
+14.
+15. Variable to Store the Percent Point Values (optional):
+15. @CE 5 0 42 50 ?
+16.
+17. Shape Parameter (required, = 1, 2, ...):
+17. @CE 6 0 42 50 ?
+18. Location Parameter:
+18. @CE 7 0 42 50 ?
+19. Scale Parameter (> 0):
+19. @CE 8 0 42 50 ?
+20.
+21.
+22. Plot the T Percent Point's?
+--------------------
+AN FE
+LET ZSHAPE = 1
+@IF 6 0 LET ZSHAPE = _6
+LET ZLOC = 0
+@IF 7 0 LET ZLOC = _7
+LET ZSCALE = 1
+@IF 8 0 LET ZSCALE = _8
+LET ZINC = 0.01
+@IF 3 0 LET ZINC = _3
+@IF 1 0 LET ZJUNK = TPPF( _1 ,ZSHAPE,ZLOC,ZSCALE)
+@IF 1 0 PLOT ZJUNK _1
+@IF 2 0 PLOT TPPF( ZZZZ ,ZSHAPE,ZLOC,ZSCALE) FOR ZZZZ = _2 ZINC _4
+@IF 5 0 LET _5 = YPLOT
+--------------------
+WEB HELP TPPF
+--------------------

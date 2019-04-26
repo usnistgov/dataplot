@@ -1,0 +1,61 @@
+This is file factplot.men--Factor Plot
+ 
+--------------------
+ 1. Factor  Plot
+ 2. FACTOR PLOT Y1 Y2 X1 X2 X3 TAG
+ 3.
+ 4. Enter Response (Y) Variable(s):
+ 5. @CE 1 0 1 50 ? gui-variable
+ 6. Enter Indpedent Variable(s) (if any):
+ 7. @CE 2 0 1 50 ? gui-variable
+ 8. Enter Group ID Variable (if any):
+ 9. @CE 3 0 1 50 ? gui-variable
+10.
+11. Number of Response Variables (>=1):
+11. @CE 4 0 42 50 ?
+12.
+13. Plot Character Types:
+13. @CE 5 0 20 50 ? gui-char
+14. Plot Character Fill Types:
+14. @CE 6 0 20 50 ? gui-ooff
+15. Plot Line Types:
+15. @CE 7 0 20 50 ? gui-line
+16. Plot Title:
+17. @CE 8 0 1 50 *
+18.
+19. Using software fonts provides more control
+20. over character sizes.  However, it can be
+21. slower to generate the plot (this is
+22. particularly true on the PC).
+23.
+24. Select Font Type for Screen:
+25. @CE 9 1 5 20 Hardware
+25. @CE 9 2 22 37 Software
+26. Plot Text Size Scale Factor (default = 2):
+26. @CE 10 0 42 50 ? 
+27.
+28. Subset/Except/For Specification: 
+29. @CE 11 0 1 50 *
+30.
+31.
+32. Generate the Factor Plot?:
+--------------------
+GR FE
+DEVICE 1 FONT TEKTRONIX
+@IF 9 2 DEVICE 1 FONT SIMPLEX
+CHARACTER _5
+CHARACTER FILL _6
+LINE _7
+MULTIPLOT CORNER COORDINATE 10 10 90 90
+MULTIPLOT SCALE FACTOR 2
+MULTIPLOT SCALE FACTOR _10
+SET FACTOR PLOT RESPONSE VARIABLES _4
+FACTOR PLOT _1 _2 _3 _11
+@IF 8 0 MOVE 50 97
+@IF 8 0 JUSTIFICATION CENTER
+@IF 8 0 TEXT _8
+MULTIPLOT SCALE FACTOR 1
+DEVICE 1 FONT TEKTRONIX
+--------------------
+WEB HELP FACTOR PLOT
+--------------------

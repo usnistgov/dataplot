@@ -1,0 +1,7 @@
+----- <~dataload\relinist.top> Load Reliability Data: NIST
+
+Load Reliability Data: NIST
+
+FULLER2.DAT*  Airplane glass failure time <xcf: ~dataload\FULLER2.DP>
+VANGEL5.DAT   Strength at failure         <xcf: ~dataload\VANGEL5.DP>
+

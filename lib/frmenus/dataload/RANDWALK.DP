@@ -1,0 +1,8 @@
+----- <~dataload\RANDWALK.DP> Load RANDWALK.DAT
+
+. This is file    RANDWALK.DP
+
+DELETE Y
+SKIP 25
+READ RANDWALK.DAT Y
+

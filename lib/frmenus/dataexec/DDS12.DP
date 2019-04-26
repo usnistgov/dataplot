@@ -1,0 +1,10 @@
+----- <~dataexec\DDS12.DP> Load & Execute DDS12.DAT
+
+. This is file    DDS12.DP
+
+DELETE Y X
+SKIP 25
+READ DDS12.DAT Y X
+TITLE DDS12.DAT
+PLOT Y X
+

@@ -1,0 +1,8 @@
+----- <~datalist\QUASIBIE.top> QUASIBIE.DAT
+ 
+QUASIBIE.DAT
+ 
+View     <xcl: LIST QUASIBIE.DAT>
+Load     <x2cl: SKIP 25; READ QUASIBIE.DAT Y X YEAR MONTH>
+Print    <xccl: printfile C:\DATAPLOT\QUASIBIE.DAT>
+ 

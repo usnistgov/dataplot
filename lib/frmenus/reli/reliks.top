@@ -1,0 +1,29 @@
+----- <~reli\reliks.top> Random Numbers
+
+Kolmogorov-Smirnov Goodness of Fit Y
+
+Normal                                     <xemf: ~reli\ksnor.men>
+Lognormal                                  <xemf: ~reli\kslgn.men>
+Power Normal                               <xemf: ~reli\kspnr.men>
+Power Lognormal                            <xemf: ~reli\kspln.men>
+
+Exponential                                <xemf: ~reli\ksexp.men>
+Geometric Extreme Exponential              <xemf: ~reli\ksgee.men>
+
+Weibull (Minimum)                          <xemf: ~reli\kswei1.men>
+Weibull (Maximum)                          <xemf: ~reli\kswei2.men>
+Inverted Weibull                           <xemf: ~reli\ksiwe.men>
+Exponentiated Weibull                      <xemf: ~reli\ksewe.men>
+
+Wald                                       <xemf: ~reli\kswal.men>
+Inverse Gaussian                           <xemf: ~reli\ksig.men>
+Reciprocal Inverse Gaussian                <xemf: ~reli\ksrig.men>
+Fatigue Life                               <xemf: ~reli\ksfl.men>
+
+Gamma                                      <xemf: ~reli\ksgam.men>
+Log Gamma                                  <xemf: ~reli\kslga.men>
+Inverted Gamma                             <xemf: ~reli\ksiga.men>
+
+Alpha                                      <xemf: ~reli\ksalp.men>
+Exponential Power                          <xemf: ~reli\kspex.men>
+

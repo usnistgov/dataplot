@@ -1,0 +1,25 @@
+----- <~reli\esttpdef.top> Tail Probabilities (Definition)
+
+Tail Probabilities (Definition)
+
+The tail probability p' (0 <= p' <= 1) of a failure time X'
+is the amount of probability under the distribution
+beyond the given time x'.
+Example 1: the left tail probability for X' = 200
+           is the probability that a random failure time
+           is less than 200.
+Example 2: the right tail probability for X' = 900
+           is the probability that a random failure time
+           exceeds 200.
+
+If the random variable X is the failure time, and
+if X' is the specific failure time of interest, and
+if    Prob    represents probability,
+then p is the left tail probability of the distribution
+if and only if
+
+   Prob( X <= X' ) = p
+
+Synonym: none
+
+

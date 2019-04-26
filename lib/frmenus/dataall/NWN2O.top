@@ -1,0 +1,8 @@
+----- <~dataall\NWN2O.top> NWN2O.DAT
+
+NWN2O.DAT
+
+View     <xcl: LIST NWN20.DAT>
+Load     <xcf: ~dataload/NWN20.DP>
+Print    <xccl: printfile C:\DATAPLOT\NWN20.DAT>
+

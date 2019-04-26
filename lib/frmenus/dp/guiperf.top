@@ -1,0 +1,44 @@
+----- <~dp\guiperf.top> Performance Issues
+ 
+Performance Issues for the GUI
+ 
+ 1) One important feature of the Dataplot
+    graphical interface is the integration of
+    the full command capability within the menu
+    system.  That is, you can freely mix typing
+    commands with accessing menus.
+
+    There are a few command line features that
+    don't work within the menu system.
+
+    a) The continuation character "..." for
+       extending a Dataplot command to a second line
+       does not work and will in fact hang the GUI.
+
+    b) Entering a READ or SERIAL READ command without a
+       file name will hang the GUI.  In the command
+       line version, this is used to read data directly
+       from the keyboard.  In the GUI, you can do this
+       by entering the data into the spreadsheet.  Also,
+       you can use the command LET Y = DATA ... to enter
+       a small number of values.
+
+    c) Dataplot has a number of "menu macros" for the
+       command line version.  These are menu macros in
+       the sense that they prompt the user to input
+       certain values.  These menu macros must be run
+       from the command line version.  They will hang
+       the GUI when they prompt for input.
+
+2) The data spreadsheet is quite useful.  However, for
+   large, or even moderate sized data sets, or on older
+   slower hardware, updating the data sheet as variables
+   are created or deleted can be rather slow.  There is
+   a button labeled "No Update" on the spreadsheet.  To
+   speed things up, you can click on this button.  This
+   suppresses any future updating of the spreadsheet window.
+   The advantage is that this can significantly speed up
+   the performance.  The disadvantage is that you lose the
+   convenience of having the data displayed in the
+   spreadsheet.
+

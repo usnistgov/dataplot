@@ -1,0 +1,22 @@
+This is file mlelpo2.men--Lagrange Poisson MLE Estimates
+ 
+--------------------
+ 1. Lagrange Poisson Maximum Likelihood Estimates
+ 2. LAGRANGE POISSON MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Frequency Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Bin Mid-Points Variable:
+ 5. @CE 1 0 42 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute Lagrange Poisson MLE's?
+--------------------
+GR FE
+LAGRANGE POISSON MAXIMUM LIKELIHOOD _1 _2 _3
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

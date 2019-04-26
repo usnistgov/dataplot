@@ -1,0 +1,32 @@
+This is file 1fvatest.men--Formal t Test: Shift in Variation
+ 
+--------------------
+ 1. Formal F Test: Shift in Variation
+ 2. F TEST Y1 Y2
+ 3.
+ 4. Problem:    1) IF a process has pre-modification
+ 5.                data available, and
+ 6.             2) IF an engineering mod is made, and
+ 7.             3) IF post-mod data is collected,
+ 8.             4) THEN can we conclude that
+ 9.                the process precision has improved?
+10.
+11. Conclusion: Yes/No?
+12.
+13.
+14. Pre-mod  Response Variable:
+14. @CE 1 0 42 50 ? gui-variable
+15. Post-mod Response Variable:
+15. @CE 2 0 42 50 ? gui-variable
+16.
+17. Subset/Except/For Specification:
+18. @CE 3 0 1 50 *
+19.
+20.
+21. Do F Test?
+--------------------
+GR FE
+F TEST _1 _2 _3
+--------------------
+WEB HELP F TEST
+--------------------

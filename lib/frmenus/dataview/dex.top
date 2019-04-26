@@ -1,0 +1,13 @@
+----- <~dataview\dex.top> View Built-in Design of Experiment Data Files
+
+View Built-in Design of Experiment Data Files
+
+Comparative data                         <~dataview\dexcomp.top>
+2**k full factorial data                 <~dataview\dex2k.top>
+2**k-p fractional factorial data         <~dataview\dex2kmp.top>
+Taguchi Ln data                          <~dataview\dextag.top>
+Plackett-Burnam data                     <~dataview\dexpb.top>
+Optimization/response surface data       <~dataview\dexopt.top>
+Regression data                          <~dataview\dexreg.top>
+Mixture data                             <~dataview\dexmix.top>
+

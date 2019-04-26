@@ -1,0 +1,21 @@
+----- <~1fac\locaesti.top> Estimation: Location
+
+Estimation: Location
+
+To estimate grand mean:
+   Compute grand average          <xemf: ~math\mean.men>
+   Compute several estimates      <xemf: ~univ\summstat.men>
+   Plot bootstrap means           <xemf: ~1fac\bootmepl.men>
+   Plot bootstrap medians         <xemf: ~1fac\bootmdpl.men>
+   Plot bootstrap midmeans        <xemf: ~1fac\bootmmpl.men>
+   Do all of the above            <xemf: ~1fac\doall.men>
+
+To estimate group mean:
+   Compute group averages         <xemf: ~1fac\tabumean.men>
+   Plot group means               <xemf: ~1fac\meanplot.men>
+   Plot group medians             <xemf: ~1fac\mediplot.men>
+   Plot group midmeans            <xemf: ~1fac\midmplot.men>
+   Do all of the above            <xemf: ~1fac\doallg.men>
+
+Checking assumptions              <xemf: ~univ\4plot.men>
+

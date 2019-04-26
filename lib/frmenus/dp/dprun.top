@@ -1,0 +1,16 @@
+----- <~dp\dprun.top> Dataplot Run
+ 
+Dataplot Run
+ 
+Starting a Run (PC)      : Click Dataplot icon (command mode)
+                           Click Dataplot GUI icon (GUI mode)
+Starting a Run (UNIX)    : dataplot  (command mode)
+                           xdp or xdataplot (GUI mode)
+Calling a Macro          : CALL [file name]
+Enter Menu Subsystem     : MENU (or M)
+Interrupt a Run          : SAVE MEMORY [file name]
+Resume after Interrupt   : RESTORE MEMORY [file name]
+Pause During Execution   : PAUSE
+Resume after Pause       : [carriage return]
+Exit from Dataplot       : EXIT/STOP/END/HALT/QUIT/BYE
+ 

@@ -1,0 +1,18 @@
+----- <~dp\helpfile.top> Dataplot HELP Files
+ 
+Dataplot HELP Files
+ 
+These are the 6 ASCII files that Dataplot uses
+whenever the analyst enters a HELP command:
+ 
+   DPHE1F.TEX
+   DPHE2F.TEX
+   DPHE3F.TEX
+   DPHE4F.TEX
+   DPHE5F.TEX
+   DPHE6F.TEX
+ 
+All 6 of these files are ASCII, and so--outside of
+Dataplot--the analyst may choose to send these files
+to a printer to obtain a complete hardcopy listing.
+ 

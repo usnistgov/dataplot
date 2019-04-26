@@ -1,0 +1,50 @@
+THIS IS DATAPLOT DATA FILE PNCC.DAT
+PURPOSE--ILLUSTRATE PN CONTROL CHART
+DEFECTIVE MIRRORS
+DATE--JULY 1990
+NUMBER OF OBSERVATIONS = 25
+NUMBER OF VARIABLES = 3
+ORDER OF VARIABLES ON A LINE IMAGE--
+   1. SUBGROUP ID (1 TO 30)
+   2. NUMBER OF DEFECTIVE ITEMS IN SUB-GROUP
+   3. TOTAL NUMBER OF ITEMS IN SUB-GROUP (ALL = 100)
+STATISTICAL AREAS--PN CONTROL CHART & P CONTROL CHART
+REFERENCE--ISHIKAWA, GUIDE TO CONTROL CHARTS, PAGE 80-81
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ PNCC.DAT X NUMDEF NUMTOT
+   CHARACTERS CONTROL CHART
+   LINES CONTROL CHART
+   PN CONTROL CHART NUMDEF NUMTOT X
+   LET P = NUMDEF/NUMTOT
+   LET PBAR = MEAN P; LET NBAR = MEAN NUMTOT; LET M = PBAR*NBAR
+   SPIKE ON; SPIKE BASE M; CHARACTER FILL ON; LINES BLANK
+   PN CONTROL CHART NUMDEF NUMTOT X
+SUB-GROUP    NUMBER     NUMBER
+           DEFECTIVE    (TOTAL)
+-------------------------------
+   1           6         150
+   2           5         150
+   3           5         150
+   4           5         150
+   5           6         150
+   6           4         150
+   7           3         150
+   8           3         150
+   9           6         150
+  10           5         150
+  11           3         150
+  12           2         150
+  13           5         150
+  14           4         150
+  15           4         150
+  16           6         150
+  17           5         150
+  18           4         150
+  19           6         150
+  20           5         150
+  21           6         150
+  22           4         150
+  23           9         150
+  24          12         150
+  25          14         150

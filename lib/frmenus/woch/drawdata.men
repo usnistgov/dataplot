@@ -1,0 +1,48 @@
+This is file drawdata.men--Draw A Line
+ 
+--------------------
+ 1. Draw A Line
+ 2. DRAW X1 Y1 X2 Y2
+ 3.
+ 4. If only one point is specified, the
+ 5. line will be drawn from the current
+ 6. position to that point.
+ 7.
+ 8. X Coordinate for First Point:
+ 8. @CE 1 0 33 50 ?
+ 9. Y Coordinate for First Point:
+ 9. @CE 2 0 33 50 ?
+10. X Coordinate for Second Point:
+10. @CE 3 0 33 50 ?
+11. Y Coordinate for Second Point:
+11. @CE 4 0 33 50 ?
+12.
+13. Line Type:
+13. @CE 5 0 42 50 * gui-line
+14. Line Color:
+14. @CE 6 0 42 50 * gui-colo
+15. Line Thickness:
+15. @CE 7 0 42 50 * gui-thic
+16.
+17. Coordinate System to Use:
+18. @CE 8 1 1 50 absolute 0 to 100 screen units
+19. @CE 8 2 1 50 absolute data units of last plot
+20. @CE 8 3 1 50 relative (to first point) 0 to 100 screen units
+21. @CE 8 4 1 50 relative (to first point) data units of last plot
+22.
+23.
+24. Draw the Line?:
+--------------------
+GR FE
+LINE _5
+LINE COLOR _6
+LINE THICKNESS _7
+LET STRING ZZZZSTR = DRAW
+@IF 8 1 LET STRING ZZZZSTR = DRAW
+@IF 8 2 LET STRING ZZZZSTR = DRAWDATA
+@IF 8 3 LET STRING ZZZZSTR = DRAW RELATIVE
+@IF 8 4 LET STRING ZZZZSTR = DRAWDATA RELATIVE
+^ZZZZSTR  _1 _2 _3 _4
+--------------------
+WEB HELP DRAW
+--------------------

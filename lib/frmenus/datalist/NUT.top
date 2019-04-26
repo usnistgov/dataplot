@@ -1,0 +1,8 @@
+----- <~datalist\NUT.top> NUT.DAT
+ 
+NUT.DAT
+ 
+View     <xcl: LIST NUT.DAT>
+Load     <x2cl: SKIP 25; READ NUT.DAT Y X1 X2 X3>
+Print    <xccl: printfile C:\DATAPLOT\NUT.DAT>
+ 

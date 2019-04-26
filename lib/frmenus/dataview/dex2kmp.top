@@ -1,0 +1,26 @@
+----- <~dataview\dex2kmp.top> View 2**(k-p) Fractional Factorial Design Data
+
+View 2**(k-p) Fractional Factorial Design Data
+
+BOXSPRI2.DAT  2**(3-1)  Defective springs    <xcf: ~dataview\BOXSPRI2.DP>
+BOXSPRI3.DAT  2**(3-1)  Defective springs    <xcf: ~dataview\BOXSPRI3.DP>
+
+BOXCLEAN.DAT  2**(4-1)  Cleanser stab.       <xcf: ~dataview\BOXCLEAN.DP>
+
+BOXREAC2.DAT  2**(5-1)  Chem. reactor        <xcf: ~dataview\BOXREAC2.DP>
+
+AC.DAT        2**(6-3)  A/C performance      <xcf: ~dataview\AC.DP>
+
+BOXBIKE2.DAT  2**(7-4)  Bike speed           <xcf: ~dataview\BOXBIKE2.DP>
+BOXBIKE3.DAT  2**(7-3)  Bike speed           <xcf: ~dataview\BOXBIKE3.DP>
+BOXFILT.DAT*  2**(7-4)  Filtrat. time        <xcf: ~dataview\BOXFILT.DP>
+BOXFILT2.DAT  2**(7-3)  Filtrat. time        <xcf: ~dataview\BOXFILT2.DP>
+AMRF.DAT      2**(7-4)  AMRF work stat.      <xcf: ~dataview\AMRF.DP>
+ROSSIT16.DAT  2**(7-3)  Roofing Data         <xcf: ~dataview\ROSSIT16.DP>
+
+SCOTT.DAT     2**(8-4)  Electron Microscopy  <xcf: ~dataview\VIBRATE.DP>
+
+VIBRATE.DAT   2**(9-5)  Vibration            <xcf: ~dataview\VIBRATE.DP>
+
+QUINLAN.DAT   2**(15-11) Speedom. noise      <xcf: ~dataview\QUINLAN.DP>
+

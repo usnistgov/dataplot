@@ -1,0 +1,25 @@
+----- <~fit\discratf.top> Exact Rational Fitting
+
+Exact Rational Fitting
+
+An exact rational fit is a data analysis technique for
+determining good starting values for the parameters in
+rational function models (a type of non-linear model).
+This command is usually followed by the FIT command.
+This command can be used only under certain specialized
+conditions.  If
+      n  = number of observations to be fitted;
+      n1 = desired degree of numerator;
+      n2 = desired degree of denominator.
+then
+      n1 + n2 must = n -1
+n1 and n2 are integers from 0 to 10.  Typical values of
+n1 and n2 are from 0 to 3.  In practice, this technique
+is rarely used on the original data (because n is usually
+much larger than 10 or 20).  This technique is usually
+applied to a selected subset of the original data, with
+the selection done so that the subset mimics quite closely
+the original data.  An exact rational fit to the subset
+will thus provide starting values which may be used for a
+least squares fit to the full data set.
+

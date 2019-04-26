@@ -1,0 +1,6 @@
+----- <~dataprin\WASHDC.DP> Print (to Printer) WASHDC.DAT
+
+. This is file    WASHDC.DP
+
+PRINT WASHDC.DAT
+

@@ -1,0 +1,24 @@
+----- <~prob\skewpdf.top> Skewed Distribution pdf & Tail Prob.
+
+Skewed Distribution pdf & Tail Probabilities
+
+Lognormal                               <xemf: ~prob\lgnpdf.men>
+Halfnormal                              <xemf: ~prob\hfnpdf.men>
+Chi-Squared                             <xemf: ~prob\chspdf.men>
+F                                       <xemf: ~prob\fpdf.men>
+
+Exponential                             <xemf: ~prob\exppdf.men>
+Gamma                                   <xemf: ~prob\gampdf.men>
+Beta                                    <xemf: ~prob\betpdf.men>
+Weibull                       (for min) <xemf: ~prob\wei1pdf.men>
+Weibull                       (for max) <xemf: ~prob\wei2pdf.men>
+Ext. Value Type 1 (= Gumbel)  (for min) <xemf: ~prob\ev11pdf.men>
+Ext. Value Type 1 (= Gumbel)  (for max) <xemf: ~prob\ev12pdf.men>
+Ext. Value Type 2 (= Frechet) (for min) <xemf: ~prob\ev21pdf.men>
+Ext. Value Type 2 (= Frechet) (for max) <xemf: ~prob\ev22pdf.men>
+Pareto                                  <xemf: ~prob\parpdf.men>
+Inverse Gaussian                        <xemf: ~prob\igpdf.men>
+Reciprocal Inverse Gaussian             <xemf: ~prob\rigpdf.men>
+Wald                                    <xemf: ~prob\walpdf.men>
+Fatigue Life                            <xemf: ~prob\flpdf.men>
+

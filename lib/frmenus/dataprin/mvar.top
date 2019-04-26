@@ -1,0 +1,25 @@
+----- <~dataprin\mvar.top> Print (to Printer) Multivariate Data
+
+Print (to Printer) Multivariate Data
+
+AUTO83B.DAT*  EPA auto miles per gallon    <xcf: ~dataprin\AUTO83B.DP>
+UGIANSKY.DAT* Interlab stress corrosion    <xcf: ~dataprin\UGIANSKY.DP>
+
+AUTO83.DAT    EPA auto miles per gallon    <xcf: ~dataprin\AUTO83.DP>
+AUTO79.DAT    Auto characteristics         <xcf: ~dataprin\AUTO79.DP>
+BIOMED3.DAT   Biomedical data              <xcf: ~dataprin\BIOMED3.DP>
+GNP.DAT       Gross national product       <xcf: ~dataprin\GNP.DP>
+AC.DAT        2**(6-3)  A/C performance    <xcf: ~dataprin\AC.DP>
+KRASNY1.DAT   2**5  Cigarette flammab.     <xcf: ~dataprin\KRASNY1.DP>
+SMALL14.DAT   Atomic modeling              <xcf: ~dataprin\SMALL14.DP>
+
+IRIS.DAT*     Classic Fisher iris data     <xcf: ~dataprin\IRIS.DP>
+FLURY5.DAT    Swiss counterfeit notes      <xcf: ~dataprin\FLURY5.DP>
+PLANETS.DAT   Solar systems planets stat.  <xcf: ~dataprin\PLANETS.DP>
+CURRIE.DAT    Pollution source analysis    <xcf: ~dataprin\CURRIE.DP>
+PERIODIC.DAT  Chemistry periodic table     <xcf: ~dataprin\PERIODIC.DP>
+NEGIZ3.DAT    Aerosol particle size        <xcf: ~dataprin\NEGIZ3.DP>
+MORALES.DAT   Mass spec: sulfur exa-fluor  <xcf: ~dataprin\MORALES.DP>
+MORALES2.DAT  Mass spec: sulfur exa-fluor  <xcf: ~dataprin\MORALES2.DP>
+KAUL.DAT      Refridgerant analysis        <xcf: ~dataprin\KAUL.DP>
+

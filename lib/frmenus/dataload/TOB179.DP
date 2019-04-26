@@ -1,0 +1,8 @@
+----- <~dataload\TOB179.DP> Load TOB179.DAT
+
+. This is file    TOB179.DP
+
+DELETE TIME TEMP VOLT Y
+SKIP 25
+READ TOB179.DAT TIME TEMP VOLT Y
+

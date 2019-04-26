@@ -1,0 +1,21 @@
+----- <~prob\expdesc.top> Exponential Description
+
+*Exponential Description
+
+pdf: f(x) = exp(-x)      for x >= 0
+
+Moments   : E(X)  = u + s
+            SD(X) = s
+
+Type      : Continuous, skewed, moderate-tailed
+Domain    : 0 to +infinity
+Synonym   : negative exponential
+Genesis   :
+Definition: If the number X of random events is Poisson,
+            then the waiting time T between events
+            is exponential.
+
+Reference : Johnson & Kotz,
+            Continuous Univariate Distributions-1,
+            Chapter 18 (pages 207-232)
+

@@ -1,0 +1,8 @@
+----- <~dexcomp\LATSQ5.DP> Load LATSQ5.DP
+
+. This is file    LATSQ5.DP
+
+DELETE X1 TO X3
+SKIP 50
+READ LATSQ5.DAT X1 TO X3
+

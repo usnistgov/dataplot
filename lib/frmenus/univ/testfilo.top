@@ -1,0 +1,27 @@
+-----<~univ\testfilo.top> Test Fixed Location
+
+Test Fixed Location
+
+Run sequence plot                    <xemf: ~univ\runseqpl.men>
+4-Plot                               <xemf: ~univ\4plot.men>
+
+Analysis on halves:
+   Vertical line plot                <xemf: ~univ\vertplo2.men>
+   Mean plot                         <xemf: ~univ\meanplo2.men>
+   Median plot                       <xemf: ~univ\mediplo2.men>
+   Midmean plot                      <xemf: ~univ\midmplo2.men>
+   Midrange plot                     <xemf: ~univ\midrplo2.men>
+   Box plot                          <xemf: ~univ\boxplot2.men>
+   Bihistogram                       <xemf: ~univ\bihist2.men>
+   Quantile-quantile plot            <xemf: ~univ\qqplot2.men>
+   Formal t test                     <xemf: ~univ\ttest2.men>
+
+Analysis on quarters:
+   Vertical line plot                <xemf: ~univ\vertplo4.men>
+   Mean plot                         <xemf: ~univ\meanplo4.men>
+   Median plot                       <xemf: ~univ\mediplo4.men>
+   Midmean plot                      <xemf: ~univ\midmplo4.men>
+   Midrange plot                     <xemf: ~univ\midrplo4.men>
+   Box plot                          <xemf: ~univ\boxplot4.men>
+   ANOVA                             <xemf: ~univ\anova4.top>
+

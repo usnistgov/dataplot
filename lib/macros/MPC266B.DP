@@ -1,0 +1,26 @@
+reset data
+reset plot control
+reset i/o
+dimension 500 30
+label size 3
+read mpc262.dat run wafer probe mo day op hum y sr
+let df = sr - sr + 5.
+y1label ohm.cm
+characters * all
+lines blank all
+x2label Repeatability standard deviations for probe 2362 - run 2
+plot sr subset probe 2362 subset run 2
+let var = sr*sr
+let df11 = sum df subset probe 2362 subset run 1
+let df12 = sum df subset probe 2362 subset run 2
+let s11 = sum var subset probe 2362 subset run 1
+let s12 = sum var subset probe 2362 subset run 2
+let s11 = (5.*s11/df11)**(1/2)
+let s12 = (5.*s12/df12)**(1/2)
+print s11 df11
+print s12 df12
+let s1 = ((s11**2 + s12**2)/2.)**(1/2)
+let df1=df11+df12
+. repeatability standard deviation and df for run 2
+print s1 df1
+. end of calculations

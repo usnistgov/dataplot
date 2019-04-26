@@ -1,0 +1,35 @@
+This is data file    TANG.DAT
+Drop Rate / Bandwidth / File Size   Effect on Apache/Linux
+     Net Processing Time
+2**3 Full Factorial Design with replicated center points
+Response variable                  = processing time (seconds)
+Number of observations             = 8
+Number of variables per line image = 4
+Order of variables on a line image--
+   1. Response variable   = processing time (seconds)
+   2. Factor 1            = drop rate (2 levels--0%    and 10%)
+   3. Factor 2            = bandwidth (2 levels--10 Mb and 100 Mb)
+   4. Factor 3            = file size (2 levels--10 kb and 100 kb)
+To read this file into Dataplot--
+   SKIP 25
+   READ TANG.DAT Y X1 X2 X3
+
+
+
+
+
+
+
+   Y          X1         X2         X3
+  Time    Drop Rate  Bandwidth  File Size
+------------------------------------------
+ 0.102408      -1         -1         -1
+ 0.611606      +1         -1         -1
+ 0.613311      -1         +1         -1
+ 0.203805      +1         +1         -1
+ 9.476249      -1         -1         +1
+ 9.146300      +1         -1         +1
+ 9.293824      -1         +1         +1
+10.789047      +1         +1         +1
+ 4.737280       0          0          0
+ 2.805004       0          0          0

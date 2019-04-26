@@ -1,0 +1,23 @@
+----------  *FASTEST-GROWING JOBS*  ----------
+
+          Fastest-growing Occupations
+          Requiring a College Degree
+
+                             Number        Projected
+                             Employed     Employment
+                             in 1980       Increase
+                                            Between
+                                         1980 to 1990
+
+Computer Systems Analysts    205,000    68% (+139,400)
+Physical Therapists           34,000    51% (+ 17,340)
+Computer programmers         228,000    49% (+111,720)
+Speech and Hearing Therapists 35,000    47% (+ 16,450)
+Aero-astronautic Engineers    68,000    43% (+ 29,240)
+Ecomomists                    29,000    42% (+ 12,180)
+Dietitians                    44,000    38% (+ 16,720)
+Electrical Engineers         327,000    35% (+114,450)
+Medical Lab Technologists    105,000    34% (+ 35,700)
+Architects                    80,000    33% (+ 26,400)
+
+Source--USA Today and Burea of Labor Statistics

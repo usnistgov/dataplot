@@ -1,0 +1,8 @@
+----- <~dataload\GAMMA.DP> Load GAMMA.DAT
+
+. This is file    GAMMA.DP
+
+DELETE Y
+SKIP 25
+READ GAMMA.DAT Y
+

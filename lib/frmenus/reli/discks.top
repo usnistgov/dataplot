@@ -1,0 +1,47 @@
+-----<~reli\discks.top> KS Plots
+
+KS Plots: Discussion
+
+Kolmogorov-Smirnov Plots
+
+An alternative to the PPCC plot is the 
+Kolmogorov-Smirnov (KS) plot.
+
+In this alternative, we plot the value of the
+Kolmogorov-Smirnov goodnes-of-fit statistic (as
+oppossed to the value of correlation coefficient
+of the probability plot) on the Y axis.  The goal
+is to find the value of the shape parameter that
+minimizes the value of the Kolmogorov-Smirnov
+statistic.  For discrete distributions or grouped
+data, we plot the value of the Chi-square
+goodness-of-fit statistic instead.
+
+The KS plot can sometimes perform better than
+the PPCC plot.  Specifically, our experience indicates
+the following.
+
+   1) The KS plot provides better discrimination in the
+      case where there are two shape parameters.
+
+   2) For some heavy-tailed distributions, the KS plot
+      performs better than the PPCC plot.
+
+      These distributions tend to have a few values in
+      the extreme tails.  These points tend to have
+      high variability.  The KS plot is less sensitive
+      to this variability than the PPCC plot.
+
+   3) Unlike the PPCC plot, the KS plot is not invariant
+      to location and scale.  Like the PPCC plot,  we
+      generate a probability plot to obtain estimates for
+      location and scale for a given value of the shape
+      parameter.
+
+      We can sometimes use this to our advantage.  We can
+      fix the value of the location and scale parameters
+      (e.g., set the scale parameter to 1 and the location
+      parameter to 0 or the data minimum).  This can
+      help in situations where the shape parameter acts
+      somewhat like a scale or location parameter.
+

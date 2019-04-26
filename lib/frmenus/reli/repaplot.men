@@ -1,0 +1,47 @@
+This is file repaplot.men--Repair Plot
+ 
+--------------------
+ 1. Repair Plot
+ 2. REPAIR PLOT Y X CENS
+ 3.
+ 4. Repair Times Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. System ID Variable:
+ 5. @CE 2 0 42 50 ? gui-vari
+ 6. Censoring Variable:
+ 6. @CE 3 0 42 50 ? gui-vari
+ 7.
+ 8. Character type for repair times:
+ 8. @CE 4 0 42 50 * gui-char
+ 9. Line types for repair/cesor times:
+ 9. @CE 5 0 42 50 * gui-line
+10.
+11. Title:
+11. @CE 6 0 10 50 *
+12. Left Axis Label:
+12. @CE 7 0 22 50 *
+13. Bottom Axis Label:
+13. @CE 8 0 22 50 *
+14.
+15. Subset/Except/For Specification:
+16. @CE 9 0 1 50 *
+17.
+18.
+19. Generate the Repair Plot?:
+--------------------
+GR FE
+LINE SAVE
+CHARACTER SAVE
+LINE SOLID ALL
+CHARACTER BLANK ALL
+CHARACTER _4
+LINES BLANK _5
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+REPAIR PLOT _1 _2 _3  _9
+LINE RESTORE
+CHARACTER RESTORE
+--------------------
+WEB HELP REPAIR PLOT
+--------------------

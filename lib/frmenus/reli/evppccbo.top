@@ -1,0 +1,24 @@
+----- <~reli\evppccbo.top> PPCC Plot/Probability Plot Bootstrap Estimation
+
+Bootstrap Parameter Estimation via PPCC Plot/Probability Plot
+
+Both Uncensored and Censored Data Supported,
+Groouped Data is Not
+
+Discussion: Bootstrap Intervals       <~reli\discppbo.top>
+
+Extreme Value Type 1 (Gumbel) (Minimum)    <xemf: ~reli\bootev11.men>
+Extreme Value Type 2 (Gumbel) (Maximum)    <xemf: ~reli\bootev12.men>
+
+Extreme Value Type 2 (Frechet) (Minimum)   <xemf: ~reli\bootev21.men>
+Extreme Value Type 2 (Frechet) (Maximum)   <xemf: ~reli\bootev22.men>
+
+Weibull (Minimum)                     <xemf: ~reli\bootwei1.men>
+Weibull (Maximum)                     <xemf: ~reli\bootwei2.men>
+
+Generalized Pareto                    <xemf: ~reli\bootgep.men>
+Generalized Extreme Value (Minimum)   <xemf: ~reli\bootgev1.men>
+Generalized Extreme Value (Maximum)   <xemf: ~reli\bootgev2.men>
+
+Bootstrap Confidence Intervals for Percentiles  <xemf: ~reli\ppccperc.men>
+

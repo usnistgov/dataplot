@@ -1,0 +1,13 @@
+----- <~edac\ZARR15.DP> Load ZARR15.DATA & generate 4-PLOT
+
+. This is file    ZARR15.DP
+
+DELETE Y
+TITLE
+.
+LIST ZARR15.DAT
+SKIP 25
+READ ZARR15.DAT Y
+.
+TITLE ZARR15.DAT
+4-PLOT Y

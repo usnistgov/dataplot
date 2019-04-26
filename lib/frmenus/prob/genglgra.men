@@ -1,0 +1,37 @@
+This is file genglgra.men--Generate Generalized Lost Games Random Numbers
+ 
+--------------------
+ 1. Generate Generalized Lost Games Random Numbers
+ 2. LET Y = GENERALIZED LOST GAMES RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Shape Parameter (p, 0.5 < p < 1):
+ 5. @CE 2 0 42 50 ?
+ 6. Shape Parameter (j, j = 0, 1, 2, ...):
+ 6. @CE 3 0 42 50 ?
+ 7. Shape Parameter (a, a > 0):
+ 7. @CE 4 0 42 50 ?
+ 8.
+ 9. Optional random number generator seed (default=305):
+10.    (integer >= 305)
+10. @CE 5 0 42 50 ?
+11.
+12. Name of output variable;
+12. @CE 6 0 42 50 ?
+13.
+14.
+15. Generate the random numbers?
+--------------------
+AN FE
+@IF 5 0 SEED _5
+LET P = 0.75
+@IF 2 0 LET P = _2
+LET J = 1
+@IF 3 0 LET J = _3
+LET A = 1
+@IF 4 0 LET A = _4
+LET _6 = GENERALIZED LOST GAMES RANDOM NUMBERS FOR I = 1 1 _1
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

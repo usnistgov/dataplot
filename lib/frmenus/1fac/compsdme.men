@@ -1,0 +1,22 @@
+This is file compsdme.men--Compute SD of Mean
+ 
+--------------------
+ 1. Compute Standard Deviation of Mean
+ 2. LET A = SD OF MEAN Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5.
+ 6. Name of Output Parameter:
+ 6. @CE 2 0 42 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 3 0 1 50 *
+10.
+11.
+12. Compute SD of Mean?
+--------------------
+LET _2 = SD OF MEAN _1 _3
+--------------------
+WEB HELP SD OF MEAN
+--------------------

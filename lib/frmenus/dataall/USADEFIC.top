@@ -1,0 +1,8 @@
+----- <~dataall\USADEFIC.top> USADEFIC.DAT
+
+USADEFIC.DAT
+
+View     <xcl: LIST USADEFIC.DAT>
+Load     <xcf: ~dataload/USADEFIC.DP>
+Print    <xccl: printfile C:\DATAPLOT\USADEFIC.DAT>
+

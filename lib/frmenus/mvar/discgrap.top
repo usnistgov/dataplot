@@ -1,0 +1,72 @@
+----- <~mvar\discgrap.top> Discussion: Graphical Techniques
+ 
+Discussion Graphical Techniques
+ 
+Graphics are commonly employed in statistical
+applications because they can frequently provide
+powerful insights and understanding of data that are 
+not readily available with strictly analytical techniques.
+
+Multivariate data provide especially difficult challenges
+for good graphics due to the fact that the terminal screen
+and the printed page are physically 2-dimensional.
+Perspective techniques can be employed to generate
+3-dimensional plots.  However, dimensions higher
+than 3 cannot be directly displayed.  Multivariate
+data sets are typically more than 3-dimensional.
+Effective graphics for high-dimensional data is by
+no means a solved problem.
+
+In addition to direct techniques for higher
+dimensional data, one common approach is to try
+to reduce the dimensionality of the original data
+with techniques such as principal components.  The
+first 2 or 3 principal coordinates can then be
+viewed with standard 2 and 3 dimensional plots.
+
+Dataplot provides a number of graphical techniques
+for multivariate data.
+
+  1) Profile Plot, Star Plot, Andrews Plot, Parallel
+     Coordinates Plot:
+
+     These plots are typically used to identify
+     similar data points.  These graphs can be 
+     reasonably effective for smaller data sets.
+     The biggest drawback is that they tend to be
+     overwhelmed for even moderate sized data sets.
+
+  2) Scatter Plot Matrix
+
+     This graph plots all the pairwise scatter plots
+     on a single page.  The strength of this plot
+     is that is shows 2-way structure for all the
+     variables in a compact format.  The limitation is
+     that scatter plot matrices do not detect higher
+     level structure.
+
+  3) Symbol Plot
+
+     The symbol plot starts with a standard scatter
+     plot.  The attributes of the plot characters,
+     specifically the size, color, fill, type of 
+     symbol, are controlled by 1 to 4 additional
+     variables.
+
+  4) Biplot
+
+     The biplot is based on a signular value
+     factorization.  Although the details are a bit
+     too involved for a complete discussion, this
+     technique can be considered similar in spirit
+     to using principal components to reduce the
+     dimensionality of the data so that it can be
+     reasonably represented with a 2d graph.
+
+One weakness of all of the above approaches is that
+they do not really handle data sets with a large number
+of observations (as well as variables).  Density
+estimation is one approach for trying to gain insight
+into these types of data sets.  Currently, Dataplot does
+not support these techniques.
+

@@ -1,0 +1,19 @@
+This is file assign.men--Assign a Value to a Parameter
+ 
+--------------------
+ 1. Assign a Value to a Parameter
+ 2. LET A = value
+ 3.
+ 4. Name of Parameter
+ 4. @CE 1 0 42 50 *
+ 5. Value (or Arithmetic Expression) for Parameter:
+ 6. @CE 2 0 1 50 *
+ 7.
+ 8.
+ 9. Perform the Assignment?:
+--------------------
+GR FE
+LET _1 = _2
+--------------------
+WEB HELP LET
+--------------------

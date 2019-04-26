@@ -1,0 +1,37 @@
+----- <~dataload\gra1ch3.top> Chapter 3: Straight Line Regression
+
+Chapter 3: Straight Line Regression
+
+ 1. Overview
+ 2. An Example of Straight Line Regression
+       Grades (p-100)                   <xcf: ~dataload\GRADES.DP>
+       Table323 (p-108)                 <xcf: ~dataload\TABLE323.DP>
+       Table324 (p-109)                 <xcf: ~dataload\TABLE324.DP>
+ 3. Straight Line Regression Model -- Assumptions (A) and (B)
+ 4. Point Estimation
+       Crystal (p-118)                  <xcf: ~dataload\CRYSTAL.DP>
+       Arsenic (p-122)                  <xcf: ~dataload\ARSENIC.DP>
+       Process1 (p-126)                 <xcf: ~dataload\PROCESS1.DP>
+       Process2 (p-126)                 <xcf: ~dataload\PROCESS2.DP>
+       Table346 (p-131)                 <xcf: ~dataload\TABLE346.DP>
+       Grades26 (p-132)                 <xcf: ~dataload\GRADES26.DP>
+ 5. Checking Assumptions
+       Car20 (p-151)                    <xcf: ~dataload\CAR20.DP>
+       SO2 (p-157)                      <xcf: ~dataload\SO2.DP>
+       Table355 (p-158)                 <xcf: ~dataload\TABLE355.DP>
+ 6. Confidence Intervals
+       Agebp (p-167)                    <xcf: ~dataload\AGEBP.DP>
+ 7. Tests
+       Shelf-life (p-176)               <xcf: ~dataload\SHELFLIF.DP>
+ 8. Analysis of Variance
+ 9. Coefficient of Determination and Coefficient of Correlation
+10. Regression Analysis When There Are Measurement Errors
+       Cans (p-200)                     <xcf: ~dataload\CANS.DP>
+       Fat  (p-203)                     <xcf: ~dataload\FAT.DP>
+       Cabbage (p-207)                  <xcf: ~dataload\CABBAGE.DP>
+       Minivans (p-209)                 <xcf: ~dataload\MINIVAN.DP>
+11. Regression Through the Orgin
+       Gravity  (p-212)                 <xcf: ~dataload\GRAVITY.DP>
+12. Exercises
+       Cholesterol  (p-215)             <xcf: ~dataload\CHOL.DP>
+

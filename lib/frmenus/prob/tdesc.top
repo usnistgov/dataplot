@@ -1,0 +1,25 @@
+----- <~prob\tdesc.top> t Description
+
+*t Description
+
+pdf: f(x;nu) = constant / (1 + x*x/nu)**((nu+1)/2)    for all x
+
+Moments   : E(X)  = 0
+                    (note--E(X) finite only if nu > 1)
+            SD(X) = sqrt(nu/(nu-2))
+                    (note--SD(X) finite only if nu > 2)
+
+Type      : Continuous, symmetric, bell-shaped, family of
+            distributions--moderate tailed through long-tailed
+Domain    : -infinity to infinity
+Synonym   : Student's t
+Genesis   : Student (Gosset) (1908)
+Definition: If X1 is normal N(0,1),
+            and X2 is Chi-squared (nu),
+            then X1/sqrt(X2/nu) has a
+            t distribution (nu).
+
+Reference : Johnson & Kotz,
+            Continuous Univariate Distributions-2,
+            Chapter 27 (pages 94-129).
+

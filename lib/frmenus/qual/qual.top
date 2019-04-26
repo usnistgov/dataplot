@@ -1,0 +1,23 @@
+----- <~qual\qual.top> Quality/SPC
+ 
+Quality/SPC
+ 
+Discussion                               <~qual\discussi.top>
+NIST/SEMATECH Handbook (Process Monitoring) <xcl: web handbook pmc>
+Deming's 14 points                       <xcl: LIST DEMING14.TEX>
+ 
+7 old tools                              <~qual\7oldtool.top>
+Control charts                           <~qual\contchar.top>
+Process capability index                 <~qual\cpk.top>
+Taguchi                                  <~qual\taguchi.top>
+Acceptance Sampling                      <~qual\accept.top>
+Measurement Process Characterization     <~qual\mpc.top>
+ 
+Built-in datasets
+    View                                 <~dataview\qual.top>
+    Load                                 <~dataload\qual.top>
+
+References                               <~qual\referenc.top>
+
+DOC/NIST Baldrige National Quality Award <~qual\baldrige.top>
+

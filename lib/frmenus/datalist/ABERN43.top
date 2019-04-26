@@ -1,0 +1,8 @@
+----- <~datalist\ABERN43.top> ABERN43.DAT
+ 
+ABERN43.DAT
+ 
+View     <xcl: LIST ABERN43.DAT>
+Load     <x2cl: SKIP 25; READ ABERN43.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\ABERN43.DAT>
+ 

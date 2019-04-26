@@ -1,0 +1,53 @@
+----- <~help\matrices.top> Matrices
+
+Matrices
+
+Matrices
+
+Matrices Useful For Linear Algebra And Multivariate Analysis    -
+
+    Matrices and matrix manipulation commands are useful
+    for solving linear algebra problems and in performing
+    multivariate statistics.  For example, Dataplot provides
+    macros for performing discriminant analysis, canonical
+    correlation, and bi-plots using the matrix commands.
+
+    The Dataplot commands that operate on matrices are
+    documented in Chapter 4 of Volume II of the Dataplot
+    Reference Manual.
+  
+        Matrix Commands              <xcl: WEB HELP MATRIX COMMANDS>
+
+    Matrices cannot be used in Dataplot except for these
+    commands that explicitly require them.  Note that the
+    individual columns of a matrix can be used as variables
+    (Dataplot appends the column number to the matrix name).
+
+Commands To Create Matrices
+
+    Matrices are created with the
+
+        READ MATRIX                   <xcl: HELP READ MATRIX>
+        CREATE MATRIX                 <xcl: HELP CREATE MATRIX>
+        MATRIX DEFINITION             <xcl: HELP MATRIX DEFINITION>
+
+    commands.  The columns of the matrix can be accessed
+    by appending the column number to the matrix name
+    (e.g., the columns of matrix M can be accessed via M1,
+    M2, etc.).  The rows of the matrix cannot be accessed
+    directly.  However, the
+
+        MATRIX ROW                    <xcl: HELP MATRIX ROW>
+
+    command can be used to copy the contents of a matrix
+    row to a column vector.  A single element of an array
+    can be extracted with the
+
+        MATRIX ELEMENT                <xcl: HELP MATRIX ELEMENT>
+
+    or by using something like M3(5) (this refers to the
+    element in column 3 and row 5).  Matrices cannot be used
+    outside of the matrix commands.  For example, you cannot
+    enter LET S = SIN(M) where M is a matrix to compute the
+    sine of all elements in a matrix.
+

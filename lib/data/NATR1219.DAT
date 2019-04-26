@@ -1,0 +1,33 @@
+This is Dataplot data file    NATR1219.DAT
+Effect of laundering on fire-retardant treatments for fabrics
+Goal: Determine the effect of laundering on fire-retardant
+      treatments
+2**(4-1) fractional factorial experiment (part of a larger experiment)
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 12-19
+Number of observations                   =  8
+Total number of variables per line image =  5
+Order of variables on a line image--
+   Response variable = inches burned
+   Factor 1 = Fabric (2 levels, -1 = Sateen, 1 = Monks Cloth)
+   Factor 2 = Treatment (2 levels, -1 =  Treatment x, 1 = Treatment Y)
+   Factor 3 = Laundering condition (2 levels, -1 = Before laundering,
+                                               1 = after one laundering)
+   Factor 4 = Direction of test  (2 levels, -1 = Warp, 1 = Fill)
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR1219.DAT Y X1 X2 X3 X4
+ 
+    Y          X1        X2        X3        X4
+  Inches                        Laundering 
+  Burned    Fabric   Treatment  Condition  Direction
+---------------------------------------------------
+  4.2          -1        -1        -1        -1
+  4.0          +1        +1        -1        -1
+  5.0          +1        -1        +1        -1
+  4.6          -1        +1        +1        -1
+  3.0          +1        -1        -1        +1
+  2.8          -1        +1        -1        +1
+  2.9          -1        -1        +1        +1
+  2.3          +1        +1        +1        +1

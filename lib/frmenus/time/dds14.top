@@ -1,0 +1,51 @@
+----- <~time\dds14.top> DDS FAQ 14 Common Criticisms of DDS
+ 
+14. What are the common criticisms of DDS?
+ 
+DDS ignores information about the system other
+than the data which might help simplify modeling .
+ 
+This leads to the concept of modal and model
+decomposition that is central to the DDS
+philosophy.  This concept is not so crucial in the
+usual system analysis based on classical
+scientific method because restrictive assumptions
+and/or controlled experiments are designed to
+ensure that only the modes of interest enter the
+data.  The DDS methodology avoids the trial and
+error inherent in such restrictions and
+assumptions.  Information not contained in the
+data, even though it may allow us to postulate a
+simple model, is not used in the modeling stage.
+Only after the model obtained by the DDS
+methodology using the data alone is decomposed, is
+this information used to see if the parts of the
+model are consistent with it and if the other
+parts are negligible.  If so, the simpler model
+based on such information is accepted.  Otherwise,
+either the information and the assumptions based
+on it are wrong, or the data has been improperly
+measured and collected.
+ 
+Thus, not requiring a priori assumptions before
+modeling is a strength of the DDS methodology in
+two ways.  First, it relieves the investigator of
+the tedious task of guessing such assumptions from
+the necessarily inadequate information available
+and thus avoids not only trial and error but also
+prejudicing of interpretations.  Second, it
+utilizes the observed data and other information
+more effectively by employing them as evidence
+from independent sources during the analysis
+stage, rather than mixing them before modeling to
+make modeling easier.  The DDS methodology
+possesses a simple, straightforward, and rational
+modeling procedure using data alone, it does not
+need assumptions to guess and simplify the
+modeling process.  Moreover, the analysis stage
+can suggest assumptions, which, if confirmed by
+other evidence, can often improve estimation,
+computational efficiency, and interpretation, and
+eventually provide simpler models for
+applications.
+ 

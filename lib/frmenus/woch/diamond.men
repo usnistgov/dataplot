@@ -1,0 +1,71 @@
+This is file diamond.men--Draw a Diamond
+ 
+--------------------
+ 1. Draw a Diamond
+ 2. DIAMOND X1 Y1 X2 Y2 X3 Y3
+ 3.
+ 4. X Coordinate for One Major Diameter End Point:
+ 4. @CE 1 0 33 50 ?
+ 5. Y Coordinate for One Diameter End Point:
+ 5. @CE 2 0 33 50 ?
+ 6. X Coordinate for One Minor Diameter End Point:
+ 6. @CE 3 0 33 50 ?
+ 7. Y Coordinate for One Minor Diameter End Point:
+ 7. @CE 4 0 33 50 ?
+ 8. X Coordinate for Other Major Diameter End Point:
+ 8. @CE 16 0 33 50 ?
+ 9. Y Coordinate for Other Major Diameter End Point:
+ 9. @CE 17 0 33 50 ?
+10.
+11. Line Type for Diamond Border:
+11. @CE 5 0 42 50 * gui-line
+12. Line Color for Diamond Border:
+12. @CE 6 0 42 50 * gui-colo
+13. Line Thickness for Diamond Border:
+13. @CE 7 0 42 50 * gui-thic
+14.
+15. Solid Fill the Diamond?:
+15. @CE 9 0 42 50 * gui-ooff
+16. Color for Solid Fill:
+16. @CE 10 0 42 50 * gui-colo
+17.
+18. Cross-Hatch Pattern for the Diamond:
+18. @CE 11 0 42 50 * gui-patt
+19. Color for Cross-Hatch Pattern:
+19. @CE 12 0 42 50 * gui-colo
+20. Line Style for Cross-Hatch Pattern:
+20. @CE 13 0 42 50 * gui-line
+21. Line Thickness for Cross-Hatch Pattern:
+21. @CE 14 0 42 50 * gui-thick
+22. Spacing Thickness for Cross-Hatch Pattern:
+22. @CE 15 0 42 50 *
+23.
+24. Coordinate System to Use:
+25. @CE 8 1 1 50 absolute 0 to 100 screen units
+26. @CE 8 2 1 50 absolute data units of last plot
+27. @CE 8 3 1 50 relative (to first point) 0 to 100 screen units
+28. @CE 8 4 1 50 relative (to first point) data units of last plot
+29.
+30.
+31. Draw the Diamond?:
+--------------------
+GR FE
+LINE _5
+LINE COLOR _6
+LINE THICKNESS _7
+REGION FILL _9
+REGION FILL COLOR _10
+REGION PATTERN _11
+REGION PATTERN COLOR _12
+REGION PATTERN LINE TYPE _13
+REGION PATTERN THICKNESS _14
+REGION PATTERN SPACING _15
+LET STRING ZZZZSTR = DIAMOND
+@IF 8 1 LET STRING ZZZZSTR = DIAMOND
+@IF 8 2 LET STRING ZZZZSTR = DIAMOND DATA
+@IF 8 3 LET STRING ZZZZSTR = DIAMOND RELATIVE
+@IF 8 4 LET STRING ZZZZSTR = DIAMOND DATA RELATIVE
+^ZZZZSTR  _1 _2 _3 _4 _16 _17
+--------------------
+WEB HELP DIAMOND
+--------------------

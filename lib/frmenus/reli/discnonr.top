@@ -1,0 +1,50 @@
+-----<~reli\discnonr.top> Discussion: Non-Renewal Processes
+
+Discussion: Non-Renewal Processes
+
+Non-Renewal Processes
+
+If the interarrival times for the repair times are not
+independent and identically distributed (iid), then
+the repair times must be modeled as a non-renewal process.
+
+In a non-renewal process, interarrival times are
+dependent.  This is typically due to a repair rate
+that is either increasing or decreasing.
+
+Although there any number of possible models, there
+are two models that have been found to be particularly
+useful in practice for monotonoically increasing or
+decreasing function.
+
+1. Power Law Model
+
+      M(t) = a*t**b
+
+   If we take the logarithm of both sides, we obtain
+
+      LN(M(t)) = LN(a) + b*LN(t)
+
+   This suggests that if the power law model applies,
+   a plot of LN(M(t)) versus LN(t) should be approximately
+   linear.
+
+2. Exponential Law Model
+
+      M(t) = a*EXP(b*t)
+
+   If we take the logarithm of both sides, we obtain
+
+      LN(M(t)) = LN(a) + b*t
+
+   This suggests that if the exponential law model applies,
+   a plot of LN(M(t)) versus t should be approximately
+   linear.
+
+If the above plots indicate that one of these models is
+appropriate, then approximate estimates for a and b can be
+obtained via least squares fits of the above equations.
+Since the interarrival times are not independent, the
+regression assumptions are not satisfied.  More accurate
+estimates can be obtained via maximum likelihood.
+

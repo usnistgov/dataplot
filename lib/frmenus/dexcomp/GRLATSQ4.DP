@@ -1,0 +1,8 @@
+----- <~dexcomp\GRLATSQ4.DP> Load GRLATSQ4.DP
+
+. This is file    GRLATSQ4.DP
+
+DELETE X1 TO X4
+SKIP 50
+READ GRLATSQ4.DAT X1 TO X4
+

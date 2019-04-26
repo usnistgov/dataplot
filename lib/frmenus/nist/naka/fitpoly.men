@@ -1,0 +1,37 @@
+This is file fitpoly.men--Fitting (Polynomial)
+ 
+--------------------line 3
+1. Fitting: 1 Variable; Polynomial Model
+2. <Degree> FIT Y X
+3.
+4. Variables:
+5.    Response    Y:
+5. @CE 1 0 20 30 ?
+6.    Independent X:
+6. @CE 2 0 20 30 ?
+7.    Weights     W:
+7. @CE 3 0 20 30 *
+8.
+9. Degree of Polynomial:
+10. @CE 4 1 20 30 Constant
+11. @CE 4 2 20 30 Linear
+12. @CE 4 3 20 30 Quadratic
+13. @CE 4 4 20 30 Cubic
+14. @CE 4 5 20 30 Quartic
+15. @CE 4 6 20 30 Quintic
+11. @CE 4 7 35 45 Sextic
+12. @CE 4 8 35 45 Septic
+13. @CE 4 9 35 45 Octic
+14. @CE 4 10 35 45 Nonic
+15. @CE 4 11 35 45 Dexic
+16.
+17. Subset/Except/For Specification:
+18. @CE 5 0 1 100 *
+19.
+20.
+21. Do the Fit?
+--------------------
+GR FE
+WEIGHTS _3
+_4 FIT _1 _2 _5
+--------------------last

@@ -1,0 +1,12 @@
+----- <~dataload\time.top> Load Built-in Time Series Data Files
+
+Load Built-in Time Series Data Files
+
+NIST data                                <~dataload\timenist.top>
+NOAA data                                <~dataload\timenoaa.top>
+Box-Jenkins data                         <~dataload\timebj.top>
+Pandit DDS data                          <~dataload\timedds.top>
+Other data                               <~dataload\timeothe.top>
+Bivariate data                           <~dataload\time2var.top>
+Image analysis data                      <~dataload\imag.top>
+

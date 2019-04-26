@@ -1,0 +1,19 @@
+----- <~dex\scrdexqu.top> Screening Design Question
+
+Screening Design Question
+
+2. If you have many factors under
+   investigation (all of which are a
+   priori equally important), and the
+   lead question of the experiment is
+   "Which of these factors effect the
+   response the most, and what are the
+   best levels of these best factors?"
+   then you need a Screening Design.  If
+   large sample sizes n are no problem,
+   then you need a Full Factorial
+   Design; if you can afford only
+   smaller sample sizes, then you need a
+   Fractional Factorial Design or a
+   Taguchi Design.
+

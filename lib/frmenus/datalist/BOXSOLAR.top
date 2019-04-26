@@ -1,0 +1,8 @@
+----- <~datalist\BOXSOLAR.top> BOXSOLAR.DAT
+ 
+BOXSOLAR.DAT
+ 
+View     <xcl: LIST BOXSOLAR.DAT>
+Load     <x2cl: SKIP 25; READ BOXSOLAR.DAT Y X1 X2 X3 X4>
+Print    <xccl: printfile C:\DATAPLOT\BOXSOLAR.DAT>
+ 

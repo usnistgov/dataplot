@@ -1,0 +1,78 @@
+----- <~help\print.top> Printing Your Graphs
+
+Printing Your Graphs
+
+
+When you exit your Dataplot session, you will
+typically have the files 
+
+   dppl1f.dat
+   dppl2f.dat
+
+In most cases, these plots will contain the graphs
+in Postscript format (Dataplot can generate graphics
+in some non-Postscript formats, but Postscript is
+the most common choice).
+
+The file dppl2f.dat should contain the most recent
+plot while dppl1f.dat should contain all plots
+subsequent to the DEVICE 2 POSTSCRIPT command.
+
+Ghostscript/Ghostview is a useful utility for
+viewing and printing Postscript files.  Ghostscript
+is a Postscript translator and Ghostview is a
+GUI program built on Ghostscript that allows you to
+view Postscript files and to print them on most
+common printers.
+
+
+Viewing/Printing Your Graphs Under Unix/Linux
+
+    The most common way of viewing Postscript files
+    is to use Ghostview.  Most Unix/Linux platforms
+    will already have Ghostview installed.  If
+    your system does not have Ghostview (and
+    Ghostscript) installed, we suggest that you
+    talk to your local system administrator to
+    have it installed.
+ 
+    If your printer is a Postscript printer, you
+    can print the files using the lpr command
+ 
+        lpr -Pprinter-id  dppl1f.dat
+ 
+    where printer-id is the name of the printer.
+    
+    If your printer does not support Postscript,
+    you may be able to print it using Ghostview.
+
+    If the Dataplot PP command does not work, you
+    may need to set the printer using the Dataplot
+    command
+
+        SET PRINTER  printer-id
+
+
+Viewing/Printing Your Graphs Under Windows
+
+    Under Windows, Dataplot uses Ghostview/Ghostscript
+    as its printer.  If you haven't installed these
+    programs, we strongly recommend that you do so
+    (both are freely downloadable).
+
+    Ghostview can be used to both view and print the
+    dppl1f.dat and dppl2f.dat files.  If you cannot find
+    these files, right click on the DATAPLOT_GUI
+    shortcut, select Properties and see what folder is
+    given in the "Start-In" field (this may be called
+    "Working Directory" in some variants of Windows).
+    Note that you can change this Start-In directory
+    to whatever is most convenient for you.
+
+    If the PP command does not work, edit the file
+    DPLOGF.TEX file in "C:\Program Files\NIST\DATAPLOT"
+    using Notepad.  In particular, check the paths defined
+    for the SET GHOSTSCRIPT PATH and SET GHOSTVIEW PATH
+    commands and set them to match the directories where
+    these programs are installed on your system.
+

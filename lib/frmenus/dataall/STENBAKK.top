@@ -1,0 +1,8 @@
+----- <~dataall\STENBAKK.top> STENBAKK.DAT
+
+STENBAKK.DAT
+
+View     <xcl: LIST STENBAKK.DAT>
+Load     <xcf: ~dataload/STENBAKK.DP>
+Print    <xccl: printfile C:\DATAPLOT\STENBAKK.DAT>
+

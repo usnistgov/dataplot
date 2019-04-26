@@ -1,0 +1,41 @@
+This is file fft.men--Compute discrete fast Fourier transform of a variable
+ 
+--------------------
+ 1. Discrete Fast Fourier Transform (FFT)
+ 2. LET YR YC = FFT Y
+ 3.
+ 4. Variable containing real component for which to compute the FFT:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable containing complex component for which to compute the
+ 6.    FFT (optional):
+ 6. @CE 2 0 33 50 * gui-variable
+ 7. Variable to store the real component of the FFT:
+ 7. @CE 3 0 33 50 ? gui-none
+ 8. Variable to store the complex component of the FFT:
+ 8. @CE 4 0 33 50 ? gui-none
+ 9.
+10. Plot FFT?:
+11. @CE 5 1 5 10 yes
+12. @CE 5 2 5 10 no
+13.
+14. Subset/Except/For Specification:
+15. @CE 6 0 -20 50 *
+16.
+17.
+18. Compute the FFT?:
+--------------------
+GR FE
+LET _3 _4 = FFT  _1 _2 _6
+LET ZZZZFLAG = 0
+@IF 5 1 LET ZZZZFLAG = 1
+IF ZZZZFLAG = 1
+  MULTIPLOT CORNER COORDINATES 2 2 98 98
+  MULTIPLOT 2 1
+  TITLE REAL COMPONENT
+  PLOT _3
+  TITLE COMPLEX COMPONENT 
+  PLOT _4
+END OF IF
+--------------------
+WEB HELP FFT
+--------------------

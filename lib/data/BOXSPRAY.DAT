@@ -1,0 +1,34 @@
+This is dataplot data file     BOXSPRAY.DAT
+Aerosol Spray Dispersion as a Function of Age
+Box, Hunter, & Hunter (1978)
+Statistics for Experimenters (1978), page 454.
+Number of observations             =  9
+Number of variables per line image =  3
+Order of variables on a line image--
+   1. Response variable Y = dispersion of aerosol
+   2. Factor 1            = age of aerosol (in min.)
+   3. Factor 2            = random run sequence
+To read this file into Dataplot--
+   SKIP 25
+   READ BOXSPRAY.DAT Y X RUNSEQ
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  Y        X          Sequence
+--------------------------------
+ 6.16      8              6
+ 9.88     22              9
+14.35     35              2
+24.06     40              8
+30.34     57              4
+32.17     73              5
+42.18     78              7
+43.23     87              1
+48.76     98              3

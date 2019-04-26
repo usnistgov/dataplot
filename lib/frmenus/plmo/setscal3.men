@@ -1,0 +1,29 @@
+This is file setscal3.men--Set Scale Attributes for Top Axis
+ 
+--------------------
+ 1. Set Scale Attributes for Top Axis
+ 2. X2LOG ON; XLIMITS 1 100000
+ 3.
+ 4. Scale for Top (X2) Axis:
+ 5. @CE 1 1  5 15 linear
+ 5. @CE 1 2 17 27 log
+ 5. @CE 1 3 29 39 Weibull
+ 6.
+ 7. Minimum for Top (X2) Axis:
+ 7. @CE 2 0 42 50 *
+ 8. Maximum for Top (X2) Axis:
+ 8. @CE 3 0 42 50 *
+ 9.
+10.
+11. Set Top Axis Scale Attributes?:
+--------------------
+PC FE
+X2LOG OFF
+@IF 1 1 X2LOG OFF
+@IF 1 2 X2LOG ON
+@IF 1 3 X2WEIBULL SCALE ON
+@IF 2 0 X2MINIMUM _2
+@IF 3 0 X2MAXIMUM _3
+--------------------
+WEB HELP LOG
+--------------------

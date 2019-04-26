@@ -1,0 +1,25 @@
+----- <~prob\ksshap3ks.top> Kolmogorov-SMirnov Goodness of Fit (3 Shape Parameters)
+
+Perform Kolmogorov-Smirnov Goodness of Fit Test (3+ shape parameters)
+
+Perform Kolmogorov-Smirnov Goodness of Fit Test
+for Continuous Distributions with Three (or more)
+Shape Parameters (Uncensored Case)
+
+Doubly Non-Central F                      <xemf: ~prob\ksdnf.men>
+Doubly Non-Central T                      <xemf: ~prob\ksdnt.men>
+Generalized Exponential                   <xemf: ~prob\ksgex.men>
+Generalized Inverse Gaussian              <xemf: ~prob\ksgig.men>
+Generalized Trapezoid                     <xemf: ~prob\ksgtr.men>
+Gompertz-Makeham                          <xemf: ~prob\ksmaka.men>
+    (Meeker/Escobar 3-shape parameterization>
+Gompertz-Makeham (DLMF parameterization)  <xemf: ~prob\ksmakb.men>
+Log Skew T                                <xemf: ~prob\kslst.men>
+Meilke's Beta-Kappa                       <xemf: ~prob\kskap.men>
+Non-Central Beta                          <xemf: ~prob\ksncb.men>
+Non-Central F                             <xemf: ~prob\ksncf.men>
+Trapezoid                                 <xemf: ~prob\kstra.men>
+Truncated Exponential                     <xemf: ~prob\kstne.men>
+Uneven Two-Sided Power                    <xemf: ~prob\ksuts.men>
+Wakeby                                    <xemf: ~prob\kswak.men>
+

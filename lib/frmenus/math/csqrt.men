@@ -1,0 +1,27 @@
+This is file csqrt.men--Compute complex square root
+ 
+--------------------
+ 1. Complex Square Root Function
+ 2. LET YR = CSQRT(XR,XC); LET YC = CSQRT(XR,XC)
+ 3.
+ 4. Variable for real component of input argument:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable for complex component of input argument:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable to store real component of the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7. Variable to store complex component of the transformed result:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 6 0 -20 50 *
+11.
+12.
+13. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = CSQRT( _1 , _2 ) _6
+LET _4 = CSQRTI( _1 , _2 ) _6
+--------------------
+WEB HELP CSQRT
+--------------------

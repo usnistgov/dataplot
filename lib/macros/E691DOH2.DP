@@ -1,0 +1,84 @@
+. This is Dataplot macro   E691DOH2.DP
+. Purpose--Generate some prelimanry graphs for an interlab analysis
+.          based on the ASTM E691 standard.
+.
+. Updated--2015/08: Use new H CONSISTENCY PLOT to generate the plot
+.
+.          The following plot is generated:
+.
+.          1) Dot plot of h-consistency statistic: Materials
+.             within Laboraties
+.
+. Input --Y        = response variable
+.       --LABID    = lab ID variable
+.       --MATID    = material ID variable
+.       --E691TIT  = string containing title for analysis
+.
+.  Step 1: Determine number of materials
+.
+feedback save
+feedback off
+let nmat = unique matid
+let nlab = unique labid
+let ntot = nmat*nlab
+let matcode = code matid
+let labcode = code labid
+let alpha = 0.005
+.
+.  Step 2: Set plot control features
+.
+label case asis
+title case asis
+label
+y1label h - Consistency Statistic
+x1label Laboratory
+title ^e691tit: h - Materials within Laboratories
+.
+let matidd = distinct matid
+line blank all
+line color black all
+character blank all
+loop for k = 1 1 nmat
+    let aval = matidd(k)
+    let plot character k = ^aval
+end of loop
+let k1 = nmat + 1
+let k2 = nmat + 2
+let k3 = nmat + 3
+let plot line k1 = solid
+let plot line k2 = solid
+let plot line k3 = solid
+let plot line color k2 = red
+let plot line color k3 = red
+set h consistency plot type stacked
+.
+xlimtis 1 nlab
+major xtic mark number nlab
+minor xtic mark number 0
+tic offset units screen
+tic offset 5 5
+title offset 2
+.
+.  Step 3: Generate the plot
+.
+set h consistency plot materials within laboratories
+h consistency plot y labcode matcode
+.
+.  Step 4: Add labeling to the plot
+.
+justification left
+movesd 86 hcv
+text ^hcv
+let hcv2 = -hcv
+movesd 86 hcv2
+text ^hcv2
+.
+line solid all
+line color black all
+character blank all
+character color black all
+set h consistency plot type default
+set h consistency plot laboratories within materials
+.
+feedback restore
+.

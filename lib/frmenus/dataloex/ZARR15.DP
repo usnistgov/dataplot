@@ -1,0 +1,10 @@
+----- <~dataloex\ZARR15.DP> Load & Execute ZARR15.DAT
+
+. This is file    ZARR15.DP
+
+DELETE Y
+SKIP 25
+READ ZARR15.DAT Y
+TITLE ZARR15.DAT
+4-PLOT Y
+

@@ -1,0 +1,35 @@
+This is file mlebet4.men--4-Parameter Beta MLE Estimates
+ 
+--------------------
+ 1. 4-Parameter Beta Maximum Likelihood Estimates
+ 2. 4-PARAMETER BETA MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. For the beta distribution, maximum likelihood
+ 5. estimation for the case when the lower and upper
+ 6. limits are unknown can be problematic.  Dataplot
+ 7. will first compute the moment estimates and then use
+ 8. these as starting values for the 4-parameter
+ 9. maximum likelihood procedure.  If the maximum likelihood
+10. procedure does not converge, the moment estimates
+11. will be used.  Note that only the point estimates are
+12. returned.
+13.
+14. NOTE: The ML estimates are currently still having
+15.       algorithmic issues, so only moment estimates
+16.       are being returned.
+17.
+18. Response Variable:
+18. @CE 1 0 42 50 ? gui-variable
+19.
+20. Subset/Except/For Specification:
+21. @CE 2 0 1 50 *
+22.
+23.
+24. Compute 4-Parameter Beta MLE's?
+--------------------
+GR FE
+DELETE BETALL BETAUL
+4-PARAMETER BETA MAXIMUM LIKELIHOOD _1 _2
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

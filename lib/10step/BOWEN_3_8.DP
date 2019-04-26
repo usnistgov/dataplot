@@ -1,0 +1,39 @@
+. This is dataplot program   bowen_3_8.dp     2/23/15
+. Purpose: Analyze Ray Bowen Dental Composite Adhesion Patent Data (k=3,n=8) via 10-step analysis
+.          Patent 4,251,565     February 17, 1981
+. Contact: Rafael (Ray) L. Bowen (NIST & American Dental Association)
+. Design : 2**3 full factorial (k=3,n=8)
+. Date   : ~ 1/1/80
+.
+. -----start point-----
+.
+dimension 100 variables
+.
+. -----Step 1: Read in the data and define strings-----
+.
+let k = 3
+skip 25; read   bowen_3_8.dat   y x1 to x^k
+.
+let string header = Factors Affecting Dental Polysac Adhesion (Ray Bowen Patent 4,251,565  2/17/81)
+let string header2 = Design: 2**3 (k=3,n=8)
+let string trailer = bowen_3_8.dp
+let string trailer2 = Datafile: bowen_3_8.dat
+let string currdate = 2/23/15
+.
+let string sty = Dental Adhesion
+.
+let string stx1 = Cleanser
+let string stx2 = Mordant
+let string stx3 = Coupling Agent
+.
+let string stx1l = H2O FormicAcid
+let string stx2l = H2O IsotonicFeCl
+let string stx3l = NoPolysac Polysac
+.
+let string stbest = up
+let string colorl = red blue
+.
+. -----Step 2: Generate 10-step DEX analysis-----
+.
+call dex10stepanalysis.dp
+.

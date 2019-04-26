@@ -1,0 +1,42 @@
+This is file btacdf.men--Compute Borel-Tanner cdf and tail probability
+ 
+--------------------
+ 1. Compute Borel-Tanner cdf and Tail Probability
+ 2. LET Y = BTACDF(X,LAMBDA,K)
+ 3.
+ 4. Input values:
+ 5.                           x (x = k, k+1, ...):
+ 5. @CE 1 0 42 50 ?
+ 6.       shape parameter lambda (0 < lambda < 1):
+ 6. @CE 2 0 42 50 ?
+ 7.             shape parameter k (k = 1, 2, ...):
+ 7. @CE 3 0 42 50 
+ 8.
+ 9. Output parameters:
+10.                  name for the cdf value:
+10. @CE 4 0 42 50 ?
+11.     name for the tail probability value:
+11. @CE 5 0 42 50 ?
+12.
+13.
+14. Compute the Probability?
+--------------------
+AN FE
+LET ZLAMBDA = 0.5
+LET ZK = 1
+@IF 2 0 LET ZLAMBDA = _2
+IF ZQ <= 0
+   LET ZLAMBDA = 0.5
+END OF IF
+IF ZLAMBDA >= 1
+   LET ZLAMBDA = 0.5
+END OF IF
+@IF 3 0 LET ZK = _3
+IF ZK <= 1
+   LET ZK = 1
+END OF IF
+@IF 4 0 LET _4 = BTACDF( _1 , ZLAMBDA , ZK )
+@IF 5 0 LET _5 = 1 - BTACDF( _1 , ZLAMBDA , ZK )
+--------------------
+WEB HELP BTACDF
+--------------------

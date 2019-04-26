@@ -1,0 +1,27 @@
+This is file conlimpr.men--Confidence Limits for Proportion
+ 
+--------------------
+ 1. Confidence Limits for Mean
+ 2. PROPORTION CONFIDENCE LIMITS Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5.
+ 6. Lower Limit for Success (default=0.99):
+ 6. @CE 2 0 42 50 ?
+ 7. Upper Limit for Success (default=1.01):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 4 0 1 50 *
+11.
+12.
+13. Compute Confidence Limits?
+--------------------
+GR FE
+ANOP LIMITS 0.99 1.01
+ANOP LIMITS _2 _3
+PROPORTION CONFIDENCE LIMITS _1 _4
+--------------------
+WEB HELP PROPORTION CONFIDENCE LIMITS
+--------------------

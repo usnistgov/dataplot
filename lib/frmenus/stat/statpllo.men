@@ -1,0 +1,94 @@
+This is file statpllo.men--Generate Statistic Plots (Location)
+ 
+--------------------line 3
+01. Statistic Plot (Location)
+02. <statistic> PLOT Y X
+03.
+04. Vertical   Axis Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Group ID        Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06.
+07. Location Statistic:
+08. @CE 3 1 5 25 raw data
+08. @CE 3 2 30 50 mean
+09. @CE 3 3 5 25 median
+09. @CE 3 4 30 50 midrange
+10. @CE 3 5 5 25 midmean
+10. @CE 3 6 30 50 biweight location
+11. @CE 3 7 5 25 trimmed mean
+11. @CE 3 8 30 50 Winsorized mean
+12. @CE 3 9 5 25 harmonic mean
+12. @CE 3 10 30 50 geometric mean
+13. @CE 3 11 5 25 Hodges Lehman
+14.
+15. For trimmed and Winsorized means, you need
+16. to specify the percentage to trim/Winsorize.
+17. 
+18. Percentage of values to trim/Winsorize above?:
+18. @CE 4 0 42 50 ? 
+19. Percentage of values to trim/Winsorize below?:
+19. @CE 5 0 42 50 ?
+20.
+21. Character Type for Data
+21. @CE 6 0 42 50 * gui-char
+22. Character Fill for Data
+22. @CE 7 0 42 50 gui-ooff
+23. Line Type for Data-connecting Line
+23. @CE 8 0 42 50 * gui-line
+24. Line Type for Global Stat Line?
+24. @CE 9 0 42 50 * gui-line
+25. Spike to Global Stat Line?
+25. @CE 10 0 42 50 gui-ooff
+26.
+27. Title:
+27. @CE 11 0 10 50 *
+28. Left Axis Label:
+28. @CE 12 0 22 50 *
+29. Bottom Axis Label:
+29. @CE 13 0 22 50 *
+30.
+31. Subset/Except/For Specification:
+32. @CE 14 0 1 50 *
+33.
+34. Generate the Statistic Plot?:
+--------------------
+TITLE _11
+Y1LABEL _12
+X1LABEL _13
+CHARACTERS _6
+CHARACTER FILL _7
+LINES _8 _9
+LET P1 = 5
+LET P2 = 5
+LET P1 = _5
+LET P2 = _4
+.
+@IF 3 2 LET ZSTAT = MEAN _1 _14
+@IF 3 3 LET ZSTAT = MEDIAN _1 _14
+@IF 3 4 LET ZSTAT = MIDRANGE _1 _14
+@IF 3 5 LET ZSTAT = MIDMEAN _1 _14
+@IF 3 6 LET ZSTAT = BIWEIGHT LOCATION _1 _14
+@IF 3 7 LET ZSTAT = TRIMMED MEAN _1 _14
+@IF 3 8 LET ZSTAT = WINSORIZED MEAN _1 _14
+@IF 3 9 LET ZSTAT = HARMONIC MEAN _1 _14
+@IF 3 10 LET ZSTAT = GEOMETRIC MEAN _1 _14
+@IF 3 11 LET ZSTAT = HODGES LEHMAN _1 _14
+SPIKE _10
+SPIKE BASE ZSTAT
+.
+BAR OFF OFF
+@IF 3 1 PLOT _1 _2 _2 _14
+@IF 3 2 MEAN PLOT _1 _2 _14
+@IF 3 3 MEDIAN PLOT _1 _2 _14
+@IF 3 4 MIDRANGE PLOT _1 _2 _14
+@IF 3 5 MIDMEAN PLOT _1 _2 _14
+@IF 3 6 BIWEIGHT LOCATION PLOT _1 _2 _14
+@IF 3 7 TRIMMED MEAN PLOT _1 _2 _14
+@IF 3 8 WINSORIZED MEAN PLOT _1 _2 _14
+@IF 3 9 HARMONIC MEAN PLOT _1 _2 _14
+@IF 3 10 GEOMETRIC MEAN PLOT _1 _2 _14
+@IF 3 11 HODGES LEHMAN PLOT _1 _2 _14
+--------------------
+WEB HELP STATISTICS PLOT
+--------------------

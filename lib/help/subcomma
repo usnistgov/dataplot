@@ -1,0 +1,628 @@
+This is DATAPLOT file     SUBCOMMANDS.               1/94
+Purpose--Enumerate Dataplot subcommands under LET
+ 
+-----Data Creation
+ 
+Data Creation
+ 
+LET Y = SEQUENCE    START         INCREMENT STOP
+ 
+ 
+LET Y = SEQUENCE    START REPEATS INCREMENT STOP
+ 
+LET Y = PATTERN <list of numbers> FOR I = START INCREMENT STOP
+ 
+LET Y = DATA <list of numbers>
+ 
+-----Data Manipulation
+ 
+Data Manipulation
+ 
+LET Y = SORT X
+LET Y = SORTC X X2
+LET Y = SORTC X X2 X3 X4 X5 X6 (etc.)
+ 
+-----Mathematics
+ 
+Mathematics
+ 
+Elementary
+Data Sets
+Fourier Transforms
+Vectors
+Matrices
+Complex Numbers
+Polynomials
+Sets
+Logicals
+ 
+-----Math: Elementary
+ 
+Math: Elementary
+ 
+LET A = SUM Y
+LET A = PRODUCT Y
+LET A = INTEGRAL Y
+LET A = INTEGRAL Y X
+ 
+LET Y = FREQUENCY X XD
+LET Y = DISTINCT X
+ 
+LET Y = DIFFERENCE X
+LET Y = SEQUENTIAL DIFFERENCE X
+LET Y = CUMULATIVE DIFFERENCE X
+ 
+LET Y = CUMULATIVE SUM X
+LET Y = CUMULATIVE PRODUCT X
+LET Y = CUMULATIVE INTEGRAL X
+ 
+LET Z = CONVOLUTION X Y
+LET Z = DECONVOLUTION X Y
+ 
+LET Y = SUMD X XD
+LET Y2 = INTERPOLATION Y X X2
+ 
+LET Y = ROOTS F WRT X FOR X = A TO B
+LET A = INTEGRAL F WRT X FOR X = A TO B
+LET F2 = DERIVATIVE F WRT X
+ 
+LET Y = RUNGE KUTTA F X
+ 
+-----Math: Data Sets
+ 
+Math: Data Sets
+ 
+Cantor Numbers
+   LET Y = CANTOR NUMBERS FOR I = START INCREMENT STOP
+ 
+Prime Numbers
+   LET Y = PRIME NUMBERS FOR I = START INCREMENT STOP
+ 
+Fibonnacci Numbers
+   LET Y = FIBONNACCI NUMBERS FOR I = START INCREMENT STOP
+ 
+Logistic Numbers (used with fractals)
+   LET K = <real value>
+   LET Y = LOGISTIC NUMBERS FOR I = START INC STOP
+ 
+Fractal Sequence
+   LET Y2 X2 = FRACTAL Y1 X1
+ 
+-----Math: Fourier Transforms
+ 
+Math: Fourier Transforms
+ 
+LET T = SINE TRANSFORM Y
+LET T = COSINE TRANSFORM Y  (???)
+ 
+LET T1 T2 = FOURIER TRANSFORM Y1 Y2 (OR JUST Y1)
+LET T1 T2 = INVERSE FOURIER TRANSFORM Y1 Y2 (OR JUST Y1)
+LET T1 T2 = FFT Y1 Y2
+LET T1 T2 = INVERSE FFT Y1 Y2
+ 
+LET T = LAPLACE TRANSFORM Y
+LET T = INVERSE LAPLACE TRANSFORM Y
+ 
+-----Math: Vector Operations
+ 
+Math: Vector Operations
+ 
+LET V3 = VECTOR ADDITION V1 V2
+LET V3 = VECTOR SUBTRACTION V1 V2
+LET V3 = VECTOR DOT PRODUCT V1 V2 (INNER PRODUCT)
+LET V3 = VECTOR CROSS PRODUCT V1 V2
+ 
+LET V3 = VECTOR LENGTH V1
+LET V3 = VECTOR DISTANCE V1 V2
+LET V3 = VECTOR ANGLE V1 V2
+ 
+-----Math: Matrix Operations
+ 
+Math: Matrix Operations
+ 
+LET M3 = MATRIX ADDITION M1 M2
+LET M3 = MATRIX ADDITION M1 P1
+LET M3 = MATRIX SUBTRACTION M1 M2
+LET M3 = MATRIX SUBTRACTION M1 P1
+LET M3 = MATRIX MULTIPLICATION M1 M2
+LET M3 = MATRIX MULTIPLICATION M1 V1
+LET M3 = MATRIX MULTIPLICATION M1 P1
+ 
+LET V3 = MATRIX SOLUTION M1 V2
+LET M3 = MATRIX INVERSE M1
+LET M3 = MATRIX TRANSPOSE M1
+LET M3 = MATRIX ADJOINT M1
+LET V3 = MATRIX EIGENVALUES M1
+LET P3 = MATRIX EIGENVECTORS M1
+LET M3 = MATRIX RANK M1
+LET P3 = MATRIX DETERMINANT M1
+LET P3 = MATRIX SPECTRAL NORM M1
+LET P3 = MATRIX SPECTRAL RADIUS M1
+LET P3 = MATRIX NUMBER OF ROWS M1
+LET P3 = MATRIX NUMBER OF COLUMNS M1
+LET V4 = MATRIX SIMPLEX SOLUTION V1 M1
+LET P3 = MATRIX TRACE M1
+LET M3 = MATRIX SUBMATRIX M1 P1 P2
+LET P3 = MATRIX MINOR M1 P1 P2
+LET P3 = MATRIX COFACTOR M1 P1 P2
+LET M3 = MATRIX DEFINITION M1 P1 P2
+LET P3 = MATRIX EUCLIDEAN NORM M1
+ 
+LET M3 = MATRIX AUGMENT M1 M2
+LET V1 = MATRIX DIAGONAL M1
+LET P3 = MATRIX ELEMENT M1 P1 P2
+LET V2 = MATRIX ITERATIVE SOLUTION M1 V1
+LET M2 = MATRIX REPLACE ELEMENT M1 P1 P2 P3
+LET M2 = MATRIX REPLACE ROW M1 V1 P1
+LET V1 = MATRIX ROW M1 P1
+ 
+LET M2 = CHOLESKY DECOMPOSITION M1
+LET M1 = DIAGONAL MATRIX V1
+LET M2 = TRIANGULAR INVERSE M1
+LET V2 = TRIANGULAR SOLUTION M1 V1
+LET V5 = TRIDIAGONAL SOLUTION V1 V2 V3 V4
+ 
+(FOR A FULL OR PARTIAL DATA SET)
+ 
+LET X2 Y2 = FRACTAL X1 Y1
+ 
+-----Math: Complex Numbers
+ 
+Math: Complex Numbers
+ 
+LET Y5 Y6 = COMPLEX ADDITION Y1 Y2 Y3 Y4
+LET Y5 Y6 = COMPLEX SUBTRACTION Y1 Y2 Y3 Y4
+LET Y5 Y6 = COMPLEX MULTIPLICATION Y1 Y2 Y3 Y4
+LET Y5 Y6 = COMPLEX DIVISION Y1 Y2 Y3 Y4
+ 
+LET Y5 Y6 = COMPLEX EXPONENTIATION Y1 Y2
+LET Y5 Y6 = COMPLEX SQUARE ROOT Y1 Y2
+LET Y5 Y6 = COMPLEX ROOTS Y1 Y2 (OR JUST Y1)
+LET Y5 Y6 = COMPLEX CONJUGATE Y1 Y2
+ 
+-----Math: Polynomial Operations
+ 
+Math: Polynomial Operations
+ 
+LET C3 = POLYNOMIAL ADDITION C1 C2
+LET C3 = POLYNOMIAL SUBTRACTION C1 C2
+LET C3 = POLYNOMIAL MULTIPLICATION C1 C2
+LET C3 = POLYNOMIAL DIVISION C1 C2
+ 
+LET C3 = POLYNOMIAL SQUARE C1
+LET C3 = POLYNOMIAL SQUARE ROOT C1  (FUTURE--NOT YET IMP)
+LET C3 = POLYNOMIAL GCD C1 C2       (FUTURE--NOT YET IMP)
+LET C3 = POLYNOMIAL LCM C1 C2       (FUTURE--NOT YET IMP)
+LET Y  = POLYNOMIAL EVALUATION C X
+ 
+-----Math: Set Operations
+ 
+Math: Set Operations
+ 
+LET S3 = SET UNION S1 S2
+LET S3 = SET INTERSECTION S1 S2
+LET S3 = SET COMPLEMENT S1 S2
+LET S3 = SET CARDINALITY S1
+LET S3 S4 = SET CARTESIAN PRODUCT S1 S2
+LET S3 = SET ELEMENTS S1    (DISTINCT)
+ 
+-----Math: Logical Operations
+ 
+Math: Logical Operations
+ 
+LET L3 = LOGICAL AND L1 L2 (CONJUNCTION)
+LET L3 = LOGICAL OR L1 L2 (DISJUNCTION)
+LET L3 = LOGICAL NAND L1 L2
+LET L3 = LOGICAL NOR L1 L2
+LET L3 = LOGICAL IFTHEN L1 L2 (IMPLICATION)
+LET L3 = LOGICAL IFF L1 L2 (EQUIVALENCE)
+LET L3 = LOGICAL NOT L1  (NEGATION OR COMPLEMENT)
+LET L3 = LOGICAL XOR L1 L2 (EXCLUS. OR OR EXCL. DISJ.)
+ 
+-----Statistics
+ 
+Statistics
+ 
+Number of Observations
+Location
+Variation
+Skewness & Kurtosis
+Percentiles
+Autocorrelation
+Correlation
+Transformations
+Probability Plot Theoretical Values
+resampling
+Generators
+Principle Components
+Singular Value Decomposition
+ 
+-----Statistics: Number of Observations
+ 
+Statistics: Number of Observations
+ 
+LET A = SIZE Y
+ 
+-----Statistics: Location
+ 
+Statistics: Location
+ 
+LET A = MEAN Y
+LET A = MEDIAN Y
+LET A = MIDRANGE Y
+LET A = MIDMEAN Y
+ 
+LET P1 = <percentage to be trimmed on left>
+LET P2 = <percentage to be trimmed on right>
+LET A = TRIMMED MEAN Y
+ 
+LET P1 = <percentage to be trimmed on left>
+LET P2 = <percentage to be trimmed on right>
+LET A = WINSORIZED MEAN Y
+ 
+WEIGHTS W
+LET A = WEIGHTED MEAN Y W
+ 
+-----Statistics: Variation
+ 
+Statistics: Variation
+ 
+LET A = RANGE Y
+LET A = STANDARD DEVIATION Y
+LET A = SD Y
+LET A = VARIANCE Y
+LET A = RELATIVE STANDARD DEVIATION Y
+LET A = RELSD Y
+LET A = AVERAGE ABSOLUTE DEVIATION Y
+LET A = STANDARD DEVIATION OF THE MEAN Y
+LET A = SDMEAN Y
+ 
+LET A = WEIGHTED STANDARD DEVIATION Y W
+LET A = WEIGHTED SD Y W
+LET A = WEIGHTED VARIANCE Y W
+ 
+-----Statistics: Skewness & Kurtosis
+ 
+Statistics: Skewness & Kurtosis
+ 
+LET A = THIRD CENTRAL MOMENT Y
+LET A = SKEWNESS Y
+LET A = FOURTH CENTRAL MOMENT Y
+LET A = KURTOSIS Y
+ 
+-----Statistics: Percentiles
+ 
+Statistics: Percentiles
+ 
+LET A = MINIMUM Y
+LET A = MAXIMUM Y
+LET A = EXTREME Y
+LET A = LOWER QUARTILE Y
+LET A = UPPER QUARTILE Y
+LET A = LOWER HINGE Y
+LET A = UPPER HINGE Y
+LET A = <FIRST, SECOND, ..., NINTH> DECILE Y
+ 
+-----Statistics: Autocorrelation
+ 
+Statistics: Autocorrelation
+ 
+LET A = AUTOCOVARIANCE Y
+LET A = AUTOCORRELATION Y
+LET A = COMOVEMENT Y
+LET A = RANK COMOVEMENT Y
+ 
+-----Statistics: Correlation
+ 
+Statistics: Correlation
+ 
+LET A = COVARIANCE Y X
+LET A = CORRELATION Y X
+LET A = RANK COVARIANCE Y X
+LET A = RANK CORRELATION Y X
+ 
+LET M3 = VARIANCE-COVARIANCE MATRIX M1
+LET M3 = CORRELATION MATRIX M1
+ 
+-----Statistics: Transformations
+ 
+Statistics: Transformations
+ 
+LET Y = COCODE X XREF
+LET Y = COCOPY X XREF YREF
+LET Y = RANK X
+ 
+LET Y = CODE  X
+LET Y = CODE2  X
+LET Y = CODE4  X
+LET Y = CODE4  X
+LET Y = CODE8  X
+LET Y = CODE10  X
+LET Y = CODE<1, 2, ..., 10>  X
+ 
+LET Y = BIWEIGHT RES
+LET Y = TRICUBE RES
+ 
+-----Statistics: Probability Plot Theoretical Values
+ 
+Statistics: Probability Plot Theoretical values
+ 
+Uniform
+LET Y = UNIFORM ORDER STATISTIC MEDIANS FOR I = START INC STOP
+ 
+Normal
+LET Y = NORMAL ORDER STATISTIC MEDIANS FOR I = START INC STOP
+ 
+Halfnormal
+LET Y = HALFNORMAL ORDER STATISTIC MEDIANS FOR I = START INC STOP
+ 
+Weibull (min)
+   MINMAX MIN
+   LET GAMMA = <positive real number>
+   LET Y = WEIBULL ORDER STATISTIC MEDIANS FOR I = START INC STOP
+ 
+Weibull (max)
+   MINMAX MAX
+   LET GAMMA = <positive real number>
+   LET Y = WEIBULL ORDER STATISTIC MEDIANS FOR I = START INC STOP
+ 
+Extreme Value Type 1 (min) = Gumbel (min)
+   LET Y = EV1    ORDER STATISTIC MEDIANS FOR I = START INC STOP
+   LET Y = GUMBEL ORDER STATISTIC MEDIANS FOR I = START INC STOP
+ 
+Extreme Value Type 1 (max) = Gumbel (max)
+   LET Y = EV1    ORDER STATISTIC MEDIANS FOR I = START INC STOP
+   LET Y = GUMBEL ORDER STATISTIC MEDIANS FOR I = START INC STOP
+ 
+Extreme Value Type 2 (min) = Frechet (min)
+   LET Y = EV2    ORDER STATISTIC MEDIANS FOR I = START INC STOP
+   LET Y = FRECHET ORDER STATISTIC MEDIANS FOR I = START INC STOP
+ 
+Extreme Value Type 2 (max) = Frechet (max)
+   LET Y = EV2    ORDER STATISTIC MEDIANS FOR I = START INC STOP
+   LET Y = FRECHET ORDER STATISTIC MEDIANS FOR I = START INC STOP
+ 
+Weibull Adjusted Ranks (related to Weibull plot)
+   LET Y = WEIBULL ADJUSTED RANKS FOR I = START INC STOP
+ 
+-----Statistics: Resampling
+ 
+Statistics: Resampling
+ 
+LET IND = BOOTSTRAP INDEX FOR I = START INCREMENT STOP
+LET Y = BOOTSTRAP SAMPLE X1 IND
+ 
+LET IND = JACKNIFE INDEX FOR I = START INCREMENT STOP
+LET Y = JACKNIFE SAMPLE X1 IND
+ 
+LET IND = DATA <any sequence of positive integers>
+LET Y = SUBSAMPLE X1 IND
+ 
+-----Statistics: Generator
+ 
+Statistics: Generator
+ 
+LET C3 = GENERATOR MULTIPLICATION C1 C2
+ 
+-----Statistics: Principle Components
+ 
+Statistics: Principle Components
+ 
+LET M2 = PRINCIPLE COMPONENTS M1
+LET M2 = PRINCIPLE COMPONENTS EIGENVECTORS M1
+LET V1 = PRINCIPLE COMPONENTS EIGENVALUES M1
+ 
+LET V1 = <FIRST, SECOND, etc.> PRINCIPLE COMPONENTS M1
+LET V1 = <FIRST, SECOND, etc.> PRINCIPLE COMPONENTS EIGENVECTORS M1
+LET A1 = <FIRST, SECOND, etc.> PRINCIPLE COMPONENTS EIGENVALUES M1
+ 
+-----Statistics: Singular Value Decomposition
+ 
+Statistics: Singular Value Decomposition
+ 
+Singular Value
+   LET V1 = SINGULAR VALUE M1
+ 
+Singular Value Decomposition
+   LET M2 V1 M3 = SINGULAR VALUE DECOMPOSITION M1
+   LET M2 V1 M3 = SVD M1
+ 
+Singular Value Factorization
+   LET M2 V1 M3 = SINGULAR VALUE FACTORIZATION M1
+   LET M2 V1 M3 = SVF M1
+ 
+-----Quality Statistics
+ 
+Quality Statistics
+ 
+Cp Statistic:
+   LET USL = <value defining the upper spec limit>
+   LET LSL = <value defining the lower spec limit>
+   LET A = CP Y
+ 
+Cpk Statistic:
+   LET USL = <value defining the upper spec limit>
+   LET LSL = <value defining the lower spec limit>
+   LET A = CPK Y
+ 
+Percent Defective
+   LET USL = <value defining the upper spec limit>
+   LET LSL = <value defining the lower spec limit>
+   LET A = PERCENT DEFECTIVE Y
+ 
+Expected Loss
+   LET USL = <value defining the upper spec limit>
+   LET LSL = <value defining the lower spec limit>
+   LET USLCOST = <value defining the loss at upper spec limit>
+   LET A = EXPECTED LOSS Y
+ 
+-----Taguchi Statistics
+ 
+Taguchi Statistics
+ 
+Signal-to-Noise (Target is best)
+   LET A = SN Y
+ 
+Signal-to-Noise (Larger is best)
+   LET A = SN+ Y
+ 
+Signal-to-Noise (Smaller is best)
+   LET A = SN- Y
+ 
+-----Random Number Generation
+ 
+Random Number Generation
+ 
+Symmetric
+Skewed & Normal-Related
+Skewed (General)
+Skewed & Extreme-Related
+Discrete
+ 
+-----Random Number Generation: Symmetric
+ 
+Random Number Generation: Symmetric
+ 
+Uniform
+   LET Y = UNIFORM RANDOM NUMBERS FOR I = START INC STOP
+ 
+Normal
+   LET Y = NORMAL RANDOM NUMBERS FOR I = START INC STOP
+ 
+Logistic
+   LET Y = LOGISTIC RANDOM NUMBERS FOR I = START INC STOP
+ 
+Double Exponential
+   LET Y = DOUB EXPO RANDOM NUMBERS FOR I = START INC STOP
+ 
+Cauchy
+   LET Y = CAUCHY RANDOM NUMBERS FOR I = START INC STOP
+ 
+Tukey
+   LET LAMBDA = <real number usually between -2 to 2>
+   LET Y = TUKEY RANDOM NUMBERS FOR I = START INC STOP
+ 
+t (Student's t)
+   LET NU = <positive integer>
+   LET Y = T RANDOM NUMBERS FOR I = START INC STOP
+ 
+-----Random Number Generation: Skewed & Normal-Related
+ 
+Random Number Generation: Skewed & Normal-Related
+ 
+Lognormal
+   LET Y = LOGNORMAL RANDOM NUMBERS FOR I = START INC STOP
+ 
+Halfnormal
+   LET Y = HALFNORMAL RANDOM NUMBERS FOR I = START INC STOP
+ 
+Chi-squared
+   LET NU = <positive integer>
+   LET Y = CHI-SQUARED RANDOM NUMBERS FOR I = START INC STOP
+ 
+F
+   LET NU1 = <positive integer>
+   LET NU2 = <positive integer>
+   LET Y = F RANDOM NUMBERS FOR I = START INC STOP
+ 
+-----Random Number Generation: Skewed (General)
+ 
+Random Number Generation: Skewed (General)
+ 
+Exponential
+   LET Y = EXPONENTIAL RANDOM NUMBERS FOR I = START INC STOP
+ 
+Gamma
+   LET GAMMA = <positive real number>
+   LET Y = GAMMA RANDOM NUMBERS FOR I = START INC STOP
+ 
+Beta
+   LET ALPHA = <positive real number>
+   LET BETA  = <positive real number>
+   LET Y = BETA RANDOM NUMBERS FOR I = START INC STOP
+ 
+Pareto
+   LET Y = PARETO RANDOM NUMBERS FOR I = START INC STOP
+ 
+-----Random Number Generation: Skewed & Extreme-Related
+ 
+Random Number Generation: Skewed & Extreme-Related
+ 
+Weibull(min)
+   SET MINMAX MIN
+   LET GAMMA = <positive real number>
+   LET Y = WEIBULL RANDOM NUMBERS FOR I = START INC STOP
+ 
+Weibull(max)
+   SET MINMAX MAX
+   LET GAMMA = <positive real number>
+   LET Y = WEIBULL RANDOM NUMBERS FOR I = START INC STOP
+ 
+Extreme Value Type 1 (min) = Gumbel (min)
+   SET MINMAX MIN
+   LET GAMMA = <positive real number>
+   LET Y = EV1    RANDOM NUMBERS FOR I = START INC STOP
+or LET Y = GUMBEL RANDOM NUMBERS FOR I = START INC STOP
+ 
+Extreme Value Type 1 (max) = Gumbel (max)
+   SET MINMAX MAX
+   LET GAMMA = <positive real number>
+   LET Y = EV1    RANDOM NUMBERS FOR I = START INC STOP
+or LET Y = GUMBEL RANDOM NUMBERS FOR I = START INC STOP
+ 
+Extreme Value Type 2 (min) = Frechet (min)
+   SET MINMAX MIN
+   LET GAMMA = <positive real number>
+   LET Y = EV2     RANDOM NUMBERS FOR I = START INC STOP
+or LET Y = FRECHET RANDOM NUMBERS FOR I = START INC STOP
+ 
+Extreme Value Type 2 (max) = Frechet (max)
+   SET MINMAX MAX
+   LET GAMMA = <positive real number>
+   LET Y = EV2     RANDOM NUMBERS FOR I = START INC STOP
+or LET Y = FRECHET RANDOM NUMBERS FOR I = START INC STOP
+ 
+Inverse Gaussian
+   LET GAMMA = <positive real number>
+   LET Y = INVERSE GAUS RANDOM NUMBERS FOR I = START INC STOP
+ 
+Reciprocal Inverse Gaussian
+   LET GAMMA = <positive real number>
+   LET Y = RECI INVE GAUS RANDOM NUMBERS FOR I = START INC STOP
+ 
+Wald
+   LET Y = WALD RANDOM NUMBERS FOR I = START INC STOP
+ 
+Fatigue Life
+   LET GAMMA = <positive real number>
+   LET Y = FATIGUE LIFE RANDOM NUMBERS FOR I = START INC STOP
+ 
+Generalized Pareto
+   LET GAMMA = <real number>
+   LET Y = GENE PARETO RANDOM NUMBERS FOR I = START INC STOP
+ 
+-----Random Number Generation: Discrete
+ 
+Random Number Generation: Discrete
+ 
+Binomial
+   LET N = <positive integer>
+   LET P = <real value from 0 to 1>
+   LET Y = BINOMIAL RANDOM NUMBERS FOR I = START INC STOP
+ 
+Geometric
+   LET P = <real value from 0 to 1>
+   LET Y = GEOMETRIC RANDOM NUMBERS FOR I = START INC STOP
+ 
+Poisson
+   LET LAMBDA = <positive real value>
+   LET Y = POISSON RANDOM NUMBERS FOR I = START INC STOP
+ 
+Negative Binomial
+   LET K = <positive integer>
+   LET P = <real value from 0 to 1>
+   LET Y = NEGA BINO RANDOM NUMBERS FOR I = START INC STOP
+ 
+Random Permutation
+   LET Y = RANDOM PERMUTATION FOR I = START INC STOP
+ 

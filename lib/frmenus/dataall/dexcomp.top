@@ -1,0 +1,16 @@
+----- <~dataall\dexcomp.top> View/etc. Comparative Design Data
+
+View/Load/Print Comparative Design Data
+
+BOXTOMAT.DAT  Comp Rand Des. Tomato yield    <xcl:LIST BOXTOMAT.top>
+BOXBLOOD.DAT  Comp Rand Des. Blood coag time <xcl:LIST BOXBLOOD.top>
+BATTADD3.DAT  Battery Additive (3-level)     <~dataall\BATTADD3.top>
+
+BOXSHOES.DAT* Rand Bl Des. Boys' shoe wear   <xcl:LIST BOXSHOES.top>
+BOXPENIC.DAT  Rand Bl Des. Penicillin form.  <xcl:LIST BOXPENIC.top>
+BOXPOISO.DAT  Rand Bl Des. Poison antidote   <xcl:LIST BOXPOISO.top>
+
+BOXAUTO.DAT   Latin Sq Des. Auto emissions   <xcl:LIST BOXAUTO.top>
+
+BOXCLOTH.DAT  Gr-Lat Sq Des. Cloth wear      <xcl:LIST BOXCLOTH.top>
+

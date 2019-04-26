@@ -1,0 +1,26 @@
+----- <~prob\expocdf.top> Plot Exponetialand Related  cdf's
+
+Plot Exponential, Weibull, Gamma, Extreme Value CDF Functions
+
+Exponential                   <xemf: ~prob\expcdf.men>
+Truncated Exponential         <xemf: ~prob\tnecdf.men>
+Generalized Exponential       <xemf: ~prob\gexcdf.men>
+Power Exponential             <xemf: ~prob\pexcdf.men>
+Geometric Extreme Exponential <xemf: ~prob\geecdf.men>
+
+Weibull (for min)             <xemf: ~prob\wei1cdf.men>
+Weibull (for max)             <xemf: ~prob\wei2cdf.men>
+Exponentiated Weibull         <xemf: ~prob\ewecdf.men>
+Inverted Weibull              <xemf: ~prob\iwecdf.men>
+
+Extreme Value Type I (for min)  <xemf: ~prob\ev11cdf.men>
+Extreme Value Type I (for max)  <xemf: ~prob\ev12cdf.men>
+Extreme Value Type II (for min) <xemf: ~prob\ev21cdf.men>
+Extreme Value Type II (for max) <xemf: ~prob\ev22cdf.men>
+Generalized Extreme Value     <xemf: ~prob\gevcdf.men>
+
+Gamma                         <xemf: ~prob\gamcdf.men>
+Log Gamma                     <xemf: ~prob\lgacdf.men>
+Inverted Gamma                <xemf: ~prob\igacdf.men>
+Generalized Gamma             <xemf: ~prob\ggdcdf.men>
+

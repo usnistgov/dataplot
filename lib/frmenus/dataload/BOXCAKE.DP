@@ -1,0 +1,8 @@
+----- <~dataload\BOXCAKE.DP> Load BOXCAKE.DAT
+
+. This is file    BOXCAKE.DP
+
+DELETE Y X1 TO X5
+SKIP 25
+READ BOXCAKE.DAT Y X1 TO X5
+

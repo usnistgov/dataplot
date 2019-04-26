@@ -1,0 +1,39 @@
+This is file btappf.men--Compute Borel-Tanner ppf
+ 
+--------------------
+ 1. Compute Borel-Tanner ppf
+ 2. LET Y = BTAPPF(X,LAMBDA,K)
+ 3.
+ 4. Input values:
+ 5.                              p (0 <= p < 1):
+ 5. @CE 1 0 42 50 ?
+ 6.       shape parameter lambda (0 < lambda < 1):
+ 6. @CE 2 0 42 50 ?
+ 7.             shape parameter k (k = 1, 2, ...):
+ 7. @CE 3 0 42 50 
+ 8.
+ 9. Output parameters:
+10.                  name for the ppf value:
+10. @CE 4 0 42 50 ?
+11.
+12.
+13. Compute the Probability?
+--------------------
+AN FE
+LET ZLAMBDA = 0.5
+LET ZK = 1
+@IF 2 0 LET ZLAMBDA = _2
+IF ZQ <= 0
+   LET ZLAMBDA = 0.5
+END OF IF
+IF ZLAMBDA >= 1
+   LET ZLAMBDA = 0.5
+END OF IF
+@IF 3 0 LET ZK = _3
+IF ZK <= 1
+   LET ZK = 1
+END OF IF
+LET _4 = BTAPPF( _1 , ZLAMBDA , ZK )
+--------------------
+WEB HELP BTAPPF
+--------------------

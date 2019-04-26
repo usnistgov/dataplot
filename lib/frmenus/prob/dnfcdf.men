@@ -1,0 +1,68 @@
+This is file dnfcdf.men--Compute Doubly Non-Central F cdf tail probability
+ 
+--------------------
+ 1. Compute Doubly Non-Central F cdf, Tail Prob.
+ 2. LET A = DNFCDF(X,SHAPE1,SHAPE2,SHAPE3,SHAPE4,LOC,SCALE)
+ 3.
+ 4. The input argument, x, can be either a
+ 5. single number, the name of a parameter,
+ 6. or the name of a variable.
+ 7.  
+ 8. Input values:
+ 9.                              x (x >= u):
+ 9. @CE 1 0 42 50 ?
+10.             shape nu1 (nu1 = 1, 2, ...):
+10. @CE 2 0 42 50 ?
+11.             shape nu2 (nu2 = 1, 2, ...):
+11. @CE 3 0 42 50 ?
+12.            shape lambda1 (lambda1 >= 0):
+12. @CE 4 0 42 50 ?
+13.            shape lambda2 (lambda2 >= 0):
+13. @CE 5 0 42 50 ?
+14.                              location u:
+14. @CE 6 0 42 50 ?
+15.                         scale s (s > 0):
+15. @CE 7 0 42 50 ?
+16.
+17. Output parameters:
+18.                  name for the cdf value:
+18. @CE 8 0 42 50 ?
+19.     name for the tail probability value:
+19. @CE 9 0 42 50 ?
+20.
+21.
+22. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 6 0 LET ZLOC = _6
+LET ZSCALE = 1
+@IF 7 0 LET ZSCALE = _7
+IF ZSCALE <= 0
+   LET ZSCALE = 1
+END OF IF
+LET ZSHAPE1 = 1
+LET ZSHAPE2 = 1
+LET ZSHAPE3 = 0
+LET ZSHAPE4 = 0
+@IF 2 0 LET ZSHAPE1 = _2
+IF ZSHAPE1 <= 1
+   LET ZSHAPE1 = 1
+END OF IF
+@IF 3 0 LET ZSHAPE2 = _3
+IF ZSHAPE2 <= 1
+   LET ZSHAPE2 = 1
+END OF IF
+@IF 4 0 LET ZSHAPE3 = _4
+IF ZSHAPE3 < 0
+   LET ZSHAPE3 = 0
+END OF IF
+@IF 5 0 LET ZSHAPE4 = _5
+IF ZSHAPE4 < 0
+   LET ZSHAPE4 = 0
+END OF IF
+@IF 8 0 LET _8 = DNFCDF( _1 ,ZSHAPE1,ZSHAPE2,ZSHAPE3,ZSHAPE4,ZLOC,ZSCALE)
+@IF 9 0 LET _9 = 1 - DNFCDF( _1 ,ZSHAPE1,ZSHAPE2,ZSHAPE3,ZSHAPE4,ZLOC,ZSCALE)
+--------------------
+WEB HELP DNFCDF
+--------------------

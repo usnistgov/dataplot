@@ -1,0 +1,454 @@
+Dataplot Distributions      4/2005
+ 
+Dataplot supports a number of probability functions:
+
+   1) pdf = probability density function
+   2) cdf = cumulative distribution function
+   3) ppf = percent point function (= inverse cdf)
+   4) sf  = sparsity function (= derivative of ppf)
+   5) haz = hazard function
+   6) cha = cumulative hazard function
+
+   Note that the survival function can be computed as the
+   CDF(1-X) and the inverse survival function can be computed
+   as PPF(1-P).  For this reason, distinct functions are not provided
+   for the survival and inverse survival functions.
+
+Random number generation is available for most, but not all,
+of the supported distributions.
+
+The following capabilities are available when the PPF function
+is available:
+
+   1) probability plots
+   2) ppcc plots (for distributions with either one or two
+      shape parameters)
+
+The following capabilities are available (for univariate
+distributions)when the CDF function is available (Kolmogorov-Smirnov
+tests are not supported for discrete distributions):
+
+   1) chi-square goodness of fit tests
+   2) Kolmogorov-Smirnov goodness of fit tests
+
+The following are available for a subset of the distributions:
+
+   1) The Anderson-Darling goodness of fit test (a refinement of the
+      Kolmogorov-Smirnov test that is more powerful) is supported
+      for:
+
+         normal, lognormal, exponential, Weibull,
+         extreme value type 1, logistic, double exponential,
+         generalized pareto, uniform (0,1), Cauchy,
+         extreme value type 2
+
+   2) There are a number of numerical parameter estimation
+      methods for probability distributions.  For the following
+      distributions, one or more of the following numeric
+      estimation methods is supported: maximum likelihood,
+      method of momements, L-moments, and elemental percentiles.
+
+      Continuous Distributions
+         normal, lognormal, exponential, double exponential,
+         Weibull, Pareto, gamma, inverse gaussian,
+         extreme value type 1, power, logistic, uniform, beta,
+         Johnson SU, Johnson SB, two-sided power,
+         fatigue life, geometric extreme exponential,
+         folded normal, Cauchy, generalized Pareto,
+         Rayleigh, Maxwell, asymmetric double exponential,
+         extreme value type 2, generalized extreme value,
+         generalized logistic type 5, mixture of normals,
+         slash, log beta, four parameter beta
+
+      Discrete Distributions
+         binomial, Poisson, geometric, logarithmic series,
+         beta-binomial, beta-geometric,
+         negative binomial, hypergeometric, Hermite, Yule,
+         Borel-Tanner, Lagrange-Poisson, zeta,
+         lost games, generalized lost games, Polya-Aeppli,
+         generalized logarithmic series, geeta,
+         quasi binomial type I, consul,
+         generalized negative binomial
+
+   Enter HELP ANDERSON DARLING GOODNESS OF FIT or
+   HELP MAXIMUM LIKELIHOOD for details.
+
+To use one of these functions in Dataplot, enter something like:
+
+     PLOT GAMPDF(X,2) FOR X = .01 .01 4
+
+NOTES:
+
+   1) Function names:
+
+      The function name is a 1 to 3 character id combined with
+      CDF, PDF, PPF, SF, HAZ, or CHA.  The function will have an
+      X argument (where the function is evaluated) and arguments for
+      any shape parameters.  Optional location and scale parameters are
+      available for many of the distributions and are referred to as LOC
+      and SCALE in the table.
+
+      The extreme value distributions (Weibull, EV1, EV2) support versions
+      based on both the minimum and the maximum order statistics.  This
+      is specified by entering the command SET MINMAX <1/2> before using
+      these distributions.
+
+      For example, the Normal functions are:
+
+         NORCDF(X,LOC,SCALE), NORPDF(X,LOC,SCALE), NORPPF(P,LOC,SCALE),
+         NORSF(P,LOC,SCALE),  NORHAZ(X,LOC,SCALE), NORCHA(X,LOC,SCALE)
+
+      The distribution identifier is included in the table.
+
+   2) Random numbers are LET subcommands as oppossed to functions.  For
+      example,
+
+          LET Y = NORMAL RANDOM NUMBERS FOR I = 1 1 100
+
+      Required parameters are specified via LET commands before
+      generating the random numbers.  Location and scale parameters
+      are not used, but can be generated simply.  For example,
+
+          LET GAMMA = 2
+          LET Y = GAMMA RANDOM NUMBERS FOR I = 1 1 100
+          LET LOC = 5
+          LET SCALE = 10
+          LET Y = LOC + SCALE*Y
+
+   3) For a few distributions, lower and upper limits are specified rather
+      than location and scale parameters.  These are referred to as
+      LOWER and UPPER in the parameter lists.
+
+   4) The multivariate distributions are supported via the MATRIX
+      subcommands under LET.  For example,
+
+        LET M = MULTIVARIATE NORMAL RANDOM NUMBERS MU SIGMA
+
+      with the variable MU denoting a variable containing the means
+      and the matrix SIGMA containing the variance-covariance matrix,
+      respectively.
+
+                                                           cha
+       Name            Rand  Prob  ppcc  cdf   pdf   ppf   haz  sf   Parameters
+________________________________________________________________________________
+
+Symmetric, continuous distributions
+ 1. Uniform        UNI YES   YES   N/A   YES   YES   YES   YES YES  LOWER, UPPER
+ 2. Normal         NOR YES   YES   N/A   YES   YES   YES   YES YES  LOC, SCALE
+    (= Gaussian)
+ 3. Logistic       LOG YES   YES   N/A   YES   YES   YES   YES YES  LOC, SCALE
+ 4. Double         DEX YES   YES   N/A   YES   YES   YES   NO  YES  LOC, SCALE
+    Exponential
+ 5. Double Weibull DWE YES   YES   YES   YES   YES   YES   NO  NO   GAMMA, LOC,
+                                                                    SCALE
+ 6. Double Gamma   DGA YES   YES   YES   YES   YES   YES   NO  NO   GAMMA, LOC,
+                                                                    SCALE
+ 7. Cauchy         CAU YES   YES   N/A   YES   YES   YES   NO  YES  LOC, SCALE
+ 8. Tukey Lambda   LAM YES   YES   YES   YES   YES   YES   NO  YES  LAMBDA
+                                                                    LOC, SCALE
+ 9. T                T YES   YES   YES   YES   YES   YES   NO  NO   NU
+                                                                    LOC, SCALE
+10. Semi-Circular  SEM YES   YES   N/A   YES   YES   YES   NO  NO   LOC, SCALE
+11. Von Misese     VON YES   YES   YES   YES   YES   YES   NO  NO   B, LOC
+12. Cosine         COS YES   YES   N/A   YES   YES   YES   NO  NO   LOC, SCALE
+13. Anglit         ANG YES   YES   N/A   YES   YES   YES   NO  NO   LOC, SCALE
+14. Hyperbolic     HSE YES   YES   N/A   YES   YES   YES   NO  NO   LOC, SCALE
+    Secant
+15. Error          ERR YES   YES   YES   YES   YES   YES   NO  NO   ALPHA,
+    (Exponential Power                                              LOC, SCALE
+    Subbotin,
+    Generalized Error)
+
+Skewed, continuous distributions
+ 1. Lognormal      LGN YES   YES   YES   YES   YES   YES   YES NO   SD, LOC,
+                                                                    SCALE
+ 2. Power          PLN YES   YES   YES   YES   YES   YES   YES NO   P, SD
+    Lognormal                                                       LOC
+ 3. Power Normal   PNR YES   YES   YES   YES   YES   YES   YES NO   P,
+                                                                    LOC, SCALE
+ 4. Half Normal    HFN YES   YES   N/A   YES   YES   YES   NO  NO   LOC, SCALE
+ 5. Folded Normal  FNR YES   YES   YES   YES   YES   YES   NO  NO   U, SD
+ 6. Truncated      TNR YES   YES   N/A   YES   YES   YES   NO  NO   A,B,U,SD
+    Normal
+ 7. Skewed Normal  SN  YES   YES   YES   YES   YES   YES   NO  NO   LAMBDA, 
+                                                                    LOC, SCALE
+ 8. Log Skewed     LSN YES   YES   YES   YES   YES   YES   NO  NO   LAMBDA, SD,
+    Normal                                                          LOC, SCALE
+ 9. Chi-Squared    CHS YES   YES   YES   YES   YES   YES   NO  NO   NU, LOC
+                                                                    SCALE
+10. Chi            CHI YES   YES   YES   YES   YES   YES   NO  NO   NU, LOC
+                                                                    SCALE
+11. Non-Central    NCC YES   YES   YES   YES   YES   YES   NO  NO   NU, LAMBDA
+    Chi-Square
+12. F                F YES   YES   YES   YES   YES   YES   NO  NO   NU1, NU2
+                                                                    LOC, SCALE
+13. Non-Central F  NCF YES   YES   N/A   YES   YES   YES   NO  NO   NU1, NU2,
+                                                                    LAMBDA
+14. Doubly         DNF YES   YES   N/A   YES   YES   YES   NO  NO   NU1, NU2
+    Non-Central F                                                   LAMBDA1,
+                                                                    LAMBDA2
+15. Folded T       FT  YES   YES   YES   YES   YES   YES   NO  NO   NU,
+                                                                    LOC, SCALE
+16. Skewed T       ST  YES   YES   YES   YES   YES   YES   NO  NO   NU, LAMBDA, 
+                                                                    LOC, SCALE
+17. Log Skewed T   LST YES   YES   N/A   YES   YES   YES   NO  NO   NU, LAMBDA, SD,
+                                                                    LOC, SCALE
+18. Non-Central T  NCT YES   YES   YES   YES   YES   YES   NO  NO   NU, LAMBDA
+19. Doubly         DNT YES   YES   N/A   YES   YES   YES   NO  NO   NU, LAMBDA1,
+    Non-Central T                                                   LAMBDA2
+20. Beta           BET YES   YES   YES   YES   YES   YES   NO  NO   ALPHA, BETA
+                                                                    LOWER, UPPER
+21. Non-Central    NCB NO    YES   N/A   YES   NO    YES   NO  NO   ALPHA, BETA,
+    Beta                                                            LAMBDA
+22. Inverted Beta  IB  YES   YES   YES   YES   YES   YES   NO  NO   ALPHA, BETA
+                                                                    LOC, SCALE
+23. Power Function POW YES   YES   YES   YES   YES   YES   NO  NO   C, LOC, SCALE
+24. Reflected      RPO YES   YES   YES   YES   YES   YES   NO  NO   C, LOC, SCALE
+    Power Function
+25. Arcsin         ARC YES   YES   N/A   YES   YES   YES   NO  NO   LOC, SCALE
+26. Gamma          GAM YES   YES   YES   YES   YES   YES   YES NO   GAMMA
+                                                                    LOC, SCALE
+27. Generalized    GGD YES   YES   YES   YES   YES   YES   YES NO   GAMMA, C
+    Gamma                                                           LOC, SCALE
+28. Inverted Gamma IGA YES   YES   YES   YES   YES   YES   YES NO   GAMMA
+                                                                    LOC, SCALE
+29. Log-Gamma      LGA YES   YES   YES   YES   YES   YES   NO  NO   GAMMA
+                                                                    LOC, SCALE
+30. Exponential    EXP YES   YES   N/A   YES   YES   YES   YES YES  LOC, SCALE
+31. Truncated      TNE YES   YES   N/A   YES   YES   YES   NO  NO   X0, M, SD
+    Exponential
+32. Power          PEX YES   YES   YES   YES   YES   YES   YES NO   BETA
+    Exponential                                                     LOC, SCALE
+33. Generalized    GEX YES   YES   N/A   YES   YES   YES   NO  NO   LAMBDA1,
+    Exponential                                                     LAMBDA2, S
+34. Geometric      GEE YES   YES   YES   YES   YES   YES   YES NO   GAMMA
+    Extreme Exponential                                             LOC, SCALE
+35. Weibull--MIN   WEI YES   YES   YES   YES   YES   YES   YES NO   GAMMA
+                                                                    LOC, SCALE
+36. Weibull--MAX   WEI YES   YES   YES   YES   YES   YES   YES NO   GAMMA
+                                                                    LOC, SCALE
+37. Exponentiated  EWE YES   YES   YES   YES   YES   YES   YES NO   GAMMA, THETA
+    Weibull                                                         LOC, SCALE
+38. Inverted       IWE YES   YES   YES   YES   YES   YES   YES NO   GAMMA
+    Weibull                                                         LOC, SCALE
+39. EV1 (Gumbel)   EV1 YES   YES   N/A   YES   YES   YES   YES NO   LOC, SCALE
+    --MIN
+40. EV1 (Gumbel)   EV1 YES   YES   N/A   YES   YES   YES   YES NO   LOC, SCALE
+    --MAX
+41. EV2 (Frechet)  EV2 YES   YES   YES   YES   YES   YES   YES NO   GAMMA
+    --MIN                                                           LOC, SCALE
+42. EV2 (Frechet)  EV2 YES   YES   YES   YES   YES   YES   YES NO   GAMMA
+    --MAX                                                           LOC, SCALE
+43. Generalized    GEV YES   YES   YES   YES   YES   YES   NO  NO   GAMMA
+    Extreme Value                                                   LOC, SCALE
+44. Gompertz       GOM YES   YES   YES   YES   YES   YES   NO  NO   C, B
+                                                                    LOC, SCALE
+45. Gompertz-      MAK YES   YES   N/A   YES   YES   YES   NO  NO   XI, LAMBDA,
+    Makeham                                                         THETA, LOC, SCALE
+46. Pareto         PAR YES   YES   YES   YES   YES   YES   YES NO   GAMMA, LOC
+    (of First Kind)
+47. Pareto         PA2 YES   YES   YES   YES   YES   YES   NO  NO   GAMMA,
+    (of Second Kind)                                                LOC, SCALE
+48. Generalized    GEP YES   YES   YES   YES   YES   YES   YES NO   GAMMA, SCALE
+    Pareto
+49. Alpha          ALP YES   YES   YES   YES   YES   YES   YES NO   ALPHA,
+                                                                    LOC, SCALE
+50. Inverse         IG YES   YES   YES   YES   YES   YES   YES NO   GAMMA
+    Gaussian                                                        LOC, SCALE
+51. Wald           WAL YES   YES   YES   YES   YES   YES   YES NO   GAMMA, LOC
+52. Reciprocal     RIG YES   YES   YES   YES   YES   YES   YES NO   GAMMA
+    Inverse Gaussian                                                LOC, SCALE
+    (= Random Walk)
+53. Generalized    GIG YES   YES   N/A   YES   YES   YES   NO  NO   CHI, LAMBDA,
+    Inverse                                                         THETA,
+    Gaussian                                                        LOC, SCALE
+54. Failure Time    FL YES   YES   YES   YES   YES   YES   YES NO   GAMMA
+                                                                    LOC, SCALE
+55. Log-Logistic   LLG YES   YES   YES   YES   YES   YES   NO  NO   DELTA
+                                                                    LOC, SCALE
+56. Half-Logistic  HFL YES   YES   N/A   YES   YES   YES   NO  NO   LOC, SCALE
+57. Generalized    HFL YES   YES   YES   YES   YES   YES   NO  NO   GAMMA
+    Half-Logistic                                                   LOC, SCALE
+58. Generalized    GLO YES   YES   YES   YES   YES   YES   NO  NO   ALPHA
+    Logistic                                                        LOC, SCALE
+59. Generalized    GL2 YES   YES   YES   YES   YES   YES   NO  NO   GAMMA
+    Logistic (Type 2)                                               LOC, SCALE
+60. Generalized    GL3 YES   YES   YES   YES   YES   YES   NO  NO   GAMMA
+    Logistic (Type 3)                                               LOC, SCALE
+61. Generalized    GL5 YES   YES   YES   YES   YES   YES   NO  NO   GAMMA
+    Logistic (Type 5)                                               LOC, SCALE
+62. Generalized    GL4 YES   YES   YES   YES   YES   YES   NO  NO   P, Q,
+    Logistic (Type 4)                                               LOC, SCALE
+63. Half-Cauchy    HFC YES   YES   N/A   YES   YES   YES   NO  NO   LOC, SCALE
+64. Wrapped-Up     WCA YES   YES   YES   YES   YES   YES   NO  NO   P, LOC
+    Cauchy
+65. Folded Cauchy  FCA YES   YES   YES   YES   YES   YES   NO  NO   M, SD
+66. Mielke's       KAP YES   YES   N/A   YES   YES   YES   NO  NO   K, BETA,
+    Beta-Kappa                                                      THETA
+                                                                    LOC, SCALE
+67. Bradford       BRA YES   YES   YES   YES   YES   YES   NO  NO   BETA
+                                                                    LOC, SCALE
+68. Reciprocal     REC YES   YES   YES   YES   YES   YES   NO  NO   B
+                                                                    LOC, SCALE
+69. Log Double     LDE YES   YES   YES   YES   YES   YES   NO  NO   ALPHA
+    Exponential                                                     LOC, SCALE
+70. Skew Double    SDE YES   YES   YES   YES   YES   YES   NO  NO   LAMBDA
+    Exponential                                                     LOC, SCALE
+71. Asymmetric     ADE YES   YES   YES   YES   YES   YES   NO  NO   LAMBDA
+    Double Exponential                                              LOC, SCALE
+72. Generalized    GAL YES   YES   YES   YES   YES   YES   NO  NO   KAPPA, TAU,
+    Asymmetric Laplace                                              LOC, SCALE
+73. Asymmetric     ALD YES   YES   YES   YES   YES   YES   NO  NO   ALPHA, BETA,
+    Log Laplace                                                     LOC, SCALE
+74. Johnson SB     JSB YES   YES   YES   YES   YES   YES   NO  NO   ALPHA1, ALPHA2,
+                                                                    LOC, SCALE
+75. Johnson SU     JSU YES   YES   YES   YES   YES   YES   NO  NO   ALPHA1, ALPHA2,
+                                                                    LOC, SCALE
+76. Two-Sided      TSP YES   YES   YES   YES   YES   YES   NO  NO   THETA, N,
+    Power                                                           LOC, SCALE
+77. Landau         LAN YES   YES   N/A   YES   YES   YES   NO  NO   LOC, SCALE
+78. Slash          SLA YES   YES   N/A   YES   YES   YES   NO  NO   LOC, SCALE
+79. G-and-H        GH  YES   YES   YES   YES   YES   YES   NO  NO   G, H,
+                                                                    LOC, SCALE
+80. Generalized    GLD YES   YES   YES   YES   YES   YES   NO  NO   LAMBDA3, LAMBDA4,
+    Tukey-Lambda                                                    LOC, SCALE
+81. Maxwell        MAX YES   YES   N/A   YES   YES   YES   NO  NO   LOC, SCALE
+82. Rayleigh       RAY YES   YES   N/A   YES   YES   YES   NO  NO   LOC, SCALE
+83. Bessel I       BEI YES   YES   N/A   YES   YES   YES   NO  NO   SIGMA1SQ,
+    Function                                                        SIGMA2SQ, NU,
+                                                                    LOC, SCALE
+84. Beta-Normal    BNO YES   YES   YES   YES   YES   YES   NO  NO   ALPHA, BETA,
+85. Triangular     TRI YES   YES   YES   YES   YES   YES   NO  NO   C,
+                                                                    LOWER, UPPER
+86. Slope          SLO YES   YES   YES   YES   YES   YES   NO  NO   ALPHA,
+                                                                    LOWER, UPPER
+87. Two-Sided      TSS YES   YES   YES   YES   YES   YES   NO  NO   ALPHA, THETA,
+    Slope                                                           LOWER, UPPER
+
+88. Ogive          OGI YES   YES   YES   YES   YES   YES   NO  NO   N,
+                                                                    LOWER, UPPER
+89. Two-Sided      TSO YES   YES   YES   YES   YES   YES   NO  NO   N, THETA,,
+    Ogive                                                           LOWER, UPPER
+90. Burr Type 2    BU2 YES   YES   YES   YES   YES   YES   NO  NO   R,
+                                                                    LOC, SCALE
+91. Burr Type 3    BU3 YES   YES   YES   YES   YES   YES   NO  NO   R, K,
+                                                                    LOC, SCALE
+92. Burr Type 4    BU4 YES   YES   YES   YES   YES   YES   NO  NO   R, C,
+                                                                    LOWLIM, UPPLIM, SCALE
+93. Burr Type 5    BU5 YES   YES   YES   YES   YES   YES   NO  NO   R, K,
+                                                                    LOC, SCALE
+94. Burr Type 6    BU6 YES   YES   YES   YES   YES   YES   NO  NO   R, K,
+                                                                    LOC, SCALE
+95. Burr Type 7    BU7 YES   YES   YES   YES   YES   YES   NO  NO   R,
+                                                                    LOC, SCALE
+96. Burr Type 8    BU8 YES   YES   YES   YES   YES   YES   NO  NO   R,
+                                                                    LOC, SCALE
+97. Burr Type 9    BU9 YES   YES   YES   YES   YES   YES   NO  NO   R, K,
+                                                                    LOC, SCALE
+98. Burr Type 10   B10 YES   YES   YES   YES   YES   YES   NO  NO   R,
+                                                                    LOC, SCALE
+99. Burr Type 11   B11 YES   YES   YES   YES   YES   YES   NO  NO   R,
+                                                                    LOC, SCALE
+100. Burr Type 12   B12 YES   YES   YES   YES   YES   YES   NO  NO   C, K,
+                                                                    LOC, SCALE
+101. Doubly Pareto  DPU YES   YES   YES   YES   YES   YES   NO  NO  M, N,
+     Uniform                                                        ALPHA, BETA
+102. Kumaraswamy    KUM YES   YES   YES   YES   YES   YES   NO  NO  ALPHA, BETA
+                                                                    LOWER, UPPER
+103. Uneven         UTS YES   YES   NO    YES   YES   YES   NO  NO  A, B, D,
+     Two-Sided Power                                                NU1, NU3, ALPHA
+104. Muth           MUT YES   YES   YES   YES   YES   YES   NO  NO  BETA,
+                                                                    LOC, SCALE
+105. Exponential-   LEX YES   YES   YES   YES   YES   YES   NO  NO  BETA,
+     Logistic                                                       LOC, SCALE
+106. Wakeby         WAK YES   YES   YES   YES   YES   YES   NO  NO  BETA, GAMMA, DELTA,
+                                                                    LOC, SCALE
+
+Mixtures
+ 1. Mixture of   NORMX YES   YES   N/A   YES   YES   YES   NO  NO   P, U1, SD1,
+    2 Normals                                                       U2, SD2
+ 2. Bi-Weibull     BWE YES   YES   N/A   YES   YES   YES   YES NO   SCALE1, GAMMA1
+                                                                    LOC2, SCALE2, GAMMA2
+
+Bivariate/Multivariate
+ 1. Bivariate      BVN NO    N/A   N/A   YES   YES   N/A   NO  N/A  P
+    Normal
+ 2. Multivariate   N/A YES   N/A   N/A   YES   NO    N/A   NO  N/A  MU, SIGMA,
+    Normal                                                          N
+ 3. Multivariate   N/A YES   N/A   N/A   YES   NO    N/A   NO  N/A  MU, SIGMA
+    T                                                               NU, N
+                                                                    N
+ 4. Wishart        N/A YES   N/A   N/A   NO    NO    N/A   NO  N/A  MU, SIGMA
+                                                                    N
+ 5. Multinomial    N/A YES   N/A   N/A   NO    NO    N/A   NO  N/A  P, NEVENTS,
+                                                                    NCAT, N
+ 6. Dirichelet     N/A YES   N/A   N/A   NO    YES   N/A   NO  N/A  ALPHA, N
+ 7. Independent    N/A YES   N/A   N/A   NO    NO    N/A   NO  N/A  LOWLIM, UPPLIM,
+    Uniform                                                         N
+ 8. Dependent      N/A YES   N/A   N/A   NO    NO    N/A   NO  N/A  LOWLIM, UPPLIM,
+    Uniform                                                         N
+
+Discrete
+ 1. Beta-Binomial  BBN YES   YES   YES   YES   YES   YES   NO  NO   ALPHA,
+                                                                    BETA, N
+ 2. Beta-Geometric BGE YES   YES   YES   YES   YES   YES   NO  NO   ALPHA, BETA
+ 3. Beta-Negative  BNB YES   YES   NO    YES   YES   YES   NO  NO   ALPHA, BETA
+    Binomial                                                        K
+    (reparameterized generalized Waring)
+ 4. Binomial       BIN YES   YES   YES   YES   YES   YES   NO  NO   N, P
+ 5. Borel-Tanner   BTA YES   YES   YES   YES   YES   YES   NO  NO   LAMBDA, K
+ 6. Consul         CON YES   YES   YES   YES   YES   YES   NO  NO   THETA (or MU),
+    (generalized geometric)                                         BETA
+ 7. Discrete       DIS YES   YES   NO    YES   YES   YES   NO  NO   N
+    Uniform
+ 8. Discrete       DIW YES   YES   YES   YES   YES   YES   NO  NO   Q, BETA
+    Weibull
+ 9. Geeta          GET YES   YES   YES   YES   YES   YES   NO  NO   THETA (or MU),
+                                                                    BETA
+10. Generalized    GLS YES   YES   YES   YES   YES   YES   NO  NO   THETA, BETA
+    Logarithmic Series
+11. Generalized    GLG YES   YES   YES   YES   YES   YES   NO  NO   P, J, A
+    Lost Games
+12. Generalized    GNB YES   YES   NO    YES   YES   YES   NO  NO   THETA, BETA,
+                                                                    M
+    Negative Binomial
+13. Geometric      GEO YES   YES   YES   YES   YES   YES   NO  NO   P
+14. Hermite        HER YES   YES   YES   YES   YES   YES   NO  NO   ALPHA, BETA
+15. Hypergeometric HYP YES   YES   NO    YES   YES   YES   NO  NO   L, K, N, M
+16. Katz           KAT YES   YES   YES   YES   YES   YES   NO  NO   ALPHA, BETA
+17. Lagrange-      LPO YES   YES   YES   YES   YES   YES   NO  NO   LAMBDA,
+    Poisson (Consul's generalized Poisson)                          THETA
+18. Leads in Coin  LCT YES   YES   NO    YES   YES   YES   NO  NO   N
+    Tossing (Discrete Arcsine)
+19. Logarithmic    DLG YES   YES   YES   YES   YES   YES   NO  NO   THETA
+    Series
+20. Lost Games     LOS YES   YES   YES   YES   YES   YES   NO  NO   P, R
+21. Classical      MAT YES   YES   NO    YES   YES   YES   NO  NO   K
+    Matching
+22. Negative        NB YES   YES   YES   YES   YES   YES   NO  NO   N, P
+    Binomial
+23. Poisson        POI YES   YES   YES   YES   YES   YES   NO  NO   LAMBDA
+24. Polya-Aeppli   PAP YES   YES   YES   YES   YES   YES   NO  NO   THETA, P
+25. Quasi Binomial QBI YES   YES   YES   YES   YES   YES   NO  NO   P, PHI
+    Type I
+26. Truncated      GNT YES   YES   NO    YES   YES   YES   NO  NO   THETA, BETA,
+    Generalized                                                     B, N
+    Negative Binomial
+                                                                    M
+27. Waring         WAR YES   YES   YES   YES   YES   YES   NO  NO   C, A
+    (reparameterized beta-geometric)
+28. Yule           YUL YES   NO    NO    YES   YES   YES   NO  NO   P
+29. Zeta           ZET YES   YES   YES   YES   YES   YES   NO  NO   ALPHA
+30. Zipf           ZIP YES   YES   YES   YES   YES   YES   NO  NO   ALPHA, N
+_________________________________________________________________________________
+
+
+Rand     = Random numbers
+Prob     = Probability plot
+ppcc     = Probability plot correlation coefficient plot
+cdf      = Cumulative distribution function
+pdf      = Probability density function (or probability mass for discrete)
+ppf      = Percent point (or inverse cdf) function
+sf       = Sparsity function 
+haz      = Hazard function 
+cha      = Cumulative hazard function 

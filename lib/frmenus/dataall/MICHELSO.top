@@ -1,0 +1,8 @@
+----- <~dataall\MICHELSO.top> MICHELSO.DAT
+
+MICHELSO.DAT
+
+View     <xcl: LIST MICHELSO.DAT>
+Load     <xcf: ~dataload/MICHELSO.DP>
+Print    <xccl: printfile C:\DATAPLOT\MICHELSO.DAT>
+

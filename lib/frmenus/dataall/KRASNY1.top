@@ -1,0 +1,8 @@
+----- <~dataall\KRASNY1.top> KRASNY1.DAT
+
+KRASNY1.DAT
+
+View     <xcl: LIST KRASNY1.DAT>
+Load     <xcf: ~dataload/KRASNY1.DP>
+Print    <xccl: printfile C:\DATAPLOT\KRASNY1.DAT>
+

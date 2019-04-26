@@ -1,0 +1,24 @@
+. This is dataplot test program HARE3.DP
+.
+. Purpose--Test Simplex Region Fill Program   SIMPLEXD.DP
+.
+. Source--Lynne Hare notes--page 24
+.
+. Date--December 1996
+.
+. -----START POINT-----
+.
+.
+DEVICE 2 POSTSCRIPT
+.
+SKIP 25
+READ HARE3.DAT Y X1 X2 X3 X4
+.
+. CALL SIMPLEXD.DP
+.
+FIT Y = A1*X1 + A2*X2 + A3*X3 + A4*X4 + A12*X1*X2 + ...
+A13*X1*X3 + A14*X1*X4 + A23*X2*X3 + A24*X2*X4 + A34*X3*X4
+.
+LET YCONT = SEQUENCE 20 20 140
+. CALL SIMPLEX3.DP
+.

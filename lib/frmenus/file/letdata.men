@@ -1,0 +1,20 @@
+This is file letdata.men--Create a variable with a small number of values
+ 
+--------------------
+ 1. Create a Variable
+ 2. LET Y = DATA <list>
+ 3.
+ 4. Enter values for the Variable:
+ 5. @CE 1 0 1 50 ?
+ 6.
+ 7. Name of Output Variable:
+ 7. @CE 2 0 40 50 ?
+ 8.
+ 9.
+10. Create the Data Sequence?
+--------------------
+AN FE
+LET _2 = DATA _1
+--------------------
+WEB HELP DATA
+--------------------

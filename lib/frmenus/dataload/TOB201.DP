@@ -1,0 +1,8 @@
+----- <~dataload\TOB201.DP> Load TOB201.DAT
+
+. This is file    TOB201.DP
+
+DELETE COMP TIME TEMP Y
+SKIP 25
+READ TOB201.DAT COMP TIME TEMP Y
+

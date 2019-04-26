@@ -1,0 +1,39 @@
+This is Dataplot data file    GAMCEN.DAT
+Sample data set from Example 13.2 of
+Karl Bury, "Statistical Distributions in Engineering",
+Cambridge University Press, 1999, pp. 227-228.
+
+Response variable   = Accelerated life test on the corrosion resistance
+                      of a multilayer coating (life = sum of coating
+                      lives)
+Censoring variable  = 1 implies failure time, 0 implies censor time
+Number of observations = 14
+Number of observations per line image = 2
+Order of observations per line image--
+   1. Response variable
+   2. Censoring variable
+To read this file into Dataplot--
+   SKIP 25
+   READ GAMCEN.DAT Y X
+   GAMMA  MAXIMUM LIKELIHOOD Y X
+ 
+ 
+ 
+ 
+ 
+  Y   X
+-------
+ 161  1
+ 334  1
+ 378  1
+ 485  0
+ 514  1
+ 646  1
+ 665  1
+ 718  0
+ 867  0
+ 947  1
+1081  1
+1284  1
+1391  1
+1789  1

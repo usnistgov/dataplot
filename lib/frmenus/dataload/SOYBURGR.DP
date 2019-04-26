@@ -1,0 +1,8 @@
+----- <~dataload\SOYBURGR.DP> Load SOYBURGR.DAT
+
+. This is file    SOYBURGR.DP
+
+DELETE Y X
+SKIP 25
+READ SOYBURGR.DAT Y X
+

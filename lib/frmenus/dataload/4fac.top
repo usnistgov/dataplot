@@ -1,0 +1,10 @@
+----- <~dataload\4fac.top> Load 4-Factor Data
+
+Load 4-Factor Data
+
+SHEESLEY.DAT* Defective lighbulbs          <xcf: ~dataload\SHEESLEY.DP>
+SHEESLE2.DAT  Defective lighbulbs          <xcf: ~dataload\SHEESLE2.DP>
+
+DORKO4.DAT    GASIE upper atmosphere study <xcf: ~dataload\DORKO4.DP>
+SPLETT4.DAT   Boulder eddy current probe   <xcf: ~dataload\SPLETT4.DP>
+

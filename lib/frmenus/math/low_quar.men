@@ -1,0 +1,22 @@
+This is file low_quar.men--Compute lower quartile of a variable
+ 
+--------------------
+ 1. Lower Quartile
+ 2. LET A = LOWER QUARTILE Y
+ 3.
+ 4. Variable for which to compute the lower quartile:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the lower quartile:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -7 50 *
+ 9.
+10.
+11. Compute the Lower Quartile?:
+--------------------
+GR FE
+LET _2 = LOWER QUARTILE  _1 _3
+--------------------
+WEB HELP LOWER QUARTILE
+--------------------

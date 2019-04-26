@@ -1,0 +1,57 @@
+This is file contmapl.men--Generate DEX Contour Matrix Plot
+
+--------------------
+ 1. DEX Contour Plot Matrix
+ 2. SET MATRIX PLOT TYPE DEX CONTOUR;MATRIX PLOT Y X1 X2 X3 YCONT
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. List of Factor Variables:
+ 6. @CE 2 0 1 50 ? gui-vari
+ 7. Variable Containing Contour Line Values:
+ 7. @CE 3 0 42 50 gui-vari
+ 8.
+ 9. Type of Optimization:
+ 9. @CE 4 1 35 42 Maximum
+ 9. @CE 4 2 43 49 Minimum
+10.
+11. The traces for the Dex Contour Plot are defined by:
+12.   trace 1        - edge points (set automatically)
+13.   trace 2        - center point (set automatically)
+14.   trace 3        - edge point square
+15.   trace 4 and up - contour lines
+16. 
+17. Line Style (start with trace 3):
+18. @CE 5 0 1 50 gui-line
+19. Line Thickness (start with trace 3):
+20. @CE 6 0 1 50 gui-thickness
+21. Line Color (start with trace 3):
+22. @CE 7 0 1 50 gui-color
+23.
+24. Set Text Size Scale Factor (default=2):
+24. @CE 8 0 42 50 *
+25.
+26.
+27. Generate the Contour Plot?:
+--------------------
+GR FE
+MULTIPLOT CORNER COORDINATE 10 10 90 90
+MULTIPLOT SCALE FACTOR 2
+MULTIPLOT SCALE FACTOR _8
+DEVICE 1 FONT SIMPLEX
+SET DEX CONTOUR  PLOT DIRECTION MAXIMUM
+SET DEX CONTOUR  PLOT DIRECTION _4
+LINE BLANK BLANK _5 
+LINE THICKNESS  0.1 0.1 0.1 0.3
+LINE THICKNESS  0.1 0.1 _6
+LINE COLOR _7
+SET MATRIX PLOT TYPE DEX CONTOUR
+SET MATRIX PLOT DIAGONAL BLANK
+MATRIX PLOT _1 _2 _3 
+DEVICE 1 FONT TEKTRONIX
+MULTIPLOT SCALE FACTOR 1
+LINE SOLID ALL
+LINE THICKNESS 0.1 ALL
+--------------------
+WEB HELP DEX CONTOUR PLOT
+--------------------

@@ -1,0 +1,70 @@
+3-FACTOR CENTRAL COMPOSITE DESIGN
+NUMBER OF LEVELS FOR EACH FACTOR =  5
+NUMBER OF FACTORS                =  3
+NUMBER OF OBSERVATIONS           =  20
+NOTE--THIS DESIGN IS A COMBINATION OF A
+         1) 2**3 FACTORIAL DESIGN WITH 3 CENTER POINTS; AND
+         2) 3-DIMENSIONAL STAR DESIGN WITH 3 CENTER POINTS
+NOTE--THIS DESIGN IS FREQUENTLY RUN IN 2 STAGES--
+         1) 2**3 FACTORIAL DESIGN WITH 3 CENTER POINTS
+            (THE FIRST 11 DESIGN POINTS)
+         2) 3-FACTOR STAR DESIGN WITH 3 CENTER POINTS
+            (THE LAST  9 DESIGN POINTS)
+REFERENCE--BOX, HUNTER & HUNTER,
+           STATISTICS FOR EXPERIMENTERS, PAGE 534
+NOTE--THIS IS A "RESPONSE SURFACE DESIGN"
+      IT IS USED IN A SEQUENTIAL FASHION WHEN--
+         1) THE GOAL IS RESPONSE OPTIMIZATION
+         2) THE 3 FACTORS ARE CONTINUOUS (E.G. CONCENTRATION)
+NOTE--IF POSSIBLE, THIS (AS WITH ALL EXPERIMENT DESIGNS) SHOULD BE
+      RUN IN RANDOM ORDER (SEE DATAPLOT'S RANDOM PERMUTATION FILES).
+NOTE--TO READ THIS FILE INTO DATAPLOT--
+      SKIP 50
+      READ CC3.DAT X1 X2 X3
+DATE--MAY 1989
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    X1        X2        X3
+   --------------------------
+   -1        -1        -1
+   +1        -1        -1
+   -1        +1        -1
+   +1        +1        -1
+   -1        -1        +1
+   +1        -1        +1
+   -1        +1        +1
+   +1        +1        +1
+    0         0         0
+    0         0         0
+    0         0         0
+   -1.414     0         0
+   +1.414     0         0
+    0        -1.414     0
+    0        +1.414     0
+    0         0        -1.414
+    0         0        +1.414
+    0         0         0
+    0         0         0
+    0         0         0

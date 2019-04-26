@@ -1,0 +1,46 @@
+This is file prinfile.men--Print a File
+ 
+--------------------
+ 1. Print a File
+ 2. WRITE <filename>   &   PRINT <filename>
+ 3.
+ 4: 1. User file:
+ 5. @CE 1 0 4 50 ?
+ 6.
+ 7. 2. Dataplot summary file:
+ 8. @CE 2 1 4 20 commands.
+ 9. @CE 2 2 4 20 syntax.
+10. @CE 2 3 4 20 subcommands.
+11. @CE 2 4 4 20 inline.
+12. @CE 2 5 4 20 functions.
+13. @CE 2 6 4 20 programs.
+14. @CE 2 7 4 20 macros.
+15. @CE 2 8 4 20 datasets.
+16. @CE 2 9 4 20 designs.
+17. @CE 2 10 4 20 distributions.
+18.
+19. First row to print:
+19. @CE 3 0 21 30 *
+20. Last  row to print:
+20. @CE 4 0 21 30 *
+21.
+22.
+23. Print the File?
+--------------------
+SU FE
+SET FILE NAME QUOTE ON
+@IF 1 0 LPRINT _1 FOR I = _3 1 _4
+@IF 2 1 LPRINT _2 FOR I = _3 1 _4
+@IF 2 2 LPRINT _2 FOR I = _3 1 _4
+@IF 2 3 LPRINT _2 FOR I = _3 1 _4
+@IF 2 4 LPRINT _2 FOR I = _3 1 _4
+@IF 2 5 LPRINT _2 FOR I = _3 1 _4
+@IF 2 6 LPRINT _2 FOR I = _3 1 _4
+@IF 2 7 LPRINT _2 FOR I = _3 1 _4
+@IF 2 8 LPRINT _2 FOR I = _3 1 _4
+@IF 2 9 LPRINT _2 FOR I = _3 1 _4
+@IF 2 10 LPRINT _2 FOR I = _3 1 _4
+SET FILE NAME QUOTE OFF
+--------------------
+WEB HELP PRINT
+--------------------

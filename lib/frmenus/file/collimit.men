@@ -1,0 +1,24 @@
+This is file collimit.men--Specify columns in file to read
+ 
+--------------------
+ 1. Specify Columns in File to Read
+ 2. COLUMN LIMITS <first>  <last>
+ 3.
+ 4. This menu allows you to restrict which
+ 5. columns are read.  This is useful for
+ 6. ignoring certain data at the beginning or
+ 7. end of data records.
+ 8.
+ 9. Enter first column to read:
+ 9. @CE 1 0 42 50 ?
+10. Enter last column to read:
+10. @CE 2 0 42 50 ?
+11.
+12.
+13. Define the Column Limits?
+--------------------
+SU FE
+COLUMN LIMITS _1  _2
+--------------------
+WEB HELP COLUMN LIMITS
+--------------------

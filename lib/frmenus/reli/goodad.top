@@ -1,0 +1,28 @@
+-----<~reli\goodad.top> Goodness of Fit: Anderson-Darling Method
+
+Goodness-of-Fit: Anderson-Darling Method
+
+Goodness-of-Fit: Anderson-Darling Method
+
+NIST/SEMATECH Handbook      <xcl: web handbook anderson-darling test>
+
+The Anderson-Darling test is a refinement of the K-S test.
+The primary distinction is that the K-S test weights differences
+between the empircal CDF and the theoretical CDF equally (i.e.,
+it considers the maximum difference regardless of where it occurs).
+The Anderson-Darling test puts more weight on differences in the
+tails (which is often of most interest in applications).  The
+Anderson-Darling test is considered a more powerful test than the
+K-S test.
+
+The critical values of the Anderson-Darling test depend on the
+specific distribution being tested.  Published tables are
+available for about a dozen distributions.  Alternatively,
+Dataplot can dynamically generate critical values for those
+distributions where maximum likelihood estimation is available.
+If the distribution parameters are known (which is typically
+not the case), then Dataplot can generate the Anderson-Darling
+critical values for all continuous distributions for which
+it can compute the CDF function.  See the "Set Options" menu
+to specify which options to use.
+

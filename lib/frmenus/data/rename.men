@@ -1,0 +1,56 @@
+This is file rename.men--Rename Variables
+ 
+--------------------
+ 1. Rename Variables
+ 2. RENAME YOLD YNEW
+ 3. (Note--old name does not get destroyed)
+ 4.
+ 4.           Old variable name   New variable name
+ 5.        1:
+ 5. @CE 1 0 11 29 ?
+ 5. @CE 2 0 31 49 ?
+ 6.        2:
+ 6. @CE 3 0 11 29 ?
+ 6. @CE 4 0 31 49 ?
+ 7.        3:
+ 7. @CE 5 0 11 29 ?
+ 7. @CE 6 0 31 49 ?
+ 8.        4:
+ 8. @CE 7 0 11 29 ?
+ 8. @CE 8 0 31 49 ?
+ 9.        5:
+ 9. @CE 9 0 11 29 ?
+ 9. @CE 10 0 31 49 ?
+10.        6:
+10. @CE 11 0 11 29 ?
+10. @CE 12 0 31 49 ?
+11.        7:
+11. @CE 13 0 11 29 ?
+11. @CE 14 0 31 49 ?
+12.        8:
+12. @CE 15 0 11 29 ?
+12. @CE 16 0 31 49 ?
+13.        9:
+13. @CE 17 0 11 29 ?
+13. @CE 18 0 31 49 ?
+14.       10:
+14. @CE 19 0 11 29 ?
+14. @CE 20 0 31 49 ?
+15.
+16.
+17. Rename the Variables?
+--------------------
+SU FE
+@IF 1 0 RENAME _1 _2
+@IF 2 0 RENAME _3 _4
+@IF 3 0 RENAME _5 _6
+@IF 4 0 RENAME _7 _8
+@IF 5 0 RENAME _9 _10
+@IF 6 0 RENAME _11 _12
+@IF 7 0 RENAME _13 _14
+@IF 8 0 RENAME _15 _16
+@IF 9 0 RENAME _17 _18
+@IF 10 0 RENAME _19 _20
+--------------------
+WEB HELP RENAME
+--------------------

@@ -1,0 +1,30 @@
+This is file ellip1.men--Compute elliptic integral (first kind)
+ 
+--------------------
+ 1. Legendre's Elliptic Integral of the first kind
+ 2. LET Y = ELLIP1(PHI,ALPHA)
+ 3.
+ 4. Note that there are several alternative ways for specifying
+ 5. the input parameters.  Check the help for details.
+ 6.
+ 7. The input values can be variables, parameters, or simply
+ 8. enter a constant.
+ 9. 
+10. Phi value (0,PI/2):
+10. @CE 1 0 42 50 ? gui-variable
+11. Alpha value:
+11. @CE 3 0 42 50 ? gui-variable
+12. Variable to store the transformed result:
+12. @CE 4 0 42 50 ?
+13.
+14. Subset/Except/For Specification:
+15. @CE 5 0 -5 50 *
+16.
+17.
+18. Compute the Transformation?:
+--------------------
+GR FE
+LET _4 = ELLIP1( _1 , _2 , _3 ) _5
+--------------------
+WEB HELP ELLIP1
+--------------------

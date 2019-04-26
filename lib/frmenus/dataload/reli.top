@@ -1,0 +1,18 @@
+----- <~dataload\reli.top> Load Built-in Reliability Data Files
+
+Load Built-in Reliability Data Files
+
+By Source:
+   NIST data                           <~dataload\relinist.top>
+   Recipe data                         <~dataload\recipe.top>
+   Bury data                           <~dataload\relibury.top>
+   Wayne Nelson data                   <~dataload\relinels.top>
+   Tobias and Trindade data            <~dataload\relitobi.top>
+   Other data                          <~dataload\reliothe.top>
+
+By Type:
+   Uncensored failure data             <~dataload\reliunce.top>
+   Censored failure data               <~dataload\relicens.top>
+   Accelerated test data               <~dataload\reliacel.top>
+   Renewal process data                <~dataload\relirene.top>
+   Nonrenewal process data             <~dataload\relinonr.top>

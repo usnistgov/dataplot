@@ -1,0 +1,15 @@
+----- <~fit\quadreg.top> Quadratic Regression
+
+Quadratic Regression
+
+Do the Fit          <xemf: ~fit\fitquad.men>
+
+Discussion          <~fit\qrdisc.top>
+NIST/SEMATECH Handbook (Least Squares) <xcl: web handbook linear least squares>
+
+Do Model Validation <~fit\modelval.top>
+Built-in Datasets   <~dataload\reg1p.top>
+
+Worked Example
+   Pontius data           <xcf: ~fit\PONTIUS.DP>
+

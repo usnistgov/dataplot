@@ -1,0 +1,22 @@
+----------  *7 (NEW) TOOLS*  ----------
+
+THE 7 (NEW) TOOLS FOR PROBLEM-SOLVING IN TOTAL QUALITY CONTROL (TQC)
+
+1. Relations Diagram
+
+2. KJ Method (Affinity Diagram)
+
+3. Systematic Diagram
+
+4. Matrix Diagram
+
+5. Matrix Data Analysis
+
+6. Process Decision Program Chart (PDPC)
+
+7. Arrow Diagram
+
+
+   Source--Mizuno, Shigeru (1987). Management for Quality
+           Improvement:  The 7 New QC Tools.  Productivity
+           Press, Cambridge Massachusetts.

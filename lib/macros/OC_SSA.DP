@@ -1,0 +1,50 @@
+. This is Dataplot macro   OC_SSA.DP
+. Purpose--Generate an Operating Characteristic curve for a
+.          single sample plan.
+.          The OC is defined as:
+.            HYPCDF(x,n,c,nn) versus p
+.          where 
+.            n      = sample size
+.            nn     = lot size
+.            c      = acceptance number for defectives
+.            x      = number of failures (= nn*fraction of failures)
+.
+. Input --N        = sample size
+.       --NN       = lot size
+.       --C        = number of defectives
+.       --PSTART   = start value for p
+.       --PINC     = increment value for p
+.       --PSTOP    = stop value for p
+. Output--graph
+.
+DELETE ZZZZP ZZZZY ZZZZX
+.
+LET ZZZZC = C
+LET ZZZZN = N
+LET ZZZZNNNN = NN
+.
+LET PSTARTT = 0.001
+LET PINCT = 0.001
+LET PSTOPT = 0.20
+IF PSTART EXISTS
+  LET PSTARTT = PSTART
+END OF IF
+IF PINC EXISTS
+  LET PINCT = PINC
+END OF IF
+IF PSTOP EXISTS
+  LET PSTOPT = PSTOP
+END OF IF
+.
+LET ZZZZP = SEQUENCE PSTARTT PINCT PSTOPT
+LET ZZZZX = ZZZZNNNN*ZZZZP
+LET ZZZZY = HYPCDF(ZZZZC,ZZZZN,ZZZZX,ZZZZNNNN)
+.
+LABEL CASE ASIS
+TITLE CASE ASIS
+Y1LABEL Probability of Acceptance, Pa
+X1LABEL Lot Fraction Defective, p
+TITLE OC Single Sample Type A (^ZZZZN, ^ZZZZC) Curve
+.
+PLOT ZZZZY VS ZZZZP
+.

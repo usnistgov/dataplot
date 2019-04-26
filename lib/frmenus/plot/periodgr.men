@@ -1,0 +1,47 @@
+This is file periodogr.men--Periodogram
+ 
+--------------------
+ 1. Periodogram
+ 2. PERIODOGRAM Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Line Types (solid, dot, dash, ...)
+ 6. @CE 3 0 42 50 * gui-line
+ 7. Character Type (blank, x, circ, ...)
+ 7. @CE 4 0 42 50 * gui-char
+ 8. Character Fill (off, on)
+ 8. @CE 5 0 42 50 * gui-ooff
+ 9. Spike (off, on)
+ 9. @CE 10 0 42 50 * gui-ooff
+10. Log scale for Vertical Axis
+10. @CE 11 0 42 50 * gui-ooff
+11.
+12. Title:
+12. @CE 6 0 10 50 *
+13. Left Axis Label:
+13. @CE 7 0 22 50 *
+14. Bottom Axis Label:
+14. @CE 8 0 22 50 *
+15.
+16. Subset/Except/For Specification:
+17. @CE 9 0 1 50 *
+18.
+19.
+20. Generate the Periodogram?:
+--------------------
+GR FE
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+SPIKE _10
+BAR OFF
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+YLOG _11
+PERIODOGRAM _1 _9
+--------------------
+WEB HELP PERIODOGRAM
+--------------------

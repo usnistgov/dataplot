@@ -1,0 +1,8 @@
+----- <~dataload\CEREAL.DP> Load CEREAL.DAT
+
+. This is file    CEREAL.DP
+
+DELETE Y X1
+SKIP 25
+READ CEREAL.DAT Y X1
+

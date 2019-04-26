@@ -1,0 +1,48 @@
+----- <~mvar\stattech.top> Multivariate Statistical Techniques
+ 
+Multivariate Analysis: Quantitative Techniques
+
+Discussion                                   <~mvar\discstat.top>
+
+2 Response Variables:
+    F Test for Shift in Variation            <xemf: ~stat\1fvatest.men>
+    T Test for Shift in Location             <xemf: ~stat\1flotest.men>
+    Sign Test for Paired Data                <xemf: ~stat\signtest.men>
+    Wilcoxon Signed Rank Sum Test (Paired Data) <xemf: ~stat\wilcoxon.men>
+    Wilcoxon Signed Rank U (= Mann-Whitney) Test<xemf: ~stat\mannwhit.men>
+
+General Multivariate (2+ Response Variables)
+    1-Sample Hotelling T Square         <xemf: ~math\matr_1ho.men>
+    2-Sample Hotelling T Square         <xemf: ~math\matr_2ho.men>
+    
+    Canonical Correlation                       <~mvar\canncorr.top>
+    Discriminantion/Classification Analysis     <~mvar\discdisc.top>
+
+The menus below operate on matrices.  Use the
+"Create Matrix" menu to create a matrix from a
+list of variables.
+
+The matrix arithmetic commands can be used to develop
+multivariate analyses not supported directly by Dataplot.
+
+Matrix Arithmetic Useful for Multivariate Analysis
+    Create Matrix                       <xemf: ~math\matr_cre.men>
+    
+    Correlation Matrix                  <xemf: ~math\matr_cor.men>
+    Variance-Covariance Matrix          <xemf: ~math\matr_cov.men>
+    Pooled Variance-Covariance Matrix (2 matrices) <xemf: ~math\matr_pco.men>
+    
+    Column Statistics of a Matrix       <xemf: ~math\matr_cst.men>
+    Row    Statistics of a Matrix       <xemf: ~math\matr_rst.men>
+    Mean of a Matrix                    <xemf: ~math\matr_mea.men>
+    Scale a Matrix                      <xemf: ~math\matr_sca.men>
+    
+    Principal Components                <xemf: ~math\matr_prc.men>
+    Matrix Distances                    <~mvar\distance.top>
+
+    Quadratic Forms                     <xemf: ~math\matr_qfo.men>
+    Linear Combination of Vector and Matrix <xemf: ~math\matr_lco.men>
+    Vector Times Transpose (= Matrix)   <xemf: ~math\matr_vtt.men>
+    
+    General Matrix Operations           <xemf: ~math\matrix.top>
+

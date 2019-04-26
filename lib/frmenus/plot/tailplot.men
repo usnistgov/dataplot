@@ -1,0 +1,31 @@
+This is file tailplot.men--Tail Area Plot
+ 
+--------------------
+ 1. Tail Area Plot
+ 2. TAIL AREA PLOT Y
+ 3.
+ 4. Vertical   Axis Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+6. Title:
+6. @CE 2 0 10 50 *
+7. Left Axis Label:
+7. @CE 3 0 22 50 *
+8. Bottom Axis Label:
+8. @CE 4 0 22 50 *
+9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 1 50 *
+12.
+13.
+14. Generate the Tail Area Plot?:
+--------------------
+GR FE
+LINES SOLID
+TITLE _2
+Y1LABEL _3
+X1LABEL _4
+TAIL AREA PLOT _1  _5
+--------------------
+WEB HELP TAIL AREA PLOT
+--------------------

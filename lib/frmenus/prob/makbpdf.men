@@ -1,0 +1,64 @@
+This is file makbpdf.men--Compute Gompertz-Makeham pdf
+ 
+--------------------
+ 1. Compute Gompertz-Makeham pdf
+ 2. LET A = MAKPDF(X,SHAPE1,SHAPE2,SHAPE3,LOC,SCALE)
+ 3.
+ 4. This menu computes the Digital Library of
+ 5. Mathematical Functions (DLMF) parameterization.
+ 6. Dataplot supports two additional
+ 7. parameterizations (click on HELP for details).
+ 8.
+ 9. The input argument, x, can be either a
+10. single number, the name of a parameter,
+11. or the name of a variable.
+12.  
+13. Input values:
+14.                          x (x >= u):
+14. @CE 1 0 42 50 ?
+15.                   shape xi (xi > 0):
+15. @CE 2 0 42 50 ?
+16.           shape lambda (lambda > 0):
+16. @CE 3 0 42 50 ?
+17.             shape theta (theta > 0):
+17. @CE 4 0 42 50 ?
+18.                          location u:
+18. @CE 5 0 42 50 ?
+19.                     scale s (s > 0):
+19. @CE 6 0 42 50 ?
+20.
+21. Output parameters:
+22.              name for the pdf value:
+22. @CE 7 0 42 50 ?
+23.
+24.
+25. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 5 0 LET ZLOC = _5
+LET ZSCALE = 1
+@IF 6 0 LET ZSCALE = _6
+IF ZSCALE <= 0
+   LET ZSCALE = 1
+END OF IF
+LET ZSHAPE1 = 1
+LET ZSHAPE2 = 1
+LET ZSHAPE3 = 1
+@IF 2 0 LET ZSHAPE1 = _2
+IF ZSHAPE1 <= 0
+   LET ZSHAPE1 = 1
+END OF IF
+@IF 3 0 LET ZSHAPE2 = _3
+IF ZSHAPE2 <= 0
+   LET ZSHAPE2 = 1
+END OF IF
+@IF 4 0 LET ZSHAPE3 = _4
+IF ZSHAPE3 <= 0
+   LET ZSHAPE3 = 1
+END OF IF
+SET GOMPERTZ MAKEHAM DEFINITION DLMF
+@IF 7 0 LET _7 = MAKPDF( _1 ,ZSHAPE1,ZSHAPE2,ZSHAPE3,ZLOC,ZSCALE)
+--------------------
+WEB HELP MAKPDF
+--------------------

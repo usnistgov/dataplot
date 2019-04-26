@@ -1,0 +1,31 @@
+This is file matr_lco.men--Matrix Linear Combination
+ 
+--------------------
+ 1. Linear Combination of Matrix and Vector
+ 2. LET Y = LINEAR COMBINATION M X
+ 3.
+ 4. The linear combination of a matrix M and vector
+ 5. X is:
+ 6.    Y = X(1)*M1 + X(2)*M2 + X(3)*M3 + ...
+ 7. where M1, M2, ... are the columns of the matrix.
+ 8. The output is a vector with the same number of
+ 9. rows as M.
+10.
+11. Name of matrix:
+11. @CE 1 0 42 50 ?  gui-matr
+12. Name of vector
+12. @CE 2 0 42 50 ? gui-vari
+13. Name of variable to store the results:
+13. @CE 3 0 42 50 ?
+14.
+15. Subset/Except/For Specification:
+16. @CE 4 0 1 50 *
+17.
+18.
+19. Perform the Linear Combination?:
+--------------------
+GR FE
+LET _3 = LINEAR COMBINATION  _1 _2  _4
+--------------------
+WEB HELP LINEAR COMBINATION
+--------------------

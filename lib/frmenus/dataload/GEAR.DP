@@ -1,0 +1,8 @@
+----- <~dataload\GEAR.DP> Load GEAR.DAT
+
+. This is file    GEAR.DP
+
+DELETE Y X
+SKIP 25
+READ GEAR.DAT Y X
+

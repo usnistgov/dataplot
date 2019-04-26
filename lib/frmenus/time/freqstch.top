@@ -1,0 +1,16 @@
+----- <~time\freqstch.top> Frequency-Domain Structure Checking
+ 
+Frequency-Domain Structure Checking
+ 
+4-Plot                     <xemf: ~univ\4plot.men>
+
+Spectrum                   <xemf: ~time\spectrum.men>
+Periodogram                <xemf: ~time\periodog.men>
+Allan SD plot              <xemf: ~plot\asdplot.men>
+Allan variance plot        <xemf: ~plot\avplot.men>
+
+Complex demodulation amplitude plot <xemf: ~time\compdeap.men>
+Complex demodulation phase plot     <xemf: ~time\compdepp.men>
+
+FFT                        <xemf: ~math\fft.men>
+

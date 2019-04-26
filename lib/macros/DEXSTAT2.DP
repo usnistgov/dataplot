@@ -1,0 +1,200 @@
+. THIS IS THE DATAPLOT MACRO FILE     DEXSTAT2.DP
+. PURPOSE--GENERATE A MULTIPLOT OF STATISTIC PLOTS
+.          FOR A USER-DEFINED STATISTIC (MEAN, MEDIAN,
+.          SD, ANOP, ETC.)
+.          THIS MACRO GENERATES PLOTS
+.          FOR MAIN EFFECTS AND
+.          FOR 2-TERM INTERACTIONS
+. UPDATED--AUGUST 1992 ADD    IF . . . NOT EXIST
+. updated: June 2014 legend ==> text
+. NOTE--THE FOLLOWING MUST PRE-EXIST--
+.       1. Y = THE RESPONSE VARIABLE
+.       2. X1 X2 X3 X4 ETC. = FACTORS (CONSTRAINT: 2 LEVELS: -1 AND +1)
+.       3. NUMFAC = THE NUMBER OF FACTORS
+.       4. STAT = THE STRING WITH THE DESIRED STATISTIC
+.              EXAMPLE--LET STRING STAT = MEAN
+.              EXAMPLE--LET STRING STAT = SD
+.              EXAMPLE--LET STRING STAT = ANOP
+.       5. YLIMITS = ? ?  (USE SAME LIMITS AS FROM    DEX MEAN PLOT)
+.       6. DP = THE NUMBER OF DECIMAL PLACES THE
+.              COMPUTED SLOPE SHOULD BE ROUNDED TO
+.              EXAMPLE--LET DP = 1
+.       7. S0         = THE STRING  WITH THE DESIRED VERT. AXIS LABEL
+.              EXAMPLE--LET STRING S0 = PERCENT ACCEPTABLE
+.       8. S1, S2, S3 = THE STRINGS WITH THE DESIRED HOR. AXIS LABELS
+.              EXAMPLE--LET STRING S1 = OVEN TEMPERATURE
+.       9. ANOP LIMITS (ONLY NEEDED IF STAT = ANOP)
+.              EXAMPLE--ANOP LIMITS 0 65
+.              EXAMPLE--ANOP LIMITS 80 100
+. NOTE--THE USER SHOULD PRE-SET YLIMITS
+.       FOR MEAN PLOT, YLIMITS SHOULD BE ABOUT
+.       DATA YMIN TO YMAX, OR ROUGHLY 1/2 THE RANGE
+.       FOR ANOP PLOT, YLIMITS SHOULD = 0 100
+. EXAMPLE--SKIP 25
+.          READ BOXBIKE2.DAT Y X1 TO X7
+.          LET NUMFAC = 7
+.          LET STRING STAT = MEAN
+.          LET DP = 1
+.          YLIMITS 50 100
+.          CALL DEXSTAT2.DP
+.
+. -----START POINT--------------------
+.
+. FEEDBACK OFF
+.
+. -----Step 1: Check existence of input variables-----
+IF NUMFAC NOT EXIST
+   LET NUMFAC = 3
+END OF IF
+.
+IF STAT NOT EXIST
+LET FUNCTION STAT = MEAN
+END OF IF
+.
+IF DP NOT EXIST
+   let dp = 2;. patch may 20, 2004
+   let dp = 5; temporary  2/11/08
+END OF IF
+.
+. -----Step 2: Set up special plot format-----
+.
+XLIMITS -2 2
+CHAR CIRCLE BLANK
+LET NUMFAC2 = NUMFAC*1.5
+LET JUNK2 = NUMFAC*2
+if hfudge exists; let junk2 = junk2*hfudge; end if
+.
+. if texth <> 2
+.    let junk2 = junk2*textexpz
+. end if
+. print junk2 textexpz
+. pause
+.
+let textexpz = 1
+if textexp exists; let textexpz = textexp; end if
+let junk2 = junk2*textexpz
+.
+. print texth junk2
+. pause
+.
+if y1ldisp not exist
+   let y1ldisp = 5+3*numfac
+   y1label displacement y1ldisp
+end if
+if y1ldisp exists
+   y1label displacement ^y1ldisp
+end if
+.
+. print k numfac numfac2; . pause
+CHAR HW NUMFAC2 NUMFAC
+CHAR FILL ON
+LINES SOLID DOTTED
+.
+XTICS OFF
+XTIC LABELS OFF
+TIC LABEL SIZE JUNK2
+LABEL SIZE JUNK2
+let htext = junk2
+let wtext = htext/2
+.
+let junk2b = (100-junk2) - 1
+let xptext = 5
+let yptext = junk2b
+FRAME CORNER COORDINATES 0 0 100 100
+.
+. -----Step 3: Generate a pre-plot to define limits for subsequent diagonal shading-----
+.
+device 1 off; device 2 off; device 3 off
+   . plot y
+   ^stat plot y x1
+   probe fx1min; let fx1min = probeval
+   probe fx1max; let fx1max = probeval
+   probe fy1min; let fy1min = probeval
+   probe fy1max; let fy1max = probeval
+   subregion xlimits fx1min fx1max; subregion ylimits fy1min fy1max
+   limits freeze
+device 1 on; device 2 on; device 3 on
+.
+. -----Step 4: Generate the individual plots-----
+.
+MULTIPLOT NUMFAC NUMFAC
+.
+Y1LABEL ^S0
+LOOP FOR j1 = 1 1 NUMFAC
+   LOOP FOR j2 = j1 1 NUMFAC
+      .
+      . MULTIPLOT NUMFAC NUMFAC j1 j2
+      IF J1 = 1; IF J2 = 1; MULTIPLOT NUMFAC NUMFAC; END IF; END IF
+      IF J1 <> 1; MULTIPLOT NUMFAC NUMFAC J1 J2; END IF
+      IF J2 <> 1; MULTIPLOT NUMFAC NUMFAC J1 J2; END IF
+      .
+      IF j1 = j2
+         LET PROD = X^j1
+         LET PROD2 = Y*PROD
+         LET SLOPE = MEAN PROD2
+         LET SLOPE = 2*SLOPE
+         LET SLOPE = ROUND(SLOPE,DP)
+         let slopeabs = abs(slope)
+         let string stout = ^j1:  ^slope
+         X1LABEL ^S^j1
+         subregion on; region fill on; region color g85
+         ^STAT PLOT Y PROD
+         color blue
+         if colorall exists; color ^colorall; end if
+         if cutoff exists
+            if slopeabs >= cutoff
+               color red
+            end if
+         end if
+         move xptext yptext; just left; hw htext wtext; text ^stout
+         color blue
+         .
+         subregion off; region fill off
+         IF j1 = 1
+            YTICS OFF
+            YTIC LABELS OFF
+         END OF IF
+         Y1LABEL
+         X1LABEL
+      END OF IF
+      .
+      IF j1 <> j2
+         LET PROD = X^j1 * X^j2
+         LET PROD2 = Y*PROD
+         LET SLOPE = MEAN PROD2
+         LET SLOPE = 2*SLOPE
+         LET SLOPE = ROUND(SLOPE,DP)
+         let slopeabs = abs(slope)
+         let string stout = ^j1&^j2:  ^slope
+         ^STAT PLOT Y PROD
+         color blue
+         if colorall exists; color ^colorall; end if
+         if cutoff exists
+            if slopeabs >= cutoff
+               color red
+            end if
+         end if
+         move xptext yptext; just left; hw htext wtext; text ^stout
+         color blue
+         .
+      END OF IF
+      .
+   END LOOP
+END LOOP
+.
+. -----Step 5: Revert back to the original plot format-----
+.
+XLIMITS
+CHAR BLANK ALL
+CHAR SIZE 2 ALL
+LINES SOLID ALL
+Y1TICS ON
+X1TICS ON
+Y1TIC LABELS ON
+X1TIC LABELS ON
+y1label displacement default
+TIC LABEL SIZE DEFAULT
+LABEL SIZE DEFAULT
+FRAME CORNER COORDINATES
+END OF MULTIPLOT
+.

@@ -1,0 +1,13 @@
+----- <~dataload\dex.top> Load Built-in Design of Experiment Data Files
+
+Load Built-in Design of Experiment Data Files
+
+Comparative data                         <~dataload\dexcomp.top>
+2**k full factorial data                 <~dataload\dex2k.top>
+2**(k-p) fractional factorial data       <~dataload\dex2kmp.top>
+Taguchi Ln data                          <~dataload\dextag.top>
+Plackett-Burnam data                     <~dataload\dexpb.top>
+Regression data                          <~dataload\dexreg.top>
+Optimization/response surface data       <~dataload\dexopt.top>
+Mixture data                             <~dataload\dexmix.top>
+

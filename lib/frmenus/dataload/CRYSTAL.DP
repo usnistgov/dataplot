@@ -1,0 +1,8 @@
+----- <~dataload\CRYSTAL.DP> Load CRYSTAL.DAT
+
+. This is file    CRYSTAL.DP
+
+DELETE Y X
+SKIP 25
+READ CRYSTAL.DAT Y X
+

@@ -1,0 +1,19 @@
+----- <~mvar\ecmdisc.top> ECM Discriminants
+ 
+ECM Discrimination
+
+The "Expected Cost of Misclassification"
+(or ECM) method starts with:
+
+a) fi(x) - the probability density functions
+   for the ith population.
+b) c(k/i) - the cost of allocating the an item to 
+   population k when it in fact belongs to population i.
+c) pi - the prior probability of population of i.
+
+That is, there are 3 components: prior probabilities,
+misclassification rules, and density functions.  These
+must be specified before applying the classification
+rules.   
+
+

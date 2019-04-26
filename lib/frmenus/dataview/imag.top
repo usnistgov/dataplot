@@ -1,0 +1,10 @@
+----- <~dataview\imag.top> View Time Series Data: Image Analysis
+
+View Time Series Data: Image Analysis
+
+EHRSTEIN.DAT  Semicond. wafer resistiv.  <xcf: ~dataview\EHRSTEIN.DP>
+BENNETT.DAT   Fracture surface roughness <xcf: ~dataview\BENNETT.DP>
+BRAIN.DAT     Brain wave analysis        <xcf: ~dataview\BRAIN.DP>
+CUBE.DAT      Vertices of a cube         <xcf: ~dataview\CUBE.DP>
+WOOLLEY.DAT   Optical disk errors        <xcf: ~dataview\WOOLLEY.DP>
+

@@ -1,0 +1,29 @@
+----- <~prob\bindesc.top> Binomial Description
+
+*Binomial Description
+
+"pdf": f(x) = constant * p**x * (1-p)**(n-x)  for x = 0, 1, ..., n
+
+Moments   : E(X)  = n*p
+            SD(X) = sqrt(n*p*(1-p))
+
+Type      : Discrete, skewed & symmetric family of distributions--
+            short-tailed to moderate-tailed.
+Domain    : 0 to n
+Synonym   :
+Genesis   : Bernoulli (1713)
+Definition: If the random variables X1, X2, X3, ...
+            represent the outcome of events 1, 2, 3, ...
+            and Xi takes on the values 0 (if failure)
+            or 1 (if success) with probabilities
+            1-p and p, respectively, and if tbere
+            are a total of n such events, and if the
+            events are independent of one another,
+            then the random variable N = the total number
+            of successful events out of the n total events
+            has a Binomial distribution.
+
+Reference : Johnson & Kotz,
+            Discrete Distributions,
+            Chapter 3 (pages 50-86).
+

@@ -1,0 +1,34 @@
+----- <~univ\distesti.top> "Estimation": Univariate Distributions
+
+"Estimation": Univariate Distributions
+
+Checking assumptions      <xemf: ~univ\4plot.men>
+
+Histogram                 <xemf: ~univ\histogra.men>
+Frequency Plot            <xemf: ~plot\freqplot.men>
+Rootogram                 <xemf: ~plot\rootogra.men>
+Box Plot                  <xemf: ~univ\boxplot1.men>
+Stem-and-Leaf Diagram     <xemf: ~plot\stemleaf.men>
+Percent Point Plot        <xemf: ~plot\percplot.men>
+Symmetry Plot             <xemf: ~plot\symmplot.men>
+Pie Chart                 <xemf: ~plot\piechart.men>
+
+... Probability Plot      <~univ\probplot.top>
+Normal Probability Plot   <~univ\normprpl.men>
+Normality Plot            <xemf: ~plot\normplot.men>
+Weibull Plot              <xemf: ~plot\weibplot.men>
+
+... PPCC Plot             <~univ\ppccplot.top>
+
+Maximum Likelihood Estimatatiin (full sample)
+   Normal                            <xemf: ~reli\normmle.men>
+   Exponential                       <xemf: ~reli\expomle.men>
+   Weibull (2-parameter)             <xemf: ~reli\weibmle.men>
+   Lognormal (2-parameter)           <xemf: ~reli\lgnmle.men>
+   Inverse Gaussian (2-parameter)    <xemf: ~reli\igmle.men>
+   Gamma (2-parameter)               <xemf: ~reli\gammmle.men>
+   Gumbel                            <xemf: ~reli\gumbmle.men>
+
+Transformations to normality:
+   Box-Cox Normality Plot <xemf: ~plot\bcnoplot.men>
+

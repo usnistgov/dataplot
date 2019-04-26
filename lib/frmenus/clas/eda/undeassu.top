@@ -1,0 +1,61 @@
+----- <~clas\eda\undeassu.top> Underlying Assumptions -----
+
+Underlying Assumptions
+
+There are 4 assumptions which typically underlie all
+measurement processes, namely that the data from the
+process at hand "behave like":
+
+   1. random drawings;
+   2. from a fixed distribution;
+   3. with that distribution having a fixed location; and
+   4. with that distribution having a fixed variation.
+
+The "fixed location" in item 3 above differs for different
+problem types.  The simplest problem type (and the default)
+is univariate.  For the univariate problem, the general
+model
+
+     response = deterministic component + random component
+
+becomes
+
+     response = constant + error
+
+For this univariate case, the "fixed location" is thus simply
+the unknown constant.  We can thus imagine the process at
+hand to be operating under constant conditions and spewing
+forth a single column of data with the properties that
+
+   1. the data are uncorrelated with one another;
+   2. the random component has a fixed distribution;
+   3. the deterministic component consists only of a constant; and
+   4. the random component has fixed variation.
+
+The universal power and importance of this univariate model is
+that it easily extrapolates to the more general case where the
+deterministic component is not just a constant but is in fact a
+function f(x1,x2,x3,...,xk) of many variables and the engineering
+objective is to characterize and model the function f.  The key
+point is that regardless of how many factors k, and regardless of
+how complicated the function f, if the engineer succeeds in choosing
+a good model, then the difference (= residuals = deviations) between
+the raw response data and the predicted values from the fitted model
+should themselves behave like a univariate process.  Further, this
+univariate process for a good fit will behave like
+
+   1. random drawings;
+   2. from a fixed distribution;
+   3. with fixed location (namely 0 in this case); and
+   4. with fixed variation.
+
+Thus if the residuals from the chosen and fitted model do in
+fact behave like the ideal, then this testing of underlying
+assumptions has in reality become a tool for the validation
+and quality of fit of the chosen model.  On the other hand, if
+the resiudals from the chosen fitted model violate one or more
+of the above univariate assumptions, then this implies in this
+context that the chosen fitted model is inadequate and thus is
+a signal that an opportunity exists for arriving at an improved
+model.
+

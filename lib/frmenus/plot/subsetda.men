@@ -1,0 +1,41 @@
+This is file subsetda.men--Compute Lower and Upper Subset Limits
+ 
+--------------------
+ 1. Create Conditioning Variable
+ 2. Macro
+ 3.
+ 4. This menu creates a qualitative conditioning
+ 5. variable from a continuous variable by using
+ 6. the SUBSET command.  You specify the lower and
+ 7. upper limits of the subsets.
+ 8.
+ 9. Original Continuous Variable:
+ 9. @CE 1 0 42 50 ? gui-variable
+10. Variable to Store Conditioning Variable:
+10. @CE 2 0 42 50 ?
+11.
+12. Values for the Lower Limits of the Subset:
+13. @CE 3 0 1 50 ?
+14. Values for the Upper Limits of the Subset:
+15. @CE 4 0 1 50 ?
+16.
+17.
+18. Generate the Conditioning Variable?:
+--------------------
+GR FE
+LET _2 = _1
+LET ZZZZN = SIZE _1
+DELETE ZZZZT1 ZZZZT2 AL AU
+LET ZZZZT1 = DATA _3
+LET ZZZZT2 = DATA _4
+LET ZZZZK1 = SIZE ZZZZT1
+LET ZZZZK2 = SIZE ZZZZT2
+LET ZZZZK = MIN(ZZZZK1,ZZZZK2)
+LOOP FOR K = 1 1 ZZZZK
+    LET AL = ZZZZT1(K)
+    LET AU = ZZZZT2(K)
+    LET _2 = K  SUBSET _1 = AL TO AU
+END OF LOOP
+--------------------
+WEB HELP SUBSET
+--------------------

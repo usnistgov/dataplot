@@ -1,0 +1,34 @@
+This is file cheby.men--Compute Chebychev Functions
+ 
+--------------------
+ 1. Chebychev Functions
+ 2. LET Y = CHEBT(X,2); LET Y = CHEBU(X,2)
+ 3.
+ 4. Horizontal axis variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Order of the Chebychev function:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7.
+ 8. Operation to perform:
+ 9. @CE 4 1 10 35 Chebychev T function
+10. @CE 4 2 10 35 Chebychev U function
+11.
+12. Plot?:
+12. @CE 5 1 14 20 no
+12. @CE 5 2 22 28 yes
+13.
+14. Subset/Except/For Specification:
+15. @CE 6 0 -5 50 *
+16.
+17.
+18. Compute the Transformation?:
+--------------------
+GR FE
+@IF 4 1 LET _3 = CHEBT( _1 , _2 ) _6
+@IF 4 2 LET _3 = CHEBU( _1 , _2 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP CHEBYCHEV FUNCTIONS
+--------------------

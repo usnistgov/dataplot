@@ -1,0 +1,25 @@
+----- <~reli\estimate.top> Estimate
+
+Estimate
+
+Compute
+   Mean life                              <xemf: ~reli\estmeali.men>
+   Interarrival times                     <xemf: ~math\intarr.men>
+   Cumulative mean time between failures  <xemf: ~math\cummean.men>
+   Hazards                                <xemf: ~reli\hazard.men>
+   Cumulative Hazards                     <xemf: ~reli\cumuhaza.men>
+
+   Location and spread estimates          <~math\locatran.top>
+   Statistical calculations               <~math\stattran.top>
+   Mathemtatical calculations             <~math\mathtran.top>
+
+Estimate
+   Tail probabilities  
+      Definition                      <~reli\esttpdef.top>
+      Parameteric Approach            <~reli\esttppar.top>
+   Percent points
+      Definition                      <~reli\estppdef.top>
+      Parameteric Approach            <~reli\estpppar.top>
+
+   Distributional parameters          <~reli\bestfitd.top>
+

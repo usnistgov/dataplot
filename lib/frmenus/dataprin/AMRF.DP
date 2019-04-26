@@ -1,0 +1,6 @@
+----- <~dataprin\AMRF.DP> Print (to Printer) AMRF.DAT
+
+. This is file    AMRF.DP
+
+PRINT AMRD.DAT
+

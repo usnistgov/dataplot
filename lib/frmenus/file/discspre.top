@@ -1,0 +1,32 @@
+----- <~file\discspre.top> Files: Using the Data Spreadsheet
+
+File: Using the Data Spreadsheet
+
+USING THE DATA SPREADSHEET
+
+Small data sets can be entered into the data spreadsheet
+in the following manner:
+
+  1) In the top row, enter the name of the variable (it
+     should consist of 1 to 8 letters or numbers).
+
+  2) Enter the desired values in the rows of the column.
+
+  3) Click on the "Apply" button.  Note that the data is not
+     entered into Dataplot until the "Apply" button is clicked.
+
+Note that only numeric data should be entered (no character
+data or formulas).  Also, "cut-and-paste" operations are not
+currently supported.
+
+Be aware that although the data spreadsheet is convenient, it
+does impose significant overhead on the GUI.  For small data
+sets (a few hundred points or less), this overhead does not
+noticealy degrade performance.  However, for larger data
+sets, updating the data sheet can cause the GUI to hang.  For
+this reason, we provide the option of turning the data
+spreadsheet off.  Just click the "No Update" button and no
+future updates to the data spreadsheet will be applied.
+A rewrite of the data spreadsheet to allow more efficient
+handling of larger data sets is planned for a future release.
+ 

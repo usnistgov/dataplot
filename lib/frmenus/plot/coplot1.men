@@ -1,0 +1,111 @@
+This is file coplot1.men--Condition Plot Options
+ 
+--------------------
+ 1. Condition Plot Options
+ 2. SET ...
+ 3.
+ 4. This menu lets you set the most common options for a
+ 5. condition plot.  Note that these options stay
+ 6. set for all subequent condition plots until
+ 7. explicitly changed.
+ 8.
+ 9. Select Plot Type:
+10. @CE 1 1  5 19 Plot
+10. @CE 1 2 20 34 Q-Q Plot
+10. @CE 1 3 35 49 Bihistogram
+11. @CE 1 4  5 19 Box-Cox Linearity
+11. @CE 1 5 20 34 Statistic Plot
+12.
+13. @CE 1 6  5 19 Histogram     
+13. @CE 1 7 20 34 Percent Point Plot
+13. @CE 1 8 38 48 Normal Prob Plot
+14. @CE 1 9  5 19 Autocorrelation
+14. @CE 1 10 20 34 Spectral
+14. @CE 1 11 38 48 Lag
+15.
+16. Enter Statistic for Statistic Plot:
+16. @CE 2 0 42 50 *
+17.
+18. Select Label Type:
+19. @CE 3 1 5 15 X and Y
+19. @CE 3 2 16 26 X only
+19. @CE 3 3 27 37 Y only
+19. @CE 3 4 38 48 None
+20. Location of X Axis Tics and Labels:
+21. @CE 4 1 5 15 Bottom
+21. @CE 4 2 16 26 Top
+21. @CE 4 3 27 37 Alternate
+22. Location of Y Axis Tics and Labels:
+23. @CE 5 1 5 15 Left
+23. @CE 5 2 16 26 Right
+23. @CE 5 3 27 37 Alternate
+24.
+25. Fit a Lowess curve to each plot?:
+25. @CE 6 1 42 45 yes
+25. @CE 6 2 46 48 no
+26. Lowess fraction (default = 0.6):
+26. @CE 7 0 42 50 *
+27.
+28. Tic Offset Units:
+28. @CE 8 1 25 34 Screen Units
+28. @CE 8 2 35 44 Data Units
+29. Tic Offset Y Axis (lower upper):
+29. @CE 9 0 42 50 ? 
+30. Tic Offset X Axis (left right):
+30. @CE 10 0 42 50 ? 
+31. Y Axis Label Displacement:
+31. @CE 11 0 42 50 ?
+32. X Axis Label Displacement:
+32. @CE 12 0 42 50 ?
+33. Title Displacement:
+33. @CE 13 0 42 50 ?
+34.
+35. Plot Frame:
+36. @CE 14 1 5 19 Conncected
+36. @CE 14 2 20 34 Conncected, but small gap
+36. @CE 14 3 35 49 Not connected
+37.
+38. Set the Condition Plot Options?:
+--------------------
+GR FE
+SET CONDITION PLOT TYPE PLOT
+@IF 1 2 SET CONDITION PLOT TYPE QUANTILE-QUANTILE
+@IF 1 3 SET CONDITION PLOT TYPE BIHISTOGRAM
+@IF 1 3 SET RELATIVE HISTOGRAM PERCENT
+@IF 1 4 SET CONDITION PLOT TYPE BOX COX LINEARITY
+@IF 1 5 SET CONDITION PLOT TYPE STATISTIC PLOT
+@IF 1 6 SET CONDITION PLOT TYPE HISTOGRAM
+@IF 1 7 SET CONDITION PLOT TYPE PERCENT POINT PLOT
+@IF 1 8 SET CONDITION PLOT TYPE NORMAL PROB PLOT
+@IF 1 9 SET CONDITION PLOT TYPE AUTOCORRELATION
+@IF 1 10 SET CONDITION PLOT TYPE SPECTRAL
+@IF 1 11 SET CONDITION PLOT TYPE LAG
+SET CONDITION PLOT STATISTIC _2
+.
+SET CONDITION PLOT LABELS ON
+@IF 3 2 SET CONDITION PLOT LABELS XON
+@IF 3 3 SET CONDITION PLOT LABELS YON
+@IF 3 4 SET CONDITION PLOT LABELS OFF
+SET CONDITION PLOT X AXIS ALTERNATE
+@IF 4 1 SET CONDITION PLOT X AXIS BOTTOM
+@IF 4 2 SET CONDITION PLOT X AXIS TOP
+SET CONDITION PLOT Y AXIS ALTERNATE
+@IF 5 1 SET CONDITION PLOT Y AXIS LEFT
+@IF 5 2 SET CONDITION PLOT Y AXIS RIGHT
+SET CONDITION PLOT FIT NONE
+@IF 6 1 SET CONDITION PLOT FIT LOWESS
+LOWESS FRACTION 0.6
+LOWESS FRACTION _7
+@IF 8 1 TIC OFFSET UNITS SCREEN
+@IF 8 2 TIC OFFSET UNITS DATA
+YTIC OFFSET _9
+XTIC OFFSET _10
+YLABEL DISPLACEMENT _11
+X1LABEL DISPLACEMENT _12
+TITLE DISPLACEMENT _13
+@IF 14 1 SET CONDITION PLOT FRAME DEFAULT
+@IF 14 2 SET CONDITION PLOT FRAME CONNECTED
+@IF 14 3 SET CONDITION PLOT FRAME USER
+--------------------
+WEB HELP CONDITION PLOT
+--------------------

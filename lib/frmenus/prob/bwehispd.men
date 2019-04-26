@@ -1,0 +1,62 @@
+This is file bwehispd.men--Histogram & Superimposed Bi-Weibull pdf Plot
+
+--------------------
+ 1. Histogram & Superimposed Bi-Weibull pdf Plot
+ 2. HIST Y; PLOT BWEPDF(X,S1,G1,U2,S2,G2) FOR X=START INC STOP
+ 3.
+ 4. Relative histogram of data:
+ 5.    Name of data variable:
+ 5. @CE 1 0 31 49 ? gui-vari
+ 6.    Class width:
+ 6. @CE 2 0 31 49 ?
+ 7.    Lower limit of 1st  class:
+ 7. @CE 3 0 31 49 ?
+ 8.    Upper limit of last class:
+ 8. @CE 4 0 31 49 ?
+ 9.    Bar fill on/off:
+ 9. @CE 5 0 31 49 ?
+10.
+11. Superimposed Bi-Weibull probability density function:
+12.    Scale parameter 1:
+12. @CE 6 0 31 49 ?
+13.    Shape parameter gamma 1:
+13. @CE 7 0 31 49 ?
+14.    Location parameter 2:
+14. @CE 8 0 31 49 ?
+15.    Scale parameter 2:
+15. @CE 9 0 31 49 ?
+16.    Shape parameter gamma 2:
+16. @CE 10 0 31 49 ?
+17.    Start point:
+17. @CE 11 0 31 49 ?
+18.    Increment:
+18. @CE 12 0 31 49 ?
+19.    Stop point:
+19. @CE 13 0 31 49 ?
+20.    Line type:
+20. @CE 14 0 31 49 gui-line
+21.
+22.
+23. Generate the plot?
+--------------------
+AN FE
+@IF 2 0 CLASS WIDTH _2
+@IF 3 0 CLASS LOWER _3
+@IF 4 0 CLASS UPPER _4
+@IF 1 0 RELATIVE HISTOGRAM _1
+@IF 1 0 LIMITS FREEZE
+.
+PRE-ERASE OFF
+@IF 5 0 BAR FILL _5
+LET ZSCALE1 = _6
+LET ZGAMMA1 = _7
+LET ZLOC2 = _8
+LET ZSCALE2 = _9
+LET ZGAMMA2 = _10
+@IF 14 0 LINES _14
+PLOT BWEPDF(X,ZSCALE1,ZGAMMA1,ZLOC2,ZSCALE2,ZGAMMA2) FOR X = _11 _12 _13
+@IF 1 0 LIMITS
+PRE-ERASE ON
+--------------------
+WEB HELP BWEPDF
+--------------------

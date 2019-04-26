@@ -1,0 +1,78 @@
+----------  *7 (OLD) TOOLS*  ----------
+
+THE 7 (OLD) TOOLS FOR PROBLEM-SOLVING IN TOTAL QUALITY CONTROL (TQC)
+
+1. Check Sheet (To Categorize the Customer Causes of Rejection).
+   To promote the collection of purposeful, reliable
+   data by making data easy to obtain and easy to use.
+   Usually used at Inspection Stage to accumulate
+   rejection causes by various types.  This answers the
+   question "Why was each item rejected?"
+   Example--Note and accumulate how many defective
+   springs are from pinholes, dimensions, cracking,
+   scratching, other.
+
+2. Pareto Diagram (To Order the Customer Causes of Rejection).
+   To indicate which problem should be solved first to
+   eliminate defects and improve the operation.  This
+   orders the causes-of-rejection.  Example--the
+   ordering of cause-of-rejection is cracking, scratching,
+   pinholes, dimensions, other.  Note what customer cause-
+   of-rejection is most frequent.
+
+3. Cause and Effect Diagram (Fishbone Diagram, Ishikawa Diagram).
+   To relate a selected customer requirement to
+   various measurable product characteristics; also, 
+   to relate a selected measurable product 
+   characteristic to various input/process/output 
+   characteristics.  To categorize and enumerate the 
+   causes for quality dispersion (4 general 
+   categories--material, machine, man, method).  It is
+   a useful graphical technique to assist engineering 
+   brainstorming to relate a selected 
+   requirement/characteristic to various 
+   component/product/process characteristics.  
+   Example--cracking may be due to input materials, 
+   machine, man (shifts), method (assembly process), 
+   hardening temperature, quenching temperature, the 
+   inspection process itself, the output spring type, 
+   etc.
+
+4. Histogram (of Some Primary Product Characteristic).
+   To show the central value, dispersion, and shape of
+   the distribution of measurements from a production
+   line.  Example--if cracking is the primary cause of
+   rejection, then examine the distribution of some
+   physical property of cracking, such as length, depth,
+   location, etc.
+
+5. Stratification (of Histograms).
+   Examine the distribution as a function of various
+   factors and levels within factors.  Example--compare
+   the distribution of the size of cracks for spring
+   type A with the distribution of size of cracks for
+   spring type B.  A bihistogram may be useful.
+
+6. Scatter Diagram.
+   To show the nature of the relationship between 2
+   kinds of data (variables).  This is really more
+   stratification--but by scatter plot rather than by
+   by histogram.  Example--how does crack size vary as
+   a function of some continuous variable (such as
+   oven temperature)?
+
+7. Graphs and Charts (including Control Charts).
+   To determine if material, man, machine, and method
+   effect the production output over time, and to
+   determine if the process is statistically "in
+   control".  Example--if crack size is related to
+   oven temperature, what does the control chart of
+   temperature reveal in terms of instability & unusual
+   patterns.
+
+
+   Source  --Total Quality Control (TQC): The Japanese Way.
+             Q. C. Trends, August 1985, pages 9-10.
+   See Also--Box & Bisgaard (1987). The Scientific Context
+             of Quality Improvement.  Quality Progress,
+             page 55-56.

@@ -1,0 +1,18 @@
+----- <~dp\resewoch.top> Reserved Words & Characters
+ 
+Reserved Words & Characters
+ 
+Do only for subset       : SUBSET    TO
+Do for all except a sub. : EXCEPT    TO
+Do for certain rows      : FOR I =
+ 
+Equal (math)             : =
+Not-equal (math)         : <>
+Inequalities (math)      : <   >   <=   >=
+ 
+Set in-line text subcomm.: ()
+Substitution character   : ^
+Termination character    : ;
+Comment character        : .
+Continuation of line     : ...
+ 

@@ -1,0 +1,10 @@
+----- <~dataloex\HAYES1.DP> Load & Execute HAYES1.DAT
+
+. This is file    HAYES1.DP
+
+DELETE Y
+SKIP 25
+READ HAYES1.DAT Y
+TITLE HAYES1.DAT
+/
+

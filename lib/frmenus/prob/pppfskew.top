@@ -1,0 +1,23 @@
+----- <~prob\pppfskew.top> Plot Common Skewed ppf's
+
+Plot Common Skewed PPF Functions
+
+Lognormal                <xemf: ~prob\plgnppf.men>
+Half-Normal              <xemf: ~prob\phfnppf.men>
+Chi-Squared              <xemf: ~prob\pchsppf.men>
+F                        <xemf: ~prob\pfppf.men>
+Exponential              <xemf: ~prob\pexpppf.men>
+Gamma                    <xemf: ~prob\pgamppf.men>
+Beta                     <xemf: ~prob\pbetppf.men>
+Weibull (for min)        <xemf: ~prob\pwei1ppf.men>
+Weibull (for max)        <xemf: ~prob\pwei2ppf.men>
+Extreme Value Type I (for min) <xemf: ~prob\pev11ppf.men>
+Extreme Value Type I (for max) <xemf: ~prob\pev12ppf.men>
+Extreme Value Type II (for min) <xemf: ~prob\pev21ppf.men>
+Extreme Value Type II (for max) <xemf: ~prob\pev22ppf.men>
+Pareto                   <xemf: ~prob\pparppf.men>
+Inverse Gaussian         <xemf: ~prob\pigppf.men>
+Wald                     <xemf: ~prob\pwalppf.men>
+Reciprocal Inverse Gaussian   <xemf: ~prob\prigppf.men>
+Fatigue-Life             <xemf: ~prob\pflppf.men>
+

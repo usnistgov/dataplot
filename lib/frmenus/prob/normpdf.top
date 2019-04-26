@@ -1,0 +1,21 @@
+----- <~prob\normpdf.top> Plot Symmetric pdf's
+
+Plot Symmetric pdf Functions
+
+Normal                   <xemf: ~prob\norpdf.men>
+Half-Normal              <xemf: ~prob\hfnpdf.men>
+Power-Normal             <xemf: ~prob\pnrpdf.men>
+Folded Normal            <xemf: ~prob\fnrpdf.men>
+Truncated Normal         <xemf: ~prob\tnrpdf.men>
+
+Log-Normal               <xemf: ~prob\lgnpdf.men>
+Power-Lognormal          <xemf: ~prob\plnpdf.men>
+
+Cauchy                   <xemf: ~prob\caupdf.men>
+Half-Cauchy              <xemf: ~prob\hfcpdf.men>
+Wrapped-Cauchy           <xemf: ~prob\wcapdf.men>
+Folded-Cauchy            <xemf: ~prob\fcapdf.men>
+
+Johnson SB               <xemf: ~prob\jsbpdf.men>
+Johnson SU               <xemf: ~prob\jsupdf.men>
+

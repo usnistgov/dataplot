@@ -1,0 +1,8 @@
+----- <~dataall\BOXREAC2.top> BOXREAC2.DAT
+
+BOXREAC2.DAT
+
+View     <xcl: LIST BOXREAC2.DAT>
+Load     <xcf: ~dataload/BOXREAC2.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXREAC2.DAT>
+

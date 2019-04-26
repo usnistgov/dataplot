@@ -1,0 +1,72 @@
+----- <~dex\cs28m3.top> Confounding:  2**(8-3) Design
+
+Confounding:  2**(8-3) Design
+
+Name of Design      = 2**(8-3) Fractional Factorial Design
+
+Number of Factors k = 8
+Number of Obs.    n = 32
+
+Resolution          = 4 (Main effects confounded with
+                      3-term interactions and higher;
+                      no main effects are confounded
+                      with any 2-term interactions)
+
+Factor Definitions  : 6 = 123
+                      7 = 124
+                      8 = 2345
+
+Defining Relation   : I +
+                      1236 + 1247 + 23458 +
+                      3467 + 14568 + 13578 +
+                      25678
+
+Main Effect         : 1  =  1 +  *
+Confounding           2  =  2 +  *
+                      3  =  3 +  *
+                      4  =  4 +  *
+                      5  =  5 +  *
+                      6  =  6 +  *
+                      7  =  7 +  *
+                      8  =  8 +  *
+
+2-Term              : 12 = 12 + 36 + 47 +  *
+Confounding           13 = 13 + 26 +  *
+                      14 = 14 + 27 +  *
+                      15 = 15 +  *
+                      16 = 16 + 23 +  *
+                      17 = 17 + 24 +  *
+                      18 = 18 +  *
+                      23 = 23 + 16 +  *
+                      24 = 24 + 17 +  *
+                      25 = 25 +  *
+                      26 = 26 + 13 +  *
+                      27 = 27 + 14 +  *
+                      28 = 28 +  *
+                      34 = 34 + 67 +  *
+                      35 = 35 +  *
+                      36 = 36 + 12 + 47 +  *
+                      37 = 37 + 46 +  *
+                      38 = 38 +  *
+                      45 = 45 +  *
+                      46 = 46 + 37 +  *
+                      47 = 47 + 12 + 36 +  *
+                      48 = 48 +  *
+                      56 = 56 +  *
+                      57 = 57 +  *
+                      58 = 58 +  *
+                      67 = 67 + 34 +  *
+                      68 = 68 +  *
+                      78 = 78 +  *
+
+Confounding Matrix:
+                          1   2   3   4   5   6   7   8
+                      ..................................
+                      1 -    12  13  14      16  17
+                      2 -        16  17      13  14
+                      3 -            34      12  37
+                      4 -                    37  12
+                      5 -
+                      6 -                        34
+                      7 -
+

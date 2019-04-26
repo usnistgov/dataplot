@@ -1,0 +1,33 @@
+This is file 6plot.men--Residual Analysis Plots
+ 
+--------------------line 3
+1. 6-plot (Residual Analysis)
+2. 6-PLOT Y X
+3.
+4. Vertical   Axis Variable Y:
+4. @CE 1 0 35 100 ? gui-variable
+5. Horizontal Axis Variable Y:
+5. @CE 2 0 35 100 ? gui-variable
+6.
+7. Character type for data:
+7. @CE 3 0 35 100 * gui-char
+8. Character type for predicted:
+8. @CE 4 0 35 100 * gui-char
+9. Line      type for data:
+9. @CE 5 0 35 100 * gui-line
+10. Line      type for predicted:
+10. @CE 6 0 35 100 * gui-line
+11.
+12. Subset/Except/For Specification:
+13. @CE 7 0 1 100 *
+14.
+15.
+16. Generate the 6 Plots?:
+--------------------
+GR FE
+CHARACTERS _3 _4
+LINES _5 _6
+6-PLOT _1 _2 _7
+--------------------
+WEB HELP 6-PLOT
+--------------------

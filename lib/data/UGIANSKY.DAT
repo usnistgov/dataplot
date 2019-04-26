@@ -1,0 +1,66 @@
+This is Dataplot data file     UGIANSKY.DAT
+ASTM Stress Corrosion Study
+NIST Contact--Gil Ugiansky
+Date--October 1971
+Response variable                  = log(days to failure)
+                                     due to stress corrosion
+Number of observations             = 35
+Number of variables per line image =  2
+Order of variables on a line image--
+   1. Response variable 1 = log(days to failure) for material 1
+   2. Response variable 2 = log(days to failure) for material 2
+   3. Factor 1            = laboratory (7 levels)
+Statistical area--Interlab / Youden Analysis
+To read this file into dataplot--
+   SKIP 25
+   READ UGIANSKY.DAT Y1 Y2 LAB
+   CHAR 1 2 3 4 5 6 7
+   LINES
+   YOUDEN PLOT Y1 Y2 LAB
+Note--See Dataplot macro file UGIANSY.DP for further analysis
+ 
+    Y1           Y2         LAB
+Log(time)    Log(time)   Laboratory
+Material 1   Material 2
+------------------------------------
+   4.4          4.3          1
+   4.5          4.1          1
+   4.2          4.6          1
+   4.1          4.0          1
+   4.4          4.2          1
+
+   4.5          4.5          2
+   3.9          4.1          2
+   4.2          4.1          2
+   4.3          4.1          2
+   4.4          4.2          2
+ 
+   1.3          3.9          3
+   1.5          4.5          3
+   1.5          4.2          3
+   1.4          4.5          3
+   1.7          4.4          3
+
+   4.2          4.1          4
+   1.2          1.3          4
+   1.2          1.2          4
+   0.7          0.8          4
+   4.5          4.8          4
+
+   4.4          4.5          5
+   4.5          2.3          5
+   4.5          3.7          5
+   4.5          3.9          5
+   4.2          4.3          5
+
+   4.4          4.5          6
+   4.5          4.5          6
+   4.6          4.5          6
+   4.2          4.1          6
+   4.3          4.3          6
+
+   3.8          3.3          7
+   3.9          3.8          7
+   4.1          3.8          7
+   4.5          4.4          7
+   4.3          4.4          7

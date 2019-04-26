@@ -1,0 +1,28 @@
+This is file ifft.men--Compute discrete inverse fast Fourier transform
+ 
+--------------------
+ 1. Inverse Discrete Fast Fourier Transform (FFT)
+ 2. LET YR YC = INVERSE FFT XR XC
+ 3.
+ 4. Variable containing real component for which to
+ 5.     compute the inverse FFT:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Variable containing complex component for which to
+ 7.     compute the inverse FFT (optional):
+ 7. @CE 2 0 33 50 ? gui-variable
+ 8. Variable to store the real component of the inverse FFT:
+ 8. @CE 3 0 33 50 ? gui-none
+ 9. Variable to store the complex component of the inverse FFT:
+ 9. @CE 4 0 33 50 ? gui-none
+10.
+11. Subset/Except/For Specification:
+12. @CE 5 0 -20 50 *
+13.
+14.
+15. Compute the inverse FFT?:
+--------------------
+GR FE
+LET _3 _4 = INVERSE FFT  _1 _2 _5
+--------------------
+WEB HELP INVERSE FFT
+--------------------

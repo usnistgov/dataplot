@@ -1,0 +1,22 @@
+This is file matr_cov.men--Covariance matrix
+ 
+--------------------
+ 1. Compute Variance-Covariance Matrix
+ 2. LET COVA = VARIANCE-COVARIANCE MATRIX M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Matrix  to store the covariance matrix:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Covariance Matrix?:
+--------------------
+GR FE
+LET _2 = VARIANCE-COVARIANCE MATRIX  _1 _3
+--------------------
+WEB HELP VARIANCE-COVARIANCE MATRIX
+--------------------

@@ -1,0 +1,27 @@
+. this is dataplot macro    darkblue.dp
+. purpose: set all colors to darkblue (= blu4)
+. note: called by    dexcase.dp
+. date: 5/22/07
+.
+. -----start point-----
+.
+let string colorz = blu4
+let string color = ^colorz
+let string darkblue = ^colorz
+.
+char color ^colorz all
+lines color ^colorz all
+spike color ^colorz
+.
+color ^colorz
+.
+title color ^colorz
+label color ^colorz
+legend color ^colorz
+.
+frame color ^colorz
+tic color ^colorz
+tic label color ^colorz
+.
+box color ^colorz
+.

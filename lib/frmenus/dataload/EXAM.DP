@@ -1,0 +1,8 @@
+----- <~dataload\EXAM.DP> Load EXAM.DAT
+
+. This is file    EXAM.DP
+
+DELETE Y X
+SKIP 25
+READ EXAM.DAT Y X
+

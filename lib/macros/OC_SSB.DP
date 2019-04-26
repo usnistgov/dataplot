@@ -1,0 +1,46 @@
+. This is Dataplot macro   OC_SSB.DP
+. Purpose--Generate an Operating Characteristic curve for a
+.          single sample plan.
+.          The OC is defined as:
+.            BINCDF(c,p,n) versus p
+.          where 
+.            n      = sample size
+.            c      = acceptance number for defectives
+.            p      = desired binomialprobabilities
+.
+. Input --N        = sample size
+.       --C        = number of defectives
+.       --PSTART   = start value for p
+.       --PINC     = increment value for p
+.       --PSTOP    = stop value for p
+. Output--graph
+.
+DELETE ZZZZP ZZZZY
+.
+LET ZZZZC = C
+LET ZZZZN = N
+.
+LET PSTARTT = 0.001
+LET PINCT = 0.001
+LET PSTOPT = 0.20
+IF PSTART EXISTS
+  LET PSTARTT = PSTART
+END OF IF
+IF PINC EXISTS
+  LET PINCT = PINC
+END OF IF
+IF PSTOP EXISTS
+  LET PSTOPT = PSTOP
+END OF IF
+.
+LET ZZZZP = SEQUENCE PSTARTT PINCT PSTOPT
+LET ZZZZY = BINCDF(ZZZZC,ZZZZP,ZZZZN)
+.
+LABEL CASE ASIS
+TITLE CASE ASIS
+Y1LABEL Probability of Acceptance, Pa
+X1LABEL Lot Fraction Defective, p
+TITLE OC Single Sample (^ZZZZN, ^ZZZZC) Curve
+.
+PLOT ZZZZY VS ZZZZP
+.

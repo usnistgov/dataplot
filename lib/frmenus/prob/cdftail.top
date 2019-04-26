@@ -1,0 +1,25 @@
+----- <~prob\cdftail.top> Compute cdf's and tail probabilities
+
+Compute Cumulative Distribution Functions and Tail Probabilities
+
+These menus are used to compute a single value
+for a cumulative distribution function or a tail
+probability (the tail probability is 1 - CDF and
+is also referred to as the survival or reliabiliy
+function.
+
+NIST/SEMATECH Handbook                    <xcl: web handbook probability functions>
+
+Continuous Distributions
+   No Shape Parameters (e.g., Normal)           <~prob\locsccdf.top>
+   One Shape Parameter (A-L) (e.g., Lognormal)  <~prob\sha1acdf.top>
+   One Shape Parameter (M-Z) (e.g., Weibull)    <~prob\sha1bcdf.top>
+   Two Shape Parameters (e.g., Beta)            <~prob\shap2cdf.top>
+   Three or More Shape Parameters               <~prob\shap3cdf.top>
+
+Mixture Distributions                           <~prob\mixcdf.top>
+Bivariate Distributions                         <~prob\bivcdf.top>
+
+Discrete Distributions                          <~prob\disccdf.top>
+
+

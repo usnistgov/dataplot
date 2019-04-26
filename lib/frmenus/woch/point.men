@@ -1,0 +1,31 @@
+This is file circle.men--Draw a Point
+ 
+--------------------
+ 1. Draw a Point
+ 2. POINT X1 Y1
+ 3.
+ 4. X Coordinate for Point:
+ 4. @CE 1 0 33 50 ?
+ 5. Y Coordinate for Point:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Color for Point:
+ 7. @CE 6 0 42 50 * gui-colo
+ 8.
+ 9. Coordinate System to Use:
+10. @CE 8 1 1 50 absolute 0 to 100 screen units
+11. @CE 8 2 1 50 absolute data units of last plot
+12.
+13.
+14. Draw the Point?:
+--------------------
+GR FE
+LINE SOLID
+LINE COLOR _6
+LET STRING ZZZZSTR = POINT
+@IF 8 1 LET STRING ZZZZSTR = POINT
+@IF 8 2 LET STRING ZZZZSTR = POINT DATA
+^ZZZZSTR  _1 _2
+--------------------
+WEB HELP POINT
+--------------------

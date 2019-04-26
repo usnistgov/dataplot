@@ -1,0 +1,10 @@
+----- <~dataexec\FLICKER.DP> Load & Execute FLICKER.DAT
+
+. This is file    FLICKER.DP
+
+DELETE Y
+SKIP 25
+READ FLICKER.DAT Y
+TITLE FLICKER.DAT
+4-PLOT Y
+

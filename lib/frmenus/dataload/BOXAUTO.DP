@@ -1,0 +1,8 @@
+----- <~dataload\BOXAUTO.DP> Load BOXAUTO.DAT
+
+. This is file    BOXAUTO.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ BOXAUTO.DAT Y X1 X2 X3
+

@@ -1,0 +1,8 @@
+----- <~dataload\BABYWT.DP> Load BABYWT.DAT
+
+. This is file    BABYWT.DP
+
+DELETE Y X
+SKIP 25
+READ BABYWT.DAT Y X
+

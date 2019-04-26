@@ -1,0 +1,27 @@
+----- <~dexcomp\latsq3.top> 3-by-3 Latin Square Design
+ 
+3-by-3 Latin Square Design
+ 
+   k  = 3 factors (2 blocking factors &
+                   1 primary factor)
+   l1 = 3 levels of factor X1 (block)
+   l2 = 3 levels of factor X2 (block)
+   l3 = 3 levels of factor X3 (primary)
+   n  = l1 * l2 = 9 runs
+   Ref.--Box, Hunter, Hunter, & p. 261
+ 
+     X1        X2        X3
+    row      column   treatment
+  blocking  blocking   factor
+   factor    factor
+   .............................
+      1         1         1
+      1         2         2
+      1         3         3
+      2         1         3
+      2         2         1
+      2         3         2
+      3         1         2
+      3         2         3
+      3         3         1
+ 

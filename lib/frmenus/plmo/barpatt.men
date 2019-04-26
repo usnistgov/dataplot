@@ -1,0 +1,64 @@
+This is file barpatt.men--Set Bar Patterns
+ 
+--------------------
+ 1. Bars
+ 2. BAR PATTERN <list of bar patterns>
+ 3.
+ 4. Bar Pattern for ALL Traces:
+ 4. @CE 1 0 42 50 * gui-patt
+ 5.
+ 6. Use the following menus to set bar patterns for
+ 7. traces individually.  The bar patterns are sequential.
+ 8. If you set the bar patterns for trace 5, you
+ 9. must also set them for traces 1, 2, 3, and 4.
+10.
+11. Bar Pattern for Trace 1:
+11. @CE 2 0 42 50 * gui-patt
+12. Bar Pattern for Trace 2:
+12. @CE 3 0 42 50 * gui-patt
+13. Bar Pattern for Trace 3:
+13. @CE 4 0 42 50 * gui-patt
+14. Bar Pattern for Trace 4:
+14. @CE 5 0 42 50 * gui-patt
+15. Bar Pattern for Trace 5:
+15. @CE 6 0 42 50 * gui-patt
+16. Bar Pattern for Trace 6:
+16. @CE 7 0 42 50 * gui-patt
+17. Bar Pattern for Trace 7:
+17. @CE 8 0 42 50 * gui-patt
+18. Bar Pattern for Trace 8:
+18. @CE 9 0 42 50 * gui-patt
+19. Bar Pattern for Trace 9:
+19. @CE 10 0 42 50 * gui-patt
+20. Bar Pattern for Trace 10:
+20. @CE 11 0 42 50 * gui-patt
+21. Bar Pattern for Trace 11:
+21. @CE 12 0 42 50 * gui-patt
+22. Bar Pattern for Trace 12:
+22. @CE 13 0 42 50 * gui-patt
+23. Bar Pattern for Trace 13:
+23. @CE 14 0 42 50 * gui-patt
+24. Bar Pattern for Trace 14:
+24. @CE 15 0 42 50 * gui-patt
+25. Bar Pattern for Trace 15:
+25. @CE 16 0 42 50 * gui-patt
+26. Bar Pattern for Trace 16:
+26. @CE 17 0 42 50 * gui-patt
+27. Bar Pattern for Trace 17:
+27. @CE 18 0 42 50 * gui-patt
+28. Bar Pattern for Trace 18:
+28. @CE 19 0 42 50 * gui-patt
+29. Bar Pattern for Trace 19:
+29. @CE 20 0 42 50 * gui-patt
+30. Bar Pattern for Trace 20:
+30. @CE 21 0 42 50 * gui-patt
+31.
+32.
+33. Set the Bar Patterns?
+--------------------
+PC FE
+BAR PATTERN _2 _3 _4 _5 _6 _7 _8 _9 _10 _11 _12 _13 _14 _15 _16 _17 _18 _19 _20 _21
+@IF 1 0 BAR PATTERN _1 ALL
+--------------------
+WEB HELP BAR PATTERN
+--------------------

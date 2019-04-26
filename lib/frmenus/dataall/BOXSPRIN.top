@@ -1,0 +1,8 @@
+----- <~dataall\BOXSPRIN.top> BOXSPRIN.DAT
+
+BOXSPRIN.DAT
+
+View     <xcl: LIST BOXSPRIN.DAT>
+Load     <xcf: ~dataload/BOXSPRIN.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXSPRIN.DAT>
+

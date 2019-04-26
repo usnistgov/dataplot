@@ -1,0 +1,35 @@
+This is file canncorr.men--Cannonical Correlation
+ 
+--------------------
+1. Cannonical Correlation
+2. Macro
+3.
+4. List of Group 1 Response Variables:
+5. @CE 1 0 1 50 gui-variable
+6. List of Group 2 Response Variables:
+7. @CE 2 0 1 50 gui-variable
+8.
+9. Base Cannonical Correlation On (pick one):
+10. @CE 3 1 10 30 correlation matrix
+10. @CE 3 2 31 50 covariance matrix
+11.
+12. Subset/Except/For Specification: 
+13. @CE 4 0 1 50 *
+14.
+15.
+16. Generate the Cannonical Correlations?:
+--------------------
+GR FE
+SKIP 0
+WRITE ZZZZJUNK.DAT _1 _4
+READ MATRIX ZZZZJUNK.DAT ZZZZX
+LET P1 = MATRIX NUMBER OF COLUMNS ZZZZX
+DELETE ZZZZX
+WRITE ZZZZJUNK.DAT _1 _2 _4
+READ MATRIX ZZZZJUNK.DAT ZZZZX
+LET ZZZZFLAG = 0
+@IF 3 2 LET ZZZZFLAG = 1
+CALL CANNONIC.DP
+--------------------
+WEB HELP CHOLESKY DECOMPOSITION
+--------------------

@@ -1,0 +1,26 @@
+This is file anova4.men--ANOVA on Quarters
+ 
+--------------------
+ 1. ANOVA on Quarters
+ 2. ANOVA Y X
+ 3.
+ 4. Vertical   Axis Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Do the ANOVA?
+--------------------
+GR FE
+DELETE ZSEQ
+DELETE ZTAG
+LET ZN = NUMBER _1 _2
+LET ZSEQ = SEQUENCE 1 1 ZN _2
+LET ZTAG = CODE4 ZSEQ _2
+.
+ANOVA _1 ZTAG _2
+--------------------
+WEB HELP ANOVA
+--------------------

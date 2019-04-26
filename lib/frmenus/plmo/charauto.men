@@ -1,0 +1,17 @@
+This is file charauto.men--Set Character Automatic
+ 
+--------------------
+ 1. Character Automatic
+ 2. CHARACTER AUTOMATIC Y
+ 3.
+ 4. Variable to Use as Argument to CHARACTER:
+ 4. @CE 1 0 42 50 * gui-vari
+ 5.
+ 6.
+ 7. Set Character Automatic?
+--------------------
+PC FE
+@IF 1 0 CHARACTER AUTOMATIC _1
+--------------------
+WEB HELP CHARACTER AUTOMATIC
+--------------------

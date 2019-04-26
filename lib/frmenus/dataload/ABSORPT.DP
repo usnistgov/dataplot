@@ -1,0 +1,8 @@
+----- <~dataload\ABSORPT.DP> Load ABSORPT.DAT
+
+. This is file    ABSORPT.DP
+
+DELETE Y X
+SKIP 25
+READ ABSORPT.DAT Y X
+

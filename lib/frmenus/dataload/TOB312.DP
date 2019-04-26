@@ -1,0 +1,8 @@
+----- <~dataload\TOB312.DP> Load TOB312.DAT
+
+. This is file    TOB312.DP
+
+DELETE Y X CENS
+SKIP 25
+READ TOB312.DAT Y X CENS
+

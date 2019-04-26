@@ -1,0 +1,35 @@
+This is Dataplot data file     NATR21.DAT
+Thickness of Mica Washers
+Question: What is the typical value for thickness?
+ 
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 2-1 to 2-15.
+ 
+Number of observations = 10
+Number of variables per line image = 1
+Order of variables on a line image--
+   1. Y = Response Variable = thickness (inches)
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR21.DAT Y
+   SUMMARY Y
+   CONFIDENCE LIMITS Y
+ 
+ 
+ 
+ 
+     Y
+ Thickness
+-----------
+   .123
+   .124
+   .126
+   .129
+   .120
+   .132
+   .123
+   .126
+   .129
+   .128

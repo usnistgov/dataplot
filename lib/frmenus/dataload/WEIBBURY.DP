@@ -1,0 +1,8 @@
+----- <~dataload\WEIBBURY.DP> Load WEIBBURY.DAT
+
+. This is file    WEIBBURY.DP
+
+DELETE Y
+SKIP 25
+READ WEIBBURY.DAT Y
+

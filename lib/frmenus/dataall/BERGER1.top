@@ -1,0 +1,8 @@
+----- <~dataall\BERGER1.top> BERGER1.DAT
+
+BERGER1.DAT
+
+View     <xcl: LIST BERGER1.DAT>
+Load     <xcf: ~dataload/BERGER1.DP>
+Print    <xccl: printfile C:\DATAPLOT\BERGER1.DAT>
+

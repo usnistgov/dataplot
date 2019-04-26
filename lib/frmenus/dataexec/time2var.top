@@ -1,0 +1,9 @@
+----- <~dataexec\time2var.top> Load and Execute Time Series Data: Bivariate
+
+Load and Execute Time Series Data: Bivariate
+
+SINSIN.DAT    Multiple sine curves     <xcf: ~dataexec\SINSIN.DP>
+
+CHOI.DAT      Fire research (n = 4000) <xcf: ~dataexec\CHOI.DP>
+CHOI2.DAT     Fire research (n = 1000) <xcf: ~dataexec\CHOI2.DP>
+

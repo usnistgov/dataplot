@@ -1,0 +1,42 @@
+----- <~dexopt\discussi.top>  Response Surface Designs: Discussion
+
+Response Surface Designs: Discussion
+
+1. What is Response Surface Methodology
+
+   Response Surface Methodolgy (RSM) is a set of
+   tools describing the relationship of one or
+   more responses (dependent variables or Y's)
+   to several factors (independent variables or
+   X's).
+
+2. Objectives of RSM
+
+   a. Understand how independent variables affect
+      responses over a region of interest.
+
+   b. Optimization.  In this context, that means find
+      values of the factor variables that maximize
+      (or minimize) the value of the response variable.
+
+   c. Improved settings of factors for many
+      responses.  It may be difficult to
+      simultaneously optimize several responses.
+
+3. Response surface methods are usually preceeded with
+   screening experiments to determine the most important
+   variables (typically redeuce to one to three factor
+   variables).  The factor variables are continuous
+   variables.
+
+4. For analysis purposes, the factor variables are 
+   typically scaled so that the minimum level of the
+   response is "-1" and the maximum level of the
+   response is "+1".  When the optimal model has been
+   determined, these values can be translated back
+   to their original units.
+
+More detailed discussion of response surface methodolgy
+is contained in the online NIST/SEMATECH Engineering
+Statistics Handbook.
+

@@ -1,0 +1,64 @@
+This is file ucont.men--Generate U Control Charts
+ 
+--------------------line 3
+1. U Control Chart
+2. U CONTROL CHART Y SIZE X
+3.
+4. Response (Vertical Axis) Variable:
+4. @CE 1 0 42 50 ? gui-variable
+5. Group ID (Horizontal Axis) Variable:
+5. @CE 2 0 42 50 ? gui-variable
+6. Sample Size Variable:
+6. @CE 3 0 42 50 ? gui-variable
+7.
+8. Engineering Values:
+9.    Target
+9. @CE 4 0 42 50 *
+10.    Lower Specification Limit
+10. @CE 5 0 42 50 *
+11.    Upper Specification Limit
+11. @CE 6 0 42 50 *
+12.
+13. Line Type for Data:
+13. @CE 7 0 42 50 * gui-line
+14. Line Type for Global Statistic Value:
+14. @CE 8 0 42 50 * gui-line
+15. Line Type for 3 Sigma Limits:
+15. @CE 9 0 42 50 * gui-line
+16. Line Type for Engineering Target Value:
+16. @CE 10 0 42 50 * gui-line
+17. Line Type for Engineering Specification Limits:
+17. @CE 11 0 42 50 * gui-line
+18.
+19. Character Type for Data
+19. @CE 12 0 42 50 * gui-char
+20. Character Fill for Data
+20. @CE 13 0 42 50 * gui-ooff
+21.
+22. Spike to Global Statistic Line?
+22. @CE 14 0 51 58 * gui-ooff
+23. Spike to Engineering Target Line?
+23. @CE 15 0 51 58 * gui-ooff
+24.
+25. Subset/Except/For Specification:
+26. @CE 16 0 1 58 *
+27.
+28. Generate the Chart?:
+--------------------
+LET TARGET = _4
+LET LSL = _5
+LET USL = _6
+LINES _7 _8 _9 _9 _10 _11 _11
+CHARACTER BLANK ALL
+CHAR _12
+CHAR FILL _13
+LET ZZZZRATI = _1 / _3  _16
+LET ZPARAM = MEAN ZZZZRATI
+SPIKE _13
+SPIKE BASE ZPARAM
+SPIKE _14
+SPIKE BASE _4
+U CHART _1 _3 _2 _16
+--------------------
+WEB HELP U CHART
+--------------------

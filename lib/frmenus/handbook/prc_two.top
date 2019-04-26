@@ -1,0 +1,12 @@
+----- <~handbook\prc_two.top> Product and Process Comparisons Two Process
+ 
+Product and Process Comparisons: Two Processes
+ 
+F Test for Shift in Variation            <xemf: ~stat\1fvatest.men>
+T Test for Shift in Location             <xemf: ~stat\1flotest.men>
+Sign Test for Paired Data                <xemf: ~stat\signtest.men>
+Wilcoxon Signed Rank Sum Test (Paired Data) <xemf: ~stat\wilcoxon.men>
+Wilcoxon Signed Rank U (= Mann-Whitney) Test<xemf: ~stat\mannwhit.men>
+Chi-Square 2 Sample Test                 <~stat\chisq2s.men>
+Kolmogorov-Smirnov 2 Sample Test         <~stat\ks2s.men>
+

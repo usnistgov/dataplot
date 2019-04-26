@@ -1,0 +1,81 @@
+This is file ppbta.men--Borel-Tanner Probability Plot
+
+--------------------
+ 1. Borel-Tanner Probability Plot
+ 2. BOREL TANNER PROBABILITY PLOT Y
+ 3.
+ 4. Your data can be either ungrouped (a single
+ 5. response variable) or grouped (a bin counts
+ 6. variable and a bin mid-points variable).
+ 7. 
+ 8. Response (or Bin Counts) Variable:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9. Optional Bin Mid-Points Variable:
+ 9. @CE 2 0 42 50 ? gui-variable
+10.
+11. Line Types:
+11. @CE 3 0 42 50 * gui-line
+12. Character Types:
+12. @CE 4 0 42 50 * gui-char
+13. Character Fill:
+13. @CE 5 0 42 50 * gui-ooff
+14.
+15. Title:
+15. @CE 6 0 22 50 *
+16. Left Axis Label:
+16. @CE 7 0 22 50 *
+17. Bottom Axis Label:
+17. @CE 8 0 22 50 *
+18.
+19. Value of the Shape Parameter (lambda):
+19. @CE 9 0 42 50 *
+20. Value of the Shape Parameter (k):
+20. @CE 10 0 42 50 *
+21.
+22. Subset/Except/For Specification:
+23. @CE 11 0 1 50 *
+24.
+25.
+26. Generate the Borel-Tanner Probability Plot?
+--------------------
+GR FE
+TITLE CASE ASIS
+LABEL CASE ASIS
+CASE ASIS
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+LET LAMBDA = 1
+LET LAMBDA = _9
+LET K = ZZZZMAX
+LET K = _10
+DELETE ZZZZMIN ZZZZMAX ZZZZY2 ZZZZX2
+LET ICASE = 0
+@IF 2 0 LET ICASE = 1
+IF ICASE = 0
+   LET ZZZZMIN = MINIMUM _1 _11
+   LET ZZZZMIN = ZZZZMIN - 0.5
+   LET ZZZZMAX = MAXIMUM _1 _11
+   LET ZZZZMAX = ZZZZMAX + 0.5
+   CLASS LOWER ZZZZMIN
+   CLASS UPPER ZZZZMAX
+   CLASS WIDTH 1
+   LET ZZZZY2 ZZZZX2 = BINNED _1 _11
+   BOREL TANNER PROBABILITY PLOT ZZZZY2 ZZZZX2
+ELSE
+   BOREL TANNER PROBABILITY PLOT _1 _2 _11
+END OF IF
+MOVE 50 5
+JUSTIFICATION CENTER
+TEXT Lambda = ^LAMBDA, K = ^K
+MOVE 17 82
+JUSTIFICATION LEFT
+TEXT PPCC = ^PPCC
+TITLE
+LABEL
+--------------------
+WEB HELP PROBABILITY PLOT
+--------------------

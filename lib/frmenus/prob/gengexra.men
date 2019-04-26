@@ -1,0 +1,46 @@
+This is file gengexra.men--Generate Generalized Exponential Random Numbers
+ 
+--------------------
+ 1. Generate Generalized Exponential Random Numbers
+ 2. LET Y = GENERALIZED EXPONENTIAL RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Shape Parameter (lambda1, lambda1 > 0):
+ 5. @CE 2 0 42 50 ?
+ 6. Shape Parameter (lambda12, lambda12 > 0):
+ 6. @CE 3 0 42 50 ?
+ 7. Shape Parameter (s, s > 0):
+ 7. @CE 4 0 42 50 ?
+ 8. Location Parameter:
+ 8. @CE 5 0 42 50 ?
+ 9. Scale Limit Parameter):
+ 9. @CE 6 0 42 50 ?
+10.
+11. Optional random number generator seed (default=305):
+12.    (integer >= 305)
+12. @CE 7 0 42 50 ?
+13.
+14. Name of output variable;
+14. @CE 8 0 42 50 ?
+15.
+16.
+17. Generate the random numbers?
+--------------------
+AN FE
+@IF 7 0 SEED _7
+LET LAMBDA1 = 1
+@IF 2 0 LET LAMBDA1 = _2
+LET LAMBDA12 = 1
+@IF 3 0 LET LAMBDA12 = _3
+LET S = 1
+@IF 4 0 LET S = _4
+LET ZLOC = 0
+@IF 5 0 LET ZLOC = _5
+LET ZSCALE = 1
+@IF 6 0 LET ZSCALE = _6
+LET _8 = GENERALIZED EXPONENTIAL RANDOM NUMBERS FOR I = 1 1 _1
+LET _8 = ZLOC + ZSCALE* _8
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

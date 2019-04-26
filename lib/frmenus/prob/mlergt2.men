@@ -1,0 +1,42 @@
+This is file mlergt2.men--Reflected Generalized Topp and Leone MLE Estimates
+ 
+--------------------
+ 1. Reflected Generalized Topp and Leone MLE Estimates
+ 2. REFLECTED GENERALIZED TOPP AND LEONE MLE Y X
+ 3.
+ 4. Maximum likelihood estimates for the shape
+ 5. parameters alpha and beta can be obtained for
+ 6. uncensored data.  You can optionally specify
+ 7. the lower and upper limit parameters.  If you
+ 8. do not specify them, 0 and 1 will be used if
+ 9. the data all lie within the (0,1) interval.
+10. Otherwise, the data minimum and data maximum
+11. will be used.  Binned data can be either
+12. equi-spaced or not equi-spaced.
+13.
+14. Variable Containing Frequencies:
+14. @CE 1 0 42 50 ? gui-variable
+15. Variable Containing Bin Mid-Points (or Lower Limit):
+15. @CE 2 0 42 50 ? gui-variable
+16. Optional Variable Containing Bin Upper Limit:
+16. @CE 3 0 42 50 ? gui-variable
+17.
+18. Value for Lower Limit (optional):
+18. @CE 4 0 42 50 ? gui-variable
+19. Value for Upper Limit (optional):
+19. @CE 5 0 42 50 ? gui-variable
+20.
+21. Subset/Except/For Specification:
+22. @CE 6 0 1 50 *
+23.
+24.
+25. Compute Reflected Generalized Topp and Leone MLE's?
+--------------------
+GR FE
+DELETE LOWLIMIT UPPLIMIT
+LET LOWLIMIT = _4
+LET UPPLIMIT = _5
+REFLECTED GENERALIZED TOPP AND LEONE MAXIMUM LIKELIHOOD _1 _2 _3 _6
+--------------------
+WEB HELP RGTPDF
+--------------------

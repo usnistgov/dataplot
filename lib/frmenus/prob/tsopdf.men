@@ -1,0 +1,49 @@
+This is file tsopdf.men--Compute Two-Sided Ogive pdf
+ 
+--------------------
+ 1. Compute Two-Sided Ogive pdf
+ 2. LET A = TSOPDF(X,N,THETA,LOWLIM,UPPLIM)
+ 3.
+ 4. The input argument, x, can be either a
+ 5. single number, the name of a parameter,
+ 6. or the name of a variable.
+ 7.  
+ 8. Input values:
+ 9.                     x (a <= x <= b):
+ 9. @CE 1 0 42 50 ?
+10.                  shape n (n >= 0.5):
+10. @CE 2 0 42 50 ?
+11.       shape theta (a <= theta <= b):
+11. @CE 3 0 42 50 ?
+12.                       lower limit a:
+12. @CE 4 0 42 50 ?
+13.                       upper limit b:
+13. @CE 5 0 42 50 ?
+14.
+15. Output parameters:
+16.              name for the pdf value:
+16. @CE 6 0 42 50 ?
+17.
+18.
+19. Compute the Probability?
+--------------------
+AN FE
+LET ZLOWLIM = 0
+@IF 4 0 LET ZLOWLIM = _4
+LET ZUPPLIM = 1
+@IF 5 0 LET ZUPPLIM = _5
+@IF 2 0 LET ZSHAPE1 = _2
+@IF 3 0 LET ZSHAPE2 = _3
+IF ZSHAPE2 < ZLOWLIM
+   LET ZSHAPE2 = ZLOWLIM
+END OF IF
+IF ZSHAPE2 > ZUPPLIM
+   LET ZSHAPE2 = ZUPPLIM
+END OF IF
+IF ZSHAPE1 <= 0.5
+   LET ZSHAPE1 = 0.5
+END OF IF
+@IF 6 0 LET _6 = TSOPDF( _1 ,ZSHAPE1,ZSHAPE2,ZLOWLIM,ZUPPLIM)
+--------------------
+WEB HELP TSOPDF
+--------------------

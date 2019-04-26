@@ -1,0 +1,42 @@
+This is file genibra.men--Generate Inverted Beta Random Numbers
+ 
+--------------------
+ 1. Generate Inverted Beta Random Numbers
+ 2. LET Y = INVERTED BETA RANDOM NUMBERS FOR I = START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Shape Parameter (alpha):
+ 5. @CE 2 0 42 50 ?
+ 6. Shape Parameter (beta):
+ 6. @CE 3 0 42 50 ?
+ 7. Location Parameter:
+ 7. @CE 4 0 42 50 ?
+ 8. Scale Parameter):
+ 8. @CE 5 0 42 50 ?
+ 9.
+10. Optional random number generator seed (default=305):
+11.    (integer >= 305)
+11. @CE 6 0 42 50 ?
+12.
+13. Name of output variable;
+13. @CE 7 0 42 50 ?
+14.
+15.
+16. Generate the random numbers?
+--------------------
+AN FE
+@IF 6 0 SEED _6
+LET ALPHA = 1
+@IF 2 0 LET ALPHA = _2
+LET BETA = 1
+@IF 3 0 LET BETA = _3
+LET ZLOC = 0
+@IF 4 0 LET ZLOC = _4
+LET ZSCALE = 1
+@IF 5 0 LET ZSCALE = _5
+LET _7 = INVERTED BETA RANDOM NUMBERS FOR I = 1 1 _1
+LET _7 = ZLOC + ZSCALE* _7
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

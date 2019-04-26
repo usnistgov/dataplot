@@ -1,0 +1,27 @@
+This is file sdlploca.men--Compute standard deviation of Lp location
+ 
+--------------------
+ 1. SD of Lp Location
+ 2. LET P = 1.5; LET A = SD OF LP LOCATION Y
+ 3.
+ 4. Variable for which to compute the sd of Lp Location:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the sd of Lp Location:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Value for p:
+ 7. @CE 3 0 33 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 4 0 1 50 *
+11.
+12.
+13. Compute the SD of Lp Location?:
+--------------------
+GR FE
+LET P = 1.5
+LET P = _3
+LET _2 = SD OF LP LOCATION  _1 _4
+--------------------
+WEB HELP SD OF LP LOCATION
+--------------------

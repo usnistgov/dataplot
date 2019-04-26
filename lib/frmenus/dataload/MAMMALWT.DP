@@ -1,0 +1,8 @@
+----- <~dataload\MAMMALWT.DP> Load MAMMALWT.DAT
+
+. This is file    MAMMALWT.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ MAMMALWT.DAT Y X1 X2
+

@@ -1,0 +1,40 @@
+This is file     REFERENCES.TEX       7/92
+ 
+ 
+Box, George P., Hunter, William G., and Hunter, J. Stuart (1978).
+Statistics for Experimenters. Wiley, New York.
+ 
+Chambers, John M., Cleveland, William S., Kleiner, Beat, and
+Tukey, Paul A. (1983). Graphical Methods for
+Data Analysis. Duxbury Press, Boston, Mass.
+ 
+Filliben, James J. (1975). "The Probability Plot Correlation
+Coefficient Test for Normality", Technometrics, Vol. 17, No. 1,
+February 1975, pp. 111-117.
+ 
+Filliben, James J. (1977). "Testing Basic Assumptions in the
+Measurement Process". ACS Symposium Series No. 63:
+Validation of the Measurement Process (James R. DeVoe, Editor).
+American Chemical Society, Washington, D. C., pp. 30-113.
+ 
+Filliben, James J. (1981). "Dataplot--An Interactive High-Level
+Language for Graphics, Non-Linear Fitting, Data Analysis, and
+Mathematics". Computer Graphics, Vol. 15, Number 3, pp. 199-213.
+ 
+Filliben, James J. (1984). Dataplot: Introduction and Overview.
+National Bureau of Standards Special Publication 667.
+U.S. Government Printing Office, Washington, D. C.
+ 
+McNeil, Donald R. (1977). Interactive Data Analysis:
+A Practical primer. Wiley, New York.
+ 
+Tufte, Edward R. (1983). The Visual Display
+of Quantitative Information.
+Graphics Press, Cheshire, Connecticut.
+ 
+Tufte, Edward R. (1990). Envisioning Information.
+Graphics Press, Cheshire, Connecticut.
+ 
+Tukey, John W. (1977). Exploratory Data Analysis.
+Addison-Wesley, Reading, Mass.
+ 

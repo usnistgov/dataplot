@@ -1,0 +1,28 @@
+This is Dataplot data file     NATR96.DAT
+Rejects of metal casings classified by cause of rejection
+Question: Does the distribution of rejects differ from week to week/
+
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 9-6
+Number of observations = 3
+Number of variables per line image = 8
+Order of variables on a line image--
+   1. BATCH = Week 
+   2. X1    = Sand
+   3. X2    = Misrun
+   4. X3    = Shift
+   5. X4    = Drop
+   6. X5    = Corebreak
+   7. X6    = Broken
+   8. X7    = Other
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR96.DAT BATCH X1 TO X8
+ 
+     Y             X  
+ BATCH   X1  X2  X3  X4  X5  X6  X7
+----------------------------------
+   1     97   8  18   8  23  21  5
+   2    120  15  12  13  21  17 15
+   3     82   4   0  12  38  25 19

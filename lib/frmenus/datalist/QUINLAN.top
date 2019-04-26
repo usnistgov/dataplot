@@ -1,0 +1,8 @@
+----- <~datalist\QUINLAN.top> QUINLAN.DAT
+ 
+QUINLAN.DAT
+ 
+View     <xcl: LIST QUINLAN.DAT>
+Load     <x2cl: SKIP 25; READ QUINLAN.DAT Y X1 TO X15>
+Print    <xccl: printfile C:\DATAPLOT\QUINLAN.DAT>
+ 

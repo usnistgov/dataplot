@@ -1,0 +1,121 @@
+This is file mletri.men--Triangular MLE Estimates
+ 
+--------------------
+ 1. Triangular Maximum Likelihood Estimates
+ 2. TRIANGULAR MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. This mneu will generate the maximum likelihood estimates
+ 5. for the shape and lower and limit parameters for
+ 6. uncensored data.  You can optionally request to have
+ 7. bootstrap  confidence limits generated  for the parameters.
+ 8.
+ 9. Response Variable:
+ 9. @CE 1 0 42 50 ? gui-variable
+10.
+11. Number of bootstrap samples (0 to omit)?
+11. @CE 2 0 42 50 *
+12.
+13. Subset/Except/For Specification:
+14. @CE 3 0 1 50 *
+15.
+16.
+17. Compute the Triangular MLE's?
+--------------------
+GR FE
+LET NUMBOOT = 0
+@IF 2 0 LET NUMBOOT = _2
+let numboot = min(1000,numboot)
+if numboot > 0
+   bootstrap samples numboot
+   set maximum likelihood percentiles default
+   device 1 font simplex
+   multiplot 2 3
+   multiplot corner coordinates 0 0 100 100
+   multiplot scale factor 2
+   label
+   title case asis
+   label case asis
+   case asis
+   title displacement 2
+   x2label displacement 13
+   x3label displacement 18
+   y1label Parameter Estimate
+   x1label
+   x2label Bootstrap Sample
+   title Bootstrap Plot
+   line color blue red green
+   limits
+   bootstrap triangular mle plot _1 _3
+   line color black all
+   .
+   delete aloc ascale ashape
+   skip 0
+   read dpst1f.dat aloc ascale ashape
+   y1label
+   x2label
+   title Lower Limit Parameter
+   let amed = median aloc
+   let amean = mean aloc
+   let asd = sd aloc
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram aloc
+   title Upper Limit Parameter
+   let amed = median ascale
+   let amean = mean ascale
+   let asd = sd ascale
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram ascale
+   title Shape Parameter
+   let amed = median ashape
+   let amean = mean ashape
+   let asd = sd ashape
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram ashape
+   x3label displacement
+   end of multiplot
+   .
+   let alpha = 0.05
+   let xqlow = alpha/2
+   let xqupp = 1 - alpha/2
+   .
+   let xq = xqlow
+   let loc95low = xq quantile aloc
+   let xq = xqupp
+   let loc95upp = xq quantile aloc
+   let xq = xqlow
+   let sca95low = xq quantile ascale
+   let xq = xqupp
+   let sca95upp = xq quantile ascale
+   let xq = xqlow
+   let sh95low = xq quantile ashape
+   let xq = xqupp
+   let sh95upp = xq quantile ashape
+   .
+   device 1 font tektronix
+   window corner coordinates 50 0 100 50
+   justification left
+   height 4
+   move 5 80
+   text Confidence Interval for Lower Limit:
+   move 5 73
+   text (^loc95low,^loc95upp)
+   move 5 60
+   text Confidence Interval for Upper Limit:
+   move 5 53
+   text (^sca95low,^sca95upp)
+   move 5 40
+   text Confidence Interval for Shape:
+   move 5 33
+   text (^sh95low,^sh95upp)
+   window corner coordinates 0 0 100 100
+   height
+   title
+   label
+end of if
+TRIANGULAR MAXIMUM LIKELIHOOD _1 _3
+--------------------
+WEB HELP TRIPDF
+--------------------

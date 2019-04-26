@@ -1,0 +1,8 @@
+----- <~dataall\EHRSTEIN.top> EHRSTEIN.DAT
+
+EHRSTEIN.DAT
+
+View     <xcl: LIST EHRSTEIN.DAT>
+Load     <xcf: ~dataload/EHRSTEIN.DP>
+Print    <xccl: printfile C:\DATAPLOT\EHRSTEIN.DAT>
+

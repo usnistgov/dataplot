@@ -1,0 +1,6 @@
+----- <~dataprin\KEYWEST.DP> Print (to Printer) KEYWEST.DAT
+
+. This is file    KEYWEST.DP
+
+PRINT KEYWEST.DAT
+

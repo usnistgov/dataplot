@@ -1,0 +1,30 @@
+----- <~dp\portplot.top> Portability & Platforms
+ 
+Portability & Platforms
+ 
+Dataplot has been designed for portability;
+its underlying 800,000 lines of code is > 99%
+Fortran 77 (a few graphics device drivers
+are written in C).  Dataplot runs on virtually all
+mainframes, minis, workstations, and larger
+micros (386's, 486's, Pentium, etc.).  Known
+Dataplot installations include:
+ 
+   IBM-PC & clones (386, 486, 586)    DOS, WINDOWS 95/NT
+   Sun (both Sun OS and Solaris)      UNIX
+   SGI Irix                           UNIX
+   IBM RS-600                         UNIX
+   HP 9000                            UNIX
+   DEC Vax Mainframes, MicroVaxes     VMS
+   DEC Alphas                         VMS and UNIX
+   Convex                             UNIX
+   Cray                               UNIX
+   Cyber                              NOS/VE
+   Univac                             Exec 8
+ 
+Executables are currently provided for 
+Sun (both Sun OS and Solaris), SGI (both 5.3
+and 6.2 of the operating system), RS-6000,
+HP-9000, DEC Alpha, Convex, and Windows 95/NT.
+The source code is available for other systems. 
+

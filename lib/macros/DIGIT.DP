@@ -1,0 +1,102 @@
+. This is Dataplot macro   DIGIT.DP
+. Purpose--Strip out the individual digits
+.          of a positive integer.
+. Date--December 2000
+. Input --a scalar positive integer (posint)
+. Output--a vector (digit(.)) consisting of the digits
+.
+. -----start point----
+.
+. feedback on
+.
+. let pausedi = 1
+if pausedi not exist; let pausedi = 0; end if
+if pausedi = 1
+   print "*****At the beginning of digit.dp*****"
+   print "     posint = ^posint"
+   pause
+end if
+.
+if pausedi = 1; feedback on; echo on; end if
+.
+if tracesw exists and tracesw = 1
+      print "*****At the beginning of digit.dp*****"
+      print "     posint = ^posint"
+end if
+.
+. ***** bug ***** bug ***** bug ***** bug ***** bug *****
+. ***** the following line (= delete digit) was omitted because
+.      under certain circumstances, x1 was getting deleted . . .
+.      very mysterious . . . alan had mentioned this problem
+.      about problems with    delete    within loops and calls.
+.      to do--do not use delete within nested loops and calls
+.      august 2007
+. delete digit
+. ***** bug ***** bug ***** bug ***** bug ***** bug *****
+.
+.
+. the following is a fix . . .
+if pausedi = 1; write "---At digit.dp step 1"
+   if ibatch exists and ibatch = 0; pause; end if
+end if
+. print digit
+. pause
+.
+. the following is a fix . . .  (12/2/13)
+if digit exists
+   . print digit
+   let digit = digit-digit
+end if
+.
+. the following is another attempted fix   11/11/08
+let digit = 0 for i = 1 1 20
+.
+if pausedi = 1; write "---At digit.dp step 2"; pause; end if
+let string sdigit = sp()
+.
+if pausedi = 1; write "---At digit.dp step 3"
+   if ibatch exists and ibatch = 0; pause; end if
+end if
+let numdig = log10(posint)
+let numdig = int(numdig)
+let numdig = numdig+1
+.
+if pausedi = 1; write "---At digit.dp step 4"; pause; end if
+let rem = posint
+loop for jz3 = 1 1 numdig
+   let jz3rev = numdig-jz3+1
+   let zd1 = rem/10
+   let zd2 = int(zd1)
+   let zd3 = 10*zd2
+   let zd4 = rem-zd3
+   let digit(jz3rev) = zd4
+   let rem = zd2
+end loop
+.
+if pausedi = 1; write "---At digit.dp step 5"; pause; end if
+.
+loop for jz3 = 1 1 numdig
+   let digitjz3 = digit(jz3)
+   let string sdigit = ^sdigit X^digitjz3
+   if jz3 <> numdig
+      let string sdigit = ^sdigit *
+   end if
+end loop
+.
+if pausedi = 1
+   print "*****At the end of digit.dp*****"
+   print "     posint = ^posint"
+   print "     numdig = ^numdig"
+   print digit
+   if ibatch exists and ibatch = 0; pause; end if
+end if
+.
+if tracesw exists and tracesw = 1
+      print "*****At the end of digit.dp*****"
+      print "     posint = ^posint"
+      print "     numdig = ^numdig"
+      print digit
+end if
+.
+print digit sdigit
+if ibatch exists and ibatch = 0; pause; end if

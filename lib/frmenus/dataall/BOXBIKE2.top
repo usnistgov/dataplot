@@ -1,0 +1,8 @@
+----- <~dataall\BOXBIKE2.top> BOXBIKE2.DAT
+
+BOXBIKE2.DAT
+
+View     <xcl: LIST BOXBIKE2.DAT>
+Load     <xcf: ~dataload/BOXBIKE2.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXBIKE2.DAT>
+

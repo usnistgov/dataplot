@@ -1,0 +1,39 @@
+----- <~dp\intework.top> Internal Worksheet
+ 
+Internal Worksheet
+ 
+By default, Dataplot supports a work space
+of 10 columns by 20,000 rows for a total of
+200,000 data points.  This space can be 
+redimensioned to use more columns and less 
+rows.  The maximum number of rows cannot be
+increased.
+
+If you need to analyze data with more than
+20,000 rows, Dataplot needs to be recompiled
+to handle a larger maximum number of rows.
+
+Dataplot currently allows a maximum of 2,500
+names.  A name is used for every parameter,
+string or function, variable, or matrix defined
+in Dataplot.
+
+The following are used to view or modify Dataplot's
+internal work space:
+
+    View Status (Size)         : STATUS
+     
+    List Names of Variables    : STATUS VARIABLES
+    List Names of Parameters   : STATUS PARAMETERS
+    List Names of Functions    : STATUS FUNCTIONS
+    List Names of Matrices     : STATUS MATRICES
+     
+    List Contents of Variables : WRITE  [list of variables]
+    List Contents of Parameters: WRITE  [list of parameters]
+    List Contents of Functions : WRITE  [list of functions]
+    List Contents of Matrices  : WRITE  [list of matrices]
+     
+    Edit Variables             : LET command, e.g.: LET X(3) = 7
+    Redimension                : DIMENSION [#] OBSERVATIONS
+                               : DIMENSION [#] VARIABLES
+ 

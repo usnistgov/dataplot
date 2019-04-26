@@ -1,0 +1,36 @@
+This is file genunira.men--Generate Uniform Random Numbers
+ 
+--------------------
+ 1. Generate Uniform Random Numbers
+ 2. LET Y = UNIFORM RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 41 50 ?
+ 5. Lower Limit Parameter:
+ 5. @CE 2 0 41 50 ?
+ 6. Upper Limit Parameter:
+ 6. @CE 3 0 41 50 ?
+ 7.
+ 8. Optional random number generator seed (default=305):
+ 9.    (integer >= 305)
+ 9. @CE 4 0 41 50 ?
+10.
+11. Name of output variable;
+11. @CE 5 0 41 50 ?
+12.
+13.
+14. Generate the random numbers?
+--------------------
+AN FE
+@IF 4 0 SEED _4
+LET ZLOWLIM = 0
+LET ZUPPLIM = 1
+@IF 2 0 LET ZLOWLIM = _2
+@IF 3 0 LET ZUPPLIM = _3
+LET ZLOC = ZLOWLIM
+LET ZSCALE = ZUPPLIM - ZLOWLIM
+LET _5 = UNIFORM RANDOM NUMBERS FOR I = 1 1 _1
+LET _5 = ZLOC + ZSCALE* _5
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

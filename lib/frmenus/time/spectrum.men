@@ -1,0 +1,42 @@
+This is file spectrum.men--Spectrum
+ 
+--------------------
+ 1. Spectrum
+ 2. SPECTRUM Y
+ 3.
+ 4. Definition: Spectrum =
+ 5.     Fourier transform of the autocovariance
+ 6.     of a time series.
+ 7.
+ 8. Vertical   axis = spectral power
+ 9. Horizontal axis = frequency (0 to .5)
+10.
+11. Question being addressed:
+12.     Which frequencies contribute most to the
+13.     decomposition of the (total) variance
+14.     of the series?
+15.
+16. Reference: Granger & Hatanaka, pages 59-61.
+17.
+18. Response Variable:
+18. @CE 1 0 33 50 ? gui-variable
+19.
+21. Line Type:
+21. @CE 2 0 33 50 * gui-line
+22. Spike on/off
+22. @CE 3 0 33 50 * gui-ooff
+24.
+25. Subset/Except/For Specification:
+26. @CE 4 0 1 50 *
+27.
+28.
+29. Generate the Spectrum?
+--------------------
+GR FE
+@IF 2 0 LINES _2
+@IF 3 0 SPIKE _3
+@IF 3 0 SPIKE BASE 0
+SPECTRUM _1 _4
+--------------------
+WEB HELP SPECTRUM
+--------------------

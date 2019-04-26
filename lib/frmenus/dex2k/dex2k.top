@@ -1,0 +1,31 @@
+----- <~dex2k\dex2k.top>  2**k Full Factorial Designs
+
+2**k Full Factorial Designs
+
+Discussion
+     Experimental Goals            <~dex2k\expgoals.top>
+     Overview                      <~dex2k\discussi.top>
+     Advantages                    <~dex2k\advantag.top>
+     Disadvantages                 <~dex2k\disadvan.top>
+     References                    <~dex2k\refer.top>
+NIST/SEMATECH Handbook             <xcl: web handbook full factorial designs>
+
+Construction
+     Discussion                     <~dex2k\consdisc.top>
+     View Designs                   <~dex2k\viewdesi.top>
+     Load Designs                   <~dex2k\loaddesi.top>
+     Models                         <~dex2k\models.top>
+     Confounding                    <~dex2k\confound.top>
+Analysis                            <~dex2k\analysis.top>
+
+Built-in Data Files
+     Discussion                     <~dex2k\dafidisc.top>
+     View                           <~dataview\dex2k.top>
+     Load                           <~dataload\dex2k.top>
+NIST DEX Course Data Files
+     View                           <~dex2k\viewdex8.top>
+     Load                           <~dex2k\loaddex8.top>
+
+Worked Examples                     <~dex2k\2kexam.top>
+NIST/SEMATECH Handbook Case Study   <xcl: web handbook eddy case study>
+

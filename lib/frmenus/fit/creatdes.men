@@ -1,0 +1,32 @@
+This is file creatdes.men--Create the Regression Design Matrix
+ 
+--------------------
+ 1. Compute the Regrerssion Design Matrix
+ 2. Macro
+ 3.
+ 4. This menu creates a design matrix from a
+ 5. list of independent variables.  This design
+ 6. matrix is used as input for other menus
+ 7. (e.g., the catcher matrix, variance inflation
+ 8. factors, etc.).  Do not include the constant
+ 9. (i.e., a column of 1's) in the variable list.
+10.
+11. List of Independent Variables:
+12. @CE 1 0  1 50 ? gui-variable
+13. Name for the design matrix:
+13. @CE 2 0  42 50 ?
+14.
+15.
+16. Compute the Design Matrix?:
+--------------------
+GR FE
+DELETE ZZZZ
+SKIP 0
+LET ZZZZN = SIZE _1
+LET ZZZZTEMP = 1 FOR I = 1 1 ZZZZN
+WRITE ZZZZJUNK.DAT ZZZZTEMP _1
+READ MATRIX ZZZZJUNK.DAT _2
+DELETE ZZZZN
+--------------------
+WEB HELP FIT
+--------------------

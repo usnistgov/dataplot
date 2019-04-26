@@ -1,0 +1,177 @@
+This is file statplot.men--Generate Statistic Plots
+ 
+--------------------line 3
+01. Statistic Plots
+02. <statistic> PLOT Y X
+03.
+04. Vertical   Axis Variable:
+04. @CE 1 0 33 50 ?
+05. Horizontal Axis Variable:
+05. @CE 2 0 33 50 ?
+06.
+07. Statistic:
+08. @CE 3 1 13 20 data
+08. @CE 3 2 23 30 number
+ 
+09. Location:
+09. @CE 3 3 13 20 mean
+09. @CE 3 4 23 30 median
+09. @CE 3 5 33 40 midrang
+09. @CE 3 6 43 50 midmean
+ 
+10. @CE 3 7 13 20 trimmea
+10. @CE 3 8 23 30 Winmean
+ 
+11. Variation
+11. @CE 3 9 13 20 sd
+11. @CE 3 10 23 30 rel sd
+11. @CE 3 11 33 40 sdmean
+12. @CE 3 12 13 20 var
+12. @CE 3 13 23 30 rel var
+12. @CE 3 14 33 40 varmean
+13. @CE 3 15 13 20 min
+13. @CE 3 16 23 30 max
+13. @CE 3 17 33 40 extreme
+13. @CE 3 18 43 50 range
+14. @CE 3 19 13 20 loquart
+14. @CE 3 20 23 30 upquart
+14. @CE 3 21 33 40 lohinge
+14. @CE 3 22 43 50 uphinge
+15. @CE 3 23 13 20 decile
+15.                           (1, 2, ..., 9):
+15. @CE 4 0 43 50 *
+ 
+16. Distrib.:
+16. @CE 3 24 13 20 skew
+16. @CE 3 25 23 30 kurt
+16. @CE 3 26 33 40 norppcc
+ 
+17. Random:
+17. @CE 3 27 13 20 autocor
+ 
+18. Sine Stat:
+18. @CE 3 28 13 20 ampl
+18. @CE 3 29 23 30 freq
+ 
+19. Taguchi:
+19. @CE 3 30 13 20 SN-
+19. @CE 3 31 23 30 SN0
+19. @CE 3 32 33 40 SN+
+ 
+20. Quality:
+20. @CE 3 33 13 20 Cp
+20. @CE 3 34 23 30 Cpk
+20. @CE 3 35 33 40 percdef
+20. @CE 3 36 43 50 exploss
+ 
+21. Math:
+21. @CE 3 37 13 20 counts
+21. @CE 3 38 23 30 sum
+21. @CE 3 39 33 40 prod
+21. @CE 3 40 43 50 inte
+22.
+23. Char. Type for Data (blank, x, circ, ...)
+23. @CE 5 0 40 50 *
+24. Char. Fill for Data
+24. @CE 6 1 40 44 off
+24. @CE 6 2 47 50 on
+25. Line Type for Data-connecting Line
+25. @CE 7 0 40 50 *
+26. Line Type for Global Stat Line?
+26. @CE 8 0 40 50 *
+27. Spike to Global Stat Line?
+27. @CE 9 1 40 44 off
+27. @CE 9 2 47 50 on
+28.
+29. Subset/Except/For Specification:
+30. @CE 10 0 1 50 *
+31.
+32. Generate the Statistic Plot?:
+--------------------
+CHARACTERS _5
+CHARACTER FILL _6
+LINES _7 _8
+.
+@IF 3 2 LET ZSTAT = NUMBER _1 _10
+@IF 3 3 LET ZSTAT = MEAN _1 _10
+@IF 3 4 LET ZSTAT = MEDIAN _1 _10
+@IF 3 5 LET ZSTAT = MIDRANGE _1 _10
+@IF 3 6 LET ZSTAT = MIDMEAN _1 _10
+@IF 3 7 LET ZSTAT = TRIMMED MEAN _1 _10
+@IF 3 8 LET ZSTAT = WINSORIZED MEAN _1 _10
+@IF 3 9 LET ZSTAT = SD _1 _10
+@IF 3 10 LET ZSTAT = RELATIVE SD _1 _10
+@IF 3 11 LET ZSTAT = SD OF MEAN _1 _10
+@IF 3 12 LET ZSTAT = VARIANCE _1 _10
+@IF 3 13 LET ZSTAT = RELATIVE VARIANCE _1 _10
+@IF 3 14 LET ZSTAT = VARIANCE OF MEAN _1 _10
+@IF 3 15 LET ZSTAT = MINIMUM _1 _10
+@IF 3 16 LET ZSTAT = MAXIMUM _1 _10
+@IF 3 17 LET ZSTAT = EXTREME _1 _10
+@IF 3 18 LET ZSTAT = RANGE _1 _10
+@IF 3 19 LET ZSTAT = LOWER QUARTILE _1 _10
+@IF 3 20 LET ZSTAT = UPPER QUARTILE _1 _10
+@IF 3 21 LET ZSTAT = LOWER HINGE _1 _10
+@IF 3 22 LET ZSTAT = UPPER HINGE _1 _10
+@IF 3 23 LET ZSTAT = DECILE HINGE _1 _10
+@IF 3 24 LET ZSTAT = SKEWNESS _1 _10
+@IF 3 25 LET ZSTAT = KURTOSIS _1 _10
+@IF 3 26 LET ZSTAT = NORPPCC _1 _10
+@IF 3 27 LET ZSTAT = AUTOCORR _1 _10
+@IF 3 30 LET ZSTAT = SN- _1 _10
+@IF 3 31 LET ZSTAT = SN0 _1 _10
+@IF 3 32 LET ZSTAT = SN+ _1 _10
+@IF 3 33 LET ZSTAT = CP _1 _10
+@IF 3 34 LET ZSTAT = CPK _1 _10
+@IF 3 35 LET ZSTAT = PERCENT DEFECTIVE _1 _10
+@IF 3 36 LET ZSTAT = EXPECTED LOSS _1 _10
+@IF 3 37 LET ZSTAT = COUNTS _1 _10
+@IF 3 38 LET ZSTAT = SUM _1 _10
+@IF 3 39 LET ZSTAT = PROD _1 _10
+@IF 3 40 LET ZSTAT = INTEGRAL _1 _10
+@IF 9 1 SPIKE OFF
+@IF 9 2 SPIKE ON
+@IF 9 2 SPIKE BASE ZSTAT
+.
+BAR OFF OFF
+@IF 3 1 PLOT _1 _2 _2 _10
+@IF 3 2 NUMBER PLOT _1 _2 _10
+@IF 3 3 MEAN PLOT _1 _2 _10
+@IF 3 4 MEDIAN PLOT _1 _2 _10
+@IF 3 5 MIDRANGE PLOT _1 _2 _10
+@IF 3 6 MIDMEAN PLOT _1 _2 _10
+@IF 3 7 TRIMMED MEAN PLOT _1 _2 _10
+@IF 3 8 WINSORIZED MEAN PLOT _1 _2 _10
+@IF 3 9 SD PLOT _1 _2 _10
+@IF 3 10 RELATIVE SD PLOT _1 _2 _10
+@IF 3 11 SD OF MEAN PLOT _1 _2 _10
+@IF 3 12 VARIANCE PLOT _1 _2 _10
+@IF 3 13 RELATIVE VARIANCE PLOT _1 _2 _10
+@IF 3 14 VARIANCE OF MEAN PLOT _1 _2 _10
+@IF 3 15 MINIMUM PLOT _1 _2 _10
+@IF 3 16 MAXIMUM PLOT _1 _2 _10
+@IF 3 17 EXTREME PLOT _1 _2 _10
+@IF 3 18 RANGE PLOT _1 _2 _10
+@IF 3 19 LOWER QUARTILE PLOT _1 _2 _10
+@IF 3 20 UPPER QUARTILE PLOT _1 _2 _10
+@IF 3 21 LOWER HINGE PLOT _1 _2 _10
+@IF 3 22 UPPER HINGE PLOT _1 _2 _10
+@IF 3 23 _4 DECILE PLOT _1 _2 _10
+@IF 3 24 SKEWNESS PLOT _1 _2 _10
+@IF 3 25 KURTOSIS PLOT _1 _2 _10
+@IF 3 26 NORMAL PPCC PLOT _1 _2 _10
+@IF 3 27 AUTOCORR STATISTIC PLOT _1 _2 _10
+@IF 3 28 SINE AMPLITUDE PLOT _1 _2 _10
+@IF 3 29 SINE FREQUENCY PLOT _1 _2 _10
+@IF 3 30 SN- PLOT _1 _2 _10
+@IF 3 31 SN0 PLOT _1 _2 _10
+@IF 3 32 SN+ PLOT _1 _2 _10
+@IF 3 33 CP PLOT _1 _2 _10
+@IF 3 34 CPK PLOT _1 _2 _10
+@IF 3 35 PERCENT DEFECTIVE PLOT _1 _2 _10
+@IF 3 36 EXPECTED LOSS PLOT _1 _2 _10
+@IF 3 37 COUNTS PLOT _1 _2 _10
+@IF 3 38 SUM PLOT _1 _2 _10
+@IF 3 39 PRODUCT PLOT _1 _2 _10
+@IF 3 40 INTEGRAL PLOT _1 _2 _10
+--------------------last

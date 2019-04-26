@@ -1,0 +1,8 @@
+----- <~datalist\MORALES.top> MORALES.DAT
+ 
+MORALES.DAT
+ 
+View     <xcl: LIST MORALES.DAT>
+Load     <x2cl: SKIP 25; READ MORALES.DAT Y1 Y2 Y3 X>
+Print    <xccl: printfile C:\DATAPLOT\MORALES.DAT>
+ 

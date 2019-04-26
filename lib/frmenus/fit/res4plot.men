@@ -1,0 +1,19 @@
+This is file res4plot.men--4-Plot of Residuals
+ 
+--------------------
+ 1. 4-Plot of Residuals
+ 2. 4-PLOT RES
+ 3.
+ 4. Subset/Except/For Specification:
+ 5. @CE 4 0 1 50 *
+ 6.
+ 7.
+13. Generate the Plot?:
+--------------------
+GR FE
+CHARACTERS _2
+LINES _3
+4-PLOT RES _4
+--------------------
+WEB HELP 4-PLOT
+--------------------

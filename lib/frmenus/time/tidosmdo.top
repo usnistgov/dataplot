@@ -1,0 +1,8 @@
+----- <~time\tidosmdo.top> Do Time-Domain Filtering
+ 
+Do Time-Domain Filtering
+ 
+Low-pass                  <xemf: ~time\lowpass.men>
+High-pass                 <xemf: ~time\highpass.men>
+Band-pass                 <xemf: ~time\bandpass.men>
+ 

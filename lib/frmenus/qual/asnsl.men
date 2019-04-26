@@ -1,0 +1,58 @@
+This is file asnsl.men--Generate Skip Lot Sample ASN Chart
+ 
+--------------------line 3
+1. Skip Lot Sample ASN Chart
+2. Macro
+3.
+4. Parameters for Reference Sampling Plan:
+5.    Acceptance Number for Defectives:
+5.    @CE 1 0 42 50 ?
+6.    Sample size:
+6.    @CE 2 0 42 50 ?
+7.
+8. Sampling Fraction ( 0 < f < 1):
+8. @CE 3 0 42 50 ?
+9. Clearance Number (positive integer):
+9. @CE 4 0 42 50 ?
+10.
+11. Start value for p (default = 0.001):
+11. @CE 5 0 42 50 ?
+12. Increment for p (default = 0.001):
+12. @CE 6 0 42 50 ?
+13. Stop value for p (default = 0.20):
+13. @CE 7 0 42 50 ?
+14.
+15.
+16. Generate the Chart?:
+--------------------
+DELETE ZZZZP ZZZZY1 ZZZZY2
+.
+LET ZZZZC = _1
+LET ZZZZN = _2
+LET ZZZZF = _3
+LET ZZZZI = _4
+.
+LET PSTART = 0.001
+LET PINC = 0.001
+LET PSTOP = 0.20
+LET PSTART = _5
+LET PINC = _6
+LET PSTOP = _7
+.
+LET ZZZZP = SEQUENCE PSTART PINC PSTOP
+LET ZZZZY1 = BINCDF(ZZZZC,ZZZZP,ZZZZN)
+LET ZZZZY2 = ZZZZN*ZZZZF/((1 - ZZZZF)*ZZZZY1**ZZZZI + ZZZZF)
+.
+LABEL CASE ASIS
+TITLE CASE ASIS
+Y1LABEL Average Sample Number
+X1LABEL Lot Fraction Defective, p
+TITLE ASN Skip Lot Sample (^ZZZZI, ^ZZZZF) Curve
+.
+LINE SOLID
+PLOT ZZZZY2 VS ZZZZP
+LABEL
+TITLE
+--------------------
+
+--------------------

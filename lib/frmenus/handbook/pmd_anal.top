@@ -1,0 +1,26 @@
+----- <~handbook\pmd_anal.top> PMD Analysis
+
+Process Modeling Analysis
+
+Detecting (Linear) Relationships: Correlation Coefficient
+   Estimation                      <xemf: ~fit\esticorr.men>
+   Confidence limits               <xemf: ~fit\corrcoli.men>
+   Testing non-zero correlation    <xemf: ~fit\testcorr.men>
+
+The Modeling Cycle:             <~fit\modelcyc.top>
+   1. Select   Model            <~fit\modelsel.top>
+   2. Fit      Model                  <~fit\modelfit.top>
+        1. y = f(x)                   <~fit\data1var.top>
+        2. y = f(x1,x2,...)           <~fit\datamvar.top>
+   3. Validate Model            <~fit\modelval.top>
+
+Inferences from linear, multi-linear model-fitting <~fit\inferenc.top>
+
+Special Topics
+   Transformations              <~fit\datatran.top>
+   Linear Calibration           <~fit\linecali.top>
+   Regression Diagnostics       <~fit\regrdiag.top>
+   Pre-fitting                  <~fit\prefitti.top>
+   Smoothing and Interpolation  <~fit\smooth.top>
+   Iteratively Re-Weighted Least Squares  <~fit\irls.top>
+

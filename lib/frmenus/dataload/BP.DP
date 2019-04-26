@@ -1,0 +1,8 @@
+----- <~dataload\BP.DP> Load BP.DAT
+
+. This is file    BP.DP
+
+DELETE Y X1 X2 X3 X4 X5
+SKIP 25
+READ BP.DAT Y X1 X2 X3 X4 X5
+

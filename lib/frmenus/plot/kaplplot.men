@@ -1,0 +1,60 @@
+This is file kaplplot.men--Kaplan-Meier Plot
+ 
+--------------------
+ 1. Kaplan Meier Plot
+ 2. KAPLAN MEIER PLOT Y TAG
+ 3.
+ 4. Failure Times Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5.
+ 6. Kaplan-Meier plots can be generated
+ 7. for censored data.  A tag variable
+ 8. can be specified.  A value of 1
+ 9. indicates the data value is a failure
+10. time while a value of 0 indicates
+11. a censored observation.
+12.
+13. Optional Tag Variable:
+13. @CE 2 0 42 50 ? gui-vari
+14.
+15. Variable to store the Kaplan-Meier estimate:
+15. @CE 3 0 42 50 *
+16.
+17. Use modified Kaplan Meier estimate?:
+17. @CE 4 1 42 46 yes
+17. @CE 4 2 47 50 no
+18.
+19. Kaplan Meier plots can either plot the
+20. reliability on the vertical axis or
+21. an estimate of the CDF (1 - reliability).
+22.
+23. Vertical axis = 
+23. @CE 5 1 42 46 reli
+23. @CE 5 2 47 50 cdf
+24.
+25. Title:
+25. @CE 6 0 10 50 *
+26. Left Axis Label:
+26. @CE 7 0 22 50 *
+27. Bottom Axis Label:
+27. @CE 8 0 22 50 *
+28.
+29. Subset/Except/For Specification:
+30. @CE 9 0 1 50 *
+31.
+32.
+33. Generate the Kaplan Meier Plot?:
+--------------------
+GR FE
+LINES SOLID
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+SET KAPLAN MEIER _5
+LET STRING ZZZZSTR = KAPLAN MEIER
+@IF 4 1 LET STRING ZZZZSTR = MODIFIED KAPLAN MEIER
+^ZZZZSTR PLOT _1  _2 _9
+LET _3 = YPLOT
+--------------------
+WEB HELP KAPLAN MEIER PLOT
+--------------------

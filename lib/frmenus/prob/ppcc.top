@@ -1,0 +1,32 @@
+----- <~prob\ppcc.top> PPCC PLOT Estimates
+
+PPCC Plot Estimation
+
+These menus are used to estimate the parameters of
+distributions with no, one, or two shape parameters
+using the PPCC plot (or KS plot)/probability plot method
+
+Discussion                                    <~reli\discppcc.top>
+NIST/SEMATECH Handbook    <xcl: web handbook ppcc plot parameter estimation>
+
+PPCC/KS Plot Options
+   Specify Location/Scale Parameters for KS Plot  <xemf: ~prob\kslocsca.men>
+   Number of Axis Points                          <xemf: ~prob\ppccaxis.men>
+   Specify Biweight or No Bweight for KS Plot     <xemf: ~prob\biweight.men>
+   Specify Axis Order for 2-Shape Parameters      <xemf: ~prob\axisorde.men>
+   Select Number of Percentiles                   <xemf: ~prob\ppccperc.men>
+
+Uncensored Data (Ungrouped or Grouped)
+   No Shape Parameters (e.g., Normal)             <~prob\locsppcc.top>
+   One Shape Parameters (A-L) (e.g., Lognormal)   <~prob\sh1appcc.top>
+   One Shape Parameters (M-Z) (e.g., Weibull)     <~prob\sh1bppcc.top>
+   Two Shape Parameters                           <~prob\sha2ppcc.top>
+
+   Discrete Distributions                         <~prob\discppcc.top>
+
+Censored Data (Ungrouped)
+   No Shape Parameters (e.g., Normal)             <~prob\loccppcc.top>
+   One Shape Parameters (A-L) (e.g., Lognormal)   <~prob\s1acppcc.top>
+   One Shape Parameters (M-Z) (e.g., Weibull)     <~prob\s1bcppcc.top>
+   Two Shape Parameters                           <~prob\sh2cppcc.top>
+

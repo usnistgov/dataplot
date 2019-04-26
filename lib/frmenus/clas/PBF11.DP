@@ -1,0 +1,10 @@
+----- <~dataloex\PBF11.DP> Load & Execute PBF11.DAT
+
+. This is file    PBF11.DP
+
+DELETE Y
+SKIP 25
+READ PBF11.DAT Y
+TITLE PBF11.DAT
+/
+

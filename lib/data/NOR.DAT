@@ -1,0 +1,42 @@
+This is Dataplot data file    NOR.DAT
+Sample data set from Example 10.2 of
+Karl Bury, "Statistical Distributions in Engineering",
+Cambridge University Press, 1999, p. 141.
+
+Response variable = Specimens from a maching process, measurement
+                    of one of the dimensions in millimeters
+Number of observations = 17
+Number of observations per line image = 1
+Order of observations per line image--
+   1. Response variable
+To read this file into Dataplot--
+   SKIP 25
+   READ NOR.DAT Y
+   SET MAXIMUM LIKELIHOOD PERCENTILE DEFAULT
+   NORMAL MAXIMUM LIKELIHOOD Y
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Y
+------------------
+12.065
+11.992
+11.992
+11.921
+11.954
+11.945
+12.029
+11.948
+11.885
+11.997
+11.982
+12.109
+11.966
+12.081
+11.846
+12.007
+12.011

@@ -1,0 +1,18 @@
+This is file saveplot.men--Save Current Plot to File
+ 
+--------------------
+ 1. Save Current Plot to File
+ 2. DEVICE 3 CLOSE; COPY DPPL2F.DAT  MYPLOT.PS
+ 3.
+ 4. Enter the File Name to Save To:
+ 5. @CE 1 0 1 70 ?
+ 6.
+ 7.
+ 8. Save the Plot?
+--------------------
+PC FE
+DEVICE 3 CLOSE
+COPY  DPPL2F.DAT  _1
+--------------------
+WEB HELP COPY
+--------------------

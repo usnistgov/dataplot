@@ -1,0 +1,9 @@
+----- <~data\chisfunc.top> Functions: chi-squared Distribution
+
+Functions: chi-squared Distribution
+
+
+CHSCDF(X,NU)      chi-squared cumulative distribution function
+CHSPDF(X,NU)      chi-squared probability density function
+CHSPPF(P,NU)      chi-squared percent point function
+

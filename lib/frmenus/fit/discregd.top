@@ -1,0 +1,99 @@
+----- <~fit\discregd.top> Regression Diagnostics
+ 
+Regression Diagnostics
+
+Regression diagnostics are used for the following purposes:
+
+  1) detect violations in the regression assumptions.
+  2) identify outliers.
+  3) identify influential points.
+  4) identify high leverage points.
+  5) identify multi-colinearity problems.
+     Related to this is identifying variables
+     to be deleted (or added) to the model.
+  6) uncover features in the data that may cause
+     problems for the fitted regression.
+
+High leverage points are outliers with respect to
+the independent variables.  Influential points are
+those that cause relatively large changes in the
+fitted function when they are deleted.  Although an
+influential point typically has high leverage, a high
+leverage point is not necessarily influential.  High
+leverage points tend to generate small residuals even
+when they are outliers.
+
+Residual plots are the primary tool for fitting
+diagnostics.  However, a great deal of statistical
+research has been devoted to regression diagnostics that
+go beyond the standard residual plots.  Current regression
+diagnostic techniques are primarily applied to linear and
+multi-linear fits.  Techniques for non-linear models,
+although a currently active research topic, are less well
+developed.
+
+Specific regression diagnostic techniques include:
+
+  1) There are several alternative residual calculations.
+
+     a) The standardized residuals are residuals divided
+        by the square root of the mean square error.
+
+     b) The internally studentized residuals are the
+        residuals divided by their standard deviations.
+
+     c) The deleted residuals are the residuals obtained
+        by deleting one row at a time (i.e., the ith
+        deleted residual is the original Y value minus
+        the predicted value when the ith point is deleted).
+
+     d) The externally studentized residuals are the
+        deleted residuals divided by their standard
+        deviations.
+
+     The standardized residuals and internally studentized
+     residuals are used as substitutes for the traditional
+     residuals in the standard residual plots.  The deleted
+     residuals and externally studentized residuals are
+     used to detect outliers that are not identified with
+     traditional residuals.
+
+  2) Many regression diagnostic techniques are based on the
+     "hat matrix", which is X(X'X)**(-1)X'.  This is an
+     NxN matrix.  Although the hat matrix tends to be
+     impractical due to its size, many useful statistics
+     are based on the diagonal of this matrix.
+
+     a) The diagonal elements of the hat matrix are a measure
+        of leverage.  The minimum leverage is (1/N) and the
+        maximum leverage is 1, and the average leverage is
+        P/N where P is the number of parameters in the fit.
+        High leverage points are those greater than 2*P/N.
+     
+     b) The DFFITS values are a measure of the influence that
+        point i has on the ith predicted value.  For small or
+        moderate sized data sets, values greater than 1 indicate
+        an influential case. For large data sets, values
+        greater than 2*SQRT(p/N) indicate influential points.
+
+     c) Cook's distance is a measure of the combined impact of
+        the ith observation on all of the regression
+        coefficients.  The Cook's distance is compared to an F
+        distribution.
+
+     In summary, the diagonal of the hat matrix is used to
+     identify high leverage points.  DFFITS and Cook's distance
+     are used to identigy high leverage points that are also
+     influential in the sense that have a large effect on the
+     fitted model.
+
+All of the regression diagnostic measures discussed above are
+written to the file DPST3F.DAT whenever Dataplot performs a
+linear fit.  They are not written for non-linear fits.  You
+can read these variables back into Dataplot for additional
+analysis.
+
+Additional regression diagnostics are based on the 
+"catcher matrix", which is X(X'X)**(-1).  These are discussed
+under the "catcher matrix" menu.
+

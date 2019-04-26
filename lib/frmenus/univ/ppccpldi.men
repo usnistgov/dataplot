@@ -1,0 +1,26 @@
+This is file ppccpldi.men--PPCC Plot (Discrete Distributions)
+
+--------------------
+1. PPCC Plot (Discrete Distributional Families)
+2. <Name of Distributional Family> PPCC PLOT Y
+3.
+4. Variable:
+4. @CE 1 0 11 25 ? gui-variable
+5.
+6. Distributional Family:
+7. @CE 2 1 11 25 Poisson
+8. @CE 2 2 11 25 Geometric
+9.
+10. Subset/Except/For Specification:
+11. @CE 3 0 -25 50 *
+12.
+13.
+14. Generate the PPCC Plot?
+--------------------
+GR FE
+@IF 2 1 POISSON PPCC PLOT _1 _3
+@IF 2 2 GEOMETRIC PPCC PLOT _1 _3
+WRITE MAXPPCC SHAPE
+--------------------
+WEB HELP PPCC PLOT
+--------------------

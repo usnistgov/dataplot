@@ -1,0 +1,8 @@
+----- <~dataview\3fac.top> View 3-Factor Data
+
+View 3-Factor Data
+
+HAMAKER.DAT*  Drill speed                  <xcf: ~dataview\HAMAKER.DP>
+MANDEL.DAT    Specific Volume of rubber    <xcf: ~dataview\MANDEL.DP>
+SPLETT3.DAT   Boulder eddy current probe  <xcf: ~dataview\SPLETT3.DP>
+

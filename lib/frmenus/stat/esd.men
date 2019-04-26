@@ -1,0 +1,23 @@
+This is file esd.men--Generalized Extreme Studentized Deviate Outlier Test
+ 
+--------------------
+ 1. Extreme Studentized Deviate Test for Outliers
+ 2. LET K = 5; ESD TEST Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Upper Bound for Number of Outliers to Test For:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute ESD Test?
+--------------------
+GR FE
+LET K = _2
+ESD TEST _1 _3
+--------------------
+WEB HELP ESD TEST
+--------------------

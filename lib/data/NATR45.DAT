@@ -1,0 +1,35 @@
+This is Dataplot data file     NATR45.DAT
+Vacuum Tube Cutoff Bias
+(Variation Shift Example (with known reference sigma0 = 2.08))
+Question: Does variability of cutoff bias of new tubes
+          differ from .208 volts?
+ 
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 4-5 to 4-7.
+ 
+Number of observations             = 10
+Number of variables per line image =  1
+Order of variables on a line image--
+   1. Response Variable Y = cutoff bias of vacuum tubes (volts)
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR45.DAT Y
+   LET SIGMA0 = .208
+   CHI-SQUARED TEST Y SIGMA0
+ 
+ 
+       Y
+  Cutoff Bias
+----------------
+     12.1
+     12.3
+     11.8
+     12.0
+     12.4
+     12.0
+     12.1
+     11.9
+     12.2
+     12.2

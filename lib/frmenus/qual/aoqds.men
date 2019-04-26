@@ -1,0 +1,73 @@
+This is file aoqds.men--Generate Double Sample AOQ Chart
+ 
+--------------------line 3
+1. Double Sample AOQ Chart
+2. Macro
+3.
+4. Acceptance Number for Defectives for Sample 1:
+4. @CE 1 0 42 50 ?
+5. Sample size for Sample 1:
+5. @CE 2 0 42 50 ?
+6. Acceptance Number for Defectives for Sample 2:
+6. @CE 3 0 42 50 ?
+7. Sample size for Sample 2:
+7. @CE 4 0 42 50 ?
+8. Lot Size:
+8. @CE 5 0 42 50 ?
+9.
+10. Start value for p (default = 0.001):
+10. @CE 6 0 42 50 ?
+11. Increment for p (default = 0.001):
+11. @CE 7 0 42 50 ?
+12. Stop value for p (default = 0.20):
+12. @CE 8 0 42 50 ?
+13.
+14.
+15. Generate the Chart?:
+--------------------
+DELETE ZZZZP ZZZZY ZZZZY1 ZZZZY2 ZZZZT1 ZZZZT2
+.
+LET ZZZZC1 = _1
+LET ZZZZN1 = _2
+LET ZZZZC2 = _3
+LET ZZZZN2 = _4
+LET ZZZZN3 = _5
+.
+LET PSTART = 0.001
+LET PINC = 0.001
+LET PSTOP = 0.20
+LET PSTART = _6
+LET PINC = _7
+LET PSTOP = _8
+.
+LET ZZZZP = SEQUENCE PSTART PINC PSTOP
+LET ZZZZY1 = BINCDF(ZZZZC1,ZZZZP,ZZZZN1)
+LET ZZZZN = SIZE ZZZZY1
+LET ZZZZY2 = 0 FOR I = 1 1 ZZZZN
+LET ZZZZK1 = ZZZZC1+1
+LET ZZZZK2 = ZZZZC2
+FEEDBACK OFF
+LOOP FOR K = ZZZZK1 1 ZZZZK2
+    LET ZK = K
+    LET ZK1 = ZZZZC2 - ZK
+    LET ZZZZT1 = BINPDF(ZK,ZZZZP,ZZZZN1)
+    LET ZZZZT2 = BINCDF(ZK1,ZZZZP,ZZZZN2)
+    LET ZZZZY2  = ZZZZY2 + ZZZZT1*ZZZZT2
+END OF LOOP
+FEEDBACK ON
+LET ZZZZY1 = ZZZZY1*(ZZZZN3 - ZZZZN1)
+LET ZZZZY2 = ZZZZY2*(ZZZZN3 - ZZZZN1 - ZZZZN2)
+LET ZZZZY = (ZZZZY1 + ZZZZY2)*ZZZZP/ZZZZN3
+TITLE AOQ Double Sample Curve
+.
+LABEL CASE ASIS
+TITLE CASE ASIS
+Y1LABEL Average Outgoing Quality
+X1LABEL Lot Fraction Defective, p
+.
+PLOT ZZZZY VS ZZZZP
+LABEL
+TITLE
+--------------------
+
+--------------------

@@ -1,0 +1,23 @@
+----- <~prob\randnumb.top> Generating Random Numbers
+
+Generating Random Numbers
+
+Normal N(mu,sigma)       <xemf: ~prob\gennorra.men>
+Uniform                  <xemf: ~prob\genunira.men>
+
+Continuous Distributions
+   No Shape Parameters                <~prob\locscran.top>
+   One Shape Parameter (A-L)          <~prob\sha1aran.top>
+   One Shape Parameter (M-Z)          <~prob\sha1bran.top>
+   Two Shape Parameters               <~prob\shap2ran.top>
+   Three or More Shape Parameters     <~prob\shap3ran.top>
+
+Mixture                               <~prob\mixran.top>
+Discrete                              <~prob\discran.top>
+
+Multivariate
+   Read a Matrix (from a file)                 <xemf: ~math\matr_rea.men>
+   Create a Matrix (from a list of variables)  <xemf: ~math\matr_cre.men>
+   Multivariate Normal                         <xemf: ~prob\genmvnrn.men>
+   Multinomial                                 <xemf: ~prob\genmulrn.men>
+

@@ -1,0 +1,8 @@
+----- <~dataall\QUASIBIE.top> QUASIBIE.DAT
+
+QUASIBIE.DAT
+
+View     <xcl: LIST QUASIBIE.DAT>
+Load     <xcf: ~dataload/QUASIBIE.DP>
+Print    <xccl: printfile C:\DATAPLOT\QUASIBIE.DAT>
+

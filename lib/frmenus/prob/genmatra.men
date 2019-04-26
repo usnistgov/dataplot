@@ -1,0 +1,29 @@
+This is file genmatra.men--Generate Classical Matching Random Numbers
+ 
+--------------------
+ 1. Generate Classical Matching Random Numbers
+ 2. LET Y = CLASSICAL MATCHING RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Number of Items Parameter (k, k a positive integer):
+ 5. @CE 2 0 42 50 ?
+ 6.
+ 7. Optional random number generator seed (default=305):
+ 8.    (integer >= 305)
+ 8. @CE 3 0 41 50 ?
+ 9.
+10. Name of output variable;
+10. @CE 4 0 41 50 ?
+11.
+12.
+13. Generate the random numbers?
+--------------------
+AN FE
+@IF 3 0 SEED _3
+LET K = 10
+@IF 2 0 LET K = _2
+LET _4 = CLASSICAL MATCHING RANDOM NUMBERS FOR I = 1 1 _1
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

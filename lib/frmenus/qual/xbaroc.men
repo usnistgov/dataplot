@@ -1,0 +1,56 @@
+This is file xbaroc.men--Generate Xbar Operating Characteristic Charts
+ 
+--------------------line 3
+1. Xbar Operating Characteristic Chart
+2. Macro
+3.
+4. The OC curve is a plot of the type II (or Beta
+5. error) of an xbar control chart.  That is, it is
+6. the probability of saying the control chart is in
+7. control when it is in fact not in control.  In other
+8. words, it is a measure of the sensitivity of the
+9. control chart.  The formula is:
+10.   y = NORCDF(3 - k*SQRT(n)) - NORCDF(-3 -k*SQRT(n))
+11.   x = k
+12. where n is the sample size and k is the number of 
+13. standard deviaitons from the mean.
+14.
+15. Sample Size:
+15. @CE 1 0 42 50 ?
+16. Increment for k (default = 0.01):
+16. @CE 2 0 42 50 ?
+17. Stop for k (default = 5):
+17. @CE 3 0 42 50 ?
+18.
+19.
+20. Generate the OC Chart?:
+--------------------
+LET ZZZZN = _1
+LINE SOLID
+CHARACTER BLANK
+SPIKE OFF
+BAR OFF
+LABEL CASE ASIS
+Y1LABEL Beta
+X1LABEL Magnitude to Detect (in standard deviation units)
+TITLE OC Curve for XBAR Control Chart (N = ^ZZZZN)
+.
+XLIMITS 0 5
+YLIMITS 0 1
+.
+LET KSTART = 0
+LET KINC = 0.01
+LET KSTOP = 5.0
+LET KINC = _2
+LET KSTOP = _3
+XLIMITS 0 KSTOP
+LET FUNCTION ZZZZF1 = NORCDF(3 - ZZZZX*SQRT(ZZZZN))
+LET FUNCTION ZZZZF2 = NORCDF(-3 - ZZZZX*SQRT(ZZZZN))
+LET FUNCTION ZZZZF  = ZZZZF1 - ZZZZF2
+PLOT ZZZZF FOR ZZZZX = KSTART KINC KSTOP
+LIMITS
+LABEL
+TITLE
+--------------------
+WEB HELP XBAR CHART
+--------------------

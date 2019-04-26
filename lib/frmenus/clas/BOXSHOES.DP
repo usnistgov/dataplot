@@ -1,0 +1,10 @@
+----- <~dataloex\BOXSHOES.DP> Load & Execute BOXSHOES.DAT
+
+. This is file    BOXSHOES.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ BOXSHOES.DAT Y X1 X2
+TITLE BOXSHOES.DAT
+/
+

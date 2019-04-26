@@ -1,0 +1,23 @@
+This is file relsd.men--Compute relative standard deviation of a variable
+ 
+--------------------
+ 1. Relative Standard Deviation
+ 2. LET A = RELATIVE STANDARD DEVIATION Y
+ 3.
+ 4. Variable for which to compute the relative standard
+ 5.    deviation:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Parameter to store the relative standard deviation:
+ 6. @CE 2 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 3 0 -10 50 *
+10.
+11.
+12. Compute the Relative Standard Deviation?:
+--------------------
+GR FE
+LET _2 = RELATIVE STANDARD DEVIATION  _1 _3
+--------------------
+WEB HELP RELATIVE STANDARD DEVIATION
+--------------------

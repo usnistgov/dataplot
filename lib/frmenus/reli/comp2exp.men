@@ -1,0 +1,99 @@
+This is file comp2exp.men--Compare 2 Exponentials
+ 
+--------------------
+ 1. Compare means of 2 exponentials
+ 2. ...
+ 3.
+ 4. This macro applies to both censored and
+ 5. non-censored failure times.  If your data
+ 6. is censored, you need to define a censoring
+ 7. variable that is set to 1 for failure times
+ 8. and set to 0 for censoring times.  For
+ 9. no censoring, simply omit the censoring
+10. variable.
+11.
+12. First Variable of Failure Times:
+12. @CE 1 0 42 50 ? gui-variable
+13. Optional First Censoring Variable:
+13. @CE 2 0 42 50 ? gui-variable
+14. Second Variable of Failure Times:
+14. @CE 3 0 42 50 ? gui-variable
+15. Optional Second Censoring Variable:
+15. @CE 4 0 42 50 ? gui-variable
+16.
+17. Significance Level:
+17. @CE 5 0 42 50 ?
+18.
+19.
+20. Compare the 2 Exponentials?:
+--------------------
+AN FE
+LET ALPHA = 0.05
+@IF 5 0 LET ALPHA = _5
+IF ALPHA > 1
+  LET ALPHA = ALPHA/100
+END OF IF
+IF ALPHA <= 0
+  LET ALPHA = .05
+END OF IF
+IF ALPHA > 1
+   LET ALPHA = .05
+END OF IF
+LET ICENSOR = 0
+@IF 2 0 LET ICENSOR = 1
+IF ICENSOR = 0
+  LET R1 = SIZE _1
+  LET A1 = MEAN _1
+  LET R2 = SIZE _3
+  LET A2 = MEAN _3
+END OF IF
+IF ICENSOR = 1
+  LET N1 = SIZE _1
+  LET R1 = SIZE _1 SUBSET _2 = 1
+  LET A1 = SUM _1 SUBSET _2 = 1
+  LET A3 = MAXIMUM _1 SUBSET _2 = 1
+  LET A1 = (A1 + (N1-R1)*A3)/R1
+  LET N2 = SIZE _3
+  LET R2 = SIZE _3 SUBSET _4 = 1
+  LET A2 = SUM _3 SUBSET _4 = 1
+  LET A4 = MAXIMUM _3 SUBSET _4 = 1
+  LET A2 = (A2 + (N2-R2)*A4)/R2
+END OF IF
+LET FRATIO = A1/A2
+LET V1 = 2*R1
+LET V2 = 2*R1
+LET PVAL = FCDF(FRATIO,V1,V2)
+LET ALPLOW=ALPHA/2
+LET ALPHIGH=1 - ALPLOW
+LET PLOW = FPPF(ALPLOW,V1,V2)
+LET PHIGH = FPPF(ALPHIGH,V1,V2)
+LET PLOW = PLOW/FRATIO
+LET PHIGH = PHIGH/FRATIO
+LET ALPHA2 = (1-ALPHA)*100
+.
+LET IACCEPT = 0
+LET STRING ZZZZSTR = ACCEPT
+IF PVAL < ALPLOW
+  LET STRING ZZZZSTR = REJECT
+END OF IF
+IF PVAL > ALPHIGH
+  LET STRING ZZZZSTR = REJECT
+END OF IF
+FEEDBACK OFF
+CAPTURE ZZZZJUNK.OUT
+WRITE " "
+WRITE " "
+WRITE "H0: EQUAL MEANS (AT THE ^ALPHA % LEVEL)"
+WRITE "    THETA 1   = ^A1"
+WRITE "    THETA 2   = ^A2"
+WRITE "    F RATIO   = ^FRATIO"
+WRITE "    P VALUE   = ^PVAL"
+WRITE "    ^ZZZZSTR AT THE ^ALPHA % LEVEL"
+WRITE " "
+WRITE "    TWO-SIDED ^ALPHA2 % CONFIDENCE INTERVAL: (^PLOW,^PHIGH)"
+WRITE " "
+.
+END OF CAPTURE
+FEEDBACK ON
+LIST ZZZZJUNK.OUT
+---------------------

@@ -1,0 +1,83 @@
+. Name:    WRIGLEGE.DP
+. Purpose: Post plot options for the CHARACTER TABULATION PLOT for
+.          the Wright brothers data.  Specifically:
+.
+.            1. Create the legend for the contour levels
+.            2. Draw the vertical/horizontal separator lines
+.            3. Draw the CPU time on the plot
+.
+FEEDBACK SAVE
+FEEDBACK OFF
+.
+.  Step 1: Optional color legend
+.
+height 1.7
+box fill pattern solid
+let xcoor1 = 92
+let xcoor2 = xcoor1 + 2
+let xcoor3 = xcoor2 + 1
+let ycoor1 = 90
+let yinc = 4
+let ycoor2 = ycoor1 - yinc
+let ycoor3 = ycoor2 + 1
+.
+loop for k = nlevel -1  1
+    let k2 = k + 1
+    box fill color ^color^k2
+    box xcoor1 ycoor1 xcoor2 ycoor2
+    move xcoor3 ycoor3
+    if k = nlevel
+       let atemp = ylevel(k)
+       text >= ^atemp
+    else
+       let atempl = ylevel(k)
+       let atempy = ylevel(k2)
+       text ^atempl - ^atempu
+    end of if
+    let ycoor1 = ycoor2
+    let ycoor2 = ycoor1 - yinc
+    let ycoor3 = ycoor2 + 1
+end of loop
+.
+box fill color ^color1
+box xcoor1 ycoor1 xcoor2 ycoor2
+move xcoor3 ycoor3
+let atemp = ylevel(1)
+text < ^atemp
+.
+.  Step 2: Draw separator lines
+.
+if seprow = 1
+   line dotted
+   line color black
+   let xcoor1 = 0.5
+   let xcoor2 = nx + 0.5
+   let nlast = ny - 1
+   loop for k = 1 1 nlast
+       let ycoor1 = k + 0.5
+       draw data xcoor1 ycoor1 xcoor2 ycoor1
+   end of loop
+   line solid
+end of if
+.
+if sepcol = 1
+   line dotted
+   line color black
+   let ycoor1 = 0.5
+   let ycoor2 = ny + 0.5
+   let nlast = nx - 1
+   loop for k = 1 1 nlast
+       let xcoor1 = k + 0.5
+       draw data xcoor1 ycoor1 xcoor1 ycoor2
+   end of loop
+   line solid
+end of if
+.
+.  Step 3: Draw CPU time
+.
+if cpuflag = 1
+   call CPUTIME.DP
+end of if
+.
+FEEDBACK RESTORE
+.

@@ -1,0 +1,19 @@
+----- <~prob\ppccboot.top> PPCC PLOT Estimates with Bootstrapping
+
+PPCC Plot Estimation with Bootstrapping
+
+These menus are used to estimate the parameters of
+distributions with no, one, or two shape parameters
+using the PPCC plot (or KS plot)/probability plot method.
+
+Censored data is supported.  However, grouped data is
+not supported.
+
+Discussion                                    <~reli\discppcc.top>
+NIST/SEMATECH Handbook    <xcl: web handbook ppcc plot parameter estimation>
+Discussion: Bootstrap Intervals               <~reli\mleboot.top>
+
+No Shape Parameters (e.g., Normal)            <~prob\lsppccbo.top>
+One Shape Parameters (A-L) (e.g., Lognormal)  <~prob\s1appccb.top>
+One Shape Parameters (M-Z) (e.g., Weibull)    <~prob\s1bppccb.top>
+

@@ -1,0 +1,45 @@
+This is file percplot.men--Normal Plot
+ 
+--------------------
+1. Normal Plot
+2. NORMAL PLOT Y
+3.
+4. Response Variable:
+4. @CE 1 0 33 50 ? gui-variable
+5. Optional Group ID Variable:
+5. @CE 2 0 33 50 * gui-variable
+6.
+7. Line type for plot?:
+7. @CE 3 0 33 50 * gui-line
+8. Character type for plot?:
+8. @CE 4 0 33 50 * gui-character
+9. Line type for fitted line?:
+9. @CE 9 0 33 50 * gui-line
+10. Line type for horizontal reference line?:
+10. @CE 10 0 33 50 * gui-line
+11. Line type for vertical reference line?:
+11. @CE 11 0 33 50 * gui-line
+12.
+13. Title:
+13. @CE 5 0 18 50 *
+14. Left Axis Label:
+14. @CE 6 0 18 100 *
+15. Bottom Axis Label:
+15. @CE 7 0 18 100 *
+16.
+17. Subset/Except/For Specification: 
+18. @CE 8 0 1 50 *
+19.
+20.
+21. Generate the Normal Plot?:
+--------------------
+GR FE
+LINE _3 _9 _10 _11
+CHARACTER _4
+TITLE _5
+Y1LABEL _6
+X1LABEL _7
+NORMAL PLOT _1 _2 _8
+--------------------
+WEB HELP NORMAL PLOT
+--------------------

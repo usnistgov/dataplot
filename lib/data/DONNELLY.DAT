@@ -1,0 +1,105 @@
+This is the Dataplot data file        DONNELLY.DAT
+Volume fraction of nitrogen required to extinguish flame on
+the surface of a plastic cylinder.
+Contact--Michelle Donnelly, Fire Research Division, BFRL, NIST
+Number of observations                       = 80
+Number of observations per line image        = 3
+Order of variables on a line image--
+   1. Dependent variable X = measurements of flux
+   2. Response variable Y  = rotameter readings
+   3. Batch                = group id (8 ball settings, 10 repitions)
+Analysis:
+   Measurements of flux (X) are made on the surface of the object,
+   and rotameter readings (Y) are converted to flowrate (Y') from a
+   calibration curve for the rotameter.  Flowrate is then converted
+   to nitrogen volume fraction.  See
+       http://www.itl.nist.gov/div898/handbook/mpc/section6/mpc65.htm
+   for details.
+
+To read this file into Dataplot--
+   SKIP 25
+   READ DONNELLY.DAT X Y GROUP
+         Rotameter
+   Flux  Readings
+    (X)       (Y)  (TAG)
+--------------------------
+     40     7.871     1
+     40     7.877     1
+     40     7.863     1
+     40     7.877     1
+     40     7.871     1
+     40     7.877     1
+     40     7.863     1
+     40     7.874     1
+     40     7.871     1
+     40     7.865     1
+     50     9.608     2
+     50     9.591     2
+     50     9.600     2
+     50     9.582     2
+     50     9.582     2
+     50     9.600     2
+     50     9.587     2
+     50     9.587     2
+     50     9.608     2
+     50     9.600     2
+     70    12.94     3
+     70    12.93     3
+     70    12.94     3
+     70    12.93     3
+     70    12.94     3
+     70    12.94     3
+     70    12.91     3
+     70    12.92     3
+     70    12.95     3
+     70    12.94     3
+     90    15.94     4
+     90    15.84     4
+     90    15.91     4
+     90    16.01     4
+     90    15.98     4
+     90    15.89     4
+     90    15.82     4
+     90    15.89     4
+     90    15.88     4
+     90    15.90     4
+     30     5.981     5
+     30     5.980     5
+     30     5.983     5
+     30     5.985     5
+     30     5.985     5
+     30     5.981     5
+     30     5.981     5
+     30     5.978     5
+     30     5.981     5
+     30     5.977     5
+     80    14.40     6
+     80    14.39     6
+     80    14.40     6
+     80    14.41     6
+     80    14.42     6
+     80    14.39     6
+     80    14.43     6
+     80    14.37     6
+     80    14.44     6
+     80    14.37     6
+    100    17.23     7
+    100    17.17     7
+    100    17.23     7
+    100    17.17     7
+    100    17.15     7
+    100    17.19     7
+    100    17.21     7
+    100    17.24     7
+    100    17.23     7
+    100    17.22     7
+     20     4.012    8
+     20     4.014    8
+     20     4.015    8
+     20     4.011    8
+     20     4.013    8
+     20     4.011    8
+     20     4.020    8
+     20     4.014    8
+     20     4.009    8
+     20     4.011    8

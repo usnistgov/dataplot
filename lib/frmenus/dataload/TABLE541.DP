@@ -1,0 +1,8 @@
+----- <~dataload\TABLE541.DP> Load TABLE541.DAT
+
+. This is file    TABLE541.DP
+
+DELETE Y X
+SKIP 25
+READ TABLE541.DAT Y X
+

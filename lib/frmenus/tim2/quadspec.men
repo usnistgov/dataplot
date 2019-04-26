@@ -1,0 +1,40 @@
+This is file quadspectr.men--Quad-spectrum
+ 
+--------------------
+ 1. Quad-spectrum
+ 2. QUADRATURE-SPECTRUM Y1 Y2
+ 3.
+ 4. Definition: Quad-spectrum =
+ 5.     imaginary part of the power cross-spectrum
+ 6.     between the 2 time series.
+ 7.
+ 8. Vertical   axis = quadrature spectral power
+ 9. Horizontal axis = frequency (0 to .5)
+10.
+11. Question being addressed:
+12.     Which frequencies contribute most to the
+13.     decomposition of the (total) covariance of
+14.     the "out-of-phase" components of the 2 series?
+15.
+16. Reference: Granger & Hatanaka, pages 74-77.
+17.
+18. Response Variable   #1:
+18. @CE 1 0 33 50 ? gui-variable
+19. Response Variable   #2:
+19. @CE 2 0 33 50 ? gui-variable
+20.
+21. Line type:
+22. @CE 3 0 33 50 * gui-line
+23.
+24. Subset/Except/For Specification:
+25. @CE 4 0 6 50 *
+26.
+27.
+28. Generate the Quad-spectrum?:
+--------------------
+GR FE
+LINES _3
+QUADRATURE-SPECTRUM _1 _2 _4
+--------------------
+WEB HELP SPECTRUM
+--------------------

@@ -1,0 +1,8 @@
+----- <~datalist\PERIODIC.top> PERIODIC.DAT
+ 
+PERIODIC.DAT
+ 
+View     <xcl: LIST PERIODIC.DAT>
+Load     <x2cl: SKIP 25; READ PERIODIC.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\PERIODIC.DAT>
+ 

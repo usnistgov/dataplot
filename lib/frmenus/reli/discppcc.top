@@ -1,0 +1,58 @@
+-----<~reli\discppcc.top> PPCC Plots: Discussion
+
+Fitting using the PPCC Plot/Probability Plot Method
+
+Probability Plot Correlation Coefficient (PPCC) Plot/
+Probability Plot Method
+
+This method is based on the following two ideas:
+
+   1) A useful goodness-of-fit measure of a distribution
+      to a set of data is the straightness of the
+      probability plot.
+
+      The probability plot is a plot of the quantiles of
+      the data against the quantiles of the theoretical
+      distribution.
+
+   2) A useful measure of the straightness of the
+      probability plot is the correlation coefficient
+      of the points on that 
+
+Estimation Procedure for Location-Scale Distributions
+
+If the distribution only has location and scale parameters,
+we generate the probability plot.  The slope and intercept
+of the line fit to the probability plot provide estimates
+for the location and scale parameters (Dataplot probability
+plots are designed so that this is in fact valid) and the
+correlation coefficient provides a goodness-of-fit measure.
+
+
+Estimation Procedure for Shape-Location-Scale Distributions
+
+If the distribution has a shape parameter, we first generate
+a PPCC plot to estimate the value of the shape parameter.
+
+For a range of values of the shape parameter, a probability
+plot is generated and the corresponding correlation coefficient
+is calculated.  The PPCC plot contains the computed correlation
+coefficients on the Y axis and the values for the shape parameter
+on the X axis.  The optimal value of the shape parameter
+corresponds to the maximum PPCC value.  It can be useful to
+perform two iterations of the PPCC plot.  The first is used to
+cover a broad range of parameter values.  This can be followed
+with a PPCC plot using a finer grid to obtain a more accurate
+estimate of the optimal shape parameter.
+
+After the estimate of the shape parameter is determined, a
+probability plot is generated to obtain estimates for the
+location and scale parameters.
+
+Further Discussion:
+   NIST/SEMATECH Handbook              <xcl: web handbook ppcc plot>
+   Advantages of the PPCC Plot         <~reli\ppccadva.top>
+   Disadvantages of the PPCC Plot      <~reli\ppccdisa.top>
+   Kolmogorov-Smirnov Alternative      <~reli\discks.top>
+   Extension to Two Shape Parameters   <~reli\ppcc2sha.top>
+

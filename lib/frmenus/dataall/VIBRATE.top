@@ -1,0 +1,8 @@
+----- <~dataall\VIBRATE.top> VIBRATE.DAT
+
+VIBRATE.DAT
+
+View     <xcl: LIST VIBRATE.DAT>
+Load     <xcf: ~dataload/VIBRATE.DP>
+Print    <xccl: printfile C:\DATAPLOT\VIBRATE.DAT>
+

@@ -1,0 +1,69 @@
+This is file ksmak.men--Kolmogorov-Smirnov Test for Gompertz-Makeham
+ 
+--------------------
+ 1. Kolmogorov-Smirnov Test for Gompertz-Makeham Distribution
+ 2. GOMPERTZ MAKEHAM KOLMOGROV-SMIRNOV GOODNESS OF FIT Y
+ 3.
+ 4. Your data can be either ungrouped (a single
+ 5. response variable) or grouped (a bin counts
+ 6. variable and a bin mid-points variable).
+ 7. For ungrouped data, a Kolmogorov-Smirnov
+ 8. goodness-of-fit test is performed.  For grouped
+ 9. data, a chi-square goodness-of-fit test is performed.
+10.
+11. This menu computes the Meeker-Escobar
+12. parameterization with two shape parameters.
+13. Dataplot supports two additional
+14. parameterizations with 3 shape parameters
+15. (click on HELP for details).
+16.
+17. Response (or Bin Counts) Variable:
+17. @CE 1 0 42 50 ? gui-variable
+18. Optional Bin Mid-Points Variable:
+18. @CE 2 0 42 50 ? gui-variable
+19.
+20. Value of Location Parameter:
+20. @CE 3 0 42 50 ?
+21. Value of Scale Parameter:
+21. @CE 4 0 42 50 ?
+22. Value of Shape Parameter (zeta):
+22. @CE 5 0 42 50 ?
+23. Value of Shape Parameter (eta):
+23. @CE 6 0 42 50 ?
+24.
+25. Minimum frequency for chi-square (default=5):
+25. @CE 7 0 42 50 ?
+26.
+27. Subset/Except/For Specification:
+28. @CE 8 0 1 50 *
+29.
+30.
+31. Compute Kolmogorov-Smirnov Gompertz-Makeham Test?
+--------------------
+GR FE
+SET GOMPERTZ MAKEHAM DEFINITION REPARAMETERIZED MEEKER
+LET ZETA = _5
+LET ETA = _6
+LET ICASE = 0
+@IF 2 0 LET ICASE = 1
+IF ICASE = 0
+   DELETE KSLOC KSSCALE
+   LET KSLOC = _3
+   LET KSSCALE = _4
+   LET STRING ZZZZCOMM = KOLMOGOROV-SMIRNOV
+   LET STRING ZZZZARGS = _1 _8
+ELSE
+   DELETE CHSLOC CHSSCALE
+   LET CHSLOC = _3
+   LET CHSSCALE = _4
+   LET MINSIZE = 5
+   LET MINSIZE = _7
+   DELETE ZZZZY ZZZZXLOW ZZZZXUP
+   LET ZZZZY ZZZZXLOW ZZZZXUP = COMBINE FREQUENCY TABLE _1 _2 _8
+   LET STRING ZZZZCOMM = CHI-SQUARE
+   LET STRING ZZZZARGS = ZZZZY ZZZZXLOW ZZZZXUP
+END OF IF
+GOMPERTZ MAKEHAM ^ZZZZCOMM GOODNESS OF FIT ^ZZZZARGS
+--------------------
+WEB HELP KOLMOGOROV SMIRNOV GOODNESS OF FIT
+--------------------

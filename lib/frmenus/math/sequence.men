@@ -1,0 +1,35 @@
+This is file sequence.men--Generate a sequence
+ 
+--------------------
+ 1. Sequence
+ 2. LET Y = SEQUENCE 1 1 100
+ 3.
+ 4. There are 2 common types of sequences.  The
+ 5. first is simply a start incremented by equal values such as:
+ 6.    -3 -2 -1 0 1 2 3
+ 7. The other is similar to the above except that each value is
+ 8. repeated more than once.  For example:
+ 9.   -3 -3 -3 -2 -2 -2 -1 -1 -1 0 0 0
+10.
+11. Start value (a real number):
+11. @CE 1 0 33 50 ?
+12. Stop value (any real number):
+12. @CE 2 0 33 50 ?
+13. Increment (any real number):
+13. @CE 3 0 33 50 ?
+14. Repeat factor (defaults to 1):
+14. @CE 4 0 33 50 *
+15. Variable to store the sequence:
+15. @CE 5 0 33 50 ? gui-none
+16.
+17. Subset/Except/For Specification:
+18. @CE 6 0 1 50 *
+19.
+20.
+21. Generate the Sequence?:
+--------------------
+GR FE
+LET _5 = SEQUENCE _1 _4 _3 _2  _6
+--------------------
+WEB HELP SEQUENCE
+--------------------

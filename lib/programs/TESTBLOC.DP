@@ -1,0 +1,7 @@
+let y = data 100 200 300 400 500 600 700 800 900 1000 1100
+let x = data 91 91 92 92 92 92 93 93 93 93 93
+let tag = data 1 1 1 1 2 2 1 2 3 4 4
+char mapping exact
+char 1 2 3 4 5
+lines bl bl bl bl bl
+block plot y x tag

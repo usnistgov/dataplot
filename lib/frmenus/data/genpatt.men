@@ -1,0 +1,26 @@
+This is file genpatt.men--Generate a Pattern
+ 
+--------------------
+1. Generate a Pattern
+2. LET Y = PATTERN <list> <SUBSET/EXCEPT qualification>
+3.
+4. User-defined list of numbers:
+5. @CE 1 0 1 50 ?
+6.
+7. Name of Output Variable:
+7. @CE 2 0 40 50 ?
+8.
+9. Subset/Except/For Specification:
+10. (Note--the FOR specification is very common
+11.        in this command if one wishes to repeat
+12.        the pattern a large number of times)
+13. @CE 3 0 1 50 ?
+14.
+15.
+16. Generate the Pattern?
+--------------------
+AN FE
+LET _2 = PATTERN _1 _3
+--------------------
+WEB HELP PATTERN
+--------------------

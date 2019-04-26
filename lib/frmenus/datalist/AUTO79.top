@@ -1,0 +1,8 @@
+----- <~datalist\AUTO79.top> AUTO79.DAT
+ 
+AUTO79.DAT
+ 
+View     <xcl: LIST AUTO79.DAT>
+Load     <x2cl: SKIP 25; READ AUTO79.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\AUTO79.DAT>
+ 

@@ -1,0 +1,22 @@
+This is file sample.men--Compute number of elements of a variable
+ 
+--------------------
+ 1. Size
+ 2. LET A = SIZE Y
+ 3.
+ 4. Variable for which to compute the number of elements:
+ 4. @CE 2 0 33 50 ? gui-variable
+ 5. Parameter to store the number of elements:
+ 5. @CE 1 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -10 50 *
+ 9.
+10.
+11. Compute the Number of Elements?:
+--------------------
+GR FE
+LET _1 = SIZE  _2 _3
+--------------------
+WEB HELP SIZE
+--------------------

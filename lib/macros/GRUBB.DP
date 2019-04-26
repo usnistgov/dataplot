@@ -1,0 +1,120 @@
+. This is Dataplot macro   LEVENE.DP
+. Purpose--Carry out Grubb's Test for Outliers
+. Input --Y        = vector of observations
+. Output--statval  = value of Grubb's statistic
+.         statvalc = cdf value (0.0 to 1.0) of statval
+.                    (values larger that .95 => signficance)
+.         outlier = outlying value (= min or max)
+.
+feedback off
+.
+. Step 1--Compute the test statistic
+.
+let n = number y
+let nm2 = n-2
+let min = minimum y
+let max = maximum y
+let mean = mean y
+let s = sd y
+let ratio1 = (mean - min)/s
+let ratio2 = (max - mean)/s
+.
+let statval = ratio1; let possible = min
+if ratio2 > ratio1
+   let statval = ratio2; let possible = max
+end if
+.
+let q = (statval*sqrt(n)/(n-1))**2
+let t = sqrt((q/(1-q))*(n-2))
+let t2 = -t
+let nm2 = n-2
+let cdf = tcdf(t2,nm2)
+let alpha = 2*n*cdf
+let statvalc = 1-alpha
+let qsave = q
+let tsave = t
+let cdfsave = cdf
+.
+. Step 2--Compute percenpoints values from the reference t distribution
+.
+let cutoff0 = 0
+.
+let alpha = .50
+let p2 = 1 - alpha/(2*n)
+let t = tppf(p2,nm2)
+let cutoff50 = ((n-1)/sqrt(n))*sqrt(t*t/(n-2+t*t))
+.
+let alpha = .25
+let p2 = 1 - alpha/(2*n)
+let t = tppf(p2,nm2)
+let cutoff75 = ((n-1)/sqrt(n))*sqrt(t*t/(n-2+t*t))
+.
+let alpha = .10
+let p2 = 1 - alpha/(2*n)
+let t = tppf(p2,nm2)
+let cutoff90 = ((n-1)/sqrt(n))*sqrt(t*t/(n-2+t*t))
+.
+let alpha = .05
+let p2 = 1 - alpha/(2*n)
+let t = tppf(p2,nm2)
+let cutoff95 = ((n-1)/sqrt(n))*sqrt(t*t/(n-2+t*t))
+.
+let alpha = .01
+let p2 = 1 - alpha/(2*n)
+let t = tppf(p2,nm2)
+let cutoff99 = ((n-1)/sqrt(n))*sqrt(t*t/(n-2+t*t))
+.
+. Step 3--Write everything out
+.
+write " "
+write "           _________________________"
+write " "
+write "           Grubb's Test for Outliers"
+write "            (Assumption: Normality)"
+write "                CALL GRUBB.DP"
+write "           _________________________"
+set write decimals 6
+write " "
+write " 1. Statistics"
+write "       Number of Observations = ^n"
+write "       Minimum                = ^min"
+write "       Mean                   = ^mean"
+write "       Maximum                = ^max"
+write "       Standard Deviation     = ^s"
+write " "
+write "       Grubb's Test Statistic = ^statval"
+.
+write " "
+write " 2. Percent Points of the Reference Distribution"
+write "    for Grubb's Test Statistic:"
+write "       0         % Point:   ^cutoff0"
+write "       50        % Point:   ^cutoff50"
+write "       75        % Point:   ^cutoff75"
+write "       90        % Point:   ^cutoff90"
+write "       95        % Point:   ^cutoff95"
+write "       99        % Point:   ^cutoff99"
+write "       99.9      % Point:   ^cutoff999"
+write " "
+let cdf2 = 100*statvalc
+let cdf2 = round(cdf2,6)
+write "       ^cdf2  % Point:   ^statval"
+.
+write " "
+write " 3. Conclusion (at the 5% level):"
+if statval < cutoff95
+   write "       There are no outliers."
+end if
+if statval >= cutoff95
+   write "       There exists an outlier."
+   let outlier = possible
+   write "       The outlier = ^outlier"
+end if
+write " "
+.
+. Step 4--Do housekeeping--delete intermediate parameters and variables
+.
+delete cutoff0 cutoff50 cutoff75 cutoff90 cutoff95 cutoff99 cutof999
+delete n nm2 min max mean s ratio1 ratio2 alpha p2  possible
+delete q t t2 cdf junk
+.
+feedback on

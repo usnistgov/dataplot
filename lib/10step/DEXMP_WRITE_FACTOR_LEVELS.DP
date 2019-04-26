@@ -1,0 +1,134 @@
+. This is dataplot macro     dexmp_write_factor_levels.dp      10/29/18
+. Purpose: Write out the factor levels for the dexmp.dp (and dexsp.dp) macros
+. Date: 10/29/18
+. Note: This routine is called by   dexmp.dp (and also by dexsp.dp)
+. Input:
+.    k        (parameter) = number of factors
+.    xplott, yplot, tagplot (vectors0 from previous dex mean plot
+. Input:
+.    k                      (parameter) = number of factors
+.    xplott, yplot, tagplot (vectors)   = plot output vectors from previous dex mean plot
+.    numlevva               (vector)    = number of levels of each factor
+.
+.
+. Output:
+.    Horzontal axis tic annotation gets wrrten out on an existing plot
+.    Note: When number of levels is moderate or large,
+.          then an abbreviated annotation will be written out.
+.
+. -----start point-----
+.
+let bugswwfl = 0
+. let pausesw = 1
+.
+if bugswwfl = 1
+   print " "; print " "; print "At beginning of dexmp_write_factor_levels.dp"
+   print xplot yplot tagplot subset tagplot 1 to k
+   if pausesw = 1; pause; end if
+   print "k = ^k"
+   if pausesw = 1; pause; end if
+end if
+.
+let yp = 18
+just center; hw 2 1
+.
+loop for jfact = 1 1 k
+   .
+   . -----Step 1: Form the annotation strings (if numlevfa >= 5, then smaller than numlevfa)-----
+   .
+   if bugswwfl = 1
+      print " "; print " "; print "======Step 1: jfact = ^jfact======";
+      print "At (dexmp_write_factor_levels.dp, step 1): form annotation strings"
+      if pausesw = 1; pause; end if
+   end if
+   .
+   delete xpv indexv stoutv numlevfa
+   let xpv = xplot
+   retain xpv subset tagplot ^jfact
+   .
+   if bugswwfl = 1; print xpv
+      if pausesw = 1; pause; end if
+   end if
+
+   let numlevfa = number xpv
+   let indexv = 1 1 numlevfa
+   .
+   if bugswwfl = 1; print "numlevfa = ^numlevfa"
+      if pausesw = 1; pause; end if
+      print xpv indexv
+      if pausesw = 1; pause; end if
+   end if
+   .
+   if numlevfa =  1; let string stoutv = 1  ;                                                 end if
+   if numlevfa =  2; let string stoutv = - +;                                                 end if
+   if numlevfa =  3; let string stoutv = - 0 +;                                               end if
+   if numlevfa =  4; let string stoutv = 1 2 3 4;                                             end if
+   if numlevfa =  5; let string stoutv = 1 3 5;     retain xpv indexv subset indexv 1 3 5;    end if
+   if numlevfa =  6; let string stoutv = 1 . . 6;   retain xpv indexv subset indexv 1 3 4 6;  end if
+   if numlevfa =  7; let string stoutv = 1 3 5 7;   retain xpv indexv subset indexv 1 3 5 7;  end if
+   if numlevfa =  8; let string stoutv = 1 . . 8;   retain xpv indexv subset indexv 1 4 5 8;  end if
+   if numlevfa =  9; let string stoutv = 1 5 9;     retain xpv indexv subset indexv 1 5 9;    end if
+   if numlevfa = 10; let string stoutv = 1 4 7 10;  retain xpv indexv subset indexv 1 4 7 10; end if
+   if numlevfa = 11; let string stoutv = 1 6 11;    retain xpv indexv subset indexv 1 6 11;   end if
+   if numlevfa = 12; let string stoutv = 1 5 8 12;  retain xpv indexv subset indexv 1 5 8 12; end if
+   if numlevfa = 13; let string stoutv = 1 7 13;    retain xpv indexv subset indexv 1 7 13;   end if
+   if numlevfa = 14; let string stoutv = 1 5 10 14; retain xpv indexv subset indexv 5 10 14;  end if
+   if numlevfa = 15; let string stoutv = 1 8 15;    retain xpv indexv subset indexv 1 8 15;   end if
+   if numlevfa = 16; let string stoutv = 1 . . 16;  retain xpv indexv subset indexv 1 8 9 16; end if
+   if numlevfa >= 17;
+      let evenodd = mod(numlevfa,2)
+      if evenodd = 1
+         let midzz = (numlevfa + 1)/2
+         let string stoutv = 1 ^midzz ^numlevfa
+         retain xpv indexv subset indexv 1 ^midzz ^numlevfa
+      end if
+      if evenodd = 0
+         let midzz = (numlevfa)/2
+         let midzzm = midzz-1
+         let midzzp = midzz+1
+         let string stoutv = 1 ^midzzm ^midzzp ^numlevfa
+         retain xpv indexv subset indexv 1 ^midzzm ^midzzp ^numlevfa
+      end if
+   end if
+   .
+   . -----Step 2: Write out the strings-----
+   .
+   if bugswwfl = 1
+      print " "; print " "; print "At (dexmp_write_factor_levels.dp, step 2)"
+      print "jfact = ^jfact"
+      print xpv indexv
+      if pausesw = 1; pause; end if
+   end if
+   .
+   let nstoutv = number of words stoutv
+   if stoutv not exist
+      print "Error-stoutv not exists
+      if pausesw = 1; pause; end if
+   end if
+   .
+   if bugswwfl = 1
+      print "stoutv = ^stoutv"
+      print "nstoutv = ^nstoutv"
+      if pausesw = 1; pause; end if
+   end if
+
+   loop for jword = 1 1 nstoutv
+      let stout = string word stoutv ^jword
+      let xp = xpv(^jword)
+      color blue;
+      if colorl exists
+         let ncolorl = number of words colorl
+         if jword <= ncolorl; let stcolorl = string word colorl ^jword; color ^stcolorl; end if
+      end if
+      moveds xp yp; text ^stout                  ;. <=======================write text
+   end loop
+end loop
+.
+. -----Step 99: Finish up-----
+.
+if bugswwfl = 1
+   print " "; print " "; print "At end of dexmp_write_factor_levels.dp"
+   if pausesw = 1; pause; end if
+end if
+
+

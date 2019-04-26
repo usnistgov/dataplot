@@ -1,0 +1,20 @@
+----- <~prob\plotcdf.top> Plot cdf's
+
+Plot Cumulative Distribution Functions
+
+These menus are used to plot cumulative distribution
+functions.
+
+NIST/SEMATECH Handbook                    <xcl: web handbook probability functions>
+
+Continuous Distributions
+   No Shape Parameters (e.g., Normal)           <~prob\plocscdf.top>
+   One Shape Parameter (A-L) (e.g., Lognormal)  <~prob\psh1acdf.top>
+   One Shape Parameter (M-Z) (e.g., Weibull)    <~prob\psh1bcdf.top>
+   Two Shape Parameters (e.g., Beta)            <~prob\psha2cdf.top>
+   Three or More Shape Parameters               <~prob\psha3cdf.top>
+
+Mixture Distributions                           <~prob\pmixcdf.top>
+
+Discrete Distributions                          <~prob\pdisccdf.top>
+

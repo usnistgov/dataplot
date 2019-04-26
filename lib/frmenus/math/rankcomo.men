@@ -1,0 +1,24 @@
+This is file rankcomo.men--Compute rank comovement of a variable
+ 
+--------------------
+ 1. Rank Comovement
+ 2. LET A = RANK COMOVEMENT Y1 Y2
+ 3.
+ 4. First variable for which to compute the rank comovement:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Second variable for which to compute the rank comovement:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Parameter to store the rank comovement:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -15 50 *
+10.
+11.
+12. Compute the Rank Comovement?:
+--------------------
+GR FE
+LET _3 = RANK COMOVEMENT  _1 _2 _4
+--------------------
+WEB HELP RANK COMOVEMENT
+--------------------

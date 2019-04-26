@@ -1,0 +1,8 @@
+----- <~datalist\FULLER2.top> FULLER2.DAT
+ 
+FULLER2.DAT
+ 
+View     <xcl: LIST FULLER2.DAT>
+Load     <x2cl: SKIP 25; READ FULLER2.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\FULLER2.DAT>
+ 

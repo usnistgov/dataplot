@@ -1,0 +1,39 @@
+. This is dataplot macro     dexarrow.dp     11/14/18
+. Purpose: Draw an up, down, or value arrow on a dex 10-step analayis plot
+.          + also draw a horizontal line at the value
+. Date: 11/14/18
+.
+. -----start point-----
+.
+arrow color red; arrow pattern solid; arrow thickness 0.2;
+region fill on; region fill color red;
+hw 1 2.5
+hw 0.5 1.5
+hw 0.75 1.5
+.
+if stbest = "up"
+   let xpzz = 17
+   let yptopz = 72; if yptop exists; let yptopz = yptop; end if
+   let ypbotz = yptopz - 4
+   arrow xpzz ypbotz xpzz yptopz
+end if
+.
+if stbest = "down"
+   let xpzz = 17
+   let yptopz = 44; if yptop exists; let yptopz = yptop; end if
+   let ypbotz = yptopz - 4
+   arrow xpzz yptopz xpzz ypbotz
+end if
+.
+if stbest <> "up" and stbest <> "down"
+   let xpleftz = 15.2; if xpleft exists; let xpleftz = xpleft; end if
+   let xprigz = xpleftz + 4
+
+   probe fy1min; let fy1min = probeval
+   probe fy1max; let fy1max = probeval
+   let ratiozz = (^stbest-fy1min) / (fy1max-fy1min)
+   let screenzz = 20 + ratiozz*(90-20)
+   lines dotted; line color blue; drawsdsd 15 ^stbest 85 ^stbest; lines bl; line color blue
+   arrow xprigz screenzz xpleftz screenzz
+end if
+.

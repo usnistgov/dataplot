@@ -1,0 +1,82 @@
+----- <~dp\guiimpl.top> Implementation
+ 
+Implementation
+ 
+The graphical user interface (GUI) for Dataplot
+was developed using the Tcl/Tk and Expect toolkits.
+Bob Lipman was the author of the Tcl/TK and Expect
+scripts used by Dataplot.
+
+Tcl was developed by John Osterhout to add scripting
+capabilities to existing programs.  Tk was a later
+extension to Tcl that allowed graphical interfaces
+to be developed using a scripting language (as 
+oppossed to using a compiled language such as C or
+Fortran).  Expect is utility developed by Don Libes
+of NIST.
+
+The graphical interface is primarily written using
+Tcl/Tk scripts.  Expect is used to handle the
+communications between Dataplot and the Tcl/Tk scripts.
+If Expect is not available, as is the case for
+Windows 95 platforms, an alternative method of
+communication is used that relies soley on Tcl/Tk.
+
+The contents of the menus are contained in ASCII
+files.  This allows for easy modification and
+development.  This is discussed in more detail under
+the "Customizing the Interface" menu.
+
+The advantages of using the Tcl/Tk and Expect
+utilities are:
+
+  1) The Tcl/Tk and Expect utilities are both freely
+     available.
+
+  2) Tcl/Tk provides portability between Unix and PC
+     platforms.  Dataplot uses the same version of
+     the Tcl/Tk and Expect scripts for Unix and PC
+     platforms.
+
+  3) Using a scripting language, as oppossed to writing
+     C code, provided for faster development and 
+     modification of the GUI design.
+
+  4) The Tcl/TK scripts are fundamentally independent of
+     the Dataplot code.  For the original implementation
+     of the GUI, we made only one relatively minor change
+     to the Dataplot source code in order to implement the
+     graphical interface.  We have since added a few minor
+     code updates to Dataplot to implement certain 
+     desirable features to the GUI.  The main point here
+     was that we were able to add significant developments
+     to the GUI without modifying the underlying Dataplot
+     source code.
+
+The disadvantages of using Tcl/Tk and Expect are:
+
+  1) Tcl/Tk and Expect have to be installed separately.
+     However, the installation of Tcl/Tk is fairly
+     automatic on the PC.  Many Unix sites already 
+     provide these utilities.  If your site does not,
+     you may need assistance from your local system
+     adminstrators to get them installed.
+
+     Some care needs to be taken that an appropriate 
+     version of Tcl/Tk is installed.  Currently, version
+     8.0 of Tcl/Tk is required.
+
+  2) As a scripting language, there is some performance
+     loss compared to using built-in C or C++ code.
+     However, for current hardware, the Tcl/Tk performance
+     is actually quite good.  If you are running Dataplot
+     on some older, slower hardware, you may want to
+     stick with the command line version.
+
+  3) The decoupling of the GUI from the underlying
+     Dataplot code has significant advantages.  However
+     it does have a few drawbacks as well.  Specifically,
+     error checking menu inputs isn't as easy as if the
+     GUI were incorporated directly into the Dataplot
+     code.
+

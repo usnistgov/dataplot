@@ -1,0 +1,489 @@
+. This is Dataplot macro file    CONFOUND.DP
+. Purpose--Compute confounding structure for  SELECTED
+.          2-level factorial designs as formed
+.          via Box, Hunter, & Hunter, page 410
+.
+. Input--k (parameter) = number of factors
+.        n (parameter) = total number of observations in y
+.
+. Output--(n-1) strings con.. which contain the dominant counfounding, and
+.         (n-1) strings cop.. which contain other confounding info
+.
+.         conxxx: when the n-based full factorial analysis says xxx,
+.                 what is the single lowest order k-based term that xxx should
+.                 be translated into?
+.                 (for full factorial designs, this will be itself--e.g., 2**5)
+.         copxxx: when the n-based full factorial analysis says xxx,
+.                 what is the additive confounding structure for xxx
+.                 involving all main effects and all k-based 2-term interactions?
+.                 If the confounding structure involves no main effects
+.                 and no 2-term interactions, then map xxx onto itself.
+.
+.         **Danger: if the design is in fact not as in BHH,
+.                   then the confounding structure in steps
+.                   6, 7, etc. will be incorrect
+
+.         **Danger: not all designs in BHH are included below.
+.                   if not yet included, then Youden + yates list + right-confounding
+.                   will not be nice
+.
+.         *** bug *** bug *** bug *** danger *** danger *** danger ***
+.             confound.dp will fail
+.             for n = 64 and higher (e.g., 2**6 , 2**(7-1), 2**7, 2**(7-1), 2**(7-2), etc.)
+.             because n = 64 ==> 2**6 ==> 6 digit tag ==> 9 character name
+.             when combined with conxxxxxx and copxxxxxx because of
+.             dataplot's restriction that variable/parameter/string names
+.             may not exceed 8 characters.
+.         *** bug *** bug *** bug ***
+.
+. Date: January 2001
+. Updated: July 2003 n = 8 & k = 5;  n = 16 & k = 6
+. Note--Do NOT use the name TAG.. anywhere else in the calling routine     ?????
+.       or other subroutines.     ?????
+.
+. Example: 2**(7-4)
+.   if k = 7; . if n = 8
+.      read string con1 con2 con3
+.      1 2 3
+.      read string con12 con13 con23 con123
+.      4 5 6 7
+.
+.      read string cop1 cop2 cop3
+.      1+24+35+67 2+14+36+57 3+15+26+47
+.      read string cop12 cop13 cop23 cop123
+.      4+12+56+37 5+13+46+17 6+23+45+17 7+16+25+34
+.   end if; .end if
+.
+. -----start point-----
+.
+let pausecon = 0
+if pausecon = 1
+   feedback on
+   write " "
+   write "At the Beginning of CONFOUND.DP . . ."
+   write " "
+   write "k,n = ^k ^n"
+   if n >= 64
+      print "   *****BUG: confound.dp  yeilds"
+      print "             incorrect results when n >= 64*****"
+   end if
+   pause
+end if
+.
+let string stmacro = confound.dp
+let string stall = k n
+call checkinput.dp
+.
+. coming from alan:      let con cop = confound k n
+.
+. -----Make sure the skip for read is set to 0-----
+.
+skip 0
+.
+. ------------ n = 4 ------------
+
+. -----(k = 2, n = 4):  2**2-----
+.
+if k = 2; if n = 4
+      read string con1 con2 con12
+      1 2 12
+
+
+      read string cop1 cop2 cop12
+      1 2 12
+end if; end if
+.
+. -----(k = 3, n = 4):  2**(3-1)-----
+.
+if k = 3; if n = 4
+      read string con1 con2 con12
+      1 2 3
+
+      read string cop1 cop2 cop12
+      1+23 2+13 3+12
+end if; end if
+.
+. ------------ n = 8 ------------
+.
+. -----(k = 3, n = 8):  2**3-----
+.
+if k = 3; if n = 8
+      read string con1 con2 con3
+      1 2 3
+      read string con12 con13 con23 con123
+      12 13 23 123
+
+      read string cop1 cop2 cop3
+      1 2 3
+      read string cop12 cop13 cop23 cop123
+      12 13 23 123
+end if; end if
+.
+. -----(k = 4, n = 8):  2**(4-1)-----
+.
+if k = 4; if n = 8
+   read string con1 con2 con3
+   1 2 3
+   read string con12 con13 con23 con123
+   12 13 14 4
+
+   read string cop1 cop2 cop3
+   1 2 3
+   read string cop12 cop13 cop23 cop123
+   12+34 13+24 14+23 4
+end if; end if
+.
+. -----(k = 5, n = 8):  2**(5-2)-----
+.
+if k = 5; if n = 8
+   read string con1 con2 con3
+   1 2 3
+   read string con12 con13 con23 con123
+   4 5 23 25
+
+   read string cop1 cop2 cop3
+   1+24+35 2+14 3+15
+   read string cop12 cop13 cop23 cop123
+   4+12 5+13 23+45 25+34
+end if; end if
+.
+. -----(k = 6, n = 8):  2**(6-3)-----
+.
+if k = 6; if n = 8
+   read string con1 con2 con3
+   1 2 3
+   read string con12 con13 con23 con123
+   4 5 6 16
+
+   read string cop1 cop2 cop3
+   1+24+35 2+14+36 3+15+26
+   read string cop12 cop13 cop23 cop123
+   4+12+56 5+13+46 6+23+45 16+25+34
+end if; end if
+.
+. -----(k = 7, n = 8):  2**(7-4)-----
+.
+if k = 7; if n = 8
+   read string con1 con2 con3
+   1 2 3
+   read string con12 con13 con23 con123
+   4 5 6 7
+
+   read string cop1 cop2 cop3
+   1+24+35+67 2+14+36+57 3+15+26+47
+   read string cop12 cop13 cop23 cop123
+   4+12+56+37 5+13+46+17 6+23+45+17 7+16+25+34
+end if; end if
+.
+. ------------ n = 16 ------------
+.
+. -----(k = 4, n = 16):  2**4-----
+.
+if k = 4; if n = 16
+   read string con1 con2 con3 con4
+   1 2 3 4
+   read string con12 con13 con14 con23 con24 con34
+   12 13 14 23 24 34
+   read string con123 con124 con134 con234 con1234
+   123 124 134 234 1234
+
+   read string cop1 cop2 cop3 cop4
+   1 2 3 4
+   read string cop12 cop13 cop14 cop23 cop24 cop34
+   12 13 14 23 24 34
+   read string cop123 cop124 cop134 cop234 cop1234
+   123 124 134 234 1234
+end if; end if
+.
+. -----(k = 5, n = 16):  2**(5-1)-----
+.
+if k = 5; if n = 16
+feedback on
+echo on
+   read string con1 con2 con3 con4
+   1 2 3 4
+pause
+   read string con12 con13 con14 con23 con24 con34
+   12 13 14 23 24 34
+pause
+   read string con123 con124 con134 con234 con1234
+   45 35 25 15 5
+pause
+
+   read string cop1 cop2 cop3 cop4
+   1 2 3 4
+pause
+   read string cop12 cop13 cop14 cop23 cop24 cop34
+   12 13 14 23 24 34
+pause
+   read string cop123 cop124 cop134 cop234 cop1234
+   45 35 25 15 5
+pause
+print con1234 cop1234
+pause
+end if; end if
+.
+. -----(k = 6, n = 16):  2**(6-2)-----
+.
+if k = 6; if n = 16
+delete con1 con2 con3 con4
+delete con123 con124 con134 con234 con1234
+   read string con1 con2 con3 con4
+   1 2 3 4
+   read string con12 con13 con14 con23 con24 con34
+   12 13 14 23 24 34
+   read string con123 con124 con134 con234 con1234
+   5 124 134 6 16
+
+   read string cop1 cop2 cop3 cop4
+   1 2 3 4
+   read string cop12 cop13 cop14 cop23 cop24 cop34
+   12+35 13+25 14+56 23+15+46 24+36 34+26
+   read string cop123 cop124 cop134 cop234 cop1234
+   5 124 134 6 45
+end if; end if
+.
+. -----(k = 7, n = 16):  2**(7-3)-----
+.
+if k = 7; if n = 16
+   read string con1 con2 con3 con4
+   1 2 3 4
+   read string con12 con13 con14 con23 con24 con34
+   12 13 14 23 24 34
+   read string con123 con124 con134 con234 con1234
+   7 124 6 5 15
+
+   read string cop1 cop2 cop3 cop4
+   1 2 3 4
+   read string cop12 cop13 cop14 cop23 cop24 cop34
+   12+37+56 13+27+46 14+36+57 15+26+47 16+25+34 17+23+45
+   read string cop123 cop124 cop134 cop234 cop1234
+   7 124 6 5 15+26+47
+end if; end if
+.
+. -----(k = 8, n = 16):  2**(8-4)-----
+.
+if k = 8; if n = 16
+   read string con1 con2 con3 con4
+   1 2 3 4
+   read string con12 con13 con14 con23 con24 con34
+   12 13 14 23 24 34
+   read string con123 con124 con134 con234 con1234
+   7 8 6 5 15
+
+   read string cop1 cop2 cop3 cop4
+   1 2 3 4
+   read string cop12 cop13 cop14 cop23 cop24 cop34
+   12+37+48+56 13+27+46+58 14+28+36+57 23+17+45+68 24+18+35+67 34+16+25+78
+   read string cop123 cop124 cop134 cop234 cop1234
+   7 8 6 5 15+26+38+47
+end if; end if
+.
+. /////////////// 2/6/15
+. -----(k = 8, n = 16):  2**(8-4)-----
+.
+if k = 13; if n = 16
+   read string con1 con2 con3 con4
+   1 2 3 4
+   read string con12 con13 con14 con23 con24 con34
+   5 6 7 8 9 10
+   read string con123 con124 con134 con234 con1234
+   11 12 13 xx yy
+
+   read string cop1 cop2 cop3 cop4
+   1+xx+yy 2+xx+yy 3+xx+yy 4+xx+yy
+   read string cop12 cop13 cop14 cop23 cop24 cop34
+   5+xx 6+xx 7+xx 8+xx 9+xx 10+xx
+   read string cop123 cop124 cop134 cop234 cop1234
+   11+xx 12+xx 13+xx xx+yy xx+yy
+end if; end if
+. ////////////////
+.
+. ------------ n = 32 ------------
+.
+. -----(k = 5, n = 32):  2**5-----
+.
+if k = 5; if n = 32
+   read string con1 con2 con3 con4 con5
+   1 2 3 4 5
+   read string con12 con13 con14 con15 con23 con24 con25 con34 con35 con45
+   12 13 14 15 23 24 25 34 35 45
+   read string con123 con124 con125 con134 con135 con145
+   123 124 125 134 135 145
+   read string con234 con235 con245 con345
+   234 235 245 345
+   read string con1234 con1235 con1245 con1345 con2345 con12345
+   1234 1235 1245 1345 2345 12345
+
+   read string cop1 cop2 cop3 cop4 cop5
+   1 2 3 4 5
+   read string cop12 cop13 cop14 cop15 cop23 cop24 cop25 cop34 cop35 cop45
+   12 13 14 15 23 24 25 34 35 45
+   read string cop123 cop124 cop125 cop134 cop135 cop145
+   123 124 125 134 135 145
+   read string cop234 cop235 cop245 cop345
+   234 235 245 345
+   read string cop1234 cop1235 cop1245 cop1345 cop2345 cop12345
+   1234 1235 1245 1345 2345 12345
+end if; end if
+.
+. -----(k = 6, n = 32):  2**(6-1)-----
+.
+if k = 6; if n = 32
+   read string con1 con2 con3 con4 con5
+   1 2 3 4 5
+   read string con12 con13 con14 con15 con23 con24 con25 con34 con35 con45
+   12 13 14 15 23 24 25 34 35 45
+   read string con123 con124 con125 con134 con135 con145
+   123 124 125 134 135 145
+   read string con234 con235 con245 con345
+   234 235 245 345
+   read string con1234 con1235 con1245 con1345 con2345 con12345
+   56 46 36 26 16 6
+
+   read string cop1 cop2 cop3 cop4 cop5
+   1 2 3 4 5
+   read string cop12 cop13 cop14 cop15 cop23 cop24 cop25 cop34 cop35 cop45
+   12 13 14 15 23 24 25 34 35 45
+   read string cop123 cop124 cop125 cop134 cop135 cop145
+   123 124 125 134 135 145
+   read string cop234 cop235 cop245 cop345
+   234 235 245 345
+   read string cop1234 cop1235 cop1245 cop1345 cop2345 cop12345
+   56 46 36 26 16 6
+end if; end if
+.
+. -----(k = 7, n = 32):  2**(7-2)-----
+.
+if k = 7; if n = 32
+   read string con1 con2 con3 con4 con5
+   1 2 3 4 5
+   read string con12 con13 con14 con15 con23 con24 con25 con34 con35 con45
+   12 13 14 15 23 24 25 34 35 45
+   read string con123 con124 con125 con134 con135 con145
+   46 36 47 26 135 27
+   read string con234 con235 con245 con345
+   16 235 17 345
+   read string con1234 con1235 con1245 con1345 con2345 con12345
+   6 456 7 256 156 56
+
+   read string cop1 cop2 cop3 cop4 cop5
+   1 2 3 4 5
+   read string cop12 cop13 cop14 cop15 cop23 cop24 cop25 cop34 cop35 cop45
+   12 13 14 15 23 24 25 34 35+67 45
+   read string cop123 cop124 cop125 cop134 cop135 cop145
+   46 36+57 47 26 135 27
+   read string cop234 cop235 cop245 cop345
+   16 235 17 345
+   read string cop1234 cop1235 cop1245 cop1345 cop2345 cop12345
+   6 456 7 256 156 56+37
+end if; end if
+.
+. -----(k = 9, n = 32):  2**(9-4)----- 11/11/08 CPSC
+.
+if k = 9; if n = 32
+   read string con1 con2 con3 con4 con5
+   1 2 3 4 5
+   read string con12 con13 con14 con15 con23 con24 con25 con34 con35 con45
+   12 13 14 15 23 24 25 34 35 45
+   read string con123 con124 con125 con134 con135 con145
+   59 58 39 57 29 28
+   read string con234 con235 con245 con345
+   56 19 18 17
+   read string con1234 con1235 con1245 con1345 con2345 con12345
+   1234 9 8 7 6 16
+
+   read string cop1 cop2 cop3 cop4 cop5
+   1 2 3 4 5
+   read string cop12 cop13 cop14 cop15 cop23 cop24 cop25 cop34 cop35 cop45
+   12+67 13+68 14+69 15 23+78 24+79 25 34+89 35 45
+   read string cop123 cop124 cop125 cop134 cop135 cop145
+   59 58 39+48 57 29+47 28+37
+   read string cop234 cop235 cop245 cop345
+   56 19+46 18+36 17+26
+   read string cop1234 cop1235 cop1245 cop1345 cop2345 cop12345
+   1234 9 8 7 6 16+27+38+49
+end if; end if
+.
+. -----(k = 10, n = 32):  2**(10-5)-----
+.
+if k = 10; if n = 32
+   read string con1 con2 con3 con4 con5
+   1 2 3 4 5
+   read string con12 con13 con14 con15 con23 con24 con25 con34 con35 con45
+   12 13 14 15 23 24 25 34 35 45
+   read string con123 con124 con125 con134 con135 con145
+   46 36 37 26 27 28
+   read string con234 con235 con245 con345
+   16 17 18 19
+   read string con1234 con1235 con1245 con1345 con2345 con12345
+   6 7 8 9 0   10
+
+   read string cop1 cop2 cop3 cop4 cop5
+   1 2 3 4 5
+   read string cop12 cop13 cop14 cop15 cop23 cop24 cop25 cop34 cop35 cop45
+   12+90 13+80 14+70 15+60 23+89 24+79 25+69 34+78 35+68 45+67
+   read string cop123 cop124 cop125 cop134 cop135 cop145
+   46+57 36+58 37+48 26+59 27+49 28+39
+   read string cop234 cop235 cop245 cop345
+   16+50 17+40 18+30 19+20
+   read string cop1234 cop1235 cop1245 cop1345 cop2345 cop12345
+   6 7 8 9 0   56+47+38+29+10
+end if; end if
+.
+. -----(k = 11, n = 64):  2**(11-5)  Resolution = 4-----
+.
+if k = 11; if n = 64
+   read string con1 con2 con3 con4 con5 con6
+   1 2 3 4 5 6
+   read string con12 con13 con14 con15 con16
+   12 13 14 15 16
+   read string con23 con24 con25 con26 con34 con35 con36 con45 con46 con56
+   23 24 25 26 34 35 36 45 46 56
+   read string con123 con124 con125 con126 con134 con135 con136
+   48 38 78 9 28 135 711
+   read string con145 con146 con156 con234 con235 con236
+   611 511 411 18 235 710
+   read string con245 con246 con256 con345 con346 con356 con456
+   610 510 410 7 89 356 111
+   read string con1234 con1235 con1236 con1245 con1246 con1256
+   8 1235 39 1245 49 59
+   read string con1345 con1346 con1356 con1456
+   17 1346 810 11
+   read string con2345 con2346 con2356 con2456 con3456
+   27 2346 811 10 67
+
+   read string cop1 cop2 cop3 cop4 cop5 cop6
+   1 2 3 4 5 6
+   read string cop12 cop13 cop14 cop15 cop16
+   12+69+1011  13   14   15  16+29
+   cop23 cop24 cop25 cop26
+   23  24  25  26+19
+   read string cop34 cop35 cop36 cop45 cop46 cop56
+   34+57  35+47  36  45+37  46  56
+   read string cop123 cop124 cop125 cop126 cop134 cop135 cop136
+   48  38  78  9  28  135  711
+   read string cop145 cop146 cop156 cop234 cop235 cop236
+   611+910  511  411  18  235  710
+   read string cop245 cop246 cop256 cop345 cop346 cop356 cop456
+   610+911  510  410  7  89  356  111+210
+   read string cop1234 cop1235 cop1236 cop1245 cop1246 cop1256
+   8  1235  39  1245  49  59
+   read string cop1345 cop1346 cop1356 cop1456
+   17  1346  810  11
+   read string cop2345 cop2346 cop2356 cop2456 cop3456
+   27  2346  811  10  67
+end if; end if
+.
+. -----Finish things up-----
+.
+if pausecon = 1
+   write " "
+   write "At the end of CONFOUND.DP . . ."
+   write " "
+   write "k,n = ^k ^n"
+   write "con1 = ^con1"
+   write "cop1 = ^cop1"
+   pause
+end if
+.

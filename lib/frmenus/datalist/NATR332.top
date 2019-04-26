@@ -1,0 +1,8 @@
+----- <~datalist\NATR332.top> NATR332.DAT
+ 
+NATR332.DAT
+ 
+View     <xcl: LIST NATR332.DAT>
+Load     <x2cl: SKIP 25; READ NATR332.DAT Y1 Y2>
+Print    <xccl: printfile C:\DATAPLOT\NATR332.DAT>
+ 

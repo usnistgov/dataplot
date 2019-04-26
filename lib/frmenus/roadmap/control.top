@@ -1,0 +1,21 @@
+----- <~roadmap\control.top> In Control
+
+In Control
+
+Question     : Is a process in statistical control
+               wrt location & variation?
+
+Model        : Y = constant + random error
+
+Input        : 1) a response variable Y
+               2) a variable X (usually hour, day, week, etc.)
+
+Output       : a conclusion (yes/no) wrt the location
+               and variation constancy of a process
+
+Stat Category: Univariate
+
+Primary Tools: 4-plot                 <xemf: ~univ\4plot.men>
+               Xbar Control Chart     <xemf: ~qual\contchar.men>
+               Range Control Chart    <xemf: ~qual\contchar.men>
+

@@ -1,0 +1,8 @@
+----- <~dataload\eva.top> Load Built-in Extreme Value Analysis Data Files
+
+Load Built-in Extreme Value Analysis Data Files
+
+NIST data                                <~dataload\evanist.top>
+Castillo data                            <~dataload\evacast.top>
+Other data                               <~dataload\evaothe.top>
+

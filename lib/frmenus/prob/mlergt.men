@@ -1,0 +1,120 @@
+This is file mlergt.men--Reflected Generalized MLE Estimates
+ 
+--------------------
+ 1. Reflected Generalized Topp Leone MLE Estimates
+ 2. REFLECTED GENERALIZED TOPP LEONE MLE Y
+ 3.
+ 4. Maximum likelihood point estimates for the shape
+ 5. parameters alpha and beta can be obtained for
+ 6. uncensored data.  It is assumed that the lower and
+ 7. upper limit parameters are known.  You can optionally
+ 8. specify the values to use for these limits or you
+ 9. can let Dataplot use the minimum and maximum of the
+10. data (if the data is all within the interval (0,1),
+11. then 0 and 1 will be used as limits).  You can
+12. optionally request to have bootstrap confidence
+13. limits generated for the distribution parameters.
+14.
+15. Response Variable (or frequencies for binned data):
+15. @CE 1 0 42 50 ? gui-variable
+16.
+17. Value for lower limit (optional):
+17. @CE 2 0 42 50 *
+18. Value for upper limit (optional):
+18. @CE 3 0 42 50 *
+19.
+20. Number of bootstrap samples (0 to omit)?
+20. @CE 4 0 42 50 *
+21.
+22. Subset/Except/For Specification:
+23. @CE 5 0 1 50 *
+24.
+25.
+26. Compute Reflected Generalized Topp Leone MLE's?
+--------------------
+GR FE
+DELETE LOWLIMIT UPPLIMIT
+LET LOWLIMIT = _2
+LET UPPLIMIT = _3
+LET NUMBOOT = 0
+@IF 4 0 LET NUMBOOT = _4
+let numboot = min(1000,numboot)
+if numboot > 0
+   bootstrap samples numboot
+   set maximum likelihood percentiles default
+   device 1 font simplex
+   multiplot 2 2
+   multiplot corner coordinates 0 0 100 100
+   multiplot scale factor 2
+   label
+   title case asis
+   label case asis
+   case asis
+   title displacement 2
+   x2label displacement 13
+   x3label displacement 18
+   y1label Parameter Estimate
+   x1label
+   x2label Bootstrap Sample
+   title Bootstrap Plot
+   line color blue red green cyan
+   limits
+   bootstrap reflected generalized topp leone mle plot _1 _5
+   line color black all
+   .
+   delete aloc ascale ashape1 ashape2
+   skip 0
+   read dpst1f.dat aloc ascale ashape1 ashape2
+   y1label
+   x2label
+   title Alpha Parameter
+   let amed = median ashape1
+   let amean = mean ashape1
+   let asd = sd ashape1
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram ashape1
+   title Beta Parameter
+   let amed = median ashape2
+   let amean = mean ashape2
+   let asd = sd ashape2
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram ashape2
+   x3label displacement
+   end of multiplot
+   .
+   let alpha = 0.05
+   let xqlow = alpha/2
+   let xqupp = 1 - alpha/2
+   .
+   let xq = xqlow
+   let sh195low = xq quantile ashape1
+   let xq = xqupp
+   let sh195upp = xq quantile ashape1
+   let xq = xqlow
+   let sh295low = xq quantile ashape2
+   let xq = xqupp
+   let sh295upp = xq quantile ashape2
+   .
+   device 1 font tektronix
+   window corner coordinates 50 0 100 50
+   justification left
+   height 4
+   move 5 70
+   text Confidence Interval for Alpha:
+   move 5 63
+   text (^sh195low,^sh195upp)
+   move 5 50
+   text Confidence Interval for Beta:
+   move 5 43
+   text (^sh295low,^sh295upp)
+   window corner coordinates 0 0 100 100
+   height
+   title
+   label
+end of if
+REFLECTED GENERALIZED TOPP AND LEONE MAXIMUM LIKELIHOOD _1 _5
+--------------------
+WEB HELP RGTPDF
+--------------------

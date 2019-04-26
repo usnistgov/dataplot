@@ -1,0 +1,348 @@
+. This is dataplot macro     dexrightmargin.dp
+. Purpose: Write factors (and levels if available) in right margin (towards the top)
+.          of the plots for the 10-step dex analysis
+. Date: 01/10/14, 6/29/15
+. Input:
+.    k (parameter)                        = number of factors
+.    stx1, stx2, stx3, . . . (strings)    = names of each of the k factors
+.    stx1l, stx2l, stx3l, . . . (strings) = all levels within each factor (optional)
+.    cpperc (parameter)                   = (0,1) switch indicating center point values are given
+.                                           AND (-,+) values are percentages around center point
+.                                           (e.g., Jeff Fong) (opt.)
+.    stcp (string)                        = center point values (optional)
+.
+.    lh     (parameter)  = height of factor levels (optional, default = 1.8)
+.    lw     (parameter)  = width  of factor levels (optional, default = 0.9)
+.
+.    xp0    (parameter)  = horizontal location of labels (optional, default = 86)
+.    yp0    (parameter)  = vertical   location of labels   (optional, default = 88.2)
+.    ypdel  (parameter)  = vertical   increment for successive labels (optional, default = 2)
+.    xpdel  (parameter)  = horizontal indentation for levels (optional, default = 2.9)
+.
+.    prog   (parameter)  = numerical suffix for the calling program
+.                         (for special cases) (optional, default = not exist)
+.    framet (parameter)  = top    frame line (in %) (optional) (default = 90)
+.    frameb (parameter)  = bottom frame line (in %) (optional) (default = 20)
+.
+. -----start point-----
+.
+let bugswdrm = 0
+. let pausesw = 1
+      .
+      if bugswdrm = 1
+         print " "
+         print "--At the beginning of dexrightmargin.dp"
+         print "k: ^k"
+         print stx1 stx2 stx3 stx4 stx5 stx6 stx7 sytx8
+         print stx1l stx2l stx3l stx4l stx5l stx6l stx7l stx8l
+         print colorl
+         if pausesw = 1; pause; end if
+      end if
+      .
+. -----Step 1: Check for missing input values-----
+      .
+      if bugswdrm = 1
+         print " "
+         print "--At (dexrightmargin.dp, step 1): check for missing values"
+         if pausesw = 1; pause; end if
+      end if
+      .
+let string stmacro = dexrightmargin.dp
+.
+set check name output filliben
+feedback save; feedback on
+let iflag = check name k stx1 to stx^k
+feedback restore
+delete xposvec yposvec tag numlevva
+.
+. -----Step 2: Check for pre-set values-----
+      .
+      if bugswdrm = 1
+         print " "
+         print "--At (dexrightmargin.dp, step 2): check for pre-set values"
+         if pausesw = 1; pause; end if
+      end if
+      .
+let lhz = 1.8   ;. changed from 1 to 2 on 4/8/16
+if lh exists; let lhz = lh; end if
+.
+let lwz = 0.9     ;. changed from 0.5 to 1 on 4/8/16
+if lw exists; let lwz = lw; end if
+.
+let xp0z = 86
+if xp0 exists; let xp0z = xp0; end if
+.
+let yp0z = 88.2
+if framet exists; let yp0z = 88.2 - (90 - framet); end if
+if yp0 exists; let yp0z = yp0; end if
+.
+. let xpdelz = 2.9
+. let xpdelz = 4.7  ;. commented out 7/9/18
+let xpdelz = 2.9
+if xpdel exists; let xpdelz = xpdel; end if
+.
+let ypdelz = 2
+if ypdel exists; let ypdelz = ypdel; end if
+.
+. -----Step 3:  prepare to loop through and write out all levels of all factors-----
+      .
+      if bugswdrm = 1
+         print " "
+         print "--At (dexrightmargin.dp, step 3): prepare for looping"
+         if pausesw = 1; pause; end if
+      end if
+      .
+let ypz = yp0z
+.
+let fudge = 1
+let fudge2 = 1
+if k >= 12
+   let fudge = 0.70; . 5/8/17
+   let fudge2 = 0.8
+else if k >= 8 and k <= 11
+   let fudge = 0.75; . inserted 9/25/17 for the j=8 hecht (nist stanford) case
+else if k = 7
+   . let fudge = 0.25 commented out 7/9/18
+   let fudge = .75
+else if k = 6
+   let fudge = 0.5
+end if
+.
+let rmhz = 2
+if textrmh exists; let rmhz = textrmh; end if
+let rmwz = 1.5
+if textrmw exists; let rmwz = textrmw; end if
+.
+loop for jfact = 1 1 k
+   let numlev^jfact = unique x^jfact
+   let numlevva(jfact) = numlev^jfact
+end of loop
+      .
+      if bugswdrm = 1
+         print "--At (dexrightmargin.dp, step 3 mid): xxx"
+         print "numlevva--"
+         print numlevva
+         print "rmhz: ^rmhz, rmwz: ^rmwz"
+         if pausesw = 1; pause; end if
+      end if
+      .
+let numlevfa = maximum numlevva
+call dexgetlevelcoded.dp       ;. <===========================call
+      .
+      if bugswdrm = 1
+         print "--At (dexrightmargin.dp, step 3 mid2): after call to dexgetlevelcoded.dp"
+         print "jfact = ^jfact    numlevfa = ^numlevfa"
+         print "stoutv = ^stoutv"
+         if pausesw = 1; pause; end if
+      end if
+.
+character color blue all
+if colorall exists
+   color ^colorall
+   . delete stjunk; . let stjunk = string word colorall   ;. deleted 6/18/18
+.    character color ^stjunk all                          ;. deleted 6/18/18
+   character color ^colorall all                          ;. fixed 6/18/18
+end if
+character justification left all
+character hw rmhz rmwz all
+.
+. -----Step 4: Determine the max number of levels for any factor-----
+.
+      if bugswdrm = 1
+         print "--At (dexrightmargin.dp, step 4): Determine max number of levels"
+         print "k = ^k"
+         print numlevva
+         if pausesw = 1; pause; end if
+      end if
+.
+let maxnumlv = -999
+loop for jfact = 1 1 k
+   delete nljz; let nljz = numlevva(jfact)
+   if nljz > maxnumlv; let maxnumlv = nljz; end if
+end loop
+      .
+      if bugswdrm = 1
+         print "--At end of (dexrightmargin.dp, step 4)"
+         print "maxnumlv = ^maxnumlv"
+         if pausesw = 1; pause; end if
+      end if
+      .
+delete nwordcol; let nwordcol = number of words colorl
+      .
+      if bugswdrm = 1; print "From near-top of step 5"
+         print "colorl = ^colorl"
+         print "nwordcol = ^nwordcol"
+         if pausesw = 1; pause; end if
+      end if
+      .
+. -----Step 5: Loop though each of the k factors-----
+.
+justification left
+hw rmhz rmwz
+let ypz = ypz + fudge*ypdelz
+.
+loop for jfact = 1 1 k
+   .
+   . ---Step 5.1: write out the factor name for factor ^jfact---
+   .
+         if bugswdrm = 1
+            print " "
+            print "===========(dexrightmargin.dp, Step 5.1, jfact = ^jfact=============="
+            if pausesw = 1; pause; end if
+         end if
+   .
+   let ypz = ypz - fudge*ypdelz
+   move xp0z ypz; text X^jfact: ^stx^jfact        ;. 6/6/16    ;. <=========================write factor name
+   .
+   delete stjunk stjunka stjunkb stjunkc
+   .
+   let numlevfa = numlev^jfact
+         .                                     ;. <===========define # levels of a factor
+         if bugswdrm = 1; print "jfact = ^jfact     numlevfa = ^numlevfa"
+            if pausesw = 1; pause; end if
+         end if
+         .
+   let cppercsw = 0
+   if numlevfa = 2 and cpperc = 1 and stcp exists
+      let stjunk = string word   stcp jfact
+      let string cp = ^stjunk
+      let nlevz = 2
+      let cppercsw = 1
+      let ypcpz = ypz - 1.5*ypdelz
+      just left; hw 2 1; move xpcpz ypcpz; text ^cp; hw rmhz rmwz
+   end if
+   .
+   . ---Step 5.2: write out the factor levels---
+   .
+               if bugswdrm = 1
+                  print " "
+                  print "--At (dexrightmargin.dp, step 5.2): prepare to write out factor levels"
+                  print "jfact = ^jfact     numlevfa = ^numlevfa"
+                 if pausesw = 1; pause; end if
+               end if
+   .
+   let xp2z = xp0z + xpdelz
+   let xp3z = xp2z + 1.3
+   let xp4z = xp3z + 2.0
+   let xpcpz = xp4z + 8
+   .
+   let maxjlev = numlevfa
+   if maxjlev  > 25; let maxjlev = 25; end if
+   .
+   let numwordj = number of words stx^jfact&l
+   .
+   let jlevdone = 0
+   loop for jlev = 1 1 maxjlev
+       if jlevdone = 0
+          .
+          . ---Step 5.3: write out the jlev-th factor level---
+          .
+                if bugswdrm = 1
+                   print " "
+                   print "      ===========(dexrightmargin.dp, Step 5.3, jlev= ^jlev=============="
+                   print "jfact = ^jfact     jlev = ^jlev   numlevfa = ^numlevfa"
+                   print "xp2z = ^xp2z   xp3z = ^xp3z   xp4z = ^xp4z   ypz = ^ypz"
+                   print "stoutv = ^stoutv"
+                   print "numlevfa = ^numlevfa    maxjlev = ^maxjlev"
+                   print "maxnumlv = ^maxnumlv"
+                   print "numwordj = ^numwordj = number of words for the entire list"
+                   print "stx^jfact&l = ^stx^jfact&l"
+                   if stx^jfact&l exists   ; print "xjl does exist"    ; end if
+                   if stx^jfact&l not exist; print "xjl does NOT exist"; end if
+                   if pausesw = 1; pause; end if
+                end if
+          .
+          . -----step 5.3.1, case 1: stxjl list as a whole does exist-----
+          .
+          let string stoutl = ^jlev
+          if numlevfa = 2 and jlev = 1; let string stoutl = -; end if
+          if numlevfa = 2 and jlev = 2; let string stoutl = +; end if
+
+          if numlevfa = 3 and jlev = 1; let string stoutl = -; end if
+          if numlevfa = 3 and jlev = 2; let string stoutl = 0; end if
+          if numlevfa = 3 and jlev = 3; let string stoutl = +; end if
+          .
+          . print "jfact = ^jfact   jlev = ^jlev   stoutl = ^stoutl"
+          . pause
+          .
+          color blue;
+          if colorl exists
+             let ncolorl = number of words colorl
+             if jlev <= ncolorl; let stcolorl = string word colorl ^jlev; color ^stcolorl; end if
+          end if
+          .
+          if stx^jfact&l exists
+             if bugswdrm = 1; print "within step 5.3.1"; end if
+             hw 2 1
+             let string stoutr = sp()
+             .
+             if jlev <= numwordj
+                let stoutr  = string word stx^jfact&l jlev
+                   .
+                   if bugswdrm = 1
+                      print "--At (dexrightmargin.dp, step 5.3.1, path a): X..j exists and stx.jj exists"
+                      print "jfact = ^jfact    jlev = ^jlev    stoutr = ^stoutr"
+                      print "stcolorl = ^stcolorl"
+                      print "numlevfa = ^numlevfa     numwordj = ^numwordj"
+                      if pausesw = 1; pause; end if
+                   end if
+                   .
+                let ypz = ypz - fudge2*ypdelz
+                move xp3z ypz; just right; text ^stoutl                      ;. <==============write left  side level if stx.l exists
+                color blue
+                let xp3zp = xp3z + 1
+                move xp3zp ypz; just right; color blue; text :               ;. <==============write  :               if stx.l exists
+                move xp4z ypz; just  left; text ^stoutr                      ;. <==============write right side level if stx.l exists
+             end if
+             .
+             if jlev = numwordj
+                   let delzz = numlevfa - numwordj
+                   if bugswdrm = 1
+                      print "--At (dexrightmargin.dp, step 5.3.2, path b): X..j exists but stx.jj not exist"
+                      print "jfact = ^jfact    jlev = ^jlev    stoutr = ^stoutr"
+                      print "stcolorl = ^stcolorl"
+                      print "numlevfa = ^numlevfa     numwordj = ^numwordj"
+                      if pausesw = 1; pause; end if
+                   end if
+                   .
+                if delzz > 0
+                   let ypz = ypz - fudge2*ypdelz
+                   move xp4z ypz; just left; text + ^delzz more levels       ;. <===============write mismatch message
+                end if
+                color blue
+             end if
+          end if
+          .
+          . -----steps 5.3.2: case 2: stxjl list as a whole does not exist-----
+          .
+          if stx^jfact&l not exist
+                   if bugswdrm = 1; print "within steps 5.3.2 and 5.3.3"; end if
+                   hw 2 1
+                   .
+                   if bugswdrm = 1
+                      print "--At (dexrightmargin.dp, step 5.3.2): x..j not exist"
+                      print "jfact = ^jfact    jlev = ^jlev"
+                      print "xp2z = ^xp2z   xp3z = ^xp3z   xp4z = ^xp4z   ypz = ^ypz"
+                      print "stout = ^stout"
+                      if pausesw = 1; pause; end if
+                   end if
+                   .
+             move xp2z ypz; just left; text (^numlevfa levels)              ;. <==here===========write level if stx.l not exist
+             let jlevdone = 1
+          end if
+                .
+                if bugswdrm = 1; print " "; print "end of jlev = ^jlev loop"
+                   if pausesw = 1; pause; end if
+                end if
+                .
+        end if;. end jlevdone
+    end loop;. end jlev
+
+    if k >=  6; let ypz = ypz - 0.3*ypdelz; end if
+ end loop;. end jfact
+.
+. -----Step 99: Finish up-----
+.
+delete xp0z yp0z xpdelz ypdelz xp2z xp3z xp4z yposvec xposvec tag
+.
+color blue

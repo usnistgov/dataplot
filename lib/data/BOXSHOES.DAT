@@ -1,0 +1,45 @@
+THIS IS DATAPLOT DATA FILE   BOXSHOES.DAT
+MATERIAL AFFECT ON BOYS SHOE SOLE WEAR (BLOCK ON BOY)
+BOX, HUNTER & HUNTER (1978), STATISTICS FOR EXPERIMENTERS
+WILEY, PAGE 97-101 (AN EXAMPLE IN CHAPTER 4)
+RANDOMIZED BLOCK DESIGN
+NUMBER OF OBSERVATIONS = 20
+TOTAL NUMBER OF VARIABLES PER LINE IMAGE = 3
+   RESPONSE VARIABLE = SHOE SOLE WEAR
+   FACTOR 1 = MATERIAL (2 TYPES)
+   FACTOR 2 = BOY (10 BOYS)
+TO READ THIS FILE INTO DATAPLOT (AND ANALYZE)--
+   SKIP 25
+   READ BOXSHOES.DAT Y X1 X2
+   .
+   CHAR 1 2; LINES BL BL
+   BLOCK PLOT Y X1 X2
+   CHAR 1 2 3 4 5 6 7 8 9 0; LINES BL BL BL BL BL BL BL BL BL BL
+   BLOCK PLOT Y X2 X1
+   .
+   ER; ANOVA Y X1 X2
+   .
+   PLOT RES X1 X1; PLOT RES X2 X2
+   LINES BLANK ALL; PLOT RES PRED; NORMAL PROBABILITY PLOT RES
+ WEAR        MATERIAL   BOY
+------------------------------
+ 13.2           1        1
+ 14.0           2        1
+  8.2           1        2
+  8.8           2        2
+ 10.9           1        3
+ 11.2           2        3
+ 14.3           1        4
+ 14.2           2        4
+ 10.7           1        5
+ 11.8           2        5
+  6.6           1        6
+  6.4           2        6
+  9.5           1        7
+  9.8           2        7
+ 10.8           1        8
+ 11.3           2        8
+  8.8           1        9
+  9.3           2        9
+ 13.3           1       10
+ 13.6           2       10

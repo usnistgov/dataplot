@@ -1,0 +1,66 @@
+This is file recipe.men--Compute a recipe analysis
+ 
+--------------------
+ 1. Recipe
+ 2. RECIPE FIT Y X BATCH XPRED
+ 3.
+ 4.
+ 5. Dependent variable for the RECIPE fit:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Independent variable for the RECIPE fit:
+ 6. @CE 2 0 33 50 ? gui-variable
+ 7. Batch variable (optional) for the RECIPE fit:
+ 7. @CE 3 0 33 50 ? gui-variable
+ 8. Variable containing points at which tolerance computed:
+ 8. @CE 4 0 33 50 ? gui-variable
+ 9. Order of fit:
+10. @CE 5 1 14 23 Constant
+10. @CE 5 2 25 34 Linear
+10. @CE 5 3 36 45 Quadratic
+10. @CE 5 4 47 56 Cubic
+11. @CE 5 5 14 23 Quartic
+11. @CE 5 6 25 34 Quintic
+11. @CE 5 7 36 45 Sextic
+11. @CE 5 8 47 56 Septic
+12. @CE 5 9 14 23 Octic
+12. @CE 5 10 25 34 Nonic
+12. @CE 5 11 36 45 Dexic
+13. Value for the probability content (typically 0.90):
+13. @CE 6 0 33 50 ?
+14. Value for the confidence (typically 0.95):
+14. @CE 7 0 33 50 ?
+15. Use Satterthwaite approximation (usually on):
+15. @CE 8 0 33 50 gui-ooff
+16.
+17. The tolerance values will be plotted with
+18. the fitted curve and the raw data.
+19.
+20. Select the line style for the tolerance values:
+20. @CE 9 0 33 50 gui-line
+21. Select the line style for the fitted curve:
+21. @CE 10 0 33 50 gui-line
+22. Select the character symbol for the raw data:
+22. @CE 11 0 33 50 gui-character
+23. Fill the character symbol?:
+23. @CE 12 0 33 50 gui-ooff
+24.
+25. Subset/Except/For Specification:
+26. @CE 13 0 -12 50 *
+27.
+28.
+29. Perform the Recipe Fit?:
+--------------------
+GR FE
+RECIPE PROBABILITY CONTENT _6
+RECIPE CONFIDENCE _7
+RECIPE SATTERTHWAITE _8
+RECIPE FIT _1 _2 _3 _4 _13
+CHARACTER _11 BLANK BLANK
+CHARACTER FILL _12 OFF OFF
+LINES BLANK _10 _9
+PLOT _1 PRED VS _2 _13 AND
+PLOT TOL _4
+--------------------
+WEB HELP RECIPE
+--------------------
+

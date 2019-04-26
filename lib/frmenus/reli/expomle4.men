@@ -1,0 +1,21 @@
+This is file expomle.men--Exponential MLE Estimates
+ 
+--------------------
+ 1. Exponential Maximum Likelihood Estimates
+ 2. EXPONENTIAL MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Compute Exponential MLE's?
+--------------------
+GR FE
+SET CENSORING TYPE NONE
+EXPONENTIAL MAXIMUM LIKELIHOOD _1 _2
+--------------------
+WEB HELP EXPONENTIAL MAXIMUM LIKELIHOOD
+--------------------

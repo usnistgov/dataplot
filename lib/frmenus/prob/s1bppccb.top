@@ -1,0 +1,24 @@
+----- <~prob\s1bppccb.top> PPCC Plot with bootstrapping for One Shape Parameter
+
+Generate PPCC (or KS) Plot with Bootstrapping (one shape parameters)
+
+Generate PPCC (or KS) Plot with Bootstrapping for
+Continuous Distributions with One Shape Parameters
+
+Muth                                      <xemf: ~prob\bootmut.men>
+Ogive                                     <xemf: ~prob\bootogi.men>
+Power                                     <xemf: ~prob\bootpow.men>
+Power Normal                              <xemf: ~prob\bootpnr.men>
+Reciprocal                                <xemf: ~prob\bootrec.men>
+Reflected Power                           <xemf: ~prob\bootrpo.men>
+Skew Double Exponential (Skew Laplace)    <xemf: ~prob\bootsde.men>
+Slope                                     <xemf: ~prob\bootslo.men>
+T                                         <xemf: ~prob\boott.men>
+Topp and Leone                            <xemf: ~prob\boottop.men>
+Tukey-Lambda (symmetric)                  <xemf: ~prob\bootlam.men>
+Von Mises                                 <xemf: ~prob\bootvon.men>
+Wald                                      <xemf: ~reli\bootwal.men>
+Weibull (minimum case)                    <xemf: ~reli\bootwei1.men>
+Weibull (maximum case)                    <xemf: ~reli\bootwei2.men>
+Wrapped Cauchy                            <xemf: ~prob\bootwca.men>
+

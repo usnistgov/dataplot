@@ -1,0 +1,24 @@
+----- <~dataall\dex2kmp.top> View/etc. 2**(k-p) Fractional Factorial Design Da
+a
+
+View/Load/Print 2**(k-p) Fractional Factorial Design Data
+
+BOXSPRI2.DAT  2**(3-1)  Defective springs  <~dataall\BOXSPRI2.top>
+BOXSPRI3.DAT  2**(3-1)  Defective springs  <~dataall\BOXSPRI3.top>
+
+BOXCLEAN.DAT  2**(4-1)  Cleanser stab. <~dataall\BOXCLEAN.top>
+
+BOXREAC2.DAT  2**(5-1)  Chem. reactor  <~dataall\BOXREAC2.top>
+
+AC.DAT        2**(6-3)  A/C performance <~dataall\AC.top>
+
+BOXBIKE2.DAT  2**(7-4)  Bike speed     <~dataall\BOXBIKE2.top>
+BOXBIKE3.DAT  2**(7-3)  Bike speed     <~dataall\BOXBIKE3.top>
+BOXFILT.DAT*  2**(7-4)  Filtrat. time  <~dataall\BOXFILT.top>
+BOXFILT2.DAT  2**(7-3)  Filtrat. time  <~dataall\BOXFILT2.top>
+AMRF.DAT      2**(7-4)  AMRF work stat. <~dataall\AMRF.top>
+
+VIBRATE.DAT   2**(9-5)  Vibration      <~dataall\VIBRATE.top>
+
+QUINLAN.DAT   2**(15-11) Speedom. noise <~dataall\QUINLAN.top>
+

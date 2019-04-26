@@ -1,0 +1,37 @@
+----- <~dex2kmp\cs29m4.top> Confounding:  2**(9-4) Design
+ 
+Confounding:  2**(9-4) Design
+ 
+Name of Design      = 2**(9-4) Fractional Factorial Design
+ 
+Number of Factors k = 9
+Number of Obs.    n = 32
+ 
+Resolution          = 4 (Main effects confounded with
+                      3-term interactions and higher;
+                      no main effects are confounded
+                      with any 2-term interactions)
+ 
+Factor Definitions  : 6 = 2345
+                      7 = 1345
+                      8 = 1245
+                      9 = 1235
+ 
+Defining Relation   : I +
+                      23456 + 13457 + 12458 + 12359 +
+                      1267 + 1368 + 1469 + 2378 + 2479 + 3489 +
+                      45678 + 35679 + 25689 + 15789 +
+                      12346789
+ 
+Main Effect         : 1  =  1 +  *
+Confounding           2  =  2 +  *
+                      3  =  3 +  *
+                      4  =  4 +  *
+                      5  =  5 +  *
+                      6  =  6 +  *
+                      7  =  7 +  *
+                      8  =  8 +  *
+                      9  =  9 +  *
+ 
+Click here to view 2-term confounding  <~dex2kmp\2t29m4.top>
+ 

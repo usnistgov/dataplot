@@ -1,0 +1,61 @@
+----- <~plot\coplot_d.top> Coplot Discussion
+
+Conditioning Plot (Coplot)
+
+
+The coplot is simply a collection of Y versus X scatter
+plots.  Instead of a single scatter plot, the scatter
+plot is generated for various subsets of a third variable.
+These plots are arranged in a multi-plot format to enable
+comparisons between them.  This plot shows the relationship
+of Y versus X conditional on the value of a third variable.
+
+There are various strategies for the determining the
+subsets.  For a qualitative variable, simply subsetting
+by the unique values of that qualitative variable is
+common.  Cleveland recommends an "equal count" algorithm.
+Some recommend a histogram binning or some other type of
+equal width bin for the subsets.
+
+Dataplot expects the conditioning variable to be a
+qualitative variable.  To condition on a real variable,
+you need to create a qualitative variable from that
+real variable.  Dataplot provides the following methods
+for creating qualitative variables from real variables.
+
+   1) You can use the SUBSET command to set explicit values. 
+      For example,
+
+         LET XCOND = X2
+         LET XCOND = 1 SUBSET X2 = 0 TO 99.9
+         LET XCOND = 2 SUBSET X2 = 100 TO 199.9
+         LET XCOND = 3 SUBSET X2 = 200 TO 299.9
+
+   2) You can use the CODE, CODE2, CODE4, CODE8, and CODE10
+      commands to divide the data into equal intervals.
+      For example, CODE4 divides the data into quartiles.
+
+         LET XCOND = CODE4 X2
+
+The conditioning plots need not be limited to scatter plots.
+Dataplot allows you to generate conditional plots for
+a number of different plot types (and additional plot
+types will be added in future implementations).  You can
+also specify either one or two conditioning variables.
+For two conditional variables, the plot is split into
+rows (value of conditioning variable 2) and columns
+(value of conditioning variable 1).  
+
+There are a number of alternatives for the appearance of this
+plot.  Dataplot tries to balance simplicity with flexibility
+by using default settings, but providing numerous SET commands
+to control the appearance of the plot.
+
+There is a separate menu for setting the options for the
+conditioning plot.  Note that these options stay set until you
+explicitly change them.  That is, you can set your favorite
+options once and then use the generate menu for subsequent plots.
+A few options are currently only available from the command line. 
+Also, regular plot control options (PlotMod Menu) can be set
+to control the appearance of the plot.
+

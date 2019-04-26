@@ -1,0 +1,41 @@
+. This is dataplot program   boxreactor_5_32.dp     2**5     1/13/15
+. Purpose: Analyze Box & Bisgaard chemical reactor yield (k=5,n=32) via 10-step analysis
+. Design = 2**5 full factorial
+. Date: 1/13/15
+.
+. -----start point-----
+.
+dimension 100 variables
+.
+. -----Step 1: Read in the data and define strings-----
+.
+let k = 5
+skip 25; read   boxreactor_5_32.dat   y x1 to x^k
+.
+let string header = Factors Affecting Chemical Reactor Yield (Box, Hunter, & Hunter)
+let string header2 = Design: 2**5 (k=5,n=32)
+let string trailer = boxreactor_5_32.dp
+let string trailer2 = Datafile: boxreactor_5_32.dat
+let string currdate = 1/13/15
+.
+let string sty = Chemical Yield (%)
+.
+let string stx1 = Feed Rate
+let string stx2 = Catalyst
+let string stx3 = Agitation Rate
+let string stx4 = Temperature
+let string stx5 = Concentration
+.
+let string stx1l = 10 15
+let string stx2l = 1 2
+let string stx3l = 100 120
+let string stx4l = 140 180
+let string stx5l = 3 6
+.
+let string stbest = up
+let string colorl = red blue
+.
+. -----Step 2: Generate 10-step DEX analysis-----
+.
+call dex10stepanalysis.dp
+.

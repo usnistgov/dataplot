@@ -1,0 +1,19 @@
+----- <~dp\guicomm.top> Command History Window
+ 
+Command History Window
+ 
+The Command History Window displays the Dataplot
+commands that have been executed in the current
+Dataplot session.  This window is located in the
+lower left quadrant.  
+
+In addition, the output window shows provides the
+following buttons:
+
+ 1) The "File" button allows the current output page
+    to be printed or saved to a file.  The items
+    under "File" are generally self-explanatory.
+
+ 2) The "Commands" button provides access to a few
+    common commands.
+

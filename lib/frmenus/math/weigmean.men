@@ -1,0 +1,24 @@
+This is file weigmean.men--Compute weighted mean of a variable
+ 
+--------------------
+ 1. Weighted Mean
+ 2. LET A = WEIGHTED MEAN Y WEIGHTS
+ 3.
+ 4. Variable for which to compute the weighted mean:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable containing the weights:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Parameter to store the weighted mean:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -10 50 *
+10.
+11.
+12. Compute the Weighted Mean?:
+--------------------
+GR FE
+LET _3 = WEIGHTED MEAN  _1 _2 _4
+--------------------
+WEB HELP WEIGHTED MEAN
+--------------------

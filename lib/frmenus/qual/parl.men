@@ -1,0 +1,62 @@
+This is file parl.men--Generate P Average Run Length Chart
+ 
+--------------------line 3
+1. P Average Run Length Chart
+2. Macro
+3.
+4. Response Variable:
+4. @CE 1 0 42 50 ? gui-variable
+5. Sample size for single group:
+5. @CE 2 0 42 50 ?
+6.
+7. Start value for p (default = 0.01):
+7. @CE 3 0 42 50 ?
+8. Increment for p (default = 0.01):
+8. @CE 4 0 42 50 ?
+9. Stop value for p (default = 0.99):
+9. @CE 5 0 42 50 ?
+10.
+11. Subset/Except/For Specification:
+12. @CE 6 0 1 50 *
+13.
+14.
+15. Generate the Chart?:
+--------------------
+DELETE ZZZZP ZZZZY
+.
+LET NUMDEF = SUM _1 _5
+LET NGROUPS = SIZE _1 _5
+LET NG = _2
+LET N = NGROUPS*NG
+LET PBAR = NUMDEF/(NGROUPS*NG)
+LET UCL = PBAR + 3*SQRT(PBAR*(1-PBAR)/N)
+LET LCL = PBAR - 3*SQRT(PBAR*(1-PBAR)/N)
+LET LCL = MAX(0,LCL)
+.
+LET PSTART = 0.01
+LET PINC = 0.01
+LET PSTOP = 0.99
+LET PSTART = _3
+LET PINC = _4
+LET PSTOP = _5
+.
+LET ZZZZP = SEQUENCE PSTART PINC PSTOP
+LET ZZZZA1 = INT(N*UCL)
+LET ZZZZA2 = INT(N*LCL)
+.
+LET ZZZZY = BINCDF(ZZZZA1,ZZZZP,N) - BINCDF(ZZZZA2,ZZZZP,N)
+LET ZZZZARL = ZZZZY
+LET ZZZZARL = 1/(1-ZZZZY) SUBSET ZZZZY <> 1
+LET ZZZZARL = 0 SUBSET ZZZZY = 0
+.
+Y1LABEL Beta
+X1LABEL Binomial Parameter Value
+TITLE ARL Curve for P Control Chart
+.
+PLOT ZZZZARL VS ZZZZP
+LIMITS
+LABEL
+TITLE
+--------------------
+WEB HELP P CHART
+--------------------

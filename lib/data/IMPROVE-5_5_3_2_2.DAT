@@ -1,0 +1,45 @@
+This is the data file   IMPROVE-5_5_3_2_2.DAT.
+Source: This example is used on page pri5322.htm of the e-Handbook
+        to demonstrate a multi-response optimization design.
+
+        The original source is: Derringer and Suich (1980), "Simultaneous
+        Optimization of Several Response Variables", Journal of Quality
+        Technology, Vol. 12, No. 4, pp. 214-219.
+
+Description:  This experiment was used in the development of a tire
+              tread component.  The controllable factors are:
+                1. X1 - hydrated silica level
+                2. X2 - silane coupling agent
+                3. X3 - sulfer level
+              The response variables and their desired ranges are
+                1. Y1 - PICO abrasion index (120 < Y1)
+                2. Y2 - 200% modulus        (1000 < Y2)
+                3. Y3 - elongation at break (400 < Y3 < 600)
+                4. Y4 - hardness            (60 < Y4 < 75)
+To read into Dataplot, enter
+
+    SKIP 25
+    READ "IMPROVE-5_5_3_2_2.DAT" RUN X1 X2 X3 Y1 Y2 Y3 Y4
+
+Run  x1    x2    x3     Y1     Y2      Y3     Y4
+--------------------------------------------------
+ 1   -1    -1    -1     102     900    470    67.5
+ 2    1    -1    -1     120     860    410    65
+ 3   -1     1    -1     117     800    570    77.5
+ 4    1     1    -1     198    2294    240    74.5
+ 5   -1    -1     1     103     490    640    62.5
+ 6    1    -1     1     132    1289    270    67
+ 7   -1     1     1     132    1270    410    78
+ 8    1     1     1     139    1090    380    70
+ 9   -1.63  0     0     102     770    590    76
+10    1.63  0     0     154    1690    260    70
+11    0    -1.63  0      96     700    520    63
+12    0     1.63  0     163    1540    380    75
+13    0     0    -1.63  116    2184    520    65
+14    0     0     1.63  153    1784    290    71
+15    0     0     0     133    1300    380    70
+16    0     0     0     133    1300    380    68.5
+17    0     0     0     140    1145    430    68
+18    0     0     0     142    1090    430    68
+19    0     0     0     145    1260    390    69
+20    0     0     0     142    1344    390    70

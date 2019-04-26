@@ -1,0 +1,54 @@
+From mayo@apollo.eeel.nist.gov Mon Dec  1 12:55:58 1997
+Return-Path: <mayo@apollo.eeel.nist.gov>
+Received: from x-files.cam.nist.gov by fs1.cam.nist.gov (4.1/SMI-DDN)
+	id AA23116; Mon, 1 Dec 97 12:55:57 EST
+Received: from tiber.nist.gov by x-files.cam.nist.gov (SMI-8.6/SMI-SVR4)
+	id MAA22031; Mon, 1 Dec 1997 12:55:56 -0500
+Received: from email.nist.gov by tiber.nist.gov (8.6.4/10.1)
+	id MAA01884; Mon, 1 Dec 1997 12:55:55 -0500
+Received: from piper (piper.eeel.nist.gov [129.6.65.1])
+	by email.nist.gov (8.8.5/8.8.5) with SMTP id MAA18996
+	for <n.heckert@nist.gov>; Mon, 1 Dec 1997 12:54:38 -0500 (EST)
+Received: from smayo by piper (SMI-8.6/SMI-SVR4)
+	id MAA21167; Mon, 1 Dec 1997 12:52:14 -0500
+Message-Id: <3.0.32.19971201125558.00693a54@piper.eeel.nist.gov>
+X-Sender: mayo@piper.eeel.nist.gov
+X-Mailer: Windows Eudora Pro Version 3.0 (32)
+Date: Mon, 01 Dec 1997 12:55:59 -0500
+To: n.heckert@nist.gov
+From: Santos Mayo <mayo@apollo.eeel.nist.gov>
+Subject: noisy data
+Cc: mayo@piper.eeel.nist.gov
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Status: R
+Content-Length: 1511
+
+Dear Alan:
+
+As I said in today's conversation, I need help to device a practical way of
+reducing a large amount of data 
+collected from electromigration experiments. As an example, I am mailing to
+you two files, ACR10.7d and ACR10.89,
+showing the voltage across a thin aluminum film resistor at about 150 C
+with  2E6 Amp/sqcm current density. These data are 2500 points spaced at
+0.4 ms time intervals. In order to plot this information, the horizontal
+axis is time (0 to 1s)
+and the single column in the file is the voltage data which include
+background electrical noise plus abrupt changes in resistance (ACR) created
+by some rather complex mechanisms induced by electron-lattice interactions.
+The random noise signal is expected to be present at all times,  while the
+ACR signal, which also has random shape, appears at random times.
+
+In order to separate noise from the ACR signal, the data in each file need
+to be autocorrelated at various lag
+values. The true random noise has zero autocorrelation, while the ACR
+signal is not correlated to any other
+signal. I am looking for a good way using Dataplot, or any other software
+you may suggest, to isolate the ACR from the noise. The analysis I need to
+do is somewhat similar to determining if seismographic data observed at
+different locations A and B, are correlated.  In a typical electromigration
+experiment some 200 files like these are generated. Clearly I need some
+software capable of reducing these data. 
+Thanks for your attention to this problem.
+

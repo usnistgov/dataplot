@@ -1,0 +1,8 @@
+----- <~datalist\BIOMED3.top> BIOMED3.DAT
+ 
+BIOMED3.DAT
+ 
+View     <xcl: LIST BIOMED3.DAT>
+Load     <x2cl: SKIP 25; READ BIOMED3.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\BIOMED3.DAT>
+ 

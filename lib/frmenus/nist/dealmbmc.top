@@ -1,0 +1,11 @@
+----- <dealmbmc.top> Case 4: Multi-Batch & With Covariates
+ 
+Case 4: Multi-Batch & With Covariates
+ 
+Discussion
+Check for Batch-to-Batch Differences <xx.top>
+Check for Adequate Regression Model  <xx.top>
+Check for (Normal) Outliers          <xx.top>
+Check for Best-Fit Distribution      <xx.top>
+Compute Design-Allowables            <xx.top>
+ 

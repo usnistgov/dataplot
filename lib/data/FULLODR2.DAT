@@ -1,0 +1,45 @@
+This is the Dataplot data file        FULLODR2.DAT
+This is the data set from page 244 of Wayne Fuller's
+book "Measurement Error Models", John Wiley, 1987.
+This is one of the data sets used in the version 2.01 ODRPACK manual.
+We have included it here to calibrate the Dataplot implementation
+of the ODRPACK package.  Data are observations digitized from the
+x-ray image of a hip prosthesis.  The variable X(i) = (v(i),h(i))
+are the the vertical and horizontal distances from the orgin.
+The proposed model is:
+    B3*(V - B1)**2 + 2*B4*(V-B1)*(H-B2) + B5*(H-B2)**2 = 0
+Note that this is an implicit model.
+Contact--Alan Heckert, NIST
+Number of observations                       = 20
+Number of observations per line image        = 2
+Order of variables on a line image--
+   1. Factor Variable V     = Vertical Distance
+   2. Factor Variable H     = Horizontal Distance
+  
+To read this file into Dataplot--
+   SKIP 25
+   READ FULLODR2.DAT V H
+
+
+     V      H
+-------------
+  0.50  -0.12
+  1.20  -0.60
+  1.60  -1.00
+  1.86  -1.40
+  2.12  -2.54
+  2.36  -3.36
+  2.44  -4.00
+  2.36  -4.75
+  2.06  -5.25
+  1.74  -5.64
+  1.34  -5.97
+  0.90  -6.32
+ -0.28  -6.44
+ -0.78  -6.44
+ -1.36  -6.41
+ -1.90  -6.25
+ -2.50  -5.88
+ -2.88  -5.50
+ -3.18  -5.24
+ -3.44  -4.86

@@ -1,0 +1,12 @@
+----- <~prob\comp3dis.top> Compare Three (or more) Samples
+
+Compare Three (or more) Samples
+
+Graphical Techniques
+   Discussion of Scatter Plot Matrix      <~plot\matrpl_d.top>
+   All Pairwise Bihistogram               <xemf: ~prob\bihistma.men>
+   All Pairwise Quantile-Quantile Plot    <xemf: ~prob\qqplotma.men>
+
+   Set Most Common Options                <xemf: ~plot\scatplo1.men>
+   Set Less Common Options                <xemf: ~plot\scatplo2.men>
+

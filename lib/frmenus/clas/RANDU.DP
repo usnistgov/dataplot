@@ -1,0 +1,13 @@
+----- <~edac\RANDU.DP> Load RANDU.DATA & generate 4-PLOT
+
+. This is file    RANDU.DP
+
+DELETE Y
+TITLE
+.
+LIST RANDU.DAT
+SKIP 25
+SERIAL READ RANDU.DAT Y
+.
+TITLE RANDU.DAT
+4-PLOT Y

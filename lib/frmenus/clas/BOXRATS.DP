@@ -1,0 +1,10 @@
+----- <~dataloex\BOXRATS.DP> Load & Execute BOXRATS.DAT
+
+. This is file    BOXRATS.DP
+
+DELETE Y X
+SKIP 25
+READ BOXRATS.DAT Y X
+TITLE BOXRATS.DAT
+/
+

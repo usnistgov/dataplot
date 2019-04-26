@@ -1,0 +1,75 @@
+This is file lsqfrec.men--Least Sqaure Fitting (Frechet)
+
+--------------------
+1. Least Squares Fitting (Frechet)
+2. LET FUNCTION F = EV2PDF(X,GAMMA,LOC,SCALE); FIT Y = F
+3.
+4. If you have raw data, Dataplot will first
+5. generate a relative histogram to generate
+6. frequency data.  If you already have frequency
+7. data, the first variable will be the frequency
+8. and the second variable will be the response
+9. value.
+10.
+11. Response or Frequency Variable:
+11. @CE 1 0 42 50 ? gui-variable
+12. Optional Response Variable (for frequency data):
+12. @CE 2 0 42 50 * gui-variable
+13.
+14. Starting Value for Gamma:
+14. @CE 3 0 42 50 ?
+15. Starting Value for Location:
+15. @CE 4 0 42 50 ?
+16. Starting Value for Scale:
+16. @CE 5 0 42 50 ?
+17. Type of Frechet:
+17. @CE 6 1 42 45 min
+17. @CE 6 2 47 50 max
+18.
+19.
+20. Subset/Except/For Specification:
+21. @CE 7 0 1 50 *
+22.
+23. Compute the Fit?
+--------------------
+GR FE
+LET ZLOC = 0
+@IF 4 0 LET ZLOC = _4
+LET ZSCALE = 1
+@IF 5 0 LET ZSCALE = _5
+LET ZSHAPE = 1
+LET ZZZZRAW = 0
+@IF 2 0 LET ZZZZRAW = 1
+IF ZZZZRAW = 0
+  SET RELATIVE HISTOGRAM AREA
+  RELATIVE HISTOGRAM _1 _7
+  LET ZZZZY = YPLOT
+  LET ZZZZX = XPLOT
+  RETAIN ZZZZY ZZZZX SUBSET YPLOT > 0
+END OF IF
+IF ZZZZRAW = 1
+  LET ZZZZY = _1 _7
+  LET ZZZZX = _2 _7
+END OF IF
+@IF 3 0 LET ZSHAPE = _3
+@IF 6 1 SET MINMAX = 1
+@IF 6 2 SET MINMAX = 2
+LET FUNCTION ZZZZF = EV2PDF(ZZZZX,ZSHAPE,ZLOC,ZSHAPE)
+FIT ZZZZY = ZZZZF
+LIMITS FREEZE
+PRE-ERASE OFF
+LET ZZZZ1 = MINIMUM ZZZZX
+LET ZZZZ2 = MAXIMUM ZZZZX
+LET ZZZZINC = (ZZZZ2 - ZZZZ1)/1000
+IF ZZZZRAW = 1
+  PLOT ZZZZY ZZZZX
+END OF IF
+X3LABEL FRECHET PDF: GAMMA = ^ZSHAPE, LOCATION = ^ZLOC, SCALE = ^ZSCALE
+PLOT EV2PDF(ZZZZX,ZSHAPE,ZLOC,ZSCALE) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+DELETE ZZZZX ZZZZY
+X3LABEL
+LIMITS
+PRE-ERASE ON
+--------------------
+WEB HELP FIT
+--------------------

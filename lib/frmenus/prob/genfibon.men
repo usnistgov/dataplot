@@ -1,0 +1,18 @@
+This is file genfibono.men--Generate Fibonacci Numbers
+ 
+--------------------
+ 1. Generate Fibonacci Numbers
+ 2. LET Y = FIBONACCI NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of Fibonacci numbers to be generated:
+ 4. @CE 1 0 41 50 ?
+ 5.
+ 6. Name of output variable:
+ 6. @CE 2 0 41 50 ?
+ 7.
+ 8.
+ 9. Generate the sequence?
+--------------------
+AN FE
+LET _2 = FIBONACCI NUMBERS FOR I = 1 1 _1
+--------------------

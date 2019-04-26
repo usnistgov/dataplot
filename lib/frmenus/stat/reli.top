@@ -1,0 +1,22 @@
+----- <~stat\reli.top> Reliability
+
+Reliability:
+
+Maximum Likelihood Estimation
+    Exponential (Full Sample)                <xemf: ~reli\expomle.men>
+    Exponential (Type I Censoring)           <xemf: ~reli\expomle1.men>
+    Exponential (Type II Censoring)          <xemf: ~reli\expomle2.men>
+    2-Parameter Weibull                      <xemf: ~stat\weibmle.men>
+    2-Parameter Lognormal                    <xemf: ~reli\lgnmle.men>
+    2-Parameter Inverse Gaussian             <xemf: ~reli\igmle.men>
+    2-Parameter Gamma                        <xemf: ~reli\gammle.men>
+
+Tolerance Limits
+    Normal Tolerance Limits                  <xemf: ~stat\normtole.men>
+    B-Basis Tolerance Limits                 <xemf: ~stat\bbasis.men>
+    A-Basis Tolerance Limits                 <xemf: ~stat\abasis.men>
+
+Reliability Trend Tests                      <xemf: ~reli\relitren.men>
+Compare Means of 2 Exponentials              <xemf: ~reli\comp2exp.men>
+Fit Power Law Model                          <xemf: ~reli\powerest.men>
+

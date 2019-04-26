@@ -1,0 +1,57 @@
+This is file mvarnorm.men--Probability plot for multivariate normality
+ 
+--------------------
+ 1. Multivariate Normality Probability Plot
+ 2. LET Y = DISTANCE FROM MEAN M; CHI-SQUARE PROB PLOT Y
+ 3.
+ 4. This macro computes:
+ 5.   Di = (Xi-XMEAN)'SINV(Xi-XMEAN)
+ 6. where Xi is the ith row of a matrix, XMEAN is
+ 7. a vector of the column means, and SINV is the
+ 8. inverse of the variance-covariance matrix.
+ 9. If the columns of the matrix are multivariate
+10. normal, then the Di are approximately chi-square
+11. with p degrees of freedom where p is the numnber
+12. of variables.
+13.
+14. Name of matrix:
+14. @CE 1 0 42 50 ? gui-matrix
+15. Variable to save the distances:
+15. @CE 2 0 42 50 ?
+16.
+17. Line Types:
+17. @CE 3 0 33 50 * gui-line
+18. Character Type:
+18. @CE 4 0 33 50 * gui-char
+19. Character Fill:
+19. @CE 5 0 33 50 * gui-ooff
+20.
+21. Plot fitted line to probability plot:
+21. @CE 6 1 42 45 yes
+21. @CE 6 2 46 49 no
+22.
+23. Subset/Except/For Specification:
+24. @CE 7 0 -1 50 *
+25.
+26.
+27. Generate the Probability Plot?:
+--------------------
+GR FE
+LET _2 = DISTANCE FROM MEAN  _1 _7
+LINE _3
+CHARACTER _4
+CHARACTER FILL _5
+LET NU = MATRIX NUMBER OF COLUMNS _1
+CHI-SQUARE PROBABILITY PLOT _2
+@IF 6 1 LET ZZZZX1 = XPLOT(1)
+@IF 6 1 LET ZZZZX2 = MAXIMUM XPLOT
+@IF 6 1 LET ZZZZY1 = PPA0 + PPA1*ZZZZX1
+@IF 6 1 LET ZZZZY2 = PPA0 + PPA1*ZZZZX2
+@IF 6 1 DRAWDATA ZZZZX1 ZZZZY1 ZZZZX2 ZZZZY2
+@IF 6 1 DELETE ZZZZX1 ZZZZX2 ZZZZY1 ZZZZY2
+JUSTIFICATION CENTER
+MOVE 50 5
+TEXT INTERCEPT = ^PPA0, SLOPE = ^PPA1
+--------------------
+WEB HELP PROBABILITY PLOT
+--------------------

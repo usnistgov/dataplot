@@ -1,0 +1,37 @@
+-----<~reli\acelassu.top> Discussion: Acceleration Models Assumptions
+
+Discussion: Acceleration Models Assumptions
+
+Acceleration Models: Assumptions
+
+The basic assumption for acceleration models is that
+components operating at increased stress have exactly
+the same failure mechanism as components operating at
+normal use conditions.  However, the time scale for
+these failure mechanisms is compressed (i.e., things
+happen faster).
+
+TRUE ACCELERATION
+
+When we have a range of stress values over which the
+basic assumption holds, we have "true acceleration".
+True acceleration is simply a transformation of the
+time scale.  If we know the life distribution at
+high stress and the appropriate time scale transformation
+to the lower stress level, we can determine the life
+distribution and failure rate at the lower stress level.
+
+LINEAR ACCELERATION
+
+For practical applications, we typically restrict ourselves
+to simple constant multipliers of the time scale.  When
+every time of failure and every distribution percentile
+is multiplied by the same constant value to obtain the
+projected results at another operating stress, we have
+linear acceleration.  This constant is referred to as the
+acceleration factor (AF).  Linear acceleration implies
+
+   (time to fail at S1) = AF x (time to fail at S2)
+
+with S1 and S2 denoting two distinct stress levels.
+

@@ -1,0 +1,50 @@
+-----<~reli\acelweib.top> Discussion: Weibull Acceleratin
+
+Discussion: Weibull Acceleration
+
+Weibull Acceleration
+
+If the failure times at high stress can be modeled as
+a Weibull distribution with shape parameter gamma(s) and
+scale parameter c(s), then
+
+    F(s)(t) = 1 - EXP{-(t/c(s))**gamma(s)}
+
+If linear acceleration holds, then
+
+    F(s)(t) = F(u)(t/AF)
+            = 1 - EXP{-(t//AF)/c(s)**gamma(s)}
+            = 1 - EXP{-(t//(AF*c(s))**gamma(s)}
+            = 1 - EXP{-(t/c(u)**gamma(u)}
+
+with c(u) = AF*c(s) and gamma(u) = gamma(s) = gamma.  That
+is, if linear acceleration holds and the life distribution
+at one stress is Weibull, then the life distribution at any
+other stress is also Weibull.  The shape parameter is
+constant while the scale parameter is multiplied by the
+acceleration factor.
+
+So the following tasks are needed:
+
+   1) Check that the data at each stress level can be
+      reasonably modeled with a Weibull distribution.
+
+   2) Estimate the shape/scale parameters at each  stress
+      level.
+
+   3) Determine if the shape parameters at each stress level
+      are sufficently close.  If so, then the Weibull
+      acceleration model can be considered reasonable.  If
+      not, then either the linear acceleration assumption or
+      the Weibull distribution assumption is not valid.
+
+   4) If the Weibull acceleration model is reasonable, then
+      we can estimate the acceleration factor based on:
+
+          Scale(u) = AF*Scale(stress)
+          AF = Scale(u)/Scale(stress)
+
+      Note that the change in failure rate (hazard rate) is
+
+          h(u)(t) = h(s)(t)/AF**gamma
+

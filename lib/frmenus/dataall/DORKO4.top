@@ -1,0 +1,8 @@
+----- <~dataall\DORKO4.top> DORKO4.DAT
+
+DORKO4.DAT
+
+View     <xcl: LIST DORKO.DAT>
+Load     <xcf: ~dataload/DORKO.DP>
+Print    <xccl: printfile C:\DATAPLOT\DORKO.DAT>
+

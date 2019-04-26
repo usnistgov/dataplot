@@ -1,0 +1,45 @@
+THIS IS DATAPLOT DATA FILE PCC.DAT
+PURPOSE--ILLUSTRATE P CONTROL CHART
+DEFECTIVE MOTORS
+DATE--JULY 1990
+NUMBER OF OBSERVATIONS = 20
+NUMBER OF VARIABLES = 3
+ORDER OF VARIABLES ON A LINE IMAGE--
+   1. SUBGROUP ID (1 TO 25)
+   2. NUMBER OF DEFECTIVE ITEMS IN SUB-GROUP
+   3. TOTAL NUMBER OF ITEMS IN SUB-GROUP
+STATISTICAL AREAS--P CONTROL CHART
+REFERENCE--ISHIKAWA, GUIDE TO QUALITY CONTROL, PAGES 77-79
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ PCC.DAT X NUMDEF NUMTOT
+   CHARACTERS CONTROL CHART
+   LINES CONTROL CHART
+   P CONTROL CHART NUMDEF NUMTOT X
+   LET N1 = SUM NUMDEF; LET N2 = SUM NUMTOT; LET M = 100*(N1/N2)
+   SPIKE ON; SPIKE BASE M; CHARACTER FILL ON; LINES BLANK
+   P CONTROL CHART NUMDEF NUMTOT X
+ 
+SUB-GROUP    NUMBER     NUMBER
+           DEFECTIVE    (TOTAL)
+-------------------------------
+ 1             14         125
+ 2             19         200
+ 3             19         188
+ 4             24         200
+ 5             15         200
+ 6             16         250
+ 7             38         390
+ 8             40         360
+ 9             21         250
+10             32         250
+11             40         395
+12             25         300
+13             39         310
+14             36         200
+15             17         300
+16             19         185
+17              4          55
+18              9          90
+19             12         130
+20             26         300

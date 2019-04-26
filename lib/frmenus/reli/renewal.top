@@ -1,0 +1,30 @@
+----- <~reli\renewal.top>
+
+Reliability: Renewal Proceses
+
+Reliability: Renewal Proceses
+
+NIST/SEMATECH Handbook           <xcl: web handbook models for repairable systems>
+Discussion                       <~reli\discrene.top>
+
+Compute Interrrival Times            <xemf: ~reli\intarr.men>
+Plots
+    Repair Times                     <xemf: ~reli\repaplot.men>
+    Mean Repair Function Plot        <xemf: ~reli\mrfplot.men>
+
+Univariate Distributional Modeling   <~reli\distmode.top>
+Homogeneous Poisson Process
+    NIST/SEMATECH Handbook
+        Homogeneous Poisson Process      <xcl: web handbook homogeneous poisson process>
+        Bathtub Curve                    <xcl: web handbook bathtub curve>
+        HPP Reliability Assessment Tests <xcl: web handbook reliability assessment test>
+        Analyze HPP Model                <xcl: web handbook analyze constant repair rate>
+    Discussion                          <~reli\dischpp.top>
+    Compute/Plot/Fit Exponential Distribution  <~reli\expomode.top>
+    Compute/Plot     Poisson     Distribution  <~reli\poismode.top>
+    Compute/Plot     Gamma       Distribution  <~reli\gammmode.top>
+
+Built-in Data Sets
+    View                             <~dataview\relirene.top>
+    Load                             <~dataload\relirene.top>
+

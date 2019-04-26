@@ -1,0 +1,46 @@
+. This is dataplot macro   number_of_digits.dp         10/9/18
+. Purpose: Determine the number of integer and decimal digits in a number
+. Date: 10/9/18
+. Called by annotate_boxplot_subplots from dexbp.dp
+. Input:
+.    numb    (parameter) = real number (+ or -)
+. Output:
+.    numdig  (parameter) = number of integer digits
+.    numdec  (parameter) = number of decimal digits
+. Example: if numb = 234.67, then numdig will = 3 and numdec = 2
+.
+. -----start point-----
+.
+. echo on
+. let numb = 12345.67
+. let numb = 2400
+. let numb = 123.004567
+.
+let numint = 0
+let numbabs = abs(numb)
+if numbabs = 0; let numint = 1; let numdec = 0; end if
+if numbabs > 0
+   let numint = log10(numbabs)
+   let numint = int(numint)
+   let numint = numint+1
+end if
+.
+let numdec = 0
+let rem = numbabs
+. print  "pre-loop"
+. print "rem = ^rem"
+. pause
+let eps = 0.00000001
+loop for j = 1 1 10
+   let rem = fract(rem)
+   let rem = 10*rem
+   let remint = int(rem+eps)
+   let remdel = rem - remint
+   let remdel = abs(remdel)
+   if remdel > .0000001; let numdec = j; end if
+   . print j rem remint remdel numdec
+   . pause
+end loop
+let numdec = numdec + 1
+.
+print numb numint numdec

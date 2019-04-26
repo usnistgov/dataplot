@@ -1,0 +1,55 @@
+THIS IS DATAPLOT DATA FILE     HAMAKER.DAT
+THRUST FORCE OF A DRILL
+REFERENCE--HAMAKER, JISI, 1971, PAGE 354-358
+RESPONSE VARIABLE--THRUST FORCE
+NUMBER OF DISTINCT INDEPENDENT VARIABLES--3
+NUMBER OF OBSERVATIONS = 30
+TOTAL NUMBER OF DISTINCT INDEPENDENT VARIABLES PER CARD--3
+TOTAL NUMBER OF          INDEPENDENT VARIABLES PER CARD--4
+ORDER OF VARIABLES ON A CARD--
+    1. THRUST FORCE (RESPONSE VARIABLE)
+    2. DRILL SPEED (5 LEVELS)
+    3. MATERIAL (2 LEVELS)
+    4. FEEDS (3 LEVELS)
+    5. MATERIAL X FEED SUBSET DEFINITION VARIABLE (6 LEVELS)
+STATISTICAL AREA--MULTI-FACTOR; 3-WAY ANOVA
+NOTE--THIS DATA DRAWN FROM
+      HAMAKER ARTICLE IN
+      JOURNAL OF INTERNATIONAL STAT. INSTITUTE
+      1971, PAGES 354-358
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ HAMAKER.DAT Y X1 X2 X3 TAG
+THRUST   DRILL    MATERIAL  FEED    MAT*FEED
+FORCE    SPEED              RATE
+--------------------------------------------
+116       100        1       1         1
+97        220        1       1         1
+84        475        1       1         1
+58        715        1       1         1
+70        870        1       1         1
+331       100        1       2         2
+293       220        1       2         2
+272       475        1       2         2
+262       715        1       2         2
+293       870        1       2         2
+570       100        1       3         3
+556       220        1       3         3
+497       475        1       3         3
+611       715        1       3         3
+653       870        1       3         3
+181       100        2       1         4
+133       220        2       1         4
+104       475        2       1         4
+92        715        2       1         4
+106       870        2       1         4
+376       100        2       2         5
+332       220        2       2         5
+324       475        2       2         5
+411       715        2       2         5
+445       870        2       2         5
+768       100        2       3         6
+725       220        2       3         6
+786       475        2       3         6
+892       715        2       3         6
+1355      870        2       3         6

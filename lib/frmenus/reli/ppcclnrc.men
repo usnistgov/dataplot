@@ -1,0 +1,69 @@
+This is file ppcclnrc.men-- Lognormal Replicated Censored PPCC Plot
+
+--------------------
+ 1. Lognormal Replicated PPCC Plot
+ 2. LOGNORMAL REPLICATED CENSORED PPCC PLOT Y X
+ 3.
+ 4. Your data can be either ungrouped (a single
+ 5. response variable) or grouped (a bin counts
+ 6. variable and a bin mid-points variable).
+ 7. 
+ 8. Response Variable:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9. Censoring Variable:
+ 9. @CE 2 0 42 50 ? gui-variable
+10. Replication (Group ID) Variable:
+10. @CE 3 0 42 50 ? gui-variable
+11.
+12. Line Types:
+12. @CE 4 0 22 50 * gui-line
+13. Line Colors:
+13. @CE 5 0 22 50 * gui-color
+14. Character Types:
+14. @CE 6 0 22 50 * gui-char
+15. Character Fill:
+15. @CE 7 0 22 50 * gui-ooff
+16.
+17. Title:
+17. @CE 8 0 22 50 *
+18. Left Axis Label:
+18. @CE 9 0 22 50 *
+19. Bottom Axis Label:
+19. @CE 10 0 22 50 *
+20.
+21. Minimum Value for sigma (omit for default):
+21. @CE 11 0 42 50 *
+22. Maximum Value for sigma (omit for default):
+22. @CE 12 0 42 50 *
+23.
+24. Subset/Except/For Specification:
+25. @CE 13 0 1 50 *
+26.
+27.
+28. Generate the Lognormal PPCC Plot?
+--------------------
+GR FE
+TITLE CASE ASIS
+LABEL CASE ASIS
+CASE ASIS
+LINES _4
+LINE COLOR _5
+CHARACTERS _6
+CHARACTER FILL _7
+TITLE _8
+Y1LABEL _9
+X1LABEL _10
+DELETE SIGMA1 SIGMA2
+LET SIGMA1 = _11
+LET SIGMA2 = _12
+LOGNORMAL REPLICATED CENSORED PPCC PLOT _1 _2 _3 _13
+MOVE 50 5
+JUSTIFICATION CENTER
+. TEXT Optimal Value of sigma = ^shape
+MOVE 50 2
+. TEXT Maximum PPCC = ^maxppcc
+TITLE
+LABEL
+--------------------
+WEB HELP PPCC PLOT
+--------------------

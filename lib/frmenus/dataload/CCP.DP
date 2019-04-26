@@ -1,0 +1,8 @@
+----- <~dataload\CCP.DP> Load CCP.DAT
+
+. This is file    CCP.DP
+
+DELETE Y SIZE X
+SKIP 25
+READ CCP.DAT Y SIZE X
+

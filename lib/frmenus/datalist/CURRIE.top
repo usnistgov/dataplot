@@ -1,0 +1,8 @@
+----- <~datalist\CURRIE.top> CURRIE.DAT
+ 
+CURRIE.DAT
+ 
+View     <xcl: LIST CURRIE.DAT>
+Load     <x2cl: SKIP 25; READ CURRIE.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\CURRIE.DAT>
+ 

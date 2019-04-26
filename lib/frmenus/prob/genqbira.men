@@ -1,0 +1,37 @@
+This is file genqbira.men--Generate Quasi-Binomial Type I Random Numbers
+ 
+--------------------
+ 1. Generate Quasi-Binomial Type I Random Numbers
+ 2. LET Y = QUASI-BINOMIAL TYPE I RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Shape Parameter (p, 0 < p < 1):
+ 5. @CE 2 0 42 50 ?
+ 6. Shape Parameter (phi, -p/m < phi < (1-p)/m):
+ 6. @CE 3 0 42 50 ?
+ 7. Shape Parameter (m, m > 0):
+ 7. @CE 4 0 42 50 ?
+ 8.
+ 9. Optional random number generator seed (default=305):
+10.    (integer >= 305)
+10. @CE 5 0 42 50 ?
+11.
+12. Name of output variable;
+12. @CE 6 0 42 50 ?
+13.
+14.
+15. Generate the random numbers?
+--------------------
+AN FE
+@IF 5 0 SEED _5
+LET P = 0.5
+@IF 2 0 LET P = _2
+LET PHI = 0
+@IF 3 0 LET PHI = _3
+LET M = 1
+@IF 4 0 LET M = _4
+LET _6 = QUASI-BINOMIAL TYPE I RANDOM NUMBERS FOR I = 1 1 _1
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

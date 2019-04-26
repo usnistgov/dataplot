@@ -1,0 +1,55 @@
+This is Dataplot data file     E2489A.DAT
+Sample data set from: "Standard Practice for
+Statistical Analysis of One-Sample and
+Two-Sample Interlaboratory Proficiency Testing
+Programs", ASTM, 2007. 
+
+The above document desribes the
+ASTM Standard E 2489 - 06 and this is the
+data set they use to demonstrate the one-sample
+proficiency analysis.
+
+Number of observations             = 30
+Number of variables per line image =  2
+Order of variables on a line image--
+   1. Lab ID              = Laboratory ID
+   2. Response variable Y = Test Result
+To read this file into Dataplot--
+   SKIP 25
+   READ E2489A.DAT LABID  Y
+ 
+ 
+ 
+ 
+   LABID        Y
+-----------------
+ 1   1.22
+ 2   1.62
+ 3   1.82
+ 4   0.60
+ 5   2.75
+ 6   1.55
+ 7   1.17
+ 8   1.76
+ 9   1.35
+10   1.18
+11   1.19
+12   1.71
+13   2.03
+14   1.10
+15   1.84
+16   1.39
+17   1.13
+18   1.66
+19   1.28
+20   1.24
+21   0.69
+22   1.54
+23   1.43
+24   0.84
+25   0.98
+26   1.97
+27   4.89
+28   1.85
+29   1.09
+30   1.07

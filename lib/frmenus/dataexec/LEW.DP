@@ -1,0 +1,10 @@
+----- <~dataexec\LEW.DP> Load & Execute LEW.DAT
+
+. This is file    LEW.DP
+
+DELETE Y
+SKIP 25
+READ LEW.DAT Y
+TITLE LEW.DAT
+4-PLOT Y
+

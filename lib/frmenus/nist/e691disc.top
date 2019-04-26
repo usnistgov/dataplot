@@ -1,0 +1,54 @@
+----- <~nist\e691disc.top> E691 Interlab: Discussion
+ 
+E691 Interlab: Discussion
+
+The menus in this section are used to perform an
+interlab analysis as documented in 
+
+   "Standard Practice for Conducting an Interlaboratory
+   Study to Determine the Precision of a Test Method", ASTM
+   International, 100 Barr Harbor Drive, PO BOX C700,
+   West Conshohoceken, PA 19428-2959, USA.
+
+The data consists of:
+
+    1. A response variable
+    2. A lab-id variable
+    3. A material-id variable
+
+If your data is stored in a format with each lab
+in a separate column, you can use the "Convert Data to"
+menu to save your data in the format needed by the
+Dataplot commands.
+
+These menus produce the following output:
+
+  1. The tables documented in the above document:
+
+     a. For each material:
+           Lab ID, Cell Average, Cell SD, 
+           Deviation of Cell Average from Material Average,
+           h-Consistency Statistic, k-Consistency Statistic,
+     b. The h-consistency statistic by laboratory and material.
+     c. The k-consistency statistic by laboratory and material.
+     d. A summary table of precision statistics for each
+        material.
+
+  2. The graphs documented in the above document:
+     a. h-consistency statistic (materials within labs)
+     b. h-consistency statistic (labs within materials)
+     c. k-consistency statistic (materials within labs)
+     d. k-consistency statistic (labs within materials)
+     e. Reproducibility SD and Repeatability SD versus
+        material average
+
+  3. A few additional graphs not documented in the above
+     document:
+
+     a. A graph displaying the lab means and sd's for each
+        material.
+     b. A plot of means, sd's, repeatability sd's, and
+        reproducibility sd's for each material.
+     c. Dot plots of the h-consistency statistics.
+     d. Box plots of the k-consistency statistics.
+

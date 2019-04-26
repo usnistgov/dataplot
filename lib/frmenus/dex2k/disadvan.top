@@ -1,0 +1,19 @@
+----- <~dex2k\disadvan.top> Disadvantages: 2**k Full Factorial Designs
+
+Disadvantages: 2**k Full Factorial Designs
+
+The disadvantages of the full factorial design are:
+
+   1. Sample size increases rapidly
+   2. Logistics of design more complicated
+      than 1-factor-at-a-time designs
+
+Of these, the sample size issue is of primary concern.
+If there are a large number of factors, it may simply
+not be practical to run a full factorial design.  In
+this case, a fractional factorial design would typically
+be run first to identify the few most important factors.
+Depending on the goals of the experiment, a full
+factorial design may be run on this reduced set of
+factor variables.
+

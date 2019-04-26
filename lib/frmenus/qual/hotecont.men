@@ -1,0 +1,40 @@
+This is file hotecont.men--Generate Phase I Hotelling Control Charts
+ 
+--------------------line 3
+1. Phase I Hotelling Control Chart
+2. PHASE I HOTELLING CONTROL CHART Y1 Y2 GROUP
+3.
+4. List of Response Variables:
+5. @CE 1 0 1 50 ? gui-variable
+6. Group ID (Horizontal Axis) Variable:
+6. @CE 2 0 42 50 ? gui-variable
+7.
+8. Optional Engineering Upper Specification Limit:
+8. @CE 3 0 42 50 *
+9.
+10. Line Type for Data:
+10. @CE 4 0 42 50 gui-line
+11. Line Type for Default Control Limit:
+11. @CE 5 0 42 50 gui-line
+12. Line Type for Engineering Specification Limit:
+12. @CE 6 0 42 50 gui-line
+13.
+14. Character Type for Data
+14. @CE 7 0 42 50 gui-char
+15. Character Fill for Data
+15. @CE 8 0 42 50 gui-ooff
+16.
+17. Subset/Except/For Specification:
+18. @CE 9 0 1 50 *
+19.
+20. Generate the Chart?:
+--------------------
+LET USL = _3
+LINES _4 _5 _5 _6
+CHARACTER BLANK ALL
+CHAR _7
+CHAR FILL _8
+PHASE I HOTELLING CONTROL CHART _1 _2 _9
+--------------------
+WEB HELP HOTELLING CONTROL CHART
+--------------------

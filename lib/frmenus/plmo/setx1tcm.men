@@ -1,0 +1,44 @@
+This is file setx1tcm.men--Set X1TIC MARK Attributes
+ 
+--------------------
+ 1. Set X1TIC MARK  Attributes
+ 2. X1TIC MARK COLOR RED; X1TIC MARK SIZE 3
+ 3.
+ 4. X1 Tic Marks:
+ 4. @CE 1 0 42 50 * gui-ooff
+ 5. Color for X1 Tic Marks:
+ 5. @CE 2 0 42 50 * gui-color
+ 6. Lower Offset for X1 Tic Marks:
+ 6. @CE 3 0 42 50 *
+ 7. Upper Offset for X1 Tic Marks:
+ 7. @CE 4 0 42 50 *
+ 8. Position for X1 Tic Marks:
+ 9. @CE 5 1  5 15 outside
+ 9. @CE 5 2 17 27 inside
+ 9. @CE 5 3 29 39 through
+10. Size for X1 Tic Marks (0 to 100 units):
+10. @CE 6 0 42 50 * 
+11. Number of Major Tic Marks for X1 Axis:
+11. @CE 7 0 42 50 *
+12. Number of Minor Tic Marks for X1 Axis:
+12. @CE 8 0 42 50 *
+13. Thickness for X1 Tic Marks:
+13. @CE 9 0 42 50 * gui-thick
+14.
+15.
+16. Set X1TIC MARK Attributes?
+--------------------
+PC FE
+@IF 1 0 X1TIC MARKS _1
+@IF 2 0 X1TIC MARKS COLOR _2
+X1TIC MARKS OFFSET _3 _4
+@IF 5 1 X1TIC MARKS POSITION OUTSIDE
+@IF 5 2 X1TIC MARKS POSITION INSIDE
+@IF 5 3 X1TIC MARKS POSITION THROUGH
+@IF 6 0 X1TIC MARKS SIZE _6
+@IF 7 0 MAJOR X1TIC MARKS NUMBER _7
+@IF 8 0 MINOR X1TIC MARKS NUMBER _8
+@IF 9 0 X1TIC MARKS THICKNESS _9
+--------------------
+WEB HELP TIC MARKS
+--------------------

@@ -1,0 +1,37 @@
+This is file gainspec.men--Gain-spectrum
+ 
+--------------------
+ 1. Gain-spectrum == Gain Diagram
+ 2. GAIN-SPECTRUM Y1 Y2
+ 3.
+ 4. Definition: Gain-spectrum =
+ 5.     sqrt( coherency * (spectrum1 / spectrum2))
+ 6.
+ 7. Vertical   axis = gain
+ 8. Horizontal axis = frequency (0 to .5)
+ 9.
+10. Question being addressed:
+11.     For a given frequency, what is
+12.     regression coefficient of series 1
+13.     on series 2.
+14.
+15. Reference: Granger & Hatanaka, page 78.
+16.
+17. Response Variable   #1:
+17. @CE 1 0 33 50 ?
+18. Response Variable   #2:
+18. @CE 2 0 33 50 ?
+19.
+20. Line type:
+21. @CE 3 0 33 50 *
+22.
+23. Subset/Except/For Specification:
+24. @CE 4 0 6 50 *
+25.
+26.
+27. Generate the Gain-spectrum?:
+--------------------
+GR FE
+LINES _3
+GAIN-SPECTRUM _1 _2 _4
+--------------------

@@ -1,0 +1,50 @@
+This is Dataplot Data File     ISHIKA78.DAT
+Ishikawa, Kaoru (1982).  Guide to Quality Control.
+Asian Productivity Organization, Tokyo,
+Unipub Quality Resources, White Plains, New York, p. 78.
+Response Variable = Number of defectives for electric machine part
+Number of Observations = 25
+Number of Variables per line image = 3
+Order of variables per line image--
+   1. Response variable = number defective
+   2. Sub-group size (= total number of items)
+   3. Sub-group ID
+Statistical Category--SPC & p Control Chart
+To read this into Dataplot--
+   SKIP 25
+   READ ISHIKA78.DAT Y NI X
+   LET P = Y/N
+   P CONTROL CHART Y NI X
+ 
+ 
+ 
+ 
+ 
+  Number    Total     Set
+Defective  Number     ID
+-------------------------------
+   15       115        1
+   18       220        2
+   23       210        3
+   22       220        4
+   18       220        5
+   15       255        6
+   44       440        7
+   47       365        8
+   13       255        9
+   33       300       10
+   42       280       11
+   46       330       12
+   38       320       13
+   29       225       14
+   26       290       15
+   17       170       16
+    5        65       17
+    7       100       18
+   14       135       19
+   36       280       20
+   25       250       21
+   24       220       22
+   20       220       23
+   15       220       24
+   18       220       25

@@ -1,0 +1,50 @@
+This is file histogra.men--Histogram
+ 
+--------------------
+1. Histogram
+2. HISTOGRAM Y
+3.
+4. Horizontal Axis Variable:
+4. @CE 1 0 33 100 ?
+5.
+6. Class Width (0.3*s):
+6. @CE 2 0 33 100 *
+7. Lower Limit of First Class:
+7. @CE 3 0 33 100 *
+8. Upper Limit of Last Class:
+8. @CE 4 0 33 100 *
+9.
+10. Bar Width for Data:
+10. @CE 5 0 33 100 *
+11. Bar Fill for Data (off, on):
+11. @CE 6 0 33 100 *
+12. Bar Dimension (2d, 3d):
+12. @CE 7 0 33 100 *
+13.
+14. Title:
+14. @CE 8 0 33 100 *
+15. Left Axis Label:
+15. @CE 9 0 33 100 *
+16. Bottom Axis Label:
+16. @CE 10 0 33 100 *
+17.
+18. Subset/Except/For Specification:
+19. @CE 11 0 1 100 *
+20.
+21.
+22. Generate the Histogram?:
+--------------------
+GR FE
+CLASS WIDTH _2
+CLASS LOWER _3
+CLASS UPPER _4
+BAR FILL _5
+BAR WIDTH _6
+BAR DIMENSION _7
+TITLE _8
+Y1LABEL _9
+X1LABEL _10
+HISTOGRAM _1 _11
+--------------------
+WEB HELP HISTOPGRAM
+--------------------

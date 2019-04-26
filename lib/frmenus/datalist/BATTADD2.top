@@ -1,0 +1,8 @@
+----- <~datalist\BATTADD2.top> BATTADD2.DAT
+ 
+BATTADD2.DAT
+ 
+View     <xcl: LIST BATTADD2.DAT>
+Load     <x2cl: SKIP 25; READ BATTADD2.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\BATTADD2.DAT>
+ 

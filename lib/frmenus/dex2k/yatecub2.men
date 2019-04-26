@@ -1,0 +1,36 @@
+This is file yatecub2.men--Generate Yates Cube Plot
+
+--------------------
+ 1. Yates Cube Plot (2**4)
+ 2. SET CONDITION PLOT TYPE YATES CUBE; MATRIX PLOT Y X1 X2 X3 X4
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. List 4 Factor Variables:
+ 6. @CE 2 0 1 50 ? gui-vari
+ 7.
+ 8. Set Text Size Scale Factor (default=2):
+ 8. @CE 3 0 42 50 *
+ 9.
+10. Plot Title:
+11. @CE 4 0 1 50 *
+12.
+13. Subset/Except/For Specification: 
+14. @CE 5 0 1 50 *
+15.
+16.
+17. Generate the Yates Cube Plot?:
+--------------------
+GR FE
+DEVICE 1 FONT SIMPLEX
+MULTIPLOT SCALE FACTOR 2
+MULTIPLOT SCALE FACTOR _3
+TITLE _3
+SET CONDITION PLOT TYPE YATES CUBE
+CONDITION PLOT _1 _2  _5
+FRAME CORNER COORDINATES
+DEVICE 1 FONT TEKTRONIX
+MULTIPLOT SCALE FACTOR 1
+--------------------
+WEB HELP YATES CUBE PLOT
+--------------------

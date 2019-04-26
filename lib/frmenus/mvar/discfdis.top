@@ -1,0 +1,60 @@
+----- <~mvar\discfdis.top> Fisher Discriminant Analysis
+ 
+Multivariate Analysis: Fisher's Discriminant Analysis
+ 
+The details of Fisher's discriminant analysis are
+too involved to be discussed in detail here.  Dataplot
+implements Fisher's discriminant analysis as 
+described in Johnson and Wichern, "Applied Multivariate
+Statistical Analysis", Third Edition.
+
+In summary, Fisher's discriminant analysis looks for
+a few linear combinations of the original data that
+maximize the ratio of the between group variability and
+the common variability within groups.
+
+Fisher's method is based on the 2 matrices:
+
+  1) W = (N1 + N2 + ... + Ng)*Spool
+     where N1, N2, ... are the sample sizes of the 
+     g groups and Spool is the pooled sample 
+     variance-covariance matrix of the response
+     variables.  W is an estimate of the common 
+     variability within groups.
+
+  2) B0 = SUM (XBARi - XBAR)(XBARi - XBAR)'
+     where the summation is over the g groups, XBAR is
+     the vector of means for all the data, and XBARi is
+     the vector of means for the ith group.  B0 is an
+     estimate of the variability between groups.
+
+Fisher's discriminant analysis then finds the linear
+combinations l that maximize:
+
+     l'*B0*l/(l'*W*l)
+
+The linear combinations that maximize this ratio are the
+eigenvectors of the WINV*B0 matrix where WINV is the
+inverse of the W matrix.
+
+Fisher's discriminant analysis works well when the first
+few of these eigenvectors provide most of the separation
+in the original data.  Typically, we would like to use
+the first 2 or 3 discriminant functions.  The corresponding
+eignevalues should give an indication of how many
+discriminant functions are required.  That is, the 
+discriminant functions corresponding to near zero
+eigenvalues can be dropped.
+
+The macro for the Fisher's discriminant analysis plots
+the response data in the units of the first 2 discriminant
+functions with each group plotted with a different
+character symbol.  This plot should give an indication
+whether or not Fisher's discriminant analysis does an
+adequate job of discrimination.
+
+Fisher's discriminant analysis does not require that the
+response data be multivariate normal.  However, it does
+make an implicit assumption that the group
+variance-covariance matrices are equal.
+

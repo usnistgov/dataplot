@@ -1,0 +1,8 @@
+----- <~dataload\THURBER.DP> Load THURBER.DAT
+
+. This is file    THURBER.DP
+
+DELETE Y
+SKIP 25
+READ THURBER.DAT Y
+

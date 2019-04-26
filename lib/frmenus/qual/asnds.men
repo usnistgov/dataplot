@@ -1,0 +1,85 @@
+This is file asnds.men--Generate Double Sample ASN Chart
+ 
+--------------------line 3
+1. Double Sample ASN Chart
+2. Macro
+3.
+4. Acceptance Number for Defectives for Sample 1:
+4. @CE 1 0 42 50 ?
+5. Sample size for Sample 1:
+5. @CE 2 0 42 50 ?
+6. Acceptance Number for Defectives for Sample 2:
+6. @CE 3 0 42 50 ?
+7. Sample size for Sample 2:
+7. @CE 4 0 42 50 ?
+8.
+9. Second Sample Curtailed?:
+10. @CE 5 1 5 10 yes
+11. @CE 5 2 5 10 no
+12.
+13. Start value for p (default = 0.001):
+13. @CE 6 0 42 50 ?
+14. Increment for p (default = 0.001):
+14. @CE 7 0 42 50 ?
+15. Stop value for p (default = 0.20):
+15. @CE 8 0 42 50 ?
+16.
+17.
+18. Generate the Chart?:
+--------------------
+DELETE ZZZZP ZZZZY ZZZZT1 ZZZZT2 ZZZZT3 ZZZZT4
+.
+LET ZZZZC1 = _1
+LET ZZZZN1 = _2
+LET ZZZZC2 = _3
+LET ZZZZN2 = _4
+.
+LET ZZZZCURT = 1
+@IF 5 2 LET ZZZZCURT = 0
+LET PSTART = 0.001
+LET PINC = 0.001
+LET PSTOP = 0.20
+LET PSTART = _6
+LET PINC = _7
+LET PSTOP = _8
+.
+LET ZZZZP = SEQUENCE PSTART PINC PSTOP
+IF ZZZZCURT = 0
+   LET ZZZZY = BINCDF(ZZZZC2,ZZZZP,ZZZZN1)-BINCDF(ZZZZC1,ZZZZP,ZZZZN1)
+   LET ZZZZY = 1 - ZZZZY
+   LET ZZZZY = ZZZZN1 + ZZZZN2*(1 - ZZZZY)
+   TITLE ASN Double Sample Curve (Uncurtailed)
+END OF IF
+IF ZZZZCURT = 1
+   LET ZZZZK1 = ZZZZC1+1
+   LET ZZZZK2 = ZZZZC2
+   LET ZZZZN21 = ZZZZN2 + 1
+   LET ZZZZN9 = SIZE ZZZZP
+   LET ZZZZY = ZZZZN1 FOR I = 1 1 ZZZZN9
+   FEEDBACK OFF
+   LOOP FOR K = ZZZZK1 1 ZZZZK2
+       LET ZK = K
+       LET ZK1 = ZZZZC2 - ZK
+       LET ZK2 = ZZZZC2 - ZK + 2
+       LET ZZZZT1 = BINPDF(ZK,ZZZZP,ZZZZN1)
+       LET ZZZZT2 = BINCDF(ZK1,ZZZZP,ZZZZN2)
+       LET ZZZZT3 = BINPDF(ZK2,ZZZZP,ZZZZN21)
+       LET ZZZZT3 = ZZZZT3 + (1-BINCDF(ZK2,ZZZZP,ZZZZN21))
+       LET ZZZZT4 = ZZZZN2*ZZZZT2 + (ZZZZC2-ZK+1)*ZZZZT3/ZZZZP
+       LET ZZZZY  = ZZZZY + ZZZZT1*ZZZZT4
+   END OF LOOP
+   FEEDBACK ON
+   TITLE ASN Double Sample Curve (Curtailed)
+END OF IF
+.
+LABEL CASE ASIS
+TITLE CASE ASIS
+Y1LABEL Average Sample Number
+X1LABEL Lot Fraction Defective, p
+.
+PLOT ZZZZY VS ZZZZP
+LABEL
+TITLE
+--------------------
+
+--------------------

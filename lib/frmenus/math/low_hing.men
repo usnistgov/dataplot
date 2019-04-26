@@ -1,0 +1,22 @@
+This is file low_hing.men--Compute lower hinge of a variable
+ 
+--------------------
+ 1. Lower Hinge
+ 2. LET A = LOWER HINGE Y
+ 3.
+ 4. Variable for which to compute the lower hinge:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the lower hinge:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Lower Hinge?:
+--------------------
+GR FE
+LET _2 = LOWER HINGE  _1 _3
+--------------------
+WEB HELP LOWER HINGE
+--------------------

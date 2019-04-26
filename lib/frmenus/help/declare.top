@@ -1,0 +1,77 @@
+----- <~help\declare.top> Declaration-Free Language
+
+Declaration-Free Language
+
+Declaration-Free Language                                        -
+
+Supported Types in Dataplot
+
+    The data types supported in the Dataplot
+    language are
+
+       1) parameters = named constants
+       2) variables  = named vectors
+       3) matrices   = named matrices
+       4) functions = named character strings
+
+Rules for Names
+
+    Names used for parameters, variables, matrices,
+    and functions can be up to eight characters, must
+    start with an alphabetic character, and may thereafter
+    be any combination of the 26 alphabetic characters,
+    the 10 numeric characters, and the underscore.  Names
+    which are longer than 8 characters can be used, but
+    only the first eight characters are scanned and
+    internal1y stored. 
+
+Declaration Free Language
+
+    Dataplot is a declaration-free language.  One need not
+    pre-define parameter, variable, matrix, and function
+    names in a separate section unto itself (as with ALGOL
+    and PASCAL); in fact, one does not pre-define such elements
+    at all.  One simply introduces these elements along the way
+    as needed by the program and as dictated by the analysis. 
+
+DELETE First to Change Type
+
+    Once a name is defined (as a parameter, a variable, a
+    matrix, or a function), it remains that type throughout
+    the Dataplot run.  For exanple, if X is used as a variable,
+    it remains a variable for the entire run.  If the analyst
+    chooses to change the use of a name (for example, to change
+    a variable X to a function X) in the middle of a run, then
+    the analyst must first delete the name using the
+
+        DELETE                                <xcl: HELP DELETE>
+
+    command (as in DELETE X), and then reuse the name in the
+    desired fashion.
+
+Data Stored in Memory
+
+    Dataplot stores variables and parameters in memory
+    (as oppossed to storing it in a binary file that is
+    read when the data is needed). 
+
+    Although this is convenient for interactive usage
+    (which Dataplot is primarily intended for), it does
+    mean that the amount of data that Dataplot can
+    handle has limits.
+
+    By default, Dataplot starts with 10 columns of data
+    with a maximum of 100,000 rows (the Windows version of
+    the graphical interface may restrict this to a maximum
+    of 20,000 rows).  You can use the
+
+        DIMENSION                             <xcl: HELP DIMENSION>
+
+    command to create more columns (at the expense of
+    fewer rows).  You cannot use the DIMENSION command to
+    exceed the default maximum number of rows.
+
+    If you need to increase the maximum number of rows,
+    contact the Dataplot developers (alan.heckert@nist.gov)
+    to obtain a version with a larger capacity.
+

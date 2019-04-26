@@ -1,0 +1,10 @@
+----- <~qual\arlchart.top> Average Run Length (ARL) Charts
+ 
+Average Run Length (ARL) Charts
+ 
+Average Run Length (ARL) Curves
+   X (Mean) Control Chart                  <xemf: ~qual\xbararl.men>
+   P (Binomial Proportion) Control Chart   <xemf: ~qual\parl.men>
+   C (Poisson Counts) Control Chart        <xemf: ~qual\carl.men>
+   Cusum (Mean) Control Chart              <xemf: ~qual\cusumarl.men>
+

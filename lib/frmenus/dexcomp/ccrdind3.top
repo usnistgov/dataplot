@@ -1,0 +1,29 @@
+----- <~dexcomp\ccrdind3.top> Completely Randomized Designs: Example 2
+ 
+Completely Randomized Designs: Example 2
+ 
+Example 2:
+
+   A more typical example of a completely
+   randomized design is the following:
+ 
+      k = 1 factor (X1)
+      l = 4 levels of that single factor
+      r = 3 replications per level
+      n = 4 levels * 3 rep. per level = 12 runs
+ 
+       X1
+      .....
+        1
+        1
+        1
+        2
+        2
+        2
+        3
+        3
+        3
+        4
+        4
+        4
+ 

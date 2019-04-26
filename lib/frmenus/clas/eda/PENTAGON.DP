@@ -1,0 +1,10 @@
+----- <~dataloex\PENTAGON.DP> Load & Execute PENTAGON.DAT
+
+. This is file    PENTAGON.DP
+
+DELETE Y
+SKIP 25
+READ PENTAGON.DAT Y
+TITLE PENTAGON.DAT
+/
+

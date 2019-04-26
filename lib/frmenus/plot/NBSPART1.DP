@@ -1,0 +1,7 @@
+----- <~plot\NBSPART1.DP> Load NBSPART1.DAT
+
+. This is file    NBSPART1.DP
+
+DELETE X Y
+READ NBSPART1.DAT X Y
+

@@ -1,0 +1,94 @@
+. This is Dataplot function    BAYEUNIV.DP
+. Purpose--Bayesian Analysis for Univariate Location
+. Note--Algorithm provided by Mark Vangel.
+. Date--August 29, 2001
+.
+. -----start point-----
+.
+device 1 x11
+device 2 ps
+.
+. -- Data.  Even Bayesians need data.
+.
+let n    = 10
+let xbar = 10
+let s    = 1
+.
+. -- Set nburn (number of initial chain elements to throw away), and
+.    set nsim  (number of simulation steps)
+.    Throw away first nburn elements in the chains to lose
+.    effect of starting values.
+.
+let nburn = 100
+let nsim = 1000
+.
+. -- Set starting values for chain.  These values shouldn't matter
+.    too much, because chains reach stat. dist very quickly for
+.    this problem.
+.
+let mu = xbar; let sigma = s
+.
+. -- Start off with a null table, and add a row for each element
+.    of the chain
+.
+. let tbl = NULL
+.
+. -- Set mean of normal prior on mu
+.    Set SD   of normal prior on mu
+.
+let phi = 5
+let tau = 100
+.
+let kmax = nburn+nsim
+let z = normal random numbers for i = 1 1 kmax
+let gamma = n/2
+let g = gamma random numbers for i = 1 1 kmax
+feedback off
+let count = 0
+loop for k = 1 1 kmax
+   let modk = mod(k,100)
+   if modk = 0; print "----- Iteration ^k -----"; end if
+.
+. -- Posterior of mu given sigma is normal with mean
+.    which is a weighted average of phi and xbar, and
+.    reciprocal variance (precision) which is the sum of
+.    of the precisions of theta and xbar.  As tau->infinity
+.    prior becomes non-informative.
+.
+   let w = 1/tau**2/(1/tau**2 +n/sigma**2)
+   let zk = z(k)
+.  let mu = w*phi +(1-w)*xbar +sqrt(1/(n/sigma**2+1/tau**2))*rnorm(1)
+   let mu = w*phi +(1-w)*xbar +sqrt(1/(n/sigma**2+1/tau**2))*zk
+.
+. -- Posterior of 1/sigma^2 given mu has a gamma distribution
+.    with scale parameter theta, and with shape n/2.
+.
+   let theta = 1/2* ( n*(xbar-mu)**2 +(n-1)*s**2)
+.  let prec = rgamma(1,n/2,1/theta)
+.  let prec = gamma(1,n/2,1/theta)
+   let scale = 1/theta
+   let gk = g(k)
+   let prec = scale*gk
+   let sigma = 1/sqrt(prec)
+.
+. -- Accumulate values of (mu,sigma) after burn-in as successive
+.    rows in a two-column table.
+.
+   if k > nburn
+.     tbl = rbind(tbl,c(mu,sigma))
+      let count = count+1
+      let muvec(count) = mu
+      let sigmavec(count) = sigma
+   end if
+end loop
+feedback on
+.
+let loc = mean muvec
+let sdloc = sd muvec
+let lower = 2.5 percentile muvec
+let upper = 97.5 percentile muvec
+.
+print "location estimate     = ^loc"
+print "sd (loc. est.)        = ^sdloc"
+print "lower (=  2.5% point) = ^lower"
+print "upper (= 97.5% point) = ^upper"

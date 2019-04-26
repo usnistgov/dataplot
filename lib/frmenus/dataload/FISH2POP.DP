@@ -1,0 +1,8 @@
+----- <~dataload\FISH2POP.DP> Load FISH2POP.DAT
+
+. This is file    FISH2POP.DP
+
+DELETE Y1 TO Y2 TAG
+SKIP 25
+READ FISH2POP.DAT Y1 TO Y2 TAG
+

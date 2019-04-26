@@ -1,0 +1,15 @@
+----- <~file\capthtml.top> Files: Capture Options (HTML)
+
+Generate Dataplot Output to HTML File
+
+Options for Generating Dataplot Output to a HTML:
+
+Generate Dataplot Output to a HTML File       <xemf: ~file\htmlon.men>
+Revert Dataplot Output to Text Output Window  <xcf: ~file\CAPTOFF.DP>
+
+Note; For HTML output, it is generally desirable
+to turn off the normal feedback messages.
+
+Turn the FEEDBACK Switch OFF                      <xcl: FEEDBACK OFF>
+Turn the FEEDBACK Switch ON                       <xcl: FEEDBACK ON>
+

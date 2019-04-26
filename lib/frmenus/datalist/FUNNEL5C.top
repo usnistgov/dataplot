@@ -1,0 +1,8 @@
+----- <~datalist\FUNNEL5C.top> FUNNEL5C.DAT
+ 
+FUNNEL5C.DAT
+ 
+View     <xcl: LIST FUNNEL5C.DAT>
+Load     <x2cl: SKIP 25; READ FUNNEL5C.DAT Y1 Y2>
+Print    <xccl: printfile C:\DATAPLOT\FUNNEL5C.DAT>
+ 

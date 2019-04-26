@@ -1,0 +1,30 @@
+----- <~reli\plotpdf.top> Plot Density Functions
+
+Plot Density (PDF) Functions
+
+Normal                               <xemf: ~prob\pnorpdf.men>
+Lognormal                            <xemf: ~prob\plgnpdf.men>
+Power Normal                         <xemf: ~prob\ppnrpdf.men>
+Power Lognormal                      <xemf: ~prob\pplnpdf.men>
+
+Exponential                          <xemf: ~prob\pexppdf.men>
+Geometric Extreme Exponential        <xemf: ~prob\pgeepdf.men>
+
+Weibull (Minimum)                    <xemf: ~prob\pwei1pdf.men>
+Weibull (Maximum)                    <xemf: ~prob\pwei2pdf.men>
+Inverted Weibull                     <xemf: ~prob\piwepdf.men>
+Exponentiated Weibull                <xemf: ~prob\pewepdf.men>
+Bi-Weibull                           <xemf: ~prob\pbwepdf.men>
+
+Wald                                 <xemf: ~prob\pwalpdf.men>
+Inverse Gaussian                     <xemf: ~prob\pigpdf.men>
+Reciprocal Inverse Gaussian          <xemf: ~prob\prigpdf.men>
+Fatigue Life                         <xemf: ~prob\pflpdf.men>
+
+Gamma                                <xemf: ~prob\pgampdf.men>
+Log Gamma                            <xemf: ~prob\plgapdf.men>
+Inverted Gamma                       <xemf: ~prob\pigapdf.men>
+
+Alpha                                <xemf: ~prob\palppdf.men>
+Exponential Power                    <xemf: ~prob\ppexpdf.men>
+

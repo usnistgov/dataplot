@@ -1,0 +1,64 @@
+This is file scatplma.men--Scatter Plot Matrix
+ 
+--------------------
+ 1. Conditioning Plot
+ 2. CONDITION PLOT Y X TAG
+ 3.
+ 4. Enter Response (Y) Variable(s):
+ 5. @CE 1 0 1 50 ? gui-variable
+ 6. Enter Indpedent Variable(s) (if any):
+ 7. @CE 2 0 1 50 ? gui-variable
+ 8. Enter Tag Variable(s):
+ 9. @CE 3 0 1 50 ? gui-variable
+10.
+11. Number of Response Variables (>=1):
+11. @CE 4 0 42 50 ?
+12. Number of Conditioning Variables (1 or 2):
+12. @CE 5 0 42 50 ?
+13.
+14. Plot Character Types:
+14. @CE 6 0 20 50 ? gui-char
+15. Plot Character Fill Types:
+15. @CE 7 0 20 50 ? gui-ooff
+16. Plot Line Types:
+16. @CE 8 0 20 50 ? gui-line
+17. Plot Title:
+18. @CE 9 0 1 50 *
+19.
+20. Using software fonts provides more control
+21. over character sizes.  However, it can be
+22. slower to generate the plot (this is
+23. particularly true on the PC).
+24.
+25. Select Font Type for Screen:
+26. @CE 10 1 5 20 Hardware
+26. @CE 10 2 22 37 Software
+27. Plot Text Size Scale Factor (default = 2):
+27. @CE 11 0 42 50 ? 
+28.
+29. Subset/Except/For Specification: 
+30. @CE 12 0 1 50 *
+31.
+32.
+33. Generate the Conditioning Plot?:
+--------------------
+GR FE
+DEVICE 1 FONT TEKTRONIX
+@IF 10 2 DEVICE 1 FONT SIMPLEX
+CHARACTER _6
+CHARACTER FILL _7
+LINE _8
+MULTIPLOT CORNER COORDINATE 10 10 90 90
+MULTIPLOT SCALE FACTOR 2
+MULTIPLOT SCALE FACTOR _11
+SET CONDITION PLOT RESPONSE VARIABLES _4
+SET CONDITION PLOT CONDITIONING VARIABLES _5
+CONDITION PLOT _1 _2 _3 _12
+@IF 9 0 MOVE 50 97
+@IF 9 0 JUSTIFICATION CENTER
+@IF 9 0 TEXT _9
+MULTIPLOT SCALE FACTOR 1
+DEVICE 1 FONT TEKTRONIX
+--------------------
+WEB HELP CONDITION PLOT
+--------------------

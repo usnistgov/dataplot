@@ -1,0 +1,8 @@
+----- <~dataall\BOXBOD.top> BOXBOD.DAT
+
+BOXBOD.DAT
+
+View     <xcl: LIST BOXBOD.DAT>
+Load     <xcf: ~dataload/BOXBOD.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXBOD.DAT>
+

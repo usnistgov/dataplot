@@ -1,0 +1,28 @@
+This is file matr_nor.men--Compute norms of a matrix
+ 
+--------------------
+ 1. Matrix Norms
+ 2. LET A = MATRIX EUCLIDEAN NORM M
+ 3.
+ 4. Matrix for which to compute the norm:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Parameter to store the norm:
+ 5. @CE 2 0 33 50 ?
+ 6. Type of norm to compute:
+ 7. @CE 3 1 14 30 euclidean norm
+ 8. @CE 3 2 14 30 spectral norm
+ 9. @CE 3 3 14 30 spectral radius
+10.
+11. Subset/Except/For Specification:
+12. @CE 4 0 1 50 *
+13.
+14.
+15. Compute the Matrix Norm?:
+--------------------
+GR FE
+@IF 3 1 LET _2 = MATRIX EUCLIDEAN NORM  _1 _4
+@IF 3 2 LET _2 = MATRIX SPECTRAL NORM  _1 _4
+@IF 3 3 LET _2 = MATRIX SPECTRAL RADIUS  _1 _4
+--------------------
+WEB HELP MATRIX EUCLIDEAN NORM
+--------------------

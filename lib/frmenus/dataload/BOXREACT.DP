@@ -1,0 +1,8 @@
+----- <~dataload\BOXREACT.DP> Load BOXREACT.DAT
+
+. This is file    BOXREACT.DP
+
+DELETE Y X1 TO X5
+SKIP 25
+READ BOXREACT.DAT Y X1 TO X5
+

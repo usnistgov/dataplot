@@ -1,0 +1,77 @@
+.
+.  Macro to classify new points based on a
+.  prior Fisher's discriminant analysis
+.
+.  To run this macro:
+.
+.  1) Define the data matrix       ZZZZX
+.  2) Define the group id variable ZTAG
+.  3) Call FISHDIS.DP to define discriminant functions
+.     EVECT1, EVECT2, ..
+.  4) Define NR = number of discriminant to use (NR <= P)
+.  5) A matrix XNEW containing the new points to classify
+.  6) Enter:  CALL FISHCLAS.DP
+.
+.  This macro returns a variable, YGROUP, which identifies
+.  the group to which the new point is classified.  YGROUP
+.  will have the same numbe of rows as XNEW.
+.
+FEEDBACK OFF
+DELETE YGROUP TEMP YY YX
+.
+IF NR NOT EXIST
+  LET NR = 2
+END OF IF
+.
+LET NEWPTS = MATRIX NUMBER OF ROWS XNEW
+.
+LOOP FOR I = 1 1 NEWPTS
+  LET X0 = MATRIX ROW XNEW I
+  .
+  .  Calculate Yhats and Ybars
+  .
+  LET XBAR = MATRIX GROUP MEANS ZZZZX ZTAG
+  .
+  LOOP FOR J = 1 1 NG
+      LET XBARTEMP = MATRIX ROW XBAR J
+      LOOP FOR K = 1 1 NR
+          LET TEMP = EVECT^K * XBARTEMP
+          LET YBAR^J(K) = SUM TEMP
+          LET TEMP = EVECT^K * X0
+          LET Y(K) = SUM TEMP
+      END OF LOOP
+  END OF LOOP
+  .
+  .  Find minimum sum of (yhat - ybar) square
+  .
+  PROBE CPUMAX
+  LET MINSUM = PROBEVAL
+  LOOP FOR J = 1 1 NG
+      LET ATEMP = (Y - YBAR^J)**2
+      LET ASUM = SUM ATEMP
+      IF ASUM < MINSUM
+        LET IGROUP = J
+        LET MINSUM = ASUM
+      END OF IF
+  END OF LOOP
+  LET YGROUP(I) = IGROUP
+  LET YX(I) = Y(1)
+  IF NR >= 2
+    LET YY(I) = Y(2)
+  END OF IF
+END OF LOOP
+.
+IF PLOTFLAG = 1
+  LET ZY = LINEAR COMBINATION ZZZZX EVECT1
+  LET ZX = LINEAR COMBINATION ZZZZX EVECT2
+  PLOT ZY ZX ZTAG
+  LIMITS FREEZE
+  PRE-ERASE OFF
+  CHARACTER FILL ON ALL
+  CHARACTER SIZE 1.2
+  PLOT YY YX
+  RESET PLOT CONTROL 
+END OF IF
+.
+FEEDBACK ON
+PRINT YGROUP YX YY

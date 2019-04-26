@@ -1,0 +1,34 @@
+Name: DUEWER1.DAT
+Source: David Duewer (2008), "A Comparison of Location Estimators
+        for Interlaboratory Data Contaminated with Value and
+        Uncertainty Outliers", Accredidation Quality Assurance,
+        Vol. 13, pp. 1193-216.
+
+        This is the data from Table 1.  It consists of the means
+        and standard deviations from 9 laboratories for an
+        interlaboratory study.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+YMEAN    YSD
+-------------
+102.02   0.16
+102.47   0.84
+102.98   0.90
+103.69   0.45
+104.08   1.16
+105.04   0.39
+105.36   0.32
+107.26   1.50
+108.26   0.77

@@ -1,0 +1,80 @@
+. This is Dataplot macro   E691DOK1.DP
+. Purpose--Generate some prelimanry graphs for an interlab analysis
+.          based on the ASTM E691 standard.
+.
+. Updated--2015/08: Use new K CONSISTENCY PLOT to generate the plot
+.
+.          The following plot is generated:
+.
+.          1) Dot plot of k-consistency statistic: Laboratories
+.             within Materials
+.
+. Input --Y        = response variable
+.       --LABID    = lab ID variable
+.       --MATID    = material ID variable
+.       --E691TIT  = string containing title for analysis
+.
+.  Step 1: Determine number of materials
+.
+feedback save
+feedback off
+let nmat = unique matid
+let nlab = unique labid
+let ntot = nmat*nlab
+let matcode = code matid
+let labcode = code labid
+let alpha = 0.005
+.
+.  Step 2: Set plot control features
+.
+label case asis
+title case asis
+label
+y1label k - Consistency Statistic
+x1label Material
+title ^e691tit: k - Laboratories within Materials
+.
+let labidd = distinct labid
+line blank all
+line color black all
+character blank all
+loop for k = 1 1 nlab
+    let aval = labidd(k)
+    let plot character k = ^aval
+end of loop
+let k1 = nlab + 1
+let k2 = nlab + 2
+let k3 = nlab + 3
+let plot line k1 = solid
+let plot line k2 = solid
+let plot line k3 = solid
+let plot line color k2 = red
+let plot line color k3 = red
+set k consistency plot type stacked
+.
+xlimtis 1 nmat
+major xtic mark number nmat
+minor xtic mark number 0
+tic offset units screen
+tic offset 5 5
+title offset 2
+.
+.  Step 3: Generate the plot
+.
+set k consistency plot laboratories within materials
+k consistency plot y labcode matcode
+.
+.  Step 4: Add labeling to the plot
+.
+justification left
+movesd 86 kcv
+text ^kcv
+.
+line solid all
+line color black all
+character blank all
+character color black all
+set k consistency plot type default
+.
+feedback restore
+.

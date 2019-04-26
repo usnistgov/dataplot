@@ -1,0 +1,26 @@
+----- <~prob\expopdf.top> Plot Exponetialand Related  pdf's
+
+Plot Exponential, Weibull, Gamma, Extreme Value PDF Functions
+
+Exponential                   <xemf: ~prob\exppdf.men>
+Truncated Exponential         <xemf: ~prob\tnepdf.men>
+Generalized Exponential       <xemf: ~prob\gexpdf.men>
+Power Exponential             <xemf: ~prob\pexpdf.men>
+Geometric Extreme Exponential <xemf: ~prob\geepdf.men>
+
+Weibull (for min)             <xemf: ~prob\wei1pdf.men>
+Weibull (for max)             <xemf: ~prob\wei2pdf.men>
+Inverted Weibull              <xemf: ~prob\iwepdf.men>
+Exponentiated Weibull         <xemf: ~prob\ewepdf.men>
+
+Extreme Value Type I (for min)  <xemf: ~prob\ev11pdf.men>
+Extreme Value Type I (for max)  <xemf: ~prob\ev12pdf.men>
+Extreme Value Type II (for min) <xemf: ~prob\ev21pdf.men>
+Extreme Value Type II (for max) <xemf: ~prob\ev22pdf.men>
+Generalized Extreme Value     <xemf: ~prob\gevpdf.men>
+
+Gamma                         <xemf: ~prob\gampdf.men>
+Log Gamma                     <xemf: ~prob\lgapdf.men>
+Inverted Gamma                <xemf: ~prob\igapdf.men>
+Generalized Gamma             <xemf: ~prob\ggdpdf.men>
+

@@ -1,0 +1,26 @@
+----- <~time\smoofilt.top> Smoothing and Filtering
+ 
+Smoothing and Filtering
+
+Discussion                            <~time\smoodisc.top>
+
+Time Domain Smoothing and Filtering
+   Least Squares Smoothing            <xemf: ~math\smoothls.men>
+   Tukey Smoothing                    <xemf: ~math\smoothtu.men>
+   Moving Average Smoothing           <xemf: ~math\smoothst.men>
+ 
+   Exponential Smoothing              <xemf: ~time\exposmoo.men>
+
+   Lowess Smoothing                   <xemf: ~math\lowess.men>
+
+Frequency Domain Smoothing and Filtering
+   Fast Fourier Transform (FFT)       <xemf: ~math\fft.men>
+   Inverse Fast Fourier Transform     <xemf: ~math\ifft.men>
+
+   Convolution                        <xemf: ~math\convol.men>
+   Deconvolution                      <xemf: ~math\deconvol.men>
+
+   Operations on Complex data         <~math\compdata.top>
+
+Worked Examples                       <~time\smooexam.top>
+

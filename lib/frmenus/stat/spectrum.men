@@ -1,0 +1,33 @@
+This is file spectrum.men--Spectrum
+ 
+--------------------
+ 1. Spectrum
+ 2. SPECTRUM Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5.
+ 6. Character Type:
+ 6. @CE 2 0 33 50 *
+ 7. Line Type:
+ 7. @CE 3 0 33 50 *
+ 8. Spike on/off
+ 8. @CE 4 0 33 50 *
+ 9. Bar on/off:
+ 9. @CE 5 0 33 50 *
+10.
+11. Subset/Except/For Specification:
+12. @CE 6 0 1 50 *
+13.
+14.
+15. Generate the Spectrum?
+--------------------
+GR FE
+@IF 2 0 CHARACTERS _2
+@IF 3 0 LINES _3
+@IF 4 0 SPIKE _4
+@IF 5 0 BAR _5
+SPECTRUM _1 _6
+--------------------
+WEB HELP SPECTRUM
+--------------------

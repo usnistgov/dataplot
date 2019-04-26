@@ -1,0 +1,6 @@
+----- <~dataprin\USADEBT.DP> Print (to Printer) USADEBT.DAT
+
+. This is file    USADEBT.DP
+
+PRINT USADEBT.DAT
+

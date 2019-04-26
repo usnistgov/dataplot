@@ -1,0 +1,42 @@
+----- <~time\stattech.top> Quantitative Techniques
+
+Quantitative Techniques
+
+Diagnostics:
+   Runs analysis                       <xemf: ~stat\runs.men>
+   Ljung-Box Test for Randomness       <xemf: ~stat\ljungbox.men>
+
+Modeling:
+   Create a Lagged Variable               <xemf: ~time\lagvar.men>
+
+   Box-Jenkins (ARIMA)                    <~time\boxjenki.top>
+   DDS (Data Dependent Systems)           <~time\dds.top>
+   Fit Linear/Non-Linear Models           <~time\data1var.top>
+
+   Fit an AR(1) Model                     <xemf: ~time\ar1fit.men>
+   Fit an AR(2) Model                     <xemf: ~time\ar2fit.men>
+
+   Fit Sinusoidal Model
+      Constant Amplitude                  <xemf: ~time\fitsins0.men>
+      Linear Fit for Amplitude            <xemf: ~time\fitsins1.men>
+      Quadratic Fit for Amplitude         <xemf: ~time\fitsins2.men>
+
+   Model Validation                       <~fit\modelval.top>
+
+Smoothing and Filtering:
+   Least Squares and Polynomial Smoothing  <xemf: ~math\smoothls.men>
+   Tukey (Robust) Smoothing           <xemf: ~math\smoothtu.men>
+   Moving Average Smoothing           <xemf: ~math\smoothst.men>
+   Moving Median Smoothing            <xemf: ~math\smoothst.men>
+
+   Lowess Smoothing                   <xemf: ~time\lowess.men>
+
+   Exponential Smoothing               <xemf: ~time\exposmoo.men>
+   Seasonal Loess                      <xemf: ~time\seasloes.men>
+
+   Fast Fourier Transform (FFT)        <xemf: ~math\fft.men>
+   Inverse Fast Fourier Transform      <xemf: ~math\ifft.men>
+
+   Convolution                         <xemf: ~math\convol.men>
+   Deconvolution                       <xemf: ~math\deconvol.men>
+

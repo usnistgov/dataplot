@@ -1,0 +1,10 @@
+----- <~dataloex\PERIODIC.DP> Load & Execute PERIODIC.DAT
+
+. This is file    PERIODIC.DP
+
+DELETE Y
+SKIP 25
+READ PERIODIC.DAT Y
+TITLE PERIODIC.DAT
+/
+

@@ -1,0 +1,8 @@
+----- <~dataload\PLASTIC.DP> Load PLASTIC.DAT
+
+. This is file    PLASTIC.DP
+
+DELETE ID Y X1 X2
+SKIP 25
+READ PLASTIC.DAT ID Y X1 X2
+

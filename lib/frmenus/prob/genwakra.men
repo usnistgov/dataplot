@@ -1,0 +1,46 @@
+This is file genwakra.men--Generate Wakeby Random Numbers
+ 
+--------------------
+ 1. Generate Wakeby Random Numbers
+ 2. LET Y = WAKEBY RANDOM NUMBERS FOR I = START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Shape Parameter (beta):
+ 5. @CE 2 0 42 50 ?
+ 6. Shape Parameter (gamma, gamma >= 0):
+ 6. @CE 3 0 42 50 ?
+ 7. Shape Parameter (delta):
+ 7. @CE 4 0 42 50 ?
+ 8. Location Parameter:
+ 8. @CE 5 0 42 50 ?
+ 9. Scale Limit Parameter):
+ 9. @CE 6 0 42 50 ?
+10.
+11. Optional random number generator seed (default=305):
+12.    (integer >= 305)
+12. @CE 7 0 42 50 ?
+13.
+14. Name of output variable;
+14. @CE 8 0 42 50 ?
+15.
+16.
+17. Generate the random numbers?
+--------------------
+AN FE
+@IF 7 0 SEED _7
+LET BETA = 1
+@IF 2 0 LET BETA = _2
+LET GAMMA = 1
+@IF 3 0 LET GAMMA = _3
+LET DELTA = 1
+@IF 4 0 LET DELTA = _4
+LET XI = 0
+@IF 5 0 LET XI = _5
+LET ALPHA = 1
+@IF 6 0 LET ALPHA = _6
+LET _8 = WAKEBY RANDOM NUMBERS FOR I = 1 1 _1
+LET _8 = ZLOC + ZSCALE* _8
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

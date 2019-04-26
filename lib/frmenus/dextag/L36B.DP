@@ -1,0 +1,8 @@
+----- <~dextag\L36B.DP> Load  L36B.DAT
+
+. This is file    L36B.DP
+
+DELETE X1 TO X27
+SKIP 25
+READ L36B.DAT X1 TO X27
+

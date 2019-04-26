@@ -1,0 +1,35 @@
+----- <~dataload\natrella.top> Natrella Book: Experimental Statistics
+
+Natrella Book: Experimental Statistics
+
+    Introduction                               <~dataload\natrintr.top>
+
+ 1. Basic Statistical Concepts                 <~dataload\natr1.top>
+
+ 2. Characterizing Performance                 <~dataload\natr2.top>
+ 3. Comparing wrt Average Performance          <~dataload\natr3.top>
+ 4. Comparing wrt Variabililty of Performance  <~dataload\natr4.top>
+
+ 5. Characterizing Linear Relationship (2 Variables) <~dataload\natr5.top>
+ 6. Polynomial and Multivariable Least Squares   <~dataload\natr6.top>
+
+ 7. Characterizing Qualitiative Performance    <~dataload\natr7.top>
+ 8. Comparing 2 Categories (Percentage Tests)  <~dataload\natr8.top>
+ 9. Comparing Several Categories (Chi-Squared Tests) <~dataload\natr9.top>
+10. Sensitivity Testing                        <~dataload\natr10.top>
+
+11. Planning Experiments (General)             <~dataload\natr11.top>
+12. Factorial Experiments                      <~dataload\natr12.top>
+13. Randomized Block & Latin Square Expiments       <~dataload\natr13.top>
+14. Experiments to Determine Optimum Levels    <~dataload\natr14.top>
+
+15. Shortcut Test for Small Samples (Normal)   <~dataload\natr15.top>
+16. Distribution-free Tests                    <~dataload\natr16.top>
+17. Treatment of Outliers                      <~dataload\natr17.top>
+18. Control Charts                             <~dataload\natr18.top>
+19. Extreme-Value Data                         <~dataload\natr19.top>
+20. The Use of Transformations                 <~dataload\natr20.top>
+21. Relating Confidence Intervals & Significance Tests <~dataload\natr21.top>
+22. Notes on Statistical Computations                 <~dataload\natr22.top>
+23. Expression of Uncertainties of Results     <~dataload\natr23.top>
+

@@ -1,0 +1,195 @@
+This is DATAPLOT file     PROGRAMS.                  7/93
+Purpose--Enumerate the names of built-in DATAPLOT programs.
+(Note--macros with * are especially important & commonly used)
+ 
+ 
+PLOT25.DP          Generate 25 plots as a 5-by-5 multiplot
+PLOTCOLOR.DP       Generate 28 (postscript) color plots
+SETCOLOR.DP        Set typical (postscript) color settings
+COLORMAP.DP        Show all (postscript) color settings
+DATAPLOT.DP        Generate a plot of a data trace
+DERIVPLO.DP        Generate a plot of a function & derivative
+BOXPLOT.DP         Generate a box plot
+BOXPLOT2.DP        Generate a box plot
+MATHOPER.DP        Generate a triplex chart of math operations
+LAGPLOT.DP         Generate a lag plot
+SPECPLOT.DP        Generate a spectral plot
+RESPLOT.DP         Generate a linear fit residuals plot
+FFTPLOT.DP         Generate a fast Fourier transform plot
+YOUDPLOT.DP        Generate a Youden plot
+ROOTPLOT.DP        Generate a plot for extracting roots
+STARPLOT.DP        Generate a multivariate star plot
+MEANPLOT.DP        Generate a mean plot
+SDPLOT.DP          Generate a standard deviation plot
+SPIKEPLO.DP        Generate a plot with spikes
+TEXASMAP.DP        Generate a map of Texas
+QUANPLOT.DP        Generate an empirical quantile-quantile plot
+PDFPLOT.DP         Generate a plot of a prob. density function
+WEIBPLOT.DP        Generate a Weibull plot
+HIST.DP            Generate a histogram
+BIHIST.DP          Generate a bihistogram
+PROFPLOT.DP        Generate a multivariate profile plot
+GANOVA3.DP         Generate a graphical ANOVA plot
+MULTITRA.DP        Generate a multitrace plot
+HIST2.DP           Generate a presentation-graphic histogram
+BLOCPLOT.DP        Generate a block plot
+XBARCHAR.DP        Generate an xbar control plot
+3DNOPLOT.DP        Generate a 3-D bivariate normal function plot
+PREDPLOT.DP        Generate a superimposed predicted values plot
+CPKPLOT.DP         Generate a Cpk plot
+DAT2PLOT.DP        Generate a multi-vertical line plot
+2TO7M4.DP          Generate a 2**(7-4) experiment design tableau
+DEXMEANP.DP        Generate a mean, sd, & Taguchi plot
+DEXINTMP.DP        Generate a DEX interactions matrix plot
+DEXCONTP.DP        Generate a DEX contour plot
+MULTPLOT.DP        Generate a matrix of scatter plots
+4PLOT.DP           Generate a 4-plot to test underlying assumptions
+ 
+BOXTOMAT.DP        Analyze Box/Hunter/Hunter tomato growth data
+BOXSHOES.DP        Analyze Box/Hunter/Hunter shoe wear data
+BOXSHOE2.DP        Analyze Box/Hunter/Hunter shoe wear data
+BOXSHOE3.DP        Analyze Box/Hunter/Hunter shoe wear data
+BOXBLOOD.DP        Analyze Box/Hunter/Hunter blood coag. time data
+BOXPENIC.DP        Analyze Box/Hunter/Hunter penicillin yield data
+BOXAUTO.DP         Analyze Box/Hunter/Hunter auto emissions data
+BOXAUTO2.DP        Analyze Box/Hunter/Hunter auto emissions data
+BOXAUTO3.DP        Analyze Box/Hunter/Hunter auto emissions data
+BOXCLOTH.DP        Analyze Box/Hunter/Hunter cloth wear data
+ 
+FUNNEL.DP          Analyze simulated 2**3 funnel data
+FUNNEL2.DP         Analyze simulated 2**3 funnel data
+BOXSPRIN.DP        Analyze Box & Bisgaard 2**3 defective springs data
+BOXPILOT.DP        Analyze Box/Hunter/Hunter 2**3 pilot plant yield data
+BOXRADAR.DP        Analyze Box/Hunter/Hunter 2**3 radar acq. time data
+BOXCHEM.DP         Analyze Box/Hunter/Hunter 2**4 chem impurity data
+BOXSOLAR.DP        Analyze Box/Hunter/Hunter 2**4 solar coll eff data
+BOXREACT.DP        Analyze Box/Hunter/Hunter 2**5 reac eff data
+BOXCAKE.DP         Analyze Box/Jones 2**5 wcp / Taguchi cake data
+ 
+BOXCLEAN.DP        Analyze Box/Hunter/Hunter 2**(4-1) cleanser data
+BOXREAC2.DP        Analyze Box/Hunter/Hunter 2**(5-1) chem react data
+BOXBIKE2.DP        Analyze Box/Hunter/Hunter 2**(7-4) bike time data
+BOXBIKE3.DP        Analyze Box/Hunter/Hunter 2**(7-3) bike time data
+BOXFILT.DP         Analyze Box/Hunter/Hunter 2**(7-4) ind filt data
+BOXFILT2.DP        Analyze Box/Hunter/Hunter 2**(7-3) ind filt data
+ 
+QUINLAN.DP         Analyze Speed. Shrink. 2**(15-11) / Taguchi L16
+BOXCAKE2.DP        Analyze Box/Jones means 2**3 wcp / Taguchi cake data
+BOXCAKE3.DP        Analyze Box/Jones sds 2**3 wcp / Taguchi cake data
+ 
+BOXSPRAY.DP        Analyze Box/Hunter/Hunter reg. aerosol spray data
+BOXWELD.DP         Analyze Box/Hunter/Hunter reg. weld strength data
+BOXRATS.DP         Analyze Box/Hunter/Hunter reg. rat survival data
+BOXBOD.DP          Analyze Box/Hunter/Hunter reg. biochem oxygen data
+BOXCHEM2.DP        Analyze Box/Hunter/Hunter reg. chem impurity data
+ 
+BOXYIELD.DP        Analyze Box/Hunter/Hunter opt des chem yield data
+BOXYIEL2.DP        Analyze Box/Hunter/Hunter opt des chem yield data
+ 
+SHEESLE2.DP        Analyze Sheesley light bulb survival time data
+BERGER1.DP         Analyze Alaska pipeline defects data (linear reg)
+PONTIUS.DP         Analyze NIST load calibration data (quad reg)
+CHWIRUT1.DP        Analyze NIST ultrasonic claibration data (non-line)
+HABER1.DP          Analyze 2-admissable numbers data (non-linear)
+LEW11.DP           Analyze beam deflection data (univariate)
+THURBER.DP         Analyze electron mob data (non-linear rat func)
+PLANETS.DP         Analyze planets data (multivariate)
+WRIGHT11.DP        Analyze Wright brothers lift data
+PERIODIC.DP        Analyze chemistry periodic table data
+PERIODI2.DP        Analyze chemistry periodic table data
+BATTADD.DP         Analyze NIST battery additive data
+BATTADD2.DP        Analyze NIST battery additive data
+ 
+LISSAJOUS.DP       Generate Lissajous trig multiplots
+ 
+PCC.DP             Generate P control chart
+PNCC.DP            Generate Pn Control chart
+UCC.DP             Generate U control chart
+CCC.DP             Generate C control chart
+ 
+DEXCUB70.DP        Generate 70 2**(3-1) design cubes
+DEXSURF.DP
+DEXSIM.DP
+DEXOPT.DP
+DEXREG.DP
+DEXSCREE.DP
+DEXTITCU.DP
+ 
+CONTOUR.DP
+BALLSTICK.DP
+BARPLOT6.DP
+BEAM.DP
+BOOTMARS.DP
+BOOTLEW.DP
+BOOTBERG.DP
+BOOTBER2.DP
+BOOTSIMI.DP
+CHEMMIX.DP
+CIRCLE.DP
+CIRCUIT.DP
+DIOPHANTINE.DP
+EFRON1.DP          Generate statistics for bootstrap study
+FFT1.DP            Remove high freq noise from a signal
+FFT2.DP
+FFT3.DP
+FILTER.DP
+NORMDENS.DP        Draw normal density with 1, 2, & 3 sigma areas
+OIL.DP
+PLOTMATRICES.DP
+PLOTROOTS.DP       Plot out complex roots from a family of functions
+POLYROOTS1.DP
+POLYROOTS2.DP
+RAIN.DP            Carry out Runge-Kutta solution to diff eq
+SPIRAL.DP          Generate a spiral plot
+SPRINGS.DP         Determine eigenvalues of non-symmetric system
+HOTELLING.DP
+REFPLOT.DP
+SDPRED.DP
+SUBSERIESPLOT.DP
+SUBSERIESPLOTRES.DP
+ 
+PLOTSIN.DP         Generate & execute menu for sine function plot
+PLOTFUNCTION.DP    Generate & execute menu for function plot
+PLOT1VAR.DP        Generate & execute menu for plotting 1 variable
+PLOT2VAR.DP        Generate & execute menu for plotting scatter plot
+CONNECTDOTS.DP     Generate & execute menu for connecting plots
+INVMAT.DP
+MULTITEXT.DP
+NORMHIST.DP
+PARETO.DP          Generate & execute menu to generate Pareto plot
+PIECHART.DP        Generate & execute menu to generate pie chart
+RANDOMSAMPLE.DP
+SIMPLEXMETHOD.DP
+SORT.DP
+SUM.DP
+TTEST.DP           t test on 2 subsets of a common variable
+WORDCHART.DP
+WORDCHARTS.DP
+REFPLOT.DP         Program to gen DATAPLOT tutorial ref plot
+3DPLOT.DP          Generate a 3-D plot within a cube
+ 
+BIQUAD.DP
+KRASNY2.DP
+CASCADEP.DP
+2TO30M21.DP
+UGIANSKY.DP         Generate Youden plot on fatigue data
+MATTINGL.DP
+MATTING2.DP
+MATTING3.DP
+HAMAKER.DP         Generate graphical ANOVA plot
+ 
+HORLICK1.DP
+HORLICK4.DP
+SCHAUER2.DP
+SCHAUER3.DP
+SCHAUER4.DP
+HUMPHRE5.DP
+PALLETT.DP
+OAKLEY.DP
+SCHILLER.DP
+BENNETT.DP
+MORTGAGE.DP        Generate mortgage table
+NEGIZ4.DP          Carry out autoregressive time series modeling
+ 
+MINITEST.DP        Carry out 23-item installation test
+MAXITEST.DP        Carry out multi-item installation test

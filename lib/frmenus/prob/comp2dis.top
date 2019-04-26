@@ -1,0 +1,20 @@
+----- <~prob\comp2dis.top> Compare Two Samples
+
+Compare Two Samples
+
+Graphical Techniques
+   Bihistogram                           <xemf: ~plot\bihist.men>
+   Quantile-Quantile Plot                <xemf: ~plot\q-qplot.men>
+   Tukey Mean-Difference Plot            <xemf: ~plot\m-dplot.men>
+   Shift Plot                            <xemf: ~plot\shiftplo.men>
+
+Quantitative Techniques
+   Chi-Square 2 Sample Test              <xemf: ~stat\chisq2s.men>
+   Kolmogorov-Smirnov 2 Sample Test      <xemf: ~stat\ks2s.men>
+   T Test for Shift in Location          <xemf: ~stat\1flotest.men>
+   Sign Test for Paired Data             <xemf: ~stat\signtest.men>
+   Wilcoxon Signed Rank Sum Test (Paired Data)   <xemf: ~stat\wilcoxon.men>
+   Wilcoxon Signed Rank U (= Mann-Whitney) Test  <xemf: ~stat\mannwhit.men>
+   F Test for Shift in Variation          <xemf: ~stat\1fvatest.men>
+
+

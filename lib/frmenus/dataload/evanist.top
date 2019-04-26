@@ -1,0 +1,8 @@
+----- <~dataload\evanist.top> Load Extreme Value Data: NIST
+
+Load Extreme Value Data: NIST
+
+SIMIU.DAT     Wind speeds                    <xcf: ~dataload\SIMIU.DP>
+WASHDC.DAT    Washington DC wind speeds      <xcf: ~dataload\WASHDC.DP>
+KEYWEST.DAT*  Key West wind speeds           <xcf: ~dataload\KEYWEST.DP>
+

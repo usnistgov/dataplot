@@ -1,0 +1,33 @@
+----- <~handbook\eda.top> Exploratory Data Analysis
+ 
+Exploratory Data Analysis
+ 
+This menu provides links to the NIST/SEMATECH
+Engineering Statistics Handbook that discuss issues
+of exploratory data analysis.
+
+NIST/SEMATECH Handbook (Exploratory Data Analysis) <xcl: web handbook eda>
+
+NIST/SEMATECH Handbook (EDA Introduction) <xcl: web handbook eda introduction>
+   Problem Categories                  <~handbook\probcat.top>
+ 
+NIST/SEMATECH Handbook (EDA Assumptions) <xcl: web handbook eda assumptions>
+   Testing Assumptions                 <~handbook\testassu.top>
+ 
+NIST/SEMATECH Handbook (EDA Technqiues) <xcl: web handbook eda techniques>
+   Graphical Techniques                <~handbook\graphtec.top>
+   Quantitative Techniques             <~handbook\quanttec.top>
+   Probability Distributions           <~handbook\probdist.top>
+ 
+NIST/SEMATECH Handbook (EDA Case Studies) <xcl: web handbook eda case studies>
+    Normal Random Numbers <xcl: web handbook normal random numbers case>
+    Uniform Random Numbers <xcl: web handbook uniform random numbers case>
+    Random Walk            <xcl: web handbook random walk case study>
+    Josephson Junction     <xcl: web handbook josephson junction case study>
+    Beam Deflection        <xcl: web handbook beam deflection case study>
+    Filter Transmittance   <xcl: web handbook filter transmittance case study>
+    Standard Resistor      <xcl: web handbook standard resistor case study>
+    Heat Flow Meter        <xcl: web handbook heat flow meter case>
+    Airplane Glass Failure <xcl: web handbook airplane glass failure case>
+    Ceramic Strength       <xcl: web handbook ceramic strength case study>
+ 

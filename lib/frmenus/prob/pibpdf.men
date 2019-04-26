@@ -1,0 +1,54 @@
+This is file pibpdf.men--Plot Inverted Beta PDF
+ 
+--------------------
+ 1. Plot an Inverted Beta PDF Function
+ 2. PLOT IBPDF(X,2,0.5) FOR X = 0.01  0.01  5
+ 3.
+ 4. You can specify the range of values to plot either
+ 5. by providing an input vector containing the explicit
+ 6. input values or by providing the start, increment,
+ 7. and stop values.
+ 8.
+ 9. Input Variable (optional):
+ 9. @CE 1 0 42 50 ? gui-variable
+10.
+11. Start Value (> loc):
+11. @CE 2 0 42 50 ?
+12. Increment Value (defaults to 0.1):
+12. @CE 3 0 42 50 ?
+13. Stop Value:
+13. @CE 4 0 42 50 ?
+14.
+15. Variable to Store the PDF Values (optional):
+15. @CE 5 0 42 50 ?
+16.
+17. First Shape Parameter (required, > 0):
+17. @CE 6 0 42 50 ?
+18. Second Shape Parameter (required, > 0):
+18. @CE 7 0 42 50 ?
+19. Location Parameter:
+19. @CE 8 0 42 50 ?
+20. Scale Parameter (> 0):
+20. @CE 9 0 42 50 ?
+21.
+22.
+23. Plot the Inverted Beta PDF's?
+--------------------
+AN FE
+LET ZSHAPE1 = 1
+@IF 6 0 LET ZSHAPE1 = _6
+LET ZSHAPE2 = 1
+@IF 7 0 LET ZSHAPE2 = _7
+LET ZLOC = 0
+@IF 8 0 LET ZLOC = _8
+LET ZSCALE = 1
+@IF 9 0 LET ZSCALE = _9
+LET ZINC = 0.1
+@IF 3 0 LET ZINC = _3
+@IF 1 0 LET ZJUNK = IBPDF( _1 ,ZSHAPE1,ZSHAPE2,ZLOC,ZSCALE)
+@IF 1 0 PLOT ZJUNK _1
+@IF 2 0 PLOT IBPDF( ZZZZ,ZSHAPE1,ZSHAPE2,ZLOC,ZSCALE) FOR ZZZZ = _2 ZINC _4
+@IF 5 0 LET _5 = YPLOT
+--------------------
+WEB HELP IBPDF
+--------------------

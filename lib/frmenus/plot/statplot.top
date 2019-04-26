@@ -1,0 +1,15 @@
+----- <~plot\statfact.top> Statisitcs for Grouped Data Plots
+
+Statistics for Grouped Data (One Group Variable)
+
+Statistics for Grouped Data (One Group Variable)
+   Location Statistics                     <xemf: ~stat\statpllo.men>
+   Scale Statistics                        <xemf: ~stat\statplsc.men>
+   Extremes and Percentiles                <xemf: ~stat\statplpe.men>
+   Quality Control                         <xemf: ~stat\statplqc.men>
+   Correlation/Fitting Statistics          <xemf: ~stat\statplco.men>
+   Miscellaneous Statistics                <xemf: ~stat\statplms.men>
+   Difference of Location Statistics       <xemf: ~stat\statlodi.men>
+   Difference of Scale Statistics          <xemf: ~stat\statscdi.men>
+   Difference of Extremes/Quantiles        <xemf: ~stat\statqudi.men>
+

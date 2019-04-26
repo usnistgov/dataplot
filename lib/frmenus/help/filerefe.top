@@ -1,0 +1,174 @@
+----- <~help\filerefe.top> File References
+
+File References
+
+File References
+
+The following commands can reference files
+
+    READ                          <xcl: HELP READ>
+    SERIAL READ                   <xcl: HELP SERIAL READ>
+    WRITE                         <xcl: HELP WRITE>
+
+    LIST                          <xcl: HELP LIST>
+
+    CALL                          <xcl: HELP CALL>
+    CREATE                        <xcl: HELP CREATE>
+
+File Names Identified with a Period
+
+    Dataplot identifies an argument in the above
+    commands as a file name if it detects a period
+    in the argument.  For example,
+
+        READ FILE.DAT Y
+
+    interprets FILE.DAT as a file name argument and
+    Y as the variable to be read since FILE.DAT contains
+    a period.  On the other hand,
+
+         READ FILEDAT Y
+
+    interprets both FILEDAT and Y as variable names
+    (Dataplot will attempt to read from the terminal
+    rather than a file in this case).
+
+    If your file name does not contain a period,
+    specify the file name on the Dataplot command with
+    a trailing period (e.g., READ TEST. Y to read the
+    file TEST).  Dataplot will first attempt to read
+    the file with the trailing period.  If this fails,
+    it then attempts to read the file with the trailing
+    period stripped off.
+
+Case Sensitivity of File Names is Platform Dependent
+
+    File names are not case sensitive under Windows or
+    VAX/VMS systems.  However, file names are case sensitive
+    on Unix/Linux platforms.
+
+    On case sensitive platforms, Dataplot first attempts
+    to open the file with the case as entered on the
+    Dataplot command.  If this fails, Dataplot next attempts
+    to open the file with the name converted to upper case.
+    If that fails, Dataplot attempts to open the file with
+    the name converted to lower case.  This means that if
+    the file has consistent case (either upper or lower),
+    Dataplot should be able to open the file regardless
+    of the case entered on the Dataplot command.  However,
+    if the file utilizes mixed case, you need to enter the
+    case correctly on the Dataplot command.
+    
+Spaces and Hyphens in File Names
+
+    If your file name contains either spaces or hyphens,
+    you need to enclose the file name in quotes (").
+
+    For the WRITE command, you also need to enter the
+    command
+
+        SET FILE NAME QUOTE ON         <xcl: HELP FILE NAME QUOTE>
+
+    before entering the WRITE command.  This is due to
+    the fact that quotes on the WRITE command can also
+    be interpreted as enclosing a file name or as enclosing
+    a string constant.  The SET FILE NAME QUOTE tells
+    Dataplot how quotes should be interpreted in this
+    ambiguous case.
+
+Built-in Dataplot Files
+
+    The Dataplot installation stores a number of built-in
+    data files, macro files, and help files.  The default
+    location under Windows is
+
+         C:\Program Files\NIST\DATAPLOT
+
+    The default location under Unix/Linux is
+
+         /usr/local/lib/dataplot
+
+    Files in this Dataplot directory (and the sub-directories
+    underneath it) can be accessed without the path name.
+    For example, under Windows the following are equivalent
+
+        READ "C:\Program Files\NIST\DATAPLOT\BERGER1.DAT"  Y  X
+
+    and
+
+        READ BERGER1.DAT  Y  X
+
+    When you specify a file name to Dataplot, it will first
+    try to open the file in the current directory (or in
+    whatever directory name is specified in the file name
+    itself).  If this fails, then Dataplot tries to open the
+    file in the Dataplot directory.
+
+Length of File Names
+
+    Currently, Dataplot restricts file names to a maximuum
+    of 80 characters (including the directory name).
+
+    In addition, Dataplot has a maximum line length for
+    commands.  For example, if a READ specifies a large number
+    of variables, this may reduce the effective maximum for
+    the number of characters in the file name.
+
+    If you have long directory names, there are a few things
+    you can try.
+
+        1) On some platforms, you can use the command
+
+              CD                           <xcl: HELP CD>
+
+           to change the current directory.  The availabilty
+           of this command is dependent on the compiler
+           used to build Dataplot on that platform.
+
+           Under Windows, you can right click on the
+           desktop shortcut and select Properties.  You can
+           then set the default directory in the field
+           labeled "Working" (this may be called "Start-In"
+           on some variants of Windows).  
+
+        2) You can create a temporary directory (e.g.,
+           C:\TEMP) and move your data files and macro files
+           to that directory.
+
+        3) The READ command supports a TO syntax.  For example,
+
+               READ FILE.DAT Y X1 TO X10
+
+           You can use the command
+
+               NAME                        <xcl: HELP NAME>
+
+           to define an alias for a variable name.  You
+           can use this to define a more informative name
+           for your variables.
+
+File Name Restrictions
+
+    Other than the length restriction, Dataplot has no
+    restrictions on the file name other than it be a
+    valid file name on the local operating system and that
+    it contain a period "." in the file name itself or as a
+ 
+    Some users prefer to give all macro files a ".DP" or
+    ".dp" extension and data files a ".DAT" or ".dat" extension.
+    We recommend that adopt this or some other convention
+    for identifying your macro and data files.  The particular
+    convention is not as important as simply being consistent
+    with whatever convention you choose.  Although this is a
+    useful method for keeping track of your Dataplot files, it
+    is strictly a user convention and is not enforced by
+    Dataplot in any way.
+ 
+Note:
+ 
+    As a further caution for Unix hosts, certain expansion
+    characters (specifically ~ to refer to your home directory)
+    are interperted by the shell and are not recognized by the
+    Fortran compiler.  These expansion characters are interperted
+    as literal characters and do not yield the intended file name.
+

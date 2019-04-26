@@ -1,0 +1,25 @@
+----- <~prob\shap1mle.top> MLE for One Shape Parameter Continuous Distributions
+
+Perform MLE (one shape parameters)
+
+Perform Maximum Likelihood Estimation for Continuous Distributions
+with One Shape Parameters
+
+Asymmetric Double Exponential (Laplace)   <xemf: ~prob\ademle.men>
+2-Parameter Burr Type 10                  <xemf: ~prob\mleb10.men>
+Extreme Value Type 2 (Frechet) (Maximum)  <xemf: ~reli\mleev22.men>
+2-Parameter Fatigue Life                  <xemf: ~reli\mlefl.men>
+2-Parameter Gamma                         <xemf: ~reli\mlegam.men>
+2-Parameter Inverted Weibull              <xemf: ~reli\mleiwe.men>
+Generalized Logistic Type 5 (L-Moments)   <xemf: ~prob\mlegl5.men>
+Generalized Pareto (Maximum)              <xemf: ~reli\mlegep.men>
+2-Parameter Geometric Extreme Exponential <xemf: ~reli\mlegee.men>
+2-Parameter Lognormal                     <xemf: ~reli\mlelgn.men>
+2-Parameter Logistic-Exponential          <xemf: ~prob\mlelex.men>
+Power                                     <xemf: ~prob\mlepow.men>
+Topp and Leone                            <xemf: ~prob\topmle.men>
+Triangular                                <xemf: ~prob\mletri.men>
+2-Parameter Weibull (Minimum)             <xemf: ~reli\mlewei1.men>
+
+Bootstrap Confidence Intervals for Percentiles  <xemf: ~prob\mleperc.men>
+

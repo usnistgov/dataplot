@@ -1,0 +1,29 @@
+----- <~1fac\assumpti.top> Assumptions: 1-Factor
+
+Assumptions: 1-Factor
+
+The model for the 1-factor model is:
+
+  y = f(x) + error
+
+The f(x) is a deterministic component (i.e.,
+the fitted part) and the error is a random
+component.  
+
+For a measurement process to be "statistically
+in control", the random component of the
+model should follow the assumptions:
+
+  1) Fixed location
+  2) Fixed variation
+  3) Fixed distribution
+  4) Randomness
+
+Note that these assumptions apply to the
+random component (i.e., the error), not the
+deterministic component.  That is, after fitting
+a model, the errors (also called the residuals)
+should be tested to see if the assumptions are
+valid.  The techniques discussed under the
+"Univariate" menu apply to the residual analysis.
+

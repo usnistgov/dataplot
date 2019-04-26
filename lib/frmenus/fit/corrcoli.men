@@ -1,0 +1,94 @@
+This is file corrcoli.men--Confidence Limits for Correlation
+ 
+--------------------
+ 1. Confidence Limits for Correlation Coefficient
+ 2. LET UPPER = TANH(ARCTANH(CORR)+1.96*(1/SQRT(N-3)))
+ 3. Reference: Snedecor & Cochran, page 185
+ 4.
+ 5. Variables:
+ 6.    Response    Y:
+ 6. @CE 1 0 35 50 ? gui-variable
+ 7.    Independent X:
+ 7. @CE 2 0 35 50 ? gui-variable
+ 8.
+ 9. Confidence level (select one):
+10. @CE 3 1 3 23 95% limits
+11. @CE 3 2 3 23 99% limits
+12.
+13. Subset/Except/For Specification:
+14. @CE 4 0 1 50 *
+15.
+16.
+17. Compute Confidence Limits?
+--------------------
+GR FE
+LET ZCORR = CORRELATION _1 _2 _4
+ 
+LET ZN = NUMBER _1 _4
+ 
+@IF 3 1 LET ZP = .95
+@IF 3 2 LET ZP = .99
+LET ZP2 = ZP+(1-ZP)/2
+LET ZPPF = NORPPF(ZP2)
+LET ZPERC = 100*ZP
+ 
+LET ZSTAT = ZCORR
+LET Z0 = ARCTANH(ZSTAT)
+LET ZLOWER = TANH(Z0-ZPPF*(1/SQRT(ZN-3)))
+LET ZUPPER = TANH(Z0+ZPPF*(1/SQRT(ZN-3)))
+ 
+IF ZLOWER < -1
+   LET ZLOWER = -1
+END IF
+IF ZUPPER > 1
+   LET ZUPPER = 1
+END IF
+ 
+CAPTURE ZZZZJUNK.DAT
+WRITE "^ZPERC Confidence Limits for Correlation"
+WRITE " "
+WRITE "Number of Observations    = ^ZN"
+WRITE "Estimated Correlation     = ^ZSTAT"
+WRITE " "
+WRITE "Estimated Lower Limit     = ^ZLOWER"
+WRITE "Estimated Upper Limit     = ^ZUPPER"
+END OF CAPTURE
+ 
+LET ZINC = (ZUPPER-ZLOWER)/200
+LET ZWIDTH4 = (ZUPPER-ZLOWER)/4
+LET ZLOWER2 = ZLOWER-ZWIDTH4
+LET ZUPPER2 = ZUPPER+ZWIDTH4
+ 
+IF ZLOWER2 < -1
+   LET ZLOWER2 = -.999
+END IF
+IF ZUPPER2 > 1
+   LET ZUPPER2 = .999
+END IF
+ 
+LET ZSDZ = 1/SQRT(ZN-3)
+LET FUNCTION ZF1 = (ARCTANH(R)-Z0)/ZSDZ
+LET FUNCTION ZJACOB = (1/(1-R**2))*(1/ZSDZ)
+PLOT NORPDF(ZF1)*ZJACOB FOR R = ZLOWER2 ZINC ZUPPER2 AND
+PLOT 0 FOR R = ZLOWER2 ZINC ZUPPER2
+ 
+JUSTIFICATION CENTER
+LET R = ZSTAT; LET ZJACOBV = ZJACOB
+LET ZPDFSTAT = NORPDF(0)*ZJACOBV
+LET R = ZLOWER; LET ZJACOBV = ZJACOB
+LET ZPDFLOWE = NORPDF((ARCTANH(ZLOWER)-Z0)/ZSDZ)*ZJACOBV
+LET R = ZUPPER; LET ZJACOBV = ZJACOB
+LET ZPDFUPPE = NORPDF((ARCTANH(ZUPPER)-Z0)/ZSDZ)*ZJACOBV
+ 
+DRAWDDDS ZSTAT ZPDFSTAT ZSTAT 10
+DRAWDDDS ZLOWER ZPDFLOWE ZLOWER 5
+DRAWDDDS ZUPPER ZPDFUPPE ZUPPER 5
+ 
+MOVEDS ZSTAT 6; TEXT ^ZSTAT
+MOVEDS ZLOWER 1; TEXT ^ZLOWER
+MOVEDS ZUPPER 1; TEXT ^ZUPPER
+ 
+LIST ZZZZJUNK.DAT
+--------------------
+WEB HELP CORRELATION
+--------------------

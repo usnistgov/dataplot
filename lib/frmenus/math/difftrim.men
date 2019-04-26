@@ -1,0 +1,32 @@
+This is file difftrim.men--Compute difference of trimmed means
+ 
+--------------------
+ 1. Difference of Trimmed Means
+ 2. LET A = DIFFERENCE OF TRIMMED MEANS Y1 Y2
+ 3.
+ 4. First Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Second Response Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Percentage of values to trim above?:
+ 6. @CE 3 0 42 50 ?
+ 7. Percentage of values to trim below?:
+ 7. @CE 4 0 42 50 ? 
+ 8. Parameter to store the trimmed mean:
+ 8. @CE 5 0 42 50 ?
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 6 0 1 50 *
+12.
+13.
+14. Compute the Difference of Trimmed Means?:
+--------------------
+GR FE
+LET P1 = 10
+LET P2 = 10
+LET P1 = _4
+LET P2 = _3
+LET _5 = DIFFERENCE OF TRIMMED MEANS  _1 _2 _6
+--------------------
+WEB HELP DIFFERENCE OF TRIMMED MEAN
+--------------------

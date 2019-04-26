@@ -1,0 +1,66 @@
+----- <~nist\calidisc.top> Linear/Quadratic Calibration: Discussion
+ 
+Linear/Quadratic Calibration: Discussion
+
+The goal of calibration is to quantitatively convert measurements
+made on one of two measurement scales to the other measurement
+scale.  There is also a model that describes the relationship
+between the two measurement scales.
+
+The primary measurement scale is usually the scientifically
+relevant scale and measurements on this scale are typically
+more precise (relatively) than measurements on the secondary
+scale.  However, the secondary scale is typically the easier
+measurement to obtain (i.e., it is typically cheaper or faster
+or more readily available).
+
+So given a measurement on the secondary scale, we want to convert
+that to an estimate of the measurement on the primary scale. The
+steps involved are:
+
+   1) We start with a series of points that have been measured
+      on both scales.  The secondary measurement is treated
+      as the response variable, Y, and the primary measurement
+      is treated as the independent variable, X.
+
+   2) We perform a fit of Y and X.  Currently, Dataplot supports
+      calibration for the case where Y and X can be fit with
+      either a linear fit
+
+         Y = A0 + A1*X
+
+      or a quadratic fit
+
+         Y = A0 + A1*X + A2 *X**2
+
+      This is typically referred to as the calibration curve.
+
+      Although these are the most common calibration models in
+      practice, more sophisticated calibration models are
+      also used.  For example, the fit could be multi-linear
+      (i.e., more than one X variable), a higher order
+      polynomial, or non-linear.  These cases are not supported
+      directly.  However, you can use a bootstrap approach
+      for many of these problems.
+      
+   3) We then have one or more points measured on the secondary
+      scale with no corresponding measurement on the primary
+      scale.
+
+      We use the calibration curve to estimate the value of
+      the measurement on the primary scale.  In addition, we
+      estimate a confidence interval for the estimated value
+      on the primary scale.
+
+      The calibration problem has recieved significant
+      attention and a number of different methods have
+      been proposed for the calibration estimates.  Most of
+      these methods return the same value for the point
+      estimate.  However, the method for obtaining the
+      confidence interval is typically different.
+
+When Dataplot performs a calibration, it first prints out a
+summary of the initial fit.  It then loops through each point
+being calibrated and prints the estimate for the primary
+scale and the corresponding confidence limits.
+

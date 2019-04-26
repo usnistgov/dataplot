@@ -1,0 +1,19 @@
+----- <~reli\evsimula.top> Simulation--Extreme Value Distributions
+
+Random Numbers: Extreme Value Distributions
+
+Set seed                                   <xemf: ~prob\setseed.men>
+Select generator to use                    <xemf: ~prob\setgene.men>
+
+Extreme Value Type 1 (Gumbel) (Minimum)   <xemf: ~prob\genev11r.men>
+Extreme Value Type 1 (Gumbel) (Maximum)   <xemf: ~prob\genev12r.men>
+
+Extreme Value Type 2 (Frechet) (Minimum)  <xemf: ~prob\genev21r.men>
+Extreme Value Type 2 (Frechet) (Maximum)  <xemf: ~prob\genev22r.men>
+
+Weibull (Minimum)                         <xemf: ~prob\genwe1ra.men>
+Weibull (Maximum)                         <xemf: ~prob\genwe2ra.men>
+
+Generalized Pareto                        <xemf: ~prob\gengepra.men>
+Generalized Extreme Value                 <xemf: ~prob\gengevra.men>
+

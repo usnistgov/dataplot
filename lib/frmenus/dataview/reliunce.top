@@ -1,0 +1,22 @@
+----- <~dataview\reliunce.top> View Reliability Data: Failure Rates (Uncensored)
+
+View Reliability Data: Failure Rates (Uncensored)
+
+ABERN35.DAT   Fatigue failure time        <xcf: ~dataview\ABERN35.DP>
+ABERN43.DAT   Bearing cage failure time   <xcf: ~dataview\ABERN43.DP>
+CASTILL6.DAT  Chain link strength         <xcf: ~dataview\CASTILL6.DP>
+CASTILL7.DAT  Elect. insulation lifetime  <xcf: ~dataview\CASTILL7.DP>
+CASTILL8.DAT  Wire cycles-to-failure      <xcf: ~dataview\CASTILL8.DP>
+EXP.DAT       Newly designed inverter     <xcf: ~dataview\EXP.DP>
+FULLER2.DAT   Airplane glass failure time <xcf: ~dataview\FULLER2.DP>
+GAMMA.DAT     Annual maximum discharge    <xcf: ~dataview\GAMMA.DP>
+LGN.DAT       Composite material          <xcf: ~dataview\LGN.DP>
+NELS105.DAT   Breakdown of insulating fluid  <xcf: ~dataview\NELS105.DP>
+NOR.DAT       Matching process            <xcf: ~dataview\NOR.DP>
+TOB3.DAT      Fuse data                   <xcf: ~dataview\TOB3.DP>
+TOB50.DAT     Light bulb data             <xcf: ~dataview\TOB50.DP>
+TOB62.DAT     Component data              <xcf: ~dataview\TOB62.DP>
+TOB143.DAT    Component data              <xcf: ~dataview\TOB143.DP>
+VANGEL5.DAT   Strength at failure         <xcf: ~dataview\VANGEL5.DP>
+WEIBBURY.DAT  Engineering material        <xcf: ~dataview\WEIBBURY.DP>
+

@@ -1,0 +1,16 @@
+----- <~dataall\regmv.top> View/etc. Regression Data: Multi-variable
+
+View/Load/Print Regression Data: Multi-variable
+
+HALD647.DAT   Cement hard. heat (4-fact.)  <~dataall\HALD647.top>
+USADEBT.DAT   USA nat. debt (1947-1993)    <~dataall\USADEBT.top>)
+NELSON.DAT    Insulation; accel. testing   <~dataall\NELSON.top>
+
+BOXCLEAN.DAT  Cleanser stab. (4 factors)   <~dataall\BOXCLEAN.top>
+BOXCHEM2.DAT  Cleanser stab. (2 factors)   <~dataall\BOXCHEM2.top>
+BOXYIELD.DAT  Time/temp eff on Yield       <~dataall\BOXYIELD.top>
+BOXYIEL2.DAT  Time/temp eff on Yield       <~dataall\BOXYIEL2.top>
+
+WAMPLER2.DAT  Multilinear fit test data    <~dataall\WAMPLER2.top>
+LONGLEY.DAT   Labor stat. fit test data    <~dataall\LONGLEY.top>
+

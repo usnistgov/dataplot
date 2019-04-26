@@ -1,0 +1,20 @@
+This is file summary.men--Compute summary statistics for a variable
+ 
+--------------------
+ 1. Summary Statistics
+ 2. SUMMARY Y
+ 3.
+ 4. Variable for which to compute summary statistics:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 -8 50 *
+ 8.
+ 9.
+10. Compute the Summary?:
+--------------------
+GR FE
+SUMMARY _1  _2
+--------------------
+WEB HELP SUMMARY
+--------------------

@@ -1,0 +1,97 @@
+This is file relscoli.men--Confidence Limits for Shift in Rel. SD
+ 
+--------------------
+ 1. Confidence Limits for Shift in Relative Standard Deviation
+ 2.
+ 3.
+ 4. Pre-mod  Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5. Post-mod Response Variable:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Confidence level (select one):
+ 8. @CE 3 1 3 23 95% limits
+ 9. @CE 3 2 3 23 99% limits
+10.
+11. Number of output decimal places:
+11. @CE 4 0 37 50 ?
+12.
+13. Subset/Except/For Specification:
+14. @CE 5 0 1 50 *
+15.
+16. Compute Confidence Limits?
+--------------------
+GR FE
+ 
+@IF 3 1 LET ZP = .95
+@IF 3 2 LET ZP = .99
+LET ZP2 = ZP+(1-ZP)/2
+LET ZPERC = 100*ZP
+ 
+LET ZN1 = NUMBER _1 _5
+LET ZN2 = NUMBER _2 _5
+LET ZDF1 = ZN1-1
+LET ZDF2 = ZN2-1
+LET ZPPFU = FPPF(ZP2,ZDF1,ZDF2)
+LET ZPPFL = FPPF(1-ZP2,ZDF1,ZDF2)
+ 
+LET ZM1 = MEAN _1 _5
+LET ZM2 = MEAN _2 _5
+LET ZSD1 = SD _1 _5
+LET ZSD2 = SD _2 _5
+LET ZRSD1 = RELATIVE SD _1 _5
+LET ZRSD2 = RELATIVE SD _2 _5
+LET ZSTAT = ZRSD1/ZRSD2
+LET ZLOWER = ZSTAT*SQRT(1/ZPPFU)
+LET ZUPPER = ZSTAT*SQRT(1/ZPPFL)
+@IF 2 1 LET ZLOWSKL = 0
+@IF 2 1 LET ZUPPSKL = ZSTAT*SQRT(1/FPPF(.95,ZDF1,ZDF2))
+@IF 2 2 LET ZLOWSKR = ZSTAT*SQRT(1/FPPF(.05,ZDF1,ZDF2))
+@IF 2 2 LET ZUPPSKR = 10**10
+ 
+IF ZLOWER < 0
+   LET ZLOWER = 0
+END IF
+ 
+LET ZINC = (ZUPPER-ZLOWER)/200
+LET ZWIDTH4 = (ZUPPER-ZLOWER)/4
+LET ZLOWER2 = ZLOWER-ZWIDTH4
+LET ZUPPER2 = ZUPPER+ZWIDTH4
+ 
+IF ZLOWER2 < 5
+   LET ZLOWER2 = .1
+END IF
+ 
+. The following must be fixed
+LET FUNCTION ZF = CHSPDF((ZDF*ZSTAT**2)/(ZZ**2),ZDF1,ZDF2)
+LET FUNCTION ZF2 = 2*ZDF*ZSTAT**2/ZZ**3
+PLOT ZF*ZF2 FOR ZZ = ZLOWER2 ZINC ZUPPER2 AND
+PLOT 0 FOR ZZ = ZLOWER2 ZINC ZUPPER2
+ 
+JUSTIFICATION CENTER
+LET ZZ = ZSTAT; LET ZPDFSTAT = ZF
+LET ZZ = ZLOWER; LET ZPDFLOWE = ZF
+LET ZZ = ZUPPER; LET ZPDFUPPE = ZF
+ 
+DRAWDDDS ZSTAT ZPDFSTAT ZSTAT 10
+DRAWDDDS ZLOWER ZPDFLOWE ZLOWER 5
+DRAWDDDS ZUPPER ZPDFUPPE ZUPPER 5
+ 
+MOVEDS ZSTAT 6; TEXT ^ZSTAT
+MOVEDS ZLOWER 1; TEXT ^ZLOWER
+MOVEDS ZUPPER 1; TEXT ^ZUPPER
+ 
+@IF 4 0 SET WRITE DECIMALS _4
+WRITE "^ZPERC Confidence Limits for (sigma1/mu1)/(sigma2/mu2)"
+WRITE " "
+WRITE "                     Pre-mod       Post-mod"
+WRITE "Number of Obs.      = ^ZN1          ^ZN2"
+WRITE "Estimated Means     = ^ZM1          ^ZM2"
+WRITE "Estimated St. devs. = ^ZSD1        ^ZSD2"
+WRITE "Estimated Rel SDs   = ^ZRSD1        ^ZRSD2"
+WRITE " "
+WRITE "Estimated Ratio= rs1/rs2      = ^ZSTAT"
+WRITE "Estimated Lower Limit         = ^ZLOWER"
+WRITE "Estimated Upper Limit         = ^ZUPPER"
+WRITE ZPERC ZN ZSTAT ZSDSTAT ZLOWER ZUPPER
+--------------------

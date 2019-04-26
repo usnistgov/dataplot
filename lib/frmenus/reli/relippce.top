@@ -1,0 +1,32 @@
+----- <~reli\relippce.top> Probability Plots
+
+Probability Plots
+
+Probability Plots: Censored Case (No Grouping)
+
+Normal                                     <xemf: ~reli\ppnorce.men>
+Lognormal                                  <xemf: ~reli\pplgnce.men>
+Power Normal                               <xemf: ~reli\pppnrce.men>
+Power Lognormal                            <xemf: ~reli\ppplnce.men>
+
+Exponential                                <xemf: ~reli\ppexpce.men>
+Geometric Extreme Exponential              <xemf: ~reli\ppgeece.men>
+
+Weibull (Minimum)                          <xemf: ~reli\ppwei1ce.men>
+Weibull (Maximum)                          <xemf: ~reli\ppwei2ce.men>
+Inverted Weibull                           <xemf: ~reli\ppiwece.men>
+Exponentiated Weibull                      <xemf: ~reli\ppewece.men>
+Bi-Weibull                                 <xemf: ~reli\ppbwece.men>
+
+Wald                                       <xemf: ~reli\ppwalce.men>
+Inverse Gaussian                           <xemf: ~reli\ppigce.men>
+Reciprocal Inverse Gaussian                <xemf: ~reli\pprigce.men>
+Fatigue Life                               <xemf: ~reli\ppflce.men>
+
+Gamma                                      <xemf: ~reli\ppgamce.men>
+Log Gamma                                  <xemf: ~reli\pplgace.men>
+Inverted Gamma                             <xemf: ~reli\ppigace.men>
+
+Alpha                                      <xemf: ~reli\ppalpce.men>
+Exponential Power                          <xemf: ~reli\pppexce.men>
+

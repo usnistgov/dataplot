@@ -1,0 +1,10 @@
+----- <~dex\wsch10.top> Chapter 10: Taguchi
+
+Chapter 10: Taguchi
+
+View:
+ QUINLAN.DAT L16  Speedometer cable noise <xcl: LIST ~QUINLAN.DAT>
+
+Load:
+ QUINLAN.DAT L16 <x2cl: SKIP 25; READ QUINLAN.DAT Y1 TO Y4 X1 TO X15>
+

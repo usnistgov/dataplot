@@ -1,0 +1,85 @@
+TOB201.DAT
+DEGRADATION DATA FOR RESISTORS.  TEST IS RUN
+AT TWO TEMPERATURE LEVELS AND PECENT DEGRADATION
+IS MEASURED (30% DEGRADATION RESULTS IN FAILURE).
+DEGRADATION IS MEASURED AT THREE DISTINCT TIMES.
+NUMBER OF OBSERVATIONS = 10*6 = 60
+NUMBER OF VARIABLES PER LINE IMAGE = 4
+ORDER OF VARIABLES ON A LINE IMAGE--
+   COMPONENT = COMPONENT ID
+   T         = TIME (IN HOURS)
+   TEMP      = TEMPERATURE (DEGREES CELCIUS)
+   Y         = PERCENT DEGRADATION
+SOURCE--TOBIAS AND TRINDADE (1981).  "APPLIED RELIABILITY",
+        SECOND EDITION, CHAPMAN & HALL/CRC, P. 201.
+STATISTICAL AREA = RELIABILITY (ARRENHUIS ANALYSIS OF
+                   DEGRADATION DATA)
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ TOB201.DAT COMP TIME TEMP Y
+ 
+ 
+
+ 
+COMP     TIME   TEMP      Y
+---------------------------
+  1        24    105    1.0
+  1        96    105    6.0
+  1       168    105   11.1
+  1        24    125    7.1
+  1        96    125   27.1
+  1       168    125   46.8
+  2        24    105    0.0
+  2        96    105    0.4
+  2       168    105    1.3
+  2        24    125    0.6
+  2        96    125    3.6
+  2       168    125    5.3
+  3        24    105    1.1
+  3        96    105    4.5
+  3       168    105    6.4
+  3        24    125    3.0
+  3        96    125   12.9
+  3       168    125   21.7
+  4        24    105    0.0
+  4        96    105    1.7
+  4       168    105    2.7
+  4        24    125    2.5
+  4        96    125   11.6
+  4       168    125   18.5
+  5        24    105    1.5
+  5        96    105    5.4
+  5       168    105    9.4
+  5        24    125    0.3
+  5        96    125    3.1
+  5       168    125    7.5
+  6        24    105    0.8
+  6        96    105    4.3
+  6       168    105    6.4
+  6        24    125    0.9
+  6        96    125    3.3
+  6       168    125    5.4
+  7        24    105    0.9
+  7        96    105    2.6
+  7       168    105    3.9
+  7        24    125    2.8
+  7        96    125   11.2
+  7       168    125   21.2
+  8        24    105    0.0
+  8        96    105    3.0
+  8       168    105    5.5
+  8        24    125    1.8
+  8        96    125   10.8
+  8       168    125   18.2
+  9        24    105    2.0
+  9        96    105    6.0
+  9       168    105   10.1
+  9        24    125    5.3
+  9        96    125   22.0
+  9       168    125   38.4
+ 10        24    105    0.6
+ 10        96    105    0.7
+ 10       168    105    0.3
+ 10        24    125    3.5
+ 10        96    125   13.4
+ 10       168    125   22.4

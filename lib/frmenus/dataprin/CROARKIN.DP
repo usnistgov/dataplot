@@ -1,0 +1,6 @@
+----- <~dataprin\CROARKIN.DP> Print (to Printer) CROARKIN.DAT
+
+. This is file    CROARKIN.DP
+
+skip 25; READ CROARKIN.DAT
+

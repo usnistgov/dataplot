@@ -1,0 +1,46 @@
+This is file genkapra.men--Generate Meilke's Beta-Kappa Random Numbers
+ 
+--------------------
+ 1. Generate Meilke's Beta-Kappa Random Numbers
+ 2. LET Y = MIELKE'S BETA-KAPPA RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Shape Parameter (k, k > 0):
+ 5. @CE 2 0 42 50 ?
+ 6. Shape Parameter (beta, beta > 0):
+ 6. @CE 3 0 42 50 ?
+ 7. Shape Parameter (theta, theta > 0):
+ 7. @CE 4 0 42 50 ?
+ 8. Location Parameter:
+ 8. @CE 5 0 42 50 ?
+ 9. Scale Limit Parameter):
+ 9. @CE 6 0 42 50 ?
+10.
+11. Optional random number generator seed (default=305):
+12.    (integer >= 305)
+12. @CE 7 0 42 50 ?
+13.
+14. Name of output variable;
+14. @CE 8 0 42 50 ?
+15.
+16.
+17. Generate the random numbers?
+--------------------
+AN FE
+@IF 7 0 SEED _7
+LET K = 1
+@IF 2 0 LET K = _2
+LET BETA = 1
+@IF 3 0 LET BETA = _3
+LET THETA = 1
+@IF 4 0 LET THETA = _4
+LET ZLOC = 0
+@IF 5 0 LET ZLOC = _5
+LET ZSCALE = 1
+@IF 6 0 LET ZSCALE = _6
+LET _8 = MIELKE BETA-KAPPA RANDOM NUMBERS FOR I = 1 1 _1
+LET _8 = ZLOC + ZSCALE* _8
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

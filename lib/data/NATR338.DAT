@@ -1,0 +1,41 @@
+This is Dataplot data file     NATR338.DAT
+Molecular Weight of Dextron (Bacterial Polysaccarides)
+(Location Shift Example (paired comparison))
+Question: Are the 2 chemical methods the same?
+ 
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 3-38 to 3-40.
+ 
+Number of observations             = 16 + 16 = 32
+Number of variables per line image = 2
+Order of variables on a line image--
+   1. Y1 = Response Variable 1 = Molecular Weight via Chem Method 1
+   2. Y2 = Response Variable 2 = Molecular Weight via Chem Method 2
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR338.DAT Y1 Y2
+   T TEST Y1 Y2
+   LET DEL = Y1-Y2
+   T TEST DEL 0
+ 
+      Y1               Y2
+  Molecular Wt.    Molecular Wt.
+    Method 1         Method 2
+----------------------------------
+     62700            56400
+     29100            27500
+     44400            42200
+     47800            46800
+     36300            33300
+     40000            37100
+     43400            37300
+     35800            36200
+     33900            35200
+     44200            38000
+     34300            32200
+     31300            27300
+     38400            36100
+     47100            43100
+     42100            38400
+     42200            39900

@@ -1,0 +1,49 @@
+This is the data file   MONITOR-6_4_3_6.DAT
+Source: This example is used on page pmc436.htm of the e-Handbook
+        to demonstrate single, double and triple exponential
+        smoothing.
+
+Description:  The data consists of six years of quarterly sales data.
+
+To read into Dataplot, enter
+
+    SKIP 25
+    READ "MONITOR-6_4_3_6.DAT" year quarter period sales
+
+
+
+
+
+
+
+
+
+
+
+
+Year     Quarter     Period     Sales
+-----------------------
+90     1      1     362
+90     2      2     385
+90     3      3     432
+90     4      4     341
+91     1      5     382
+91     2      6     409
+91     3      7     498
+91     4      8     387
+92     1      9     473
+92     2     10     513
+92     3     11     582
+92     4     12     474
+93     1     13     544
+93     2     14     582
+93     3     15     681
+93     4     16     557
+94     1     17     628
+94     2     18     707
+94     3     19     773
+94     4     20     592
+95     1     21     627
+95     2     22     725
+95     3     23     854
+95     4     24     661

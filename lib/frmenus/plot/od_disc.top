@@ -1,0 +1,44 @@
+----- <~plot\od_disc.top> Graphical Output Devices
+
+Graphical Output Devices
+
+
+DATAPLOT supports 3 graphical output devices (defined
+by DEVICE 1, DEVICE 2, and DEVICE 3).  Device 1 output
+is sent to the screen and device 2 output is sent to a
+file (DPPL1F.DAT or dppl1f.dat on most systems).  Device 3
+output is also sent to a file (DPPL2F.DAT or dppl2f.dat
+on most systems), but it only contains the most recent plot.
+The PP command can be used to send the most recent plot only
+to the printer (PP uses the device 3 output).  DATAPLOT
+supports all 3 devices simultaneously if desired (that is,
+a single PLOT command can generate both the plot on the
+screen and also write the plot to a file for later printing).
+
+For the GUI, the screen device is set automatically (to
+X11 on Unix and to Tcl/Tk on the PC).  You can choose to
+set the screen device to Tcl/Tk on Unix from the file menu 
+in the "Graph" window (select Software Graphics) if you like.
+The Tcl/Tk device gives you some additional manipulation of
+the graphics output such as pan and zoom not available with
+the X11 device).
+
+By default, the GUI sets device 1 automatically, device 2 to
+be off, and device 3 to be a Postscript printer.
+
+Device 3 is provided to allow convenient printing of the
+current plot.  The "Print" button uses the PP command to
+print the device 3 output.  You may need to use the
+"Set Printer" option to define the printer (by default, on
+Unix, it goes to your default printer, on the PC it goes to
+your local printer).
+
+The device 2 output is used to save all the plots from the
+current session.  If you are generating many plots, you
+may want to selectively save the plots.  The DEVICE 2 ON and
+DEVICE 2 OFF commands allow you to do this.  DEVICE 2 OFF
+suppresses the graphics output to device 2 for subsequent
+plots until a DEVICE 2 ON is entered.  These commands do not
+open or close the DPPL1F.DAT (dppl1f.dat) file, they merely
+suppress (or re-activate) output going to this file.
+

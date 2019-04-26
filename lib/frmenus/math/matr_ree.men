@@ -1,0 +1,26 @@
+This is file matr_ree.men--Replace element of a matrix
+ 
+--------------------
+ 1. Replace Element of a Matrix
+ 2. LET R = MATRIX REPLACE ELEMENT M ROWID COLID PAR
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Row of matrix to replace:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Column of matrix to replace:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7. Parameter containing new element:
+ 7. @CE 4 0 33 50 ? gui-none
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 1 50 *
+11.
+12.
+13. Replace the Element?:
+--------------------
+GR FE
+LET _1 = MATRIX REPLACE ELEMENT  _1 _2 _3 _4 _5
+--------------------
+WEB HELP MATRIX REPLACE ELEMENT
+--------------------

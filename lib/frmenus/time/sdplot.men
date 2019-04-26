@@ -1,0 +1,55 @@
+This is file sdplot.men--SD Plot for Time Series
+ 
+--------------------
+ 1. SD Plot for Time Series
+ 2. SD PLOT Y DUMMY
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5.
+ 6. Character Type:
+ 6. @CE 2 0 33 50 * gui-char
+ 7. Line Type:
+ 7. @CE 3 0 33 50 * gui-line
+ 8. Spike on/off
+ 8. @CE 4 0 33 50 * gui-ooff
+ 9. Bar on/off:
+ 9. @CE 5 0 33 50 * gui-ooff
+10.
+11. Number of intervals to use (pick one):
+11. @CE 6 1 35 38 2
+11. @CE 6 2 39 42 4
+11. @CE 6 3 43 46 8
+11. @CE 6 4 47 50 10
+12.
+13. Subset/Except/For Specification:
+14. @CE 7 0 1 50 *
+15.
+16.
+17. Generate the SD Plot?
+--------------------
+GR FE
+@IF 2 0 CHARACTERS _2
+@IF 3 0 LINES _3
+@IF 4 0 SPIKE _4
+@IF 5 0 BAR _5
+LET ZN = NUMBER _1 _7
+.
+LET ZDUMMY = SEQUENCE 1 1 ZN
+LET ZDUMMY = SEQUENCE 1 1 ZN _7
+LET ZDUMMY = CODE8 ZDUMMY
+LET ZDUMMY = CODE8 ZDUMMY _7
+@IF 6 1 LET ZDUMMY = CODE2 ZDUMMY
+@IF 6 1 LET ZDUMMY = CODE2 ZDUMMY _7
+@IF 6 2 LET ZDUMMY = CODE4 ZDUMMY
+@IF 6 2 LET ZDUMMY = CODE4 ZDUMMY _7
+@IF 6 4 LET ZDUMMY = CODE10 ZDUMMY
+@IF 6 4 LET ZDUMMY = CODE10 ZDUMMY _7
+@IF 4 0 LET ZSD = SD _1 _7
+@IF 4 0 SPIKE BASE ZSD
+@IF 5 0 LET ZSD = SD _1 _7
+@IF 5 0 BAR BASE ZSD
+SD PLOT _1 ZDUMMY _7
+--------------------
+WEB HELP SD PLOT
+--------------------

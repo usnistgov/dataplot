@@ -1,0 +1,29 @@
+----- <~dp\guioutp.top> Alphanumeric Output Window
+ 
+Alphanumeric Output Window
+ 
+Many Dataplot commands generate alphanumeric
+output.  This output is saved to the 
+alphanumeric output which is located in the
+upper left quadrant.  
+
+For convenience, the output is saved in 
+"pages".  That is, the output for each command
+is saved in a separate page.  The arrow buttons in
+the upper left corner are used to navigate these pages.
+A counter is displayed in the upper right corner to
+show the current page.
+
+In addition, the output window shows provides the
+following buttons:
+
+ 1) The "File" button allows the current output page
+    to be printed or saved to a file.  The items
+    under "File" are generally self-explanatory.
+
+ 2) The "Commands" button provides access to a few
+    common commands.
+
+ 3) The "Help" button access the on-line Dataplot
+    help files.
+

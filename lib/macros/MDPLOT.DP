@@ -1,0 +1,23 @@
+.
+.  Generate a Tukey mean-difference plot for the variables
+.  Y1 and Y2.  These variables must be created prior to running
+.  this macro.  A quantile-quantile plot is generated before the
+.  Tukey m-d plot.
+.
+LINE BLANK SOLID
+CHARACTER CIRCLE BLANK
+CHARACTER SIZE 1.0
+QUANTILE-QUANTILE PLOT Y1 Y2
+.
+LET YMEAN = (YPLOT+XPLOT)/2
+LET YDIFF = YPLOT - XPLOT
+LET AMIN = MINIMUM YMEAN
+LET AMAX = MAXIMUM YMEAN
+LET XZERO = DATA AMIN AMAX
+LET YZERO = DATA 0 0
+.
+TITLE TUKEY M-D PLOT
+X1LABEL MEAN
+Y1LABEL DIFFERENCE
+PLOT YDIFF YMEAN AND
+PLOT YZERO XZERO

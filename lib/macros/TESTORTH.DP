@@ -1,0 +1,52 @@
+. this is dataplot program    TESTORTH.DP
+. purpose: test to see if a design matrix is orthogonal
+. date: july 21, 2006
+.
+. -----start point-----
+.
+.
+let k = 23
+.
+skip 1
+. read l36new.dat y1 to y^k
+. read l36handbook.dat y1 to y^k
+read l36handbooknew.dat y1 to y^k
+.
+multiplot 5 5
+char x
+lines bl
+loop for j = 1 1 k
+   plot y^j
+   tabu y^j
+   pause
+end loop
+move 50 91; just center; text Step 1: Test 1-Dimensional Balance
+multiplot off
+.
+feedback off
+let count = 0
+let km1 = k-1
+loop for k1 = 1 1 km1
+   let k1p1 = k1+1
+   loop for k2 = k1p1 1 k
+      let count = count + 1
+      let col1(count) = k1
+      let col2(count) = k2
+      let r(count) = correlation y^k1 y^k2
+      feedback on
+      cross tabulate y^k1 y^k2
+      pause
+      feedback off
+   end loop
+end loop
+.
+multiplot 3 1
+lines bl all
+plot r
+move 50 91; just center; text Step 2: Test 2-Dimensional Balance
+char 2 3 4 5 6 7 8 9 0 11 12 13 14 15 16 17 18 19 20 21 22 23
+plot r col1 col2
+char 1 2 3 4 5 6 7 8 9 0 11 12 13 14 15 16 17 18 19 20 21 22 23
+plot r col2 col1
+multiplot off
+.

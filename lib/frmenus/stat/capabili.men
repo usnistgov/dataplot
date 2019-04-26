@@ -1,0 +1,33 @@
+This is file capabiliti.men--Capability Analysis
+ 
+--------------------
+ 1. Capability Analysis
+ 2. CAPABILITY ANALYSIS Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5.
+ 6. Lower Specification Limit:
+ 6. @CE 3 0 42 50 ?
+ 7. Upper Specification Limit:
+ 7. @CE 4 0 42 50 ?
+ 8. Target Value:
+ 8. @CE 5 0 42 50 ?
+ 9. Cost Value:
+ 9. @CE 6 0 42 50 ?
+10.
+11. Subset/Except/For Specification:
+12. @CE 2 0 1 50 *
+13.
+14.
+15. Compute Capability Analysis?
+--------------------
+GR FE
+LET LSL = _3
+LET USL = _4
+LET TARGET = _5
+LET USLCOST = _6
+CAPABILITY ANALYSIS _1 _2
+--------------------
+WEB HELP CAPABILITY ANALYSIS
+--------------------

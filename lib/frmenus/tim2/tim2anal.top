@@ -1,0 +1,24 @@
+----- <~tim2\tim2anal.top> Time Series (2-Variable) Analysis
+ 
+Time Series (2-Variable) Analysis
+ 
+Discussion                     <~tim2\discussi.top>
+
+Assumptions                    <~tim2\assumpti.top>
+Assumption testing             <~tim2\testassu.top>
+ 
+Plot data                      <~tim2\viewdata.top>
+ 
+Time     -domain analysis      <~tim2\timedoma.top>
+Frequency-domain analysis      <~tim2\freqdoma.top>
+
+Graphical techniques           <~tim2\bytechni.top>
+ 
+Built-in data sets:
+   View                        <~dataview\time2var.top>
+   Load                        <~dataload\time2var.top>
+ 
+Worked Examples                <~tim2\tim2exam.top>
+
+References                     <~tim2\referenc.top>
+ 

@@ -1,0 +1,8 @@
+----- <~dataload\CHOI.DP> Load CHOI.DAT
+
+. This is file    CHOI.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ CHOI.DAT Y1 Y2
+

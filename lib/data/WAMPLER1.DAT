@@ -1,0 +1,46 @@
+This is dataplot data file     WAMPLER1.DAT
+Roy Wampler (NIST) Least Squares Algorithm Test Data (Polynomial)
+Note--The test consists of:
+      Fitting a 5th degree polynomial of Y1 on X
+      Fitting a 5th degree polynomial of Y2 on X
+Note--The exact coefficients for
+      the fit of Y1 on X are
+         1, 1, 1, 1, 1, 1.
+      The exact coefficients for
+      the fit of Y2 on X are
+         1, .1, .01, .001, .0001, .00001
+Source--Wampler, Roy H. (1970).
+      "A Report of the Accuracy of Some Widely-Used
+      Least Squares Computer Programs".
+      Journal of the American Statistical Association,
+      1970, Vol. 65, Pages 549-565, especially p. 552.
+To read this file into Dataplot (& do fits)--
+   SKIP 25
+   READ WAMPLER1.DAT X Y1 Y2
+   QUINTIC FIT Y1 X
+   QUINTIC FIT Y2 X
+ 
+ 
+    X        Y1      Y2
+--------------------------
+    0         1   1.00000
+    1         6   1.11111
+    2        63   1.24992
+    3       364   1.42753
+    4      1365   1.65984
+    5      3906   1.96875
+    6      9331   2.38336
+    7     19608   2.94117
+    8     37449   3.68928
+    9     66430   4.68559
+   10    111111   6.00000
+   11    177156   7.71561
+   12    271453   9.92992
+   13    402234  12.75603
+   14    579195  16.32384
+   15    813616  20.78125
+   16   1118481  26.29536
+   17   1508598  33.05367
+   18   2000719  41.26528
+   19   2613660  51.16209
+   20   3368421  63.00000

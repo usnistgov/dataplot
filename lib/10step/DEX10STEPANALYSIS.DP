@@ -1,0 +1,168 @@
+. This is dataplot macro    dex10stepanalysis.dp    12/29/14 => 1/25/16
+. Input
+.    plotid (vector) = list of desired (1 to 10) plots (optional)
+.    stepsw (parameter) = (0,1) switch to specify if want 10-step id # in upper left (opt., default = 1)
+.                         (Setting stepsw = 0 is usually used if want only a few of the 10 plots +
+.                         want response id to appear in upper left)
+.
+. Date: 12/29/14
+.
+. -----start point-----
+.
+. let plotid = data 8 9 10
+. let plotid = data 7
+. let plotid = data 2 6
+.
+let paused10 = 0
+let tracesw = 0
+if paused10 = 1
+   print "At the beginning of   dex10stepanalysis.dp"
+   print plotid
+   print "Hit   Enter   to continue . . ."
+   if ibatch not exist or ibatch = 0; pause; end if
+end if
+.
+. -----Step 1: Set initialization preferences-----
+.
+if projecth not exists; let projecth = 3; end if
+if projectw not exists; let projectw = 1.5; end if
+.
+if titlesiz not exist; let titlesiz = 2.5; end if
+if labelsiz not exist; let labelsiz = 2.5; end if
+let annotate = 1
+let trailsw = 0
+let circlesw = 1; let circleh = 1.1; let circlew = 0.9
+.
+let annotat2 = 1
+let rigmarsw = 1
+.
+if texth not exist; let texth = 2; end if
+if textw not exist; let textw = 1; end if
+if textboxh not exist; let textboxh = 2; end if
+if textboxw not exist; let textboxw = 1; end if
+.
+. let levelsw = 1;. if want (-1,+1) coded data on horizontal axis of main effects plot
+. let levelsw = 2;. if want (1,2) coded data on horizontal axis of main effects plot
+. let levelsw = 3;. if want real data on horizontal axis of main effects plot
+.
+. If want step ID numbers in upper left corner of each plot starting with 0 + 1, then set   step   value to 0)
+if stepsw not exist; let step = 0; end if
+if stepsw exists; if stepsw = 1; let step = 0; end if; end if
+.
+. -----Step 2: Treat the unspecified plots case-----
+.
+if plotid not exist
+   loop for jplot = 1 1 10
+      let plotid^jplot = 1
+   end loop
+end if
+.
+. -----Step 3: Treat the pre-specified plots case-----
+.
+if plotid exists
+   loop for jplot = 1 1 10
+      let plotid^jplot = 0
+   end loop
+   .
+   let nplot = number plotid
+   loop for jplot = 1 1 nplot
+      let jplot2 = plotid(jplot)
+      let plotid^jplot2 = 1
+   end loop
+end if
+.
+. print " "
+. print "==========> From the middle of the    dex10stepanalysis.dp    macro:"
+. print plotid
+. print "nplot = ^nplot"
+loop for jplot = 1 1 10
+   . print plotid^jplot
+end loop
+. pause
+.
+. -----Step 5: Check that k exists and is positive-----
+.
+if k not exist
+   print " "
+   print "-----Error in      dex10stepanalysis.dp     macro-----"
+   print "The parameter   k (= number of factors) is undefined."
+   print " "
+   if ibatch not exist or ibatch = 0; pause; end if
+   stop
+end if
+.
+if k exists; if k <= 0
+   print " "
+   print "-----Error in      dex10stepanalysis.dp     macro-----"
+   print "The parameter   k   (= the number of factors)"
+   print "must be a positive integer, but is not."
+   print "The value of k = ^k"
+   print " "
+   if ibatch not exist or ibatch = 0; pause; end if
+   stop
+end if
+.
+. -----Step 11: Step thorugh the 10 possible plots-----
+.
+feedback off
+.
+. print plotid1 plotid2 plotid3
+.
+let pagecoun = 0
+.
+if plotid1 = 1
+   call dexodp.dp
+end if
+.
+.
+if plotid2 = 1
+   call dexsp.dp
+end if
+.
+if plotid3 = 1
+   . let decplace = 6
+   . let labelsiz = 4
+   ylim
+   call dexmp.dp
+end if
+.
+if plotid4 = 1
+   . let y1ldisp = 30
+   call dexiem.dp
+end if
+.
+if plotid5 = 1
+   . NOTE: bug in dexyp.dp if call dexupper.dp here  01/10/14
+   call dexbp.dp
+end if
+.
+if plotid6 = 1
+   . capture junk^jresp.out
+      . stat v
+      . pause
+      . stat f
+      . pause
+      . stat p
+      . if ibatch not exist or ibatch = 0; . pause; . end if
+   . end capture
+   call dexyp.dp
+end if
+.
+if plotid7 = 1
+   call dexep.dp
+end if
+.
+if plotid8 = 1
+   call dexhpp.dp
+end if
+.
+if plotid9 = 1
+   call dexcrsdp.dp
+end if
+.
+if plotid10 = 1
+   call dexcp.dp
+end if
+.
+let confdone = 0
+.

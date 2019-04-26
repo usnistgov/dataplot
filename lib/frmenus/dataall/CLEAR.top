@@ -1,0 +1,8 @@
+----- <~dataall\CLEAR.top> CLEAR.DAT
+
+CLEAR.DAT
+
+View     <xcl: LIST CLEAR.DAT>
+Load     <xcf: ~dataload/CLEAR.DP>
+Print    <xccl: printfile C:\DATAPLOT\CLEAR.DAT>
+

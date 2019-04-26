@@ -1,0 +1,41 @@
+----- <~prob\discppf.top> Discrete Distribution ppf & Tail Prob.
+
+Discrete Distribution PPF Probabilities
+
+Compute Percent Point Function for
+Discrete Distributions
+
+Beta-Binomial                   <xemf: ~prob\bbnppf.men>
+Beta-Geometric                  <xemf: ~prob\bgeppf.men>
+Beta-Negative Binomial          <xemf: ~prob\bnbppf.men>
+Binomial                        <xemf: ~prob\binppf.men>
+Borel-Tanner                    <xemf: ~prob\btappf.men>
+Classical Matching              <xemf: ~prob\matppf.men>
+Consul
+    (theta parameterization)    <xemf: ~prob\con1ppf.men>
+    (mu parameterization)       <xemf: ~prob\con2ppf.men>
+Discrete Uniform                <xemf: ~prob\disppf.men>
+Discrete Weibull                <xemf: ~prob\diwppf.men>
+Geeta
+    (theta parameterization)    <xemf: ~prob\get1ppf.men>
+    (mu parameterization)       <xemf: ~prob\get2ppf.men>
+Generalized Logarithmic Series  <xemf: ~prob\glsppf.men>
+Generalized Lost Games          <xemf: ~prob\glgppf.men>
+Generalized Negative Binomial   <xemf: ~prob\gnbppf.men>
+Geometric                       <xemf: ~prob\geoppf.men>
+Hermite                         <xemf: ~prob\herppf.men>
+Hypergeometric                  <xemf: ~prob\hypppf.men>
+Katz                            <xemf: ~prob\katppf.men>
+Lagrange Poisson                <xemf: ~prob\lpoppf.men>
+Leads in Coin Tossing           <xemf: ~prob\lctppf.men>
+Logarithmic Series              <xemf: ~prob\dlgppf.men>
+Lost Games                      <xemf: ~prob\losppf.men>
+Negative Binomial               <xemf: ~prob\nbppf.men>
+Poisson                         <xemf: ~prob\poippf.men>
+Polya-Aeppli                    <xemf: ~prob\papppf.men>
+Quasi-Binomial Type I           <xemf: ~prob\qbippf.men>
+Yule                            <xemf: ~prob\yulppf.men>
+Waring                          <xemf: ~prob\warppf.men>
+Zeta                            <xemf: ~prob\zetppf.men>
+Zipf                            <xemf: ~prob\zipppf.men>
+

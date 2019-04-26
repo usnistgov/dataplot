@@ -1,0 +1,9 @@
+----- <~stat\1res2fac.top> 1 Response, 2 Factor
+
+1 Response, 2 Factor:
+
+Cross-Tabulate Statistics for Grouped Data <xemf: ~stat\crosstab.men>
+Chi-Square Test for Independence           <xemf: ~stat\chisqind.men>
+Friedman Test                              <xemf: ~stat\friedman.men>
+Quade Test                                 <xemf: ~stat\quade.men>
+

@@ -1,0 +1,35 @@
+----- <~plot\level_d.top> Level Plots
+
+Level Plots
+
+
+The level plot, proposed by Bill Cleveland in
+"Visualizing Data", is a conditioning plot that
+subsets on the response variable as oppossed
+to a factor variable.  It is an alternative to
+a contour plot.
+
+In Dataplot, you can simply use the 
+"Conditioning Plot" menu and specify the
+response variable as the subsetting variable.
+
+Cleveland also demonstrates the use of the
+level plot with surface (i.e., function) rather
+than a set of data.  He specifically fits a 2-D
+loess surface to set of points and generates the
+level plot for the loess surface.  In Dataplot,
+if you want to generate a level plot for a
+surface, do the following:
+
+   1) Define the 2-D function (under "Math"/"Create
+      a User Defined Function").
+
+   2) Evaluate the function at a grid of points
+      (under "Math"/"Evaluate a 2-D Function").
+
+   3) Use the "Conditioning Plot" menu with the
+      evaluated points as the subsetting variable.
+
+      For surfaces, you may want to set the character
+      type to blank and the line type to solid.
+

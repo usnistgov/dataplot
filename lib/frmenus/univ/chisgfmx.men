@@ -1,0 +1,53 @@
+This is file chisgfmx.men--Chi-Square Goodness of Fit (Mixture Dist.)
+
+--------------------
+ 1. Chi-Square Goodness of Fit (Mixture Distributions)
+ 2. <Distribution> CHI-SQUARE GOODNESS OF FIT Y
+ 3.
+ 4. Variable:
+ 4. @CE 1 0 11 30 ? gui-variable
+ 5.
+ 6. @CE 2 1 11 30 Mixture of 2 Normals
+ 7.                    u1 =
+ 7. @CE 3 0 41 50 ?
+ 8.                   sd1 =
+ 8. @CE 4 0 41 50 ?
+ 9.                    u2 =
+ 9. @CE 5 0 41 50 ?
+10.                   sd2 =
+10. @CE 6 0 41 50 ?
+11.                     p =
+11. @CE 7 0 41 50 ?
+12. @CE 2 2 11 30 Bi-Weibull
+13.                scale1 =
+13. @CE 8 0 41 50 ?
+14.                gamma1 =
+14. @CE 9 0 41 50 ?
+15.                  loc2 =
+15. @CE 10 0 41 50 ?
+16.                scale2 =
+16. @CE 11 0 41 50 ?
+17.                gamma2 =
+17. @CE 12 0 41 50 ?
+18.
+19. Subset/Except/For Specification:
+20. @CE 13 0 -5 50 *
+21.
+22. Generate the Chi-Square Goodness of Fit?
+--------------------
+GR FE
+@IF 3 0 LET U1 = _3
+@IF 4 0 LET SD1 = _4
+@IF 5 0 LET U2 = _5
+@IF 6 0 LET SD2 = _6
+@IF 7 0 LET P = _7
+@IF 8 0 LET SCALE1 = _8
+@IF 9 0 LET GAMMA1 = _9
+@IF 10 0 LET LOC2 = _10
+@IF 11 0 LET SCALE2 = _11
+@IF 12 0 LET GAMMA2 = _12
+@IF 2 1 NORMAL MIXTURE CHI-SQUARE GOODNESS OF FIT _1 _13
+@IF 2 2 BIWEIBULL CHI-SQUARE GOODNESS OF FIT _1 _13
+--------------------
+WEB HELP CHI-SQUARE GOODNESS OF FIT
+--------------------

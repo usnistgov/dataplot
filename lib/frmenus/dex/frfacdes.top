@@ -1,0 +1,25 @@
+----- <~dex\frfacdes.top> Fractional Factorial Designs
+
+Fractional Factorial Designs
+
+For examining larger numbers of factors (k = 5, 6,
+7, ...), the number of runs required by full
+factorial designs (n = 2**k) frequently becomes
+prohibitively large for the "average"
+engineer/scientist.  In such cases, it is thus
+more common to use the 2**(k-p) fractional
+factorial designs.  These designs allow us to
+examine and "screen" a large number k of factors
+in a relatively small number n of runs.
+
+The 2**(3-1), 2**(4-1), 2**(5-1), 2**(5-2),
+2**(6-2), etc.  designs are popular examples of
+such designs.  Note that the fractional (and full)
+factorial designs have a broad scope of
+applicability; the factors under investigaation
+with these designs may be both quantitative (such
+as pressure, temperature, force, concentration,
+distance, etc.) or qualitative (such a catalyst,
+day, treatment, supplier, algorithm, etc.) with no
+loss of generality.
+

@@ -1,0 +1,8 @@
+----- <~dataload\AGEBP.DP> Load AGEBP.DAT
+
+. This is file    AGEBP.DP
+
+DELETE Y X
+SKIP 25
+READ AGEBP.DAT Y X
+

@@ -1,0 +1,19 @@
+----- <~dex2kmp\cpbindde.top> Index: Plackett-Burman Designs
+ 
+Index: Plackett-Burman Designs
+ 
+Name of   Number of Number of Resolution
+Design     Factors    Runs
+              k         n
+........................................
+ 
+PB4           3         4         3     <~dex2kmp\2to3m1.top>
+PB8           7         8         3     <~dex2kmp\2to7m4.top>
+PB12         11        12         3     <~dex2kmp\pb12.top>
+PB16         15        16         3     <~dex2kmp\2to15m11.top>
+PB20         19        20         3     <~dex2kmp\pb20.top>
+PB24         23        24         3     <~dex2kmp\pb24.top>
+PB28         27        28         3     <~dex2kmp\pb28.top>
+PB32         31        32         3     <~dex2kmp\2to31m26.top>
+PB36         35        36         3     <~dex2kmp\pb36.top>
+ 

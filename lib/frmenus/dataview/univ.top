@@ -1,0 +1,9 @@
+----- <~dataview\univ.top> View Built-in Univariate Data Files
+
+View Built-in Univariate Data Files
+
+NIST data                 <~dataview\univnist.top>
+Natrella Data             <~dataview\univnatr.top>
+Sematech Data             <~dataview\univsema.top>
+Other data                <~dataview\univothe.top>
+

@@ -1,0 +1,103 @@
+This is file jackplco.men--Generate Jacknife Plots (Correlation)
+ 
+--------------------line 3
+01. Jacknife Plots (Correlation/Fitting/Calibration)
+02. JACKNIFE <statistic> PLOT Y X
+03.
+04. First Response Variables:
+04. @CE 1 0 42 50 ? gui-vari
+05. Second Response Variables:
+05. @CE 2 0 42 50 ? gui-vari
+06. Variable to Save Computed Jacknife Values:
+06. @CE 3 0 42 50 ?
+07. Optional Group ID Variable:
+07. @CE 4 0 42 50 ? gui-vari
+08.
+09. Correlation/Fitting/Calibration Statistic (Select one):
+10. @CE 5 1 1 27 biweight midcorrelation
+10. @CE 5 2 29 57 biweight midcovariance
+11. @CE 5 3 1 27 comovement
+11. @CE 5 4 29 57 correlation
+12. @CE 5 5 1 27 covariance
+12. @CE 5 6 29 57 linear correlation
+13. @CE 5 7 1 27 linear intercept
+13. @CE 5 8 29 57 linear ressd
+14. @CE 5 9 1 27 linear slope
+14. @CE 5 10 29 57 percentage bend correlation
+15. @CE 5 11 1 27 rank comovement
+15. @CE 5 12 29 57 rank correlation
+16. @CE 5 13 1 27 rank covariance
+16. @CE 5 14 29 57 Winsorized correlation
+17. @CE 5 15 1 27 Winsorized covariance
+17. @CE 5 16 29 57 linear calibration
+18. @CE 5 17 1 27 quadratic calibration
+19.
+20. Percentage of values to Winsorize above?:
+20. @CE 6 0 42 50 ? 
+21. Percentage of values to Winsorize below?:
+21. @CE 7 0 42 50 ?
+22. Beta for percentage bend (0 < beta < 0.5):
+22. @CE 8 0 42 50 ?
+23. Y0 for linear/quadratic calibration:
+23. @CE 9 0 42 50 ?
+24.
+25. Character Type for Data
+25. @CE 10 0 42 50 * gui-char
+26. Character Fill for Data
+26. @CE 11 0 42 50 gui-ooff
+27. Line Type for Data-connecting Line
+27. @CE 12 0 42 50 * gui-line
+28.
+29. Title:
+29. @CE 13 0 10 50 *
+30. Left Axis Label:
+30. @CE 14 0 22 50 *
+31. Bottom Axis Label:
+31. @CE 15 0 22 50 *
+32.
+33. Subset/Except/For Specification:
+34. @CE 16 0 1 50 *
+35.
+36. Generate the Jacknife Plot?:
+--------------------
+TITLE _13
+Y1LABEL _14
+X1LABEL _15
+CHARACTER SAVE
+LINE SAVE
+CHARACTERS _10
+CHARACTER FILL _11
+LINES _12
+@IF 3 0 CHARACTERS _10 ALL
+@IF 3 0 CHARACTER FILL _11 ALL
+@IF 3 0 LINES _12 ALL
+LET P1 = 5
+LET P2 = 5
+LET P1 = _7
+LET P2 = _6
+LET BETA = _8
+LET Y0 = _9
+.
+@IF 5 1 JACKNIFE BIWEIGHT MIDCORRELATION PLOT _1 _2 _4 _16
+@IF 5 2 JACKNIFE BIWEIGHT MIDCOVARIANCE PLOT _1 _2 _4 _16
+@IF 5 3 JACKNIFE COMOVEMENT PLOT _1 _2 _4 _16
+@IF 5 4 JACKNIFE CORRELATION PLOT _1 _2 _4 _16
+@IF 5 5 JACKNIFE COVARIANCE PLOT _1 _2 _4 _16
+@IF 5 6 JACKNIFE LINEAR CORRELATION PLOT _1 _2 _4 _16
+@IF 5 7 JACKNIFE LINEAR INTERCEPT PLOT _1 _2 _4 _16
+@IF 5 8 JACKNIFE LINEAR RESSD PLOT _1 _2 _4 _16
+@IF 5 9 JACKNIFE LINEAR SLOPE PLOT _1 _2 _4 _16
+@IF 5 10 JACKNIFE PERCENTAGE BEND CORRELATION PLOT _1 _2 _4 _16
+@IF 5 11 JACKNIFE RANK COMOVEMENT PLOT _1 _2 _4 _16
+@IF 5 12 JACKNIFE RANK CORRELATION PLOT _1 _2 _4 _16
+@IF 5 13 JACKNIFE RANK COVARIANCE PLOT _1 _2 _4 _16
+@IF 5 14 JACKNIFE WINSORIZED CORRELATION PLOT _1 _2 _4 _16
+@IF 5 15 JACKNIFE WINSORIZED COVARIANCE PLOT _1 _2 _4 _16
+@IF 5 16 JACKNIFE LINEAR CALIBRATION PLOT _1 _2 _4 _16
+@IF 5 17 JACKNIFE QUADRATIC CALIBRATION PLOT _1 _2 _4 _16
+CHARACTER RESTORE
+LINE RESTORE
+LET _3 = YPLOT
+--------------------
+WEB HELP JACKNIFE PLOT
+--------------------

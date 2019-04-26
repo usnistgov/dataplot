@@ -1,0 +1,19 @@
+This is file rowlimit.men--Specify rows in file to read
+ 
+--------------------
+ 1. Specify Rows in File to Read
+ 2. ROW LIMITS <first>  <last>
+ 3.
+ 4. Enter first row to read:
+ 4. @CE 1 0 42 50 ?
+ 5. Enter last row to read:
+ 5. @CE 2 0 42 50 ?
+ 6.
+ 7.
+ 8. Define the Row Limits?
+--------------------
+SU FE
+ROW LIMITS _1  _2
+--------------------
+WEB HELP ROW LIMITS
+--------------------

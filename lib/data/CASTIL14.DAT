@@ -1,0 +1,79 @@
+This is Dataplot Data File     CASTIL14.DAT
+Women's Age Data--Oldest yearly death age for Swedish women (1905-1958)
+Engineering Goal--Predict/forecast oldest yearly ages in future
+Response Variable = oldest yearly death age for Swedish women
+Number of Observations = 55
+Number of Variables per line image = 1
+Order of variables per line image--
+   1. Response variable = olderst yearly death age for Swedish women
+Statistical Category--Extreme Value Analysis
+To read this into Dataplot--
+   SKIP 25
+   READ CASTIL14.DAT Y
+Source--Enrique Castillo (1988). Extreme Value Theory
+        in Engineering. Academic Press, San Diego, California,
+        p. 338-339.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Oldest yearly death age for Swedish women (pre-sorted)
+---------------------------------------------------------------
+100.08
+100.49
+100.82
+100.88
+100.90
+101.17
+101.26
+101.41
+101.63
+101.66
+101.67
+101.70
+101.76
+102.41
+102.52
+102.54
+102.55
+102.57
+102.57
+102.61
+102.63
+102.69
+102.78
+102.88
+102.94
+103.00
+103.06
+103.15
+103.17
+103.24
+103.25
+103.36
+103.40
+103.43
+103.47
+103.57
+103.80
+103.98
+104.01
+104.22
+104.65
+104.88
+104.92
+105.00
+105.12
+105.12
+105.12
+105.48
+105.55
+105.72
+105.83
+106.09
+106.48
+106.50

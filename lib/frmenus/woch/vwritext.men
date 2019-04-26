@@ -1,0 +1,40 @@
+This is file writtext.men--Write a Vertical Text String
+ 
+--------------------
+ 1. Write a Vertical Text String
+ 2. ANGLE 90; TEXT THIS IS A STRING
+ 3.
+ 4. Enter text to draw:
+ 5. @CE 1 0 1 50 ?
+ 6.
+ 7. If no position is entered, the string
+ 8. drawn at the current screen position.
+ 9. X Coordinate:
+ 9. @CE 2 0 33 50 ?
+10. Y Coordinate:
+10. @CE 3 0 33 50 ?
+11.
+12. Coordinate System to Use:
+13. @CE 4 1 1 50 absolute 0 to 100 screen units
+14. @CE 4 2 1 50 absolute data units of last plot
+15.
+16. The attributes for the text (e.g., font, justification,
+17. justification, color) can be set in the "Set Text
+18. Attributes" menu prior to invoking this menu.
+19.
+20.
+21. Draw the Text?:
+--------------------
+GR FE
+LET STRING ZZZZSTR = MOVE
+@IF 4 1 LET STRING ZZZZSTR = MOVE
+@IF 4 2 LET STRING ZZZZSTR = MOVEDATA
+@IF 2 0 ^ZZZZSTR  _2 _3
+DEGREES
+ANGLE 90
+TEXT _1
+ANGLE 0
+RADIANS
+--------------------
+WEB HELP TEXT
+--------------------

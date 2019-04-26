@@ -1,0 +1,8 @@
+----- <~dataload\MARSHAK.DP> Load MARSHAK.DAT
+
+. This is file    MARSHAK.DP
+
+DELETE Y
+SKIP 25
+READ MARSHAK.DAT Y
+

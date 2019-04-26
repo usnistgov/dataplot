@@ -1,0 +1,220 @@
+                   Dataplot Analysis of a
+                2**3 Full factorial Design:
+                     Defective Springs
+ 
+ 
+We recommend the following as a bare minimum
+Dataplot analysis of a 2**3 full factorial design.
+The analysis consists of the following 7 steps:
+ 
+   1. pre-view the data file
+   2. read in the data
+   3. generate an effects plot for main factors
+   4. generate an effects plot for main factors & 2-term interactions
+   5. generate a matrix of effects plots
+   6. do a Yates analysis to estimate effects
+   7. generate a contour plot of the most important 2 factors
+ 
+ 
+Experimental Background
+ 
+You are a manufacturer of metal springs and you
+wish to reduce the number of defective springs per
+batch.  You suspect that 3 factors are affecting
+the number of defectives: the temperature of the
+oven for making the steels, the carbon
+concentration of the steel, and the temperature of
+the quenching temperature after the steel is
+removed from the oven.  You run a 2**3 full
+factorial design (8 runs) in which
+ 
+   Y  = response variable = % acceptable per batch
+   X1 = oven temperature (1450 and 1600 degress F)
+   X2 = carbon concentration (.5 and .7%)
+   X3 = quenching temperature (70 and 120 degrees F)
+ 
+Your objective of course to determine which of
+these factors (and interactions) effect the %
+acceptable springs, and ultimately to determine
+the settings of the factors which maximize the
+percent acceptable springs.
+ 
+Dataplot has several hundred auxiliary data files
+(ASCII) that have been provided for user perusal
+and which contain a variety of interesting data
+sets.  The names of the available Dataplot
+auxiliary data files are in the file
+ 
+   DATASETS.TEX
+ 
+You can thus scan Dataplot's available auxiliary
+data file names by entering any of the following 3
+equivalent commands:
+ 
+   VIEW DATASETS.TEX
+   PREVIEW DATASETS.TEX
+   LIST DATASETS.TEX
+ 
+Hypothetical data from the above 2**3 defective
+springs experiment has been placed in the Dataplot
+auxiliary file BOXSPRIN.DAT.  This example and
+data were drawn from the manuscript [Box &
+Bisgaard, 19xx]
+ 
+ 
+1. Preview the data file
+ 
+You can view the contents of the ASCII data file
+BOXSPRIN.DAT by entering:
+ 
+   VIEW BOXSPRIN.DAT
+ 
+The following will appear on your screen:
+ 
+   <output 1 here>
+ 
+Note that this ASCII file has 25 lines of non-data
+header information (most Dataplot auxiliary files
+have 25 lines of header information) plus 8 lines
+of data.  The 25 header lines describe the
+contents of the file and how to read ths file into
+Dataplot.  The 8 lines of data consist of 4 data
+columns:
+ 
+   column 1 = response = % acceptable springs per batch
+   column 2 = factor 1 = coded oven temperature
+   column 3 = factor 2 = coded carbon concentration
+   column 4 = factor 3 = coded quench temperature
+ 
+ 
+2. Read in the data
+ 
+You can read the 4 data columns in the file BOXSPRIN.DAT
+into Dataplot by entering:
+ 
+   SKIP 25                           ignore the 25 header lines
+   READ BOXSPRIN.DAT Y X1 X2 X3      read the data in
+ 
+This read will be free-format.  The default
+separator of adjacent numbers on a file line is
+one (or more) blanks.  Dataplot will read all data
+in until down to the end-of-file.  The 4 data
+columns in the file will be read into 4 data
+columns (= variables = vectors) internal to
+Dataplot.  We have chosen to name these 4 internal
+variables as Y, X1, X2, and X3.  You can name them
+anything you like by changing the READ command.
+For example,
+ 
+   READ BOXSPRIN.DAT PERCACC OVEN CARB QUENCH
+ 
+would name the 4 internal variables PERCACC, OVEN,
+CARB, and QUENCH.  In Dataplot, characters beyond
+the first 8 in a name are ignored, thus choose
+whatever names you like but make them unique
+within characters 1 to 8.
+ 
+Upon entering the original READ command (READ
+BOXSPRIN.DAT Y X1 X2 X3) the following feedback
+message appears on your screen:
+ 
+   <output 2 here>
+ 
+ 
+3. Generate an effects plot for main factors
+ 
+You can generate an effects plot (main factors
+only) by entering
+ 
+   DEX MEAN PLOT Y X1 X2 X3
+ 
+The following will appear on your screen:
+ 
+   <output 3 here>
+ 
+The vertical axis is the mean response.  The horizontal axis
+(1, 2, and 3) is the coded 3 factors:
+ 
+   1 = factor 1 = coded oven temperature
+   2 = factor 2 = coded carbon concentration
+   3 = factor 3 = coded quench temperaTURE
+ 
+The line on the plot above "1" connects the mean
+response (xx) for factor 1 (oven temperature) at
+the low setting (1450 degrees F), and the mean
+response (xx) for factor 1 (oven temperature) at
+the high setting (1600 degrees F).  The difference
+between these 2 mean values is the least squares
+estimate of the factor 1 effect.  In this case,
+the estimated factor 1 effect is xx-yy = zz.
+You thus see from the plot that
+ 
+   mean response for oven temperature at 1450 degrees = xx
+   mean response for oven temperature at 1600 degrees = xx
+   estimated oven temperature effect = xx
+ 
+   mean response for carbon concentration at .5% = xx
+   mean response for carbon concentration at .7% = xx
+   estimated carbon concentration = xx
+ 
+   mean response for quench temperature at 70 degrees = xx
+   mean response for quench temperature at 120 degrees = xx
+   estimate quench temperature effect = xx
+ 
+Main effects plots compares the relative
+importance of the 3 factors and gives you a procedure
+for constructing a ranked list of the 3 factors.  If a
+line on a main effects plot is steep, the
+estimated factor effect is large, and the factor
+is important.  If a line on a main effects is
+shallow, the estimated factor effect is small
+(near zero), and the factor is unimportant.  In
+this case, you see that
+ 
+   1. factor 1 has the steepest line;
+   2. factor 2 has the next steepest line;
+   3. factor 3 has the least steep line;
+ 
+thus
+ 
+   1. factor 1 (oven temperature) is most important;
+   2. factor 2 (carbon concentration) is next in importance;
+   3. factor 3 (quench temperature) is least important.
+ 
+The main effects plot also gives you a good method of
+determining best settings for each of the 3 factors.
+From the plot, for each factor, you choose the setting
+which (of course) maximizes the % acceptable springs
+Your best settings are therefore:
+ 
+   1. factor 1 (oven temperature): 1600 degrees
+   2. factor 2 (carbon concentration): .5%
+   3. factor 3 (quench temperature): 120 degrees
+ 
+Other considerations (to be discussed later) may
+temper our choose for these best settings, but for
+now these settings are clearly superior in terms
+of improving our % acceptable springs.
+ 
+4. Generate an effects plot for main factors & interactions
+ 
+Main effects tell only part of the story in many physical phenomenona;
+interactions are often also important.
+Since this experiment involves 3 factors,
+there are three 2-term interactions:
+ 
+   1. oven temperature x carbon concentration
+   2. oven temperature x quench temperature
+   3. carbon concentration x quench temperature
+ 
+and one 3-term interaction:
+ 
+   oven temperature x carbon concentration x quench temperature
+ 
+For 2-level experiments such as you ran above, you can extend the
+above effects plot in a very simple fashion to tell if interactions
+are important.
+Since the 2 settings of each of the 3 factors
+X1, X2 and X3 have been coded as -1 and +1, note that
+you may form the 2-term interaction variables
+X1*X2, X1*X3, and X2*X3

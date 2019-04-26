@@ -1,0 +1,23 @@
+This is file setseed.men--Set Seed
+ 
+--------------------
+ 1. Set Seed for Random Numbers
+ 2. SEED = VALUE
+ 3.
+ 4. For the default random number generator, the
+ 5. minimum value should be 305.  Also, even
+ 6. integers are equivalent to odd integers
+ 7. (i.e., 306 results in same random numbers as
+ 8. 305).
+ 9.
+10. Value for the seed:
+10. @CE 1 0 42 50 ?
+11.
+12.
+13. Set the Seed?
+--------------------
+AN FE
+SEED _1
+--------------------
+WEB HELP SEED
+--------------------

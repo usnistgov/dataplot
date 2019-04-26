@@ -1,0 +1,14 @@
+----- <~fit\splinreg.top> Spline Regression
+
+Spline Regression
+
+Do the Fit          <xemf: ~fit\fitsplin.men>
+
+Discussion          <~fit\discspli.top>
+Do Model Validation <~fit\modelval.top>
+Built-in Datasets   <~dataload\spline.top>
+
+Worked Examples
+   Spiegleman data (linear spline)  <xcf: ~fit\SPIEGEL2.DP>
+   Swanson    data (cubic spline)   <xcf: ~fit\SWANSON1.DP>
+

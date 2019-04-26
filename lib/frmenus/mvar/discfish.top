@@ -1,0 +1,13 @@
+----- <~mvar\discfish.top> Fisher Discriminant Analysis
+ 
+Fisher's Discriminant Analysis
+ 
+Discussion                <~mvar\disfdis.top>
+
+Fisher's Discriminant Analysis (p > 2)  <xemf: ~mvar\fishdisp.men>
+Fisher's Discriminant Analysis (p = 2)  <xemf: ~mvar\fishdis2.men>
+
+Worked Examples
+    Fisher's Iris Data    <xcl: CALL FISHIRIS.DP>
+    2 Population Example  <xcl: CALL FISH2POP.DP>
+

@@ -1,0 +1,26 @@
+----- <~fit\discsplin.top> Spline Fitting
+
+Spline Fitting
+
+A spline fit is a data analysis technique for
+estimating (via the least squares criterion) the
+parameters in a spline polynomial model.  It is
+commonly used to fit curves that have different
+shapes in different areas of the horizontal axis
+variable.  Knot points are defined to delineate
+these different regions.  Separate spline polynomials
+are fit in these different areas.  The distinction of
+spline fits is that the fitted curve will be smooth
+at the knot points.
+ 
+The values for the spline fit are placed in the
+internal variable PRED. The residuals (the difference
+between the fitted values and the raw data) are
+placed in the internal variable RES.
+ 
+Dataplot allows a maximum of 50 knot points to be
+defined.
+ 
+Cubic splines are the most commonly used.  Degrees
+above 3 are rarely used.
+

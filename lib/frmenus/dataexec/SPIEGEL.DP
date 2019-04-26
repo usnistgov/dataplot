@@ -1,0 +1,10 @@
+----- <~dataexec\SPIEGEL.DP> Load & Execute SPIEGEL.DAT
+
+. This is file    SPIEGEL.DP
+
+DELETE Y X
+SKIP 25
+READ SPIEGEL.DAT Y X
+TITLE SPIEGEL.DAT
+PLOT Y X
+

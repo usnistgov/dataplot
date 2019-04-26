@@ -1,0 +1,8 @@
+----- <~dataall\CONSUMPR.top> CONSUMPR.DAT
+
+CONSUMPR.DAT
+
+View     <xcl: LIST CONSUMPR.DAT>
+Load     <xcf: ~dataload/CONSUMPR.DP>
+Print    <xccl: printfile C:\DATAPLOT\CONSUMPR.DAT>
+

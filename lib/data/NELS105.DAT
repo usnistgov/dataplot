@@ -1,0 +1,44 @@
+This is Dataplot data file    NELS105.DAT
+Time to Breakdown of an Insulating Fluid
+Reference--Nelson, Wayne.
+Applied Life Data Analysis
+Wiley, New York, page 105.
+Response varible = Minutes to failure/running
+Number of observations = 16 => 7
+Order of observations on a line image--
+   Response varible = Months to failure/removal
+   Factor 1 = failure tag (0 = not failed due to removal from test
+                           1 = failed)
+   Factor 2 = Transformer ID (1 to 16)
+
+
+
+
+
+
+
+Failure/  Voltage
+Time 
+(Minutes)
+ Y        VOLTAGE
+---------------------------
+ 0.19  34
+ 0.78  34
+ 0.96  34
+ 1.31  34
+ 2.78  34
+ 3.16  34
+ 4.15  34
+ 4.67  34
+ 4.85  34
+ 6.50  34
+ 7.35  34
+ 8.01  34
+ 8.27  34
+12.06  34
+31.75  34
+32.52  34
+33.91  34
+36.71  34
+72.89  34
+END OF DATA

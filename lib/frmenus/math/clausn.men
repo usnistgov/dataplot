@@ -1,0 +1,25 @@
+This is file clausn.men--Compute Clausen Integral
+ 
+--------------------
+ 1. Clausen Integral
+ 2. LET Y = CLAUSN(X)
+ 3.
+ 4. The input values can be variables, parameters, or simply
+ 5. enter a constant.
+ 6. 
+ 7. Input Argument:
+ 7. @CE 1 0 42 50 ? gui-variable
+ 8. Variable to store the transformed result:
+ 8. @CE 2 0 42 50 ?
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 3 0 -5 50 *
+12.
+13.
+14. Compute the Transformation?:
+--------------------
+GR FE
+LET _2 = CLAUSN( _1 ) _3
+--------------------
+WEB HELP CLAUSN
+--------------------

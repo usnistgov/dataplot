@@ -1,0 +1,95 @@
+----- <~prob\disc.top> Discussion
+
+Probability Functions
+
+
+This menu computes and plots various types of
+probability functions.  Specifically, Dataplot
+provides the following types of probality functions:
+
+  1) probability density function (pdf).
+
+     A pdf function is the probability that a
+     variable is equal to a given value.  This
+     is expressed as:
+
+          f(x) = P[X= x]
+
+  2) cumulative distribution function (cdf).
+
+     A cdf function is the probability that a
+     variable is less than or equal to a given
+     value.  This is expressed as:
+
+          F(x) = P[X<= x]
+
+  3) percent point function (cdf), also known as
+     an inverse cdf function.
+
+     A percent point function is the inverse of the
+     cdf function.  That is, given a probability p,
+     what is the value of x such that F(x) = p.
+     This is expressed as:
+
+          G(p) = x
+
+  4) sparsity function (sf).
+
+     The sparsity function is the derivative of the
+     percent point function.  This function is rarely
+     used in practice, although Dataplot does provide
+     built-in sparsity functions for a few
+     distributions.
+
+In addition, the following related functions are also
+useful in certain applications:
+
+  1) survival function.
+
+     This is the P(x > X).  Note that this is
+     simply 1 - the cdf value, so these can be
+     computed and plotted in a straightforward way in
+     Dataplot by using the corresponding cdf functions.
+
+     The inverse survival function is the quantile that
+     is exceeded by the variable with probability p.
+     This can be expressed as:
+
+        Z(p) = G(1-p)
+
+     where G is the percent point function.  Therefore,
+     Dataplot can compute this function via the built-in
+     ppf function.
+
+  2) hazard function.
+
+     The hazard function is primarily used in reliability
+     applications.  It is defined as the ratio of the
+     probability density to the survival function:
+
+        h(x) = f(x)/(1-F(x))
+
+     where f is the pdf and F is the CDF.  This function
+     can be computed in Dataplot via the built-in cdf and
+     pdf functions.
+
+  3) cumulative hazard function.
+
+     The cumulative hazard function is the integral of the
+     hazard function defined above.  It can be expressed as:
+
+        H(x) = -log(1-F(x))
+
+     where F is the cdf function.  Therefore this function
+     can be computed in Dataplot via the built-in cdf
+     functions.
+
+Many distributions have location and scale parameters.
+There is typically a standard form of these distributions.
+The standard form has a specific location and scale parameter
+(usually 0 for location, 1 for scale).  Dataplot computes
+the standard form of the distribution.  However, it is
+a straightfoward calculation to obtain values for
+non-standard forms.  The menus in this section allow you
+to specify the location and scale parameters where applicable.
+

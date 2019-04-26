@@ -1,0 +1,124 @@
+. This is dataplot macro     rightmarginfactorsandlevels.dp       (== rightmarginfactors.dp   sync: 9/12/16)
+. Purpose: On an existing  sorted response plot, write factors & levels in right margin
+.         (toward the top)
+. Date: 12/2/14
+. Input (all are required):
+.    k        (parameter) = number of factors
+.    stx1, stx2, stx3, . . . (strings) = names of each of the k factors
+.
+.    levelsw  (parameter) = 0/1 switch for whether levels should be printed (optional)
+.                           (default = 1 = yes = print levels)
+.    nlevv    (vector)    = vector of number of levels of each factor
+.    stx1l, stx2l, stx3l, . . . (strings) = multi-word strings for each level of each factor
+.    stcolor1, stcolor2, etc. = multiword strings for the colors of each level of each factro
+.
+.    lh       (parameter) = height of labels                         (optional) (default = 1)
+.    lw       (parameter) = width  of labels                         (optional) (default = 0.5)
+.
+.    xp0      (parameter) = horizontal location of labels            (optional) (default = 86)
+.    yp0      (parameter) = vertical location of labels              (optional) (default = 88.2)
+.    ypdel    (parameter) = vertical increment for successive labels (optional) (default = 2)
+.    xpdel    (parameter) = horizontal indentation for levels        (optional) (default = 3)
+.
+.    prog     (parameter) = numerical suffix for the calling program (for special cases) (optional)
+.                           (default = not exist)
+.    codetype (parameter) = value defining whether 1, 2, etc. or -, + desired (optional)
+.                           (default = 0 = show as is)
+.                              codetype = 0: show as is
+.                              codetype = 1: show - +
+.                              codetype = 2: show - 0 +
+.
+. -----start point-----
+.
+.
+. -----Step 1: Check for missing input values-----
+.
+let string stmacro = rightmarginfactorsandlevels.dp
+.
+set check name output filliben
+feedback save; feedback on
+let iflag = check name k nlevv stx1 to stx^jz
+feedback off
+.
+loop for jz = 1 1 k
+   feedback on
+   let iflag = check name stx^jz&l
+   feedback off
+end loop
+feedback restore
+.
+. -----Step 11: Write out the factors and factor settings-----
+.
+let lhz = 1
+if lh exists; let lhz = lh; end if
+.
+let lwz = 0.5
+if lw exists; let lwz = lw; end if
+.
+let xp0z = 86
+if xp0 exists; let xp0z = xp0; end if
+.
+let yp0z = 88.2
+if yp0 exists; let yp0z = yp0; end if
+.
+let xpdelz = 3
+if xpdel exists; let xpdelz = xpdel; end if
+.
+let ypdelz = 2
+if ypdel exists; let ypdelz = ypdel; end if
+.
+let levelswz = 1
+if levelsw exists; let levelswz = levelsw; end if
+.
+just center; hw lhz lwz
+let ypz = yp0z + ypdelz
+loop for jfact = 1 1 k
+   color blue
+   if jprime exists
+      if jfact = jprime; color black; end if
+   end if
+   let ypz = ypz - ypdelz
+   move xp0z ypz; just left; hw 2 1; text X^jfact: ^stx^jfact
+   .
+   if levelswz = 1
+      let nlev = nlevv(jfact)
+      loop for jlev = 1 1 nlev
+         let xp2z = xp0z + xpdelz
+         let ypz = ypz - ypdelz
+         let stzz = string word stx^jfact&l jlev
+         let string stout = ^stzz
+         .
+         let string stcolzz = blue
+         if stcolor^jfact exists
+            let stcolzz = string word stcolor^jfact jlev
+         end if
+         color ^stcolzz
+         .
+         if codetype not exist
+            move xp2z ypz; text ^jlev: ^stout
+         end if
+         if codetype exists and codetype = 0
+            move xp2z ypz; text ^jlev: ^stout
+         end if
+         if codetype exists and codetype = 1
+            if jlev = 1; move xp2z ypz; text - : ^stout; end if
+            if jlev = 2; move xp2z ypz; text +: ^stout; end if
+         end if
+         if codetype exists and codetype = 2
+            if nlev = 3
+               if jlev = 1; move xp2z ypz; text - : ^stout; end if
+               if jlev = 2; move xp2z ypz; text 0: ^stout; end if
+               if jlev = 3; move xp2z ypz; text +: ^stout; end if
+            end if
+            if nlev = 2
+               if jlev = 1; move xp2z ypz; text - : ^stout; end if
+               if jlev = 2; move xp2z ypz; text +: ^stout; end if
+            end if
+         end if
+         .
+      end loop
+   end if
+end loop
+.
+. delete lhz lwz xp0z yp0z xpdelz ypdelz xp2z
+.

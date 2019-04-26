@@ -1,0 +1,14 @@
+----- <~prob\pppfchis.top> Plot Chi-Square, Beta, F, and Related ppf's
+
+Plot Chi-square, Beta, F, and Related PPF Functions
+
+Chi-Squared              <xemf: ~prob\pchsppf.men>
+Chi                      <xemf: ~prob\pchppf.men>
+
+F                        <xemf: ~prob\pfppf.men>
+Beta                     <xemf: ~prob\pbetppf.men>
+Power                    <xemf: ~prob\ppowppf.men>
+Arcsin                   <xemf: ~prob\parsppf.men>
+Mielke's Beta-Kappa      <xemf: ~prob\pkapppf.men>
+Two-Sided Power          <xemf: ~prob\ptspppf.men>
+

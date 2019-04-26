@@ -1,0 +1,62 @@
+THIS IS DATAPLOT DATA FILE BOXCAKE.DAT
+FLOUR/SHORTENING/EGGS/TEMP/TIME EFFECT ON CAKE TASTE
+EXAMPLE OF TAGUCHI PARAMETER DESIGN
+REFERENCE--BOX, G.E.P, AND JONES, XX.
+           QUALITY PROGRESS, JUNE 1987, PAGE 56.
+REFERENCE--BOX, G.E.P., BISGAARD, SOREN, & FUNG, CONRAD ,
+           "AN EXPLANATION AND CRITIQUE OF TAGUCHI'S
+           CONTRIBUTIONS TO QUALITY ENGINEERING",
+           QUALITY AND RELIABILITY ENGINEERING INTERNATIONAL,
+           VOLUME 4, 1988, PAGES 123-131.
+2**5 FULL FACTORIAL DESIGN + 5 PSEUDO-CENTER POINTS
+NUMBER OF OBSERVATIONS = 32 + 5 = 37
+TOTAL NUMBER OF VARIABLES = 6
+   RESPONSE VARIABLE = TASTE RATING OF CAKE (0 = BAD, 7 = GOOD)
+   FACTOR 1 = FLOUR (2 LEVELS-- )                INNER ARRAY
+   FACTOR 2 = SHORTENING (2 LEVELS--)            INNER ARRAY
+   FACTOR 3 = EGGS (2 LEVELS--)                  INNER ARRAY
+   FACTOR 4 = OVEN TEMPERATURE (2 LEVELS--)      OUTER ARRAY
+   FACTOR 5 = OVEN TIME (2 LEVELS--)             OUTER ARRAY
+TO READ THIS INTO DATAPLOT--
+   SKIP 25
+   READ BOXCAKE.DAT Y X1 X2 X3 X4 X5
+   DELETE Y X1 TO X5 FOR I = 1 1 5
+TASTE   FLOUR  SHORT. EGGS   TEMP.  TIME
+-----------------------------------------
+ 6.7      0      0      0      0      0
+ 3.4      0      0      0     -1     -1
+ 5.4      0      0      0     +1     -1
+ 4.1      0      0      0     -1     +1
+ 3.8      0      0      0     +1     +1
+ 1.1     -1     -1     -1     -1     -1
+ 3.8      1     -1     -1     -1     -1
+ 3.7     -1      1     -1     -1     -1
+ 4.5      1      1     -1     -1     -1
+ 4.2     -1     -1      1     -1     -1
+ 5.0      1     -1      1     -1     -1
+ 3.1     -1      1      1     -1     -1
+ 3.9      1      1      1     -1     -1
+ 5.7     -1     -1     -1      1     -1
+ 4.9      1     -1     -1      1     -1
+ 5.1     -1      1     -1      1     -1
+ 6.4      1      1     -1      1     -1
+ 6.8     -1     -1      1      1     -1
+ 6.0      1     -1      1      1     -1
+ 6.3     -1      1      1      1     -1
+ 5.5      1      1      1      1     -1
+ 6.4     -1     -1     -1     -1      1
+ 4.3      1     -1     -1     -1      1
+ 6.7     -1      1     -1     -1      1
+ 5.8      1      1     -1     -1      1
+ 6.5     -1     -1      1     -1      1
+ 5.9      1     -1      1     -1      1
+ 6.4     -1      1      1     -1      1
+ 5.0      1      1      1     -1      1
+ 1.3     -1     -1     -1      1      1
+ 2.1      1     -1     -1      1      1
+ 2.9     -1      1     -1      1      1
+ 5.2      1      1     -1      1      1
+ 3.5     -1     -1      1      1      1
+ 5.7      1     -1      1      1      1
+ 3.0     -1      1      1      1      1
+ 5.4      1      1      1      1      1

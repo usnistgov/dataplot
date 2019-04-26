@@ -1,0 +1,8 @@
+----- <~dataload\NEGIZ3.DP> Load NEGIZ3.DAT
+
+. This is file    NEGIZ3.DP
+
+DELETE Y1 TO Y6
+SKIP 0
+READ NEGIZ3.DAT Y1 TO Y6
+

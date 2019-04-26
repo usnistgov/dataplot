@@ -1,0 +1,46 @@
+----- <~dex\viewdata.top> Experiment Design: Graphical Techniques
+
+Experiment Design: Graphical Techniques
+
+DEX Plots
+    DEX Mean Plot            <xemf: ~plot\dexmeanp.men>
+    DEX SD Plot              <xemf: ~plot\dexsdplo.men>
+    DEX stat Plot            <xemf: ~plot\dexstatp.men>
+    DEX Scatter Plot         <xemf: ~plot\dexscatp.men>
+    DEX Sign Plot            <xemf: ~plot\dexsignp.men>
+    DEX stat Effects Plot    <xemf: ~plot\dexeffep.men>
+    DEX stat Youden Plot     <xemf: ~plot\dexyoudp.men>
+
+    DEX Contour Plot (center point)     <xemf: ~dex2k\contplot.men>
+    DEX Contour Plot (no center point)  <xemf: ~dex2k\contplo2.men>
+    Pairwise DEX Contour Plots          <xemf: ~dex2k\contmapl.men>
+    
+    Yates Cube Plot (2**3)   <xemf: ~dex2k\yatecube.men>
+    Yates Cube Plot (2**4)   <xemf: ~dex2k\yatecub2.men>
+    Yates Cube Plot (2**5)   <xemf: ~dex2k\yatecub3.men>
+
+    Do 10-Step Screening Analysis     <~dex2k\10step.top>
+
+1 Response Variable, 1 Factor Variable
+    Scatter Plot                      <xemf: ~stat\scatplot.men>
+    Scatter Plot with Vertical Lines  <xemf: ~stat\vertplot.men>
+    Box Plot                          <xemf: ~stat\boxplot.men>
+    Mean Plot                         <xemf: ~1fac\meanplot.men>
+    SD Plot                           <xemf: ~1fac\sdplot.men>
+    Statistics for Grouped Data       <xemf: ~stat\statplot.men>
+
+2 Factor Variables
+   Character Plot               <xemf: ~mfac\charplot.men>
+   Line Plot                    <xemf: ~mfac\lineplot.men>
+   3D Plot (Data)               <xemf: ~plot\3dplot.men>
+   Contour Plot (Data)          <xemf: ~math\contour.men>
+
+3 Factors
+   GANOVA Graphical Analysis of Variance  <xemf: ~mfac\ganova.men>
+          (= character + line plot)       <xemf: ~mfac\ganova.men>
+
+General (2+ Factors, see DEX Plots above)
+   Block Plot                   <xemf: ~stat\blockplo.men>
+   Taguchi Plots                <xemf: ~qual\tagplot.men>
+   Scatter Plot Matrix          <xemf: ~plot\scatplma.men>
+

@@ -1,0 +1,23 @@
+----- <~prob\locscmle.top> MLE for Location-Scale Continuous Distributions
+
+Perform MLE (no shape parameters)
+
+Perform Maximum Likelihood Estimation for Continuous Distributions
+with No Shape Parameters
+
+Cauchy                                    <xemf: ~prob\caumle.men>
+Double Exponential (Laplace)              <xemf: ~prob\dexmle.men>
+Exponential                               <xemf: ~reli\mleexp.men>
+Extreme Value Type I(Gumbel)  - Minimum   <xemf: ~reli\mleev12.men>
+Extreme Value Type I(Gumbel)  - Maximum   <xemf: ~reli\mleev12.men>
+Logistic                                  <xemf: ~prob\logmle.men>
+1-Parameter Maxwell                       <xemf: ~prob\maxmle.men>
+2-Parameter Maxwell                       <xemf: ~prob\max2mle.men>
+Normal                                    <xemf: ~reli\mlenor.men>
+1-Parameter Rayleigh                      <xemf: ~prob\raymle.men>
+2-Parameter Rayleigh                      <xemf: ~prob\ray2mle.men>
+Slash                                     <xemf: ~prob\mlesla.men>
+Uniform                                   <xemf: ~prob\unimle.men>
+
+Bootstrap Confidence Intervals for Percentiles  <xemf: ~prob\mleperc.men>
+

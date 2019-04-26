@@ -1,0 +1,36 @@
+This is file airy.men--Compute Airy Functions
+ 
+--------------------
+ 1. Airy Functions
+ 2. LET YNEW = AIRY(X); LET YNEW = BAIRY(X)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value.
+ 6.
+ 7. Variable  to operate on:
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8.
+ 9. Operation to perform:
+10. @CE 2 1 10 40 Airy (first kind)
+11. @CE 2 2 10 40 Bairy (second kind)
+12.
+13. Variable to store the transformed result:
+13. @CE 3 0 33 50 ?
+14.
+15. Plot?:
+15. @CE 5 1 14 20 no
+15. @CE 5 2 22 28 yes
+16.
+17. Subset/Except/For Specification:
+18. @CE 4 0 -5 50 *
+19.
+20.
+21. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = AIRY( _1 ) _4
+@IF 2 2 LET _3 = BAIRY( _1 ) _4
+@IF 5 2 PLOT _3  _1  _4
+--------------------
+WEB HELP AIRY
+--------------------

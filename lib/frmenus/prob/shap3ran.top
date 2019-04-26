@@ -1,0 +1,24 @@
+----- <~prob\shap3ran.top> Random Numbers for 3+ Shape Parameter Continuous Distributions
+
+Generate Random Numbers (three or more shape parameters)
+
+Generate Random Numbers for Continuous Distributions
+with Three (or more) Shape Parameters
+
+Doubly Non-Central F                      <xemf: ~prob\gendnfra.men>
+Doubly Non-Central T                      <xemf: ~prob\gendntra.men>
+Generalized Exponential                   <xemf: ~prob\gengexra.men>
+Generalized Inverse Gaussian              <xemf: ~prob\gengigra.men>
+Generalized Trapezoid                     <xemf: ~prob\gengtrra.men>
+Gompertz-Makeham                          <xemf: ~prob\genmakara.men>
+    (Meeker/Escobar 3-shape parameterization>
+Gompertz-Makeham (DLMF parameterization)  <xemf: ~prob\genmakbra.men>
+Log Skew T                                <xemf: ~prob\genlstra.men>
+Meilke's Beta-Kappa                       <xemf: ~prob\genkapra.men>
+Non-Central Beta                          <xemf: ~prob\genncbra.men>
+Non-Central F                             <xemf: ~prob\genncfra.men>
+Trapezoid                                 <xemf: ~prob\gentrara.men>
+Truncated Exponential                     <xemf: ~prob\gentnera.men>
+Uneven Two-Sided Power                    <xemf: ~prob\genutsra.men>
+Wakeby                                    <xemf: ~prob\genwakra.men>
+

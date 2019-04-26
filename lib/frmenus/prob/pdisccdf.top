@@ -1,0 +1,43 @@
+----- <~prob\pdisccdf.top> Discrete Distribution cdf
+
+Discrete Distribution PDF Probabilities
+
+Plot Cumulative Distribution Function for
+Discrete Distributions
+
+Beta-Binomial                                  <xemf: ~prob\pbbncdf.men>
+Beta-Geometric                                 <xemf: ~prob\pbgecdf.men>
+Beta-Negative Binomial                         <xemf: ~prob\pbnbcdf.men>
+Binomial                                       <xemf: ~prob\pbincdf.men>
+Borel-Tanner                                   <xemf: ~prob\pbtacdf.men>
+Classical Matching                             <xemf: ~prob\pmatcdf.men>
+Consul
+    (Theta Parameterization)                   <xemf: ~prob\pcon1cdf.men>
+    (Mu Parameterization)                      <xemf: ~prob\pcon2cdf.men>
+Discrete Uniform                               <xemf: ~prob\pdiscdf.men>
+Discrete Weibull                               <xemf: ~prob\pdiwcdf.men>
+Geeta
+    (Theta Parameterization)                   <xemf: ~prob\pget1cdf.men>
+    (Mu Parameterization)                      <xemf: ~prob\pget2cdf.men>
+Generalized Logarithmic Series                 <xemf: ~prob\pglscdf.men>
+Generalized Lost Games                         <xemf: ~prob\pglgcdf.men>
+Generalized Negative Binomial                  <xemf: ~prob\pgnbcdf.men>
+Geometric
+    (number of trials before first success)    <xemf: ~prob\pgeocdf.men>
+    (number of trials including first success) <xemf: ~prob\pgeo2cdf.men>
+Hermite                                        <xemf: ~prob\phercdf.men>
+Hypergeometric                                 <xemf: ~prob\phypcdf.men>
+Katz                                           <xemf: ~prob\pkatcdf.men>
+Lagrange Poisson                               <xemf: ~prob\plpocdf.men>
+Leads in Coin Tossing                          <xemf: ~prob\plctcdf.men>
+Logarithmic Series                             <xemf: ~prob\pdlgcdf.men>
+Lost Games                                     <xemf: ~prob\ploscdf.men>
+Negative Binomial                              <xemf: ~prob\pnbcdf.men>
+Poisson                                        <xemf: ~prob\ppoicdf.men>
+Polya-Aeppli                                   <xemf: ~prob\ppapcdf.men>
+Quasi-Binomial Type I                          <xemf: ~prob\pqbicdf.men>
+Yule                                           <xemf: ~prob\pyulcdf.men>
+Waring                                         <xemf: ~prob\pwarcdf.men>
+Zeta                                           <xemf: ~prob\pzetcdf.men>
+Zipf                                           <xemf: ~prob\pzipcdf.men>
+

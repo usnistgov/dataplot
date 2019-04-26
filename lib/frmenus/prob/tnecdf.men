@@ -1,0 +1,41 @@
+This is file tnecdf.men--Compute Truncated Exponential cdf
+ 
+--------------------
+ 1. Compute Truncated Exponential cdf
+ 2. LET A = TNECDF(X,X0,MU,S)
+ 3.
+ 4. The input argument, x, can be either a
+ 5. single number, the name of a parameter,
+ 6. or the name of a variable.
+ 7.  
+ 8. Input values:
+ 9.                          x (u < x < x0):
+ 9. @CE 1 0 42 50 ?
+10.           truncation level x0 (x0 > u0):
+10. @CE 2 0 42 50 ?
+11.                              location u:
+11. @CE 3 0 42 50 ?
+12.                         shape s (s > 0):
+12. @CE 4 0 42 50 ?
+13.
+14. Output parameters:
+15.                  name for the cdf value:
+15. @CE 5 0 42 50 ?
+16.     name for the tail probability value:
+16. @CE 6 0 42 50 ?
+17.
+18.
+19. Compute the Probability?
+--------------------
+AN FE
+LET ZX0 = 1000
+@IF 2 0 LET ZX0 = _2
+LET ZMU = 0
+@IF 3 0 LET ZMU = _3
+LET ZS = 1
+@IF 4 0 LET ZS = _4
+@IF 5 0 LET _5 = TNECDF( _1 ,ZX0,ZMU,ZS)
+@IF 6 0 LET _6 = 1 - TNECDF( _1 ,ZX0,ZMU,ZS)
+--------------------
+WEB HELP TNECDF
+--------------------

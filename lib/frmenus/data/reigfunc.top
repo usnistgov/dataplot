@@ -1,0 +1,8 @@
+----- <~data\reigfunc.top> Functions: Reciprocal Inv. Gauusian Distributions
+
+Functions: Reciprocal Inverse Gaussian Distribution
+
+RIGCDF(X,GAMMA)   reciprical inverse Gaussian cum. dist. func.
+RIGCDF(X,GAMMA)   reciprical inverse Gaussian prob. dens. func.
+RIGCDF(X,GAMMA)   reciprical inverse Gaussian percent point func.
+

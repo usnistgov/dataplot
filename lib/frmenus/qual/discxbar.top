@@ -1,0 +1,38 @@
+----- <~qual\discxbar.top> Discussion: xbar, r, and s control charts
+ 
+Discussion: Xbar, R, and S Control Charts
+ 
+1) Mean, range, standard deviation control charts
+
+   These were the original control charts devised
+   by Shewart and they are still the most commonly
+   used control charts.
+
+   Xbar control charts are used to detect shifts
+   in location while R (range) and S (standard
+   deviation) control charts are used to detect
+   changes in variation.
+
+   For these charts, the data is divided into groups
+   (or batches).  The appropriate statistic (i.e., mean,
+   range, or sd) is computed and plotted for each
+   sub-group.  Control limits are plotted and the group
+   statistics that fall outside these control limits
+   indicate an "out of control" process.  The control limits
+   are chosen to detect "3 sigma" shifts.  That is, shifts
+   in location exceeding 3 times the standard deviation
+   indicate lack of control.
+
+   In addition to the automatically computed control limits,
+   you can specify your own control limits.  These are referred
+   to as engineering limits as they are often based on
+   prior data.  However, 2 sigma limits are also popular and
+   may be plotted as user specified engineering limits (i.e.,
+   calculate the sample mean and add/subtract 2 times the
+   sample standard deviation).
+ 
+   These type of control charts do very well for detecting
+   large shifts.  In addition, they are simple and easy
+   to understand.  However, the EWMA and CUSUM charts perform
+   better for detecting small (e.g., 1 sigma shifts) shifts.
+

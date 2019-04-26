@@ -1,0 +1,34 @@
+----- <~dataprin\reg1p.top> Print (to Printer) Regression Data: 1-Variable & P
+ly.DP
+
+Print (to Printer) Regression Data: 1-Variable & Polynomial
+
+BERGER1.DAT   Alaska Pipeline cracks       <xcf: ~dataprin\BERGER1.DP>
+SPIEGEL.DAT   Nuclear tank calibration     <xcf: ~dataprin\SPIEGEL.DP>
+PONTIUS.DAT*  Load cell calibration        <xcf: ~dataprin\PONTIUS.DP>
+
+NATR511.DAT   Young's Modulus              <xcf: ~dataprin\NATR511.DP>
+NATR522.DAT   Young's Modulus (with reps)  <xcf: ~dataprin\NATR522.DP>
+NATR527.DAT   Colorimetry                  <xcf: ~dataprin\NATR527.DP>
+NATR533.DAT   Tire Wear                    <xcf: ~dataprin\NATR533.DP>
+NATR540.DAT   Tire Wear                    <xcf: ~dataprin\NATR540.DP>
+NATR65.DAT    3-Variable                   <xcf: ~dataprin\NATR65.DP>
+NATR627.DAT   Cubic                        <xcf: ~dataprin\NATR627.DP>
+
+GRA1326.DAT  Blood Pressure                <xcf: ~dataprin\GRA1326.DP>
+
+WAMPLER1.DAT  Polynomial fitting test data <xcf: ~dataprin\WAMPLER1.DP>
+NORRIS6.DAT   Ozone Photometry             <xcf: ~dataprin\NORRIS6.DP>
+
+BOXSPRAY.DAT  Age eff on spray dispersion  <xcf: ~dataprin\BOXSPRAY.DP>
+BOXWELD.DAT   Velocity & weld strength     <xcf: ~dataprin\BOXWELD.DP>
+BOXRATS.DAT   Supplement & growth rate     <xcf: ~dataprin\BOXRATS.DP>
+
+MICHELSO.DAT  Speed of Light               <xcf: ~dataprin\MICHELSO.DP>
+USADEBT.DAT   USA nat. debt (1947-1993)    <xcf: ~dataprin\USADEBT.DP>
+MORALES.DAT   SO2 isotope analysis         <xcf: ~dataprin\MORALES.DP>
+MORALES2.DAT  SO2 isotope analysis         <xcf: ~dataprin\MORALES2.DP>
+
+FREQPRIM.DAT  Frequency of prime numbers   <xcf: ~dataprin\FREQPRIM.DP>
+PRIMESM.DAT   Mersenne prime numbers       <xcf: ~dataprin\PRIMESM.DP>
+

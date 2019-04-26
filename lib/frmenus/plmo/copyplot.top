@@ -1,0 +1,10 @@
+----- <~plmo\copyplot.top> Copy Plots to File
+ 
+Copy Plots to File
+
+Copy Current Plot to File          <xemf: ~plmo\saveplot.men>
+
+Copy All Subsequent Plots to File  <xemf: ~plmo\saveallp.men>
+Suspend Generating Plots to File   <xcl: DEVICE 2 OFF>
+Resume Generating Plots to File    <xcl: DEVICE 2 ON>
+

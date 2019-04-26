@@ -1,0 +1,38 @@
+-----  <~clas\dexdata.top> View, Load, & Plot DEX Class Data Files (to be done)
+
+View, Load, & Plot DEX Class Datasets (to be done)
+
+Univariate
+   RANDN.DAT     Rand Normal Random Numbers   <xcf: ~clas\RANDN.DP>
+   RANDU.DAT     Rand Uniform Random Numbers  <xcf: ~clas\RANDU.DP>
+   RANDWALK.DAT  Random Walk                  <xcf: ~clas\RANDWALK.DP>
+   FLICKER.DAT   Flicker Noise                <xcf: ~clas\FLICKER.DP>
+   SOULEN.DAT    Josephson junc cryothermom.  <xcf: ~clas\SOULEN.DP>
+   LEW.DAT       Beam deflections             <xcf: ~clas\LEW.DP>
+   MAVRO.DAT     Filter Transmittance         <xcf: ~clas\MAVRO.DP>
+   ZARR13.DAT    Hear flow meter              <xcf: ~clas\ZARR13.DP>
+   ZARR14.DAT    Hear flow meter              <xcf: ~clas\ZARR14.DP>
+   ZARR15.DAT    Hear flow meter              <xcf: ~clas\ZARR15.DP>
+   DZIUBA.DAT    Standard Reistor             <xcf: ~clas\DZIUBA.DP>
+   NORMAL.DAT    Normal Random Numbers        <xcf: ~clas\NORMAL.DP>
+   FULLER2.DAT   Airplane Glass Failure Time  <xcf: ~clas\FULLER2.DP>
+   VANGEL5.DAT   Strength at failure          <xcf: ~clas\VANGEL5.DP>
+
+Comparative
+   DRAFT69.DAT   1969 Draft Lottery           <xcf: ~clas\DRAFT69.DP>
+   MLCO2.DAT     NOAA Ozone Study             <xcf: ~clas\MLCO2.DP>
+   SPRING.DAT    ASTM Sulfur Trioxide         <xcf: ~clas\SPRING.DP>
+   BOXSHOES.DAT  Boys' Shoe Material (BHH)    <xcf: ~clas\BOXSHOES.DP>
+   SHEESLE2.DAT  Defective Light Bulbs        <xcf: ~clas\SHEESLE2.DP>
+   HOSPITAL.DAT  Hospital Death Rates         <xcf: ~clas\HOSPITAL.DP>
+   ELECT92.DAT   1992 PresidentiaL Election   <xcf: ~clas\ELECT92.DP>
+   OLYMPICS.DAT  1994 Olympic Skating         <xcf: ~clas\OLYMPICS.DP>
+
+Screening
+   BOXSPRIN.DAT Defective Springs             <xcf: ~clas\BOXSPRIN.DP>
+   BOWEN.DAT Dental Polysac Adhesion          <xcf: ~clas\BOWEN.DP>
+   BOXREAC2.DAT Chemical Reaction Yield (BHH) <xcf: ~clas\BOXREAC2.DP>
+   SRBSN.DAT Ceramics Strength                <xcf: ~clas\SRBSN.DP>
+
+Multivariate
+   PLANETS.DAT Planets                        <xcf: ~clas\PLANETS.DP>

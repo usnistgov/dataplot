@@ -1,0 +1,10 @@
+----- <~dataloex\MLN2O.DP> Load & Execute MLN2O.DAT
+
+. This is file    MLN2O.DP
+
+DELETE Y
+SKIP 25
+READ MLN2O.DAT Y
+TITLE MLN2O.DAT
+/
+

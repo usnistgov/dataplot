@@ -1,0 +1,72 @@
+-----PROBE---------------------------------------------
+
+PROBE
+
+Name:
+    PROBE
+ 
+Type:
+    Support Command
+ 
+Purpose:
+    Print the contents of certain internal underlying Fortran variables.
+ 
+Description:
+    This command provides information which may assist in implementation
+    and debugging.  Hence it is normally only used by
+    the service group which implements DATAPLOT on your computer.
+ 
+Syntax:
+    PROBE   <name>
+    where <name> is the underlying Fortran variable to print.
+ 
+Examples:
+    PROBE NUMCOL
+    PROBE NUMNAM
+    PROBE IBUGSU
+ 
+Note:
+    The list of the variables that can probed is documented under
+    the SET command.  Enter HELP SET to examine the list.
+ 
+Note:
+    The PROBE command is used to return the values of certain
+    internal parameters and strings.  This command was updated
+    so that the returned value is automatically saved.  If the
+    returned value is an integer or real number, then the value
+    is stored in the internal parameter PROBEVAL.  If the
+    returned value is a string, then the value is stored in the
+    internal string PROBESTR.  PROBESTR and PROBEVAL can then be
+    used in the same way as other parameters and strings.
+
+    This feature is typically used in macros.  For example, you
+    might want to use the machine maximum value as a "missing
+    value" indicator.  A host independent way of using this value
+    would now be:
+
+       PROBE CPUMAX
+       LET MACHMAX = PROBVAL
+
+    You could then use the parameter MACHMAX wherever you wanted
+    to define a missing value.
+
+    This feature was implemented 1998/8.
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    SET   = Specify the value for an underlying Fortran variable.
+ 
+Applications:
+    Implementation and debugging
+ 
+Implementation Date:
+    Pre-1987
+ 
+Program:
+    XX
+ 

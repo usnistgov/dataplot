@@ -1,0 +1,50 @@
+----- <~prob\shap2ran.top> Random Numbers for Two Shape Parameter Continuous Distributions
+
+Generate Random Numbers (two shape parameters)
+
+Generate Random Numbers for Continuous Distributions
+with Two Shape Parameters
+
+Beta                                      <xemf: ~prob\genbetra.men>
+Beta Normal                               <xemf: ~prob\genbnora.men>
+Burr Type 3                               <xemf: ~prob\genbu3ra.men>
+Burr Type 4                               <xemf: ~prob\genbu4ra.men>
+Burr Type 5                               <xemf: ~prob\genbu5ra.men>
+Burr Type 6                               <xemf: ~prob\genbu6ra.men>
+Burr Type 9                               <xemf: ~prob\genbu9ra.men>
+Burr Type 12                              <xemf: ~prob\genb12ra.men>
+Doubly Pareto Uniform                     <xemf: ~prob\gendpura.men>
+Exponentiated Weibull                     <xemf: ~prob\genewera.men>
+F                                         <xemf: ~prob\genfra.men>
+Folded Cauchy                             <xemf: ~prob\genfcara.men>
+Folded Normal                             <xemf: ~prob\genfnrra.men>
+G-and-H                                   <xemf: ~prob\genghra.men>
+Generalized Asymmetric Laplace            <xemf: ~prob\gengalra.men>
+Generalized Gamma                         <xemf: ~prob\genggdra.men>
+Generalized Logistic Type 4               <xemf: ~prob\gengl4ra.men>
+Generalized McLeish                       <xemf: ~prob\gengmcra.men>
+Generalized Topp and Leone                <xemf: ~prob\gengtlra.men>
+Generalized Tukey-Lambda                  <xemf: ~prob\gengldra.men>
+Gompertz                                  <xemf: ~prob\gengomra.men>
+Gompertz Makeham                          <xemf: ~prob\genmakra.men>
+    (Meeker/Escobar 2-shape parameterization)
+Inverse Gaussian                          <xemf: ~prob\genigra.men>
+Inverted Beta                             <xemf: ~prob\genibra.men>
+Johnson SB                                <xemf: ~prob\genjsbra.men>
+Johnson SU                                <xemf: ~prob\genjsura.men>
+Kumaraswamy                               <xemf: ~prob\genkumra.men>
+Log Beta                                  <xemf: ~prob\genlbera.men>
+Log Skew Normal                           <xemf: ~prob\genlsnra.men>
+Non-Central Chi-Square                    <xemf: ~prob\gennccra.men>
+Non-Central T                             <xemf: ~prob\gennctra.men>
+Pareto                                    <xemf: ~prob\genparra.men>
+Pareto of the Second Kind                 <xemf: ~prob\genpa2ra.men>
+Power Lognormal                           <xemf: ~prob\genplnra.men>
+Reciprocal Inverse Gaussian               <xemf: ~prob\genrigra.men>
+Reflected Generalized Topp and Leone      <xemf: ~prob\genrgtra.men>
+Skew T                                    <xemf: ~prob\genstra.men>
+Truncated Normal                          <xemf: ~prob\gentnrra.men>
+Two-Sided Ogive                           <xemf: ~prob\gentsora.men>
+Two-Sided Power                           <xemf: ~prob\gentspra.men>
+Two-Sided Slope                           <xemf: ~prob\gentssra.men>
+

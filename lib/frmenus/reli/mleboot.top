@@ -1,0 +1,34 @@
+-----<~reli\mleboot.top> Discussion: Bootstrap Intervals
+
+Discussion: Bootstrap Intervals
+
+Discussion: Bootstrap Intervals
+
+The maximum likelihood estimation for the following
+distributions only generates point estimates:
+
+   Geometric Extreme Exponential
+   Inverse Gaussin
+   2-Parameter Fatigue Life
+   
+Dataplot can use the bootstrap to generate confidence
+intervals for the following:
+
+   1) Parameters of the distribution
+
+   2) Selected percentiles
+
+The menus for these distributions can optionally
+generate the confidence intervals the distribution
+parameters.
+
+There is a separate menu for generating the confidence
+intervals for the percentiles for all these
+distributions.  You should run the maximum likelihood
+menu first (and be sure to specify the number of
+bootstrap samples > 0).
+
+The number of bootstrap samples should be at least 100.
+The menus in the GUI will truncate the maximum number of
+bootstrap samples at 1,000.
+

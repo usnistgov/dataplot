@@ -1,0 +1,49 @@
+This is file percplot.men--Percent Point Plot
+ 
+--------------------
+1. Percent Point Plot
+2. PERCENT POINT PLOT Y
+3.
+4. Response Variable:
+4. @CE 1 0 33 50 ? gui-variable
+5. Optional Group ID Variable:
+5. @CE 2 0 33 50 * gui-variable
+6.
+7. Line type for plot?:
+7. @CE 3 0 33 50 * gui-line
+8. Character type for plot?:
+8. @CE 4 0 33 50 * gui-character
+9.
+10. Title:
+10. @CE 5 0 18 50 *
+11. Left Axis Label:
+11. @CE 6 0 18 100 *
+12. Bottom Axis Label:
+12. @CE 7 0 18 100 *
+13.
+14. Class Width (0.3*s):
+14. @CE 9 0 33 50 *
+15. Lower Limit of First Class:
+15. @CE 10 0 33 50 *
+16. Upper Limit of Last Class:
+16. @CE 11 0 33 50 *
+17.
+18. Subset/Except/For Specification: 
+19. @CE 8 0 1 50 *
+20.
+21.
+22. Generate the Percent Point Plot?:
+--------------------
+GR FE
+CLASS WIDTH _9
+CLASS LOWER _10
+CLASS UPPER _11
+LINE _3
+CHARACTER _4
+TITLE _5
+Y1LABEL _6
+X1LABEL _7
+PERCENT POINT PLOT _1 _2 _8
+--------------------
+WEB HELP PERCENT POINT PLOT
+--------------------

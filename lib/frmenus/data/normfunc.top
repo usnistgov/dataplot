@@ -1,0 +1,10 @@
+----- <~data\normfunc.top> Functions: Normal Distribution
+
+Functions: Normal Distribution
+
+Standard Normal Distribution (Mean = 0, Standard Deviation = 1)
+
+NORCDF(X)         normal cumulative distribution function
+NORPDF(X)         normal probability density function
+NORPPF(P)         normal percent point function
+

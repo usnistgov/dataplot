@@ -1,0 +1,44 @@
+----- <~help\dpproc1.top> Create Each Graph in a Separate File
+
+Creating Each Dataplot Graph in a Separate File
+
+Creating Each Dataplot Graph in a Separate File
+
+When importing a Dataplot graph into an external application,
+you need to put each graph in a separate file.  There are
+several ways you can do this.
+
+1) You can generate each graph in a separate Dataplot
+   session.  Although easy, this can be more time consuming
+   than needed if you are generating multiple graphs.
+
+2) You can redefine the IPL1NA variable.  For example,
+
+      SET IPL1NA PLOT1.EPS
+      DEVICE 2 POSTSCRIPT ENCAPSUALTED
+      ORIENTATION LANDSCAPE WORDPERFECT
+      ... generate plot ....
+      DEVICE 2 CLOSE
+      SET IPL1NA PLOT2.EPS
+      DEVICE 2 POSTSCRIPT ENCAPSUALTED
+      ORIENTATION LANDSCAPE WORDPERFECT
+      ... generate plot ....
+      DEVICE 2 CLOSE
+
+   Repeat the above sequence as often as needed.
+
+3) Alternatively, you can use the SYSTEM command:
+
+      DEVICE 2 POSTSCRIPT ENCAPSUALTED
+      ORIENTATION LANDSCAPE WORDPERFECT
+      ... generate plot ....
+      DEVICE 2 CLOSE
+      SYSTEM COPY DPPL1F.DAT  PLOT1.EPS
+      DEVICE 2 POSTSCRIPT ENCAPSUALTED
+      ORIENTATION LANDSCAPE WORDPERFECT
+      ... generate plot ....
+      DEVICE 2 CLOSE
+      SYSTEM COPY DPPL1F.DAT  PLOT2.EPS
+
+   Repeat the above sequence as often as needed.
+

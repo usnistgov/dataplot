@@ -1,0 +1,8 @@
+----- <~dataload\OIL.DP> Load OIL.DAT
+
+. This is file    OIL.DP
+
+DELETE Y X
+SKIP 25
+READ OIL.DAT X Y
+

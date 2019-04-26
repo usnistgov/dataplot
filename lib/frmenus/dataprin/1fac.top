@@ -1,0 +1,9 @@
+----- <~dataprin\1fac.top> Print (to Printer) 1-Factor Data (incl. 2-Sample)
+
+Print (to Printer) 1-Factor Data (Including the "2-Sample" Problem)
+
+NIST data                 <~dataprin\1facnist.DP>
+Natrella Data             <~dataprin\1facnatr.DP>
+Sematech Data             <~dataprin\1facsema.DP>
+Other data                <~dataprin\1facothe.DP>
+

@@ -1,0 +1,30 @@
+----- <~dataall\dataall.top> View/etc. Built-in Dataplot data Files
+
+View/Load/Print Built-in Dataplot Data Files
+
+Core data sets             <~dataall\core.top>
+
+By Stat Category:
+   Quality/SPC             <~dataall\qual.top>
+   Design of Experiment    <~dataall\dex.top>
+   Regression              <~dataall\reg.top>
+
+   Univariate              <~dataall\univ.top>
+   Time Series             <~dataall\time.top>
+   Multi-Factor            <~dataall\mfac.top>
+   Multivariate            <~dataall\mvar.top>
+   Uncertainty Analysis    <~dataall\unce.top>
+
+   Probability             <~dataall\prob.top>
+   Reliability             <~dataall\reli.top>
+   Extreme Value Analysis  <~dataall\eva.top>
+   Mathematics             <~dataall\math.top>
+
+By Book:
+   Natrella                       <~dataall\natrella.top>
+   Sematech                       <~dataall\sematech.top>
+   Box, Hunter, & Hunter          <~dataall\bhh.top>
+   Statistics for Scientists      <~dataall\stsc.top>
+   Graybill/Iyer  I: Regression              <~dataall\grayiye1.top>
+   Graybill/Iyer II: Inference               <~dataall\grayiye2.top>
+

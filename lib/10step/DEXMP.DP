@@ -1,0 +1,560 @@
+. This is dataplot macro   DEXMP.DP
+.
+. Purpose: Generate a DEX mean plot = dex main effects plot
+.          (or more generally, a dex <statmp> plot)
+.          (= ste p 3 of the DEXPLOT.DP 10-ste p DEX analysis procedure)
+.
+. Note: Input parameters, vectors, matrices, or strings needed:
+.
+. Input (Required):
+.    1. y (vector)                   = Response variable
+.    2. x1, x2, x3, . . . (vectors)  = Factors
+.    3. k (parameter)                = Total number of plot factors
+.
+.    4. k0 (parameter)               = Total number of base factors (not including interactions) (opt.) (def. = k)
+
+. Input (Optional):
+.    1. project (string)             = Project title to appear at top of page   (default = no title)
+.    2. sty     (string)             = Name of response variable                (default = no name)
+.    3. stx1, stx2, stx3, . . . (strings) = Names of the 1st, 2nd, . . .factors (default = no names)
+.    4. circlesw  (parameter)        = Switch (0,1) for circles or not          (default = 1 = circles)
+.    5. circleh  (parameter)         = Height of plot circles                   (default = 2)
+.    6. circlew  (parameter)         = Width  of plot circles                   (default = 1)
+.    7. decplace (parameter)         = # of dec. places for the effect          (default = 4)
+.    8. decplacr (parameter)         = # of dec. places for the % rel. effects  (default = 0)
+.    9. decplacm (parameter)         = # of dec. places for the mean            (default = 4)
+.   10. titlesw  (parameter)         = (0,1) Switch for title printing          (default = 1 ==> "Main Effects Plot")
+.   11. titlesiz (parameter)         = Size of title to appear at top of plot   (default = 2)
+.   12. labelsiz (parameter)         = Size of label to appear at left & bottom of plot (default = 2)
+.   13. writerel (parameter)         = 0 or 1 switch dictating as to whether desire Relative Effects line
+.                                                                  (default = 0 = no relative effects printed)
+.   14. trailsw  (parameter)         = (0,1) Switch for trailer printing
+.                                                                  (default = 1 ==> print trailer (but also only i_f existent))
+.
+.   15. errbarsw (parameter)         = (0,1) switch dictating the plotting of error bars  <====================
+.                                                                                (default = 0 = not plot error bars).
+.   16. bartype (string)             = line type for the error bars (if existent)(default = solid)
+.   17. shiftup (parameter)          = amount to shift up for the within frame effect annotation (def. = not exist = 0)
+.   18. rightmsw (parameter)         = (0,1) switch dictating the listing of factors & levels in right margin
+.   xx. strowlab (string) = (left,right) switch dictating where |Effect|, |Rel.Eff.|, Fcdf is written out
+.  (default = 1 = yes = list factors and levels, but requires existence of stx1, stx2, . . . and stx1l, stx2l, . . .)
+.   21. stx1, stx2, stx3, . . . (strings) = Names of the 1st, 2nd, 3rd, . . . factors (default = no names)
+.                                            (e.g., let string stx1  = OvenTemp) (default = no names) of the factors
+.   22. stx1l, stx2l, stx3l, . .(strings) = Names of the 1st, 2nd, 3rd, . . . factor levels (default = no names)
+.                                            (e.g., let string stx1l = 1450 1600)
+.   23. stxshort (string)            = Multi-component shorter names for each factor (optional)
+.   24. framet (parameter)           = top    frame line (in %) (optional)      (default = 90)
+.   25. frameb (parameter)           = bottom frame line (in %) (optional)      (default = 20)
+.   21. levelsw (parameter)          = switch dictating the desired type of levels
+.                                         (optional, default = not exist)
+.                                            1 = classic (-1,0,1) case
+.                                            2 = integer (1, 2, 3, 4, ...) case
+.                                            3 = pre-existing strings cas
+.   22. yminmp (parameter) = vertical axis minimum                                    (default = float)
+.   23. ymaxmp (parameter) = vertical axis maximum                                    (default = float)
+.   24. statmp (string) = name of statistic (e.g., Median, SD, etc.) (default = mean) ;. 7/10/18.
+.   25. stepprsw (parameter) = (0,1) switch to dictate whether upper left step id should be printed (default = 1 = yes) ;. 9/17/18
+.   26. stylimmp (string) = 2-item string defining personalized ylimits for plot (optional) (default = as computed)
+.
+. Output:
+.    coefout (vector of length k)
+.    tagout
+.    relcoefo
+.    cdfout
+.
+. Note: Graphics output produced = A 1-page plot: DEX Mean Plot (= Main Effects Plot)
+.          Vertical   axis = Mean Response for a given level of a given factor
+.          Horizontal axis = Each factor and each level within a factor
+.
+. Note: Graphics interpretation: I_f the mean response differs
+.                                across levels within a factor,
+.                                then the factor is deemed to "have an effect"
+.
+. Note: Macros called by this macro:
+.       dexcheck.dp, alertk, alertv
+.       dexplotiniti.dp
+.       dexwriteproject.dp
+.       dexknbox.dp
+.       tagcorn.dp
+.       checkkyx.dp
+.       checkinputargumentexistence.dp
+.
+. Date: May 2005, July 2010
+.
+. -----start point-----
+.
+. print " "
+. print "From (dexmp.dp, start point)"
+. print y for i = 1 1 5
+. pause
+.
+feedback save
+feedback off
+printing off
+let bugswmp = 0
+. let pausesw = 1
+.
+set write decimals
+.
+if bugswmp = 1; print " "; print "---At beginning of DEX Ste p 3 (DEXMP.DP)"
+   print "   levelsw = ^levelsw"
+   print y x1 x2 x3
+   print stx1 stx2 stx3 stx4 stx5
+   print stx1l stx2l stx3l stx4l stx5l
+   . feedback on
+   . echo on
+   if pausesw = 1; pause; end if
+end if
+.
+. -------------------------------------------
+. -----Do Analysis Ste p 3: Dex Mean Plot-----
+. -------------------------------------------
+.
+.
+. -----Step 1.1: Check input values for existence and equivalent length-----
+.
+if bugswmp = 1; print "--At (dexmp.dp, step 1.1): check input"
+   if pausesw = 1; pause; end if
+end if
+.
+let string stmacro = dexmp.dp
+if k not exist
+   call determine_k.dp
+end if
+set check name output filliben
+set check length output filliben
+feedback on
+let iflag = check name k y x1 to x^k
+let iflag = check equal length y x1 to x^k
+feedback off
+.
+loop for jz = 1 1 k
+    let numlev^jz = unique x^jz
+    let numlevva(jz) = numlev^jz
+end of loop
+let numlevto = sum numlevva
+let numlevmx = maximum numlevva
+let numlevmn = minimum numlevva
+let numlevdi = unique numlevva
+.
+. -----Step 2: Define plot settings-----
+.
+if bugswmp = 1; print "--At (dexmp.dp, step 2): plot settings "
+   if pausesw = 1; pause; end if
+end if
+.
+call dexplotinit.dp
+.
+let kp1 = k+1
+let kp2 = k+2
+.
+xtic offset 0 0
+xlimits 0 kp1
+major x1tic number kp2
+minor x1tic number 0
+.
+if k <= 2
+   xlim 1 k
+   xtic offset 15 15
+   major x1tic number k
+end if
+.
+if stylimmp exists; ylim ^stylimmp; end if    ;. this is a fix for occasional improper ylim   10/23/18
+.
+xlabel
+x3label Factors (^k)
+x3label size 3
+if stprex exists
+   x3label ^stprex Factors (^k)
+end if
+x3label displacement 11
+if k >= 6
+   x3label displacement 13
+end if
+.
+set string space ignore
+let string igtempe = cr()
+let string igtempo = cr()
+if k >= 6
+   let string igtempo = cr()
+   let string igtempe = cr()sp()cr()
+end if
+.
+let icnt = 0
+if k > 2
+   let icnt = 1
+   let string ig1 = sp()
+end if
+delete stjunk igtemp2
+loop for jz = 1 1 k
+    let icnt = icnt + 1
+    let string igtemp2 = X^jz
+    let string ig^icnt = ^igtemp2
+    let ieven = mod(jz,2)
+    let string igtemp = ^igtempo
+    if ieven = 0
+       let string igtemp = ^igtempe
+    end if
+    if stx^jz exists
+       let string stjunk = ^stx^jz
+       let ig^icnt = string concatenate igtemp2 igtemp stjunk
+    end if
+    if stxshort exists
+       let stjunk = string word stxshort jz
+       let ig^icnt = string concatenate igtemp2 igtemp stjunk
+    end if
+    delete stjunk igtemp2
+end of loop
+delete igtemp
+if k > 2
+   let icnt = icnt + 1
+   let string ig^icnt = sp()
+end if
+let ig = group label ig1 to ig^icnt
+x1tic mark label format group label
+x1tic mark label content ig
+x1tic mark label on
+label color blue
+tic mark label color blue
+tic mark color blue
+if colorall exists
+   label color ^colorall
+   tic mark label color ^colorall
+   tic mark color ^colorall
+end if
+.
+. ylim
+if yminmp exists; ymin ^yminmp; end if
+if ymaxmp exists; ymax ^ymaxmp; end if
+let string statmpz = Mean
+if statmp exists; let string statmpz = ^statmp; end if     ;. 7/10/18
+.
+ytic offset 10 5
+minor x1tic number 0
+if levelsw exists and levelsw = 3; x1tics off; end if
+.
+. -----Step 3: Define character & label contents (and sizes) pre-plot-----
+.
+if bugswmp = 1; print "--At (dexmp.dp, step 3): char, labels, sizes "
+   if pausesw = 1; pause; end if
+end if
+.
+. char X blank
+char circle blank
+char size 1.1 0.9
+char fill on on
+call setcircle.dp
+char offset 0 0
+char color blue all
+line color blue all
+if colorall exists
+   char color ^colorall all
+   line color ^colorall all
+end if
+.
+lines solid dotted
+.
+if titlesiz exists; title size ^titlesiz; end if
+.
+if titlesw not exist;
+   title Main Effects Plot
+   if statmpz exists; if statmpz <> Mean
+      title Main Effects Plot (^statmpz)
+   end if; end if
+end if
+if titlesw exist and titlesw = 1;
+   title Main Effects Plot
+   if statmpz exists; if statmpz <> Mean
+      title Main Effects Plot (^statmpz)
+   end if; end if
+end if
+.
+if sty not exist
+   if ylabelsw not exist
+      if statmp not exist; y1label Mean Response; end if
+      if statmp exists; y1label ^statmp Response; end if
+   end if
+   if ylabelsw exist and ylabelsw = 1
+      if statmp not exist; y1label Mean Response; end if
+      if statmp exists; y1label ^statmp Response; end if
+   end if
+end if
+.
+if sty exists
+   if statmp not exist; y1label Mean Response Y (^sty); end if
+   if statmp exists; y1label ^statmp Response Y (^sty); end if
+end if
+.
+label size 3
+if labelsiz exists; label size ^labelsiz; end if
+if ticlabsi exists; tic label size ^ticlabsi; end if
+.
+. -----Step 4: GENERATE THE PLOT-----
+.
+if bugswmp = 1; print "--At (dexmp.dp, step 4): GENERATE THE PLOT"
+   if pausesw = 1; pause; end if
+end if
+.
+. print statmp
+. pause
+.
+ylim
+ylimits unfreeze
+if statmp not exist
+   if k = 1; dex mean plot y x1; end if
+   if k >= 2; dex mean plot y x1 to x^k; end if;. <=====================
+   . print y x1 x2
+   . pause
+end if
+.
+if statmp exists
+   dex ^statmpz plot y x1 to x^k
+   save
+end if
+.
+skip 0
+read dpst1f.dat coefz relcoefz
+.
+delete xplotd
+let xplotd = distinct xplot
+retain xplotd for i = 1 1 numlevto
+let nxplot = size xplotd
+.
+if errbarsw exists and errbarsw = 1
+   xlimits freeze
+   ylimits freeze
+end if
+.
+. -----Step 5: Write out the factor level (labels)-----
+.
+if bugswmp = 1; print "--At (dexmp.dp, step 5): write xi labels"
+   if pausesw = 1; pause; end if
+end if
+.
+call dexmp_write_factor_levels.dp
+.
+. pause
+.
+. -----Step 6: Write out . . .-----
+.
+if bugswmp = 1; print "--At (dexmp.dp, step 6): write xxx "
+   if pausesw = 1; pause; end if
+end if
+.
+. let bz = 12
+let bz = 12.5
+let bz2 = bz - 2
+just cece
+.
+let texthz = 2
+let textwz = 1
+if texth exists; let texthz = texth; end if
+if textw exists; let textwz = textw; end if
+.
+hw texthz textwz
+loop for jz = 1 1 k
+   let az = jz
+   moveds az bz
+   if suv^az exist; text ^suv^az; end if
+end loop
+.
+. pause
+.
+. -----Step 8.1: For classical dex mean plot, do multiple ANOVAs, and
+. -----        Write out 3 rows:  |effect|, |relative effect|, and fcdf (or pvalue)-----
+.
+if bugswmp = 1; print "--At (dexmp.dp, step 7.1): anova"
+   if pausesw = 1; pause; end if
+end if
+.
+if statmpz = Mean
+   call dexmp_anova.dp
+end if
+.
+. -----Step 7.2: For  dex sd plot, do multiple LEVENE TESTs, and
+. -----        Write out 4 rows:  max si, min si, ratio, and leven test fcdf (or pvalue)-----
+.
+if bugswmp = 1; print "--At (dexmp.dp, step 7.2): levene"
+   if pausesw = 1; pause; end if
+end if
+.
+if statmpz = SD
+   call dexmp_levene_test.dp
+end if
+.
+. -----Step 8: If called for, plot out error bars (confidence bars)-----
+.
+if bugswmp = 1; print "--At (dexmp.dp, step 8): conf. limits"
+   if pausesw = 1; pause; end if
+end if
+.
+if errbarsw exists and errbarsw = 1
+   call computestats.dp
+   let yplotlcl = yplotm - 2*yplotsdm
+   let yplotucl = yplotm + 2*yplotsdm
+   call ploterrorbars.dp
+end if
+.
+. -----Step 8: If called for, draw out an arrow for "best"-----
+.
+if bugswmp = 1; print "--At (dexmp.dp, step 8): arrow for "best"
+   if pausesw = 1; pause; end if
+end if
+.
+if stbest exists
+   call dexarrow.dp
+end if
+.
+. -----Step 21: Write out project title, (n,k) box, ybar, and "Step"-----
+.
+if bugswmp = 1; print "--At (dexmp.dp, step 21): proj,(n,k),ybar,step,annotate"
+   if pausesw = 1; pause; end if
+end if
+.
+if project exists
+   if projcol exists; color ^projcol; end if
+   call dexwriteproject.dp
+end if
+.
+call dexknbox.dp
+.
+let ybar = mean y
+if decplacm not exist; set write decimals 4; end if
+if decplacm exists; set write decimals decplacm; end if
+let stybar = number to string ybar
+move 85 91; just right; hw 2 1; text Mean = ^stybar; just center
+.
+if step exists
+   let step = step + 1; hw 2 1; just left; move 5 95
+   . text Step ^step
+   . call tagcorn.dp   9/17/18/
+   if stepprsw not exist
+      call tagcorn.dp
+   end if
+   if stepprsw exists; if stepprsw = 1
+      call tagcorn.dp
+   end if; end if
+end if
+.
+if annotate exists and annotate = 1
+   if colorall exists; color ^colorall; end if
+   call annotate.dp
+end if
+.
+. -----Step 22: Write out right margin factor and setting info-----
+.
+if bugswmp = 1; print "--At (dexmp.dp, step 22): right margin"
+   if pausesw = 1; pause; end if
+end if
+.
+if rightmsw exists; print "rightmsw = ^rightmsw"; end if
+.
+. pause
+if rightmsw exists and rightmsw = 1 or rightmsw not exist
+   if stx1 exists and stx1l exists
+      let ypdel = 2; let lh = 1.8; let lw = 0.9
+      if k >= 9
+         let ypdel = 1.5; let lh = 1.6; let lw = 0.8
+         let string colorl = red blue green black
+      end if
+      call dexrightmargin.dp
+      delete ypdel lh lw
+   end if
+end if
+.
+. -----Step 23: If called for, write out customized upper left info-----
+.
+if bugswmp = 1; print "--At (dexmp.dp, step 11): upper left"
+   if pausesw = 1; pause; end if
+end if
+.
+if stcorn1 exists
+   call upperleft.dp
+end if
+.
+. -----Step 24: If called for, print out a target reference line-----
+.
+if bugswmp = 1; print "--At (dexmp.dp, step 24): target ref. line"
+   if pausesw = 1; pause; end if
+end if
+.
+if ytarget exists
+   lines dotted; drawsdsd 15 ytarget 85 ytarget
+   lines solid; drawsdsd 84.25 ytarget 85.75 ytarget
+   movesd 86 ytarget; move relative 0 .3; hw 2 1; just lece; text Target = ^ytarget
+   just left
+end if
+.
+. -----Step 25: Create the 4 output vectors-----
+.
+if bugswmp = 1; print "--At (dexmp.dp, step 25): 4 output vectors"
+   if pausesw = 1; pause; end if
+end if
+.
+. stat v
+. pause
+. print coefz
+. pause
+.
+let coefout = coefz
+let tagout = tagz
+let relcoefo = relcoefz
+let cdfout = cdfz
+. print tagout coefout relcoefo cdfout
+. pause
+.
+. -----Step 31: Form conclusions and write out to file-----
+.
+let step = 3
+call form_and_write_dex_10_step_conclusions.dp
+.
+. -----Step 99: Finish up-----
+.
+if bugswmp = 1; print "--At end of dexmp.dp"
+   if pausesw = 1; pause; end if
+end if
+.
+. note--the limits unfreeze command must be AFTER the ylimits command   11/2/1
+xlimits
+ylimits
+limits unfreeze
+.
+char blank all
+char color blue all
+char fill off all
+char hw 2 1 all
+char offset 0 0 all
+char justification cece all
+lines solid all
+xtic offset 5 5
+ytic offset 5 5
+tic label format default
+minor xtic number default
+major xtic number default
+just left
+title
+y1label
+x1label
+x3label
+x1tic label on
+.
+region fill off  ;.   11/16/18
+.
+. pause
+. stop
+.
+. feedback on
+.
+delete cxplotz coefz tagz relcoefz cdfz
+delete dxz dxjunk
+delete coefout tagout relcoefo cdfout
+.
+feedback restore
+.
+limits restore
+.
+if itime exists and itime = 1
+   cpu time
+   let t3 = cputime
+end if
+.

@@ -1,0 +1,45 @@
+----- <~dex2kmp\cs215m11.top> Confounding:  2**(15-11) Design
+ 
+Confounding:  2**(15-11) Design
+ 
+Name of Design      = 2**(15-11) Fractional Factorial Design
+ 
+Number of Factors k = 15
+Number of Obs.    n = 16
+ 
+Resolution          = 3 (Main effects confounded with
+                      2-term interactions and higher)
+ 
+Factor Definitions  : 5 = 12
+                      6 = 13
+                      7 = 14
+                      8 = 23
+                      9 = 24
+                      0 = 34
+                      A = 123
+                      B = 124
+                      C = 134
+                      D = 234
+                      E = 1234
+ 
+Defining Relation   : to be done
+ 
+Main Effect         : each main effect conf. with 7 2-term interactions
+Confounding           1  =  1 + 25 + 36 + 47 + 8A + 9B + 0C + DE
+                      2  =  2 + 15 + 38 + 49 + 6A + 7B + 0D + CE
+                      3  =  3 + 16 + 28 + 40 + 5A + 7C + 9D + BE
+                      4  =  4 + 17 + 29 + 30 + 5B + 6C + 8D + AE
+                      5  =  5 + 12 + 3A + 4B + 68 + 79 + 0E + CD
+                      6  =  6 + 13 + 2A + 4C + 58 + 70 + 9E + BD
+                      7  =  7 + 14 + 2B + 3C + 59 + 60 + 8E + AD
+                      8  =  8 + 1A + 23 + 4D + 56 + 7E + 90 + BC
+                      9  =  9 + 1B + 24 + 3D + 57 + 6E + 80 + AC
+                      0  =  0 + 1C + 2D + 34 + 5E + 67 + 89 + AB
+                      A  =  A + 18 + 26 + 35 + 4E + 7D + 9C + 0B
+                      B  =  B + 19 + 27 + 3E + 45 + 6D + 8C + 0A
+                      C  =  C + 10 + 2E + 37 + 46 + 5D + 8B + 9A
+                      D  =  D + 1E + 20 + 39 + 48 + 5C + 6B + 7A
+                      E  =  E + 1D + 2C + 3B + 4A + 50 + 69 + 78
+ 
+Click here to view 2-term confounding  <~dex2kmp\2t215m11.top>
+ 

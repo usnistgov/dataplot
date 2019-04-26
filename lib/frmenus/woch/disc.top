@@ -1,0 +1,33 @@
+----- <~woch\disc.top> Diagrammatic Graphics
+ 
+Diagrammatic Graphics
+
+
+Dataplot provides a number of commands for
+generating diagrammatic graphics.  This includes
+things such as drawing text, lines, boxes,
+circles, and so on.
+
+In Dataplot, diagrammatic graphics are primarily
+used to annotate previosly created charts.  However,
+they can also be used to generate diagrams and word
+charts.
+
+For diagrammatic graphics, coordinates can
+either be specified in a 0 to 100 scale for
+both the horizontal and vertical directions
+(screen units) or in units of the most recent
+plot (data units).  Coordinates can also either be
+absolute or relative.  Relative coordinates
+set the first point in absolute units and then
+all subsequent points are relative to the previous
+point.
+
+Note that if you are using "software graphics", you
+can also generate diagrammatic graphics from the
+"Draw" button on the graphics window.  Software
+graphics is the default on the PC.  For Unix,
+X11 is the default graphics type.  Software
+graphics can be selected from the "File" button
+on the graphics window.
+

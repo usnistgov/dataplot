@@ -1,0 +1,30 @@
+This is Dataplot data file     VANGEL1.DAT
+1-sample Coefficient of Variation Example
+Mark Vangel, NIST
+Question--What is a 95% confidence interval for rel. variation?
+ 
+Response variables = Tension
+Number of observations             = 5
+Number of variables per line image = 1
+Order of variables on a line image--
+   Response variable 1 = specimen tension
+Statistical areas--univariate analysis
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ VANGEL1.DAT Y
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Tension
+--------
+  3.26
+  3.02
+  3.07
+  2.99
+  3.29

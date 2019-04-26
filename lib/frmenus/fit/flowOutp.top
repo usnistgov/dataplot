@@ -1,0 +1,25 @@
+----- <~fit\flowOutp.top> Flowchart: Report output
+
+Flowchart: Report Output
+
+4.  Report output:
+    1. Experimental info (data collected)
+       1. number of runs
+       2. number of observations within a run
+
+    2. Testing info (+ supporting residual analysis) regarding:
+       1. Model
+       2. Run
+       3. Data
+       4. General case
+
+    3. Analysis info (data kept for final report)
+       1. number of runs k
+       2. number of observations n within a run
+
+    4. Generate calibration line statistics
+       If Case L0-V0       <~fit\flowl0v0.top>
+       If Case L1-V0       <~fit\flowl1v0.top>
+       If Case L0-V1       <~fit\flowl0v1.top>
+       If Case L1-V1       <~fit\flowl1v1.top>
+

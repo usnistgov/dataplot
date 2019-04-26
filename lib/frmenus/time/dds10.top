@@ -1,0 +1,13 @@
+----- <~time\dds10.top> DDS FAQ 10 DDS Underlying Assumptions
+ 
+10. What underlying assumptions for DDS?
+ 
+The only assumption underlying DDS is that the
+data must be an ordered sequence.  Although its
+current computer programs are based on equi-spaced
+or uniformly sampled data, they can be modified
+for non-uniform sampling if the underlying process
+is continuous-time (or space).  As stressed in
+response to question 4, the paucity of assumptions
+is one of commendable features of the method.
+ 

@@ -1,0 +1,10 @@
+----- <~dataloex\GNP.DP> Load & Execute GNP.DAT
+
+. This is file    GNP.DP
+
+DELETE Y
+SKIP 25
+READ GNP.DAT Y
+TITLE GNP.DAT
+/
+

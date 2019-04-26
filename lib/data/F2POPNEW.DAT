@@ -1,0 +1,36 @@
+.  Perform a Fisher's dsicriminant analysis
+.  Case with 2 populations (has simplifications from general case).
+.
+.  Hemophillia data from "Applied Multivariate Statistical Analysis"
+.  by Johnson and Wichern (p. 570).
+.
+.  AHFACT = LOG10(AHF activity)
+.  AHFANT = LOG10(AHF antigen)
+.
+.  TAG = 1 - Noncarriers
+.  TAG = 2 - Carriers
+.
+.  These are the new points that are used to test the
+.  Classification
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+----------------------------
+-.112   -.279
+-.059   -.068
+ .064    .012
+-.043   -.052
+-.050   -.098
+-.094   -.113
+-.123   -.143
+-.011   -.037
+-.210   -.090
+-.126   -.019
+END OF DATA

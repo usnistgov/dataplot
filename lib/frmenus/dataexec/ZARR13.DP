@@ -1,0 +1,10 @@
+----- <~dataexec\ZARR13.DP> Load & Execute ZARR13.DAT
+
+. This is file    ZARR13.DP
+
+DELETE Y
+SKIP 25
+READ ZARR13.DAT Y
+TITLE ZARR13.DAT
+4-PLOT Y
+

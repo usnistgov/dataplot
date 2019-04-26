@@ -1,0 +1,8 @@
+----- <~dataall\CCPN.top> CCPN.DAT
+
+CCPN.DAT
+
+View     <xcl: LIST CCPN.DAT>
+Load     <xcf: ~dataload/CCPN.DP>
+Print    <xccl: printfile C:\DATAPLOT\CCPN.DAT>
+

@@ -1,0 +1,17 @@
+----- <~plmo\setspike.top> Set Spikes and Attributes
+ 
+Set Spikes and Attributes
+ 
+Set Spike Types         <xemf: ~plmo\modispik.men>
+Set Spike Bases         <xemf: ~plmo\spikbase.men>
+Set Spike Colors        <xemf: ~plmo\spikcolo.men>
+Set Spike Direction     <xemf: ~plmo\spikdire.men>
+Set Spike Thicknesses   <xemf: ~plmo\spikthic.men>
+
+Help for Spike Attributes
+   SPIKE              <xcl: HELP SPIKE>
+   SPIKE BASE         <xcl: HELP SPIKE BASE>
+   SPIKE COLOR        <xcl: HELP SPIKE COLOR>
+   SPIKE DIRECTION    <xcl: HELP SPIKE DIRECTION>
+   SPIKE THICKNESS    <xcl: HELP SPIKE THICKNESS>
+

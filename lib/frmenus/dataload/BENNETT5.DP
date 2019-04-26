@@ -1,0 +1,8 @@
+----- <~dataload\BENNETT5.DP> Load BENNETT5.DAT
+
+. This is file    BENNETT5.DP
+
+DELETE Y
+SKIP 25
+READ BENNETT5.DAT Y
+

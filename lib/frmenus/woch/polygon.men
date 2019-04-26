@@ -1,0 +1,66 @@
+This is file polygon.men--Draw a 2D-Polygon
+ 
+--------------------
+ 1. Draw a 2D-Polygon
+ 2. POLYGON Y X
+ 3.
+ 4. Variable Containing X Coordinates:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable containing Y Coordinates:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6.
+ 7. Line Type for Polygon Border:
+ 7. @CE 5 0 42 50 * gui-line
+ 8. Line Color for Polygon Border:
+ 8. @CE 6 0 42 50 * gui-colo
+ 9. Line Thickness for Polygon Border:
+ 9. @CE 7 0 42 50 * gui-thic
+10.
+11. Solid Fill the Polygon?:
+11. @CE 9 0 42 50 * gui-ooff
+12. Color for Solid Fill:
+12. @CE 10 0 42 50 * gui-colo
+13.
+14. Cross-Hatch Pattern for the Polygon:
+14. @CE 11 0 42 50 * gui-patt
+15. Color for Cross-Hatch Pattern:
+15. @CE 12 0 42 50 * gui-colo
+16. Line Style for Cross-Hatch Pattern:
+16. @CE 13 0 42 50 * gui-line
+17. Line Thickness for Cross-Hatch Pattern:
+17. @CE 14 0 42 50 * gui-thick
+18. Spacing Thickness for Cross-Hatch Pattern:
+18. @CE 15 0 42 50 *
+19.
+20. Coordinate System to Use:
+21. @CE 8 1 1 50 absolute 0 to 100 screen units
+22. @CE 8 2 1 50 absolute data units of last plot
+23. @CE 8 3 1 50 relative (to first point) 0 to 100 screen units
+24. @CE 8 4 1 50 relative (to first point) data units of last plot
+25.
+26. Subset/Except/For Specification:
+27. @CE 16 0 1 50 *
+28.
+29.
+30. Draw the Polygon?:
+--------------------
+GR FE
+LINE _5
+LINE COLOR _6
+LINE THICKNESS _7
+REGION FILL _9
+REGION FILL COLOR _10
+REGION PATTERN _11
+REGION PATTERN COLOR _12
+REGION PATTERN LINE TYPE _13
+REGION PATTERN THICKNESS _14
+REGION PATTERN SPACING _15
+LET STRING ZZZZSTR = POLYGON
+@IF 8 1 LET STRING ZZZZSTR = POLYGON
+@IF 8 2 LET STRING ZZZZSTR = POLYGON DATA
+@IF 8 3 LET STRING ZZZZSTR = POLYGON RELATIVE
+@IF 8 4 LET STRING ZZZZSTR = POLYGON DATA RELATIVE
+^ZZZZSTR  _2 _1 _16
+--------------------
+WEB HELP POLYGON
+--------------------

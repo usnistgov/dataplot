@@ -1,0 +1,1038 @@
+-----Response Surface Designs       zzzzzzzzz
+ 
+Response Surface Designs
+ 
+Discussion
+ 
+Index of Designs
+Listing of Designs
+Models
+Built-in Design Files
+Construction Example #1
+Construction Example #2
+ 
+Analysis Commands
+Built-in Tutorial Data Files
+Quick Analysis Example
+Detailed Analysis Examples
+ 
+References
+ 
+-----Discussion of Response Surface Designs
+ 
+Discussion of Response Surface Designs
+ 
+to be done
+ 
+-----Index of Response Surface Designs
+ 
+Index of Response Surface Designs
+ 
+    Name of                    Number of   Number of
+    Design                      Factors   Observations
+                                   k           n
+    --------------------------------------------------
+      2**2 design with center point  2         5
+      star design with center point  2         5
+      2-factor composite design      2        10
+ 
+      2**3 design with center point  3         9
+      star design with center point  3         9
+      3-factor composite design      3        18
+ 
+-----Listing of Response Surface Designs
+ 
+Listing of Response Surface Designs
+ 
+-----Models for Response Surface Designs
+ 
+Models for Response Surface Designs
+ 
+to be done
+ 
+-----Built-in Response Surface Design Files
+ 
+Built-in Response Surface Design Files
+ 
+SKIP 25; READ 2TO2WC.DAT X1 X2
+SKIP 25; READ STAR2WC.DAT X1 X2
+SKIP 25; READ CC2.DAT X1 X2
+ 
+SKIP 25; READ 2TO3WC.DAT X1 X2 X3
+SKIP 25; READ STAR3WC.DAT X1 X2 X3
+SKIP 25; READ CC3.DAT X1 X2 X3
+ 
+-----Construction example #1
+ 
+Construction example #1
+ 
+-----Construction example #2
+ 
+Construction example #2
+ 
+-----Response Surface Analysis Commands
+ 
+Response Surface Analysis Commands
+ 
+-----Built-in Response Surface Tutorial Data Files
+ 
+Built-in Response Surface Tutorial Data Files
+ 
+SKIP 25; READ BOXYIELD Y X1 X2
+SKIP 25; READ BOXYIEL2 Y X1 X2
+ 
+-----Quick Response Surface Analysis Example
+ 
+Quick Response Surface Analysis Example
+ 
+-----Detailed Response Surface Analysis Example
+ 
+Detailed Response Surface Analysis Example
+ 
+-----References for Response Surface Designs
+ 
+References for Response Surface Designs
+ 
+Box, G. E. P, Hunter, W. G., and Hunter, J. S. (1978).
+   Statistics for Experimenters John Wiley & Sons, New
+   York, Chapter 15.
+ 
+Box, G. E. P. and Draper, N. R. (1987).  Empirical
+   Model Building and Response Surfaces.  John Wiley
+   and Sons, New York.
+ 
+Box, G. E. P. and Hunter, J. S. (1957).  Multifactor
+   Experimental Design for Exploring Response Surfaces.
+   Annals of Mathematical Statistics, 28, pages
+   195-241.
+ 
+Box, G. E. P. (1954).  The Exploration and Exploitation
+   of Response Surfaces: Some General Considerations
+   and Examples.  Biometrics, 10, pages 16 ff.
+ 
+Juran, J. M. (ed.) (1979).  Quality Control Handbook.
+   McGraw-Hill, New York, 3rd edition, chapter 28.
+ 
+-----Mixture Designs       zzzzzzzzz
+ 
+Mixture Designs
+ 
+Discussion
+ 
+Index of Designs
+Listing of Designs
+Models
+Built-in Design Files
+Construction Example #1
+Construction Example #2
+ 
+Analysis Commands
+Built-in Tutorial Data Files
+Quick Analysis Example
+Detailed Analysis Examples
+ 
+References
+ 
+-----Discussion of Mixture Designs
+ 
+Discussion of Mixture Designs
+ 
+to be done
+ 
+-----Index of Mixture Designs
+ 
+Index of Mixture Designs
+ 
+            Name of           No. of  No. of Deg. of
+            Design            Factors  Runs  Fitted
+                                 k      n     Poly.
+   -------------------------------------------------
+   (k=3,d=1) Simplex-Lattice     3      3       1
+   (k=3,d=2) Simplex-Lattice     3      6       2
+   (k=3,d=3) Simplex-Lattice     3     10       3
+   (k=3,d=4) Simplex-Lattice     3     15       4
+   (k=3)     Simplex-Centroid    3      7       ?
+ 
+   (k=4,d=1) Simplex-Lattice     4      4       1
+   (k=4,d=2) Simplex-Lattice     4     10       2
+   (k=4,d=3) Simplex-Lattice     4     20       3
+   (k=4,d=4) Simplex-Lattice     4     35       4
+   (k=4)     Simplex-Centroid    4     15       ?
+ 
+   (k=5,d=1) Simplex-Lattice     5      5       1
+   (k=5,d=2) Simplex-Lattice     5     15       2
+   (k=5,d=3) Simplex-Lattice     5     35       3
+   (k=5)     Simplex-Centroid    5     31       ?
+ 
+   (k=6,d=1) Simplex-Lattice     6      6       1
+   (k=6,d=2) Simplex-Lattice     6     21       2
+ 
+   (k=7,d=1) Simplex-Lattice     7      7       1
+   (k=7,d=2) Simplex-Lattice     7     28       2
+ 
+   (k=8,d=1) Simplex-Lattice     8      8       1
+   (k=8,d=2) Simplex-Lattice     8     36       2
+ 
+-----Listing of Mixture Designs
+ 
+Listing of Mixture Designs
+ 
+(k=3,d=1) Simplex-Lattice
+(k=3,d=2) Simplex-Lattice
+(k=3,d=3) Simplex-Lattice
+(k=3,d=4) Simplex-Lattice
+(k=3)     Simplex-Centroid
+ 
+(k=4,d=1) Simplex-Lattice
+(k=4,d=2) Simplex-Lattice
+(k=4,d=3) Simplex-Lattice
+(k=4,d=4) Simplex-Lattice
+(k=4)     Simplex-Centroid
+ 
+(k=5,d=1) Simplex-Lattice
+(k=5,d=2) Simplex-Lattice
+(k=5,d=3) Simplex-Lattice
+(k=5)     Simplex-Centroid
+ 
+(k=6,d=1) Simplex-Lattice
+(k=6,d=2) Simplex-Lattice
+ 
+(k=7,d=1) Simplex-Lattice
+(k=7,d=2) Simplex-Lattice
+ 
+(k=8,d=1) Simplex-Lattice
+(k=8,d=2) Simplex-Lattice
+ 
+-----(k=3,d=1) Simplex-Lattice Design
+ 
+(k=3,d=1) Simplex-Lattice Design
+ 
+k = 3 factors; d = degree 1
+n = 3 runs
+ 
+   X1  X2  X3
+  -------------
+    1   0   0
+    0   1   0
+    0   0   1
+ 
+-----(k=3,d=2) Simplex-Lattice Design
+ 
+(k=3,d=2) Simplex-Lattice Design
+ 
+k = 3 factors; d = degree 2
+n = 6 runs
+ 
+    X1   X2   X3
+  ----------------
+   1.0  0.0  0.0
+   0.0  1.0  0.0
+   0.0  0.0  1.0
+   0.5  0.5  0.0
+   0.5  0.0  0.5
+   0.0  0.5  0.5
+ 
+-----(k=3,d=3) Simplex-Lattice Design
+ 
+(k=3,d=3) Simplex-Lattice Design
+ 
+k = 3 factors; d = degree 3
+n = 10 runs
+ 
+    X1     X2     X3
+  ----------------------
+   1.000  0.000  0.000
+   0.000  1.000  0.000
+   0.000  0.000  1.000
+   0.667  0.333  0.000
+   0.667  0.000  0.333
+   0.000  0.667  0.333
+   0.333  0.667  0.000
+   0.333  0.000  0.667
+   0.000  0.333  0.667
+   0.333  0.333  0.333
+ 
+-----(k=3,d=4) Simplex-Lattice Design
+ 
+(k=3,d=4) Simplex-Lattice Design
+ 
+k = 3 factors; d = degree 4
+n = 15 runs
+ 
+    X1   X2   X3
+ ------------------
+   1.00 0.00 0.00
+   0.00 1.00 0.00
+   0.00 0.00 1.00
+   0.75 0.25 0.00
+   0.75 0.00 0.25
+   0.00 0.75 0.25
+   0.25 0.75 0.00
+   0.25 0.00 0.75
+   0.00 0.25 0.75
+   0.50 0.50 0.00
+   0.50 0.00 0.50
+   0.00 0.50 0.50
+   0.50 0.25 0.25
+   0.25 0.50 0.25
+   0.25 0.25 0.50
+ 
+-----k=3 Simplex-Centroid Design
+ 
+k=3 Simplex-Centroid Design
+ 
+k = 3 factors
+n = 7 runs
+ 
+     X1     X2     X3
+  ---------------------
+   1.000  0.000  0.000
+   0.000  1.000  0.000
+   0.000  0.000  1.000
+   0.500  0.500  0.000
+   0.500  0.000  0.500
+   0.000  0.500  0.500
+   0.333  0.333  0.333
+ 
+-----(k=4,d=1) Simplex-Lattice Design
+ 
+(k=4,d=1) Simplex-Lattice Design
+ 
+k = 4 factors; d = degree 1
+n = 4 runs
+ 
+   X1  X2  X3  X4
+  -----------------
+    1   0   0   0
+    0   1   0   0
+    0   0   1   0
+    0   0   0   1
+ 
+-----(k=4,d=2) Simplex-Lattice Design
+ 
+(k=4,d=2) Simplex-Lattice Design
+ 
+k = 4 factors; d = degree 2
+n = 10 runs
+ 
+    X1   X2   X3   X4
+  ---------------------
+   1.0  0.0  0.0  0.0
+   0.0  1.0  0.0  0.0
+   0.0  0.0  1.0  0.0
+   0.0  0.0  0.0  1.0
+   0.5  0.5  0.0  0.0
+   0.5  0.0  0.5  0.0
+   0.5  0.0  0.0  0.5
+   0.0  0.5  0.5  0.0
+   0.0  0.5  0.0  0.5
+   0.0  0.0  0.5  0.5
+ 
+-----(k=4,d=3) Simplex-Lattice Design
+ 
+(k=4,d=3) Simplex-Lattice Design
+ 
+k = 4 factors; d = degree 3
+n = 20 runs
+ 
+     X1     X2     X3     X4
+  -----------------------------
+   1.000  0.000  0.000  0.000
+   0.000  1.000  0.000  0.000
+   0.000  0.000  1.000  0.000
+   0.000  0.000  0.000  1.000
+   0.667  0.333  0.000  0.000
+   0.667  0.000  0.333  0.000
+   0.667  0.000  0.000  0.333
+   0.000  0.667  0.333  0.000
+   0.000  0.667  0.000  0.333
+   0.000  0.000  0.667  0.333
+   0.333  0.667  0.000  0.000
+   0.333  0.000  0.667  0.000
+   0.333  0.000  0.000  0.667
+   0.000  0.333  0.667  0.000
+   0.000  0.333  0.000  0.667
+   0.000  0.000  0.333  0.667
+   0.333  0.333  0.333  0.000
+   0.333  0.333  0.000  0.333
+   0.333  0.000  0.333  0.333
+   0.000  0.333  0.333  0.333
+ 
+-----(k=4,d=4) Simplex-Lattice Design
+ 
+(k=4,d=4) Simplex-Lattice Design
+ 
+k = 4 factors; d = degree 4
+n = 35 runs
+ 
+     X1     X2     X3     X4
+  -----------------------------
+   1.000  0.000  0.000  0.000
+   0.000  1.000  0.000  0.000
+   0.000  0.000  1.000  0.000
+   0.000  0.000  0.000  1.000
+   0.750  0.250  0.000  0.000
+   0.750  0.000  0.250  0.000
+   0.750  0.000  0.000  0.250
+   0.000  0.750  0.250  0.000
+   0.000  0.750  0.000  0.250
+   0.000  0.000  0.750  0.250
+   0.250  0.750  0.000  0.000
+   0.250  0.000  0.750  0.000
+   0.250  0.000  0.000  0.750
+   0.000  0.250  0.750  0.000
+   0.000  0.250  0.000  0.750
+   0.000  0.000  0.250  0.750
+   0.500  0.500  0.000  0.000
+   0.500  0.000  0.500  0.000
+   0.500  0.000  0.000  0.500
+   0.000  0.500  0.500  0.000
+   0.000  0.500  0.000  0.500
+   0.000  0.000  0.500  0.500
+   0.500  0.250  0.250  0.000
+   0.500  0.250  0.000  0.250
+   0.500  0.000  0.250  0.250
+   0.250  0.500  0.250  0.000
+   0.250  0.500  0.000  0.250
+   0.000  0.500  0.250  0.250
+   0.250  0.250  0.500  0.000
+   0.250  0.000  0.500  0.250
+   0.000  0.250  0.500  0.250
+   0.250  0.250  0.000  0.500
+   0.250  0.000  0.250  0.500
+   0.000  0.250  0.250  0.500
+   0.250  0.250  0.250  0.250
+ 
+-----(k=4) Simplex-Centroid Design
+ 
+(k=4) Simplex-Centroid Design
+ 
+k = 4 factors
+n = 15 runs
+ 
+     X1     X2     X3     X4
+  -----------------------------
+   1.000  0.000  0.000  0.000
+   0.000  1.000  0.000  0.000
+   0.000  0.000  1.000  0.000
+   0.000  0.000  0.000  1.000
+   0.500  0.500  0.000  0.000
+   0.500  0.000  0.500  0.000
+   0.500  0.000  0.000  0.500
+   0.000  0.500  0.500  0.000
+   0.000  0.500  0.000  0.500
+   0.000  0.000  0.500  0.500
+   0.000  0.333  0.333  0.333
+   0.333  0.000  0.333  0.333
+   0.333  0.333  0.000  0.333
+   0.333  0.333  0.333  0.000
+   0.250  0.250  0.250  0.250
+ 
+-----(k=5,d=1) Simplex-Lattice Design
+ 
+(k=5,d=1) Simplex-Lattice Design
+ 
+k = 5 factors; d = degree 1
+n = 5 runs
+ 
+   X1  X2  X3  X4  X5
+  ---------------------
+    1   0   0   0   0
+    0   1   0   0   0
+    0   0   1   0   0
+    0   0   0   1   0
+    0   0   0   0   1
+ 
+-----(k=5,d=2) Simplex-Lattice Design
+ 
+(k=5,d=2) Simplex-Lattice Design
+ 
+k = 5 factors; d = degree 2
+n = 15 runs
+ 
+    X1   X2   X3   X4   X5
+  --------------------------
+   1.0  0.0  0.0  0.0  0.0
+   0.0  1.0  0.0  0.0  0.0
+   0.0  0.0  1.0  0.0  0.0
+   0.0  0.0  0.0  1.0  0.0
+   0.0  0.0  0.0  0.0  1.0
+   0.5  0.5  0.0  0.0  0.0
+   0.5  0.0  0.5  0.0  0.0
+   0.5  0.0  0.0  0.5  0.0
+   0.5  0.0  0.0  0.0  0.5
+   0.0  0.5  0.5  0.0  0.0
+   0.0  0.5  0.0  0.5  0.0
+   0.0  0.5  0.0  0.0  0.5
+   0.0  0.0  0.5  0.5  0.0
+   0.0  0.0  0.5  0.0  0.5
+   0.0  0.0  0.0  0.5  0.5
+ 
+-----(k=5,d=3) Simplex-Lattice Design
+ 
+(k=5,d=3) Simplex-Lattice Design
+ 
+k = 5 factors; d = degree 3
+n = 35 runs
+ 
+     X1     X2     X3     X4     X5
+  ----------------------------------
+   1.000  0.000  0.000  0.000  0.000
+   0.000  1.000  0.000  0.000  0.000
+   0.000  0.000  1.000  0.000  0.000
+   0.000  0.000  0.000  1.000  0.000
+   0.000  0.000  0.000  0.000  1.000
+   0.667  0.333  0.000  0.000  0.000
+   0.667  0.000  0.333  0.000  0.000
+   0.667  0.000  0.000  0.333  0.000
+   0.667  0.000  0.000  0.000  0.333
+   0.000  0.667  0.333  0.000  0.000
+   0.000  0.667  0.000  0.333  0.000
+   0.000  0.667  0.000  0.000  0.333
+   0.000  0.000  0.667  0.333  0.000
+   0.000  0.000  0.667  0.000  0.333
+   0.000  0.000  0.000  0.667  0.333
+   0.333  0.667  0.000  0.000  0.000
+   0.333  0.000  0.667  0.000  0.000
+   0.333  0.000  0.000  0.667  0.000
+   0.333  0.000  0.000  0.000  0.667
+   0.000  0.333  0.667  0.000  0.000
+   0.000  0.333  0.000  0.667  0.000
+   0.000  0.333  0.000  0.000  0.667
+   0.000  0.000  0.333  0.667  0.000
+   0.000  0.000  0.333  0.000  0.667
+   0.000  0.000  0.000  0.333  0.667
+   0.333  0.333  0.333  0.000  0.000
+   0.333  0.333  0.000  0.333  0.000
+   0.333  0.333  0.000  0.000  0.333
+   0.333  0.000  0.333  0.333  0.000
+   0.333  0.000  0.333  0.000  0.333
+   0.333  0.000  0.000  0.333  0.333
+   0.000  0.333  0.333  0.333  0.000
+   0.000  0.333  0.333  0.000  0.333
+   0.000  0.333  0.000  0.333  0.333
+   0.000  0.000  0.333  0.333  0.333
+ 
+-----(k=5) Simplex-Centroid Design
+ 
+(k=5) Simplex-Centroid Design
+ 
+k = 5 factors
+n = 31 runs
+ 
+     X1     X2     X3     X4    X5
+  ----------------------------------
+   1.000  0.000  0.000  0.000  0.000
+   0.000  1.000  0.000  0.000  0.000
+   0.000  0.000  1.000  0.000  0.000
+   0.000  0.000  0.000  1.000  0.000
+   0.000  0.000  0.000  0.000  1.000
+   0.500  0.500  0.000  0.000  0.000
+   0.500  0.000  0.500  0.000  0.000
+   0.500  0.000  0.000  0.500  0.000
+   0.500  0.000  0.000  0.000  0.500
+   0.000  0.500  0.500  0.000  0.000
+   0.000  0.500  0.000  0.500  0.000
+   0.000  0.500  0.000  0.000  0.500
+   0.000  0.000  0.500  0.500  0.000
+   0.000  0.000  0.500  0.000  0.500
+   0.000  0.000  0.000  0.500  0.500
+   0.333  0.333  0.333  0.000  0.000
+   0.333  0.333  0.000  0.333  0.000
+   0.333  0.333  0.000  0.000  0.333
+   0.333  0.000  0.333  0.333  0.000
+   0.333  0.000  0.333  0.000  0.333
+   0.333  0.000  0.000  0.333  0.333
+   0.000  0.333  0.333  0.333  0.000
+   0.000  0.333  0.333  0.000  0.333
+   0.000  0.333  0.000  0.333  0.333
+   0.000  0.000  0.333  0.333  0.333
+   0.250  0.250  0.250  0.250  0.000
+   0.250  0.250  0.250  0.000  0.250
+   0.250  0.250  0.000  0.250  0.250
+   0.250  0.000  0.250  0.250  0.250
+   0.000  0.250  0.250  0.250  0.250
+   0.200  0.200  0.250  0.250  0.250
+ 
+-----(k=6,d=1) Simplex-Lattice Design
+ 
+(k=6,d=1) Simplex-Lattice Design
+ 
+k = 6 factors; d = degree 1
+n = 6 runs
+ 
+   X1  X2  X3  X4  X5  X6
+  -------------------------
+    1   0   0   0   0   0
+    0   1   0   0   0   0
+    0   0   1   0   0   0
+    0   0   0   1   0   0
+    0   0   0   0   1   0
+    0   0   0   0   0   1
+ 
+-----(k=6,d=2) Simplex-Lattice Design
+ 
+(k=6,d=2) Simplex-Lattice Design
+ 
+k = 6 factors; d = degree 2
+n = 21 runs
+ 
+    X1   X2   X3   X4   X5   X6
+  -------------------------------
+   1.0  0.0  0.0  0.0  0.0  0.0
+   0.0  1.0  0.0  0.0  0.0  0.0
+   0.0  0.0  1.0  0.0  0.0  0.0
+   0.0  0.0  0.0  1.0  0.0  0.0
+   0.0  0.0  0.0  0.0  1.0  0.0
+   0.0  0.0  0.0  0.0  0.0  1.0
+   0.5  0.5  0.0  0.0  0.0  0.0
+   0.5  0.0  0.5  0.0  0.0  0.0
+   0.5  0.0  0.0  0.5  0.0  0.0
+   0.5  0.0  0.0  0.0  0.5  0.0
+   0.5  0.0  0.0  0.0  0.0  0.5
+   0.0  0.5  0.5  0.0  0.0  0.0
+   0.0  0.5  0.0  0.5  0.0  0.0
+   0.0  0.5  0.0  0.0  0.5  0.0
+   0.0  0.5  0.0  0.0  0.0  0.5
+   0.0  0.0  0.5  0.5  0.0  0.0
+   0.0  0.0  0.5  0.0  0.5  0.0
+   0.0  0.0  0.5  0.0  0.0  0.5
+   0.0  0.0  0.0  0.5  0.5  0.0
+   0.0  0.0  0.0  0.5  0.0  0.5
+   0.0  0.0  0.0  0.0  0.5  0.5
+ 
+-----(k=7,d=1) Simplex-Lattice Design
+ 
+(k=7,d=1) Simplex-Lattice Design
+ 
+k = 7 factors; d = degree 1
+n = 7 runs
+ 
+   X1  X2  X3  X4  X5  X6  X7
+  -----------------------------
+    1   0   0   0   0   0   0
+    0   1   0   0   0   0   0
+    0   0   1   0   0   0   0
+    0   0   0   1   0   0   0
+    0   0   0   0   1   0   0
+    0   0   0   0   0   1   0
+    0   0   0   0   0   0   1
+ 
+-----(k=7,d=2) Simplex-Lattice Design
+ 
+(k=7,d=2) Simplex-Lattice Design
+ 
+k = 7 factors; d = degree 2
+n = 28 runs
+ 
+    X1   X2   X3   X4   X5   X6   X7
+  ------------------------------------
+   1.0  0.0  0.0  0.0  0.0  0.0  0.0
+   0.0  1.0  0.0  0.0  0.0  0.0  0.0
+   0.0  0.0  1.0  0.0  0.0  0.0  0.0
+   0.0  0.0  0.0  1.0  0.0  0.0  0.0
+   0.0  0.0  0.0  0.0  1.0  0.0  0.0
+   0.0  0.0  0.0  0.0  0.0  1.0  0.0
+   0.0  0.0  0.0  0.0  0.0  0.0  1.0
+   0.5  0.5  0.0  0.0  0.0  0.0  0.0
+   0.5  0.0  0.5  0.0  0.0  0.0  0.0
+   0.5  0.0  0.0  0.5  0.0  0.0  0.0
+   0.5  0.0  0.0  0.0  0.5  0.0  0.0
+   0.5  0.0  0.0  0.0  0.0  0.5  0.0
+   0.5  0.0  0.0  0.0  0.0  0.0  0.5
+   0.0  0.5  0.5  0.0  0.0  0.0  0.0
+   0.0  0.5  0.0  0.5  0.0  0.0  0.0
+   0.0  0.5  0.0  0.0  0.5  0.0  0.0
+   0.0  0.5  0.0  0.0  0.0  0.5  0.0
+   0.0  0.5  0.0  0.0  0.0  0.0  0.5
+   0.0  0.0  0.5  0.5  0.0  0.0  0.0
+   0.0  0.0  0.5  0.0  0.5  0.0  0.0
+   0.0  0.0  0.5  0.0  0.0  0.5  0.0
+   0.0  0.0  0.5  0.0  0.0  0.0  0.5
+   0.0  0.0  0.0  0.5  0.5  0.0  0.0
+   0.0  0.0  0.0  0.5  0.0  0.5  0.0
+   0.0  0.0  0.0  0.5  0.0  0.0  0.5
+   0.0  0.0  0.0  0.0  0.5  0.5  0.0
+   0.0  0.0  0.0  0.0  0.5  0.0  0.5
+   0.0  0.0  0.0  0.0  0.0  0.5  0.5
+ 
+-----(k=8,d=1) Simplex-Lattice Design
+ 
+(k=8,d=1) Simplex-Lattice Design
+ 
+k = 8 factors; d = degree 1
+n = 8 runs
+ 
+   X1  X2  X3  X4  X5  X6  X7  X8
+  ---------------------------------
+    1   0   0   0   0   0   0   0
+    0   1   0   0   0   0   0   0
+    0   0   1   0   0   0   0   0
+    0   0   0   1   0   0   0   0
+    0   0   0   0   1   0   0   0
+    0   0   0   0   0   1   0   0
+    0   0   0   0   0   0   1   0
+    0   0   0   0   0   0   0   1
+ 
+-----(8,2) Simplex-Lattice   k = 8 n = 36 Quad
+ 
+(8,2) Simplex-Lattice   k = 8 n = 36 Quad
+ 
+k = 8 factors; d = degree 2
+n = 36 runs
+ 
+    X1   X2   X3   X4   X5   X6   X7   X8
+  -----------------------------------------
+   1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+   0.0  1.0  0.0  0.0  0.0  0.0  0.0  0.0
+   0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0
+   0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0
+   0.0  0.0  0.0  0.0  1.0  0.0  0.0  0.0
+   0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0
+   0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0
+   0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0
+   0.5  0.5  0.0  0.0  0.0  0.0  0.0  0.0
+   0.5  0.0  0.5  0.0  0.0  0.0  0.0  0.0
+   0.5  0.0  0.0  0.5  0.0  0.0  0.0  0.0
+   0.5  0.0  0.0  0.0  0.5  0.0  0.0  0.0
+   0.5  0.0  0.0  0.0  0.0  0.5  0.0  0.0
+   0.5  0.0  0.0  0.0  0.0  0.0  0.5  0.0
+   0.5  0.0  0.0  0.0  0.0  0.0  0.0  0.5
+   0.0  0.5  0.5  0.0  0.0  0.0  0.0  0.0
+   0.0  0.5  0.0  0.5  0.0  0.0  0.0  0.0
+   0.0  0.5  0.0  0.0  0.5  0.0  0.0  0.0
+   0.0  0.5  0.0  0.0  0.0  0.5  0.0  0.0
+   0.0  0.5  0.0  0.0  0.0  0.0  0.5  0.0
+   0.0  0.5  0.0  0.0  0.0  0.0  0.0  0.5
+   0.0  0.0  0.5  0.5  0.0  0.0  0.0  0.0
+   0.0  0.0  0.5  0.0  0.5  0.0  0.0  0.0
+   0.0  0.0  0.5  0.0  0.0  0.5  0.0  0.0
+   0.0  0.0  0.5  0.0  0.0  0.0  0.5  0.0
+   0.0  0.0  0.5  0.0  0.0  0.0  0.0  0.5
+   0.0  0.0  0.0  0.5  0.5  0.0  0.0  0.0
+   0.0  0.0  0.0  0.5  0.0  0.5  0.0  0.0
+   0.0  0.0  0.0  0.5  0.0  0.0  0.5  0.0
+   0.0  0.0  0.0  0.5  0.0  0.0  0.0  0.5
+   0.0  0.0  0.0  0.0  0.5  0.5  0.0  0.0
+   0.0  0.0  0.0  0.0  0.5  0.0  0.5  0.0
+   0.0  0.0  0.0  0.0  0.5  0.0  0.0  0.5
+   0.0  0.0  0.0  0.0  0.0  0.5  0.5  0.0
+   0.0  0.0  0.0  0.0  0.0  0.5  0.0  0.5
+   0.0  0.0  0.0  0.0  0.0  0.0  0.5  0.5
+ 
+-----Models for Mixture Designs
+ 
+Models for Mixture Designs
+ 
+(k=3,d=1) Simplex-Lattice
+(k=3,d=2) Simplex-Lattice
+(k=3,d=3) Simplex-Lattice
+(k=3,d=4) Simplex-Lattice
+(k=3)     Simplex-Centroid
+ 
+(k=4,d=1) Simplex-Lattice
+(k=4,d=2) Simplex-Lattice
+(k=4,d=3) Simplex-Lattice
+(k=4,d=4) Simplex-Lattice
+(k=4)     Simplex-Centroid
+ 
+(k=5,d=1) Simplex-Lattice
+(k=5,d=2) Simplex-Lattice
+(k=5,d=3) Simplex-Lattice
+(k=5)     Simplex-Centroid
+ 
+(k=6,d=1) Simplex-Lattice
+(k=6,d=2) Simplex-Lattice
+ 
+(k=7,d=1) Simplex-Lattice
+(k=7,d=2) Simplex-Lattice
+ 
+(k=8,d=1) Simplex-Lattice
+(k=8,d=2) Simplex-Lattice
+ 
+-----Model for (k=3,d=1) Simplex-Lattice Design
+ 
+Model for (k=3,d=1) Simplex-Lattice Design
+ 
+k = 3 factors; d = degree 1
+n = 3 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3
+ 
+-----Model for (k=3,d=2) Simplex-Lattice Design
+ 
+Model for (k=3,d=2) Simplex-Lattice Design
+ 
+k = 3 factors; d = degree 2
+n = 6 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 +
+    B12*X1*X2 + B13*X1*X3 + B23*X2*X3
+ 
+-----Model for (k=3,d=3) Simplex-Lattice Design
+ 
+Model for (k=3,d=3) Simplex-Lattice Design
+ 
+k = 3 factors; d = degree 3
+n = 10 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 +
+    B12*X1*X2 + B13*X1*X3 + B23*X2*X3 +
+    C12*X1*X2*(X1-X2) + C13*X1*X3*(X1-X3) +
+    C23*X2*X3*(X2-X3) +
+    B123*X1*X2*X3
+ 
+-----Model for (k=3,d=4) Simplex-Lattice Design
+ 
+Model for (k=3,d=4) Simplex-Lattice Design
+ 
+k = 3 factors; d = degree 4
+n = 15 runs
+ 
+to be determined
+ 
+-----Model for k=3 Simplex-Centroid Design
+ 
+Model for k=3 Simplex-Centroid Design
+ 
+k = 3 factors
+n = 7 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 +
+    B12*X1*X2 + B13*X1*X3 + B23*X2*X3 +
+    B123*X1*X2*X3
+ 
+-----Model for (k=4,d=1) Simplex-Lattice Design
+ 
+Model for (k=4,d=1) Simplex-Lattice Design
+ 
+k = 4 factors; d = degree 1
+n = 4 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 + B4*X4
+ 
+-----Model for (k=4,d=2) Simplex-Lattice Design
+ 
+Model for (k=4,d=2) Simplex-Lattice Design
+ 
+k = 4 factors; d = degree 2
+n = 10 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 + B4*X4 +
+    B12*X1*X2 + B13*X1*X3 + B14*X1*X4 +
+    B23*X2*X3 + B24*X2*X4 + B34*X3*X4
+ 
+-----Model for (k=4,d=3) Simplex-Lattice Design
+ 
+Model for (k=4,d=3) Simplex-Lattice Design
+ 
+k = 4 factors; d = degree 3
+n = 20 runs
+ 
+to be determined
+ 
+-----Model for (k=4,d=4) Simplex-Lattice Design
+ 
+Model for (k=4,d=4) Simplex-Lattice Design
+ 
+k = 4 factors; d = degree 4
+n = 35 runs
+ 
+to be determined
+ 
+-----Model for (k=4) Simplex-Centroid Design
+ 
+Model for (k=4) Simplex-Centroid Design
+ 
+k = 4 factors
+n = 15 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 + B4*X4 +
+    B12*X1*X2 + B13*X1*X3 + B14*X1*X4 +
+    B23*X2*X3 + B24*X2*X4 + B34*X3*X4 +
+    B123*X1*X2*X3 + B124*X1*X2*X4 +
+    B134*X1*X3*X4 + B234*X2*X3*X4 +
+    B1234*X1*X2*X3*X4
+ 
+-----Model for (k=5,d=1) Simplex-Lattice Design
+ 
+Model for (k=5,d=1) Simplex-Lattice Design
+ 
+k = 5 factors; d = degree 1
+n = 5 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 + B4*X4 +
+    B5*X5
+ 
+-----Model for (k=5,d=2) Simplex-Lattice Design
+ 
+Model for (k=5,d=2) Simplex-Lattice Design
+ 
+k = 5 factors; d = degree 2
+n = 15 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 + B4*X4 +
+    B5*X5 +
+    B12*X1*X2 + B13*X1*X3 + B14*X1*X4 +
+    B15*X1*X5 +
+    B23*X2*X3 + B24*X2*X4 + B25*X2*X5 +
+    B34*X3*X4 + B35*X3*X5 +
+    B45*X4*X5
+ 
+-----Model for (k=5,d=3) Simplex-Lattice Design
+ 
+Model for (k=5,d=3) Simplex-Lattice Design
+ 
+k = 5 factors; d = degree 3
+n = 35 runs
+ 
+-----Model for (k=5) Simplex-Centroid Design
+ 
+Model for (k=5) Simplex-Centroid Design
+ 
+k = 5 factors
+n = 31 runs
+ 
+to be determined
+ 
+-----Model for (k=6,d=1) Simplex-Lattice Design
+ 
+Model for (k=6,d=1) Simplex-Lattice Design
+ 
+k = 6 factors; d = degree 1
+n = 6 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 + B4*X4 +
+    B5*X5 +B6*X6
+ 
+-----Model for (k=6,d=2) Simplex-Lattice Design
+ 
+Model for (k=6,d=2) Simplex-Lattice Design
+ 
+k = 6 factors; d = degree 2
+n = 21 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 + B4*X4 +
+    B5*X5 + B6*X6 +
+    B12*X1*X2 + B13*X1*X3 + B14*X1*X4 +
+    B15*X1*X5 + B16*X1*X6 +
+    B23*X2*X3 + B24*X2*X4 + B25*X2*X5 +
+    B26*X2*X6 +
+    B34*X3*X4 + B35*X3*X5 + B36*X3*X6 +
+    B45*X4*X5 + B46*X4*X6 +
+    B56*X5*X6
+ 
+-----Model for (k=7,d=1) Simplex-Lattice Design
+ 
+Model for (k=7,d=1) Simplex-Lattice Design
+ 
+k = 7 factors; d = degree 1
+n = 7 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 + B4*X4 +
+    B5*X5 + B6*X6 + B7*X7 +
+ 
+-----Model for (k=7,d=2) Simplex-Lattice Design
+ 
+Model for (k=7,d=2) Simplex-Lattice Design
+ 
+k = 7 factors; d = degree 2
+n = 28 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 + B4*X4 +
+    B5*X5 + B6*X6 + B7*X7 +
+    B12*X1*X2 + B13*X1*X3 + B14*X1*X4 +
+    B15*X1*X5 + B16*X1*X6 + B17*X1*X7 +
+    B23*X2*X3 + B24*X2*X4 + B25*X2*X5 +
+    B26*X2*X6 + B27*X2*X7 +
+    B34*X3*X4 + B35*X3*X5 + B36*X3*X6 +
+    B37*X3*X7 +
+    B45*X4*X5 + B46*X4*X6 + B47*X4*X7 +
+    B56*X5*X6 + B57*X5*X7 +
+    B67*X6*X7
+ 
+-----Model for (k=8,d=1) Simplex-Lattice Design
+ 
+Model for (k=8,d=1) Simplex-Lattice Design
+ 
+k = 8 factors; d = degree 1
+n = 8 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 + B4*X4 +
+    B5*X5 + B6*X6 + B7*X7 + B8*X8
+ 
+-----(8,2) Simplex-Lattice   k = 8 n = 36 Quad
+ 
+(8,2) Simplex-Lattice   k = 8 n = 36 Quad
+ 
+k = 8 factors; d = degree 2
+n = 36 runs
+ 
+Y = B1*X1 + B2*X2 + B3*X3 + B4*X4 +
+    B5*X5 + B6*X6 + B7*X7 + B8*X8  +
+    B12*X1*X2 + B13*X1*X3 + B14*X1*X4 +
+    B15*X1*X5 + B16*X1*X6 + B17*X1*X7 +
+    B18*X1*X8 +
+    B23*X2*X3 + B24*X2*X4 + B25*X2*X5 +
+    B26*X2*X6 + B27*X2*X7 + B28*X2*X8 +
+    B34*X3*X4 + B35*X3*X5 + B36*X3*X6 +
+    B37*X3*X7 + B38*X3*X8 +
+    B45*X4*X5 + B46*X4*X6 + B47*X4*X7 +
+    B48*X4*X8 +
+    B56*X5*X6 + B57*X5*X7 + B58*X5*X8 +
+    B67*X6*X7 + B68*X6*X8 +
+    B78*X7*X8
+ 
+-----Built-in Mixture Design Files
+ 
+Built-in Mixture Design Files
+ 
+-----Construction example #1
+ 
+Construction example #1
+ 
+-----Construction example #2
+ 
+Construction example #2
+ 
+-----Mixture Design Analysis Commands
+ 
+Mixture Design Analysis Commands
+ 
+-----Built-in Mixture Tutorial Data Files
+ 
+Built-in Mixture Tutorial Data Files
+ 
+-----Quick Mixture Analysis Example
+ 
+Quick Mixture Analysis Example
+ 
+-----Detailed Mixture Analysis Example
+ 
+Detailed Mixture Analysis Example
+ 
+-----References for Mixture Design
+ 
+References for Mixture Design
+ 
+Cornell, John A. (1190).  Experiments with Mixtures:
+   Design + Details, Models, and the Analysis of Mixture Data.
+   John Wiley & Sons, New York.
+ 
+-----Built-in Random Run Sequence Files
+ 
+Built-in Random Run Sequence Files
+ 
+LET Y = RANDOM PERMUTATION FOR I = 1 1 N
+ 
+SKIP 25; SERIAL READ PERM9.DAT SEQ
+SKIP 25; SERIAL READ PERM16.DAT SEQ
+SKIP 25; SERIAL READ PERM20.DAT SEQ
+SKIP 25; SERIAL READ PERM30.DAT SEQ
+SKIP 25; SERIAL READ PERM50.DAT SEQ
+SKIP 25; SERIAL READ PERM100.DAT SEQ
+SKIP 25; SERIAL READ PERM200.DAT SEQ
+SKIP 25; SERIAL READ PERM500.DAT SEQ
+SKIP 25; SERIAL READ PERM1000.DAT SEQ
+ 
+------------------------------------

@@ -1,0 +1,28 @@
+----- <~dp\guimain.top> Main Menu Window
+ 
+Main Menu Window
+
+The Main Menu Window is used to execute Dataplot
+commands.
+
+The main menu window is at the top of the
+gui.  A menu is accessed by clicking the left
+mouse button on the desire menu button.
+
+Sub-menus may be:
+
+  1) menus to additional menus;
+  2) explanatory text; or
+  3) action menus that initiate 1 or more Dataplot
+     commands.
+
+The sub-menus have two special buttons.  Clicking
+the "X" button on the left corner makes the
+menu disappear.  Left clicking the "File" button
+brings up several generic items.  These are 
+self-explanatory for the most part (e.g., save,
+print, etc.). 
+
+Clicking the right mouse button brings up the most
+recently accessed menus.
+

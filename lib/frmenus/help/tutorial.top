@@ -1,0 +1,25 @@
+----- <~help\tutorial.top> Getting Started
+
+Getting Started with Dataplot
+
+Getting Started with Dataplot
+   Introduction to Dataplot                <~help\intro.top>
+   About the Graphical Interface           <~dp\guihelp.top>
+   Entering Your Data                      <~help\entdata.top>
+
+   A Simple Example                        <~help\simpexamp.top>
+
+   Creating Graphics Output                <~help\graphdev.top>
+   Viewing/Printing Your Graphs            <~help\print.top>
+   Importing Your Graphs into Word/PPT     <~help\import.top>
+
+   Dataplot Start-Up File                  <~help\custom.top>
+
+Additonal Help
+   Help (ASCII)                            <~dp\dp.top>
+
+   Web-Based Help
+      Configuring the Browser              <~scre\browser.top>
+      Dataplot Reference Manual            <~refman\refman.top>
+      e-Handbook                           <~handbook\handbook.top>
+

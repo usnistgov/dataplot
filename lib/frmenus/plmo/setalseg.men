@@ -1,0 +1,23 @@
+This is file setalseg.men--Set Segment Attributes for All Segments
+ 
+--------------------
+ 1. Set Segment Attributes for all Segments
+ 2. SEGMENT COLOR RED; SEGMENT PATTERN DASH
+ 3.
+ 4. Color for Segment:
+ 4. @CE 1 0 42 50 * gui-color
+ 5. Line Type for Segment:
+ 5. @CE 2 0 42 50 * gui-line
+ 6. Line Thickness for SEGMENT:
+ 6. @CE 3 0 42 50 * gui-thick
+ 7.
+ 8.
+ 9. Set Segment Attributes?
+--------------------
+PC FE
+@IF 1 0 SEGMENT COLOR _1
+@IF 2 0 SEGMENT PATTERN _2
+@IF 3 0 SEGMENT THICKNESS _3
+--------------------
+WEB HELP SEGMENT COORDINATES
+--------------------

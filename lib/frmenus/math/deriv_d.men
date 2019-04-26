@@ -1,0 +1,21 @@
+This is file deriv_d.men--Compute the derivative function at given points
+ 
+--------------------
+ 1. Derivative of a Function
+ 2. LET Y = DERIVATIVE F1 FOR WRT X
+ 3.
+ 4. Name of previously created function (or enter a functional expression):
+ 5. @CE 1 0 -7 50 ?
+ 6. Variable for which derivative is computed:
+ 6. @CE 2 0 33 50 ? gui-variable
+ 8. Variable to store derivative values:
+ 8. @CE 3 0 33 50 ? gui-none
+ 9.
+10.
+11. Compute the Derivative?:
+--------------------
+GR FE
+LET _3 = DERIVATIVE _1 WRT _2
+--------------------
+WEB HELP DERIVATIVE
+--------------------

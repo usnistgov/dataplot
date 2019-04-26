@@ -1,0 +1,22 @@
+This is file range.men--Compute range of a variable
+ 
+--------------------
+ 1. Range
+ 2. LET A = RANGE Y
+ 3.
+ 4. Variable for which to compute the range:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the range:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the range?:
+--------------------
+GR FE
+LET _2 = RANGE  _1 _3
+--------------------
+WEB HELP RANGE
+--------------------

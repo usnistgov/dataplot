@@ -1,0 +1,27 @@
+----- <~roadmap\sigmod.top> Significant Modification (Y/N)
+
+Significant Modification (Y/N)
+
+Situation     : We have response data collected both before
+                and after an engineering modification.
+
+Question      : Does the engineering modification have an effect?
+                Does a factor "have an effect"?
+                Is the factor important/significant?
+
+Model         : Y = f(X) + random error
+
+Input         : 1) a response variable Y
+                2) a tag variable X containing factor settings
+
+Output        : a conclusion (yes\no)
+                about the importance of factor X
+
+Stat Category : Comparative (= 1-Factor Analysis)
+
+Primary Tools : Scatter Plot           <xemf: ~stat\scatplot.men>
+                Box Plot               <xemf: ~1fac\boxplot.men>
+                Block Plot             <xemf: ~1fac\blockplo.men>
+
+Worked Example: BOXSHOES.DAT           <xcf: ~roadmap/BOXSHOES.DP>
+

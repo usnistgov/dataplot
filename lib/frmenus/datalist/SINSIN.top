@@ -1,0 +1,8 @@
+----- <~datalist\SINSIN.top> SINSIN.DAT
+ 
+SINSIN.DAT
+ 
+View     <xcl: LIST SINSIN.DAT>
+Load     <x2cl: SKIP 25; READ SINSIN.DAT X Y1 TO Y6>
+Print    <xccl: printfile C:\DATAPLOT\SINSIN.DAT>
+ 

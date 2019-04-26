@@ -1,0 +1,80 @@
+This is Dataplot data file     TUKEY433.DAT
+World Telephones (AT&T)
+Tukey, T. W. (1977)
+Exploratory Data Analysis, Addison-Wesley, page 433.
+ 
+Response Variable = number of phones (in thousands)
+Number of observations             = 49
+Number of variables per line image =  3
+Order of variables per line image--
+   1. Response variable = number of phones (in thousands)
+   2. Factor 1          = Year (7 levels: 1951, 1956 to 1961)
+   3. Factor 2          = Continent (7 levels)
+                             1 = North America; 2 = Europe
+                             3 = Asia; 4 = South America
+                             5 = Oceania; 6 = Africa
+                             7 = Mid America
+Statistical areas--2-factor analysis
+                 --comparative designs
+To read this file into Dataplot--
+      SKIP 25
+      READ TUKEY433.DAT Y X1 X2
+ 
+ 
+ # of Phones         Year     Continent
+--------------------------------------
+   45939             1951         1
+   60423             1956         1
+   64721             1957         1
+   68484             1958         1
+   71799             1959         1
+   76036             1960         1
+   79831             1961         1
+ 
+   21574             1951         2
+   29990             1956         2
+   32510             1957         2
+   35218             1958         2
+   37598             1959         2
+   40341             1960         2
+   43173             1961         2
+ 
+    2876             1951         3
+    4708             1956         3
+    5230             1957         3
+    6062             1958         3
+    6856             1959         3
+    8220             1960         3
+    9053             1961         3
+ 
+    1815             1951         4
+    2568             1956         4
+    2695             1957         4
+    2845             1958         4
+    3000             1959         4
+    3145             1960         4
+    3338             1961         4
+ 
+    1646             1951         5
+    2366             1956         5
+    2526             1957         5
+    2691             1958         5
+    2868             1959         5
+    3054             1960         5
+    3224             1961         5
+ 
+     895             1951         6
+    1411             1956         6
+    1546             1957         6
+    1663             1958         6
+    1769             1959         6
+    1905             1960         6
+    2005             1961         6
+ 
+     555             1951         7
+     733             1956         7
+     773             1957         7
+     836             1958         7
+     911             1959         7
+    1008             1960         7
+    1076             1961         7

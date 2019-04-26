@@ -1,0 +1,160 @@
+. This is Dataplot program   VANGEL33.DP
+. RECIPE Tolerance Limits Analysis of Graphite/Epoxy Fabric Strength
+. ANOVA Case
+. Date--September 1997
+.
+. ----------start point----------
+.
+device 1 x11
+device 2 postscript
+.
+. ------------------------
+. Step 1--Read in the data
+.
+skip 25
+read vangel33.dat y x b
+.
+. -----------------------------------------
+. Step 2--Test for randomness and normality
+.
+4-plot y
+.
+. ----------------------------------------------------------
+. Step 3--Test for homoegneity (wrt location, wrt variation)
+.
+y1label Strength
+x1label Direction
+x3label automatic
+characters x all
+lines solid all
+plot y x x
+.
+characters box plot
+lines box plot
+box plot y x
+.
+characters blank all
+lines solid all
+y1label
+x1label
+x3label
+.
+call ftestloc.dp
+call levene.dp
+.
+capture vangel33.out1
+   call ftestloc.dp
+   call levene.dp
+end capture
+.
+. -------------------------
+. Step 4--Test for outliers
+.
+let ysave = y
+anova y x
+let y = res
+.
+call grubb.dp
+capture vangel33.out2
+   call grubb.dp
+end capture
+.
+. --------------------------------------
+. Step 5--Test for best-fit distribution
+.
+multiplot 2 4
+   justification center; hw 4 3
+   normal probability plot y
+      move 50 95; text Normal Prob Plot
+      move 28 85; let ppcc = round(ppcc,4); text ^ppcc
+      move 50 10; text loc = ^ppa0 scale = ^ppa1
+   lognormal probability plot y
+      move 50 95; text Lognormal Prob Plot
+      move 28 85; let ppcc = round(ppcc,4); text ^ppcc
+      move 50 10; text loc = ^ppa0 scale = ^ppa1
+   tukey ppcc plot y
+      move 50 95; text Tukey PPCC Plot
+      move 50 85; text optimal tail length = ^shape
+   let lambda = shape; tukey probability plot y
+      move 50 95; text Tukey Prob Plot (^lambda)
+      move 28 85; let ppcc = round(ppcc,4); text ^ppcc
+      move 50 10; text loc = ^ppa0 scale = ^ppa1
+let miny = minimum y
+if miny > 0
+   weibull plot y
+      move 50 95; text 2-par. Weibull Plot
+      move 50 10; text (eta = ^eta, beta = ^beta)
+   let gamma = beta; weibull probability plot y
+      move 50 95; text Weibull Prob Plot (^gamma)
+      move 28 85; let ppcc = round(ppcc,4); text ^ppcc
+      move 50 10; text loc = ^ppa0 scale = ^ppa1
+end if
+   weibull PPCC plot y
+      move 50 95; text 3-par. Weibull PPCC Plot
+      move 50 85; text optimal shape = ^shape
+   let gamma = shape; weibull probability plot y
+      move 50 95; text Weibull Prob Plot (^gamma)
+      move 28 85; let ppcc = round(ppcc,4); text ^ppcc
+      move 50 10; text loc = ^ppa0 scale = ^ppa1
+multiplot off
+.
+pre-erase off
+   erase
+   title Weibull Density Functions
+
+   let miny = min y
+   let maxy = max y
+.    let plotxmin = 1
+.    if miny < 0
+.       let plotxmin = 100*int(2*miny/100)
+.    end if
+.    let plotxmax = 100*int(2*maxy/100)
+.    xlimits plotxmin plotxmax
+
+   let plotxmin = -20
+   let plotxmax = 20
+   xlimits plotxmin plotxmax
+
+   let plotymin = 0
+   let plotymax = .30
+   ylimits plotymin plotymax
+
+   relative histogram y
+   lines dotted; let loc = 0; let scale = ^eta; let shape = ^beta
+   plot (1/scale)*weipdf((x-loc)/scale,shape) for x = plotxmin 1 plotxmax
+   lines solid; let loc = ^ppa0; let scale = ^ppa1; let shape = ^gamma
+   plot (1/scale)*weipdf((x-loc)/scale,shape) for x = plotxmin 1 plotxmax
+
+   justification left; hw 2 1
+   move 18 85; text 2-parameter
+   lines dotted; draw 28 85 38 85
+   move 18 80; text 3-parameter
+   lines solid; draw 28 80 38 80
+
+   limits
+pre-erase on
+
+. ------------------------------------------------
+. Step 6--Compute (recipe/normal) tolerance limits
+.
+let y = ysave
+.
+recipe content 90
+recipe confidence 95
+recipe factors 1
+recipe anova y x b
+.
+capture vangel33.out3
+   recipe anova y x b
+end capture
+.
+characters x blank box
+character fill off off on
+character hw 2 1 2 1 .2 3
+lines blank blank blank
+plot y pred versus x and
+plot tol versus x
+.
+. ------------
+. Step 7--Done
+.

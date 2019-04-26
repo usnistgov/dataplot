@@ -1,0 +1,30 @@
+----- <~unce\compinfo.top> Component Information: Discussion
+ 
+Component Information: Discussion
+ 
+The following 3 pieces of information are needed:
+ 
+   1. the typical value (usually the sample mean)
+ 
+   2. the standard deviation for the component;
+ 
+   3. the correlation (and/or covariance) of the
+      component with all other components;
+ 
+These 3 values come from 2 sources:
+ 
+   1) a statistical analysis of data (also called Type A);
+      (click here for this analysis) <xemf: ~unce\statinfo.men>
+ 
+   2) science/engineering expertise  (also called Type B).
+      (click here for this analysis) <xemf: ~unce\properro.men>
+ 
+Once all of the above information has been obtained
+for each and every component, then the uncertainty analysis
+computation may be initiated by clicking on one of the
+following 2 items:
+ 
+   Tableau 1: Typical Values & SDs  <xemf: ~unce\typvalsd.men>
+ 
+   Tableau 2: Covariances & Correl. <xemf: ~unce\covacorr.men>
+ 

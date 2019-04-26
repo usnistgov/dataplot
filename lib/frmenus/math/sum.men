@@ -1,0 +1,22 @@
+This is file sum.men--Compute sum of a variable
+ 
+--------------------
+ 1. Sum
+ 2. LET A = SUM Y
+ 3.
+ 4. Variable for which to compute the sum:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the sum:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Sum?:
+--------------------
+GR FE
+LET _2 = SUM _1 _3
+--------------------
+WEB HELP SUM
+--------------------

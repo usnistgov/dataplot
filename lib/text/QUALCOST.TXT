@@ -1,0 +1,18 @@
+----------  *QUALITY COSTS*  ----------
+
+Quality Cost = the total cost involved in providing
+               a product with quality acceptable 
+               to the customer, including the cost of
+               failing to meet the customer's quality 
+               requirements.
+
+   1. Prevention.
+
+   2. Appraisal.
+
+   3. Internal Failures.
+
+   4. External Failures.
+
+
+   Source--"Quality Costs", Q. C. Trends, February 1986, page 13.

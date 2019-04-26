@@ -1,0 +1,8 @@
+----- <~datalist\ELNINO.top> ELNINO.DAT
+ 
+ELNINO.DAT
+ 
+View     <xcl: LIST ELNINO.DAT>
+Load     <x2cl: SKIP 25; READ ELNINO.DAT Y X YEAR MONTH>
+Print    <xccl: printfile C:\DATAPLOT\ELNINO.DAT>
+ 

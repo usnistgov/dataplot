@@ -1,0 +1,8 @@
+----- <~dataall\GARBOCZI.top> GARBOCZI.DAT
+
+GARBOCZI.DAT
+
+View     <xcl: LIST GARBOCZI.DAT>
+Load     <xcf: ~dataload/GARBOCZI.DP>
+Print    <xccl: printfile C:\DATAPLOT\GARBOCZI.DAT>
+

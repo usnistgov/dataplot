@@ -1,0 +1,43 @@
+This is file mutchaz.men--Compute Muth cumulative hazard
+ 
+--------------------
+ 1. Compute Muth cumulative hazard
+ 2. LET A = MUTCHAZ(X,SHAPE1,LOC,SCALE)
+ 3.
+ 4. The input argument, x, can be either a
+ 5. single number, the name of a parameter,
+ 6. or the name of a variable.
+ 7.  
+ 8. Input values:
+ 9.                              x (x >= u):
+ 9. @CE 1 0 42 50 ?
+10.             shape beta (0 <= beta <= 1):
+10. @CE 2 0 42 50 ?
+11.                              location u:
+11. @CE 3 0 42 50 ?
+12.                         scale s (s > 0):
+12. @CE 4 0 42 50 ?
+13.
+14. Output parameters:
+15.    name for the cumulative hazard value:
+15. @CE 5 0 42 50 ?
+16.
+17.
+18. Compute the Cumulative Hazard?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 3 0 LET ZLOC = _3
+LET ZSCALE = 1
+@IF 4 0 LET ZSCALE = _4
+IF ZSCALE <= 0
+   LET ZSCALE = 1
+END OF IF
+@IF 2 0 LET ZSHAPE1 = _2
+IF ZSHAPE1 <= 0
+   LET ZSHAPE1 = 1
+END OF IF
+@IF 5 0 LET _5 = MUTCHAZ( _1 ,ZSHAPE1,ZLOC,ZSCALE)
+--------------------
+WEB HELP MUTCHAZ
+--------------------

@@ -1,0 +1,20 @@
+----- <~fit\flowruns.top> Flowchart: Test Runs
+
+Flowchart: Test Runs
+
+2a. Test for outlying runs
+    If none    : ideal; keep all runs; proceed
+    If outliers: omit runs; report; proceed
+2b. Test for run-to-run effect (location shift)
+    If no effect        :  Case L0
+    If run-to-run effect:  Case L1
+2c. Test for run-to-run effect (variation shift)
+    If no effect        :  Case V0
+    If run-to-run effect:  Case V1
+2d. Test for within-run time drift
+    If no drift: ideal; proceed
+    If drift   : report; proceed
+2e. Test for across-run time drift
+    If no drift: ideal; proceed
+    If drift   : report; proceed
+

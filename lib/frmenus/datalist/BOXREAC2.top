@@ -1,0 +1,8 @@
+----- <~datalist\BOXREAC2.top> BOXREAC2.DAT
+ 
+BOXREAC2.DAT
+ 
+View     <xcl: LIST BOXREAC2.DAT>
+Load     <x2cl: SKIP 25; READ BOXREAC2.DAT Y X1 TO X5>
+Print    <xccl: printfile C:\DATAPLOT\BOXREAC2.DAT>
+ 

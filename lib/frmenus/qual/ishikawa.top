@@ -1,0 +1,17 @@
+----- <~qual\ishikawa.top> Ishikawa Diagrams
+ 
+Ishikawa Diagrams
+ 
+If a defect has been detected, Ishikawa, or
+cause and effect diagrams, can be useful tool
+for helping to diagnose the cause.
+
+Dataplot provides a menu macro to generate
+an Ishikawa diagram.  It can be called by:
+
+    CALL ISHIKAWA.DP
+
+Note that this menu MUST be run from the command
+line version of Dataplot.  It will hang the
+graphical user interface version.
+

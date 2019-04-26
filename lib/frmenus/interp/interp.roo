@@ -1,0 +1,45 @@
+----- <~interp\interp.roo> Interpretation
+1 4 2 6
+Interpretation: SRM
+
+Location
+No
+No
+Yes
+Yes
+Variation
+No
+Yes
+No
+Yes
+List Assumptions
+row2-col3 <~interp\dummy.top>
+row3-col3 <~interp\dummy.top>
+row4-col3 <~interp\dummy.top>
+row5-col3 <~interp\dummy.top>
+Test Location Shift
+row2-col4 <~interp\dummy.top>
+row3-col4 <~interp\dummy.top>
+row3-col4 <~interp\dummy.top>
+row3-col4 <~interp\dummy.top>
+Test Variation Shift
+V1 <~interp\dummy.top>
+V2 <~interp\dummy.top>
+V3 <~interp\dummy.top>
+V4 <~interp\dummy.top>
+Estimate mu
+case 1 <~interp\dummy.top>
+case 2 <~interp\dummy.top>
+case 3 <~interp\dummy.top>
+case 4 <~interp\dummy.top>
+Estimate sigma
+this is case 1 <~interp\dummy.top>
+this is case 2 <~interp\dummy.top>
+this is case 3 <~interp\dummy.top>
+this is case 4 <~interp\dummy.top>
+Estimate sd(muhat)
+this is case 1 <~interp\dummy.top>
+this is case 2 <~interp\dummy.top>
+this is case 3 <~interp\dummy.top>
+this is case 4 <~interp\dummy.top>
+

@@ -1,0 +1,23 @@
+This is file condind.men--Compute the Condition Indices
+ 
+--------------------
+ 1. Compute the Condition Indices
+ 2. LET Y = CONDITION INDICES X
+ 3.
+ 4. Use the "Create Design Matrix" menu
+ 5. to create a design matrix from a list
+ 6. of independent variables.
+ 7.
+ 8. Name of the design matrix:
+ 8. @CE 1 0  42 50 ? gui-variable
+ 9. Name for the condition indices variable:
+ 9. @CE 2 0  42 50 ?
+10.
+11.
+12. Compute the CONDITION INDICES?:
+--------------------
+GR FE
+LET _2 = CONDITION INDICES _1
+--------------------
+WEB HELP CONDITION INDICES
+--------------------

@@ -1,0 +1,25 @@
+----- <~dataall\mvar.top> View/etc. Multivariate Data
+
+View/Load/Print Multivariate Data
+
+AUTO83B.DAT*  EPA auto miles per gallon    <~dataall\AUTO83B.top>
+UGIANSKY.DAT* Interlab stress corrosion    <~dataall\UGIANSKY.top>
+
+AUTO83.DAT    EPA auto miles per gallon    <~dataall\AUTO83.top>
+AUTO79.DAT    Auto characteristics         <~dataall\AUTO79.top>
+BIOMED3.DAT   Biomedical data              <~dataall\BIOMED3.top>
+GNP.DAT       Gross national product       <~dataall\GNP.top>
+AC.DAT        2**(6-3)  A/C performance    <~dataall\AC.top>
+KRASNY1.DAT   2**5  Cigarette flammab.     <~dataall\KRASNY1.top>
+SMALL14.DAT   Atomic modeling              <~dataall\SMALL14.top>
+
+IRIS.DAT*     Classic Fisher iris data     <~dataall\IRIS.top>
+FLURY5.DAT    Swiss counterfeit notes      <~dataall\FLURY5.top>
+PLANETS.DAT   Solar systems planets stat.  <~dataall\PLANETS.top>
+CURRIE.DAT    Pollution source analysis    <~dataall\CURRIE.top>
+PERIODIC.DAT  Chemistry periodic table     <~dataall\PERIODIC.top>
+NEGIZ3.DAT    Aerosol particle size        <~dataall\NEGIZ3.top>
+MORALES.DAT   Mass spec: sulfur exa-fluor  <~dataall\MORALES.top>
+MORALES2.DAT  Mass spec: sulfur exa-fluor  <~dataall\MORALES2.top>
+KAUL.DAT      Refridgerant analysis        <~dataall\KAUL.top>
+

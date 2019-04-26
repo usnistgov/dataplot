@@ -1,0 +1,34 @@
+This is file lagvar.men--Generate Properly Lagged Variables
+ 
+--------------------
+ 1. Generate Properly Lagged Variables
+ 2. Macro
+ 3.
+ 4. Time Series Variable:
+ 4. @CE 1 0 42 50 gui-variable
+ 5. Lag (typically 1):
+ 5. @CE 2 0 42 50 ?
+ 6.
+ 7. Name for First Lagged Variable:
+ 7. @CE 3 0 42 50 ?
+ 8. Name for Second Lagged Variable:
+ 8. @CE 4 0 42 50 ?
+ 9.
+10.
+11. Generate the Lagged Variables?:
+--------------------
+GR FE
+DELETE ZZZZTAG _3 _4
+LET ZZZZN = SIZE _1
+LET ZZZZLAG = 1
+LET ZZZZLAG = _2
+LET ZZZZLAG = INT(ZZZZLAG + 0.5)
+LET ZZZZLAG = ABS(ZZZZLAG)
+LET ZZZZTAG = SEQUENCE 1 1 ZZZZN
+LET _3 = _1
+LET _4 = _1
+LET ZZZZSTAR = ZZZZLAG + 1
+RETAIN _3 FOR I = ZZZZSTAR 1 ZZZZN
+LET ZZZZSTOP = ZZZZN - ZZZZLAG
+RETAIN _4 FOR I = 1 1 ZZZZSTOP
+--------------------

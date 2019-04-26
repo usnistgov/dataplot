@@ -1,0 +1,45 @@
+This is Dataplot data file    WEIBBURY.DAT
+Sample data set from Example 17.2 of
+Karl Bury, "Statistical Distributions in Engineering",
+Cambridge University Press, 1999, pp. 341-342.
+
+Response variable = Specimens of a new engineering material
+                    tested for rupture strength (N/cm**2 X 10,000)
+Number of observations = 20
+Number of observations per line image = 1
+Order of observations per line image--
+   1. Response variable
+To read this file into Dataplot--
+   SKIP 25
+   READ WEIBBURY.DAT Y
+   SET MAXIMUM LIKELIHOOD PERCENTILE DEFAULT
+   SET WEIBULL BIAS CORRECTED ON
+   WEIBULL MAXIMUM LIKELIHOOD Y
+ 
+ 
+ 
+ 
+ 
+ 
+  Y
+------------------
+62.3
+42.0
+47.3
+54.8
+48.5
+61.3
+43.1
+55.6
+51.3
+46.3
+61.8
+66.1
+53.5
+40.7
+46.0
+54.0
+57.0
+57.0
+45.1
+59.1

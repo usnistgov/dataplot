@@ -1,0 +1,41 @@
+----------  *LATITUDE-LONGITUDE*  ----------
+
+Latitude and Longitude of Selected U. S. Cities--
+            (Ordered East to West)
+
+                           Latitude Longitude Time-Zone
+
+BOSTON, MASS.                 42.4     71.0    75.
+WASHINGTON D.C.               38.9     77.1    75.
+MIAMI, FLA.                   25.8     80.25   75.
+KEY WEST, FLA.                24.6     81.75   75.
+TAMPA, FLA.                   28.0     82.5    75.
+DETROIT, MICH.                42.3     83.0    75.
+CINCINATTI, OHIO              39.1     84.5    75.
+ATLANTA, GA.                  33.8     84.5    75.
+MOBILE, ALABAMA               30.7     88.0    90.
+NEW ORLEANS, LA.              30.0     90.0    90.
+LITTLE ROCK, ARK.             34.7     92.25   90.
+INTERNATIONAL FALLS, MINN.    48.6     93.5    90.
+KANSAS CITY, MO.              39.1     94.5    90.
+HOUSTON, TEXAS                29.8     95.25   90.
+CORPUS CHRISTI, TEXAS         27.8     97.5    90.
+BROWNSVILLE, TEXAS            25.9     97.5    90.
+SAN ANTONIO, TEXAS            29.4     98.5    90.
+BISMARK, NORTH DAKOTA         46.8     100.75  90.
+AMARILLO, TEXAS               35.3     101.75  90.
+RAPID CITY, S.D.              44.1     103.25 105.
+DENVER, COLORADO              39.8     105.0  105.
+EL PASO, TEXAS                31.8     106.5   90.
+ALBUQUERQUE, N.M.             35.1     106.75 105.
+GREAT FALLS, MONT.            47.5     111.25 105.
+SALT LAKE CITY, UTAH          40.8     112.0  105.
+PHOENIX, ARIZ.                33.4     112.0  105.
+LAS VEGAS, NEV.               36.2     115.25 120.
+SAN DIEGO, CAL.               32.7     117.0  120.
+SPOKANE, WASH.                47.6     117.5  120.
+LOS ANGELES, CAL.             34.1     118.25 120.
+RENO, NEV.                    39.5     119.75 120.
+SAN FRANCISCO, CAL.           37.8     122.5  120.
+PORTLAND, OREGON              45.5     122.75 120.
+

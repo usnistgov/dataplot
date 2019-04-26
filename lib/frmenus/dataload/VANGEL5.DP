@@ -1,0 +1,8 @@
+----- <~dataload\VANGEL5.DP> Load VANGEL5.DAT
+
+. This is file    VANGEL5.DP
+
+DELETE Y
+SKIP 25
+READ VANGEL5.DAT Y
+

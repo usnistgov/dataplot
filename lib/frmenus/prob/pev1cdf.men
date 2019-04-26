@@ -1,0 +1,45 @@
+This is file pev1cdf.men--Plot Extreme Value Type I CDF
+ 
+--------------------
+ 1. Plot a Extreme Value Type I CDF Function
+ 2. PLOT EV1CDF(X) FOR X = -3 0.01 3
+ 3.
+ 4. Location Parameter u:
+ 4. @CE 5 0 42 50 ?
+ 5. Scale Parameter s (s > 0):
+ 5. @CE 6 0 42 50 ?
+ 6.
+ 7. You can specify the range of values to plot either
+ 8. by providing an input vector containing the explicit
+ 9. input values or by providing the start, increment,
+10. and stop values.
+11.
+12. Input Variable (optional):
+12. @CE 1 0 42 50 ? gui-variable
+13.
+14. Start Value:
+14. @CE 2 0 42 50 ?
+15. Increment Value (defaults to 0.1):
+15. @CE 3 0 42 50 ?
+16. Stop Value:
+16. @CE 4 0 42 50 ?
+17.
+18. Variable to Store the CDF Values (optional):
+18. @CE 7 0 42 50 ?
+19.
+20.
+21. Plot the Extreme Value Type I CDF's?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 5 0 LET ZLOC = _5
+LET ZSCALE = 1
+@IF 6 0 LET ZSCALE = _6
+LET ZINC = 0.1
+@IF 3 0 LET ZINC = _3
+@IF 1 0 PLOT (1/ZSCALE)*EV1CDF(( _1 - ZLOC)/ZSCALE)
+@IF 2 0 PLOT (1/ZSCALE)*EV1CDF(( ZZZZ - ZLOC)/ZSCALE) FOR ZZZZ = _2 ZINC _4
+@IF 7 0 LET _7 = YPLOT
+--------------------
+WEB HELP EV1CDF
+--------------------

@@ -1,0 +1,48 @@
+----- <~dataview\relitobi.top> View Reliability Data: Tobias and Trindade
+
+View Reliability Data: Tobias and Trindade
+
+Data sets from Tobias and Trindade "Applied Reliability",
+Second Edition, Chapman & Hall/CRC, 1995.
+
+Uncensored Failure Data
+   TOB3.DAT      Fuse data                       <xcf: ~dataview\TOB3.DP>
+   TOB50.DAT     Light bulb data                 <xcf: ~dataview\TOB50.DP>
+   TOB62.DAT     Component data                  <xcf: ~dataview\TOB62.DP>
+   TOB143.DAT    Component data                  <xcf: ~dataview\TOB143.DP>
+
+Censored Failure Data
+   TOB99.DAT     Capicator data                  <xcf: ~dataview\TOB99.DP>
+   TOB128.DAT    Component data                  <xcf: ~dataview\TOB128.DP>
+   TOB150.DAT    Component data                  <xcf: ~dataview\TOB150.DP>
+   TOB152.DAT    Dielectric breakdown strength   <xcf: ~dataview\TOB152.DP>
+   TOB159.DAT    Transistor failure times        <xcf: ~dataview\TOB159.DP>
+   TOB161.DAT    Multiply censored failure times <xcf: ~dataview\TOB161.DP>
+
+Accelerated Data
+   TOB171.DAT    Temperature stress failure data <xcf: ~dataview\TOB171.DP>
+   TOB179.DAT    Temperature/voltage stress data <xcf: ~dataview\TOB179.DP>
+   TOB201.DAT    Temperature stress degradation  <xcf: ~dataview\TOB201.DP>
+   TOB215.DAT    Temperature stress failure data <xcf: ~dataview\TOB215.DP>
+   TOB216A.DAT   Temperature/voltage stress data <xcf: ~dataview\TOB216A.DP>
+   TOB216B.DAT   Voltage stress degradation      <xcf: ~dataview\TOB216B.DP>
+
+Repair Data (Renewal Process)
+   TOB305.DAT    Repair times (single system)    <xcf: ~dataview\TOB305.DP>
+   TOB312.DAT    Repair times (multiple systems) <xcf: ~dataview\TOB312.DP>
+   TOB332.DAT    Repair times (multiple systems) <xcf: ~dataview\TOB332.DP>
+
+Repair Data (Nonrenewal Process)
+   TOB335.DAT    Repair times (single system)    <xcf: ~dataview\TOB335.DP>
+   TOB336.DAT    Repair times (single system)    <xcf: ~dataview\TOB336.DP>
+   TOB346.DAT    Repair times (multiple systems) <xcf: ~dataview\TOB346.DP>
+   TOB351.DAT    Repair times (single system)    <xcf: ~dataview\TOB351.DP>
+   TOB354.DAT    Repair times (multiple systems) <xcf: ~dataview\TOB354.DP>
+   TOB360.DAT    Repair times (multiple systems) <xcf: ~dataview\TOB360.DP>
+   TOB365.DAT    Repair times (single system)    <xcf: ~dataview\TOB365.DP>
+   TOB366.DAT    Repair times (single system)    <xcf: ~dataview\TOB366.DP>
+
+Duane Growth Model
+   TOB375.DAT    Repair times (single system)    <xcf: ~dataview\TOB375.DP>
+   TOB384.DAT    Repair times (single system)    <xcf: ~dataview\TOB384.DP>
+

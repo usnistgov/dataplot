@@ -1,0 +1,16 @@
+----- <~dex2kmp\mod2to7.top> Model:  2**7 Design
+ 
+Model:  2**7 Design
+ 
+k = 7 factors
+n = 128 runs
+ 
+Y = MU +
+    0.5*(  7 main effects +
+          21 2-term interations +
+          35 3-term interations +
+          35 4-term interations +
+          21 5-term interations +
+           7 6-term interations +
+           1 7-term interations )
+ 

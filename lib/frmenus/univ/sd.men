@@ -1,0 +1,27 @@
+This is file sd.men--Standard Deviation
+ 
+--------------------
+ 1. Standard Deviation
+ 2. LET A = SD Y
+ 3.
+ 4. Input :
+ 5.    Response Variable:
+ 5.    @CE 1 0 30 50 ?
+ 6.
+ 7. Output:
+ 8.    Name for computed stan. dev.:
+ 8.    @CE 2 0 33 50 ?
+ 9.
+10. Number of output decimal places:
+10. @CE 3 0 33 50 ?
+11.
+12. Subset/Except/For Specification:
+13. @CE 4 0 1 50 *
+14.
+15.
+16. Compute the sample stan. dev.?
+--------------------
+GR FE
+@IF 3 0 SET WRITE DECIMALS _3
+LET _2 = SD _1 _4
+--------------------

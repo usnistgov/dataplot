@@ -1,0 +1,8 @@
+----- <~dataload\USADEFIC.DP> Load USADEFIC.DAT
+
+. This is file    USADEFIC.DP
+
+DELETE Y X
+SKIP 25
+READ USADEFIC.DAT Y X
+

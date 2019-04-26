@@ -1,0 +1,28 @@
+This is file bbasis.men--B Basis Tolereance Limits
+ 
+--------------------
+ 1. B Basis Tolerance Limits
+ 2. B BASIS NORMAL TOLERANCE LIMITS Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Distribution:
+ 6. @CE 3 1 5 20 Normal
+ 7. @CE 3 2 5 20 Lognormal
+ 8. @CE 3 3 5 20 Weibull
+ 9. @CE 3 4 5 20 Non-Parametric Case
+10.
+11. Subset/Except/For Specification:
+12. @CE 2 0 1 50 *
+13.
+14.
+15. Compute B Basis Tolerance Limits
+--------------------
+GR FE
+@IF 3 1 B BASIS NORMAL TOLERANCE LIMIT _1 _2
+@IF 3 2 B BASIS LOGNORMAL TOLERANCE LIMIT _1 _2
+@IF 3 3 B BASIS WEIBULL TOLERANCE LIMIT _1 _2
+@IF 3 4 B BASIS EXPONENTIAL TOLERANCE LIMIT _1 _2
+--------------------
+WEB HELP B BASIS TOLERANCE LIMIT
+--------------------

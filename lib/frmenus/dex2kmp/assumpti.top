@@ -1,0 +1,50 @@
+----- <~dex2kmp\assumpti.top> The High-order Interaction Assumption
+ 
+The High-order Interaction Assumption
+ 
+A common assumption in the construction and analysis of
+fractional factorial designs is that 3-term
+interactions and higher are nil (not physically
+real).  This assumption is reflected in this
+catalog by an * in many of the tables with higher
+k. For example, for the 2**(5-2) design, the main
+effects confounding expression:
+ 
+   1 = 1 + 24 + 35 + *
+ 
+is to be interpreted as factor 1 is confounded with
+itself, with the 2-term cross product X2*X4, with the
+2-term cross-product X3*X5, and with higher-order
+(3-term interactions and higher) cross-products.  Such
+higher-order terms are not usually of interest (and are
+usually assumed to be nil) and so are simply
+represented by an *.
+ 
+On the other hand, inasmuch as the defining relation
+has been computed for all designs in this catalog (see,
+for example, the 128-term defining relation for the
+2**(11-7) design on page 100) then if so desired one
+could compute exactly the higher-order confounding
+structure by the "multiplication" method as previosuly
+described.  Hence for a 2**(5-2) design with defining
+relation given by
+ 
+   I + 124 + 135 + 2345
+ 
+the exact confounding structure for factor 1 is determined
+by
+ 
+   1 (I + 124 + 135 + 2345)
+   = 1 + 1124 + 1135 + 12345)
+   = 1 + 1 24 + 1 35 + 12345)
+   = 1 + 24 + 35 + 12345
+ 
+and so X1 is confounded with itself, with X2*X4,
+with X3*X5, and with the 5-term cross-product
+factor X1*X2*X3*X4*X5.  In practice, the chance
+that this 5-term interaction effect is physically
+real is virtually nil and so we can confidently
+ignore the potential contribution of this 5-term
+interaction in interpreting the estimated effect
+of beta1.
+ 

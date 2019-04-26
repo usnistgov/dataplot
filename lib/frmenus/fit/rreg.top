@@ -1,0 +1,12 @@
+----- <~fit\rreg.top> Ridge Regression
+
+Ridge Regression
+
+Discussion                      <~fit\rrdisc.top>
+Generate the Ridge Trace Plot   <xemf: ~fit\fitrr.men>
+Built-in Datasets               <~dataload\regmv.top>
+References                      <~fit\refridge.top>
+
+Worked Example
+   Body Fat Example       <xcl: CALL RIDGE.DP>
+

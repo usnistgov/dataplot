@@ -1,0 +1,40 @@
+----- <~help\latproc.top> Importing Dataplot Graphs into Latex
+
+Importing Dataplot Graphics into Latex
+
+Importing Dataplot Graphics into Latek
+
+
+To import graphics into Latex, it is recommended that
+you generate the graph in Postscript or encapsulated
+Postscript format.  You can then use the "epsfig"
+package in Latex to import the graph.
+
+Note that you can in fact generate Dataplot in
+Latex format using the command
+
+    CAPTURE LATEX  file.tex
+
+Output subsequent to this command will be
+generated in Latex format.  To have your plots
+incorporated into the Latex document, do something
+like the following:
+
+    FEEEDBACK OFF
+    PRINT ON
+    CAPTURE LATEX sample.tex
+    TABULATE MEAN Y X
+    SET IPL1NA meanplot.ps
+    DEVICE 2 POSTSCRIPT
+    MEAN PLOT Y X
+    DEVICE 2 CLOSE
+    CHARACTER BOX PLOT
+    LINE BOX PLOT
+    SET IPL1NA boxplot.ps
+    DEVICE 2 POSTSCRIPT
+    BOX PLOT Y X
+    DEVICE 2 CLOSE
+    END OF CAPTURE
+
+For more information:         <xcl: HELP CAPTURE LATEX>
+

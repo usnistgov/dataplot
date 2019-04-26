@@ -1,0 +1,28 @@
+This is file bartlett.men--K-Sample Bartlett Test for Homogeneity of Variances
+ 
+--------------------
+ 1. K-Sample Bartlett Test
+ 2. BARTLETT TEST Y1 TAG
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Group ID Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Which version of test:
+ 8. @CE 3 1 5 40 Chi-Square Test (default)
+ 9. @CE 3 2 5 40 F Test (default)
+10.
+11. Subset/Except/For Specification:
+12. @CE 4 0 1 50 *
+13.
+14.
+15. Compute Bartlett's Test?
+--------------------
+GR FE
+LET STRING ZZZZSTR = BARTLETT
+@IF 3 2 LET STRING ZZZZSTR = DM BARTLETT
+^ZZZZSTR TEST _1 _2 _4
+--------------------
+WEB HELP BARTLETT TEST
+--------------------

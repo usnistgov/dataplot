@@ -1,0 +1,8 @@
+----- <~dataload\BOXJE142.DP> Load BOXJE142.DAT
+
+. This is file    BOXJE142.DP
+
+DELETE Y
+SKIP 25
+READ BOXJE142.DAT Y
+

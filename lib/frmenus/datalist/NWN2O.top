@@ -1,0 +1,8 @@
+----- <~datalist\NWN2O.top> NWN2O.DAT
+ 
+NWN2O.DAT
+ 
+View     <xcl: LIST NWN20.DAT>
+Load     <x2cl: SKIP 25; READ NWN20.DAT Y
+Print    <xccl: printfile C:\DATAPLOT\NWN20.DAT>
+ 

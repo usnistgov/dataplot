@@ -1,0 +1,10 @@
+----- <~dataloex\THURBER.DP> Load & Execute THURBER.DAT
+
+. This is file    THURBER.DP
+
+DELETE Y
+SKIP 25
+READ THURBER.DAT Y
+TITLE THURBER.DAT
+/
+

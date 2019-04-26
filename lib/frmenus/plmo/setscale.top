@@ -1,0 +1,20 @@
+----- <~plmo\setscale.top> Set Scale
+ 
+Set Scale Attributes
+ 
+Set Scale Attributes for Bottom Axis  <xemf: ~plmo\setscal1.men>
+Set Scale Attributes for Left   Axis  <xemf: ~plmo\setscal2.men>
+Set Scale Attributes for Top    Axis  <xemf: ~plmo\setscal3.men>
+Set Scale Attributes for Right  Axis  <xemf: ~plmo\setscal4.men>
+
+Set Scale Attributes for Bottom and Top Axis <xemf: ~plmo\setscalx.men>
+Set Scale Attributes for Left and Right Axis <xemf: ~plmo\setscaly.men>
+
+Set Scale Attributes for All Axes            <xemf: ~plmo\setscala.men>
+ 
+Help for Scale Attributes
+   LIMITS                          <xcl: HELP LIMITS>
+   MINIMUM                         <xcl: HELP MINIMUM>
+   MAXIMUM                         <xcl: HELP MAXIMUM>
+   LOG                             <xcl: HELP LOG>
+   WEIBULL SCALE                   <xcl: HELP WEIBULL SCALE>

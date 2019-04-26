@@ -1,0 +1,13 @@
+----- <~dex\mod2to3.top> Model:  2**3 Design
+
+Model:  2**3 Design
+
+k = 3 factors
+n = 8 runs
+
+Y = MU +
+    0.5*( B1*X1 + B2*X2 + B3*X3 +
+          B12*X1*X2 + B13*X1*X3 +
+          B23*X2*X3 +
+          B123*X1*X2*X3 )
+

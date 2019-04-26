@@ -1,0 +1,10 @@
+----- <~dataload\univnatr.top> Load Univariate Data: Natrella
+
+Load Univariate Data: Natrella
+
+NATR21.DAT    Thickness of mica washers (2-1)  <~dataload\NATR21.DP>
+NATR26.DAT    Burn time of rocket powder (2-6) <~dataload\NATR26.DP>
+
+NATR41.DAT    Battery capacity (4-1)           <~dataload\NATR41.DP>
+NATR45.DAT    Vacum tube cutoff bias (4-5)     <~dataload\NATR45.DP>
+

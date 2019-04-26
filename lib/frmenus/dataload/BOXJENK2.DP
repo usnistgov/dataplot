@@ -1,0 +1,8 @@
+----- <~dataload\BOXJENK2.DP> Load BOXJENK2.DAT
+
+. This is file    BOXJENK2.DP
+
+DELETE Y
+SKIP 25
+READ BOXJENK2.DAT Y
+

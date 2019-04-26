@@ -1,0 +1,9 @@
+----- <~dataloex\univ.top> Load & Execute Built-in Univariate Data Files
+
+Load & Execute Built-in Univariate Data Files
+
+NIST data                 <~dataloex\univnist.top>
+Natrella Data             <~dataloex\univnatr.top>
+Sematech Data             <~dataloex\univsema.top>
+Other data                <~dataloex\univothe.top>
+

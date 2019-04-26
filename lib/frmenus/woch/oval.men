@@ -1,0 +1,55 @@
+This is file oval.men--Draw a Oval
+ 
+--------------------
+ 1. Draw a Oval
+ 2. OVAL X1 Y1 X2 Y2 X3 Y3
+ 3.
+ 4. X Coordinate for One Major Diameter End Point:
+ 4. @CE 1 0 33 50 ?
+ 5. Y Coordinate for One Diameter End Point:
+ 5. @CE 2 0 33 50 ?
+ 6. X Coordinate for One Minor Diameter End Point:
+ 6. @CE 3 0 33 50 ?
+ 7. Y Coordinate for One Minor Diameter End Point:
+ 7. @CE 4 0 33 50 ?
+ 8. X Coordinate for Other Major Diameter End Point:
+ 8. @CE 16 0 33 50 ?
+ 9. Y Coordinate for Other Major Diameter End Point:
+ 9. @CE 17 0 33 50 ?
+10.
+11. Line Type for Oval Border:
+11. @CE 5 0 42 50 * gui-line
+12. Line Color for Oval Border:
+12. @CE 6 0 42 50 * gui-colo
+13. Line Thickness for Oval Border:
+13. @CE 7 0 42 50 * gui-thic
+14.
+15. Coordinate System to Use:
+16. @CE 8 1 1 50 absolute 0 to 100 screen units
+17. @CE 8 2 1 50 absolute data units of last plot
+18. @CE 8 3 1 50 relative (to first point) 0 to 100 screen units
+19. @CE 8 4 1 50 relative (to first point) data units of last plot
+20.
+21.
+22. Draw the Oval?:
+--------------------
+GR FE
+LINE _5
+LINE COLOR _6
+LINE THICKNESS _7
+REGION FILL _9
+REGION FILL COLOR _10
+REGION PATTERN _11
+REGION PATTERN COLOR _12
+REGION PATTERN LINE TYPE _13
+REGION PATTERN THICKNESS _14
+REGION PATTERN SPACING _15
+LET STRING ZZZZSTR = OVAL
+@IF 8 1 LET STRING ZZZZSTR = OVAL
+@IF 8 2 LET STRING ZZZZSTR = OVAL DATA
+@IF 8 3 LET STRING ZZZZSTR = OVAL RELATIVE
+@IF 8 4 LET STRING ZZZZSTR = OVAL DATA RELATIVE
+^ZZZZSTR  _1 _2 _3 _4 _16 _17
+--------------------
+WEB HELP OVAL
+--------------------

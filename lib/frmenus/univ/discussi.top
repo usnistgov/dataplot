@@ -1,0 +1,37 @@
+-----<~univ\discussi.top> Univariate Discussion
+
+Univariate Discussion
+
+The univariate data set is one which has
+the model:
+
+   Y = constant + error
+
+It is the simplest case of the general model:
+
+   Y = deterministic component + random component
+
+In practice, the analyst has at his/her
+disposal a single collection of observations.
+These observations are not assumed to be
+related to any other factor.  Indeed, in many
+cases, information about any other factors
+are not available.  Moreover, it is also not
+assumed that the data is equi-spaced in time;
+if the data happens to be equi-spaced, then
+the univariate analysis techniques described
+herein are valid, but additional appropriate
+techniques are also desribed under 'time
+series analysis'.
+
+Typical questions that a univariate analysis tries
+to answer are:
+
+   1) What is a typical value?
+
+   2) What is the uncertainty of the typical value?
+
+   3) What distribution do the data come from?
+
+   4) What are various percentile estimates?
+

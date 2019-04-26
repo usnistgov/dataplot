@@ -1,0 +1,31 @@
+----- <~dataloex\timenist.top> Load & Execute Time Series Data: NIST
+
+Load & Execute Time Series Data: NIST
+
+LEW.DAT*      Beam deflections            <xcf: ~dataloex\LEW.DP>
+SOULEN0.DAT   Josephson junc cryothermom. <xcf: ~dataloex\SOULEN0.DP>
+SOULEN.DAT    Josephson junc cryothermom. <xcf: ~dataloex\SOULEN.DP>
+MARSHAK.DAT   Nuclear thermometry         <xcf: ~dataloex\MARSHAK.DP>
+BAKER.DAT     Force calibration           <xcf: ~dataloex\BAKER.DP>
+MAVRO.DAT     Filter transmittance        <xcf: ~dataloex\MAVRO.DP>
+DZIUBA.DAT    Standard resistor           <xcf: ~dataloex\DZIUBA.DP>
+HABER1.DAT    Dens of 2-admiss. numbers   <xcf: ~dataloex\HABER1.DP>
+HAYES1.DAT    Fire res. smoke obscuration <xcf: ~dataloex\HAYES1.DP>
+LUTHER.DAT    Torsion pendulum exp. for G <xcf: ~dataloex\LUTHER.DP>
+NEGIZ3.DAT    Aerosol particle size       <xcf: ~dataloex\NEGIZ3.DP>
+ZARR13.DAT    Heat flow meter             <xcf: ~dataloex\ZARR13.DP>
+ZARR14.DAT    Heat flow meter             <xcf: ~dataloex\ZARR14.DP>
+ZARR15.DAT    Heat flow meter             <xcf: ~dataloex\ZARR15.DP>
+
+SIMIU.DAT     Wind speeds                 <xcf: ~dataloex\SIMIU.DP>
+WASHDC.DAT    Washington DC wind speeds   <xcf: ~dataloex\WASHDC.DP>
+KEYWEST.DAT   Key West wind speeds        <xcf: ~dataloex\KEYWEST.DP>
+
+NBSPOW1.DAT   Power disturbance #1 at NBS <xcf: ~dataloex\NBSPOW1.DP>
+NBSPOW2.DAT   Power disturbance #2 at NBS <xcf: ~dataloex\NBSPOW2.DP>
+NBSPOW3.DAT   Power disturbance #3 at NBS <xcf: ~dataloex\NBSPOW3.DP>
+
+FUNNEL5A.DAT  Funnel data                 <xcf: ~dataloex\FUNNEL5A.DP>
+
+REHM.DAT      Biomedical air flow         <xcf: ~dataloex\REHM.DP>
+

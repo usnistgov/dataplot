@@ -1,0 +1,24 @@
+----- <~prob\betdesc.top> Beta Description
+
+*Beta Description
+
+pdf: f(x) = constant * x**(ALPHA-1) * (1-x)**(BETA-1)   0 <= x <= 1
+
+Moments   : E(X)  = alpha / (alpha+beta)
+            SD(X) = num / den
+                    where num = (1/(alpha+beta)) * sqrt(alpha*beta)
+                    and   den = sqrt(alpha + beta + 1)
+
+Type      : Continuous, skewed family of distributions--
+            short-tailed.
+Domain    : 0 to 1 (for standard beta distribution)
+Synonym   :
+Genesis   :
+Definition: If X1 is Chi-squared (nu1)
+            and X2 is Chi-squared (nu2),
+            then X1**2 / (X1**2 + X2**2) is Beta.
+
+Reference : Johnson & Kotz,
+            Continuous Univariate Distributions-2,
+            Chapter 24 (pages 37-56).
+

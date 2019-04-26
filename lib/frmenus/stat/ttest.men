@@ -1,0 +1,22 @@
+This is file ttest.men--1 Sample T Test 
+ 
+--------------------
+ 1. 1 Sample T Test
+ 2. T TEST Y U0
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. Hypothesised Mean Value:
+ 5. @CE 2 0 42 50 ? 
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute 1 Sample T Test?
+--------------------
+GR FE
+T TEST _1 _2 _3
+--------------------
+WEB HELP T TEST
+--------------------

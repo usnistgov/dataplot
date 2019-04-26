@@ -1,0 +1,43 @@
+This is file bnbppf.men--Compute Beta-Negative Binomial ppf
+ 
+--------------------
+ 1. Compute Beta-Negative Binomial ppf
+ 2. LET Y = BNBPPF(P,ALPHA,BETA,M)
+ 3.
+ 4. Input values:
+ 5.                          p (0 <= p < 1):
+ 5. @CE 1 0 42 50 ?
+ 6.       shape parameter Alpha (alpha > 0):
+ 6. @CE 2 0 42 50 ?
+ 7.         shape parameter Beta (beta > 0):
+ 7. @CE 3 0 42 50 ?
+ 8.               shape parameter K (k > 0):
+ 8. @CE 4 0 42 50 ?
+ 9.
+10. Output parameters:
+11.                  name for the ppf value:
+11. @CE 5 0 42 50 ?
+12.
+13.
+14. Compute the Probability?
+--------------------
+AN FE
+LET ZALPHA = 1
+LET ZBETA = 1
+LET ZK = 1
+@IF 2 0 LET ZALPHA = _2
+IF ZALPHA <= 0
+   LET ZALPHA = 1
+END OF IF
+@IF 3 0 LET ZBETA = _3
+IF ZBETA <= 0
+   LET ZBETA = 1
+END OF IF
+@IF 4 0 LET ZK = _4
+IF ZK <= 0
+   LET ZK = 1
+END OF IF
+LET _5 = BNBPPF( _1 , ZALPHA , ZBETA, ZK )
+--------------------
+WEB HELP BNBPPF
+--------------------

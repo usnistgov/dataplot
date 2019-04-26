@@ -1,0 +1,38 @@
+This is file medpolg.men--Median Polish (with graphics)
+ 
+--------------------
+ 1. Median Polish (with Graphics)
+ 2. MEDIAN POLISH Y X1 X2 X3
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. List of (1 to 10) Factor Variables:
+ 6. @CE 2 0 1 50 ? gui-variable
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 3 0 1 50 *
+10.
+11.
+12. Compute Median Polish?
+--------------------
+GR FE
+MEDIAN POLISH _1 _2 _3
+MULTIPLOT 2 2
+MULTIPLOT CORNER COORDINATES 5 5 95 95
+LINE SAVE
+CHARACTER SAVE
+CHARACTER X BLANK
+LINE BLANK SOLID
+TITLE AUTOMATIC
+DEX MEAN PLOT _1 _2 _3
+PLOT RES
+PLOT RES VS PRED
+NORMAL PROBABILITY PLOT RES
+END OF MULTIPLOT
+MULTIPLOT CORNER COORDINATES
+TITLE
+LINE RESTORE
+CHARACTER RESTORE
+--------------------
+WEB HELP MEIDAN POLISH
+--------------------

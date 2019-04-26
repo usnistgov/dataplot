@@ -1,0 +1,44 @@
+. This is Dataplot program file     BENNETT6.DP
+. Larry Bennett Superconducitivy modeling
+. May 1994
+.
+. -----start point-----
+.
+. dimension 5000 observations
+dimension 2500 observations
+.
+skip 25
+read bennett6.dat y x tag temp
+let tag = code tag
+.
+. multiplot 3 4
+. loop for k = 1 1 10
+.    plot y x subset tag k
+. end loop
+.
+let function f = m0*(1+a*x)**(-1/mu)
+.
+retain y x tag subset tag 1 TO 6
+let y2 = y
+loop for k = 1 1 6
+   let y^k = y
+   let x^k = x
+   retain y^k x^k subset tag k
+end loop
+.
+loop for k = 1 1 6
+   let ymin = min y^k
+   let ymax = max y^k
+   let xmin = min x^k
+   let xmax = max x^k
+   let v^k = (y^k-ymin)/(ymax-ymin)
+   let u^k = (x^k-xmin)/(xmax-xmin)
+end loop
+.
+plot v1 u1 and
+plot v2 u2 and
+plot v3 u3 and
+plot v4 u4 and
+plot v5 u5 and
+plot v6 u6
+.

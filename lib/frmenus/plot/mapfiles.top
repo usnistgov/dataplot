@@ -1,0 +1,10 @@
+----- <~plot\mapfiles.top> Map Datasets
+ 
+Map Datasets
+ 
+Map coordinates for Texas      <xcf: ~plot\TEXAS.DP>
+Map coordinates for China      <xcf: ~plot\CHINA.DP>
+Map coordinates for middle of NIST campus  <xcf: ~plot\NBSPART1.DP>
+Map coordinates for USA (crude resolution) <xcf: ~plot\USA.DP>
+Map coordinates for USA (higher resolution)  <xcf: ~plot\USA3.DP>
+

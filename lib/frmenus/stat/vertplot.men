@@ -1,0 +1,42 @@
+This is file vertplot.men--Scatter Plot with Vertical Lines
+ 
+--------------------
+ 1. Scatter Plot with Vertical Lines
+ 2. PLOT Y X X
+ 3.
+ 4. Vertical   Axis Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. Horizontal Axis Variable:
+ 5. @CE 2 0 33 50 ? gui-vari
+ 6.
+ 7. Line Types:
+ 7. @CE 3 0 42 50 * gui-line
+ 8. Character Type:
+ 8. @CE 4 0 42 50 * gui-char
+ 9. Character Fill:
+ 9. @CE 5 0 42 50 * gui-ooff
+10.
+11. Title:
+11. @CE 6 0 10 50 *
+12. Left Axis Label:
+12. @CE 7 0 22 50 *
+13. Bottom Axis Label:
+13. @CE 8 0 22 50 *
+14.
+15. Subset/Except/For Specification:
+16. @CE 9 0 6 50 *
+17.
+18.
+19. Generate the Plot?:
+--------------------
+GR FE
+@IF 3 0 LINES _3 ALL
+@IF 4 0 CHARACTERS _4 ALL
+@IF 5 0 CHARACTER FILL _5 ALL
+@IF 6 0 TITLE _6
+@IF 7 0 Y1LABEL _7
+@IF 8 0 X1LABEL _8
+PLOT _1 _2 _2 _9
+--------------------
+WEB HELP PLOT
+--------------------

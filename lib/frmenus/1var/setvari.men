@@ -1,0 +1,17 @@
+This is file setvari.men--Set Variable To Use
+ 
+--------------------
+ 1. Select Response Variable
+ 2. LET STRING ZZZZZZZY = Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5.
+ 6.
+ 7. Select the Variable?:
+--------------------
+GR FE
+LET STRING ZZZZZZZY = _1
+--------------------
+WEB HELP LET
+--------------------

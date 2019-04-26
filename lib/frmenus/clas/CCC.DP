@@ -1,0 +1,10 @@
+----- <~dataloex\CCC.DP> Load & Execute CCC.DAT
+
+. This is file    CCC.DP
+
+DELETE Y X
+SKIP 25
+READ CCC.DAT Y X
+TITLE CCC.DAT
+/
+

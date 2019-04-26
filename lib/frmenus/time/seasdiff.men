@@ -1,0 +1,36 @@
+This is file seasdiff.men--Generate a seasonal difference
+ 
+--------------------
+ 1. Generate a Seasonal Difference
+ 2. Macro
+ 3.
+ 4. A seasonal difference of period k is defined as:
+ 5.   Y(t) = Y(t) - Y(t-k)
+ 6. where k defines the number of seasons.  For example,
+ 7. k would typically be 12 for monthly data.
+ 8.
+ 9. Response Variable:
+ 9. @CE 1 0 42 50 ? gui-variable
+10. Name for the Differenced Variable:
+10. @CE 2 0 42 50 ?
+11. Period (i.e., number of seasons):
+11. @CE 3 0 42 50 ?
+12.
+13.
+14. Generate the Seasonal Difference?:
+--------------------
+GR FE
+LET ZZZZK = 12
+LET ZZZZK = _3
+LET ZZZZY1 = _1
+LET ZZZZY2 = _1
+LET ZZZZN = SIZE _1
+LET ZZZZ1 = ZZZZK + 1
+LET ZZZZ2 = ZZZZN - ZZZZK
+RETAIN ZZZZY1 FOR I = ZZZZ1 1 ZZZZN
+RETAIN ZZZZY2 FOR I = 1 1 ZZZZ2
+LET _2 = ZZZZY1 - ZZZZY2
+DELETE ZZZZY1 ZZZZY2
+--------------------
+
+--------------------

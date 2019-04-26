@@ -1,0 +1,39 @@
+This is file ev11ppf.men--Compute EV1 (= Gumbel) (for min) ppf
+ 
+--------------------
+ 1. Compute EV1 (= Gumbel) (for min) ppf
+ 2. SET MINMAX MIN; LET A = EV1PPF(P,LOC,SCALE)
+ 3.
+ 4. Note: The Gumbel distribution can be based on either
+ 5.       the minimum or the maximum order statistic.
+ 6.       This menu computes the minimum case.
+ 7.       Example: minimum breaking strength of a chain.
+ 9.
+10. Input values:
+11.               p (0 < p < 1):
+11. @CE 1 0 42 50 ?
+12.                  location u:
+12. @CE 2 0 42 50 ?
+13.             scale s (s > 0):
+13. @CE 3 0 42 50 ?
+14.
+15. Output parameters:
+16.      name for the ppf value:
+16. @CE 4 0 42 50 ?
+17.
+18.
+19. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 2 0 LET ZLOC = _2
+LET ZSCALE = 1
+@IF 3 0 LET ZSCALE = _3
+IF ZSCALE <= 0
+   LET ZSCALE = 1
+END OF IF
+SET MINMAX MIN
+@IF 4 0 LET _4 = EV1PPF( _1 ,ZLOC,ZSCALE)
+--------------------
+WEB HELP EV1PPF
+--------------------

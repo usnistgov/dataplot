@@ -1,0 +1,94 @@
+This is file bootplqc.men--Generate Bootstrap Plots (Quality Control)
+ 
+--------------------line 3
+01. Bootstrap Plots (Quality Control)
+02. BOOTSTRAP <statistic> PLOT Y
+03.
+04. Response Variable:
+04. @CE 1 0 42 50 ? gui-vari
+05. Variable to Save Computed Bootstrap Values:
+05. @CE 2 0 42 50 ?
+06. Optional Group ID Variable:
+06. @CE 3 0 42 50 ? gui-vari
+07.
+08. Quality Control Statistic (Select one):
+09. Capability Analysis
+10. @CE 4 1 1 27 Cp
+10. @CE 4 2 29 57 Cpk
+11. @CE 4 3 1 27 Cnpk
+11. @CE 4 4 29 57 Cpm
+12. @CE 4 5 1 27 Cc
+12. @CE 4 6 29 57 Expected Loss
+13. @CE 4 7 1 27 Percent Defective
+14.
+15. Lower Specification Limit:
+15. @CE 5 0 42 50 ? 
+16. Upper Specification Limit:
+16. @CE 6 0 42 50 ?
+17. Target Value:
+17. @CE 7 0 42 50 ?
+18. Cost Value:
+18. @CE 8 0 42 50 ?
+19.
+20. Taguchi
+21. @CE 4 8 1 27 Taguchi sn-
+21. @CE 4 9 29 57 Taguchi sn+
+22. @CE 4 10 1 27 Taguchi sn0
+22. @CE 4 11 29 57 Taguchi sn00
+23.
+24. Character Type for Data
+24. @CE 9 0 42 50 * gui-char
+25. Character Fill for Data
+25. @CE 10 0 42 50 gui-ooff
+26. Line Type for Data-connecting Line
+26. @CE 11 0 42 50 * gui-line
+27.
+28. Title:
+28. @CE 12 0 10 50 *
+29. Left Axis Label:
+29. @CE 13 0 22 50 *
+30. Bottom Axis Label:
+30. @CE 14 0 22 50 *
+31.
+32. Number of bootstrap samples (default = 100):
+32. @CE 15 0 42 50
+33.
+34. Subset/Except/For Specification:
+35. @CE 16 0 1 50 *
+36.
+37. Generate the Bootstrap Plot?:
+--------------------
+TITLE _12
+Y1LABEL _13
+X1LABEL _14
+CHARACTER SAVE
+LINE SAVE
+CHARACTERS _9
+CHARACTER FILL _10
+LINES _11
+@IF 3 0 CHARACTERS _9 ALL
+@IF 3 0 CHARACTER FILL _10 ALL
+@IF 3 0 LINES _11 ALL
+LET LSL = _5
+LET USL = _6
+LET TARGET = _7
+LET USLCOST = _8
+.
+BOOTSTRAP SAMPLES _15
+@IF 4 1 BOOTSTRAP CP PLOT _1 _3 _16
+@IF 4 2 BOOTSTRAP CPK PLOT _1 _3 _16
+@IF 4 3 BOOTSTRAP CNPK PLOT _1 _3 _16
+@IF 4 4 BOOTSTRAP CPM PLOT _1 _3 _16
+@IF 4 5 BOOTSTRAP CC PLOT _1 _3 _16
+@IF 4 6 BOOTSTRAP EXPECTED LOSS PLOT _1 _3 _16
+@IF 4 7 BOOTSTRAP PERCENT DEFECTIVE PLOT _1 _3 _16
+@IF 4 8 BOOTSTRAP TAGUCHI SN- PLOT _1 _3 _16
+@IF 4 9 BOOTSTRAP TAGUCHI SN+ PLOT _1 _3 _16
+@IF 4 10 BOOTSTRAP TAGUCHI SN0 PLOT _1 _3 _16
+@IF 4 11 BOOTSTRAP TAGUCHI SN00 PLOT _1 _3 _16
+CHARACTER RESTORE
+LINE RESTORE
+LET _2 = YPLOT
+--------------------
+WEB HELP BOOTSTRAP PLOT
+--------------------

@@ -1,0 +1,28 @@
+This is file bootmmpl.men--Generate Bootstrap Midmean Plot
+ 
+--------------------line 3
+ 1. Bootstrap Midmean Plot
+ 2. BOOTSTRAP MIDMEAN PLOT Y X
+ 3.
+ 4. Response        Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. Horizontal Axis Variable:
+ 5. @CE 2 0 42 50 ? gui-vari
+ 6.
+ 7. Character Type for Data:
+ 7. @CE 3 0 42 50 * gui-char
+ 8. Line Type for Data:
+ 8. @CE 4 0 42 50 * gui-line
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 1 50 *
+12.
+13.
+14. Generate the Plot?
+--------------------
+CHARACTERS _3
+LINES _4
+BOOTSTRAP MIDMEAN PLOT _1 _2 _5
+--------------------
+WEB HELP BOOTSTRAP PLOT
+--------------------

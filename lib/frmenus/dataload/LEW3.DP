@@ -1,0 +1,8 @@
+----- <~dataload\LEW3.DP> Load LEW3.DAT
+
+. This is file    LEW3.DP
+
+DELETE Y
+SKIP 25
+READ LEW3.DAT Y
+

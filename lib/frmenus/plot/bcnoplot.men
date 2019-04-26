@@ -1,0 +1,37 @@
+This is file bcnoplot.men--Box-Cox Normality Plot
+ 
+--------------------
+1. Box-Cox Normality Plot
+2. BOX-COX NORMALITY PLOT Y
+3.
+4. Response Variable:
+4. @CE 1 0 33 50 ? gui-variable
+5.
+6. Line type for plot?:
+6. @CE 3 0 33 50 * gui-line
+7. Character type for plot?:
+7. @CE 4 0 33 50 * gui-character
+8.
+9. Title:
+9. @CE 5 0 18 50 *
+10. Left Axis Label:
+10. @CE 6 0 18 100 *
+11. Bottom Axis Label:
+11. @CE 7 0 18 100 *
+12.
+13. Subset/Except/For Specification: 
+14. @CE 8 0 1 50 *
+15.
+16.
+17. Generate the Box-Cox Normality Plot?:
+--------------------
+GR FE
+LINE _3
+CHARACTER _4
+TITLE _5
+Y1LABEL _6
+X1LABEL _7
+BOX-COX NORMALITY PLOT _1 _2 _8
+--------------------
+WEB HELP BOX-COX NORMALITY PLOT
+--------------------

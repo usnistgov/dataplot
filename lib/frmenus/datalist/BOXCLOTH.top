@@ -1,0 +1,8 @@
+----- <~datalist\BOXCLOTH.top> BOXCLOTH.DAT
+ 
+BOXCLOTH.DAT
+ 
+View     <xcl: LIST BOXCLOTH.DAT>
+Load     <x2cl: SKIP 25; READ BOXCLOTH.DAT Y X1 TO X5>
+Print    <xccl: printfile C:\DATAPLOT\BOXCLOTH.DAT>
+ 

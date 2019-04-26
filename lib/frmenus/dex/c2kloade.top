@@ -1,0 +1,16 @@
+----- <~dex\c2kloade.top> Load Full Factorial Designs
+
+Load Full Factorial Designs
+
+ Name   Number   Number
+  of      of       of
+Design  Factors  Runs
+           k       n
+........................
+ 2**2      2       4      <x2cl: SKIP 25; READ 2TO2.DAT X1 X2>
+ 2**3      3       8      <x2cl: SKIP 25; READ 2TO3.DAT X1 TO X3>
+ 2**4      4      16      <x2cl: SKIP 25; READ 2TO4.DAT X1 TO X4>
+ 2**5      5      52      <x2cl: SKIP 25; READ 2TO3.DAT X1 TO X5>
+ 2**6      6      64      <x2cl: SKIP 25; READ 2TO6.DAT X1 TO X6>
+ 2**7      7     128      <x2cl: SKIP 25; READ 2TO7.DAT X1 TO X7>
+

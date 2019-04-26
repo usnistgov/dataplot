@@ -1,0 +1,25 @@
+----- <~dataview\univnist.top> View Univariate Data: NIST
+
+View Univariate Data: NIST
+
+LEW.DAT       Beam deflections            <xcf: ~dataview\LEW.DP>
+SOULEN0.DAT   Josephson junc cryothermom. <xcf: ~dataview\SOULEN0.DP>
+SOULEN.DAT    Josephson junc cryothermom. <xcf: ~dataview\SOULEN.DP>
+MARSHAK.DAT   Nuclear thermometry         <xcf: ~dataview\MARSHAK.DP>
+
+SIMIU.DAT     Wind speeds                 <xcf: ~dataview\SIMIU.DP>
+WASHDC.DAT    Washington DC wind speeds   <xcf: ~dataview\WASHDC.DP>
+KEYWEST.DAT   Key West wind speeds        <xcf: ~dataview\KEYWEST.DP>
+MAVRO.DAT*    Filter transmittance        <xcf: ~dataview\MAVRO.DP>
+DZIUBA.DAT    Standard resistor           <xcf: ~dataview\DZIUBA.DP>
+ZARR13.DAT    Hear flow meter             <xcf: ~dataview\ZARR13.DP>
+ZARR14.DAT    Hear flow meter             <xcf: ~dataview\ZARR14.DP>
+ZARR15.DAT    Hear flow meter             <xcf: ~dataview\ZARR15.DP>
+
+MORALES.DAT   Mass spec: sulfur exa-fluor <xcf: ~dataview\MORALES.DP>
+MORALES2.DAT  Mass spec: sulfur exa-fluor <xcf: ~dataview\MORALES2.DP>
+
+REHM.DAT      Asmathic air flow           <xcf: ~dataview\REHM.DP>
+FUNNEL5A.DAT  Funnel data                 <xcf: ~dataview\FUNNEL5A.DP>
+VANGEL5.DAT   Strength at failure         <xcf: ~dataview\VANGEL5.DP>
+

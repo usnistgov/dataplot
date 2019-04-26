@@ -1,0 +1,8 @@
+----- <~dataall\ELNINO.top> ELNINO.DAT
+
+ELNINO.DAT
+
+View     <xcl: LIST ELNINO.DAT>
+Load     <xcf: ~dataload/ELNINO.DP>
+Print    <xccl: printfile C:\DATAPLOT\ELNINO.DAT>
+

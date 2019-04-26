@@ -1,0 +1,8 @@
+----- <~dataall\CROARK2.top> CROARK2.DAT
+
+CROARK2.DAT
+
+View     <xcl: skip 25; READ CROARKI2.DAT>
+Load     <x2cl: skip 25; READ CROARKI2.DAT Y X>
+Print    <xcl: skip 25; READ CROARKI2.DAT>
+

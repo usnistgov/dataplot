@@ -1,0 +1,10 @@
+----- <~dataloex\OIL.DP> Load & Execute OIL.DAT
+
+. This is file    OIL.DP
+
+DELETE Y
+SKIP 25
+READ OIL.DAT Y
+TITLE OIL.DAT
+/
+

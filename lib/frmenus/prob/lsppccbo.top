@@ -1,0 +1,30 @@
+----- <~prob\lsppccbo.top> Probablity Plot Parameter Estimation for Loc/Scale with Bootstrapping
+
+Perform Parameter Estimation using Probability Plot with Bootstrapping
+
+Perform Parameter Estimation for Distributions
+with No Shape Parameters.  Confidence intervals
+for the location and scale parameters will be
+generated via bootstrapping.
+
+Anglit                                    <xemf: ~prob\bootang.men>
+Arcsin                                    <xemf: ~prob\bootars.men>
+Cauchy                                    <xemf: ~prob\bootcau.men>
+Cosine                                    <xemf: ~prob\bootcos.men>
+Double Exponential (Laplace)              <xemf: ~prob\bootdex.men>
+Exponential                               <xemf: ~reli\bootexp.men>
+Extreme Value Type I(Gumbel)  - Minimum   <xemf: ~reli\bootev11.men>
+Extreme Value Type I(Gumbel)  - Maximum   <xemf: ~reli\bootev12.men>
+Half-Cauchy                               <xemf: ~prob\boothfc.men>
+Half-Logistic                             <xemf: ~prob\boothfl.men>
+Half-Normal                               <xemf: ~prob\boothfn.men>
+Hyperbolic Secant                         <xemf: ~prob\boothse.men>
+Logistic                                  <xemf: ~prob\bootlog.men>
+Maxwell                                   <xemf: ~prob\bootmax.men>
+Normal                                    <xemf: ~reli\bootnor.men>
+Rayleigh                                  <xemf: ~prob\bootray.men>
+Semi-Circular                             <xemf: ~prob\bootsem.men>
+Slash                                     <xemf: ~prob\bootsla.men>
+Uniform                                   <xemf: ~prob\bootuni.men>
+
+Bootstrap Confidence Intervals for Percentiles  <xemf: ~reli\ppccperc.men>

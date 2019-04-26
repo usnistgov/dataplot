@@ -1,0 +1,42 @@
+This is file trapdf.men--Compute Trapezoid pdf
+ 
+--------------------
+ 1. Compute Trapezoid pdf
+ 2. LET A = TRAPDF(X,A,B,C,D)
+ 3.
+ 4. The input argument, x, can be either a
+ 5. single number, the name of a parameter,
+ 6. or the name of a variable.
+ 7.  
+ 8. Input values:
+ 9.                              x (x >= a):
+ 9. @CE 1 0 42 50 ?
+10.                           lower limit a:
+10. @CE 2 0 42 50 ?
+11.                         shape b (b > a):
+11. @CE 3 0 42 50 ?
+12.                         shape c (c > b):
+12. @CE 4 0 42 50 ?
+13.                           upper limit d:
+13. @CE 5 0 42 50 ?
+14.
+15. Output parameters:
+16.                  name for the pdf value:
+16. @CE 6 0 42 50 ?
+17.
+18.
+19. Compute the Probability?
+--------------------
+AN FE
+LET ZA = 0
+LET ZD = 1
+LET ZB = 0.25
+LET ZC = 0.75
+@IF 2 0 LET ZA = _2
+@IF 3 0 LET ZB = _3
+@IF 4 0 LET ZC = _4
+@IF 5 0 LET ZD = _5
+@IF 6 0 LET _6 = TRAPDF( _1 ,ZA,ZB,ZC,ZD)
+--------------------
+WEB HELP TRAPDF
+--------------------

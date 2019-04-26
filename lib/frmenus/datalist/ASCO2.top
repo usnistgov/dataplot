@@ -1,0 +1,8 @@
+----- <~datalist\ASCO2.top> ASCO2.DAT
+ 
+ASCO2.DAT
+ 
+View     <xcl: LIST ASCO2.DAT>
+Load     <x2cl: SKIP 25; READ ASCO2.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\ASCO2.DAT>
+ 

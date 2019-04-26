@@ -1,0 +1,18 @@
+----- <~unce\engiinfo.top> Science/Engineering-Based Component Information
+ 
+Science/Engineering-Based Component Information
+ 
+For a given component, the needed information is
+ 
+   1. Typical Value
+   2. Uncertainty
+ 
+Such information based on Science/Engineering
+has 5 sources (select the appropriate item):
+ 
+   1. SRM certificates           <xemf: ~unce\srmcerti.men>
+   2. Calibration certificates   <xemf: ~unce\calicert.men>
+   3. Published reference values <xemf: ~unce\refevalu.men>
+   4. Scientific Judgement       <xemf: ~unce\sciejudg.men>
+   5. Other                      <xemf: ~unce\other.men>
+ 

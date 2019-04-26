@@ -1,0 +1,13 @@
+----- <~mvar\inferenc.top> Inferences on Mean and Covariances
+ 
+Multivariate Analysis: Inferences
+
+Inference on Means:
+    1-Sample Hotelling T Square         <xemf: ~math\matr_1ho.men>
+    2-Sample Hotelling T Square         <xemf: ~math\matr_2ho.men>
+    
+
+Inference on Covariance Matrices:
+    Multivariate Normality Probability Plot <xemf: ~mvar\mvarnorm.men>
+    Bartlett Test for Equal Covariances <xemf: ~mvar\bartlett.men>
+

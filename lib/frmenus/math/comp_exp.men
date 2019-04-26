@@ -1,0 +1,31 @@
+This is file comp_exp.men--Compute complex exponentation
+ 
+--------------------
+ 1. Complex Exponentiation
+ 2. LET YR YC = COMPLEX EXPONENTATION XR XC
+ 3. @CE 6 1 64 70 Help
+ 3.
+ 4. Variable containing real component for which
+ 5.    to compute the complex exponentation:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Variable containing complex component for which
+ 7.    to compute the complex exponentation:
+ 7. @CE 2 0 33 50 * gui-variable
+ 8. Variable to store the real component of
+ 9.    the complex exponentation:
+ 9. @CE 3 0 33 50 ? gui-none
+10. Variable to store the complex component of
+11.    the complex exponentation:
+11. @CE 4 0 33 50 ? gui-none
+12.
+13. Subset/Except/For Specification:
+14. @CE 5 0 -10 50 *
+15.
+16.
+17. Compute the Complex Exponentiation?:
+--------------------
+GR FE
+LET _3 _4 = COMPLEX EXPONENTATION  _1 _2 _5
+--------------------
+WEB HELP COMPLEX EXPONENTATION
+--------------------

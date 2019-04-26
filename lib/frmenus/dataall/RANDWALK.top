@@ -1,0 +1,8 @@
+----- <~dataall\RANDWALK.top> RANDWALK.DAT
+
+RANDWALK.DAT
+
+View     <xcl: LIST RANDWALK.DAT>
+Load     <xcf: ~dataload/RANDWALK.DP>
+Print    <xccl: printfile C:\DATAPLOT\RANDWALK.DAT>
+

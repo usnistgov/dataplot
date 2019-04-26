@@ -1,0 +1,31 @@
+----- <~dexcomp\ccrdanal.top> Completely Randomized Designs: Analysis
+ 
+Completely Randomized Designs: Analysis
+
+Discussion                             <~dexcomp\ccrddian.top>
+NIST/SEMATECH Handbook
+     Scatter Plot                     <xcl: web handbook scatter plot>
+     Box Plot                         <xcl: web handbook box plot>
+     ANOVA                            <xcl: web handbook one factor anova>
+     Kruskal-Wallis Test              <xcl: web handbook kruskall-wallis test>
+
+Graphical Techniques
+     Scatter Plot with Replication     <xemf: ~dexcomp\replplot.men>
+     Box Plot                          <xemf: ~stat\boxplot.men>
+     Mean Plot                         <xemf: ~1fac\meanplot.men>
+     SD Plot                           <xemf: ~1fac\sdplot.men>
+     Statistics for Grouped Data       <xemf: ~stat\statplot.men>
+
+Quantitative Techniques
+     Analysis of Variance (Balanced)                <xemf: ~stat\anova.men>
+     Analysis of Variance (Balanced, with Graphics) <xemf: ~stat\anovag.men>
+     Kruskal-Wallis Nonparametric 1-Factor ANOVA    <xemf: ~stat\kruskal.men>
+     Median Polish                                  <xemf: ~stat\medpol.men>
+     Median Polish (with Graphics)                  <xemf: ~stat\medpolg.men>
+
+     F Test for Homogeneous Locations         <xemf: ~stat\ftestloc.men>
+     Bartlett Test for Homogeneous Variances  <xemf: ~stat\bartlett.men>
+     Levene Test for Homogeneous Variances    <xemf: ~stat\levene.men>
+     Anderson Darling K Sample Test           <xemf: ~stat\andrdark.men>
+     Tabulate Statistics for Grouped Data     <xemf: ~stat\tabulate.men>
+

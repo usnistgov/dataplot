@@ -1,0 +1,40 @@
+. THIS IS DATAPLOT MACRO FILE   IDA2.DP
+. PURPOSE--READ IN ISOTOPIC ANALYSIS DATA
+.          AND GENERATE 3 RUNS SEQUENCE PLOTS & 3 BOX PLOTS
+. DATE--JUNE 1994
+. INPUT--THE DATAPLOT STRING F CONTAINING THE TARGET DATA FILE NAME
+.        E.G., LET STRING F = BD37R1.TXT
+.              CALL IDA.DP
+.              PP
+.              ER
+.
+. -----START POINT-----
+.
+delete y7 y8 y11
+skip 12
+column limits 13 40
+read a:^F y7 y8 y11
+let x = sequence 1 10 1 10
+.
+feedback off
+x3label automatic
+multiplot 2 3
+.
+plot y7
+plot y8
+plot y11
+.
+let set = 7; call ida3.dp
+box plot y7 x
+let set = 8; call ida3.dp
+box plot y8 x
+let set = 11; call ida3.dp
+box plot y11 x
+x1label
+x2label
+.
+multiplot off
+move 50 95
+justification center
+text File = ^F
+save 11 to 1

@@ -1,0 +1,27 @@
+This is file bernnum2.men--Compute Bernoulli Number
+ 
+--------------------
+ 1. Bernoulli Numbers
+ 2. LET Y = BN(N)
+ 3.
+ 4. Order of the Bernoulli polynomial (max = 65):
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the transformed result:
+ 5. @CE 3 0 33 50 ?
+ 6.
+ 7. Plot?:
+ 7. @CE 5 1 14 20 no
+ 7. @CE 5 2 22 28 yes
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 6 0 -5 50 *
+11.
+12.
+13. Compute the Transformation?:
+--------------------
+GR FE
+LET _3 = BN( _1 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP BN
+--------------------

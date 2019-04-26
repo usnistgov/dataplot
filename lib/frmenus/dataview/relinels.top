@@ -1,0 +1,18 @@
+----- <~dataview\relinels.top> View Reliability Data: Wayne Nelson
+
+View Reliability Data: Wayne Nelson
+
+From "Applied Life Data Analysis"
+   NELS105.DAT   Breakdown of insulating fluid    <xcf: ~dataview\NELS105.DP>
+   NELS138.DAT   Transformer failure              <xcf: ~dataview\NELS138.DP>
+   NELS144.DAT   Generator field windings         <xcf: ~dataview\NELS144.DP>
+
+From "Accelerated Testing"
+   NELS393.DAT   Class-H insulation in motorettes <xcf: ~dataview\NELS393.DP>
+   NELS421.DAT   Million dollar experiment        <xcf: ~dataview\NELS421.DP>
+
+Miscellaneous
+   NELSON.DAT    Dial. breakdwn strength of insul <xcf: ~dataview\NELSON.DP>
+   NELS28.DAT    Diesel engine fans               <xcf: ~dataview\NELS28.DP>
+   NELSNIST.DAT  Electromigration failure times   <xcf: ~dataview\NELSNIST.DP>
+

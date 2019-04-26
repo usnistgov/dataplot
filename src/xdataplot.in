@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+#  dplibdir may need to be modified if you did not install
+#  Dataplot with 'make install'
+#
+
+dplibdir=/usr/local/lib/dataplot
+
+export XDP_FILE=$dplibdir/frmenus
+export XDP_CODE=$dplibdir/frscript
+
+#  Invoke the main Tcl/Tk script.  The following options may be
+#  modified to suit your taste or provided as arguments:
+#
+#      -left    => Windows will be left-justified on the screen
+#      -right   => Windows will be right-justified on the screen
+#      -soft    => Use Tcl/Tk for screen graphics (if not
+#                  specified, X11 will be used).  Although the
+#                  X11 graphics will probably be more efficient,
+#                  the Tcl/Tk graphics have cleaner graph restore
+#                  when the menus over-write the graphs.
+
+exec $dplibdir/frscript/xdataplot.wish -soft  "$@"

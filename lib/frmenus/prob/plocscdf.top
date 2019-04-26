@@ -1,0 +1,27 @@
+----- <~prob\plocscdf.top> Plot CDF's for Location-Scale Continuous Distributions
+
+Plot CDF's (no shape parameters)
+
+Plot Cumulative Distribution Function for Continuous Distributions
+with No Shape Parameters
+
+Anglit                                    <xemf: ~prob\pangcdf.men>
+Arcsin                                    <xemf: ~prob\parscdf.men>
+Cauchy                                    <xemf: ~prob\pcaucdf.men>
+Cosine                                    <xemf: ~prob\pcoscdf.men>
+Double Exponential (Laplace)              <xemf: ~prob\pdexcdf.men>
+Exponential                               <xemf: ~prob\pexpcdf.men>
+Extreme Value Type I(Gumbel)  - Minimum   <xemf: ~prob\pev11cdf.men>
+Extreme Value Type I(Gumbel)  - Maximum   <xemf: ~prob\pev12cdf.men>
+Half-Cauchy                               <xemf: ~prob\phfccdf.men>
+Half-Logistic                             <xemf: ~prob\phflcdf.men>
+Half-Normal                               <xemf: ~prob\phfncdf.men>
+Hyperbolic Secant                         <xemf: ~prob\phsecdf.men>
+Logistic                                  <xemf: ~prob\plogcdf.men>
+Maxwell                                   <xemf: ~prob\pmaxcdf.men>
+Normal                                    <xemf: ~prob\pnorcdf.men>
+Rayleigh                                  <xemf: ~prob\praycdf.men>
+Semi-Circular                             <xemf: ~prob\psemcdf.men>
+Slash                                     <xemf: ~prob\pslacdf.men>
+Uniform                                   <xemf: ~prob\punicdf.men>
+

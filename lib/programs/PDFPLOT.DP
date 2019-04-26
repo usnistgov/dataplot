@@ -1,0 +1,17 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     PDFPLOT.DP
+. PURPOSE--GENERATE A PLOT OF PROBABILITY DENSITY FUNCTIONS
+.
+. -----START POINT-----------------------------------
+.
+TITLE Chi-Squared Distribution (nu = 3 to 6)
+Y1LABEL Probability Density Function Value
+X1LABEL X
+LEGEND 1 Probability
+LEGEND 2 Probability Density Function Plot
+.
+LET XMAX=20
+.
+PLOT CHSPDF(X,3) FOR X = 0 .1 XMAX AND
+PLOT CHSPDF(X,4) FOR X = 0 .1 XMAX AND
+PLOT CHSPDF(X,5) FOR X = 0 .1 XMAX AND
+PLOT CHSPDF(X,6) FOR X = 0 .1 XMAX

@@ -1,0 +1,27 @@
+----- <~prob\probplot.top> Probability Plot
+
+Probability Plot
+
+These menus are used to generate probability plots
+for distributions with no, one, two, or three or more
+shape parameters.
+
+Discussion                                    <~prob\discpp.top>
+NIST/SEMATECH Handbook    <xcl: web handbook probability plot>
+
+Uncensored Data (Ungrouped or Grouped)
+   No Shape Parameters (e.g., Normal)             <~prob\locsppcc.top>
+   One Shape Parameter (A-L) (e.g., Lognormal)    <~prob\sh1aprob.top>
+   One Shape Parameter (M-Z) (e.g., Weibull)      <~prob\sh1bprob.top>
+   Two Shape Parameters (e.g., Beta)              <~prob\sha2prob.top>
+   Three (or more) Shape Parameters               <~prob\sha3prob.top>
+
+   Discrete Distributions                         <~prob\discprob.top>
+
+Censored Data (Ungrouped)
+   No Shape Parameters (e.g., Normal)             <~prob\loccppcc.top>
+   One Shape Parameter (A-L) (e.g., Lognormal)    <~prob\s1acprob.top>
+   One Shape Parameter (M-Z) (e.g., Weibull)      <~prob\s1bcprob.top>
+   Two Shape Parameters (e.g., Beta)              <~prob\sh2cprob.top>
+   Three (or more) Shape Parameters               <~prob\sh3cprob.top>
+

@@ -1,0 +1,8 @@
+----- <~dataload\MANDEL.DP> Load MANDEL.DAT
+
+. This is file    MANDEL.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ MANDEL.DAT Y X1 X2 X3
+

@@ -1,0 +1,22 @@
+----- <~help\od.top> Commands for Graphics Output Devices
+
+Commands for Graphics Output Devices
+
+
+Discussion                            <~plot\od_disc.top>
+Dataplot On-Line Help for Output Devices <xcl: HELP OUTPUT DEVICES>
+
+Print Current Plot (PP)               <xcl: PP>
+Set Printer for PP Command            <xemf: ~plot\setprint.men>
+Use GPRINT for PP Command (PC only)   <xemf: ~plot\setghost.men>
+
+Turn on Device 2 (dppl1f.dat) as Postscript <xcl: DEVICE 2 POSTSCRIPT>
+Turn on Device 2 (dppl1f.dat) as HP LaserJet (HP-GL mode) <xcl: DEVICE 2 HPGL LASERJET>
+Turn on Device 2 (dppl1f.dat) as PNG (Unix only)  <xcl: DEVICE 2 GD PNG>
+Turn on Device 2 (dppl1f.dat) as JPEG (Unix only) <xcl: DEVICE 2 GD JPEG>
+Turn on Device 2 (dppl1f.dat) as SVG   <xcl: DEVICE 2 SVG>
+
+Temporarily Suppress Device 2 Output  <xcl: DEVICE 2 OFF>
+Re-activate Device 2 Output           <xcl: DEVICE 2 ON>
+Close Device 2 Output File            <xcl: DEVICE 2 CLOSE>
+

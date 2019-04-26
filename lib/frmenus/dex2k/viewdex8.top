@@ -1,0 +1,9 @@
+----- <~dex2k\viewdex8.top> View NIST DEX Course Ch. 8 Files
+
+View NIST DEX Course Chapter 8 Files
+
+BOXSPRIN.DAT  2**3  Defective springs   <xcl: LIST ~BOXSPRIN.DAT>
+BOXPILOT.DAT  2**3  Pilot plant yield   <xcl: LIST ~BOXPILOT.DAT>
+BOXCHEM.DAT   2**4  Chemical yield      <xcl: LIST ~BOXCHEM.DAT>
+BOXREACT.DAT  2**5  Chem. reactor eff   <xcl: LIST ~BOXREACT.DAT>
+

@@ -1,0 +1,37 @@
+This is file con1ppf.men--Compute Consul ppf
+ 
+--------------------
+ 1. Compute Consul ppf
+ 2. LET Y = CONPPF(X,THETA,M)
+ 3.
+ 4. Input values:
+ 5.                             p (0 <= p < 1):
+ 5. @CE 1 0 42 50 ?
+ 6.      shape parameter theta (0 < theta < 1):
+ 6. @CE 2 0 42 50 
+ 7.       shape parameter m (1 <= m < 1/theta):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Output parameters:
+10.                  name for the ppf value:
+10. @CE 4 0 42 50 ?
+11.
+12.
+13. Compute the Probability?
+--------------------
+AN FE
+SET CONSUL DEFINITION THETA
+LET ZTHETA = 0.5
+LET ZM = 1.5
+@IF 2 0 LET ZTHETA = _2
+IF ZTHETA <= 0
+   LET ZTHETA = 0.5
+END OF IF
+IF ZTHETA >= 1
+   LET ZTHETA = 0.5
+END OF IF
+@IF 3 0 LET ZM = _3
+LET _4 = CONPPF( _1 , ZTHETA, ZM )
+--------------------
+WEB HELP CONPPF
+--------------------

@@ -1,0 +1,43 @@
+-----<~reli\extremev.top> Extreme Value Analysis
+
+Extreme Value Analysis
+
+Discussion                            <~reli\evdisc.top>
+
+Graph the Data
+   Run Sequence Plot with Threshold   <xemf: ~reli\runseq.men>
+   Histogram                          <xemf: ~stat\histogra.men>
+   Kernel Density Plot                <xemf: ~plot\kernplot.men>
+   CME Plot                           <xemf: ~plot\cmeplot.men>
+
+Peaks Over Threshold Analysis
+   Discussion                         <~reli\potdisc.top>
+   Peaks Over Threshold Plot          <xemf: ~reli\potplot.men>
+   Plot Return Values                 <xemf: ~reli\retvplot.men>
+
+Distributional Fitting
+   Discussion                         <~reli\efitdisc.top>
+   Distributional Descriptions        <~reli\evdesc.top>
+   Estimate Parameters/Quantiles
+       Maximum Likelihood                     <~reli\evmle.top>
+       de Haan                                <~reli\dehaan.men>
+       Conditional Mean Exceedance (CME)      <~reli\cme.men>
+       PPCC (or KS) Plot/Probability Plot     <~reli\evppccpl.top>
+       PPCC/KS/PP with Bootstrap Intervals    <~reli\evppccbo.top>
+   Assess Goodness of Fit (Graphical)
+       Discussion: Grapical Methods           <~reli\goodfitg.top>
+       Histogram & superimposed distribution  <~reli\evhistpd.top>
+       Probability Plots                      <~reli\evprpl.top>
+   Assess Goodness of Fit (Quantitative)
+       Discussion: Quantitative Tests         <~reli\goodfitq.top>
+       Anderson-Darling                       <~reli\evandeda.top>
+       Kolmogorov-Smirnov/Chi-Square          <~reli\evks.top>
+
+Simulation (Random Numbers)           <~reli\evsimula.top>
+
+Built-in Data Sets
+   View                               <~dataview\eva.top>
+   Load                               <~dataload\eva.top>
+
+References                            <~reli\evrefere.top>
+

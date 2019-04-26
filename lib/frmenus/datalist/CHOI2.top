@@ -1,0 +1,8 @@
+----- <~datalist\CHOI2.top> CHOI2.DAT
+ 
+CHOI2.DAT
+ 
+View     <xcl: LIST CHOI2.DAT>
+Load     <x2cl: SKIP 25; READ CHOI2.DAT Y1 Y2>
+Print    <xccl: printfile C:\DATAPLOT\CHOI2.DAT>
+ 

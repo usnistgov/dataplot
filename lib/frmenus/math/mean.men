@@ -1,0 +1,22 @@
+This is file mean.men--Compute mean of a variable
+ 
+--------------------
+ 1. Mean
+ 2. LET A = MEAN Y
+ 3.
+ 4. Variable for which to compute the mean:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the mean:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Mean?:
+--------------------
+GR FE
+LET _2 = MEAN  _1 _3
+--------------------
+WEB HELP MEAN
+--------------------

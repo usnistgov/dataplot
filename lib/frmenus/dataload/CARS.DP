@@ -1,0 +1,8 @@
+----- <~dataload\CARS.DP> Load CARS.DAT
+
+. This is file    CARS.DP
+
+DELETE ID Y X1 X2
+SKIP 25
+READ CARS.DAT ID Y X1 X2
+

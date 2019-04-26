@@ -1,0 +1,8 @@
+----- <~datalist\SPLETT4.top> SPLETT4.DAT
+ 
+SPLETT4.DAT
+ 
+View     <xcl: LIST SPLETT4.DAT>
+Load     <x2cl: SKIP 25; READ SPLETT4.DAT Y X1 TO X4>
+Print    <xccl: printfile C:\DATAPLOT\SPLETT4.DAT>
+ 

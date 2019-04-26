@@ -1,0 +1,43 @@
+----- <~dex\cs25m1.top> Confounding:  2**(5-1) Design
+
+Confounding:  2**(5-1) Design
+
+Name of Design      = 2**(5-1) Fractional Factorial Design
+
+Number of Factors k = 5
+Number of Obs.    n = 16
+
+Resolution          = 5 (Main effects confounded with
+                      4-term interactions and higher;
+                      no main effects are confounded
+                      with any 2- or 3-term interactions)
+
+Factor Definitions  : 5 = 1234
+
+Defining Relation   : I +
+                      12345
+
+Main Effect         : 1  =  1 +  *
+Confounding           2  =  2 +  *
+                      3  =  3 +  *
+                      4  =  4 +  *
+                      5  =  5 +  *
+
+2-Term              : 12 = 12 +  *
+Confounding           13 = 13 +  *
+                      14 = 14 +  *
+                      15 = 15 +  *
+                      23 = 23 +  *
+                      24 = 24 +  *
+                      25 = 34 +  *
+                      34 = 34 +  *
+                      35 = 35 +  *
+                      45 = 45 +  *
+
+Confounding Matrix:
+                      Empty; thus
+                      no main effects are confounded
+                      with any 2-term interactions;
+                      no 2-term interactions are confounded
+                      with any other 2-term interactions.
+

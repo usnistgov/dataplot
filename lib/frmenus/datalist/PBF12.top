@@ -1,0 +1,8 @@
+----- <~datalist\PBF12.top> PBF12.DAT
+ 
+PBF12.DAT
+ 
+View     <xcl: LIST PBF12.DAT>
+Load     <x2cl: SKIP 25; READ PBF12.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\PBF12.DAT>
+ 

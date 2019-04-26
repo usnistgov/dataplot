@@ -1,0 +1,9 @@
+----- <~fit\norrgeaa.top> General Analysis Approach : Jim Norris
+
+General Analysis Approach: Jim Norris Calibration Procedure
+
+1. Select Model   (usually linear)
+2. Fit Model      (least squares)
+3. Validate Model (& test underlying assumptions)
+4. Use Model      (to generate calibration info)
+

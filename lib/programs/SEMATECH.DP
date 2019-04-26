@@ -1,0 +1,70 @@
+device 1 x11
+.
+lattice 20 20 15 15 80 80
+.
+. Define box 1
+.
+move 22 77; text Linear
+move 22 74; text PolynomiaL
+move 22 71; text Spline
+move 22 68; text Non-linear
+move 22 65; text Lowess
+.
+. Define box 2
+.
+move 22 57; text Linear
+move 22 54; text PolynomiaL
+move 22 51; text Spline
+move 22 48; text Non-linear
+.
+. Define box 3
+.
+move 22 37; text Linear
+move 22 34; text PolynomiaL
+move 22 31; text Spline
+move 22 28; text Non-linear
+.
+. Define box 4
+.
+move 37 77; text Multi-linear
+move 37 74; text Non-linear
+move 37 71; text Ridge Reg.
+move 37 68; text Prin. Comp. Reg.
+.
+. Define box 5
+.
+.
+. Define box 6
+.
+move 37 37; text Multi-linear
+move 37 34; text Non-linear
+.
+. Define box 7
+.
+move 52 77; text Multi-linear
+move 52 74; text Non-linear
+.
+. Define box 8
+.
+move 52 57; text Multi-linear
+move 52 54; text Non-linear
+.
+. Define box 9
+.
+move 52 37; text Multi-linear
+move 52 34; text Non-linear
+.
+. Define box 10
+.
+move 77 77; text Multi-linear
+move 77 74; text Non-linear
+move 77 71; text Partial Least Sq.
+.
+. Define box 11
+.
+.
+. Define box 12
+.
+move 77 37; text Multi-linear
+move 77 34; text Non-linear
+.

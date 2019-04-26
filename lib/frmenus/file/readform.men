@@ -1,0 +1,45 @@
+This is file creadform.men--Specify a Format for subsequent READ
+ 
+--------------------
+ 1. Specify a Format for Subsequent READ
+ 2. SET READ FORMAT <format>
+ 3.
+ 4. If your data has a consistent format where the
+ 5. data is lined up by the decimal point, you can
+ 6. specify a Fortran-like format for the READ 
+ 7. command.  There are two reasons for doing this:
+ 8.
+ 9. 1) Performance (it is about 10 times faster)
+10. 2) It allows you to skip over unwanted fields
+11.
+12. The following format specifications are supported:
+13.
+14. 1) The "X" specifier can be used to skip columns.
+15.    For example, 3X means skip 3 columns.
+16. 2) The "Fn.w" specifier is used to read real data.
+17.    The "n" is the total width of the field and
+18.    the "w" is the number of digits to the right of
+19.    the decimal point.  For example, F8.3 means
+20.    read a numeric field of 8 characters with 3
+21.    digits to the right of the decimal point.
+22. 3) The "En.w" format specifier is used to read
+23.    data in exponential format.  The "n" is the
+24.    total width of the field and "w" is the number
+25.    of digits in the mantissa.
+26.
+27. The following is an example of a combined format
+28. specification:
+29.
+30.    F8.3,3X,2E15.7,F10.5
+31.
+32. Enter the format specification:
+33. @CE 1 0 1 50 ?
+34.
+35.
+36. Define the Read Format?
+--------------------
+SU FE
+SET READ FORMAT _1
+--------------------
+WEB HELP SET READ FORMAT
+--------------------

@@ -1,0 +1,102 @@
+. This is dataplot macro     compute_effect_estimates_and_confounding.dp      10/16/18
+. Purpose: For the given (k,n) design, compute all effect estimates (ordered) & confounding
+. Date: 10/16/18
+
+. Input:
+.   confsw                   (parameter) = Switch indicated as to whether est. & conf. calculations
+.                                          have already been done (= 1), or not done (= 0)
+.   confdone                 (parameter) = Switch indicated as to whether est. & conf. calculations
+.                                          have already been done (= 1), or not done (= 0)  ??? why the same???
+.   k                        (parameter) = number of factors
+.   y                        (vector)    = response variable
+.   x1, x2, to x^k           (vectors)   = factors
+.
+. Output (The following are all
+.         sorted by |eff|):
+.   numeff                   (parameter) = The number of effects
+.   effindex                 (vector)    = The dummy index (1 to numeff)
+.   meanh                    (vector)    = The means at the "high" side
+.   meanl                    (vector)    = The means at the "low"  side
+
+.   eff                      (vector)    = The   effect estimates (ordered by |eff|)
+.   effid1, effid2, to effid5(vectors)   = The   effect ID's
+.   steft1, stef2, etc.      (strings)   = Their corresponding tags and confounding
+.   stefc1, stefc2, etc.     (strings)   = Their ocrresponding confounding
+.   releff                   (vector)    = The   relative effect estimates
+.   sdeff                    (vector)    = The   sd(effects)
+.   teff                     (vector)    = The   t(effects)
+.   rsd                      (vector)    = The   residual SD for each single model
+.   cumrsd                   (vector)    = The   residual SD for each cumulative model
+.   stcore1, stcore2, etc.   (strings)   = The   effect ID's (as multiplier definitions)
+.   stconf1, stconf2, etc.   (strings)   = The   effect confouding
+.
+. -----start point-----
+.
+let bugsweec = 0
+. let pausesw = 1
+.
+if bugsweec = 1; print " "; print "--At the beginning of compute_effect_estimates_and_confounding.dp"
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 1: Determine the confounding switch-----
+.
+if bugsweec = 1; print "--At (compute_effect_estimates_and_confounding.dp, step 1): determine confounding switch"
+   print "confsw = ^confsw"
+   print "confdone = ^confdone"
+   if pausesw = 1; pause; end if
+end if
+.
+let confsw2 = 0
+if confsw not exist; let confsw2 = 1; end if
+if confsw exists and confsw = 1; let confsw2 = 1; end if
+.
+. -----Step 2: Treat the needs-to-be-done case-----
+.
+if bugsweec = 1; print "--At (compute_effect_estimates_and_confounding.dp, step 2): do estimation & confounding"
+   print "confsw = ^confsw"
+   print "confsw2 = ^confsw2"
+   print confdone = ^confdone"
+   if pausesw = 1; pause; end if
+end if
+.
+if confsw2 = 1
+   if confdone exists and confdone = 0 or confdone not exist
+      . call 2_level_design_effects_and_confounding.dp
+      let stall = string combine x1 to x^k
+      let conftag1 conftag2 = dex confound ^stall
+      let corefac = dex core ^stall
+      let corefac1 = corefa1
+      let corefac2 = corefa2
+      let corefac3 = corefa3
+      let corefac4 = corefa4
+      let corefac5 = corefa5
+      let numcore = number corefac1
+      let confdone = 1
+      let coredone = 1
+      .
+      call est.dp     ;. <================================
+      .
+   end if
+end if
+.
+. -----Step 99: Finish up-----
+.
+if bugsweec = 1; print " "; print "--At the end of compute_effect_estimates_and_confounding.dp"
+   print "confsw = ^confsw"
+   print "confsw2 = ^confsw2"
+   print "confdone = ^confdone"
+   print "coresw = ^coresw"
+   print " "
+   print "numeff = ^numeff"
+   print " "
+   print effindex meanh meanl
+   print effindex eff effind1 effind2
+   print effindex eff releff sdeff teff rsd cumrsd
+   print " "
+   print "      steft.. stefc.. stcore.. stconf.."
+   loop for jz = 1 1 numeff
+      print "^jz  steft^jz stefc^jz stcore^jz stconf^jz"
+   end loop
+   if pausesw = 1; pause; end if
+end if

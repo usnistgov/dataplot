@@ -1,0 +1,78 @@
+      This is Dataplot file   BALDRIGE.TEX
+ 
+      Malcolm Baldrige National Quality Award
+      1991 Examination Categories/Items
+ 
+                                                           Points
+      1.0 Leadership
+          1.1 Senior Executive Leadership                    40
+          1.2 Quality Values                                 15
+          1.3 Management for Quality                         25
+          1.4 Public Responsibility                          20
+                                                           -----
+                                                            100
+ 
+      2.0 Information and Analysis
+          2.1 Scope & Management of Q. Data & Information    20
+          2.2 Competitive Comparisons and Benchmarks         30
+          2.3 Analysis of Quality Data and Information       20
+                                                           -----
+                                                             70
+ 
+      3.0 Strategic Quality Planning
+          3.1 Strategic Quality Planning Process             35
+          3.2 Quality Goals and Plans                        25
+                                                           -----
+                                                             60
+ 
+      4.0 Human Resource Utilization
+          4.1 Human Resource Management                      20
+          4.2 Employee Involvement                           40
+          4.3 Quality Education and Training                 40
+          4.4 Employee Recognition & Performance Measurement 25
+          4.5 Employee Well-Being and Morale                 25
+                                                           -----
+                                                            150
+ 
+      5.0 Quality Assurance of Products and Services
+          5.1 Design & Intro. of Q. Products & Services      35
+          5.2 Process Quality Control                        20
+          5.3 Continuous Improvement of Processes            20
+          5.4 Quality Assessment                             15
+          5.5 Documentation                                  10
+          5.6 Business Process and Support Service Q.        20
+          5.7 Supplier Quality                               20
+                                                           -----
+                                                            140
+ 
+      6.0 Quality Results
+          6.1 Product and Service Quality Results            90
+          6.2 Bus. Process, Oper., & Support Serv. Q. Res.   50
+          6.3 Supplier Quality Results                       40
+                                                           -----
+                                                            180
+ 
+      7.0 Customer Satisfaction
+          7.1 Determining Customer Requirements and Expect.  30
+          7.2 Customer Relationship Management               50
+          7.3 Customer Service Standards                     20
+          7.4 Commitment to Customers                        15
+          7.5 Complaint Resolution for Quality Improvement   25
+          7.6 Determining Customer Satisfaction              20
+          7.7 Customer Satisfaction Results                  70
+          7.8 Customer Satisfaction Comparison               70
+                                                           -----
+                                                            300
+ 
+                                                      ----------
+                                            Total Points   1000
+ 
+ 
+      Reference--Malcolm Baldrige National Quality Award
+                 National Institute of Standards and Technology
+                 Route 270 and Quince Orchard Road
+                 Administration Building, Room A537
+                 Gaithersburg, Maryland 20899
+                 Telephone--301-975-2036
+                 Telefax--301-948-3716
+ 

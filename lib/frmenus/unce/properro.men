@@ -1,0 +1,64 @@
+This is file properro.men--Propagation of Error
+ 
+--------------------
+ 1. Propagation of Error
+ 2. Y = f(X1, X2, X3, X4, ..., Xk)    to be fixed!
+ 3.
+ 4. Input:
+ 5.    1) Typical values (mean)     for X1, X2, ...
+ 6.    2) Uncertainties  (st. dev.) for X1, X2, ...
+ 7.
+ 8. Output:
+ 9.    1) Typical value  (mean)     for Y
+10.    2) Uncertainty    (st. dev.) for Y
+11.
+12. Function f:
+13. @CE 1 0 1 49 ?
+14.
+15. Number k of components Xi:
+15. @CE 2 0 37 49 ?
+16.
+17.       Component Xi    Typical Value SD(Typ. Value)
+18.    1
+18. @CE 3 0 7 21 ?
+18. @CE 4 0 23 35 ?
+18. @CE 5 0 37 49 ?
+19.    2
+19. @CE 6 0 7 21 ?
+19. @CE 7 0 23 35 ?
+19. @CE 8 0 37 49 ?
+20.    3
+20. @CE 9 0 7 21 ?
+20. @CE 10 0 23 35 ?
+20. @CE 11 0 37 49 ?
+21.    4
+22.    5
+23.    6
+24.    7
+25.    8
+26.    9
+27.   10
+28.
+29.
+30. Do the Propagation of Error?
+--------------------
+GR FE
+LET STRING ZF = _1
+LET ZK = _2
+LET _3 = _4
+LET _6 = _7
+LET _9 = _10
+LET ZTYPVALY = _1
+.
+LET ZCOMP1 = ( _5 / _4 )**2
+LET ZCOMP2 = ( _8 / _7 )**2
+LET ZCOMP3 = ( _11 / _10 )**2
+LET ZSUM = 0
+LOOP FOR ZDUMMY = 1 1 ZK
+   LET ZSUM = ZSUM+(ZCOMP^ZDUMMY)**K
+END LOOP
+LET ZSUM = SQRT(ZSUM)
+LET ZSDY = ZSUM
+LET Z2SDY = 2*ZSDY
+PRINT ZTYPVALY ZSDY Z2SDY
+--------------------

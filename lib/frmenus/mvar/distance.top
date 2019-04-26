@@ -1,0 +1,17 @@
+----- <~mvar\distance.top> Matrix Distance
+ 
+Matrix Distances
+ 
+Discussion                          <~mvar\discdist.top>
+
+Scale a Matrix                      <xemf: ~math\matr_sca.men>
+
+Distance from the Mean              <xemf: ~math\matr_dme.men>
+
+Matrix Distances
+   Euclidean   Distance             <xemf: ~math\matr_eud.men>
+   Mahalanobis Distance             <xemf: ~math\matr_mad.men>
+   Minkowsky   Distance             <xemf: ~math\matr_mid.men>
+   Block       Distance             <xemf: ~math\matr_bld.men>
+   Chebychev   Distance             <xemf: ~math\matr_chd.men>
+

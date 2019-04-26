@@ -1,0 +1,8 @@
+----- <~dataload\CAR20.DP> Load CAR20.DAT
+
+. This is file    CAR20.DP
+
+DELETE Y X
+SKIP 25
+READ CAR20.DAT Y X
+

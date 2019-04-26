@@ -1,0 +1,34 @@
+----- <~dataview\gra1ch4.top> Chapter 4: Multiple Linear Regression
+
+Chapter 4: Multiple Linear Regression
+
+ 1. Overview
+ 2. Notations and Definitions
+       Plastic (p-225)                   <xcf: ~dataview\PLASTIC.DP>
+       Table423 (p-225)                  <xcf: ~dataview\TABLE423.DP>
+       Table425 (p-228)                  <xcf: ~dataview\TABLE425.DP>
+       Table426 (p-231)                  <xcf: ~dataview\TABLE426.DP>
+ 3. Assumptions for Multiple Linear Regression
+ 4. Point Estimation
+       Table442 (p-238)                  <xcf: ~dataview\TABLE442.DP>
+       GPA      (p-242)                  <xcf: ~dataview\GPA.DP>
+       Table444 (p-246)                  <xcf: ~dataview\TABLE444.DP>
+       Table445 (p-250)                  <xcf: ~dataview\TABLE445.DP>
+ 5. Residual Analysis
+       Electricity Consumption (p-253)   <xcf: ~dataview\ELECTRIC.DP>
+ 6. Confidence Intervals
+ 7. Tests
+ 8. Analysis of Variance
+       Grocery (p-287)                   <xcf: ~dataview\GROCERY.DP>
+       Height at Age 18 (p-289)          <xcf: ~dataview\AGE18.DP>
+ 9. Comparison of Two Regression Functions (Nested Case)
+    and Coefficients of Determination
+10. Comparing Two Multiple Regression Models
+11. Lack-of-Fit Analysis
+       Blood Pressure (p-326)            <xcf: ~dataview\BP.DP>
+       Cereal (p-332)                    <xcf: ~dataview\CEREAL.DP>
+12. Exercises
+       Mouse (p-335)                     <xcf: ~dataview\MOUSE.DP>
+       Car (p-337)                       <xcf: ~dataview\CAR17.DP>
+       Plant (p-340)                     <xcf: ~dataview\PLANT.DP>
+

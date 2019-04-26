@@ -1,0 +1,18 @@
+----- <~dex2kmp\2t24m1.top> 2-Term Confounding:  2**(4-1) Design
+ 
+2-Term Interaction Confounding:  2**(4-1) Design
+ 
+2-Term              : 12 = 12 + 34
+Confounding           13 = 13 + 24
+                      14 = 14 + 23
+                      23 = 23 + 14
+                      24 = 24 + 13
+                      34 = 34 + 12
+ 
+Confounding Matrix:
+                          1   2   3   4
+                      ..................
+                      1 -    34  24  23
+                      2 -        14  13
+                      3 -            12
+ 

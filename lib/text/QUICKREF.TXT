@@ -1,0 +1,26 @@
+**tab on
+**tabnumber 01
+**tab1 01 1000
+ 
+XLABEL TIME   @Set x-axis label to TIME
+YLABEL FORCE   @Set y-axis label to FORCE
+TITLE CALIBRATION  @Set title to CALIBRATION
+XLIMITS A B  @Set x-axis limits to A and B
+YLIMITS A B  @Set y-axis limits to A and B
+CHARACTERS X CIRCLE NONE  @Set plot characters for traces 1, 2, 3 to X, CIRCLane
+LINES SOLID DOT DASH  @Set line types for traces 1, 2, 3 to SOLID, DOT, Aand DAH
+SPIKE ON OFF ON  @Set plot spikes for traces 1, 2, 3 to ON, OFF, and ON
+BARS ON OFF ON  @Set plot bars for traces 1, 2, 3 to ON, OFF, and ON
+LOG ON  @Set both axes to log scale
+LOG OFF  @Set both axes to linear scale
+ 
+MULTIPLOT 3 4  @Set plot page to 3 rows x 4 columns = 12 plots per page
+MULTIPLOT OFF  @Return to 1 plot per page
+ 
+PLOT Y  @Plot Y versus dummy index (usually time)
+PLOT Y X  @Plot Y (vertically) versus X (horizontally)
+PLOT Y X TAG  @Plot Y versus X with distinct traces defined by elements of TAG
+HISTOGRAM Y  @Generate histogram of Y
+NORMAL PROBABILITY PLOT Y  @Generate Normal probability plot of Y
+PIE CHART Y  @Generate pie chart of Y
+ 

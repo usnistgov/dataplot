@@ -1,0 +1,29 @@
+This is file sort.men--Sort a variable
+ 
+--------------------
+ 1. Sort
+ 2. LET YSORT = SORT Y
+ 3.
+ 4. Variable to sort:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the sorted data:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. List of variables to carry along in the sort:
+ 7. @CE 3 0 -10 50 ? gui-variable
+ 8. Sort Direction:
+ 8. @CD 4 1 30 39 Ascending
+ 8. @CD 4 2 40 49 Descending
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 -10 50 *
+12.
+13.
+14. Carry out the Sort?:
+--------------------
+GR FE
+@IF 4 1 SET SORT DIRECTION ASCENDING
+@IF 4 2 SET SORT DIRECTION DESCENDING
+LET _2 = SORTC  _1 _3 _5
+--------------------
+WEB HELP SORTC
+--------------------

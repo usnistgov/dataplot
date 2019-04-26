@@ -1,0 +1,25 @@
+----- <~dp\todo.top> To Do
+ 
+To Do
+ 
+ 1. Graphics copy of menu screen     PIZZAZZ (Jeff Fong)
+ 2. TCPCP (Shirley)
+ 3. From within Dataplot: execute Mosaic (Ron Boisvert)
+ 4. From within Mosaic  : execute Dataplot (Ron Boisvert)
+ 5. Literature-readable pages (Jim Norris)
+ 6. "under construction" items
+ 7. Put Dataplot PC-executable (& 5 floppy contents) on FTP (Alan)
+ 8. Put Dataplot PC-executable (& 5 floppy contents) on Mosiac
+ 9. Compress all frontend + subdirectories into a file
+       PKZIP -rm OUT.ZIP (Hari)
+10. Compress Dataplot executable => 2 floppies
+       PKZIP -& A:EXEFILE.EXE DATAPLOT.EXE (Hari)
+       PKUNZIP -D A:EXEFILE.EXE (Hari)
+11. Frontend ROOMS: fix [8]
+12. Roadmaps
+13. Frontend Print: fix Print glitches
+14. Mac
+15. X-lib / Motif (Alan) (Rob, Judy colleague)
+16. Mathematica (Nutall)
+17. Lahey / Smart-drive
+ 

@@ -1,0 +1,20 @@
+----- <~1fac\viewdata.top> Graphical Techniques
+
+Graphical Techniques
+
+1 Response Variable, 1 Factor Variable
+    Scatter Plot                      <xemf: ~stat\scatplot.men>
+    Scatter Plot with Vertical Lines  <xemf: ~stat\vertplot.men>
+    
+    Box Plot                          <xemf: ~stat\boxplot.men>
+    
+    Mean Plot                         <xemf: ~1fac\meanplot.men>
+    SD Plot                           <xemf: ~1fac\sdplot.men>
+    Statistics for Grouped Data       <xemf: ~stat\statplot.men>
+
+2 Response Variables
+    Bihistogram                       <xemf: ~plot\bihist.men>
+    Quantile-Quantile Plot            <xemf: ~plot\q-qplot.men>
+
+    Youden Plot                       <xemf: ~stat\youdplot.men>
+

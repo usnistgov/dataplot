@@ -1,0 +1,9 @@
+----- <~dataexec\eva.top> Load and Execute Built-in Extreme Value Analysis Dat
+ Files
+
+Load and Execute Built-in Extreme Value Analysis Data Files
+
+NIST data                                <xcf: ~dataexec\evanist.top>
+Castillo data                            <xcf: ~dataexec\evacast.top>
+Other data                               <xcf: ~dataexec\evaothe.top>
+

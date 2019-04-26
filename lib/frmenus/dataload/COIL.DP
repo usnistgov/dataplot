@@ -1,0 +1,8 @@
+----- <~dataload\COIL.DP> Load COIL.DAT
+
+. This is file    COIL.DP
+
+DELETE Y X
+SKIP 25
+READ COIL.DAT Y X
+

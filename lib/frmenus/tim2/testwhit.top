@@ -1,0 +1,23 @@
+----- <~tim2\testwhit.top> Testing White Noise
+ 
+Testing White Noise
+ 
+Discussion                 <~time\testwndi.top>
+ 
+Within a Single Series:
+
+   Graphical Techniques:
+       4-PLOT                 <xemf: ~univ\4plot.men>
+       Run sequence plot      <xemf: ~plot\runsplot.men>
+       Lag plot               <xemf: ~time\lagplot.men>
+   
+       Autocorrelation plot   <xemf: ~plot\autoplot.men>
+   
+       Periodogram            <xemf: ~plot\periodog.men>
+       Spectrum               <xemf: ~time\spectrum.men>
+   
+   Quantitative Techniques:
+       Runs test              <xemf: ~stat\runs.men>
+
+Between Two Series:
+

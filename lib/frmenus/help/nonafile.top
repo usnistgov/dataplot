@@ -1,0 +1,17 @@
+----- <~help\nonafile.top> Help: Entering Data
+ 
+Help: Discussion/Non-ASCII Files
+
+Note that Dataplot does not currently support directly
+reading files from other statistical/spreadsheet programs,
+database files, or XML based files.  We plan to add some
+support in future releases (at least on Windows platforms),
+but for now you need to save the data from these programs
+in an ASCII file in order to read them into Dataplot.
+
+The following contains some guidance on creating
+ASCII files from Excel (this may also be useful with
+regard to other spreadsheet formats).
+
+Excel Files                               <~file\discexce.top>
+

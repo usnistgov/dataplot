@@ -1,0 +1,11 @@
+----- <~dataview\relirene.top> View Reliability Data: Repair Data (Renewal Process)
+
+View Reliability Data: Repair Data (Renewal Process)
+
+View Reliability Data: Repair Data (Renewal Process)
+
+Repair Data (Renewal Process)
+   TOB305.DAT    Repair times (single system)    <xcf: ~dataview\TOB305.DP>
+   TOB312.DAT    Repair times (multiple systems) <xcf: ~dataview\TOB312.DP>
+   TOB332.DAT    Repair times (multiple systems) <xcf: ~dataview\TOB332.DP>
+

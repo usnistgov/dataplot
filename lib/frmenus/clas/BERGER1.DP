@@ -1,0 +1,10 @@
+----- <~dataloex\BERGER1.DP> Load & Execute BERGER1.DAT
+
+. This is file    BERGER1.DP
+
+DELETE Y X BATCH
+SKIP 25
+READ BERGER1.DAT Y X BATCH
+TITLE BERGER1.DAT
+/
+

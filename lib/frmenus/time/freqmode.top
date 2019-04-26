@@ -1,0 +1,19 @@
+----- <~time\freqmode.top> Frequency-Domain Modeling
+ 
+Frequency-Domain Modeling
+ 
+Discussion                   <~time\frdomodi.top>
+ 
+Create a Lagged Variable     <xemf: ~time\lagvar.men>
+
+Fit an AR(1) Model           <xemf: ~time\ar1fit.men>
+Fit an AR(2) Model           <xemf: ~time\ar2fit.men>
+Fit Linear/Non-Linear Models <~time\data1var.top>
+
+Fit Sinusoidal Model
+   Constant Amplitude           <xemf: ~time\fitsins0.men>
+   Linear Fit for Amplitude     <xemf: ~time\fitsins1.men>
+   Quadratic Fit for Amplitude  <xemf: ~time\fitsins2.men>
+
+Model Validation             <~fit\modelval.top>
+

@@ -1,0 +1,8 @@
+----- <~dataall\WAMPLER1.top> WAMPLER1.DAT
+
+WAMPLER1.DAT
+
+View     <xcl: LIST WAMPLER1.DAT>
+Load     <xcf: ~dataload/WAMPLER1.DP>
+Print    <xccl: printfile C:\DATAPLOT\WAMPLER1.DAT>
+

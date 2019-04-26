@@ -1,0 +1,54 @@
+----- <~plmo\plmo.top> Plot Modification
+ 
+Plot Modification
+
+Plots can also be modified from the
+Graph Settings window.  In the Graph window
+click on Edit -> Settings (or enter Ctrl-G).
+ 
+Execute Saved Commands       <xcl: />
+Re-Generate Most Recent Plot <xcl: REPLOT>
+
+Run Macro Showing Plot Control  <xcf: ~plmo\REFPLOT.DP>
+
+Auto-X3LABEL (to show plot command)
+   On                        <xcl: X3LABEL AUTOMATIC>
+   Off (= default)           <xcl: X3LABEL >
+
+Show Defaults                <xcl: LIST DEFAULTS.>
+Reset to default             <~plmo\defaults.top>
+ 
+Set/Modify
+   Background Color                 <xemf: ~plmo\setbackc.men>
+   Title (and Attributes)           <~plmo\settitle.top>
+   Labels (and Attributes)          <~plmo\setlabel.top>
+   Legends (and Attributes)         <~plmo\setlegen.top>
+   Frames (and Attributes)          <~plmo\setframe.top>
+   Tic Marks (and Attributes)       <~plmo\setticm.top>
+   Tic Mark Labels (and Attributes) <~plmo\setticl.top>
+   Tic offset                       <xemf: ~plmo\setticof.men>
+   Data Traces
+      Characters                    <~plmo\setchar.top>
+      Lines                         <~plmo\setline.top>
+      Spikes                        <~plmo\setspike.top>
+      Bars                          <~plmo\setbar.top>
+   Grid (and Attributes)            <~plmo\setgrid.top>
+   Scale Attributes                 <~plmo\setscale.top>
+   Box Attributes                   <~plmo\setbox.top>
+   Segment Attributes               <~plmo\setsegm.top>
+   Arrow Attributes                 <~plmo\setarrow.top>
+ 
+Show status                         <xcl: STATUS>
+ 
+Set Multiple Plots Per Page         <~plot\multplpp.top>
+Region of Graphics Device to Use    <xemf: ~plmo\windowcc.men>
+ 
+Graphics window:
+   Erase                            <xcl: ERASE>
+   Send Last Plot to Defaut Printer (Postscript)   <xcl: PP>
+   Save Plots to File              <~plmo\copyplot.top>
+
+After-plot
+     Annotation              <~woch\woch.top>
+     Identification          <xemf: ~plmo\plotiden.men>
+

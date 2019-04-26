@@ -1,0 +1,32 @@
+-----<~reli\goodks.top> Goodness of Fit: Kolmogorov-Smirnov
+
+Goodness-of-Fit: Kolmogorov-Smirnov Method
+
+Goodness-of-Fit: Kolmogorov-Smirnov Method
+
+NIST/SEMATECH Handbook     <xcl: web handbook kolmogorov-Smirnov gof test>
+
+The Kolmogorov-Smirnov (K-S) test is based on the maximum
+distance from the empircal CDF of the data and the theoretical
+CDF of the specified distribution.  An attractive feature of
+this test is that the test statistic does not depend on the
+specific distribution being tested.
+
+Some drawbacks of the K-S test are:
+
+   1) The standard test cannot be applied to discrete data,
+      grouped data, or to censored data.  There are extensions
+      of the K-S test for these cases, but they are currently
+      not supported in Dataplot.
+
+   2) If the parameters of the distribution are estimated
+      from the data, the critical values are no longer
+      accurate.  Note that the value of the test statistic
+      can still be used for ranking fits and as a rough
+      guide.
+
+      You can specify that the critical values be generated
+      dynamically for those distributions where Dataplot
+      supports maximum likelihood estimation.  This option
+      can be specified in the "Set Options" menu.
+

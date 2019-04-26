@@ -1,0 +1,8 @@
+----- <~dataload\BOXSPRI2.DP> Load BOXSPRI2.DAT
+
+. This is file    BOXSPRI2.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ BOXSPRI2.DAT Y X1 X2 X3
+

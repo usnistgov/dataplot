@@ -1,0 +1,8 @@
+----- <~dataall\SPF11.top> SPF11.DAT
+
+SPF11.DAT
+
+View     <xcl: LIST SPF11.DAT>
+Load     <xcf: ~dataload/SPF11.DP>
+Print    <xccl: printfile C:\DATAPLOT\SPF11.DAT>
+

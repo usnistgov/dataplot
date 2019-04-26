@@ -1,0 +1,66 @@
+. This is Dataplot test program LAGERGRE.DP
+.
+. Purpose--Generate 3 plots for Marcia Simon
+.          Federal Highway Administration
+.          concrete strength mixture experiment analysis:
+.             1) plot of simplex triangle
+.             2) plot of design points
+.             3) plot of region
+.
+. Date--March 1997
+.
+. -----START POINT-----
+.
+. -----Generate Plot 1 (Triangle + centroid lines)-----
+.
+.
+. DEVICE 2 POSTSCRIPT ENCAPSULATED
+DEVICE 2 POSTSCRIPT
+ERASE
+.
+LET STRING S1 = X1
+LET STRING S2 = X2
+LET STRING S3 = X3
+.
+CALL SIMPLEX1.DP
+DEVICE 2 CLOSE
+DOS COPY DPPL1F.DAT LAGERGR1.PS
+.
+. -----Generate Plot 2 (triangle + design)-----
+.
+DEVICE 2 POSTSCRIPT ENCAPSULATED
+ERASE
+.
+READ X1 X2 X3
+   100     0     0
+    65    35     0
+    30    70     0
+    30    35    35
+    30     0    70
+    65     0    35
+    54    23    23
+END DATA
+LET X1 = (X1-30)/70
+LET X2 = (X2-0)/70
+LET X3 = (X3-0)/70
+.
+CALL SIMPLEX2.DP
+.
+DEVICE 2 CLOSE
+DOS COPY DPPL1F.DAT LAGERGR2.PS
+.
+. -----Generate Plot 3 (triangle + region)-----
+.
+DEVICE 2 POSTSCRIPT ENCAPSULATED
+ERASE
+.
+LET X1MIN = .15
+LET X1MAX = .25
+LET X2MIN = .10
+LET X2MAX = .20
+LET X3MIN = .60
+LET X3MAX = .70
+.
+CALL SIMPLEX3.DP
+DEVICE 2 CLOSE
+DOS COPY DPPL1F.DAT LAGERGR3.PS

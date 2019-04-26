@@ -1,0 +1,10 @@
+----- <~dataall\mfac.top> View/etc. Built-in Multifactor Data Files
+
+View/Load/Print Built-in Multifactor Data Files
+
+1-factor data                            <~dataall\1fac.top>
+2-factor data                            <~dataall\2fac.top>
+3-factor data                            <~dataall\3fac.top>
+4-factor data                            <~dataall\4fac.top>
+>= 5-factor data                         <~dataall\5fac.top>
+

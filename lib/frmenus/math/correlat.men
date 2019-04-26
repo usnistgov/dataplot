@@ -1,0 +1,24 @@
+This is file correlat.men--Compute correlation of a variable
+ 
+--------------------
+ 1. Correlation
+ 2. LET A = CORRELATION Y1 Y2
+ 3.
+ 4. First variable for which to compute the correlation:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Second variable for which to compute the correlation:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Parameter to store the correlation:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -10 50 *
+10.
+11.
+12. Compute the Correlation?:
+--------------------
+GR FE
+LET _3 = CORRELATION  _1 _2 _4
+--------------------
+WEB HELP CORRELATION
+--------------------

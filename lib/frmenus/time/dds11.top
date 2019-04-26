@@ -1,0 +1,19 @@
+----- <~time\dds11.top> DDS FAQ 11 Effect of Outliers on DDS
+ 
+11. How is DDS affected by outliers?
+ 
+As has been pointed out by Barnett and Lewis in
+the third edition of their book ``Outliers in
+Statistical Data' pub Outliers exist as part of
+experimenter's reality and as part of analyst's
+inescapable responsibility .
+ 
+Outliers and missing observations in the data will
+distort the parameter estimates in DDS and would
+require additional computation to identify them
+and to minimize their influence.  Outliers in the
+residuals require changing the usual norm in model
+fitting, and also require considerable additional
+computation to correctly recover the resultant
+deterministic components.
+ 

@@ -1,0 +1,11 @@
+----- <~dataexec\NATR527.DP> Load & Execute NATR527.DAT
+
+. This is file    NATR527.DP
+
+DELETE Y X
+SKIP 25
+READ NATR527.DAT Y X
+TITLE NATR527.DAT
+FIT Y X
+6-PLOT Y X
+

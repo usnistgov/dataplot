@@ -1,0 +1,39 @@
+This is file setx1lab.men--Set X1LABEL Attributes
+ 
+--------------------
+ 1. Set X1LABEL Attributes
+ 2.  X1LABEL COLOR RED; X1LABEL SIZE 3
+ 3.
+ 4. Color for X1 Label:
+ 4. @CE 1 0 42 50 * gui-color
+ 5. Font for X1LABEL:
+ 5. @CE 2 0 42 50 * gui-font
+ 6. Size for X1LABEL (0 to 100 units):
+ 6. @CE 3 0 42 50 * 
+ 7. Displacement for X1LABEL:
+ 7. @CE 4 0 42 50 * 
+ 8. Case for X1LABEL:
+ 9. @CE 5 1 5 17 all upper
+ 9. @CE 5 2 19 31 all lower
+ 9. @CE 5 3 33 45 as entered
+10. Fill Switch for X1LABEL:
+10. @CE 6 0 42 50 * gui-ooff
+11. Software Fonts - Line Thickness for X1LABEL:
+11. @CE 7 0 42 50 * gui-thick
+12.
+13.
+14. Set X1LABEL Attributes?
+--------------------
+PC FE
+@IF 1 0 X1LABEL COLOR _1
+@IF 2 0 X1LABEL FONT _2
+@IF 3 0 X1LABEL SIZE _3
+@IF 4 0 X1LABEL DISPLACEMENT _4
+@IF 5 1 X1LABEL CASE UPPER
+@IF 5 2 X1LABEL CASE LOWER
+@IF 5 3 X1LABEL CASE ASIS
+@IF 6 0 X1LABEL FILL _6
+@IF 7 0 X1LABEL THICKNESS _7
+--------------------
+WEB HELP LABEL
+--------------------

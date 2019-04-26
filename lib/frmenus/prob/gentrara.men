@@ -1,0 +1,41 @@
+This is file gentrara.men--Generate Trapezoid Random Numbers
+ 
+--------------------
+ 1. Generate Trapezoid Random Numbers
+ 2. LET Y = TRAPEZOID RANDOM NUMBERS FOR I = START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 41 50 ?
+ 5. Lower Limit Parameter (A):
+ 5. @CE 2 0 41 50 ?
+ 6. Shape Parameter (B, B > A):
+ 6. @CE 3 0 41 50 ?
+ 7. Shape Parameter (C, C > B):
+ 7. @CE 4 0 41 50 ?
+ 8. Upper Limit Parameter (D, D > C):
+ 8. @CE 5 0 41 50 ?
+ 9.
+10. Optional random number generator seed (default=305):
+11.    (integer >= 305)
+11. @CE 6 0 41 50 ?
+12.
+13. Name of output variable;
+13. @CE 7 0 41 50 ?
+14.
+15.
+16. Generate the random numbers?
+--------------------
+AN FE
+@IF 6 0 SEED _6
+LET A = 0
+LET B = 0.25
+LET C = 0.75
+LET D = 1
+@IF 2 0 LET A = _2
+@IF 3 0 LET B = _3
+@IF 4 0 LET C = _4
+@IF 5 0 LET D = _5
+LET _7 = TRAPEZOID RANDOM NUMBERS FOR I = 1 1 _1
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

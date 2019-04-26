@@ -1,0 +1,8 @@
+----- <~datalist\BOXJE142.top> BOXJE142.DAT
+ 
+BOXJE142.DAT
+ 
+View     <xcl: LIST BOXJE142.DAT>
+Load     <x2cl: SKIP 25; READ BOXJE142.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\BOXJE142.DAT>
+ 

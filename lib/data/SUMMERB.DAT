@@ -1,0 +1,33 @@
+This is Dataplot data file     SUMMERB.DAT
+Summer Intern (2001) Experiment: Factors Affecting Funnel Traversal Time
+Team B (= Boys Team)
+Goal: Determine Important Factors among Ball, Funnel, & Ramp
+Response variable                  = traversal time
+Number of observations             = 8
+Order of variables on a line image--
+   1. Response variable = traversal time
+   2. Factor 1          = Ball Size    (2 levels)
+   3. Factor 2          = Funeel Type  (2 levels)
+   4. Factor 3          = Ramp         (2 levels)
+Statistical Category: Multi-factor, 2**3 Fulll Factorial
+To read this data file into Dataplot--
+   skip 25
+   read summerb.dat y x1 x2 x3
+
+
+
+
+
+
+
+ Time        Ball   Funnel   Ramp
+  Y           X1      X2      X3
+-------------------------------------
+ 3.97         -1      -1      -1
+ 5.03         +1      -1      -1
+11.72         -1      +1      -1
+14.47         +1      +1      -1
+ 6.88         -1      -1      +1
+ 9.34         +1      -1      +1
+13.16         -1      +1      +1
+16.20         +1      +1      +1

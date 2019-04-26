@@ -1,0 +1,21 @@
+----- <~handbook\ppc.top> Production Process Characterization
+ 
+Production Process Characterization
+ 
+This menu provides links to the NIST/SEMATECH
+Engineering Statistics Handbook that discuss issues
+of production process characterization.
+
+NIST/SEMATECH Handbook (Production Process Characterization) <xcl: web handbook ppc>
+
+NIST/SEMATECH Handbook (PPC Introduction) <xcl: web handbook ppc introduction>
+NIST/SEMATECH Handbook (PPC Assumptions) <xcl: web handbook ppc assumptions>
+NIST/SEMATECH Handbook (PPC Data Collection) <xcl: web handbook ppc data collection>
+ 
+NIST/SEMATECH Handbook (PPC Analysis)     <xcl: web handbook ppc analysis>
+    PPC Analysis Techniques               <~handbook\ppc_anal.top>
+ 
+NIST/SEMATECH Handbook (PPC Case Studies) <xcl: web handbook ppc case studies>
+    Furnace Case Study       <xcl: web handbook ppc furnace case study>
+    Machine Case Study       <xcl: web handbook ppc machine case study>
+ 

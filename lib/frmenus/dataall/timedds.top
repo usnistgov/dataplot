@@ -1,0 +1,26 @@
+----- <~dataall\timedds.top> View/etc. Time Series Data: DDS
+
+View/Load/Print Time Series Data: DDS
+
+DDS1.DAT   Papermaking gate opening      <~dataall\DDS1.top>
+DDS2.DAT   Yearly sunspot numbers        <~dataall\DDS2.top>
+DDS3.DAT   IBM stock prices              <~dataall\DDS3.top>
+DDS4.DAT   Mech. vibratory system displ. <~dataall\DDS4.top>
+DDS5.DAT   Grinding wheel profile dev.   <~dataall\DDS5.top>
+DDS6.DAT   Machine part diameter 1       <~dataall\DDS6.top>
+DDS7.DAT   Machine part diameter 2       <~dataall\DDS7.top>
+DDS8.DAT   U.S. treasure Securities      <~dataall\DDS8.top>
+DDS9.DAT   Money market rates            <~dataall\DDS9.top>
+DDS10.DAT   Hospital in-patient counts   <~dataall\DDS10.top>
+DDS11.DAT   U.S. consumer price index    <~dataall\DDS11.top>
+DDS12.DAT   U.S. wholesale price index   <~dataall\DDS12.top>
+DDS13.DAT   Airline passenger counts     <~dataall\DDS13.top>
+DDS14.DAT   Nuclear plant crack lengths  <~dataall\DDS14.top>
+DDS15.DAT   Wood surface height          <~dataall\DDS15.top>
+DDS16.DAT   Papermaking machine I/O data <~dataall\DDS16.top>
+DDS17.DAT   Chemical Concentration       <~dataall\DDS17.top>
+DDS18.DAT   U.S. gross national product  <~dataall\DDS18.top>
+DDS19.DAT   U.S durables expenditures    <~dataall\DDS19.top>
+DDS20.DAT   Papermaking machine I/O      <~dataall\DDS20.top>
+DDS21.DAT   Wood pulping machine I/O     <~dataall\DDS21.top>
+

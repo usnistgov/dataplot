@@ -1,0 +1,35 @@
+This is Dataplot data file     CORNEL23.DAT
+Effect of Fruit Proportions on Punch Taste
+        3-Factor Constrained Mixture (Simplex Region)
+        Screening Design (Snee & Marquardt)
+Mixture Experiment Example
+Source--Cornell, John A. (1990).  ASQC Statistics
+        Division Volume 5:  How to Run Mixture Experiments
+        for Product Quality.  Page 23 (Table 5).
+Response Variable                  = fruit punch taste
+Number of observations             = 10
+Number of variables per line image = 4
+Order of variables per line image--
+   Response variable = punch taste
+   Factor 1          = watermelon % (0 to 100)
+   Factor 2          = pineapple  % (0 to 100)
+   Factor 3          = orange     % (0 to 100)
+Project Question--What settings for the 3 ingredients
+                  maximize the taste?
+Statistical areas--mixture design of experiment
+To read this file into Dataplot--
+   SKIP 25; READ CORNELL9.DAT Y1 Y2 Y3 W P O
+   LET X1 = (W-30)/70; LET X2 = P/70; LET X3 = O/70
+ Y1    Y2    Y3        X1          X2          X3
+Taste Taste Taste  Watermelon % Pineapple % Orange %
+----------------------------------------------------
+ 4.3   4.7   4.8      100           0           0
+ 6.3   5.8   6.1       65          35           0
+ 6.5   6.2   6.3       30          70           0
+ 6.2   6.2   6.1       30          35          35
+ 6.9   7.0   7.4       30           0          70
+ 6.1   6.5   5.9       65           0          35
+ 6.0   5.8   6.4       54          23          23
+ 5.4   5.8   6.6       80          10          10
+ 5.7   5.0   5.6       40          40          20
+ 5.2   6.4   6.4       40          20          40

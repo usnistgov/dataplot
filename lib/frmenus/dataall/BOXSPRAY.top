@@ -1,0 +1,8 @@
+----- <~dataall\BOXSPRAY.top> BOXSPRAY.DAT
+
+BOXSPRAY.DAT
+
+View     <xcl: LIST BOXSPRAY.DAT>
+Load     <xcf: ~dataload/BOXSPRAY.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXSPRAY.DAT>
+

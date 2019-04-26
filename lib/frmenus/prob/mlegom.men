@@ -1,0 +1,25 @@
+This is file mlegom.men--Gompertz MLE Estimates
+ 
+--------------------
+ 1. Gompertz Maximum Likelihood Estimates
+ 2. GOMPERTZ MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Maximum likelihood estimates for the shape
+ 5. parameters alpha and k can be obtained for
+ 6. uncensored data.  Bootstrap confidence
+ 7. intervals are not yet supported.
+ 8.
+ 9. Response Variable:
+ 9. @CE 1 0 42 50 ? gui-variable
+10.
+11. Subset/Except/For Specification:
+12. @CE 2 0 1 50 *
+13.
+14.
+15. Compute Gompertz MLE's?
+--------------------
+GR FE
+GOMPERTZ MAXIMUM LIKELIHOOD _1 _2
+--------------------
+WEB HELP GOMPDF
+--------------------

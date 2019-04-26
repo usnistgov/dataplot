@@ -1,0 +1,18 @@
+----- <~dex\ccomddis.top> Discussion:  Screening Designs
+
+Discussion:  Screening Designs
+
+An important goal in many research/industrial
+experiments is to systematically and simultaneously
+ferret out (screen) the most important factors
+(influencing a response) from a large number of
+potential influential factors.  Juran refers to this
+process as extracting the "vital few from the trivial
+many".  Commonly used sets of experiment designs to
+achieve this goal are
+
+   1) 2-level full factorial designs
+   2) 2-level fractional factorial designs
+   3) Taguchi designs.
+   4) Plackett-Burman designs
+

@@ -1,0 +1,11 @@
+----- <~dex2kmp\mod2to2.top> Model:  2**2 Design
+ 
+Model:  2**2 Design
+ 
+k = 2 factors
+n = 4 runs
+ 
+Y = MU +
+    0.5*( B1*X1 + B2*X2 +
+          B12*X1*X2 )
+ 

@@ -1,0 +1,34 @@
+This is Dataplot data file     SNED174.DAT
+Snedecor & Cochran Correlation Coefficient Example
+Question: Are the 2 variables (linearly) related?
+ 
+Source--Snedecore, George W. and Cochran , William G. (1937).
+        Statistical Methods. Sixth Edition.
+        The Iowa State University Press, Ames, Iowa.
+ 
+Number of observations             =  9
+Number of variables per line image =  2
+Order of variables on a line image--
+   1. Response Variable Y = Variable 1
+   2. Factor 1            = Variable 2
+ 
+To read this into Dataplot--
+   SKIP 25
+   READ SNED174.DAT Y X
+ 
+ 
+ 
+ 
+ 
+ 
+   Y         X
+----------------
+  11         0
+  13         4
+   8         6
+   4         8
+   7        12
+   6        14
+   3        16
+   2        22
+   0        26

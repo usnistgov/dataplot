@@ -1,0 +1,8 @@
+----- <~dataload\SHELFLIF.DP> Load SHELFLIF.DAT
+
+. This is file    SHELFLIF.DP
+
+DELETE Y X
+SKIP 25
+READ SHELFLIF.DAT Y X
+

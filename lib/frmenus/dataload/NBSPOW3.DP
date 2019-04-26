@@ -1,0 +1,8 @@
+----- <~dataload\NBSPOW3.DP> Load NBSPOW3.DAT
+
+. This is file    NBSPOW3.DP
+
+DELETE Y
+SKIP 25
+READ NBSPOW3.DAT Y
+

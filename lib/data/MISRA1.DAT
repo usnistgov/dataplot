@@ -1,0 +1,39 @@
+This is Dataplot data file    MISRA1.DAT
+Dental Research Monomolecular Adsorption
+Dwarika Misra, NIST, 1978
+Number of Observations     = 14
+Number of Variables per line image =  2
+Order of variables on a line image--
+   1. Response variable = volume
+   2. Factor 1          = pressure
+Statistical category--non-linear modeling
+Comparing 4 non-linear models:
+   1. Y = a * (1 - exp(-b*x))
+   2. Y = a * (1 - (1 + b*x/2)**(-2))
+   3. Y = a * (1 - (1 + 2*b*x)**(-.5))
+   4. Y = a * b * x * ((1 + b*x)**(-1))
+To read this file into Dataplot--
+   SKIP 25
+   READ MISRA1.DAT Y X
+ 
+ 
+ 
+ 
+ 
+  Y         X
+Volume   Pressure
+------------------
+10.07      77.6
+14.73     114.9
+17.94     141.1
+23.93     190.8
+29.61     239.9
+35.18     289.0
+40.02     332.8
+44.82     378.4
+50.76     434.8
+55.05     477.3
+61.01     536.8
+66.40     593.1
+75.47     689.1
+81.78     760.0

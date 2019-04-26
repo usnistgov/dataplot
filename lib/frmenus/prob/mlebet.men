@@ -1,0 +1,117 @@
+This is file mlebet.men--Beta MLE Estimates
+ 
+--------------------
+ 1. Beta Maximum Likelihood Estimates
+ 2. BETA MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Maximum likelihood point estimates for the shape
+ 5. parameters alpha and beta can be obtained for
+ 6. uncensored data.  It is assumed that the lower and
+ 7. upper limit parameters are known.  You can optionally
+ 8. specify the values to use for these limits or you
+ 9. can let Dataplot use the minimum and maximum of the
+10. data.  You can optionally request to have bootstrap
+11. confidence limits generated for the distribution
+12. parameters.
+13.
+14. Response Variable:
+14. @CE 1 0 42 50 ? gui-variable
+15.
+16. Value for lower limit (optional):
+16. @CE 2 0 42 50 *
+17. Value for upper limit (optional):
+17. @CE 3 0 42 50 *
+18.
+19. Number of bootstrap samples (0 to omit)?
+19. @CE 4 0 42 50 *
+20.
+21. Subset/Except/For Specification:
+22. @CE 5 0 1 50 *
+23.
+24.
+25. Compute 2-Parameter Beta MLE's?
+--------------------
+GR FE
+DELETE BETALL BETAUL
+LET NUMBOOT = 0
+@IF 4 0 LET NUMBOOT = _4
+let numboot = min(1000,numboot)
+if numboot > 0
+   bootstrap samples numboot
+   set maximum likelihood percentiles default
+   device 1 font simplex
+   multiplot 2 2
+   multiplot corner coordinates 0 0 100 100
+   multiplot scale factor 2
+   label
+   title case asis
+   label case asis
+   case asis
+   title displacement 2
+   x2label displacement 13
+   x3label displacement 18
+   y1label Parameter Estimate
+   x1label
+   x2label Bootstrap Sample
+   title Bootstrap Plot
+   line color blue red green
+   limits
+   bootstrap beta mle plot _1 _5
+   line color black all
+   .
+   delete aalpha abeta
+   skip 0
+   read dpst1f.dat aalpha abeta
+   y1label
+   x2label
+   title Alpha Parameter
+   let amed = median aalpha
+   let amean = mean aalpha
+   let asd = sd aalpha
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram aalpha
+   title Beta Parameter
+   let amed = median abeta
+   let amean = mean abeta
+   let asd = sd abeta
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram abeta
+   x3label displacement
+   end of multiplot
+   .
+   let alpha = 0.05
+   let xqlow = alpha/2
+   let xqupp = 1 - alpha/2
+   .
+   let xq = xqlow
+   let alp95low = xq quantile aalpha
+   let xq = xqupp
+   let alp95upp = xq quantile aalpha
+   let xq = xqlow
+   let bet95low = xq quantile abeta
+   let xq = xqupp
+   let bet95upp = xq quantile abeta
+   .
+   device 1 font tektronix
+   window corner coordinates 50 0 100 50
+   justification left
+   height 4
+   move 5 70
+   text Confidence Interval for Alpha:
+   move 5 63
+   text (^alp95low,^alp95upp)
+   move 5 50
+   text Confidence Interval for Beta:
+   move 5 43
+   text (^bet95low,^bet95upp)
+   window corner coordinates 0 0 100 100
+   height
+   title
+   label
+end of if
+BETA MAXIMUM LIKELIHOOD _1 _5
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

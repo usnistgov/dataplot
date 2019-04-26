@@ -1,0 +1,119 @@
+This is file topmle.men--Topp and Leone MLE Estimates
+ 
+--------------------
+ 1. Topp and Leone Maximum Likelihood Estimates
+ 2. TOPP AND LEONE MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. This mneu will generate the maximum likelihood estimate
+ 5. for the shape parameter for uncensored data.  You can
+ 6. optionally request to have bootstrap  confidence limits
+ 7. generated  for the shape parameter.
+ 8.
+ 9. Response Variable:
+ 9. @CE 1 0 42 50 ? gui-variable
+10.
+11. If all the data fall in the (0,1) interval, then
+12. 0 and 1 are used as the lower and upper limit
+13. parameters.  Otherwise, the data minimum and
+14. maximum are used as estimates of the lower and
+15. upper limit parameters.
+16.
+17. Number of bootstrap samples (0 to omit)?
+17. @CE 2 0 42 50 *
+18.
+19. Subset/Except/For Specification:
+20. @CE 3 0 1 50 *
+21.
+22.
+23. Compute the Topp and Leone MLE's?
+--------------------
+GR FE
+LET NUMBOOT = 0
+@IF 2 0 LET NUMBOOT = _2
+let numboot = min(1000,numboot)
+if numboot > 0
+   bootstrap samples numboot
+   set maximum likelihood percentiles default
+   device 1 font simplex
+   multiplot 2 3
+   multiplot corner coordinates 0 0 100 100
+   multiplot scale factor 2
+   label
+   title case asis
+   label case asis
+   case asis
+   title displacement 2
+   x2label displacement 13
+   x3label displacement 18
+   y1label Parameter Estimate
+   x1label
+   x2label Bootstrap Sample
+   title Bootstrap Plot
+   line color blue red green
+   limits
+   bootstrap topp and leone mle plot _1 _3
+   line color black all
+   .
+   delete aloc ascale ashape
+   skip 0
+   read dpst1f.dat aloc ascale ashape
+   y1label
+   x2label
+   title Lower Limit Parameter
+   let amed = median aloc
+   let amean = mean aloc
+   let asd = sd aloc
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram aloc
+   title Upper Limit Parameter
+   let amed = median ascale
+   let amean = mean ascale
+   let asd = sd ascale
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram ascale
+   title Shape Parameter
+   let amed = median ashape
+   let amean = mean ashape
+   let asd = sd ashape
+   x2label Median = ^amed, Mean = ^amean
+   x3label SD = ^asd
+   histogram ashape
+   x3label displacement
+   end of multiplot
+   .
+   let alpha = 0.05
+   let xqlow = alpha/2
+   let xqupp = 1 - alpha/2
+   .
+   let xq = xqlow
+   let loc95low = xq quantile aloc
+   let xq = xqupp
+   let loc95upp = xq quantile aloc
+   let xq = xqlow
+   let sh95low = xq quantile ashape
+   let xq = xqupp
+   let sh95upp = xq quantile ashape
+   .
+   device 1 font tektronix
+   window corner coordinates 50 0 100 50
+   justification left
+   height 4
+   . move 5 70
+   . text Confidence Interval for Location:
+   . move 5 63
+   . text (^loc95low,^loc95upp)
+   move 5 50
+   text Confidence Interval for Shape:
+   move 5 43
+   text (^sh95low,^sh95upp)
+   window corner coordinates 0 0 100 100
+   height
+   title
+   label
+end of if
+TOPP AND LEONE MAXIMUM LIKELIHOOD _1 _3
+--------------------
+WEB HELP TOPPDF
+--------------------

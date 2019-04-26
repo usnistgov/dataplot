@@ -1,0 +1,8 @@
+----- <~datalist\PBN2O.top> PBN2O.DAT
+ 
+PBN2O.DAT
+ 
+View     <xcl: LIST PBN2O.DAT>
+Load     <x2cl: SKIP 25; READ PBN2O.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\PBN2O.DAT>
+ 

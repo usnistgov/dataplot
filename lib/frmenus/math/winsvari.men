@@ -1,0 +1,28 @@
+This is file winsvari.men--Compute Winsorized variance of a variable
+ 
+--------------------
+ 1. Winsorized Variance
+ 2. LET A = WINSORIZED VARIANCE Y
+ 3.
+ 4. Variable for which to compute the Winsorized variance:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Percentage of values to Winsorize above?:
+ 5. @CE 2 0 42 50 ? 
+ 6. Percentage of values to Winsorize below?:
+ 6. @CE 3 0 42 50 ?
+ 7. Parameter to store the Winsorized variance:
+ 7. @CE 4 0 42 50 ? gui-none
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 1 50 *
+11.
+12.
+13. Compute the Winsorized Variance?:
+--------------------
+GR FE
+LET P1 = _3
+LET P2 = _2
+LET _4 = WINSORIZED VARIANCE  _1 _5
+--------------------
+WEB HELP WINSORIZED VARIANCE
+--------------------

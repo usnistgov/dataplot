@@ -1,0 +1,8 @@
+----- <~dataload\CORNELL4.DP> Load CORNELL4.DAT
+
+. This is file    CORNELL4.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ CORNELL4.DAT Y X1 X2
+

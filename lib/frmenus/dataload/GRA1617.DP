@@ -1,0 +1,8 @@
+----- <~dataload\GRA1617.DP> Load GRA1617.DAT
+
+. This is file    GRA1617.DP
+
+DELETE Y X
+SKIP 25
+READ GRA1617.DAT Y X
+

@@ -1,0 +1,50 @@
+This is dataplot data file   zarr110.dat
+Data from: Dean V. Neubauer, "Testing for Randomness: The Mean
+           Successive Differece Test", ASTM Standardization News,
+           September/October 2012, pp. 12-13.
+Article provided by Bob Zarr.
+Contact: Bob Zarr
+Date: January 7, 2013
+Number of variables per line image = 1
+Order of variables on a line image:
+   1. Response Y = response
+To read this data file into dataplot:
+skip 25; read zarr110.dat y
+
+
+
+
+
+
+
+
+
+
+
+  Y
+------
+81.02
+80.08
+80.05
+79.70
+79.13
+77.09
+80.09
+79.40
+80.56
+80.97
+80.17
+81.35
+79.64
+80.82
+81.26
+80.75
+80.74
+81.59
+80.14
+80.75
+81.01
+79.09
+78.73
+78.45
+79.56

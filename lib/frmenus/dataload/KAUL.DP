@@ -1,0 +1,8 @@
+----- <~dataload\KAUL.DP> Load KAUL.DAT
+
+. This is file    KAUL.DP
+
+DELETE X TAG Y1 TO Y12
+SKIP 25
+READ KAUL.DAT X TAG Y1 TO Y12
+

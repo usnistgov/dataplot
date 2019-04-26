@@ -1,0 +1,35 @@
+This is file 3factqua.men--Fit 3-Factor Quadratic Model
+ 
+--------------------
+1. Fitting: 3 Variable Second Order Model
+2. FIT Y X1 X2 X3 X12 X13 X23 X123 X1SQ X2SQ X3SQ
+3.
+4. Variables:
+5.    Response    Y:
+5. @CE 1 0 40 50 ? gui-variable
+6.    First Independent X:
+6. @CE 2 0 40 50 ? gui-variable
+7.    Second Independent Variable:
+7. @CE 3 0 40 50 * gui-variable
+8.    Third Independent Variable:
+8. @CE 4 0 40 50 * gui-variable
+9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 1 50 *
+12.
+13.
+14. Do the Fit?
+--------------------
+GR FE
+DELETE ZZZZX12 ZZZZX13 ZZZZX23 ZZZZX123 ZZZZX1SQ ZZZZX12SQ ZZZZX3SQ
+LET ZZZZX12 = _2 * _3
+LET ZZZZX13 = _2 * _4
+LET ZZZZX23 = _3 * _4
+LET ZZZZX123 = _2 * _3 * _4
+LET ZZZZX1SQ = _2 **2
+LET ZZZZX2SQ = _3 **2
+LET ZZZZX3SQ = _4 **2
+FIT _1 _2 _3 _4 ZZZZX12 ZZZZX13 ZZZZX23 ZZZZX123 ZZZZX1SQ ZZZZX2SQ ZZZZX3SQ _5
+--------------------
+WEB HELP FIT
+--------------------

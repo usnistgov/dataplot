@@ -1,0 +1,24 @@
+----- <~prob\skewhisp.top> Skewed Distribution pdf Plots
+
+Skewed Distribution pdf Plots
+
+Lognormal                               <xemf: ~prob\lgnhispd.men>
+Halfnormal                              <xemf: ~prob\hfnhispd.men>
+Chi-Squared                             <xemf: ~prob\chshispd.men>
+F                                       <xemf: ~prob\fhispd.men>
+
+Exponential                             <xemf: ~prob\exphispd.men>
+Gamma                                   <xemf: ~prob\gamhispd.men>
+Beta                                    <xemf: ~prob\bethispd.men>
+Weibull                       (for min) <xemf: ~prob\wei1hisp.men>
+Weibull                       (for max) <xemf: ~prob\wei2hisp.men>
+Ext. Value Type 1 (= Gumbel)  (for min) <xemf: ~prob\ev11hisp.men>
+Ext. Value Type 1 (= Gumbel)  (for max) <xemf: ~prob\ev12hisp.men>
+Ext. Value Type 2 (= Frechet) (for min) <xemf: ~prob\ev21hisp.men>
+Ext. Value Type 2 (= Frechet) (for max) <xemf: ~prob\ev22hisp.men>
+Pareto                                  <xemf: ~prob\parhispd.men>
+Inverse Gaussian                        <xemf: ~prob\ighispd.men>
+Reciprocal Inverse Gaussian             <xemf: ~prob\righispd.men>
+Wald                                    <xemf: ~prob\walhispd.men>
+Fatigue Life                            <xemf: ~prob\flhispd.men>
+

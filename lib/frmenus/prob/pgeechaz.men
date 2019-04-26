@@ -1,0 +1,50 @@
+This is file pgeechaz.men--Plot Geometric Extreme Exponential Hazard
+ 
+--------------------
+ 1. Plot a Geometric Extreme Exponential Cumulative Hazard
+ 2. PLOT GEECHAZ(X,2) FOR X = 0 0.01 5
+ 3.
+ 4. Shape Parameter gamma (required):
+ 4. @CE 1 0 42 50 ?
+ 5. Location Parameter u (optional):
+ 5. @CE 2 0 42 50 ?
+ 6. Scale Parameter s (optional):
+ 6. @CE 3 0 42 50 ?
+ 7.
+ 8. You can specify the range of values to plot either
+ 9. by providing an input vector containing the explicit
+10. input values or by providing the start, increment,
+11. and stop values.
+12.
+13. Input Variable (optional):
+13. @CE 4 0 42 50 ? gui-variable
+14.
+15. Start Value:
+15. @CE 5 0 42 50 ?
+16. Increment Value (defaults to 0.1):
+16. @CE 6 0 42 50 ?
+17. Stop Value:
+17. @CE 7 0 42 50 ?
+18.
+19. Variable to Store the Cumulative Hazard Values (optional):
+19. @CE 8 0 42 50 ?
+20.
+21.
+22. Plot the Geometric Extreme Exponential Cumulative Hazard?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 2 0 LET ZLOC = _2
+LET ZSCALE = 1
+@IF 3 0 LET ZSCALE = _2
+LET ZGAMMA = 1
+@IF 1 0 LET ZGAMMA = _1
+LET ZINC = 0.1
+@IF 6 0 LET ZINC = _6
+@IF 4 0 LET ZJUNK = GEECHAZ( _4 ,ZGAMMA,ZLOC,ZSCALE)
+@IF 4 0 PLOT ZJUNK _4
+@IF 5 0 PLOT GEECHAZ( ZZZZ ,ZGAMMA,ZLOC,ZSCALE) FOR ZZZZ = _5 ZINC _7
+@IF 8 0 LET _8 = YPLOT
+--------------------
+WEB HELP GEECHAZ
+--------------------

@@ -1,0 +1,8 @@
+----- <~dataload\ZARR14.DP> Load ZARR14.DAT
+
+. This is file    ZARR14.DP
+
+DELETE Y
+SKIP 25
+READ ZARR14.DAT Y
+

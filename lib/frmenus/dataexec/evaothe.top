@@ -1,0 +1,10 @@
+----- <~dataexec\evaothe.top> Load and Execute Extreme Value Data: Other
+
+Load and Execute Extreme Value Data: Other
+
+GEAR.DAT      Gear diameters (Ishikawa)   <xcf: ~dataexec\GEAR.DP>
+CLEAR.DAT     Component clearances        <xcf: ~dataexec\CLEAR.DP>
+
+RANDN.DAT     Normal random numbers       <xcf: ~dataexec\RANDN.DP>
+RANDU.DAT     Uniform random numbers      <xcf: ~dataexec\RANDU.DP>
+

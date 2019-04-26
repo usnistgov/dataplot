@@ -1,0 +1,37 @@
+This is file freqplot.men--Pie Chart
+ 
+--------------------
+1. Pie Chart
+2. PIE CHART Y
+3.
+4. Response Variable:
+4. @CE 1 0 33 50 ? gui-variable
+5.
+6. Solid Fill Pie Slices?:
+6. @CE 2 0 33 50 * gui-ooff
+7. Colors for Solid Fill Pie Slices?:
+8. @CE 3 0 1 50 *
+9.
+10. Title:
+10. @CE 4 0 18 50 *
+11.
+12. Subset/Except/For Specification: 
+13. @CE 7 0 1 50 *
+14.
+15.
+16. Generate the Pie Chart?:
+--------------------
+GR FE
+LINE SOLID ALL
+CHARACTER BLANK ALL
+@IF 2 0 REGION FILL ON ALL
+@IF 3 0 REGION FILL COLOR _3
+@IF 3 0 REGION PATTERN COLOR _3
+TITLE _4
+LET ZZZZN = SIZE _1
+LET ZZZZX = SEQUENCE 1 1 ZZZZN
+PIE CHART _1 ZZZZX
+DELETE ZZZZN ZZZZX
+--------------------
+WEB HELP PIE CHART
+--------------------

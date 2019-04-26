@@ -1,0 +1,45 @@
+----- <~prob\genshap1ran.top> Random numbers for One Shape Parameter Continuous Distributions
+
+Generate Random Numbers (one shape parameters)
+
+Generate Random Numbers for Continuous Distributions
+with One Shape Parameters
+
+Asymmetric Double Exponential (Laplace)   <xemf: ~prob\genadera.men>
+Bradford                                  <xemf: ~prob\genbrara.men>
+Chi                                       <xemf: ~prob\genchra.men>
+Chi-Square                                <xemf: ~prob\genchsra.men>
+Double Gamma                              <xemf: ~prob\gendgara.men>
+Double Weibull                            <xemf: ~prob\gendwera.men>
+Error (Subbotin)                          <xemf: ~prob\gensubra.men>
+Fatigue Life                              <xemf: ~prob\genflra.men>
+Folded T                                  <xemf: ~prob\genftra.men>
+Gamma                                     <xemf: ~prob\gengamra.men>
+Generalized Extreme Value (Minimum)       <xemf: ~prob\gengev1r.men>
+Generalized Extreme Value (Maximum)       <xemf: ~prob\gengev2r.men>
+Generalized Half-Logistic                 <xemf: ~prob\genghlra.men>
+Generalized Logistic                      <xemf: ~prob\genglora.men>
+Generalized Pareto                        <xemf: ~prob\gengepra.men>
+Geometric Extreme Exponential             <xemf: ~prob\gengeera.men>
+Inverted Gamma                            <xemf: ~prob\genigara.men>
+Inverted Weibull                          <xemf: ~prob\geniwera.men>
+Log Double Exponential (Log Laplace)      <xemf: ~prob\genldera.men>
+Log Gamma                                 <xemf: ~prob\genlgara.men>
+Log Logistic                              <xemf: ~prob\genllgra.men>
+Lognormal                                 <xemf: ~prob\genlgnra.men>
+Maxwell                                   <xemf: ~prob\genmaxra.men>
+McLeish                                   <xemf: ~prob\genmclra.men>
+Power Normal                              <xemf: ~prob\genpnrra.men>
+Reciprocal                                <xemf: ~prob\genrecra.men>
+Skew Double Exponential (Skew Laplace)    <xemf: ~prob\gensdera.men>
+Skew Normal                               <xemf: ~prob\gensnra.men>
+T                                         <xemf: ~prob\gentra.men>
+Topp and Leone                            <xemf: ~prob\gentopra.men>
+Triangular                                <xemf: ~prob\gentrira.men>
+Tukey-Lambda (symmetric)                  <xemf: ~prob\genlamra.men>
+Von Mises                                 <xemf: ~prob\genvonra.men>
+Wald                                      <xemf: ~prob\genwalra.men>
+Weibull (minimum case)                    <xemf: ~prob\genwe1ra.men>
+Weibull (maximum case)                    <xemf: ~prob\genwe2ra.men>
+Wrapped Cauchy                            <xemf: ~prob\genwcara.men>
+

@@ -1,0 +1,20 @@
+----- <~dataexec\stsc.top> Statistics for Scientists Course
+
+Statistics for Scientists Course
+
+    Introduction                           <xcf: ~dataexec\stscintr.DP>
+
+ 1. Exploratory Data Analysis I            <xcf: ~dataexec/stsceda1.DP>
+ 2. Exploratory Data Analysis II           <xcf: ~dataexec/stsceda2.DP>
+ 3. Sampling Distributions                 <xcf: ~dataexec/stscsamp.DP>
+ 4. Hypothesis Testing                     <xcf: ~dataexec/stschypo.DP>
+ 5. Statistical Intervals                  <xcf: ~dataexec/stscinte.DP>
+ 6. Model Fitting I (Linear Models)        <xcf: ~dataexec/stscfit1.DP>
+ 7. Model Fitting II (Multi/Non-Linear)    <xcf: ~dataexec/stscfit2.DP>
+ 8. Design of Experiment I                 <xcf: ~dataexec/stscdex1.DP>
+ 9. Design of Experiment II                <xcf: ~dataexec/stscdex2.DP>
+10. ANOVA I                                <xcf: ~dataexec/stscano1.DP>
+11. ANOVA II & Control Charts II           <xcf: ~dataexec/stscano2.DP>
+12. Control Charts                         <xcf: ~dataexec\stsccont.DP>
+13. Computationally Intensive Methods      <xcf: ~dataexec/stsccomp.DP>
+

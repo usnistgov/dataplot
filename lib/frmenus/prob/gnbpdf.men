@@ -1,0 +1,44 @@
+This is file gnbpdf.men--Compute Generalized Negative Binomial pdf
+ 
+--------------------
+ 1. Compute Generalized Negative Binomial pdf
+ 2. LET Y = GNBPDF(X,THETA,BETA,M)
+ 3.
+ 4. Input values:
+ 5.                                x (x = 0, 1, 2, ...):
+ 5. @CE 1 0 42 50 ?
+ 6.               shape parameter theta (0 < theta < 1):
+ 6. @CE 2 0 42 50 ?
+ 7.         shape parameter beta (1 <= beta M= 1/theta):
+ 7. @CE 3 0 42 50 ?
+ 8.                           shape parameter m (m > 0):
+ 8. @CE 4 0 42 50 ?
+ 9.
+10. Output parameters:
+11.                  name for the pdf value:
+11. @CE 5 0 42 50 ?
+12.
+13.
+14. Compute the Probability?
+--------------------
+AN FE
+LET ZTHETA = 0.7
+LET ZBETA = 1
+LET ZM = 1
+@IF 2 0 LET ZTHETA = _2
+IF ZTHETA <= 0
+   LET ZTHETA = 0.7
+END OF IF
+IF ZTHETA >= 1
+   LET ZTHETA = 0.7
+END OF IF
+@IF 3 0 LET ZBETA = _3
+@IF 4 0 LET ZM = _4
+IF ZM <= 0
+   LET ZM = 1
+END OF IF
+@IF 5 0 LET _5 = GNBPDF( _1 , ZTHETA , ZBETA, ZM )
+@IF 6 0 LET _6 = 1 - GNBPDF( _1 , ZTHETA , ZBETA, ZM )
+--------------------
+WEB HELP GNBPDF
+--------------------

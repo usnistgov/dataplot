@@ -1,0 +1,877 @@
+This is Dataplot file    FAQS.
+ 
+Purpose--List frequently-asked questions about Dataplot
+ 
+Dataplot FAQs
+ 
+   1. Named Plot Files
+   2. Title Positioning
+   3. Vertical Axis Label Repositioning
+   4. Margin Spacing Within a Plot
+   5. Capturing Regression Output to File
+   6. Accessing Regression Coefficient Standard Deviations
+   7. Repeating Blocks of Commands
+   8. Generating a Single Plot for Import into Wordperfect
+   9. Generating Multiple Plots for Import into Wordperfect
+  10. Printing the Current Screen Plot (PP) under UNIX
+  11. Generating Portrait-mode Postscript Plots
+  12. Generating Text with Upper & Lower Case Script
+  13. Where to Have the Dataplot Login File DPLOGF.TEX
+  14. How to Encircle/Highlight Data Points on a Plot
+  15. How to Have 2 Different Left/Right Axis Labels
+  16. How to Correct Oversized Default Font on the Screen
+ 
+ 
+.....Q1.Named Plot Files....
+ 
+Q1.How do I go about copying individual plots out to
+   files whose names I specify?
+ 
+A1.The easiest way to do this is to make use of
+   dataplot's DEVICE 3. Whenever a plot appears on the
+   screen, a postscript copy of the plot is being
+   copied out to "Device 3".  In real life,
+ 
+      DEVICE 1 is your terminal screen.
+      DEVICE 2 is the file    dppl1f.dat   in your current directory.
+      DEVICE 3 is the file    dppl2f.dat   in your current directory.
+ 
+   Thus a postscript version of the plot currently on
+   your screen also resides in the file dppl2f.dat .
+   Thus to copy a pre-existing plot out to file XYZ.,
+   say, one needs only to
+ 
+      1) close DEVICE 3  (by entering DEVICE 3 CLOSE)
+            DEVICE 3 CLOSE
+      2) copy over the contents of dppl2f.dat
+            UNIX: SYSTEM cp dppl2f.dat XYZ.
+            PC  : SYSTEM COPY DPPL2F.DAT XYZ.
+ 
+   A second method (which must be done before the plot
+   is generated) is as follows:
+ 
+      1) close DEVICE 3  (by entering DEVICE 3 CLOSE)
+            DEVICE 3 CLOSE
+      2) rename the DEVICE 3 file (from dppl1f.dat to XYZ.)
+            SET IPL2NA = XYZ.
+ 
+   In general, method 1 is the preferred method.
+ 
+ 
+.....Q2.Title Positioning....
+ 
+Q2.How do I go about moving the title on my plot down
+   closer to the upper frame line?
+ 
+A2.In Dataplot
+ 
+      the botoom of your screen is at 0
+      the top of your screen is at 100
+      the top frame line of your plot is at 90
+      the title line is at 97 (= 7 units above the top frame line)
+ 
+   To change the default TITLE position, use the
+   TITLE OFFSET (= the TITLE DISPLACEMENT) command, as in
+ 
+        TITLE OFFSET 3
+ 
+   which would offset all succeeding titles which
+   would offset the TITLE on all succeeding plots to
+   be at 93 (= 3 units above the top frame line).
+ 
+   To make this permanent, put the appropriate TITLE
+   OFFSET command in your DPLOGF.TEX so that it will
+   be automatically executed upon entry into Dataplot.
+ 
+ 
+.....Q3.Vertical Axis Label Positioning....
+ 
+Q3.The default positioning of the left vertical axis
+   label (as obtained by the Y1LABEL command) is such
+   that the label happens to be overwriting the tic
+   mark numbers.  How do I move the label to the left
+   so as to avoid this overwriting?
+ 
+A3.In Dataplot
+ 
+      the left edge of your screen is at 0
+      the right edge of your screen is at 100
+      the left vertical frame line is at 15
+      the left vertical axis label is at 7
+         (8 units to the left of the axis line)
+ 
+   To change the default Y1LABEL position, use the
+   Y1LABEL OFFSET (= the Y1LABEL DISPLACEMENT)
+   command, as in
+ 
+      Y1LABEL OFFSET 10
+ 
+   which would offset the Y1LABEL on all succeeding
+   plots 10 units to the left of the left frame line.
+ 
+   To make this permanent, put the appropriate Y1LABEL
+   OFFSET command in your DPLOGF.TEX so that it will
+   be automatically executed upon entry into Dataplot.
+ 
+ 
+.....Q4.Margin Spacing Within a Plot....
+ 
+Q4.Some of my plots have data points which end up on
+   the frame lines and so are hard to see and easy to
+   miss.  How do I build in a buffer zone within a
+   plot so that the plot points are visibly off the
+   frame lines?
+ 
+A4.This problem is caused (by default) because the tic
+   mark min and max are at the frame corners.  The
+   easiest way to solve the problem is to offset the
+   min and max away from the corners.  This is done
+   via the TIC OFFSET command.  The TIC OFFSET may be
+   done either in data units or in screen (0 to 100)
+   units--the most common offsetting is done in screen
+   units.  Thus, for example, to build in a 5% buffer
+   zone inside all 4 frame lines of a plot, enter
+ 
+      TIC OFFSET UNITS SCREEN
+      TIC OFFSET 5 5
+ 
+   To make this permanent, put the above 2 commands
+   into your DPLOGF.TEX so that it will be
+   automatically executed upon entry into Dataplot.
+ 
+ 
+.....Q5.Capturing Regression Output....
+ 
+Q5.How do I capture the text output from a regression
+   out to a file so that I can use it as part of a
+   report?
+ 
+A5.The text output from the FIT command (or the text
+   output from any Dataplot command for that matter)
+   may be captured by use of the CAPTURE command.
+   Thus if one wants to capture the text output from a
+   quadratic fit out to the file XYZ., for example,
+   then one would enter
+ 
+      QUADRATIC FIT Y X      (to see the fit output on the screen)
+      CAPTURE XYZ.           (to initiate the capture of text out to file XYZ.)
+         QUADRATIC FIT Y X   (to regenerate the fit output; nothing will go to the screen)
+      END OF CAPTURE         (to terminate the capture of text out to file XYZ.)
+      LIST XYZ.              (to view on screen the contents of file XYZ.)
+ 
+ 
+.....Q6.Capturing Regression Coefficient Standard Deviations....
+ 
+Q6.When I do a regression, the coefficients become
+   Dataplot parameters (scalars) but the standard
+   deviation of the coefficients--though seen on the
+   screen-- are not saved as Dataplot parameters.  I
+   would like to have the coefficient standard
+   deviations as parameters for printing and/or for
+   annotation on plots.  How do I get these
+   coefficient standard deviations?
+ 
+A6.Whenever a FIT command is executed, the
+   coefficients and their standard deviations are
+   copied out to file dpst1f.dat in your current
+   directory.  Thus to get the standard deviations,
+   simply read them in (via the READ command), as in:
+ 
+      QUADRATIC FIT Y X           (carry out the quadratic fit)
+      SKIP 0                      (since   dppl1f.dat   has no header lines)
+      READ DPST1F.DAT COEF SDCOEF (read in coefficients & sd(coefficients)
+                                   into vectors COEF and SDCOEF)
+      LET SDA0 = SDCOEF(1)        (copy the first element of SDCOEF into the parameter SDA0)
+      LET SDA1 = SDCOEF(2)        (copy the second element of SDCOEF into the parameter SDA1)
+      LET SDA2 = SDCOEF(3)        (copy the third  element of SDCOEF into the parameter SDA2)
+      WRITE A0 A1 A2 SDA1 SDA1 SDA2  (write (to screen) the coefficients & their sd's)
+      X2LABEL AO = ^A0  SDA0 = ^SDA0 (define contents of X2LABEL for future plots)
+      PLOT RES X                     (generate a residual plot--including X2LABEL)
+ 
+ 
+.....Q7.Repeating Commands....
+ 
+Q7.How do I go about re-executing a previous command or a previous
+   set of commands?
+ 
+   If you want to repeat a single command, then you may use the REPEAT
+   (or R for short) command.  To re-execute the last command, enter
+   any of the following:
+ 
+      REPEAT
+      R
+      REPEAT 1
+      R 1
+ 
+   If you want to repeat a command that occurred a few commands back
+   but you are not sure how far back, then precede the R command with
+   a LIST (or L) command with no arguments:
+ 
+      LIST
+      L
+ 
+   This will list out the previous 20 commands or so,
+   and if the the desired command was, say, 7 commands back, then
+   you would follow the LIST command by either of the following:
+ 
+      REPEAT 7
+      R 7
+ 
+   If you need to re-execute a chunk of commands, then this is done
+   via a sequence of the following commands:
+ 
+      LIST (or L)      (to list and see the previous commands--with line numbers)
+      SAVE (or S)      (to save (in whatever order desired) previous commands)
+      /                (to rexecute the saved commands)
+ 
+   For example,
+ 
+      MULTIPLOT 2 2     (to specify that the next 2 x 2 = 4 plots
+                         appear on a the same page in a 2-by-2 grid)
+      PLOT Y1 X1        (to plot Y1 versus X1 in upper left)
+      PLOT Y2 X2        (to plot Y2 versus X2 in upper right)
+      PLOT Y3 X3        (to plot Y3 versus X3 in lower left)
+      PLOT Y4 X4        (to plot Y4 versus X4 in lower right)
+      LIST              (to list and see previous commands--with line numbers)
+      SAVE 5 4 3 2 1    (to save commands 5, 4, 3, 2, and 1--in that order)
+      /                 (to re-generate the 2 by 2 multiplot)
+      CHARACTERS X      (to set plot characters to X)
+      /                 (to again re-generate the 2 by 2 multiplot)
+ 
+ 
+.....Q8.Single Plot for Import into WordPerfect.....
+ 
+Q7.How do I go about generating a single plot that I may import
+   into a WordPerfect document?
+ 
+   The best way to create a WordPerfect-importable file is to
+   create an encapsulated postscript file from within Dataplot
+   and then import it into WordPerfect.  To generate such a
+   plot, make use of the DEVICE 2 command as in
+ 
+      DEVICE 2 ENCAPSULATED POSTSCRIPT
+ 
+   or (as with many Dataplot commands) use just the first 4
+   characters of a word, as in
+ 
+      DEVICE 2 ENCA POST
+ 
+   WordPerfect expects the plot to be in a named file, and so it
+   is typical to assign a user-preferred name to the output file
+   from the DEVICE 2 command (the default output file name is
+   DPPL1F.DAT).  To do so, use the SET IPL1NA ...  command, as in
+ 
+      SET IPL1NA MYPLOT.EPS
+ 
+   which would attach the name MYPLOT.EPS to DEVICE 2. After
+   generating the plot, do not forget to close DEVICE 2 (via
+ 
+      DEVICE 2 CLOSE
+ 
+   so as to assure that succeeding plots do not end up being
+   written to this same file (WordPerfect typically expects only
+   1 plot per file).
+ 
+   Thus for example, to generate a sine function plot and have
+   an encapsulated postscript version ending up in the file
+   MYPLOT.EPS, the following code would do it:
+ 
+      DEVICE 2 ENCAPSULATED POSTSCRIPT
+      SET IPL1NA MYPLOT.EPS
+      PLOT SIN(X) FOR X = 0 .1 10
+      DEVICE 2 CLOSE
+ 
+   Note that upon exit from Dataplot (via EXIT, STOP, END, QUIT,
+   etc.) the encapsulated postscript version of the plot will
+   reside in MYPLOT.EPS . Typically, an encapsulated postscript
+   file created by any software (not just Dataplot) is not
+   immediately viewable as is (they have the postscript showpage
+   command redefined and voided out) and so a typical DOS
+ 
+      PRINT MYPLOT.TEX
+ 
+   or a typical UNIX
+ 
+      lpr MYPLOT.TEX
+ 
+   or even a
+ 
+     GHOSTVIEW MYPLOT.EPS
+ 
+   will not work.  To make matters worse, within WordPerfect,
+   encapsulated postscript files will typically show up only as
+   a grayed-out area (that's a WordPerfect convention!).  Thus
+   the only way to view an encapsulated postscript file is by
+   printing out the page from within the application
+   (WordPerfect).
+ 
+ 
+.....Q9.Multiple Plot for Import into WordPerfect.....
+ 
+Q9.How do I generate multiple plots that I may import
+   into a WordPerfect (or Latex, or Microsoft Word or
+   FrameMaker or whatever your favored word processor is)
+   document?
+ 
+   In particular, suppose I wanted to generate 3 separate function plots:
+ 
+      1) y = x
+      2) y = x**2
+      3) y = x**3
+ 
+   and have them residing in 3 files named
+ 
+      1) MYPLOT1.DAT
+      2) MYPLOT2.DAT
+      3) MYPLOT3.DAT
+ 
+   so that they may be imported into WordPerfect after exiting
+   Dataplot.
+ 
+A9. Most word processors accept encapsulated Postscript files
+    for importing graphs.  This is the recommended choice for
+    Dataplot if available.  If encapsulated Postscript is not
+    supported, you may be able to use the HP-GL driver
+    (DEVICE 2 HP-GL).  If only bitmaps are supported (e.g., 
+    TIFF or GIF formats), we recommend the Ghostscript program.
+    Ghostscript is a freely available program that converts
+    Postscript to various popular formats such as TIFF or GIFF.
+    There are other commerical software packages that can
+    perform a similar function.
+
+    Another consideration is obtaining a proper orientation
+    for the imported plot.  Portrait mode plots generally
+    require no additional meddling.  However, landscape
+    plots typically come out rotated the wrong way when
+    imported into the word processor.  The following
+    Dataplot command corrects this (it generates a landscape
+    plot on a portrait page):
+
+        ORIENTATION LANDSCAPE WORDPERFECT
+
+    This command was added 10/96, so if you have an older
+    version of Dataplot this command is not available (if
+    you do this sort of thing often, it is worthwhile to
+    upgrade to a more recent version of Dataplot).  Also,
+    this command only applies to encapsulated Postscript
+    files.
+
+    Continuing on with the same considerations as with
+    an earlier FAQ about generating a single plot for
+    import into WordPerfect, the following code would
+    work:
+
+       SET IPL1NA MYPLOT1.DAT
+       DEVICE 2 ENCAPSULATED POSTSCRIPT
+       ORIENTATION LANDSCAPE WORDPERFECT
+       PLOT X FOR X = 1 1 10
+       DEVICE 2 CLOSE
+       .
+       SET IPL1NA MYPLOT2.DAT
+       DEVICE 2 ENCAPSULATED POSTSCRIPT
+       ORIENTATION LANDSCAPE WORDPERFECT
+       PLOT X**2 FOR X = 1 1 10
+       DEVICE 2 CLOSE
+       .
+       SET IPL1NA MYPLOT3.DAT
+       DEVICE 2 ENCAPSULATED POSTSCRIPT
+       ORIENTATION LANDSCAPE WORDPERFECT
+       PLOT X**3 FOR X = 1 1 10
+       DEVICE 2 CLOSE
+       .
+
+ 
+.....Q10.Printing the current screen plot (PP) under UNIX.....
+ 
+Q10.In UNIX, the PP command to print the last plot on the screen
+    works, but sends the plot off to the wrong printer; how do I
+    get PP to send the plot to the correct printer.
+ 
+A10.In UNIX, Dataplot's PP command sends the plot off to your
+    current default printer.  To determine the current printer,
+    enter from UNIX:
+ 
+       echo $PRINTER
+ 
+    To change the printer default (e.g., to lw9), use the UNIX
+    setenv    command (either manually or via the    .cshrc    file):
+ 
+       setenv PRINTER lw9
+ 
+ 
+ 
+ 
+.....Q11.Generating Portrait-mode Postscript Plots.....
+ 
+Q11. How do I generate a portrait-mode postscript plot?
+     In particular, How do I generate a plot of Y = x**2
+     with titles and labels and have it in portrait mode
+     as opposed to the default landscape mode?
+ 
+A11. The following code will generate the portrait-mode
+     Postscript plot:
+ 
+        DEVICE 2 POSTSCRIPT
+        ORIENTATION PORTRAIT
+        PLOT X**2 FOR X = 1 1 10
+        EXIT
+ 
+     In this example, the postscript output for
+     DEVICE 2 will by default go to the file DPPL1F.DAT.
+     Do a system (DOS, UNIX, ...) print of the file to
+     any postscript printer; for example:
+ 
+        PRINT DPPL1F.DAT
+ 
+     If you do not prefer the positioning of the plot
+     on the vertical page, then adjustments may be made
+     via the FRAME COORDINATES command, as in
+ 
+        DEVICE 2 POSTSCRIPT
+        ORIENTATION PORTRAIT
+        FRAME COORDINATES 10 20 90 90
+        PLOT X**2 FOR X = 1 1 10
+        EXIT
+ 
+     which would make the plot a little larger on the page
+     by changing the lower left corner of the plot frame lines
+     from the default of 15 20 (15% over and 20% up)
+     to 10 20 (10% over and 20% up),
+     and the upper right corner of the plot frame lines
+     from the default of 85 90 (85% over and 90% up)
+     to 90 90 (90% over and 90% up).
+ 
+     If you are generating multiple plots per page and you wish to
+     have portrait mode output, then to additionally
+     adjust the aspect ratio,  you may
+     also use the MULTIPLOT COORDINATES command
+     which will adjust the size and position of the entire
+     set of multiplots from its default of   15 20   85 90   .
+     An example of the use of that command is
+ 
+        MULTIPLOT COORDINATES 10 20 90 85
+ 
+     Adjustments on the vertical axis label (to prevent
+     possible overwriting on tic lables) may be done via
+     the Y1LABEL OFFSET command (default is 8), as in
+ 
+        Y1LABEL OFFSET 15
+ 
+     which would move the left vertical axis 15% to the left
+     of the left vertical frame line.
+     If you are using filled symmetric plot characters (for examples,
+     circles) and you want to maintain the symmetry after
+     conversion to portrait mode, then you may use the
+     CHARACTER HW command (default height = 2% and default width = 1%)
+     of total screen height and width, respectively, as in
+ 
+        CHARACTER FILL 1 1.4 ALL
+ 
+     which would set all within-plot characters to a height of 1%
+     and to a width of 1.4% (such a sizing yields symmetric circles--
+     as opposed to ellipses) for 2 by 2 multiplots.
+ 
+     In summary, therefore, for a 2 by 2 multiplot, the following
+     code yields nice output for portrait mode:
+ 
+        DEVICE 2 POSTSCRIPT
+        .
+        ORIENTATION PORTRAIT
+        .
+        MULTIPLOT 2 2
+        MULTIPLOT COORDINATES 10 20 90 90
+        FRAME COORDINATES 10 20 90 85
+        .
+        CHARACTERS CIRCLE
+        CHARACTER FILL ON
+        CHARACTER HW 1 1.4
+        .
+        Y1LABEL Y
+        XLABEL X
+        .
+        PLOT X FOR X = 1 1 10
+        PLOT X**2 FOR X = 1 1 10
+        PLOT X**3 FOR X = 1 1 10
+        Y1LABEL OFFSET 10
+        PLOT X**4 FOR X = 1 1 10
+        .
+        EXIT
+ 
+        PRINT DPPL1F.DAT
+ 
+ 
+ 
+.....Q12.Generating Text with Upper & Lower Case Script .....
+ 
+Q12. In a Dataplot macro, I had
+ 
+        TITLE Calibration Analysis
+ 
+     (a mixture of upper & lower case) but the output on a plot was
+ 
+         CALIBRATION ANALYSIS
+ 
+     (all caps).  Why did this happen and how can I fix it?
+     I have similar questions regarding automatic caps
+     for plot labels, plot tic labels, plot legends,
+     general text strings, etc.
+ 
+A12. The case of output strings is controlled by various
+     forms of the   CASE   command.  The default is UPPER
+     which means the default output case for titles, labels,
+     tic labels, legends, text, etc.
+     (regardless of the case of the input string as specified
+     by the TITLE, LABEL, TIC LABEL, LEGEND, and TEXT commands)
+     is UPPER (= upper case).
+     3 CASEs are allowed:
+ 
+        UPPER (upper case--the default)
+        LOWER (lower case)
+        ASIS ("as is"--whatever mixture you have in the string)
+ 
+     In particular, if you want all succeeding titles to be "as is",
+     then enter (somewhere before the first plot command, and usually
+     in the vicinity of the first TITLE command) the following command:
+ 
+        TITLE CASE ASIS
+ 
+     Similarly, one would have
+ 
+        LABEL CASE ASIS      to specify that all labels are "as is"
+        TIC LABEL CASE ASIS  to specify that all tic labels are "as is"
+        LEGEND CASE ASIS     to specify all legends as "as is"
+        CASE ASIS            to specify all TEXT command string as "as is"
+ 
+     Since having all titles, labels, tic labels, legends, and text strings
+     in the "as is" case, then it is very common (and recommended)
+     to have the following 5 commands stored in you Dataplot login file
+     (DPLOGF.TEX) so that they will be automatically executed upon
+     entry into Dataplot and thus the analyst need not worry about it further:
+ 
+        TITLE CASE ASIS
+        LABEL CASE ASIS
+        TIC LABEL CASE ASIS
+        LEGEND CASE ASIS
+        CASE ASIS
+ 
+     or (in a more compact fashion):
+ 
+        TITLE CASE ASIS; LABEL CASE ASIS; TIC LABEL CASE ASIS
+        LEGEND CASE ASIS; CASE ASIS
+ 
+ 
+.....Q13.Where to Have the Dataplot Login File DPLOGF.TEX.....
+ 
+Q13. I realize that Dataplot has a file named   DPLOGF.TEX
+     which will automatically be executed upon entry into Dataplot,
+     and which I can usefully employ by storing in this ASCII file
+     commands that will override system defaults and put in
+     place analyst preferences. How can I create this file
+     and what directory should it go in?
+ 
+A13. The ASCII file DPLOGF.TEX may be created by any convenient editor.
+     Dataplot first looks for this file in the current directory.
+     If found, the search is over and the commands are executed.
+     If not found, the search continues.
+ 
+     PC DOS:
+     Dataplot will look secondarily for DPLOGF.TEX in the directory
+     specified symbolically as DATAPLO$ in your AUTOEXEC.BAT
+     file.  Thus in my AUTOEXEC.BAT, I have a line:
+ 
+        SET DATAPLO$ = C:\DATAPLOT\
+ 
+     and so the next search directory after the current
+     directory will be C:\DATAPLOT\   . If no such line exists in
+     the AUTOEXEC.BAT file, then the search is terminated and no
+     Dataplot login file gets executed.
+ 
+     UNIX:
+     Pre-July 1996, no central directory existed for
+     the DPLOGF.TEX and so the analyst had no choice but to
+     have the same DPLOGF.TEX in every directory where he/she
+     might run Dataplot (a waste).
+     Post-July 1996, Dataplot looks secondarily for DPLOGF.TEX in the
+     directory specified symbolically as $HOME in your
+     .cshrc file.  Thus in my .cshrc, I have a line:
+ 
+        setenv $HOME /usr/local/fs3b/filliben
+ 
+     which specified my home (root) directory.
+     If no such line exists in the .cshrc file, then the search
+     is terminated and no Dataplot login file gets executed.
+ 
+ 
+.....Q14.How to Encircle/Highlight Data Points on a Plot .....
+ 
+ 
+Q14. I have a plot of Y versus X. I would like to draw the
+     viewer's attention to a particular data point on the plot
+     by drawing a circle around that point (only).  How do I do that?
+     In particular, suppose I have a plot of Y = X**2 for X = 1 (at
+     increments of 1) up to 10.  Suppose I want to draw a circle around
+     the data point at X = 8 (that would be Y = 64).  How do I do that?
+ 
+A14.The easiest way to do that is to make use of the Dataplot multitrace
+     capability (via consecutive PLOT statements connected by AND) and
+ 
+        1) plot the raw data with usual characters and usual character sizes
+        2) plot the highlighted data with circles of a larger size.
+ 
+     The following code will work for the problem at hand:
+ 
+ 
+        Encircle/Highlight a Plot Point
+ 
+   LET X = SEQUENCE 1 1 10
+   LET Y = X**2
+   CHARACTERS X CIRCLE
+   CHARACTER HW  2 1   5 4
+   LINES BLANK BLANK
+   PLOT Y X AND
+   PLOT Y X SUBSET X 7.5 TO 8.5
+ 
+.
+ 
+ 
+ 
+.....Q15.How to Have 2 Different Left/Right Axis Labels .....
+ 
+ 
+Q15. I have a function
+ 
+           y = 220 - 200*exp(-x)
+ 
+     relating farenheit temperature (y) to time (x) for
+     the time range x: 0 to 10.  The temperature y is in
+     farehnheit and will range from 20 degrees F to 220
+     degrees F. I would like to produce a single-trace
+     plot of temperature (vertically) versus time
+     (horizontally).  Rather than generate the single
+     left-axis-only plot that is Dataplot's default,
+     I would like to generate a dual-axis plot consisting of
+ 
+        1) neat farehnheit units from 20 to 220 on the left axis, and
+        2) neat Celsius units from 0 to 100 on the right axis
+           (properly positioned relative to the left axis and the trace).
+ 
+     How is this done most easily?
+ 
+A15. Inasmuch as the default Dataplot settings for tic labels are
+ 
+        1) that they float with the data;
+        2) that they are neat;
+        3) that only the left axis tics & tic labels are on (not the right);
+        4) that if on, the right axis tic labels would be identical to the left;
+ 
+     then all of these defaults must be overridden in order to achieve
+     the desired plot.  The following code will work:
+ 
+ 
+      Generate a Dual-Axis Plot
+ 
+   Y2TICS ON                     (turn the right tics on)
+   Y2TIC LABELS ON               (turn the right tic labels on)
+   .
+   LET FMIN = 20                 (set the left axis minimum at 20)
+   LET FMAX = 220                (set the left axis maximum at 220)
+   LET CMIN = 0                  (set the right axis minimum at 0)
+   LET CMAX = 100                (set the right axis maximum at 100)
+   Y1LIMITS FMIN FMAX            (set the left axis limits at 20 and 220)
+   Y2LIMITS CMIN CMAX            (set the right axis limits at 0 and 100)
+   .
+   LET CMIN2 = (5/9)*(FMIN-32)   (calculate what 20 F is in Celsius units)
+   LET CMAX2 = (5/9)*(FMAX-32)   (calculate what 220 F is in Celsius units)
+   LET DELMIN = CMIN-CMIN2       (compute a lower right tic offset)
+   LET DELMAX = CMAX2-CMAX       (compute an upper right tic offset)
+   .
+   TIC OFFSET UNITS DATA         (specify that the tic offset units will be in "data units")
+   TIC OFFSET 0 0                (set all tic offsets to 0 for lower tic and 0 for upper tic)
+   Y2TIC OFFSET DELMIN DELMAX    (set tic offsets for right axis)
+   .
+   Y1LABEL Temperature (F)       (set the left axis label)
+   Y2LABEL Temperature (C)       (set the right axis label)
+   X2LABEL Time                  (set the bottom axis label)
+   .
+   LET FUNCTION F = FMAX-(FMAX-FMIN)*EXP(-X)   (define the function to be plotted)
+   PLOT F FOR X = 0 .1 10        (plot the function)
+ 
+.
+ 
+ 
+ 
+.....Q16.How to Correct Oversized Default Font on the Screen .....
+ 
+ 
+Q16. In generating Dataplot graphics, I commonly use the
+     default font for graphics appearing on the screen (=
+     device 1), and postscript renditions of the same font
+     for paper output (= device 2).  I notice that when I
+     do multiplotting (multiple plots on the same page)
+     even though I get nice postscript paper output plots
+     with publication-quality helvetica font, the multiple
+     plots on the screen are of considerably poorer
+     quality.  It seems that although the font on paper
+     output is scaled continuously and can get arbitrarily
+     small (while still maintaining high resolution), the
+     font on the screen appears limited as to how small it
+     can get and thus moderate-sized characters appear when
+     much smaller characters are needed--thus resulting in
+     overwriting.  How can I correct this?
+ 
+A16. The questioner's observation is correct:  screen
+     graphics for the default font is limited in size,
+     whereas device 2 postscript paper output font is
+     continuous.  For 1-plot-per-page graphics, there is no
+     problem; however, for multiplotting, there is a
+     problem in how text appears on plots on the screen.
+     The following simple code illustrates this problem:
+ 
+ 
+   DEVICE 1 DEFAULT;. (This command is redundant and not needed)
+   DEVICE 2 POSTSCRIPT
+   .
+   CASE ASIS
+   TITLE Default Font
+   Y1LABEL Response; X1LABEL Time
+   TITLE SIZE 4; LABEL SIZE 4; TIC LABELS SIZE 4
+   MULTIPLOT 2 2
+      PLOT X FOR X = 1 1 10
+      PLOT (X**2)/10 FOR X = 1 1 10
+      PLOT (X**3)/100 FOR X = 1 1 10
+      PLOT (X**4)/1000 FOR X = 1 1 10
+   MULTIPLOT OFF
+ 
+.
+ 
+     Note how the vertical axis tic labels appear to be too
+     large and are ill-positioned and crowding the tic
+     marks.  Titles, labels, and legends may also appear
+     ill-sized.  There are 2 cures for this:
+ 
+     Cure 1:
+     The first cure is to globally (across all devices)
+     change the font from the default (= tektronix) font to
+     one of the 7 continuously-scaled fonts available in
+     Dataplot:
+ 
+           simplex, duplex, triplex, triplex italic, complex, and complex script
+ 
+     (for example, by entering FONT SIMPLEX anywhere before
+     the first plot).  This will yield graphs on the screen
+     with properly-scaled characters.  The good news is
+     that this will yield plots on the screen with
+     properly-scaled characters; the neutral news is that
+     such plots take a bit longer to generate; the bad news
+     is that if device 2 is turned on to postscript (for
+     example, by DEVICE 2 POSTSCRIPT ), then the postscript
+     paper output that results will in fact be postscript,
+     but will be a postscript rendition of a simplex font
+     plot--this is quite good but is not as good as a
+     postscript rendition of a default font plot (which
+     makes use of the built-in laser printer fonts).  Thus
+     the following code will yield good screen graphics and
+     adequate postscript paper output:
+ 
+   DEVICE 1 DEFAULT;. (This command is redundant and not needed)
+   DEVICE 2 POSTSCRIPT
+   FONT SIMPLEX
+   .
+   CASE ASIS
+   TITLE Default Font
+   Y1LABEL Response; X1LABEL Time
+   TITLE SIZE 4; LABEL SIZE 4; TIC LABELS SIZE 4
+   MULTIPLOT 2 2
+      PLOT X FOR X = 1 1 10
+      PLOT (X**2)/10 FOR X = 1 1 10
+      PLOT (X**3)/100 FOR X = 1 1 10
+      PLOT (X**4)/1000 FOR X = 1 1 10
+   MULTIPLOT OFF
+ 
+.
+ 
+     Cure 2:
+     Prior to July 1996, cure 1 was the only cure.  As of
+     July, 1996, Alan Heckert of NIST has provided a more
+     acceptable second cure.  Cure 2 is to change the font
+     from default to scalable for device 1 only (the
+     screen), while maintaining a high-quality postscript
+     rendition of the default font for device 2 (paper
+     output).  In practice, to maintain acceptably fast
+     screen graphics, use the fastest scalable font
+     (simplex).  Thus the following code will yield both
+     good (simplex font) screen graphics, and excellent
+     postscript (default font) paper output graphics:
+ 
+ 
+   DEVICE 1 DEFAULT;. (This command is redundant and not needed)
+   DEVICE 2 POSTSCRIPT
+   DEVICE 1 SIMPLEX
+   .
+   CASE ASIS
+   TITLE Default Font
+   Y1LABEL Response; X1LABEL Time
+   TITLE SIZE 4; LABEL SIZE 4; TIC LABELS SIZE 4
+   MULTIPLOT 2 2
+      PLOT X FOR X = 1 1 10
+      PLOT (X**2)/10 FOR X = 1 1 10
+      PLOT (X**3)/100 FOR X = 1 1 10
+      PLOT (X**4)/1000 FOR X = 1 1 10
+   MULTIPLOT OFF
+ 
+
+
+
+ 
+.....Q17.Using the PC as a terminal for Dataplot .....
+ 
+Q17. I am using my IBM PC compatible to run Dataplot on
+     a remote workstation.  I do not particulary want to
+     install and run Dataplot locally on my PC, but I
+     would still like to generate high quality graphics
+     on my screen.
+
+A17. When used as a terminal to a remote computer, the
+     graphics capability is determined by the communications
+     software.  The type of graphics protocol supported
+     varies widely depending on the specific communications
+     software you have.
+
+     Dataplot supports the following graphics protocols that
+     may be useful for this purpose:
+
+        TEKTRONIX 4014 (also supports color models such as 4105
+                       and 4115)
+        REGIS (protocol used by DEC VT-240 and VT-340 terminals)
+        HP 2622 (a Hewlet-Packard terminal)
+        X11
+
+    For example, Kermit and the NCSA TCP/IP package both support
+    Tektronix 4014 emulation.  Kermit is useful if you are
+    communicating over a phone line.  If you have an ethernet
+    card, check in the index of the accompanying documentation
+    for the above terms (i.e., TEKTRONIX, REGIS, HP 2622, X11).
+    Be aware that the software provided by some TCP/IP
+    implementations does not support ANY graphics protocol.
+
+    If your communications protocol does not support graphics
+    emulation, there are 2 possible solutions.
+
+      1) Kermit can be run on top of some communications
+         software.  Check with your communications software
+         vendor to see if this is possible.
+
+      2) Commercial implemenatations of X11 for the PC are available.
+         X11 is a protocol designed to provide device independent
+         graphics and windowing in a network environment.  It
+         is the standard protocol for most Unix workstations.
+         Unfortunately, commercial implementations for the PC
+         still tend to be somewhat expensive.
+
+    If neither of these 2 implementations is possible or
+    desirable, we advise checking with the communications vendor
+    for advice (or possibly investigating other communications
+    software).
+
+
+

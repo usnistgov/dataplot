@@ -1,0 +1,14 @@
+----- <~prob\specfit.top> Specialized Fitting Methods
+
+Specialized Distributional Fitting Methods
+
+This menu provides specialized distributional
+fitting methods.
+
+Normal Plot                                <xemf: ~plot\normplot.men>
+Weibull Plot                               <xemf: ~plot\weibplot.men>
+
+Generalized Pareto
+    de Haan                                <~reli\dehaan.men>
+    Conditional Mean Exceedance (CME)      <~reli\cme.men>
+

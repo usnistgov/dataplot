@@ -1,0 +1,83 @@
+-----<~prob\est_disc.top> Distributional Fitting, Discussion
+
+Fitting Distribution to Data
+
+Given a set of data points, it is often desirable
+to fit some type of distribution to the data.
+
+Finding the best fit distribution generally means
+finding the optimal value of one or more shape
+parameters and finding reasonable estimates of the
+location and scale parameters.
+
+There are various methods for doing this:
+
+  1) PPCC and Probability Plots
+
+     Probability plots are a commonly used technique
+     for assessing how well a distribution fits a
+     given data set.  The data are plotted against a
+     theoretical distribution and if the distribution
+     fits the data well the plot should be linear (or
+     nearly so).  A line can be fit to the probability
+     plot.  The intercept and slope of this fitted line
+     are estimates for the location and scale parameters
+     of the distribution.  In addition, a convenient
+     measure of the linearity of the plot is the
+     correlation coefficient between the Y axis
+     (theortical) variable and the X axis (data) variable.
+  
+     For distributions with a single shape parameter, the
+     PPCC (probability plot correlation coefficient plot) 
+     provides a useful extension to the probability plot.
+     For a range of values of the shape parameter, a
+     probability plot is generated and the corresponding
+     correlation coefficient is calculated.  The PPCC
+     plot is the computed correlation coefficients on the
+     Y axis and the values for the shape parameter on the
+     X axis (and the optimal value of the shape parameter
+     corresponds to the maximum PPCC value).  The value
+     of the maximum correlation also gives a useful
+     guide to how well the distribution fits the data.
+     The plot also indicates how sensitive the data are
+     to non-optimal values.
+
+     It is useful to do 2 iterations of the PPCC plot.
+     The first is used to cover a broad range of
+     parameter values.  After determing the best area,
+     a PPCC plot with a much finer grid can be used to
+     get a more accurate estimate of the optimal shape
+     parameter.  The PPCC plot is generally followed by
+     a probability plot to obtain estimates for the
+     location and scale parameters.
+
+  2) Least Squares
+
+     The Dataplot FIT command can be used to generate
+     a standard non-linear least squares estimate for
+     the distribution parameters.   The PPCC and 
+     probability plots can be used to provide good
+     starting values.
+
+     If you have raw data, Dataplot computes the fit
+     by first generating a relative histogram to
+     obtain frequency data.  A PDF curve is then fit
+     to this histogram.  If you already have frequency
+     data, it should be converted to relative frequency
+     before doing the least squares fit.
+
+  3) Maximum likelihood estimators have been developed
+     for many common distributions.  Dataplot currently
+     only supports maximum likelihood estimates for a
+     few distributions.  At this time, Dataplot does not
+     provide standard errors for the ML estimates.
+
+  4) Specialized techniques have been developed for
+     certain distributions.
+
+     For the generalized Pareto distribution, Dataplot
+     supports a method developed Dehaan (called the
+     Dehaan estimator) and a method based on the
+     conditional mean exceedance (CME).  These methods
+     are commonly used in extreme value applications.
+

@@ -1,0 +1,8 @@
+----- <~dexopt\CC3.DP> Load CC3.DP
+
+. This is file    CC3.DP
+
+DELETE X1 X2 X3
+SKIP 50
+READ CC3.DAT X1 X2 X3
+

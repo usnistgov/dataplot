@@ -1,0 +1,8 @@
+----- <~dataall\CURRIE.top> CURRIE.DAT
+
+CURRIE.DAT
+
+View     <xcl: LIST CURRIE.DAT>
+Load     <xcf: ~dataload/CURRIE.DP>
+Print    <xccl: printfile C:\DATAPLOT\CURRIE.DAT>
+

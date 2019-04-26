@@ -1,0 +1,8 @@
+----- <~dataload\SPLETT4.DP> Load SPLETT4.DAT
+
+. This is file    SPLETT4.DP
+
+DELETE Y X1 TO X4
+SKIP 25
+READ SPLETT4.DAT Y X1 TO X4
+

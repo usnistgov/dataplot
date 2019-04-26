@@ -1,0 +1,90 @@
+This is Dataplot data file     RATFEED.DAT
+Weight Gain of Rats
+Source--Hoaglin, D., Mosteller, F., and Tukey, J. (1991).
+        Fundamentals of Exploratory Analysis of Variance.
+        Wiley, New York, page 99.
+Source--Snedecore, G. W. and Cochran, W. G. (1980).
+        Statistical Methods.
+        Iowa State Univarsity Press, 7th Edition, p 347.
+Response Variable                  = Weight gain of rats
+Number of observations             = 60 (= 3 sources x 2 levels x 10 reps)
+Number of variables per line image = 3
+Order of variables per line image--
+   Response variable = rat weight gain (in grams)
+   Factor 1          = source of protein   (1 = beef, 2 = pork, 3 = cereal)
+   Factor 2          = level of protein    (1 = high, 2 = low)
+Statistical areas--Multifactor
+Design type      --Randomized Block
+To read this file into Dataplot--
+      SKIP 25
+      READ RATFEED.DAT Y X1 X2
+
+Weight          Source     Level
+ Gain        of Protein  of Protein
+  Y              X1         X2
+------------------------------------
+ 118              1          1
+ 117              1          1
+ 111              1          1
+ 107              1          1
+ 104              1          1
+ 102              1          1
+ 100              1          1
+  87              1          1
+  81              1          1
+  73              1          1
+
+  95              1          2
+  90              1          2
+  90              1          2
+  90              1          2
+  86              1          2
+  78              1          2
+  76              1          2
+  72              1          2
+  64              1          2
+  51              1          2
+
+ 120              2          1
+ 108              2          1
+ 105              2          1
+ 102              2          1
+ 102              2          1
+  98              2          1
+  96              2          1
+  94              2          1
+  91              2          1
+  79              2          1
+
+ 106              2          2
+  97              2          2
+  86              2          2
+  82              2          2
+  82              2          2
+  81              2          2
+  73              2          2
+  70              2          2
+  61              2          2
+  49              2          2
+
+ 111              3          1
+  98              3          1
+  95              3          1
+  92              3          1
+  88              3          1
+  86              3          1
+  82              3          1
+  77              3          1
+  74              3          1
+  56              3          1
+
+ 107              3          2
+  98              3          2
+  97              3          2
+  95              3          2
+  89              3          2
+  80              3          2
+  74              3          2
+  74              3          2
+  67              3          2
+  58              3          2

@@ -1,0 +1,9 @@
+----- <deal1bnc.top> Case 1: Single Batch & No Covariates
+ 
+Case 1: Single Sample: Single Batch & No Covariates
+ 
+Discussion
+Check for (Normal) Outliers          <xx.top>
+Check for Best-Fit Distribution      <xx.top>
+Compute Design-Allowables            <xx.top>
+ 

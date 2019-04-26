@@ -1,0 +1,29 @@
+This is Dataplot data file     NATR92.DAT
+Inspection and Testing of Clinical Themometers
+Question: Does the new product differ from the standard with regard
+          to the proportions in each category? 
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 9-2
+Number of observations = 4
+Number of variables per line image = 2
+Order of variables on a line image--
+   1. Y = Response Variable = Number of Themometers
+   2. X = Category
+          1 = non-defective
+          2 = defective, class A (defects in glass, defective markings,
+                                  dimensional non-conformance, etc.)
+          3 = defective, class B (defects in mercury columns)
+          4 = defective, class C (nonconformance to precision and
+                                 accuracy requirements) 
+   3. P = Known proportion for standard product
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR92.DAT Y X P
+     Y
+ Number         Category       KNOWN PROPORTION FOR STANDARD PRODUCT
+-------------------------------------------------------------------
+   1188             1                0.87
+     91             2                0.09
+     47             3                0.03
+     10             4                0.01

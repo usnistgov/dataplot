@@ -1,0 +1,35 @@
+----- <~dataload\gra1ch6.top> Chapter 6: Applications of Regression I
+
+Chapter 6: Applications of Regression I
+
+ 1. Overview
+ 2. Prediction Intervals
+       Used Cars (p-407)                  <xcf: ~dataload\USEDCARS.DP>
+       Ethnic (p-414)                     <xcf: ~dataload\ETHNIC.DP>
+ 3. Tolerance Intervals
+       Table631 (p-421)                   <xcf: ~dataload\TABLE631.DP>
+ 4. Calibration and Regulation for Straight Line Regression
+       Thermometer (p-421)                <xcf: ~dataload\THERMOM.DP>
+       Chamber (p-433)                    <xcf: ~dataload\CHAMBER.DP>
+ 5. Comparisons of Several Straight Line Regressions--Identical,
+    Parallel, and Intersecting Lines
+       Eggshell (p-443)                   <xcf: ~dataload\EGGSHELL.DP>
+       Crystal3 (p-447)                   <xcf: ~dataload\CRYSTAL3.DP>
+ 6. Intersection of Two Straight Line Regression Functions
+ 7. Maximum or Minimum of a Quadratic Regression
+       Sulferic Acid (p-461)              <xcf: ~dataload\SULFURIC.DP>
+       Concrete (p-464)                   <xcf: ~dataload\CONCRETE.DP>
+ 8. Linear Splines
+       Sales (p-470)                      <xcf: ~dataload\SALES.DP>
+ 9. Exercises
+       Race Times (p-476)                 <xcf: ~dataload\TRACK.DP>
+       Blood Pressure (p-477)             <xcf: ~dataload\BPWEIGHT.DP>
+       Chemical Assays (p-479)            <xcf: ~dataload\ASSAY.DP>
+       Ball Bearings (p-481)              <xcf: ~dataload\BALLBEAR.DP>
+       Prison (p-483)                     <xcf: ~dataload\PRISON.DP>
+       Salaries (p-486)                   <xcf: ~dataload\SALARIES.DP>
+       Miles per Gallon (p-489)           <xcf: ~dataload\MPG.DP>
+       Nickel (p-491)                     <xcf: ~dataload\NICKEL.DP>
+       Turkey (p-495)                     <xcf: ~dataload\TURKEY.DP>
+       Baby weight (p-497)                <xcf: ~dataload\BABYWT.DP>
+

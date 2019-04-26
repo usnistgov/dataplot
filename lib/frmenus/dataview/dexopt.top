@@ -1,0 +1,10 @@
+----- <~dataview\dexopt.top> View Optimization Design Data
+
+View Optimization Design Data
+
+BOXCLEAN.DAT  2**(4-1)  Cleanser stability <xcf: ~dataview\BOXCLEAN.DP>
+
+BOXYIELD.DAT* 2**2 wcp  Yield & time, temp <xcf: ~dataview\BOXYIELD.DP>
+BOXYIEL2.DAT  2**2 wcp  Yield & time, temp <xcf: ~dataview\BOXYIEL2.DP>
+BOXYIEL3.DAT  2**2 wcp  Yield & time, temp <xcf: ~dataview\BOXYIEL3.DP>
+

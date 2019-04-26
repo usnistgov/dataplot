@@ -1,0 +1,42 @@
+This is file papcdf.men--Compute Polya-Aeppli cdf and tail probability
+ 
+--------------------
+ 1. Compute Polya-Aeppli cdf and Tail Probability
+ 2. LET Y = PAPCDF(X,THETA,P)
+ 3.
+ 4. Input values:
+ 5.                             x (x = 0, 1, ...):
+ 5. @CE 1 0 42 50 ?
+ 6.             shape parameter theta (theta > 0):
+ 6. @CE 2 0 42 50 
+ 7.                 shape parameter p (0 < p < 1):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Output parameters:
+10.                  name for the cdf value:
+10. @CE 4 0 42 50 ?
+11.     name for the tail probability value:
+11. @CE 5 0 42 50 ?
+12.
+13.
+14. Compute the Probability?
+--------------------
+AN FE
+LET ZTHETA = 1
+LET ZP = 0.5
+@IF 2 0 LET ZTHETA = _2
+IF ZTHETA <= 0
+   LET ZTHETA = 1
+END OF IF
+@IF 3 0 LET ZP = _3
+IF ZP <= 0
+   LET ZP = 0.5
+END OF IF
+IF ZP >= 1
+   LET ZP = 0.5
+END OF IF
+@IF 4 0 LET _4 = PAPCDF( _1 , ZTHETA, ZP )
+@IF 5 0 LET _5 = 1 - PAPCDF( _1 , ZTHETA, ZP )
+--------------------
+WEB HELP PAPCDF
+--------------------

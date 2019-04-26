@@ -1,0 +1,40 @@
+----- <~file\file.top> Files
+
+Viewing and Reading Files
+
+Discussion/Help         <~file\discfile.top>
+
+User files
+   View  (LIST)                          <xemf: ~file\viewfile.men>
+   Open  (READ/LOAD) (Column Oriented)   <xemf: ~file\readvafi.men>
+   Open  (READ/LOAD) (Row Oriented)      <xemf: ~file\readvaf2.men>
+   Define Options for Reading Files      <~file\options.top>
+   Enter a Small Number of Values        <xemf: ~file\letdata.men>
+   Define a Parameter                    <xemf: ~math\assign.men>
+
+Built-in Dataplot Datasets
+   View  (LIST)          <~dataview\dataview.top>
+   Open  (READ/LOAD)     <~dataload\dataload.top>
+
+
+File Manipulation Menus
+   Save Dataplot Variables to a File  <xemf: ~file\writvafi.men>
+   Copy the Contents of a File        <xemf: ~file\copyfile.men>
+   Search a File for a String         <xemf: ~file\searfile.men>
+
+
+Data Manipulation Menus
+   Re-dimension Workspace             <xemf: ~data\dimensio.men>
+   Delete All Variables               <xcl: RESET VARIABLES>
+   List Defined Variable/Parameter    <~data\viewdata.top>
+   Rename Variables                   <xemf: ~data\rename.men>
+   Generate Data and Transformations  <~data\genedata.top>
+   Delete parts of variables          <xemf: ~data\delete.men>
+   Pack   parts of variables          <xemf: ~data\pack.men>
+
+Data Output Options
+   Discussion                         <~file\discout.top>
+   ASCII Output to File               <~file\captasci.top>
+   HTML Output to File                <~file\capthtml.top>
+   Latex Output to File               <~file\captlate.top>
+

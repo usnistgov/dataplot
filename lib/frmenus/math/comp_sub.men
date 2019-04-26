@@ -1,0 +1,36 @@
+This is file comp_sub.men--Compute complex subtraction
+ 
+--------------------
+ 1. Complex Subtraction
+ 2. LET Y5 Y6 = COMPLEX SUBTRACTION Y1 Y2 Y3 Y4
+ 3.
+ 4. Real component of the first variable for
+ 5. which to compute the complex subtraction:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Complex component of the first variable for
+ 7.    which to compute the complex subtraction:
+ 7. @CE 2 0 33 50 * gui-variable
+ 8. Real component of the second variable for
+ 9.    which to compute the complex subtraction:
+ 9. @CE 3 0 33 50 ? gui-variable
+10. Complex component of the second variable for
+11.    which to compute the complex subtraction:
+11. @CE 4 0 33 50 * gui-variable
+12. Variable to store the real component of
+13.    the complex subtraction:
+13. @CE 5 0 33 50 ? gui-none
+14. Variable to store the complex component of
+15.    the complex subtraction:
+15. @CE 6 0 33 50 ? gui-none
+16.
+17. Subset/Except/For Specification:
+18. @CE 7 0 -10 50 *
+19.
+20.
+21. Compute the Complex Subtraction?:
+--------------------
+GR FE
+LET _5 _6 = COMPLEX SUBTRACTION  _1 _2 _3 _4 _7
+--------------------
+WEB HELP COMPLEX SUBTRACTION
+--------------------

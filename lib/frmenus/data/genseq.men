@@ -1,0 +1,29 @@
+This is file genseq.men--Generate a Sequence
+ 
+--------------------
+ 1. Generate a Sequence
+ 2. LET Y = SEQUENCE START REP INC STOP
+ 3.
+ 4. Start of Sequence:
+ 4. @CE 1 0 40 50 ?
+ 5. Replication Factor (Default = 1):
+ 5. @CE 2 0 40 50 *
+ 6. Increment:
+ 6. @CE 3 0 40 50 ?
+ 7. End of Sequence:
+ 7. @CE 4 0 40 50 ?
+ 8.
+ 9. Name of Output Variable:
+ 9. @CE 5 0 40 50 ?
+10.
+11. Subset/Except/For Specification:
+12. @CE 6 0 1 50 ?
+13.
+14.
+15. Generate the Sequence?
+--------------------
+AN FE
+LET _5 = SEQUENCE _1 _2 _3 _4 _6
+--------------------
+WEB HELP SEQUENCE
+--------------------

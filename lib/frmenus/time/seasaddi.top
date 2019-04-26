@@ -1,0 +1,75 @@
+----- <~time\seasaddi.top> Discussion: Seasonality
+ 
+Discussion: Seasonality
+ 
+Many time series exhibit seasonality.  For example,
+retail sales historically are much higher in December
+due to Christmas than other months.  Economic time
+series in general tend to have a significant seasonality
+component.  Seasonality tends to be less prevelant in
+the physcial sciences, although there are exceptions
+(e.g., enviromental data may be quite seasonal).
+
+Many time series techniques assume that the data is
+stationary (i.e., constant location and scale).
+This means that they assume that trend and seasonality
+have already been removed from the data.
+
+In some cases, the trend and seasonality components are
+actually the dominant features.  If so, this may
+indicate the use of time series techniques where the
+estimation of the trend and seasonality are emphasized
+rather than techniques that assume that the data is
+already stationary.  The seasonal loess procedure is
+an example of this kind of technique.  It decomposes a
+series into a trend, seasonal, and residual component.
+
+There are several tasks involved in seasonality.
+
+  1) The first task is to assess whether or not
+     seasonality is significant.  This can usually
+     be done with a seasonal subseries plot (for
+     large data sets, you may wish to use a 
+     box plot instead) or a seasonal mean plot.
+
+  2) If significant seasonality is present, then
+     you may want to either estimate or remove the
+     seasonal effect from the series.  There are
+     various methods for doing this.
+
+     a) One simple method for removing seasonal effects is:
+ 
+           Y(t) = X(t) - S(t) + M
+
+        where X(t) is the original series, S(t) is a
+        seasonal mean, and M is the overall mean.  This
+        method assumes that there is not significant trend
+        in the data.
+
+     b) Seasonal loess is a more involved method that
+        decomposes the original series as:
+
+           X(t) = Trend(t) + Seasonal(t) + Res(t)
+
+        That is, it decomposes the original series into
+        3 series: a trend component, a seasonal component,
+        and an error term.  This method is recommended when
+        the trend and seasonality components are dominant.
+        You can apply stationary methods to the residual
+        component if there is still significant structure.
+
+     c) Box-Jenkins methodoly employs seasonal differences
+        to remove seasonality.  This is similar to the idea
+        of using first differences to remove trend.  Seasonal
+        differences are computed as:
+
+           X(t) = X(t) - X(t-k)
+
+        where k is the number of seasons.  For example, for
+        monthly data k is typically 12.
+
+     d) There are many other methods not supported directly
+        by Dataplot.  Some methods, such as the X-12 program
+        from the Census Bureau and the SABL program from Bell
+        Labs, are quite complex.
+

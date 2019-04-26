@@ -1,0 +1,44 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     SUM.DP
+. PURPOSE--MENU TO GENERATE THE SUM  OF A SEQUENCE OF NUMBERS
+. DATE--MAY 24, 1988
+.
+. -----START POINT-----------------------------------
+.
+FEEDBACK OFF
+.
+ERASE
+.
+SET IO TERMINAL
+.
+WRITE " "
+WRITE "               ***********************"
+WRITE "               **   DATAPLOT MENU   **"
+WRITE "               **  SEQUENTIAL SUM   **"
+WRITE "               ***********************"
+WRITE " "
+.
+. STEP 1--
+. READ IN THE VALUES TO BE SUMMED
+.
+WRITE " "
+WRITE "        NUMBER OF VALUES TO BE SUMMED = ?"
+READ PARAMETER N
+.
+LOOP FOR K = 1 1 N
+WRITE "        VALUE ^K = ?"
+READ PARAMETER YTEMP^K
+LET Y(K) = YTEMP^K
+END OF LOOP
+SET WRITE DECIMALS 6
+PRINT Y
+.
+. STEP 2--
+. SUM THE NUMBERS UP
+.
+RETAIN Y FOR I = 1 1 N
+LET S = SUM Y
+WRITE " "
+WRITE "SUM = ^S "
+.
+SET IRD 5
+SET IO

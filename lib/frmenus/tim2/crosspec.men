@@ -1,0 +1,45 @@
+This is file crosspec.men--Cross-spectrum
+ 
+--------------------
+ 1. Cross-spectrum
+ 2. CROSS-SPECTRUM Y1 Y2
+ 3.
+ 4. Definition: Cross-spectrum =
+ 5.     Fourier transform of the cross-covariance
+ 6.     between the 2 time series.  The cross-spectrum
+ 7.     consists of 2 traces:
+ 8.        1) co-spectrum         (for frequencies "in phase")
+ 9.        2) quadrature-spectrum (for freq. "out-of-phase")
+10.
+11. Vertical   axis = co-spectral & quad-spectral power
+12. Horizontal axis = frequency (0 to .5)
+13.
+14. Question being addressed:
+15.     Which frequencies contribute most to the
+16.     decomposition of the (total) covariance
+17.     between the 2 series?
+18.
+19. Reference: Granger & Hatanaka, pages 74-77.
+20.
+21. Response Variable   #1:
+21. @CE 1 0 33 50 ? gui-variable
+22. Response Variable   #2:
+22. @CE 2 0 33 50 ? gui-variable
+23.
+24. Line Type for trace #1:
+24. @CE 3 0 42 50 * gui-line
+25. Line Type for trace #2:
+25. @CE 4 0 42 50 * gui-line
+26.
+27. Subset/Except/For Specification:
+28. @CE 5 0 6 50 *
+29.
+30.
+31. Generate the Cross-spectrum?:
+--------------------
+GR FE
+LINES _3 _4
+CROSS-SPECTRUM _1 _2 _5
+--------------------
+WEB HELP SPECTRUM
+--------------------

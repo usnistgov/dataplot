@@ -1,0 +1,34 @@
+This is file hanoppef.men--Halfnormal Prob. Plot of |Est. Effects|
+ 
+--------------------
+ 1. Halfnormal Probability Plot of |Estimated Effects|
+ 2. YATES Y + READ coef. from DPST1F.DAT & plot
+ 3.        (Data assumed in Yates order)
+ 4.       (DIMENSION must > 10 variables)
+ 5.
+ 6. Response Variable:
+ 6. @CE 1 0 33 50 ? gui-vari
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 2 0 1 50 *
+10.
+11.
+12. Plot |Effects|?
+--------------------
+GR FE
+YATES _1 _2
+.
+SKIP 0
+READ DPST1F.DAT ZTAG ZCOEF
+LET ZTAG3 = ZTAG
+LET ZCOEF2 = ABS(ZCOEF)
+LET ZCOEF3 = SORTC ZCOEF2 ZTAG3
+.
+CHARACTERS X
+LINES
+HALFNORMAL PROBABILITY PLOT ZCOEF3
+CHARACTERS AUTOMATIC ZTAG3
+PLOT YPLOT XPLOT XPLOT
+--------------------
+WEB HELP YATES
+--------------------

@@ -1,0 +1,51 @@
+----- <~prob\sha2hisp.top> Histogram with Overlaid PDF (Two Shape Parameters)
+
+Histogram with Overlaid PDF (Two Shape Parameters, Continuous)
+
+Generate a relative histogram and overlay the
+specified probability density functions for
+distributions with two shape parameters.
+
+Beta                                      <xemf: ~prob\bethispd.men>
+Beta Normal                               <xemf: ~prob\bnohispd.men>
+Burr Type 3                               <xemf: ~prob\bu3hispd.men>
+Burr Type 4                               <xemf: ~prob\bu4hispd.men>
+Burr Type 5                               <xemf: ~prob\bu5hispd.men>
+Burr Type 6                               <xemf: ~prob\bu6hispd.men>
+Burr Type 9                               <xemf: ~prob\bu9hispd.men>
+Burr Type 12                              <xemf: ~prob\b12hispd.men>
+Doubly Pareto Uniform                     <xemf: ~prob\dpuhispd.men>
+Exponentiated Weibull                     <xemf: ~prob\ewehispd.men>
+F                                         <xemf: ~prob\fhispd.men>
+Folded Cauchy                             <xemf: ~prob\fcahispd.men>
+Folded Normal                             <xemf: ~prob\fnrhispd.men>
+G-and-H                                   <xemf: ~prob\ghhispd.men>
+Generalized Asymmetric Laplace            <xemf: ~prob\galhispd.men>
+Generalized Gamma                         <xemf: ~prob\ggdhispd.men>
+Generalized Logistic (type 4)             <xemf: ~prob\gl4hispd.men>
+Generalized McLeish                       <xemf: ~prob\gmchispd.men>
+Generalized Topp and Leone                <xemf: ~prob\gtlhispd.men>
+Generalized Tukey-Lambda                  <xemf: ~prob\gldhispd.men>
+Gompertz                                  <xemf: ~prob\gomhispd.men>
+Gompertz Makeham                          <xemf: ~prob\makhispd.men>
+    (Meeker/Escobar 2-shape parameterization)
+Inverse Gaussian                          <xemf: ~prob\ighispd.men>
+Inverted Beta                             <xemf: ~prob\ibhispd.men>
+Johnson SB                                <xemf: ~prob\jsbhispd.men>
+Johnson SU                                <xemf: ~prob\jsuhispd.men>
+Kumaraswamy                               <xemf: ~prob\kumhispd.men>
+Log Beta                                  <xemf: ~prob\lbehispd.men>
+Log Skew Normal                           <xemf: ~prob\lsnhispd.men>
+Non-Central Chi-Square                    <xemf: ~prob\ncchispd.men>
+Non-Central T                             <xemf: ~prob\ncthispd.men>
+Pareto                                    <xemf: ~prob\parhispd.men>
+Pareto of the Second Kind                 <xemf: ~prob\pa2hispd.men>
+Power Lognormal                           <xemf: ~prob\plnhispd.men>
+Reciprocal Inverse Gaussian               <xemf: ~prob\righispd.men>
+Reflected Generalized Topp and Leone      <xemf: ~prob\rgthispd.men>
+Skew T                                    <xemf: ~prob\sthispd.men>
+Truncated Normal                          <xemf: ~prob\tnrhispd.men>
+Two-Sided Ogive                           <xemf: ~prob\tsohispd.men>
+Two-Sided Power                           <xemf: ~prob\tsphispd.men>
+Two-Sided Slope                           <xemf: ~prob\tsshispd.men>
+

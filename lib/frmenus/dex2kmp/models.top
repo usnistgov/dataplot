@@ -1,0 +1,14 @@
+----- <~dex2kmp\models.top> Models for 2**(k-p) Frac. Fact. Designs
+ 
+Models for 2**(k-p) Fractional Factorial Designs
+ 
+Models for 2**(k-p) Fractional
+Factorial Designs
+ 
+2**2              <~dex2kmp\mod2to2.top>
+2**3              <~dex2kmp\mod2to3.top>
+2**4              <~dex2kmp\mod2to4.top>
+2**5              <~dex2kmp\mod2to5.top>
+2**6              <~dex2kmp\mod2to6.top>
+2**7              <~dex2kmp\mod2to7.top>
+ 

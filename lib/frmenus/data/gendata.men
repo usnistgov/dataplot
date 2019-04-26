@@ -1,0 +1,20 @@
+This is file gendata.men--Generate Arbitrary Data Sequence
+ 
+--------------------
+ 1. Generate Arbitrary Data Sequence
+ 2. LET Y = DATA <list>
+ 3.
+ 4. Desired arbitrary sequence of numbers:
+ 5. @CE 1 0 1 50 ?
+ 6.
+ 7. Name of Output Variable:
+ 7. @CE 2 0 40 50 ?
+ 8.
+ 9.
+10. Generate the Data Sequence?
+--------------------
+AN FE
+LET _2 = DATA _1
+--------------------
+WEB HELP DATA
+--------------------

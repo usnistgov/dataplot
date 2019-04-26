@@ -1,0 +1,36 @@
+This is file katppf.men--Compute Katz ppf
+ 
+--------------------
+ 1. Compute Katz ppf
+ 2. LET Y = KATPPF(P,ALPHA,BETA)
+ 3.
+ 4. Input values:
+ 5.                        p (0 <= p < 1):
+ 5. @CE 1 0 42 50 ?
+ 6.     shape parameter alpha (alpha > 0):
+ 6. @CE 2 0 42 50 ?
+ 7.       shape parameter beta (beta < 1):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Output parameters:
+10.                name for the ppf value:
+10. @CE 4 0 42 50 ?
+11.
+12.
+13. Compute the Probability?
+--------------------
+AN FE
+LET ZA = 1
+LET ZB = 1
+@IF 2 0 LET ZA = _2
+IF ZA <= 0
+   LET ZA = 1
+END OF IF
+@IF 3 0 LET ZB = _3
+IF ZB <= 0
+   LET ZB = 1
+END OF IF
+@IF 4 0 LET _4 = KATPPF( _1 , ZA , ZB )
+--------------------
+WEB HELP KATPPF
+--------------------

@@ -1,0 +1,34 @@
+----- <~dataloex\reg1p.top> Load & Execute Regression Data: 1-Variable & Poly.
+P
+
+Load & Execute Regression Data: 1-Variable & Polynomial
+
+BERGER1.DAT   Alaska Pipeline cracks       <xcf: ~dataloex\BERGER1.DP>
+SPIEGEL.DAT   Nuclear tank calibration     <xcf: ~dataloex\SPIEGEL.DP>
+PONTIUS.DAT*  Load cell calibration        <xcf: ~dataloex\PONTIUS.DP>
+
+NATR511.DAT   Young's Modulus              <xcf: ~dataloex\NATR511.DP>
+NATR522.DAT   Young's Modulus (with reps)  <xcf: ~dataloex\NATR522.DP>
+NATR527.DAT   Colorimetry                  <xcf: ~dataloex\NATR527.DP>
+NATR533.DAT   Tire Wear                    <xcf: ~dataloex\NATR533.DP>
+NATR540.DAT   Tire Wear                    <xcf: ~dataloex\NATR540.DP>
+NATR65.DAT    3-Variable                   <xcf: ~dataloex\NATR65.DP>
+NATR627.DAT   Cubic                        <xcf: ~dataloex\NATR627.DP>
+
+GRA1326.DAT  Blood Pressure                <xcf: ~dataloex\GRA1326.DP>
+
+WAMPLER1.DAT  Polynomial fitting test data <xcf: ~dataloex\WAMPLER1.DP>
+NORRIS6.DAT   Ozone Photometry             <xcf: ~dataloex\NORRIS6.DP>
+
+BOXSPRAY.DAT  Age eff on spray dispersion  <xcf: ~dataloex\BOXSPRAY.DP>
+BOXWELD.DAT   Velocity & weld strength     <xcf: ~dataloex\BOXWELD.DP>
+BOXRATS.DAT   Supplement & growth rate     <xcf: ~dataloex\BOXRATS.DP>
+
+MICHELSO.DAT  Speed of Light               <xcf: ~dataloex\MICHELSO.DP>
+USADEBT.DAT   USA nat. debt (1947-1993)    <xcf: ~dataloex\USADEBT.DP>
+MORALES.DAT   SO2 isotope analysis         <xcf: ~dataloex\MORALES.DP>
+MORALES2.DAT  SO2 isotope analysis         <xcf: ~dataloex\MORALES2.DP>
+
+FREQPRIM.DAT  Frequency of prime numbers   <xcf: ~dataloex\FREQPRIM.DP>
+PRIMESM.DAT   Mersenne prime numbers       <xcf: ~dataloex\PRIMESM.DP>
+

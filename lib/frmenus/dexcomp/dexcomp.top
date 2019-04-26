@@ -1,0 +1,34 @@
+----- <~dexcomp\dexcomp.top> Comparative Designs
+ 
+Comparative Designs
+ 
+Discussion
+     Overview                            <~dexcomp\discussi.top>
+     Design Types:
+          Completely Randomized Designs  <~dexcomp\ccrd.top>
+          Randomized Block Designs       <~dexcomp\crbd.top>
+          Latin Square+ Designs          <~dexcomp\clsd.top>
+     References                          <~dexcomp\ccomdref.top>
+NIST/SEMATECH Handbook                   <xcl: web handbook comparative designs>
+ 
+Construction
+     Completely Randomized Designs       <~dexcomp\ccrdinde.top>
+     Randomized Block Designs            <~dexcomp\crbdinde.top>
+     Latin Square+ Designs               <~dexcomp\clsdinde.top>
+
+Models
+     Completely Randomized Designs       <~dexcomp\ccrdmode.top>
+     Randomized Block Designs            <~dexcomp\crbdmode.top>
+     Latin Square+ Designs               <~dexcomp\clsdmode.top>
+
+Analysis
+     Completely Randomized Designs       <~dexcomp\ccrdanal.top>
+     Randomized Block Designs            <~dexcomp\crbdanal.top>
+     Latin Square+ Designs               <~dexcomp\clsdanal.top>
+ 
+Built-in Data Sets
+     View                                <~dataview\dexcomp.top>
+     Load                                <~dataload\dexcomp.top>
+
+Worked Examples                          <~dexcomp\compexam.top>
+ 

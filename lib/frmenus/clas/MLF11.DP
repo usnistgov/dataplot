@@ -1,0 +1,10 @@
+----- <~dataloex\MLF11.DP> Load & Execute MLF11.DAT
+
+. This is file    MLF11.DP
+
+DELETE Y
+SKIP 25
+READ MLF11.DAT Y
+TITLE MLF11.DAT
+/
+

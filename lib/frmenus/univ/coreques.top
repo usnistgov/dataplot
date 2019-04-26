@@ -1,0 +1,26 @@
+----- <~univ\coreques.top> Core Questions: Univariate
+
+Core Questions: Univariate
+
+Location
+   NIST/SEMATECH Handbook (One Process Mean) <xcl: web handbook compare one process mean>
+   Estimation: location estimate = ?       <~univ\locaesti.top>
+   Testing: has location changed/improved  <~univ\locatest.top>
+            relative to reference MU0?     <~univ\locatest.top>
+
+Variation:
+   NIST/SEMATECH Handbook (One Process Variability) <xcl: web handbook compare one process variability>
+   Estimation: variation estimate= ?       <~univ\variesti.top>
+   Testing: has variation changed/improved <~univ\varitest.top>
+            relative to reference sigma0?  <~univ\varitest.top>
+
+Relative Variation:
+   Estimation: relative variation estimate = ?     <~univ\relvesti.top>
+   Testing: has relative variation changed/improved <~univ\relvtest.top>
+            relative to reference relative SD     <~univ\relvtest.top>
+
+Distribution
+   NIST/SEMATECH Handbook (One Process Distribution) <xcl: web handbook compare one process distribution>
+   Estimatation: distribution = ?          <~univ\distesti.top>
+   Testing: does distribution = reference distribution? <~univ\disttest.top>
+

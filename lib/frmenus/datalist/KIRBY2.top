@@ -1,0 +1,8 @@
+----- <~datalist\KIRBY2.top> KIRBY2.DAT
+ 
+KIRBY2.DAT
+ 
+View     <xcl: LIST KIRBY2.DAT>
+Load     <x2cl: SKIP 25; READ KIRBY2.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\KIRBY2.DAT>
+ 

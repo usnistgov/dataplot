@@ -1,0 +1,13 @@
+----- <~dataload\dexreg.top> Load Regression Design Data
+
+Load Regression Design Data
+
+1 independent variable
+   BOXBOD.DAT   Oxygen demand        <xcf: ~dataload\BOXBOD.DP>
+   BOXRATS.DAT  Rat growth rate      <xcf: ~dataload\BOXRATS.DP>
+   BOXWELD.DAT  Breaking strength    <xcf: ~dataload\BOXWELD.DP>
+
+2 independent variables
+   BOXCHEM2.DAT Chemical impurity         <xcf: ~dataload\BOXCHEM2.DP>
+   BOXSPRAY.DAT Aerosol spray dispersion  <xcf: ~dataload\BOXSPRAY.DP>
+

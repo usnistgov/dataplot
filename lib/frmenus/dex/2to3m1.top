@@ -1,0 +1,17 @@
+----- <~dex\2to3m1.top> 2**(3-1) Design
+
+2**(3-1) Design
+
+   k = 3 factors
+   n = 4 runs
+   r = resolution 3
+       (main effects  ==  2-term interactions)
+
+          (12)
+   X1  X2  X3
+   ..........
+   -   -   +
+   +   -   -
+   -   +   -
+   +   +   +
+

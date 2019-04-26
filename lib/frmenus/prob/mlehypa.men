@@ -1,0 +1,44 @@
+This is file mlehypa.men--Hypergeometric MLE Estimates
+ 
+--------------------
+ 1. Hypergeometric Maximum Likelihood Estimates
+ 2. HYPERGEOMETRIC MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. The hypergeometric distribution has four
+ 5. parameters:
+ 6.
+ 7.    N  = total number of items in population
+ 8.    n  = number of items in sample
+ 9.    k  = number of defectives in population
+10.    x  = number of defectives in sample
+11.
+12. This menu estimates the number of defectives
+13. in the population (k) given the other parameters
+14. are known.  One application for this is in
+15. acceptance sampling (i.e., we want to predict
+16. the total number of defectives in a lot based
+17. on the number of defectives in a sample).
+18.
+19. Response Variable:
+19. @CE 1 0 42 50 ? gui-variable
+20.
+21. Value for the Number of Items in the Sample:
+21. @CE 2 0 42 50 *
+22. Value for the Number of Items in the Population:
+22. @CE 3 0 42 50 *
+23.
+24. Subset/Except/For Specification:
+25. @CE 4 0 1 50 *
+26.
+27.
+28. Compute Hypergeometric MLE's?
+--------------------
+GR FE
+SET HYPERGEOMETRIC MAXIMUM LIKELIHOOD ACCEPTANCE SAMPLING
+DELETE NSAMP NPOP
+@IF 2 0 LET NSAMP = _2
+@IF 3 0 LET NPOP  = _3
+HYPERGEOMETRIC MAXIMUM LIKELIHOOD _1  NSAMP NPOP  _4
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

@@ -1,0 +1,20 @@
+----- <~prob\symmppf.top> Symmetric Distribution Percent Points
+
+Symmetric Distribution Percent Points
+
+Uniform                  <xemf: ~prob\unippf.men>
+Normal                   <xemf: ~prob\norppf.men>
+Logistic                 <xemf: ~prob\logppf.men>
+Double Exponential       <xemf: ~prob\dexppf.men>
+Double Weibull           <xemf: ~prob\dweppf.men>
+Double Gamma             <xemf: ~prob\dgappf.men>
+Cauchy                   <xemf: ~prob\cauppf.men>
+Tukey-Lambda             <xemf: ~prob\tukppf.men>
+t (df NU)                <xemf: ~prob\tppf.men>
+Semi-Circular            <xemf: ~prob\semppf.men>
+Triangular               <xemf: ~prob\trippf.men>
+Von Mises                <xemf: ~prob\vonppf.men>
+Cosine                   <xemf: ~prob\cosppf.men>
+Anglit                   <xemf: ~prob\angppf.men>
+Hyperbolic Secant        <xemf: ~prob\hseppf.men>
+

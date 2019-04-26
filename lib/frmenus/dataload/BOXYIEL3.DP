@@ -1,0 +1,8 @@
+----- <~dataload\BOXYIEL3.DP> Load BOXYIEL3.DAT
+
+. This is file    BOXYIEL3.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ BOXYIEL3.DAT Y X1 X2
+

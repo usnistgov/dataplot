@@ -1,0 +1,83 @@
+This is file log.men--Compute exp and log functions
+ 
+--------------------
+ 1. Exponential and Logarithmic Functions
+ 2. LET YNEW = EXP(Y)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value.
+ 6.
+ 7. Variable  to operate on:
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8. Operation to perform:
+ 9.
+10. @CE 2 1 10 26 sin
+10. @CE 2 2 28 44 sec
+10. @CE 2 3 46 62 tan
+11. @CE 2 4 10 26 cos
+11. @CE 2 5 28 44 csc
+11. @CE 2 6 46 62 cot
+12.
+13. @CE 2 7 10 26 arcsin
+13. @CE 2 8 28 44 arcsec
+13. @CE 2 9 46 62 arctan
+14. @CE 2 10 10 26 arccos
+14. @CE 2 11 28 44 arccs
+14. @CE 2 12 46 62 arccot
+15.
+16. @CE 2 13 10 26 sinh
+16. @CE 2 14 28 44 sech
+16. @CE 2 15 46 62 tanh
+17. @CE 2 16 10 26 cosh
+17. @CE 2 17 28 44 csch
+17. @CE 2 18 46 62 coth
+18.
+19. @CE 2 19 10 26 arcsinh
+19. @CE 2 20 28 44 arcsech
+19. @CE 2 21 46 62 arctanh
+20. @CE 2 22 10 26 arccosh
+20. @CE 2 23 28 44 arccsch
+20. @CE 2 24 46 62 arccoth
+21.
+22. Variable to store the transformed result:
+22. @CE 3 0 33 50 ?
+23.
+24. Plot?:
+24. @CE 5 1 14 20 no
+24. @CE 5 2 14 20 yes
+25.
+26. Subset/Except/For Specification:
+27. @CE 4 0 -5 50 *
+28.
+30.
+31. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = SIN( _1 ) _4
+@IF 2 2 LET _3 = SEC( _1 ) _4
+@IF 2 3 LET _3 = TAN( _1 ) _4
+@IF 2 4 LET _3 = COS( _1 ) _4
+@IF 2 5 LET _3 = CSC( _1 ) _4
+@IF 2 6 LET _3 = COT( _1 ) _4
+@IF 2 7 LET _3 = ARCSIN( _1 ) _4
+@IF 2 8 LET _3 = ARCSEC( _1 ) _4
+@IF 2 9 LET _3 = ARCTAN( _1 ) _4
+@IF 2 10 LET _3 = ARCCOS( _1 ) _4
+@IF 2 11 LET _3 = ARCCSC( _1 ) _4
+@IF 2 12 LET _3 = ARCCOT( _1 ) _4
+@IF 2 13 LET _3 = SINH( _1 ) _4
+@IF 2 14 LET _3 = SECH( _1 ) _4
+@IF 2 15 LET _3 = TANH( _1 ) _4
+@IF 2 16 LET _3 = COSH( _1 ) _4
+@IF 2 17 LET _3 = CSCH( _1 ) _4
+@IF 2 18 LET _3 = COTH( _1 ) _4
+@IF 2 19 LET _3 = ARCSINH( _1 ) _4
+@IF 2 20 LET _3 = ARCSECH( _1 ) _4
+@IF 2 21 LET _3 = ARCTANH( _1 ) _4
+@IF 2 22 LET _3 = ARCCOSH( _1 ) _4
+@IF 2 23 LET _3 = ARCCSCH( _1 ) _4
+@IF 2 24 LET _3 = ARCCOTH( _1 ) _4
+@IF 5 2 PLOT _3  _1  _4
+--------------------
+WEB HELP TRIGONOMETRIC FUNCTIONS
+--------------------

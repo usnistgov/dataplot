@@ -1,0 +1,10 @@
+----- <~dataloex\AUTO79.DP> Load & Execute AUTO79.DAT
+
+. This is file    AUTO79.DP
+
+DELETE Y
+SKIP 25
+READ AUTO79.DAT Y
+TITLE AUTO79.DAT
+/
+

@@ -1,0 +1,35 @@
+----- <~dataexec\natrella.top> Natrella Book: Experimental Statistics
+
+Natrella Book: Experimental Statistics
+
+    Introduction                               <xcf: ~dataexec\natrintr.DP>
+
+ 1. Basic Stat Concepts                        <xcf: ~dataexec\natr1.DP>
+
+ 2. Characterizing Performance                 <xcf: ~dataexec\natr2.DP>
+ 3. Comparing wrt Average Performance          <xcf: ~dataexec\natr3.DP>
+ 4. Comparing wrt Variabililty of Performance  <xcf: ~dataexec\natr4.DP>
+
+ 5. Characterizing Linear Relationship (2 Var) <xcf: ~dataexec\natr5.DP>
+ 6. Polynomial & Multivariable Least Sq.       <xcf: ~dataexec\natr6.DP>
+
+ 7. Characterizing Qualitiative Performance    <xcf: ~dataexec\natr7.DP>
+ 8. Comparing 2 Categories (Percentage Tests)  <xcf: ~dataexec\natr8.DP>
+ 9. Comparing Several Cat. (Chi-Squared Tests) <xcf: ~dataexec\natr9.DP>
+10. Sensitivity Testing                        <xcf: ~dataexec\natr10.DP>
+
+11. Planning Experiments (General)             <xcf: ~dataexec\natr11.DP>
+12. Factorial Experiments                      <xcf: ~dataexec\natr12.DP>
+13. Randomized Block & Latin Square Exp.       <xcf: ~dataexec\natr13.DP>
+14. Experiments to Determine Optimum Levels    <xcf: ~dataexec\natr14.DP>
+
+15. Shortcut Test for Small Samples (Normal)   <xcf: ~dataexec\natr15.DP>
+16. Distribution-free Tests                    <xcf: ~dataexec\natr16.DP>
+17. Treatment of Outliers                      <xcf: ~dataexec\natr17.DP>
+18. Control Charts                             <xcf: ~dataexec\natr18.DP>
+19. Extreme-Value Data                         <xcf: ~dataexec\natr19.DP>
+20. The Use of Transformations                 <xcf: ~dataexec\natr20.DP>
+21. Relating Confidence Int. & Signif. Tests   <xcf: ~dataexec\natr21.DP>
+22. Notes on Stat Computations                 <xcf: ~dataexec\natr22.DP>
+23. Expression of Uncertainties of Results     <xcf: ~dataexec\natr23.DP>
+

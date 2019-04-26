@@ -1,0 +1,18 @@
+----- <~dex\dexmixqu.top> Mixture Design Question
+
+Mixture Design Question
+
+5. If you have 3 to 10, say, continuous
+   factors which are in fact proportions
+   (as opposed to question 3 above) and
+   so sum to unity, and if you have no
+   mathematical model in hand but do
+   wish to end up with a representation
+   of the response surface via a fitted
+   empirical model, and if the lead
+   question is "What are the best
+   (unbiased & minimum variance)
+   estimates for the coefficients in
+   that given model?", then you need a
+   Mixture Design.
+

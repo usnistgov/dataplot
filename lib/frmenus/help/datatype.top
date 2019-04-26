@@ -1,0 +1,27 @@
+----- <~help\datatype.top> Data Types
+
+Data Types
+
+Data Types
+
+No Data Typing Commands
+
+    You do not need to pre-specify data types.  Dataplot
+    automatically determines the correct data type based
+    on usage.  In fact, the Dataplot language does not
+    provide any data typing commands.  In most cases, you
+    do not need to worry about correct data types.
+
+Data Stored Internally as Single Precision Numbers
+
+    Dataplot stores numbers internally as single precision
+    floating point numbers.  Many internal calculations (e.g.,
+    fitting) are performed using double precision arithmetic.
+    However, the results are saved in single precision.  On some
+    platforms (e.g., SUN and most Unix workstations), Dataplot
+    can be built in such a way that single precision defaults to
+    double precision.  For most applications, this should not be
+    necessary.  Contact the Dataplot developers
+    (alan.heckert@nist.gov) if you would like more information
+    about this.
+

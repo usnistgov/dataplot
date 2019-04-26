@@ -1,0 +1,34 @@
+This is file mlenormx.men--Normal Mixture MLE Estimates
+ 
+--------------------
+ 1. Normal Mixture Maximum Likelihood Estimates
+ 2. NORMAL MIXTURE MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. This menu generates the maximum likelihood
+ 5. of a mixture of normal distributions.  It is
+ 6. assumed that the number of component distributions
+ 7. are known (it defaults to 2).  The estimates
+ 8. can be computed for either raw data or data
+ 9. that has already been binned.
+10.
+11. Response (or Bin Counts) Variable:
+11. @CE 1 0 42 50 ? gui-variable
+12. Optional Bin Mid-Points Variable:
+12. @CE 2 0 42 50 ? gui-variable
+13.
+14. Specify the numbr of component distributions:
+14. @CE 3 0 42 50 *
+15.
+16. Subset/Except/For Specification:
+17. @CE 4 0 1 50 *
+18.
+19.
+20. Compute Normal Mixture MLE's?
+--------------------
+GR FE
+LET P = 2
+@IF 3 0 LET P = _3
+NORMAL MIXTURE MAXIMUM LIKELIHOOD _1 _2 _4
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

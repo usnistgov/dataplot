@@ -1,0 +1,8 @@
+----- <~dataload\WATTERS.DP> Load WATTERS.DAT
+
+. This is file    WATTERS.DP
+
+DELETE Y1 Y2 X REP
+SKIP 25
+READ WATTERS.DAT Y1 Y2 X REP
+

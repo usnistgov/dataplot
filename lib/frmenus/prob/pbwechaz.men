@@ -1,0 +1,58 @@
+This is file pbwechaz.men--Plot Bi-Weibull Cumulative Hazard
+ 
+--------------------
+ 1. Plot a Bi-Weibull Cumulative Hazard Function
+ 2. PLOT BWECHAZ(X,S1,GAMMA1,MU2,S2,GAMMA2) FOR X = 0 0.01 5
+ 3.
+ 4. Shape Parameter scale1:
+ 4. @CE 1 0 42 50 ?
+ 5. Shape Parameter gamma1:
+ 5. @CE 2 0 42 50 ?
+ 6. Shape Parameter   loc2:
+ 6. @CE 3 0 42 50 ?
+ 7. Shape Parameter scale2:
+ 7. @CE 4 0 42 50 ?
+ 8. Shape Parameter gamma2:
+ 8. @CE 5 0 42 50 ?
+ 9.
+10. You can specify the range of values to plot either
+11. by providing an input vector containing the explicit
+12. input values or by providing the start, increment,
+13. and stop values.
+14.
+15. Input Variable (optional):
+15. @CE 6 0 42 50 ? gui-variable
+16.
+17. Start Value:
+17. @CE 7 0 42 50 ?
+18. Increment Value (defaults to 0.1):
+18. @CE 8 0 42 50 ?
+19. Stop Value:
+19. @CE 9 0 42 50 ?
+20.
+21. Variable to Store the Cumulative Hazard Values (optional):
+21. @CE 10 0 42 50 ?
+22.
+23.
+24. Plot the Bi-Weibull Cumulative Hazard?
+--------------------
+AN FE
+LET ZMU2 = 0
+LET ZS1 = 1
+LET ZS2 = 1
+LET ZG1 = 1
+LET ZG2 = 1
+@IF 1 0 LET ZS1 = _1
+@IF 2 0 LET ZG1 = _2
+@IF 3 0 LET ZMU2 = _3
+@IF 4 0 LET ZS2 = _4
+@IF 5 0 LET ZG2 = _5
+LET ZINC = 0.1
+@IF 8 0 LET ZINC = _8
+@IF 6 0 LET ZJUNK = BWECHAZ( _6 ,ZS1,ZG1,ZMU2,ZS2,ZG2)
+@IF 6 0 PLOT ZJUNK _6
+@IF 7 0 PLOT BWECHAZ( ZZZZ ,ZS1,ZG1,ZMU2,ZS2,ZG2) FOR ZZZZ = _7 ZINC _9
+@IF 10 0 LET _10 = YPLOT
+--------------------
+WEB HELP BWECHAZ
+--------------------

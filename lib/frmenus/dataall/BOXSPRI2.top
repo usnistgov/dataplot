@@ -1,0 +1,8 @@
+----- <~dataall\BOXSPRI2.top> BOXSPRI2.DAT
+
+BOXSPRI2.DAT
+
+View     <xcl: LIST BOXSPRI2.DAT>
+Load     <xcf: ~dataload/BOXSPRI2.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXSPRI2.DAT>
+

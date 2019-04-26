@@ -1,0 +1,10 @@
+----- <~dataloex\CURRIE.DP> Load & Execute CURRIE.DAT
+
+. This is file    CURRIE.DP
+
+DELETE Y
+SKIP 25
+READ CURRIE.DAT Y
+TITLE CURRIE.DAT
+/
+

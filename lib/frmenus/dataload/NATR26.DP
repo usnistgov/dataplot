@@ -1,0 +1,8 @@
+----- <~dataload\NATR26.DP> Load NATR26.DAT
+
+. This is file    NATR26.DP
+
+DELETE Y
+SKIP 25
+READ NATR26.DAT Y
+

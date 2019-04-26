@@ -1,0 +1,30 @@
+----- <~dataprin\dataprin.top> Print (to Printer) Built-in Dataplot data Files
+
+Print (to Printer) Built-in Dataplot Data Files
+
+Core data sets             <~dataprin\core.top>
+
+By Stat Category:
+   Quality/SPC             <~dataprin\qual.top>
+   Design of Experiment    <~dataprin\dex.top>
+   Regression              <~dataprin\reg.top>
+
+   Univariate              <~dataprin\univ.top>
+   Time Series             <~dataprin\time.top>
+   Multi-Factor            <~dataprin\mfac.top>
+   Multivariate            <~dataprin\mvar.top>
+   Uncertainty Analysis    <~dataprin\unce.top>
+
+   Probability             <~dataprin\prob.top>
+   Reliability             <~dataprin\reli.top>
+   Extreme Value Analysis  <~dataprin\eva.top>
+   Mathematics             <~dataprin\math.top>
+
+By Book:
+   Natrella                          <~dataprin\natrella.top>
+   Sematech                          <~dataprin\sematech.top>
+   Box, Hunter, & Hunter             <~dataprin\bhh.top>
+   Statistics for Scientists         <~dataprin\stsc.top>
+   Graybill/Iyer  I: Regression      <~dataprin\grayiye1.top>
+   Graybill/Iyer II: Inference       <~dataprin\grayiye2.top>
+

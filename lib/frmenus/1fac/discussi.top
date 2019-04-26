@@ -1,0 +1,25 @@
+----- <~1fac\discussi.top> Discussion: 1-Factor
+
+Discussion: 1-Factor
+
+Data for a 1-factor study conist of a response
+variable, Y, and a factor variable, X.  These are
+also called the dependent variable (Y) and the
+independent variable (X).  
+
+The factor variable is usually assumed to be fixed.
+Designed experiments typically have only a few discrete
+values of the factor variable.  The distinct values
+are called the levels of the factor variable.  The case
+where there are only 2 levels of the factor variable is
+a special case.
+
+Typical questions addressed in a 1-factor analysis are:
+  1) Does the factor have significance and importance?
+  2) Does the factor "Have an Effect"?
+  3) Has the process improved?
+  4) Has the process Changed?
+  5) What is the best setting for the factor?
+  6) What is a good model for the relationship between
+     the response variable and the factor variable?
+

@@ -1,0 +1,30 @@
+This is file andedarl.men--Anderson-Darling 1-Sample Test
+ 
+--------------------
+ 1. 1-Sample Anderson-Darling Goodness of Fit Test
+ 2. ANDERSON-DARLING WEIBULL TEST Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Distribution:
+ 6. @CE 3 1 5 20 Normal
+ 7. @CE 3 2 5 20 Lognormal
+ 8. @CE 3 3 5 20 Weibull
+ 9. @CE 3 4 5 20 Exponential
+10. @CE 3 5 5 20 Extreme Value Type 1
+11.
+12. Subset/Except/For Specification:
+13. @CE 2 0 1 50 *
+14.
+15.
+16. Compute 1-Sample Anderson-Darling Test?
+--------------------
+GR FE
+@IF 3 1 ANDERSON-DARLING NORMAL TEST _1 _2
+@IF 3 2 ANDERSON-DARLING LOGNORMAL TEST _1 _2
+@IF 3 3 ANDERSON-DARLING WEIBULL TEST _1 _2
+@IF 3 4 ANDERSON-DARLING EXPONENTIAL TEST _1 _2
+@IF 3 5 ANDERSON-DARLING EXTREME VALUE TYPE 1 TEST _1 _2
+--------------------
+WEB HELP ANDERSON-DARLING TEST
+--------------------

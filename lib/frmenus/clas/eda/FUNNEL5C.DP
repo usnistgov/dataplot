@@ -1,0 +1,10 @@
+----- <~dataloex\FUNNEL5C.DP> Load & Execute FUNNEL5C.DAT
+
+. This is file    FUNNEL5C.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ FUNNEL5C.DAT Y1 Y2
+TITLE FUNNEL5C.DAT
+/
+

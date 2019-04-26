@@ -1,0 +1,57 @@
+TAGUCHI L32 (TYPE B) ORTHOGONAL DESIGN
+NUMBER OF FACTORS                = 10
+NUMBER OF LEVELS FOR EACH FACTOR =  2 FOR 1 FACTOR
+                                    4 FOR 9 FACTORS
+NUMBER OF OBSERVATIONS           = 32
+REFERENCE--TAGUCHI, SYS. OF EXP. DES., VOL. 2, PAGE 1170.
+NOTE--IF POSSIBLE, THIS (AS WITH ALL EXPERIMENT DESIGNS)
+      SHOULD BE RUN IN RANDOM ORDER
+      (TO ASSIST IN THIS RANDOMIZATION,
+      SEE DATAPLOT'S REFERENCE FILES OF
+      RANDOM PERMUTATIONS).
+NOTE--TO READ THIS FILE INTO DATAPLOT--
+      DIMENSION 20 VARIABLES
+      SKIP 25
+      READ L32B.DAT X1 TO X10
+DATE--JUNE 1988
+
+
+
+
+
+
+X  X  X  X  X  X  X  X  X  X
+1  2  3  4  5  6  7  8  9 10
+----------------------------
+1  1  1  1  1  1  1  1  1  1
+1  1  2  2  2  2  2  2  2  2
+1  1  3  3  3  3  3  3  3  3
+1  1  4  4  4  4  4  4  4  4
+1  2  1  1  2  2  3  3  4  4
+1  2  2  2  1  1  4  4  3  3
+1  2  3  3  4  4  1  1  2  2
+1  2  4  4  3  3  2  2  1  1
+1  3  1  2  3  4  1  2  3  4
+1  3  2  1  4  3  2  1  4  3
+1  3  3  4  1  2  3  4  1  2
+1  3  4  3  2  1  4  3  2  1
+1  4  1  2  4  3  3  4  2  1
+1  4  2  1  3  4  4  3  1  2
+1  4  3  4  2  1  1  2  4  3
+1  4  4  3  1  2  2  1  3  4
+2  1  1  4  1  4  2  3  2  3
+2  1  2  3  2  3  1  4  1  4
+2  1  3  2  3  2  4  1  4  1
+2  1  4  1  4  1  3  2  3  2
+2  2  1  4  2  3  4  1  3  2
+2  2  2  3  1  4  3  2  4  1
+2  2  3  2  4  1  2  3  1  4
+2  2  4  1  3  2  1  4  2  3
+2  3  1  3  3  1  2  4  4  2
+2  3  2  4  4  2  1  3  3  1
+2  3  3  1  1  3  4  2  2  4
+2  3  4  2  2  4  3  1  1  3
+2  4  1  3  4  2  4  2  1  3
+2  4  2  4  3  1  3  1  2  4
+2  4  3  1  2  4  2  4  3  1
+2  4  4  2  1  3  1  3  4  2

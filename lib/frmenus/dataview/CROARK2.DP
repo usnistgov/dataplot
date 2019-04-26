@@ -1,0 +1,6 @@
+----- <~dataview\CROARK2.DP> View CROARK2.DAT
+
+. This is file    CROARK2.DP
+
+skip 25; READ CROARKI2.DAT
+

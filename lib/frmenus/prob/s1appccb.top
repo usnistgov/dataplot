@@ -1,0 +1,44 @@
+----- <~prob\s1appccb.top> PPCC Plot with bootstrapping for One Shape Parameter
+
+Generate PPCC (or KS) Plot with Bootstrapping (one shape parameters)
+
+Generate PPCC (or KS) Plot with Bootstrapping for
+Continuous Distributions with One Shape Parameters
+
+Alpha                                     <xemf: ~prob\bootalp.men>
+Asymmetric Double Exponential (Laplace)   <xemf: ~prob\bootade.men>
+Bradford                                  <xemf: ~prob\bootbra.men>
+Burr Type 2                               <xemf: ~prob\bootbu2.men>
+Burr Type 7                               <xemf: ~prob\bootbu7.men>
+Burr Type 8                               <xemf: ~prob\bootbu8.men>
+Burr Type 10                              <xemf: ~prob\bootb10.men>
+Burr Type 11                              <xemf: ~prob\bootb11.men>
+Chi                                       <xemf: ~prob\bootch.men>
+Chi-Square                                <xemf: ~prob\bootchs.men>
+Double Gamma                              <xemf: ~prob\bootdga.men>
+Double Weibull                            <xemf: ~prob\bootdwe.men>
+Error (Subbotin)                          <xemf: ~prob\bootsub.men>
+Exponential Power                         <xemf: ~reli\bootpex.men>
+Fatigue Life                              <xemf: ~reli\bootfl.men>
+Folded T                                  <xemf: ~prob\bootft.men>
+Frechet (Extreme Value Type 2) (Minimum)  <xemf: ~reli\bootev21.men>
+Frechet (Extreme Value Type 2) (Maximum)  <xemf: ~reli\bootev22.men>
+Gamma                                     <xemf: ~reli\bootgam.men>
+Generalized Extreme Value (Minimum)       <xemf: ~reli\bootgev1.men>
+Generalized Extreme Value (Maximum)       <xemf: ~reli\bootgev2.men>
+Generalized Half-Logistic                 <xemf: ~prob\bootghfl.men>
+Generalized Logistic (type 1)             <xemf: ~prob\bootglo.men>
+Generalized Logistic (type 2)             <xemf: ~prob\bootgl2.men>
+Generalized Logistic (type 3)             <xemf: ~prob\bootgl3.men>
+Generalized Logistic (Hosking)            <xemf: ~prob\bootgl5.men>
+Generalized Pareto (Maximum)              <xemf: ~reli\bootgep.men>
+Generalized Pareto (Minimum)              <xemf: ~reli\bootgep2.men>
+Geometric Extreme Exponential             <xemf: ~reli\bootgee.men>
+Inverted Gamma                            <xemf: ~reli\bootiga.men>
+Inverted Weibull                          <xemf: ~reli\bootiwe.men>
+Log Double Exponential (Log Laplace)      <xemf: ~prob\bootlde.men>
+Log Gamma                                 <xemf: ~reli\bootlga.men>
+Logistic-Exponential                      <xemf: ~prob\bootlex.men>
+Log Logistic                              <xemf: ~prob\bootllg.men>
+Lognormal                                 <xemf: ~reli\bootlgn.men>
+

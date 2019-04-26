@@ -1,0 +1,77 @@
+----- <~time\dds5.top> DDS FAQ 5 DDS Inventor
+ 
+5. Who invented DDS? When? Where? Why?
+ 
+DDS was invented by Dr.  Sudhakar M. Pandit as a
+paradigm for data-based modeling, prediction, and
+control.  A precursor to its development was an
+attempt in his M. S. thesis at the Pennsylvania
+State University in 1970 to update the parameters
+of a given model using observed data.  The
+concept, the definition, and the formulation of
+the DDS methodology was first outlined in his Ph.
+D. preliminary report (dissertation proposal) in
+1972 at the University of Wisconsin-Madison, as an
+outgrowth of the 1970 M. S. thesis.  The resultant
+Ph.  D. dissertation, completed in 1973, was the
+central reference for DDS until the appearance of
+his 1991 book published by Wiley Interscience.
+The motivation of ``why'' for DDS is best
+described by the following excerpt from the
+preface of this book:
+ 
+``When I first became acquainted with the theory
+of relativity over 25 years ago, I was not only
+fascinated and charmed by its grandeur and beauty,
+but also puzzled and dismayed by its inherent and
+pervasive determinism.  Even without the benefit
+of quantum mechanics, a rudimentary knowledge of
+Indian philosophy shows that any description of
+causation in a physical reality in space-time is
+necessarily relative and uncertain or
+indeterminate.  A modern exposition of this
+ancient philosophy by Swami Vivekananda in the
+pre-relativity era, which I happened to read at
+the same time, made this quite clear: since the
+ultimate reality is one and undivided by (or
+beyond) space-time, its divided physical
+appearance in space-time must be causally related
+by a mathematical description expressing both
+relativity and uncertainty.  In the description of
+an ideally isolated system, when boundary
+conditions result in deterministic effects
+dominating the uncertainty, e.g., systems in
+classical celestial mechanics, relativistic
+mechanics with its consequent determinism alone
+may suffice as an approximation.  Otherwise the
+uncertainty of quantum mechanics prevails.
+ 
+The apparently divided physical reality is
+perceived by means of sensory data, which must
+reflect all the laws of its space-time relation
+captured by the sensory mechanism.  The classical
+scientific method conjectures such laws, expresses
+them in mathematical models, and establishes their
+validity by verifying the agreement of their
+consequences with the observed data.  Modern
+physics modifies these laws and models to get
+better agreement with more and more refined data,
+thus reducing the uncertainty.
+ 
+It is also possible to reverse the method,
+deriving the mathematical models directly from the
+data and using them in applications such as
+design, prediction, and control.  I have called a
+system represented by such a model from data alone
+as ``Data Dependent Systems' meth practical
+utility of an approach of this kind is obvious and
+is illustrated in this book.  But it also has
+theoretical utility in that it provides a rational
+method of decomposing the possibly complicated
+models obtained from data into simple parts, which
+can be utilized to confirm, deny, or modify
+well-known laws and even to conjecture new laws
+for the behavior of the underlying system.  In
+this sense the approach is fully complementary to
+the classical scientific method.'
+ 

@@ -1,0 +1,128 @@
+This is file ishikawa.men--Ishikawa Diagram
+ 
+--------------------
+ 1. Ishikawa Diagram
+ 2. Macro
+ 3.
+ 4. Major Title (top of page):
+ 5. @CE 1 0 1 50 ?
+ 6. Base Title (bottom of page):
+ 7. @CE 2 0 1 50 ?
+ 8. Text for Goal Box:
+ 9. @CE 3 0 1 50 ?
+10.
+11. Size for Major Title (default=3):
+11. @CE 4 0 42 50 *
+12. Size for Base Title (default=2):
+12. @CE 5 0 42 50 *
+13. Draw Explicit Arrows:
+13. @CE 6 1 41 45 yes
+13. @CE 6 2 46 50 no
+14.
+15. Text can be specified for up to 12
+16. major branches.  In addition, up to
+17. 5 sub-branches can be defined for
+18. each major branch.
+19.
+20. Text for Major Branch 1:
+20. @CE 7 0 26 50 ?
+21.        Text for Sub-Branches:
+21. @CE 8 0 10 50 ?
+13. Independent Variable 1:
+13. @CE 2 0 42 50 ? gui-variable
+14. Independent Variable 2:
+14. @CE 3 0 42 50 ? gui-variable
+15. Independent Variable 3:
+15. @CE 4 0 42 50 ? gui-variable
+16. Independent Variable 4:
+16. @CE 5 0 42 50 ? gui-variable
+17. Independent Variable 5:
+17. @CE 6 0 42 50 ? gui-variable
+18. Independent Variable 6:
+18. @CE 7 0 42 50 ? gui-variable
+19. Independent Variable 7:
+19. @CE 8 0 42 50 ? gui-variable
+20. Independent Variable 8:
+20. @CE 9 0 42 50 ? gui-variable
+21. Independent Variable 9:
+21. @CE 10 0 42 50 ? gui-variable
+22.
+23. Fit a Lowess curve to each plot?:
+23. @CE 11 1 42 45 yes
+23. @CE 11 2 46 48 no
+24.
+25. Plot Symbol:
+25. @CE 12 0 42 50 ? gui-char
+26.
+27.
+28. Subset/Except/For Specification: 
+29. @CE 13 0 1 50 *
+30.
+31.
+32. Generate the Scatter Plot Matrix?:
+--------------------
+GR FE
+LET STRING ZZZZS1 = _1
+LET ZZZZNVAR = 1
+@IF 2 0 LET STRING ZZZZS2 = _2
+@IF 2 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 3 0 LET STRING ZZZZS3 = _3
+@IF 3 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 4 0 LET STRING ZZZZS4 = _4
+@IF 4 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 5 0 LET STRING ZZZZS5 = _5
+@IF 5 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 6 0 LET STRING ZZZZS6 = _6
+@IF 6 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 7 0 LET STRING ZZZZS7 = _7
+@IF 7 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 8 0 LET STRING ZZZZS8 = _8
+@IF 8 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 9 0 LET STRING ZZZZS9 = _9
+@IF 9 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 10 0 LET STRING ZZZZS10 = _10
+@IF 10 0 LET ZZZZNVAR = ZZZZNVAR + 1
+LET STRING ZZZZSUBS = SP()
+LET STRING ZZZZSUBS = _13
+MULTIPLOT CORNER COORDINATES 2 2 98 98
+MULTIPLOT ZZZZNVAR ZZZZNVAR
+FRAME CORNER COORDINATES 0 0 100 100
+TIC MARKS OFF
+TIC MARK LABELS OFF
+TITLE
+TITLE OFFSET -15
+TITLE SIZE 5
+LABEL
+LOWESS FRACTION 0.3
+LET ZZZZFLAG = 0
+@IF 11 1 LET ZZZZFLAG = 1
+LINE BLANK SOLID
+CHARACTER X BLANK
+CHARACTER _12
+IF ZZZZFLAG = 1
+  LINE BLANK SOLID
+  CHARACTER _12 BLANK
+END OF IF
+LOOP FOR K = 1 1 ZZZZNVAR
+    LOOP FOR L = 1 1 ZZZZNVAR
+       IF K = L
+         TITLE ^ZZZZS^K
+         PLOT ^ZZZZS^K VS ^ZZZZS^L   ^ZZZZSUBS
+         TITLE
+       END OF IF
+       IF K <> L
+         IF ZZZZFLAG = 0
+           PLOT ^ZZZZS^K VS ^ZZZZS^L   ^ZZZZSUBS
+         END OF IF
+         IF ZZZZFLAG = 1
+           LOWESS ^ZZZZS^K ^ZZZZS^L ^ZZZZSUBS
+           PLOT ^ZZZZS^K PRED VS ^ZZZZS^L   ^ZZZZSUBS
+         END OF IF
+       END OF IF
+    END OF LOOP
+END OF LOOP
+END OF MULTIPLOT
+RESET PLOT CONTROL
+--------------------
+WEB HELP MULTIPLOT
+--------------------

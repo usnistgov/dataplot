@@ -1,0 +1,13 @@
+----- <~dex2k\impofact.top> Tech. for Analysis Goal 2: Important Factors
+
+Techniques for Analysis Goal 2: Important Factors
+
+DEX scatter plot                   <xemf: ~plot\dexscatp.men>
+DEX mean plot (main eff plot)      <xemf: ~plot\dexmeanp.men>
+Interaction effects matrix         <xemf: ~dex2k\inteffma.men>
+Estimate effects (Yates analysis)  <xemf: ~dex2k\yates.men>
+Normal prob plot of effects        <xemf: ~dex2k\normppef.men>
+Halfnormal prob plot |effects|     <xemf: ~dex2k\hanoppef.men>
+Cumulative res. st. dev. plot      <xemf: ~dex2k\crsdplot.men>
+95% confidence int. on effects     <xemf: ~dex2k\efclplot.men>
+

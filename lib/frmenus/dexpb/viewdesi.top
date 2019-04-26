@@ -1,0 +1,17 @@
+----- <~dexpb\viewdesi.top> View Plackett-Burman Designs
+ 
+View Placket-Burman Designs
+ 
+   INDEX OF PLACKETT-BURMAN EXPERIMENT DESIGNS
+
+ Name    Number   Number
+  of       of       of 
+Design   Factors  Runs
+.........................
+ 
+PB12       11      12             <xcl: LIST PB12.DAT>
+PB20       19      20             <xcl: LIST PB20.DAT>
+PB24       23      24             <xcl: LIST PB24.DAT>
+PB28       27      28             <xcl: LIST PB28.DAT>
+PB36       35      36             <xcl: LIST PB36.DAT>
+

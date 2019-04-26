@@ -1,0 +1,10 @@
+----- <~dataloex\CCXBAR.DP> Load & Execute CCXBAR.DAT
+
+. This is file    CCXBAR.DP
+
+DELETE Y X
+SKIP 25
+READ CCXBAR.DAT Y X
+TITLE CCXBAR.DAT
+/
+

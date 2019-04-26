@@ -1,0 +1,33 @@
+-----<~univ\testfidi.top> Test Fixed Distribution
+
+Test Fixed Distribution
+
+4-Plot                               <xemf: ~univ\4plot.men>
+
+Histogram                            <xemf: ~univ\histogra.men>
+Probability Plot                     <~univ\probplot.top>
+PPCC Plot                            <~univ\ppccplot.top>
+
+Anderson-Darling Goodness of Fit Test <xemf: ~stat\andedarl.men>
+Maximum Likelihood Estimatatiin (full sample)
+   Normal                            <xemf: ~reli\normmle.men>
+   Exponential                       <xemf: ~reli\expomle.men>
+   Weibull (2-parameter)             <xemf: ~reli\weibmle.men>
+   Lognormal (2-parameter)           <xemf: ~reli\lgnmle.men>
+   Inverse Gaussian (2-parameter)    <xemf: ~reli\igmle.men>
+   Gamma (2-parameter)               <xemf: ~reli\gammmle.men>
+   Gumbel                            <xemf: ~reli\gumbmle.men>
+
+Analysis on halves:
+   Vertical line plot                <xemf: ~univ\vertplo2.men>
+   Box plot                          <xemf: ~univ\boxplot2.men>
+   Bihistogram                       <xemf: ~univ\bihist2.men>
+   Quantile-quantile plot            <xemf: ~univ\qqplot2.men>
+|  Kolmogorov-Smirnoff test          <xemf: ~univ\km2.men>
+   Normal probability plot           <xemf: ~univ\normprp2.men>
+
+Analysis on quarters:
+   Vertical line plot                <xemf: ~univ\vertplo4.men>
+   Box plot                          <xemf: ~univ\boxplot4.men>
+   Normal probability plot           <xemf: ~univ\normprp4.men>
+

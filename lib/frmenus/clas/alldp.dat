@@ -1,0 +1,3056 @@
+$$$$$$$$$$$$$$$$$$
+clas/ABERN17.DP
+----- <~dataloex\ABERN17.DP> Load & Execute ABERN17.DAT
+
+. This is file    ABERN17.DP
+
+DELETE Y TAG X
+SKIP 25
+READ ABERN17.DAT Y TAG X
+TITLE ABERN17.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/ABERN35.DP
+----- <~dataloex\ABERN35.DP> Load & Execute ABERN35.DAT
+
+. This is file    ABERN35.DP
+
+DELETE Y
+SKIP 25
+READ ABERN35.DAT Y
+TITLE ABERN35.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/ABERN43.DP
+----- <~dataloex\ABERN43.DP> Load & Execute ABERN43.DAT
+
+. This is file    ABERN43.DP
+
+DELETE Y
+SKIP 25
+READ ABERN43.DAT Y
+TITLE ABERN43.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/AC.DP
+----- <~dataloex\AC.DP> Load & Execute AC.DAT
+
+. This is file    AC.DP
+
+DELETE Y X1 TO X6
+SKIP 25
+READ AC.DAT Y X1 TO X6
+TITLE AC.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/AMRF.DP
+----- <~dataloex\AMRF.DP> Load & Execute AMRF.DAT
+
+. This is file    AMRF.DP
+
+DELETE Y X1 TO X7
+SKIP 25
+READ AMRD.DAT Y X1 TO X7
+TITLE AMRD.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/ASCO2.DP
+----- <~dataloex\ASCO2.DP> Load & Execute ASCO2.DAT
+
+. This is file    ASCO2.DP
+
+DELETE Y
+SKIP 25
+READ ASCO2.DAT Y
+TITLE ASCO2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/ASF11.DP
+----- <~dataloex\ASF11.DP> Load & Execute ASF11.DAT
+
+. This is file    ASF11.DP
+
+DELETE Y
+SKIP 25
+READ ASF11.DAT Y
+TITLE ASF11.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/ASF12.DP
+----- <~dataloex\ASF12.DP> Load & Execute ASF12.DAT
+
+. This is file    ASF12.DP
+
+DELETE Y
+SKIP 25
+READ ASF12.DAT Y
+TITLE ASF12.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/ASN2O.DP
+----- <~dataloex\ASN2O.DP> Load & Execute ASN2O.DAT
+
+. This is file    ASN2O.DP
+
+DELETE Y
+SKIP 25
+READ ASN20.DAT Y
+TITLE ASN20.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/AUTO79.DP
+----- <~dataloex\AUTO79.DP> Load & Execute AUTO79.DAT
+
+. This is file    AUTO79.DP
+
+DELETE Y
+SKIP 25
+READ AUTO79.DAT Y
+TITLE AUTO79.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/AUTO83B.DP
+----- <~dataloex\AUTO83B.DP> Load & Execute AUTO83B.DAT
+
+. This is file    AUTO83B.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ AUTO83B.DAT Y1 Y2
+TITLE AUTO83B.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/AUTO83.DP
+----- <~dataloex\AUTO83.DP> Load & Execute AUTO83.DAT
+
+. This is file    AUTO83.DP
+
+DELETE Y X1 TO X7
+SKIP 25
+READ AUTO83.DAT Y X1 TO X7
+TITLE AUTO83.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BAKER.DP
+----- <~dataloex\BAKER.DP> Load & Execute BAKER.DAT
+
+. This is file    BAKER.DP
+
+DELETE Y
+SKIP 25
+READ BAKER.DAT Y
+TITLE BAKER.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BATTADD2.DP
+----- <~dataloex\BATTADD2.DP> Load & Execute BATTADD2.DAT
+
+. This is file    BATTADD2.DP
+
+DELETE Y X
+SKIP 25
+READ BATTADD2.DAT Y X
+TITLE BATTADD2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BATTADD3.DP
+----- <~dataloex\BATTADD3.DP> Load & Execute BATTADD3.DAT
+
+. This is file    BATTADD3.DP
+
+DELETE Y X BATT
+SKIP 25
+READ BATTADD3.DAT Y X BATT
+TITLE BATTADD3.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BENNETT5.DP
+----- <~dataloex\BENNETT5.DP> Load & Execute BENNETT5.DAT
+
+. This is file    BENNETT5.DP
+
+DELETE Y
+SKIP 25
+READ BENNETT5.DAT Y
+TITLE BENNETT5.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BENNETT.DP
+----- <~dataloex\BENNETT.DP> Load & Execute BENNETT.DAT
+
+. This is file    BENNETT.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ BENNETT.DAT Y X1 X2
+TITLE BENNETT.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BERGER1.DP
+----- <~dataloex\BERGER1.DP> Load & Execute BERGER1.DAT
+
+. This is file    BERGER1.DP
+
+DELETE Y X BATCH
+SKIP 25
+READ BERGER1.DAT Y X BATCH
+TITLE BERGER1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BIOMED3.DP
+----- <~dataloex\BIOMED3.DP> Load & Execute BIOMED3.DAT
+
+. This is file    BIOMED3.DP
+
+DELETE Y
+SKIP 25
+READ BIOMED3.DAT Y
+TITLE BIOMED3.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOWEN.DP
+----- <~dataloex\BOWEN.DP> Load & Execute BOWEN.DAT
+
+. This is file    BOWEN.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ BOWEN.DAT Y X1 X2 X3
+TITLE BOWEN.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXAUTO.DP
+----- <~dataloex\BOXAUTO.DP> Load & Execute BOXAUTO.DAT
+
+. This is file    BOXAUTO.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ BOXAUTO.DAT Y X1 X2 X3
+TITLE BOXAUTO.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXBIKE2.DP
+----- <~dataloex\BOXBIKE2.DP> Load & Execute BOXBIKE2.DAT
+
+. This is file    BOXBIKE2.DP
+
+DELETE Y X1 TO X7
+SKIP 25
+READ BOXBIKE2.DAT Y X1 TO X7
+TITLE BOXBIKE2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXBIKE3.DP
+----- <~dataloex\BOXBIKE3.DP> Load & Execute BOXBIKE3.DAT
+
+. This is file    BOXBIKE3.DP
+
+DELETE Y X1 TO X7
+SKIP 25
+READ BOXBIKE3.DAT Y X1 TO X7
+TITLE BOXBIKE3.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXBLOOD.DP
+----- <~dataloex\BOXBLOOD.DP> Load & Execute BOXBLOOD.DAT
+
+. This is file    BOXBLOOD.DP
+
+DELETE Y X RUNSEQ
+SKIP 25
+READ BOXBLOOD.DAT Y X RUNSEQ
+TITLE BOXBLOOD.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXBOD.DP
+----- <~dataloex\BOXBOD.DP> Load & Execute BOXBOD.DAT
+
+. This is file    BOXBOD.DP
+
+DELETE Y
+SKIP 25
+READ BOXBOD.DAT Y
+TITLE BOXBOD.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXCAKE2.DP
+----- <~dataloex\BOXCAKE2.DP> Load & Execute BOXCAKE2.DAT
+
+. This is file    BOXCAKE2.DP
+
+DELETE Y X1 TO X5
+SKIP 25
+READ BOXCAKE2.DAT Y X1 TO X5
+TITLE BOXCAKE2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXCAKE.DP
+----- <~dataloex\BOXCAKE.DP> Load & Execute BOXCAKE.DAT
+
+. This is file    BOXCAKE.DP
+
+DELETE Y X1 TO X5
+SKIP 25
+READ BOXCAKE.DAT Y X1 TO X5
+TITLE BOXCAKE.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXCHEM2.DP
+----- <~dataloex\BOXCHEM2.DP> Load & Execute BOXCHEM2.DAT
+
+. This is file    BOXCHEM2.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ BOXCHEM.DAT Y X1 X2
+TITLE BOXCHEM.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXCHEM.DP
+----- <~dataloex\BOXCHEM.DP> Load & Execute BOXCHEM.DAT
+
+. This is file    BOXCHEM.DP
+
+DELETE Y X1 X2 X3 X4
+SKIP 25
+READ BOXCHEM.DAT Y X1 X2 X3 X4
+TITLE BOXCHEM.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXCLEA2.DP
+----- <~dataloex\BOXCLEA2.DP> Load & Execute BOXCLEA2.DAT
+
+. This is file    BOXCLEA2.DP
+
+DELETE Y
+SKIP 25
+READ BOXCLEA2.DAT Y
+TITLE BOXCLEA2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXCLEAN.DP
+----- <~dataloex\BOXCLEAN.DP> Load & Execute BOXCLEAN.DAT
+
+. This is file    BOXCLEAN.DP
+
+DELETE Y X1 X2 X3 X4
+SKIP 25
+READ BOXCLEAN.DAT Y X1 TO X4
+TITLE BOXCLEAN.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXCLOTH.DP
+----- <~dataloex\BOXCLOTH.DP> Load & Execute BOXCLOTH.DAT
+
+. This is file    BOXCLOTH.DP
+
+DELETE Y X1 TO X5
+SKIP 25
+READ BOXCLOTH.DAT Y X1 TO X5
+TITLE BOXCLOTH.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXFILT2.DP
+----- <~dataloex\BOXFILT2.DP> Load & Execute BOXFILT2.DAT
+
+. This is file    BOXFILT2.DP
+
+DELETE Y X1 TO X7
+SKIP 25
+READ BOXFILT2.DAT Y X1 TO X7
+TITLE BOXFILT2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXFILT.DP
+----- <~dataloex\BOXFILT.DP> Load & Execute BOXFILT.DAT
+
+. This is file    BOXFILT.DP
+
+DELETE Y X1 TO X7
+SKIP 25
+READ BOXFILT.DAT Y X1 TO X7
+TITLE BOXFILT.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXINDUS.DP
+----- <~dataloex\BOXINDUS.DP> Load & Execute BOXINDUS.DAT
+
+. This is file    BOXINDUS.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ BOXINDUS.DAT Y1 Y2
+TITLE BOXINDUS.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXJE142.DP
+----- <~dataloex\BOXJE142.DP> Load & Execute BOXJE142.DAT
+
+. This is file    BOXJE142.DP
+
+DELETE Y
+SKIP 25
+READ BOXJE142.DAT Y
+TITLE BOXJE142.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXJENK1.DP
+----- <~dataloex\BOXJENK1.DP> Load & Execute BOXJENK1.DAT
+
+. This is file    BOXJENK1.DP
+
+DELETE Y
+SKIP 25
+READ BOXJENK1.DAT Y
+TITLE BOXJENK1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXJENK2.DP
+----- <~dataloex\BOXJENK2.DP> Load & Execute BOXJENK2.DAT
+
+. This is file    BOXJENK2.DP
+
+DELETE Y
+SKIP 25
+READ BOXJENK2.DAT Y
+TITLE BOXJENK2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXMOLD.DP
+----- <~dataloex\BOXMOLD.DP> Load & Execute BOXMOLD.DAT
+
+. This is file    BOXMOLD.DP
+
+DELETE Y X1 TO X8
+SKIP 25
+READ BOXMOLD.DAT Y X1 TO X8
+TITLE BOXMOLD.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXPENIC.DP
+----- <~dataloex\BOXPENIC.DP> Load & Execute BOXPENIC.DAT
+
+. This is file    BOXPENIC.DP
+
+DELETE Y FORM BATCH RUNSEQ
+SKIP 25
+READ BOXPENIC.DAT Y FORM BATCH RUNSEQ>
+TITLE BOXPENIC.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXPILOT.DP
+----- <~dataloex\BOXPILOT.DP> Load & Execute BOXPILOT.DAT
+
+. This is file    BOXPILOT.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ BOXPILOT.DAT Y X1 X2 X3
+TITLE BOXPILOT.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXPOISO.DP
+----- <~dataloex\BOXPOISO.DP> Load & Execute BOXPOISO.DAT
+
+. This is file    BOXPOISO.DP
+
+DELETE Y X1 X2 REP
+SKIP 25
+READ BOXPOISO.DAT Y X1 X2 REP
+TITLE BOXPOISO.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXRADAR.DP
+----- <~dataloex\BOXRADAR.DP> Load & Execute BOXRADAR.DAT
+
+. This is file    BOXRADAR.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ BOXRADAR.DAT Y X1 X2 X3
+TITLE BOXRADAR.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXRATS.DP
+----- <~dataloex\BOXRATS.DP> Load & Execute BOXRATS.DAT
+
+. This is file    BOXRATS.DP
+
+DELETE Y X
+SKIP 25
+READ BOXRATS.DAT Y X
+TITLE BOXRATS.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXREAC2.DP
+----- <~dataloex\BOXREAC2.DP> Load & Execute BOXREAC2.DAT
+
+. This is file    BOXREAC2.DP
+
+DELETE Y X1 TO X5
+SKIP 25
+READ BOXREAC2.DAT Y X1 TO X5
+TITLE BOXREAC2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXREACT.DP
+----- <~dataloex\BOXREACT.DP> Load & Execute BOXREACT.DAT
+
+. This is file    BOXREACT.DP
+
+DELETE Y X1 TO X5
+SKIP 25
+READ BOXREACT.DAT Y X1 TO X5
+TITLE BOXREACT.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXSHOES.DP
+----- <~dataloex\BOXSHOES.DP> Load & Execute BOXSHOES.DAT
+
+. This is file    BOXSHOES.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ BOXSHOES.DAT Y X1 X2
+TITLE BOXSHOES.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXSOLAR.DP
+----- <~dataloex\BOXSOLAR.DP> Load & Execute BOXSOLAR.DAT
+
+. This is file    BOXSOLAR.DP
+
+DELETE Y X1 X2 X3 X4
+SKIP 25
+READ BOXSOLAR.DAT Y X1 X2 X3 X4
+TITLE BOXSOLAR.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXSPRAY.DP
+----- <~dataloex\BOXSPRAY.DP> Load & Execute BOXSPRAY.DAT
+
+. This is file    BOXSPRAY.DP
+
+DELETE Y X RUNSEQ
+SKIP 25
+READ BOXSPRAY.DAT Y X RUNSEQ
+TITLE BOXSPRAY.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXSPRI2.DP
+----- <~dataloex\BOXSPRI2.DP> Load & Execute BOXSPRI2.DAT
+
+. This is file    BOXSPRI2.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ BOXSPRI2.DAT Y X1 X2 X3
+TITLE BOXSPRI2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXSPRI3.DP
+----- <~dataloex\BOXSPRI3.DP> Load & Execute BOXSPRI3.DAT
+
+. This is file    BOXSPRI3.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ BOXSPRI3.DAT Y X1 X2 X3
+TITLE BOXSPRI3.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXSPRIN.DP
+----- <~clas\BOXSPRIN.DP> Load & Execute BOXSPRIN.DAT
+
+. This is file    BOXSPRIN.DP
+
+DELETE Y X1 TO X3
+SKIP 25
+READ BOXSPRIN.DAT Y X1 TO X3
+.
+YATES Y
+SKIP 0
+READ DPST1F.DAT TAG COEF TCOEF RSD CUMRSD
+.
+CHAR AUTOMATIC TAG
+LET NUMCOEF = NUMBER COEF
+LET ZZZINDEX = SEQUENCE 1 1 NUMCOEF
+PLOT CUMRSD ZZZINDEX TAG
+$$$$$$$$$$$$$$$$$$
+clas/BOXTOMAT.DP
+----- <~dataloex\BOXTOMAT.DP> Load & Execute BOXTOMAT.DAT
+
+. This is file    BOXTOMAT.DP
+
+DELETE Y X POS
+SKIP 25
+READ BOXTOMAT.DAT Y X POS
+TITLE BOXTOMAT.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXWELD.DP
+----- <~dataloex\BOXWELD.DP> Load & Execute BOXWELD.DAT
+
+. This is file    BOXWELD.DP
+
+DELETE Y X
+SKIP 25
+READ BOXWELD.DAT Y X
+TITLE BOXWELD.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXYIEL2.DP
+----- <~dataloex\BOXYIEL2.DP> Load & Execute BOXYIEL2.DAT
+
+. This is file    BOXYIEL2.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ BOXYIEL2.DAT Y X1 X2
+TITLE BOXYIEL2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BOXYIELD.DP
+----- <~dataloex\BOXYIELD.DP> Load & Execute BOXYIELD.DAT
+
+. This is file    BOXYIELD.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ BOXYIELD.DAT Y X1 X2
+TITLE BOXYIELD.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/BRAIN.DP
+----- <~dataloex\BRAIN.DP> Load & Execute BRAIN.DAT
+
+. This is file    BRAIN.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ BRAIN.DAT Y X1 X2
+TITLE BRAIN.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CASTIL10.DP
+----- <~dataloex\CASTIL10.DP> Load & Execute CASTIL10.DAT
+
+. This is file    CASTIL10.DP
+
+DELETE Y
+SKIP 25
+READ CASTIL10.DAT Y
+TITLE CASTIL10.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CASTIL11.DP
+----- <~dataloex\CASTIL11.DP> Load & Execute CASTIL11.DAT
+
+. This is file    CASTIL11.DP
+
+DELETE Y
+SKIP 25
+READ CASTIL11.DAT Y
+TITLE CASTIL11.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CASTIL12.DP
+----- <~dataloex\CASTIL12.DP> Load & Execute CASTIL12.DAT
+
+. This is file    CASTIL12.DP
+
+DELETE Y
+SKIP 25
+READ CASTIL12.DAT Y
+TITLE CASTIL12.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CASTIL13.DP
+----- <~dataloex\CASTIL13.DP> Load & Execute CASTIL13.DAT
+
+. This is file    CASTIL13.DP
+
+DELETE Y
+SKIP 25
+READ CASTIL13.DAT Y
+TITLE CASTIL13.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CASTIL14.DP
+----- <~dataloex\CASTIL14.DP> Load & Execute CASTIL14.DAT
+
+. This is file    CASTIL14.DP
+
+DELETE Y
+SKIP 25
+READ CASTIL14.DAT Y
+TITLE CASTIL14.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CASTILL1.DP
+----- <~dataloex\CASTILL1.DP> Load & Execute CASTILL1.DAT
+
+. This is file    CASTILL1.DP
+
+DELETE Y
+SKIP 25
+READ CASTILL1.DAT Y
+TITLE CASTILL1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CASTILL2.DP
+----- <~dataloex\CASTILL2.DP> Load & Execute CASTILL2.DAT
+
+. This is file    CASTILL2.DP
+
+DELETE Y
+SKIP 25
+READ CASTILL2.DAT Y
+TITLE CASTILL2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CASTILL3.DP
+----- <~dataloex\CASTILL3.DP> Load & Execute CASTILL3.DAT
+
+. This is file    CASTILL3.DP
+
+DELETE Y
+SKIP 25
+READ CASTILL3.DAT Y
+TITLE CASTILL3.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CASTILL4.DP
+----- <~dataloex\CASTILL4.DP> Load & Execute CASTILL4.DAT
+
+. This is file    CASTILL4.DP
+
+DELETE Y
+SKIP 25
+READ CASTILL4.DAT Y
+TITLE CASTILL4.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CASTILL5.DP
+----- <~dataloex\CASTILL5.DP> Load & Execute CASTILL5.DAT
+
+. This is file    CASTILL5.DP
+
+DELETE Y
+SKIP 25
+READ CASTILL5.DAT Y
+TITLE CASTILL5.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CASTILL6.DP
+----- <~dataloex\CASTILL6.DP> Load & Execute CASTILL6.DAT
+
+. This is file    CASTILL6.DP
+
+DELETE Y
+SKIP 25
+READ CASTILL6.DAT Y
+TITLE CASTILL6.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CASTILL7.DP
+----- <~dataloex\CASTILL7.DP> Load & Execute CASTILL7.DAT
+
+. This is file    CASTILL7.DP
+
+DELETE Y
+SKIP 25
+READ CASTILL7.DAT Y
+TITLE CASTILL7.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CASTILL8.DP
+----- <~dataloex\CASTILL8.DP> Load & Execute CASTILL8.DAT
+
+. This is file    CASTILL8.DP
+
+DELETE Y
+SKIP 25
+READ CASTILL8.DAT Y
+TITLE CASTILL8.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CASTILL9.DP
+----- <~dataloex\CASTILL9.DP> Load & Execute CASTILL9.DAT
+
+. This is file    CASTILL9.DP
+
+DELETE Y
+SKIP 25
+READ CASTILL9.DAT Y
+TITLE CASTILL9.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CCC.DP
+----- <~dataloex\CCC.DP> Load & Execute CCC.DAT
+
+. This is file    CCC.DP
+
+DELETE Y X
+SKIP 25
+READ CCC.DAT Y X
+TITLE CCC.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CCP.DP
+----- <~dataloex\CCP.DP> Load & Execute CCP.DAT
+
+. This is file    CCP.DP
+
+DELETE Y X
+SKIP 25
+READ CCP.DAT Y X
+TITLE CCP.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CCPN.DP
+----- <~dataloex\CCPN.DP> Load & Execute CCPN.DAT
+
+. This is file    CCPN.DP
+
+DELETE Y X
+SKIP 25
+READ CCPN.DAT Y X
+TITLE CCPN.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CCU.DP
+----- <~dataloex\CCU.DP> Load & Execute CCU.DAT
+
+. This is file    CCU.DP
+
+DELETE Y X
+SKIP 25
+READ CCU.DAT Y X
+TITLE CCU.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CCXBAR.DP
+----- <~dataloex\CCXBAR.DP> Load & Execute CCXBAR.DAT
+
+. This is file    CCXBAR.DP
+
+DELETE Y X
+SKIP 25
+READ CCXBAR.DAT Y X
+TITLE CCXBAR.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CHOI2.DP
+----- <~dataloex\CHOI2.DP> Load & Execute CHOI2.DAT
+
+. This is file    CHOI2.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ CHOI2.DAT Y1 Y2
+TITLE CHOI2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CHOI.DP
+----- <~dataloex\CHOI.DP> Load & Execute CHOI.DAT
+
+. This is file    CHOI.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ CHOI.DAT Y1 Y2
+TITLE CHOI.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CHOLEST1.DP
+----- <~dataloex\CHOLEST1.DP> Load & Execute CHOLEST1.DAT
+
+. This is file    CHOLEST1.DP
+
+DELETE Y X REP
+SKIP 25
+READ CHOLEST1.DAT Y X REP
+TITLE CHOLEST1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CHWIRUT1.DP
+----- <~dataloex\CHWIRUT1.DP> Load & Execute CHWIRUT1.DAT
+
+. This is file    CHWIRUT1.DP
+
+DELETE Y X
+SKIP 25
+READ CHWIRUT1.DAT Y X
+TITLE CHWIRUT1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CHWIRUT2.DP
+----- <~dataloex\CHWIRUT2.DP> Load & Execute CHWIRUT2.DAT
+
+. This is file    CHWIRUT2.DP
+
+DELETE Y X
+SKIP 25
+READ CHWIRUT2.DAT Y X
+TITLE CHWIRUT2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CLARK0.DP
+----- <~dataloex\CLARK0.DP> Load & Execute CLARK0.DAT
+
+. This is file    CLARK0.DP
+
+DELETE Y
+SKIP 25
+READ CLARK0.DAT Y
+TITLE CLARK0.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CLEAR.DP
+----- <~dataloex\CLEAR.DP> Load & Execute CLEAR.DAT
+
+. This is file    CLEAR.DP
+
+DELETE Y X
+SKIP 25
+READ CLEAR.DAT Y X
+TITLE CLEAR.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CONSUMPR.DP
+----- <~dataloex\CONSUMPR.DP> Load & Execute CONSUMPR.DAT
+
+. This is file    CONSUMPR.DP
+
+DELETE Y
+SKIP 25
+READ CONSUMPR.DAT Y
+TITLE CONSUMPR.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CROARK2.DP
+----- <~dataloex\CROARK2.DP> Load & Execute CROARK2.DAT
+
+. This is file    CROARK2.DP
+
+DELETE Y X
+SKIP 25
+READ CROARKI2.DAT Y X
+TITLE CROARKI2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CROARK3.DP
+----- <~dataloex\CROARK3.DP> Load & Execute CROARK3.DAT
+
+. This is file    CROARK3.DP
+
+DELETE Y DAY
+DELETE X
+SKIP 25
+READ CROARK3.DAT Y DAY
+TITLE CROARK3.DAT
+LET X = DAY
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CROARKIN.DP
+----- <~dataloex\CROARKIN.DP> Load & Execute CROARKIN.DAT
+
+. This is file    CROARKIN.DP
+
+DELETE Y X
+SKIP 25
+READ CROARKIN.DAT Y X
+TITLE CROARKIN.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CUBE.DP
+----- <~dataloex\CUBE.DP> Load & Execute CUBE.DAT
+
+. This is file    CUBE.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ CUBE.DAT Y X1 X2
+TITLE CUBE.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/CURRIE.DP
+----- <~dataloex\CURRIE.DP> Load & Execute CURRIE.DAT
+
+. This is file    CURRIE.DP
+
+DELETE Y
+SKIP 25
+READ CURRIE.DAT Y
+TITLE CURRIE.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS10.DP
+----- <~dataloex\DDS10.DP> Load & Execute DDS10.DAT
+
+. This is file    DDS10.DP
+
+DELETE Y X
+SKIP 25
+READ DDS10.DAT Y X
+TITLE DDS10.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS11.DP
+----- <~dataloex\DDS11.DP> Load & Execute DDS11.DAT
+
+. This is file    DDS11.DP
+
+DELETE Y X
+SKIP 25
+READ DDS11.DAT Y X
+TITLE DDS11.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS12.DP
+----- <~dataloex\DDS12.DP> Load & Execute DDS12.DAT
+
+. This is file    DDS12.DP
+
+DELETE Y X
+SKIP 25
+READ DDS12.DAT Y X
+TITLE DDS12.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS13.DP
+----- <~dataloex\DDS13.DP> Load & Execute DDS13.DAT
+
+. This is file    DDS13.DP
+
+DELETE Y X
+SKIP 25
+READ DDS13.DAT Y X
+TITLE DDS13.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS14.DP
+----- <~dataloex\DDS14.DP> Load & Execute DDS14.DAT
+
+. This is file    DDS14.DP
+
+DELETE Y X
+SKIP 25
+READ DDS14.DAT Y X
+TITLE DDS14.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS15.DP
+----- <~dataloex\DDS15.DP> Load & Execute DDS15.DAT
+
+. This is file    DDS15.DP
+
+DELETE Y X
+SKIP 25
+READ DDS15.DAT Y X
+TITLE DDS15.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS16.DP
+----- <~dataloex\DDS16.DP> Load & Execute DDS16.DAT
+
+. This is file    DDS16.DP
+
+DELETE Y X
+SKIP 25
+READ DDS16.DAT Y X
+TITLE DDS16.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS17.DP
+----- <~dataloex\DDS17.DP> Load & Execute DDS17.DAT
+
+. This is file    DDS17.DP
+
+DELETE Y X
+SKIP 25
+READ DDS17.DAT Y X
+TITLE DDS17.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS18.DP
+----- <~dataloex\DDS18.DP> Load & Execute DDS18.DAT
+
+. This is file    DDS18.DP
+
+DELETE Y X
+SKIP 25
+READ DDS18.DAT Y X
+TITLE DDS18.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS19.DP
+----- <~dataloex\DDS19.DP> Load & Execute DDS19.DAT
+
+. This is file    DDS19.DP
+
+DELETE Y X
+SKIP 25
+READ DDS19.DAT Y X
+TITLE DDS19.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS1.DP
+----- <~dataloex\DDS1.DP> Load & Execute DDS1.DAT
+
+. This is file    DDS1.DP
+
+DELETE Y X
+SKIP 25
+READ DDS1.DAT Y X
+TITLE DDS1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS20.DP
+----- <~dataloex\DDS20.DP> Load & Execute DDS20.DAT
+
+. This is file    DDS20.DP
+
+DELETE Y X
+SKIP 25
+READ DDS20.DAT Y X
+TITLE DDS20.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS21.DP
+----- <~dataloex\DDS21.DP> Load & Execute DDS21.DAT
+
+. This is file    DDS21.DP
+
+DELETE Y X
+SKIP 25
+READ DDS21.DAT Y X
+TITLE DDS21.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS2.DP
+----- <~dataloex\DDS2.DP> Load & Execute DDS2.DAT
+
+. This is file    DDS2.DP
+
+DELETE Y X
+SKIP 25
+READ DDS2.DAT Y X
+TITLE DDS2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS3.DP
+----- <~dataloex\DDS3.DP> Load & Execute DDS3.DAT
+
+. This is file    DDS3.DP
+
+DELETE Y X
+SKIP 25
+READ DDS3.DAT Y X
+TITLE DDS3.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS4.DP
+----- <~dataloex\DDS4.DP> Load & Execute DDS4.DAT
+
+. This is file    DDS4.DP
+
+DELETE Y X
+SKIP 25
+READ DDS4.DAT Y X
+TITLE DDS4.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS5.DP
+----- <~dataloex\DDS5.DP> Load & Execute DDS5.DAT
+
+. This is file    DDS5.DP
+
+DELETE Y X
+SKIP 25
+READ DDS5.DAT Y X
+TITLE DDS5.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS6.DP
+----- <~dataloex\DDS6.DP> Load & Execute DDS6.DAT
+
+. This is file    DDS6.DP
+
+DELETE Y X
+SKIP 25
+READ DDS6.DAT Y X
+TITLE DDS6.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS7.DP
+----- <~dataloex\DDS7.DP> Load & Execute DDS7.DAT
+
+. This is file    DDS7.DP
+
+DELETE Y X
+SKIP 25
+READ DDS7.DAT Y X
+TITLE DDS7.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS8.DP
+----- <~dataloex\DDS8.DP> Load & Execute DDS8.DAT
+
+. This is file    DDS8.DP
+
+DELETE Y X
+SKIP 25
+READ DDS8.DAT Y X
+TITLE DDS8.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DDS9.DP
+----- <~dataloex\DDS9.DP> Load & Execute DDS9.DAT
+
+. This is file    DDS9.DP
+
+DELETE Y X
+SKIP 25
+READ DDS9.DAT Y X
+TITLE DDS9.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DORKO4.DP
+----- <~dataloex\DORKO4.DP> Load & Execute DORKO4.DAT
+
+. This is file    DORKO4.DP
+
+DELETE Y LAB RUN DAY TOD
+SKIP 25
+READ DORKO.DAT Y LAB RUN DAY TOD
+TITLE DORKO.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/DRAFT69.DP
+----- <~edac\DRAFT69.DP> Load DRAFT69.DAT & generate 4-PLOT
+
+. This is file    DRAFT69.DP
+
+DELETE Y DAY MONTH
+TITLE
+.
+LIST DRAFT69.DAT
+SKIP 25
+READ DRAFT69.DAT Y DAY MONTH
+.
+TITLE DRAFT69.DAT
+X3LABEL AUTOMATIC
+CHARACTERS X; LINES BLANK
+XLIMITS 1 15
+PLOT Y MONTH
+CHARACTERS BLANK; LINES SOLID
+BOX PLOT Y MONTH MONTH
+MIDRANGE PLOT Y MONTH
+XLIMITS
+$$$$$$$$$$$$$$$$$$
+clas/DZIUBA.DP
+----- <~edac\DZIUBA.DP> Load DZIUBA.DATA & generate 4-PLOT
+
+. This is file    DZIUBA.DP
+
+DELETE Y
+TITLE
+.
+LIST DZIUBA.DAT
+SKIP 25
+READ DZIUBA.DAT JUNK Y
+DELETE JUNK
+.
+TITLE DZIUBA.DAT
+4-PLOT Y
+$$$$$$$$$$$$$$$$$$
+clas/ECKERLE4.DP
+----- <~dataloex\ECKERLE4.DP> Load & Execute ECKERLE4.DAT
+
+. This is file    ECKERLE4.DP
+
+DELETE Y
+SKIP 25
+READ ECKERLE4.DAT Y
+TITLE ECKERLE4.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/EHRSTEIN.DP
+----- <~dataloex\EHRSTEIN.DP> Load & Execute EHRSTEIN.DAT
+
+. This is file    EHRSTEIN.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ EHRSTEIN.DAT Y X1 X2
+TITLE EHRSTEIN.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/ELNINO.DP
+----- <~dataloex\ELNINO.DP> Load & Execute ELNINO.DAT
+
+. This is file    ELNINO.DP
+
+DELETE Y X YEAR MONTH
+SKIP 25
+READ ELNINO.DAT Y X YEAR MONTH
+TITLE ELNINO.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/FLICKER.DP
+----- <~edac\FLICKER.DP> Load FLICKER.DATA & generate 4-PLOT
+
+. This is file    FLICKER.DP
+
+DELETE Y
+TITLE
+.
+LIST FLICKER.DAT
+SKIP 25
+READ FLICKER.DAT Y
+.
+TITLE FLICKER.DAT
+4-PLOT Y
+$$$$$$$$$$$$$$$$$$
+clas/FLURY5.DP
+----- <~dataloex\FLURY5.DP> Load & Execute FLURY5.DAT
+
+. This is file    FLURY5.DP
+
+DELETE Y1 TO Y6 TAG
+SKIP 25
+READ FLURY5.DAT Y1 TO Y6 TAG
+TITLE FLURY5.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/FREQPRIM.DP
+----- <~dataloex\FREQPRIM.DP> Load & Execute FREQPRIM.DAT
+
+. This is file    FREQPRIM.DP
+
+DELETE Y X
+SKIP 25
+READ FREQPRIM.DAT Y X
+TITLE FREQPRIM.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/FULLER2.DP
+. THIS IS DATAPLOT PROGRAM FILE    FULLER2.DP
+.
+. DEVICE 2 POSTSCRIPT
+
+DELETE Y
+TITLE AUTOMATIC
+TITLE SIZE 4
+. FEEDBACK OFF
+LET STRING MARK = FULLER2.DP
+.
+SKIP 25
+READ FULLER2.DAT Y
+.
+CHARACTERS X
+LINES BLANK
+4-PLOT Y
+MOVE 60 40
+TEXT PPCC = ^PPCC
+CALL MARK.DP
+.
+MULTIPLOT 2 2
+   TITLE SIZE 4
+   LABEL SIZE 4
+   TIC LABEL SIZE 4
+HW 4 3
+.
+   Y1LABEL PCCC
+   XLABEL Lambda
+   TUKEY PPCC PLOT Y
+.
+   y1label PROBABILITY
+   Y1LABEL Probability
+   XLABEL Log(Ordered Data)
+   XLIMITS 10 100
+   WEIBULL PLOT Y
+   LET BETA = ROUND(BETA,2)
+   MOVE 20 85
+   TEXT Beta = ^BETA
+   LET ETA = ROUND(ETA,2)
+   MOVE 20 80
+   TEXT Eta = ^ETA
+   XLIMITS
+.
+   Y1LABEL PPCC
+   XLABLE Gamma
+   WEIBULL PPCC PLOT Y
+.
+   LET GAMMA = BETA
+   Y1LABEL Ordered Data
+   XLABEL Theoretical values from W(0,1,2)
+   WEIBULL PROBABILITY PLOT Y
+   LET PPCC = ROUND(PPCC,3)
+   MOVE 20 85
+   TEXT PPCC = ^PPCC
+MULTIPLOT OFF
+CALL MARK.DP
+$$$$$$$$$$$$$$$$$$
+clas/FUNNEL5A.DP
+----- <~dataloex\FUNNEL5A.DP> Load & Execute FUNNEL5A.DAT
+
+. This is file    FUNNEL5A.DP
+
+DELETE Y
+SKIP 25
+READ FUNNEL5A.DAT Y
+TITLE FUNNEL5A.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/FUNNEL5B.DP
+----- <~dataloex\FUNNEL5B.DP> Load & Execute FUNNEL5B.DAT
+
+. This is file    FUNNEL5B.DP
+
+DELETE Y TAG
+SKIP 25
+READ FUNNEL5B.DAT Y TAG
+TITLE FUNNEL5B.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/FUNNEL5C.DP
+----- <~dataloex\FUNNEL5C.DP> Load & Execute FUNNEL5C.DAT
+
+. This is file    FUNNEL5C.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ FUNNEL5C.DAT Y1 Y2
+TITLE FUNNEL5C.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/GARBOCZI.DP
+----- <~dataloex\GARBOCZI.DP> Load & Execute GARBOCZI.DAT
+
+. This is file    GARBOCZI.DP
+
+DELETE X Y DELX DELY
+SKIP 25
+READ GARBOCZI.DAT X Y DELX DELY
+TITLE GARBOCZI.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/GEAR.DP
+----- <~dataloex\GEAR.DP> Load & Execute GEAR.DAT
+
+. This is file    GEAR.DP
+
+DELETE Y X
+SKIP 25
+READ GEAR.DAT Y X
+TITLE GEAR.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/GNP.DP
+----- <~dataloex\GNP.DP> Load & Execute GNP.DAT
+
+. This is file    GNP.DP
+
+DELETE Y
+SKIP 25
+READ GNP.DAT Y
+TITLE GNP.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/GRA1326.DP
+----- <~dataloex\GRA1326.DP> Load & Execute GRA1326.DAT
+
+. This is file    GRA1326.DP
+
+DELETE Y X
+SKIP 25
+READ GRA1326.DAT Y X
+TITLE GRA1326.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/GRA1617.DP
+----- <~dataloex\GRA1617.DP> Load & Execute GRA1617.DAT
+
+. This is file    GRA1617.DP
+
+DELETE Y X
+SKIP 25
+READ GRA1617.DAT Y X
+TITLE GRA1617.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/HABER1.DP
+----- <~dataloex\HABER1.DP> Load & Execute HABER1.DAT
+
+. This is file    HABER1.DP
+
+DELETE Y
+SKIP 25
+READ HABER1.DAT Y
+TITLE HABER1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/HAHN1.DP
+----- <~dataloex\HAHN1.DP> Load & Execute HAHN1.DAT
+
+. This is file    HAHN1.DP
+
+DELETE Y
+SKIP 25
+READ HAHN1.DAT Y
+TITLE HAHN1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/HAHN.DP
+----- <~dataloex\HAHN.DP> Load & Execute HAHN.DAT
+
+. This is file    HAHN.DP
+
+DELETE Y
+SKIP 25
+READ HAHN.DAT Y
+TITLE HAHN.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/HALD647.DP
+----- <~dataloex\HALD647.DP> Load & Execute HALD647.DAT
+
+. This is file    HALD647.DP
+
+DELETE Y
+SKIP 25
+READ HALD647.DAT Y
+TITLE HALD647.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/HAMAKER.DP
+----- <~dataloex\HAMAKER.DP> Load & Execute HAMAKER.DAT
+
+. This is file    HAMAKER.DP
+
+DELETE Y
+SKIP 25
+READ HAMAKER.DAT Y
+TITLE HAMAKER.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/HAYES1.DP
+----- <~dataloex\HAYES1.DP> Load & Execute HAYES1.DAT
+
+. This is file    HAYES1.DP
+
+DELETE Y
+SKIP 25
+READ HAYES1.DAT Y
+TITLE HAYES1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/IRIS.DP
+----- <~dataloex\IRIS.DP> Load & Execute IRIS.DAT
+
+. This is file    IRIS.DP
+
+DELETE Y1 TO Y4 TAG
+SKIP 25
+READ IRIS.DAT Y1 TO Y4 TAG
+TITLE IRIS.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/KAUL.DP
+----- <~dataloex\KAUL.DP> Load & Execute KAUL.DAT
+
+. This is file    KAUL.DP
+
+DELETE X TAG Y1 TO Y12
+SKIP 25
+READ KAUL.DAT X TAG Y1 TO Y12
+TITLE KAUL.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/KEYWEST.DP
+----- <~dataloex\KEYWEST.DP> Load & Execute KEYWEST.DAT
+
+. This is file    KEYWEST.DP
+
+DELETE Y
+SKIP 25
+READ KEYWEST.DAT Y
+TITLE KEYWEST.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/KIRBY2.DP
+----- <~dataloex\KIRBY2.DP> Load & Execute KIRBY2.DAT
+
+. This is file    KIRBY2.DP
+
+DELETE Y
+SKIP 25
+READ KIRBY2.DAT Y
+TITLE KIRBY2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/KRASNY1.DP
+----- <~dataloex\KRASNY1.DP> Load & Execute KRASNY1.DAT
+
+. This is file    KRASNY1.DP
+
+DIMENSION 40 VARIABLES
+DELETE Y1 Y2 Y3 Y4 Y5 JUNK X1 X2 X3 X4 X5
+DELETE Y
+SKIP 25
+READ KRASNY1.DAT Y1 Y2 Y3 Y4 Y5 JUNK JUNK JUNK JUNK X1 X2 X3 X4 X5
+TITLE KRASNY1.DAT
+LET Y = Y5
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/LEW3.DP
+----- <~dataloex\LEW3.DP> Load & Execute LEW3.DAT
+
+. This is file    LEW3.DP
+
+DELETE Y
+SKIP 25
+READ LEW3.DAT Y
+TITLE LEW3.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/LEW.DP
+----- <~edac\LEW.DP> Load LEW.DATA & generate 4-PLOT
+
+. This is file    LEW.DP
+
+DELETE Y
+TITLE
+.
+LIST LEW.DAT
+SKIP 25
+READ LEW.DAT Y
+.
+TITLE LEW.DAT
+4-PLOT Y
+$$$$$$$$$$$$$$$$$$
+clas/LIN.DP
+----- <~dataloex\LIN.DP> Load & Execute LIN.DAT
+
+. This is file    LIN.DP
+
+DELETE Y
+SKIP 25
+READ LIN.DAT Y
+TITLE LIN.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/LONGLEY.DP
+----- <~dataloex\LONGLEY.DP> Load & Execute LONGLEY.DAT
+
+. This is file    LONGLEY.DP
+
+DELETE Y
+SKIP 25
+READ LONGLEY.DAT Y
+TITLE LONGLEY.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/LOTTERY3.DP
+----- <~dataloex\LOTTERY3.DP> Load & Execute LOTTERY3.DAT
+
+. This is file    LOTTERY3.DP
+
+DELETE Y MON DAY YEAR
+SKIP 25
+READ LOTTERY3.DAT Y MON DAY YEAR
+TITLE LOTTERY3.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/LOTTERY4.DP
+----- <~dataloex\LOTTERY4.DP> Load & Execute LOTTERY4.DAT
+
+. This is file    LOTTERY4.DP
+
+DELETE Y MON DAY YEAR
+SKIP 25
+READ LOTTERY4.DAT Y MON DAY YEAR
+TITLE LOTTERY4.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/LUTHER.DP
+----- <~dataloex\LUTHER.DP> Load & Execute LUTHER.DAT
+
+. This is file    LUTHER.DP
+
+DELETE Y
+SKIP 25
+READ LUTHER.DAT Y
+TITLE LUTHER.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/MANDEL.DP
+----- <~dataloex\MANDEL.DP> Load & Execute MANDEL.DAT
+
+. This is file    MANDEL.DP
+
+DELETE Y
+SKIP 25
+READ MANDEL.DAT Y
+TITLE MANDEL.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/MARSHAK.DP
+----- <~dataloex\MARSHAK.DP> Load & Execute MARSHAK.DAT
+
+. This is file    MARSHAK.DP
+
+DELETE Y
+SKIP 25
+READ MARSHAK.DAT Y
+TITLE MARSHAK.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/MAVRO.DP
+----- <~edac\MAVRO.DP> Load MAVRO.DATA & generate 4-PLOT
+
+. This is file    MAVRO.DP
+
+DELETE Y
+TITLE
+.
+LIST MAVRO.DAT
+SKIP 25
+READ MAVRO.DAT Y
+.
+TITLE MAVRO.DAT
+4-PLOT Y
+$$$$$$$$$$$$$$$$$$
+clas/MICHELSO.DP
+----- <~dataloex\MICHELSO.DP> Load & Execute MICHELSO.DAT
+
+. This is file    MICHELSO.DP
+
+DELETE Y T D AMPM SET
+SKIP 25
+READ MICHELSO.DAT Y T D AMPM Set
+TITLE MICHELSO.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/MISRA1.DP
+----- <~dataloex\MISRA1.DP> Load & Execute MISRA1.DAT
+
+. This is file    MISRA1.DP
+
+DELETE Y
+SKIP 25
+READ MISRA1.DAT Y
+TITLE MISRA1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/MLCO2.DP
+----- <~dataloex\MLCO2.DP> Load & Execute MLCO2.DAT
+
+. This is file    MLCO2.DP
+
+DELETE Y
+SKIP 25
+READ MLCO2.DAT Y
+TITLE MLCO2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/MLCO2MON.DP
+----- <~dataloex\MLCO2MON.DP> Load & Execute MLCO2MON.DAT
+
+. This is file    MLCO2MON.DP
+
+DELETE Y X YEAR MONTH
+SKIP 25
+READ MLCO2MON.DAT Y X YEAR MONTH
+TITLE MLCO2MON.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/MLF11.DP
+----- <~dataloex\MLF11.DP> Load & Execute MLF11.DAT
+
+. This is file    MLF11.DP
+
+DELETE Y
+SKIP 25
+READ MLF11.DAT Y
+TITLE MLF11.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/MLF12.DP
+----- <~dataloex\MLF12.DP> Load & Execute MLF12.DAT
+
+. This is file    MLF12.DP
+
+DELETE Y
+SKIP 25
+READ MLF12.DAT Y
+TITLE MLF12.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/MLN2O.DP
+----- <~dataloex\MLN2O.DP> Load & Execute MLN2O.DAT
+
+. This is file    MLN2O.DP
+
+DELETE Y
+SKIP 25
+READ MLN2O.DAT Y
+TITLE MLN2O.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/MORALES2.DP
+----- <~dataloex\MORALES2.DP> Load & Execute MORALES2.DAT
+
+. This is file    MORALES2.DP
+
+DELETE Y1 Y2 Y3 X SET EXPER
+SKIP 25
+READ MORALES2.DAT Y1 Y2 Y3 X SET EXPER
+TITLE MORALES2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/MORALES.DP
+----- <~dataloex\MORALES.DP> Load & Execute MORALES.DAT
+
+. This is file    MORALES.DP
+
+DELETE Y1 Y2 Y3 X
+SKIP 25
+READ MORALES.DAT Y1 Y2 Y3 X
+TITLE MORALES.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR21.DP
+----- <~dataloex\NATR21.DP> Load & Execute NATR21.DAT
+
+. This is file    NATR21.DP
+
+DELETE Y
+SKIP 25
+READ NATR21.DAT Y
+TITLE NATR21.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR26.DP
+----- <~dataloex\NATR26.DP> Load & Execute NATR26.DAT
+
+. This is file    NATR26.DP
+
+DELETE Y
+SKIP 25
+READ NATR26.DAT Y
+TITLE NATR26.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR323.DP
+----- <~dataloex\NATR323.DP> Load & Execute NATR323.DAT
+
+. This is file    NATR323.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ NATR323.DAT Y1 Y2
+TITLE NATR323.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR326.DP
+----- <~dataloex\NATR326.DP> Load & Execute NATR326.DAT
+
+. This is file    NATR326.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ NATR326.DAT Y1 Y2
+TITLE NATR326.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR332.DP
+----- <~dataloex\NATR332.DP> Load & Execute NATR332.DAT
+
+. This is file    NATR332.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ NATR332.DAT Y1 Y2
+TITLE NATR332.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR334.DP
+----- <~dataloex\NATR334.DP> Load & Execute NATR334.DAT
+
+. This is file    NATR334.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ NATR334.DAT Y1 Y2
+TITLE NATR334.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR338.DP
+----- <~dataloex\NATR338.DP> Load & Execute NATR338.DAT
+
+. This is file    NATR338.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ NATR338.DAT Y1 Y2
+TITLE NATR338.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR341.DP
+----- <~dataloex\NATR341.DP> Load & Execute NATR341.DAT
+
+. This is file    NATR341.DP
+
+DELETE Y X
+SKIP 25
+READ NATR341.DAT Y X
+TITLE NATR341.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR41.DP
+----- <~dataloex\NATR41.DP> Load & Execute NATR41.DAT
+
+. This is file    NATR41.DP
+
+DELETE Y
+SKIP 25
+READ NATR41.DAT Y
+TITLE NATR41.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR45.DP
+----- <~dataloex\NATR45.DP> Load & Execute NATR45.DAT
+
+. This is file    NATR45.DP
+
+DELETE Y
+SKIP 25
+READ NATR45.DAT Y
+TITLE NATR45.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR48.DP
+----- <~dataloex\NATR48.DP> Load & Execute NATR48.DAT
+
+. This is file    NATR48.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ NATR48.DAT Y1 Y2
+TITLE NATR48.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR511.DP
+----- <~dataloex\NATR511.DP> Load & Execute NATR511.DAT
+
+. This is file    NATR511.DP
+
+DELETE Y X
+SKIP 25
+READ NATR511.DAT Y X
+TITLE NATR511.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR522.DP
+----- <~dataloex\NATR522.DP> Load & Execute NATR522.DAT
+
+. This is file    NATR522.DP
+
+DELETE Y X
+SKIP 25
+READ NATR522.DAT Y X
+TITLE NATR522.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR527.DP
+----- <~dataloex\NATR527.DP> Load & Execute NATR527.DAT
+
+. This is file    NATR527.DP
+
+DELETE Y X
+SKIP 25
+READ NATR527.DAT Y X
+TITLE NATR527.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR533.DP
+----- <~dataloex\NATR533.DP> Load & Execute NATR533.DAT
+
+. This is file    NATR533.DP
+
+DELETE Y X
+SKIP 25
+READ NATR533.DAT Y X
+TITLE NATR533.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR540.DP
+----- <~dataloex\NATR540.DP> Load & Execute NATR540.DAT
+
+. This is file    NATR540.DP
+
+DELETE Y X
+SKIP 25
+READ NATR540.DAT Y X
+TITLE NATR540.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR627.DP
+----- <~dataloex\NATR627.DP> Load & Execute NATR627.DAT
+
+. This is file    NATR627.DP
+
+DELETE Y X
+SKIP 25
+READ NATR627.DAT Y X
+TITLE NATR627.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NATR65.DP
+----- <~dataloex\NATR65.DP> Load & Execute NATR65.DAT
+
+. This is file    NATR65.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ NATR65.DAT Y X1 X2 X3
+TITLE NATR65.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NBSPOW1.DP
+----- <~dataloex\NBSPOW1.DP> Load & Execute NBSPOW1.DAT
+
+. This is file    NBSPOW1.DP
+
+DELETE Y
+SKIP 25
+READ NBSPOW1.DAT Y
+TITLE NBSPOW1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NBSPOW2.DP
+----- <~dataloex\NBSPOW2.DP> Load & Execute NBSPOW2.DAT
+
+. This is file    NBSPOW2.DP
+
+DELETE Y
+SKIP 25
+READ NBSPOW2.DAT Y
+TITLE NBSPOW2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NBSPOW3.DP
+----- <~dataloex\NBSPOW3.DP> Load & Execute NBSPOW3.DAT
+
+. This is file    NBSPOW3.DP
+
+DELETE Y
+SKIP 25
+READ NBSPOW3.DAT Y
+TITLE NBSPOW3.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NEGIZ3.DP
+----- <~dataloex\NEGIZ3.DP> Load & Execute NEGIZ3.DAT
+
+. This is file    NEGIZ3.DP
+
+DELETE Y
+SKIP 25
+READ NEGIZ3.DAT Y
+TITLE NEGIZ3.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NELSON.DP
+----- <~dataloex\NELSON.DP> Load & Execute NELSON.DAT
+
+. This is file    NELSON.DP
+
+DELETE Y
+SKIP 25
+READ NELSON.DAT Y
+TITLE NELSON.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NORMAL.DP
+----- <~edac\NORMAL.DP> Load NORMAL.DATA & generate PPCC plots.
+
+. This is file    NORMAL.DP
+.
+DELETE Y
+TITLE
+.
+LIST NORMAL.DAT
+SKIP 25
+READ NORMAL.DAT Y
+.
+TITLE SIZE 4
+LABEL SIZE 4
+TIC LABEL SIZE 4
+LEGEND 1 SIZE 4
+CHARACTERS X
+LINES
+TITLE AUTOMATIC
+4-PLOT Y
+MOVE 60 40
+LET PPCC = ROUND(PPCC,3)
+TEXT ^PPCC
+.
+MULTIPLOT 2 2
+Y1LABEL Ordered Data
+X1LABEL Theoretical values from U(0,1)
+UNIFORM PROBABILITY PLOT Y
+LET PPCC = ROUND(PPCC,3)
+LET PPCC1 = PPCC
+X1LABEL Theoretical values from N(0,1)
+NORMAL PROBABILITY PLOT Y
+LET PPCC = ROUND(PPCC,3)
+LET PPCC2 = PPCC
+LET LAMBDA = -.5
+X1LABEL Theoretical values from T(0,1,-0.5)
+TUKEY LAMBDA PROBABILITY PLOT Y
+LET PPCC = ROUND(PPCC,3)
+LET PPCC3 = PPCC
+CAUCHY PROBABILITY PLOT Y
+.
+X1LABEL Theoretical values from C(0,1)
+LET PPCC = ROUND(PPCC,3)
+LET PPCC4 = PPCC
+.
+MULTIPLOT 2 2
+LEGEND 1 ^PPCC1
+Y1LABEL Ordered Data
+X1LABEL Theoretical values from U(0,1)
+UNIFORM PROBABILITY PLOT Y
+LEGEND 1 ^PPCC2
+X1LABEL Theoretical values from N(0,1)
+NORMAL PROBABILITY PLOT Y
+LEGEND 1 ^PPCC3
+X1LABEL Theoretical values from T(0,1,-0.5)
+TUKEY LAMBDA PROBABILITY PLOT Y
+LEGEND 1 ^PPCC4
+X1LABEL Theoretical values from C(0,1)
+CAUCHY PROBABILITY PLOT Y
+MULTIPLOT OFF
+LEGEND 1
+.
+MULTIPLOT 2 2
+Y1LABEL PPCC
+XLABEL Lambda
+TUKEY LAMBDA PPCC PLOT Y
+XLABEL Nu
+T PPCC PLOT Y
+XLABEL Gamma
+WEIBULL PPCC PLOT Y
+XLABEL Gamma
+PARETO PPCC PLOT Y
+.
+MULTIPLOT 2 2
+YLIMITS .5 1
+CHAR
+LINES SOLID
+XLABEL Lambda
+TUKEY LAMBDA PPCC PLOT Y
+XLABEL Nu
+T PPCC PLOT Y
+XLABEL Gamma
+WEIBULL PPCC PLOT Y
+XLABEL Gamma
+PARETO PPCC PLOT Y
+.
+MULTIPLOT 2 2
+YLIMITS .9 1
+CHAR
+LINES SOLID
+XLABEL Lambda
+TUKEY LAMBDA PPCC PLOT Y
+XLABEL Nu
+T PPCC PLOT Y
+XLABEL Gamma
+WEIBULL PPCC PLOT Y
+XLABEL Gamma
+PARETO PPCC PLOT Y
+YLIMITS
+.
+MULTIPLOT 2 2
+CHARACTERS X
+LINES
+XLABEL Gamma
+WEIBULL PPCC PLOT Y
+XLABEL Gamma
+XLIM 0 15
+WEIBULL PPCC PLOT Y
+XLIM
+Y1LABEL Ordered Data
+XLABEL Theoretical Values from W(Gamma = 4)
+LET GAMMA = 4
+WEIBULL PROBABILITY PLOT Y
+Y1LABEL Ordered Data
+XLABEL Theoretical Values from W(Gamma = 15)
+LET GAMMA = 15
+WEIBULL PROBABILITY PLOT Y
+.
+TITLE SIZE 2
+LABEL SIZE 2
+TIC LABEL SIZE 2
+LEGEND 1 SIZE 2
+$$$$$$$$$$$$$$$$$$
+clas/NORRIS6.DP
+----- <~dataloex\NORRIS6.DP> Load & Execute NORRIS6.DAT
+
+. This is file    NORRIS6.DP
+
+DELETE Y X YEAR MACH REP TAG
+SKIP 25
+READ NORRIS6.DAT Y X YEAR MACH REP TAG
+TITLE NORRIS6.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NUT.DP
+----- <~dataloex\NUT.DP> Load & Execute NUT.DAT
+
+. This is file    NUT.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ NUT.DAT Y X1 X2 X3
+TITLE NUT.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NWF11.DP
+----- <~dataloex\NWF11.DP> Load & Execute NWF11.DAT
+
+. This is file    NWF11.DP
+
+DELETE Y
+SKIP 25
+READ NWF11.DAT Y
+TITLE NWF11.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NWF12.DP
+----- <~dataloex\NWF12.DP> Load & Execute NWF12.DAT
+
+. This is file    NWF12.DP
+
+DELETE Y
+SKIP 25
+READ NWF12.DAT Y
+TITLE NWF12.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/NWN2O.DP
+----- <~dataloex\NWN2O.DP> Load & Execute NWN2O.DAT
+
+. This is file    NWN2O.DP
+
+DELETE Y
+SKIP 25
+READ NWN20.DAT Y
+TITLE NWN20.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/OIL.DP
+----- <~dataloex\OIL.DP> Load & Execute OIL.DAT
+
+. This is file    OIL.DP
+
+DELETE Y
+SKIP 25
+READ OIL.DAT Y
+TITLE OIL.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/PBCO2.DP
+----- <~dataloex\PBCO2.DP> Load & Execute PBCO2.DAT
+
+. This is file    PBCO2.DP
+
+DELETE Y
+SKIP 25
+READ PBCO2.DAT Y
+TITLE PBCO2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/PBF11.DP
+----- <~dataloex\PBF11.DP> Load & Execute PBF11.DAT
+
+. This is file    PBF11.DP
+
+DELETE Y
+SKIP 25
+READ PBF11.DAT Y
+TITLE PBF11.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/PBF12.DP
+----- <~dataloex\PBF12.DP> Load & Execute PBF12.DAT
+
+. This is file    PBF12.DP
+
+DELETE Y
+SKIP 25
+READ PBF12.DAT Y
+TITLE PBF12.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/PBN2O.DP
+----- <~dataloex\PBN2O.DP> Load & Execute PBN2O.DAT
+
+. This is file    PBN2O.DP
+
+DELETE Y
+SKIP 25
+READ PBN2O.DAT Y
+TITLE PBN2O.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/PENTAGON.DP
+----- <~dataloex\PENTAGON.DP> Load & Execute PENTAGON.DAT
+
+. This is file    PENTAGON.DP
+
+DELETE Y
+SKIP 25
+READ PENTAGON.DAT Y
+TITLE PENTAGON.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/PERIODIC.DP
+----- <~dataloex\PERIODIC.DP> Load & Execute PERIODIC.DAT
+
+. This is file    PERIODIC.DP
+
+DELETE Y
+SKIP 25
+READ PERIODIC.DAT Y
+TITLE PERIODIC.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/PLANETS.DP
+----- <~dataloex\PLANETS.DP> Load & Execute PLANETS.DAT
+
+. This is file    PLANETS.DP
+
+DELETE Y
+SKIP 25
+READ PLANETS.DAT Y
+TITLE PLANETS.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/PONTIUS.DP
+----- <~dataloex\PONTIUS.DP> Load & Execute PONTIUS.DAT
+
+. This is file    PONTIUS.DP
+
+DELETE Y X
+SKIP 25
+READ PONTIUS.DAT Y X
+TITLE PONTIUS.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/PRIMESM.DP
+----- <~dataloex\PRIMESM.DP> Load & Execute PRIMESM.DAT
+
+. This is file    PRIMESM.DP
+
+DELETE Y X
+SKIP 25
+READ PRIMESM.DAT Y X
+TITLE PRIMESM.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/QUASIBIE.DP
+----- <~dataloex\QUASIBIE.DP> Load & Execute QUASIBIE.DAT
+
+. This is file    QUASIBIE.DP
+
+DELETE Y X YEAR MONTH
+SKIP 25
+READ QUASIBIE.DAT Y X YEAR MONTH
+TITLE QUASIBIE.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/QUINLAN.DP
+----- <~dataloex\QUINLAN.DP> Load & Execute QUINLAN.DAT
+
+. This is file    QUINLAN.DP
+
+DELETE Y X1 TO X15
+SKIP 25
+READ QUINLAN.DAT Y X1 TO X15
+TITLE QUINLAN.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/RANDN.DP
+----- <~edac\RANDN.DP> Load RANDN.DATA & generate 4-PLOT
+
+. This is file    RANDN.DP
+
+DELETE Y
+TITLE
+.
+LIST RANDN.DAT
+SKIP 25
+SERIAL READ RANDN.DAT Y
+.
+TITLE RANDN.DAT
+4-PLOT Y
+$$$$$$$$$$$$$$$$$$
+clas/RANDU.DP
+----- <~edac\RANDU.DP> Load RANDU.DATA & generate 4-PLOT
+
+. This is file    RANDU.DP
+
+DELETE Y
+TITLE
+.
+LIST RANDU.DAT
+SKIP 25
+SERIAL READ RANDU.DAT Y
+.
+TITLE RANDU.DAT
+4-PLOT Y
+$$$$$$$$$$$$$$$$$$
+clas/RANDWALK.DP
+----- <~edac\RANDWALK.DP> Load RANDWALK.DATA & generate 4-PLOT
+
+. This is file    RANDWALK.DP
+
+DELETE Y
+TITLE
+.
+LIST RANDWALK.DAT
+SKIP 25
+READ RANDWALK.DAT Y
+.
+TITLE RANDWALK.DAT
+4-PLOT Y
+$$$$$$$$$$$$$$$$$$
+clas/REHM.DP
+----- <~dataloex\REHM.DP> Load & Execute REHM.DAT
+
+. This is file    REHM.DP
+
+DELETE Y
+SKIP 25
+READ REHM.DAT Y
+TITLE REHM.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/ROSZMAN1.DP
+----- <~dataloex\ROSZMAN1.DP> Load & Execute ROSZMAN1.DAT
+
+. This is file    ROSZMAN1.DP
+
+DELETE Y
+SKIP 25
+READ ROSZMAN1.DAT Y
+TITLE ROSZMAN1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SHEESLE2.DP
+----- <~dataloex\SHEESLE2.DP> Load & Execute SHEESLE2.DAT
+
+. This is file    SHEESLE2.DP
+
+DELETE Y X1 TO X4
+SKIP 25
+READ SHEESLE2.DAT Y X1 TO X4
+TITLE SHEESLE2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SHEESLEY.DP
+----- <~dataloex\SHEESLEY.DP> Load & Execute SHEESLEY.DAT
+
+. This is file    SHEESLEY.DP
+
+DELETE Y
+SKIP 25
+READ SHEESLEY.DAT Y
+TITLE SHEESLEY.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SIMIU.DP
+----- <~edac\SIMIU.DP> Load SIMIU.DATA & generate 4-PLOT
+
+. This is file    SIMIU.DP
+
+DELETE Y
+TITLE
+.
+LIST SIMIU.DAT
+SKIP 25
+READ SIMIU.DAT Y
+.
+TITLE SIMIU.DAT
+4-PLOT Y
+$$$$$$$$$$$$$$$$$$
+clas/SIN1.DP
+----- <~dataloex\SIN1.DP> Load & Execute SIN1.DAT
+
+. This is file    SIN1.DP
+
+DELETE Y
+SKIP 25
+READ SIN1.DAT Y
+TITLE SIN1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SIN2.DP
+----- <~dataloex\SIN2.DP> Load & Execute SIN2.DAT
+
+. This is file    SIN2.DP
+
+DELETE Y
+SKIP 25
+READ SIN2.DAT Y
+TITLE SIN2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SIN3.DP
+----- <~dataloex\SIN3.DP> Load & Execute SIN3.DAT
+
+. This is file    SIN3.DP
+
+DELETE Y
+SKIP 25
+READ SIN3.DAT Y
+TITLE SIN3.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SIN4.DP
+----- <~dataloex\SIN4.DP> Load & Execute SIN4.DAT
+
+. This is file    SIN4.DP
+
+DELETE Y
+SKIP 25
+READ SIN4.DAT Y
+TITLE SIN4.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SINSIN.DP
+----- <~dataloex\SINSIN.DP> Load & Execute SINSIN.DAT
+
+. This is file    SINSIN.DP
+
+DELETE X Y1 TO Y6
+DELETE Y
+SKIP 25
+READ SINSIN.DAT X Y1 TO Y6
+TITLE SINSIN.DAT
+LET Y = Y1
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SMALL14.DP
+----- <~dataloex\SMALL14.DP> Load & Execute SMALL14.DAT
+
+. This is file    SMALL14.DP
+
+DELETE Y
+SKIP 25
+READ SMALL14.DAT Y
+TITLE SMALL14.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SOULEN0.DP
+----- <~dataloex\SOULEN0.DP> Load & Execute SOULEN0.DAT
+
+. This is file    SOULEN0.DP
+
+DELETE Y
+SKIP 25
+READ SOULEN0.DAT Y
+TITLE SOULEN0.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SOULEN.DP
+----- <~edac\SOULEN.DP> Load SOULEN.DATA & generate 4-PLOT
+
+. This is file    SOULEN.DP
+
+DELETE Y
+TITLE
+.
+LIST SOULEN.DAT
+SKIP 25
+SERIAL READ SOULEN.DAT Y
+.
+TITLE SOULEN.DAT
+4-PLOT Y
+
+$$$$$$$$$$$$$$$$$$
+clas/SPAGON1.DP
+----- <~dataloex\SPAGON1.DP> Load & Execute SPAGON1.DAT
+
+. This is file    SPAGON1.DP
+
+DELETE Y
+SKIP 25
+READ SPAGON1.DAT Y
+TITLE SPAGON1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SPAGON2.DP
+----- <~dataloex\SPAGON2.DP> Load & Execute SPAGON2.DAT
+
+. This is file    SPAGON2.DP
+
+DELETE Y
+SKIP 25
+READ SPAGON2.DAT Y
+TITLE SPAGON2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SPAGON3.DP
+----- <~dataloex\SPAGON3.DP> Load & Execute SPAGON3.DAT
+
+. This is file    SPAGON3.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ SPAGON3.DAT Y1 Y2
+TITLE SPAGON3.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SPAGON4.DP
+----- <~dataloex\SPAGON4.DP> Load & Execute SPAGON4.DAT
+
+. This is file    SPAGON4.DP
+
+DELETE Y X
+SKIP 25
+READ SPAGON4.DAT Y X
+TITLE SPAGON4.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SPCO2.DP
+----- <~dataloex\SPCO2.DP> Load & Execute SPCO2.DAT
+
+. This is file    SPCO2.DP
+
+DELETE Y
+SKIP 25
+READ SPCO2.DAT Y
+TITLE SPCO2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SPF11.DP
+----- <~dataloex\SPF11.DP> Load & Execute SPF11.DAT
+
+. This is file    SPF11.DP
+
+DELETE Y
+SKIP 25
+READ SPF11.DAT Y
+TITLE SPF11.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SPF12.DP
+----- <~dataloex\SPF12.DP> Load & Execute SPF12.DAT
+
+. This is file    SPF12.DP
+
+DELETE Y
+SKIP 25
+READ SPF12.DAT Y
+TITLE SPF12.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SPIEGEL.DP
+----- <~dataloex\SPIEGEL.DP> Load & Execute SPIEGEL.DAT
+
+. This is file    SPIEGEL.DP
+
+DELETE Y X
+SKIP 25
+READ SPIEGEL.DAT Y X
+TITLE SPIEGEL.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SPLETT2.DP
+----- <~dataloex\SPLETT2.DP> Load & Execute SPLETT2.DAT
+
+. This is file    SPLETT2.DP
+
+DELETE Y MACHINE
+DELETE X
+SKIP 25
+READ SPLETT2.DAT Y MACHINE
+TITLE SPLETT2.DAT
+LET X = MACHINE
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SPLETT3.DP
+----- <~dataloex\SPLETT3.DP> Load & Execute SPLETT3.DAT
+
+. This is file    SPLETT3.DP
+
+DELETE Y X1 TO X3
+SKIP 25
+READ SPLETT3.DAT Y X1 TO X3
+TITLE SPLETT3.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SPLETT4.DP
+----- <~dataloex\SPLETT4.DP> Load & Execute SPLETT4.DAT
+
+. This is file    SPLETT4.DP
+
+DELETE Y X1 TO X4
+SKIP 25
+READ SPLETT4.DAT Y X1 TO X4
+TITLE SPLETT4.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SPN2O.DP
+----- <~dataloex\SPN2O.DP> Load & Execute SPN2O.DAT
+
+. This is file    SPN2O.DP
+
+DELETE Y
+SKIP 25
+READ SPN2O.DAT Y
+TITLE SPN2O.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/STENBAKK.DP
+----- <~dataloex\STENBAKK.DP> Load & Execute STENBAKK.DAT
+
+. This is file    STENBAKK.DP
+
+DELETE Y X1 TO X10
+SKIP 25
+READ STENBAKK.DAT Y X1 TO X10
+TITLE STENBAKK.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SUNSPOT2.DP
+----- <~dataloex\SUNSPOT2.DP> Load & Execute SUNSPOT2.DAT
+
+. This is file    SUNSPOT2.DP
+
+DELETE Y YEAR
+SKIP 25
+READ SUNSPOT2.DAT Y YEAR
+TITLE SUNSPOT2.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SUNSPOT.DP
+----- <~dataloex\SUNSPOT.DP> Load & Execute SUNSPOT.DAT
+
+. This is file    SUNSPOT.DP
+
+DELETE Y
+SKIP 25
+READ SUNSPOT.DAT Y
+TITLE SUNSPOT.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SUPERCON.DP
+----- <~dataloex\SUPERCON.DP> Load & Execute SUPERCON.DAT
+
+. This is file    SUPERCON.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ SUPERCON.DAT Y X1 X2 X3
+TITLE SUPERCON.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/SWANSON1.DP
+----- <~dataloex\SWANSON1.DP> Load & Execute SWANSON1.DAT
+
+. This is file    SWANSON1.DP
+
+DELETE Y
+SKIP 25
+READ SWANSON1.DAT Y
+TITLE SWANSON1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/THURBER.DP
+----- <~dataloex\THURBER.DP> Load & Execute THURBER.DAT
+
+. This is file    THURBER.DP
+
+DELETE Y
+SKIP 25
+READ THURBER.DAT Y
+TITLE THURBER.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/UGIANSKY.DP
+----- <~dataloex\UGIANSKY.DP> Load & Execute UGIANSKY.DAT
+
+. This is file    UGIANSKY.DP
+
+DELETE Y
+SKIP 25
+READ UGIANSKY.DAT Y
+TITLE UGIANSKY.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/USADEBT.DP
+----- <~dataloex\USADEBT.DP> Load & Execute USADEBT.DAT
+
+. This is file    USADEBT.DP
+
+DELETE Y
+SKIP 25
+READ USADEBT.DAT Y
+TITLE USADEBT.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/USADEFIC.DP
+----- <~dataloex\USADEFIC.DP> Load & Execute USADEFIC.DAT
+
+. This is file    USADEFIC.DP
+
+DELETE Y X
+SKIP 25
+READ USADEFIC.DAT Y X
+TITLE USADEFIC.DAT
+/
+
+$$$$$$$$$$$$$$$$$$
+clas/VANGEL1.DP
+----- <~dataloex\VANGEL1.DP> Load & Execute VANGEL1.DAT
+
+. This is file    VANGEL1.DP
+
+DELETE Y
+SKIP 25
+READ VANGEL1.DAT Y
+TITLE VANGEL1.DAT
+/
+
+$$$$$$$$$$$$$$$$$$

@@ -1,0 +1,30 @@
+----- <~dataload\dataload.top> Load Built-in Dataplot data Files
+
+Load Built-in Dataplot Data Files
+
+Core data sets             <~dataload\core.top>
+
+By Stat Category:
+   Quality/SPC             <~dataload\qual.top>
+   Design of Experiment    <~dataload\dex.top>
+   Regression              <~dataload\reg.top>
+
+   Univariate              <~dataload\univ.top>
+   Time Series             <~dataload\time.top>
+   Multi-Factor            <~dataload\mfac.top>
+   Multivariate            <~dataload\mvar.top>
+   Uncertainty Analysis    <~dataload\unce.top>
+
+   Probability             <~dataload\prob.top>
+   Reliability             <~dataload\reli.top>
+   Extreme Value Analysis  <~dataload\eva.top>
+   Mathematics             <~dataload\math.top>
+
+By Book:
+   Natrella                          <~dataload\natrella.top>
+   Sematech                          <~dataload\sematech.top>
+   Box, Hunter, & Hunter             <~dataload\bhh.top>
+   Statistics for Scientists         <~dataload\stsc.top>
+   Graybill/Iyer  I: Regression      <~dataload\grayiye1.top>
+   Graybill/Iyer II: Inference       <~dataload\grayiye2.top>
+

@@ -1,0 +1,23 @@
+This is file sd_mean.men--Compute standard deviation of the mean of a variable
+ 
+--------------------
+ 1. Standard Deviation of the Mean
+ 2. LET A = STANDARD DEVIATION OF THE MEAN Y
+ 3.
+ 4. Variable for which to compute the standard deviation
+ 5.    of the mean:
+ 5. @CE 1 0 33 50 ? gui-variable
+ 6. Parameter to store the standard deviation of the mean:
+ 6. @CE 2 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 3 0 -12 50 *
+10.
+11.
+12. Compute the Standard Deviation of the Mean?:
+--------------------
+GR FE
+LET _2 = STANDARD DEVIATION OF THE MEAN  _1 _3
+--------------------
+WEB HELP STANDARD DEVIATION OF THE MEAN
+--------------------

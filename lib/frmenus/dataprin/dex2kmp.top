@@ -1,0 +1,24 @@
+----- <~dataprin\dex2kmp.top> Print (to Printer) 2**(k-p) Fractional Factorial
+Design Data
+
+Print (to Printer) 2**(k-p) Fractional Factorial Design Data
+
+BOXSPRI2.DAT  2**(3-1)  Defective springs  <xcf: ~dataprin\BOXSPRI2.DP>
+BOXSPRI3.DAT  2**(3-1)  Defective springs  <xcf: ~dataprin\BOXSPRI3.DP>
+
+BOXCLEAN.DAT  2**(4-1)  Cleanser stab.     <xcf: ~dataprin\BOXCLEAN.DP>
+
+BOXREAC2.DAT  2**(5-1)  Chem. reactor      <xcf: ~dataprin\BOXREAC2.DP>
+
+AC.DAT        2**(6-3)  A/C performance    <xcf: ~dataprin\AC.DP>
+
+BOXBIKE2.DAT  2**(7-4)  Bike speed         <xcf: ~dataprin\BOXBIKE2.DP>
+BOXBIKE3.DAT  2**(7-3)  Bike speed         <xcf: ~dataprin\BOXBIKE3.DP>
+BOXFILT.DAT*  2**(7-4)  Filtrat. time      <xcf: ~dataprin\BOXFILT.DP>
+BOXFILT2.DAT  2**(7-3)  Filtrat. time      <xcf: ~dataprin\BOXFILT2.DP>
+AMRF.DAT      2**(7-4)  AMRF work stat.    <xcf: ~dataprin\AMRF.DP>
+
+VIBRATE.DAT   2**(9-5)  Vibration          <xcf: ~dataprin\VIBRATE.DP>
+
+QUINLAN.DAT   2**(15-11) Speedom. noise    <xcf: ~dataprin\QUINLAN.DP>
+

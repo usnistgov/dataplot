@@ -1,0 +1,48 @@
+This is file setprint.men--SET PRINTER
+ 
+--------------------
+ 1. Set Printer
+ 2. SET PRINTER \\samba\lw7
+ 3.
+ 4. The PP command allows you print the most recent plot
+ 5. on a printer.  In order for this command to work,
+ 6. the printer may need to be defined.
+ 7. 
+ 8. Under Unix, the PP command issues the command
+ 9. 
+10.    lpr dppl2f.dat
+11.
+12. That is, dppl2f.dat is sent to your default printer.
+13. If you specify a printer, it issues the command
+14.
+15.    lpr -Pprinter-id  dppl2f.dat
+16.
+17. Under Windows, the PP command issues the command
+18.
+19.    COPY DPPL2F.DAT PRN:
+20.
+21. That is, it prints DPPL2F.DAT on the local printer.
+22. To print on a network printer, use this menu to
+23. specify the name of the printer.  In this case, the
+24. PP command issues the command
+25.
+26.    COPY DPPL2F.DAT printer-id
+27.
+28. For example, on my PC, I enter the printer-id as
+29. "\\DCIS-NT3\HP8_PS".  This method works for
+30. Postscript or HP-GL emulation printers.  To use
+31. a generic Windows printer, use the "Set GSPRINT"
+32. menu to specify an alternative method for printing
+33. with the PP command.
+34.
+35. Enter the Printer ID:
+36. @CE 1 0 1 50 ?
+37.
+38.
+39. Set the Printer ID?:
+--------------------
+SU FE
+SET PRINTER _1
+--------------------
+WEB HELP SET PRINTER
+--------------------

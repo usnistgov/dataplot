@@ -1,0 +1,31 @@
+This is file blocplot.men--Generate 2-level Block Plot
+ 
+--------------------
+ 1. 2-level Block Plot
+ 2. BLOCK PLOT Y    X1 X2 ... XK    XPRIMARY
+ 3.
+ 4. Response Variable (Vertical Axis):
+ 4. @CE 1 0 36 50 ? gui-vari
+ 5. Primary Factor (via Plot Character):
+ 5. @CE 2 0 36 50 ? gui-vari
+ 6. List of Other Factors (Horizontal Axis):
+ 7. @CE 3 0 1 50 ? gui-variable
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 4 0 1 50 ?
+11.
+12. Characters for Primary Factor Levels:
+13. (For example:    - +    or    1 2    or    M F  )
+14. @CE 5 0 1 50 ? gui-char
+15.
+16. Generate the Block Plot?:
+--------------------
+GR FE
+LINES SOLID ALL
+LINES BLANK BLANK
+CHARACTERS BLANK ALL
+CHARACTERS _5
+BLOCK PLOT _1 _3 _2 _4
+--------------------
+WEB HELP BLOCK PLOT
+--------------------

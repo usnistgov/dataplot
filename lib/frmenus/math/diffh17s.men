@@ -1,0 +1,24 @@
+This is file diffh17s.men--Compute difference of H17 scale
+ 
+--------------------
+ 1. Difference of H17 Scale
+ 2. LET A = DIFFERENCE OF H17 SCALE Y1 Y2
+ 3.
+ 4. First Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Second Response Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Parameter to store the difference:
+ 6. @CE 3 0 42 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Compute the Difference of H17 Scale?:
+--------------------
+GR FE
+LET _3 = DIFFERENCE OF H17 SCALE  _1 _2 _4
+--------------------
+WEB HELP DIFFERENCE OF H15 SCALE
+--------------------

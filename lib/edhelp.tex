@@ -1,0 +1,6633 @@
+38.                          number of     sections below
+15.                          section number for the   A     section
+  100.    OVERVIEW           first line number of OVERVIEW section
+  400.    ABBREVIATIONS      first line number of ABBREVIATIONS section
+  500.    DEFAULTS           first line number of DEFAULTS section
+  600.    EXAMPLES           first line number of EXAMPLES section
+  800.    FEATURES           first line number of FEATURES section
+  900.    HOSTS              first line number of HOST section
+ 1000.    IMPLEMENTATION     first line number of IMPLEMENTATION section
+ 1200.    LANGUAGE           first line number of LANGUAGE section
+ 1300.    MODES              first line number of OUTPUT DEVICES section
+ 1400.    OUTPUT DEVICES     first line number of OUTPUT DEVICES section
+ 1500.    PORTABILITY        first line number of PORTABILITY section
+ 1600.    SUMMARY            first line number of SUMMARY section
+ 1800.    TERMINALS          first line number of TERMINALS section
+ 1900.    TUTORIAL           first line number of TUTORIAL section
+ 2200.    A                  first line number of A section
+ 2400.    B                  first line number of B section
+ 2500.    C                  first line number of C section
+ 2800.    D                  first line number of D section
+ 3200.    E                  first line number of E section
+ 3500.    F                  first line number of F section
+ 3600.    G                  first line number of G section
+ 3700.    H                  first line number of H section
+ 3900.    I                  first line number of I section
+ 4200.    J                  first line number of J section
+ 4300.    K                  first line number of K section
+ 4400.    L                  first line number of L section
+ 4900.    M                  first line number of M section
+ 5000.    N                  first line number of N section
+ 5100.    O                  first line number of O section
+ 5200.    P                  first line number of P section
+ 5400.    Q                  first line number of Q section
+ 5500.    R                  first line number of R section
+ 5600.    S                  first line number of S section
+ 5900.    T                  first line number of T section
+ 6100.    U                  first line number of U section
+ 6200.    V                  first line number of V section
+ 6300.    W                  first line number of W section
+ 6400.    X                  first line number of X section
+ 6500.    Y                  first line number of Y section
+ 6600.    Z                  first line number of Z section
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Updated--July 1992 (for merge with DATAPLOT)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *OVERVIEW*  -------------------
+----------------------------------------------------------
+ 
+OVERVIEW
+ 
+OVERVIEW
+ 
+   EDIT/FED is an English-syntax, portable line editor
+   for general-purpose text-editing, program-writing,
+   and word-processing.
+ 
+   Examples of EDIT/FED commands--
+ 
+      EXIT       = Exit from EDIT/FED
+      ABORT      = Abort from EDIT/FED (no changes made)
+      P          = Print current line
+      P 7        = Print 7 lines (current + 6)
+      P 20 30    = Print lines 20 to 30
+      23         = Go to (and print) line 23
+      <CR>       = Go to (and print) next line
+      N 4        = Go to (and print) 4th next line
+      U 5        = Go up 5 lines (and print it)
+      L ABC      = Locate next occurrance of ABC
+      C /ABC/DE/ = Change ABC to DE on current line
+      D          = Delete current line
+      I ABC      = Insert ABC as a line after current line
+      INPUT      = Go into input (= insert) mode
+      EDIT       = Go back to edit mode (the default)
+ 
+   Additional information about EDIT/FED is generated
+   via the HELP command.  The format of the
+   HELP command is
+ 
+      HELP   [command or topic]
+ 
+ 
+Summary (1-line) of EDIT/FED commands                 Example
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ 
+ABORT     Abort out of editor (no changes made)       AB
+ 
+ADD       Insert a text file after the current line   ADD ABC.TEX
+ 
+BOTTOM    Go to bottom (= last line + 1) of file      B
+ 
+CALL      Execute an editor macro (subprogram)        CALL ABC.TEX
+ 
+CENTER    Center lines at specified column            SET CENTER 25
+                                                      CENTER
+ 
+CHANGE    Change old string to new string             C /KAT/CAT/
+                                                      C /KAT/CAT/ 20
+ 
+CA        Change all occurances of string on line     CA /KAT/CAT/
+                                                      CA /KAT/CAT/ 20
+ 
+COPY      Copy pre-marked text block to a file        SET COPY 20 30
+                                                      COPY ABC TEX
+ 
+CUT       Trim text off end of line                   CUT CAT
+ 
+DCOPY     Copy (& delete) pre-marked block to file    SET COPY 20 30
+                                                      DCOPY ABC TEX
+ 
+DELETE    Delete lines of text                        D
+                                                      D 10
+                                                      D 5 14
+ 
+DHOLD     Delete a line but hold (= save) it          DHOLD
+                                                      DHOLD 2
+                                                      DHOLD 10
+ 
+DI        Delete and insert a line                    DI XXX
+ 
+DUP       Duplicate (= insert) held lines             DUP
+          (from HOLD and DHOLD)                       DUP 2
+                                                      DUP 10
+                                                      DUP 1 5
+                                                      DUP 2 7
+ 
+DTL       Delete lines until locate a string          DTL --
+ 
+EDIT      Switch from input mode to edit mode         EDIT
+ 
+EXECUTE   Execute a held line                         X
+ 
+EXTEND    Append a string onto a line                 EXT  SUBSET
+ 
+EXIT      Exit out of editor (make changes permanent) EXIT
+ 
+EXEM      Append a string to multiple lines           EXT  SUBSET 10
+ 
+GO        Go to a line                                GO 25
+                                                      or 25
+ 
+HELP      Display on-line help information            HELP
+                                                      HELP PRINT
+                                                      HELP CHANGE
+ 
+HOLD      Hold (= saves) a line                       HOLD
+                                                      HOLD 2
+                                                      HOLD 10
+ 
+INDENT    Indent lines at specified column            SET INDENT 3
+                                                      INDENT
+                                                      INDENT 10
+ 
+INPUT     Switch from edit mode to input mode         INPUT
+ 
+INSERT    Insert a line after the current line        I PLOT Y X
+ 
+LAST      Go to the last line of the file             LAST
+ 
+LOCATE    Locate next line with a string              L PLOT
+ 
+LOCATE    Locate all succeeding lines with a string   LA PLOT
+ 
+LI        Locate all lines with string & and
+          insert a line after                         LI PLOT XXX
+ 
+LIB       Locate all lines with string & and
+          insert a line before                        LIB PLOT XXX
+ 
+ 
+LIST      List an external file                       LIST ABC.TEX
+ 
+NEAT      Make paragraph neat                         SET NEAT 1 50
+                                                      NEAT
+ 
+NEXT      Go to the next line                         N
+                                                      or <CR>
+                                                      N 10
+ 
+PRINT     Print lines                                 P
+                                                      P 10
+                                                      P 5 14
+ 
+PA        Print (current +) all remaining lines       PA
+ 
+PN        Print lines (starting with next line)       PN
+                                                      PN 20
+ 
+PP        Print a page of text                        PP
+ 
+PPAR      Print a paragraph of text                   PPAR
+ 
+PTL       Print lines until locate a string           PTL --
+ 
+SET CENT  Set (= mark) column for CENTER              SET CENTER 25
+ 
+SET CHAN  Set (= mark) columns for CHANGE             SET CHANGE 7 20
+ 
+SET COPY  Set (= mark) columns for COPY               SET COPY 70 90
+ 
+SET LOCA  Set (= mark) columns for LOCATE             SET LOCATE 5 7
+ 
+SET NEAT  Set (= mark) columns for NEAT               SET NEAT 1 50
+ 
+SET SHIF  Set (= mark) columns for SHIFT              SET SHIFT 55
+ 
+SET TRUN  Set (= mark) columns for TRUNCATE           SET TRUNCATE 55
+ 
+SC1       Set (= mark) first line for COPY            SC1
+ 
+SC2       Set (= mark) last  line for COPY            SC2
+ 
+SHIFT     Shift text left or right on lines           SET SHIFT 5
+                                                      SHIFT
+                                                      SHIFT 20
+ 
+SHOW      Display settings of switches and limit      SHOW
+ 
+SPLIT     Split remainder of a line onto next line    SPLIT CAT
+ 
+STAT      Display settings of switches and limit      STAT
+ 
+TOP       Go to the top (= line 1 - 1) of the file    T
+ 
+TRUNCATE  Truncate lines at a specified column        SET TRUN 55
+                                                      TRUNCATE
+                                                      TRUNCATE 300
+ 
+UNDO      Undo all changes (from previous TOP)        UNDO
+ 
+UP        Go up to previous line                      UP
+                                                      UP 10
+ 
+ 
+   Available commands:
+ 
+      ABORT     ADD
+      BOTTOM
+      CALL      CENTER    CHANGE    CA        COPY      CUT
+      DELETE    DHOLD     DI        DUP       DTL
+      EDIT      EXECUTE   EXTEND    EXIT      EXEM
+      FIND
+      GO
+      HELP      HOLD
+      INDENT    INPUT     INSERT
+      LAST      LOCATE    LA      LI        LC        LIST
+                LOBL      LABL
+      NEAT      NEXT
+      PRINT     PA        PN        PP        PPAR      PTL
+      SET CENT  SET CHAN  SET COPY  SET LOCA
+      SET NEAT  SET SHIF  SET TRUN  SC1       SC2
+      TOP       TRUNCATE
+      UNDO      UP
+ 
+   Available topics:
+ 
+      Abbreviations (for commands)
+      Defaults
+      Examples
+      Features
+      Hosts
+      Implementation
+      Language Extendability
+      Modes (Input/Edit)
+      Output Devices
+      Portability
+      Summary (of commands)
+      Terminals
+      Tutorial
+ 
+   You can  abbreviate any topic name, although
+   ambiguous abbreviations will result in only
+   the first match being displayed.
+ 
+   Examples--HELP PRINT
+             HELP PTL
+             HELP LOCATE
+ 
+             HELP SUMMARY
+             HELP MODES
+             HELP FEATURES
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *ABBREVIATIONS*  -------------------
+----------------------------------------------------------
+ 
+ABBREVIATIONS
+ 
+Abbreviations for EDIT/FED commands--
+ 
+   ABORT        --AB           ABO          ABO+anything
+   ABORT & RERUN--ABRR
+   ADD          --AD
+ 
+   BOTTOM       --B            B+anything
+ 
+   CALL         --CAL          CAL+anything
+   CENTER       --CE           CE+anything
+   CHANGE       --C            CH           CH+anything
+   CHANGE ALL   --CA
+   COPY         --CO           COP
+   CUT          --CU
+ 
+   DELETE       --D            DE           DE+anything
+   DEL. & HOLD  --DH           DH+anything
+   DEL. & INSERT--DI
+   DUPLICATE    --DU           DU+anything
+   DEL. TILL LOC--DTL
+ 
+   EDIT         --EDIT
+   EXECUTE      --EXE          EXEC         EXEC+anything
+   EXTEND       --EXT          EXT+anything
+   EXIT         --E            EX           EXI
+   EXIT & RERUN --EXRR
+ 
+   FIND         --F            FI           FI+anything
+   FORMAT       --FO           FO+anything
+ 
+   GO           --G
+ 
+   HELP         --HE           HE+anything
+   HOLD         --H            HO           HO+anything
+ 
+   INDENT       --IND          IND+ANYTHING
+   INPUT        --INPUT
+   INSERT       --I            IN           INS          INS+anything
+ 
+   LAST         --LAS          LAS+anything
+   LOCATE       --L            LO           LO+anything
+   LOCATE ALL   --LA
+   LOC. BL. LINE--LOBL
+   LOC. ALL B L --LABL
+   LOC. & CALL  --LC
+   LOC. & INSERT--LI
+   LIST         --LIS
+ 
+   MOVE         --M            M+anything
+ 
+   NEXT         --N            N+anything
+ 
+   PRINT        --P            PR           PR+anything
+   PRINT ALL    --PA
+   PRINT NEXT   --PN
+   PRINT PAGE   --PP
+   PRINT PAR.   --PPAR
+   PR. TILL LOC.--PTL
+ 
+   SET          --S            SE
+   SHIFT        --SHI          SHI+anything
+   SHOW         --SH           SHO
+   SPLIT        --SP           SP+anything
+ 
+   TOP          --T            TO
+   TRUNCATE     --TR           TRU          TRU+anything
+   TRANSLATE    --TRA          TRA+anything
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *DEFAULTS*  -------------------
+----------------------------------------------------------
+ 
+DEFAULTS
+ 
+DEFAULTS
+ 
+   Maximum number of characters   per line   =     132
+   Maximum number of lines      in workspace =  25,000
+   Maximum number of characters in workspace = 500,000
+ 
+   Column limits for CHANGE command          = 1 to 132
+   Column limits for PRINT  command          = 1 to 132
+ 
+   Mask character      = *
+   Feedback            = ON
+   Auto line numbering = ON
+   Trace               = OFF
+   Justification       = LEFT
+ 
+   Host                = VAX 11/780
+   Link                = Any link and baud rate
+   Terminal            = Any alphanumeric terminal
+   Terminal Rows       = Any number of rows
+   Terminal Columns    = 60+ characters (else wrap-around)
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *EXAMPLES*  -------------------
+----------------------------------------------------------
+ 
+EXAMPLES
+ 
+No examples available as of yet.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *FEATURES*  -------------------
+----------------------------------------------------------
+ 
+FEATURES
+ 
+No description available as of yet.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *HOSTS*  -------------------
+----------------------------------------------------------
+ 
+HOSTS
+ 
+HOSTS
+ 
+   The undelying code for EDIT/FED is portable
+   FORTRAN 77; thus EDIT/FED will execute
+   on any host which
+ 
+      1) has a FORTRAN 77 compiler; and
+ 
+      2) has sufficient main/disk
+         memory for EDIT/FED's internal
+         workspace (25,000 lines and
+         500,000 characters).
+ 
+   To simplify maintenance and local
+   modifications to EDIT/FED, EDIT/FED's internal
+   COMMON arrays have been isolated into
+   the file EDCOMM.INC, and are included
+   in the source code via FORTRAN's
+   INCLUDE command.  Inasmuch as INCLUDE
+   is not part of the FORTRAN 77 standard,
+   a few (but not many) FORTRAN compilers will
+   balk at this.  If your compiler complains,
+   then the implementor must edit EDCOMM.INC
+   into each subroutine (a straighforward
+   operation) prior to compilation.  Aside from
+   INCLUDE, there are no other deviations from
+   the FORTRAN 77 standard--the code will
+   compile cleanly.
+ 
+   EDIT/FED will run on virutally any major
+   main/mini/micro-computer.  The default
+   host for EDIT/FED is the VAX 11/7XX under
+   the VMS operating system.  EDIT/FED will
+   run under a variety of other operating
+   systems including UNIX.
+ 
+   Known EDIT/FED implementations to date
+   (November, 1985) include--
+ 
+      VAX 11/785 under VMS
+ 
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *IMPLEMENTATION*  -------------------
+----------------------------------------------------------
+ 
+IMPLEMENTATION
+ 
+IMPLEMENTATION
+ 
+   EDIT/FED is written in portable FORTRAN 77
+   and so it may be implemented on any
+   host computer which
+ 
+      1) has a FORTRAN 77 compiler; and
+ 
+      2) has sufficient main/disk
+         memory for EDIT/FED's internal
+         workspace (25,000 lines and
+         500,000 characters).
+ 
+   The underlying code for EDIT/FED consists of
+   about 100 FORTRAN subroutines.  These
+   subroutine names all have    ED   as the
+   first 2 characters, as in EDMAIN, EDSEAR,
+   EDSET, EDSHOW, EDCHAN, etc.
+ 
+   Step 1 in the implementation process is
+   to read the EDIT/FED tape onto your computer.
+   This ascii tape was created on a
+   VAX 11/785 and has the following
+   specifications--
+ 
+      Format          = Ascii
+      Type            = 9-track
+      Density         = 1600 Bpi
+      Parity          = ???
+      Labelling       = Unlabelled
+      Record Type     = Fixed length
+      Block Type      = Fixed length
+      Record Size     = 80   characters per record
+      Block  Size     = 36   records    per block
+                      = 2880 characters per block
+      Number of Files = 5
+ 
+   File 1 consists of subroutines and files
+   which are the most frequent candidates
+   for host-dependent changes (if such changes
+   need be made).  File 1 consists of
+ 
+      EDMAIN.FOR    EDIT/FED's main routine.
+      EDINIT.FOR    EDIT/FED's initialization subroutine.
+      EDOPEN.FOR    EDIT/FED's file-opening subroutine.
+      EDCOMM.INC    EDIT/FED's COMMON arrays
+ 
+   File 2 consists of the remaining EDIT/FED
+   subroutines ordered alphabetically.
+   File 3 consists of EDIT/FED's on-line
+   documentation file (EDHELP.TEX).
+   File 4 consists of EDIT/FED's test
+   runstream file (EDTEST.TEX).
+   File 5 consists of the VAX 11/785
+   runstream that would read the tape,
+   compile the subroutines, link the
+   subroutines, and run a simple test
+   edit session.
+ 
+   Step 2 in the implementation process is
+   to compile the code in files 1 and 2.
+   To simplify maintenance and local
+   modifications to EDIT/FED, EDIT/FED's internal
+   COMMON arrays have been isolated into
+   the file EDCOMM.INC, and are includable
+   in the source code via FORTRAN's
+   INCLUDE command.  Inasmuch as INCLUDE
+   is not part of the FORTRAN 77 standard,
+   a few (but not many) FORTRAN compilers will
+   balk at this.  If your compiler complains,
+   then the implementor must edit EDCOMM.INC
+   into each subroutine (a straighforward
+   operation) prior to compilation.  Aside from
+   INCLUDE, there are no other deviations from
+   the FORTRAN 77 standard--the code will
+   compile cleanly.
+ 
+   Step 3 is to LINK the code and determine
+   if it will fit on your computer.  The current
+   EDIT/FED workspace settings have been set at
+   25,000 lines and 500,000 characters.
+   These settings are defined in file EDCOMM.INC.
+   Link the code and see if your computer
+   willkl accept the default sizes.  If
+   yes, then the implementation is done;
+   if no, then scale down the 25,000 and
+   500,000 settings in EDCOMM.INC to
+   acceptable sizes (e.g., 1000 and 50,000),
+   recompile all of the subroutines, and
+   relink.
+ 
+   EDIT/FED will run on virutally any major
+   main/mini/micro-computer.  The default
+   host for EDIT/FED is the VAX 11/7XX under
+   the VMS operating system.  EDIT/FED will
+   run under a variety of other operating
+   systems including UNIX.
+ 
+   Known EDIT/FED implementations to date
+   (November, 1985) include--
+ 
+      VAX 11/785 under VMS
+      IBM-PC     under DOS
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *LANGUAGE EXTENSIONS*  ---------------
+----------------------------------------------------------
+ 
+No description available as of yet.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *MODES*  -------------------
+----------------------------------------------------------
+ 
+MODES
+ 
+MODES
+ 
+   When you are using EDIT/FED to edit a file,
+   EDIT/FED will be in one of 2 modes--
+ 
+      1) edit  mode (the default mode); or
+      2) input mode.
+ 
+   When EDIT/FED is in    edit mode,
+   then all of the usual editor commands
+   (such as PRINT, CHANGE, DELETE, LOCATE,
+   NEXT, COPY, MOVE, ADD, LIST, EXIT, etc.)
+   are at the disposal of the analyst.
+   The     edit mode    is the most common
+   mode of operation; most changing and updating
+   of files is done in    edit mode.
+ 
+   The advantage of    edit mode   is that
+   all of the editor commands may be used to
+   make the desired changes in the file.
+   The disadvantage of    edit mode is that
+   extra keystrokes are required for the entry
+   of large amounts of text.
+ 
+   When EDIT/FED is in    input mode,
+   then "what you type" is "what goes into
+   the file".  Input mode   is the most
+   common way of entering large amounts
+   of text into a file.
+ 
+   The advantage of    input mode   is that
+   large amounts of text may be efficiently
+   entered.   The disadvantage of    input mode
+   is that the analyst has no immediate access
+   to editor commands (such as PRINT, DELETE,
+   and so forth).
+ 
+   If you are in   edit mode   , and you want
+   to go into   input mode   , there is only
+   one way to do it--by entering
+ 
+      INPUT
+ 
+   If you are in   input mode   , and you want
+   to go into   edit mode   , there is only
+   one way to do it--by entering
+ 
+      EDIT
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *OUTPUT DEVICES*  -------------------
+----------------------------------------------------------
+ 
+OUTPUT DEVICES
+ 
+ 
+No description available as of yet.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *PORTABILITY*  -------------------
+----------------------------------------------------------
+ 
+PORTABILITY
+ 
+ 
+No description available as of yet.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *SUMMARY*  -------------------
+----------------------------------------------------------
+ 
+SUMMARY
+ 
+Summary (1-line) of EDIT/FED commands                 Example
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ 
+ABORT     Abort out of editor (no changes made)       AB
+ 
+ADD       Insert a text file after the current line   ADD ABC.TEX
+ 
+BOTTOM    Go to bottom (= last line + 1) of file      B
+ 
+CALL      Execute an editor macro (subprogram)        CALL ABC.TEX
+ 
+CENTER    Center lines at specified column            SET CENTER 25
+                                                      CENTER
+ 
+CHANGE    Change old string to new string             C /KAT/CAT/
+                                                      C /KAT/CAT/ 20
+ 
+CA        Change all occurances of string on line     CA /KAT/CAT/
+                                                      CA /KAT/CAT/ 20
+ 
+COPY      Copy pre-marked text block to a file        SET COPY 20 30
+                                                      COPY ABC TEX
+ 
+CUT       Trim text off end of line                   CUT CAT
+ 
+DCOPY     Copy (& delete) pre-marked block to file    SET COPY 20 30
+                                                      DCOPY ABC TEX
+ 
+DELETE    Delete lines of text                        D
+                                                      D 10
+                                                      D 5 14
+ 
+DHOLD     Delete a line but hold (= save) it          DHOLD
+                                                      DHOLD 2
+                                                      DHOLD 10
+ 
+DI        Delete and insert a line                    DI XXX
+ 
+DUP       Duplicate (= insert) held lines             DUP
+          (from HOLD and DHOLD)                       DUP 2
+                                                      DUP 10
+                                                      DUP 1 5
+                                                      DUP 2 7
+ 
+DTL       Delete lines until locate a string          DTL --
+ 
+EDIT      Switch from input mode to edit mode         EDIT
+ 
+EXECUTE   Execute a held line                         X
+ 
+EXTEND    Append a string onto a line                 EXT  SUBSET
+ 
+EXIT      Exit out of editor (make changes permanent) EXIT
+ 
+EXEM      Append a string to multiple lines           EXT  SUBSET 10
+ 
+GO        Go to a line                                GO 25
+                                                      or 25
+ 
+HELP      Display on-line help information            HELP
+                                                      HELP PRINT
+                                                      HELP CHANGE
+ 
+HOLD      Hold (= saves) a line                       HOLD
+                                                      HOLD 2
+                                                      HOLD 10
+ 
+INDENT    Indent lines at specified column            SET INDENT 3
+                                                      INDENT
+                                                      INDENT 10
+ 
+INPUT     Switch from edit mode to input mode         INPUT
+ 
+INSERT    Insert a line after the current line        I PLOT Y X
+ 
+LAST      Go to the last line of the file             LAST
+ 
+LOCATE    Locate next line with a string              L PLOT
+ 
+LOCATE    Locate all succeeding lines with a string   LA PLOT
+ 
+LI        Locate all lines with string & and
+          insert a line after                         LI PLOT XXX
+ 
+LIB       Locate all lines with string & and
+          insert a line before                        LIB PLOT XXX
+ 
+ 
+LIST      List an external file                       LIST ABC.TEX
+ 
+NEAT      Make paragraph neat                         SET NEAT 1 50
+                                                      NEAT
+ 
+NEXT      Go to the next line                         N
+                                                      or <CR>
+                                                      N 10
+ 
+PRINT     Print lines                                 P
+                                                      P 10
+                                                      P 5 14
+ 
+PA        Print (current +) all remaining lines       PA
+ 
+PN        Print lines (starting with next line)       PN
+                                                      PN 20
+ 
+PP        Print a page of text                        PP
+ 
+PPAR      Print a paragraph of text                   PPAR
+ 
+PTL       Print lines until locate a string           PTL --
+ 
+SET CENT  Set (= mark) column for CENTER              SET CENTER 25
+ 
+SET CHAN  Set (= mark) columns for CHANGE             SET CHANGE 7 20
+ 
+SET COPY  Set (= mark) columns for COPY               SET COPY 70 90
+ 
+SET LOCA  Set (= mark) columns for LOCATE             SET LOCATE 5 7
+ 
+SET NEAT  Set (= mark) columns for NEAT               SET NEAT 1 50
+ 
+SET SHIF  Set (= mark) columns for SHIFT              SET SHIFT 55
+ 
+SET TRUN  Set (= mark) columns for TRUNCATE           SET TRUNCATE 55
+ 
+SC1       Set (= mark) first line for COPY            SC1
+ 
+SC2       Set (= mark) last  line for COPY            SC2
+ 
+SHIFT     Shift text left or right on lines           SET SHIFT 5
+                                                      SHIFT
+                                                      SHIFT 20
+ 
+SHOW      Display settings of switches and limit      SHOW
+ 
+SPLIT     Split remainder of a line onto next line    SPLIT CAT
+ 
+STAT      Display settings of switches and limit      STAT
+ 
+TOP       Go to the top (= line 1 - 1) of the file    T
+ 
+TRUNCATE  Truncate lines at a specified column        SET TRUN 55
+                                                      TRUNCATE
+                                                      TRUNCATE 300
+ 
+UNDO      Undo all changes (from previous TOP)        UNDO
+ 
+UP        Go up to previous line                      UP
+                                                      UP 10
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+-------------------------------------------------------------
+-------------------------  *TERMINALS*  -------------------
+----------------------------------------------------------
+ 
+TERMINALS
+ 
+No description available as of yet.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *TUTORIAL*  -------------------
+----------------------------------------------------------
+ 
+TUTORIAL
+ 
+No tutorial available as of yet.
+ 
+----------------------------------------------------------
+ 
+      Carriage Return     .        **ST      #       <Name>
+ 
+      SCALE
+      SET NUMBER
+SET PROMPT ON/OFF
+SET INFINITY
+SET MASK
+SUMMARY
+WORD PROCESSING
+SET FONT
+SET HW
+SET JUSTIFICATION
+MOVE ON PAGE
+DRAW LINE
+SET LASER ON/OFF
+EXIT-&-RERUN
+ABORT-&-RERUN
+SET NEAT ON/OFF
+Generate Format Statements
+ 
+   Note--The SET command and the SHOW command
+          have many sub-entries.
+ 
+   Enter INSTRUCTIONS for more detailed information
+   on how to use HELP.
+ 
+   Enter HINTS if you are not sure of the name
+   of the command or topic for which you need help.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *A*  --------------------------
+----------------------------------------------------------
+ 
+ABORT
+ 
+Command --ABORT
+ 
+Purpose --Exits out of the file being edited
+          with all edit changes being ignored;
+          that is, the file is left in its
+          original state.
+ 
+Format  --ABORT
+ 
+Synonyms--AB
+ 
+Examples--ABORT
+          AB
+ 
+Related Commands--
+          EXIT            = Exits from editing session.
+          ABRR            = Aborts and reruns editor.
+          EXRR            = Exits and reruns editor.
+ 
+----------------------------------------------------------
+ 
+ 
+ABRR
+ 
+Command --ABRR (Abort and Rerun)
+ 
+Purpose --Aborts out of the file being edited
+          (with all edit changes being ignored--
+          that is, the file is left in its
+          original state); further, you are
+          immediately placed back in the editor
+          with an inquiry as to what new
+          file you would like to edit.
+ 
+Format  --ABRR
+ 
+Synonyms--None.
+ 
+Examples--ABRR
+ 
+Related Commands--
+          ABORT           = Aborts out of editing session.
+          EXIT            = Exits  out of editing session.
+          EXRR            = Exits  out and reruns editor.
+ 
+----------------------------------------------------------
+ 
+ADD
+ 
+Command --ADD
+ 
+Purpose --Adds (= inserts) a block of text or
+          an external file.  The insertion is done
+          immediately after the current line.
+ 
+Format  --The ADD command has 2 forms--
+ 
+       1--ADD
+          This no-argument form adds the
+          last block of text that was
+          saved via the COPY command
+          with no arguments.
+ 
+       2--ADD    [file name]
+          This 1-argument form adds the
+          specified external file.
+ 
+Note    --For both forms, after the ADD command
+          is executed, the "current line" is
+          updated to the last line of the added text.
+ 
+Note    --If the number of lines added is
+          less than 10, then all lines
+          will be printed on the screen
+          as they are being added.
+        --If the number of lines added
+          is greater than 10, then only the
+          first and last added lines will
+          be printed.
+        --If no printing is desired, then
+          the FEEDBACK OFF command should
+          be entered beforehand.
+ 
+Synonyms--AD
+ 
+Examples--ADD
+          ADD REPORT.TEX
+ 
+Related Commands--
+          COPY            = Copies a block of text.
+          MOVE            = Moves a block of text.
+          SET FEEDBACK    = Allows/suppresses feedback.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *B*  --------------------------
+----------------------------------------------------------
+ 
+BOTTOM
+ 
+Command --BOTTOM
+ 
+Purpose --Goes to the (imaginary) line immediately
+          after the last line of the file.
+ 
+Note    --The "current line" setting is updated
+          to the     total number of lines + 1.
+ 
+        --[BOTTOM]    appears on the screen.
+ 
+Format  --BOTTOM
+ 
+Synonyms--BOT
+ 
+Examples--BOT
+          BOTTOM
+ 
+Related Commands--
+          TOP             = Goes before line 1.
+          LAST            = Goes to last line.
+          FIRST           = Goes to first line.
+          GO              = Goes to any line.
+          #               = Goes to any line.
+          SET NUMBER      = Allows/suppresses line numbers.
+          SET PROMPT      = Allows/suppresses prompt & line number.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *C*  --------------------------
+----------------------------------------------------------
+ 
+CALL
+ 
+Command --CALL
+ 
+Purpose --Calls (= executes) an edit macro
+          (= subroutine = procedure)
+          residing in the specified file.
+ 
+Format  --The CALL command has 2 forms--
+ 
+       1--CALL
+          This no-argument form re-executes
+          the last macro that had been executed.
+ 
+       2--CALL    [file name]
+          This 1-argument form executes the
+          macro in the specified file.
+ 
+Note    --If one is unsure of the contents
+          of a macro file, then use of the LIST
+          command will allow one to pre-view
+          the file (without actually executing
+          the contents of the file).
+ 
+Synonyms--CA
+          CAL
+ 
+Examples--CALL
+          CALL REPORT.TEX
+ 
+Related Commands--
+          LIST            = Lists (= prints on the screen)
+                            a file (but does not execute it).
+ 
+----------------------------------------------------------
+ 
+CENTER
+ 
+Command --CENTER
+ 
+Purpose --Centers existing text in the specified range
+          of lines so that each line is centered about
+          a pre-specified target column.
+ 
+Format  --The CENTER command has 3 forms--
+ 
+       1--CENTER
+ 
+          This no-argument form centers the current
+          line (only) so that the resulting text
+          is centered about the target column.
+ 
+       2--CENTER     [number of lines]
+ 
+          This 1-argument form centers each line
+          for the specified number of lines.  The
+          centering starts with the current line.
+          Each line is centered about the target column.
+ 
+       3--CENTER   [first line]   [last line]
+ 
+          This 2-argument form centers each line
+          for the specified range of lines; that is,
+          centering starts with the   [first line]
+          and proceeds through the   [last line].
+          Each line is centered about the target column.
+ 
+Note    --For all 3 cases, the    [target column]
+          is pre-specified by prior use of the
+          SET CENTER command, as in
+ 
+             SET CENTER 30
+             CENTER 100 120
+ 
+          which would set the [target column] to 30
+          and then center lines 100 through 120.
+ 
+        --The centering operation takes the existing
+          text sting on each line, determines the first
+          non-blank character, determines the last non-blank
+          character, and re-positions the entire text string
+          so that mid-string is at the    [target column].
+ 
+        --The CENTER command is useful for the
+          centering of titles and the like.
+ 
+        --The CENTER command operates on existing text,
+          text which is already in the specified line.
+          It has no effect on yet-to-be-entered text.
+ 
+        --For all 3 forms, after the CENTER command
+          has been executed, the "current line" is
+          updated to be the last line centered.
+ 
+Synonyms--CE
+          CEN
+ 
+Examples--SET CENTER 30    Specifies centering column as 30.
+          CENTER           Centers current line about column 30.
+          CENTER 5         Centers next 5 lines about column 30
+                           (starting with current line).
+          CENTER 10 15     Centers lines 10 to 15 about column 30.
+ 
+Related Commands--
+          SET CENTER      = Specifies the centering column.
+          INDENT          = Indents text on lines.
+          TRUNCATE        = Truncates text on lines.
+          SHIFT           = Shifts text on lines.
+          SET TAB         = Specifies column for auto-tabbing.
+          PRINT           = Prints lines.
+          SET FEEDBACK    = Allows/suppresses feedback.
+ 
+----------------------------------------------------------
+ 
+COPY
+ 
+Command --COPY
+ 
+Purpose --Copies a block of text
+             1) to the editor's temporary copy file; or
+             2) to an external file; or
+             3) to another location in the file.
+ 
+Format  --The COPY command has 3 forms--
+ 
+       1--COPY
+          This no-argument form copies the
+          previously-specified block of text
+          to the editor's temporary copy file.
+          The previous-specification is done via the
+          SET BEGIN, SET END, or SET COPY  commands).
+          The "current line" setting remains unchanged.
+ 
+       2--COPY    [file name]
+          This 1-argument form copies the
+          previously-specified block of text
+          to the specified file.
+          The previous-specification is done via the
+          SET BEGIN, SET END, or SET COPY  commands).
+          The "current line" setting remains unchanged.
+ 
+       3--COPY   [start line]   [stop line]   [target line]
+          This 3-argument form copies the block of text
+          from the    start line   through the    stop line
+          and inserts this block immediately after
+          the    target line.
+          The "current line" setting is updated to be
+          the last line of the copied block in its
+          new location.
+ 
+Note    --The copy does not destroy the original version
+          of the text block; it is a copy (= duplicate);
+          it is not a move and delete.
+ 
+Note    --If the number of lines copied is
+          less than 10, then all lines
+          will be printed on the screen
+          as they are being copied.
+        --If the number of lines copied
+          is greater than 10, then only the
+          first and last copied lines will
+          be printed.
+        --If no printing is desired, then
+          the FEEDBACK OFF command should
+          be entered beforehand.
+ 
+Synonyms--CO
+ 
+Examples--3 ways to copy the text from
+          lines 50 to 60 and insert it
+          immediately after line 20--
+ 
+          1) SET COPY  50 60
+             COPY
+             20
+             ADD
+ 
+          2) SET COPY  50 60
+             COPY YOURFILE.TEX
+             20
+             ADD YOURFILE.TEX
+ 
+          3) COPY 50 60 20
+ 
+Related Commands--
+          SET BEGIN       = Defines first line of block.
+          SET END         = Defines last line of block.
+          SET COPY        = Defines first & last lines of block.
+          ADD             = Adds (= inserts) a block of text.
+          MOVE            = Moves a block of text.
+          SET FEEDBACK    = Allows/suppresses printing.
+ 
+----------------------------------------------------------
+ 
+CUT
+ 
+Command --CUT
+ 
+Purpose --Deletes all characters on the current
+          line beyond (and including) the
+          specified string.
+ 
+Format  --CUT   [string]
+ 
+          Deletes all characters on the current
+          line beyond (and including) [string].
+ 
+Note    --If multiple occurrances of the string
+          are on the line, then the cutting will
+          be done from the last (= right-most) such
+          occurrance.  Thus if the original line is
+             ABC DEF GHI ABC DEF GHI
+          Then the command
+             CUT DEF
+          will result in
+             ABC DEF GHI ABC
+          The commands
+             CUT DE
+          and
+             CUT D
+          will yield the same result.
+ 
+        --The CUT command has no effect
+          on the "current line" setting--it
+          remains unchanged.
+ 
+Synonyms--None.
+ 
+Examples--CUT ABC          Cuts ABC and beyond on current line.
+        --CUT )            Cuts ) and beyond on current line.
+ 
+Related Commands--
+          EXTEND          = Appends string to end of line.
+          SPLIT           = Splits string onto next line.
+          SET TAB         = Sets auto-tab column.
+          SET INDENT      = Sets indentation column.
+          SET CENTER      = Sets centering column.
+          SET TRUNCATE    = Sets truncation column.
+          INDENT          = Indents lines of text.
+          CENTER          = Centers lines of text.
+          TRUNCATE        = Truncates lines of text.
+          DELETE          = Deletes k lines (start with current).
+          PRINT           = Prints k lines (start with current).
+          SET FEEDBACK    = Allows/suppresses printing.
+          SET NUMBER      = Allows/suppresses line numbers.
+          SET PROMPT      = Allows/suppr. prompt & line num.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *D*  --------------------------
+----------------------------------------------------------
+ 
+DELETE
+ 
+Command --DELETE
+ 
+Purpose --Deletes specified lines.
+ 
+Format  --The DELETE command has 3 forms--
+ 
+       1--DELETE
+ 
+          This no-argument form deletes the
+          current line only.
+          After the deletion is completed, the
+          "current line" setting is left unchanged,
+          and a    [DELETED LINE]   message is
+          printed out.
+ 
+       2--DELETE [number of lines]
+ 
+          This 1 argument form deletes the specified
+          [number of lines].  The deleting starts with
+          the current line.
+          After the deletion is completed, the
+          "current line" setting is left unchanged,
+          and a    [DELETED LINE]   message is
+          printed out.
+ 
+       3--DELETE [first line] [last line]
+ 
+          This 2-argument form deletes the specified
+          range of lines, that is deletes from the
+          [first line]     through the     [last line].
+          After the deletion is completed, the
+          "current line" setting is updated to
+          the first line of the deleted block,
+          and a    [DELETED LINE]   message is
+          printed out.
+ 
+Synonyms--D
+ 
+Examples--D                    Delete current line.
+          D 10                 Delete next 10 lines.
+                               (starting with current line).
+          D 30 50              Delete lines 30 to 50.
+ 
+Related Commands--
+          DTL             = Deletes till locate a string.
+          DHOLD           = Deletes and holds (saves) a line.
+          PRINT           = Prints lines.
+          SET FEEDBACK    = Allows/suppresses printing.
+          SET NUMBER      = Turns line numbers on/off.
+          SET PROMPT      = Turns prompt on/off.
+ 
+----------------------------------------------------------
+ 
+DHOLD
+ 
+Command --DHOLD (Delete and Hold)
+ 
+Purpose --Deletes and holds (= saves = copies)
+          the current line.
+ 
+Format  --The DHOLD command has 2 forms--
+ 
+       1--DHOLD
+ 
+          This no-argument form deletes and holds
+          (= saves) the current line.  The line
+          is saved in the editor's temporary line-
+          storage location #1 (there are 10 such
+          line-storage locations).  The   DHOLD
+          command with no arguments is equivalent to
+          DHOLD 1   .
+ 
+       2--DHOLD    [storage number]
+ 
+          This 1-argument form deletes and holds
+          (= saves) the current line.  The line
+          is saved in the editor's temporary line-
+          storage location specified by the
+          [storage number].  There are 10 such line-
+          storage locations and so     [storage number]
+          must be an integer from 1 to 10.
+ 
+Note    --After the DHOLD is executed, the
+          "current line" setting is left unchanged,
+          and a    [DELETE LINE]   message is
+          printed out.
+ 
+        --To dump a held line, use the DUP command.
+          The DHOLD and DUP commands are complementary
+          in the sense that DHOLD deletes and
+          holds a desired line, while DUP inserts
+          the held line at some other desired
+          location in the text.  Thus DUP 3 will insert
+          the contents of the editor's line-storage
+          location #3 immediately after whatever line
+          the editor is currently positioned at.
+          Thus an example of editor code to
+             go to line 50
+             delete and hold that line
+             then go to line 20
+             and insert the held line
+          is
+             50
+             DHOLD
+             20
+             DUP
+ 
+Synonyms--DH
+          HD
+ 
+Examples--DH      Delete and hold line in ed. temp. location #1.
+          DH 1    Delete and hold line in ed. temp. location #1.
+          DH 5    Delete and hold line in ed. temp. location #5.
+ 
+Related Commands--
+          DUP             = Duplicates (= insert)
+                            a held line.
+          HOLD            = Holds a line
+                            (but do not delete it).
+          DELETE          = Deletes lines.
+          DTL             = Deletes lines till locate a string.
+          MOVE            = Moves (= delete & copy)
+                            a block of lines.
+          PRINT           = Prints lines.
+          SET FEEDBACK    = Allows/suppresses printing.
+ 
+----------------------------------------------------------
+ 
+DUPLICATE
+ 
+Command --DUPLICATE
+ 
+Purpose --Duplicates (= inserts) a held line.
+ 
+Format  --The DUP command has 3 forms--
+ 
+       1--DUP
+ 
+          This no-argument form duplicates once
+          (= inserts) the held line residing in the
+          editor's temporary line-storage location #1.
+          The insertion is done immediately after the
+          current line.  The DUPLICATE command with
+          no arguments is equivalent to   DUPLICATE 1
+          and    DUPLICATE 1 1    (see forms 2 and 3 below).
+ 
+       2--DUPLICATE    [storage number]
+ 
+          This 1-argument form duplicates once
+          (= inserts) the held line residing in the
+          editor's temporary line-storage location
+          specified by   [storage number].  Since there
+          are 10 such line-storage locations available,
+          then   [storage number]   must be an integer
+          from 1 to 10.  The DUPLICATE command with
+          1 argument (e.g., DUPLICATE 7) is equivalent to
+          the 2-arguemnt DUPLICATE command with second
+          argument = 1 (e.g., DUPLICATE 7 1);
+          see the 2-argument form below.
+          The insertion is done immediately after the
+          current line.
+ 
+       3--DUPLICATE  [storage number]  [number of duplicates]
+ 
+          This 2-argument form duplicates
+          [number of duplicates] times
+          the held line residing in the
+          editor's temporary line-storage location
+          specified by   [storage number].  Since there
+          are 10 such line-storage locations available,
+          then   [storage number]   must be an integer
+          from 1 to 10.  The duplication is done
+          immediately after the current line.
+ 
+Note    --If the number of lines duplicated is
+          less than 10, then all lines
+          will be printed on the screen
+          as they are being inserted.
+        --If the number of lines duplicated
+          is greater than 10, then only the
+          first and last inserted lines will
+          be printed.
+        --If no printing is desired, then
+          the FEEDBACK OFF command should
+          be entered beforehand.
+ 
+        --After the DUPLICATE is executed, the
+          "current line" setting is updated to the last
+          line printed.
+ 
+        --To hold a desired line, use the HOLD command
+          (= Hold but do not delete) or the
+          DHOLD (= Hold and then delete) commands.
+          The HOLD/DHOLD and DUPLICATE commands are complementary
+          in the sense that HOLD/DHOLD holds
+          a desired line, while DUPLICATE inserts
+          the held line at some other desired
+          location in the text.  Thus DUPLICATE 3 will insert
+          the contents of the editor's line-storage
+          location #3 immediately after whatever line
+          the editor is currently positioned at.
+          Thus an example of editor code to
+             go to line 50
+             hold (= save) that line
+             then go to line 20
+             and insert the held line
+          is
+             50
+             HOLD
+             20
+             DUPLICATE
+ 
+Synonyms--DU
+ 
+Examples--DUPLICATE        Duplicate line 1 once.
+          DUPLICATE 7      Duplicate line 7 once.
+          DUPLICATE 7 50   Duplicate line 7 50 times.
+ 
+Related Commands--
+          HOLD            = Holds a line
+                            (but does not delete it).
+          DHOLD           = Holds a line
+                            (but also deletes it).
+          EXECUTE         = Executes a held line.
+          INSERT          = Inserts a line.
+          ADD             = Inserts a file.
+          CALL            = Executes a file.
+          COPY            = Copies a block of lines.
+          MOVE            = Moves (= deletes and copies)
+                            a block of lines.
+          PRINT           = Prints lines.
+          SET FEEDBACK    = Allows/suppresses feedback.
+          SET PRINTING    = Allows/suppresses printing.
+ 
+----------------------------------------------------------
+ 
+DTL
+ 
+Command --DTL (Delete till Locate)
+ 
+Purpose --Locates the next line on which
+          the specified string occurs, and
+          deletes all lines from the current line
+          down to the line with the located string.
+ 
+Format  --The DTL command has 2 forms--
+ 
+       1--DTL
+ 
+          This no-argument form locates the
+          next line on which the previously-
+          specified string occurs, and
+          deletes all lines from the current line
+          down to the line with the located string.
+          The "previously-specified string" is
+          the string that was explicitly used in a
+          previous LOCATE, DTL, DTL, or LAI command.
+          Thus the no-argument form of the DTL command
+          "remembers" previous located strings
+          and uses them if the analyst so desires.
+ 
+       2--DTL     [string]
+ 
+          This 1-argument form locates the
+          next line on which the specified
+          string occurs and  deletes all lines
+          from the current line down to the line
+          with the located string.
+ 
+Note    --The deleting starts on the current line;
+          but the search for the string
+          does not start until the next line.
+          If the string is found anywhere on
+          some line, the search is terminated,
+          and the lines are deleted.
+ 
+        --Each line is searched its full width
+          (the default column limits for the search
+          are columns 1 to 132).
+          To restrict the search to a certain range  of
+          columns (e.g., columns 7 through 72), then
+          use the SET LOCATE command before using
+          the DTL command, as in
+             SET LOCATE 7 72
+             DTL ABC
+          which will delete the current line
+          and every line down to the first
+          line containing ABC in columns
+          7 through 72.
+ 
+        --If the specified string is not located,
+          then the current line and all subsequent
+          lines are deleted.
+ 
+        --For both forms of the DTL command, after the
+          command has been executed, the "current line"
+          setting is updated to the last line that was
+          printed.
+ 
+ 
+Synonyms--None.
+ 
+Examples--DTL ABC              Delete current line down
+                               to the first line containing
+                               the string     ABC
+        --DTL 1000 CONTINUE    Delete current line down
+                               to the first line containing
+                               the string     1000 CONTINUE
+ 
+Related Commands--
+          SET LOCATE      = Sets column limits for
+                            LOCATE, DTL, DTL, and
+                            LAI commands.
+          LOCATE          = Locates a string.
+          PTL             = Print-till-locate =
+                            prints from current line down
+                            to line with located string.
+          LAI             = Locate-all-and-insert =
+                            locates all lines with a string
+                            and inserts new lines with a second
+                            string.
+          PRINT           = Prints k lines (start with current).
+          SET FEEDBACK    = Allows/suppresses printing.
+          SET NUMBER      = Allows/suppresses line numbers.
+          SET PROMPT      = Allows/suppr. prompt & line num.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *E*  --------------------------
+----------------------------------------------------------
+ 
+EDIT
+ 
+Command --EDIT
+ 
+Purpose --Place the editor into    edit mode
+          so that all subsequent lines entered
+          from the terminal will be interpreted
+          as editor commands, and will not be
+          placed into the file as raw text.
+ 
+Format  --EDIT
+ 
+Note    --The editor has 2 modes--
+ 
+             1) edit  mode (default mode)
+             2) input mode
+ 
+        --When the editor is in    edit mode,
+          then all of the editor commands are
+          at the disposal of the analyst.
+          The     edit mode    is the most common
+          mode of operation; most changing and updating
+          of files is done in    edit mode.
+          The advantage of    edit mode   is that
+          all of the editor commands may be used to
+          make the desired changes in the file.
+          The disadvantage of    edit mode is that
+          extra keystrokes are required for the entry
+          of large amounts of text.
+ 
+        --When the editor is in    input mode,
+          then "what you type" is "what goes into
+          the file".  Input mode   is the most
+          common way of entering large amounts
+          of text into a file.
+          The advantage of    input mode   is that
+          large amounts of text may be efficiently
+          entered.   The disadvantage of    input mode
+          is that the analyst has no immediate access
+          to editor commands (such as PRINT, DELETE,
+          and so forth).
+ 
+        --To go from edit mode to input mode, enter
+ 
+             INPUT
+ 
+        --To go from input mode to edit mode, enter
+ 
+             EDIT
+ 
+Synonyms--None
+ 
+Examples--EDIT
+ 
+Related Commands--
+          INPUT           = Goes from edit mode to input mode.
+ 
+----------------------------------------------------------
+ 
+EXECUTE
+ 
+Command --EXECUTE
+ 
+Purpose --Executes a held line.
+ 
+Format  --The EXECUTE command has 3 forms--
+ 
+       1--EXECUTE
+ 
+          This no-argument form executes once
+          the held line residing in the
+          editor's temporary line-storage location #1.
+          The EXECUTE command with no arguments
+          is equivalent to   EXECUTE 1    and
+          EXECUTE 1 1    (see forms 2 and 3 below).
+ 
+       2--EXECUTE    [storage number]
+ 
+          This 1-argument form executes once
+          the held line residing in the
+          editor's temporary line-storage location
+          specified by   [storage number].  Since there
+          are 10 such line-storage locations available,
+          then   [storage number]   must be an integer
+          from 1 to 10.  The EXECUTE command with
+          1 argument (e.g., EXECUTE 7) is equivalent to
+          the 2-arguemnt EXECUTE command with second
+          argument = 1 (e.g., EXECUTE 7 1);
+          see the 2-argument form below.
+ 
+       3--EXECUTE  [storage number]  [number of duplicates]
+ 
+          This 2-argument form executes
+          [number of duplicates] times
+          the held line residing in the
+          editor's temporary line-storage location
+          specified by   [storage number].  Since there
+          are 10 such line-storage locations available,
+          then   [storage number]   must be an integer
+          from 1 to 10.
+ 
+Note    --The EXECUTE command is analagous to
+          the CALL command in that they both
+          execute editor instructions.  EXECUTE
+          differs from CALL in that EXECUTE executes
+          a single held instruction line while
+          CALL executes a file-full of instructions.
+ 
+        --The EXECUTE command is analagous to
+          the DUPLICATE command in that they both
+          operate on held lines (held via
+          HOLD/DHOLD).  EXECUTE differs from
+          DUPLICATE in that EXECUTE executes
+          a held line while DUPLICATE merely
+          duplicates (= inserts) a held line.
+ 
+        --Whether or not printing results
+          from the commands being executed,
+          depends on the actual commands
+          being executed and on the setting
+          of the FEEDBACK and PRINTING
+          switches.  If no printing is desired,
+          then such switches should be turned off
+          ahead of time by prior entry of the
+          SET FEEDBACK OFF and SET PRINTING OFF
+          commands.
+ 
+        --After the EXECUTE is executed, the
+          "current line" setting is updated
+          depending on what instructions
+          have been executed.
+ 
+        --To hold a desired line, use the HOLD command
+          (= Hold but do not delete) or the
+          DHOLD (= Hold and then delete) commands.
+          The HOLD/DHOLD and EXECUTE commands are complementary
+          in the sense that HOLD/DHOLD holds
+          a desired line, while EXECUTE executes
+          the held line .  Thus EXECUTE 3 will execute
+          the contents of the editor's line-storage
+          location #3 immediately after whatever line
+          the editor is currently positioned at.
+          Thus an example of editor code to
+             go to line 50
+             hold (= save) that line
+             then execute that line
+          is
+             50
+             HOLD
+             EXECUTE
+ 
+Synonyms--EXE
+ 
+Examples--EXECUTE        Execute held line 1 once.
+          EXECUTE 7      Execute held line 7 once.
+          EXECUTE 7 50   Execute held line 7 50 times.
+ 
+Related Commands--
+          HOLD            = Holds a line
+                            (but do not delete it).
+          DHOLD           = Holds a line
+                            (but also delete it).
+          DUPLICATE       = Inserts a held line.
+          CALL            = Executes a file.
+          ADD             = Inserts a file.
+          INSERT          = Inserts a line.
+          PRINT           = Prints lines.
+          SET FEEDBACK    = Allows/suppresses feedback.
+          SET PRINTING    = Allows/suppresses printing.
+ 
+----------------------------------------------------------
+ 
+EXTEND
+ 
+Command --EXTEND
+ 
+Purpose --Attaches a string at the end
+          of the current line.
+ 
+Format  --EXTEND   [string]
+ 
+          Attaches [string] at the end
+          of the current line.
+ 
+Note    --All editor commands must have at least 1 space
+          between the command and the succeeding
+          arguments of the command line.  For
+          most editor commands; extra spaces
+          are not significant.  For the EXTEND
+          command, however, such extra spaces are
+          significant--they become part of the string
+          to be appended.  For example, if the
+          original line is
+             ABC DEF GHI
+          and the command
+             EXTEND JKL MNO PQR
+          is entered (note only one space
+          after the EXTEND command), then
+          the resulting line is
+             ABC DEF GHIJKL MNO PQR
+          The    J   of the new string abutts
+          immediately up against the    I
+          of the old string.  In some cases
+          this is desirable; in others, it may
+          not be.  To cause the new string to
+          have a space after the old string,
+          one should enter instead
+             EXTEND  JKL MNO PQR
+          (Note the 2 spaces after the EXTEND
+          command).  The net result will be
+             ABC DEF GHI JKL MNO PQR
+          as desired.
+ 
+        --The EXTEND command has not effect
+          on the "current line" setting--it
+          remains unchanged.
+ 
+Synonyms--EXT
+ 
+Examples--EXT ABC          Appends ABC to current line.
+        --EXT )            Appends ) to current line.
+ 
+Related Commands--
+          CUT             = Cuts string from end of line.
+          SPLIT           = Splits string onto next line.
+          SET TAB         = Sets auto-tab column.
+          SET INDENT      = Sets indentation column.
+          SET CENTER      = Sets centering column.
+          SET TRUNCATE    = Sets truncation column.
+          INDENT          = Indents lines of text.
+          CENTER          = Centers lines of text.
+          TRUNCATE        = Truncates lines of text.
+          DELETE          = Deletes k lines (start with current).
+          PRINT           = Prints k lines (start with current).
+          SET FEEDBACK    = Allows/suppresses printing.
+          SET NUMBER      = Allows/suppresses line numbers.
+          SET PROMPT      = Allows/suppr. prompt & line num.
+ 
+----------------------------------------------------------
+ 
+EXIT
+ 
+Command --EXIT
+ 
+Purpose --Exits out of the file being edited
+          with all edit changes being made permanent.
+ 
+Format  --EXIT
+ 
+Synonyms--EX
+ 
+Examples--EXIT
+          EX
+ 
+Related Commands--
+          ABORT           = Aborts from editing session.
+          EXRR            = Exits and reruns editor.
+          ABRR            = Aborts and reruns editor.
+ 
+----------------------------------------------------------
+ 
+EXRR
+ 
+Command --EXRR (Exit and Rerun)
+ 
+Purpose --Exits out of the file being edited
+          (with all edit changes being made permanent);
+          and then immediately places you back
+          in the editor with an inquiry as to
+          what new file you would like to edit.
+ 
+Format  --EXRR
+ 
+Synonyms--None.
+ 
+Examples--EXRR
+ 
+Related Commands--
+          EXIT            = Exits  out of editing session.
+          ABORT           = Aborts out of editing session.
+          ABRR            = Aborts and reruns editor.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *F*  --------------------------
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *G*  --------------------------
+----------------------------------------------------------
+ 
+GO
+ 
+Command --GO
+ 
+Purpose --Goes to the specified line and
+          prints the line out (on the screen).
+ 
+Format  --GO     [line number]
+ 
+Note    --After the GO command has been executed,
+          the "current line" setting is updated
+          to the specified line.
+ 
+Note    --The GO command is a heavily used command;
+          the GO command spelling is, however, rarely
+          used.  It is more common to simply enter the
+          [line number]     without the prefix GO.
+          Thus to go to line 17, it is rare to use
+             GO 17
+          It is more common to use simply
+             17
+ 
+Synonyms--G
+          line number
+ 
+Examples--GO 140            Go to to line 140.
+          G 140             Go to to line 140.
+          140               Go to to line 140.
+ 
+Related Commands--
+          UP              = Goes up k lines.
+          NEXT            = Goes down k lines.
+          TOP             = Goes before line 1.
+          FIRST           = Goes to first line.
+          LAST            = Goes to last line.
+          BOTTOM          = Goes after last line.
+          GO              = Goes to any line.
+          #               = Goes to any line.
+          PRINT           = Prints k lines (start with current).
+          PN              = Prints k lines (start with next).
+          SET NUMBER      = Allows/suppresses line numbers.
+          SET PROMPT      = Allows/suppr. prompt & line num.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *H*  --------------------------
+----------------------------------------------------------
+ 
+HELP
+ 
+Command --HELP
+ 
+Purpose --Invokes the editor facility to display
+          information about an editor command or topic.
+ 
+Format  --The HELP command has 2 forms--
+ 
+       1--HELP
+ 
+          This no-argument form displays general
+          information about the HELP facility, and
+          also displays a list of editor commands
+          and topics for which further HELP
+          information is available.
+ 
+       2--HELP [command or topic]
+ 
+          The 1 argument form displays specific
+          format and usage information about the
+          specified command or the specified topic.
+          You can abbreviate any command or topic
+          name, although ambiguous abbreviations will
+          result in all matches being displayed.
+ 
+Note    --For both forms, the "current line" status
+          is left unchanged.
+ 
+Synonyms--HE
+ 
+Examples--HELP          Display general editor information.
+          HELP SET      Display information about SET command.
+          HELP SHOW     Display information about SHOW command.
+          HELP CHANGE   Display information about CHANGE command.
+          HELP C        Display information about all C commands.
+          HELP LIMITS   Display information about various limits.
+ 
+Related Commands--
+          SET             = Assigns settings
+                            of underlying variables.
+          SHOW            = Displays current settings
+                            of underlying variables.
+          SET PRINTER     = Activates/deactivates hardcopy.
+ 
+----------------------------------------------------------
+ 
+HOLD
+ 
+Command --HOLD
+ 
+Purpose --Holds (= saves = copies) the current line.
+ 
+Format  --The HOLD command has 2 forms--
+ 
+       1--HOLD
+ 
+          This no-argument form holds
+          (= saves) the current line.  The line
+          is saved in the editor's temporary line-
+          storage location #1 (there are 10 such
+          line-storage locations).  The   HOLD
+          command with no arguments is equivalent to
+          HOLD 1   .
+ 
+       2--HOLD    [storage number]
+ 
+          This 1-argument form holds
+          (= saves) the current line.  The line
+          is saved in the editor's temporary line-
+          storage location specified by the
+          [storage number].  There are 10 such line-
+          storage locations and so     [storage number]
+          must be an integer from 1 to 10.
+ 
+Note    --After the HOLD is executed, the
+          "current line" setting is left unchanged.
+ 
+        --To dump a held line, use the DUP command.
+          The HOLD and DUP commands are complementary
+          in the sense that HOLD holds
+          a desired line, while DUP inserts
+          the held line at some other desired
+          location in the text.  Thus DUP 3 will insert
+          the contents of the editor's line-storage
+          location #3 immediately after whatever line
+          the editor is currently positioned at.
+          Thus an example of editor code to
+             go to line 50
+             hold (= save) that line
+             then go to line 20
+             and insert the held line
+          is
+             50
+             HOLD
+             20
+             DUP
+ 
+Synonyms--H
+          HO
+ 
+Examples--H      Hold line in ed. temp. location #1.
+          H 1    Hold line in ed. temp. location #1.
+          H 5    Hold line in ed. temp. location #5.
+ 
+Related Commands--
+          DUP             = Duplicates (= inserts)
+                            a held line.
+          DHOLD           = Holds a line
+                            (but also delete it).
+          DELETE          = Deletes lines.
+          DTL             = Deletes lines till locate string.
+          MOVE            = Moves (= delete & copy)
+                            a block of lines.
+          PRINT           = Prints lines.
+          SET FEEDBACK    = Allows/suppresses printing.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *I*  --------------------------
+----------------------------------------------------------
+ 
+INDENT
+ 
+Command --INDENT
+ 
+Purpose --Indents existing text in the specified range
+          of lines so that each line is indented to
+          the specified target column.
+ 
+Format  --The INDENT command has 3 forms--
+ 
+       1--INDENT
+ 
+          This no-argument form indents the current
+          line (only) so that the resulting text
+          is indented to the target column.
+ 
+       2--INDENT     [number of lines]
+ 
+          This 1-argument form indents each line
+          for the specified number of lines.  The
+          indenting starts with the current line.
+          Each line is indented to the target column.
+ 
+       3--INDENT   [first line]   [last line]
+ 
+          This 2-argument form indents each line
+          for the specified range of lines; that is,
+          indenting starts with the   [first line]
+          and proceeds through the   [last line].
+          Each line is indented to the target column.
+ 
+Note    --For all 3 cases, the    [target column]
+          is pre-specified by prior use of the
+          SET INDENT command, as in
+             SET INDENT 10
+             INDENT 100 120
+          which would set the [target column] to 10
+          and then indent lines 100 through 120.
+ 
+        --The indenting operation takes the existing
+          text sting on each line, determines the first
+          non-blank character, and re-positions the entire
+          text string so that the first non-blank
+          character is at the     [target column].
+ 
+        --INDENT is similar to SHIFT in that
+          both result in text lines being shifted.
+          INDENT differs from SHIFT in that
+          INDENT assures that the resulting text
+          will start in the specified column,
+          wheras SHIFT merely does a straightforwward
+          translation (left or right).
+ 
+        --The INDENT command is useful for the
+          indenting of lists and the like.
+ 
+        --The INDENT command operates on existing text,
+          text which is already in the specified line.
+          It has no effect on yet-to-be-entered text.
+ 
+        --For all 3 forms, after the INDENT command
+          has been executed, the "current line" is
+          updated to be the last line indented.
+ 
+Synonyms--IND
+ 
+Examples--SET INDENT 6     Specifies indentation column as 6.
+          INDENT           Indent current line to column 6.
+          INDENT 10        Indent next 10 lines to column 6
+                           (starting with current line).
+          INDENT 10 15     Indent lines 10 to 15 to column 6.
+ 
+Related Commands--
+          SET INDENT      = Specifies indentation column.
+          SET SHIFT       = Specifies shift amount.
+          SHIFT           = Shifts text on lines.
+          CENTER          = Centers text on lines.
+          TRUNCATE        = Truncates text on lines.
+          SET TAB         = Specifies auto-tabbing column.
+          PRINT           = Prints lines.
+          SET FEEDBACK    = Allows/suppresses screen printing.
+ 
+----------------------------------------------------------
+ 
+INPUT
+ 
+Command --INPUT
+ 
+Purpose --Place the editor into    input mode
+          so that all subsequent lines entered
+          from the terminal will be placed in the
+          file as raw text, and will not be
+          interpreted as editor commands.
+ 
+Format  --INPUT
+ 
+Note    --The editor has 2 modes--
+ 
+             1) edit  mode (default mode)
+             2) input mode
+ 
+        --When the editor is in    edit mode,
+          then all of the editor commands are
+          at the disposal of the analyst.
+          The     edit mode    is the most common
+          mode of operation; most changing and updating
+          of files is done in    edit mode.
+          The advantage of    edit mode   is that
+          all of the editor commands may be used to
+          make the desired changes in the file.
+          The disadvantage of    edit mode is that
+          extra keystrokes are required for the entry
+          of large amounts of text.
+ 
+        --When the editor is in    input mode,
+          then "what you type" is "what goes into
+          the file".  Input mode   is the most
+          common way of entering large amounts
+          of text into a file.
+          The advantage of    input mode   is that
+          large amounts of text may be efficiently
+          entered.   The disadvantage of    input mode
+          is that the analyst has no immediate access
+          to editor commands (such as PRINT, DELETE,
+          and so forth).
+ 
+        --To go from edit mode to input mode, enter
+ 
+             INPUT
+ 
+        --To go from input mode to edit mode, enter
+ 
+             EDIT
+ 
+        --When in    input mode, the "current line"
+          seting is updated as text lines are entered.
+ 
+Synonyms--None
+ 
+Examples--INPUT
+ 
+Related Commands--
+          EDIT            = Goes from input mode to edit mode.
+ 
+----------------------------------------------------------
+ 
+INSERT
+ 
+Command --INSERT
+ 
+Purpose --Inserts a string immediately after
+          the current line.
+ 
+Format  --INSERT   [string]
+ 
+          Inserts [string] immediately after the
+          current line.
+ 
+Note    --The INSERT command is a heavily used command;
+          the full INSERT command spelling is, however,
+          rarely used; the    I    synonym is much more
+          common.  Thus to insert the string
+             The quick brown fox
+          immediately after the current line,
+          one could enter--
+             I The quick brown fox
+ 
+        --The INSERT command provides an
+          alternative way of entering text
+          (aside from switching into    input mode
+          via the INPUT command).  If only a few
+          lines of text need be entered, then use
+          of the INSERT command is efficient because
+          the text is getting inserted and yet
+          the analyst never leaves   edit mode   and
+          so has the advantage of having at disposal
+          all of the editor commands.  On the other
+          hand, if much text needs to be entered, then
+          it makes sense to enter    input mode
+          and type away continuously until all of
+          the text has been entered.  The    input mode
+          method of inserting the above 1 line is--
+             INPUT
+             The quick brown fox
+             EDIT
+ 
+        --The INSERT command is sensitive to
+          the auto-tab setting (as set via the
+          SET TAB command).  Thus if it is desired
+          that all text start in column 7, then
+          one method of achieving that is to enter
+             SET TAB 7
+          before entering various test lines
+          (via INSERT or via input mode).
+          The resulting inserted lines
+          will have spaces automatically
+          inserted so that the first
+          character of each line will start
+          at column 7.  The default
+          SET TAB setting is column 1.
+ 
+        --Another way to achieve a similar effect
+          is to leave the auto-tab setting at 1,
+          enter (via INSERT or via input mode) the
+          desired text lines, and then (after
+          all the text is entered), shift the
+          text to the desired column via the
+          SET INDENT and INDENT commands, as in
+             SET INDENT 7
+             INDENT 20 30
+          which would set the indentation column
+          to 7, and then indent lines 20 to 30,
+          say, of the text.
+ 
+        --The INSERT command with an empty string
+          provides a convenient way of entering
+          a blank line.
+ 
+        --Immediately after the INSERT command
+          has been executed, the "current line"
+          setting is updated by 1, so that the
+          analyst is thus "pointing at" the
+          line which just got inserted.
+ 
+Synonyms--I
+          IN
+ 
+Examples--I ABC               Inserts ABC
+          I 100 CONTINUE      Inserts 100 CONTINUE
+          I                   Inserts a blank line.
+ 
+Related Commands--
+          SET TAB         = Sets auto-tab column.
+          SET INDENT      = Sets indentation column.
+          SET CENTER      = Sets centering column.
+          SET TRUNCATE    - Set truncation column.
+          INDENT          = Indents lines of text.
+          CENTER          = Centers lines of text.
+          TRUNCATE        = Truncates lines of text.
+          DELETE          = Deletes k lines (start with current).
+          PRINT           = Prints k lines (start with current).
+          PA              = Prints all lines (start with current).
+          SET FEEDBACK    = Allows/suppresses printing.
+          SET NUMBER      = Allows/suppresses line numbers.
+          SET PROMPT      = Allows/suppr. prompt & line num.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *J*  --------------------------
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *K*  --------------------------
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *L*  --------------------------
+----------------------------------------------------------
+ 
+LAST
+ 
+Command --LAST
+ 
+Purpose --Goes to the last line of the file
+          and prints it out (on the screen).
+ 
+Format  --LAST
+ 
+Note    --The "current line" setting is updated
+          to the     number of lines     in the file.
+ 
+        --The LAST command is a convenent way to
+          determine the number of lines currently
+          in the file.
+ 
+Synonyms--LA
+ 
+Examples--LAST
+          LAS
+ 
+Related Commands--
+          TOP             = Goes before line 1.
+          BOTTOM          = Goes after last line.
+          FIRST           = Goes to first line.
+          GO              = Goes to any line.
+          #               = Goes to any line.
+          SET NUMBER      = Prints line numbers.
+          SET PROMPT      = Prints prompt & line number.
+ 
+----------------------------------------------------------
+ 
+LOCATE
+ 
+Command --LOCATE
+ 
+Purpose --Locates the next line on which
+          the specified string occurs, and
+          prints the line out (on the screen).
+ 
+Format  --The LOCATE command has 2 forms--
+ 
+       1--LOCATE
+ 
+          This no-argument form locates the
+          next line on which the previously-
+          specified string occurs and
+          prints the line out (on the screen).
+          The "previously-specified string" is
+          the string that was used in the
+          previous LOCATE command.  Thus the
+          no-argument form of the LOCATE command
+          "remembers" previous located strings
+          and uses them if the analyst so desires.
+ 
+       2--LOCATE     [string]
+ 
+          This 1-argument form locates the
+          next line on which the specified
+          string occurs and prints the line
+          out (on the screen).
+ 
+Note    --The search for the string
+          does not include the current line;
+          the search starts on the next line.
+          If the string is found anywhere on
+          some line, the search is terminated,
+          and the line is printed out.
+ 
+        --Each line is searched its full width
+          (the default column limits for the search
+          are columns 1 to 132).
+          To restrict the search to a certain range  of
+          columns (e.g., columns 7 through 72), then
+          use the SET command and its LLIMITS sub-command
+          before using the LOCATE command, as in
+             SET LLIMITS 7 72
+             LOCATE ABC
+ 
+        --The LOCATE command finds strings anywhere
+          in the pre-specified columns limits.  If it
+          is important to restrict the search so
+          that a "hit" is obtained only if the string
+          starts in a specific column (e.g., an A in column
+          11, a B in column 12, and a C in column 13,
+          then use the FIND command, as in
+             FIND           ABC
+          The spacing in the FIND command is significant.
+ 
+        --For both forms of the LOCATE command, after the
+          command has been executed, the "current line"
+          setting is updated to the line that was
+          printed.
+ 
+        --The LOCATE command is a heavily used command;
+          the full LOCATE command spelling is, however,
+          rarely used; the    L    synonym is much more
+          common.  Thus to find the next occurrance of
+          the string     1500 CONTINUE
+          it is rare to use
+             LOCATE 1500 CONTINUE
+          it is more common to use
+             L 1500 CONTINUE
+ 
+Synonyms--L
+ 
+Examples--LOCATE ABC       Locate ABC
+          L ABC            Locate ABC
+ 
+Related Commands--
+          SET LLIMITS     = Sets LOCATE column limits.
+          FIND            = Finds a string starting in a specific column.
+          CHANGE          = Changes a string to another string.
+          PRINT           = Prints k lines (start with current).
+          SET FEEDBACK    = Allows/suppresses printing.
+          SET NUMBER      = Allows/suppresses line numbers.
+          SET PROMPT      = Allows/suppr. prompt & line num.
+ 
+----------------------------------------------------------
+ 
+LI
+ 
+Command --LI (Locate and Insert)
+ 
+Purpose --Locates all subsequent lines
+          which contain a specified string, and
+          inserts immediately after such
+          lines a new line consisting of XXX.
+ 
+Format  --The LI command has 2 forms--
+ 
+       1--LI     [old string]
+ 
+          This 1-argument form locates
+          all subsequent lines which
+          contain [old string] and inserts
+          immediately after such lines
+          a new line consisting of XXX.
+ 
+       2--LI     [old string]     [new string]   <<<not operational>>>
+ 
+          This 2-argument form locates
+          all subsequent lines which
+          contain [old string] and inserts
+          immediately after such lines
+          a new line consisting of [new string].
+ 
+Note    --The search for the string
+          does not start until the next line.
+          If the string is found anywhere on
+          such subsequent lines, a new
+          line is inserted, and the
+          search resumes.
+ 
+        --Each line is searched its full width
+          (the default column limits for the search
+          are columns 1 to 132).
+          To restrict the search to a certain range  of
+          columns (e.g., columns 7 through 72), then
+          use the SET LOCATE command before using
+          the LI command, as in
+             SET LOCATE 7 72
+             LI ABC DEF
+          which will search columns 7 through 72
+          of all subsequent lines, and anytime
+          an ABC is found on such lines, a new
+          line consisting of
+             DEF
+          is inserted immediately after each
+          such line.
+ 
+        --[old string] and [new string] in the
+          above forms must each consist of
+          contiguous characters; that is, there
+          may be at most 1 or 2 arguments--
+          never more; thus
+             LI FED XXXX
+          is legal (there are only 2 disinct
+          words--FED and XXXX), but
+             LI FED CALL FIX.ED
+          is illegal (because there are 3 distinct
+          words--FED, CALL, and FIX.ED).
+ 
+        --In practice, the restriction that
+          [new string] be contiguous characters is
+          of very little consequence.
+          If a multi-word new string is desired,
+          then it is common in practice
+          to use LI command with [new string]
+          being a unique 1-word entry
+          (such as XXXX), and then followsing up
+          with a CHANGE command to change
+          all XXXX's to the desired multi-word
+          result, as in
+             LI ABC XXXX
+             TOP
+             CHANGE /XXXX/CALL FIX.ED/  55555
+          which would insert the line XXXX
+          after each line containing ABC,
+          then go back to the top of the file,
+          and then change XXXX on any line
+          to CALL FIX.ED (for the next 55555 lines--
+          which in practice means the whole file).
+ 
+        --As the above example alludes to,
+          the LI command is a convenient way
+          (starting with a list of all files
+          in a directory) of setting up a
+          system runstream to systematically
+          re-edit all subroutines in a
+          directory.  In the above example,
+          the re-editing is specified by EDIT/FED
+          commands residing in the file FIX.ED   .
+          With very little difficulty, one could
+          end up with a file consisting of (for a VAX)
+             $FED SUB1.FOR
+             CALL FIX.ED
+             $FED SUB2.FOR
+             CALL FIX.ED
+             $FED SUB3.FOR
+             CALL FIX.ED
+             etc.
+          which one could then execute (on a VAX)
+          by using the VAX @ utility.
+ 
+        --For both forms of the LI command, after the
+          command has been executed, the "current line"
+          setting is updated to the bottom of the file.
+ 
+Synonyms--None.
+ 
+Examples--LI ABC               Locate every subsequent
+                               line containing ABC and
+                               insert a line consisting
+                               of XXX
+        --LI CONTINUE C        Locate every subsequent
+                               line containing CONTINUE and
+                               insert a line consisting
+                               of C
+ 
+Related Commands--
+          LC              = Locate and Call.
+          LOCATE          = Locates a string.
+          SET LOCATE      = Sets column limits for
+                            LOCATE, PTL, DTL, and
+                            LI commands.
+          PTL             = Print-till-locate =
+                            print from current line down
+                            to line with located string.
+          DTL             = Delete-till-locate =
+                            delete from current line down
+                            to line with located string.
+          CHANGE          = Changes strings on lines.
+          PRINT           = Prints k lines (start with current).
+          SET FEEDBACK    = Allows/suppresses printing.
+          SET NUMBER      = Allows/suppresses line numbers.
+          SET PROMPT      = Allows/suppr. prompt & line num.
+ 
+----------------------------------------------------------
+ 
+LC
+ 
+Command --LC (Locate and Call)
+ 
+Purpose --Locates all subsequent lines
+          which contain a specified string, and
+          calls the specified macro
+          whenever the string is found.
+ 
+Format  --LC     [string]   [macro file]
+ 
+          This form locates
+          all subsequent lines which
+          contain [string] and calls
+          [macro file] each time the
+          string is found.
+ 
+Note    --The search for the string
+          does not start until the next line.
+          If the string is found anywhere on
+          such subsequent lines, the macro
+          is called (executed), and the
+          search resumes.
+ 
+        --Each line is searched its full width
+          (the default column limits for the search
+          are columns 1 to 132).
+          To restrict the search to a certain range  of
+          columns (e.g., columns 7 through 72), then
+          use the SET LOCATE command before using
+          the LI command, as in
+             SET LOCATE 7 72
+             LC ABC DEF
+          which will search columns 7 through 72
+          of all subsequent lines, and anytime
+          an ABC is found on such lines, a new
+          line consisting of
+             DEF
+          is inserted immediately after each
+          such line.
+ 
+        --[string] in the
+          above form must consist of
+          contiguous characters; that is, there
+          must be exactly a total of 2 arguments--
+          thus
+             LC FED FIX1.MAC
+          is legal (there are only 2 disinct
+          words--FED and FIX1.MAC), but
+             LC FED CALL FIX1.MAC
+          is illegal (because there are 3 distinct
+          words--FED, CALL, and FIX1.MAC).
+ 
+        --As the above example alludes to,
+          the LC command is a convenient way
+          (starting with a list of all files
+          in a directory) of setting up a
+          system runstream to systematically
+          re-edit all subroutines in a
+          directory.  In the above example,
+          the re-editing is specified by EDIT/FED
+          commands residing in the file FIX.MAC   .
+          With very little difficulty, one could
+          end up with a file consisting of (for a VAX)
+             $FED SUB1.FOR
+             CALL FIX.MAC
+             $FED SUB2.FOR
+             CALL FIX.MAC
+             $FED SUB3.FOR
+             CALL FIX.MAC
+             etc.
+          which one could then execute (on a VAX)
+          by using the VAX @ utility.
+ 
+        --After the LC command is executed, the
+          "current line" setting is updated
+          depending on what the operations
+          that were specified inside the macro.
+ 
+Synonyms--None.
+ 
+Examples--LC ABC FIX.MAC       Locate every subsequent
+                               line containing ABC and
+                               (each time the string is found)
+                               call the macro residing
+                               in the file   FIX.MAC.
+ 
+Related Commands--
+          LI              = Locate and Insert.
+          LOCATE          = Locates a string.
+          SET LOCATE      = Sets column limits for
+                            LOCATE, PTL, DTL, and
+                            LI commands.
+          PTL             = Print-till-locate =
+                            print from current line down
+                            to line with located string.
+          DTL             = Delete-till-locate =
+                            delete from current line down
+                            to line with located string.
+          CHANGE          = Changes strings on lines.
+          PRINT           = Prints k lines (start with current).
+          SET FEEDBACK    = Allows/suppresses printing.
+          SET NUMBER      = Allows/suppresses line numbers.
+          SET PROMPT      = Allows/suppr. prompt & line num.
+ 
+----------------------------------------------------------
+ 
+LIST
+ 
+Command --LIST
+ 
+Purpose --Lists (onto the screen) the
+          contents of an external file.
+ 
+Format  --LIST   [file name]
+ 
+          This lists the contents of the file
+          with the name   [file name].  The LIST
+          command thus allows the analyst to carry
+          out an editing session in one file and
+          (without leaving the editor) peruse the
+          contents of another file.
+ 
+Note    --After the LIST command has been
+          executed, the "current line" setting
+          in the primary file remains unchanged.
+ 
+Synonyms--None.
+ 
+Examples--LIST FIX.ED         Print the contents
+                              of the file FIX.ED
+        --LIST REPORT.TEX     Print the contents
+                              of the file REPORT.TEX
+ 
+Related Commands--
+          ADD             = Adds (= copy into the current file)
+                            the contents of a second file.
+          CALL            = Calls (= executes) the macro
+                            residing in a second file.
+          COPY            = Copies out the contents of all (or part)
+                            of current file into another file.
+          PRINT           = Prints k lines (of current file).
+          PA              = Prints all lines of current file.
+          SET PRINTER     = Activates hardcopy Printer.
+          SET NUMBER      = Turns line numbers on/off.
+          SET PROMPT      = Turns prompt on/off.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *M*  --------------------------
+----------------------------------------------------------
+ 
+MOVE
+ 
+Command --MOVE
+ 
+Purpose --Moves (= copies and then deletes) a block of text
+             1) to the editor's temporary copy file; or
+             2) to an external file; or
+             3) to another location in the file.
+ 
+Format  --The MOVE command has 3 forms--
+ 
+       1--MOVE
+          This no-argument form moves the
+          previously-specified block of text
+          to the editor's temporary copy file.
+          The previous-specification is done via the
+          SET BEGIN, SET END, or SET COPY  commands).
+          The "current line" setting is updated to
+          be the first line of the text block that
+          was moved.
+ 
+       2--MOVE    [file name]
+          This 1-argument form moves the
+          previously-specified block of text
+          to the specified file.
+          The previous-specification is done via the
+          SET BEGIN, SET END, or SET COPY  commands).
+          The "current line" setting is updated to
+          be the first line of the text block that
+          was moved.
+ 
+       3--MOVE   [start line]   [stop line]   [target line]
+          This 3-argument form moves the block of text
+          from the    start line   through the    stop line
+          and inserts this block immediately after
+          the    target line.
+          The "current line" setting is updated to
+          be the last line of the moved block in its
+          new location
+ 
+Note    --The MOVE command is like a combination of
+          the COPY and DELETE commands--the original
+          version of the text block is deleted after
+          it is moved.
+ 
+Note    --If the number of lines moved is
+          less than 10, then all lines
+          will be printed on the screen
+          as they are being moved.
+        --If the number of lines moved
+          is greater than 10, then only the
+          first and last moved lines will
+          be printed.
+        --If no printing is desired, then
+          the FEEDBACK OFF command should
+          be entered beforehand.
+ 
+Synonyms--MO
+          DCOPY
+          DCO
+ 
+Examples--3 ways to move the text from
+          lines 50 to 60 and insert it
+          immediately after line 20--
+ 
+          1) SET COPY   50 60
+             MOVE
+             20
+             ADD
+ 
+          2) SET COPY   50 60
+             MOVE YOURFILE.TEX
+             20
+             ADD YOURFILE.TEX
+ 
+          3) MOVE  50 60 20
+ 
+Related Commands--
+          SET BEGIN       = Defines first line of block.
+          SET END         = Defines last line of block.
+          SET COPY        = Defines first & last lines of block.
+          ADD             = Adds (= insert) a block of text.
+          COPY            = Copy a block of text.
+          SET FEEDBACK    = Allows/suppresses printing.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *N*  --------------------------
+----------------------------------------------------------
+ 
+NEXT
+ 
+Command --NEXT
+ 
+Purpose --Goes to the next line (or the next
+          k-th line) of the file, and
+          prints the line out (on the screen).
+ 
+Format  --The NEXT command has 2 forms--
+ 
+       1--NEXT
+ 
+          This no-argument form goes to the
+          next line of the file and prints it
+          (on the screen).
+ 
+       2--NEXT     [number of lines]
+ 
+          This 1-argument form goes down
+          [number of lines] lines in the file and
+          prints (on the screen) that line.
+ 
+Note    --For both forms, after the NEXT command
+          has been executed, the "current line"
+          setting is updated to the line that
+          was printed.
+ 
+        --The NEXT command is a heavily used command;
+          the NEXT command spelling is, however, rarely used;
+          N    and    carriage return    are more common.
+ 
+        --To go to the next line, it is rare to use
+             NEXT
+          it is more common to use
+             N
+          or more simply just
+             carriage return
+ 
+        --To go down, say, 7 lines in a file,
+          It is rare to use
+             NEXT 7
+          it is more common to use
+             N 7
+ 
+Synonyms--N
+          carriage return
+ 
+Examples--NEXT               Go down 1 line.
+          N                  Go down 1 line.
+          carriage return    Go down 1 line.
+          NEXT 12            Go down 12 lines.
+          N 12               Go down 12 lines.
+ 
+Related Commands--
+          UP              = Goes up k lines.
+          TOP             = Goes before line 1.
+          FIRST           = Goes to first line.
+          LAST            = Goes to last line.
+          BOTTOM          = Goes after last line.
+          GO              = Goes to any line.
+          #               = Goes to any line.
+          PRINT           = Prints k lines (start with current).
+          PRINT-NEXT (PN) = Prints k lines (start with next).
+          SET NUMBER      = Allows/suppresses line numbers.
+          SET PROMPT      = Allows/suppr. prompt & line num.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *O*  --------------------------
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *P*  --------------------------
+----------------------------------------------------------
+ 
+PRINT
+ 
+Command --PRINT
+ 
+Purpose --Prints specified lines onto the screen.
+ 
+Format  --The PRINT command has 3 forms--
+ 
+       1--PRINT
+ 
+          This no-argument form prints the
+          current line only.
+ 
+       2--PRINT [number of lines]
+ 
+          The 1 argument form prints the specified
+          [number of lines].  The printing starts with
+          the current line.
+ 
+       3--PRINT    [start line]    [stop line]
+ 
+          The 2-argument form prints the specified
+          range of lines, that is prints from the
+          [start line]     through the     [stop line].
+ 
+Note    --For all 3 forms, after the PRINT command
+          has been executed, the "current line" is
+          updated to be the last line printed.
+ 
+Synonyms--P
+ 
+Examples--P        Print current line.
+          P 10     Print next 10 lines.
+                   (starting with current line).
+          P 30 50  Print lines 30 to 50.
+ 
+Related Commands--
+          PTL             = Print-till-locate =
+                            prints from current line down
+                            to line with located string.
+          PP              = Print a pageful.
+          PA              = Prints all remaining lines
+                            (to the end of text).
+          PN              = Print lines (but start
+                            with next line).
+          SET PRINTER     = Activates hardcopy Printer.
+          SET NUMBER      = Turns line numbers on/off.
+          SET PROMPT      = Turns prompt on/off.
+          NEXT            = Goes to (and Print) next line.
+ 
+----------------------------------------------------------
+ 
+PA
+ 
+Command --PA
+ 
+Purpose --Prints specified line and all
+          remaining lines onto the screen.
+ 
+Format  --The PA command has 2 forms--
+ 
+       1--PA
+ 
+          This no-argument form prints the
+          current line and all remaining lines.
+ 
+       2--PA [start line]
+ 
+          The 1 argument form prints the [start line]
+          and all remaining lines.
+ 
+Note    --For all 2 forms, after the PA command
+          has been executed, the "current line" is
+          updated to be the last line printed.
+ 
+Synonyms--None
+ 
+Examples--PA       Print current line to end of file.
+          PA 10    Print line 10 to end of file.
+ 
+Related Commands--
+          PRINT           = Prints specified lines.
+          PTL             = Print-till-locate =
+                            prints from current line down
+                            to line with located string.
+          PP              = Print a pageful.
+          PN              = Print lines (but start
+                            with next line).
+          SET PRINTER     = Activates hardcopy Printer.
+          SET NUMBER      = Turns line numbers on/off.
+          SET PROMPT      = Turns prompt on/off.
+          NEXT            = Goes to (and Print) next line.
+ 
+----------------------------------------------------------
+ 
+PTL
+ 
+Command --PTL (Print till Locate)
+ 
+Purpose --Locates the next line on which
+          the specified string occurs, and
+          prints all lines from the current line
+          down to the line with the located string.
+ 
+Format  --The PTL command has 2 forms--
+ 
+       1--PTL
+ 
+          This no-argument form locates the
+          next line on which the previously-
+          specified string occurs, and
+          prints all lines from the current line
+          down to the line with the located string.
+          The "previously-specified string" is
+          the string that was explicitly used in a
+          previous LOCATE, PTL, DTL, or LAI command.
+          Thus the no-argument form of the PTL command
+          "remembers" previous located strings
+          and uses them if the analyst so desires.
+ 
+       2--PTL     [string]
+ 
+          This 1-argument form locates the
+          next line on which the specified
+          string occurs and  prints all lines
+          from the current line down to the line
+          with the located string.
+ 
+Note    --The printing starts on the current line;
+          but the search for the string
+          does not start until the next line.
+          If the string is found anywhere on
+          some line, the search is terminated,
+          and the lines are printed out.
+ 
+        --Each line is searched its full width
+          (the default column limits for the search
+          are columns 1 to 132).
+          To restrict the search to a certain range  of
+          columns (e.g., columns 7 through 72), then
+          use the SET LOCATE command before using
+          the PTL command, as in
+             SET LOCATE 7 72
+             PTL ABC
+          which will print the current line
+          and every line down to the first
+          line containing ABC in columns
+          7 through 72.
+ 
+        --If the specified string is not located,
+          then the current line and all subsequent
+          lines are printed.
+ 
+        --For both forms of the PTL command, after the
+          command has been executed, the "current line"
+          setting is updated to the last line that was
+          printed.
+ 
+Synonyms--None.
+ 
+Examples--PTL ABC              Print current line down
+                               to the first line containing
+                               the string     ABC
+        --PTL 1000 CONTINUE    Print current line down
+                               to the first line containing
+                               the string     1000 CONTINUE
+ 
+Related Commands--
+          SET LOCATE      = Sets column limits for
+                            LOCATE, PTL, DTL, and
+                            LAI commands.
+          LOCATE          = Locates a string.
+          DTL             = Delete-till-locate =
+                            delete from current line down
+                            to line with located string.
+          LAI             = Locate-all-and-insert =
+                            locate all lines with a string
+                            and insert new lines with a second
+                            string.
+          PRINT           = Prints k lines (start with current).
+          SET FEEDBACK    = Allows/suppresses printing.
+          SET NUMBER      = Allows/suppresses line numbers.
+          SET PROMPT      = Allows/suppr. prompt & line num.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *Q*  --------------------------
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *R*  --------------------------
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *S*  --------------------------
+----------------------------------------------------------
+ 
+SHIFT
+ 
+Command --SHIFT
+ 
+Purpose --Shifts existing text in the specified range
+          of lines so that each line is displaced
+          (left or right) by the specified target
+          amount.
+ 
+Format  --The SHIFT command has 3 forms--
+ 
+       1--SHIFT
+ 
+          This no-argument form shifts the current
+          line (only) so that the resulting text
+          is displaced (left or right) by
+          the specified target amount.
+ 
+       2--SHIFT     [number of lines]
+ 
+          This 1-argument form shifts each line
+          for the specified number of lines.  The
+          shifting starts with the current line.
+          Each line is displaced (left or right) by
+          specified target amount.
+ 
+       3--SHIFT   [first line]   [last line]
+ 
+          This 2-argument form shifts each line
+          for the specified range of lines; that is,
+          shifting starts with the   [first line]
+          and proceeds through the   [last line].
+          Each line is displaced (left or right) by
+          specified target amount.
+ 
+Note    --For all 3 cases, the    [target amount]
+          is pre-specified by prior use of the
+          SET SHIFT command, as in
+             SET SHIFT 10
+             SHIFT 100 120
+          which would set the [target amount] to 10
+          columns to the right and then would
+          shift lines 100 through 120.
+ 
+        --Negative values in the SET SHIFT command
+          indicate a displacement to the left; thus
+             SET SHIFT -2
+             SHIFT 100 120
+          would set the [target amount] to -2
+          (that is, 2 columns to the left) and then
+          would shift lines 100 through 120.
+ 
+        --The shifting operation takes the existing
+          text string on each line, and displaces (left
+          or right) the entire line by the specified
+          [target amount].
+ 
+        --SHIFT is similar to INDENT in that
+          both result in text lines being shifted.
+          SHIFT differs from INDENT in that
+          SHIFT merely does a straightforward
+          translation (left or right), wheras
+          INDENT assures that the resulting text
+          will start in a specified column,
+ 
+        --The SHIFT command is useful for the
+          shifting of lists and the like.
+ 
+        --The SHIFT command operates on existing text,
+          text which is already in the specified line.
+          It has no effect on yet-to-be-entered text.
+ 
+        --For all 3 forms, after the SHIFT command
+          has been executed, the "current line" is
+          updated to be the last line shifted.
+ 
+Synonyms--SHI
+ 
+Examples--SET SHIFT 6       Specifies shift amount as
+                            6 columns to the right.
+          SHIFT             Shift current line right 6 columns.
+          SHIFT 10          Shift next 10 lines right 6 columns
+                            (starting with current line).
+          SHIFT 10 15       Shift lines 10 to 15 right 6 columns.
+ 
+Related Commands--
+          SET SHIFT       = Specifies shift amount.
+          SET INDENT      = Specifies indentation column.
+          INDENT          = Indents text on lines.
+          CENTER          = Centers text on lines.
+          TRUNCATE        = Truncates text on lines.
+          SET TAB         = Specifies auto-tabbing column.
+          PRINT           = Prints lines.
+          SET FEEDBACK    = Allows/suppresses screen printing.
+ 
+ 
+----------------------------------------------------------
+ 
+SPLIT
+ 
+Command --SPLIT
+ 
+Purpose --Deletes all characters on the current
+          line beyond (and including) the
+          specified string, and places the
+          deleted string at the beginning
+          of the text on the next line.
+ 
+Format  --SPLIT   [string]
+ 
+          Deletes all characters on the current
+          line beyond (and including) [string],
+          and places the deleted string at
+          the beginning of the text on
+          the next line.
+ 
+Note    --If multiple occurrances of the string
+          are on the line, then the splitting will
+          be done from the last (= right-most) such
+          occurrance.  Thus if the original line is
+             ABC DEF GHI ABC DEF GHI
+          then the command
+             SPLIT DEF
+          will result in
+             ABC DEF GHI ABC
+          The commands
+             SPLIT DE
+          and
+             SPLIT D
+          will yield the same result.
+ 
+        --If the following line already has
+          text on it, then the split part
+          from the previous line will be
+          inserted at the beginning of the
+          next line at the first non-blank
+          character.  Also, a space will
+          automatically be inserted between
+          the end of the inserted split
+          and the beginning of the text already
+          on the line (it is usually desired to
+          have such an intervening space).  In
+          the previous example, the split part was
+             DEF GHI
+          If the next line is
+                AAAAA BBBBB CCCCC
+          then the new next line will be
+                DEF GHI AAAAA BBBBB CCCCC
+          If the next line is
+                         AAAAA BBBBB CCCCC
+          then the new next line will be
+                         DEF GHI AAAAA BBBBB CCCCC
+ 
+        --If the following line is blank, then
+          the blank line will be left as is,
+          and a new line will be created between
+          the first line and the blank line.
+          On this newly-created line, the
+          insertion will obey current
+          auto-tab setting (as set via
+          prior use of the SET TAB command).
+          The default auto-tab setting of 1
+          would lead to the split part
+          being inserted at column 1.  If the
+          analyst had previously entered
+             SET TAB 11
+          then the split part would have started
+          in column 11.
+ 
+        --After the SPLIT command has
+          been executed, the "current line"
+          setting will be 1 larger than
+          the original current line setting.
+ 
+Synonyms--SP
+ 
+Examples--SPLIT ABC          Splits ABC and beyond
+                             on current line and
+                             places ABC on the next line.
+        --SPLIT ing          Splits   ing    and beyond
+                             on current line and
+                             places    ing    on the next line.
+ 
+Related Commands--
+          EXTEND          = Append string to end of line.
+          SPLIT           = Splits string onto next line.
+          SET TAB         = Sets auto-tab column.
+          SET INDENT      = Sets indentation column.
+          SET CENTER      = Sets centering column.
+          SET TRUNCATE    = Set truncation column.
+          SET SHIFT       = Set shift column.
+          INDENT          = Indents lines of text.
+          CENTER          = Centers lines of text.
+          TRUNCATE        = Truncates lines of text.
+          SHIFT           = Shifts lines of text.
+          DELETE          = Deletes k lines (start with current).
+          PRINT           = Prints k lines (start with current).
+          SET FEEDBACK    = Allows/suppresses printing.
+          SET NUMBER      = Allows/suppresses line numbers.
+          SET PROMPT      = Allows/suppr. prompt & line num.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *T*  --------------------------
+----------------------------------------------------------
+ 
+TOP
+ 
+Command --TOP
+ 
+Purpose --Goes to the (imaginary) line immediately
+          before the first line of the file.
+ 
+Format  --TOP
+ 
+Note    --The "current line" setting is changed
+          to the value 0.
+ 
+        --[TOP]     appears on the screen.
+ 
+Synonyms--T
+ 
+Examples--T
+          TOP
+ 
+Related Commands--
+          FIRST           = Goes to first line.
+          LAST            = Goes to last line.
+          BOTTOM          = Goes after last line.
+          GO              = Goes to any line.
+          #               = Goes to any line.
+          SET NUMBER      = Prints line numbers.
+          SET PROMPT      = Prints prompt & line number.
+ 
+----------------------------------------------------------
+ 
+TRUNCATE
+ 
+Command --TRUNCATE
+ 
+Purpose --Truncates existing text in the specified range
+          of lines so that each line is truncated to
+          the specified target column.
+ 
+Format  --The TRUNCATE command has 3 forms--
+ 
+       1--TRUNCATE
+ 
+          This no-argument form truncates the current
+          line (only) so that the resulting text
+          is truncated to the target column.
+ 
+       2--TRUNCATE     [number of lines]
+ 
+          This 1-argument form truncates each line
+          for the specified number of lines.  The
+          truncating starts with the current line.
+          Each line is truncated to the target column.
+ 
+       3--TRUNCATE   [first line]   [last line]
+ 
+          This 2-argument form truncates each line
+          for the specified range of lines; that is,
+          truncating starts with the   [first line]
+          and proceeds through the   [last line].
+          Each line is truncated to the target column.
+ 
+Note    --For all 3 cases, the    [target column]
+          is pre-specified by prior use of the
+          SET TRUNCATE command, as in
+             SET TRUNCATE 80
+             TRUNCATE 100 120
+          which would set the [target column] to 80
+          and then truncate lines 100 through 120.
+ 
+        --The truncating operation takes the existing
+          text sting on each line, determines the last
+          non-blank character, and deletes (if necessary)
+          all characters in the text string beyond
+          the     [target column].
+ 
+        --The TRUNCATE command is useful for removing
+          "garbage" text out at the end of lines.
+ 
+        --The TRUNCATE command operates on existing text,
+          text which is already in the specified line.
+          It has no effect on yet-to-be-entered text.
+ 
+        --For all 3 forms, after the TRUNCATE command
+          has been executed, the "current line" is
+          updated to be the last line truncated.
+ 
+Synonyms--TRUN
+ 
+Examples--SET TRUNCATE 72    Specifies truncation column as 72.
+          TRUNCATE           Truncate current line to column 72.
+          TRUNCATE 10        Truncate next 10 lines to column 72.
+                             (starting with current line).
+          TRUNCATE 10 15     Truncate lines 10 to 15 to column 72.
+ 
+Related Commands--
+          SET TRUNCATE    = Specifies the truncation column.
+          INDENT          = Indents text on lines.
+          CENTER          = Centers text on lines.
+          SHIFT           = Shifts text on lines.
+          SET TAB         = Specifies column for auto-tabbing.
+          PRINT           = Prints lines.
+          SET FEEDBACK    = Allows/suppresses screen printing.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *U*  --------------------------
+----------------------------------------------------------
+ 
+UP
+ 
+Command --UP
+ 
+Purpose --Goes to the previous line (or the
+          k-th previous line) of the file, and
+          prints the line out (on the screen).
+ 
+Format  --The UP command has 2 forms--
+ 
+       1--UP
+ 
+          This no-argument form goes to the
+          previous line of the file and prints it
+          (on the screen).
+ 
+       2--UP     [number of lines]
+ 
+          This 1-argument form goes up
+          [number of lines] lines in the file and
+          prints (on the screen) that line.
+ 
+Note    --For both forms, after the UP command
+          has been executed, the "current line"
+          setting is updated to the line that
+          was printed.
+ 
+        --The UP command is a heavily used command;
+ 
+Synonyms--U
+ 
+Examples--UP        Go up 1 line.
+          U         Go up 1 line.
+          UP 12     Go up 12 lines.
+          U 12      Go up 12 lines.
+ 
+Related Commands--
+          NEXT            = Goes down k lines.
+          TOP             = Goes before line 1.
+          FIRST           = Goes to first line.
+          LAST            = Goes to last line.
+          BOTTOM          = Goes after last line.
+          GO              = Goes to any line.
+          #               = Goes to any line.
+          PRINT           = Prints k lines (start with current).
+          PRINT-NEXT (PN) = Prints k lines (start with next).
+          SET NUMBER      = Allows/suppresses line numbers.
+          SET PROMPT      = Allows/suppr. prompt & line num.
+ 
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *V*  --------------------------
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *W*  --------------------------
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *X*  --------------------------
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *Y*  --------------------------
+----------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------------------------------
+-------------------------  *Z*  --------------------------
+----------------------------------------------------------
+ 
+   Available commands:
+ 
+      ABORT     ABRR      ADD
+      BOTTOM    BOX
+      CALL      CENTER    CHANGE    CA        COPY      CUT
+      DELETE    DHOLD     DI        DUP       DTL
+      EDIT      EXECUTE   EXTEND    EXIT      EXRR      EXEM
+      FIND      FORMAT
+      GO
+      HELP      HOLD
+      INDENT    INPUT     INSERT
+      LAST      LOCATE    LI        LC        LIST
+                LA        LOBL     LABL
+      MOVE
+      NEXT
+      PRINT     PA        PN        PP        PPAR      PTL
+      SET       SHIFT     SHOW      SPLIT
+      TOP       TRUNCATE  TRANSLATE
+      UNDO      UP
+ 
+   Commands which are not yet operational (February 1, 1986):
+ 
+      FORMAT
+      PPAR
+      SHIFT
+      SPLIT
+      TRANSLATE
+ 
+ 
+ 
+----------------------------------------------------------

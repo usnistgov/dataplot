@@ -1,0 +1,65 @@
+This is Dataplot Data File     CASTILL9.DAT
+Phila. Precipitation data--Yearly Precip. in Phila. (inches)
+Engineering Goal--Determine drought risk
+Response Variable = yearly precipitation in Philadelphia
+Number of Observations = 40
+Number of Variables per line image = 1
+Order of variables per line image--
+   1. Response variable = yearly precip. in Phila. (in.) (sorted)
+Statistical Category--Extreme Value Analysis
+To read this into Dataplot--
+   SKIP 25
+   READ CASTILL9.DAT Y
+Source--Enrique Castillo (1988). Extreme Value Theory
+        in Engineering. Academic Press, San Diego, California,
+        p. 337.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Yearly precipitation in Philadelphia (inches) (sorted)
+-----------------------------------------------------------------
+ 29.34
+ 29.88
+ 32.20
+ 33.03
+ 33.27
+ 34.04
+ 34.95
+ 35.15
+ 35.45
+ 36.77
+ 37.78
+ 38.35
+ 38.37
+ 39.14
+ 39.52
+ 40.00
+ 40.47
+ 40.48
+ 41.05
+ 41.15
+ 41.75
+ 42.62
+ 43.05
+ 43.36
+ 44.46
+ 44.82
+ 44.85
+ 45.40
+ 45.84
+ 45.95
+ 46.00
+ 46.06
+ 46.62
+ 47.79
+ 47.87
+ 48.13
+ 49.06
+ 49.42
+ 49.63
+ 52.13

@@ -1,0 +1,38 @@
+This is file simplex.men--Draw Simplex Triangle with data
+ 
+--------------------
+ 1. Draw Simplex Triangle (Data)
+ 2. Macro
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 gui-vari
+ 5. Factor Variable 1:
+ 5. @CE 2 0 42 50 gui-vari
+ 6. Factor Variable 2:
+ 6. @CE 3 0 42 50 gui-vari
+ 7. Factor Variable 3:
+ 7. @CE 4 0 42 50 gui-vari
+ 8.
+ 9. Label for Factor Variable 1:
+ 9. @CE 5 0 33 50 *
+10. Label for Factor Variable 2:
+10. @CE 6 0 33 50 *
+11. Label for Factor Variable 3:
+11. @CE 7 0 33 50 *
+12. 
+13.
+14. Draw the Simplex Triangle?:
+--------------------
+GR FE
+LET Y = _1
+LET X1 = _2
+LET X2 = _3
+LET X3 = _4
+LET STRING S1 = X1
+LET STRING S2 = X2
+LET STRING S3 = X3
+LET STRING S1 = _5
+LET STRING S2 = _6
+LET STRING S3 = _7
+CALL SIMPLEX.DP
+--------------------

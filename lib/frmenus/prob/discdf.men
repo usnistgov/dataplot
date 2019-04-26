@@ -1,0 +1,27 @@
+This is file discdf.men--Compute Discrete Uniform cdf and tail probability
+ 
+--------------------
+ 1. Compute Discrete Uniform cdf and Tail Prob.
+ 2. LET A = DISCDF(X,N)
+ 3.
+ 4. Input values:
+ 5.                 x (x = 0, 1, 2, ..., n):
+ 5. @CE 1 0 42 50 ?
+ 6.                           upper limit n:
+ 6. @CE 2 0 42 50 ?
+ 7.
+ 8. Output parameters:
+ 9.                  name for the cdf value:
+ 9. @CE 3 0 42 50 ?
+10.     name for the tail probability value:
+10. @CE 4 0 42 50 ?
+11.
+12.
+13. Compute the Probability?
+--------------------
+AN FE
+@IF 3 0 LET _3 = DISCDF( _1 , _2 )
+@IF 4 0 LET _4 = 1 - DISCDF( _1 , _2 )
+--------------------
+WEB HELP DISCDF
+--------------------

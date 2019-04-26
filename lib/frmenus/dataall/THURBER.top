@@ -1,0 +1,8 @@
+----- <~dataall\THURBER.top> THURBER.DAT
+
+THURBER.DAT
+
+View     <xcl: LIST THURBER.DAT>
+Load     <xcf: ~dataload/THURBER.DP>
+Print    <xccl: printfile C:\DATAPLOT\THURBER.DAT>
+

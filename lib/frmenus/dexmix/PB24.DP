@@ -1,0 +1,8 @@
+----- <~dexpb\PB24.DP> Load  PB24.DAT
+
+. This is file    PB24.DP
+
+DELETE X1 TO X23
+SKIP 50
+READ PB24.DAT X1 TO X23
+

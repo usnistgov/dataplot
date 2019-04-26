@@ -1,0 +1,22 @@
+-----<~time\discussi.top> Discussion: Time Series
+ 
+Discussion: Time Series
+ 
+The time series data set is one which has
+the model:
+
+   Y(i) = f(t(i)) + error
+        = deterministic component + random component
+
+In this case, t(i) is the time of the ith
+observation and Y(i) is the value of some
+response variable at that time.  The 
+
+The t(i) are often equi-spaced, but not
+always.  Note that many time series analysis
+techniques only apply if the data are in fact
+equi-spaced.
+
+Typical Questions                   <~time\typquest.top>
+Approaches to Time Series Analysis  <~time\approach.top>
+

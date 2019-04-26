@@ -1,0 +1,32 @@
+This is file rungkut2.men--Compute a Runge-Kutta solution for a second order differential equation
+ 
+--------------------
+ 1. Runge-Kutta (second order)
+ 2. LET Y YD = RUNGE KUTTA F X
+ 3.
+ 4. Name of previously created function (or enter a functional expression):
+ 5. @CE 1 0 -10 50 ?
+ 6. Variable defining the grid of X values:
+ 6. @CE 2 0 33 50 ? gui-variable
+ 7. Initial value for dependent variable?:
+ 7. @CE 3 0 33 50 ?
+ 8. Name for dependent variable:
+ 8. @CE 4 0 33 50 ? gui-none
+ 9. Initial value for derivative of dependent variable?:
+ 9. @CE 5 0 33 50 ?
+10. Name for derivative of dependent variable:
+10. @CE 6 0 33 50 ? gui-none
+11.
+12. Subset/Except/For Specification:
+13. @CE 7 0 -10 50 *
+14.
+15.
+16. Compute the Runge Kutta Solution?:
+--------------------
+GR FE
+LET _4 = DATA _3
+LET _6 = DATA _5
+LET _4 _6 = RUNGE KUTTA _1 _2 _7
+--------------------
+WEB HELP RUNGE KUTTA
+--------------------

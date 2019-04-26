@@ -1,0 +1,58 @@
+This is file probnorm.men--Probability Plot  (Normal)
+
+--------------------
+1. Probability Plot Fitting (Normal)
+2. NORMAL PROBABILITY PLOT Y
+3.
+4. Probability plots can be generated for either raw
+5. data or frequency data.
+6. 
+7. Response or Frequency Variable:
+7. @CE 1 0 42 50 ? gui-variable
+8. Optional Response Variable (for frequency data):
+8. @CE 2 0 42 50 * gui-variable
+9.
+10.
+11. Subset/Except/For Specification:
+12. @CE 3 0 1 50 *
+13.
+14. Generate the Probability Plot?
+--------------------
+GR FE
+NORMAL PROBABILITY PLOT _1 _2 _3
+LET ZZZZLOCA = ^PPA0
+LET ZZZZSCAL = ^PPA1
+SLEEP 3
+LET ZZZZRAW = 0
+@IF 2 0 LET ZZZZRAW = 1
+IF ZZZZRAW = 0
+  SET RELATIVE HISTOGRAM AREA
+  RELATIVE HISTOGRAM _1 _4
+  LET ZZZZ1 = MINIMUM _1
+  LET ZZZZ2 = MAXIMUM _1
+  X3LABEL LOCATION = ^ZZZZLOCA, SCALE = ^ZZZZSCAL
+  LET ZZZZINC = (ZZZZ2 - ZZZZ1)/1000
+  LIMITS FREEZE
+  PRE-ERASE OFF
+  PLOT NORPDF(ZZZZX,ZZZZLOCA,ZZZZSCAL) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+  PRE-ERASE ON
+  LIMITS
+END OF IF
+IF ZZZZRAW = 1
+  PLOT _1 _2 _4
+  LIMITS FREEZE
+  PRE-ERASE OFF
+  LET ZZZZ1 = MINIMUM _2
+  LET ZZZZ2 = MAXIMUM _2
+  LET ZZZZINC = (ZZZZ2 - ZZZZ1)/1000
+  LET ZZZZLOCA = ^PPA0
+  LET ZZZZSCAL = ^PPA1
+  X3LABEL LOCATION = ^ZZZZLOCA, SCALE = ^ZZZZSCALE
+  PLOT NORPDF(ZZZZX,ZZZZLOCA,ZZZZSCAL) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+  PRE-ERASE ON
+  LIMITS
+END OF IF
+X3LABEL
+--------------------
+WEB HELP PROBABILITY PLOT
+--------------------

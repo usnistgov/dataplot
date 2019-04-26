@@ -1,0 +1,16 @@
+----- <~prob\ad.top> Anderson Darling Goodness of Fit
+
+Anderson-Darling Goodness of Fit
+
+These menus are used to perform Anderson-Darling goodness
+of fit tests for various continuous distributions.
+
+NIST/SEMATECH Handbook    <xcl: web handbook anderson darling goodness of fit>
+
+Uncensored Data (Ungrouped or Grouped)
+   No Shape Parameters (e.g., Normal)            <~prob\locsks.top>
+   One Shape Parameters (A-L) (e.g., Lognormal)  <~prob\shap1aks.top>
+   One Shape Parameters (M-Z) (e.g., Weibull)    <~prob\shap1bks.top>
+   Two Shape Parameters (e.g., Beta)             <~prob\shap2ks.top>
+   Three (or more) Shape Parameters              <~prob\shap3ks.top>
+

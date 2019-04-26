@@ -1,0 +1,298 @@
+**comment This is file   PRINCIPL.TEX
+ 
+ 
+                              General Principles of
+                        Experiment Design & Data Analysis
+ 
+                                James J. Filliben
+ 
+ 
+ 1. Classical Data Analysis versus EDA (Exploratory Data Analysis):
+       Classical: data --> model* --> analysis --> conclusions
+       EDA: data* --> analysis --> model --> conclusions
+ 
+ 2. Primary goal of EDA: insight
+ 
+ 3. #1 tool of EDA: graphics
+ 
+ 4. Plot the raw data
+ 
+ 5. EDA is sequential:
+       data
+       simple statistics
+       univariate
+       multivariate
+ 
+ 6. Essence of analysis (EDA): comparison
+    Essence of comparison: juxtaposition
+    therefore ==> multiplotting
+ 
+ 7. When in doubt: test underlying assumptions
+ 
+ 8. A number without an uncertainty is useless
+ 
+ 9. Check outliers
+ 
+10. EDA:
+       1. check global structure
+       2. check fine structure
+ 
+11. To look at fine structure,
+    must subtract out global structure first
+ 
+12. Optimal estimator of location    depends
+    on the underlying distribution
+ 
+13. Therefore, should "estimate" distribution first
+    before choosing location estimator
+ 
+14. Estimate distribution via probability plots
+ 
+15. Plot simple statistics:
+       ybar(i) vs i
+       sd(i) vs i
+ 
+16. If multidimensional/multi-factors:
+    then use
+       1. multitrace
+       2. line types
+       3. character types
+       4. color
+       5. dynamics
+       6. multiplotting
+ 
+17. Global truth <===> subset truth
+       If looking to deduce a global truth,
+       then must be true over all/most subsets
+ 
+18. If multivariable,
+    then look at
+       1. within  (absolute)
+       2. between (relative)
+ 
+19. For graphics:
+       keep data density up
+       keep chart junk down
+       keep white space down
+ 
+20. In graphics, don't waste white space.
+    therefore ==> multitracing & multiplotting
+ 
+21. As the sample size n increases,
+    and the number of factors k increases,
+    then the importance of graphics increases.
+ 
+22. Goal of quantitative analysis: rigor
+    Goal of graphical analysis: sufficiency
+                                save time
+                                insight
+                                structure
+ 
+23. Conjecture:
+       If can "prove it" quantitatively,
+       then there exist some graph that can
+       show/demonstrate it better.
+ 
+24. Value of current computers
+    is not fast number-crunching,
+    it is  fast graphics.
+ 
+25. Local conclusions need not be true globally, but
+    global conclusions must be true locally;
+    therefore ==> subset plots
+ 
+26. We can understand univariate structure
+    without understanding multivariate structure,
+                    but
+    we cannot understand multivariate structure
+    without understanding univariate structure;
+    therefore ==> univariate: do univariate first.
+ 
+27. Analysis is a    comparison    operation--
+                     not
+    a    memory    operation;
+    therefore ==> multiplot plots per page.
+ 
+28. Ideal number of points/page: 1000 to 100,000;
+    but typical number is 10 to 100;
+    therefore ==> multiplotting
+ 
+29. Which variable to put on horizontal axis:
+       1. the one with the most number of levels
+       2. the nuisance factor (as in block plot)
+ 
+30. Impediments to structure-extraction: chart junk:
+       1. tics
+       2. tic labels
+       3. dead space between plots
+       4. grids
+    Bare necessity: data & frames
+ 
+31. Connecting lines or not?
+       Do both! (fast graphics)
+       Lines: +: emphasize autocorrelation strucutre
+              -: impede distributional structure
+                    1. randomness*
+                    2. fixed distribution*
+                    3. fixed location
+                    4. fixed variation
+ 
+32. If have a factor with 2 levels, then use
+       1. bihistogram
+       2. empirical Q-Q plot
+       3. Youden plot
+ 
+33. For multivariate, think
+       within: fine structure/univariate
+                  as well as
+       between: global structure/multivariate
+ 
+34. DEX sampling plan
+    is more important than
+    data analysis (GIGO: garbage in, garbage out)
+ 
+35. Design of Experiment / Data Analysis    Bridge:
+                  DEX            DAN
+       Problem =========> Data =========> Conclusions
+ 
+36. Assumptions:
+       1. Most stat procedures have assumptions,
+          validity of engineering conclusions
+                   depends on
+          validity of underlying assumptions
+          therefore ==> test assumptions
+       2. identify assumptions:
+             1. randomness
+             2. fixed distribution
+             3. fixed location
+             4. fixed variation
+       3. if given a choice (always!),
+          use those stat procedures
+          with fewer (or no) assumptions
+             e.g., use block plot rather than ANOVA F test
+             e.g., use binomial test rather than normal test
+             e.g., plot raw data (no assumptions!)
+ 
+37. Data Analysis Approaches:
+       How ensure that our conclusions are
+                 not dependent
+       on the statistical approach we choose?
+ 
+          1. use data-based procedures only,
+             rather than stat-based procedures
+             (e.g., average & median)
+          2. use graphical procedures involving only data
+          3. use procedures with few assumptions
+          4. use multiple procedures (at least 2)
+          5. use assumption-robust / data-resistive procedures
+          6. use distributionally-correct procedures
+                e.g., average for normal & median for Cauchy
+          7. do in proper order:
+                check distribution first
+                check outliers first & body of data later
+                check univariate first & multivariate later
+                check subsets first & global later
+                   (data analysis itself is an ordered operation)
+ 
+38. Valid conclusions:
+       Bridge:
+                             DEX          Data analysis
+          problem & goal ===========> data ==========> conclusion
+                             construct exp.
+ 
+39. Valid Conclusions:
+             = f(problem & goal,
+                       crisply stated
+                       well-defined scope
+                       DEX/goal pigeonhole
+                 DEX (= design of experiment),
+                       choice of DEX: orthogonal
+                                      randomization
+                                      replication
+                                      blocking
+                                      use of a control
+                                      frequent calibration/SRM
+                       hardware/equipment
+                       materials
+                       measuring devie
+                       software/experimentation method
+                       environment
+                       factory/site
+                       how conduct the experiment
+                       DEX pigeonhole
+                 data,
+                       outliers
+                 DAN (= data analysis technique),
+                       power of statistical procedures
+                       correctness of statistical approach
+                       validity of statistical assumptions
+                       assumption-robust / outlier-resistive
+                       software
+                       statistician    )
+ 
+40. What DEX (design of experiment) to use
+       depends on
+    goal pigeonhole
+ 
+41. What DAN (data analysis technique) to use
+       depends on
+    goal pigeonhole
+ 
+42. If starting with a data set,
+    then must define    goals   first
+    (how do we know when we're done?)
+    before get bogged down
+    by the details of the data analysis technique
+ 
+43. To do goal pigeonholing--
+       make a multiple-choice
+       "walk away with what" list (of nouns/objects):
+           1. a typical value (location parameter) (a number)
+           2. a distribution & its parameters
+           3. a yes/no statement (a conclusion) as to whether
+              an engineering modification (different settings
+              of a factor) made a difference/improvement
+           4. a ranked list of factors (k factors)
+           5. a ranked list of best settings (k numbers)
+           6. a function & its parameters
+           7. a time series function (in time) & its parameters
+ 
+44. If a list/plot is good,
+    then a sorted list/plot is better
+    <Pareto Principle>
+ 
+45. DEX & DAN are dictated by    goals & pigeonholing;
+    goals & pigeonholing    are dictated by the experimentalist.
+    What is the specific goal of the experiment?
+ 
+46. Setting project goals is
+            not
+    a statistics question
+ 
+47. The primary question to distinguish
+    between a    comparative    problem
+    versus  a    screening   problem:
+       1. Are all factors equally important a priori? yes/no
+       2. Do you care if:
+             you find differences in factor ...? yes/no
+             is factor ... out of control?
+             is factor ... a characteristic of the
+                (unchangeable) population?
+ 
+48. Goals come first, techniques come later.
+ 
+49. If standing on the desert shore of west Africa,
+    must decide first as to goal:
+       1. where you want to be at the end
+    before you decide whether you need (general techniques) a
+       1. desert guide
+       2. safari leader
+       3. boat captain
+    & well before you decide whether you need (detailed techniques) a
+       1. camel
+       2. machetti
+       3. boat
+ 
+50. Primary project goal question:
+       How do you know when you are done?
+ 

@@ -1,0 +1,11 @@
+----- <~time\dds13.top> DDS FAQ 13 Underlying Models
+ 
+13. What are the underlying models used by DDS?
+ 
+Autoregressive Moving Average (ARMA) models.  The
+DDS modeling strategy initially uses a sequence of
+ARMA(2n, 2n-1), which arise as a uniformly sampled
+form of continuous time, stochastic differential
+equations.  The final adequate model may, however,
+be of arbitrary moving average order ARMA(n,m).
+ 

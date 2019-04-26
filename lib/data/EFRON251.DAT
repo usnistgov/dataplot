@@ -1,0 +1,33 @@
+Table 25.1, p. 373 of Efron and Tibshirani (1993), "An Introduction
+to the Bootstrap", Chapman & Hall/CRC.
+
+
+Calibration example, 
+
+    x = Approved - Placebo
+    y = New - Approved
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Placebo     Approved      New
+-----------------------------
+ 9243        17649      16449
+ 9671        12013      14614
+11792        19979      17274
+13357        21816      23798
+ 9055        13850      12560
+ 6290         9806      10157
+12412        17208      16570
+18806        29044      26325

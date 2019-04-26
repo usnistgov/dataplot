@@ -1,0 +1,126 @@
+THIS IS DATAPLOT DATA FILE PERIODIC.DAT
+PERIODIC TABLE ELEMENTS
+DATE--1990
+NUMBER OF OBSERVATIONS = 101
+NUMBER OF VARIABLES = 8
+ORDER OF VARIABLES ON A LINE IMAGE--
+   1. ORDER NUMBER (1 TO 101)
+   2. PERIODIC TABLE ROW (1 TO 10)
+   3. PERIODIC TABLE COLUMN (1 TO 18)
+   4. ATOMIC WEIGHT
+   5. DENSITY (IN GRAMS PER CUBIC CENTIMETER)
+   6. ATOMIC DIAMETER
+   7. TERRESTIAL ABUNDANCE (IN GRAMS PER METRIC TON)
+   8. ELECTRICAL RESISTIVITY (RHO * 10**-8 OHM-METERS)
+SOURCE--AMERICAN INSTITUTE OF PHYSICS HANDBOOK.
+        MCGRAW-HILL, 1957, PAGES 7-9 TO 7-12
+TO READ THIS INTO DATAPLOT--
+   SKIP 25
+   COLUMN LIMITS 20 80
+   READ PERIODIC.DAT Y1 TO Y8
+ 
+ 
+Element     Symbol  Order R  C  Atomic   Density  Atom  Terr  Coef of
+                    Number      Weight   g/cm**3  Diam  Abund  Resis.
+------------------------------------------------------------------------------
+Hydrogen      H       1   1  1  1.0080   0.763    3.0   1300   -999
+Helium        He      2   1 18  4.003    0.19     -999  0.003  -999
+Lithium       Li      3   1  2  6.940    0.534    3.13  65     8.55
+Beryllium     Be      4   2  2  9.013    1.85     2.25  6      10.1
+Boron         B       5   2 13  10.82    2.535    -999  3      -999
+Carbon        C       6   2 14  12.011   3.52     1.54  320    -999
+Nitrogen      N       7   2 15  14.008   1.14     1.06  46.3   -999
+Oxygen        O       8   2 16  16.0000  1.568    -999  466000 -999
+Fluorine      F       9   2 17  19.00    1.5      1.36  900    -999
+Neon          Ne     10   2 18  20.183   1.204    3.20  .00007 -999
+Sodium        Na     11   3  1  22.991   0.9712   3.83  28300  -999
+Magnesium     Mg     12   3  2  24.32    1.74     3.20  20900  4.35
+Aluminum      Al     13   3 13  26.98    2.70     2.82  81300  2.828
+Silicon       Si     14   3 14  28.09    2.42     2.34  277200 -999
+Phosphorus    P      15   3 15  30.975   1.83     2.16  1180   -999
+Sulfur        S      16   3 16  32.066   2.07     2.12  520    -999
+Chlorine      Cl     17   3 17  35.457   2.2      1.94  314    -999
+Argon         A      18   3 18  39.944   1.65     3.82  0.04   -999
+Potassium     K      19   4  1  39.100   0.87     4.76  25900  6.1
+Calcium       Ca     20   4  2  40.08    1.55     3.93  36300  4.59
+Scandium      Sc     21   4  3  44.96    3.02     3.20   5     -999
+Titanium      Ti     22   4  4  47.90    4.5      2.93  4400   55
+Vanadium      V      23   4  5  50.95    5.87     2.71  150    58.5
+Chromium      Cr     24   4  6  52.01    7.14     2.57  200    2.6
+Manganese     Mn     25   4  7  54.94    7.3      2.5   1000   -999
+Iron          Fe     26   4  8  55.85    7.86     2.52  50000  8.85
+Cobalt        Co     27   4  9  58.94    8.71     2.50  23     9.7
+Nickel        Ni     28   4 10  58.69    8.8      2.49  80     7.236
+Copper        Cu     29   4 11  63.54    8.933    2.551 70     1.692
+Zinc          Zn     30   4 12  65.38    4.32     2.748 132    5.75
+Gallium       Ga     31   4 13  69.72    5.93     2.7   15     53
+Germanium     Ge     32   4 14  72.60    5.46     2.788 7      -999
+Arsenic       As     33   4 15  74.91    5.73     2.50  5      35
+Selenium      Se     34   4 16  78.96    4.82     2.32  0.09   -999
+Bromine       Br     35   4 17  79.916   4.2      2.26  1.62   -999
+Krypton       Kr     36   4 18  83.80    3.4      4.0  9.8E-6  -999
+Rubidium      Rb     37   5  1  85.48    1.53     5.02 310     11.6
+Strontium     Sr     38   5  2  87.63    2.60     4.29 300     24.8
+Yttrium       Y      39   5  3  88.92    3.8      3.62 28.1    -999
+Zirconium     Zr     40   5  4  91.22    6.44     3.19 220     41.0
+Niobium       Nb     41   5  5  92.91    -999     2.94 24      21
+Molybdenum    Mo     42   5  6  95.95    9.01     2.80 15      5.14
+Technetium    Tc     43   5  7  99        -999    -999 -999    -999
+Ruthenium     Ru     44   5  8  101.1    12.1     2.67 .004    7.64
+Rhodium       Rh     45   5  9  102.91   12.44    2.7  .001    5.11
+Palladium     Pd     46   5 10  106.7    12.16    2.745 .010   10.21
+Silver        Ag     47   5 11  107.880  10.492   2.883 .10    1.468
+Cadmium       Cd     48   5 12  112.41   8.65     3.042 .15    7.54
+Indium        In     49   5 13  114.76   7.28     3.14  .1     8.37
+Tin           Sn     50   5 14  118.70   7.29     3.164 40     11.5
+Antimony      Sb     51   5 15  121.76   6.62     3.228 1      39.1
+Tellurium     Te     52   5 16  127.61   6.25     2.9  .002    -999
+Iodine        I      53   5 17  126.91   4.94     2.7  .3      -999
+Xenon         Xe     54   5 18  131.3    -999     4.4  1.2E-6  -999
+Cesium        Cs     55   6  1  132.91   1.873    5.4    7     19.0
+Barium        Ba     56   6  2  137.36   3.5      4.48  250    60
+Lanthanum     La     57   6  3  138.92   6.15     3.741 18.3   57.6
+Cerium        Ce     58   7  4  140.13   6.73     3.64  46.1   -999
+Praesodymium  Pr     59   7  5  140.92   6.48     3.65  5.53   -999
+Neodymium     Nd     60   7  6  144.27   7.00     3.63  23.9   -999
+Promethium    Pm     61   7  7  145      -999     -999 -999    -999
+Samarium      Sm     62   7  8  150.43   7.75     -999  6.47   -999
+Europium      Eu     63   7  9  152.0    -999     4.08  1.06   -999
+Gadolinium    Gd     64   7 10  156.9    -999     3.59  6.36   -999
+Terbium       Tb     65   7 11  158.93   -999     3.54  0.91   -999
+Dyprosium     Dy     66   7 12  162.46   -999     3.54  4.47   -999
+Holmium       Ho     67   7 13  164.94   -999     3.52  1.15   -999
+Erbium        Er     68   7 14  167.2    4.77     3.50  2.47   -999
+Thulium       Tm     69   7 15  168.94   -999     3.48  0.20   -999
+Ytterbium     Yb     70   7 16  173.04   -999     3.87  2.66   -999
+Lutetium      Lu     71   7 17  174.99   -999     3.47  0.75   -999
+Hafnium       Hf     72   8  4  178.6    11.3     3.17  4.5    32.1
+Tantalium     Ta     73   8  5  180.95   16.6     2.94  2.1    15.5
+Wolfram       W      74   8  6  183.92   -999     2.82  69     -999
+Rhenium       Re     75   8  7  186.31   20.53    2.75 .001    18.9
+Osmium        Os     76   8  8   190.2   22.5     2.70 .005    9.5
+Iridium       Ir     77   8  9  192.2    22.42    2.709 .001   6.10
+Platinum      Pt     78   8 10  195.23   21.27    2.769 .005   9.83
+Gold          Au     79   8 11  197.0    18.88    2.878 .005   2.44
+Mercury       Hg     80   8 12  200.61   14.193   3.10   .5    95.783
+Thallium      Tl     81   8 13  204.39   11.86    3.42   3     17.60
+Lead          Pb     82   8 14  207.21   11.48    3.49  16     19.8
+Bismuth       Bi     83   8 15  209.00   9.86     3.64 .2      119.0
+Polonium      Po     84   8 16  210      -999     -999  3E-10  -999
+Astatine      At     85   8 17  210      -999     -999 -999    -999
+Radon         Rn     86   8 18  222      -999     -999 -999    -999
+Francium      Fr     87   9  1  223      -999     -999 -999    -999
+Radium        Ra     88   9  2  226.05   5        -999 13E-6   -999
+Actinium      Ac     89   9  3  227      -999     -999 3E-10   -999
+Thorium       Th     90  10  4  232.05   -999     -999 11.5    18
+Protactinium  Pa     91  10  5  231      -999     -999 8E-7    -999
+Uranium       U      92  10  6  238.07   18.7     -999  4      29
+Neptunium     Np     93  10  7  237      -999     -999 -999    -999
+Plutonium     Pu     94  10  8  242      -999     -999 -999    -999
+Americium     Am     95  10  9  243      -999     -999 -999    -999
+Curium        Cm     96  10 10  243      -999     -999 -999    -999
+Berkelium     Bk     97  10 11  245      -999     -999 -999    -999
+Californium   Cf     98  10 12   246    -999      -999 -999    -999
+Einsteinium   E      99  10 13  -999     -999     -999 -999    -999
+Fermium       Fm    100  10 14  -999     -999     -999 -999    -999
+Mendelevium   Mv    101  10 15  -999     -999     -999 -999    -999

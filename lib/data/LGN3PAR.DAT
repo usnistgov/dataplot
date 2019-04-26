@@ -1,0 +1,46 @@
+This is Dataplot data file    LGN3PAR.DAT
+Sample data set from Example 11.6 of
+Karl Bury, "Statistical Distributions in Engineering",
+Cambridge University Press, 1999, pp. 175-177.
+
+Response variable = Fatigue life (stress cycles*100) of  a steel.
+Number of observations = 21
+Number of observations per line image = 1
+Order of observations per line image--
+   1. Response variable
+To read this file into Dataplot--
+   SKIP 25
+   READ LGN3PAR.DAT Y
+   SET MAXIMUM LIKELIHOOD PERCENTILE DEFAULT
+   3-PARAMETER LOGNORMAL MAXIMUM LIKELIHOOD Y
+
+
+
+
+
+
+
+
+Y
+------------------
+566.9
+574.8
+599.6
+627.1
+628.3
+638.8
+640.4
+642.4
+677.5
+680.8
+684.4
+695.7
+703.4
+726.5
+779.3
+785.6
+792.5
+817.5
+838.6
+884.3
+969.4

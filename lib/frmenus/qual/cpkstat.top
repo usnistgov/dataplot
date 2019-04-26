@@ -1,0 +1,13 @@
+----- <~qual\cpkstat.top> Process Capability Statistic
+ 
+Process Capability Statistic
+ 
+ 
+CP Statistic                <xemf: ~math\cp.men>
+CPK Statistic               <xemf: ~math\cpk.men>
+CNPK Statistic              <xemf: ~math\cnpk.men>
+CPM Statistic               <xemf: ~math\cpm.men>
+CC Statistic                <xemf: ~math\cc.men>
+Expected Loss Statistic     <xemf: ~math\exp_loss.men>
+Percent Defective Statistic <xemf: ~math\percdefe.men>
+ 

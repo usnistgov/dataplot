@@ -1,0 +1,34 @@
+This is file warcdf.men--Compute Waring cdf & tail Prob.
+ 
+--------------------
+ 1. Compute Waring cdf & Tail Probabilities
+ 2. LET A = WARCDF(X,C,A)
+ 3.
+ 4. This distribution has very long tails for
+ 5. values of the a shape parameter less than 1.  The
+ 6. Dataplot algorithms still need work for this
+ 7. case for large x values.
+ 8.
+ 9. Input values:
+10.                 x:
+10. @CE 1 0 20 37 ?
+11.    shape parameter c:                  c > a
+11. @CE 2 0 20 37 ?
+12.    shape parameter a:                  a > 0
+12. @CE 3 0 20 37 ?
+13.
+14. Output parameters:
+15.      name for the cdf  value:
+15. @CE 4 0 38 49 ?
+16.      name for the tail prob. value:
+16. @CE 5 0 38 49 ?
+17.
+18.
+19. Compute the Probability?
+--------------------
+AN FE
+@IF 4 0 LET _4 = WARCDF( _1 , _2 , _3 )
+@IF 5 0 LET _5 = 1 - WARCDF( _1 , _2 , _3 )
+--------------------
+WEB HELP WARCDF
+--------------------

@@ -1,0 +1,30 @@
+This is file normprpl.men--Normal Probability Plot
+ 
+--------------------
+ 1. Normal Probability Plot
+ 2. NORMAL PROBABILITY PLOT Y
+ 3.
+ 4. Response       Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5.
+ 6. Line  Type for Data:
+ 6. @CE 2 0 33 50 * gui-line
+ 7. Character Type for Data:
+ 7. @CE 3 0 33 50 * gui-char
+ 8. Character Fill for Data:
+ 8. @CE 4 0 33 50 * gui-char
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 1 50 *
+12.
+13.
+14. Generate the Normal Probability Plot?
+--------------------
+GR FE
+@IF 2 0 LINES _2
+@IF 3 0 CHARACTERS _3
+@IF 4 0 CHARACTER FILL _4
+NORMAL PROBABILITY PLOT _1 _5
+--------------------
+WEB HELP PROBABILITY PLOT
+--------------------

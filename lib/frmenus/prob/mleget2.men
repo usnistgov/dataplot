@@ -1,0 +1,22 @@
+This is file mleget2.men--Geeta MLE Estimates
+ 
+--------------------
+ 1. Geeta Maximum Likelihood Estimates
+ 2. GEETA MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Frequency Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Bin Mid-Points Variable:
+ 5. @CE 1 0 42 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute Geeta MLE's?
+--------------------
+GR FE
+GEETA MAXIMUM LIKELIHOOD _1 _2 _3
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

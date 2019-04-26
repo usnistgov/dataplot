@@ -1,0 +1,43 @@
+This is file partresp.men--Generate Partial Residual Plots
+ 
+--------------------
+ 1. Generate Partial Residual Plots
+ 2. PARTIAL RESIDUAL PLOT Y X1 X2 ...
+ 3.
+ 4. List of Independent Variables:
+ 5. @CE 1 0  1 50 ? gui-variable
+ 6. Name of Dependent Variable:
+ 6. @CE 2 0  42 50 ? gui-variable
+ 7.
+ 8. You can either generate a single partial
+ 9. residual plot or a matrix of partial
+10. residual plots (one plot for each
+11. independent variable).
+12.
+13. Select type of plot to generate:
+14. @CE 3 1 5 25 Single plot
+15.         Independent variable to use:
+15. @CE 4 0 42 50 gui-vari
+16. @CE 3 2 5 25 Matrix plot
+17.
+18. Plot Character:
+18. @CE 5 0 42 50 ? gui-char
+19. Character Fill:
+19. @CE 6 0 42 50 ? gui-ooff
+20.
+21. Subset/Except/For Specification:
+22. @CE 7 0 1 50 *
+23.
+24.
+25. Generate the Partial Residual Plots?:
+--------------------
+GR FE
+LINE BLANK
+CHARACTER _5
+CHARACTER FILL _5
+@IF 3 1 PARTIAL RESIDUAL PLOT _2 _1 _4 _7
+@IF 3 2 MULTIPLOT CORNER COORDINATES 2 2 98 98
+@IF 3 2 MATRIX PARTIAL RESIDUAL PLOT _2 _1 _7
+--------------------
+WEB HELP PARTIAL RESIDUAL PLOT
+--------------------

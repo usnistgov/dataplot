@@ -1,0 +1,8 @@
+----- <~datalist\DRAFT69B.top> DRAFT69B.DAT
+ 
+DRAFT69B.DAT
+ 
+View     <xcl: LIST DRAFT69B.DAT>
+Load     <x2cl: SKIP 25; READ DRAFT69B.DAT Y DAY MONTH>
+Print    <xccl: printfile C:\DATAPLOT\DRAFT69B.DAT>
+ 

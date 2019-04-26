@@ -1,0 +1,8 @@
+----- <~dataall\NWF11.top> NWF11.DAT
+
+NWF11.DAT
+
+View     <xcl: LIST NWF11.DAT>
+Load     <xcf: ~dataload/NWF11.DP>
+Print    <xccl: printfile C:\DATAPLOT\NWF11.DAT>
+

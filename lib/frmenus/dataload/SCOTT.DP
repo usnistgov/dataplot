@@ -1,0 +1,8 @@
+----- <~dataload\SCOTT.DP> Load SCOTT.DAT
+
+. This is file    SCOTT.DP
+
+DELETE Y X1 X2 X3 X4 X5 X6 X7 X8
+SKIP 25
+READ SCOTT.DAT Y X1 TO X8
+

@@ -1,0 +1,36 @@
+This is Dataplot data file    FUNNEL5B.DAT
+Simulated 1-factor Funnel data
+(same as FUNNEL13.DAT except here Y in 1 column)
+Number of observations             = 10
+Number of variables per line image = 2
+Order of Variables on a line image--
+   1. Response variable = traversal time (seconds)
+   2. Factor 1 = treatment (2 levels: pre-mode & post-mod)
+Reference--DEX notes, Chapter 5: Statistics
+           2-sample location  shift testing
+           2-sample variation shift testing
+To read this into Dataplot--
+   SKIP 25
+   READ FUNNEL5B.DAT Y TAG
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Traversal Time     Treatment
+-----------------------------
+     8.8              1
+     9.9              1
+    10.6              1
+    10.2              1
+    10.2              1
+ 
+    10.8              2
+    11.0              2
+    11.5              2
+    10.4              2
+    11.6              2

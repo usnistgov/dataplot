@@ -1,0 +1,64 @@
+This is file modichar.men--Set Character Types
+ 
+--------------------
+ 1. Characters
+ 2. CHARACTERS <list of character types>
+ 3.
+ 4. Character Type for ALL Traces:
+ 4. @CE 1 0 42 50 * gui-char
+ 5.
+ 6. Use the following menus to set character traces
+ 7. individually.  The character traces are sequential.
+ 8. If you set the character type for trace 5, you
+ 9. must also set them for traces 1, 2, 3, and 4.
+10.
+11. Character Type for Trace 1:
+11. @CE 2 0 42 50 * gui-char
+12. Character Type for Trace 2:
+12. @CE 3 0 42 50 * gui-char
+13. Character Type for Trace 3:
+13. @CE 4 0 42 50 * gui-char
+14. Character Type for Trace 4:
+14. @CE 5 0 42 50 * gui-char
+15. Character Type for Trace 5:
+15. @CE 6 0 42 50 * gui-char
+16. Character Type for Trace 6:
+16. @CE 7 0 42 50 * gui-char
+17. Character Type for Trace 7:
+17. @CE 8 0 42 50 * gui-char
+18. Character Type for Trace 8:
+18. @CE 9 0 42 50 * gui-char
+19. Character Type for Trace 9:
+19. @CE 10 0 42 50 * gui-char
+20. Character Type for Trace 10:
+20. @CE 11 0 42 50 * gui-char
+21. Character Type for Trace 11:
+21. @CE 12 0 42 50 * gui-char
+22. Character Type for Trace 12:
+22. @CE 13 0 42 50 * gui-char
+23. Character Type for Trace 13:
+23. @CE 14 0 42 50 * gui-char
+24. Character Type for Trace 14:
+24. @CE 15 0 42 50 * gui-char
+25. Character Type for Trace 15:
+25. @CE 16 0 42 50 * gui-char
+26. Character Type for Trace 16:
+26. @CE 17 0 42 50 * gui-char
+27. Character Type for Trace 17:
+27. @CE 18 0 42 50 * gui-char
+28. Character Type for Trace 18:
+28. @CE 19 0 42 50 * gui-char
+29. Character Type for Trace 19:
+29. @CE 20 0 42 50 * gui-char
+30. Character Type for Trace 20:
+30. @CE 21 0 42 50 * gui-char
+31.
+32.
+33. Set the Characters?
+--------------------
+PC FE
+CHARACTERS _2 _3 _4 _5 _6 _7 _8 _9 _10 _11 _12 _13 _14 _15 _16 _17 _18 _19 _20 _21
+@IF 1 0 CHARACTERS _1 ALL
+--------------------
+WEB HELP CHARACTER
+--------------------

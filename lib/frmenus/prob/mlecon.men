@@ -1,0 +1,20 @@
+This is file mlecon.men--Consul MLE Estimates
+ 
+--------------------
+ 1. Consul Maximum Likelihood Estimates
+ 2. CONSUL MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Compute Consul MLE's?
+--------------------
+GR FE
+CONSUL MAXIMUM LIKELIHOOD _1 _2
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

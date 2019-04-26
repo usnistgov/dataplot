@@ -1,0 +1,91 @@
+THIS IS DATAPLOT DESIGN-OF-EXPERIMENT FILE   2TO7M3.DAT
+2**(7-3) FRACTIONAL FACTORIAL DESIGN
+NUMBER OF LEVELS FOR EACH FACTOR =  2
+NUMBER OF FACTORS                =  7
+NUMBER OF OBSERVATIONS           = 16
+RESOLUTION                       =  4 (THEREFORE NO MAIN EFFECTS ARE
+                                       CONFOUNDED WITH ANY 2-FACTOR INTERACTIONS;
+                                       MAIN EFFECTS ARE CONFOUNDED WITH
+                                       3-FACTOR INTERACTION AND HIGHER)
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ FACTOR    DEFINITION         CONFOUNDING STRUCTURE
+   1           1                1 + 235 + 267 + 347 + 456 + HIGHER INTERACTIONS
+   2           2                2 + 135 + 167 + 346 + 457 + HIGHER INTERACTIONS
+   3           3                3 + 125 + 147 + 246 + 567 + HIGHER INTERACTIONS
+   4           4                4 + 137 + 156 + 236 + 257 + HIGHER INTERACTIONS
+   5         123                5 + 123 + 146 + 247 + 367 + HIGHER INTERACTIONS
+   6         234                6 + 127 + 145 + 234 + 357 + HIGHER INTERACTIONS
+   7         134                7 + 126 + 134 + 245 + 356 + HIGHER INTERACTIONS
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  12                           12 + 35 + 67 + HIGHER INTERACTIONS 
+  13                           13 + 25 + 47 + HIGHER INTERACTIONS 
+  14                           14 + 37 + 56 + HIGHER INTERACTIONS 
+  15                           15 + 23 + 46 + HIGHER INTERACTIONS 
+  16                           16 + 27 + 45 + HIGHER INTERACTIONS 
+  17                           17 + 26 + 34 + HIGHER INTERACTIONS 
+  23                           23 + 15 + 46 + HIGHER INTERACTIONS 
+  24                           24 + 36 + 57 + HIGHER INTERACTIONS 
+  25                           25 + 13 + 47 + HIGHER INTERACTIONS 
+  26                           26 + 17 + 34 + HIGHER INTERACTIONS 
+  27                           27 + 16 + 45 + HIGHER INTERACTIONS 
+  34                           34 + 17 + 26 + HIGHER INTERACTIONS 
+  35                           35 + 12 + 67 + HIGHER INTERACTIONS 
+  36                           36 + 24 + 57 + HIGHER INTERACTIONS 
+  37                           37 + 14 + 56 + HIGHER INTERACTIONS 
+  45                           45 + 16 + 27 + HIGHER INTERACTIONS 
+  46                           46 + 15 + 23 + HIGHER INTERACTIONS 
+  47                           47 + 13 + 25 + HIGHER INTERACTIONS 
+  56                           56 + 14 + 37 + HIGHER INTERACTIONS 
+  57                           57 + 24 + 36 + HIGHER INTERACTIONS 
+  67                           67 + 12 + 35 + HIGHER INTERACTIONS 
+ 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+DEFINING RELATION =             I + 1235 + 2346 + 1347
+DEFINING RELATION (CONT.)         + 1456 + 2457 + 1267 + 3567
+REFERENCE--BOX, HUNTER & HUNTER, STAT. FOR EXP., PAGE 410,
+NOTE--IF POSSIBLE, THIS (AS WITH ALL EXPERIMENT DESIGNS) SHOULD BE
+      RUN IN RANDOM ORDER (SEE DATAPLOT'S RANDOM PERMUTATION FILES).
+NOTE--TO READ THIS FILE INTO DATAPLOT--
+      SKIP 75
+      READ 2TO7M3.DAT X1 TO X7
+DATE--DECEMBER 1988
+NOTE--IN THE DESIGN BELOW, "-1" REPRESENTS THE "LOW"  SETTING OF A FACTOR
+                           "+1" REPRESENTS THE "HIGH" SETTING OF A FACTOR
+NOTE--ALL FACTOR EFFECT ESTIMATES WILL BE OF THE FORM
+      AVERAGE OF THE "HIGH" - AVERAGE OF THE "LOW"
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   X1  X2  X3  X4  X5  X6  X7
+   --------------------------
+   -1  -1  -1  -1  -1  -1  -1
+   +1  -1  -1  -1  +1  -1  +1
+   -1  +1  -1  -1  +1  +1  -1
+   +1  +1  -1  -1  -1  +1  +1
+   -1  -1  +1  -1  +1  +1  +1
+   +1  -1  +1  -1  -1  +1  -1
+   -1  +1  +1  -1  -1  -1  +1
+   +1  +1  +1  -1  +1  -1  -1
+   -1  -1  -1  +1  -1  +1  +1
+   +1  -1  -1  +1  +1  +1  -1
+   -1  +1  -1  +1  +1  -1  +1
+   +1  +1  -1  +1  -1  -1  -1
+   -1  -1  +1  +1  +1  -1  -1
+   +1  -1  +1  +1  -1  -1  +1
+   -1  +1  +1  +1  -1  +1  -1
+   +1  +1  +1  +1  +1  +1  +1

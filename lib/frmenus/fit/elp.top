@@ -1,0 +1,11 @@
+----- <~fit\elp.top> Empirical Linear Prediction
+
+Empirical Linear Prediction
+
+Discussion          <~fit\elpdisc.top>
+FAQs                <xcl: LIST ~fit\elpfaq.tex>
+Do the ELP          <xemf: ~fit\fitelp.men>
+Do Model Validation <xemf: ~fit\modelval.men>
+Built-in Datasets   <~fit\svdrdata.top>
+References          <~fit\elpref.top>
+

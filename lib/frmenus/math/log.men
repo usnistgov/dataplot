@@ -1,0 +1,38 @@
+This is file log.men--Compute exp and log functions
+ 
+--------------------
+ 1. Exponential and Logarithmic Functions
+ 2. LET YNEW = EXP(Y)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value.
+ 6.
+ 7. Variable  to operate on:
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8. Operation to perform:
+ 9. @CE 2 1 10 26 exp
+ 9. @CE 2 2 28 44 log (base e)
+10. @CE 2 3 10 26 log (base 10) 
+10. @CE 2 4 28 44 log (base 2)
+11. Variable to store the transformed result:
+11. @CE 3 0 33 50 ?
+12.
+13. Plot?:
+13. @CE 5 1 14 20 no
+13. @CE 5 2 14 20 yes
+14.
+15. Subset/Except/For Specification:
+16. @CE 4 0 -5 50 *
+17.
+18.
+19. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = EXP( _1 ) _4
+@IF 2 2 LET _3 = LOG( _1 ) _4
+@IF 2 3 LET _3 = LOG10( _1 ) _4
+@IF 2 4 LET _3 = LOG2( _1 ) _4
+@IF 5 2 PLOT _3 _1 _4
+--------------------
+WEB HELP MATHEMATICAL LIBRARY FUNCTIONS
+--------------------

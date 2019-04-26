@@ -1,0 +1,10 @@
+----- <~dataloex\BOXJE142.DP> Load & Execute BOXJE142.DAT
+
+. This is file    BOXJE142.DP
+
+DELETE Y
+SKIP 25
+READ BOXJE142.DAT Y
+TITLE BOXJE142.DAT
+/
+

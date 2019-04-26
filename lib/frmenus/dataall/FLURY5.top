@@ -1,0 +1,8 @@
+----- <~dataall\FLURY5.top> FLURY5.DAT
+
+FLURY5.DAT
+
+View     <xcl: LIST FLURY5.DAT>
+Load     <xcf: ~dataload/FLURY5.DP>
+Print    <xccl: printfile C:\DATAPLOT\FLURY5.DAT>
+

@@ -1,0 +1,9 @@
+----- <~dataexec\dextag.top> Load and Execute Taguchi Design Data
+
+Load and Execute Taguchi Design Data
+
+BOXCAKE.DAT   2**5 wcp Cake taste          <xcf: ~dataexec\BOXCAKE.DP>
+BOXCAKE2.DAT  2**3 wcp Cake taste          <xcf: ~dataexec\BOXCAKE2.DP>
+
+QUINLAN.DAT*  L16      Speedom. noise      <xcf: ~dataexec\QUINLAN.DP>
+

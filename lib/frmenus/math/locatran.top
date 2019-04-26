@@ -1,0 +1,31 @@
+----- <~math\locatran.top> Location Transformations
+ 
+Location Transformations
+ 
+Calculate various measures of
+location.  These commands calculate
+the requested statistic for the
+data in a variable and store the
+resulting statistic in a parameter.
+
+
+Measures of Location
+   Mean                               <xemf: ~math\mean.men>
+   Biweight Location                  <xemf: ~math\biwemean.men>
+   Cumulative Mean                    <xemf: ~math\cummean.men>
+   Geometric Mean                     <xemf: ~math\geommean.men>
+   H10 Location                       <xemf: ~math\h10loca.men>
+   H12 Location                       <xemf: ~math\h12loca.men>
+   H15 Location                       <xemf: ~math\h15loca.men>
+   H17 Location                       <xemf: ~math\h17loca.men>
+   H20 Location                       <xemf: ~math\h20loca.men>
+   Harmonic Mean                      <xemf: ~math\harmmean.men>
+   Hodges Lehman                      <xemf: ~math\hodglehm.men>
+   Lp Location                        <xemf: ~math\lploca.men>
+   Median                             <xemf: ~math\median.men>
+   Midmean                            <xemf: ~math\midmean.men>
+   Midrange                           <xemf: ~math\midrange.men>
+   Trimmed Mean                       <xemf: ~math\trimmean.men>
+   Weighted Mean                      <xemf: ~math\weigmean.men>
+   Winsorized Mean                    <xemf: ~math\winsmean.men>
+

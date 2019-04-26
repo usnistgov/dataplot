@@ -1,0 +1,30 @@
+----- <~reli\plotppf.top> Plot Percent Point Functions
+
+Plot Percent Point (PPF) Functions
+
+Normal                               <xemf: ~prob\pnorppf.men>
+Lognormal                            <xemf: ~prob\plgnppf.men>
+Power Normal                         <xemf: ~prob\ppnrppf.men>
+Power Lognormal                      <xemf: ~prob\pplnppf.men>
+
+Exponential                          <xemf: ~prob\pexpppf.men>
+Geometric Extreme Exponential        <xemf: ~prob\pgeeppf.men>
+
+Weibull (Minimum)                    <xemf: ~prob\pwei1ppf.men>
+Weibull (Maximum)                    <xemf: ~prob\pwei2ppf.men>
+Inverted Weibull                     <xemf: ~prob\piweppf.men>
+Exponentiated Weibull                <xemf: ~prob\peweppf.men>
+Bi-Weibull                           <xemf: ~prob\pbweppf.men>
+
+Wald                                 <xemf: ~prob\pwalppf.men>
+Inverse Gaussian                     <xemf: ~prob\pigppf.men>
+Reciprocal Inverse Gaussian          <xemf: ~prob\prigppf.men>
+Fatigue Life                         <xemf: ~prob\pflppf.men>
+
+Gamma                                <xemf: ~prob\pgamppf.men>
+Log Gamma                            <xemf: ~prob\plgappf.men>
+Inverted Gamma                       <xemf: ~prob\pigappf.men>
+
+Alpha                                <xemf: ~prob\palpppf.men>
+Exponential Power                    <xemf: ~prob\ppexppf.men>
+

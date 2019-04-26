@@ -1,0 +1,32 @@
+----- <~dexcomp\crbddisc.top> Discussion: Randomized Block Designs
+ 
+Discussion: Randomized Block Designs
+ 
+For randomized block designs, there is one factor
+variable that is of primary interest.  However, there
+are also several other nuisance factor variables.
+
+Nuisance variables are those which may affect the
+measured result, but are not considered of primary
+interest.  For example, in applying a treatment, nuisance
+variables might be the specific operator who prepared
+the treatment, the time of day the experiment was run,
+and the room temperature.  All experiments have nuisance
+factors.  The experimenter will typically need to spend
+some time deciding which nuisance factors are important
+enough to measure.
+
+A nuisance factor is a blocking factor if every level of
+the primary factor occurrs the same number of times.
+The analysis of the experiment will focus on the effect
+of the primary factor in each block of the experiment.
+
+The general rule is:
+
+  "Block what you can, randomize what you cannot"
+
+Blocking is used to remove the effects of one or two of
+the most important nuisance variables.  Randomization is
+then used to reduce the contaminating effects of the remaining
+nuisance variables.
+

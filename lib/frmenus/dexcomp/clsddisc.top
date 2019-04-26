@@ -1,0 +1,37 @@
+----- <~dexcomp\clsddisc.top> Discussion: Latin Square Designs
+ 
+Discussion: Latin Square Designs
+ 
+Latin square, and the related Graeco-Latin square and
+hyper Graeco-Latin square designs, are a special type of
+comparative design.
+ 
+There is a single factor of primary interest, typically
+called the treatment factor, and several nuisance factors.
+For Latin square designs, there are 2 nuisance factors,
+for Graeco-Latin square designs there are 3 nuisance
+factors, and for hyper-Graeco-Latin square designs there
+are 4 nusisance factors.
+
+The nuisance factors are used as blocking variables.
+
+  1) For Latin square designs, the 2 nuisance factors
+     are divided into a tabular grid with the property
+     that each row and each column recieve each treatment
+     exactly once.
+
+  2) A Graeco-Latin square design is a kxk tabular grid
+     where k is the number of levels of the treatment
+     factor.  However, it uses 3 blocking variables instead
+     of the 2 used by the standard Latin square design.
+
+  3) A hyer-Graeco-Latin square design is a kxk tabular grid
+     where k is the number of levels of the treatment
+     factor.  However, it uses 4 blocking variables instead of
+     the 2 used by the standard Latin square design.
+
+Note that Latin square designs are equivalent to
+specific fractional factorial designs (e.g., the 4x4 Latin
+square design is equivalent to a 4**(3-1) fractional 
+factorial design.
+

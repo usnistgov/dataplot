@@ -1,0 +1,41 @@
+PERFORMANCE OF AIR CONDITIONER
+(FED.)
+2**(6-2) FRACTIONAL FACTORIAL DESIGN
+NUMBER OF OBSERVATIONS = 16
+TOTAL NUMBER OF VARIABLES = 9
+   RESPONSE VARIABLE #1 = PERFORMANCE MEASURE #1
+   RESPONSE VARIABLE #2 = PERFORMANCE MEASURE #2
+   RESPONSE VARIABLE #3 = PERFORMANCE MEASURE #3
+   FACTOR 1 =       (2 LEVELS)
+   FACTOR 2 =       (2 LEVELS)
+   FACTOR 3 =       (2 LEVELS)
+   FACTOR 4 =       (2 LEVELS)
+   FACTOR 5 =       (2 LEVELS)
+   FACTOR 6 =       (2 LEVELS)
+TO READ THIS FILE INTO DATAPLOT--
+   DIMENSION 20 VARIABLES
+   SKIP 25
+   READ AC.DAT Y1 Y2 Y3 X1 TO X6
+
+
+
+
+
+ Y1     Y2     Y3    X1 X2 X3 X4 X5 X6
+---------------------------------------
+72.4  157.18  3.19   -1 -1 -1 +1 +1 +1
+68.1  156.59  3.08   +1 -1 -1 -1 -1 +1
+69.7  155.52  3.24   -1 +1 -1 -1 +1 -1
+74.3  156.35  3.12   +1 +1 -1 +1 -1 -1
+71.9  157.28  3.04   -1 -1 +1 +1 -1 -1
+82.4  156.26  3.07   +1 -1 +1 -1 +1 -1
+71.0  162.32  3.05   -1 +1 +1 -1 -1 +1
+69.8  155.82  3.12   +1 +1 +1 +1 +1 +1
+72.0  158.61  3.11   -1 -1 -1 -1 -1 -1
+69.3  158.31  3.24   +1 -1 -1 +1 +1 -1
+74.6  158.14  3.10   -1 +1 -1 +1 -1 +1
+69.5  159.52  3.11   +1 +1 -1 -1 +1 +1
+82.3  156.39  3.02   -1 -1 +1 -1 +1 +1
+72.2  159.99  3.06   +1 -1 +1 +1 -1 +1
+81.6  158.88  3.09   -1 +1 +1 +1 +1 -1
+70.6  161.08  3.03   +1 +1 +1 -1 -1 -1

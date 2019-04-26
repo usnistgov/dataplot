@@ -1,0 +1,59 @@
+----- <~dp\guicust.top> Customizing the Graphical Interface
+ 
+Customizing the Graphical Design
+ 
+There are several ways in which the graphical              -
+interface can be customized.
+
+  1) When the gui is installed, the file 
+     xdpConfig allows you to specify the path
+     for the Dataplot executable, set font
+     sizes, set colors, and specify which
+     internet browser to use.  This is a simple
+     ASCII file and any modifications should be
+     clear from the comments in the file.
+
+     Whoever installs this file should at least
+     examine the xdpConfig file for any
+     potential changes.
+
+  2) The Tcl/Tk scripts are available.  We
+     neither encourage or discourage you from
+     modifying these scripts.  We will not support
+     any changes you might make.  Changes to the
+     Tcl/Tk scripts should only be attempted if
+     you have some expertise with Tcl/Tk already.
+
+     At this point, any changes we make will be 
+     maintenance fixes (e.g., updating to work
+     with newer versions of Tcl/Tk).
+
+  3) The contents of the menus are contained in
+     ASCII files.  These can be edited using the
+     text editor of your choice.
+
+     There are two ways in which you might chose to
+     edit the menus.
+
+     a) You may want to edit an already existing menu.
+        For example, you may want to specify your own
+        defaults, put in automatic titles, and so forth.
+        Feel free to do this with the understanding 
+        that you are responsible for maintaining the
+        changes.
+
+     b) You may have certain analyses that you perform
+        routinely at your local site.  It may simplify
+        Dataplot if you can write your own menus to
+        automate these analyses.
+
+        We fully encourage you to do this if you
+        want.  We suggest that any new menus you
+        add go under the "NIST" button from the main
+        menu.  You can rename this button to reflect
+        a name specific to your local site.
+
+     We plan to put together a web page that documents
+     the structure of the menu files and also document
+     how to write and add your own menus.
+

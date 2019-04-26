@@ -1,0 +1,8 @@
+----- <~datalist\AMRF.top> AMRF.DAT
+ 
+AMRF.DAT
+ 
+View     <xcl: LIST AMRD.DAT>
+Load     <x2cl: SKIP 25; READ AMRD.DAT Y X1 TO X7>
+Print    <xccl: printfile C:\DATAPLOT\AMRD.DAT>
+ 

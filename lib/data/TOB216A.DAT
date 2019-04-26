@@ -1,0 +1,61 @@
+TOB216A.DAT
+TEMPERATURE/VOLTAGE STRESS FAILURE DATA.
+THREE DISTINCT TEMPERATURES, THREE VOLTAGES, 6 OF THE
+9 POSSIBLE COMBINATIONS USED WITH 50 COMPONENTS
+USED AT EACH COMBINATION.  7 READOUT TIMES WERE USED.
+NUMBER OF OBSERVATIONS = 7*6 = 42
+NUMBER OF VARIABLES PER LINE IMAGE = 4
+ORDER OF VARIABLES ON A LINE IMAGE--
+   T     = TIME (HOURS)
+   X1    = TEMPERATURE (DEGREES CELCIUS)
+   X2    = VOLTAGE
+   Y     = NUMBER OF NEW FAILURES
+SOURCE--TOBIAS AND TRINDADE (1981).  "APPLIED RELIABILITY",
+        SECOND EDITION, CHAPMAN & HALL/CRC, P. 216.
+STATISTICAL AREA = RELIABILITY (ARRHENIUS, INVERSE POWER MODEL)
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ TOB216A.DAT TIME TEMP VOLT NUMFAIL
+ 
+ 
+
+
+ 
+ TIME      TEMP   VOLT    Y
+---------------------------
+  24       125     8      2
+  24       115    10      0
+  24       125    10      1
+  24        95    12      0
+  24       115    12      0
+  24       125    12      0
+  48       125     8      0
+  48       115    10      0
+  48       125    10      0
+  48        95    12      0
+  48       115    12      0
+  48       125    12      0
+ 168       125     8      4
+ 168       115    10      0
+ 168       125    10      2
+ 168       115    12      0
+ 168       115    12      3
+ 168       125    12      5
+ 500       125     8      6
+ 500       115    10      3
+ 500       125    10     10
+ 500        95    12      0
+ 500       115    12      6
+ 500       125    12     15
+1000       125     8      9
+1000       115    10      9
+1000       125    10     16
+1000        95    12      2
+1000       115    12      9
+1000       125    12     20
+2000       125     8      9
+2000       115    10     10
+2000       125    10     13
+2000        95    12      3
+2000       115    12     18
+2000       125    12      8

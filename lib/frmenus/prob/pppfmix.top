@@ -1,0 +1,7 @@
+----- <~prob\pppfmix.top> Plot Mixture ppf's
+
+Plot Mixture PPF Functions
+
+Normal Mixture           <xemf: ~prob\pnormppf.men>
+Bi-Weibull               <xemf: ~prob\pbweppf.men>
+

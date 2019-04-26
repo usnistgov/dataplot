@@ -1,0 +1,21 @@
+----- <~time\boxjenki.top> Box-Jenkins Modeling
+ 
+Box-Jenkins Modeling
+ 
+Discussion                     <~time\boxjdisc.top>
+NIST/SEMATECH Handbook (Box-Jenkins)  <xcl: web handbook arma>
+ 
+Difference Data                              <xemf: ~time\differ.men>
+Seasonal Difference Data                     <xemf: ~time\seasdiff.men>
+
+Model Identification                         <~time\identbj.top>
+Model Fitting                                <xemf: ~time\bjfit.men>
+   Read Parameter, SD of Par                 <xemf: ~time\bjpar.men>
+   Read SD of Predicted Values               <xemf: ~time\bjsdpred.men>
+   List Iteration History                    <xcl: LIST DPST3F.DAT>
+   List Parameter Variance-Covariance Matrix <xcl: LIST DPST4F.DAT>
+Model Validation                             <~time\validbj.top>
+
+Read Forecasted Values         <xemf: ~time\bjfore.men>
+Plot Forecasted Values         <xemf: ~time\bjforepl.men>
+

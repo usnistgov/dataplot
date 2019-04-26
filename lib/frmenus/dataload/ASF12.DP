@@ -1,0 +1,8 @@
+----- <~dataload\ASF12.DP> Load ASF12.DAT
+
+. This is file    ASF12.DP
+
+DELETE Y
+SKIP 25
+READ ASF12.DAT Y
+

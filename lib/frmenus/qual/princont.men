@@ -1,0 +1,57 @@
+This is file princont.men--Generate Principal COmponent Control Charts
+ 
+--------------------line 3
+1. Principal Component Control Chart
+2. Macro
+3.
+4. List of Response Variables:
+5. @CE 1 0 1 50 ? gui-variable
+6. Group ID (Horizontal Axis) Variable:
+6. @CE 2 0 42 50 ? gui-variable
+7.
+8. Principal Component to Plot:
+9. @CE 3 1 5 15 FIRST
+9. @CE 3 2 16 26 SECOND
+9. @CE 3 3 27 37 THIRD
+10.
+11. Type of Control Chart:
+12. @CE 4 1 5 15 MEAN
+12. @CE 4 2 16 26 RANGE
+12. @CE 4 3 27 37 SD
+13.
+14. Line Type for Data:
+14. @CE 5 0 42 50 gui-line
+15. Line Type for 3 Sigma Limits:
+15. @CE 6 0 42 50 gui-line
+16.
+17. Character Type for Data
+17. @CE 7 0 42 50 gui-char
+18. Character Fill for Data
+18. @CE 8 0 42 50 gui-ooff
+19.
+20. Subset/Except/For Specification:
+21. @CE 9 0 1 50 *
+22.
+23. Generate the Chart?:
+--------------------
+WRITE ZZZZJUNK.DAT _1 _9
+DELETE ZZZZX ZZZZP ZZZZTAG
+SKIP 0
+READ MATRIX ZZZZJUNK.DAT ZZZZX
+LET ZZZZTAG = _2
+REATIN ZZZZTAG _9
+LET ZZZZP = PRINCIPAL COMPONENTS ZZZZX
+LET ZZZZK = 1
+@IF 3 1 LET ZZZZK = 1
+@IF 3 2 LET ZZZZK = 1
+@IF 3 3 LET ZZZZK = 1
+LINES _5 _6
+CHARACTER BLANK ALL
+CHAR _7
+CHAR FILL _8
+@IF 4 1 XBAR CONTROL CHART ZZZZX^ZZZZK ZZZZTAG
+@IF 4 2 R CONTROL CHART ZZZZX^ZZZZK ZZZZTAG
+@IF 4 3 SD CONTROL CHART ZZZZX^ZZZZK ZZZZTAG
+--------------------
+WEB HELP PRINCIPAL COMPONENTS
+--------------------

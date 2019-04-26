@@ -1,0 +1,21 @@
+----------  *WEATHERSNOWY*  ----------
+
+    USA's 10 Snowiest Locations
+    (Based on Annual Snowfall)
+
+     Location                 Snowfall  Snowfall
+                              (Inches)   (Feet)
+
+Stampede Pass, Wshington        435       36.25
+Valdez, Alaska                  287       23.9
+Mount Washington, N. H.         247       20.6
+Blue Canyon, California         245       20.4
+Yakutat, Alaska                 208       17.3
+Marquette, Michigan             118        9.8
+Sault Ste. Marie, Mich.         114        9.5
+Caribou, Maine                  113        9.4
+Syracuse, New York              110        9.2
+Lauder, Wyoming                 106        8.8
+Takeetna, Alaska                106        8.8
+
+   Source--USA Today, December 30, 1987.

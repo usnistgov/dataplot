@@ -1,0 +1,26 @@
+This is file fitmult.men--Fitting (Line)
+ 
+--------------------
+1. Fitting: More Than 1 Variable; Linear Model
+2. FIT Y X1 X2 X3
+3.
+4. Variables:
+5.    Response Variable:
+5. @CE 1 0 40 50 ? gui-variable
+6.    List of Independent Variables:
+7. @CE 2 0  1 50 ? gui-variable
+8.    Weights W:
+8. @CE 3 0 40 50 * gui-variable
+9.
+10. Subset/Except/For Specification:
+11. @CE 4 0 1 50 *
+12.
+13.
+14. Do the Multi-Linear Fit?
+--------------------
+GR FE
+WEIGHTS _3
+FIT _1 _2 _4
+--------------------
+WEB HELP FIT
+--------------------

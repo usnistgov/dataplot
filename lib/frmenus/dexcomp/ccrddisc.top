@@ -1,0 +1,41 @@
+----- <~dexcomp\ccrddisc.top> Discussion: Completely Randomized Design
+ 
+Discussion: Completely Randomized Design
+ 
+Completely randomized designs have 1 factor variable.
+The experiment compares the outcomes for a response
+variable based on the different levels of the factor
+variable.
+
+For completely randomized designs,  the levels of the
+factor variable are randomly assigned.  By randomization,
+we mean that the run sequence of the experimental units
+is randomly assigned.  For example, if there are 3 levels of the
+factor variable with each level to be run 4 times,
+then there are 12 run sequences.  An example of an
+unrandomized design would be to run 4 replications for
+the first level, then 4 for the second level, and
+finally 4 for the third level.  To randomize it, youn example
+of randomization would be to put 12 slips of paper in
+a box with 4 having level 1, 4 having level 2, and 4 having
+level 3.  At each run, one of slips would be drawn and
+the level selected would be used for the next run of the
+experiment.
+
+Randomization is performed so that the conclusions
+from the experiment are
+
+   1) correct;
+   2) unambiguous;
+   3) defensible.
+
+If no randomization is performed, then any inferences
+from resulting analysis of variance have no validity.
+
+The randomization is typically performed by some type
+of computer program (in Dataplot, see the Generate Random
+Run Sequence menu under the main DEX menu).  However, the
+randomization can also be generated from random number
+tables or by some physical mechanism (e.g., drawing the
+slips of paper).
+

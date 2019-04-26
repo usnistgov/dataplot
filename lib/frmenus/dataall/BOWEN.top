@@ -1,0 +1,8 @@
+----- <~dataall\BOWEN.top> BOWEN.DAT
+
+BOWEN.DAT
+
+View     <xcl: LIST BOWEN.DAT>
+Load     <xcf: ~dataload/BOWEN.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOWEN.DAT>
+

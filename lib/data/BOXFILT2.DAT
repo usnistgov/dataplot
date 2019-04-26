@@ -1,0 +1,41 @@
+H20/MAT./TEMP/RECYCLE/CAUST SODA/FILTER CLOTH/HOLD TIME
+         EFFECT ON FILTRATION TIME
+BOX, HUNTER & HUNTER (1978)
+STATISTIC FOR EXPERIMENTERS
+WILEY, PAGE 426 & 427
+2**(7-3) FRACTIONAL FACTORIAL DESIGN VIA FOLDOVER
+NUMBER OF OBSERVATIONS = 16
+TOTAL NUMBER OF VARIABLES PER LINE IMAGE = 8
+   RESPONSE VARIABLE = FILTRATION TIME (IN MINUTES)
+   FACTOR 1 = WATER SUPPLY SOURCE        (2 LEVELS--TOWN & WELL)
+   FACTOR 2 = RAW MATERIAL SOURCE        (2 LEVELS--ON SITE & OTHER)
+   FACTOR 3 = TEMPERATURE                (2 LEVELS--LOW & HIGH)
+   FACTOR 4 = RECYCLE                    (2 LEVELS--YES & NO)
+   FACTOR 5 = CAUSTIC SODA ADDITION RATE (2 LEVELS--FAST & SLOW)
+   FACTOR 6 = FILTER CLOTH OLD           (2 LEVELS--NEW & OLD)
+   FACTOR 7 = HOLDUP TIME                (2 LEVELS--LOW & HIGH)
+TO READ THIS FILE INTO DATAPLOT--
+   DIMENSION 20 VARIABLES
+   SKIP 25
+   READ BOXFILT2.DAT Y X1 TO X7
+ 
+ 
+ 
+ Y     X1  X2  X3  X4  X5  X6  X7
+---------------------------------
+68.4   -1  -1  -1  +1  +1  +1  -1
+77.7   +1  -1  -1  -1  -1  +1  +1
+66.4   -1  +1  -1  -1  +1  -1  +1
+81.0   +1  +1  -1  +1  -1  -1  -1
+78.6   -1  -1  +1  +1  -1  -1  +1
+41.2   +1  -1  +1  -1  +1  -1  -1
+68.7   -1  +1  +1  -1  -1  +1  -1
+38.7   +1  +1  +1  +1  +1  +1  +1
+66.7   +1  +1  +1  -1  -1  -1  +1
+65.0   -1  +1  +1  +1  +1  -1  -1
+86.4   +1  -1  +1  +1  -1  +1  -1
+61.9   -1  -1  +1  -1  +1  +1  +1
+47.8   +1  +1  -1  -1  +1  +1  -1
+59.0   -1  +1  -1  +1  -1  +1  +1
+42.6   +1  -1  -1  +1  +1  -1  +1
+67.6   -1  -1  -1  -1  -1  -1  -1

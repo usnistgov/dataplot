@@ -1,0 +1,8 @@
+----- <~dataload\PRISON.DP> Load PRISON.DAT
+
+. This is file    PRISON.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ PRISON.DAT Y X1 X2
+

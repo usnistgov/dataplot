@@ -1,0 +1,37 @@
+This is file get1ppf.men--Compute Geeta ppf
+ 
+--------------------
+ 1. Compute Geeta ppf
+ 2. LET Y = GETPPF(P,THETA,BETA)
+ 3.
+ 4. Input values:
+ 5.                                   p (0 <= p < 1):
+ 5. @CE 1 0 42 50 ?
+ 6.            shape parameter theta (0 < theta < 1):
+ 6. @CE 2 0 42 50 
+ 7.       shape parameter beta (1 <= beta < 1/theta):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Output parameters:
+10.                  name for the ppf value:
+10. @CE 4 0 42 50 ?
+11.
+12.
+13. Compute the Probability?
+--------------------
+AN FE
+SET GEETA DEFINITION THETA
+LET ZTHETA = 0.5
+LET ZBETA = 1.5
+@IF 2 0 LET ZTHETA = _2
+IF ZTHETA <= 0
+   LET ZTHETA = 0.5
+END OF IF
+IF ZTHETA >= 1
+   LET ZTHETA = 0.5
+END OF IF
+@IF 3 0 LET ZBETA = _3
+LET _4 = GETPPF( _1 , ZTHETA, ZBETA )
+--------------------
+WEB HELP GETPPF
+--------------------

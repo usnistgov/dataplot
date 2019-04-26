@@ -1,0 +1,18 @@
+reset data
+reset graphics
+reset i/o
+.
+dimension 500 30
+read mpc262d.dat wafer probe d1 d2
+let bias2362a = mean d1 subset probe 2362
+let bias2362b = mean d2 subset probe 2362
+print bias2362a bias2362b
+title GAUGE STUDY FOR 5 PROBES
+Y1LABEL OHM.CM
+lines dotted dotted dotted dotted dotted solid
+characters 1 2 3 4 5 blank
+xlimits 137 143
+let zero = pattern 0 for I = 1 1 30
+x1label DIFFERENCES AMONG PROBES VS WAFER (RUN 2)
+plot d2 wafer probe and
+plot zero wafer

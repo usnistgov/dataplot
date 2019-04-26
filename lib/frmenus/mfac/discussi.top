@@ -1,0 +1,36 @@
+----- <~mfac\discussi.top> Multifactor Analysis
+ 
+Multifactor Analysis
+
+Multifactor analysis is the analysis of data
+that consists of single response variable and
+a group fixed variables.  The fixed variables
+are called the factor variables.  The response
+variable is typically modeled as a function
+of the factor variables.  That is,
+
+    Y=f(x1,x2,x3,...)
+
+This is distinguised from multivariate data in that
+multivariate data consists of multiple response
+variables.  Regression and non-linear fitting are
+a specific type of model (i.e., least squares fitting)
+for multifactor data.
+
+Typical questions that a multifactor analysis might
+try to answer are:
+
+  1) Does a given factor have an effect?
+
+  2) Are 2 (or more) labs equivalent?
+
+  3) What are the most important factors?
+
+  4) What is the best function for fitting the model?
+ 
+  5) What is the best model for the response variable?
+
+  6) What are the optimal settings for each factor?
+
+  7) Are there outliers?
+

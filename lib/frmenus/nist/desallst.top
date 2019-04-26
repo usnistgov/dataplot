@@ -1,0 +1,23 @@
+----- <~nist\desallst.top> SED Project: Design-Allowable Stress
+ 
+Design-Allowable Stress
+ 
+Discussion                                  <~nist\dealdisc.top>
+Goal                                        <~nist\dealgoal.top>
+Input                                       <~nist\dealinpu.top>
+Output                                      <~nist\dealoutp.top>
+General Approach                            <~nist\dealappr.top>
+FAQs                                        <~nist\dealfaqs.top>
+ 
+Do the Analysis
+   Discussion                               <~nist\dealandi.top>
+   Case 1: Single Batch & No Covariates     <~nist\deal1bnc.top>
+   Case 2: Multi- Batch & No Covariates     <~nist\dealmbnc.top>
+   Case 3: Single-Batch with Covariates     <~nist\deal1bmc.top>
+   Case 4: Multi- Batch with Covariates     <~nist\dealmbmc.top>
+ 
+Tutorial                                    <~nist\dealtuto.top>
+Glossary                                    <~nist\dealglos.top>
+References                                  <~nist\dealrefe.top>
+NIST Contacts                               <~nist\dealnico.top>
+ 

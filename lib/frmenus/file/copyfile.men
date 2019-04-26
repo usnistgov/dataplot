@@ -1,0 +1,50 @@
+This is file copyfile.men--Copy a File to Another File
+ 
+--------------------
+ 1. Copy a File to Another File
+ 2. COPY <input filename> <output filename>
+ 3.
+ 4. Input file:
+ 5. 1. User file:
+ 6. @CE 1 0 4 50 ?
+ 7.
+ 8. 2. Dataplot summary file:
+ 9. @CE 2 1 4 20 commands.
+10. @CE 2 2 4 20 syntax.
+11. @CE 2 3 4 20 subcommands.
+12. @CE 2 4 4 20 inline.
+13. @CE 2 5 4 20 functions.
+14. @CE 2 6 4 20 programs.
+15. @CE 2 7 4 20 macros.
+16. @CE 2 8 4 20 datasets.
+17. @CE 2 9 4 20 designs.
+18. @CE 2 10 4 20 distributions.
+19.
+20. Output file:
+21. @CE 3 0 4 50 ?
+22.
+23. First row to copy:
+23. @CE 4 0 21 30 *
+24. Last  row to copy:
+24. @CE 5 0 21 30 *
+25.
+26.
+27. Copy the File?
+--------------------
+SU FE
+SET FILE NAME QUOTE ON
+@IF 1 0 COPY _1 _3 FOR I = _4 1 _5
+@IF 2 1 COPY _2 _3 FOR I = _4 1 _5
+@IF 2 2 COPY _2 _3 FOR I = _4 1 _5
+@IF 2 3 COPY _2 _3 FOR I = _4 1 _5
+@IF 2 4 COPY _2 _3 FOR I = _4 1 _5
+@IF 2 5 COPY _2 _3 FOR I = _4 1 _5
+@IF 2 6 COPY _2 _3 FOR I = _4 1 _5
+@IF 2 7 COPY _2 _3 FOR I = _4 1 _5
+@IF 2 8 COPY _2 _3 FOR I = _4 1 _5
+@IF 2 9 COPY _2 _3 FOR I = _4 1 _5
+@IF 2 10 COPY _2 _3 FOR I = _4 1 _5
+SET FILE NAME QUOTE OFF
+--------------------
+WEB HELP COPY
+--------------------

@@ -1,0 +1,157 @@
+This is file lsq_skew.men--Least Sqaure Fitting (Skewed Dist.)
+
+--------------------
+1. Least Squares Fitting (Skewed Distributions)
+2. LET FUNCTION F = <dist>; FIT Y = F
+3.
+4. If you have raw data, Dataplot will first
+5. generate a relative histogram to generate
+6. frequency data.  If you already have frequency
+7. data, the first variable will be the frequency
+8. and the second variable will be the response
+9. value.
+10.
+11. Response or Frequency Variable:
+11. @CE 1 0 42 50 ? gui-variable
+12. Optional Response Variable (for frequency data):
+12. @CE 2 0 42 50 * gui-variable
+13.
+14. Distributions marked with a "*" and "#"
+15. estimate location and scale parameters.  Starting
+16. starting values for the shape, location, and
+17. parameters are optional.
+18.
+19. Distribution:
+20. @CE 3 1 11 40 *#Lognormal
+21.                                      sd =
+21. @CE 4 0 41 50 ?
+22. @CE 3 2 11 40 *#Halfnormal
+23. @CE 3 3 11 40 *#Exponential
+24. @CE 3 4 11 40 *#Gamma
+25.                                   gamma =
+26. @CE 5 0 41 50 ?
+27. @CE 3 5 11 40 Beta
+27.                                   alpha =
+27. @CE 6 0 41 50 ?
+28.                                   beta =
+28. @CE 7 0 41 50 ?
+29. @CE 3 6 11 40 *#Weibull
+29.                                   gamma =
+29. @CE 8 0 41 50 ?
+30.                                   min(1) or max(2) =
+30. @CE 9 0 41 50 ?
+31. @CE 3 7 11 40 *#Extreme Value Type 1
+31.                                   min(1) or max(2) =
+31. @CE 10 0 41 50 ?
+32. @CE 3 8 11 40 *#Extreme Value Type 2
+32.                                   gamma =
+32. @CE 11 0 41 50 ?
+33.                                   min(1) or max(2) =
+33. @CE 12 0 41 50 ?
+34. @CE 3 9 11 40 #Pareto
+34.                                   gamma =
+34. @CE 13 0 41 50 ?
+35. @CE 3 10 11 40 #*Inverse Gaussian
+35.                                   gamma =
+35. @CE 14 0 41 50 ?
+36. @CE 3 11 11 40 Reciprocal Inverse Gaussian
+36.                                   gamma =
+36. @CE 15 0 41 50 ?
+37. @CE 3 12 11 40 Failure Time
+37.                                   gamma =
+37. @CE 16 0 41 50 ?
+38.
+39. Optional Starting Value for Location Parameter (for *):
+39. @CE 17 0 41 50 ?
+40. Optional Starting Value for Scale Parameter (for #):
+40. @CE 18 0 41 50 ?
+41.
+42. Subset/Except/For Specification:
+43. @CE 19 0 -10 50 *
+44.
+45. Compute the Fit?
+--------------------
+GR FE
+LET ZLOC = 0
+@IF 17 0 LET ZLOC = _17
+LET ZSCALE = 1
+@IF 18 0 LET ZSCALE = _18
+LET ZSHAPE = 1
+LET ZZZZRAW = 0
+@IF 2 0 LET ZZZZRAW = 1
+IF ZZZZRAW = 0
+  SET RELATIVE HISTOGRAM AREA
+  RELATIVE HISTOGRAM _1 _19
+  LET ZZZZY = YPLOT
+  LET ZZZZX = XPLOT
+  RETAIN ZZZZY ZZZZX SUBSET YPLOT > 0
+END OF IF
+IF ZZZZRAW = 1
+  LET ZZZZY = _1 _19
+  LET ZZZZX = _2 _19
+END OF IF
+@IF 4 0 LET ZSHAPE = _4
+@IF 5 0 LET ZSHAPE = _5
+@IF 6 0 LET ZSHAPE = _6
+@IF 7 0 LET ZSHAPE2 = _7
+@IF 8 0 LET ZSHAPE = _8
+@IF 9 0 SET MINMAX = _9
+@IF 10 0 SET MINMAX = _10
+@IF 11 0 LET ZSHAPE = _11
+@IF 12 0 SET MINMAX = _12
+@IF 13 0 LET ZSHAPE = _13
+@IF 14 0 LET ZSHAPE = _14
+@IF 15 0 LET ZSHAPE = _15
+@IF 16 0 LET ZSHAPE = _16
+@IF 3 1 LET FUNCTION ZZZZF = LGNPDF(ZZZZX,ZSHAPE,ZLOC,ZSHAPE)
+@IF 3 2 LET FUNCTION ZZZZF = HFNPDF(ZZZZX,ZLOC,ZSHAPE)
+@IF 3 3 LET FUNCTION ZZZZF = EXPPDF(ZZZZX,ZLOC,ZSHAPE)
+@IF 3 4 LET FUNCTION ZZZZF = GAMPDF(ZZZZX,ZSHAPE,ZLOC,ZSHAPE)
+@IF 3 5 LET FUNCTION ZZZZF = BETPDF(ZZZZX,ZSHAPE1,ZSHAPE2)
+@IF 3 6 LET FUNCTION ZZZZF = WEIPDF(ZZZZX,ZSHAPE,ZLOC,ZSHAPE)
+@IF 3 7 LET FUNCTION ZZZZF = EV1PDF(ZZZZX,ZLOC,ZSHAPE)
+@IF 3 8 LET FUNCTION ZZZZF = EV1PDF(ZZZZX,ZSHAPE,ZLOC,ZSHAPE)
+@IF 3 9 LET FUNCTION ZZZZF = PARPDF(ZZZZX,ZSHAPE,ZLOC,ZSHAPE)
+@IF 3 10 LET FUNCTION ZZZZF = IGPDF(ZZZZX,ZSHAPE,ZLOC,ZSHAPE)
+@IF 3 10 LET FUNCTION ZZZZF = RIGPDF(ZZZZX,ZSHAPE,ZLOC,ZSHAPE)
+@IF 3 11 LET FUNCTION ZZZZF = FLPDF(ZZZZX,ZSHAPE,ZLOC,ZSHAPE)
+FIT ZZZZY = ZZZZF
+LIMITS FREEZE
+PRE-ERASE OFF
+LET ZZZZ1 = MINIMUM ZZZZX
+LET ZZZZ2 = MAXIMUM ZZZZX
+LET ZZZZINC = (ZZZZ2 - ZZZZ1)/1000
+IF ZZZZRAW = 1
+  PLOT ZZZZY ZZZZX
+END OF IF
+@IF 3 1 X3LABEL LOGNORMAL PDF: SD = ^ZSHAPE, LOCATION = ^ZLOC, SCALE = ^ZSCALE
+@IF 3 1 PLOT LGNPDF(ZZZZX,ZSHAPE,ZLOC,ZSCALE) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+@IF 3 2 X3LABEL HALF-NORMAL PDF: LOCATION = ^ZLOC, SCALE = ^ZSCALE
+@IF 3 2 PLOT HFNPDF(ZZZZX,ZLOC,ZSCALE) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+@IF 3 3 X3LABEL EXPOPNENTIAL PDF: LOCATION = ^ZLOC, SCALE = ^ZSCALE
+@IF 3 3 PLOT EXPPDF(ZZZZX,ZLOC,ZSCALE) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+@IF 3 4 X3LABEL GAMMA PDF: GAMMA = ^ZSHAPE, LOCATION = ^ZLOC, SCALE = ^ZSCALE
+@IF 3 4 PLOT GAMPDF(ZZZZX,ZSHAPE,ZLOC,ZSCALE) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+@IF 3 5 X3LABEL BETA PDF: ALPHA = ^ZSHAPE1, BETA = ^ZSHAPE2
+@IF 3 5 PLOT GAMPDF(ZZZZX,ZSHAPE,ZLOC,ZSCALE) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+@IF 3 6 X3LABEL WEIBULL PDF: GAMMA = ^ZSHAPE, LOCATION = ^ZLOC, SCALE = ^ZSCALE
+@IF 3 6 PLOT WEIPDF(ZZZZX,ZSHAPE,ZLOC,ZSCALE) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+@IF 3 7 X3LABEL GUMBEL PDF: LOCATION = ^ZLOC, SCALE = ^ZSCALE
+@IF 3 7 PLOT EV1PDF(ZZZZX,ZLOC,ZSCALE) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+@IF 3 8 X3LABEL FRECHET PDF: GAMMA = ^ZSHAPE, LOCATION = ^ZLOC, SCALE = ^ZSCALE
+@IF 3 8 PLOT EV2PDF(ZZZZX,ZSHAPE,ZLOC,ZSCALE) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+@IF 3 9 X3LABEL PARETO PDF: GAMMA = ^ZSHAPE, LOCATION = ^ZLOC, SCALE = ^ZSCALE
+@IF 3 9 PLOT PARPDF(ZZZZX,ZSHAPE,ZLOC,ZSCALE) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+@IF 3 10 X3LABEL INVERSE GAUSSIAN PDF: GAMMA = ^ZSHAPE, LOCATION = ^ZLOC, SCALE = ^ZSCALE
+@IF 3 10 PLOT IGPDF(ZZZZX,ZSHAPE,ZLOC,ZSCALE) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+@IF 3 11 X3LABEL RECIPROCAL INVERSE GAUSSIAN PDF: GAMMA = ^ZSHAPE, LOCATION = ^ZLOC, SCALE = ^ZSCALE
+@IF 3 11 PLOT RIGPDF(ZZZZX,ZSHAPE,ZLOC,ZSCALE) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+@IF 3 12 X3LABEL FATIGUE LIFE PDF: GAMMA = ^ZSHAPE, LOCATION = ^ZLOC, SCALE = ^ZSCALE
+@IF 3 12 PLOT FLPDF(ZZZZX,ZSHAPE,ZLOC,ZSCALE) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+DELETE ZZZZX ZZZZY
+X3LABEL
+LIMITS
+PRE-ERASE ON
+--------------------
+WEB HELP FIT
+--------------------

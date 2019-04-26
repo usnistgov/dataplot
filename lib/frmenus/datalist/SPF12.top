@@ -1,0 +1,8 @@
+----- <~datalist\SPF12.top> SPF12.DAT
+ 
+SPF12.DAT
+ 
+View     <xcl: LIST SPF12.DAT>
+Load     <x2cl: SKIP 25; READ SPF12.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\SPF12.DAT>
+ 

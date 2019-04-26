@@ -1,0 +1,50 @@
+This is the data file   MONITOR-6_3_3_1.DAT
+Source: This example is used on page pmc331.htm of the e-Handbook
+        to demonstrate counts-based control charts.
+
+Description:  The data consists of 25 wafers where each wafer
+              contains 100 chips. For each wafer, we count the
+              number of defective chips.
+
+To read into Dataplot, enter
+
+    SKIP 25
+    READ "MONITOR-6_3_3_1.DAT" waferid defects
+
+
+
+
+
+
+
+
+
+
+Wafer  Number of
+ID     Defects
+----------------
+ 1     16
+ 2     14
+ 3     28
+ 4     16
+ 5     12
+ 6     20
+ 7     10
+ 8     12
+ 9     10
+10     17
+11     19
+12     17
+13     14
+14     16
+15     15
+16     13
+17     14
+18     16
+19     11
+20     20
+21     11
+22     19
+23     16
+24     31
+25     13

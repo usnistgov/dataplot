@@ -1,0 +1,37 @@
+----- <~dex2kmp\conftabu.top> Confounding: Tabulation vs. Construction
+ 
+Confounding: Tabulation vs. Construction
+ 
+The determination of what is confounded with what in
+fractional factorial designs is a straightforward
+operation.  In essence, it boils down to looking at all
+possible main factors, 2-term cross-product factors,
+3-term cross-product factors, ..., k-term cross-product
+factors and determining which subsets of such
+factors have identical - and + settings (and are
+thus confounded).  Unfortunately, this becomes
+tedious for moderate and larger values of k. This
+leads us to a second purpose of this catalog--to
+provide confounding structure for 2-level
+fractional factorial designs.  Such detailed
+structure is provided for all 2-level designs with
+number k of factors up to 11 and with sample size
+n up tp 128).
+ 
+Careful examination of the confounding structure
+in combination with engineering/scientific
+judgement about the potential existence of
+interactions, can lead to dramatic reductions in
+sample size for a given number of factors to be
+examined.  An excellent (or extreme--depending on
+one's perspective) example of this reduction is
+the 2**(7-4) design which examines k = 7 factors
+with only n = 8 runs.  The sample size is
+minimally small; on the other hand, this
+"saturated" (n = k+1) fractional factorial design
+must be used with caution--a caution that is
+dictated by the engineer's judgment as to which
+factors are likely and unlikely to interact.  If
+such caution are not attended to, then faulty
+engineering conclusions may result.
+ 

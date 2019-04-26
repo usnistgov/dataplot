@@ -1,0 +1,10 @@
+----- <~univ\ppccplot.top> PPCC Plot
+
+PPCC Plot
+
+symmetric distributions              <xemf: ~univ\ppccplsy.men>
+skewed distributions                 <xemf: ~univ\ppccplsk.men>
+additional skewed distributions      <xemf: ~univ\ppccpls2.men>
+discrete discributions               <xemf: ~univ\ppccpldi.men>
+
+2-parameter distributions            <xemf: ~univ\ppccpl2p.men>

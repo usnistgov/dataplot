@@ -1,0 +1,32 @@
+----- <~mvar\discdisc.top> Discussion: Discrimination/Classification Analysis
+ 
+Discussion: Discrimination/Classification Analysis
+ 
+NOTE: These menus are still under 
+      development/debugging and should not
+      be used yet.
+
+
+Discriminant analysis and classification are closely
+related multivariate techniques.  Discrimination is used
+to "separate" observations into distinct groups while
+classification attempts to allocate a new observation to
+previously defined groups.
+
+Typically, a discriminant analysis is applied to data with
+known groups (i.e., a training set) in order to come up with
+a classification rule for new observations.
+
+There are many approaches and techniques to discrimination and
+classification.  Although Dataplot does not support any of
+these methods directly, the matrix and statistics commands can be
+used to write macros for some of these procedures.
+
+Macros are provided for 2 of the more common traditional methods.
+
+   1) Expected Cost of Misclassification (ECM)   <~mvar\ecmdiscr.top>
+   2) Fisher's Discriminant Analysis             <~mvar\fishdisc.top>
+
+
+There are many other methods and approaches to this problem.
+

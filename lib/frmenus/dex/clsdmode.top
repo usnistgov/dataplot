@@ -1,0 +1,27 @@
+----- <~dex\clsdmode.top> Models: Latin Square Designss
+
+Models for Latin Square+ Designs
+
+   Y(i,j,k) = MU + R(i) + C(j) + T(k) + random error
+
+where
+
+   Y(i,j,k) is any observation for which
+            X1 = i, X2 = j, X3 = k
+            X1 and X2 are blocking factors
+            X3 is the primary factor
+   MU is the general location parameter
+   R(i) is the effect for being in row block i
+   C(j) is the effect for being in column block j
+   T(k) is the effect for being in treatment k
+
+Estimates--
+
+   Est. for MU:   ybarall = the average of all the data
+   Est. for R(i): ybar(i) - ybarall
+                  ybar(i) = average of all Y for which X1 = i
+   Est. for C(j): ybar(j) - ybarall
+                  ybar(j) = average of all Y for which X2 = j
+   Est. for T(k): ybar(k) - ybarall
+                  ybar(k) = average of all Y for which X3 = k
+

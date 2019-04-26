@@ -1,0 +1,27 @@
+This is file creaxseq.men--Generate a sequence
+ 
+--------------------
+ 1. Sequence
+ 2. LET X = SEQUENCE -10  0.1  10
+ 3.
+ 4. This menu is used to create the x variable for
+ 5. the influence curve.  Specify the start value,
+ 6. the increment, and the stop value.
+ 7.
+ 8. Start value (a real number):
+ 8. @CE 1 0 42 50 ?
+ 9. Stop value (a real number):
+ 9. @CE 2 0 42 50 ?
+10. Increment (a real number):
+10. @CE 3 0 42 50 ?
+11. Variable to store the sequence:
+11. @CE 4 0 42 50 ? gui-none
+12.
+13.
+14. Generate the Sequence?:
+--------------------
+GR FE
+LET _4 = SEQUENCE _1 _3 _2
+--------------------
+WEB HELP SEQUENCE
+--------------------

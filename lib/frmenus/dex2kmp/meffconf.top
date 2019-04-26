@@ -1,0 +1,21 @@
+----- <~dex2kmp\meffconf.top> Main Effect Confounding
+ 
+Main Effect Confounding
+ 
+The confounding structure for the 3 main effects of a
+2**(3-1) design are
+ 
+   1 = 1 + 23
+   2 = 2 + 13
+   3 = 3 + 12
+ 
+This was determined by "multiplying" through the
+defining relation by 1 and 2 and 3, respectively.
+Since these main effects are confounded with 2-term
+interactions, then this is a resolution 3 (= 2+1)
+design.  Care must be exercised in interpreting any of
+the main effect estimates because they have
+contributions (of an unknown sign or magnitude) from a
+2-term interaction (which in nature may or may not be
+real).
+ 

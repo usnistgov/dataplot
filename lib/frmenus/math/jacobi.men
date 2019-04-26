@@ -1,0 +1,33 @@
+This is file jacobi.men--Compute Jacobi Polynomial
+ 
+--------------------
+ 1. Jacobi Polynomial
+ 2. LET Y = JACOBIP(X,N,A,B)
+ 3.
+ 4. Horizontal axis variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Order of the Jacobi Polynomial (integer from 0 to 25):
+ 5. @CE 2 0 42 50 ? gui-none
+ 6. First shape parameter (A):
+ 6. @CE 3 0 42 50 ? gui-none
+ 7. Second shape parameter (B):
+ 7. @CE 4 0 42 50 ? gui-none
+ 8. Variable to store the transformed result:
+ 8. @CE 5 0 42 50 ?
+ 9.
+10. Plot?:
+10. @CE 6 1 14 20 no
+10. @CE 6 2 22 28 yes
+11.
+12. Subset/Except/For Specification:
+13. @CE 7 0 -5 50 *
+14.
+15.
+16. Compute the Transformation?:
+--------------------
+GR FE
+LET _5 = JACOBIP( _1 , _2 , _3 , _4 ) _7
+@IF 6 2 PLOT _5  _1  _7
+--------------------
+WEB HELP JACOBIP
+--------------------

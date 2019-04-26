@@ -1,0 +1,10 @@
+----- <~file\CAPTVIEW.DP> View the capture file
+
+. This is file    CAPTVIEW.DP
+IF CAPTSWIT EXISTS
+   IF CAPTSWIT > 0
+      END OF CAPTURE
+   END OF IF
+END OF IF
+LET CAPTSWIT = 0
+LIST  ^CAPTNAME

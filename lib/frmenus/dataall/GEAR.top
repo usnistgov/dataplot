@@ -1,0 +1,8 @@
+----- <~dataall\GEAR.top> GEAR.DAT
+
+GEAR.DAT
+
+View     <xcl: LIST GEAR.DAT>
+Load     <xcf: ~dataload/GEAR.DP>
+Print    <xccl: printfile C:\DATAPLOT\GEAR.DAT>
+

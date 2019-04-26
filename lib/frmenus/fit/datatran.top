@@ -1,0 +1,14 @@
+----- <~fit\datatran.top> Data Transformations
+ 
+Data Transformations
+ 
+Box-Cox Linearity Transformation      <xemf: ~plot\bcliplot.men>
+
+Transformations
+ 
+   Arithmetic Operations (+,-,/,*,**)    <xemf: ~math\arithm.men>
+   1-Variable Elementary Operations      <xemf: ~math\arithm1.men>
+   2-Variable Elementary Operations      <xemf: ~math\arithm2.men>
+   Trigonometric Functions               <xemf: ~math\trig.men>
+   Exponential and Logarithmic Functions <xemf: ~math\log.men>
+

@@ -1,0 +1,32 @@
+This is Dataplot file    C:\DATAPLOT\HELP\LINES.
+ 
+Purpose: List the line types available within Dataplot
+ 
+Example of usage:
+ 
+   LINES BLANK SOLID
+ 
+Within Dataplot, this LINES file may be viewed by entering:
+ 
+   LIST LINES.     (be sure to include the trailing .)
+ 
+You may specify 8 different line types within Dataplot:
+ 
+   no line         BLANK or NONE   or BL or NO
+   solid           SOLID or SO
+   dotted          DOT   or DOTTED or DO
+   dashed          DASH  or DASHED or DA
+   dashed type 1   DASH1 or DA1
+   dashed type 2   DASH2 or DA2
+   dashed type 3   DASH3 or DA3
+   dashed type 4   DASH4 or DA4
+ 
+The short designations (e.g., BL for BLANK, SO for
+SOLID, DA3 for DASH3) allow for the specification of a
+large number of line types on a single command line, as in
+ 
+   LINES SO SO SO SO SO DO DO DO DO DO DA DA DA DA DA
+ 
+DATAPLOT does all dash patterns in hardware, so dashed
+lines may have a somewhat different appearance on
+different devices.

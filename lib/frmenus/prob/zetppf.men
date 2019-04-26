@@ -1,0 +1,29 @@
+This is file zetppf.men--Compute Zeta ppf
+ 
+--------------------
+ 1. Compute Zeta ppf
+ 2. LET A = ZETPPF(X,ALPHA)
+ 3.
+ 4. Input values:
+ 5.                       x (0 <= x < 1):
+ 5. @CE 1 0 42 50 ?
+ 6.    shape parameter alpha (alpha > 1):
+ 6. @CE 2 0 42 50 ?
+ 7.
+ 8. Output parameters:
+ 9.      name for the ppf  value:
+ 9. @CE 3 0 42 50 ?
+10.
+11.
+12. Compute the Probability?
+--------------------
+AN FE
+LET ZP = 1.5
+@IF 2 0 LET ZP = _2
+IF ZP <= 1
+   LET ZP = 1.5
+END OF IF
+@IF 3 0 LET _3 = ZETPPF( _1 ,ZP)
+--------------------
+WEB HELP ZETPPF
+--------------------

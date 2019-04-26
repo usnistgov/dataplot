@@ -1,0 +1,29 @@
+This is file planss.men--Generate Single Sample Acceptance Plan
+ 
+--------------------line 3
+1. Binomial Single Sample Acceptance Plan
+2. SINGLE SAMPLE ACCEPTANCE PLAN P1 P2 ALPHA BETA
+3.
+4. Value for P1 (= Acceptable Quality Level):
+4. @CE 1 0 42 50 ?
+5. Value for P2 (= Lot Tolerance Percent Defective, P2 > P1):
+5. @CE 2 0 42 50 ?
+6. Value for Alpha:
+6. @CE 3 0 42 50 ?
+7. Value for Beta:
+7. @CE 4 0 42 50 ?
+8.
+9. Parameter to Save Sample Size:
+9. @CE 5 0 42 50 ?
+10. Parameter to Save Acceptance Number:
+10. @CE 6 0 42 50 ?
+11.
+12.
+13. Generate the Sampling Plan?:
+--------------------
+SINGLE SAMPLE ACCEPTANCE PLAN _1 _2 _3 _4
+LET _5 = SSN
+LET _6 = SSC
+--------------------
+WEB HELP SINGLE SAMPLE ACCEPTANCE PLAN
+--------------------

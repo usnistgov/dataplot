@@ -1,0 +1,56 @@
+. THIS IS DATAPLOT PROGRAM FILE   ASQCSAL.DP
+. BLOCK PLOT OF ASQC SALARY (BY EDUCATION & JOB TYPE)
+.
+. -----START POINT----------
+.
+LET STRING MARK = ASQCSAL.DP
+.
+. ------------------------
+. STEP 1--READ IN THE DATA
+. ------------------------
+.
+SKIP 25
+READ ASQCSAL.DAT Y EDU JOB
+.
+. -------------------------------
+. STEP 2--GENERATE THE BLOCK PLOT
+. -------------------------------
+.
+TITLE ASQC Salary Study (Quality Progress, September, 1993)
+Y1LABEL Salary (in Thousands of $)
+XLABEL Job
+X3LABEL AUTOMATIC
+LEGEND 1 G = Grade School  H = High School   V = Vocational   A = Associate
+LEGEND 2 B = Bachelors  M = Masters   P = Ph.D.
+LEGEND 1 COORDINATES 16 87
+LEGEND 2 COORDINATES 16 84
+CHARACTERS G H V A B M P
+LINES BL BL BL BL BL BL BL
+XLIMITS 1 12
+YLIMITS 0 100
+X1TICS OFF
+X1TIC LABELS OFF
+BLOCK PLOT Y JOB EDU SUBSET Y > 0
+.
+FEEDBACK OFF
+LET STRING S1 = ALL
+LET STRING S2 = IND. CONS.
+LET STRING S3 = HOUSE CONS.
+LET STRING S4 = Director
+LET STRING S5 = Engineer
+LET STRING S6 = Inspector
+LET STRING S7 = Manager
+LET STRING S8 = Professor
+LET STRING S9 = Specialist
+LET STRING S10 = Statistician
+LET STRING S11 = Supervisor
+LET STRING S12 = Technician
+JUSTIFICATION CENTER
+HW 1 0.5
+LOOP FOR K = 1 1 12
+   MOVEDATA K 0
+   TEXT ^S^K
+END LOOP
+FEEDBACK ON
+.
+CALL MARK.DP

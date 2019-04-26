@@ -1,0 +1,64 @@
+This is file probgumb.men--PPCC  (Gumbel)
+
+--------------------
+1. Probability Plot Fitting (Gumbel = Extreme Value Type 1)
+2. EXTREME VALUE TYPE 1 PROBABILITY PLOT Y
+3.
+4. Probability plots can be generated for either raw
+5. data or frequency data.
+6. 
+7. Response or Frequency Variable:
+7. @CE 1 0 42 50 ? gui-variable
+8. Optional Response Variable (for frequency data):
+8. @CE 2 0 42 50 * gui-variable
+9.
+10. Type of Gumbel:
+10. @CE 3 1 42 45 min
+10. @CE 3 2 47 50 max
+11.
+12.
+13. Subset/Except/For Specification:
+14. @CE 4 0 1 50 *
+15.
+16. Generate the Probability Plot?
+--------------------
+GR FE
+@IF 3 1 SET MINMAX 1
+@IF 3 2 SET MINMAX 2
+EXTREME VALUE TYPE 1 PROBABILITY PLOT _1 _2 _4
+SLEEP 3
+LET ZZZZRAW = 0
+@IF 2 0 LET ZZZZRAW = 1
+IF ZZZZRAW = 0
+  X3LABEL LOCATION = ^PPA0, SCALE = ^PPA1
+  SET RELATIVE HISTOGRAM AREA
+  RELATIVE HISTOGRAM _1 _4
+  LIMITS FREEZE
+  PRE-ERASE OFF
+  LET ZZZZ1 = MINIMUM _1
+  LET ZZZZ2 = MAXIMUM _1
+  LET ZZZZINC = (ZZZZ2 - ZZZZ1)/1000
+  LET ZZZZLOCA = ^PPA0
+  LET ZZZZSCAL = ^PPA1
+  PLOT EV1PDF(ZZZZX,ZZZZLOCA,ZZZZSCAL) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+  PRE-ERASE ON
+  LIMITS
+END OF IF
+IF ZZZZRAW = 1
+  X3LABEL LOCATION = ^PPA0, SCALE = ^PPA1
+  PLOT _1 _2 _4
+  LIMITS FREEZE
+  PRE-ERASE OFF
+  LET ZZZZ1 = MINIMUM _2
+  LET ZZZZ2 = MAXIMUM _2
+  LET ZZZZINC = (ZZZZ2 - ZZZZ1)/1000
+  LET ZZZZLOCA = ^PPA0
+  LET ZZZZSCAL = ^PPA1
+  PLOT EV1PDF(ZZZZX,ZZZZLOCA,ZZZZSCAL) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+  PRE-ERASE ON
+  LIMITS
+END OF IF
+X3LABEL
+--------------------
+WEB HELP PROBABILITY PLOT
+--------------------

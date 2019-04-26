@@ -1,0 +1,13 @@
+----- <~univ\disttest.top> Test Shift in Distribution from Reference
+
+Test Shift in Distribution from Reference
+
+Checking assumptions                            <xemf: ~univ\4plot.men>
+
+Probability Plotting                            <~univ\probplot.top>
+PPCC Plotting                                   <~univ\ppccplot.top>
+Superimpose histogram and probability function  <~prob\histpdfp.top>
+
+Anderson-Darling Goodness of Fit Test           <~stat\andedarl.men>
+Kolmogorov-Smirnoff Testing                     <~univ\ks.top>
+

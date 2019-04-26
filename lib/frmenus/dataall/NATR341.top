@@ -1,0 +1,8 @@
+----- <~dataall\NATR341.top> NATR341.DAT
+
+NATR341.DAT
+
+View     <xcl: LIST NATR341.DAT>
+Load     <xcf: ~dataload/NATR341.DP>
+Print    <xccl: printfile C:\DATAPLOT\NATR341.DAT>
+

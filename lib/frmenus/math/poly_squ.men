@@ -1,0 +1,22 @@
+This is file poly_squ.men--Compute polynomial square of a variable
+ 
+--------------------
+ 1. Polynomial Square
+ 2. LET Y2 = POLYNOMIAL SQUARE Y1
+ 3.
+ 4. Variable for the polynomial square:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the polynomial square:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 4 0 -5 50 *
+ 9.
+10.
+11. Compute the Polynomial Square?:
+--------------------
+GR FE
+LET _2 = POLYNOMIAL SQUARE  _1 _3
+--------------------
+WEB HELP POLYNOMIAL SQUARE
+--------------------

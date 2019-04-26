@@ -1,0 +1,20 @@
+. This is Dataplot macro    DEXKN.DP
+. Purpose--write out k = (number of factors)
+.          and       n = (number of runs)
+. in upper left corner in a shaded box.
+. Input: k = number of factors
+.        n = number of runs
+. Output: none
+.
+. -----start point-----
+.
+. box fill on
+. box fill pattern solid
+. box fill color g80
+box 15 85 21 90
+hw 2 1; just left
+move 16 87.75; text k = ^k
+move 16 85.75; text n = ^n
+box fill pattern blank
+box fill color g80
+.

@@ -1,0 +1,77 @@
+This is file normppre.men--Normal Probability Plot of Residuals
+ 
+--------------------
+ 1. Normal Probability Plot of Residuals
+ 2. NORMAL PROBABILITY PLOT RES
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. Total number of components to be included
+ 6. in the model (including additive constant):
+ 7. @CE 2 0 1 10
+ 8. Factors & interactions in the model:
+ 9.     component  1:   additive constant
+10.     component  2:
+11. @CE 3 0 25 50 *
+12.     component  3:
+12. @CE 4 0 25 50 *
+13.     component  4:
+13. @CE 5 0 25 50 *
+14.     component  5:
+14. @CE 6 0 25 50 *
+15.     component  6:
+15. @CE 7 0 25 50 *
+16.     component  7:
+16. @CE 8 0 25 50 *
+17.     component  8:
+17. @CE 9 0 25 50 *
+18.     component  9:
+18. @CE 10 0 25 50 *
+19.     component 10:
+19. @CE 11 0 25 50 *
+20.
+21. Subset/Except/For Specification:
+22. @CE 12 0 1 50 *
+23.
+24.
+25. Generate the Plot?:
+--------------------
+GR FE
+LET ZY = _1
+LET ZNUMPAR = 2
+.
+IF ZNUMPAR = 1
+   CONSTANT FIT ZY ZY
+END IF
+IF ZNUMPAR = 2
+   FIT ZY _3
+END IF
+IF ZNUMPAR = 3
+  FIT ZY _3 _4
+END IF
+IF ZNUMPAR = 4
+  FIT ZY _3 _4 _5
+END IF
+IF ZNUMPAR = 5
+  FIT ZY _3 _4 _5 _6
+END IF
+IF ZNUMPAR = 6
+  FIT ZY _3 _4 _5 _6 _7
+END IF
+IF ZNUMPAR = 7
+  FIT ZY _3 _4 _5 _6 _7 _8
+END IF
+IF ZNUMPAR = 8
+  FIT ZY _3 _4 _5 _6 _7 _8 _9
+END IF
+IF ZNUMPAR = 9
+  FIT ZY _2 _3 _4 _5 _6 _7 _8 _9 _10
+END IF
+.
+LINES BLANK
+CHARACTER X
+.
+NORMAL PROBABILITY PLOT RES
+--------------------
+WEB HELP PROBABILITY PLOT
+--------------------

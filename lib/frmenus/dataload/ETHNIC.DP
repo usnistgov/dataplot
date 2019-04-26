@@ -1,0 +1,8 @@
+----- <~dataload\ETHNIC.DP> Load ETHNIC.DAT
+
+. This is file    ETHNIC.DP
+
+DELETE Y X
+SKIP 25
+READ ETHNIC.DAT Y X
+

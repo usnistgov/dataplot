@@ -1,0 +1,10 @@
+----- <~dataloex\FLURY5.DP> Load & Execute FLURY5.DAT
+
+. This is file    FLURY5.DP
+
+DELETE Y1 TO Y6 TAG
+SKIP 25
+READ FLURY5.DAT Y1 TO Y6 TAG
+TITLE FLURY5.DAT
+/
+

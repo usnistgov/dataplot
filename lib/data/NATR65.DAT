@@ -1,0 +1,31 @@
+This is Dataplot data file     NATR65.DAT
+Multiple Regression Example (numerically-convenient example)
+Question: What function relates Y to X1, X2, and X3?
+ 
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 6-5 to 6-17.
+ 
+Number of observations             =  6
+Number of variables per line image =  4
+Order of variables on a line image--
+   1. Response Variable Y = response
+   2. Factor 1         X1 = factor 1
+   3. Factor 2         X2 = factor 2
+   4. Factor 3         X3 = factor 3
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR65.DAT Y X1 X2 X3
+   FIT Y X1 X2 X3
+ 
+ 
+ 
+Y    X1    X2    X3
+--------------------
+2     1     8     1
+4     2     8     7
+4     2     6     0
+4     3     1     2
+3     4     2     7
+3     4     5     1

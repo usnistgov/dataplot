@@ -1,0 +1,8 @@
+----- <~dataload\CROARKIN.DP> Load CROARKIN.DAT
+
+. This is file    CROARKIN.DP
+
+DELETE Y X
+SKIP 25
+READ CROARKIN.DAT Y X
+

@@ -1,0 +1,35 @@
+----- <~1fac\1facanal.top> 1-Factor Analysis
+
+1-Factor Analysis
+
+Discussion                        <~1fac\discussi.top>
+Assumptions                       <~1fac\assumpti.top>
+
+Graphical Techniques              <~1fac\viewdata.top>
+Quantitative Techniques           <~1fac\stattech.top>
+
+Roadmap: Testing                  <~1fac\roadmap.roo>
+Testing Assumptions
+    Shift in Location?   mu1-mu2           <~1fac\location.top>
+    Shift in Variation?  sigma1-sigma2     <~1fac\variatio.top>
+    Shift in Rel. Var.?  (100*sigma1/mu1-100*sigma2/mu2) <~1fac\relvaria.top>
+Core questions
+    Shift in Location?                <~1fac\shifloca.top>
+    Shift in Variation?               <~1fac\shifvari.top>
+    Shift in Relative Variation?      <~1fac\shifrelv.top>
+    Shift in Distribution?            <~1fac\shifdist.top>
+
+Statistical categories
+    Estimation                     <~1fac\estimati.top>
+    SD (estimation)                <~1fac\sdestima.top>
+    Confidence Limits              <~1fac\conflimi.top>
+    Test                           <~1fac\testing.top>
+
+Built-in data sets
+    View                           <~dataview\1fac.top>
+    Load                           <~dataload\1fac.top>
+
+Worked Examples                   <~1fac\anovexam.top>
+
+References                        <~1fac\referenc.top>
+

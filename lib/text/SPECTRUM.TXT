@@ -1,0 +1,18 @@
+----------  *SPECTRUM*  ----------
+
+               Electromagnetic Spectrum
+
+                                  Minimum    Maximum        Typical
+                                 Cycles/Sec Cycles/Sec    Wavelength
+
+ELF (Ext. Low Freq., Power Lines)   10**0     10**3       3000 miles
+VLF (Very Low Freq., AM Radio)      10**3     10**7       1000 feet
+VHF (Very High Freq., TV)           10**8     10**9       10 feet
+Microwaves (Radar, Microwaves)      10**9     10**11      1 inch
+Infrared                            10**12    10**14      10**-3 inch
+Visible Light                       10**15    10**15      10**-5 inch
+Ultraviolet (ionizing)              10**15    10**17      10**-6 inch
+X-Rays (ionizing)                   10**16    10**21      10**-10 inch
+Gamma Rays (ionizing)               10**19    10**22      10**-11 inch
+
+   Source: Derived from Washington Post, Dec. 16, 1987, page D3

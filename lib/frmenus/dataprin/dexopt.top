@@ -1,0 +1,9 @@
+----- <~dataprin\dexopt.top> Print (to Printer) Optimization Design Data
+
+Print (to Printer) Optimization Design Data
+
+BOXCLEAN.DAT  2**(4-1)  Cleanser stability <xcf: ~dataprin\BOXCLEAN.DP>
+
+BOXYIELD.DAT* 2**3 wcp  Yield & time, temp <xcf: ~dataprin\BOXYIELD.DP>
+BOXYIEL2.DAT  2**3 wcp  Yield & time, temp <xcf: ~dataprin\BOXYIEL2.DP>
+

@@ -1,0 +1,8 @@
+----- <~dataall\KIRBY2.top> KIRBY2.DAT
+
+KIRBY2.DAT
+
+View     <xcl: LIST KIRBY2.DAT>
+Load     <xcf: ~dataload/KIRBY2.DP>
+Print    <xccl: printfile C:\DATAPLOT\KIRBY2.DAT>
+

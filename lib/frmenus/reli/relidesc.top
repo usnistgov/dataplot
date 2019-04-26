@@ -1,0 +1,17 @@
+----- <~reli\relidesc.top> Distributional Descriptions: Reliability
+
+Distributional Descriptions: Reliability
+
+Normal                                   <~prob\nordesc.top>
+Lognormal                                <~prob\lgndesc.top>
+
+Exponential                              <~prob\expdesc.top>
+Weibull (Minimum)                        <~prob\wei1desc.top>
+Weibull (Maximum)                        <~prob\wei2desc.top>
+Gamma                                    <~prob\gamdesc.top>
+
+Inverse Gaussian                         <~prob\ingdesc.top>
+Reciprocal Inverse Gaussian              <~prob\rigdesc.top>
+Wald                                     <~prob\walesc.top>
+Fatigue Life                             <~prob\ftldesc.top>
+

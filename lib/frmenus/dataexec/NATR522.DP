@@ -1,0 +1,11 @@
+----- <~dataexec\NATR522.DP> Load & Execute NATR522.DAT
+
+. This is file    NATR522.DP
+
+DELETE Y X
+SKIP 25
+READ NATR522.DAT Y X
+TITLE NATR522.DAT
+FIT Y X
+6-PLOT Y X
+

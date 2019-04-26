@@ -1,0 +1,10 @@
+----- <~dataloex\SHEESLE2.DP> Load & Execute SHEESLE2.DAT
+
+. This is file    SHEESLE2.DP
+
+DELETE Y X1 TO X4
+SKIP 25
+READ SHEESLE2.DAT Y X1 TO X4
+TITLE SHEESLE2.DAT
+/
+

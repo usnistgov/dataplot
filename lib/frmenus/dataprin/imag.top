@@ -1,0 +1,10 @@
+----- <~dataprin\imag.top> Print (to Printer) Time Series Data: Image Analysis
+
+Print (to Printer) Time Series Data: Image Analysis
+
+EHRSTEIN.DAT  Semicond. wafer resistiv.  <xcf: ~dataprin\EHRSTEIN.DP>
+BENNETT.DAT   Fracture surface roughness <xcf: ~dataprin\BENNETT.DP>
+BRAIN.DAT     Brain wave analysis        <xcf: ~dataprin\BRAIN.DP>
+CUBE.DAT      Vertices of a cube         <xcf: ~dataprin\CUBE.DP>
+WOOLLEY.DAT   Optical disk errors        <xcf: ~dataprin\WOOLLEY.DP>
+

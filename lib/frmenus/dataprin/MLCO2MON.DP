@@ -1,0 +1,6 @@
+----- <~dataprin\MLCO2MON.DP> Print (to Printer) MLCO2MON.DAT
+
+. This is file    MLCO2MON.DP
+
+PRINT MLCO2MON.DAT
+

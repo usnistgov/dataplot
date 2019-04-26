@@ -1,0 +1,18 @@
+This is file crea_fun.men--Create a user-defined function
+ 
+--------------------
+ 1. Create a User-Defined Function
+ 2. LET FUNCTION F = A*EXP(1-X)/X
+ 3.
+ 4. Name for the function:
+ 4. @CE 1 0 33 50 ?
+ 5. Enter the functional expression:
+ 6. @CE 2 0 -20 50 ? gui-none
+ 7.
+ 8. Create the Function?:
+--------------------
+GR FE
+LET FUNCTION _1 = _2
+--------------------
+WEB HELP LET FUNCTION
+--------------------

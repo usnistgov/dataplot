@@ -1,0 +1,95 @@
+This is Dataplot data file    NELS28.DAT
+Hours to failure of diesel engine fans
+Response variable = hours to failure
+Engineering problem 1: Estimate the percentage failing
+                       on an 8000 hour warranty.
+Engineering problem 2: Determine if the failure rate of the
+                       fans decrease or increase with age.
+Number of observations = 70 (with 12 failures and 58 unfailed)
+Type of experiment: multiply-censored (thus use hazard plotting)
+Number of variables per line image = 2
+Order of variables on a line image--
+   1. Response variable = hours to failure
+   2. Failure tag variable (2 levels: 1 => failed; 2 => not failed)
+Source--
+   Nelson, Wayne (1986). How to Analyze Data with
+   Simple Plots.  The ACQC Basic References in Quality
+   Control: Statistical Techniques.  Volume 1.  American
+   Society for Quality Control, Milwaukee, Wisconsin, p. 28.
+Statistical area = Reliability
+To read this file into Dataplot--
+   SKIP 25
+   READ NELS28.DAT Y TAG
+ 
+Hours to Failure   Fail/No-fail Indicator
+----------------------------------------------
+      450                1
+      460                2
+     1150                1
+     1150                1
+     1560                2
+     1600                1
+     1660                2
+     1850                2
+     1850                2
+     1850                2
+     1850                2
+     1850                2
+     2030                2
+     2030                2
+     2030                2
+     2070                1
+     2070                1
+     2080                1
+     2200                2
+     3000                2
+     3000                2
+     3000                2
+     3000                2
+     3100                1
+     3200                2
+     3450                1
+     3750                2
+     3750                2
+     4150                2
+     4150                2
+     4150                2
+     4150                2
+     4300                2
+     4300                2
+     4300                2
+     4300                2
+     4600                1
+     4850                2
+     4850                2
+     4850                2
+     4850                2
+     5000                2
+     5000                2
+     5000                2
+     6100                1
+     6100                2
+     6100                2
+     6100                2
+     6300                2
+     6450                2
+     6450                2
+     6700                2
+     7450                2
+     7800                2
+     7800                2
+     8100                2
+     8100                2
+     8200                2
+     8500                2
+     8500                2
+     8500                2
+     8750                1
+     8750                2
+     8750                2
+     9400                2
+     9900                2
+    10100                2
+    10100                2
+    10100                2
+    11500                2

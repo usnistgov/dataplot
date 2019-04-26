@@ -1,0 +1,12 @@
+----- <~dataloex\time.top> Load & Execute Built-in Time Series Data Files
+
+Load & Execute Built-in Time Series Data Files
+
+NIST data                                <~dataloex\timenist.top>
+NOAA data                                <~dataloex\timenoaa.top>
+Box-Jenkins data                         <~dataloex\timebj.top>
+Pandit DDS data                          <~dataloex\timedds.top>
+Other data                               <~dataloex\timeothe.top>
+Bivariate data                           <~dataloex\time2var.top>
+Image analysis data                      <~dataloex\imag.top>
+

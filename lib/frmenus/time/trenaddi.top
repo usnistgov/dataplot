@@ -1,0 +1,37 @@
+-----<~time\trenaddi.top> Trends in Time Series
+ 
+Discussion: Trends in Time Series
+ 
+The time series data set is one which has
+the model:
+
+   Y(i) = f(t(i)) + error
+        = deterministic component + random component
+
+A common assumption in most time series analysis
+is that the data are stationary.  Stationarity
+essentially means that the location of the series
+is constant.
+
+Many, if not most, time series do have a changing
+location over time.  This is referred to as the trend
+of the series.  An important first step in a time
+series analysis is often to detect and remove the
+trend.
+
+Often, taking 1 or 2 differences of the series and
+analyzing the differenced series is sufficient.
+The first difference is the series defined by
+    XNEW(t) = X(t) - X(t-1)
+Note that the differenced series will have 1 less
+observation.  The differencing can be applied
+iteratively (i.e., the second difference is the
+differencing of the first differenced series),
+although more than second differencing is rare.
+
+Another method for removing trend is to fit some
+type of curve to the original data and then apply
+time series analysis to the residuals.  Normally,
+a simple linear or quadratic curve is fit (the purpose
+is to remove the trend, not provide a complete fit).
+

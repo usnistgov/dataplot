@@ -1,0 +1,18 @@
+----- <~dataview\reli.top> View Built-in Reliability Data Files
+
+View Built-in Reliability Data Files
+
+By Source:
+   NIST data                           <~dataview\relinist.top>
+   Recipe data                         <~dataview\recipe.top>
+   Bury data                           <~dataview\relibury.top>
+   Wayne Nelson data                   <~dataview\relinels.top>
+   Tobias and Trindade data            <~dataview\relitobi.top>
+   Other data                          <~dataview\reliothe.top>
+
+By Type:
+   Uncensored failure data             <~dataview\reliunce.top>
+   Censored failure data               <~dataview\relicens.top>
+   Accelerated test data               <~dataview\reliacel.top>
+   Renewal process data                <~dataview\relirene.top>
+   Nonrenewal process data             <~dataview\relinonr.top>

@@ -1,0 +1,7 @@
+----- <~prob\pcdfmix.top> Plot Mixture cdf's
+
+Plot Mixture CDF Functions
+
+Normal Mixture           <xemf: ~prob\pnormcdf.men>
+Bi-Weibull               <xemf: ~prob\pbwecdf.men>
+

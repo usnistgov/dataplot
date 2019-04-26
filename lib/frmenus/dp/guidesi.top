@@ -1,0 +1,21 @@
+----- <~dp\guidesi.top> Design of Graphical Interface
+ 
+Design of the Graphical Interface
+ 
+The Dataplot gui provides the following 6 windows:
+
+These windows can typically be controlled
+using standard mouse operations on your local
+window system.  That is, they can be moved, 
+resized, closed, and so forth.  Since this
+involves standard mouse operations that are
+platform dependent (and independent of Dataplot),
+we don't discuss that issue further.
+
+ 1) Main Menu Window                 <~dp\guimain.top>
+ 2) Alphanumeric Output Window       <~dp\guioutp.top>
+ 3) Graphics Window                  <~dp\guigrap.top>
+ 4) Command Window                   <~dp\guicomm.top>
+ 5) Data Spreadsheet                 <~dp\guispre.top>
+ 6) Command Line                     <~dp\guicmdl.top>
+

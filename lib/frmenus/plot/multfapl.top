@@ -1,0 +1,9 @@
+----- <~plot\multfapl.top> Multi-Factor Plots
+
+Multi-Factor Plots
+
+Box Plot                <xemf: ~stat\boxplot.men>
+Violin Plot             <xemf: ~plot\violin.men>
+Plot Statistics         <xemf: ~stat\statplot.men>
+Block Plot              <xemf: ~stat\blockplo.men>
+

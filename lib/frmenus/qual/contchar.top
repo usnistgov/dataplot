@@ -1,0 +1,49 @@
+----- <~qual\contchar.top> Control Chart
+ 
+Control Chart
+ 
+Discussion                   <~qual\cochdisc.top>
+NIST/SEMATECH Handbook (Control Charts) <xcl: web handbook  control charts>
+ 
+Generate Univariate Control Charts
+   X (Mean) Control Chart                  <xemf: ~qual\xbarcont.men>
+   S (Standard Deviation) Control Chart    <xemf: ~qual\sdcont.men>
+   R (Range) Control Chart                 <xemf: ~qual\rangcont.men>
+
+   NP (Binomial Counts) Control Chart      <xemf: ~qual\npcont.men>
+   P (Binomial Proportion) Control Chart   <xemf: ~qual\pcont.men>
+   C (Poisson Counts) Control Chart        <xemf: ~qual\ccont.men>
+   U (Poisson Proportion) Control Chart    <xemf: ~qual\ucont.men>
+
+   CUSUM Mean Control Chart                <xemf: ~qual\cusum.men>
+
+   EWMA Control Chart                      <xemf: ~qual\ewmacont.men>
+   Moving Average Control Chart            <xemf: ~qual\movxcont.men>
+   Moving Range Control Chart              <xemf: ~qual\movrcont.men>
+   Moving Standard Deviation Control Chart <xemf: ~qual\movscont.men>
+
+Generate Multivariate Control Chart
+   Phase I  Hotelling Control Chart            <xemf: ~qual\hotecont.men>
+   Phase II Hotelling Control Chart            <xemf: ~qual\hotecon2.men>
+   Phase I  Hotelling Individual Control Chart <xemf: ~qual\hotecon3.men>
+   Phase II Hotelling Individual Control Chart <xemf: ~qual\hotecon4.men>
+   Principal Components Control Chart          <xemf: ~qual\princont.men>
+ 
+Operating Characteristic (OC) Curves       <~qual\occhart.top>
+Average Run Length (ARL) Curves            <~qual\arlchart.top>
+   
+Built-in datasets
+   View                      <~dataview\qualcoch.top>
+   Load                      <~dataload\qualcoch.top>
+
+Worked Examples
+   CCXBAR.DAT    Silicon Wafer Thickness    <xcl: CALL XBARCHAR.DP>
+   GEAR.DAT      Gear Diameter              <xcl: CALL GEAR.DP>
+   PCC.DAT       Defective Motors           <xcl: CALL PCC.DP>
+   PNCC.DAT      Defective Mirrors          <xcl: CALL PNCC.DP>
+   CCC.DAT       Number of Surface Defects  <xcl: CALL CCC.DP>
+   UCC.DAT       Cracks in Plastic Wires    <xcl: CALL UCC.DP>
+   T2CC.DAT      Multivariate Data          <xcl: CALL T2CC.DP>
+
+References                   <~qual\cochrefe.top>
+

@@ -1,0 +1,85 @@
+. This is the dataplot macro file     checkcorners.dp
+. Purpose: Compute the mean values at the 4 corner points
+.          this is needed to occasionally adjust the contour line spacing--
+.          especially when the 4 corners are near identical
+. Input:
+.       1. y  = the response variable
+.       2. u1 = desired horizontal axis factor (as -1 and +1)
+.       3. u2 = desired vertical axis factor (as -1 and +1)
+.       4. ycont = desired contour line values
+. Output:
+.   maxcorn (parameter) = maximum corner mean
+.   mincorn (parameter) = minimum corner mean
+.   delcorn (parameter) = difference between largest corner and smallest corne
+.
+. Note: The contour plot will range for -2 to 2
+.       in both u1 and u2 directions.
+. Note: The input u1 and u2 vectors usually consist
+.       of only -1 and +1 values, but may in fact
+.       have other values other than -1 and +1
+.       (e.g., center point values of (0,0)).
+.       note however that any u1 and u2 values other
+.       than -1 and +1 will    not    be used in the computation
+.       of the model coefficients
+.       and the subsequent contour lines.
+. Updated: June 1995, April 2007
+. Note: This macro creates several intermediate variables.
+.       a common cause for this macro to fail is that the user
+.       has an internal dataplot worksheet that is dimensioned
+.       (max number of variables)
+.       too small (for example, the default dimension
+.       on some computers may allow a max of 10 variables only).
+.       to adjust for this, the analyst may "manually"
+.       increase the max number of variables in the main program
+.       via the dimension statement, as in:
+.          dimension 50 variables
+. Example:
+.          dimension 50 variables
+.          skip 25
+.          read boxyield.dat y x1 x2
+.          let u1 = x1
+.          let u2 = x2
+.          let ycont = sequence 50 2 70
+.          call dexcont.dp
+.
+. -----start point-------------------
+.
+. print" At the beginning of   checkcorners.dp"
+. stat v
+. pause
+.
+. -----Step 1: Check input arguments for existence-----
+.
+let string stmacro = checkcorners.dp
+
+let string stall = y u1 u2 ycont
+call checkinput.dp
+
+. print y u1 u2
+. print ycont
+. pause
+.
+. -----Step 2: Extract only the corner points of the design
+.              (ignore center points, for example)-----
+.
+.
+. -----Step 3: Compute the means at the corner points-----
+.
+let count = 0
+let count = count+1
+let meancorn(count) = mean y subset u1 -1 subset u2 -1
+let count = count+1
+let meancorn(count) = mean y subset u1 +1 subset u2 -1
+let count = count+1
+let meancorn(count) = mean y subset u1 -1 subset u2 +1
+let count = count+1
+let meancorn(count) = mean y subset u1 +1 subset u2 +1
+. print meancorn
+. pause
+.
+let maxcorn = maximum meancorn
+let mincorn = minimum meancorn
+let delcorn = maxcorn - mincorn
+.
+. print maxcorn mincorn delcorn
+. pause

@@ -1,0 +1,60 @@
+. This is dataplot program   wtc_13_16.dp     2**(13-9)     1/13/15
+. Purpose: Analyze World Trade Center core column damage (k=13,n=16+1) via 10-step analysis
+. Design = 2**(13-9) fractional factorial design (with a center point)
+. Date: xx/yy/04
+.
+. -----start point-----
+.
+dimension 1000 variables     ;. note expanded dimension for k = 13  ***
+.
+. -----Step 1: Read in the data-----
+.
+let k = 13
+skip 50; read   wtc_13_16.dat   y x1 to x^k
+delete  y x1 to x^k for i = 9 1 9
+.
+. -----Step 2: Define strings-----
+.
+let string header = Factors Affecting World Trade Center Inner Core Column Damage
+let string header2 = Design: 2**(13-9) (k=13,n=16)
+let string trailer = wtc_13_16.dp
+let string trailer2 = Datafile: wtc_13_16.dat
+let string currdate = 3/5/04
+.
+let string sty = Core Column Damage
+
+let string stx1  = Impact speed at core col.
+let string stx2  = Impact location (vert.)
+let string stx3  = Impact location (horiz.)
+let string stx4  = Engine assignment set
+let string stx5  = Engine strength
+let string stx6  = Engine failure strain
+let string stx7  = Engine strain rate effects
+let string stx8  = Core col. strength
+let string stx9  = Core col. failure strain
+let string stx10 = Core col. strain rate effects
+let string stx11 = Model erosion parameter
+let string stx12 = Model contact parameter
+let string stx13 = Model friction coef.
+.
+let string stx1l  = 175 250
+let string stx2l  = 0 620
+let string stx3l  = 0 914
+let string stx4l  = 1 2
+let string stx5l  = -35 +35
+let string stx6l  = -50 +50
+let string stx7l  = 0 10
+let string stx8l  = -15 +15
+let string stx9l  = -50 +50
+let string stx10l = 0 10
+let string stx11l = 1 2
+let string stx12l = 1 2
+let string stx13l = 0 .6
+.
+let string stbest = down
+let string colorl = red blue
+.
+. -----Step 3: Carry out 10-step DEX analysis-----
+.
+call dex10stepanalysis.dp
+.

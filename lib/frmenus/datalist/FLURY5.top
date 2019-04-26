@@ -1,0 +1,8 @@
+----- <~datalist\FLURY5.top> FLURY5.DAT
+ 
+FLURY5.DAT
+ 
+View     <xcl: LIST FLURY5.DAT>
+Load     <x2cl: SKIP 25; READ FLURY5.DAT Y1 TO Y6 TAG>
+Print    <xccl: printfile C:\DATAPLOT\FLURY5.DAT>
+ 

@@ -1,0 +1,41 @@
+This is file   inn_8_16.dat         8/2/2004
+Plutonium Contamination
+Robert Radford and Ken Inn
+Date--August 2004
+2**(8-4) Fractional Factorial Design, BHH, Ed 1. p. 410
+(but extracted as an identical subset of the 2*((9-5)) ==> Res. 4
+Number of observations                   = 16
+Total number of variables per line image = 10
+Order of variables on a line image--
+   Response variable = Plutonium Amount (Bq)
+   Factor 1          = Glassware   (-1 = Operator 1,       +1 = Operator 2)
+   Factor 2          = Reagent     (-1 = Operator 1,       +1 = Operator 2)
+   Factor 3          = Sample Prep (-1 = Co-precipitation, +1 = Electrodeposition)
+   Factor 4          = Tracer      (-1 = Operator 1,       +1 = Operator 2)
+   Factor 5          = Dissolution (-1 = Without,          +1 = With)
+   Factor 6          = Hood        (-1 = Operator 1,       +1 = Operator 2)
+   Factor 7          = Chemistry   (-1 = Without,          +1 = With)
+   Factor 8          = Ashing      (-1 = Without,          +1 = With)
+To read this file into Dataplot--
+   skip 25
+   read inn_8_16.dat y x1 x2 x3 x4 x5 x6 x7 x8
+
+     Y       X1    X2    X3    X4    X5    X6    X7    X8
+    Pu      Glass Reag  Prep Tracer Diss  Hood Chem Ashing
+------------------------------------------------------------
+  0.000000   -1.   -1.   -1.   -1.   -1.   -1.   -1.   -1.
+  0.003312    1.   -1.   -1.   -1.   -1.    1.    1.    1.
+  0.000037   -1.    1.   -1.   -1.    1.   -1.    1.    1.
+  0.000000    1.    1.   -1.   -1.    1.    1.   -1.   -1.
+  0.000065   -1.   -1.    1.   -1.    1.    1.    1.   -1.
+  0.000133    1.   -1.    1.   -1.    1.   -1.   -1.    1.
+  0.000046   -1.    1.    1.   -1.   -1.    1.   -1.    1.
+  0.000030    1.    1.    1.   -1.   -1.   -1.    1.   -1.
+  0.000000   -1.   -1.   -1.    1.    1.    1.   -1.    1.
+  0.000287    1.   -1.   -1.    1.    1.   -1.    1.   -1.
+  0.000133   -1.    1.   -1.    1.   -1.    1.    1.   -1.
+  0.000048    1.    1.   -1.    1.   -1.   -1.   -1.    1.
+  0.000133   -1.   -1.    1.    1.   -1.   -1.    1.    1.
+  0.005749    1.   -1.    1.    1.   -1.    1.   -1.   -1.
+  0.000015   -1.    1.    1.    1.    1.   -1.   -1.   -1.
+  0.002470    1.    1.    1.    1.    1.    1.    1.    1.

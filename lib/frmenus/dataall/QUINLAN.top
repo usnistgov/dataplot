@@ -1,0 +1,8 @@
+----- <~dataall\QUINLAN.top> QUINLAN.DAT
+
+QUINLAN.DAT
+
+View     <xcl: LIST QUINLAN.DAT>
+Load     <xcf: ~dataload/QUINLAN.DP>
+Print    <xccl: printfile C:\DATAPLOT\QUINLAN.DAT>
+

@@ -1,0 +1,10 @@
+----- <~dataloex\mfac.top> Load & Execute Built-in Multifactor Data Files
+
+Load & Execute Built-in Multifactor Data Files
+
+1-factor data                            <~dataloex\1fac.top>
+2-factor data                            <~dataloex\2fac.top>
+3-factor data                            <~dataloex\3fac.top>
+4-factor data                            <~dataloex\4fac.top>
+>= 5-factor data                         <~dataloex\5fac.top>
+

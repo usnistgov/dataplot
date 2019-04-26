@@ -1,0 +1,22 @@
+This is file andedark.men--Anderson-Darling K Sample Test
+ 
+--------------------
+ 1. Anderson-Darling K Sample Test
+ 2. ANDERSON-DARLING K-SAMPLE TEST Y X
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Group ID Variable:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute Anderson-Darling K-Sample Test?
+--------------------
+AN FE
+ANDERSON-DARLING K-SAMPLE TEST _1 _2 _3
+--------------------
+WEB HELP ANDERSON-DARLING K-SAMPLE TEST
+--------------------

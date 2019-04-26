@@ -1,0 +1,59 @@
+. This is Dataplot macro   ARL_XBAR.DP
+. Purpose--Generate an Average Run Length (ARL) curve for a
+.          XBAR Control Chart.
+.          This is based on the formula:
+.              ARL = 1/(1-BETA)
+.          where BETA is the Y coordinate of the OC curve.
+.          The OC is defined as:
+.            NORCDF(3 - k*SQRT(N)) - NORCDF(-3-k*SQRT(N)) versus p
+.          where 
+.            n      = total sample size
+.            k      = k*sigma is the limit we want to be able to
+.                     detect
+.
+.          The OC is essentiallty a plot of the type II (or Beta error)
+.          (probability of incorrectly accepting the hypothesis of
+.          statistical control).  It measures the sensitivity of the
+.          control chart.
+.
+.          For k > 0, the ARL curve is the average number of runs it
+.          takes to detect an out of control process.   For k = 0, it
+.          is the average number of runs before an out of control
+.          signal is given for a process that is actually in control.
+.
+. Input --N        = variable containing sample sizes
+.       --KSTART   = 0
+.       --KINC     = increment between plot points
+.       --KSTOP    = stop point for plot
+. Output--graph
+.
+.
+delete zzzzy zzzzk zzzzarl
+.
+xlimits 0 5
+ylimits
+.
+let kstart = 0
+let kinct = 0.01
+let kstopt = 5.0
+if kinc exist
+  let kinct = kinc
+end of if
+if kstop exist
+  let kstopt = kstop
+  let kjunk=int(kstop+1)
+  xlimits 0 kstop
+end of if
+let function zzzzf = norcdf(3 - zzzzk*sqrt(n)) - norcdf(-3 - zzzzk*sqrt(n))
+.
+let zzzzk = sequence kstart kinct kstopt
+let zzzzy = zzzzf
+let zzzzarl = zzzzy
+let zzzzarl = 1/(1-zzzzy) subset zzzzy <> 1
+let zzzzarl = 0 subset zzzzy = 1
+.
+y1label Average Run Length 
+x1label Magnitude to Detect (standard deviation units)
+title ARL Curve for XBAR Control Chart (N = ^n)
+.
+plot zzzzarl vs zzzzk subset zzzzarl > 0

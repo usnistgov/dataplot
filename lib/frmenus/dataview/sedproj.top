@@ -1,0 +1,17 @@
+----- <~nist\sedproj.top> Discussion
+ 
+NIST Menu
+ 
+The menus in this section will typically be
+of interest NIST staff.  They are special menus
+geared to specific NIST courses and projects.
+Most of the menus in this section are only
+partially completed.
+
+This section can serve as a guide to customizing
+the Dataplot GUI for your local site.  If you have
+special or specific analyses at your site, you
+can write special menus to generate these analyses
+(and you might wish to rename the NIST button
+in the top.top menu to a more meaningful local name).
+

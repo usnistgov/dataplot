@@ -1,0 +1,18 @@
+reset data
+reset graphics
+reset i/o
+.
+dimension 500 30
+label size 3
+read mpc262.dat run wafer probe mo day op hum y sw
+y1label ohm.cm
+title GAUGE STUDY
+lines blank all
+let z = pattern 1 2 3 4 5 6 for I=1 1 300
+characters A B C D E F
+X1LABEL  WAFERS
+X2LABEL REPEATABILITY STANDARD DEVIATIONS BY WAFER AND DAY
+X3LABEL CODE FOR DAYS: A, B, C, D, E, F
+let z2 = wafer + z/10 -0.25
+TITLE RUN 2
+plot sw z2 day subset run 2

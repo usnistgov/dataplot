@@ -1,0 +1,8 @@
+----- <~dataall\BOXCAKE.top> BOXCAKE.DAT
+
+BOXCAKE.DAT
+
+View     <xcl: LIST BOXCAKE.DAT>
+Load     <xcf: ~dataload/BOXCAKE.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXCAKE.DAT>
+

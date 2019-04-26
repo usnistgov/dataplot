@@ -1,0 +1,8 @@
+----- <~dataload\ASSAY.DP> Load ASSAY.DAT
+
+. This is file    ASSAY.DP
+
+DELETE Y X
+SKIP 25
+READ ASSAY.DAT Y X
+

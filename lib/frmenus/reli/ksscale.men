@@ -1,0 +1,36 @@
+This is file ksscale.men--Fix location/scale for KS plots
+ 
+--------------------
+ 1. Fix location/scale for KS Plot
+ 2. LET KSSLOC=value; LET KSSCALE = value
+ 3.
+ 4. In some cases, it may be advantagous to fix
+ 5. the values of the location and scale parameters
+ 6. when generating a KS plot (you cannot do this for
+ 7. the PPCC plot).  This is particularly the case
+ 8. when a shape parameter acts much like a scale or
+ 9. location parameter.
+10.
+11. If you do choose to fix these values, a reasonable
+12. choice is to fix the scale parameter to 1 and the
+13. location value to 0 or to the minimum value of the
+14. data.
+15.
+16. To clear any previously set values, simply leave
+17. the following fields blank.
+18.
+19. Fixed value for location parameter:
+19. @CE 1 0 42 50 ? *
+20. Fixed value for location parameter:
+20. @CE 2 0 42 50 ? *
+21.
+22.
+23. Set the location/scale values for KS Plots?
+--------------------
+GR FE
+DELETE KSLOC KSSCALE
+@IF 1 0 LET KSLOC = _1
+@IF 2 0 LET KSSCALE = _2
+--------------------
+WEB HELP KS PLOT
+--------------------

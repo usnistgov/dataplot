@@ -1,0 +1,49 @@
+This is file wei1cdf.men--Compute Weibull (for minimum) cdf
+ 
+--------------------
+ 1. Compute Weibull (for minimum) cdf and tail prob.
+ 2. SET MINMAX MIN; LET A = WEICDF(X,SHAPE,LOC,SCALE)
+ 3.
+ 4. Note: The Weibull distribution can be based on either
+ 5.       the minimum or the minimum order statistic.
+ 6.       This menu computes the minimum case.
+ 7.       Example: minimum breaking strength of a chain.
+ 8.
+ 9. Input values:
+10.                              x (x >= mu):
+10. @CE 1 0 42 50 ?
+11.                  shape gamma (gamma > 0):
+11. @CE 2 0 42 50 ?
+12.                               location u:
+12. @CE 3 0 42 50 ?
+13.                          scale s (s > 0):
+13. @CE 4 0 42 50 ?
+14.
+15. Output parameters:
+16.                   name for the cdf value:
+16. @CE 5 0 42 50 ?
+17.      name for the tail probability value:
+17. @CE 6 0 42 50 ?
+18.
+19.
+20. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 3 0 LET ZLOC = _3
+LET ZSCALE = 1
+@IF 3 0 LET ZSCALE = _4
+IF ZSCALE <= 0
+   LET ZSCALE = 1
+END OF IF
+LET ZSHAPE = 1
+@IF 2 0 LET ZSHAPE = _2
+IF ZSHAPE <= 0
+   LET ZSHAPE = 1
+END OF IF
+SET MINMAX MIN
+@IF 5 0 LET _5 = WEICDF( _1 ,ZSHAPE,ZLOC,ZSCALE)
+@IF 6 0 LET _6 = 1 - WEICDF( _1 ,ZSHAPE,ZLOC,ZSCALE)
+--------------------
+WEB HELP WEICDF
+--------------------

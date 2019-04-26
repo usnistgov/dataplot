@@ -1,0 +1,10 @@
+----- <~dataexec\HAHN1.DP> Load & Execute HAHN1.DAT
+
+. This is file    HAHN1.DP
+
+DELETE Y
+SKIP 25
+READ HAHN1.DAT Y
+TITLE HAHN1.DAT
+/
+

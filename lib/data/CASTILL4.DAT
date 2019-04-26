@@ -1,0 +1,60 @@
+This is Dataplot Data File     CASTILL4.DAT
+Phone Data--Waiting time between phone calls (sec) (pre-sorted)
+Engineering Goal--Determine computer ability for heavy-traffic calls
+Response Variable = waiting time between phone calls (sec)
+Number of Observations = 35
+Number of Variables per line image = 1
+Order of variables per line image--
+   1. Response variable = wait time between phone calls (sec) (sort)
+Statistical Category--Extreme Value Analysis
+To read this into Dataplot--
+   SKIP 25
+   READ CASTILL4.DAT Y
+Source--Enrique Castillo (1988). Extreme Value Theory
+        in Engineering. Academic Press, San Diego, California,
+        p. 335.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Waiting time between phone calls (sec) (pre-sorted)
+--------------------------------------------------------------
+  0.000060
+  0.000074
+  0.000112
+  0.000200
+  0.000221
+  0.000236
+  0.000285
+  0.000298
+  0.000337
+  0.000374
+  0.000389
+  0.000416
+  0.000487
+  0.000559
+  0.000632
+  0.000645
+  0.000813
+  0.000960
+  0.001100
+  0.001130
+  0.001170
+  0.001280
+  0.001300
+  0.001350
+  0.001420
+  0.001560
+  0.001590
+  0.001720
+  0.002210
+  0.002380
+  0.002480
+  0.002640
+  0.003390
+  0.003480
+  0.005260

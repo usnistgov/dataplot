@@ -1,0 +1,43 @@
+----- <~handbook\quanttec.top> Quantitative Techniques
+
+EDA Quantitative Techniques
+
+Univariate
+   Summary Statistics for Univariate Data   <xemf: ~stat\summstat.men>
+   Confidence Limits for Mean               <xemf: ~stat\conlimme.men>
+   Confidence Limits for Proportion         <xemf: ~stat\conlimpr.men>
+   1 Sample T Test                          <xemf: ~stat\ttest.men>
+   Normal Tolerance Limits                  <xemf: ~stat\normtole.men>
+   Chi-Square Test for Standard Deviation   <xemf: ~stat\chisqtst.men>
+   Runs Test for Randomness                 <xemf: ~stat\runs.men>
+   Grubbs Test for Outliers                 <xemf: ~stat\grubb.men>
+   Wilk-Shapiro Test for Normality          <xemf: ~stat\wilkshap.men>
+   Chi-Square Goodness of Fit               <~univ\chisq.top>
+   Kolmogorov-Smirnov Goodness of Fit       <~univ\ks.top>
+   Anderson-Darling Goodness of Fit         <xemf: ~stat\andedarl.men>
+
+2 Response Variables                       <~stat\2resp.top>
+   Confidence Interval for Difference Between 2 Means <xemf: ~stat\diffconf.men>
+   Confidence Interval for Difference Between 2 Proportions <xemf: ~stat\diffprop.men>
+   T Test for Shift in Location             <xemf: ~stat\1flotest.men>
+   Sign Test for Paired Data                <xemf: ~stat\signtest.men>
+   Wilcoxon Signed Rank Sum Test (Paired Data) <xemf: ~stat\wilcoxon.men>
+   Wilcoxon Signed Rank U (= Mann-Whitney) Test<xemf: ~stat\mannwhit.men>
+   F Test for Shift in Variation            <xemf: ~stat\1fvatest.men>
+
+1 Response, 1 Factor                       <~stat\1res1fac.top>
+   F Test for Homogeneous Locations         <xemf: ~stat\ftestloc.men>
+   Bartlett Test for Homogeneous Variances  <xemf: ~stat\bartlett.men>
+   Levene Test for Homogeneous Variances    <xemf: ~stat\levene.men>
+   Tabulate Statistics for Grouped Data     <xemf: ~stat\tabulate.men>
+   Kruskal-Wallis 1-Factor ANOVA            <xemf: ~stat\kruskal.men>
+
+1 Response, 2 Factor                       <~stat\1res2fac.top>
+   Cross-Tabulate Statistics for Grouped Data <xemf: ~stat\crosstab.men>
+   Chi-Square Test for Independence           <xemf: ~stat\chisqind.men>
+
+General Multi-Factor                       <~stat\multfact.top>
+  Analysis of Variance (Balanced)          <xemf: ~stat\anova.men>
+  Analysis of Variance (Balanced, with Graphics) <xemf: ~stat\anovag.men>
+  Yates Analysis                           <xemf: ~stat\yates.men>
+

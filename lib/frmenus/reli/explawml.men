@@ -1,0 +1,70 @@
+This is file explawml.men--Fit Exponential Law Model
+ 
+--------------------
+ 1. Fit Exponential Law Model (Single System)
+ 2. EXPONENTIAL LAW MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Failure Times Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Optional Censoring Time:
+ 5. @CE 2 0 42 50 ?
+ 6.
+ 7. Character type for data:
+ 7. @CE 3 0 42 50 * gui-char
+ 8. Character fill for data:
+ 8. @CE 4 0 42 50 * gui-ooff
+ 9. Line type for fitted line:
+ 9. @CE 5 0 42 50 * gui-line
+10.
+11. Title:
+11. @CE 6 0 10 50 *
+12. Left Axis Label:
+12. @CE 7 0 22 50 *
+13. Bottom Axis Label:
+13. @CE 8 0 22 50 *
+14.
+15. Subset/Except/For Specification:
+16. @CE 9 0 1 50 *
+17.
+18.
+19. Estimate the Exponential Law Model and Plot?:
+--------------------
+GR FE
+LINE SAVE
+CHARACTER SAVE
+@IF 2 LET TEND = _2
+.
+DELETE ZZZZY ZZZZT ZZZZN
+LET ZZZZY = _1
+@IF 9 RETAIN ZZZZY _9
+EXPONENTIAL LAW MLE ZZZZY
+LET FUNCTION ZZZZF = (AHAT/BHAT)*(EXP(BHAT*ZZZZY) - 1)
+.
+LET ZZZZPRED = ZZZZF
+LET ZZZZN = SIZE ZZZZY
+LET ZZZZT = SEQUENCE 1 1 ZZZZN
+LET ZZZZRES = ZZZZY - ZZZZPRED
+.
+LINE SOLID ALL
+CHARACTER BLANK ALL
+CHARACTER X
+CHARACTER _3
+CHARACTER FILL _4
+LINES BLANK _5
+TITLE Maximum Likelihood Fit of Exponential Law Model
+Y1LABEL Cumulative Number of Repairs
+X1LABEL Repair Times
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+X3LABEL Mhat(t) = (^AHAT/^BHAT)*(EXP(^BHAT*t) - 1)
+PLOT ZZZZT ZZZZPRED VS ZZZZY
+.
+TITLE
+LABEL
+CHARACTER FILL OFF
+LINE RESTORE
+CHARACTER RESTORE
+---------------------
+WEB HELP EXPONENTIAL LAW
+---------------------

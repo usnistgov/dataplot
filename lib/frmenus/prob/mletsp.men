@@ -1,0 +1,27 @@
+This is file mletsp.men--Two-Sided Power MLE Estimates
+ 
+--------------------
+ 1. Two-Sided Power Maximum Likelihood Estimates
+ 2. TWO-SIDED POWER MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Maximum likelihood point estimates for the shape
+ 5. parameters theta and n and the lower and upper
+ 6. limit parameters can be obtained for uncensored
+ 7. data.  Bootstrap confidence intervals for the
+ 8. shape parameters are not yet 8. supported for
+ 9. this distribution.
+10.
+11. Response Variable:
+11. @CE 1 0 42 50 ? gui-variable
+12.
+13. Subset/Except/For Specification:
+14. @CE 2 0 1 50 *
+15.
+16.
+17. Compute Two-Sided Power MLE's?
+--------------------
+GR FE
+TWO-SIDED POWER MAXIMUM LIKELIHOOD _1 _2
+--------------------
+WEB HELP TSPPDF
+--------------------

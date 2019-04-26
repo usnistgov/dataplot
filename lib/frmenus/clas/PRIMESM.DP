@@ -1,0 +1,10 @@
+----- <~dataloex\PRIMESM.DP> Load & Execute PRIMESM.DAT
+
+. This is file    PRIMESM.DP
+
+DELETE Y X
+SKIP 25
+READ PRIMESM.DAT Y X
+TITLE PRIMESM.DAT
+/
+

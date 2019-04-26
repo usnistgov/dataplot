@@ -1,0 +1,44 @@
+This is file resistor.men--Draw An Resistor
+ 
+--------------------
+ 1. Draw An Resistor
+ 2. RESISTOR X1 Y1 X2 Y2
+ 3.
+ 4. X Coordinate for the Start Point:
+ 4. @CE 1 0 33 50 ?
+ 5. Y Coordinate for the Start Point:
+ 5. @CE 2 0 33 50 ?
+ 6. X Coordinate for the Stop Point:
+ 6. @CE 3 0 33 50 ?
+ 7. Y Coordinate for the Stop Point:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Line Type:
+ 9. @CE 5 0 42 50 * gui-line
+10. Line Color:
+10. @CE 6 0 42 50 * gui-colo
+11. Line Thickness:
+11. @CE 7 0 42 50 * gui-thic
+12.
+13. Coordinate System to Use:
+14. @CE 8 1 1 50 absolute 0 to 100 screen units
+15. @CE 8 2 1 50 absolute data units of last plot
+16. @CE 8 3 1 50 relative (to first point) 0 to 100 screen units
+17. @CE 8 4 1 50 relative (to first point) data units of last plot
+18.
+19.
+20. Draw the Resistor?:
+--------------------
+GR FE
+LINE _5
+LINE COLOR _6
+LINE THICKNESS _7
+LET STRING ZZZZSTR = RESISTOR
+@IF 8 1 LET STRING ZZZZSTR = RESISTOR
+@IF 8 2 LET STRING ZZZZSTR = RESISTOR DATA
+@IF 8 3 LET STRING ZZZZSTR = RESISTOR RELATIVE
+@IF 8 4 LET STRING ZZZZSTR = RESISTOR DATA RELATIVE
+^ZZZZSTR  _1 _2 _3 _4
+--------------------
+WEB HELP RESISTOR
+--------------------

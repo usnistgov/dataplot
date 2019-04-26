@@ -1,0 +1,25 @@
+----- <~fit\diagnost.top> Read and Plot Saved Diagnostics
+
+Read (and Plot) Saved Diagnostics
+
+After a linear fit, Dataplot saves many common
+regression diagnostics to the file DPST3F.DAT.
+You can read any of these variables back into
+Dataplot for further analysis.  The nonlinear
+fit command does not compute these values.
+
+This menu assumes that you have already
+performed the linear fit.
+
+Diagonal of hat matrix          <xemf: ~fit\readhii.men>
+Variance of residuals           <xemf: ~fit\readresv.men>
+Standardized residuals          <xemf: ~fit\readsres.men>
+Internally studentized residuals <xemf: ~fit\readires.men>
+Deleted residuals                <xemf: ~fit\readdres.men>
+Externally studentized residuals <xemf: ~fit\readeres.men>
+Cook's Distance                  <xemf: ~fit\readcook.men>
+DFFITS Statistic                 <xemf: ~fit\readdfft.men>
+Press Statistic                  <xemf: ~fit\readpres.men>
+Cook's V Statistic               <xemf: ~fit\readcoov.men>
+Mahalanobis distance             <xemf: ~fit\readmaha.men>
+

@@ -1,0 +1,26 @@
+-----  <~mfac\anovexam.top> Multi-Factor Examples
+
+Load and Analyze ANOVA Class Datasets
+
+1-Factor
+   NEWCAR.DAT    New Car Interest Rates: City Effect     <xcf: ~clas\anov\NEWCAR.DP>
+   KENTON.DAT    Food Cases Sold: Design Effect          <xcf: ~clas\anov\KENTON.DP>
+   DRAFT69.DAT   1969 Draft Lottery: Month Effect        <xcf: ~clas\anov\DRAFT69.DP>
+
+2-Factor
+   SMOKERS.DAT   Smokers: Age & Income Effect            <xcf: ~clas\anov\SMOKERS.DP>
+   RATFEED.DAT   Weight Gain of Rats: Protein Effects    <xcf: ~clas\anov\RATFEED.DP>
+   TECHRISK.DAT  Perceived Risk of Technologies          <xcf: ~clas\anov\TECHRISK.DP>
+   ELISA.DAT     HIV Optical Density Readings from ELISA <xcf: ~clas\anov\ELISA.DP>
+   BOXSHOES.DAT  Boys' Shoe Material (BHH)               <xcf: ~clas\anov\BOXSHOES.DP>
+
+3-Factor
+   TUMOR.DAT     Tumor Size                              <xcf: ~clas\anov\TUMOR.DP>
+   CREAM.DAT     Acidity of Sour Cream                   <xcf: ~clas\anov\CREAM.DP>
+   BOOKS.DAT     Classic Books Reading Comprehension     <xcf: ~clas\anov\BOOKS.DP>
+   HAMAKER.DAT   Drill Thrust Force                      <xcf: ~clas\anov\HAMAKER.DP>
+
+4-Factor
+   GOLD.DAT      Dental Gold Hardness                    <xcf: ~clas\anov\GOLD.DP>
+   SHEESLE2.DAT  Defective Light Bulbs                   <xcf: ~clas\anov\SHEESLE2.DP>
+

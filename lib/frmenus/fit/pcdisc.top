@@ -1,0 +1,22 @@
+----- <~fit\pcdisc.top> Principal Components Regression
+
+Principal Components Regression
+
+Principal components regression is typically
+used when there are a large number of 
+independent variables.  In this case, there
+are typically significant correlations between
+the independent variables.  This results in
+multicolinearity problems and unstable regression
+estimates.
+
+The standard approach to this problem is to reduce
+the number of independent variables to reduce the
+colinearity problems.  Principal components regression
+is an alternative approach.  A principal components
+analysis is run first.  The first p principal
+components are used in a subsequent fit.  The choice
+of p involves a trade-off between reducing the number
+of independent variables and maintaining the maximum
+amount of information in the original data.
+

@@ -1,0 +1,32 @@
+----- <~reli\reliassu.top> Assumptions
+
+Assumptions
+
+Randomness and Representativeness
+
+   The items in the sample are a random and
+   representative subset of the items in the
+   population.  A sample is random if every element
+   in the population has an equal chance of being
+   selected in the sample--this is achieved by use of
+   random numbers.  A sample is representative if the
+   histogram of the sample is similar to the
+   probability density function of the population.
+
+Common Distribution
+
+   If the data are censored and if the unfailed items
+   were permitted to run to failure, then their failure
+   times would be statistically independent of the
+   censor time.  That is, the life distribution of
+   items censored at a particular age must be the
+   same as the life distribution of items that run
+   beyond that age.  This assumption would not be
+   satisfied, for example, if some units were removed
+   from test when such items appeared to be about to fail.
+
+   Reference--Nelson, Wayne (1986). How to Analyze Data with
+              Simple Plots.  The ACQC Basic References in Quality
+              Control: Statistical Techniques.  American Society
+              for Quality Control, Milwaukee, Wisconsin, p. 30.
+

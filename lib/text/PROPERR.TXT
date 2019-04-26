@@ -1,0 +1,20 @@
+Propagation of Error Formulae
+ 
+Reference--Ku, Precision Measurement & Calibration
+           NBS, SP 300, page 337.
+ 
+Question--If Y has standard deviation sd(Y),
+          and if Y is transformed via T(Y),
+          then what is the standard deviation of T(Y)?
+ 
+Answer--sd(T(Y)) approximately = sd(Y) * T'(Y)
+ 
+T(Y)              sd(T(Y))
+----------------------------
+1/Y               sd(Y) * (1/Y**2)
+log(Y)            sd(Y) * (1/Y)
+sqrt(Y)           sd(Y) * (1/(2*sqrt(Y)))
+Y (no trans.)     sd(Y)
+Y**2              sd(Y) * (2*Y)
+exp(Y)            sd(Y) * exp(Y)
+ 

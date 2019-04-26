@@ -1,0 +1,22 @@
+----- <~nist\consdisc.top> Consensus Means: Discussion
+ 
+Consensus Means: Discussion
+
+The CONSENSUS MEAN command computes an estimate
+of a consensus mean, and the associated uncertainty,
+based on the data from multiple laboratories or
+multiple methods.
+
+The problem of determining a consensus mean based
+on the data from two or more laboratories (or from
+using two or more methods from the same laboratory)
+is a common one at NIST and other measurement
+laboratories.  There are a number of approaches to
+this problem.  The Dataplot CONSENSUS MEANS command
+implements a number of the more commonly used
+approaches.  Note that Dataplot computes estimates
+for a variety of methods and does not specify which
+is the most appropriate method for a given data set.
+Consult with a statistician for guidance on which
+method is most appropriate for your data.
+

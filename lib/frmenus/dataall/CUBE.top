@@ -1,0 +1,8 @@
+----- <~dataall\CUBE.top> CUBE.DAT
+
+CUBE.DAT
+
+View     <xcl: LIST CUBE.DAT>
+Load     <xcf: ~dataload/CUBE.DP>
+Print    <xccl: printfile C:\DATAPLOT\CUBE.DAT>
+

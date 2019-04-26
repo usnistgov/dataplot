@@ -1,0 +1,14 @@
+----- <~prob\ppdfdisc.top> Plot Discrete pdf's
+
+Plot Discrete PDF Functions
+
+Binomial                 <xemf: ~prob\pbinpdf.men>
+Geometric                <xemf: ~prob\pgeopdf.men>
+Poisson                  <xemf: ~prob\ppoipdf.men>
+Negative Binomial        <xemf: ~prob\pnbpdf.men>
+Discrete Uniform         <xemf: ~prob\pdispdf.men>
+Hypergeometric           <xemf: ~prob\phyppdf.men>
+Logarithmic Series       <xemf: ~prob\pdlgpdf.men>
+Beta Binomial            <xemf: ~prob\pbbnpdf.men>
+Waring                   <xemf: ~prob\pwarpdf.men>
+

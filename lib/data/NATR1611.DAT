@@ -1,0 +1,29 @@
+This is Dataplot data file     NATR1611.DAT
+Output admittance of two types of transistors
+Question: Does the average of products A exceed that of
+product B?
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 16-11
+Number of observations = 4
+Number of variables per line image = 2
+Order of variables on a line image--Y1 Y2
+   1. Y1 = current for type A
+   2. Y2 = current for type B
+
+
+
+
+
+
+
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR1611.DAT Y1 Y2
+     Y1                            Y2
+ Type A                          Type B
+---------------------------------------
+ 0.291                           0.246
+ 0.390                           0.252
+ 0.305                           0.300
+ 0.316                           0.258

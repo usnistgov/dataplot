@@ -1,0 +1,32 @@
+----- <~dex2kmp\cs28m2.top> Confounding:  2**(8-2) Design
+ 
+Confounding:  2**(8-2) Design
+ 
+Name of Design      = 2**(8-2) Fractional Factorial Design
+ 
+Number of Factors k = 8
+Number of Obs.    n = 64
+ 
+Resolution          = 5 (Main effects confounded with
+                      4-term interactions and higher;
+                      no main effects are confounded
+                      with any 2- or 3-term interactions)
+ 
+Factor Definitions  : 7 = 1234
+                      8 = 1256
+ 
+Defining Relation   : I +
+                      12347 + 12568 +
+                      345678
+ 
+Main Effect         : 1  =  1 +  *
+Confounding           2  =  2 +  *
+                      3  =  3 +  *
+                      4  =  4 +  *
+                      5  =  5 +  *
+                      6  =  6 +  *
+                      7  =  7 +  *
+                      8  =  8 +  *
+ 
+Click here to view 2-term confounding  <~dex2kmp\2t28m2.top>
+ 

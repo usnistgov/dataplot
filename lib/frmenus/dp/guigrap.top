@@ -1,0 +1,81 @@
+----- <~dp\guigrap.top> Graphics Window
+ 
+Graphics Window
+
+The graphics window, located in the upper
+right quadrant, is where graphics output
+is displayed.
+
+For Unix platforms, graphics are displayed in
+an X11 window.  For PC platforms, the graphics
+are displayed using a Tcl/Tk window.
+
+The graphics window provides the following buttons.
+
+ 1) The "File" button provides the following options:
+
+    Clear   - erases the graphics window
+    Save Postscript - saves the current graph, in Postscript
+                      format to a file name of your choice
+    Save Pixmap  - saves the current graph as a pixmap that
+                   can be viewed later via the View Pixmap
+                   button
+    View Pixmap  - views graphs created previously by the
+                   Save Pixmap button.  These graphs are
+                   displayed in a new window, not the
+                   graphics window.
+    Software    - generate graphs using Tcl/Tk.  This is
+    Graphics      the default, and only choice, on PC
+                  platforms.  On Unix platforms, graphics
+                  are generated using X11.  You can
+                  specify the Tcl/Tk graphics by clicking
+                  this button.  Using Tcl/Tk allows the 
+                  window to be resized and activates the
+                  options under the Draw button.
+
+ 2) The "Edit" button supports the following features.
+
+    Settings - this brings up a table of plot control
+               features that you can set by modifying the
+               table.  Plot control features can also be
+               set under the "PlotMod" window.
+
+    Graph Font - allows you to select a font for the screen
+                 graphics.  Only applies if Software Graphics
+                 are being used.
+
+    Print Font - allows you to select a font for the
+                 Postscript version of the plot.
+
+ 3) The "Draw" button allows certain diagrammatic graphics to
+    be generated using the mouse.  It is only only active when
+    the Software Graphics are being used.
+
+ 4) The "Help" button access the on-line Dataplot
+    help files for the Dataplot graphics commands.
+
+ 5) The "Replot" button redraws the most recent plot.
+
+    This is convenient if you've made a number of
+    changes to plot control features (e.g., adding
+    a title, setting the line types) and you want to
+    regenerate the plot.
+
+ 6) The "Refresh" button is used to redraw the current
+    graph window.  This is slightly different than
+    the "Replot" button.  With "Replot", you are 
+    actually re-entering the most recent plot command.
+    With "Refresh", you are simply restoring the
+    current contents of the graph window.  "Refresh"
+    is typically used when the graph has been destroyed
+    by window operations.
+
+ 7) The "Print" button prints the current graph on your
+    default printer.
+
+ 8) The Counter in the upper right corner shows the
+    coordinates of the cursor when it is in the
+    graphics window.  These are Dataplot 0 to 100 
+    units.  This can be useful for positioning text
+    and other graphics elements.
+

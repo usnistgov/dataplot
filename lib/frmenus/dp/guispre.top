@@ -1,0 +1,72 @@
+----- <~dp\guispre.top> Data Spreadsheet Window
+ 
+Spreadsheet Window
+ 
+The spreadsheet window can be used to enter data
+directly from the window.  It is also useful for 
+showing the currently defined data.  That is, if
+you read data from a file, the variables you read
+are displayed in the spreadsheet window.
+
+To enter data directly from the spreadsheet 
+window, simply move the mouse to one of the
+boxes, click the left mouse button, and type
+the value.  You can use the tab key to move
+to the next row.  Click the "Apply" button
+to enter the data.   The "Files/Data" menu is used
+to read data from files.
+
+A number of buttons are provided for this window:
+
+  1) The "Set Decimals" button allows you to specify
+     the number of decimal points used in displaying
+     the data.  By default, the data is displayed in
+     exponential format.  You can specify 0 to 10 for
+     the number of decimal points.  Clicking "-1"
+     resets exponential format.
+
+  2) The "Apply" button is used to read any data you
+     manually typed in the spreadsheet into Dataplot.
+
+  3) The "Replot" button redraws the most recent plot.
+
+     This is convenient if you've made a number of
+     changes to plot control features (e.g., adding
+     a title, setting the line types) and you want to
+     regenerate the plot.
+
+  4) The "Refresh" button is used to redraw the current
+     graph window.  This is slightly different than
+     the "Replot" button.  With "Replot", you are 
+     actually re-entering the most recent plot command.
+     With "Refresh", you are simply restoring the
+     current contents of the graph window.  "Refresh"
+     is typically used when the graph has been destroyed
+     by window operations.
+
+  5) The "No Update" button is used to suppress the
+     updating of the data in the spreadsheet window.
+     This is typically done for performance reasons.
+     Although the data window is convenient, it can hamper
+     performance when dealing with moderate and large
+     sized data sets.  The spreadsheet is normally updated
+     whenever a new variable is created or a DELETE is
+     performed.  If there are several thousand data points,
+     this can take some time.
+
+The following limitations of the spreadsheet should
+be noted:
+
+  1) Only variables are displayed.  Parameters, strings,
+     and matrices are not displayed.
+
+     The current parameters can be listed by entering the
+     command STATUS PARAMETERS from the command line
+     window.  Likewise, the command STATUS FUNCTIONS
+     lists all currently defined strings.
+
+  2) Dataplot does not currently automatically read 
+     common spread sheet files such as Excel or Quattro
+     Pro files.  You need to save these files as ASCII
+     files and then read the ASCII files into Dataplot.
+

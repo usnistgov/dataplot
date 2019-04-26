@@ -1,0 +1,50 @@
+dp3      - aad
+dp4      - calcpt
+dp5      - cocode
+dp6      - daws
+dp7      - dmath1
+dp8      - dpalla
+dp9      - dpbaba
+dp10     - dpc4hi
+dp11     - dpcir2
+dp12     - dpdb80
+dp13     - dpdia2
+dp14     - dpecho
+dp15     - dpfeed
+dp16     - dpfunc
+dp17     - dpi
+dp18     - dplab
+dp19     - dploex
+dp20     - dpmess
+dp21     - dppaco
+dp22     - dpplo1
+dp23     - dpprob
+dp24     - dprcsn
+dp25     - dpreal
+dp26     - dproac
+dp27     - dprtl
+dp28     - dpsepa
+dp29     - dpsort
+dp30     - dpsub2
+dp31     - dptis2
+dp32     - dpuosm
+dp33     - draw0
+dp34     - drcu1
+dp35     - drtil1
+dp36     - drtu1
+dp37     - gammaf
+dp38     - grersc
+dp39     - grtrca
+dp40     - heads
+dp41     - maingr
+dp42     - mati50
+dp43     - range
+dp44     - taguch
+dp45     - unime2
+dp46     - wiinws (PC window routines)
+dp1      - initmc, initfo, initf2, initwi, dpopfi, ckclar, dpsyst,
+           dpsys2, dptime, dpedit, dpwrst
+dp2      - inithk, dpinfi, dpclfi, dprefi, dpcoan, dpcona, dpcopl,
+           dpcop2, dpcop3, dpcop4, dpcoru, grkicr, grrecr, grresc,
+           grsemo, uniran, dptran, dpopms, dpuppe, dpupp4, dpupnt,
+           dpup80, dplo80, dpset,  initpc

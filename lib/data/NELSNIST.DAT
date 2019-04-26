@@ -1,0 +1,84 @@
+This is Dataplot data file     NELSNIST.DAT
+Electromigration failure times in aluminum
+          conductor microcircuits
+Wayne Nelson & Necip Doganaksoy: NIST Report (1992)
+Accelerated test specs--59 aluminum conductors
+                        each conductor had length 400 microns
+                        the test was run at high temperature
+                        the test was run at high current density
+Source--Nelson, Wayne and Doganaksoy, Necip (1992).
+        A Computer Program POWNOR for Fitting the Power-Normal
+        and -Lognormal Models to Life or Strength Data from
+        Specimens of Various Sizes. NISTIR 4760, March 1992.
+Ultimate Source--Harry Shaft, NIST, March 1987
+Number of observations             = 59
+Number of variables per line image =  1
+Order of variables per line image--
+   1. Response = hours to failure
+Statistical area--Reliability, Accelerated Testing
+To read this file into Dataplot--
+   SKIP 25
+   READ NELSNIST.DAT Y
+ 
+ 
+Hours to Failure
+----------------
+     6.545
+     8.120
+    11.038
+     7.459
+     5.807
+     8.336
+     6.948
+    10.092
+     7.224
+     6.515
+     9.289
+     4.706
+     5.381
+     7.495
+     6.725
+     9.218
+     9.254
+     7.496
+     7.365
+     6.476
+     7.543
+     8.687
+     6.958
+     6.573
+     8.532
+     7.945
+     5.009
+     4.531
+     6.923
+     6.071
+     6.956
+     2.997
+     4.288
+     6.538
+     9.663
+     6.869
+     7.489
+     7.974
+     5.640
+    10.491
+     6.492
+     8.591
+     6.522
+     5.589
+     6.369
+     6.352
+     7.398
+     8.799
+     5.434
+     5.923
+     5.459
+     6.129
+     4.137
+     6.087
+     7.024
+     4.700
+     6.033
+     7.683
+     7.937

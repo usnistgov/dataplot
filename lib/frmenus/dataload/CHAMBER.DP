@@ -1,0 +1,8 @@
+----- <~dataload\CHAMBER.DP> Load CHAMBER.DAT
+
+. This is file    CHAMBER.DP
+
+DELETE Y X
+SKIP 25
+READ CHAMBER.DAT Y X
+

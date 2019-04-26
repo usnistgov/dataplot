@@ -1,0 +1,34 @@
+This is file bvnpdf.men--Compute bivariate normal pdf
+ 
+--------------------
+ 1. Compute Bivariate Normal pdf
+ 2. LET A = BVNPDF(X1,X2,CORR)
+ 3.
+ 4. Input values:
+ 5.                                         x1:
+ 5. @CE 1 0 42 50 ?
+ 6.                                         x2:
+ 6. @CE 2 0 42 50 ?
+ 7.     Correlation parameter p (-1 <= p <= 1):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Output parameters:
+10.                    name for the pdf  value:
+10. @CE 4 0 42 50 ?
+11.
+12.
+13. Compute the Probability?
+--------------------
+AN FE
+LET ZP = 0
+@IF 3 0 LET ZP = _3
+IF ZP < -1
+   LET ZP = 0
+END OF IF
+IF ZP > 1
+   LET ZP = 0
+END OF IF
+@IF 4 0 LET _4 = BVNPDF( _1 , _2 , ZP )
+--------------------
+WEB HELP BVNPDF
+--------------------

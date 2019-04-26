@@ -1,0 +1,10 @@
+----- <~dataloex\SHEESLEY.DP> Load & Execute SHEESLEY.DAT
+
+. This is file    SHEESLEY.DP
+
+DELETE Y
+SKIP 25
+READ SHEESLEY.DAT Y
+TITLE SHEESLEY.DAT
+/
+

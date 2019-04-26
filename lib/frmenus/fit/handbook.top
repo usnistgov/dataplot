@@ -1,0 +1,27 @@
+----- <~fit\handbook.top> Fit----------------------------
+
+NIST/SEMATECH Handbook (Process Modeling)
+
+The following accesses specific topics in the
+NIST/SEMATECH Engineering Statistics Handbook
+
+Process Modeling         <xcl: web handbook pmd>
+
+Assumptions              <xcl: web handbook fit model assumptions>
+Model Design             <xcl: web handbook fit model design>
+Model Steps              <xcl: web handbook fit model steps>
+Model Selection          <xcl: web handbook fit model selection>
+
+Linear Models            <xcl: web handbook linear least squares>
+Polynomial Regression    <xcl: web handbook linear least squares>
+Non-Linear Models        <xcl: web handbook nonlinear least squares>
+Weighted Linear Models   <xcl: web handbook weighted least squares>
+Lowess (or Loess)        <xcl: web handbook lowess>
+
+Parameter Estimation     <xcl: web handbook fit model estimation>
+Model Validation         <xcl: web handbook fit model validation>
+Model Improvement        <xcl: web handbook fit model improvement>
+
+Develop Model from Data  <xcl: web handbook develop regression model>
+Case Studies             <xcl: web handbook fit case studies>
+

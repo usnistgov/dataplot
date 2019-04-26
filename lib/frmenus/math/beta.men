@@ -1,0 +1,33 @@
+This is file beta.men--Compute beta and related functions
+ 
+--------------------
+ 1. Beta (and Related) Functions
+ 2. LET YNEW = BETA(A,B)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value for the 2 arguements.
+ 6.
+ 7. First shape parameter (A):
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8. Second shape parameter (B):
+ 8. @CE 2 0 33 50 ? gui-variable
+ 9.
+10. Operation to perform:
+11. @CE 3 1 10 40 beta
+12. @CE 3 2 10 40 log beta
+13.
+14. Variable (or parameter) to store the result:
+14. @CE 4 0 33 50 ?
+15.
+16. Subset/Except/For Specification:
+17. @CE 6 0 -5 50 *
+18.
+19.
+20. Compute the Transformation?:
+--------------------
+GR FE
+@IF 3 1 LET _4 = BETA( _1 , _2 ) _6
+@IF 3 2 LET _4 = LNBETA( _1 , _2 ) _6
+--------------------
+WEB HELP BETA
+--------------------

@@ -1,0 +1,10 @@
+----- <~dataloex\ECKERLE4.DP> Load & Execute ECKERLE4.DAT
+
+. This is file    ECKERLE4.DP
+
+DELETE Y
+SKIP 25
+READ ECKERLE4.DAT Y
+TITLE ECKERLE4.DAT
+/
+

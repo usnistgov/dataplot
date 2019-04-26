@@ -1,0 +1,35 @@
+This is file setseg1.men--Set Segment Attributes for Single Segment
+ 
+--------------------
+ 1. Set Segment Attributes for a Single Segment
+ 2. SEGMENT 1 COLOR RED; SEGMENT 1 PATTERN DASH
+ 3.
+ 4. Segment Number to Set Attributes For:
+ 4. @CE 1 0 42 50 ?
+ 5. X Coordinate for Start of Segment:
+ 5. @CE 2 0 42 50 ?
+ 6. Y Coordinate for Start of Segment:
+ 6. @CE 3 0 42 50 ?
+ 7. X Coordinate for End of Segment:
+ 7. @CE 4 0 42 50 ?
+ 8. Y Coordinate for End of Segment:
+ 8. @CE 5 0 42 50 ?
+ 9.
+10. Color for Segment:
+10. @CE 6 0 42 50 * gui-color
+11. Line Type for Segment:
+11. @CE 7 0 42 50 * gui-line
+12. Line Thickness for Segment:
+12. @CE 8 0 42 50 * gui-thick
+13.
+14.
+15. Set Segment Attributes?
+--------------------
+PC FE
+SEGMENT _1 COORDINATES _2 _3 _4 _5
+@IF 6 0 SEGMENT _1 COLOR _6
+@IF 7 0 SEGMENT _1 PATTERN _7
+@IF 8 0 SEGMENT _1 THICKNESS _8
+--------------------
+WEB HELP SEGMENT COORDINATES
+--------------------

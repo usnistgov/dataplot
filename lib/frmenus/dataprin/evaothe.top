@@ -1,0 +1,10 @@
+----- <~dataprin\evaothe.top> Print (to Printer) Extreme Value Data: Other
+
+Print (to Printer) Extreme Value Data: Other
+
+GEAR.DAT      Gear diameters (Ishikawa)   <xcf: ~dataprin\GEAR.DP>
+CLEAR.DAT     Component clearances        <xcf: ~dataprin\CLEAR.DP>
+
+RANDN.DAT     Normal random numbers       <xcf: ~dataprin\RANDN.DP>
+RANDU.DAT     Uniform random numbers      <xcf: ~dataprin\RANDU.DP>
+

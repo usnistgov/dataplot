@@ -1,0 +1,66 @@
+This is file lsqgpar.men--Least Sqaure Fitting (Generalized Pareto)
+
+--------------------
+1. Least Squares Fitting (Generalized Pareto)
+2. LET FUNCTION F = GEPPDF(X,GAMMA,SCALE); FIT Y = F
+3.
+4. If you have raw data, Dataplot will first
+5. generate a relative histogram to generate
+6. frequency data.  If you already have frequency
+7. data, the first variable will be the frequency
+8. and the second variable will be the response
+9. value.
+10.
+11. Response or Frequency Variable:
+11. @CE 1 0 42 50 ? gui-variable
+12. Optional Response Variable (for frequency data):
+12. @CE 2 0 42 50 * gui-variable
+13.
+14. Starting Value for Gamma:
+14. @CE 3 0 42 50 ?
+15. Starting Value for Scale:
+15. @CE 4 0 42 50 ?
+16.
+17.
+18. Subset/Except/For Specification:
+19. @CE 5 0 1 50 *
+20.
+21. Compute the Fit?
+--------------------
+GR FE
+LET ZSCALE = 1
+@IF 4 0 LET ZSCALE = _4
+LET ZSHAPE = 1
+LET ZZZZRAW = 0
+@IF 2 0 LET ZZZZRAW = 1
+IF ZZZZRAW = 0
+  SET RELATIVE HISTOGRAM AREA
+  RELATIVE HISTOGRAM _1 _5
+  LET ZZZZY = YPLOT
+  LET ZZZZX = XPLOT
+  RETAIN ZZZZY ZZZZX SUBSET YPLOT > 0
+END OF IF
+IF ZZZZRAW = 1
+  LET ZZZZY = _1 _5
+  LET ZZZZX = _2 _5
+END OF IF
+@IF 3 0 LET ZSHAPE = _3
+LET FUNCTION ZZZZF = GEPPDF(ZZZZX,ZSHAPE,ZSHAPE)
+FIT ZZZZY = ZZZZF
+LIMITS FREEZE
+PRE-ERASE OFF
+LET ZZZZ1 = MINIMUM ZZZZX
+LET ZZZZ2 = MAXIMUM ZZZZX
+LET ZZZZINC = (ZZZZ2 - ZZZZ1)/1000
+IF ZZZZRAW = 1
+  PLOT ZZZZY ZZZZX
+END OF IF
+X3LABEL GENERALIZED PARETO PDF: GAMMA = ^ZSHAPE, SCALE = ^ZSCALE
+PLOT GEPPDF(ZZZZX,ZSHAPE,ZSCALE) FOR ZZZZX = ZZZZ1 ZZZZINC ZZZZ2
+DELETE ZZZZX ZZZZY
+X3LABEL
+LIMITS
+PRE-ERASE ON
+--------------------
+WEB HELP FIT
+--------------------

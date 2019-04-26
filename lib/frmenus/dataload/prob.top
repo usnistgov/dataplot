@@ -1,0 +1,7 @@
+----- <~dataload\prob.top> Load Built-in Probability Data Files
+
+Load Built-in Probability Data Files
+
+RANDN.DAT     Normal random numbers         <xcf: ~dataload\RANDN.DP>
+RANDU.DAT     Uniform random numbers        <xcf: ~dataload\RANDU.DP>
+

@@ -1,0 +1,28 @@
+This is file matr_qfo.men--Matrix Quadratic Form
+ 
+--------------------
+ 1. Matrix Quadratic Form
+ 2. LET A = QUADRATIC FORM M Y
+ 3.
+ 4. The quadratic form is A = Y'MY where M is a
+ 5. square matrix and Y is a vector.  The result
+ 6. is a scalar.
+ 7.
+ 8. Name of matrix:
+ 8. @CE 1 0 42 50 ? 
+ 9. Name of vector
+ 9. @CE 2 0 42 50 ? gui-vari
+10. Name of scalar to store the results:
+10. @CE 3 0 42 50 ?
+11.
+12. Subset/Except/For Specification:
+13. @CE 4 0 1 50 *
+14.
+15.
+16. Perform the Quadratic Form Multiplication?:
+--------------------
+GR FE
+LET _3 = QUADRATIC FORM  _1 _2  _4
+--------------------
+WEB HELP QUADRATIC FORM
+--------------------

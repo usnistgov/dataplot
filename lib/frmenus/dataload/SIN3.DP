@@ -1,0 +1,8 @@
+----- <~dataload\SIN3.DP> Load SIN3.DAT
+
+. This is file    SIN3.DP
+
+DELETE Y X
+SKIP 25
+READ SIN3.DAT Y X
+

@@ -1,0 +1,8 @@
+----- <~dataload\DZIUBA.DP> Load DZIUBA.DAT
+
+. This is file    DZIUBA.DP
+
+DELETE Y1 Y2 X1 X2 X3
+SKIP 25
+READ DZIUBA.DAT Y1 Y2 X1 X2 X3
+

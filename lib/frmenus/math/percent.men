@@ -1,0 +1,24 @@
+This is file percent.men--Compute percentile of a variable
+ 
+--------------------
+ 1. Percentile
+ 2. LET A = 50 PERCENTGILE Y
+ 3.
+ 4. Variable for which to compute the percentile:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Parameter to store the percentile:
+ 5. @CE 2 0 42 50 ? gui-none
+ 6. Percentile to compute (between 0 and 100):
+ 6. @CE 3 0 42 50 *
+ 7. 
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 0 50 *
+10.
+11.
+12. Compute the Percentile?:
+--------------------
+GR FE
+LET _2 = _3  PERCENTILE  _1 _4
+--------------------
+WEB HELP PERCENTILE
+--------------------

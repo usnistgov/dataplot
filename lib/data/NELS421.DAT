@@ -1,0 +1,74 @@
+THIS IS DATA FILE     NELS421.DAT
+TURNING FAILURE TIMES OF CLASS-H INSULATION IN MOTORETTES
+THE "MILLION DOLLAR" EXPERIMENT
+DESIGN TYPE = HEXAGON WITH CENTER POINT (7 DISTINCT POINTS)
+WAYNE NELSON BOOK
+NUMBER OF OBSERVATIONS = 43
+NUMBER OF VARIABLES PER LINE IMAGE = 4
+ORDER OF VARIABLES ON A LINE IMAGE--
+   Y = HOURS TO (TURN) FAILURE
+   TAG = FAILURE TAG (1 = FAILURE, 2 = NO FAILURE)
+   X1 = TEMPERATURE (5 LEVELS--200, 215, 230, 245, AND 260 DEG C)
+   X2 = INSPECTION TIME (3 LEVELS--2 DAYS, 7 DAYS, AND 28 DAYS)
+SOURCE--NELSON, WAYNE (1990).  ACCELERATED TESTING
+   TABLE 5.1, PAGE 421, WILEY, NEW YORK.
+STATISTICAL AREA = RELIABILITY
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ NELS421.DAT Y TAG TEMP TIME
+ 
+ 
+ 
+ 
+HOURS TO    FAIL/NO-FAIL   TEMPERATURE     TIME
+ FAILURE     INDICATOR
+------------------------------------------------
+7392             2              200          7
+7392             2              200          7
+7392             2              200          7
+7392             2              200          7
+7392             2              200          7
+7392             2              200          7
+7392             2              200          7
+7392             2              200          7
+7392             2              200          7
+ 
+8400             1              215         28
+11424            2              215         28
+11424            2              215         28
+11424            2              215         28
+11424            2              215         28
+11424            2              215         28
+11424            2              215         28
+11424            2              215         28
+ 
+2784             2              215          2
+2784             2              215          2
+2784             2              215          2
+2784             2              215          2
+2784             2              215          2
+2784             2              215          2
+ 
+2451             1              230          7
+2955             1              230          7
+3444             1              230          7
+3780             1              230          7
+3948             1              230          7
+6216             2              230          7
+ 
+2352             1              245         28
+2352             1              245         28
+2352             1              245         28
+3696             1              245         28
+4368             1              245         28
+5712             1              245         28
+ 
+892              1              245          2
+988              1              245          2
+988              1              245          2
+3072             2              245          2
+ 
+1088             1              260          7
+1256             1              260          7
+1592             1              260          7
+1764             1              260          7

@@ -1,0 +1,33 @@
+----- <~dex2kmp\2to9m5.top> 2**(9-5) Design
+ 
+2**(9-5) Design
+ 
+   k = 9 factors
+   n = 16 runs
+   r = resolution 3
+       (main effects  ==  2-term interactions)
+ 
+                     (234)   (124)
+                 (123)   (134)   (1234)
+   X1  X2  X3  X4  X5  X6  X7  X8  X9
+   ..................................
+   -   -   -   -   -   -   -   -   +
+   +   -   -   -   +   -   +   +   -
+   -   +   -   -   +   +   -   +   -
+   +   +   -   -   -   +   +   -   +
+   -   -   +   -   +   +   +   -   -
+   +   -   +   -   -   +   -   +   +
+   -   +   +   -   -   -   +   +   +
+   +   +   +   -   +   -   -   -   -
+   -   -   -   +   -   +   +   +   -
+   +   -   -   +   +   +   -   -   +
+   -   +   -   +   +   -   +   -   +
+   +   +   -   +   -   -   -   +   -
+   -   -   +   +   +   -   -   +   +
+   +   -   +   +   -   -   +   -   -
+   -   +   +   +   -   +   -   -   -
+   +   +   +   +   +   +   +   +   +
+ 
+Click here to view confounding structure. <~dex2kmp\cs29m5.top>
+Click here to load design. <x2cl: SKIP 75; READ 2TO9M5.DAT X1 TO X9>
+ 

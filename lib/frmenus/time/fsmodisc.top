@@ -1,0 +1,24 @@
+----- <~time\fsmodisc.top> Discussion: Smoothing In Frequency Domain
+ 
+Discussion: Smoothing and Filtering in the Frequency Domain
+ 
+There are a multitude of methods for filtering in
+the frequency domain.  This topic is generally called
+digitial signal processing and is a book length subject
+in its own right.
+
+Although Dataplot is not a digitial signal processing
+program, it does provide some of the tools used in digital
+signal processing.  These tools can be used to implement
+some of the more basic digitial filtering techniques.
+
+  1) Fast Fourier Tranform/Inverse Fast Fourier Transform
+  2) Convolution/Deconvolution
+  3) Complex arithmetic
+
+Two of the worked examples show the use of these tools
+in performing frequency based filtering.
+
+Consult an appropriate reference for more information
+on digitial signal processing.
+

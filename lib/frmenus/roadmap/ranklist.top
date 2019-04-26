@@ -1,0 +1,32 @@
+----- <~roadmap\ranklist.top> Ranked List of Factors
+
+Ranked List of Factors
+
+Situation     : We have data collected for a response
+                and several factors.
+
+Question      : What are the most important factors
+                affecting the response?
+
+Model         : Y = f(X1,X2,X3,...,Xk) + random error
+
+Input         : 1) a response variable Y
+                2) a tag variable X1 containing X1 settings
+                3) a tag variable X2 containing X2 settings
+                4) a tag variable X3 containing X3 settings
+                   ...
+              k+1) a tag variable Xk containing Xk settings
+
+Output        : a ranked list of factors
+                (most important to least important)
+
+Stat Category : Screening (= Multi-Factor Analysis)
+
+Primary Tools : DEX Mean Plot                     <xemf: ~dex2k\meanplot.men>
+                DEX Scatter Plot                  <xemf: ~dex2k\scatplot.men>
+                DEX Interaction Effects Matrix    <xemf: ~dex2k\inteffma.men>
+                Yates Analysis                    <xemf: ~dex2k\yates.men>
+                Halfnormal Prob. Plot |Effects|   <xemf: ~dex2k\hanoppef.men>
+
+Worked Example: BOXSPRIN.DAT          <xcf: ~roadmap/BOXSPRIN.DP>
+

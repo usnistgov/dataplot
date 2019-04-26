@@ -1,0 +1,101 @@
+----- <~dex\cs211m4.top> Confounding:  2**(11-4) Design
+
+Confounding:  2**(11-4) Design
+
+Name of Design      = 2**(11-4) Fractional Factorial Design
+
+Number of Factors k = 11
+Number of Obs.    n = 128
+
+Resolution          = 5 (Main effects confounded with
+                      4-term interactions and higher;
+                      no main effects are confounded
+                      with any 2- or 3-term interactions)
+
+Factor Definitions  : 8 = 1237
+                      9 = 2345
+                      0 = 1346
+                      A = 1234567
+
+Defining Relation   : I +
+                      12378 + 23459 + 13460 + 1234567A +
+                      145789 + 246780 + 4568A +
+                      125690 + 1679A + 2570A+
+                      3567890 + 23689A + 13580A + 34790A +
+                      124890A
+
+Main Effect         : 1  =  1 +  *
+Confounding           2  =  2 +  *
+                      3  =  3 +  *
+                      4  =  4 +  *
+                      5  =  5 +  *
+                      6  =  6 +  *
+                      7  =  7 +  *
+                      8  =  8 +  *
+                      9  =  9 +  *
+                      0  =  0 +  *
+                      A  =  A +  *
+
+2-Term              : 12 = 12 +  *
+Confounding           13 = 13 +  *
+                      14 = 14 +  *
+                      15 = 15 +  *
+                      16 = 16 +  *
+                      17 = 17 +  *
+                      18 = 18 +  *
+                      19 = 19 +  *
+                      10 = 10 +  *
+                      1A = 1A +  *
+                      23 = 23 +  *
+                      24 = 24 +  *
+                      25 = 25 +  *
+                      26 = 26 +  *
+                      27 = 27 +  *
+                      28 = 28 +  *
+                      29 = 29 +  *
+                      20 = 20 +  *
+                      2A = 2A +  *
+                      34 = 34 +  *
+                      35 = 35 +  *
+                      36 = 36 +  *
+                      37 = 37 +  *
+                      38 = 38 +  *
+                      39 = 39 +  *
+                      30 = 30 +  *
+                      3A = 3A +  *
+                      45 = 45 +  *
+                      46 = 46 +  *
+                      47 = 47 +  *
+                      48 = 48 +  *
+                      49 = 49 +  *
+                      40 = 40 +  *
+                      4A = 4A +  *
+                      56 = 56 +  *
+                      57 = 57 +  *
+                      58 = 58 +  *
+                      59 = 59 +  *
+                      50 = 50 +  *
+                      5A = 5A +  *
+                      67 = 67 +  *
+                      68 = 68 +  *
+                      69 = 69 +  *
+                      60 = 60 +  *
+                      6A = 6A +  *
+                      78 = 78 +  *
+                      79 = 79 +  *
+                      70 = 70 +  *
+                      7A = 7A +  *
+                      89 = 89 +  *
+                      80 = 80 +  *
+                      8A = 8A +  *
+                      90 = 90 +  *
+                      9A = 9A +  *
+                      0A = 0A +  *
+
+Confounding Matrix:
+                      Empty; thus
+                      no main effects are confounded
+                      with any 2-term interactions;
+                      no 2-term interactions are confounded
+                      with any other 2-term interactions.
+

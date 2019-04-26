@@ -1,0 +1,8 @@
+----- <~datalist\BOXTOMAT.top> BOXTOMAT.DAT
+ 
+BOXTOMAT.DAT
+ 
+View     <xcl: LIST BOXTOMAT.DAT>
+Load     <x2cl: SKIP 25; READ BOXTOMAT.DAT Y X POS>
+Print    <xccl: printfile C:\DATAPLOT\BOXTOMAT.DAT>
+ 

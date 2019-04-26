@@ -1,0 +1,25 @@
+----- <~dex2k\preqdisc.top> Discussion: Prediction Equation
+
+Discussion: Prediction Equation
+
+The prediction equation for 2**k designs are of
+the form
+
+   Y = MU + 0.5*(imprtant factors)
+
+For example, for the 2**3 full factorial design,
+the recommended prediction equation is
+
+   Y = MU +
+       0.5*( B1*X1 + B2*X2 + B3*X3 +
+             B12*X1*X2 + B13*X1*X3 +
+             B23*X2*X3 +
+             B123*X1*X2*X3 )
+
+where all of the parameters will be replaced
+by the least squares estimate.
+In practice, we would include only those terms which
+turn out to be "large" (significantly non-zero), as
+determined by any of the subsequent menu items
+in this section.
+

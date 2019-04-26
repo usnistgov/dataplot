@@ -1,0 +1,35 @@
+----- <~dataview\handbook.top> NIST/SEMATECH Engineering Statistics Handbook
+
+NIST/SEMATECH Engineering Statistics Handbook
+
+Exploratory Data Analysis
+   Normal Random Numbers                   <xcf: ~dataview\RANDN.DP>
+   Uniform Random Numbers                  <xcf: ~dataview\RANDU.DP>
+   Random Walk Data                        <xcf: ~dataview\RANDWALK.DP>
+   Josephson Junction Cryothermometry Data <xcf: ~dataview\SOULEN.DP>
+   Beam Deflection Data                    <xcf: ~dataview\LEW.DP>
+   Filter Transmittance Data               <xcf: ~dataview\MAVRO.DP>
+   Standard Resistor Data                  <xcf: ~dataview\DZIUBA.DP>
+   Heat Flow Meter Data                    <xcf: ~dataview\ZARR13.DP>
+   Airplane Glass Failure Data             <xcf: ~dataview\FULLER2.DP>
+   Ceramic Strength Data                   <xcf: ~dataview\JAHANMI2.DP>
+
+Measurement Process Characterization
+   Gauge Study Data for Silicon Wafers     <xcf: ~dataview\MPC61.DP>
+   Check Standard Data for Silicon Wafers  <xcf: ~dataview\MPC62.DP>
+   Gauge Study Uncertainty Data            <xcf: ~dataview\MPC63.DP>
+
+Production Process Characterization
+
+Process Modeling
+   Load Cell Calibration Data              <xcf: ~dataview\PONTIUS.DP>
+
+Process Improvement
+
+Process Monitoring and Control
+   Lithography Process Data                <xcf: ~dataview\LITHOGRA.DP>
+
+Process Comparisons
+
+Reliability
+

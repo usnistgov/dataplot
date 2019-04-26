@@ -1,0 +1,8 @@
+----- <~dataall\BOXRATS.top> BOXRATS.DAT
+
+BOXRATS.DAT
+
+View     <xcl: LIST BOXRATS.DAT>
+Load     <xcf: ~dataload/BOXRATS.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXRATS.DAT>
+

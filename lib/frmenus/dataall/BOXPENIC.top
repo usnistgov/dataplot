@@ -1,0 +1,8 @@
+----- <~dataall\BOXPENIC.top> BOXPENIC.DAT
+
+BOXPENIC.DAT
+
+View     <xcl: LIST BOXPENIC.DAT>
+Load     <xcf: ~dataload/BOXPENIC.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXPENIC.DAT>
+

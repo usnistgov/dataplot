@@ -1,0 +1,36 @@
+This is file zipppf.men--Compute Zipf ppf
+ 
+--------------------
+ 1. Compute Zipf ppf
+ 2. LET Y = ZIPPPF(P,ALPHA,N)
+ 3.
+ 4. Input values:
+ 5.                                p (0 <= p <= 1):
+ 5. @CE 1 0 42 50 ?
+ 6.              shape parameter alpha (alpha > 1):
+ 6. @CE 2 0 42 50 ?
+ 7.              shape parameter n (n = 1, 2, ...):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Output parameters:
+10.                  name for the ppf value:
+10. @CE 4 0 42 50 ?
+11.
+12.
+13. Compute the Probability?
+--------------------
+AN FE
+LET ZALPHA = 1.5
+LET ZN = 100
+@IF 2 0 LET ZALPHA = _2
+IF ZALPHA <= 1
+   LET ZALPHA = 1.5
+END OF IF
+@IF 3 0 LET ZN = _3
+IF ZN <= 1
+   LET ZN = 1
+END OF IF
+LET _4 = ZIPPPF( _1 , ZALPHA , ZN )
+--------------------
+WEB HELP ZIPPPF
+--------------------

@@ -1,0 +1,106 @@
+SAVE 1
+. THIS IS DATAPLOT PROGRAM FILE     HOTBAR.DP
+. KEN SNYDER FEBRUARY 1994
+. This is a 'black-box' simulation program block for implementing a
+. fuzzy controller.
+.
+. The black-box system is a uniform rod which has inductive heating
+. at one end.  The routine black_box() takes a voltage as an input and returns
+. the temperature at the opposite end of the bar.  The voltage is applied through
+. an inductor and resistor in series.  The resulting I^2*R heating is applied
+. to the one end of the bar.  There are also parameters for the convective
+. loss of heat into the environment:
+.
+. INPUT--
+.    BARLEN = NUMBER OF ELEMENTS IN THE BAR
+.    AMBTEMP = AMBIENT TEMPERATURE
+.    TARGTEMP = FINAL TARGET TEMPERATURE
+. OUTPUT--
+.    BARTEMP--THIS VECTOR WILL CONTAIN UPDATED TEMP. VALUES ALONG BAR
+.    TIME   --THIS PARAMETER WILL BE INCREMENTED BY DELTIME
+. INTERMEDIATE PARAMETERS--
+.    RESIST   = heater resistance
+.    INDUCT   = inductance
+.    DELTIME  = time increment
+.    HEATFLUX = heat into first element
+.    KLOSS0   = heat loss coefficient for first section
+.    KLOSS    = heat loss coefficient for middle sections
+.    KLOSSN   = heat loss coefficient for last section
+. Note--the above parameters and variables are set in HOTBAR0.DP
+.
+. TYPICAL CALLING SEQUENCE--
+.    LET BARLEN = 10
+.    LET AMBTEMP = 23
+.    LET TARGTEMP = 24
+.    CALL HOTBAR0.DP
+. .
+.    LET VOLTAGE = 23
+.    CALL HOTBAR.DP
+.    LET VOLTAGE = 23
+.    CALL HOTBAR.DP
+.    LET VOLTAGE = 23
+.    CALL HOTBAR.DP
+.    ETC.
+.
+. -----START POINT-----
+.
+FEEDBACK OFF
+LET PASS = PASS+1
+.
+. STEP 1--CALCULATE HEAT FLUX INTO FIRST SECTION
+.
+LET CURRENT = CURRENT + (DELTIME/INDUCT)*(VOLTAGE-CURRENT*RESIST);
+LET HEATFLUX = CURRENT*CURRENT*RESIST
+.
+. STEP 2--CALCULATE TEMPERATURE FOR FIRST SECTION.
+.
+LET BT1 = BARTEMP(1)
+LET BT2 = BARTEMP(2)
+LET BT3 = BARTEMP(3)
+.
+LET TEMP1=BT1 + DELTIME * (BT1-2.0*BT2+BT3-KLOSS0*(BT1-AMBTEMP)) + HEATFLUX
+LET TEMP(1)=TEMP1
+LET BARTEMP(1)=TEMP1
+.
+. Step 3--Calculate temperature for intermediate sections (elements)
+. STEP 3--CALCULATE TEMPERATURES FOR INTERMEDIATE SECTIONS (ELEMENTS)
+.         NOTE--THE DISTANCE BETWEEN ELEMENTS IS ASSUMED TO BE UNITY.
+.
+LOOP FOR I = 2 1 BARLEN
+   LET BTI=BARTEMP(I)
+   LET IM1=I-1
+   LET BTIM1=BARTEMP(IM1)
+   LET IP1=I+1
+   LET BTIP1=BARTEMP(IP1)
+   LET TEMPI = BTI + DELTIME * (BTIM1-2.0*BTI+BTIM1-KLOSS*(BTI-AMBTEMP))
+   LET TEMP(I)=TEMPI
+   LET BARTEMP(I)=TEMPI
+END LOOP
+.
+. STEP 4--CALCULATE HEAT FLUX INTO THE LAST SECTION
+.
+LET I=BARLEN
+LET BTN=BARTEMP(I)
+LET IM1=I-1
+LET BTNM1=BARTEMP(IM1)
+LET IM2=I-2
+LET BTNM2=BARTEMP(IM2)
+LET TEMPN=BTN + DELTIME * (BTN-2.0*BTNM1+BTNM2-KLOSSN*(BTN-AMBTEMP))
+LET TEMP(BARLEN)=TEMPN
+LET BARTEMP(BARLEN)=TEMPN
+.
+LET TIME = TIME+DELTIME
+LET T(PASS) = TIME
+LET V(PASS) = VOLTAGE
+LET FIRSTTEM(PASS) = BARTEMP(1)
+LET LASTTEMP(PASS) = BARTEMP(BARLEN)
+.
+. STEP 5--WRITE EVERYTHING OUT
+.
+. WRITE T V FIRSTTEM LASTTEMP
+X3LABEL AUTOMATIC
+MULTIPLOT 2 2
+PLOT BARTEMP ELEMENT
+PLOT FIRSTTEMP T
+PLOT LASTTEMP T
+.

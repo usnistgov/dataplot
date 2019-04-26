@@ -1,0 +1,53 @@
+This is file lowess.men--Compute a lowess smooth of a variable
+ 
+--------------------
+ 1. Lowess (Locally Weighted Least Squares)
+ 2. LOWESS Y X
+ 3.
+ 4. Vertical  axis variable for the lowess:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Optional horizontal axis variable for the lowess:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Variable to save residuals:
+ 6. @CE 3 0 42 50 *
+ 7.
+ 8. Lowess fraction (a number between 0 and 1):
+ 8. @CE 4 0 42 50 *
+ 9. Lowess degree:
+ 9. @CE 5 1 14 25 linear
+ 9. @CE 5 2 27 38 quadratic
+10.
+11. Line style for the lowess curve:
+11. @CE 6 0 42 50 gui-line
+12. Character symbol for the raw data:
+12. @CE 7 0 42 50 gui-character
+13. Fill the character symbol?:
+13. @CE 8 0 42 50 gui-ooff
+14.
+15. Subset/Except/For Specification:
+16. @CE 9 0 -5 50 *
+17.
+18.
+19. Perform the Lowess Smooth?:
+--------------------
+GR FE
+MULTIPLOT CORNER COORDINATES 5 5 95 95
+MULTIPLOT 2 1
+LOWESS FRACTION _4
+@IF 5 1 LOWESS DEGREE 1
+@IF 5 2 LOWESS DEGREE 2
+LET ZZZZN = SIZE _1
+LET ZZZZX = SEQUENCE 1 1 ZZZZN
+@IF 2 0 DELETE ZZZZX
+@IF 2 0 LET ZZZZX = _2
+PLOT _1 ZZZZX _9
+LOWESS _1 ZZZZX  _9
+CHARACTER _7 BLANK
+CHARACTER FILL _8 OFF
+LINES BLANK _6
+PLOT _1 PRED VS ZZZZX _9
+END OF MULTIPLOT
+LET _3 = RES
+--------------------
+WEB HELP LOWESS SMOOTH
+--------------------

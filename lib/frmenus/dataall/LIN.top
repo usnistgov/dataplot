@@ -1,0 +1,8 @@
+----- <~dataall\LIN.top> LIN.DAT
+
+LIN.DAT
+
+View     <xcl: LIST LIN.DAT>
+Load     <xcf: ~dataload/LIN.DP>
+Print    <xccl: printfile C:\DATAPLOT\LIN.DAT>
+

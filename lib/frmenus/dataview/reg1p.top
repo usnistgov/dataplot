@@ -1,0 +1,36 @@
+----- <~dataview\reg1p.top> View Regression Data: 1-Variable & Poly.DP
+
+View Regression Data: 1-Variable & Polynomial
+
+BERGER1.DAT   Alaska Pipeline cracks       <xcf: ~dataview\BERGER1.DP>
+SPIEGEL.DAT   Nuclear tank calibration     <xcf: ~dataview\SPIEGEL.DP>
+PONTIUS.DAT*  Load cell calibration        <xcf: ~dataview\PONTIUS.DP>
+LEIGH4.DAT    Coating thickness SRM        <xcf: ~dataview\LEIGH4.DP>
+JONES.DAT     Density of Water             <xcf: ~dataview\JONES.DP>
+ANSCOMBE.DAT  Anscombe Data Sets           <xcf: ~dataview\ANSCOMBE.DP>
+
+NATR511.DAT   Young's Modulus              <xcf: ~dataview\NATR511.DP>
+NATR522.DAT   Young's Modulus (with reps)  <xcf: ~dataview\NATR522.DP>
+NATR527.DAT   Colorimetry                  <xcf: ~dataview\NATR527.DP>
+NATR533.DAT   Tire Wear                    <xcf: ~dataview\NATR533.DP>
+NATR540.DAT   Tire Wear                    <xcf: ~dataview\NATR540.DP>
+NATR65.DAT    3-Variable                   <xcf: ~dataview\NATR65.DP>
+NATR627.DAT   Cubic                        <xcf: ~dataview\NATR627.DP>
+
+GRA1326.DAT  Blood Pressure                <xcf: ~dataview\GRA1326.DP>
+
+WAMPLER1.DAT  Polynomial fitting test data <xcf: ~dataview\WAMPLER1.DP>
+NORRIS6.DAT   Ozone Photometry             <xcf: ~dataview\NORRIS6.DP>
+
+BOXSPRAY.DAT  Age eff on spray dispersion  <xcf: ~dataview\BOXSPRAY.DP>
+BOXWELD.DAT   Velocity & weld strength     <xcf: ~dataview\BOXWELD.DP>
+BOXRATS.DAT   Supplement & growth rate     <xcf: ~dataview\BOXRATS.DP>
+
+MICHELSO.DAT  Speed of Light               <xcf: ~dataview\MICHELSO.DP>
+USADEBT.DAT   USA nat. debt (1947-1993)    <xcf: ~dataview\USADEBT.DP>
+MORALES.DAT   SO2 isotope analysis         <xcf: ~dataview\MORALES.DP>
+MORALES2.DAT  SO2 isotope analysis         <xcf: ~dataview\MORALES2.DP>
+
+FREQPRIM.DAT  Frequency of prime numbers   <xcf: ~dataview\FREQPRIM.DP>
+PRIMESM.DAT   Mersenne prime numbers       <xcf: ~dataview\PRIMESM.DP>
+

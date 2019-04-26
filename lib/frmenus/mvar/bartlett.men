@@ -1,0 +1,37 @@
+This is file bartlett.men--Bartlett Test for Equal Covariances
+ 
+--------------------
+ 1. Bartlett Test for Equal Covariances
+ 2. Macro
+ 3.
+ 4. The following should be noted when applying the
+ 5. Bartlett test for equal covariances:
+ 6.   1) It is sensitive to departures from 
+ 7.      multivariate normality.
+ 8.   2) The number of varibles and number of
+ 9.      groups should both be 5 or less.
+10.   3) The Ni for each group should be at least
+11.      20 or so.
+12.
+13. List of Response Variables:
+14. @CE 1 0 1 50 gui-variable
+15. Gropup ID Variable:
+15. @CE 2 0 42 50 gui-variable
+16.
+17. Subset/Except/For Specification: 
+18. @CE 3 0 1 50 *
+19.
+20.
+21. Generate the Bartlett Test?:
+--------------------
+GR FE
+DELETE ZX ZTAG
+WRITE ZZZZJUNK.DAT _1 _3
+SKIP 0
+READ MATRIX ZZZZJUNK.DAT ZX
+LET ZTAG = _2
+RETAIN ZTAG _3
+CALL BARTCOVA.DP
+--------------------
+WEB HELP VARIANCE-COVARIANCE MATRIX
+--------------------

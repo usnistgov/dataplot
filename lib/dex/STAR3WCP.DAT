@@ -1,0 +1,34 @@
+3-FACTOR STAR DESIGN WITH 3 CENTER POINTS
+NUMBER OF LEVELS FOR EACH FACTOR =  3
+NUMBER OF FACTORS                =  3
+NUMBER OF OBSERVATIONS           =  9
+REFERENCE--BOX, HUNTER & HUNTER,
+           STATISTICS FOR EXPERIMENTERS, PAGE 534
+NOTE--IF POSSIBLE, THIS (AS WITH ALL EXPERIMENT DESIGNS) SHOULD BE
+      RUN IN RANDOM ORDER (SEE DATAPLOT'S RANDOM PERMUTATION FILES).
+NOTE--TO READ THIS FILE INTO DATAPLOT--
+      SKIP 25
+      READ STAR3WCP.DAT X1 X2 X3
+DATE--MAY 1989
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    X1        X2        X3
+   --------------------------
+   -1.414     0         0
+   +1.414     0         0
+    0        -1.414     0
+    0        +1.414     0
+    0         0        -1.414
+    0         0        +1.414
+    0         0         0
+    0         0         0
+    0         0         0

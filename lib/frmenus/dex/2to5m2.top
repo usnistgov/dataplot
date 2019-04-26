@@ -1,0 +1,21 @@
+----- <~dex\2to5m2.top> 2**(5-2) Design
+
+2**(5-2) Design
+
+   k = 5 factors
+   n = 8 runs
+   r = resolution 3
+       (main effects  ==  2-term interactions)
+
+             (12) (13)
+   X1  X2  X3  X4  X5
+   ..................
+   -   -   -   +   +
+   +   -   -   -   -
+   -   +   -   -   +
+   +   +   -   +   -
+   -   -   +   +   -
+   +   -   +   -   +
+   -   +   +   -   -
+   +   +   +   +   +
+

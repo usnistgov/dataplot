@@ -1,0 +1,33 @@
+THIS IS DATAPLOT DATA FILE EDA1.DAT
+HOMEWORK PROBLEM #3
+REFERENCE--BOX & BISGAARD
+ENGINEERING QUESTION--IS THERE A DIFFERENCE IN THE 2 DETECTORS?
+TO READ THIS INTO DATAPLOT--
+   SKIP 25
+   READ EDA1.DAT Y X1 X2 X3
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+INTENSITY   DETECTOR  SOURCE OPERATOR
+--------------------------------------
+   67          -1       -1      -1
+   79          +1       -1      -1
+   61          -1       +1      -1
+   75          +1       +1      -1
+   59          -1       -1      +1
+   90          +1       -1      +1
+   52          -1       +1      +1
+   87          +1       +1      +1

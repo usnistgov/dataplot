@@ -1,0 +1,32 @@
+----- <~dexmix\dexmix.top>  Mixture Designs
+ 
+Mixture Designs
+ 
+Discussion
+    Overview                            <~dexmix\discussi.top>
+    Experimental Goals                  <~dexmix\expgoals.top>
+    Advantages                          <~dexmix\advantag.top>
+    Disadvantages                       <~dexmix\disadvan.top>
+    References                          <~dexmix\refer.top>
+NIST/SEMATECH Handbook
+    Mixture Designs             <xcl: web handbook mixture designs>
+    Mixture Screening Designs   <xcl: web handbook mixture screening designs>
+    Simplex Lattice Designs     <xcl: web handbook simplex lattice designs>
+    Constrained Mixture Designs <xcl: web handbook constrained mixture designs>
+
+Construction
+    View                                <~dexmix\viewdesi.top>
+    Load                                <~dexmix\loaddesi.top>
+    Draw Simplex Grid                   <~dexmix\simplex.top>
+    Constrained Regions                 <~dexmix\irregular.top>
+
+Analysis
+    View Models                         <~dexmix\viewmode.top>
+    Fit Models                          <~dexmix\loadmode.top>
+    Validate Models                     <~fit\modelval.top>
+    Graphical Techniques                <~mfac\viewdata.top>
+ 
+Built-in Data Files
+    View                                <~dataview\dexmix.top>
+    Load                                <~dataload\dexmix.top>
+

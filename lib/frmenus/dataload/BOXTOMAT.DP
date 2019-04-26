@@ -1,0 +1,8 @@
+----- <~dataload\BOXTOMAT.DP> Load BOXTOMAT.DAT
+
+. This is file    BOXTOMAT.DP
+
+DELETE Y X POS
+SKIP 25
+READ BOXTOMAT.DAT Y X POS
+

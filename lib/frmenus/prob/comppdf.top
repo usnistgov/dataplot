@@ -1,0 +1,21 @@
+----- <~prob\comppdf.top> Compute pdf's
+
+Compute Probability Density Functions
+
+These menus are used to compute a single value
+for a probability density function.
+
+NIST/SEMATECH Handbook                    <xcl: web handbook probability functions>
+
+Continuous Distributions
+   No Shape Parameters (e.g., Normal)           <~prob\locscpdf.top>
+   One Shape Parameters (A-L) (e.g., Lognormal) <~prob\sha1apdf.top>
+   One Shape Parameters (M-Z) (e.g., Weibull)   <~prob\sha1bpdf.top>
+   Two Shape Parameters (e.g., Beta)            <~prob\shap2pdf.top>
+   Three or More Shape Parameters               <~prob\shap3pdf.top>
+
+Mixture Distributions                           <~prob\mixpdf.top>
+Bivariate Distributions                         <~prob\bivpdf.top>
+
+Discrete Distributions                          <~prob\discpdf.top>
+

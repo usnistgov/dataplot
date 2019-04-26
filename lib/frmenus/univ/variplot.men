@@ -1,0 +1,45 @@
+This is file variplot.men--Graphical Test: Shift in Variation
+
+--------------------
+ 1. Graphical Test: Shift in Variation
+ 2. PLOT Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. Reference Variation Value sigma0:
+ 5. @CE 2 0 42 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Generate the Plot?
+--------------------
+GR FE
+LET ZN = SIZE _1
+LET ZDUMMY = 1 FOR I = 1 1 ZN
+LET ZMEAN = MEAN _1 _3
+LET ZSD = STANDARD DEVIATION _1 _3
+CHARACTERS X BLANK
+LINES SOLID DOTTED
+XLIMITS .9 1.1
+PLOT _1 ZDUMMY _3 AND
+LINES DASH
+LET ZUPP = ZMEAN + ZSD
+LET ZLOW = ZMEAN - ZSD
+DRAWDATA .98 ZLOW .98 ZUPP
+LET ZUPP = ZMEAN + 2*ZSD
+LET ZLOW = ZMEAN - 2*ZSD
+DRAWDATA .96 ZLOW .96 ZUPP
+LINES SOLID SOLID
+CHARACTERS BLANK BLANK
+XLIMITS
+LET ZUPP = ZMEAN + _2
+LET ZLOW = ZMEAN - _2
+DRAWDATA 1.02 ZLOW 1.02 ZUPP
+LET ZUPP = ZMEAN + 2* _2
+LET ZLOW = ZMEAN - 2* _2
+DRAWDATA 1.04 ZLOW 1.04 ZUPP
+--------------------
+WEB HELP PLOT
+--------------------

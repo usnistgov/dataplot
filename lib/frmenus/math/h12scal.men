@@ -1,0 +1,22 @@
+This is file h12scal.men--Compute H12 scale of a variable
+ 
+--------------------
+ 1. H12 Scale
+ 2. LET A = H12 SCALE Y
+ 3.
+ 4. Variable for which to compute the H12 Scale:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the H12 Scale:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the H12 Scale?:
+--------------------
+GR FE
+LET _2 = H12 SCALE  _1 _3
+--------------------
+WEB HELP H15 SCALE
+--------------------

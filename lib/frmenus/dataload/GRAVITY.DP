@@ -1,0 +1,8 @@
+----- <~dataload\GRAVITY.DP> Load GRAVITY.DAT
+
+. This is file    GRAVITY.DP
+
+DELETE Y X
+SKIP 25
+READ GRAVITY.DAT Y X
+

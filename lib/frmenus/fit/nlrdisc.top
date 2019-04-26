@@ -1,0 +1,58 @@
+----- <~fit\nlrdisc.top> Non-Linear Regression
+ 
+Non-Linear Regression
+
+Dataplot fits non-linear functions using a
+modified Levenburg-Marquardt algorithm.
+
+Issues:
+
+   1) Starting values
+
+      Dataplot provides default starting values
+      for non-linear fits.  In most cases, this
+      these default values will be adequate.
+      However, in certain cases, good starting
+      values may be needed in order for the fit
+      to converge.  This is particularly true
+      for functions that have many local minima
+      and maxima.  In this case, you may need
+      to provide your own starting values.
+
+      Good starting values are often known from
+      prior experience.  However, if this is not
+      the case, the PRE-FIT command may be useful
+      in generating good starting values.
+
+      Starting values are specified via the LET
+      command.  For example, if C is a parameter
+      in your fit function, then a starting value of
+      3 would be specified by entering
+
+          LET C = 3
+
+   2) Defining the non-linear function
+
+      The non-linear function can be specified directly
+      on the FIT command.  For example
+
+          FIT Y = A + B*EXP(-C*X)
+
+      Here, Y is the dependent variable, X is the
+      indepdendent variable, and A, B, and C are the
+      model parameters.
+
+      Alternatively, the LET FUNCTION command can
+      be used to define the function.  For the
+      above example, the analyst could enter
+
+          LET FUNCTION F = A + B*EXP(-C*X)
+          FIT Y = F
+
+      Dataplot provides a large library of built-in
+      functions that can be used in defining user
+      functions for non-linear fits.
+
+      You can specify up to 15 parameters for 
+      non-linear fits.
+

@@ -1,0 +1,37 @@
+This is file bjfore.men--Forecasts for Box-Jenkins Model
+ 
+--------------------
+ 1. Forecasts from ARMA Model
+ 2. READ DPST5F.DAT INDX FORE FORESD FL95 FU95
+ 3.
+ 4. This menu reads in the forecasted values
+ 5. (for (N/10)+1 future values), the standard
+ 6. deviations for the forecasts, and 95% lower
+ 7. and upper confidence interval for the
+ 8. forecast from the most recent ARMA fit.
+ 9. The ARMA command writes these values to
+10. the file DPST5F.DAT.
+11.
+12. After reading in these variables, you can
+13. use the various plotting menus to plot them.
+14.
+15. Name for Index Variable:
+15. @CE 1 0 42 50 ?
+16. Name for Forecast Variable:
+16. @CE 2 0 42 50 ?
+17. Name for Forecast Standard Deviation Variable:
+17. @CE 3 0 42 50 ?
+18. Name for Forecast Lower 95% Confidence Limit Variable:
+18. @CE 4 0 42 50 ?
+19. Name for Forecast Upper 95% Confidence Limit Variable:
+19. @CE 5 0 42 50 ?
+20.
+21.
+22. Read in Forecasted Values?
+--------------------
+GR FE
+SKIP 0
+READ DPST5F.DAT _1 _2 _3 _4 _5
+--------------------
+WEB HELP ARMA
+--------------------

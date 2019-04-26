@@ -1,0 +1,40 @@
+This is file get1cdf.men--Compute Geeta cdf and tail probability
+ 
+--------------------
+ 1. Compute Geeta cdf and Tail Probability
+ 2. LET Y = GETCDF(X,THETA,BETA)
+ 3.
+ 4. Input values:
+ 5.                                x (x = 1, 2, ...):
+ 5. @CE 1 0 42 50 ?
+ 6.            shape parameter theta (0 < theta < 1):
+ 6. @CE 2 0 42 50 
+ 7.       shape parameter beta (1 <= beta < 1/theta):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Output parameters:
+10.                  name for the cdf value:
+10. @CE 4 0 42 50 ?
+11.     name for the tail probability value:
+11. @CE 5 0 42 50 ?
+12.
+13.
+14. Compute the Probability?
+--------------------
+AN FE
+SET GEETA DEFINITION THETA
+LET ZTHETA = 0.5
+LET ZBETA = 1.5
+@IF 2 0 LET ZTHETA = _2
+IF ZTHETA <= 0
+   LET ZTHETA = 0.5
+END OF IF
+IF ZTHETA >= 1
+   LET ZTHETA = 0.5
+END OF IF
+@IF 3 0 LET ZBETA = _3
+@IF 4 0 LET _4 = GETCDF( _1 , ZTHETA, ZBETA )
+@IF 5 0 LET _5 = 1 - GETCDF( _1 , ZTHETA, ZBETA )
+--------------------
+WEB HELP GETCDF
+--------------------

@@ -1,0 +1,52 @@
+TOB171.DAT
+WEIBULL TEMPERATURE STRESS FAILURE DATA
+AT THREE DISTINCT TEMPERATURES, 40 CAPICATORS
+(120 CAPICATORS TOTAL) WERE HEATED AND FAILURES
+WERE COUNTED AT 9 READOUT TIMES.
+NUMBER OF OBSERVATIONS = 9
+NUMBER OF VARIABLES PER LINE IMAGE = 4
+ORDER OF VARIABLES ON A LINE IMAGE--
+   TIME     = TIME
+   TEMP     = TEMP
+   NUMFAIL  = NUMBER OF FAILURES
+SOURCE--TOBIAS AND TRINDADE (1981).  "APPLIED RELIABILITY",
+        SECOND EDITION, CHAPMAN & HALL/CRC, P. 171.
+STATISTICAL AREA = RELIABILITY (LOGNORMAL DISTRIBUTION)
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ TOB171.DAT TIME TEMP NUMFAIL
+ 
+ 
+
+
+
+ 
+TIME     TEMP     NUMFAIL
+-------------------------
+  24       85           1
+  24      105           2
+  24      125           5
+  72       85           0
+  72      105           1
+  72      125          10
+ 168       85           0
+ 168      105           3
+ 168      125          13
+ 300       85           1
+ 300      105           2
+ 300      125           2
+ 500       85           0
+ 500      105           2
+ 500      125           3
+ 750       85           3
+ 750      105           4
+ 750      125           2
+1000       85           0
+1000      105           5
+1000      125           2
+1250       85           1
+1250      105           1
+1250      125           1
+1500       85           2
+1500      105           4
+1500      125           0

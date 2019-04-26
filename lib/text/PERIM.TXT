@@ -1,0 +1,21 @@
+----------  *PERIMETERS*  ----------
+
+    Perimeters of Geometric Figures
+
+Square                4 * side
+Rectangle             2 * (length + width)
+Parallelogram         2 * (side1 + side2)
+Triangle              side1 + side2 + side3
+Regular n-polygon     n * side
+Trapezoid             height * (base1 + base2) / 2
+Trapezoid             base1 + base2 + height * [csc(theta1) + csc(theta2)]
+
+Circle                2 * pi * radius
+Ellipse               4 * radius1 * E(k,pi/2)
+Ellipse               where E(k,pi/2) is the Complete Elliptic
+Ellipse               Integral of the Second Kind, and where
+Ellipse               k = (1/radius1) * sqrt(radius1**2 - radius2**2)
+
+   Source--Spiegel, Murray R.  Mathematical Handbook of Formulas
+           and Tables.  Schaum's Outline series in Mathematics.
+           McGraw-Hill Book Co., 1968.

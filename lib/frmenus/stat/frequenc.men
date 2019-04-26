@@ -1,0 +1,20 @@
+This is file frequenc.men--Frequency Test for Randomness
+ 
+--------------------
+ 1. Frequency Test for Randomness
+ 2. FREQUENCY TEST Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Compute Frequency Test?
+--------------------
+GR FE
+FREQUENCY TEST _1 _2
+--------------------
+WEB HELP FREQUENCY TEST
+--------------------

@@ -1,0 +1,11 @@
+----- <~math\user_fun.top> User defined functions
+ 
+User Defined Functions
+ 
+Discussion                            <~math\userfu_d.top>
+
+Create a User Defined Function      <xemf: ~math\crea_fun.men>
+Combine User Defined Functions      <xemf: ~math\comb_fun.men>
+Evaluate a 1-D Function             <xemf: ~math\eva1_fun.men>
+Evaluate a 2-D Function             <xemf: ~math\eva2_fun.men>
+Built-In Functions (Documentation)  <xccl: web help functions>

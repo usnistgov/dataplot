@@ -1,0 +1,57 @@
+-----<~prob\dfitdisc.top> Distributional Fitting, Discussion
+
+Fitting Distribution to Data
+
+Fitting a Distribution to Data                                    -
+
+A common task with univariate data is to fit a distributional
+model to data.  Specifically, this consists of one or more of
+the following elements:
+
+   1) Determine the best-fit distribution to your data.
+
+   2) Find point estimates and confidence intervals
+      for the parameters of the distributions.
+
+   3) Find point estimates and confidence intervals for
+      selected quantiles (percent points) of the distribution.
+
+Dataplot supports distributional modeling for the following
+types of data:
+
+   1) Raw data (no grouping and no censoring)
+
+   2) Censored data
+
+   3) Grouped data (i.e., data is collected as a frequency
+      table).
+
+A reasonable strategy for fitting a distributional model is
+
+    1) Graph the data.  Distributional plots should show
+       basic features of the data (is the data symmetric
+       or skewed? is the data multi-modal or unimodal? is
+       the data heavy-tailed? are there significant
+       outliers?) which should suggest good candidate
+       models.
+
+    2) Fit the candidate distributions and rank them
+       according to some goodness-of-fit criterion (e.g.,
+       maximum PPCC, minimum Kolmogorov-Smirnov).  Practical
+       considerations can also be considered (e.g., if
+       two different distributions provide comparable quality
+       fits, you may prefer the simpler model).
+
+    3) Perform a more careful analysis of the best fitting
+       distributions.
+
+    4) Assess whether your best-bit distribution is in fact
+       good enough.
+
+Dataplot provides several approaches to fitting distributions
+
+    Maximum Likelihood                       <~prob\mle_disc.top>
+    PPCC Plot/Probability Plot               <~reli\discppcc.top>
+
+Specialized methods may be available for a few distributions.
+

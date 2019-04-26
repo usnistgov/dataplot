@@ -1,0 +1,8 @@
+----- <~datalist\USADEFIC.top> USADEFIC.DAT
+ 
+USADEFIC.DAT
+ 
+View     <xcl: LIST USADEFIC.DAT>
+Load     <x2cl: SKIP 25; READ USADEFIC.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\USADEFIC.DAT>
+ 

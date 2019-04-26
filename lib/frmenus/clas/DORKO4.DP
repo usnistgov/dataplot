@@ -1,0 +1,10 @@
+----- <~dataloex\DORKO4.DP> Load & Execute DORKO4.DAT
+
+. This is file    DORKO4.DP
+
+DELETE Y LAB RUN DAY TOD
+SKIP 25
+READ DORKO.DAT Y LAB RUN DAY TOD
+TITLE DORKO.DAT
+/
+

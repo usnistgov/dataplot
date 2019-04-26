@@ -1,0 +1,31 @@
+----- <~reli\weibmode.top>
+
+Reliability: Compute/Plot/Fit Weibull Model
+
+Compute Weibull Distribution Functions
+    Cumulative Distribution Function        <xemf: ~prob\wei1cdf.men>
+    Probability Density Function            <xemf: ~prob\wei1pdf.men>
+    Percent Point Function                  <xemf: ~prob\wei1ppf.men>
+    Hazard Function                         <xemf: ~prob\wei1haz.men>
+    Cumulative Hazard Function              <xemf: ~prob\wei1chaz.men>
+    
+Plot Weibull Distribution Functions
+    Cumulative Distribution Function        <xemf: ~prob\pwei1cdf.men>
+    Probability Density Function            <xemf: ~prob\pwei1pdf.men>
+    Percent Point Function                  <xemf: ~prob\pwei1ppf.men>
+    Hazard Function                         <xemf: ~prob\pwei1haz.men>
+    Cumulative Hazard Function              <xemf: ~prob\pwei1cha.men>
+    Average Failure Rate Function           <xemf: ~reli\pwei1afr.men>
+
+Fit Weibull Distribution
+    Maximum Likelihood                      <xemf: ~reli\mlewei1.men>
+    PPCC Plot (Uncensored)                  <xemf: ~reli\ppccwei1.men>
+    Probability Plot (Uncensored)           <xemf: ~reli\ppwei1.men>
+    PPCC Plot (Censored)                    <xemf: ~reli\ppccwe1c.men>
+    Probability Plot (Censored)             <xemf: ~reli\ppwei1ce.men>
+
+Weibull Goodness of Fit
+    Anderson-Darling                        <xemf: ~reli\adweib.men>
+    Kolmogorov-Smirnov                      <xemf: ~reli\kswei1.men>
+    Histogram with Fitted PDF               <xemf: ~prob\wei1hisp.men>
+

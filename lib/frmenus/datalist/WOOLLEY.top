@@ -1,0 +1,8 @@
+----- <~datalist\WOOLLEY.top> WOOLLEY.DAT
+ 
+WOOLLEY.DAT
+ 
+View     <xcl: SERIAL READ WOOLLEY.DAT>
+Load     <x2cl: SKIP 25; SERIAL READ WOOLLEY.DAT Y>
+Print    <xcl: SERIAL READ WOOLLEY.DAT>
+ 

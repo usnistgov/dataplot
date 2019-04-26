@@ -1,0 +1,8 @@
+----- <~dataload\BOXBLOOD.DP> Load BOXBLOOD.DAT
+
+. This is file    BOXBLOOD.DP
+
+DELETE Y X RUNSEQ
+SKIP 25
+READ BOXBLOOD.DAT Y X RUNSEQ
+

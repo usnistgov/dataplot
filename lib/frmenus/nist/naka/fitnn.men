@@ -1,0 +1,51 @@
+This is file fitnn.men--Fit neural net
+ 
+--------------------
+1. Fit Neural Net
+2. (=== Maureen Caudill, Neural Networks Primer, p. 11)
+3.
+4. Weights
+5.    Read Weights in at Beginning?
+5. @CE 1 1 35 40 yes
+5. @CE 1 2 45 50 no
+6.    File Name of Pre-existing weights:
+7. @CE 2 0 4 50 *
+8.    Save Weights at the End?
+8. @CE 3 1 35 40 yes
+8. @CE 3 2 45 50 no
+9.    File Name to save weights:
+10. @CE 4 0 4 50 *
+11.
+12. Net Specifications:
+13.    Number of Inputs:
+13. @CE 5 0 35 50 ?
+14.    Number of Outputs:
+14. @CE 6 0 35 50 ?
+15.    Number of Categories:
+15. @CE 7 0 35 50 ?
+16.    Number of Hidden Layers:
+16. @CE 8 0 35 50 ?
+17.    Number of Neurons / Layer:
+17. @CE 9 0 35 50 ?
+18.    Learning Rate (0 to 1):
+18. @CE 10 0 35 50 ?
+19.    Momemtum:
+19. @CE 11 0 35 50 ?
+20.    Weight Range:
+20. @CE 12 0 35 50 ?
+21.
+22. Learn?
+22. @CE 13 1 35 40 yes
+22. @CE 13 2 45 50 no
+23. Learning Mode (Select one):
+24. @CE 14 1 3 23 Back Propagation
+24. @CE 14 2 30 50 BP/Momentum
+25. @CE 14 3 3 23 Kohonen/LVQ
+25. @CE 14 4 30 50 Probabilistic
+26. @CE 14 4 3 23 General Regression
+27.
+28. Run the Neural Net?
+--------------------
+SU FE
+. to be done--via Neural net Primer mag
+--------------------

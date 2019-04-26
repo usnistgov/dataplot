@@ -1,0 +1,40 @@
+-----<~reli\goodfitg.top> Discussion: Goodness of Fit Graphical Methods
+
+Goodness-of-Fit: Graphical Methods
+
+Goodness-of-Fit: Graphical Methods
+
+Dataplot provides two graphical methods for assessing
+goodness-of-fit.
+
+1) Probability Plots
+
+   Probability plots provide an excellent tool for visually
+   assessing the goodness of fit.  The straighter the
+   probability plot, the stronger the evidence of a good
+   distributional fit.
+
+   One advantage of probability plots is that if the
+   distributional fit is not good, the plot can provide
+   some guidance as to how the distributional model could
+   be improved.
+
+   The correlation coefficient of points on the probability
+   plot (i.e., the PPCC value) provides a quantitative
+   measure of the linearity of the probability plot.  This
+   can be used as a ranking critierion for comparing
+   distributional models.
+
+   Dataplot probability plots can be applied to both
+   grouped data and censored data.
+
+   NIST/SEMATECH Handbook    <xcl: web handbook probability plot>
+
+2) Histogram with a PDF superimposed
+
+   Generating a relative histogram with the fitted
+   distributional model superimposed provides another
+   visual assessment of the quality of the fit.
+
+   NIST/SEMATECH Handbook    <xcl: web handbook histogram>
+

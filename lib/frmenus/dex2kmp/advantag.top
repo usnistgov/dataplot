@@ -1,0 +1,12 @@
+----- <~dex2kmp\advantag.top> Advantages: 2**(k-p) Frac. Fact. Designs
+ 
+Advantages: 2**(k-p) Fractional Factorial Designs
+ 
+1. Small sample size (the most important advantage);
+2. Able to estimate main effects & some interactions;
+ 
+3. Yields perfect fit at the design points
+4. Is an orthogonal design
+5. Estimates are free & clear of one another
+6. Accomodates both continuous and discrete factors
+ 

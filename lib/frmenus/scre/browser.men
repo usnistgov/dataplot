@@ -1,0 +1,32 @@
+This is file browser.men--SET BROWSER
+ 
+--------------------
+ 1. Set Browser
+ 2. SET BROWSER /usr/local/bin/netscape
+ 3.
+ 4. By default, Dataplot assumes you are using the
+ 5. Netscape browser and the Netscape executable is
+ 6. available from your default path.  That is,
+ 7. Dataplot simply executes a "netscape ..." command
+ 8. to access Web pages.  If you are using a different
+ 9. browser, e.g. Internet Explorer, or if the directory
+10. containing your preferred browser is not in your
+11. default path, you can enter the path to this
+12. browser here.  For example, on my Window NT I need
+13. to enter the following to use Internet Explorer:
+14.
+15.      "C:\Program Files\Plus!\Microsft Internet\iexplore.exe"
+16.
+17. Note that the quotes are included (since we have spaces
+18. in the directory name).  This path name may vary for
+19. other PC's.
+20.
+21. Enter Browser Path:
+22. @CE 1 0 1 70 ?
+23.
+24.
+25. Set the Browser?:
+--------------------
+SU FE
+SET BROWSER _1
+--------------------

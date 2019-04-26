@@ -1,0 +1,10 @@
+----- <~dataloex\WAMPLER2.DP> Load & Execute WAMPLER2.DAT
+
+. This is file    WAMPLER2.DP
+
+DELETE Y
+SKIP 25
+READ WAMPLER2.DAT Y
+TITLE WAMPLER2.DAT
+/
+

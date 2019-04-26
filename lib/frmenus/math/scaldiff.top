@@ -1,0 +1,48 @@
+----- <~math\scaldiff.top> Difference of Scale Statistics
+ 
+Difference of Scale Statistics
+ 
+Calculate the difference between two
+response variables for various measures
+of scale.  These commands calculate
+the requested statistic for the data in
+variables and store the resulting statistic
+in a parameter.
+
+
+Measures of Scale
+   Difference of Average Absolute Deviation  <xemf: ~math\diffaad.men>
+   Difference of Biweight Midvariance        <xemf: ~math\diffbwmv.men>
+   Difference of Biweight Scale              <xemf: ~math\diffbwsc.men>
+   Difference of Coefficient of Variation    <xemf: ~math\diffcoef.men>
+   Difference of H10                         <xemf: ~math\diffh10s.men>
+   Difference of H12                         <xemf: ~math\diffh12s.men>
+   Difference of H15                         <xemf: ~math\diffh15s.men>
+   Difference of H17                         <xemf: ~math\diffh17s.men>
+   Difference of H20                         <xemf: ~math\diffh20s.men>
+   Difference of Interquartile Range         <xemf: ~math\diffiqra.men>
+   Difference of Kurtosis                    <xemf: ~math\diffkurt.men>
+   Difference of Median Absolute Deviation   <xemf: ~math\diffmad.men>
+   Difference of Percentage Bend Midvariance <xemf: ~math\diffpbmv.men>
+   Difference of QN Scale                    <xemf: ~math\diffqn.men>
+   Difference of Range                       <xemf: ~math\diffrang.men>
+   Difference of Relative SD                 <xemf: ~math\diffrlsd.men>
+   Difference of Relative Variance           <xemf: ~math\diffrelv.men>
+   Difference of Root Mean Square            <xemf: ~math\diffrms.men>
+   Difference of Skewness                    <xemf: ~math\diffskew.men>
+   Difference of Standard Deviation          <xemf: ~math\diffsd.men>
+   Difference of SD of the Mean              <xemf: ~math\diffsdme.men>
+   Difference of SD of Lp Locations          <xemf: ~math\difflpsd.men>
+   Difference of SN Scale                    <xemf: ~math\diffsn.men>
+   Difference of Sums                        <xemf: ~math\diffsum.men>
+   Difference of Variance                    <xemf: ~math\diffvari.men>
+   Difference of Variance of the Mean        <xemf: ~math\diffvarm.men>
+   Difference of Winsorized SD               <xemf: ~math\diffwisd.men>
+   Difference of Winsorized Variance         <xemf: ~math\diffwvar.men>
+
+Measures of Extremes and Quantiles
+   Difference of Extremes                    <xemf: ~math\diffextr.men>
+   Difference of Maximums                    <xemf: ~math\diffmaxi.men>
+   Difference of Minimums                    <xemf: ~math\diffmini.men>
+   Difference of Quantiles                   <xemf: ~math\diffquan.men>
+

@@ -1,0 +1,24 @@
+This is file matr_tri.men--Solve a triangular system of linear equations
+ 
+--------------------
+ 1. Solve Triangular System of Linear Equations
+ 2. LET B = TRIANGULAR SOLUTION X A
+ 3.
+ 4. Name of coefficient matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Name of constants variable:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable  to store the matrix solution:
+ 6. @CE 3 0 33 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 5 0 -5 50 *
+10.
+11.
+12. Solve the Triangular System of Equations?:
+--------------------
+GR FE
+LET _3 = TRIANGULAR SOLUTION  _1 _2 _5
+--------------------
+WEB HELP TRIANGULAR SOLUTION
+--------------------

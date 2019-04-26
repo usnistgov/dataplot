@@ -1,0 +1,10 @@
+----- <~prob\mskeppf.top> Plot Miscellaneous Skewed ppf's
+
+Plot Miscellaneous Skewed PPF Functions
+
+Gompertz                 <xemf: ~prob\gomppf.men>
+Alpha                    <xemf: ~prob\alpppf.men>
+Bradford                 <xemf: ~prob\brappf.men>
+Reciprocal               <xemf: ~prob\recppf.men>
+Log Double Exponential   <xemf: ~prob\ldeppf.men>
+

@@ -1,0 +1,57 @@
+----- <~time\dds2.top> DDS FAQ 2 DDS Deliverables
+ 
+2. What are the 'deliverables' from DDS?
+ 
+The primary deliverable of DDS is a purely data
+based mathematical model in the form of stochastic
+difference equation, from which all the dynamic
+characteristics of underlying differential
+equation can be obtained.  This model provides the
+following:
+ 
+    1. Autoregressive moving average
+       (ARMA) model coefficients and residuals.
+ 
+    2. Characteristic roots or eigenvalues, with the
+       natural frequency and damping ratio for a complex
+       conjugate pair corresponding to oscillatory modes
+       in the data.
+ 
+    3. Green's function or impulse response
+       function with the accompanying modal components.
+       Identification of input-output transfer function.
+ 
+    4. Auto-and cross-spectra with their modal
+       components.
+ 
+    5. Auto- and cross-covariance with their
+       modal components.
+ 
+    6. Modal decomposition of variance/power.
+ 
+    7. Stochastic modal deconvolution for
+       enhancements and simplifications of data.
+ 
+    8. Smooth and easily understood plots of all these
+       characteristics backed by quantitative tables.
+ 
+    9. Equations for implementing prediction, forecast
+       and control using a microprocessor.
+ 
+   10. Model residuals, including outliers, to indica
+       presence of deterministic components in the data.
+ 
+   11. Reconstruction and plot of deterministic and
+       stochastic components of the data together with
+       the modal components of each if needed.
+ 
+   12. Separation of noise from the signal without prior
+       qualitative or quantitative assumptions of the
+       noise.
+ 
+   13. Identification of data as stationary or
+       non-stationary.
+ 
+   14. Identification and estimation of
+       trends and cycles.
+ 

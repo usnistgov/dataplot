@@ -1,0 +1,41 @@
+-----  <~clas\anov\anovexam.top> Load & Analyze ANOVA Class Data Files
+
+Load & Analyze ANOVA Class Datasets
+
+1-Factor
+   NEWCAR.DAT    New Car Interest Rates: City Effect     <xcf: ~clas\anov\NEWCAR.DP>
+   KENTON.DAT    Food Cases Sold: Design Effect          <xcf: ~clas\anov\KENTON.DP>
+   DRAFT69.DAT   1969 Draft Lottery: Month Effect        <xcf: ~clas\anov\DRAFT69.DP>
+   BOXBLOOD.DAT  Blood Coagulation Time: Diet Effect (BHH) <xcf: ~clas\anov\BOXBLOOD.DP>
+
+2-Factor
+   SMOKERS.DAT   Smokers: Age & Income Effect            <xcf: ~clas\anov\SMOKERS.DP>
+   RATFEED.DAT   Weight Gain of Rats: Protein Effects    <xcf: ~clas\anov\RATFEED.DP>
+   MANDEL2.DAT   Paper Smoothness: Material & Lab Effect <xcf: ~clas\anov\MANDEL2.DP>
+   TECHRISK.DAT  Perceived Risk of Technologies          <xcf: ~clas\anov\TECHRISK.DP>
+   ELISA.DAT     HIV Optical Density Readings from ELISA <xcf: ~clas\anov\ELISA.DP>
+   BOXPENIC.DAT  Penicillin Yield: Effect of Formula & Batch (BHH) <xcf: ~clas\anov\BOXPENIC.DP>
+   MLCO2.DAT     NOAA Ozone Study: Year & Month Effect   <xcf: ~clas\anov\MLCO2.DP>
+   BOXSHOES.DAT  Boys' Shoe Material (BHH)               <xcf: ~clas\anov\BOXSHOES.DP>
+   HOSPITAL.DAT  Death Rates: Hospital & Disease Effect  <xcf: ~clas\anov\HOSPITAL.DP>
+   ELECT92.DAT   1992 PresidentiaL Election: Cand. & State Effect <xcf: ~clas\anov\ELECT92.DP>
+   OLYMPICS.DAT  1994 Olympic Skating: Skater & Judge Effect <xcf: ~clas\anov\OLYMPICS.DP
+
+3-Factor
+   PAINTS.DAT    Lifetime of Street Paints               <xcf: ~clas\anov\PAINTS.DP>
+   TUMOR.DAT     Tumor Size                              <xcf: ~clas\anov\TUMOR.DP>
+   CREAM.DAT     Acidity of Sour Cream                   <xcf: ~clas\anov\CREAM.DP>
+   BOOKS.DAT     Classic Books Reading Comprehension     <xcf: ~clas\anov\BOOKS.DP>
+   BOXAUTO.DAT   Auto Emission                           <xcf: ~clas\anov\BOXAUTO.DP>
+   FUNNEL.DAT    Funnel Traversal Time                   <xcf: ~clas\anov\FUNNEL.DP>
+   BOWEN.DAT     Dental Polysac Adhesion                 <xcf: ~clas\anov\BOWEN.DP>
+   HAMAKER.DAT   Drill Thrust Force                      <xcf: ~clas\anov\HAMAKER.DP>
+   ELECT92.DAT   1992 PresidentiaL Election              <xcf: ~clas\anov\ELECT92.DP>
+
+4-Factor
+   GOLD.DAT      Dental Gold Hardness                    <xcf: ~clas\anov\GOLD.DP>
+   SHEESLE2.DAT  Defective Light Bulbs                   <xcf: ~clas\anov\SHEESLE2.DP>
+
+5-Factor
+   SRBSN.DAT     Ceramics Strength                       <xcf: ~clas\anov\SRBSN.DP>
+   BOXREAC2.DAT  Chemical Reaction Yield (BHH)           <xcf: ~clas\anov\BOXREAC2.DP>

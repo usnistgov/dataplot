@@ -1,0 +1,10 @@
+----- <~fit\datamvar.top> Fitting Multi-variable
+
+Fitting Multi-variable: y = f(x1,x2,...)
+
+Multiple Regression          <~fit\multreg.top>
+Non-Linear Regression        <~fit\nlreg.top>
+
+Principle Components Regression (PCR)    <~fit\pcreg.top>
+Ridge Regression (RR)        <~fit\rreg.top>
+

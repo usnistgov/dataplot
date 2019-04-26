@@ -1,0 +1,8 @@
+----- <~datalist\NELSON.top> NELSON.DAT
+ 
+NELSON.DAT
+ 
+View     <xcl: LIST NELSON.DAT>
+Load     <x2cl: SKIP 25; READ NELSON.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\NELSON.DAT>
+ 

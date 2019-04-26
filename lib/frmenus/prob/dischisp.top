@@ -1,0 +1,44 @@
+----- <~prob\dischisp.top> Histogram with Overlaid PDF (Discrete Distributions)
+
+Histogram with Overlaid PDF (Discrete Distributions)
+
+These menus will generate a relative histogram
+and overlay the specified probability mass
+function.
+
+Beta-Binomial                                   <xemf: ~prob\bbnhispd.men>
+Beta-Geometric                                  <xemf: ~prob\bgehispd.men>
+Beta-Negative Binomial                          <xemf: ~prob\bnbhispd.men>
+Binomial                                        <xemf: ~prob\binhispd.men>
+Borel-Tanner                                    <xemf: ~prob\btahispd.men>
+Classical Matching                              <xemf: ~prob\mathispd.men>
+Consul
+    (Theta parameterization)                    <xemf: ~prob\con1hisp.men>
+    (Mu parameterization)                       <xemf: ~prob\con2hisp.men>
+Discrete Uniform                                <xemf: ~prob\dishispd.men>
+Discrete Weibull                                <xemf: ~prob\diwhispd.men>
+Geeta
+    (Theta parameterization)                    <xemf: ~prob\get1hisp.men>
+    (Mu parameterization)                       <xemf: ~prob\get2hisp.men>
+Generalized Logarithmic Series                  <xemf: ~prob\glshispd.men>
+Generalized Lost Games                          <xemf: ~prob\glghispd.men>
+Generalized Negative Binomial                   <xemf: ~prob\gnbhispd.men>
+Geometric
+    (number of trials before first success)     <xemf: ~prob\geoahisp.men>
+    (number of trials including first success)  <xemf: ~prob\geobhisp.men>
+Hermite                                         <xemf: ~prob\herhispd.men>
+Hypergeometric                                  <xemf: ~prob\hyphispd.men>
+Katz                                            <xemf: ~prob\kathispd.men>
+Lagrange Poisson                                <xemf: ~prob\lpohispd.men>
+Leads in Coin Tossing                           <xemf: ~prob\lcthispd.men>
+Logarithmic Series                              <xemf: ~prob\dlghispd.men>
+Lost Games                                      <xemf: ~prob\loshispd.men>
+Negative Binomial                               <xemf: ~prob\nbhispd.men>
+Poisson                                         <xemf: ~prob\poihispd.men>
+Polya-Aeppli                                    <xemf: ~prob\paphispd.men>
+Quasi-Binomial Type I                           <xemf: ~prob\qbihispd.men>
+Yule                                            <xemf: ~prob\yulhispd.men>
+Waring                                          <xemf: ~prob\warhispd.men>
+Zeta                                            <xemf: ~prob\zethispd.men>
+Zipf                                            <xemf: ~prob\ziphispd.men>
+

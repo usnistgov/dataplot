@@ -1,0 +1,190 @@
+. This is dataplot macro     dexep_box.dp     10/15/18
+. Purpose: For dexep.dp, draw out the box and contents in upper right corner within the plot
+. Date: 10/15/18
+. Input:
+.   numeff               (parameter) = number of effects
+.   maxnumef             (parameter) = maximum number of effects to be printed out (optional) (default = 20)
+.   eff                  (vector)    = effect estimates
+.   steft1, steft2, etc. (strings)   = primary names of the effects
+.   stefc1, stefc2, etc. (strings)   = confounding structure strings
+.   colorall             (string)    = color for text (optional) (default = blue)
+. Output:
+.   A drawn out box with 4 columns of info:
+.      1. effect names
+.      2. effect values
+.      3. relative effect values (%)
+.      4. confounding structure (if existent)
+.
+. -----start point-----
+.
+let bugswepb = 0
+. let pausesw = 1
+.
+if bugswepb = 1; print " "; print "--At beginning of dexep_box.dp): draw box and contents"
+   print "numeff = ^numeff"
+   loop for jz = 1 1 numeff
+      let effj = eff(jz)
+      print "jz = ^jz   steft^jz = ^steft^jz   eff.. = ^effj    stefc^jz = ^stefc^jz"
+   end loop
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 1: Draw out the box for the ordered effects-----
+.
+if bugswepb = 1; print "--At (dexep_box.dp, step 1): draw box"
+   if pausesw = 1; pause; end if
+end if
+.
+let numeffp = numeff
+if numeff >= 20; let numeffp = 20; end if
+if maxnumef exists and numeffp > maxnumef
+   let numeffp = maxnumef
+end if
+.
+let length = 0
+loop for j = 1 1 numeff
+   let lengthj = string length stefc^j
+   if lengthj > length; let length = lengthj; end if
+end loop
+. print "length = ^length"
+. pause
+.
+let fudge = 0.9
+. let xright = 99
+let xright = 85
+let xleft = xright - 10 - 10 - length*fudge + 1
+if xleft >= 52; let xleft = 52; end if
+.
+let fudge = 1
+let y0del = 1
+if texth >= 2; let y0del = fudge*texth; end if
+. print texth fudge y0 y0del
+. print y0del numeffp
+let y0 = 86.5 - y0del*numeffp - 1.5
+box fill pattern solid; box fill color g80
+. print "xleft = ^xleft"
+. pause
+.
+. box xleft y0 85 90
+box xleft y0 xright 90
+.
+. -----Step 2: Within the box, write out the title line-----
+.
+if bugswepb = 1; print "--At (dexep_box.dp, step 2): write ranked list of effects"
+   print "numeff = ^numeff     numeffp = ^numeffp"
+   if pausesw = 1; pause; end if
+end if
+.
+if colorall exists; color ^colorall; end if
+.
+hw texth textw; just center
+let y0 = 87.7
+let x0 = xleft + 3; move x0 y0; text Factor
+let x0 = xleft + 10; move x0 y0; text Effect
+let x0 = xleft + 17.5; move x0 y0; text (%)
+if length <= 10; let x0 = xleft + 21; end if
+if length >= 11; let x0 = xleft + 23; end if
+move x0 y0; just left; text Confounding
+.
+let x0 = xleft + 3; let y0 = 86.5
+just center
+.
+let fudge = 1
+let y0del = 1
+if texth >= 2; let y0del = fudge*texth; end if
+. print texth fudge y0 y0del
+. pause
+.
+lines dotted; draw xleft 86.6 xright 86.6; lines solid
+.
+. -----Step 3: Write column  1 in box: effect ids for the ranked |effects|-----
+.
+if bugswepb = 1; print "--At (dexep_box.dp, step 3): col. 1: effect ids"
+   if pausesw = 1; pause; end if
+end if
+.
+character justification center all
+loop for j = 1 1 numeffp
+   let y0 = y0 - y0del
+   let y0pos(j) = y0
+   let plot character j = ^steft^j
+   move x0 y0; just center; hw 2 1; text ^steft^j                ;. column 1
+end loop
+. draw symbol x0 y0pos tagzzz
+. here here here  <=========================================
+delete tagzzz; let tagzzz = sequence 1 1 numeffp
+   .
+if bugswepb = 1; print "--At end of step 7.3 of dexep_box.dp"
+   print   x0 y0pos tagzzz numeffp
+   loop for jz = 1 1 numeff
+      let effj = eff(jz)
+      print "jz = ^jz   steft^jz = ^steft^jz   eff.. = ^effj    stefc^jz = ^stefc^jz"
+   end loop
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 4: Write columns 2 and 3 in box: ordered effect values (and relative effect values)-----
+.
+if bugswepb = 1; print "--At (dexep_box.dp, step 4): col. 2: effect values"
+   if pausesw = 1; pause; end if
+end if
+.
+. let x0 = xleft + 11; . let y0 = 86.5    commented out 10/8/18
+let x0 = xleft + 13; let y0 = 86.5
+character justification center all
+let dpepz = 4
+if dpep exists; let dpepz = dpep; end if
+set write decimals dpepz
+let m = mean y
+loop for j = 1 1 numeffp
+   let effj = eff(j)
+   let y0 = y0 - y0del
+   let y0pos(j) = y0
+   let string steffj = ^effj
+   set write decimals dpepz
+   let steffj = number to string effj
+   let plot character j =  ^steffj
+   move x0 y0; just center; hw 2 1; . text ^steffj                  ;. column 2
+   move x0 y0; just right; hw 2 1; text ^steffj                  ;. column 2
+   .
+   let reffj = 100*effj/m
+   set write decimals 1
+   let streffj = number to string reffj
+   let x0p = xleft + 20
+   move x0p y0; just center; hw 2 1; . text (^streffj%)             ;. column 3
+   move x0p y0; just right; hw 2 1; text (^streffj%)             ;. column 3
+   .
+end loop
+. draw symbol x0 y0pos tagzzz
+set write decimals
+.
+. -----Step 5: Write column  4 in box: confounding-----
+.
+if bugswepb = 1; print "--At (dexep-box.dp, step 5): col. 4: confounding"
+   if pausesw = 1; pause; end if
+end if
+.
+. let x0 = xleft + 18; . let y0 = 86.5   commented out 10/8/18
+let x0 = xleft + 22; let y0 = 86.5
+character justification left all
+loop for j = 1 1 numeffp
+   let string stout = ^stefc^j
+   if stefc^j = -999; let string stout = sp(); end if
+   if stefc^j = -99; let string stout = sp(); end if    ;. patch 10/8/18 for full factorial failure
+   let y0 = y0 - y0del
+   let y0pos(j) = y0
+   if stefc^j <> -999
+      let plot character j =  ^stout
+      . move x0 y0; . just center; . hw 2 1; . text ^stout                 ;. column 4
+      move x0 y0; just left; hw 2 1; text ^stout                 ;. column 4
+   end if
+end loop
+. draw symbol x0 y0pos tagzzz
+delete y0pos tagzzz
+.
+. -----Sterp 99: Finish up the macro-----
+.
+if bugswepb = 1; print " "; print "--At end of dexep_box.dp)"
+   if pausesw = 1; pause; end if
+end if
+.

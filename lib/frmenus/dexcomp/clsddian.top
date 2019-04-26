@@ -1,0 +1,34 @@
+----- <~dexcomp\clsddian.top> Discussion: Latin Square Designs Analysis
+ 
+Discussion: Latin Squares Designs - Analysis
+ 
+A typical analysis sequence for a latin square
+design might be as follows.
+
+   1) A first step is to generate a scatter plot of
+      the response variable against each of the
+      factor variables.
+
+      The primary graphical tool for latin square designs
+      is the block plot.
+
+      The block plot shows whether there is an effect
+      for the levels of the primary factor.  It also
+      shows whether this effect, if present, is consistent
+      across the blocking and nusiance factors.
+
+   2) The primary quantitative tool is a analysis of
+      variance (ANOVA).  Note that the Dataplot ANOVA
+      command assumes balanced data (i.e., each level of
+      the factor variables have the same number of
+      replications).  
+
+      ANOVA assumes that the residuals are indepedent
+      and identically distributed that follow a
+      normal distribution.  This assumption should be
+      checked.
+
+      If the ANOVA assumptions are not valid, an
+      alternative is to use the nonparametric
+      median polish approach.
+

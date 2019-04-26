@@ -1,0 +1,10 @@
+----- <~dataloex\EHRSTEIN.DP> Load & Execute EHRSTEIN.DAT
+
+. This is file    EHRSTEIN.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ EHRSTEIN.DAT Y X1 X2
+TITLE EHRSTEIN.DAT
+/
+

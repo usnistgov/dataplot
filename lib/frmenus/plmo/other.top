@@ -1,0 +1,13 @@
+----- <~plmo\other.top> Other
+ 
+Other
+ 
+Reference plot: PLOT25:DP       <xcl: CALL REFPLOT.DP>
+25-plot macro : PLOT25.DP       <xcl: CALL PLOT25.DP>
+Plot positioning & orientation  <xemf: ~plmo\plotpos.men>
+Set plot format for a device    <xemf: ~plmo\modiplfd.men>
+Color                           <xemf: ~plmo\modicolo.men>
+Thickness                       <xemf: ~plmo\modithic.men>
+Future plots                    <xemf: ~plmo\futplots.men>
+ 
+ 

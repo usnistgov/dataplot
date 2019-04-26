@@ -1,0 +1,43 @@
+-----<~reli\ppcc2sha.top> PPCC Plots: Two Shape Parameters
+
+PPCC Plots: Two Shape Parameters
+
+PPCC Plots: Two Shape Parameters
+
+The PPCC plot was originally designed for the case
+where there is a single shape parameter.
+
+We have extended this plot to the case where the
+distribution has two shape parameters.
+
+The format of this plot is:
+
+   1) The Y axis contains the value of the correlation
+      coefficient (as in the one shape parameter case).
+
+   2) The X axis represents the value of the first
+      shape parameters.
+
+   3) We draw a curve for each value of the second shape
+      parameter.
+
+That is, for the two-shape parameter case, we have k
+curves rather than 1 curve (k denotes the number of distinct
+values for the second shape parameter).
+
+Our experience is that for many distributions the PPCC plot
+does not provide good discrimination for the two shape
+parameter case.   The Kolmogorov-Smirnov alternative often
+performs better for these distributions.
+
+The PPCC (or KS) plot does not extend well to cases where
+there are more than two shape parameters.  Although you
+could generate tables to contain the PPCC (or KS) value
+for more than two shape parameters, the underlying
+computational burden becomes excessive.  For example, if
+25 values of the shape parameter are given for each of
+three shape parameters, this means that 25*25*25=15,625
+underlying probability plots must be generated.  An
+alternative is to use some type of optimization 
+software.  However, we have not tried to implement this.
+

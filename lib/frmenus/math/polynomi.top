@@ -1,0 +1,13 @@
+----- <~math\polynomi.top> Polynomial Operations
+ 
+Polynomial Operations
+ 
+Discussion                      <~math\poly_dis.top>
+
+Polynomial Addition                    <xemf: ~math\poly_add.men>
+Polynomial Division                    <xemf: ~math\poly_div.men>
+Polynomial Evaluation                  <xemf: ~math\poly_eva.men>
+Polynomial Multiplication              <xemf: ~math\poly_mul.men>
+Polynomial Square                      <xemf: ~math\poly_squ.men>
+Polynomial Subtraction                 <xemf: ~math\poly_sub.men>
+ 

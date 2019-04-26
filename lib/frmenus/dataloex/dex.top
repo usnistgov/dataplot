@@ -1,0 +1,11 @@
+----- <~dataloex\dex.top> Load & Execute Built-in Design of Experiment Data Files
+
+Load & Execute Built-in Design of Experiment Data Files
+
+Comparative data                         <~dataloex\dexcomp.top>
+2**k full factorial data                 <~dataloex\dex2k.top>
+2**k-p fractional factorial data         <~dataloex\dex2kmp.top>
+Taguchi Ln data                          <~dataloex\dextag.top>
+Optimization/response surface data       <~dataloex\dexopt.top>
+Mixture data                             <~dataloex\dexmix.top>
+

@@ -1,0 +1,8 @@
+----- <~dataload\BOXBOD.DP> Load BOXBOD.DAT
+
+. This is file    BOXBOD.DP
+
+DELETE Y X
+SKIP 25
+READ BOXBOD.DAT Y X
+

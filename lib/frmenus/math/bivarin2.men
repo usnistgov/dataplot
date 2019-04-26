@@ -1,0 +1,33 @@
+This is file bivarin2.men--Perform a bivariate interpolation
+ 
+--------------------
+ 1. Bivariate Interpolation (non-gridded data)
+ 2. LET Z2 = 2D INTERPOLATION Z1 Y1 X1 Y2 X2
+ 3.
+ 4. Z axis variable with original data:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Y axis variable with original data:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. X axis variable with original data:
+ 6. @CE 3 0 33 50 ? gui-variable
+ 7. Y axis variable containing points at
+ 8.    which to interpolate:
+ 8. @CE 4 0 33 50 ? gui-var
+ 9. X axis variable containing points at
+10.    which to interpolate:
+10. @CE 5 0 33 50 ? gui-variable
+11. Variable to store the interpolated values:
+11. @CE 6 0 33 50 ? gui-none
+12. 
+13. Subset/Except/For Specification:
+14. @CE 7 0 -3 50 *
+15.
+16.
+17. Perform the interpolation?:
+--------------------
+GR FE
+LET _6 = 2D INTERPOLATION _1 _2 _3 _4 _5  _7
+--------------------
+WEB HELP 2D INTERPOLATION
+--------------------
+

@@ -1,0 +1,51 @@
+This is file pev21cdf.men--Plot Extreme Value Type II CDF
+ 
+--------------------
+ 1. Plot a Extreme Value Type II CDF Function
+ 2. SET MINMAX MIN; PLOT EV2CDF(X,2) FOR X = -3 .01 0
+ 3.
+ 4. Shape Parameter gamma (required):
+ 4. @CE 8 0 42 50 ?
+ 5. Location Parameter u:
+ 5. @CE 5 0 42 50 ?
+ 6. Scale Parameter b (b > 0):
+ 6. @CE 6 0 42 50 ?
+ 7.
+ 8. You can specify the range of values to plot either
+ 9. by providing an input vector containing the explicit
+10. input values or by providing the start, increment,
+11. and stop values.
+12.
+13. Input Variable (optional):
+13. @CE 1 0 42 50 ? gui-variable
+14.
+15. Start Value:
+15. @CE 2 0 42 50 ?
+16. Increment Value (defaults to 0.1):
+16. @CE 3 0 42 50 ?
+17. Stop Value:
+17. @CE 4 0 42 50 ?
+18.
+19. Variable to Store the CDF Values (optional):
+19. @CE 7 0 42 50 ?
+20.
+21.
+22. Plot the Extreme Value Type II CDF's?
+--------------------
+AN FE
+SET MINMAX MIN
+LET ZGAMMA = 1
+@IF 8 0 LET ZGAMMA = _8
+LET ZLOC = 0
+@IF 5 0 LET ZLOC = _5
+LET ZSCALE = 1
+@IF 6 0 LET ZSCALE = _6
+LET ZINC = 0.1
+@IF 3 0 LET ZINC = _3
+@IF 1 0 LET ZJUNK = EV2CDF(( _1 - ZLOC)/ZSCALE,ZGAMMA)
+@IF 1 0 PLOT ZJUNK _1
+@IF 2 0 PLOT EV2CDF(( ZZZZ - ZLOC)/ZSCALE,ZGAMMA) FOR ZZZZ = _2 ZINC _4
+@IF 7 0 LET _7 = YPLOT
+--------------------
+WEB HELP EV2CDF
+--------------------

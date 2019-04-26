@@ -1,0 +1,36 @@
+This is Dataplot data file     NATR540.DAT
+Tire Tread Wear (2 Methods) (Linear Regression Example)
+ 
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 5-40 to 5-46.
+ 
+Number of observations             = 11
+Number of variables per line image =  2
+Order of variables on a line image--
+   1. Response variable = tread wear via groove method
+   2. Factor 1          = tread wear via weight method
+Note--Tread wear is measured in hundreds of miles
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR540.DAT Y X
+ 
+ 
+ 
+ 
+    Y                 X
+Groove Method    Weight Method
+ Tread Wear       Tread Wear
+------------------------------
+    311              375
+    281              334
+    240              310
+    287              305
+    259              309
+    233              319
+    231              304
+    237              273
+    209              204
+    161              245
+    199              209

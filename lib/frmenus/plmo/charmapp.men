@@ -1,0 +1,19 @@
+This is file charmapp.men--Set Character Mapping
+ 
+--------------------
+ 1. Character mapping
+ 2. CHARACTER MAPPING <RANK/EXACT>
+ 3.
+ 4. Character Mapping:
+ 4. @CE 1 1 25 35 rank
+ 4. @CE 1 2 37 47 exact
+ 5.
+ 6.
+ 7. Set Character Mapping?
+--------------------
+PC FE
+@IF 1 1 CHARACTER MAPPING RANK
+@IF 1 2 CHARACTER MAPPING EXACT
+--------------------
+WEB HELP CHARACTER MAPPING
+--------------------

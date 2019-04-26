@@ -1,0 +1,10 @@
+----- <~dataloex\ABERN35.DP> Load & Execute ABERN35.DAT
+
+. This is file    ABERN35.DP
+
+DELETE Y
+SKIP 25
+READ ABERN35.DAT Y
+TITLE ABERN35.DAT
+PLOT Y
+

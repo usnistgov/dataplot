@@ -1,0 +1,8 @@
+----- <~dataall\BOXFILT.top> BOXFILT.DAT
+
+BOXFILT.DAT
+
+View     <xcl: LIST BOXFILT.DAT>
+Load     <xcf: ~dataload/BOXFILT.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXFILT.DAT>
+

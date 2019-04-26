@@ -1,0 +1,41 @@
+This is file pnrcdf.men--Compute power normal cdf and tail probability
+ 
+--------------------
+ 1. Compute Power Normal cdf and Tail Prob.
+ 2. LET A = PNRCDF(X,P,U,S)
+ 3.
+ 4. The input argument, x, can be either a
+ 5. single number, the name of a parameter,
+ 6. or the name of a variable.
+ 7.  
+ 8. Input values:
+ 9.                                       x:
+ 9. @CE 1 0 42 50 ?
+10.                              location u:
+10. @CE 2 0 42 50 ?
+11.                         scale s (x > 0):
+11. @CE 3 0 42 50 ?
+12.                         power p (p > 0):
+12. @CE 4 0 42 50 ?
+13.
+14. Output parameters:
+15.                  name for the cdf value:
+15. @CE 5 0 42 50 ?
+16.     name for the tail probability value:
+16. @CE 6 0 42 50 ?
+17.
+18.
+19. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 2 0 LET ZLOC = _2
+LET ZSCALE = 1
+@IF 3 0 LET ZSCALE = _3
+LET ZPOWER = 1
+@IF 4 0 LET ZPOWER = _4
+@IF 5 0 LET _5 = PNRCDF( _1 ,ZPOWER,ZLOC,ZSCALE)
+@IF 6 0 LET _6 = 1 - PNRCDF( _1 ,ZPOWER,ZLOC,ZSCALE)
+--------------------
+WEB HELP PNRCDF
+--------------------

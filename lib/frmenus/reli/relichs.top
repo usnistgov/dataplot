@@ -1,0 +1,27 @@
+----- <~reli\relichs.top> Chi-Square Goodness of Fit
+
+Chi-Square Goodness of Fit Y
+
+Normal                                     <xemf: ~reli\chsnor.men>
+Lognormal                                  <xemf: ~reli\chslgn.men>
+Power Normal                               <xemf: ~reli\chspnr.men>
+Power Lognormal                            <xemf: ~reli\chspln.men>
+
+Exponential                                <xemf: ~reli\chsexp.men>
+Geometric Extreme Exponential              <xemf: ~reli\chsgee.men>
+
+Weibull (Minimum)                          <xemf: ~reli\chswei1.men>
+Weibull (Maximum)                          <xemf: ~reli\chswei2.men>
+Inverted Weibull                           <xemf: ~reli\chsiwe.men>
+Exponentiated Weibull                      <xemf: ~reli\chsewe.men>
+Bi-Weibull                                 <xemf: ~reli\chsbwe.men>
+
+Wald                                       <xemf: ~reli\chswal.men>
+Inverse Gaussian                           <xemf: ~reli\chsig.men>
+Reciprocal Inverse Gaussian                <xemf: ~reli\chsrig.men>
+Fatigue Life                               <xemf: ~reli\chsfl.men>
+
+Gamma                                      <xemf: ~reli\chsgam.men>
+Log Gamma                                  <xemf: ~reli\chslga.men>
+Inverted Gamma                             <xemf: ~reli\chsiga.men>
+

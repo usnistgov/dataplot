@@ -1,0 +1,21 @@
+----- <~dataall\univothe.top> View/etc. Univariate Data: Other
+
+View/Load/Print Univariate Data: Other
+
+GEAR.DAT      Gear diameters (Ishikawa)     <~dataall\GEAR.top>
+CLEAR.DAT     Component clearances          <~dataall\CLEAR.top>
+MICHELSO.DAT  Michelson speed of light exp  <~dataall\MICHELSO.top>
+LIN.DAT       Polonium 209 SRM conc         <~dataall\LIN.top>
+
+RANDN.DAT     Normal random numbers         <~dataall\RANDN.top>
+RANDU.DAT     Uniform random numbers        <~dataall\RANDU.top>
+RANDWALK.DAT  Random walk                   <~dataall\RANDWALK.top>
+FLICKER.DAT   Flicker noise                 <~dataall\FLICKER.top>
+
+LOTTERY3.DAT  Maryland "pick 3" lott. #'s   <~dataall\LOTTERY3.top>
+LOTTERY4.DAT  Maryland "pick 4" lott. #'s   <~dataall\LOTTERY4.top>
+
+
+      .....time series.....
+
+

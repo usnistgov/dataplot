@@ -1,0 +1,10 @@
+----- <~dataload\mfac.top> Load Built-in Multifactor Data Files
+
+Load Built-in Multifactor Data Files
+
+1-factor data                            <~dataload\1fac.top>
+2-factor data                            <~dataload\2fac.top>
+3-factor data                            <~dataload\3fac.top>
+4-factor data                            <~dataload\4fac.top>
+>= 5-factor data                         <~dataload\5fac.top>
+

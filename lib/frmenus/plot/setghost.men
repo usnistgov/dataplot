@@ -1,0 +1,46 @@
+This is file setghost.men--SET GHOSTSCRIPT PRINTER
+ 
+--------------------
+ 1. Set Ghostscript Printer
+ 2. SET GHOSTSCRIPT PRINTER ON
+ 3.
+ 4. Under Windows, the PP command prints the
+ 5. most recent plot by issuing the command:
+ 6.
+ 7.    COPY DPPL2F.DAT PRN:
+ 8.
+ 9. This works if your printer supports either
+10. Postscript or HP-GL emulation (most HP 
+11. Laserjet printers).  If you can installed
+12. Ghostscript/Ghostview on your local PC, you
+13. can enter the command
+14. SET GHOSTSCRIPT PRINTER ON.  This will cause
+15. the PP command to issue the following command:
+16.
+17.    GSPRINT.EXE DPPL2F.DAT
+18.
+19. GSPRINT is a command that is installed with
+20. Ghostview that prints a Postscript file on the
+21. default  generic Windows printer.  Setting this
+22. switch to OFF reverts to the COPY method
+23. for the PP command.
+24.
+25. Ghostview Printer Switch:
+25. @CE 1 0 42 50 gui-ooff
+26.
+27. If you did not install Ghostview in the default
+28. location, then you need to specify the
+29. directory where Ghostview was installed.
+30.
+31. Enter the directory where Ghostview was installed:
+32. @CE 2 0 1 50 ?
+33.
+34.
+35. Set the Ghostscript Printer?:
+--------------------
+SU FE
+SET GHOSTSCRIPT PRINTER _1
+SET GHOSTVIEW PATH _2
+--------------------
+WEB HELP SET GHOSTSCRIPT PRINTER
+--------------------

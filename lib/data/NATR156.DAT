@@ -1,0 +1,31 @@
+This is Dataplot data file     NATR156.DAT
+Breaking strength of cement briquettes (in pounds per square inch)
+Question: Do the averages of t products differ?
+
+Source--Natella, Mary G. (1963). Experimental Statistics.
+        National Bureau of Standards Handbook 91.
+        U.S. Government Printing Office.  Page 15-6
+Number of observations = 6
+Number of variables per line image = 5
+Order of variables on a line image--Y1 Y2 Y3 Y4 Y5
+   1. Y1 = Group 1
+   2. Y2 = Group 2
+   3. Y3 = Group 3
+   4. Y4 = Group 4
+   5. Y5 = Group 5
+
+
+
+
+To read this file into Dataplot--
+   SKIP 25
+   READ NATR156.DAT Y1 Y2 Y3 Y4 Y5
+
+ Y1              Y2              Y3              Y4             Y5
+-------------------------------------------------------------------
+ 518             508             554             555            536
+ 560             574             598             567            492
+ 538             528             579             550            528
+ 510             534             538             535            572
+ 544             538             544             540            506
+ 2670            2682            2813           2747            2634

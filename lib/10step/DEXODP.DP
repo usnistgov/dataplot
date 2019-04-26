@@ -1,0 +1,652 @@
+. This is dataplot macro   DEXODP.DP (updated for Bob Zarr 02/03/14)
+.                                    (updated to use new DEX ORDERED PLOT)
+.                                    (pausesw switch to suppress "pause" calls)
+.
+. Purpose: Generate a DEX ordered data plot
+.          (= ste p 1 of the DEXPLOT.DP 10-ste p DEX analysis procedure)
+.
+. Input (Required):
+.    1. y (vector)                   = Response variable
+.    2. x1, x2, x3, . . . (vectors)  = Factors
+.    3. k (parameter)                = Total number of factors
+.    4. numleva (vector)             = number of levels for each factor
+.
+. Input (Optional):
+.    4. project (string)             = Project title to appear at top of page
+.    5. sty     (string)             = Name of response variable
+.    6. stx     (string)             = Name of horizontal axis (default = Factor Settings)
+.    6. stx1, stx2,stx3,. . .(strings) = Short  Names of the 1st, 2nd, 3rd, . . . factors (optional)
+.    7. cx1, cx2, cx3, . . . (crings)  = Longer Names of the 1st, 2nd, 3rd, . . . factors (optional)
+.    8. circlesw (parameter)         = Circle 0/1 switch (default = 0 = none => X)
+.    9. circleh  (parameter)         = Height of plot circles   (default = 2)
+.   10. circlew  (parameter)         = Width  of plot circles   (default = 1)
+.   11. colorcha (string)    = character color                 (optional) (default = blue)
+.   12. decplace (parameter)         = Number of decimal places (default = 4)
+.   12. titlesw  (parameter)         = (0,1) Switch for title printing (default = 1 ==> "Ordered Data Plot")
+.   13. titlesiz (parameter)         = Size of title to appear at top of plot (default = 2)
+.   14. y1labsw  (parameter)         = (0,1,2) Switch for y1label printing (default = 1 ==> "Response"
+.   14. x1labsw  (parameter)         = (0,1) Switch for x1label printing (default = 1 ==> "Factor Settings"
+.   15. labelsiz (parameter)         = Size of label to appear at right & botto
+.   16. color1, color2, . . ., color5 (strings) = color for levels 1, 2, . . .
+.                                               (optional) (default = 0 = no = (-,+))
+.   17. chprisw (parameter)          = 1,2,3,.. "switch" to dictate what character to NOT blank out
+.   18. levelsw (parameter)          = 1 (= classic: (-1,0,+1), or 2 (= coded integer), or
+.                                      3 (i_f have pre-defined level settings (based on stx1l1 etc. (e.g., zarr))
+.   19. cxl11, cxl12, cxl13, . . ., cxl21, cxl22, cxl23, . . ., cxl31, cxl32, cxl3
+.                                      (optional) (default = no blanking = all settings appear)
+.   20. texth and textw (parameters) = size of horizontal within-frame text strings
+.   21. yunclow (vector)            = lower (typically 95%) confidence limit values (optional)
+.   22. yuncupp (vector)            = upper (typically 95%) confidence limit values (optional)
+.
+.   23. yminodp (parameter)          = vertical axis minimum (optional)
+.   24. ymaxodp (parameter)          = vertical axis maximum (optional)
+.   25. xminodp (parameter)          = horizontal axis minimum (optional)
+.   26. xmaxodp (parameter)          = horizontal axis maximum (optional)
+.
+.   27. cut1odp (parameter)          = upper limit from minimum (optional)
+.   28. cut2odp (parameter)          = lower limit from maximum (optional)
+.   29. annotate (parameter)         = switch to print out bottom-left annotate info (optional)
+.   30. rightmsw (parameter)         = switch to print out right-margin factor & settings in
+.                            (default = 1, but requires existence of stx1, stx2, . . . and stx1l, stx2l, . . .)
+.   31. stcorn1 (string)             = string to appear near (user-specified wh ere) upper left corner
+.   32. framet (parameter)           = top    frame line (in %) (optional) (default = 90)
+.   33. frameb (parameter)           = bottom frame line (in %) (optional) (default = 20)
+.    34. meansw (parameter)         = (0,1) swtch for printing out mean value (defau
+.    35. dp (parameter)         = number of decimals places for mean calculation (default = 4)
+.    36. meanloc (parameter) = location for printing out mean (default = 4 = outside of right frame line)
+.                                 1: outside of left  frame line
+.                                 2: inside  of left  frame line
+.                                 3: inside  of right frame line
+.                                 4: outside of right frame line
+. 37. ytarget (parameter) = target response (optional)
+. 38. stepprsw (parameter) = (0,1) switch to dictate whether upper left step id should be printed (default = 1 = yes) ;. 9/17/18
+. 39. stbest (string) = indicator for best arrow direction (up, down, zero) (optional) (default = no arrow)  ;. 11/14/18
+
+. Output:
+.    An ordered (= sorted) data plot (1 page)
+.    Vertical   axis = Sorted response value for a given level of a given factor
+.    Horizontal axis = The carry-along level within each factor corresponding to the sorted value
+.    interpretation  : If the levels within a factor cluster
+.                      for the large (or small) sorted responses
+.                      then the factor is deemed to "have an effect"
+.
+. Macro Hierarchy:
+.    dexodp.dp calls the following macros:
+.       1. dexcheck.dp
+.             alertk, alertv
+.       2. dexplotinit.dp
+.       3. dexplotdefplotset.dp
+.       4. dexwriteproject.dp
+.       5. dexknbox.dp
+.       6. printtrailer.dp
+.       7. tagcorn.dp
+.
+. Example of programs which call dexodp.dp:
+.   mateus2.dp
+.
+. Date: May 2005, July 2010,  March 2013
+.
+. -----start point-----
+.
+feedback save
+feedback off
+printing off
+let bugswodp = 0
+. let pausesw = 1
+.
+if itime exists and itime = 1
+   cpu time
+   let t0 = cputime
+end if
+.
+if bugswodp = 1; print "dexodp.dp"; end if
+.
+. print "this is from dexodp.dp"
+. pause
+.
+if bugswodp = 1; print " "; print "--At beginning of DEX Ste p 1 (DEXODP.DP)"
+   print y
+   print x1 x2 x3 x4
+   print stx1 stx2 stx3 stx4 stx5
+   print stx1l stx2l stx3l stx4l stx5l
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 1.1: Check input values for existence and equivalent length-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 1): check input"
+   if pausesw = 1; pause; end if
+end if
+let string stmacro = dexodp.dp
+if k not exist
+   call determine_k.dp
+end if
+set check name output filliben
+set check length output filliben
+feedback on
+let iflag = check name k y x1 to x^k
+let iflag = check equal length y x1 to x^k
+feedback off
+.
+. -----Step 2: Define plot settings & colors-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 2): plot settings & colors"
+   if pausesw = 1; pause; end if
+end if
+.
+. stat p
+. print "---3. from dexodp: cx1 = ^cx1"
+. print "---3. from dexodp: cy = ^cy"
+. pause
+. stat f
+. pause
+call dexplotinit.dp
+call dexplotdefplotset.dp
+.
+. -----Step 3: Define more colors-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 3): more colors"
+   if pausesw = 1; pause; end if
+end if
+.
+let string colorchz = blue
+if forecol exists; let string colorchz = ^forecol; end if
+if colorcha exists; let string colorchz = ^colorcha; end if
+if colorall exists; color ^colorall; end if
+if colorall exists; let string tagcolor = ^colorall; end if
+.
+. -----Step 4: Collect factor settings-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 4): collect all factor settings"
+   if pausesw = 1; pause; end if
+end if
+. echo on
+. feedback on
+.
+let string strss = y
+let n = number ^strss
+. print n
+. pause
+.
+let kp1 = k+1
+.
+. -----Step 5: Define vertical axis label-----
+if bugswodp = 1; print "--At (dexodp.dp, step 5): vertical axis label"
+   if pausesw = 1; pause; end if
+end if
+.
+. echo off
+. feedback off
+.
+char X
+call setcircle.dp
+lines blank
+.
+if titlesw not exist; title Ordered Data Plot; end if
+if titlesw exist and titlesw = 1; title Ordered Data Plot; end if
+.
+title size ^titlesiz
+.
+if y1labsw exists and y1labsw >= 1
+   if sty not exist; y1label Ordered Response Y; end if
+end if
+if sty exists
+   if y1labsw not exist
+      y1label Ordered Response Y (^sty)
+   end if
+   if y1labsw exists
+       if y1labsw = 1
+          y1label Ordered Response Y (^sty)
+       end if
+       if y1labsw = 2
+          y1label ^sty
+       end if
+   end if
+end if
+.
+. -----Step 6: Define horizontal axis label-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 6): horizontal axis label"
+   if pausesw = 1; pause; end if
+end if
+.
+x1label Factor Settings
+if x1labsw exists and x1labsw = 0; x1label; end if
+.
+if stprex exists; x1label ^stprex Factor Settings; end if
+if stx exists; x1label ^stx; end if
+.
+x3label
+.
+. -----Step 7: Define label sizes, tics-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 7): label sizes, tics"
+   if pausesw = 1; pause; end if
+end if
+.
+. label size 2.5
+label size 3
+if labelsiz exists; label size ^labelsiz; end if
+.
+tic label size 2
+if ticlabsz exists; tic label size ^ticlabsz; end if
+.
+x1tics off
+x1tic labels off
+xmin -1
+.
+let yoffset = 2*k + 4
+y1tic offset yoffset 5
+.
+. -----Step 8: Define limits-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 8): limits"
+   if pausesw = 1; pause; end if
+end if
+.
+xlim 1 n
+.
+. ylim
+if yminodp exists; ymin ^yminodp; end if
+if ymaxodp exists; ymax ^ymaxodp; end if
+.
+if xminodp exists; xmin ^xminodp; end if
+if xmaxodp exists; xmax ^xmaxodp; end if
+.
+let texthz = 2
+let textwz = 1
+if texth exists; let texthz = texth; end if
+if textw exists; let textwz = textw; end if
+.
+. -----Step 9: GENERATE THE PLOT-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 9): GENERATE THE PLOT"
+   if pausesw = 1; pause; end if
+end if
+.
+. label size 3
+.
+let nhoriz = n
+.
+set dex pareto plot order ascending
+set dex ordered plot identification on
+if yunclow exists and yuncupp exists
+   line solid all
+   line blank
+   set dex ordered plot uncertainty on
+   dex ordered plot y yunclow yncupp x1 to x^k
+else
+   dex ordered plot y x1 to x^k
+end if
+.
+. list dpst1f.dat
+. pause
+skip 0
+read dpst1f.dat zx zfact zcode
+.
+let zcode = code zcode
+let zfacts = zfact
+.
+. -----Step 10: Write out carry-along horiz. axis factor settings (& the right-margin factor names)-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 10): write horiz. axis settings +"
+   if pausesw = 1; pause; end if
+end if
+.
+let stall = string combine x1 to x^k
+let classic = dex check classic ^stall
+.
+if bugswodp = 1; print "--From middle of step 10"
+   print "   levelsw = ^levelsw"
+   print "   classic = ^classic"
+   print "   stx1l   = ^stx1l"
+   print "   stx2l   = ^stx2l"
+   if pausesw = 1; pause; end if
+end if
+.
+hw texthz textwz
+.
+let ybase = 20 + yoffset - 2
+if frameb exists; let ybase = frameb + yoffset - 2; end if
+let yinc = 2
+.
+. print zfact
+. pause
+let zfacts = zfact
+delete xposz yposz
+loop for jz = 1 1 k
+   let yposz = ybase-jz*yinc
+   let zfacts = yposz subset zfact = jz
+end of loop
+character hw texthz textwz all
+character units ds all
+let ntemp = maximum zcode
+.
+if ntemp = 2
+   character  - +
+else if ntemp = 3
+   character - 0 +
+else
+   character automatic distinct zcode
+end if
+. character color ^forecol2 all
+if colorl not exist; let string colorl = red blue green black; end if
+character color ^colorl
+if colorall exists; character color ^colorall all; end if
+.
+line blank all
+ylimits freeze
+pre-erase off
+plot zfacts zx zcode
+ylimits unfreeze
+pre-erase on
+character units dd all
+character automatic
+character blank all
+character hw
+.
+loop for jz = 1 1 k
+   let yposz = ybase-jz*yinc-1
+   color ^forecol2
+   if colorall exists; color ^colorall; end if
+   .
+   delete seq dseq
+   .
+   . ---Step 10.2: write factor labels, left and right, as well as length of longest run---
+   .
+   if bugswodp = 1; print "--At (dexodp.dp, step 10.2): factor labels, lng run"
+      if pausesw = 1; pause; end if
+   end if
+   .
+   move 15.5 yposz; just left; text X^jz:
+   .
+   let xposz = 85.5
+   if xpright exists; let xposz = xpright; end if
+   if stx^jz exists
+      move xposz yposz; just left; text ^jz: ^stx^jz
+   end if
+   .
+   let xposz = 90
+   if xpright2 exists; let xposz = xpright2; end if
+   if cxs^jz exist
+      move xposz yposz; just left; text ^cxs^jz
+   end if
+   .
+   let xposz = 98
+   if xpright2 exists; let xposz = xpright2; end if
+   if lenlong exists
+      color ^forecol2
+      let cut2 = 7; let cut3 = 5;    . this needs to be fixed     11/24/15   <=======
+      if ndseq = 2 and lenlong >= cut2; color red; end if
+      if ndseq = 3 and lenlong >= cut3; color red; end if
+      move xposz yposz; just right; text ^lenlong
+      color ^forecol2
+   end if
+   .
+end loop
+if cut1odp exists and cut2odp exists
+   let xposz = cut1odp + 0.5
+   lines solid; drawdsds xposz 20 xposz 90; lines blank
+end if
+.
+. -----Step 11: Write out the factor settings for ymax and ymin-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 11): ymax & ymin factor settings"
+   if pausesw = 1; pause; end if
+end if
+.
+   call dexodp_settings.dp
+.
+. -----Step 12: Write out project, (k,n), ybar, step, annotate-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 12): proj,(n,k),ybar,step,annot"
+   if pausesw = 1; pause; end if
+end if
+.
+color blue
+.
+if project exists
+   if projcol exists; color ^projcol; end if
+   call dexwriteproject.dp
+   . print "after call to dexwriteproject.dp"
+end if
+.
+if leeboxsw not exist
+   . print "before the call to dexknbox.dp"
+   call dexknbox.dp
+   . print "after call to dexknbox.dp"
+end if
+if leeboxsw exist
+   call dexknboxlee.dp
+   . print "after call to dexknboxlee.dp"
+end if
+.
+let ybar = mean y
+if decplacm not exist; set write decimals 4; end if
+if decplacm exists; set write decimals decplacm; end if
+let stybar = number to string ybar
+move 85 91; just right; hw 2 1; text Mean = ^stybar; just center
+.
+if step exists
+   let step = step + 1; hw 2 1; just left; move 5 95
+   . text Step ^step
+   . call tagcorn.dp   9/17/18/
+   if stepprsw not exist
+      call tagcorn.dp
+   end if
+   if stepprsw exists; if stepprsw = 1
+      call tagcorn.dp
+   end if; end if
+end if
+.
+if annotate exists and annotate = 1
+   if colorall exists; color ^colorall; end if
+   call annotate.dp
+end if
+.
+. -----Step 12: Write out right margin factor and setting info-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 12): right margin"
+   if pausesw = 1; pause; end if
+end if
+.
+.
+if rightmsw exists and rightmsw = 1 or rightmsw not exist
+   if stx1 exists and stx1l exists
+      let ypdel = 2
+      let lh = 1.8
+      let lw = 0.9
+      . let string colorl = blue blue blue blue blue blue blue blue blue blue
+      if k >= 9
+         let ypdel = 1.5; let lh = 1.6; let lw = 0.8
+         let string colorl = red blue green black
+      end if
+      call dexrightmargin.dp
+      . delete ypdel lh lw colorl
+      delete ypdel lh lw
+   end if
+end if
+.
+. -----Step 13: If called for, write out customized upper left info-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 13): upper left"
+   if pausesw = 1; pause; end if
+end if
+.
+if stcorn1 exists
+   if colorall exists; let string corncol = ^colorall; end if
+   if colorall exists
+      loop for jcorn = 1 1 5
+         let string corncol^j = ^colorall
+      end loop
+   end if
+   call upperleft.dp
+end if
+.
+. -----Step 14: If called for, print out mean info-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 14): print mean"
+   if pausesw = 1; pause; end if
+end if
+.
+if meansw exists and meansw = 1
+   let myz = mean y
+   let myzr = round(myz,4)
+   if dp exists; let myzr = round(myz,dp); end if
+   if meanloc exists
+      hw 2 1; lines solid
+      if meanloc = 1
+         drawsdsd 14.45 myz 15.75 myz; movesd 14 myz; move relative 0 .3; just rice; text Mean = ^myzr
+      end if
+      if meanloc = 2
+         drawsdsd 14.25 myz 15.75 myz; movesd 16 myz; move relative 0 .3; just lece; text Mean = ^myzr
+      end if
+      if meanloc = 3
+         drawsdsd 84.25 myz 85.75 myz; movesd 84 myz; move relative 0 .3; just rice; text Mean = ^myzr
+      end if
+      if meanloc = 4
+         drawsdsd 84.25 myz 85.75 myz; movesd 86 myz; move relative 0 .3; just lece; text Mean = ^myzr
+      end if
+      just left
+   end if
+end if
+move relative 0 0  ;. inserted   7/10/18
+.
+. -----Step 15: If called for, print out a target reference line-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 15): target reference line"
+   if pausesw = 1; pause; end if
+end if
+.
+if ytarget exists
+   lines dotted; drawsdsd 15 ytarget 85 ytarget
+   lines solid; drawsdsd 84.25 ytarget 85.75 ytarget
+   movesd 86 ytarget; move relative 0 .3; hw 2 1; just lece; text Target = ^ytarget
+   just left
+end if
+.
+. -----Step 16: If called for, draw out an arrow for "best"-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 16): arrow for "best"
+   if pausesw = 1; pause; end if
+end if
+.
+if stbest exists
+   call dexarrow.dp
+end if
+.
+. -----Step 17: Compute statistics (de-activated)-----
+.
+if bugswodp = 1; print "--At (dexodp.dp, step 17): compute stats (deactivated)"
+   if pausesw = 1; pause; end if
+end if
+.
+let dothis = 0
+if dothis = 1
+   .
+   if bugswodp = 1
+      print " "; print "--At dexodp.dp step 17: compute statistics"
+      if pausesw = 1; pause; end if
+   end if
+   .
+   let n = number ^strss
+   let m = mean ^strss
+   let s = sd ^strss
+   let sdm = sd of mean ^strss
+   .
+   let min = minimum ^strss
+   let med = median ^strss
+   let max = maximum ^strss
+   .
+   let df = n-1
+   let fudge = tppf(.975,df)
+   let unc = fudge*sdm
+   let relunc = 100*(unc/m)
+   .
+   set write rewind off
+   print univariate_uncertainty.out "^n   ^m   ^s   ^sdm   ^unc   ^relunc"
+   .
+   let unc2 = 2*sdm
+   let relunc2 = 100*(unc2/m)
+   .
+   let unc3 = 2*s*sqrt(1+(1/n))
+   let relunc3 = 100*(unc3/m)
+   .
+   let lower = m-unc
+   let upper = m+unc
+   summary y
+   .
+   . -----Step 18: Round to desired number of decimals (default = 4) (de-activated)-----
+   .
+   if bugswodp = 1; print "--At (dexodp.dp, step 18): round stats (deactivaed)"
+      if pausesw = 1; pause; end if
+   end if
+   .
+   set write decimals ^stdp
+   .
+   let mr = number to string m
+   let minr = number to string min
+   let medr = number to string med
+   let maxr = number to string max
+   .
+   let sr = number to string s
+   let sdmr = number to string sdm
+   .
+   set write decimals 2
+   let reluncr = number to string relunc
+   let relunc2r = number to string relunc2
+   let relunc3r = number to string relunc3
+   .
+   set write decimals
+   .
+   let xp = 16; let yp = 85; let ypdel = 3
+   move xp yp; text Number of Observations = ^n
+   let yp = yp - ypdel; move xp yp; text Mean = ^mr
+   let yp = yp - ypdel; move xp yp; text SD(Data) = ^sdr
+   let yp = yp - ypdel; move xp yp; text SD(Mean) = ^sdmr
+   let yp = yp - ypdel; move xp yp; text Expanded Uncertainty (k=2) = ^uncr
+   let yp = yp - ypdel; move xp yp; text Expanded Uncertainty (k=t95) = ^uncr
+   . print n m s sdm
+   . print lower m upper
+   . print m unc relunc reluncr
+   . pause
+   .
+end if
+.
+. -----Step 31: Form conclusions and write out to file-----
+.
+let step = 1
+call form_and_write_dex_10_step_conclusions.dp
+.
+. -----Step 99: Finish up-----
+.
+if bugswodp = 1; print "--At end of dexodp.dp"
+   if pausesw = 1; pause; end if
+end if
+.
+. note: the limits unfreeze command must be AFTER the ylim command   11/2/18
+ylimits
+xlim
+limits unfreeze
+.
+x1tics on
+x1tic labels on
+y1tic offset 5 5
+title
+y1label
+x1label
+just left
+move relative 0 0
+.
+region fill off  ;. 12/10/18
+.
+delete zx zfact zfacts zcode
+delete dxplot7 z1 z2 z3 yorigz y2zz
+.
+feedback restore
+.
+set write decimals 4
+if itime exists and itime = 1
+  cpu time
+  let t1 = cputime
+end of if

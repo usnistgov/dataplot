@@ -1,0 +1,19 @@
+-----<~reli\acelrela.top> Discussion: Acceleration Models Relationships
+
+Discussion: Linear Acceleration - Relationships
+
+Linear Acceleration: Relationships
+
+The following relationships hold for linear acceleration
+models (AF denotes the acceleration factor):
+
+    Time-to-Fail             t(u) = AF x t(s)
+    Failure Probability      F(u)(t) = F(s)(t/AF)
+    Reliability              R(u)(t) = R(s)(t/AF)
+    Probability Density      f(u)(t) = (1/AF) f(s)(t/AF)
+    Failure Rate (Hazard)    h(u)(t) = (1/AF) h(s)(t/AF)
+
+Note that if we have true linear acceleration, then the
+above relationships hold regardless of what the 
+underlying life distribution is.
+

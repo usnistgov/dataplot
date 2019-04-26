@@ -1,0 +1,45 @@
+----- <~prob\sha1prob.top> Probability Plot for One Shape Parameter Continuous Distributions
+
+Generate Probability Plot (one shape parameters)
+
+Generate Probability Plot for Continuous Distributions
+with One Shape Parameters (Uncensored Case)
+
+Asymmetric Double Exponential (Laplace)   <xemf: ~prob\adeprob.men>
+Bradford                                  <xemf: ~prob\braprob.men>
+Chi                                       <xemf: ~prob\chprob.men>
+Chi-Square                                <xemf: ~prob\chsprob.men>
+Double Gamma                              <xemf: ~prob\dgaprob.men>
+Double Weibull                            <xemf: ~prob\dweprob.men>
+Error (Subbotin)                          <xemf: ~prob\subprob.men>
+Fatigue Life                              <xemf: ~reli\ppfl.men>
+Folded T                                  <xemf: ~prob\ftprob.men>
+Gamma                                     <xemf: ~reli\ppgam.men>
+Generalized Extreme Value (Minimum)       <xemf: ~reli\ppgev1.men>
+Generalized Extreme Value (Maximum)       <xemf: ~reli\ppgev2.men>
+Generalized Half-Logistic                 <xemf: ~prob\ghflprob.men>
+Generalized Logistic                      <xemf: ~prob\gloprob.men>
+Generalized Pareto                        <xemf: ~reli\ppgep.men>
+Geometric Extreme Exponential             <xemf: ~reli\ppgee.men>
+Inverted Gamma                            <xemf: ~reli\ppiga.men>
+Inverted Weibull                          <xemf: ~reli\ppiwe.men>
+Log Double Exponential (Log Laplace)      <xemf: ~prob\ldeprob.men>
+Log Gamma                                 <xemf: ~reli\pplga.men>
+Log Logistic                              <xemf: ~prob\llgprob.men>
+Lognormal                                 <xemf: ~reli\pplgn.men>
+Maxwell                                   <xemf: ~prob\maxprob.men>
+McLeish                                   <xemf: ~prob\mclprob.men>
+Power Normal                              <xemf: ~reli\pppnr.men>
+Reciprocal                                <xemf: ~prob\recprob.men>
+Skew Double Exponential (Skew Laplace)    <xemf: ~prob\sdeprob.men>
+Skew Normal                               <xemf: ~prob\snprob.men>
+T                                         <xemf: ~prob\tprob.men>
+Topp and Leone                            <xemf: ~prob\topprob.men>
+Triangular                                <xemf: ~prob\triprob.men>
+Tukey-Lambda (symmetric)                  <xemf: ~prob\lamprob.men>
+Von Mises                                 <xemf: ~prob\vonprob.men>
+Wald                                      <xemf: ~reli\ppwal.men>
+Weibull (minimum case)                    <xemf: ~reli\ppwei1.men>
+Weibull (maximum case)                    <xemf: ~reli\ppwei2.men>
+Wrapped Cauchy                            <xemf: ~prob\wcaprob.men>
+

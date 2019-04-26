@@ -1,0 +1,40 @@
+. Name:    WRIGLEVE.DP
+. Purpose: Define the levels and associated attributes for the
+.          contouring
+.
+FEEDBACK SAVE
+FEEDBACK OFF
+.
+.  Step 1: Define the levels in YLEVEL
+.
+let ylevel = data 10 20 30 40 50
+let nlevel = size ylevel
+let nlevel2 = nlevel + 1
+.
+.  Step 2: Define the
+.
+.            1) colors for each level
+.            2) background styles for each level
+.            3) character size for background (charh1) and value (charh2)
+.
+let string color1 = red
+let string color2 = coral
+let string color3 = orange
+let string color4 = green
+let string color5 = cyan
+let string color6 = blue
+.
+let string style1 = box
+let string style2 = blank
+let string style3 = blank
+let string style4 = blank
+let string style5 = blank
+let string style6 = box
+. 
+let charh1 = 4
+let charw1 = 4
+let charh2 = 2
+let charw2 = 2
+.
+FEEDBACK RESTORE
+.

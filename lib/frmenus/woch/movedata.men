@@ -1,0 +1,25 @@
+This is file movedata.men--Set Current Position
+ 
+--------------------
+ 1. Set Current Position
+ 2. MOVE X1 Y1
+ 3.
+ 4. X Coordinate:
+ 4. @CE 1 0 33 50 ?
+ 5. Y Coordinate:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Coordinate System to Use:
+ 8. @CE 8 1 5 30 screen units (0 to 100)
+ 9. @CE 8 2 5 30 data units (last plot)
+10.
+11.
+12. Move to the Point?:
+--------------------
+GR FE
+LET STRING ZZZZSTR = MOVE
+@IF 8 2 LET STRING ZZZZSTR = MOVEDATA
+^ZZZZSTR  _1 _2
+--------------------
+WEB HELP MOVE
+--------------------

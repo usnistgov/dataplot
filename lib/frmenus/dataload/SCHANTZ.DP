@@ -1,0 +1,8 @@
+----- <~dataload\SCHANTZ.DP> Load SCHANTZ.DAT
+
+. This is file    SCHANTZ.DP
+
+DELETE Y X
+SKIP 25
+READ SCHANTZ.DAT X Y
+

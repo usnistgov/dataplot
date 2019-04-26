@@ -1,0 +1,7 @@
+----- <~dataexec\3fac.top> Load and Execute 3-Factor Data
+
+Load and Execute 3-Factor Data
+
+HAMAKER.DAT*  Drill speed                  <xcf: ~dataexec\HAMAKER.DP>
+MANDEL.DAT    Specific Volume of rubber    <xcf: ~dataexec\MANDEL.DP>
+

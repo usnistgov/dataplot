@@ -1,0 +1,8 @@
+----- <~dataload\T2CC.DP> Load T2CC.DAT
+
+. This is file    T2CC.DP
+
+DELETE Y1 Y2 X
+SKIP 25
+READ T2CC.DAT Y1 Y2 X
+

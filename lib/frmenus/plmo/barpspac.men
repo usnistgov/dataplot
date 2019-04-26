@@ -1,0 +1,64 @@
+This is file barpspac.men--Set Bar Pattern Spacings
+ 
+--------------------
+ 1. Bars
+ 2. BAR PATTERN SPACING <list of bar pattern spacings>
+ 3.
+ 4. Bar Pattern Spacing for ALL Traces:
+ 4. @CE 1 0 42 50 *
+ 5.
+ 6. Use the following menus to set bar pattern spacings for
+ 7. traces individually.  The bar pattern spacings are sequential.
+ 8. If you set the bar pattern spacings for trace 5, you
+ 9. must also set them for traces 1, 2, 3, and 4.
+10.
+11. Bar Pattern Spacing for Trace 1:
+11. @CE 2 0 42 50 *
+12. Bar Pattern Spacing for Trace 2:
+12. @CE 3 0 42 50 *
+13. Bar Pattern Spacing for Trace 3:
+13. @CE 4 0 42 50 *
+14. Bar Pattern Spacing for Trace 4:
+14. @CE 5 0 42 50 *
+15. Bar Pattern Spacing for Trace 5:
+15. @CE 6 0 42 50 *
+16. Bar Pattern Spacing for Trace 6:
+16. @CE 7 0 42 50 *
+17. Bar Pattern Spacing for Trace 7:
+17. @CE 8 0 42 50 *
+18. Bar Pattern Spacing for Trace 8:
+18. @CE 9 0 42 50 *
+19. Bar Pattern Spacing for Trace 9:
+19. @CE 10 0 42 50 *
+20. Bar Pattern Spacing for Trace 10:
+20. @CE 11 0 42 50 *
+21. Bar Pattern Spacing for Trace 11:
+21. @CE 12 0 42 50 *
+22. Bar Pattern Spacing for Trace 12:
+22. @CE 13 0 42 50 *
+23. Bar Pattern Spacing for Trace 13:
+23. @CE 14 0 42 50 *
+24. Bar Pattern Spacing for Trace 14:
+24. @CE 15 0 42 50 *
+25. Bar Pattern Spacing for Trace 15:
+25. @CE 16 0 42 50 *
+26. Bar Pattern Spacing for Trace 16:
+26. @CE 17 0 42 50 *
+27. Bar Pattern Spacing for Trace 17:
+27. @CE 18 0 42 50 *
+28. Bar Pattern Spacing for Trace 18:
+28. @CE 19 0 42 50 *
+29. Bar Pattern Spacing for Trace 19:
+29. @CE 20 0 42 50 *
+30. Bar Pattern Spacing for Trace 20:
+30. @CE 21 0 42 50 *
+31.
+32.
+33. Set the Bar Pattern Spacings?
+--------------------
+PC FE
+BAR PATTERN SPACING _2 _3 _4 _5 _6 _7 _8 _9 _10 _11 _12 _13 _14 _15 _16 _17 _18 _19 _20 _21
+@IF 1 0 BAR PATTERN SPACING _1 ALL
+--------------------
+WEB HELP BAR PATTERN SPACING
+--------------------

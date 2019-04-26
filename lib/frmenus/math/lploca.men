@@ -1,0 +1,27 @@
+This is file lploca.men--Compute Lp location of a variable
+ 
+--------------------
+ 1. Lp Location
+ 2. LET P = 1.5; LET A = LP LOCATION Y
+ 3.
+ 4. Variable for which to compute the Lp Location:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the Lp Location:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Value for p:
+ 7. @CE 3 0 33 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 4 0 1 50 *
+11.
+12.
+13. Compute the Lp Location?:
+--------------------
+GR FE
+LET P = 1.5
+LET P = _3
+LET _2 = LP LOCATION  _1 _4
+--------------------
+WEB HELP LP LOCATION
+--------------------

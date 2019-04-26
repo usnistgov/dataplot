@@ -1,0 +1,25 @@
+This is file mulfbund.men--Multifactor (Bundled)
+
+--------------------
+ 1. Multi-Factor (Bundled Analysis)
+ 2. CALL ANOVA.DP
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Number of Factors:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. List of (1 to 10) Factor Variables:
+ 7. @CE 3 0 1 50 ? gui-variable
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 4 0 1 50 *
+11.
+12.
+13. Compute ANOVA?
+--------------------
+GR FE
+LET NUMFAC = _2
+CALL ANOVA.DP _1 _3 _4
+--------------------
+WEB HELP ANOVA
+--------------------

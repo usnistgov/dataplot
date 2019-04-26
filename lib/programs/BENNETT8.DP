@@ -1,0 +1,48 @@
+. This is Dataplot program file     BENNETT8.DP
+. Larry Bennett Superconducitivy modeling
+. May 1994
+.
+. -----start point-----
+.
+. dimension 5000 observations
+dimension 2500 observations
+.
+skip 25
+read bennett6.dat y x tag temp
+let tag = code tag
+.
+. multiplot 3 4
+. loop for k = 1 1 10
+.    plot y x subset tag k
+. end loop
+.
+let function f = m0*(1+a*x)**(-1/mu)
+.
+. retain y x tag subset tag 2
+.
+. BOX-COX LINEARITY PLOT Y X
+. LET X2 = X**.635
+. LINEAR FIT Y X2
+. MULTIPLOT 2 2
+. CHAR X BL
+. LINES BL SOLID
+. PLOT Y PRED VS X
+. PLOT RES X
+.
+ER
+LET X2 = 1/X
+LET FUNCTION G = 1/(X2-C)
+LET C = 0
+LET X3 = G
+PLOT Y X3 TAG
+ER
+SKIP 0
+LOOP FOR K = 1 1 6
+   LINEAR FIT Y X3 SUBSET TAG K
+   FIT Y = A+B*G SUBSET TAG K
+   READ DPST1F.DAT COEF^K
+   LET COEF^K = RESSD FOR I = 4 1 4
+END LOOP
+.
+SET WRITE DECIMALS 6
+PRINT COEF1 COEF2 COEF3 COEF4 COEF5 COEF6

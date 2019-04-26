@@ -1,0 +1,10 @@
+----- <~dataloex\NEGIZ3.DP> Load & Execute NEGIZ3.DAT
+
+. This is file    NEGIZ3.DP
+
+DELETE Y1 TO Y6
+. SKIP 25
+READ NEGIZ3.DAT Y1 TO Y6
+TITLE NEGIZ3.DAT
+4-PLOT Y1
+

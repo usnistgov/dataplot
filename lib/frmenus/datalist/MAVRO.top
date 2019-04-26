@@ -1,0 +1,8 @@
+----- <~datalist\MAVRO.top> MAVRO.DAT
+ 
+MAVRO.DAT
+ 
+View     <xcl: LIST MAVRO.DAT>
+Load     <x2cl: SKIP 25; READ MAVRO.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\MAVRO.DAT>
+ 

@@ -1,0 +1,51 @@
+THIS IS DATAPLOT DATA FILE     LEW4.DAT
+CONCRETE PULL-OUT BOND STRENGTH MATURITY STUDY
+H. S. LEW  (NBS CENTER FOR BUILDING TECHNOLOGY)
+DATE--197X
+THE DATA HEREIN IS AN RECONSTRUCTED (1993) APPROXIMATION
+OF THE ORIGINAL   LEW4.DAT   DATA SET
+RESPONSE VARIABLE = PULL-OUT BOND STRENGTH
+NUMBER OF OBSERVATIONS = 26
+TOTAL NUMBER OF VARIABLES PER LINE IMAGE = 2
+ORDER OF VARIABLES ON A LINE IMAGE--
+   1. Y = BOND STRENGTH (= RESPONSE VARIABLE)
+   2. X = MATURITY (DAYS)
+STATISTICAL AREAS--NON-LINEAR REGRESSION
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ LEW11.DAT Y X
+ 
+ 
+ 
+ 
+ 
+ 
+     Y              X
+BOND STRENGTH  MATURITY (DAYS)
+-------------------------------
+    8.5            5.3
+   11.2            5.4
+   14.5            6.4
+   12.2            6.5
+   13.8            7.3
+   14.0            7.4
+   17.2            8.2
+   17.0            8.5
+   17.3            8.8
+   20.0            9.7
+   19.9            9.8
+   19.6           10.6
+   21.5           12.2
+   21.2           12.3
+   22.9           13.5
+   23.9           14.0
+   26.0           16.1
+   24.2           16.4
+   26.2           18.5
+   26.0           18.7
+   26.0           19.5
+   28.0           21.1
+   26.3           22.0
+   25.9           22.2
+   27.5           25.3
+   27.0           26.0

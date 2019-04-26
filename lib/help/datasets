@@ -1,0 +1,497 @@
+This is DATAPLOT file     DATASETS.              8/94
+Purpose--Enumerate the names of built-in DATAPLOT data files.
+ 
+ 
+-----Data Files (Ordered by Statistical Technique)
+ 
+ 1. Univariate/NIST
+ 2. Univariate/Mary Natrella Handbook
+ 3. Univariate/SEMATECH 
+ 4. Univariate/Miscellaneous 
+ 5. Time Series/NIST 
+ 6. Time Series/Miscellaneous 
+ 7. Time Series/Box-Jenkins 
+ 8. Time Series/NOAA 
+ 9. Time Series/Pandit DDS 
+10. Time Series/Bivariate 
+11. Regression/1-Variable and Polynomial 
+12. Regression/1-Variable and Non-Linear 
+13. Regression/Multi-Variable 
+14. 1-factor ANOVA/NIST 
+15. 1-factor ANOVA/Miscellaneous 
+16. 1-factor ANOVA/Mary Natrella Handbook 
+17. 1-factor ANOVA/SEMATECH 
+18. 2-factor ANOVA 
+19. 3-factor ANOVA 
+20. 4-factor ANOVA 
+21. 5+-factor ANOVA 
+22. Design of Experiment/Comparative Designs 
+23. Design of Experiment/2**k Full Factorial 
+24. Design of Experiment/2**(k-p) Fractional Factorial 
+25. Design of Experiment/Taguchi 
+26. Design of Experiment/Response Surface/Optimization 
+27. Multivariate/Multresponse
+28. Control Charts
+29. Pareto Analysis
+30. Reliability/NIST
+31. Reliability/Miscellaneous
+32. Error Bar Plotting
+33. 3D Plotting & Contouring
+34. Extreme Value Analysis/NIST
+35. Extreme Value Analysis/Castillo
+36. Extreme Value Analysis/Miscellaneous
+ 
+-----Data Files--Univariate/NIST
+ 
+   DZIUBA1.DAT   Standard resistor
+   FUNNEL5A.DAT  Funnel data
+   KEYWEST.DAT   Key West maximum wind speed
+   LEW.DAT       Steel-concrete beam deflection
+   MARSHAK.DAT   Nuclear thermometry cryothermometry experiment
+   MAVRO.DAT     Filter transmittance
+   MORALES.DAT   SO2 isotope analysis
+   MORALES2.DAT  SO2 isotope analysis
+   REHM.DAT      Biomedical air flow
+   SIMIU.DAT     Thunderstorm wind velocities
+   SOULEN0.DAT   Josephson junction cryothermometry
+   SOULEN.DAT    Josephson junction cryothermometry
+   VANGEL1.DAT   Tensile strength
+   WASHDC.DAT    Washington D.C. maximum wind speeds
+   ZARR13.DAT    Heat flow meter apparatus calibration
+   ZARR14.DAT    Heat flow meter apparatus calibration
+   ZARR15.DAT    Heat flow meter apparatus calibration
+ 
+-----Data Files--Univariate/Mary Natrella Handbook
+ 
+   NATR21.DAT    Washer (2-1)
+   NATR26.DAT    Rocket (2-6)
+
+-----Data Files--Univariate/SEMATECH
+ 
+   SPAGON1.DAT   SEMATECH semi-conductor thickness
+   SPAGON2.DAT   SEMATECH semi-conductor thickness
+
+-----Data Files--Univariate/Miscellaneous
+ 
+   CLEAR.DAT     Component clearance inspection data
+   FLICKER.DAT   Flicker noise
+   GEAR.DAT      Gear diameters (Ishikawa)
+   LIN.DAT       Polonium 209 SRN concentrations
+   LOTTERY3.DAT  Maryland "Pick 3" lottery numbers
+   LOTTERY4.DAT  Maryland "Pick 4" lottery numbers
+   MICHELSO.DAT  Michelson's 1879 determination of speed of light
+   RANDN.DAT     Normal random numbers
+   RANDU.DAT     Uniform random numbers
+   RANDWALK.DAT  Random walk
+
+-----Data Files--Time Series/NIST
+ 
+   BAKER.DAT     Force calibration
+   DUTTON.DAT    Dutton coherency plot data
+   DZIUBA1.DAT   Standard resistor
+   FUNNEL5A.DAT  Funnel data
+   HABER1.DAT    Density of 2-admissable numbers
+   HAYES1.DAT    Fire research smoke obscuration
+   KEYWEST.DAT   Key West maximum wind speed
+   LEW.DAT       Steel-concrete beam deflection
+   LUTHER.DAT    Torsion pendulum experiment for G
+   MARSHAK.DAT   Nuclear thermometry cryothermometry experiment
+   MAVRO.DAT     Filter transmittance
+   NBSPOW1.DAT   Power distrubance number 1 at NIST
+   NBSPOW2.DAT   Power distrubance number 2 at NIST
+   NBSPOW3.DAT   Power distrubance number 3 at NIST
+   NEGIZ3.DAT    Aerosol particle size dynamic modeling
+   NEGIZ4.DAT    Aerosol particle size dynamic modeling
+   REHM.DAT      Biomedical air flow
+   SIMIU.DAT     Thunderstorm wind velocities
+   SOULEN0.DAT   Josephson junction cryothermometry
+   SOULEN.DAT    Josephson junction cryothermometry
+   WASHDC.DAT    Washington D.C. maximum wind speeds
+ 
+-----Data Files--Time Series/Miscellaneous
+ 
+   CLEAR.DAT     Component clearance inspection data
+   CONSUMPR.DAT  Consumer price index (by year relative to 1974)
+   FLICKER.DAT   Flicker noise
+   GEAR.DAT      Gear diameters (Ishikawa)
+   GNP.DAT       Gross National Product
+   GNP2.DAT      Gross National Product
+   LIN.DAT       Polonium 209 SRN concentrations
+   LOTTERY3.DAT  Maryland "Pick 3" lottery numbers
+   LOTTERY4.DAT  Maryland "Pick 4" lottery numbers
+   MICHELSO.DAT  Michelson's 1879 determination of speed of light
+   OIL.DAT       Oil depth analysis
+   RANDN.DAT     Normal random numbers
+   RANDU.DAT     Uniform random numbers
+   RANDWALK.DAT  Random walk
+   SIN1.DAT      Sinusodial data (frequency = 0.1)
+   SIN2.DAT      Sinusodial data (frequency = 0.2)
+   SIN3.DAT      Sinusodial data (frequency = 0.3)
+   SIN4.DAT      Sinusodial data (frequency = 0.4)
+   SUNSPOT.DAT   Monthly sunspot
+   SUNSPOT2.DAT  Yearly sunspot
+
+-----Data Files--Time Series/Box-Jenkins
+ 
+   BOXJENK1.DAT  Box-Jenkins chemical process yield
+   BOXJENK2.DAT  Box-Jenkins Wolfer yearly sunspot data
+   BOXJE142.DAT  Box-Jenkins industrial process yield
+
+-----Data Files--Time Series/NOAA
+ 
+   ASCO2.DAT     American Samoa monthly CO2 (1973-86)
+   ASF11.DAT     American Samoa monthly freon-11 (1977-86)
+   ASF12.DAT     American Samoa monthly freon-12 (1977-86)
+   ASN2O.DAT     American Samoa monthly N2O (1977-86)
+   ELKINS11.DAT  Elkins North Atlantic freon-11
+   ELNINO.DAT    El Nino/Southern Oscillation
+   MLCO2.DAT     Mauna Loa monthly CO2 (1958-87)
+   MLCO2MON.DAT  Mauna Loa monthly CO2 (1974-86)
+   MLF11.DAT     Mauna Loa monthly freon-11 (1977-86)
+   MLF12.DAT     Mauna Loa monthly freon-12 (1977-86)
+   MLN2O.DAT     Mauna Loa monthly N2O (1977-86)
+   NWF11.DAT     Niwot Ridge monthly freon-11 (1977-86)
+   NWF12.DAT     Niwot Ridge monthly freon-12 (1977-86)
+   NWN2O.DAT     Niwot Ridge monthly N2O (1977-86)
+   PBF11.DAT     Pt. Barrow monthly freon-11 (1977-86)
+   PBF12.DAT     Pt. Barrow monthly freon-12 (1977-86)
+   PBN2O.DAT     Pt. Barrow monthly N2O (1977-86)
+   PBCO2.DAT     Pt. Barrow monthly CO2 (1973-86)
+   SPF11.DAT     South Pole monthly freon-11 (1977-86)
+   SPF12.DAT     South Pole monthly freon-12 (1977-86)
+   SPN2O.DAT     South Pole monthly N2O (1977-86)
+   SPCO2.DAT     South Pole monthly CO2 (1973-86)
+ 
+-----Data Files--Time Series/Pandit DDS
+ 
+   DDS1.DAT      Papermaking gate openings
+   DDS2.DAT      Yearly sunspot numbers
+   DDS3.DAT      IBM stock prices
+   DDS4.DAT      Mechanical vibratory system displacement
+   DDS5.DAT      Grinding wheel displacement
+   DDS6.DAT      Machine part diameter 1
+   DDS7.DAT      Machine part diameter 2
+   DDS8.DAT      US treasury securities
+   DDS9.DAT      Money market rates
+   DDS10.DAT     Hospital in-patient counts
+   DDS11.DAT     US consumer price index
+   DDS12.DAT     US wholesale price index
+   DDS13.DAT     Airline passenger counts
+   DDS14.DAT     Nuclear plant crack lengths
+   DDS15.DAT     Wood surface height
+   DDS16.DAT     Paper making machine I/O
+   DDS17.DAT     Chemical concentration
+   DDS18.DAT     US gross national product
+   DDS19.DAT     US durable expenditures
+   DDS20.DAT     Papermaking machine I/O
+   DDS21.DAT     Papermaking machine I/O
+
+-----Data Files--Time Series/Bivariate
+ 
+   CHOI.DAT      Fire residue emission trigger (NIST) (N=4000)
+   CHOI2.DAT     Fire residue emission trigger (NIST) (N=1000)
+   SINSIN.DAT    Multiple sine curves
+
+-----Data Files--Regression/1-Variable and Polynomial
+ 
+   BERGER1.DAT   Alaska Pipeline radiographic calibration
+   BOXRATS.DAT   Rat growth rate versus supplement amount
+   BOXSPRAY.DAT  Aerosal spray dispersion versus age
+   BOXWELD.DAT   Inertial weld breaking strength versus velocity
+   FREQPRIM.DAT  Frequency of prime numbers
+   GRAYI326.DAT  Blood pressure
+   MICHELSO.DAT  Michelson's 1879 determination of speed of light
+   MORALES.DAT   SO2 isotope analysis
+   MORALES2.DAT  SO2 isotope analysis
+   NATR511.DAT   Young's Modulus
+   NATR522.DAT   Young's Modulus with replication
+   NATR527.DAT   Colorimetry
+   NATR533.DAT   Tire wear
+   NATR540.DAT   Tire wear
+   NATR627.DAT   Cubic fit
+   NORRIS6.DAT   Ozone photometry
+   PONTIUS.DAT   Load cell calibration
+   PRIMESM.DAT   Mersenne prime numbers
+   SNAIL.DAT     Snail spiral data
+   SPIEGEL.DAT   Nuclear tank calibration
+   USADEBT.DAT   USA national debt (1947 to 1993)
+   WAMPLER1.DAT  Polynomial fitting test data
+ 
+-----Data Files--Regression/1-Variable and Non-Linear
+ 
+   BENNETT5.DAT  Superconductivity magnetization modelling
+   BOXBOD.DAT    Oxygen demand versus incubation time
+   CHWIRUT1.DAT  Ultrasonic reference block calibration
+   CHWIRUT2.DAT  Ultrasonic reference block calibration
+   ECKERLE4.DAT  Circular interference transmissions
+   GRAYI617.DAT  Visual response proportion
+   HABER1.DAT    Density of 2-admissable numbers
+   HAHN1.DAT     Thermal expansion of copper
+   KIRBY2.DAT    Electron microscope line width standard
+   LEW3.DAT      Concrete tensile strength
+   MISRA1.DAT    Dental research monomolecular absorption study
+   NELSON.DAT    Dialetric breakdown strength of Insulation accelerated testing (Arrhenius Eq.)
+   ROSZMAN1.DAT  Quantum defects for sulfur 1 atom
+   SWANSON1.DAT  Ozone spectroscopy (Spline Regression)
+   THURBER.DAT   Semiconductor mobility modelling
+   USADEBT.DAT   USA national debt (1947 to 1993)
+ 
+-----Data Files--Regression/Multi-Variable
+ 
+   BOXCHEM2.DAT  Chemical impurity, 2 independent variables
+   BOXCLEAN.DAT  Acid effects on cleanser stability
+   BOXYIELD.DAT  Chemical yield as function of time and temperature
+   BOXYIEL2.DAT  Chemical yield as function of time and temperature
+   HALD647.DAT   Cement hardening, 4 independent variables
+   LONGLEY.DAT   Labor statistics fitting test data
+   NELSON.DAT    Dialetric breakdown strength of Insulation accelerated testing (Arrhenius Eq.)
+   USADEBT.DAT   USA national debt (1947 to 1993)
+   WAMPLER2.DAT  Multilinear fitting test data
+ 
+-----Data Files--1-factor ANOVA/NIST
+ 
+   BATTADD2.DAT  Battery additive (2-level)
+   BATTADD3.DAT  Battery additive (3-level)
+   BATTERY1.DAT  Battery comparison
+   CHOLEST1.DAT  NIST SRM: Human Serum Cholesterol
+   DORK04.DAT    NIST GASIE SO4 concentration
+   FUNNEL5B.DAT  2-sample funnel data
+   FUNNEL5C.DAT  2-sample funnel data
+   SPLETT2.DAT   Charpy V notch testing
+   VANGEL2.DAT   Tensile strength
+   WATTERS.DAT   NIST SRM: Si & Cr Buffalo River Concentrations
+ 
+-----Data Files--1-factor ANOVA/Miscellaneous
+ 
+   DRAFT69B.DAT  1969 Draft Lottery data rankings
+   LOTTERY3.DAT  Maryland "Pick 3" lottery numbers
+   LOTTERY4.DAT  Maryland "Pick 4" lottery numbers
+   MICHELSO.DAT  Michelson's 1879 determination of speed of light
+   PENTAGON.DAT  Pentagon expenditures by year
+   USADEBT.DAT   USA national debt (1947 to 1993)
+   USADEFIC.DAT  USA national deficit (1980 to 1988)
+ 
+-----Data Files--1-factor ANOVA/Mary Natrella Handbook
+ 
+   NATR323.DAT   Fusion (3-23)
+   NATR326.DAT   Concrete (3-26)
+   NATR332.DAT   Batteries (3-32)
+   NATR334.DAT   Steel (3-34)
+   NATR338.DAT   Dextrons (3-38)
+   NATR341.DAT   Cement (3-41)
+   NATR41.DAT    Batteries (4-1)
+   NATR45.DAT    Tubes (4-5)
+   NATR48.DAT    Dive bombs (4-8)
+ 
+-----Data Files--1-factor ANOVA/SEMATECH
+ 
+   SPAGON3.DAT   SEMATECH semi-conductor thickness
+   SPAGON4.DAT   SEMATECH semi-conductor thickness
+ 
+-----Data Files--2-factor ANOVA
+ 
+   ATKINSON.DAT  Chimpanzee sign times
+   CLARK0.DAT    Electrical connectors
+   FREY.DAT      Frey drug fatality analysis
+   OLYMPICS.DAT  Scoring for women's figure skating in 1994 Olympics
+   PERIODIC.DAT  Chemistry periodic table
+   SNED326.DAT   Oat poppy plants
+   TUKEY433.DAT  World telephones
+   WRIGHT11.DAT  Wright brothers original flight data
+ 
+-----Data Files--3-factor ANOVA
+ 
+   CHALLENG.DAT  NASA Challenger disaster data
+   CURVEBAL.DAT  Curveball data (partial data set)
+   CURVEBA2.DAT  Curveball data (full data set)
+   EDA1.DAT      Compare 2 detectors
+   HAMAKER.DAT   Drill speed
+   MANDEL.DAT    Specific volume of rubber
+ 
+-----Data Files--4-factor ANOVA
+ 
+   ELECT92.DAT   1992 presedential election by state
+   RIPKEN.DAT    Cal Ripken batting average
+   SHEESLEY.DAT  Light bulb lead wire weld process (raw data)
+   SHEESLE2.DAT  Light bulb lead wire weld process (mean data)
+ 
+-----Data Files--5+-factor ANOVA
+ 
+   AUTO83.DAT    EPA automobile miles per gallon
+ 
+-----Data Files--Design of Experiments/Comparative Designs
+ 
+   BATTADD3.DAT  Battery additive (3 levels)
+   BOXAUTO.DAT   Latin square design for automobile emissions
+   BOXBLOOD.DAT  Comparitive randomized design for blood coagulation time
+   BOXCLOTH.DAT  Greco-Latin square design cloth data
+   BOXPENIC.DAT  Randomized block design for penicillin yield
+   BOXPOISO.DAT  Randomized block design for poison antidote
+   BOXSHOES.DAT  Randomized block design for boys shoe sole wear
+   BOXTOMAT.DAT  Comparitive randomized design for tomato yield
+   FUNNEL.DAT    Randomized block design for funnel experiment
+ 
+-----Data Files--Design of Experiment/2**k Full Factorial
+ 
+   BOWEN.DAT     2**3 dental polysac adhesion
+   BOXBISG.DAT   2**3 spring defects
+   BOXCAKE.DAT   2**5 cake taste
+   BOXCAKE2.DAT  2**3 cake taste
+   BOXCHEM.DAT   2**4 chemical yield
+   BOXPILOT.DAT  2**3 pilot plant yield
+   BOXRADAR.DAT  xx eff on yy (2**3 Des of Exp)
+   BOXREACT.DAT  2**5 reactor efficiency
+   BOXSOLAR.DAT  2**4 solar collection efficiency
+   BOXSPRIN.DAT  2**3 defective springs
+   KRASNY1.DAT   2**5 cigarette flammability study
+   NUT.DAT       2**3 nut strength
+   SPLETT3.DAT   2**3 eddy current
+   SPLETT4.DAT   2**4 eddy current
+   STENBAKK.DAT  2**10 DAC converter
+   SUPERCON.DAT  2**3 superconductivity temperature
+   VECCHIA.DAT   2**4 superconducting chip optimization
+   WEBER.DAT     2**5 hospital energy consumption
+ 
+-----Data Files--Design of Experiment/2**(k-p) Fractional Factorial
+ 
+   AC.DAT        Factors aff A/C perf. (2**(6-4) Des of Exp & MV)
+   AMRF.DAT      Feed/Drill/etc. eff on tool acc (Des. of Exp.)
+   BOXBIKE2.DAT  2**(7-4) bike speed
+   BOXBIKE3.DAT  2**(7-4) bike speed
+   BOXCLEAN.DAT  2**(4-1) cleanser stability
+   BOXFILT.DAT   2**(7-4) filtration time
+   BOXFILT2.DAT  2**(7-3) filtration time
+   BOXREAC2.DAT  2**(5-1) reactor efficiency
+   BOXSPRI2.DAT  2**(3-1) defective springs
+   BOXSPRI3.DAT  2**(3-1) defective springs
+   ESSEX.DAT     2**(7-4) piston dome porosity
+   QUINLAN.DAT   2**(15-11) speedometer casing
+   VIBRATE.DAT   2**(9-5) vibration of a component
+ 
+-----Data Files--Design of Experiment/Taguchi
+ 
+   BOXCAKE.DAT   2**5 cake taste
+   BOXCAKE2.DAT  2**3 cake taste
+   KENSEI.DAT    L18 aerosol spray
+   QUINLAN.DAT   L16 speedometer casing
+ 
+-----Data Files--Design of Experiment/Response Surface/Optimization
+ 
+   BOXBOD.DAT    Oxygen demand versus incubation time
+   BOXCHEM2.DAT  Chemical impurity, 2 independent variables
+   BOXCLEAN.DAT  Acid effects on cleanser stability
+   BOXYIELD.DAT  Chemical yield as function of time and temperature
+   BOXYIEL2.DAT  Chemical yield as function of time and temperature
+ 
+-----Data Files--Multivariate/Multiresponse
+ 
+   AC.DAT        2**(6-3) air conditioner performance
+   AUTO79.DAT    Automobile characteristics (1979)
+   AUTO83.DAT    EPA automobile miles per gallon
+   AUTO83B.DAT   EPA automobile miles per gallon
+   BIOMED3.DAT   Biomedical
+   CURRIE.DAT    Pollution source analysis
+   CURRIE3.DAT   Atmospheric zinc concentrations
+   CURRIE4.DAT   Atmospheric chemical concentrations
+   FLURY5.DAT    Flury-Riedwyl forged Swiss bank notes
+   GNP.DAT       Gross National Product
+   IRIS.DAT      Classic Fisher taxonomy iris data
+   KAUL.DAT      Refrigerent analysis
+   KRASNY1.DAT   2**5 cigarette flammability study
+   MORALES.DAT   SO2 isotope analysis
+   MORALES2.DAT  SO2 isotope analysis
+   NEGIZ3.DAT    Aerosol particle size dynamic modeling
+   PALLETT.DAT   Voice recogniztion ATIS SLS test results
+   PERIODIC.DAT  Chemistry periodic table
+   PLANETS.DAT   Solar system planet statistics
+   SMALL14.DAT   Atomic modelling
+   UGIANSKY.DAT  Interlaboratory stress correlation
+ 
+-----Data Files--Control Charts
+ 
+   CCC.DAT       Surface defects per square yard (C Control Charts)
+   CCP.DAT       Defective motors (P Control Charts)
+   CCPN.DAT      Defective mirrors (P and PN Control Charts)
+   CCU.DAT       Cracks in plastic wire (U Control Charts)
+   CCXBAR.DAT    Silicon wafer thickness (Mean, Range, and S Control Charts)
+   CLEAR.DAT     Component clearance inspection data
+   CROARKIN.DAT  NIST weight standard
+   CROARK2.DAT   NIST magnification standard
+   CROARK3.DAT   NIST SEM line width SRM
+   DRAFT69B.DAT  1969 Draft Lottery data rankings
+   GEAR.DAT      Gear diameters
+   LOTTERY3.DAT  Maryland "Pick 3" lottery numbers
+   LOTTERY4.DAT  Maryland "Pick 4" lottery numbers
+   MICHELSO.DAT  Michelson's 1879 determination of speed of light
+   REHM.DAT      Biomedical air flow
+ 
+-----Data Files--Pareto Analysis
+ 
+   GASTAX86.DAT  Gasoline tax (by state)
+   MURDER86.DAT  1986 murder rates (by state)
+   NBSSOFTW.DAT  Software used at NIST
+   NBSACTIV.DAT  Statistical computing activities at NIST
+   PERIODIC.DAT  Chemistry periodic table
+   TRAFFIC.DAT   Automobile traffic fatalities by state
+ 
+-----Data Files--Reliability/NIST
+ 
+   FULLER2.DAT   Airplane glass failure times
+   VANGEL2.DAT   Tensile strength
+ 
+-----Data Files--Reliability/Miscellaneous
+ 
+   ABERN17.DAT   Compressor rivet failure
+   ABERN35.DAT   Fatigue failure time
+   ABERN43.DAT   Bearing cage failure time
+   CASTIL6.DAT   Chain link strength
+   CASTIL7.DAT   Electrical insulation lifetime
+   CASTIL8.DAT   Wire cycles-to-failure
+   CLEAR.DAT     Component clearance inspection data
+   GEAR.DAT      Gear diameters
+   HAHN.DAT      Locomotive controls failure
+   NELSON.DAT    Dialetric breakdown strength of insulation
+   RANDN.DAT     Normal random numbers
+   RANDU.DAT     Uniform random numbers
+ 
+-----Data Files--Error Bar Plotting
+ 
+   GARBOCZI.DAT  Building materials percolation
+ 
+-----Data Files--3D Plotting and Contouring
+ 
+   BENNETT.DAT   Fracture surface roughness
+   BRAIN.DAT     Brain wave analysis
+   CUBE.DAT      Vertices of a cube
+   EHRSTEIN.DAT  Resistivity of semiconductor wafers
+   WOLLEY.DAT    Optical disk errors
+ 
+-----Data Files--Extreme Value Analysis/NIST
+ 
+   KEYWEST.DAT   Key West maximum wind speed
+   SIMIU.DAT     Thunderstorm wind velocities
+   WASHDC.DAT    Washington D.C. maximum wind speeds
+ 
+-----Data Files--Extreme Value Analysis/Castillo
+ 
+   CASTILL1.DAT  Maximum yearly wind speeds
+   CASTILL2.DAT  Maximum yearly river discharge
+   CASTILL3.DAT  Maximum yearly wave height
+   CASTILL4.DAT  Between phone call wait times
+   CASTILL5.DAT  CDistance from earthquake epicenter to nuclear plant
+   CASTILL6.DAT  Chain link strength
+   CASTILL7.DAT  Electrical insulation lifetime
+   CASTILL8.DAT  Wire cycles-to-failure
+   CASTILL9.DAT  Philadelphia yearly percipitation
+   CASTIL10.DAT  Maximumwave height in Norway
+   CASTIL11.DAT  Maximum yearly river discharge in Macon
+   CASTIL12.DAT  Maximum yearly river discharge in Hawk
+   CASTIL13.DAT  Oldest man's age in Sweden
+   CASTIL14.DAT  Oldest woman's age in Sweden
+ 
+-----Data Files--Extreme Value Analysis/Miscellaneous
+ 
+   GEAR.DAT      Gear diameters
+   HAHN.DAT      Locomotive controls failure
+   RANDN.DAT     Normal random numbers
+   RANDU.DAT     Uniform random numbers

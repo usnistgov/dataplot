@@ -1,0 +1,8 @@
+----- <~dataall\BOXWELD.top> BOXWELD.DAT
+
+BOXWELD.DAT
+
+View     <xcl: LIST BOXWELD.DAT>
+Load     <xcf: ~dataload/BOXWELD.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXWELD.DAT>
+

@@ -1,0 +1,53 @@
+----- <~time\timedisc.top> Discussion: Time Domain Analysis
+ 
+Discussion: Time Domain Analysis
+ 
+There are several basic approaches to performing
+time series analysis in the time domain.
+
+  1) One basic approach is to decompose the series
+     into trend, seasonal, and residual components.
+     Common methods for doing this are the Holt-Winter
+     (based on exponential smoothing, also called triple
+     exponential smoothing) technique and the seasonal
+     loess technique, based on locally weighted least
+     squares, developed by William Cleveland.  Currently,
+     Dataplot supports the seasonal loess method but not
+     the Holt-Winter method.  Dataplot does support
+     simple exponential smoothing.
+
+     These methods tend to perform well for data where
+     the trend and seasonal components dominate.
+
+  2) For time series data that are stationary, that
+     is they have constant location and scale, the
+     most used methods are based on autoregressive
+     models (AR models) and moving average (MA) methods
+     or a combination of these methods.  Stationarity
+     means that the trend and seasonal components have
+     already been removed.  For example, you might use
+     a seasonal loess to separate trend and seasonality
+     effects and then use AR and MA methods to model any
+     remaining structure in the residuals.  There are
+     other methods, such as differencing, to remove
+     trend and seasonality effects.
+
+     Box and Jenkins popularized an approach to using a
+     combination of AR and MA methods.  This approach is
+     commonly called ARIMA (AutoRegressive Integrated Moving
+     Averages) or simply Box-Jenkins modeling.  We are
+     currently adding an ARIMA modeling capability to
+     Dataplot.  Simple AR models can be fit using the
+     normal FIT command in Dataplot.
+
+     Dataplot also supports a method called Data Dependent
+     Systems (DDS).  This method is similar to the 
+     Box-Jenkins approach, but it uses more automatic
+     methods for model identification (which is the
+     most complex part of using the Box-Jenkins methods).
+
+  3) Smoothing techniques are also common for time series.
+     There are various approaches to smoothing such as
+     least squares, moving averages, and locally weighted
+     least squares.  Dataplot supports many of these methods.
+

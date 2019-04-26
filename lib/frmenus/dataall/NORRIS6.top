@@ -1,0 +1,8 @@
+----- <~dataall\NORRIS6.top> NORRIS6.DAT
+
+NORRIS6.DAT
+
+View     <xcl: LIST NORRIS6.DAT>
+Load     <xcf: ~dataload/NORRIS6.DP>
+Print    <xccl: printfile C:\DATAPLOT\NORRIS6.DAT>
+

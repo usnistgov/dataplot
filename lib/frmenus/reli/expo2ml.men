@@ -1,0 +1,28 @@
+This is file expo2ml.men--Fit Exponential (ML) at 2 Stress Levels
+ 
+--------------------
+ 1. Exponential Maximum Likelihood Estimates
+ 2. EXPONENTIAL MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Response Variable for Lower Stress Level:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Response Variable for Higher Stress Level:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute Exponential Acceleration Factor?
+--------------------
+GR FE
+SET CENSORING TYPE NONE
+EXPONENTIAL MAXIMUM LIKELIHOOD _1 _3
+LET SCALE1 = B2
+EXPONENTIAL MAXIMUM LIKELIHOOD _2 _3
+LET SCALE2 = B2
+LET AF = SCALE2/SCALE1
+WRITE "SCALE 1: ^SCALE1, SCALE 2: ^SCALE2, ACCELERATION FACTOR: ^AF"
+--------------------
+WEB HELP EXPONENTIAL MAXIMUM LIKELIHOOD
+--------------------

@@ -1,0 +1,8 @@
+----- <~dataall\NATR540.top> NATR540.DAT
+
+NATR540.DAT
+
+View     <xcl: LIST NATR540.DAT>
+Load     <xcf: ~dataload/NATR540.DP>
+Print    <xccl: printfile C:\DATAPLOT\NATR540.DAT>
+

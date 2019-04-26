@@ -1,0 +1,30 @@
+This is file levene.men--K-Sample Levene Test for Homogeneity of Variances
+ 
+--------------------
+ 1. K-Sample Levene Test
+ 2. LEVENE TEST Y1 TAG
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Group ID Variable:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6.
+ 7. Which version of the test:
+ 8. @CE 3 1 5 25 Median (default)
+ 9. @CE 3 2 5 25 Mean
+10. @CE 3 3 5 25 Trimmed Mean
+11.
+12. Subset/Except/For Specification:
+13. @CE 4 0 1 50 *
+15.
+16.
+17. Compute Levene's Test?
+--------------------
+GR FE
+LET STRING ZZZZSTR = MEDIAN
+@IF 3 2 LET STRING ZZZZSTR = MEAN
+@IF 3 3 LET STRING ZZZZSTR = TRIMMED MEAN
+^ZZZZSTR LEVENE TEST _1 _2 _3
+--------------------
+WEB HELP LEVENE TEST
+--------------------

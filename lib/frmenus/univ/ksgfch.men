@@ -1,0 +1,70 @@
+This is file ksgfch.men--Kolmogorov-Smirnov Goodness of Fit (Continuous Dist.)
+
+--------------------
+ 1. Kolmogorov-Smirnov Goodness of Fit (Chi-Square, F, Beta Distributions)
+ 2. <Distribution> KOLMOGOROV-SMIRNOV GOODNESS OF FIT Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5.
+ 6. Distribution:
+ 7. @CE 2 1 11 30 F
+ 8.                  nu1 =
+ 8. @CE 3 0 41 50 ?
+ 9.                  nu2 =
+ 9. @CE 4 0 41 50 ?
+10. @CE 2 2 11 30 Beta
+11.                  alpha =
+11. @CE 5 0 41 50 ?
+12.                  beta =
+12. @CE 6 0 41 50 ?
+13. @CE 2 3 11 30 Kolmogorov-Smirnov
+13.                                   nu =
+13. @CE 7 0 41 50 ?
+14. @CE 2 4 11 30 Chi
+14.                                   nu =
+14. @CE 8 0 41 50 ?
+15. @CE 2 5 11 30 Power
+15.                                   c =
+15. @CE 9 0 41 50 ?
+16. @CE 2 6 11 30 Arcsin
+17. @CE 2 7 11 30 Mielke's Beta-Kappa
+18.                  k =
+18. @CE 10 0 41 50 ?
+19.                  beta =
+19. @CE 11 0 41 50 ?
+20.                  theta =
+20. @CE 12 0 41 50 ?
+21. @CE 2 8 11 30 Two-Sided Power
+22.                  theta =
+22. @CE 13 0 41 50 ?
+23.                  n =
+23. @CE 14 0 41 50 ?
+24.
+25. Subset/Except/For Specification:
+26. @CE 15 0 -10 50 *
+27.
+28. Generate the Kolmogorov-Smirnov Goodness of Fit?
+--------------------
+GR FE
+@IF 3 0 LET NU1 = _3
+@IF 4 0 LET NU2 = _4
+@IF 5 0 LET ALPHA = _5
+@IF 6 0 LET BETA = _6
+@IF 7 0 LET NU = _7
+@IF 8 0 LET NU = _8
+@IF 9 0 LET C = _9
+@IF 10 0 LET K = _10
+@IF 11 0 LET BETA = _11
+@IF 12 0 LET THETA = _12
+@IF 2 1 F KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _15
+@IF 2 2 BETA KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _15
+@IF 2 3 KOLMOGOROV-SMIRNOV CHI-SQUARE GOODNESS OF FIT _1 _15
+@IF 2 4 CHI KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _15
+@IF 2 5 POWER KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _15
+@IF 2 6 ARCSIN KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _15
+@IF 2 7 MIELKE BETA-KAPPA KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _15
+@IF 2 8 TWO SIDED POWER KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _15
+--------------------
+WEB HELP KOLMOGOROV-SMIRNOV GOODNESS OF FIT
+--------------------

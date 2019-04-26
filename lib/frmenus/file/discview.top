@@ -1,0 +1,29 @@
+----- <~file\discview.top> Files: Viewing ASCII Files
+
+File: Viewing ASCII Files
+
+VIEWING AN ASCII FILE WITHIN DATAPLOT
+
+It is often helpful to view an ASCII file before trying to
+read it into Dataplot.  You can do this with the command
+
+    LIST FILE.DAT
+
+This will list the file 20 lines (you can change the number
+of lines with the SET LIST LINES command) at a time.  You
+can then enter a carriage return to view the next 20 lines or
+a "no" to stop viewing the file.
+
+For some Dataplot commands used for reading data files, you
+need to either know approriate line numbers or column numbers.
+
+To view the file with line numbers, enter the command
+
+   NLIST  FILE.DAT
+
+To identify appropriate columns, enter the command
+
+   RULER
+
+This will identify the first 80 columns.
+

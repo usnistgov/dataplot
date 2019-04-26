@@ -1,0 +1,37 @@
+This is Dataplot data file     SNED150.DAT
+Snedecor & Cochran Linear Regression Example:
+   Apple Crop Yield & Wormy Fruit
+Question: What linear function relates crop yield
+          with worm infestation?
+
+Source--Snedecore, George W. and Cochran , William G. (1937).
+        Statistical Methods. Sixth Edition.
+        The Iowa State University Press, Ames, Iowa, page 150.
+
+Number of observations             = 12
+Number of variables per line image =  2
+Order of variables on a line image--
+   1. Response Variable Y = Size of Crop (in hundreds)
+   2. Factor 1            = Percentage of Wormy Fruits
+
+To read this into Dataplot--
+   SKIP 25
+   READ SNED150.DAT Y X
+
+
+
+       Y                 X
+   % Wormy Fruit   Size of Crop     
+---------------------------------
+      59                 8
+      58                 6
+      56                11
+      53                22
+      50                14
+      45                17
+      43                18
+      42                24
+      39                19
+      38                23
+      30                26
+      27                40

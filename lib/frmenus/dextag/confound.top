@@ -1,0 +1,19 @@
+----- <~dextag\confound.top> Confounding: Taguchi Designs
+ 
+Confounding: Taguchi Desgins
+ 
+Confounding exists in a design when the value of
+the estimated main effect has multiple sources:
+ 
+   1) the main effect itself;
+   2) contaminents/bias from high-order interactions.
+ 
+The confounding characteristics of estimators from
+a design are completely fixed by the actual design
+plan being executed.
+ 
+Every Taguchi design has confounding--it cannot be avoided.
+The main effects from every Taguchi design are
+necessarily contaminated/biased by some high-order
+interaction.
+

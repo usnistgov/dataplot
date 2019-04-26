@@ -1,0 +1,73 @@
+This is file gensymrn.men--Generate Symmetric Random Numbers
+ 
+--------------------
+ 1. Generate Symmetric Random Numbers
+ 2. LET Y = ... RANDOM NUMBERS FOR I = START INC STOP
+ 3.
+ 4. Distribution (Select one):
+ 5. @CE 1 1 5 30 Uniform
+ 6. @CE 1 2 5 30 Normal
+ 7. @CE 1 3 5 30 Logistic
+ 8. @CE 1 4 5 30 Double-Exponential
+ 9. @CE 1 5 5 30 Cauchy
+10. @CE 1 6 5 30 Tukey
+10.                               lambda =
+10. @CE 2 0 41 50 ?
+11. @CE 1 7 5 20 t
+11.                               nu =
+11. @CE 3 0 41 50 ?
+12. @CE 1 8 5 30 Triangular
+12.                               c =
+12. @CE 6 0 41 50 ?
+13. @CE 1 9 5 30 Semi-circular
+14. @CE 1 10 5 30 Cosine
+15. @CE 1 11 5 30 Anglit
+16. @CE 1 12 5 30 Hyperbolic Secant
+17. @CE 1 13 5 30 Double Weibull
+17.                               gamma =
+17. @CE 9 0 41 50 ?
+18. @CE 1 14 5 30 Double Gamma
+18.                               gamma =
+18. @CE 10 0 41 50 ?
+19.
+20.
+21. Number of Random Numbers:
+21. @CE 4 0 41 50 ?
+22. Optional Location Parameter:
+22. @CE 7 0 41 50 ?
+23. Optional Scale Parameter:
+23. @CE 8 0 41 50 ?
+24. Name of Output Variable :
+24. @CE 5 0 41 50 ?
+25.
+26.
+27. Generate the Random Numbers?
+--------------------
+AN FE
+@IF 1 1 LET _5 = UNIFORM RANDOM NUMBERS FOR I = 1 1 _4
+@IF 1 2 LET _5 = NORMAL RANDOM NUMBERS FOR I = 1 1 _4
+@IF 1 3 LET _5 = LOGISTIC RANDOM NUMBERS FOR I = 1 1 _4
+@IF 1 4 LET _5 = DOUBLE EXPO RANDOM NUMBERS FOR I = 1 1 _4
+@IF 1 5 LET _5 = CAUCHY RANDOM NUMBERS FOR I = 1 1 _4
+@IF 1 6 LET LAMBDA = _2
+@IF 1 6 LET _5 = TUKEY RANDOM NUMBERS FOR I = 1 1 _4
+@IF 1 7 LET NU = _3
+@IF 1 7 LET _5 = T RANDOM NUMBERS FOR I = 1 1 _4
+@IF 1 8 LET C = _6
+@IF 1 8 LET _5 = TRIANGULAR RANDOM NUMBERS FOR I = 1 1 _4
+@IF 1 9 LET _5 = SEMI_CIRCULAR RANDOM NUMBERS FOR I = 1 1 _4
+@IF 1 10 LET _5 = COSINE RANDOM NUMBERS FOR I = 1 1 _4
+@IF 1 11 LET _5 = ANGLIT RANDOM NUMBERS FOR I = 1 1 _4
+@IF 1 12 LET _5 = HYPERBOLIC SECANT RANDOM NUMBERS FOR I = 1 1 _4
+@IF 1 13 LET GAMMA = _9
+@IF 1 13 LET _5 = DOUBLE WEIBULL RANDOM NUMBERS FOR I = 1 1 _4
+@IF 1 14 LET GAMMA = _10
+@IF 1 14 LET _5 = DOUBLE GAMMA RANDOM NUMBERS FOR I = 1 1 _4
+LET ZLOC = 0
+LET ZSD = 1
+@IF 7 0 LET ZLOC = _7
+@IF 8 0 LET ZSD = _8
+LET _5 = ZLOC + ZSD* _5
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

@@ -1,0 +1,31 @@
+. This is dataplot macro    dexplotdefplotset.dp
+. Purpose: Define plot settings for each of the 10 plots
+.          for dexplot.dp
+.          (so that each plot may be called individually)
+. Date: September 2007
+.
+. -----start point-----
+.
+if tracesw exists and tracesw = 1; print "Entering dexplotdefplotset.dp"; end if
+.
+if ibatch not exist or ibatch = 0
+   device 1 off
+end of if
+device 2 off; device 3 off
+tic offset units screen
+tic offset 5 5
+ytic offset 0 0
+.
+plot y
+.
+. feedback on
+probe fy1min; let mintic = probeval
+probe fy1max; let maxtic = probeval
+let rangetic = maxtic-mintic
+ytic offset 5 5
+if ibatch not exist or ibatch = 0
+   device 1 on
+end of if
+device 2 on; device 3 on
+.
+if tracesw exists and tracesw = 1; print "Exiting dexplotdefplotset.dp"; end if

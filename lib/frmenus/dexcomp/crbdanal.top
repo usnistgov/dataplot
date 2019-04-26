@@ -1,0 +1,29 @@
+----- <~dexcomp\crbdanal.top> Randomized Block Designs: Analysis
+
+Randomized Block Designs: Analysis
+ 
+Discussion                            <~dexcomp\crbddian.top>
+NIST/SEMATECH Handbook
+     Block Plot                       <xcl: web handbook block plot>
+     ANOVA                            <xcl: web handbook two factor anova>
+
+Graphical Techniques:
+     Block Plot                       <xemf: ~stat\blockplo.men>
+
+     DEX Scatter Plot                 <xemf: ~plot\dexscatp.men>
+     DEX Mean Plot                    <xemf: ~plot\dexmeanp.men>
+     DEX SD Plot                      <xemf: ~plot\dexsdplo.men>
+
+     Character Plot                   <xemf: ~mfac\charplot.men>
+     Line Plot                        <xemf: ~mfac\lineplot.men>
+     Contour Plot (Data)              <xemf: ~math\contour.men>
+
+Quantitative Techniques:
+     Analysis of Variance (Balanced)  <xemf: ~stat\anova.men>
+     Analysis of Variance (Balanced, with Graphics) <xemf: ~stat\anovag.men>
+     Median Polish                    <xemf: ~stat\medpol.men>
+     Median Polish (with Graphics)    <xemf: ~stat\medpolg.men>
+     Friedman Nonparametric 2-Factor ANOVA   <xemf: ~stat\friedman.men>
+     Durbin   Nonparametric 2-Factor ANOVA   <xemf: ~stat\durbin.men>
+     Cross-Tabulate Statistics for Grouped Data <xemf: ~stat\crosstab.men>
+

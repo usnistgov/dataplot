@@ -1,0 +1,37 @@
+This is file multplpp.men--MULTIPLOT
+ 
+--------------------
+ 1. Multiple Plots Per Page
+ 2. MULTIPLOT 2 2
+ 3.
+ 4. Enter the Number of Multiplot Rows:
+ 4. @CE 1 0 42 50 ?
+ 5. Enter the Number of Multiplot Columns:
+ 5. @CE 2 0 42 50 ?
+ 6.
+ 7. If you enter any of the following 4
+ 8. values, then you should enter ALL 4.
+ 9. Otherwise, you will get unpredictable
+10. results with the subsequent multiplots.
+11. The coordinates are relative to the
+12. Dataplot 0 to 100 coordinate system.
+13.
+14. Coordinates for Multi-plot Area
+15.    Lower Left X Coordinate:
+15.    @CE 3 0 42 50 *
+16.    Lower Left Y Coordinate:
+16.    @CE 4 0 42 50 *
+17.    Upper Right X Coordinate:
+17.    @CE 5 0 42 50 *
+18.    Upper Right Y Coordinate:
+18.    @CE 6 0 42 50 *
+19.
+20.
+21. Start Multiplot Mode?
+--------------------
+PC FE
+MULTIPLOT CORNER COORDINATES _3 _4 _5 _6
+MULTIPLOT _1 _2
+--------------------
+WEB HELP MULTIPLOT
+--------------------

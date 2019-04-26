@@ -1,0 +1,21 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     BOXPLOT.DP
+. PURPOSE--GENERATE A BOX PLOT OF AUTO DATA
+.
+. -----START POINT-----------------------------------
+.
+TITLE 1983 Automobile MPG Analysis
+Y1LABEL Miles per Gallon
+X1LABEL Country (USA, Europe, Japan)
+LEGEND 1 1-Factor Modeling
+LEGEND 2 Box Plot
+.
+SKIP 25
+READ AUTO83.DAT Y J1 J2 J3 J4 J5 J6 X
+.
+CHARACTERS BOX PLOT
+LINES BOX PLOT
+YMAX 60
+.
+BOX PLOT Y X
+.
+YMAX

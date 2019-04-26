@@ -1,0 +1,90 @@
+. This is dataplot macro     checkinput.dp
+.
+. Purpose: Check for the existence of required input
+. Date: August 27, 2010 ==> September 25, 2012
+.
+. Input (Required):
+.    1. stmacro (string) = Name of the macro for which input is being checked
+.    2. stall   (string) = Name of a multi-word string whose components are being checked
+.
+. Output:
+.    Nothing                      when the input argument does     exist
+.    An error message and a pause when the input argument does not exist
+.
+. Macros needed: 0
+.
+. Example of calling routine: lee101subsub.dp   as in
+.
+.    let string stmacro = lee101subsub.dp
+.    let string stall = caseexp analysw j stresp^j ^stresp^j
+.    call checkinput.dp
+.
+. -----start point-----
+.
+. print "stmacro = ^stmacro"
+. print "stall = ^stall"
+. pause
+.
+if stall exists
+   let numinput = number of words stall
+   if numinput >= 1
+      loop for jinput = 1 1 numinput
+         let stinput = string word stall jinput
+         if ^stinput not exist
+            .
+            if htmlsw not exist
+               print " "
+               print "======================================="
+               print "Error--Macro ^stmacro"
+               if stinput <> "k"
+                  print "       is missing required input: ^stinput"
+               end if
+               if stinput = "k"
+                  print "       is missing required input: ^stinput (= number of factors)"
+               end if
+               . print "       is missing required input: ^stinput"
+               print "       Click     Enter     to continue . . ."
+               print "======================================="
+               print " "
+               if ibatch not exist or ibatch = 0; pause; end if
+            end if
+            .
+            if htmlsw exists; if htmlsw <> 1
+               print " "
+               print "======================================="
+               print "Error--Macro ^stmacro"
+               if stinput <> "k"
+                  print "       is missing required input: ^stinput"
+               end if
+               if stinput = "k"
+                  print "       is missing required input: ^stinput (= number of factors)"
+               end if
+               . print "       Click     Enter     to continue . . ."
+               print "======================================="
+               print " "
+               if ibatch not exist or ibatch = 0; pause; end if
+            end if; end if
+            .
+            if htmlsw exists; if htmlsw = 1
+               print " "
+               print "======================================="
+               print "Error--Macro ^stmacro"
+               print "       is missing required input: ^stinput"
+               print " "
+               print "       1. Close this error-message window (via X-out)"
+               print "       2. Terminate the Dataplot run (via Ctrl-c)"
+               print "       3. Edit Dataplot's main routine to define k"
+               print "               Example: let k = 3"
+               print "       4. Rerun Dataplot"
+               print "======================================="
+               print " "
+               device 3 close
+               end of capture
+               web file://c:\0\dataplot_graphics_and_numeric_output_10step.html
+               pause
+            end if; end if
+         end if
+      end loop
+   end if
+end if
+.

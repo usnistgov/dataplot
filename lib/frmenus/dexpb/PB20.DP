@@ -1,0 +1,8 @@
+----- <~dexpb\PB20.DP> Load  PB20.DAT
+
+. This is file    PB20.DP
+
+DELETE X1 TO X19
+SKIP 50
+READ PB20.DAT X1 TO X19
+

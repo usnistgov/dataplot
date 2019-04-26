@@ -1,0 +1,29 @@
+----- <~prob\discmle.top> MLE for Discrete Distribution
+
+MLE for Discrete Distribution
+
+Perform Maximum Likelihood Estimation for
+Discrete Distributions
+
+Beta-Binomial                       <xemf: ~prob\mlebbn.men>
+Beta-Geometric                      <xemf: ~prob\mlebge.men>
+Binomial                            <xemf: ~prob\mlebin.men>
+Borel-Tanner                        <xemf: ~prob\mlebta.men>
+Consul                              <xemf: ~prob\mlecon.men>
+Geeta                               <xemf: ~prob\mleget.men>
+Generalized Logarithmic Series      <xemf: ~prob\mlegls.men>
+Geometric                           <xemf: ~prob\mlegeo.men>
+Hermite                             <xemf: ~prob\mleher.men>
+Hypergeometric
+    Acceptance Sampling             <xemf: ~prob\mlehypa.men>
+    Capture/Recapture               <xemf: ~prob\mlehypb.men>
+Lagrange Poisson                    <xemf: ~prob\mlelpo.men>
+Logarithmic Series                  <xemf: ~prob\mledlg.men>
+Lost Games                          <xemf: ~prob\mlelos.men>
+Negative Binomial                   <xemf: ~prob\mlenb.men>
+Quasi-Binomial Type I               <xemf: ~prob\mleqbi.men>
+Poisson                             <xemf: ~prob\mlepoi.men>
+Polya-Aeppli                        <xemf: ~prob\mlepap.men>
+Yule                                <xemf: ~prob\mleyul.men>
+Zeta                                <xemf: ~prob\mlezet.men>
+

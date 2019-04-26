@@ -1,0 +1,8 @@
+----- <~dataall\RANDU.top> RANDU.DAT
+
+RANDU.DAT
+
+View     <xcl: LIST RANDU.DAT>
+Load     <xcf: ~dataload/RANDU.DP>
+Print    <xccl: printfile C:\DATAPLOT\RANDU.DAT>
+

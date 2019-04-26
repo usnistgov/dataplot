@@ -1,0 +1,28 @@
+----- <~data\data.top> Data
+
+Data
+
+Dataplot files
+   1-file:
+      View/Load/Print                  <~dataall\dataall.top>
+   Multi-file:
+      View                             <~dataview\dataview.top>
+      Load                             <~dataload\dataload.top>
+      Print                            <~dataprin\dataprin.top>
+      Load & Execute saved command(s)  <~dataloex\dataloex.top>
+
+User files
+   View                       <xemf: ~file\viewfile.men>
+   Load                       <xemf: ~file\readvafi.men>
+
+Internal data
+   View                       <~data\viewdata.top>
+   Rename                     <xemf: ~data\rename.men>
+   Generate                   <~data\genedata.top>
+   Transform                  <~data\trandata.top>
+   Delete parts of variables  <xemf: ~data\delete.men>
+   Pack   parts of variables  <xemf: ~data\pack.men>
+   Write variables to file    <xemf: ~file\writvafi.men>
+
+   Delete all variables       <xcl: RESET VARIABLES>
+

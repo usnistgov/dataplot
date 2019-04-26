@@ -1,0 +1,10 @@
+----- <~dataexec\CASTILL5.DP> Load & Execute CASTILL5.DAT
+
+. This is file    CASTILL5.DP
+
+DELETE Y
+SKIP 25
+READ CASTILL5.DAT Y
+TITLE CASTILL5.DAT
+PLOT Y
+

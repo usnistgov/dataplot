@@ -1,0 +1,8 @@
+----- <~dataprin\reg.top> Print (to Printer) Built-in Regression Data Files
+
+Print (to Printer) Built-in Regression Data Files
+
+1-Variable & Polynomial                  <xcf: ~dataprin\reg1p.DP>
+1-Variable & Non-Linear                  <xcf: ~dataprin\reg1n.DP>
+Multivariable                            <xcf: ~dataprin\regmv.DP>
+

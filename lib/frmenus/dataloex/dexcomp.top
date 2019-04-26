@@ -1,0 +1,16 @@
+----- <~dataloex\dexcomp.top> Load & Execute Comparative Design Data
+
+Load & Execute Comparative Design Data
+
+BOXTOMAT.DAT  Comp Rand Des. Tomato yield    <xcf: ~dataloex\BOXTOMAT.DP>
+BOXBLOOD.DAT  Comp Rand Des. Blood coag time <xcf: ~dataloex\BOXBLOOD.DP>
+BATTADD3.DAT  Battery Additive (3-level)     <xcf: ~dataloex\BATTADD3.DP>
+
+BOXSHOES.DAT* Rand Bl Des. Boys' shoe wear   <xcf: ~dataloex\BOXSHOES.DP>
+BOXPENIC.DAT  Rand Bl Des. Penicillin form.  <xcf: ~dataloex\BOXPENIC.DP>
+BOXPOISO.DAT  Rand Bl Des. Poison antidote   <xcf: ~dataloex\BOXPOISO.DP>
+
+BOXAUTO.DAT   Latin Sq Des. Auto emissions   <xcf: ~dataloex\BOXAUTO.DP>
+
+BOXCLOTH.DAT  Gr-Lat Sq Des. Cloth wear      <xcf: ~dataloex\BOXCLOTH.DP>
+

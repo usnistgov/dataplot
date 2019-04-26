@@ -1,0 +1,10 @@
+----- <~prob\pmixpdf.top> Plot Mixture pdf's
+
+Plot Mixture pdf Functions
+
+Plot Probability Density Function for
+Mixture Distributions
+
+Normal Mixture           <xemf: ~prob\pnormpdf.men>
+Bi-Weibull               <xemf: ~prob\pbwepdf.men>
+

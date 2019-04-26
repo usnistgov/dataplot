@@ -1,0 +1,82 @@
+This is file probpldi.men--Probability Plot (Discrete Distributions)
+
+--------------------
+ 1. Probability Plot (Discrete Distributions)
+ 2. <Name of Distribution> PROBABILITY PLOT Y
+ 3.
+ 4. Variable:
+ 4. @CE 1 0 11 30 ?
+ 5.
+ 6. Distribution:
+ 7. @CE 2 1 11 30 Binomial
+ 8.                      n =
+ 8. @CE 3 0 42 50 ?
+ 9.                      p =
+ 9. @CE 4 0 42 50 ?
+10. @CE 2 2 11 30 Geometric
+10.                      p =
+10. @CE 5 0 42 50 ?
+11. @CE 2 3 11 30 Poison
+11.                      lambda =
+11. @CE 6 0 42 50 ?
+12. @CE 2 4 11 30 Negative Binomial
+13.                      n =
+13. @CE 7 0 42 50 ?
+14.                      k =
+14. @CE 8 0 42 50 ?
+15. @CE 2 5 11 30 Discrete Uniform
+15.                      n =
+15. @CE 9 0 42 50 ?
+16. @CE 2 6 11 30 Hypergeometric
+17.                      k (number of items picked) =
+17. @CE 11 0 42 50 ?
+18.                      m (number of items) =
+18. @CE 12 0 42 50 ?
+19.                      n (number of marked items) =
+19. @CE 13 0 42 50 ?
+20. @CE 2 7 11 30 Logarithmic Series
+20.                      theta =
+20. @CE 14 0 42 50 ?
+21. @CE 2 8 11 30 Beta-Binomial
+22.                      n =
+22. @CE 15 0 42 50 ?
+23.                      alpha =
+23. @CE 16 0 42 50 ?
+24.                      beta =
+24. @CE 17 0 42 50 ?
+25. @CE 2 4 11 30 Waring
+26.                      a (1 is Yule) =
+26. @CE 18 0 42 50 ?
+27.                      c (> a, 1) =
+27. @CE 19 0 42 50 ?
+28.
+29. Subset/Except/For Specification:
+30. @CE 20 0 1 50 *
+31.
+32.
+33. Generate the Probability Plot?
+--------------------
+GR FE
+@IF 3 0 LET N = _3
+@IF 4 0 LET P = _4
+@IF 5 0 LET P = _5
+@IF 6 0 LET LAMBDA = _6
+@IF 7 0 LET N = _7
+@IF 8 0 LET K = _8
+@IF 9 0 LET N = _9
+@IF 11 0 LET K = _11
+@IF 12 0 LET M = _12
+@IF 13 0 LET N = _13
+@IF 14 0 LET THETA = _14
+@IF 15 0 LET N = _15
+@IF 16 0 LET ALPHA = _16
+@IF 17 0 LET BETA = _17
+@IF 18 0 LET A = _18
+@IF 19 0 LET C = _19
+X3LABEL AUTOMATIC
+_2 PROBABILITY PLOT _1 _20
+SET WRITE DECIMALS 4
+WRITE PPCC PPA0 PPA1 SDPPA0 SDPPA1
+--------------------
+WEB HELP PROBABILITY PLOT
+--------------------

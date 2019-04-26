@@ -1,0 +1,83 @@
+This is file xhatwhcl.men--Plot Simul. Conf. Limits for Calibration
+ 
+--------------------
+ 1. Plot Simultaneous Confidence Limits for Calibration
+ 2. PLOT Y PRED UPPER LOWER VERSUS X
+ 3. Note--(Working-Hotelling Confidence Limits for Calibration)
+ 4.
+ 5. Variables:
+ 6.    Response    Y:
+ 6. @CE 1 0 35 50 ? gui-vari
+ 7.    Independent X:
+ 7. @CE 2 0 35 50 ? gui-vari
+ 8.
+ 9. Confidence level (select one):
+10. @CE 3 1 3 23 95% limits
+11. @CE 3 2 3 23 99% limits
+12.
+13. Character Type for Raw Data:
+13. @CE 4 0 42 50 ? gui-char
+14. Character Type for Predicted Values:
+14. @CE 5 0 42 50 ? gui-char
+15. Character Type for Confidence Limits:
+15. @CE 6 0 42 50 ? gui-char
+16.
+17. Line     Type for Raw Data:
+17. @CE 7 0 42 50 ? gui-line
+18. Line     Type for Predicted Values:
+18. @CE 8 0 42 50 ? gui-line
+19. Line     Type for Confidence Limits:
+19. @CE 9 0 42 50 ? gui-line
+20.
+21. Subset/Except/For Specification:
+22. @CE 10 0 1 50 *
+23.
+24.
+25. Generate the Plot?
+--------------------
+GR FE
+LINEAR FIT _1 _2 _10
+ 
+LET ZN = NUMBER _1 _10
+LET ZNPAR = ZN-RESDF
+ 
+@IF 3 1 LET PPF = FPPF(.95,ZNPAR,RESDF)
+@IF 3 2 LET PPF = FPPF(.99,ZNPAR,RESDF)
+ 
+CHARACTERS _4 _5 _6 _6
+LINES _7 _8 _9 _9
+ 
+LET ZXMIN = MINIMUM _2 _10
+LET ZXMAX = MAXIMUM _2 _10
+LET ZXINC = (ZXMAX-ZXMIN)/200
+LET ZX2 = SEQUENCE ZXMIN ZXINC ZXMAX
+ 
+LET ZXRAW = _2
+LET ZMEAN = MEAN ZXRAW _10 _DO
+LET ZNUM = (ZX2-ZMEAN)**2
+LET ZXDEL = (ZXRAW-ZMEAN)**2
+LET ZDEN = SUM ZXDEL
+ 
+LET ZTERM1 = SQRT((1/ZN)+(ZNUM/ZDEN))
+LET ZFACTOR = SQRT(ZNPAR*PPF)*ZTERM1
+ 
+LET ZPRED2 = A0+A1*ZX2
+LET ZLOWER = ZPRED2-RESSD*ZFACTOR
+LET ZUPPER = ZPRED2+RESSD*ZFACTOR
+ 
+LET ZYMIN = MINIMUM _1 _10
+LET ZYMAX = MAXIMUM _1 _10
+LET ZYINC = (ZXMAX-ZXMIN)/200
+LET ZY3 = SEQUENCE ZYMIN ZYINC ZYMAX
+ 
+LET ZPRED3 = (ZY3-A0)/A1
+QUADRATIC FIT ZX2 ZLOWER
+LET ZLOWER3 = A0+A1*ZY3+A2*ZY3**2
+QUADRATIC FIT ZX2 ZUPPER
+LET ZUPPER3 = A0+A1*ZY3+A2*ZY3**2
+ 
+PRINT ZY3 ZLOWER3 ZPRED3 ZUPPER3
+ 
+PLOT _1 _2 _10 AND
+PLOT ZPRED2 ZLOWER ZUPPER VERSUS ZX2
+--------------------

@@ -1,0 +1,107 @@
+This is file crosscdi.men--Generate Cross Tabulate Plot (Diff of Scale)
+ 
+--------------------line 3
+01. Cross Tabulate Plot (Difference of Scale)
+02. CROSS TABULATE DIFFERENCE OF <statistic> PLOT Y1 Y2 X1 X2
+03.
+04. First Response Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Second Response Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06. Group One ID Variables:
+06. @CE 3 0 37 54 ? gui-vari
+07. Group Two ID Variables:
+07. @CE 4 0 37 54 ? gui-vari
+08.
+09. Scale Statistic (select one):
+10. @CE 5 1  1 27 aad
+10. @CE 5 2 29 57 biweight midvariance
+11. @CE 5 3  1 27 biweight scale
+11. @CE 5 4 29 57 coef of vari
+12. @CE 5 5  1 27 iq range
+12. @CE 5 6 29 57 kurtosis
+13. @CE 5 7  1 27 mad
+13. @CE 5 8 29 57 percentage bend midv
+14. @CE 5 9  1 27 range
+14. @CE 5 10 29 57 relative sd
+15. @CE 5 11  1 27 skewness
+15. @CE 5 12 29 57 sd
+16. @CE 5 13  1 27 sd of mean
+16. @CE 5 14 29 57 variance
+17. @CE 5 15  1 27 variance of mean
+17. @CE 5 16 29 57 Winsorized sd
+18. @CE 5 17  1 27 Winsorized variance
+19.
+20. For trimmed and Winsorized means, you need
+21. to specify the percentage to trim/Winsorize.
+22. 
+23. Percentage of values to trim/Winsorize above?:
+23. @CE 6 0 42 50 ? 
+24. Percentage of values to trim/Winsorize below?:
+24. @CE 7 0 42 50 ?
+25. Value of Beta for Percentage Bend (>0, < 0.5):
+25. @CE 8 0 42 50 ?
+26.
+27. Character Type for Data
+27. @CE 8 0 42 50 * gui-char
+28. Character Fill for Data
+28. @CE 9 0 42 50 gui-ooff
+29. Line Type for Group 1 Global Stat Line?
+29. @CE 10 0 42 50 * gui-line
+30. Line Type for Global Stat Line?
+30. @CE 11 0 42 50 * gui-line
+31.
+32. Title:
+32. @CE 12 0 10 50 *
+33. Left Axis Label:
+33. @CE 13 0 22 50 *
+34. Bottom Axis Label:
+34. @CE 14 0 22 50 *
+35.
+36. Subset/Except/For Specification:
+37. @CE 15 0 1 50 *
+38.
+39. Generate the Cross Tabulate Plot?:
+--------------------
+CHARACTER SAVE
+LINE SAVE
+CHARACTER X BLANK BLANK
+LINE BLANK SOLID SOLID
+CHARACTERS _9
+CHARACTER FILL _10
+LINES _11 ALL
+LINES BLANK _12
+SPIKE OFF OFF OFF
+BAR OFF OFF OFF
+TITLE _13
+Y1LABEL _14
+X1LABEL _15
+LET P1 = 5
+LET P2 = 5
+LET P1 = _7
+LET P2 = _6
+LET BETA = _8
+.
+@IF 5 1 CROSS TABULATE DIFF OF AAD PLOT _1 _2 _3 _4 _16
+@IF 5 2 CROSS TABULATE DIFF OF BIWEIGHT MIDVARIANCE PLOT _1 _2 _3 _4 _16
+@IF 5 3 CROSS TABULATE DIFF OF BIWEIGHT SCALE PLOT _1 _2 _3 _4 _16
+@IF 5 4 CROSS TABULATE DIFF OF COEF OF VARI PLOT _1 _2 _3 _4 _16
+@IF 5 5 CROSS TABULATE DIFF OF IQ RANGE PLOT _1 _2 _3 _4 _16
+@IF 5 6 CROSS TABULATE DIFF OF KURTOSIS PLOT _1 _2 _3 _4 _16
+@IF 5 7 CROSS TABULATE DIFF OF MAD PLOT _1 _2 _3 _4 _16
+@IF 5 8 CROSS TABULATE DIFF OF PERCENTAGE BEND MIDV PLOT _1 _2 _3 _4 _16
+@IF 5 9 CROSS TABULATE DIFF OF RANGE PLOT _1 _2 _3 _4 _16
+@IF 5 10 CROSS TABULATE DIFF OF RELATIVE SD PLOT _1 _2 _3 _4 _16
+@IF 5 11 CROSS TABULATE DIFF OF RELATIVE SD PLOT _1 _2 _3 _4 _16
+@IF 5 12 CROSS TABULATE DIFF OF SKEWNESS PLOT _1 _2 _3 _4 _16
+@IF 5 13 CROSS TABULATE DIFF OF STANDARD DEVIATION PLOT _1 _2 _3 _4 _16
+@IF 5 14 CROSS TABULATE DIFF OF SD OF THE MEAN PLOT _1 _2 _3 _4 _16
+@IF 5 15 CROSS TABULATE DIFF OF VARIANCE PLOT _1 _2 _3 _4 _16
+@IF 5 16 CROSS TABULATE DIFF OF VARIANCE OF MEAN PLOT _1 _2 _3 _4 _16
+@IF 5 17 CROSS TABULATE DIFF OF WINSORIZED SD PLOT _1 _2 _3 _4 _16
+@IF 5 18 CROSS TABULATE DIFF OF WINSORIZED VARIANCE PLOT _1 _2 _3 _4 _16
+CHARACTER RESTORE
+LINE RESTORE
+--------------------
+WEB HELP CROSS TABULATE PLOT
+--------------------

@@ -1,0 +1,15 @@
+----- <~dp\operfile.top> Operating on Files
+ 
+Operating on Files
+ 
+Directory of user files : SYSTEM dir
+ 
+View & list a file      : LIST        [file name]
+ 
+Read from a file        : READ        [file name] [var list]
+                        : SERIAL READ [file name] [var list]
+Write to a file         : WRITE       [file name] [var list]
+ 
+Edit a file             : EDIT        [file name]
+Search a file for string: SEARCH      [file name] [string]
+ 

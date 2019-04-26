@@ -1,0 +1,17 @@
+----- <~dex2kmp\construc.top> Construction:  2**(k-p) Frac. Fact. Designs
+ 
+Construction:  2**(k-p) Fract. Fact. Designs
+ 
+Discussion                           <~dex2kmp\consdisc.top>
+ 
+View Designs (k = 3 to  8 factors)   <~dex2kmp\viewdes3.top>
+View Designs (k = 9 to 31 factors)   <~dex2kmp\viewdes9.top>
+ 
+Load Designs (k = 3 to  8 factors)   <~dex2kmp\loaddes3.top>
+Load Designs (k = 9 to 31 factors)   <~dex2kmp\loaddes9.top>
+ 
+Confounding  (k = 3 to  8 factors)   <~dex2kmp\confoun3.top>
+Confounding  (k = 9 to 31 factors)   <~dex2kmp\confoun9.top>
+ 
+Models                               <~dex2kmp\models.top>
+ 

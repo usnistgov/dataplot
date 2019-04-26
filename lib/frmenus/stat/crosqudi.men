@@ -1,0 +1,70 @@
+This is file crosqudi.men--Generate Cross Tabulate Plot (Diff of Quant)
+ 
+--------------------line 3
+01. Cross Tabulate Plot (Difference of Quantiles)
+02. CROSS TABULATE DIFFERENCE OF <statistic> PLOT Y1 Y2 X1 X2
+03.
+04. First Response Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Second Response Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06. Group One ID Variables:
+06. @CE 3 0 37 54 ? gui-vari
+07. Group Two ID Variables:
+07. @CE 4 0 37 54 ? gui-vari
+08.
+09. Quantile Statistic:
+10. @CE 5 1  1 27 minimum
+10. @CE 5 2 29 57 maximum
+11. @CE 5 3  1 27 extreme
+11. @CE 5 4 29 57 quantile
+12.
+13. Desired quantile (>0, < 1):
+13. @CE 6 0 42 50 ? 
+14.
+15. Character Type for Data
+15. @CE 7 0 42 50 * gui-char
+16. Character Fill for Data
+16. @CE 8 0 42 50 gui-ooff
+17. Line Type for Group 1 Global Stat Line?
+17. @CE 9 0 42 50 * gui-line
+18. Line Type for Global Stat Line?
+18. @CE 10 0 42 50 * gui-line
+19.
+20. Title:
+20. @CE 11 0 10 50 *
+21. Left Axis Label:
+21. @CE 12 0 22 50 *
+22. Bottom Axis Label:
+22. @CE 13 0 22 50 *
+23.
+24. Subset/Except/For Specification:
+25. @CE 14 0 1 50 *
+26.
+27. Generate the Cross Tabulate Plot?:
+--------------------
+CHARACTER SAVE
+LINE SAVE
+CHARACTER X BLANK BLANK
+LINE BLANK SOLID SOLID
+CHARACTERS _7
+CHARACTER FILL _8
+LINES _9 ALL
+LINES BLANK _10
+SPIKE OFF OFF OFF
+BAR OFF OFF OFF
+TITLE _11
+Y1LABEL _12
+X1LABEL _13
+LET XQ = 0.5
+LET XQ = _6
+.
+@IF 5 1 CROSS TABULATE DIFF OF MINIMUM PLOT _1 _2 _3 _4 _14
+@IF 5 2 CROSS TABULATE DIFF OF MAXIMUM PLOT _1 _2 _3 _4 _14
+@IF 5 3 CROSS TABULATE DIFF OF EXTREME PLOT _1 _2 _3 _4 _14
+@IF 5 4 CROSS TABULATE DIFF OF QUANTILE PLOT _1 _2 _3 _4 _14
+CHARACTER RESTORE
+LINE RESTORE
+--------------------
+WEB HELP CROSS TABULATE PLOT
+--------------------

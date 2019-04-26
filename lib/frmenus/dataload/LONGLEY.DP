@@ -1,0 +1,8 @@
+----- <~dataload\LONGLEY.DP> Load LONGLEY.DAT
+
+. This is file    LONGLEY.DP
+
+DELETE Y
+SKIP 25
+READ LONGLEY.DAT Y
+

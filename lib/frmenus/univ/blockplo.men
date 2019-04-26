@@ -1,0 +1,74 @@
+This is file blockplo.men--Generate Block Plot
+ 
+--------------------
+1. Block Plot
+2. PLOT Y XB XP
+3.
+4. Type of block plot:
+5. @CE 1 1 3 10 data
+6. @CE 1 2 3 10 number
+5. @CE 1 3 13 20 mean
+6. @CE 1 4 13 20 median
+7. @CE 1 5 13 20 midmea
+8. @CE 1 6 13 20 midran
+5. @CE 1 7 23 30 st dev
+6. @CE 1 8 23 30 var
+7. @CE 1 9 23 30 range
+8. @CE 1 10 23 30 min
+9. @CE 1 11 23 30 max
+5. @CE 1 12 33 40 skew
+6. @CE 1 13 33 40 kurt
+7. @CE 1 14 33 40 autoco
+5.                                         Taguchi S/N
+6. @CE 1 15 43 50 target
+7. @CE 1 16 43 50 larger
+8. @CE 1 17 43 50 smaller
+10.
+11. Response Variable:
+11. @CE 2 0 33 50 ?
+12. Primary Factor:
+12. @CE 3 0 33 50 ?
+13. List of Nuisance/Blocking Factors:
+14. @CE 4 0 1 50 ?
+15. Subset/Except/For Specification:
+16. @CE 5 0 1 50 ?
+17.
+18. Number of levels of the primary factor:
+19. @CE 6 1 3 10 2
+19. @CE 6 2 13 20 3
+19. @CE 6 3 23 30 4
+19. @CE 6 4 33 40 5
+19. @CE 6 5 43 50 6
+20. Character Types for primary factor levels:
+21. @CE 7 0 1 50 ?
+22. Line Types for the blocks:
+23. @CE 8 0 1 50 ?
+24.
+25. Generate the Block Plot?:
+--------------------
+GR FE
+CHAR _7
+@IF 8 0 LINES _8 ALL
+@IF 6 1 LINES BL BL
+@IF 6 2 LINES BL BL BL
+@IF 6 3 LINES BL BL BL BL
+@IF 6 4 LINES BL BL BL BL BL
+@IF 6 5 LINES BL BL BL BL BL BL
+@IF 1 1 BLOCK PLOT _2 _4 _3 _5
+@IF 1 2 NUMBER BLOCK PLOT _2 _4 _3 _5
+@IF 1 3 MEAN BLOCK PLOT _2 _4 _3 _5
+@IF 1 4 MEDIAN BLOCK PLOT _2 _4 _3 _5
+@IF 1 5 MIDMEAN BLOCK PLOT _2 _4 _3 _5
+@IF 1 6 MIDRANGE BLOCK PLOT _2 _4 _3 _5
+@IF 1 7 SD BLOCK PLOT _2 _4 _3 _5
+@IF 1 8 VARIANCE BLOCK PLOT _2 _4 _3 _5
+@IF 1 9 RANGE BLOCK PLOT _2 _4 _3 _5
+@IF 1 10 MINIMUM BLOCK PLOT _2 _4 _3 _5
+@IF 1 11 MAXIMUM BLOCK PLOT _2 _4 _3 _5
+@IF 1 12 SKEWNESS BLOCK PLOT _2 _4 _3 _5
+@IF 1 13 KURTOSIS BLOCK PLOT _2 _4 _3 _5
+@IF 1 14 AUTOCORR BLOCK PLOT _2 _4 _3 _5
+@IF 1 15 SN0 BLOCK PLOT _2 _4 _3 _5
+@IF 1 16 SN+ BLOCK PLOT _2 _4 _3 _5
+@IF 1 17 SN- BLOCK PLOT _2 _4 _3 _5
+--------------------

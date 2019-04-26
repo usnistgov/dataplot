@@ -1,0 +1,26 @@
+This is file plotfu2d.men--Plot a Function (2-dimension)
+ 
+--------------------
+1. Plot a Function
+2. PLOT <function> FOR X = START INCREMENT STOP
+3.
+4. Function:
+5. @CE 1 0 1 50 ?
+6.
+7. Variate (X)
+7. @CE 2 0 42 50 ?
+8. Start Point:
+8. @CE 3 0 42 50 ?
+9. Increment:
+9. @CE 4 0 42 50 ?
+10. Stop Point:
+10. @CE 5 0 42 50 ?
+11.
+12.
+13. Plot the Function?
+--------------------
+GR FE
+PLOT _1 FOR _2 = _3 _4 _5
+--------------------
+WEB HELP PLOT
+--------------------

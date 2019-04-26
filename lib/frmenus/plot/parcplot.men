@@ -1,0 +1,68 @@
+This is file parcplot.men--Parallel Coordinates Plot
+ 
+--------------------
+1. Parallel Coordinates Plot
+2. Macro
+3.
+4. List of Response Variables:
+5. @CE 1 0 1 50 ? gui-variable
+6.
+7. The data are standardized by subtracting
+8. the mean and dividing by the standard
+9. deviation.  You can specify the lower and
+10. upper limits of the plot scales in
+11. standardized units.  It defaults to
+12. -3.5 to 3.5.
+13.
+14. Lower Limit:
+14. @CE 2 0 42 50 *
+15. Upper Limit:
+15. @CE 3 0 42 50 *
+16.
+17. Subset/Except/For Specification: 
+18. @CE 4 0 1 50 *
+19.
+20.
+21. Generate the Parallel Coordinates Plot?:
+--------------------
+GR FE
+WRITE ZZZZJUNK.DAT _1 _4
+DELETE ZZZZ
+READ MATRIX ZZZZJUNK.DAT ZZZZ
+LET ZZZZN = MATRIX NUMBER OF ROWS ZZZZ
+LET ZZZZP = MATRIX NUMBER OF COLUMNS ZZZZ
+DIMENSION MATRIX ROWS ZZZZN
+SET MATRIX SCALE ZSCORE
+LET ZZZZ = MATRIX COLUMN SCALE ZZZZ
+LET ZZZZ2N = 2*ZZZZN
+LET ZZZZY = 1 FOR I = 1 1 ZZZZ2N
+LET ZZZZY = 0 FOR I = 1 1 ZZZZN
+LET ZZZZTAG = SEQUENCE 1 1 ZZZZN FOR I = 1 1 ZZZZ2N
+LET ZZZZTEMP = ZZZZP - 1
+MULTIPLOT ZZZZTEMP 1
+MULTIPLOT CORNER COORDINATES 5 5 95 95
+FRAME CORNER COORDINATES 5 0 95 100
+YFRAME OFF
+TIC LABELS OFF
+TIC MARKS OFF
+YLIMITS 0 1
+XLIMITS -3.5 3.5
+XLIMITS _2 _3
+LEGEND 1 COORDINATES 4.9 98
+LEGEND JUSTIFICATION RIGHT
+LOOP FOR K = ZZZZP -1 2
+   LET ZZZZA = K - 1
+   LET ZZZZX = ZZZZ^ZZZZA
+   EXTEND ZZZZX ZZZZ^K
+   LEGEND 1 X^K
+   PLOT ZZZZY ZZZZX ZZZZTAG
+END OF LOOP
+JUSTIFICATION RIGHT
+MOVE 4.9 1.5
+TEXT X1
+END OF MULTIPLOT
+DELETE ZZZZ ZZZZX ZZZZY ZZZZTAG ZZZZZA ZZZZN ZZZZP ZZZZ2N ZZZZTEMP
+RESET PLOT CONTROL
+--------------------
+WEB HELP ANDREWS PLOT
+--------------------

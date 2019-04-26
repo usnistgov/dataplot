@@ -1,0 +1,20 @@
+----- <~qual\discmove.top> Discussion: Moving Statistic Control Chart
+ 
+Discussion: Moving <stat> Control Charts
+ 
+2) moving average, moviong range, moving standard deviation
+
+   These control charts are similar to the mean, range,
+   and standard deviation charts.  The primary 
+   distinction is that the they can be used for ungrouped
+   data.
+
+   These charts work by computing a statistic over a
+   sliding window.  That is, at point i, the k closest points
+   are used to compute the statistic.  The value of k is referred
+   to as the filter width.
+
+   Although these charts can be used for grouped data
+   as well, the primary usage is as an alternative to
+   the standard xbar, r, and s charts for ungrouped data.
+

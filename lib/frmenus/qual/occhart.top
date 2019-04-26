@@ -1,0 +1,9 @@
+----- <~qual\occhart.top> Operating Characteristic (OC) Curves
+ 
+Operating Characteristic (OC) Charts
+ 
+Operating Characteristic (OC) Curves
+   X (Mean) Control Chart                  <xemf: ~qual\xbaroc.men>
+   P (Binomial Proportion) Control Chart   <xemf: ~qual\poc.men>
+   C (Poisson Counts) Control Chart        <xemf: ~qual\coc.men>
+   

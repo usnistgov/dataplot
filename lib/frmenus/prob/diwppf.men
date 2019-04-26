@@ -1,0 +1,40 @@
+This is file diwppf.men--Compute Discrete Weibull ppf
+ 
+--------------------
+ 1. Compute Discrete Weibull ppf
+ 2. LET Y = DIWPPF(P,Q,BETA)
+ 3.
+ 4. Input values:
+ 5.                             p (0 <= p < 1):
+ 5. @CE 1 0 42 50 ?
+ 6.              shape parameter q (0 < q < 1):
+ 6. @CE 2 0 42 50 ?
+ 7.            shape parameter beta (beta > 0):
+ 7. @CE 3 0 42 50 ?
+ 8.
+ 9. Output parameters:
+10.                  name for the ppf value:
+10. @CE 4 0 42 50 ?
+11.
+12.
+13. Compute the Probability?
+--------------------
+AN FE
+LET ZQ = 0.75
+LET ZBETA = 1
+@IF 2 0 LET ZQ = _2
+IF ZQ <= 0.5
+   LET ZQ = 0.75
+END OF IF
+IF ZQ >= 1
+   LET ZQ = 0.75
+END OF IF
+@IF 3 0 LET ZBETA = _3
+IF ZBETA <= 0
+   LET ZBETA = 1
+END OF IF
+@IF 4 0 LET _4 = DIWPPF( _1 , ZQ , ZBETA )
+@IF 5 0 LET _5 = 1 - DIWPPF( _1 , ZQ , ZBETA )
+--------------------
+WEB HELP DIWPPF
+--------------------

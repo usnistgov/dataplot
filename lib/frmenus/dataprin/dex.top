@@ -1,0 +1,12 @@
+----- <~dataprin\dex.top> Print (to Printer) Built-in Design of Experiment Dat
+ Files
+
+Print (to Printer) Built-in Design of Experiment Data Files
+
+Comparative data                         <~dataprin\dexcomp.top>
+2**k full factorial data                 <~dataprin\dex2k.top>
+2**k-p fractional factorial data         <~dataprin\dex2kmp.top>
+Taguchi Ln data                          <~dataprin\dextag.top>
+Optimization/response surface data       <~dataprin\dexopt.top>
+Mixture data                             <~dataprin\dexmix.top>
+

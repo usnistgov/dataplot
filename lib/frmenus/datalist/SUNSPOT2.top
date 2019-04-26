@@ -1,0 +1,8 @@
+----- <~datalist\SUNSPOT2.top> SUNSPOT2.DAT
+ 
+SUNSPOT2.DAT
+ 
+View     <xcl: LIST SUNSPOT2.DAT>
+Load     <x2cl: SKIP 25; READ SUNSPOT2.DAT Y YEAR>
+Print    <xccl: printfile C:\DATAPLOT\SUNSPOT2.DAT>
+ 

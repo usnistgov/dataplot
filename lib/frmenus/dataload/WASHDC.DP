@@ -1,0 +1,8 @@
+----- <~dataload\WASHDC.DP> Load WASHDC.DAT
+
+. This is file    WASHDC.DP
+
+DELETE Y X
+SKIP 25
+READ WASHDC.DAT Y X
+

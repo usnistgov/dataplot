@@ -1,0 +1,26 @@
+----- <~math\disc_der.top> Derivatives
+ 
+Derivatives
+
+
+Dataplot computes derivatives by computing
+the analytic derivative.  It can then
+either return this function or evaluate it
+at a specific set of points.
+
+Dataplot can take derivatives of functions
+containing combinations of the following
+types of functions:
+
+1. Arithmetic operations (+, -, *, /, **).
+2. Built-in trigonmetric functions
+   (including the inverse functions).
+3. Built-in hyperbolic trigonometric functions
+   (including the inverse functions). 
+4. LOG (for natural logs) and LOG10 (for
+   base 10 logs).
+5. SQRT function.
+6. EXP function.
+
+Note that this is a small subset of the
+functions that Dataplot supports in general.

@@ -1,0 +1,40 @@
+This is Dataplot data file     CORNEL81.DAT
+Effect of Fish Components & Temperature on Fish Patties Taste
+        3-Factor Unconstrined Mixture + Process Variable
+        Simplex-Centroid Design + 2-level Process Variable
+Source--Cornell, John A. (1990).  ASQC Statistics
+        Division Volume 5:  How to Run Mixture Experiments
+        for Product Quality.  Page 81.
+Response Variable                  = fish patties taste (1 to 9)
+Number of observations             = 14 (= 7 + 7)
+Number of variables per line image =  5 (= 1 + 4)
+Order of variables per line image--
+   Response variable = fish patties taste (1 = bad to 9 = good)
+   Factor 1          = mullet proportion     (0 to 1)
+   Factor 2          = sheepshead proportion (0 to 1)
+   Factor 3          = croaker proportion    (0 to 1)
+   Factor 4          = cook temperature      (2 levels)
+Project Question--What settings for the 3 ingredients
+                  and temperature maximize the taste?
+Statistical area--mixture design of experiment
+To read this file into Dataplot--
+      SKIP 25; READ CORNEL81.DAT Y X1 X2 X3 X4
+  Y           X1          X2          X3         X4
+ Taste      Mullet     Sheepshead   Croaker Temperature
+          Proportion  Proportion  Proportion
+--------------------------------------------------------
+ 4.0           1           0            0        +1
+ 4.7           0           1            0        +1
+ 4.6           0           0            1        +1
+ 5.3           .5          .5           0        +1
+ 4.4           0           .5           .5       +1
+ 4.9           .5          0            .5       +1
+ 4.4           .333        .333         .333     +1
+
+ 4.7           1           0            0        -1
+ 5.3           0           1            0        -1
+ 3.7           0           0            1        -1
+ 5.1           .5          .5           0        -1
+ 4.0           0           .5           .5       -1
+ 4.9           .5          0            .5       -1
+ 4.7           .333        .333         .333     -1

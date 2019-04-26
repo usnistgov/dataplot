@@ -1,0 +1,6 @@
+----- <~dataprin\SPIEGEL.DP> Print (to Printer) SPIEGEL.DAT
+
+. This is file    SPIEGEL.DP
+
+PRINT SPIEGEL.DAT
+

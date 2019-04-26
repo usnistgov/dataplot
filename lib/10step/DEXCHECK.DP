@@ -1,0 +1,75 @@
+. This is dataplot macro    dexcheck.dp
+. Purpose: Check input items (k, y, x1, x2, . . ., xk, n, index)
+.          used by the 10 dexplot.dp macros
+. Date: January 8, 2008
+.
+. -----start point-----
+.
+if pausesw = 1; write "---At the beginning of dexcheck.dp"; pause; end if
+.
+. -----Step 1: Check to see if k exists-----
+.
+if k not exist
+   call alertk.dp
+end if
+.
+. -----Step 2: Check to see if Y, X1, X2, . . . , Xk exists-----
+.
+let string stvar = Y; let string stvar2 = The Response Variable
+if ^stvar not exist
+   call alertv.dp
+end if
+.
+loop for jzz = 1 1 k
+   let string stvar = X^jzz; let string stvar2 = Factor ^jzz
+   if ^stvar not exist
+      call alertv.dp
+   end if
+end loop
+.
+. -----Step 3: Compute n and define index-----
+.
+let n = number y
+let index = 1 1 n
+.
+. -----Step 4: Check for the existence of a center point-----
+.
+if tagcent not exist; let tagcent = 0 for i = 1 1 n; end if
+loop for jzz = 1 1 n
+   let allcent = 1
+   loop for kzz = 1 1 k
+      let xzzz = x^kzz(jzz)
+      if xzzz <> 0; let allcent = 0; end if
+   end loop
+   if allcent = 1; let tagcent(jzz) = 1; end if
+end loop
+let numcent = 0
+let numcent = number y subset tagcent 1
+if numcent > 0.5
+   let meancent = mean y subset tagcent 1
+   let sdcent = sd y subset tagcent 1
+   let ncent = number y subset tagcent 1
+end if
+.
+. -----Step 5: If center points exist, strip off center points-----
+.
+if numcent > 0.5
+   retain y subset tagcent 0
+   loop for kzz = 1 1 k
+      retain x^kzz subset tagcent 0
+   end loop
+end if
+.
+. -----Step 6: If center points exist, recompute n and index-----
+.
+if numcent > 0.5
+   let n = number y
+   delete index
+   let index = 1 1 n
+   delete tagcent
+end if
+.
+print n y x1 x2 x3 index tagcent
+.
+if pausesw = 1; write "---At the end       of dexcheck.dp"; pause; end if
+.

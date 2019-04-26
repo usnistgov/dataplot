@@ -1,0 +1,8 @@
+----- <~dataall\VANGEL5.top> VANGEL5.DAT
+
+VANGEL5.DAT
+
+View     <xcl: LIST VANGEL5.DAT>
+Load     <xcf: ~dataload/VANGEL5.DP>
+Print    <xccl: printfile C:\DATAPLOT\VANGEL5.DAT>
+

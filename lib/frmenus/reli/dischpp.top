@@ -1,0 +1,49 @@
+-----<~reli\dischpp.top> Discussion: Homogeneous Poisson Process
+
+Discussion: Homogeneous Poisson Process
+
+Homogeneous Poisson Process (HPP)
+
+If the interarrival times follow an exponential
+distribution, then we have a Homogeneous Poisson
+Process (HPP).  The HPP models the case where
+there is a constant repair rate over time.
+
+The following relationships hold for a HPP:
+
+   F(t)       = 1 - EXP(-lambda*t)    (exponential cdf)
+   P{N(t)=k}  = (lambda*t)**k**EXP(-lambda*t)/k!
+              = Poisson distribution
+   M(t)       = lambda*t      (expected number of failures)
+   m(t)       = lambda        (repair rate)
+   MTBF       = 1/lambda      (mean time between failures)
+
+Dataplot uses the scale parameter beta = (1/lambda)
+for the exponential distribution.
+
+Note that the distribution of the time to the kth
+failure is the sum of k independent exponential
+random variables.  This is a gamma distribution with
+shape parameter k and scale parameter lambda.  The
+mean time to the kth failure is k/lambda.
+
+In practice, many systems follow a "bathtub" curve
+for reliability.  In the bathtub curve, there are
+three distinct phases:
+
+   1) An initial eary failure period.  This is characterized
+      by a high but rapidly decreasing failure rate.
+
+   2) The failure rates then level off and remain roughly
+      constant for most of the useful life of the product.
+      This long period of a level failure rate is referred
+      to as the intrinsic failure period.
+
+   3) The system will eventually reach a period where the
+      failure rate increases as the materials wear out and
+      degradation failures occur at an increasing rate.
+      This is referred to as the wearout failure period.
+
+The HPP model can often be applied to the intrinsic
+failure period.
+

@@ -1,0 +1,45 @@
+This is file setalbox.men--Set Box Attributes for All Boxes
+ 
+--------------------
+ 1. Set Box Attributes for all Boxes
+ 2. BOX COLOR RED; BOX PATTERN DASH
+ 3.
+ 4. Color for Box Border:
+ 4. @CE 6 0 42 50 * gui-color
+ 5. Line Type for Box Border:
+ 5. @CE 7 0 42 50 * gui-line
+ 6. Line Thickness for Box Border:
+ 6. @CE 8 0 42 50 * gui-thick
+ 7.
+ 8. Pattern for Box Interior:
+ 8. @CE 9 0 42 50 * gui-pattern
+ 9. Color for Box Interior:
+ 9. @CE 10 0 42 50 * gui-color
+10. Line Type for Box Interior:
+10. @CE 11 0 42 50 * gui-line
+11. Line Thickness for Box Interior:
+11. @CE 12 0 42 50 * gui-line
+12. Cross-Hatch Spacing for Box Interior:
+12. @CE 13 0 42 50 *
+13.
+14. Height for Box Shadow (0 for none):
+14. @CE 14 0 42 50 *
+15. Width for Box Shadow (0 for none):
+15. @CE 15 0 42 50 *
+16.
+17.
+18. Set Box Attributes?
+--------------------
+PC FE
+@IF 6 0 BOX _1 COLOR _6
+@IF 7 0 BOX _1 PATTERN _7
+@IF 8 0 BOX _1 THICKNESS _8
+@IF 9 0 BOX _1 FILL PATTERN _9
+@IF 10 0 BOX _1 FILL COLOR _10
+@IF 11 0 BOX _1 FILL LINE _11
+@IF 12 0 BOX _1 FILL THICKNESS _12
+@IF 13 0 BOX _1 FILL GAP _13
+BOX _1 SHADOW HW _14 _15
+--------------------
+WEB HELP BOX COORDINATES
+--------------------

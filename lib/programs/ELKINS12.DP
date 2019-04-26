@@ -1,0 +1,43 @@
+skip 25
+read elkins12.dat x y1 y2 y3 y4
+.
+xlimits 1975 1995
+label size 4
+title size 4
+tic label size 3
+.
+y1label displacement 5
+multiplot 2 1
+title Output of CFC-11 and CFC-12 (7-Station Average)
+y1label Concentration (parts per trillion)
+xlabel year
+let set1 = 1 for i = 1 1 16
+let set2 = 1 for i = 1 1 16
+let set3 = 1 for i = 1 1 16
+let set4 = 1 for i = 1 1 16
+.
+characters circle circle
+char fill on on
+char hw 2.5 1 all
+legend 1 coordinates 50 40
+legend 2 coordinates 50 73
+legend size 3
+legend 1 CFC-11
+legend 2 CFC-12
+.
+plot y1 x set1 and
+plot y2 x set2
+.
+title Total Concentration of CFC-11 and CFC-12 (7-Station Average)
+y1label Concentration (parts per trillion)
+xlabel year
+legend 1 coordinates 50 30
+legend 2 coordinates 50 67
+plot y3 x set3 and
+plot y4 x set4
+.
+multiplot off
+move 50 95
+just center
+hw 3 2
+text Ozone Analysis

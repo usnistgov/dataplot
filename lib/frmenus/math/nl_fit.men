@@ -1,0 +1,51 @@
+This is file nl_fit.men--Compute a non-linear least squares fit
+ 
+--------------------
+ 1. Non-Linear Fit
+ 2. FIT Y = F1
+ 3.
+ 4. Dependent variable for the fit:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Dependent variable for the fit:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Name of previously defined function (or enter a functional expression):
+ 7. @CE 3 0 -7 50 ?
+ 8. 
+ 9. The fitted line wil be plotted with the raw
+10. data and several residual plots will be generated.
+11.
+12. Select the line style for the fitted curve:
+12. @CE 4 0 33 50 gui-line
+13. Select the character symbol for the raw data:
+13. @CE 5 0 33 50 gui-character
+14. Fill the character symbol?:
+14. @CE 6 0 33 50 gui-ooff
+15.
+16. Subset/Except/For Specification:
+17. @CE 7 0 -7 50 *
+18.
+19.
+20. Perform the fit?:
+--------------------
+GR FE
+CAPTURE ZZZZJUNK.DAT
+FIT _1 =  _3 _7
+END OF CAPTURE
+TITLE AUTOMATIC
+MULTIPLOT 2 2
+MULTIPLOT CORNER COORDINATES 5 5 95 95
+CHARACTER _5 BLANK
+CHARACTER FILL _6 OFF
+LINES BLANK _4
+PLOT _1 VS _2 _7
+PLOT _1 PRED VS _2 _7
+PLOT RES VS _2 _7
+NORMAL PROBABILITY PLOT RES
+END OF MULTIPLOT
+MULTIPLOT CORNER COORDIANTES
+TITLE
+LISTZZZZJUNK.DAT
+--------------------
+WEB HELP FIT
+--------------------
+

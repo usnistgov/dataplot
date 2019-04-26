@@ -1,0 +1,119 @@
+. This is Dataplot program    DEXCOMB.DP
+. Purpose--Generate combinatorials for groups size 1, 2, and 3
+. Use--In experiment design,
+.      for estimating effects up to 3-term interactions, and
+.      for determining confounding structure up to 3-term interactions.
+. Input  --k   = number of factors
+. Output --comb = vector of combinations: 1, 2, ...,k, 12, 13, ...
+.                 ... (k-2)(k-1)k
+.                 (that is, up through 3-term groupings)
+.
+. -----start point-----
+.
+if bug = 1
+   write "*****at the beginning of dexcomb.dp*****"
+end if
+.
+. -----k = 1-----
+.
+if k = 1
+   let comb = data 1
+end if
+.
+. -----k = 2-----
+.
+if k = 2
+   let comb = data 1 2 12
+end if
+.
+. -----k = 3-----
+.
+if k = 3
+   let comb = data 1 2 3 12 13 23 123
+end if
+.
+. -----k = 4-----
+.
+if k = 4
+   let comb = data 1 2 3 4 12 13 14 23 24 34 ...
+                   123 123 134 234
+end if
+.
+. -----k = 5-----
+.
+if k = 5
+   let comb = data 1 2 3 4 5 12 13 14 15 23 24 25 34 35 45
+   let comb2 = data 123 124 125 134 135 145 234 235 245 345
+. extend comb comb2
+end if
+.
+. -----k = 6-----
+.
+if k = 6
+   let comb = data 1 2 3 4 5 6
+   let comb2 = data 12 13 14 15 16 23 24 25 26 34 35 36 45 46 56
+.    let comb3 = data 123 124 125 126 134 135 136 145 146 156 ...
+.                      234 235 236 345 346 456
+   extend comb comb2
+.    extend comb comb3
+end if
+.
+. -----k = 7-----
+.
+if k = 7
+   let comb = data 1 2 3 4 5 6 7
+   let comb2 = data 12 13 14 15 16 17 23 24 25 26 27 34 35 36 37 ...
+                    45 46 47 56 57 67
+.    let comb31 = data 123 124 125 126 127 134 135 136 137 145 146 147
+.    let comb32 = data 156 157 167 234 235 236 237
+.    let comb33 = data 245 246 247 256 257 267 345 346 347
+.    let comb34 = data 356 357 367 456 457 467
+   extend comb comb2
+.    extend comb comb31
+.    extend comb comb32
+.    extend comb comb33
+.    extend comb comb34
+end if
+.
+. -----k = 8-----
+.
+if k = 8
+   let comb = data 1 2 3 4 5 6 7 8
+   let comb21 = data 12 13 14 15 16 17 18 23 24 25 26 27 28
+   let comb22 = data 34 35 36 37 38 45 46 47 48 56 57 58 67 68 78
+   let comb31 = data 123 124 125 126 127 128 134 135 136 137 138
+   let comb32 = data 145 146 147 148 156 157 158 167 168 178
+   let comb33 = data 234 235 236 237 238 245 246 247 248 256 257 258
+   let comb34 = data 267 268 278 345 346 347 348 356 357 358
+   let comb35 = data 367 368 378 456 457 458 467 468 478 567 568 578 678
+   let comb36 = data 245 246 247 256 257 267 345 346 347
+   let comb37 = data 356 357 367 456 457 467
+   extend comb comb21
+   extend comb comb22
+   extend comb comb31
+   extend comb comb32
+   extend comb comb33
+   extend comb comb34
+   extend comb comb35
+   extend comb comb36
+   extend comb comb37
+end if
+.
+let ncomb = number comb
+. print k
+. print comb
+.
+loop for j = 1 1 ncomb
+   let combj = comb(j)
+   call digit.dp
+   .
+   let d1 = digit(1)
+   let d2 = digit(2)
+   let d3 = digit(3)
+   .
+   let string a = ^d1&^d2&^d3
+end loop
+.
+if bug = 1
+   write "*****at the end       of dexcomb.dp*****"
+end if

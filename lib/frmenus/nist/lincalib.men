@@ -1,0 +1,24 @@
+This is file lincalib.men--Compute Linear Calibration
+ 
+--------------------
+ 1. Linear Calibration
+ 2. LINEAR CALIBRATION Y X Y0
+ 3.
+ 4. Response Variable (Measurements on Less Precise Scale):
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Independent Variable (Measurements on More Precise Scale):
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Variable Containing Calibration Points:
+ 7. @CE 3 0 42 50 ? gui-variable
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 4 0 1 50 *
+11.
+12.
+13. Compute the Linear Calibration?:
+--------------------
+LINEAR CALIBRATION _1 _2 _3 _4
+--------------------
+WEB HELP CALIBRATION
+--------------------

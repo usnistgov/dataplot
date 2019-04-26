@@ -1,0 +1,45 @@
+This is file setgrid.men--Set Grid and Attributes
+ 
+--------------------
+ 1. Set Grid and Attributes
+ 2. YGRID ON
+ 3.
+ 4. Major Horizontal Grid Lines:
+ 4. @CE 1 0 42 50 ? gui-ooff
+ 5. Major Vertical Grid Lines:
+ 5. @CE 2 0 42 50 ? gui-ooff
+ 6. Minor Horizontal Grid Lines:
+ 6. @CE 3 0 42 50 ? gui-ooff
+ 7. Minor Vertical Grid Lines:
+ 7. @CE 4 0 42 50 ? gui-ooff
+ 8.
+ 9. Color for the Horizontal Grid Lines:
+ 9. @CE 5 0 42 50 * gui-color
+10. Color for the Vertical Grid Lines:
+10. @CE 6 0 42 50 * gui-color
+11. Line Style for the Horizontal Grid Lines:
+11. @CE 7 0 42 50 * gui-line
+12. Line Style for the Vertical Grid Lines:
+12. @CE 8 0 42 50 * gui-line
+13. Line Thickness for the Horizontal Grid Lines:
+13. @CE 9 0 42 50 * gui-thick
+14. Line Thickness for the Vertical Grid Lines:
+14. @CE 10 0 42 50 * gui-thick
+15.
+16.
+17. Set Grid?:
+--------------------
+PC FE
+@IF 1 0 YGRID _1
+@IF 2 0 XGRID _2
+@IF 3 0 YGMINOR _3
+@IF 4 0 XGMINOR _2
+@IF 5 0 YGRID COLOR _5
+@IF 6 0 XGRID COLOR _6
+@IF 7 0 YGRID PATTERN _7
+@IF 8 0 XGRID PATTERN _8
+@IF 9 0 YGRID THICKNESS _9
+@IF 10 0 XGRID THICKNESS _10
+--------------------
+WEB HELP GRID
+--------------------

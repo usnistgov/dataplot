@@ -1,0 +1,8 @@
+----- <~dataall\CCXBAR.top> CCXBAR.DAT
+
+CCXBAR.DAT
+
+View     <xcl: LIST CCXBAR.DAT>
+Load     <xcf: ~dataload/CCXBAR.DP>
+Print    <xccl: printfile C:\DATAPLOT\CCXBAR.DAT>
+

@@ -1,0 +1,200 @@
+-------------------------  *SUMMARY*  -------------------
+----------------------------------------------------------
+ 
+SUMMARY
+ 
+Summary (1-line) of EDIT/FED commands                 Example
+ 
+ABORT     Abort out of editor (no changes made)       AB
+ 
+ADD       Insert a text file after the current line   ADD ABC.TEX
+ 
+BOTTOM    Go to bottom (= last line + 1) of file      B
+ 
+CALL      Execute an editor macro (subprogram)        CALL ABC.TEX
+ 
+CENTER    Center lines at specified column            SET CENTER 25
+                                                      CENTER
+ 
+CHANGE    Change old string to new string             C /KAT/CAT/
+                                                      C /KAT/CAT/ 20
+ 
+CA        Change all occurances of string on line     CA /KAT/CAT/
+                                                      CA /KAT/CAT/ 20
+ 
+COPY      Copy pre-marked text block to a file        SET COPY 20 30
+                                                      COPY ABC TEX
+ 
+CUT       Trim text off end of line                   CUT CAT
+ 
+DCOPY     Copy (& delete) pre-marked block to file    SET COPY 20 30
+                                                      DCOPY ABC TEX
+ 
+DELETE    Delete lines of text                        D
+                                                      D 10
+                                                      D 5 14
+ 
+DHOLD     Delete a line but hold (= save) it          DHOLD
+                                                      DHOLD 2
+                                                      DHOLD 10
+ 
+DI        Delete and insert a line                    DI XXX
+ 
+DUP       Duplicate (= insert) held lines             DUP
+          (from HOLD and DHOLD)                       DUP 2
+                                                      DUP 10
+                                                      DUP 1 5
+                                                      DUP 2 7
+ 
+DTL       Delete lines until locate a string          DTL --
+ 
+EDIT      Switch from input mode to edit mode         EDIT
+ 
+EXECUTE   Execute a held line                         X
+ 
+EXTEND    Append a string onto a line                 EXT  SUBSET
+ 
+EXIT      Exit out of editor (make changes permanent) EXIT
+ 
+EXEM      Append a string to multiple lines           EXT  SUBSET 10
+ 
+GO        Go to a line                                GO 25
+                                                      or 25
+ 
+HELP      Display on-line help information            HELP
+                                                      HELP PRINT
+                                                      HELP CHANGE
+ 
+HOLD      Hold (= saves) a line                       HOLD
+                                                      HOLD 2
+                                                      HOLD 10
+ 
+INDENT    Indent lines at specified column            SET INDENT 3
+                                                      INDENT
+                                                      INDENT 10
+ 
+INPUT     Switch from edit mode to input mode         INPUT
+ 
+INSERT    Insert a line after the current line        I PLOT Y X
+ 
+LAST      Go to the last line of the file             LAST
+ 
+LOCATE    Locate next line with a string              L PLOT
+ 
+LOCATE    Locate all succeeding lines with a string   LA PLOT
+ 
+LI        Locate all lines with string & and
+          insert a line after                         LI PLOT XXX
+ 
+LIB       Locate all lines with string & and
+          insert a line before                        LIB PLOT XXX
+ 
+ 
+LIST      List an external file                       LIST ABC.TEX
+ 
+NEXT      Go to the next line                         N
+                                                      or <CR>
+ 
+PRINT     Print lines                                 P
+                                                      P 10
+                                                      P 5 14
+ 
+PA        Print (current +) all remaining lines       PA
+ 
+PN        Print lines (starting with next line)       PN
+ 
+PP        Print a page of text                        PP
+ 
+PPAR      Print a paragraph of text                   PPAR
+ 
+PTL       Print lines until locate a string           PTL --
+ 
+SET CENT  Set (= mark) columns for CENTER             SET CENTER 25
+ 
+SET COPY  Set (= mark) columns for COPY               SET COPY 70 90
+ 
+SET LOCA  Set (= mark) columns for LOCATE             SET LOCATE 5 7
+ 
+SET SHIF  Set (= mark) columns for SHIFT              SET SHIFT 55
+ 
+SET TRUN  Set (= mark) columns for TRUNCATE           SET TRUNCATE 55
+ 
+SC1       Set (= mark) first line for COPY            SC1
+ 
+SC2       Set (= mark) last  line for COPY            SC2
+ 
+SHIFT     Shift text left or right on lines           SET SHIFT 5
+                                                      SHIFT
+                                                      SHIFT 20
+ 
+SHOW      Display settings of switches and limit      SHOW
+ 
+SPLIT     Split remainder of a line onto next line    SPLIT CAT
+ 
+STAT      Display settings of switches and limit      STAT
+ 
+TOP       Go to the top (= line 1 - 1) of the file    T
+ 
+TRUNC     Truncate lines at a specified column        SET TRUNC 55
+ 
+-------------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+-------------------------------------------------------------

@@ -1,0 +1,8 @@
+----- <~dexpb\PB28.DP> Load  PB28.DAT
+
+. This is file    PB28.DP
+
+DELETE X1 TO X27
+SKIP 50
+READ PB28.DAT X1 TO X27
+

@@ -1,0 +1,8 @@
+----- <~dataload\SPAGON4.DP> Load SPAGON4.DAT
+
+. This is file    SPAGON4.DP
+
+DELETE Y X
+SKIP 25
+READ SPAGON4.DAT Y X
+

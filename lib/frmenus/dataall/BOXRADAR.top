@@ -1,0 +1,8 @@
+----- <~dataall\BOXRADAR.top> BOXRADAR.DAT
+
+BOXRADAR.DAT
+
+View     <xcl: LIST BOXRADAR.DAT>
+Load     <xcf: ~dataload/BOXRADAR.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXRADAR.DAT>
+

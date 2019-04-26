@@ -1,0 +1,8 @@
+----- <~dataall\BRAIN.top> BRAIN.DAT
+
+BRAIN.DAT
+
+View     <xcl: LIST BRAIN.DAT>
+Load     <xcf: ~dataload/BRAIN.DP>
+Print    <xccl: printfile C:\DATAPLOT\BRAIN.DAT>
+

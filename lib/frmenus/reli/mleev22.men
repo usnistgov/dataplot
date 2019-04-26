@@ -1,0 +1,31 @@
+This is file mleev22.men--Frechet (maximum) MLE Estimates
+ 
+--------------------
+ 1. Frechet (maximum) Maximum Likelihood Estimates
+ 2. FRECHET MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Maximum likelihood estimates for the shape
+ 5. and scale parameters may be obtained for
+ 6. uncensored data.
+ 7.
+ 8. Response Variable:
+ 8. @CE 1 0 42 50 ? gui-variable
+ 9.
+10. Estimates for select percentiles?
+11. @CE 3 1 40 44 no
+11. @CE 3 2 47 50 yes
+12.
+13. Subset/Except/For Specification:
+14. @CE 4 0 1 50 *
+15.
+16.
+17. Compute Frechet (maximum) MLE's?
+--------------------
+GR FE
+SET MINMAX 2
+@IF 3 1 SET MAXIMUM LIKELIHOOD PERCENTILES NONE
+@IF 3 2 SET MAXIMUM LIKELIHOOD PERCENTILES DEFAULT
+FRECHET MAXIMUM LIKELIHOOD _1 _2 _4
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

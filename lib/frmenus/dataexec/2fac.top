@@ -1,0 +1,8 @@
+----- <~dataexec\2fac.top> Load and Execute 2-Factor Data
+
+Load and Execute 2-Factor Data
+
+WRIGHT11.DAT  Wright brothers data         <xcf: ~dataexec\WRIGHT11.DP>
+CLARK0.DAT    Electrical connectors        <xcf: ~dataexec\CLARK0.DP>
+PERIODIC.DAT  Chemistry periodic table     <xcf: ~dataexec\PERIODIC.DP>
+

@@ -1,0 +1,83 @@
+This is file geobhisp.men--Histogram & Superimposed Geometric pdf Plot
+
+--------------------
+ 1. Histogram & Superimposed Geometric pdf Plot
+ 2. HISTOGRAM Y; PLOT GEOPDF(X,P) FOR X = START INC STOP
+ 3.
+ 4. The geometric distribution can be defined as
+ 5. either the number of trials before the first
+ 6. success or as the number of trial up to and
+ 7. including the first success.  This menu computes
+ 8. the second alternative (first success is counted).
+ 9.
+10. Your data can be either ungrouped (a single
+11. response variable) or grouped (a bin counts
+12. variable and a bin mid-points variable).
+13. 
+14. Response (or Bin Counts) Variable:
+14. @CE 1 0 42 50 ? gui-variable
+15. Optional Bin Mid-Points Variable:
+15. @CE 2 0 42 50 ? gui-variable
+16.
+17. Superimposed Geometric probability density function:
+18.    Shape parameter P:
+18. @CE 3 0 42 50 ?
+19.    Line type:
+19. @CE 4 0 42 50 ? gui-line
+20.    Line color:
+20. @CE 5 0 42 50 ? gui-color
+21.    Bar fill on/off:
+21. @CE 6 0 42 50 ?
+22.
+23. Title:
+23. @CE 7 0 20 50 *
+24. Left Axis Label:
+24. @CE 8 0 20 50 *
+25. Bottom Axis Label:
+25. @CE 9 0 20 50 *
+26.
+27.
+28. Generate the plot?
+--------------------
+AN FE
+SET GEOMETRIC DEFINITION DLMF
+TITLE _7
+Y1LABEL _8
+X1LABEL _9
+@IF 6 0 BAR FILL _6
+.
+LET ICASE = 0
+@IF 2 0 LET ICASE = 1
+IF ICASE = 0
+   LET ZMIN = MINIMUM _1
+   LET ZMAX = MAXIMUM _1
+   LET ZLOW = ZMIN - 0.5
+   LET ZUPP = ZMAX + 0.5
+   CLASS WIDTH 1
+   CLASS LOWER ZLOW
+   CLASS UPPER ZUPP
+   RELATIVE HISTOGRAM _1
+   LIMITS FREEZE
+ELSE
+   LET ZMIN = MINIMUM _2
+   LET ZMAX = MAXIMUM _2
+   LET ZLOW = ZMIN - 0.5
+   LET ZUPP = ZMAX + 0.5
+   RELATIVE HISTOGRAM _1 _2
+   LIMITS FREEZE
+END OF IF
+.
+CHARACTER BLANK
+@IF 4 0 LINES _4
+@IF 5 0 LINE COLOR _5
+LET ZSHAPE = _3
+PRE-ERASE OFF
+PLOT GEOPDF(X,ZSHAPE) FOR X = ZMIN  1 ZMAX
+LIMITS
+PRE-ERASE ON
+CLASS WIDTH
+CLASS LOWER
+CLASS UPPER
+--------------------
+WEB HELP GEOPDF
+--------------------

@@ -1,0 +1,37 @@
+This is file cbeta.men--Compute complex beta functions
+ 
+--------------------
+ 1. Complex Beta Function
+ 2. LET YR = CBETA(XR,XC); LET YC = CBETAI(XR,XC)
+ 3.
+ 4. Variable for real component of first shape parameter:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable for complex component of first shape parameter:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable for real component of second shape parameter:
+ 6. @CE 7 0 33 50 ? gui-variable
+ 7. Variable for complex component of second shape parameter:
+ 7. @CE 8 0 33 50 ? gui-variable
+ 8. Variable to store real component of the transformed result:
+ 8. @CE 3 0 33 50 ?
+ 9. Variable to store complex component of the transformed result:
+ 9. @CE 4 0 33 50 ?
+10.
+11. Operation to perform:
+12. @CE 5 1 10 30 complex beta
+13. @CE 5 2 10 30 complex log beta
+14.
+15. Subset/Except/For Specification:
+16. @CE 6 0 -20 50 *
+17.
+18.
+19. Compute the Transformation?:
+--------------------
+GR FE
+@IF 5 1 LET _3 = CBETA( _1 , _2 , _7 , _8 ) _6
+@IF 5 1 LET _4 = CBETAI( _1 , _2 , _7 , _8 ) _6
+@IF 5 2 LET _3 = CLNBETA( _1 , _2 , _7 , _8 ) _6
+@IF 5 2 LET _4 = CLNBETAI( _1 , _2 , _7 , _8 ) _6
+--------------------
+WEB HELP CBETA
+--------------------

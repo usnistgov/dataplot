@@ -1,0 +1,8 @@
+----- <~datalist\HAMAKER.top> HAMAKER.DAT
+ 
+HAMAKER.DAT
+ 
+View     <xcl: LIST HAMAKER.DAT>
+Load     <x2cl: SKIP 25; READ HAMAKER.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\HAMAKER.DAT>
+ 

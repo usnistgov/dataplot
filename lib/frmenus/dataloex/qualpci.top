@@ -1,0 +1,8 @@
+----- <~dataloex\qualpci.top> Load & Execute Quality/SPC Data: Process Cap. In
+ex
+
+Load & Execute Quality/SPC Data: Process Capability Index
+
+CROARK3.DAT   NIST SEM line width SRM     <xcf: ~dataview\CROARK3.DP>
+GEAR.DAT      Gear diameters (Ishikawa)   <xcf: ~dataview\GEAR.DP>
+

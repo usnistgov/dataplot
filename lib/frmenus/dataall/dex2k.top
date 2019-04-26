@@ -1,0 +1,25 @@
+----- <~dataall\dex2k.top> View/etc. 2**k Full Factorial Design Data
+
+View/Load/Print 2**k Full Factorial Design Data
+
+BOXSPRIN.DAT* 2**3  Defective springs   <~dataall\BOXSPRIN.top>
+BOXPILOT.DAT  2**3  Pilot plant yield   <~dataall\BOXPILOT.top>
+BOXRADAR.DAT  2**3  Radar acquis. time  <~dataall\BOXRADAR.top>
+BOWEN.DAT     2**3  Dental adhesion     <~dataall\BOWEN.top>
+SUPERCON.DAT  2**3  Superconduct. temp. <~dataall\SUPERCON.top>
+NUT.DAT       2**3  Nut strength        <~dataall\NUT.top>
+SPLETT3.DAT   2**3  Eddy Current        <~dataall\SPLETT3.top>
+
+BOXCHEM.DAT   2**4  Chemical yield      <~dataall\BOXCHEM.top>
+BOXSOLAR.DAT  2**4  Solar collector eff <~dataall\BOXSOLAR.top>
+SPLETT4.DAT   2**4  Eddy Current        <~dataall\SPLETT4.top>
+
+BOXREACT.DAT  2**5  Chem. reactor eff   <~dataall\BOXREACT.top>
+KRASNY1.DAT   2**5  Cigarette flammab.  <~dataall\KRASNY1.top>
+WEBER.DAT     2**5  Hospital energy     <~dataall\WEBER.top>
+
+STENBAKK.DAT  2**10 DAC Converter       <~dataall\STENBAKK.top>
+
+BOXCAKE.DAT   2**5 wcp Cake taste       <~dataall\BOXCAKE.top>
+BOXCAKE2.DAT  2**3 wcp Cake taste       <~dataall\BOXCAKE2.top>
+

@@ -1,0 +1,23 @@
+----- <~dataview\dexmix.top> View Mixture Design Data
+
+View Mixture Design Data
+
+2-Factor Unconstrained Mixture
+CORNELL4.DAT Juice composition on lemonade flavor   <xcf: ~dataview\CORNELL4.DP>
+
+3-Factor Unconstrained Mixture
+CORNELL9.DAT Fish components on fish patties texture <xcf: ~dataview\CORNELL9.DP>
+CORNEL35.DAT Pesticide composition on mite survival <xcf: ~dataview\CORNEL35.DP>
+CORNEL62.DAT Reduction of gasoline octane           <xcf: ~dataview\CORNEL62.DP>
+
+3-Factor Constrained Mixture
+CORNEL23.DAT Fruit proportions on punch taste  <xcf: ~dataview\CORNEL23.DP>
+PUNCH.DAT    Fruit proportions on punch taste  <xcf: ~dataview\PUNCH.DP>
+PUNCH2.DAT   Fruit proportions on punch taste  <xcf: ~dataview\PUNCH2.DP>
+CORNEL43.DAT ?                                 <xcf: ~dataview\CORNEL43.DP>
+CORNEL69.DAT Plastizaers on automobile vinyl thickness  <xcf: ~dataview\CORNEL69.DP>
+CORNEL78.DAT ?                                 <xcf: ~dataview\CORNEL78.DP>
+
+6-Factor Constrained Mixture
+SIMON.DAT    Cement data                       <xcf: ~dataview\SIMON.DP>
+

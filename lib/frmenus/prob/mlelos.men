@@ -1,0 +1,20 @@
+This is file mlelos.men--Lost Games MLE Estimates
+ 
+--------------------
+ 1. Lost Games Maximum Likelihood Estimates
+ 2. LOST GAMES MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Compute Lost Games MLE's?
+--------------------
+GR FE
+LOST GAMES MAXIMUM LIKELIHOOD _1 _2
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

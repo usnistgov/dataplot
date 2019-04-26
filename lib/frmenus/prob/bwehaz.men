@@ -1,0 +1,54 @@
+This is file bwehaz.men--Compute Bi-Weibull hazard
+ 
+--------------------
+ 1. Compute Bi-Weibull hazard
+ 2. LET A = BWEHAZ(X,U1,SD1,U2,SD2,P)
+ 3.
+ 4. Input values:
+ 5.                         x (x > 0):
+ 5. @CE 1 0 42 50 ?
+ 6.                 scale s1 (s1 > 0):
+ 6. @CE 2 0 42 50 ?
+ 7.               gamma1 (gamma1 > 0):
+ 7. @CE 3 0 42 50 ?
+ 8.                       location u2:
+ 8. @CE 4 0 42 50 ?
+ 9.                 scale s2 (s2 > 0):
+ 9. @CE 5 0 42 50 ?
+10.               gamma2 (gamma2 > 0):
+10. @CE 6 0 42 50 ?
+11.
+12. Output parameters:
+13.         name for the hazard value:
+13. @CE 7 0 42 50 ?
+14.
+15.
+16. Compute the Hazard?
+--------------------
+AN FE
+LET ZS1 = 0
+LET ZGAMMA1 = 1
+LET ZU2 = 0
+LET ZS2 = 1
+LET ZGAMMA2 = 0.5
+@IF 2 0 LET ZS1 = _2
+IF ZS1 <= 0
+   LET ZS1 = 1
+END OF IF
+@IF 3 0 LET ZGAMMA1 = _3
+IF ZGAMMA1 <= 0
+   LET ZGAMMA1 = 1
+END OF IF
+@IF 4 0 LET ZU2 = _4
+@IF 5 0 LET ZS2 = _5
+IF ZS2 <= 0
+   LET ZS2 = 1
+END OF IF
+@IF 6 0 LET ZGAMMA2 = _6
+IF ZGAMMA2 <= 0
+   LET ZGAMMA2 = 0.5
+END OF IF
+@IF 7 0 LET _7 = BWEHAZ( _1 ,ZS1,ZGAMMA1,ZU2,ZS2,ZGAMMA2)
+--------------------
+WEB HELP BWEHAZ
+--------------------

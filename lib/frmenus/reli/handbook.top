@@ -1,0 +1,44 @@
+----- <~reli\handbook.top> NIST/SEMATECH Handbook
+
+NIST/SEMATECH Handbook
+
+The following accesses specific topics in the
+NIST/SEMATECH Engineering Statistics Handbook
+
+Reliability Chapter          <xcl: web handbook reliability>
+   Introduction              <xcl: web handbook reliability introduction>
+   Importance                <xcl: web handbook reliability importance>
+
+Basic Terms               <xcl: web handbook reliability basic terms>
+   Relibability Function        <xcl: web handbook reliability function>
+   Survival Function            <xcl: web handbook survival function>
+   Hazard and Cumulative Hazard Function <xcl: web handbook hazard rate>
+   Bathtub Curve                <xcl: web handbook bathtub function>
+   Repair Rate                  <xcl: web handbook repair rate>
+
+Basic Models                    <xcl: web handbook reliability basic models>
+   Censoring                    <xcl: web handbook censoring>
+   Acceleration Models          <xcl: web handbook acceleration models>
+   Proportional Hazards Model   <xcl: web handbook proportional hazards model>
+   Homogeneous Poisson Process  <xcl: web handbook homogeneous poisson process>
+   Non-Homogeneous Poisson Process <xcl: web handbook non-homogeneous poisson process>
+   Power Law                    <xcl: web handbook power law>
+   Series Model                 <xcl: web handbook series model>
+   Parallel Model               <xcl: web handbook parallel model>
+
+Reliability Plotting      <xcl: web handbook reliability plotting>
+   Graphical Estimation         <xcl: web handbook reliability graphical estimation>
+   Duane Plot                   <xcl: web handbook duane plot>
+   Hazard Plot                  <xcl: web handbook hazard plot>
+   Probability Plot             <xcl: web handbook probability plot>
+
+Reliability Data Analysis <xcl: web handbook reliability data analysis>
+   Trend Test                   <xcl: web handbook trend test>
+   Goodness of Fit              <xcl: web handbook reliability goodness fit>
+   Best Fit Distribution        <xcl: web handbook reliability best fit>
+   Maximum Likelihood Estimation <xcl: web handbook reliability maximum likelihood estimation>
+
+Probability Distributions    <xcl: web handbook probability distributions>
+   Nonrepairable Distributions  <xcl: web handbook nonrepairable lifetime distributions>
+   Gallery of Distributions     <xcl: web handbook probability distributions gallery>
+

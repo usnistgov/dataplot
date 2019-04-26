@@ -1,0 +1,8 @@
+----- <~dataload\NICKEL.DP> Load NICKEL.DAT
+
+. This is file    NICKEL.DP
+
+DELETE Y X
+SKIP 25
+READ NICKEL.DAT Y X
+

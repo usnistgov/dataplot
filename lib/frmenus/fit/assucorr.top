@@ -1,0 +1,64 @@
+----- <~fit\assudisc.top> Assumptions: Corrective Action
+
+Assumptions: Corrective Action
+
+Given the model: y = f(x1,x2, ..., xp) + e
+
+     where y is the dependent variable, 
+     f(x) is some model, and e is an error
+     term.  The f(x) is referred to as the
+     fixed (or determinsitic) component and
+     the e as the random component.
+
+The common assumptions for least squares fitting:
+
+  1. Fixed Model: the deterministic model is
+     fixed and unchanging throughout the data
+     collection process.
+
+     If your model violates this assumption, the
+     appropriate corrective actions are:
+
+     1)
+
+  2. Randomness: the data were drawn randomly
+     about the deterministic component.
+
+     If your model violates this assumption, the
+     appropriate corrective actions are:
+
+     1)
+
+  3. Fixed Variation: the random component has
+     fixed variability irrespective of the
+     deterministic factors.
+
+     If your model violates this assumption, the
+     appropriate corrective actions are:
+
+     1) 
+
+  4. Fixed Distribution: the random component has
+     fixed distribution irrespective of the
+     deterministic factors.
+
+     If your model violates this assumption, the
+     appropriate corrective actions are:
+
+     1) 
+
+  5. No outliers: the data is outlier free--all
+     the data were drawn flawlessly from the same
+     deterministic and random models.
+
+     If your model violates this assumption, the
+     appropriate corrective actions are:
+
+     1) First check to see if the outliers may in
+        fact be errors in the original data.
+
+     2) If the data is in fact valid, you may
+        want to consider the use of robust regression
+        techniques in order to down-weight the 
+        influence of the outlier.
+

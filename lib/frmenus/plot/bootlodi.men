@@ -1,0 +1,87 @@
+This is file bootlodi.men--Generate Bootstrap Plots (Diff of Location)
+ 
+--------------------line 3
+01. Bootstrap Plots (Difference of Location)
+02. BOOTSTRAP DIFFERENCE OF <statistic> PLOT Y1 Y2
+03.
+04. First Response Variables:
+04. @CE 1 0 42 50 ? gui-vari
+05. Second Response Variables:
+05. @CE 2 0 42 50 ? gui-vari
+06. Variable to Save Computed Bootstrap Values:
+06. @CE 3 0 42 50 ?
+07. Optional Group ID Variable:
+07. @CE 4 0 42 50 ? gui-vari
+08.
+09. Location Statistic (Select One):
+10. @CE 5 1 1 27 mean
+10. @CE 5 2 29 57 median
+11. @CE 5 3 1 27 midrange
+11. @CE 5 4 29 57 midmean
+12. @CE 5 5 1 27 biweight location
+12. @CE 5 6 29 57 trimmed mean
+13. @CE 5 7 1 27 Winsorized mean
+13. @CE 5 8 29 57 harmonic mean
+14. @CE 5 9 1 27 geometric mean
+14. @CE 5 10 29 57 Hodges-Lehman
+15.
+16. Percentage of values to Winsorize/Trim above?:
+16. @CE 6 0 42 50 ? 
+17. Percentage of values to Winsorize/Trim below?:
+17. @CE 7 0 42 50 ?
+18.
+19. Character Type for Data
+19. @CE 8 0 42 50 * gui-char
+20. Character Fill for Data
+20. @CE 9 0 42 50 gui-ooff
+21. Line Type for Data-connecting Line
+21. @CE 10 0 42 50 * gui-line
+22.
+23. Title:
+23. @CE 11 0 10 50 *
+24. Left Axis Label:
+24. @CE 12 0 22 50 *
+25. Bottom Axis Label:
+25. @CE 13 0 22 50 *
+26.
+27. Number of bootstrap samples (default = 100):
+27. @CE 14 0 42 50
+28.
+29. Subset/Except/For Specification:
+30. @CE 15 0 1 50 *
+31.
+32. Generate the Bootstrap Plot?:
+--------------------
+TITLE _11
+Y1LABEL _12
+X1LABEL _13
+CHARACTER SAVE
+LINE SAVE
+CHARACTERS _8
+CHARACTER FILL _9
+LINES _10
+@IF 3 0 CHARACTERS _8 ALL
+@IF 3 0 CHARACTER FILL _9 ALL
+@IF 3 0 LINES _10 ALL
+LET P1 = 5
+LET P2 = 5
+LET P1 = _7
+LET P2 = _6
+.
+BOOTSTRAP SAMPLES _14
+@IF 5 1 BOOTSTRAP DIFFERENCE OF MEAN PLOT _1 _2 _4 _15
+@IF 5 2 BOOTSTRAP DIFFERENCE OF MEDIAN PLOT _1 _2 _4 _15
+@IF 5 3 BOOTSTRAP DIFFERENCE OF MIDRANGE PLOT _1 _2 _4 _15
+@IF 5 4 BOOTSTRAP DIFFERENCE OF MIDMEAN PLOT _1 _2 _4 _15
+@IF 5 5 BOOTSTRAP DIFFERENCE OF BIWEIGHT LOCATION PLOT _1 _2 _4 _15
+@IF 5 6 BOOTSTRAP DIFFERENCE OF TRIMMED MEAN PLOT _1 _2 _4 _15
+@IF 5 7 BOOTSTRAP DIFFERENCE OF WINSORIZED MEAN PLOT _1 _2 _4 _15
+@IF 5 8 BOOTSTRAP DIFFERENCE OF HARMONIC MEAN PLOT _1 _2 _4 _15
+@IF 5 9 BOOTSTRAP DIFFERENCE OF GEOMETRIC MEAN PLOT _1 _2 _4 _15
+@IF 5 10 BOOTSTRAP DIFFERENCE OF HODGES LEHMAN PLOT _1 _2 _4 _15
+CHARACTER RESTORE
+LINE RESTORE
+LET _3 = YPLOT
+--------------------
+WEB HELP BOOTSTRAP PLOT
+--------------------

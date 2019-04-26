@@ -1,0 +1,36 @@
+This is file error.men--Compute error and related functions
+ 
+--------------------
+ 1. Error (and Related) Functions
+ 2. LET YNEW = ERF(Y)
+ 3.
+ 4. You can enter a previously created variable or parameter name
+ 5. or simply enter a numeric value.
+ 6.
+ 7. Variable  to operate on:
+ 7. @CE 1 0 33 50 ? gui-variable
+ 8. Operation to perform:
+ 9. @CE 2 1 10 40 error function
+10. @CE 2 2 10 40 complementary error function
+11. @CE 2 3 10 40 Dawson's integral
+12. Variable to store the transformed result:
+12. @CE 3 0 33 50 ?
+13.
+14. Plot?:
+14. @CE 5 1 14 20 no
+14. @CE 5 2 14 20 yes
+15.
+16. Subset/Except/For Specification:
+17. @CE 4 0 -5 50 *
+18.
+19.
+20. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = ERF( _1 ) _4
+@IF 2 2 LET _3 = ERFC( _1 ) _4
+@IF 2 3 LET _3 = DAWSON( _1 ) _4
+@IF 5 2 PLOT _3 _1 _4
+--------------------
+WEB HELP ERF
+--------------------

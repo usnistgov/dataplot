@@ -1,0 +1,15 @@
+----- <~prob\discmle2.top> MLE for Discrete Distribution
+
+MLE for Discrete Distribution (Binned Data)
+
+Perform Maximum Likelihood Estimation for
+Discrete Distributions (Binned Data)
+
+Borel-Tanner                     <xemf: ~prob\mlebta2.men>
+Consul                           <xemf: ~prob\mlecon2.men>
+Geeta                            <xemf: ~prob\mleget2.men>
+Generalized Logarithnic Series   <xemf: ~prob\mlegls2.men>
+Lagrange Poisson                 <xemf: ~prob\mlelpo2.men>
+Lost Games                       <xemf: ~prob\mlelos2.men>
+Zeta                             <xemf: ~prob\mlezet2.men>
+

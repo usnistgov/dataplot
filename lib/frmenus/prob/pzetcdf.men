@@ -1,0 +1,60 @@
+This is file pzetcdf.men--Plot Zeta Series CDF
+ 
+--------------------
+ 1. Plot an Zeta Series CDF Function
+ 2. PLOT ZETCDF(X,1.5) FOR X = 1 1 25
+ 3.
+ 4. You can specify the range of values to plot eityul
+ 5. by providing an input vector containing the explicit
+ 6. input values or by providing the start, increment,
+ 7. and stop values.
+ 8.
+ 9. Input Variable (optional):
+ 9. @CE 1 0 42 50 ? gui-variable
+10.
+11. Start Value (>= 1, defaults to 1):
+11. @CE 2 0 42 50 ?
+12. Increment Value (defaults to 1):
+12. @CE 3 0 42 50 ?
+13. Stop Value (defaults to 10):
+13. @CE 4 0 42 50 ?
+14.
+15. Variable to Store the CDF Values (optional):
+15. @CE 5 0 42 50 ?
+16.
+17. Shape Parameter Alpha (required, alpha > 1):
+17. @CE 6 0 42 50 ?
+18.
+19.
+20. Plot the Zeta Series CDF's?
+--------------------
+AN FE
+LET ZP = 2
+@IF 6 0 LET ZP = _6
+LET ZSTART = 1
+LET ZINC = 1
+LET ZSTOP = 10
+@IF 2 0 LET ZSTART = _2
+@IF 3 0 LET ZINC = _3
+@IF 4 0 LET ZSTOP = _4
+TIC OFFSET UNITS SCREEN
+XTIC OFFSET 3 3
+YTIC OFFSET 3 3
+SPIKE ON
+CHAR BLANK
+LINE BLANK
+LET ZZZZFLAG = 0
+@IF 1 0 LET ZZZZFLAG =1
+IF ZZZZFLAG = 1
+   LET ZJUNK = ZETCDF( _1 ,ZP)
+   PLOT ZJUNK _1
+ELSE
+   PLOT ZETCDF(ZZZZ,ZP) FOR ZZZZ = ZSTART ZINC ZSTOP
+END OF IF
+@IF 5 0 LET _5 = YPLOT
+XTIC OFFSET 0 0
+SPIKE OFF
+LINE SOLID
+--------------------
+WEB HELP ZETCDF
+--------------------

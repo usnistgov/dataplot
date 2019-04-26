@@ -1,0 +1,8 @@
+----- <~dataall\CASTILL3.top> CASTILL3.DAT
+
+CASTILL3.DAT
+
+View     <xcl: LIST CASTILL3.DAT>
+Load     <xcf: ~dataload/CASTILL3.DP>
+Print    <xccl: printfile C:\DATAPLOT\CASTILL3.DAT>
+

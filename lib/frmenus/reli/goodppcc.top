@@ -1,0 +1,29 @@
+-----<~reli\goodppcc.top> Goodness of Fit: PPCC Method
+
+Goodness-of-Fit: PPCC Method
+
+Goodness-of-Fit: PPCC Method
+
+The PPCC plot/probability plot method generates a
+the PPCC measure for goodness of fit.  However, it
+does not provide critical values for determining if
+the distributional fit is accurate.
+
+The PPCC GOODNES OF FIT command does provide these
+critical values.  It is currently supported for 
+location/scale distributions and distributions with
+one shape parameter.
+
+Dataplot dynamically generates the critical values
+using simulation.  The
+
+   SET GOODNESS OF FIT FULLY SPECIFIED ON/OFF
+
+should typically be set to OFF for this method
+(see the "Set Options" menu for details).
+
+The PPCC method depends on many computations of the
+percent point function.  So if the percent point function
+is expensive to compute, the PPCC goodness of fit method
+may not be practical (particularly within the GUI).
+

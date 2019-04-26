@@ -1,0 +1,51 @@
+This is file matr_2ho.men--2-Sample Hotelling T Square Test
+ 
+--------------------
+ 1. Hotelling 2-Sample T Square Test
+ 2. LET A = 2-SAMPLE HOTELLING T-SQUARE X Y
+ 3.
+ 4. The 2-sample Hotelling t square test is:
+ 5.    H0: U1=U2
+ 6. where U1 and U2 are the vector of population means.
+ 7. That is, it is testing whether the population means
+ 8. from 2 different samples are equal.
+ 9. 
+10. Name of First Data Matrix:
+10. @CE 1 0 42 50 ? gui-matr
+11. Name of Second Data Matrix:
+11. @CE 2 0 42 50 ? gui-vari
+12. Name of scalar to store the results:
+12. @CE 3 0 42 50 ?
+13.
+14. Subset/Except/For Specification:
+15. @CE 4 0 1 50 *
+16.
+17.
+18. Perform the Hotelling T Square Test?:
+--------------------
+GR FE
+LET _3 = HOTELLING 2 SAMPLE T SQUARE  _1 _2  _4
+LET ZZZZU1 = MATRIX COLUMN MEANS _1 _4
+LET ZZZZU2 = MATRIX COLUMN MEANS _2 _4
+LET ZZZZN1 = MATRIX NUMBER OF ROWS _1 _4
+LET ZZZZN2 = MATRIX NUMBER OF ROWS _2 _4
+CAPTURE ZZZZJUNK.DAT
+PRINT "HO: U1 = U2"
+PRINT "HA: U1 <> U2"
+PRINT " "
+PRINT "SAMPLE SIZE FOR MATRIX 1       = ^ZZZZN1"
+PRINT "SAMPLE SIZE FOR MATRIX 2       = ^ZZZZN2"
+PRINT " "
+PRINT "SAMPLE MEANS:"
+PRINT ZZZZU1 ZZZZU2
+PRINT " "
+PRINT "HOTELLING T-SQUARE STATISTIC   = ^ZZZZA"
+PRINT "90%   CRITICAL VALUE           = ^B90"
+PRINT "95%   CRITICAL VALUE           = ^B90"
+PRINT "99%   CRITICAL VALUE           = ^B90"
+PRINT "99.5% CRITICAL VALUE           = ^B90"
+END OF CAPTURE
+LIST ZZZZJUNK.DAT
+--------------------
+WEB HELP 2 SAMPLE T SQUARE
+--------------------

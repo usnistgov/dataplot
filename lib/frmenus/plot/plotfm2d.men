@@ -1,0 +1,46 @@
+This is file plotfm2d.tex--Plot Multiple Functions
+ 
+--------------------
+ 1. Plot Multiple Functions
+ 2. PLOT F1 FOR X = X1MIN X1INC X1MAX AND etc.
+ 3.
+ 4.     Function                 Char Type   Line Type
+ 5. @CE 1 0 1 38 ?
+ 5. @CE 2 0 40 43 ?
+ 5. @CE 3 0 45 50 ?
+ 6. @CE 4 0 1 38 ?
+ 6. @CE 5 0 40 43 ?
+ 6. @CE 6 0 45 50 ?
+ 7. @CE 7 0 1 38 ?
+ 7. @CE 8 0 40 43 ?
+ 7. @CE 9 0 45 50 ?
+ 8. @CE 10 0 1 38 ?
+ 8. @CE 11 0 40 43 ?
+ 8. @CE 12 0 45 50 ?
+ 9. @CE 13 0 1 38 ?
+ 9. @CE 14 0 40 43 ?
+ 9. @CE 15 0 45 50 ?
+10.
+11. Variate (X)
+11. @CE 16 0 33 50
+12. Start Point:
+12. @CE 17 0 33 50
+13. Increment:
+13. @CE 18 0 33 50
+14. Stop Point:
+14. @CE 19 0 33 50
+15.
+16.
+Plot the Functions?
+--------------------
+GR FE
+CHARACTERS _2 _5 _8 _11 _14
+LINES _3 _6 _9 _12 _15
+PLOT _1 FOR _13 = _14 _15 _16 AND
+PLOT _4 FOR _13 = _14 _15 _16 AND
+PLOT _7 FOR _13 = _14 _15 _16 AND
+PLOT _10 FOR _13 = _14 _15 _16 AND
+PLOT _13 FOR _13 = _14 _15 _16
+--------------------
+WEB HELP PLOT
+--------------------

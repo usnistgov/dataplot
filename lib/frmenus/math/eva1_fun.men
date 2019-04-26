@@ -1,0 +1,39 @@
+This is file eva1_fun.men--Evaluate a 1-D user-defined function
+ 
+--------------------
+ 1. Evaluate a 1-D User Defined Function
+ 2. LET FY = F
+ 3.
+ 4. Name of the function (or enter a functional expression):
+ 5. @CE 1 0 -10 50 ? gui-function
+ 6. Variable for which the function is defined:
+ 6. @CE 2 0 33 50 ? gui-variable
+ 7. Variable to store the computed values:
+ 7. @CE 7 0 33 50 ? gui-none
+ 8.
+ 9. Method for defining points at which to evaluate the function:
+10. @CE 3 1 10 50 variable specified above already defined
+11.
+12. @CE 3 2 10 50 define an equally spaced sequence
+13.              Start value:
+13. @CE 4 0 33 50 * 
+14.              Stop value:
+14. @CE 5 0 33 50 * 
+15.              Increment:
+15. @CE 6 0 33 50 * 
+16.
+17. @CE 3 3 10 50 list of points (enter in box below):
+18. @CE 5 0 -10 50 * 
+19.
+20.
+21. Evaluate the Function?:
+--------------------
+GR FE
+@IF 3 1 LET _7 = _1
+@IF 3 2 LET _7 = _1  FOR _2 = _4 _5 _6
+@IF 3 3 DELETE _2 _5
+@IF 3 3 LET _2 = DATA _5
+@IF 3 3 LET _7 = _1
+--------------------
+WEB HELP LET FUNCTION
+--------------------

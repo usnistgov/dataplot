@@ -1,0 +1,28 @@
+----- <~prob\tukdesc.top> Tukey Description
+
+*Tukey Description
+
+pdf: f(x;lambda)    : no closed form
+pdf: f(x;u,s,lambda): no closed form
+
+Moments   : E(X)  =
+            SD(X) =
+
+Type      : Continuous, symmetric, bell-shaped, family of
+            distributions--short tailed through long-tailed
+            lambda      tail-length     distribution
+            ............................................
+              1.5        very short       U-shaped
+              1.0        short            uniform
+              0.14       moderate         approximately normal
+              0          moderate         logistic
+             -1          long             approximately Cauchy
+Domain    : -1/lambda to +1/lambda for lambda > 0
+            -infinity to +infinity for lambda <= 0
+Synonym   : Lambda
+Genesis   : ...
+Definition: If
+            then
+
+Reference : ...
+

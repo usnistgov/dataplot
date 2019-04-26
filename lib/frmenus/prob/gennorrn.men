@@ -1,0 +1,29 @@
+This is file gennorrn.men--Generate Normal Random Numbers
+
+--------------------
+ 1. Generate Normal Random Numbers
+ 2. LET Y = NORMAL RANDOM NUMBERS FOR I = START INC STOP
+ 3.
+ 4. Mean mu
+ 4. @CE 1 0 41 50 ?
+ 5. Standard deviation sigma
+ 5. @CE 2 0 41 50 ?
+ 6.
+ 7. Number of Random Numbers:
+ 7. @CE 3 0 41 50 ?
+ 8. Name of Output Variable :
+ 8. @CE 4 0 41 50 ?
+ 9.
+10.
+11. Generate the Random Numbers?
+--------------------
+AN FE
+LET ZLOC = 0
+LET ZSD = 1
+@IF 1 0 LET ZLOC = _1
+@IF 2 0 LET ZSD = _2
+LET _4 = NORMAL RANDOM NUMBERS FOR I = 1 1 _3
+LET _4 = ZLOC + ZSD* _4
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

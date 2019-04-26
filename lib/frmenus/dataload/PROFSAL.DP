@@ -1,0 +1,8 @@
+----- <~dataload\PROFSAL.DP> Load PROFSAL.DAT
+
+. This is file    PROFSAL.DP
+
+DELETE Y X
+SKIP 25
+READ PROFSAL.DAT Y X
+

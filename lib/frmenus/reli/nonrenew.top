@@ -1,0 +1,33 @@
+----- <~reli\nonrenew.top>
+
+Reliability: Non-Renewal Proceses
+
+Reliability: Non-Renewal Proceses
+
+NIST/SEMATECH Handbook     <xcl: web handbook models for repairable systems>
+Discussion                 <~reli\discnonr.top>
+
+Compute Interrrival Times  <xemf: ~reli\intarr.men>
+
+Power Law Models
+    NIST/SEMATECH Handbook   
+        Overview           <xcl: web handbook power law>
+        Analysis           <xcl: web handbook analyze power law model>
+    LN(Cumulative Number of Repairs) vs LN(Time)    <xemf: ~reli\powlawls.men>
+        4-Plot of Residuals                         <xcl: 4-plot zzzzres>
+    Power Law Maximum Likelihood (Single System)    <xemf: ~reli\powerest.men>
+        4-Plot of Residuals                         <xcl: 4-plot zzzzres>
+    Power Law Maximum Likelihood (Multiple Systems) <xemf: ~reli\powlawm2.men>
+
+Exponential Law Models
+    NIST/SEMATECH Handbook                <xcl: web handbook exponential law>
+    Discussion                                  <~reli\discexpl.top>
+    LN(Cumulative Number of Repairs) vs Time    <xemf: ~reli\explawls.men>
+        4-Plot of Residuals                     <xcl: 4-plot zzzzres>
+    Exponential Law Maximum Likelihood          <xemf: ~reli\explawml.men>
+        4-Plot of Residuals                     <xcl: 4-plot zzzzres>
+
+Built-in Data Sets
+    View                   <~dataview\relinonr.top>
+    Load                   <~dataload\relinonr.top>
+

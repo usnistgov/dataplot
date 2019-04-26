@@ -1,0 +1,80 @@
+This is file maxppcc.men-- Maxwell PPCC Plot
+
+--------------------
+ 1. Maxwell KS Plot
+ 2. MAXWELL KS PLOT Y
+ 3.
+ 4. Your data can be either ungrouped (a single
+ 5. response variable) or grouped (a bin counts
+ 6. variable and a bin mid-points variable).
+ 7. 
+ 8. The shape parameter for the Maxwell distribution
+ 9. is essentially a scale parameter.  For this reason,
+10. the PPCC plot is not effective in this case.  We
+11. set the scale parameter to 1 and fix the location
+12. parameter to either 0 or the data minimum and
+13. then use the KS plot to estimate the shape parameter.
+14.
+15. Response (or Bin Counts) Variable:
+15. @CE 1 0 42 50 ? gui-variable
+16. Optional Bin Mid-Points Variable:
+16. @CE 2 0 42 50 ? gui-variable
+17.
+18. Line Types:
+18. @CE 3 0 42 50 * gui-line
+19. Character Types:
+19. @CE 4 0 42 50 * gui-char
+20. Character Fill:
+20. @CE 5 0 42 50 * gui-ooff
+21.
+22. Title:
+22. @CE 6 0 22 50 *
+23. Left Axis Label:
+23. @CE 7 0 22 50 *
+24. Bottom Axis Label:
+24. @CE 8 0 22 50 *
+25.
+26. Minimum Value for sigma (omit for default):
+26. @CE 9 0 42 50 *
+27. Maximum Value for sigma (omit for default):
+27. @CE 10 0 42 50 *
+28.
+29. Select value of location parameter:
+30. @CE 11 1 1 30 Zero
+31. @CE 11 2 1 30 Data minimum
+32.
+33. Subset/Except/For Specification:
+34. @CE 12 0 1 50 *
+35.
+36.
+37. Generate the Maxwell PPCC Plot?
+--------------------
+GR FE
+TITLE CASE ASIS
+LABEL CASE ASIS
+CASE ASIS
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+DELETE SIGMA1 SIGMA2
+LET SIGMA1 = _9
+LET SIGMA2 = _10
+LET KSSCALE = 1
+LET KSLOC = 0
+LET ZZZZMIN = MINIMUM _1 _12
+@IF 2 0 LET ZZZZMIN = MINIMUM _2 _12
+@IF 11 2 LET KSLOC = ZZZZMIN
+MAXWELL KS PLOT _1 _2 _12
+MOVE 50 5
+JUSTIFICATION CENTER
+TEXT Optimal Value of sigma = ^shape
+MOVE 50 2
+TEXT Minimum KS = ^minks
+TITLE
+LABEL
+--------------------
+WEB HELP PPCC PLOT
+--------------------

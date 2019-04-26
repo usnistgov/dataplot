@@ -1,0 +1,10 @@
+----- <~dataload\TOB159.DP> Load TOB159.DAT
+
+. This is file    TOB159.DP
+
+DELETE Y X
+SKIP 25
+READ TOB159.DAT Y X
+LET Y = 1000 FOR I = 18 1 600
+LET X = 0    FOR I = 18 1 600
+

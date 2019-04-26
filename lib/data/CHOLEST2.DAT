@@ -1,0 +1,113 @@
+This is Dataplot data file    CHOLEST2.DAT
+Cholesterol Data from John Mandel, NIST Publication 700-2
+Lisa Okaley: Estabilishing & Maintaining Statistical Control
+American Chemical Society Meeting, Wash. D.C. 8/24/94
+Number of Observations = 88
+Response Variable = Cholesterol Concentration
+Number of variables on a line image = 3
+Order of variables on a line image--
+   1. Response = Cholesterol Concentration
+   2. Factor 1 = Day
+   3. Factor 2 = Replication Within Day
+Statistical Areas--1-factor ANOVA & Interlab
+To read this file into Dataplot--
+   SKIP 25
+   READ CHOLEST2.DAT Y DAY REP
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Concentration   Day   Replication
+----------------------------------
+     390         1        1
+     392         2        1
+     392         3        1
+     388         4        1
+     378         5        1
+     392         6        1
+     392         7        1
+     398         8        1
+     404         9        1
+     400        10        1
+     402        11        1
+     392        12        1
+     398        13        1
+     380        14        1
+     398        15        1
+     388        16        1
+     402        17        1
+     386        18        1
+     386        19        1
+     390        20        1
+     396        21        1
+     396        22        1
+     384        23        1
+     388        24        1
+     386        25        1
+     398        26        1
+     376        27        1
+     390        28        1
+     394        29        1
+     382        30        1
+     380        31        1
+     384        32        1
+     402        33        1
+     390        34        1
+     402        35        1
+     398        36        1
+     390        37        1
+     426        38        1
+     414        39        1
+     402        40        1
+     402        41        1
+     402        42        1
+     400        43        1
+     404        44        1
+     392         1        2
+     388         2        2
+     388         3        2
+     388         4        2
+     396         5        2
+     392         6        2
+     390         7        2
+     402         8        2
+     406         9        2
+     400        10        2
+     402        11        2
+     406        12        2
+     396        13        2
+     400        14        2
+     402        15        2
+     386        16        2
+     392        17        2
+     390        18        2
+     382        19        2
+     386        20        2
+     390        21        2
+     394        22        2
+     388        23        2
+     382        24        2
+     384        25        2
+     392        26        2
+     376        27        2
+     386        28        2
+     384        29        2
+     378        30        2
+     382        31        2
+     388        32        2
+     392        33        2
+     398        34        2
+     402        35        2
+     394        36        2
+     394        37        2
+     428        38        2
+     428        39        2
+     398        40        2
+     400        41        2
+     404        42        2
+     402        43        2
+     404        44        2

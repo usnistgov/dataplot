@@ -1,0 +1,63 @@
+----- <~reli\relicfit.top> Complete Fit Analysis
+
+Complete Fit Analysis
+
+Perform a Complete (graph, fit, assess goodness of fit)
+Fit Analysis for the Specified Distribution
+
+
+Uncensored Data (Ungrouped or Grouped)
+   Normal                               <xemf: ~reli\fitnor.men>
+   Lognormal                            <xemf: ~reli\fitlgn.men>
+   Power Normal                         <xemf: ~reli\fitpnr.men>
+   Power Lognormal                      <xemf: ~reli\fitpln.men>
+
+   Exponential                          <xemf: ~reli\fitexp.men>
+   Geometric Extreme Exponential        <xemf: ~reli\fitgee.men>
+
+   Weibull (Minimum)                    <xemf: ~reli\fitwei1.men>
+   Weibull (Maximum)                    <xemf: ~reli\fitwei2.men>
+   Inverted Weibull                     <xemf: ~reli\fitiwe.men>
+   Exponentiated Weibull                <xemf: ~reli\fitewe.men>
+   Bi-Weibull                           <xemf: ~reli\fitbwe.men>
+
+   Wald                                 <xemf: ~reli\fitwal.men>
+   Inverse Gaussian                     <xemf: ~reli\fitig.men>
+   Reciprocal Inverse Gaussian          <xemf: ~reli\fitrig.men>
+   Fatigue Life                               <xemf: ~reli\fitfl.men>
+
+   Gamma                                <xemf: ~reli\fitgam.men>
+   Log Gamma                            <xemf: ~reli\fitlga.men>
+   Inverted Gamma                       <xemf: ~reli\fitiga.men>
+
+   Alpha                                <xemf: ~reli\fitalp.men>
+   Exponential Power                    <xemf: ~reli\fitpex.men>
+
+
+Censored Data (Ungrouped)
+   Normal                               <xemf: ~reli\fitnorce.men>
+   Lognormal                            <xemf: ~reli\fitlgnce.men>
+   Power Normal                         <xemf: ~reli\fitpnrce.men>
+   Power Lognormal                      <xemf: ~reli\fitplnce.men>
+
+   Exponential                          <xemf: ~reli\fitexpce.men>
+   Geometric Extreme Exponential        <xemf: ~reli\fitgeece.men>
+
+   Weibull (Minimum)                    <xemf: ~reli\fitwei1ce.men>
+   Weibull (Maximum)                    <xemf: ~reli\fitwei2ce.men>
+   Inverted Weibull                     <xemf: ~reli\fitiwece.men>
+   Exponentiated Weibull                <xemf: ~reli\fitewece.men>
+   Bi-Weibull                           <xemf: ~reli\fitbwece.men>
+
+   Wald                                 <xemf: ~reli\fitwalce.men>
+   Inverse Gaussian                     <xemf: ~reli\fitigce.men>
+   Reciprocal Inverse Gaussian          <xemf: ~reli\fitrigce.men>
+   Fatigue Life                         <xemf: ~reli\fitflce.men>
+
+   Gamma                                <xemf: ~reli\fitgamce.men>
+   Log Gamma                            <xemf: ~reli\fitlgace.men>
+   Inverted Gamma                       <xemf: ~reli\fitigace.men>
+
+   Alpha                                <xemf: ~reli\fitalpce.men>
+   Exponential Power                    <xemf: ~reli\fitpexce.men>
+

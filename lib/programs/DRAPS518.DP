@@ -1,0 +1,18 @@
+.  FILE: DRAPS518.DP
+.  Performs an orthogonal distance analysis of Draper/Smith
+.  data set (p. 518 of 2nd. ed.).  From ODRPACK ACM article.
+.
+skip 25
+read draps518.dat y x
+.
+let b1 = 4
+let b2 = 5
+let b3 = 200
+let function f = B1*10**(b2*x/(b3+x))
+.
+let yerr = data 1
+.
+orthogonal distance error yerr
+.
+orthogonal distance fit y = f
+.

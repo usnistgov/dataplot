@@ -1,0 +1,94 @@
+This is file crosplqc.men--Generate Cross Tab Statistic Plots (Quality Control)
+ 
+--------------------line 3
+01. Cross Tabulated Statistic Plots (QC)
+02. CROSS TABULATE <statistic> PLOT Y X1 X2
+03.
+04. Vertical Axis Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Group One ID Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06. Group Two ID Variable:
+06. @CE 3 0 37 54 ? gui-vari
+07.
+08. Quality Control Statistic (Select one):
+09. Capability Analysis
+10. @CE 4 1 1 27 Cp
+10. @CE 4 2 29 57 Cpk
+11. @CE 4 3 1 27 Cnpk
+11. @CE 4 4 29 57 Cpm
+12. @CE 4 5 1 27 Cc
+12. @CE 4 6 29 57 Expected Loss
+13. @CE 4 7 1 27 Percent Defective
+14.
+15. Lower Specification Limit:
+15. @CE 5 0 42 50 ? 
+16. Upper Specification Limit:
+16. @CE 6 0 42 50 ?
+17. Target Value:
+17. @CE 7 0 42 50 ?
+18. Cost Value:
+18. @CE 8 0 42 50 ?
+19.
+20. Taguchi
+21. @CE 4 8 1 27 Taguchi sn-
+21. @CE 4 9 29 57 Taguchi sn+
+22. @CE 4 10 1 27 Taguchi sn0
+22. @CE 4 11 29 57 Taguchi sn00
+23.
+24. Character Type for Data
+24. @CE 9 0 42 50 * gui-char
+25. Character Fill for Data
+25. @CE 10 0 42 50 gui-ooff
+26. Line Type for Group 1 Global Stat Line?
+26. @CE 11 0 42 50 * gui-line
+27. Line Type for Global Stat Line?
+27. @CE 12 0 42 50 * gui-line
+28.
+29. Title:
+29. @CE 13 0 10 50 *
+30. Left Axis Label:
+30. @CE 14 0 22 50 *
+31. Bottom Axis Label:
+31. @CE 15 0 22 50 *
+32.
+33. Subset/Except/For Specification:
+34. @CE 16 0 1 50 *
+35.
+36. Generate the Statistic Plot?:
+--------------------
+TITLE _13
+Y1LABEL _14
+X1LABEL _15
+CHARACTER SAVE
+LINE SAVE
+CHARACTER X BLANK BLANK
+LINE BLANK SOLID SOLID
+CHARACTERS _9
+CHARACTER FILL _10
+LINES _11 ALL
+LINES BLANK _12
+SPIKE OFF OFF OFF
+BAR OFF OFF OFF
+.
+LET LSL = _5
+LET USL = _6
+LET TARGET = _7
+LET USLCOST = _8
+.
+@IF 4 1 CROSS TABULATE CP PLOT _1 _2 _3 _16
+@IF 4 2 CROSS TABULATE CPK PLOT _1 _2 _3 _16
+@IF 4 3 CROSS TABULATE CNPK PLOT _1 _2 _3 _16
+@IF 4 4 CROSS TABULATE CPM PLOT _1 _2 _3 _16
+@IF 4 5 CROSS TABULATE CC PLOT _1 _2 _3 _16
+@IF 4 6 CROSS TABULATE EXPECTED LOSS PLOT _1 _2 _3 _16
+@IF 4 7 CROSS TABULATE PERCENT DEFECTIVE PLOT _1 _2 _3 _16
+@IF 4 8 CROSS TABULATE TAGUCHI SN- PLOT _1 _2 _3 _16
+@IF 4 9 CROSS TABULATE TAGUCHI SN+ PLOT _1 _2 _3 _16
+@IF 4 10 CROSS TABULATE TAGUCHI SN0 PLOT _1 _2 _3 _16
+@IF 4 11 CROSS TABULATE TAGUCHI SN00 PLOT _1 _2 _3 _16
+CHARACTER RESTORE
+LINE RESTORE
+--------------------
+WEB HELP CROSS TABULATE PLOT
+--------------------

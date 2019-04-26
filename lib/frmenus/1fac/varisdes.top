@@ -1,0 +1,11 @@
+----- <~1fac\varisdes.top> Standard Deviation(Variation Estimate)
+
+Standard Deviation(Variation Estimate)
+
+To estimate SD (grand standard deviation):
+   Compute classical SD (sigma)        <xemf: ~math\sd.men>
+   Compute classical s/sqrt(n)         <xemf: ~math\sd_mean.men>
+   Compute from bootstrap plot of standard deviations <xemf: ~1fac\bootsdpl.men>
+
+Checking assumptions                   <xemf: ~univ\4plot.men>
+

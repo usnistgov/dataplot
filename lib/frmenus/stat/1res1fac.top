@@ -1,0 +1,13 @@
+----- <~stat\1res1fac.top> 1 Response, 1 Factor
+
+1 Response, 1 Factor:
+
+F Test for Homogeneous Locations         <xemf: ~stat\ftestloc.men>
+Bartlett Test for Homogeneous Variances  <xemf: ~stat\bartlett.men>
+Levene Test for Homogeneous Variances    <xemf: ~stat\levene.men>
+Squared Ranks Test for Equal Variances   <xemf: ~stat\squarank.men>
+Klotz Ranks Test for Equal Variances     <xemf: ~stat\klotz.men>
+Anderson Darling K Sample Test           <xemf: ~stat\andrdark.men>
+Tabulate Statistics for Grouped Data     <xemf: ~stat\tabulate.men>
+Kruskal-Wallis 1-Factor ANOVA            <xemf: ~stat\kruskal.men>
+

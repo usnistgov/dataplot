@@ -1,0 +1,63 @@
+This is Dataplot data file   VANGEL31.DAT
+Tensile Strength of Graphite/Epoxy 4-ply Unidirectional Tape
+Source--Vangel, Mark, G. Statistical Methods for Composite
+        Material Basis Properties.
+        Presentation at Composite Materials Handbook Meeting,
+        September 12, 1996, Chicago, Ill, page 29.
+      --Shyprykevich, ASTM STP 1003, 1989.  ?
+Number of observations            = 38
+Number of varibles per line image = 1
+Order of variables on a line image--
+   1. Response variable = tensile strength (ksi)
+Statistical Classification--Univariate, Tolerance Limits
+Engineering question--What is the B-basis (= lower 95% confidence
+                      for 10% point) value?
+To read this file into Dataplot (and do RECIPE tolerance limits)--
+   SKIP 25
+   READ VANGEL31.DAT Y
+   RECIPE CONTENT 90
+   RECIPE CONFIDENCE 95
+   RECIPE Y
+
+
+Strength
+   Y
+--------
+  147
+  154
+  159
+  159
+  166
+  169
+  172
+  172
+  173
+  173
+  174
+  174
+  174
+  175
+  178
+  180
+  181
+  181
+  184
+  187
+  188
+  188
+  189
+  190
+  190
+  192
+  197
+  200
+  200
+  200 	
+  202
+  206
+  208
+  209
+  209
+  211
+  218
+  231

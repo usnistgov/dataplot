@@ -1,0 +1,177 @@
+. This is dataplot macro file    annotate.dp
+. Purpose: this macro writes out 4 items onto a graphics page:
+.             1. the header (a title line across the top)
+.             and as many as 4 subheaders underneath
+.             2. the specified date (on page 1 only) (in the upper left)
+.             3. a page count (in the upper left) on all pages
+.             4. a trailer(s)--usually the calling dataplot program name--
+.                           (in the lower left)
+. Input (must pre-exist):
+.    1. header   (string)
+.    2. header2  (string)
+.    3. header3  (string)
+.
+.    4. headhw1  (string)    = height & width of header
+.    5. headhw2  (string)    = height & width of header
+.    6. headhw3  (string)    = height & width of header
+.
+.    7. yheader  (parameter) = vertical location (0 to 100) for header (a parameter) (default = 97)
+.    8. yheader2 (parameter) = vertical location (0 to 100) for header2 (a parameter) (default = 94.5)
+.    9. yheader3 (parameter) = vertical location (0 to 100) for header2 (a parameter) (default = 92)
+.
+.   10. pagecoun (parameter)
+.   11. trailer  (string)
+.   12. colorann (string)   = color for all of the annotation (optional) (default = existing color--danger)
+.
+.   13. stcorn  (or stcorn1) (strings) = first upper left string (optional)
+.   14. stcorn2 (string) = second upper left string (optional)
+.   15. stcorn3 (string) = third upper left string (optional)
+.   16. stcorn4 (string) = fourth upper left string (optional)
+.       etc.
+.   17. corncol (string) = color for upper left string (optional: default = blue)
+.   18. cornh   (paramter) = height of upper left characters (optional, default = 4)
+.   19. cornw   (paramter) = width  of upper left characters (optional, default = 2)
+.   20. cornxp  (paramter) = horiz position (0 to 100) for upper left strings (optional, default = 5)
+.   21. cornyp  (paramter) = vert position (0 to 100) for first upper left strings (optional, default = 97)
+.
+. Note: upperleft corner auto-option added    5/18/18
+.       hence if call annotate.dp, it will (if stcorn(1) exists) automatically additionally call upperleft.dp
+.
+. Note   : whatever items do not pre-exist will be ignored (= not printed)
+. Example:
+.          . This is dataplot program     alaska.dp
+.          device 1 x11
+.          device 2 ps
+.          let string header = Alaska Pipeline Analysis
+.          let yheader = 98
+.          let pagecoun = 0
+.          let string trailer = alaska.dp
+.          skip 25
+.          read berger1.dat y x
+.          characters x
+.          lines blank
+.          plot y x
+.          call annotate.dp
+.
+. Date--July 2002, April 2011, October 2017
+.
+. Macros needed: 0
+.
+. -----start point-----
+.
+. print "--From annotate.dp: at start. In pause mode . . .";. pause
+.
+. -----Step 1: Print out the headers-----
+.
+. print "header = ^header"
+. print "header2 = ^header2"
+. print "header3 = ^header3"
+. pause
+. print "--From annotate.dp: at step 1. In pause mode . . .";. pause
+.
+if colorann exists; color ^colorann; end if   ;. inserted 10/18/17
+if colorall exists; color ^colorall; end if   ;. inserted 10/18/17
+.
+if yheader exists; let yheader1 = yheader; end if
+if yheader1 not exist; let yheader1 = 97; end if
+if yheader2 not exist; let yheader2 = 94.5; end if
+if yheader3 not exist; let yheader3 = 92; end if
+if yheader4 not exist; let yheader4 = 89.5; end if
+if yheader5 not exist; let yheader5 = 87; end if
+.
+hw 3 1.5
+if headhw exists; hw ^headhw; end if    ;. not working
+if headhw1 exists; hw ^headhw1; end if
+if head1hw exists; hw ^head1hw; end if
+if hwhead exists; hw ^hwhead; end if
+if headhw exists; hw ^headhw; end if
+if hwhead1 exists; hw ^hwhead1; end if
+just center; move 50 yheader1; text ^header
+.
+hw 3 1.5
+if head2hw exists; hw ^head2hw; end if
+if headhw2 exists; hw ^headhw2; end if
+if hwhead2 exists; hw ^hwhead2; end if
+just center; move 50 yheader2; text ^header2
+.
+. hw 2 1
+if head3hw exists; hw ^head3hw; end if
+if headhw3 exists; hw ^headhw3; end if
+if hwhead3 exists; hw ^hwhead3; end if
+just center; move 50 yheader3; text ^header3
+.
+. hw 2 1
+if head4hw exists; hw ^head4hw; end if
+if headhw4 exists; hw ^headhw4; end if
+if hwhead4 exists; hw ^hwhead4; end if
+just center; move 50 yheader4; text ^header4
+.
+. hw 2 1
+if head5hw exists; hw ^head5hw; end if
+if headhw5 exists; hw ^headhw5; end if
+if hwhead5 exists; hw ^hwhead5; end if
+just center; move 50 yheader5; text ^header5
+.
+. -----Step 2: print out the current date and page number-----
+.
+. print "--From annotate.dp: at step 2. In pause mode . . .";. pause
+.
+.
+if pagecoun exists
+   if pagecoun > -0.5
+      let pagecoun = pagecoun+1
+      hw 2 1; just right; move 98 yheader1; text ^pagecoun
+      if pagecoun = 1; move 98 99; text ^currdate; end if
+   end if
+end if
+.
+. -----Step 3: print out the trailer(s)-----
+.
+. print "--From annotate.dp: at step 3. In pause mode . . .";. pause
+.
+. hw 1.5 .75; just right; move 98 1; . text ^trailer
+hw 1.6 0.8; just right; move 98 2.5; text ^trailer
+.
+if trailerm exists
+   hw 1.6 0.8; just right; move 98 1; text ^trailerm
+end if
+.
+if trailer2 exists
+   . let xtrail2z = 85
+   . let xtrail2z = 16
+   . let xtrail2z = 15.5
+   . let xtrail2z = 15
+   . let ytrail2z = 94.5
+   . let ytrail2z = 91
+     .
+     let xtrail2z = 98
+     . let ytrail2z = 5   commented out 6/21/17
+     let ytrail2z = 1
+     .
+   if xtrail2 exists; let xtrail2z = xtrail2; end if
+   if ytrail2 exists; let ytrail2z = ytrail2; end if
+   let string xjzz = right
+   if xtrail2j exists; let string xjzz = ^xtrail2j; end if
+   . move xtrail2z ytrail2z; . just ^xjzz; . hw 1.8 0.9; . text ^trailer2
+   move xtrail2z ytrail2z; just ^xjzz; hw 1.6 0.8; text ^trailer2
+   . move xtrail2z ytrail2z; . just right; . hw 1.8 0.9; . text ^trailer2
+end if
+.
+if trailer3 exists
+   . move 90 94.5; . just right; . hw 1.8 0.9; . text ^trailer3
+   . move 98 0.25; . just right; . hw 1.8 0.9; . text ^trailer3
+   move 98 0.25; just right; hw 1.6 0.8; text ^trailer3
+end if
+.
+if trailer4 exists
+    move 85 94.5; just center; hw 1.8 0.9; text ^trailer4
+end if
+.
+. hw 2 1; . just center
+hw 2 1; just left
+.
+. -----step 4: Print out upper left text (if called for)-----
+.
+. if stcorn exists or stcorn1 exists    ;. inserted ~ 5/18/18    deleted 6/18/18
+.    call upperleft.dp
+. end if

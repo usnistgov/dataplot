@@ -1,0 +1,10 @@
+----- <~dataloex\ASCO2.DP> Load & Execute ASCO2.DAT
+
+. This is file    ASCO2.DP
+
+DELETE Y MONTH MMEAN
+SKIP 25
+READ ASCO2.DAT Y MONTH MMEAN
+TITLE ASCO2.DAT
+PLOT Y
+

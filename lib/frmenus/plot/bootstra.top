@@ -1,0 +1,28 @@
+----- <~plot\bootstra.top> Bootstrap/Jacknife Plots
+
+Bootstrap/Jacknife Plots
+
+Discussion                          <~plot\bootdisc.top>
+
+Bootstrap Plots
+   Location Statistics                 <xemf: ~plot\bootpllo.men>
+   Scale Statistics                    <xemf: ~plot\bootplsc.men>
+   Extremes and Percentiles            <xemf: ~plot\bootplpe.men>
+   Quality Control                     <xemf: ~plot\bootplqc.men>
+   Correlation/Fitting/Calibration     <xemf: ~plot\bootplco.men>
+   Miscellaneous Statistics            <xemf: ~plot\bootplms.men>
+   Difference of Location Statistics   <xemf: ~plot\bootlodi.men>
+   Difference of Scale Statistics      <xemf: ~plot\bootscdi.men>
+   Difference of Extreme/Quantile Statistics <xemf: ~plot\bootqudi.men>
+
+Jacknife Plots
+   Location Statistics                 <xemf: ~plot\jackpllo.men>
+   Scale Statistics                    <xemf: ~plot\jackplsc.men>
+   Extremes and Percentiles            <xemf: ~plot\jackplpe.men>
+   Quality Control                     <xemf: ~plot\jackplqc.men>
+   Correlation/Fitting/Calibration     <xemf: ~plot\jackplco.men>
+   Miscellaneous Statistics            <xemf: ~plot\jackplms.men>
+   Difference of Location Statistics   <xemf: ~plot\jacklodi.men>
+   Difference of Scale Statistics      <xemf: ~plot\jackscdi.men>
+   Difference of Extreme/Quantile Statistics <xemf: ~plot\jackqudi.men>
+

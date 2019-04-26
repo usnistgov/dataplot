@@ -1,0 +1,37 @@
+THIS IS DATAPLOT DATA FILE    BOOTHCOX.TEX
+SUPERSATURATED DESIGN (VIA BOOTH-COX METHOD)
+N = 12 RUNS
+K = 24 FACTORS
+SOURCE--MARILYNN S. DEUKER (19XX).
+        SUPERSATURATED DESIGNS.
+        ENCYCLOPEDIA OF STATISTICS (EDITORS: KOTZ & JOHNSON),
+        VOLUME 9, PAGE 100.
+        (EDITORS: KOTZ & JOHNSON)
+BASE REFERENCE--BOOTH, KATHLEEN H. V. AND COX, D. R. (1962)
+        SOME SYSTEMATIC SUPERSATURATED DESIGNS.
+        TECHNOMETRICS, VOL. 4, NUMBER 4, NOVEMBER 1962.
+NOTE--COLUMNS 1 TO 7 OF THE ABOVE DESIGN ARE ORTHOGONAL
+TO READ THIS INTO DATAPLOT--
+   SKIP 25
+   READ BOOTHCOX.DAT X1 TO X24
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+X1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+------------------------------------------------------------------------
++1 -1 +1 -1 +1 +1 +1 +1 -1 -1 -1 +1 -1 -1 +1 -1 -1 +1 -1 -1 +1 -1 -1 -1
+-1 +1 +1 +1 +1 -1 -1 -1 -1 +1 -1 -1 -1 -1 -1 -1 -1 -1 +1 +1 -1 -1 -1 -1
+-1 +1 +1 -1 -1 +1 +1 -1 +1 -1 +1 -1 +1 +1 -1 -1 +1 -1 -1 -1 +1 -1 -1 -1
+-1 -1 -1 -1 +1 +1 -1 -1 -1 -1 +1 -1 +1 -1 -1 +1 -1 +1 +1 -1 -1 +1 -1 +1
++1 +1 +1 -1 +1 -1 -1 -1 +1 +1 +1 +1 -1 -1 -1 +1 +1 +1 +1 +1 -1 +1 -1 -1
++1 -1 +1 +1 -1 +1 -1 -1 -1 +1 -1 -1 +1 -1 +1 +1 +1 -1 -1 -1 +1 -1 +1 +1
++1 -1 -1 +1 +1 -1 +1 -1 +1 -1 -1 -1 -1 +1 -1 -1 -1 -1 -1 +1 -1 +1 +1 -1
+-1 -1 +1 +1 -1 -1 +1 +1 -1 +1 +1 +1 -1 +1 -1 +1 -1 -1 -1 -1 +1 +1 +1 +1
++1 +1 -1 -1 -1 -1 +1 +1 +1 -1 -1 +1 +1 -1 +1 +1 -1 -1 +1 -1 -1 -1 +1 -1
++1 +1 -1 +1 -1 +1 -1 +1 -1 -1 +1 -1 -1 +1 +1 -1 +1 +1 -1 +1 -1 -1 -1 +1
+-1 +1 -1 +1 +1 +1 +1 +1 +1 +1 -1 +1 +1 +1 +1 -1 +1 +1 +1 +1 +1 +1 +1 +1
+-1 -1 -1 -1 -1 -1 -1 +1 +1 +1 +1 +1 +1 +1 +1 +1 +1 +1 +1 +1 +1 +1 +1 +1

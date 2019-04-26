@@ -1,0 +1,29 @@
+----- <~dataview\dataview.top> View Built-in Dataplot data Files
+
+View Built-in Dataplot Data Files
+
+Core data sets             <~dataview\core.top>
+
+By Stat Category:
+   Quality/SPC             <~dataview\qual.top>
+   Design of Experiment    <~dataview\dex.top>
+   Regression              <~dataview\reg.top>
+
+   Univariate              <~dataview\univ.top>
+   Time Series             <~dataview\time.top>
+   Multi-Factor            <~dataview\mfac.top>
+   Multivariate            <~dataview\mvar.top>
+   Uncertainty Analysis    <~dataview\unce.top>
+
+   Probability             <~dataview\prob.top>
+   Reliability             <~dataview\reli.top>
+   Extreme Value Analysis  <~dataview\eva.top>
+   Mathematics             <~dataview\math.top>
+
+By Book:
+   Engineering Statistics Handbook   <~dataview\handbook.top>
+   Natrella                          <~dataview\natrella.top>
+   Box, Hunter, & Hunter             <~dataview\bhh.top>
+   Statistics for Scientists         <~dataview\stsc.top>
+   Graybill/Iyer  I: Regression      <~dataview\grayiye1.top>
+

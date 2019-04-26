@@ -1,0 +1,131 @@
+. This is Dataplot program     colormap.dp
+. Purpose--Display available Postsript colors & names
+. Note--send output file (dppl1f.dat) to postscipt laser printer
+.
+device 2 postscript
+. orientation portrait
+device 2 color
+device 1 off
+.
+let x1 = 5
+let xinc = 10
+let x2 = x1 + xinc
+let yinc = 3
+let y1 = 97
+margin x1
+vertical spacing 3
+crlf on
+line thickness 2.5
+.
+line color white; draw x1 y1 x2 y1; text white; let y1 = y1 - yinc
+line color black; draw x1 y1 x2 y1; text black; let y1 = y1 - yinc
+line color red; draw x1 y1 x2 y1; text red; let y1 = y1 - yinc
+line color blue; draw x1 y1 x2 y1; text blue; let y1 = y1 - yinc
+line color green; draw x1 y1 x2 y1; text green; let y1 = y1 - yinc
+line color magenta; draw x1 y1 x2 y1; text magenta; let y1 = y1 - yinc
+line color orange; draw x1 y1 x2 y1; text orange; let y1 = y1 - yinc
+line color cyan; draw x1 y1 x2 y1; text cyan; let y1 = y1 - yinc
+line color YELLOW; draw x1 y1 x2 y1; text yellow; let y1 = y1 - yinc
+line color YGRE; draw x1 y1 x2 y1; text YGRE; let y1 = y1 - yinc
+line color DGRE; draw x1 y1 x2 y1; text DGRE; let y1 = y1 - yinc
+line color lblu; draw x1 y1 x2 y1; text lblu; let y1 = y1 - yinc
+line color vblu; draw x1 y1 x2 y1; text vblu; let y1 = y1 - yinc
+line color vred; draw x1 y1 x2 y1; text vred; let y1 = y1 - yinc
+line color dgra; draw x1 y1 x2 y1; text dgra; let y1 = y1 - yinc
+line color lgra; draw x1 y1 x2 y1; text lgra; let y1 = y1 - yinc
+line color aqua; draw x1 y1 x2 y1; text aqua; let y1 = y1 - yinc
+line color brow; draw x1 y1 x2 y1; text brown; let y1 = y1 - yinc
+line color cabl; draw x1 y1 x2 y1; text cabl; let y1 = y1 - yinc
+line color coral; draw x1 y1 x2 y1; text coral; let y1 = y1 - yinc
+line color cblu; draw x1 y1 x2 y1; text cblu; let y1 = y1 - yinc
+line color dogr; draw x1 y1 x2 y1; text dogr; let y1 = y1 - yinc
+line color dorc; draw x1 y1 x2 y1; text dorc; let y1 = y1 - yinc
+line color dsbl; draw x1 y1 x2 y1; text dsbl; let y1 = y1 - yinc
+line color dtur; draw x1 y1 x2 y1; text dtur; let y1 = y1 - yinc
+line color fire; draw x1 y1 x2 y1; text fire; let y1 = y1 - yinc
+line color fgre; draw x1 y1 x2 y1; text fgre; let y1 = y1 - yinc
+line color gold; draw x1 y1 x2 y1; text gold; let y1 = y1 - yinc
+line color gldr; draw x1 y1 x2 y1; text gldr; let y1 = y1 - yinc
+line color gray; draw x1 y1 x2 y1; text gray; let y1 = y1 - yinc
+.
+let x1 = 30
+let x2 = x1 + xinc
+let y1 = 97
+line color ired; draw x1 y1 x2 y1; text ired; let y1 = y1 - yinc
+line color khak; draw x1 y1 x2 y1; text khak; let y1 = y1 - yinc
+line color dmgr; draw x1 y1 x2 y1; text dmgr; let y1 = y1 - yinc
+line color lsbl; draw x1 y1 x2 y1; text lsbl; let y1 = y1 - yinc
+line color lgre; draw x1 y1 x2 y1; text lgre; let y1 = y1 - yinc
+line color maro; draw x1 y1 x2 y1; text maroon; let y1 = y1 - yinc
+line color maqu; draw x1 y1 x2 y1; text maqu; let y1 = y1 - yinc
+line color mblu; draw x1 y1 x2 y1; text mblu; let y1 = y1 - yinc
+line color mfgr; draw x1 y1 x2 y1; text mfgr; let y1 = y1 - yinc
+line color mgld; draw x1 y1 x2 y1; text mgld; let y1 = y1 - yinc
+line color morc; draw x1 y1 x2 y1; text morc; let y1 = y1 - yinc
+line color msgr; draw x1 y1 x2 y1; text msgr; let y1 = y1 - yinc
+line color msbl; draw x1 y1 x2 y1; text msbl; let y1 = y1 - yinc
+line color mspg; draw x1 y1 x2 y1; text mspg; let y1 = y1 - yinc
+line color mtur; draw x1 y1 x2 y1; text mtur; let y1 = y1 - yinc
+line color mvrd; draw x1 y1 x2 y1; text mvrd; let y1 = y1 - yinc
+line color mdbl; draw x1 y1 x2 y1; text mdbl; let y1 = y1 - yinc
+line color navy; draw x1 y1 x2 y1; text navy; let y1 = y1 - yinc
+line color ored; draw x1 y1 x2 y1; text ored; let y1 = y1 - yinc
+line color orch; draw x1 y1 x2 y1; text orch; let y1 = y1 - yinc
+line color pgre; draw x1 y1 x2 y1; text pgre; let y1 = y1 - yinc
+line color pink; draw x1 y1 x2 y1; text pink; let y1 = y1 - yinc
+line color plum; draw x1 y1 x2 y1; text plum; let y1 = y1 - yinc
+line color purp; draw x1 y1 x2 y1; text purple; let y1 = y1 - yinc
+line color salm; draw x1 y1 x2 y1; text salmon; let y1 = y1 - yinc
+line color sgre; draw x1 y1 x2 y1; text sgre; let y1 = y1 - yinc
+line color sien; draw x1 y1 x2 y1; text sienna; let y1 = y1 - yinc
+line color skbl; draw x1 y1 x2 y1; text skbl; let y1 = y1 - yinc
+line color sblu; draw x1 y1 x2 y1; text sblu; let y1 = y1 - yinc
+line color spgr; draw x1 y1 x2 y1; text spgr; let y1 = y1 - yinc
+.
+let x1 = 55
+let x2 = x1 + xinc
+let y1 = 97
+line color stbl; draw x1 y1 x2 y1; text stbl; let y1 = y1 - yinc
+line color tan; draw x1 y1 x2 y1; text tan; let y1 = y1 - yinc
+line color this; draw x1 y1 x2 y1; text thistle; let y1 = y1 - yinc
+line color turq; draw x1 y1 x2 y1; text turquoise; let y1 = y1 - yinc
+line color viol; draw x1 y1 x2 y1; text violet; let y1 = y1 - yinc
+line color whea; draw x1 y1 x2 y1; text wheat; let y1 = y1 - yinc
+line color gyel; draw x1 y1 x2 y1; text gyel; let y1 = y1 - yinc
+line color lcya; draw x1 y1 x2 y1; text lcyan; let y1 = y1 - yinc
+line color blu2; draw x1 y1 x2 y1; text blu2; let y1 = y1 - yinc
+line color blu3; draw x1 y1 x2 y1; text blu3; let y1 = y1 - yinc
+line color blu4; draw x1 y1 x2 y1; text blu4; let y1 = y1 - yinc
+line color cya2; draw x1 y1 x2 y1; text cya2; let y1 = y1 - yinc
+line color cya3; draw x1 y1 x2 y1; text cya3; let y1 = y1 - yinc
+line color cya4; draw x1 y1 x2 y1; text cya4; let y1 = y1 - yinc
+line color gre2; draw x1 y1 x2 y1; text gre2; let y1 = y1 - yinc
+line color gre3; draw x1 y1 x2 y1; text gre3; let y1 = y1 - yinc
+line color gre4; draw x1 y1 x2 y1; text gre4; let y1 = y1 - yinc
+line color yel2; draw x1 y1 x2 y1; text yel2; let y1 = y1 - yinc
+line color yel3; draw x1 y1 x2 y1; text yel3; let y1 = y1 - yinc
+line color yel4; draw x1 y1 x2 y1; text yel4; let y1 = y1 - yinc
+line color ora2; draw x1 y1 x2 y1; text ora2; let y1 = y1 - yinc
+line color ora3; draw x1 y1 x2 y1; text ora3; let y1 = y1 - yinc
+line color ora4; draw x1 y1 x2 y1; text ora4; let y1 = y1 - yinc
+line color red2; draw x1 y1 x2 y1; text red2; let y1 = y1 - yinc
+line color red3; draw x1 y1 x2 y1; text red3; let y1 = y1 - yinc
+line color red4; draw x1 y1 x2 y1; text red4; let y1 = y1 - yinc
+line color mag2; draw x1 y1 x2 y1; text mag2; let y1 = y1 - yinc
+line color mag3; draw x1 y1 x2 y1; text mag3; let y1 = y1 - yinc
+line color mag4; draw x1 y1 x2 y1; text mag4; let y1 = y1 - yinc
+.
+let x1 = 80
+let x2 = x1 + xinc
+let y1 = 97
+line color g10; draw x1 y1 x2 y1; text g10; let y1 = y1 - yinc
+line color g20; draw x1 y1 x2 y1; text g20; let y1 = y1 - yinc
+line color g30; draw x1 y1 x2 y1; text g30; let y1 = y1 - yinc
+line color g40; draw x1 y1 x2 y1; text g40; let y1 = y1 - yinc
+line color g50; draw x1 y1 x2 y1; text g50; let y1 = y1 - yinc
+line color g60; draw x1 y1 x2 y1; text g60; let y1 = y1 - yinc
+line color g70; draw x1 y1 x2 y1; text g70; let y1 = y1 - yinc
+line color g80; draw x1 y1 x2 y1; text g80; let y1 = y1 - yinc
+line color g90; draw x1 y1 x2 y1; text g90; let y1 = y1 - yinc
+.
+quit

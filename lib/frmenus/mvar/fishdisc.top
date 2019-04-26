@@ -1,0 +1,11 @@
+----- <~mvar\discfish.top> Fisher Discrimination
+ 
+Fisher's Discriminant Analysis
+ 
+Discussion                             <~mvar\discfdis.top>
+
+Compute Discriminant Functions         <xemf: ~mvar\fishdisc.men>
+Classify New Points                    <xemf: ~mvar\fishclas.men>
+
+Worked Examples
+   IRIS.DAT Discrimination for Fisher Iris Data  <xcl: CALL FISHIRIS.DP>

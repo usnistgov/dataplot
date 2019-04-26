@@ -1,0 +1,46 @@
+EFFECT OF CLOTH TYPE ON WEAR (BLOCK ON POSITION, HOLDER, PAPER)
+BOX, HUNTER & HUNTER (1978), STATISTICS FOR EXPERIMENTERS,
+WILEY, PAGE 256-258 (HYPER-GRAECO-LATIN SAMPLE OF CHAPTER 8)
+HYPER-GRAECO-LATIN SQUARE    (FIRST HALF OF EXAMPLE ONLY)
+NUMBER OF OBSERVATIONS = 16  (FIRST HALF OF EXAMPLE ONLY)
+TOTAL NUMBER OF VARIABLES PER LINE IMAGE = 6
+   RESPONSE VARIABLE = LOSS OF WEIGHT (IN MILLIGRAMS)
+   FACTOR 1 = CLOTH TYPE (4 TYPES)
+   FACTOR 2 = HOLDER POSITION (4 POSITIONS)
+   FACTOR 3 = RUN (4 RUNS)
+   FACTOR 4 = HOLDER (4 TYPES)
+   FACTOR 5 = EMORY PAPER SHEET (4 SHEETS)
+TO READ THIS FILE INTO DATAPLOT (AND ANALYZE)--
+   SKIP 30
+   READ BOXCLOTH.DAT Y X1 X2 X3 X4 X5
+   .
+   CHAR X BLANK;
+   MULTIPLOT 2 1
+   LINES BLANK DOTTED; DEX SCATTER PLOT Y X1 X2 X3 X4 X5
+   LINES SOLID DOTTED; DEX MEAN PLOT Y X1 X2 X3 X4 X5
+   .
+   ER; ANOVA Y X1 X2 X3 X4 X5
+   .
+   MULTIPLOT 2 2
+   LINES BLANK DOTTED; DEX SCATTER PLOT RES X1 X2 X3 X4 X5
+   LINES SOLID DOTTED; DEX MEAN PLOT RES X1 X2 X3 X4 X5
+   NORMAL PROBABILITY PLOT RES
+ 
+WEAR        CLOTH POSITION RUN HOLDER POSITION
+-------------------------------------------
+320           1      1      1    1        1
+297           2      2      1    2        2
+299           3      3      1    3        3
+313           4      4      1    4        4
+266           3      1      2    4        2
+227           4      2      2    3        1
+260           1      3      2    2        4
+240           2      4      2    1        3
+221           4      1      3    2        3
+240           3      2      3    1        4
+267           2      3      3    4        1
+252           1      4      3    3        2
+301           2      1      4    3        4
+238           1      2      4    4        3
+243           4      3      4    1        2
+290           3      4      4    2        1

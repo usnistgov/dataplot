@@ -1,0 +1,17 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     DATAPLOT.DP
+. PURPOSE--GENERATE A DATA PLOT (RUN SEQUENCE PLOT) OF FORCE DATA
+.
+. -----START POINT-----------------------------------
+.
+TITLE Load Cell Calibration
+Y1LABEL Force
+X1LABEL Time
+LEGEND 1 Time Series
+LEGEND 2 Data Plot
+.
+SKIP 25
+READ BAKER.DAT Y
+.
+PLOT Y
+.
+DELETE X Y

@@ -1,0 +1,88 @@
+This is DATAPLOT file DEXEXAMP.TEX
+ 
+ 
+     Index of Design of Experiment Examples (DATAPLOT Data Files)
+ 
+ 
+                   (Precede all READ's with SKIP 25)
+ 
+ 
+-----Comparative Designs-------------------------------------------------
+ 
+Completely Randomized Designs
+ 
+   READ BOXTOMAT.DAT Y X1 POSITION
+   READ BOXBLOOD.DAT Y X1 RUNSEQ
+ 
+Randomized Block Designs
+ 
+   READ BOXSHOES.DAT Y X1 X2
+   READ BOXPENIC.DAT Y X1 X2
+   READ BOXCOX.DAT Y X1 X2
+   READ SHEESLEY.DAT Y X1 X2 X3 X4
+ 
+Latin Square etc. Designs
+ 
+   READ BOXAUTO.DAT Y X1 X2 X3
+   READ BOXCLOTH.DAT Y X1 X2 X3 X4 X5
+ 
+ 
+-----Screening Designs-------------------------------------------------
+ 
+2**k Full Factorial Designs
+ 
+   READ BOXBISG.DAT Y X1 X2 X3
+   READ BOXSPRIN.DAT Y X1 X2 X3
+   READ BOXPILOT.DAT Y X1 X2 X3
+   READ BOXRADAR.DAT Y X1 X2 X3 SD
+   READ BOWEN.DAT Y X1 X2 X3
+   READ NUT.DAT Y X1 X2 X3
+ 
+   READ BOXCHEM.DAT Y X1 TO X4
+   READ BOXSOLAR.DAT Y X1 TO X4
+   READ BARKPOP2.DAT Y1 Y2 Y3 X1 TO X4
+ 
+   READ BOXREACT.DAT Y X1 TO X5
+   READ KRASNY1.DAT Y1 Y2 Y3 Y4 Y5 X1 X2 X3 X4 X5
+   READ WEBER.DAT Y1 TO Y3 X1 TO X5
+ 
+2**(k-p) Fractional Factorial Designs
+ 
+   READ BOXSPRI2.DAT Y X1 X2 X3
+ 
+   READ BOXCLEAN.DAT Y X1 TO X4
+ 
+   READ BOXREAC2.DAT Y X1 TO X5 SEQ
+ 
+   READ AC.DAT Y1 Y2 Y3 X1 X2 X3 X4 X5 X6
+ 
+   READ BOXBIKE2.DAT Y X1 TO X7
+   READ BOXBIKE3.DAT Y X1 TO X7
+ 
+   READ BARKPOP.DAT Y1 Y2 X1 TO X8
+ 
+   READ VIBRATE.DAT Y X1 TO X9
+ 
+Taguchi Designs
+ 
+   READ POROSITY.DAT Y X1 TO X7
+ 
+   READ QUINLAN.DAT Y X1 TO X11
+ 
+ 
+-----Regression Designs-------------------------------------------------
+ 
+   READ BOXSPRAY.DAT Y X SEQ
+   READ BOXWELD.DAT Y X
+   READ BOXRATS.DAT Y X
+   READ BOXBOD.DAT Y X
+   READ BOXCHEM2.DAT Y X1 X2
+ 
+ 
+-----Optimization (Response Surface) Designs-------------------------------------------------
+ 
+   READ BOXYIELD.DAT Y X1 X2
+ 
+ 
+   READ BOXYIEL2.DAT Y X1 X2
+ 

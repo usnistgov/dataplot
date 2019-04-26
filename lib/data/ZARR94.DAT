@@ -1,0 +1,54 @@
+This is Dataplot data file    ZARR94.DAT
+Thermal Conductivity Interlab Study (Material 1 only)
+Note: Material 1 = NIST's SRM 1451
+Bob Zar (NIST), September 2000
+Response variable = thermal conductivity (lambda)
+Number of observations             = 5 labs x 5 reps = 25 (5 labs x 5 reps)
+Number of variables per line image = 2
+Order of variables on a line image--
+   1. Response variable   = thermal conductivity
+   2. Factor 1            = laboratory (5 levels:
+Analysis question: What is a consensus mean value?
+To read this data file into Dataplot--
+   skip 25; read zarr94.dat y x
+
+
+
+
+
+
+
+
+
+     Y              X
+Conductivity   Laboratory
+-------------------------
+  0.04473        1.00000
+  0.04489        1.00000
+  0.04425        1.00000
+  0.04417        1.00000
+  0.04434        1.00000
+
+  0.04101        2.00000
+  0.04104        2.00000
+  0.04105        2.00000
+  0.04103        2.00000
+  0.04109        2.00000
+
+  0.04052        3.00000
+  0.04055        3.00000
+  0.04056        3.00000
+  0.04056        3.00000
+  0.04056        3.00000
+
+  0.04150        4.00000
+  0.04110        4.00000
+  0.04110        4.00000
+  0.04110        4.00000
+  0.04110        4.00000
+
+  0.04035        5.00000
+  0.04030        5.00000
+  0.04029        5.00000
+  0.04031        5.00000
+  0.04034        5.00000

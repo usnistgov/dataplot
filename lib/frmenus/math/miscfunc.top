@@ -1,0 +1,13 @@
+----- <~math\miscfunc.top> Miscellaneous Special Functions
+ 
+MIscellaneous Special Functions
+ 
+Abramowitz Function               <xemf: ~math\abram.men>
+Debye Function                    <xemf: ~math\debye.men>
+Clausen Integral                  <xemf: ~math\clausn.men>
+EXP3 Integral                     <xemf: ~math\exp3.men>
+Lobach Integral                   <xemf: ~math\lobach.men>
+Stromgren's Integral              <xemf: ~math\strom.men>
+Synchrotron Radiation Functions   <xemf: ~math\synch.men>
+Transport Integral                <xemf: ~math\trans.men>
+

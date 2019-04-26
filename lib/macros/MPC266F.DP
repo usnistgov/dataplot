@@ -1,0 +1,43 @@
+reset data
+reset plot control
+reset i/o
+dimension 500 30
+label size 3
+read mpc262.dat run wafer probe mo day op hum y sr
+let df = sr - sr + 5.
+let m311 = average y subset probe 2362 subset run 1 subset wafer 138
+let m312 = average y subset probe 2362 subset run 1 subset wafer 139
+let m313 = average y subset probe 2362 subset run 1 subset wafer 140
+let m314 = average y subset probe 2362 subset run 1 subset wafer 141
+let m315 = average y subset probe 2362 subset run 1 subset wafer 142
+let m321 = average y subset probe 2362 subset run 2 subset wafer 138
+let m322 = average y subset probe 2362 subset run 2 subset wafer 139
+let m323 = average y subset probe 2362 subset run 2 subset wafer 140
+let m324 = average y subset probe 2362 subset run 2 subset wafer 141
+let m325 = average y subset probe 2362 subset run 2 subset wafer 142
+let s31=(((m311-m321)**2)/2.)**(1/2)
+let s32=(((m312-m322)**2)/2.)**(1/2)
+let s33=(((m313-m323)**2)/2.)**(1/2)
+let s34=(((m314-m324)**2)/2.)**(1/2)
+let s35=(((m315-m325)**2)/2.)**(1/2)
+let df31=1
+let df32=1
+let df33=1
+let df34=1
+let df35=1
+let wafer1=138
+let wafer2=139
+let wafer3=140
+let wafer4=141
+let wafer5=142
+. level-3 standard deviations and df for 5 wafers
+print wafer1 s31 df31
+print wafer2 s32 df32
+print wafer3 s33 df33
+print wafer4 s34 df34
+print wafer5 s35 df35
+let s3 = ((s31**2+s32**2+s33**2+s34**2+s35**2)/5.0)**(1/2)
+let df3=df31+df32+df33+df34+df35
+. pooled level-3 std deviation and df over 5 wafers
+print s3 df3
+. end of calculations

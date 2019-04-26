@@ -1,0 +1,94 @@
+----------  *TAGINDEX.DAT*  ----------
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+
+   INDEX OF TAGUCHI ORTHOGONAL EXPERIMENT DESIGNS
+         ORDERED BY FACTORS, RUNS, LEVELS
+
+
+           1. TAGUCHI ORTHOGONAL DESIGNS
+           (ORDERED BY NUMBER OF FACTORS)
+
+DESIGN       # FACTOR S    # LEVELS/FACTOR        # RUNS
+
+  L4             3            2                      4
+  L9             4            3                      9
+  L16B           5            4                     16
+  L25            6            5                     25
+  L8             7            2                      8
+  L18            7            6 FOR  1; 3 FOR   6   18
+  L32B          10            2 FOR  1; 4 FOR   9   32
+  L12           11            2                     12
+  L50           12            2 FOR  1; 5 FOR  11   50
+  L27           13            2 FOR  1; 3 FOR  12   27
+  L16           15            2                     16
+  L64B          21            4                     64
+  L36           22            3                     36
+  L54           26            2 FOR  1; 3 FOR  25   54
+  L36B          27            2 FOR 15; 3 FOR  12   36
+  L32           31            2                     32
+  L64           31            2                     64
+  L81           40            3                     81
+
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+
+   INDEX OF TAGUCHI ORTHOGONAL EXPERIMENT DESIGNS
+           (ORDERED BY NUMBER OF RUNS)
+
+DESIGN       # FACTOR S    # LEVELS/FACTOR        # RUNS
+
+  L4             3            2                      4
+  L8             7            2                      8
+  L9             4            3                      9
+  L12           11            2                     12
+  L16           15            2                     16
+  L16B           5            4                     16
+  L18            7            6 FOR  1; 3 FOR   6   18
+  L25            6            5                     25
+  L27           13            2 FOR  1; 3 FOR  12   27
+  L32           31            2                     32
+  L32B          10            2 FOR  1; 4 FOR   9   32
+  L36           22            3                     36
+  L36B          27            2 FOR 15; 3 FOR  12   36
+  L50           12            2 FOR  1; 5 FOR  11   50
+  L54           26            2 FOR  1; 3 FOR  25   54
+  L64           31            2                     64
+  L64B          21            4                     64
+  L81           40            3                     81
+
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+
+   INDEX OF TAGUCHI ORTHOGONAL EXPERIMENT DESIGNS
+          (ORDERED BY NUMBER OF LEVELS)
+
+DESIGN       # FACTOR S    # LEVELS/FACTOR        # RUNS
+
+  L4             3            2                      4
+  L8             7            2                      8
+  L12           11            2                     12
+  L16           15            2                     16
+  L32           31            2                     32
+  L64           31            2                     64
+
+  L9             4            3                      9
+  L36           22            3                     36
+  L81           40            3                     81
+
+  L16B           5            4                     16
+  L64B          21            4                     64
+
+  L25            6            5                     25
+
+  L32B          10            2 FOR  1; 4 FOR   9   32
+  L50           12            2 FOR  1; 5 FOR  11   50
+  L27           13            2 FOR  1; 3 FOR  12   27
+  L54           26            2 FOR  1; 3 FOR  25   54
+  L36B          27            2 FOR 15; 3 FOR  12   36
+
+  L18            7            6 FOR  1; 3 FOR   6   18
+

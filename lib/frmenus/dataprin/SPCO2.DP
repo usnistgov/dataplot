@@ -1,0 +1,6 @@
+----- <~dataprin\SPCO2.DP> Print (to Printer) SPCO2.DAT
+
+. This is file    SPCO2.DP
+
+PRINT SPCO2.DAT
+

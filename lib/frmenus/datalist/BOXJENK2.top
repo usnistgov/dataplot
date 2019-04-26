@@ -1,0 +1,8 @@
+----- <~datalist\BOXJENK2.top> BOXJENK2.DAT
+ 
+BOXJENK2.DAT
+ 
+View     <xcl: LIST BOXJENK2.DAT>
+Load     <x2cl: SKIP 25; READ BOXJENK2.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\BOXJENK2.DAT>
+ 

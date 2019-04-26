@@ -1,0 +1,8 @@
+----- <~dataload\MISRA1.DP> Load MISRA1.DAT
+
+. This is file    MISRA1.DP
+
+DELETE Y
+SKIP 25
+READ MISRA1.DAT Y
+

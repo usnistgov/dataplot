@@ -1,0 +1,31 @@
+This is file homoplot.men--Homoscedasticity Plot
+ 
+--------------------
+ 1. Homoscedasticity Plot
+ 2. HOMOSCEDASTICITY PLOT Y X
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Group ID Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Character Setting:
+ 7. @CE 3 0 42 50 gui-char
+ 8. Character Fill:
+ 8. @CE 4 0 42 50 gui-ooff
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 1 50 *
+12.
+13.
+14. Generate the Homoscedasticity Plot?:
+--------------------
+GR FE
+CHARACTER X
+CHARACTER _3
+CHARACTER FILL _4
+LINE BLANK
+HOMOSCEDASTICITY PLOT _1 _2 _5
+--------------------
+WEB HELP HOMOSCEDASTICITY PLOT
+--------------------

@@ -1,0 +1,53 @@
+. This is Dataplot program    tietjen.dp
+. Mike Tietjen (EEEL) semiconductor growth rate
+.
+. -----start point-----
+.
+device 1 x11
+device 2 eps
+orientation landscape wordperfect
+.
+skip 25
+read tietjen.dat y tag
+.
+tics off
+tic labels off
+frame corner coordinates 0 0 100 100
+.
+legend 1 coordinates 97 86
+legend 1 justification right
+legend 1 size 10
+multiplot 6 4
+
+   loop for k = 1 1 8
+      legend 1 ^k
+      plot y subset tag k
+   end loop
+
+   xlimits 0 .04
+   loop for k = 1 1 8
+      legend 1 ^k
+      spectrum y subset tag k
+   end loop
+   xlimits
+
+   demodulation frequence .015
+   loop for k = 1 1 8
+      legend 1 ^k
+      let y2 = y
+      retain y2 subset tag k
+      complex demodulation amplitude plot y2
+   end loop
+
+multiplot off
+.
+pre-erase off
+frame corner coordinates 15 20 85 90
+legend 1
+frame off
+lines
+title Semiconductor Growth Rate
+title displacement 4
+y1label Amplitude                Spectrum                  Raw Data
+y1label displacement 4
+plot x for x = 1 1 10

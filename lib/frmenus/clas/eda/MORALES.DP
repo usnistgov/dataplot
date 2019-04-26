@@ -1,0 +1,10 @@
+----- <~dataloex\MORALES.DP> Load & Execute MORALES.DAT
+
+. This is file    MORALES.DP
+
+DELETE Y1 Y2 Y3 X
+SKIP 25
+READ MORALES.DAT Y1 Y2 Y3 X
+TITLE MORALES.DAT
+/
+

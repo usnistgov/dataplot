@@ -1,0 +1,53 @@
+. THIS IS DATAPLOT PROGRAM FILE    MANDEL2.DP
+. PURPOSE--2-WAY ANALYSIS OF WORLD TELEPHONES
+.
+. -----START POINT-----
+.
+DEVICE 2 POSTSCRIPT
+.
+SKIP 25
+READ TUKEY433.DAT Y YEAR CONTINENT
+LET YEARC = CODE YEAR
+.
+LOOP FOR J = 1 1 7
+   LET A = MEAN Y SUBSET YEARC J
+   LET COLMEAN = A SUBSET YEARC J
+END LOOP
+.
+LET GM = MEAN Y
+LOOP FOR I = 1 1 7
+   FIT Y = H+SLOPE*(COLMEAN-^GM) SUBSET CONTINENT I
+END LOOP
+.
+LET DEL = Y-COLMEAN
+LOOP FOR I = 1 1 7
+   FIT DEL COLMEAN SUBSET CONTINENT I
+END LOOP
+.
+TITLE Example 2: World Telephones
+Y1LABEL Number of Phones Y
+XLABEL Year
+X3LABEL Figure x. Number of phones versus year (for each continent)
+LEGEND 1 Line = Continent
+Response versus Year for each Continent
+PLOT Y YEARC CONTINENT
+.
+TITLE Example 2: World Telephones
+Y1LABEL Y - Column (= Year) Means
+XLABEL Column (= Year) Means
+X3LABEL Figure 3. Prediction lines of Y-yearly means vs.
+yearly means (for each continent)
+LEGEND 1 Line = Continent
+PLOT PRED COLMEAN CONTINENT
+.
+TITLE Example 2: World Telephones
+Y1LABEL Residuals
+XLABEL Row (= Continent)
+X3LABEL Figure 4. Residuals from row-linear model
+CHAR BLANK ALL
+LINES BLANK ALL
+SPIKE ON ALL
+XLIMITS 1 7
+legend 1
+LET INDEX = CONTINENT+(YEARC-4)/10
+PLOT RES INDEX

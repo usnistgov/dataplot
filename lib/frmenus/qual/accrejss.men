@@ -1,0 +1,52 @@
+This is file accrejss.men--Accept/Reject Plot for Sequential Sample
+ 
+--------------------line 3
+1. Sequential Sample Accept/Reject Chart
+2. Macro
+3.
+4. Sample Size Variable:
+4. @CE 1 0 42 50 ?
+5. Cumulative Number of Defects Variable:
+5. @CE 2 0 42 50 ?
+6.
+7. Acceptable Quality Level (P1):
+7. @CE 3 0 42 50 ?
+8. Alpha (default = 0.05):
+8. @CE 4 0 42 50 ?
+9. Lot Tolereance Percent Defective (P2):
+9. @CE 5 0 42 50 ?
+10. Beta (default = 0.10):
+10. @CE 6 0 42 50 ?
+11.
+12.
+13. Generate the Chart?:
+--------------------
+DELETE ZZZZP ZZZZY ZZZZT1 ZZZZT2 ZZZZT3 ZZZZT4
+.
+LET ZZZZA = 0.05
+LET ZZZZB = 0.10
+LET ZZZZP1 = _3
+LET ZZZZA  = _4
+LET ZZZZP2 = _5
+LET ZZZZB  = _6
+.
+LET ZZZZK = LOG(ZZZZP2*(1-ZZZZP1)/(ZZZZP1*(1-ZZZZP2)))
+LET ZZZZS = LOG((1-ZZZZP1)/(1-ZZZZP2))/ZZZZK
+LET ZZZZH1 = LOG((1-ZZZZA)/ZZZZB)/ZZZZK
+LET ZZZZH2 = LOG((1-ZZZZB)/ZZZZA)/ZZZZK
+LET FUNCTION ZZZZF1 = -ZZZZH1 + ZZZZS*ZZZZN
+LET FUNCTION ZZZZF2 = ZZZZH2 + ZZZZS*ZZZZN
+.
+TITLE Sequential Sampling Accept/Reject Chart
+Y1LABEL Number of Defectives
+X1LABEL Sample Size
+.
+LET ZZZZMAXN = MAXIMUM _1
+PLOT _2 _1 AND
+PLOT ZZZZF1 FOR ZZZZN = 0 1 ZZZZMAXN AND
+PLOT ZZZZF2 FOR ZZZZN = 0 1 ZZZZMAXN
+LABEL
+TITLE
+--------------------
+
+--------------------

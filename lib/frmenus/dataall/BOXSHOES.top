@@ -1,0 +1,8 @@
+----- <~dataall\BOXSHOES.top> BOXSHOES.DAT
+
+BOXSHOES.DAT
+
+View     <xcl: LIST BOXSHOES.DAT>
+Load     <xcf: ~dataload/BOXSHOES.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXSHOES.DAT>
+

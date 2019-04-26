@@ -1,0 +1,20 @@
+----- <~prob\percpoin.top> Compute percent point functions
+
+Compute Percent Point Functions
+
+These menus are used to compute a single value
+for a percent point function.
+
+NIST/SEMATECH Handbook                    <xcl: web handbook probability functions>
+
+Continuous Distributions
+   No Shape Parameters (e.g., Normal)           <~prob\locscppf.top>
+   One Shape Parameters (A-L) (e.g., Lognormal) <~prob\sha1appf.top>
+   One Shape Parameters (M-Z) (e.g., Weibull)   <~prob\sha1bppf.top>
+   Two Shape Parameters (e.g., Beta)            <~prob\shap2ppf.top>
+   Three or More Shape Parameters               <~prob\shap3ppf.top>
+
+Mixture Distributions                           <~prob\mixppf.top>
+
+Discrete Distributions                          <~prob\discppf.top>
+

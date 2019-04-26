@@ -1,0 +1,48 @@
+This is file gengomra.men--Generate Gompertz Makeham Random Numbers
+ 
+--------------------
+ 1. Generate Gompertz Makeham Random Numbers
+ 2. LET Y = GOMPERTZ MAKEHAM RANDOM NUMBERS FOR I=START INC STOP
+ 3.
+ 4. This menu computes the Meeker-Escobar
+ 5. parameterization with two shape parameters.
+ 6. Dataplot supports two additional
+ 7. parameterizations with 3 shape parameters
+ 8. (click on HELP for details).
+ 9.
+10. Number of random numbers to be generated:
+10. @CE 1 0 41 50 ?
+11. Shape Parameter (zeta):
+11. @CE 2 0 41 50 ?
+12. Shape Parameter (eta, eta >= 0):
+12. @CE 3 0 41 50 ?
+13. Location Parameter:
+13. @CE 4 0 41 50 ?
+14. Scale Parameter (> 0):
+14. @CE 5 0 41 50 ?
+15.
+16. Optional random number generator seed (default=305):
+17.    (integer >= 305)
+17. @CE 6 0 41 50 ?
+18.
+19. Name of output variable;
+19. @CE 7 0 41 50 ?
+20.
+21.
+22. Generate the random numbers?
+--------------------
+AN FE
+@IF 6 0 SEED _6
+LET ZETA = 1
+@IF 2 0 LET ZETA = _2
+LET ETA = 1
+@IF 3 0 LET ETA = _3
+LET ZLOC = 0
+@IF 4 0 LET ZLOC = _4
+LET ZSCALE = 1
+@IF 5 0 LET ZSCALE = _5
+LET _7 = GOMPERTZ MAKEHAM RANDOM NUMBERS FOR I = 1 1 _1
+LET _7 = ZLOC + ZSCALE* _7
+--------------------
+WEB HELP MAKPDF
+--------------------

@@ -1,0 +1,35 @@
+This is Dataplot data file     TABLE161.DAT
+Gas Mileage for 10 cars of the same (unspecified) type.
+Question: Does the 90% lower confidence interval for gas mileage
+          exceed 25.
+Source--Graybill and Iyer (1994). Regression Analysis: Concepts and 
+        Applications.  Duxbury Press.
+        Page 28 (Chapter 1)
+Number of observations = 10
+Number of variables per line image = 1
+Order of variables on a line image--
+   1. Y = Response Variable = Gas Mileage
+
+
+
+
+
+
+
+
+To read this file into Dataplot--
+   SKIP 25
+   READ TABLE161.DAT Y
+     Y
+ Gas Mileage
+------------
+    25.72
+    25.24
+    25.19
+    25.88
+    26.42
+    24.48
+    25.11
+    24.29
+    25.06
+    25.63

@@ -1,0 +1,21 @@
+----- <~dataall\reliothe.top> View/etc. Reliability Data: Other
+
+View/Load/Print Reliability Data: Other
+
+ABERN17.DAT*  Compressor rivet failure    <~dataall\ABERN17.top>
+ABERN35.DAT   Fatigue failure time        <~dataall\ABERN35.top>
+ABERN43.DAT   Bearing cage failure time   <~dataall\ABERN43.top>
+
+HAHN.DAT      Locomotive controls failure <~dataall\HAHN.top>
+NELSON.DAT    Dial. brkdwn stren of insul <~dataall\NELSON.top>
+
+GEAR.DAT      Gear diameters (Ishikawa)   <~dataall\GEAR.top>
+CLEAR.DAT     Component clearances        <~dataall\CLEAR.top>
+
+CASTILL6.DAT  Chain link strength         <~dataall\CASTILL6.top>
+CASTILL7.DAT  Elect. insulation lifetime  <~dataall\CASTILL7.top>
+CASTILL8.DAT  Wire cycles-to-failure      <~dataall\CASTILL8.top>
+
+RANDN.DAT     Normal random numbers       <~dataall\RANDN.top>
+RANDU.DAT     Uniform random numbers      <~dataall\RANDU.top>
+

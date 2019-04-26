@@ -1,0 +1,85 @@
+This is file makhispd.men--Histogram & Superimposed Gompertz-Makeham pdf Plot
+
+--------------------
+ 1. Histogram & Superimposed Gompertz-Makeham pdf Plot
+ 2. HISTOGRAM Y; PLOT MAKPDF(X,ZETA,ETA) FOR X = START INC STOP
+ 3.
+ 4. This menu computes the Meeker-Escobar
+ 5. parameterization with two shape parameters.
+ 6. Dataplot supports two additional
+ 7. parameterizations with 3 shape parameters
+ 8. (click on HELP for details).
+ 9.
+10. Response variable: 
+10. @CE 1 0 42 50 ? gui-vari
+11.
+12. Relative histogram of data (leave blank for defaults):
+13.    Class width:
+13. @CE 2 0 42 50 ?
+14.    Lower limit of first class:
+14. @CE 3 0 42 50 ?
+15.    Upper limit of last class:
+15. @CE 4 0 42 50 ?
+16.    Bar fill on/off:
+16. @CE 5 0 42 50 ?
+17.
+18. Superimposed Gompertz-Makeham probability density function:
+19.    Shape (zeta):
+19. @CE 6 0 42 50 ?
+20.    Shape (eta):
+20. @CE 7 0 42 50 ?
+21.    Location u:
+21. @CE 8 0 42 50 ?
+22.    Scale s:
+22. @CE 9 0 42 50 ?
+23.    Start point:
+23. @CE 10 0 42 50 ?
+24.    Increment:
+24. @CE 11 0 42 50 ?
+25.    Stop point:
+25. @CE 12 0 42 50 ?
+26.    Line type:
+26. @CE 13 0 42 50 ? gui-line
+27.    Line color:
+27. @CE 14 0 42 50 ? gui-color
+28.
+29.
+30. Title:
+30. @CE 15 0 20 50 *
+31. Left Axis Label:
+31. @CE 16 0 20 50 *
+32. Bottom Axis Label:
+32. @CE 17 0 20 50 *
+33.
+34.
+35. Generate the plot?
+--------------------
+AN FE
+@IF 2 0 CLASS WIDTH _2
+@IF 3 0 CLASS LOWER _3
+@IF 4 0 CLASS UPPER _4
+@IF 5 0 BAR FILL _5
+TITLE _15
+Y1LABEL _16
+X1LABEL _17
+@IF 1 0 RELATIVE HISTOGRAM _1
+@IF 1 0 LIMITS FREEZE
+.
+SET GOMPERTZ MAKEHAM DEFINITION REPARAMETERIZED MEEKER
+@IF 13 0 LINES _13
+@IF 14 0 LINE COLOR _14
+PRE-ERASE OFF
+LET ZSHAPE1 = 1
+@IF 6 0 LET ZSHAPE1 = _6
+LET ZSHAPE2 = 1
+@IF 7 0 LET ZSHAPE2 = _7
+LET ZLOC = 0
+@IF 8 0 LET ZLOC = _8
+LET ZSCALE = 1
+@IF 9 0 LET ZSCALE = _9
+PLOT MAKPDF(X,ZSHAPE1,ZSHAPE2,ZLOC,ZSCALE) FOR X = _10 _11 _12
+@IF 1 0 LIMITS
+PRE-ERASE ON
+--------------------
+WEB HELP MAKPDF
+--------------------

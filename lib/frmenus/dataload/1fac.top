@@ -1,0 +1,9 @@
+----- <~dataload\1fac.top> Load 1-Factor Data (incl. 2-Sample)
+
+Load 1-Factor Data (Including the "2-Sample" Problem)
+
+NIST data                 <~dataload\1facnist.top>
+Natrella Data             <~dataload\1facnatr.top>
+Sematech Data             <~dataload\1facsema.top>
+Other data                <~dataload\1facothe.top>
+

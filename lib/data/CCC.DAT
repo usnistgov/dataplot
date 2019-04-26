@@ -1,0 +1,45 @@
+THIS IS DATAPLOT DATA FILE CCC.DAT
+PURPOSE--ILLUSTRATE C CONTROL CHART
+NUMBER OF SURFACE DEFECTS PER SQUARE YARD  (PAINT, FABRIC)
+DATE--JULY 1990
+NUMBER OF OBSERVATIONS = 20
+NUMBER OF VARIABLES = 3
+ORDER OF VARIABLES ON A LINE IMAGE--
+   1. NUMBER OF DEFECTS PER SQUARE YARD OF SURFACE
+   2. SIZE (AREA) OF SURFACE (ALL AT 1 SQUARE YARD)
+   3. SUBGROUP ID (1 TO 20)
+STATISTICAL AREAS--C CONTROL CHART
+REFERENCE--ISHIKAWA, GUIDE TO QUALITY CONTROL, PAGES 83-84
+TO READ THIS FILE INTO DATAPLOT (AN ANALYZE)--
+   SKIP 25
+   READ CCC.DAT NUMDEF SIZE X
+   CHARACTERS CONTROL CHART
+   LINES CONTROL CHART
+   C CONTROL CHART NUMDEF SIZE X
+   LET RATIO = NUMDEF/SIZE; LET M = MEAN RATIO
+   SPIKE ON; SPIKE BASE M; CHARACTER FILL ON; LINES BLANK
+   C CONTROL CHART NUMDEF SIZE X
+ 
+      NUMBER OF       AREA OF    SUB-GROUP
+ DEFECTS PER SQ YD    SURFACE
+------------------------------------------
+         6              1.0          1
+         5              1.0          2
+         3              1.0          3
+         5              1.0          4
+         3              1.0          5
+         8              1.0          6
+         3              1.0          7
+         5              1.0          8
+         4              1.0          9
+         3              1.0         10
+         6              1.0         11
+         4              1.0         12
+         6              1.0         13
+         6              1.0         14
+         6              1.0         15
+         5              1.0         16
+         7              1.0         17
+         6              1.0         18
+         9              1.0         19
+        13              1.0         20

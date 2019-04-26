@@ -1,0 +1,128 @@
+This is file yhatwhcl.men--Plot Simultaneous Confidence Limits
+ 
+--------------------
+ 1. Plot Simultaneous Confidence Limits
+ 2. PLOT Y PRED UPPER LOWER VERSUS X
+ 3.
+ 4. This menu plots sumultaneous confidence
+ 5. limits for the predicted values against each
+ 6. independent variable in the fit.  From 1 to 9
+ 7. independent variables can be specified.
+ 8.
+ 9. Note that these are simultaneous confidence limits.
+10.
+11. Dependent Variable:
+11. @CE 1 0 42 50 ? gui-variable
+12. Independent Variable 1:
+12. @CE 2 0 42 50 ? gui-variable
+13. Independent Variable 2:
+13. @CE 3 0 42 50 ? gui-variable
+14. Independent Variable 3:
+14. @CE 4 0 42 50 ? gui-variable
+15. Independent Variable 4:
+15. @CE 5 0 42 50 ? gui-variable
+16. Independent Variable 5:
+16. @CE 6 0 42 50 ? gui-variable
+17. Independent Variable 6:
+17. @CE 7 0 42 50 ? gui-variable
+18. Independent Variable 7:
+18. @CE 8 0 42 50 ? gui-variable
+19. Independent Variable 8:
+19. @CE 9 0 42 50 ? gui-variable
+20. Independent Variable 9:
+20. @CE 10 0 42 50 ? gui-variable
+21.
+22. Select Confidence Level:
+22. @CE 11 1 35 39 90%
+22. @CE 11 2 40 44 95%
+22. @CE 11 3 46 50 99%
+23. Select Type of Confidence Interval:
+23. @CE 12 1 31 40 Hotelling
+23. @CE 12 2 41 50 Bonferroni
+24.
+25. Character Type for Raw Data:
+25. @CE 13 0 42 50 ? gui-char
+26. Character Type for Predicted Values:
+26. @CE 14 0 42 50 ? gui-char
+27. Character Type for Confidence Limits:
+27. @CE 15 0 42 50 ? gui-char
+28. Line     Type for Raw Data:
+28. @CE 16 0 42 50 ? gui-line 
+29. Line     Type for Predicted Values:
+29. @CE 17 0 42 50 ? gui-line
+30. Line     Type for Confidence Limits:
+30. @CE 18 0 42 50 ? gui-line
+31.
+32. Subset/Except/For Specification:
+33. @CE 19 0 1 50 *
+34.
+35.
+36. Generate the Plot?
+--------------------
+GR FE
+LET ZZZZNVAR = 0
+@IF 2 0 LET STRING ZZZZS2 = _2
+@IF 2 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 3 0 LET STRING ZZZZS3 = _3
+@IF 3 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 4 0 LET STRING ZZZZS4 = _4
+@IF 4 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 5 0 LET STRING ZZZZS5 = _5
+@IF 5 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 6 0 LET STRING ZZZZS6 = _6
+@IF 6 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 7 0 LET STRING ZZZZS7 = _7
+@IF 7 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 8 0 LET STRING ZZZZS8 = _8
+@IF 8 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 9 0 LET STRING ZZZZS9 = _9
+@IF 9 0 LET ZZZZNVAR = ZZZZNVAR + 1
+@IF 10 0 LET STRING ZZZZS10 = _10
+@IF 10 0 LET ZZZZNVAR = ZZZZNVAR + 1
+FIT _1 _2 _3 _4 _5 _6 _7 _8 _9 _10 _19
+CHARACTER SAVE
+LINE SAVE
+CHARACTER X BLANK BLANK BLANK
+LINE BLANK SOLID DOT DOT
+CHARACTERS _13 _14 _15 _15
+LINES _16 _17 _18 _18
+SKIP 0
+READ DPST2F.DAT ZZPREDSD
+LET ALPHA = 0.05
+@IF 11 1 LET ALPHA = 0.10
+@IF 11 3 LET ALPHA = 0.01
+LET ZZZZFLAG = 0
+@IF 12 2 LET ZZZZFLAG =1
+LET ZZZZN = SIZE _1
+LET ZZZZNP = RESDF
+LET ZZZZP = ZZZZN - RESDF
+IF ZZZZFLAG = 0
+  LET ZZZZW = ZZZZP*FPPF(1-ALPHA,ZZZZP,ZZZZNP)
+  LET ZLOWER = PRED - SQRT(ZZZZW)*ZZPREDSD
+  LET ZUPPER = PRED + SQRT(ZZZZW)*ZZPREDSD
+  DELETE ZZPREDSD ZZZZW
+END OF IF
+IF ZZZZFLAG = 1
+  LET ALPHA2 = 1 - (ALPHA/(2*ZZZZN))
+  LET ZLOWER = PRED - TPPF(ALPHA2,ZZZZNP)*ZZPREDSD
+  LET ZUPPER = PRED + TPPF(ALPHA2,ZZZZNP)*ZZPREDSD
+  DELETE ZZPREDSD
+END OF IF
+LET ZZZZNPLT = INT(SQRT(ZZZZNVAR)+0.999)
+DEVICE 1 FONT SIMPLEX
+MULTIPLOT CORNER COORDINATES 2 2 98 98
+MULTIPLOT ZZZZNPLT ZZZZNPLT
+LOOP FOR K = 1 1 ZZZZNVAR
+    LET K2 = K + 1
+    X1LABEL ^ZZZZS^K2
+    PLOT _1 PRED ZLOWER ZUPPER  VERSUS ^ZZZZS^K2  _19
+END OF LOOP
+END OF MULTIPLOT
+DEVICE 1 FONT TEKTRONIX
+X1LABEL
+CHARACTER RESTORE
+LINE RESTORE
+PRINT _1 ZLOWER PRED ZUPPER
+--------------------
+WEB HELP FIT
+--------------------

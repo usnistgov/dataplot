@@ -1,0 +1,8 @@
+----- <~datalist\DDS6.top> DDS6.DAT
+ 
+DDS6.DAT
+ 
+View     <xcl: LIST DDS6.DAT>
+Load     <x2cl: SKIP 25; READ DDS6.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\DDS6.DAT>
+ 

@@ -1,0 +1,27 @@
+This is file grubb.men--Grubbs Outlier Test
+ 
+--------------------
+ 1. Grubbs Test for Outliers
+ 2. GRUBB TEST Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5.
+ 6. Type of Test:
+ 7. @CE 2 1  5 15 Two-Sided
+ 7. @CE 2 2 20 30 Minimum
+ 7. @CE 2 3 35 45 Maximum
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 3 0 1 50 *
+11.
+12.
+13. Compute Grubbs Test?
+--------------------
+GR FE
+@IF 2 1 GRUBB TEST _1 _3
+@IF 2 2 GRUBB MINIMUM _1 _3
+@IF 2 3 GRUBB MAXIMUM _1 _3
+--------------------
+WEB HELP GRUBB TEST
+--------------------

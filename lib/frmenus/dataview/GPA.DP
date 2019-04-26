@@ -1,0 +1,6 @@
+----- <~dataview\GPA.DP> View GPA.DAT
+
+. This is file    GPA.DP
+
+LIST GPA.DAT
+

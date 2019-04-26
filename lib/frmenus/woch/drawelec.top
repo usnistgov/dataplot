@@ -1,0 +1,13 @@
+----- <~woch\drawelec.top> Electrical Symbols
+ 
+Draw an Electric Symbol
+ 
+AND Box                   <xemf: ~woch\and.men>
+Amplifier                 <xemf: ~woch\amplif.men>
+Capacitor                 <xemf: ~woch\capacito.men>
+Ground                    <xemf: ~woch\ground.men>
+Inductor                  <xemf: ~woch\inductor.men>
+NOR Box                   <xemf: ~woch\nor.men>
+OR Box                    <xemf: ~woch\or.men>
+Resistor                  <xemf: ~woch\resistor.men>
+

@@ -1,0 +1,8 @@
+----- <~datalist\FLICKER.top> FLICKER.DAT
+ 
+FLICKER.DAT
+ 
+View     <xcl: LIST FLICKER.DAT>
+Load     <x2cl: SKIP 25; READ FLICKER.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\FLICKER.DAT>
+ 

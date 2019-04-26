@@ -1,0 +1,46 @@
+This is file conlimme.men--Confidence Limits for Mean
+ 
+--------------------
+ 1. Confidence Limits for Mean
+ 2. CONFIDENCE LIMITS Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5.
+ 6. Names for Output Parameters:
+ 7.    Mean
+ 7.    @CE 2 0 33 50 ?
+ 8.    SD(Mean)
+ 8.    @CE 3 0 33 50 ?
+ 9.    Lower 95% Conf. Limit
+ 9.    @CE 4 0 33 50 ?
+10.    Upper 95% Conf. Limit
+10.    @CE 5 0 33 50 ?
+11.    Lower 99% Conf. Limit
+11.    @CE 6 0 33 50 ?
+12.    Upper 99% Conf. Limit
+12.    @CE 7 0 33 50 ?
+13.
+13. Subset/Except/For Specification:
+15. @CE 8 0 5 50 ?
+16.
+17.
+18. Compute Confidence Limits?
+--------------------
+GR FE
+LET ZMEAN = MEAN Y _8
+LET ZN = NUMBER Y _8
+LET ZSD = SD _1 _8
+LET ZSDM = ZSD/SQRT(ZN)
+LET Z95L = ZMEAN - TPPF(.975,ZN-1)*ZSDM
+LET Z95U = ZMEAN + TPPF(.975,ZN-1)*ZSDM
+LET Z99L = ZMEAN - TPPF(.995,ZN-1)*ZSDM
+LET Z99U = ZMEAN + TPPF(.995,ZN-1)*ZSDM
+@IF 2 0 LET _2 = ZMEAN
+@IF 3 0 LET _3 = ZSDM
+@IF 4 0 LET _4 = Z95L
+@IF 5 0 LET _5 = Z95U
+@IF 6 0 LET _6 = Z99L
+@IF 7 0 LET _7 = Z99U
+WRITE _2 _3 _4 _5 _6 _7
+--------------------

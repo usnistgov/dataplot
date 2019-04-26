@@ -1,0 +1,68 @@
+This is file statplms.men--Generate Statistic Plots (Miscellaneous)
+ 
+--------------------line 3
+01. Statistic Plots (Miscellanous)
+02. <statistic> PLOT Y X
+03.
+04. Vertical   Axis Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Group ID        Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06.
+07. Statistic (Select one):
+08. @CE 3 1 5 25 size
+08. @CE 3 2 30 50 normal PPCC
+09. @CE 3 3 5 25 autocorrelation
+09. @CE 3 4 30 50 autocovariance
+10. @CE 3 5 5 25 sine amplitude
+10. @CE 3 6 30 50 sine frequency
+11.
+12. Character Type for Data
+12. @CE 4 0 42 50 * gui-char
+13. Character Fill for Data
+13. @CE 5 0 42 50 gui-ooff
+14. Line Type for Data-connecting Line
+14. @CE 6 0 42 50 * gui-line
+15. Line Type for Global Stat Line?
+15. @CE 7 0 42 50 * gui-line
+16. Spike to Global Stat Line?
+16. @CE 8 0 42 50 gui-ooff
+17.
+18. Title:
+18. @CE 9 0 10 50 *
+19. Left Axis Label:
+19. @CE 10 0 22 50 *
+20. Bottom Axis Label:
+20. @CE 11 0 22 50 *
+21.
+22. Subset/Except/For Specification:
+23. @CE 12 0 1 50 *
+24.
+25. Generate the Statistic Plot?:
+--------------------
+TITLE _9
+Y1LABEL _10
+X1LABEL _11
+CHARACTERS _4
+CHARACTER FILL _5
+LINES _6 _7
+.
+@IF 3 1 LET ZSTAT = SIZE _1 _12
+@IF 3 2 LET ZSTAT = NORMAL PPCC _1 _12
+@IF 3 3 LET ZSTAT = AUTOCORRELATION _1 _12
+@IF 3 4 LET ZSTAT = AUTOCOVARIANCE _1 _12
+@IF 3 5 LET ZSTAT = SINE AMPLITUDE _1 _12
+@IF 3 6 LET ZSTAT = SINE FREQUENCY _1 _12
+SPIKE _8
+SPIKE BASE ZSTAT
+.
+BAR OFF OFF
+@IF 3 1 SIZE PLOT _1 _2 _12
+@IF 3 2 NORMAL PPCC PLOT _1 _2 _12
+@IF 3 3 AUTOCORRELATION STATISTIC PLOT _1 _2 _12
+@IF 3 4 AUTOCOvARIANCE STATISTIC PLOT _1 _2 _12
+@IF 3 5 SINE AMPLITUDE PLOT _1 _2 _12
+@IF 3 6 SINE FREQUENCY PLOT _1 _2 _12
+--------------------
+WEB HELP STATISTICS PLOT
+--------------------

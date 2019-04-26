@@ -1,0 +1,144 @@
+This is Dataplot data file     BOOKS.DAT
+Classic Books Reading Comprehension 
+Source--Burch, Mary Crowell (1928).
+        Determination of a content of the course in literature of a
+        suitable difficulty for junior and senior high school students.
+        Genetic Psychology Monographs, 4, table 9, page 231.
+Response Variable                  = Reading Comprehension
+Number of observations             = 96 (= 6 x 4 x 4)
+Number of variables per line image = 4
+Order of variables per line image--
+   Response variable = reading comprehension (0 to 100%)
+   Factor 1          = book          (6 levels:
+                                      1 = Black Beauty 2 = Gull. Travels
+                                      3 = The Iliad    4 = Lorna Doone
+                                      5 = The Aeneid   6 = Milton)
+   Factor 2          = grade         (4 levels: 7, 8, 9, 10)
+   Factor 3          = ability group (4 levels: 1, 2, 3, 4)
+Statistical area--Multifactor
+Problem Type    --Comparative
+Design type     --Randomized Block
+To read this file into Dataplot--
+      SKIP 25; READ BOOKS.DAT Y X1 X2 X3
+  Size    Book   Grade  Ability
+    Y      X1     X2     X3
+------------------------------
+   59      1      1      1
+   78      1      1      2
+   83      1      1      3
+   90      1      1      4
+
+   70      1      2      1
+   84      1      2      2
+   91      1      2      3
+   99      1      2      4
+
+   62      1      3      1
+   81      1      3      2
+   83      1      3      3
+   94      1      3      4
+
+   72      1      4      1
+   78      1      4      2
+   88      1      4      3
+   96      1      4      4
+
+   40      2      1      1
+   60      2      1      2
+   69      2      1      3
+   71      2      1      4
+
+   46      2      2      1
+   72      2      2      2
+   79      2      2      3
+   85      2      2      4
+
+   53      2      3      1
+   66      2      3      2
+   78      2      3      3
+   89      2      3      4
+
+   47      2      4      1
+   59      2      4      2
+   75      2      4      3
+   88      2      4      4
+
+   19      3      1      1
+   31      3      1      2
+   42      3      1      3
+   55      3      1      4
+
+   31      3      2      1
+   41      3      2      2
+   54      3      2      3
+   64      3      2      4
+
+   30      3      3      1
+   46      3      3      2
+   56      3      3      3
+   73      3      3      4
+
+   39      3      4      1
+   47      3      4      2
+   66      3      4      3
+   85      3      4      4
+
+   26      4      1      1
+   25      4      1      2
+   39      4      1      3
+   56      4      1      4
+
+   23      4      2      1
+   34      4      2      2
+   57      4      2      3
+   68      4      2      4
+
+   24      4      3      1
+   40      4      3      2
+   50      4      3      3
+   71      4      3      4
+
+   21      4      4      1
+   40      4      4      2
+   62      4      4      3
+   83      4      4      4
+
+   16      5      1      1
+   40      5      1      2
+   46      5      1      3
+   47      5      1      4
+
+   30      5      2      1
+   39      5      2      2
+   53      5      2      3
+   67      5      2      4
+
+   26      5      3      1
+   39      5      3      2
+   48      5      3      3
+   71      5      3      4
+
+   29      5      4      1
+   44      5      4      2
+   55      5      4      3
+   67      5      4      4
+
+   05      4      1      1
+   13      6      1      2
+   10      6      1      3
+   27      6      1      4
+
+   23      6      2      1
+   17      6      2      2
+   15      6      2      3
+   31      6      2      4
+
+   18      6      3      1
+   11      6      3      2
+   24      6      3      3
+   41      6      3      4
+
+   12      6      4      1
+   10      6      4      2
+   27      6      4      3
+   47      6      4      4

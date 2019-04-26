@@ -1,0 +1,119 @@
+This is file barplot.men--Bar Plot
+ 
+--------------------
+ 1. Bar Plot
+ 2. BAR ON; PLOT Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. Optional Horizontal Axis Variable:
+ 5. @CE 2 0 33 50 ? gui-vari
+ 6.
+ 7. Title:
+ 7. @CE 18 0 10 50 *
+ 8. Left Axis Label:
+ 8. @CE 19 0 22 50 *
+ 9. Bottom Axis Label:
+ 9. @CE 20 0 22 50 *
+10.
+11. Base for Bars (typically 0):
+11. @CE 3 0 33 50 *
+12. Solid Filled Bars?:
+12. @CE 4 0 33 50 * gui-ooff
+13. Color for Solid Filled Bars?:
+13. @CE 5 0 33 50 * gui-color
+14. Width of Bar (typically 0.5):
+14. @CE 16 0 33 50 *
+15.
+16. Color for Bar Border:
+16. @CE 13 0 33 50 * gui-color
+17. Line Type for Bar Border:
+17. @CE 14 0 33 50 * gui-line
+18. Line Thickness for Bar Border:
+18. @CE 15 0 33 50 * gui-thick
+19.
+20. Cross-Hatch Pattern:
+20. @CE 8 0 33 50 *
+21. Color for Cross-Hatch Pattern:
+21. @CE 9 0 33 50 *
+22. Line Type for Cross-Hatch Pattern:
+22. @CE 10 0 33 50 * gui-line
+23. Line Thickness for Cross-Hatch Pattern:
+23. @CE 12 0 33 50 * gui-thick
+24. Spacing for Cross-Hatch Pattern:
+24. @CE 11 0 33 50 *
+25.
+26. Bar Dimension:
+26. @CE 6 1 25 30 2
+26. @CE 6 2 32 37 3
+27. Bar Direction:
+27. @CE 7 1 25 35 Vertical
+27. @CE 7 2 37 47 Horizontal
+28.
+29. Enter Bar Labels (use SP() for blank labels):
+30. @CE 17 0 -10 50 *
+31.
+32. Subset/Except/For Specification:
+33. @CE 21 0 -10 50 *
+34.
+35. Generate the Bar Plot?:
+--------------------
+GR FE
+LINE SAVE
+CHARACTER SAVE
+LINE BLANK BLANK BLANK
+CHARACTER BLANK BLANK BLANK
+SPIKE OFF OFF OFF
+BAR ON ON ON
+BAR BASE _3
+BAR FILL _4
+BAR FILL COLOR _5
+@IF 8 0 BAR FILL ON
+@IF 8 0 BAR PATTERN _8
+BAR PATTERN COLOR _9
+BAR PATTERN LINE _10
+BAR PATTERN SPACING _11
+BAR PATTERN THICKNESS _12
+@IF 6 1 BAR DIMENSION  2
+@IF 6 2 BAR DIMENSION  3
+@IF 6 2 BAR FILL ONTS
+HORIZONTAL SWITCH OFF
+@IF 7 2 HORIZONTAL SWITCH ON
+BAR BORDER COLOR _13
+BAR BORDER LINE _14
+BAR BORDER THICKNESS _15
+BAR WIDTH _16
+LET ZZZZDIR = 1
+@IF 7 2 LET ZZZZDIR = 2
+@IF 17 0 LET ZZZZN = SIZE _1
+IF ZZZZDIR = 1
+@IF 17 0 MAJOR XTIC MARK NUMBER ZZZZN
+@IF 17 0 MINOR XTIC MARK NUMBER 0
+@IF 17 0 XLIMITS 1 ZZZZN
+@IF 17 0 XTIC OFFSET 0.5 0.5
+@IF 17 0 XTIC LABEL FORMAT ALPHA
+@IF 17 0 XTIC LABEL CONTENT _17
+END OF IF
+IF ZZZZDIR = 2
+@IF 17 0 MAJOR YTIC MARK NUMBER ZZZZN
+@IF 17 0 MINOR YTIC MARK NUMBER 0
+@IF 17 0 YLIMITS 1 ZZZZN
+@IF 17 0 YTIC OFFSET 0.5 0.5
+@IF 17 0 YTIC LABEL FORMAT ALPHA
+@IF 17 0 YTIC LABEL CONTENT _17
+END OF IF
+TITLE _18
+Y1LABEL _19
+X1LABEL _20
+PLOT _1 _2 _21
+LINE RESTORE
+CHARACTER RESTORE
+BAR OFF OFF OFF
+@IF 17 0 LIMITS
+@IF 17 0 TIC OFFSET
+@IF 17 0 MAJOR TIC MARK NUMBER
+@IF 17 0 MINOR TIC MARK NUMBER
+@IF 17 0 TIC MARK LABEL FORMAT
+--------------------
+WEB HELP BAR
+--------------------

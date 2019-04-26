@@ -1,0 +1,57 @@
+This is file setbox1.men--Set Box Attributes for Single Box
+ 
+--------------------
+ 1. Set Box Attributes for a Single Box
+ 2. BOX 1 COLOR RED; BOX 1 PATTERN DASH
+ 3.
+ 4. Box Number to Set Attributes For:
+ 4. @CE 1 0 42 50 ?
+ 5. X Coordinate for One Corner of Box:
+ 5. @CE 2 0 42 50 ?
+ 6. Y Coordinate for One Corner of Box:
+ 6. @CE 3 0 42 50 ?
+ 7. X Coordinate for Other Corner of Box:
+ 7. @CE 4 0 42 50 ?
+ 8. Y Coordinate for Other Corner of Box:
+ 8. @CE 5 0 42 50 ?
+ 9.
+10. Color for Box Border:
+10. @CE 6 0 42 50 * gui-color
+11. Line Type for Box Border:
+11. @CE 7 0 42 50 * gui-line
+12. Line Thickness for Box Border:
+12. @CE 8 0 42 50 * gui-thick
+13.
+14. Pattern for Box Interior:
+14. @CE 9 0 42 50 * gui-pattern
+15. Color for Box Interior:
+15. @CE 10 0 42 50 * gui-color
+16. Line Type for Box Interior:
+16. @CE 11 0 42 50 * gui-line
+17. Line Thickness for Box Interior:
+17. @CE 12 0 42 50 * gui-line
+18. Cross-Hatch Spacing for Box Interior:
+18. @CE 13 0 42 50 *
+19.
+20. Height for Box Shadow (0 for none):
+20. @CE 14 0 42 50 *
+21. Width for Box Shadow (0 for none):
+21. @CE 15 0 42 50 *
+22.
+23.
+24. Set Box Attributes?
+--------------------
+PC FE
+BOX _1 COORDINATES _2 _3 _4 _5
+@IF 6 0 BOX _1 COLOR _6
+@IF 7 0 BOX _1 PATTERN _7
+@IF 8 0 BOX _1 THICKNESS _8
+@IF 9 0 BOX _1 FILL PATTERN _9
+@IF 10 0 BOX _1 FILL COLOR _10
+@IF 11 0 BOX _1 FILL LINE _11
+@IF 12 0 BOX _1 FILL THICKNESS _12
+@IF 13 0 BOX _1 FILL GAP _13
+BOX _1 SHADOW HW _14 _15
+--------------------
+WEB HELP BOX COORDINATES
+--------------------

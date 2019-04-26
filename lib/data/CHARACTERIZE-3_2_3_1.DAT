@@ -1,0 +1,50 @@
+This is the Dataplot data file        CHARACTERIZE-3_2_3_1.DAT
+Data provided by Barry Hembre of AMD.  This data set is used on
+page ppc231.htm of the e-Handbook to demonstrate one-way ANOVA.
+This is slightly modifed version of the MACHINE.DAT file (it does
+not include the day, time, and sample factors, the numbers are
+rounded, and only 25 of the 180 observations are included)).
+
+Number of observations                       = 25
+Number of observations per line image        = 2
+Order of variables on a line image--
+   1. Factor Variable MACHINE      = Machine Number
+   2. Dependent Variable DIAMETER  = DIAMETER
+  
+To read this file into Dataplot--
+   SKIP 25
+   READ CHARACTERIZE-3_2_3_1.DAT MACHINE DIAMETER
+
+
+
+
+
+
+
+MACHINE  DIAMETER
+-----------------
+    1    0.125
+    2    0.118
+    3    0.123
+    4    0.126
+    5    0.118
+    1    0.127
+    2    0.122
+    3    0.125
+    4    0.128
+    5    0.129
+    1    0.125
+    2    0.120
+    3    0.125
+    4    0.126
+    5    0.127
+    1    0.126
+    2    0.124
+    3    0.124
+    4    0.127
+    5    0.120
+    1    0.128
+    2    0.119
+    3    0.126
+    4    0.129
+    5    0.121

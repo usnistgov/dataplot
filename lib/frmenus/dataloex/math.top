@@ -1,0 +1,7 @@
+----- <~dataloex\math.top> Load & Execute Built-in Mathematics Data Files
+
+Load & Execute Built-in Mathematics Data Files
+
+FREQPRIM.DAT  Frequency of prime numbers   <xcf: ~dataloex\FREQPRIM.DP>
+PRIMESM.DAT   Mersenne prime numbers       <xcf: ~dataloex\PRIMESM.DP>
+

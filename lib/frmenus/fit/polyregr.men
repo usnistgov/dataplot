@@ -1,0 +1,60 @@
+This is file polyregr.men--Carry out Polynomial Regression
+ 
+--------------------
+1. Polynomial Regression
+2. ... FIT Y X
+3.
+4. Vertical   Axis Variable Y:
+4. @CE 1 0 33 50 ?
+5. Horizontal Axis Variable X:
+5. @CE 2 0 33 50 ?
+6. Subset/Except/For Specification:
+7. @CE 3 0 33 50 *
+8.
+9. Degree of Polynomial (Select one):
+9. @CE 4 1 1 5 1
+9. @CE 4 2 6 11 2
+9. @CE 4 3 12 17 3
+9. @CE 4 4 18 24 4
+9. @CE 4 5 25 30 5
+10. @CE 4 6 1 5 6
+10. @CE 4 7 6 11 7
+10. @CE 4 8 12 17 8
+10. @CE 4 9 18 24 9
+10. @CE 4 10 25 30 10
+11.
+12. If resistive weighting,
+13. then specify type:
+13. @CE 5 1 33 50  biweight
+14. @CE 5 2 33 50  tricube
+15.
+16. If user-defined weighting,
+17. then specify the
+18. weights variable:
+18. @CE 6 0 33 50  *
+19.
+20.
+21. Do the Regression?:
+--------------------
+AN FE
+@IF 4 1 LET STRING ZDEGREE = LINEAR
+@IF 4 2 LET STRING ZDEGREE = QUADRATIC
+@IF 4 3 LET STRING ZDEGREE = CUBIC
+@IF 4 4 LET STRING ZDEGREE = QUARTIC
+@IF 4 5 LET STRING ZDEGREE = QUINTIC
+@IF 4 6 LET STRING ZDEGREE = SEXTIC
+@IF 4 7 LET STRING ZDEGREE = SEPTIC
+@IF 4 8 LET STRING ZDEGREE = OCTIC
+@IF 4 9 LET STRING ZDEGREE = NONIC
+@IF 4 10 LET STRING ZDEGREE = DEXIC
+^ZDEGREE FIT _1 _2 _3
+@IF 5 1 LET ZW = BIWEIGHT RES _3
+@IF 5 1 WEIGHTS ZW
+@IF 5 1 ^ZSTRING _1 _2 _3
+@IF 5 2 LET ZW = TRICUBE RES _3
+@IF 5 2 WEIGHTS ZW
+@IF 5 2 ^ZSTRING _1 _2 _3
+@IF 6 0 LET ZW = _6 _3
+@IF 6 0 WEIGHTS ZW
+@IF 6 0 ^ZSTRING _1 _2 _3
+--------------------

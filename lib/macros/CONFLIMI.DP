@@ -1,0 +1,43 @@
+. This is Dataplot     macro conflimi.dp
+. Purpose   --Compute 95% t confidence limits for the mean
+.             and produce graphics summary table
+. Output    --A graphical summary table
+. Input     --ytarg = vector of data
+. Assumption--device 1 and device 2 already open
+. Called By --test2coli.dp (for example)
+.
+. -----start point
+.
+let ntarg = number ytarg
+let mtarg = mean ytarg
+let starg = sd ytarg
+let sdmtarg = sd mean ytarg
+let ntarg = number ytarg
+let dftarg = ntarg-1
+let ttarg = tppf(.975,dftarg)
+let chwtarg = ttarg*sdmtarg
+let chwptarg = 100*(chwtarg/mtarg)
+let chwptarg = round(chwptarg,3)
+
+let string str11 = Sample Size n
+let string str21 = Mean
+let string str31 = Standard Deviation
+let string str41 = Standard Deviation of the Mean
+let string str51 = Degrees of Freedom
+let string str61 = t Factor (95% Symmetric)
+let string str71 = 95% Confidence Half Width ("Total Uncertainty")
+let string str81 = 95% Confidence Half Width (as % of Mean)
+.
+let string str12 = ^ntarg
+let string str22 = ^mtarg
+let string str32 = ^starg
+let string str42 = ^sdmtarg
+let string str52 = ^dftarg
+let string str62 = ^ttarg
+let string str72 = ^chwtarg
+let string str82 = ^chwptarg  %
+.
+let xleft = 20; let xc1 = 23; let xc2 = 70
+let ytop = 85; let ydel = 5
+let numcol = 2; let numrow = 8
+call 2column.dp

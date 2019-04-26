@@ -1,0 +1,23 @@
+----- <~dataall\reg1n.top> View/etc. Regression Data: 1-Variable & Non-L.
+
+View/Load/Print Regression Data: 1-Variable & Non-Linear
+
+CHWIRUT1.DAT* Ultrasonic ref. block calib  <~dataall\CHWIRUT1.top>
+CHWIRUT2.DAT  Ultrasonic ref. block calib  <~dataall\CHWIRUT2.top>
+ECKERLE4.DAT  Circular interfer. transmit  <~dataall\ECKERLE4.top>
+HAHN1.DAT     Thermal expansion of copper  <~dataall\HAHN1.top>
+KIRBY2.DAT    Electron microsc line width  <~dataall\KIRBY2.top>
+LEW3.DAT      Concrete tensile strength    <~dataall\LEW3.top>
+MISRA1.DAT    Dental res. adsorbtion       <~dataall\MISRA1.top>
+ROSZMAN1.DAT  Quantum defects for sulfur   <~dataall\ROSZMAN1.top>
+THURBER.DAT   Semiconductor mobility       <~dataall\THURBER.top>
+BENNETT5.DAT  Superconductivity magnetiz.  <~dataall\BENNETT5.top>
+
+GRA1617.DAT  Visual response proportion    <~dataall\GRA1617.top>
+HABER1.DAT    Dens of 2-admiss numbers     <~dataall\HABER1.top>
+SWANSON1.DAT  Ozone spectroscopy           <~dataall\SWANSON1.top>
+USADEBT.DAT   USA nat. debt (1947-1993)    <~dataall\USADEBT.top>
+
+BOXBOD.DAT    Incub time & bio O2 demand   <~dataall\BOXBOD.top>
+NELSON.DAT    Insulation accel. testing    <~dataall\NELSON.top>
+

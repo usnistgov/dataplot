@@ -1,0 +1,22 @@
+This is file medpol.men--Median polish
+ 
+--------------------
+ 1. Median Polish
+ 2. MEDIAN POLISH Y X1 X2
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. List of (1 to 5) Factor Variables:
+ 6. @CE 2 0 1 50 ? gui-variable
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 3 0 1 50 *
+10.
+11.
+12. Compute Median Polish?
+--------------------
+GR FE
+MEDIAN POLISH _1 _2 _3
+--------------------
+WEB HELP MEIDAN POLISH
+--------------------

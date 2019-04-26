@@ -1,0 +1,25 @@
+----- <~dexcomp\ccrdind2.top> Completely Randomized Designs: Example 1
+ 
+Completely Randomized Designs: Example 1
+ 
+Example 1:
+
+   The most trivial Completely Randomized Design consists
+   of the following:
+ 
+      k = 1 factor (X1)
+      l = 2 levels of that single factor
+      r = 1 replications per level
+      n = 2 levels * 1 rep. per level = 2 runs
+ 
+       X1
+      .....
+        1
+        2
+ 
+   Such a design is not usually run because it has no replication
+   and therefore no measure of "within" variability.  It is
+   a priori impossible to determine if the 2 levels have a
+   statistically significant effect on the response
+   unless we have a handle on the nature variation of the data.
+ 

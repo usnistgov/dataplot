@@ -1,0 +1,80 @@
+This is file inflqc.men--Generate Influence Curves (Quality Control)
+ 
+--------------------line 3
+01. Influence Curves (QC)
+02. <statistic> INFLUENCE CURVE Y XSEQ
+03.
+04. Response Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. X Sequence Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06.
+07. Quality Control Statistic (Select one):
+08. Capability Analysis
+09. @CE 3 1 1 27 Cp
+09. @CE 3 2 29 57 Cpk
+10. @CE 3 3 1 27 Cnpk
+10. @CE 3 4 29 57 Cpm
+11. @CE 3 5 1 27 Cc
+11. @CE 3 6 29 57 Expected Loss
+12. @CE 3 7 1 27 Percent Defective
+13.
+14. Lower Specification Limit:
+14. @CE 4 0 42 50 ? 
+15. Upper Specification Limit:
+15. @CE 5 0 42 50 ?
+16. Target Value:
+16. @CE 6 0 42 50 ?
+17. Cost Value:
+17. @CE 7 0 42 50 ?
+18.
+19. Taguchi
+20. @CE 3 8 1 27 Taguchi sn-
+20. @CE 3 9 29 57 Taguchi sn+
+21. @CE 3 10 1 27 Taguchi sn0
+21. @CE 3 11 29 57 Taguchi sn00
+22.
+23. Character Type for Data
+23. @CE 8 0 42 50 * gui-char
+24. Character Fill for Data
+24. @CE 9 0 42 50 gui-ooff
+25. Line Type for Data-connecting Line
+25. @CE 10 0 42 50 * gui-line
+26.
+27. Title:
+27. @CE 11 0 10 50 *
+28. Left Axis Label:
+28. @CE 12 0 22 50 *
+29. Bottom Axis Label:
+29. @CE 13 0 22 50 *
+30.
+31. Subset/Except/For Specification:
+32. @CE 14 0 1 50 *
+33.
+34. Generate the Influence Curve?:
+--------------------
+TITLE _11
+Y1LABEL _12
+X1LABEL _13
+CHARACTERS _8
+CHARACTER FILL _9
+LINES _10
+LET LSL = _4
+LET USL = _5
+LET TARGET = _6
+LET USLCOST = _7
+.
+@IF 3 1 CP INFLUENCE CURVE _1 _2 _14
+@IF 3 2 CPK INFLUENCE CURVE _1 _2 _14
+@IF 3 3 CNPK INFLUENCE CURVE _1 _2 _14
+@IF 3 4 CPM INFLUENCE CURVE _1 _2 _14
+@IF 3 5 CC INFLUENCE CURVE _1 _2 _14
+@IF 3 6 EXPECTED LOSS INFLUENCE CURVE _1 _2 _14
+@IF 3 7 PERCENT DEFECTIVE INFLUENCE CURVE _1 _2 _14
+@IF 3 8 TAGUCHI SN- INFLUENCE CURVE _1 _2 _14
+@IF 3 9 TAGUCHI SN+ INFLUENCE CURVE _1 _2 _14
+@IF 3 10 TAGUCHI SN0 INFLUENCE CURVE _1 _2 _14
+@IF 3 11 TAGUCHI SN00 INFLUENCE CURVE _1 _2 _14
+--------------------
+WEB HELP INFLUENCE CURVE
+--------------------

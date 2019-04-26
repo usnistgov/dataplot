@@ -1,0 +1,12 @@
+----- <~univ\variboot.top> Bootstrap &/or Jacknife: Variation
+
+Bootstrap and/or Jacknife Estimates of Variation
+
+Bootstrap
+   Standard Deviation                <xemf: ~univ\bootsdpl.men>
+   Range                             <xemf: ~univ\bootrapl.men>
+
+Jacknife
+   Standard Deviation                <xemf: ~univ\jacksdpl.men>
+   Range                             <xemf: ~univ\jackrapl.men>
+

@@ -1,0 +1,10 @@
+----- <~dataloex\MANDEL.DP> Load & Execute MANDEL.DAT
+
+. This is file    MANDEL.DP
+
+DELETE Y
+SKIP 25
+READ MANDEL.DAT Y
+TITLE MANDEL.DAT
+/
+

@@ -1,0 +1,26 @@
+----- <~dataloex\timedds.top> Load & Execute Time Series Data: DDS
+
+Load & Execute Time Series Data: DDS
+
+DDS1.DAT   Papermaking gate opening      <xcf: ~dataloex\DDS1.DP>
+DDS2.DAT   Yearly sunspot numbers        <xcf: ~dataloex\DDS2.DP>
+DDS3.DAT   IBM stock prices              <xcf: ~dataloex\DDS3.DP>
+DDS4.DAT   Mech. vibratory system displ. <xcf: ~dataloex\DDS4.DP>
+DDS5.DAT   Grinding wheel profile dev.   <xcf: ~dataloex\DDS5.DP>
+DDS6.DAT   Machine part diameter 1       <xcf: ~dataloex\DDS6.DP>
+DDS7.DAT   Machine part diameter 2       <xcf: ~dataloex\DDS7.DP>
+DDS8.DAT   U.S. treasure Securities      <xcf: ~dataloex\DDS8.DP>
+DDS9.DAT   Money market rates            <xcf: ~dataloex\DDS9.DP>
+DDS10.DAT   Hospital in-patient counts   <xcf: ~dataloex\DDS10.DP>
+DDS11.DAT   U.S. consumer price index    <xcf: ~dataloex\DDS11.DP>
+DDS12.DAT   U.S. wholesale price index   <xcf: ~dataloex\DDS12.DP>
+DDS13.DAT   Airline passenger counts     <xcf: ~dataloex\DDS13.DP>
+DDS14.DAT   Nuclear plant crack lengths  <xcf: ~dataloex\DDS14.DP>
+DDS15.DAT   Wood surface height          <xcf: ~dataloex\DDS15.DP>
+DDS16.DAT   Papermaking machine I/O data <xcf: ~dataloex\DDS16.DP>
+DDS17.DAT   Chemical Concentration       <xcf: ~dataloex\DDS17.DP>
+DDS18.DAT   U.S. gross national product  <xcf: ~dataloex\DDS18.DP>
+DDS19.DAT   U.S durables expenditures    <xcf: ~dataloex\DDS19.DP>
+DDS20.DAT   Papermaking machine I/O      <xcf: ~dataloex\DDS20.DP>
+DDS21.DAT   Wood pulping machine I/O     <xcf: ~dataloex\DDS21.DP>
+

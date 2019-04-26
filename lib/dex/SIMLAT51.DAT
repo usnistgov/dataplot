@@ -1,0 +1,31 @@
+(k=5,d=1) Simplex-Lattice Design
+ 
+(k=5,d=1) Simplex-Lattice Design
+ 
+k = 5 factors; d = degree 1
+n = 5 runs
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   X1  X2  X3  X4  X5
+  ---------------------
+    1   0   0   0   0
+    0   1   0   0   0
+    0   0   1   0   0
+    0   0   0   1   0
+    0   0   0   0   1
+ 

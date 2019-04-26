@@ -1,0 +1,164 @@
+2**(10-4) FRACTIONAL FACTORIAL DESIGN
+NUMBER OF LEVELS FOR EACH FACTOR =  2
+NUMBER OF FACTORS                = 10
+NUMBER OF OBSERVATIONS           = 64
+RESOLUTION                       =  4 (THEREFORE NO MAIN EFFECTS ARE
+                                      CONFOUNDED WITH ANY 2-FACTOR
+                                      INTERACTIONS;
+                                      MAIN EFFECTS ARE CONFOUNDED WITH
+                                      3-FACTOR INTERACTIONS AND HIGHER)
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ FACTOR    DEFINITION       CONFOUNDING STRUCTURE
+   1           1                1 + HIGHER
+   2           2                2 + HIGHER
+   3           3                3 + HIGHER
+   4           4                4 + HIGHER
+   5           5                5 + HIGHER
+   6           6                6 + HIGHER
+   7        2346                7 + HIGHER
+   8        1346                8 + HIGHER
+   9        1245                9 + HIGHER
+   10       1235               10 + HIGHER
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  12                           12 + 78 + HIGHER
+  13                           13 + HIGHER
+  14                           14 + HIGHER
+  15                           15 + HIGHER
+  16                           16 + HIGHER
+  17                           17 + 28 + HIGHER
+  18                           18 + 27 + HIGHER
+  19                           19 + HIGHER
+  1(10)                        1(10) + HIGHER
+  23                           23 + HIGHER
+  24                           24 + HIGHER
+  25                           25 + HIGHER
+  26                           26 + HIGHER
+  27                           27 + 18 + HIGHER
+  28                           28 + 17 + HIGHER
+  29                           29 + HIGHER
+  2(10)                        2(10) + HIGHER
+  34                           34 + 9(10) + HIGHER
+  35                           35 + HIGHER
+  36                           36 + HIGHER
+  37                           37 + HIGHER
+  38                           38 + HIGHER
+  39                           39 + 4(10) + HIGHER
+  3(10)                        3(10) + 49 + HIGHER
+  45                           45 + HIGHER
+  46                           46 + HIGHER
+  47                           47 + HIGHER
+  48                           48 + HIGHER
+  49                           49 + 3(10) + HIGHER
+  4(10)                        4(10) + 39 + HIGHER
+  56                           56 + HIGHER
+  57                           57 + HIGHER
+  58                           58 + HIGHER
+  59                           59 + HIGHER
+  5(10)                        5(10) + HIGHER
+  67                           67 + HIGHER
+  68                           68 + HIGHER
+  69                           69 + HIGHER
+  6(10)                        6(10) + HIGHER
+  78                           78 + 12 + HIGHER
+  79                           79 + HIGHER
+  7(10)                        7(10) + HIGHER
+  89                           89 + HIGHER
+  8(10)                        8(10) + HIGHER
+  9(10)                        9(10) + 34 + HIGHER
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+DEFINING RELATION =             I +
+REFERENCE--BOX, HUNTER & HUNTER, STAT. FOR EXP., PAGE 410,
+NOTE--IF POSSIBLE, THIS (AS WITH ALL EXPERIMENT DESIGNS) SHOULD BE
+      RUN IN RANDOM ORDER (SEE DATAPLOT'S RANDOM PERMUTATION FILES).
+NOTE--TO READ THIS FILE INTO DATAPLOT--
+      DIMENSION 20 VARIABLES
+      SKIP 100
+      READ 2TO10M4.DAT X1 TO X10
+DATE--DECEMBER 1988
+NOTE--IN THE DESIGN BELOW, "-1" REPRESENTS THE "LOW"  SETTING OF A FACTOR
+                           "+1" REPRESENTS THE "HIGH" SETTING OF A FACTOR
+NOTE--ALL FACTOR EFFECT ESTIMATES WILL BE OF THE FORM
+      AVERAGE OF THE "HIGH" - AVERAGE OF THE "LOW"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   X1  X2  X3  X4  X5  X6  X7  X8  X9 X10
+   --------------------------------------
+   -1  -1  -1  -1  -1  -1  +1  +1  +1  +1
+   +1  -1  -1  -1  -1  -1  +1  -1  -1  -1
+   -1  +1  -1  -1  -1  -1  -1  +1  -1  -1
+   +1  +1  -1  -1  -1  -1  -1  -1  +1  +1
+   -1  -1  +1  -1  -1  -1  -1  -1  +1  -1
+   +1  -1  +1  -1  -1  -1  -1  +1  -1  +1
+   -1  +1  +1  -1  -1  -1  +1  -1  -1  +1
+   +1  +1  +1  -1  -1  -1  +1  +1  +1  -1
+   -1  -1  -1  +1  -1  -1  -1  -1  -1  +1
+   +1  -1  -1  +1  -1  -1  -1  +1  +1  -1
+   -1  +1  -1  +1  -1  -1  +1  -1  +1  -1
+   +1  +1  -1  +1  -1  -1  +1  +1  -1  +1
+   -1  -1  +1  +1  -1  -1  +1  +1  -1  -1
+   +1  -1  +1  +1  -1  -1  +1  -1  +1  +1
+   -1  +1  +1  +1  -1  -1  -1  +1  +1  +1
+   +1  +1  +1  +1  -1  -1  -1  -1  -1  -1
+   -1  -1  -1  -1  +1  -1  +1  +1  -1  -1
+   +1  -1  -1  -1  +1  -1  +1  -1  +1  +1
+   -1  +1  -1  -1  +1  -1  -1  +1  +1  +1
+   +1  +1  -1  -1  +1  -1  -1  -1  -1  -1
+   -1  -1  +1  -1  +1  -1  -1  -1  -1  +1
+   +1  -1  +1  -1  +1  -1  -1  +1  +1  -1
+   -1  +1  +1  -1  +1  -1  +1  -1  +1  -1
+   +1  +1  +1  -1  +1  -1  +1  +1  -1  +1
+   -1  -1  -1  +1  +1  -1  -1  -1  +1  -1
+   +1  -1  -1  +1  +1  -1  -1  +1  -1  +1
+   -1  +1  -1  +1  +1  -1  +1  -1  -1  +1
+   +1  +1  -1  +1  +1  -1  +1  +1  +1  -1
+   -1  -1  +1  +1  +1  -1  +1  +1  +1  +1
+   +1  -1  +1  +1  +1  -1  +1  -1  -1  -1
+   -1  +1  +1  +1  +1  -1  -1  +1  -1  -1
+   +1  +1  +1  +1  +1  -1  -1  -1  +1  +1
+   -1  -1  -1  -1  -1  +1  -1  -1  +1  +1
+   +1  -1  -1  -1  -1  +1  -1  +1  -1  -1
+   -1  +1  -1  -1  -1  +1  +1  -1  -1  -1
+   +1  +1  -1  -1  -1  +1  +1  +1  +1  +1
+   -1  -1  +1  -1  -1  +1  +1  +1  +1  -1
+   +1  -1  +1  -1  -1  +1  +1  -1  -1  +1
+   -1  +1  +1  -1  -1  +1  -1  +1  -1  +1
+   +1  +1  +1  -1  -1  +1  -1  -1  +1  -1
+   -1  -1  -1  +1  -1  +1  +1  +1  -1  +1
+   +1  -1  -1  +1  -1  +1  +1  -1  +1  -1
+   -1  +1  -1  +1  -1  +1  -1  +1  +1  -1
+   +1  +1  -1  +1  -1  +1  -1  -1  -1  +1
+   -1  -1  +1  +1  -1  +1  -1  -1  -1  -1
+   +1  -1  +1  +1  -1  +1  -1  +1  +1  +1
+   -1  +1  +1  +1  -1  +1  +1  -1  +1  +1
+   +1  +1  +1  +1  -1  +1  +1  +1  -1  -1
+   -1  -1  -1  -1  +1  +1  -1  -1  -1  -1
+   +1  -1  -1  -1  +1  +1  -1  +1  +1  +1
+   -1  +1  -1  -1  +1  +1  +1  -1  +1  +1
+   +1  +1  -1  -1  +1  +1  +1  +1  -1  -1
+   -1  -1  +1  -1  +1  +1  +1  +1  -1  +1
+   +1  -1  +1  -1  +1  +1  +1  -1  +1  -1
+   -1  +1  +1  -1  +1  +1  -1  +1  +1  -1
+   +1  +1  +1  -1  +1  +1  -1  -1  -1  +1
+   -1  -1  -1  +1  +1  +1  +1  +1  +1  -1
+   +1  -1  -1  +1  +1  +1  +1  -1  -1  +1
+   -1  +1  -1  +1  +1  +1  -1  +1  -1  +1
+   +1  +1  -1  +1  +1  +1  -1  -1  +1  -1
+   -1  -1  +1  +1  +1  +1  -1  -1  +1  +1
+   +1  -1  +1  +1  +1  +1  -1  +1  -1  -1
+   -1  +1  +1  +1  +1  +1  +1  -1  -1  -1
+   +1  +1  +1  +1  +1  +1  +1  +1  +1  +1

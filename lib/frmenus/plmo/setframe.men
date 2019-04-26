@@ -1,0 +1,57 @@
+This is file setframe.men--Set Frame and Attributes
+ 
+--------------------
+ 1. Set Frame
+ 2. FRAME OFF
+ 3.
+ 4. All 4 Frame Lines:
+ 4. @CE 1 0 42 50 ? gui-ooff
+ 5.
+ 6. Bottom Frame Line:
+ 6. @CE 2 0 42 50 ? gui-ooff
+ 7. Top    Frame Line:
+ 7. @CE 3 0 42 50 ? gui-ooff
+ 8. Left   Frame Line:
+ 8. @CE 4 0 42 50 ? gui-ooff
+ 9. Right  Frame Line:
+ 9. @CE 5 0 42 50 ? gui-ooff
+10.
+11. Color for the Frame:
+11. @CE 6 0 42 50 * gui-color
+12. Line Thickness for the Frame:
+12. @CE 7 0 42 50 * gui-thick
+13. Line Style for the Frame:
+13. @CE 8 0 42 50 * gui-thick
+14.
+15. The default frame has its lower
+16. left corner at (15,20) and its
+17. upper corner at (85,90) on a
+18. 0 to 100 scale.  If you enter one
+19. of the following coordinates, you
+20. should enter all four.
+21.
+22. X Coordinate for Lower Corner:
+22. @CE 9 0 42 50 *
+23. Y Coordinate for Lower Corner:
+23. @CE 10 0 42 50 *
+24. X Coordinate for Upper Corner:
+24. @CE 11 0 42 50 *
+25. Y Coordinate for Upper Corner:
+25. @CE 12 0 42 50 *
+26.
+27.
+28. Set Frame and Attributes?
+--------------------
+PC FE
+@IF 1 0 FRAME _1
+@IF 2 0 X1FRAME _2
+@IF 3 0 X2FRAME _3
+@IF 4 0 Y1FRAME _4
+@IF 5 0 Y2FRAME _5
+@IF 6 0 FRAME COLOR _6
+@IF 7 0 FRAME THICKNESS _7
+@IF 8 0 FRAME PATTERN _8
+FRAME CORNER COORDINATES _9 _10 _11 _12
+--------------------
+WEB HELP FRAME
+--------------------

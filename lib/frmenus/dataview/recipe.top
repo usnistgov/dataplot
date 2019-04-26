@@ -1,0 +1,9 @@
+----- <~dataview\recipe.top> Load Recipe Data
+
+View Reliability Data: Recipe
+
+VANGEL31.DAT  Tensile strength of Graphite/Epoxy 4-Ply Unidirectional Tape <xcf: ~dataview\VANGEL31.DP>
+VANGEL32.DAT  Compressive strength of Graphite/Epoxy Tape <xcf: ~dataview\VANGEL32.DP>
+VANGEL33.DAT  Tensile strength of Graphite/Epoxy Fabric <xcf: ~dataview\VANGEL33.DP>
+VANGEL34.DAT  Tensile strength of Graphite/Epoxy Composite Material <xcf: ~dataview\VANGEL34.DP>
+

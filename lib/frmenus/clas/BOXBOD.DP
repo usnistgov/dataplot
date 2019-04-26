@@ -1,0 +1,10 @@
+----- <~dataloex\BOXBOD.DP> Load & Execute BOXBOD.DAT
+
+. This is file    BOXBOD.DP
+
+DELETE Y
+SKIP 25
+READ BOXBOD.DAT Y
+TITLE BOXBOD.DAT
+/
+

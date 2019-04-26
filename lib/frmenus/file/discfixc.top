@@ -1,0 +1,76 @@
+----- <~file\discfixc.top> Files: Reading Fixed Columns
+
+File: Reading Fixed Columns
+
+READING FIXED COLUMNS
+
+By default, Dataplot performs free format reads.  That is,
+you do not need to line up the columns neatly.  You do need
+to provide one or more spaces (tabs, commas, colons, semi-colons,
+parenthesis, or brackets can be used as well) between data fields.
+
+Many data files will contain fixed fields.  There are several reasons
+you may want or need to take advantage of these fixed fields rather
+than using a free format read.
+
+   1. If your data fields do not contain spaces (or some other
+      delimiter) between data columns, you need to tell
+      Dataplot how to interpret the columns.
+
+   2. In some cases, you may only want to read selected
+      variables in the data file.
+
+   3. Using a formatted read can significantly speed up the reading
+      of the data.  If you have small or moderate size data files
+      (say 500 rows or fewer), this is really not an issue.  However,
+      if you are reading 50,000 rows, you can significantly speed up
+      the read by specifying the format.
+
+   4. If the data fields have unequal lengths, Dataplot will not
+      interpret the data file correctly with a free format read.
+      It assigns the data items in the order they are encountered
+      to the variable names in the order they are given.  Dataplot
+      does not try to guess if a data item is missing based on the
+      columns.
+
+      The issue of unequal lengths is discussed in detail in the
+      next section.
+
+There are two basic cases for fixed fields.
+
+   1. The data fields are justified by the decimal point.
+
+      In this case, you can use the 
+
+          SET READ FORMAT  format
+
+      command to specify a Fortran-like format to read the file.
+      Enter HELP READ FORMAT for details.
+
+      Using a formatted read is significantly faster than a
+      free format read.
+
+   2. Many programs will write ASCII files with fixed columns,
+      but the data fields will be either left or right justified
+      rather than lined up by the decimal point.
+
+      In this case, you can use a special form of the
+      COLUMN LIMITS command that was introduced with the
+      January, 2004 version.  Normally, the first and last columns
+      to read are specified.  However, you can now enter variables for
+      the lower and upper limits as in the following example:
+
+         LET LOWER = DATA  1  21   41
+         LET UPPER = DATA 10  30   50
+         COLUMN LIMITS LOWER UPPER
+
+      That is, if variables rather than parameters are specified,
+      separate column limits are specified for each data field.
+      In this case, the first data field is between columns
+      1 and 10, the second field is between columns 21 and 30, and
+      the third field is between 41 and 50.
+
+      When this syntax is used, only one variable is read for
+      each specified field.  If the field is blank, then this is
+      interpreted as a missing value.
+

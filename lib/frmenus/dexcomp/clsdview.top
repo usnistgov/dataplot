@@ -1,0 +1,11 @@
+-----  <~dexcomp\clsdview.top> View Latin Square Designs
+
+View Data Sets: Latin Square Designs
+
+Latin Square Designs
+   BOXAUTO.DAT   Auto Emission            <xcf: ~dataview\BOXAUTO.DP>
+
+Graeco-Latin Square Designs
+   BOXCLOTH.DAT  Cloth wear (replicate I only) <xcf: ~dataview\BOXCLOTH.DP>
+   BOXCLOT2.DAT  Cloth wear (full data)   <xcf: ~dataview\BOXCLOT2.DP>
+

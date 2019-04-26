@@ -1,0 +1,8 @@
+----- <~dataload\RAMUS.DP> Load RAMUS.DAT
+
+. This is file    RAMUS.DP
+
+DELETE Y X1 TO X4
+SKIP 25
+READ RAMUS.DAT Y X1 TO X4
+

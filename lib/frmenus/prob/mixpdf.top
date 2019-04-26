@@ -1,0 +1,10 @@
+----- <~prob\mixpdf.top> Compute Mixture pdf's
+
+Compute Mixture pdf Functions
+
+Compute Probability Density Function for
+Mixture Distributions
+
+Normal Mixture           <xemf: ~prob\normxpdf.men>
+Bi-Weibull               <xemf: ~prob\bwepdf.men>
+

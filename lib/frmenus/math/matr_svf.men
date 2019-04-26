@@ -1,0 +1,26 @@
+This is file matr_svf.men--Singular Value Factorization of a matrix
+ 
+--------------------
+ 1. Singular Value Factorization of a Matrix
+ 2. LET U S V = SINGULAR VALUE FACTORIZATION M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Variable to store the singular values:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Matrix to store the U matrix:
+ 6. @CE 3 0 33 50 ? gui-matrix
+ 7. Matrix to store the V matrix:
+ 7. @CE 4 0 33 50 ? gui-matrix
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 -5 50 *
+11.
+12.
+Compute the Singular Value Factorization?:
+--------------------
+GR FE
+LET _3 _2 _4 = SINGULAR VALUE FACTORIZATION  _1 _5
+--------------------
+WEB HELP SINGULAR VALUE FACTORIZATION
+--------------------

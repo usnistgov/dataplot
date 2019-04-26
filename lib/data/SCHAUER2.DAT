@@ -1,0 +1,31 @@
+This is data file   SCHAUER2.DAT
+Yellow Bopok (may 1993) Plots
+Bone dosimetry via re-irradiation of bone specimens
+David Schauer
+January 1993
+Number of observations = 6
+Number of variables per line image = 2
+Order of variables on a line image--
+   Y = Signal Intensity (divided by 1000) of the EPR Spectrophotometer
+   X = Added Irradiation Dose (in Grays)
+Note--
+   The device is an EPR Spectrometer.
+   The sample is placed in a strong magnetic field.
+   Sweep through sample with magnetic fields of varying strength.
+   This induces monochromatic microwaves.
+   The spectrometer measures the energy absorbed.
+   The energy absorbed is proprotional to radiation dose in the bone.
+   The vertical axis signal intensity value
+   (0 to 100,000 coded here as 0 to 100)
+   is the peak to value intensity of the first derviative (with respect
+   to the magnetic field) of the absorption curve.
+   The raw signal has not yet been adjusted for mass, dose, or
+   number of scans.
+EPR Signal/1000  Added Dose
+---------------------------
+   29.990            0
+   44.767           20
+   55.613           40
+   67.279           60
+   82.106           80
+   94.376          100

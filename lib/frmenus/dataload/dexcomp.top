@@ -1,0 +1,16 @@
+----- <~dataload\dexcomp.top> Load Comparative Design Data
+
+Load Comparative Design Data
+
+BOXTOMAT.DAT  Comp Rand Des. Tomato yield    <xcf: ~dataload\BOXTOMAT.DP>
+BOXBLOOD.DAT  Comp Rand Des. Blood coag time <xcf: ~dataload\BOXBLOOD.DP>
+BATTADD3.DAT  Battery Additive (3-level)     <xcf: ~dataload\BATTADD3.DP>
+
+BOXSHOES.DAT* Rand Bl Des. Boys' shoe wear   <xcf: ~dataload\BOXSHOES.DP>
+BOXPENIC.DAT  Rand Bl Des. Penicillin form.  <xcf: ~dataload\BOXPENIC.DP>
+BOXPOISO.DAT  Rand Bl Des. Poison antidote   <xcf: ~dataload\BOXPOISO.DP>
+
+BOXAUTO.DAT   Latin Sq Des. Auto emissions   <xcf: ~dataload\BOXAUTO.DP>
+
+BOXCLOTH.DAT  Gr-Lat Sq Des. Cloth wear      <xcf: ~dataload\BOXCLOTH.DP>
+

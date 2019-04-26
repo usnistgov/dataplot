@@ -1,0 +1,42 @@
+----- <~reli\relidata.top> Reliability--Types of Data
+
+Discussion--Types of Data in Reliability
+
+When performing reliability analysis, we often
+encounter data of the following types:
+
+  1) Full Sample - a single vector of data is
+     collected and each item in the sample represents
+     a failure time.
+
+  2) Censored Data - for practical considerations,
+     we often cannot let all items in a test run to
+     failure.  Instead, we may run the test until
+     a pre-specified number of items fail or until
+     a pre-specified amount of time has elapsed.
+
+     At the end of the test, each item can represent
+     either a failure time (i.e., this item failed
+     before the test ended) or a censoring time
+     (i.e., this item was still operating normally
+     when the test ended).
+
+     Methods used for analyzing reliability data
+     typically need to be modified to account
+     for censoring.
+
+     In Dataplot, a censoring variable should be
+     coded as 1 to signify a failure time and
+     0 to signify a censoring time.
+
+  3) Some data collection technology may generate
+     large amounts of data.  In these cases, it is
+     common to group the data into a number of equal
+     size bins.  In this case, the response variable
+     is simply a count of the number of items in each
+     bin and a second variable contains the mid-points
+     of each bin.
+
+When analyzing the data, we may need to use different
+methods depending on what type of data we have.
+

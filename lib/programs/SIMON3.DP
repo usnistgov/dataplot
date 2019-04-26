@@ -1,0 +1,105 @@
+. This is Dataplot program    SIMON3.DAT
+. Analysis of FHA concrete
+. April 1997
+.
+. -----start point-----
+.
+device 2 postscript
+.
+. ---------------------------------------
+. Step 1--Read in the data
+.
+skip 25
+read simon.dat y1 y2 y3 y4 y5 x1 x2 x3 x4 x5 x6
+let x6 = 1-x1-x2-x3-x4-x5
+.
+. ---------------------------------------
+. Step 2--Define MULTIPLOT specs
+.
+let numrow = 6
+let numcol = 6
+.
+let string sx1 = Water
+let string sx2 = Cement
+let string sx3 = Microsil.
+let string sx4 = HTWRA
+let string sx5 = Course Ag.
+let string sx6 = Fine Ag.
+.
+. ---------------------------------------
+. Step 3--Define engineering acceptance cutoff values
+.
+let cut11 = 2
+let cut12 = 4
+let cut2 = 3200
+let cut3 = 7400
+let cut4 = 700
+.
+. ---------------------------------------
+. Step 5--Compute engineering acceptance cutoff values
+.
+let n = number y1
+let index = sequence 1 1 n
+.
+let string q1 = subset y1 cut11 to cut12 subset y2 > cut2
+let string q2 = subset y3 > cut3 subset y4 < cut4
+write y1 y2 y3 y4 y5 ^q1 ^q2
+write index ^q1 ^q2
+.
+let tag = 0 for i = 1 1 n
+let tag = 1 ^q1 ^q2
+let tag2 = cumulative sum tag
+let tag2 = tag2*tag
+.
+. ---------------------------------------
+. Step 6--Generate plots with highlighted acceptable values
+.
+characters x circle
+character fill off on
+character hw 3 2 6 5
+lines blank all
+multiplot numrow numcol
+   tic offset units screen
+   tic offset 10 10
+   frame corner coordinates 0 0 100 100
+   tics off
+   tic labels off
+   loop for v = 1 1 numrow
+      loop for h = v 1 numcol
+         multiplot numrow numcol v h
+         plot x^v x^h tag
+      end loop
+   end loop
+multiplot off
+.
+call labelxx.dp
+justification center
+move 50 95; hw 4 3; text FHA Concrete Analysis
+move 50 92; hw 2.5 1.5; text Analysis of Design & Analysis of Interactions
+move 90 5; hw 1 .75; text SIMON3.DP
+.
+. ---------------------------------------
+. Step 7--Generate plots with highlighted acceptable values
+.
+characters x 1 2 3 4 5 6
+character fill off all
+character hw 3 2 8 6 8 6 8 6 8 6 8 6 8 6
+lines blank all
+multiplot numrow numcol
+   frame corner coordinates 0 0 100 100
+   tics off
+   tic labels off
+   loop for v = 1 1 numrow
+      loop for h = v 1 numcol
+         multiplot numrow numcol v h
+         plot x^v x^h tag2
+      end loop
+   end loop
+multiplot off
+.
+call labelxx.dp
+justification center
+move 50 95; hw 4 3; text FHA Concrete Analysis
+move 50 92; hw 2.5 1.5; text Analysis of Design & Analysis of Interactions
+move 90 5; hw 1 .75; text SIMON3.DP
+.

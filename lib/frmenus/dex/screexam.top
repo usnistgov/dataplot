@@ -1,0 +1,49 @@
+-----  <~dex\screexam.top> Load & Analyze DEX Data Files
+
+Screening Designs:
+
+Full Factorial Designs:
+   BOXSPRIN.DAT  2**3 Defective springs  <xcf: ~clas\eda\BOXSPRIN.DP>
+   BOXPILOT.DAT  2**3 Pilot plant yield  <xcf: ~clas\eda\BOXPILOT.DP>
+   BOXRADAR.DAT  2**3 Radar aquisition time <xcf: ~clas\eda\BOXRADAR.DP>
+   BOWEN.DAT     2**3 Radar aquisition time <xcf: ~clas\anov\BOWEN.DP>
+   NUT.DAT       2**3 Nut strength          <xcf: ~clas\eda\NUT.DP>
+   SPLETT3.DAT   2**3 Eddy current          <xcf: ~clas\eda\SPLETT3.DP>
+
+   BOXCHEM.DAT   2**4 Chemical yield       <xcf: ~clas\eda\BOXCHEM.DP>
+   BOXSOLAR.DAT  2**4 Solar collector efficiency <xcf: ~clas\eda\BOXSOLAR.DP>
+   SPLETT4.DAT   2**4 Eddy current          <xcf: ~clas\eda\SPLETT4.DP>
+
+   BOXREACT.DAT  2**5 Reactor Efficienty      <xcf: ~clas\eda\BOXREACT.DP>
+   KRASNY1.DAT   2**5 Cigarette flammability <xcf: ~clas\eda\KRASNY1.DP>
+   WEBER.DAT     2**5 Hospital energy     <xcf: ~clas\eda\WEBER.DP>
+
+   STENBAKK.DAT  2**10 DAC converter      <xcf: ~clas\eda\STENBAKK.DP>
+
+   BOXCAKE.DAT   2**5 wcp Cake taste      <xcf: ~clas\eda\BOXCAKE.DP>
+   BOXCAKE2.DAT  2**5 wcp Cake taste      <xcf: ~clas\eda\BOXCAKE2.DP>
+
+Fractional Factorial Designs:
+   BOXSPRI2.DAT  2**(3-1) Defective springs  <xcf: ~clas\eda\BOXSPRI2.DP>
+   BOXSPRI3.DAT  2**(3-1) Defective springs  <xcf: ~clas\eda\BOXSPRI3.DP>
+
+   BOXCLEAN.DAT  2**(4-1) Cleanser stability <xcf: ~clas\eda\BOXCLEAN.DP>
+
+   BOXREAC2.DAT  2**(5-1) Chemical reactor   <xcf: ~clas\eda\BOXREAC2.DP>
+
+   AC.DAT        2**(6-3) A/C performance    <xcf: ~clas\eda\AC.DP>
+
+   BOXBIKE2.DAT  2**(7-4) Bike speed     <xcf: ~clas\eda\BOXBIKE2.DP>
+   BOXFILT.DAT   2**(7-4) Filtration time <xcf: ~clas\eda\BOXFILT.DP>
+   AMRF.DAT      2**(7-4) AMRF workstation <xcf: ~clas\eda\AMRF.DP>
+
+   VIBRATE.DAT   2**(9-5) Vibration       <xcf: ~clas\eda\VIBRATE.DP>
+
+   QUINLAN.DAT   2**(15-11) Speedometer casing <xcf: ~clas\eda\QUINLAN.DP>
+
+Taguchi Designs:
+   BOXCAKE.DAT   2**5 wcp Cake taste      <xcf: ~clas\eda\BOXCAKE.DP>
+   BOXCAKE2.DAT  2**5 wcp Cake taste      <xcf: ~clas\eda\BOXCAKE2.DP>
+
+   QUINLAN.DAT   2**(15-11) Speedometer casing <xcf: ~clas\eda\QUINLAN.DP>
+

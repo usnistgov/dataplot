@@ -1,0 +1,8 @@
+----- <~datalist\BOXSPRI3.top> BOXSPRI3.DAT
+ 
+BOXSPRI3.DAT
+ 
+View     <xcl: LIST BOXSPRI3.DAT>
+Load     <x2cl: SKIP 25; READ BOXSPRI3.DAT Y X1 X2 X3>
+Print    <xccl: printfile C:\DATAPLOT\BOXSPRI3.DAT>
+ 

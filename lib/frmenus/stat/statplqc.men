@@ -1,0 +1,99 @@
+This is file statplqc.men--Generate Statistic Plots (Quality Control)
+ 
+--------------------line 3
+01. Statistic Plots (Scale)
+02. <statistic> PLOT Y X
+03.
+04. Vertical   Axis Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Group ID        Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06.
+07. Quality Control Statistic (Select one):
+08. Capability Analysis
+09. @CE 3 1 1 27 Cp
+09. @CE 3 2 29 57 Cpk
+10. @CE 3 3 1 27 Cnpk
+10. @CE 3 4 29 57 Cpm
+11. @CE 3 5 1 27 Cc
+11. @CE 3 6 29 57 Expected Loss
+12. @CE 3 7 1 27 Percent Defective
+13.
+14. Lower Specification Limit:
+14. @CE 4 0 42 50 ? 
+15. Upper Specification Limit:
+15. @CE 5 0 42 50 ?
+16. Target Value:
+16. @CE 6 0 42 50 ?
+17. Cost Value:
+17. @CE 7 0 42 50 ?
+18.
+19. Taguchi
+20. @CE 3 8 1 27 Taguchi sn-
+20. @CE 3 9 29 57 Taguchi sn+
+21. @CE 3 10 1 27 Taguchi sn0
+21. @CE 3 11 29 57 Taguchi sn00
+22.
+23. Character Type for Data
+23. @CE 8 0 42 50 * gui-char
+24. Character Fill for Data
+24. @CE 9 0 42 50 gui-ooff
+25. Line Type for Data-connecting Line
+25. @CE 10 0 42 50 * gui-line
+26. Line Type for Global Stat Line?
+26. @CE 11 0 42 50 * gui-line
+27. Spike to Global Stat Line?
+27. @CE 12 0 42 50 gui-ooff
+28.
+29. Title:
+29. @CE 13 0 10 50 *
+30. Left Axis Label:
+30. @CE 14 0 22 50 *
+31. Bottom Axis Label:
+31. @CE 15 0 22 50 *
+32.
+33. Subset/Except/For Specification:
+34. @CE 16 0 1 50 *
+35.
+36. Generate the Statistic Plot?:
+--------------------
+TITLE _13
+Y1LABEL _14
+X1LABEL _15
+CHARACTERS _8
+CHARACTER FILL _9
+LINES _10 _11
+LET LSL = _4
+LET USL = _5
+LET TARGET = _6
+LET USLCOST = _7
+.
+@IF 3 1 LET ZSTAT = CP _1 _16
+@IF 3 2 LET ZSTAT = CPK _1 _16
+@IF 3 3 LET ZSTAT = CNPK _1 _16
+@IF 3 4 LET ZSTAT = CPM _1 _16
+@IF 3 5 LET ZSTAT = CC _1 _16
+@IF 3 6 LET ZSTAT = EXPECTED LOSS _1 _16
+@IF 3 7 LET ZSTAT = PERCENT DEFECTIVE _1 _16
+@IF 3 8 LET ZSTAT = TAGUCHI SN- _1 _16
+@IF 3 9 LET ZSTAT = TAGUCHI SN+ _1 _16
+@IF 3 10 LET ZSTAT = TAGUCHI SN0 _1 _16
+@IF 3 11 LET ZSTAT = TAGUCHI SN00 _1 _16
+SPIKE _11
+SPIKE BASE ZSTAT
+.
+BAR OFF OFF
+@IF 3 1 CP PLOT _1 _2 _16
+@IF 3 2 CPK PLOT _1 _2 _16
+@IF 3 3 CNPK PLOT _1 _2 _16
+@IF 3 4 CPM PLOT _1 _2 _16
+@IF 3 5 CC PLOT _1 _2 _16
+@IF 3 6 EXPECTED LOSS PLOT _1 _2 _16
+@IF 3 7 PERCENT DEFECTIVE PLOT _1 _2 _16
+@IF 3 8 TAGUCHI SN- PLOT _1 _2 _16
+@IF 3 9 TAGUCHI SN+ PLOT _1 _2 _16
+@IF 3 10 TAGUCHI SN0 PLOT _1 _2 _16
+@IF 3 11 TAGUCHI SN00 PLOT _1 _2 _16
+--------------------
+WEB HELP STATISTICS PLOT
+--------------------

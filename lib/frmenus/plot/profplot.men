@@ -1,0 +1,80 @@
+This is file profplot.men--Profile Plot
+ 
+--------------------
+1. Profile Plot
+2. PROFILE PLOT Y1 Y2 Y3 Y4 Y5
+3.
+4. A profile plot is generated for one row of a
+5. group of variables.  This menu allows you to
+6. either generate a single profile plot for a
+7. single row or to generate a multiplot of 
+8. profile plots for a number of rows (each row is
+9. one plot in the multiplot).
+10.
+11. List of Response Variables:
+12. @CE 1 0 1 50 ? gui-variable
+13. First row of variable to plot?:
+13. @CE 2 0 42 50 *
+14. Last row of variable to plot?:
+14. @CE 3 0 42 50 *
+15.
+16. If specified, the number of rows times the
+17. number of columns should be greater than or
+18. equal to the number of rows (last - first + 1)
+19. specified above.  Otherwise, some profiles 
+20. may overlap.
+21.
+22. Number of rows for multi-plot (1 for none):
+22. @CE 4 0 42 50 *
+23. Number of columns for multi-plot (1 for none):
+23. @CE 5 0 42 50 *
+24.
+25. Line type for plot?:
+25. @CE 6 0 42 50 * gui-line
+26. Spikes for plot?:
+26. @CE 7 0 42 50 * gui-ooff
+27. Bars for plot?:
+27. @CE 8 0 42 50 * gui-ooff
+28. Bar width for plot?:
+28. @CE 9 0 42 50 *
+29. Bar fill for plot?:
+29. @CE 11 0 42 50 * gui-ooff
+30. Base for spikes or bars (either 0 or 0.5)?:
+30. @CE 10 0 42 50 *
+31.
+32.
+33. Generate the Profile Plot?:
+--------------------
+GR FE
+LINE SAVE
+CHARACTER SAVE
+LINE _6
+SPIKE _7
+SPIKE BASE _10
+BAR _8
+BAR WIDTH _9
+BAR FILL _11
+BAR BASE _10
+CHARACTER BLANK ALL
+YLIMITS 0 1
+LET ZZZZFRST = 1
+@IF 2 0 LET ZZZZFRST = _2
+LET ZZZZLST = 1
+@IF 3 0 LET ZZZZLST = _3
+LET ZZZZROWS = 1
+@IF 4 0 LET ZZZZROWS = _4
+LET ZZZZCOLS = 1
+@IF 5 0 LET ZZZZCOLS = _5
+MULTIPLOT CORNER COORDINATES 5 5 95 95
+MULTIPLOT ZZZZROWS ZZZZCOLS
+LOOP FOR K = ZZZZFRST 1 ZZZZLST
+PROFILE PLOT _1 FOR I = K 1 K
+END OF LOOP
+END OF MULTIPLOT
+MULTIPLOT CORNER COORDINATES
+YLIMITS
+LINE RESTORE
+CHARACTER RESTORE
+--------------------
+WEB HELP PROFILE PLOT
+--------------------

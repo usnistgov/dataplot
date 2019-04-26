@@ -1,0 +1,8 @@
+----- <~dataload\PRIMESM.DP> Load PRIMESM.DAT
+
+. This is file    PRIMESM.DP
+
+DELETE Y
+SKIP 25
+READ PRIMESM.DAT Y X
+

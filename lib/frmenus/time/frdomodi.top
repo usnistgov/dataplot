@@ -1,0 +1,69 @@
+----- <~time\frdomodi.top> Discussion: Frequency-Domain Modeling
+ 
+Discussion: Frequency-Domain Modeling
+ 
+The Dataplot FIT command can be used to fit
+many of the models suggested by a frequency
+analysis.
+
+There are 2 models that are particularly prevelant. 
+
+  1) If the spectral plot shows a single dominant
+     low frequency peak,  then a low order 
+     autoregressive (AR) model is indicated.  For
+     example, the AR(1) model is:
+
+       Y(t) = A0 + A1*Y(t-1) + E(i) 
+
+     Some other models might be
+
+       Y(t) = A0 + A1*Y(t-1) + A2*Y(t-2) + E(i) 
+       Y(t) = A0 + A1*Y(t-1) + A2*(Y(t-1)**2) + E(i) 
+
+     In Dataplot, models of this type can be estiamted
+     with least squares using the FIT command.  The
+     only complication is that the properly lagged
+     variables must be created before using the FIT
+     command.  We provide a menu for fitting the
+     AR(1) model.  Higher order AR models can be fit
+     using the "Fit Linear/Non-Linear Models" menu.
+     You should create the lagged variables before using
+     that menu.
+
+  2) If the spectral plot shows a dominant mid-level peak,
+     a sinusoidal model may be appropriate.  The basic
+     model is:
+
+        Y(t) = C + A*SIN(2*PI*FREQ*t + PHASE) + E(i)
+
+     This model requires good starting values.  Specifically,
+
+        a) C is the "average" value.  If the original
+           series has constant location, then the
+           starting value for C can simply be the mean
+           of the original series.  If the location is
+           not constant, then C can be replaced by
+           (B0 + B1*t) or (B0+ B1*t + B1*t**2).  That is,
+           we can fit a line or quadratic to remove trend.
+           A more complicated function for the trend can
+           also be used if necessary.
+
+        b) A is the amplitude.  This can be estimated from
+           a complex demodulation amplitude plot.  If this
+           plot is relatively flat, then A can simply be a
+           constant.
+
+           If the complex demodulation amplitude plot shows
+           a trend, then we can replace A with an appropriate
+           function.  That is, we do a fit on the curve in
+           the complex demodulation amplitude plot and use
+           this in place of A.  Again, a linear or quadratic
+           model is usually sufficient.
+
+        c) The frequency is estimated from the the spectrum
+           plot.  The complex demodulation phase plot can
+           be used to fine tune this estimate.
+
+      After obtaining initial estimates for C, A, and FREQ,
+      we use the FIT command to generate the final estimates.
+

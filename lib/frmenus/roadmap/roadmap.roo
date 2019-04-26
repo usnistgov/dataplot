@@ -1,0 +1,21 @@
+----- <~roadmap\roadmap.top> Roadmap
+0 4 0 4
+Roadmap:  Problem ==> Stat Category ==> Stat Solution
+
+Typical Value?           <~roadmap\typval.top>
+Percentile?              <~roadmap\percenti.top>
+Distributional Model?    <~roadmap\distmod.top>
+Signal?                  <~roadmap\signal.top>
+Significant Mod (Y/N)?   <~roadmap\sigmod.top>
+Important Factor (Y/N)?  <~roadmap\impfact.top>
+Ranked List of Factors?  <~roadmap\ranklist.top>
+Best Function?           <~roadmap\bestfunc.top>
+Best Settings?           <~roadmap\bestsett.top>
+Multivariate Structure?  <~roadmap\multivar.top>
+Equivalent Labs?         <~roadmap\interlab.top>
+Uncertainty Value?       <~roadmap\uncertai.top>
+Homogeneity?             <~roadmap\homogene.top>
+.
+.
+.
+

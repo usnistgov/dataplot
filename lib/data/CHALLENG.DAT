@@ -1,0 +1,49 @@
+This is Dataplot data file CHALLENG.DAT
+NASA Challenger Disaster Data
+Launch Date = January 28, 1986
+Projected Temperature = 31 degrees F
+Source--Edward Tufte Handout & NASA & Morton Thiokol
+Number of Observations = 24
+Number of Variables per line image = 4
+Order of Variables on a line image--
+    1. Response 1 = Number of Failed O-Rings (0, 1, 2, or 3)
+    2. Response 2 = Type of Failure (0 = No Damage
+                                     1 = Primary O-Ring Heating
+                                     2 = Primary O-Ring Erosion
+                                     3 = Primary O-Ring Blowby
+                                     4 = Secondary O-Ring Heating
+    3. Factor 1 = Flight ID (1 to 24)
+    4. Factor 2 = Temperature
+To read this into Dataplot--
+   SKIP 25
+   READ CHALLENG.DAT Y1 Y2 FLIGHT TEMP
+ 
+ 
+ # of   Primary   Flight   Temperature
+Failed  Type of
+O-Rings Failure
+--------------------------------------
+   0       0        1          66
+   1       2        2          70
+   0       0        3          69
+   0       0        4          80
+   0       0        5          68
+   0       0        6          67
+   0       0        7          72
+   0       0        8          73
+   0       0        9          70
+   1       2       10          57
+   1       1       11          63
+   0       0       12          78
+   1       2       13          70
+   0       0       14          67
+   3       3       15          53
+   0       0       16          75
+   0       0       17          67
+   0       0       18          70
+   0       0       19          81
+   0       0       20          76
+   0       0       21          79
+   2       3       22          75
+   0       0       23          76
+   1       2       24          58

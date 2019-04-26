@@ -1,0 +1,1573 @@
+**comment This is file   DPSNAPSH.TEX
+** --------------------
+**linesperinch 11
+**scale 30
+**font 2
+** --------------------
+**magnify 3.0
+**lines per inch 4
+**move 0325 2950
+A Snapshot of Selected Dataplot Commands
+ 
+**center off
+**magnify 1.0
+**lines per inch 8
+**tab on
+**tab number 02
+**tab1 01 1150
+**tab2 01 1550
+**move 2230 2815
+10/92
+ 
+**comment ------start of page 1----------
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+1. Dataplot Basics
+ 
+**revvideo 0304 0850 0.9
+1.1 System Operations
+ 
+DP
+@Execute Dataplot
+EXIT or STOP or HALT or QUIT or BYE
+@Exit from Dataplot
+ 
+DIMENSION 50 VARIABLES
+@Redimension internal Dataplot worksheet to 50 variables (do at start of run)
+FEEDBACK OFF
+@Suppress feedback from all support commands (e.g., SUBSET)
+ECHO ON
+@Upon execution, echo all command lines back to screen
+ 
+LIST (or L)
+@List last 20 command lines entered
+R  2
+@Re-execute the 2-nd previous command
+SAVE 12 6 TO 3 1
+@Save command lines 12, 6, 5, 4, 3, and 1 for future re-execution
+/
+@Repeat the last set of command lines saved (& display output on screen)
+/  PRINTER  or  /  LP  or  /  LPT1
+@Repeat last set of comm. lines saved & divert output from screen to laser printer
+ @ (Note--printer should here be in non-postscript DOS text mode)
+/  OUT.
+@Repeat last set of comm. lines saved & divert output from screen to file OUT.
+ 
+DEFINE ER  ESC  FF
+@Define command ER to be   escape formfeed
+ER
+@Execute command ER (which would erase screen & leave in text mode on PC)
+ 
+CALL PARETO.DP
+@Execute the Dataplot macro residing in file PARETO.DP
+CALL <user-provided file name>
+@Execute the user-written Dataplot macro residing in <user-provided file name>
+ 
+SUBSET/EXCEPT/FOR
+@Can append to any graphics & analysis commands to limit scope of execution
+        e.g.,
+@of a plot or of an analysis
+        PLOT Y X SUBSET DAY 2
+@Plot Y versus X but only for DAY = 2
+        ANOVA Y X1 X2 X3 SUBSET MONTH 7 TO 9
+@Do ANOVA of Y on X1, X2, and X3
+ @but only for values of MONTH variable from 7 to 9
+        LINEAR FIT Y X EXCEPT Y > 90
+@Do linear regression of Y on X but only for Y > 90
+        NORMAL PROBABILITY PLOT Y FOR I = 1 1 20
+@Generate normal probability plot of first 20 elements of Y
+ 
+RESET
+@Reset all of Dataplot; in effect, exit and reexecute Dataplot
+RESET VARIABLES
+@Reset (= delete) all internal variables (= vectors)
+RESET PARAMETERS
+@Reset (= delete) all internal parameters (= scalars)
+RESET FUNCTIONS
+@Reset (= delete) all internal functions (= character strings)
+RESET PLOT
+@Reset (= blank out) all plot titles, labels, and legends
+RESET IO
+@Reset settings for Dataplot's I/O commands
+RESET SUPPORT
+@Reset settings for all of Dataplot's Support commands
+ 
+HELP
+@Display general Dataplot information & the command categories
+ 
+HELP <command category>
+@Display information about the Dataplot <category command> category
+HELP GRAPHICS
+@Display information about Dataplot Graphics Commands
+HELP ANALYSIS
+@Display information about Dataplot Analysis Commands
+ 
+HELP <command name>
+@Display information about the Dataplot <command name> command
+HELP PLOT
+@Display information about the Dataplot PLOT command
+HELP FIT
+@Display information about the Dataplot FIT command
+HELP LET
+@Display information about the Dataplot LET command
+HELP TITLE
+@Display information about the Dataplot TITLE command
+HELP GRID
+@Display information about the Dataplot GRID command
+HELP TEXT
+@Display information about the Dataplot TEXT command
+HELP BOX PLOT
+@Display information about the Dataplot BOX PLOT command
+ 
+HELP LET SUBCOMMANDS
+@Display information about subcommands under the LET command
+HELP FUNCTIONS
+@Display information about all off Dataplot's internal library functions
+HELP MATH FUNCTIONS
+@Display information about only Dataplot's internal mathematics functions
+HELP CHARACTER TYPES
+@Display information about allowable plot character types
+HELP LINES TYPES
+@Display information about allowable plot line types
+HELP TEXT SUBCOMMANDS
+@Display information about subcommands under the TEXT command
+ 
+**comment ------start of page 2----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+1. Dataplot Basics (Continued)
+ 
+**revvideo 0304 0850 0.9
+1.2 Files & I/O
+ 
+DOS DIR *.DAT
+@Execute the DOS    DIR *.BAT   command while still in Dataplot
+ 
+SKIP 25
+@Skip the first 25 header lines of a file on subsequent READs
+READ BOXSPRIN.DAT Y X1 X2 X3
+@Read data from file BOXSPRIN.DAT into internal variables Y, X1, X2, & 3
+READ BOXSPRIN.DAT ACC OVEN CARB QUENCH
+@Read data from file BOXSPRIN.DAT into int. var. ACC, OVEN, CARB, & QUENCH
+ 
+WRITE Y X1 X2 X3
+@Write variables Y, X1, X2, and X3 to screen
+WRITE OUT.DAT Y X1 X2 X3
+@Write variables Y, X1, X2, and X3 out to the user file   OUT.DAT
+ 
+LIST (or L)
+@Display the last 20 command lines entered onto the screen
+LIST BOXSPRIN.DAT
+@Display the contents of file   BOXSPRIN.DAT   onto the screen
+LIST BOXSPRIN.DAT FOR I = 1 1 20
+@Display the first 20 lines of file   BOXSPRIN.DAT onto the screen
+ 
+DOS PRINT BOXSPRIN.DAT
+@(DOS only) Temporarily exit to DOS & send file BOXSPRIN.DAT to laser printer
+SYSTEM PRINT BOXSPRIN.DAT
+@(In general) Temporarily exit to System & send file BOXSPRIN.DAT to laser prin.
+ 
+SET READ FORMAT 4F8.0
+@Set format for future READs to be (Fortran-like) 4F8.0 (default = free-format)
+SET WRITE DECIMALS 3
+@Set format for future WRITEs to be 3 decimal places
+SET WRITE FORMAT 4F10.2
+@Set format for future WRITEs to be (Fortran-like) 4F10.2
+ 
+CAPTURE OUT.
+@Start diverting all screen text output into the file OUT.
+   LINEAR FIT Y X
+@Do a linear fit of Y versus X (FIT output diverted to OUT.)
+END OF CAPTURE
+@Stop diverting all screen text output into the file OUT.
+DOS PRINT OUT.
+@(DOS only) Temporarily exit to DOS & send file OUT. to laser printer
+ @(Note--Laser printer must be in DOS-text mode)
+ 
+**comment ------start of page 3----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+1. Dataplot Basics (Continued)
+ 
+**revvideo 0304 0850 0.9
+1.3 Data Creation/Manipulation
+ 
+LET TARGET = 20
+@Create the parameter (= scalar) TARGET and assign to it the value 20
+ 
+LET Y = DATA 67 79 61 75 59 90 52 87
+@Create variable (= vector) Y with 8 elements: 67, 79, 61, ..., 87
+LET X = SEQUENCE 1 1 6
+@Create variable X with first element = 1, increment = 1, & last element = 6,
+ @that is, X will have the 6 elements: 1 2 3 4 5 6
+LET X = SEQUENCE 1 3 1 6
+@Create variable X with 18 elements: 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5 6 6 6
+LET X1 = PATTERN 1 2 FOR I = 1 1 8
+@Create variable X1 with 8 elements: 1 2 1 2 1 2 1 2
+ 
+LET Y2 = Y**2
+@Create variable Y2 as the squared elements of Y
+LET Y3 = LOG(Y)
+@Create variable Y3 as the natural logarithm of the elements of Y
+LET Y3 = SQRT(Y)
+@Create variable Y3 as the square root of the elements of Y
+LET DUMMY7 = IND(MONTH,7)
+@Create variable DUMMY7 as 1 whenever MONTH = 7, and as 0 elsewhere
+ @(thus IND(.,.) is an indicator function)
+LET Y2 = MSD(Y)
+@Create variable Y2 as the most signficant digit of Y
+ 
+LET Y = NORMAL RANDOM NUMBERS FOR I = 1 1 8
+@Create variable Y with 8 random numbers from normal N(0,1) distribution
+LET Y = UNIFORM RANDOM NUMBERS FOR I = 1 1 10
+@Create variable Y with 10 random numbers from uniform[0,1] distribution
+ 
+LET GAMMA = 2.3
+@Create the parameter (= scalar) GAMMA and assign to it the value 2.3
+   LET Y = WEIBULL RANDOM NUMBERS FOR I = 1 1 20
+@Create variable Y with 20 rand. numb. from Weib. dist. with shape param. 2.3
+ 
+LET X = RANDOM PERMUTATION FOR I = 1 1 16
+@Create variable X with a random permutation of 1 to 16
+ 
+LET Y2 = CODE Y
+@Create variable Y2 as a coded version of Y, as follows:
+ @if Y = smallest, then Y2 = 1; if Y = next-smallest, then Y2 = 2, etc.
+ 
+LET Y2 = CODE2 Y
+@Create variable Y2 as a coded version of Y, as follows:
+ @if Y <= median value of Y, then Y2 = 1;
+ @if Y > median value of Y, then Y2 = 2
+ 
+LET Y2 = CODE4 Y
+@Create variable Y2 as a coded version of Y, as follows:
+ @if Y in first/second/third/fourth quartile of Y, then Y2 = 1/2/3/4
+ 
+LET Y2 = SORT Y
+@Create variable Y2 as the sorted (smallest to largest) version of Y
+ 
+LET Y2 = SORTC Y X1 X2 X3
+@Create variable Y2 as the sorted (smallest to largest) version of Y
+ @and carry along the corresponding elements in X1, X2, and X3
+ 
+LET Y1 = Y; RETAIN Y1 SUBSET DAY 1
+@Copy Y to Y1; then retain (= keep, and pack to top of vector)
+ @only those elements in Y for which the corresponding
+ @elements of the variable DAY are equal to 1
+ 
+LET Y1 = Y; EXTEND Y1 Y2
+@Copy Y to Y1; then extend Y1 by Y2 (= attach Y2 to the end of Y1)
+ 
+LET Y2 = CUMULATIVE SUM Y
+@Create a variable Y2 = cumulative sum of elements of Y
+ @(thus Y2(1)=Y(1), Y2(2)=Y(1)+Y(2), Y2(3)=Y(1)+Y(2)+Y(3), etc.)
+ 
+LET Y2 = DIFFERENCE Y
+@Create a variable Y2 = first difference of elements in the variable Y
+ @(thus Y2(1)=Y(2)-Y(1), Y2(2)=Y(3)-Y(2), Y2(3)=Y(4)-Y(3), etc.)
+ 
+DELETE X Y Z
+@Delete variables X, Y and Z
+ 
+DELETE X Y Z SUBSET Z = 2
+@Delete all elements in X, Y, and Z for which Z = 2
+ @(and pack all remaining elements up to topmost positions)
+ 
+DELETE X(1) Y(23) Z(1000)
+@Delete element 1 of X, element 23 of Y, and element 1000 of Z
+ @(and pack all remaining elements up to topmost positions)
+ 
+**comment ------start of page 4----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+2. Graphics
+ 
+**revvideo 0304 0850 0.9
+2.1 Plot Data
+ 
+PLOT Y
+@Plot variable Y (vertically) versus dummy index 1, 2, 3, ... (horizontally)
+ @(Use current settings of title, label, legend, axis limits,
+ @plot characters, plot lines, plot spikes, plot bars, etc.)
+ 
+PLOT Y X  or  PLOT Y VERSUS X  or  PLOT Y VS X
+@Plot variable Y (vertically) versus variable X (horizontally)
+ 
+PLOT Y X TAG
+@Generate multi-trace plot of Y (vertically) versus X (horizontally)
+ @where distinct values of TAG variable define distinct traces
+ 
+PLOT Y1 Y2 Y3 Y4 VERSUS X
+@Generate multi-trace plot of variables Y1, Y2, Y3, and Y4 (vertically)
+ @versus variable X (horizontally)
+ 
+PLOT Y PRED VERSUS X
+@Generate 2-trace plot of Y and post-fit predicted values in PRED
+ @(vertically) versus variable X (horizontally)
+ 
+PLOT Y VERSUS X AND
+   PLOT PRED VERSUS X
+@Generate 2-trace plot of Y and post-fit predicted values in PRED
+ @(vertically) versus variable X (horizontally) <alternate method>
+ 
+3D-PLOT Y X1 X2
+@Generate a 3-dimensional trace of Y versus X1 and X2
+ 
+3D-PLOT Y X1 X2 X1 AND
+@Generate a 3-d trace of Y versus X1 & X2; cross-hatch at each X1 value
+   3D-PLOT Y X1 X2 X2
+@Generate a 3-d trace of Y versus X1 & X2; cross-hatch at each X2 value
+ @(the net result will be a 3-d surface with cross-hatching in both direction)
+ 
+LET X1 = SEQUENCE -5 1 5 FOR I = 1 1 121
+@Create variable X1 with elements -5, -4, -3, ..., 4, 5 repeated 11 times
+LET X2 = SEQUENCE -5 11 1 5
+@Create variable X2 with 11 -5's, 11 -4's, 11 -3's, ..., 11 4's, 11 5's
+LET Y = X1**2+X2**2
+@Create variable Y = X1 squared + X2 squared
+LET Y0 = DATA 10 20 30 40
+@Create variable Y0 with 4 elements: 10, 20, 30, and 40
+CONTOUR PLOT Y X1 X2 Y0
+@Generate a contour plot of Y vs. X1 and X2 with contour lines at Y0
+ 
+**revvideo 0304 0850 0.9
+2.2 Plot Functions
+ 
+PLOT SIN(X**2)*EXP(-X) FOR X = 0 .1 10
+@Generate plot of function evaluated at X = 0, .1, .2, .3, ..., 10.0
+3DPLOT EXP(-X**2-Y**2) FOR X = -2 .2 2 FOR Y = -2 .2 2
+@Generate 3-D plot of function evaluated at X = -2.0, -1.8, -1.6, ... 1.8, 2.0
+ @and Y = -2.0, -1.8, -1.6, ..., 1.8, 2.0
+ 
+**revvideo 0304 0850 0.9
+2.3 Character/Line/Spike/Bar Plots
+ 
+STATUS
+@Display current status of worksheet dimensions, plot characters/lines/
+ @spikes/bars and existing internal Dataplot variables, parameters, & functions
+CHARACTERS X BLANK CIRCLE
+@Set plot character types (for future plots) as follows:
+ @trace 1 = X; trace 2 = BLANK; trace 3 = CIRCLE
+LINES SOLID DOT DASH
+@Set plot line types:  trace 1 = SOLID; trace 2 = DOT; trace 3 = DASH
+SPIKE ON ON OFF
+@Set plot spikes on/off:  trace 1 = ON; trace 2 = ON; trace 3 = OFF
+BAR ON OFF ON
+@Set plot bars on/off:  trace 1 = ON; trace 2 = OFF; trace 3 = ON
+BAR FILL ON OFF ON
+@Set plot bar fills on/off:  trace 1 = ON; trace 2 = OFF; trace 3 = ON
+BAR WIDTH .5 .5 .5
+@Set plot bar widths:  trace 1 = .5; trace 2 = .5; trace 3 = .5
+BAR DIMENSION 2 3 3
+@Set plot bar dimension:  trace 1 = 2; trace 2 = 3; trace 3 = 3
+BAR FILL ONTS ONTS OFF
+@Set 3-d bar fill patterns:  trace 1 = ONTS; trace 2 = ONTS; trace 3 = OFF
+ @Note--ONTS means fill is ON for Top & Side of 3-d bars
+ 
+**comment ------start of page 5----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+2. Graphics (Continued)
+ 
+**revvideo 0304 0850 0.9
+2.4 Annotating Plots
+ 
+TITLE DEFECTIVE SPRINGS ANALYSIS
+@Set title to DEFECTIVE SPRINGS ANALYSIS
+Y1LABEL PERCENT DEFECTIVE
+@Set left vertical axis label to PERCENT DEFECTIVE
+X1LABEL STEEL TEMPERATURE
+@Set first horizontal axis label to STEEL TEMPERATURE
+LET STRING S1 = JANUARY; X2LABEL DATE = ^S1
+@Define string S1 to be JANAUARY; then set second horizontal
+ @axis label to   MONTH = <contents of S1 (namely, JANAURY)>
+Y1LABEL AUTOMATIC
+@Set left vertical axis label so that it will automatically display
+ @the contents of the first argument of the PLOT command
+ @(e.g., PLOT PRESSURE TEMPERATURE will automatically yield
+ @PRESSURE as the left vertical axis label)
+X1LABEL AUTOMATIC
+@Set first horizontal axis label so that it will automatically display
+ @the contents of the second argument of the PLOT command
+ @(e.g., PLOT PRESSURE TEMPERATURE will automatically yield
+ @TEMPERATURE as the first horizontal axis label)
+X3LABEL AUTOMATIC
+@Set third horizontal axis label so that it will automatically display
+ @the entire command line which generated the plot
+ @(e.g., NORMAL PROBABILITY PLOT TEMPERATURE will automatically yield
+ @NORMAL PROBABILITY PLOT TEMPERATURE as the third horizontal axis label)
+ 
+**revvideo 0304 0850 0.9
+2.5 Modifying Plots
+ 
+XLIMITS 0 3
+@Set (for future plots) the horizontal axis limits to 0 and 3
+YLIMITS 50 90
+@Set vertical axis plot limits to 50 and 90
+YLIMITS
+@Set vertical axis plot limits back to default (= neat and float with the dat)
+ 
+LEGEND 1 LABORATORY 3
+@Define legend 1 to be LABORATORY 3
+LEGEND 1 COORDINATES 20 80
+@Define plot coordinates for legend 1 to be 20% over and 80% up page
+ 
+GRID ON
+@Set grid lines on plots to be automatically ON
+ 
+XLOG ON
+@Set log scale for horizontal axis to be ON
+YLOG ON
+@Set log scale for vertical axis to be ON
+LOGLOG ON
+@Set log scale for both axes to be ON
+LOGLOG OFF
+@Set log scale for both axes to be OFF (& therefore revert to linear scale)
+ 
+TIC OFFSET UNITS SCREEN
+@Set corner tic units to screen (0 to 100) (as opposed to data)
+TIC OFFSET 5 5
+@Set offset for first and last tics to be 5% from corner
+ 
+**revvideo 0304 0850 0.9
+2.6 Multiple Plots per Page
+ 
+MULTIPLOT 2 2
+@Have next 2 x 2 = 4 plots automatically appear on the same page
+   PLOT Y X1; PLOT Y X2; PLOT Y X3; PLOT Y X4
+@Generate 4 separate plots
+MULTIPLOT OFF
+@Revert back to 1 plot per page
+ 
+TITLE HW 5 3
+@Set height/width of plot title to be 5%/3% (of total screen height)
+LABEL HW 4 2
+@Set height & width of all plot labels to be 4% and 2%
+TIC LABEL HW 4 2
+@Set height & width of tic labels on plots to be 4% and 2%
+ 
+**comment ------start of page 6----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+2. Graphics (Continued)
+ 
+**revvideo 0304 0850 0.9
+2.7 Word Charts
+ 
+ERASE
+@Erase the screen (and remain in graphics mode)
+ @ (as opposed to ER which would erase screen but go to text mode)
+MOVE 50 50
+@Move 50% across the screen & 50% up the screen (therefore, go to center of s)
+JUSTIFICATION CENTER
+@Set justification for future text to be center-justified
+FONT TRIPLEX
+@Set font for future text to be triplex
+HW 10 7
+@Set height & width of future text to be 10% and 7% (of screen height & width)
+TEXT ABC
+@Write out the text string ABC
+BOX 40 40 60 60
+@Draw a box with one corner at (40%,40%) and other corner at (60%,60%)
+CIRCLE 40 40 60 60
+@Draw a circle with one circumference point at (40%,40%) and opposing point a)
+TEXT LC()ESUP()PI()I
+@Write out the text string (lower case) e with superscript Greek pi and i
+ 
+**revvideo 0304 0850 0.9
+2.8 Diagrams
+ 
+LINE 20 20 80 80
+@Draw a line segment from (20%,20%) to (80%,80%)
+ARROW 20 50 60 50
+@Draw an arrow with tail at (20%,50%) and head at (60%,50%)
+HW 3 1
+@Set height and width to 3% and 1% (of total screen height and width)
+AMPLIFIER 30 50 70 50
+@Draw an amplifier with mid-side at (30%,50%) and with tip at (70%,50%)
+ 
+**revvideo 0304 0850 0.9
+2.9 Capturing Graphics
+ 
+PP
+@Send the current contents of the screen to a (Postscript) laser printer
+ @(this is an important and heavily used command)
+ 
+DEVICE 2 POSTSCRIPT
+@Activate a secondary output device (a file) and specify format to be postscript
+   PLOT SIN(X) FOR X = 0 .1 6
+@Plot the sin function--it will appear on screen and also to to secondaty deve
+EXIT
+@Exit from Dataplot
+(from DOS) PRINT DPPL1F.DAT
+@Send the file DPPL1F.DAT to the postscript laser printer
+ 
+**comment ------start of page 7----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+3. Mathematics
+ 
+LET Y = PRIME NUMBERS FOR I = 1 1 100
+@Create a variable Y consisting of the first 100 primes
+ 
+LET Y2 = LOG(Y)
+@Create Y2 equal to the natural log of Y
+ @(if Y is a parameter (= scalar), then Y2 will be a parameter (= scalar));
+ @if Y is a variable (= vector), then Y2 will be a variable (= vector))
+ 
+LET FUNCTION F =SIN(X**2)*EXP(-A*X)
+@Create the function (= character string) F containing the following
+ @19 characters:  SIN(X**2)*EXP(-A*X)
+ @(F may be used directly in future operations, such as:
+ @     transformations:  @LET A = 1; LET Y = F
+ @     plotting:  @PLOT F for X = 0 .1 10
+ @     fitting:  @FIT Y = F
+ @     root-finding:  @LET R = ROOTS F WRT X FOR X = 0 TO 10
+ @     analytic differentiation:  @LET FUNCTION F2 = DERIVATIVE F WRT X
+ 
+LINEAR FIT Y X
+@Perform least squares linear fit of Y on X (pred. val. => PRED, residuals => RES)
+   PLOT Y PRED VERSUS X
+@Generate a plot with 2 traces: Y versus X and PRED versus X
+   PLOT RES X
+@Generate a plot of residuals versus X (ideal: structureless)
+ 
+QUARTIC FIT Y X
+@Perform least squares quartic fit of Y on X (pred. val. => PRED, res. => RES)
+   PLOT Y PRED VERSUS X
+@Generate a plot with 2 traces: Y versus X and PRED versus X
+   PLOT RES X
+@Generate a plot of residuals versus X (ideal: structureless)
+ 
+FIT Y X1 X2 X3
+@Perform least sq. fit of Y on X1, X2, and X3 (pred. val. => PRED, res. => RES)
+   PLOT Y PRED VERSUS X1
+@Generate a plot with 2 traces: Y versus X1 and PRED versus X1
+   PLOT Y PRED VERSUS X2
+@Generate a plot with 2 traces: Y versus X2 and PRED versus X2
+   PLOT Y PRED VERSUS X3
+@Generate a plot with 2 traces: Y versus X3 and PRED versus X3
+ 
+FIT Y = EXP(-ALPHA*X)/(A+B*X)
+@Perform least squares non-linear fit of Y on X (pred. val. => PRED, res. => RES)
+   PLOT Y PRED VERSUS X
+@Generate a plot with 2 traces: Y versus X and PRED versus X
+   PLOT RES X
+@Generate a plot of residuals versus X (ideal: structureless)
+ 
+FILTER WIDTH 7
+@Set width of smoothing window to be 7 observations (default = 3 observations)
+   SMOOTH Y
+@Perform (moving average) smooth of Y (smoothed => PRED, residuals => RES)
+   LET N = NUMBER Y
+@Determine number of elements in the variable Y; place answer in parameter N
+   LET X = SEQUENCE 1 1 N
+@Create the variable X with the sequence 1, 2, 3, ..., N
+   PLOT Y PRED VERSUS X
+@Generate a plot with 2 traces: Y versus X and PRED versus X
+   PLOT RES X
+@Generate a plot of residuals (= high-frequency component) versus X
+ 
+FILTER WIDTH 11
+@Set width of smoothing window to be 11 observations (default = 3 observations)
+   CUBIC SMOOTH Y
+@Perform (least squares cubic) smooth of Y (smoothed => PRED, res. => RES)
+   LET N = NUMBER Y
+@Determine number of elements in the variable Y; place answer in parameter N
+   LET X = SEQUENCE 1 1 N
+@Create the variable X with the sequence 1, 2, 3, ..., N
+   PLOT Y PRED VERSUS X
+@Generate a plot with 2 traces: Y versus X and PRED versus X
+   PLOT RES X
+@Generate a plot of residuals (= high-frequency component) versus X
+ 
+LOWESS PROPORTION 10
+@Set width of smoothing window to be 10% of total data width (default = 5%)
+   LOWESS SMOOTH Y X
+@Perform (LOWESS) smooth of Y on X (smoothed => PRED, residuals => RES)
+   PLOT Y PRED VERSUS X
+@Generate a plot with 2 traces: Y versus X and PRED versus X
+   PLOT RES X
+@Generate a plot of residuals (= high-frequency component) versus X
+ 
+LET A = INTEGRAL Y X
+@Compute the (trapezoid-rule) integral of Y versus X, place result in parameA
+ 
+LET Y2 = INTERPOLATE Y X X2
+@Perform cubic-spline interpolation of Y on X (evaluate at X2, resultant into Y2)
+  PLOT Y VERSUS X   Y2 VERSUS X2
+@Generate a plot with 2 traces: Y versus X and Y2 versus X2
+ 
+LET Y2 X2 = FFT Y X
+@Perform a fast Fourier transform of the complex data in Y (real) & X (imag.)
+ @the real and imaginary output are placed in Y2 and X2
+LET Y2 X2 = INVERSE FFT Y X
+@Perform inv. fast Fourier transform of the complex data in Y (real) and X (imag.)
+ @the real and imaginary output are placed in Y2 and X2
+ 
+ 
+**comment ------start of page 8----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+4. Probability
+ 
+LET P = NORCDF(2)
+@Create parameter P = normal N(0,1) cum. dist. function evaluated at x = 2
+LET P = TCDF(2,8)
+@Create parameter P = t(nu=8) cum. dist. function evaluated at x = 2
+LET P = CHSCDF(2,8)
+@Create parameter P = chi-squared(nu=8) cum. dist. function eval. at x = 2
+LET P = FCDF(2,8,11)
+@Create parameter P = F(nu1=8,nu2=11) cum. dist. function eval. at x = 2
+LET P = WEICDF(2,8)
+@Create parameter P = Weibull(shape=8) cum. dist. function eval. at x = 2
+LET P = WALCDF(2,8)
+@Create parameter P = Wald(shape=8) cum. dist. function eval. at x = 2
+LET P = FLCDF(2,8)
+@Create parameter P = Fatigue Life(shape=8) cum. dist. func. eval. at x = 2
+LET P = IGCDF(2,8)
+@Create parameter P = Inverse Gaussian(shape=8) cum. dist. func. eval. at x = 2
+LET P = RIGCDF(2,8)
+@Create parameter P = Recip. Inv. Gaus.(shape=8) cum. dist. func. at x = 2
+ 
+LET X = NORPPF(.975)
+@Create parameter P = normal N(0,1) percent point function evaluated at p = .975
+LET X = TPPF(.975,8)
+@Create parameter P = t(nu=8) percent point function eval. at p = .975
+LET X = CHSPPF(.975,8)
+@Create parameter P = chi-squared(nu=8) percent point function eval. at p = .975
+LET X = FPPF(.975,8,11)
+@Create parameter P = F(nu1=8,nu2=11) percent point function eval. at p = .975
+LET P = WEIPPF(2,8)
+@Create parameter P = Weibull(shape=8) percent point function eval. at p = .975
+LET P = WALPPF(2,8)
+@Create parameter P = Wald(shape=8) percent point function eval. at p = .975
+LET P = FLPPF(2,8)
+@Create parameter P = Fatigue Life(shape=8) percent point func. eval. at p = .975
+LET P = IGPPF(2,8)
+@Create parameter P = Inv. Gaus.(shape=8) percent point func. eval. at p = .975
+LET P = RIGCDF(2,8)
+@Create parameter P = Recip. Inv. Gaus.(shape=8) percent point func. eval. at p = .975
+ 
+PLOT NORPDF(X) FOR X = -3 .1 3
+@Plot the normal N(0,1) density function eval. at x = -3, at increments ,3
+PLOT NORPDF((X-100)/10) FOR X = 70 1 130
+@Plot the normal N(100,10) density function evaluated at x = 70 (1) 130
+PLOT WEIPDF(X,8) FOR X = .1 .1 30
+@Plot the Weibull (shape=8) density function for x = .1 (.1) 30
+PLOT WEIPDF((X-100)/10,8) FOR X = 101 1 200
+@Plot the Weibull (min=100,scale=10,shape=8) dens. func. for x = 101 (1) 200
+PLOT TPDF(P,3) FOR X = -10 .1 10
+@Plot the t(nu=3) distribution dens. func. for x = -10 (.1) 10
+ 
+PLOT TPDF(P,1) FOR X = -10 .1 10 AND
+@Generate a plot with 3 traces: the t(nu=1) prob density function,
+PLOT TPDF(P,2) FOR X = -10 .1 10 AND
+@the t(nu=2) probability density function, and
+PLOT TPDF(P,3) FOR X = -10 .1 10
+@the t(nu=3) probability density function
+ 
+PLOT TPPF(P,3) FOR P = .01 .01 .99
+@Plot the t(nu=3) distribution percent points for p = .01 (.01) .99
+PLOT TPPF(.975,NU) FOR NU = 1 1 100
+@Plot the 97.5 percent point of the t dist. for nu = 1 (1) 100
+ 
+LET Y = UNIFORM RANDOM NUMBERS FOR I = 1 1 20
+@Create variable Y with 20 random numbers from uniform N[0,1] distribution
+LET Y = NORMAL RANDOM NUMBERS FOR I = 1 1 20
+@Create variable Y with 20 random numbers from normal N(0,1) distribution
+ 
+LET Y = NORMAL RANDOM NUMBERS FOR I = 1 1 20
+@Create variable Y with 20 random numbers from normal N(0,1) distribution
+   LET Y2 = 100+10*Y
+@Create variable Y2 with 20 random numbers from normal N(100,10) distribution
+ 
+LET Y = CAUCHY RANDOM NUMBERS FOR I = 1 1 100
+@Create variable Y with 20 random numbers from Cauchy C(0,1) distribution
+ 
+LET NU = 5
+   LET Y = T RANDOM NUMBERS FOR I = 1 1 40
+@Create variable Y with 40 random numbers from t distribution with nu = 5
+ 
+LET NU = 5
+   LET Y = CHI-SQUARED RAND NUMB FOR I = 1 1 40
+@Create variable Y with 40 random numbers from chi-squared dist. with nu = 5
+ 
+LET NU1 = 5; LET NU2 = 8
+LET Y = F RANDOM NUMBERS FOR I = 1 1 40
+@Create variable Y with 40 random numbers from F dist. with nu1 = 5 & nu2 = 8
+ 
+LET GAMMA = 4
+   LET Y = WEIBULL RANDOM NUMBERS FOR I = 1 1 50
+@Create variable Y with 50 random numbers from Weibull dist. with shape par. = 4
+ 
+LET GAMMA = 4
+   LET Y = WEIBULL RANDOM NUMBERS FOR I = 1 1 50
+@Create variable Y with 50 random numbers from Weibull dist. with shape par. = 4
+   LET Y2 = 100+10*Y
+@Create variable Y2 with 50 random numbers from Weib. dist. with shape par. = 4
+ @& with minimum = 100, and with scale = 10
+ 
+LET RUNSEQ = RANDOM PERMUTATION FOR I = 1 1 8
+@Create variable RUNSEQ with a random permutation of 1 to 8
+ 
+**comment ------start of page 9----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+5. Statistics
+ 
+**revvideo 0304 0850 0.9
+5.1 Univariate Analysis
+ 
+4-PLOT Y
+@Generate 4-plot analysis (run sequence plot, lag plot, histogram,
+ @normal probability plot of the data in the variable Y
+ 
+PLOT Y
+@Generate a plot of Y versus the dummy index 1, 2, 3, ...
+LAG PLOT Y
+@Generate a lag plot (with lag = 1) of the data in the variable Y
+ @vertical axis = Y(i); horizontal axis = Y(i-1)
+HISTOGRAM Y
+@Generate a histogram of Y
+STEM-AND-LEAF DIAGRAM Y
+@Generate a stem-and-leaf diagram of the data in the variable Y
+ 
+NORMAL PROBABILITY PLOT Y
+@Generate a normal probability plot of Y (ideal: linear)
+ @(to determine if data follows a normal distribution)
+ @vertical axis = sorted Y(i); horizontal axis = normal N(0,1) order stat medians
+ 
+UNIFORM PROBABILITY PLOT Y
+@Generate a uniform probability plot of Y (ideal: linear)
+ @(to determine if data follows a uniform distribution)
+ @vertical axis = sorted Y(i); horizontal axis = uniform U[0,1] order stat medians
+ 
+CAUCHY PROBABILITY PLOT Y
+@Generate a Cauchy probability plot of Y (ideal: linear)
+ @(to determine if data follows a Cauchy distribution)
+ @vertical axis = sorted Y(i); horizontal axis = Cauchy C[0,1] order stat medians
+ 
+LOGNORMAL PROBABILITY PLOT Y
+@Generate a lognormal probability plot of Y (ideal: linear)
+ 
+HALFNORMAL PROBABILITY PLOT Y
+@Generate a halfnormal probability plot of Y (ideal: linear)
+ 
+EXPONENTIAL PROBABILITY PLOT Y
+@Generate a exponential probability plot of Y (ideal: linear)
+ 
+EV1 PROBABILITY PLOT Y
+@Generate a extreme value type 1 probability plot of Y (ideal: linear)
+ 
+LET NU = 6; T PROB PLOT Y
+@Generate t (with tail parameter = 6) probability plot (ideal: linear)
+ @(to determine if data follows a t distribution with shape = 6)
+ @vertical axis = sorted Y(i); horizontal axis = t t(0,1,6) order stat medians
+ 
+LET GAMMA = 2.5; WEIBULL PROB PLOT Y
+@Generate Weibull (with shape parameter = 2.5) probability plot (ideal: linear)
+ @(to determine if data follows a Weibull distribution with shape = 2.5)
+ @vertical axis = sorted Y(i); horizontal axis = Weibull W(0,1,2.5) order stat medians
+ 
+PPCC PLOT Y or TUKEY PPCC PLOT Y
+@Generate Tukey distribution probability plot correlation coefficient plot
+ @(to determine the best-fit member of the Tukey distributional family)
+ 
+T PPCC PLOT Y
+@Generate t distribution probability plot correlation coefficient plot
+ @(to determine the best-fit member of the t distributional family)
+ 
+EV2 PPCC PLOT Y
+@Generate extreme value type 2 distribution prob. plot corr. coef. plot
+ @(to determine the best-fit member of the ext. value dist. family)
+ 
+PARETO PPCC PLOT Y
+@Generate Pareto type 2 distribution prob. plot corr. coef. plot
+ @(to determine the best-fit member of the Pareto dist. family)
+ 
+WEIBULL PPCC PLOT Y
+@Generate Weibull distribution probability plot correlation coefficient plot
+ @(to determine the best-fit member of the Weibull distributional family
+ @with common constraint: minimum = 0)
+ 
+WEIBULL PLOT Y
+@Generate Weibull plot of the data in the variable Y
+ 
+INVERSE GAUSSIAN PPCC PLOT Y
+@Generate Inverse Gaussian distribution prob. plot corr. coef. plot
+ @(to determine the best-fit member of the Inv. Gaus. distributional family)
+ 
+FAILURE TIME PPCC PLOT Y
+@Generate Failure Time distribution prob. plot corr. coef. plot
+ @(to determine the best-fit member of the Fail. Time distributional family)
+ 
+**comment ------start of page 10----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+5. Statistics (Continued)
+ 
+**revvideo 0304 0850 0.9
+5.1 Univariate Analysis (Continued)
+ 
+BOX-COX NORMALITY PLOT Y
+@Generate Box-Cox normality plot (to determine best transformation to normali)
+ @vertical axis = normality measure; horizontal axis = power transformation in x
+ 
+SUMMARY Y
+@Generate battery of location, variation, autocorrelation, & distribution statis
+ 
+LET N = NUMBER Y
+@Create parameter N = number of elements in the variable (= vector) Y
+LET S = SUM Y
+@Create parameter S = sum of all data in the variable Y
+LET A = MEAN Y
+@Create parameter A = mean of all data in the variable Y
+LET A = MEDIAN Y
+@Create parameter A = median of all data in the variable Y
+LET A = MIDMEAN Y
+@Create parameter A = midmean of all data in the variable Y
+LET S = STANDARD DEVIATION Y
+@Create parameter S = standard deviation of all data in the variable Y
+LET V = VARIANCE Y
+@Create parameter V = variance of all data in the variable Y
+LET SDM = STANDARD DEVIATION OF THE MEAN Y
+@Create parameter SDM = standard deviation of the mean of all data in variable Y
+LET A = AUTOCORRELATION Y
+@Create parameter A = autocorrelation of all data in the variable Y
+LET C = CORRELATION X Y
+@Create parameter A = correlation of all data in the variables X and Y
+ 
+LET TARGET = 25
+@Create parameter TARGET (process target value) as 25
+   LET LSL = 22
+@Create parameter LSL (process lower spec limit) as 22
+   LET USL = 28
+@Create parameter USL (process upper spec limit) as 28
+   LET A = CPK Y
+@Create parameter A = Cpk (capability index) of data in variable Y
+ 
+LET W = DATA 1 1 .9 .9 4 1.2 2 1.5
+@Create variable W consisting of 8 numbers (used to define desired weights)
+   LET M = WEIGHTED MEAN Y W
+@Create parameter M = weighted mean of data in variable Y (with weights in W)
+   LET S = WEIGHTED STANDARD DEVIATION Y W
+@Create parameter S = weighted st. dev. of data in variable Y (with weights in W)
+   LET V = WEIGHTED VARIANCE Y W
+@Create parameter V = weighted variance of data in variable Y (with weights in W)
+ 
+TABULATE Y
+@Tabulate (= display a table of) distinct values and counts of the variable Y
+ 
+AUTOCORRELATION PLOT Y
+@Generate an autocorrelation plot of the data in the variable Y
+SPECTRUM Y
+@Generate a spectral plot of the data in the variable Y
+ 
+DEMODULATION FREQUENCY .3
+@Set demodulation frequency to .3 (cycles per observation)
+   COMPLEX DEMODULATION AMPLITUDE PLOT Y
+@Generate a complex demod. amplitude plot (at demodulation frequency = .3)
+   COMPLEX DEMODULATION PHASE PLOT Y
+@Generate a complex demod. phase plot (at demodulation frequency = .3)
+ 
+FILTER WIDTH 7
+@Set width of smoothing window to be 7 observations (default = 3 observations)
+   SMOOTH Y
+@Perform (moving average) smooth of Y (smoothed => PRED, residuals => RES)
+   LET N = NUMBER Y
+@Determine number of elements in the variable Y; place answer in parameter N
+   LET X = SEQUENCE 1 1 N
+@Create the variable X with the sequence 1, 2, 3, ..., N
+   PLOT Y PRED VERSUS X
+@Generate a plot with 2 traces: Y versus X and PRED versus X
+   PLOT RES X
+@Generate a plot of residuals (= high-frequency component) versus X
+ 
+FILTER WIDTH 11
+@Set width of smoothing window to be 11 observations (default = 3 observations)
+   CUBIC SMOOTH Y
+@Perform (least squares cubic) smooth of Y (smoothed => PRED, res. => RES)
+   LET N = NUMBER Y
+@Determine number of elements in the variable Y; place answer in parameter N
+   LET X = SEQUENCE 1 1 N
+@Create the variable X with the sequence 1, 2, 3, ..., N
+   PLOT Y PRED VERSUS X
+@Generate a plot with 2 traces: Y versus X and PRED versus X
+   PLOT RES X
+@Generate a plot of residuals (= high-frequency component) versus X
+ 
+LOWESS PROPORTION 25
+@Set width of smoothing window to be 25% of total data width (default = 5%)
+   LOWESS SMOOTH Y X
+@Perform (LOWESS) smooth of Y on X (smoothed => PRED, residuals => RES)
+   PLOT Y PRED VERSUS X
+@Generate a plot with 2 traces: Y versus X and PRED versus X
+   PLOT RES X
+@Generate a plot of residuals (= high-frequency component) versus X
+ 
+**comment ------start of page 11----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+5. Statistics (Continued)
+ 
+**revvideo 0304 0850 0.9
+5.2 Regression Analysis
+ 
+PLOT Y X  or  PLOT Y VERSUS X  or  PLOT Y VS X
+@Plot variable Y versus variable X (to assist in selecting a model)
+ 
+LET C = CORRELATION Y X
+@Create parameter C = product moment corr. coef. of Y and X
+ @(to assist in measuring linear relatedness of 2 variables)
+ 
+LET C = RANK CORRELATION Y X
+@Create parameter C = Spearman's rank moment corr. coef. of Y and X
+ @(to assist in measuring relatedness of 2 variables)
+ 
+LINEAR FIT Y X
+@Perform least squares linear fit of Y on X (prec. val. => PRED, res. => RES)
+   CHARACTERS X BLANK; LINES BLANK SOLID
+@Set plot characters for next plots to X and blank; set plot lines to blank ad
+   PLOT Y PRED VERSUS X
+@Generate a plot with 2 traces: Y versus X and PRED versus X
+   PLOT RES X
+@Generate a plot of residuals versus X (ideal: structureless)
+   NORMAL PROBABILITY PLOT RES
+@Generate a normal probability plot of the residuals (ideal: linear)
+   PRINT A0 A1 RESSD
+@Print intercept, slope, and residuals standard deviation (ideal: near-zero)
+ 
+QUARTIC FIT Y X
+@Perform least squares quartic fit of Y on X (pred. val. => PRED, res. => RES)
+   PLOT Y PRED VERSUS X
+@Generate a plot with 2 traces: Y versus X and PRED versus X
+   PLOT RES X
+@Generate a plot of residuals versus X (ideal: structureless)
+ 
+FIT Y X1 X2 X3
+@Perform least squares fit of Y on X1, X2, & X3 (pred. val. => PRED, res. => RES)
+   PLOT Y PRED VERSUS X1
+@Generate a plot with 2 traces: Y versus X1 and PRED versus X1
+   PLOT Y PRED VERSUS X2
+@Generate a plot with 2 traces: Y versus X2 and PRED versus X2
+   PLOT Y PRED VERSUS X3
+@Generate a plot with 2 traces: Y versus X3 and PRED versus X3
+ 
+FIT Y = EXP(-ALPHA*X)/(A+B*X)
+@Perform least squares non-linear fit of Y on X (pred. val. => PRED, res. =>RES)
+   PLOT Y PRED VERSUS X
+@Generate a plot with 2 traces: Y versus X and PRED versus X
+ 
+WEIGHTS W
+@Specify W as the variable containing desired weights for the upcoming fit
+FIT Y = EXP(-ALPHA*X)/(A+B*X)
+@Perf. weighted lst. sq. non-lin. fit of Y on X (pred. val. => PRED, res. => RES)
+ 
+FIT Y = EXP(-ALPHA*X)/(A+B*X)
+@Perf. (unweighted) lst. sq. non-lin. fit of Y on X (pred. val. => PRED, res. => RES)
+LET W = BIWEIGHT RES
+@Create variable W = (Tukey robust) biweights based on previous unweighted fit
+WEIGHTS W
+@Specify W as the variable containing desired weights for the upcoming fit
+FIT Y = EXP(-ALPHA*X)/(A+B*X)
+@Perform robust, weighted least sq. non-linear fit of Y on X
+ @(pred. values => PRED, residuals => RES)
+ 
+FIT Y = A1*IND(TAG,1) + B1*IND(TAG,2) + SLOPE*X
+@Perform joint fit of 2 data sets with distinct intercepts (A1 and B1)
+ @but both having common slope (SLOPE).  IND(.,.) is Dataplot indicator function
+ 
+BOX-COX LINEARITY PLOT Y X
+@Generate Box-Cox linearity plot (determine best transf. of X to achieve linearity)
+ @vertical axis = linearity measure; horizontal axis = power transformation ix
+ 
+LET KNOTS = DATA 10 30 80
+@Create a variable KNOTS consisting of 3 values: 10, 30, and 80
+   CUBIC SPLINE FIT Y X KNOTS
+@Carry out a cubic spline fit of the data in Y and X with partition points inS
+ 
+LINEAR CORRELATION PLOT Y X TAG
+@Generate a linear correlation plot of Y on X
+ @(For each distinct value of TAG, extract the subset consisting of
+ @the corresponding values of Y and X; compute the correlation coefficient
+ @of this subset; plot this correlation coefficient versus the TAG value;
+ @repeat for all distinct values of TAG; therefore,
+ @vertical axis = subset correlation coefficient; horizontal axis = TAG)
+ 
+LINEAR SLOPE PLOT Y X TAG
+@Generate a linear slope plot of Y on X
+ @vertical axis = slope from linear fit of subset; horizontal axis = TAG)
+ 
+LINEAR INTERCEPT PLOT Y X TAG
+@Generate a linear intercept plot of Y on X
+ @vertical axis = intercept from linear fit of subset; horizontal axis = TAG)
+ 
+LINEAR RESSD PLOT Y X TAG
+@Generate a linear residual standard deviation plot of Y on X
+ @vertical axis = res. s.d. from linear fit of subset; horizontal axis = TAG)
+ 
+ 
+**comment ------start of page 12----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+5. Statistics (Continued)
+ 
+**revvideo 0304 0850 0.9
+5.3 Multi-Factor Analysis
+ 
+BOX PLOT Y X
+@Generate Box Plot of Y on X
+ 
+MEAN PLOT Y X
+@Generate a mean plot of Y on X
+ @(For each distinct value of X, compute the mean of all corresponding
+ @values of Y, and then plot the means versus each X)
+ 
+MEDIAN PLOT Y X
+@Generate a median plot of Y on X
+SD PLOT Y X
+@Generate a standard deviation plot of Y on X
+ 
+TABULATE COUNTS Y X
+@Tabulate (= display a table of) number of Y values at each distinct value in X
+TABULATE MEAN Y X
+@Tabulate (= display a table of) mean of Y values at each distinct value in X
+TABULATE STANDARD DEVIATION Y X
+@Tabulate (= display a table of) stsn. dev. of Y values at each distinct value in X
+TABULATE RANGE Y X
+@Tabulate (= display a table of) range of Y values at each distinct value in X
+ 
+PLOT Y1 Y2 Y3 Y4 VS X
+@Generate multi-trace plot of variables Y1, Y2, Y3, and Y4 (vertically)
+ @versus variable X (horizontally)
+ 
+MULTIPLOT 2 3
+@Have next 2 x 3 = 6 plots automatically appear on the same page
+   LOOP FOR K = 1 1 6
+@Initiate a loop with dummy parameter K taking on the values 1, 2, ..., 6
+   HISTOGRAM Y^K
+@Generate a series of 6 plots: histogram of Y1, histogram of Y2, ..., histogram6
+   END LOOP
+@Terminate the loop
+ 
+MULTIPLOT 2 3
+@Have next 2 x 3 = 6 plots automatically appear on the same page
+   LOOP FOR K = 1 1 6
+@Initiate a loop with dummy parameter K taking on the values 1, 2, ..., 6
+   PLOT Y^K VERSUS X
+@Generate a series of 6 plots: Y1 versus X, Y2 versus X, ..., Y6 versus X
+   END LOOP
+@Terminate the loop
+ 
+MULTIPLOT 2 3
+@Have next 2 x 3 = 6 plots automatically appear on the same page
+   LOOP FOR K = 1 1 6
+@Initiate a loop with dummy parameter K taking on the values 1, 2, ..., 6
+   LOOP FOR L = 1 1 6
+@Initiate a loop with dummy parameter L taking on the values 1, 2, ..., 6
+   PLOT Y^K VERSUS Y^L
+@Generate a series of 36 plots: Y1 versus X, Y2 versus X, ..., Y6 versus X
+   END LOOP
+@Terminate the loop for L
+   END LOOP
+@Terminate the loop for K
+ 
+ANOVA Y X1 X2 X3 X4 X5
+@Carry out a (balanced) Analysis of Variance of Y on X1, X2, X3, X4, X5
+MEDIAN POLISH Y X1 X2 X3 X4 X5
+@Carry out a (balanced) (Tukey) Median Polish of Y on X1, X2, X3, X4, X5
+ 
+BLOCK PLOT Y X2 X1
+@Generate a block plot of Y on X2 and X1
+ @vertical axis = Y; horizontal axis = X2; plot character = X1
+BLOCK PLOT Y X2 X3 X4 X1
+@Generate a block plot of Y on X2, X3, X4 and X1
+ @vertical axis = Y; horizontal axis = X2 x X3 x X4; plot character = X1
+ 
+**comment ------start of page 13----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+5. Statistics (Continued)
+ 
+**revvideo 0304 1000 0.9
+5.4 Multi-Response (Multivariate) Analysis
+ 
+MULTIPLOT 2 2
+@Have next 2 x 2 = 4 plots automatically appear on the same page
+   PLOT Y1
+@Generate the 1st plot: Y1 versus the dummy index 1, 2, 3, ...
+   PLOT Y2
+@Generate the 2nd plot: Y2 versus the dummy index 1, 2, 3, ...
+   PLOT Y1 Y2
+@Generate the 3rd plot: Y1 versus Y2
+MULTIPLOT OFF
+@Revert back to 1 plot per page
+ 
+BIHISTOGRAM Y1 Y2
+@Generate a bihistogram of the data in Y1 and Y2
+QUANTILE-QUANTILE PLOT Y1 Y2
+@Generate a quantile-quantile plot of the data in Y1 and Y2
+ 
+CROSS-TAB Y1 Y2
+@Tabulate (= display a table of) distinct values & counts of the variables Y1 & Y2
+T TEST Y1 Y2
+@Carry out a t-test for the 2 variables Y1 and Y2
+ 
+LET N = NUMBER Y1
+@Create parameter N = number of elements in the variable (= vector) Y
+LET X = SEQUENCE 1 1 N
+@Create variable X with elements 1, 2, 3, 4, ..., N
+PLOT Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y8 VERSUS X
+@Generate multi-trace plot of Y1, Y2, ..., Y8 versus X
+ 
+MULTIPLOT 2 4
+@Have next 2 x 4 = 8 plots automatically appear on the same page
+   LOOP FOR K = 1 1 8
+@Initiate a loop with dummy parameter K taking on the values 1, 2, ..., 8
+   HISTOGRAM Y^K
+@Generate a series of 8 plots: histogram of Y1, histogram of Y2, ..., histogram Y8
+   END LOOP
+@Terminate the loop
+ 
+MULTIPLOT 2 4
+@Have next 2 x 4 = 8 plots automatically appear on the same page
+   LOOP FOR K = 1 1 8
+@Initiate a loop with dummy parameter K taking on the values 1, 2, ..., 8
+   PLOT Y^K
+@Generate a series of 8 plots: Y1 versus i, Y2 versus i, ..., Y8 versus i
+   END LOOP
+@Terminate the loop
+ 
+STAR PLOT Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y8
+@Generate a star plot for the 8 variables Y1 to Y8
+PROFILE PLOT Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y8
+@Generate a profile plot for the 8 variables Y1 to Y8
+ 
+LET V1 = FIRST PRIN COMP Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y8
+@Create the 8-element variable V1 = the 1st prin. comp. for the 8 variables
+   LET V2 = SECOND PRIN COMP Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y8
+@Create the 8-element variable V2 = the 2nd prin. comp. for the 8 variables
+   PLOT V1 V2
+@Plot the 1st prin. comp. (vertically) vs. the 2nd prin. comp. (horizontally)
+ 
+LET V1 = FIRST PRIN EIGEN Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y8
+@Create the 8-element variable V1 = the 1st prin. eigenvalue for the 8 variables
+   LET V2 = SECOND PRIN EIGEN Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y8
+@Create the 8-element variable V2 = the 2nd prin. eigenvalue for the 8 variables
+ 
+**comment ------start of page 14----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+5. Statistics (Continued)
+ 
+**revvideo 0304 0850 0.9
+5.5 Time Series Analysis
+ 
+4-PLOT Y
+@Generate 4-plot analysis (run sequence plot, lag plot, histogram,
+ @normal probability plot of the data in the variable Y
+ 
+ 
+PLOT Y
+@Plot the data in the variable Y (versus the dummy index 1, 2, 3, ...)
+ 
+LAG PLOT Y
+@Generate a lag plot (with lag = 1) of the data in the variable Y
+ @vertical axis = Y(i); horizontal axis = Y(i-1)
+LAG 2 PLOT Y
+@Generate a lag plot (with lag = 2) of the data in the variable Y
+ @vertical axis = Y(i); horizontal axis = Y(i-2)
+LAG 12 PLOT Y
+@Generate a lag plot (with lag = 12) of the data in the variable Y
+ @vertical axis = Y(i); horizontal axis = Y(i-12)
+ 
+AUTOCORRELATION PLOT Y
+@Generate an autocorrelation plot of the data in the variable Y
+ @vertical axis = autocorr. of Y(i) and Y(i+h); horizontal axis = lag h
+SPECTRUM Y
+@Generate a spectral plot of the data in the variable Y
+ @vertical axis = variance component; horizontal axis = frequency (0 to .5 cyc)
+ 
+LOGLOG
+@Set both axes to be log scale for future plots
+  ALLAN VARIANCE
+@Generate an Allan variance plot of the data in the variable Y
+ @vertical axis = Allan variance; horizontal axis = subset size
+ 
+DEMODULATION FREQUENCY .3
+@Set demodulation frequency to .3 (cycles per observation)
+   COMPLEX DEMODULATION AMPLITUDE PLOT Y
+@Generate a complex demod. amplitude plot (at demodulation frequency = .3)
+   COMPLEX DEMODULATION PHASE PLOT Y
+@Generate a complex demod. phase plot (at demodulation frequency = .3)
+ 
+ 
+LET Y2 X2 = FFT Y
+@Perform a fast Fourier transform of the real data in Y
+ @the real and imaginary output are placed in Y2 and X2
+LET Y2 X2 = FFT Y X
+@Perform a fast Fourier transform of the complex data in Y and X
+ @the real and imaginary output are placed in Y2 and X2
+LET Y2 X2 = INVERSE FFT Y X
+@Perform an inverse fast Fourier transform of the complex data in Y (real) and X
+ @the real and imaginary output are placed in Y2 and X2
+ 
+LET Y2 X2 = FOURIER TRANSFORM Y
+@Perform a (slow) Fourier transform of the real data in Y
+ @the real and imaginary output are placed in Y2 and X2
+LET Y2 X2 = FOURIER TRANSFORM Y X
+@Perform a (slow) Fourier transform of the complex data in Y and X
+ @the real and imaginary output are placed in Y2 and X2
+LET Y2 X2 = INVERSE FOURIER TRANSFORM Y X
+@Perform an inv. (slow) Fourier transform of complex data in Y (real) & X (imag.)
+ @the real and imaginary output are placed in Y2 and X2
+ 
+FILTER WIDTH 7
+@Set width of smoothing window to be 7 observations (default = 3 observations)
+   SMOOTH Y
+@Perform (moving average) smooth of Y (smoothed => PRED, residuals => RES)
+   LET N = NUMBER Y
+@Determine number of elements in the variable Y; place answer in parameter N
+   LET X = SEQUENCE 1 1 N
+@Create the variable X with the sequence 1, 2, 3, ..., N
+   PLOT Y PRED VERSUS X
+@Generate a plot with 2 traces: Y versus X and PRED versus X
+   PLOT RES X
+@Generate a plot of residuals (= high-frequency component) versus X
+ 
+FILTER WIDTH 11
+@Set width of smoothing window to be 11 observations (default = 3 observations)
+   CUBIC SMOOTH Y
+@Perform (least squares cubic) smooth of Y (smoothed => PRED, res. => RES)
+   LET N = NUMBER Y
+@Determine number of elements in the variable Y; place answer in parameter N
+   LET X = SEQUENCE 1 1 N
+@Create the variable X with the sequence 1, 2, 3, ..., N
+   PLOT Y PRED VERSUS X
+@Generate a plot with 2 traces: Y versus X and PRED versus X
+   PLOT RES X
+@Generate a plot of residuals (= high-frequency component) versus X
+ 
+LOWESS PROPORTION 25
+@Set width of smoothing window to be 25% of total data width (default = 5%)
+   LOWESS SMOOTH Y X
+@Perform (LOWESS) smooth of Y on X (smoothed => PRED, residuals => RES)
+   PLOT Y PRED VERSUS X
+@Generate a plot with 2 traces: Y versus X and PRED versus X
+   PLOT RES X
+@Generate a plot of residuals (= high-frequency component) versus X
+ 
+ 
+**comment ------start of page 15----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+5. Statistics (Continued)
+ 
+**revvideo 0304 0850 0.9
+5.6 Uncertainty Analysis
+ 
+JACKNIFE MEAN PLOT Y
+@Generate a jacknife mean plot for the data in the variable Y
+ @vert. axis = mean for i-th jacknife sample; hor. axis = bootstrap)
+JACKNIFE MEDIAN PLOT Y
+@Generate a jacknife median plot for the data in the variable Y
+ @vert. axis = median for i-th jacknife sample; hor. axis = bootstrap)
+ 
+BOOTSTRAP MEAN PLOT Y
+@Generate a bootstrap mean plot for the data in the variable Y
+ @vert. axis = mean for i-th bootstrap sample; hor. axis = bootstrap)
+BOOTSTRAP MEDIAN PLOT Y
+@Generate a bootstrap median plot for the data in the variable Y
+ @vert. axis = median for i-th bootstrap sample; hor. axis = bootstrap)
+BOOTSTRAP MIDMEAN PLOT Y
+@Generate a bootstrap midmean plot for the data in the variable Y
+BOOTSTRAP RANGE PLOT Y
+@Generate a bootstrap range plot for the data in the variable Y
+BOOTSTRAP SD PLOT Y
+@Generate a bootstrap sd plot for the data in the variable Y
+ 
+BOOTSTRAP LINEAR CORRELATION PLOT Y X
+@Generate a bootstrap linear correlation plot for Y and X
+BOOTSTRAP LINEAR INTERCEPT PLOT Y X
+@Generate a bootstrap linear intercept plot for Y and X
+BOOTSTRAP LINEAR SLOPE PLOT Y X
+@Generate a bootstrap linear slope plot for Y and X
+BOOTSTRAP LINEAR RESSD PLOT Y X
+@Generate a bootstrap linear residual s.d. plot for Y and X
+ 
+LET NUMBOOT = 100
+@Create parameter NUMBOOT and set = 100
+   LET N = NUMBER Y
+@Create parameter N = number of elements in the variable Y
+   LOOP FOR K = 1 1 NUMBOOT
+@Initiate a loop with dummy parameter K taking on the values 1, 2, ..., NUMBOOT
+   LET IND = BOOTSTRAP INDEX FOR I = 1 1 N
+@Create a variable IND = random sample with replacement of 1, 2, 3, ..., N
+   LET Y2 = BOOTSTRAP SAMPLE Y IND
+@Create a variable Y2 = bootstrap sample of Y based on current contents of IND
+   WEIBULL PLOT Y2
+@Generate a Weibull Plot of Y2 (which also computes B99 = est. 99 percent point)
+   LET STAT(K) = B99
+@Place the current value of B99 into the k-th element of the variable (vectorT
+   END LOOP
+@Terminate the loop
+   LET MEANSTAT = MEAN STAT
+@Generate the parameter MEANSTAT = mean of the B99 values in variable STAT
+   LET SDSTAT = STANDARD DEVIATION STAT
+@Generate the parameter SDSTAT = stan. dev. of the B99 values in variable STAT
+   X2LABEL MEAN(B99) = ^MEANSTAT
+@Set 2nd horiz. axis label for upcoming histogram to the computed mean B99
+   X3LABEL SD(B99) = ^SDSTAT
+@Set 3rd horiz. axis label for upcoming histogram to the computed s.d. of B99
+   HISTOGRAM STAT
+@Generate a histogram of the B99 values in the variable STAT
+ 
+**comment ------start of page 16----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+6. Design of Experiment
+ 
+**revvideo 0304 0850 0.9
+6.1 Organization
+ 
+LIST DEXSUMSH.TEX
+@List the Exp. Design Summary Sheet file DEXSUMSH.TEX to the screen
+DOS PRINT DEXSUMSH.TEX
+@Send the Exp. Design Summary Sheet file DEXSUMSH.TEX to laser printer
+ 
+LIST DEXSUMS2.TEX
+@List the Exp. Design Summary Sheet file DEXSUMS2.TEX to the screen
+DOS PRINT DEXSUMS2.TEX
+@Send the Exp. Design Summary Sheet file DEXSUMS2.TEX to laser printer
+ 
+**revvideo 0304 0850 0.9
+6.2 Construction
+ 
+LIST DEXPLANS.TEX
+@List the Dataplot file DEXPLANS.TEX onto the screen
+ @DEXPLANS.TEX contains a list of all experimental plans available in Dataplot
+LIST DEXRES4.TEX
+@List (onto screen) the file DEXRES4.TEX containing instructions
+ @for resolution 4 designs for numbers of factors = 3, 4, 5, 6, ..., 11, 15, 2
+ 
+SKIP 25; READ LATSQ4.DAT X1 X2 X3
+@Read the Exp. Des. 4-by-4 Latin Square design file into Dataplot
+SKIP 25; READ 2TO3.DAT X1 X2 X3
+@Read the Exp. Des. 2**3 full factorial design file into Dataplot
+SKIP 25; READ 2TO8M4.DAT X1 X2 X3 X4 X5 X6 X7 X8
+@Read the Exp. Des. 2**(8-4) fractional fact. design file into Dataplot
+SKIP 25; READ L8.DAT X1 X2 X3 X4 X5 X6 X7
+@Read the Exp. Des. Taguchi L8 design file into Dataplot
+SKIP 25; READ PLACBURM.DAT X1 TO X11
+@Read the Exp. Des. Plackett-Burman design file into Dataplot
+ 
+LET X1 = PATTERN -1 +1 FOR I = 1 1 8
+@Create the variable X with 8 elements: -1 +1 -1 +1 -1 +1 -1 +1
+LET X1 = PATTERN 1 2 FOR I = 1 1 8
+@Create the variable X1 with 8 elements: 1 2 1 2 1 2 1 2
+LET X2 = DATA 1 1 2 2 1 1 2 2
+@Create the variable X with 8 elements: 1 1 2 2 1 1 2 2
+ 
+LET RUNSEQ = RANDOM PERMUTATION FOR I = 1 1 8
+@Create a variable RUNSEQ consisting of a random permutation of 1 to 8
+ 
+**comment ------start of page 17----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+6. Design of Experiment (Continued)
+ 
+**revvideo 0304 0850 0.9
+6.3 Analysis
+ 
+LIST DEXEXAMP.TEX
+@List the Dataplot file DEXEXAMP.TEX onto the screen
+ 
+ @DEXEXAMP.TEX contains a list of all experimental design data sets available
+LIST BOXSPRIN.DAT
+@List onto screen the contents of Dataplot file BOXSPRIN.DAT
+   SKIP 25; READ BOXSPRIN.DAT Y X1 X2 X3
+@Read into Dataplot the contents of Dataplot file BOXSPRIN.DAT
+ 
+LIST BOXBIKE2.DAT
+@List onto screen the contents of Dataplot file BOXBIKE2.DAT
+   SKIP 25; READ BOXBIKE2.DAT Y X1 X2 X3 X4 X5 X6 X7
+@Read into Dataplot the contents of Dataplot file BOXSPRIN.DAT
+ 
+PLOT Y RUNSEQ
+@Plot the data in variable Y versus the variable RUNSEQ
+ 
+DEX SCATTER PLOT Y X1 TO X7
+@Generate a Des. of Exp. Scatter Plot of Y on X1 to X7
+DEX MEAN PLOT Y X1 TO X7
+@Generate a Des. of Exp. Mean Plot of Y on X1 to X7 (very important)
+DEX SD PLOT Y X1 TO X7
+@Generate a Des. of Exp. Standard deviation Plot of Y on X1 to X7
+DEX TAGUCHI SN0 PLOT Y X1 TO X7
+@Gen. a Des. of Exp. Taguchi Sig.-to-Noise ("on target") Plot of Y on X1 to X7
+DEX TAGUCHI SN- PLOT Y X1 TO X7
+@Gen. a Des. of Exp. Taguchi Sig.-to-Noise ("small is good") Plot of Y on X1 to X7
+DEX TAGUCHI SN+ PLOT Y X1 TO X7
+@Gen. a Des. of Exp. Taguchi Sig.-to-Noise ("large is good") Plot of Y on X1 to X7
+ 
+READ BOXSPRIN.DAT Y X1 X2 X3
+@Read in the 2**3 full factorial data from dataplot file BOXSPIN.DAT
+   DEX MEAN PLOT Y X1 TO X3
+@Generate a Des. of Exp. Mean Plot of Y on X1 to X3 (very important)
+   LET NUMFAC = 3
+@Create the parameter NUMFAC (# of factors) as 3 (needed by DEXSTAT2.DP)
+   LET DP = 2
+@Create the parameter DP (# of decimals places) as 2 (needed by DEXSTAT2.DP)
+   LET STRING STAT = MEAN
+@Create the string STAT (desired stat) as MEAN (needed by DEXSTAT2.DP)
+   YLIMITS 50 90
+@ Set plot vertical axis limits as 50 to 90 (needed by DEXSTAT2.DP)
+   CALL DEXSTAT2.DP
+@Execute the Dataplot macro file DEXSTAT2.DP
+ @which carries out a main-effect & 2-factor graphical analysis of effects
+ 
+YATES ANALYSIS Y
+@Carry out a Yates analysis of the data in variable Y (assumed to be in Yates)
+ @(Note--estimated effects automatically written out to file DPST1F.DAT)
+   SKIP 0; READ DPST1F.DAT TAG COEF
+@Read Yates analysis estimated effects in from file
+   NORMAL PROBABILITY PLOT COEF
+@Generate normal probability plot of coefficients
+ 
+ANOVA Y X1 X2 X3
+@Carry out a (balanced) Analysis of Variance of Y on X1, X2, and X3
+PLOT RES RUNSEQ
+@Plot the residuals from a fit versus the variable RUNSEQ
+NORMAL PROBABILITY PLOT RES
+@Generate a normal probability plot of residuals (ideal = linear)
+CALL DEXCUBE.DP
+@Execute the Dataplot 2**3 full factorial menu macro DEXCUBE.DP
+CALL DEXSQUAR.DP
+@Execute the Dataplot 2**2 full factorial menu macro DEXSQUAR.DP
+ 
+**comment ------start of page 18----------
+**newpage
+**move 0325 2795
+**box 0300 0400 2300 2797 0.0
+ 
+**revvideo 0304 1000 1.0
+7. Quality and Productivity
+ 
+**revvideo 0304 0850 0.9
+7.1 General Q & P
+ 
+4-PLOT Y
+@Generate 4-plot analysis (run sequence plot, lag plot, histogram,
+ @normal probability plot of the data in the variable Y
+ 
+XBAR CHART Y X
+@Generate an Xbar Control Chart of the raw data in Y with tags in X
+RANGE CHART Y X
+@Generate an Range Control Chart of the raw data in Y with tags in X
+ 
+SUMMARY Y
+@Generate battery of location, variation, autocorrelation, & distribution statis
+LET M = MEAN Y
+@Create parameter A = mean of all data in variable Y
+LET S = STANDARD DEVIATION Y
+@Create parameter S = standard deviation of all data in variable Y
+LET SDM = STANDARD DEVIATION OF THE MEAN Y
+@Create parameter SDM = standard deviation of the mean for all data in variable Y
+ 
+CONFIDENCE LIMITS Y
+@Compute a table of various confidence limits for mu and sigma for the data inY
+ 
+HISTOGRAM Y
+@Generate a histogram of the data in the variable Y
+NORMAL PROBABILITY PLOT Y
+@Generate a normal probability plot of the data in the variable Y (ideal: lin)
+ 
+LET TARGET = 25
+@Create parameter TARGET (process target value) as 25
+   LET LSL = 22
+@Create parameter LSL (process lower spec limit) as 22
+   LET USL = 28
+@Create parameter USL (process upper spec limit) as 28
+   LET A = CPK Y
+@Create parameter A = Cpk (capability index) of data in variable Y
+ 
+**revvideo 0304 0850 0.9
+7.2   7 Old Tools
+ 
+CALL ISHIKAWA.DP
+@Execute the Dataplot Ishikawa menu macro in file ISHIKAWA.DP
+CALL PARETO.DP
+@Execute the Dataplot Pareto Diagram menu macro in file PARETO.DP
+HISTOGRAM Y
+@Generate a histogram of the data in the variable Y
+BIHISTOGRAM Y1 Y2
+@Generate a bihistogram of the data in Y1 and the data in Y2
+PLOT Y X  or  PLOT Y VERSUS X  or  PLOT Y VS X
+@Generate a scatter plot of variable Y versus variable X
+ 
+LET TARGET = 25
+@Create parameter TARGET (process target value) as 25
+   LET LSL = 22
+@Create parameter LSL (process lower spec limit) as 22
+   LET USL = 28
+@Create parameter USL (process upper spec limit) as 28
+   XBAR CONTROL CHART Y X
+@Generate a xbar (= mean) control chart for the raw data in Y and X
+ 
+RANGE CONTROL CHART Y X
+@Generate a range control chart for the raw data in Y and X
+ 
+ 
+**move 1500 0350
+This is DATAPLOT file DPSNAPSH.TEX 10/92 PP 11 & 30 & 2
+For questions, contact J. J. Filliben (NIST) 301-975-2855

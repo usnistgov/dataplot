@@ -1,0 +1,33 @@
+----- <~dexcomp\crbddian.top> Discussion: Randomized Block Designs Analysis
+ 
+Discussion: Randomized Block Designs - Analysis
+ 
+A typical analysis sequence for a randomized block
+design might be as follows.
+
+   1) As a first step, graph the data.  The primary
+      graphical tool for randomized block designs is
+      the block plot.
+
+      The block plot shows whether there is an effect
+      for the levels of the primary factor.  It also
+      shows whether this effect, if present, is consistent
+      across the blocking and nusiance factors.
+
+   2) The primary quantitative tool is a two-factor
+      (or higher if there are nusiance factors) analysis
+      of variance (ANOVA).  Note that the Dataplot ANOVA
+      command assumes balanced data (i.e., each level of
+      the factor variables have the same number of
+      replications).  
+
+      ANOVA assumes that the residuals are indepedent
+      and identically distributed that follow a
+      normal distribution.  This assumption should be
+      checked.
+
+      If the ANOVA assumptions are not valid, an
+      alternative is to use the nonparametric
+      Friedman test.  If you have an incomplete design,
+      then the Durbin test may be applicable.
+

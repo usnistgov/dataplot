@@ -1,0 +1,25 @@
+This is file matr_row.men--Compute number of rows and columns of a matrix
+ 
+--------------------
+ 1. Matrix Number of Rows and Columns
+ 2. LET A = MATRIX NUMBER OF ROWS M; LET B = MATRIX NUMBER OF COLUMNS M
+ 3.
+ 4. Matrix for which to compute the number of rows and columns:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Parameter to store the number of rows:
+ 5. @CE 2 0 33 50 ?
+ 6. Parameter to store the number of columns:
+ 6. @CE 3 0 33 50 ?
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -15 50 *
+10.
+11.
+12. Compute the Number of Rows and Columns?:
+--------------------
+GR FE
+LET _2 = MATRIX NUMBER OF ROWS  _1 _4
+LET _3 = MATRIX NUMBER OF COLUMNS  _1 _4
+--------------------
+WEB HELP MATRIX NUMBER OF ROWS
+--------------------

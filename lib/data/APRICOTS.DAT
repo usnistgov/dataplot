@@ -1,0 +1,27 @@
+This is Dataplot data file     APRICOTS.DAT
+...
+Source--Li and Cardoza (1994).
+        ...
+        Journal of AOAC Int., 77, page 689.
+Response Variable                  = 
+Number of observations             = 18 (= 9 labs x 2 reps)
+Number of variables per line image = 2
+Order of variables per line image--
+   Response variable = 
+   Factor 1          = lab
+Statistical area--Multifactor 
+Problem Type    --Interlab
+Design type     --Randomized Block
+To read this file into Dataplot--
+      SKIP 25
+      READ APRICOTS.DAT Y LAB
+
+
+
+
+   Y          X
+----------------------------
+25.05
+25.58
+27.16
+26.29

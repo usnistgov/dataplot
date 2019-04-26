@@ -1,0 +1,45 @@
+THIS IS DATAPLOT DATA FILE UCC.DAT
+PURPOSE--ILLUSTRATE U CONTROL CHART
+NUMBER OF CRACKS IN PLASTIC WIRE AFTER REFRIDGERATION AND FLEXING
+DATE--JULY 1990
+NUMBER OF OBSERVATIONS = 20
+NUMBER OF VARIABLES = 3
+ORDER OF VARIABLES ON A LINE IMAGE--
+   1. SUBGROUP ID (1 TO 30)
+   2. NUMBER OF DEFECTS (CRACKS) PER SPECIMEN
+   3. SIZE (LENGTH) OF SPECIMEN (IN METERS)
+STATISTICAL AREAS--U CONTROL CHART
+REFERENCE--ISHIKAWA, GUIDE TO QUALITY CONTROL, PAGES 81-83
+TO READ THIS FILE INTO DATAPLOT--
+   SKIP 25
+   READ UCC.DAT X NUMDEF SIZE
+   CHARACTERS CONTROL CHART
+   LINES CONTROL CHART
+   U CONTROL CHART NUMDEF SIZE X
+   LET RATIO = NUMDEF/SIZE; LET M = MEAN RATIO
+   SPIKE ON; SPIKE BASE M; CHARACTER FILL ON; LINES BLANK
+   U CONTROL CHART NUMDEF SIZE X
+ 
+SUB-GROUP    NUMBER OF      LENGTH OF
+              DEFECTS       SPECIMEN
+-------------------------------------
+   1            4             2.0
+   2            3             2.0
+   3            3             2.0
+   4            4             2.0
+   5            5             2.0
+   6            3             2.0
+   7            6             2.5
+   8            7             2.5
+   9            5             2.5
+  10            3             2.5
+  11            5             2.5
+  12            5             2.5
+  13            4             2.5
+  14            6             2.25
+  15            5             2.25
+  16            4             2.25
+  17            4             2.25
+  18            6             2.25
+  19            8             2.75
+  20            8             2.75

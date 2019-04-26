@@ -1,0 +1,8 @@
+----- <~datalist\WEBER.top> WEBER.DAT
+ 
+WEBER.DAT
+ 
+View     <xcl: LIST WEBER.DAT>
+Load     <x2cl: SKIP 25; READ WEBER.DAT Y X1 TO X5>
+Print    <xccl: printfile C:\DATAPLOT\WEBER.DAT>
+ 

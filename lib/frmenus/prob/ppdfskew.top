@@ -1,0 +1,23 @@
+----- <~prob\ppdfskew.top> Plot Common Skewed pdf's
+
+Plot Common Skewed PDF Functions
+
+Lognormal                <xemf: ~prob\plgnpdf.men>
+Half-Normal              <xemf: ~prob\phfnpdf.men>
+Chi-Squared              <xemf: ~prob\pchspdf.men>
+F                        <xemf: ~prob\pfpdf.men>
+Exponential              <xemf: ~prob\pexppdf.men>
+Gamma                    <xemf: ~prob\pgampdf.men>
+Beta                     <xemf: ~prob\pbetpdf.men>
+Weibull (for min)        <xemf: ~prob\pwei1pdf.men>
+Weibull (for max)        <xemf: ~prob\pwei2pdf.men>
+Extreme Value Type I (for min) <xemf: ~prob\pev11pdf.men>
+Extreme Value Type I (for max) <xemf: ~prob\pev12pdf.men>
+Extreme Value Type II (for min) <xemf: ~prob\pev21pdf.men>
+Extreme Value Type II (for max) <xemf: ~prob\pev22pdf.men>
+Pareto                   <xemf: ~prob\pparpdf.men>
+Inverse Gaussian         <xemf: ~prob\pigpdf.men>
+Wald                     <xemf: ~prob\pwalpdf.men>
+Reciprocal Inverse Gaussian   <xemf: ~prob\prigpdf.men>
+Fatigue-Life             <xemf: ~prob\pflpdf.men>
+

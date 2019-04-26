@@ -1,0 +1,10 @@
+----- <~dataexec\imag.top> Load and Execute Time Series Data: Image Analysis
+
+Load and Execute Time Series Data: Image Analysis
+
+EHRSTEIN.DAT  Semicond. wafer resistiv.  <xcf: ~dataexec\EHRSTEIN.DP>
+BENNETT.DAT   Fracture surface roughness <xcf: ~dataexec\BENNETT.DP>
+BRAIN.DAT     Brain wave analysis        <xcf: ~dataexec\BRAIN.DP>
+CUBE.DAT      Vertices of a cube         <xcf: ~dataexec\CUBE.DP>
+WOOLLEY.DAT   Optical disk errors        <xcf: ~dataexec\WOOLLEY.DP>
+

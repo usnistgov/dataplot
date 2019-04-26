@@ -1,0 +1,7 @@
+----- <~plot\CHINA.DP> Load CHINA.DAT
+
+. This is file    CHINA.DP
+
+DELETE X Y
+READ CHINA.DAT X Y
+

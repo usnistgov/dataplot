@@ -1,0 +1,39 @@
+This is file weilinfi.men--Weighted Linear Fit
+to be done--see Keith
+--------------------
+1. Weighted Linear Fits
+ 2. LINEAR FIT Y X
+ 3.
+ 4. Variables:
+ 5.    Less-Precise Variable Y:
+ 5. @CE 1 0 40 50 ?
+ 6.    More-Precise Variable X:
+ 6. @CE 2 0 40 50 ?
+ 7.    Group Variable      TAG:
+ 7. @CE 3 0 40 50 ?
+ 8.    Weights               W:
+ 8. @CE 4 0 40 50 ?
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 1 50 *
+12.
+13.
+14. Do the Weighted Fit?
+--------------------
+GR FE
+WEIGHTS _4
+LINEAR FIT _1 _2 _5
+LET ZTAG = DISTINCT _3 _5
+LET NZTAG = NUMBER ZTAG
+LOOP FOR ZK = 1 1 NZTAG
+   LET ZJUNK = ZTAG(ZK)
+   LINEAR FIT _1 _2 SUBSET _3 ZJUNK _5
+   LET ZA0(ZK) = A0
+   LET ZA1(ZK) = A1
+END LOOP
+LET AVEINTER = MEAN ZA0
+LET AVESLOPE = MEAN ZA1
+LET SDINTER = SD ZA0
+LET ZDSLOPE = SD ZA1
+WRITE AVEINTER AVESLOPE SDINTER SDSLOPE
+--------------------

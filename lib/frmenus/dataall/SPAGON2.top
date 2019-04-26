@@ -1,0 +1,8 @@
+----- <~dataall\SPAGON2.top> SPAGON2.DAT
+
+SPAGON2.DAT
+
+View     <xcl: LIST SPAGON2.DAT>
+Load     <xcf: ~dataload/SPAGON2.DP>
+Print    <xccl: printfile C:\DATAPLOT\SPAGON2.DAT>
+

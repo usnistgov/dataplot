@@ -1,0 +1,54 @@
+This is dataplot data file     COLUCCI3.DAT
+Polymeric Glass Formation (Isobaric--constant pressure (= 10 only))
+Dina Colucci, NIST, June 1996
+Note--This file is a simplifed subset of file COLUCCI1.DAT
+Number of observations             =  28
+Number of variables per line image =   2
+Order of variables on a line image--
+   1. Response variable Y = volume
+   2. Factor 1            = temperature
+   3. Factor 3            = region   (2 levels:
+                            1 = rubbery; 3 = glassy)
+Statistical Category--Regression (2 separate linear fits)
+To read this file into Dataplot--
+   SKIP 25
+   READ COLUCCI3.DAT Y X1 REGION
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   Y              X           REGION
+ Volume          Temp         Region
+-------------------------------------
+0.91744         249.65          1
+0.915291        245.77          1
+0.910297        240.18          1
+0.9077          235.71          1
+0.906072        230.83          1
+0.901575        225.16          1
+0.898444        219.97          1
+0.896938        214.17          1
+0.894923        210.94          1
+0.891657        205.87          1
+0.888249        201.26          1
+0.885907        195.43          1
+0.883234        191.37          1
+0.880079        185.82          1
+0.877246        181.01          1
+0.874422        175.56          1
+0.871715        170.13          1
+ 
+0.845773        100.63          3
+0.844756         95.24          3
+0.843739         90.07          3
+0.842551         84.99          3
+0.841708         80.7           3
+0.840551         75.59          3
+0.83951          70.21          3
+0.838489         64.88          3
+0.837709         60.58          3
+0.836871         55.19          3
+0.836122         50.6           3

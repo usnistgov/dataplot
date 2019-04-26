@@ -1,0 +1,8 @@
+----- <~dataall\HAYES1.top> HAYES1.DAT
+
+HAYES1.DAT
+
+View     <xcl: LIST HAYES1.DAT>
+Load     <xcf: ~dataload/HAYES1.DP>
+Print    <xccl: printfile C:\DATAPLOT\HAYES1.DAT>
+

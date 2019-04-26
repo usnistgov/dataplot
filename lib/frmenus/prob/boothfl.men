@@ -1,0 +1,130 @@
+This is file boothfl.men--Bootstrap Confidence Intervals for Half-Logistic
+ 
+--------------------
+ 1. Half-Logistic Bootstrap Confidence Intervals
+ 2. BOOTSTRAP HALF-LOGISTIC PLOT Y
+ 3.
+ 4. The half-logistic probability plot generates point estimates
+ 5. for the location and scale parameters.  This menu uses
+ 6. the bootstrap to generated confidence intervals for
+ 7. the location and scale parameters.  Both uncensored
+ 8. and censored data are supported.  Grouped data is not.
+ 9.
+10. If a censoring variable is specified, it should contain
+11. a value of 1 to signify a failure time and a value of 0
+12. to signify a censoring time.
+13.
+14. Response Variable:
+14. @CE 1 0 42 50 ? gui-variable
+15. Optional Censoring Variable:
+15. @CE 2 0 42 50 ? gui-variable
+16.
+17. Number of bootstrap samples:
+17. @CE 3 0 42 50 *
+18.
+19. Significance Level (default=0.05):
+19. @CE 4 0 42 50 ? *
+20.
+21. Subset/Except/For Specification:
+22. @CE 5 0 1 50 *
+23.
+24.
+25. Compute Bootstrap Confidence Intervals?
+--------------------
+GR FE
+LET NUMBOOT = 100
+@IF 3 0 LET NUMBOOT = _3
+let numboot = min(1000,numboot)
+let numboot = max(100,numboot)
+let icensor = 0
+@IF 2 0 let icensor = 1
+let alpha = 0.05
+let alpha = _4
+if alpha <= 0
+   let alpha = 0.05
+end of if
+if alpha >= 1
+   let alpha = 0.05
+end of if
+if alpha > 0.5
+   let alpha = 1 - alpha
+end of if
+let xqlow = alpha/2
+let xqupp = 1 - alpha/2
+.
+bootstrap samples numboot
+set maximum likelihood percentiles default
+device 1 font simplex
+multiplot 2 2
+multiplot corner coordinates 0 0 100 100
+multiplot scale factor 2
+label
+title case asis
+label case asis
+case asis
+title displacement 2
+x2label displacement 13
+x3label displacement 18
+y1label Parameter Estimate
+x1label
+x2label Bootstrap Sample
+title Bootstrap Plot
+line color blue red green
+limits
+if icensor = 0
+   bootstrap half-logistic plot _1 _5
+else
+   bootstrap half-logistic censored plot _1 _2 _5
+end of if
+line color black all
+.
+delete aloc ascale
+skip 0
+read dpst1f.dat aloc ascale
+y1label
+x2label
+title Location Parameter
+let amed = median aloc
+let amean = mean aloc
+let asd = sd aloc
+x2label Median = ^amed, Mean = ^amean
+x3label SD = ^asd
+histogram aloc
+title Scale Parameter
+let amed = median ascale
+let amean = mean ascale
+let asd = sd ascale
+x2label Median = ^amed, Mean = ^amean
+x3label SD = ^asd
+histogram ascale
+x3label displacement
+end of multiplot
+.
+let xq = xqlow
+let loc95low = xq quantile aloc
+let xq = xqupp
+let loc95upp = xq quantile aloc
+let xq = xqlow
+let sca95low = xq quantile ascale
+let xq = xqupp
+let sca95upp = xq quantile ascale
+.
+device 1 font tektronix
+window corner coordinates 50 0 100 50
+justification left
+height 4
+move 5 70
+text Confidence Interval for Location:
+move 5 63
+text (^loc95low,^loc95upp)
+move 5 50
+text Confidence Interval for Scale:
+move 5 43
+text (^sca95low,^sca95upp)
+window corner coordinates 0 0 100 100
+height
+title
+label
+--------------------
+WEB HELP DISTRIBUTIONAL BOOTSTRAP
+--------------------

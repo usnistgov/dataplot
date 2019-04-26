@@ -1,0 +1,67 @@
+This is file crosplms.men--Generate Cross Tab Statistic Plots (Miscellaneous)
+ 
+--------------------line 3
+01. Cross Tabulated Statistic Plots (Miscellanous)
+02. CROSS TABULATE <statistic> PLOT Y X1 X2
+03.
+04. Vertical Axis Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Group One ID Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06. Group Two ID Variable:
+06. @CE 3 0 37 54 ? gui-vari
+07.
+08. Statistic (Select one):
+09. @CE 4 1 5 25 count
+09. @CE 4 2 30 50 normal PPCC
+10. @CE 4 3 5 25 autocorrelation
+10. @CE 4 4 30 50 autocovariance
+11. @CE 4 5 5 25 sine amplitude
+11. @CE 4 6 30 50 sine frequency
+12.
+13. Character Type for Data
+13. @CE 5 0 42 50 * gui-char
+14. Character Fill for Data
+14. @CE 6 0 42 50 gui-ooff
+15. Line Type for Group 1 Global Stat Line?
+15. @CE 7 0 42 50 * gui-line
+16. Line Type for Global Stat Line?
+16. @CE 8 0 42 50 * gui-line
+17.
+18. Title:
+18. @CE 9 0 10 50 *
+19. Left Axis Label:
+19. @CE 10 0 22 50 *
+20. Bottom Axis Label:
+20. @CE 11 0 22 50 *
+21.
+22. Subset/Except/For Specification:
+23. @CE 12 0 1 50 *
+24.
+25. Generate the Statistic Plot?:
+--------------------
+TITLE _9
+Y1LABEL _10
+X1LABEL _11
+CHARACTER SAVE
+LINE SAVE
+CHARACTER X BLANK BLANK
+LINE BLANK SOLID SOLID
+CHARACTERS _5
+CHARACTER FILL _6
+LINES _7 ALL
+LINES BLANK _8
+SPIKE OFF OFF OFF
+BAR OFF OFF OFF
+.
+@IF 4 1 CROSS TABULATE COUNT PLOT _2 _3 _12
+@IF 4 2 CROSS TABULATE NORMAL PPCC PLOT _1 _2 _3 _12
+@IF 4 3 CROSS TABULATE AUTOCORRELATION PLOT _1 _2 _3 _12
+@IF 4 4 CROSS TABULATE AUTOCOvARIANCE PLOT _1 _2 _3 _12
+@IF 4 5 CROSS TABULATE SINE AMPLITUDE PLOT _1 _2 _3 _12
+@IF 4 6 CROSS TABULATE SINE FREQUENCY PLOT _1 _2 _3 _12
+CHARACTER RESTORE
+LINE RESTORE
+--------------------
+WEB HELP CROSS TABULATE PLOT
+--------------------

@@ -1,0 +1,37 @@
+This is file groupsd.men--Group Standard Deviations for a Matrix
+ 
+--------------------
+ 1. Group Standard Deviations of a Matrix
+ 2. LET MEANS = MATRIX GROUP SD M TAG
+ 3.
+ 4. This menu calculates the group standard deviations
+ 5. of a list of variables.  That is, there are p variables
+ 6. and k groups.  A group id variable identifies which
+ 7. group that each row of the data belongs to.
+ 8. A kxp matrix of standard deviations is returned.
+ 9.
+10. List of Response Variables:
+11. @CE 1 0 1 50 gui-variable
+12. Gropup ID Variable:
+12. @CE 2 0 42 50 gui-variable
+13.
+14. Name for Matrix to Store Group SD's:
+14. @CE 3 0 42 50 ?
+15.
+16. Subset/Except/For Specification: 
+17. @CE 4 0 1 50 *
+18.
+19.
+20. Generate the Group SD's?:
+--------------------
+GR FE
+DELETE ZZZZX ZZZZTAG
+WRITE ZZZZJUNK.DAT _1 _4
+SKIP 0
+READ MATRIX ZZZZJUNK.DAT ZZZZX
+LET ZZZZTAG = _2
+RETAIN ZZZZTAG _4
+LET _3 = MATRIX GROUP SD ZZZZX ZZZZTAG
+--------------------
+WEB HELP MATRIX GROUP SD
+--------------------

@@ -1,0 +1,44 @@
+This is file mlehypb.men--Hypergeometric MLE Estimates
+ 
+--------------------
+ 1. Hypergeometric Maximum Likelihood Estimates
+ 2. HYPERGEOMETRIC MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. The hypergeometric distribution has four
+ 5. parameters:
+ 6.
+ 7.    N  = total number of items in population
+ 8.    n  = number of items in sample
+ 9.    k  = number of defectives in population
+10.    x  = number of defectives in sample
+11.
+12. In capture/recapture problems, we take a
+13. sample, mark the items, and return them to
+14. the population.  At a later date, we take
+15. a second sample.  Based on the number of marked
+16. items in the second sample, we obtain an
+17. estimate of the number of items in the population.
+18.
+19. Response Variable:
+19. @CE 1 0 42 50 ? gui-variable
+20.
+21. Number of Items in the Re-Capture Sample (n):
+21. @CE 2 0 42 50 *
+22. Number of Marked Items (k):
+22. @CE 3 0 42 50 *
+23.
+24. Subset/Except/For Specification:
+25. @CE 4 0 1 50 *
+26.
+27.
+28. Compute Hypergeometric MLE's?
+--------------------
+GR FE
+SET HYPERGEOMETRIC MAXIMUM LIKELIHOOD CAPTURE RECAPTURE
+DELETE NSAMP K
+@IF 2 0 LET NSAMP = _2
+@IF 3 0 LET K  = _3
+HYPERGEOMETRIC MAXIMUM LIKELIHOOD _1  NSAMP K  _4
+--------------------
+WEB HELP MAXIMUM LIKELIHOOD
+--------------------

@@ -1,0 +1,64 @@
+This is file setparam.men--Set Parameters
+
+--------------------line 3
+ 1. Set Parameter Starting Value and Constraints
+ 2. LET A1 = <number, parameter, or expression>
+ 3.
+ 4. Parameter    Starting        Constraint        Constraint
+ 5.               Value             Min               Max
+ 6.    a1
+ 6. @CE 1 0 1 20 ?
+ 6. @CE 2 0 21 40 *
+ 6. @CE 3 0 41 60 *
+ 7.    a2
+ 7. @CE 4 0 1 20 ?
+ 7. @CE 5 0 21 40 *
+ 7. @CE 6 0 41 60 *
+ 8.    a3
+ 8. @CE 7 0 1 20 ?
+ 8. @CE 8 0 21 40 *
+ 8. @CE 9 0 41 60 *
+ 9.    a4
+ 9. @CE 10 0 1 20 ?
+ 9. @CE 11 0 21 40 *
+ 9. @CE 12 0 41 60 *
+10.    a5
+10. @CE 13 0 1 20 ?
+10. @CE 14 0 21 40 *
+10. @CE 15 0 41 60 *
+11.    a6
+11. @CE 16 0 1 20 ?
+11. @CE 17 0 21 40 *
+11. @CE 18 0 41 60 *
+12.    a7
+12. @CE 19 0 1 20 ?
+12. @CE 20 0 21 40 *
+12. @CE 21 0 41 60 *
+13.
+14.
+15. Set the Parameters?
+--------------------
+GR FE
+LET A1 = _1
+LET A1MIN = _2
+LET A1MIN = _3
+
+LET A2 = _4
+LET A2MIN = _5
+LET A2MIN = _6
+
+LET A3 = _7
+LET A3MIN = _8
+LET A3MIN = _9
+
+LET A4 = _10
+LET A4MIN = _11
+LET A4MIN = _12
+
+LET A5 = _13
+LET A5MIN = _14
+LET A5MIN = _15
+
+--------------------last
+WEB HELP LET
+--------------------last

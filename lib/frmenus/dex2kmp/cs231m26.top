@@ -1,0 +1,34 @@
+----- <~dex2kmp\cs231m26.top> Confounding:  2**(31-26) Design
+ 
+Confounding:  2**(31-26) Design
+ 
+Name of Design      = 2**(31-26) Fractional Factorial Design
+ 
+Number of Factors k = 31
+Number of Obs.    n = 26
+ 
+Resolution          = 3 (Main effects confounded with
+                      2-term interactions and higher)
+ 
+Factor Definitions  : 6 = 12           I = 134
+                      7 = 13           J = 135
+                      8 = 14           K = 145
+                      9 = 15           L = 234
+                      0 = 23           M = 235
+                      A = 24           N = 245
+                      B = 25           O = 345
+                      C = 34           P = 1234
+                      D = 35           Q = 1235
+                      E = 45           R = 1245
+                      F = 123          S = 1345
+                      G = 124          T = 2345
+                      H = 125          U = 12345
+ 
+Defining Relation   : extremely complicated
+ 
+Main Effect         : each of the 31 main effects
+Confounding           is confounded with
+                      15 2-term interactions
+ 
+Click here to view 2-term confounding  <~dex2kmp\2t231m26.top>
+ 

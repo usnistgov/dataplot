@@ -1,0 +1,21 @@
+This is file pack.men--Pack Data
+ 
+--------------------
+ 1. Pack Data
+ 2. PACK Y1 Y2 Y3 ... <SUBSET/EXCEPT/FOR qualif.>
+ 3.
+ 4. List of Variables to be Packed:
+ 5. @CE 1 0 1 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. (required to dictate the packing)
+ 9. @CE 2 0 1 50 ?
+10.
+11.
+12. Pack the Variables?
+--------------------
+SU FE
+PACK _1 _2
+--------------------
+WEB HELP RETAIN
+--------------------

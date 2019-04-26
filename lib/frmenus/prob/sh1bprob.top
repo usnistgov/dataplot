@@ -1,0 +1,27 @@
+----- <~prob\sha1prob.top> Probability Plot for One Shape Parameter Continuous Distributions
+
+Generate Probability Plot (one shape parameters)
+
+Generate Probability Plot for Continuous Distributions
+with One Shape Parameters (Uncensored Case)
+
+McLeish                                   <xemf: ~prob\mclprob.men>
+Muth                                      <xemf: ~prob\mutprob.men>
+Ogive                                     <xemf: ~prob\ogiprob.men>
+Power                                     <xemf: ~prob\powprob.men>
+Power Normal                              <xemf: ~reli\pppnr.men>
+Reciprocal                                <xemf: ~prob\recprob.men>
+Reflected Power                           <xemf: ~prob\rpoprob.men>
+Skew Double Exponential (Skew Laplace)    <xemf: ~prob\sdeprob.men>
+Skew Normal                               <xemf: ~prob\snprob.men>
+Slope                                     <xemf: ~prob\sloprob.men>
+T                                         <xemf: ~prob\tprob.men>
+Topp and Leone                            <xemf: ~prob\topprob.men>
+Triangular                                <xemf: ~prob\triprob.men>
+Tukey-Lambda (symmetric)                  <xemf: ~prob\lamprob.men>
+Von Mises                                 <xemf: ~prob\vonprob.men>
+Wald                                      <xemf: ~reli\ppwal.men>
+Weibull (minimum case)                    <xemf: ~reli\ppwei1.men>
+Weibull (maximum case)                    <xemf: ~reli\ppwei2.men>
+Wrapped Cauchy                            <xemf: ~prob\wcaprob.men>
+

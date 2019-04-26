@@ -1,0 +1,19 @@
+----- <~reli\test.top> Test
+
+Test
+
+NIST/SEMATECH Handbook (Trend Tests)  <xcl: web handbook trend test>
+NIST/SEMATECH Handbook (Goodness of Fit Tests)  <xcl: web handbook reliability goodness of fit>
+NIST/SEMATECH Handbook (Fit Power Law Model)  <xcl: web handbook power law model>
+
+Reliability Trend Tests            <xemf: ~reli\relitren.men>
+
+Goodness of Fit Tests
+   Anderson-Darling                <xemf: ~stat\andedarl.men>
+   Chi-Square                      <~univ\chisq.top>
+   Kolomogorov-Smirnov             <~univ\ks.top>
+   Probability Plot                <~univ\probplot.top>
+
+Compare 2 Exponentials             <xemf: ~reli\comp2exp.men>
+Fit Power Law Model                <xemf: ~reli\powerest.men>
+

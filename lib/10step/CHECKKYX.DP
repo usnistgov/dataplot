@@ -1,0 +1,24 @@
+. This is dataplot macro   checkkyx.dp
+. Purpose: Check for the existence of k, y, x1, x2, . . ., xk
+. Date: October 14, 2011
+. Example of calling routine--dexmp.dp
+.
+. -----start point-----
+.
+let string stmacro = checkkyx.dp
+.
+let string stall = k
+call checkinput.dp
+.
+if k not exist
+   call determine_k.dp
+end if
+.
+let string stall = y
+call checkinput.dp
+.
+loop for jk = 1 1 k
+   let string stall = x^jk
+   call checkinput.dp
+end loop
+.

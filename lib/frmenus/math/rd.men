@@ -1,0 +1,26 @@
+This is file rd.men--Compute Carlson's RD elliptic integral
+ 
+--------------------
+ 1. Carlson's Elliptic Integral of the second kind (RD)
+ 2. LET Y = RD(X,Y,Z)
+ 3.
+ 4. X-axis variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Y-axis variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Z-axis variable:
+ 6. @CE 3 0 42 50 ? gui-none
+ 7. Variable to store the transformed result:
+ 7. @CE 5 0 42 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 6 0 -5 50 *
+11.
+12.
+13. Compute the Transformation?:
+--------------------
+GR FE
+LET _5 = RD( _1 , _2 , _3 ) _6
+--------------------
+WEB HELP RD
+--------------------

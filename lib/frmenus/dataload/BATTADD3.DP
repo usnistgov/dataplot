@@ -1,0 +1,8 @@
+----- <~dataload\BATTADD3.DP> Load BATTADD3.DAT
+
+. This is file    BATTADD3.DP
+
+DELETE Y X BATT
+SKIP 25
+READ BATTADD3.DAT Y X BATT>
+

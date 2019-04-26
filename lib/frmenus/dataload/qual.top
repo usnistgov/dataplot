@@ -1,0 +1,9 @@
+----- <~dataload\qual.top> Load Built-in Quality/SPC Data Files
+
+Load Built-in Quality/SPC Data Files
+
+7 Old Tools                              <xcf: ~dataload\OLDTOOLS.DP>
+Control Charts                           <~dataload\qualcoch.top>
+Process Capability Index                 <~dataload\qualpci.top>
+Taguchi                                  <~dataload\qualtag.top>
+

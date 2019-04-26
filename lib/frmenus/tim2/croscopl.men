@@ -1,0 +1,54 @@
+This is file croscopl.men--Cross-correlation plot
+ 
+--------------------
+ 1. Cross-correlation Plot
+ 2. CROSS-CORRELATION PLOT Y1 Y2
+ 3.
+ 4. Definition: Cross-correlation(at lag h) =
+ 5.     correlation of Y1(i) with Y2(i-lag)
+ 6.     -1  <= cross-correlation  <= +1
+ 7.
+ 8. Vertical   axis = cross-correlation at lag h
+ 9. Horizontal axis = lag h
+10.
+11. Question being addressed:
+12.     For which lag is series 1 most
+13.     closely related to series 2?
+14.
+15. Reference: Granger & Hatanaka, page 74.
+16.
+17. Response Variable   #1:
+17. @CE 1 0 33 50 ? gui-variable
+18. Response Variable   #2:
+18. @CE 2 0 33 50 ? gui-variable
+19.
+20. Line Type:
+20. @CE 3 0 33 50 * gui-line
+21. Character type:
+21. @CE 4 0 33 50 * gui-char
+22. Character fill on/off?:
+22. @CE 5 0 33 50 * gui-ooff
+23. Spike on/off
+23. @CE 6 0 33 50 * gui-ooff
+24.
+25. Subset/Except/For Specification:
+26. @CE 7 0 6 50 *
+27.
+28.
+29. Generate the Plot?:
+--------------------
+GR FE
+LINE SAVE
+CHARACTER SAVE
+@IF 3 0 LINES _3
+@IF 4 0 CHARACTERS _4
+@IF 5 0 CHARACTER FILL _5
+@IF 6 0 SPIKE _6
+@IF 6 0 SPIKE BASE 0
+CROSS-CORRELATION PLOT _1 _2 _7
+CHARACTERS RESTORE
+LINES RESTORE
+SPIKE OFF
+--------------------
+WEB HELP CORRELATION PLOT
+--------------------

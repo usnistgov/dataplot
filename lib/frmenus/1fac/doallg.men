@@ -1,0 +1,45 @@
+This is file doallg.men--Compute various Location Measures
+ 
+--------------------line 3
+ 1. Various Group Statistics
+ 2. MEAN PLOT Y X
+ 3.
+ 4. Response        Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. Horizontal Axis Variable:
+ 5. @CE 2 0 42 50 ? gui-vari
+ 6.
+ 7. Line Types
+ 8.    Connecting the Data:
+ 8. @CE 3 0 43 50 * gui-line
+ 9.    For Global Mean Value Line:
+ 9. @CE 4 0 43 50 * gui-line
+10.
+11. Character Type for Data:
+11. @CE 5 0 43 50 * gui-char
+12. Character Fill for Data:
+12. @CE 6 0 43 50 * gui-ooff
+13.
+14. Spike to Global Mean Line:
+14. @CE 7 0 43 50 * gui-ooff
+15.
+16. Subset/Except/For Specification:
+17. @CE 8 0 1 50 *
+18.
+19.
+20. Generate the Plots?
+--------------------
+CHARACTERS _3
+LINES _4
+MULTIPLOT CORNER COORDINATES 5 5 95 95
+MULTIPLOT 2 2
+TITLE AUTOMATIC
+MEAN PLOT _1 _2 _8
+MEDIAN PLOT _1 _2 _8
+MIDMEAN PLOT _1 _2 _8
+END OF MULTIPLOT
+TITLE
+TABULATE MEANS _1 _2 _8
+--------------------
+WEB HELP MEAN PLOT
+--------------------

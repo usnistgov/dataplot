@@ -1,0 +1,30 @@
+This is file winscorr.men--Compute Winsorized correlation of a variable
+ 
+--------------------
+ 1. Winsorized Correlation
+ 2. LET A = WINSORIZED CORRELATION Y
+ 3.
+ 4. First variable for which to compute the correlation:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Second variable for which to compute the correlation:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Percentage of values to Winsorize above?:
+ 6. @CE 3 0 42 50 ? 
+ 7. Percentage of values to Winsorize below?:
+ 7. @CE 4 0 42 50 ?
+ 8. Parameter to store the Winsorized correlation:
+ 8. @CE 5 0 42 50 ? gui-none
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 6 0 1 50 *
+12.
+13.
+14. Compute the Winsorized Correlation?:
+--------------------
+GR FE
+LET P1 = _4
+LET P2 = _3
+LET _5 = WINSORIZED CORRELATION  _1 _2 _6
+--------------------
+WEB HELP WINSORIZED CORRELATION
+--------------------

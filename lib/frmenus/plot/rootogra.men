@@ -1,0 +1,63 @@
+This is file rootogra.men--Rootogram
+ 
+--------------------
+1. Rootogram
+2. ROOTOGRAM Y
+3.
+4. Horizontal Axis Variable:
+4. @CE 1 0 33 50 ? gui-variable
+5.
+6. Class Width (0.3*s):
+6. @CE 2 0 33 50 *
+7. Lower Limit of First Class:
+7. @CE 3 0 33 50 *
+8. Upper Limit of Last Class:
+8. @CE 4 0 33 50 *
+9.
+10. Bar Width for Data:
+10. @CE 5 0 33 50 *
+11. Bar Fill for Data (off, on):
+11. @CE 6 0 33 50 * gui-ooff
+12. Bar Dimension (2d, 3d):
+12. @CE 7 1 32 36 2d
+12. @CE 7 2 38 42 3d
+13.
+14. Title:
+14. @CE 8 0 18 50 *
+15. Left Axis Label:
+15. @CE 9 0 18 100 *
+16. Bottom Axis Label:
+16. @CE 10 0 18 100 *
+17.
+18. Type of Rootogram:
+19. @CE 12 1 10 45 counts (default)
+20. @CE 12 2 10 45 cumulative counts
+21. @CE 12 3 10 45 relative
+22. @CE 12 4 10 45 cumulative relative
+23.
+24. Subset/Except/For Specification: 
+25. @CE 11 0 1 50 *
+26.
+27.
+31. Generate the Rootogram?:
+--------------------
+GR FE
+CLASS WIDTH _2
+CLASS LOWER _3
+CLASS UPPER _4
+BAR FILL _5
+BAR WIDTH _6
+@IF 7 1 BAR DIMENSION 2
+@IF 7 2 BAR DIMENSION 3
+TITLE _8
+Y1LABEL _9
+X1LABEL _10
+LET STRING ZZZZSTR = ROOTOGRAM
+@IF 12 2 LET STRING ZZZZSTR = CUMULATIVE ROOTOGRAM
+@IF 12 3 LET STRING ZZZZSTR = RELATIVE ROOTOGRAM
+@IF 12 4 LET STRING ZZZZSTR = CUMULATIVE RELATIVE ROOTOGRAM
+^ZZZZSTR  _1 _11
+DELETE ZZZZSTR
+--------------------
+WEB HELP ROOTOGRAM
+--------------------

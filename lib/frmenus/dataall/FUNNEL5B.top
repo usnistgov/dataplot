@@ -1,0 +1,8 @@
+----- <~dataall\FUNNEL5B.top> FUNNEL5B.DAT
+
+FUNNEL5B.DAT
+
+View     <xcl: LIST FUNNEL5B.DAT>
+Load     <xcf: ~dataload/FUNNEL5B.DP>
+Print    <xccl: printfile C:\DATAPLOT\FUNNEL5B.DAT>
+

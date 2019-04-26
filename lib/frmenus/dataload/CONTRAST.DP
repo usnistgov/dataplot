@@ -1,0 +1,8 @@
+----- <~dataload\CONTRAST.DP> Load CONTRAST.DAT
+
+. This is file    CONTRAST.DP
+
+DELETE Y X
+SKIP 25
+READ CONTRAST.DAT Y X
+

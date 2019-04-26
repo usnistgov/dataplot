@@ -1,0 +1,8 @@
+----- <~datalist\BAKER.top> BAKER.DAT
+ 
+BAKER.DAT
+ 
+View     <xcl: LIST BAKER.DAT>
+Load     <x2cl: SKIP 25; READ BAKER.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\BAKER.DAT>
+ 

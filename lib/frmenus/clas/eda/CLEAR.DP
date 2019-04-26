@@ -1,0 +1,10 @@
+----- <~dataloex\CLEAR.DP> Load & Execute CLEAR.DAT
+
+. This is file    CLEAR.DP
+
+DELETE Y X
+SKIP 25
+READ CLEAR.DAT Y X
+TITLE CLEAR.DAT
+/
+

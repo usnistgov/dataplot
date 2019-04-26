@@ -1,0 +1,37 @@
+This is file gevcdf.men--Compute generalized extreme value cdf & tail Prob.
+ 
+--------------------
+ 1. Compute generalized extreme value cdf & Tail Probabilities
+ 2. LET A = GEVCDF(X,GAMMA)
+ 3.
+ 4. Input values:
+ 5.           x:              x < 1/gamma, gamma > 0
+ 6.                           x > 1/gamma, gamma < 0
+ 6. @CE 1 0 20 37 ?
+ 7.       shape gamma:
+ 7. @CE 2 0 20 37 ?
+ 8.     lower bound u:
+ 8. @CE 3 0 20 37 ?
+ 9.           scale s:                     s > 0
+ 9. @CE 4 0 20 37 ?
+10.
+11. Output parameters:
+12.      name for the cdf  value:
+12. @CE 5 0 38 49 ?
+13.      name for the tail prob. value:
+13. @CE 6 0 38 49 ?
+14.
+15.
+16. Compute the Probability?
+--------------------
+AN FE
+LET ZGAMMA = _2
+LET ZLOC = 0
+@IF 3 0 LET ZLOC = _3
+LET ZSCALE = 1
+@IF 4 0 LET ZSCALE = _4
+@IF 5 0 LET _5 = GEVCDF(( _1 - ZLOC)/ZSCALE, ZGAMMA )
+@IF 6 0 LET _6 = 1 - GEVCDF(( _1 - ZLOC)/ZSCALE,ZGAMMA)
+--------------------
+WEB HELP GEVCDF
+--------------------

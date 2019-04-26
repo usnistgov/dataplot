@@ -1,0 +1,9 @@
+----- <~dataview\reg.top> View Built-in Regression Data Files
+
+View Built-in Regression Data Files
+
+1-Variable & Polynomial                  <~dataview\reg1p.top>
+1-Variable & Non-Linear                  <~dataview\reg1n.top>
+Multivariable                            <~dataview\regmv.top>
+Graybill and Iyer Data Sets              <~dataview\grayiye1.top>
+

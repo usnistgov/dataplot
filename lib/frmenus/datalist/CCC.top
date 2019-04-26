@@ -1,0 +1,8 @@
+----- <~datalist\CCC.top> CCC.DAT
+ 
+CCC.DAT
+ 
+View     <xcl: LIST CCC.DAT>
+Load     <x2cl: SKIP 25; READ CCC.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\CCC.DAT>
+ 

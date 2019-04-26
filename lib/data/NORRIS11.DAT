@@ -1,0 +1,63 @@
+This is Dataplot data file    NORRIS11.DAT
+Calibration of Ozone Monitors (Photometers)
+Jim Norris, NIST
+Date            = ...
+Customer device = ...
+NIST device     = ...
+Response variable = measured ozone concentration by customer device
+Number of observations             = 36
+Number of variables per line image =  2
+Order of variables on a line--
+   1. Response Variable = measured O3 conc. by customer device
+   2. Factor 1          = measured O3 conc. by NIST device
+   3. Factor 2          = run (= batch) (3 levels)
+Statistical Classification--Regression & Calibration
+Core question: What linear equation allows the customer
+               to adjust his/her device to the NIST device
+To read this data file into Dataplot--
+   SKIP 25
+   READ NORRIS11.DAT Y X RUN
+ 
+ 
+ 
+    Y              X
+ Customer         NIST        Run
+------------------------------------
+    0.1            0.2         1
+  338.8          337.4         1
+  118.1          118.2         1
+  888.0          884.6         1
+    9.2           10.1         1
+  228.1          226.5         1
+  668.5          666.3         1
+  998.5          996.3         1
+  449.1          448.6         1
+  778.9          777.0         1
+  559.2          558.2         1
+    0.3            0.4         1
+ 
+    0.1            0.6         2
+  778.1          775.5         2
+  668.8          666.9         2
+  339.3          338.0         2
+  448.9          447.5         2
+   10.8           11.6         2
+  557.7          556.0         2
+  228.3          228.1         2
+  998.0          995.8         2
+  888.8          887.6         2
+  119.6          120.2         2
+    0.3            0.3         2
+ 
+    0.6            0.3         3
+  557.6          556.8         3
+  339.3          339.1         3
+  888.0          887.2         3
+  998.5          999.0         3
+  778.9          779.0         3
+   10.2           11.1         3
+  117.6          118.3         3
+  228.9          229.2         3
+  668.4          669.1         3
+  449.2          448.9         3
+    0.2            0.5         3

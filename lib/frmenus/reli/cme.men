@@ -1,0 +1,23 @@
+This is file cme.men--CME Estimates
+ 
+--------------------
+ 1. CME Estimate (for Generalized Pareto)
+ 2. CME Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Threshold Value:
+ 5. @CE 2 0 42 50 *
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute CME Estimate?
+--------------------
+GR FE
+LET THRESHOL = _2
+CME _1 _3
+--------------------
+WEB HELP CME
+--------------------

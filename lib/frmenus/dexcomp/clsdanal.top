@@ -1,0 +1,20 @@
+----- <~dexcomp\clsdanal.top> Latin Square Designs: Analysis
+
+Latin Square Designs: Analysis
+ 
+Discussion                            <~dexcomp\clsddian.top>
+NIST/SEMATECH Handbook
+     Block Plot                       <xcl: web handbook block plot>
+     Scatter Plot                     <xcl: web handbook scatter plot>
+     ANOVA                            <xcl: web handbook two factor anova>
+
+Graphical Techniques:
+     Block Plot                       <xemf: ~stat\blockplo.men>
+     Scatter Plot                     <xemf: ~dexcomp\replplot.men>
+
+Quantitative Techniques:
+     Analysis of Variance (Balanced)  <xemf: ~stat\anova.men>
+     Analysis of Variance (Balanced, with Graphics) <xemf: ~stat\anovag.men>
+     Median Polish                    <xemf: ~stat\medpol.men>
+     Median Polish (with Graphics)    <xemf: ~stat\medpolg.men>
+

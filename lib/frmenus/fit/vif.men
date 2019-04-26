@@ -1,0 +1,23 @@
+This is file vif.men--Compute the Variance Inflation Factors
+ 
+--------------------
+ 1. Compute the Variance Inflation Factors
+ 2. LET Y = VARIANCE INFLATION FACTORS X
+ 3.
+ 4. Use the "Create Design Matrix" menu
+ 5. to create a design matrix from a list
+ 6. of independent variables.
+ 7.
+ 8. Name of the design matrix:
+ 8. @CE 1 0  42 50 ? gui-variable
+ 9. Name for the variance inflation factors variable:
+ 9. @CE 2 0  42 50 ?
+10.
+11.
+12. Compute the Variance Inflation Factors?:
+--------------------
+GR FE
+LET _2 = VARIANCE INFLATION FACTORS _1
+--------------------
+WEB HELP VARIANCE INFLATION FACTORS
+--------------------

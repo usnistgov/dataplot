@@ -1,0 +1,34 @@
+This is file iwecdf.men--Compute Inverted Weibull cdf
+ 
+--------------------
+ 1. Compute Inverted Weibull cdf
+ 2. LET A = IWECDF(X,GAMMA)
+ 3.
+ 4. Input values:
+ 5.                 x:           x >= 0
+ 5. @CE 1 0 20 37 ?
+ 6.     shape gamma:             gamma > 0
+ 6. @CE 2 0 20 37 ?
+ 7.     location u:
+ 7. @CE 3 0 20 37 ?
+ 8.     scale s:                 s > 0
+ 8. @CE 4 0 20 37 ?
+ 9.
+10. Output parameters:
+11.      name for the cdf  value:
+11. @CE 5 0 38 49 ?
+12.
+13.
+14. Compute the Probability?
+--------------------
+AN FE
+LET ZLOC = 0
+@IF 3 0 LET ZLOC = _3
+LET ZSCALE = 1
+@IF 4 0 LET ZSCALE = _4
+LET ZZZZGAMM = 1
+@IF 2 0 LET ZZZZGAMM = _2
+@IF 5 0 LET _5 = IWECDF( _1 ,ZZZZGAMM)
+--------------------
+WEB HELP IWECDF
+--------------------

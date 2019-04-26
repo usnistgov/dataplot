@@ -1,0 +1,26 @@
+----- <~dexreg\dexreg.top>  Regression Designs
+ 
+Regression Designs
+ 
+Discussion
+    Overview                     <~dexreg\discussi.top>
+    Experimental Goals           <~dexreg\expgoals.top>
+    Advantages                   <~dexreg\advantag.top>
+    Disadvantages                <~dexreg\disadvan.top>
+    References                   <~dexreg\refer.top>
+ 
+Construction                     <~dexreg\construc.top>
+
+Analysis
+   1-Variable linear fit         <xemf: ~math\lin_fit.men>
+   1-Variable non-linear fit     <xemf: ~math\nl_fit.men>
+   Multi-variable fitting        <~fit\fit.top>
+ 
+Built-in Data Files
+   View                          <~dataview\dexreg.top>
+   Load                          <~dataload\dexreg.top>
+ 
+Worked Examples
+    BOXSPRAY.DAT  Aerosol spray dispersion          <xcf: ~dex\BOXSPRAY.DP>
+    BOXBOD.DAT    Oxygen demand vs incubation time  <xcf: ~clas\eda\BOXBOD.DP>
+ 

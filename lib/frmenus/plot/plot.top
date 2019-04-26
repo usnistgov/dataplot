@@ -1,0 +1,48 @@
+----- <~plot\plot.top> Plot
+
+Plot
+
+NIST/SEMATECH Handbook (Graphical Techniques) <xcl: web handbook graphics gallery>
+Graphical Output Devices            <~plot\od.top>
+
+Basic Plots
+   4-Plot                       <xemf: ~univ\4plot.men>
+   PLOT Y and PLOT Y X          <xemf: ~stat\scatplot.men>
+   Histogram                    <xemf: ~univ\histogra.men>
+   Probability Plot             <~univ\probplot.top>
+   PPCC Plot                    <~univ\ppccplot.top>
+   DEX Mean Plot                <xemf: ~plot\dexmeanp.men>
+   Control Charts               <~qual\contchar.top>
+
+Regression Plots
+   Plot Data and Predicted      <xemf: ~fit\plotpred.men>
+   Plot Residuals               <xemf: ~fit\plotres.men>
+   6-Plot (Residual Analysis)   <xemf: ~fit\6plot.men>
+   Residuals-Fitted Spread Plot <xemf: ~plot\rfplot.men>
+
+Multi-Factor Plots
+   Box Plot                     <xemf: ~stat\boxplot.men>
+   Block Plot                   <xemf: ~stat\blockplo.men>
+   Mean Plot                    <xemf: ~stat\meanplot.men>
+   Standard Deviation Plot      <xemf: ~stat\sdplot.men>
+   Statistics for Grouped Data (One Group)  <~plot\statplot.top>
+   Statistics for Grouped Data (Two Groups) <~plot\crosplot.top>
+   Additional Multi-Factor Plots            <~plot\multfact.top>
+
+Univariate Plots                    <~plot\univplot.top>
+X-Y and 3-D Plots                   <~plot\xyplot.top>
+Bar (and Related) Plots             <~plot\bar.top>
+Experiment Design Plots             <~plot\dexplots.top>
+Distributional Plots                <~plot\distplot.top>
+Time Series Plots                   <~plot\timeplot.top>
+Multivariate Plots                  <~plot\multplot.top>
+Reliability and Extreme Value Plots <~plot\reliplot.top>
+Bootstrap/Jacknife Plot             <~plot\bootstra.top>
+Maps                                <~plot\map.top>
+
+Multiplot Plots per Page            <~plot\multplpp.top>
+Replot Current Plot                 <xcl: replot>
+Print the Current Plot (PP)         <xcl: PP>
+
+Macro: 25 Sample Plots: PLOT25.DP   <xcl: CALL PLOT25.DP>
+

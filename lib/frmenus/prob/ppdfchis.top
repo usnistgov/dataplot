@@ -1,0 +1,14 @@
+----- <~prob\ppdfchis.top> Plot Chi-Square, Beta, F, and Related pdf's
+
+Plot Chi-square, Beta, F, and Related PDF Functions
+
+Chi-Squared              <xemf: ~prob\pchspdf.men>
+Chi                      <xemf: ~prob\pchpdf.men>
+
+F                        <xemf: ~prob\pfpdf.men>
+Beta                     <xemf: ~prob\pbetpdf.men>
+Power                    <xemf: ~prob\ppowpdf.men>
+Arcsin                   <xemf: ~prob\parspdf.men>
+Mielke's Beta-Kappa      <xemf: ~prob\pkappdf.men>
+Two-Sided Power          <xemf: ~prob\ptsppdf.men>
+

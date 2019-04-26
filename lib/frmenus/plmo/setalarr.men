@@ -1,0 +1,23 @@
+This is file setalarr.men--Set Arrow Attributes for All Arrows
+ 
+--------------------
+ 1. Set Arrow Attributes for all Arrows
+ 2. ARROW COLOR RED; ARROW PATTERN DASH
+ 3.
+ 4. Color for Arrow:
+ 4. @CE 1 0 42 50 * gui-color
+ 5. Line Type for Arrow:
+ 5. @CE 2 0 42 50 * gui-line
+ 6. Line Thickness for ARROW:
+ 6. @CE 3 0 42 50 * gui-thick
+ 7.
+ 8.
+ 9. Set Arrow Attributes?
+--------------------
+PC FE
+@IF 1 0 ARROW COLOR _1
+@IF 2 0 ARROW PATTERN _2
+@IF 3 0 ARROW THICKNESS _3
+--------------------
+WEB HELP ARROW COORDINATES
+--------------------

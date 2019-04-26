@@ -1,0 +1,19 @@
+----- <~plmo\setarrow.top> Set Arrows and Attributes
+ 
+Set Arrows and Attributes
+ 
+Up to 100 arrows can be specified
+for subsequent plots.  These arrows
+are specified in Dataplot 0 to 100 units.
+
+Set All Arrow Attributes                  <xemf: ~plmo\setalarr.men>
+Set Arrow Attributes for a Single Arrow <xemf: ~plmo\setarr1.men>
+
+Turn Off All Arrows                       <xcl: ARROW COORDINATES>
+
+Help for Segment Attributes
+   ARROW COORDINATES <xcl: HELP ARROW COORDINATES>
+   ARROW COLOR       <xcl: HELP ARROW COLOR>
+   ARROW PATTERN     <xcl: HELP ARROW PATTERN>
+   ARROW THICKNESS   <xcl: HELP ARROW THICKNESS>
+

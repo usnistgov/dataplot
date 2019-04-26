@@ -1,0 +1,7 @@
+----- <~data\errofunc.top> xx
+
+Error Functions
+
+ERF(X)            error function
+ERFC(X)           complementary error function
+

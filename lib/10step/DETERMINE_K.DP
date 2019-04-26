@@ -1,0 +1,17 @@
+. This is dataplot macro     determine_k.dp
+. Purpose: Determine the value of k (= numnber of factors) for dex 10-step mac
+. Date: 11/18/15
+.
+. -----start point-----
+.
+if k not exist
+   loop for jz = 1 1 30
+      if x^jz exists; let k = jz; end if
+   end loop
+   .
+   print "   ==============================================="
+   print "          k (= number of factors) is being internally computed"
+   print "          by the existence of highest-indexed X.. variable."
+   print "          k has been computed as k = ^k"
+   print "   ==============================================="
+end if

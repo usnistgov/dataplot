@@ -1,0 +1,16 @@
+----- <~dex\wsch8.top> Chapter 8: Full Factorial Designs
+
+Chapter 8: Full Factorial Designs
+
+View:
+   BOXSPRIN.DAT  2**3  Defective springs   <xcl: LIST ~BOXSPRIN.DAT>
+   BOXPILOT.DAT  2**3  Pilot plant yield   <xcl: LIST ~BOXPILOT.DAT>
+   BOXCHEM.DAT   2**4  Chemical yield      <xcl: LIST ~BOXCHEM.DAT>
+   BOXREACT.DAT  2**5  Chem. reactor eff   <xcl: LIST ~BOXREACT.DAT>
+
+Load:
+   BOXSPRIN.DAT  2**3  <x2cl: SKIP 25; READ BOXSPRIN.DAT Y X1 X2 X3>
+   BOXPILOT.DAT  2**3  <x2cl: SKIP 25; READ BOXPILOT.DAT Y X1 X2 X3>
+   BOXCHEM.DAT   2**4  <x2cl: SKIP 25; READ BOXCHEM.DAT Y X1 TO X4>
+   BOXREACT.DAT  2**5  <x2cl: SKIP 25; READ BOXREACT.DAT Y X1 TO X5>
+

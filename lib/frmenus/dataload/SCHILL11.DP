@@ -1,0 +1,8 @@
+----- <~dataload\SCHILL11.DP> Load SCHILL11.DAT
+
+. This is file    SCHILL11.DP
+
+DELETE Y X
+SKIP 25
+READ SCHILL11.DAT Y X
+

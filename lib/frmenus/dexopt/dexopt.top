@@ -1,0 +1,31 @@
+----- <~dexopt\dexopt.top>  Optimization Designs
+
+Optimization (Response Surface) Designs
+ 
+Discussion
+    Overview                              <~dexopt\discussi.top>
+    Experimental Goals                    <~dexopt\expgoals.top>
+    Advantages                            <~dexopt\advantag.top>
+    Disadvantages                         <~dexopt\disadvan.top>
+    References                            <~dexopt\refer.top>
+NIST/SEMATECH Handbook 
+    Response Surface Method   <xcl: web handbook response surface designs>
+    Central Composite Designs <xcl: web handbook central composite designs>
+    Box-Behnken Designs       <xcl: web handbook box behnkins designs>
+    Comparison of RSM Deisgns <xcl: web handbook compare response surface designs>
+    Blocking of RSM Deisgns   <xcl: web handbook blocking response surface designs>
+    Adding Center Points      <xcl: web handbook response surface center points>
+ 
+Construction
+    View Designs                          <~dexopt\viewdesi.top>
+    Load Designs                          <~dexopt\loaddesi.top>
+Analysis                                  <~dexopt\analysis.top>
+ 
+Built-in Data Files
+    View                                  <~dataview\dexopt.top>
+    Load                                  <~dataload\dexopt.top>
+
+Worked Examples 
+    BOXYIEL2.DAT  Chemical Yield          <xcf: ~dex\BOXYIEL2.DP>
+    BOXCLEAN.DAT  Cleanser Stability      <xcf: ~clas\eda\BOXCLEAN.DP>
+

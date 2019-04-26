@@ -1,0 +1,52 @@
+----- <~prob\prob.top> Probability
+
+Probability Distributions
+
+Discussion                              <~prob\disc.top>
+NIST/SEMATECH Handbook                  <xcl: web handbook probability distributions>
+
+View Distributional Definitions                 <~prob\viewprob.top>
+
+Compute Probability Functions
+    Cumulative distribution & tail probabilities <~prob\cdftail.top>
+    Probability density functions                <~prob\comppdf.top>
+    Percent point (quantiles) functions          <~prob\percpoin.top>
+    Hazard function                              <~prob\comphaz.top>
+    Cumulative hazard function                   <~prob\compchaz.top>
+
+Plot Probability Functions
+    CDF Functions                            <~prob\plotcdf.top>
+    PDF Functions                            <~prob\plotpdf.top>
+    PPF Functions                            <~prob\plotppf.top>
+    Hazard Functions                         <~prob\plothaz.top>
+    Cumulative Hazard Functions              <~prob\plotchaz.top>
+    Sparsity Functions                       <~prob\plotsf.top>
+
+Univariate Distributional Fitting
+    Discussion                               <~prob\dfitdisc.top>
+    Estimate Parameters/Quantiles
+        Maximum Likelihood                    <~prob\mle.top>
+        PPCC (or KS) Plot/Probability Plot    <~prob\ppcc.top>
+        PPCC/KS/PP with bootstrapping         <~prob\ppccboot.top>
+        Specialized Methods                   <~prob\specfit.top>
+    Assess Goodness of Fit (Graphical)
+        Discusion                             <~reli\goodfitg.top>
+        Probability plots                     <~prob\probplot.top>
+        Histogram & superimposed pdf plot     <~prob\histpdfp.top>
+    Assess Goodness of Fit (Quantitative)
+        Discusion                             <~reli\goodfitq.top>
+        Set Options                           <~reli\goodfopt.top>
+        Anderson-Darling                      <~prob\andedarl.top>
+        Kolmogorov-Smirnov/Chi-Square         <~prob\ks.top>
+        Wilk-Shapiro Test for Normality       <xemf: ~stat\wilkshap.men>
+
+Simulation (Random Numbers)
+    Set seed                                 <xemf: ~prob\setseed.men>
+    Select generator to use                  <xemf: ~prob\setgene.men>
+    Random permutations                      <xemf: ~prob\genranpe.men>
+    Random numbers                           <~prob\randnumb.top>
+
+Distributional Plots                         <~plot\distplot.top>
+Compare Two Samples                          <~prob\comp2dis.top>
+Compare Three (or more) Samples              <~prob\comp3dis.top>
+

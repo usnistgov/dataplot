@@ -1,0 +1,27 @@
+This is file trimmese.men--Compute trimmed mean standard error of a variable
+ 
+--------------------
+ 1. Trimmed Mean Standard Error
+ 2. LET A = TRIMMED MEAN STANDARD ERROR Y
+ 3.
+ 4. Variable for which to compute the trimmed mean standard error:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Percentage of values to trim above?:
+ 5. @CE 2 0 42 50 ?
+ 6. Percentage of values to trim below?:
+ 6. @CE 3 0 42 50 ? 
+ 7. Parameter to store the trimmed mean:
+ 7. @CE 4 0 42 50 ? gui-none
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 1 50 *
+11.
+12.
+13. Compute the Trimmed Mean Standard Error?:
+--------------------
+GR FE
+LET P1 = _3
+LET P2 = _2
+LET _4 = TRIMMED MEAN STANDARD ERROR _1 _5
+--------------------
+WEB HELP TRIMMED MEAN STANDARD ERROR

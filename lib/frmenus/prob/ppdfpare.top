@@ -1,0 +1,12 @@
+----- <~prob\ppdfsymm.top> Plot Pareto and Logistic pdf's
+
+Plot Pareto and Logistic PDF Functions
+
+Pareto                   <xemf: ~prob\pparpdf.men>
+Generalized Pareto       <xemf: ~prob\pgeppdf.men>
+Pareto Type 2            <xemf: ~prob\ppa2pdf.men>
+Logistic                 <xemf: ~prob\plogpdf.men>
+Log-Logistic             <xemf: ~prob\pllgpdf.men>
+Half-Logistic            <xemf: ~prob\phflpdf.men>
+Generalized Logistic     <xemf: ~prob\pglopdf.men>
+

@@ -1,0 +1,157 @@
+. This is dataplot macro     form_and_write_dex_10_step_conclusions.dp
+. Purpose: For each of the dex 10 steps, create conclusions and write them out to file
+. Date: 12/10/18
+.
+. -----start point-----
+.
+let concsw = 0
+.
+if concsw = 1
+   .
+   print "Step = ^step"
+   .
+   . -----Do the Summary case (from dexodp.dp)-----
+   .
+   if step = 1
+      set write decimals 4
+      let ny    = number  y
+      let miny  = minimum y; let stmin  = number to string miny
+      let maxy  = maximum y; let stmax  = number to string maxy
+      let meany = mean    y; let stmean = number to string meany
+      let sdy   = sd      y; let stsd   = number to string sdy
+      let rsdy = 0; if meany <> 0; let rsdy = 100*sdy/meany
+                    set write decimals 2; let strsdy = number to string rsdy; end if
+      set write decimals 4
+      let unc1  =   sdy/sqrt(n); let stunc1 = number to string unc1
+      let unc2  = 2*sdy/sqrt(n); let stunc2 = number to string unc2
+      let df = n-1; let t = tppf(0.975,df)
+      let unc95 = t*sdy/sqrt(n); let stunc95 = number to string unc95
+      set write decimals 2
+      let runc1 = 0;  if meany <> 0; let runc1 = 100*unc1/meany;
+                      let strunc1 = number to string runc1; end if
+      let runc2 = 0;  if meany <> 0; let runc2 = 100*unc2/meany;
+                      let strunc2 = number to string runc2; end if
+      let runc95 = 0; if meany <> 0; let runc95 = 100*unc95/meany;
+                      let strunc95 = number to string runc95; end if
+      let stt = number to string t
+      .
+      . ---Normality---
+      .
+      let ppcc = normal ppcc Y; let ppcc = 100*ppcc
+      set write decimals 4; let stppcc = number to string ppcc
+      if n <= 100
+         let ppcc05 = 100*norppcv(n,0.05)
+         let ppcc01 = 100*norppcv(n,0.01)
+      end if
+      let string stnorm1 = ^stppcc%
+      delete stnorm2
+      if n <= 100
+         if ppcc < ppcc05; let string stnorm2 = Fails Normality at alpha = 5% level; end if
+         if ppcc < ppcc01; let string stnorm2 = Fails Normality at alpha = 1% level; end if
+      end if
+      .
+      . ---Outliers (Grubbs)---
+      .
+      grubbs test y; let grub = statval
+      set write decimals 4; let stgrub = number to string grub
+      let grub95 = cutoff95
+      let grub99 = cutoff99
+      delete stgrub2; let string stgrub2 = No outlier detected
+      if grub > grub95; let string stgrub2 = Fails Outlier Test at alpha = 5% level; end if
+      if grub > grub99; let string stgrub2 = Fails Outlier Test at alpha = 1% level; end if
+      delete outlier
+      if grub > grub95 or grubb > grub99;
+      let minz = (meany-miny)/sdy; let maxz = (maxy-meany)sdy
+      let outlier = miny; if maxz > minz; let outlier = maxy; end if; end if
+      .
+      capture dex_10_step_conclusions_summary.txt
+         print "DEX 10-Step Conclusions"
+         print " "
+         print "1. Data: The (n = ^ny) data points in Y range from ^stmin to ^stmax"
+         print "      with Mean = ^stmean and SD(data) = ^stsd (^strsdy%)."
+         print "      Unc(Mean): (k=1): ^stunc1 (^strunc1%)   (k=2): ^stunc2 (^strunc2%)"
+         print "                 (k=95% = ^stt): ^stunc95 (^strunc95%)"
+         print "      Normality Test: Normal PPCC Test:           ^stnorm1"
+         if stnorm2 exists; print "                      ^stnorm2"; end if
+         .
+         print "      Outlier   Test: Grubbs (Assumes Normality): ^stgrub"
+         print "                      ^stgrub2"
+         if outlier exists; print "                      Outlier = ^outlier"; end if
+      end capture
+      .
+      list dex_10_step_conclusions_summary.txt
+   end if
+   .
+   . -----Do the Important Factors case (from dexep.dp)-----
+   .
+   if step = 7
+      capture dex_10_step_conclusions_important_factors.txt
+         print "2. Important Factors: There are 5 important factors/interactions (with effects):"
+
+         let numimp = 5
+         loop for j = 1 1 numimp
+            let j2 = ^steft^j
+            let effj = eff(j)
+            set write decimals 4; let steff = number to string effj
+            let reffj = releff(j)
+            set write decimals 2; let streff = number to string reffj
+            let string stref = -999
+            let efcj = ^stefc^j
+            if efcj <> -999
+               print "      X^j2    (^stx^j2)     ^steff (^streff%)    ^stefc^j"
+            end if
+            if efcj = -999
+               print "      X^j2    (^stx^j2)     ^steff (^streff%) "
+            end if
+         end loop
+         print "Although only X5 (^stx^5) is statistically significant (p < .05) individually,"
+         print "these 5 factors/interactions are statistically different from the remaining 5 factors"
+         print "Of all 8 factors, the least important is X3 (^stx3) (effect = .0123 (44%))"
+      end capture
+      list dex_10_step_conclusions_important_factors.txt
+   end if
+   .
+   . -----Do the Interactions case (from dexep.dp)-----
+   .
+   if step = 7
+      capture dex_10_step_conclusions_interactions.txt
+         print "3. Interactions: The 2 existent interactions in the above list"
+         print "(X5*X8 and X1*X5) are large and of interest,"
+         print "but not statistically significant."
+      end capture
+      list dex_10_step_conclusions_interactions.txt
+   end if
+   .
+   . -----Do the Best Settings case (from dexodp.dp and dexmp.dp)-----
+   .
+   if step = 1
+      capture dex_10_step_conclusions_best_settings.txt
+         print "4. Best Settings: The best setting (yielding SiO2 Layer Thickness Errors"
+         print "closest to 0) is (X1,X2,X3,X4,X5.X6.X7,X8) = (- + any - + + - +), that is,"
+         print " (tilt = 0, tilt az. = 25, beam th. = any, film th. = 1.5, defocus = -48.4,"
+         print " ast. mag. = .08, ast. az. = 0, viv amp = .04)."
+      end capture
+      list dex_10_step_conclusions_best_settings.txt
+   end if
+   .
+   . -----Do the Best Future Settings case (from dexcp.dp)-----
+   .
+   if step = 10
+      capture dex_10_step_conclusions_future_settings.txt
+         print "5. Future: The best direction to potentially reduce the error closer to 0"
+         print "would be to increase X5 (defocus) and decrease X8 (vib. amplitude)."
+      end capture
+      list dex_10_step_conclusions_future_settings.txt
+   end if
+   .
+   . -----Do the Modeling case (from dexcp.dp)-----
+   .
+   if step = 9
+      capture dex_10_step_conclusions_modeling.txt
+         print "6. Modeling: The best model blah blah blah  error closer to 0"
+         print "would be to increase X5 (defocus) and decrease X8 (vib. amplitude)."
+      end capture
+      list dex_10_step_conclusions_modeling.txt
+   end if
+   .
+end if

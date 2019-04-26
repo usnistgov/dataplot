@@ -1,0 +1,16 @@
+----- <~data\chebfunc.top> xx
+
+Chebychev Polynomials of the First Kind
+
+CHEB0(X)          Chebychev polynomial of order 0
+CHEB1(X)          Chebychev polynomial of order 1
+CHEB2(X)          Chebychev polynomial of order 2
+CHEB3(X)          Chebychev polynomial of order 3
+CHEB4(X)          Chebychev polynomial of order 4
+CHEB5(X)          Chebychev polynomial of order 5
+CHEB6(X)          Chebychev polynomial of order 6
+CHEB7(X)          Chebychev polynomial of order 7
+CHEB8(X)          Chebychev polynomial of order 8
+CHEB9(X)          Chebychev polynomial of order 9
+CHEB10(X)         Chebychev polynomial of order 10
+

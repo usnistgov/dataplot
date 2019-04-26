@@ -1,0 +1,31 @@
+----- <~math\locadiff.top> Difference of Location Statistics
+ 
+Difference of Location Statistics
+ 
+Calculate the difference between two
+response variables for various measures
+of location.  These commands calculate
+the requested statistic for the data in
+variables and store the resulting statistic
+in a parameter.
+
+
+Measures of Location
+   Difference of Means                <xemf: ~math\diffmean.men>
+   Difference of Biweight Locations   <xemf: ~math\diffbwlo.men>
+   Difference of Geometric Means      <xemf: ~math\diffgeme.men>
+   Difference of Harmonic Means       <xemf: ~math\diffharm.men>
+   Difference of H10                  <xemf: ~math\diffh10.men>
+   Difference of H12                  <xemf: ~math\diffh12.men>
+   Difference of H15                  <xemf: ~math\diffh15.men>
+   Difference of H17                  <xemf: ~math\diffh17.men>
+   Difference of H20                  <xemf: ~math\diffh20.men>
+   Difference of Hodges Lehman        <xemf: ~math\diffhodg.men>
+   Difference of Lp Location          <xemf: ~math\difflplo.men>
+   Difference of Medians              <xemf: ~math\diffmedi.men>
+   Difference of Midmeans             <xemf: ~math\diffmidm.men>
+   Difference of Midranges            <xemf: ~math\diffmidr.men>
+   Difference of Sample Size          <xemf: ~math\diffsize.men>
+   Difference of Trimmed Means        <xemf: ~math\difftrim.men>
+   Difference of Winsorized Means     <xemf: ~math\diffwime.men>
+

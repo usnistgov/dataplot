@@ -1,0 +1,11 @@
+-----  <~time\smooexam.top> Load & Analyze Smoothing examples
+
+Worked Examples for Smoothing and Filtering
+
+FFT Based Smoothing
+    Remove high frequency contamination      <xcf: ~time\FFT1.DP>
+    Decompose series into signal and noise   <xcf: ~time\FFT2.DP>
+
+Time Domain Smoothing
+    MAVRO.DAT  Apply different smoothers     <xcf: ~time\SMOOTH.DP>
+

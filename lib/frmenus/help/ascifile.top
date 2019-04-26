@@ -1,0 +1,61 @@
+----- <~help\ascifile.top> Help: Entering Data
+ 
+Help: Discussion/ASCII Data Files
+
+Probably the most common method for entering data into
+Dataplot is to read an ASCII file.  This section provides
+guidance on reading ASCII data files in Dataplot.
+
+One particularly important point to note is that although
+the data spreadsheet window is convenient, it can impose
+significant overhead.  We recommend that you click the
+"No Update" button on the spreadsheet before reading large
+data files.  The definition of large will depend somewhat
+on how new your computer is, but a good starting point is to
+check the "No Update" if you anticipate reading more than
+1,000 rows of data.  If you have a lot of columns of data,
+you may want to click the "No Upate" if you anticipate 500
+rows or more.
+
+IDEAL CASE
+
+By default, Dataplot assumes rectangular data files containing
+numeric data where the data columns are separated by one or
+more spaces.  Commas or tabs may be used as delimiters as well.
+
+In this case, you can read the file with a command like the following:
+
+    READ  FILE.DAT  Y X1 X2
+
+The first argument after the READ is the name of the ASCII file.
+The remaining arguments identify the variable names.  Variable
+names can be up to eight characters long and should be limited
+to alphabetic (A-Z) and numeric (0-9) characters.  Although
+other characters can in fact be used, this is discouraged
+since their use can cause problems in some contexts.  Variable
+names are not case sensitive (Dataplot converts all alphabetic
+characters to upper case).
+
+Dataplot recognizes the first argument as a file name if it
+finds a "." in the name.  If no "." is found, Dataplot assumes
+the first argument is a variable name and it tries to read
+from the keyboard rather than the file.
+
+The following menus provide more detailed discussion of
+issues you may encounter in reading your data files.
+
+Further Discussion of Specific Issues
+   Viewing ASCII Data Files                  <~file\discview.top>
+   Dataset Dimensions                        <~file\discwork.top>
+   Entering Data Via the Spreadsheet         <~file\discspre.top>
+   File Name Restrictions                    <~file\discname.top>
+   Header Lines/Restricted Rows or Columns   <~file\dischead.top>
+   Long Data Records                         <~file\disclong.top>
+   Automatic Variable Names                  <~file\discauto.top>
+   Reading Fixed Columns                     <~file\discfixc.top>
+   Reading Variables of Unequal Length       <~file\discuneq.top>
+   Reading Data with Character Fields        <~file\discchar.top>
+   Reading Row Oriented Data                 <~file\discrowd.top>
+   Comment Lines in Data Files               <~file\disccomm.top>
+   Excel Files                               <~file\discexce.top>
+

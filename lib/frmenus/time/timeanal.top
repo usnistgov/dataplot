@@ -1,0 +1,28 @@
+----- <~time\timeanal.top> Time Series (1-Variable) Analysis
+ 
+Time Series (1-Variable) Analysis
+ 
+Discussion                     <~time\discussi.top>
+NIST/SEMATECH Handbook         <~time\handbook.top>
+
+Assumptions                    <~time\assumpti.top>
+Assumption testing             <~time\testassu.top>
+ 
+Plot the data                  <xemf: ~plot\runsplot.men>
+
+Time     -domain analysis      <~time\timedoma.top>
+Frequency-domain analysis      <~time\freqdoma.top>
+
+Graphical Techniques           <~time\viewdata.top>
+Quantitative Techniques        <~time\stattech.top>
+
+Built-in data sets
+   View                        <~dataview\time.top>
+   Load                        <~dataload\time.top>
+
+Worked Examples                <~time\timeexam.top>
+
+References                     <~time\referenc.top>
+
+Time Series (2-Variable) Analysis   <~tim2\tim2anal.top>
+

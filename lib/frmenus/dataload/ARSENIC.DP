@@ -1,0 +1,8 @@
+----- <~dataload\ARSENIC.DP> Load ARSENIC.DAT
+
+. This is file    ARSENIC.DP
+
+DELETE Y X
+SKIP 25
+READ ARSENIC.DAT Y X
+

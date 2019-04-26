@@ -1,0 +1,46 @@
+----- <~help\builtin.top> Help: Built-in Data
+ 
+Help: Discussion/Built-in Datasets
+
+The Dataplot installation comes with a large number
+of built-in datasets.  Note that these files are all
+ASCII files.
+
+If you would just like to experiment with Dataplot,
+one of the easiest ways to get started is to load
+in one of these built-in datasets.  Under the
+"Files/Data" menu, select the "Open (READ/LOAD)" option
+beneath "Built-in Dataplot Datasets".  For convenience,
+the data files are grouped into similar categories.
+When you select a specific data file, Dataplot will
+automatically run a macro to read that data file.
+
+On Windows platforms, the default location is:
+
+   C:\Program Files\NIST\DATAPLOT\DATA
+
+On Unix/Linux platforms, the default location is:
+
+   /usr/local/lib/dataplot
+
+You can view or read these files without specifying
+the path name.
+
+To view a list of available data files, enter the
+command
+
+    LIST DATASETS
+
+To view the contents of a specific file, you can
+enter a command like
+
+    LIST BERGER1.DAT
+
+Most of these files will contain comments that give
+instructions for reading the file into Dataplot.  For
+example, to read the BERGER1.DAT file you could enter
+the commands
+
+    SKIP 25
+    READ BERGER1.DAT Y X BAR
+

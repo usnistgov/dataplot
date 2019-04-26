@@ -1,0 +1,29 @@
+----- <~prob\wei2desc.top> Weibull Description (for Max)
+
+*Weibull Description (for Max)
+
+to be fixed
+pdf: f(x)     = gamma * x**(gamma-1) * exp(-(x**gamma))  with x > 0
+pdf: f(x,u,s) = gamma * z**(gamma-1) * exp(-(z**gamma))
+                with z = (x-u)/s   with x > u
+
+Moments   : E(X)  = gamma function (1 + 1/gamma)
+            SD(X) = term1 - term2
+                    where term1 = gamma function (1 + 2/gamma)
+                    and   term2 = (gamma function (1 + 1/gamma))**2
+
+Type      : Continuous, skewed family of distributions--
+            moderate-tailed to long-tailed.
+Domain    : 0 to +infinity
+Synonym   : Exponential (when gamma = 1)
+Genesis   : Weibull (1939)
+Definition: If the times T1, T2, T3, ... to failure
+            of components 1, 2, 3, ... are exponential,
+            then the time T = min(T1, T2, T3, ...) to failure
+            of the system tends (as the number of
+            components approaches infinity) to Weibull.
+
+Reference : Johnson & Kotz,
+            Continuous Univariate Distributions-2,
+            Chapter 20 (pages 250-271).
+

@@ -1,0 +1,29 @@
+This is file setscal2.men--Set Scale Attributes for Left Axis
+ 
+--------------------
+ 1. Set Scale Attributes for Left Axis
+ 2. Y1LOG ON; Y1LIMITS 1 100000
+ 3.
+ 4. Scale for Left (Y1) Axis:
+ 5. @CE 1 1  5 15 linear
+ 5. @CE 1 2 17 27 log
+ 5. @CE 1 3 29 39 Weibull
+ 6.
+ 7. Minimum for Left (Y1) Axis:
+ 7. @CE 2 0 42 50 *
+ 8. Maximum for Left (Y1) Axis:
+ 8. @CE 3 0 42 50 *
+ 9.
+10.
+11. Set Left Axis Scale Attributes?:
+--------------------
+PC FE
+Y1LOG OFF
+@IF 1 1 Y1LOG OFF
+@IF 1 2 Y1LOG ON
+@IF 1 3 Y1WEIBULL SCALE ON
+@IF 2 0 Y1MINIMUM _2
+@IF 3 0 Y1MAXIMUM _3
+--------------------
+WEB HELP LOG
+--------------------

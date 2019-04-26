@@ -1,0 +1,39 @@
+----- <~help\dpproc2.top> Recommended Procedure in Dataplot
+
+Recommended Procedure in Dataplot
+
+Recommended Procedure in Dataplot
+
+
+Although there are a number of different approaches for
+creating graphics for importing into external applications,
+the following is our recommendation as the best compromise
+between simplicity and quality.
+
+1) In Dataplot, generate the graph in either Postscript or
+   encapsulated Postscript format and either exit out of
+   Dataplot or close the graphics device (DEVICE 2 CLOSE).
+   For the sake of discussion, we assume you have created the
+   file C:\SAMPLE.PS using one of the methods above.
+
+2) Initiate the Windows version of Ghostview.
+
+3) Load the SAMPLE.PS file using the File/Open menu.
+
+   a. Initiate the File/Convert menu.
+
+   b. Select the desired device.  If your application can
+      import PDF files, the recommended format is "pdfwrite".
+      If your application does not support PDF, then the
+      recommended alternative is "jpeg".
+
+   c. Select the resolution.  By default, Dataplot generates
+      Postscript output at 300 dpi.  This should be adequate
+      for most applications.
+
+   d. Click OK.
+
+   e. You will be prompted for a file name to save the file.
+
+   f. Import the saved file into your application.
+

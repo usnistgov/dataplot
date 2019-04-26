@@ -1,0 +1,346 @@
+/* dataplot.css: Dataplot SVG style sheets */
+/* Version: March, 2002                    */
+
+/*   Define a special fill for the background color */
+
+rect.background {
+   stroke:#FFFFFF;
+   fill:none;
+}
+
+/*   Define line types based on:  */
+/*   1) Type (solid, dash, dotted, dash2, dash3, dash4, dash5 */
+/*   2) Width (narrow, medium, wide, extra wide) */
+/*   Remaining attributes default to same values (specifically */
+/*   foreground color is set to black) */
+
+
+polyline.narrow-solid {
+   stroke-width:1;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.medium-solid {
+   stroke-width:3;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.wide-solid {
+   stroke-width:5;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.extrawide-solid {
+   stroke-width:7;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+
+polyline.narrow-dash {
+   stroke-width:1;
+   stroke-dasharray: 3,3;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.medium-dash {
+   stroke-width:3;
+   stroke-dasharray: 3,3;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.wide-dash {
+   stroke-width:5;
+   stroke-dasharray: 3,3;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.extrawide-dash {
+   stroke-width:7;
+   stroke-dasharray: 3,3;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+
+polyline.narrow-dotted {
+   stroke-width:1;
+   stroke-dottedarray: 1,1;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.medium-dotted {
+   stroke-width:3;
+   stroke-dottedarray: 1,1;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.wide-dotted {
+   stroke-width:5;
+   stroke-dottedarray: 1,1;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.extrawide-dotted {
+   stroke-width:7;
+   stroke-dottedarray: 1,1;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+
+polyline.narrow-dash2 {
+   stroke-width:1;
+   stroke-dash2array: 9,5;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.medium-dash2 {
+   stroke-width:3;
+   stroke-dash2array: 9,5;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.wide-dash2 {
+   stroke-width:5;
+   stroke-dash2array: 9,5;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.extrawide-dash2 {
+   stroke-width:7;
+   stroke-dash2array: 9,5;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+
+polyline.narrow-dash3 {
+   stroke-width:1;
+   stroke-dash3array: 5,3,9,2;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.medium-dash3 {
+   stroke-width:3;
+   stroke-dash3array: 5,3,9,2;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.wide-dash3 {
+   stroke-width:5;
+   stroke-dash3array: 5,3,9,2;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.extrawide-dash3 {
+   stroke-width:7;
+   stroke-dash3array: 5,3,9,2;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+
+polyline.narrow-dash4 {
+   stroke-width:1;
+   stroke-dash4array: 9,3,5,9,3,5;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.medium-dash4 {
+   stroke-width:3;
+   stroke-dash4array: 9,3,5,9,3,5;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.wide-dash4 {
+   stroke-width:5;
+   stroke-dash4array: 9,3,5,9,3,5;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.extrawide-dash4 {
+   stroke-width:7;
+   stroke-dash4array: 9,3,5,9,3,5;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+
+polyline.narrow-dash5 {
+   stroke-width:1;
+   stroke-dash5array: 5,2,5,2;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.medium-dash5 {
+   stroke-width:3;
+   stroke-dash5array: 5,2,5,2;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.wide-dash5 {
+   stroke-width:5;
+   stroke-dash5array: 5,2,5,2;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+polyline.extrawide-dash5 {
+   stroke-width:7;
+   stroke-dash5array: 5,2,5,2;
+   stroke-linecap: butt;
+   stroke-linejoin: miter;
+   stroke-miterlimit: 4;
+   stroke-opacity:1;
+   stroke:#000000;
+   fill:none;
+}
+
+/*   Define text types based on:  */
+/*   1) Justification (left/center/right) */
+/*   Orientation (horizontal/vertical)  will use these classes, */
+/*   but it will use transformation in the SVG file. */
+/*   Remaining attributes default to same values (specifically */
+/*   foreground color is set to black, size is set to 7) */
+
+text.center-horizontal {
+   text-anchor:middle; 
+   font-family:sans-serif;
+   font-weight:bold;
+   font-style:normal;
+   font-variant:normal;
+   text-rendering:auto;
+   text-decoration:none;
+   writing-mode:lr-tb;
+   font-size:  9;
+   stroke:#000000;
+}
+
+text.left-horizontal {
+   text-anchor:start; 
+   font-family:sans-serif;
+   font-weight:bold;
+   font-style:normal;
+   font-variant:normal;
+   text-rendering:auto;
+   text-decoration:none;
+   writing-mode:lr-tb;
+   font-size:  9;
+   stroke:#000000;
+}
+
+text.right-horizontal {
+   text-anchor:end; 
+   font-family:sans-serif;
+   font-weight:bold;
+   font-style:normal;
+   font-variant:normal;
+   text-rendering:auto;
+   text-decoration:none;
+   writing-mode:lr-tb;
+   font-size:  9;
+   stroke:#000000;
+}
+

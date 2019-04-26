@@ -1,0 +1,38 @@
+----- <~plmo\setchar.top> Set Characters and Attributes
+ 
+Set Characters and Attributes
+ 
+Set Character Types         <xemf: ~plmo\modichar.men>
+
+Set Character Heights       <xemf: ~plmo\charsize.men>
+Set Character Height and Width <xemf: ~plmo\charhw.men>
+Set Character Widths        <xemf: ~plmo\charwidt.men>
+
+Set Character Angles        <xemf: ~plmo\charangl.men>
+Set Character Cases         <xemf: ~plmo\charcase.men>
+Set Character Colors        <xemf: ~plmo\charcolo.men>
+Set Character Fills         <xemf: ~plmo\charfill.men>
+Set Character Fonts         <xemf: ~plmo\charfont.men>
+Set Character Justifications   <xemf: ~plmo\charjust.men>
+Set Character Offsets       <xemf: ~plmo\charoffs.men>
+Set Character Thicknesses   <xemf: ~plmo\charthic.men>
+
+Set Character Automatic     <xemf: ~plmo\charauto.men>
+Set Character Mappings      <xemf: ~plmo\charmapp.men>
+
+Help for Character Attributes
+   CHARACTER              <xcl: HELP CHARACTER>
+   CHARACTER ANGLE        <xcl: HELP CHARACTER ANGLE>
+   CHARACTER AUTOMATIC    <xcl: HELP CHARACTER AUTOMATIC>
+   CHARACTER CASE         <xcl: HELP CHARACTER CASE>
+   CHARACTER COLOR        <xcl: HELP CHARACTER COLOR>
+   CHARACTER FILL         <xcl: HELP CHARACTER FILL>
+   CHARACTER FONT         <xcl: HELP CHARACTER FONT>
+   CHARACTER HW           <xcl: HELP CHARACTER HW>
+   CHARACTER JUSTIFICATION <xcl: HELP CHARACTER JUSTIFICATION>
+   CHARACTER MAPPING      <xcl: HELP CHARACTER MAPPING>
+   CHARACTER OFFSET       <xcl: HELP CHARACTER OFFSET>
+   CHARACTER SIZE         <xcl: HELP CHARACTER SIZE>
+   CHARACTER THICKNESS    <xcl: HELP CHARACTER THICKNESS>
+   CHARACTER WIDTH        <xcl: HELP CHARACTER WIDTH>
+

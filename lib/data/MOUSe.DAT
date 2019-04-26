@@ -1,0 +1,33 @@
+This is Dataplot data file     MOUSE.DAT
+Drug absorbtion in mice
+Question: Is there a multi-linear relationship?
+
+Source--Graybill and Iyer (1994). Regression Analysis: Concepts and 
+        Applications.  Duxbury Press.
+        Page 335 (Chapter 4)
+Number of observations = 8
+Number of variables per line image = 5
+Order of variables on a line image--
+   1. C  = Response Variable = Drug concentration)
+   2. Y  = Response Variable = LOG10(Drug concentration)
+   3. T  = Independent Variable = Time (minutes)
+   4. X1 = Independent Variable = LOG10(Time)
+   5. X2 = Independent Variable = LOG10(Time)**2
+   (Fit Y versus X1 and X2)
+
+
+
+
+
+To read this file into Dataplot--
+   SKIP 25
+   READ MOUSE.DAT C T Y X1 X2
+-------------------------------
+  1.02   20   0.008600  1.30103  1.69268
+  1.08   40   0.033424  1.60206  2.56660
+  1.10   60   0.041393  1.77815  3.16182
+  1.06   90   0.025306  1.95424  3.81906
+  0.95  150  -0.022276  2.17609  4.73537
+  0.77  210  -0.113509  2.32222  5.39270
+  0.60  300  -0.221849  2.47712  6.13613
+  0.42  420  -0.376751  2.62325  6.88144

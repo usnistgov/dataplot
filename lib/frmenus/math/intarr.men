@@ -1,0 +1,22 @@
+This is file intarr.men--Compute interarrival times of a variable
+ 
+--------------------
+ 1. Interarrival Times
+ 2. LET Y2 = INTERARRIVAL TIMES Y
+ 3.
+ 4. Variable to compute the interarrival times for:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Variable to store the interrival times:
+ 5. @CE 2 0 42 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the Interrival Times?:
+--------------------
+GR FE
+LET _2 = INTERARRIVAL TIMES  _1 _3
+--------------------
+WEB HELP INTERARRIVAL TIMES
+--------------------

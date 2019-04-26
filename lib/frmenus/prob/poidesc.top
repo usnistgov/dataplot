@@ -1,0 +1,22 @@
+----- <~prob\poidesc.top> Poisson Description
+
+*Poisson Description
+
+"pdf": f(x) = exp(-lambda) * ((lambda**x)/x!)  for x = 0, 1, 2, ...
+
+Moments   : E(X)  = lambda
+            SD(X) = sqrt(lambda)
+
+Type      : Discrete, skewed family of distributions--
+            moderate to moderate/long-tailed.
+Domain    : 0 to infinity
+Synonym   :
+Genesis   : Poisson (1837)
+Definition: If the waiting time between random events
+            is exponential, then the number N of events
+            occuring in a fixed period of time is Poisson.
+
+Reference : Johnson & Kotz,
+            Discrete Distributions,
+            Chapter 4 (pages 87-121).
+

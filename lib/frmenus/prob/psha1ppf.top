@@ -1,0 +1,47 @@
+----- <~prob\psha1ppf.top> PPF's for One Shape Parameter Continuous Distributions
+
+Plot PPF's (one shape parameters)
+
+Plot Percent Point Function for Continuous Distributions
+with One Shape Parameters
+
+Asymmetric Double Exponential (Laplace)   <xemf: ~prob\padeppf.men>
+Bradford                                  <xemf: ~prob\pbrappf.men>
+Chi                                       <xemf: ~prob\pchppf.men>
+Chi-Square                                <xemf: ~prob\pchsppf.men>
+Double Gamma                              <xemf: ~prob\pdgappf.men>
+Double Weibull                            <xemf: ~prob\pdweppf.men>
+Error (Subbotin)                          <xemf: ~prob\psubppf.men>
+Extreme Value Type 2 (Minimum)            <xemf: ~prob\pev21ppf.men>
+Extreme Value Type 2 (Maximum)            <xemf: ~prob\pev22ppf.men>
+Fatigue Life                              <xemf: ~prob\pflppf.men>
+Folded T                                  <xemf: ~prob\pftppf.men>
+Gamma                                     <xemf: ~prob\pgamppf.men>
+Generalized Extreme Value (Minimum)       <xemf: ~prob\pgev1ppf.men>
+Generalized Extreme Value (Maximum)       <xemf: ~prob\pgev2ppf.men>
+Generalized Half-Logistic                 <xemf: ~prob\pghflppf.men>
+Generalized Logistic                      <xemf: ~prob\pgloppf.men>
+Generalized Pareto                        <xemf: ~prob\pgepppf.men>
+Geometric Extreme Exponential             <xemf: ~prob\pgeeppf.men>
+Inverted Gamma                            <xemf: ~prob\pigappf.men>
+Inverted Weibull                          <xemf: ~prob\piweppf.men>
+Log Double Exponential (Log Laplace)      <xemf: ~prob\pldeppf.men>
+Log Gamma                                 <xemf: ~prob\plgappf.men>
+Log Logistic                              <xemf: ~prob\pllgppf.men>
+Lognormal                                 <xemf: ~prob\plgnppf.men>
+Maxwell                                   <xemf: ~prob\pmaxppf.men>
+McLeish                                   <xemf: ~prob\pmclppf.men>
+Power Normal                              <xemf: ~prob\ppnrppf.men>
+Reciprocal                                <xemf: ~prob\precppf.men>
+Skew Double Exponential (Skew Laplace)    <xemf: ~prob\psdeppf.men>
+Skew Normal                               <xemf: ~prob\psnppf.men>
+T                                         <xemf: ~prob\ptppf.men>
+Topp and Leone                            <xemf: ~prob\ptopppf.men>
+Triangular                                <xemf: ~prob\ptrippf.men>
+Tukey-Lambda (symmetric)                  <xemf: ~prob\plamppf.men>
+Von Mises                                 <xemf: ~prob\pvonppf.men>
+Wald                                      <xemf: ~prob\pwalppf.men>
+Weibull (minimum case)                    <xemf: ~prob\pwei1ppf.men>
+Weibull (maximum case)                    <xemf: ~prob\pwei2ppf.men>
+Wrapped Cauchy                            <xemf: ~prob\pwcappf.men>
+

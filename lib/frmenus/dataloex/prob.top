@@ -1,0 +1,7 @@
+----- <~dataloex\prob.top> Load & Execute Built-in Probability Data Files
+
+Load & Execute Built-in Probability Data Files
+
+RANDN.DAT     Normal random numbers         <xcf: ~dataloex\RANDN.DP>
+RANDU.DAT     Uniform random numbers        <xcf: ~dataloex\RANDU.DP>
+

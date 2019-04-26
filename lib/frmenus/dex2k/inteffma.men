@@ -1,0 +1,76 @@
+This is file inteffma.men--Generate DEX Interaction Effects (Plot) Matrix
+
+--------------------
+ 1. DEX Interaction Effects Plot Matrix
+ 2. DEX INTERACTION PLOT Y X1 TO X5
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. List of Factors/Variables:
+ 6. @CE 2 0 1 50 ? gui-vari
+ 7.
+ 8. Vertical axis (response variable) lower plot limit
+ 8. @CE 3 0 41 50 ?
+ 9. Vertical axis (response variable) upper plot limit
+ 9. @CE 4 0 41 50 ?
+10. Number of decimals places for estimated effects
+10. @CE 5 0 41 50 ?
+11.
+12. Print Effects:
+12. @CE 6 1 41 45 yes
+12. @CE 6 2 46 50 no
+13. Prefix for Effects Text:
+13. @CE 7 0 33 50 ?
+14.
+15. Subset/Except/For Specification:
+16. @CE 8 0 1 50 *
+17.
+18. Line type for data points:
+18. @CE 9 0 43 50 * gui-line
+19. Line type for global mean:
+19. @CE 10 0 43 50 * gui-line
+20. Character type for data:
+20. @CE 11 0 43 50 * gui-char
+21. Character fill for data:
+21. @CE 12 0 43 50 * gui-ooff
+22.
+23. Overall Title:
+24. @CE 13 0 1 50 *
+25.
+26. Generate the Dex Interaction Effects Plot?:
+--------------------
+GR FE
+YMINIMUM _3
+YMAXIMUM _4
+XLIMITS -1 1
+MAJOR XTIC MARK NUMBER 2
+MINOR XTIC MARK NUMBER 0
+TIC OFFSET UNITS SCREEN
+XTIC OFFSET 10 10
+YTIC OFFSET 10 10
+LET NUMDECPL = _5
+MULTIPLOT CORNER COORDINATES 10 10 90 90
+MULTIPLOT SCALE FACTOR 3
+DEVICE 1 FONT SIMPLEX
+LINE SOLID SOLID
+CHARACTER X BLANK
+LINE _9 _10
+CHARACTER _11
+CHARACTER FILL _12
+@IF 6 1 SET MATRIX PLOT X2LABEL EFFECTS
+@IF 6 1 X2LABEL DISPLACEMNT 14
+SET X2LABEL PREFIX _7
+SET SCATTER PLOT MATRIX LOWER DIAGONAL OFF
+DEX MEAN INTERACTION PLOT _1 _2 _8
+SET SCATTER PLOT MATRIX LOWER DIAGONAL ON
+MOVE 50 95
+JUSTIFICATION CENTER
+TEXT _13
+MULTIPLOT SCALE FACTOR 
+DEVICE 1 FONT TEKTRONIX
+LIMITS
+MAJOR XTIC MARK NUMBER
+MINOR XTIC MARK NUMBER
+--------------------
+WEB HELP DEX INTERACTION PLOT
+--------------------

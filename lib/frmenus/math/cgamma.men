@@ -1,0 +1,36 @@
+This is file cgamma.men--Compute complex gamma functions
+ 
+--------------------
+ 1. Complex Gamma Function
+ 2. LET YR = CGAMMA(XR,XC); LET YC = CGAMMAI(XR,XC)
+ 3.
+ 4. Variable for real component of input argument:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable for complex component of input argument:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable to store real component of the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7. Variable to store complex component of the transformed result:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Operation to perform:
+10. @CE 5 1 10 30 complex gamma
+11. @CE 5 2 10 30 complex log gamma
+12. @CE 5 3 10 30 complex psi
+13.
+14. Subset/Except/For Specification:
+15. @CE 6 0 -20 50 *
+16.
+17.
+18. Compute the Transformation?:
+--------------------
+GR FE
+@IF 5 1 LET _3 = CGAMMA( _1 , _2 ) _6
+@IF 5 1 LET _4 = CGAMMAI( _1 , _2 ) _6
+@IF 5 2 LET _3 = CLNGAM( _1 , _2 ) _6
+@IF 5 2 LET _4 = CLNGAMI( _1 , _2 ) _6
+@IF 5 3 LET _3 = CPSI( _1 , _2 ) _6
+@IF 5 3 LET _4 = CPSII( _1 , _2 ) _6
+--------------------
+WEB HELP CGAMMA
+--------------------

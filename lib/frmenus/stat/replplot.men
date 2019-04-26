@@ -1,0 +1,67 @@
+This is file scatplot.men--Scatter Plot
+ 
+--------------------
+ 1. Scatter Plot
+ 2. PLOT Y X
+ 3.
+ 4. A replication plot is a scatter plot with a third
+ 5. variable that is a group identifier.  Points belonging
+ 6. to the same group are drawn with the same attributes.
+ 7. That is, when you specify the line and character settings
+ 8. below, you can specify a different setting for each group
+ 9. (the groups are ranked from smallest to largest with the
+10. smallest group using the first setting, the second smallest
+11. using the second setting and so on).  You can enter the
+12. ALL (e.g., SOLID ALL) to set all groups to the same value.
+13. 
+14. Vertical   Axis Variable:
+14. @CE 1 0 33 50 ? gui-vari
+15. Horizontal Axis Variable:
+15. @CE 2 0 33 50 ? gui-vari
+16. Group Identifier Variable:
+16. @CE 12 0 33 50 ? gui-vari
+17.
+18. Line Types (solid, dot, dash, ...)
+19. @CE 3 0 1 50 * gui-line
+20. Character Type (blank, x, circ, ...)
+21. @CE 4 0 1 50 * gui-char
+22. Character Fill (off, on)
+23. @CE 5 0 1 50 * gui-ooff
+24. Spike (off, on)
+25. @CE 13 0 1 50 * gui-ooff
+26. Bar (off, on)
+27. @CE 14 0 1 50 * gui-ooff
+28.
+29. Sort by horizontal axis variable (typically ON):
+29. @CE 10 0 42 50 * gui-ooff
+30. Clear screen before plot (typically ON):
+30. @CE 11 0 42 50 * gui-ooff
+31.
+32. Title:
+32. @CE 6 0 10 50 *
+33. Left Axis Label:
+33. @CE 7 0 22 50 *
+34. Bottom Axis Label:
+34. @CE 8 0 22 50 *
+35.
+36. Subset/Except/For Specification:
+37. @CE 9 0 1 50 *
+38.
+39.
+40. Generate the Plot?:
+--------------------
+GR FE
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+SPIKE _13
+BAR _14
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+@IF 10 0 PRE-SORT _10
+@IF 11 0 PRE-ERASE _11
+PLOT _1 _2 _12 _9
+--------------------
+WEB HELP PLOT
+--------------------

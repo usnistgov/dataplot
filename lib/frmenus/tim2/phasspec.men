@@ -1,0 +1,38 @@
+This is file phasspec.men--Phase-spectrum
+ 
+--------------------
+ 1. Phase-spectrum == Phase Diagram
+ 2. PHASE-SPECTRUM Y1 Y2
+ 3.
+ 4. Definition: Phase-spectrum =
+ 5.     arctan( quadrature-spectrum / co-spectrum )
+ 6.
+ 7. Vertical   axis = phase difference
+ 8. Horizontal axis = frequency (0 to .5)
+ 9.
+10. Question being addressed:
+11.     For each frequency, is there a difference
+12.     in the phases between the 2 series?
+13.
+14. Reference: Granger & Hatanaka, pages 77-90.
+15.
+16. Response Variable   #1:
+16. @CE 1 0 33 50 ? gui-variable
+17. Response Variable   #2:
+17. @CE 2 0 33 50 ? gui-variable
+18.
+19. Line type:
+20. @CE 3 0 33 50 * gui-line
+21.
+22. Subset/Except/For Specification:
+23. @CE 4 0 6 50 *
+24.
+25.
+26. Generate the Phase-spectrum?:
+--------------------
+GR FE
+LINES _3
+PHASE-SPECTRUM _1 _2 _4
+--------------------
+WEB HELP SPECTRUM
+--------------------

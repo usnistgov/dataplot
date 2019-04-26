@@ -1,0 +1,40 @@
+This is Dataplot data file    TIETMOO1.DAT
+Vertical semi-diameters of the planet Venus
+
+Source: Gary Tietjen and Roger Moore (August 1972), "Some Grubbs-Type
+        Statistics for the Detection of Several Outliers", Technometrics,
+        Vol. 14, No. 3, pp. 583-597. 
+
+        Originally from
+        Grubbs, Frank (1950), Sample Criteria for Testing Outlying
+        Observations, Annals of Mathematical Statistics, 21(1) pp. 27-58.
+
+Response variable = Vertical semi-diameter of planet Venus
+Number of observations = 15
+Number of observations per line image = 1
+Order of observations per line image--
+   1. Response variable = computed calibration factor
+
+To read this file into Dataplot--
+   SKIP 25
+   READ TIETMOO1.DAT Y
+   LET NOUTLIER = 2
+   TIETJEN-MOORE Y
+
+
+---------------
+-1.40
+-0.44
+-0.30
+-0.24
+-0.22
+-0.13
+-0.05
+0.06
+0.10
+0.18
+0.20
+0.39
+0.48
+0.63
+1.01

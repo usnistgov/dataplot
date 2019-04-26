@@ -1,0 +1,63 @@
+-----<~prob\mle_disc.top> Discussion: Maximim Likelihood
+
+Discussion: Maximum Likelihood
+
+Maximum Likelihood                                                  -
+
+Maximum likelihood estimators are obtained by maximizing
+a likelihood function.  In some cases, these maximization
+functions can be solved to provide straightforward formulas.
+In other cases, high quality software for function
+maximization or for solving simultaneous non-linear equations
+is requred.
+
+Maximum likelihood methods have the following desirable asymptotic
+statistical properties:
+
+  1) They become unbiased minimum variance estimators as the
+     sample size increases.
+
+  2) They have approximate normal distributions and approximate
+     sample variances that can be calculated and used to
+     generate confidence bounds.
+
+  3) Likelihood functions can be used to test hypothesis
+     about models and parameters.
+
+Some drawbacks to maximum likelihood estimation are:
+
+  1) The likelihood equations, particularly for censored data,
+     can sometimes be complicated.  These equations have been
+     worked out for a several distributions that are commonly
+     used in modeling censored data.
+
+  2) There may be times when the maximum likelihood solution
+     does not exist or the solution of maximum likelihood
+     equations is not numerically stable.  For a number of
+     commonly used distributions (lognormal, Weibull, gamma),
+     the maximum likelihood estimates are known to be unstable
+     if the location parameter is included (a practical solution
+     is to subtract the data minimum from the data and then use
+     scale-shape parameter equations).
+
+  3) For small samples, the large sample optimality properties
+     may not apply.
+
+  4) The likelihood equations may require reasonable starting
+     values.  Method of moments (or some other simple estimation
+     technique) estimates are often used as starting values.
+
+Dataplot generates one or more of the following items when
+performing maximum likelihood estimation:
+
+
+  1) Point estimates for the distribution parameters (this
+     is the minimum output generated).
+
+  2) Confidence intervals for the distribution parameters.
+     Note that if numerical estimates are not available, you
+     may be able to generate them via bootstrapping.
+
+  3) Point estimates and confidence intervals for select
+     quantiles of the distribution.
+

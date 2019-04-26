@@ -1,0 +1,8 @@
+----- <~datalist\CROARK3.top> CROARK3.DAT
+ 
+CROARK3.DAT
+ 
+View     <xcl: LIST CROARK3.DAT>
+Load     <x2cl: SKIP 25; READ CROARK3.DAT Y DAY>
+Print    <xccl: printfile C:\DATAPLOT\CROARK3.DAT>
+ 

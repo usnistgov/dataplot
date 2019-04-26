@@ -1,0 +1,38 @@
+----- <~mvar\mvaranal.top> Multi-Variable Analysis
+ 
+Multi-Variable Analysis
+ 
+The multivariate analysis commands often use
+use matrices which can generate many columns'
+of data.  It may be advisable to do the following:
+  1) Re-Dimension the workspace to accomodate
+     more columns.
+  2) Clicking the "No Update" button on the
+     spreadsheet results in faster performance
+     (at the loss of not seeing the updated data
+     in the spreadsheet).
+
+Discussion                   <~mvar\discussi.top>
+Re-Dimension Workspace       <xemf: ~data\dimensio.men>
+Dimension Matrix             <xemf: ~math\matr_dim.men>
+ 
+Read a Matrix (from a file)  <xemf: ~math\matr_rea.men>
+Create a Matrix (from list of variables) <xemf: ~math\matr_cre.men>
+
+Graphical Technqiues         <~mvar\multplot.top>
+Quantitative Techniques
+   Discussion                <~mvar\discstat.top>
+   2 Response Variables      <~mvar\tech2var.top>
+   Inferences on Means and Covariances  <~mvar\inferenc.top>
+   Canonical Correlation     <~mvar\canncorr.top>
+   Discriminantion/Classification Analysis  <~mvar\discdisc.top>
+   Matrix Arithmetic for Multivariate Analysis <~mvar\matrarit.top>
+ 
+Built-in data sets
+   View                      <~dataview\mvar.top>
+   Load                      <~dataload\mvar.top>
+
+Worked Examples              <~mvar\workexam.top>
+
+References                   <~mvar\referenc.top>
+

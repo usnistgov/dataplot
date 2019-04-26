@@ -1,0 +1,50 @@
+This is file igamma.men--Compute incomplete gamma and related functions
+ 
+--------------------
+ 1. Incomplete Gamma (and Related) Functions
+ 2. LET YNEW = GAMMAI(X,A)
+ 3.
+ 4. These functions accept 2 arguments.  The first is the
+ 5. argument for the horizontal axis variable (i.e., the
+ 6. X value) and the second argument is a shape parameter.
+ 7. Both of these values can be a variable, parameter, or
+ 8. simply a constant.  However, the shape parameter is typically
+ 9. a parameter or constant as opposed to a variable.
+10.
+11. Horizontal axis variable:
+11. @CE 1 0 33 50 ? gui-variable
+12. Shape parameter:
+12. @CE 6 0 33 50 ? gui-none
+13.
+14. Operation to perform:
+15. @CE 2 1 10 45 incomplete gamma function
+16. @CE 2 2 10 45 incomplete gamma function ratio
+17. @CE 2 3 10 45 complementary incomplete gamma function
+18. @CE 2 4 10 45 Tricomi's incomplete gamma function
+19. @CE 2 5 10 45 Pochhammer's generalized symbol
+20. @CE 2 6 10 45 Pochhammer's generalized symbol (first order)
+21.
+22. Variable to store the transformed result:
+22. @CE 3 0 33 50 ?
+23.
+24. Plot?:
+24. @CE 5 1 14 20 no
+24. @CE 5 2 22 28 yes
+25.
+26. Subset/Except/For Specification:
+27. @CE 4 0 -5 50 *
+28.
+29.
+30. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = GAMMAI( _1 , _6 ) _4
+@IF 2 2 LET _3 = GAMMAIP( _1 , _6 ) _4
+@IF 2 3 LET _3 = GAMMAIC( _1 , _6 ) _4
+@IF 2 4 LET _3 = TRICOMI( _1 , _6 ) _4
+@IF 2 5 LET _3 = POCH( _1 , _6 ) _4
+@IF 2 6 LET _3 = POCH1( _1 , _6 ) _4
+@IF 5 2 PLOT _3  _1  _4
+--------------------
+WEB HELP GAMMA FUNCTIONS
+--------------------

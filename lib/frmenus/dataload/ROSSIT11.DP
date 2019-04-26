@@ -1,0 +1,8 @@
+----- <~dataload\ROSSIT11.DP> Load ROSSIT11.DAT
+
+. This is file    ROSSIT11.DP
+
+DELETE ID Y COND
+SKIP 25
+READ ROSSIT11.DAT ID Y COND
+

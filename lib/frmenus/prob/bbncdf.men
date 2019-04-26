@@ -1,0 +1,41 @@
+This is file bbncdf.men--Compute beta-binomial cdf and tail probability
+ 
+--------------------
+ 1. Compute beta-binomial cdf and Tail Prob.
+ 2. LET Y = BBNCDF(X,A,B,N)
+ 3.
+ 4. Input values:
+ 5.                 x (x = 0, 1, 2, ..., n):
+ 5. @CE 1 0 42 50 ?
+ 6.               shape parameter a (a > 0):
+ 6. @CE 2 0 42 50 ?
+ 7.               shape parameter b (b > 0):
+ 7. @CE 3 0 42 50 ?
+ 8.      number of trials n (n = 1, 2, ...):
+ 8. @CE 4 0 42 50 ?
+ 9.
+10. Output parameters:
+11.                  name for the cdf value:
+11. @CE 5 0 42 50 ?
+12.     name for the tail probability value:
+12. @CE 6 0 42 50 ?
+13.
+14.
+15. Compute the Probability?
+--------------------
+AN FE
+LET ZA = 1
+LET ZB = 1
+@IF 2 0 LET ZA = _2
+IF ZA <= 0
+   LET ZA = 1
+END OF IF
+@IF 3 0 LET ZA = _3
+IF ZB <= 0
+   LET ZB = 1
+END OF IF
+@IF 5 0 LET _5 = BBNCDF( _1 , ZA , ZB , _4 )
+@IF 6 0 LET _6 = 1 - BBNCDF( _1 , ZA , ZB , _4 )
+--------------------
+WEB HELP BBNCDF
+--------------------

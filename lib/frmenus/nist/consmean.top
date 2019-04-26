@@ -1,0 +1,19 @@
+----- <~nist\consmean.top> Consensus Means
+ 
+Consensus Means
+ 
+Discussion                 <~nist\consdisc.top>
+ 
+Mean Plot                  <xemf: ~stat\meanplot.men>
+Box Plot                   <xemf: ~stat\boxplot.men>
+Standard Deviation Plot    <xemf: ~stat\sdplot.men>
+Youden Plot                <xemf: ~stat\youdplot.men>
+ 
+Compute Consensus Means    <xemf: ~nist\consensu.men>
+Consensus Means Plot       <xemf: ~nist\consplot.men>
+ 
+Load Built-In Data Files
+   SCHANTZ.DAT  Fish tissue                     <xcf: ~dataload\SCHANTZ.DP>
+   STUTZ86.DAT  Mass fraction (percent) by QXRD <xcf: ~nist\STUTZ86.DP>
+   ZARR94.DAT   Thermal conductivity            <xcf: ~dataload\ZARR94.DP>
+

@@ -1,0 +1,31 @@
+----- <~dataall\timenist.top> View/etc. Time Series Data: NIST
+
+View/Load/Print Time Series Data: NIST
+
+LEW.DAT*      Beam deflections            <~dataall\LEW.top>
+SOULEN0.DAT   Josephson junc cryothermom. <~dataall\SOULEN0.top>
+SOULEN.DAT    Josephson junc cryothermom. <~dataall\SOULEN.top>
+MARSHAK.DAT   Nuclear thermometry         <~dataall\MARSHAK.top>
+BAKER.DAT     Force calibration           <~dataall\BAKER.top>
+MAVRO.DAT     Filter transmittance        <~dataall\MAVRO.top>
+DZIUBA.DAT    Standard resistor           <~dataall\DZIUBA.top>
+HABER1.DAT    Dens of 2-admiss. numbers   <~dataall\HABER1.top>
+HAYES1.DAT    Fire res. smoke obscuration <~dataall\HAYES1.top>
+LUTHER.DAT    Torsion pendulum exp. for G <~dataall\LUTHER.top>
+NEGIZ3.DAT    Aerosol particle size       <~dataall\NEGIZ3.top>
+ZARR13.DAT    Heat flow meter             <~dataall\ZARR13.top>
+ZARR14.DAT    Heat flow meter             <~dataall\ZARR14.top>
+ZARR15.DAT    Heat flow meter             <~dataall\ZARR15.top>
+
+SIMIU.DAT     Wind speeds                 <~dataall\SIMIU.top>
+WASHDC.DAT    Washington DC wind speeds   <~dataall\WASHDC.top>
+KEYWEST.DAT   Key West wind speeds        <~dataall\KEYWEST.top>
+
+NBSPOW1.DAT   Power disturbance #1 at NBS <~dataall\NBSPOW1.top>
+NBSPOW2.DAT   Power disturbance #2 at NBS <~dataall\NBSPOW2.top>
+NBSPOW3.DAT   Power disturbance #3 at NBS <~dataall\NBSPOW3.top>
+
+FUNNEL5A.DAT  Funnel data                 <~dataall\FUNNEL5A.top>
+
+REHM.DAT      Biomedical air flow         <~dataall\REHM.top>
+

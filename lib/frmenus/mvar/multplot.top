@@ -1,0 +1,27 @@
+----- <~mvar\multplot.top> Multivariate Plots
+
+Multivariate Analysis: Graphical Techniques
+
+Discussion                   <~mvar\discgrap.top>
+
+2 Variable Plots
+   Bihistogram               <xemf: ~plot\bihist.men>
+   Quantile-Quantile Plot    <xemf: ~plot\q-qplot.men>
+   Youden Plot               <xemf: ~mvar\youdplot.men>
+
+3 Variable Plots
+   3D-Plot (Data)            <xemf: ~plot\3dplot.men>
+   Contour Plot (Data)       <xemf: ~math\contour.men>
+
+4+ Variable Plots
+   Andrews Plot              <xemf: ~plot\andrplot.men>
+   Biplot                    <xemf: ~plot\biplot.men>
+   Parallel Coordinates Plot <xemf: ~plot\parcplot.men>
+   Graphical Representation of First 2 Principal Components <xemf: ~plot\prinplot.men>
+   Principal Coordinates Analysis <xemf: ~plot\pcorplot.men>
+   Multivariate Normality Probability Plot <xemf: ~mvar\mvarnorm.men>
+   Profile Plot              <xemf: ~plot\profplot.men>
+   Star Plot                 <xemf: ~plot\starplot.men>
+   Symbol Plot               <xemf: ~plot\symbplot.men>
+   Scatter Plot Matrix       <xemf: ~plot\scatplma.men>
+

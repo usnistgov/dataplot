@@ -1,0 +1,10 @@
+----- <~dataloex\CUBE.DP> Load & Execute CUBE.DAT
+
+. This is file    CUBE.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ CUBE.DAT Y X1 X2
+TITLE CUBE.DAT
+/
+

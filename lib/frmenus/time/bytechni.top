@@ -1,0 +1,33 @@
+----- <~time\bytechni.top> By Technique
+ 
+By Technique
+ 
+Diagnostic Graphics:
+   4-PLOT                              <xemf: ~univ\4plot.men>
+   Run sequence plot                   <xemf: ~plot\runsplot.men>
+   Lag plot                            <xemf: ~time\lagplot.men>
+   Autocorrelation plot                <xemf: ~time\autocopl.men>
+   Partial autocorrelation plot        <xemf: ~time\partaucp.men>
+   Spectrum                            <xemf: ~time\spectrum.men>
+   Complex demodulation amplitude plot <xemf: ~time\compdeap.men>
+   Complex demodulation phase plot     <xemf: ~time\compdepp.men>
+   Runs analysis                       <xemf: ~stat\runs.men>
+   Distribution-free tests             <xemf: ~time\distfree.men>
+ 
+Modeling:
+   Box-Jenkins (ARMA), not available yet  <~time\boxjenki.top>
+   DDS                                 <~time\dds.top>
+   Model validation                    <xemf: ~time\validmod.men>
+ 
+Smoothing:
+   Least Squares and Polynomial Smoothing  <xemf: ~math\smoothls.men>
+   Tukey (Robust) Smoothing           <xemf: ~math\smoothtu.men>
+   Moving Average Smoothing           <xemf: ~math\smoothst.men>
+   Moving Meidan Smoothing            <xemf: ~math\smoothst.men>
+   Lowess Smoothing                   <xemf: ~math\lowess.men>
+
+   Exponential Smoothing               <xemf: ~time\exposmoo.men>
+
+   Fast Fourier Transform (FFT)        <xemf: ~math\fft.men>
+   Inverse Fast Fourier Transform      <xemf: ~math\ifft.men>
+ 

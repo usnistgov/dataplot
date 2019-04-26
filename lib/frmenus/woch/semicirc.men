@@ -1,0 +1,67 @@
+This is file semicirc.men--Draw a Semi-Circle
+ 
+--------------------
+ 1. Draw a Semi-Circle
+ 2. SEMI-CIRCLE X1 Y1 X2 Y2
+ 3.
+ 4. X Coordinate for First Diameter End Point:
+ 4. @CE 1 0 33 50 ?
+ 5. Y Coordinate for First Diameter End Point:
+ 5. @CE 2 0 33 50 ?
+ 6. X Coordinate for Second Diameter End Point:
+ 6. @CE 3 0 33 50 ?
+ 7. Y Coordinate for Second Diameter End Point:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Line Type for Semi-Circle Border:
+ 9. @CE 5 0 42 50 * gui-line
+10. Line Color for Semi-Circle Border:
+10. @CE 6 0 42 50 * gui-colo
+11. Line Thickness for Semi-Circle Border:
+11. @CE 7 0 42 50 * gui-thic
+12.
+13. Solid Fill the Semi-Circle?:
+13. @CE 9 0 42 50 * gui-ooff
+14. Color for Solid Fill:
+14. @CE 10 0 42 50 * gui-colo
+15.
+16. Cross-Hatch Pattern for the Semi-Circle:
+16. @CE 11 0 42 50 * gui-patt
+17. Color for Cross-Hatch Pattern:
+17. @CE 12 0 42 50 * gui-colo
+18. Line Style for Cross-Hatch Pattern:
+18. @CE 13 0 42 50 * gui-line
+19. Line Thickness for Cross-Hatch Pattern:
+19. @CE 14 0 42 50 * gui-thick
+20. Spacing Thickness for Cross-Hatch Pattern:
+20. @CE 15 0 42 50 *
+21.
+22. Coordinate System to Use:
+23. @CE 8 1 1 50 absolute 0 to 100 screen units
+24. @CE 8 2 1 50 absolute data units of last plot
+25. @CE 8 3 1 50 relative (to first point) 0 to 100 screen units
+26. @CE 8 4 1 50 relative (to first point) data units of last plot
+27.
+28.
+29. Draw the Semi-Circle?:
+--------------------
+GR FE
+LINE _5
+LINE COLOR _6
+LINE THICKNESS _7
+REGION FILL _9
+REGION FILL COLOR _10
+REGION PATTERN _11
+REGION PATTERN COLOR _12
+REGION PATTERN LINE TYPE _13
+REGION PATTERN THICKNESS _14
+REGION PATTERN SPACING _15
+LET STRING ZZZZSTR = SEMI-CIRCLE
+@IF 8 1 LET STRING ZZZZSTR = SEMI-CIRCLE
+@IF 8 2 LET STRING ZZZZSTR = SEMI-CIRCLE DATA
+@IF 8 3 LET STRING ZZZZSTR = SEMI-CIRCLE RELATIVE
+@IF 8 4 LET STRING ZZZZSTR = SEMI-CIRCLE DATA RELATIVE
+^ZZZZSTR  _1 _2 _3 _4
+--------------------
+WEB HELP SEMI-CIRCLE
+--------------------

@@ -1,0 +1,30 @@
+This is file     GLITZ.DAT
+3-D surface glitz data from Ivars Peterson article:
+"Going for Glitz",
+Science News, October 9, 1993, page 232-233.
+Number of Observations = 30
+To read this into Dataplot--
+   SKIP 25
+   SERIAL READ Y
+   LET ROW = SEQUENCE 1 6 1 5
+   LET COLUMN = PATTERN 1 2 3 4 5 6 FOR I = 1 1 30
+   3DPLOT Y X1 X2
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+----------------------------------
+2.124 1.836 1.236 1.336 1.023 1.231
+1.675 1.375 1.245 1.036 1.012 1.023
+1.742 1.185 1.024 1.044 0.834 0.429
+1.053 1.046 1.093 0.824 1.090 1.023
+0.922 0.893 0.632 0.712 1.093 1.193

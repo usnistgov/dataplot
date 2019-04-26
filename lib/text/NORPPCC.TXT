@@ -1,0 +1,83 @@
+THIS IS DATAPLOT TEXT FILE NORPPCC.TEX
+PERCENT POINTS OF THE NORMAL PROBABILITY PLOT
+           CORRELATION COEFFICIENT TEST FOR NORMALITY.
+REFERENCE--FILLIBEN, JAMES J. (1975) "THE PROBABILITY PLOT
+           CORRELATION COEFFICIENT TEST FOR NORMALITY",
+           TECHNOMETRICS, VOL. 17, NO. 1, FEBRUARY 1975,
+           PAGES 111-117.
+EXAMPLE OF USE--
+   QUESTION: SUPPOSE THE ANALYST HAS 15 OBSERVATIONS, AND
+             THE CALCULATED NORMAL PROBABILITY PLOT
+             CORRELATION COEFFICIENT IS .984.
+             IS THE DATA NORMALLY DISTRIBUTED?
+   ANSWER:   FROM THE TABLE BELOW, THE 5% POINT
+             OF THE NORMAL PPCC = .937.
+             SINCE THE CALCULATED NORMAL PPCC = .984,
+             THEN (AT THE 5% ALPHA LEVEL)
+             THERE IS NO EVIDENCE FROM THE DATA TO REFUTE
+             THE ASSUMPTION OF NORMALITY.  IN PRACTICE,
+             WE WOULD "ACCEPT" THE HYPOTHESIS OF NORMALITY.
+TO READ THIS INTO DATAPLOT--
+   SKIP 25
+   READ NORPPCC.TEX N PP1 PP5
+ 
+SAMPLE SIZE N   1% POINT    5% POINT
+------------------------------------
+       3         .869        .879
+       4         .822        .868
+       5         .822        .879
+       6         .835        .890
+       7         .847        .899
+       8         .859        .905
+       9         .868        .912
+      10         .876        .917
+      11         .883        .922
+      12         .889        .926
+      13         .895        .931
+      14         .901        .934
+      15         .907        .937
+      16         .912        .940
+      17         .916        .942
+      18         .919        .945
+      19         .923        .947
+      20         .925        .950
+      21         .928        .952
+      22         .930        .954
+      23         .933        .955
+      24         .936        .957
+      25         .937        .958
+      26         .939        .959
+      27         .941        .960
+      28         .943        .962
+      29         .945        .962
+      30         .947        .964
+      31         .948        .965
+      32         .949        .966
+      33         .950        .967
+      34         .951        .967
+      35         .952        .968
+      36         .953        .968
+      37         .955        .969
+      38         .956        .970
+      39         .957        .971
+      40         .958        .972
+      41         .958        .972
+      42         .959        .973
+      43         .959        .973
+      44         .960        .973
+      45         .961        .974
+      46         .962        .974
+      47         .963        .974
+      48         .963        .975
+      49         .964        .975
+      50         .965        .977
+      55         .967        .978
+      60         .970        .980
+      65         .972        .981
+      70         .974        .982
+      75         .975        .983
+      80         .976        .984
+      85         .977        .985
+      90         .978        .985
+      95         .979        .986
+     100         .981        .987

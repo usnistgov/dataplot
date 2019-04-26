@@ -1,0 +1,37 @@
+This is file chsnor.men--Chi-Square Test for Normal
+ 
+--------------------
+ 1. Chi-Square Test for Normal Distribution
+ 2. NORMAL CHI-SQUARE GOODNESS OF FIT Y
+ 3.
+ 4. Counts Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Class Mid-Point Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Value of Location Parameter:
+ 7. @CE 3 0 42 50 ?
+ 8. Value of Scale Parameter:
+ 8. @CE 4 0 42 50 ?
+ 9.
+10. Minimum Class Size (default = 5):
+10. @CE 5 0 42 50 ?
+11.
+12. Subset/Except/For Specification:
+13. @CE 6 0 1 50 *
+14.
+15.
+16. Compute Chi-Square Normal Test?
+--------------------
+GR FE
+DELETE CHSLOC CHSSCALE
+@IF 3 0 LET CHSLOC = _3
+@IF 4 0 LET CHSSCALE = _4
+LET MINSIZE = 5
+@IF 5 0 LET MINSIZE = _5
+DELETE ZZZZY ZZZZXLOW ZZZZXUPP
+LET ZZZZY ZZZZXLOW ZZZZXUPP = COMBINE FREQUENCY TABLE _1 _2 _6
+NORMAL CHI-SQUARE GOODNESS OF FIT ZZZZY ZZZZXLOW ZZZZXUPP
+--------------------
+WEB HELP CHI-SQUARE GOODNESS OF FIT TEST
+--------------------

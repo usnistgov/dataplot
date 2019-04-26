@@ -1,0 +1,8 @@
+----- <~dataload\AMRF.DP> Load AMRF.DAT
+
+. This is file    AMRF.DP
+
+DELETE Y X1 TO X7
+SKIP 25
+READ AMRD.DAT Y X1 TO X7
+

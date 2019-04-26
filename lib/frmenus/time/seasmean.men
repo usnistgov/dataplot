@@ -1,0 +1,38 @@
+This is file seasmean.men--Generate Seasonal Mean Plot
+ 
+--------------------line 3
+ 1. Seasonal Mean Plot
+ 2. MEAN PLOT Y X
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Seasonal Index Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Generate the Seasonal Mean Plot?:
+--------------------
+LINE BLANK SOLID
+BAR OFF OFF
+CHARACTER BLANK ALL
+SPIKE ON OFF
+LET ZZZZSTAT = MEAN _1 _3
+SPIKE BASE ZZZZSTAT
+LET ZZZZY = DISTINCT _2 _3
+LET ZZZZN = SIZE ZZZZY
+XLIMITS 1 ZZZZN
+MAJOR XTIC MARK NUMBER ZZZZN
+MINOR XTIC MARK NUMBER 0
+XTIC OFFSET 1 1
+MEAN PLOT _1 _2 _3
+XLIMITS
+MAJOR XTIC MARK NUMBER
+MINOR XTIC MARK NUMBER
+XTIC OFFSET
+DELETE ZZZZY
+--------------------
+WEB HELP MEAN PLOT
+--------------------

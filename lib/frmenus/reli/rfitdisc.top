@@ -1,0 +1,57 @@
+-----<~reli\rfitdisc.top> Distributional Fitting, Discussion
+
+Fitting Distribution to Data
+
+Fitting a Distribution to Data
+
+A common task in reliability applications is to
+fit a distribution to a set of data.  Specifically,
+this consists of one or more of the following
+elements:
+
+   1) Determine the best-fit distribution to
+      your data.
+
+   2) Find point estimates and confidence intervals
+      for the parameters of the distributions.
+
+   3) Find point estimates and confidence intervals
+      for selected quantiles (percent points) of the
+      distribution.
+
+Distributional fitting in reliability applications is
+complicated by the fact that we often deal with censored
+data.  Our fitting methods have to be adjusted to account
+for this censoring.
+
+A reasonable strategy for fitting a distributional model is
+
+    1) Graph the data.  Distributional plots should show
+       basic features of the data (is the data symmetric
+       or skewed? is the data multi-modal or unimodal? is
+       the data heavy-tailed? are there significant
+       outliers?) which should suggest good candidate
+       models.
+
+    2) Fit the candidate distributions and rank them
+       according to some goodness-of-fit criterion (e.g.,
+       maximum PPCC, minimum Kolmogorov-Smirnov).  Practical
+       considerations can also be considered (e.g., if
+       two different distributions provide comparable quality
+       fits, you may prefer the simpler model).
+
+    3) Perform a more careful analysis of the best fitting
+       distributions.
+
+    4) Assess whether your best-bit distribution is in fact
+       good enough.
+
+Dataplot provides several approaches to fitting distributions
+
+    Maximum Likelihood                       <~reli\discmle.top>
+    PPCC Plot/Probability Plot               <~reli\discppcc.top>
+
+Weibull plots and normal plots provide an alternative
+graphical method for fitting Weibull and normal
+distributions, respectively.
+

@@ -1,0 +1,26 @@
+----- <~fit\flowl1v0.top> Flowchart: Report Output: Case L1-V0
+
+Flowchart: Report Output: Case L1-V0
+           Generate Calibration Lines Statistics
+           (there exists run-to-run effect wrt location)
+           (no           run-to-run effect wrt variation)
+
+    1. do individual fits for each run
+    2. compute final intercept and slope as
+       average of individual intercepts
+       and slopes
+    3. report final calibration line
+    4. compute sd(intercept) and sd(slope) as
+       sd(k coefs) / sqrt(k)
+    5. compute df(int) and df(slope) as
+       k-1
+    6. compute residual sd as
+       the usual pooled sd
+    7. compute df for residual sd as
+       k*(n-2)
+    8. residual analysis for final calibration line
+    9. report final inverse calibration line
+   10. report  inv. calibration points &
+       uncertainties by
+       (to be done)
+

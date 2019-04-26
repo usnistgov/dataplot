@@ -1,0 +1,38 @@
+This is file contour.men--Contour Plot
+ 
+--------------------
+ 1. Contour Plot (Data)
+ 2. CONTOUR PLOT Z X Y Z0
+ 3.
+ 4. Z Axis Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. X Axis Variable:
+ 5. @CE 2 0 33 50 ? gui-vari
+ 6. Y Axis Variable:
+ 6. @CE 3 0 33 50 ? gui-vari
+ 7.
+ 8. You can specify the desired contour levels either
+ 9. by entering a the name of a previously created
+10. variable or by entering the desired values directly.
+11.
+12. Contour Levels Variable:
+12. @CE 5 0 33 50 * gui-vari
+13. Enter values for desired contour levels:
+14. @CE 4 0 1 50 ?
+15.
+16. Subset/Except/For Specification:
+17. @CE 6 0 1 50 *
+18.
+19.
+20. Generate the Contour Plot?:
+--------------------
+GR FE
+LINES SOLID ALL
+CHARACTERS BLANK ALL
+@IF 4 0 DELETE ZLEVELS
+@IF 4 0 LET ZLEVELS = DATA _4
+@IF 4 0 CONTOUR PLOT _1 _2 _3 ZLEVELS _6
+@IF 5 0 CONTOUR PLOT _1 _2 _3 _5 _6
+--------------------
+WEB HELP CONTOUR PLOT
+--------------------

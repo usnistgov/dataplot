@@ -1,0 +1,1404 @@
+. Purpose--Carry out augmented ANOVA analysis
+. Note   --anova.dp is called by the anovaall.dp program
+.        --anova.dp calls paircomp.dp which in turn calls intchar.dp
+. Date: June 2002 (Stefan's ANOVA Class)
+.
+. let string mark3 = anova.dp
+.
+. -----start point-----
+.
+. -----Graphics Housekeeping #1: if  device 1 (= screen)
+. -----                          and device 2 (= file dppl1f.dat)-----
+. -----                          are closed, then open them-----
+.
+. echo
+probe idman(1); let device1 = probeval
+probe iopsy1; let opersyst = probeval
+if device1 = 4
+   if opersyst = 1; device 1 x11;  end if; . (do the unix case)
+   if opersyst = 2; device 1 qwin; end if; . (do the windows case)
+end if
+.
+probe idman(2); let device2 = probeval
+if device2 <= 0
+   device 2 ps
+end if
+.
+. -----Other Housekeeping-----
+.
+if numfac not exist; let numfac = 1; end if
+if project not exist; let string project =  ; end if
+if sty not exist; let string sty = Y; end if
+if stx1 not exist; let string stx1 = X1; end if
+if stx2 not exist; let string stx2 = X2; end if
+if stx3 not exist; let string stx3 = X3; end if
+if stx4 not exist; let string stx4 = X4; end if
+if stx5 not exist; let string stx5 = X5; end if
+status
+. pause
+.
+. -----define miscellaneous settings-----
+.
+. x3label automatic
+.
+if autoprin not exist; let autoprin = 1; end if
+.
+tic offset units screen
+tic offset 5 5
+.
+let numfacp1 = numfac+1
+let numfacp2 = numfac+2
+.
+. -----step 0.1: Compute summary statistics-----
+.
+let n = number y
+delete distx
+let prod = 1
+loop for j = 1 1 numfac
+   let distx = distinct x^j
+   let l^j = number distx
+   let prod = prod*l^j
+end loop
+let r = n/prod
+.
+. -----Page 1: Spec Summary-----
+.
+write "______________________________________________"
+write "_______________| At Page 1 |________________"
+write "______________________________________________"
+
+     erase
+     lines solid; draw 8 77 92 77
+.
+     move 50 86; just center; hw 2 1; text Multifactor Experiment
+     move 50 83; just center; hw 2 1; text Data Summary
+     move 50 80; just center; hw 2 1; text ^project
+
+     just left
+     hw 2 1
+     let y0 = 75
+.
+let ydel = 5
+.
+     let y0 = y0-ydel
+     move 20 y0; text Response Variable:
+     move 70 y0; text ^sty
+.
+     let y0 = y0-ydel
+     move 20 y0; text Number of Factors:
+     move 70 y0; text ^numfac
+.
+     loop for k = 1 1 numfac
+     let y0 = y0-ydel
+        move 20 y0; text Number of Levels for Factor ^k (^stx^k):
+        move 70 y0; text ^l^k
+     end loop
+.
+     let y0 = y0-ydel
+     move 20 y0; text Number of Distinct Cells:
+     move 70 y0; text ^prod
+.
+     let y0 = y0-ydel
+     move 20 y0; text Number of Observations Within a Cell:
+     move 70 y0; text ^r
+.
+     let y0 = y0-ydel
+     move 20 y0; text Total Number of Observations:
+     move 70 y0; text ^n
+.
+     let page = 0; let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+     let y0 = y0-ydel
+     box 8 y0 92 90
+.
+. -----Page 2: Analysis Questions-----
+.
+write "______________________________________________"
+write "_______________| At Page 2 |________________"
+write "______________________________________________"
+.
+erase
+lines solid
+draw 8 77 92 77
+.
+     move 50 86; just center; hw 2 1; text Multifactor Experiment
+     move 50 83; just center; hw 2 1; text Analysis Questions
+move 50 80; just center; hw 2 1; text ^project
+.
+let ydel = 3
+.
+just left
+hw 2 1
+let x0 = 10
+let y0 = 77.5
+let y0 = y0-ydel
+let y0 = y0-ydel; move x0 y0; text   Q1: Factor:
+let y0 = y0-ydel; move x0 y0; text   Q2: Factor:
+let y0 = y0-ydel; move x0 y0; text   Q3: Setting:
+let y0 = y0-ydel; move x0 y0; text   Q4: Assumption:
+let y0 = y0-ydel; move x0 y0; text   Q5: Assumption:
+let y0 = y0-ydel; move x0 y0; text   Q6: Model:
+let y0 = y0-ydel; move x0 y0; text   Q7: Model:
+let y0 = y0-ydel; move x0 y0; text   Q8: Model:
+let y0 = y0-ydel; move x0 y0; text   Q9: Setting:
+let y0 = y0-ydel; move x0 y0; text   Q10: Cells:
+let y0 = y0-ydel; move x0 y0; text   Q11: Levels:
+.
+just left
+hw 2 1
+let x0 = 25
+let y0 = 77.5
+let y0 = y0-ydel
+let y0 = y0-ydel; move x0 y0; text Is a Factor Important?
+let y0 = y0-ydel; move x0 y0; text What Factors are Important (Relative Ranking)?
+let y0 = y0-ydel; move x0 y0; text What are the Best/Worst Settings for Each Factor?
+let y0 = y0-ydel; move x0 y0; text Is the ANOVA Constant-Variance Assumption Valid?
+let y0 = y0-ydel; move x0 y0; text Is the ANOVA Assumption that "Cell Variation Not Vary with Cell Means" Valid
+let y0 = y0-ydel; move x0 y0; text Is the Trivial (No-Factor)   Y = constant + error   Model Adequate (Predict Well)?
+let y0 = y0-ydel; move x0 y0; text Is the Full ^numfac-Factor Additive Model Adequate (Predict Well)?
+let y0 = y0-ydel; move x0 y0; text Is the Full ^numfac-Factor Additive Model Robustly Adequate (Predict Well) (i.e., for Each of the ^prod Cells)?
+let y0 = y0-ydel; move x0 y0; text What are the Robust Best/Worst Settings for Each Factor?
+let y0 = y0-ydel; move x0 y0; text Are there Outlying Cells, Factor Settings, or Setting Combinations?
+let y0 = y0-ydel; move x0 y0; text Within Each Factor, What Levels are Equivalent?
+.
+just right
+let x0 = 91.5
+let y0 = 77.5
+let y0 = y0-ydel
+let y0 = y0-ydel; move x0 y0; . Q1; . text 4
+let y0 = y0-ydel; move x0 y0; . Q2; . text 9
+let y0 = y0-ydel; move x0 y0; . Q3; . text 28
+let y0 = y0-ydel; move x0 y0; . Q4; . text 28
+let y0 = y0-ydel; move x0 y0; . Q5; . text 39
+let y0 = y0-ydel; move x0 y0; . Q6; . text 40
+let y0 = y0-ydel; move x0 y0; . Q7; . text ..
+let y0 = y0-ydel; move x0 y0; . Q8; . text ..
+let y0 = y0-ydel; move x0 y0; . Q9; . text ..
+let y0 = y0-ydel; move x0 y0; . Q10; . text ..
+let y0 = y0-ydel; move x0 y0; . Q11; . text ..
+.
+let x0 = 91.5
+let y0 = 77.5 - (ydel/2) + 0.7
+let y0 = y0-ydel
+let y0 = y0-ydel; move x0 y0; . Q1;
+let y0 = y0-ydel; move x0 y0; . Q2;
+let y0 = y0-ydel; move x0 y0; . Q3;
+let y0 = y0-ydel; move x0 y0; . Q4;
+let y0 = y0-ydel; move x0 y0; . Q5;
+let y0 = y0-ydel; move x0 y0; . Q6;
+let y0 = y0-ydel; move x0 y0; . Q7;
+let y0 = y0-ydel; move x0 y0; . Q8;
+let y0 = y0-ydel; move x0 y0; . Q9;
+let y0 = y0-ydel; move x0 y0; . Q10;
+let y0 = y0-ydel; move x0 y0; . Q11;
+.
+let y0 = y0-ydel
+box 8 y0 92 90
+just left
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. -----Page 3: Analysis Principles-----
+.
+write "______________________________________________"
+write "_______________| At Page 3 |________________"
+write "______________________________________________"
+.
+erase
+box 8 15 92 90
+lines solid; draw 8 77 92 77
+.
+move 50 86; just center; hw 2 1; text Multifactor Experiment
+move 50 83; just center; hw 2 1; text Analysis Principles
+move 50 80; just center; hw 2 1; text ^project
+
+just left
+hw 2 1
+let y0 = 75
+let ydel = 3
+let y0 = y0-ydel; move 20 y0; text   1. Data
+move 34 y0; text : Start with the data & include the data in the analysis
+let y0 = y0-ydel; move 20 y0; text   2. Questions
+move 34 y0; text : Start with specific questions
+let y0 = y0-ydel; move 20 y0; text   3. Emphasis
+move 34 y0; text : Questions, data, and answers--not techniques/methodology
+let y0 = y0-ydel; move 20 y0; text   4. Specificity
+move 34 y0; text : Give specific answers to specific questions
+let y0 = y0-ydel; move 20 y0; text   5. Questions
+move 34 y0; text : Answer all questions
+let y0 = y0-ydel; move 20 y0; text   6. Assumptions
+move 34 y0; text : Test underlying assumptions of the data
+let y0 = y0-ydel; move 20 y0; text   7. Assumptions
+move 34 y0; text : Test underlying assumptions of the analysis (ANOVA) technique
+let y0 = y0-ydel; move 20 y0; text   9. Robustness
+move 34 y0; text : Check the robustness of conclusions about factors and settings
+let y0 = y0-ydel; move 20 y0; text 10. Parsimony
+move 34 y0; text : First choose techniques which are simple
+let y0 = y0-ydel; move 20 y0; text 11. Graphics
+move 34 y0; text : First choose techniques which are graphical
+let y0 = y0-ydel; move 20 y0; text 13. Analysis
+move 34 y0; text : Multiple questions require multiple pages of analysis
+let y0 = y0-ydel; move 20 y0; text 14. Conclusions
+move 34 y0; text : The analysis (& each page) should end with engineering conclusions
+let y0 = y0-ydel; move 20 y0; text 16. Conclusions
+move 34 y0; text : Validity comes from data appearance--not just ANOVA tail probabilities
+let y0 = y0-ydel; move 20 y0; text 17. Conclusions
+move 34 y0; text : Validity comes from multiple approaches (to avoid approach-dependencey)
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. -----Page 4: Analysis Techniques-----
+.
+write "______________________________________________"
+write "_______________| At Page 4 |________________"
+write "______________________________________________"
+.
+erase
+lines solid; draw 8 77 92 77
+.
+move 50 86; just center; hw 2 1; text Multifactor Experiment
+move 50 83; just center; hw 2 1; text Analysis Techniques
+move 50 80; just center; hw 2 1; text ^project
+
+just left
+hw 2 1
+let y0 = 75
+let ydel = 3
+let y0 = y0-ydel; move 20 y0
+text Technique 1: Scatter Plot of Raw Data vs. Each Level of Each Factor
+let y0 = y0-ydel; move 20 y0
+text Technique 2: Analysis of Variance (ANOVA)
+let y0 = y0-ydel; move 20 y0
+text Technique 3: Plot of Means vs. Each Level of Each Factor
+let y0 = y0-ydel; move 20 y0
+text Technique 4: Scatter Plot of Residuals about Cell Means vs. Each of the ^numcell Cell Ids
+let y0 = y0-ydel; move 20 y0
+text Technique 5: Scatter Plot of Residuals about Cell Means vs. Each of the ^numcell Cell Means
+let y0 = y0-ydel; move 20 y0
+text Technique 6: Plot of Cell Standard Deviations vs. Cell Means
+let y0 = y0-ydel; move 20 y0
+text Technique 7: Normal Probability Plot of the Raw Data
+let y0 = y0-ydel; move 20 y0
+text Technique 8: Normal Probability Plot of the Residuals
+let y0 = y0-ydel; move 20 y0
+text Technique 9: Scatter Plot of Residuals vs. Cell Ids
+let y0 = y0-ydel; move 20 y0
+text Technique 10: Scatter Plot of Residuals vs. Each Factor
+let y0 = y0-ydel; move 20 y0
+text Technique 11: Mean Block (Robustness) Plot of Residuals
+let y0 = y0-ydel; move 20 y0
+text Technique 12: Character Plot of Raw Data vs. Cell Ids
+let y0 = y0-ydel; move 20 y0
+text Technique 13: Pairwise t Tests
+let y0 = y0-ydel; move 20 y0
+.
+box 8 y0 92 90
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. -----Page 5: Usual ANOVA Assumptions-----
+.
+write "______________________________________________"
+write "_______________| At Page 5 |________________"
+write "______________________________________________"
+.
+erase
+lines solid; draw 8 77 92 77
+.
+move 50 86; just center; hw 2 1; text Multifactor Experiment
+move 50 83; just center; hw 2 1
+   if numfac = 1; text Usual Assumptions (For ^numfac Factor); end if
+   if numfac >= 2; text Usual Assumptions (For ^numfac Factors); end if
+move 50 80; just center; hw 2 1; text ^project
+
+just left
+hw 2 1
+let y0 = 75
+let ydel = 3
+.
+let string sttail = ij
+let string stcell = (i,j)
+if numfac = 1
+   let string sttail = i
+   let string stcell = (i)
+end if
+if numfac = 2
+   let string sttail = ij
+   let string stcell = (i,j)
+end if
+if numfac = 3
+   let string sttail = ijk
+   let string stcell = (i,j,k)
+end if
+if numfac = 4
+   let string sttail = ijkl
+   let string stcell = (i,j,k,l)
+end if
+if numfac = 5
+   let string sttail = ijklm
+   let string stcell = (i,j,k,l,m)
+end if
+.
+let y0 = y0-ydel; move 10 y0
+text Assumption 1: Model:
+move 33 y0
+text For cell ^stcell:  Y^sttail = D^sttail + e^sttail
+let y0 = y0-ydel; move 36 y0
+text Y^sttail = observed data
+let y0 = y0-ydel; move 36 y0
+text D^sttail = deterministic component
+let y0 = y0-ydel; move 36 y0
+text e^sttail = random component
+.
+let y0 = y0-ydel; move 10 y0
+text Assumption 2: Additive:
+move 33 y0
+text The deterministic term D^sttail is additive for all cells:
+let y0 = y0-ydel; move 36 y0
+if numfac = 1; text D^sttail = c + B1(i); end if
+if numfac = 2; text D^sttail = c + B1(i) + B2(j); end if
+if numfac = 3; text D^sttail = c + B1(i) + B2(j) + B3(k); end if
+if numfac = 4; text D^sttail = c + B1(i) + B2(j) + B3(k) + B4(l); end if
+if numfac = 5; text D^sttail = c + B1(i) + B2(j) + B3(k) + B4(l) + B5(m); end if
+.
+if numfac >= 1
+   let y0 = y0-ydel; move 40 y0
+   text where B1(i) is the effect of factor 1's level i on cell ^stcell
+end if
+if numfac >= 2
+   let y0 = y0-ydel; move 40 y0
+   text where B2(j) is the effect of factor 2's level j on cell ^stcell
+end if
+if numfac >= 3
+   let y0 = y0-ydel; move 40 y0
+   text where B3(k) is the effect of factor 3's level k on cell ^stcell
+end if
+if numfac >= 4
+   let y0 = y0-ydel; move 40 y0
+   text where B4(l) is the effect of factor 4's xxxxx cell ^stcell
+end if
+if numfac >= 5
+   let y0 = y0-ydel; move 40 y0
+   text where B5(m) is the effect of factor 5 on cell ^stcell
+end if
+.
+let y0 = y0-ydel; move 10 y0
+8
+text Assumption 3: Random:
+move 33 y0
+text The random term  e^sttail  is, in fact, random and uncorrelated for all cells
+.
+let y0 = y0-ydel; move 10 y0
+text Assumption 4: Location:
+move 33 y0
+text The random term  e^sttail  has mean 0 for all cells
+.
+let y0 = y0-ydel; move 10 y0
+text Assumption 5: Variation:
+move 33 y0
+text The random term  e^sttail  has fixed (identical) standard deviation sigma for all cells
+.
+let y0 = y0-ydel; move 10 y0
+text Assumption 6: Distribution:
+move 33 y0
+text The random term  e^sttail  has fixed (identical) distribution for all cells,
+let y0 = y0-ydel; move 33 y0
+text and that fixed distribution is normal (= Gaussian))
+.
+let y0 = y0-ydel; move 10 y0
+.
+box 8 y0 92 90
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. -----Q1: Is a Factor Important?-----
+. -----Q2: Relative Importance?-----
+. -----Q3: Best/Worst Settings?-----
+. ----------Technique 1: DEX Scatter Plot of Raw Data-----
+.
+.
+y1label ^sty
+.
+lines solid dotted
+char circle blank
+. char hw 1 1
+char hw .75 .75
+char fill on off
+.
+major xtic number numfacp2
+minor xtic number 0
+xlim 0 numfacp1
+.
+if numfac  = 1; dex scatter plot y x1; end if
+if numfac >= 2; dex scatter plot y x1 to x^numfac; end if
+loop for j = 1 1 numfac
+   moveds j 13; just center; text ^stx^j
+end loop
+char hw 2 1
+.
+major xtic number default
+minor xtic number default
+xlim
+.
+move 11.5 98; just center; hw 2 1; text Step 1; box 8 97 15 100
+move 50 98; just center; hw 2 1; text Q1. Is a Factor Important?  Q2. Relative Importance?  Q3. Best/Worst Settings?
+move 50 95; just center; hw 2 1; text Technique 1: Scatter Plot of Raw Data vs. Each Level of Each Factor
+move 50 92; just center; hw 2 1; text ^project
+.
+box 15 1 85 12
+just left; hw 2 1; move 16 10; text Conclusions:
+just left; hw 2 1; move 19 8; text Importance/Significance of Each Factor:
+just left; hw 2 1; move 19 6; text Relative Importance Ranking of Factors:
+just left; hw 2 1; move 19 4; text Best/Worst Settings for Each Factor:
+.
+. .....Step 1.2: Annotate (at top) the plot with summary info.....
+.
+move 16 88; just left
+if numfac = 1; text k = ^numfac   l = ^l1   r = ^r   n = ^n; end if
+if numfac = 2; text k = ^numfac   l = ^l1&,^l2   r = ^r   n = ^n; end if
+if numfac = 3; text k = ^numfac   l = ^l1&,^l2&,^l3   r = ^r   n = ^n; end if
+if numfac = 4; text k = ^numfac   l = ^l1&,^l2&,^l3&,^l4   r = ^r   n = ^n; end if
+if numfac = 5; text k = ^numfac   l = ^l1&,^l2&,^l3&,^l4&,^l5   r = ^r   n = ^n; end if
+draw 15 87 40 87; draw 40 87 40 90
+.
+call mark3.dp
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. ----------Technique 2: Analysis of Variance-----
+.
+.
+y1label ^sty
+.
+. lines solid dotted
+. char circle blank
+. char hw 1 1
+. char fill on off
+.
+erase
+move 11.5 98; just center; hw 2 1; text Step 2; box 8 97 15 100
+move 50 98; just center; hw 2 1; text Q1. Is a Factor Important?  Q2. Relative Importance?  Q3. Best/Worst Settings?
+move 50 95; just center; hw 2 1; text Technique 2: Analysis of Variance (ANOVA)
+move 50 92; just center; hw 2 1; text ^project
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+if numfac = 1; let string stanova = y x1; end if
+if numfac = 2; let string stanova = y x1 x2; end if
+if numfac = 3; let string stanova = y x1 x2 x3; end if
+if numfac = 4; let string stanova = y x1 x2 x3 x4; end if
+if numfac = 5; let string stanova = y x1 x2 x3 x4 x5; end if
+. capture anova.out
+.    anova ^stanova
+.    capture flush
+. end capture
+
+. system fed anova.out < fixanova.fed
+. call anova.out
+.
+box 15 1 85 12
+just left; hw 2 1; move 16 10; text Conclusions:
+just left; hw 2 1; move 19 8; text Importance/Significance of Each Factor:
+just left; hw 2 1; move 19 6; text Relative Importance Ranking of Factors:
+just left; hw 2 1; move 19 4; text Best/Worst Settings for Each Factor:
+call mark3.dp
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. ----------Technique 3: DEX Mean Plot of Raw Data-----
+.
+y1label Mean ^sty
+.
+lines solid dotted
+char circle blank
+. char hw 1 1
+char hw .75 .75
+char fill on off
+.
+major xtic number numfacp2
+minor xtic number 0
+xlim 0 numfacp1
+.
+if numfac  = 1; dex mean plot y x1; end if
+if numfac >= 2; dex mean plot y x1 to x^numfac; end if
+loop for j = 1 1 numfac
+   moveds j 13; just center; text ^stx^j
+end loop
+char hw 2 1
+.
+major xtic number default
+minor xtic number default
+xlim
+.
+move 11.5 98; just center; hw 2 1; text Step 3; box 8 97 15 100
+move 50 98; just center; hw 2 1; text Q1. Is a Factor Important?  Q2. Relative Importance?  Q3. Best/Worst Settings?
+move 50 95; just center; hw 2 1; text Technique 3: Plot of Means vs. Each Level of Each Factor
+move 50 92; just center; hw 2 1; text ^project
+.
+box 15 1 85 12
+just left; hw 2 1; move 16 10; text Conclusions:
+just left; hw 2 1; move 19 8; text Importance/Significance of Each Factor:
+just left; hw 2 1; move 19 6; text Relative Importance Ranking of Factors:
+just left; hw 2 1; move 19 4; text Best/Worst Settings for Each Factor:
+call mark3.dp
+.
+. .....Step 2.2: Annotate the plot with summary info.....
+.
+let n = number y
+delete distx
+let prod = 1
+loop for j = 1 1 numfac
+   let distx = distinct x^j
+   let l^j = number distx
+   let prod = prod*l^j
+end loop
+let r = n/prod
+move 16 88; just left
+if numfac = 1; text k = ^numfac   l = ^l1   r = ^r   n = ^n; end if
+if numfac = 2; text k = ^numfac   l = ^l1&,^l2   r = ^r   n = ^n; end if
+if numfac = 3; text k = ^numfac   l = ^l1&,^l2&,^l3   r = ^r   n = ^n; end if
+if numfac = 4; text k = ^numfac   l = ^l1&,^l2&,^l3&,^l4   r = ^r   n = ^n; end if
+if numfac = 5; text k = ^numfac   l = ^l1&,^l2&,^l3&,^l4&,^l5   r = ^r   n = ^n; end if
+draw 15 87 40 87; draw 40 87 40 90
+.
+. .....Step 2.3: Carry out the ANOVA.....
+.
+if numfac = 1; anova y x1; end if
+if numfac = 2; anova y x1 x2; end if
+if numfac = 3; anova y x1 x2 x3; end if
+if numfac = 4; anova y x1 x2 x3 x4; end if
+if numfac = 5; anova y x1 x2 x3 x4 x5; end if
+.
+. .....Step 2.4: Superimpose the ANOVA F Stat cdf Value onto the DEX Mean Plot.....
+.
+skip 0
+read dpst1f.dat col1 col2 col3 col4 col5 col6
+delete col1 col2 col3 col4 col5
+if ressd > 0
+   loop for j = 1 1 numfac
+      let ppf = col6(j); let ppf2 = round(ppf,3)
+      moveds j 23; just center
+      if ppf2 <  95; text ^ppf2; end if
+      if ppf2 >= 95
+         if ppf2 <  99; text ^ppf2 *; end if
+         if ppf2 >= 99; text ^ppf2 **; end if
+      end if
+   end loop
+end if
+move 16 23; just left; text ANOVA  F cdf:
+let s = standard deviation y
+move 16 21; just left; text s = ^s
+if s > 0
+   move 84 21; just right; text sres = ^ressd
+end if
+if ressd = 0
+   move 84 21; just right; text Note/Caution--Exact Fit: sres = ^ressd
+end if
+draw 15 25 85 25
+delete col6
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. -----Q4: Is the ANOVA Constant-Variance Assumption Valid?-----
+. ----------Technique 4: DEX Scatter Plot of Residuals about Cell Means-----
+.
+let cell = x1
+if numfac >= 2
+   loop for j = 2 1 numfac
+      let cell = cell + (x^j)/10**(j-1)
+   end loop
+end if
+let cell = coded cell
+let numcell = maximum cell
+.
+char x all
+lines solid all
+major xtic number default
+minor xtic number default
+xlimits
+. y1label ^sty
+y1label Residuals about Cell Means
+. plot y cell cell
+anova y cell
+plot res cell cell
+move 50 13; just center; text Cell Id (^numcell Cells)
+.
+levene test y cell
+let levene = statval
+let levenecd = statcdf
+.
+move 11.5 98; just center; hw 2 1; text Step 4; box 8 97 15 100
+move 50 98; just center; hw 2 1; text Q4. Is the ANOVA Constant Variance Assumption Valid (Over all ^numcell Cells)?
+move 50 95; just center; hw 2 1; text Technique 4: Scatter Plot of Residuals about Cell Means vs. Each of the ^numcell Cell Ids
+move 50 92; just center; hw 2 1; text ^project
+.
+let sig = 0
+if levenecd >= .95; let sig = 1; end if
+.
+box 15 1 85 12
+just left; hw 2 1; move 16 10; text Conclusion:
+move 19 8; just left
+text The Levene statistic for testing homoscedasticity (constant variation) = ^levene
+.
+if sig = 0
+   move 19 6; just left
+   text Constant Variance Assumption DOES hold (since cdf(^levene) = ^levenecd <= .95).
+end if
+.
+if sig = 1
+   move 19 6; just left
+   text Constant Variance Assumption NOT hold (since cdf(^levene) = ^levenecd > .95).
+   move 19 4; just left
+   text Corrrective Action: Transform Y (^sty) --for example, by logs--
+   move 19 2; just left
+   text and then reanalyze the transformed Y data.
+end if
+.
+call mark3.dp
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. -----Q5: Is the ANOVA Assumption that "Cell Variation Not Vary with Cell Means" Valid?-----
+. ----------Technique 5: DEX Scatter Plot of Raw Data vs. Cell Means-----
+.
+anova y cell
+. plot y pred pred
+y1label Residuals about Cell Means
+plot res pred pred
+move 50 13; just center; text Cell Means
+.
+move 11.5 98; just center; hw 2 1; text Step 5; box 8 97 15 100
+move 50 98; just center; hw 2 1; text Q5. Is the ANOVA Assumption that "Cell Variation Not Vary with Cell Means" Valid?
+move 50 95; just center; hw 2 2; text Technique 5: Scatter Plot of Residuals about Cell Means vs. Each of the ^numcell Cell Means
+move 50 92; just center; hw 2 1; text ^project
+.
+let sig = 0
+if levenecd >= .95; let sig = 1; end if
+.
+box 15 1 85 12
+just left; hw 2 1; move 16 10; text Conclusion:
+move 19 8; just left
+text The Levene statistic for testing homoscedasticity (constant variation) = ^levene
+.
+if sig = 0
+   move 19 6; just left
+   text Constant Variance Assumption DOES hold (since cdf(^levene) = ^levenecd <= .95).
+end if
+.
+if sig = 1
+   move 19 6; just left
+   text Constant Variance Assumption NOT hold (since cdf(^levene) = ^levenecd > .95).
+   move 19 4; just left
+   text Corrrective Action: Transform Y (^sty) --for example, by logs--
+   move 19 2; just left
+   text and then reanalyze the transformed Y data.
+end if
+.
+call mark3.dp
+x1label
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. ----------Technique 6: Plot of Cell Standard Deviations vs. Cell Means-----
+.
+delete meancell sdcell
+delete junkcoef junksdco
+loop for k = 1 1 numcell
+   let meancell(k) = mean y subset cell k
+   let sdcell(k) = sd y subset cell k
+end loop
+print  meancell sdcell pred
+y1label Cell Standard Deviations
+char x bl
+lines bl solid
+fit sdcell meancell
+skip 0
+read dpst1f.dat junkcoef junksdco
+let slope = junkcoef(2)
+let sdslope = junksdco(2)
+let tratio = slope/sdslope
+let slopecdf = tcdf(tratio,resdf)
+let sig = 0
+if slopecdf >= .975; let sig = 1; end if
+if slopecdf <= .025; let sig = 1; end if
+print slope sdslope tratio ressd slopecdf sig
+plot sdcell pred vs meancell
+move 50 13; just center; text Cell Means
+delete junkcoef junksdco
+print meancell sdcell pred numcell
+. pause
+. stop
+.
+move 11.5 98; just center; hw 2 1; text Step 6; box 8 97 15 100
+move 50 98; just center; hw 2 1; text Q5. Is the ANOVA Assumption that "Cell Variation Not Vary with Cell Mean" Valid?
+move 50 95; just center; hw 2 2; text Technique 6: Plot of Cell Standard Deviations vs. Cell Means
+move 50 92; just center; hw 2 1; text ^project
+.
+box 15 1 85 12
+hw 2 1
+move 16 10; just left; text Conclusion:
+move 19 8; just left
+text The Least Squares slope of the above Cell SD vs Cell Means line = ^slope
+.
+if sig = 0
+   move 19 6; just left
+   text Cell SDs do NOT vary with Cell Means (since CDF(^slope) = ^slopecdf <= .95),
+   move 19 4; just left
+   text hence no transformation and reanalysis of Y is necessary.
+   move 19 2; just left
+   text Continue to the next plot.
+end if
+.
+if sig = 1
+   move 19 6; just left
+   text Cell SDs DO vary with Cell Means (since CDF(^slope) = ^slopecdf > .95).
+   move 19 4; just left
+   text Corrrective Action: Transform Y (^sty) --for example, by logs--
+   move 19 2; just left
+   text and then reanalyze the transformed Y data.
+end if
+call mark3.dp
+.
+y1label
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. -----Q6: Is the Trivial (No-Factor)    Y = constant + error    Model Adequate?-----
+. ----------Technique 7: Normal Probability Plot of The Raw Data-----
+.
+y1label Ordered ^sty
+normal probablity plot y
+move 50 13; just center; text Normal N(0,1) Order Statistic Medians
+.
+let ppcc05 = -999
+delete junkn junkz junkppcc
+skip 25
+. read norppccnew.tex junkn junkz junkppcc for i = 1 1 58
+read norppccnew.tex junkn junkz junkppcc
+let junkcoun = number junkn subset junkn n
+if junkcoun >= 1
+   retain junkn junkz junkppcc subset junkn n
+   let ppcc05 = junkppcc(1)
+end if
+if junkcoun <= 0
+   let nm10 = n-10
+   let np10 = np10
+   retain junkn junkz junkppcc subset junkn nm10 to np10
+   linear fit junkppcc junkn
+   let ppcc05 = a0+a1*n
+end if
+delete junkn junkz junkppcc
+.
+move 11.5 98; just center; hw 2 1; text Step 7; box 8 97 15 100
+move 50 98; just center; hw 2 1; text Q6. Is the Trivial (No-Factor)    Y = constant + error    Model Adequate?
+move 50 95; just center; hw 2 1; text Technique 7: Normal Probability Plot of the Raw Data
+move 50 92; just center; hw 2 1; text ^project
+move 16 88; just left; text PPCC = ^ppcc
+move 84 21; just right; text s = ^s
+.
+let sig = 0
+if ppcc <= ppcc05; let sig = 1; end if
+.
+box 15 1 85 12
+hw 2 1
+move 16 10; just left; text Conclusion:
+move 19 8; just left
+text The (Filliben) probability plot correlation coefficient for testing normality = ^ppcc
+.
+if sig = 0
+   move 19 6; just left
+text Normality assumption IS valid (since ^ppcc >= the (n = ^n) PPCC 5% point (= ^ppcc05)),
+   move 19 4; just left
+   text which in turn ==> the No-Factor Model MAY (not IS) be adequate
+   move 19 2; just left
+   text Corrective Action: Add factors to the model anyway, and recheck normality of residuals
+end if
+.
+if sig = 1
+   move 19 6; just left
+text Normality assumption NOT valid (since ^ppcc < the (n = ^n) PPCC 5% point (= ^ppcc05)),
+   move 19 4; just left
+   text which in turn ==> the No-Factor Model is NOT adequate.
+   move 19 2; just left
+   text Corrective Action: Add factors to the model, and reanalyze
+end if
+.
+call mark3.dp
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. -----Q7: Is the 2-Factor Additive Model Adequate?-----
+. ----------Technique 8: Normal Probability Plot of the Full-Additive-Model Residuals-----
+.
+if numfac = 1; anova y x1; end if
+if numfac = 2; anova y x1 x2; end if
+if numfac = 3; anova y x1 x2 x3; end if
+if numfac = 4; anova y x1 x2 x3 x4; end if
+if numfac = 5; anova y x1 x2 x3 x4 x5; end if
+let ressdful = ressd
+.
+y1label Residuals from ^numfac-Factor Additive Model
+normal probablity plot res
+move 50 13; just center; text Normal N(0,1) Order Statistic Medians
+.
+let ppcc05 = -999
+delete junkn junkz junkppcc
+skip 25
+. read norppccnew.tex junkn junkz junkppcc for i = 1 1 58
+read norppccnew.tex junkn junkz junkppcc
+let junkcoun = number junkn subset junkn n
+if junkcoun >= 1
+   retain junkn junkz junkppcc subset junkn n
+   let ppcc05 = junkppcc(1)
+end if
+if junkcoun <= 0
+   let nm10 = n-10
+   let np10 = np10
+   retain junkn junkz junkppcc subset junkn nm10 to np10
+   linear fit junkppcc junkn
+   let ppcc05 = a0+a1*n
+end if
+delete junkn junkz junkppcc
+.
+move 11.5 98; just center; hw 2 1; text Step 8; box 8 97 15 100
+move 50 98; just center; hw 2 1; text Q7. Is the ^numfac-Factor Additive Model Adequate?
+move 50 95; just center; hw 2 1; text Technique 8: Normal Probability Plot of the Residuals
+move 50 92; just center; hw 2 1; text ^project
+move 16 88; just left; text PPCC = ^ppcc
+move 84 21; just right; text sres = ^ressdful
+.
+let sig = 0
+if ppcc <= ppcc05; let sig = 1; end if
+.
+box 15 1 85 12
+hw 2 1
+move 16 10; just left; text Conclusion:
+move 19 8; just left
+text The (Filliben) probability plot correlation coefficient for testing normality = ^ppcc
+.
+if sig = 0
+   move 19 6; just left
+text Normality assumption IS valid (since ^ppcc >= the (n = ^n) PPCC 5% point (= ^ppcc05)),
+   move 19 4; just left
+   text which in turn ==> the ^numfac-Factor Additive Model is adequate.
+end if
+.
+if sig = 1
+   move 19 6; just left
+text Normality assumption NOT valid (since ^ppcc < the (n = ^n) PPCC 5% point (= ^ppcc05)),
+   move 19 4; just left
+   text which in turn ==> the ^numfac-Factor Additive Model is NOT adequate.
+   move 19 2; just left
+   text Corrective Action: 1. Add interaction terms, 2. Add additional factors, or 3. Transform Y
+end if
+.
+call mark3.dp
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. -----Q8: Does the 2-Factor Additive Model Fit Well for All Cells?-----
+. ----------Technique 9: Scatter Plot of Residuals vs. Cell IDs
+.
+if numfac = 1; anova y x1; end if
+if numfac = 2; anova y x1 x2; end if
+if numfac = 3; anova y x1 x2 x3; end if
+if numfac = 4; anova y x1 x2 x3 x4; end if
+if numfac = 5; anova y x1 x2 x3 x4 x5; end if
+.
+y1label Residuals from ^numfac-Factor Additive Model
+lines solid all
+char blank all
+plot res cell cell
+limits freeze
+lines blank all
+char 1 2 3 4 5 6 7 8 9 0 a b c d e f g h i j k l m n o p q r s t u v w x y z
+pre-erase off
+plot res cell x1
+lines solid all
+char x all
+limits
+pre-erase on
+move 50 13; just center; text Cell Id (^numcell Cells)
+lines dotted; drawdata 1 0 numcell 0; lines solid
+move 16 85; just left; text Plot Character = X1 (^stx1)
+.
+move 11.5 98; just center; hw 2 1; text Step 9; box 8 97 15 100
+move 50 98; just center; hw 2 1; text Q8. Does the ^numfac-Factor Additive Model Fit Well for All ^numcell cells?
+move 50 95; just center; hw 2 1; text Technique 9: Scatter Plot of Residuals vs. Cell Ids
+move 50 92; just center; hw 2 1; text ^project
+move 84 21; just right; text sres = ^ressdful
+.
+let sig = 0
+if lofcdf >= .95; let sig = 1; end if
+.
+box 15 1 85 12
+hw 2 1
+move 16 10; just left; text Conclusion:
+move 19 8; just left
+text Residual SD (Model-Dependent) = ^ressd     Replication SD (Model-Free) = ^repsd
+.
+if sig = 0
+   move 19 6; just left
+   text The ^numfac-Factor Model IS adequate (since Lack-of-Fit test cdf(^lofcdf) > .95).
+   move 19 4; just left
+   text In any event, note which cells have poorest prediction (that is, largest residuals):
+end if
+.
+if sig = 1
+   move 19 6; just left
+   text The ^numfac-Factor Model NOT adequate (since Lack-of-Fit test cdf(^lofcdf) <= .95).
+   move 19 4; just left
+   text Corrective Action: 1. Add interaction terms, 2. Add other factors, or 3. Transform Y
+end if
+.
+call mark3.dp
+.
+. .....Step 8.2: Annotate (at top) the plot with summary info.....
+.
+let n = number y
+delete distx
+let prod = 1
+loop for j = 1 1 numfac
+   let distx = distinct x^j
+   let l^j = number distx
+   let prod = prod*l^j
+end loop
+let r = n/prod
+move 16 88; just left
+if numfac = 1; text k = ^numfac   l = ^l1   r = ^r   n = ^n; end if
+if numfac = 2; text k = ^numfac   l = ^l1&,^l2   r = ^r   n = ^n; end if
+if numfac = 3; text k = ^numfac   l = ^l1&,^l2&,^l3   r = ^r   n = ^n; end if
+if numfac = 4; text k = ^numfac   l = ^l1&,^l2&,^l3&,^l4   r = ^r   n = ^n; end if
+if numfac = 5; text k = ^numfac   l = ^l1&,^l2&,^l3&,^l4&,^l5   r = ^r   n = ^n; end if
+draw 15 87 40 87; draw 40 87 40 90
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. ----------Technique 10: Scatter Plot of Residuals vs. Each Factor
+.
+if numfac = 1; anova y x1; end if
+if numfac = 2; anova y x1 x2; end if
+if numfac = 3; anova y x1 x2 x3; end if
+if numfac = 4; anova y x1 x2 x3 x4; end if
+if numfac = 5; anova y x1 x2 x3 x4 x5; end if
+.
+y1label Residuals from ^numfac-Factor Additive Model
+.
+major xtic number default
+minor xtic number default
+xlim 0 numfacp1
+.
+char x blank
+lines solid dotted
+.
+if numfac  = 1; dex scatter plot res x1; end if
+if numfac >= 2; dex scatter plot res x1 to x^numfac; end if
+loop for j = 1 1 numfac
+   moveds j 13; just center; text ^stx^j
+end loop
+.
+major xtic number default
+minor xtic number default
+xlim
+.
+lines solid all
+char x all
+.
+move 11.5 98; just center; hw 2 1; text Step 10; box 8 97 15 100
+move 50 98; just center; hw 2 1; text Q8. Does the ^numfac-Factor Additive Model Fit Well for All ^numcell cells?
+move 50 95; just center; hw 2 1; text Technique 10: Scatter Plot of Residuals vs. Each Factor
+move 50 92; just center; hw 2 1; text ^project
+move 84 21; just right; text sres = ^ressdful
+.
+let sig = 0
+if lofcdf >= .95; let sig = 1; end if
+.
+box 15 1 85 12
+hw 2 1
+move 16 10; just left; text Conclusion:
+move 19 8; just left
+text Residual SD (Model-Dependent) = ^ressd     Replication SD (Model-Free) = ^repsd
+.
+if sig = 0
+   move 19 6; just left
+   text The ^numfac-Factor Model IS adequate (since Lack-of-Fit test cdf(^lofcdf) > .95
+   move 19 4; just left
+   text In any event, note which factors and levels have poorest prediction
+   move 19 2; just left
+   text (that is, largest residuals):
+end if
+.
+if sig = 1
+   move 19 6; just left
+   text The ^numfac-Factor Model NOT adequate (since Lack-of-Fit test cdf(^lofcdf) <= .95
+   move 19 4; just left
+   text Corrective Action: 1. Add interaction terms, 2. Add other factors, or 3. Transform Y
+end if
+.
+call mark3.dp
+.
+. .....Step 8.2: Annotate (at top) the plot with summary info.....
+.
+let n = number y
+delete distx
+let prod = 1
+loop for j = 1 1 numfac
+   let distx = distinct x^j
+   let l^j = number distx
+   let prod = prod*l^j
+end loop
+let r = n/prod
+move 16 88; just left
+if numfac = 1; text k = ^numfac   l = ^l1   r = ^r   n = ^n; end if
+if numfac = 2; text k = ^numfac   l = ^l1&,^l2   r = ^r   n = ^n; end if
+if numfac = 3; text k = ^numfac   l = ^l1&,^l2&,^l3   r = ^r   n = ^n; end if
+if numfac = 4; text k = ^numfac   l = ^l1&,^l2&,^l3&,^l4   r = ^r   n = ^n; end if
+if numfac = 5; text k = ^numfac   l = ^l1&,^l2&,^l3&,^l4&,^l5   r = ^r   n = ^n; end if
+draw 15 87 40 87; draw 40 87 40 90
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. -----Q9: What are the Robust Best/Worst Settings for Each Factor?-----
+. -----Q1: Is a Factor Important?
+. ----------Technique 11: Do Robustness/Block Plot Analysis-----
+
+y1label Mean Residuals from Robustness Factors Model
+x1tic label off
+x1tics off
+.
+loop for target = 1 1 numfac
+.
+   char bl all
+   let string stchar = sp()
+   let jmax = l^target
+   loop for j = 1 1 jmax; let string stchar = ^stchar ^j; end loop
+   char ^stchar
+write target l1 l2 stchar  l^target jmax
+.
+   lines solid all
+   let string stlines = sp()
+   let jmax = l^target
+   loop for j = 1 1 jmax; let string stlines = ^stlines bl; end loop
+   lines ^stlines
+write target l1 l2 stlines  l^target jmax
+.
+   if numfac = 2
+      if target = 1
+         anova y x2
+         y1label Mean Residuals from Robustness Factors Model: ^stx2
+         mean block plot res x2 x1
+         move 50 13; just center; text Robustness Factor = X2 (^stx2)
+      end if
+      if target = 2
+         anova y x1
+         y1label Mean Residuals from Robustness Factors Model: ^stx1
+         mean block plot res x1 x2
+         move 50 13; just center; text Robustness Factor = X1 (^stx1)
+      end if
+   end if
+.
+   if numfac = 3
+      if target = 1
+         anova y x2 x3
+         y1label Mean Residuals from Robustness Factors Model: ^stx2 ^stx3
+         mean block plot res x2 x3 x1
+         move 50 13; just center; text Robustness Factors = X2 (^stx2) and X3 (^stx3)
+      end if
+      if target = 2
+         anova y x1 x3
+         y1label Mean Residuals from Robustness Factors Model: ^stx1 ^stx3
+         mean block plot res x1 x3 x2
+         move 50 13; just center; text Robustness Factors = X1 (^stx1) and X3 (^stx3)
+      end if
+      if target = 3
+         anova y x1 x2
+         y1label Mean Residuals from Robustness Factors Model: ^stx1 ^stx2
+         mean block plot res x1 x2 x3
+         move 50 13; just center; text Robustness Factors = X1 (^stx1) and X2 (^stx2)
+      end if
+   end if
+.
+   if numfac = 4
+      if target = 1
+         anova y x2 x3 x4
+         y1label Mean Residuals from Robustness Factors Model: ^stx2 ^stx3 ^stx4
+         mean block plot res x2 x3 x4 x1
+         move 50 13; just center; text Robustness Factors = X2 (^stx2), X3 (^stx3) and x4 (^stx4)
+      end if
+      if target = 2
+         anova y x1 x3 x4
+         y1label Mean Residuals from Robustness Factors Model: ^stx1 ^stx3 ^stx4
+         mean block plot res x1 x3 x4 x2
+         move 50 13; just center; text Robustness Factors = X1 (^stx1), X3 (^stx3) and X4 (^stx4)
+      end if
+      if target = 3
+         anova y x1 x2 x4
+         y1label Mean Residuals from Robustness Factors Model: ^stx1 ^stx2 ^stx4
+         mean block plot res x1 x2 x4 x3
+         move 50 13; just center; text Robustness Factors = X1 (^stx1), X2 (^stx2) and X4 (^stx4)
+      end if
+      if target = 4
+         anova y x1 x2 x3
+         y1label Mean Residuals from Robustness Factors Model: ^stx1 ^stx2 ^stx3
+         mean block plot res x1 x2 x3 x4
+         move 50 13; just center; text Robustness Factors = X1 (^stx1), X2 (^stx2) and X3 (^stx3)
+      end if
+   end if
+.
+   if numfac = 5
+      if target = 1
+         anova y x2 x3 x4 x5
+         y1label Mean Residuals from Robustness Factors Model: ^stx2 ^stx3 ^stx4 ^stx5
+         mean block plot res x2 x3 x4 x5 x1
+         move 50 13; just center; text Robustness Factors = X2 (^stx2), X3 (^stx3), x4 (^stx4), and X5 (^stx5)
+      end if
+      if target = 2
+         anova y x1 x3 x4 x5
+         y1label Mean Residuals from Robustness Factors Model: ^stx1 ^stx3 ^stx4 ^stx5
+         mean block plot res x1 x3 x4 x5 x2
+         move 50 13; just center; text Robustness Factors = X1 (^stx1), X3 (^stx3), x4 (^stx4), and X5 (^stx5)
+      end if
+      if target = 3
+         anova y x1 x2 x4 x5
+         y1label Mean Residuals from Robustness Factors Model: ^stx1 ^stx2 ^stx4 ^stx5
+         mean block plot res x1 x2 x4 x5 x3
+         move 50 13; just center; text Robustness Factors = X1 (^stx1), X2 (^stx2), x4 (^stx4), and X5 (^stx5)
+      end if
+      if target = 4
+         anova y x1 x2 x3 x5
+         y1label Mean Residuals from Robustness Factors Model: ^stx1 ^stx2 ^stx3 ^stx5
+         mean block plot res x1 x2 x3 x5 x4
+         move 50 13; just center; text Robustness Factors = X1 (^stx1), X2 (^stx2), x3 (^stx3), and X5 (^stx5)
+      end if
+      if target = 5
+         anova y x1 x2 x3 x4
+         y1label Mean Residuals from Robustness Factors Model: ^stx1 ^stx2 ^stx3 ^stx4
+         mean block plot res x1 x2 x3 x4 x5
+         move 50 13; just center; text Robustness Factors = X1 (^stx1), X2 (^stx2), x3 (^stx3), and X4 (^stx4)
+      end if
+   end if
+.
+   if numfac >=  2
+      move 16 88; just left; text Plot Character = X^target (^stx^target)
+move 11.5 98; just center; hw 2 1; text Step 11; box 8 97 15 100
+move 50 98; just center; text Q9. Robust Best/Worst Settings for Each Factor?  Q10. Factor Importance?
+      move 50 95; just center; hw 2 1; text Technique 11: Mean Block (Robustness) Plot of Residuals
+      move 50 92; just center; hw 2 1; text ^project
+.
+      box 15 1 85 12
+      just left; hw 2 1; move 16 10; text Conclusions:
+      just left; hw 2 1; move 19 8; text Robust Best/Worst Settings for Factor ^target (^stx^target):
+      just left; hw 2 1; move 19 6; text Importance/Significance of Factor ^target (^stx^target):
+      call mark3.dp
+.
+      let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+   end if
+end loop
+y1label
+x1tic label on
+x1tics on
+.
+. -----Q10: Outlying Cells, Factor Settings, & Setting Combinations?-----
+. ----------Technique 12: Character Plot of Raw Data vs. Cell Ids-----
+
+y1label ^sty
+x1label Cell Id (^numcell Cells)
+lines bl all
+char 1 2 3 4 5 6 7 8 9 0 a b c d e f g h i j k l m n o p q r s t u v w x y z
+.
+let h = 2
+if numfac = 2; multiplot 1 2; let h = 2; end if
+if numfac = 3; multiplot 2 2; let h = 4; end if
+if numfac = 4; multiplot 2 2; let h = 4; end if
+if numfac = 5; multiplot 2 3; let h = 4; end if
+if numfac = 6; multiplot 2 3; let h = 4; end if
+let hhalf = h/2
+let y0 = 90-h
+label size ^h; tic label size ^h; char hw ^h ^hhalf all; hw ^h ^hhalf
+loop for target = 1 1 numfac
+   plot y cell x^target
+   move 16 y0; just left; text Plot Character = X^target (^stx^target)
+end loop
+multiplot off
+label size 2; tic label size 2; char hw 2 1 all; hw 2 1
+.
+move 11.5 98; just center; hw 2 1; text Step 12; box 8 97 15 100
+move 50 98; just center; text Q10. Outlying Cells, Factor Settings, & Setting Combinations?
+move 50 95; just center; hw 2 1; text Technique 12: Character Plot of Raw Data vs. Cell Ids
+move 50 92; just center; hw 2 1; text ^project
+.
+box 15 1 85 12
+just left; hw 2 1; move 16 10; text Conclusions:
+just left; hw 2 1; move 19 8; text Outlying Cells:
+just left; hw 2 1; move 19 6; text Outlying Factor Settings:
+just left; hw 2 1; move 19 4; text Outlying Setting Combinations:
+call mark3.dp
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. -----Q11: Within Each Factor, What Levels are Equivalent?-----
+. ----------Technique 13: Pairwise t Tests-----
+
+y1label ^sty
+x1label
+.
+loop for k = 1 1 numfac
+   if k = 1; let maxlev = l1; end if
+   if k >= 2
+      if l^k > maxlev; let maxlev = l^k; end if
+   end if
+end loop
+. let base = 5 + 2*(maxlev+2)
+let base = 18+1.4*(maxlev-5)
+let base2 = base + 10
+.
+char x blank
+lines solid dotted
+ytic offset base 5
+let numfacph = numfac + 0.5
+xlim 0.5 numfacph
+.
+major xtic number numfacp2
+minor xtic number 0
+xlim 0 numfacp1
+.
+if numfac  = 1; dex scatter plot y x1; end if
+if numfac >= 2; dex scatter plot y x1 to x^numfac; end if
+loop for j = 1 1 numfac
+   moveds j 13; just center; text ^stx^j
+end loop
+char hw 2 1
+.
+major xtic number default
+minor xtic number default
+xlim
+.
+just left
+let y0 = base2; move 86 y0; text Level
+let y0 = y0-2; move 86 y0; text Pairwise
+let y0 = y0-2; move 86 y0; text Equivalent
+let y0 = y0-2; move 86 y0; text Levels
+let ytext = y0-1
+let y0 = base2+2; lines solid; draw 15 y0 94 y0
+let y0 = base2-0.5; lines dotted; draw 15 y0 94 y0
+if ytext >= 20
+   lines solid; draw 85 20 94 20
+   let y0 = base2+2; draw 94 20 94 y0
+end if
+if ytext < 20
+   lines solid; draw 85 ytext 94 ytext
+   let y0 = base2+2; draw 94 ytext 94 y0
+   draw 85 ytext 85 20
+end if
+.
+just center
+vertical spacing -.5
+loop for ifac = 1 1 numfac
+   hw 2 1
+   if l^ifac > 10; hw 1.5 .50; end if
+   let target = ifac
+   call paircomp.dp
+   let lmax = l^ifac
+   let x0del = 0.4/((l^ifac)-1)
+   loop for lev = 1 1 lmax
+      let x0 = (ifac-1) + 0.8+x0del*(lev-1)
+      let targint = lev; call intchar.dp
+      let y0 = base2; moveds x0 y0; text ^outchar
+      let y0 = base2-2; moveds x0 y0; text ^steq^lev
+   end loop
+end loop
+hw 2 1
+.
+ytic offset 5 5
+.
+move 11.5 98; just center; hw 2 1; text Step 13; box 8 97 15 100
+move 50 98; just center; hw 2 1; text Q11. Within Each Factor, What Levels are Equivalent?
+move 50 95; just center; hw 2 1; text Technique 13: Pairwise t Tests
+move 50 92; just center; hw 2 1; text ^project
+.
+box 15 1 85 12
+just left; hw 2 1; move 16 10; text Conclusions:
+just left; hw 2 1; move 19 8; text Equivalent Levels for Each Factor:
+.
+move 16 88; just left
+if numfac = 1; text k = ^numfac   l = ^l1   r = ^r   n = ^n; end if
+if numfac = 2; text k = ^numfac   l = ^l1&,^l2   r = ^r   n = ^n; end if
+if numfac = 3; text k = ^numfac   l = ^l1&,^l2&,^l3   r = ^r   n = ^n; end if
+if numfac = 4; text k = ^numfac   l = ^l1&,^l2&,^l3&,^l4   r = ^r   n = ^n; end if
+if numfac = 5; text k = ^numfac   l = ^l1&,^l2&,^l3&,^l4&,^l5   r = ^r   n = ^n; end if
+draw 15 87 40 87; draw 40 87 40 90
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. -----Page n: Conclusions-----
+.
+write "______________________________________________"
+write "_______________| At Page n |________________"
+write "______________________________________________"
+.
+erase
+lines solid
+.
+move 50 86; just center; hw 2 1; text Multifactor Experiment
+move 50 83; just center; hw 2 1; text Conclusions
+move 50 80; just center; hw 2 1; text ^project
+move 50 77; just center
+if numfac = 1; text k = ^numfac   l = ^l1   r = ^r   n = ^n; end if
+if numfac = 2; text k = ^numfac   l = ^l1&,^l2   r = ^r   n = ^n; end if
+if numfac = 3; text k = ^numfac   l = ^l1&,^l2&,^l3   r = ^r   n = ^n; end if
+if numfac = 4; text k = ^numfac   l = ^l1&,^l2&,^l3&,^l4   r = ^r   n = ^n; end if
+if numfac = 5; text k = ^numfac   l = ^l1&,^l2&,^l3&,^l4&,^l5   r = ^r   n = ^n; end if
+
+just left
+hw 2 1
+let y0 = 74
+let ydel = 18
+let y0 = y0+ydel
+.
+let y0 = y0-ydel
+let y0m3 = y0-3
+draw 8 y0 92 y0
+move 9 y0m3; text Important Factors:
+.
+let y0 = y0-ydel
+let y0m3 = y0-3
+draw 8 y0 92 y0
+move 9 y0m3; text Good Model:
+.
+let y0 = y0-ydel
+let y0m3 = y0-3
+draw 8 y0 92 y0
+move 9 y0m3; text Best/Worst Settings:
+.
+let y0 = y0-ydel
+let y0m3 = y0-3
+draw 8 y0 92 y0
+move 9 y0m3; text Outlying Cell Settings/Combinations:
+.
+let y0 = y0-ydel
+box 8 y0 92 90
+.
+call mark3.dp
+.
+let page = page+1; move 97 97; just left; hw 2 1; text ^page
+.
+. -----Graphics Housekeeping #2: if device 2 (= file dppl1f.dat) is open,-----
+. -----                          then close and print it-----
+.
+probe idman(2); let device2 = probeval; end if
+if device2 >= 1
+   device 2 close
+   if autoprin = 1
+      system print dppl1f.dat
+      write " "
+      write "|-----------------------------------|"
+      write "| All graphics in this session      |"
+      write "|     1. have been stored in your   |"
+      write "|        local file dppl1f.dat,     |"
+      write "|     2. have been sent to your     |"
+      write "|        local printer.             |"
+      write "|-----------------------------------|"
+   end if
+end if
+.
+. -----End of anova.dp macro-----

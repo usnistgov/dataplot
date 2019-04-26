@@ -1,0 +1,8 @@
+----- <~datalist\PONTIUS.top> PONTIUS.DAT
+ 
+PONTIUS.DAT
+ 
+View     <xcl: LIST PONTIUS.DAT>
+Load     <x2cl: SKIP 25; READ PONTIUS.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\PONTIUS.DAT>
+ 

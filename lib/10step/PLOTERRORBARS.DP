@@ -1,0 +1,71 @@
+. This is dataplot macro   ploterrorbars.dp
+. Purpose: Superimpose error bars on an (existing) plot
+. Date: October 17, 2011 ==> January 17, 2012
+. Assumption: A plot already exists
+. Input:
+.   yplotucl (vector) = 95% upper confidence limits (formed in dexomp1.dp)
+.   yplotlcl (vector) = 95% lower confidence limits (formed in dexomp1.dp)
+.   xplotm   (vector) = ordering vector    xplotm(1) = the x-position for the 1st mean
+.   color1, color2, color3, . . . (strings) = color for the lines
+.                                             color1 = the color for factor id 1
+.   bartype (string) = line type for the error bars (default = solid)
+.
+. Note: If no error bars appear, then make ylim wider and replot
+.
+. Note: If this routine is preceeded by    call dexmp.dp, then need    x1tic offset
+.                                          before calling ploterrorbars.dp
+.       but if this routine is preceeded by    dex mean plot . . ., then not needed.
+.
+. -----start point-----
+.
+let pausesw = 0
+.
+if pausesw = 1
+   print " "
+   print "At the beginning of    ploterrorbars.dp:"
+   . print xplotm yplotlcl yplotm yplotucl
+   . print color1 color2 color3 nplotm
+   . pause
+end if
+.
+let string colordez = blue
+if colordef exists; let string colordez = ^colordef; end if
+.
+. -----Step 1: Generate the plot-----
+.
+lines solid
+if bartype exists
+   lines ^bartype
+end if
+let nzz = number yplotlcl
+print nzz
+. pause
+loop for jdummy = 1 1 nzz
+   .
+   let jdummy2 = jdummy
+   if xplotm exists
+      let jdummy2 = xplotm(jdummy)
+   end if
+   .
+   line color ^colordez
+   if color^jdummy2 exists
+      line color ^color^jdummy2
+   end if
+   .
+   let yp1 = yplotlcl(jdummy)
+   let yp2 = yplotucl(jdummy)
+   . print "jdummy jdummy2 yp1 yp2 = ^jdummy ^jdummy2 ^yp1 ^yp2"
+   . pause
+   drawdddd jdummy2 yp1 jdummy2 yp2
+   .
+   if pausesw = 1
+      print jdummy jdummy2 yp1 yp2
+      if ibatch not exist or ibatch = 0; pause; end if
+   end if
+   .
+end loop
+line
+line color blue
+.
+. Note: If no error bars appear, then make ylim wider and replot
+.

@@ -1,0 +1,8 @@
+----- <~dataload\HAYES1.DP> Load HAYES1.DAT
+
+. This is file    HAYES1.DP
+
+DELETE Y
+SKIP 25
+READ HAYES1.DAT Y
+

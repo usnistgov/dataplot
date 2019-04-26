@@ -1,0 +1,10 @@
+----- <~dataloex\PONTIUS.DP> Load & Execute PONTIUS.DAT
+
+. This is file    PONTIUS.DP
+
+DELETE Y X
+SKIP 25
+READ PONTIUS.DAT Y X
+TITLE PONTIUS.DAT
+/
+

@@ -1,0 +1,55 @@
+This is file coc.men--Generate C Operating Characteristic Chart
+ 
+--------------------line 3
+1. C Operating Characteristic Chart
+2. Macro
+3.
+4. Response Variable:
+4. @CE 1 0 42 50 ? gui-variable
+5.
+6. Start value for c (default = 0.1):
+6. @CE 2 0 42 50 ?
+7. Increment for c (default = 0.1):
+7. @CE 3 0 42 50 ?
+8. Stop value for c (default = 50):
+8. @CE 4 0 42 50 ?
+9.
+10. Subset/Except/For Specification:
+11. @CE 5 0 1 50 *
+12.
+13.
+14. Generate the Chart?:
+--------------------
+DELETE ZZZZC ZZZZY
+.
+LET NUMDEF = SUM _1 _5
+LET NGROUPS = SIZE _1 _5
+LET CBAR = NUMDEF/NGROUPS
+LET UCL = CBAR + 3*SQRT(CBAR)
+LET LCL = CBAR - 3*SQRT(CBAR)
+LET LCL = MAX(0,LCL)
+.
+LET CSTART = 0.1
+LET CINC = 0.1
+LET CSTOP = 50
+LET CSTART = _2
+LET CINC = _3
+LET CSTOP = _4
+.
+LET ZZZZC = SEQUENCE CSTART CINC CSTOP
+LET ZZZZA1 = INT(UCL)
+LET ZZZZA2 = INT(LCL)
+.
+LET ZZZZY = POICDF(ZZZZA1,ZZZZC) - POICDF(ZZZZA2,ZZZZC)
+.
+Y1LABEL Beta
+X1LABEL Poisson Parameter Value
+TITLE OC Curve for C Control Chart
+.
+PLOT ZZZZY VS ZZZZC
+LIMITS
+LABEL
+TITLE
+--------------------
+WEB HELP C CHART
+--------------------

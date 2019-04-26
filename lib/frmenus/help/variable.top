@@ -1,0 +1,96 @@
+----- <~help\variable.top> Variables
+
+Variables
+
+Variables
+
+Variables Are Named Vectors                                      -
+
+    A variable is a named vector (a named
+    one-dimensional array) and can be defined via
+    the
+
+         LET                         <xcl: HELP LET>
+         READ                        <xcl: HELP READ>
+         SERIAL READ                 <xcl: HELP SERIAL READ>
+     and DATA                        <xcl: HELP DATA>
+
+    commands, as in the following examples
+
+       LET Y = SEQUENCE 1 1 10
+       LET Z = PATTERN 1 2 3 FOR I = 1 2 9
+       LET U = NORMAL RANDOM NUMBERS FOR I = 1 1 100
+       LET X2 = X**2-LOG(Y)
+       LET Y2 = SQRT(X+Y**3)
+       LET Y = DATA 1 5 10 25 34 46 22 17
+
+    or 
+
+       READ X Y
+       1 1
+       2 4
+       3 9
+       4 16
+       5 25
+       END OF DATA
+
+    or 
+
+       SERIAL READ X Y
+       1 1 2 4 3 9 4 16 5 25
+       END OF DATA
+
+    NOTE: You cannot perform a READ or SERIAL READ from
+          the keyboard (i.e., no file name given) in the
+          GUI.  You either have to save the data in an
+          ASCII file and then read from that file or you
+          can enter the data directly into the data
+          spreadsheet.  For more information:
+
+              Entering Data                <~help\entdata.top>
+
+Variables Most Common Component In Dataplot
+
+    Variables are the most commonly-handled component
+    in Dataplot.  For example
+
+         PLOT Y X
+         FIT Y = A+B*LOG(X+C)
+         LET X2 = LOG(X)
+
+Rules For Variable Names
+
+    The following are the rules for names (variables,
+    parameters, matrices, functions, and strings) in
+    Dataplot.
+
+       1. Names for variab1es, parameters, matrices,
+          strings, and functions may be of any length, but
+          since only the first eight characters are scanned
+          and internally stored, no two names should be
+          identical for the first eight characters.
+
+       2. Names must start with an alphabetic character, but
+          may be any combination of alphabetic, numeric and
+          underscore characters thereafter.  It is the author's
+          personal practice to follow the usual mathematical
+          custom of using characters toward the end of the
+          alphabet (X's, Y's, Z's, etc.) to represent variables,
+          of using characters toward the beginning of the
+          alphabet (A's, B's, C's, etc.) to represent parameters,
+          and of using characters in the vicinity of F (e.g.,
+          F's, G's, H's, etc.) to represent functions.  Note,
+          however, that this is a personal preference and not
+          a Dataplot requirement.
+
+       3. Variable names are not case sensitive.
+
+Defining An Alias for a Variable Name
+
+    You can define an alias for a variable name.  The primary
+    use for this is in calling macros that expect variables
+    to have a specific name.
+
+        NAME Command                   <xcl: HELP NAME>
+
+

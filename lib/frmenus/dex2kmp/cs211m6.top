@@ -1,0 +1,51 @@
+----- <~dex2kmp\cs211m6.top> Confounding:  2**(11-6) Design
+ 
+Confounding:  2**(11-6) Design
+ 
+Name of Design      = 2**(11-6) Fractional Factorial Design
+ 
+Number of Factors k = 11
+Number of Obs.    n = 32
+ 
+Resolution          = 4 (Main effects confounded with
+                      3-term interactions and higher;
+                      no main effects are confounded
+                      with any 2-term interactions)
+ 
+Factor Definitions  : 6 = 123
+                      7 = 234
+                      8 = 345
+                      9 = 134
+                      0 = 145
+                      A = 245
+ 
+Defining Relation   : I +
+                      1236 + 2347 + 3458 + 1349 + 1450 + 245A +
+                      1467 + 124568 + 2469 + 234560 + 13456A +
+                      2578 + 1279 + 123570 + 357A + 1589 +
+                      1380 + 238A + 3590 + 12359A + 120A +
+                      135678 + 3679 + 5670 + 12567A + 235689 +
+                      2680 + 168A + 125690 + 569A + 360A +
+                      12345789 + 124780 + 478A + 245790 + 14579A +
+                      13470A + 4890 + 12489A + 1234580A + 23490A +
+                      456789 + 346780 + 1234678A + 13456790 + 2345679A +
+                      24670A + 12346890 + 34689A + 45680A + 14690A +
+                      237890 + 13789A + 15780A + 790A + 25890A +
+                      167890 + 26789A + 2356780A +
+                      1236790A + 1356890A + 3457890A +
+                      124567890A
+ 
+Main Effect         : 1  =  1 +  *
+Confounding           2  =  2 +  *
+                      3  =  3 +  *
+                      4  =  4 +  *
+                      5  =  5 +  *
+                      6  =  6 +  *
+                      7  =  7 +  *
+                      8  =  8 +  *
+                      9  =  9 +  *
+                      0  =  0 +  *
+                      A  =  A +  *
+ 
+Click here to view 2-term confounding  <~dex2kmp\2t211m6.top>
+ 

@@ -1,0 +1,8 @@
+----- <~dataload\TABLE561.DP> Load TABLE561.DAT
+
+. This is file    TABLE561.DP
+
+DELETE Y X1 TO X7
+SKIP 25
+READ TABLE561.DAT Y X1 TO X7
+

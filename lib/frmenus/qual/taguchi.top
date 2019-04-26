@@ -1,0 +1,16 @@
+----- <~qual\taguchi.top> Taguchi
+ 
+Taguchi
+ 
+Discussion                      <~qual\tagdiscu.top>
+ 
+Compute  Taguchi Statistics     <xemf: ~qual\tagstat.men>
+Generate Taguchi Plots          <xemf: ~qual\tagplot.men>
+Generate DEX Taguchi Plots      <xemf: ~dex2k\dextagpl.men>
+ 
+Built-in Datasets
+    View                        <~dataview\qualtag.top>
+    Load                        <~dataload\qualtag.top>
+
+References                      <~qual\tagrefer.top>
+

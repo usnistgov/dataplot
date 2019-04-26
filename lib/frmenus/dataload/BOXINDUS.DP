@@ -1,0 +1,8 @@
+----- <~dataload\BOXINDUS.DP> Load BOXINDUS.DAT
+
+. This is file    BOXINDUS.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ BOXINDUS.DAT Y X1 X2
+

@@ -1,0 +1,176 @@
+. This is dataplot macro     dexmp_levene_test.dp     7/10/18
+. Purpose: For each of the k factors, complute local Levene tests,
+. and write out SD ratio info above horixontal axis
+. Date: 7/10/18
+.
+. -----start point-----
+.
+. -----Step 8: For ANOVA, write out 3 rows:  |effect|, |relative effect|, and fcdf (or pvalue)-----
+.
+let string stjunk = blue
+if coloreff exists; let string stjunk = ^coloreff; end if
+if colorall exists; let string stjunk = ^colorall; end if
+.
+let wrel = 1
+if writerel exists; let wrel = writerel; end if
+.
+if bugswmp = 1; print "--At dexmp.dp step 8"
+   if ibatch not exist or ibatch = 0; pause; end if
+end if
+.
+let ybar = mean y
+just cece
+. hw 1.75 .85   zzzzzz 6/6/16
+hw texthz textwz
+if texth = 3
+   hw 2.8 1.4; let b2z = 20.8+1.4; let b1z = b2z+2.8
+else if texth = 4
+   hw 3.4 1.7; let b2z = 20.8+1.7; let b1z = b2z+3.4
+else if texth = 5
+   hw 4.0 2.0; let b2z = 20.8+2.0; let b1z = b2z+4.0
+else if texth = 6
+   hw 4.6 2.3; let b2z = 20.8+2.3; let b1z = b2z+4.6
+end if
+if frameb exists and b1z exists; let b1z = b1z - (20 - frameb); end if
+if frameb exists and b2z exists; let b2z = b2z - (20 - frameb); end if
+.
+delete tagz cdfz cdf jstart numlevva
+let string stjunk = blue
+if coloreff exists; let string stjunk = ^coloreff; end if
+if colorall exists; let string stjunk = ^colorall; end if
+.
+if wrel = 1
+   let b1z = 27
+   let b2z = 24.75
+   let b3z = 22.5
+   let b4z = 20.5
+   .
+   let cadd1 = 0; let cadd2 = 0
+   if shiftup exists; let cadd1 = shiftup; end if
+   if frameb exists; let cadd2 = 20 - frameb; end if
+   let cadd = cadd1 + cadd2
+   .
+   let b1z = b1z + cadd
+   let b2z = b2z + cadd
+   let b3z = b3z + cadd
+   let b4z = b4z + cadd
+else
+   let b1z = b2z
+   let b3z = b1z + 1
+   .
+   if shiftup exists
+      let b1z = b1z + shiftup
+      let b3z = b3z + shiftup
+   end if
+end if
+.
+let nydist = unique y
+.
+loop for jz = 1 1 k
+   let az = jz
+   let del = coefz(jz)
+   let reldel = relcoefz(jz)
+   .
+   if decplace not exist; set write decimals 2; end if;.  <=====================here
+   if decplace exists; set write decimals decplace; end if
+
+   let stdel = number to string del
+   .
+   if decplacr not exist; set write decimals 0; end if
+   if decplacr exists; set write decimals decplacr; end if
+   let streldel = number to string reldel
+   .
+   let string stjunk2 = ^stjunk
+   let ndxjunk = unique x^jz
+   .
+   printing off
+   if ndxjunk = 1 or nydist = 1
+      let del = 0
+      let reldel = 0
+      let string stdel = 0
+      let string streldel = 0
+      let coefz(jz) = 0
+      let relcoefz(jz) = 0
+   end if
+   let cdf = 0
+   let pvalue = 1
+   .
+   if statmpz = Mean
+      if ndxjunk >= 2 and nydist > 1
+         anova y x^jz   ;. <====================
+         skip 0; read parameter dpst1f.dat junkp1 junkp2 junkp3 junkp4 junkp5 cdf
+      end if
+      printing on
+   end if
+   .
+   if statmpz = SD
+      if ndxjunk >= 2 and nydist > 1
+         levene test y x^jz   ;. <====================
+         skip 0; read parameter dpst1f.dat junkp1 junkp2 junkp3 junkp4 junkp5 cdf
+      end if
+      printing on
+   end if
+   .
+   color ^stjunk2
+   if cdf >= 95; color red; end if
+   if cdf >= 99; color red; end if
+   .
+   if wrel = 1
+      moveds az b1z; text ^stdel
+      moveds az b2z; text ^streldel
+      moveds az b3z
+      .
+      if pvaluesw exists and pvaluesw = 1
+         let pvalue = 1 - (cdf/100);. 3/30/15
+         let pvaluer = round(pvalue,4); 8/25/15 for this line and next 2 lines
+         if pvaluedp exists; let pvaluer = round(pvalue,pvaluedp); end if
+         text ^pvaluer
+      end if
+      .
+      if ndxjunk >= 2
+         if pvaluesw exists and pvaluesw = 0 or pvaluesw not exist
+            let cdf2 = round(cdf,2)
+            let cdf3 = round(cdf,3)
+            let cdf4 = round(cdf,4)
+            moveds az b3z; text ^cdf2
+            if cdf >= 99; moveds az b4z; text **; end if
+            if cdf >= 95 and cdf < 99; moveds az b4z; text *; end if
+         end if
+      end if
+   end if
+   .
+   if wrel <> 1
+      if cdf >= 95
+         moveds az b3z
+         if cdf >= 99; text **; else; text *; end if
+      end if
+      let cdf2 = round(cdf,2)
+      let cdf3 = round(cdf,3)
+      let cdf4 = round(cdf,4)
+      let b4z = b3z + 2; moveds az b4z; text ^cdf2
+      moveds az b1z; text ^stdel
+   end if
+   .
+   let cdfz(jz) = cdf
+   .
+end loop
+color ^stjunk2; delete stjunk stjunk2
+let tagz = sequence 1 1 k
+.
+. -----Step 8.2: Write out the 3 row labels on the right (or left)-----
+.
+hw texthz textwz
+let xplabz = 86; just lece
+if strowlab exists; if strowlab = left; let xplabz = 14; just rice; end if; end if
+   if wrel = 1
+      move xplabz b1z; text |Effect|
+      move xplabz b2z; text Rel.|Effect| (%)
+      if pvaluesw not exist; move xplabz b3z; text Fcdf (%); end if
+      if pvaluesw exists and pvaluesw = 0; move xplabz b3z; text Fcdf (%); end if
+      if pvaluesw exists and pvaluesw = 1; move xplabz b3z; text p-value; end if
+   end if
+   if wrel <> 1
+      let b1z = b2z
+      move xplabz b1z; text |Effect|
+   end if
+end if

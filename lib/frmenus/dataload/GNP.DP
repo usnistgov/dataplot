@@ -1,0 +1,8 @@
+----- <~dataload\GNP.DP> Load GNP.DAT
+
+. This is file    GNP.DP
+
+DELETE Y1 TO Y10
+SKIP 25
+READ GNP.DAT Y1 TO Y10
+

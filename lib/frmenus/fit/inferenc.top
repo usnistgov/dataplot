@@ -1,0 +1,28 @@
+----- <~fit\inferenc.top> Inferences From Model Fitting
+
+Inferences From Model-Fitting
+
+NIST/SEMATECH Handbook (prediction) <xcl: web handbook fit prediction>
+
+Linear fits (FIT Y X):
+   Confidence limits for intercept <xemf: ~fit\intecoli.men>
+   Confidence limits for slope <xemf: ~fit\slopcoli.men>
+   Single-use   prediction limits for Y     <xemf: ~fit\dataprli.men>
+   Simultaneous tolerance  limits for Y     <xemf: ~fit\datatoli.men>
+
+Multi-Linear Fits
+   Non-simultaneous confidence limits for parameters <xemf: ~fit\parcl.men>
+   Bonferoni joint confidence limits for parameters <xemf: ~fit\bonfer.men>
+   Compute regression function at new points  <xemf: ~fit\newpts.men>
+   
+   Single-use   confidence limits for Yhat  <xemf: ~fit\yhatcoli.men>
+   Simultaneous confidence limits for Yhat  <xemf: ~fit\yhatwhcl.men>
+
+
+Following assume fit already performed
+   Parameter variance-covariance matrix  <xemf: ~fit\parcov.men>
+   (X'X) inverse matrix                  <xemf: ~fit\xtxinv.men>
+
+Following assume fit and parameter variance-covariance matrix already computed
+   Confidence and prediction interval of 1 new point  <xemf: ~fit\newptcl.men>
+

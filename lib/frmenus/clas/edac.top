@@ -1,0 +1,13 @@
+----- <~edac\edac.top> EDA Class----------------------------
+
+EDA Class
+
+Exploratory versus Classical          <~edac\explclas.top>
+Underlying Assumptions (Univariate)   <~edac\undeassu.top>
+Problem Classification (8)            <~edac\probclas.top>
+
+Data Sets                             <~edac\datasets.top>
+Tools/Techniques                      <~edac\tools.top>
+
+References                            <xcl: LIST ~edac\referenc.tex>
+

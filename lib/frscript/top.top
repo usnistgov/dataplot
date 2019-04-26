@@ -1,0 +1,25 @@
+This is Dataplot file   top.top
+
+-----------------------
+Files/Data       <~file\file.top>
+Plot             <~plot\plot.top>
+DEX              <~dex\dex.top>
+Fit              <~fit\fit.top>
+Reliability      <~reli\reli.top>
+Probability      <~prob\prob.top>
+TimeSeries       <~time\timeanal.top>
+One Vari         <~1var\1var.top>
+Help             <~dp\dp.top>
+e-Handbook       <~handbook\handbook.top>
+Home Page        <xccl: web http://www.itl.nist.gov/div898/software/dataplot/>
+Get Started      <~help/tutorial.top>
+PlotMod          <~plmo\plmo.top>
+Qual/SPC         <~qual\qual.top>
+Stat             <~stat\stat.top>
+ExtVal           <~reli\extremev.top>
+Math             <~math\math.top>
+NIST             <~nist\nist.top>
+Two Vari         <~2var\2var.top>
+DiagGraph        <~woch\woch.top>
+Roadmap          <~roadmap\roadmap.roo>
+Exit             <exec exit>

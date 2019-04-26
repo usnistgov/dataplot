@@ -1,0 +1,27 @@
+----- <~prob\locscran.top> Random numbers for Location-Scale Continuous Distributions
+
+Compute Random Numbers (no shape parameters)
+
+Compute Random Numbers for Continuous Distributions
+with No Shape Parameters
+
+Anglit                                    <xemf: ~prob\genangra.men>
+Arcsin                                    <xemf: ~prob\genarsra.men>
+Cauchy                                    <xemf: ~prob\gencaura.men>
+Cosine                                    <xemf: ~prob\gencosra.men>
+Double Exponential (Laplace)              <xemf: ~prob\gendexra.men>
+Exponential                               <xemf: ~prob\genexpra.men>
+Extreme Value Type I(Gumbel)  - Minimum   <xemf: ~prob\genev11ra.men>
+Extreme Value Type I(Gumbel)  - Maximum   <xemf: ~prob\genev12ra.men>
+Half-Cauchy                               <xemf: ~prob\genhfcra.men>
+Half-Logistic                             <xemf: ~prob\genhflra.men>
+Half-Normal                               <xemf: ~prob\genhfnra.men>
+Hyperbolic Secant                         <xemf: ~prob\genhsera.men>
+Logistic                                  <xemf: ~prob\genlogra.men>
+Maxwell                                   <xemf: ~prob\genmaxra.men>
+Normal                                    <xemf: ~prob\gennorra.men>
+Rayleigh                                  <xemf: ~prob\genrayra.men>
+Semi-Circular                             <xemf: ~prob\gensemra.men>
+Slash                                     <xemf: ~prob\genslara.men>
+Uniform                                   <xemf: ~prob\genunira.men>
+

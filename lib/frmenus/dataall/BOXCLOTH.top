@@ -1,0 +1,8 @@
+----- <~dataall\BOXCLOTH.top> BOXCLOTH.DAT
+
+BOXCLOTH.DAT
+
+View     <xcl: LIST BOXCLOTH.DAT>
+Load     <xcf: ~dataload/BOXCLOTH.DP>
+Print    <xccl: printfile C:\DATAPLOT\BOXCLOTH.DAT>
+

@@ -1,0 +1,70 @@
+This is file norhispd.men--Histogram & Superimposed Normal pdf Plot
+
+--------------------
+ 1. Histogram & Superimposed Normal pdf Plot
+ 2. HISTOGRAM Y; PLOT NORPDF(X) FOR X = START INC STOP
+ 4.
+ 5. Response variable: 
+ 5. @CE 1 0 42 50 ? gui-vari
+ 6.
+ 7. Relative histogram of data (leave blank for defaults):
+ 8.    Class width:
+ 8. @CE 2 0 42 50 ?
+ 9.    Lower limit of first class:
+ 9. @CE 3 0 42 50 ?
+10.    Upper limit of last class:
+10. @CE 4 0 42 50 ?
+11.    Bar fill on/off:
+11. @CE 5 0 42 50 ?
+12.
+13. Superimposed normal probability density function:
+14.    Location u:
+14. @CE 6 0 42 50 ?
+15.    Scale s:
+15. @CE 7 0 42 50 ?
+16.    Start point:
+16. @CE 8 0 42 50 ?
+17.    Increment:
+17. @CE 9 0 42 50 ?
+18.    Stop point:
+18. @CE 10 0 42 50 ?
+19.    Line type:
+19. @CE 11 0 42 50 ? gui-line
+20.    Line color:
+20. @CE 12 0 42 50 ? gui-color
+21.
+22.
+23. Title:
+23. @CE 13 0 20 50 *
+24. Left Axis Label:
+24. @CE 14 0 20 50 *
+25. Bottom Axis Label:
+25. @CE 15 0 20 50 *
+26.
+27.
+28. Generate the plot?
+--------------------
+AN FE
+@IF 2 0 CLASS WIDTH _2
+@IF 3 0 CLASS LOWER _3
+@IF 4 0 CLASS UPPER _4
+@IF 5 0 BAR FILL _5
+TITLE _13
+Y1LABEL _14
+X1LABEL _15
+@IF 1 0 RELATIVE HISTOGRAM _1
+@IF 1 0 LIMITS FREEZE
+.
+@IF 11 0 LINES _11
+@IF 12 0 LINE COLOR _12
+PRE-ERASE OFF
+LET ZLOC = 0
+@IF 6 0 LET ZLOC = _6
+LET ZSCALE = 1
+@IF 7 0 LET ZSCALE = _7
+PLOT NORPDF(X,ZLOC,ZSCALE) FOR X = _8 _9 _10
+@IF 1 0 LIMITS
+PRE-ERASE ON
+--------------------
+WEB HELP NORPDF
+--------------------

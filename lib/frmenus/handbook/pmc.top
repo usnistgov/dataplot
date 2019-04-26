@@ -1,0 +1,26 @@
+----- <~handbook\pmc.top> Process or Product Monitoring and Control
+ 
+Process or Product Monitoring and Control
+ 
+This menu provides links to the NIST/SEMATECH
+Engineering Statistics Handbook that discuss issues
+of process or product monitoring and control.
+
+NIST/SEMATECH Handbook (Process Monitoring) <xcl: web handbook pmc>
+
+NIST/SEMATECH Handbook (Process Monitoring Introduction) <xcl: web handbook pmc introduction>
+   Capability Analysis                        <xemf: ~stat\capabili.men>
+
+NIST/SEMATECH Handbook (Process Monitoring Acceptance Sampling) <xcl: web handbook acceptance sampling>
+   Acceptance Sampling                        <~qual\accept.top>
+
+NIST/SEMATECH Handbook (Process Monitoring Control Charts) <xcl: web handbook control charts introduction>
+   Control Charts                             <~qual\contchar.top>
+
+NIST/SEMATECH Handbook (Process Monitoring Time Series) <xcl: web handbook time series>
+   Time Series Analysis                       <~time\timeanal.top>
+
+NIST/SEMATECH Handbook (Process Monitoring Case Studies) <xcl: web handbook pmc case studies>
+   Lithography            <xcl: web handbook lithography case study>
+   Aerosol Particle Size  <xcl: web handbook aerosol particle size case study>
+ 

@@ -1,0 +1,8 @@
+----- <~dataload\PREMIUMS.DP> Load PREMIUMS.DAT
+
+. This is file    PREMIUMS.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ PREMIUMS.DAT Y X1 X2
+

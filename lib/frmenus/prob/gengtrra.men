@@ -1,0 +1,53 @@
+This is file gengtrra.men--Generate Generalized Trapezoid Random Numbers
+ 
+--------------------
+ 1. Generate Generalized Trapezoid Random Numbers
+ 2. LET Y = GENERALIZED TRAPEZOID RANDOM NUMBERS FOR I = START INC STOP
+ 3.
+ 4. Number of random numbers to be generated:
+ 4. @CE 1 0 42 50 ?
+ 5. Lower Limit Parameter (A):
+ 5. @CE 2 0 42 50 ?
+ 6. Threshold Parameter (B, B > A):
+ 6. @CE 3 0 42 50 ?
+ 7. Threshold Parameter (C, C > B):
+ 7. @CE 4 0 42 50 ?
+ 8. Upper Limit Parameter (D, D > C):
+ 8. @CE 5 0 42 50 ?
+ 9. Shape Parameter (NU1, NU1 > 0):
+ 9. @CE 6 0 42 50 ?
+10. Shape Parameter (NU3, NU3 > 0):
+10. @CE 7 0 42 50 ?
+11. Shape Parameter (Alpha, Alpha > 0):
+11. @CE 8 0 42 50 ?
+12.
+13. Optional random number generator seed (default=305):
+14.    (integer >= 305)
+14. @CE 9 0 42 50 ?
+15.
+16. Name of output variable;
+16. @CE 10 0 42 50 ?
+17.
+18.
+19. Generate the random numbers?
+--------------------
+AN FE
+@IF 9 0 SEED _9
+LET A = 0
+LET B = 0.25
+LET C = 0.75
+LET D = 1
+LET NU1 = 1
+LET NU3 = 1
+LET ALPHA = 1
+@IF 2 0 LET A = _2
+@IF 3 0 LET B = _3
+@IF 4 0 LET C = _4
+@IF 5 0 LET D = _5
+@IF 6 0 LET NU1 = _6
+@IF 7 0 LET NU3 = _7
+@IF 8 0 LET ALPHA = _8
+LET _10 = GENERALIZED TRAPEZOID RANDOM NUMBERS FOR I = 1 1 _1
+--------------------
+WEB HELP RANDOM NUMBERS
+--------------------

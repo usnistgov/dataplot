@@ -1,0 +1,12 @@
+----- <~plmo\setgrid.top> Grid and Grid Attributes
+ 
+Grid and Grid Attributes
+ 
+Set Grid and Attributes     <xemf: ~plmo\setgrid.men>
+
+Help for Grid Attributes
+   GMINOR (Minor Grid)      <xcl: HELP GMINOR>
+   GRID COLOR               <xcl: HELP GRID COLOR>
+   GRID PATTERN             <xcl: HELP GRID PATTERN>
+   GRID THICKNESS           <xcl: HELP GRID THICKNESS>
+

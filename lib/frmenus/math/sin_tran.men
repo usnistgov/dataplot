@@ -1,0 +1,22 @@
+This is file sin_tran.men--Compute discrete sine transform of a variable
+ 
+--------------------
+ 1. Discrete Sine Transform
+ 2. LET Y = SINE TRANSFORM X
+ 3.
+ 4. Variable for which to compute the sine transform:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the sine transform:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -10 50 *
+ 9.
+10.
+11. Compute the Sine Transform?:
+--------------------
+GR FE
+LET _2 = SINE TRANSFORM  _1 _3
+--------------------
+WEB HELP SINE TRANSFORM
+--------------------

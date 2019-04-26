@@ -1,0 +1,119 @@
+This is Dataplot data file     GOLD.DAT
+Hardness of Dental Gold
+Source--Hoaglin, D., Mosteller, F., and Tukey, J. (1991).
+        Fundamentals of Exploratory Analysis of Variance.
+        Wiley, New York, page 128.
+Response Variable                  = Hardness (diamond pyramid)
+Number of observations             = 90 (= 5 x 3 x 2 x 3)
+Number of variables per line image = 5
+Order of variables per line image--
+   Response variable = hardness
+   Factor 1          = dentist     (5 levels)
+   Factor 2          = method      (3 levels)
+   Factor 3          = alloy       (2 levels)
+   Factor 4          = temperature (3 levels)
+Statistical area--Multifactor
+Problem Type    --Comparative
+Design type     --Randomized Block
+To read this file into Dataplot--
+      SKIP 25
+      READ GOLD.DAT Y X1 X2 X3 X4
+
+
+  Hardness    Dentist Method  Alloy     Temp
+     Y          X1      X2      X3       X4
+----------------------------------------------
+    813          1       1       1      1500
+    792          1       1       1      1600
+    792          1       1       1      1700
+    907          1       1       2      1500
+    792          1       1       2      1600
+    835          1       1       2      1700
+    782          1       2       1      1500
+    698          1       2       1      1600
+    665          1       2       1      1700
+   1115          1       2       2      1500
+    835          1       2       2      1600
+    870          1       2       2      1700
+    752          1       3       1      1500
+    620          1       3       1      1600
+    835          1       3       1      1700
+    847          1       3       2      1500
+    560          1       3       2      1600
+    585          1       3       2      1700
+
+    715          2       1       1      1500
+    803          2       1       1      1600
+    813          2       1       1      1700
+    858          2       1       2      1500
+    907          2       1       2      1600
+    882          2       1       2      1700
+    772          2       2       1      1500
+    782          2       2       1      1600
+    743          2       2       1      1700
+    933          2       2       2      1500
+    792          2       2       2      1600
+    824          2       2       2      1700
+    835          2       3       1      1500
+    715          2       3       1      1600
+    673          2       3       1      1700
+    698          2       3       2      1500
+    734          2       3       2      1600
+    681          2       3       2      1700
+
+    743          3       1       1      1500
+    627          3       1       1      1600
+    752          3       1       1      1700
+    858          3       1       2      1500
+    762          3       1       2      1600
+    724          3       1       2      1700
+    813          3       2       1      1500
+    743          3       2       1      1600
+    613          3       2       1      1700
+    824          3       2       2      1500
+    847          3       2       2      1600
+    782          3       2       2      1700
+    743          3       3       1      1500
+    681          3       3       1      1600
+    743          3       3       1      1700
+    715          3       3       2      1500
+    824          3       3       2      1600
+    681          3       3       2      1700
+
+    792          4       1       1      1500
+    743          4       1       1      1600
+    762          4       1       1      1700
+    894          4       1       2      1500
+    792          4       1       2      1600
+    649          4       1       2      1700
+    690          4       2       1      1500
+    882          4       2       1      1600
+    772          4       2       1      1700
+    813          4       2       2      1500
+    870          4       2       2      1600
+    858          4       2       2      1700
+    493          4       3       1      1500
+    707          4       3       1      1600
+    289          4       3       1      1700
+    715          4       3       2      1500
+    813          4       3       2      1600
+    312          4       3       2      1700
+
+    707          5       1       1      1500
+    698          5       1       1      1600
+    715          5       1       1      1700
+    772          5       1       2      1500
+   1048          5       1       2      1600
+    870          5       1       2      1700
+    803          5       2       1      1500
+    665          5       2       1      1600
+    752          5       2       1      1700
+    824          5       2       2      1500
+    933          5       2       2      1600
+    835          5       2       2      1700
+    421          5       3       1      1500
+    483          5       3       1      1600
+    405          5       3       1      1700
+    536          5       3       2      1500
+    405          5       3       2      1600
+    312          5       3       2      1700

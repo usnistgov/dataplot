@@ -1,0 +1,19 @@
+----- <~fit\modelsel.top> Model Selection: Plotting
+
+Model Selection: Plotting
+
+NIST/SEMATECH Handbook (Model Selection) <xcl: web handbook fit model selection>
+
+Scatter plot                  <xemf: ~stat\scatplot.men>
+Transform X to linearity      <xemf: ~plot\bcliplot.men>
+
+Scatter plot matrix           <xemf: ~fit\yscatplm.men>
+    (Y versus independent variables)
+
+Partial Residual Plots                       <xemf: ~fit\partresp.men>
+Partial Regression (= Added Variable) Plots  <xemf: ~fit\partregr.men>
+Partial Leverage Plots                       <xemf: ~fit\partlevp.men>
+
+Best CP                                      <xemf: ~fit\bestcp.men>
+    (for "best subsets" in multilinear regression)
+

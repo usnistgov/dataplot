@@ -1,0 +1,13 @@
+----- <~univ\locaesti.top> Estimation: Univariate Location
+
+Estimation: Univariate Location
+
+Checking assumptions                 <xemf: ~univ\4plot.men>
+
+Summary statistics                   <xemf: ~stat\summstat.men>
+Confidence limits                    <xemf: ~univ\locacoli.men>
+ybar, SD(ybar) & Conf. limits        <xemf: ~univ\meancl.men>
+
+Bootstrap &/or Jacknife estimation   <~univ\locaboot.top>
+Robust estimation                    <~univ\locarobu.top>
+

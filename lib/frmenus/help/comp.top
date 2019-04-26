@@ -1,0 +1,26 @@
+----- <~help\comp.top> Language Components
+
+Language Components
+
+Language Components
+
+The Dataplot language consists of the following
+components
+
+    Commands                             <~help\commands.top>
+    Arithmetic Operators                 <~help\arith.top>
+    Relational Operators                 <~help\relat.top>
+    Data Types                           <~help\datatype.top>
+        Numbers                          <~help\numbers.top>
+        Parameters                       <~help\param.top>
+        Variables                        <~help\variable.top>
+        Strings                          <~help\strings.top>
+        Character Variables              <~help\charvari.top>
+        Matrices                         <~help\matrices.top>
+        Complex Numbers                  <~help\compnumb.top>
+    Functions                            <~help\function.top>
+    LET Sub-Commands                     <xcf: ~help\LETSUBC.DP>
+    Keywords                             <xcf: ~help\KEYWORDS.DP
+    TEXT Sub-Commands                    <xcf: ~help\TEXTSUBC.DP>
+    File References                      <~help\filerefe.top>
+

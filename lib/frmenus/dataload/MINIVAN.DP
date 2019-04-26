@@ -1,0 +1,8 @@
+----- <~dataload\MINIVAN.DP> Load MINIVAN.DAT
+
+. This is file    MINIVAN.DP
+
+DELETE Y X
+SKIP 25
+READ MINIVAN.DAT Y X
+

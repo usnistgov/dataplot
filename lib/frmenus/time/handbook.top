@@ -1,0 +1,20 @@
+----- <~time\handbook.top> Time Series--------------------
+
+NIST/SEMATECH Handbook (Time Series)
+
+The following accesses specific topics in the
+NIST/SEMATECH Engineering Statistics Handbook
+
+Time Domain Analysis         <xcl: web handbook time series>
+   Run Sequence Plot         <xcl: web handbook run sequence plot>
+   Autocorrelation Plot      <xcl: web handbook autocorrelation plot>
+   Moving Average Techniques <xcl: web handbook moving average>
+   Exponential Smoothing     <xcl: web handbook exponential smoothing>
+   Box-Jenkins Modeling      <xcl: web handbook box jenkins>
+
+Frequency Domain Analysis
+   Spectral Plot             <xcl: web handbook spectral Plot>
+   Complex Demodulation Amplitude Plot <xcl: web handbook complex demodulation amplitude plot>
+   Complex Demodulation Phase Plot <xcl: web handbook complex demodulation phase plot>
+   Beam Deflection Case Study <xcl: web handbook beam deflection case study>
+

@@ -1,0 +1,22 @@
+This is file matr_inv.men--Inverse of a matrix
+ 
+--------------------
+ 1. Inverse of a Matrix
+ 2. LET MP = MATRIX INVERSE M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Matrix  to store the matrix inverse:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Find the Matrix Inverse?:
+--------------------
+GR FE
+LET _2 = MATRIX INVERSE  _1 _3
+--------------------
+WEB HELP MATRIX INVERSE
+--------------------

@@ -1,0 +1,8 @@
+----- <~dataload\BIVGAUSS.DP> Load BIVGAUSS.DAT
+
+. This is file    BIVGAUSS.DP
+
+DELETE Y1 Y2
+SKIP 25
+READ BIVGAUSS.DAT Y1 Y2
+

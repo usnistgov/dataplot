@@ -1,0 +1,24 @@
+This is file hazard.men--Compute hazard
+ 
+--------------------
+ 1. Hazards
+ 2. LET Y2 = HAZARD Y TAG
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Censoring Variable (1=failure time, 0=censored):
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Variable to store the Hazards:
+ 6. @CE 3 0 42 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Compute the Hazards?:
+--------------------
+GR FE
+LET _3 = HAZARD _1 _2 _4
+--------------------
+WEB HELP HAZARD
+--------------------

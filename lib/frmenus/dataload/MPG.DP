@@ -1,0 +1,8 @@
+----- <~dataload\MPG.DP> Load MPG.DAT
+
+. This is file    MPG.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ MPG.DAT Y X1 X2
+

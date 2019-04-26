@@ -1,0 +1,8 @@
+----- <~prob\ppccplot.top> PPCC Plot
+
+PPCC Plot
+
+symmetric            <xemf: ~univ\ppccplsy.men>
+skewed               <xemf: ~univ\ppccplsk.men>
+discrete             <xemf: ~univ\ppccpldi.men>
+

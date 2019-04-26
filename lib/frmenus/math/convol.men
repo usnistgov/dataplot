@@ -1,0 +1,24 @@
+This is file convol.men--Compute convolution of a variable
+ 
+--------------------
+ 1. Convolution
+ 2. LET Y = CONVOLUTION X1 X2
+ 3.
+ 4. Variable containing the data stream:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable containing the response variable:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable to store the convolution:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 -3 50 *
+10.
+11.
+12. Compute the Convolution?:
+--------------------
+GR FE
+LET _3 = CONVOLUTION  _1 _2 _4
+--------------------
+WEB HELP CONVOLUTION
+--------------------

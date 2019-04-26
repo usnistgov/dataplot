@@ -1,0 +1,10 @@
+----- <~dataloex\BRAIN.DP> Load & Execute BRAIN.DAT
+
+. This is file    BRAIN.DP
+
+DELETE Y X1 X2
+SKIP 25
+READ BRAIN.DAT Y X1 X2
+TITLE BRAIN.DAT
+/
+

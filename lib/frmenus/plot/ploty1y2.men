@@ -1,0 +1,56 @@
+This is file ploty1y2.men--Plot Y1 and Y2
+ 
+--------------------
+ 1. Plot Y1 and Y2 (vert.) versus 1 and 2 (horiz.)
+ 2. PLOT Y TAG
+ 3.
+ 4. First  Vertical   Axis Variable:
+ 4. @CE 1 0 33 50 ? GUI-VARI
+ 5. Second Vertical   Axis Variable:
+ 5. @CE 2 0 33 50 ? GUI-VARI
+ 6.
+ 7. Line Types:
+ 7. @CE 3 0 42 50 * gui-line
+ 8. Character Type:
+ 8. @CE 4 0 42 50 * gui-char
+ 9. Character Fill:
+ 9. @CE 5 0 42 50 * gui-ooff
+10.
+11. Title:
+11. @CE 6 0 10 50 *
+12. Left Axis Label:
+12. @CE 7 0 22 50 *
+13. Bottom Axis Label:
+13. @CE 8 0 22 50 *
+14.
+15. Subset/Except/For Specification:
+16. @CE 9 0 6 50 *
+17.
+18.
+19. Generate the Plot?
+--------------------
+GR FE
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+ 
+LET ZJUNK1 = _1
+@IF 9 0 RETAIN ZJUNK1 _9
+LET ZJUNK2 = _2
+@IF 9 0 RETAIN ZJUNK2 _9
+LET ZY = ZJUNK1
+EXTEND ZY ZJUNK2
+ 
+LET ZN1 = NUMBER ZJUNK1
+LET ZN2 = NUMBER ZJUNK2
+LET ZN12 = ZN1+ZN2
+LET ZTAG = 2 FOR I = 1 1 ZN12
+LET ZTAG = 1 FOR I = 1 1 ZN1
+ 
+PLOT ZY ZTAG
+--------------------
+WEB HELP PLOT
+--------------------

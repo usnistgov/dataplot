@@ -1,0 +1,27 @@
+----- <~prob\locsks.top> KS Goodness of Fit for Loc/Scale
+
+Perform Kolmogorov-Smirnov Goodness of Fit Test
+
+Perform Kolmogorov-Smirnov Goodness of Fit Test
+for Distributions with No Shape Parameters
+
+Anglit                                    <xemf: ~prob\ksang.men>
+Arcsin                                    <xemf: ~prob\ksars.men>
+Cauchy                                    <xemf: ~prob\kscau.men>
+Cosine                                    <xemf: ~prob\kscos.men>
+Double Exponential (Laplace)              <xemf: ~prob\ksdex.men>
+Exponential                               <xemf: ~reli\ksexp.men>
+Extreme Value Type I(Gumbel)  - Minimum   <xemf: ~reli\ksev11.men>
+Extreme Value Type I(Gumbel)  - Maximum   <xemf: ~reli\ksev12.men>
+Half-Cauchy                               <xemf: ~prob\kshfc.men>
+Half-Logistic                             <xemf: ~prob\kshfl.men>
+Half-Normal                               <xemf: ~prob\kshfn.men>
+Hyperbolic Secant                         <xemf: ~prob\kshse.men>
+Logistic                                  <xemf: ~prob\kslog.men>
+Maxwell                                   <xemf: ~prob\ksmax.men>
+Normal                                    <xemf: ~reli\ksnor.men>
+Rayleigh                                  <xemf: ~prob\ksray.men>
+Semi-Circular                             <xemf: ~prob\kssem.men>
+Slash                                     <xemf: ~prob\kssla.men>
+Uniform                                   <xemf: ~prob\ksuni.men>
+

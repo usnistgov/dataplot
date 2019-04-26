@@ -1,0 +1,10 @@
+----- <~time\validbj.top> Model Validation: Box-Jemkins Models
+
+Model Validation: Box-Jenkins Models
+
+Autocorrelation plot of residuals    <xemf: ~time\autocpre.men>
+
+4-PLOT of Residuals                  <xcl: 4-PLOT RES>
+Scatter plot of residuals            <xemf: ~fit\plotres.men>
+Normal probability plot of residuals <xemf: ~fit\norppres.men>
+

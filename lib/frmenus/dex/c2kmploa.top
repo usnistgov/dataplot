@@ -1,0 +1,49 @@
+----- <~dex\c2kmploa.top> Load:  2**(k-p) Fractional Factorial Designs
+
+Load:  2**(k-p) Fractional Factorial Designs
+
+  Name   Number Number Resolution
+   of      of     of
+ Design  Factors Runs
+            k     n
+..........................
+2**(3-1)    3     4    3 <x2cl: SKIP 50; READ 2TO3M1.DAT X1 TO X3>
+
+2**(4-1)    4     8    4 <x2cl: SKIP 50; READ 2TO4M1.DAT X1 TO X4>
+
+2**(5-1)    5    16    5 <x2cl: SKIP 50; READ 2TO5M1.DAT X1 TO X5>
+2**(5-2)    5     8    3 <x2cl: SKIP 50; READ 2TO5M2.DAT X1 TO X5>
+
+2**(6-1)    6    32    6 <x2cl: SKIP 50; READ 2TO6M1.DAT X1 TO X6>
+2**(6-2)    6    16    4 <x2cl: SKIP 50; READ 2TO6M2.DAT X1 TO X6>
+2**(6-3)    6     8    3 <x2cl: SKIP 50; READ 2TO6M3.DAT X1 TO X6>
+
+2**(7-1)    7    64    7 <x2cl: SKIP 75; READ 2TO7M1.DAT X1 TO X7>
+2**(7-2)    7    32    4 <x2cl: SKIP 75; READ 2TO7M2.DAT X1 TO X7>
+2**(7-3)    7    16    4 <x2cl: SKIP 75; READ 2TO7M3.DAT X1 TO X7>
+2**(7-4)    7     8    3 <x2cl: SKIP 75; READ 2TO7M4.DAT X1 TO X7>
+
+2**(8-1)    8   128    8 <x2cl: SKIP 75; READ 2TO8M1.DAT X1 TO X8>
+2**(8-2)    8    64    5 <x2cl: SKIP 75; READ 2TO8M2.DAT X1 TO X8>
+2**(8-3)    8    32    4 <x2cl: SKIP 75; READ 2TO8M3.DAT X1 TO X8>
+2**(8-4)    8    16    4 <x2cl: SKIP 75; READ 2TO8M4.DAT X1 TO X8>
+
+2**(9-2)    9   128    6 <x2cl: SKIP 75; READ 2TO9M2.DAT X1 TO X9>
+2**(9-3)    9    64    4 <x2cl: SKIP 75; READ 2TO9M3.DAT X1 TO X9>
+2**(9-4)    9    32    4 <x2cl: SKIP 75; READ 2TO9M4.DAT X1 TO X9>
+2**(9-5)    9    16    3 <x2cl: SKIP 75; READ 2TO9M5.DAT X1 TO X9>
+
+2**(10-3)  10   128    5 <x2cl: SKIP 100; READ 2TO10M3.DAT X1 TO X10>
+2**(10-4)  10    64    4 <x2cl: SKIP 100; READ 2TO10M4.DAT X1 TO X10>
+2**(10-5)  10    32    4 <x2cl: SKIP 100; READ 2TO10M5.DAT X1 TO X10>
+2**(10-6)  10    16    3 <x2cl: SKIP 100; READ 2TO10M6.DAT X1 TO X10>
+
+2**(11-4)  11   128    5 <x2cl: SKIP 100; READ 2TO11M4.DAT X1 TO X11>
+2**(11-5)  11    64    4 <x2cl: SKIP 100; READ 2TO11M5.DAT X1 TO X11>
+2**(11-6)  11    32    4 <x2cl: SKIP 100; READ 2TO11M6.DAT X1 TO X11>
+2**(11-7)  11    16    3 <x2cl: SKIP 100; READ 2TO11M7.DAT X1 TO X11>
+
+2**(15-11) 15    16    3 <x2cl: SKIP 100; READ 2TO15M11.DAT X1 TO X15>
+
+2**(31-26) 31    32    3 <x2cl: SKIP 100; READ 2TO31M26.DAT X1 TO X31>
+

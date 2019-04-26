@@ -1,0 +1,45 @@
+----- <~fit\rrdisc.top> Ridge Regression
+
+Ridge Regression
+
+Ridge regression is a technique that was
+developed to address ill-conditioned problems
+in regression.  Ill-conditioned regression
+problems are those in which the X'X matrix
+is nearly singular (where X is the matrix of
+indepdendent variables).  This is typically
+caused by significant correlation between the
+independent variables and is commonly referred
+to as multicolinearity.  It causes the estimate
+of regression coefficients to be unstable (i.e.,
+small changes in the data result in large changes
+in the parameter estimates).
+
+Ridge regression tries to reduce the variablity
+of the regression estimates by allowing biased
+estimates.  The mathematical details of how ridge
+regression is performed are contained in the books
+listed in the References menu.
+
+Ridge regression requires the choice of the
+"biasing constant" c.  C is typically determined
+by plotting the "ridge trace".
+
+Dataplot does not support ridge regression directly.
+However, the Dataplot matrix commands can be used
+to implement ridge regression.  Note that a number
+of temporary matrices are created in the ridge
+analysis, so this may limit the size data sets for
+which Dataplot can compute ridge traces.  It is
+advisable to re-dimension your work space to allow
+as many columns as possible (see the Files/Data menu)
+before doing the ridge regression.
+
+Note that some experts only recommend ridge regression
+in certain restricted situations.  See the Draper and
+Smith text (listed in the References) for more
+details.  The basic objection is that ridge regression
+is in fact making some hidden assumptions that
+should not be made unless there is prior information
+to justify doing so.
+

@@ -1,0 +1,8 @@
+----- <~dataall\CCU.top> CCU.DAT
+
+CCU.DAT
+
+View     <xcl: LIST CCU.DAT>
+Load     <xcf: ~dataload/CCU.DP>
+Print    <xccl: printfile C:\DATAPLOT\CCU.DAT>
+

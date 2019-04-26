@@ -1,0 +1,16 @@
+----- <~dex\a2kdesig.top> Analysis of 2**k Designs
+
+Analysis of 2**k Designs
+
+Procedure:
+   10-Step Screening Analysis            <~dex2k\10step.top>
+
+Goals:                                         <~dex\a2kgoals.top>
+   1. Ranked list of factors                   <~dex\a2kranlf.top>
+   2. Most important factors => prediction eq. <~dex\a2kimpfa.top>
+   3. Best settings                            <~dex\a2kbesse.top>
+
+Built-in Data Files   <~dex\a2kdatfi.top>
+   Index              <~dex\a2kindda.top>
+   Load               <~dex\a2kloada.top>
+

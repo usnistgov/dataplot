@@ -1,0 +1,10 @@
+----- <~dataloex\SIMIU.DP> Load & Execute SIMIU.DAT
+
+. This is file    SIMIU.DP
+
+DELETE Y
+SKIP 25
+READ SIMIU.DAT Y
+TITLE SIMIU.DAT
+4-PLOT Y
+

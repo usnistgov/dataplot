@@ -1,0 +1,26 @@
+This is file matr_cof.men--Cofactor of a matrix
+ 
+--------------------
+ 1. Cofactor of a Matrix
+ 2. LET COFACT = MATRIX COFACTOR M ROWID COLID
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Row for which to compute the cofactor:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Column for which to compute the cofactor:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7. Parameter  to store the cofactor:
+ 7. @CE 4 0 33 50 ?
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 1 50 *
+11.
+12.
+13. Compute the Cofactor?:
+--------------------
+GR FE
+LET _4 = MATRIX COFACTOR  _1 _2 _3 _5
+--------------------
+WEB HELP MATRIX COFACTOR
+--------------------

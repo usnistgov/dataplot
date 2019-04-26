@@ -1,0 +1,32 @@
+----- <~file\options.top> Files: Read Options
+
+Set Options for READ
+
+Set Options for Subsequent READ Commands
+
+The following menus set various options for
+subsequent READ commands.  These options are
+discussed in detail under the "Discussion/Help"
+menu.
+
+Note that these options remain in effect until
+you change them.  To reset the default options,
+select the "Clear" option.
+
+Clear (Reset default options)               <xcf: ~file\CLEAR.DP>
+
+Specify the Number of Header Lines to Skip  <xemf: ~file\skip.men>
+Specify Rows in File to READ                <xemf: ~file\rowlimit.men>
+Specify (Single) Columns in File to READ    <xemf: ~file\collimit.men>
+Specify (Multiple) Columns in File to READ  <xemf: ~file\collimi2.men>
+Define a Fortran-like Format for the READ   <xemf: ~file\readform.men>
+
+Define the Maximum Record Length            <xemf: ~file\maxrcl.men>
+Define the Value to use for Missing Data    <xemf: ~file\missvalu.men>
+Define the Character that Delinmits Fields  <xemf: ~file\delimit.men>
+Define the Comment Character for Data Files <xemf: ~file\commchar.men>
+
+Check Data Files for Comments               <xemf: ~file\commchec.men>
+Specify How Character Data is Handled       <xemf: ~file\charact.men>
+First Line Contains Variable Names          <xemf: ~file\varlabel.men>
+

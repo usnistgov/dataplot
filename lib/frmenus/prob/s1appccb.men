@@ -1,0 +1,23 @@
+----- <~prob\s1appccb.top> PPCC Plot/Probability Plot Bootstrap Estimation
+
+Bootstrap Parameter Estimation via PPCC Plot/Probability Plot
+
+Both Uncensored and Censored Data Supported,
+Groouped Data is Not
+
+Discussion: Bootstrap Intervals       <~reli\discppbo.top>
+
+Fatigue Life                          <xemf: ~reli\bootfl.men>
+Gamma                                 <xemf: ~reli\bootgam.men>
+Geometric Extreme Exponential         <xemf: ~reli\bootgee.men>
+Inverted Gamma                        <xemf: ~reli\bootiga.men>
+Inverted Weibull                      <xemf: ~reli\bootiwe.men>
+Log Gamma                             <xemf: ~reli\bootlga.men>
+Lognormal                             <xemf: ~reli\bootlgn.men>
+Wald                                  <xemf: ~reli\bootwal.men>
+Weibull (Minimum)                     <xemf: ~reli\bootwei1.men>
+Weibull (Maximum)                     <xemf: ~reli\bootwei2.men>
+
+
+Bootstrap Confidence Intervals for Percentiles  <xemf: ~reli\ppccperc.men>
+

@@ -1,0 +1,50 @@
+This is Dataplot data file    GAMMA.DAT
+Sample data set from Example 13.1 of
+Karl Bury, "Statistical Distributions in Engineering",
+Cambridge University Press, 1999, p. 225-226.
+
+Response variable = Annual maximum discharge values
+                    (in 1,000 cubic feet per second) fro
+                    St. Mary's river, Stillwater, Nova Scotia
+Number of observations = 25
+Number of observations per line image = 1
+Order of observations per line image--
+   1. Response variable
+To read this file into Dataplot--
+   SKIP 25
+   READ GAMMA.DAT Y
+   SET MAXIMUM LIKELIHOOD PERCENTILE DEFAULT
+   GAMMA MAXIMUM LIKELIHOOD Y
+
+
+
+
+
+
+  Y
+----
+16.0
+11.6
+19.9
+18.6
+18.0
+13.1
+29.1
+10.3
+12.2
+15.6
+12.7
+13.1
+19.2
+19.5
+23.0
+ 6.7
+ 7.1
+14.3
+20.6
+25.6
+ 8.2
+34.4
+16.1
+10.2
+12.3

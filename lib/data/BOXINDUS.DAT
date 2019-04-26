@@ -1,0 +1,35 @@
+This is Dataplot data file     BOXINDUS.DAT
+2-Sample Industry Yield Example: Shift in Location
+Question--Do the 2 samples have same location?
+ 
+Box, Hunter, & Hunter (1978)
+Statistics for Experimenters. Wiley, page 77.
+ 
+Number of observations             = 10
+Number of variables per line image =  2
+Order of variables on a line image--
+   Response variable 1 = yield for method A
+   Response variable 2 = yield for method B
+Statistical areas--multi-factor analysis (2-sample)
+ 
+To read this file into Dataplot--
+   SKIP 25
+   READ BOXINDUS.DAT Y1 Y2
+ 
+ 
+ 
+ 
+    Y1          Y2
+  Yield       Yield
+ Method A    Method B
+---------------------
+   89.7        84.7
+   81.4        86.1
+   84.5        83.2
+   84.8        91.9
+   87.3        86.3
+   79.7        79.3
+   85.1        82.6
+   81.7        89.1
+   83.7        83.7
+   84.5        88.5

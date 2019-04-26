@@ -1,0 +1,91 @@
+This is the data file        PR1.DAT
+
+Source: This data set is used in the discussion of selecting an appropriate
+        function in the Process Modeling Chapter of the e-Handbook (first
+        given on pmd422.htm).  This data set was provided by Will Guthrie.
+
+Description: Materials scientists are interested in how cylindrical polymer
+             samples that have been twisted by a fixed amount relax over
+             time. They are also interested in finding out how temperature
+             may affect this process. As a result, both time and
+             temperature are thought to be important factors for describing
+             the systematic variation in this polymer relaxation data.
+
+Data:  This data is a simulated data set.
+       1. Column 1 = Time (T)
+       2. Column 2 = Temperature (TMP)
+       3. Column 3 = Measured Torque (Y)
+
+To read this file into Dataplot--
+
+   SKIP 25
+   READ PR1.DAT T TMP Y
+
+  T TMP        Y
+----------------
+  0  25 8.048611
+ 12  25 6.230087
+ 24  25 5.389125
+ 36  25 5.125844
+ 48  25 5.019791
+ 60  25 4.976071
+ 72  25 5.045801
+ 84  25 5.014055
+ 96  25 4.988176
+108  25 5.037880
+120  25 5.028441
+  0  35 8.040181
+ 12  35 6.804087
+ 24  35 6.074486
+ 36  35 5.515687
+ 48  35 5.224727
+ 60  35 5.072107
+ 72  35 5.097080
+ 84  35 5.019472
+ 96  35 5.018129
+108  35 4.978442
+120  35 5.004146
+  0  45 8.029943
+ 12  45 7.172377
+ 24  45 6.507420
+ 36  45 6.003543
+ 48  45 5.768832
+ 60  45 5.494798
+ 72  45 5.274615
+ 84  45 5.117353
+ 96  45 5.061273
+108  45 5.076027
+120  45 5.021564
+  0  55 8.045344
+ 12  55 7.537605
+ 24  55 6.994534
+ 36  55 6.417369
+ 48  55 6.152281
+ 60  55 5.827176
+ 72  55 5.658384
+ 84  55 5.510555
+ 96  55 5.418474
+108  55 5.192566
+120  55 5.134557
+  0  65 7.988658
+ 12  65 7.636592
+ 24  65 7.280359
+ 36  65 6.906924
+ 48  65 6.583996
+ 60  65 6.235893
+ 72  65 6.018024
+ 84  65 5.807667
+ 96  65 5.594132
+108  65 5.396655
+120  65 5.415614
+  0  75 7.979375
+ 12  75 7.711996
+ 24  75 7.342641
+ 36  75 7.096341
+ 48  75 6.835128
+ 60  75 6.577571
+ 72  75 6.331769
+ 84  75 6.209890
+ 96  75 5.997762
+108  75 5.840834
+120  75 5.707373

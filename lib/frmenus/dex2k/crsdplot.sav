@@ -1,0 +1,48 @@
+This is file crsdplot.men--Generate cumulative res. sd. plot
+
+--------------------
+ 1. Cumulative Residual Standard Deviation Plot
+ 2. YATES Y        (Yates order assumed)
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ?
+ 5.
+ 6. Subset/Except/For Specification:
+ 7. @CE 2 0 1 50 *
+ 8.
+ 9.
+10. Generate the plot?
+--------------------
+GR FE
+YATES _1 _3
+SKIP 0
+READ DPST1F.DAT TAG COEF TCOEF RSD CUMRSD
+.
+LET NUMCOEF = NUMBER COEF
+LET ZZZINDEX = SEQUENCE 1 1 NUMCOEF
+LET TAG2 = TAG
+LET ZZZINDE2 = SORTC ZZZINDEX TAG2
+.
+PRE-ERASE OFF
+ERASE
+.
+CHARACTERS AUTOMATIC TAG
+CHARACTER OFFSET 2 0 ALL
+LINES BLANK ALL
+SPIKE ON ALL
+PLOT CUMRSD ZZZINDEX TAG2
+YLIMITS FREEZE
+.
+LET CUTOFF = _2
+.
+CHARACTER BLANK ALL
+CHARACTER OFFSET 0 0 ALL
+SPIKE OFF ALL
+.
+LINES SOLID
+PLOT 0 FOR X = 1 1 NUMCOEF
+LINES DOTTED
+PLOT CUTOFF FOR X = 1 1 NUMCOEF
+.
+PRE-ERASE ON
+YLIMITS

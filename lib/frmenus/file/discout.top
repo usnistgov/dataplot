@@ -1,0 +1,42 @@
+----- <~file\discout.top> Output Options: Discussion
+ 
+Output Options: Discussion
+
+By default, the alphanumeric output from Dataplot commands is
+written to the text output window.  Alternatively, you can do
+one of the following:
+
+  1) Generate the output to an ASCII file.
+
+     It may be helpful to turn the ECHO switch ON
+     (this echos the entered command with a box of
+     asterisks around it) as this can help clarify
+     which command generates the output.
+
+  2) Generate the output to a file in HTML format.
+     
+     Dataplot enters a PRE tag to start the HTML
+     format.  This is an "asis" mode.  A number of
+     Dataplot analysis commands will now generate
+     output using HTML syntax.
+    
+     After you close the HTML file, you can view the
+     HTML file in Dataplot.  For example, if the HTML
+     output was generated in the file C:\DATAPLOT.HTM,
+     then you can go to the Command Line window and enter
+
+        WEB file://C:\DATAPLOT.HTM
+
+  3) Generate the output to a file in Latex format.
+
+     Dataplot enters a {\verbatim} tag to start the
+     Latex format.  This is an "asis" mode.  A number of
+     Dataplot analysis commands will now generate
+     output using Latex syntax.
+    
+
+Note that when one of these options is activated, no
+the output will not be generated to the text output
+window.  Also, you should only activate one of the
+above options at one time.
+

@@ -1,0 +1,8 @@
+----- <~dataload\NATR134.DP> Load NATR134.DAT
+
+. This is file    NATR134.DP
+
+DELETE R X1 X2 X3 X4 X5 X6
+SKIP 25
+READ NATR134.DAT R X1 TO X6
+

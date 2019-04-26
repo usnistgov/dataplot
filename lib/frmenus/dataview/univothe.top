@@ -1,0 +1,17 @@
+----- <~dataview\univothe.top> View Univariate Data: Other
+
+View Univariate Data: Other
+
+GEAR.DAT      Gear diameters (Ishikawa)     <xcf: ~dataview\GEAR.DP>
+CLEAR.DAT     Component clearances          <xcf: ~dataview\CLEAR.DP>
+MICHELSO.DAT  Michelson speed of light exp  <xcf: ~dataview\MICHELSO.DP>
+LIN.DAT       Polonium 209 SRM conc         <xcf: ~dataview\LIN.DP>
+
+RANDN.DAT     Normal random numbers         <xcf: ~dataview\RANDN.DP>
+RANDU.DAT     Uniform random numbers        <xcf: ~dataview\RANDU.DP>
+RANDWALK.DAT  Random walk                   <xcf: ~dataview\RANDWALK.DP>
+FLICKER.DAT   Flicker noise                 <xcf: ~dataview\FLICKER.DP>
+
+LOTTERY3.DAT  Maryland "pick 3" lott. #'s   <xcf: ~dataview\LOTTERY3.DP>
+LOTTERY4.DAT  Maryland "pick 4" lott. #'s   <xcf: ~dataview\LOTTERY4.DP>
+

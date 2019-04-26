@@ -1,0 +1,8 @@
+----- <~dataall\PERIODIC.top> PERIODIC.DAT
+
+PERIODIC.DAT
+
+View     <xcl: LIST PERIODIC.DAT>
+Load     <xcf: ~dataload/PERIODIC.DP>
+Print    <xccl: printfile C:\DATAPLOT\PERIODIC.DAT>
+

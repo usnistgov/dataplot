@@ -1,0 +1,98 @@
+This is file fitrr.men--Ridge Regression
+ 
+--------------------
+ 1. Ridge Regression
+ 2. Macro ...
+ 3.
+ 4. For ridge regression, you need:
+ 5.   1) A response variable (i.e., Y)
+ 6.   2) A list of factor variables (i.e., X)
+ 7.   3) A variable containing the values
+ 8.      of the biasing constant C that you
+ 9.      want to generate a ridge trace for.
+10.      These values are typically in the
+11.      range 0 to 1.
+12.
+13. Variables:
+14.    Response Variable:
+14. @CE 1 0 42 50 ? gui-variable
+15.    List of Independent Variables:
+16. @CE 2 0  1 50 ? gui-variable
+17.    C Variable:
+17. @CE 3 0 42 50 * gui-variable
+18.
+19. This menu generates a "ridge trace" plot.
+20. The ridge trace plot is used to select the
+21. optimal value of the biasing constant C.
+22. It also generates arrays B1 to Bp.  Each
+23. row of these arrays are the regression
+24. coefficients for the corresponding row of C.
+25.
+26.
+27. Do the Ridge Regression?
+--------------------
+GR FE
+WRITE ZZZZJUNK.DAT _2
+SKIP 0
+READ MATRIX ZZZZJUNK.DAT Z
+LET P = MATRIX NUMBER OF COLUMNS Z
+LET N = SIZE Z1
+DIMENSION MATRIX ROWS N
+LET FACT = 1/SQRT(N-1)
+.  Generate standardized regression model
+SET MATRIX SCALE Z-SCORE
+LET Z = MATRIX COLUMN SCALE Z
+LET Z = MATRIX MULTIPLY Z FACT
+LET YMEAN = MEAN _1
+LET YSD = STANDARD DEVIATION _1
+LET YT = FACT*(( _1 - YMEAN)/YSD)
+.  GENERATE VARIOUS CORRELATION MATRICES
+LET RXX = CORRELATION MATRIX Z
+LOOP FOR K = 1 1 P
+    LET A = CORRELATION YT Z^K
+    LET RYX(K) = A
+END OF LOOP
+DELETE Z
+.
+LET NC = SIZE _3
+.  SOLVE VIA: 
+.  1) B = (RXX + cI)**(-1)RYX
+.  2) VIF = diagonal(RXX+cI)**(-1)*RXX*(RXX+cI)**(-1))
+LOOP FOR K = 1 1 NC
+    LET A = _3 (K)
+    LET CDIAG = A FOR I = 1 1 P
+    LET CMAT = DIAGONAL MATRIX CDIAG
+    LET MATTMP = MATRIX ADDITION RXX CMAT
+    LET MATINV = MATRIX INVERSE MATTMP
+    LET BR = MATRIX MULTIPLY MATINV RYX
+    LET MATZZZ = MATRIX MULTIPLY MATINV RXX
+    LET MATZZZ = MATRIX MULTIPLY MATZZZ MATINV
+    LET VIFALL = MATRIX DIAGONAL MATZZZ
+    LOOP FOR L = 1 1 P
+        LET B^L(K) = BR(L)
+        LET VIF^L(K) = VIFALL(L)
+    END OF LOOP
+END OF LOOP
+.  Plot ridge trace
+TITLE RIDGE TRACE
+X1LABEL C
+Y1LABEL BLC()K
+LINE SOLID DASH DOT
+LET P1 = P - 1
+LOOP FOR K = 1 1 P1
+  PLOT B^K VS _3 AND
+END OF LOOP
+PLOT B^P VS _3
+CAPTURE ZZZZJUNK.DAT
+PRINT "AFTER PICKING BEST VALUE OF C, YOU CAN TRANSFORM"
+PRINT "BACK TO THE ORIGINAL UNITS BY:"
+PRINT " "
+PRINT "   Bk = (Sy/Sk)*B'k"
+PRINT " "
+PRINT "WHERE  (B'k are the standardized parameter estimates)"
+PRINT "       B0 = YMEAN - SUM(Bk*XMEANk)"
+END OF CAPTURE
+LIST ZZZZJUNK.DAT
+--------------------
+WEB HELP MATRIX COMMANDS
+--------------------

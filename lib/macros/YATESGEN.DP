@@ -1,0 +1,116 @@
+. This is Dataplot program file     yatesgen.DP
+. Purpose--Generate ranked list of effects for general 2-level design
+.          (that is, not necessarily in Yates order)
+. Input k  = number of factors
+.       n  = number of runs
+.       Y  = response variable
+.       X1 = factor 1
+.       X2 = factor 2
+.       ...
+.       Xk = factor k
+. Output--
+.    tagz = cell name ID if this were a full factorial in n runs
+.    coef = effect estimates
+. Sub-macros needed--call sdigit.dp
+.
+. -----start point-----
+.
+let pausesw = 0
+.
+if pausesw = 1; print "---At start of yatesgen.DP"
+   if ibatch exists and ibatch = 0; pause; end if
+end if
+.
+. -----Step 1--Carry out a (full factorial) Yates analysis
+.              for these n observations-----
+. Note--the Yates command is being used here below only as a quick
+.       way to generate all possible Yates-order tagzs.
+.       (the resulting Yates coefficients are not used at all).
+.
+printing on
+yates y
+. printing off
+delete tagz
+skip 0
+read dpst1f.dat tagz
+. print "within yatesgen.dp--1"
+. stat v
+. pause
+. print y x1 x2 x3 tagz
+. pause
+.
+. -----Step 2--Compute effect estimates-----
+.
+let numtagz = number tagz
+loop for jz5 = 1 1 numtagz
+   let posint = tagz(jz5)
+   . print "from yategen.dp   jz5,posint = ^jz5 ^posint ^jz5"
+   . call digit.dp         ;. replaced by digits command + sdigit.dp macro   1/26/15
+   let digitv = digits posint
+   let numdigit = number digitv
+   call sdigit.dp
+   let prod = ^sdigit
+   let ymeanp(jz5) = -999
+   let ymeanm(jz5) = -999
+   let np = number y subset prod +1
+   let nm = number y subset prod -1
+   if np >= 1 and nm >= 1
+      let ymeanp(jz5) = mean y subset prod +1
+      let ymeanm(jz5) = mean y subset prod -1
+   end if
+   . let ymeanp(jz5) = mean y subset prod +1
+   . let ymeanm(jz5) = mean y subset prod -1
+   . print "jz5 posint np nm = ^jz5 ^posint ^np ^nm"
+   . pause
+end loop
+. print ymeanp ymeanm
+. pause
+.
+. print "within yatesgen.dp--3"
+. stat v
+. pause
+. print y x1 x2 x3 tagz
+. pause
+.
+. -----Step 3--Order the effect estimates
+.              and carry Yates order cell names-----
+.
+let coef = ymeanp - ymeanm
+let coef2 = abs(coef)
+let coef2 = -coef2
+let coef3 = sortc coef2 coef tagz
+print tagz ymeanp ymeanm coef
+. pause
+.
+.-----Step 4--Compute residual SD-----
+.
+let ybar = mean y
+let pred = ybar*(y-y+1)
+let numtagzm1 = numtagz-1
+let p = 1
+loop for jz5 = 1 1 numtagzm1
+   let coefjz5 = coef(jz5)
+   let posint = tagz(jz5)
+   . call digit.dp         ;. replaced by digits command + sdigit.dp macro   1/26/15
+   let digitv = digits posint
+   let numdigit = number digitv
+   call sdigit.dp
+   let termjz5 = ^sdigit
+   let pred = pred+0.5*coefjz5*termjz5
+   let res = y-pred
+   let res2 = res*res
+   let sumres2 = sum res2
+   let p = p+1
+   let ratio = 0
+   if n > p; let ratio = sumres2/(n-p); end if
+   capture junk.
+   stat v
+   stat p
+   stat f
+   print rsd
+   end capture
+   let rsd = 0
+   if n > p; let rsd = sqrt(ratio); end if
+   let cumrsd(jz5) = rsd
+end loop
+let cumrsd(numtagz) = 0

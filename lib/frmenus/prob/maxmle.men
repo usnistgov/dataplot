@@ -1,0 +1,50 @@
+This is file maxmle.men--Maxwell MLE Estimates
+ 
+--------------------
+ 1. Maxwell Maximum Likelihood Estimates
+ 2. MAXWELL MAXIMUM LIKELIHOOD Y
+ 3.
+ 4. This menu will generate the maximum likelihood
+ 5. estimate for the scale parameter for uncenored
+ 6. data.  You can optionally request to have bootstrap
+ 7. confidence limits generated for the scale parameter.
+ 8.
+ 9. Response Variable:
+ 9. @CE 1 0 42 50 ? gui-variable
+10. Number of bootstrap samples (0 to omit)?
+11. @CE 2 0 42 50 *
+12.
+13. Subset/Except/For Specification:
+14. @CE 3 0 1 50 *
+15.
+16.
+17. Compute Maxwell MLE's?
+--------------------
+GR FE
+LET NUMBOOT = 0
+@IF 2 0 LET NUMBOOT = _2
+let numboot = min(1000,numboot)
+if numboot > 0
+   bootstrap samples numboot
+   set maximum likelihood percentiles default
+   label
+   title case asis
+   label case asis
+   case asis
+   title displacement 2
+   x2label displacement 13
+   x3label displacement 18
+   y1label Parameter Estimate
+   x1label
+   x2label Bootstrap Sample
+   title Bootstrap Plot
+   line color black
+   limits
+end of if
+MAXWELL MAXIMUM LIKELIHOOD _1 _3
+if numboot > 0
+   bootstrap maxwell maximum likelihood plot _1 _3
+end of if
+--------------------
+WEB HELP MAXPDF
+--------------------

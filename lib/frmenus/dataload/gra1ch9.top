@@ -1,0 +1,20 @@
+----- <~dataload\gra1ch9.top> Chapter 9: Nonlinear Regression
+
+Chapter 9: Nonlinear Regression
+
+ 1. Overview
+ 2. Some Commonly Used Families for Nonlinear Regression
+ 3. Statistical Assumptions and Inferences for Nonlinear Regression
+       Light  (p-608)                     <xcf: ~dataload\LIGHT.DP>
+       Coil  (p-612)                      <xcf: ~dataload\COIL.DP>
+       Absorption  (p-613)                <xcf: ~dataload\ABSORPT.DP>
+ 4. Linearizable Models
+       Contrast  (p-617)                  <xcf: ~dataload\CONTRAST.DP>
+ 5. Exercises
+       Serum  (p-622)                     <xcf: ~dataload\SERUM.DP>
+       Haze  (p-624)                      <xcf: ~dataload\HAZE.DP>
+
+ Not sure where these data sets go
+       Cement  (p-?)                      <xcf: ~dataload\CEMENT.DP>
+       Car2  (p-?)                        <xcf: ~dataload\CAR2.DP>
+

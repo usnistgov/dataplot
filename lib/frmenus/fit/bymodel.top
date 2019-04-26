@@ -1,0 +1,19 @@
+----- <~fit\bymodel.top> By Model and Technique
+
+By Model and Technique
+
+Discussion                                 <~fit\modedisc.top>
+
+Linear                 Regression          <~fit\linreg.top>
+Polynomial             Regression          <~fit\polyreg.top>
+Rational Function      Regression          <~fit\ratfreg.top>
+Spline                 Regression          <~fit\splinreg.top>
+Non-Linear             Regression          <~fit\nlreg.top>
+
+Multiple               Regression          <~fit\multreg.top>
+| Partial Least Squares  Regression (PLS)    <~fit\plsreg.top>
+| Principle Components   Regression (PCR)    <~fit\pcreg.top>
+| Neural Net             Regression (NNR)    <~fit\nnreg.top>
+| Ridge                  Regression (RR)     <~fit\rreg.top>
+| Sing. Value Decomp.    Regression (PCR)    <~fit\svdreg.top>
+

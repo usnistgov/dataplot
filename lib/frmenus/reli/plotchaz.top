@@ -1,0 +1,29 @@
+----- <~reli\plotchaz.top> Plot Cumulative Hazard Functions
+
+Plot Cumulative Hazard Functions
+
+Normal                                <xemf: ~prob\pnorchaz.men>
+Lognormal                             <xemf: ~prob\plgnchaz.men>
+Power Normal                          <xemf: ~prob\ppnrchaz.men>
+Power Lognormal                       <xemf: ~prob\pplnchaz.men>
+
+Exponential                           <xemf: ~prob\pexpchaz.men>
+Geometric Extreme Exponential         <xemf: ~prob\pgeechaz.men>
+
+Weibull (Minimum)                     <xemf: ~prob\pwei1chaz.men>
+Weibull (Maximum)                     <xemf: ~prob\pwei2chaz.men>
+Inverted Weibull                      <xemf: ~prob\piwechaz.men>
+Exponentiated Weibull                 <xemf: ~prob\pewechaz.men>
+Bi-Weibull                            <xemf: ~prob\pbwechaz.men>
+
+Wald                                  <xemf: ~prob\pwalchaz.men>
+Inverse Gaussian                      <xemf: ~prob\pigchaz.men>
+Reciprocal Inverse Gaussian           <xemf: ~prob\prigchaz.men>
+Fatigue Life                          <xemf: ~prob\pflchaz.men>
+
+Gamma                                 <xemf: ~prob\pgamchaz.men>
+Inverted Gamma                        <xemf: ~prob\pigachaz.men>
+
+Alpha                                 <xemf: ~prob\palpchaz.men>
+Exponential Power                     <xemf: ~prob\ppexchaz.men>
+

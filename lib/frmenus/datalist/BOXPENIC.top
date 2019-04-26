@@ -1,0 +1,8 @@
+----- <~datalist\BOXPENIC.top> BOXPENIC.DAT
+ 
+BOXPENIC.DAT
+ 
+View     <xcl: LIST BOXPENIC.DAT>
+Load     <x2cl: SKIP 25; READ BOXPENIC.DAT Y FORM BATCH RUNSEQ>
+Print    <xccl: printfile C:\DATAPLOT\BOXPENIC.DAT>
+ 

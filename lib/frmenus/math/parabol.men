@@ -1,0 +1,42 @@
+This is file parabol.men--Compute Parabolic Cylinder Functions
+ 
+--------------------
+ 1. Parabolic Cylinder Functions
+ 2. LET Y = PBDV(X,2)
+ 3.
+ 4. Horizontal axis variable:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Order of the parabolic cylinder function:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the transformed result:
+ 6. @CE 3 0 33 50 ?
+ 7.
+ 8. Operation to perform:
+ 9. @CE 4 1 10 40 Dv function
+10. @CE 4 2 10 40 derivative of Dv function
+11. @CE 4 3 10 40 Vv function
+12. @CE 4 4 10 40 derivative of Vv function
+13. @CE 4 5 10 40 Wa function (only for X < 5)
+14. @CE 4 6 10 40 derivative of Wa function (only for X < 5)
+15.
+16. Plot?:
+16. @CE 5 1 14 20 no
+16. @CE 5 2 22 28 yes
+17.
+18. Subset/Except/For Specification:
+19. @CE 6 0 -5 50 *
+20.
+21.
+22. Compute the Transformation?:
+--------------------
+GR FE
+@IF 4 1 LET _3 = PBDV( _1 , _2 ) _6
+@IF 4 2 LET _3 = PBDV1( _1 , _2 ) _6
+@IF 4 3 LET _3 = PBVV( _1 , _2 ) _6
+@IF 4 4 LET _3 = PBVV1( _1 , _2 ) _6
+@IF 4 5 LET _3 = PBWA( _1 , _2 ) _6
+@IF 4 6 LET _3 = PBWA1( _1 , _2 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP PARABOLIC CYLINDER FUNCTIONS
+--------------------

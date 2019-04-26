@@ -1,0 +1,34 @@
+This is file autocpre.men--Autocorrelation plot of residuals
+ 
+--------------------
+ 1. Autocorrelation Plot of Residuals
+ 2. AUTOCORRELATION PLOT RES
+ 3.
+ 4. Line type:
+ 4. @CE 1 0 33 50 gui-line
+ 5. Character type:
+ 5. @CE 2 0 33 50 gui-char
+ 6. Character fill on/off?:
+ 6. @CE 3 0 33 50 gui-ooff
+ 7. Spike on/off
+ 7. @CE 4 0 33 50 gui-ooff
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 5 0 6 50 *
+11.
+12.
+13. Generate the Autocorrelation Plot?:
+--------------------
+GR FE
+LINES _1
+CHARACTERS _2
+CHARACTER FILL _3
+SPIKE _4
+SPIKE BASE 0
+LET ZZZZN = SIZE RES
+LET STRING ZZZZSTR = FOR I = 1 1 ZZZZN
+@IF 5 0 LET STRING ZZZZSTR = _5
+AUTOCORRELATION PLOT RES ^ZZZZSTR
+--------------------
+WEB HELP AUTOCORELATION PLOT
+--------------------

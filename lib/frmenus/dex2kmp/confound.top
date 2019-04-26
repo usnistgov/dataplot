@@ -1,0 +1,40 @@
+----- <~dex2kmp\confound.top> Confounding: 2**(k-p) Frac. Fact. Designs
+ 
+Confounding: 2**(k-p) Fractional Factorial Designs
+ 
+Confounding exists in a design when the value of
+the estimated main effect has multiple sources:
+ 
+   1) the main effect itself;
+   2) contaminents/bias from high-order interactions.
+ 
+The confounding characteristics of estimators from
+a design are completely fixed by the actual design
+plan being executed.
+ 
+Every fractional factorial design has
+confounding--it cannot be avoided.  The main
+effects from every fractional factorial design are
+necessarily contaminated/biased by some high-order
+interaction.
+ 
+In general, since such confounding must occur for
+fractional factorial designs, then given a choice
+between 2 fractional factorial designs--one in
+which main effects are confounded with 2-term
+interactions, and another in which main effects
+are confounded with no 2-term interactions but with
+some 3-term interactions, then one would normally
+choose the fractional factorial design in which
+main effects are confounding with as high-an-order
+interaction as possible.  Since high-order
+interactions are (in nature) less likely to be
+real that lower-order interactions, such a choice
+of design will help protect the accuracy of the
+estimated main effects.
+ 
+Resolution is a term which designates the degree
+to which estimated main effects from a design are
+contaminated/correlated with estimated 2-term
+interactions, 3-term interactions, etc.  from the design.
+ 

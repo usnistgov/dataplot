@@ -1,0 +1,24 @@
+----- <~nist\calib.top> Linear/Quadratic Calibration
+ 
+Linear/Quadratic Calibration
+ 
+Discussion                                   <~nist\calidisc.top>
+NIST/SEMATECH Handbook (Calibration) <xcl: web handbook fit calibration>
+
+Scatter Plot of Data                         <xemf: ~stat\scatplot.men>
+Create Variable with the Calibration Points  <xemf: ~nist\letdata.men>
+Perform a linear fit                         <xemf: ~fit\linecali.men>
+Validate the linear fit                      <~fit\modelval.top>
+Inferences from the linear fit               <~fit\inferenc.top>
+
+Perform Linear Calibration                   <xemf: ~nist\lincalib.men>
+Perform Quadratic Calibration                <xemf: ~nist\quacalib.men>
+
+View Dataplot Data Sets
+   Ozone Monitor    <xcl: LIST NORRIS11.DAT>
+   Piston Gage      <xcl: LIST EHRLICH.DAT>
+
+Load Dataplot Data Sets
+   Ozone Monitor    <x2cl: SKIP 25; READ NORRIS11.DAT Y X TAG>
+   Piston Gage      <x2cl: SKIP 25; READ EHRLICH.DAT Y X TAG>
+

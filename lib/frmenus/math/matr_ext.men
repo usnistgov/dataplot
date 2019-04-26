@@ -1,0 +1,24 @@
+This is file matr_ext.men--Extract row of a matrix
+ 
+--------------------
+ 1. Extract Row of a Matrix
+ 2. LET R = MATRIX ROW M
+ 3.
+ 4. Name of original matrix:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Row of matrix to extract:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Variable to store the row:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0 1 50 *
+10.
+11.
+12. Extract the Row?:
+--------------------
+GR FE
+LET _3 = MATRIX ROW  _1 _2 _4
+--------------------
+WEB HELP MATRIX ROW
+--------------------

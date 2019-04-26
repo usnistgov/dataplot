@@ -1,0 +1,40 @@
+This is Dataplot data file     SNED118.DAT
+Snedecor & Cochran 2-Sample Variation Shift Example:
+   Basal Metabolism of College Women with Differing Sleep Duration
+Question: Is there a difference in the 2 groups?
+Question: Is there a difference in variability in the 2 groups?
+ 
+Source--Snedecore, George W. and Cochran , William G. (1937).
+        Statistical Methods. Sixth Edition.
+        The Iowa State University Press, Ames, Iowa, page 118.
+ 
+Number of observations             = 15 + 11 = 26
+Number of variables per line image =  2
+Order of variables on a line image--
+   1. Response Variable Y1 = metabolism for group with 7+ sleep hour
+   2. Response Variable Y2 = metabolism for group with 6- sleep hour
+Note--A value of -99 indicates missing data
+ 
+To read this into Dataplot--
+   SKIP 25
+   READ SNED118.DAT Y1 Y2
+ 
+      Y1            Y2
+  Metabolism    Metabolism
+   Group 7+      Group 6-
+---------------------------
+     35.3          32.5
+     35.9          34.0
+     37.2          34.4
+     33.0          31.8
+     31.9          35.0
+     33.7          34.6
+     36.0          34.6
+     35.0          33.5
+     33.3          33.6
+     33.6          31.5
+     37.9          33.8
+     35.6          -99
+     29.0          -99
+     33.7          -99
+     35.7          -99

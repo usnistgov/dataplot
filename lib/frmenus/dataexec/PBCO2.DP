@@ -1,0 +1,10 @@
+----- <~dataexec\PBCO2.DP> Load & Execute PBCO2.DAT
+
+. This is file    PBCO2.DP
+
+DELETE Y YEAR MONTH
+SKIP 25
+READ PBCO2.DAT YEAR MONTH Y
+TITLE PBCO2.DAT
+4-PLOT Y SUBSET Y > 0
+

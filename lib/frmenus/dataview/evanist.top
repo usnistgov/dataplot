@@ -1,0 +1,8 @@
+----- <~dataview\evanist.top> View Extreme Value Data: NIST
+
+View Extreme Value Data: NIST
+
+SIMIU.DAT     Wind speeds                    <xcf: ~dataview\SIMIU.DP>
+WASHDC.DAT    Washington DC wind speeds      <xcf: ~dataview\WASHDC.DP>
+KEYWEST.DAT*  Key West wind speeds           <xcf: ~dataview\KEYWEST.DP>
+

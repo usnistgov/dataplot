@@ -1,0 +1,78 @@
+. This is Dataplot program file    LINREG.DP
+. Dataplot linear regression output
+. for Standard Reference Data Sets Project
+. Date--May 1996
+.
+. -----start point-----
+.
+. Step 1--Do Wampler 1 Data
+.
+SKIP 25
+READ /home/fs3a/lager/public_html/srd/lls/dat_wamp1.html Y X
+QUINTIC FIT Y X
+CAPTURE WAMPLER1.OUT
+   QUINTIC FIT Y X
+END CAPTURE
+RESET VARIABLES
+.
+. Step 2--Do Wampler 2 Data
+.
+SKIP 25
+READ /home/fs3a/lager/public_html/srd/lls/dat_wamp2.html Y X
+QUINTIC FIT Y X
+CAPTURE WAMPLER2.OUT
+   QUINTIC FIT Y X
+END CAPTURE
+RESET VARIABLES
+.
+. Step 3--Do Wampler 3 Data
+.
+SKIP 25
+READ /home/fs3a/lager/public_html/srd/lls/dat_wamp3.html Y X
+QUINTIC FIT Y X
+CAPTURE WAMPLER3.OUT
+   QUINTIC FIT Y X
+END CAPTURE
+RESET VARIABLES
+.
+. Step 4--Do Wampler 4 Data
+.
+SKIP 25
+READ /home/fs3a/lager/public_html/srd/lls/dat_wamp4.html Y X
+QUINTIC FIT Y X
+CAPTURE WAMPLER4.OUT
+   QUINTIC FIT Y X
+END CAPTURE
+RESET VARIABLES
+.
+. Step 5--Do Wampler 5 Data
+.
+SKIP 25
+READ /home/fs3a/lager/public_html/srd/lls/dat_wamp5.html Y X
+QUINTIC FIT Y X
+CAPTURE WAMPLER5.OUT
+   QUINTIC FIT Y X
+END CAPTURE
+RESET VARIABLES
+.
+. Step 6--Do Longley Data
+.
+SKIP 25
+READ /home/fs3a/lager/public_html/srd/lls/dat_longl.html ...
+     Y X1 X2 X3 X4 X5 X6
+FIT Y X1 X2 X3 X4 X5 X6
+CAPTURE LONGLEY.OUT
+   FIT Y X1 X2 X3 X4 X5 X6
+END CAPTURE
+RESET VARIABLES
+.
+. Step 7--Do Filippelli Data
+.
+SKIP 25
+READ /home/fs3a/lager/public_html/srd/lls/dat_filip.html Y X
+QUINTIC FIT Y X
+CAPTURE FILIPPELLI.OUT
+   QUINTIC FIT Y X
+END CAPTURE
+RESET VARIABLES
+.

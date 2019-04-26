@@ -1,0 +1,8 @@
+----- <~dataload\ECKERLE4.DP> Load ECKERLE4.DAT
+
+. This is file    ECKERLE4.DP
+
+DELETE Y X1 TO X5
+. SKIP 25
+READ ECKERLE4.DAT Y X1 TO X5
+

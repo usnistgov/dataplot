@@ -1,0 +1,22 @@
+This is file h10scal.men--Compute H10 scale of a variable
+ 
+--------------------
+ 1. H10 Scale
+ 2. LET A = H10 SCALE Y
+ 3.
+ 4. Variable for which to compute the H10 Scale:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Parameter to store the H10 Scale:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Compute the H10 Scale?:
+--------------------
+GR FE
+LET _2 = H10 SCALE  _1 _3
+--------------------
+WEB HELP H15 SCALE
+--------------------

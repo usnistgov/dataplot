@@ -1,0 +1,20 @@
+----- <~prob\symmcdf.top> Symmetric Distribution cdf & Tail Prob.
+
+Symmetric Distribution cdf & Tail Probabilities
+
+Uniform                  <xemf: ~prob\unicdf.men>
+Normal                   <xemf: ~prob\norcdf.men>
+Logistic                 <xemf: ~prob\logcdf.men>
+Double Exponential       <xemf: ~prob\dexcdf.men>
+Double Weibull           <xemf: ~prob\dwecdf.men>
+Double Gamma             <xemf: ~prob\dgacdf.men>
+Cauchy                   <xemf: ~prob\caucdf.men>
+Tukey-Lambda             <xemf: ~prob\tukcdf.men>
+t (df NU)                <xemf: ~prob\tcdf.men>
+Semi-Circular            <xemf: ~prob\semcdf.men>
+Triangular               <xemf: ~prob\tricdf.men>
+Von Mises                <xemf: ~prob\voncdf.men>
+Cosine                   <xemf: ~prob\coscdf.men>
+Anglit                   <xemf: ~prob\angcdf.men>
+Hyperbolic Secant        <xemf: ~prob\hsecdf.men>
+

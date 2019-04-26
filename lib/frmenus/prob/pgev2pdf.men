@@ -1,0 +1,52 @@
+This is file pgev2pdf.men--Plot Generalized Extreme Value PDF
+ 
+--------------------
+ 1. Plot a Generalized Extreme Value PDF Function
+ 2. SET MINMAX MAX; PLOT GEVPDF(X,2) FOR X = 0 0.01 5
+ 3.
+ 4. You can specify the range of values to plot either
+ 5. by providing an input vector containing the explicit
+ 6. input values or by providing the start, increment,
+ 7. and stop values.
+ 8.
+ 9. Input Variable (optional):
+ 9. @CE 1 0 42 50 ? gui-variable
+10.
+11. Start Value (gamma > 0: -inf < x < 1/gamma):
+12.             (gamma < 0:  1/gamma < x < inf):
+12. @CE 2 0 42 50 ?
+13. Increment Value (defaults to 0.1):
+13. @CE 3 0 42 50 ?
+14. Stop Value:
+14. @CE 4 0 42 50 ?
+15.
+16. Variable to Store the PDF Values (optional):
+16. @CE 5 0 42 50 ?
+17.
+18. Shape Parameter (required):
+18. @CE 6 0 42 50 ?
+19. Location Parameter:
+19. @CE 7 0 42 50 ?
+20. Scale Parameter (> 0):
+20. @CE 8 0 42 50 ?
+21.
+22.
+23. Plot the Generalized Extreme Value PDF's?
+--------------------
+AN FE
+SET MINMAX MAX
+LET ZSHAPE = 1
+@IF 6 0 LET ZSHAPE = _6
+LET ZLOC = 0
+@IF 7 0 LET ZLOC = _7
+LET ZSCALE = 1
+@IF 8 0 LET ZSCALE = _8
+LET ZINC = 0.1
+@IF 3 0 LET ZINC = _3
+@IF 1 0 LET ZJUNK = GEVPDF( _1 ,ZSHAPE,ZLOC,ZSCALE)
+@IF 1 0 PLOT ZJUNK _1
+@IF 2 0 PLOT GEVPDF( ZZZZ,ZSHAPE,ZLOC,ZSCALE) FOR ZZZZ = _2 ZINC _4
+@IF 5 0 LET _5 = YPLOT
+--------------------
+WEB HELP GEVPDF
+--------------------

@@ -1,0 +1,8 @@
+----- <~dataload\HAMAKER.DP> Load HAMAKER.DAT
+
+. This is file    HAMAKER.DP
+
+DELETE Y
+SKIP 25
+READ HAMAKER.DAT Y
+

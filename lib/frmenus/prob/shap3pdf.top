@@ -1,0 +1,24 @@
+----- <~prob\shap3pdf.top> PDF's for 3+ Shape Parameter Continuous Distributions
+
+Compute PDF's (three or more shape parameters)
+
+Compute Probability Density Function for Continuous Distributions
+with Three (or more) Shape Parameters
+
+Doubly Non-Central F                      <xemf: ~prob\dnfpdf.men>
+Doubly Non-Central T                      <xemf: ~prob\dntpdf.men>
+Generalized Exponential                   <xemf: ~prob\gexpdf.men>
+Generalized Inverse Gaussian              <xemf: ~prob\gigpdf.men>
+Generalized Trapezoid                     <xemf: ~prob\gtrpdf.men>
+Gompertz-Makeham                          <xemf: ~prob\makapdf.men>
+    (Meeker/Escobar 3-shape parameterization>
+Gompertz-Makeham (DLMF parameterization)  <xemf: ~prob\makbpdf.men>
+Log Skew T                                <xemf: ~prob\lstpdf.men>
+Meilke's Beta-Kappa                       <xemf: ~prob\kappdf.men>
+Non-Central Beta                          <xemf: ~prob\ncbpdf.men>
+Non-Central F                             <xemf: ~prob\ncfpdf.men>
+Trapezoid                                 <xemf: ~prob\trapdf.men>
+Truncated Exponential                     <xemf: ~prob\tnepdf.men>
+Uneven Two-Sided Power                    <xemf: ~prob\utspdf.men>
+Wakeby                                    <xemf: ~prob\wakpdf.men>
+

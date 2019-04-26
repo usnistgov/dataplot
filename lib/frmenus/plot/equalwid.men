@@ -1,0 +1,31 @@
+This is file equalwid.men--Compute Lower and Upper Subset Limits
+ 
+--------------------
+ 1. Equal width subsets
+ 2. Macro
+ 3.
+ 4. Variable to Store the Lower Limits:
+ 4. @CE 1 0 33 50 ?
+ 5. Variable to Store the Upper Limits:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Lower Limit:
+ 7. @CE 3 0 42 50 *
+ 8. Upper Limit:
+ 8. @CE 4 0 42 50 *
+ 9. Subset Width (Increment):
+ 9. @CE 5 0 42 50 *
+10.
+11.
+12. Compute the Upper and Lower Limit Variables?:
+--------------------
+GR FE
+LET _1 = SEQUENCE _3 _5 _4
+LET _2 = _1
+LET ZZZZN = SIZE _1
+LET ZZZZNM1 = ZZZZN - 1
+RETAIN _1 FOR I = 1 1 ZZZZNM1
+RETAIN _2 FOR I = 2 1 ZZZZN
+--------------------
+WEB HELP SEQUENCE
+--------------------

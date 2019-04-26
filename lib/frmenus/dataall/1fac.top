@@ -1,0 +1,9 @@
+----- <~dataall\1fac.top> View/etc. 1-Factor Data (incl. 2-Sample)
+
+View/Load/Print 1-Factor Data (Including the "2-Sample" Problem)
+
+NIST data                 <~dataall\1facnist.top>
+Natrella Data             <~dataall\1facnatr.top>
+Sematech Data             <~dataall\1facsema.top>
+Other data                <~dataall\1facothe.top>
+

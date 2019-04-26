@@ -1,0 +1,22 @@
+This is file matr_ran.men--Compute rank of a matrix
+ 
+--------------------
+ 1. Matrix Rank
+ 2. LET A = MATRIX RANK M
+ 3.
+ 4. Matrix for which to compute the rank:
+ 4. @CE 1 0 33 50 ? gui-matrix
+ 5. Parameter to store the rank:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -5 50 *
+ 9.
+10.
+11. Compute the Matrix Rank?:
+--------------------
+GR FE
+LET _2 = MATRIX RANK  _1 _3
+--------------------
+WEB HELP MATRIX RANK
+--------------------

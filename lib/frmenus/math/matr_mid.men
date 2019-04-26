@@ -1,0 +1,29 @@
+This is file matr_min.men--Matrix Minkowsky Distance
+ 
+--------------------
+ 1. Minkowsky Distance
+ 2. LET MDIST = MINKOWSKY ROW DISTANCE M
+ 3.
+ 4. Name of Original Matrix:
+ 4. @CE 1 0 42 50 ? gui-matr
+ 5. Name of Matrix to Store Minkowsky Distances:
+ 5. @CE 2 0 42 50 ? 
+ 6.
+ 7. Compute Minkowsky Distances for (pick one):
+ 8. @CE 3 1 10 20 rows
+ 8. @CE 3 2 21 31 columns
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 4 0 1 50 *
+12.
+13.
+14. Compute the Minkowsky Distances?:
+--------------------
+GR FE
+@IF 3 1 LET ZZZZN = MATRIX NUMBER OF ROWS _1
+@IF 3 1 DIMENSION MATRIX COLUMNS ZZZZN
+@IF 3 1 LET _2 = MINKOWSKY ROW DISTANCE _1 _4
+@IF 3 2 LET _2 = MINKOWSKY COLUMN DISTANCE _1 _4
+--------------------
+WEB HELP MINKOWSKY DISTANCE
+--------------------

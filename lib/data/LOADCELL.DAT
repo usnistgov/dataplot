@@ -1,0 +1,58 @@
+This is the data file   LOADCELL.DAT
+
+Source: This example is used on page mpc365.htm of the e-Handbook
+        to demonstrate an instrument calibration problem.  Data is
+        from Carroll Croarkin.
+
+Description:  This data contains load cell measurements.  There are
+              three repititions at each load level and there are 11
+              load levels.
+
+Data:  Column 1 = Load level
+       Column 2 = Measured response
+
+To read into Dataplot, enter
+
+    SKIP 25
+    READ LOADCELL.DAT X Y
+
+
+
+
+
+
+X          Y
+-------------------
+ 2.     0.20024    
+ 2.     0.20016    
+ 2.     0.20024
+ 4.     0.40056    
+ 4.     0.40045    
+ 4.     0.40054
+ 6.     0.60087    
+ 6.     0.60075    
+ 6.     0.60086
+ 8.     0.80130    
+ 8.     0.80122    
+ 8.     0.80127
+10.     1.00173    
+10.     1.00164    
+10.     1.00173
+12.     1.20227    
+12.     1.20218    
+12.     1.20227
+14.     1.40282    
+14.     1.40278    
+14.     1.40279
+16.     1.60344    
+16.     1.60339    
+16.     1.60341
+18.     1.80412    
+18.     1.80409    
+18.     1.80411
+20.     2.00485    
+20.     2.00481    
+20.     2.00483
+21.     2.10526    
+21.     2.10524    
+21.     2.10524

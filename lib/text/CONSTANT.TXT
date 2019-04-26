@@ -1,0 +1,64 @@
+----------  *MATH, PHYSCIAL, & AND ENGINEERING CONSTANTS*  ----------
+
+pi                                         3.14159265358979
+e                                          2.718281828459045
+1/sqrt(2*pi)                               0.3989422804014326779
+loge(2)                                    0.6931471805599453094
+loge(3)                                    1.098612288668109691395
+sqrt(2)                                    1.4142135623730950488
+sqrt(3)                                    1.7320508075688772935
+gamma                                      0.5772156649015328606
+gamma(0.5)                                 1.772453850905516
+
+Speed of light in vacuum                   2.997925
+Elementary charge                          1.60210
+Elementary charge                          4.80298
+Avogadro constant                          6.02252
+Electron rest mass                         9.1091
+Electron rest mass                         5.48597
+Proton rest mass                           1.67252
+Proton rest mass                           1.00727663
+Neutron rest mass                          1.67482
+Neutron rest mass                          1.0086654
+Faraday constant                           9.64870
+Faraday constant                           2.89261
+Planck constant                            6.6256
+Planck constant                            1.05450
+Fine structure constant                    7.29720
+Fine structure constant                    1.370388
+Fine structure constant                    1.161385
+Fine structure constant                    5.32492
+Charge-to-mass ratio for electron          1.758796
+Charge-to-mass ratio for electron          5.27274
+Quantum-charge ratio                       4.13556
+Quantum charge ratio                       1.37947
+Compton wavelength of electron             2.42621
+Compton wavelength of electron             3.86144
+Compton wavelength of proton               1.32140
+Compton wavelength of proton               2.10307
+Rydberg constant                           1.0973731
+Bohr radius                                5.29167
+Electron radius                            2.81777
+Electron radius                            7.9398
+Thomson cross section                      6.6516
+Gyromagnetic ratio of proton               2.67519
+Gyromagnetic ratio of proton               4.25770
+Bohr magneton                              9.2732
+Nuclear magneton                           5.0505
+Proton moment                              1.41049
+Anomalous electron moment corrn.           1.159615
+Zeeman splitting constant                  4.66858
+Gas constant                               8.3143
+Normal volume perfect gas                  2.24136
+Boltzmann constant                         1.38054
+First radiation constant                   3.7405
+Second radiation constant                  1.43879
+Wien displacement constant                 2.8978
+Stefan-Boltzmann constant                  5.6697
+Gravitational constant                     6.670
+
+Source--Abramowitz & Stegun (1964). Handbook of
+        Mathematical Functions.  National Bureau of
+        Standards Applied Mathematics Series Vol. 55.
+        U. S. Gov. Printing Office, Washington, D. C.,
+        Page 7.

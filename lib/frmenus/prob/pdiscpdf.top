@@ -1,0 +1,43 @@
+----- <~prob\pdiscpdf.top> Discrete Distribution pdf
+
+Discrete Distribution PDF Probabilities
+
+Plot Probability Density Function for
+Discrete Distributions
+
+Beta-Binomial                                  <xemf: ~prob\pbbnpdf.men>
+Beta-Geometric                                 <xemf: ~prob\pbgepdf.men>
+Beta-Negative Binomial                         <xemf: ~prob\pbnbpdf.men>
+Binomial                                       <xemf: ~prob\pbinpdf.men>
+Borel-Tanner                                   <xemf: ~prob\pbtapdf.men>
+Classical Matching                             <xemf: ~prob\pmatpdf.men>
+Consul
+    (Theta Parameterization)                   <xemf: ~prob\pcon1pdf.men>
+    (Mu Parameterization)                      <xemf: ~prob\pcon2pdf.men>
+Discrete Uniform                               <xemf: ~prob\pdispdf.men>
+Discrete Weibull                               <xemf: ~prob\pdiwpdf.men>
+Geeta
+    (Theta Parameterization)                   <xemf: ~prob\pget1pdf.men>
+    (Mu Parameterization)                      <xemf: ~prob\pget2pdf.men>
+Generalized Logarithmic Series                 <xemf: ~prob\pglspdf.men>
+Generalized Lost Games                         <xemf: ~prob\pglgpdf.men>
+Generalized Negative Binomial                  <xemf: ~prob\pgnbpdf.men>
+Geometric
+    (number of trials before first success)    <xemf: ~prob\pgeopdf.men>
+    (number of trials including first success) <xemf: ~prob\pgeo2pdf.men>
+Hermite                                        <xemf: ~prob\pherpdf.men>
+Hypergeometric                                 <xemf: ~prob\phyppdf.men>
+Katz                                           <xemf: ~prob\pkatpdf.men>
+Lagrange Poisson                               <xemf: ~prob\plpopdf.men>
+Leads in Coin Tossing                          <xemf: ~prob\plctpdf.men>
+Logarithmic Series                             <xemf: ~prob\pdlgpdf.men>
+Lost Games                                     <xemf: ~prob\plospdf.men>
+Negative Binomial                              <xemf: ~prob\pnbpdf.men>
+Poisson                                        <xemf: ~prob\ppoipdf.men>
+Polya-Aeppli                                   <xemf: ~prob\ppappdf.men>
+Quasi-Binomial Type I                          <xemf: ~prob\pqbipdf.men>
+Yule                                           <xemf: ~prob\pyulpdf.men>
+Waring                                         <xemf: ~prob\pwarpdf.men>
+Zeta                                           <xemf: ~prob\pzetpdf.men>
+Zipf                                           <xemf: ~prob\pzippdf.men>
+

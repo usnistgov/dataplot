@@ -1,0 +1,8 @@
+----- <~dataload\CROARK3.DP> Load CROARK3.DAT
+
+. This is file    CROARK3.DP
+
+DELETE Y DAY
+SKIP 25
+READ CROARK3.DAT Y DAY
+

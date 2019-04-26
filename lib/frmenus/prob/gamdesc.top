@@ -1,0 +1,23 @@
+----- <~prob\gamdesc.top> Gamma Description
+
+*Gamma Description
+
+pdf: ...
+
+Moments   : E(X)  = u + gamma
+            SD(X) = s * sqrt(gamma)
+
+Type      : Continuous, skewed family of distributions--
+            moderate-tailed to moderate/long-tailed.
+Domain    : 0 to +infinity
+Synonym   : Erlang (if gamma is a positive integer)
+            Exponential (if gamma = 1)
+            Raleigh (if gamma = 2)
+Genesis   : LaPlace (1836), Pearson (1900)
+Definition: If X is Chi-squared (nu),
+            then X/2 is Gamma (nu/2).
+
+Reference : Johnson & Kotz,
+            Continuous Univariate Distributions-2,
+            Chapter 17 (pages 166-206).
+

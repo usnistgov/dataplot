@@ -1,0 +1,70 @@
+----- <~help\dpproc3.top> Alternative Approches for Exporting Graphs
+
+Alternative Approoaches for Importing Dataplot Graphics into Word/PPT
+
+Alternative Approoaches for Importing Dataplot
+Graphics into Word/PPT
+
+
+Although we believe the recommended approach provides
+the best option, there are a number of other approaches
+that we mention here.
+
+1) On most Unix platforms, you can generate JPEG or PNG
+   files directly.  For example:
+
+      SET IPL1NA PLOT1.PNG
+      DEVICE 2 GD PNG
+      ...  PLOT ...
+      DEVICE 2 CLOSE
+
+   The primary disadvantage of this method is that the
+   graphs are not generated in as high a quality as graphs
+   generated using Postscript.
+
+   For details                         <xcl: HELP GD>
+
+2) You can have Dataplot use Ghostscript to automatically
+   convert Postscript output to PDF, JPEG, or some other
+   format supported by Ghostscript.  The primary drawback
+   of this option is that the graphs need to be generated
+   in portrait rather than landscape mode.  Enter
+   HELP POSTSCRIPT CONVERT for details.
+
+   For details                         <xcl: HELP POSTSCRIPT CONVERT>
+
+3) You can generate the graphics output in Postscript
+   format.  Then you can either use some external program
+   to convert to a suitable format (e.g., distill to convert
+   to PDF or Image Magik to convert to a large number of
+   formats) or try to import Postscript directly.
+
+   There are a number of complications you need to be aware
+   of if you want to import Postscript directly (which is
+   why we recommend the PDF option when available).  These
+   complications are discussed in the "Issues regarding
+   Importing Postscript" menu.
+
+   Note that the Postscript format was developed by Adobe.
+   For this reason, Adobe products are more likely to have
+   builtin Postscript translators.  The direct importing of
+   Postscript files should work well for software that has
+   a builtin Postscript translator.   Most non-Adobe programs
+   (e.g., Word, Power Point) do not have builtin translators
+   even when they allow you to import Postscript files.
+
+4) You can generate the plot on the screen and then cut and
+   paste the plot into your application.  The primary drawback
+   of this approach is graph will be in screen resolution
+   (i.e., 72 dpi) rather than printer resolution (300 dpi).
+   Although this may not be noticeable for a screen
+   presentation, there is a noticeable loss of quality for
+   printed documents.
+
+   If you would prefer to use the cut and paste approach, we
+   recommend generating Postscript output, importing the
+   Postscript graph into Ghostview, and then performing the
+   cut and paste from Ghostview to your application program.
+   This allows you to preserve the high quality Postscript
+   fonts.
+

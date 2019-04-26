@@ -1,0 +1,30 @@
+This is file synch.men--Compute Synchrotron Radiation Function
+ 
+--------------------
+ 1. Synchrotron Radiation Function
+ 2. LET Y = SYNCH1(X); LEY Y = SYNCH2(X)
+ 3.
+ 4. The input values can be variables, parameters, or simply
+ 5. enter a constant.
+ 6. 
+ 7. Input Argument:
+ 7. @CE 1 0 42 50 ? gui-variable
+ 8. Order:
+ 9. @CE 2 1 11 15 1
+ 9. @CE 2 2 16 20 2
+10.
+11. Variable to store the transformed result:
+11. @CE 3 0 42 50 ?
+12.
+13. Subset/Except/For Specification:
+14. @CE 4 0 -5 50 *
+15.
+16.
+17. Compute the Transformation?:
+--------------------
+GR FE
+@IF 2 1 LET _3 = SYNCH1( _1 ) _4
+@IF 2 2 LET _3 = SYNCH2( _1 ) _4
+--------------------
+WEB HELP SYNCH
+--------------------

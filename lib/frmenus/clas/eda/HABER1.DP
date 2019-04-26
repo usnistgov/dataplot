@@ -1,0 +1,10 @@
+----- <~dataloex\HABER1.DP> Load & Execute HABER1.DAT
+
+. This is file    HABER1.DP
+
+DELETE Y
+SKIP 25
+READ HABER1.DAT Y
+TITLE HABER1.DAT
+/
+

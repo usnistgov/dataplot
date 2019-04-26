@@ -1,0 +1,36 @@
+----- <~dp\modeoper.top> Modes of Operation
+ 
+Modes of Operation
+ 
+You may run Dataplot interactively or batch:
+ 
+Interactive (best for exploratory data analysis)
+ 
+   1. Enter commands manually
+      This is the fastest and most common mode for
+      the experienced Dataplot user.
+         Advantage: fast
+         Disadvantage: must know commands and syntax
+ 
+   2. Call macro (Dataplot script) files: CALL [file name]
+      This is useful for routine running and rerunning
+      of production runs.
+         Advantage: few keystrokes
+         Disadvantage: the macro files must pre-exist
+ 
+   3. Use point-&-click graphical user interface
+      This is the most common mode for the novice user
+         Advantage: not need to know commands
+         Disadvantage: slower than manual if commands known
+ 
+   4. Any mixture of the above
+      Even if the user is in the menu mode, it may
+      be overridden by manually entering commands
+      (including CALL commands) anywhere on the
+      screen.
+ 
+Batch (best for productive runs)
+ 
+   From DOS : DP       [name of macro (script file)]
+   From UNIX: dataplot [name of macro (script file)]
+ 

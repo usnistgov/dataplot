@@ -1,0 +1,8 @@
+----- <~dataload\FULLODR2.DP> Load FULLODR2.DAT
+
+. This is file    FULLODR2.DP
+
+DELETE V H
+SKIP 25
+READ FULLODR2.DAT V H
+

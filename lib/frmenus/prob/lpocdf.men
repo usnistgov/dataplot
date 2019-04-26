@@ -1,0 +1,42 @@
+This is file lpocdf.men--Compute Lagrange Poisson cdf and tail probability
+ 
+--------------------
+ 1. Compute Lagrange Poisson cdf and Tail Probability
+ 2. LET Y = LPOCDF(X,LAMBDA,THETA)
+ 3.
+ 4. Input values:
+ 5.                             x (x = 0, 1, ...):
+ 5. @CE 1 0 42 50 ?
+ 6.       shape parameter lambda (0 < lambda < 1):
+ 6. @CE 2 0 42 50 ?
+ 7.             shape parameter theta (theta > 0):
+ 7. @CE 3 0 42 50 
+ 8.
+ 9. Output parameters:
+10.                  name for the cdf value:
+10. @CE 4 0 42 50 ?
+11.     name for the tail probability value:
+11. @CE 5 0 42 50 ?
+12.
+13.
+14. Compute the Probability?
+--------------------
+AN FE
+LET ZLAMBDA = 0.5
+LET ZTHETA = 1
+@IF 2 0 LET ZLAMBDA = _2
+IF ZLAMBDA <= 0
+   LET ZLAMBDA = 0.5
+END OF IF
+IF ZLAMBDA >= 1
+   LET ZLAMBDA = 0.5
+END OF IF
+@IF 3 0 LET ZTHETA = _3
+IF ZTHETA <= 0
+   LET ZTHETA = 1
+END OF IF
+@IF 4 0 LET _4 = LPOCDF( _1 , ZLAMBDA , ZTHETA )
+@IF 5 0 LET _5 = 1 - LPOCDF( _1 , ZLAMBDA , ZTHETA )
+--------------------
+WEB HELP LPOCDF
+--------------------

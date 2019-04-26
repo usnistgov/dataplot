@@ -1,0 +1,8 @@
+----- <~datalist\BOXBLOOD.top> BOXBLOOD.DAT
+ 
+BOXBLOOD.DAT
+ 
+View     <xcl: LIST BOXBLOOD.DAT>
+Load     <x2cl: SKIP 25; READ BOXBLOOD.DAT Y X RUNSEQ>
+Print    <xccl: printfile C:\DATAPLOT\BOXBLOOD.DAT>
+ 

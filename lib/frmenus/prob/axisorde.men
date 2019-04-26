@@ -1,0 +1,35 @@
+This is file axisorde.men--Set Axis Order for PPCC/KS Plot
+ 
+--------------------
+ 1. Set Axis Order for PPCC/KS Plot
+ 2. SET PPCC PLOT AXIS ORDER REVERSE
+ 3.
+ 4. When there are two shape parameters, the Y axis
+ 5. will contain the value of the correlation
+ 6. coeffient (or KS statistic).  The X axis will
+ 7. contain the value of the second shape parameter.
+ 8. Each value of the first shape parameter will be
+ 9. represented by a separate curve on the plot.
+10.
+11. It may be useful to reverse the order of the
+12. shape parameters (it can actually be useful to
+13. generate the plot with both the default order
+14. and the reversed order).
+15.
+16. Note that if you change the axis order, it
+17. stays in effect for all subsequent PPCC/KS plots
+18. until you change it again.
+19.
+20. Set the axis order:
+21. @CE 1 1 1 30 Default
+22. @CE 1 2 1 30 Reversed
+23.
+24.
+25. Specify the Axis Order?
+--------------------
+GR FE
+SET PPCC PLOT AXIS ORDER DEFAULT
+@IF 1 2 SET PPCC PLOT AXIS ORDER REVERSED
+--------------------
+WEB HELP PPCC PLOT
+--------------------

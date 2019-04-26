@@ -1,0 +1,27 @@
+----- <~univ\stattech.top> Statistics Techniques: Univariate
+
+Quantitative Techniques: Univariate
+
+NIST/SEMATECH Handbook (Quantitative Techniques) <xcl: web handbook quantitative gallery>
+
+Analysis on Full Data Set
+   Summary Statistics for Univariate Data   <xemf: ~stat\summstat.men>
+   Confidence Limits for Mean               <xemf: ~stat\conlimme.men>
+   Chi-Square Test for Standard Deviation   <xemf: ~stat\chisqtst.men>
+   Runs Test for Randomness                 <xemf: ~stat\runs.men>
+   Grubbs Test for Outliers                 <xemf: ~stat\grubb.men>
+
+   2-Parameter Weibull ML Estimates         <xemf: ~stat\weibmle.men>
+   B-Basis Tolerance Limits                 <xemf: ~stat\bbasis.men>
+   A-Basis Tolerance Limits                 <xemf: ~stat\abasis.men>
+   Anderson-Darling 1-Sample Goodnes of Fit Test <xemf: ~stat\andedarl.men>
+   Capability Analysis                      <xemf: ~stat\capabili.men>
+
+Analysis on Halves:
+   t test                            <xemf: ~univ\ttest2.men>
+   F test                            <xemf: ~univ\ftest2.men>
+
+Analysis on Quarters:
+   ANOVA                             <xemf: ~univ\1facano4.men>
+   Bartlett's test                   <xemf: ~univ\barttes4.men>
+

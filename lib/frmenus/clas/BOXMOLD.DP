@@ -1,0 +1,10 @@
+----- <~dataloex\BOXMOLD.DP> Load & Execute BOXMOLD.DAT
+
+. This is file    BOXMOLD.DP
+
+DELETE Y X1 TO X8
+SKIP 25
+READ BOXMOLD.DAT Y X1 TO X8
+TITLE BOXMOLD.DAT
+/
+

@@ -1,0 +1,37 @@
+This is the Dataplot data file        FULLODR1.DAT
+This is the data set from page 230 - 238 of Wayne Fuller's
+book "Measurement Error Models", John Wiley, 1987.
+This is one of the data sets used in the version 2.01 ODRPACK manual.
+We have included it here to calibrate the Dataplot implementation
+of the ODRPACK package.  Data are the percent saturation of
+nitrogen gas in a brine solution forced into the pores of
+sandstone and the observed compressional wave velocity of 
+ultrasonic signals propogated through the sandstone.
+The proposed model is:
+    Y = B1 + B2*[EXP(B3*X) - 1]**2
+Contact--Alan Heckert, NIST
+Number of observations                       = 12
+Number of observations per line image        = 2
+Order of variables on a line image--
+   1. Factor Variable X     = Compression Velocity
+   2. Dependent Variable Y  = Percent Saturation
+  
+To read this file into Dataplot--
+   SKIP 25
+   READ FULLODR1.DAT X Y
+
+
+      X        Y
+----------------
+    0.0   1265.0 
+    0.0   1263.6 
+    5.0   1258.0 
+    7.0   1254.0 
+    7.5   1253.0 
+   10.0   1249.8 
+   16.0   1237.0 
+   26.0   1218.0 
+   30.0   1220.6 
+   34.0   1213.8 
+   34.5   1215.5 
+  100.0   1212.0

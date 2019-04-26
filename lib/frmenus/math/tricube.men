@@ -1,0 +1,22 @@
+This is file tricube.men--Compute biweight of a variable
+ 
+--------------------
+ 1. Tricube
+ 2. LET A = TRICUBE Y
+ 3.
+ 4. Variable for which to compute the tricube:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the tricubes:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 -2 50 *
+ 9.
+10.
+11. Compute the Tricube?:
+--------------------
+GR FE
+LET _2 = TRICUBE  _1 _3
+--------------------
+WEB HELP TRICUBE
+--------------------

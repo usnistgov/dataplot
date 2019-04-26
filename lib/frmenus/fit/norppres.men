@@ -1,0 +1,25 @@
+This is file norppres.men--Normal Prob Plot of Residuals    buggy 4/97
+
+--------------------
+ 1. Normal Probability Plot of Residuals
+ 2. NORMAL PROBABILITY PLOT RES
+ 3.
+ 4. Character type for     plot points:
+ 4. @CE 1 0 38 50 ?
+ 5. Line      type between plot points:
+ 5. @CE 2 0 38 50 ?
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 ?
+ 9.
+10.
+11. Generate the Plot?:
+--------------------
+GR FE
+@IF 1 0 CHARACTERS _1
+@IF 2 0 LINES _2
+NORMAL PROBABILITY PLOT RES
+@IF 3 0 NORMAL PROBABILITY PLOT RES _3
+--------------------
+WEB HELP PROBABILITY PLOT
+--------------------

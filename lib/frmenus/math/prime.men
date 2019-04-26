@@ -1,0 +1,26 @@
+This is file prime.men--Generate a prime of prime numbers
+ 
+--------------------
+ 1. Prime Numbers
+ 2. LET Y = PRIME NUMBERS FOR I = 1 1 100
+ 3.
+ 4. Start value (a positive integer):
+ 4. @CE 1 0 33 50 ?
+ 5. Stop value (a positive integer):
+ 5. @CE 2 0 33 50 ?
+ 6. Increment (a positive integer):
+ 6. @CE 3 0 33 50 ?
+ 7. Variable to store the prime numbers:
+ 7. @CE 5 0 33 50 ? gui-none
+ 8.
+ 9. Subset/Except/For Specification:
+10. @CE 6 0 1 50 *
+11.
+12.
+13. Generate the Prime Numbers?:
+--------------------
+GR FE
+LET _5 = PRIME NUMBERS FOR I = _1 _3 _2  _6
+--------------------
+WEB HELP PRIME NUMBERS
+--------------------

@@ -1,0 +1,38 @@
+This is file matr_add.men--Matrix addition
+ 
+--------------------
+ 1. Matrix addition
+ 2. LET MNEW = MATRIX ADDITION MA MB
+ 3.
+ 4. The first argument should be a matrix.  The second
+ 5. argument can be either a matrix, a vector, or a
+ 6. parameter (or constant).  If a parameter is given,
+ 7. that value is added to each element of the first matrix.
+ 8. If a variable is given, the addition is performed by
+ 9. adding each column of the matrix to the given variable.
+10. If a matrix is given, the corresponding elements of both
+11. matrices are added.
+12.
+15. Name of first matrix:
+15. @CE 1 0 33 50 ? gui-matrix
+16. Name of second matrix/variable/parameter:
+16. @CE 2 0 33 50 ? gui-matrix
+17. Name of matrix to store the results:
+17. @CE 3 0 33 50 ? gui-matrix
+18.
+19. Operation to perform:
+19. @CE 4 1 24 36 addition
+19. @CE 4 2 38 50 subtraction
+20.
+21. Subset/Except/For Specification:
+22. @CE 5 0 -1 50 *
+23.
+24.
+25. Perform the Matrix Addition?:
+--------------------
+GR FE
+@IF 4 1 LET _3 = MATRIX ADDITION  _1 _2  _5
+@IF 4 2 LET _3 = MATRIX SUBTRACTION  _1 _2  _5
+--------------------
+WEB HELP MATRIX ADDITION
+--------------------

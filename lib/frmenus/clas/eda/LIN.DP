@@ -1,0 +1,10 @@
+----- <~dataloex\LIN.DP> Load & Execute LIN.DAT
+
+. This is file    LIN.DP
+
+DELETE Y
+SKIP 25
+READ LIN.DAT Y
+TITLE LIN.DAT
+/
+

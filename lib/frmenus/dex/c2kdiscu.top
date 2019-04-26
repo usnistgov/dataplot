@@ -1,0 +1,18 @@
+----- <~dex\c2kdiscu.top> Discussion:  2**k Full Factorial Designs
+
+Discussion:  2**k Full Factorial Designs
+
+A 2**k full factorial design is a design which examines
+k factors--each with 2 levels (= settings).  The total
+number of runs for a 2**k full factorial design is
+
+   n = 2**k
+
+The 2**3 and 2**4 designs (with only n = 8 and n
+= 16 runs, respectively) are popular designs which
+provide much information and insight to the scientist
+and engineer.  The 2**5, 2**6 designs and higher designs
+are important but less frequently used due to the
+increasingly large sample sizes required by such
+designs.
+

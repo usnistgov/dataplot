@@ -1,0 +1,9 @@
+----- <~prob\ntcfhisp.top> Normal, t, chi-squared, F pdf Plots
+
+Normal, t, chi-squared, F pdf Plots
+
+Normal                   <xemf: ~prob\norhispd.men>
+t                        <xemf: ~prob\thispd.men>
+chi-squared              <xemf: ~prob\chshispd.men>
+F                        <xemf: ~prob\fhispd.men>
+

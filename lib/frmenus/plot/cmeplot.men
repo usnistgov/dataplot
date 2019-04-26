@@ -1,0 +1,49 @@
+This is file cmeplot.men--CME Plot
+ 
+--------------------
+ 1. CME Plot
+ 2. CME PLOT Y
+ 3.
+ 4. Vertical   Axis Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Type of Plot:
+ 7. @CE 2 1 5 40 Conditional Mean Exceedance
+ 8. @CE 2 2 5 40 Conditional Median Exceedance
+ 9. @CE 2 3 5 40 Conditional Midmean Exceedance
+10. @CE 2 4 5 40 Conditional Exceedance
+11.
+12. Line Types (solid, dot, dash, ...)
+12. @CE 3 0 42 50 * gui-line
+13. Character Type (blank, x, circ, ...)
+13. @CE 4 0 42 50 * gui-char
+14. Character Fill (off, on)
+14. @CE 5 0 42 50 * gui-ooff
+15.
+16. Title:
+16. @CE 6 0 10 50 *
+17. Left Axis Label:
+17. @CE 7 0 22 50 *
+18. Bottom Axis Label:
+18. @CE 8 0 22 50 *
+19.
+20. Subset/Except/For Specification:
+21. @CE 9 0 1 50 *
+22.
+23.
+24. Generate the CME Plot?:
+--------------------
+GR FE
+LINES _3
+CHARACTERS _4
+CHARACTER FILL _5
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+@IF 2 1 CME PLOT _1 _9
+@IF 2 2 CONDITIONAL MEDIAN EXCEEDANCE PLOT _1 _9
+@IF 2 3 CONDITIONAL MIDMEAN EXCEEDANCE PLOT _1 _9
+@IF 2 4 CONDITIONAL EXCEEDANCE PLOT _1 _9
+--------------------
+WEB HELP CME PLOT
+--------------------

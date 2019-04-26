@@ -1,0 +1,81 @@
+This is file jackplpe.men--Generate Jacknife Plots (Percentiles)
+ 
+--------------------line 3
+01. Jacknife Plots (Percentiles and Extremes)
+02. JACKNIFE <statistic> PLOT Y
+03.
+04. Response Variable:
+04. @CE 1 0 42 50 ? gui-vari
+05. Variable to Save Computed Jacknife Values:
+05. @CE 2 0 42 50 ?
+06. Optional Group ID Variable:
+06. @CE 3 0 42 50 ?
+07.
+08. Statistic (Select one):
+09. @CE 4 1 5 25 minimum
+09. @CE 4 2 30 50 maximum
+10. @CE 4 3 5 25 extreme
+10. @CE 4 4 30 50 decile
+11. @CE 4 5 5 25 lower hinge
+11. @CE 4 6 30 50 upper hinge
+12. @CE 4 7 5 25 lower quartile
+12. @CE 4 8 30 50 upper quartile
+13. @CE 4 9 5 25 percentile
+13. @CE 4 10 30 50 quantile
+14.
+15. Desired percentile (>0, < 100):
+15. @CE 5 0 42 50 ? 
+16. Desired quantile (> 0, < 1):
+16. @CE 6 0 42 50 ?
+17. Desired decile (first, second, ..., ninth):
+17. @CE 7 0 42 50 ?
+18.
+19. Character Type for Data
+19. @CE 8 0 42 50 * gui-char
+20. Character Fill for Data
+20. @CE 9 0 42 50 gui-ooff
+21. Line Type for Data-connecting Line
+21. @CE 10 0 42 50 * gui-line
+22.
+23. Title:
+23. @CE 11 0 10 50 *
+24. Left Axis Label:
+24. @CE 12 0 22 50 *
+25. Bottom Axis Label:
+25. @CE 13 0 22 50 *
+26.
+27. Subset/Except/For Specification:
+28. @CE 14 0 1 50 *
+29.
+30. Generate the Jacknife Plot?:
+--------------------
+TITLE _11
+Y1LABEL _12
+X1LABEL _13
+CHARACTERS SAVE
+LINES SAVE
+CHARACTERS _8
+CHARACTER FILL _9
+LINES _10
+@IF 3 0 CHARACTERS _8 ALL
+@IF 3 0 CHARACTER FILL _9 ALL
+@IF 3 0 LINES _10 ALL
+LET XQ = _6
+LET P100 = _5
+.
+@IF 4 1 JACKNIFE MINIMUM PLOT _1 _3 _14
+@IF 4 2 JACKNIFE MAXIMUM PLOT _1 _3 _14
+@IF 4 3 JACKNIFE EXTREME PLOT _1 _3 _14
+@IF 4 4 JACKNIFE _6 DECILE PLOT _1 _3 _14
+@IF 4 5 JACKNIFE LOWER HINGE PLOT _1 _3 _14
+@IF 4 6 JACKNIFE UPPER HINGE PLOT _1 _3 _14
+@IF 4 7 JACKNIFE LOWER QUARTILE PLOT _1 _3 _14
+@IF 4 8 JACKNIFE UPPER QUARTILE PLOT _1 _3 _14
+@IF 4 9 JACKNIFE PERCENTILE PLOT _1 _3 _14
+@IF 4 10 JACKNIFE QUANTILE PLOT _1 _3 _14
+CHARACTER RESTORE
+LINE RESTORE
+LET _2 = YPLOT
+--------------------
+WEB HELP JACKNIFE PLOT
+--------------------

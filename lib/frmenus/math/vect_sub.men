@@ -1,0 +1,24 @@
+This is file vect_sub.men--Compute vector subtraction of a variable
+ 
+--------------------
+ 1. Vector Subtraction
+ 2. LET A = VECTOR SUBTRACTION Y1 Y2
+ 3.
+ 4. First variable for which to compute the vector subtraction:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Second variable for which to compute the vector subtraction:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. Variable to store the vector subtraction:
+ 6. @CE 3 0 33 50 ? gui-none
+ 7.
+ 8. Subset/Except/For Specification:
+ 9. @CE 4 0  -20 50 *
+10.
+11.
+12. Compute the Vector Subtraction?:
+--------------------
+GR FE
+LET _3 = VECTOR SUBTRACTION  _1 _2 _4
+--------------------
+WEB HELP VECTOR SUBTRACTION
+--------------------

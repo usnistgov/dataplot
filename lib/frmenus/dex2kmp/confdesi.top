@@ -1,0 +1,30 @@
+----- <~dex2kmp\confdesi.top> Confounding in Various Designs
+ 
+Confounding in Various Designs
+ 
+Confounding is an unpleasant side-effect which is
+present in many designs (even the crude
+one-factor-at-a-time designs which are an
+anachronistic staple of engineering
+experimentation).  However, the 2-level fractional
+factorial designs (and orthogonal designs in
+general) are much better suited to "handle",
+minimize, compute, and control such intrinsic
+confounding.
+ 
+With one-factor-at-a-time designs, the confounding
+structure is shallower (if factors are confounded,
+they are only partially confounded) but broader (a
+given factor is confounded with many other
+factors).
+ 
+With fractional factorial (and orthogonal)
+designs, the confounding structure is deeper (if
+factors are confounded, they are fully confounded)
+but more restricted (a given factor is confounded
+with only a few other factors).  The net effect is
+that the confounding structure in fractional
+factorial (and orthogonal) designs is superior
+because it is limited, partitionable,
+controllable, and pre-determinable.
+ 

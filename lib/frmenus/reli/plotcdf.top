@@ -1,0 +1,30 @@
+----- <~reli\plotcdf.top> Plot Cumulative Distribution Functions
+
+Plot Cumulative Distribution (CDF) Functions
+
+Normal                              <xemf: ~prob\pnorcdf.men>
+Lognormal                           <xemf: ~prob\plgncdf.men>
+Power Normal                        <xemf: ~prob\ppnrcdf.men>
+Power Lognormal                     <xemf: ~prob\pplncdf.men>
+
+Exponential                         <xemf: ~prob\pexpcdf.men>
+Geometric Extreme Exponential       <xemf: ~prob\pgeecdf.men>
+
+Weibull (Minimum)                   <xemf: ~prob\pwei1cdf.men>
+Weibull (Maximum)                   <xemf: ~prob\pwei2cdf.men>
+Inverted Weibull                    <xemf: ~prob\piwecdf.men>
+Exponentiated Weibull               <xemf: ~prob\pewecdf.men>
+Bi-Weibull                          <xemf: ~prob\pbwecdf.men>
+
+Wald                                <xemf: ~prob\pwalcdf.men>
+Inverse Gaussian                    <xemf: ~prob\pigcdf.men>
+Reciprocal Inverse Gaussian         <xemf: ~prob\prigcdf.men>
+Fatigue Life                        <xemf: ~prob\pflcdf.men>
+
+Gamma                               <xemf: ~prob\pgamcdf.men>
+Log Gamma                           <xemf: ~prob\plgacdf.men>
+Inverted Gamma                      <xemf: ~prob\pigacdf.men>
+
+Alpha                               <xemf: ~prob\palpcdf.men>
+Exponential Power                   <xemf: ~prob\ppexcdf.men>
+

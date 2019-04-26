@@ -1,0 +1,8 @@
+----- <~dataall\DDS21.top> DDS21.DAT
+
+DDS21.DAT
+
+View     <xcl: LIST DDS21.DAT>
+Load     <xcf: ~dataload/DDS21.DP>
+Print    <xccl: printfile C:\DATAPLOT\DDS21.DAT>
+

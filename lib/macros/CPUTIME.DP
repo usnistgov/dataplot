@@ -1,0 +1,22 @@
+. Name:    CPUTIME.DP
+. Purpose: Print the cumulative CPUTIME usage on the current 
+.
+.  Step xx: CPU Time
+.
+FEEDBACK SAVE
+FEEDBACK OFF
+.
+let zzzzcput = 0
+if cputime exists
+   let zzzzcput = cputime
+end of if
+cpu time
+let zzzzcput = cputime - zzzzcput
+let zzzzcput = round(zzzzcput,2)
+.
+justification right
+move 98 3
+text CPU Time = ^zzzzcput
+.
+FEEDBACK RESTORE
+.

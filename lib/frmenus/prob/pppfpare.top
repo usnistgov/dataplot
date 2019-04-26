@@ -1,0 +1,12 @@
+----- <~prob\pppfsymm.top> Plot Pareto and Logistic ppf's
+
+Plot Pareto and Logistic PPF Functions
+
+Pareto                   <xemf: ~prob\pparppf.men>
+Generalized Pareto       <xemf: ~prob\pgepppf.men>
+Pareto Type 2            <xemf: ~prob\ppa2ppf.men>
+Logistic                 <xemf: ~prob\plogppf.men>
+Log-Logistic             <xemf: ~prob\pllgppf.men>
+Half-Logistic            <xemf: ~prob\phflppf.men>
+Generalized Logistic     <xemf: ~prob\pgloppf.men>
+

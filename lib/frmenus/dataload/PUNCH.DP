@@ -1,0 +1,11 @@
+----- <~dataload\PUNCH.DP> Load PUNCH.DAT
+
+. This is file    PUNCH.DP
+
+DELETE Y X1 X2 X3
+SKIP 25
+READ PUNCH.DAT Y X1 TO X3
+LET X1 = (X1-30)/70
+LET X2 = X2/70
+LET X3 = X3/70
+

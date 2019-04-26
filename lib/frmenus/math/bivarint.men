@@ -1,0 +1,37 @@
+This is file bivarint.men--Perform a bivariate interpolation
+ 
+--------------------
+ 1. Bivariate Interpolation (gridded data)
+ 2. LET Z2 = BIVARIATE INTERPOLATION Z1 Y1 X1 Y2 X2
+ 3.
+ 4. Z axis variable with original data:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Y axis variable with original data:
+ 5. @CE 2 0 33 50 ? gui-variable
+ 6. X axis variable with original data:
+ 6. @CE 3 0 33 50 ? gui-variable
+ 7. Y axis variable containing points at
+ 8.    which to interpolate:
+ 8. @CE 4 0 33 50 ? gui-variable
+ 9. X axis variable containing points at
+10.    which to interpolate:
+10. @CE 5 0 33 50 ? gui-variable
+11. Variable to store the interpolated values:
+11. @CE 6 0 33 50 ? gui-none
+12. Interpolation Method:
+13. @CE 7 1 14 25 Bi-linear
+13. @CE 7 2 27 38 B-Spline
+14. 
+15. Subset/Except/For Specification:
+16. @CE 8 0 -3 50 *
+17.
+18.
+19. Perform the Interpolation?:
+--------------------
+GR FE
+@IF 7 1 LET _6 = BILINEAR INTERPOLATION _1 _2 _3 _4 _5  _8
+@IF 7 2 LET _6 = BIVARIATE INTERPOLATION _1 _2 _3 _4 _5  _8
+--------------------
+WEB HELP BIVARIATE INTERPOLATION
+--------------------
+

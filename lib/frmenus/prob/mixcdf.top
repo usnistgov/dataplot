@@ -1,0 +1,10 @@
+----- <~prob\mixcdf.top> Compute Mixture cdf's
+
+Compute Mixture cdf Functions
+
+Compute Cumulative Distribution and Tail Probability
+Functions for Mixture Distributions
+
+Normal Mixture           <xemf: ~prob\normxcdf.men>
+Bi-Weibull               <xemf: ~prob\bwecdf.men>
+

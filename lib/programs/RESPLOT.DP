@@ -1,0 +1,24 @@
+. THIS IS THE DATAPLOT PROGRAM FILE     RESPLOT.DP
+. PURPOSE--GENERATE A RESIDUAL PLOT
+.          AFTER A FIT TO NUCLEAR SAFEGUARDS DATA
+.
+. -----START POINT-----------------------------------
+.
+TITLE Nuclear Safeguards Tank Calibration
+Y1LABEL Volume
+X1LABEL Pressure
+LEGEND 1 Regression
+LEGEND 2 Residual Plot
+.
+SKIP 25
+READ SPIEGEL.DAT X Y
+.
+LINEAR FIT Y X
+CHAR X
+LINES BLANK
+XMIN -5
+YMAX 400
+.
+PLOT RES X
+.
+LIMITS

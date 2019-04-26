@@ -1,0 +1,108 @@
+This is file charcase.men--Set Character Case
+ 
+--------------------
+ 1. Character Cases
+ 2. CHARACTER CASE <list of character cases>
+ 3.
+ 4. Character Case for ALL Traces:
+ 4. @CE 1 1 30 35 asis
+ 4. @CE 1 2 37 42 upper
+ 4. @CE 1 3 44 49 lower
+ 5.
+ 6. Use the following menus to set character cases
+ 7. individually.  The character cases are sequential.
+ 8. If you set the character case for trace 5, you
+ 9. must also set them for traces 1, 2, 3, and 4.
+10.
+11. Character Case for Trace 1:
+11. @CE 2 1 30 35 asis
+11. @CE 2 2 37 42 upper
+11. @CE 2 3 44 49 lower
+12. Character Case for Trace 2:
+12. @CE 3 1 30 35 asis
+12. @CE 3 2 37 42 asis
+12. @CE 3 3 44 49 asis
+13. Character Case for Trace 3:
+13. @CE 4 1 30 35 asis
+13. @CE 4 2 37 42 asis
+13. @CE 4 3 44 49 asis
+14. Character Case for Trace 4:
+14. @CE 5 1 30 35 asis
+14. @CE 5 2 37 42 asis
+14. @CE 5 3 44 49 asis
+15. Character Case for Trace 5:
+15. @CE 6 1 30 35 asis
+15. @CE 6 2 37 42 asis
+15. @CE 6 3 44 49 asis
+16. Character Case for Trace 6:
+16. @CE 7 1 30 35 asis
+16. @CE 7 2 37 42 asis
+16. @CE 7 3 44 49 asis
+17. Character Case for Trace 7:
+17. @CE 8 1 30 35 asis
+17. @CE 8 2 37 42 asis
+17. @CE 8 3 44 49 asis
+18. Character Case for Trace 8:
+18. @CE 9 1 30 35 asis
+18. @CE 9 2 37 42 asis
+18. @CE 9 3 44 49 asis
+19. Character Case for Trace 9:
+19. @CE 10 1 30 35 asis
+19. @CE 10 2 37 42 asis
+19. @CE 10 3 44 49 asis
+20. Character Case for Trace 10:
+20. @CE 11 1 30 35 asis
+20. @CE 11 2 37 42 asis
+20. @CE 11 3 44 49 asis
+21. Character Case for Trace 11:
+21. @CE 12 1 30 35 asis
+21. @CE 12 2 37 42 asis
+21. @CE 12 3 44 49 asis
+22. Character Case for Trace 12:
+22. @CE 13 1 30 35 asis
+22. @CE 13 2 37 42 asis
+22. @CE 13 3 44 49 asis
+23. Character Case for Trace 13:
+23. @CE 14 1 30 35 asis
+23. @CE 14 2 37 42 asis
+23. @CE 14 3 44 49 asis
+24. Character Case for Trace 14:
+24. @CE 15 1 30 35 asis
+24. @CE 15 2 37 42 asis
+24. @CE 15 3 44 49 asis
+25. Character Case for Trace 15:
+25. @CE 16 1 30 35 asis
+25. @CE 16 2 37 42 asis
+25. @CE 16 3 44 49 asis
+26. Character Case for Trace 16:
+26. @CE 17 1 30 35 asis
+26. @CE 17 2 37 42 asis
+26. @CE 17 3 44 49 asis
+27. Character Case for Trace 17:
+27. @CE 18 1 30 35 asis
+27. @CE 18 2 37 42 asis
+27. @CE 18 3 44 49 asis
+28. Character Case for Trace 18:
+28. @CE 19 1 30 35 asis
+28. @CE 19 2 37 42 asis
+28. @CE 19 3 44 49 asis
+29. Character Case for Trace 19:
+29. @CE 20 1 30 35 asis
+29. @CE 20 2 37 42 asis
+29. @CE 20 3 44 49 asis
+30. Character Case for Trace 20:
+30. @CE 21 1 30 35 asis
+30. @CE 21 2 37 42 asis
+30. @CE 21 3 44 49 asis
+31.
+32.
+33. Set the Character Cases?
+--------------------
+PC FE
+CHARACTER CASE _2 _3 _4 _5 _6 _7 _8 _9 _10 _11 _12 _13 _14 _15 _16 _17 _18 _19 _20 _21
+@IF 1 1 CHARACTER CASE ASIS ALL
+@IF 1 2 CHARACTER CASE UPPER ALL
+@IF 1 3 CHARACTER CASE LOWER ALL
+--------------------
+WEB HELP CHARACTER CASE
+--------------------

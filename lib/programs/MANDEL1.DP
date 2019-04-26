@@ -1,0 +1,41 @@
+. THIS IS DATAPLOT PROGRAM FILE    MANDEL1.DP
+. PURPOSE--2-WAY ANALYSIS OF POPPY PLANTS IN OATS DATA
+.
+. -----START POINT-----
+.
+DEVICE 2 POSTSCRIPT
+.
+SKIP 25
+READ SNED326.DAT Y T B
+.
+LOOP FOR J = 1 1 5
+   LET A = MEAN Y SUBSET T J
+   LET COLMEAN = A SUBSET T J
+END LOOP
+.
+LET GM = MEAN Y
+LOOP FOR I = 1 1 4
+   FIT Y = H+SLOPE*(COLMEAN-^GM) SUBSET B I
+END LOOP
+.
+LET DEL = Y-COLMEAN
+LOOP FOR I = 1 1 4
+   FIT DEL COLMEAN SUBSET B I
+END LOOP
+.
+TITLE Example 1: Poppy Plants in Oats
+Y1LABEL Y - Column Means
+XLABEL Column Means
+X3LABEL Figure 1. Prediction lines of Y-treatment means vs. treatment means (for each block)
+PLOT PRED COLMEAN B
+.
+TITLE Example 1: Poppy Plants in Oats
+Y1LABEL Residuals
+XLABEL Row (Block)
+X3LABEL Figure 2. Residuals from row-linear model
+CHAR BLANK ALL
+LINES BLANK ALL
+SPIKE ON ALL
+XLIMITS 1 4
+LET INDEX = B+(T-3)/10
+PLOT RES INDEX

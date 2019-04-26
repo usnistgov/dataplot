@@ -1,0 +1,8 @@
+----- <~dataall\LOTTERY4.top> LOTTERY4.DAT
+
+LOTTERY4.DAT
+
+View     <xcl: LIST LOTTERY4.DAT>
+Load     <xcf: ~dataload/LOTTERY4.DP>
+Print    <xccl: printfile C:\DATAPLOT\LOTTERY4.DAT>
+

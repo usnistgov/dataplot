@@ -1,0 +1,28 @@
+This is file matr_tdi.men--Solve a tridiagonal system of linear equations
+ 
+--------------------
+ 1. Solve Tridiagonal System of Linear Equations
+ 2. LET X = TRIDIAGONAL SOLUTION ASUB ADIAG ASUP B
+ 3.
+ 4. Subdiagonal variable:
+ 4. @CE 1 0 33 50 ? gui-variable:
+ 5. Diagonal variable:
+ 5. @CE 2 0 33 50 ? gui-variable:
+ 6. Superdiagonal variable:
+ 6. @CE 3 0 33 50 ? gui-variable:
+ 7. Constants variable:
+ 7. @CE 4 0 33 50 ? gui-variable
+ 8. Variable  to store the tridiagonal solution:
+ 8. @CE 5 0 33 50 ?
+ 9.
+10. Subset/Except/For Specification:
+11. @CE 6 0 -5 50 *
+12.
+13.
+14. Solve the Tridiagonal System of Equations?:
+--------------------
+GR FE
+LET _5 = TRIDIAGONAL SOLUTION  _1 _2 _3 _4 _6
+--------------------
+WEB HELP TRIDIAGONAL SOLUTION
+--------------------

@@ -1,0 +1,7 @@
+----- <~dataload\qualpci.top> Load Quality/SPC Data: Process Cap. Index
+
+Load Quality/SPC Data: Process Capability Index
+
+CROARK3.DAT   NIST SEM line width SRM     <xcf: ~dataload\CROARK3.DP>
+GEAR.DAT      Gear diameters (Ishikawa)   <xcf: ~dataload\GEAR.DP>
+

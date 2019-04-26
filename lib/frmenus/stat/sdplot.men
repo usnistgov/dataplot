@@ -1,0 +1,42 @@
+This is file sdplot.men--Generate Standard Deviation Plot
+ 
+--------------------line 3
+ 1. Standard Deviation Plots
+ 2. SD PLOT Y X
+ 3.
+ 4. Response        Variable
+ 4. @CE 1 0 33 50 ?
+ 5. Horizontal Axis Variable:
+ 5. @CE 2 0 33 50 ?
+ 6.
+ 7. Char. Type for Data (blank, x, circ, ...)
+ 7. @CE 3 0 40 50 *
+ 8. Char. Fill for Data
+ 8. @CE 4 1 40 44 off
+ 8. @CE 4 2 47 50 on
+ 9. Line Type for Data-connecting Line
+ 9. @CE 5 0 40 50 *
+10. Line Type for Global Standard Deviation Line?
+10. @CE 6 0 40 50 *
+11. Spike to Global Standard Deviation Line?
+11. @CE 7 1 40 44 off
+11. @CE 7 2 47 50 on
+12.
+13. Subset/Except/For Specification:
+14. @CE 8 0 1 50 *
+15.
+16. Generate the SD Plot?:
+--------------------
+CHARACTERS _3
+CHARACTER FILL _4
+LINES _5 _6
+.
+@IF 7 1 SPIKE OFF
+@IF 7 2 SPIKE ON
+@IF 7 2 SPIKE BASE ZSTAT
+.
+BAR OFF OFF
+SD PLOT _1 _2 _8
+--------------------last
+WEB HELP SD PLOT
+--------------------last

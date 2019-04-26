@@ -1,0 +1,35 @@
+----- <~roadmap\bestfunc.top> Best Function
+
+Best Function
+
+Situation     : We have data collected on a response and
+                continuous factors affecting the response.
+
+Question      : What function best relates the response Y
+                with factors X1, X2, X3, ..., Xk?
+
+Model         : Y = f(X1,X2,X3,...,Xk) + random error
+
+Input         : 1) a response variable Y
+                2) a tag variable X1 containing X1 settings
+                3) a tag variable X2 containing X2 settings
+                4) a tag variable X3 containing X3 settings
+                   ...
+              k+1) a tag variable Xk containing Xk settings
+
+Output        : 1) a function f, and
+                2) estimated parameters
+
+Stat Category : Regression
+
+Primary Tools : Scatter Plot                        <xemf: ~stat\scatplot.men>
+                Least Squares Fitting
+                      1. y = f(x)                   <~fit\data1var.top>
+                      2. y = f(x1,x2,...)           <~fit\datamvar.top>
+                      3. (y1,y2,...) = f(x1,x2,...) <~fit\datamres.top>
+                Graphical Residual Analysis         <~fit\modelval.top>
+                DEX Scatter Plot                    <xemf: ~dex2k\scatplot.men>
+                DEX Mean Plot                       <xemf: ~dex2k\meanplot.men>
+
+Worked example: PONTIUS.DAT                         <xcf: ~roadmap\PONTIUS.DP>
+

@@ -1,0 +1,22 @@
+This is file rank.men--Rank a variable
+ 
+--------------------
+ 1. Rank
+ 2. LET YRANK = RANK Y
+ 3.
+ 4. Variable to rank:
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Variable to store the ranks:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Carry out the Ranking?:
+--------------------
+GR FE
+LET _2 = RANK  _1 _3
+--------------------
+WEB HELP RANK
+--------------------

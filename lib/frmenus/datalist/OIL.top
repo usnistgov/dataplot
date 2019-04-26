@@ -1,0 +1,8 @@
+----- <~datalist\OIL.top> OIL.DAT
+ 
+OIL.DAT
+ 
+View     <xcl: LIST OIL.DAT>
+Load     <x2cl: SKIP 25; READ OIL.DAT Y>
+Print    <xccl: printfile C:\DATAPLOT\OIL.DAT>
+ 

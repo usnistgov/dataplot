@@ -1,0 +1,45 @@
+CONVHULL.DAT
+Source: W. F. Eddy (1977), "Algorithm 523: CONVEX, A New Convex Hull
+        Algorithm for Planar Sets", ACM Transactions on Mathematical
+        Software (TOMS), Vol. 3, No. 4, pp. 411-412.
+
+        This is the sample data Eddy includes to demonstrate his
+        convex hull routine.
+
+Column 1:  X-Coordinate of vertices
+Column 2:  Y-Coordinate of vertices
+
+
+
+
+
+
+
+
+
+
+
+
+
+  X         Y
+--------------------------------------------
+ 2.0       0.0
+ 1.73     -1.0
+ 1.0       1.73
+ 0.0       2.0
+ 0.1       0.1
+-1.0      -1.73
+ 0.2      -0.2
+-1.73      1.0
+-0.3       0.3
+ 0.0      -2.0
+-0.4      -0.4
+-2.0       0.0
+ 0.5       0.5
+1.73       1.0
+ 0.6      -0.6
+-1.0       1.73
+-0.7       0.7
+-1.73     -1.0
+-0.8      -0.8
+1.0       -1.73

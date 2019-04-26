@@ -1,0 +1,50 @@
+-----<~reli\discrepl.top> Discussion: Plotting Repair Times
+
+Discussion: Plotting Repair Times
+
+Plotting Repair Times
+
+   1) Plot the system ID versus the repair/censoring
+      times for each system.  Repair times are typically
+      drawn with some plot symbol.  A solid line is drawn
+      from zero to the censoring time (or the last failure
+      time for failure censored data).  The purpose of this
+      plot is to obtain an overall view of the repair data.
+
+   2) Plot the cumulative number of repairs versus system
+      age.  This is typically done as a step function.  A
+      linear appearance indicates the repair rate is remaining
+      basically constant (and so a renewal process is
+      approproiate).  Significant curvature indicates either
+      an increasing or or decreasing repair rate (and so a
+      non-renewal process is indicated).
+
+   3) Plot the cumulative number of repairs versus system
+      age for each system.  Nelson has proposed a pooled
+      summation estimate of the mean cumulative repair
+      function.  This estimated curve is overlaid on the plot.
+
+Plotting Interarrival Times
+
+   1) Plot the interarrival times versus system age.
+      If there are no discernable trends, a renewal
+      is indicated.  If there is a discernable trend,
+      a non-renewal process is indicated.
+
+   2) Plot the reciprocal of the interarrival times versus
+      the system age.  The reciprocal is equivalent to
+      estimating an average rate between consecutive repairs.
+      For this reason, the plot is referred to as an Average
+      Repair Rate (ARR) plot.  For a renewal process, this plot
+      should be relatively constant.  The plot can identify
+      periods of nearly constant, increasing, decreasing, or
+      highly varying repair rates.
+
+   3) A 4-plot generates a run sequence plot, a lag plot, a
+      histogram, and a normal probability plot.  The run
+      sequence plot checks for constant location and scale,
+      the lag plot checks for first order autocorrelation, the
+      histogram provides an indication of the distribution, and
+      the exponential probability plot provides a check on
+      whether the interarrival times follow an exponential model.
+

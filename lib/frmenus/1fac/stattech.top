@@ -1,0 +1,20 @@
+----- <~1fac\stattech.top> Statistics Techniques: 1 Factor
+
+Quantitative Techniques: 1 Factor
+
+1 Response Variable, 1 Factor Variable
+    F Test for Homogeneous Locations         <xemf: ~stat\ftestloc.men>
+    Bartlett Test for Homogeneous Variances  <xemf: ~stat\bartlett.men>
+    Levene Test for Homogeneous Variances    <xemf: ~stat\levene.men>
+    Anderson Darling K Sample Test           <xemf: ~stat\andrdark.men>
+    Tabulate Statistics for Grouped Data     <xemf: ~stat\tabulate.men>
+    Kruskal-Wallis 1-Factor ANOVA            <xemf: ~stat\kruskal.men>
+    ANOVA                                    <xemf: ~stat\anova.men>
+
+2 Response Variables
+    T Test for Shift in Location             <xemf: ~stat\1flotest.men>
+    Sign Test for Paired Data                <xemf: ~stat\signtest.men>
+    Wilcoxon Signed Rank Sum Test (Paired Data) <xemf: ~stat\wilcoxon.men>
+    Wilcoxon Signed Rank U (= Mann-Whitney) Test<xemf: ~stat\mannwhit.men>
+
+    F Test for Shift in Variation            <xemf: ~stat\1fvatest.men>

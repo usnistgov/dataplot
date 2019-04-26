@@ -1,0 +1,65 @@
+This is file lgnecdf.men--Fitted CDF versus Sorted Interarrival Times
+
+--------------------
+ 1. Fitted Lognormal CDF versus Interarrival Times
+ 2. ECDF PLOT Y; PLOT LGNCDF(X,SIGMA,LOC,SCALE) FOR X = AMIN AINC AMAX
+ 4.
+ 5. Response Variable: 
+ 5. @CE 1 0 42 50 ? gui-vari
+ 6.
+ 7. Superimposed Exponential Cumulative Distribution Function:
+ 8.   Shape sigma:
+ 8. @CE 2 0 42 50 ?
+ 9.    Location u:
+ 9. @CE 3 0 42 50 ?
+10.    Scale s:
+10. @CE 4 0 42 50 ?
+11.    Line Type for Fitted Line:
+11. @CE 5 0 42 50 ? gui-line
+12.    Line Color for Fitted Line:
+12. @CE 6 0 42 50 ? gui-color
+13.
+14. Title:
+14. @CE 7 0 20 50 *
+15. Left Axis Label:
+15. @CE 8 0 20 50 *
+16. Bottom Axis Label:
+17. @CE 9 0 20 50 *
+18.
+19.
+20. Generate the plot?
+--------------------
+AN FE
+LINE SAVE
+CHARACTER SAVE
+.
+LINE SOLID
+CHARACTER BLANK
+ECDF PLOT _1
+.
+TITLE _7
+Y1LABEL _8
+X1LABEL _9
+LINE COLOR BLUE
+@IF 5 0 LINES _5
+@IF 6 0 LINE COLOR _6
+PRE-ERASE OFF
+LIMITS FREEZE
+LET ZMIN = MINIMUM _1
+LET ZMAX = MAXIMUM _1
+LET ZINC = (ZMAX-ZMIN)/100
+LET ZSIGMA = 1
+@IF 2 0 LET ZSIGMA = _2
+LET ZLOC = 0
+@IF 3 0 LET ZLOC = _3
+LET ZSCALE = 1
+@IF 4 0 LET ZSCALE = _4
+PLOT LGNCDF(X,ZSIGMA,ZLOC,ZSCALE) FOR X = ZMIN ZINC ZMAX
+LIMITS
+PRE-ERASE ON
+LINE COLOR BLACK
+LINE RESTORE
+CHARACTER RESTORE
+--------------------
+WEB HELP ECDF PLOT
+--------------------

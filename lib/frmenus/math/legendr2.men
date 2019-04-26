@@ -1,0 +1,39 @@
+This is file legendr2.men--Compute Associated Legendre Polynomials
+ 
+--------------------
+ 1. Associatyed Legendre Polynomials and Functions
+ 2. LET Y = LEGENDRE(X,2,3)
+ 3.
+ 4. Horizontal axis variable (-PI,PI):
+ 4. @CE 1 0 33 50 ? gui-variable
+ 5. Order of the Legendre polynomial:
+ 5. @CE 2 0 33 50 ? gui-none
+ 6. Degree of the Legendre polynomial:
+ 6. @CE 7 0 33 50 ? gui-none
+ 7. Variable to store the transformed result:
+ 7. @CE 3 0 33 50 ?
+ 8. Operation to perform?:
+ 9. @CE 4 1 10 65 associated Legendre polynomial (not normalized)
+10. @CE 4 2 10 65 associated Legendre polynomial (normalized)
+11. @CE 4 3 10 65 associated Legendre function first kind (normalized)
+12. @CE 4 4 10 65 associated Legendre function second kind (normalized)
+13.
+14. Plot?:
+14. @CE 5 1 14 20 no
+14. @CE 5 2 22 28 yes
+15.
+16. Subset/Except/For Specification:
+17. @CE 6 0 -10 50 *
+18.
+19.
+20. Compute the Transformation?:
+--------------------
+GR FE
+@IF 4 1 LET _3 = LEGENDRE( _1 , _2 , _7 ) _6
+@IF 4 2 LET _3 = NRMLEG( _1 , _2 , _7 ) _6
+@IF 4 3 LET _3 = LEGP( _1 , _2 , _7 ) _6
+@IF 4 4 LET _3 = LEGQ( _1 , _2 , _7 ) _6
+@IF 5 2 PLOT _3  _1  _6
+--------------------
+WEB HELP LEGENDRE
+--------------------

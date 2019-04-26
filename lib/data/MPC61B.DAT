@@ -1,0 +1,55 @@
+This is the data file   MPC61B.DAT.
+Source: This data is used to generate the graphs on page mpc614.htm
+        of the e-Handbook.  This is a case study of a gauge study for
+        resistivity measurements.  Data is from Carroll Croakin.
+Description:  The data file MPC61.DAT contains resistivity measurements.
+              This file contains the averages for the 5 wafers for each
+              of run 1 and run 2 for one of the probes for six days.  In
+              addition, it includes the differences between these averages.
+              See the MPC61.DAT header for background on the original data.
+Data:         Column 1:   Wafer ID (check standards 138, 139, 140, 141, 142)
+              Column 2:   Probe (only 2362 data included)
+              Column 3:   Month for Run 1
+              Column 4:   Day for Run 1
+              Column 5:   Resistivity for Run 1
+              Column 6:   Month for Run 2
+              Column 7:   Day for Run 2
+              Column 8:   Resistivity for Run 2
+              Column 9:   Difference in resistivity between run 1 and run 2
+To read into Dataplot, enter
+
+    SKIP 25
+    READ MPC61B.DAT WAFER PROBE MO1 DAY1 Y1 MO2 DAY2 Y2 DIFF
+
+ WAFER  PROBE  MO1 DAY1   Y1       MO2 DAY2     Y2        DIFF
+---------------------------------------------------------------
+   138. 2362.   3.  15.   95.1162   4.  12.   95.1687   -0.0525
+   138. 2362.   3.  17.   95.0569   4.  18.   95.1564   -0.0995
+   138. 2362.   3.  18.   95.0598   4.  19.   95.1354   -0.0756
+   138. 2362.   3.  22.   95.1487   4.  19.   95.0422    0.1065
+   138. 2362.   3.  23.   95.0743   4.  20.   95.1354   -0.0611
+   138. 2362.   3.  24.   95.1010   4.  21.   95.1075   -0.0065
+   139. 2362.   3.  15.   99.2939   4.  12.   99.3408   -0.0469
+   139. 2362.   3.  17.   99.3234   4.  18.   99.3116    0.0118
+   139. 2362.   3.  18.   99.2748   4.  19.   99.3241   -0.0493
+   139. 2362.   3.  22.   99.3512   4.  19.   99.2991    0.0521
+   139. 2362.   3.  23.   99.2350   4.  20.   99.3049   -0.0699
+   139. 2362.   3.  24.   99.3574   4.  21.   99.2782    0.0792
+   140. 2362.   3.  15.   96.0771   4.  12.   96.0793   -0.0022
+   140. 2362.   3.  17.   95.9976   4.  18.   96.1115   -0.1139
+   140. 2362.   3.  18.   96.0148   4.  19.   96.0803   -0.0655
+   140. 2362.   3.  22.   96.0397   4.  19.   96.0411   -0.0014
+   140. 2362.   3.  23.   96.0407   4.  20.   96.0988   -0.0581
+   140. 2362.   3.  24.   96.0445   4.  21.   96.0482   -0.0037
+   141. 2362.   3.  15.  101.0471   4.  12.  101.1353   -0.0882
+   141. 2362.   3.  17.  101.0224   4.  18.  101.1201   -0.0977
+   141. 2362.   3.  18.  101.0702   4.  19.  101.0946   -0.0244
+   141. 2362.   3.  22.  101.0904   4.  19.  100.9977    0.0927
+   141. 2362.   3.  23.  101.0626   4.  20.  101.0963   -0.0337
+   141. 2362.   3.  24.  101.0686   4.  21.  101.0300    0.0386
+   142. 2362.   3.  15.   94.2437   4.  12.   94.2052    0.0385
+   142. 2362.   3.  17.   94.2115   4.  18.   94.2824   -0.0709
+   142. 2362.   3.  18.   94.2348   4.  19.   94.2396   -0.0048
+   142. 2362.   3.  22.   94.2124   4.  19.   94.2087    0.0037
+   142. 2362.   3.  23.   94.2214   4.  20.   94.2937   -0.0723
+   142. 2362.   3.  24.   94.1651   4.  21.   94.2330   -0.0679

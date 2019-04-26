@@ -1,0 +1,57 @@
+----- <~reli\ppccplot.top> PPCC Plot/Probability Plot Estimation
+
+Parameter Estimation via PPCC Plot/Probability Plot
+
+Discussion: PPCC Plot Options                <~reli\ppccopti.top>
+
+Uncensored Data (Ungrouped or Grouped)
+  Normal                                     <xemf: ~reli\ppnor.men>
+  Lognormal                                  <xemf: ~reli\ppcclgn.men>
+  Power Normal                               <xemf: ~reli\ppccpnr.men>
+  Power Lognormal                            <xemf: ~reli\ppccpln.men>
+  
+  Exponential                                <xemf: ~reli\ppexp.men>
+  Geometric Extreme Exponential              <xemf: ~reli\ppccgee.men>
+  
+  Weibull (Minimum)                          <xemf: ~reli\ppccwei1.men>
+  Weibull (Maximum)                          <xemf: ~reli\ppccwei2.men>
+  Inverted Weibull                           <xemf: ~reli\ppcciwe.men>
+  Exponentiated Weibull                      <xemf: ~reli\ppccewe.men>
+  
+  Wald                                       <xemf: ~reli\ppccwal.men>
+  Inverse Gaussian                           <xemf: ~reli\ppccig.men>
+  Reciprocal Inverse Gaussian                <xemf: ~reli\ppccrig.men>
+  Fatigue Life                               <xemf: ~reli\ppccfl.men>
+  
+  Gamma                                      <xemf: ~reli\ppccgam.men>
+  Log Gamma                                  <xemf: ~reli\ppcclga.men>
+  Inverted Gamma                             <xemf: ~reli\ppcciga.men>
+
+  Alpha                                      <xemf: ~reli\ppccalp.men>
+  Exponential Power                          <xemf: ~reli\ppccpex.men>
+
+Censored Data (Ungrouped)
+  Normal                                     <xemf: ~reli\ppnorce.men>
+  Lognormal                                  <xemf: ~reli\ppcclgnc.men>
+  Power Normal                               <xemf: ~reli\ppccpnrc.men>
+  Power Lognormal                            <xemf: ~reli\ppccplnc.men>
+  
+  Exponential                                <xemf: ~reli\ppexpce.men>
+  Geometric Extreme Exponential              <xemf: ~reli\ppccgeec.men>
+  
+  Weibull (Minimum)                          <xemf: ~reli\ppccwe1c.men>
+  Weibull (Maximum)                          <xemf: ~reli\ppccwe2c.men>
+  Inverted Weibull                           <xemf: ~reli\ppcciwec.men>
+  Exponentiated Weibull                      <xemf: ~reli\ppccewec.men>
+  
+  Wald                                       <xemf: ~reli\ppccwalc.men>
+  Inverse Gaussian                           <xemf: ~reli\ppccigce.men>
+  Reciprocal Inverse Gaussian                <xemf: ~reli\ppccrigc.men>
+  Fatigue Life                               <xemf: ~reli\ppccflce.men>
+  
+  Gamma                                      <xemf: ~reli\ppccgamc.men>
+  Log Gamma                                  <xemf: ~reli\ppcclgac.men>
+  Inverted Gamma                             <xemf: ~reli\ppccigac.men>
+
+  Alpha                                      <xemf: ~reli\ppccalpc.men>
+  Exponential Power                          <xemf: ~reli\ppccpexc.men>

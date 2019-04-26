@@ -1,0 +1,46 @@
+This is the data file        LOESSCMP.DAT
+
+Source: This data set is used in the discussion of loess in the
+        Process Modeling Chapter of the e-Handbook (first given on
+        pmd144.htm and pmd/section1/dep/dep144.htm).  This data set
+        was provided by Will Guthrie.
+
+Description:  This is simulated data used to demonstrate the steps
+              in a loess fit.  There is no underlying physical model
+              for this data set.
+
+Data:  1. Column 1 = Independent Variable (X)
+       2. Column 2 = Dependent Variable (Y)
+
+To read this file into Dataplot--
+
+   SKIP 25
+   READ LOESSCMP.DAT X Y PRED
+
+
+
+
+
+        X         Y 
+----------------------
+   0.5578196  18.63654
+   2.0217271 103.49646
+   2.5773252 150.35391
+   3.4140288 190.51031
+   4.3014084 208.70115
+   4.7448394 213.71135
+   5.1073781 228.49353
+   6.5411662 233.55387
+   6.7216176 234.55054
+  7.2600583 223.89225
+  8.1335874 227.68339
+  9.1224379 223.91982
+ 11.9296663 168.01999
+ 12.3797674 164.95750
+ 13.2728619 152.61107
+ 14.2767453 160.78742
+ 15.3731026 168.55567
+ 15.6476637 152.42658
+ 18.5605355 221.70702
+ 18.5866354 222.69040
+ 18.7572812 243.18828

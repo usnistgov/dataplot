@@ -1,0 +1,10 @@
+----- <~dataloex\USADEBT.DP> Load & Execute USADEBT.DAT
+
+. This is file    USADEBT.DP
+
+DELETE Y
+SKIP 25
+READ USADEBT.DAT Y
+TITLE USADEBT.DAT
+/
+

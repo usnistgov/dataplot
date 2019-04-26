@@ -1,0 +1,30 @@
+----- <~dataloex\dataloex.top> Load & Execute Built-in Dataplot data Files
+
+Load & Execute Built-in Dataplot Data Files
+
+Core data sets             <~dataloex\core.top>
+
+By Stat Category:
+   Quality/SPC             <~dataloex\qual.top>
+   Design of Experiment    <~dataloex\dex.top>
+   Regression              <~dataloex\reg.top>
+
+   Univariate              <~dataloex\univ.top>
+   Time Series             <~dataloex\time.top>
+   Multi-Factor            <~dataloex\mfac.top>
+   Multivariate            <~dataloex\mvar.top>
+   Uncertainty Analysis    <~dataloex\unce.top>
+
+   Probability             <~dataloex\prob.top>
+   Reliability             <~dataloex\reli.top>
+   Extreme Value Analysis  <~dataloex\eva.top>
+   Mathematics             <~dataloex\math.top>
+
+By Book:
+   Natrella                          <~dataloex\natrella.top>
+   Sematech                          <~dataloex\sematech.top>
+   Box, Hunter, & Hunter             <~dataloex\bhh.top>
+   Statistics for Scientists         <~dataloex\stsc.top>
+   Graybill/Iyer  I: Regression      <~dataloex\grayiye1.top>
+   Graybill/Iyer II: Inference       <~dataloex\grayiye2.top>
+

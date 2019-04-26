@@ -1,0 +1,16 @@
+----- <~dex2k\viewdesi.top> View 2**k Full Factorial Designs
+ 
+View 2**k Full Factorial Designs
+ 
+ Name   Number   Number
+  of      of       of
+Design  Factors  Runs
+           k       n
+........................
+ 2**2      2       4      <~dex2k\2to2.top>
+ 2**3      3       8      <~dex2k\2to3.top>
+ 2**4      4      16      <~dex2k\2to4.top>
+ 2**5      5      52      <xcl: LIST ~dex2k\2to5.top>
+ 2**6      6      64      <xcl: LIST ~dex2k\2to6.top>
+ 2**7      7     128      <xcl: LIST ~dex2k\2to7.top>
+ 

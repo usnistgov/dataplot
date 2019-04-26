@@ -1,0 +1,21 @@
+----- <~dexcomp\ccrdmode.top> Models: Completely Randomized Designs
+ 
+Models: Completely Randomized Designs
+
+The following is the model for a completely
+randomized design:
+ 
+   Y(i,j) = MU + T(i) + random error
+ 
+where
+ 
+   Y(i) is any observation for which X1 = i
+   MU   is the general location parameter
+   T(i) is the effect for being in treatment i
+ 
+The estimates for this model are:
+ 
+   Estimate for MU:   ybarall = the average of all the data
+   Estimate for T(i): ybar(i) - ybarall
+                      ybar(i) = average of all Y for which X1 = i
+ 

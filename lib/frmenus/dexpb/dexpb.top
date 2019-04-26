@@ -1,0 +1,20 @@
+----- <~dexpb\dexpb.top>  Plackett-Burman Designs
+ 
+Placket Burnam Designs
+ 
+Discussion
+     Overview              <~dexpb\discussi.top>
+     References            <~dexpb\refer.top>
+NIST/SEMATECH Handbook     <xcl: web handbook plackett burnam designs>
+ 
+Construction
+    View Designs           <~dexpb\viewdesi.top>
+    Load Designs           <~dexpb\loaddesi.top>
+
+Analysis                   <~dexpb\analysis.top>
+ 
+Built-in Data Files
+   View                    <~dataview\dexpb.top>
+   Load                    <~dataload\dexpb.top>
+
+

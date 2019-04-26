@@ -1,0 +1,8 @@
+----- <~dataload\ASCO2.DP> Load ASCO2.DAT
+
+. This is file    ASCO2.DP
+
+DELETE Y
+SKIP 25
+READ ASCO2.DAT Y
+

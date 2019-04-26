@@ -1,0 +1,28 @@
+----- <~math\recipe_d.top> Recipe
+ 
+Recipe
+ 
+RECIPE stands for REgression Confidence Intervals on PErcentiles.
+It is used to calculate basis values for regression models with or
+without a random batch effect.  A detailed discussion of recipe
+can be found at the following Web site:
+
+    http://www.itl.nist.gov/div898/software/recipe/homepage.html
+
+The primary output from RECIPE is a set of tolerance values.
+
+RECIPE is typically preceeded by a regression or ANOVA analysis.
+RECIPE is then typically applied to the final regression or
+ANOVA model.  Recipe currently supports the following types of
+models:
+
+   1) 1-factor regression (including polynomial models)
+   2) multi-factor regression
+   3) multi-factor ANOVA
+
+Recipe is generally used in the context of the MIL-17 Handbook
+standards for obtaining A- and B-basis material property values.
+Dataplot provides the other statistical techniques discussed
+in the MIL-17 Handbook for deterimining basis values (these
+are grouped under the MIL-17 Handbook heading).
+

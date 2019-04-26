@@ -1,0 +1,55 @@
+This is file fitsins1.men--Fit Sinusoidal Model with Linear Amplitude
+ 
+--------------------
+ 1. Fit Sinusoidal Model (linear amplitude)
+ 2. FIT Y = C + (B0+B1*T)*SIN(2*3.14159*FREQ*T + PHASE)
+ 3.
+ 4. Time Series Variable:
+ 4. @CE 1 0 42 50 gui-variable
+ 5.
+ 6. Use for C:
+ 7. @CE 2 1 5 30 Use Mean of Series
+ 8. @CE 2 2 5 30 Use Linear Fit of Trend
+ 9. @CE 2 3 5 30 Use Quadratic Fit of Trend
+10.
+11. Initial Estimate of Constant Term for Amplitude:
+11. @CE 3 0 42 50 ?
+12. Initial Estimate of Linear Term for Amplitude:
+12. @CE 4 0 42 50 ?
+13. Initial Estimate of Frequency (0 - 0.5):
+13. @CE 5 0 42 50 ?
+14.
+15.
+16. Perform the Fit?
+--------------------
+GR FE
+DELETE ZZZZX
+LET ZZZZN = SIZE _1
+LET ZZZZX = SEQUENCE 1 1 ZZZZN
+.
+LET ZZORDER = 0
+@IF 2 2 LET ZZORDER = 1
+@IF 2 3 LET ZZORDER = 2
+LET B0 = 0
+LET B0 = _3
+LET B1 = 1
+LET B1 = _4
+LET FREQ = 0.3
+LET FREQ = _5
+.
+IF ZZORDER = 0
+  LET C = MEAN _1
+  FIT _1 = C + (B0 + B1*ZZZZX)*SIN(2*3.14159* FREQ*ZZZZX + PHASE)
+END OF IF
+IF ZZORDER = 1
+  FIT _1 ZZZZX
+  FIT _1 = (A0 + A1*ZZZZX) + (B0+B1*ZZZZX)*SIN(2*3.14159* FREQ*ZZZZX + PHASE)
+END OF IF
+IF ZZORDER = 2
+  QUADRATIC FIT _1 ZZZZX
+  FIT _1 = (A0+A1*ZZZZX+A2*ZZZZX)+(B0+B1*ZZZZX)*SIN(2*3.14159* FREQ*ZZZZX + PHASE)
+END OF IF
+LIST ZZZZJUNK.DAT
+--------------------
+WEB HELP FIT
+--------------------

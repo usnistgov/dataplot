@@ -1,0 +1,29 @@
+----- <~reli\system.top>
+
+Reliability: System Reliability
+
+System Reliability
+
+Discussion                                <~reli\discsyst.top>
+
+Series Model
+    NIST/SEMATECH Handbook    <xcl: web handbook series model>
+    Discussion                <~reli\discseri.top>
+
+Parallel (Redundant) Model
+    NIST/SEMATECH Handbook    <xcl: web handbook parallel model>
+    Discussion                <~reli\discpara.top>
+
+R Out of N Model
+    NIST/SEMATECH Handbook    <xcl: web handbook rn model>
+    Discussion                <~reli\discrn.top>
+
+Other Models
+    NIST/SEMATECH Handbook
+        Bottom Up Reliability    <xcl: web handbook bottom up reliability evaluation>
+        Competing Risk Model     <xcl: web handbook competing risk model>
+        Standby Model            <xcl: web handbook standby model>
+        Complex Systems          <xcl: web handbook complex systems>
+        Bayesian Model           <xcl: web handbook reliability bayesian methodology>
+
+

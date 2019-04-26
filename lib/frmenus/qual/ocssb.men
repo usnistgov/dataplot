@@ -1,0 +1,48 @@
+This is file ocssb.men--Generate Single Sample OC Chart (Type B)
+ 
+--------------------line 3
+1. Single Sample OC Chart (Type B)
+2. Macro
+3.
+4. Acceptance Number for Defectives:
+4. @CE 1 0 42 50 ?
+5. Sample size:
+5. @CE 2 0 42 50 ?
+6.
+7. Start value for p (default = 0.001):
+7. @CE 3 0 42 50 ?
+8. Increment for p (default = 0.001):
+8. @CE 4 0 42 50 ?
+9. Stop value for p (default = 0.20):
+9. @CE 5 0 42 50 ?
+10.
+11.
+12. Generate the Chart?:
+--------------------
+DELETE ZZZZP ZZZZY
+.
+LET ZZZZC = _1
+LET ZZZZN = _2
+.
+LET PSTART = 0.001
+LET PINC = 0.001
+LET PSTOP = 0.20
+LET PSTART = _3
+LET PINC = _4
+LET PSTOP = _5
+.
+LET ZZZZP = SEQUENCE PSTART PINC PSTOP
+LET ZZZZY = BINCDF(ZZZZC,ZZZZP,ZZZZN)
+.
+LABEL CASE ASIS
+TITLE CASE ASIS
+Y1LABEL Probability of Acceptance, Pa
+X1LABEL Lot Fraction Defective, p
+TITLE OC Single Sample (^ZZZZN, ^ZZZZC) Curve
+.
+PLOT ZZZZY VS ZZZZP
+LABEL
+TITLE
+--------------------
+
+--------------------

@@ -1,0 +1,8 @@
+----- <~datalist\CHWIRUT2.top> CHWIRUT2.DAT
+ 
+CHWIRUT2.DAT
+ 
+View     <xcl: LIST CHWIRUT2.DAT>
+Load     <x2cl: SKIP 25; READ CHWIRUT2.DAT Y X>
+Print    <xccl: printfile C:\DATAPLOT\CHWIRUT2.DAT>
+ 

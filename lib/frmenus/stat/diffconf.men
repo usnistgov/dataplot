@@ -1,0 +1,22 @@
+This is file diffconf.men--Confidence Interval for Difference Between Means
+ 
+--------------------
+ 1. Confidence Interval for Difference Between 2 Means
+ 2. DIFFERENCE OF MEANS CONFIDENCE LIMITS Y1 Y2
+ 3.
+ 4. First  Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Second Response Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Subset/Except/For Specification:
+ 8. @CE 3 0 1 50 *
+ 9.
+10.
+11. Generate Confidence Limits?
+--------------------
+GR FE
+DIFFERENCE OF MEANS CONFIDENCE LIMITS _1 _2 _3
+--------------------
+WEB HELP DIFFERENCE OF MEANS CONFIDENCE LIMITS
+--------------------
