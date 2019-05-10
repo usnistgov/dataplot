@@ -1,7 +1,7 @@
 This file contains installation instructions for Linux/Unix
 platforms.  For MacOS platforms, see
 
-   https://www.itl.nist.gov/div898/software/dataplot/ftp/homepage.htm
+   https://www.itl.nist.gov/div898/software/dataplot/ftp/mac/homepage.htm
 
 and select the link for your version of MacOS.
 
@@ -13,9 +13,9 @@ For Windows 7/8/10 platforms, see
 
 INSTALLATION FROM PACKAGES
 
- 1. Red Hat Package Manager (RHPM):
+ 1. Red Hat Package Manager (RPM):
 
-      ... add instructions here ...
+      ... add instructions here when this becomes publically available ...
 
     Thanks to Chris Schanzle for putting this package together.
 
@@ -28,19 +28,20 @@ If you are installing Dataplot on a system for which you cannot
 use the RHPM file, you can build Dataplot from source.  It is
 assumed that you have gfortran/gcc already installed.
 
- 1. Download the tar file
+ 1. Download the zip file
 
-    Download the Dataplot tar file to a convenient location.
-    For the sake of discussion, we assume the tar file is named
+    From
 
-       dataplot-20190410.tar.gz
+       https://github.com/usnistgov/dataplot
 
-    The date portion of this name may vary.
+    select the "Close or Download" menu and then select the
+    "Download ZIP" option.  This will download the file
 
- 2. Unpack the file
+           dataplot-master.zip
 
-       gunzip dataplot-20190410.tar.gz
-       tar -xf dataplot-20190410.tar
+    Move this file to a convenient location and then enter
+
+       unzip dataplot-master.zip
 
     After the files are unpacked, you should have a "src"
     directory and a "lib" directory.
