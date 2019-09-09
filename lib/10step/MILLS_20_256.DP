@@ -1,0 +1,161 @@
+. This is dataplot program file    mills_20_256.dp     (derived from mills303.dp)     7/3/12
+. Purpose: TCP Internet Congestion Control: Main effects plot for each response (45)
+.          simulation experiment 3    (2**(20-12)) (no cp)
+. Date: July 6, 2012
+.
+. -----start point-----
+.
+dimension 200 variables
+.
+call jjfcolor.dp
+.
+let sacase = 11;. that is, "kevin's experiment 3"
+.
+let string headhw1 = 2.8 1.4
+let string headhw2 = 2.8 1.4
+let string headhw3 = 2.8 1.4
+.
+let pagecoun = 0
+let string trailer = mills_20_256.dp
+.
+device 2 color on
+set postscript font helvetica bold
+let string foreground = blue
+let string background = white
+call color.dp
+.
+. -----Step 1: Read in the data-----
+.
+let k = 20
+let numfact = 20
+let numresp = 45
+maximum record length 1024
+column limits 1 1024
+.
+skip 10; read mills301factors.dat x1 to x^numfact
+.
+if sacase = 11
+   skip 10; read    mills301responses3a.dat    junk y1 to y^numresp
+   let string project = TCP Internet Congestion Control Sensitivity Analysis (k=20,n=256) (Mills)
+   let string currdate = 07/06/12
+   .
+   stat v
+   let y421 = y42(1)
+   let y431 = y43(1)
+   let y441 = y44(1)
+   let y451 = y45(1)
+   print y421 y431 y441 y451
+end if
+.
+let n = number y1
+print n
+.
+stat v
+.
+. -----Step 2: Define strings for plot annotation-----
+. -----Step 2.1: Define strings for responses-----
+.
+let string sty1 = Attempt Rate
+let string sty2 = NERA Rate
+let string sty3 = Full Grant Rate
+let string sty4 = User Arrival Rate
+let string sty5 = Give Up Rate
+let string sty6 = Grant Latency
+let string sty7 = Cluster Reallocation Rate
+let string sty8 = Cluster Full Grant Proportion
+let string sty9 = Cluster NERA Proportion
+let string sty10 = Cloud-wide vCore Util
+let string sty11 = Cloud-wide Mem Util
+let string sty12 = Cloud-wide Disk Space Util
+let string sty13 = Cloud-wide pCore Load
+let string sty14 = Cloud-wide Disk Count Load
+let string sty15 = Cloud-wide NIC Count Load
+let string sty16 = Cluster Variance vCore Util
+let string sty17 = Cluster Variance Mem Util
+let string sty18 = Cluster Variance Disk Space Util
+let string sty19 = Cluster Variance pCore Load
+let string sty20 = Cluster Variance Disk Count Load
+let string sty21 = Cluster Variance NIC Count Load
+let string sty22 = Node Reallocation Rate
+let string sty23 = Avg. Cluster NERA Rate
+let string sty24 = Avg. Cluster Full Grant Rate
+let string sty25 = Avg. Cluster Run Instance Rate
+let string sty26 = SD Cluster NERA Rate
+let string sty27 = SD  Cluster Full Grant Rate
+let string sty28 = SD Cluster Run Instance Rate
+let string sty29 = Average # Current Instances
+let string sty30 = Average Fraction M1small Instances
+let string sty31 = Average Fraction M1large Instances
+let string sty32 = Average Fraction M1xlarge Instances
+let string sty33 = Average Fraction C1medium Instances
+let string sty34 = Average Fraction C1xlarge Instances
+let string sty35 = Average Fraction M2xlarge Instances
+let string sty36 = Average Fraction M4xlarge Instances
+let string sty37 = Average # WS Messages/Hour
+let string sty38 = Average Fraction Intra-Site Messages
+let string sty39 = Aggregate Revenue Per Hour
+let string sty40 = User Success Rate
+let string sty41 = Proportion of Requested VMs Obtained
+let string sty42 = Run Instance Response Time
+let string sty43 = Early Termination Rate
+let string sty44 = Extension Giveup Rate
+let string sty45 = Extension Grant Latency
+.
+. -----Step 2.2: Define strings for factors-----
+.
+let string stx1  = #U
+let string stx2  = UTP
+let string stx3  = UHT
+let string stx4  = UDC
+let string stx5  = UBRP
+let string stx6  = CdCCC
+let string stx7  = CdRC
+let string stx8  = CsASV
+let string stx9  = CsRSV
+let string stx10 = CsPTP
+let string stx11 = CsRCF
+let string stx12 = NdPN
+let string stx13 = NdPF
+let string stx14 = NdPC
+let string stx15 = CD
+let string stx16 = CBSD
+let string stx17 = CWSD
+let string stx18 = CBSL
+let string stx19 = CWSL
+let string stx20 = CCCP
+.
+. -----Step 3: Extract data for response 22-----
+.
+let jresp = 22
+.
+delete y; let y = y^jresp
+let string sty = ^sty^jresp
+.
+stat v
+.
+print "---From dexcase: sty = ^sty"; . pause
+st
+let string project2 = ^jresp. Response = ^sty
+print "---From dexcase: project2 = ^project2"; . pause
+.
+let decplace = 2
+call darkblue.dp
+print y
+print k n
+. pause
+.
+. -----Step 4: Generate 10-step DEX analysis for response 22-----
+.
+let writerel = 1
+.
+call dex10stepanalysis.dp
+.
+call mills303upperright.dp
+move 5 95; just center; hw 6 3; color blue; text ^jresp; hw 2 1
+if sacase = 11
+   move 5 90; just center; hw 6 3; color blue; text SA3; hw 2 1
+end if
+.
+
+
+

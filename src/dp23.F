@@ -5760,6 +5760,7 @@ C                                       CASE)
 C     UPDATED         --MARCH     2010. USE DPPAR3 TO EXTRACT EITHER A
 C                                       RESPONSE VARIABLE OR A MATRIX
 C                                       NAME
+C     UPDATED         --AUGUST    2019. ADD CTL999, CTU999
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -6108,6 +6109,7 @@ C
      1              XTEMP1,XTEMP2,MAXNXT,
      1              PID,IVARID,IVARI2,NREPL,
      1              CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1              CTL999,CTU999,
      1              ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1              ICASAN,ISUBRO,IBUGA3,IERROR)
 C
@@ -6115,6 +6117,7 @@ C
         IFRST=.FALSE.
         ILAST=.FALSE.
         CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1              CTL999,CTU999,
      1              IFLAGU,IFRST,ILAST,ICASAN,
      1              IBUGA2,IBUGA3,ISUBRO,IERROR)
 C
@@ -6187,6 +6190,7 @@ C
      1                XTEMP1,XTEMP2,MAXNXT,
      1                PID,IVARID,IVARI2,NREPL,
      1                CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                CTL999,CTU999,
      1                ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                ICASAN,ISUBRO,IBUGA3,IERROR)
 C
@@ -6196,6 +6200,7 @@ C
           IF(IRESP.EQ.1)IFRST=.TRUE.
           IF(IRESP.EQ.NRESP)ILAST=.TRUE.
           CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                CTL999,CTU999,
      1                IFLAGU,IFRST,ILAST,ICASAN,
      1                IBUGA2,IBUGA3,ISUBRO,IERROR)
 C
@@ -6331,6 +6336,7 @@ C
      1                    XTEMP1,XTEMP2,MAXNXT,
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                    CTL999,CTU999,
      1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
@@ -6341,6 +6347,7 @@ C
             IF(NCURVE.EQ.1)IFRST=.TRUE.
             IF(NCURVE.EQ.NUMSE1)ILAST=.TRUE.
             CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                  CTL999,CTU999,
      1                  IFLAGU,IFRST,ILAST,ICASAN,
      1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
  1110     CONTINUE
@@ -6369,6 +6376,7 @@ C
      1                    XTEMP1,XTEMP2,MAXNXT,
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                    CTL999,CTU999,
      1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
@@ -6379,6 +6387,7 @@ C
             IF(NCURVE.EQ.1)IFRST=.TRUE.
             IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
             CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                  CTL999,CTU999,
      1                  IFLAGU,IFRST,ILAST,ICASAN,
      1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
  1220     CONTINUE
@@ -6410,6 +6419,7 @@ C
      1                    XTEMP1,XTEMP2,MAXNXT,
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                    CTL999,CTU999,
      1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
@@ -6419,6 +6429,7 @@ C
             IF(NCURVE.EQ.1)IFRST=.TRUE.
             IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
             CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                  CTL999,CTU999,
      1                  IFLAGU,IFRST,ILAST,ICASAN,
      1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
  1330     CONTINUE
@@ -6454,6 +6465,7 @@ C
      1                    XTEMP1,XTEMP2,MAXNXT,
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                    CTL999,CTU999,
      1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
@@ -6463,6 +6475,7 @@ C
             IF(NCURVE.EQ.1)IFRST=.TRUE.
             IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
             CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                  CTL999,CTU999,
      1                  IFLAGU,IFRST,ILAST,ICASAN,
      1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
  1440     CONTINUE
@@ -6502,6 +6515,7 @@ C
      1                    XTEMP1,XTEMP2,MAXNXT,
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                    CTL999,CTU999,
      1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
@@ -6511,6 +6525,7 @@ C
             IF(NCURVE.EQ.1)IFRST=.TRUE.
             IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
             CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                  CTL999,CTU999,
      1                  IFLAGU,IFRST,ILAST,ICASAN,
      1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
  1550     CONTINUE
@@ -6554,6 +6569,7 @@ C
      1                    XTEMP1,XTEMP2,MAXNXT,
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                    CTL999,CTU999,
      1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
@@ -6563,6 +6579,7 @@ C
             IF(NCURVE.EQ.1)IFRST=.TRUE.
             IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
             CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                  CTL999,CTU999,
      1                  IFLAGU,IFRST,ILAST,ICASAN,
      1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
  1660     CONTINUE
@@ -6601,6 +6618,7 @@ C
      1                  XTEMP1,XTEMP2,MAXNXT,
      1                  PID,IVARID,IVARI2,NREPL,
      1                  CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                  CTL999,CTU999,
      1                  ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                  ICASAN,ISUBRO,IBUGA3,IERROR)
 C
@@ -6620,12 +6638,12 @@ C     INPUT  ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
 C                                OF OBSERVATIONS
 C                       N      = THE INTEGER NUMBER OF
 C                                OBSERVATIONS IN THE VECTOR Y.
-C     WRITTEN BY--JAMES J. FILLIBEN
+C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
 C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
 C                 GAITHERSBURG, MD 20899-8980
-C                 PHONE--301-975-2855
+C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
@@ -6639,6 +6657,7 @@ C                                       SUPPORT)
 C     UPDATED         --MARCH     2010. SOME MODIFICATIONS TO THE
 C                                       OUTPUT (AESTHETIC, NOT
 C                                       SUBSTANTIVE)
+C     UPDATED         --AUGUST    2019. ADD CTL999, CTU999
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -6869,6 +6888,8 @@ C
       CUTU95=AUPPER(4)
       CUTL99=ALOWER(5)
       CUTU99=AUPPER(5)
+      CTL999=ALOWER(6)
+      CTU999=AUPPER(6)
 C
 C               ***************************************
 C               **  STEP 5--                         **

@@ -17560,7 +17560,9 @@ C
       RETURN
       END
       SUBROUTINE SETARI(Y1,Y2,N1,N2,IACASE,IWRITE,
-     1Y3,Y4,N3,SCAL3,ITYP3,IBUGA3,ISUBRO,IERROR)
+     1                  Y3,Y4,N3,SCAL3,ITYP3,
+     1                  Y1HOLD,Y2HOLD,
+     1                  IBUGA3,ISUBRO,IERROR)
 C
 C     PURPOSE--CARRY OUT SET        ARITHMETIC OPERATIONS
 C              OF THE REAL DATA IN Y1 AND Y2.
@@ -17594,6 +17596,11 @@ C     VERSION NUMBER--87/9
 C     ORIGINAL VERSION--AUGUST   1987.
 C     UPDATED         --JUNE      1990. TEMPORARY ARRAYS TO GARBAGE COMMON
 C     UPDATED         --SEPTEMBER 1993. FIX CARTESIAN PRODUCT (ALAN)
+C     UPDATED         --JULY      2019. MOVE CREATION OF SCRATCH
+C                                       STORAGE TO CALLING ROUTINE
+C                                       SOME RECODING FOR BETTER
+C                                       READABILITY (BUT NO SUBSTANATIVE
+C                                       CHANGE)
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -17615,14 +17622,8 @@ C
       DIMENSION Y2(*)
       DIMENSION Y3(*)
       DIMENSION Y4(*)
-C
-      DIMENSION Y1HOLD(MAXOBV)
-      DIMENSION Y2HOLD(MAXOBV)
-CCCCC FOLLOWING LINES ADDED JUNE, 1990
-      INCLUDE 'DPCOZ2.INC'
-      EQUIVALENCE (G2RBAG(IGAR11),Y1HOLD(1))
-      EQUIVALENCE (G2RBAG(IGAR12),Y2HOLD(1))
-CCCCC END CHANGE
+      DIMENSION Y1HOLD(*)
+      DIMENSION Y2HOLD(*)
 C
 C---------------------------------------------------------------------
 C
@@ -17638,33 +17639,28 @@ C-----START POINT-----------------------------------------------------
 C
       ISUBN1='SETA'
       ISUBN2='RI  '
-C
       IERROR='NO'
-C
       SCAL3=(-999.0)
       ITYP3='VECT'
 C
       TOL=0.00001
 C
-      IF(IBUGA3.EQ.'OFF'.AND.ISUBRO.NE.'TARI')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF SETARI--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBUGA3,ISUBRO,IACASE,IWRITE
-   52 FORMAT('IBUGA3,ISUBRO,IACASE,IWRITE = ',A4,2X,A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)N1
-   53 FORMAT('N1 = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      DO55I=1,N1
-      WRITE(ICOUT,56)I,Y1(I),Y2(I)
-   56 FORMAT('I,Y1(I),Y2(I) = ',I8,2E13.5)
-      CALL DPWRST('XXX','BUG ')
-   55 CONTINUE
-   90 CONTINUE
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'TARI')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF SETARI--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,IACASE,IWRITE,N1
+   52   FORMAT('IBUGA3,ISUBRO,IACASE,IWRITE,N1 = ',4(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N1
+          WRITE(ICOUT,56)I,Y1(I),Y2(I)
+   56     FORMAT('I,Y1(I),Y2(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
 C
 C               **************************************************
 C               **  CARRY OUT SET        ARITHMETIC OPERATIONS  **
@@ -17675,60 +17671,53 @@ C               **  STEP 11--                             **
 C               **  CHECK NUMBER OF INPUT OBSERVATIONS.   **
 C               ********************************************
 C
-      IF(N1.LT.1)GOTO1100
-      IF(IACASE.EQ.'SECA')GOTO1190
-      IF(IACASE.EQ.'SEEL')GOTO1190
-      IF(N2.LT.1)GOTO1100
-      GOTO1190
-C
- 1100 CONTINUE
-      IERROR='YES'
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1151)
- 1151 FORMAT('***** ERROR IN SETARI--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1152)
- 1152 FORMAT('      THE INPUT NUMBER OF OBSERVATIONS')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1153)
- 1153 FORMAT('      IN THE VARIABLE FOR WHICH')
-      CALL DPWRST('XXX','BUG ')
-      IF(IACASE.EQ.'SEUN')WRITE(ICOUT,1161)
- 1161 FORMAT('      THE SET        UNION IS TO BE ',
-     1'COMPUTED')
-      IF(IACASE.EQ.'SEUN')CALL DPWRST('XXX','BUG ')
-      IF(IACASE.EQ.'SEIN')WRITE(ICOUT,1162)
- 1162 FORMAT('      THE SET        INTERSECTION IS TO BE ',
-     1'COMPUTED')
-      IF(IACASE.EQ.'SEIN')CALL DPWRST('XXX','BUG ')
-      IF(IACASE.EQ.'SECO')WRITE(ICOUT,1163)
- 1163 FORMAT('      THE SET        COMPLEMENT IS TO BE ',
-     1'COMPUTED')
-      IF(IACASE.EQ.'SECO')CALL DPWRST('XXX','BUG ')
-      IF(IACASE.EQ.'SECA')WRITE(ICOUT,1164)
- 1164 FORMAT('      THE SET        CARDINALITY IS TO BE ',
-     1'COMPUTED')
-      IF(IACASE.EQ.'SECA')CALL DPWRST('XXX','BUG ')
-      IF(IACASE.EQ.'SECP')WRITE(ICOUT,1165)
- 1165 FORMAT('      THE SET        CARTESIAN PRODUCT IS TO BE ',
-     1'COMPUTED')
-      IF(IACASE.EQ.'SECP')CALL DPWRST('XXX','BUG ')
-      IF(IACASE.EQ.'SECA')WRITE(ICOUT,1166)
- 1166 FORMAT('      THE SET        ELEMENTS IS TO BE ',
-     1'COMPUTED')
-      IF(IACASE.EQ.'SECA')CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1181)
- 1181 FORMAT('      MUST BE 1 OR LARGER.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1182)
- 1182 FORMAT('      SUCH WAS NOT THE CASE HERE.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1183)N1
- 1183 FORMAT('      THE INPUT NUMBER OF OBSERVATIONS HERE = ',I8,
-     1'.')
-      CALL DPWRST('XXX','BUG ')
-      GOTO9000
+      IF(N1.LT.1 .OR. N2.LT.1)THEN
+        IF(N1.GT.1 .AND.
+     1    (IACASE.EQ.'SECA' .OR. IACASE.EQ.'SEEL'))GOTO1190
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1151)
+ 1151   FORMAT('***** ERROR IN SET ARITHMETIC (SETARI)--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1152)
+ 1152   FORMAT('      THE NUMBER OF OBSERVATIONS IN THE VARIABLE ',
+     1         'FOR WHICH')
+        CALL DPWRST('XXX','BUG ')
+        IF(IACASE.EQ.'SEUN')THEN
+          WRITE(ICOUT,1161)
+ 1161     FORMAT('      THE  SET UNION  IS TO BE COMPUTED')
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(IACASE.EQ.'SEIN')THEN
+          WRITE(ICOUT,1162)
+ 1162     FORMAT('      THE  SET INTERSECTION  IS TO BE COMPUTED')
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(IACASE.EQ.'SECO')THEN
+          WRITE(ICOUT,1163)
+ 1163     FORMAT('      THE  SET COMPLEMENT  IS TO BE COMPUTED')
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(IACASE.EQ.'SECA')THEN
+          WRITE(ICOUT,1164)
+ 1164     FORMAT('      THE  SET CARDINALITY  IS TO BE COMPUTED')
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(IACASE.EQ.'SECP')THEN
+          WRITE(ICOUT,1165)
+ 1165     FORMAT('      THE  SET CARTESIAN PRODUCT  IS TO BE COMPUTED')
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(IACASE.EQ.'SEEL')THEN
+          WRITE(ICOUT,1166)
+ 1166     FORMAT('      THE  SET ELEMENTS  IS TO BE COMPUTED')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        WRITE(ICOUT,1181)
+ 1181   FORMAT('      MUST BE 1 OR LARGER.  SUCH WAS NOT THE ',
+     1         'CASE HERE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1183)N1
+ 1183   FORMAT('      THE NUMBER OF OBSERVATIONS = ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
 C
  1190 CONTINUE
 C
@@ -17737,220 +17726,206 @@ C               **  STEP 12--                  **
 C               **  BRANCH TO THE PROPER CASE  **
 C               *********************************
 C
-      IF(IACASE.EQ.'SEUN')GOTO2100
-      IF(IACASE.EQ.'SEIN')GOTO2200
-      IF(IACASE.EQ.'SECO')GOTO2300
-      IF(IACASE.EQ.'SECA')GOTO2400
-      IF(IACASE.EQ.'SECP')GOTO2500
-      IF(IACASE.EQ.'SEEL')GOTO2600
-C
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1211)
- 1211 FORMAT('***** INTERNAL ERROR IN SETARI--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1212)
- 1212 FORMAT('      IACASE NOT EQUAL TO')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1213)
- 1213 FORMAT('      SEUN, SEIN, SECO, SECA, ')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1214)
- 1214 FORMAT('      SECP, OR SEEL')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1215)
- 1215 FORMAT('      IACASE = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      IERROR='YES'
-      GOTO9000
+      IF(IACASE.EQ.'SEUN')THEN
 C
 C               *********************************************
 C               **  STEP 21--                              **
 C               **  TREAT THE SET        UNION       CASE  **
 C               *********************************************
 C
- 2100 CONTINUE
-      K=1
-      Y3(K)=Y1(K)
+        K=1
+        Y3(K)=Y1(K)
 C
-      IF(N1.LE.1)GOTO2119
-      DO2110I=1,N1
-      TARGET=Y1(I)
-      DO2120J=1,K
-      Y3JL=Y3(J)-TOL
-      Y3JU=Y3(J)+TOL
-      IF(Y3JL.LE.TARGET.AND.TARGET.LE.Y3JU)GOTO2110
- 2120 CONTINUE
-      K=K+1
-      Y3(K)=TARGET
- 2110 CONTINUE
- 2119 CONTINUE
+        IF(N1.GT.1)THEN
+          DO2110I=1,N1
+            TARGET=Y1(I)
+            DO2120J=1,K
+              Y3JL=Y3(J)-TOL
+              Y3JU=Y3(J)+TOL
+              IF(Y3JL.LE.TARGET.AND.TARGET.LE.Y3JU)GOTO2110
+ 2120       CONTINUE
+            K=K+1
+            Y3(K)=TARGET
+ 2110     CONTINUE
+        ENDIF
 C
-      DO2130I=1,N2
-      TARGET=Y2(I)
-      DO2140J=1,K
-      Y3JL=Y3(J)-TOL
-      Y3JU=Y3(J)+TOL
-      IF(Y3JL.LE.TARGET.AND.TARGET.LE.Y3JU)GOTO2130
- 2140 CONTINUE
-      K=K+1
-      Y3(K)=TARGET
- 2130 CONTINUE
+        DO2130I=1,N2
+          TARGET=Y2(I)
+          DO2140J=1,K
+            Y3JL=Y3(J)-TOL
+            Y3JU=Y3(J)+TOL
+            IF(Y3JL.LE.TARGET.AND.TARGET.LE.Y3JU)GOTO2130
+ 2140     CONTINUE
+          K=K+1
+          Y3(K)=TARGET
+ 2130   CONTINUE
 C
-      ITYP3='VECT'
-      N3=K
-      GOTO9000
+        ITYP3='VECT'
+        N3=K
+      ELSEIF(IACASE.EQ.'SEIN')THEN
 C
 C               *********************************************
 C               **  STEP 22--                              **
 C               **  TREAT THE SET        INTERSECTION CASE **
 C               *********************************************
 C
- 2200 CONTINUE
-      K=0
+        K=0
 C
-      DO2210I=1,N1
-      TARGET=Y1(I)
-      DO2220J=1,N2
-      Y2JL=Y2(J)-TOL
-      Y2JU=Y2(J)+TOL
-      IF(Y2JL.LE.TARGET.AND.TARGET.LE.Y2JU)GOTO2215
- 2220 CONTINUE
-      GOTO2210
- 2215 CONTINUE
-      K=K+1
-      Y3(K)=TARGET
- 2210 CONTINUE
+        DO2210I=1,N1
+          TARGET=Y1(I)
+          DO2220J=1,N2
+            Y2JL=Y2(J)-TOL
+            Y2JU=Y2(J)+TOL
+            IF(Y2JL.LE.TARGET.AND.TARGET.LE.Y2JU)GOTO2215
+ 2220     CONTINUE
+          GOTO2210
+ 2215     CONTINUE
+          K=K+1
+          Y3(K)=TARGET
+ 2210   CONTINUE
 C
-      ITYP3='VECT'
-      N3=K
-      GOTO9000
+        ITYP3='VECT'
+        N3=K
+      ELSEIF(IACASE.EQ.'SECO')THEN
 C
 C               ************************************************
 C               **  STEP 23--                                 **
 C               **  TREAT THE SET        COMPLEMENT     CASE  **
 C               ************************************************
 C
- 2300 CONTINUE
-      K=0
+        K=0
 C
-      DO2310I=1,N2
-      TARGET=Y2(I)
-      DO2320J=1,N1
-      Y1JL=Y1(J)-TOL
-      Y1JU=Y1(J)+TOL
-      IF(Y1JL.LE.TARGET.AND.TARGET.LE.Y1JU)GOTO2310
- 2320 CONTINUE
-      K=K+1
-      Y3(K)=TARGET
- 2310 CONTINUE
+        DO2310I=1,N2
+          TARGET=Y2(I)
+          DO2320J=1,N1
+            Y1JL=Y1(J)-TOL
+            Y1JU=Y1(J)+TOL
+            IF(Y1JL.LE.TARGET.AND.TARGET.LE.Y1JU)GOTO2310
+ 2320     CONTINUE
+          K=K+1
+          Y3(K)=TARGET
+ 2310   CONTINUE
 C
-      ITYP3='VECT'
-      N3=K
-      GOTO9000
+        ITYP3='VECT'
+        N3=K
+      ELSEIF(IACASE.EQ.'SECA')THEN
 C
 C               ************************************************
 C               **  STEP 24--                                 **
 C               **  TREAT THE SET        CARDINALITY    CASE  **
 C               ************************************************
 C
- 2400 CONTINUE
-      K=1
-      Y3(K)=Y1(K)
+        K=1
+        Y3(K)=Y1(K)
 C
-      IF(N1.LE.1)GOTO2419
-      DO2410I=1,N1
-      TARGET=Y1(I)
-      DO2420J=1,K
-      Y3JL=Y3(J)-TOL
-      Y3JU=Y3(J)+TOL
-      IF(Y3JL.LE.TARGET.AND.TARGET.LE.Y3JU)GOTO2410
- 2420 CONTINUE
-      K=K+1
- 2410 CONTINUE
- 2419 CONTINUE
-      SCAL3=K
+        IF(N1.GT.1)THEN
+          DO2410I=1,N1
+            TARGET=Y1(I)
+            DO2420J=1,K
+              Y3JL=Y3(J)-TOL
+              Y3JU=Y3(J)+TOL
+              IF(Y3JL.LE.TARGET.AND.TARGET.LE.Y3JU)GOTO2410
+ 2420       CONTINUE
+            K=K+1
+ 2410     CONTINUE
+        ENDIF
+        SCAL3=K
 C
-      ITYP3='SCAL'
-      N3=1
-      GOTO9000
+        ITYP3='SCAL'
+        N3=1
+      ELSEIF(IACASE.EQ.'SECP')THEN
 C
 C               ***************************************************
 C               **  STEP 25--                                    **
 C               **  TREAT THE SET        CARTESIAN PRODUCT CASE  **
 C               ***************************************************
 C
- 2500 CONTINUE
-      K1=1
-      Y1HOLD(K1)=Y1(K1)
-      IF(N1.LE.1)GOTO2519
-      DO2510I=1,N1
-         TARGET=Y1(I)
-         DO2520J=1,K1
-            Y1JL=Y1HOLD(J)-TOL
-            Y1JU=Y1HOLD(J)+TOL
-            IF(Y1JL.LE.TARGET.AND.TARGET.LE.Y1JU)GOTO2510
- 2520    CONTINUE
-         K1=K1+1
-         Y1HOLD(K1)=TARGET
- 2510 CONTINUE
- 2519 CONTINUE
+        K1=1
+        Y1HOLD(K1)=Y1(K1)
+        IF(N1.GT.1)THEN
+          DO2510I=1,N1
+            TARGET=Y1(I)
+            DO2520J=1,K1
+              Y1JL=Y1HOLD(J)-TOL
+              Y1JU=Y1HOLD(J)+TOL
+              IF(Y1JL.LE.TARGET.AND.TARGET.LE.Y1JU)GOTO2510
+ 2520       CONTINUE
+            K1=K1+1
+            Y1HOLD(K1)=TARGET
+ 2510     CONTINUE
+        ENDIF
 C
-CCCCC THE FOLLOWING SECTION WAS CORRECTED   (ALAN) SEPTEMBER 1993
-      K2=1
-      Y2HOLD(K2)=Y2(K2)
-      IF(N2.LE.1)GOTO2539
-      DO2530I=1,N2
-         TARGET=Y2(I)
-         DO2540J=1,K2
-            Y2JL=Y2HOLD(J)-TOL
-            Y2JU=Y2HOLD(J)+TOL
-            IF(Y2JL.LE.TARGET.AND.TARGET.LE.Y2JU)GOTO2530
- 2540    CONTINUE
-         K2=K2+1
-         Y2HOLD(K2)=TARGET
- 2530 CONTINUE
- 2539 CONTINUE
+CCCCC   THE FOLLOWING SECTION WAS CORRECTED (ALAN) SEPTEMBER 1993
+        K2=1
+        Y2HOLD(K2)=Y2(K2)
+        IF(N2.GT.1)THEN
+          DO2530I=1,N2
+            TARGET=Y2(I)
+            DO2540J=1,K2
+              Y2JL=Y2HOLD(J)-TOL
+              Y2JU=Y2HOLD(J)+TOL
+              IF(Y2JL.LE.TARGET.AND.TARGET.LE.Y2JU)GOTO2530
+ 2540       CONTINUE
+            K2=K2+1
+            Y2HOLD(K2)=TARGET
+ 2530     CONTINUE
+        ENDIF
 C
-CCCCC THE FOLLOWING SECTION WAS CORRECTED   (ALAN) SEPTEMBER 1993
-      K=0
-      DO2550I=1,K1
-      DO2560J=1,K2
-      K=K+1
-      Y3(K)=Y1HOLD(I)
-      Y4(K)=Y2HOLD(J)
- 2560 CONTINUE
- 2550 CONTINUE
+CCCCC   THE FOLLOWING SECTION WAS CORRECTED   (ALAN) SEPTEMBER 1993
+        K=0
+        DO2550I=1,K1
+          DO2560J=1,K2
+            K=K+1
+            Y3(K)=Y1HOLD(I)
+            Y4(K)=Y2HOLD(J)
+ 2560     CONTINUE
+ 2550   CONTINUE
 C
-      ITYP3='VECT'
-      N3=K
-      GOTO9000
+        ITYP3='VECT'
+        N3=K
+      ELSEIF(IACASE.EQ.'SEEL')THEN
 C
 C               *******************************************************
 C               **  STEP 26--                                        **
 C               **  TREAT THE SET        ELEMENTS (DISTINCT)   CASE  **
 C               *******************************************************
 C
- 2600 CONTINUE
-      K=1
-      Y3(K)=Y1(K)
+        K=1
+        Y3(K)=Y1(K)
 C
-      IF(N1.LE.1)GOTO2619
-      DO2610I=1,N1
-      TARGET=Y1(I)
-      DO2620J=1,K
-      Y3JL=Y3(J)-TOL
-      Y3JU=Y3(J)+TOL
-      IF(Y3JL.LE.TARGET.AND.TARGET.LE.Y3JU)GOTO2610
- 2620 CONTINUE
-      K=K+1
-      Y3(K)=TARGET
- 2610 CONTINUE
- 2619 CONTINUE
+        IF(N1.GT.1)THEN
+          DO2610I=1,N1
+            TARGET=Y1(I)
+            DO2620J=1,K
+              Y3JL=Y3(J)-TOL
+              Y3JU=Y3(J)+TOL
+              IF(Y3JL.LE.TARGET.AND.TARGET.LE.Y3JU)GOTO2610
+ 2620       CONTINUE
+            K=K+1
+            Y3(K)=TARGET
+ 2610     CONTINUE
+        ENDIF
 C
-      ITYP3='VECT'
-      N3=K
-      GOTO9000
+        ITYP3='VECT'
+        N3=K
+      ELSE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1211)
+ 1211   FORMAT('***** INTERNAL ERROR IN SETARI--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1212)
+ 1212   FORMAT('      IACASE NOT EQUAL TO')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1213)
+ 1213   FORMAT('      SEUN, SEIN, SECO, SECA, SECP OR SEEL')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1215)
+ 1215   FORMAT('      IACASE = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
 C
 C               *****************
 C               **  STEP 90--  **
@@ -17959,41 +17934,36 @@ C               *****************
 C
  9000 CONTINUE
 C
-      IF(IBUGA3.EQ.'OFF'.AND.ISUBRO.NE.'TARI')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF SETARI--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)IBUGA3,ISUBRO,IACASE,IWRITE
- 9012 FORMAT('IBUGA3,ISUBRO,IACASE,IWRITE = ',A4,2X,A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)IERROR
- 9013 FORMAT('IERROR = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9017)N1,N2,N3
- 9017 FORMAT('N1,N2,N3 = ',3I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9018)SCAL3,ITYP3
- 9018 FORMAT('SCAL3,ITYP3 = ',E15.7,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      IF(ITYP3.EQ.'SCAL')GOTO9090
-      DO9021I=1,N1
-      WRITE(ICOUT,9022)I,Y1(I)
- 9022 FORMAT('I,Y1(I) = ',I8,E13.5)
-      CALL DPWRST('XXX','BUG ')
- 9021 CONTINUE
-      DO9031I=1,N2
-      WRITE(ICOUT,9032)I,Y2(I)
- 9032 FORMAT('I,Y2(I) = ',I8,E13.5)
-      CALL DPWRST('XXX','BUG ')
- 9031 CONTINUE
-      DO9041I=1,N3
-      WRITE(ICOUT,9042)I,Y3(I),Y4(I)
- 9042 FORMAT('I,Y3(I),Y4(I) = ',I8,2E13.5)
-      CALL DPWRST('XXX','BUG ')
- 9041 CONTINUE
- 9090 CONTINUE
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'TARI')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF SETARI--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9017)N1,N2,N3
+ 9017   FORMAT('N1,N2,N3 = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9018)SCAL3,ITYP3,IERROR
+ 9018   FORMAT('SCAL3,ITYP3,IERROR = ',G15.7,2(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        IF(ITYP3.NE.'SCAL')THEN
+          DO9021I=1,N1
+            WRITE(ICOUT,9022)I,Y1(I)
+ 9022       FORMAT('I,Y1(I) = ',I8,G15.7)
+            CALL DPWRST('XXX','BUG ')
+ 9021     CONTINUE
+          DO9031I=1,N2
+            WRITE(ICOUT,9032)I,Y2(I)
+ 9032       FORMAT('I,Y2(I) = ',I8,G15.7)
+            CALL DPWRST('XXX','BUG ')
+ 9031     CONTINUE
+          DO9041I=1,N3
+            WRITE(ICOUT,9042)I,Y3(I),Y4(I)
+ 9042       FORMAT('I,Y3(I),Y4(I) = ',I8,2G15.7)
+            CALL DPWRST('XXX','BUG ')
+ 9041     CONTINUE
+        ENDIF
+      ENDIF
 C
       RETURN
       END
@@ -21591,17 +21561,18 @@ CCCCC END DO                             JANUARY 1989
 C
 C     PURPOSE--CARRY OUT MARK VANGEL'S SIMCOV PROGRAM
 C              FOR LINEAR MODELS.
-C     WRITTEN BY--JAMES J. FILLIBEN
+C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
 C                 NATION INSTITUTE OF STANDARDS AND TECHNOLOGY
 C                 GAITHERSBURG, MD 20899-8980
-C                 PHONE--301-975-2855
+C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATION INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--97/9
 C     ORIGINAL VERSION--SEPTEMBER   1997.
+C     UPDATED         --JULY        2019. TWEAK SCRATCH SPACE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -21648,35 +21619,38 @@ C
 C---------------------------------------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOZZ.INC'
+      INCLUDE 'DPCOZI.INC'
+      INCLUDE 'DPCOZD.INC'
 C
       DIMENSION ILIS(100)
       DIMENSION ICOLR(100)
 C
       REAL XTMP(1)
-      DOUBLE PRECISION COV(MAXOBV/2)
-      DOUBLE PRECISION XDESGN(MAXOBV/2)
-      DOUBLE PRECISION XPTS(MAXOBV/2)
-      DOUBLE PRECISION V2(MAXOBV/2)
-      DOUBLE PRECISION TLM0(MAXOBV/2)
-      DOUBLE PRECISION TLM1(MAXOBV/2)
-      DOUBLE PRECISION ETA0(MAXOBV/2)
-      DOUBLE PRECISION ETA1(MAXOBV/2)
-      DOUBLE PRECISION XM(MAXOBV/2)
-      DOUBLE PRECISION WK2(MAXOBV/2)
-      DOUBLE PRECISION WK3(MAXOBV/2)
+      DOUBLE PRECISION XDESGN(MAXOBV)
+      DOUBLE PRECISION XPTS(MAXOBV)
+      DOUBLE PRECISION V2(MAXOBV)
+      DOUBLE PRECISION TLM0(MAXOBV)
+      DOUBLE PRECISION TLM1(MAXOBV)
+      DOUBLE PRECISION ETA0(MAXOBV)
+      DOUBLE PRECISION ETA1(MAXOBV)
+      DOUBLE PRECISION XM(MAXOBV)
+      DOUBLE PRECISION WK2(MAXOBV)
+      DOUBLE PRECISION WK3(MAXOBV)
       DOUBLE PRECISION XN(MAXOBV)
-      DOUBLE PRECISION T(MAXOBV/2)
-      DOUBLE PRECISION CRT(MAXOBV/2)
+      DOUBLE PRECISION T(MAXOBV)
+      DOUBLE PRECISION CRT(MAXOBV)
+      DOUBLE PRECISION Y2(MAXOBV)
+      DOUBLE PRECISION COV(MAXOBV)
 C
       DIMENSION IP(MAXOBV)
       DIMENSION IQ(MAXOBV)
 C
-      DOUBLE PRECISION Y2(MAXOBV/2)
-      DIMENSION PRED2(MAXOBV/2)
-      DIMENSION RES2(MAXOBV/2)
+      DIMENSION PRED2(MAXOBV)
+      DIMENSION RES2(MAXOBV)
 C
-      DOUBLE PRECISION XMAT(MAXOBV*10)
-      DOUBLE PRECISION SCRTCH(MAXOBV*20)
+      DOUBLE PRECISION XMAT(5*MAXOBV)
+      DOUBLE PRECISION SCRTCH(10*MAXOBV)
 C
       DOUBLE PRECISION XTX(100)
       DOUBLE PRECISION XTXI(100)
@@ -21700,37 +21674,36 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
+      EQUIVALENCE (COV(1),X(1))
       EQUIVALENCE (Y2(1),X3D(1))
-      EQUIVALENCE (PRED2(1),X(1))
-      EQUIVALENCE (RES2(1),D(1))
+      EQUIVALENCE (PRED2(1),D(1))
+      EQUIVALENCE (RES2(1),D(MAXOBV+1))
       EQUIVALENCE (CRT(1),DSIZE(1))
-      EQUIVALENCE (COV(1),DSYMB(1))
+      EQUIVALENCE (XN(1),DSYMB(1))
+      EQUIVALENCE (T(1),DFILL(1))
       EQUIVALENCE (XTX(1),DCOLOR(1))
       EQUIVALENCE (XTXI(1),DCOLOR(1001))
       EQUIVALENCE (S1(1),DCOLOR(2001))
       EQUIVALENCE (S2(1),DCOLOR(3001))
       EQUIVALENCE (V1(1),DCOLOR(4001))
 C
-      INCLUDE 'DPCOZZ.INC'
-      INCLUDE 'DPCOZ2.INC'
-      INCLUDE 'DPCOZI.INC'
-      INCLUDE 'DPCOZD.INC'
+      EQUIVALENCE (GARBAG(IGARB1),XMAT(1))
+      EQUIVALENCE (GARBAG(IGAR11),SCRTCH(1))
+C
+      EQUIVALENCE (DGARBG(IDGAR1),XDESGN(1))
+      EQUIVALENCE (DGARBG(IDGAR2),XPTS(1))
+      EQUIVALENCE (DGARBG(IDGAR3),V2(1))
+      EQUIVALENCE (DGARBG(IDGAR4),TLM0(1))
+      EQUIVALENCE (DGARBG(IDGAR5),TLM1(1))
+      EQUIVALENCE (DGARBG(IDGAR6),ETA0(1))
+      EQUIVALENCE (DGARBG(IDGAR7),ETA1(1))
+      EQUIVALENCE (DGARBG(IDGAR8),XM(1))
+      EQUIVALENCE (DGARBG(IDGAR9),WK2(1))
+      EQUIVALENCE (DGARBG(IDGA10),WK3(1))
+C
       EQUIVALENCE (IGARBG(IIGAR1),IQ(1))
       EQUIVALENCE (IGARBG(IIGAR2),IP(1))
-      EQUIVALENCE (G2RBAG(1),SCRTCH(1))
-      EQUIVALENCE (G2RBAG(1+40*MAXOBV),XM(1))
-      EQUIVALENCE (G2RBAG(1+41*MAXOBV),WK2(1))
-      EQUIVALENCE (G2RBAG(1+42*MAXOBV),WK3(1))
-      EQUIVALENCE (G2RBAG(1+43*MAXOBV),T(1))
-      EQUIVALENCE (G2RBAG(1+44*MAXOBV),XN(1))
-      EQUIVALENCE (GARBAG(1),XMAT(1))
-      EQUIVALENCE (DGARBG(1),XDESGN(1))
-      EQUIVALENCE (DGARBG(1+MAXOBV),XPTS(1))
-      EQUIVALENCE (DGARBG(1+2*MAXOBV),V2(1))
-      EQUIVALENCE (DGARBG(1+3*MAXOBV),TLM0(1))
-      EQUIVALENCE (DGARBG(1+4*MAXOBV),TLM1(1))
-      EQUIVALENCE (DGARBG(1+5*MAXOBV),ETA0(1))
-      EQUIVALENCE (DGARBG(1+6*MAXOBV),ETA1(1))
+C
 C---------------------------------------------------------------------
 C
       CHARACTER*4 IFEEDB
@@ -33902,17 +33875,15 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C     REFERENCES--MONTGOMERY, STATISTICAL QUALITY CONTROL,
 C                 ALGORITHM IS FORTRAN TRANSLATION OF A BASIC CODE
 C                 PROVIDED BY JACK PRINS.
-C     WRITTEN BY--JAMES J. FILLIBEN
+C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
-C                 NATION INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
 C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-075-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATION INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C     LANGUAGE--ANSI FORTRAN (1966)
-C               EXCEPTION--HOLLERITH STRINGS IN FORMAT STATEMENTS
-C                          DENOTED BY QUOTES RATHER THAN NH.
+C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--99/3
 C     ORIGINAL VERSION--MARCH     1999.
 C
@@ -37341,7 +37312,7 @@ CCCCC         CALL GAMMA(VB,GB)
         ENDIF
         RETURN
         END
-      SUBROUTINE STWS(X,N,IWRITE,YSTWS,IBUGA3,IERROR)
+      SUBROUTINE STWS(X,N,Y,IWRITE,YSTWS,IUPPER,IBUGA3,IERROR)
 C
 C     PURPOSE--THIS SUBROUTINE COMPUTES THE
 C              STANDARDIZED WILK-SHAPIRO STATISTIC
@@ -37388,8 +37359,6 @@ C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATION INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1966)
-C               EXCEPTION--HOLLERITH STRINGS IN FORMAT STATEMENTS
-C                          DENOTED BY QUOTES RATHER THAN NH.
 C     VERSION NUMBER--82.6
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--JULY      1972.
 C     UPDATED         --JULY      1981.
@@ -37397,6 +37366,7 @@ C     UPDATED         --AUGUST    1981.
 C     UPDATED         --NOVEMBER  1981.
 C     UPDATED         --MAY       1982.
 C     UPDATED         --JUNE      1990. TEMPORARY ARRAYS TO GARBAGE COMMON
+C     UPDATED         --JULY      2019. TWEAK SCRATCH SPACE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -37409,14 +37379,8 @@ C
 C
 C---------------------------------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
-C
       DIMENSION X(*)
-      DIMENSION Y(MAXOBV)
-CCCCC FOLLOWING LINES ADDED JUNE, 1990
-      INCLUDE 'DPCOZ2.INC'
-      EQUIVALENCE (G2RBAG(IGAR45),Y(1))
-CCCCC END CHANGE
+      DIMENSION Y(*)
 C
 C---------------------------------------------------------------------
 C
@@ -37432,32 +37396,27 @@ C-----START POINT-----------------------------------------------------
 C
       ISUBN1='STWS'
       ISUBN2='    '
-C
       IERROR='NO'
-      IUPPER=MAXOBV
 C
       EWILKS=0.0
       SDWILK=0.0
 C
-      IF(IBUGA3.EQ.'OFF')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF STWS--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBUGA3
-   52 FORMAT('IBUGA3 = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)N
-   53 FORMAT('N = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      DO55I=1,N
-      WRITE(ICOUT,56)I,X(I)
-   56 FORMAT('I,X(I) = ',I8,E15.7)
-      CALL DPWRST('XXX','BUG ')
-   55 CONTINUE
-   90 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF STWS--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,N,IUPPER
+   52   FORMAT('IBUGA3,N,IUPPER = ',A4,2X,2I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+         WRITE(ICOUT,56)I,X(I)
+   56    FORMAT('I,X(I) = ',I8,G15.7)
+         CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
 C
 C               ********************************************
 C               **  STEP 1--                              **
@@ -37466,66 +37425,64 @@ C               ********************************************
 C
       AN=N
 C
-      IF(1.LE.N.AND.N.LE.IUPPER)GOTO119
-      IERROR='YES'
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,111)
-  111 FORMAT('***** ERROR IN STWS--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,112)
-  112 FORMAT('      THE INPUT NUMBER OF OBSERVATIONS')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,113)
-  113 FORMAT('      IN THE VARIABLE FOR WHICH')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,114)
-  114 FORMAT('      THE STANDARDIZED WILK-SHAPIRO')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,115)
-  115 FORMAT('      STATISTIC IS TO BE COMPUTED')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,116)IUPPER
-  116 FORMAT('      MUST BE BETWEEN 1 AND ',I8,' (INCLUSIVELY).')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,117)
-  117 FORMAT('      SUCH WAS NOT THE CASE HERE.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,118)N
-  118 FORMAT('      THE INPUT NUMBER OF OBSERVATIONS HERE = ',I8,
-     1'.')
-      CALL DPWRST('XXX','BUG ')
-      GOTO9000
-  119 CONTINUE
+      IF(N.LT.1 .OR. N.GT.IUPPER)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN STWS--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)
+  112   FORMAT('      THE NUMBER OF OBSERVATIONS IN THE RESPONSE ',
+     1         'VARIABLE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,114)
+  114   FORMAT('      FOR WHICH THE STANDARDIZED WILK-SHAPIRO')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,115)
+  115   FORMAT('      STATISTIC IS TO BE COMPUTED')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,116)IUPPER
+  116   FORMAT('      MUST BE BETWEEN 1 AND ',I8,' (INCLUSIVELY).')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)
+  117   FORMAT('      SUCH WAS NOT THE CASE HERE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,118)N
+  118   FORMAT('      THE NUMBER OF OBSERVATIONS = ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
 C
-      IF(N.EQ.1)GOTO120
-      GOTO129
-  120 CONTINUE
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,121)
-  121 FORMAT('***** NON-FATAL DIAGNOSTIC IN STWS--',
-     1'THE 2ND INPUT ARGUMENT (N) HAS THE VALUE 1')
-      CALL DPWRST('XXX','BUG ')
-      YSTWS=0.0
-      GOTO9000
-  129 CONTINUE
+      IF(N.EQ.1)THEN
+        YSTWS=0.0
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,121)
+  121     FORMAT('***** WARNING IN STWS--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,123)
+  123     FORMAT('      THE NUMBER OF OBSERVATIONS IS ONE.')
+          CALL DPWRST('XXX','BUG ')
+          GOTO9000
+        ENDIF
+      ENDIF
 C
       HOLD=X(1)
       DO135I=2,N
-      IF(X(I).NE.HOLD)GOTO139
+        IF(X(I).NE.HOLD)GOTO139
   135 CONTINUE
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,121)
+      CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,136)HOLD
-  136 FORMAT('***** NON-FATAL DIAGNOSTIC IN STWS--',
-     1'THE FIRST INPUT ARGUMENT (A VECTOR) HAS ALL ELEMENTS = ',E15.7)
+  136 FORMAT('      THE RESPONSE VARIABLE HAS ALL ELEMENTS = ',G15.7)
       CALL DPWRST('XXX','BUG ')
       YSTWS=0.0
       GOTO9000
   139 CONTINUE
-C
-  190 CONTINUE
 C
 C               ********************************
 C               **  STEP 2--                  **
@@ -37540,13 +37497,13 @@ C
 C
       SUM=0.0
       DO100I=1,N
-      SUM=SUM+Y(I)
+        SUM=SUM+Y(I)
   100 CONTINUE
       YBAR=SUM/AN
 C
       SUM=0.0
       DO200I=1,N
-      SUM=SUM+(Y(I)-YBAR)**2
+        SUM=SUM+(Y(I)-YBAR)**2
   200 CONTINUE
       BVAR=SUM/AN
       BS=0.0
@@ -37558,25 +37515,26 @@ C
       ASUBN=SQRT((1.0+(1.0/(4.0*ARG)))/SQRT(ARG))
       ASUB1=-ASUBN
       SUM=SUM+ASUB1*Y(1)+ASUBN*Y(N)
-      IF(N.LE.2)GOTO510
-      NM1=N-1
-      DO500I=2,NM1
-      AI=I
-      PI=(AI-GAMMA)/(AN-2.0*GAMMA+1.0)
-      CALL NORPPF(PI,EI)
-      COEFI =2.0*EI  /SQRT(-2.722+4.083*AN)
-      SUM=SUM+COEFI*Y(I)
-  500 CONTINUE
-  510 CONTINUE
+      IF(N.GT.2)THEN
+        NM1=N-1
+        DO500I=2,NM1
+          AI=I
+          PI=(AI-GAMMA)/(AN-2.0*GAMMA+1.0)
+          CALL NORPPF(PI,EI)
+          COEFI =2.0*EI  /SQRT(-2.722+4.083*AN)
+          SUM=SUM+COEFI*Y(I)
+  500   CONTINUE
+      ENDIF
       WILKSH=SUM*SUM/(AN*BS*BS)
 C
-C               ****************************************************************
-C               **  STEP 3--
-C               **  COMPUTE THE EXPECTED VALUE AND STANDARD DEVIATION
-C               **  OF THE WILK-SHAPIRO STATISTIC UNDER THE NORMALITY ASSUMPTION
-C               **  REFERENCE--JJF APPROXIMATION TO MOMENTS
-C               **   ON PAGE 601 OF BIOMETRIKA (1965)
-C               ****************************************************************
+C               ********************************************************
+C               **  STEP 3--                                          **
+C               **  COMPUTE THE EXPECTED VALUE AND STANDARD DEVIATION **
+C               **  OF THE WILK-SHAPIRO STATISTIC UNDER THE NORMALITY **
+C               **  ASSUMPTION                                        **
+C               **  REFERENCE--JJF APPROXIMATION TO MOMENTS           **
+C               **             ON PAGE 601 OF BIOMETRIKA (1965)       **
+C               ********************************************************
 C
       IF(N.LE.2)EWILKS=1.0
       IF(N.EQ.3)EWILKS=.9135
@@ -37595,17 +37553,16 @@ C               **  WRITE OUT A LINE         **
 C               **  OF SUMMARY INFORMATION.  **
 C               *******************************
 C
-      IF(IFEEDB.EQ.'OFF')GOTO890
-      IF(IWRITE.EQ.'OFF')GOTO890
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,811)
-  811 FORMAT('THE STANDARDIZED WILK-SHAPIRO STATISTIC')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,812)N,YSTWS
-  812 FORMAT('OF THE ',I8,' OBSERVATIONS = ',E15.7)
-      CALL DPWRST('XXX','BUG ')
-  890 CONTINUE
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,811)
+  811   FORMAT('THE STANDARDIZED WILK-SHAPIRO STATISTIC')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,812)N,YSTWS
+  812   FORMAT('OF THE ',I8,' OBSERVATIONS = ',E15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               *****************
 C               **  STEP 90--  **
@@ -37613,22 +37570,16 @@ C               **  EXIT.      **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGA3.EQ.'OFF')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF STWS--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)IBUGA3,IERROR
- 9012 FORMAT('IBUGA3,IERROR = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)N
- 9013 FORMAT('N = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9015)YSTWS
- 9015 FORMAT('YSTWS = ',E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9090 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF STWS--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)YSTWS,IERROR
+ 9015   FORMAT('YSTWS,IERROR = ',G15.7,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END

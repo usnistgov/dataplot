@@ -1,0 +1,157 @@
+. This is dataplot macro   mills303upperright.dp
+. Purpose: Write legend list items in upper right margin for mills303.dp (Main Effects Plots)
+. Date: July 6, 2012
+.
+. let string cx1  = #U
+. let string cx2  = UTP
+. let string cx3  = UHT
+. let string cx4  = UDC
+. let string cx5  = UBRP
+. let string cx6  = CdCCC
+. let string cx7  = CdRC
+. let string cx8  = CsASV
+. let string cx9  = CsRSV
+. let string cx10 = CsPTP
+. let string cx11 = CsRCF
+. let string cx12 = NdPN
+. let string cx13 = NdPF
+. let string cx14 = NdPC
+. let string cx15 = CD
+. let string cx16 = CBSD
+. let string cx17 = CWSD
+. let string cx18 = CBSL
+. let string cx19 = CWSL
+. let string cx20 = CCCP
+.
+. -----start point-----
+.
+let ypstartz = 90
+if ypstart exists; let ypstartz = ypstart; end if
+let yp = ypstartz
+.
+. let xpstartz = 85.5;. for right justification
+let xpstartz = 87.5;. for right justification
+if xpstart exists; let xpstartz = xpstart; end if
+let xp1 = xpstartz
+.
+. print xpstart ypstart xpstartz ypstartz
+. pause
+.
+just left; hw 2 1
+. let xp1 = 85.5
+. let xp2 = 90
+. let xp2 = xp1 + 2
+let xp2 = xp1 + 1
+let xp3 = xp2 + 6
+let ypdel = 2
+. color blue
+color blu4
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 1:
+move xp2 yp; just left; text #U
+move xp3 yp; just left; text #Users
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 2:
+move xp2 yp; just left; text UTP
+move xp3 yp; just left; text UTyProb
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 3:
+move xp2 yp; just left; text UHT
+move xp3 yp; just left; text UHgTime
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 4:
+move xp2 yp; just left; text UDC
+move xp3 yp; just left; text UDemChg
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 5:
+move xp2 yp; just left; text UBRP
+move xp3 yp; just left; text UBgRqProb
+.
+let yp = yp - ypdel
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 6:
+move xp2 yp; just left; text CdCCC
+move xp3 yp; just left; text CldClstChoiceCrit
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 7:
+move xp2 yp; just left; text CdRC
+move xp3 yp; just left; text CldReconfig
+.
+let yp = yp - ypdel
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 8:
+move xp2 yp; just left; text CsASV
+move xp3 yp; just left; text ClstAbSzVar
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 9:
+move xp2 yp; just left; text CsRSV
+move xp3 yp; just left; text ClstRelSzVar
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 10:
+move xp2 yp; just left; text CsPTP
+move xp3 yp; just left; text ClstPlatTypProb
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 11:
+move xp2 yp; just left; text CsRCF
+move xp3 yp; just left; text ClstReconfig
+.
+let yp = yp - ypdel
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 12:
+move xp2 yp; just left; text NdPN
+move xp3 yp; just left; text NdProbNERA
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 13:
+move xp2 yp; just left; text NdPF
+move xp3 yp; just left; text NdProbFail
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 14:
+move xp2 yp; just left; text NdPC
+move xp3 yp; just left; text NdProbCF
+.
+let yp = yp - ypdel
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 15:
+move xp2 yp; just left; text CD
+move xp3 yp; just left; text ComDist
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 16:
+move xp2 yp; just left; text CBSD
+move xp3 yp; just left; text ComBtwStDly
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 17:
+move xp2 yp; just left; text CWSD
+move xp3 yp; just left; text ComWthStDly
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 18:
+move xp2 yp; just left; text CBSL
+move xp3 yp; just left; text ComBtwStLoss
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 19:
+move xp2 yp; just left; text CWSL
+move xp3 yp; just left; text ComWthStLoss
+.
+let yp = yp - ypdel
+move xp1 yp; just right; text 20:
+move xp2 yp; just left; text CCCP
+move xp3 yp; just left; text ComClatCutProb
+.

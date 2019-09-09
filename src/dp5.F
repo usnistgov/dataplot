@@ -2649,7 +2649,7 @@ C
       RETURN
       END
       SUBROUTINE CODECH(ITYPEH,IW21HO,IW22HO,W2HOLD,NWHOLD,
-     1                  IA,PARAM,IPARN,IPARN2,
+     1                  IA,PARAM,IPARN,IPARN2,YTEMP,
      1                  IWRITE,
      1                  IBUGA3,ISUBRO,IERROR)
 C
@@ -2693,8 +2693,14 @@ C                                       CHARACTER VARIABLE IN THE
 C                                       DPZCHF.DAT.
 C     UPDATED         --APRIL     2017. MODIFY THE FEEDBACK TO SHOW
 C                                       THE ACTUAL MAPPING
+C     UPDATED         --JUNE      2019. DIMENSION SCRATCH REAL ARRAYS IN
+C                                       CALLING ROUTINE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      DIMENSION YTEMP(*)
+      DIMENSION PARAM(*)
+      DIMENSION W2HOLD(*)
 C
       CHARACTER*4 IWRITE
       CHARACTER*4 IBUGA3
@@ -2713,25 +2719,15 @@ C
       CHARACTER*4 IHRIGH
       CHARACTER*4 IHRIG2
 C
-      CHARACTER*4 ITYPEH
-      CHARACTER*4 IW21HO
-      CHARACTER*4 IW22HO
-      CHARACTER*4 IA
-      CHARACTER*4 IPARN
-      CHARACTER*4 IPARN2
+      CHARACTER*4 ITYPEH(*)
+      CHARACTER*4 IW21HO(*)
+      CHARACTER*4 IW22HO(*)
+      CHARACTER*4 IA(*)
+      CHARACTER*4 IPARN(*)
+      CHARACTER*4 IPARN2(*)
       CHARACTER*4 IANGLU
       CHARACTER*4 IBUGCO
       CHARACTER*4 IBUGEV
-C
-      DIMENSION ITYPEH(*)
-      DIMENSION IW21HO(*)
-      DIMENSION IW22HO(*)
-      DIMENSION W2HOLD(*)
-C
-      DIMENSION IA(*)
-      DIMENSION PARAM(*)
-      DIMENSION IPARN(*)
-      DIMENSION IPARN2(*)
 C
 C
 C---------------------------------------------------------------------
@@ -2741,7 +2737,6 @@ C
       INCLUDE 'DPCOHK.INC'
       INCLUDE 'DPCOF2.INC'
       INCLUDE 'DPCOZC.INC'
-      INCLUDE 'DPCOZZ.INC'
 C
       CHARACTER*80 IFILE
       CHARACTER*12 ISTAT
@@ -2757,8 +2752,6 @@ C
       CHARACTER*500 IATEMP
       CHARACTER*20 IFRMT
       CHARACTER*24 IXTEMP(MAXOBV)
-      DIMENSION YTEMP(MAXOBV)
-      EQUIVALENCE (GARBAG(1),YTEMP(1))
       EQUIVALENCE (CGARBG(1),IXTEMP(1))
 C
 C---------------------------------------------------------------------
@@ -3077,11 +3070,8 @@ C
         WRITE(ICOUT,9011)
  9011   FORMAT('***** AT THE END OF CODECH--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9012)IBUGA3,IERROR
- 9012   FORMAT('IBUGA3,IERROR = ',A4,2X,A4)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9013)N,IROW
- 9013   FORMAT('N,IROW = ',I8)
+        WRITE(ICOUT,9012)IBUGA3,IERROR,N,IROW
+ 9012   FORMAT('IBUGA3,IERROR,N,IROW = ',2(A4,2X),2I8)
         CALL DPWRST('XXX','BUG ')
         DO9015I=1,N
           WRITE(ICOUT,9016)I,IXTEMP(I)
@@ -3090,7 +3080,7 @@ C
  9015   CONTINUE
         DO9035I=1,IROW
           WRITE(ICOUT,9036)I,YTEMP(I)
- 9036     FORMAT('I,YTEMP(I) = ',I8,E15.7)
+ 9036     FORMAT('I,YTEMP(I) = ',I8,G15.7)
           CALL DPWRST('XXX','BUG ')
  9035   CONTINUE
       ENDIF
@@ -3098,7 +3088,7 @@ C
       RETURN
       END
       SUBROUTINE CODEC2(ITYPEH,IW21HO,IW22HO,W2HOLD,NWHOLD,
-     1                  IA,PARAM,IPARN,IPARN2,
+     1                  IA,PARAM,IPARN,IPARN2,YTEMP,YTEMP2,IPERM,
      1                  IWRITE,
      1                  IBUGA3,ISUBRO,IERROR)
 C
@@ -3135,8 +3125,16 @@ C     UPDATED         --DECEMBER  2009. MODIFY DECLARATION OF IXWORK
 C                                       FOR INTEL COMPILER
 C     UPDATED         --APRIL     2017. MODIFY THE FEEDBACK TO SHOW
 C                                       THE ACTUAL MAPPING
+C     UPDATED         --JUNE      2019. DIMENSION REAL SCRATCH ARRAYS
+C                                       IN CALLING ROUTINE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      DIMENSION W2HOLD(*)
+      DIMENSION PARAM(*)
+      DIMENSION YTEMP(*)
+      DIMENSION YTEMP2(*)
+      DIMENSION IPERM(*)
 C
       CHARACTER*4 IWRITE
       CHARACTER*4 IBUGA3
@@ -3155,25 +3153,15 @@ C
       CHARACTER*4 IHRIGH
       CHARACTER*4 IHRIG2
 C
-      CHARACTER*4 ITYPEH
-      CHARACTER*4 IW21HO
-      CHARACTER*4 IW22HO
-      CHARACTER*4 IA
-      CHARACTER*4 IPARN
-      CHARACTER*4 IPARN2
+      CHARACTER*4 ITYPEH(*)
+      CHARACTER*4 IW21HO(*)
+      CHARACTER*4 IW22HO(*)
+      CHARACTER*4 IA(*)
+      CHARACTER*4 IPARN(*)
+      CHARACTER*4 IPARN2(*)
       CHARACTER*4 IANGLU
       CHARACTER*4 IBUGCO
       CHARACTER*4 IBUGEV
-C
-      DIMENSION ITYPEH(*)
-      DIMENSION IW21HO(*)
-      DIMENSION IW22HO(*)
-      DIMENSION W2HOLD(*)
-C
-      DIMENSION IA(*)
-      DIMENSION PARAM(*)
-      DIMENSION IPARN(*)
-      DIMENSION IPARN2(*)
 C
 C---------------------------------------------------------------------
 C
@@ -3182,8 +3170,6 @@ C
       INCLUDE 'DPCOHK.INC'
       INCLUDE 'DPCOF2.INC'
       INCLUDE 'DPCOZC.INC'
-      INCLUDE 'DPCOZZ.INC'
-      INCLUDE 'DPCOZI.INC'
 C
       CHARACTER*80 IFILE
       CHARACTER*12 ISTAT
@@ -3201,12 +3187,6 @@ C
       CHARACTER*24 IXTEMP(MAXOBV/2)
       CHARACTER*24 IXWORK(MAXOBV/2)
 CCCCC CHARACTER*24 IXSAVE(MAXOBV/2)
-      DIMENSION YTEMP(MAXOBV)
-      DIMENSION YTEMP2(MAXOBV)
-      DIMENSION IPERM(MAXOBV)
-      EQUIVALENCE (GARBAG(1),YTEMP(1))
-      EQUIVALENCE (GARBAG(IGARB2),YTEMP2(1))
-      EQUIVALENCE (IGARBG(1),IPERM(1))
       EQUIVALENCE (CGARBG(1),IXTEMP(1))
       EQUIVALENCE (CGARBG(MAXOBV/2 + 1),IXWORK(1))
 C
@@ -3613,7 +3593,7 @@ C
       RETURN
       END
       SUBROUTINE CODEC3(ITYPEH,IW21HO,IW22HO,W2HOLD,NWHOLD,
-     1                  IA,PARAM,IPARN,IPARN2,
+     1                  IA,PARAM,IPARN,IPARN2,YTEMP,
      1                  IWRITE,
      1                  IBUGA3,ISUBRO,IERROR)
 C
@@ -3659,8 +3639,14 @@ C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGYS.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--2018/06
 C     ORIGINAL VERSION--JUNE      2018.
+C     UPDATED         --JUNE      2019. MOVE DIMENSION OF SCRATCH
+C                                       REAL ARRAY TO CALLING ROUTINE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      DIMENSION YTEMP(*)
+      DIMENSION W2HOLD(*)
+      DIMENSION PARAM(*)
 C
       CHARACTER*4 IWRITE
       CHARACTER*4 IBUGA3
@@ -3681,25 +3667,15 @@ C
       CHARACTER*4 IHRIG3
       CHARACTER*4 IHRIG4
 C
-      CHARACTER*4 ITYPEH
-      CHARACTER*4 IW21HO
-      CHARACTER*4 IW22HO
-      CHARACTER*4 IA
-      CHARACTER*4 IPARN
-      CHARACTER*4 IPARN2
+      CHARACTER*4 ITYPEH(*)
+      CHARACTER*4 IW21HO(*)
+      CHARACTER*4 IW22HO(*)
+      CHARACTER*4 IA(*)
+      CHARACTER*4 IPARN(*)
+      CHARACTER*4 IPARN2(*)
       CHARACTER*4 IANGLU
       CHARACTER*4 IBUGCO
       CHARACTER*4 IBUGEV
-C
-      DIMENSION ITYPEH(*)
-      DIMENSION IW21HO(*)
-      DIMENSION IW22HO(*)
-      DIMENSION W2HOLD(*)
-C
-      DIMENSION IA(*)
-      DIMENSION PARAM(*)
-      DIMENSION IPARN(*)
-      DIMENSION IPARN2(*)
 C
 C---------------------------------------------------------------------
 C
@@ -3708,7 +3684,6 @@ C
       INCLUDE 'DPCOHK.INC'
       INCLUDE 'DPCOF2.INC'
       INCLUDE 'DPCOZC.INC'
-      INCLUDE 'DPCOZZ.INC'
 C
       CHARACTER*80 IFILE
       CHARACTER*12 ISTAT
@@ -3724,8 +3699,6 @@ C
       CHARACTER*500 IATEMP
       CHARACTER*20 IFRMT
       CHARACTER*24 IXTEMP(MAXOBV)
-      DIMENSION YTEMP(MAXOBV)
-      EQUIVALENCE (GARBAG(1),YTEMP(1))
       EQUIVALENCE (CGARBG(1),IXTEMP(1))
 C
 C---------------------------------------------------------------------
@@ -6169,7 +6142,8 @@ C
       RETURN
       END
       SUBROUTINE COMARI(Y1,Y2,Y3,Y4,N1,IACASE,IWRITE,
-     1Y5,Y6,N5,SCAL3,ITYP3,IBUGA3,ISUBRO,IERROR)
+     1                  Y5,Y6,N5,SCAL3,ITYP3,
+     1                  IBUGA3,ISUBRO,IERROR)
 C
 C     PURPOSE--CARRY OUT COMPLEX ARITHMETIC OPERATIONS
 C              OF THE COMPLEX DATA IN Y1,Y2 AND Y3,Y4.
@@ -6198,9 +6172,6 @@ C                 GAITHERSBURG, MD 20899
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGYS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/5
 C     ORIGINAL VERSION--APRIL     1987.
@@ -6211,6 +6182,8 @@ C     UPDATED         --MAY       1995.  EQUIVALENCE FOR ARRAYS
 C     UPDATED         --AUGUST    1995.  REPLACE NUMERICAL RECIPES
 C                                        ROUTINE FOR COMPLEX ROOTS
 C                                        WITH CMLIB ROUTINE
+C     UPDATED         --JUNE      2019.  DIMENSION COEFS, ROOTS,
+C                                        WORK, ERRBND
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -6263,17 +6236,13 @@ C
 C
       DIMENSION COEFS(MAXOBV)
       DIMENSION ROOTS(MAXOBV)
-CCCCC FOLLOWING LINES ADDED AUGUST 1995
       DIMENSION WORK(MAXOBV)
       DIMENSION ERRBND(MAXOBV)
-CCCCC FOLLOWING LINES ADDED MAY 1995
-      INCLUDE 'DPCOZ2.INC'
-      EQUIVALENCE (G2RBAG(IGAR11),COEFS(1))
-      EQUIVALENCE (G2RBAG(IGAR21),ROOTS(1))
-CCCCC FOLLOWING LINES ADDED AUGUST 1995
-      EQUIVALENCE (G2RBAG(IGAR31),WORK(1))
-      EQUIVALENCE (G2RBAG(IGAR34),ERRBND(1))
-CCCCC END CHANGE
+      INCLUDE 'DPCOZZ.INC'
+      EQUIVALENCE (GARBAG(JGAR15),COEFS(1))
+      EQUIVALENCE (GARBAG(JGAR17),ROOTS(1))
+      EQUIVALENCE (GARBAG(JGAR19),WORK(1))
+      EQUIVALENCE (GARBAG(IGAR10),ERRBND(1))
 C
 C---------------------------------------------------------------------
 C
@@ -16437,31 +16406,27 @@ C
       END
       SUBROUTINE CORR(X,Y,N,IWRITE,XYCORR,IBUGA3,IERROR)
 C
-C     PURPOSE--THIS SUBROUTINE COMPUTES THE
-C              SAMPLE CORRELATION COEFFICIENT
+C     PURPOSE--THIS SUBROUTINE COMPUTES THE SAMPLE CORRELATION COEFFICIENT
 C              BETWEEN THE 2 SETS OF DATA IN THE INPUT VECTORS X AND Y.
 C              THE SAMPLE CORRELATION COEFFICIENT WILL BE A SINGLE
-C              PRECISION VALUE CALCULATED AS THE
-C              SUM OF CROSS PRODUCTS DIVIDED BY (N-1).
+C              PRECISION VALUE CALCULATED AS THE SUM OF CROSS PRODUCTS
+C              DIVIDED BY (N-1).
 C     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-C                                (UNSORTED) OBSERVATIONS
-C                                WHICH CONSTITUTE THE FIRST SET
-C                                OF DATA.
+C                                (UNSORTED) OBSERVATIONS WHICH
+C                                CONSTITUTE THE FIRST SET OF DATA.
 C                     --Y      = THE SINGLE PRECISION VECTOR OF
-C                                (UNSORTED) OBSERVATIONS
-C                                WHICH CONSTITUTE THE SECOND SET
-C                                OF DATA.
+C                                (UNSORTED) OBSERVATIONS WHICH
+C                                CONSTITUTE THE SECOND SET OF DATA.
 C                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 C                                IN THE VECTOR X, OR EQUIVALENTLY,
 C                                THE INTEGER NUMBER OF OBSERVATIONS
 C                                IN THE VECTOR Y.
 C     OUTPUT ARGUMENTS--XYCORR = THE SINGLE PRECISION VALUE OF THE
 C                                COMPUTED SAMPLE CORRELATION COEFFICIENT
-C                                BETWEEN THE 2 SETS OF DATA
-C                                IN THE INPUT VECTORS X AND Y.
-C                                THIS SINGLE PRECISION VALUE
-C                                WILL BE BETWEEN -1.0 AND 1.0
-C                                (INCLUSIVELY).
+C                                BETWEEN THE 2 SETS OF DATA IN THE
+C                                INPUT VECTORS X AND Y.  THIS SINGLE
+C                                PRECISION VALUE WILL BE BETWEEN -1.0
+C                                AND 1.0 (INCLUSIVELY).
 C     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
 C             SAMPLE CORRELATION COEFFICIENT BETWEEN THE 2 SETS
 C             OF DATA IN THE INPUT VECTORS X AND Y.
@@ -16532,7 +16497,6 @@ C-----START POINT-----------------------------------------------------
 C
       ISUBN1='CORR'
       ISUBN2='    '
-C
       IERROR='NO'
 C
       DN=0.0D0
@@ -16689,14 +16653,237 @@ C
         WRITE(ICOUT,9011)
  9011   FORMAT('***** AT THE END       OF CORR--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9012)IBUGA3,IERROR
- 9012   FORMAT('IBUGA3,IERROR = ',A4,2X,A4)
+        WRITE(ICOUT,9012)IERROR,XYCORR
+ 9012   FORMAT('IERROR,XYCORR = ',A4,2X,G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,9014)DN,DMEAN1,DMEAN2,DSUM12
  9014   FORMAT('DN,DMEAN1,DMEAN2,DSUM12 = ',4G15.7)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9015)XYCORR
- 9015   FORMAT('XYCORR = ',G15.7)
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE CORRAT(Y,X,N,ICASE,IWRITE,XDIST,ETA,
+     1                  IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES THE SAMPLE CORRELATION RATIO
+C              FOR THE RESPONSE VARIABLE Y AND GROUP-ID VARIABLE X.
+C              THE FORMULA IS:
+C
+C                 ETA**2 = SUM[i=1 to p][N(i)*(YBAR(i) - YBAR)**2/
+C                          SUM[i=1 to p][SUM[j=1 to N(i)][Y(ij) - YBAR)**2
+C
+C              WHERE
+C
+C                 P       = NUMBER OF GROUPS
+C                 N(i)    = NUMBER OF OBERVATIONS IN GROUP i
+C                 YBAR(i) = MEAN OF GROUP i
+C                 YBAR    = GRAND MEAN
+C
+C              THE INTRACLASS CORRELATION COEFFICIENT IS THE THE
+C              SQUARE ROOT OF THE CORRELATION RATIO.
+C
+C     INPUT  ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+C                                (UNSORTED) OBSERVATIONS FOR THE
+C                                RESPONSE VARIABLE.
+C                     --X      = THE SINGLE PRECISION VECTOR OF
+C                                (UNSORTED) OBSERVATIONS FOR THE
+C                                GROUP-ID VARIABLE.
+C                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR Y.
+C     OUTPUT ARGUMENTS--CORR   = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED SAMPLE CORRELATION RATIO.
+C                                THIS SINGLE PRECISION VALUE WILL BE
+C                                BETWEEN -1.0 AND 1.0 (INCLUSIVELY).
+C                     --ETA    = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED SAMPLE INTRACLASS CORRELATION.
+C     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE SAMPLE
+C             CORRELATION RATIO FOR THE 2 SETS OF DATA IN THE INPUT
+C             VECTORS X AND Y.
+C     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+C                   OF N FOR THIS SUBROUTINE.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT.
+C     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     REFERENCES--Pearson E.S. (1926) "Review of Statistical Methods
+C                 for Research Workers (R. A. Fisher)", Science
+C                 Progress, 20, 733-734.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGYS
+C                 GAITHERSBURG, MD 20899
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGYS.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2019/08
+C     ORIGINAL VERSION--AUGUST    2019.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ICASE
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION X(*)
+      DIMENSION Y(*)
+      DIMENSION XDIST(*)
+C
+      DOUBLE PRECISION DN
+      DOUBLE PRECISION DSUM1
+      DOUBLE PRECISION DSUM2
+      DOUBLE PRECISION DSUM3
+      DOUBLE PRECISION DSUM4
+      DOUBLE PRECISION DMEAN
+C
+C---------------------------------------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='CORR'
+      ISUBN2='AT  '
+      IERROR='NO'
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RRAT')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF CORR--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,N
+   52   FORMAT('IBUGA3,ISUBRO,N = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,X(I),Y(I)
+   56     FORMAT('I,X(I),Y(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+C
+C               *******************************************
+C               **  COMPUTE     CORRELATION RATIO        **
+C               *******************************************
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      AN=N
+C
+      IF(N.LT.1)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN CORRELATION RATIO--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)
+  112   FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE RESPONSE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+  113   FORMAT('      VARIABLE IS LESS THAN 1.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)N
+  117   FORMAT('      THE NUMBER OF OBSERVATIONS = ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+C               ************************************************
+C               **  STEP 2--                                  **
+C               **  COMPUTE THE     CORRELATION RATIO.        **
+C               ************************************************
+C
+      CALL DISTIN(X,N,IWRITE,XDIST,NDIST,IBUGA3,IERROR)
+      CALL MEAN(Y,N,IWRITE,YBAR,IBUGA3,IERROR)
+C
+      DSUM2=0.0D0
+      DSUM4=0.0D0
+      DO1000IGRP=1,NDIST
+        NTEMP=0
+        AHOLD=XDIST(IGRP)
+        DSUM1=0.0D0
+        DSUM3=0.0D0
+        DO1010I=1,N
+          IF(X(I).EQ.AHOLD)THEN
+            NTEMP=NTEMP+1
+            DSUM1=DSUM1 + DBLE(Y(I))
+            DSUM3=DSUM3 + (DBLE(Y(I)) - DBLE(YBAR))**2
+          ENDIF
+ 1010   CONTINUE
+        DMEAN=DSUM1/DBLE(NTEMP)
+        DN=DBLE(NTEMP)
+        DSUM2=DSUM2 + DN*(DMEAN-DBLE(YBAR))**2
+        DSUM4=DSUM4 + DSUM3
+C
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RRAT')THEN
+          WRITE(ICOUT,1019)IGRP,NTEMP,DSUM1,DSUM3
+ 1019     FORMAT('IGRP,NTEMP,DSUM1,DSUM3 = ',2I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+ 1000 CONTINUE
+      ETASQ=REAL(DSUM2/DSUM4)
+      ETA=DSQRT(DSUM2/DSUM4)
+C
+C               *******************************
+C               **  STEP 3--                 **
+C               **  WRITE OUT A LINE         **
+C               **  OF SUMMARY INFORMATION.  **
+C               *******************************
+C
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IF(ICASE.EQ.'CRAT')THEN
+          WRITE(ICOUT,8011)N,ETA
+ 8011     FORMAT('THE CORRELATION RATIO OF THE ',I8,
+     1         ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSE
+          WRITE(ICOUT,8013)N,ETASQ
+ 8013     FORMAT('THE INTRACLASS CORRELATION OF THE ',I8,
+     1         ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RRAT')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF CORRAT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR,NDIST,CORR,ETA
+ 9012   FORMAT('IERROR,NDIST,CORR,ETA = ',A4,2X,I8,2X,2G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)DN,DMEAN1,DMEAN2,DSUM12
+ 9014   FORMAT('DN,DMEAN1,DMEAN2,DSUM12 = ',4G15.7)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C

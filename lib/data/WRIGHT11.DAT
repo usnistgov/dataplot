@@ -1,28 +1,28 @@
-THIS IS DATAPLOT DATA FILE WRIGHT11.DAT
-WRIGHT BROTHER'S WIND PRESSURE DATA
-WIND TUNNEL, FALL OF 1901
-THIS IS DATA FOR COMPUTING FALSE LIFTS OEZR RECTANGULAR PRESSURE
-XI FIXED AREA = 6 SQUARE INCHES
-SURFACE DESIGNATIONS--16 (1 TO 17 WITH SURFACE 14 MISSING)
-ANGLES OF INCIDENCE--14
-RESPONSE = WIND PRESSURE
-VARIABLE 1 = ANGLE OF INCIDENCE
-VARIABLE 2 = SURFACE DESIGNATION (DIFFERENT KINDS OF WINGS)
-SOURCE = DISPLAY AT KITTY HAWK
-DISPLAY ENTITLED WIND PRESSURE DATA (LAB TESTS--1901)
-ORIGINAL DATA HAS BEEN GIVEN IN ACCURACY TO 1/4 (AND OCCASIONALLY 1/8)
-THIS DATA BELOW HAS BEEN TRUNCATED (NOT ROUNDED)
-ORDER OF DATA--WIND PRESSURE    ANGLE OF INCIDENCE    SURFACE DESIGNATION
-THIS DAT A TAKEN BECAUSE THEY REALIZED THAT OTTO LILIENTHAL'S TABLES
-DID NOT MATCH THEIR OWN EXPERIENCES AT GLIDING.
-REFERENCE--THE ROAD TO KITTY HAWK, PAGE 111 AND FOLLOWING.
-           MOOLMAN, TIME-LIFE BOOKS.
- 
- 
- 
- 
-PRESSURE ANGLE WING-TYPE
-----------------------------
+This is dataplot data file    wright11.dat
+Wright brother's wind pressure data
+Wind tunnel, fall of 1901
+This is data for computing false lifts over rectangular pressure
+      at fixed area = 6 square inches
+Number of observations = 222
+Number of variables on a line image = 3
+Order of data on a line image
+   1. Response = Wind pressure
+   2. Factor 1 = Angle of incidence (14 levels)
+   3. Factor 2 = Surface designation (= wing type) (16 levels: 1 to 17 with wing 14 missing)
+Source = Display at Kitty Hawk
+   Display entitled Wind Pressure Data (Lab Tests--1901)
+   Original data had been given in accuracy to 1/4 (and occasionally 1/8)
+   This data below has been truncated (not rounded)
+   This data was collected because the Wright brothers realized that
+   Otto Lilienthal's tables did not match their own experiences at gliding.
+Reference--The Road to Kitty Hawk, page 111 and following.
+           Moolman, Time-Life books.
+To read this data file into dataplot:
+   skip 25; read wright11.dat y angle wing
+
+
+Pressure Angle Wing-type
+-------------------------
 0         0         1
 2         2.5       1
 4         5         1

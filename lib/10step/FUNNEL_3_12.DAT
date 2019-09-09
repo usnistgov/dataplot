@@ -1,0 +1,43 @@
+This is dataplot data file     funnel_3_12.dat          3/4/16
+Funnel experiment (3-factor comparative design)
+Randomized block design (k=3,n=12)
+Number of observations = 12
+Total number of variables per line image = 4
+   1. Response = traversal time (seconds)
+   2. Factor 1 = ball size      (2 levels: small and large)
+   3. Factor 2 = funnel         (2 levels: blue and red)
+   4. Factor 3 = ramp           (3 levels: wood, plastic, and aluminum)
+   5. Factor 4 = run sequence   (12 levels: 1 to 12)
+To read this file into dataplot (and analyze)--
+   skip 25
+   read funnel_3_12.dat y ball funnel ramp runseq
+
+
+
+
+
+
+
+
+
+  Y        X1    X2    X3            X4
+ Time      Ball Funnel Ramp        RunSeq
+------------------------------------------
+ 9.24       1     1     1            6
+17.98       2     1     1            4
+
+ 9.76       1     1     2            2
+14.35       2     1     2            1
+
+10.24       1     1     3            9
+18.18       2     1     3           10
+
+ 8.00       1     2     1            5
+10.79       2     2     1            7
+
+ 6.89       1     2     2            8
+12.56       2     2     2           12
+
+ 7.25       1     2     3            3
+11.80       2     2     3           11
+

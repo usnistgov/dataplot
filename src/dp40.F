@@ -15713,6 +15713,8 @@ C     UPDATED         --MARCH     2019.  ISYSHI
 C     UPDATED         --MARCH     2019.  IEDITR
 C     UPDATED         --APRIL     2019.  IAUXDP
 C     UPDATED         --APRIL     2019.  IREAAS
+C     UPDATED         --JULY      2019.  IBXPSK
+C     UPDATED         --AUGUST    2019.  I1PTOC
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -19320,6 +19322,25 @@ C               ******************************************************
 C
       IREAAS='OFF'
 C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JULY 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET BOXPLOT FENCE SKEWNESS            **
+C               **                <GALTON/OFF>                      **
+C               ******************************************************
+C
+      IBXPSK='OFF'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JULY 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET ONE SAMPLE PROFICIENCY TEST       **
+C               **                IDENTIFY LAB <DEFAULT/UNUSUAL/    **
+C               **                EXTREMELY UNUSUAL>                **
+C               ******************************************************
+C
+      I1PTOC='OFF'
+C
 CCCCC THE FOLLOWING SECTION WAS ADDED    APRIL 2017
 C
 C               ******************************************************
@@ -21547,9 +21568,10 @@ C
 C
       RETURN
       END
-      SUBROUTINE INTERP(Y,X,N,X2,N2,IWRITE,Y2,IBUGG3,ISUBRO,IERROR)
-CCCCC ADD ISUBRO ARGUMENT MAY, 1994.
-CCCCC SUBROUTINE INTERP(Y,X,N,X2,N2,IWRITE,Y2,IBUGG3,IERROR)
+      SUBROUTINE INTERP(Y,X,N,X2,N2,IWRITE,Y2,
+     1                  YTEMP,YDIST,XDIST,DELX,DELY,DERIV,DELX6,
+     1                  P,B,Z,C,A,MAXNXT,
+     1                  IBUGG3,ISUBRO,IERROR)
 C
 C     PURPOSE--COMPUTE SPLINE INTERPOLATION OF A VARIABLE
 C              (GENERATE INTERPOLATED POINTS).
@@ -21587,10 +21609,12 @@ C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION--APRIL     1987.
-C     UPDATED         --MAY       1989.  SORT THE INPUT DATA
+C     UPDATED         --MAY       1989. SORT THE INPUT DATA
 C     UPDATED         --JUNE      1990. TEMPORARY ARRAYS TO GARBAGE COMMON.
 C                                       ARRAY DECLARATIONS MOVED FROM INTER2
 C     UPDATED         --MAY       1994. ADD ISUBRO ARGUMENT
+C     UPDATED         --JULY      2019. MOVE CREATION OF SCRATCH STORAGE
+C                                       TO CALLING ROUTINE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -21605,42 +21629,24 @@ C
 C
 C---------------------------------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
-C
       DIMENSION Y(*)
       DIMENSION X(*)
       DIMENSION X2(*)
       DIMENSION Y2(*)
 C
-      DIMENSION YTEMP(MAXOBV)
-      DIMENSION YDIST(MAXOBV)
-      DIMENSION XDIST(MAXOBV)
+      DIMENSION YTEMP(*)
+      DIMENSION YDIST(*)
+      DIMENSION XDIST(*)
 C
-      DIMENSION DELX(MAXOBV)
-      DIMENSION DELY(MAXOBV)
-      DIMENSION DERIV(MAXOBV)
-      DIMENSION DELX6(MAXOBV)
-      DIMENSION P(MAXOBV)
-      DIMENSION B(MAXOBV)
-      DIMENSION Z(MAXOBV)
-      DIMENSION C(4,MAXOBV)
-      DIMENSION A(MAXOBV,3)
-CCCCC FOLLOWING LINES ADDED JUNE, 1990
-      INCLUDE 'DPCOZZ.INC'
-      INCLUDE 'DPCOZ2.INC'
-      EQUIVALENCE (G2RBAG(IGAR11),YTEMP(1))
-      EQUIVALENCE (G2RBAG(IGAR12),YDIST(1))
-      EQUIVALENCE (G2RBAG(IGAR13),XDIST(1))
-      EQUIVALENCE (G2RBAG(IGAR14),DELX(1))
-      EQUIVALENCE (G2RBAG(IGAR15),DELY(1))
-      EQUIVALENCE (G2RBAG(IGAR16),DERIV(1))
-      EQUIVALENCE (G2RBAG(IGAR17),DELX6(1))
-      EQUIVALENCE (G2RBAG(IGAR18),P(1))
-      EQUIVALENCE (G2RBAG(IGAR19),B(1))
-      EQUIVALENCE (G2RBAG(IGAR20),Z(1))
-      EQUIVALENCE (G2RBAG(IGAR21),C(1,1))
-      EQUIVALENCE (G2RBAG(IGAR25),A(1,1))
-CCCCC END CHANGE
+      DIMENSION DELX(*)
+      DIMENSION DELY(*)
+      DIMENSION DERIV(*)
+      DIMENSION DELX6(*)
+      DIMENSION P(*)
+      DIMENSION B(*)
+      DIMENSION Z(*)
+      DIMENSION C(4,MAXNXT)
+      DIMENSION A(MAXNXT,3)
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
@@ -21659,30 +21665,27 @@ C
 C
       IERROR='NO'
 C
-      IF(IBUGG3.EQ.'OFF'.AND.ISUBRO.NE.'TERP')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF INTERP--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)N
-   52 FORMAT('N = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      DO55I=1,N
-      WRITE(ICOUT,56)I,Y(I),X(I)
-   56 FORMAT('I,Y(I),X(I) = ',I8,2E15.7)
-      CALL DPWRST('XXX','BUG ')
-   55 CONTINUE
-      WRITE(ICOUT,62)N2
-   62 FORMAT('N2 = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      DO65I=1,N2
-      WRITE(ICOUT,66)I,X2(I)
-   66 FORMAT('I,X2(I) = ',I8,E15.7)
-      CALL DPWRST('XXX','BUG ')
-   65 CONTINUE
-   90 CONTINUE
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'TERP')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF INTERP--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)N,N2
+   52   FORMAT('N,N2 = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,Y(I),X(I)
+   56     FORMAT('I,Y(I),X(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+        DO65I=1,N2
+          WRITE(ICOUT,66)I,X2(I)
+   66     FORMAT('I,X2(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   65   CONTINUE
+      ENDIF
 C
 C               ****************************************
 C               **  STEP 11--                         **
@@ -21704,13 +21707,13 @@ C
 C
       NDIST=0
       DO1210I=1,N
-      IF(NDIST.EQ.0)GOTO1220
-      DO1215I2=1,NDIST
-      IF(X(I).EQ.XDIST(I2))GOTO1210
- 1215 CONTINUE
- 1220 CONTINUE
-      NDIST=NDIST+1
-      XDIST(NDIST)=X(I)
+        IF(NDIST.EQ.0)GOTO1220
+        DO1215I2=1,NDIST
+          IF(X(I).EQ.XDIST(I2))GOTO1210
+ 1215   CONTINUE
+ 1220   CONTINUE
+        NDIST=NDIST+1
+        XDIST(NDIST)=X(I)
  1210 CONTINUE
 C
       CALL SORT(XDIST,NDIST,XDIST)
@@ -21728,33 +21731,25 @@ C               **  THE CORE OF THE INTERPOLATION CODE             **
 C               **  IS EXPECTING SORTED, DISTINCT X VALUES.        **
 C               *****************************************************
 C
-      IF(NDIST.EQ.N)GOTO1310
-      GOTO1320
-C
- 1310 CONTINUE
-      DO1311K=1,NDIST
-      YDIST(K)=Y(K)
- 1311 CONTINUE
-      GOTO1390
-C
- 1320 CONTINUE
-      DO1321K=1,NDIST
-      TAG=XDIST(K)
-      J=0
-      DO1322I=1,N
-      IF(X(I).EQ.TAG)GOTO1323
-      GOTO1322
- 1323 CONTINUE
-      J=J+1
-      YTEMP(J)=Y(I)
- 1322 CONTINUE
-      NI=J
-      CALL MEAN(YTEMP,NI,IWRITE,YMEAN,IBUGG3,IERROR)
-      YDIST(K)=YMEAN
- 1321 CONTINUE
-      GOTO1390
-C
- 1390 CONTINUE
+      IF(NDIST.EQ.N)THEN
+        DO1311K=1,NDIST
+          YDIST(K)=Y(K)
+ 1311   CONTINUE
+      ELSE
+        DO1321K=1,NDIST
+          TAG=XDIST(K)
+          J=0
+          DO1322I=1,N
+            IF(X(I).EQ.TAG)THEN
+              J=J+1
+              YTEMP(J)=Y(I)
+            ENDIF
+ 1322     CONTINUE
+          NI=J
+          CALL MEAN(YTEMP,NI,IWRITE,YMEAN,IBUGG3,IERROR)
+          YDIST(K)=YMEAN
+ 1321   CONTINUE
+      ENDIF
 C
 C               ********************************************
 C               **  STEP 14--                             **
@@ -21765,11 +21760,10 @@ CCCCC THE REMAINDER OF THIS SUBROUTINE WAS REPLACED    MAY 1989
 CCCCC BY A CALL TO INTER2                              MAY 1989
 C
 CCCCC JUNE, 1990.  MOVE SOME DIMENSIONING FROM INTER2 TO INTERP
+C
       CALL INTER2(YDIST,XDIST,NDIST,X2,N2,Y2,
-     1DELX,DELY,DERIV,DELX6,P,B,Z,C,A,MAXOBV,
-CCCCC ADD ISUBRO ARGUMENT  MAY, 1994.
-CCCCC1IBUGG3,IERROR)
-     1IBUGG3,ISUBRO,IERROR)
+     1            DELX,DELY,DERIV,DELX6,P,B,Z,C,A,MAXNXT,
+     1            IBUGG3,ISUBRO,IERROR)
 C
 C               *****************
 C               **  STEP 90--  **
@@ -21777,48 +21771,42 @@ C               **  EXIT.      **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGG3.EQ.'OFF'.AND.ISUBRO.NE.'TERP')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF INTERP--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)N,N2
- 9012 FORMAT('N,N2 = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      DO9015I=1,N
-      WRITE(ICOUT,9016)A(I,1),A(I,2),A(I,3)
- 9016 FORMAT('A(I,1),A(I,2),A(I,3)        = ',3E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9015 CONTINUE
-      DO9025I=1,N
-      WRITE(ICOUT,9026)DELX(I),DELY(I),DERIV(I),DELX6(I),B(I),Z(I)
- 9026 FORMAT('DELX(I),DELY(I),DERIV(I),DELX6(I),B(I),Z(I) = ',
-     16F10.5)
-      CALL DPWRST('XXX','BUG ')
- 9025 CONTINUE
-      DO9035I=1,N
-      WRITE(ICOUT,9036)C(1,I),C(2,I),C(3,I),C(4,I)
- 9036 FORMAT('C(1,I),C(2,I),C(3,I),C(4,I) = ',4F10.5)
-      CALL DPWRST('XXX','BUG ')
- 9035 CONTINUE
-      WRITE(ICOUT,9041)N2
- 9041 FORMAT('N2 = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      DO9042I=1,N2
-      WRITE(ICOUT,9043)I,X2(I),Y2(I)
- 9043 FORMAT('I,X2(I),Y2(I) = ',I8,2E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9042 CONTINUE
-      WRITE(ICOUT,9051)NDIST
- 9051 FORMAT('NDIST = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      DO9052I=1,NDIST
-      WRITE(ICOUT,9053)I,XDIST(I),YDIST(I)
- 9053 FORMAT('I,XDIST(I),YDIST(I) = ',I8,2E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9052 CONTINUE
- 9090 CONTINUE
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'TERP')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF INTERP--')
+        CALL DPWRST('XXX','BUG ')
+        DO9015I=1,N
+          WRITE(ICOUT,9016)A(I,1),A(I,2),A(I,3)
+ 9016     FORMAT('A(I,1),A(I,2),A(I,3)        = ',3G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9015   CONTINUE
+        DO9025I=1,N
+          WRITE(ICOUT,9026)DELX(I),DELY(I),DERIV(I),DELX6(I),B(I),Z(I)
+ 9026     FORMAT('DELX(I),DELY(I),DERIV(I),DELX6(I),B(I),Z(I) = ',
+     1           6F10.5)
+          CALL DPWRST('XXX','BUG ')
+ 9025   CONTINUE
+        DO9035I=1,N
+          WRITE(ICOUT,9036)C(1,I),C(2,I),C(3,I),C(4,I)
+ 9036     FORMAT('C(1,I),C(2,I),C(3,I),C(4,I) = ',4F10.5)
+          CALL DPWRST('XXX','BUG ')
+ 9035   CONTINUE
+        DO9042I=1,N2
+          WRITE(ICOUT,9043)I,X2(I),Y2(I)
+ 9043     FORMAT('I,X2(I),Y2(I) = ',I8,2E15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9042   CONTINUE
+        WRITE(ICOUT,9051)NDIST
+ 9051   FORMAT('NDIST = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        DO9052I=1,NDIST
+          WRITE(ICOUT,9053)I,XDIST(I),YDIST(I)
+ 9053     FORMAT('I,XDIST(I),YDIST(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9052   CONTINUE
+      ENDIF
 C
       RETURN
       END
@@ -23058,7 +23046,10 @@ C
       RETURN
       END
       SUBROUTINE INT2D(Z,Y,X,N,Y2,NY,X2,NX,IWRITE,Z2,N2,
-     1IBUGG3,ISUBRO,IERROR)
+     1                 YTEMP,XTEMP,YDIST,XDIST,ZDIST,
+     1                 ZTEMP,ZTEMP2,XNEW,YNEW,
+     1                 WORK,IWORK,
+     1                 IBUGG3,ISUBRO,IERROR)
 C
 C     PURPOSE--COMPUTE BIVARIATE INTERPOLATION OF SCATTERED DATA.
 C              THE INTERPOLATION IS GENERATED ON A GRID.  
@@ -23127,8 +23118,6 @@ C
 C
 C---------------------------------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
-C
       DIMENSION Z(*)
       DIMENSION Y(*)
       DIMENSION X(*)
@@ -23136,36 +23125,23 @@ C
       DIMENSION Y2(*)
       DIMENSION Z2(*)
 C
-      DIMENSION YTEMP(MAXOBV)
-      DIMENSION XTEMP(MAXOBV)
-      DIMENSION YDIST(MAXOBV)
-      DIMENSION XDIST(MAXOBV)
-      DIMENSION ZDIST(MAXOBV)
-      DIMENSION ZTEMP2(MAXOBV)
-      DIMENSION ZTEMP(MAXOBV)
-      DIMENSION XNEW(MAXOBV)
-      DIMENSION YNEW(MAXOBV)
-      DIMENSION IWORK(7*MAXOBV)
-      DIMENSION WORK(7*MAXOBV)
-C
-      INCLUDE 'DPCOZZ.INC'
-      INCLUDE 'DPCOZ2.INC'
-      INCLUDE 'DPCOZI.INC'
-      EQUIVALENCE (G2RBAG(IGAR11),YTEMP(1))
-      EQUIVALENCE (G2RBAG(IGAR12),YDIST(1))
-      EQUIVALENCE (G2RBAG(IGAR13),XDIST(1))
-      EQUIVALENCE (G2RBAG(IGAR14),ZDIST(1))
-      EQUIVALENCE (G2RBAG(IGAR15),ZTEMP2(1))
-      EQUIVALENCE (G2RBAG(IGAR16),ZTEMP(1))
-      EQUIVALENCE (G2RBAG(IGAR17),XTEMP(1))
-      EQUIVALENCE (G2RBAG(IGAR18),XNEW(1))
-      EQUIVALENCE (G2RBAG(IGAR19),YNEW(1))
-      EQUIVALENCE (G2RBAG(IGAR20),WORK(1))
-      EQUIVALENCE (IGARBG(1),IWORK(1))
-CCCCC END CHANGE
+      DIMENSION YTEMP(*)
+      DIMENSION XTEMP(*)
+      DIMENSION YDIST(*)
+      DIMENSION XDIST(*)
+      DIMENSION ZDIST(*)
+      DIMENSION ZTEMP2(*)
+      DIMENSION ZTEMP(*)
+      DIMENSION XNEW(*)
+      DIMENSION YNEW(*)
+CCCCC DIMENSION IWORK(7*MAXOBV)
+CCCCC DIMENSION WORK(7*MAXOBV)
+      DIMENSION IWORK(*)
+      DIMENSION WORK(*)
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
+      INCLUDE 'DPCOPA.INC'
       INCLUDE 'DPCOHK.INC'
 C
       CHARACTER*4 IFEEDB
@@ -23180,38 +23156,34 @@ C-----START POINT-----------------------------------------------------
 C
       ISUBN1='INT2'
       ISUBN2='D   '
-C
       IERROR='NO'
 C
-      IF(IBUGG3.EQ.'OFF'.AND.ISUBRO.NE.'NT2D')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF INT2D--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)N
-   52 FORMAT('N = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      DO55I=1,N
-      WRITE(ICOUT,56)I,Z(I),Y(I),X(I)
-   56 FORMAT('I,Z(I),Y(I),X(I) = ',I8,3E15.7)
-      CALL DPWRST('XXX','BUG ')
-   55 CONTINUE
-      WRITE(ICOUT,62)NX,NY
-   62 FORMAT('NX, NY = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      DO65I=1,NX
-      WRITE(ICOUT,66)I,X2(I)
-   66 FORMAT('I,X2(I) = ',I8,E15.7)
-      CALL DPWRST('XXX','BUG ')
-   65 CONTINUE
-      DO75I=1,NY
-      WRITE(ICOUT,76)I,Y2(I)
-   76 FORMAT('I,Y2(I) = ',I8,E15.7)
-      CALL DPWRST('XXX','BUG ')
-   75 CONTINUE
-   90 CONTINUE
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'NT2D')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF INT2D--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)N,NX,NY
+   52   FORMAT('N,NX,NY = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,Z(I),Y(I),X(I)
+   56     FORMAT('I,Z(I),Y(I),X(I) = ',I8,3G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+        DO65I=1,NX
+          WRITE(ICOUT,66)I,X2(I)
+   66     FORMAT('I,X2(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   65   CONTINUE
+        DO75I=1,NY
+          WRITE(ICOUT,76)I,Y2(I)
+   76     FORMAT('I,Y2(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   75   CONTINUE
+      ENDIF
 C
 C               ****************************************
 C               **  STEP 11--                         **
@@ -23224,7 +23196,7 @@ C
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       DO1010,I=1,N
-      XTEMP(I)=X(I)
+        XTEMP(I)=X(I)
  1010 CONTINUE
 C
       CALL SORTC(X,Y,N,X,Y)
@@ -23241,13 +23213,13 @@ C
 C
       NDISTX=0
       DO1210I=1,N
-      IF(NDISTX.EQ.0)GOTO1220
-      DO1215I2=1,NDISTX
-      IF(X(I).EQ.XDIST(I2))GOTO1210
- 1215 CONTINUE
- 1220 CONTINUE
-      NDISTX=NDISTX+1
-      XDIST(NDISTX)=X(I)
+        IF(NDISTX.EQ.0)GOTO1220
+        DO1215I2=1,NDISTX
+          IF(X(I).EQ.XDIST(I2))GOTO1210
+ 1215   CONTINUE
+ 1220   CONTINUE
+        NDISTX=NDISTX+1
+        XDIST(NDISTX)=X(I)
  1210 CONTINUE
 C
       CALL SORT(XDIST,NDISTX,XDIST)
@@ -23263,13 +23235,13 @@ C
 C
       NDISTY=0
       DO1310I=1,N
-      IF(NDISTY.EQ.0)GOTO1320
-      DO1315I2=1,NDISTY
-      IF(Y(I).EQ.YDIST(I2))GOTO1310
- 1315 CONTINUE
- 1320 CONTINUE
-      NDISTY=NDISTY+1
-      YDIST(NDISTY)=Y(I)
+        IF(NDISTY.EQ.0)GOTO1320
+        DO1315I2=1,NDISTY
+          IF(Y(I).EQ.YDIST(I2))GOTO1310
+ 1315   CONTINUE
+ 1320   CONTINUE
+        NDISTY=NDISTY+1
+        YDIST(NDISTY)=Y(I)
  1310 CONTINUE
 C
       CALL SORT(YDIST,NDISTY,YDIST)
@@ -23349,13 +23321,13 @@ C
 C
       NDISTX=0
       DO1510I=1,NX
-      IF(NDISTX.EQ.0)GOTO1520
-      DO1515I2=1,NDISTX
-      IF(X2(I).EQ.XDIST(I2))GOTO1510
- 1515 CONTINUE
- 1520 CONTINUE
-      NDISTX=NDISTX+1
-      XDIST(NDISTX)=X2(I)
+        IF(NDISTX.EQ.0)GOTO1520
+        DO1515I2=1,NDISTX
+          IF(X2(I).EQ.XDIST(I2))GOTO1510
+ 1515   CONTINUE
+ 1520   CONTINUE
+        NDISTX=NDISTX+1
+        XDIST(NDISTX)=X2(I)
  1510 CONTINUE
 C
       CALL SORT(XDIST,NDISTX,XDIST)
@@ -23372,13 +23344,13 @@ C
 C
       NDISTY=0
       DO1610I=1,NY
-      IF(NDISTY.EQ.0)GOTO1620
-      DO1615I2=1,NDISTY
-      IF(Y2(I).EQ.YDIST(I2))GOTO1610
- 1615 CONTINUE
- 1620 CONTINUE
-      NDISTY=NDISTY+1
-      YDIST(NDISTY)=Y2(I)
+        IF(NDISTY.EQ.0)GOTO1620
+        DO1615I2=1,NDISTY
+          IF(Y2(I).EQ.YDIST(I2))GOTO1610
+ 1615   CONTINUE
+ 1620   CONTINUE
+        NDISTY=NDISTY+1
+        YDIST(NDISTY)=Y2(I)
  1610 CONTINUE
 C
       CALL SORT(YDIST,NDISTY,YDIST)
@@ -23401,7 +23373,7 @@ C
  1654 FORMAT('      THE NUMBER OF DISTINCT X AND Y INTERPOLATION')
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,1655)NDISTX,NDISTY
- 1655 FORMAT('      IS ',I8,' AND ',I8,' RESPECTIVELY.          *****')
+ 1655 FORMAT('      IS ',I8,' AND ',I8,' RESPECTIVELY.   *****')
       CALL DPWRST('XXX','BUG ')
       IERROR='YES'
       GOTO9000
@@ -23422,8 +23394,8 @@ C
       IHWUSE='P'
       MESSAG='NO'
       CALL CHECKN(IHP,IHP2,IHWUSE,
-     1IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
-     1ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCP,IERROR)
+     1            IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
+     1            ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCP,IERROR)
       IF(IERROR.EQ.'YES')GOTO1710
       ANPPR=VALUE(ILOCP)
  1710 CONTINUE
@@ -23432,17 +23404,14 @@ C
       IF(NPPR.GE.3)GOTO1719
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1711)
- 1711 FORMAT('***** ERROR IN INT2D--')
+      WRITE(ICOUT,1651)
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,1712)
- 1712 FORMAT('      THE AVERAGE NUMBER OF POINTS PER REGION MUST')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1714)
- 1714 FORMAT('      BE GREATER THAN OR EQUAL TO 3;')
+ 1712 FORMAT('      THE AVERAGE NUMBER OF POINTS PER REGION MUST BE ',
+     1       'GRETAER')
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,1715)
- 1715 FORMAT('      SUCH WAS NOT THE CASE HERE.')
+ 1715 FORMAT('      THAN OR EQUAL TO 3;  SUCH WAS NOT THE CASE HERE.')
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,1716)NPPR
  1716 FORMAT('      THE CURRENT VALUE OF NPPR IS ',I8)
@@ -23463,8 +23432,8 @@ C
       NIWK=7*MAXOBV
       NWK=7*MAXOBV
       CALL INT2D2(ZDIST,YNEW,XNEW,N,YDIST,NY,XDIST,NX,Z2,N2,
-     1NPPR,NIWK,NWK,WORK,IWORK,
-     1IBUGG3,ISUBRO,IERROR)
+     1            NPPR,NIWK,NWK,WORK,IWORK,
+     1            IBUGG3,ISUBRO,IERROR)
 C
 C               *****************
 C               **  STEP 90--  **
@@ -23472,21 +23441,21 @@ C               **  EXIT.      **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGG3.EQ.'OFF'.AND.ISUBRO.NE.'NT2D')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF INT2D--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)N,N2
- 9012 FORMAT('N,N2 = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      DO9042I=1,N2
-      WRITE(ICOUT,9043)I,X2(I),Y2(I),Z2(I)
- 9043 FORMAT('I,X2(I),Y2(I),Z2(I) = ',I8,3E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9042 CONTINUE
- 9090 CONTINUE
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'NT2D')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF INT2D--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)N,N2
+ 9012   FORMAT('N,N2 = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        DO9042I=1,N2
+          WRITE(ICOUT,9043)I,X2(I),Y2(I),Z2(I)
+ 9043     FORMAT('I,X2(I),Y2(I),Z2(I) = ',I8,3G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9042   CONTINUE
+      ENDIF
 C
       RETURN
       END
@@ -29703,7 +29672,8 @@ C
       RETURN
       END
       SUBROUTINE KENTAU(X,Y,N,ICASAN,IKTATA,IWRITE,XTEMP,YTEMP,MAXNXT,
-     1                  XYKTAU,STATCD,PVAL,PVALLT,PVALUT,
+     1                  XYKTAU,KTAUA,KTAUB,KTAUC,
+     1                  STATCD,PVAL,PVALLT,PVALUT,
      1                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,
      1                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,
      1                  IBUGA3,ISUBRO,IERROR)
@@ -29753,6 +29723,8 @@ C     ORIGINAL VERSION--OCTOBER   2004.
 C     UPDATED         --FEBRUARY  2013. RETURN CRITICAL VALUES FOR
 C                                       SMALL SAMPLES, CDF/PVALUES
 C                                       FOR LARGE SAMPLES
+C     UPDATED         --AUGUST    2019. SUPPORT SOME DIFFERENT
+C                                       FORMULATIONS OF KENDALL'S TAU
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -29781,6 +29753,10 @@ C
       DIMENSION WP975(60)
       DIMENSION WP990(60)
       DIMENSION WP995(60)
+C
+      REAL KTAUA
+      REAL KTAUB
+      REAL KTAUC
 C
 C---------------------------------------------------------------------
 C
@@ -29846,9 +29822,33 @@ C
 C
 C-----START POINT-----------------------------------------------------
 C
+C     2019/08: NOTE THAT THERE ARE SEVERAL ALTERNATIVE FORMULATIONS
+C              OF KENDALL'S TAU IN THE LITERATURE.  OUR ORIGINAL
+C              IMPLEMENTATION IS FROM CONOVER WHICH IS:
+C
+C                 K = (Nc - Nd)/(Nc + Nd)
+C
+C              WHERE Nc IS THE NUMBER OF CONCORDANT PAIRS AND Nd IS THE
+C              NUMBER OF DISCORDANT PAIRS.  THIS IS ALSO CALLED THE
+C              GOODMAN AND KRUSKAL GAMMA COEFFICIENT.
+C
+C              KENDALL'S ORIGINAL FORMULATION IS:
+C
+C                K = (Nc - Nd)/{N*(N-1)/2}
+C
+C              THIS IS ALSO REFERRED TO AS KENDALL'S TAU-A IN THE
+C              LITERATURE.
+C
+C              THE DISTINCTION BETWEEN THE 2 STATISTICS IS THAT THE
+C              CONOVER (GAMMA) FORMULATION TAKES TIES INTO ACCOUNT WHILE
+C              KENDALL'S TAU-A DOES NOT.
+C
+C              THERE ARE SEVERAL ADDITIONAL VARIANTS.  THESE USE
+C              (Nc - Nd) IN THE NUMERATOR, BUT USE DIFFERENT
+C              DENOMINATORS.
+C
       ISUBN1='KENT'
       ISUBN2='AU  '
-C
       IERROR='NO'
 C
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'NTAU')THEN
@@ -29918,10 +29918,23 @@ C               **  STEP 2--                                   **
 C               **  COMPUTE THE RANK CORRELATION COEFFICIENT.  **
 C               *************************************************
 C
-      CALL SORTC(X,Y,N,XTEMP,YTEMP)
+      CALL DISTIN(X,N,IWRITE,XTEMP,NXD,IBUGA3,IERROR)
+      CALL DISTIN(Y,N,IWRITE,YTEMP,NYD,IBUGA3,IERROR)
+      M=MIN(NXD,NYD)
+      AM=REAL(M)
+CCCCC CALL SORTC(X,Y,N,XTEMP,YTEMP)
 C
       ANC=0.0
       AND=0.0
+      AN=REAL(N)
+      DENOM1=(AN/2.0)*(AN-1.0)
+      TX=0.0
+      TY=0.0
+      TXY=0.0
+      ANC2=0.0
+      AND2=0.0
+      AN1=0.0
+      AN2=0.0
 C
       NM1=N-1
       DO200J=1,NM1
@@ -29933,16 +29946,40 @@ C
             RATIO=ANUM/ADENOM
             IF(RATIO.GT.0.0)THEN
               ANC=ANC+1.0
+              ANC2=ANC2+1.0
             ELSEIF(RATIO.LT.0.0)THEN
               AND=AND+1.0
+              AND2=AND2+1.0
             ELSE
               ANC=ANC+0.5
               AND=AND+0.5
+              TY=TY+1.0
+            ENDIF
+          ELSE
+            IF(Y(I).NE.Y(J))THEN
+              TX=TX+1.0
+            ELSE
+              TXY=TXY+1.0
             ENDIF
           ENDIF
   300   CONTINUE
   200 CONTINUE
       XYKTAU=(ANC-AND)/(ANC+AND)
+C
+C     KENDALL'S TAU-A
+C
+      KTAUA=(ANC-AND)/DENOM1
+C
+C     KENDALL'S TAU-B
+C
+      DENOM2=SQRT((ANC2+AND2+TX)*(ANC2+AND2+TY))
+      KTAUB=(ANC2-AND2)/DENOM2
+C
+C     KENDALL'S TAU-C
+C
+      DENOM3=(AM-1.0)/AM
+      DENOM3=DENOM3*AN*AN
+      KTAUC=2.0*(ANC2-AND2)/DENOM3
 C
 C               *************************************************
 C               **  STEP 2B--                                  **
@@ -29954,6 +29991,8 @@ C     USE TABLED CRITICAL VALUES FROM TABLE A11 FOR N <= 60.  OTHERWISE,
 C     USE 
 C
 C           W(p) = Z(p)*SQRT(N*(2*N+5))/(3*SQRT(N*(N-1)))
+C
+C     ONLY COMPUTE THESE FOR CONOVER DEFINITION OF KENDALL'S TAU.
 C
       AN=REAL(N)
       ANUM=SQRT(2.0*(2.0*AN+5.0))
@@ -30024,6 +30063,12 @@ C
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,9012)IERROR,ANC,AND,XYKTAU
  9012   FORMAT('IERROR,ANC,AND,XYKTAU = ',A4,2X,3G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)KTAUA,KTAUB,KTAUC,TX,TY,TXY
+ 9014   FORMAT('KTAUA,KTAUB,KTAUC,TX,TY,TXY = ',6G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9016)ANC2,AND2,DENOM1,DENOM2,DENOM3,AM
+ 9016   FORMAT('ANC2,AND2,DENOM1,DENOM2,DENOM3,AM = ',6G15.7)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
@@ -45082,7 +45127,9 @@ C
 C
       RETURN
       END
-      SUBROUTINE LININT(Y,X,N,X2,N2,IWRITE,Y2,IBUGG3,ISUBRO,IERROR)
+      SUBROUTINE LININT(Y,X,N,X2,N2,IWRITE,Y2,
+     1                  YTEMP,YDIST,XDIST,
+     1                  IBUGG3,ISUBRO,IERROR)
 C
 C     PURPOSE--COMPUTE LINEAR INTERPOLATION OF A VARIABLE
 C              (GENERATE INTERPOLATED POINTS).
@@ -45120,6 +45167,8 @@ C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--94/5
 C     ORIGINAL VERSION--MAY       1994.
+C     UPDATED         --JULY      2019. MOVE CREATION OF SCRATCH
+C                                       STORAGE TO CALLING ROUTINE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -45140,17 +45189,9 @@ C
       DIMENSION X(*)
       DIMENSION X2(*)
       DIMENSION Y2(*)
-C
-      DIMENSION YTEMP(MAXOBV)
-      DIMENSION YDIST(MAXOBV)
-      DIMENSION XDIST(MAXOBV)
-C
-      INCLUDE 'DPCOZZ.INC'
-      INCLUDE 'DPCOZ2.INC'
-      EQUIVALENCE (G2RBAG(IGAR11),YTEMP(1))
-      EQUIVALENCE (G2RBAG(IGAR12),YDIST(1))
-      EQUIVALENCE (G2RBAG(IGAR13),XDIST(1))
-CCCCC END CHANGE
+      DIMENSION YTEMP(*)
+      DIMENSION YDIST(*)
+      DIMENSION XDIST(*)
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
@@ -45166,33 +45207,29 @@ C-----START POINT-----------------------------------------------------
 C
       ISUBN1='LINI'
       ISUBN2='NT  '
-C
       IERROR='NO'
 C
-      IF(IBUGG3.EQ.'OFF'.AND.ISUBRO.NE.'NINT')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF LININT--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)N
-   52 FORMAT('N = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      DO55I=1,N
-      WRITE(ICOUT,56)I,Y(I),X(I)
-   56 FORMAT('I,Y(I),X(I) = ',I8,2E15.7)
-      CALL DPWRST('XXX','BUG ')
-   55 CONTINUE
-      WRITE(ICOUT,62)N2
-   62 FORMAT('N2 = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      DO65I=1,N2
-      WRITE(ICOUT,66)I,X2(I)
-   66 FORMAT('I,X2(I) = ',I8,E15.7)
-      CALL DPWRST('XXX','BUG ')
-   65 CONTINUE
-   90 CONTINUE
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'NINT')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF LININT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)N,N2
+   52   FORMAT('N,N2 = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,Y(I),X(I)
+   56     FORMAT('I,Y(I),X(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+        DO65I=1,N2
+          WRITE(ICOUT,66)I,X2(I)
+   66     FORMAT('I,X2(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   65   CONTINUE
+      ENDIF
 C
 C               ****************************************
 C               **  STEP 11--                         **
@@ -45213,13 +45250,13 @@ C
 C
       NDIST=0
       DO1210I=1,N
-      IF(NDIST.EQ.0)GOTO1220
-      DO1215I2=1,NDIST
-      IF(X(I).EQ.XDIST(I2))GOTO1210
- 1215 CONTINUE
- 1220 CONTINUE
-      NDIST=NDIST+1
-      XDIST(NDIST)=X(I)
+        IF(NDIST.EQ.0)GOTO1220
+        DO1215I2=1,NDIST
+          IF(X(I).EQ.XDIST(I2))GOTO1210
+ 1215   CONTINUE
+ 1220   CONTINUE
+        NDIST=NDIST+1
+        XDIST(NDIST)=X(I)
  1210 CONTINUE
 C
       CALL SORT(XDIST,NDIST,XDIST)
@@ -45237,33 +45274,25 @@ C               **  THE CORE OF THE INTERPOLATION CODE             **
 C               **  IS EXPECTING SORTED, DISTINCT X VALUES.        **
 C               *****************************************************
 C
-      IF(NDIST.EQ.N)GOTO1310
-      GOTO1320
-C
- 1310 CONTINUE
-      DO1311K=1,NDIST
-      YDIST(K)=Y(K)
- 1311 CONTINUE
-      GOTO1390
-C
- 1320 CONTINUE
-      DO1321K=1,NDIST
-      TAG=XDIST(K)
-      J=0
-      DO1322I=1,N
-      IF(X(I).EQ.TAG)GOTO1323
-      GOTO1322
- 1323 CONTINUE
-      J=J+1
-      YTEMP(J)=Y(I)
- 1322 CONTINUE
-      NI=J
-      CALL MEAN(YTEMP,NI,IWRITE,YMEAN,IBUGG3,IERROR)
-      YDIST(K)=YMEAN
- 1321 CONTINUE
-      GOTO1390
-C
- 1390 CONTINUE
+      IF(NDIST.EQ.N)THEN
+        DO1311K=1,NDIST
+          YDIST(K)=Y(K)
+ 1311   CONTINUE
+      ELSE
+        DO1321K=1,NDIST
+          TAG=XDIST(K)
+          J=0
+          DO1322I=1,N
+            IF(X(I).EQ.TAG)THEN
+              J=J+1
+              YTEMP(J)=Y(I)
+            ENDIF
+ 1322     CONTINUE
+          NI=J
+          CALL MEAN(YTEMP,NI,IWRITE,YMEAN,IBUGG3,IERROR)
+          YDIST(K)=YMEAN
+ 1321   CONTINUE
+      ENDIF
 C
 C               ********************************************
 C               **  STEP 14--                             **
@@ -45278,24 +45307,21 @@ C               **  EXIT.      **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGG3.EQ.'OFF'.AND.ISUBRO.NE.'NINT')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF LININT--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)N,N2
- 9012 FORMAT('N,N2 = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9051)NDIST
- 9051 FORMAT('NDIST = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      DO9052I=1,NDIST
-      WRITE(ICOUT,9053)I,XDIST(I),YDIST(I)
- 9053 FORMAT('I,XDIST(I),YDIST(I) = ',I8,2E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9052 CONTINUE
- 9090 CONTINUE
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'NINT')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF LININT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9051)NDIST
+ 9051   FORMAT('NDIST = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        DO9052I=1,NDIST
+          WRITE(ICOUT,9053)I,XDIST(I),YDIST(I)
+ 9053     FORMAT('I,XDIST(I),YDIST(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9052   CONTINUE
+      ENDIF
 C
       RETURN
       END
@@ -55603,7 +55629,7 @@ C
  2200 CONTINUE
       ICASAN='PREF'
       CALL DPPREF(IBUGA2,IBUGA3,IBUGCO,IBUGEV,IBUGQ,ISUBRO,
-     1IFOUND,IERROR)
+     1            IFOUND,IERROR)
       IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
 C
  2299 CONTINUE
@@ -59058,7 +59084,7 @@ C               **************************
 C               **  TREAT THE AND CASE  **
 C               **************************
 C
-CCCCC MODIFIED TO SUPPORT "ELLIPSE DATA" OPTION.  JULY 1997.
+CCCCC MODIFIED TO SUPPORT "AND DATA" OPTION.  JULY 1997.
       IF(ICOM.EQ.'AND')THEN
         ICASE='AND'
         UNITSW='SCRE'
@@ -59395,67 +59421,55 @@ C
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
       ENDIF
 C
- 7199 CONTINUE
-C
-C               ************************************
+C               ****************************
 C               **  TREAT THE ANGLE CASE  **
-C               ************************************
+C               ****************************
 C
 CCCCC OCTOBER 1995.  NAME CONFLICT WITH ANGLIT PROBABILITY PLOT
 C
-      IF(ICOM.EQ.'ANGL')GOTO7200
-      GOTO7299
- 7200 CONTINUE
-CCCCC OCTOBER 1995.  ADD FOLLOWING 2 LINES.
-      IF(ICOM2.EQ.'IT  '.OR.(NUMARG.GE.2.AND.IHARG(1).EQ.'PROB'.AND.
-     1IHARG(2).EQ.'PLOT'))GOTO7299
-      ICASE='ANGL'
-      CALL DPANGL(IHARG,IARGT,ARG,NUMARG,
-     1ITEXAU,
-     1ADEFAN,IDEFDI,
-     1ATEXAN,ITEXDI,
-     1IBUGD2,ISUBRO,IFOUND,IERROR)
-      ANGLE=ATEXAN
-      DEFANG=ADEFAN
-      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-C
- 7299 CONTINUE
+      IF(ICOM.EQ.'ANGL' .AND. ICOM2.NE.'IT  ')THEN
+        IF(IHARG(1).NE.'PROB' .OR. IHARG(2).NE.'PLOT')THEN
+          ICASE='ANGL'
+          CALL DPANGL(IHARG,IARGT,ARG,NUMARG,
+     1                ITEXAU,ADEFAN,IDEFDI,ATEXAN,ITEXDI,
+     1                IBUGD2,ISUBRO,IFOUND,IERROR)
+          ANGLE=ATEXAN
+          DEFANG=ADEFAN
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+        ENDIF
+      ENDIF
 C
 C               ************************************
-C               **  TREAT THE ANGLE UNITS CASE  **
-C               **  TREAT THE RADIANS     CASE  **
-C               **  TREAT THE DEGREES     CASE  **
-C               **  TREAT THE GRADS       CASE  **
+C               **  TREAT THE ANGLE UNITS CASE    **
+C               **  TREAT THE RADIANS     CASE    **
+C               **  TREAT THE DEGREES     CASE    **
+C               **  TREAT THE GRADS       CASE    **
 C               ************************************
 C
-      IF(ICOM.EQ.'ANGL')GOTO7300
-      IF(ICOM.EQ.'RADI')GOTO7300
-      IF(ICOM.EQ.'DEGR')GOTO7300
-      IF(ICOM.EQ.'GRAD')GOTO7300
-      GOTO7399
- 7300 CONTINUE
-      ICASE='ANGU'
-      IF(ICOM.EQ.'ANGL')GOTO7310
-      ISHIFT=2
-      CALL SHIFTR(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,
-     1IBUGD2,IERROR)
-      IHARG(1)='UNIT'
-      IHOLD=ICOM
-      IF(NUMARG.GE.3.AND.IHARG(3).EQ.'OFF')IHOLD=IDEFAU
-      IF(NUMARG.GE.3.AND.IHARG(3).EQ.'OFF'.AND.ICOM.EQ.IDEFAU)
-     1IHOLD='DEGR'
-      IHARG(2)=IHOLD
-      NUMARG=2
- 7310 CONTINUE
-      CALL DPANGU(IHARG,NUMARG,
-     1IDEFAU,
-     1ITEXAU,
-     1IBUGD2,ISUBRO,IFOUND,IERROR)
-      IANGLU=ITEXAU
-      IDEANU=IDEFAU
-      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-C
- 7399 CONTINUE
+      IF(ICOM.EQ.'ANGL' .OR. ICOM.EQ.'RADI' .OR.
+     1   ICOM.EQ.'DEGR' .OR. ICOM.EQ.'GRAD')THEN
+        IF(IHARG(1).NE.'FIT ' .AND. IHARG(2).NE.'FIT' .AND.
+     1     IHARG(3).NE.'FIT ')THEN
+          ICASE='ANGU'
+          IF(ICOM.NE.'ANGL')THEN
+            ISHIFT=2
+            CALL SHIFTR(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,
+     1                  IBUGD2,IERROR)
+            IHARG(1)='UNIT'
+            IHOLD=ICOM
+            IF(NUMARG.GE.3.AND.IHARG(3).EQ.'OFF')IHOLD=IDEFAU
+            IF(NUMARG.GE.3.AND.IHARG(3).EQ.'OFF'.AND.ICOM.EQ.IDEFAU)
+     1         IHOLD='DEGR'
+            IHARG(2)=IHOLD
+            NUMARG=2
+          ENDIF
+          CALL DPANGU(IHARG,NUMARG,IDEFAU,ITEXAU,
+     1                IBUGD2,ISUBRO,IFOUND,IERROR)
+          IANGLU=ITEXAU
+          IDEANU=IDEFAU
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+        ENDIF
+      ENDIF
 C
 C               ************************************
 C               **  TREAT THE PATTERN CASE        **

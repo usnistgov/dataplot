@@ -1,0 +1,41 @@
+. This is dataplot program   funnel_3_12.dp      (Comparative Analysis)     3/10/19
+. Purpose: Analyze funnel traversal time data (k=3,n=12) via block plots
+. Design : full factorial (k=3,n=12)
+. Date   : 3/10/16
+.
+. -----start point-----
+.
+dimension 100 variables
+.
+. -----Step 1: Read in the data and define strings-----
+.
+let k = 3
+skip 25; read   funnel_3_12.dat   y x1 to x^k
+.
+let string header = Factors Affecting Funnel Traversal Time
+let string header2 = Design: Full Factorial (k=3,n=12)
+let string trailer = funnel_3_12.dp
+let string trailer2 = Datafile: funnel_3_12.dat
+let string currdate = 3/10/16
+.
+let string sty = Traversal Time (sec)
+.
+let string stx1 = Ball Size
+let string stx2 = Funnel
+let string stx3 = Ramp Type
+.
+let string stx1l = Small Large
+let string stx2l = Red Blue
+let string stx3l = Wood Aluminum Plastic
+.
+let string stbest = up
+let string colorl = red blue
+.
+. -----Step 2: Do Comparative Analysis-----
+.
+let k = 3
+let krob = 2
+let xprime = x1
+let xrob1 = x2
+let xrob2 = x3
+call testblockplot_funnel_3_12.dp

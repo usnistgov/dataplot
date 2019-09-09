@@ -1,28 +1,29 @@
-2256
-NEWTON'S GRAVITATIONAL CONSTANT VIA TORSION PENDULUM EXPERIMENT
-GABE LUTHER (NIST)
-NUMBER OF OBSERVATIONS =
-NUMBER OF VARIABLES = 1
-ORDER OF VARIABLES ON A LINE IMAGE--
-   1. RESPONSE--PENDULUM ANGLE
-STATISTICAL AREA--TIME SERIES
-TO READ THIS FILE INTO DATAPLOT (& ANALYZE)--
-   SKIP 25
-   READ LUTHER.DAT Y
-   4-PLOT Y
-   SPECTRUM Y
-   DEMODULATION FREQUENCY .02
-   COMPLEX DEMOD PHASE PLOT Y
-   COMPLEX DEMOD AMPLITUDE PLOT Y
- 
- 
- 
- 
- 
- 
- 
- 
+This is dataplot data file     luther.dat
+Newton's gravitational constant via torsion pendulum experiment
+Gabe Luther (NIST)
+Number of observations = 989
+Number of variables = 1
+Order of variables on a line image--
+   1. Response--pendulum angle
+Statistical area--time series
+To read this file into dataplot (& analyze)--
+   skip 25
+   read luther.dat y
+   4-plot y
+   spectrum y
+   demodulation frequency .02
+   complex demod phase plot y
+   complex demod amplitude plot y
+
+
+
+
+
+
+
+  Y
 ----
+2256
 1913
 1609
 1347

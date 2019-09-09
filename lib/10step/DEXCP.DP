@@ -1,6 +1,6 @@
 . This is dataplot macro   DEXCP.DP        latest update: 9/25/18
 . Purpose: Generate a DEX contour plot
-.          (= ste p 10 of the DEXPLOT.DP 10-ste p DEX analysis procedure)
+.          (= step 10 of the DEXPLOT.DP 10-step DEX analysis procedure)
 . Date: May 2005 ==> 1/26/15 ==> 2/23/15 => 9/25/18
 . 9/25/18: insert logic for vertical and horizontal factors for the k >= 10 case
 .
@@ -34,7 +34,7 @@ printing off
 let bugswcp = 0
 . let pausesw = 1
 .
-if bugswcp = 1; print " "; print "--At beginning of DEX Ste p 10 (DEXCP.DP)"
+if bugswcp = 1; print " "; print "--At beginning of DEX Step 10 (DEXCP.DP)"
    print "contourh contourv = ^contourh ^contourv"
    print "meancent ncent = ^meancent ^ncent"
    print "confdone = ^confdone"

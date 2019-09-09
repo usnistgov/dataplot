@@ -1,0 +1,25 @@
+. This is dataplot macro     write_factors_and_settinga_upper_left.dp
+. Purpose: Write factor names and settings in upper left\
+. Date: 3/18/19
+. Input:
+.    k (parameter)                     = number of factors
+.    rightmsw (parameter)              = (0,1) switch dictating whether want right margin info
+.    stx1, stx2, . . . stx^k (strings) = factor names
+.    stx1l, stx2l, . . ., stx^k&l      = factor settings
+. Output:
+.    factors and settings written out in upper right margin
+.
+. -----start point-----
+.
+if rightmsw exists and rightmsw = 1 or rightmsw not exist
+   if stx1 exists and stx1l exists
+      let ypdel = 2; let lh = 1.8; let lw = 0.9
+      if k >= 9
+         let ypdel = 1.5; let lh = 1.6; let lw = 0.8
+         let string colorl = red blue green black
+      end if
+      call dexrightmargin.dp
+      delete ypdel lh lw
+   end if
+end if
+.

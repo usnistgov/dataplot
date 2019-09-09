@@ -7,10 +7,13 @@
 .
 dimension 100 variables
 .
-. -----Step 1: Read in the data and define strings-----
+. -----Step 1: Read in the data-----
 .
 let k = 5
+delete y; delete x1 to x^k
 skip 25; read   boxreactor_5_16.dat   Y X1 X2 X3 X4 X5
+.
+. -----Step 2: Define strings-----
 .
 let string header = Factors Affecting Chemical Reactor Yield (Box, Hunter, & Hunter)
 let string header2 = Design: 2**(5-1) (k=5,n=16)
@@ -35,7 +38,8 @@ let string stx5l = 3 6
 let string stbest = up
 let string colorl = red blue
 .
-. -----Step 2: Generate 10-step DEX analysis-----
+. -----Step 3: Generate 10-step DEX analysis-----
 .
 call dex10stepanalysis.dp
+.
 

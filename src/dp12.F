@@ -5550,10 +5550,10 @@ C
       RETURN
       END
       SUBROUTINE DPDEGR(IHARG,IARGT,IARG,NUMARG,IDEFDG,
-     1IDEG,IFOUND,IERROR)
+     1                  IDEG,IFOUND,IERROR)
 C
-C     PURPOSE--DEFINE THE INTEGER DEGREE OF THE POLYNOMIAL
-C              FOR USE IN THE FIT, PRE-FIT, SPLINE FIT, AND SMOOTH COMMANDS.
+C     PURPOSE--DEFINE THE INTEGER DEGREE OF THE POLYNOMIAL FOR USE
+C              IN THE FIT, PRE-FIT, SPLINE FIT, AND SMOOTH COMMANDS.
 C              THE SPECIFIED DEGREE WILL BE PLACED
 C              IN THE FLOATING POINT VARIABLE IDEG.
 C     INPUT  ARGUMENTS--IHARG  (A  HOLLERITH VECTOR)
@@ -5572,13 +5572,13 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--NOVEMBER 1980.
 C     UPDATED         --MAY       1982.
+C     UPDATED         --JULY      2019. CHECK FOR CONFLICT WITH
+C                                       "DEGREE ... FIT" COMMAND
+C     UPDATED         --JULY      2019. RECODE FOR BETTER READABILITY
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -5609,67 +5609,51 @@ C
       IERROR='NO'
 C
  1110 CONTINUE
-      IF(NUMARG.LE.0)GOTO1150
-      IF(NUMARG.EQ.1.AND.IHARG(1).EQ.'DEGR')GOTO1150
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1150
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1150
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1150
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1150
-      IF(IARGT(NUMARG).EQ.'NUMB')GOTO1160
-      GOTO1120
+      IF(NUMARG.LE.0 .OR.
+     1   (NUMARG.EQ.1.AND.IHARG(1).EQ.'DEGR') .OR.
+     1   IHARG(NUMARG).EQ.'ON' .OR. IHARG(NUMARG).EQ.'OFF' .OR.
+     1   IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA')THEN
+        IHOLD=IDEFDG
+      ELSEIF(IARGT(NUMARG).EQ.'NUMB')THEN
+        IHOLD=IARG(NUMARG)
+      ELSE
+        IERROR='YES'
+        WRITE(ICOUT,1121)
+ 1121   FORMAT('***** ERROR IN DPDEGR--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1122)
+ 1122   FORMAT('      ILLEGAL FORM FOR DEGREE COMMAND.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1124)
+ 1124   FORMAT('      TEST EXAMPLE TO DEMONSTRATE THE PROPER FORM--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1125)
+ 1125   FORMAT('      SUPPOSE THE THE ANALYST WISHES TO SET THE ',
+     1         'DEGREE = 3  ')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1127)
+ 1127   FORMAT('      FOR SOME SMOOTHING OR FITTING OPERATION,')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1128)
+ 1128   FORMAT('      THEN AN ALLOWABLE FORM IS--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1129)
+ 1129   FORMAT('      DEGREE 3 ')
+        CALL DPWRST('XXX','BUG ')
+        GOTO1199
+      ENDIF
 C
- 1120 CONTINUE
-      IERROR='YES'
-      WRITE(ICOUT,1121)
- 1121 FORMAT('***** ERROR IN DPDEGR--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1122)
- 1122 FORMAT('      ILLEGAL FORM FOR DEGREE ',
-     1'COMMAND.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1124)
- 1124 FORMAT('      TEST EXAMPLE TO DEMONSTRATE THE ',
-     1'PROPER FORM--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1125)
- 1125 FORMAT('      SUPPOSE THE THE ANALYST WISHES ')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1126)
- 1126 FORMAT('      TO SET THE DEGREE = 3  ')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1127)
- 1127 FORMAT('      FOR SOME SMOOTHING OR FITTING OPERATION,')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1128)
- 1128 FORMAT('      THEN AN ALLOWABLE FORM IS--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1129)
- 1129 FORMAT('      DEGREE 3 ')
-      CALL DPWRST('XXX','BUG ')
-      GOTO1199
-C
- 1150 CONTINUE
-      IHOLD=IDEFDG
-      GOTO1180
-C
- 1160 CONTINUE
-      IHOLD=IARG(NUMARG)
-      GOTO1180
-C
- 1180 CONTINUE
       IFOUND='YES'
       IDEG=IHOLD
 C
-      IF(IFEEDB.EQ.'OFF')GOTO1189
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1181)IDEG
- 1181 FORMAT('THE POLYNOMIAL DEGREE HAS JUST BEEN SET TO ',
-     1I8)
-      CALL DPWRST('XXX','BUG ')
- 1189 CONTINUE
-      GOTO1199
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1181)IDEG
+ 1181   FORMAT('THE POLYNOMIAL DEGREE HAS JUST BEEN SET TO ',I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
  1199 CONTINUE
       RETURN
@@ -6325,15 +6309,16 @@ C
       RETURN
       END
       SUBROUTINE DPDEHL(X,Y,Z,D,X2,Y2,NPLOTP,
-     1XEYE,YEYE,ZEYE,
-     1XOUT,YOUT,TAGOUT,NOUT,NTRACE,
-     1IBUGU2,ISUBRO,IERROR)
+     1                  XEYE,YEYE,ZEYE,
+     1                  XOUT,YOUT,TAGOUT,NOUT,NTRACE,
+     1                  ALOWER,AUPPER,XHORIZ,XD,YD,XS,YS,
+     1                  XTEMP,YTEMP,DTEMP,IVIS,
+     1                  IBUGU2,ISUBRO,IERROR)
 C
-C     PURPOSE--GIVEN THE VECTORS OF THE ALREADY-TRANSFORMED
-C              3D-TO-2D DATA, DETERMINE WHERE THE
-C              HIDDEN LINES ARE AND REMOVE THEM--
-C              FORM UPDATED VECTORS CONTAINING ONLY THE
-C              VISIBLE LINES.
+C     PURPOSE--GIVEN THE VECTORS OF THE ALREADY-TRANSFORMED 3D-TO-2D
+C              DATA, DETERMINE WHERE THE HIDDEN LINES ARE AND REMOVE
+C              THEM--FORM UPDATED VECTORS CONTAINING ONLY THE VISIBLE
+C              LINES.
 C     METHOD USED = FLOATING HORIZON
 C     REFERENCE--ROGERS, DAVID F. (1985).  PROCEDURAL
 C                ELEMENTS FOR COMPUTER GRAPHICS.
@@ -6382,34 +6367,35 @@ C
       DIMENSION YOUT(*)
       DIMENSION TAGOUT(*)
 C
-      DIMENSION AUPPER(1000)
-      DIMENSION ALOWER(1000)
-      DIMENSION XHORIZ(1000)
+CCCCC DIMENSION AUPPER(1000)
+CCCCC DIMENSION ALOWER(1000)
+CCCCC DIMENSION XHORIZ(1000)
 C
-      DIMENSION XD(1000)
-      DIMENSION YD(1000)
+CCCCC DIMENSION XD(1000)
+CCCCC DIMENSION YD(1000)
 C
-      DIMENSION XS(1000)
-      DIMENSION YS(1000)
-      DIMENSION IVIS(1000)
+CCCCC DIMENSION XS(1000)
+CCCCC DIMENSION YS(1000)
+CCCCC DIMENSION IVIS(1000)
 C
-      DIMENSION XTEMP(1000)
-      DIMENSION YTEMP(1000)
-      DIMENSION DTEMP(1000)
-CCCCC FOLLOWING LINES ADDED MAY 1995
-      INCLUDE 'DPCOPA.INC'
-      INCLUDE 'DPCOZ2.INC'
-      EQUIVALENCE (G2RBAG(IGAR31),AUPPER(1))
-      EQUIVALENCE (G2RBAG(IGAR32),ALOWER(1))
-      EQUIVALENCE (G2RBAG(IGAR33),XHORIZ(1))
-      EQUIVALENCE (G2RBAG(IGAR34),XD(1))
-      EQUIVALENCE (G2RBAG(IGAR35),YD(1))
-      EQUIVALENCE (G2RBAG(IGAR36),XS(1))
-      EQUIVALENCE (G2RBAG(IGAR37),YS(1))
-      EQUIVALENCE (G2RBAG(IGAR38),XTEMP(1))
-      EQUIVALENCE (G2RBAG(IGAR39),YTEMP(1))
-      EQUIVALENCE (G2RBAG(IGAR40),DTEMP(1))
-CCCCC END CHANGE
+CCCCC DIMENSION XTEMP(1000)
+CCCCC DIMENSION YTEMP(1000)
+CCCCC DIMENSION DTEMP(1000)
+C
+      DIMENSION AUPPER(*)
+      DIMENSION ALOWER(*)
+      DIMENSION XHORIZ(*)
+C
+      DIMENSION XD(*)
+      DIMENSION YD(*)
+C
+      DIMENSION XS(*)
+      DIMENSION YS(*)
+      DIMENSION IVIS(*)
+C
+      DIMENSION XTEMP(*)
+      DIMENSION YTEMP(*)
+      DIMENSION DTEMP(*)
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
@@ -11939,6 +11925,7 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--2019/03
 C     ORIGINAL VERSION--MARCH     2019. EXTRACT AS SEPARATE
 C                                       SUBROUTINE
+C     UPDATED         --AUGUST    2019. ADD "PS2PDF" OPTION
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -12247,6 +12234,7 @@ C                  WITH START.  UNTIL THEN, ONLY USE "HIDDEN" IF
 C                  THE FILE NAME DOES NOT CONTAIN A SPACE CHARACTER.
 C                  SO IN THE CODES BELOW, CHECK FOR A SPACE IN THE
 C                  FILE NAME.
+C         2019/08: CAN OPTIONALLY RUN PS2PDF
 C
           IF(IPSTD2.EQ.'CONV')THEN
 C
@@ -12309,19 +12297,42 @@ C
             CALL DPSYS2(ISTRIN,N0,ISUBRO,IERROR)
             ISYSPE=ISSAV1
             ISYSHI=ISSAV2
-          ELSE
+          ELSEIF(IPSTD2.EQ.'PS2P')THEN
 C
-C           2015/11: SINCE GHOSTSCRIPT IS NOW INSTALLED IN
-C                    "Program Files" UNDER WINDOWS, ENCLOSE THE
-C                    GHOSTSCRIPT PATH IN QUOTES.
+C           2019/08: PS2PDF OPTION.  NOTE THAT PS2PDF IS INSTALLED
+C                    AS PART OF GHOSTSCRIPT APPLICATION, SO CAN USE
+C                    GHOSTSCRIPT PATH.  PS2PDF DOES ESSENTIALLY SAME
+C                    THING AS DEFAULT "GHOSTSCRIPT" OPTION, BUT HAS A
+C                    SIMPLER SYNTAX.
 C
-            ISTEPN='15'
+C                    NOTE THAT UNDER WINDOWS, THE PS2PDF SCRIPT
+C                    IS CALLED PS2PDF.BAT AND IS LOCATED IN THE
+C                    "LIB" DIRECTORY RATHER THAN THE "BIN" DIRECTORY.
+C
+C                    IT APPEARS THAT QUOTING THE "PS2PDF" PORTION
+C                    OF THIS CAUSES PROBLEMS IN "HIDDEN" MODE
+C                    UNDER WINDOWS.
+C
+            ISTEPN='14B'
             IF(IBUGO2.EQ.'ON'.OR.ISUBRO.EQ.'DEP3')
      1         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
             ISTRIN=' '
+            N0=0
+            IFLSP2=0
             IF(NCGHPA.GT.0)THEN
-              IF(ISTRIN(1:1).NE.IQUOTE)THEN
+C
+C             CHECK FOR SPACE IN NAME
+C
+              DO2213KK=1,NCGHPA
+                IF(IGSTPA(KK:KK).EQ.' ')THEN
+                  IFLSP2=1
+                  GOTO2219
+                ENDIF
+ 2213         CONTINUE
+ 2219         CONTINUE
+C
+              IF(ISTRIN(1:1).NE.IQUOTE .AND. IFLSP2.EQ.1)THEN
                 ISTRIN(1:1)=IQUOTE
                 ISTRIN(2:NCGHPA+1)=IGSTPA(1:NCGHPA)
                 N0=NCGHPA+1
@@ -12340,27 +12351,122 @@ C
                   N0=N0+1
                   ISTRIN(N0:N0)=IBASLC
                 ENDIF
+                NOM3=N0-3
+                NOM1=N0-1
+                IF(ISTRIN(NOM3:NOM1).EQ.'bin')ISTRIN(NOM3:NOM1)='lib'
+                IF(ISTRIN(NOM3:NOM1).EQ.'BIN')ISTRIN(NOM3:NOM1)='LIB'
               ENDIF
 C
-            ELSE
-              ISTRIN(1:1)=IQUOTE
-              N0=1
+            ENDIF
+C
+            N0=N0+1
+            ISTRIN(N0:N0+5)='ps2pdf'
+            N0=N0+5
+            IF(IHOST1.EQ.'IBM-')THEN
+              N0=N0+1
+              ISTRIN(N0:N0+3)='.bat'
+              N0=N0+3
+            ENDIF
+            IF(IFLSP2.EQ.1 .OR.ISTRIN(1:1).EQ.IQUOTE)THEN
+              N0=N0+1
+              ISTRIN(N0:N0)=IQUOTE
+              IFLSP2=1
+            ENDIF
+            N0=N0+1
+            ISTRIN(N0:N0)=' '
+            IF(IFLGSP.EQ.1)THEN
+              N0=N0+1
+              ISTRIN(N0:N0)=IQUOTE
+            ENDIF
+C
+            N0=N0+1
+            ISTRIN(N0:N0+ILASTT-1)=IFILE(1:ILASTT)
+            N0=N0+ILASTT-1
+            IF(IFLGSP.EQ.1)THEN
+              N0=N0+1
+              ISTRIN(N0:N0)=IQUOTE
+            ENDIF
+            ISSAV1=ISYSPE
+            ISSAV2=ISYSHI
+            ISYSPE='OFF'
+            ISYSHI='ON'
+            IF(IFLGSP.EQ.1 .OR. IFLSP2.EQ.1)ISYSHI='OFF'
+C
+            IF(IBUGO2.EQ.'ON'.OR.ISUBRO.EQ.'DEP3')THEN
+               WRITE(ICOUT,2201)N0,ISTRIN(1:N0)
+ 2201          FORMAT('BEFORE DPSYS2: N0,ISTRIN = ',I5,2X,A80)
+               CALL DPWRST('XXX','BUG ')
+            ENDIF
+C
+            CALL DPSYS2(ISTRIN,N0,ISUBRO,IERROR)
+            ISYSPE=ISSAV1
+            ISYSHI=ISSAV2
+          ELSE
+C
+C           2015/11: SINCE GHOSTSCRIPT IS NOW INSTALLED IN
+C                    "Program Files" UNDER WINDOWS, ENCLOSE THE
+C                    GHOSTSCRIPT PATH IN QUOTES.
+C
+            ISTEPN='15'
+            IF(IBUGO2.EQ.'ON'.OR.ISUBRO.EQ.'DEP3')
+     1         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+C           CHECK FOR SPACE IN NAME
+C
+            IFLSP2=0
+            DO2223KK=1,NCGHPA
+              IF(IGSTPA(KK:KK).EQ.' ')THEN
+                IFLSP2=1
+                GOTO2229
+              ENDIF
+ 2223       CONTINUE
+ 2229       CONTINUE
+C
+            ISTRIN=' '
+            IF(NCGHPA.GT.0)THEN
+              IF(ISTRIN(1:1).NE.IQUOTE .AND. IFLSP2.EQ.1)THEN
+                ISTRIN(1:1)=IQUOTE
+                ISTRIN(2:NCGHPA+1)=IGSTPA(1:NCGHPA)
+                N0=NCGHPA+1
+              ELSE
+                ISTRIN(1:NCGHPA)=IGSTPA(1:NCGHPA)
+                N0=NCGHPA
+                IFLSP2=1
+              ENDIF
+C
+              IF(IOPSY1.EQ.'UNIX')THEN
+                IF(IGSTPA(NCGHPA:NCGHPA).NE.'/')THEN
+                  N0=N0+1
+                  ISTRIN(N0:N0)='/'
+                ENDIF
+              ELSEIF(IHOST1.EQ.'IBM-')THEN
+                IF(IGSTPA(NCGHPA:NCGHPA).NE.IBASLC)THEN
+                  N0=N0+1
+                  ISTRIN(N0:N0)=IBASLC
+                ENDIF
+              ENDIF
             ENDIF
 C
             IF(IOPSY1.EQ.'UNIX')THEN
               N0=N0+1
-              ISTRIN(N0:N0+3)='gs  '
-              ISTRIN(N0+2:N0+2)=IQUOTE
-              N0=N0+3
+              ISTRIN(N0:N0+1)='gs'
+              N0=N0+1
             ELSEIF(IHOST1.EQ.'IBM-')THEN
               N0=N0+1
               IF(IGSTVR.EQ.'64')THEN
-                ISTRIN(N0:N0+13)='GSWIN64C.EXE  '
+                ISTRIN(N0:N0+11)='GSWIN64C.EXE'
+                N0=N0+11
               ELSE
-                ISTRIN(N0:N0+13)='GSWIN32C.EXE  '
+                ISTRIN(N0:N0+11)='GSWIN32C.EXE'
+                N0=N0+11
               ENDIF
-              ISTRIN(N0+12:N0+12)=IQUOTE
-              N0=N0+13
+            ENDIF
+C
+            IF(IFLSP2.EQ.1)THEN
+              N0=N0+1
+              ISTRIN(N0:N0)=IQUOTE
+              N0=N0+1
+              ISTRIN(N0:N0)=' '
             ENDIF
 C
             N0=N0+1
@@ -12405,7 +12511,7 @@ C
             ISSAV2=ISYSHI
             ISYSPE='OFF'
             ISYSHI='ON'
-            IF(IFLGSP.EQ.1)ISYSHI='OFF'
+            IF(IFLGSP.EQ.1 .OR. IFLSP2.EQ.1)ISYSHI='OFF'
             CALL DPSYS2(ISTRIN,N0,ISUBRO,IERROR)
             ISYSPE=ISSAV1
             ISYSHI=ISSAV2
@@ -12780,6 +12886,84 @@ C
               CALL DPSYS2(ISTRIN,N0,ISUBRO,IERROR)
               ISYSPE=ISSAV1
               ISYSHI=ISSAV2
+            ELSEIF(IPSTD2.EQ.'PS2P')THEN
+C
+              ISTEPN='224A'
+              IF(IBUGO2.EQ.'ON'.OR.ISUBRO.EQ.'DEP3')
+     1           CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+C             CHECK FOR SPACE IN NAME
+C
+              IFLSP2=0
+              DO2233KK=1,NCGHPA
+                IF(IGSTPA(KK:KK).EQ.' ')THEN
+                  IFLSP2=1
+                  GOTO2239
+                ENDIF
+ 2233         CONTINUE
+ 2239         CONTINUE
+C
+              ISTRIN=' '
+              IF(NCGHPA.GT.0)THEN
+                IF(IGSTPA(1:1).NE.IQUOTE .AND. IFLSP2.EQ.1)THEN
+                  ISTRIN(1:1)=IQUOTE
+                  ISTRIN(2:NCGHPA+1)=IGSTPA(1:NCGHPA)
+                  N0=NCGHPA+1
+                ELSE
+                  ISTRIN(1:NCGHPA)=IGSTPA(1:NCGHPA)
+                  N0=NCGHPA
+                ENDIF
+                IF(IOPSY1.EQ.'UNIX')THEN
+                  IF(IGSTPA(NCGHPA:NCGHPA).NE.'/')THEN
+                    N0=N0+1
+                    ISTRIN(N0:N0)='/'
+                  ENDIF
+                ELSEIF(IHOST1.EQ.'IBM-')THEN
+                  IF(IGSTPA(NCGHPA:NCGHPA).NE.IBASLC)THEN
+                    N0=N0+1
+                    ISTRIN(N0:N0)=IBASLC
+                  ENDIF
+                  NOM3=N0-3
+                  NOM1=N0-1
+                  IF(ISTRIN(NOM3:NOM1).EQ.'BIN')ISTRIN(NOM3:NOM1)='LIB'
+                  IF(ISTRIN(NOM3:NOM1).EQ.'bin')ISTRIN(NOM3:NOM1)='lib'
+                ENDIF
+              ENDIF
+C
+              N0=N0+1
+              ISTRIN(N0:N0+5)='ps2pdf'
+              N0=N0+5
+              IF(IHOST1.EQ.'IBM-')THEN
+                N0=N0+1
+                ISTRIN(N0:N0+3)='.bat'
+                N0=N0+3
+              ENDIF
+              IF(IFLSP2.EQ.1)THEN
+                N0=N0+1
+                ISTRIN(N0:N0)=IQUOTE
+              ENDIF
+              N0=N0+1
+              ISTRIN(N0:N0)=' '
+              IF(IFLGSP.EQ.1)THEN
+                N0=N0+1
+                ISTRIN(N0:N0)=IQUOTE
+              ENDIF
+C
+              N0=N0+1
+              ISTRIN(N0:N0+ILAST-1)=IFILE(1:ILAST)
+              N0=N0+ILAST-1
+              IF(IFLGSP.EQ.1)THEN
+                N0=N0+1
+                ISTRIN(N0:N0)=IQUOTE
+              ENDIF
+              ISSAV1=ISYSPE
+              ISSAV2=ISYSHI
+              ISYSPE='OFF'
+              ISYSHI='ON'
+              IF(IFLGSP.EQ.1 .OR. IFLSP2.EQ.1)ISYSHI='OFF'
+              CALL DPSYS2(ISTRIN,N0,ISUBRO,IERROR)
+              ISYSPE=ISSAV1
+              ISYSHI=ISSAV2
             ELSE
 C
               ISTEPN='224'
@@ -12787,8 +12971,20 @@ C
      1           CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
               ISTRIN=' '
+              IFLSP2=0
+C
+C             CHECK FOR SPACE IN NAME
+C
+              DO2243KK=1,NCGHPA
+                IF(IGSTPA(KK:KK).EQ.' ')THEN
+                  IFLSP2=1
+                  GOTO2249
+                ENDIF
+ 2243         CONTINUE
+ 2249         CONTINUE
+C
               IF(NCGHPA.GT.0)THEN
-                IF(IGSTPA(1:1).NE.IQUOTE)THEN
+                IF(IGSTPA(1:1).NE.IQUOTE .AND. IFLSP2.EQ.1)THEN
                   ISTRIN(1:1)=IQUOTE
                   ISTRIN(2:NCGHPA+1)=IGSTPA(1:NCGHPA)
                   N0=NCGHPA+1
@@ -12800,9 +12996,6 @@ C
                   N0=N0+1
                   ISTRIN(N0:N0)=IBASLC
                 ENDIF
-              ELSE
-                ISTRIN(1:1)=IQUOTE
-                N0=1
               ENDIF
               IF(IOPSY1.EQ.'UNIX')THEN
                 N0=N0+1
@@ -12812,12 +13005,16 @@ C
               ELSEIF(IHOST1.EQ.'IBM-')THEN
                 N0=N0+1
                 IF(IGSTVR.EQ.'64')THEN
-                  ISTRIN(N0:N0+13)='GSWIN64C.EXE  '
+                  ISTRIN(N0:N0+11)='GSWIN64C.EXE'
+                  N0=N0+11
                 ELSE
-                  ISTRIN(N0:N0+13)='GSWIN32C.EXE  '
+                  ISTRIN(N0:N0+11)='GSWIN32C.EXE'
+                  N0=N0+11
                 ENDIF
-                ISTRIN(N0+12:N0+12)=IQUOTE
-                N0=N0+13
+                IF(IFLSP2.EQ.1)THEN
+                  N0=N0+1
+                  ISTRIN(N0:N0)=IQUOTE
+                ENDIF
               ENDIF
               N0=N0+1
               IF(IPSTDV.EQ.'PDF')THEN
@@ -12859,7 +13056,7 @@ C
               ISSAV2=ISYSHI
               ISYSPE='OFF'
               ISYSHI='ON'
-              IF(IFLGSP.EQ.1)ISYSHI='OFF'
+              IF(IFLGSP.EQ.1 .OR. IFLSP2.EQ.1)ISYSHI='OFF'
               CALL DPSYS2(ISTRIN,N0,ISUBRO,IERROR)
               ISYSPE=ISSAV1
               ISYSHI=ISSAV2
@@ -13368,9 +13565,6 @@ C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
-CCCCC THE FOLLOWING 2 LINES WERE COMMENTED OUT MAY 1992 (JJF)
-CCCCC IBUGG4='OFF'
-CCCCC ISUBG4='9999'
 C
       IF(IBUGO2.EQ.'ON'.OR.ISUBRO.EQ.'DEPW')THEN
         WRITE(ICOUT,999)
@@ -13529,10 +13723,7 @@ C
         IGENID='PLO1'
       ELSEIF(I.EQ.3)THEN
         IGENNU=IPL2NU
-CCCCC   THE FOLLOWING LINE WAS FIXED   MAY 1992 (JJF)
-CCCCC   IF(I.EQ.2)IGENID='PLO2'
         IGENID='PLO2'
-C
       ELSEIF(I.GE.4)THEN
         IGENNU=IDUNIT(I)
         IGENID='GENE'
@@ -14848,11 +15039,13 @@ C
       RETURN
       END
       SUBROUTINE DPDERV(ITYPEH,IW21HO,IW22HO,W2HOLD,NWHOLD,
-     1IA,PARAM,IPARN,IPARN2,
-     1IFOUNZ,IBEGIN,IEND,ITYPE,IHOL,IHOL2,INT1,FLOAT1,IERRO1,
-     1NUMCL,NUMPL,NUMAOL,ITYW1L,ICAT1L,INLI1L,ITYW2L,
-     1NUMCR,NUMPR,NUMAOR,ITYW1R,ICAT1R,INLI1R,ITYW2R,
-     1IANGLU,IBUGA3,IBUGCO,IBUGEV,IBUGQ,ISUBRO,IFOUND,IERROR)
+     1                  IA,PARAM,IPARN,IPARN2,
+     1                  IFOUNZ,IBEGIN,IEND,ITYPE,IHOL,IHOL2,
+     1                  INT1,FLOAT1,IERRO1,
+     1                  NUMCL,NUMPL,NUMAOL,ITYW1L,ICAT1L,INLI1L,ITYW2L,
+     1                  NUMCR,NUMPR,NUMAOR,ITYW1R,ICAT1R,INLI1R,ITYW2R,
+     1                  IANGLU,RESULT,
+     1                  IBUGA3,IBUGCO,IBUGEV,IBUGQ,ISUBRO,IFOUND,IERROR)
 C
 C     PURPOSE--TREAT THE LET CASE FOR
 C              FINDING THE DERIVATIVE OF A FUNCTION.
@@ -14871,8 +15064,12 @@ C     UPDATED         --JULY      1981.
 C     UPDATED         --JANUARY   1982.
 C     UPDATED         --JUNE      1990. TEMPORARY ARRAYS TO GARBAGE COMMON
 C     UPDATED         --MARCH     2015. CALL LIST TO DPINFU
+C     UPDATED         --JULY      2019. CREATE STORAGE FOR RESULT ARRAY
+C                                       CALLING ROUTINE
 C
 C---------------------------------------------------------------------
+C
+      DIMENSION RESULT(*)
 C
       CHARACTER*4 ITYPEH
       CHARACTER*4 IW21HO
@@ -14986,11 +15183,6 @@ C
       DIMENSION INEW2(10)
 C
       DIMENSION IFUNC4(1000)
-      DIMENSION RESULT(MAXOBV)
-CCCCC FOLLOWING LINES ADDED JUNE, 1990
-      INCLUDE 'DPCOZ2.INC'
-      EQUIVALENCE (G2RBAG(IGAR45),RESULT(1))
-CCCCC END CHANGE
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -19793,6 +19985,7 @@ C     UPDATED         --FEBRUARY  2019. ADD DEX INTERACTION <STAT> PLOT
 C     UPDATED         --FEBRUARY  2019. ADD CLASSIFICATION <STAT> PLOT
 C     UPDATED         --FEBRUARY  2019. RECODE FOR MORE EFFICIENT USE OF
 C                                       STORAGE
+C     UPDATED         --JULY      2019. TWEAK SCRATCH STORAGE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -19857,7 +20050,6 @@ C
       DIMENSION X1(10*MAXOBV)
 C
       INCLUDE 'DPCOZZ.INC'
-      INCLUDE 'DPCOZ2.INC'
       INCLUDE 'DPCOZI.INC'
       INCLUDE 'DPCOZD.INC'
 C
@@ -19876,8 +20068,7 @@ C
       EQUIVALENCE (GARBAG(JGAR13),XTEMP2(1))
       EQUIVALENCE (GARBAG(JGAR14),XTEMP3(1))
       EQUIVALENCE (GARBAG(JGAR15),STAT(1))
-      EQUIVALENCE (G2RBAG(IGAR11),X1(1))
-C
+      EQUIVALENCE (GARBAG(JGAR16),X1(1))
 C
       INTEGER ITEMP1(MAXOBV)
       INTEGER ITEMP2(MAXOBV)
@@ -21851,6 +22042,10 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--2014/8
 C     ORIGINAL VERSION--AUGUST    2014.
 C     UPDATED         --JUNE      2018. OPTION TO SORT BY AVERAGE RANK
+C     UPDATED         --JULY      2019. TWEAK SCRATCH STORAGE, NO
+C                                       LONGER NEED TEMP24, TEMP25,
+C                                       TEMP26
+C     UPDATED         --JULY      2019. CALL LIST TO DPDFP2
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -21897,9 +22092,9 @@ C---------------------------------------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
       INCLUDE 'DPCOZZ.INC'
-      INCLUDE 'DPCOZ2.INC'
       INCLUDE 'DPCOZD.INC'
       INCLUDE 'DPCOZI.INC'
+      INCLUDE 'DPCODA.INC'
 C
       DIMENSION Y1(MAXOBV)
       DIMENSION Y2(MAXOBV)
@@ -21931,9 +22126,6 @@ C
       DIMENSION TEMP21(MAXOBV)
       DIMENSION TEMP22(MAXOBV)
       DIMENSION TEMP23(MAXOBV)
-      DIMENSION TEMP24(MAXOBV)
-      DIMENSION TEMP25(MAXOBV)
-      DIMENSION TEMP26(MAXOBV)
       DIMENSION AVERAN(MAXOBV)
 C
       DIMENSION ITEMP1(MAXOBV)
@@ -21964,20 +22156,18 @@ C
       EQUIVALENCE (GARBAG(JGAR18),TEMP14(1))
       EQUIVALENCE (GARBAG(JGAR19),TEMP15(1))
       EQUIVALENCE (GARBAG(JGAR20),TEMP16(1))
-      EQUIVALENCE (G2RBAG(IGAR11),TEMP17(1))
-      EQUIVALENCE (G2RBAG(IGAR12),TEMP18(1))
-      EQUIVALENCE (G2RBAG(IGAR13),TEMP19(1))
-      EQUIVALENCE (G2RBAG(IGAR14),TEMP20(1))
-      EQUIVALENCE (G2RBAG(IGAR15),TEMP21(1))
-      EQUIVALENCE (G2RBAG(IGAR16),TEMP22(1))
-      EQUIVALENCE (G2RBAG(IGAR17),TEMP23(1))
-      EQUIVALENCE (G2RBAG(IGAR18),TEMP24(1))
-      EQUIVALENCE (G2RBAG(IGAR19),TEMP25(1))
-      EQUIVALENCE (G2RBAG(IGAR20),TEMP26(1))
-      EQUIVALENCE (G2RBAG(IGAR21),Y2(1))
-      EQUIVALENCE (G2RBAG(IGAR22),X2(1))
-      EQUIVALENCE (G2RBAG(IGAR23),D2(1))
-      EQUIVALENCE (G2RBAG(IGAR24),AVERAN(1))
+      EQUIVALENCE (GARBAG(IGAR11),TEMP17(1))
+      EQUIVALENCE (GARBAG(IGAR12),TEMP18(1))
+      EQUIVALENCE (GARBAG(IGAR13),TEMP19(1))
+      EQUIVALENCE (GARBAG(IGAR14),TEMP20(1))
+      EQUIVALENCE (GARBAG(IGAR15),TEMP21(1))
+      EQUIVALENCE (GARBAG(IGAR16),TEMP22(1))
+      EQUIVALENCE (GARBAG(IGAR17),TEMP23(1))
+      EQUIVALENCE (GARBAG(IGAR18),Y2(1))
+      EQUIVALENCE (GARBAG(IGAR19),X2(1))
+      EQUIVALENCE (GARBAG(IGAR20),D2(1))
+      EQUIVALENCE (GARBAG(IGAR21),AVERAN(1))
+C
       EQUIVALENCE (IGARBG(IIGAR1),ITEMP1(1))
       EQUIVALENCE (IGARBG(IIGAR2),ITEMP2(1))
       EQUIVALENCE (IGARBG(IIGAR3),IINDX(1))
@@ -21988,7 +22178,6 @@ C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOHK.INC'
-      INCLUDE 'DPCODA.INC'
       INCLUDE 'DPCOSU.INC'
       INCLUDE 'DPCOST.INC'
 C
@@ -22034,17 +22223,17 @@ C
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
-C               ***********************************************************
-C               **  STEP 1--                                            **
-C               **  EXTRACT THE COMMAND                                 **
-C               **  LOOK FOR ONE OF THE FOLLOWING COMMANDS:             **
-C               **    1) DISTRIBUTIONAL FIT PLOT Y X1                   **
-C               **    2) MULTIPLE DISTRIBUTIONAL FIT PLOT Y1 ... YK     **
-C               **    3) REPLICATED DISTRIBUTIONAL FIT PLOT Y X1 ... XK **
-C               **  THE "REPLICATION" CASE IS ACTUALLY THE DEFAULT AND  **
-C               **  THE KEYWORD "REPLICATION" IS OPTIONAL. HOWEVER,     **
-C               **  SUPPORT IT FOR COMPATABILITY WITH OTHER COMMANDS.   **
-C               **********************************************************
+C               *******************************************************
+C               **  STEP 1--                                         **
+C               **  EXTRACT THE COMMAND                              **
+C               **  LOOK FOR ONE OF THE FOLLOWING COMMANDS:          **
+C               **    1) DISTRIBUTIONAL FIT PLOT Y X1                **
+C               **    2) MULTIPLE DISTRIBUTIONAL FIT PLOT Y1 ... YK  **
+C               **    3) REPLICATED DISTRIBUTIONAL FIT PLOT Y X1 ... XK
+C               **  THE "REPLICATION" CASE IS ACTUALLY THE DEFAULT AND*
+C               **  THE KEYWORD "REPLICATION" IS OPTIONAL. HOWEVER,  **
+C               **  SUPPORT IT FOR COMPATABILITY WITH OTHER COMMANDS.**
+C               *******************************************************
 C
       ISTEPN='1'
       IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'DFPL')
@@ -22341,7 +22530,7 @@ C
      1              TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,TEMP6,TEMP7,TEMP8,
      1              TEMP9,TEMP10,TEMP11,TEMP12,TEMP13,TEMP14,TEMP15,
      1              TEMP16,TEMP17,TEMP18,TEMP19,TEMP20,TEMP21,
-     1              TEMP22,TEMP23,TEMP24,TEMP25,TEMP26,AVERAN,
+     1              TEMP22,TEMP23,AVERAN,
      1              ITEMP1,ITEMP2,IINDX,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              PTPLXI,PTPLYI,ITPLCD,
@@ -22395,7 +22584,7 @@ C
      1              TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,TEMP6,TEMP7,TEMP8,
      1              TEMP9,TEMP10,TEMP11,TEMP12,TEMP13,TEMP14,TEMP15,
      1              TEMP16,TEMP17,TEMP18,TEMP19,TEMP20,TEMP21,
-     1              TEMP22,TEMP23,TEMP24,TEMP25,TEMP26,AVERAN,
+     1              TEMP22,TEMP23,AVERAN,
      1              ITEMP1,ITEMP2,IINDX,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              PTPLXI,PTPLYI,ITPLCD,
@@ -22452,7 +22641,7 @@ C
      1                  TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,TEMP6,TEMP7,TEMP8,
      1                  TEMP9,TEMP10,TEMP11,TEMP12,TEMP13,TEMP14,TEMP15,
      1                  TEMP16,TEMP17,TEMP18,TEMP19,TEMP20,TEMP21,
-     1                  TEMP22,TEMP23,TEMP24,TEMP25,TEMP26,AVERAN,
+     1                  TEMP22,TEMP23,AVERAN,
      1                  ITEMP1,ITEMP2,IINDX,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  PTPLXI,PTPLYI,ITPLCD,
@@ -22523,6 +22712,8 @@ C     ORIGINAL VERSION--AUGUST    2014.
 C     UPDATED         --JUNE      2018. OPTION TO SORT BY AVERAGE RANK
 C     UPDATED         --JUNE      2018. OPTIONALLY SELECT "TABLE" OR
 C                                       "SCATTER" OPTION
+C     UPDATED         --JULY      2019. CALL LIST TO DPBEF2, NO LONGER
+C                                       NEED TEMP24, TEMP25, TEMP26
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -22618,9 +22809,6 @@ C
       DIMENSION TEMP21(*)
       DIMENSION TEMP22(*)
       DIMENSION TEMP23(*)
-      DIMENSION TEMP24(*)
-      DIMENSION TEMP25(*)
-      DIMENSION TEMP26(*)
       DIMENSION AVERAN(*)
 C
       DIMENSION Y2(*)
@@ -22827,7 +23015,7 @@ C
      1                ITEMP1,ITEMP2,
      1                TEMP10,TEMP11,TEMP12,TEMP13,TEMP14,
      1                TEMP15,TEMP16,TEMP17,TEMP18,TEMP19,
-     1                TEMP20,TEMP21,TEMP22,TEMP23,TEMP24,TEMP25,TEMP26,
+     1                TEMP20,TEMP21,TEMP22,TEMP23,
      1                YLOWLM,YUPPLM,A,B,MINMAX,
      1                IADEDF,IGEPDF,IMAKDF,IBEIDF,
      1                ILGADF,ISKNDF,IGLDDF,IBGEDF,IGETDF,ICONDF,
@@ -22860,13 +23048,13 @@ C
         IF(IDFISO.EQ.'AVRA')THEN
           NRANK=NRANK+1
           DO2143JDIS=1,NLIST
-            TEMP24(JDIS)=STATVA(JDIS)
-            IF(TEMP24(JDIS).EQ.CPUMIN)TEMP24(JDIS)=CPUMAX
+            TEMP21(JDIS)=STATVA(JDIS)
+            IF(TEMP21(JDIS).EQ.CPUMIN)TEMP21(JDIS)=CPUMAX
  2143     CONTINUE
-          CALL RANK(TEMP24,NLIST,IWRITE,TEMP25,TEMP26,MAXOBV,
+          CALL RANK(TEMP21,NLIST,IWRITE,TEMP22,TEMP23,MAXOBV,
      1               IBUGG3,IERROR)
           DO2145KDIS=1,NLIST
-            AVERAN(KDIS)=AVERAN(JDIS) + TEMP25(JDIS)
+            AVERAN(KDIS)=AVERAN(JDIS) + TEMP22(JDIS)
  2145     CONTINUE
         ENDIF
 C
@@ -22973,11 +23161,11 @@ C
       DO2410JDIS=1,NLIST
         IPOS=NLIST - JDIS + 1
         INLON3(IPOS)=INLON2(JDIS)
-        IF(IDFISO.EQ.'AVRA')TEMP26(IPOS)=AVERAN(JDIS)
+        IF(IDFISO.EQ.'AVRA')TEMP23(IPOS)=AVERAN(JDIS)
  2410 CONTINUE
       DO2420JDIS=1,NLIST
         INLON2(JDIS)=INLON3(JDIS)
-        IF(IDFISO.EQ.'AVRA')AVERAN(JDIS)=TEMP26(JDIS)
+        IF(IDFISO.EQ.'AVRA')AVERAN(JDIS)=TEMP23(JDIS)
  2420 CONTINUE
 C
 C     NOW FLIP THE VALUE OF THE Y-COORDINATE
@@ -23002,33 +23190,33 @@ C
 C     IF REQUESTED, SORT BY AVERAGE RANK
 C
       IF(IDFISO.EQ.'AVRA')THEN
-        CALL SORTI(AVERAN,NLIST,TEMP25,TEMP26)
+        CALL SORTI(AVERAN,NLIST,TEMP22,TEMP23)
 C
 C       FOR PPCC GOODNESS OF FIT, WANT DESCENDING SORT.  FOR OTHER
 C       METHODS, WANT ASCENDING SORT.
 C
-C       TEMP25 CONTAINS THE SORTED VALUES OF AVERAN WHILE TEMP26
+C       TEMP22 CONTAINS THE SORTED VALUES OF AVERAN WHILE TEMP23
 C       CONTAINS THE INDEX VARIABLE.
 C
         IF(IBFICR.EQ.'PPCC')THEN
           DO2521II=1,NLIST
-            TEMP21(II)=TEMP25(II)
-            TEMP22(II)=TEMP26(II)
+            TEMP20(II)=TEMP22(II)
+            TEMP21(II)=TEMP23(II)
  2521     CONTINUE
           DO2523II=1,NLIST
-            AVERAN(II)=TEMP21(II)
-            TEMP26(II)=TEMP22(II)
+            AVERAN(II)=TEMP20(II)
+            TEMP23(II)=TEMP21(II)
  2523     CONTINUE
         ELSE
           DO2527II=1,NLIST
-            AVERAN(II)=TEMP25(II)
+            AVERAN(II)=TEMP22(II)
  2527     CONTINUE
         ENDIF
 C
 C       FLIP THE ORDER BASED ON THE AVERAGE RANK
 C
         DO2610JDIS=1,NLIST
-          IPOS=TEMP26(JDIS) + 0.5
+          IPOS=TEMP23(JDIS) + 0.5
           INLON3(IPOS)=INLON2(JDIS)
  2610   CONTINUE
         DO2620JDIS=1,NLIST
@@ -23039,7 +23227,7 @@ C       NOW FLIP THE VALUE OF THE Y-COORDINATE
 C
         DO2660J=1,N2
           JDIS=INT(D2(J)+0.5)
-          IPOS=TEMP26(JDIS) + 0.5
+          IPOS=TEMP23(JDIS) + 0.5
           D2(J)=REAL(IPOS)
  2660   CONTINUE
 C

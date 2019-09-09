@@ -7522,6 +7522,11 @@ C     UPDATED         --MARCH      2019.  SET EDITOR
 C     UPDATED         --APRIL      2019.  SET AUXILLARY FILES DECIMAL
 C                                             POINTS
 C     UPDATED         --APRIL      2019.  SET READ ASTERISK IGNORE
+C     UPDATED         --MAY        2019.  ADD LEFT/RIGHT OPTIONS TO
+C                                         SET CONSENSUS MEAN PLOT DATA
+C     UPDATED         --JULY       2019.  SET BOXPLOT SKEWNESS
+C     UPDATED         --AUGUST     2019.  SET ONE SAMPLE PROFICIENCY
+C                                             TEST IDENTIFY LAB
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -7714,7 +7719,8 @@ C               ***************************************
 C
       IF(NUMARG.GE.1)THEN
         IF(IHARG(1).EQ.'PRE' .OR. IHARG(1).EQ.'PREP' .OR.
-     1    (IHARG(1).EQ.'POST' .AND. IHARG2(1).NE.'SCRI'))THEN
+     1    (IHARG(1).EQ.'POST' .AND. IHARG2(1).NE.'SCRI' .AND.
+     1     IHARG(2).NE.'CONV'))THEN
           CALL DPPRPO(ICOM,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,
      1                IPPDE1,IPPDE2,
      1                IBUGS2,ISUBRO,IFOUND,IERROR)
@@ -12386,7 +12392,7 @@ C
 C
 CCCCC FOLLOWING SECTION ADDED OCTOBER  2011
 C     *************************************************************
-C     **  SET CONSENSUS MEAN PLOT DATA    <ON/OFF>               **
+C     **  SET CONSENSUS MEAN PLOT DATA    <ON/OFF/LEFT/RIGHT>    **
 C     *************************************************************
 C
       IPART1='CONS'
@@ -12401,6 +12407,10 @@ C
         ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE' .OR.
      1         IHV.EQ.'FALS')THEN
           IHV='OFF'
+        ELSEIF(IHV.EQ.'LEFT')THEN
+          IHV='LEFT'
+        ELSEIF(IHV.EQ.'RIGH')THEN
+          IHV='ON'
         ELSE
           IHV='ON'
         ENDIF
@@ -14092,6 +14102,102 @@ C
           IF(IFANMS.GT.500)IFANMS=500
           IV=IFANMS
           GOTO5150
+        ENDIF
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JULY   2019
+C     *****************************************************
+C     **  SET BOXPLOT FENCE SKEWNESS <OFF/GALTON>        **
+C     *****************************************************
+C
+      IPART1='BOXP'
+      IPART2='FENC'
+      IPART3='SKEW'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHARG(4).EQ.'ON' .OR. IHARG(4).EQ.'YES' .OR.
+     1     IHARG(4).EQ.'TRUE' .OR. IHARG(4).EQ.'GALT' .OR.
+     1     IHARG(4).EQ.'WALK' .OR. IHARG(4).EQ.'BOWL')THEN
+          IBXPSK='GALT'
+          IHV=IBXPSK
+          GOTO5160
+        ELSEIF(IHARG(4).EQ.'KIMB')THEN
+          IBXPSK='KIMB'
+          IHV=IBXPSK
+          GOTO5160
+        ELSE
+          IBXPSK='OFF'
+          IHV=IBXPSK
+          GOTO5160
+        ENDIF
+      ENDIF
+C
+      IPART1='BOX '
+      IPART2='PLOT'
+      IPART3='FENC'
+      IPART4='SKEW'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4)THEN
+        IF(IHARG(5).EQ.'ON' .OR. IHARG(5).EQ.'YES' .OR.
+     1     IHARG(5).EQ.'TRUE' .OR. IHARG(5).EQ.'GALT' .OR.
+     1     IHARG(5).EQ.'WALK' .OR. IHARG(5).EQ.'BOWL')THEN
+          IBXPSK='GALT'
+          IHV=IBXPSK
+          GOTO5160
+        ELSEIF(IHARG(5).EQ.'KIMB')THEN
+          IBXPSK='KIMB'
+          IHV=IBXPSK
+          GOTO5160
+        ELSE
+          IBXPSK='OFF'
+          IHV=IBXPSK
+          GOTO5160
+        ENDIF
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED MARCH 2002.
+C     ****************************************************************
+C     **  SET BOX PLOT WIDTH <VARIABLE/FIXED>                       **
+C     ****************************************************************
+C
+      IPART1='BOX '
+      IPART2='PLOT'
+      IPART3='WIDT'
+      IF(IHARG(1).EQ.IPART1.AND.
+     1   (IHARG(2).EQ.IPART2.OR.IHARG(2).EQ.IPART3))THEN
+        IBXPWI=IHV
+        IF(IBXPWI.NE.'FIXE')IBXPWI='VARI'
+        IHV=IBXPWI
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED AUGUST 2019
+C     *****************************************************
+C     **  SET ONE SAMPLE PROFICIENCY TEST IDENTIFY LAB   **
+C     **      <DEFAULT/UNUSUAL/EXTREMELY UNUSUAL>        **
+C     *****************************************************
+C
+      IPART1='ONE '
+      IPART2='SAMP'
+      IPART3='PROF'
+      IPART4='TEST'
+      IPART5='IDEN'
+      IPART6='LAB'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4 .AND.
+     1   IHARG(5).EQ.IPART5 .AND. IHARG(6)(1:3).EQ.IPART6(1:3))THEN
+        IF(IHARG(7).EQ.'UNUS')THEN
+          I1PTOC='UNUS'
+          IHV=I1PTOC
+          GOTO5160
+        ELSEIF(IHARG(7).EQ.'EXTR' .AND. IHARG(8).EQ.'UNUS')THEN
+          I1PTOC='EXTR'
+          IHV=I1PTOC
+          GOTO5160
+        ELSE
+          I1PTOC='DEFA'
+          IHV=I1PTOC
+          GOTO5160
         ENDIF
       ENDIF
 C
@@ -17113,22 +17219,6 @@ C
 C
 CCCCC FOLLOWING SECTION ADDED MARCH 2002.
 C     ****************************************************************
-C     **  SET BOX PLOT WIDTH <VARIABLE/FIXED>                       **
-C     ****************************************************************
-C
-      IPART1='BOX '
-      IPART2='PLOT'
-      IPART3='WIDT'
-      IF(IHARG(1).EQ.IPART1.AND.
-     1   (IHARG(2).EQ.IPART2.OR.IHARG(2).EQ.IPART3))THEN
-        IBXPWI=IHV
-        IF(IBXPWI.NE.'FIXE')IBXPWI='VARI'
-        IHV=IBXPWI
-        GOTO5160
-      ENDIF
-C
-CCCCC FOLLOWING SECTION ADDED MARCH 2002.
-C     ****************************************************************
 C     **  SET 4-PLOT MLTIPLOT  <ON/OFF>                             **
 C     ****************************************************************
 C
@@ -20026,6 +20116,7 @@ C
         IF(IHARG(4).EQ.'PGM ')IPSTDV='PGM '
         IF(IHARG(4).EQ.'PNM ')IPSTDV='PNM '
         IF(IHARG(4).EQ.'PPM ')IPSTDV='PPM '
+        IF(IPSTD2.EQ.'PS2P')IPSTDV='PDF'
         IHV=IPSTDV
         GOTO5160
       ELSEIF(IHARG(1).EQ.IPART3.AND.IHARG(2).EQ.IPART4)THEN
@@ -27058,6 +27149,9 @@ C     UPDATED         --MARCH      2019.  PROBE EDITOR
 C     UPDATED         --APRIL      2019.  PROBE AUXILIARY FILES DECIMAL
 C                                               POINTS
 C     UPDATED         --APRIL      2019.  PROBE READ ASTERISK IGNORE
+C     UPDATED         --JULY       2019.  PROBE BOXPLOT FENCE SKEWNESS
+C     UPDATED         --AUGUST     2019.  PROBE ONE SAMPLE PROFICIENCY
+C                                               TEST IDENTIFY LAB
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -31434,6 +31528,51 @@ C
      1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4)THEN
         IV=IFANMS
         GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JULY         2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE BOXPLOT FENCE SKEWNESS <OFF/GALTON>       **
+C               ******************************************************
+C
+      IPART1='BOXP'
+      IPART2='FENC'
+      IPART3='SKEW'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IBXPSK
+        GOTO5160
+      ENDIF
+C
+      IPART1='BOX '
+      IPART2='PLOT'
+      IPART3='FENC'
+      IPART4='SKEW'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4)THEN
+        IHV=IBXPSK
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED AUGUST       2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE ONE SAMPLE PROFICIENCY TEST IDENTIFY      **
+C               **        LAB <DEFAULT/UNUSUA/EXTREMELY UNUSUAL>    **
+C               ******************************************************
+C
+      IPART1='ONE '
+      IPART2='SAMP'
+      IPART3='PROF'
+      IPART4='TEST'
+      IPART5='IDEN'
+      IPART6='LAB '
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4 .AND.
+     1   IHARG(5).EQ.IPART5 .AND. IHARG(6)(1:3).EQ.IPART6)THEN
+        IHV=I1PTOC
+        GOTO5160
       ENDIF
 C
 CCCCC FOLLOWING SECTION ADDED JUNE         2017.

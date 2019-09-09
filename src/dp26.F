@@ -398,6 +398,10 @@ C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--2012/2
 C     ORIGINAL VERSION--FEBRUARY  2012.
+C     UPDATED         --AUGUST    2019. COMPUTE NUMBER OF MATERIALS
+C                                       SEPARATELY FOR EACH LAB INSTEAD
+C                                       OF ASSUMING THE NUMBER OF
+C                                       MATERIALS IS EQUAL ACROSS LABS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -500,15 +504,12 @@ C
       NPLOTP=0
       CALL DISTIN(ALAB,N,IWRITE,XIDTEM,NLAB,IBUGG3,IERROR)
       CALL SORT(XIDTEM,NLAB,XIDTEM)
-      CALL DISTIN(AMATID,N,IWRITE,XIDTE2,NMAT,IBUGG3,IERROR)
-      CALL SORT(XIDTE2,NMAT,XIDTE2)
 C
 C               ********************************************
 C               **  STEP 3--                              **
 C               **  GENERATE THE PLOT COORDINATES.        **
 C               ********************************************
 C
-      ANMAT=REAL(NMAT)
       DO2010J=1,NLAB
         HOLD=XIDTEM(J)
         K=0
@@ -519,6 +520,9 @@ C
           ENDIF
  2020   CONTINUE
         IF(K.GE.1)THEN
+          CALL DISTIN(TEMP1,K,IWRITE,XIDTE2,NMAT,IBUGG3,IERROR)
+          CALL SORT(XIDTE2,NMAT,XIDTE2)
+          ANMAT=REAL(NMAT)
           CALL RSCSUM(TEMP1,K,XCAP,IWRITE,RSZ,IBUGG3,ISUBRO,IERROR)
           CALL SSQ(TEMP1,K,XCAP,IWRITE,ATEMP,IBUGG3,ISUBRO,IERROR)
           RLP=SQRT(ATEMP/ANMAT)

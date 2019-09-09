@@ -1,0 +1,34 @@
+. This is dataplot program   funnel_8_16.dp     4/3/19
+. Purpose: Analyze DEX Class Funnel #1 Experiment: Does ball have an effect? (k=1)
+. Response: Funnel Traversal Time (sec)
+. Design = ???
+. Date: 4/3/19
+.
+. -----start point-----
+.
+dimension 100 variables
+.
+. -----Step 1: Read in the data-----
+.
+let k = 1
+delete y; delete x
+skip 25; read    funnel_1_6.dat    y x runseq
+.
+. -----Step 2: Define strings for plot annotation-----
+.
+let string header = DEX Class Exp. #1: Comparing 2 Ball Sizes on Funnel Traversal Time
+let string header2 = Q. Are the 2 Ball Sizes Equivalent?
+let string trailer = funnel_1_6.dp
+let string trailer2 = Datafile: funnel_1_6.dat
+let currdate = 4/3/19
+let pagecoun = 0
+.
+let string sty = Funnel Traversal Time (sec)
+let string stx = Ball Size
+.
+let string stxl = Small Large
+.
+. -----Step 3: Carry out Comparative Analysis-----
+.
+call  comparative_k1_analysis.dp
+.

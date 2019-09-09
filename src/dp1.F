@@ -3260,9 +3260,9 @@ CCCCC     NCEDT1=12
           IRESLT=GETENVQQ('DATAPLO$',ICDIR)
           IF(IRESLT.LE.0)THEN
 CCCCC       ICDIR='C:\DATAPLOT\'
-            ICDIR='C:\PROGRAM FILES\NIST\DATAPLOT\'
-            NCP1=31
-            NCDIR=31
+            ICDIR='C:\PROGRAM FILES (x86)\NIST\DATAPLOT\'
+            NCP1=37
+            NCDIR=37
           ELSE
             NCDIR=80
             NMAX=80

@@ -32878,6 +32878,7 @@ C                 H20 SCALE
 C                 INDEX OF DISPERSION
 C                 INTERQUARTILE RANGE
 C                 LOGNORMAL COEFFICIENT OF VARIATION
+C                 LOWER SEMI-INTERQUARTILE RANGE
 C                 MAD TO MEDIAN
 C                 MEDIAN ABSOLUTE DEVIATION (MAD)
 C                 PERCENTAGE BEND MIDVARIANCE
@@ -32901,6 +32902,7 @@ C                 SUM OF SQUARES
 C                 SUM OF SQUARES FROM MEAN
 C                 TRIMMED SD
 C                 UNBIASED COEFFICIENT OF VARIATION
+C                 UPPER SEMI-INTERQUARTILE RANGE
 C                 VARIANCE
 C                 WINSORIZED STANDARD DEVIATION
 C                 WINSORIZED VARIANCE
@@ -33269,6 +33271,7 @@ C                 BINARY ASYMMETRIC DICE MATCH DISSIMILARITY
 C                 BINARY ASYMMETRIC DICE MATCH SIMILARITY
 C                 BINARY ASYMMETRIC SOKOL MATCH DISSIMILARITY
 C                 BINARY ASYMMETRIC SOKOL MATCH SIMILARITY
+C                 BINARY GAMMA COEFFICIENT
 C                 BINARY JACCARD DISSIMILARITY
 C                 BINARY JACCARD SIMILARITY
 C                 BINARY MATCH DISSIMILARITY
@@ -33286,6 +33289,7 @@ C                 CORRELATION
 C                 CORRELATION ABSOLUTE VALUE
 C                 CORRELATION PVALUE
 C                 CORRELATION CDF
+C                 CORRELATION RATIO
 C                 COSINE DISTANCE
 C                 COSINE SIMILARITY
 C                 COVARIANCE
@@ -33295,7 +33299,11 @@ C                 EUCLIDEAN LENGTH
 C                 GENERALIZED JACCARD COEFFICIENT
 C                 GENERALIZED JACCARD DISTANCE
 C                 HAMMING DISTANCE
-C                 KENDALLS TAU
+C                 INTRACLASS CORRELATION
+C                 KENDALLS TAU (GAMMA CORRELATION COEFFICIENT)
+C                 KENDALLS TAU A
+C                 KENDALLS TAU B
+C                 KENDALLS TAU C
 C                 KENDALLS TAU ABSOLUTE VALUE
 C                 KENDALLS TAU CDF
 C                 KENDALLS TAU DISSIMILARITY
@@ -33319,7 +33327,8 @@ C                 SPEARMAN DISSIMILARITY
 C                 WINSORIZED COVARIANCE
 C                 WINSORIZED CORRELATION
 C                 YOUDEN INDEX
-C                 YULES Q
+C                 YULES Q (BINARY GAMMA COEFFICIENT)
+C                 YULES Y
 C
 C              REGRESSION/FITTING:
 C                 CONSTANT INTERCEPT
@@ -33996,6 +34005,16 @@ C     UPDATED         --OCTOBER   2018. PEARSON SIMILARITY
 C     UPDATED         --OCTOBER   2018. WEIGHTED COSINE SIMILARITY
 C     UPDATED         --NOVEMBER  2018. GROUPED CORRELATION
 C     UPDATED         --JANUARY   2019. PYTHON MEAN
+C     UPDATED         --JULY      2019. LOWER SEMI-INTERQUARTILE RANGE
+C     UPDATED         --JULY      2019. UPPER SEMI-INTERQUARTILE RANGE
+C     UPDATED         --AUGUST    2019. GAMMA CORRELATION COEFFICIENT AS
+C                                       SYNONYM FOR KENDALL'S TAU
+C     UPDATED         --AUGUST    2019. BINARY GAMMA COEFFICIENT AS
+C                                       SYNONYM FOR YULE'S Q
+C     UPDATED         --AUGUST    2019. KENDALL TAU A
+C     UPDATED         --AUGUST    2019. KENDALL TAU B
+C     UPDATED         --AUGUST    2019. KENDALL TAU C
+C     UPDATED         --AUGUST    2019. YULES Y
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -34021,7 +34040,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      PARAMETER (MAXSTA=1508)
+      PARAMETER (MAXSTA=1518)
       PARAMETER (MAXSCL=8)
       INTEGER      INFLAV(MAXSTA)
       CHARACTER*4  INAME(MAXSTA,MAXSCL)
@@ -38588,7 +38607,7 @@ C
       DATA INFLAV(752)/2/
       DATA INLONG(752)/'RANK CORRELATION CDF'/
 C
-      DATA INCASE(753)/'KTAA'/
+      DATA INCASE(753)/'TAUA'/
       DATA (INAME(753,J),J=1,MAXSCL)/
      1'KEND','    ','TAU ','CORR','ABSO','VALU','    ','    '/
       DATA INFLAV(753)/2/
@@ -43180,11 +43199,11 @@ C
       DATA INFLAV(1503)/2/
       DATA INLONG(1503)/'KENDALLS TAU DISSIMILARITY'/
 C
-      DATA INCASE(1504)/'KTAU'/
+      DATA INCASE(1504)/'TAUA'/
       DATA (INAME(1504,J),J=1,MAXSCL)/
-     1'KEND','    ','TAU ','    ','    ','    ','    ','    '/
+     1'KEND','    ','TAU ','A   ','    ','    ','    ','    '/
       DATA INFLAV(1504)/2/
-      DATA INLONG(1504)/'KENDALLS TAU'/
+      DATA INLONG(1504)/'KENDALLS TAU A'/
 C
       DATA INCASE(1505)/'WCSI'/
       DATA (INAME(1505,J),J=1,MAXSCL)/
@@ -43209,6 +43228,66 @@ C
      1'YOUD','    ','INDE','    ','    ','    ','    ','    '/
       DATA INFLAV(1508)/2/
       DATA INLONG(1508)/'YOUDEN INDEX'/
+C
+      DATA INCASE(1509)/'SIQL'/
+      DATA (INAME(1509,J),J=1,MAXSCL)/
+     1'LOWE','    ','SEMI','INTE','RANG','    ','    ','    '/
+      DATA INFLAV(1509)/1/
+      DATA INLONG(1509)/'LOWER SEMI-INTERQUARTILE RANGE'/
+C
+      DATA INCASE(1510)/'SIQU'/
+      DATA (INAME(1510,J),J=1,MAXSCL)/
+     1'UPPE','    ','SEMI','INTE','RANG','    ','    ','    '/
+      DATA INFLAV(1510)/1/
+      DATA INLONG(1510)/'UPPER SEMI-INTERQUARTILE RANGE'/
+C
+      DATA INCASE(1511)/'YULQ'/
+      DATA (INAME(1511,J),J=1,MAXSCL)/
+     1'BINA','    ','GAMM','COEF','    ','    ','    ','    '/
+      DATA INFLAV(1511)/2/
+      DATA INLONG(1511)/'YULES Q'/
+C
+      DATA INCASE(1512)/'YULQ'/
+      DATA (INAME(1512,J),J=1,MAXSCL)/
+     1'KRUS','    ','GOOD','BINA','GAMM','COEF','    ','    '/
+      DATA INFLAV(1512)/2/
+      DATA INLONG(1512)/'YULES Q'/
+C
+      DATA INCASE(1513)/'YULY'/
+      DATA (INAME(1513,J),J=1,MAXSCL)/
+     1'YULE','    ','Y   ','    ','    ','    ','    ','    '/
+      DATA INFLAV(1513)/2/
+      DATA INLONG(1513)/'YULES Y'/
+C
+      DATA INCASE(1514)/'KTAU'/
+      DATA (INAME(1514,J),J=1,MAXSCL)/
+     1'GAMM','    ','CORR','COEF','    ','    ','    ','    '/
+      DATA INFLAV(1514)/2/
+      DATA INLONG(1514)/'GAMMA CORRELATION COEFFICIENT (KENDALL TAU)'/
+C
+      DATA INCASE(1515)/'KTAU'/
+      DATA (INAME(1515,J),J=1,MAXSCL)/
+     1'KRUS','    ','GOOD','GAMM','CORR','COEF','    ','    '/
+      DATA INFLAV(1515)/2/
+      DATA INLONG(1515)/'GAMMA CORRELATION COEFFICIENT (KENDALL TAU)'/
+C
+      DATA INCASE(1516)/'KTAB'/
+      DATA (INAME(1516,J),J=1,MAXSCL)/
+     1'KEND','    ','TAU ','B   ','    ','    ','    ','    '/
+      DATA INFLAV(1516)/2/
+      DATA INLONG(1516)/'KENDALLS TAU B'/
+C
+      DATA INCASE(1517)/'KTAC'/
+      DATA (INAME(1517,J),J=1,MAXSCL)/
+     1'KEND','    ','TAU ','C   ','    ','    ','    ','    '/
+      DATA INFLAV(1517)/2/
+      DATA INLONG(1517)/'KENDALLS TAU C'/
+C
+      DATA INCASE(1518)/'KTAU'/
+      DATA (INAME(1518,J),J=1,MAXSCL)/
+     1'KEND','    ','TAU ','    ','    ','    ','    ','    '/
+      DATA INFLAV(1518)/2/
+      DATA INLONG(1518)/'KENDALLS TAU'/
 C
 C-----START POINT-----------------------------------------------------
 C

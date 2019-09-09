@@ -1,0 +1,57 @@
+. This is dataplot macro     get_robustness_factors.dp     10/9/18
+. Purpose: For a given primary factor (jprim), determine the appropriate 3 rob
+. Date: 10/9/18
+. Input:
+.   k     (parameter) = number of factors
+.   jprim (parameter) = primary factor id
+.   rlf   (vector)    = ranked list of the k factors
+. Output:
+.   jrob1 (parameter) = 1st robustness factor id
+.   jrob2 (parameter) = 2nd robustness factor id
+.   jrob3 (parameter) = 3rd robustness factor id
+. Note: This macro is called by     dexbp.dp
+.
+. NOTE: FIX THIS MACRO for the k = 3 and 2 CASE   10/9/18
+.
+. -----start point-----
+.
+let bugswgrf = 0
+. let pausesw = 1
+.
+if bugswrgrf = 1; print " "; print "--At beginning of     get_robustness_factors.dp"
+   print "k = ^j    jprim = ^jprim"
+   print rlf
+   if pausesw = 1; pause; end if
+end if
+.
+let rlf1 = rlf(1)
+let rlf2 = rlf(2)
+let rlf3 = rlf(3)
+let rlf4 = rlf(4)
+.
+let jrob1 = rlf1
+let jrob2 = rlf2
+let jrob3 = rlf3
+.
+if jprim = rlf1
+   let jrob1 = rlf2
+   let jrob2 = rlf3
+   let jrob3 = rlf4
+end if
+.
+if jprim = rlf2
+   let jrob1 = rlf1
+   let jrob2 = rlf3
+   let jrob3 = rlf4
+end if
+.
+if jprim = rlf3
+   let jrob1 = rlf1
+   let jrob2 = rlf2
+   let jrob3 = rlf4
+end if
+.
+if bugswgrf = 1; print " "; print "--At end of     get_robustness_factors.dp"
+   print "jrob1 jrob2 jrob3 = ^jrob1 ^jrob2 ^jrob3"
+   if pausesw = 1; pause; end if
+end if

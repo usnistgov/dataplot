@@ -2925,6 +2925,8 @@ C
       IOP='-999'
       ISUBN1='MAIN'
       ISUBN2='OD  '
+      IFOUND='NO'
+      IERROR='NO'
 C
       IF(IBUGOD.EQ.'ON'.OR.ISUBRO.EQ.'INOD')THEN
         WRITE(ICOUT,999)
@@ -2947,9 +2949,6 @@ C
           CALL DPWRST('XXX','BUG ')
    70   CONTINUE
       ENDIF
-C
-      IFOUND='NO'
-      IERROR='NO'
 C
 C               *****************************************************
 C               **  TREAT THE GENERAL (= DEVICE-INDEPENDENT) CASE  **
@@ -3254,9 +3253,16 @@ C
         IARG(1)=1
       ENDIF
 C
-C               **************************************
-C               **  TREAT THE DEVICE ... POWER CASE **
-C               **************************************
+C               ************************************************
+C               **  TREAT THE DEVICE ... POWER CASE           **
+C               **  TREAT THE DEVICE ... CONTINUOUS CASE      **
+C               **  TREAT THE DEVICE ... COLOR      CASE      **
+C               **  TREAT THE DEVICE ... PICTURE POINTS CASE  **
+C               **  TREAT THE DEVICE ... UNIT        CASE     **
+C               **  TREAT THE DEVICE ... FONT       CASE      **
+C               **  TREAT THE DEVICE ... SCALE      CASE      **
+C               **  TREAT THE DEVICE ...  (MANUFACTURER) CASE **
+C               ************************************************
 C
       IF(ICOM.EQ.'DEVI' .OR. ICOM.EQ.'TERM')THEN
         CALL DPDEPW(IHARG,IHARG2,IARGT,IARG,NUMARG,
@@ -3270,13 +3276,7 @@ C
      1              ICAPSW,ICAPNU,
      1              IANS,IWIDTH,IBUGO2,ISUBRO,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-      ENDIF
 C
-C               ********************************************
-C               **  TREAT THE DEVICE ... CONTINUOUS CASE  **
-C               ********************************************
-C
-      IF(ICOM.EQ.'DEVI' .OR. ICOM.EQ.'TERM')THEN
         CALL DPDECN(IHARG,IHARG2,IARGT,IARG,NUMARG,
      1              IDEFCN,
      1              NUMDEV,MAXDEV,
@@ -3284,13 +3284,7 @@ C
      1              IDPOWE,IDCONT,IDCOLO,IDNVPP,IDNHPP,IDUNIT,
      1              IBUGO2,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-      ENDIF
 C
-C               ********************************************
-C               **  TREAT THE DEVICE ... COLOR      CASE  **
-C               ********************************************
-C
-      IF(ICOM.EQ.'DEVI' .OR. ICOM.EQ.'TERM')THEN
         CALL DPDECL(IHARG,IHARG2,IARGT,IARG,NUMARG,
      1              IDEFDC,
      1              NUMDEV,MAXDEV,
@@ -3298,13 +3292,7 @@ C
      1              IDPOWE,IDCONT,IDCOLO,IDNVPP,IDNHPP,IDUNIT,
      1              IBUGO2,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-      ENDIF
 C
-C               *************************************************
-C               **  TREAT THE DEVICE ... PICTURE POINTS CASE   **
-C               *************************************************
-C
-      IF(ICOM.EQ.'DEVI' .OR. ICOM.EQ.'TERM')THEN
         CALL DPDEPP(IHARG,IHARG2,IARGT,IARG,NUMARG,
      1              IDEFVP,IDEFHP,
      1              NUMDEV,MAXDEV,
@@ -3312,13 +3300,7 @@ C
      1              IDPOWE,IDCONT,IDCOLO,IDNVPP,IDNHPP,IDUNIT,
      1              IBUGO2,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-      ENDIF
 C
-C               *************************************************
-C               **  TREAT THE DEVICE ... UNIT        CASE      **
-C               *************************************************
-C
-      IF(ICOM.EQ.'DEVI' .OR. ICOM.EQ.'TERM')THEN
         CALL DPDEUN(IHARG,IHARG2,IARGT,IARG,NUMARG,
      1              IDEFUN,
      1              NUMDEV,MAXDEV,
@@ -3326,30 +3308,14 @@ C
      1              IDPOWE,IDCONT,IDCOLO,IDNVPP,IDNHPP,IDUNIT,
      1              IBUGO2,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-      ENDIF
 C
-CCCCC FOLLOWING SECTION ADDED JULY 1996.
-C
-C               ********************************************
-C               **  TREAT THE DEVICE ... FONT       CASE  **
-C               ********************************************
-C
-      IF(ICOM.EQ.'DEVI' .OR. ICOM.EQ.'TERM')THEN
         CALL DPDEFT(IHARG,IHARG2,IARGT,IARG,NUMARG,
      1              IDEFFN,NUMDEV,MAXDEV,
      1              IDMANU,IDMODE,IDMOD2,IDMOD3,IDPOWE,
      1              IDCONT,IDCOLO,IDFONT,IDNVPP,IDNHPP,IDUNIT,
      1              IBUGO2,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-      ENDIF
 C
-CCCCC FOLLOWING SECTION ADDED DECEMBER 2018.
-C
-C               ********************************************
-C               **  TREAT THE DEVICE ... SCALE      CASE  **
-C               ********************************************
-C
-      IF(ICOM.EQ.'DEVI' .OR. ICOM.EQ.'TERM')THEN
         CALL DPDESC(IHARG,IHARG2,IARGT,IARG,ARG,NUMARG,
      1              NUMDEV,MAXDEV,
      1              IDMANU,IDMODE,IDMOD2,IDMOD3,IDPOWE,
@@ -3357,13 +3323,7 @@ C
      1              PDSCAL,
      1              IBUGO2,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-      ENDIF
 C
-C               ***********************************************
-C               **  TREAT THE DEVICE ...  (MANUFACTURER) CASE  **
-C               ***********************************************
-C
-      IF(ICOM.EQ.'DEVI' .OR. ICOM.EQ.'TERM')THEN
         CALL DPDEMN(IHARG,IHARG2,IARGT,IARG,NUMARG,
      1              IPL1NU,IPL1NA,
      1              IPL2NU,IPL2NA,
@@ -9950,17 +9910,20 @@ C               **  TREAT THE POLYNOMIAL DEGREE CASE  **
 C               **  TREAT THE DEGREE CASE             **
 C               ****************************************
 C
-      IF(ICOM.EQ.'DEGR'.AND.ICOM2.EQ.'EE  ')GOTO3100
-      IF(ICOM.EQ.'POLY'.AND.IHARG(1).NE.'AEPP')GOTO3100
-      GOTO3199
+      IF((ICOM.EQ.'DEGR'.AND.ICOM2.EQ.'EE  ') .OR.
+     1   (ICOM.EQ.'POLY'.AND.IHARG(1).NE.'AEPP'))THEN
 C
- 3100 CONTINUE
-      IF(NUMARG.GE.2. AND. IHARG(1).EQ.'MLE')GOTO3199
-      IF(NUMARG.GE.3. AND. IHARG(1).EQ.'MAXI' .AND.
-     1   IHARG(2).EQ.'LIKE')GOTO3199
-      CALL DPDEGR(IHARG,IARGT,IARG,NUMARG,IDEFDG,
-     1IDEG,IFOUND,IERROR)
-      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+C       CHECK FOR NAME CONFLICTS
+C
+        IF(NUMARG.GE.2. AND. IHARG(1).EQ.'MLE')GOTO3199
+        IF(NUMARG.GE.3. AND. IHARG(1).EQ.'MAXI' .AND.
+     1     IHARG(2).EQ.'LIKE')GOTO3199
+        IF(IHARG(1).EQ.'FIT' .OR. IHARG(2).EQ.'FIT' .OR.
+     1     IHARG(3).EQ.'FIT')GOTO3199
+C
+        CALL DPDEGR(IHARG,IARGT,IARG,NUMARG,IDEFDG,IDEG,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ENDIF
 C
  3199 CONTINUE
 C
@@ -11603,7 +11566,7 @@ C               **  TREAT THE LOWESS DEGREE  CASE     **
 C               ****************************************
 C
       IF(ICOM.EQ.'LOWE'.AND.NUMARG.GE.1.AND.
-     1IHARG(1).EQ.'DEGR')THEN
+     1   IHARG(1).EQ.'DEGR')THEN
         CALL DPLODG(IHARG,IARGT,ARG,NUMARG,
      1              ALOWDG,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
@@ -11839,183 +11802,120 @@ C
      1     IHARG(2).EQ.'APPR') .OR.
      1     (NUMARG.GE.1.AND.IHARG(1).EQ.'SATT') .OR.
      1     (NUMARG.GE.1.AND.IHARG(1).EQ.'APPR'))THEN
-          CALL DPRESA(IHARG,NUMARG,IDEFSA,IRECSA,
-     1                IBUGS2,IFOUND,IERROR)
+          CALL DPRESA(IHARG,NUMARG,IDEFSA,IRECSA,IBUGS2,IFOUND,IERROR)
           IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-        ENDIF
-      ENDIF
 C
 C               ******************************************************
 C               **  TREAT THE RECIPE PROBABILITY CONTENT       CASE **
 C               ******************************************************
 C
-      IF(ICOM.NE.'RECI')GOTO13499
-      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'PROB'.AND.IHARG(2).EQ.'PLOT')
-     1GOTO13499
-      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'PROB'.AND.IHARG(2).EQ.'CONT')
-     1GOTO13400
-      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'CONT')GOTO13400
-      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'PROB')GOTO13400
-      GOTO13499
-C
-13400 CONTINUE
-C
-      CALL DPREPC(IHARG,IARGT,ARG,NUMARG,DEFRPC,
-     1RECIPC,IFOUND,IERROR)
-      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-C
-13499 CONTINUE
+        ELSEIF((NUMARG.GE.2.AND.IHARG(1).EQ.'PROB'.AND.
+     1         IHARG(2).EQ.'PLOT') .OR.
+     1         (NUMARG.GE.2.AND.IHARG(1).EQ.'PROB'.AND.
+     1         IHARG(2).EQ.'CONT') .OR.
+     1         (NUMARG.GE.1.AND.IHARG(1).EQ.'CONT') .OR.
+     1         (NUMARG.GE.1.AND.IHARG(1).EQ.'PROB'))THEN
+          CALL DPREPC(IHARG,IARGT,ARG,NUMARG,DEFRPC,RECIPC,
+     1                IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
 C
 C               ******************************************************
 C               **  TREAT THE RECIPE CONFIDENCE                CASE **
 C               ******************************************************
 C
-      IF(ICOM.NE.'RECI')GOTO13599
-      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'CONF')GOTO13500
-      GOTO13599
-C
-13500 CONTINUE
-C
-      CALL DPRECO(IHARG,IARGT,ARG,NUMARG,DEFRCO,
-     1RECICO,IFOUND,IERROR)
-      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-C
-13599 CONTINUE
+        ELSEIF(NUMARG.GE.1.AND.IHARG(1).EQ.'CONF')THEN
+          CALL DPRECO(IHARG,IARGT,ARG,NUMARG,DEFRCO,RECICO,
+     1                IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
 C
 C               ******************************************************
 C               **  TREAT THE RECIPE FIT DEGREE                CASE **
 C               ******************************************************
 C
-      IF(ICOM.NE.'RECI')GOTO13699
-      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'FIT '.AND.IHARG(2).EQ.'DEGR')
-     1GOTO13600
-      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'DEGR')GOTO13600
-      GOTO13699
-C
-13600 CONTINUE
-C
-      CALL DPREDG(IHARG,IARGT,ARG,NUMARG,DEFRDG,
-     1RECIDG,IFOUND,IERROR)
-      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-C
-13699 CONTINUE
+        ELSEIF((NUMARG.GE.2.AND.IHARG(1).EQ.'FIT '.AND.
+     1         IHARG(2).EQ.'DEGR') .OR.
+     1         (NUMARG.GE.1.AND.IHARG(1).EQ.'DEGR'))THEN
+          CALL DPREDG(IHARG,IARGT,ARG,NUMARG,DEFRDG,RECIDG,
+     1                IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
 C
 C               ******************************************************
 C               **  TREAT THE RECIPE ANOVA FACTORS             CASE **
 C               ******************************************************
 C
-      IF(ICOM.NE.'RECI')GOTO13799
-      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'ANOV'.AND.IHARG(2).EQ.'FACT')
-     1GOTO13700
-      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'FACT')GOTO13700
-      GOTO13799
-C
-13700 CONTINUE
-C
-      CALL DPREFA(IHARG,IARGT,ARG,NUMARG,DEFRFA,
-     1RECIFA,IFOUND,IERROR)
-      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-C
-13799 CONTINUE
+        ELSEIF((NUMARG.GE.2.AND.IHARG(1).EQ.'ANOV'.AND.
+     1         IHARG(2).EQ.'FACT') .OR.
+     1         (NUMARG.GE.1.AND.IHARG(1).EQ.'FACT'))THEN
+          CALL DPREFA(IHARG,IARGT,ARG,NUMARG,DEFRFA,RECIFA,
+     1                IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
 C
 C               ******************************************************
 C               **  TREAT THE RECIPE OUTPUT                    CASE **
 C               ******************************************************
 C
-      IF(ICOM.NE.'RECI')GOTO13899
-      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'OUTP')GOTO13800
-      GOTO13899
-C
-13800 CONTINUE
-C
-      CALL DPRETN(IHARG,NUMARG,IDEFTN,IRECTN,
-     1IBUGS2,IFOUND,IERROR)
-      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-C
-13899 CONTINUE
+        ELSEIF(NUMARG.GE.1.AND.IHARG(1).EQ.'OUTP')THEN
+          CALL DPRETN(IHARG,NUMARG,IDEFTN,IRECTN,
+     1                IBUGS2,IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
 C
 C               ******************************************************
 C               **  TREAT THE RECIPE CORRELATION               CASE **
 C               ******************************************************
 C
-      IF(ICOM.NE.'RECI')GOTO13999
-      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'CORR')GOTO13900
-      GOTO13999
-C
-13900 CONTINUE
-C
-      CALL DPRECR(IHARG,IARGT,IARG,NUMARG,IDEFR9,IRECC1,
-     1IFOUND,IERROR)
-      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-C
-13999 CONTINUE
+        ELSEIF(NUMARG.GE.1.AND.IHARG(1).EQ.'CORR')THEN
+          CALL DPRECR(IHARG,IARGT,IARG,NUMARG,IDEFR9,IRECC1,
+     1                IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
 C
 C               ******************************************************
 C               **  TREAT THE RECIPE SIMCOV REPLICATES         CASE **
 C               ******************************************************
 C
-      IF(ICOM.NE.'RECI')GOTO14099
-      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'SIMC'.AND.IHARG(2).EQ.'REPL')
-     1GOTO14000
-      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'REPL'.AND.IHARG(2).EQ.'SIMC')
-     1GOTO14000
-      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'SIMC')GOTO14000
-      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'REPL')GOTO14000
-      GOTO14099
-C
-14000 CONTINUE
-C
-      CALL DPRES1(IHARG,IARGT,IARG,NUMARG,IDEFR7,IRECR1,
-     1IFOUND,IERROR)
-      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-C
-14099 CONTINUE
+        ELSEIF((NUMARG.GE.2.AND.IHARG(1).EQ.'SIMC'.AND.
+     1         IHARG(2).EQ.'REPL') .OR.
+     1         (NUMARG.GE.2.AND.IHARG(1).EQ.'REPL'.AND.
+     1         IHARG(2).EQ.'SIMC') .OR.
+     1         (NUMARG.GE.1.AND.IHARG(1).EQ.'SIMC') .OR.
+     1         (NUMARG.GE.1.AND.IHARG(1).EQ.'REPL'))THEN
+          CALL DPRES1(IHARG,IARGT,IARG,NUMARG,IDEFR7,IRECR1,
+     1                IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
 C
 C               ******************************************************
 C               **  TREAT THE RECIPE SIMPVT REPLICATES         CASE **
 C               ******************************************************
 C
-      IF(ICOM.NE.'RECI')GOTO14199
-      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'SIMP'.AND.IHARG(2).EQ.'REPL')
-     1GOTO14100
-      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'REPL'.AND.IHARG(2).EQ.'SIMP')
-     1GOTO14100
-      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'SIMP')GOTO14100
-      GOTO14199
-C
-14100 CONTINUE
-C
-      CALL DPRESZ(IHARG,IARGT,IARG,NUMARG,IDEFR8,IRECR2,
-     1IFOUND,IERROR)
-      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-C
-14199 CONTINUE
+        ELSEIF((NUMARG.GE.2.AND.IHARG(1).EQ.'SIMP'.AND.
+     1         IHARG(2).EQ.'REPL') .OR.
+     1         (NUMARG.GE.2.AND.IHARG(1).EQ.'REPL'.AND.
+     1         IHARG(2).EQ.'SIMP') .OR.
+     1         (NUMARG.GE.1.AND.IHARG(1).EQ.'SIMP'))THEN
+          CALL DPRESZ(IHARG,IARGT,IARG,NUMARG,IDEFR8,IRECR2,
+     1                IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
 C
 CCCCC FOLLOWING SECTION ADDED APRIL 1998.
 C               ******************************************************
 C               **  TREAT THE RECIPE FIT   FACTORS             CASE **
 C               ******************************************************
 C
-      IF(ICOM.NE.'RECI')GOTO14299
-      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'FIT '.AND.IHARG(2).EQ.'FACT')
-     1GOTO14200
+        ELSEIF(NUMARG.GE.2.AND.IHARG(1).EQ.'FIT '.AND.
+     1         IHARG(2).EQ.'FACT')THEN
+          CALL DPREFF(IHARG,IARGT,ARG,NUMARG,DEFRFF,RECIFF,
+     1                IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+        ENDIF
 C
-14200 CONTINUE
-C
-      CALL DPREFF(IHARG,IARGT,ARG,NUMARG,DEFRFF,
-     1RECIFF,IFOUND,IERROR)
-      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-C
-14299 CONTINUE
+      ENDIF
 C
 C               ********************************
 C               **  TREAT THE AUTO TEXT CASE  **
 C               ********************************
 C
       IF(ICOM.EQ.'AUTO'.AND.
-     1NUMARG.GE.1.AND.IHARG(1).EQ.'TEXT')THEN
-        CALL DPAUTX(IHARG,NUMARG,
-     1              IATXSW,IFOUND,IERROR)
+     1   NUMARG.GE.1.AND.IHARG(1).EQ.'TEXT')THEN
+        CALL DPAUTX(IHARG,NUMARG,IATXSW,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
       ENDIF
 C
@@ -13982,6 +13882,7 @@ C     UPDATED         --JUNE      2012 CORRELATION PVALUE MATRIX
 C     UPDATED         --SEPTEMBER 2016 CORRELATION ABSOLUTE VALUE
 C     UPDATED         --SEPTEMBER 2016 CORRELATION PERCENTAGE VALUE
 C     UPDATED         --SEPTEMBER 2016 CORRELATION DIGITS
+C     UPDATED         --AUGUST    2019 CALL LIST TO KENTAU
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -17224,7 +17125,8 @@ C
             ELSEIF(ICORTY.EQ.'KTAU')THEN
               ICASZZ='TWOS'
               CALL KENTAU(Y3,Y4,NR1,ICASZZ,IKTATA,IWRITE,Y1,Y2,MAXOBV,
-     1                    RIGHT,STATCD,PVAL,PVALLT,PVALUT,
+     1                    RIGHT,AKTAUA,AKTAUB,AKTAUC,
+     1                    STATCD,PVAL,PVALLT,PVALUT,
      1                    CUTU90,CUTU95,CTU975,CUTU99,CTU995,
      1                    CUTL90,CUTL95,CTL975,CUTL99,CTL995,
      1                    IBUGA3,ISUBRO,IERROR)
@@ -17291,7 +17193,8 @@ C
             ELSEIF(ICORTY.EQ.'KTAU')THEN
               ICASZZ='TWOS'
               CALL KENTAU(Y3,Y4,NC1,ICASZZ,IKTATA,IWRITE,Y1,Y2,MAXOBV,
-     1                    RIGHT,STATCD,PVAL,PVALLT,PVALUT,
+     1                    RIGHT,AKTAUA,AKTAUB,AKTAUC,
+     1                    STATCD,PVAL,PVALLT,PVALUT,
      1                    CUTU90,CUTU95,CTU975,CUTU99,CTU995,
      1                    CUTL90,CUTL95,CTL975,CUTL99,CTL995,
      1                    IBUGA3,ISUBRO,IERROR)
@@ -17957,7 +17860,8 @@ C
             ELSEIF(ICORTY.EQ.'KTAU')THEN
               ICASZZ='TWOS'
               CALL KENTAU(Y3,Y4,NR1,ICASZZ,IKTATA,IWRITE,Y1,Y2,MAXOBV,
-     1                    RIGHT,STATCD,PVAL,PVALLT,PVALUT,
+     1                    RIGHT,AKTAUA,AKTAUB,AKTAUC,
+     1                    STATCD,PVAL,PVALLT,PVALUT,
      1                    CUTU90,CUTU95,CTU975,CUTU99,CTU995,
      1                    CUTL90,CUTL95,CTL975,CUTL99,CTL995,
      1                    IBUGA3,ISUBRO,IERROR)
@@ -18016,7 +17920,8 @@ C
             ELSEIF(ICORTY.EQ.'KTAU')THEN
               ICASZZ='TWOS'
               CALL KENTAU(Y3,Y4,NC1,ICASZZ,IKTATA,IWRITE,Y1,Y2,MAXOBV,
-     1                    RIGHT,STATCD,PVAL,PVALLT,PVALUT,
+     1                    RIGHT,AKTAUA,AKTAUB,AKTAUC,
+     1                    STATCD,PVAL,PVALLT,PVALUT,
      1                    CUTU90,CUTU95,CTU975,CUTU99,CTU995,
      1                    CUTL90,CUTL95,CTL975,CUTL99,CTL995,
      1                    IBUGA3,ISUBRO,IERROR)

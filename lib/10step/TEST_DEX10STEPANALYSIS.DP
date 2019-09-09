@@ -1,0 +1,385 @@
+. This is dataplot program        test_dex10stepanalysis.dp     9/13/18
+. Purpose: Test       dex10stepanalysis.dp    with harrison skye data
+. Date: 9/13/18
+.
+. -----start point-----
+.
+dimension 100 variables
+.
+. -----Step 1: Invoke (from the keyboard) the desired data case-----
+.
+. here
+let case = 1
+feedback off
+feedback on
+set io terminal
+print " "
+print "Enter the desired test set now (1 to ^case)"
+print "Enter (from the keyboard)"
+print " "
+print "the desired data case ID (1 to 20):"
+print "    1 = Box Defective Springs (k=3,n=8)"
+print "    2 = John Henry Scott HRTEM SiO2 Thickness (CPU/Mem. Gate Dialect.) (k=8,n=16)"
+print "    3 = Li Ma Additive Manufacturing (3D Printing) Post-Laser-Scan Peak Temperature (k=10,n=16+1)"
+print "    4 = Ray Bowen Dental Composites Polysac Adhesion (k=3,n=8)"
+print " "
+print "    5 = BHH Household Cleanser (p. 422/xxx) k=4,n=8)"
+print "    6 = BHH Reactor Efficiency (p. 377/xxx)(k=5,n=32)"
+print "    7 = BHH Reactor Efficiency (p. 376/xxx)(k=5,n=16)"
+print "    8 = BHH Reactor Efficiency (p. 377/xxx)(k=5,n=8)"
+print " "
+print "    9 = BHH Industrial Filtration Time (Part 1)(p. 426/xxx) (k=7,n=8)"
+print "   10 = BHH Industrial Filtration Time (Part 2)(p. 427/xxx) (k=7,n=8)"
+print "   11 = BHH Industrial Filtration Time (Combined) (p. 426 &427/xxx) (k=7,n=16)"
+print " "
+print "   12 = WTC Collapse Analysis (k=13,n=16)"
+print "   13 = Ken Inn Laboratory Trace Plutonium Contamination (k=8,n=16)"
+print "   14 = Jolene Splett Eddy Current (k=3,n=8)"
+print "   15 = Bill Healy Hot Plate Conductivity Error (k=6,n=16)"
+print " "
+print "   16 = Wetzel/Guttman Maldi-TOF-MS Parameter Optimization (k=5,n=16)"
+print "   17 = Bob Zarr NIST 500 mm Guarded Hot Plate (k=6,n=16+3)"
+print "   18 = Ariel Hecht Cell Growth in E. coli  Engineered for Lypocene (k=9,n=64+4)"
+print "   19 = Jeffrey Fong MRI RF Coil Uniformity Analysis (k=7,n=16)"
+print "   20 = Josh Kneifel NIST Net-Zero House Energy Consumption (k=7,n=128)"
+print " "
+print "   21 = Yooyoung Lee IRIS Biometric Syste Verification Rates (k=8,n=324)"
+print "   22 = Shuvo Bardhan Synthetic Worm Generator Number of Iterations to Full Infection (k=3,n=8+1)"
+print "   23 = Sheesley Lightbulb Manufacturing Lead Wire Defect Rate (k=4,n=24)"
+print "   24 = Quinlan Plastic Speedometer Casing Manufacturing Post-Extrusion Shrinkage (Tagulchi L16) (k=15,n=16)"
+print "   25 = George Klouda Albuequerque Carbon Monoxide Concentration (k=3,n=8+2 corner)"
+print " "
+print "   26 = V = I*R Formula-Derivation Example ("Simulated" Data)"
+print "   27 = Debra Tang Apache/Linus Processing Time (k=3,n=8+2)"
+print "   28 = Kevin Mills Abilene Network Flow Characterization (k=11,n=64+1)" ;. good
+print "   29 = Jean-Louis Vigouroux Genetic Algorithm for Lathe (Cutting Speed, Feed Rate) Optimization (k=10,n=128+1)"
+print "   30 = Ken Inn Radioactive Concentration in Urban Soil (Concentration) (k=9,n=16)" ;. youden plot not nwork
+print " "
+print "   31 = Rick Silver / Juan Soto Scatterfield Microscopy (k=8,n=32+1)"
+print "   32 = BHH Bike Speed (p. 390) (k=7,n=16)"
+print "   33 = Siham Khoussi Named Data Networks NDN-DPDK Forwarder Interest Packet Processing Latency (k=4,n=16)"
+print " "
+print "   34 = Harrison Skye HVAC Efficiency (k=6,n=16)"
+print "   35 = Sumona Sarkar Image Analysis Settings for Automated Cell Counting"
+print "   36 = Sumona Sarkar Image Analysis Settings for Automated Cell Counting (with Reps)"
+print "   37 = BHH Chemical Yield (page 325 2**4 (k=4,n=16)"
+print "   38 = Sumona Sarkar Image Analysis Cell Counting Y3 = Mean (across 8cond.) Rank for Y3 = Viab%|Err| (k=8,n=64)
+print "   39 = Will Guthrie k=2 Funnel Experiment for Texas Uncertainty Class k=2,l=3,rep=10,n=90)"
+print "   40 = Samia Benjida k=3 Comparison of Image-Metric Systems k=3,l=3/5/127,n=1905)"
+.
+print " "
+print "Not working:"
+print "   13: ken inn   dexbp.dp has missing horizontal axis tic annotation"
+print "   13: ken inn   dexcp.dp has too many decimals for the contour line IDs"
+print "   19: jeff fong dexbp.dp has missing horizontal tic annotation"
+print "   39: will guthrie (10 reps) dexiem.dp has missing plot points"
+print "   40: samia benjida (a factor has 127 levels) dexsp/dexmp.dp has missing horiz. axis tic labels"
+print " "
+print "Also:"
+print "   Cannot call dex10stepanalysis.dp in a loop"
+print "   n must be a power of 2--cannot have replicate powers of 2???"
+print " "
+print "Enter the desired test set (1 to ^case):"
+print " "
+print "2**3 (1)"
+print "2**4 (37)   2**(4-1) (5)"
+print "2**5 (6)    2**(5-1) (7)       2**(5-2) (8)"
+print "2**6 (xx)   2**(6-1) (xx)      2**(6-2) (15)   2**(6-3) (xx)"
+print "2**7 (20)   2**(7-3) (11)      2**(7-4) (9)"
+print "2**8 (xx)   2**(8-1) (21)      2**(8-2) (35)   2**(8-4) (13)"
+print "2**(9-3)   (18)   2**(9-5) (30)"
+print "2**(11-5)  (28)"
+print "2**(13-9)  (xx)"
+print "2**(15-11) (24)"
+print "2**(20-xx) (xx)"
+.
+read parameter case
+set io
+. print " "
+. print "Case = ^case"
+. print " "
+. pause
+.
+. -----Step 2: Read in the data-----
+.
+feedback off
+.
+if case = 1
+   let k = 3; skip 25; read boxsprings.dat y x1 to x^k
+   let string header = Case ^case: Box Defective Springs 2**3 (k=3,n=8)
+   let string sty = % Defective Springs
+end if
+.
+if case = 2
+   let k = 8; skip 25; read scott_8_16.dat y x1 to x^k
+   let string header = Case ^case:  John Henry Scott HRTEM SiO2 Thickness (CPU/Mem. Gate Dialect.) 2**(8-4) (k=8,n=16)
+   let string sty = HRTEM Error in SiO2 Layer Thickness
+   let dpep = 4
+end if
+.
+if case = 3;. not working
+   let k = 10; skip 25; read ma_10_16.dat y x1 to x^k
+   let string header = Case ^case:  Additive Manufact. (3D Printing) Post-Laser-Scan Peak Temp. 2**(10-6) (k=10,n=16+1)
+   let string sty = Peak Temperature
+end if
+.
+if case = 4
+   let k = 3; skip 25; read bowen.dat y x1 to x^k
+   let string header = Case ^case:  Ray Bowen Dental Composites Polysac Adhesion 2**3 (k=3,n=8)
+   let string sty = Adhesion
+end if
+.
+if case = 5
+   let k = 4; skip 25; read boxcleanser.dat y x1 to x^k
+   let string header = Case ^case: BHH (p. 422) Household Cleanser Stability (Target = 25+) 2**(4-1) (k=4,n=8)
+   let string sty = Stability
+end if
+.
+if case = 6
+   let k = 5; skip 25; read boxreactor_5_32.dat y x1 to x^k
+   let string header = Case ^case:  BHH Reactor Efficiency 2**5 (k=5,n=32)
+   let string sty = xx
+end if
+.
+if case = 7
+   let k = 5; skip 25; read boxreactor_5_16.dat y x1 to x^k
+   let string header = Case ^case:  BHH Reactor Efficiency 2**(5-1) (k=5,n=16)
+   let string sty = xx
+end if
+.
+if case = 8
+   let k = 5; skip 25; read boxreactor_5_8.dat y x1 to x^k
+   let string header = Case ^case:  BHH Reactor Efficiency 2**(5-2)(k=5,n=8)
+   let string sty = xx
+end if
+.
+if case = 9
+   let k = 7; skip 25; read boxfilt1.dat y x1 to x^k
+   let string header = Case ^case:  BHH (p. 426) Industrial Filtration Time (Part 1) 2**(7-4) (k=7,n=8)
+   let string sty = xx
+end if
+.
+if case = 10
+   let k = 7; skip 25; read boxfilt2.dat y x1 to x^k
+   let string header = Case ^case:  BHH (p. 427) Industrial Filtration Time (Part 2) 2**(7-4) (k=7,n=8)
+   let string sty = xx
+end if
+.
+if case = 11
+   let k = 7; skip 25; read boxfilt3.dat y x1 to x^k
+   let string header = Case ^case:  BHH (p. 426&427) Industrial Filtration Time (Combineed) 2**(7-3) (k=7,n=16)
+   let string sty = xx
+end if
+.
+if case = 12
+   let k = 13; skip 50; read wtcara2.dat y x1 to x^k
+   let string header = Case ^case:  WTC Collapse Analysis 2**(13-9) (k=13,n=16)
+   let string sty = xx
+end if
+.
+if case = 13
+   let k = 8; skip 25; read inn2.dat y x1 to x^k
+   let string header = Case ^case:  Ken Inn Laboratory Trace Plutonium Contamination 2**(8-4) (k=8,n=16)
+   let string sty = Plutonium Concentration
+end if
+.
+if case = 14
+   let k = 3; skip 25; read splett.dat y x1 to x^k
+   let string header = Case ^case:  Splett Eddy Current 2**3 (k=3,n=8)
+   let string sty = xx
+end if
+.
+if case = 15
+   let k = 6; skip 25; read healy1.dat y yjunk x1 to x^k
+   let y = 100*y
+   let string header = Case ^case:  Healy Hot Plate Conductivity Error 2**(6-2) (k=6,n=16)
+   let string sty = Conductivity Relative Error (%)
+end if
+.
+if case = 16
+   let k = 5; skip 25; read wetzel.dat yjunk1 y yjunk2 x1 to x^k
+   let string header = Case ^case:  Wetzel/Guttman Maldi-TOF-MS Parameter Optimization 2**(5-1) (k=5,n=16)
+   let string sty = xx
+end if
+.
+if case = 17
+   let k = 6; skip 25; read zarr161.dat y x1 to x^k
+   let string header = Case ^case: Zarr NIST 500 mm Guarded Hot Plate 2**(6-2) (k=6,n=16+3)
+   let string sty = xx
+end if
+.
+if case = 18
+   let k = 9; skip 25; read hecht.dat y x1 to x^k
+   let string header = Case ^case: Ariel Hecht Cell Growth in E. coli Engineered for Lypocene 2**(9-3) (k=9,n=64+4)
+   let string sty = xx
+   let dpep = 4
+end if
+.
+if case = 19
+   let k = 7; skip 25; read fong_7_16.dat y x1 to x^k
+   let string header = Case ^case: Jeffrey Fong MRI RF Coil Uniformity 2**(7-3) (k=7,n=16)
+   let string sty = xx
+end if
+.
+if case = 20
+   let k = 7; skip 25; read kneifel_7_128.dat y x1 to x^k
+   let string header = Case ^case: Josh Kneifel NIST Net-Zero House Energy Consumption 2**7 (k=7,n=128)
+   let string sty = xx
+end if
+.
+if case = 21
+   let k = 8; skip 25; read lee_8_128.dat y yjunk x1 to x^k
+   let string header = Case ^case: Yooyoung Lee IRIS Biometric System Verification Rate 2**(8-1) (k=8,n=128)
+   let string sty = xx
+end if
+.
+if case = 22
+   let k = 3; skip 25; read bardhan45.dat y yjunk x1 to x^k
+   let string header = Case ^case: Shuvo Bardhan Synthetic Worm Generation # of Iterations to Saturation 2**3 (k=3,n=8)
+   let string sty = # Iterations to Saturation
+end if
+.
+if case = 23
+   let k = 4; skip 25; read sheesleylightbulb_4_24.dat y x1 to x^k
+   let string header = Case ^case: Sheesley Lightbulb Manuf. Defect Rate (Exp. in Industry, p. 47) (2**3)(3**1) (k=4,n=24)
+   let string sty = Ave. # Defective Lead Wires / Hour
+end if
+.
+if case = 24
+   let k = 15; skip 50; read quinlan2.dat y x1 to x^k
+   let string header = Case ^case: Quinlan Plastic Speedometer Casing Manuf. Shrinkage (Taguchi L16) 2**(15-11) (k=15,n=16)
+   let string sty = % Shrinkage (After 2-Hour Heat Soak)
+end if
+.
+if case = 25
+   let k = 3; skip 25; read klouda2.dat y yjunk x1 to x^k
+   let string header = Case ^case: Albuequerque Carbon Monoxide Concentration 2**3 (k=3,n=8+2)
+   let string sty = Carbon Monoxide Concentration
+end if
+.
+if case = 26
+   let k = 2; skip 25; read vir.dat y x1 to x^k
+   let string header = Case ^case: V = I*R Formula-Derivation Example ("Simulated" Data) 2**2 (k=2,n=4)
+   let string sty = Voltage
+end if
+.
+if case = 27
+   let k = 3; skip 25; read tang.dat y x1 to x^k
+   let string header = Case ^case: Apache/Linux Processing Time 2**3 (k=3,n=8+2)
+   let string sty = Processing Time (sec)
+end if
+.
+if case = 28
+   let k = 11; skip 10; read mills28responses.dat y1 to y22; let y = y1
+   skip 10; read mills28factors.dat x1 to x11; delete x1 to x11 for i = 65 1 65
+   let string header = Case ^case: Kevin Mills Abilene Network Flow Characterization 2**(11-5) (k=11,n=64+1)
+   let string sty = Number of Active Flows
+end if
+.
+if case = 29
+   let k = 10; skip 100; read vigouroux.dat y1 to y10 x1 to x^k; let y = y1
+   let string header = Case ^case: 28  Jean-Louis Vigouroux Genetic Alg. Lathe (Cut Speed, Feed Rate) ...
+Optim. 2**(10-3) (k=10,n=128+1)
+   let string sty = Mean MRR (Material Removal Rate)
+   let dpep = 5
+end if
+.
+if case = 30
+   let k = 9; skip 25; read inn13.dat y1 y2 y3 x1 to x^k; let y = y2
+   let string header = Case ^case: Radioactive Concentration in Urban Soil (Strontium) 2**(9-5) (k=9,n=16)
+   let string sty = Plutonium Concentration
+end if
+.
+if case = 31
+   let k = 8; skip 25; read soto2.dat y1 y2 y3 x1 to x^k; let y = y3
+   let string header = Case ^case: Rick Silver / Juan Soto Scatterfield Microscopy 2**(8-3) (k=8,n=32+1)
+   let string sty = Normalized Max Intensity (x 1000)
+end if
+.
+if case = 32
+   let k = 7; skip 25; read boxbike3.dat y x1 to x^k
+   let string header = Case ^case: BHH Bike Speed (p. 390/xxx) 2**(7-3) (k=7,n=16)
+   let string sty = Time to Traverse a Hill in Madison, Wisc
+end if
+.
+if case = 33
+   let k = 4; skip 25; read khoussi15.dat y x1 to x^k
+   let string header = Siham Khoussi NDN-DPDK Forwarder Interest Packet Processing Latency 2**4 (k=4,n=16)
+   let string sty = Forwarder Interest Latency (k=4,n=16)
+end if
+.
+if case = 34
+   let k = 6; skip 25; read skye.dat y x1 to x^k
+   let string header = Case ^case:  Harrison Skye HVAC Efficiency 2**(4-1)(4**1) (k=6,n=32)
+   let string sty = Q Dot GSHP (CO2 Ground Source Heat Pump) Air Total
+end if
+.
+if case = 35
+   let k = 8; skip 25; read sarkar40.dat y x1 to x^k
+   let string header = Case ^case: Sumona Sarkar Image-Analysis Settings for Automated Cell Counting 2**(8-2) (k=8,n=65)
+   let string sty =  Cell Viability (%)
+end if
+.
+if case = 36
+   let k = 8; skip 5; read sarkar41_healthy.dat x1 to x^k xjunk1 xjunk2 xjunk3 y
+   let string header = Case ^case: Sumona Sarkar Image-Analysis Settings for Automated Cell Counting (k=8,n=65) 2**(8-2) (with Reps)
+   let string sty =  Cell Viability (%)
+end if
+.
+if case = 37
+   let k = 4; skip 25; read boxchem.dat y x1 to x^k
+   let string header = Case ^case: BHH Chemical Yield (p. 325) 2**4 (k=4,n=16)
+   let string sty = % Conversion
+end if
+.
+if case = 38
+   let k = 8; skip 25; read sarkar47.dat y x1 to x^k
+   let string header = Case ^case: Sumona Sarkar Image Analysis Settings for Cell Counting Y3=Viab%|Err| 2**(8-2) (k=8,n=64)
+   let string sty =  % Viability |Error|
+end if
+.
+if case = 39
+   let k = 2; skip 25; read guthrie1.dat xjunk x1 to x^k y
+   let string header = Case ^case: Will Guthrie k=2 Funnel Exp. for Texas Uncertainty Class (3**2)*10 (k=2,l=3,rep=10,n=90)
+   let string sty = Traversal Time (sec)
+end if
+.
+if case = 40
+   let k = 3; skip 25; read bajcsy201.dat y1 y2 y3 y4 x1 x2 x3
+   let y = y1 - y2
+   let string header = Case ^case: Samia Benjida Comparison of Image Metrology Systems 3*8127 (k=3,l=3/5/127,n=1905)
+   let string sty = Area
+end if
+.
+if case = 41
+   let k = xx; skip 25; read xx.dat y x1 to x^k
+   let string header = Case ^case: xx (k=xx,n=xx)
+   let string sty = xx
+end if
+.
+feedback on
+.
+. -----Step 3: Carry out the DEX 1-step analysis-----
+.
+let n = number y
+.
+. print y x1 to x^k
+. stat v
+print "case = ^case"
+print "(k=^k, n=^n)"
+. pause
+.
+let annotate = 1
+call dex10stepanalysis.dp
+. call dexyp.dp
+. call dexbp.dp
+. call dexcp.dp
+. call dexcp.dp
+. call dexcrsdp.dp
+. call dexep.dp
+. call dexcrsdp.dp
+. call dexep.dp
+. call dexcp.dp
+. call dexcp.dp
+. call dexiem.dp
+. call dexmp.dp

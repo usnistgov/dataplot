@@ -37,6 +37,9 @@
 . capture junk.
 feedback save; feedback off
 printing off
+feedback on
+capture screen on
+capture junk.out
 .
 . here   5/31/17 number of elements in conftag1 = 0
 let bugswest = 0
@@ -80,7 +83,7 @@ let string stmacro = est.dp
 set check name output filliben
 feedback on
 let iflag = check name k x1 to x^k
-feedback off
+feedback on
 .
 let n = number x1
 .
@@ -319,6 +322,8 @@ end if
 . end loop
 .
 .
+echo on
+feedback off
 loop for j1 = 1 1 numeff
    let string steft^j1 = ^stmain^j1
    delete prod^j1; let prod^j1 = ^stcore^j1
@@ -327,6 +332,8 @@ loop for j1 = 1 1 numeff
    let stefc^j1 = string compare and replace stmain^j1 stc stt1 to stt^numconf
    . print "j1: ^j1,  stefc^j1: ^stefc^j1"
 end loop
+echo off
+end of capture
 .
 . -----Step 5: Carry along cumrsd-----
 .

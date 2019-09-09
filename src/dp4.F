@@ -4926,6 +4926,9 @@ C
       CHARACTER*4 IANS
       CHARACTER*4 IERROR
 C
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+C
 C---------------------------------------------------------------------
 C
       DIMENSION IHNAME(*)
@@ -4983,6 +4986,8 @@ C
 C
         ISUBN0='WRIT'
         IERRF2='NO'
+        IBUGS2='OFF'
+        ISUBRO='XXXX'
         IFLAGC=1
         CALL DPOPFI(IOUNI2,IFILE2,ISTAT2,IFORM2,IACCE2,IPROT2,
      1              ICURS2,
@@ -8810,6 +8815,7 @@ C     ORIGINAL VERSION--AUGUST    1981.
 C     UPDATED         --SEPTEMBER 1981.
 C     UPDATED         --MAY       1982.
 C     UPDATED         --JUNE      1987.
+C     UPDATED         --JULY      2019. RECODE FOR BETTER READABILITY
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -8845,28 +8851,22 @@ C
       ICASFI='UNKN'
       ILOCFI=-99
 C
-      IF(IBUGA3.EQ.'OFF')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF CKFIT--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBUGA3
-   52 FORMAT('IBUGA3 = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)NUMARG
-   53 FORMAT('NUMARG = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,54)ICOM,ICOM2
-   54 FORMAT('ICOM,ICOM2 = ',A4,A4)
-      CALL DPWRST('XXX','BUG ')
-      DO55I=1,NUMARG
-      WRITE(ICOUT,56)I,IHARG(I),IHARG2(I)
-   56 FORMAT('I,IHARG(I),IHARG2(I) = ',I8,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-   55 CONTINUE
-   90 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF CKFIT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ICOM,ICOM2,NUMARG
+   52   FORMAT('IBUGA3,ICOM,ICOM2,NUMARG = ',3(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,NUMARG
+          WRITE(ICOUT,56)I,IHARG(I),IHARG2(I)
+   56     FORMAT('I,IHARG(I),IHARG2(I) = ',I8,2(A4,2X))
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
 C
 C               *********************************
 C               **  STEP 1.1--                 **
@@ -8879,417 +8879,330 @@ C               **  BUT WITH NO EQUAL SIGNS    **
 C               **  AFTER                      **
 C               *********************************
 C
-      ICASFI='FIT'
+      ICASFI='    '
+      ILASTC=0
 C
-CCCCC IF(ICOM.EQ.'FIT')GOTO110
-      IF(ICOM.EQ.'FIT')GOTO1100
-      GOTO1190
-C
- 1100 CONTINUE
-      IF(NUMARG.LE.0)GOTO1190
-      DO1110I=1,NUMARG
-      IF(IHARG(I).EQ.'=')GOTO1120
-      IF(IHARG(I).EQ.'SUBS'.AND.IHARG2(I).EQ.'ET  ')GOTO1130
-      IF(IHARG(I).EQ.'EXCE'.AND.IHARG2(I).EQ.'PT  ')GOTO1130
-      IF(IHARG(I).EQ.'FOR '.AND.IHARG2(I).EQ.'    ')GOTO1130
- 1110 CONTINUE
-      GOTO1130
- 1120 CONTINUE
-      ICASFI='FIT'
-      GOTO110
- 1130 CONTINUE
-      ICASFI='MFIT'
-      GOTO110
- 1190 CONTINUE
+      IF(ICOM.EQ.'FIT')THEN
+        ICASFI='FIT'
+        IF(NUMARG.GT.0)THEN
+          DO1110I=1,NUMARG
+            IF(IHARG(I).EQ.'=')THEN
+              ICASFI='FIT'
+              ILASTC=0
+              GOTO1119
+            ELSEIF((IHARG(I).EQ.'SUBS'.AND.IHARG2(I).EQ.'ET  ') .OR.
+     1             (IHARG(I).EQ.'EXCE'.AND.IHARG2(I).EQ.'PT  ') .OR.
+     1             (IHARG(I).EQ.'FOR '.AND.IHARG2(I).EQ.'    '))THEN
+              ICASFI='MFIT'
+              ILASTC=0
+              GOTO1119
+            ENDIF
+ 1110     CONTINUE
+          ICASFI='MFIT'
+          ILASTC=0
+ 1119     CONTINUE
+        ENDIF
 C
 C               *********************************
 C               **  STEP 1.2--                 **
 C               **  SEARCH FOR ROBUST FITTING  **
 C               *********************************
 C
-      ICASFI='RFIT'
 C
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'ROBU'.AND.IHARG(2).EQ.'FIT')GOTO112
+      ELSEIF(NUMARG.GE.2 .AND. ICOM.EQ.'ROBU' .AND.
+     1       IHARG(2).EQ.'FIT')THEN
+        ICASFI='RFIT'
+        ILASTC=2
 C
 C               *******************************************
 C               **  STEP 1.20--                          **
-C               **  SEARCH FOR 0-TH DEGREE    FITTING     **
+C               **  SEARCH FOR 0-TH DEGREE    FITTING    **
 C               *******************************************
 C
-      ICASFI='0FIT'
 C
-      IF(NUMARG.GE.3.AND.
-     1ICOM.EQ.'0'.AND.IHARG(1).EQ.'TH'.AND.IHARG(2).EQ.'DEGR'.AND.
-     1IHARG(3).EQ.'FIT')GOTO113
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'0TH'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'ZERO'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'0'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'0'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'ZERO'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.1.AND.
-     1ICOM.EQ.'CONS'.AND.IHARG(1).EQ.'FIT')GOTO111
-      IF(NUMARG.GE.1.AND.
-     1ICOM.EQ.'RECT'.AND.IHARG(1).EQ.'FIT')GOTO111
-      IF(NUMARG.GE.1.AND.
-     1ICOM.EQ.'FLAT'.AND.IHARG(1).EQ.'FIT')GOTO111
+      ELSEIF(NUMARG.GE.3 .AND. ICOM.EQ.'0' .AND. IHARG(1).EQ.'TH' .AND.
+     1       IHARG(2).EQ.'DEGR' .AND. IHARG(3).EQ.'FIT')THEN
+        ICASFI='0FIT'
+        ILASTC=3
+      ELSEIF(NUMARG.GE.2 .AND. 
+     1      (ICOM.EQ.'0TH' .OR. ICOM.EQ.'ZERO' .OR. ICOM.EQ.'0') .AND.
+     1       IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')THEN
+        ICASFI='0FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.2 .AND. ICOM.EQ.'DEGR' .AND.
+     1      (IHARG(1).EQ.'0' .OR. IHARG(1).EQ.'ZERO') .AND.
+     1       IHARG(2).EQ.'FIT')THEN
+        ICASFI='0FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.1.AND.
+     1      (ICOM.EQ.'CONS' .OR. ICOM.EQ.'RECT' .OR.
+     1       ICOM.EQ.'FLAT') .AND. IHARG(1).EQ.'FIT')THEN
+        ICASFI='0FIT'
+        ILASTC=1
 C
 C               *******************************************
 C               **  STEP 1.21--                          **
-C               **  SEARCH FOR 1-ST DEGREE    FITTING     **
+C               **  SEARCH FOR 1-ST DEGREE    FITTING    **
 C               *******************************************
 C
-      ICASFI='1FIT'
 C
-      IF(NUMARG.GE.3.AND.
-     1ICOM.EQ.'1'.AND.IHARG(1).EQ.'ST'.AND.IHARG(2).EQ.'DEGR'.AND.
-     1IHARG(3).EQ.'FIT')GOTO113
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'1ST'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'FIRS'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'1'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'ONE'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'1'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'ONE'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.1.AND.
-     1ICOM.EQ.'LINE'.AND.IHARG(1).EQ.'FIT')GOTO111
+      ELSEIF(NUMARG.GE.3 .AND. ICOM.EQ.'1' .AND. IHARG(1).EQ.'ST' .AND.
+     1       IHARG(2).EQ.'DEGR' .AND. IHARG(3).EQ.'FIT')THEN
+        ICASFI='1FIT'
+        ILASTC=3
+      ELSEIF(NUMARG.GE.2 .AND.
+     1      (ICOM.EQ.'1ST' .OR. ICOM.EQ.'FIRS' .OR. ICOM.EQ.'1' .OR.
+     1       ICOM.EQ.'ONE') .AND.
+     1       IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')THEN
+        ICASFI='1FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.2 .AND. ICOM.EQ.'DEGR' .AND.
+     1      (IHARG(1).EQ.'1' .OR. IHARG(1).EQ.'ONE') .AND.
+     1       IHARG(2).EQ.'FIT')THEN
+        ICASFI='1FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.1 .AND. ICOM.EQ.'LINE' .AND.
+     1       IHARG(1).EQ.'FIT')THEN
+        ICASFI='1FIT'
+        ILASTC=1
 C
 C               *******************************************
 C               **  STEP 1.22--                          **
-C               **  SEARCH FOR 2-ND DEGREE    FITTING     **
+C               **  SEARCH FOR 2-ND DEGREE    FITTING    **
 C               *******************************************
 C
-      ICASFI='2FIT'
-C
-      IF(NUMARG.GE.3.AND.
-     1ICOM.EQ.'2'.AND.IHARG(1).EQ.'ND'.AND.IHARG(2).EQ.'DEGR'.AND.
-     1IHARG(3).EQ.'FIT')GOTO113
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'2ND'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'SECO'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'2'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'TWO'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'2'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'TWO'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.1.AND.
-     1ICOM.EQ.'QUAD'.AND.IHARG(1).EQ.'FIT')GOTO111
+      ELSEIF(NUMARG.GE.3 .AND. ICOM.EQ.'2' .AND. IHARG(1).EQ.'ND' .AND.
+     1       IHARG(2).EQ.'DEGR' .AND. IHARG(3).EQ.'FIT')THEN
+        ICASFI='2FIT'
+        ILASTC=3
+      ELSEIF(NUMARG.GE.2 .AND.
+     1      (ICOM.EQ.'2ND' .OR. ICOM.EQ.'SECO' .OR. ICOM.EQ.'2' .OR.
+     1       ICOM.EQ.'TWO') .AND.
+     1       IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')THEN
+        ICASFI='2FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.2 .AND. ICOM.EQ.'DEGR' .AND.
+     1      (IHARG(1).EQ.'2' .OR. IHARG(1).EQ.'TWO') .AND.
+     1       IHARG(2).EQ.'FIT')THEN
+        ICASFI='2FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.1 .AND. ICOM.EQ.'QUAD' .AND.
+     1       IHARG(1).EQ.'FIT')THEN
+        ICASFI='2FIT'
+        ILASTC=1
 C
 C               *******************************************
 C               **  STEP 1.23--                          **
-C               **  SEARCH FOR 3-RD DEGREE    FITTING     **
+C               **  SEARCH FOR 3-RD DEGREE    FITTING    **
 C               *******************************************
 C
-      ICASFI='3FIT'
-C
-      IF(NUMARG.GE.3.AND.
-     1ICOM.EQ.'3'.AND.IHARG(1).EQ.'RD'.AND.IHARG(2).EQ.'DEGR'.AND.
-     1IHARG(3).EQ.'FIT')GOTO113
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'3RD'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'THIR'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'3'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'THRE'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'3'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'THRE'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.1.AND.
-     1ICOM.EQ.'CUBI'.AND.IHARG(1).EQ.'FIT')GOTO111
+      ELSEIF(NUMARG.GE.3 .AND. ICOM.EQ.'3' .AND. IHARG(1).EQ.'RD' .AND.
+     1       IHARG(2).EQ.'DEGR' .AND. IHARG(3).EQ.'FIT')THEN
+        ICASFI='3FIT'
+        ILASTC=3
+      ELSEIF(NUMARG.GE.2 .AND.
+     1      (ICOM.EQ.'3RD' .OR. ICOM.EQ.'THIR' .OR. ICOM.EQ.'3' .OR.
+     1       ICOM.EQ.'THRE') .AND.
+     1       IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')THEN
+        ICASFI='3FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.2 .AND. ICOM.EQ.'DEGR' .AND.
+     1      (IHARG(1).EQ.'3' .OR. IHARG(1).EQ.'THRE') .AND.
+     1       IHARG(2).EQ.'FIT')THEN
+        ICASFI='3FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.1 .AND. ICOM.EQ.'CUBI' .AND.
+     1       IHARG(1).EQ.'FIT')THEN
+        ICASFI='3FIT'
+        ILASTC=1
 C
 C               *******************************************
 C               **  STEP 1.24--                          **
-C               **  SEARCH FOR 4-TH DEGREE    FITTING     **
+C               **  SEARCH FOR 4-TH DEGREE    FITTING    **
 C               *******************************************
 C
-      ICASFI='4FIT'
-C
-      IF(NUMARG.GE.3.AND.
-     1ICOM.EQ.'4'.AND.IHARG(1).EQ.'TH'.AND.IHARG(2).EQ.'DEGR'.AND.
-     1IHARG(3).EQ.'FIT')GOTO113
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'4TH'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'FOUR'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'4'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'FOUR'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'4'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'FOUR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.1.AND.
-     1ICOM.EQ.'QUAR'.AND.IHARG(1).EQ.'FIT')GOTO111
+      ELSEIF(NUMARG.GE.3 .AND. ICOM.EQ.'4' .AND. IHARG(1).EQ.'TH' .AND.
+     1       IHARG(2).EQ.'DEGR' .AND. IHARG(3).EQ.'FIT')THEN
+        ICASFI='4FIT'
+        ILASTC=3
+      ELSEIF(NUMARG.GE.2 .AND.
+     1      (ICOM.EQ.'4TH' .OR. ICOM.EQ.'FOUR' .OR. ICOM.EQ.'4') .AND.
+     1       IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')THEN
+        ICASFI='4FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.2 .AND. ICOM.EQ.'DEGR' .AND.
+     1      (IHARG(1).EQ.'4' .OR. IHARG(1).EQ.'FOUR') .AND.
+     1       IHARG(2).EQ.'FIT')THEN
+        ICASFI='4FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.1 .AND. ICOM.EQ.'QUAR' .AND.
+     1       IHARG(1).EQ.'FIT')THEN
+        ICASFI='4FIT'
+        ILASTC=1
 C
 C               *******************************************
 C               **  STEP 1.25--                          **
-C               **  SEARCH FOR 5-TH DEGREE    FITTING     **
+C               **  SEARCH FOR 5-TH DEGREE    FITTING    **
 C               *******************************************
 C
-      ICASFI='5FIT'
-C
-      IF(NUMARG.GE.3.AND.
-     1ICOM.EQ.'5'.AND.IHARG(1).EQ.'TH'.AND.IHARG(2).EQ.'DEGR'.AND.
-     1IHARG(3).EQ.'FIT')GOTO113
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'5TH'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'FIFT'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'5'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'FIVE'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'5'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'FIVE'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.1.AND.
-     1ICOM.EQ.'QUIN'.AND.IHARG(1).EQ.'FIT')GOTO111
+      ELSEIF(NUMARG.GE.3 .AND. ICOM.EQ.'5' .AND. IHARG(1).EQ.'TH' .AND.
+     1       IHARG(2).EQ.'DEGR' .AND. IHARG(3).EQ.'FIT')THEN
+        ICASFI='5FIT'
+        ILASTC=3
+      ELSEIF(NUMARG.GE.2 .AND.
+     1      (ICOM.EQ.'5TH' .OR. ICOM.EQ.'FIFT' .OR. ICOM.EQ.'5' .OR.
+     1       ICOM.EQ.'FIVE') .AND.
+     1       IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')THEN
+        ICASFI='5FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.2 .AND. ICOM.EQ.'DEGR' .AND.
+     1      (IHARG(1).EQ.'5' .OR. IHARG(1).EQ.'FIVE') .AND.
+     1       IHARG(2).EQ.'FIT')THEN
+        ICASFI='5FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.1 .AND. ICOM.EQ.'QUIN' .AND.
+     1       IHARG(1).EQ.'FIT')THEN
+        ICASFI='5FIT'
+        ILASTC=1
 C
 C               *******************************************
 C               **  STEP 1.26--                          **
-C               **  SEARCH FOR 6-TH DEGREE    FITTING     **
+C               **  SEARCH FOR 6-TH DEGREE    FITTING    **
 C               *******************************************
 C
-      ICASFI='6FIT'
-C
-      IF(NUMARG.GE.3.AND.
-     1ICOM.EQ.'6'.AND.IHARG(1).EQ.'TH'.AND.IHARG(2).EQ.'DEGR'.AND.
-     1IHARG(3).EQ.'FIT')GOTO113
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'6TH'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'SIXT'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'6'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'SIX'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'6'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'SIX'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.1.AND.
-     1ICOM.EQ.'SEXT'.AND.IHARG(1).EQ.'FIT')GOTO111
+      ELSEIF(NUMARG.GE.3 .AND. ICOM.EQ.'6' .AND. IHARG(1).EQ.'TH' .AND.
+     1       IHARG(2).EQ.'DEGR' .AND. IHARG(3).EQ.'FIT')THEN
+        ICASFI='6FIT'
+        ILASTC=3
+      ELSEIF(NUMARG.GE.2 .AND.
+     1      (ICOM.EQ.'6TH' .OR. ICOM.EQ.'SIXT' .OR. ICOM.EQ.'6' .OR.
+     1       ICOM.EQ.'SIX') .AND.
+     1       IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')THEN
+        ICASFI='6FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.2 .AND. ICOM.EQ.'DEGR' .AND.
+     1      (IHARG(1).EQ.'6' .OR. IHARG(1).EQ.'SIX') .AND.
+     1       IHARG(2).EQ.'FIT')THEN
+        ICASFI='6FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.1 .AND. ICOM.EQ.'SEXT' .AND.
+     1       IHARG(1).EQ.'FIT')THEN
+        ICASFI='6FIT'
+        ILASTC=1
 C
 C               *******************************************
 C               **  STEP 1.27--                          **
-C               **  SEARCH FOR 7-TH DEGREE    FITTING     **
+C               **  SEARCH FOR 7-TH DEGREE    FITTING    **
 C               *******************************************
 C
-      ICASFI='7FIT'
-C
-      IF(NUMARG.GE.3.AND.
-     1ICOM.EQ.'7'.AND.IHARG(1).EQ.'TH'.AND.IHARG(2).EQ.'DEGR'.AND.
-     1IHARG(3).EQ.'FIT')GOTO113
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'7TH'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'SEVE'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'7'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'SEVE'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'7'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'SEVE'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.1.AND.
-     1ICOM.EQ.'SEPT'.AND.IHARG(1).EQ.'FIT')GOTO111
+      ELSEIF(NUMARG.GE.3 .AND. ICOM.EQ.'7' .AND. IHARG(1).EQ.'TH' .AND.
+     1       IHARG(2).EQ.'DEGR' .AND. IHARG(3).EQ.'FIT')THEN
+        ICASFI='7FIT'
+        ILASTC=3
+      ELSEIF(NUMARG.GE.2 .AND.
+     1      (ICOM.EQ.'7TH' .OR. ICOM.EQ.'SEVE' .OR. ICOM.EQ.'7') .AND.
+     1       IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')THEN
+        ICASFI='7FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.2 .AND. ICOM.EQ.'DEGR' .AND.
+     1      (IHARG(1).EQ.'7' .OR. IHARG(1).EQ.'SEVE') .AND.
+     1       IHARG(2).EQ.'FIT')THEN
+        ICASFI='7FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.1 .AND. ICOM.EQ.'SEPT' .AND.
+     1       IHARG(1).EQ.'FIT')THEN
+        ICASFI='7FIT'
+        ILASTC=1
 C
 C               *******************************************
 C               **  STEP 1.28--                          **
-C               **  SEARCH FOR 8-TH DEGREE    FITTING     **
+C               **  SEARCH FOR 8-TH DEGREE    FITTING    **
 C               *******************************************
 C
-      ICASFI='8FIT'
-C
-      IF(NUMARG.GE.3.AND.
-     1ICOM.EQ.'8'.AND.IHARG(1).EQ.'TH'.AND.IHARG(2).EQ.'DEGR'.AND.
-     1IHARG(3).EQ.'FIT')GOTO113
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'8TH'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'EIGH'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'8'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'EIGH'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'8'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'EIGH'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.1.AND.
-     1ICOM.EQ.'OCTI'.AND.IHARG(1).EQ.'FIT')GOTO111
+      ELSEIF(NUMARG.GE.3 .AND. ICOM.EQ.'8' .AND. IHARG(1).EQ.'TH' .AND.
+     1       IHARG(2).EQ.'DEGR' .AND. IHARG(3).EQ.'FIT')THEN
+        ICASFI='8FIT'
+        ILASTC=3
+      ELSEIF(NUMARG.GE.2 .AND.
+     1      (ICOM.EQ.'8TH' .OR. ICOM.EQ.'EIGH' .OR. ICOM.EQ.'8') .AND.
+     1       IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')THEN
+        ICASFI='8FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.2 .AND. ICOM.EQ.'DEGR' .AND.
+     1      (IHARG(1).EQ.'8' .OR. IHARG(1).EQ.'EIGH') .AND.
+     1       IHARG(2).EQ.'FIT')THEN
+        ICASFI='8FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.1 .AND. ICOM.EQ.'OCTI' .AND.
+     1       IHARG(1).EQ.'FIT')THEN
+        ICASFI='8FIT'
+        ILASTC=1
 C
 C               *******************************************
 C               **  STEP 1.29--                          **
-C               **  SEARCH FOR 9-TH DEGREE    FITTING     **
+C               **  SEARCH FOR 9-TH DEGREE    FITTING    **
 C               *******************************************
 C
-      ICASFI='9FIT'
-C
-      IF(NUMARG.GE.3.AND.
-     1ICOM.EQ.'9'.AND.IHARG(1).EQ.'TH'.AND.IHARG(2).EQ.'DEGR'.AND.
-     1IHARG(3).EQ.'FIT')GOTO113
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'9TH'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'NINT'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'9'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'NINE'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'9'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'NINE'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.1.AND.
-     1ICOM.EQ.'NONI'.AND.IHARG(1).EQ.'FIT')GOTO111
+      ELSEIF(NUMARG.GE.3 .AND. ICOM.EQ.'9' .AND. IHARG(1).EQ.'TH' .AND.
+     1       IHARG(2).EQ.'DEGR' .AND. IHARG(3).EQ.'FIT')THEN
+        ICASFI='9FIT'
+        ILASTC=3
+      ELSEIF(NUMARG.GE.2 .AND.
+     1      (ICOM.EQ.'9TH' .OR. ICOM.EQ.'NINT' .OR. ICOM.EQ.'9' .OR.
+     1       ICOM.EQ.'NINE') .AND.
+     1       IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')THEN
+        ICASFI='9FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.2 .AND. ICOM.EQ.'DEGR' .AND.
+     1      (IHARG(1).EQ.'9' .OR. IHARG(1).EQ.'NINT') .AND.
+     1       IHARG(2).EQ.'FIT')THEN
+        ICASFI='9FIT'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.1 .AND. ICOM.EQ.'NONI' .AND.
+     1       IHARG(1).EQ.'FIT')THEN
+        ICASFI='9FIT'
+        ILASTC=1
 C
 C               *******************************************
 C               **  STEP 1.20--                          **
-C               **  SEARCH FOR 10-TH DEGREE   FITTING     **
+C               **  SEARCH FOR 10-TH DEGREE   FITTING    **
 C               *******************************************
 C
-      ICASFI='10FI'
-C
-      IF(NUMARG.GE.3.AND.
-     1ICOM.EQ.'10'.AND.IHARG(1).EQ.'TH'.AND.IHARG(2).EQ.'DEGR'.AND.
-     1IHARG(3).EQ.'FIT')GOTO113
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'10TH'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'TENT'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'10'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'TEN'.AND.IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'10'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.2.AND.
-     1ICOM.EQ.'DEGR'.AND.IHARG(1).EQ.'TEN'.AND.IHARG(2).EQ.'FIT')
-     1GOTO112
-      IF(NUMARG.GE.1.AND.
-     1ICOM.EQ.'DEXI'.AND.IHARG(1).EQ.'FIT')GOTO111
+      ELSEIF(NUMARG.GE.3 .AND. ICOM.EQ.'10' .AND. IHARG(1).EQ.'TH' .AND.
+     1       IHARG(2).EQ.'DEGR' .AND. IHARG(3).EQ.'FIT')THEN
+        ICASFI='10FI'
+        ILASTC=3
+      ELSEIF(NUMARG.GE.2 .AND.
+     1      (ICOM.EQ.'10TH' .OR. ICOM.EQ.'TENT' .OR. ICOM.EQ.'10' .OR.
+     1       ICOM.EQ.'TEN') .AND.
+     1       IHARG(1).EQ.'DEGR'.AND.IHARG(2).EQ.'FIT')THEN
+        ICASFI='10FI'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.2 .AND. ICOM.EQ.'DEGR' .AND.
+     1      (IHARG(1).EQ.'10' .OR. IHARG(1).EQ.'TEN') .AND.
+     1       IHARG(2).EQ.'FIT')THEN
+        ICASFI='10FI'
+        ILASTC=2
+      ELSEIF(NUMARG.GE.1 .AND. ICOM.EQ.'DEXI' .AND.
+     1       IHARG(1).EQ.'FIT')THEN
+        ICASFI='10FI'
+        ILASTC=1
+      ELSE
 C
 C               ********************************************
 C               **  STEP 1.31--                           **
 C               **  SINCE VALID COMMAND NOT FOUND, EXIT.  **
 C               ********************************************
 C
-      ICASFI='    '
 C
-      IFOUND='NO'
-      GOTO9000
 C
-  110 CONTINUE
-      ILASTC=0
+        IFOUND='NO'
+        GOTO9000
+      ENDIF
+C
       CALL ADJUST(ILASTC,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG)
-      GOTO180
-C
-  111 CONTINUE
-      ILASTC=1
-      CALL ADJUST(ILASTC,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG)
-      GOTO180
-C
-  112 CONTINUE
-      ILASTC=2
-      CALL ADJUST(ILASTC,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG)
-      GOTO180
-C
-  113 CONTINUE
-      ILASTC=3
-      CALL ADJUST(ILASTC,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG)
-      GOTO180
-C
-  180 CONTINUE
       ILOCFI=ILASTC
       IFOUND='YES'
-      GOTO190
-C
-  190 CONTINUE
 C
 C               *****************
 C               **  STEP 90--  **
@@ -9297,30 +9210,16 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGA3.EQ.'OFF')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF CKFIT--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)IFOUND,IERROR
- 9012 FORMAT('IFOUND,IERROR = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)ICASFI,ILOCFI
- 9013 FORMAT('ICASFI,ILOCFI = ',A4,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9016)NUMARG
- 9016 FORMAT('NUMARG = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9017)ICOM,ICOM2
- 9017 FORMAT('ICOM,ICOM2 = ',A4,A4)
-      CALL DPWRST('XXX','BUG ')
-      DO9020I=1,NUMARG
-      WRITE(ICOUT,9021)I,IHARG(I),IHARG2(I)
- 9021 FORMAT('I,IHARG(I),IHARG2(I) = ',I8,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
- 9020 CONTINUE
- 9090 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF CKFIT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IFOUND,IERROR,ICASFI,ILOCFI
+ 9012   FORMAT('IFOUND,IERROR,ICASFI,ILOCFI = ',3(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END
@@ -13229,6 +13128,11 @@ C                      KEEP/OMIT
 C                      THRESHOLD MINIMUM
 C                      THRESHOLD MAXIMUM
 C                      SHUFFLE GROUP
+C                      BREAK LOCATION
+C                      FRAGMENT LOCATION
+C                      FRAGMENT LENGTH
+C                      2D GRID
+C                      3D GRID
 C
 C                      DISTINCT
 C                      SEQUENTIAL DIFFERENCE
@@ -13906,6 +13810,12 @@ C                                       COORDINATES
 C     UPDATED         --OCTOBER   2018. MATRIX PEARSON ROW SIMILARITY
 C     UPDATED         --OCTOBER   2018. MATRIX PEARSON COLUMN SIMILARITY
 C     UPDATED         --OCTOBER   2018. CODE DEX 2-LEVEL
+C     UPDATED         --JULY      2019. BREAK LOCATION
+C     UPDATED         --AUGUST    2019. FRAGMENT LOCATION
+C     UPDATED         --AUGUST    2019. FRAGMENT CENTROID
+C     UPDATED         --AUGUST    2019. FRAGMENT LENGTH
+C     UPDATED         --AUGUST    2019. 2D GRID
+C     UPDATED         --AUGUST    2019. 3D GRID
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -14305,6 +14215,22 @@ C
      1IHARG(3).EQ.'COSI'.AND.IHARG(4).EQ.'TRAN')GOTO1252
       IF(NUMARG.GE.4.AND.
      1IHARG(3).EQ.'COS'.AND.IHARG(4).EQ.'TRAN')GOTO1252
+C
+      IF(NUMARG.GE.4.AND.
+     1IHARG(3).EQ.'BREA'.AND.IHARG(4).EQ.'LOCA')GOTO4252
+      IF(NUMARG.GE.4.AND.
+     1IHARG(3).EQ.'FRAG'.AND.IHARG(4).EQ.'LOCA')GOTO4253
+      IF(NUMARG.GE.4.AND.
+     1IHARG(3).EQ.'FRAG'.AND.IHARG(4).EQ.'CENT')GOTO4253
+      IF(NUMARG.GE.4.AND.
+     1IHARG(3).EQ.'FRAG'.AND.IHARG(4).EQ.'LENG')GOTO4254
+C
+      IF(NUMARG.GE.5.AND.
+     1IHARG(4).EQ.'2D  '.AND.IHARG(5).EQ.'GRID')GOTO4256
+      IF(NUMARG.GE.6.AND.
+     1IHARG(5).EQ.'3D  '.AND.IHARG(6).EQ.'GRID')GOTO4258
+      IF(NUMARG.GE.7.AND.
+     1IHARG(6).EQ.'4D  '.AND.IHARG(7).EQ.'GRID')GOTO4260
 C
       ISTEPN='2E'
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MATH')
@@ -16743,6 +16669,30 @@ C
  2982 CONTINUE
       ICASL7='MATI'
       GOTO8005
+C
+ 4252 CONTINUE
+      ICASL7='BLOC'
+      GOTO8005
+C
+ 4253 CONTINUE
+      ICASL7='FLOC'
+      GOTO8005
+C
+ 4254 CONTINUE
+      ICASL7='FLEN'
+      GOTO8005
+C
+ 4256 CONTINUE
+      ICASL7='2DGR'
+      GOTO8006
+C
+ 4258 CONTINUE
+      ICASL7='3DGR'
+      GOTO8007
+C
+ 4260 CONTINUE
+      ICASL7='4DGR'
+      GOTO8008
 C
  5002 CONTINUE
       ICASL7='MPIN'
@@ -20484,12 +20434,11 @@ C
  9000 CONTINUE
       RETURN
       END
-      SUBROUTINE CMPDIS(Y,CENSOR,XLEVEL,N,ICASPL,ICASP2,
+      SUBROUTINE CMPDIS(Y,CENSOR,XLEVEL,N,MAXNXT,ICASPL,ICASP2,
      1                  TEMP1,TEMP2,TEMP3,
      1                  DTEMP,DTMP12,DTMP13,ITEMP1,
-     1                  ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,ZTEMP5,
-     1                  ZTEMP6,ZTEMP7,ZTEMP8,ZTEMP9,ZTMP10,
-     1                  ZTMP11,ZTMP12,ZTMP13,ZTMP14,
+     1                  ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,ZTEMP5,ZTEMP6,
+     1                  ZTEMP7,ZTEMP8,ZTEMP9,ZTMP10,ZTMP11,
      1                  YLOWLM,YUPPLM,A,B,MINMAX,NUMSHA,
      1                  SHAP11,SHAP12,SHAP21,SHAP22,
      1                  IADEDF,IGEPDF,IMAKDF,IBEIDF,
@@ -20527,6 +20476,10 @@ C           OF THE NATIONAL BUREAU OF STANDARDS.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--2010/3
 C     ORIGINAL VERSION--MARCH     2010.
+C     UPDATED         --JULY      2019. CALL LIST TO DPPP2
+C     UPDATED         --JULY      2019. CALL LIST TO DPPPC2
+C     UPDATED         --JULY      2019. REMOVE ZTMP12, ZTMP13,ZTMP14
+C                                       FROM CALL LIST
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -20615,9 +20568,6 @@ C
       DIMENSION ZTEMP9(*)
       DIMENSION ZTMP10(*)
       DIMENSION ZTMP11(*)
-      DIMENSION ZTMP12(*)
-      DIMENSION ZTMP13(*)
-      DIMENSION ZTMP14(*)
 C
       DIMENSION CLLIMI(*)
       DIMENSION CLWIDT(*)
@@ -20784,7 +20734,7 @@ C
      1               PPLOC,PPSCAL,
      1               PPA0,PPA1,PPCC,SDPPA0,SDPPA1,XRESSD,XRESDF,
      1               CCALBE,PPA0BW,PPA1BW,
-     1               ZTEMP4,ZTEMP5,ZTEMP6,ZTEMP7,
+     1               ZTEMP4,ZTEMP5,
      1               TEMP1,TEMP2,TEMP3,NJUNK1,NJUNK2,NCURVE,
      1               IBUGA3,ISUBRO,IERROR)
           IF(IPPCBW.EQ.'BIWE')THEN
@@ -20804,16 +20754,15 @@ C
             PPSCAL=KSSCAL
           ENDIF
           IF(ICASPL.EQ.'BFWE')SHAPE2=SH2
-          CALL DPPPC2(Y,CENSOR,XLEVEL,N,
+          CALL DPPPC2(Y,CENSOR,XLEVEL,N,MAXNXT,
      1                ICASP2,ICASPL,
      1                SHAP11,SHAP12,SHAP21,SHAP22,
      1                SHAPE1,SHAPE2,SHAPE3,SHAPE4,SHAPE5,
      1                YLOWLM,YUPPLM,A,B,MINMAX,
-     1                TEMP1(1),TEMP1(10001),TEMP1(20001),
-     1                TEMP1(30001),NUMSHA,
-     1                ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,ZTEMP5,
-     1                ZTEMP6,ZTEMP7,ZTEMP8,
-     1                ZTEMP9,ZTMP10,ZTMP11,ZTMP12,IPPCBW,
+     1                TEMP1(1),TEMP1(20001),TEMP1(40001),
+     1                TEMP1(60001),NUMSHA,
+     1                ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,TEMP1(80001),
+     1                ZTEMP5,ZTEMP6,ZTEMP7,ZTEMP8,ZTEMP9,IPPCBW,
      1                IADEDF,IGEPDF,IMAKDF,IBEIDF,
      1                ILGADF,ISKNDF,IGLDDF,IBGEDF,
      1                IGETDF,ICONDF,IGOMDF,IKATDF,
@@ -20822,7 +20771,7 @@ C
      1                IPPCDP,IPPCAP,IPPCAO,IMETHD,ICENSO,
      1                IFLAGF,NCURVE,
      1                PCHSLM,ILEVEL,
-     1                ZTMP13,ZTMP14,TEMP2,TEMP3,NJUNK1,NJUNK2,
+     1                ZTMP10,ZTMP11,TEMP2,TEMP3,NJUNK1,NJUNK2,
      1                PPCCMX,SHA1MX,SHA2MX,A0SAVE,A1SAVE,A0BWSV,A1BWSV,
      1                IBUGA3,ISUBRO,IERROR)
           SH1=SHA1MX
@@ -20995,6 +20944,7 @@ C                 H20 SCALE
 C                 INDEX OF DISPERSION
 C                 INTERQUARTILE RANGE
 C                 LOGNORMAL COEFFICIENT OF VARIATION
+C                 LOWER SEMI-INTERQUARTILE RANGE
 C                 MAD TO MEDIAN
 C                 MEDIAN ABSOLUTE DEVIATION (MAD)
 C                 NORMALIZED INTERQUARTILE RANGE
@@ -21019,6 +20969,7 @@ C                 SUM OF SQUARES
 C                 SUM OF SQUARES FROM MEAN
 C                 TRIMMED SD
 C                 UNBIASED COEFFICIENT OF VARIATION
+C                 UPPER SEMI-INTERQUARTILE RANGE
 C                 VARIANCE
 C                 WINSORIZED STANDARD DEVIATION
 C                 WINSORIZED VARIANCE
@@ -21392,6 +21343,7 @@ C                 BINARY ASYMMETRIC DICE MATCH DISSIMILARITY
 C                 BINARY ASYMMETRIC DICE MATCH SIMILARITY
 C                 BINARY ASYMMETRIC SOKAL MATCH DISSIMILARITY
 C                 BINARY ASYMMETRIC SOKAL MATCH SIMILARITY
+C                 BINARY GAMMA COEFFICIENT
 C                 BINARY JACCARD DISSIMILARITY
 C                 BINARY JACCARD SIMILARITY
 C                 BINARY MATCH DISSIMILARITY
@@ -21409,6 +21361,7 @@ C                 CORRELATION
 C                 CORRELATION ABSOLUTE VALUE
 C                 CORRELATION PVALUE
 C                 CORRELATION CDF
+C                 CORRELATION RATIO
 C                 COSINE DISTANCE
 C                 COSINE SIMILARITY
 C                 COVARIANCE
@@ -21418,7 +21371,11 @@ C                 EUCLIDEAN LENGTH
 C                 GENERALIZED JACCARD COEFFCIENT
 C                 GENERALIZED JACCARD DISTANCE
 C                 HAMMING DISTANCE
-C                 KENDALLS TAU
+C                 INTRACLASS CORRELATION
+C                 KENDALLS TAU (GAMMA CORRELATION COEFFICIENT)
+C                 KENDALLS TAU A
+C                 KENDALLS TAU B
+C                 KENDALLS TAU C
 C                 KENDALLS TAU ABSOLUTE VALUE
 C                 KENDALLS TAU CDF
 C                 KENDELLS TAU DISSIMILARITY
@@ -21444,7 +21401,8 @@ C                 SPEARMAN SIMILARITY
 C                 WINSORIZED COVARIANCE
 C                 WINSORIZED CORRELATION
 C                 YOUDEN INDEX
-C                 YULES Q
+C                 YULES Q (BINARY GAMMA COEFFICIENT)
+C                 YULES Y
 C
 C              REGRESSION/FITTING: (11)
 C                 CONSTANT INTERCEPT
@@ -22216,6 +22174,16 @@ C     UPDATED         --OCTOBER   2018. WEIGHTED COSINE SIMILARITY
 C     UPDATED         --OCTOBER   2018. GROUPED CORRELATION
 C     UPDATED         --JANUARY   2019. PYTHON MEAN
 C     UPDATED         --JANUARY   2019. YOUDEN INDEX
+C     UPDATED         --JULY      2019. LOWER SEMI-INTERQUARTILE RANGE
+C     UPDATED         --JULY      2019. UPPER SEMI-INTERQUARTILE RANGE
+C     UPDATED         --AUGUST    2019. BINARY GAMMA COEFFICIENT
+C     UPDATED         --AUGUST    2019. YULES Y
+C     UPDATED         --AUGUST    2019. KENDALL TAU A
+C     UPDATED         --AUGUST    2019. KENDALL TAU B
+C     UPDATED         --AUGUST    2019. KENDALL TAU C
+C     UPDATED         --AUGUST    2019. CORRECTION TO RLP COMPUTATION
+C     UPDATED         --AUGUST    2019. INTRACLASS CORRELATION
+C     UPDATED         --AUGUST    2019. CORRELATION RATIO
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -22619,6 +22587,9 @@ C
       IF(ICASPL.EQ.'RACM')GOTO31530
       IF(ICASPL.EQ.'KTAU')GOTO31540
       IF(ICASPL.EQ.'KTAA')GOTO31540
+      IF(ICASPL.EQ.'TAUA')GOTO31540
+      IF(ICASPL.EQ.'KTAB')GOTO31540
+      IF(ICASPL.EQ.'KTAC')GOTO31540
       IF(ICASPL.EQ.'KTCD')GOTO31540
       IF(ICASPL.EQ.'KTPV')GOTO31540
       IF(ICASPL.EQ.'KTPL')GOTO31540
@@ -22655,10 +22626,14 @@ C
       IF(ICASPL.EQ.'BDSI')GOTO31685
       IF(ICASPL.EQ.'YULQ')GOTO31685
       IF(ICASPL.EQ.'YOUD')GOTO31685
+      IF(ICASPL.EQ.'GC22')GOTO31685
+      IF(ICASPL.EQ.'YULY')GOTO31685
       IF(ICASPL.EQ.'GJCO')GOTO31688
       IF(ICASPL.EQ.'GJDI')GOTO31688
       IF(ICASPL.EQ.'LODR')GOTO31690
       IF(ICASPL.EQ.'LOSE')GOTO31700
+      IF(ICASPL.EQ.'ICCR')GOTO31715
+      IF(ICASPL.EQ.'CRAT')GOTO31715
 C
       IF(ICASPL.EQ.'LOWH')GOTO11540
       IF(ICASPL.EQ.'UPPH')GOTO11550
@@ -23073,6 +23048,8 @@ C
       IF(ICASPL.EQ.'HAME')GOTO11970
       IF(ICASPL.EQ.'IQRA')GOTO11980
       IF(ICASPL.EQ.'NIQR')GOTO11980
+      IF(ICASPL.EQ.'SIQL')GOTO11980
+      IF(ICASPL.EQ.'SIQU')GOTO11980
       IF(ICASPL.EQ.'QCDI')GOTO11981
       IF(ICASPL.EQ.'QQRA')GOTO11982
       IF(ICASPL.EQ.'DQDI')GOTO11983
@@ -23484,6 +23461,8 @@ C
       IF(ICASPL.EQ.'HAME')GOTO11970
       IF(ICASPL.EQ.'IQRA')GOTO11980
       IF(ICASPL.EQ.'NIQR')GOTO11980
+      IF(ICASPL.EQ.'SIQL')GOTO11980
+      IF(ICASPL.EQ.'SIQU')GOTO11980
       IF(ICASPL.EQ.'QQRA')GOTO11982
       IF(ICASPL.EQ.'BILO')GOTO11990
       IF(ICASPL.EQ.'BISC')GOTO12000
@@ -24619,8 +24598,9 @@ CCCCC CALL INTVEC(TEMP,TEMPZ,NS2,NUMVIN,IWRITE,RIGHT,IBUGG3,IERROR)
       RIGHT=XTEMP3(1)
       GOTO79000
 11405 CONTINUE
-      CALL DISTIN(TEMPZ,NSZ,IWRITE,XTEMP1,NOUT,IBUGG3,IERROR)
+      CALL DISTIN(TEMPZ,NS2,IWRITE,XTEMP1,NOUT,IBUGG3,IERROR)
       ANMAT=REAL(NOUT)
+      XCAP=CPUMIN
       CALL SSQ(TEMP,NS2,XCAP,IWRITE,RIGHT,IBUGG3,ISUBRO,IERROR)
       RIGHT=SQRT(RIGHT/ANMAT)
       GOTO79000
@@ -25009,11 +24989,15 @@ C
       ICASZZ='TWOS'
       CALL KENTAU(TEMP,TEMPZ,NS2,ICASZZ,IKTATA,IWRITE,
      1            XTEMP1,XTEMP2,MAXNXT,
-     1            RIGHT,STATCD,PVAL,PVALLT,PVALUT,
+     1            RIGHT,AKTAUA,AKTAUB,AKTAUC,
+     1            STATCD,PVAL,PVALLT,PVALUT,
      1            CUTU90,CUTU95,CTU975,CUTU99,CTU995,
      1            CUTL90,CUTL95,CTL975,CUTL99,CTL995,
      1            IBUGG3,ISUBRO,IERROR)
       IF(ICASPL.EQ.'KTAA')RIGHT=ABS(RIGHT)
+      IF(ICASPL.EQ.'TAUA')RIGHT=AKTAUA
+      IF(ICASPL.EQ.'KTAB')RIGHT=AKTAUB
+      IF(ICASPL.EQ.'KTAC')RIGHT=AKTAUC
       IF(ICASPL.EQ.'KTCD')RIGHT=STATCD
       IF(ICASPL.EQ.'KTPV')RIGHT=PVAL
       IF(ICASPL.EQ.'KTPL')RIGHT=PVALLT
@@ -25025,19 +25009,22 @@ C
       ICASZZ='TWOS'
       CALL KENTAU(TEMP,TEMPZ,NS2,ICASZZ,IKTATA,IWRITE,
      1            XTEMP1,XTEMP2,MAXNXT,
-     1            R12,STATCD,PVAL,PVALLT,PVALUT,
+     1            R12,AKTAUA,AKTAUB,AKTAUC,
+     1            STATCD,PVAL,PVALLT,PVALUT,
      1            CUTU90,CUTU95,CTU975,CUTU99,CTU995,
      1            CUTL90,CUTL95,CTL975,CUTL99,CTL995,
      1            IBUGG3,ISUBRO,IERROR)
       CALL KENTAU(TEMP,TEMPZ3,NS2,ICASZZ,IKTATA,IWRITE,
      1            XTEMP1,XTEMP2,MAXNXT,
-     1            R13,STATCD,PVAL,PVALLT,PVALUT,
+     1            R13,AKTAUA,AKTAUB,AKTAUC,
+     1            STATCD,PVAL,PVALLT,PVALUT,
      1            CUTU90,CUTU95,CTU975,CUTU99,CTU995,
      1            CUTL90,CUTL95,CTL975,CUTL99,CTL995,
      1            IBUGG3,ISUBRO,IERROR)
       CALL KENTAU(TEMPZ,TEMPZ3,NS2,ICASZZ,IKTATA,IWRITE,
      1            XTEMP1,XTEMP2,MAXNXT,
-     1            R23,STATCD,PVAL,PVALLT,PVALUT,
+     1            R23,AKTAUA,AKTAUB,AKTAUC,
+     1            STATCD,PVAL,PVALLT,PVALUT,
      1            CUTU90,CUTU95,CTU975,CUTU99,CTU995,
      1            CUTL90,CUTL95,CTL975,CUTL99,CTL995,
      1            IBUGG3,ISUBRO,IERROR)
@@ -25197,6 +25184,13 @@ C
       CALL TRIMSD(TEMP,NS2,PROP1,PROP2,NTRIM1,NTRIM2,IWRITE,
      1            XTEMP1,RIGHT,
      1            IBUGG3,ISUBRO,IERROR)
+      GOTO79000
+C
+31715 CONTINUE
+      CALL CORRAT(TEMP,TEMPZ,NS2,ICASPL,IWRITE,XTEMP1,ETA,
+     1            IBUGG3,ISUBRO,IERROR)
+      RIGHT=ETA
+      IF(ICASPL.EQ.'ICCR')RIGHT=ETA**2
       GOTO79000
 C
 11540 CONTINUE
@@ -25816,8 +25810,17 @@ C
 11980 CONTINUE
       CALL LOWQUA(TEMP,NS2,IWRITE,XTEMP1,MAXNXT,RIGH1,IBUGG3,IERROR)
       CALL UPPQUA(TEMP,NS2,IWRITE,XTEMP1,MAXNXT,RIGH2,IBUGG3,IERROR)
+      IF(ICASPL.EQ.'SIQU' .OR. ICASPL.EQ.'SIQL')THEN
+        CALL MEDIAN(TEMP,NS2,IWRITE,XTEMP1,MAXNXT,RIGH3,IBUGG3,IERROR)
+      ENDIF
       RIGHT=RIGH2-RIGH1
-      IF(ICASPL.EQ.'NIQR')RIGHT=0.7413*RIGHT
+      IF(ICASPL.EQ.'NIQR')THEN
+        RIGHT=0.7413*RIGHT
+      ELSEIF(ICASPL.EQ.'SIQU')THEN
+        RIGHT=RIGH2-RIGH3
+      ELSEIF(ICASPL.EQ.'SIQL')THEN
+        RIGHT=RIGH3-RIGH1
+      ENDIF
       GOTO79000
 11981 CONTINUE
 CCCCC 2017/12: ALLOW QUANTILE METHOD TO BE SPECIFIED
@@ -29844,6 +29847,16 @@ C     UPDATED         --OCTOBER   2018. WEIGHTED COSINE SIMILARITY
 C     UPDATED         --NOVEMBER  2018. GROUPED CORRELATION
 C     UPDATED         --JANUARY   2019. PYTHON MEAN
 C     UPDATED         --JANUARY   2019. YOUDEN INDEX
+C     UPDATED         --JULY      2019. LOWER SEMI-INTERQUARTILE RANGE
+C     UPDATED         --JULY      2019. UPPER SEMI-INTERQUARTILE RANGE
+C     UPDATED         --AUGUST    2019. BINARY GAMMA COEFFICIENT
+C     UPDATED         --AUGUST    2019. YULES Y
+C     UPDATED         --AUGUST    2019. KENDALL TAU A
+C     UPDATED         --AUGUST    2019. KENDALL TAU B
+C     UPDATED         --AUGUST    2019. KENDALL TAU C (NOT WORKING YET)
+C     UPDATED         --AUGUST    2019. CORRECTION TO RLP COMPUTATION
+C     UPDATED         --AUGUST    2019. INTRACLASS CORRELATION
+C     UPDATED         --AUGUST    2019. CORRELATION RATIO
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -30253,11 +30266,15 @@ C
       IF(ICASPL.EQ.'BSSI')GOTO31685
       IF(ICASPL.EQ.'BDSI')GOTO31685
       IF(ICASPL.EQ.'YULQ')GOTO31685
+      IF(ICASPL.EQ.'YULY')GOTO31685
+      IF(ICASPL.EQ.'GC22')GOTO31685
       IF(ICASPL.EQ.'YOUD')GOTO31685
       IF(ICASPL.EQ.'GJCO')GOTO31688
       IF(ICASPL.EQ.'GJDI')GOTO31688
       IF(ICASPL.EQ.'LODR')GOTO31690
       IF(ICASPL.EQ.'LOSE')GOTO31700
+      IF(ICASPL.EQ.'ICCR')GOTO31715
+      IF(ICASPL.EQ.'CRAT')GOTO31715
 C
       IF(ICASPL.EQ.'LOWH')GOTO11540
       IF(ICASPL.EQ.'UPPH')GOTO11550
@@ -30672,6 +30689,8 @@ C
       IF(ICASPL.EQ.'HAME')GOTO11970
       IF(ICASPL.EQ.'IQRA')GOTO11980
       IF(ICASPL.EQ.'NIQR')GOTO11980
+      IF(ICASPL.EQ.'SIQL')GOTO11980
+      IF(ICASPL.EQ.'SIQU')GOTO11980
       IF(ICASPL.EQ.'QQRA')GOTO11982
       IF(ICASPL.EQ.'BILO')GOTO11990
       IF(ICASPL.EQ.'BISC')GOTO12000
@@ -31081,6 +31100,8 @@ C
       IF(ICASPL.EQ.'HAME')GOTO11970
       IF(ICASPL.EQ.'IQRA')GOTO11980
       IF(ICASPL.EQ.'NIQR')GOTO11980
+      IF(ICASPL.EQ.'SIQL')GOTO11980
+      IF(ICASPL.EQ.'SIQU')GOTO11980
       IF(ICASPL.EQ.'QCDI')GOTO11981
       IF(ICASPL.EQ.'QQRA')GOTO11982
       IF(ICASPL.EQ.'DQDI')GOTO11983
@@ -31634,7 +31655,7 @@ CCCCC CALL INTVEC(TEMP,TEMPZ,NS2,NUMVIN,IWRITE,RIGHT,IBUGG3,IERROR)
       RIGHT=XTEMP3(1)
       GOTO79000
 11405 CONTINUE
-      CALL DISTIN(TEMPZ,NSZ,IWRITE,XTEMP1,NOUT,IBUGG3,IERROR)
+      CALL DISTIN(TEMPZ,NS2,IWRITE,XTEMP1,NOUT,IBUGG3,IERROR)
       ANMAT=REAL(NOUT)
       CALL SSQ(TEMP,NS2,XCAP,IWRITE,RIGHT,IBUGG3,ISUBRO,IERROR)
       RIGHT=SQRT(RIGHT/ANMAT)
@@ -32023,10 +32044,14 @@ C
       ICASZZ='TWOS'
       CALL KENTAU(TEMP,TEMPZ,NS2,ICASZZ,IKTATA,IWRITE,
      1            XTEMP1,XTEMP2,MAXNXT,
-     1            RIGHT,STATCD,PVAL,PVALLT,PVALUT,
+     1            RIGHT,AKTAUA,AKTAUB,AKTAUC,
+     1            STATCD,PVAL,PVALLT,PVALUT,
      1            CUTU90,CUTU95,CTU975,CUTU99,CTU995,
      1            CUTL90,CUTL95,CTL975,CUTL99,CTL995,
      1            IBUGG3,ISUBRO,IERROR)
+      IF(ICASPL.EQ.'TAUA')RIGHT=AKTAUA
+      IF(ICASPL.EQ.'KTAB')RIGHT=AKTAUB
+      IF(ICASPL.EQ.'KTAC')RIGHT=AKTAUC
       IF(ICASPL.EQ.'KTAA')RIGHT=ABS(RIGHT)
       IF(ICASPL.EQ.'KTCD')RIGHT=STATCD
       IF(ICASPL.EQ.'KTPV')RIGHT=PVAL
@@ -32039,19 +32064,22 @@ C
       ICASZZ='TWOS'
       CALL KENTAU(TEMP,TEMPZ,NS2,ICASZZ,IKTATA,IWRITE,
      1            XTEMP1,XTEMP2,MAXNXT,
-     1            R12,STATCD,PVAL,PVALLT,PVALUT,
+     1            R12,AKTAUA,AKTAUB,AKTAUC,
+     1            STATCD,PVAL,PVALLT,PVALUT,
      1            CUTU90,CUTU95,CTU975,CUTU99,CTU995,
      1            CUTL90,CUTL95,CTL975,CUTL99,CTL995,
      1            IBUGG3,ISUBRO,IERROR)
       CALL KENTAU(TEMP,TEMPZ3,NS2,ICASZZ,IKTATA,IWRITE,
      1            XTEMP1,XTEMP2,MAXNXT,
-     1            R13,STATCD,PVAL,PVALLT,PVALUT,
+     1            R13,AKTAUA,AKTAUB,AKTAUC,
+     1            STATCD,PVAL,PVALLT,PVALUT,
      1            CUTU90,CUTU95,CTU975,CUTU99,CTU995,
      1            CUTL90,CUTL95,CTL975,CUTL99,CTL995,
      1            IBUGG3,ISUBRO,IERROR)
       CALL KENTAU(TEMPZ,TEMPZ3,NS2,ICASZZ,IKTATA,IWRITE,
      1            XTEMP1,XTEMP2,MAXNXT,
-     1            R23,STATCD,PVAL,PVALLT,PVALUT,
+     1            R23,AKTAUA,AKTAUB,AKTAUC,
+     1            STATCD,PVAL,PVALLT,PVALUT,
      1            CUTU90,CUTU95,CTU975,CUTU99,CTU995,
      1            CUTL90,CUTL95,CTL975,CUTL99,CTL995,
      1            IBUGG3,ISUBRO,IERROR)
@@ -32211,6 +32239,13 @@ C
       CALL TRIMSD(TEMP,NS2,PROP1,PROP2,NTRIM1,NTRIM2,IWRITE,
      1            XTEMP1,RIGHT,
      1            IBUGG3,ISUBRO,IERROR)
+      GOTO79000
+C
+31715 CONTINUE
+      CALL CORRAT(TEMP,TEMPZ,NS2,ICASPL,IWRITE,XTEMP1,ETA,
+     1            IBUGG3,ISUBRO,IERROR)
+      RIGHT=ETA
+      IF(ICASPL.EQ.'ICCR')RIGHT=ETA**2
       GOTO79000
 C
 11540 CONTINUE
@@ -32831,7 +32866,17 @@ C
       CALL LOWQUA(TEMP,NS2,IWRITE,XTEMP1,MAXNXT,RIGH1,IBUGG3,IERROR)
       CALL UPPQUA(TEMP,NS2,IWRITE,XTEMP1,MAXNXT,RIGH2,IBUGG3,IERROR)
       RIGHT=RIGH2-RIGH1
-      IF(ICASPL.EQ.'NIQR')RIGHT=0.7413*RIGHT
+      IF(ICASPL.EQ.'SIQU' .OR. ICASPL.EQ.'SIQL')THEN
+        CALL MEDIAN(TEMP,NS2,IWRITE,XTEMP1,MAXNXT,RIGH3,IBUGG3,IERROR)
+      ENDIF
+      RIGHT=RIGH2-RIGH1
+      IF(ICASPL.EQ.'NIQR')THEN
+        RIGHT=0.7413*RIGHT
+      ELSEIF(ICASPL.EQ.'SIQU')THEN
+        RIGHT=RIGH2-RIGH3
+      ELSEIF(ICASPL.EQ.'SIQL')THEN
+        RIGHT=RIGH3-RIGH1
+      ENDIF
       GOTO79000
 11981 CONTINUE
 CCCCC 2017/12: ALLOW QUANTILE METHOD TO BE SPECIFIED

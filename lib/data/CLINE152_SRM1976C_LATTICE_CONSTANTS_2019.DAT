@@ -1,0 +1,65 @@
+This is data file    cline152_srm1976c_lattice_constants_2019.dat   Corrected Data for SRM 1976c  lattice constants
+Contents: intensities measured in summer 2018; reanalysied 2/2019 
+Date: February 8, 2019
+Number of observations = 13+2 parameters x (20 samples) = 300
+Number of variables per line image = 4
+Order of variables on a line image:
+   1. Response variable = line intensity relative to 100% on {1,0,4} peak (depending on X3) or lattice 'a' or lattice 'c'
+   2. Factor 1     = Sample Index:                    (20 levels): 1-20
+   3. Factor 2     = Subsample index                  (1 levels): always zero for this SRM
+   4. Factor 3     = Lattice Constants       (2 levels: set to 0 for lattice 'a' (= horizontal), 1 for lattice 'c' (= vertical)
+
+Native order of file is chronological by date data were collected
+
+To read this data file into dataplot:
+   skip 25: read    line152_srm1976c_lattice_parameter.dat   y x1 x2 x3
+
+
+
+
+
+
+
+
+    Y   	X1	X2	X3
+---------------------------------------
+ 475.9083	 10	0	  0
+1299.3388	 10	0	  1
+ 475.9114	  5	0	  0
+1299.3346	  5	0	  1
+ 475.9102	 20	0	  0
+1299.3337	 20	0	  1
+ 475.9114	 18	0	  0
+1299.3344	 18	0	  1
+ 475.9096	 11	0	  0
+1299.3381	 11	0	  1
+ 475.9080	 19	0	  0
+1299.3384	 19	0	  1
+ 475.9091	  7	0	  0
+1299.3343	  7	0	  1
+ 475.9135	  1	0	  0
+1299.3363	  1	0	  1
+ 475.9072	  3	0	  0
+1299.3359	  3	0	  1
+ 475.9095	 12	0	  0
+1299.3415	 12	0	  1
+ 475.9071	  4	0	  0
+1299.3353	  4	0	  1
+ 475.9105	  9	0	  0
+1299.3374	  9	0	  1
+ 475.9079	  6	0	  0
+1299.3354	  6	0	  1
+ 475.9082	  8	0	  0
+1299.3350	  8	0	  1
+ 475.9100	 16	0	  0
+1299.3371	 16	0	  1
+ 475.9092	 14	0	  0
+1299.3350	 14	0	  1
+ 475.9079	  2	0	  0
+1299.3401	  2	0	  1
+ 475.9058	 17	0	  0
+1299.3360	 17	0	  1
+ 475.9098	 15	0	  0
+1299.3390	 15	0	  1
+ 475.9095	 13	0	  0
+1299.3337	 13	0	  1

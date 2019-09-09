@@ -1,5 +1,5 @@
 9.
-                                                       March  2019
+                                                       August  2019
 This is the DATAPLOT News file DPNEWF.TEX.  This NEWS file contains a
 list of DATAPLOT enhancements.  Some commands may be documented here
 that are not yet available in the standard documentation.
@@ -7,6 +7,101 @@ that are not yet available in the standard documentation.
 The complete news file can be viewed at
 
     http://www.itl.nist.gov/div898/software/dataplot/news.htm
+
+-----------------------------------------------------------------------
+The following enhancements were made to DATAPLOT
+May 2019 - August 2019.
+-----------------------------------------------------------------------
+
+ 1) The Dataplot source code is now available on the following
+    github site
+
+        https://github.com/usnistgov/dataplot
+
+    The build from source code has been simplified for Linux and
+    MacOS systems.
+
+ 2) Numerous changes were made to make more efficient use of scratch
+    space.  This allowed us to increase the default maximum number of
+    rows from 1,500,000 to 2,000,000.
+
+ 3) Made the following changes to the Graphics commands.
+
+      a. For the CONSENSUS MEANS PLOT, the default is to put the method
+         results on the left side of the plot and the lab data results
+         on the right side of the plot.  To reverse this (i.e., data
+         results first, then method results), enter the command
+
+            SET CONSENSUS MEAN PLOT DATA LEFT
+
+         You can also specify RIGHT, but this is equivalent to the
+         default of ON.
+
+      b. Added the following option for the BOX PLOT command
+
+            SET BOXPLOT FENCE SKEWNESS <OFF/GALTON/KIMBER>
+
+         For skewed datasets, the default box plot algorithm for
+         identifying outliers may identify an excessive number of
+         outliers when the FENCES switch is turned on.  Several
+         authors have suggested alternative algorithms to address
+         this.  Enter HELP BOX PLOT for details.
+
+ 4) Made the following changes to the Analysis commands.
+
+      a. Added the following option for the ONE SAMPLE PROFICIENCY TEST
+         command
+
+            SET ONE SAMPLE PROFICIENCY TEST IDENTIFY LAB
+                <DEFAULT/UNUSUAL/EXTREMELY UNUSUAL>
+
+         For Table 2, if there are multiple labs with the same values,
+         only one lab-id is given (there is a column for the number of
+         occurrences for that value).  For outliers, it can be useful
+         to identify all the labs.  If UNUSUAL is specified, all lab-id's
+         are given for the Unusual and Extremely Unusual categories.  If
+         EXTREMELY UNUSUAL is specified, all lab-id's are given for the
+         Extremeley Unusual category (but not the Unusual category).
+
+ 5) Added the following Math LET sub-commands.
+
+      LET Y = BREAK LOCATIONS X
+      LET Y = FRAGMENT LOCATIONS X
+      LET Y = FRAGMENT LENGTHS X
+
+      LET Y1 Y2 = 2D GRIDDED X1 X2
+      LET Y1 Y2 Y3 = 3D GRIDDED X1 X2 X3
+      LET Y1 Y2 Y3 Y4 = 4D GRIDDED X1 X2 X3 X4
+
+ 6) Added the following Statistics LET sub-commands.
+
+      LET A = LOWER SEMI INTERQUARTILE RANGE Y
+      LET A = UPPER SEMI INTERQUARTILE RANGE Y
+
+      LET A = KENDALLS TAU A  Y1 Y2
+      LET A = KENDALLS TAU B  Y1 Y2
+      LET A = KENDALLS TAU C  Y1 Y2
+      LET A = YULES Y  Y1 Y2
+
+      LET A = CORRELATION RATIO Y X
+      LET A = INTRACLASS CORRELATION RATIO Y X
+
+ 7) Miscellaneous Updates
+
+    a. Added the following option to the SET POSTSCRIPT CONVERT
+       command
+
+          SET POSTSCRIPT CONVERT PS2PDF
+
+       The SET POSTSCRIPT CONVERT command is used to automatically
+       convert Dataplot's Postscript output to another format (most
+       commonly PDF, but not limited to this).  Previously, this
+       command supported "GHOSTSCRIPT" and "CONVERT".  GHOSTSCRIPT
+       uses Ghostscript to perform the conversion and CONVERT uses
+       the "convert" command from ImageMagick.
+
+       The PS2PDF option uses the "ps2pdf" script that is installed
+       with Ghostscript.
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT

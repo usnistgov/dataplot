@@ -1,0 +1,28 @@
+. This is dataplot macro     get_write_anova_fcdf_dexmp.dp     4/3/19
+. Purpose: Compute and write out anova fcdf for k factors: x1 to x^k
+.          for a main effects plot
+. Date: 4/3/19
+.
+. Input (Required):
+.    k            (parameter) = number of factors
+.    x1, x2, etc. (vectors)   = factors
+.    y            (vector)    = response
+. Input (Optional):
+.    q            (string)    = subset/except/for qualification (default = none)
+           
+. Output:
+.    the fcdf is written out below each factor of an dex scatter plot or dex mean plot
+. Example of calling routine: sarkar71_sub.dp
+.
+. -----start point-----
+.
+just center; hw 2 1
+loop for jfact = 1 1 k
+   if q not exist; anova y x^jfact;    end if
+   if q exists;    anova y x^jfact ^q; end if
+   call get_anova_fcdf.dp
+   color blue; if fstatcdf >= 95; color red; end if
+   moveds ^jfact 21; text ^fcdfr1%
+end loop
+color blue
+.

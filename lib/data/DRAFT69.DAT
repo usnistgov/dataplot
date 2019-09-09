@@ -1,14 +1,14 @@
-This is Dataplot data file     DRAFT69.DAT
-1969 Draft Lottery Rankings
+This is Dataplot data file     draft69.dat     3/28/19
+December 1, 1969 Draft Lottery Rankings
 Number of observations             = 365
 Number of variables per line image =   3
 Order of variables on a line image--
-   1. Response variable = draft rank (1 to 365)
+   1. Response variable = draft rank  (1 to 365)
    2. Factor 1          = day of year (1 to 365)
-   3. Factor 2          = month (1 to 12)
+   3. Factor 2          = month       (1 to  12)
 To read this file into Dataplot--
-   SKIP 25
-   READ DRAFT69.DAT Y DAY MONTH
+   skip 25
+   read   draf69.dat   y doy month
 
 
 
@@ -19,9 +19,9 @@ To read this file into Dataplot--
 
 
 
-
- Rank    Day of   Month
-          Year
+   Y         X1     X2
+ Rank      Day of Month
+            Year
 ------------------------
   258        1      1
   115        2      1

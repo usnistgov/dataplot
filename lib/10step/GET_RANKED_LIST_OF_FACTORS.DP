@@ -30,7 +30,7 @@ if bugswrlf = 1; if pausesw = 1; pause; end if; end if
 .
 delete indexzz; let indexzz = 0 1 k
 delete coefzz
-skip 0; read dpst1f.dat coefzz
+skip 1; read dpst1f.dat coefzz
 if bugswwlf = 1; print "At mid1 of (get-ranked_list_of_factors.dp,step 2)"
    print indexzz coefzz
    if pausesw = 1; pause; end if
@@ -62,5 +62,3 @@ if bugswrlf = 1; print " "; print "--At end of    get_ranked_list_of_factors.dp"
    if pausesw = 1; pause; end if
 end if
 delete indexzz coefzz
-
-

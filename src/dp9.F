@@ -7636,13 +7636,19 @@ C     UPDATED         --OCTOBER  2013. SUPPORT FOR HTML, LATEX,
 C                                      RTF OUTPUT
 C     UPDATED         --OCTOBER  2013. ADD "CONSTANT" MODEL
 C     UPDATED         --OCTOBER  2013. ADD BIC/AIC TERMS
+C     UPDATED         --JULY     2019. TWEAK SCRATCH SPACE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
 CCCCC SUPPORT MAXIMUM OF 38 INDPENDENT VARIABLES, CORRELATION
 CCCCC MATRIX ALSO NEEDS TO INCLUDE CONSTANT TERM AND DEPENDENT
 CCCCC VARIABLE.
-      PARAMETER (MAXV=38)
+C
+C     2019/07: INCREASE MAXIMUM NUMBER OF COLUMNS, BUT BASE LIMITS
+C              ON ROWS*COLUMNS RATHER THAN MAXROW*COLUMNS.  RESTRICT
+C              TOTAL NUMBER OF POINTS TO 34*MAXROW.
+C
+      PARAMETER (MAXV=98)
       PARAMETER (MAXC=MAXV+2)
 C
       CHARACTER*4 ICAPSW
@@ -7676,11 +7682,13 @@ C
 C---------------------------------------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOZZ.INC'
+      INCLUDE 'DPCOZD.INC'
       INCLUDE 'DPCOHO.INC'
 C
       DOUBLE PRECISION SQRTCT(MAXOBV)
       REAL RXY(MAXC,MAXC)
-      REAL XYMAT(MAXOBV*MAXC)
+      REAL XYMAT(34*MAXOBV)
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -7696,11 +7704,8 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      INCLUDE 'DPCOZZ.INC'
-      INCLUDE 'DPCOZ2.INC'
-      INCLUDE 'DPCOZD.INC'
       EQUIVALENCE (GARBAG(IGARB1),RXY(1,1))
-      EQUIVALENCE (G2RBAG(IGAR11),XYMAT(1))
+      EQUIVALENCE (GARBAG(IGARB2),XYMAT(1))
       EQUIVALENCE (DGARBG(IDGAR1),SQRTCT(1))
 C
 C---------------------------------------------------------------------
@@ -7717,7 +7722,6 @@ C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPBE'
       ISUBN2='CP  '
-C
       IERROR='NO'
 C
       MAXCP1=MAXCOL+1
@@ -7745,7 +7749,7 @@ C
           WRITE(ICOUT,58)I,IHNAME(I),IHNAM2(I),IUSE(I),IN(I),IVALUE(I),
      1                   VALUE(I)
    58     FORMAT('I,IHNAME(I),IHNAM2(I),IUSE(I),IN(I),IVALUE(I)',
-     1           'VALUE(I) = ',I8,2X,A4,A4,2X,A4,2I8,G15.7)
+     1           'VALUE(I) = ',I8,2X,2A4,2X,A4,2I8,G15.7)
           CALL DPWRST('XXX','BUG ')
    57   CONTINUE
       ENDIF
@@ -7902,7 +7906,7 @@ C
       INTCPT=IFACT
       MBEST=INUMCP
       IF(NUMVAR-1.LE.3 .AND. MBEST.GT.7)MBEST=7
-      CALL DPBEC2(XYMAT,N,NUMVAR,SQRTCT,RXY,
+      CALL DPBEC2(XYMAT,NS,NUMVAR,SQRTCT,RXY,
      1            MAXC,MAXV,MAXOBV,
      1            MBEST,INTCPT,
      1            ICAPSW,ICAPTY,IFORSW,
@@ -7982,7 +7986,7 @@ C
       REAL RXY(MAXC,MAXC)
       REAL XYMAT(*)
 C
-      PARAMETER (MAXV2=38)
+      PARAMETER (MAXV2=98)
       CHARACTER*8 IVLIST
       COMMON/BESTC1/IOUNI1,IOUNI2
       COMMON/BESTC2/IVLIST(MAXV2)
@@ -8001,7 +8005,6 @@ C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPBE'
       ISUBN2='C2  '
-C
       IERROR='NO'
 C
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'BEC2')THEN
@@ -8059,7 +8062,8 @@ C
       NPARAM=NVARS-1
       ITYPE=3
 CCCCC NSPAC=MAXC*20000
-      NSPAC=MAXC*MAXOBV
+CCCCC NSPAC=MAXC*MAXOBV
+      NSPAC=34*MAXOBV
 C
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'BEC2')THEN
          WRITE(ICOUT,7112)N,NVARS
@@ -8161,6 +8165,8 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--2011/3
 C     ORIGINAL VERSION--MARCH     2011.
 C     UPDATED         --AUGUST    2014. MODIFICATIONS TO CALL LIST
+C     UPDATED         --JULY      2019. TWEAK SCRATCH STORAGE,
+C                                       REMOVE ZTMP15, ZTMP16, ZTMP17
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -8226,6 +8232,10 @@ C
 C---------------------------------------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOZZ.INC'
+      INCLUDE 'DPCOZD.INC'
+      INCLUDE 'DPCOZI.INC'
+      INCLUDE 'DPCODA.INC'
 C
       DIMENSION Y1(MAXOBV)
       DIMENSION X1(MAXOBV)
@@ -8270,20 +8280,12 @@ C
       DIMENSION ZTMP12(MAXOBV)
       DIMENSION ZTMP13(MAXOBV)
       DIMENSION ZTMP14(MAXOBV)
-      DIMENSION ZTMP15(MAXOBV)
-      DIMENSION ZTMP16(MAXOBV)
-      DIMENSION ZTMP17(MAXOBV)
 C
       DIMENSION STATVA(100)
       CHARACTER*60 INLON2(100)
 C
       DIMENSION ITEMP1(MAXOBV)
       DIMENSION ITEMP2(MAXOBV)
-C
-      INCLUDE 'DPCOZZ.INC'
-      INCLUDE 'DPCOZ2.INC'
-      INCLUDE 'DPCOZD.INC'
-      INCLUDE 'DPCOZI.INC'
 C
       EQUIVALENCE (GARBAG(IGARB1),Y1(1))
       EQUIVALENCE (GARBAG(IGARB2),X1(1))
@@ -8304,25 +8306,23 @@ C
       EQUIVALENCE (GARBAG(JGAR17),XIDTE5(1))
       EQUIVALENCE (GARBAG(JGAR18),XIDTE6(1))
       EQUIVALENCE (GARBAG(JGAR19),ZY(1))
-      EQUIVALENCE (G2RBAG(IGAR11),ZTEMP1(1))
-      EQUIVALENCE (G2RBAG(IGAR12),ZTEMP2(1))
-      EQUIVALENCE (G2RBAG(IGAR13),ZTEMP3(1))
-      EQUIVALENCE (G2RBAG(IGAR14),ZTEMP4(1))
-      EQUIVALENCE (G2RBAG(IGAR15),ZTEMP5(1))
-      EQUIVALENCE (G2RBAG(IGAR16),ZTEMP6(1))
-      EQUIVALENCE (G2RBAG(IGAR17),ZTEMP7(1))
-      EQUIVALENCE (G2RBAG(IGAR18),ZTEMP8(1))
-      EQUIVALENCE (G2RBAG(IGAR19),ZTEMP9(1))
-      EQUIVALENCE (G2RBAG(IGAR20),ZTMP10(1))
-      EQUIVALENCE (G2RBAG(IGAR21),ZTMP11(1))
-      EQUIVALENCE (G2RBAG(IGAR22),ZTMP12(1))
-      EQUIVALENCE (G2RBAG(IGAR23),ZTMP13(1))
-      EQUIVALENCE (G2RBAG(IGAR24),ZTMP14(1))
-      EQUIVALENCE (G2RBAG(IGAR25),ZTMP15(1))
-      EQUIVALENCE (G2RBAG(IGAR26),ZTMP16(1))
-      EQUIVALENCE (G2RBAG(IGAR27),ZTMP17(1))
-      EQUIVALENCE (G2RBAG(IGAR28),XLEVEL(1))
-      EQUIVALENCE (G2RBAG(IGAR29),XDESGN(1,1))
+      EQUIVALENCE (GARBAG(JGAR20),ZTEMP1(1))
+      EQUIVALENCE (GARBAG(IGAR11),ZTEMP2(1))
+      EQUIVALENCE (GARBAG(IGAR12),ZTEMP3(1))
+      EQUIVALENCE (GARBAG(IGAR13),ZTEMP4(1))
+      EQUIVALENCE (GARBAG(IGAR14),ZTEMP5(1))
+      EQUIVALENCE (GARBAG(IGAR15),ZTEMP6(1))
+      EQUIVALENCE (GARBAG(IGAR16),ZTEMP7(1))
+      EQUIVALENCE (GARBAG(IGAR17),ZTEMP8(1))
+      EQUIVALENCE (GARBAG(IGAR18),ZTEMP9(1))
+      EQUIVALENCE (GARBAG(IGAR19),ZTMP10(1))
+      EQUIVALENCE (GARBAG(IGAR20),ZTMP11(1))
+      EQUIVALENCE (GARBAG(IGAR21),ZTMP12(1))
+      EQUIVALENCE (GARBAG(IGAR22),ZTMP13(1))
+      EQUIVALENCE (GARBAG(IGAR23),ZTMP14(1))
+      EQUIVALENCE (GARBAG(IGAR24),XLEVEL(1))
+      EQUIVALENCE (DSYMB(1),XDESGN(1,1))
+C
       EQUIVALENCE (DGARBG(IDGAR1),DTEMP(1))
       EQUIVALENCE (DGARBG(IDGAR2),DTEMP2(1))
       EQUIVALENCE (DGARBG(IDGAR3),DTEMP3(1))
@@ -8332,7 +8332,6 @@ C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOHK.INC'
-      INCLUDE 'DPCODA.INC'
       INCLUDE 'DPCOSU.INC'
       INCLUDE 'DPCOS2.INC'
       INCLUDE 'DPCOHO.INC'
@@ -8732,7 +8731,7 @@ C
      1                ITEMP1,ITEMP2,
      1                ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,ZTEMP5,
      1                ZTEMP6,ZTEMP7,ZTEMP8,ZTEMP9,ZTMP10,
-     1                ZTMP11,ZTMP12,ZTMP13,ZTMP14,ZTMP15,ZTMP16,ZTMP17,
+     1                ZTMP11,ZTMP12,ZTMP13,ZTMP14,
      1                YLOWLM,YUPPLM,A,B,MINMAX,
      1                IADEDF,IGEPDF,IMAKDF,IBEIDF,
      1                ILGADF,ISKNDF,IGLDDF,IBGEDF,IGETDF,ICONDF,
@@ -8881,8 +8880,7 @@ C
      1                    ITEMP1,ITEMP2,
      1                    ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,ZTEMP5,
      1                    ZTEMP6,ZTEMP7,ZTEMP8,ZTEMP9,ZTMP10,
-     1                    ZTMP11,ZTMP12,ZTMP13,ZTMP14,ZTMP15,
-     1                    ZTMP16,ZTMP17,
+     1                    ZTMP11,ZTMP12,ZTMP13,ZTMP14,
      1                    YLOWLM,YUPPLM,A,B,MINMAX,
      1                    IADEDF,IGEPDF,IMAKDF,IBEIDF,
      1                    ILGADF,ISKNDF,IGLDDF,IBGEDF,IGETDF,ICONDF,
@@ -8926,8 +8924,7 @@ C
      1                    ITEMP1,ITEMP2,
      1                    ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,ZTEMP5,
      1                    ZTEMP6,ZTEMP7,ZTEMP8,ZTEMP9,ZTMP10,
-     1                    ZTMP11,ZTMP12,ZTMP13,ZTMP14,ZTMP15,
-     1                    ZTMP16,ZTMP17,
+     1                    ZTMP11,ZTMP12,ZTMP13,ZTMP14,
      1                    YLOWLM,YUPPLM,A,B,MINMAX,
      1                    IADEDF,IGEPDF,IMAKDF,IBEIDF,
      1                    ILGADF,ISKNDF,IGLDDF,IBGEDF,IGETDF,ICONDF,
@@ -8975,8 +8972,7 @@ C
      1                    ITEMP1,ITEMP2,
      1                    ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,ZTEMP5,
      1                    ZTEMP6,ZTEMP7,ZTEMP8,ZTEMP9,ZTMP10,
-     1                    ZTMP11,ZTMP12,ZTMP13,ZTMP14,ZTMP15,
-     1                    ZTMP16,ZTMP17,
+     1                    ZTMP11,ZTMP12,ZTMP13,ZTMP14,
      1                    YLOWLM,YUPPLM,A,B,MINMAX,
      1                    IADEDF,IGEPDF,IMAKDF,IBEIDF,
      1                    ILGADF,ISKNDF,IGLDDF,IBGEDF,IGETDF,ICONDF,
@@ -9028,8 +9024,7 @@ C
      1                    ITEMP1,ITEMP2,
      1                    ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,ZTEMP5,
      1                    ZTEMP6,ZTEMP7,ZTEMP8,ZTEMP9,ZTMP10,
-     1                    ZTMP11,ZTMP12,ZTMP13,ZTMP14,ZTMP15,
-     1                    ZTMP16,ZTMP17,
+     1                    ZTMP11,ZTMP12,ZTMP13,ZTMP14,
      1                    YLOWLM,YUPPLM,A,B,MINMAX,
      1                    IADEDF,IGEPDF,IMAKDF,IBEIDF,
      1                    ILGADF,ISKNDF,IGLDDF,IBGEDF,IGETDF,ICONDF,
@@ -9085,8 +9080,7 @@ C
      1                    ITEMP1,ITEMP2,
      1                    ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,ZTEMP5,
      1                    ZTEMP6,ZTEMP7,ZTEMP8,ZTEMP9,ZTMP10,
-     1                    ZTMP11,ZTMP12,ZTMP13,ZTMP14,ZTMP15,
-     1                    ZTMP16,ZTMP17,
+     1                    ZTMP11,ZTMP12,ZTMP13,ZTMP14,
      1                    YLOWLM,YUPPLM,A,B,MINMAX,
      1                    IADEDF,IGEPDF,IMAKDF,IBEIDF,
      1                    ILGADF,ISKNDF,IGLDDF,IBGEDF,IGETDF,ICONDF,
@@ -9146,8 +9140,7 @@ C
      1                    ITEMP1,ITEMP2,
      1                    ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,ZTEMP5,
      1                    ZTEMP6,ZTEMP7,ZTEMP8,ZTEMP9,ZTMP10,
-     1                    ZTMP11,ZTMP12,ZTMP13,ZTMP14,ZTMP15,
-     1                    ZTMP16,ZTMP17,
+     1                    ZTMP11,ZTMP12,ZTMP13,ZTMP14,
      1                    YLOWLM,YUPPLM,A,B,MINMAX,
      1                    IADEDF,IGEPDF,IMAKDF,IBEIDF,
      1                    ILGADF,ISKNDF,IGLDDF,IBGEDF,IGETDF,ICONDF,
@@ -9208,7 +9201,7 @@ C
      1                  ITEMP1,ITEMP2,
      1                  ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,ZTEMP5,
      1                  ZTEMP6,ZTEMP7,ZTEMP8,ZTEMP9,ZTMP10,
-     1                  ZTMP11,ZTMP12,ZTMP13,ZTMP14,ZTMP15,XLOw,XHIGH,
+     1                  ZTMP11,ZTMP12,XLOW,XHIGH,
      1                  YLOWLM,YUPPLM,A,B,MINMAX,
      1                  IADEDF,IGEPDF,IMAKDF,IBEIDF,
      1                  ILGADF,ISKNDF,IGLDDF,IBGEDF,IGETDF,ICONDF,
@@ -9282,6 +9275,9 @@ C     UPDATED         --JULY      2014. SUPPORT G DISTRIBUTION
 C     UPDATED         --AUGUST    2014. NOW CALLED FROM DPDFP2 AS WELL,
 C                                       FOR THIS CASE DO NOT SORT AND
 C                                       DO NOT PRINT TABLE
+C     UPDATED         --JULY      2019. CALL LIST TO DPPP2
+C     UPDATED         --JULY      2019. TWEAK SCRATCH SPACE USE,
+C                                       REMOVE ZTMP13, ZTMP14, ZTMP15
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -9383,9 +9379,6 @@ C
       DIMENSION ZTMP10(*)
       DIMENSION ZTMP11(*)
       DIMENSION ZTMP12(*)
-      DIMENSION ZTMP13(*)
-      DIMENSION ZTMP14(*)
-      DIMENSION ZTMP15(*)
       DIMENSION XLOW(*)
       DIMENSION XHIGH(*)
 C
@@ -9870,7 +9863,7 @@ C
 C
       CALL SORT(Y,N,Y)
       DO195I=1,N
-        ZTMP15(I)=Y(I)
+        ZTMP12(I)=Y(I)
   195 CONTINUE
 C
       YLOWLS=YLOWLM
@@ -10051,7 +10044,7 @@ C
         ENDIF
 C
         DO206I=1,N
-          Y(I)=ZTMP15(I)
+          Y(I)=ZTMP12(I)
   206   CONTINUE
 C
 C       CASE 1: FIT VIA PPCC.
@@ -10111,16 +10104,15 @@ C
             ICASP3=IBFIME
             IF(IBFIME.EQ.'CHSQ')THEN
               IDIST2=INLON2(KDIST)
-              CALL DPPPC3(Y,CENSOR,XLOW,XHIGH,N,
+              CALL DPPPC3(Y,CENSOR,XLOW,XHIGH,N,MAXOBV,
      1                    ICASP3,ICASP2,IDATSW,IDIST2,
      1                    SHAP11,SHAP12,SHAP21,SHAP22,
      1                    SHAPE1,SHAPE2,SHAPE3,SHAPE4,SHAPE5,
      1                    YLOWLM,YUPPLM,A,B,MINMAX,
-     1                    TEMP1(1),TEMP1(10001),TEMP1(20001),
-     1                    TEMP1(30001),NUMSHA,
-     1                    ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,ZTEMP5,
-     1                    ZTEMP6,ZTEMP7,ZTEMP8,
-     1                    ZTEMP9,ZTMP10,ZTMP11,ZTMP12,IPPCBW,
+     1                    TEMP1(1),TEMP1(20001),TEMP1(40001),
+     1                    TEMP1(60001),NUMSHA,
+     1                    ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,TEMP1(80001),
+     1                    ZTEMP5,ZTEMP6,ZTEMP7,ZTEMP8,ZTEMP9,IPPCBW,
      1                    IADEDF,IGEPDF,IMAKDF,IBEIDF,
      1                    ILGADF,ISKNDF,IGLDDF,IBGEDF,
      1                    IGETDF,ICONDF,IGOMDF,IKATDF,
@@ -10129,20 +10121,19 @@ C
      1                    IPPCDP,IPPCAP,IPPCAO,IMETHD,ICENSO,
      1                    IFLAGF,NCURVE,
      1                    PCHSLM,MINSIZ,IHSTCW,CLWIDT,CLLIMI,
-     1                    ZTMP13,ZTMP14,TEMP2,TEMP3,NJUNK1,NJUNK2,
+     1                    ZTMP10,ZTMP11,TEMP2,TEMP3,NJUNK1,NJUNK2,
      1                    PPCC,SHA1MX,SHA2MX,PPA0,PPA1,
      1                    IBUGA3,ISUBRO,IERROR)
             ELSE
-              CALL DPPPC2(Y,CENSOR,XLEVEL,N,
+              CALL DPPPC2(Y,CENSOR,XLEVEL,N,MAXOBV,
      1                    ICASP3,ICASP2,
      1                    SHAP11,SHAP12,SHAP21,SHAP22,
      1                    SHAPE1,SHAPE2,SHAPE3,SHAPE4,SHAPE5,
      1                    YLOWLM,YUPPLM,A,B,MINMAX,
-     1                    TEMP1(1),TEMP1(10001),TEMP1(20001),
-     1                    TEMP1(30001),NUMSHA,
-     1                    ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,ZTEMP5,
-     1                    ZTEMP6,ZTEMP7,ZTEMP8,
-     1                    ZTEMP9,ZTMP10,ZTMP11,ZTMP12,IPPCBW,
+     1                    TEMP1(1),TEMP1(20001),TEMP1(40001),
+     1                    TEMP1(60001),NUMSHA,
+     1                    ZTEMP1,ZTEMP2,ZTEMP3,ZTEMP4,TEMP1(80001),
+     1                    ZTEMP5,ZTEMP6,ZTEMP7,ZTEMP8,ZTEMP9,IPPCBW,
      1                    IADEDF,IGEPDF,IMAKDF,IBEIDF,
      1                    ILGADF,ISKNDF,IGLDDF,IBGEDF,
      1                    IGETDF,ICONDF,IGOMDF,IKATDF,
@@ -10151,7 +10142,7 @@ C
      1                    IPPCDP,IPPCAP,IPPCAO,IMETHD,ICENSO,
      1                    IFLAGF,NCURVE,
      1                    PCHSLM,ILEVEL,
-     1                    ZTMP13,ZTMP14,TEMP2,TEMP3,NJUNK1,NJUNK2,
+     1                    ZTMP10,ZTMP11,TEMP2,TEMP3,NJUNK1,NJUNK2,
      1                    PPCC,SHA1MX,SHA2MX,PPA0,PPA1,
      1                    PPA0BW,PPA1BW,
      1                    IBUGA3,ISUBRO,IERROR)
@@ -10217,7 +10208,7 @@ C
      1                 PPLOC,PPSCAL,
      1                 PPA0,PPA1,PPCC,SDPPA0,SDPPA1,XRESSD,XRESDF,
      1                 CCALBE,PPA0BW,PPA1BW,
-     1                 ZTEMP4,ZTEMP5,ZTEMP6,ZTEMP7,
+     1                 ZTEMP4,ZTEMP5,
      1                 TEMP1,TEMP2,TEMP3,NJUNK1,NJUNK2,NCURVE,
      1                 IBUGA3,ISUBRO,IERROR)
             IF(IERROR.EQ.'YES')GOTO9000
@@ -10311,14 +10302,14 @@ C               TO SAVE A COPY OF Y THAT IS USED FOR DPML1 SO THAT
 C               WE CAN RESTORE IT FOR THE GOODNESS OF FIT TEST.
 C
           CALL DPBEF4(ICASP2,IDFTTY,MINMAX,XMIN,XMAX,XSKEW,IBFICR,
-     1                Y,ZTMP14,N,
+     1                Y,ZTMP11,N,
      1                ISKIP,YLOWLM,YUPPLM,
      1                IBUGA3,ISUBRO,IERROR)
           DO240II=1,N
             AHOLD=Y(II)
-            Y(II)=ZTMP14(II)
-            ZTMP14(II)=AHOLD
-            ZTMP13(II)=Y(II)
+            Y(II)=ZTMP11(II)
+            ZTMP11(II)=AHOLD
+            ZTMP10(II)=Y(II)
   240     CONTINUE
           IF(ISKIP.EQ.1)GOTO200
 C
@@ -10442,7 +10433,7 @@ C
           ENDIF
 C
           DO245II=1,N
-            Y(II)=ZTMP13(II)
+            Y(II)=ZTMP10(II)
   245     CONTINUE
 C
           IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'BEF2')THEN
@@ -10647,7 +10638,7 @@ C
      1                 PPLOC,PPSCAL,
      1                 PPA0,PPA1,PPCC,SDPPA0,SDPPA1,XRESSD,XRESDF,
      1                 CCALBE,PPA0BW,PPA1BW,
-     1                 ZTEMP4,ZTEMP5,ZTEMP6,ZTEMP7,
+     1                 ZTEMP4,ZTEMP5,
      1                 TEMP1,TEMP2,TEMP3,NJUNK1,NJUNK2,NCURVE,
      1                 IBUGA3,ISUBRO,IERROR)
             STATVA(KDIST)=PPCC
@@ -10745,7 +10736,7 @@ C
 C
         IF(IBFIME.EQ.'ML')THEN
           DO280II=1,N
-            Y(II)=ZTMP14(II)
+            Y(II)=ZTMP11(II)
   280     CONTINUE
         ENDIF
 C
@@ -18388,6 +18379,7 @@ C     UPDATED         --DECEMBER  2012. SUPPORT FOR "BACKGROUND" FOR
 C                                       BLOCKS
 C     UPDATED         --NOVEMBER  2016. SUPPORT FOR "JITTER"
 C     UPDATED         --MARCH     2019. ADD ICHMAP TO CALL LIST
+C     UPDATED         --JULY      2019. TWEAK SCRATCH SPACE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -18460,7 +18452,6 @@ C
       DOUBLE PRECISION DTEMP3(MAXOBV)
 C
       INCLUDE 'DPCOZZ.INC'
-      INCLUDE 'DPCOZ2.INC'
       INCLUDE 'DPCOZI.INC'
       INCLUDE 'DPCOZD.INC'
       EQUIVALENCE (GARBAG(IGARB1),Y1(1))
@@ -18483,7 +18474,7 @@ C
       EQUIVALENCE (GARBAG(JGAR18),TAG9(1))
       EQUIVALENCE (GARBAG(JGAR19),DISTLA(1))
       EQUIVALENCE (GARBAG(JGAR20),DISTL2(1))
-      EQUIVALENCE (G2RBAG(IGAR11),X2JITT(1))
+      EQUIVALENCE (GARBAG(IGAR11),X2JITT(1))
 C
       EQUIVALENCE (IGARBG(IIGAR1),ITEMP1(1))
       EQUIVALENCE (IGARBG(IIGAR2),ITEMP2(1))
@@ -23903,6 +23894,7 @@ C     UPDATED         --AUGUST   2011. SUPPORT FOR "REPLICATED" FIT
 C                                      (WHEN SINGLE X VARIABLE, ALLOW
 C                                      BOOTSTRAP SAMPLES FROM WITHIN EACH
 C                                      DISTINCT X VARIABLE)
+C     UPDATED         --JULY     2019. TWEAK SCRATCH STORAGE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -23950,7 +23942,6 @@ C
       DIMENSION T2(101)
 C
       INCLUDE 'DPCOZZ.INC'
-      INCLUDE 'DPCOZ2.INC'
       INCLUDE 'DPCOZD.INC'
       INCLUDE 'DPCOZI.INC'
 C
@@ -23958,13 +23949,13 @@ C
       DIMENSION VSDPRD(MAXOBV)
       DIMENSION PRED2(MAXOBV)
       DIMENSION RES2(MAXOBV)
-C
+      DIMENSION RES3(MAXOBV)
+      DIMENSION RES4(MAXOBV)
       DIMENSION TEMP1(MAXOBV)
       DIMENSION TEMP2(MAXOBV)
       DIMENSION TEMP3(MAXOBV)
       DIMENSION TEMP4(MAXOBV)
-      DIMENSION RES3(MAXOBV)
-      DIMENSION RES4(MAXOBV)
+C
       DIMENSION ITEMP1(MAXOBV)
       DIMENSION ITEMP2(MAXOBV)
       DIMENSION ITEMP3(MAXOBV)
@@ -23983,21 +23974,23 @@ C
       INCLUDE 'DPCOHO.INC'
 C
       EQUIVALENCE (W(1),X3D(1))
-      EQUIVALENCE (PRED2(1),X(1))
-      EQUIVALENCE (RES2(1),D(1))
-      EQUIVALENCE (DFILL(1),VSDPRD(1))
-      EQUIVALENCE (G2RBAG(IGAR11),XMAT(1,1))
-      EQUIVALENCE (GARBAG(IGARB1),PARAM(1))
-      EQUIVALENCE (GARBAG(IGARB1+200),T(1))
-      EQUIVALENCE (GARBAG(IGARB1+400),S(1))
-      EQUIVALENCE (GARBAG(IGARB1+600),PARAM2(1))
-      EQUIVALENCE (GARBAG(IGARB1+800),T2(1))
-      EQUIVALENCE (GARBAG(IGARB2),TEMP1(1))
-      EQUIVALENCE (GARBAG(IGARB3),TEMP2(1))
-      EQUIVALENCE (GARBAG(IGARB4),TEMP3(1))
-      EQUIVALENCE (GARBAG(IGARB5),RES3(1))
-      EQUIVALENCE (GARBAG(IGARB6),RES4(1))
-      EQUIVALENCE (GARBAG(IGARB7),TEMP4(1))
+      EQUIVALENCE (TEMP4(1),X3D(MAXOBV+1))
+      EQUIVALENCE (PRED2(1),D(1))
+      EQUIVALENCE (RES4(1),D(MAXOBV+1))
+      EQUIVALENCE (RES2(1),DSIZE(1))
+      EQUIVALENCE (RES3(1),DSIZE(MAXOBV+1))
+      EQUIVALENCE (VSDPRD(1),DSYMB(1))
+      EQUIVALENCE (TEMP3(1),DSYMB(MAXOBV+1))
+      EQUIVALENCE (TEMP1(1),DCOLOR(1))
+      EQUIVALENCE (TEMP2(1),DFILL(1))
+      EQUIVALENCE (PARAM(1),DFILL(MAXOBV+1))
+      EQUIVALENCE (T(1),DFILL(MAXOBV+201))
+      EQUIVALENCE (S(1),DFILL(MAXOBV+401))
+      EQUIVALENCE (PARAM2(1),DFILL(MAXOBV+601))
+      EQUIVALENCE (T2(1),DFILL(MAXOBV+801))
+C
+      EQUIVALENCE (GARBAG(IGARB1),XMAT(1,1))
+C
       EQUIVALENCE (DGARBG(IDGAR1),VSCRT(1))
       EQUIVALENCE (IGARBG(IIGAR1),ITEMP1(1))
       EQUIVALENCE (IGARBG(IIGAR2),ITEMP2(1))
@@ -24050,7 +24043,7 @@ C
           WRITE(ICOUT,58)I,IHNAME(I),IHNAM2(I),IUSE(I),IN(I),IVALUE(I),
      1                   VALUE(I)
    58     FORMAT('I,IHNAME(I),IHNAM2(I),IUSE(I),IN(I),IVALUE(I)',
-     1           'VALUE(I) = ',I8,2X,A4,A4,2X,A4,2I8,G15.7)
+     1           'VALUE(I) = ',I8,2X,2A4,2X,A4,2I8,G15.7)
           CALL DPWRST('XXX','BUG ')
    57   CONTINUE
       ENDIF
@@ -26521,6 +26514,9 @@ C                 INFORMATION TECHNOLOGY LABORATORY
 C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
 C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
+C     REFERENCE--WALKER, DOVOEDO, CHAKRABORTI, AND HILTON (2019),
+C                "AN IMPROVED BOXPLOT FOR UNIVARIATE DATA",
+C                AMERICAN STATISTICIAN, VOL. 72, NO. 4, PP. 348-353.
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
@@ -26967,8 +26963,8 @@ C               **  DEFINE THE NUMBER OF PLOT VARIABLES (NPLOTV).     **
 C               *********************************************************
 C
         CALL DPBOX2(Y1,X1,X2,X3,NLOCAL,NLOCAL,NLOCAL,NLOCAL,NUMVAR,
-     1              ICASPL,ISIZE,ICONT,
-     1              IFENCE,IBXPWI,IBXPDI,IMULT,
+     1              ICASPL,ISIZE,ICONT,MAXOBV,
+     1              IFENCE,IBXPWI,IBXPDI,IMULT,IBXPSK,
      1              XIDTEM,XTEMP1,XTEMP2,
      1              Y,X,D,NPLOTP,NPLOTV,
      1              IBUGG3,ISUBRO,IERROR)
@@ -27020,8 +27016,8 @@ C               **  VALUES Y(.) AND X(.) FOR THE PLOT.             **
 C               *****************************************************
 C
         CALL DPBOX2(Y1,X1,X2,X3,NLOCAL,NLOCA2,NLOCA3,NLOCA4,NUMVAR,
-     1              ICASPL,ISIZE,ICONT,
-     1              IFENCE,IBXPWI,IBXPDI,IMULT,
+     1              ICASPL,ISIZE,ICONT,MAXOBV,
+     1              IFENCE,IBXPWI,IBXPDI,IMULT,IBXPSK,
      1              XIDTEM,XTEMP1,XTEMP2,
      1              Y,X,D,NPLOTP,NPLOTV,
      1              IBUGG3,ISUBRO,IERROR)
@@ -27061,8 +27057,8 @@ C
       RETURN
       END
       SUBROUTINE DPBOX2(Y,X,TEMP2,TEMP3,N,N2Z,N3,N4,NUMV2,
-     1                  ICASPL,ISIZE,ICONT,
-     1                  IFENCE,IBXPWI,IBXPDI,IMULT,
+     1                  ICASPL,ISIZE,ICONT,MAXNXT,
+     1                  IFENCE,IBXPWI,IBXPDI,IMULT,IBXPSK,
      1                  XIDTEM,TEMP,TEMP4,
      1                  Y2,X2,D2,N2,NPLOTV,
      1                  IBUGG3,ISUBRO,IERROR)
@@ -27098,6 +27094,8 @@ C                                       WHERE SD IS 0 (N = 1 OR WHEN
 C                                       ALL VALUES ARE EQUAL))
 C     UPDATED         --JUNE      2016. OPTION TO DRAW LINE AT 1, 5, 10,
 C                                       90, 95, 99 PERCENTILE VALUES
+C     UPDATED         --AUGUST    2019. OPTION FOR FENCES FOR SKEWED
+C                                       BOX PLOT
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -27107,6 +27105,7 @@ C
       CHARACTER*4 IBXPWI
       CHARACTER*4 IBXPDI
       CHARACTER*4 IMULT
+      CHARACTER*4 IBXPSK
       CHARACTER*4 IBUGG3
       CHARACTER*4 ISUBRO
       CHARACTER*4 IERROR
@@ -27151,8 +27150,8 @@ C
         WRITE(ICOUT,71)N,N2Z,N3,N4,NUMV2,ISIZE
    71   FORMAT('N,N2Z,N3,N4,NUMV2,ISIZE, = ',6I8)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,72)ICASPL,IFENCE,IBXPWI,IBXPDI,ICONT
-   72   FORMAT('ICASPL,IFENCE,IBXPWI,IBXPDI,ICONT = ',4(A4,2X),A4)
+        WRITE(ICOUT,72)ICASPL,IFENCE,IBXPWI,IBXPDI,IBXPSKI,ICONT
+   72   FORMAT('ICASPL,IFENCE,IBXPWI,IBXPDI,IBXPSK,ICONT=',4(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         DO75I=1,N
           WRITE(ICOUT,76)I,Y(I),X(I),TEMP2(I),TEMP3(I)
@@ -27676,8 +27675,36 @@ C
           H=Y75-Y25
           STEP=1.5*H
 C
+C         2019/08: SKEWED OPTION FOR FENCES
+C
           AINNFU=Y75+STEP
           AOUTFU=Y75+2.0*STEP
+          IF(IBXPSK.EQ.'GALT')THEN
+            CALL LOWQUA(TEMP,NI,IWRITE,TEMP4,MAXNXT,RIGH1,
+     1                  IBUGG3,IERROR)
+            CALL UPPQUA(TEMP,NI,IWRITE,TEMP4,MAXNXT,RIGH2,
+     1                  IBUGG3,IERROR)
+            CALL MEDIAN(TEMP,NI,IWRITE,TEMP4,MAXNXT,RIGH3,
+     1                  IBUGG3,IERROR)
+            SIQU=RIGH2-RIGH3
+            SIQL=RIGH3-RIGH1
+            STEPU=STEP*(SIQU/SIQL)
+            STEPL=STEP*(SIQL/SIQU)
+            AINNFU=Y75+STEPU
+            AOUTFU=Y75+2.0*STEPU
+          ELSEIF(IBXPSK.EQ.'KIMB')THEN
+            CALL LOWQUA(TEMP,NI,IWRITE,TEMP4,MAXNXT,RIGH1,
+     1                  IBUGG3,IERROR)
+            CALL UPPQUA(TEMP,NI,IWRITE,TEMP4,MAXNXT,RIGH2,
+     1                  IBUGG3,IERROR)
+            CALL MEDIAN(TEMP,NI,IWRITE,TEMP4,MAXNXT,RIGH3,
+     1                  IBUGG3,IERROR)
+            STEPL=2.0*(RIGH3-RIGH1)
+            STEPU=2.0*(RIGH2-RIGH3)
+            AINNFU=Y75+1.5*STEPU
+            AOUTFU=Y75+3.0*STEPU
+          ENDIF
+C
           YADJU=Y75
           DO1155I=1,NI
             IREV=NI-I+1
@@ -27709,6 +27736,13 @@ C
         ELSE
           AINNFL=Y25-STEP
           AOUTFL=Y25-2.0*STEP
+          IF(IBXPSK.EQ.'GALT')THEN
+            AINNFL=Y25-STEPL
+            AOUTFL=Y25-2.0*STEPL
+          ELSEIF(IBXPSK.EQ.'GALT' .OR. IBXPSK.EQ.'KIMB')THEN
+            AINNFL=Y25-1.5*STEPL
+            AOUTFL=Y25-3.0*STEPL
+          ENDIF
           YADJL=Y25
           DO1165I=1,NI
             I2=I
@@ -32419,6 +32453,7 @@ C                                       CASE)
 C     UPDATED         --MARCH     2010. USE DPPAR3 TO EXTRACT EITHER A
 C                                       RESPONSE VARIABLE OR A MATRIX
 C                                       NAME
+C     UPDATED         --AUGUST    2019. ADD CTL999, CTU999
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -32735,6 +32770,7 @@ C
      1              XTEMP1,XTEMP2,MAXNXT,
      1              PID,IVARID,IVARI2,NREPL,
      1              CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1              CTL999,CTU999,
      1              ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1              ICASAN,ISUBRO,IBUGA3,IERROR)
 C
@@ -32742,6 +32778,7 @@ C
         IFRST=.FALSE.
         ILAST=.FALSE.
         CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1              CTL999,CTU999,
      1              IFLAGU,IFRST,ILAST,ICASAN,
      1              IBUGA2,IBUGA3,ISUBRO,IERROR)
 C
@@ -32814,6 +32851,7 @@ C
      1                XTEMP1,XTEMP2,MAXNXT,
      1                PID,IVARID,IVARI2,NREPL,
      1                CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                CTL999,CTU999,
      1                ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                ICASAN,ISUBRO,IBUGA3,IERROR)
 C
@@ -32823,6 +32861,7 @@ C
           IF(IRESP.EQ.1)IFRST=.TRUE.
           IF(IRESP.EQ.NRESP)ILAST=.TRUE.
           CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                CTL999,CTU999,
      1                IFLAGU,IFRST,ILAST,ICASAN,
      1                IBUGA2,IBUGA3,ISUBRO,IERROR)
 C
@@ -32982,6 +33021,7 @@ C
      1                    XTEMP1,XTEMP2,MAXNXT,
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                    CTL999,CTU999,
      1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
@@ -32992,6 +33032,7 @@ C
             IF(NCURVE.EQ.1)IFRST=.TRUE.
             IF(NCURVE.EQ.NUMSE1)ILAST=.TRUE.
             CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                  CTL999,CTU999,
      1                  IFLAGU,IFRST,ILAST,ICASAN,
      1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
  1110     CONTINUE
@@ -33021,6 +33062,7 @@ C
      1                    XTEMP1,XTEMP2,MAXNXT,
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                    CTL999,CTU999,
      1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
@@ -33031,6 +33073,7 @@ C
             IF(NCURVE.EQ.1)IFRST=.TRUE.
             IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
             CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                  CTL999,CTU999,
      1                  IFLAGU,IFRST,ILAST,ICASAN,
      1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
  1220     CONTINUE
@@ -33063,6 +33106,7 @@ C
      1                    XTEMP1,XTEMP2,MAXNXT,
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                    CTL999,CTU999,
      1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
@@ -33072,6 +33116,7 @@ C
             IF(NCURVE.EQ.1)IFRST=.TRUE.
             IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
             CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                  CTL999,CTU999,
      1                  IFLAGU,IFRST,ILAST,ICASAN,
      1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
  1330     CONTINUE
@@ -33108,6 +33153,7 @@ C
      1                    XTEMP1,XTEMP2,MAXNXT,
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                    CTL999,CTU999,
      1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
@@ -33117,6 +33163,7 @@ C
             IF(NCURVE.EQ.1)IFRST=.TRUE.
             IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
             CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                  CTL999,CTU999,
      1                  IFLAGU,IFRST,ILAST,ICASAN,
      1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
  1440     CONTINUE
@@ -33157,6 +33204,7 @@ C
      1                    XTEMP1,XTEMP2,MAXNXT,
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                    CTL999,CTU999,
      1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
@@ -33166,6 +33214,7 @@ C
             IF(NCURVE.EQ.1)IFRST=.TRUE.
             IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
             CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                  CTL999,CTU999,
      1                  IFLAGU,IFRST,ILAST,ICASAN,
      1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
  1550     CONTINUE
@@ -33210,6 +33259,7 @@ C
      1                    XTEMP1,XTEMP2,MAXNXT,
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                    CTL999,CTU999,
      1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
@@ -33219,6 +33269,7 @@ C
             IF(NCURVE.EQ.1)IFRST=.TRUE.
             IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
             CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                  CTL999,CTU999,
      1                  IFLAGU,IFRST,ILAST,ICASAN,
      1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
  1660     CONTINUE
@@ -33257,6 +33308,7 @@ C
      1                  XTEMP1,XTEMP2,MAXNXT,
      1                  PID,IVARID,IVARI2,NREPL,
      1                  CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                  CTL999,CTU999,
      1                  ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
      1                  ICASAN,ISUBRO,IBUGA3,IERROR)
 C
@@ -33270,12 +33322,12 @@ C     INPUT  ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
 C                                OF OBSERVATIONS
 C                       N      = THE INTEGER NUMBER OF
 C                                OBSERVATIONS IN THE VECTOR Y.
-C     WRITTEN BY--JAMES J. FILLIBEN
+C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
 C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
 C                 GAITHERSBURG, MD 20899-8980
-C                 PHONE--301-975-2855
+C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
@@ -33290,6 +33342,7 @@ C                                       SUPPORT)
 C     UPDATED         --MARCH     2010. SOME MODIFICATIONS TO THE
 C                                       OUTPUT (AESTHETIC, NOT
 C                                       SUBSTANTIVE)
+C     UPDATED         --AUGUST    2019. ADD CTL999, CTU999
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -33500,6 +33553,8 @@ C
       CUTU95=AUPPER(4)
       CUTL99=ALOWER(5)
       CUTU99=AUPPER(5)
+      CTL999=ALOWER(6)
+      CTU999=AUPPER(6)
 C
 C     ADD A FUDGE FACTOR SO THAT CONFIDENCE LEVEL WILL
 C     BE PRINTED CORRECTLY TO 3 DECIMAL PLACES.
