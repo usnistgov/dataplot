@@ -1,0 +1,55 @@
+. This is dataplot program     rubinson23_sub.dp     2/15/19
+. Purpose: Do time series (including cross-correlation analysis) of ken rubinson spectro. . . data
+. Date: 2/15/19
+.
+. -----start point-----
+.
+. -----Step 1: Plot the data-----
+.
+multiplot 2 1
+multiplot scale factor 2
+   plot y1
+   plot y2
+multiplot off
+.
+let n = number y1
+let t = 1 1 n
+line color blue red
+plot y1 y2 vs t
+.
+let del = y1 - y2
+plot del t
+.
+char X; lines bl
+plot y1 y2
+.
+let y = y1
+call 4plot_noargs.dp
+let y = y2
+call 4plot_noargs.dp
+.
+. -----Step 2: Do time series analysis of the data-----
+.
+multiplot 2 1
+   autocorrelation plot y1
+   autocorrelation plot y2
+multiplot off
+.
+multiplot 2 1
+   spectrum y1
+   spectrum y2
+multiplot off
+.
+cross-correlation plot y1 y2
+cross-spectral plot y1 y2
+cospectral plot y1 y2
+amplitude spectral plot y1 y2
+yminimum; ytic offset 0 0
+quadrature spectral plot y1 y2
+coherency spectral plot y1 y2
+phase spectral plot y1 y2
+gain spectral plot y1 y2
+y1label co-spectrum/spectrum 1
+x1label quadrature spectrum/spectrum 2
+argand spectral plot y1 y2
+.

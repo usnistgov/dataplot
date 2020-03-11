@@ -380,25 +380,26 @@ C
 CCCCC APRIL 1996.  IN FOLLOWING BLOCK, USE IRD AS THE INPUT UNIT
          IF(NSER.GT.1)THEN
             DO100I=1,NSER
-                  IF(IFLAG.EQ.0)THEN
-                     DO80J=I+1,NSER
-80                      LAG(J,I)=0.0
-                   ELSE
-                      IF(I.EQ.1)THEN
-CCCCC                    READ(5,*) (LAG(J,I),J=2,NSER)
-                         READ(IRD,*) (LAG(J,I),J=2,NSER)
-                      ELSEIF(I.EQ.NSER)THEN
-CCCCC                    READ(5,*) (LAG(J,I),J=1,I-1)
-                         READ(IRD,*) (LAG(J,I),J=1,I-1)
-                      ELSE
-CCCCC                   READ(5,*) (LAG(J,I),J=1,I-1),(LAG(J,I),J=I+1,NSER)
-                        READ(IRD,*) (LAG(J,I),J=1,I-1),
-     >                              (LAG(J,I),J=I+1,NSER)
-                      ENDIF
+              IF(IFLAG.EQ.0)THEN
+                DO80J=I+1,NSER
+                  LAG(J,I)=0.0
+80              CONTINUE
+              ELSE
+                IF(I.EQ.1)THEN
+CCCCC             READ(5,*) (LAG(J,I),J=2,NSER)
+                  READ(IRD,*) (LAG(J,I),J=2,NSER)
+                ELSEIF(I.EQ.NSER)THEN
+CCCCC             READ(5,*) (LAG(J,I),J=1,I-1)
+                  READ(IRD,*) (LAG(J,I),J=1,I-1)
+                ELSE
+CCCCC             READ(5,*) (LAG(J,I),J=1,I-1),(LAG(J,I),J=I+1,NSER)
+                  READ(IRD,*) (LAG(J,I),J=1,I-1),
+     >                        (LAG(J,I),J=I+1,NSER)
                  ENDIF
-CCCCC            WRITE(ICOUT,90) I,(LAG(J,I),J=1,NSER)
-CCC90            FORMAT (5X,'SERIES',I4,':  LAGS=',10(I5,','),/)
-CCCCC            CALL DPWRST('XXX','WRIT')
+              ENDIF
+CCCCC         WRITE(ICOUT,90) I,(LAG(J,I),J=1,NSER)
+CCC90         FORMAT (5X,'SERIES',I4,':  LAGS=',10(I5,','),/)
+CCCCC         CALL DPWRST('XXX','WRIT')
 100         CONTINUE
          ENDIF
 C
@@ -655,16 +656,17 @@ C     SET INITIAL VALUES OF MEANS IF ESTIMATED
 C
             IF(IFMEAN.GT.0.AND.IFSEAS.EQ.0)THEN
                IPAR=NSEAS+1
-                  DO210I=1,NSER
-                     PAR(IPAR)=AVG(I)
-                     IF(IFMEAN.GT.1) PAR(IPAR)=YDDS(IFMEAN-1,I)
-                     IPAR=IPAR+1
+               DO210I=1,NSER
+                 PAR(IPAR)=AVG(I)
+                 IF(IFMEAN.GT.1) PAR(IPAR)=YDDS(IFMEAN-1,I)
+                 IPAR=IPAR+1
 C
 C     SUBTRACT AVERAGE TO RESET DATA FOR INITIAL VALUES OF NEW MODEL
 C
-                        DO210J=1,NOB
-                           XDDS(J,I)=YDDS(J,I)-AVG(I)
-  210                   CONTINUE
+                 DO215J=1,NOB
+                   XDDS(J,I)=YDDS(J,I)-AVG(I)
+  215            CONTINUE
+  210          CONTINUE
             ENDIF
 C
 C     SKIP STOCHASTIC ESTIMATION FOR DETERMINISTIC MODELS
@@ -699,15 +701,16 @@ C
 220            NPHI0=0
                NPHI=0
                MAXLAG=1
-                  DO230I=INDEX+1,NSER
-230                  IF(LAG(I,INDEX).EQ.0)NPHI0=NPHI0+1
-                     DO235I=1,NSER
-                       ML=LAG(I,INDEX)+NAR(I,INDEX)-1
-                       IF(ML.GT.MAXLAG) MAXLAG=ML
-                       NPHI=NPHI+NAR(I,INDEX)
-  235                CONTINUE
-                     MAXLAG=MAX(MAXLAG,NMA(INDEX))
-                     NPAR=NPHI0+NPHI+NMA(INDEX)+IPAR-1
+               DO230I=INDEX+1,NSER
+                  IF(LAG(I,INDEX).EQ.0)NPHI0=NPHI0+1
+230            CONTINUE
+               DO235I=1,NSER
+                 ML=LAG(I,INDEX)+NAR(I,INDEX)-1
+                 IF(ML.GT.MAXLAG) MAXLAG=ML
+                 NPHI=NPHI+NAR(I,INDEX)
+  235          CONTINUE
+               MAXLAG=MAX(MAXLAG,NMA(INDEX))
+               NPAR=NPHI0+NPHI+NMA(INDEX)+IPAR-1
 C
 C     SET INITIAL VALUES OF INITIAL AT'S IF ESTIMATED
 C
@@ -1193,16 +1196,17 @@ C     LOOP ACROSS THE BLOCKS
 C
           DO40J=1,NSER
 C
-C     LOOP ON ELEMENTS PER BLOCK
+C           LOOP ON ELEMENTS PER BLOCK
 C
-CCCCC     DO40K=1,NAR(J)
-          DO40K=1,NAR2(J)
-             SUM=0.0
-             DO35L=MAXLAG+1,NOB
-               SUM=SUM-XDDS(L-K-LAGT(J)+1,J)*XDDS(L,I)
-  35         CONTINUE
-             XTX(IROW,ICOL)=SUM
-             ICOL=ICOL+1
+CCCCC       DO40K=1,NAR(J)
+            DO45K=1,NAR2(J)
+              SUM=0.0
+              DO35L=MAXLAG+1,NOB
+                SUM=SUM-XDDS(L-K-LAGT(J)+1,J)*XDDS(L,I)
+  35          CONTINUE
+              XTX(IROW,ICOL)=SUM
+              ICOL=ICOL+1
+  45        CONTINUE
   40     CONTINUE
 C
 C     FORM IMMEDIATE DIAGONAL BLOCK
@@ -1226,14 +1230,15 @@ C     FORM XTY - SECTION CORRESPONDING TO INVARIANT PART
 C
       IROW=1
       DO90I=1,NSER
-CCCCC DO90J=1,NAR(I)
-      DO90J=1,NAR2(I)
-        SUM=0.0
-        DO80K=MAXLAG+1,NOB
-          SUM=SUM+XDDS(K-J-LAGT(I)+1,I)*XDDS(K,INDEX)
-  80    CONTINUE
-        XTX(IROW,ISIZ+1)=SUM
-        IROW=IROW+1
+CCCCC   DO90J=1,NAR(I)
+        DO95J=1,NAR2(I)
+          SUM=0.0
+          DO80K=MAXLAG+1,NOB
+            SUM=SUM+XDDS(K-J-LAGT(I)+1,I)*XDDS(K,INDEX)
+  80      CONTINUE
+          XTX(IROW,ISIZ+1)=SUM
+          IROW=IROW+1
+  95    CONTINUE
   90  CONTINUE
 C
 C     IMMEDIATE PART
@@ -1253,8 +1258,9 @@ C
 C    DEFINE UPPER TRIANGLE OF XTX
 C
       DO120I=1,ISIZ-1
-      DO120J=I+1,ISIZ
-        XTX(I,J)=XTX(J,I)
+        DO125J=I+1,ISIZ
+          XTX(I,J)=XTX(J,I)
+  125   CONTINUE
   120 CONTINUE
       RETURN
       END
@@ -1322,21 +1328,21 @@ CCCCC   GO TO (70,80), KI
             JC(I)=JC(K)
             JC(K)=MU
         ENDIF
-C     INTERCHANGE ROW I AND ROW K
+C       INTERCHANGE ROW I AND ROW K
         DO90J=M,L
           X=A(I,J)
           A(I,J)=A(K,J)
           A(K,J)=X
   90    CONTINUE
 C
-C     TEST FOR SINGULARITY
+C       TEST FOR SINGULARITY
 C
   95    CONTINUE
         IF(ABS(A(I,I)).EQ.0.)THEN
 C
-C     MATRIX IS SINGULAR
+C         MATRIX IS SINGULAR
 C
-CCCCC APRIL 1996.  USE IERROR FLAG RATHER THAN STOP
+CCCCC     APRIL 1996.  USE IERROR FLAG RATHER THAN STOP
 CCCCC     PRINT*,'***ERROR*** IN GJR. MATRIX IS SINGULAR'
 CCCCC     STOP'line 714'
           WRITE(ICOUT,9011)
@@ -1348,21 +1354,23 @@ CCCCC     STOP'line 714'
         X=A(I,I)
         A(I,I)=1.
 C
-C     REDUCTION OF THE I-TH ROW
+C       REDUCTION OF THE I-TH ROW
 C
         DO100J=M,L
-100       A(I,J)=A(I,J)/X
+          A(I,J)=A(I,J)/X
+100     CONTINUE
 C
-C     REDUCTION OF ALL REMAINING ROWS
+C       REDUCTION OF ALL REMAINING ROWS
 C
-        DO120K=1,N
+        DO125K=1,N
           IF(K.EQ.I) GO TO 120
           X=A(K,I)
           A(K,I)=0.
           DO110J=M,L
             A(K,J)=A(K,J)-X*A(I,J)
 110       CONTINUE
-120     CONTINUE
+125     CONTINUE
+120   CONTINUE
 C
 C     AX=B AND DET.(A) ARE NOW COMPUTED
 C
@@ -1502,12 +1510,13 @@ CCCCC MP1=M+1
       MP1Z=M+1
       DO40J=1,M
 CCCCC   DO40K=1,MP1
-        DO40K=1,MP1Z
+        DO45K=1,MP1Z
           SUM=0.0
           DO30I=0,(NSER-1)*NM,NM
             SUM=SUM+XTX(I+J+K,NXTY)
-  30    CONTINUE
-        XTX(J,K)=SUM
+  30      CONTINUE
+          XTX(J,K)=SUM
+  45    CONTINUE
   40  CONTINUE
 CCCCC APRIL 1996.  ADD IERROR TO ARGUMENT LIST
 CCCCC CALL GJR(XTX,M,4,MXINV,MXINV1)
@@ -1552,7 +1561,7 @@ C
 C
 C     FIND REST OF PHI'S FOR SERIES I
 C
-            DO80J=1,NAR(I,INDEX)
+            DO85J=1,NAR(I,INDEX)
                SUM=0.0
                IF(J.LE.M) SUM=THETA(J)*PHI0
                DO70K=1,MIN(J-1,M)
@@ -1561,6 +1570,7 @@ C
                PAR(JPAR)=XTX(IPAR,NXTY)+SUM
                JPAR=JPAR+1
                IPAR=IPAR+1
+  85        CONTINUE
   80     CONTINUE
 C
 C     PRINT INITIAL PARAMETER VALUES
@@ -1751,13 +1761,14 @@ C
 C     FORM XTX AND XTY MATRIX
 C
       DO150 IPAR=1,NPAR1
-         DO150 JPAR=1,IPAR
+         DO155 JPAR=1,IPAR
              XX=0.0
              DO140 IOB=IS,NOB
                  XX=XX+1.0D0*Z(IOB,IPAR)*Z(IOB,JPAR)
   140        CONTINUE
              A(IPAR,JPAR)=XX
              A(JPAR,IPAR)=XX
+  155    CONTINUE
   150 CONTINUE
 CCCCC IF(ITNO.EQ.2.AND.IFPRT.GT.0) WRITE(ICOUT,160) A(NPAR1,NPAR1)
 CCCCC IF(ITNO.EQ.2.AND.IFPRT.GT.0) WRITE(3,160) A(NPAR1,NPAR1)
@@ -2103,13 +2114,14 @@ C
 C     REFORM XTX MATRIX AND INVERT IT
 C
       DO460I=1,NPAR
-         DO460J=1,I
+         DO465J=1,I
             XX=0.0
             DO450K=IS,NOB
                XX=XX+Z(K,I)*Z(K,J)
   450       CONTINUE
             A(I,J)=XX
             A(J,I)=XX
+  465    CONTINUE
   460 CONTINUE
 CCCCC APRIL 1996.  ADD IERROR TO ARGUMENT LIST.  USE DATAPLOT I/O
 CCCCC CALL GJR (A,NPAR,1,MXPAR1,MXPAR1)
@@ -2349,8 +2361,9 @@ C
 C     FIND AND PRINT CORRELATION MATRIX
 C
       DO590I=1,NPAR
-         DO590J=1,I
+         DO595J=1,I
             A(I,J)=A(I,J)/A(I,NPAR1)/A(J,NPAR1)
+  595    CONTINUE
   590 CONTINUE
 C
 CCCCC IF(IFPRT.GT.0) WRITE(ICOUT,600)
@@ -2363,8 +2376,9 @@ C
       DO610 J2=1,J1
          I1=(J2-1)*10+1
          I2=MIN0(NPAR,J2*10)
-         DO610I=I1,NPAR
+         DO615I=I1,NPAR
             II=MIN0(I,I2)
+  615    CONTINUE
   610 CONTINUE
 CCCCC IF(IFPRT.GT.0) WRITE(ICOUT,620) (A(I,J),J=I1,II)
 CC620 FORMAT (6X,10(F10.7,2X))
@@ -2806,8 +2820,9 @@ C
 C     RESTORE ORIGINAL DATA VALUES
 C
             DO5I=1,NSER
-               DO5J=1,NOB
+               DO6J=1,NOB
                   XDDS(J,I)=YDDS(J,I)
+   6           CONTINUE 
    5        CONTINUE 
             KPAR=KPAR+NSER
             IPAR=NSER+1
@@ -2823,7 +2838,7 @@ C
                   SUM=SUM+PAR(JPAR)
                   JPAR=JPAR+1
   10           CONTINUE
-               DO30 IT=1,NOB
+               DO35 IT=1,NOB
                   S=SUM
                   K=KPAR
                   DO20J=1,MIN(IT-1,NMA(INDEX))
@@ -2831,6 +2846,7 @@ C
                       K=K+1
   20              CONTINUE
                   Z(IT,IZ)=S
+  35           CONTINUE
   30        CONTINUE
          ENDIF
 C
@@ -2919,8 +2935,9 @@ C
             DO170 IT=1,I
                Z(IT,IZ)=0.0
   170       CONTINUE
-            DO180 IT=I+1,NOB
-                 Z(IT,IZ)=Z(IT-1,IZ-1)
+            DO185 IT=I+1,NOB
+               Z(IT,IZ)=Z(IT-1,IZ-1)
+  185       CONTINUE
   180    CONTINUE
       IS=MAXLAG
       RETURN
@@ -2969,9 +2986,10 @@ C
 C
 C     WINDOW REST OF DIAGONAL
 C
-         DO20J=1,MIN(M-1,N-I-1)
+         DO25J=1,MIN(M-1,N-I-1)
              SUM=SUM+X1(N-J-I)*X2(N-J)-X1(NOB-J-I)*X2(NOB-J)
              XTX(IR+J,IC+I+J)=SUM
+  25     CONTINUE
   20  CONTINUE
 C
 C     FORM LOWER LEFT HALF
@@ -2987,10 +3005,11 @@ C
 C
 C     WINDOW REST OF DIAGONAL
 C
-         DO40J=1,M-I-1
+         DO45J=1,M-I-1
             SUM=SUM+X1(M-J)*X2(M-J-I)-X1(NOB-J)*X2(NOB-J-I)
             XTX(IR+I+J,IC+J)=SUM
-  40     CONTINUE
+  45     CONTINUE
+  40  CONTINUE
 C
       RETURN
       END
@@ -3132,9 +3151,10 @@ C
         DO120I=1,NSER
            LAGT=LAG(I,INDEX)
            IF(LAGT.EQ.0) LAGT=1
-           DO120J=LAGT,LAGT+NAR(I,INDEX)-1
+           DO125J=LAGT,LAGT+NAR(I,INDEX)-1
                SUM=SUM-PAR(IPAR)*XDDS(IT-J,I)
                IPAR=IPAR+1
+  125      CONTINUE
   120   CONTINUE
         DO130I=1,NMA(INDEX)
            SUM=SUM+PAR(IPAR)*AT(IT-I)
@@ -3188,10 +3208,11 @@ C
 C
 C     WINDOW REST OF DIAGONAL
 C
-         DO20J=1,N-I-1
+         DO25J=1,N-I-1
             IF(J.EQ.0) GO TO 20
             SUM=SUM+XDDS(N-J)*XDDS(N-J-I)-XDDS(NOB-J)*XDDS(NOB-J-I)
             XTX(IR+I+J,IC+J)=SUM
+  25     CONTINUE
   20  CONTINUE
       RETURN
       END
@@ -3562,12 +3583,14 @@ C
          DO50I=1,N
                CNUM=THT0*ROOT(I)**(N-1)
                   DO10J=1,M
-10                   CNUM=CNUM-THETA(J)*ROOT(I)**(N-1-J)
-               DEN=CMPLX(1.0,0.0)
+                     CNUM=CNUM-THETA(J)*ROOT(I)**(N-1-J)
+10                CONTINUE
+                  DEN=CMPLX(1.0,0.0)
                   DO20J=1,N
-20                   IF(I.NE.J) DEN=DEN*(ROOT(I)-ROOT(J))
-               G(I)=CNUM/DEN
-               IF(AIMAG(ROOT(I)) .GE. 0.0)THEN
+                     IF(I.NE.J) DEN=DEN*(ROOT(I)-ROOT(J))
+20                CONTINUE
+                  G(I)=CNUM/DEN
+                  IF(AIMAG(ROOT(I)) .GE. 0.0)THEN
 C
 C     PRINT TERM CORRESPONDING TO THIS G
 C

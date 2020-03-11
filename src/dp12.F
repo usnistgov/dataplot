@@ -1,3 +1,3321 @@
+      SUBROUTINE DPDAVI(XTEMP1,MAXNXT,
+     1                  ICAPSW,ICASAN,IFORSW,
+     1                  IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+C
+C     PURPOSE--PERFORM DAVID, HARTLEY, PEARSON TEST FOR UNIVARIATE
+C              OUTLIERS FOR DATA THAT FOLLOWS AN APPROXIMATELY NORMAL
+C              DISRIBUTION.  THIS STATISTIC IS BASED ON THE RATIO OF
+C              THE RANGE AND THE STANDARD DEVIATION.  THIS TEST IS
+C              INCLUDED IN THE 2016 EDITION OF THE E-178 STANDARD.
+C     REFERENCES--DAVID, HARTLEY, AND PEARSON (1954), "THE DISTRIBUTION
+C                 OF THE RATIO, IN A SINGLE NORMAL SAMPLE, OF RANGE TO
+C                 STANDARD DEVIATION", BIOMETRIKA, BOKA, VOL. 41,
+C                 PP. 482-493.
+C               --E178 - 16A (2016), "Standard Practice for Dealing with
+C                 Outlying Observations", ASTM International, 100 Barr
+C                 Harbor Drive, PO BOX C700, West Conshohocken, PA
+C                 19428-2959, USA. 
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORAOTRY
+C                 NATIONAL INSTITUTE OF STANDARDS OF TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS OF TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2019/10
+C     ORIGINAL VERSION--OCTOBER   2019.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ICASAN
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 ICAPAN
+      CHARACTER*4 IFORSW
+      CHARACTER*4 IBUGA2
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IBUGQ
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ICASP2
+      CHARACTER*4 IDAVT2
+C
+      CHARACTER*4 IHWUSE
+      CHARACTER*4 MESSAG
+      CHARACTER*4 ICASEQ
+      CHARACTER*4 IDATSW
+      CHARACTER*4 IHP
+      CHARACTER*4 IHP2
+C
+      CHARACTER*4 IH
+      CHARACTER*4 IH2
+      CHARACTER*4 ISUBN0
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+C
+      CHARACTER*4 IFLAGU
+      LOGICAL IFRST
+      LOGICAL ILAST
+C
+      CHARACTER*4 LOWLTY
+      CHARACTER*4 UPPLTY
+      CHARACTER*4 IMETHD
+      CHARACTER*4 IREPL
+      CHARACTER*4 IMULT
+      CHARACTER*4 ICTMP1
+      CHARACTER*4 ICTMP2
+      CHARACTER*4 ICASE
+C
+      CHARACTER*40 INAME
+      PARAMETER (MAXSPN=30)
+      CHARACTER*4 IVARN1(MAXSPN)
+      CHARACTER*4 IVARN2(MAXSPN)
+      CHARACTER*4 IVARTY(MAXSPN)
+      CHARACTER*4 IVARID(MAXSPN)
+      CHARACTER*4 IVARI2(MAXSPN)
+      REAL PVAR(MAXSPN)
+      REAL PID(MAXSPN)
+      INTEGER ILIS(MAXSPN)
+      INTEGER NRIGHT(MAXSPN)
+      INTEGER ICOLR(MAXSPN)
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOZZ.INC'
+C
+      DIMENSION Y1(MAXOBV)
+      DIMENSION X1(MAXOBV)
+      DIMENSION XTEMP1(MAXOBV)
+      DIMENSION XTEMP2(MAXOBV)
+C
+      DIMENSION XDESGN(MAXOBV,7)
+      DIMENSION XIDTEM(MAXOBV)
+      DIMENSION XIDTE2(MAXOBV)
+      DIMENSION XIDTE3(MAXOBV)
+      DIMENSION XIDTE4(MAXOBV)
+      DIMENSION XIDTE5(MAXOBV)
+      DIMENSION XIDTE6(MAXOBV)
+C
+      DIMENSION TEMP1(MAXOBV)
+      DIMENSION TEMP2(MAXOBV)
+C
+      EQUIVALENCE (GARBAG(IGARB1),Y1(1))
+      EQUIVALENCE (GARBAG(IGARB2),X1(1))
+      EQUIVALENCE (GARBAG(IGARB4),XTEMP2(1))
+      EQUIVALENCE (GARBAG(IGARB5),TEMP1(1))
+      EQUIVALENCE (GARBAG(IGARB6),TEMP2(1))
+      EQUIVALENCE (GARBAG(IGARB7),XIDTEM(1))
+      EQUIVALENCE (GARBAG(IGARB8),XIDTE2(1))
+      EQUIVALENCE (GARBAG(IGARB9),XIDTE3(1))
+      EQUIVALENCE (GARBAG(IGAR10),XIDTE4(1))
+      EQUIVALENCE (GARBAG(JGAR11),XIDTE5(1))
+      EQUIVALENCE (GARBAG(JGAR12),XIDTE6(1))
+      EQUIVALENCE (GARBAG(JGAR13),XDESGN(1,1))
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOSU.INC'
+      INCLUDE 'DPCOS2.INC'
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOMC.INC'
+      INCLUDE 'DPCOST.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      IERROR='NO'
+      ICASAN='    '
+      IREPL='OFF'
+      IMULT='OFF'
+      ISUBN1='DPDA'
+      ISUBN2='VI  '
+C
+      MAXCP1=MAXCOL+1
+      MAXCP2=MAXCOL+2
+      MAXCP3=MAXCOL+3
+      MAXCP4=MAXCOL+4
+      MAXCP5=MAXCOL+5
+      MAXCP6=MAXCOL+6
+C
+      MINN2=3
+C
+C               ***************************************************
+C               **  TREAT THE DAVID, HARTLEY PEARSON TEST CASE   **
+C               ***************************************************
+C
+      IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'DAVI')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPDAVI--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)ICASAN
+   52   FORMAT('ICASAN = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGA2,IBUGA3,IBUGQ
+   53   FORMAT('IBUGA2,IBUGA3,IBUGQ = ',A4,2X,A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *********************************************************
+C               **  STEP 1--                                           **
+C               **  EXTRACT THE COMMAND                                **
+C               **  LOOK FOR ONE OF THE FOLLOWING COMMANDS:            **
+C               **    1) DAVID TEST Y                                  **
+C               **    2) DAVID TEST Y LABID                            **
+C               **    3) DAVID MULTIPLE TEST Y1 ... YK                 **
+C               **    4) REPLICATED DAVID TEST Y X1 ... XK             **
+C               **    5) REPLICATED DAVID TEST Y LABID X1 ... XK       **
+C               **       REPLICATED DAVID TEST Y X1 ... XK LABID       **
+C               *********************************************************
+C
+      ISTEPN='1'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'DAVI')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      ILASTC=9999
+      ILASTZ=9999
+      IFOUND='NO'
+      ICASAN='DTES'
+C
+      DO100I=0,NUMARG-1
+C
+        IF(I.EQ.0)THEN
+          ICTMP1=ICOM
+          ICTMP2=IHARG(I+1)
+        ELSE
+          ICTMP1=IHARG(I)
+          ICTMP2=IHARG(I+1)
+        ENDIF
+C
+        IF(ICTMP1.EQ.'DAVI' .AND. ICTMP2.EQ.'TEST')THEN
+          IFOUND='YES'
+          ILASTC=I
+          ILASTZ=I+1
+        ELSEIF(ICTMP1.EQ.'DAVI')THEN
+          IFOUND='YES'
+          ILASTC=I
+          ILASTZ=I
+        ELSEIF(ICTMP1.EQ.'REPL')THEN
+          IREPL='ON'
+          ILASTC=MIN(ILASTC,I)
+          ILASTZ=MAX(ILASTZ,I)
+        ELSEIF(ICTMP1.EQ.'MULT')THEN
+          IMULT='ON'
+          ILASTC=MIN(ILASTC,I)
+          ILASTZ=MAX(ILASTZ,I)
+        ENDIF
+  100 CONTINUE
+C
+      ISHIFT=ILASTZ
+      CALL SHIFTL(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,
+     1            IBUGA2,IERROR)
+C
+      IF(IFOUND.EQ.'NO')GOTO9000
+      IF(IMULT.EQ.'ON')THEN
+        IF(IREPL.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,101)
+  101     FORMAT('***** ERROR IN DAVID, HARTLEY, PEARSON ',
+     1           'OUTLIER TEST--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,102)
+  102     FORMAT('      YOU CANNOT SPECIFY BOTH "MULTIPLE" AND ',
+     1           '"REPLICATION" FOR THE DAVID TEST COMMAND.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+      ENDIF
+C
+C               *********************************
+C               **  STEP 4--                   **
+C               **  EXTRACT THE VARIABLE LIST  **
+C               *********************************
+C
+      ISTEPN='4'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'DAVI')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      INAME='DAVID TEST FOR OUTLIERS'
+      MINNA=1
+      MAXNA=100
+      MINN2=2
+      IFLAGE=1
+      IF(IMULT.EQ.'ON')IFLAGE=0
+      IFLAGM=1
+      IF(IREPL.EQ.'ON')IFLAGM=0
+      IFLAGP=0
+      JMIN=1
+      JMAX=NUMARG
+      MINNVA=-99
+      MAXNVA=-99
+C
+      CALL DPPARS(IHARG,IHARG2,IARGT,ARG,NUMARG,IANS,IWIDTH,
+     1            IHNAME,IHNAM2,IUSE,NUMNAM,IN,IVALUE,VALUE,
+     1            JMIN,JMAX,
+     1            MINN2,MINNA,MAXNA,MAXSPN,IFLAGE,INAME,
+     1            IVARN1,IVARN2,IVARTY,PVAR,
+     1            ILIS,NRIGHT,ICOLR,ISUB,NQ,ILOCQ,NUMVAR,
+     1            MINNVA,MAXNVA,
+     1            IFLAGM,IFLAGP,
+     1            IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'DAVI')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,281)
+  281   FORMAT('***** AFTER CALL DPPARS--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,282)NQ,NUMVAR
+  282   FORMAT('NQ,NUMVAR = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NUMVAR.GT.0)THEN
+          DO285I=1,NUMVAR
+            WRITE(ICOUT,287)I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),
+     1                      ICOLR(I)
+  287       FORMAT('I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),',
+     1             'ICOLR(I) = ',I8,2X,A4,A4,2X,3I8)
+            CALL DPWRST('XXX','BUG ')
+  285     CONTINUE
+        ENDIF
+      ENDIF
+C
+C               ***********************************************
+C               **  STEP 5--                                 **
+C               **  DETERMINE:                               **
+C               **  1) NUMBER OF REPLICATION VARIABLES (0-6) **
+C               **  2) NUMBER OF RESPONSE    VARIABLES (>= 1)**
+C               ***********************************************
+C
+      ISTEPN='5'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'DAVI')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      NRESP=0
+      NREPL=0
+      NLABID=0
+      IF(IMULT.EQ.'ON')THEN
+        NRESP=NUMVAR
+      ELSEIF(IREPL.EQ.'ON')THEN
+        NRESP=1
+        IF(NUMVAR.EQ.2)THEN
+          NLABID=0
+          NREPL=1
+        ELSE
+          NLABID=1
+          NREPL=NUMVAR-NRESP-NLABID
+        ENDIF
+        IF(NREPL.LT.1 .OR. NREPL.GT.6)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,101)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,511)
+  511     FORMAT('      FOR THE REPLICATION CASE, THE NUMBER OF ',
+     1           'REPLICATION VARIABLES')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,512)
+  512     FORMAT('      MUST BE BETWEEN ONE AND SIX.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,513)NREPL
+  513     FORMAT('      THE NUMBER OF REPLICATION VARIABLES = ',I5)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+      ELSE
+        NRESP=1
+        NLABID=NUMVAR-NRESP
+        IF(NLABID.GT.1)NLABID=1
+      ENDIF
+C
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'DAVI')THEN
+        WRITE(ICOUT,521)NRESP,NLABID,NREPL
+  521   FORMAT('NRESP,NLABID,NREPL = ',3I5)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               ******************************************************
+C               **  STEP 6--                                        **
+C               **  GENERATE THE DAVID  TEST FOR THE VARIOUS CASES  **
+C               ******************************************************
+C
+      ISTEPN='6'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'DAVI')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+C               *****************************************
+C               **  STEP 7A--                          **
+C               **  CASE 1: SINGLE RESPONSE VARIABLE   **
+C               **          WITH NO REPLICATION        **
+C               *****************************************
+C
+      IF(NRESP.EQ.1 .AND. NREPL.EQ.0)THEN
+        ISTEPN='7A'
+        IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'DAVI')
+     1    CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+        PID(1)=CPUMIN
+        IVARID(1)=IVARN1(1)
+        IVARI2(1)=IVARN2(1)
+C
+        ICOL=1
+        NUMVA2=1
+        IF(NLABID.GE.1)NUMVA2=2
+        CALL DPPAR3(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,
+     1              INAME,IVARN1,IVARN2,IVARTY,
+     1              ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVA2,
+     1              MAXCOL,MAXCP1,MAXCP2,MAXCP3,
+     1              MAXCP4,MAXCP5,MAXCP6,
+     1              V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,
+     1              Y1,X1,XTEMP2,NLOCAL,NLOCA2,NLOCA3,ICASE,
+     1              IBUGA3,ISUBRO,IFOUND,IERROR)
+        IF(IERROR.EQ.'YES')GOTO9000
+        IF(NLABID.EQ.0)THEN
+          DO720I=1,NLOCAL
+            X1(I)=REAL(I)
+  720     CONTINUE
+        ENDIF
+C
+C       *****************************************************
+C       **  STEP 7B--                                      **
+C       **  CALL DPDAV2 TO PERFORM DAVID  TEST.            **
+C       *****************************************************
+C
+C
+        IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'DAVI')THEN
+          ISTEPN='7B'
+          CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,711)
+  711     FORMAT('***** FROM THE MIDDLE  OF DPDAVI--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,712)ICASAN,NUMVAR,IDATSW,NLOCAL
+  712     FORMAT('ICASAN,NUMVAR,IDATSW,NQ = ',
+     1           A4,I8,2X,A4,I8)
+          CALL DPWRST('XXX','BUG ')
+          IF(NLOCAL.GE.1)THEN
+            DO715I=1,NLOCAL
+              WRITE(ICOUT,716)I,Y1(I),X1(I)
+  716         FORMAT('I,Y1(I),X1(I) = ',I8,2F12.5)
+              CALL DPWRST('XXX','BUG ')
+  715       CONTINUE
+          ENDIF
+        ENDIF
+C
+        NCURVE=1
+        CALL DPDAV2(Y1,X1,NLOCAL,MAXOBV,IDAVTA,
+     1              XTEMP1,XTEMP2,PID,IVARID,IVARI2,NREPL,NLABID,
+     1              ICAPSW,ICAPTY,IFORSW,
+     1              STATVA,STATCD,PVAL,
+     1              CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1              ISUBRO,IBUGA3,IERROR)
+C
+C               ***************************************
+C               **  STEP 7C--                        **
+C               **  COMPUTE DAVID     STAT           **
+C               **  UPDATE INTERNAL DATAPLOT TABLES  **
+C               ***************************************
+C
+        ISTEPN='7C'
+        IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'DAVI')
+     1    CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+        IFLAGU='ON'
+        IFRST=.FALSE.
+        ILAST=.FALSE.
+        IDAVT2=IDAVTA
+        IF(IDAVTA.EQ.'ASTM' .AND. NLOCAL.GT.50)IDAVT2='SIMU'
+        IF(IDAVTA.EQ.'DAVI' .AND. NLOCAL.GT.1000)IDAVT2='SIMU'
+        CALL DPDAV4(STATVA,STATCD,PVAL,
+     1              CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1              IFLAGU,IFRST,ILAST,ICASP2,IDAVT2,
+     1              IBUGA2,IBUGA3,ISUBRO,IERROR)
+C
+C               ******************************************
+C               **  STEP 8A--                           **
+C               **  CASE 2: MULTIPLE RESPONSE VARIABLES **
+C               **          NOTE THAT A LABID VARIABLE  **
+C               **          IS NOT SUPPORTED FOR THIS   **
+C               **          CASE.                       **
+C               ******************************************
+C
+      ELSEIF(NRESP.GT.1)THEN
+        ISTEPN='8A'
+        IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'DAVI')
+     1    CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+C       LOOP THROUGH EACH OF THE RESPONSE VARIABLES
+C
+        NCURVE=0
+        DO810IRESP=1,NRESP
+          NCURVE=NCURVE+1
+C
+          IINDX=ICOLR(IRESP)
+          PID(1)=CPUMIN
+          IVARID(1)=IVARN1(IRESP)
+          IVARI2(1)=IVARN2(IRESP)
+C
+          IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'DAVI')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,811)IRESP,NCURVE
+  811       FORMAT('IRESP,NCURVE = ',2I5)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+C
+          ICOL=IRESP
+          NUMVA2=1
+          CALL DPPAR3(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,
+     1                INAME,IVARN1,IVARN2,IVARTY,
+     1                ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVA2,
+     1                MAXCOL,MAXCP1,MAXCP2,MAXCP3,
+     1                MAXCP4,MAXCP5,MAXCP6,
+     1                V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,
+     1                Y1,XTEMP1,XTEMP2,NLOCAL,NLOCA2,NLOCA3,ICASE,
+     1                IBUGA3,ISUBRO,IFOUND,IERROR)
+          IF(IERROR.EQ.'YES')GOTO9000
+          DO820I=1,NLOCAL
+            X1(I)=REAL(I)
+  820     CONTINUE
+C
+C         *****************************************************
+C         **  STEP 8B--                                      **
+C         *****************************************************
+C
+          IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'DAVI')THEN
+            ISTEPN='8B'
+            CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,822)
+  822       FORMAT('***** FROM THE MIDDLE  OF DPDAVI--')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,823)ICASAN,NUMVAR,IDATSW,NLOCAL
+  823       FORMAT('ICASAN,NUMVAR,IDATSW,NQ = ',
+     1             A4,I8,2X,A4,I8)
+            CALL DPWRST('XXX','BUG ')
+            IF(NLOCAL.GE.1)THEN
+              DO825I=1,NLOCAL
+                WRITE(ICOUT,826)I,Y1(I),X1(I)
+  826           FORMAT('I,Y1(I),X1(I) = ',I8,2F12.5)
+                CALL DPWRST('XXX','BUG ')
+  825         CONTINUE
+            ENDIF
+          ENDIF
+C
+          CALL DPDAV2(Y1,X1,NLOCAL,MAXOBV,IDAVTA,
+     1                XTEMP1,XTEMP2,PID,IVARID,IVARI2,NREPL,NLABID,
+     1                ICAPSW,ICAPTY,IFORSW,
+     1                STATVA,STATCD,PVAL,
+     1                CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1                ISUBRO,IBUGA3,IERROR)
+C
+C               ***************************************
+C               **  STEP 8C--                        **
+C               **  COMPUTE DAVID     STAT           **
+C               **  UPDATE INTERNAL DATAPLOT TABLES  **
+C               ***************************************
+C
+          ISTEPN='8C'
+          IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'DAVI')
+     1      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+          IFLAGU='FILE'
+          IFRST=.FALSE.
+          ILAST=.FALSE.
+          IF(IRESP.EQ.1)IFRST=.TRUE.
+          IF(IRESP.EQ.NRESP)ILAST=.TRUE.
+          IDAVT2=IDAVTA
+          IF(IDAVTA.EQ.'ASTM' .AND. NLOCAL.GT.50)IDAVT2='SIMU'
+          IF(IDAVTA.EQ.'DAVI' .AND. NLOCAL.GT.1000)IDAVT2='SIMU'
+          CALL DPDAV4(STATVA,STATCD,PVAL,
+     1                CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1                IFLAGU,IFRST,ILAST,ICASP2,IDAVT2,
+     1                IBUGA2,IBUGA3,ISUBRO,IERROR)
+C
+  810   CONTINUE
+C
+C               ****************************************************
+C               **  STEP 9A--                                     **
+C               **  CASE 3: ONE OR MORE REPLICATION VARIABLES.    **
+C               **          FOR THIS CASE, THE NUMBER OF RESPONSE **
+C               **          VARIABLES MUST BE EXACTLY 1.          **
+C               **          FOR THIS CASE, ALL VARIABLES MUST     **
+C               **          HAVE THE SAME LENGTH.                 **
+C               ****************************************************
+C
+      ELSEIF(IREPL.EQ.'ON')THEN
+        ISTEPN='9A'
+        IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'DAVI')
+     1    CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+        J=0
+        IMAX=NRIGHT(1)
+        IF(NQ.LT.NRIGHT(1))IMAX=NQ
+        DO910I=1,IMAX
+          IF(ISUB(I).EQ.0)GOTO910
+          J=J+1
+C
+C         RESPONSE VARIABLE IN Y1
+C
+          ICOLC=1
+          IJ=MAXN*(ICOLR(ICOLC)-1)+I
+          IF(ICOLR(ICOLC).LE.MAXCOL)Y1(J)=V(IJ)
+          IF(ICOLR(ICOLC).EQ.MAXCP1)Y1(J)=PRED(I)
+          IF(ICOLR(ICOLC).EQ.MAXCP2)Y1(J)=RES(I)
+          IF(ICOLR(ICOLC).EQ.MAXCP3)Y1(J)=YPLOT(I)
+          IF(ICOLR(ICOLC).EQ.MAXCP4)Y1(J)=XPLOT(I)
+          IF(ICOLR(ICOLC).EQ.MAXCP5)Y1(J)=X2PLOT(I)
+          IF(ICOLR(ICOLC).EQ.MAXCP6)Y1(J)=TAGPLO(I)
+C
+C         LABID VARIABLE IN X1
+C
+          IF(NLABID.GE.1)THEN
+            ICOLC=ICOLC+1
+            ICOLT=ICOLR(ICOLC)
+            IJ=MAXN*(ICOLT-1)+I
+            IF(ICOLT.LE.MAXCOL)X1(J)=V(IJ)
+            IF(ICOLT.EQ.MAXCP1)X1(J)=PRED(I)
+            IF(ICOLT.EQ.MAXCP2)X1(J)=RES(I)
+            IF(ICOLT.EQ.MAXCP3)X1(J)=YPLOT(I)
+            IF(ICOLT.EQ.MAXCP4)X1(J)=XPLOT(I)
+            IF(ICOLT.EQ.MAXCP5)X1(J)=X2PLOT(I)
+            IF(ICOLT.EQ.MAXCP6)X1(J)=TAGPLO(I)
+          ELSE
+            X1(J)=REAL(I)
+          ENDIF
+C
+          IF(NREPL.GE.1)THEN
+            DO920IR=1,MIN(NREPL,6)
+              ICOLC=ICOLC+1
+              ICOLT=ICOLR(ICOLC)
+              IJ=MAXN*(ICOLT-1)+I
+              IF(ICOLT.LE.MAXCOL)XDESGN(J,IR)=V(IJ)
+              IF(ICOLT.EQ.MAXCP1)XDESGN(J,IR)=PRED(I)
+              IF(ICOLT.EQ.MAXCP2)XDESGN(J,IR)=RES(I)
+              IF(ICOLT.EQ.MAXCP3)XDESGN(J,IR)=YPLOT(I)
+              IF(ICOLT.EQ.MAXCP4)XDESGN(J,IR)=XPLOT(I)
+              IF(ICOLT.EQ.MAXCP5)XDESGN(J,IR)=X2PLOT(I)
+              IF(ICOLT.EQ.MAXCP6)XDESGN(J,IR)=TAGPLO(I)
+  920       CONTINUE
+          ENDIF
+C
+  910   CONTINUE
+        NLOCAL=J
+C
+        ISTEPN='9B'
+        IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'DAVI')
+     1    CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+C       NOTE: CHECK TO SEE IF X1 HAS ALL UNIQUE ELEMENTS.  IF NOT,
+C             THEN INTERPRET THIS AS A REPLICATION VARIABLE.
+C
+        CALL DISTIN(X1,NLOCAL,IWRITE,XTEMP2,NDIST,IBUGA3,IERROR)
+        IF(NLOCAL.NE.NDIST)THEN
+          NLABID=0
+          IF(NREPL.GT.6)NREPL=6
+          IF(NREPL.GE.1)THEN
+            DO930J=1,NREPL-1
+              DO935I=1,NLOCAL
+                XDESGN(I,J+1)=XDESGN(I,J)
+  935         CONTINUE
+  930       CONTINUE
+          ENDIF
+          NREPL=NREPL+1
+          DO938I=1,NLOCAL
+            XDESGN(I,1)=X1(I)
+            X1(I)=REAL(I)
+  938     CONTINUE
+        ENDIF
+C
+        PID(1)=CPUMIN
+        IVARID(1)=IVARN1(1)
+        IVARI2(1)=IVARN2(1)
+        IF(NLABID.EQ.1)THEN
+          PID(2)=CPUMIN
+          IVARID(2)=IVARN1(2)
+          IVARI2(2)=IVARN2(2)
+        ENDIF
+        IADD=NRESP+NLABID
+        DO940II=1,NREPL
+          IVARID(II+IADD)=IVARN1(II+IADD)
+          IVARI2(II+IADD)=IVARN2(II+IADD)
+  940   CONTINUE
+C
+C       *****************************************************
+C       **  STEP 9B--                                      **
+C       **  CALL DPDAV2 TO PERFORM GRUBB TEST.             **
+C       *****************************************************
+C
+C
+        IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'DAVI')THEN
+          ISTEPN='9C'
+          CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,941)
+  941     FORMAT('***** FROM THE MIDDLE  OF DPDAVI--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,942)ICASAN,NUMVAR,IDATSW,NLOCAL,NREPL
+  942     FORMAT('ICASAN,NUMVAR,IDATSW,NLOCAL,NREPL = ',
+     1           A4,I8,2X,A4,2I8)
+          CALL DPWRST('XXX','BUG ')
+          IF(NLOCAL.GE.1)THEN
+            DO945I=1,NLOCAL
+              WRITE(ICOUT,946)I,Y1(I),X1(I),XDESGN(I,1),XDESGN(I,2)
+  946         FORMAT('I,Y1(I),X1(I),XDESGN(I,1),XDESGN(I,2) = ',
+     1               I8,4F12.5)
+              CALL DPWRST('XXX','BUG ')
+  945       CONTINUE
+          ENDIF
+        ENDIF
+C
+C       *****************************************************
+C       **  STEP 9C--                                      **
+C       **  FIND THE DISTINCT VALUES IN EACH OF THE        **
+C       **  REPLICATION VARIABLES.                         **
+C       *****************************************************
+C
+        CALL DPPP5(XDESGN(1,1),XDESGN(1,2),XDESGN(1,3),
+     1             XDESGN(1,4),XDESGN(1,5),XDESGN(1,6),
+     1             NREPL,NLOCAL,MAXOBV,
+     1             XIDTEM,XIDTE2,XIDTE3,XIDTE4,XIDTE5,XIDTE6,
+     1             XTEMP1,XTEMP2,
+     1             NUMSE1,NUMSE2,NUMSE3,NUMSE4,NUMSE5,NUMSE6,
+     1             IBUGA3,ISUBRO,IERROR)
+C
+C       *****************************************************
+C       **  STEP 9D--                                      **
+C       **  NOW LOOP THROUGH THE VARIOUS REPLICATIONS      **
+C       *****************************************************
+C
+        NPLOTP=0
+        NCURVE=0
+        IF(NREPL.EQ.1)THEN
+          J=0
+          DO1110ISET1=1,NUMSE1
+            K=0
+            PID(IADD+1)=XIDTEM(ISET1)
+            DO1130I=1,NLOCAL
+              IF(XIDTEM(ISET1).EQ.XDESGN(I,1))THEN
+                K=K+1
+                TEMP1(K)=Y1(I)
+                TEMP2(K)=X1(I)
+              ENDIF
+ 1130       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            NPLOT1=NPLOTP
+            IF(NTEMP.GT.0)THEN
+              CALL DPDAV2(TEMP1,TEMP2,NTEMP,MAXOBV,IDAVTA,
+     1                    XTEMP1,XTEMP2,PID,IVARID,IVARI2,NREPL,NLABID,
+     1                    ICAPSW,ICAPTY,IFORSW,
+     1                    STATVA,STATCD,PVAL,
+     1                    CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1                    ISUBRO,IBUGA3,IERROR)
+            ENDIF
+            NPLOT2=NPLOTP
+            IFLAGU='FILE'
+            IFRST=.FALSE.
+            ILAST=.FALSE.
+            IF(NCURVE.EQ.1)IFRST=.TRUE.
+            IF(NCURVE.EQ.NUMSE1)ILAST=.TRUE.
+            NPTEMP=NPLOT2-NPLOT1
+            IDAVT2=IDAVTA
+            IF(IDAVTA.EQ.'ASTM' .AND. NTEMP.GT.50)IDAVT2='SIMU'
+            IF(IDAVTA.EQ.'DAVI' .AND. NTEMP.GT.1000)IDAVT2='SIMU'
+            CALL DPDAV4(STATVA,STATCD,PVAL,
+     1                  CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1                  IFLAGU,IFRST,ILAST,ICASP2,IDAVT2,
+     1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
+ 1110     CONTINUE
+        ELSEIF(NREPL.EQ.2)THEN
+          J=0
+          NTOT=NUMSE1*NUMSE2
+          DO1210ISET1=1,NUMSE1
+          DO1220ISET2=1,NUMSE2
+            K=0
+            PID(1+IADD)=XIDTEM(ISET1)
+            PID(2+IADD)=XIDTE2(ISET2)
+            DO1290I=1,NLOCAL
+              IF(
+     1           XIDTEM(ISET1).EQ.XDESGN(I,1) .AND.
+     1           XIDTE2(ISET2).EQ.XDESGN(I,2)
+     1          )THEN
+                K=K+1
+                TEMP1(K)=Y1(I)
+                TEMP2(K)=X1(I)
+              ENDIF
+ 1290       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            NPLOT1=NPLOTP
+            IF(NTEMP.GT.0)THEN
+              CALL DPDAV2(TEMP1,TEMP2,NTEMP,MAXOBV,IDAVTA,
+     1                    XTEMP1,XTEMP2,PID,IVARID,IVARI2,NREPL,NLABID,
+     1                    ICAPSW,ICAPTY,IFORSW,
+     1                    STATVA,STATCD,PVAL,
+     1                    CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1                    ISUBRO,IBUGA3,IERROR)
+            ENDIF
+            NPLOT2=NPLOTP
+            IFLAGU='FILE'
+            IFRST=.FALSE.
+            ILAST=.FALSE.
+            IF(NCURVE.EQ.1)IFRST=.TRUE.
+            IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
+            NPTEMP=NPLOT2-NPLOT1
+            IDAVT2=IDAVTA
+            IF(IDAVTA.EQ.'ASTM' .AND. NTEMP.GT.50)IDAVT2='SIMU'
+            IF(IDAVTA.EQ.'DAVI' .AND. NTEMP.GT.1000)IDAVT2='SIMU'
+            CALL DPDAV4(STATVA,STATCD,PVAL,
+     1                  CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1                  IFLAGU,IFRST,ILAST,ICASP2,IDAVT2,
+     1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
+ 1220     CONTINUE
+ 1210     CONTINUE
+        ELSEIF(NREPL.EQ.3)THEN
+          J=0
+          NTOT=NUMSE1*NUMSE2*NUMSE3
+          DO1310ISET1=1,NUMSE1
+          DO1320ISET2=1,NUMSE2
+          DO1330ISET3=1,NUMSE3
+            K=0
+            PID(1+IADD)=XIDTEM(ISET1)
+            PID(2+IADD)=XIDTE2(ISET2)
+            PID(3+IADD)=XIDTE3(ISET3)
+            DO1390I=1,NLOCAL
+              IF(
+     1           XIDTEM(ISET1).EQ.XDESGN(I,1) .AND.
+     1           XIDTE2(ISET2).EQ.XDESGN(I,2) .AND.
+     1           XIDTE3(ISET3).EQ.XDESGN(I,3)
+     1          )THEN
+                K=K+1
+                TEMP1(K)=Y1(I)
+                TEMP2(K)=X1(I)
+              ENDIF
+ 1390       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            NPLOT1=NPLOTP
+            IF(NTEMP.GT.0)THEN
+              CALL DPDAV2(TEMP1,TEMP2,NTEMP,MAXOBV,IDAVTA,
+     1                    XTEMP1,XTEMP2,PID,IVARID,IVARI2,NREPL,NLABID,
+     1                    ICAPSW,ICAPTY,IFORSW,
+     1                    STATVA,STATCD,PVAL,
+     1                    CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1                    ISUBRO,IBUGA3,IERROR)
+            ENDIF
+            NPLOT2=NPLOTP
+            IFLAGU='FILE'
+            IFRST=.FALSE.
+            ILAST=.FALSE.
+            IF(NCURVE.EQ.1)IFRST=.TRUE.
+            IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
+            NPTEMP=NPLOT2-NPLOT1
+            IDAVT2=IDAVTA
+            IF(IDAVTA.EQ.'ASTM' .AND. NTEMP.GT.50)IDAVT2='SIMU'
+            IF(IDAVTA.EQ.'DAVI' .AND. NTEMP.GT.1000)IDAVT2='SIMU'
+            CALL DPDAV4(STATVA,STATCD,PVAL,
+     1                  CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1                  IFLAGU,IFRST,ILAST,ICASP2,IDAVT2,
+     1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
+ 1330     CONTINUE
+ 1320     CONTINUE
+ 1310     CONTINUE
+        ELSEIF(NREPL.EQ.4)THEN
+          J=0
+          NTOT=NUMSE1*NUMSE2*NUMSE3*NUMSE4
+          DO1410ISET1=1,NUMSE1
+          DO1420ISET2=1,NUMSE2
+          DO1430ISET3=1,NUMSE3
+          DO1440ISET4=1,NUMSE4
+            K=0
+            PID(1+IADD)=XIDTEM(ISET1)
+            PID(2+IADD)=XIDTE2(ISET2)
+            PID(3+IADD)=XIDTE3(ISET3)
+            PID(4+IADD)=XIDTE4(ISET4)
+            DO1490I=1,NLOCAL
+              IF(
+     1           XIDTEM(ISET1).EQ.XDESGN(I,1) .AND.
+     1           XIDTE2(ISET2).EQ.XDESGN(I,2) .AND.
+     1           XIDTE3(ISET3).EQ.XDESGN(I,3) .AND.
+     1           XIDTE4(ISET4).EQ.XDESGN(I,4)
+     1          )THEN
+                K=K+1
+                TEMP1(K)=Y1(I)
+                TEMP2(K)=X1(I)
+              ENDIF
+ 1490       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            NPLOT1=NPLOTP
+            IF(NTEMP.GT.0)THEN
+              CALL DPDAV2(TEMP1,TEMP2,NTEMP,MAXOBV,IDAVTA,
+     1                    XTEMP1,XTEMP2,PID,IVARID,IVARI2,NREPL,NLABID,
+     1                    ICAPSW,ICAPTY,IFORSW,
+     1                    STATVA,STATCD,PVAL,
+     1                    CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1                    ISUBRO,IBUGA3,IERROR)
+            ENDIF
+            NPLOT2=NPLOTP
+            IFLAGU='FILE'
+            IFRST=.FALSE.
+            ILAST=.FALSE.
+            IF(NCURVE.EQ.1)IFRST=.TRUE.
+            IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
+            NPTEMP=NPLOT2-NPLOT1
+            IDAVT2=IDAVTA
+            IF(IDAVTA.EQ.'ASTM' .AND. NTEMP.GT.50)IDAVT2='SIMU'
+            IF(IDAVTA.EQ.'DAVI' .AND. NTEMP.GT.1000)IDAVT2='SIMU'
+            CALL DPDAV4(STATVA,STATCD,PVAL,
+     1                  CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1                  IFLAGU,IFRST,ILAST,ICASP2,IDAVT2,
+     1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
+ 1440     CONTINUE
+ 1430     CONTINUE
+ 1420     CONTINUE
+ 1410     CONTINUE
+        ELSEIF(NREPL.EQ.5)THEN
+          J=0
+          NTOT=NUMSE1*NUMSE2*NUMSE3*NUMSE4*NUMSE5
+          DO1510ISET1=1,NUMSE1
+          DO1520ISET2=1,NUMSE2
+          DO1530ISET3=1,NUMSE3
+          DO1540ISET4=1,NUMSE4
+          DO1550ISET5=1,NUMSE5
+            K=0
+            PID(1+IADD)=XIDTEM(ISET1)
+            PID(2+IADD)=XIDTE2(ISET2)
+            PID(3+IADD)=XIDTE3(ISET3)
+            PID(4+IADD)=XIDTE4(ISET4)
+            PID(5+IADD)=XIDTE5(ISET4)
+            DO1590I=1,NLOCAL
+              IF(
+     1           XIDTEM(ISET1).EQ.XDESGN(I,1) .AND.
+     1           XIDTE2(ISET2).EQ.XDESGN(I,2) .AND.
+     1           XIDTE3(ISET3).EQ.XDESGN(I,3) .AND.
+     1           XIDTE4(ISET4).EQ.XDESGN(I,4) .AND.
+     1           XIDTE5(ISET5).EQ.XDESGN(I,5)
+     1          )THEN
+                K=K+1
+                TEMP1(K)=Y1(I)
+                TEMP2(K)=X1(I)
+              ENDIF
+ 1590       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            NPLOT1=NPLOTP
+            IF(NTEMP.GT.0)THEN
+              CALL DPDAV2(TEMP1,TEMP2,NTEMP,MAXOBV,IDAVTA,
+     1                    XTEMP1,XTEMP2,PID,IVARID,IVARI2,NREPL,NLABID,
+     1                    ICAPSW,ICAPTY,IFORSW,
+     1                    STATVA,STATCD,PVAL,
+     1                    CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1                    ISUBRO,IBUGA3,IERROR)
+            ENDIF
+            NPLOT2=NPLOTP
+            IFLAGU='FILE'
+            IFRST=.FALSE.
+            ILAST=.FALSE.
+            IF(NCURVE.EQ.1)IFRST=.TRUE.
+            IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
+            NPTEMP=NPLOT2-NPLOT1
+            IDAVT2=IDAVTA
+            IF(IDAVTA.EQ.'ASTM' .AND. NTEMP.GT.50)IDAVT2='SIMU'
+            IF(IDAVTA.EQ.'DAVI' .AND. NTEMP.GT.1000)IDAVT2='SIMU'
+            CALL DPDAV4(STATVA,STATCD,PVAL,
+     1                  CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1                  IFLAGU,IFRST,ILAST,ICASP2,IDAVT2,
+     1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
+ 1550     CONTINUE
+ 1540     CONTINUE
+ 1530     CONTINUE
+ 1520     CONTINUE
+ 1510     CONTINUE
+        ELSEIF(NREPL.EQ.6)THEN
+          J=0
+          NTOT=NUMSE1*NUMSE2*NUMSE3*NUMSE4*NUMSE5*NUMSE6
+          DO1610ISET1=1,NUMSE1
+          DO1620ISET2=1,NUMSE2
+          DO1630ISET3=1,NUMSE3
+          DO1640ISET4=1,NUMSE4
+          DO1650ISET5=1,NUMSE5
+          DO1660ISET6=1,NUMSE6
+            K=0
+            PID(1+IADD)=XIDTEM(ISET1)
+            PID(2+IADD)=XIDTE2(ISET2)
+            PID(3+IADD)=XIDTE3(ISET3)
+            PID(4+IADD)=XIDTE4(ISET4)
+            PID(5+IADD)=XIDTE5(ISET4)
+            PID(6+IADD)=XIDTE6(ISET4)
+            DO1690I=1,NLOCAL
+              IF(
+     1           XIDTEM(ISET1).EQ.XDESGN(I,1) .AND.
+     1           XIDTE2(ISET2).EQ.XDESGN(I,2) .AND.
+     1           XIDTE3(ISET3).EQ.XDESGN(I,3) .AND.
+     1           XIDTE4(ISET4).EQ.XDESGN(I,4) .AND.
+     1           XIDTE5(ISET5).EQ.XDESGN(I,5) .AND.
+     1           XIDTE6(ISET6).EQ.XDESGN(I,6)
+     1          )THEN
+                K=K+1
+                TEMP1(K)=Y1(I)
+                TEMP2(K)=X1(I)
+              ENDIF
+ 1690       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            NPLOT1=NPLOTP
+            IF(NTEMP.GT.0)THEN
+              CALL DPDAV2(TEMP1,TEMP2,NTEMP,MAXOBV,IDAVTA,
+     1                    XTEMP1,XTEMP2,PID,IVARID,IVARI2,NREPL,NLABID,
+     1                    ICAPSW,ICAPTY,IFORSW,
+     1                    STATVA,STATCD,PVAL,
+     1                    CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1                    ISUBRO,IBUGA3,IERROR)
+            ENDIF
+            NPLOT2=NPLOTP
+            IFLAGU='FILE'
+            IFRST=.FALSE.
+            ILAST=.FALSE.
+            IF(NCURVE.EQ.1)IFRST=.TRUE.
+            IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
+            NPTEMP=NPLOT2-NPLOT1
+            IDAVT2=IDAVTA
+            IF(IDAVTA.EQ.'ASTM' .AND. NTEMP.GT.50)IDAVT2='SIMU'
+            IF(IDAVTA.EQ.'DAVI' .AND. NTEMP.GT.1000)IDAVT2='SIMU'
+            CALL DPDAV4(STATVA,STATCD,PVAL,
+     1                  CUT80,CUT90,CUT95,CUT975,CUT99,CUT995,
+     1                  IFLAGU,IFRST,ILAST,ICASP2,IDAVT2,
+     1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
+ 1660     CONTINUE
+ 1650     CONTINUE
+ 1640     CONTINUE
+ 1630     CONTINUE
+ 1620     CONTINUE
+ 1610     CONTINUE
+        ENDIF
+C
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+C
+      IF(IERROR.EQ.'YES')THEN
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,9001)(IANS(I),I=1,MIN(100,IWIDTH))
+ 9001     FORMAT(100A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
+C
+      IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'DAVI')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPDAVI--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IFOUND,IERROR
+ 9012   FORMAT('IFOUND,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)NPLOTP,NS,ICASAN
+ 9013   FORMAT('NPLOTP,NS,ICASAN = ',2I8,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPDAV2(Y,X,N,MAXNXT,IDAVTA,
+     1                  TEMP1,TEMP2,PID,IVARID,IVARI2,NREPL,NLABID,
+     1                  ICAPSW,ICAPTY,IFORSW,
+     1                  STATVA,STATCD,PVAL,
+     1                  CUT80,CUT90,CUT95,
+     1                  CUT975,CUT99,CUT995,
+     1                  ISUBRO,IBUGA3,IERROR)
+C
+C     PURPOSE--THIS ROUTINE CARRIES OUT THE DAVID, HARTLEY, PEARSON TEST
+C              FOR UNIVARIATE OUTLIERS (DATA ASSUMED TO FOLLOW AN
+C              APPROXIMATELY NORMAL DISTRIBUTION).  THIS TEST WAS ADDED
+C              TO SUPPORT THE 2016 EDITION OF THE ASTM E178 STANDARD.
+C     EXAMPLE--DAVID TEST Y
+C     REFERENCES--DAVID, HARTLEY, AND PEARSON (1954), "THE DISTRIBUTION
+C                 OF THE RATIO, IN A SINGLE NORMAL SAMPLE, OF RANGE TO
+C                 STANDARD DEVIATION", BIOMETRIKA, BOKA, VOL. 41,
+C                 PP. 482-493.
+C               --E178 - 16A (2016), "Standard Practice for Dealing with
+C                 Outlying Observations", ASTM International, 100 Barr
+C                 Harbor Drive, PO BOX C700, West Conshohocken, PA
+C                 19428-2959, USA. 
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2019/10
+C     ORIGINAL VERSION--OCTOBER   2019.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+      CHARACTER*4 IVARID(*)
+      CHARACTER*4 IVARI2(*)
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 ICAPTY
+      CHARACTER*4 IFORSW
+      CHARACTER*4 IDAVTA
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IDAVT2
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+C
+      REAL ALPHA(6)
+      REAL CV(6)
+C
+      CHARACTER*40 IRTFFF
+      CHARACTER*40 IRTFFP
+      CHARACTER*4 IRTFMD
+      COMMON/COMRTF/IRTFMD
+C
+      PARAMETER(NUMCLI=5)
+      PARAMETER(MAXLIN=2)
+      PARAMETER (MAXROW=30)
+      CHARACTER*60 ITITLE
+      CHARACTER*60 ITITLZ
+      CHARACTER*1  ITITL9
+      CHARACTER*60 ITEXT(MAXROW)
+      CHARACTER*4  ALIGN(NUMCLI)
+      CHARACTER*4  VALIGN(NUMCLI)
+      REAL         AVALUE(MAXROW)
+      INTEGER      NCTEXT(MAXROW)
+      INTEGER      IDIGIT(MAXROW)
+      INTEGER      NTOT(MAXROW)
+      CHARACTER*60 ITITL2(MAXLIN,NUMCLI)
+      CHARACTER*15 IVALUE(MAXROW,NUMCLI)
+      CHARACTER*4  ITYPCO(NUMCLI)
+      INTEGER      NCTIT2(MAXLIN,NUMCLI)
+      INTEGER      NCVALU(MAXROW,NUMCLI)
+      INTEGER      IWHTML(NUMCLI)
+      INTEGER      IWRTF(NUMCLI)
+      REAL         AMAT(MAXROW,NUMCLI)
+      LOGICAL IFRST
+      LOGICAL ILAST
+      LOGICAL IFLAG1
+      LOGICAL IFLAG2
+      LOGICAL IFLAG3
+      LOGICAL IFLAGA
+      LOGICAL IFLAGB
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION Y(*)
+      DIMENSION X(*)
+      DIMENSION TEMP1(*)
+      DIMENSION TEMP2(*)
+      DIMENSION PID(*)
+C
+C---------------------------------------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='DPDA'
+      ISUBN2='V2  '
+      IERROR='NO'
+      STATVA=CPUMIN
+      STATCD=CPUMIN
+      PVAL=CPUMIN
+      CUT80=CPUMIN
+      CUT90=CPUMIN
+      CUT95=CPUMIN
+      CUT975=CPUMIN
+      CUT99=CPUMIN
+      CUT995=CPUMIN
+C
+      IDAVT2=IDAVTA
+      IF(IDAVTA.EQ.'ASTM' .AND. N.GT.50)IDAVT2='SIMU'
+      IF(IDAVTA.EQ.'DAVI' .AND. N.GT.1000)IDAVT2='SIMU'
+      IF(IDAVT2.EQ.'DAVI')THEN
+        NALPHA=5
+        ALPHA(1)=90.
+        ALPHA(2)=95.
+        ALPHA(3)=97.5
+        ALPHA(4)=99.
+        ALPHA(5)=99.5
+      ELSEIF(IDAVT2.EQ.'ASTM')THEN
+        NALPHA=3
+        ALPHA(1)=90.
+        ALPHA(2)=95.
+        ALPHA(3)=99.
+      ELSE
+        NALPHA=6
+        ALPHA(1)=80.
+        ALPHA(2)=90.
+        ALPHA(3)=95.
+        ALPHA(4)=97.5
+        ALPHA(5)=99.
+        ALPHA(6)=99.5
+      ENDIF
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DAV2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,51)
+   51   FORMAT('**** AT THE BEGINNING OF DPDAV2--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,52)ISUBRO,IBUGA3,IDAVTA,N,MAXNXT
+   52   FORMAT('ISUBRO,IBUGA3,IDAVTA,N,MAXNXT = ',3(A4,2X),2I8)
+        CALL DPWRST('XXX','WRIT')
+        DO56I=1,N
+          WRITE(ICOUT,57)I,Y(I),X(I)
+   57     FORMAT('I,Y(I),X(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','WRIT')
+   56   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 11--                             **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      ISTEPN='11'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DAV2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(N.LT.3)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,1111)
+ 1111   FORMAT('***** ERROR IN DAVID TEST--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,1113)
+ 1113   FORMAT('      THE NUMBER OF OBSERVATIONS IS LESS THAN 3.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,1114)N
+ 1114   FORMAT('SAMPLE SIZE = ',I8)
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+      HOLD=Y(1)
+      DO1135I=2,N
+        IF(Y(I).NE.HOLD)GOTO1139
+ 1135 CONTINUE
+ 1130 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','WRIT')
+      WRITE(ICOUT,1111)
+      CALL DPWRST('XXX','WRIT')
+      WRITE(ICOUT,1131)HOLD
+ 1131 FORMAT('      THE RESPONSE VARIABLE HAS ALL ELEMENTS = ',G15.7)
+      CALL DPWRST('XXX','WRIT')
+      IERROR='YES'
+      GOTO9000
+ 1139 CONTINUE
+C
+C               ******************************
+C               **  STEP 21--               **
+C               **  CARRY OUT CALCULATIONS  **
+C               **  FOR    DAVID's    TEST  **
+C               ******************************
+C
+ 2100 CONTINUE
+C
+      ISTEPN='41'
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'DAV2')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IWRITE='OFF'
+      CALL DPDAV3(Y,N,TEMP1,TEMP2,IWRITE,PSTAMV,
+     1            MAXNXT,IDAVT2,ISEED,
+     1            ALPHA,CV,NALPHA,
+     1            STATVA,YMEAN,YSD,YRANGE,
+     1            PVAL,STATCD,YINDMN,YINDMX,
+     1            ISUBRO,IBUGA3,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+      YMIN=Y(INT(YINDMN))
+      YMAX=Y(INT(YINDMX))
+C
+      IF(IDAVT2.EQ.'ASTM')THEN
+        CUT90=CV(1)
+        CUT95=CV(2)
+        CUT99=CV(3)
+        NCDF=3
+      ELSEIF(IDAVT2.EQ.'DAVI')THEN
+        CUT90=CV(1)
+        CUT95=CV(2)
+        CUT975=CV(3)
+        CUT99=CV(4)
+        CUT995=CV(5)
+        NCDF=5
+      ELSE
+        CUT80=CV(1)
+        CUT90=CV(2)
+        CUT95=CV(3)
+        CUT975=CV(4)
+        CUT99=CV(5)
+        CUT995=CV(6)
+        NCDF=6
+      ENDIF
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DAV2')THEN
+        WRITE(ICOUT,2111)YMEAN,YSD,YRANGE
+ 2111   FORMAT('YMEAN,YSD,YRANGE=',3G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2113)STATVA,PVAL,CDF,YINDMN,YINDMX
+ 2113   FORMAT('STATVA,PVAL,CDF,YINDMN,YINDMX=',5G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C
+C               *********************************
+C               **   STEP 42--                 **
+C               **   WRITE OUT EVERYTHING      **
+C               **   FOR DAVID TEST            **
+C               *********************************
+C
+      ISTEPN='42'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DAV2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(IPRINT.EQ.'OFF')GOTO9000
+C
+      NUMDIG=7
+      IF(IFORSW.EQ.'1')NUMDIG=1
+      IF(IFORSW.EQ.'2')NUMDIG=2
+      IF(IFORSW.EQ.'3')NUMDIG=3
+      IF(IFORSW.EQ.'4')NUMDIG=4
+      IF(IFORSW.EQ.'5')NUMDIG=5
+      IF(IFORSW.EQ.'6')NUMDIG=6
+      IF(IFORSW.EQ.'7')NUMDIG=7
+      IF(IFORSW.EQ.'8')NUMDIG=8
+      IF(IFORSW.EQ.'9')NUMDIG=9
+      IF(IFORSW.EQ.'0')NUMDIG=0
+      IF(IFORSW.EQ.'E')NUMDIG=-2
+      IF(IFORSW.EQ.'-2')NUMDIG=-2
+      IF(IFORSW.EQ.'-3')NUMDIG=-3
+      IF(IFORSW.EQ.'-4')NUMDIG=-4
+      IF(IFORSW.EQ.'-5')NUMDIG=-5
+      IF(IFORSW.EQ.'-6')NUMDIG=-6
+      IF(IFORSW.EQ.'-7')NUMDIG=-7
+      IF(IFORSW.EQ.'-8')NUMDIG=-8
+      IF(IFORSW.EQ.'-9')NUMDIG=-9
+C
+      ITITLE(1:43)='David, Hartley, Pearson Test for Outliers: '
+      ITITLE(44:60)='Simultaneous Test'
+      NCTITL=60
+      ITITLZ='for Minimum and Maximum (Assumption: Normality)'
+      NCTITZ=48
+C
+      ICNT=1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=0
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Response Variable: '
+      WRITE(ITEXT(ICNT)(20:23),'(A4)')IVARID(1)(1:4)
+      WRITE(ITEXT(ICNT)(24:27),'(A4)')IVARI2(1)(1:4)
+      NCTEXT(ICNT)=27
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+C
+      IF(NREPL.GT.0)THEN
+        NRESP=1
+        IADD=NLABID+NRESP
+        DO4101I=1,NREPL
+          ICNT=ICNT+1
+          ITEMP=I+IADD
+          ITEXT(ICNT)='Factor Variable  : '
+          WRITE(ITEXT(ICNT)(17:17),'(I1)')I
+          WRITE(ITEXT(ICNT)(20:23),'(A4)')IVARID(ITEMP)(1:4)
+          WRITE(ITEXT(ICNT)(24:27),'(A4)')IVARI2(ITEMP)(1:4)
+          NCTEXT(ICNT)=27
+          AVALUE(ICNT)=PID(ITEMP)
+          IDIGIT(ICNT)=NUMDIG
+ 4101   CONTINUE
+      ENDIF
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)='H0: The minimum and maximum are not'
+      NCTEXT(ICNT)=35
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    both outliers'
+      NCTEXT(ICNT)=17
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      AVALUE(ICNT)=0.0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Ha: Both the minimum and maximum are'
+      NCTEXT(ICNT)=36
+      IDIGIT(ICNT)=-1
+      AVALUE(ICNT)=0.0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    outliers'
+      NCTEXT(ICNT)=13
+      IDIGIT(ICNT)=-1
+      AVALUE(ICNT)=0.0
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Potential minimum outlier value tested:'
+      NCTEXT(ICNT)=39
+      AVALUE(ICNT)=YMIN
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Potential maximum outlier value tested:'
+      NCTEXT(ICNT)=39
+      AVALUE(ICNT)=YMAX
+      IDIGIT(ICNT)=NUMDIG
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Summary Statistics:'
+      NCTEXT(ICNT)=19
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Number of Observations:'
+      NCTEXT(ICNT)=23
+      AVALUE(ICNT)=REAL(N)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Minimum:'
+      NCTEXT(ICNT)=15
+      AVALUE(ICNT)=YMIN
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='ID for Sample Minimum:'
+      NCTEXT(ICNT)=22
+      AVALUE(ICNT)=X(INT(YINDMN))
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Maximum:'
+      NCTEXT(ICNT)=15
+      AVALUE(ICNT)=YMAX
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='ID for Sample Maximum:'
+      NCTEXT(ICNT)=22
+      AVALUE(ICNT)=X(INT(YINDMX))
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Mean:'
+      NCTEXT(ICNT)=12
+      AVALUE(ICNT)=YMEAN
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample SD:'
+      NCTEXT(ICNT)=10
+      AVALUE(ICNT)=YSD
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Range:'
+      NCTEXT(ICNT)=13
+      AVALUE(ICNT)=YRANGE
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='David Test Statistic Value:'
+      NCTEXT(ICNT)=27
+      AVALUE(ICNT)=STATVA
+      IDIGIT(ICNT)=NUMDIG
+C
+CCCCC NOTE: CDF AND P-VALUE ONLY PRINTED IF CRITICAL
+CCCCC       VALUES DETERMINED FROM SIMUMLATION
+C
+      IF(IDAVTA.EQ.'SIMU')THEN
+        ICNT=ICNT+1
+        ITEXT(ICNT)='CDF Value:'
+        NCTEXT(ICNT)=10
+        AVALUE(ICNT)=STATCD
+        IDIGIT(ICNT)=NUMDIG
+        ICNT=ICNT+1
+        ITEXT(ICNT)='P-Value:'
+        NCTEXT(ICNT)=7
+        AVALUE(ICNT)=PVAL
+        IDIGIT(ICNT)=NUMDIG
+        ICNT=ICNT+1
+        ITEXT(ICNT)=' '
+        NCTEXT(ICNT)=1
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+      ENDIF
+C
+      NUMROW=ICNT
+      DO4210I=1,NUMROW
+        NTOT(I)=15
+ 4210 CONTINUE
+C
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+C
+      ISTEPN='42A'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DAV2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      CALL DPDTA1(ITITLE,NCTITL,ITITLZ,NCTITZ,ITEXT,NCTEXT,
+     1            AVALUE,IDIGIT,
+     1            NTOT,NUMROW,
+     1            ICAPSW,ICAPTY,ILAST,IFRST,
+     1            ISUBRO,IBUGA3,IERROR)
+C
+      ISTEPN='42B'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DAV2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      ISTEPN='42D'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DAV2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      ITITL9=' '
+      NCTIT9=0
+      ITITLE='Conclusions (Upper 1-Tailed Test)'
+      NCTITL=33
+      NUMLIN=1
+      NUMROW=NCDF
+      NUMCOL=5
+      ITITL2(1,1)='Alpha'
+      ITITL2(1,2)='CDF'
+      ITITL2(1,3)='Statistic'
+      ITITL2(1,4)='Critical Value'
+      ITITL2(1,5)='Conclusion'
+      NCTIT2(1,1)=5
+      NCTIT2(1,2)=3
+      NCTIT2(1,3)=9
+      NCTIT2(1,4)=14
+      NCTIT2(1,5)=10
+C
+      NMAX=0
+      DO4321I=1,NUMCOL
+        VALIGN(I)='b'
+        ALIGN(I)='r'
+        NTOT(I)=15
+        IF(I.EQ.1 .OR. I.EQ.2)NTOT(I)=7
+        IF(I.EQ.4)NTOT(I)=17
+        NMAX=NMAX+NTOT(I)
+        IDIGIT(I)=3
+        ITYPCO(I)='ALPH'
+ 4321 CONTINUE
+      ITYPCO(3)='NUME'
+      ITYPCO(4)='NUME'
+      IDIGIT(1)=0
+      IDIGIT(2)=0
+      DO4323I=1,NUMROW
+        DO4325J=1,NUMCOL
+          NCVALU(I,J)=0
+          IVALUE(I,J)=' '
+          NCVALU(I,J)=0
+          AMAT(I,J)=0.0
+ 4325   CONTINUE
+ 4323 CONTINUE
+      IF(IDAVT2.EQ.'ASTM')THEN
+        IVALUE(1,1)='10%'
+        IVALUE(2,1)='5%'
+        IVALUE(3,1)='1%'
+        IVALUE(1,2)='90%'
+        IVALUE(2,2)='95%'
+        IVALUE(3,2)='99%'
+        NCVALU(1,1)=3
+        NCVALU(2,1)=2
+        NCVALU(3,1)=2
+        NCVALU(1,2)=3
+        NCVALU(2,2)=3
+        NCVALU(3,2)=3
+      ELSEIF(IDAVT2.EQ.'DAVI')THEN
+        IVALUE(1,1)='10%'
+        IVALUE(2,1)='5%'
+        IVALUE(3,1)='2.5%'
+        IVALUE(4,1)='1%'
+        IVALUE(5,1)='0.5%'
+        IVALUE(1,2)='90%'
+        IVALUE(2,2)='95%'
+        IVALUE(3,2)='97.5%'
+        IVALUE(4,2)='99%'
+        IVALUE(5,2)='99.5%'
+        NCVALU(1,1)=3
+        NCVALU(2,1)=2
+        NCVALU(3,1)=4
+        NCVALU(4,1)=2
+        NCVALU(5,1)=4
+        NCVALU(1,2)=3
+        NCVALU(2,2)=3
+        NCVALU(3,2)=5
+        NCVALU(4,2)=3
+        NCVALU(5,2)=5
+      ELSE
+        IVALUE(1,1)='20%'
+        IVALUE(2,1)='10%'
+        IVALUE(3,1)='5%'
+        IVALUE(4,1)='2.5%'
+        IVALUE(5,1)='1%'
+        IVALUE(6,1)='0.5%'
+        IVALUE(1,2)='80%'
+        IVALUE(2,2)='90%'
+        IVALUE(3,2)='95%'
+        IVALUE(4,2)='97.5%'
+        IVALUE(5,2)='99%'
+        IVALUE(6,2)='99.5%'
+        NCVALU(1,1)=3
+        NCVALU(2,1)=3
+        NCVALU(3,1)=2
+        NCVALU(4,1)=4
+        NCVALU(5,1)=2
+        NCVALU(6,1)=4
+        NCVALU(1,2)=3
+        NCVALU(2,2)=3
+        NCVALU(3,2)=3
+        NCVALU(4,2)=5
+        NCVALU(5,2)=3
+        NCVALU(6,2)=5
+      ENDIF
+      IVALUE(1,5)='Accept H0'
+      IVALUE(2,5)='Accept H0'
+      IVALUE(3,5)='Accept H0'
+      IVALUE(4,5)='Accept H0'
+      IVALUE(5,5)='Accept H0'
+      IVALUE(6,5)='Accept H0'
+      NCVALU(1,5)=9
+      NCVALU(2,5)=9
+      NCVALU(3,5)=9
+      NCVALU(4,5)=9
+      NCVALU(5,5)=9
+      NCVALU(6,5)=9
+      DO4410KK=1,NCDF
+        AMAT(KK,3)=STATVA
+        IF(STATVA.GT.CV(KK))IVALUE(KK,5)='Reject H0'
+        AMAT(KK,4)=RND(CV(KK),IDIGIT(3))
+ 4410 CONTINUE
+C
+      IWHTML(1)=150
+      IWHTML(2)=150
+      IWHTML(3)=150
+      IWHTML(4)=150
+      IWHTML(5)=150
+      IWRTF(1)=1500
+      IWRTF(2)=IWRTF(1)+1500
+      IWRTF(3)=IWRTF(2)+2000
+      IWRTF(4)=IWRTF(3)+2000
+      IWRTF(5)=IWRTF(4)+2000
+      IFRST=.FALSE.
+      ILAST=.TRUE.
+C
+      ISTEPN='42E'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DAV2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      CALL DPDTA4(ITITL9,NCTIT9,
+     1            ITITLE,NCTITL,ITITL2,NCTIT2,
+     1            MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1            IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,NUMROW,
+     1            IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1            ICAPSW,ICAPTY,IFRST,ILAST,
+     1            ISUBRO,IBUGA3,IERROR)
+C
+      IF(IDAVT2.EQ.'SIMU')THEN
+        ITITLE='Critical Values Based on 50,000 Simulations'
+        NCTEMP=43
+      ELSEIF(IDAVT2.EQ.'ASTM')THEN
+        ITITLE='Critical Values Based on ASTM E-178 Tables'
+        NCTEMP=42
+      ELSEIF(IDAVT2.EQ.'DAVI')THEN
+        ITITLE='Critical Values Based on David Tables'
+        NCTEMP=37
+      ELSE
+        ITITLE='Critical Values Based on Formula'
+        NCTEMP=32
+      ENDIF
+      IRTFMD='OFF'
+      IFNTSZ=-1
+      IFLAGA=.TRUE.
+      IFLAGB=.TRUE.
+      ISIZE=-1
+      NTOTAL=NCTEMP
+      NBLNK1=2
+      NBLNK2=1
+      ITYPE=2
+      AVAL=CPUMIN
+      CALL DPDTXT(ITITLE,NCTEMP,AVAL,NUMDIG,
+     1            NTOTAL,NBLNK1,NBLNK2,IFLAGA,IFLAGB,ISIZE,
+     1            ICAPSW,ICAPTY,ITYPE,
+     1            ISUBRO,IBUGA3,IERROR)
+      ISIZE=-99
+      IFNTSZ=0
+C
+      ISTEPN='42F'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DAV2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DAV2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPDAV2--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9013)IERROR,STATVA,STATCD,PVAL
+ 9013   FORMAT('IERROR,STATVA,STATCD,PVAL = ',A4,2X,3G15.7)
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPDAV3(X,N,TEMP1,TEMP2,IWRITE,PSTAMV,
+     1                  MAXNXT,IDAVTA,ISEED,
+     1                  ALPHA,CV,NALPHA,
+     1                  STATVA,XMEAN,XSD,XRANGE,
+     1                  PVAL,STATCD,XINDMN,XINDMX,
+     1                  ISUBRO,IBUGA3,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES THE DAVID,HARTLEY, PEARSON
+C              STATISTIC (AND ALTERNATIVELY THE P-VALUE, CDF,
+C              AND THE INDEX OF THE MIN AND MAX POINTS).
+C              THE DAVID STATISTIC TEST WHETHER THE MINIMIN AND MAXIMUM
+C              POINTS ARE SIMULTANEOUSLY OUTLIERS.  THIS TEST IS BASED
+C              ON THE UNDERLYING ASSUMPTION OF NORMALITY.
+C
+C              THIS TEST IS BASED ON THE RATIO OF THE RANGE TO THE
+C              STANDARD DEVIATION.  IT TESTS THE SMALLEST AND LARGEST
+C              VALUES SIMULTAENOUSLY AS BOTH BEING OUTLIERS.
+C
+C              CRITICAL VALUES CAN BE DETERMINED IN THE FOLLOWING
+C              WAYS:
+C
+C                1. TABLES FROM ASTM E178 - 16a
+C                2. TABLES FROM DAVID's PAPER
+C                3. EQUATION 6 FROM DAVID'S PAPER
+C                4. SIMULATION
+C
+C              THE FORMULA IS 
+C     REFERENCES--DAVID, HARTLEY, AND PEARSON (1954), "THE DISTRIBUTION
+C                 OF THE RATIO, IN A SINGLE NORMAL SAMPLE, OF RANGE TO
+C                 STANDARD DEVIATION", BIOMETRIKA, BOKA, VOL. 41,
+C                 PP. 482-493.
+C               --E178 - 16A (2016), "Standard Practice for Dealing with
+C                 Outlying Observations", ASTM International, 100 Barr
+C                 Harbor Drive, PO BOX C700, West Conshohocken, PA
+C                 19428-2959, USA. 
+C     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+C                                (UNSORTED OR SORTED) OBSERVATIONS.
+C                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR X.
+C     OUTPUT ARGUMENTS--XDAVID  = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED DAVID STATISTIC.
+C                     --XCDF   = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED CDF OF THE TEST STATISTIC.
+C                     --XIND   = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED INDEX OF THE SAMPLE MINIMUM.
+C     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+C             GRUBB STATISTIC.
+C     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+C                   OF N FOR THIS SUBROUTINE.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--MINIM, MAXIM, MEAN, SD.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     WRITTEN BY--JAMES J. FILLIBEN
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2855
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2009.2
+C     ORIGINAL VERSION--FEBRUARY  2009.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IDAVTA
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 IDAVT2
+      CHARACTER*4 IOP
+      CHARACTER*4 IDIR
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION X(*)
+      DIMENSION TEMP1(*)
+      DIMENSION TEMP2(*)
+      DIMENSION ALPHA(*)
+      DIMENSION CV(*)
+C
+      REAL LININ3
+      EXTERNAL LININ3
+C
+C---------------------------------------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='DPDA'
+      ISUBN2='V3  '
+      IERROR='NO'
+      IDAVT2=IDAVTA
+      IF(IDAVTA.EQ.'ASTM')THEN
+        IF(N.GT.50)IDAVT2='SIMU'
+        IF(NALPHA.EQ.1)THEN
+          ALPT=ALPHA(1)
+          IF(ALPT.GT.1.0 .AND. ALPT.LT.100.0)ALPT=ALPT/100.0
+          IF(ALPT.LT.0.5)ALPT=1.0 - ALPT
+          IF(ALPT.NE.0.90 .AND. ALPT.NE.0.95 .AND.
+     1       ALPT.NE.0.99)IDAVT2='SIMU'
+        ENDIF
+      ELSEIF(IDAVTA.EQ.'DAVI')THEN
+        IF(N.GT.1000)IDAVT2='SIMU'
+        IF(NALPHA.EQ.1)THEN
+          ALPT=ALPHA(1)
+          IF(ALPT.GT.1.0 .AND. ALPT.LT.100.0)ALPT=ALPT/100.0
+          IF(ALPT.LT.0.5)ALPT=1.0 - ALPT
+          IF(ALPT.NE.0.90  .AND. ALPT.NE.0.95 .AND.
+     1       ALPT.NE.0.975 .AND. ALPT.NE.0.990 .AND.
+     1       ALPT.NE.0.99  .AND. ALPT.NE.0.995)IDAVT2='SIMU'
+        ENDIF
+      ENDIF
+C
+      STATVA=CPUMIN
+      XSD=CPUMIN
+      XMEAN=CPUMIN
+      XRANGE=CPUMIN
+      XINDMN=CPUMIN
+      XINDMX=CPUMIN
+      CDF=CPUMIN
+      PVAL=CPUMIN
+      XIND=0.0
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'DAV3')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPDAV3--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,IDAVTA,IDAVT2,ISEED,N
+   52   FORMAT('IBUGA3,ISUBRO,IDAVTA,IDAVT2,ISEED,N = ',4(A4,2X),2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)NALPHA,ALPHA(1)
+   54   FORMAT('NALPHA,ALPHA(1) = ',I5,F10.5)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,X(I)
+   56     FORMAT('I,X(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      AN=N
+C
+      IF(N.LT.3)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN DAVID, HARTLEY, PEARSON STATISTIC--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)
+  112   FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE RESPONSE ',
+     1         'VARIABLE MUST BE AT LEAST 3.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)N
+  117   FORMAT('      THE NUMBER OF OBSERVATIONS = ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+C               *****************************************
+C               **  STEP 2--                           **
+C               **  COMPUTE THE DAVID STATISTIC.       **
+C               *****************************************
+C
+      IWRITE='OFF'
+      NM2=N-2
+      CALL MINIM(X,N,IWRITE,XMIN,IBUGA3,IERROR)
+      CALL MAXIM(X,N,IWRITE,XMAX,IBUGA3,IERROR)
+      CALL MEAN(X,N,IWRITE,XMEAN,IBUGA3,IERROR)
+      CALL SD(X,N,IWRITE,XSD,IBUGA3,IERROR)
+      XRANGE=XMAX-XMIN
+C
+      IF(XSD.LE.0.0)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,212)
+  212   FORMAT('      THE COMPUTED STANDARD DEVIATION WAS ZERO.')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+      STATVA=XRANGE/XSD
+      CALL MAXIND(X,N,IWRITE,PSTAMV,XINDMX,ISUBRO,IBUGA3,IERROR)
+      CALL MININD(X,N,IWRITE,PSTAMV,XINDMN,ISUBRO,IBUGA3,IERROR)
+C
+C               *****************************************
+C               **  STEP 3--                           **
+C               **  COMPUTE THE CRITICAL VALUES        **
+C               *****************************************
+C
+      IF(IDAVT2.EQ.'FORM')THEN
+        ADF=REAL(N-2)
+        AFACT=REAL(N)*REAL(N-1)
+        DO3100II=1,NALPHA
+          ALPT=ALPHA(II)
+          IF(ALPT.GT.1.0 .AND. ALPT.LT.100.0)ALPT=ALPT/100.0
+          IF(ALPT.LE.0.0 .OR. ALPT.GT.1.0)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,111)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,3111)ALPHA(II)
+ 3111       FORMAT('      INVALID VALUE OF ALPHA (',G15.7,'),')
+            CALL DPWRST('XXX','WRIT')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+          IF(ALPT.LT.0.5)ALPT=1.0 - ALPT
+          ALPTP=(1.0 - ALPT)/AFACT
+          CALL TPPF(ALPTP,ADF,TVAL)
+          ANUM=2.0*REAL(N-1)*TVAL**2
+          DENOM=ADF + TVAL**2
+          U2=ANUM/DENOM
+          CV(II)=SQRT(U2)
+ 3100   CONTINUE
+      ELSEIF(IDAVT2.EQ.'SIMU')THEN
+        IOP='OPEN'
+        IFLAG1=0
+        IFLAG2=1
+        IFLAG3=0
+        IFLAG4=0
+        IFLAG5=0
+        CALL DPAUFI(IOP,IFLAG1,IFLAG2,IFLAG3,IFLAG4,IFLAG5,
+     1              IOUNI1,IOUNI2,IOUNI3,IOUNI4,IOUNI5,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO9000
+C
+        NSIM=50000
+        DO3200II=1,NSIM
+          CALL NORRAN(N,ISEED,TEMP2)
+          CALL SD(TEMP2,N,IWRITE,XSDT,IBUGA3,IERROR)
+          CALL RANGDP(TEMP2,N,IWRITE,XRT,IBUGA3,IERROR)
+          W=XRT/XSDT
+          TEMP1(II)=W
+          WRITE(IOUNI2,'(E15.7)')W
+ 3200   CONTINUE
+C
+        IOP='CLOS'
+        CALL DPAUFI(IOP,IFLAG1,IFLAG2,IFLAG3,IFLAG4,IFLAG5,
+     1              IOUNI1,IOUNI2,IOUNI3,IOUNI4,IOUNI5,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO9000
+C
+        CALL SORT(TEMP1,NSIM,TEMP1)
+C
+        DO3210II=1,NALPHA
+          ALPT=ALPHA(II)
+          IF(ALPT.GT.1.0 .AND. ALPT.LT.100.0)ALPT=ALPT/100.0
+          IF(ALPT.LE.0.0 .OR. ALPT.GT.1.0)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,111)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,3111)ALPHA(II)
+            CALL DPWRST('XXX','WRIT')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+          IF(ALPT.LT.0.5)ALPT=1.0 - ALPT
+          P100=100.0*ALPT
+          CALL PERCEN(P100,TEMP1,NSIM,IWRITE,TEMP2,MAXNXT,
+     1                XPERC,IBUGA3,IERROR)
+          CV(II)=XPERC
+ 3210   CONTINUE
+        IDIR='UPPE'
+        CALL DPGOF8(TEMP1,NSIM,STATVA,PVAL,IDIR,IBUGA3,ISUBRO,IERROR)
+        STATCD=1.0 - PVAL
+      ELSEIF(IDAVT2.EQ.'ASTM')THEN
+        DO3300II=1,NALPHA
+          ALPT=ALPHA(II)
+          IF(ALPT.GT.1.0 .AND. ALPT.LT.100.0)ALPT=ALPT/100.0
+          IF(ALPT.LE.0.0 .OR. ALPT.GT.1.0)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,111)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,3111)ALPHA(II)
+            CALL DPWRST('XXX','WRIT')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+          IF(ALPT.LT.0.5)ALPT=1.0 - ALPT
+          IF(ALPT.EQ.0.90)THEN
+            IF(N.EQ.3)THEN
+              CV(II)=1.9973
+            ELSEIF(N.EQ.4)THEN
+              CV(II)=2.409
+            ELSEIF(N.EQ.5)THEN
+              CV(II)=2.712
+            ELSEIF(N.EQ.6)THEN
+              CV(II)=2.949
+            ELSEIF(N.EQ.7)THEN
+              CV(II)=3.143
+            ELSEIF(N.EQ.8)THEN
+              CV(II)=3.308
+            ELSEIF(N.EQ.9)THEN
+              CV(II)=3.449
+            ELSEIF(N.EQ.10)THEN
+              CV(II)=3.574
+            ELSEIF(N.EQ.11)THEN
+              CV(II)=3.684
+            ELSEIF(N.EQ.12)THEN
+              CV(II)=3.782
+            ELSEIF(N.EQ.13)THEN
+              CV(II)=3.871
+            ELSEIF(N.EQ.14)THEN
+              CV(II)=3.952
+            ELSEIF(N.EQ.15)THEN
+              CV(II)=4.025
+            ELSEIF(N.EQ.16)THEN
+              CV(II)=4.093
+            ELSEIF(N.EQ.17)THEN
+              CV(II)=4.156
+            ELSEIF(N.EQ.18)THEN
+              CV(II)=4.214
+            ELSEIF(N.EQ.19)THEN
+              CV(II)=4.269
+            ELSEIF(N.EQ.20)THEN
+              CV(II)=4.320
+            ELSEIF(N.EQ.21)THEN
+              CV(II)=4.368
+            ELSEIF(N.EQ.22)THEN
+              CV(II)=4.413
+            ELSEIF(N.EQ.23)THEN
+              CV(II)=4.456
+            ELSEIF(N.EQ.24)THEN
+              CV(II)=4.497
+            ELSEIF(N.EQ.25)THEN
+              CV(II)=4.535
+            ELSEIF(N.EQ.26)THEN
+              CV(II)=4.572
+            ELSEIF(N.EQ.27)THEN
+              CV(II)=4.607
+            ELSEIF(N.EQ.28)THEN
+              CV(II)=4.641
+            ELSEIF(N.EQ.29)THEN
+              CV(II)=4.673
+            ELSEIF(N.EQ.30)THEN
+              CV(II)=4.704
+            ELSEIF(N.GE.31 .AND. N.LE.34)THEN
+              X1=30.
+              X2=35.
+              X3=REAL(N)
+              Y1=4.704
+              Y2=4.841
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.35)THEN
+              CV(II)=4.841
+            ELSEIF(N.GE.36 .AND. N.LE.39)THEN
+              X1=35.
+              X2=40.
+              X3=REAL(N)
+              Y1=4.841
+              Y2=4.957
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.40)THEN
+              CV(II)=4.957
+            ELSEIF(N.GE.41 .AND. N.LE.44)THEN
+              X1=40.
+              X2=45.
+              X3=REAL(N)
+              Y1=4.957
+              Y2=5.057
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.45)THEN
+              CV(II)=5.057
+            ELSEIF(N.GE.46 .AND. N.LE.49)THEN
+              X1=45.
+              X2=50.
+              X3=REAL(N)
+              Y1=5.057
+              Y2=5.144
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.50)THEN
+              CV(II)=5.144
+            ENDIF
+          ELSEIF(ALPT.EQ.0.95)THEN
+            IF(N.EQ.3)THEN
+              CV(II)=1.9993
+            ELSEIF(N.EQ.4)THEN
+              CV(II)=2.429
+            ELSEIF(N.EQ.5)THEN
+              CV(II)=2.755
+            ELSEIF(N.EQ.6)THEN
+              CV(II)=3.012
+            ELSEIF(N.EQ.7)THEN
+              CV(II)=3.222
+            ELSEIF(N.EQ.8)THEN
+              CV(II)=3.399
+            ELSEIF(N.EQ.9)THEN
+              CV(II)=3.552
+            ELSEIF(N.EQ.10)THEN
+              CV(II)=3.685
+            ELSEIF(N.EQ.11)THEN
+              CV(II)=3.803
+            ELSEIF(N.EQ.12)THEN
+              CV(II)=3.909
+            ELSEIF(N.EQ.13)THEN
+              CV(II)=4.005
+            ELSEIF(N.EQ.14)THEN
+              CV(II)=4.092
+            ELSEIF(N.EQ.15)THEN
+              CV(II)=4.171
+            ELSEIF(N.EQ.16)THEN
+              CV(II)=4.244
+            ELSEIF(N.EQ.17)THEN
+              CV(II)=4.311
+            ELSEIF(N.EQ.18)THEN
+              CV(II)=4.374
+            ELSEIF(N.EQ.19)THEN
+              CV(II)=4.433
+            ELSEIF(N.EQ.20)THEN
+              CV(II)=4.487
+            ELSEIF(N.EQ.21)THEN
+              CV(II)=4.539
+            ELSEIF(N.EQ.22)THEN
+              CV(II)=4.587
+            ELSEIF(N.EQ.23)THEN
+              CV(II)=4.633
+            ELSEIF(N.EQ.24)THEN
+              CV(II)=4.676
+            ELSEIF(N.EQ.25)THEN
+              CV(II)=4.717
+            ELSEIF(N.EQ.26)THEN
+              CV(II)=4.756
+            ELSEIF(N.EQ.27)THEN
+              CV(II)=4.793
+            ELSEIF(N.EQ.28)THEN
+              CV(II)=4.829
+            ELSEIF(N.EQ.29)THEN
+              CV(II)=4.863
+            ELSEIF(N.EQ.30)THEN
+              CV(II)=4.895
+            ELSEIF(N.GE.31 .AND. N.LE.34)THEN
+              X1=30.
+              X2=35.
+              X3=REAL(N)
+              Y1=4.895
+              Y2=5.040
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.35)THEN
+              CV(II)=5.040
+            ELSEIF(N.GE.36 .AND. N.LE.39)THEN
+              X1=35.
+              X2=40.
+              X3=REAL(N)
+              Y1=5.040
+              Y2=5.162
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.40)THEN
+              CV(II)=5.162
+            ELSEIF(N.GE.41 .AND. N.LE.44)THEN
+              X1=40.
+              X2=45.
+              X3=REAL(N)
+              Y1=5.162
+              Y2=5.265
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.45)THEN
+              CV(II)=5.265
+            ELSEIF(N.GE.46 .AND. N.LE.49)THEN
+              X1=45.
+              X2=50.
+              X3=REAL(N)
+              Y1=5.265
+              Y2=5.356
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.50)THEN
+              CV(II)=5.356
+            ENDIF
+          ELSEIF(ALPT.EQ.0.99)THEN
+            IF(N.EQ.3)THEN
+              CV(II)=2.000
+            ELSEIF(N.EQ.4)THEN
+              CV(II)=2.445
+            ELSEIF(N.EQ.5)THEN
+              CV(II)=2.803
+            ELSEIF(N.EQ.6)THEN
+              CV(II)=3.095
+            ELSEIF(N.EQ.7)THEN
+              CV(II)=3.338
+            ELSEIF(N.EQ.8)THEN
+              CV(II)=3.543
+            ELSEIF(N.EQ.9)THEN
+              CV(II)=3.720
+            ELSEIF(N.EQ.10)THEN
+              CV(II)=3.875
+            ELSEIF(N.EQ.11)THEN
+              CV(II)=4.011
+            ELSEIF(N.EQ.12)THEN
+              CV(II)=4.133
+            ELSEIF(N.EQ.13)THEN
+              CV(II)=4.244
+            ELSEIF(N.EQ.14)THEN
+              CV(II)=4.344
+            ELSEIF(N.EQ.15)THEN
+              CV(II)=4.435
+            ELSEIF(N.EQ.16)THEN
+              CV(II)=4.519
+            ELSEIF(N.EQ.17)THEN
+              CV(II)=4.597
+            ELSEIF(N.EQ.18)THEN
+              CV(II)=4.669
+            ELSEIF(N.EQ.19)THEN
+              CV(II)=4.736
+            ELSEIF(N.EQ.20)THEN
+              CV(II)=4.799
+            ELSEIF(N.EQ.21)THEN
+              CV(II)=4.858
+            ELSEIF(N.EQ.22)THEN
+              CV(II)=4.913
+            ELSEIF(N.EQ.23)THEN
+              CV(II)=4.965
+            ELSEIF(N.EQ.24)THEN
+              CV(II)=5.015
+            ELSEIF(N.EQ.25)THEN
+              CV(II)=5.061
+            ELSEIF(N.EQ.26)THEN
+              CV(II)=5.106
+            ELSEIF(N.EQ.27)THEN
+              CV(II)=5.148
+            ELSEIF(N.EQ.28)THEN
+              CV(II)=5.188
+            ELSEIF(N.EQ.29)THEN
+              CV(II)=5.226
+            ELSEIF(N.EQ.30)THEN
+              CV(II)=5.263
+            ELSEIF(N.GE.31 .AND. N.LE.34)THEN
+              X1=30.
+              X2=35.
+              X3=REAL(N)
+              Y1=5.263
+              Y2=5.426
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.35)THEN
+              CV(II)=5.426
+            ELSEIF(N.GE.36 .AND. N.LE.39)THEN
+              X1=35.
+              X2=40.
+              X3=REAL(N)
+              Y1=5.426
+              Y2=5.561
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.40)THEN
+              CV(II)=5.561
+            ELSEIF(N.GE.41 .AND. N.LE.44)THEN
+              X1=40.
+              X2=45.
+              X3=REAL(N)
+              Y1=5.561
+              Y2=5.674
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.45)THEN
+              CV(II)=5.674
+            ELSEIF(N.GE.46 .AND. N.LE.49)THEN
+              X1=45.
+              X2=50.
+              X3=REAL(N)
+              Y1=5.674
+              Y2=5.773
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.50)THEN
+              CV(II)=5.773
+            ENDIF
+          ELSE
+            CV(II)=CPUMIN
+          ENDIF
+ 3300   CONTINUE
+      ELSEIF(IDAVT2.EQ.'DAVI')THEN
+        DO3400II=1,NALPHA
+          ALPT=ALPHA(II)
+          IF(ALPT.GT.1.0 .AND. ALPT.LT.100.0)ALPT=ALPT/100.0
+          IF(ALPT.LE.0.0 .OR. ALPT.GT.1.0)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,111)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,3111)ALPHA(II)
+            CALL DPWRST('XXX','WRIT')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+          IF(ALPT.LT.0.5)ALPT=1.0 - ALPT
+          IF(ALPT.EQ.0.90)THEN
+            IF(N.EQ.3)THEN
+               CV(II)=1.997
+            ELSEIF(N.EQ.4)THEN
+               CV(II)=2.409
+            ELSEIF(N.EQ.5)THEN
+               CV(II)=2.712
+            ELSEIF(N.EQ.6)THEN
+               CV(II)=2.949
+            ELSEIF(N.EQ.7)THEN
+               CV(II)=3.143
+            ELSEIF(N.EQ.8)THEN
+               CV(II)=3.308
+            ELSEIF(N.EQ.9)THEN
+               CV(II)=3.449
+            ELSEIF(N.EQ.10)THEN
+               CV(II)=3.57
+            ELSEIF(N.EQ.11)THEN
+               CV(II)=3.68
+            ELSEIF(N.EQ.12)THEN
+               CV(II)=3.78
+            ELSEIF(N.EQ.13)THEN
+               CV(II)=3.87
+            ELSEIF(N.EQ.14)THEN
+               CV(II)=3.95
+            ELSEIF(N.EQ.15)THEN
+               CV(II)=4.02
+            ELSEIF(N.EQ.16)THEN
+               CV(II)=4.09
+            ELSEIF(N.EQ.17)THEN
+               CV(II)=4.15
+            ELSEIF(N.EQ.18)THEN
+               CV(II)=4.21
+            ELSEIF(N.EQ.19)THEN
+               CV(II)=4.27
+            ELSEIF(N.EQ.20)THEN
+               CV(II)=4.32
+            ELSEIF(N.GE.21 .AND. N.LE.29)THEN
+              X1=20.
+              X2=30.
+              X3=REAL(N)
+              Y1=4.32
+              Y2=4.70
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.30)THEN
+               CV(II)=4.70
+            ELSEIF(N.GE.31 .AND. N.LE.39)THEN
+              X1=30.
+              X2=40.
+              X3=REAL(N)
+              Y1=4.70
+              Y2=4.96
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.40)THEN
+               CV(II)=4.96
+            ELSEIF(N.GE.41 .AND. N.LE.49)THEN
+              X1=40.
+              X2=50.
+              X3=REAL(N)
+              Y1=4.96
+              Y2=5.15
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.50)THEN
+               CV(II)=5.15
+            ELSEIF(N.GE.51 .AND. N.LE.59)THEN
+              X1=50.
+              X2=60.
+              X3=REAL(N)
+              Y1=5.15
+              Y2=5.29
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.60)THEN
+               CV(II)=5.29
+            ELSEIF(N.GE.61 .AND. N.LE.79)THEN
+              X1=60.
+              X2=80.
+              X3=REAL(N)
+              Y1=5.29
+              Y2=5.51
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.80)THEN
+               CV(II)=5.51
+            ELSEIF(N.GE.81 .AND. N.LE.99)THEN
+              X1=80.
+              X2=100.
+              X3=REAL(N)
+              Y1=5.51
+              Y2=5.68
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.100)THEN
+               CV(II)=5.68
+            ELSEIF(N.GE.101 .AND. N.LE.149)THEN
+              X1=100.
+              X2=150.
+              X3=REAL(N)
+              Y1=5.68
+              Y2=5.96
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.150)THEN
+               CV(II)=5.96
+            ELSEIF(N.GE.151 .AND. N.LE.199)THEN
+              X1=150.
+              X2=200.
+              X3=REAL(N)
+              Y1=5.96
+              Y2=6.15
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.200)THEN
+               CV(II)=6.15
+            ELSEIF(N.GE.201 .AND. N.LE.499)THEN
+              X1=200.
+              X2=500.
+              X3=REAL(N)
+              Y1=6.15
+              Y2=6.72
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.500)THEN
+               CV(II)=6.72
+            ELSEIF(N.GE.501 .AND. N.LE.999)THEN
+              X1=500.
+              X2=1000.
+              X3=REAL(N)
+              Y1=6.72
+              Y2=7.11
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.1000)THEN
+               CV(II)=7.11
+            ENDIF
+          ELSEIF(ALPT.EQ.0.95)THEN
+            IF(N.EQ.3)THEN
+               CV(II)=1.999
+            ELSEIF(N.EQ.4)THEN
+               CV(II)=2.429
+            ELSEIF(N.EQ.5)THEN
+               CV(II)=2.753
+            ELSEIF(N.EQ.6)THEN
+               CV(II)=3.012
+            ELSEIF(N.EQ.7)THEN
+               CV(II)=3.222
+            ELSEIF(N.EQ.8)THEN
+               CV(II)=3.399
+            ELSEIF(N.EQ.9)THEN
+               CV(II)=3.552
+            ELSEIF(N.EQ.10)THEN
+               CV(II)=3.685
+            ELSEIF(N.EQ.11)THEN
+               CV(II)=3.80
+            ELSEIF(N.EQ.12)THEN
+               CV(II)=3.91
+            ELSEIF(N.EQ.13)THEN
+               CV(II)=4.00
+            ELSEIF(N.EQ.14)THEN
+               CV(II)=4.09
+            ELSEIF(N.EQ.15)THEN
+               CV(II)=4.17
+            ELSEIF(N.EQ.16)THEN
+               CV(II)=4.24
+            ELSEIF(N.EQ.17)THEN
+               CV(II)=4.31
+            ELSEIF(N.EQ.18)THEN
+               CV(II)=4.38
+            ELSEIF(N.EQ.19)THEN
+               CV(II)=4.43
+            ELSEIF(N.EQ.20)THEN
+               CV(II)=4.49
+            ELSEIF(N.GE.21 .AND. N.LE.29)THEN
+              X1=20.
+              X2=30.
+              X3=REAL(N)
+              Y1=4.49
+              Y2=4.89
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.30)THEN
+               CV(II)=4.89
+            ELSEIF(N.GE.31 .AND. N.LE.39)THEN
+              X1=30.
+              X2=40.
+              X3=REAL(N)
+              Y1=4.89
+              Y2=5.15
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.40)THEN
+               CV(II)=5.15
+            ELSEIF(N.GE.41 .AND. N.LE.49)THEN
+              X1=40.
+              X2=50.
+              X3=REAL(N)
+              Y1=5.15
+              Y2=5.35
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.50)THEN
+               CV(II)=5.35
+            ELSEIF(N.GE.51 .AND. N.LE.59)THEN
+              X1=50.
+              X2=60.
+              X3=REAL(N)
+              Y1=5.35
+              Y2=5.50
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.60)THEN
+               CV(II)=5.50
+            ELSEIF(N.GE.61 .AND. N.LE.79)THEN
+              X1=60.
+              X2=80.
+              X3=REAL(N)
+              Y1=5.50
+              Y2=5.73
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.80)THEN
+               CV(II)=5.73
+            ELSEIF(N.GE.81 .AND. N.LE.99)THEN
+              X1=80.
+              X2=100.
+              X3=REAL(N)
+              Y1=5.73
+              Y2=5.90
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.100)THEN
+               CV(II)=5.90
+            ELSEIF(N.GE.101 .AND. N.LE.149)THEN
+              X1=100.
+              X2=150.
+              X3=REAL(N)
+              Y1=5.90
+              Y2=6.18
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.150)THEN
+               CV(II)=6.18
+            ELSEIF(N.GE.151 .AND. N.LE.199)THEN
+              X1=150.
+              X2=200.
+              X3=REAL(N)
+              Y1=6.18
+              Y2=6.38
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.200)THEN
+               CV(II)=6.38
+            ELSEIF(N.GE.201 .AND. N.LE.499)THEN
+              X1=200.
+              X2=500.
+              X3=REAL(N)
+              Y1=6.38
+              Y2=6.94
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.500)THEN
+               CV(II)=6.94
+            ELSEIF(N.GE.501 .AND. N.LE.999)THEN
+              X1=500.
+              X2=1000.
+              X3=REAL(N)
+              Y1=6.94
+              Y2=7.33
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.1000)THEN
+               CV(II)=7.33
+            ENDIF
+          ELSEIF(ALPT.EQ.0.975)THEN
+            IF(N.EQ.3)THEN
+               CV(II)=2.000
+            ELSEIF(N.EQ.4)THEN
+               CV(II)=2.439
+            ELSEIF(N.EQ.5)THEN
+               CV(II)=2.782
+            ELSEIF(N.EQ.6)THEN
+               CV(II)=3.056
+            ELSEIF(N.EQ.7)THEN
+               CV(II)=3.282
+            ELSEIF(N.EQ.8)THEN
+               CV(II)=3.471
+            ELSEIF(N.EQ.9)THEN
+               CV(II)=3.634
+            ELSEIF(N.EQ.10)THEN
+               CV(II)=3.777
+            ELSEIF(N.EQ.11)THEN
+               CV(II)=3.903
+            ELSEIF(N.EQ.12)THEN
+               CV(II)=4.01
+            ELSEIF(N.EQ.13)THEN
+               CV(II)=4.11
+            ELSEIF(N.EQ.14)THEN
+               CV(II)=4.21
+            ELSEIF(N.EQ.15)THEN
+               CV(II)=4.29
+            ELSEIF(N.EQ.16)THEN
+               CV(II)=4.37
+            ELSEIF(N.EQ.17)THEN
+               CV(II)=4.44
+            ELSEIF(N.EQ.18)THEN
+               CV(II)=4.51
+            ELSEIF(N.EQ.19)THEN
+               CV(II)=4.57
+            ELSEIF(N.EQ.20)THEN
+               CV(II)=4.63
+            ELSEIF(N.GE.21 .AND. N.LE.29)THEN
+              X1=20.
+              X2=30.
+              X3=REAL(N)
+              Y1=4.63
+              Y2=5.06
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.30)THEN
+               CV(II)=5.06
+            ELSEIF(N.GE.31 .AND. N.LE.39)THEN
+              X1=30.
+              X2=40.
+              X3=REAL(N)
+              Y1=5.06
+              Y2=5.34
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.40)THEN
+               CV(II)=5.34
+            ELSEIF(N.GE.41 .AND. N.LE.49)THEN
+              X1=40.
+              X2=50.
+              X3=REAL(N)
+              Y1=5.34
+              Y2=5.54
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.50)THEN
+               CV(II)=5.54
+            ELSEIF(N.GE.51 .AND. N.LE.59)THEN
+              X1=50.
+              X2=60.
+              X3=REAL(N)
+              Y1=5.54
+              Y2=5.70
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.60)THEN
+               CV(II)=5.70
+            ELSEIF(N.GE.61 .AND. N.LE.79)THEN
+              X1=60.
+              X2=80.
+              X3=REAL(N)
+              Y1=5.70
+              Y2=5.93
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.80)THEN
+               CV(II)=5.93
+            ELSEIF(N.GE.81 .AND. N.LE.99)THEN
+              X1=80.
+              X2=100.
+              X3=REAL(N)
+              Y1=5.93
+              Y2=6.11
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.100)THEN
+               CV(II)=6.11
+            ELSEIF(N.GE.101 .AND. N.LE.149)THEN
+              X1=100.
+              X2=150.
+              X3=REAL(N)
+              Y1=6.11
+              Y2=6.39
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.150)THEN
+               CV(II)=6.39
+            ELSEIF(N.GE.151 .AND. N.LE.199)THEN
+              X1=150.
+              X2=200.
+              X3=REAL(N)
+              Y1=6.39
+              Y2=6.59
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.200)THEN
+               CV(II)=6.59
+            ELSEIF(N.GE.201 .AND. N.LE.499)THEN
+              X1=200.
+              X2=500.
+              X3=REAL(N)
+              Y1=6.59
+              Y2=7.15
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.500)THEN
+               CV(II)=7.15
+            ELSEIF(N.GE.501 .AND. N.LE.999)THEN
+              X1=500.
+              X2=1000.
+              X3=REAL(N)
+              Y1=7.15
+              Y2=7.54
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.1000)THEN
+               CV(II)=7.54
+            ENDIF
+          ELSEIF(ALPT.EQ.0.99)THEN
+            IF(N.EQ.3)THEN
+               CV(II)=2.000
+            ELSEIF(N.EQ.4)THEN
+               CV(II)=2.445
+            ELSEIF(N.EQ.5)THEN
+               CV(II)=2.803
+            ELSEIF(N.EQ.6)THEN
+               CV(II)=3.095
+            ELSEIF(N.EQ.7)THEN
+               CV(II)=3.338
+            ELSEIF(N.EQ.8)THEN
+               CV(II)=3.543
+            ELSEIF(N.EQ.9)THEN
+               CV(II)=3.720
+            ELSEIF(N.EQ.10)THEN
+               CV(II)=3.875
+            ELSEIF(N.EQ.11)THEN
+               CV(II)=4.012
+            ELSEIF(N.EQ.12)THEN
+               CV(II)=4.134
+            ELSEIF(N.EQ.13)THEN
+               CV(II)=4.244
+            ELSEIF(N.EQ.14)THEN
+               CV(II)=4.34
+            ELSEIF(N.EQ.15)THEN
+               CV(II)=4.43
+            ELSEIF(N.EQ.16)THEN
+               CV(II)=4.51
+            ELSEIF(N.EQ.17)THEN
+               CV(II)=4.59
+            ELSEIF(N.EQ.18)THEN
+               CV(II)=4.66
+            ELSEIF(N.EQ.19)THEN
+               CV(II)=4.73
+            ELSEIF(N.EQ.20)THEN
+               CV(II)=4.79
+            ELSEIF(N.GE.21 .AND. N.LE.29)THEN
+              X1=20.
+              X2=30.
+              X3=REAL(N)
+              Y1=4.79
+              Y2=5.25
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.30)THEN
+               CV(II)=5.25
+            ELSEIF(N.GE.31 .AND. N.LE.39)THEN
+              X1=30.
+              X2=40.
+              X3=REAL(N)
+              Y1=5.25
+              Y2=5.54
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.40)THEN
+               CV(II)=5.54
+            ELSEIF(N.GE.41 .AND. N.LE.49)THEN
+              X1=40.
+              X2=50.
+              X3=REAL(N)
+              Y1=5.54
+              Y2=5.77
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.50)THEN
+               CV(II)=5.77
+            ELSEIF(N.GE.51 .AND. N.LE.59)THEN
+              X1=50.
+              X2=60.
+              X3=REAL(N)
+              Y1=5.77
+              Y2=5.93
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.60)THEN
+               CV(II)=5.93
+            ELSEIF(N.GE.61 .AND. N.LE.79)THEN
+              X1=60.
+              X2=80.
+              X3=REAL(N)
+              Y1=5.93
+              Y2=6.18
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.80)THEN
+               CV(II)=6.18
+            ELSEIF(N.GE.81 .AND. N.LE.99)THEN
+              X1=80.
+              X2=100.
+              X3=REAL(N)
+              Y1=6.18
+              Y2=6.36
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.100)THEN
+               CV(II)=6.36
+            ELSEIF(N.GE.101 .AND. N.LE.149)THEN
+              X1=100.
+              X2=150.
+              X3=REAL(N)
+              Y1=6.36
+              Y2=6.64
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.150)THEN
+               CV(II)=6.64
+            ELSEIF(N.GE.151 .AND. N.LE.199)THEN
+              X1=150.
+              X2=200.
+              X3=REAL(N)
+              Y1=6.64
+              Y2=6.85
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.200)THEN
+               CV(II)=6.85
+            ELSEIF(N.GE.201 .AND. N.LE.499)THEN
+              X1=200.
+              X2=500.
+              X3=REAL(N)
+              Y1=6.85
+              Y2=7.42
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.500)THEN
+               CV(II)=7.42
+            ELSEIF(N.GE.501 .AND. N.LE.999)THEN
+              X1=500.
+              X2=1000.
+              X3=REAL(N)
+              Y1=7.42
+              Y2=7.80
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.1000)THEN
+               CV(II)=7.80
+            ENDIF
+          ELSEIF(ALPT.EQ.0.995)THEN
+            IF(N.EQ.3)THEN
+               CV(II)=2.000
+            ELSEIF(N.EQ.4)THEN
+               CV(II)=2.447
+            ELSEIF(N.EQ.5)THEN
+               CV(II)=2.813
+            ELSEIF(N.EQ.6)THEN
+               CV(II)=3.115
+            ELSEIF(N.EQ.7)THEN
+               CV(II)=3.369
+            ELSEIF(N.EQ.8)THEN
+               CV(II)=3.585
+            ELSEIF(N.EQ.9)THEN
+               CV(II)=3.772
+            ELSEIF(N.EQ.10)THEN
+               CV(II)=3.935
+            ELSEIF(N.EQ.11)THEN
+               CV(II)=4.079
+            ELSEIF(N.EQ.12)THEN
+               CV(II)=4.208
+            ELSEIF(N.EQ.13)THEN
+               CV(II)=4.325
+            ELSEIF(N.EQ.14)THEN
+               CV(II)=4.431
+            ELSEIF(N.EQ.15)THEN
+               CV(II)=4.53
+            ELSEIF(N.EQ.16)THEN
+               CV(II)=4.62
+            ELSEIF(N.EQ.17)THEN
+               CV(II)=4.69
+            ELSEIF(N.EQ.18)THEN
+               CV(II)=4.77
+            ELSEIF(N.EQ.19)THEN
+               CV(II)=4.84
+            ELSEIF(N.EQ.20)THEN
+               CV(II)=4.91
+            ELSEIF(N.GE.21 .AND. N.LE.29)THEN
+              X1=20.
+              X2=30.
+              X3=REAL(N)
+              Y1=4.91
+              Y2=5.39
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.30)THEN
+               CV(II)=5.39
+            ELSEIF(N.GE.31 .AND. N.LE.39)THEN
+              X1=30.
+              X2=40.
+              X3=REAL(N)
+              Y1=5.39
+              Y2=5.69
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.40)THEN
+               CV(II)=5.69
+            ELSEIF(N.GE.41 .AND. N.LE.49)THEN
+              X1=40.
+              X2=50.
+              X3=REAL(N)
+              Y1=5.69
+              Y2=5.91
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.50)THEN
+               CV(II)=5.91
+            ELSEIF(N.GE.51 .AND. N.LE.59)THEN
+              X1=50.
+              X2=60.
+              X3=REAL(N)
+              Y1=5.91
+              Y2=6.09
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.60)THEN
+               CV(II)=6.09
+            ELSEIF(N.GE.61 .AND. N.LE.79)THEN
+              X1=60.
+              X2=80.
+              X3=REAL(N)
+              Y1=6.09
+              Y2=6.35
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.80)THEN
+               CV(II)=6.35
+            ELSEIF(N.GE.81 .AND. N.LE.99)THEN
+              X1=80.
+              X2=100.
+              X3=REAL(N)
+              Y1=6.35
+              Y2=6.54
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.100)THEN
+               CV(II)=6.54
+            ELSEIF(N.GE.101 .AND. N.LE.149)THEN
+              X1=100.
+              X2=150.
+              X3=REAL(N)
+              Y1=6.54
+              Y2=6.84
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.150)THEN
+               CV(II)=6.84
+            ELSEIF(N.GE.151 .AND. N.LE.199)THEN
+              X1=150.
+              X2=200.
+              X3=REAL(N)
+              Y1=6.84
+              Y2=7.03
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.200)THEN
+               CV(II)=7.03
+            ELSEIF(N.GE.201 .AND. N.LE.499)THEN
+              X1=200.
+              X2=500.
+              X3=REAL(N)
+              Y1=7.03
+              Y2=7.60
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.500)THEN
+               CV(II)=7.60
+            ELSEIF(N.GE.501 .AND. N.LE.999)THEN
+              X1=500.
+              X2=1000.
+              X3=REAL(N)
+              Y1=7.60
+              Y2=7.99
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.1000)THEN
+               CV(II)=7.99
+            ENDIF
+          ENDIF
+ 3400   CONTINUE
+      ENDIF
+C
+C               *******************************
+C               **  STEP 3--                 **
+C               **  WRITE OUT A LINE         **
+C               **  OF SUMMARY INFORMATION.  **
+C               *******************************
+C
+  800 CONTINUE
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,811)N,XDAVID
+  811   FORMAT('THE VALUE OF THE GRUBB STATISTIC OF THE ',I8,
+     1         ' OBSERVATIONS = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'DAV3')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPDAV3--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IBUGA3,IERROR
+ 9012   FORMAT('IBUGA3,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)N
+ 9013   FORMAT('N = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)XMIN,XMAX,XMEAN,XSD
+ 9015   FORMAT('XMIN,XMAX,XMEAN,XSD = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9016)XDAVID,XCDF,XIND,XDIR
+ 9016   FORMAT('XDAVID,XCDF,XIND,XDIR = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPDAV4(STATVA,STATCD,PVAL,
+     1                  CUT80,CUT90,CUT95,
+     1                  CUT975,CUT99,CUT995,
+     1                  IFLAGU,IFRST,ILAST,ICASPL,IDAVTA,
+     1                  IBUGA2,IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--UTILITY ROUTINE USED BY DPDAVI.  THIS ROUTINE
+C              UPDATES THE PARAMETERS "STATVAL", "STATCDF", AND
+C              "PVALUE" AFTER A DAVID TEST.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORAOTRY
+C                 NATIONAL INSTITUTE OF STANDARDS OF TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS OF TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2019/10
+C     ORIGINAL VERSION--OCTOBER   2019.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IFLAGU
+      CHARACTER*4 ICASPL
+      CHARACTER*4 IDAVTA
+      CHARACTER*4 ICASP2
+      CHARACTER*4 IBUGA2
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      LOGICAL IFRST
+      LOGICAL ILAST
+C
+      CHARACTER*4 IH
+      CHARACTER*4 IH2
+      CHARACTER*4 ISUBN0
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCOHO.INC'
+C
+      CHARACTER*4 IOP
+      SAVE IOUNI1
+C
+C-----COMMON----------------------------------------------------------
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'DAV4')THEN
+        ISTEPN='1'
+        CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPDAV4--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)ICASPL,IDAVTA,STATVA,STATCD,PVAL
+   53   FORMAT('ICASPL,IDAVTA,STATVA,STATCD,PVAL = ',2(A4,2X),3G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,55)CUT80,CUT90,CUT95,CUT975,CUT99,CUT995
+   55   FORMAT('CUT80,CUT90,CUT95,CUT975,CUT99,CUT995 = ',6G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      IF(IFLAGU.EQ.'FILE')THEN
+C
+        IF(IFRST)THEN
+          IOP='OPEN'
+          IFLAG1=1
+          IFLAG2=0
+          IFLAG3=0
+          IFLAG4=0
+          IFLAG5=0
+          CALL DPAUFI(IOP,IFLAG1,IFLAG2,IFLAG3,IFLAG4,IFLAG5,
+     1                IOUNI1,IOUNI2,IOUNI3,IOUNI4,IOUNI5,
+     1                IBUGA3,ISUBRO,IERROR)
+          IF(IERROR.EQ.'YES')GOTO9000
+C
+          WRITE(IOUNI1,295)
+  295     FORMAT(11X,'STATVAL',8X,'STATCDF',8X,'PVALUE',
+     1           7X,'CUTOFF80',7X,'CUTOFF90',7X,'CUTOFF95',
+     1           7X,'CUTOF975',7X,'CUTOFF99',7X,'CUTOF995')
+        ENDIF
+        WRITE(IOUNI1,299)STATVA,STATCD,PVAL,CUT80,CUT90,
+     1                   CUT95,CUT975,CUT99,CUT995
+  299   FORMAT(9E15.7)
+      ELSEIF(IFLAGU.EQ.'ON')THEN
+        IF(STATVA.NE.CPUMIN)THEN
+          IH='STAT'
+          IH2='VAL '
+          VALUE0=STATVA
+          CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1                IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1                IANS,IWIDTH,IBUGA3,IERROR)
+        ENDIF
+C
+        IF(STATCD.NE.CPUMIN)THEN
+          IH='STAT'
+          IH2='CDF '
+          VALUE0=STATCD
+          CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1                IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1                IANS,IWIDTH,IBUGA3,IERROR)
+        ENDIF
+C
+        IF(PVAL.NE.CPUMIN)THEN
+          IH='PVAL'
+          IH2='UE  '
+          VALUE0=PVAL
+          CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1                IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1                IANS,IWIDTH,IBUGA3,IERROR)
+        ENDIF
+C
+        IF(CUT80.NE.CPUMIN)THEN
+          IH='CUTO'
+          IH2='FF80'
+          VALUE0=CUT80
+          CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1                IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1                IANS,IWIDTH,IBUGA3,IERROR)
+        ENDIF
+C
+        IF(CUT90.NE.CPUMIN)THEN
+          IH='CUTO'
+          IH2='FF90'
+          VALUE0=CUT90
+          CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1                IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1                IANS,IWIDTH,IBUGA3,IERROR)
+        ENDIF
+C
+        IF(CUT95.NE.CPUMIN)THEN
+          IH='CUTO'
+          IH2='FF95'
+          VALUE0=CUT95
+          CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1                IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1                IANS,IWIDTH,IBUGA3,IERROR)
+        ENDIF
+C
+        IF(CUT975.NE.CPUMIN)THEN
+          IH='CUTO'
+          IH2='F975'
+          VALUE0=CUT975
+          CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1                IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1                IANS,IWIDTH,IBUGA3,IERROR)
+        ENDIF
+C
+        IF(CUT99.NE.CPUMIN)THEN
+          IH='CUTO'
+          IH2='FF99'
+          VALUE0=CUT99
+          CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1                IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1                IANS,IWIDTH,IBUGA3,IERROR)
+        ENDIF
+C
+        IF(CUT995.NE.CPUMIN)THEN
+          IH='CUTO'
+          IH2='F100'
+          VALUE0=CUT995
+          CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1                IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1                IANS,IWIDTH,IBUGA3,IERROR)
+        ENDIF
+C
+      ENDIF
+C
+      IF(IFLAGU.EQ.'FILE')THEN
+        IF(ILAST)THEN
+          IOP='CLOS'
+          IFLAG1=1
+          IFLAG2=0
+          IFLAG3=0
+          IFLAG4=0
+          IFLAG5=0
+          CALL DPAUFI(IOP,IFLAG1,IFLAG2,IFLAG3,IFLAG4,IFLAG5,
+     1                IOUNI1,IOUNI2,IOUNI3,IOUNI4,IOUNI5,
+     1                IBUGA3,ISUBRO,IERROR)
+C
+          IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'DAV4')THEN
+            ISTEPN='3A'
+            CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,301)IERROR
+  301       FORMAT('AFTER CALL DPCLFI, IERROR = ',A4)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+C
+          IF(IERROR.EQ.'YES')GOTO9000
+        ENDIF
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+C
+      IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'DAV4')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END OF DPDAV4--')
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
       SUBROUTINE DPDB80(ISTRIN,JMAX,NMAX,IBUGS2,ISUBRO,IERROR)
 C
 C     PURPOSE--DETERMINE THE LAST NON-BLANK
@@ -11956,6 +15274,7 @@ C
       CHARACTER*16 IFORMT
       CHARACTER*4 ISSAV1
       CHARACTER*4 ISSAV2
+      CHARACTER*4 ICLESV
       CHARACTER*3 IEXT
 C
 C-----COMMON----------------------------------------------------------
@@ -12291,12 +15610,15 @@ C
             ENDIF
             ISSAV1=ISYSPE
             ISSAV2=ISYSHI
+            ICLESV=ICLEWT
             ISYSPE='OFF'
             ISYSHI='ON'
-            IF(IFLGSP.EQ.1)ISYSHI='OFF'
+            ICLEWT='OFF'
+CCCCC       IF(IFLGSP.EQ.1)ISYSHI='OFF'
             CALL DPSYS2(ISTRIN,N0,ISUBRO,IERROR)
             ISYSPE=ISSAV1
             ISYSHI=ISSAV2
+            ICLEWT=ICLESV
           ELSEIF(IPSTD2.EQ.'PS2P')THEN
 C
 C           2019/08: PS2PDF OPTION.  NOTE THAT PS2PDF IS INSTALLED
@@ -12388,9 +15710,11 @@ C
             ENDIF
             ISSAV1=ISYSPE
             ISSAV2=ISYSHI
+            ICLESV=ICLEWT
             ISYSPE='OFF'
             ISYSHI='ON'
-            IF(IFLGSP.EQ.1 .OR. IFLSP2.EQ.1)ISYSHI='OFF'
+            ICLEWT='OFF'
+CCCCC       IF(IFLGSP.EQ.1 .OR. IFLSP2.EQ.1)ISYSHI='OFF'
 C
             IF(IBUGO2.EQ.'ON'.OR.ISUBRO.EQ.'DEP3')THEN
                WRITE(ICOUT,2201)N0,ISTRIN(1:N0)
@@ -12401,6 +15725,7 @@ C
             CALL DPSYS2(ISTRIN,N0,ISUBRO,IERROR)
             ISYSPE=ISSAV1
             ISYSHI=ISSAV2
+            ICLEWT=ICLESV
           ELSE
 C
 C           2015/11: SINCE GHOSTSCRIPT IS NOW INSTALLED IN
@@ -12431,7 +15756,6 @@ C
               ELSE
                 ISTRIN(1:NCGHPA)=IGSTPA(1:NCGHPA)
                 N0=NCGHPA
-                IFLSP2=1
               ENDIF
 C
               IF(IOPSY1.EQ.'UNIX')THEN
@@ -12465,9 +15789,9 @@ C
             IF(IFLSP2.EQ.1)THEN
               N0=N0+1
               ISTRIN(N0:N0)=IQUOTE
-              N0=N0+1
-              ISTRIN(N0:N0)=' '
             ENDIF
+            N0=N0+1
+            ISTRIN(N0:N0)=' '
 C
             N0=N0+1
             ISTRIN(N0:N0+29)='-dNOPAUSE -dBATCH -q -sDEVICE='
@@ -12509,12 +15833,15 @@ C
             N0=N0+ILASTT-1
             ISSAV1=ISYSPE
             ISSAV2=ISYSHI
+            ICLESV=ICLEWT
             ISYSPE='OFF'
             ISYSHI='ON'
-            IF(IFLGSP.EQ.1 .OR. IFLSP2.EQ.1)ISYSHI='OFF'
+            ICLEWT='OFF'
+CCCCC       IF(IFLGSP.EQ.1 .OR. IFLSP2.EQ.1)ISYSHI='OFF'
             CALL DPSYS2(ISTRIN,N0,ISUBRO,IERROR)
             ISYSPE=ISSAV1
             ISYSHI=ISSAV2
+            ICLEWT=ICLESV
           ENDIF
         ENDIF
 C
@@ -12880,12 +16207,15 @@ C
               ENDIF
               ISSAV1=ISYSPE
               ISSAV2=ISYSHI
+              ICLESV=ICLEWT
               ISYSPE='OFF'
               ISYSHI='ON'
-              IF(IFLGSP.EQ.1)ISYSHI='OFF'
+              ICLEWT='OFF'
+CCCCC         IF(IFLGSP.EQ.1)ISYSHI='OFF'
               CALL DPSYS2(ISTRIN,N0,ISUBRO,IERROR)
               ISYSPE=ISSAV1
               ISYSHI=ISSAV2
+              ICLEWT=ICLESV
             ELSEIF(IPSTD2.EQ.'PS2P')THEN
 C
               ISTEPN='224A'
@@ -12958,12 +16288,15 @@ C
               ENDIF
               ISSAV1=ISYSPE
               ISSAV2=ISYSHI
+              ICLESV=ICLEWT
               ISYSPE='OFF'
               ISYSHI='ON'
-              IF(IFLGSP.EQ.1 .OR. IFLSP2.EQ.1)ISYSHI='OFF'
+              ICLEWT=ICLESV
+CCCCC         IF(IFLGSP.EQ.1 .OR. IFLSP2.EQ.1)ISYSHI='OFF'
               CALL DPSYS2(ISTRIN,N0,ISUBRO,IERROR)
               ISYSPE=ISSAV1
               ISYSHI=ISSAV2
+              ICLEWT='OFF'
             ELSE
 C
               ISTEPN='224'
@@ -13054,12 +16387,15 @@ C
               ENDIF
               ISSAV1=ISYSPE
               ISSAV2=ISYSHI
+              ICLESV=ICLEWT
               ISYSPE='OFF'
               ISYSHI='ON'
-              IF(IFLGSP.EQ.1 .OR. IFLSP2.EQ.1)ISYSHI='OFF'
+              ICLEWT='OFF'
+CCCCC         IF(IFLGSP.EQ.1 .OR. IFLSP2.EQ.1)ISYSHI='OFF'
               CALL DPSYS2(ISTRIN,N0,ISUBRO,IERROR)
               ISYSPE=ISSAV1
               ISYSHI=ISSAV2
+              ICLEWT=ICLESV
             ENDIF
           ENDIF
         ENDIF
@@ -20627,7 +23963,6 @@ C
      1            Y,X,D,NPLOTP,NPLOTV,STAT,
      1            ISUBRO,IBUGG3,IERROR)
 C
-      print *,'after dpdex2: icaspl,icasp9 = ',icaspl,icasp9
       ICASP3=ICASPL
       ICASPL='DEXP'
       IF(ICASP3.EQ.'SIGN')ICASPL='DEXS'
@@ -20635,7 +23970,6 @@ C
       IF(IDEXYO.EQ.'YOUD')ICASPL='DEXY'
       IF(IDEXOP.EQ.'ORDE')ICASPL='DEXO'
       IF(ICASP3.EQ.'SCAT' .AND. ICASP9.EQ.'CLAS')ICASPL='CLAS'
-      print *,'before exit: icaspl = ',icaspl
 C
 C               *****************
 C               **  STEP 90--  **
@@ -21719,8 +25053,11 @@ C
             D2(J)=CNT2
           ENDIF
 C
+CCCCC 2020/01: CHANGE FORMAT FOR dpst1f.dat
+C
           DO2460JJ=1,NUMFAC
-            WRITE(IOUNI1,'(4F7.0)')XVAL,REAL(JJ),X(IVAL,JJ)
+CCCCC       WRITE(IOUNI1,'(4F7.0)')XVAL,REAL(JJ),X(IVAL,JJ)
+            WRITE(IOUNI1,'(4F15.0)')XVAL,REAL(JJ),X(IVAL,JJ)
 C
             IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'DEX2')THEN
               WRITE(ICOUT,2461)I,JJ,XVAL,X(IVAL,JJ)

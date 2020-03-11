@@ -15473,7 +15473,8 @@ C
       RETURN
 100   CONTINUE
       DO 110 I = 1,N
-110      Y(I) = G(I) / DIAGB(I)
+         Y(I) = G(I) / DIAGB(I)
+110   CONTINUE
       RETURN
       END
 C

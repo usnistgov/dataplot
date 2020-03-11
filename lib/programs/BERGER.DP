@@ -1,0 +1,16 @@
+. This is the dataplot program file     berger.dp
+. Purpose--Do transformations & fits for alaska pipeline data
+.
+. -----start point-----
+.
+feedback off
+.
+. -----Step 1: Read in the data-----
+.
+skip 25
+read berger.dat x y
+.
+. -----Step 2: Fit and plot the data-----
+.
+call berger_sub.dp
+.

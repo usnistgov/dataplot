@@ -1,0 +1,102 @@
+. This is dataplot macro     get1cvestimate.dp       10/23/12
+. Purpose: For a fixed dataset with lab means ybarv, and a fixed estimator method ^jest
+.          and an input weights vector w^jest (or w),
+.          normalize (overwrite) the weights vector w^jdata (or w), (re)compute the CV estimator
+. Note:    For a given dataset, this macro is called ^numest (13) times  (once for each estimator)
+.          from the macro     halfandhalfplot.dp
+.      Note: This routine may be used and called by all 13 estimator methods (WA included).
+.            It relies exclusively on the input weights vectors w^jest,
+.            normalizes the weights, and (re)computes the cv estimator.
+. Note:    Calling macro = halfandhalfplot.dp
+. Date:    October 23, 2012
+.
+. Input (3):
+.   jest          (parameter)           = ID for the estimator (typically 1 to 13)
+.   w^jest        (vector)              = weight vector for the ^jest estimator
+.   ybarv         (vector)              = lab means
+.   ybarvs        (vector)              = sorted lab means
+.   sorted        (parameter)           = sort switch that dictates whether use raw means or order stat means
+.   decplace      (parameter)           = desired number of dec. places for rounded output (opt.) (def.=4)
+.
+. Output (2):
+.   cvest(^jest)  (element of a vector) = CV estimate for estimator ^jest
+.   cvestr(^jest) (element of a vector) = rounded CV estimate for estimator ^jest.
+.
+. 1+13 Consensus-value Estimators:
+.      GM    = Grand Mean
+
+.      MM    = Mean of means
+.      MP    = Mandel-Paule
+.      MMP   = Modified Mandel-Paule
+.      VR    = Vangel-Rukhin
+.      DL    = DerSimonian-laird
+.
+.      TrM   = Triangular Mean of Means
+.      TM    = Trimmed Mean of Means
+.      TrTM  = Trimmed Triangular Mean of Means
+.      MdM   = Midmean of Means
+.      TrMdM = Triangular Midmean of Means
+.      MedM  = Median of Means
+.
+.      IZ    = Inverse Means
+.      IZZ   = Inverse Means (Z**2)
+.
+. -----start point-----
+.
+let bugswget = 0
+.
+if bugswget = 1
+   print " "
+   print "At beginning of      get1cvestimate.dp"
+   print "jest = ^jest       sorted = ^sorted"
+   print w^jest ybarv ybarvs
+   pause
+end if
+.
+. -----Step 1: Check input arguments for existence-----
+.
+let string stmacro = get1cvestimate.dp
+let string stall = jest w^jest ybarv
+call checkinput.dp
+.
+. -----Step 2: Compute the CV estimator-----
+.
+delete wvorig prod denom est^jest est^jest&r
+let wvorig = w^jest
+.
+if sorted = 0
+   let denom = sum w^jest
+   let w^jest = w^jest/denom
+   let prod = w^jest*ybarv
+   let est^jest = sum prod
+end if
+.
+if sorted = 1
+   let denom = sum w^jest
+   let w^jest = w^jest/denom
+   let prod = w^jest*ybarvs
+   let est^jest = sum prod
+end if
+.
+if decplace exists; let est^jest&r = round(est^jest,decplace); end if
+if decplace not exist; let est^jest&r = round(est^jest,4); end if
+.
+if bugswget = 1
+   print ybarv w^jest prod
+   print est^jest est^jest&r
+   pause
+end if
+.
+if bugswget = 1
+   print ". . . . . ^jest. ^st^jest. . . . . "
+   print wvorig w^jest
+   print est^jest est^jest&r
+end if
+.
+let cvest(^jest) = est^jest
+let cvestr(^jest) = est^jest&r
+.
+. print cvest cvestr
+.
+. -----Step 99: Finish up"
+.

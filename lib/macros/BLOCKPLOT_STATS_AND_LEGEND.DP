@@ -1,0 +1,151 @@
+. This is dataplot macro   blockplot_stats_and_legend.dp      2/4/19 => 2/14/18
+. Purpose: Compute block plot stats and write them out (in the legend area) out (in the legend area)
+. Date: Septebmer 28, 2010  => 2/4/19 => 2/14/19
+. Input:
+.    pre-existing block plot
+.    y     (vector)    = response
+.    cond  (vector)    = condition ids         (same length as y)
+.    xprim (vector)    = primary factor vector (same length as y)
+.    lower (parameter) = target level for the lower value of the inequality
+.    upper (parameter) = target level for the upper value of the inequality
+. Output:
+.    blockplot stats computed and written out to legend area of pre-existing block plot
+. 
+. -----start point-----
+.
+feedback off
+.
+just left; hw 2.4 1.2
+.
+let buggh = 0
+if buggh = 1
+   print " "
+   print "*******at beginning of blockplot_legend.dp********"
+   print " "
+   print "lower = ^lower     upper = ^upper"
+   pause
+   print y condp xprim
+   print "ncondp = ^ncondp"
+. stat v
+. pause
+. stat p
+. pause
+   pause
+end if
+.
+. -----Step 11: Compute and print out heads- and trials-based stats-----
+.
+let dcond = distinct cond
+let dcond = sort dcond
+let ndcond = number dcond
+if buggh = 1
+   print dcond
+   print ndcond
+   pause
+end if
+.
+let heads = 0
+let trials = 0
+delete delv
+loop for jcond = 1 1 ndcond
+   let jcond2 = dcond(jcond)
+   . print jcond jcond2
+   . pause
+   delete junk1; let junk1 = y; retain junk1 subset cond ^jcond2 subset xprim lower
+   let njunk1 = number junk1
+   if njunk1 >= 1; let lowerp = junk1(1); end if
+   .
+   delete junk2; let junk2 = y; retain junk2 subset cond ^jcond2 subset xprim upper
+   let njunk2 = number junk2
+   if njunk2 >= 1; let upperp = junk2(1); end if
+   if njunk1 >=1 and njunk2 >= 1
+      let trials = trials + 1
+      let delv(jcond) = upperp - lowerp
+   end if
+   if upperp > lowerp; let heads = heads + 1; end if
+   . print "finish: jcond jcond2 heads trials = ^jcond ^jcond2 ^heads ^trials"
+. pause
+end loop
+.
+if buggh = 1
+   print "heads = ^heads     trials = ^trials"
+   print delv
+   pause
+end if
+.
+let p = heads/trials
+let p = 100*p
+let p = round(p,2)
+move 16 87; . text Plot Character = ^stlegend
+. move 16 87; . text Plot Character = X^case: ^stprim
+move 16 84; text Event: # Times ^stevent:  ^heads Out of the ^trials Robustness Conditions (^p%)
+.
+. -----Step 12: Compute and print out binomial probabilities based on heads and trials-----
+.
+let tailpro2 = 100*tailprob
+.
+let tailpr1 = bincdf(heads,0.5,trials)
+let heads2 = trials-heads
+let tailpr2 = bincdf(heads2,0.5,trials)
+let tailprob = tailpr1
+if tailpr2 > tailpr1; let tailprob = tailpr2; end if    ;. let included here 2/12/19
+. let tailprob = 100*tailprob
+. print "^tailpr1, ^tailpr2, ^tailprob)
+. pause
+.
+let tailpro2 = round(tailprob,4)
+let tailpro2 = 100*tailpro2
+move 16 81; text Binomial Tail Probability
+color blue; if tailpro2 >= 95; color red; end if
+move 38 81; text = ^tailpro2%
+color blue
+.
+. -----Step 21: compute and print out t-based stats-----
+.
+let m = mean y
+set write decimals 4; let stmr = number to string m
+.
+let ndel = number delv
+let avedel = mean delv
+.
+let sddel = sd delv
+let sdavedel = sddel/sqrt(ndel)
+. print avedel sddel sdavedel
+.
+. pause
+let avedel2 = avedel
+if numdp exists; let avedel2 = round(avedel2,numdp); end if
+.
+let sdavede2 = sdavedel
+if numdp exists; let sdavede2 = round(sdavede2,numdp); end if
+.
+let tavedel = avedel/sdavedel
+let tavedel = round(tavedel,2)
+.
+if m <> 0; let ravedel = 100*(avedel/m); end if
+set write decimals 2; let strad = number to string ravedel
+.
+move 16 78; text AveDel 
+if m <> 0; move 38 78; text = ^avedel2 (^strad%); end if
+if m =  0; move 38 78; text = ^avedel2; end if
+.
+move 16 75; text SD(AveDel)
+move 38 75; text = ^sdavede2
+.
+let tavedel = avedel / sdavedel
+let tavedel = round(tavedel,4)
+move 16 72; text t = Avedel / SD(Avedel)
+move 38 72; text = ^tavedel
+.
+. -----Step 22: Compute (and print out) t-based probabilities----
+.
+let tavedel2 = abs(tavedel)
+let ttailpr = tcdf(tavedel2,trials)
+let ttailpr = 100*ttailpr
+let ttailpr = round(ttailpr,4)
+.
+move 16 69; text t Tail Probability
+color blue; if ttailpr >= 95; color red; end if
+move 38 69; text = ^ttailpr%
+color blue
+.

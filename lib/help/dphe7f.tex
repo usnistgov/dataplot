@@ -15,6 +15,8 @@ PURPOSE--CONTAIN SYNONYMS FOR RETRIES OF THE HELP FILE (LAST UPDATED 2018/03)
 2        SAMP HOTE T    SQUA            HOTELLIN TWO  SAMP TSQU
 2        SAMP HOTE TSQU                 HOTELLIN TWO  SAMP TSQU
 2        SAMP HOTE TSQU                 HOTELLIN TWO  SAMP TSQUA
+3D       GRID                           2D       GRID
+4D       GRID                           2D       GRID
 4PLOT                                   4        PLOT
 4PLOT    DIST                           4        PLOT
 4PLOT    MULT                           4        PLOT
@@ -103,18 +105,18 @@ BETA     NORM                           BNOPDF
 BETA     NORM DIST                      BNOPDF
 BETA     PRIM DIST                      IBPDF
 BETA                                    PROBABIL FUNC
-BINARY   MATC                           BINARY   MATC DISI
-BINARY   ASYM DICE MATC DISS            BINARY   MATC DISI
-BINARY   ASYM DICE MATC SIMI            BINARY   MATC DISI
-BINARY   ASYM SOKA MATC DISS            BINARY   MATC DISI
-BINARY   ASYM SOKA MATC SIMI            BINARY   MATC DISI
-BINARY   JACC DISS                      BINARY   MATC DISI
-BINARY   JACC SIMI                      BINARY   MATC DISI
-BINARY   MATC SIMI                      BINARY   MATC DISI
-BINARY   ROGE MATC DISS                 BINARY   MATC DISI
-BINARY   ROGE MATC SIMI                 BINARY   MATC DISI
-BINARY   SOKA MATC DISS                 BINARY   MATC DISI
-BINARY   SOKA MATC SIMI                 BINARY   MATC DISI
+BINARY   MATC                           BINARY   MATC DISS
+BINARY   ASYM DICE MATC DISS            BINARY   MATC DISS
+BINARY   ASYM DICE MATC SIMI            BINARY   MATC DISS
+BINARY   ASYM SOKA MATC DISS            BINARY   MATC DISS
+BINARY   ASYM SOKA MATC SIMI            BINARY   MATC DISS
+BINARY   JACC DISS                      BINARY   MATC DISS
+BINARY   JACC SIMI                      BINARY   MATC DISS
+BINARY   MATC SIMI                      BINARY   MATC DISS
+BINARY   ROGE MATC DISS                 BINARY   MATC DISS
+BINARY   ROGE MATC SIMI                 BINARY   MATC DISS
+BINARY   SOKA MATC DISS                 BINARY   MATC DISS
+BINARY   SOKA MATC SIMI                 BINARY   MATC DISS
 BINARY   TABU PLOT                      BINARY   PLOT
 BINOMIAL DIST                           PROBABIL FUNC
 BINOMIAL CONT CORR                      MAXIMUM  LIKE
@@ -246,6 +248,7 @@ CAPTURE  SCRI LOOP SUBS                 CAPTURE
 CAPTURE  SPLI                           CAPTURE
 CAPTURE  SUSP                           CAPTURE
 CASE     LABE                           READ     ROW  LABE
+CAT      MORE                           CAT
 CATLAN   BETA                           CATLAN
 CAUCHY   DIST                           PROBABIL FUNC
 CAUCHY   PPCC                           STATISTI PPCC
@@ -361,6 +364,7 @@ COMPLEX  LOG BETA                       CLNBETA
 COMPLEX  LOG GAMM                       CLNGAM
 COMPONEN PLUS RESI                      CCPR     PLOT
 COMPONEN PLUS RESI PLOT                 CCPR     PLOT
+COMPUTER NAME                           SYSTEM   SWIT
 CONDITIO NUMB                           MATRIX   COND NUMB
 CONFLUEN HYPE M                         CHM
 CONFLUEN HYPE U                         CHU
@@ -379,10 +383,12 @@ CONVERT  CHAR                           CONVERT  CHAR (SET
 COPY     CLIP                           CLIPBOAR
 CORRELAT ABSO VALU                      CORRELAT
 CORRELAT CDF                            CORRELAT
+CORRELAT OF   MEAN CONF LIMI PLOT       I        PLOT
 CORRELAT                                CORRELAT
 CORRELAT                                MATRIX   CORR
 CORRELAT PVAL                           CORRELAT
 CORRELAT P    VALU                      CORRELAT
+CORRELAT RATI                           INTRACLA CORR
 CORRELAT UNIF RAND NUMB                 MULTIVAR UNIF RAND NUMB
 COSINE                                  PROBABIL FUNC
 COSINE   SIMI                           COSINE   DIST
@@ -425,9 +431,12 @@ DAGUM    TYPE I    DIST                 B10PDF
 DATA     FILE                           ASCII    FILE
 DATAPLOT URL                            WEB      HELP
 DATE     DELI                           READ
+DAVID    OUTL TEST                      DAVID    TEST
+DAVID    TEST CRIT VALU                 DAVID    TEST
 DEBYE    FUNC                           DEBYE
 DECILE   RATI                           INTERDEC RATI
 DECI     POIN                           READ     DECI POIN 
+DEFAULT  PRIN                           SYSTEM   SWIT
 DEFINITI                                MATRIX   DEFI
 DEHAAN   ESTI                           DEHAAN
 DEHAAN   GENE PARE                      DEHAAN
@@ -451,9 +460,14 @@ DEX      RANG PLOT                      DEX      PLOT
 DEX      SD   PLOT                      DEX      PLOT
 DEX      SN   PLOT                      DEX      PLOT
 DEX      STAN DEVI PLOT                 DEX      PLOT
+DEX      STAT PLOT INTE                 DEX      PLOT
 DEX      TAGU PLOT                      DEX      PLOT
 DIANA                                   CLUSTER
 DIANA    CLUS                           CLUSTER
+DICE     ASYM DISS                      BINARY   MATC DISS
+DICE     ASYM SIMI                      BINARY   MATC DISS
+DICE     DISS                           BINARY   MATC DISS
+DICE     SIMI                           BINARY   MATC DISS
 DIFFEREN OF   AVER ABSO DEVI            DIFFEREN OF   AAD
 DIFFEREN OF   AAD  TO   MED             AAD      TO   MED
 DIFFEREN OF   BINO PROP                 BINOMIAL PROP
@@ -555,6 +569,7 @@ EXCEL                                   ASCII    FILE
 EXCEL    DATA FILE                      ASCII    FILE
 EXCEL    FILE                           ASCII    FILE
 EXCEL    FILE                           ASCII    FILE
+EXCEL    VIEW                           LIST
 EXCESS   KURT                           KURTOSIS
 EXPAND   TAB                            TAB      EXPAND
 EXPONENT BIAS CORR                      MAXIMUM  LIKE
@@ -594,6 +609,8 @@ FERMI    DIRA FUNC                      FERMDIRA
 FERMI    DIRA INTE                      FERMDIRA
 F                                       F
 FIBO                                    FIBONNAC NUMB
+FINDSTR                                 GREP
+FIND     STRI                           GREP
 FIRST    DIFF                           SEQUENTI DIFF
 FIRST    MATC                           INDEX    FIRS MATC
 FIRST    NOT  MATC                      INDEX    FIRS MATC
@@ -611,6 +628,8 @@ FOLDED   T                              PROBABIL FUNC
 FORWARD  SELE                           BEST     CP
 FOURFOLD PLOT                           ROSE     PLOT
 F                                       PROBABIL FUNC
+FRAGMENT LENG                           BREAK    LOCA
+FRAGMENT LOCA                           BREAK    LOCA
 FRAM     CORN COOR                      FRAME    COOR
 FRAME    CORN COOR                      FRAME    COOR
 FRAME    LIMI OFFS                      YFRAME
@@ -718,7 +737,20 @@ GRUBB    MAXI TEST                      GRUBBS   TEST
 GRUBB    MINI TEST                      GRUBBS   TEST
 GRUBBS   MAXI TEST                      GRUBBS   TEST
 GRUBBS   MINI TEST                      GRUBBS   TEST
+GRUBB    CRIT VALU                      GRUBBS   TEST
+GRUBB    DEGR FREE                      GRUBBS   TEST
+GRUBB    STAN DEVI                      GRUBBS   TEST
 GRUBB    TEST                           GRUBBS   TEST
+GRUBB    TEST CRIT VALU                 GRUBBS   TEST
+GRUBB    TEST DEGR FREE                 GRUBBS   TEST
+GRUBB    TEST STAN DEVI                 GRUBBS   TEST
+GRUBBS   CRIT VALU                      GRUBBS   TEST
+GRUBBS   DEGR FREE                      GRUBBS   TEST
+GRUBBS   STAN DEVI                      GRUBBS   TEST
+GRUBBS   TEST                           GRUBBS   TEST
+GRUBBS   TEST CRIT VALU                 GRUBBS   TEST
+GRUBBS   TEST DEGR FREE                 GRUBBS   TEST
+GRUBBS   TEST STAN DEVI                 GRUBBS   TEST
 GSPRINT                                 GHOSTSCR PRIN
 GUI      FEED                           STATUS
 GUI      STAT                           STATUS
@@ -754,6 +786,7 @@ HANN                                    HANNING
 HANNING                                 HANNING
 HARMONIC NUMB                           HARMNUMB
 HB                                      WEB
+HEAD                                    WRITE
 HERMITE  DIST                           HERPDF
 HERMITE  INTE                           INTERPOL
 HERMITE                                 HERPDF
@@ -767,6 +800,7 @@ HISTOGRA MAXI CLAS                      HISTOGRA
 HISTOGRA OUTL POIN                      HISTOGRA
 HISTOGRA OUTL                           HISTOGRA
 HOSK     GENE LOGI                      GL5PDF
+HOST     NAME                           SYSTEM   SWIT
 HOTELL   1    SAMP T2                   HOTELLIN ONE  SAMP TSQUA
 HOTELL   1    SAMP T2                   HOTELLIN ONE  SAMP TSQUA
 HOTELL   2    SAMP T2                   HOTELLIN TWO  SAMP TSQUA
@@ -803,8 +837,10 @@ INDEX    LAST NOT  MATC                 INDEX    FIRS MATC
 INFLUENC                                INFLUENC CURV
 INFLUENC PLOT                           INFLUENC CURV
 IN                                      HOUSEKEE SWIT
+INSERT   OVER                           INSERT
 INTERCEP                                FIT
 INTERP                                  INTERPOL
+INTRACLA CORR COEF                      INTRACLA CORR
 INVERSE  ARCT INTE                      ATNINT
 INVERSE  GAUS DIST                      PROBABIL FUNC
 INVERSE  GAUS                           PROBABIL FUNC
@@ -835,6 +871,8 @@ IVSTAR                                  HOUSEKEE SWIT
 IVSTOP                                  HOUSEKEE SWIT
 IWIDSV                                  WORKSPAC SWIT
 IWIDTH                                  WORKSPAC SWIT
+JACCARD  DISI                           BINARY   MATC DISS
+JACCARD  SIMI                           BINARY   MATC DISS
 JACKKNIF                                BOOTSTRA PLOT
 JACKNIFE                                BOOTSTRA PLOT
 JOHNSON  SB   DIST                      JSBPDF
@@ -865,6 +903,9 @@ K        CONS PLOT                      H        CONS PLOT
 KELVIN   BER  FUNC                      BER
 KELVIN   FUNC                           BER
 KELVIN   KER  FUNC                      KER
+KENDALL  TAU  A                         KENDALL  TAU
+KENDALL  TAU  B                         KENDALL  TAU
+KENDALL  TAU  C                         KENDALL  TAU
 KENDALL  TAU  DIST                      KENDALL  TAU  DISS
 KENDALL  TAU  SIMI                      KENDALL  TAU  DISS
 KER1                                    KER
@@ -912,6 +953,9 @@ KS                                      KOLMOGOR SMIR GOOD FIT
 KS       TEST                           KOLMOGOR SMIR GOOD FIT
 KUMARASW DIST                           KUMPDF
 KUMARASW                                KUMPDF
+KURT     OUTL TEST CRIT VALU            KURTOSIS OUTL TEST
+KURTOSIS OUTL TEST CRIT VALU            KURTOSIS OUTL TEST
+KURTOSIS TEST                           KURTOSIS OUTL TEST
 KW                                      KRUSKAL  WALL
 KW       TEST                           KRUSKAL  WALL
 LABEL    OFFS                           LABEL    DISP
@@ -945,6 +989,12 @@ LINEAR   REGR                           FIT
 LINE     PAUS                           PAUS     LINE (SET
 LINE     TYPE                           LINE     TYPE
 LIST     CLIP                           CLIPBOAR
+LIST     EXCEL                          LIST
+LIST     LAUN                           LIST
+LIST     NEW  WIND                      LIST
+LIST     POWE POIN                      LIST
+LIST     VIEW                           LIST
+LIST     WORD                           LIST
 LJUNG    BOX                            LJUNG    BOX  TEST
 LOBACHEV INTE                           LOBACH
 LOCATION STAN                           STANDARD
@@ -999,7 +1049,9 @@ LONG     DATA FILE                      MAXIMUM  RECO LENG
 LOOP     CLIP                           CLIPBOAR
 LOST     GAME DIST                      LOSPDF
 LOST     GAME                           LOSPDF
+LOWER    SEMI INTE RANG                 SEMI     INTE QUAR RANG
 LOWESS                                  LOWESS   SMOO
+LS                                      DIR
 MACRO    ARGU                           MACRO    SUBS CHAR
 MACRO    LEVE                           CALL
 MACRO    QUOT STRI                      MACRO    SUBS CHAR
@@ -1237,6 +1289,7 @@ ONE      SAMP HOTE T    SQUA            HOTELLIN ONE  SAMP TSQU
 ONE      SAMP HOTE TSQU                 HOTELLIN ONE  SAMP TSQU
 ONE      SAMP HOTE TSQU                 HOTELLIN ONE  SAMP TSQUA
 ONE      SAMP PROF                      PROFICIE TEST
+ONE      SAMP PROF TEST IDEN LAB        PROFICIE TEST
 ONE      SAMP PROF TEST                 PROFICIE TEST
 ONE      SIDE AGRE COUL                 AGRESTI  COUL
 ONE      SIDE BINO EXAC                 EXACT    BINO
@@ -1377,6 +1430,7 @@ POWER    NORM DIST                      PNRPDF
 POWER    NORM DIST                      PROBABIL FUNC
 POWER    NORM                           PNRPDF
 POWER    NORM                           PROBABIL FUNC
+POWER    POIN VIEW                      LIST
 POWER                                   POWPDF
 PPCC     PLOT AXIS ORDE                 PPCC     PLOT
 PPCC     PLOT AXIS POIN                 PPCC     PLOT
@@ -1405,7 +1459,11 @@ PROBAILI PPCC DATA POIN                 PPCC     PLOT
 PROB     CLIP LINE                      CLIPBOAR
 PROBE    ARG                            HOUSEKEE SWIT
 PROBE    COMM LINE ARGU                 MACRO    SUBS CHAR
+PROBE    COMP NAME                      SYSTEM   SWIT
 PROBE    CPUM                           MACHINE  CONS
+PROBE    HOME                           SYSTEM   SWIT
+PROBE    HOST                           SYSTEM   SWIT
+PROBE    HOST NAME                      SYSTEM   SWIT
 PROBE    IARG                           HOUSEKEE SWIT
 PROBE    ICOM                           HOUSEKEE SWIT
 PROBE    IHAR                           HOUSEKEE SWIT
@@ -1431,11 +1489,21 @@ PROBE    NUMC                           MACHINE  CONS
 PROBE    NUMF                           WORKSPAC SWIT
 PROBE    NUMN                           WORKSPAC SWIT
 PROBE    N                              WORKSPAC SWIT
+PROBE    SHEL                           SYSTEM   SWIT
+PROBE    SYST SWIT                      SYSTEM   SWIT
+PROBE    USER                           SYSTEM   SWIT
+PROBE    USER NAME                      SYSTEM   SWIT
 PROBE    VALU                           HOUSEKEE SWIT
+PROBE    WIND BITS                      SYSTEM   SWIT
 PROB     FUNC                           PROBABIL FUNC
 PROB     PLOT CORR COEF PLOT            PPCC     PLOT
 PROB                                    PROBABIL FUNC
+PROGRAM  FILE                           SYSTEM   SWIT
+PROGRAM  FILE X86                       SYSTEM   SWIT
+PROGRAM  FILE (X86                      SYSTEM   SWIT
 PSVIEW   FILE CLOS                      PSVIEW
+PYTHON   PATH                           PYTHON
+PYTHON   VERSION                        PYTHON
 QCD                                     QUARTILE COEF OF   DISP
 QQ       PLOT                           QUANTILE QUAN PLOT
 QR                                      FIT
@@ -1456,9 +1524,18 @@ QUARTILE COEF OF   DISP CONF LIMI       COEFFICI OF   QUAR DISP CONF LIMI
 QUARTILE COEF OF   VARI CONF INTE       COEFFICI OF   QUAR DISP CONF LIMI
 QUARTILE COEF OF   VARI CONF LIMI       COEFFICI OF   QUAR DISP CONF LIMI
 QWIN     SYST                           SYSTEM
+R        PATH                           RSCRIPT
 RANK3                                   RANK2
 RANK4                                   RANK2
 RANK     SUM                            RANK     SUM  TEST
+RATIO    OF   MEAN CONF LIMI            RATIO    OF   MEAN CONF INTE
+RATIO    OF   MEAN CONF LIMI PLOT       I        PLOT
+RATIO    OF   MEAN LOWE CONF INTE       RATIO    OF   MEAN CONF INTE
+RATIO    OF   MEAN UPPE CONF INTE       RATIO    OF   MEAN CONF INTE
+RATIO    OF   MEAN LOWE CONF LIMI       RATIO    OF   MEAN CONF INTE
+RATIO    OF   MEAN UPPE CONF LIMI       RATIO    OF   MEAN CONF INTE
+RATIO    OF   MEAN METH                 RATIO    OF   MEAN CONF INTE
+RATIO    OF   MEAN                      RATIO    OF   MEAN CONF INTE
 RAYLEIGH DIST                           RAYPDF
 RAYLEIGH PPCC                           STATISTI PPCC
 RAYLEIGH                                RAYPDF
@@ -1477,7 +1554,9 @@ READING  EXCE FILE                      ASCII    FILE
 READ     LINE                           READ     LINE (SET
 READ     MISS VALU                      READ     MISS VALU (SET
 READ     PAD  MISS COLU                 READ     PAD  MISS COLU (SET
+READ     PERC SIGN IGNO                 READ
 READ     STRI CLIP                      CLIPBOAR
+READ     TRAI PLUS MINU IGNO            READ
 RECEIVER OPER CHAR CURV                 ROC      CURV
 RECEIVER OPER CHAR                      ROC      CURV
 RECIPE   ANOV                           RECIPE
@@ -1519,21 +1598,27 @@ RIDG     REG                            RIDGE    REGR
 RIDG     REGR                           RIDGE    REGR
 RIEMANN  ZETA                           ZETA
 RLP      PLOT                           ISO      1352 RLP  PLOT
+RMDIR                                   RM
 RMS                                     ROOT     MEAN SQUA ERRO
 ROBUSTNE                                ROBUST
 ROBUST   POOL RANG                      ROBUST   POOL STAN DEVI
 ROBUST   POOL SD                        ROBUST   POOL STAN DEVI
 ROBUST   REG                            FIT
+ROGERS   DISI                           BINARY   MATC DISS
+ROGERS   SIMI                           BINARY   MATC DISS
 ROOT     MEAN SQUA                      ROOT     MEAN SQUA ERRO
 ROW      LABE COLU                      CONVERT  CHAR (SET
 ROW      LABE                           READ     ROW  LABE
 ROW      LINE MODE                      TWO      WAY  PLOT
+R        CODE                           RSCRIPT
+R        SCRI                           RSCRIPT
 RUKHIN   VANG                           CONSENSU MEAN
 RUKHIN   VANG MAXI LIKE                 CONSENSU MEAN
 RUKHIN   VANG ML                        CONSENSU MEAN
 RUN      CLIP                           CLIPBOAR
 RUNGE                                   RUNGE    KUTT
 RUNG                                    RUNGE    KUTT
+RUNNING  R                              RSCRIPT
 SAMPLE   RAND PERM DIST                 SAMPLE   RAND PERM
 SAMPLING                                BOOTSTRA
 SCALABLE VECT GRAP                      SVG
@@ -1605,12 +1690,14 @@ SET      CAPT SCRI                      CAPTURE
 SET      CAPT SCRI LOOP SUBS            CAPTURE
 SET      CAPT SPLI                      CAPTURE
 SET      CAPT SUSP                      CAPTURE
+SET      CAT  MORE                      CAT
 SET      CENS PPCC PLOT                 PPCC     PLOT
 SET      CENS PROB PLOT                 PROBABIL PLOT
 SET      CHAR AUTO DYNA                 CHARACTE AUTO
 SET      CHAR AUTO OFFS                 CHARACTE AUTO
 SET      CHAR FIEL COMM DELI            READ
 SET      CHAR REPE OFFS                 CHARACTE
+SET      CHAR VARI                      CHARACTE VARI
 SET      CIRC CORR                      CIRCLE
 SET      CLIP DELA                      CLIPBOAR
 SET      CLIP LOOP LINE                 CLIPBOAR
@@ -1627,16 +1714,19 @@ SET      CROS TABU MISS VALU            CROSS    TABU
 SET      CROS TABU MISS                 CROSS    TABU
 SET      DATA URL                       WEB      HELP
 SET      DATE DELI                      READ
+SET      DAVI TEST CRIT VALU            DAVID    TEST
 SET      DELA STAN INPU                 STANDARD INPU
 SET      DEVI 2    SPLI                 DEVICE   2    SPLI 
 SET      DEVI 3                         DEVICE   3
 SET      DEVI 3    NAME COUN            DEVICE   3    NAME COUN
 SET      DEX  CONT PLOT                 DEX      CONT PLOT
+SET      DEX  STAT PLOT INTE            DEX      PLOT
 SET      EXPA TAB                       EXPAND   TAB
 SET      EXPO BIAS CORR                 MAXIMUM  LIKE
 SET      EQUA COMM LINE                 COMMA    COMM LINE
 SET      FATA ERRO                      FATAL    ERRO
 SET      EDIT                           EDIT
+SET      EXCE VIEW                      LIST
 SET      EXPA TAB                       TAB      EXPA
 SET      FILE SWIT                      FILE     SWIT
 SET      FIT  AUXI FILE                 FIT      AUXI FILE
@@ -1651,6 +1741,11 @@ SET      GENE PARE MLE  STAR VALU       MAXIMUM  LIKE
 SET      GENE PARE ML   STAR VALU       MAXIMUM  LIKE
 SET      GENE PARE MAXI LIKE STAR VALU  MAXIMUM  LIKE
 SET      GEOM DEFI                      GEOPDF
+SET      GRUB DEGR FREE                 GRUBBS   TEST
+SET      GRUB STAN DEVI                 GRUBBS   TEST
+SET      GRUB TEST DEGR FREE            GRUBBS   TEST
+SET      GRUB TEST STAN DEVI            GRUBBS   TEST
+SET      GRUB TEST CRIT VALU            GRUBBS   TEST
 SET      GUI  FEED                      STATUS
 SET      GUI                            GUI
 SET      GUMB BIAS CORR                 MAXIMUM  LIKE
@@ -1660,16 +1755,21 @@ SET      HIST EMPT BINS                 HISTOGRA
 SET      HIST MAXI CLAS                 HISTOGRA
 SET      HIST OUTL POIN                 HISTOGRA
 SET      HIST OUTL                      HISTOGRA
+SET      HOME PATH                      HOME     PATH
 SET      HYPH COMM LINE                 COMMA    COMM LINE
 SET      HYPH WORD SEPA                 HYPHEN   WORD SEPA
+SET      INSE OVER                      INSERT
 SET      KAPL MEIE                      KAPLAN   MEIE PLOT
 SET      KERN DENS PROB FUNC            KERNEL   DENS PLOT
 SET      KERN DENS RAND NUMB            KERNEL   DENS PLOT
+SET      KURT OUTL TEST CRIT VALU       KURTOSIS OUTL TEST
 SET      TWO  SAMP KOLM SMIR TEST       KOLMOGOR SMIR TWO  SAMP
 SET      LATE COLO                      LATEX
 SET      LATE LINE THIC                 LATEX
 SET      LATE RESI                      CAPTURE  LATE
 SET      LINE PAUS                      PAUS     LINE (SET
+SET      LIST LAUN                      LIST
+SET      LIST VIEW                      LIST
 SET      LOCA STAN                      STANDARD
 SET      LOD      CRIT VALU             LIMITS   OF   DETE
 SET      LOD      OUTP FILE             LIMITS   OF   DETE
@@ -1689,7 +1789,9 @@ SET      NAME TABL                      NAME     TABL
 SET      NETS                           WEB
 SET      NORM KERN DENS MIXT PLOT EXPA  NORMAL   KERN DENS MIXT PLOT
 SET      NORM PLOT AXES                 NORMAL   PLOT
+SET      ONE  SAMP PROF TEST IDEN LAB   PROFICIE TEST
 SET      OPTI                           OPTIMIZE
+SET      OUTP LINE NUMB                 OUTPUT   LINE NUMB
 SET      PARA EXPA                      PARAMETE EXPA
 SET      PATH                           PATH
 SET      PAUS LINE                      PAUS     LINE (SET
@@ -1705,6 +1807,7 @@ SET      PEAK OVER THRE X    AXIS       PEAKS    OVER THRE PLOT
 SET      PERC DIGI                      MAXIMUM  LIKE
 SET      PERC POIN PLOT                 PERCENT  POIN PLOT
 SET      PIE  CHAR                      PIE      CHAR
+SET      POST CONV                      POSTSCRI CONV
 SET      POST DEFA COLO                 POSTSCRI
 SET      POST DEFA COLO                 POSTSCRI DEFA COLOR
 SET      POT  INCR                      PEAKS    OVER THRE PLOT
@@ -1716,6 +1819,7 @@ SET      POT  METH                      PEAKS    OVER THRE PLOT
 SET      POT  PERI                      PEAKS    OVER THRE PLOT
 SET      POT  TOLE                      PEAKS    OVER THRE PLOT
 SET      POT  X    AXIS                 PEAKS    OVER THRE PLOT
+SET      POWE POIN VIEW                 LIST
 SET      PPCC PLOT AXIS ORDE            PPCC     PLOT
 SET      PPCC PLOT DATA POIN            PPCC     PLOT
 SET      PPCC PLOT HORI AXIS POIN       PPCC     PLOT
@@ -1723,6 +1827,8 @@ SET      PPCC PLOT LOCA SCAL            PPCC     PLOT
 SET      PROB PLOT DATA POIN            PROBABIL PLOT
 SET      PROM ADVA                      PROMPT   ADVA
 SET      PSVI FILE CLOS                 PSVIEW
+SET      PYTH PATH                      PYTHON
+SET      PYTH VERSION                   PYTHON
 SET      QUAN QUAN PLOT NUMB OF   PERC  QUANTILE QUAN PLOT
 SET      QWIN COLO DIRE                 QWIN
 SET      QWIN COLO                      QWIN
@@ -1730,6 +1836,8 @@ SET      QWIN COLO TRUE                 QWIN
 SET      QWIN COLO VGA                  QWIN
 SET      QWIN TEXT BACK                 QWIN
 SET      QWIN TEXT FORE                 QWIN
+SET      RATI OF   MEAN METH            RATIO   OF    MEAN CONF INTE
+SET      R    PATH                      RSCRIPT
 SET      READ CHAR MISS VALU            READ
 SET      READ COMM IGNO                 READ
 SET      READ DECI POIN                 READ     DECI POIN (SET
@@ -1739,6 +1847,7 @@ SET      READ IP   ADDR                 READ
 SET      READ LINE                      READ     LINE (SET
 SET      READ MISS VALU                 READ     MISS VALU (SET
 SET      READ PAD  MISS COLU            READ     PAD  MISS COLU (SET
+SET      READ PERC SIGN IGNO            READ
 SET      READ TRAI PLUS MINU IGNO       READ
 SET      RELA HIST                      HISTOGRA
 SET      REPL                           SUBSTITU CHAR
@@ -1747,9 +1856,11 @@ SET      SAMP RAND PERM DIST            SAMPLE   RAND PERM
 SET      SCAL STAT                      STANDARD
 SET      SEAR DIRE                      SEARCH   DIRE
 SET      SEAR PATH                      SEARCH   DIRE
+SET      SKEW OUTL TEST CRIT VALU       SKEWNESS OUTL TEST
 SET      STAN INPU                      STANDARD INPU
 SET      STAT MISS VALU                 STATISTI MISS VALU
 SET      STRI JUST CHAR                 STRING   JUST
+SET      STRI SEPA                      STRING   COMB
 SET      SUBS FORM                      SUBSTITU CHAR
 SET      SUBS HEIG                      SUPERSCR SCAL
 SET      SUBS HORI SCAL                 SUPERSCR SCAL
@@ -1822,6 +1933,7 @@ SET      WEIB MAXI LIKE MINI            MAXIMUM  LIKE
 SET      WEIB MODI MOME                 MAXIMUM  LIKE
 SET      WEIB MOME                      MAXIMUM  LIKE
 SET      WORD DELI                      STRING   SPLI
+SET      WORD VIEW VIEW                 LIST
 SET      WRIT HEAD FILE                 WRITE
 SET      VARI NAME                      READ
 SET      WRIT FEED                      WRITE    FEED (SET
@@ -1840,6 +1952,7 @@ SHANNON  EVEN INDE                      SHANNON  DIVE INDE
 SHAPIRO  WILK NORM TEST                 WILK     SHAP NORM TEST
 SHAPIRO  WILK NORM                      WILK     SHAP NORM TEST
 SHAPIRO  WILK                           WILK     SHAP NORM TEST
+SHELL                                   SYSTEM   SWIT
 SHORTES  HALF MID  MEAN                 SHORTES  HALF MIDM
 SHORTES  HALF MID  RANG                 SHORTES  HALF MIDR
 SHOW                                    PSVIEW
@@ -1859,6 +1972,9 @@ SKEWED   T    DIST                      PROBABIL FUNC
 SKEWED   T                              PROBABIL FUNC
 SKEW     LAPL DIST                      SDEPDF
 SKEW     LAPL                           SDEPDF
+SKEW     OUTL TEST CRIT VALU            SKEWNESS OUTL TEST
+SKEWNESS OUTL TEST CRIT VALU            SKEWNESS OUTL TEST
+SKEWNESS TEST                           SKEWNESS OUTL TEST
 SLASH    DIST                           SLAPDF
 SLASH    PPCC                           STATISTI PPCC
 SLASH                                   PROBABIL FUNC
@@ -1866,6 +1982,10 @@ SLOPE    DIST                           SLOPDF
 SLOPE                                   FIT
 SLOPE                                   SLOPDF
 SNR                                     SIGNAL   TO   NOIS RATI
+SOKAL    ASYM DISI                      BINARY   MATC DISS
+SOKAL    ASYM SIMI                      BINARY   MATC DISS
+SOKAL    DISI                           BINARY   MATC DISS
+SOKAL    SIMI                           BINARY   MATC DISS
 SOLUTION                                MATRIX   SOLU
 SORT3                                   SORT2
 SORT4                                   SORT2
@@ -1913,6 +2033,7 @@ STRING   JUST CHAR                      STRING   JUST
 STRING   CENT JUST                      STRING   JUST
 STRING   LEFT JUST                      STRING   JUST
 STRING   RIGH JUST                      STRING   JUST
+STRING   SEPA                           STRING   COMB
 STROMGRE INTE                           STROM
 STRUVE   FUNC                           HV
 SUBBOTIN DIST                           ERRPDF
@@ -1972,6 +2093,7 @@ TABULATI PLOT SORT                      TABULATI PLOT
 TABULATI PLOT UNCE INTE                 TABULATI PLOT
 TABULATI PLOT X    INCR                 TABULATI PLOT
 TABULATI PLOT Y    INCR                 TABULATI PLOT
+TAIL                                    WRITE
 T        DIST                           PROBABIL FUNC
 THRESHOL MAXI                           THRESHOL
 THRESHOL                                THRESHOL
@@ -2105,7 +2227,10 @@ UNIFORM  MAXI LIKE                      MAXIMUM  LIKE
 UNIFORM  PPCC                           STATISTI PPCC
 UNIFORM                                 PROBABIL FUNC
 UNIFORM  RAND NUMB                      INDEPEND UNIF RAND NUMB
+UPPER    SEMI INTE RANG                 SEMI     INTE QUAR RANG
 URL                                     WEB
+USER                                    SYSTEM   SWIT
+USER     NAME                           SYSTEM   SWIT
 USCORE                                  STANDARD
 USCORE   STAN                           STANDARD
 VALUE                                   HOUSEKEE SWIT
@@ -2164,6 +2289,7 @@ WILK     SHAP                           WILK     SHAP NORM TEST
 WILKS    SHAP NORM TEST                 WILK     SHAP NORM TEST
 WILKS    SHAP NORM                      WILK     SHAP NORM TEST
 WILKS    SHAP                           WILK     SHAP NORM TEST
+WINDOWS  BITS                           SYSTEM   SWIT
 WINDOW   PLOT                           WINDOW   STAT PLOT
 WINDOWS  PRIN                           GHOSTSCR PRIN
 WISHART  DIST                           WISHART  RAND NUMB
@@ -2215,11 +2341,13 @@ YLABEL                                  LABEL
 YLAB                                    LABEL
 YLIMITS                                 LIMITS
 YLIM                                    LIMITS
-YOUDEN   INDE                           BINARY   MATC DISI
+YOUDEN   INDE                           BINARY   MATC DISS
 YOUDEN   MATR PLOT                      SCATTER  PLOT MATR
 YULE     DIST                           YULPDF
-YULE     Q                              BINARY   MATC DISI
-YULES    Q                              BINARY   MATC DISI
+YULE     Q                              BINARY   MATC DISS
+YULES    Q                              BINARY   MATC DISS
+YULE     Y                              BINARY   MATC DISS
+YULES    Y                              BINARY   MATC DISS
 YULE                                    PROBABIL FUNC
 YULE                                    YULPDF
 ZIPF     DIST                           PROBABIL FUNC

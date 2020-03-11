@@ -45,7 +45,6 @@ C                                     NUMBER OF NESTED LOOPS
 C     UPDATED         --OCTOBER  2018 ILOOIF TO KEEP TRACK OF IF LEVEL
 C                                     WHEN INITIATE LOOP
 C     UPDATED         --OCTOBER  2018 "CONTINUE LOOP"
-C     UPDATED         --OCTOBER  2018 IMPLEMENT "LOOP WHILE"
 C
 C---------------------------------------------------------------------
 C
@@ -10298,6 +10297,9 @@ C         REMOVE THE ESCAPE CHARACTER BUT TREAT AS NO EQUAL CHARACTER
 C         CASE.  START WITH CHARACTER POSITION 2 AS THERE NEEDS TO BE
 C         AT LEAST ONE CHARACTER FOR THE ARGUMENT NAME.
 C
+C         2019/11: ONLY TRIGGER "NAMED" ARGUMENT IF THERE IS A SINGLE
+C                  WORD TO LEFT OF EQUAL SIGN.
+C
           DO36311II=2,NCTEMP-1
             IF(IMACAR(NMACAG)(II:II).EQ.'=')THEN
               IF(II.GT.1 .AND. IMACAR(NMACAG)(II-1:II-1).EQ.'\')THEN
@@ -10306,6 +10308,28 @@ C
                 NCTEMP=NCTEMP-1
                 GOTO36319
               ENDIF
+              DO36113LL=1,II-1
+                IF(IMACAR(NMACAG)(LL:LL).NE.' ')THEN
+                  IFRST=LL
+                  GOTO36114
+                ENDIF
+36113         CONTINUE
+              GOTO36319
+36114         CONTINUE
+              DO36115LL=II-1,IFRST,-1
+                IF(IMACAR(NMACAG)(LL:LL).NE.' ')THEN
+                  ILAST=LL
+                  GOTO36116
+                ENDIF
+36115         CONTINUE
+              GOTO36319
+36116         CONTINUE
+              DO36117LL=IFRST,ILAST
+                IF(IMACAR(NMACAG)(LL:LL).EQ.' ')THEN
+                  GOTO36319
+                ENDIF
+36117         CONTINUE
+C
               IPOSEQ=II
               GOTO36319
             ENDIF
@@ -23524,6 +23548,7 @@ C                      LET Y X = STACK X1 ... XK
 C                      LET Y X1 X2 = REPLICATED STACK X1 ... XK LAB
 C                      LET Y2 = SHUFFLE GROUPS Y X INDEX
 C                      LET Z  = UNSTACK Y X
+C                      LET Y3 = INSERT Y1 Y2 NLOC
 C
 C                      LET Y2 X2 = BINNED Y  (OR FREQUENCY TABLE)
 C                      LET Y2 X2 CODE = CODED BINNED Y
@@ -23915,6 +23940,7 @@ C     UPDATED         --JULY      2019. BREAK LOCATIONS
 C     UPDATED         --JULY      2019. FRAGMENT LOCATIONS
 C     UPDATED         --JULY      2019. FRAGMENT LENGTHS
 C     UPDATED         --AUGUST    2019. 2D GRID, 3D GRID, 4D GRID
+C     UPDATED         --FEBRUARY  2020. INSERT
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -24613,6 +24639,7 @@ C
      1       ICASL7.EQ.'JSCT'.OR.ICASL7.EQ.'PA  '.OR.
      1       ICASL7.EQ.'GWSA'.OR.ICASL7.EQ.'3DGR'.OR.
      1       ICASL7.EQ.'HERI'.OR.ICASL7.EQ.'HERD'.OR.
+     1       ICASL7.EQ.'INSE'.OR.
      1       ICASL7.EQ.'EBLL'.OR.ICASL7.EQ.'EBUL')THEN
         NUMVAR=3
       ELSEIF(ICASL7.EQ.'COAD'.OR.ICASL7.EQ.'COSU'.OR.
@@ -24825,7 +24852,7 @@ C
      1     ICASL7.EQ.'EZPL' .OR. ICASL7.EQ.'EZMI' .OR.
      1     ICASL7.EQ.'IZET' .OR. ICASL7.EQ.'TPOI' .OR.
      1     ICASL7.EQ.'PA  ' .OR. ICASL7.EQ.'GWSA' .OR.
-     1     ICASL7.EQ.'HERG' .OR.
+     1     ICASL7.EQ.'HERG' .OR. ICASL7.EQ.'INSE' .OR.
      1     ICASL7.EQ.'AGCO' .OR. ICASL7.EQ.'SPF2')THEN
           IFLAG1=1
         ENDIF
@@ -24965,6 +24992,7 @@ C
      1   ICASL7.EQ.'SHIF'.OR.ICASL7.EQ.'CSHI'.OR.
      1   ICASL7.EQ.'LARG'.OR.ICASL7.EQ.'SMAL'.OR.
      1   ICASL7.EQ.'VPER'.OR.ICASL7.EQ.'SRNP'.OR.
+     1   ICASL7.EQ.'INSE'.OR.
      1   NUMVAR.LE.1)THEN
         GOTO2190
 C
@@ -26171,7 +26199,7 @@ C
         CALL REVERS(TEMP1,NS1,IWRITE,TEMP1,TEMP2,IBUGA3,IERROR)
       ELSEIF(ICASL7.EQ.'MTCH')THEN
         CALL MATCH(TEMP1,TEMP3,NS1,TEMP2,NS2,IWRITE,TEMP4,ICASMT,
-     1             IBUGA3,IERROR)
+     1             IBUGA3,ISUBRO,IERROR)
         NITEMX=NS2
         DO11373I=1,NITEMX
           TEMP1(I)=TEMP4(I)
@@ -29342,6 +29370,15 @@ C
         DO21043I=1,NS1
           TEMP1(I)=TEMP91(I)
 21043   CONTINUE
+      ELSEIF(ICASL7.EQ.'INSE')THEN
+        AVAL=TEMPS(3)
+        NLOC=INT(AVAL+0.1)
+        CALL INSERT(TEMP1,NS1,TEMP2,NS2,NLOC,IWRITE,TEMP9,NOUT,MAXOBV,
+     1              IINSOW,IBUGA3,ISUBRO,IERROR)
+        DO21047I=1,NOUT
+          TEMP1(I)=TEMP9(I)
+21047   CONTINUE
+        NITEMX=NOUT
       ELSEIF(ICASL7.EQ.'WINS')THEN
 C
 C        2012/10: FOR WINSORIZING, CAN SPECIFY EITHER A SPECIFIC NUMBER

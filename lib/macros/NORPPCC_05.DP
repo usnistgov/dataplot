@@ -1,0 +1,35 @@
+. This is dataplot macro     norppcc_05ppt.dp    4/4/19
+. Purpose: Compute the 5% point of the normal ppcc
+. Date: 4/4/19
+. Input (Required):
+.    n        (parameter) = number of observations
+. Output:
+.    cutoff05 (parameter) = normal ppcc (0 to 1)
+.
+. -----start point-----
+.
+delete cutoff05; let cutoff05 = -999
+.
+if n <= 1000; let cutoff05 = norppcv(n,0.05); end if
+.
+if n >= 1001
+   delete nv cutoffv
+   skip 25; read norppcc_05.dat nv cutoffv
+   let jzmaxp1 = number cutoffv
+   let jzmax = jzmaxp1 - 1
+   loop for jz = 1 1 jzmax
+     let jzp1 = jz + 1
+     let nlowz = nv(jz)
+     let nuppz = nv(jzp1)
+     let cutlowz = cutoffv(jz)
+     let cutuppz = cutoffv(jzp1)
+     if nlowz <= n and n <= nuppz
+        let pz = (n-nlowz)/(nuppz-nlowz)
+        let cutoff05 = cutlowz + pz*(cutuppz-cutlowz)
+     end if
+   end loop
+end if
+.
+print "n = ^n    cutoff05 = ^cutoff05"
+.
+

@@ -1,0 +1,38 @@
+. This is dataplot program     rubinson23.dp     2/15/19
+. Purpose: Do time series (including cross-correlation analysis) of ken rubinson spectro. . . data
+. Date: 2/15/19
+.
+. -----start point-----
+.
+dimension 55 variables
+.
+let string header = Phase-Sensitive Modeling of 2 Signals (Ken Rubinson)
+let string header2 = Time: 4000 to 5000
+let string headhw1 = 2.8 1.4
+let string headhw2 = 2.8 1.4
+let string headhw3 = 2.8 1.4
+let string currdate = 2/15/19
+let pagecoun = 0
+let string trailer = rubinson22.dp
+let string trailer2 = Datafile: rubinson21_ IR181105.dat
+.
+. -----Step 1: Read in the data-----
+.
+skip 0
+read rubinson21.dat x y1 to y50
+.
+. -----subset the data-----
+.
+let numrow = 10
+.
+let string q = for i = 4000 1 5000
+loop for j = 1 1 numrow
+   retain y^j ^q
+end loop
+delete q
+stat v
+.
+. -----Step 3: Plot the data and do time series analysis of the data-----
+.
+call rubinson23_sub.dp
+.

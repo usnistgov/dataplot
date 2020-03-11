@@ -48,7 +48,8 @@ C
       MAXMN = MAX(M, N)
       N1 = MAXMN + 1
       DO 1 I = 1, N1
-    1 FRQNCY(I) = ONE
+         FRQNCY(I) = ONE
+    1 CONTINUE
       IF (MINMN .EQ. 1) GO TO 4
 C
 C     Check length of work array
@@ -60,7 +61,8 @@ C     Clear rest of FREQNCY
 C
       N1 = N1 + 1
       DO 2 I = N1, MN1
-    2 FRQNCY(I) = ZERO
+         FRQNCY(I) = ZERO
+    2 CONTINUE
 C
 C     Generate successively higher order distributions
 C
@@ -75,13 +77,14 @@ C
 C
 C     Generate complete distribution from outside inwards
 C
-        DO 3 J = 1, L
+        DO 33 J = 1, L
           K = K + 1
           N1 = N1 - 1
           SUM = FRQNCY(J) + WORK(J)
           FRQNCY(J) = SUM
           WORK(K) = SUM - FRQNCY(N1)
           FRQNCY(N1) = SUM
+   33   CONTINUE
     3 CONTINUE
 C
     4 IFAULT = 0
@@ -101,7 +104,7 @@ C
 C
       RETURN
       END
-      DOUBLE PRECISION FUNCTION UNI()
+      DOUBLE PRECISION FUNCTION UNI(IRESET)
 *
 *     Uniform (0, 1) random number generator
 *
@@ -110,6 +113,7 @@ C
 *     "Combined Multiple Recursive Random Number Generators"
 *     Operations Research 44, pp. 816-822.
 *
+*     2019/11: ALLOW GENERATOR TO BE RE-INITIALIZED
 *
       INTEGER A12, A13, A21, A23, P12, P13, P21, P23
       INTEGER Q12, Q13, Q21, Q23, R12, R13, R21, R23
@@ -125,6 +129,17 @@ C
       SAVE X10, X11, X12, X20, X21, X22
       DATA       X10,      X11,      X12,      X20,      X21,      X22  
      &    / 11111111, 22222223, 33333335, 44444447, 55555559, 66666661 /
+*
+*     RE-INITIALIZE
+*
+      IF(IRESET.EQ.1)THEN
+        X10=11111111
+        X11=22222223
+        X12=33333335
+        X20=44444447
+        X21=55555559
+        X22=66666661
+      ENDIF
 *
 *     Component 1
 *
@@ -589,6 +604,10 @@ C***REFERENCES  MARSAGLIA G., "COMMENTS ON THE PERFECT UNIFORM RANDOM
 C                 NUMBER GENERATOR", UNPUBLISHED NOTES, WASH S. U.
 C***ROUTINES CALLED  (NONE)
 C***END PROLOGUE UNI
+C
+C     UPDATED  2019/11: IN ORDER TO ALLOW RE-INITIALIZATION OF SEED
+C                       WITHIN A SINGLE DATAPLOT SESSION, RESET VALUES
+C                       OF U WITHIN INITIALIZATION CODE.
       PARAMETER(
      *    CSAVE=362436./16777216.  ,
      *    CD=7654321./16777216.,
@@ -632,6 +651,30 @@ C
       RETURN
 C
       ENTRY USTART(ISEED)
+C
+C     2019/11: RESET U VALUES
+C
+      U(1)=0.8668672834288
+      U(2)=0.3697986366357
+      U(3)=0.8008968294805
+      U(4)=0.4173889774680
+      U(5)=0.8254561579836
+      U(6)=0.9640965269077
+      U(7)=0.4508667414265
+      U(8)=0.6451309529668
+      U(9)=0.1645456024730
+      U(10)=0.2787901807898
+      U(11)=0.06761531340295
+      U(12)=0.9663226330820
+      U(13)=0.01963343943798
+      U(14)=0.02947398211399
+      U(15)=0.1636231515294
+      U(16)=0.3976343250467
+      U(17)=0.2631008574685
+      I=17
+      J=5
+      K=24
+      C=CSAVE
 C 
 C          Set up ...
 C          Convert ISEED to four smallish positive integers.
@@ -656,8 +699,10 @@ C               be changed by user call to UNIB(K)
                   K1 = M1
                   L1 = MOD(53*L1+1,169)
                   IF(MOD(L1*M1,64).GE.32)S=S+T
-    3             T = .5*T
-    2   U(II) = S
+                  T = .5*T
+    3     CONTINUE
+          U(II) = S
+    2   CONTINUE
         USTART = FLOAT(ISEED)
         RETURN
 C
@@ -18004,7 +18049,7 @@ C
       NR = 1
       DO 5 I = 1, NP
         NR = NR + I - 1
-        DO 5 J = I, NP
+        DO 55 J = I, NP
           IP = NR
           NQ = (J*J - J) / 2 + I - 1
           C = ZERO
@@ -18013,22 +18058,24 @@ C
             NQ = NQ + 1
             C = C + SB(IP) * D(NQ)
     4     CONTINUE
-        SA(IP) = C
+          SA(IP) = C
+   55   CONTINUE
     5 CONTINUE
 C
       DO 7 I = 1, NP
-      II = NP - I + 1
-      NQ = NNP - NP
-      DO 7 J = 1, I
-        IP = (II*II - II) / 2
-        C = ZERO
-        DO 6 K = I, NP
-          IP = IP + 1
-          NQ = NQ + 1
-          C = C + SA(IP) * SA(NQ)
+        II = NP - I + 1
+        NQ = NNP - NP
+        DO 8 J = 1, I
+          IP = (II*II - II) / 2
+          C = ZERO
+          DO 6 K = I, NP
+            IP = IP + 1
+            NQ = NQ + 1
+            C = C + SA(IP) * SA(NQ)
     6     CONTINUE
           SA(NQ) = C / RN
           NQ = NQ - 2 * NP + I + J - 1
+    8   CONTINUE
     7 CONTINUE
 C
       RETURN

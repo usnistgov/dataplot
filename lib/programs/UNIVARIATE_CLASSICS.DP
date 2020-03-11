@@ -1,0 +1,81 @@
+. This is dataplot program   univariate_classics.dp     3/29/19
+. Purpose: 4plot analysis of classic univariate data sets
+. Date: 3/29/19  (Original date: 1969)
+.
+. -----start point-----
+.
+dimension 100 variables
+.
+let string header = Univariate Analysis (k=0):  Q. Is a Process in Statistical Control?
+let string headhw1 = 2.6 1.3; let string headhw2 = 2.6 1.3; let string headhw3 = 2.6 1.3
+let string trailer = univariate_classics.dp
+let string currdate = 3/29/19
+let pagecoun = 0
+.
+. -----Example 1: Normal random numbers-----
+.
+let string header2 = Example 1: Normal Random Numbers (n = 100)
+delete y; let y = normal random numbers for i = 1 1 100
+call 4plot_noargs.dp
+.
+. -----Example 2: Uniform random numbers-----
+.
+let string header2 = Example 2: Uniform Random Numbers (n = 100)
+delete y; let y = uniform random numbers for i = 1 1 100
+call 4plot_noargs.dp
+.
+. -----Example 3: cauchy random numbers-----
+.
+let string header2 = Example 3: Cauchy Random Numbers (n = 100)
+delete y; let y = cauchy random numbers for i = 1 1 100
+call 4plot_noargs.dp
+.
+. -----Example 4: Beam Deflections (H. S. Lew)-----
+.
+let string header2 = Example 4: Steel-Concrete Beam Deflection (n = 200) (H. S. Lew) (1970)
+let string trailer2 = Datafile: lew.dat
+delete y; skip 25; read   lew.dat   y
+call 4plot_noargs.dp
+.
+. -----Example 5: Josephsone Junction Cryothermometry (Bob Soulen)-----
+.
+let string header2 = Example 5: Josephson Junction (n = 140) (Bob Soulen (1971))
+let string trailer2 = Datafile: soulen.dat
+delete y; skip 25; read   soulen.dat   y
+call 4plot_noargs.dp
+.
+. -----Example 6: Example 6: Nuclear Cryothermometry (Harvey Marshak)-----
+.
+let string header2 = Example 6: Nuclear Thermometry (n = 211) (Harvey Marshak) (1971)
+let string trailer2 = Datafile: marshak.dat
+delete y; skip 25; read   marshak.dat   y
+call 4plot_noargs.dp
+.
+. -----Example 7: Example 7. Wind Speeds (Emil Simiu)-----
+.
+let string header2 = Example 7: Wind Speeds (n = 1000) (Emil Simiu) (1977)
+let string trailer2 = Datafile: simiu.dat
+delete y; skip 25; read   simiu.dat   y
+call 4plot_noargs.dp
+.
+. -----Example 8: Example 8. Filter Transmittance (Mavro)-----
+.
+let string header2 = Example 8: Filter Transmittance for Spectrophotometry (n = 50) (Radu Mavrodineanu) (1970's)
+let string trailer2 = Datafile: mavro.dat
+delete y; skip 25; read   mavro.dat   y
+call 4plot_noargs.dp
+.
+. -----Example 9: Example 9. Standard Resistor (Ron Dziuba)-----
+.
+let string header2 = Example 9: Standard Resistor (n = 1000) (Ron Dziuba) (1985)
+let string trailer2 = Datafile: dziuba1.dat
+delete y; skip 25; read   dziuba1.dat   y
+call 4plot_noargs.dp
+.
+. -----Example 10: Example 10: Heat Flow Meter (Bob Zarr)-----
+.
+let string header2 = Example 10: Heat Flow Meter (n = 195) (Bob Zarr) (1990)
+let string trailer2 = Datafile: zarr13.dat
+delete y; skip 25; read   zarr13.dat   y
+call 4plot_noargs.dp
+

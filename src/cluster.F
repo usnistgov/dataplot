@@ -129,80 +129,86 @@ C     For each point I, find its two closest centres, IC1(I) and
 C     IC2(I).     Assign it to IC1(I).
 C
       DO 50 I = 1, M
-      IC1(I) = 1
-      IC2(I) = 2
-      DO 10 IL = 1, 2
-        DT(IL) = ZERO
-        DO 10 J = 1, N
-          DA = A(I,J) - C(IL,J)
-          DT(IL) = DT(IL) + DA*DA
+        IC1(I) = 1
+        IC2(I) = 2
+        DO 10 IL = 1, 2
+          DT(IL) = ZERO
+          DO 11 J = 1, N
+            DA = A(I,J) - C(IL,J)
+            DT(IL) = DT(IL) + DA*DA
+   11     CONTINUE
    10   CONTINUE
-      IF (DT(1) .GT. DT(2)) THEN
-        IC1(I) = 2
-        IC2(I) = 1
-        TEMP = DT(1)
-        DT(1) = DT(2)
-        DT(2) = TEMP
-      END IF
-      DO 50 L = 3, K
-        DB = ZERO
-        DO 30 J = 1, N
-          DC = A(I,J) - C(L,J)
-          DB = DB + DC*DC
-          IF (DB .GE. DT(2)) GO TO 50
+        IF (DT(1) .GT. DT(2)) THEN
+          IC1(I) = 2
+          IC2(I) = 1
+          TEMP = DT(1)
+          DT(1) = DT(2)
+          DT(2) = TEMP
+        END IF
+        DO 55 L = 3, K
+          DB = ZERO
+          DO 30 J = 1, N
+            DC = A(I,J) - C(L,J)
+            DB = DB + DC*DC
+            IF (DB .GE. DT(2)) GO TO 50
    30     CONTINUE
-        IF (DB .LT. DT(1)) GO TO 40
-        DT(2) = DB
-        IC2(I) = L
-        GO TO 50
+          IF (DB .LT. DT(1)) GO TO 40
+          DT(2) = DB
+          IC2(I) = L
+          GO TO 50
    40     DT(2) = DT(1)
-        IC2(I) = IC1(I)
-        DT(1) = DB
-        IC1(I) = L
+          IC2(I) = IC1(I)
+          DT(1) = DB
+          IC1(I) = L
+   55   CONTINUE
    50 CONTINUE
 C
 C     Update cluster centres to be the average of points contained
 C     within them.
 C
       DO 70 L = 1, K
-      NC(L) = 0
-      DO 60 J = 1, N
-   60   C(L,J) = ZERO
+         NC(L) = 0
+         DO 60 J = 1, N
+            C(L,J) = ZERO
+   60    CONTINUE
    70 CONTINUE
       DO 90 I = 1, M
-      L = IC1(I)
-      NC(L) = NC(L) + 1
-      DO 80 J = 1, N
-   80   C(L,J) = C(L,J) + A(I,J)
+         L = IC1(I)
+         NC(L) = NC(L) + 1
+         DO 80 J = 1, N
+           C(L,J) = C(L,J) + A(I,J)
+   80    CONTINUE
    90 CONTINUE
 C
 C     Check to see if there is any empty cluster at this stage
 C
       DO 120 L = 1, K
-      IF (NC(L) .EQ. 0) THEN
-        IFAULT = 1
-        RETURN
-      END IF
-      IFAULT = 0
-      AA = NC(L)
-      DO 110 J = 1, N
-  110   C(L,J) = C(L,J) / AA
+         IF (NC(L) .EQ. 0) THEN
+            IFAULT = 1
+            RETURN
+         END IF
+         IFAULT = 0
+         AA = NC(L)
+         DO 110 J = 1, N
+            C(L,J) = C(L,J) / AA
+  110    CONTINUE
 C
-C     Initialize AN1, AN2, ITRAN & NCP
-C     AN1(L) = NC(L) / (NC(L) - 1)
-C     AN2(L) = NC(L) / (NC(L) + 1)
-C     ITRAN(L) = 1 if cluster L is updated in the quick-transfer stage,
-C              = 0 otherwise
-C     In the optimal-transfer stage, NCP(L) stores the step at which
-C     cluster L is last updated.
-C     In the quick-transfer stage, NCP(L) stores the step at which
-C     cluster L is last updated plus M.
+C        Initialize AN1, AN2, ITRAN & NCP
+C        AN1(L) = NC(L) / (NC(L) - 1)
+C        AN2(L) = NC(L) / (NC(L) + 1)
+C        ITRAN(L) = 1 if cluster L is updated in the quick-transfer
+C                   stage,
+C                 = 0 otherwise
+C        In the optimal-transfer stage, NCP(L) stores the step at which
+C        cluster L is last updated.
+C        In the quick-transfer stage, NCP(L) stores the step at which
+C        cluster L is last updated plus M.
 C
-      AN2(L) = AA / (AA + ONE)
-      AN1(L) = BIG
-      IF (AA .GT. ONE) AN1(L) = AA / (AA - ONE)
-      ITRAN(L) = 1
-      NCP(L) = -1
+         AN2(L) = AA / (AA + ONE)
+         AN1(L) = BIG
+         IF (AA .GT. ONE) AN1(L) = AA / (AA - ONE)
+         ITRAN(L) = 1
+         NCP(L) = -1
   120 CONTINUE
       INDX = 0
       DO 140 IJ = 1, ITER
@@ -235,7 +241,8 @@ C
 C     NCP has to be set to 0 before entering OPTRA.
 C
       DO 130 L = 1, K
-  130   NCP(L) = 0
+         NCP(L) = 0
+  130 CONTINUE
   140 CONTINUE
 C
 C     Since the specified number of iterations has been exceeded, set
@@ -245,24 +252,28 @@ C
 C
 C     Compute within-cluster sum of squares for each cluster.
 C
-  150 DO 160 L = 1, K
-      WSS(L) = ZERO
-      DO 160 J = 1, N
-        C(L,J) = ZERO
+  150 CONTINUE
+      DO 160 L = 1, K
+         WSS(L) = ZERO
+         DO 165 J = 1, N
+            C(L,J) = ZERO
+  165    CONTINUE
   160 CONTINUE
       DO 170 I = 1, M
-      II = IC1(I)
-      DO 170 J = 1, N
-        C(II,J) = C(II,J) + A(I,J)
+         II = IC1(I)
+         DO 175 J = 1, N
+            C(II,J) = C(II,J) + A(I,J)
+  175    CONTINUE
   170 CONTINUE
       DO 190 J = 1, N
-      DO 180 L = 1, K
-  180   C(L,J) = C(L,J) / FLOAT(NC(L))
-      DO 190 I = 1, M
-        II = IC1(I)
-        DA = A(I,J) - C(II,J)
-        WSS(II) = WSS(II) + DA*DA
-
+         DO 180 L = 1, K
+           C(L,J) = C(L,J) / FLOAT(NC(L))
+  180    CONTINUE
+         DO 195 I = 1, M
+            II = IC1(I)
+            DA = A(I,J) - C(II,J)
+           WSS(II) = WSS(II) + DA*DA
+  195    CONTINUE
   190 CONTINUE
 C
       RETURN
@@ -648,17 +659,19 @@ C
          WRITE(ICOUT,3)(CLAB(J),J=JLP,JUP)
     3    FORMAT(10X,25(1X,A4))
          CALL DPWRST('XXX','WRIT')
-         DO 80 I=1,M
+         DO 85 I=1,M
             I1=I-1
             DO 20 L=1,26
                AE(L)=BLANK
-   20          AA(L)=BLANK
+               AA(L)=BLANK
+   20       CONTINUE
             IF (I .NE. 1) THEN
 C
 C     FILL IN DISTANCES
 C
                DO 30 J=JLP,JUP
-   30             IA(J-JLP+1)=INT(D(I1,J)*10.)
+                  IA(J-JLP+1)=INT(D(I1,J)*10.)
+   30          CONTINUE
 C
 C     FILL IN VERTICAL BOUNDARIES
 C
@@ -689,7 +702,8 @@ C
                   IF(J1.LE.26.AND.J2.GT.0) THEN
                      DO 50 J=J1,J2
                         IF(J.NE.J2) AE(J)=DD
-   50                   IF(AA(J).EQ.BLANK) AA(J)=DASH
+                        IF(AA(J).EQ.BLANK) AA(J)=DASH
+   50                CONTINUE
                      IF(NB(1,K).EQ.I+1) THEN
                         AA(J1)=COMMA
                         AA(J2)=COMMA
@@ -700,7 +714,7 @@ C
             WRITE(ICOUT,5)(AA(J),AE(J),J=1,JR),AA(JR+1)
     5       FORMAT(10X,25(A1,A4),A1)
             CALL DPWRST('XXX','WRIT')
-   70    CONTINUE
+   85    CONTINUE
    80 CONTINUE
       RETURN
       END
@@ -831,10 +845,13 @@ C     THE K+1-ST ROW OF SUM STORES THE SAME CALCULATIONS AS ABOVE EXCEPT
 C        FOR THE ENTIRE DATA SET RATHER THAN FOR AN INDIVIDUAL CLUSTER
 C
       DCLUS = 2*N + M
-      DO 10 I=1,7
-         DO 10 J=1,N
-            DO 10 KK=1,K+1
-   10          SUM(I,J,KK)=0.
+      DO 13 I=1,7
+         DO 12 J=1,N
+            DO 11 KK=1,K+1
+               SUM(I,J,KK)=0.
+   11       CONTINUE
+   12    CONTINUE
+   13 CONTINUE
 C
 C     LOOP ONCE FOR EACH DESIRED CLUSTER
 C
@@ -842,20 +859,24 @@ C
          DO 60 NC=1,ITER
             ERR=0.
             DO 20 KKK=1,KK
-               DO 20 J=1,N
+               DO 25 J=1,N
                   IF(NC.EQ.1.OR.SUM(1,J,KKK).NE.SUM(3,J,KKK)) ERR=1.
+   25          CONTINUE
    20       CONTINUE
 C
 C     IF NO CHANGES HAVE BEEN MADE, OUTPUT THE CLUSTER
 C
             IF(ERR.EQ.0.) GO TO 70
             DO 30 KKK=1,KK
-               DO 30 J=1,N
+               DO 35 J=1,N
                   SUM(2,J,KKK)=0.
-   30       SUM(1,J,KKK)=SUM(3,J,KKK)
+                  SUM(1,J,KKK)=SUM(3,J,KKK)
+   35          CONTINUE
+   30       CONTINUE
             DO 50 I=1,M
                DO 40 J=1,N
-   40             WORK(J)=A(I,J)
+                  WORK(J)=A(I,J)
+   40          CONTINUE
                IWORK(I)=NC
 C
 C     FIND BEST CLUSTER FOR CASE I
@@ -875,18 +896,20 @@ C     OF THE CLUSTER
 C
          SM=0.
          DO 80 J=1,N
-            DO 80 KKK=1,KK
+            DO 85 KKK=1,KK
                IF(SUM(4,J,KKK).GE.SM) THEN
                   SM=SUM(4,J,KKK)
                   KM=KKK
                ENDIF
+   85       CONTINUE
    80    CONTINUE
          KN=KK+1
          DO 90 JJ=1,N
             SUM(2,JJ,KM)=0.
             SUM(3,JJ,KM)=0.
             SUM(2,JJ,KN)=0.
-   90       SUM(3,JJ,KN)=0.
+            SUM(3,JJ,KN)=0.
+   90    CONTINUE
          DO 110 I=1,M
             IF(IWORK(I).EQ.KM) THEN
                DO 100 JJ=1,N
@@ -975,7 +998,8 @@ C
 C
       SP=0.
       DO 10 I=1,M
-   10    SP=SP+W(I)
+         SP=SP+W(I)
+   10 CONTINUE
       IF(SP.EQ.0.) SP=R1MACH(4)
 C
 C     COMPUTED WEIGHTED MEANS
@@ -983,18 +1007,23 @@ C
       DO 30 J=1,N
          SS=0.
          DO 20 I=1,M
-   20       SS=SS+A(I,J)*W(I)
-   30    U(J)=SS/SP
+            SS=SS+A(I,J)*W(I)
+   20    CONTINUE
+         U(J)=SS/SP
+   30 CONTINUE
 C
 C     COMPUTED WEIGHTED COVARIANCES
 C
       DO 50 J=1,N
-         DO 50 K=1,J
+         DO 55 K=1,J
             SS=0.
             DO 40 I=1,M
-   40          SS=SS+(A(I,J)-U(J))*(A(I,K)-U(K))*W(I)
+               SS=SS+(A(I,J)-U(J))*(A(I,K)-U(K))*W(I)
+   40       CONTINUE
             C(J,K,ICLUS)=SS/SP
-   50       C(K,J,ICLUS)=C(J,K,ICLUS)
+            C(K,J,ICLUS)=C(J,K,ICLUS)
+   55    CONTINUE
+   50 CONTINUE
       RETURN
       END
       SUBROUTINE COVOUT(MM, M, N, A, CLAB1, CLAB2, RLAB, TITLE, K,
@@ -1660,7 +1689,8 @@ C
 C
       XM=99999.
       DO 10 I=1,M
-   10    WORK(5,I)=0.
+         WORK(5,I)=0.
+   10 CONTINUE
 C
 C     LOOK FOR BLOCKS WITHIN THRESHOLD
 C
@@ -1704,7 +1734,8 @@ C     FIND BEST VARIABLE SPLIT
 C
       DO 50 I=1,M
          WORK(8,I)=0.
-   50    WORK(9,I)=0.
+         WORK(9,I)=0.
+   50 CONTINUE
       DM=0.
       WORK(12,IR)=0.
       WORK(13,IR)=JL
@@ -1733,7 +1764,8 @@ C
          DO 80 I=1,M
             CC=A(I,JJ)
             A(I,JJ)=A(I,JD)
-   80       A(I,JD)=CC
+            A(I,JD)=CC
+   80    CONTINUE
          C = CLAB(JJ)
          CLAB(JJ) = CLAB(JD)
          CLAB(JD) = C
@@ -1880,8 +1912,10 @@ C
 CCCCC END CHANGE
 C
       DO 10 I = 1 , M
-         DO 10 J = I , M
- 10         A(J,I) = A(I,J)
+         DO 20 J = I , M
+            A(J,I) = A(I,J)
+ 20      CONTINUE
+ 10   CONTINUE
 C
  9000 CONTINUE
       RETURN
@@ -2125,7 +2159,8 @@ C
             SD=SD+SUM(3,J,K)*SUM(2,J,K)
             SSB=SSB+SUM(3,J,K)**2*SUM(2,J,K)
             SSW=SSW+SUM(7,J,K)
-   10       SC=SC+SUM(2,J,K)
+            SC=SC+SUM(2,J,K)
+   10    CONTINUE
          DFB=KK-1.
          DFW=SC-DFB-1.
          ASSW=ASSW+SSW
@@ -2393,19 +2428,23 @@ C
       T = PMIX
       XLL1 = -R1MACH(2)
       DO 10 J=1,K
-   10    WORK2(1,N+1,J)=0.
+         WORK2(1,N+1,J)=0.
+   10 CONTINUE
       DO 30 I=1,M
          DO 20 J=1,K
-   20       WORK1(P+I,J)=0.
+            WORK1(P+I,J)=0.
+   20    CONTINUE
          J=(I*K)/(M+1)+1
-   30    WORK1(P+I,J)=1.
+         WORK1(P+I,J)=1.
+   30 CONTINUE
       DO 200 IT=1,MXITER
 C
 C     UPDATE MEANS AND COVARIANCES
 C
          DO 40 J=1,K
-   40       CALL CLUMOM(MM,M,N,A,J,WORK1(P+1,J),WORK1(U+1,J),DMWRK1,
+            CALL CLUMOM(MM,M,N,A,J,WORK1(P+1,J),WORK1(U+1,J),DMWRK1,
      *               DMWRK2,WORK2)
+   40    CONTINUE
 C
 C     UPDATE WEIGHTS
 C
@@ -2413,32 +2452,41 @@ C
          DO 60 J=1,K
             WORK1(PMIX,J)=0.
             DO 50 I=1,M
-   50          WORK1(PMIX,J)=WORK1(PMIX,J)+WORK1(P+I,J)
-   60    WW=WW+WORK1(PMIX,J)
+               WORK1(PMIX,J)=WORK1(PMIX,J)+WORK1(P+I,J)
+   50       CONTINUE
+            WW=WW+WORK1(PMIX,J)
+   60    CONTINUE
          DO 70 J=1,K
-   70       IF(WW.NE.0.) WORK1(PMIX,J)=WORK1(PMIX,J)/WW
+            IF(WW.NE.0.) WORK1(PMIX,J)=WORK1(PMIX,J)/WW
+   70    CONTINUE
 C
 C     ADJUST FOR COVARIANCE STRUCTURE
 C
          IF(NCOV.NE.1) THEN
             DO 100 I=1,N
-               DO 100 II=1,N
+               DO 105 II=1,N
                   WORK2(I,II,1)=WORK1(PMIX,1)*WORK2(I,II,1)
                   DO 80 J=2,K
-   80                WORK2(I,II,1)=WORK2(I,II,1)+WORK2(I,II,J)*
+                     WORK2(I,II,1)=WORK2(I,II,1)+WORK2(I,II,J)*
      *                             WORK1(PMIX,J)
+   80             CONTINUE
                   IF(NCOV.GE.3.AND.I.NE.II) WORK2(I,II,1)=0.
                   DO 90 J=2,K
-   90                WORK2(I,II,J)=WORK2(I,II,1)
+                     WORK2(I,II,J)=WORK2(I,II,1)
+   90             CONTINUE
+  105          CONTINUE
   100       CONTINUE
             IF (NCOV.EQ.4) THEN
                CC=0.
                DO 110 I=1,N
-  110             CC=CC+WORK2(I,I,1)
+                  CC=CC+WORK2(I,I,1)
+  110          CONTINUE
                CC=CC/N
                DO 120 I=1,N
-                  DO 120 J=1,K
-  120                WORK2(I,I,J)=CC
+                  DO 125 J=1,K
+                     WORK2(I,I,J)=CC
+  125             CONTINUE
+  120             CONTINUE
             ENDIF
          ENDIF
          II=IT-1
@@ -2455,15 +2503,19 @@ C
 C     COMPUTE INVERSES AND DETERMINANTS OF COVARIANCE MATRICES
 C
             DO 130 III = 1 , N
-               DO 130 JJJ = 1 , N
- 130              WORK3(III,JJJ) = WORK2(III,JJJ,J)
+               DO 135 JJJ = 1 , N
+                  WORK3(III,JJJ) = WORK2(III,JJJ,J)
+ 135           CONTINUE
+ 130        CONTINUE
             CALL INVERT(DMWRK3,N,WORK3,DETER,WORK3(1,N+1),IWORK,IERR,
      *                  OUNIT)
             IF (IERR .NE. 0) RETURN
             DET = DETER(1) * (10. ** DETER(2))
             DO 140 III = 1 , N
-               DO 140 JJJ = 1 , N
- 140              WORK2(III,JJJ,J) = WORK3(III,JJJ)
+               DO 145 JJJ = 1 , N
+                  WORK2(III,JJJ,J) = WORK3(III,JJJ)
+ 145           CONTINUE
+ 140        CONTINUE
             IF(DET.EQ.0.) RETURN
             DET=SQRT(ABS(DET))
             WORK2(1,N+1,J)=DET
@@ -2471,14 +2523,18 @@ C
 C     COMPUTE PROBABILITY DENSITY FOR THE I-TH OBSERVATION FROM THE J-TH
 C     NORMAL
 C
-            DO 160 I=1,M
+            DO 165 I=1,M
                S=0.
                DO 150 L=1,N
-                  DO 150 LL=1,N
-  150                S=S+WORK2(L,LL,J)*(A(I,L)-WORK1(U+L,J))*(A(I,LL)-
+                  DO 155 LL=1,N
+                     S=S+WORK2(L,LL,J)*(A(I,L)-WORK1(U+L,J))*(A(I,LL)-
      *                   WORK1(U+LL,J))
+  155             CONTINUE
+  150          CONTINUE
                IF(S.GT.100.) S=100.
-  160          WORK1(T+I,J)=EXP(-S/2.)*WORK1(PMIX,J)/DET
+               WORK1(T+I,J)=EXP(-S/2.)*WORK1(PMIX,J)/DET
+  165       CONTINUE
+  160    CONTINUE
 C
 C     COMPUTES LOG LIKELIHOOD
 C
@@ -2486,22 +2542,25 @@ C
          DO 180 I=1,M
             S=0.
             DO 170 J=1,K
-  170          S=S+WORK1(T+I,J)
+               S=S+WORK1(T+I,J)
+  170       CONTINUE
             IF(S.EQ.0.) S=R1MACH(4)
             XLL=XLL+LOG(S)
-            DO 180 J=1,K
-  180          WORK1(T+I,J)=WORK1(T+I,J)/S
-            IF (IPRINT.EQ.'ON') THEN
-               WRITE(ICOUT,1) IT,XLL
-    1          FORMAT(' ITERATION = ',I5,' LOG LIKELIHOOD = ',F12.6)
-               CALL DPWRST('XXX','WRIT')
-            ENDIF
+            DO 185 J=1,K
+               WORK1(T+I,J)=WORK1(T+I,J)/S
+  185       CONTINUE
+  180     CONTINUE
+          IF (IPRINT.EQ.'ON') THEN
+             WRITE(ICOUT,1) IT,XLL
+    1        FORMAT(' ITERATION = ',I5,' LOG LIKELIHOOD = ',F12.6)
+             CALL DPWRST('XXX','WRIT')
+          ENDIF
 C
 C     UPDATE PROBABILITY THE I-TH OBSERVATION WAS DRAWN FROM THE J-TH
 C     NORMAL
 C
          DO 190 I=1,M
-            DO 190 J=1,K
+            DO 195 J=1,K
                XIT=MXITER
                ALPHA=1.+.7*IT/XIT
                WORK1(P+I,J)=ALPHA*WORK1(T+I,J)-(ALPHA-1.)*WORK1(P+I,J)
@@ -2512,6 +2571,7 @@ C
                IF(IT.EQ.5.AND.WORK1(P+I,J).LE.0.5) WORK1(P+I,J)=0.
                IF(WORK1(P+I,J).GT.1.) WORK1(P+I,J)=1.
                IF(WORK1(P+I,J).LT.0.) WORK1(P+I,J)=0.
+  195      CONTINUE
   190    CONTINUE
 C
 C     RETURN IF NO CHANGE IN LOG LIKELIHOOD
@@ -2640,7 +2700,8 @@ C
    10             CONTINUE
                   IF(XC.EQ.0.) GO TO 30
                   DD=DD/XC
-   20             IF(DD.LT.DI) DI=DD
+                  IF(DD.LT.DI) DI=DD
+   20          CONTINUE
                IF(DI.GE.DM) THEN
                   DM=DI
                   IM=I
@@ -2651,7 +2712,8 @@ C
 C     BEGIN A NEW CLUSTER LABELED KK
 C
          DO 40 J=1,N
-   40       WORK1(U+J,KK)=A(IM,J)
+            WORK1(U+J,KK)=A(IM,J)
+   40    CONTINUE
          WORK1(PMIX,KK)=EXP(0.5*N)
          ITER=25
          DO 150 IT=1,ITER
@@ -2668,7 +2730,8 @@ C
    50             CONTINUE
                   IF(DD.GT.100.) DD=100.
                   WORK1(P+I,KL)=WORK1(PMIX,KL)*EXP(-DD)
-   60          PP=PP+WORK1(P+I,KL)
+                  PP=PP+WORK1(P+I,KL)
+   60          CONTINUE
                IF(PP.NE.0.) THEN
                   PN=0.
                   DO 70 KL=1,KK
@@ -2677,7 +2740,8 @@ C
                      PN =PN+WORK1(P+I,KL)
    70             CONTINUE
                   DO 80 KL=1,KK
-   80                WORK1(P+I,KL)=WORK1(P+I,KL)/PN
+                     WORK1(P+I,KL)=WORK1(P+I,KL)/PN
+   80             CONTINUE
                ENDIF
    90       CONTINUE
 C
@@ -2685,25 +2749,33 @@ C     UPDATE MIXTURE PROBABILITIES
 C
             DO 100 KL=1,KK
                WORK1(PMIX,KL)=0.
-               DO 100 I=1,M
-  100             WORK1(PMIX,KL)=WORK1(PMIX,KL)+WORK1(P+I,KL)/M
+               DO 105 I=1,M
+                  WORK1(PMIX,KL)=WORK1(PMIX,KL)+WORK1(P+I,KL)/M
+  105          CONTINUE
+  100       CONTINUE
 C
 C     UPDATE CLUSTER ESTIMATES, EACH ONE A WEIGHTED MEAN
 C
             DO 120 KL=1,KK
-               DO 120 J=1,N
+               DO 125 J=1,N
                   WORK1(U+J,KL)=0.
                   DO 110 I=1,M
-  110                WORK1(U+J,KL)=WORK1(U+J,KL)+A(I,J)*WORK1(P+I,KL)
-  120       IF(WORK1(PMIX,KL).NE.0.) WORK1(U+J,KL)=WORK1(U+J,KL)/
-     *                                            (WORK1(PMIX,KL)*M)
+                     WORK1(U+J,KL)=WORK1(U+J,KL)+A(I,J)*WORK1(P+I,KL)
+  110             CONTINUE
+                  IF(WORK1(PMIX,KL).NE.0.)
+     *               WORK1(U+J,KL)=WORK1(U+J,KL)/(WORK1(PMIX,KL)*M)
+  125          CONTINUE
+  120       CONTINUE
             DO 140 J=1,N
                WORK2(J)=0.
                DO 130 I=1,M
-                  DO 130 KL=1,KK
-  130                WORK2(J)=WORK2(J)+(A(I,J)-WORK1(U+J,KL))**2*
+                  DO 135 KL=1,KK
+                     WORK2(J)=WORK2(J)+(A(I,J)-WORK1(U+J,KL))**2*
      *                                  WORK1(P+I,KL)
-  140       WORK2(J)=WORK2(J)/M
+  135             CONTINUE
+  130          CONTINUE
+               WORK2(J)=WORK2(J)/M
+  140       CONTINUE
   150    CONTINUE
 C
 C     PRINT RESULTS OF ITERATION
@@ -3002,7 +3074,7 @@ C
       DO 50 K=1,KC
          KK=K-1
          J=0
-         DO 50 I=1,M
+         DO 60 I=1,M
             IF (J.EQ.20) J=0
             IF (IWORK(LC+I).EQ.KK) THEN
                J=J+1
@@ -3101,7 +3173,8 @@ C
 C
       XM=99999.
       DO 10 J=1,N
-   10    WORK(14,J)=0.
+         WORK(14,J)=0.
+   10 CONTINUE
 C
 C     LOOK FOR BLOCKS WITHIN THRESHOLD
 C
@@ -3145,7 +3218,8 @@ C     FIND BEST CASE SPLIT
 C
       DO 50 J=1,N
          WORK(17,J)=0.
-   50    WORK(18,J)=0.
+         WORK(18,J)=0.
+   50 CONTINUE
       DM=0.
       WORK(3,IR)=0.
       WORK(4,IR)=IL
@@ -3176,7 +3250,8 @@ C
          DO 80 J=1,N
             CC=A(II,J)
             A(II,J)=A(ID,J)
-   80       A(ID,J)=CC
+            A(ID,J)=CC
+   80    CONTINUE
          C = RLAB(II)
          RLAB(II) = RLAB(ID)
          RLAB(ID) = C
@@ -3326,7 +3401,8 @@ C
          IF(WCLAB(J).NE.0) THEN
             DO 20 I=IL,IU
                U(1,J)=U(1,J)+A(I,J)*W(I,J)
-   20          U(2,J)=U(2,J)+WCLAB(J)
+               U(2,J)=U(2,J)+WCLAB(J)
+   20       CONTINUE
             U(1,J)=U(1,J)/U(2,J)
          ENDIF
    30 CONTINUE
@@ -3381,7 +3457,8 @@ C
             A(II,J)=C
             C=W(I,J)
             W(I,J)=W(II,J)
-   70       W(II,J)=C
+            W(II,J)=C
+   70    CONTINUE
          CTEMP = RLAB(I)
          RLAB(I) = RLAB(II)
          RLAB(II) = CTEMP
@@ -3595,7 +3672,8 @@ C
             IWORK1(3,KC)=J+1
             IWORK1(4,KC)=J+1
             DO 30 I=IL,IU
-   30          W(I,J)=0.
+               W(I,J)=0.
+   30       CONTINUE
          ENDIF
          IWORK(IWCLAB+J)=0
    40 CONTINUE
@@ -3869,9 +3947,12 @@ C
      *               WORK)
          GO TO 10
       ENDIF
-   60 DO 70 K=1,KA
-        DO 70 J=1,4
-   70      IF(IWORK(J,K).LT.0) IWORK(J,K)=-IWORK(J,K)
+   60 CONTINUE
+      DO 70 K=1,KA
+        DO 75 J=1,4
+           IF(IWORK(J,K).LT.0) IWORK(J,K)=-IWORK(J,K)
+   75   CONTINUE
+   70 CONTINUE
       CALL BLOCK(MM,M+1,N+1,A,CLAB,RLAB,TITLE,KA,DMIWRK,IWORK,IERR,
      *           OUNIT)
       RETURN

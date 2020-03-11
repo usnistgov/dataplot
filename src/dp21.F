@@ -3877,6 +3877,1667 @@ C
 C
       RETURN
       END
+      SUBROUTINE DPMRCL(ICASAN,ICAPSW,IFORSW,
+     1                  ISUBRO,IBUGA2,IBUGA3,IBUGQ,IFOUND,IERROR)
+C
+C     PURPOSE--GENERATE (SYMMETRIC) CONFIDENCE LIMITS FOR THE MEAN
+C              FOR PROBABILITY VALUE P = .90, .95, .99, .999, AND .9999.
+C     WRITTEN BY--JAMES J. FILLIBEN
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2855
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2019/10
+C     ORIGINAL VERSION--OCTOBER   2019.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ICASAN
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 IFORSW
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA2
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IBUGQ
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ICASE
+      CHARACTER*4 IHWUSE
+      CHARACTER*4 MESSAG
+      CHARACTER*4 ICASEQ
+      CHARACTER*4 IH
+      CHARACTER*4 IH2
+      CHARACTER*4 ISUBN0
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 IFLAGU
+C
+      LOGICAL IFRST
+      LOGICAL ILAST
+C
+      CHARACTER*4 IREPL
+      CHARACTER*4 IMULT
+C
+      CHARACTER*40 INAME
+      PARAMETER (MAXSPN=30)
+      CHARACTER*4 IVARN1(MAXSPN)
+      CHARACTER*4 IVARN2(MAXSPN)
+      CHARACTER*4 IVARTY(MAXSPN)
+      CHARACTER*4 IVARID(MAXSPN)
+      CHARACTER*4 IVARI2(MAXSPN)
+      REAL PVAR(MAXSPN)
+      REAL PID(MAXSPN)
+      INTEGER ILIS(MAXSPN)
+      INTEGER NRIGHT(MAXSPN)
+      INTEGER ICOLR(MAXSPN)
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOPA.INC'
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCOSU.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOST.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='DPMR'
+      ISUBN2='CL  '
+      IFOUND='YES'
+      IERROR='NO'
+C
+      MAXCP1=MAXCOL+1
+      MAXCP2=MAXCOL+2
+      MAXCP3=MAXCOL+3
+      MAXCP4=MAXCOL+4
+      MAXCP5=MAXCOL+5
+      MAXCP6=MAXCOL+6
+C
+C               ****************************************
+C               **  TREAT THE CONFIDENCE LIMITS CASE  **
+C               ****************************************
+C
+      IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'MRCL')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPMRCL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA2,IBUGA3,IBUGQ,ISUBRO
+   52   FORMAT('IBUGA2,IBUGA3,IBUGQ,ISUBRO = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,55)MAXNXT,MAXV2
+   55   FORMAT('MAXNXT,MAXV2 = ',I8,2X,I5)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *********************************
+C               **  STEP 1--                   **
+C               **  EXTRACT THE COMMAND        **
+C               *********************************
+C
+      ISTEPN='1'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'MRCL')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+C     THE FOLLOWING COMMANDS ARE ACCEPTED:
+C
+C         RATIO OF MEAN CONFIDENCE LIMITS Y X
+C
+      IFOUND='NO'
+      IF(ICOM.EQ.'RATI' .AND. IHARG(1).EQ.'OF  ' .AND.
+     1   IHARG(2).EQ.'MEAN' .AND. IHARG(3).EQ.'CONF' .AND.
+     1   (IHARG(4).EQ.'LIMI' .OR. IHARG(4).EQ.'INTE'))THEN
+        IFOUND='YES'
+        ISHIFT=4
+      ELSE
+        GOTO9000
+      ENDIF
+C
+      CALL SHIFTL(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,
+     1            IBUGA2,IERROR)
+C
+C               *********************************
+C               **  STEP 1--                   **
+C               **  EXTRACT THE VARIABLE LIST  **
+C               *********************************
+C
+      ISTEPN='1'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'MRCL')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      INAME='RATIO OF MEANS CONFIDENCE LIMIT'
+      MINNA=1
+      MAXNA=100
+      MINNVA=2
+      MAXNVA=2
+      IFLAGP=0
+      JMIN=1
+      JMAX=NUMARG
+      MINN2=3
+      IFLAGE=1
+      IFLAGM=2
+C
+      CALL DPPARS(IHARG,IHARG2,IARGT,ARG,NUMARG,IANS,IWIDTH,
+     1            IHNAME,IHNAM2,IUSE,NUMNAM,IN,IVALUE,VALUE,
+     1            JMIN,JMAX,
+     1            MINN2,MINNA,MAXNA,MAXSPN,IFLAGE,INAME,
+     1            IVARN1,IVARN2,IVARTY,PVAR,
+     1            ILIS,NRIGHT,ICOLR,ISUB,NQ,ILOCQ,NUMVAR,
+     1            MINNVA,MAXNVA,
+     1            IFLAGM,IFLAGP,
+     1            IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'MRCL')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,181)
+  181   FORMAT('***** AFTER CALL DPPARS--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,182)NQ,NUMVAR
+  182   FORMAT('NQ,NUMVAR = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NUMVAR.GT.0)THEN
+          DO185I=1,NUMVAR
+            WRITE(ICOUT,187)I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),
+     1                      ICOLR(I)
+  187       FORMAT('I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),',
+     1             'ICOLR(I) = ',I8,2X,2A4,2X,3I8)
+            CALL DPWRST('XXX','BUG ')
+  185     CONTINUE
+        ENDIF
+      ENDIF
+C
+C               *******************************************
+C               **  STEP 3--                             **
+C               *******************************************
+C
+      ISTEPN='3'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'MRCL')
+     1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IINDX=ICOLR(1)
+      PID(1)=CPUMIN
+      IVARID(1)=IVARN1(1)
+      IVARI2(1)=IVARN2(1)
+      PID(2)=CPUMIN
+      IVARID(2)=IVARN1(2)
+      IVARI2(2)=IVARN2(2)
+C
+      ICOL=1
+      NUMVA2=2
+      CALL DPPAR3(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,
+     1            INAME,IVARN1,IVARN2,IVARTY,
+     1            ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVA2,
+     1            MAXCOL,MAXCP1,MAXCP2,MAXCP3,
+     1            MAXCP4,MAXCP5,MAXCP6,
+     1            V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,
+     1            Y,X,X,NLOCAL,NLOCA2,NLOCA3,ICASE,
+     1            IBUGA3,ISUBRO,IFOUND,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+C         *****************************************************
+C         **  STEP 3B--                                      **
+C         *****************************************************
+C
+      ISTEPN='3B'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'MRCL')
+     1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'MRCL')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,322)
+  322   FORMAT('***** FROM THE MIDDLE  OF DPMRCL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,323)NUMVAR,NLOCAL
+  323   FORMAT('NUMVAR,NLOCAL = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NLOCAL.GE.1)THEN
+          DO325I=1,NLOCAL
+            WRITE(ICOUT,326)I,Y(I),X(I)
+  326       FORMAT('I,Y(I),X(I) = ',I8,2G15.7)
+            CALL DPWRST('XXX','BUG ')
+  325     CONTINUE
+        ENDIF
+      ENDIF
+C
+      CALL DPMRC2(Y,X,NLOCAL,IVARID,IVARI2,
+     1            CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1            CTL999,CTU999,
+     1            ICAPSW,ICAPTY,IFORSW,IRATME,
+     1            ISUBRO,IBUGA3,IERROR)
+C
+      ICASAN='MRCL'
+      IFLAGU='ON'
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+      CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1            CTL999,CTU999,
+     1            IFLAGU,IFRST,ILAST,ICASAN,
+     1            IBUGA2,IBUGA3,ISUBRO,IERROR)
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'MRCL')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPMRCL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)NRIGHT(1),NRIGHT(2)
+ 9014   FORMAT('NRIGHT(1),NRIGHT(2) = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9016)IFOUND,IERROR
+ 9016   FORMAT('IFOUND,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPMRC2(Y,X,N,IVARID,IVARI2,
+     1                  CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1                  CTL999,CTU999,
+     1                  ICAPSW,ICAPTY,IFORSW,IRATME,
+     1                  ISUBRO,IBUGA3,IERROR)
+C
+C     PURPOSE--THIS ROUTINE GENERATES CONFIDENCE LIMITS FOR THE RATIO OF
+C              TWO MEANS, I.E., E(Y)/E(X) (NOT E(Y/X) FOR THE DATA IN
+C              THE INPUT VECTORS Y AND X FOR THE PAIRED DATA CASE.
+C              THREE ANALYTIC METHODS ARE SUPPORTED.  NOTE THAT THESE
+C              METHODS ASSUME Y AND X ARE BOTH APPROXIMATELY NORMAL.
+C     INPUT  ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+C                                OBSERVATIONS FOR THE NUMERATOR
+C                                VARIABLE.
+C                     --X      = THE SINGLE PRECISION VECTOR OF
+C                                OBSERVATIONS FOR THE DENOMINATOR
+C                                VARIABLE.
+C                       N      = THE INTEGER NUMBER OF
+C                                OBSERVATIONS IN THE VECTOR Y.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2019/10
+C     ORIGINAL VERSION--OCTOBER   2019.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 ICAPTY
+      CHARACTER*4 IFORSW
+      CHARACTER*4 IRATME
+C
+      CHARACTER*4 IVARID(*)
+      CHARACTER*4 IVARI2(*)
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ICASA2
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION Y(*)
+      DIMENSION X(*)
+C
+      PARAMETER (NUMALP=8)
+C
+      DIMENSION CONF(NUMALP)
+      DIMENSION T(NUMALP)
+      DIMENSION TSDM(NUMALP)
+      DIMENSION ALOWER(NUMALP)
+      DIMENSION AUPPER(NUMALP)
+C
+      PARAMETER(NUMCLI=5)
+      PARAMETER(MAXLIN=2)
+      PARAMETER (MAXROW=20)
+      CHARACTER*60 ITITLE
+      CHARACTER*60 ITITLZ
+      CHARACTER*1  ITITL9
+      CHARACTER*60 ITEXT(MAXROW)
+      CHARACTER*4  ALIGN(NUMCLI)
+      CHARACTER*4  VALIGN(NUMCLI)
+      REAL         AVALUE(MAXROW)
+      INTEGER      NCTEXT(MAXROW)
+      INTEGER      IDIGIT(MAXROW)
+      INTEGER      NTOT(MAXROW)
+      INTEGER      IWHTML(NUMCLI)
+      INTEGER      IWRTF(NUMCLI)
+      LOGICAL IFRST
+      LOGICAL ILAST
+C
+C---------------------------------------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='DPMR'
+      ISUBN2='C2  '
+      IERROR='NO'
+      IWRITE='OFF'
+C
+      NUMDIG=7
+      IF(IFORSW.EQ.'1')NUMDIG=1
+      IF(IFORSW.EQ.'2')NUMDIG=2
+      IF(IFORSW.EQ.'3')NUMDIG=3
+      IF(IFORSW.EQ.'4')NUMDIG=4
+      IF(IFORSW.EQ.'5')NUMDIG=5
+      IF(IFORSW.EQ.'6')NUMDIG=6
+      IF(IFORSW.EQ.'7')NUMDIG=7
+      IF(IFORSW.EQ.'8')NUMDIG=8
+      IF(IFORSW.EQ.'9')NUMDIG=9
+      IF(IFORSW.EQ.'0')NUMDIG=0
+      IF(IFORSW.EQ.'E')NUMDIG=-2
+      IF(IFORSW.EQ.'-2')NUMDIG=-2
+      IF(IFORSW.EQ.'-3')NUMDIG=-3
+      IF(IFORSW.EQ.'-4')NUMDIG=-4
+      IF(IFORSW.EQ.'-5')NUMDIG=-5
+      IF(IFORSW.EQ.'-6')NUMDIG=-6
+      IF(IFORSW.EQ.'-7')NUMDIG=-7
+      IF(IFORSW.EQ.'-8')NUMDIG=-8
+      IF(IFORSW.EQ.'-9')NUMDIG=-9
+C
+      CONF(1)=50.0
+      CONF(2)=75.0
+      CONF(3)=90.0
+      CONF(4)=95.0
+      CONF(5)=99.0
+      CONF(6)=99.9
+      CONF(7)=99.99
+      CONF(8)=99.999
+C
+      CUTL90=CPUMIN
+      CUTU90=CPUMIN
+      CUTL95=CPUMIN
+      CUTU95=CPUMIN
+      CUTL99=CPUMIN
+      CUTU99=CPUMIN
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MRC2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,51)
+   51   FORMAT('**** AT THE BEGINNING OF DPMRC2--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,IRATME,N
+   52   FORMAT('IBUGA3,ISUBRO,IRATME,N = ',3(2X,A4),I8)
+        CALL DPWRST('XXX','WRIT')
+        DO56I=1,N
+          WRITE(ICOUT,57)I,Y(I),X(I)
+   57     FORMAT('I,Y(I),X(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','WRIT')
+   56   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      ISTEPN='6'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      NMIN=3
+      IF(N.LE.NMIN)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+  101   FORMAT('***** ERROR IN RATIO OF MEANS CONFIDENCE LIMITS--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,103)
+  103   FORMAT('      THE RESPONSE VARIABLES MUST HAVE AT LEAST ',
+     1         I5,' OBSERVATIONS.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,105)IVARID(1),IVARI2(1),N
+  105   FORMAT('      SAMPLE SIZE FOR ',A4,A4,' = ',I8)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,105)IVARID(2),IVARI2(2),N
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C               ***************************************
+C               **  STEP 2--                         **
+C               **  COMPUTE CONFIDENCE LIMITS        **
+C               **  FOR VARIOUS PROBABILITY VALUES.  **
+C               ***************************************
+C
+      ISTEPN='8'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(IRATME.EQ.'FIEL')THEN
+        CALL DPMRC3(Y,X,N,CONF,NUMALP,
+     1              RATIO,ALOWER,AUPPER,
+     1              YBAR,XBAR,YVAR,XVAR,
+     1              ISUBRO,IBUGA3,IERROR)
+      ELSEIF(IRATME.EQ.'LSAM')THEN
+        CALL DPMRC4(Y,X,N,CONF,NUMALP,
+     1              RATIO,ALOWER,AUPPER,
+     1              YBAR,XBAR,YVAR,XVAR,XYCOV,
+     1              ISUBRO,IBUGA3,IERROR)
+      ELSEIF(IRATME.EQ.'LRAT')THEN
+        CALL DPMRC5(Y,X,N,CONF,NUMALP,
+     1              RATIO,ALOWER,AUPPER,
+     1              YBAR,XBAR,YVAR,XVAR,XYCOV,
+     1              ISUBRO,IBUGA3,IERROR)
+      ENDIF
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+      CALL CORR(Y,X,N,IWRITE,XYCORR,IBUGA3,IERROR)
+C
+      CUTL90=ALOWER(3)
+      CUTU90=AUPPER(3)
+      CUTL95=ALOWER(4)
+      CUTU95=AUPPER(4)
+      CUTL99=ALOWER(5)
+      CUTU99=AUPPER(5)
+      CTL999=ALOWER(6)
+      CTU999=AUPPER(6)
+C
+C               ****************************
+C               **  STEP 3--              **
+C               **  WRITE EVERYTHING OUT  **
+C               ****************************
+C
+      ISTEPN='3'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(IPRINT.EQ.'OFF')GOTO9000
+C
+      ITITLE='Confidence Limits for the Ratio of Means'
+      NCTITL=40
+      IF(IRATME.EQ.'FIEL')THEN
+        ITITLZ='(Fieller Method)'
+        NCTITZ=16
+      ELSEIF(IRATME.EQ.'LSAM')THEN
+        ITITLZ='(Large Sample Approximation Method)'
+        NCTITZ=35
+      ELSEIF(IRATME.EQ.'LRAT')THEN
+        ITITLZ='(Log Ratio Method)'
+        NCTITZ=18
+      ENDIF
+C
+      ICNT=1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=0
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Numerator Variable:   '
+      WRITE(ITEXT(ICNT)(23:26),'(A4)')IVARID(1)(1:4)
+      WRITE(ITEXT(ICNT)(27:30),'(A4)')IVARI2(1)(1:4)
+      NCTEXT(ICNT)=29
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Denominator Variable: '
+      WRITE(ITEXT(ICNT)(23:26),'(A4)')IVARID(2)(1:4)
+      WRITE(ITEXT(ICNT)(27:30),'(A4)')IVARI2(2)(1:4)
+      NCTEXT(ICNT)=29
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Summary Statistics for Numerator Variable:'
+      NCTEXT(ICNT)=42
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Number of Observations:'
+      NCTEXT(ICNT)=23
+      AVALUE(ICNT)=REAL(N)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Mean:'
+      NCTEXT(ICNT)=12
+      AVALUE(ICNT)=YBAR
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Standard Deviation:'
+      NCTEXT(ICNT)=26
+      AVALUE(ICNT)=SQRT(YVAR)
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Coefficient of Variation:'
+      NCTEXT(ICNT)=32
+      AVALUE(ICNT)=SQRT(YVAR)/YBAR
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Summary Statistics for Variable 2:'
+      NCTEXT(ICNT)=34
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Number of Observations:'
+      NCTEXT(ICNT)=23
+      AVALUE(ICNT)=REAL(N)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Mean:'
+      NCTEXT(ICNT)=12
+      AVALUE(ICNT)=XBAR
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Standard Deviation:'
+      NCTEXT(ICNT)=26
+      AVALUE(ICNT)=SQRT(XVAR)
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Coefficient of Variation:'
+      NCTEXT(ICNT)=32
+      AVALUE(ICNT)=SQRT(XVAR)/XBAR
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Correlation:'
+      NCTEXT(ICNT)=12
+      AVALUE(ICNT)=XYCORR
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+C
+      NUMROW=ICNT
+      DO5210I=1,NUMROW
+        NTOT(I)=15
+ 5210 CONTINUE
+C
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+C
+      ISTEPN='3B'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      CALL DPDTA1(ITITLE,NCTITL,ITITLZ,NCTITZ,ITEXT,NCTEXT,
+     1            AVALUE,IDIGIT,
+     1            NTOT,NUMROW,
+     1            ICAPSW,ICAPTY,ILAST,IFRST,
+     1            ISUBRO,IBUGA3,IERROR)
+C
+      ISTEPN='9B'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      ICASA2='MRC2'
+      DO390II=1,NUMALP
+        TSDM(II)=RATIO
+  390 CONTINUE
+      CALL DPDT11(CONF,T,TSDM,ALOWER,AUPPER,
+     1            ICASA2,ICAPSW,ICAPTY,NUMDIG,
+     1            ISUBRO,IBUGA3,IERROR)
+C
+      GOTO9000
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MRC2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPMRC2--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPMRC3(Y,X,N,ALPHA,NALPHA,
+     1                  RATIO,ALOWLM,AUPPLM,
+     1                  YBAR,XBAR,YVAR,XVAR,
+     1                  ISUBRO,IBUGA3,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES CONFIDENCE LIMITS FOR THE
+C              RATIO OF TWO MEANS FOR THE PAIRED CASE USING FIELLER'S
+C              METHOD.
+C
+C              FIELLER'S CONFIDENCE LIMITS ARE
+C
+C                 (XBAR*YBAR - t**2(q)*COV(XBAR,YBAR) +/-
+C                 SQRT{(XBAR*YBAR - t**2(q)*COV(XBAR,YBAR)**2 -
+C                 (XBAR**2 - t**2(q)*S**2(XBAR))*
+C                 (YBAR**2 - t**2(q)*S**2(YBAR))}
+C
+C
+C              WHERE
+C
+C                 XBAR           = MEAN OF X
+C                 YBAR           = MEAN OF Y
+C                 RHO            = YBAR/XBAR
+C                 S**2(XBAR)     = VARIANCE OF XBAR
+C                                = SUM[i=1 to N][X(i) - XBAR)**2]/
+C                                  (N*(N-1))
+C                 S**2(YBAR)     = VARIANCE OF YBAR
+C                                = SUM[i=1 to N][Y(i) - YBAR)**2]/
+C                                  (N*(N-1))
+C                 COV(XBAR,YBAR) = COVARIANCE OF XBAR AND YBAR
+C                                = SUM[i=1 to N][(Y(i) - YBAR)*
+C                                                (X(i)-XBAR)]/
+C                                  (N*(N-1))
+C                 t(q)           = t PERCENT POINT VALUE WITH
+C                                  N - 1 DEGREES OF FREEDOM
+C
+C              NOTE THAT THE CONFIDENCE LIMITS CAN BE PROBLEMATIC.
+C              SPECIFICALLY, IF XBAR IS SUFFICIENTLY CLOSE TO ZERO,
+C              YOU CAN OBTAIN UNBOUNDED VALUES.  THIS CAN OCCUR
+C              IF XBAR**2/S**2(XBAR) > t**2(q).  NOTE THAT THERE ARE
+C              TWO CASES THAT RESULT.  IN ONE CASE, THE BOUNDS ABOVE
+C              ACTUALLY DESCRIBE AN "EXCLUSION ZONE" RATHER THAN AN
+C              "INCLUSION ZONE".  THAT IS, THE VALUES BETWEEN THE
+C              BOUNDS ARE WHERE WE ARE CONFIDENT THAT THE RATIO DOES
+C              NOT LIE RATHER THAN WERE IT DOES LIE.  IN THE SECOND
+C              CASE, THE CONFIDENCE BOUNDS ARE UNBOUNDED.  FOR
+C              PRACTICAL PURPOSES, NEITHER OF THESE CASES WILL
+C              GENERATE USEFUL CONFIDENCE LIMITS, SO JUST REPORT
+C              AS UNBOUNDED IN EITHER CASE.
+C
+C
+C     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+C                               OBSERVATIONS FOR THE FIRST RESPONSE
+C                               (NUMERATOR) VARIABLE.
+C                    --X      = THE SINGLE PRECISION VECTOR OF
+C                               OBSERVATIONS FOR THE SECOND RESPONSE
+C                               (DENOMINATOR) VARIABLE.
+C                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                               IN THE VECTORS Y AND X.
+C                    --ALPHA  = THE SINGLE PRECISION VECTOR OF CONFIDENCE
+C                               LEVELS
+C                      NALPHA = THE INTEGER NUMBER OF ALPHA VALUES
+C     OUTPUT ARGUMENTS-RATIO  = YBAR/XBAR
+C                     -YLOWLM = THE SINGLE PRECISION VECTOR OF LOWER
+C                               CONFIDENCE LIMIT VALUES
+C                     -YUPPLM = THE SINGLE PRECISION VECTOR OF UPPER
+C                               CONFIDENCE LIMIT VALUES
+C     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+C     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN. 
+C     REFERENCES--V. H. FRANZ ((2007), "RATIOS: A SHORT GUIDE TO
+C                 CONFIDENCE LIMITS AND PROPER USE",
+C                 arXiv:0710.2024 [stat.AP].
+C               --E. C. FIELER (1940), "THE BIOLOGICAL STANDARDIZATION
+C                 OF INSULIN", SUPPLEMENT TO THE JOURNAL OF THE
+C                 ROYAL STATISTICAL SOCIETY, VOL. 7, NO. 1, PP. 1-64.
+C               --E. C. FIELER (1940), "A FUNDAMENTAL FORMULA IN THE
+C                 STATISTICS OF BIOLOGICAL ASSAYS AND SOME
+C                 APPLICAITONS", QUARTERLY JOURNAL OF PHARMACY AND
+C                 PHARMACOLOGY, VOL. 17, PP. 117-123.
+C               --E. C. FIELER (1940), "SOME PROBLEMS IN INTERVAL
+C                 ESTIMATION", JOURNAL OF THE ROYAL STATISTICAL
+C                 SOCIETY (B), VOL. 16, NO. 2, PP. 175-185.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     ORIGINAL VERSION--SEPTEMBER 2019. 
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION Y(*)
+      DIMENSION X(*)
+      DIMENSION ALOWLM(*)
+      DIMENSION AUPPLM(*)
+      DIMENSION ALPHA(*)
+C
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+C
+      DOUBLE PRECISION DSUM1
+      DOUBLE PRECISION DSUM2
+      DOUBLE PRECISION DSUM3
+      DOUBLE PRECISION DN
+      DOUBLE PRECISION DNM1
+      DOUBLE PRECISION DVAL
+      DOUBLE PRECISION DTQ
+      DOUBLE PRECISION DLOW
+      DOUBLE PRECISION DUPP
+      DOUBLE PRECISION DX
+      DOUBLE PRECISION DY
+      DOUBLE PRECISION DCOVXY
+      DOUBLE PRECISION DYBAR
+      DOUBLE PRECISION DXBAR
+      DOUBLE PRECISION DYVARB
+      DOUBLE PRECISION DXVARB
+      DOUBLE PRECISION DRATIO
+      DOUBLE PRECISION DTERM1
+      DOUBLE PRECISION DTERM2
+      DOUBLE PRECISION DTERM3
+      DOUBLE PRECISION DTERM4
+      DOUBLE PRECISION DNUML
+      DOUBLE PRECISION DNUMU
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='MRC3'
+      ISUBN2='    '
+      IWRITE='OFF'
+      IERROR='NO'
+      DO10I=1,NALPHA
+        ALOWLM(I)=CPUMIN
+        AUPPLM(I)=CPUMIN
+   10 CONTINUE
+      RATIO=CPUMIN
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC3')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,51)
+   51   FORMAT('**** AT THE BEGINNING OF DPMRC3--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,N,NALPHA
+   52   FORMAT('IBUGA3,ISUBRO,N,NALPHA = ',2(A4,2X),I8,I5)
+        CALL DPWRST('XXX','WRIT')
+        DO56I=1,N
+          WRITE(ICOUT,57)I,Y(I),X(I)
+   57     FORMAT('I,Y(I),X(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','WRIT')
+   56   CONTINUE
+        DO76I=1,NALPHA
+          WRITE(ICOUT,77)I,ALPHA(I)
+   77     FORMAT('I,ALPHA(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','WRIT')
+   76   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      ISTEPN='1'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC3')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      DO110I=1,NALPHA
+        ALOWLM(I)=CPUMIN
+        AUPPLM(I)=CPUMIN
+  110 CONTINUE
+C
+      NMIN=3
+      IF(NMIN.LT.3)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+  101   FORMAT('***** ERROR: RATIO OF MEANS CONFIDENCE LIMITS--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,102)NMIN
+  102   FORMAT('      THE NUMBER OF ORIGINAL OBSERVATIONS  IS LESS ',
+     1         'THAN ',I3,'.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,103)N
+  103   FORMAT('      SAMPLE SIZE = ',I8)
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 2--                              **
+C               **  COMPUTE SOME BASIC STATISTICS         **
+C               ********************************************
+C
+      ISTEPN='2'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC3')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      DN=DBLE(N)
+      DNM1=DBLE(N-1)
+      CALL MEAN(Y,N,IWRITE,YBAR,IBUGA3,IERROR)
+      CALL VAR(Y,N,IWRITE,YVAR,IBUGA3,IERROR)
+      CALL MEAN(X,N,IWRITE,XBAR,IBUGA3,IERROR)
+      CALL VAR(X,N,IWRITE,XVAR,IBUGA3,IERROR)
+      CALL COV(Y,X,N,IWRITE,XYCOV,IBUGA3,IERROR)
+      DYBAR=DBLE(YBAR)
+      DXBAR=DBLE(XBAR)
+      DYVAR=DBLE(YVAR)
+      DXVAR=DBLE(XVAR)
+      DYVARB=DYVAR/DN
+      DXVARB=DXVAR/DN
+      DCOVXY=DBLE(XYCOV)/DN
+C
+C
+      IF(DYVARB.LE.0.0D0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,131)
+  131   FORMAT('      VARIANCE OF MEAN FOR FIRST (NUMERATOR) RESPONSE ',
+     1             'IS NON-POSITIVE.')
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ELSEIF(DXVARB.LE.0.0D0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,136)
+  136   FORMAT('      VARIANCE OF MEAN FOR SECOND (DENOMINATOR) ',
+     1         'RESPONSE VARIABLE IS NON-POSITIVE.')
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ELSEIF(DXBAR.EQ.0.0D0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,141)
+  141   FORMAT('      THE MEAN OF THE DENOMINATOR VARIABLE IS ',
+     1         'EQUAL TO ZERO.')
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+      IF(IBUGA3.EQ.'ON'.AND.ISUBRO.EQ.'MRC3')THEN
+        WRITE(ICOUT,191)YBAR,XBAR,YVAR,XVAR
+  191   FORMAT('YBAR,XBAR,YVAR,XVAR = ',4G15.7)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,193)DYVARB,DXVARB,XYCOV,DCOVXY
+  193   FORMAT('DYVARB,DXVARB,XYCOV,DCOVXY = ',G15.7)
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 3--                              **
+C               **  CARRY OUT CALCULATIONS FOR CONFIDENCE **
+C               **  LIMITS.                               **
+C               ********************************************
+C
+      ISTEPN='3'
+      IF(IBUGA3.EQ.'ON'.AND.ISUBRO.EQ.'MRC3')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      DRATIO=DYBAR/DXBAR
+      RATIO=REAL(DRATIO)
+      ADF=REAL(N-1)
+C
+      DO310II=1,NALPHA
+        ALPT=ALPHA(II)
+        IF(ALPT.GT.1.0 .AND. ALPT.LT.100.0)ALPT=ALPT/100.0
+        IF(ALPT.LE.0.0 .OR. ALPT.GT.1.0)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','WRIT')
+          WRITE(ICOUT,101)
+          CALL DPWRST('XXX','WRIT')
+          WRITE(ICOUT,311)ALPHA(II)
+  311     FORMAT('      INVALID VALUE OF ALPHA (',G15.7,'),')
+          CALL DPWRST('XXX','WRIT')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+        IF(ALPT.LT.0.5)ALPT=1.0 - ALPT
+        ALPT=(1.0 - ALPT)/2.0
+        ALPT=1.0 - ALPT
+        CALL TPPF(ALPT,ADF,TPPFV)
+        DTQ=DBLE(TPPFV)**2
+C
+C       TEST TO SEE IF WE HAVE THE BOUNDED CASE
+C
+        DVAL=DXBAR**2/DXVARB
+        IF(DVAL.LE.DTQ)THEN
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,315)
+  315       FORMAT('***** WARNING: RATIO OF MEANS CONFIDENCE LIMITS--')
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,316)ALPHA(II)
+  316       FORMAT('      FOR ALPHA (',G15.7,'), THE FIELLER INTERVAL ',
+     1             'IS UNBOUNDED.')
+            CALL DPWRST('XXX','WRIT')
+          ENDIF
+          GOTO310
+        ENDIF
+C
+C       NOW COMPUTE THE BOUNDS
+C
+        DTERM1=DYBAR*DXBAR - DTQ*DCOVXY
+        DTERM2=(DYBAR*DXBAR - DTQ*DCOVXY)**2
+        DTERM3=(DXBAR**2 - DTQ*DXVARB)*(DYBAR**2 - DTQ*DYVARB)
+        DTERM4=DXBAR**2 - DTQ*DXVARB
+        DNUML=DTERM1 - DSQRT(DTERM2 - DTERM3)
+        DNUMU=DTERM1 + DSQRT(DTERM2 - DTERM3)
+        DLOW=DNUML/DTERM4
+        DUPP=DNUMU/DTERM4
+        ALOWLM(II)=REAL(DLOW)
+        AUPPLM(II)=REAL(DUPP)
+C
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MRC3')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','WRIT')
+          WRITE(ICOUT,331)DTERM1,DTERM2,DTERM3,DTERM4,DTQ
+  331     FORMAT('DTERM1,DTERM2,DTERM3,DTERM4,DTQ = ',5G15.7)
+          CALL DPWRST('XXX','WRIT')
+          WRITE(ICOUT,333)DNUML,DNUMU,DLOW,DUPP
+  333     FORMAT('DNUML,DNUMU,DLOW,DUPP = ',4G15.7)
+          CALL DPWRST('XXX','WRIT')
+        ENDIF
+C
+  310 CONTINUE
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MRC3')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9051)
+ 9051   FORMAT('**** AT THE END OF DPMRC3--')
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
+      RETURN
+      END 
+      SUBROUTINE DPMRC4(Y,X,N,ALPHA,NALPHA,
+     1                  RATIO,ALOWLM,AUPPLM,
+     1                  YBAR,XBAR,YVAR,XVAR,COVXY,
+     1                  ISUBRO,IBUGA3,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES CONFIDENCE LIMITS FOR THE
+C              RATIO OF TWO MEANS FOR THE PAIRED CASE USING A LARGE
+C              SAMPLE APPROXIMATION METHOD.
+C
+C              THE CONFIDENCE LIMITS ARE
+C
+C                 Ic = R +/- t(alpha/2,n-1)*R*
+C                      SQRT{C(YBAR,YBAR) + C(XBAR,XBAR) -
+C                           2*C(YBAR,XBAR)}
+C
+C              WHERE
+C
+C                 XBAR          = MEAN OF X
+C                 YBAR          = MEAN OF Y
+C                 RHO           = YBAR/XBAR
+C                 C(YBAR,YBAR)  = (S**2(Y)/YBAR**2)/N
+C                 C(XBAR,XBAR)  = (S**2(X)/XBAR**2)/N
+C                 C(XBAR,YBAR)  = (S(X,Y)/(XBAR*YBAR)/N
+C                 S**2(Y)       = VARIANCE OF Y
+C                 S**2(X)       = VARIANCE OF X
+C                 S(X,Y)        = COVARIANCE OF Y AND X
+C                 t             = t PERCENT POINT VALUE WITH
+C
+C              NOTE THAT THIS METHOD, UNLIKE FIELER'S METHOD,
+C              DOES NOT RESULT IN UNBOUNDED CONFIDENCE LIMITS.
+C
+C
+C     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+C                               OBSERVATIONS FOR THE FIRST RESPONSE
+C                               (NUMERATOR) VARIABLE.
+C                    --X      = THE SINGLE PRECISION VECTOR OF
+C                               OBSERVATIONS FOR THE SECOND RESPONSE
+C                               (DENOMINATOR) VARIABLE.
+C                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                               IN THE VECTORS Y AND X.
+C                    --ALPHA  = THE SINGLE PRECISION VECTOR OF CONFIDENCE
+C                               LEVELS
+C                      NALPHA = THE INTEGER NUMBER OF ALPHA VALUES
+C     OUTPUT ARGUMENTS-RATIO  = YBAR/XBAR
+C                     -YLOWLM = THE SINGLE PRECISION VECTOR OF LOWER
+C                               CONFIDENCE LIMIT VALUES
+C                     -YUPPLM = THE SINGLE PRECISION VECTOR OF UPPER
+C                               CONFIDENCE LIMIT VALUES
+C     OTHER DATAPAC   SUBROUTINES NEEDED--MEAN, VARIANCE, COV.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+C     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN. 
+C     REFERENCES--SHERMAN, MAITY, AND WANG (2011), "INFERENCES FOR THE
+C                 RATIO: FIELLER'S INTERVAL, LOG RATIO, AND LARGE
+C                 SAMPLE BASED CONFIDENCE INTERVALS", AStA Adv Stat Anal
+C                 95:313–323.
+C               --COCHRAN (1977), "SAMPLING TECHNIQUES", WILEY, NEW YORK.
+C               --LOHR (2009), "SAMPLING: DESIGN AND ANALYSIS",
+C                 Second Edition, BROOKS/COLE, PACIFIC GROVE.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     ORIGINAL VERSION--SEPTEMBER 2019. 
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION Y(*)
+      DIMENSION X(*)
+      DIMENSION ALOWLM(*)
+      DIMENSION AUPPLM(*)
+      DIMENSION ALPHA(*)
+C
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+C
+      DOUBLE PRECISION DN
+      DOUBLE PRECISION DR
+      DOUBLE PRECISION DXBAR
+      DOUBLE PRECISION DYBAR
+      DOUBLE PRECISION DXVAR
+      DOUBLE PRECISION DYVAR
+      DOUBLE PRECISION DCOV
+      DOUBLE PRECISION DCXX
+      DOUBLE PRECISION DCYY
+      DOUBLE PRECISION DCXY
+      DOUBLE PRECISION DTERM1
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='MRC4'
+      ISUBN2='    '
+      IWRITE='OFF'
+      IERROR='NO'
+      DO10I=1,NALPHA
+        ALOWLM(I)=CPUMIN
+        AUPPLM(I)=CPUMIN
+   10 CONTINUE
+      RATIO=CPUMIN
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC4')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,51)
+   51   FORMAT('**** AT THE BEGINNING OF DPMRC4--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,N,NALPHA
+   52   FORMAT('IBUGA3,ISUBRO,N,NALPHA = ',2(A4,2X),I8,I5)
+        CALL DPWRST('XXX','WRIT')
+        DO56I=1,N
+          WRITE(ICOUT,57)I,Y(I),X(I)
+   57     FORMAT('I,Y(I),X(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','WRIT')
+   56   CONTINUE
+        DO76I=1,NALPHA
+          WRITE(ICOUT,77)I,ALPHA(I)
+   77     FORMAT('I,ALPHA(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','WRIT')
+   76   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      ISTEPN='1'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC4')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      DO110I=1,NALPHA
+        ALOWLM(I)=CPUMIN
+        AUPPLM(I)=CPUMIN
+  110 CONTINUE
+C
+      NMIN=5
+      IF(NMIN.LT.5)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+  101   FORMAT('***** ERROR: RATIO OF MEANS CONFIDENCE LIMITS--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,102)NMIN
+  102   FORMAT('      THE NUMBER OF ORIGINAL OBSERVATIONS  IS LESS ',
+     1         'THAN ',I3,'.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,103)N
+  103   FORMAT('      SAMPLE SIZE = ',I8)
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 2--                              **
+C               **  COMPUTE SOME BASIC STATISTICS         **
+C               ********************************************
+C
+      ISTEPN='2'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC4')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      CALL MEAN(Y,N,IWRITE,YBAR,IBUGA3,IERROR)
+      CALL VAR(Y,N,IWRITE,YVAR,IBUGA3,IERROR)
+      CALL MEAN(X,N,IWRITE,XBAR,IBUGA3,IERROR)
+      CALL VAR(X,N,IWRITE,XVAR,IBUGA3,IERROR)
+      CALL COV(Y,X,N,IWRITE,XYCOV,IBUGA3,IERROR)
+C
+      IF(YVAR.LE.0.0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,131)
+  131   FORMAT('      VARIANCE OF MEAN FOR FIRST (NUMERATOR) RESPONSE ',
+     1             'IS NON-POSITIVE.')
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ELSEIF(XVAR.LE.0.0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,136)
+  136   FORMAT('      VARIANCE OF MEAN FOR SECOND (DENOMINATOR) ',
+     1         'RESPONSE VARIABLE IS NON-POSITIVE.')
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ELSEIF(XBAR.EQ.0.0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,141)
+  141   FORMAT('      THE MEAN OF THE DENOMINATOR VARIABLE IS ',
+     1         'EQUAL TO ZERO.')
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC4')THEN
+        WRITE(ICOUT,191)YBAR,YVAR,XBAR,XVAR,XYCOV
+  191   FORMAT('YBAR,YVAR,XBAR,XVAR,XYCOV = ',5G15.7)
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 3--                              **
+C               **  CARRY OUT CALCULATIONS FOR CONFIDENCE **
+C               **  LIMITS.                               **
+C               ********************************************
+C
+      ISTEPN='3'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC4')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      RATIO=YBAR/XBAR
+      ADF=REAL(N-1)
+      DN=DBLE(N)
+      DR=DBLE(RATIO)
+      DXBAR=DBLE(XBAR)
+      DYBAR=DBLE(YBAR)
+      DYVAR=DBLE(YVAR)
+      DXVAR=DBLE(XVAR)
+      DCOV=DBLE(XYCOV)
+      DCYY=(DYVAR/DYBAR**2)/DN
+      DCXX=(DXVAR/DXBAR**2)/DN
+      DCXY=(DCOV/(DXBAR*DYBAR))/DN
+      DTERM1=DR*DSQRT(DCYY + DCXX - 2.0D0*DCXY)
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MRC4')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,301)DR,DCYY,DCXX,DCXY,DTERM1
+  301   FORMAT('DR,DCYY,DCXX,DCXY,DTERM1 = ',5G15.7)
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
+      DO310II=1,NALPHA
+        ALPT=ALPHA(II)
+        IF(ALPT.GT.1.0 .AND. ALPT.LT.100.0)ALPT=ALPT/100.0
+        IF(ALPT.LE.0.0 .OR. ALPT.GE.1.0)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','WRIT')
+          WRITE(ICOUT,101)
+          CALL DPWRST('XXX','WRIT')
+          WRITE(ICOUT,311)ALPHA(II)
+  311     FORMAT('      INVALID VALUE OF ALPHA (',G15.7,'),')
+          CALL DPWRST('XXX','WRIT')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+        IF(ALPT.LT.0.5)ALPT=1.0 - ALPT
+        ALPT=(1.0 - ALPT)/2.0
+        ALPT=1.0 - ALPT
+        CALL TPPF(ALPT,ADF,TPPFV)
+        DT=DBLE(TPPFV)
+        DLOW=DR - DT*DTERM1
+        DUPP=DR + DT*DTERM1
+        ALOWLM(II)=REAL(DLOW)
+        AUPPLM(II)=REAL(DUPP)
+C
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MRC4')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','WRIT')
+          WRITE(ICOUT,333)DT,DLOW,DUPP
+  333     FORMAT('DT,DLOW,DUPP = ',3G15.7)
+          CALL DPWRST('XXX','WRIT')
+        ENDIF
+C
+  310 CONTINUE
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MRC4')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9051)
+ 9051   FORMAT('**** AT THE END OF DPMRC4--')
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
+      RETURN
+      END 
+      SUBROUTINE DPMRC5(Y,X,N,ALPHA,NALPHA,
+     1                  RATIO,ALOWLM,AUPPLM,
+     1                  YBAR,XBAR,YVAR,XVAR,XYCOV,
+     1                  ISUBRO,IBUGA3,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES CONFIDENCE LIMITS FOR THE
+C              RATIO OF TWO MEANS FOR THE PAIRED CASE USING THE
+C              LOG RATIO METHOD.
+C
+C              THE CONFIDENCE LIMITS ARE
+C
+C                 Ilr = (R*EXP{-t(alpha/2,n-1)*
+C                       SQRT{C(YBAR,YBAR) + C(XBAR,XBAR) -
+C                           2*C(YBAR,XBAR)},
+C                        R*EXP{t(alpha/2,n-1)*
+C                       SQRT{C(YBAR,YBAR) + C(XBAR,XBAR) -
+C                           2*C(YBAR,XBAR)},
+C
+C              WHERE
+C
+C                 XBAR           = MEAN OF X
+C                 YBAR           = MEAN OF Y
+C                 R              = YBAR/XBAR
+C                 C(YBAR,YBAR)   = (S**2(Y)/YBAR**2)/N
+C                 C(XBAR,XBAR)   = (S**2(X)/XBAR**2)/N
+C                 C(XBAR,YBAR)   = (S(X,Y)/(XBAR*YBAR)/N
+C                 S**2(Y)        = VARIANCE OF Y
+C                 S**2(X)        = VARIANCE OF X
+C                 S(XBAR,YBAR)   = COVARIANCE OF Y AND X
+C                 t              = t PERCENT POINT VALUE WITH
+C
+C              NOTE THAT THIS METHOD, UNLIKE FIELER'S METHOD,
+C              DOES NOT RESULT IN UNBOUNDED CONFIDENCE LIMITS.
+C              IT ALSO ALLOWS FOR ASYMMETRIC INTERVALS (UNLIKE
+C              THE LARGE SAMPLE APPROXIMATION METHOD).
+C
+C
+C     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+C                               OBSERVATIONS FOR THE FIRST RESPONSE
+C                               (NUMERATOR) VARIABLE.
+C                    --X      = THE SINGLE PRECISION VECTOR OF
+C                               OBSERVATIONS FOR THE SECOND RESPONSE
+C                               (DENOMINATOR) VARIABLE.
+C                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                               IN THE VECTORS Y AND X.
+C                    --ALPHA  = THE SINGLE PRECISION VECTOR OF CONFIDENCE
+C                               LEVELS
+C                      NALPHA = THE INTEGER NUMBER OF ALPHA VALUES
+C     OUTPUT ARGUMENTS-RATIO  = YBAR/XBAR
+C                     -YLOWLM = THE SINGLE PRECISION VECTOR OF LOWER
+C                               CONFIDENCE LIMIT VALUES
+C                     -YUPPLM = THE SINGLE PRECISION VECTOR OF UPPER
+C                               CONFIDENCE LIMIT VALUES
+C     OTHER DATAPAC   SUBROUTINES NEEDED--MEAN, VARIANCE, COV.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+C     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN. 
+C     REFERENCES--SHERMAN, MAITY, AND WANG (2011), "INFERENCES FOR THE
+C                 RATIO: FIELLER'S INTERVAL, LOG RATIO, AND LARGE
+C                 SAMPLE BASED CONFIDENCE INTERVALS", AStA Adv Stat Anal
+C                 95:313–323.
+C               --COCHRAN (1977), "SAMPLING TECHNIQUES", WILEY, NEW YORK.
+C               --LOHR (2009), "SAMPLING: DESIGN AND ANALYSIS",
+C                 Second Edition, BROOKS/COLE, PACIFIC GROVE.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     ORIGINAL VERSION--SEPTEMBER 2019. 
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION Y(*)
+      DIMENSION X(*)
+      DIMENSION ALOWLM(*)
+      DIMENSION AUPPLM(*)
+      DIMENSION ALPHA(*)
+C
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+C
+      DOUBLE PRECISION DSUM1
+      DOUBLE PRECISION DSUM2
+      DOUBLE PRECISION DSUM3
+      DOUBLE PRECISION DN
+      DOUBLE PRECISION DNM1
+      DOUBLE PRECISION DVAL
+      DOUBLE PRECISION DTQ
+      DOUBLE PRECISION DLOW
+      DOUBLE PRECISION DUPP
+      DOUBLE PRECISION DX
+      DOUBLE PRECISION DY
+      DOUBLE PRECISION DTERM1
+      DOUBLE PRECISION DTERM2
+      DOUBLE PRECISION DTERM3
+      DOUBLE PRECISION DTERM4
+      DOUBLE PRECISION DTERM5
+      DOUBLE PRECISION DTERM6
+      DOUBLE PRECISION DTERM7
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='MRC5'
+      ISUBN2='    '
+      IWRITE='OFF'
+      IERROR='NO'
+      DO10I=1,NALPHA
+        ALOWLM(I)=CPUMIN
+        AUPPLM(I)=CPUMIN
+   10 CONTINUE
+      RATIO=CPUMIN
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC5')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,51)
+   51   FORMAT('**** AT THE BEGINNING OF DPMRC5--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,N,NALPHA
+   52   FORMAT('IBUGA3,ISUBRO,N,NALPHA = ',2(A4,2X),I8,I5)
+        CALL DPWRST('XXX','WRIT')
+        DO56I=1,N
+          WRITE(ICOUT,57)I,Y(I),X(I)
+   57     FORMAT('I,Y(I),X(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','WRIT')
+   56   CONTINUE
+        DO76I=1,NALPHA
+          WRITE(ICOUT,77)I,ALPHA(I)
+   77     FORMAT('I,ALPHA(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','WRIT')
+   76   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      ISTEPN='1'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC5')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      DO110I=1,NALPHA
+        ALOWLM(I)=CPUMIN
+        AUPPLM(I)=CPUMIN
+  110 CONTINUE
+C
+      NMIN=5
+      IF(NMIN.LT.5)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+  101   FORMAT('***** ERROR: RATIO OF MEANS CONFIDENCE LIMITS--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,102)NMIN
+  102   FORMAT('      THE NUMBER OF ORIGINAL OBSERVATIONS  IS LESS ',
+     1         'THAN ',I3,'.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,103)N
+  103   FORMAT('      SAMPLE SIZE = ',I8)
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 2--                              **
+C               **  COMPUTE SOME BASIC STATISTICS         **
+C               ********************************************
+C
+      ISTEPN='2'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MRC5')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      CALL MEAN(Y,N,IWRITE,YBAR,IBUGA3,IERROR)
+      CALL VAR(Y,N,IWRITE,YVAR,IBUGA3,IERROR)
+      CALL MEAN(X,N,IWRITE,XBAR,IBUGA3,IERROR)
+      CALL VAR(X,N,IWRITE,XVAR,IBUGA3,IERROR)
+      CALL COV(Y,X,N,IWRITE,XYCOV,IBUGA3,IERROR)
+C
+      IF(YVAR.LE.0.0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,131)
+  131   FORMAT('      VARIANCE OF MEAN FOR FIRST (NUMERATOR) RESPONSE ',
+     1             'IS NON-POSITIVE.')
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ELSEIF(XVAR.LE.0.0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,136)
+  136   FORMAT('      VARIANCE OF MEAN FOR SECOND (DENOMINATOR) ',
+     1         'RESPONSE VARIABLE IS NON-POSITIVE.')
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ELSEIF(XBAR.EQ.0.0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,141)
+  141   FORMAT('      THE MEAN OF THE DENOMINATOR VARIABLE IS ',
+     1         'EQUAL TO ZERO.')
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+      IF(IBUGA3.EQ.'ON'.AND.ISUBRO.EQ.'MRC5')THEN
+        WRITE(ICOUT,191)YBAR,YVAR,XBAR,XVAR,XYCOV
+  191   FORMAT('YBAR,YVAR,XBAR,XVAR,XYCOV = ',5G15.7)
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 3--                              **
+C               **  CARRY OUT CALCULATIONS FOR CONFIDENCE **
+C               **  LIMITS.                               **
+C               ********************************************
+C
+      ISTEPN='3'
+      IF(IBUGA3.EQ.'ON'.AND.ISUBRO.EQ.'MRC5')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      RATIO=YBAR/XBAR
+      ADF=REAL(N-1)
+      DN=DBLE(N)
+      DR=DBLE(RATIO)
+      DXBAR=DBLE(XBAR)
+      DYBAR=DBLE(YBAR)
+      DYVAR=DBLE(YVAR)
+      DXVAR=DBLE(XVAR)
+      DCOV=DBLE(XYCOV)
+      DCYY=(DYVAR/DYBAR**2)/DN
+      DCXX=(DXVAR/DXBAR**2)/DN
+      DCXY=(DCOV/(DXBAR*DYBAR))/DN
+      DTERM1=DSQRT(DCYY + DCXX - 2.0D0*DCXY)
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MRC5')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,301)DR,DCYY,DCXX,DCXY,DTERM1
+  301   FORMAT('DR,DCYY,DCXX,DCXY,DTERM1 = ',5G15.7)
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
+      DO310II=1,NALPHA
+        ALPT=ALPHA(II)
+        IF(ALPT.GT.1.0 .AND. ALPT.LT.100.0)ALPT=ALPT/100.0
+        IF(ALPT.LE.0.0 .OR. ALPT.GT.1.0)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','WRIT')
+          WRITE(ICOUT,101)
+          CALL DPWRST('XXX','WRIT')
+          WRITE(ICOUT,311)ALPHA(II)
+  311     FORMAT('      INVALID VALUE OF ALPHA (',G15.7,'),')
+          CALL DPWRST('XXX','WRIT')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+        IF(ALPT.LT.0.5)ALPT=1.0 - ALPT
+        ALPT=(1.0 - ALPT)/2.0
+        ALPT=1.0 - ALPT
+        CALL TPPF(ALPT,ADF,TPPFV)
+        DT=DBLE(TPPFV)
+        DLOW=DR*DEXP((-DT)*DTERM1)
+        DUPP=DR*DEXP(DT*DTERM1)
+        ALOWLM(II)=REAL(DLOW)
+        AUPPLM(II)=REAL(DUPP)
+C
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MRC5')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','WRIT')
+          WRITE(ICOUT,333)DT,DLOW,DUPP
+  333     FORMAT('DT,DLOW,DUPP = ',3G15.7)
+          CALL DPWRST('XXX','WRIT')
+        ENDIF
+C
+  310 CONTINUE
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MRC5')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9051)
+ 9051   FORMAT('**** AT THE END OF DPMRC5--')
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
+      RETURN
+      END 
       SUBROUTINE DPMRFP(NPLOTV,NPLOTP,NS,ICASPL,IAND1,IAND2,
      1                  IBUGG2,IBUGG3,ISUBRO,IBUGQ,IFOUND,IERROR)
 C

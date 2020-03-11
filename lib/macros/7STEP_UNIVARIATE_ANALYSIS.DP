@@ -1,0 +1,179 @@
+. This is dataplot macro     7step_univariate_analysis.dp     3/13/19
+. Purpose: Carry out a 7-step univariate analysis (e.g., for Jim Cline SRM 1976c)
+. Date: 3/13/19
+. Input:
+.   y (vector) = response variable
+.   header (string) = top header line to appear on every plot
+.   y1lab  (string) = vertical axis label to appear on the scatter plot
+.   st1, st2, ..., (s
+.   jpeak?
+.
+. -----start point-----
+.
+. -----Step 11: Plot the data-----
+.
+feedback off
+.
+let string header2 = Is the Process in Statistical Control? (Predictability)
+let string header3 = Run Sequence Plot
+.
+char X all; lines blank all
+y1label Response= ^y1lab
+x1label Sequence Number
+label size 2.6; y1label displacement 9
+y1label ^y1lab
+x1label Sequence Number
+plot y
+if stcorn1 exists; call upperleft.dp; end if
+call annotate.dp
+.
+. -----Step 12: Check for Drift-----
+.
+feedback off
+.
+let string header2 = Drift?
+let string header3 = Run Sequence Plot & Linear Fit
+.
+char X bl; lines blank solid
+y1label Response = ^y1lab
+x1label Sequence Number
+label size 2.6; y1label displacement 9
+y1label ^y1lab
+x1label Sequence Number
+let n = number y
+delete xjunk; let xjunk = 1 1 n
+fit y xjunk
+plot y pred vs xjunk
+skip 0; read parameter dpst1f.dat inter sdinter tinter
+skip 1; read parameter dpst1f.dat slope sdslope tslope
+move 16 87; just let; hw 2.5 1.25; text Linear Fit (n = ^n)
+move 16 84; text Intercept = ^inter  SD(Inter) = ^sdinter   t(Inter) = ^tinter
+move 16 81; text Slope = ^slope  SD(Slope) = ^sdslope   t(Slope) = ^tslope
+if stcorn1 exists; call upperleft.dp; end if
+call annotate.dp
+.
+. -----Step 13: Check Drift & Scale Shift via ANOVA-----
+.
+let string header2 = Q. Fixed Location?  Fixed Variation?
+let string header3 = Apply ANOVA & Levent Test to Partitioned Data
+delete xhalf
+let evenodd = mod(n,2)
+let nhalf = n/2
+if evenodd = 1; let nhalf = (n+1)/2; end if
+let nhalfp1 = nhalf+1
+.
+x1tic offset units screen; x1tic offset 15 15
+let xhalf = 1 for i = 1 1 n
+let xhalf = 2 for i = nhalfp1 1 n
+char X all; lines solid all
+plot y xhalf xhalf
+.
+anova y xhalf
+set write decimals 2; let statcdfr = number to string statcdf
+move 16 87; just left; hw 2.5 1.25;
+if statcdf < 95;  color blue; text ANOVA cdf = ^statcdfr% => 2 halves same wrt location; end if
+if statcdf >= 95; color red;  text ANOVA cdf = ^statcdfr% => 2 halves differ in location; color blue; end if
+.
+levene test y xhalf
+set write decimals 2; let statcdfr = number to string statcdf
+move 16 84; just left; hw 2.5 1.25
+if statcdf < 95;  color blue; text Levene cdf = ^statcdfr% => 2 halves same wrt variation; end if
+if statcdf >= 95; color red;  text Levene cdf = ^statcdfr% => 2 halves differ in variation; color blue; end if
+x1tic offset units screen; x1tic offset 5 5
+if stcorn1 exists; call upperleft.dp; end if
+call annotate.dp
+.
+. -----Step 14: 4plot-----
+.
+let string header2 = Q. Is Process in Statistical Control?  Predictability?  Drift?
+let string header3 = Run Sequence Plot, Lag Plot, Histogram, Normal Probability Plot
+.
+char X; lines solid
+label size 2.6; y1label displacement 9
+let dp = 5
+call 4plot_noargs.dp
+if stcorn1 exists; call upperleft.dp; end if
+call annotate.dp
+.
+. -----Step 15: Normally Distributed? Outliers?-----
+.
+let string header2 = Q. Normal Distribution?  Outliers?
+let string header3 = Normal Probability Plot (Ordered Y(i) vs Normal N(0,1) Order Stat Medians)
+.
+y1label Ordered ^y1lab
+x1label Normal N(0,1) Order Statistic Medians
+.
+char X; lines bl
+label size 2.6; y1label displacement 9
+normal probability plot y
+.
+let ppcc = normal ppcc y
+let ppcc = 100*ppcc
+. if n <= 100                                ;. FIX THIS <================================error
+   let ppcc05 = 100*norppcv(n,0.05)
+   let ppcc01 = 100*norppcv(n,0.01)
+. end if
+print "ppcc = ^ppcc    ppcc05 = ^ppcc05    ppcc01 = ^ppcc01"
+. pause
+set write decimals 6; let ppccr = number to string ppcc
+move 16 87; just left; hw 2.5 1.25
+if ppcc >  ppcc05; color blue; text Filliben Normal PPCC = ^ppccr => data normal; end if
+if ppcc <= ppcc05; color red;  text Filliben Normal PPCC = ^ppccr => data not normal; color blue; end if
+.
+wilks shapiro test y
+set write decimals 6; let statvalr = number to string statval
+move 16 84; just left; hw 2.5 1.25
+if pvalue >  .05; color blue; text Wilks Shapiro Normal Stat = ^statvalr => data normal; end if
+if pvalue <= .05; color red;  text Wilks Shapiro Normal Stat = ^statvalr => data not normal; color blue; end if
+.
+let ksloc = mean y
+let ksscale = sd y
+normal anderson darling goodness of fit y
+. pause
+set write decimals 6; let statvalr = number to string statval
+move 16 81; just left; hw 2.5 1.25
+if pvalue >  .05; color blue; text Anderson Darling Normal Stat = ^statvalr => data normal; end if
+if pvalue <= .05; color red;  text Anderson Darling Normal Stat = ^statvalr => data not normal; color blue; end if
+x1tic offset units screen; x1tic offset 5 5
+if stcorn1 exists; call upperleft.dp; end if
+call annotate.dp
+.
+gumble test y
+set write decimals 6; let statvalr = number to string statval
+move 16 78; just left; hw 2.5 1.25
+if pvalue >  .05; color blue; text Gumbel Normal Outlier Test Stat = ^statvalr => no outliers; end if
+if pvalue <= .05; color red;  text Gumbel Normal Outlier Test Stat = ^statvalr = outliers exist; end if
+.
+. -----Step 16: Univiarete uncertainty analysis-----
+.
+let string header2 = Q. Certified Value & Uncertainty(CV)
+let string header3 = Mean & Unc(Mean)
+.
+feedback off
+let xp = 20; let yp = 88
+let xpbox2 = 64
+.
+delete ysave; let ysave = y
+if k >= 2; let y = mvz; end if
+.
+call univariate_uncertainty_noargs.dp yp=86
+if stcorn1 exists; call upperleft.dp; end if
+call annotate.dp
+delete y; let y = ysave
+.
+. -----Step 17: Univiarete uncertainty analysis-----Univariate normal tolerance limits-----
+.
+let string header2 = Q. Tolerance Limits for the Population
+let string header3 = Mean +-() k*SD(Mean)
+.
+let dp = 5
+call tolerance.dp
+if stcorn1 exists; call upperleft.dp; end if
+call annotate.dp
+.
+. -----Finish up-----
+.
+xlim
+ylim
+.
+

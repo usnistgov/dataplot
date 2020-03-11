@@ -1,0 +1,26 @@
+. This is dataplot macro     size_orig.dp    11/15/16
+. Purpose: Change character sizes for char, titles, labels, tic labels, etc.
+. Date: 8/16/16 ==> 9/9/16  ==> 11/15/16
+. Input:
+.    sizezzz (parameter) = value for height of character  (optional)  (default = 2)
+.
+. Macros needed: 0
+.
+. -----start point-----
+.
+. print "at beginning of    size_orig.dp"
+. pause
+let sizezzzh = 2
+if sizezzz exists; let sizezzzh = sizezzz; end if
+let sizezzzw = sizezzzh/2
+.
+tic label size ^sizezzzh
+label size ^sizezzzh
+title size ^sizezzzh
+legend size ^sizezzzh
+.
+char hw ^sizezzzh ^sizezzzw all
+hw ^sizezzzh ^sizezzzw
+.
+reset command line arguments
+.

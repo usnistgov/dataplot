@@ -1,0 +1,142 @@
+. This is dataplot macro    testblockplot_sheesley.dp  (new)    3/19/18 => 2/8/19 => 2/14/19
+. Purpose: Do block plot (k = 1+3 = 4, n = 24) for Sheesley Light Bulb example
+. Design: Randomized Block Design (k=4,n=24) (and == Full Factorial Design)
+.         Primary Factor:    Weld  (2)
+.         Robustness Factor: Plant (2)
+.                            Speed (2)
+.                            Shift (3)
+. Date: September 2010  => 2/8/19 => 2/14/19
+
+.
+. -----start point-----
+.
+let string header = Sheesley Lightblub Block Plot Analysis
+let string headhw1 = 3 2
+let string headhw2 = 2.6 1.3
+let string headhw3 = 2.6 1.3
+. let string currdate = 9/28/10
+. let string currdate = 1/17/18
+let string currdate = 2/14/19
+.
+let pagecoun = 0
+let string trailer = testblockplot_sheesley.dp
+let string trailer2 = Datafile = sheesleylightbulb_4_24.dat
+.
+. -----Step 1: Read in the data-----
+.
+let k = 4
+let n = 24
+.
+skip 25
+read sheesleylightbulb_4_24.dat y x1 x2 x3 x4 tag
+stat v
+.
+. -----Step 2: Define strings-----
+.
+let string sty = Average # Defective Lead Wires per Hour
+
+let string stx1 = Weld
+let string stx2 = Plant
+let string stx3 = Speed
+let string stx4 = Shift
+.
+let string stxsh1 = Weld
+let string stxsh2 = Plant
+let string stxsh3 = Speed
+let string stxsh4 = Shift
+.
+. -----Step 3: Define needed vectors-----
+.
+let x1c = code x1
+let x2c = code x2
+let x3c = code x3
+let x4c = code x4
+.
+. -----Step 10: Do preliminary dex scatter plots and dex mean plots-----
+.
+let string header2 = Q. What is the Relative Importance of the Factors?
+call dexsp.dp
+call annotate.dp
+.
+call dexmp.dp
+call annotate.dp
+.
+. -----Step 11: Generate 6 => 4 block plots for each of the 4 primary factors-----
+.
+feedback off
+.
+let numrob = k-1
+loop for case = 1 1 k
+   delete xprim; let xprim = x^case
+   let string stprim = ^stx^case
+   let string header2 = Q. Does X^case = ^stx^case  Have an Effect on ^sty?
+   .
+   if case = 1
+      let rid1 = 2; let rid2 = 3; let rid3 = 4
+      char bl all; char 1 2; char color blue red ^darkgree
+      lines solid all; lines bl bl
+      let string stlegend = X^case: #Components (2 levels: 1, 2)
+      let string stevent = W2 < W1; let lower = 2; let upper = 1
+      let string corncol = blue
+   end if
+   .
+   if case = 2
+      let rid1 = 1; let rid2 = 3; let rid3 = 4
+      char bl all; char 1 2; char color blue red ^darkgree
+      lines solid all; lines bl bl
+      let string stlegend = X^case: #Components (2 levels: 1, 2)
+      let string stevent = Pl2 < Pl1; let lower = 2; let upper = 1
+      let string corncol = red
+   end if
+   .
+   if case = 3
+      let rid1 = 1; let rid2 = 2; let rid3 = 4
+      char bl all; char 1 2; char color blue red ^darkgree
+      lines solid all; lines bl bl
+      let string stlegend = X^case: #Components (2 levels: 1, 2)
+      let string stevent = Sp2 < Sp1; let lower = 2; let upper = 1
+      let string corncol = ^darkgree
+   end if
+   .
+   if case = 4
+      let rid1 = 1; let rid2 = 2; let rid3 = 3
+      char bl all; char 1 2 3; char color blue red ^darkgree
+      lines solid all; lines bl bl bl
+      let string stlegend = X^case: #Components (2 levels: 1, 2, 3)
+      let string stevent = Sh2 < Sh1; let lower = 2; let upper = 1
+      let string corncol = orange
+   end if
+   .
+   delete tag cond
+   loop for jrob = 1 1 numrob
+      delete xrob^jrob; let xrob^jrob = x^rid^jrob
+   end loop
+   .
+   if numrob = 1; let tag = x^rid1&c; end if
+   if numrob = 2; let tag = 100*(x^rid1&c-1) + x^rid2&c; end if
+   if numrob = 3; let tag = 100*(x^rid1&c-1) + 10*(x^rid2&c-1) + x^rid3&c; end if
+   if numrob = 4; let tag = 1000*(x^rid1&c-1 + 100*(x^rid2&c-1) + 10*(x^rid3&c-1) + x^rid4&c; end if
+   .
+   let tag = code tag
+   let condp = tag
+   delete cond; let cond = condp
+   x2label Robustness Conditions (X^rid1,X^rid2,X^rid3): (^stx^rid1,^stx^rid2,^stx^rid3)
+   .
+   let dcondp = distinct condp
+   let ndcondp = number dcondp
+   .
+   y1label ^sty
+   x3label ^stbott
+   xlim 1 ndcondp
+   x1tics off
+   x1tic labels off
+   y1tic offset units screen; y1tic offset 5 20
+   x1tic offset units screen; x1tic offset 5 5
+   if ndcondp <= 5; x1tic offset units screen; x1tic offset 10 10; end if
+   .
+   . call blockplot_6plots.dp
+   call blockplot_4plots.dp
+   .
+   x1tic offset units screen; x1tic offset 5 5
+end loop
+

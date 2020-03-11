@@ -191,6 +191,19 @@ C     UPDATED         --MARCH     2019. RECODE SECTION THAT IMPLEMENTS
 C                                         / LP
 C                                         / <file>
 C     UPDATED         --MARCH     2019. CHANGE DEFAULT SEED FROM 305 TO 3005
+C     UPDATED         --SEPTEMBER 2019. IF COMMAND NOT MATCHED AND THE
+C                                       NUMBER OF ARGUMENTS IS ZERO,
+C                                       TRY ADDING A "PRINT" TO
+C                                       BEGINING.  FOR EXAMPLE,
+C                                           Y
+C                                       WILL BE CHANGED TO
+C                                           PRINT Y
+C     UPDATED         --DECEMBER  2019. IF FILE NAME IS FIRST ARGUMENT,
+C                                       CHECK FILE EXTENSION TO
+C                                       DISTINGUISH BETWEEN MACRO AND
+C                                       GRAPH/IMAGE FILE
+C     UPDATED         --FEBRUARY  2020. FOR "CALL CLIPBOARD", CHECK IF
+C                                       ARGUMENT 1 IS A FILE NAME.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -490,6 +503,7 @@ CCCCC FOR THE ASCII/POSTCRIPT PRINTING TO THE LASER PRINTER.
 C
       CHARACTER*4 IHWUSE
       CHARACTER*4 MESSAG
+      CHARACTER*4 NEWNAM
 C
       CHARACTER*255 ISTRZZ
       CHARACTER*4   IRTYPE
@@ -1515,7 +1529,12 @@ CCCCC IVERSI='2.0 (2019/04/02)'
 CCCCC IVERSI='2.0 (2019/04/11)'
 CCCCC IVERSI='2.0 (2019/04/18)'
 CCCCC IVERSI='2.1 (2019/07/12)'
-      IVERSI='2.2 (2019/08/27)'
+CCCCC IVERSI='2.2 (2019/08/27)'
+CCCCC IVERSI='2.3 (2019/10/03)'
+CCCCC IVERSI='2.4 (2019/12/02)'
+CCCCC IVERSI='5.12 (2019/12/13)'
+      IVERSI='5.02.29 (2020/02/29)'
+      NCVERS=20
 C
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
@@ -2465,7 +2484,8 @@ C
       ENDIF
 C
       IF((IWIDTH.EQ.1.AND.IANS(1).EQ.'X') .OR.
-     1   (IWIDTH.GE.2.AND.IANS(1).EQ.'X'.AND.IANS(2).EQ.' ') .OR.
+     1   (IWIDTH.GE.2.AND.IANS(1).EQ.'X'.AND.IANS(2).EQ.' ' .AND.
+     1    IHARG(1).NE.'=   ') .OR.
      1   (IWIDTH.GE.14.AND.IANS(1).EQ.'E'.AND.IANS(9).EQ.'S'))THEN
         CALL DPEXEC(IANSEX,IWIDEX,IBUGMA,IFOUND,IERROR)
         IF(IFOUND.EQ.'NO')THEN
@@ -2705,33 +2725,236 @@ C
         IF(IWIDTH.GT.255)IWIDTH=255
         CALL DPFILE(IANSLC,IWIDTH,IWORD,
      1              IOFILE,IBUGS2,ISUBRO,IERROR)
+C
+C       2019/12: CHECK FOR FOLLOWING FILE EXTENSIONS:
+C
+C                 1. PS/EPS
+C                 2. PDF
+C                 3. PNG
+C                 4. JPG
+C                 5. JPEG
+C                 6. GIF
+C                 7. TIF/TIFF
+C                 8. XLS/XLSX
+C                 9. DOC/DOCX/RTF
+C                10. PPT/PPTX
+C                11. DAT/CSV/OUT
+C
+C                FOR THESE CASES, ENTER A "PSVIEW <FILE>" RATHER THAN
+C                A "CALL <FILE>" COMMAND.
+C
         IF(IERROR.EQ.'NO' .AND. IOFILE.EQ.'YES')THEN
+          IFLAGT=0
           DO8121JJ=MAXSTR,1,-1
             IF(IANSLC(JJ).NE.' ')THEN
               IITEMP=JJ
+              IF(JJ.GE.4 .AND. IANSLC(JJ-3).EQ.'.')THEN
+                IF(IANSLC(JJ-2).EQ.'P' .AND. IANSLC(JJ-1).EQ.'D' .AND.
+     1             IANSLC(JJ).EQ.'F')IFLAGT=1
+                IF(IANSLC(JJ-2).EQ.'p' .AND. IANSLC(JJ-1).EQ.'d' .AND.
+     1             IANSLC(JJ).EQ.'f')IFLAGT=1
+                IF(IANSLC(JJ-2).EQ.'E' .AND. IANSLC(JJ-1).EQ.'P' .AND.
+     1             IANSLC(JJ).EQ.'S')IFLAGT=1
+                IF(IANSLC(JJ-2).EQ.'e' .AND. IANSLC(JJ-1).EQ.'p' .AND.
+     1             IANSLC(JJ).EQ.'s')IFLAGT=1
+                IF(IANSLC(JJ-2).EQ.'P' .AND. IANSLC(JJ-1).EQ.'N' .AND.
+     1             IANSLC(JJ).EQ.'G')IFLAGT=1
+                IF(IANSLC(JJ-2).EQ.'p' .AND. IANSLC(JJ-1).EQ.'n' .AND.
+     1             IANSLC(JJ).EQ.'g')IFLAGT=1
+                IF(IANSLC(JJ-2).EQ.'G' .AND. IANSLC(JJ-1).EQ.'I' .AND.
+     1             IANSLC(JJ).EQ.'F')IFLAGT=1
+                IF(IANSLC(JJ-2).EQ.'g' .AND. IANSLC(JJ-1).EQ.'i' .AND.
+     1             IANSLC(JJ).EQ.'f')IFLAGT=1
+                IF(IANSLC(JJ-2).EQ.'J' .AND. IANSLC(JJ-1).EQ.'P' .AND.
+     1             IANSLC(JJ).EQ.'G')IFLAGT=1
+                IF(IANSLC(JJ-2).EQ.'j' .AND. IANSLC(JJ-1).EQ.'p' .AND.
+     1             IANSLC(JJ).EQ.'g')IFLAGT=1
+                IF(IANSLC(JJ-2).EQ.'X' .AND. IANSLC(JJ-1).EQ.'L' .AND.
+     1             IANSLC(JJ).EQ.'S')IFLAGT=2
+                IF(IANSLC(JJ-2).EQ.'x' .AND. IANSLC(JJ-1).EQ.'l' .AND.
+     1             IANSLC(JJ).EQ.'s')IFLAGT=2
+                IF(IANSLC(JJ-2).EQ.'D' .AND. IANSLC(JJ-1).EQ.'O' .AND.
+     1             IANSLC(JJ).EQ.'C')IFLAGT=3
+                IF(IANSLC(JJ-2).EQ.'d' .AND. IANSLC(JJ-1).EQ.'o' .AND.
+     1             IANSLC(JJ).EQ.'c')IFLAGT=3
+                IF(IANSLC(JJ-2).EQ.'R' .AND. IANSLC(JJ-1).EQ.'T' .AND.
+     1             IANSLC(JJ).EQ.'F')IFLAGT=3
+                IF(IANSLC(JJ-2).EQ.'r' .AND. IANSLC(JJ-1).EQ.'t' .AND.
+     1             IANSLC(JJ).EQ.'f')IFLAGT=3
+                IF(IANSLC(JJ-2).EQ.'P' .AND. IANSLC(JJ-1).EQ.'P' .AND.
+     1             IANSLC(JJ).EQ.'T')IFLAGT=4
+                IF(IANSLC(JJ-2).EQ.'p' .AND. IANSLC(JJ-1).EQ.'p' .AND.
+     1             IANSLC(JJ).EQ.'t')IFLAGT=4
+                IF(IANSLC(JJ-2).EQ.'D' .AND. IANSLC(JJ-1).EQ.'A' .AND.
+     1             IANSLC(JJ).EQ.'T')IFLAGT=5
+                IF(IANSLC(JJ-2).EQ.'d' .AND. IANSLC(JJ-1).EQ.'a' .AND.
+     1             IANSLC(JJ).EQ.'t')IFLAGT=5
+                IF(IANSLC(JJ-2).EQ.'C' .AND. IANSLC(JJ-1).EQ.'S' .AND.
+     1             IANSLC(JJ).EQ.'V')IFLAGT=5
+                IF(IANSLC(JJ-2).EQ.'c' .AND. IANSLC(JJ-1).EQ.'s' .AND.
+     1             IANSLC(JJ).EQ.'v')IFLAGT=5
+                IF(IANSLC(JJ-2).EQ.'O' .AND. IANSLC(JJ-1).EQ.'U' .AND.
+     1             IANSLC(JJ).EQ.'T')IFLAGT=5
+                IF(IANSLC(JJ-2).EQ.'o' .AND. IANSLC(JJ-1).EQ.'u' .AND.
+     1             IANSLC(JJ).EQ.'t')IFLAGT=5
+              ELSEIF(JJ.GE.3 .AND. IANSLC(JJ-2).EQ.'.')THEN
+                IF(IANSLC(JJ-1).EQ.'P' .AND.
+     1             IANSLC(JJ-1).EQ.'S')IFLAGT=1
+                IF(IANSLC(JJ-1).EQ.'p' .AND.
+     1             IANSLC(JJ-1).EQ.'s')IFLAGT=1
+              ELSEIF(JJ.GE.5 .AND. IANSLC(JJ-4).EQ.'.')THEN
+                IF(IANSLC(JJ-3).EQ.'J' .AND. IANSLC(JJ-2).EQ.'P' .AND.
+     1             IANSLC(JJ-1).EQ.'E' .AND. IANSLC(JJ).EQ.'G')IFLAGT=1
+                IF(IANSLC(JJ-3).EQ.'j' .AND. IANSLC(JJ-2).EQ.'p' .AND.
+     1             IANSLC(JJ-1).EQ.'e' .AND. IANSLC(JJ).EQ.'g')IFLAGT=1
+                IF(IANSLC(JJ-3).EQ.'T' .AND. IANSLC(JJ-2).EQ.'I' .AND.
+     1             IANSLC(JJ-1).EQ.'F' .AND. IANSLC(JJ).EQ.'F')IFLAGT=1
+                IF(IANSLC(JJ-3).EQ.'t' .AND. IANSLC(JJ-2).EQ.'i' .AND.
+     1             IANSLC(JJ-1).EQ.'f' .AND. IANSLC(JJ).EQ.'f')IFLAGT=1
+                IF(IANSLC(JJ-3).EQ.'X' .AND. IANSLC(JJ-2).EQ.'L' .AND.
+     1             IANSLC(JJ-1).EQ.'S' .AND. IANSLC(JJ).EQ.'X')IFLAGT=2
+                IF(IANSLC(JJ-3).EQ.'x' .AND. IANSLC(JJ-2).EQ.'l' .AND.
+     1             IANSLC(JJ-1).EQ.'s' .AND. IANSLC(JJ).EQ.'x')IFLAGT=2
+                IF(IANSLC(JJ-3).EQ.'D' .AND. IANSLC(JJ-2).EQ.'C' .AND.
+     1             IANSLC(JJ-1).EQ.'O' .AND. IANSLC(JJ).EQ.'X')IFLAGT=3
+                IF(IANSLC(JJ-3).EQ.'d' .AND. IANSLC(JJ-2).EQ.'o' .AND.
+     1             IANSLC(JJ-1).EQ.'c' .AND. IANSLC(JJ).EQ.'x')IFLAGT=3
+                IF(IANSLC(JJ-3).EQ.'P' .AND. IANSLC(JJ-2).EQ.'T' .AND.
+     1             IANSLC(JJ-1).EQ.'T' .AND. IANSLC(JJ).EQ.'X')IFLAGT=4
+                IF(IANSLC(JJ-3).EQ.'p' .AND. IANSLC(JJ-2).EQ.'p' .AND.
+     1             IANSLC(JJ-1).EQ.'t' .AND. IANSLC(JJ).EQ.'x')IFLAGT=4
+              ENDIF
               GOTO8122
             ENDIF
  8121     CONTINUE
           GOTO8129
  8122     CONTINUE
-          DO8126JJ=IITEMP,1,-1
-            JJTEMP=JJ+5
-            IANSLC(JJTEMP)=IANSLC(JJ)
- 8126     CONTINUE
-          IANSLC(1)='C   '
-          IANSLC(2)='A   '
-          IANSLC(3)='L   '
-          IANSLC(4)='L   '
-          IANSLC(5)='    '
-          IWIDTH=IITEMP+5
-          CALL DPUPPE(IANSLC,IWIDTH,IANS,IBUGMA,IERROR)
-          IEQUCL='OFF'
-          CALL DPTYPE(IANSLC,IWIDTH,IBUGTY,
-     1                ICOM,ICOM2,ICOMT,ICOMI,ACOM,ICOMLC,ICOML2,
-     1                IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
-     1                IHARG,IHARG2,IARGT,IARG,ARG,IHARLC,IHARL2,NUMARG,
-     1                IHOST1,IHOST2)
-          IEQUCL=IEQUSV
+C
+          IF(IFLAGT.EQ.0)THEN
+            DO8126JJ=IITEMP,1,-1
+              JJTEMP=JJ+5
+              IANSLC(JJTEMP)=IANSLC(JJ)
+ 8126       CONTINUE
+            IANSLC(1)='C   '
+            IANSLC(2)='A   '
+            IANSLC(3)='L   '
+            IANSLC(4)='L   '
+            IANSLC(5)='    '
+            IWIDTH=IITEMP+5
+            NUMARG=NUMARG+1
+            CALL DPUPPE(IANSLC,IWIDTH,IANS,IBUGMA,IERROR)
+            IEQUCL='OFF'
+            CALL DPTYPE(IANSLC,IWIDTH,IBUGTY,
+     1                  ICOM,ICOM2,ICOMT,ICOMI,ACOM,ICOMLC,ICOML2,
+     1                  IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
+     1                  IHARG,IHARG2,IARGT,IARG,ARG,IHARLC,IHARL2,
+     1                  NUMARG,IHOST1,IHOST2)
+            IEQUCL=IEQUSV
+          ELSEIF(IFLAGT.EQ.1)THEN
+            DO8127JJ=IITEMP,1,-1
+              JJTEMP=JJ+7
+              IANSLC(JJTEMP)=IANSLC(JJ)
+ 8127       CONTINUE
+            IANSLC(1)='P   '
+            IANSLC(2)='S   '
+            IANSLC(3)='V   '
+            IANSLC(4)='I   '
+            IANSLC(5)='E   '
+            IANSLC(6)='W   '
+            IANSLC(7)='    '
+            IWIDTH=IITEMP+7
+            NUMARG=NUMARG+1
+            CALL DPUPPE(IANSLC,IWIDTH,IANS,IBUGMA,IERROR)
+            IEQUCL='OFF'
+            CALL DPTYPE(IANSLC,IWIDTH,IBUGTY,
+     1                  ICOM,ICOM2,ICOMT,ICOMI,ACOM,ICOMLC,ICOML2,
+     1                  IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
+     1                  IHARG,IHARG2,IARGT,IARG,ARG,IHARLC,IHARL2,
+     1                  NUMARG,IHOST1,IHOST2)
+            IEQUCL=IEQUSV
+          ELSEIF(IFLAGT.GE.2 .AND. IFLAGT.LE.4)THEN
+            IF(IFLAGT.EQ.2)JFACT=11
+            IF(IFLAGT.EQ.3)JFACT=10
+            IF(IFLAGT.EQ.4)JFACT=17
+            DO8128JJ=IITEMP,1,-1
+              JJTEMP=JJ+JFACT
+              IANSLC(JJTEMP)=IANSLC(JJ)
+ 8128       CONTINUE
+            IANSLC(1)='L   '
+            IANSLC(2)='I   '
+            IANSLC(3)='S   '
+            IANSLC(4)='T   '
+            IANSLC(5)='    '
+            IF(IFLAGT.EQ.2)THEN
+              IANSLC(6)='E   '
+              IANSLC(7)='X   '
+              IANSLC(8)='C   '
+              IANSLC(9)='E   '
+              IANSLC(10)='L   '
+              IANSLC(11)='    '
+            ELSEIF(IFLAGT.EQ.3)THEN
+              IANSLC(6)='W   '
+              IANSLC(7)='O   '
+              IANSLC(8)='R   '
+              IANSLC(9)='D   '
+              IANSLC(10)='    '
+            ELSEIF(IFLAGT.EQ.4)THEN
+              IANSLC(6)='P   '
+              IANSLC(7)='O   '
+              IANSLC(8)='W   '
+              IANSLC(9)='E   '
+              IANSLC(10)='R   '
+              IANSLC(11)='    '
+              IANSLC(12)='P   '
+              IANSLC(13)='O   '
+              IANSLC(14)='I   '
+              IANSLC(15)='N   '
+              IANSLC(16)='T   '
+              IANSLC(17)='    '
+            ENDIF
+            IWIDTH=IITEMP+JFACT
+            NUMARG=NUMARG+2
+            IF(IFLAGT.EQ.4)NUMARG=NUMARG+1
+            CALL DPUPPE(IANSLC,IWIDTH,IANS,IBUGMA,IERROR)
+            IEQUCL='OFF'
+            CALL DPTYPE(IANSLC,IWIDTH,IBUGTY,
+     1                  ICOM,ICOM2,ICOMT,ICOMI,ACOM,ICOMLC,ICOML2,
+     1                  IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
+     1                  IHARG,IHARG2,IARGT,IARG,ARG,IHARLC,IHARL2,
+     1                  NUMARG,IHOST1,IHOST2)
+            IEQUCL=IEQUSV
+          ELSEIF(IFLAGT.EQ.5)THEN
+            DO88127JJ=IITEMP,1,-1
+              JJTEMP=JJ+16
+              IANSLC(JJTEMP)=IANSLC(JJ)
+88127       CONTINUE
+            IANSLC(1)='L   '
+            IANSLC(2)='I   '
+            IANSLC(3)='S   '
+            IANSLC(4)='T   '
+            IANSLC(5)='    '
+            IANSLC(6)='N   '
+            IANSLC(7)='E   '
+            IANSLC(8)='W   '
+            IANSLC(9)='    '
+            IANSLC(10)='W   '
+            IANSLC(11)='I   '
+            IANSLC(12)='N   '
+            IANSLC(13)='D   '
+            IANSLC(14)='O   '
+            IANSLC(15)='W   '
+            IANSLC(16)='    '
+            IWIDTH=IITEMP+16
+            NUMARG=NUMARG+3
+            CALL DPUPPE(IANSLC,IWIDTH,IANS,IBUGMA,IERROR)
+            IEQUCL='OFF'
+            CALL DPTYPE(IANSLC,IWIDTH,IBUGTY,
+     1                  ICOM,ICOM2,ICOMT,ICOMI,ACOM,ICOMLC,ICOML2,
+     1                  IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
+     1                  IHARG,IHARG2,IARGT,IARG,ARG,IHARLC,IHARL2,
+     1                  NUMARG,IHOST1,IHOST2)
+            IEQUCL=IEQUSV
+          ENDIF
         ENDIF
       ENDIF
 C
@@ -2937,11 +3160,13 @@ CCCCC CHECK FOR NAME CONFLICT FOR REPEAT PLOT, REPEAT GRAPH  APRIL 1997
       IF(ICOM.EQ.'REPE'.AND.NUMARG.GE.1.AND.IHARG(1).EQ.'STAN')GOTO3290
       IF(ICOM.EQ.'REPE'.AND.NUMARG.GE.1.AND.IHARG(1).EQ.'SD  ')GOTO3290
       IF(ICOM.EQ.'REPE'.AND.NUMARG.GE.1.AND.IHARG(1).EQ.'STAT')GOTO3290
+      IF(ICOM.EQ.'REPE'.AND.NUMARG.GE.1.AND.IHARG(1).EQ.'=   ')GOTO3290
       IF(ICOM.EQ.'REPE')GOTO3210
 CCCCC THE FOLLOWING LINE WAS REPLACED BY SUBSEQUENT 3 LINES JULY 1990
 CCCCC IF(ICOM.EQ.'R')GOTO3210
       IF(ICOM.EQ.'R'.AND.NUMARG.GE.1.AND.IHARG(1).EQ.'CONT')GOTO3290
       IF(ICOM.EQ.'R'.AND.NUMARG.GE.1.AND.IHARG(1).EQ.'CHAR')GOTO3290
+      IF(ICOM.EQ.'R'.AND.NUMARG.GE.1.AND.IHARG(1).EQ.'=   ')GOTO3290
       IF(ICOM.EQ.'R')GOTO3210
       GOTO3290
 C
@@ -3173,10 +3398,23 @@ C
 C
 C     2015/02: IF CURRENT IF STATUS IS FALSE, SKIP MACRO SECTION
 C
+C     2020/02: CHECK IF ARGUMENT 1 IS A FILE NAME.
+C
       IF(IIFSW.EQ.'TRUE')THEN
         IF(ICOM.EQ.'CALL'.AND.ICOM2.EQ.'    ')THEN
+C
+C         CHECK IF ARGUMENT IS A FILE NAME STARTING WITH
+C         "CLIPBOARD.
+C
           IF(NUMARG.EQ.1 .AND. IHARG(1).EQ.'CLIP' .AND.
-     1       IHARG2(1).EQ.'BOAR')GOTO3330
+     1       IHARG2(1).EQ.'BOAR')THEN
+               IWORD=2
+               IOFILE='NO'
+               CALL DPFILE(IANSLC,IWIDTH,IWORD,
+     1                     IOFILE,IBUGS2,ISUBRO,IERROR)
+               IF(IOFILE.EQ.'NO')GOTO3330
+          ENDIF
+C
           IF(NUMARG.EQ.1 .AND. IHARG(1).EQ.'EXIT')THEN
             IMACRO='EOF'
             GOTO3320
@@ -3806,7 +4044,7 @@ CCCCC WERE NOT BEING STORED IF IN A LOOP    (DECEMBER 1988)
      1              IREARW,IWRIRW,NPLOTP,IPRITY,
      1              IUNFOF,IUNFNR,IUNFMC,IMACRO,IMALEV,
      1              IANSLO,ILOOST,ILOOLI,
-     1              NUMIF,
+     1              NUMIF,ISEED,
      1              IFOUND,IERROR)
         IF(IFOUND.EQ.'YES')GOTO8000
         IF(IERROR.EQ.'YES')GOTO8100
@@ -4555,13 +4793,23 @@ CCCCC1TEMP,TEMP2,TEMP3,XTEMP1,XTEMP2,MAXNXT,
 C
 CCCCC THE FOLLOWING 10 LINES DEALING WITH    VERSION     (MAY 1989)
 CCCCC WERE INSERTED MAY 1989
+CCCCC
+CCCCC 2019/12: CREATE A PARAMETER WITH VERSION INFO
 C
       IF(ICOM.EQ.'VERS' .AND. ICOM2.NE.'ATEC')THEN
         WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
+        CALL DPWRST('XXX','PRIN')
         WRITE(ICOUT,6191)IVERSI
  6191   FORMAT('THIS IS DATAPLOT VERSION ',A24)
-        CALL DPWRST('XXX','BUG ')
+        CALL DPWRST('XXX','PRIN')
+        DO6193II=1,NCVERS
+          IFUNC3(II)=' '
+          IFUNC3(II)(1:1)=IVERSI(II:II)
+ 6193   CONTINUE
+        CALL UPDATF('DPVE','RS  ',IFUNC3,NCVERS,'CHAD','NO  ',
+     1              IHNAME,IHNAM2,IUSE,IN,IVSTAR,IVSTOP,
+     1              NUMNAM,MAXNAM,IANS,IWIDTH,ILISTL,NEWNAM,MAXN3,
+     1              IFUNC,NUMCHF,MAXCHF,IBUGUG,ILOCN,IFOUND,IERROR)
         IFOUND='YES'
         IERROR='NO'
         GOTO8000
@@ -4945,12 +5193,50 @@ C     2018/09: IF COMMAND NOT FOUND AND COMMAND DOES NOT START WITH
 C              "LET", CHECK FOR AN "=".  IF "=" FOUND, THEN INSERT
 C              "LET" AT START OF LINE AND RETRY THE COMMAND.
 C
+C     2019/09: CHECK FIRST IF NUMBER OF ARGUMENTS IS ZERO.  IF SO,
+C              THEN INSERT "PRINT" AT START OF LINE AND RETRY THE
+C              COMMAND.
+C
       ISTEPN='62'
       IF(IBUGMA.EQ.'ON'.OR.ISUBRO.EQ.'MAIN')
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       IF((IDEFCM.EQ.'OFF' .OR. IDEFCM.EQ.'NO') .AND. IWIDDC.LE.0)THEN
-        IF(ICOM.NE.'LET ')THEN
+        IF(NUMARG.EQ.0)THEN
+          ISHIFT=1
+          IERROR='NO'
+          CALL SHIFTR(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,
+     1                IBUGG2,IERROR)
+          IF(IERROR.EQ.'YES')GOTO8000
+          DO6340II=IWIDTH,1,-1
+            IANSLC(II+6)=IANSLC(II)
+            IANS(II+6)=IANS(II)
+ 6340     CONTINUE
+          IHARG(1)=ICOM
+          IHARG2(1)=ICOM2
+          ICOM='PRIN'
+          ICOM2='T   '
+          IANS(1)='P   '
+          IANS(2)='R   '
+          IANS(3)='I   '
+          IANS(4)='N   '
+          IANS(5)='T   '
+          IANS(6)='    '
+          IANSLC(1)='P   '
+          IANSLC(2)='R   '
+          IANSLC(3)='I   '
+          IANSLC(4)='N   '
+          IANSLC(5)='T   '
+          IANSLC(6)='    '
+          IWIDTH=IWIDTH+6
+          CALL DPWRIT(IMACRO,IMACNU,IMACCS,
+     1                IFORSW,ICWRIF,NCWRIF,
+     1                IWRIRW,
+     1                IFORWI,IFORWR,MAXNWI,
+     1                IBUGS2,IBUGQ,ISUBRO,IFOUND,IERROR)
+          IFOUND='YES'
+          GOTO8000
+        ELSEIF(ICOM.NE.'LET ')THEN
           IFLAG=0
           DO6230II=1,NUMARG
             IF(IHARG(II).EQ.'=   ')THEN

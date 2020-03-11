@@ -1,0 +1,206 @@
+This is dataplot file     r_python_dataplot_comparator,txt     11/7/19
+Purpose: For each of a series of common data analysis & graphics activities, 
+         show (and compare) the needed code for R, then Python, and then Dataplot.
+Date: 11/7/19 
+Reference: G. James, D. Witten, T. Hastie, R. Tibshirani, 
+"An Introduction to Statistical learning: with Applications in R",
+pages 42-51, Springer, 2017.
+
+
+
+
+Define a vector of numbers:
+R : y <- c(1,4,8,17,23)
+Py:
+Dp: let y = data 1 4 8 17 23 
+
+
+Print to screen the contents of a vector
+R : y <- c(1,4,9,16,25,36)
+    y
+Py:
+Dp: let y = data 1 4 8 17 23
+    y (or equivalently, print y)
+
+
+Show the list of previous commands:
+R : repeated up arrow
+Py:
+Dp: list 5
+
+
+Go to, edit, and re-execute the previous command:
+R : up arrow once, then highlight and edit the command, then hit Enter
+Py:
+Dp: Note previous command, retype it correctly, then hit Enter
+
+
+Determine the length of a vector
+R : y <- c(1,4,8,17,23)
+    length(y)
+Py:
+Dp: let y = data 1 4 8 17 23
+    let a = number y
+
+
+Add 2 vectors together
+R : x = c(1,4,8,17,23)
+    y = c(1,1,1,2,2)
+    z = x+y
+Py:
+Dp: let x = data 1 4 8 17 23; let y = data 1 1 1 2 2; let z = x+y (or equivalently, z = x+y)
+
+
+list all objects (data, functions, etc.)
+R : ls()
+Py: 
+Dp: status
+
+
+Delete 2 vectors 
+R : rm(x,y)
+Py: 
+Dp: delete x y
+
+
+Delete all vectors
+R : 
+Py:
+Dp: reset variables
+
+
+Create a matrix of numbers
+R : x=matrix(data=c(1,2,3,1,4,9),nrow=3,ncol=2)
+Py: 
+Dp: let x1 = data 1 2 3; let x2 = data 1 4 9; let m = matrix definition x1 3 2
+
+
+Square the contents of a vector
+R : x<- c(1,4,8,17,23)
+    y= x^2
+Py:
+Dp: let x = data 1 4 8 17 23; let y = x**2
+
+
+Generate 20 normal N(0,1) random numbers
+R : y=rnorm(100)
+Py:
+Dp: let y = normal random numbers for i = 1 1 20
+
+
+Generate 20 normal N(mean=7,sd=3) random numbers
+R : y=rnorm(20,mean=7,sd=3)
+Py:
+Dp: let y = normal random numbers for i = 1 1 20; let y = 7+3*y
+
+
+Set a specific seed and generate 20 uniform [0,1] random numbers
+R : setseed(579)
+    y1=rnorm(20)
+    setseed(579)
+    y2=rnorm(20)
+    y1 y2
+Py:
+Dp: set seed 579; let y1 = uniform random numbers for i = 1 1 20
+    set seed 579; let y2 = uniform random numbers for i = 1 1 20
+    print y1 y2
+
+Square all the elements in a matrix
+R : x=matrix(data=c(1,2,3,1,4,9),nrow=3,ncol=2)
+    y=x^2
+Py: 
+Dp: let x1 = data 1 2 3; let x2 = data 1 4 9; let m = matrix definition x1 3 2
+    ???
+
+Compute mean and sd of a vector of numbers
+R : y=c(1,4,8,17,23)
+    m=mean(y)
+    s=sd(y)
+Py: 
+Dp: let y = data 1 3 8 17 23
+    let m = mean y
+    let s = sd y
+
+
+Print 2 parameters
+R : a=4
+    b=12
+    a;b
+Py:
+Dp: let a = 4    (or equivalently, a = 4)
+    let b = 12   (or equivalently, b = 12)
+    print a b
+    (or equivalently:)
+    a = 4; b = 12; print a b
+
+-----Graphics-----
+
+Plot 2 vectors
+R : x=rnorm(100)
+    y=rnorm(100)
+    plot (x,y)
+Py:
+Dp: let x = normal random numbers for i = 1 1 100
+    let y = normal random numbers for i = 1 1 100
+    plot y x
+
+
+Plot 2 vectors with axis labels and a title
+R : x=rnorm(100)
+    y=rnorm(100)
+    plot (x,y,xlab="Your x-Axis Label",ylab="Your y-Axis Label,Main="This is a Scatter Plot")
+Py:
+Dp: let x = normal random numbers for i = 1 1 100
+    let y = normal random numbers for i = 1 1 100
+    y1label Your y-Axis Label; x1label Your x-Axis Label; Title This is a Scatter Plot
+    plot y x
+
+
+Generate a plot and save the output as a pdf file
+R : x=rnorm(100)
+    y=rnorm(100)
+    pdf("rout.pdf)
+    plot (x,y)
+    dev.off()
+Py:
+Dp: let x = normal random numbers for i = 1 1 100
+    let y = normal random numbers for i = 1 1 100
+    device 2 pdf; let device 2 name = rout.pdf       FIX<=========
+    plot y x
+    device 2 close
+
+
+Create a vector sequence of integers from 1 to 10
+R : x=seq(1,10)
+Py: 
+Dp: Let y = sequence 1 1 10
+
+
+Create a vector seqence from 1 to 10 with increment = .1
+R : x=seq(1,10,101)
+Py:
+Dp: let y = sequence 1 .1 10
+
+
+Create a contour plot
+R : x=seq(-pi,pi,length=50)
+    y=x
+    z=outer(x,y,function(x,y)cos(y)/(1+x^2))
+    contour(x,y,z)
+Py:
+Dp: let x = -pi .1 pi
+    let y = x
+    let function f = cos(y)/(1+x**2)
+    let z = f
+    countour plot z x y
+
+
+
+
+
+
+
+
+
+
+ 

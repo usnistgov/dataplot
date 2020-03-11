@@ -1,0 +1,153 @@
+. This is dataplot macro     blockplot_4plots.dp     4/10/19
+. Purpose: Generate 4 block plots:
+.            1. no sort
+.            2. sort by mean
+.            3. sort by range (= height of block)
+.            4. sort residuals by range (= height of blocks)
+. Date: 4/10/19
+. Input:
+.   k                    (parameter) = number of factors
+.   y                    (vector)    = response
+.   x1, x2, etc.         (vectors)   = factors
+.   stx1 stx2, etc.      (strings)   = factor names
+.   stxsh1, stxsh2, etc. (strings    = short factor names
+.   xprim                (vector)    = primary factor
+.   condp                (vector)    = horizontal axis locations (1, 2, 3, etc.)
+.   stprim               (string)    = name of response
+.
+.   numrob               (parameter) = number of robustness factors (usually = k-1)
+.   xrob1, xrob2, etc.   (vectors)   = robustness factors
+.   stevent              (string)    = inequality event
+.
+.
+.
+. Output:
+.   4 block plots (1 plot per page)
+.
+. Example of calling program: blockplot_boxreactor_5_32.dp
+.
+. -----start point----
+.
+. -----Step 0: Do error check-----
+.
+let bugsw4pl = 0
+if bugsw4pl = 1
+   print " "
+   print "*****At beginning of     blockplot_4plots.dp*****
+   print "stevent = ^stevent"
+   pause
+end if
+.
+. -----Step 1: block plot with no sorting---
+.
+let string header3 = Block Plot (Unsorted)
+let string stcorn1 = X^case
+.
+block plot y condp xprim                          ;. <=========================
+.
+call blockplot_horizontal_axis_sorted.dp
+.
+let numdp = 2
+move 16 87; just left; hw 2.4 1.2; text Plot Character = X^case: ^stprim
+call blockplot_stats_and_legend.dp
+.
+move 84.5 90.5; just right; hw 2 1; text (k=^k,n=^n)
+move 84.5 87; just right; hw 2.4 1.2; text Mean = ^stmr
+call annotate.dp
+.
+just center; hw 4 2; color ^corncol
+move 4 97; text ^stcorn1
+move 4 93; text Unsorted
+color blue
+.
+. -----Step 2:block plot with sorting (by mean)---
+.
+let string header3 = Block Plot (Sorted by Block Mean)
+.
+delete robs index; let robs index = sort by mean y condp
+. print robs index
+. pause
+block plot y robs xprim                           ;. <=========================
+.
+call blockplot_horizontal_axis_sorted.dp
+.
+let numdp = 2
+. call blockplot_stats_and_legend.dp
+move 16 87; just left; hw 2.4 1.2; text Plot Character = X^case: ^stprim
+if m <> 0; move 16 84; text Event: # Times ^stevent: Avedel = ^avedel2 (^strad%); end if
+if m =  0; move 16 84; text Event: # Times ^stevent: Avedel = ^avedel2; end if
+.
+move 84.5 90.5; just right; hw 2 1; text (k=^k,n=^n)
+move 84.5 87; just right; hw 2.4 1.2; text Mean = ^stmr
+call annotate.dp
+let string stcorn3 = BlockPl
+let string stcorn4 = Min
+.
+just center; hw 4 2; color ^corncol
+move 4 97; text ^stcorn1
+move 4 93; text Mean
+color blue
+.
+delete robs index
+.
+. -----Step 3: block plot with sorting (by block size = range)---
+.
+let string header3 = Block Plot (Sorted by Block Range = Block Height)
+.
+delete robs index; let robs index = sort by range y condp
+block plot y robs xprim                           ;. <=========================
+.
+call blockplot_horizontal_axis_sorted.dp
+.
+let numdp = 2
+. call blockplot_stats_and_legend.dp
+move 16 87; just left; hw 2.4 1.2; text Plot Character = X^case: ^stprim
+if m <> 0; move 16 84; text Event: # Times ^stevent: Avedel = ^avedel2 (^strad%); end if
+if m =  0; move 16 84; text Event: # Times ^stevent: Avedel = ^avedel2; end if
+.
+move 84.5 90.5; just right; hw 2 1; text (k=^k,n=^n)
+move 84.5 87; just right; hw 2.4 1.2; text Mean = ^stmr
+call annotate.dp
+let string stcorn3 = BlockPl
+let string stcorn4 = Range
+.
+just center; hw 4 2; color ^corncol
+move 4 97; text ^stcorn1
+move 4 93; text Range
+color blue
+.
+delete robs index
+.
+. -----Step 4: block plot of residuals with sorting (by block size = range)---
+.
+let string header3 = Block Plot (of Residuals Sorted by Block Range = Block Height)
+.
+delete robs index; let robs index = sort by range y condp
+.
+anova y condp
+delete ysave; let ysave = y
+let y = res
+.
+block plot y robs xprim                           ;. <=========================
+.
+call blockplot_horizontal_axis_sorted.dp
+.
+let numdp = 2
+. call blockplot_stats_and_legend.dp
+move 16 87; just left; hw 2.4 1.2; text Plot Character = X^case: ^stprim
+if m <> 0; move 16 84; text Event: # Times ^stevent: Avedel = ^avedel2 (^strad%); end if
+if m =  0; move 16 84; text Event: # Times ^stevent: Avedel = ^avedel2; end if
+.
+move 84.5 90.5; just right; hw 2 1; text (k=^k,n=^n)
+move 84.5 87; just right; hw 2.4 1.2; text Mean = ^stmr
+call annotate.dp
+let string stcorn3 = BlockPl
+let string stcorn4 = Range
+.
+just center; hw 4 2; color ^corncol
+move 4 97; text ^stcorn1
+move 4 93; text Range
+color blue
+.
+delete robs index
+let y = ysave

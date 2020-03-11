@@ -8998,17 +8998,19 @@ C
      +                       L = L + (IPIVK-IPIVI)*(IPIVK+IPIVI-3)/2
                    V(L) = V(HC)
                    HC = HC + 1
- 360               CONTINUE
- 370          CONTINUE
+ 360          CONTINUE
+ 370     CONTINUE
 C
- 380  IV(COVMAT) = COV
+ 380  CONTINUE
+      IV(COVMAT) = COV
 C
 C  ***  APPLY SCALE FACTOR = (RESID. SUM OF SQUARES) / MAX(1,N-P).
 C
       T = V(F) / (HALF * MAX(1,N-P))
       K = COV - 1 + P*(P+1)/2
       DO 390 I = COV, K
- 390     V(I) = T * V(I)
+         V(I) = T * V(I)
+ 390  CONTINUE
 C
  999  RETURN
 C  ***  LAST CARD OF COVCLC FOLLOWS  ***
@@ -9526,7 +9528,8 @@ C        ==========  END SECOND INNER PRODUCT  ==========
          BETA = QRKMAX * SQRT(SIGMA - (QRKK*ALPHAK/QRKMAX) )
          QR(K,K) = QRKK - ALPHA(K)
          DO 65 I=K,M
-   65         QR(I,K) =  QR(I,K) / BETA
+              QR(I,K) =  QR(I,K) / BETA
+   65    CONTINUE
          K1 = K + 1
          IF (K1 .GT. N) GO TO 120
 C
@@ -10074,7 +10077,8 @@ C
       DATA ZERO/0.0D0/
 C
       DO 10 I = 1, N
- 10      X(I) = Y(I)
+         X(I) = Y(I)
+ 10   CONTINUE
       NP1 = N + 1
       I0 = N*(N+1)/2
       DO 30 II = 1, N
@@ -13136,8 +13140,10 @@ C
 C
 C  ***  COMPUTE U0  ***
 C
- 90   DO 100 I = 1, P
- 100     W(I) = G(I)/D(I)
+ 90   CONTINUE
+      DO 100 I = 1, P
+         W(I) = G(I)/D(I)
+ 100  CONTINUE
       V(DGNORM) = V2NORM(P, W)
       UK = V(DGNORM)/RAD
       IF (UK .LE. ZERO) GO TO 390
@@ -13159,7 +13165,8 @@ C
      +             ALPHAK = UK * MAX(P001, SQRT(LK/UK))
       SQRTAK = SQRT(ALPHAK)
       DO 120 I = 1, P
- 120     W(I) = ONE
+         W(I) = ONE
+ 120  CONTINUE
 C
 C  ***  ADD ALPHAK*D AND UPDATE QR DECOMP. USING FAST GIVENS TRANS.  ***
 C
@@ -13243,7 +13250,8 @@ C
  210               CONTINUE
               GO TO 240
 C
- 220          B = WL/SI
+ 220          CONTINUE
+              B = WL/SI
               A = D1*B/D2
               T = A*B + ONE
               IF (T .GT. TTOL) GO TO 200
@@ -13256,20 +13264,23 @@ C
                    SJ = STEP(J1)
                    W(L) = A*WL + SJ
                    STEP(J1) = B*SJ - WL
- 230               CONTINUE
+ 230          CONTINUE
 C
 C             ***  RESCALE TEMP. ROW IF NECESSARY  ***
 C
- 240          IF (D2 .GE. DTOL) GO TO 260
+ 240          CONTINUE
+              IF (D2 .GE. DTOL) GO TO 260
                    D2 = D2*DFACSQ
                    DO 250 K = I1, P
- 250                    STEP(K) = STEP(K)/DFAC
+                      STEP(K) = STEP(K)/DFAC
+ 250               CONTINUE
  260          CONTINUE
  270     CONTINUE
 C
 C  ***  COMPUTE STEP  ***
 C
- 280  CALL LITVMU(P, W(RES), W(RMAT), W(RES))
+ 280  CONTINUE
+      CALL LITVMU(P, W(RES), W(RMAT), W(RES))
 C     ***  RECOVER STEP AND STORE PERMUTED -D*STEP AT W(RES)  ***
       DO 290 I = 1, P
          J1 = IPIVOT(I)
@@ -13295,17 +13306,21 @@ C
 C
 C  ***  UNACCEPTABLE STEP -- UPDATE LK, UK, ALPHAK, AND TRY AGAIN  ***
 C
- 300  IF (PHI .LT. ZERO) UK = MIN(UK, ALPHAK)
+ 300  CONTINUE
+      IF (PHI .LT. ZERO) UK = MIN(UK, ALPHAK)
       GO TO 320
- 310  IF (PHI .LT. ZERO) UK = ALPHAK
- 320  DO 330 I = 1, P
+ 310  CONTINUE
+      IF (PHI .LT. ZERO) UK = ALPHAK
+ 320  CONTINUE
+      DO 330 I = 1, P
          J1 = IPIVOT(I)
          K = RES0 + I
          STEP(I) = D(J1) * (W(K)/DST)
- 330     CONTINUE
+ 330  CONTINUE
       CALL LIVMUL(P, STEP, W(RMAT), STEP)
       DO 340 I = 1, P
- 340     STEP(I) = STEP(I) / SQRT(W(I))
+         STEP(I) = STEP(I) / SQRT(W(I))
+ 340  CONTINUE
       T = ONE / V2NORM(P, STEP)
       ALPHAK = ALPHAK + T*PHI*T/RAD
       LK = MAX(LK, ALPHAK)
@@ -13336,30 +13351,36 @@ C     ***  BIGGER RADIUS  ***
 C
 C  ***  SPECIAL CASE -- RAD .LE. 0 OR (G = 0 AND J IS SINGULAR)  ***
 C
- 390  V(STPPAR) = ZERO
+ 390  CONTINUE
+      V(STPPAR) = ZERO
       DST = ZERO
       LK = ZERO
       UK = ZERO
       V(GTSTEP) = ZERO
       V(PREDUC) = ZERO
       DO 400 I = 1, P
- 400     STEP(I) = ZERO
+         STEP(I) = ZERO
+ 400  CONTINUE
       GO TO 450
 C
 C  ***  ACCEPTABLE GAUSS-NEWTON STEP -- RECOVER STEP FROM W  ***
 C
- 410  ALPHAK = ZERO
+ 410  CONTINUE
+      ALPHAK = ZERO
       DO 420 I = 1, P
          J1 = IPIVOT(I)
          STEP(J1) = -W(I)
- 420     CONTINUE
+ 420  CONTINUE
 C
 C  ***  SAVE VALUES FOR USE IN A POSSIBLE RESTART  ***
 C
- 430  V(STPPAR) = ALPHAK
- 440  V(GTSTEP) = DOTPRD(P, STEP, G)
+ 430  CONTINUE
+      V(STPPAR) = ALPHAK
+ 440  CONTINUE
+      V(GTSTEP) = DOTPRD(P, STEP, G)
       V(PREDUC) = HALF * (ALPHAK*DST*DST - V(GTSTEP))
- 450  V(DSTNRM) = DST
+ 450  CONTINUE
+      V(DSTNRM) = DST
       W(DSTSAV) = DST
       W(LK0) = LK
       W(UK0) = UK
@@ -15421,24 +15442,29 @@ C
          KM1 = K - 1
          ZK = Z(K)
          DO 20 I = 1, KM1
- 20           Y(I) = Y(I) + J(I,K)*ZK
+            Y(I) = Y(I) + J(I,K)*ZK
+ 20      CONTINUE
          Y(K) = ZK*RD(K)
- 30      CONTINUE
+ 30   CONTINUE
 C
- 40   IF (FUNC .LE. 1) GO TO 999
+ 40   CONTINUE
+      IF (FUNC .LE. 1) GO TO 999
       GO TO 70
 C
- 50   DO 60 I = 1, P
- 60      Y(I) = X(I)
+ 50   CONTINUE
+      DO 60 I = 1, P
+         Y(I) = X(I)
+ 60   CONTINUE
 C
 C  ***  SET  Z = (RMAT**T) * Y  ***
 C
- 70   Z(1) = Y(1) * RD(1)
+ 70   CONTINUE
+      Z(1) = Y(1) * RD(1)
       IF (P .EQ. 1) GO TO 90
       DO 80 I = 2, P
          IM1 = I - 1
          Z(I) = Y(I)*RD(I) + DOTPRD(IM1, J(1,I), Y)
- 80      CONTINUE
+ 80   CONTINUE
 C
 C  ***  NOW SET  Y = PERM * Z  ***
 C
@@ -15483,7 +15509,8 @@ C
 C
 C
       DO 10 I = 1, P
- 10      W(I) = A*X(I) + Y(I)
+         W(I) = A*X(I) + Y(I)
+ 10   CONTINUE
       RETURN
       END
 *AMESTP
@@ -16459,7 +16486,8 @@ C
 C
 C
       DO 10 I = 1, P
- 10      Y(I) = X(I)
+         Y(I) = X(I)
+ 10   CONTINUE
       RETURN
       END
 *AMFCNT
@@ -18292,7 +18320,8 @@ C        ***  ESTIMATE TO INITIALIZE LOWER BOUND LK ON ALPHA.
          T = L(J)
          L(J) = ONE
          DO 50 I = 1, IRC
- 50           W(I) = ZERO
+              W(I) = ZERO
+ 50      CONTINUE
          W(IRC) = ONE
          CALL LITVMU(IRC, W, L, W)
          T1 = V2NORM(IRC, W)
@@ -18440,7 +18469,8 @@ C
       T = L(J)
       L(J) = ONE
       DO 230 I = 1, IRC
- 230     W(I) = ZERO
+         W(I) = ZERO
+ 230  CONTINUE
       W(IRC) = ONE
       CALL LITVMU(IRC, W, L, W)
       T1 = V2NORM(IRC, W)
@@ -18495,10 +18525,11 @@ C
 C
 C  ***  SUCCESSFUL STEP IN GENERAL.  COMPUTE STEP = -(D**-1)*Q  ***
 C
- 290  DO 300 I = 1, P
+ 290  CONTINUE
+      DO 300 I = 1, P
          J = Q0 + I
          STEP(I) = -W(J)/D(I)
- 300     CONTINUE
+ 300  CONTINUE
       V(GTSTEP) = -DOTPRD(P, DIG, W(Q))
       V(PREDUC) = HALF * (ABS(ALPHAK)*DST*DST - V(GTSTEP))
       GO TO 430
@@ -18506,7 +18537,8 @@ C
 C
 C  ***  RESTART WITH NEW RADIUS  ***
 C
- 310  IF (V(DST0) .LE. ZERO .OR. V(DST0) - RAD .GT. PHIMAX) GO TO 330
+ 310  CONTINUE
+      IF (V(DST0) .LE. ZERO .OR. V(DST0) - RAD .GT. PHIMAX) GO TO 330
 C
 C     ***  PREPARE TO RETURN NEWTON STEP  ***
 C
@@ -18514,14 +18546,15 @@ C
          KA = KA + 1
          K = 0
          DO 320 I = 1, P
-              K = K + I
-              J = DIAG0 + I
-              DIHDI(K) = W(J)
- 320          CONTINUE
+            K = K + I
+            J = DIAG0 + I
+            DIHDI(K) = W(J)
+ 320     CONTINUE
          UK = NEGONE
          GO TO 40
 C
- 330  IF (KA .EQ. 0) GO TO 60
+ 330  CONTINUE
+      IF (KA .EQ. 0) GO TO 60
 C
       DST = W(DSTSAV)
       ALPHAK = ABS(V(STPPAR))
@@ -18538,7 +18571,8 @@ C        ***  SMALLER RADIUS  ***
          GO TO 260
 C
 C     ***  BIGGER RADIUS  ***
- 340  UK = T - W(EMIN)
+ 340  CONTINUE
+      UK = T - W(EMIN)
       IF (ALPHAK .GT. ZERO) UK = MIN(UK, W(UK0))
       LK = MAX(ZERO, -V(DST0), T - W(EMAX))
       IF (V(DST0) .GT. ZERO) LK = MAX(LK, (V(DST0)-RAD)*W(PHIPIN))
@@ -18547,7 +18581,8 @@ C
 C  ***  HANDLE (NEARLY) SINGULAR H + ALPHA*D**2  ***
 C
 C     ***  NEGATE ALPHAK TO INDICATE SPECIAL CASE  ***
- 350  ALPHAK = -ALPHAK
+ 350  CONTINUE
+      ALPHAK = -ALPHAK
 C     ***  ALLOCATE STORAGE FOR SCRATCH VECTOR X  ***
       X0 = Q0 + P
       X = X0 + 1
@@ -18561,8 +18596,10 @@ C
 C
       K = 0
 C     ***  NORMALIZE W  ***
- 360  DO 370 I = 1, P
- 370     W(I) = T*W(I)
+ 360  CONTINUE
+      DO 370 I = 1, P
+         W(I) = T*W(I)
+ 370  CONTINUE
 C     ***  COMPLETE CURRENT INV. POWER ITER. -- REPLACE W BY (L**-T)*W.
       CALL LITVMU(P, W, L, W)
       T1 = ONE/V2NORM(P, W)
@@ -18574,14 +18611,16 @@ C     ***  START NEXT INV. POWER ITER. BY STORING NORMALIZED W IN X.
       DO 380 I = 1, P
          J = X0 + I
          W(J) = T1*W(I)
- 380     CONTINUE
+ 380  CONTINUE
 C     ***  COMPUTE W = (L**-1)*X.
       CALL LIVMUL(P, W, L, W(X))
       T = ONE/V2NORM(P, W)
       GO TO 360
 C
- 390  DO 400 I = 1, P
- 400     W(I) = T1*W(I)
+ 390  CONTINUE
+      DO 400 I = 1, P
+         W(I) = T1*W(I)
+ 400  CONTINUE
 C
 C  ***  NOW W IS THE DESIRED APPROXIMATE (UNIT) EIGENVECTOR AND
 C  ***  T*X = ((D**-1)*H*(D**-1) + ALPHAK*I)*W.
@@ -18623,17 +18662,19 @@ C
          J = J + I
          K = DIAG0 + I
          DIHDI(J) = W(K)
- 440     CONTINUE
+ 440  CONTINUE
       GO TO 999
 C
 C  ***  SPECIAL CASE -- G = 0  ***
 C
- 450  V(STPPAR) = ZERO
+ 450  CONTINUE
+      V(STPPAR) = ZERO
       V(PREDUC) = ZERO
       V(DSTNRM) = ZERO
       V(GTSTEP) = ZERO
       DO 460 I = 1, P
- 460     STEP(I) = ZERO
+         STEP(I) = ZERO
+ 460  CONTINUE
 C
  999  RETURN
 C
@@ -18812,22 +18853,24 @@ C       ***  THAT X(I) HOLDS THE CURRENT PARTIAL SUM FOR ROW I.
               JI = J0 + I
               SPLUS = SPLUS + ABS(X(I) + L(JI)*XPLUS)
               SMINUS = SMINUS + ABS(X(I) + L(JI)*XMINUS)
- 20           CONTINUE
- 30      IF (SMINUS .GT. SPLUS) XPLUS = XMINUS
+ 20      CONTINUE
+ 30      CONTINUE
+         IF (SMINUS .GT. SPLUS) XPLUS = XMINUS
          X(J) = XPLUS
 C       ***  UPDATE PARTIAL SUMS  ***
          IF (JM1 .EQ. 0) GO TO 100
          DO 40 I = 1, JM1
               JI = J0 + I
               X(I) = X(I) + L(JI)*XPLUS
- 40           CONTINUE
+ 40      CONTINUE
  100     CONTINUE
 C
 C  ***  NORMALIZE X  ***
 C
       T = ONE/V2NORM(P, X)
       DO 110 I = 1, P
- 110     X(I) = T*X(I)
+         X(I) = T*X(I)
+ 110  CONTINUE
 C
 C  ***  SOLVE L*Y = X AND RETURN SVMIN = 1/TWONORM(Y)  ***
 C
@@ -19189,11 +19232,13 @@ C
       T = ZERO
       IF (SDOTWM .NE. ZERO) T = WSCALE / SDOTWM
       DO 10 I = 1, P
- 10      W(I) = T * WCHMTD(I)
+         W(I) = T * WCHMTD(I)
+ 10   CONTINUE
       CALL SLVMUL(P, U, A, STEP)
       T = HALF * (SIZE * DOTPRD(P, STEP, U)  -  DOTPRD(P, STEP, Y))
       DO 20 I = 1, P
- 20      U(I) = T*W(I) + Y(I) - SIZE*U(I)
+         U(I) = T*W(I) + Y(I) - SIZE*U(I)
+ 20   CONTINUE
 C
 C  ***  SET  A = A + U*(W**T) + W*(U**T)  ***
 C
@@ -19706,12 +19751,14 @@ C
               DO 10 K = I1, J
                    A(M) = A(M) + LJ*L(K)
                    M = M + 1
- 10                CONTINUE
- 20           CONTINUE
- 30      LII = L(II)
+ 10           CONTINUE
+ 20      CONTINUE
+ 30      CONTINUE
+         LII = L(II)
          DO 40 J = I1, II
- 40           A(J) = LII * L(J)
- 50      CONTINUE
+              A(J) = LII * L(J)
+ 40      CONTINUE
+ 50   CONTINUE
 C
       RETURN
 C  ***  LAST CARD OF LTSQAR FOLLOWS  ***
@@ -19899,6 +19946,7 @@ C
 C
 C
       DO 10 I = 1, P
- 10      Y(I) = S
+         Y(I) = S
+ 10   CONTINUE
       RETURN
       END

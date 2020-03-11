@@ -1427,54 +1427,65 @@ C
       real t1, t2, a(m,n)
 c
       do 5  i=1,m
-      i1=sig(i)
-6     if(i1.le.i) go to 5
-      i2=sig(i1)
-      sig(i1)=-i2
-      i1=i2
-      go to 6
-5     sig(i)=-sig(i)
+         i1=sig(i)
+6        continue
+         if(i1.le.i) go to 5
+         i2=sig(i1)
+         sig(i1)=-i2
+         i1=i2
+         go to 6
+         sig(i)=-sig(i)
+5     continue
       if(tau(1).lt.0) go to 9
       do 7  j=1,n
-      j1=tau(j)
-8     if(j1.le.j) go to 7
-      j2=tau(j1)
-      tau(j1)=-j2
-      j1=j2
-      go to 8
-7     tau(j)=-tau(j)
-9     do 10  i=1,m
-      i1=-sig(i)
-      if(i1.lt.0) go to 10
-      lc=0
-20    i1=sig(i1)
-      lc=lc+1
-      if(i1.gt.0) go to 20
-      i1=i
-      do 30  j=1,n
-      if(tau(j).gt.0) go to 30
-      j2=j
-      k=lc
-40    j1=j2
-      t1=a(i1,j1)
-50    i1=iabs(sig(i1))
-      t1=a(i1,j1)
-      j1=iabs(tau(j1))
-      t2=a(i1,j1)
-      a(i1,j1)=t1
-      t1=t2
-      if(j1.ne.j2) go to 50
-      k=k-1
-      if(i1.ne.i) go to 50
-      j2=iabs(tau(j2))
-55    if(k.ne.0) go to 40
-30    continue
+         j1=tau(j)
+8        continue
+         if(j1.le.j) go to 7
+         j2=tau(j1)
+         tau(j1)=-j2
+         j1=j2
+         go to 8
+         tau(j)=-tau(j)
+7     continue
+9     continue
+      do 10  i=1,m
+         i1=-sig(i)
+         if(i1.lt.0) go to 10
+         lc=0
+20       continue
+         i1=sig(i1)
+         lc=lc+1
+         if(i1.gt.0) go to 20
+         i1=i
+         do 30  j=1,n
+           if(tau(j).gt.0) go to 30
+           j2=j
+           k=lc
+40         continue
+           j1=j2
+           t1=a(i1,j1)
+50         continue
+           i1=iabs(sig(i1))
+           t1=a(i1,j1)
+           j1=iabs(tau(j1))
+           t2=a(i1,j1)
+           a(i1,j1)=t1
+           t1=t2
+           if(j1.ne.j2) go to 50
+           k=k-1
+           if(i1.ne.i) go to 50
+           j2=iabs(tau(j2))
+55         continue
+           if(k.ne.0) go to 40
+30       continue
 10    continue
       do 60  i=1,m
-60    sig(i)=iabs(sig(i))
+         sig(i)=iabs(sig(i))
+60    continue
       if(tau(1).gt.0) return
       do 70  j=1,n
-70    tau(j)=iabs(tau(j))
+         tau(j)=iabs(tau(j))
+70    continue
       return
       end
       subroutine spanfo(n,e,endpt,k,x,nv,y)
@@ -1604,29 +1615,37 @@ C     SPANNING TREES.
 C
       integer a,comp,e,end,endpt,stack,x,y
       dimension a(n),stack(nstk),endpt(2,e),end(2,n),nv(n),y(n),x(n)
-10    if(k.ne.1) go to 30
-20    n2=e-n+1
+C
+10    continue
+      if(k.ne.1) go to 30
+20    continue
+      n2=e-n+1
       do 21  i=1,n2
-21    stack(i)=i
+        stack(i)=i
+21    continue
       m=n2+1
       stack(m)=n2
       return
-30    k1=k-1
+c
+30    continue
+      k1=k-1
       do 31  i=1,k1
-      i3=a(i)
-      end(1,i)=endpt(1,i3)
-31    end(2,i)=endpt(2,i3)
+         i3=a(i)
+         end(1,i)=endpt(1,i3)
+         end(2,i)=endpt(2,i3)
+31    continue
       n3=n+1
       call spanfo(n3,k1,end,comp,x,nv,y)
       i1=a(k1)+1
       i2=e-n+k
       m1=m
-32    do 35  i=i1,i2
-      i3=endpt(1,i)
-      i4=endpt(2,i)
-      if(x(i3).eq.x(i4)) go to 35
-      m1=m1+1
-      stack(m1)=i
+32    continue
+      do 35  i=i1,i2
+         i3=endpt(1,i)
+         i4=endpt(2,i)
+         if(x(i3).eq.x(i4)) go to 35
+         m1=m1+1
+         stack(m1)=i
 35    continue
       stack(m1+1)=m1-m
       m=m1+1

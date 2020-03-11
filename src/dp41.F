@@ -435,6 +435,7 @@ C
 C
       IFOUND='NO'
       IERROR='NO'
+      IF(ICOM.EQ.'LET ')GOTO9000
       IBCABT='OFF'
 C
 C               ***********************************************
@@ -2888,6 +2889,7 @@ C
 C
       CHARACTER*4 IFTYPE
       CHARACTER*4 ICASE2
+      CHARACTER*4 ICASE3
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
@@ -3166,7 +3168,8 @@ C
                GOTO9000
              ENDIF
           ENDIF
-          CALL VIEWFI(IPL2NA,IBUGO2,ISUBRO,IERROR)
+          ICASE3='IPL2'
+          CALL VIEWFI(IPL2NA,ICASE3,IBUGO2,ISUBRO,IERROR)
           GOTO9000
         ELSEIF((IHARG(1).LE.'DEVI' .AND. IHARG(2).EQ.'2') .OR.
      1         (IHARG(1).EQ.'DPPL' .AND. IHARG2(1)(1:2).EQ.'1F') .OR.
@@ -3210,7 +3213,8 @@ C
               CALL DPWRST('XXX','BUG ')
             ENDIF
           ENDIF
-          CALL VIEWFI(IPL1NA,IBUGO2,ISUBRO,IERROR)
+          ICASE3='IPL1'
+          CALL VIEWFI(IPL1NA,ICASE3,IBUGO2,ISUBRO,IERROR)
           GOTO9000
         ELSEIF(NUMARG.GE.1)THEN
 C
@@ -3225,7 +3229,8 @@ C
      1                ICASEZ,IFILEZ,NCFILE,
      1                IBUGO2,ISUBRO,IFOUND,IERROR)
           IF(NCFILE.LE.80)THEN
-            CALL VIEWFI(ISTRIN,IBUGO2,ISUBRO,IERROR)
+            ICASE3='FILE'
+            CALL VIEWFI(ISTRIN,ICASE3,IBUGO2,ISUBRO,IERROR)
           ELSE
             WRITE(ICOUT,999)
             CALL DPWRST('XXX','BUG ')
@@ -9107,6 +9112,21 @@ C                                       DPWEB
 C     UPDATED         --DECEMBER  2018. SUPPORT FOR "DEVICE ... SCALE"
 C                                       COMMAND
 C     UPDATED         --FEBRUARY  2019. SUPPORT FOR "CALL CLIPBOARD"
+C     UPDATED         --SEPTEMBER 2019. SUPPORT FOR "GREP" AS SEARCH
+C                                       OPTION
+C     UPDATED         --SEPTEMBER 2019. ADD "RM" AND "RMDIR" COMMANDS
+C     UPDATED         --SEPTEMBER 2019. ADD "MKDIR" COMMAND
+C     UPDATED         --SEPTEMBER 2019. ADD "CAT" COMMAND
+C     UPDATED         --SEPTEMBER 2019. ADD "DIR" COMMAND
+C     UPDATED         --SEPTEMBER 2019. FOR LIST AND SAVE, CHECK IF
+C                                       FIRST ARGUMENT IS "="
+C     UPDATED         --OCTOBER   2019. "HEAD" AND "TAIL" OPTIONS FOR
+C                                       WRITE COMMAND
+C     UPDATED         --NOVEMBER  2019. "RSCRIPT" AND "PYTHON"
+C                                       COMMANDS
+C     UPDATED         --FEBRUARY  2020. FOR "CLIPBOARD" COMMANDS,
+C                                       CHECK IF "CLIPBOARD" ARGUMENT
+C                                       IS ACTUALLY A FILE NAME.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -9354,7 +9374,17 @@ C
      1   ICOM.EQ.'EXEC' .OR. ICOM.EQ.'RUN ')THEN
 C
         IF(NUMARG.EQ.1 .AND. IHARG(1).EQ.'CLIP' .AND.
-     1     IHARG2(1).EQ.'BOAR')GOTO13390
+     1     IHARG2(1).EQ.'BOAR')THEN
+C
+C         CHECK IF ARGUMENT IS A FILE NAME STARTING WITH
+C         "CLIPBOARD.
+C
+          IWORD=2
+          IOFILE='NO'
+          CALL DPFILE(IANSLC,IWIDTH,IWORD,
+     1                IOFILE,IBUGS2,ISUBRO,IERROR)
+          IF(IOFILE.EQ.'NO')GOTO13390
+        ENDIF
 C
         IF(NUMARG.EQ.1 .AND.
      1    IHARG(1).EQ.'EXIT')THEN
@@ -9970,7 +10000,7 @@ C
      1              IREARW,IWRIRW,NPLOTP,IPRITY,
      1              IUNFOF,IUNFNR,IUNFMC,IMACRO,IMALEV,
      1              IANSLO,ILOOST,ILOOLI,
-     1              NUMIF,
+     1              NUMIF,ISEED,
      1              IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
       ENDIF
@@ -10535,6 +10565,9 @@ CCCCC LIST)
       IF(ICOM.EQ.'PRIN'.AND.ICOM2.EQ.'T1  ')GOTO5800
       IF(ICOM.EQ.'PRIN'.AND.ICOM2.EQ.'T2  ')GOTO5800
       IF(ICOM.EQ.'PRIN'.AND.ICOM2.EQ.'T3  ')GOTO5800
+      IF(ICOM.EQ.'HEAD'.AND.ICOM2.EQ.'    ')GOTO5800
+      IF(ICOM.EQ.'TAIL'.AND.ICOM2.EQ.'    '.AND.
+     1   IHARG(1).NE.'AREA')GOTO5800
       GOTO5899
 C
  5800 CONTINUE
@@ -10965,12 +10998,14 @@ C
       IF(ICOM.EQ.'LIST'.AND.NUMARG.GE.1.AND.IHARG(1).EQ.'GRAP'.AND.
      1IHARG2(1).EQ.'HS ')GOTO9499
 C
-      IF(ICOM.EQ.'LIST' .OR. ICOM.EQ.'TYPE' .OR. ICOM.EQ.'VIEW' .OR.
+      IF((ICOM.EQ.'LIST' .OR. ICOM.EQ.'L   ' .OR. ICOM.EQ.'VIEW' .OR.
      1   ICOM.EQ.'PREV' .OR. ICOM.EQ.'NLIS' .OR. ICOM.EQ.'NTYP' .OR.
-     1   ICOM.EQ.'NVIE' .OR. ICOM.EQ.'NPRE')THEN
+     1   ICOM.EQ.'NVIE' .OR. ICOM.EQ.'NPRE') .AND.
+     1   IHARG(1).NE.'=   ')THEN
 CCCCC    2 LINES OF ARGS (IHELMX THROUGH NCPOSH) WERE ADDED JULY 1989
 CCCCC    THE FOLLOWING LINE WAS CHANGED NOVEMBER 1989
-        CALL DPLIST(ICOM,IANSLC,IWIDTH,IHARG,IHARG2,NUMARG,
+        CALL DPLIST(ICOM,IANSLC,IWIDTH,IHARG,IHARG2,IARGT,
+     1              IARG,ARG,NUMARG,
      1              ICOM3,ICOM4,ICOM5,NUMCOM,NCOM5,
 CCCCC1              IHELMX,
      1              ILISMX,
@@ -11048,7 +11083,8 @@ C
 CCCCC DECEMBER 1993.  CHECK FOR CONFLICT WITH S CHART COMMAND
 C
       IF(ICOM.EQ.'SAVE' .OR. ICOM.EQ.'S   ' .AND.
-     1   IHARG(1).NE.'CONT' .AND. IHARG(1).NE.'CHAR')THEN
+     1   IHARG(1).NE.'CONT' .AND. IHARG(1).NE.'CHAR' .AND.
+     1   IHARG(1).NE.'=   ')THEN
         CALL DPSACO(IANSLC,IWIDTH,IHARG,IARGT,IARG,NUMARG,
      1              IANSSV,IREPMX,IPOINT,ISACNC,
      1              IBUGS2,ISUBRO,IFOUND,IERROR)
@@ -11229,15 +11265,18 @@ C               **  TREAT THE SEARCH CASE **
 C               ****************************
 C
       IF(ICOM.EQ.'SEAR' .OR. ICOM.EQ.'?   ' .OR.
-     1   ICOM.EQ.'??? ')THEN
+     1   ICOM.EQ.'??? ' .OR. ICOM.EQ.'GREP' .OR.
+     1  (ICOM.EQ.'FIND' .AND. ICOM2.EQ.'STR '))THEN
         ISEART='1LIN'
         IF(ICOM2.EQ.'CHB')ISEART='BLAN'
         IF(ICOM2.EQ.'CHBL')ISEART='BLAN'
         IF(ICOM2.EQ.'CHD')ISEART='----'
         IF(ICOM2.EQ.'CHDA')ISEART='----'
+        IF(ICOM.EQ.'GREP')ISEART='GREP'
+        IF(ICOM.EQ.'FIND' .AND. ICOM2.EQ.'STR ')ISEART='FIND'
 CCCCC   THE FOLLOWING LINE WAS ADDED      JANUARY 1994
         IF(ICOM2.EQ.'CH1 ')ISEART='FIRS'
-        CALL DPSEAR(IANSLC,IWIDTH,ICOM,IHARG,IHARG2,NUMARG,ISEART,
+        CALL DPSEAR(IANS,IANSLC,IWIDTH,ICOM,IHARG,IHARG2,NUMARG,ISEART,
      1              ICOM3,ICOM4,ICOM5,NUMCOM,NCOM5,
 CCCCC   FEBRUARY 2003: ADD FOLLOWING LINE
      1              IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
@@ -11342,6 +11381,16 @@ C
         CALL DPSYST(IANS,IANSLC,IWIDTH,
      1              IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
      1              IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,
+     1              IBUGS2,ISUBRO,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ENDIF
+C
+C               *************************************
+C               **  TREAT THE RSCRIPT/PYTHON CASE  **
+C               *************************************
+C
+      IF(ICOM.EQ.'RSCR' .OR. ICOM.EQ.'PYTH')THEN
+        CALL DPEXRP(IANS,IANSLC,IWIDTH,ICOM,ICOM2,
      1              IBUGS2,ISUBRO,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
       ENDIF
@@ -11664,6 +11713,8 @@ C               *******************************
 C               **  TREAT THE WEB HELP CASE  **
 C               *******************************
 C
+ 1201 CONTINUE
+C
       IF((ICOM.EQ.'WEB'.AND.IHARG(1).EQ.'HELP') .OR.
      1    ICOM.EQ.'??  ')THEN
         CALL DPHELW(ICOM,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,
@@ -11693,12 +11744,82 @@ C               **  NOTE: SET "HANDBOOK" =   **
 C               **        "WEB HANDBOOK      **
 C               *******************************
 C
+CCCCC 2019/11: IF THE FIRST ARGUMENT DOES NOT START WITH ONE OF THE
+C              FOLLOWING
+C
+C                  http
+C                  file:
+C                  www.
+C                  A PERIOD "." WITHIN THE FIRST 8 CHARACTERS, THEN
+C
+C              THEN ASSUME THIS IS NOT A URL ADDRESS AND CONVERT THE
+C              "WEB" COMMAND TO A "WEB HELP" COMMAND.
+C
       IF(ICOM.EQ.'WEB'  .OR. ICOM.EQ.'W   ' .OR.
      1   ICOM.EQ.'WS  ' .OR.
      1  (ICOM.EQ.'????' .AND. ICOM2.EQ.'?   '))THEN
-        CALL DPWEB(ICOM,ICOM2,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,
-     1             IANSLC,IWIDTH,IBUGS2,ISUBRO,IFOUND,IERROR)
-        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+C
+        IFLAG=0
+        IF(ICOM.EQ.'WS  ')IFLAG=1
+        IF(ICOM.EQ.'????' .AND. ICOM2.EQ.'?   ')IFLAG=1
+        IF(IHARG(1).EQ.'SEAR' .AND. IHARG2(1).EQ.'CH  ')IFLAG=1
+        IF(IHARG(1).EQ.'HTTP' .AND. IHARG2(1)(1:1).EQ.':')IFLAG=1
+        IF(IHARG(1).EQ.'HTTP' .AND. IHARG2(1)(1:2).EQ.'S:')IFLAG=1
+        IF(IHARG(1).EQ.'FILE' .AND. IHARG2(1)(1:1).EQ.':')IFLAG=1
+        IF(IHARG(1).EQ.'"HTT' .AND. IHARG2(1)(1:2).EQ.'P:')IFLAG=1
+        IF(IHARG(1).EQ.'"HTT' .AND. IHARG2(1)(1:3).EQ.'PS:')IFLAG=1
+        IF(IHARG(1).EQ.'"FIL' .AND. IHARG2(1)(1:2).EQ.'E:')IFLAG=1
+        IF(IHARG(1).EQ.'WWW.')IFLAG=1
+        IF(IHARG(1)(1:1).EQ.'.')IFLAG=1
+        IF(IHARG(1)(2:2).EQ.'.')IFLAG=1
+        IF(IHARG(1)(3:3).EQ.'.')IFLAG=1
+        IF(IHARG(1)(4:4).EQ.'.')IFLAG=1
+        IF(IHARG2(1)(1:1).EQ.'.')IFLAG=1
+        IF(IHARG2(1)(2:2).EQ.'.')IFLAG=1
+        IF(IHARG2(1)(3:3).EQ.'.')IFLAG=1
+        IF(IHARG2(1)(4:4).EQ.'.')IFLAG=1
+C
+        IF(IFLAG.EQ.1)THEN
+          CALL DPWEB(ICOM,ICOM2,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,
+     1               IANSLC,IWIDTH,IBUGS2,ISUBRO,IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+        ELSE
+          ISHIFT=1
+          CALL SHIFTR(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,
+     1                IBUGS2,IERROR)
+          ISTRT=-1
+          DO1210II=1,30
+            IF(IANS(II)(1:1).EQ.IHARG(1)(1:1)   .AND.
+     1         IANS(II+1)(1:1).EQ.IHARG(1)(2:2) .AND.
+     1         IANS(II+2)(1:1).EQ.IHARG(1)(3:3) .AND.
+     1         IANS(II+3)(1:1).EQ.IHARG(1)(4:4))THEN
+              ISTRT=II
+              GOTO1219
+            ENDIF
+ 1210     CONTINUE
+ 1219     CONTINUE
+          IF(ISTRT.GE.1)THEN
+            DO1220II=ISTRT,IWIDTH
+              IF(II+5.LE.255)THEN
+                IANS(II+5)=IANS(II)
+                IANSLC(II+5)=IANSLC(II)
+              ENDIF
+ 1220       CONTINUE
+            IANS(ISTRT)='H   '
+            IANS(ISTRT+1)='E   '
+            IANS(ISTRT+2)='L   '
+            IANS(ISTRT+3)='P   '
+            IANS(ISTRT+4)='    '
+            IANSLC(ISTRT)='H   '
+            IANSLC(ISTRT+1)='E   '
+            IANSLC(ISTRT+2)='L   '
+            IANSLC(ISTRT+3)='P   '
+            IANSLC(ISTRT+4)='    '
+          ENDIF
+          IHARG(1)='HELP'
+          IHARG2(1)='    '
+          GOTO1201
+        ENDIF
       ENDIF
 C
 CCCCC FOLLOWING SECTION ADDED APRIL 1997.
@@ -11790,6 +11911,44 @@ C
      1              IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
      1              IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,
      1              IBUGS2,ISUBRO,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ENDIF
+C
+C               ********************************
+C               **  TREAT THE RM     CASE     **
+C               ********************************
+C
+      IF(ICOM.EQ.'RM  ' .OR.
+     1  (ICOM.EQ.'RMDI' .AND. ICOM2.EQ.'R   '))THEN
+        CALL DPRM(IANS,IANSLC,IWIDTH,IBUGS2,ISUBRO,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ENDIF
+C
+C               ********************************
+C               **  TREAT THE MKDIR  CASE     **
+C               ********************************
+C
+      IF(ICOM.EQ.'MKDI' .AND. ICOM2.EQ.'R   ')THEN
+        CALL DPMKDR(IANS,IANSLC,IWIDTH,IBUGS2,ISUBRO,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ENDIF
+C
+C               ********************************
+C               **  TREAT THE CAT    CASE     **
+C               ********************************
+C
+      IF(ICOM.EQ.'CAT ' .OR.
+     1  (ICOM.EQ.'TYPE' .AND. ICOM2.EQ.'    '))THEN
+        CALL DPCAT(IANS,IANSLC,IWIDTH,IBUGS2,ISUBRO,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ENDIF
+C
+C               ********************************
+C               **  TREAT THE DIR    CASE     **
+C               ********************************
+C
+      IF(ICOM.EQ.'DIR ' .OR. ICOM.EQ.'LS  ')THEN
+        CALL DPDIR(IANS,IANSLC,IWIDTH,IBUGS2,ISUBRO,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
       ENDIF
 C
@@ -24378,7 +24537,8 @@ C
 C
       RETURN
       END
-      SUBROUTINE MATCH(X,Z,NX,VAL,NVAL,IWRITE,Y,ICASE,IBUGA3,IERROR)
+      SUBROUTINE MATCH(X,Z,NX,VAL,NVAL,IWRITE,Y,ICASE,
+     1                 IBUGA3,ISUBRO,IERROR)
 C
 C     PURPOSE--MATCH EACH VALUE IN THE VALUE ARRAY TO THE
 C              CLOSEST VALUE IN THE X ARRAY.  THE RETURNED
@@ -24388,7 +24548,7 @@ C              THE MATCHING VALUE, JUST THE INDEX OF THE
 C              MATCHING VALUE).
 C              IF ICASE IS TRAN, THEN RETURN THE VALUE OF THE
 C              ARRAY Z CORRESPONDING TO INDEX.
-C     WRITTEN BY--JAMES J. FILLIBEN
+C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
 C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
@@ -24399,12 +24559,14 @@ C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--2001/10
 C     ORIGINAL VERSION--OCTOBER   2001.
+C     UPDATED         --DECEMBER  2019. ADD ISUBRO
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES----------------
 C
       CHARACTER*4 ICASE
       CHARACTER*4 IWRITE
       CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
       CHARACTER*4 IERROR
 C
       CHARACTER*4 ISUBN1
@@ -24434,19 +24596,19 @@ C
       ISUBN2='H   '
       IERROR='NO'
 C
-      IF(IBUGA3.EQ.'ON')THEN
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'ATCH')THEN
         WRITE(ICOUT,999)
   999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
    51   FORMAT('***** AT THE BEGINNING OF MATCH--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,52)IBUGA3,NX
-   52   FORMAT('IBUGA3,NX = ',A4,2X,I8)
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,NX,NVAL
+   52   FORMAT('IBUGA3,ISUBRO,NX,NVAL = ',2(A4,2X),2I8)
         CALL DPWRST('XXX','BUG ')
         DO55I=1,NX
-          WRITE(ICOUT,56)I,X(I),VAL(I)
-   56     FORMAT('I,X(I), VAL(I) = ',I8,2G15.7)
+          WRITE(ICOUT,56)I,X(I),Z(I)
+   56     FORMAT('I,X(I),Z(I) = ',I8,2G15.7)
           CALL DPWRST('XXX','BUG ')
    55   CONTINUE
       ENDIF
@@ -24489,7 +24651,7 @@ C               *****************
 C
  9000 CONTINUE
 C
-      IF(IBUGA3.EQ.'ON')THEN
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'ATCH')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,9011)
@@ -24498,9 +24660,9 @@ C
         WRITE(ICOUT,9012)IERROR,NX
  9012   FORMAT('IERROR,NX = ',A4,2X,I8)
         CALL DPWRST('XXX','BUG ')
-        DO9015I=1,NX
-          WRITE(ICOUT,9016)I,X(I),Y(I)
- 9016     FORMAT('I,X(I),Y(I) = ',I8,2G15.7)
+        DO9015I=1,NVAL
+          WRITE(ICOUT,9016)I,VAL(I),Y(I)
+ 9016     FORMAT('I,VAL(I),Y(I) = ',I8,2G15.7)
           CALL DPWRST('XXX','BUG ')
  9015   CONTINUE
       ENDIF

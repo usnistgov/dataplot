@@ -7607,7 +7607,8 @@ C
       IF (N .EQ. 1) GO TO 1001
 C
       DO 100 I = 2, N
-  100 E2(I-1) = E2(I)
+         E2(I-1) = E2(I)
+  100 CONTINUE
 C
       F = 0.0E0
       B = 0.0E0
@@ -7620,7 +7621,8 @@ C
          B = H
          C = B * B
 C     .......... LOOK FOR SMALL SQUARED SUB-DIAGONAL ELEMENT ..........
-  105    DO 110 M = L, N
+  105    CONTINUE
+         DO 110 M = L, N
             IF (E2(M) .LE. C) GO TO 120
 C     .......... E2(N) IS ALWAYS ZERO, SO THERE IS NO EXIT
 C                THROUGH THE BOTTOM OF THE LOOP ..........
@@ -7639,7 +7641,8 @@ C     .......... FORM SHIFT ..........
          H = G - D(L)
 C
          DO 140 I = L1, N
-  140    D(I) = D(I) - H
+            D(I) = D(I) - H
+  140    CONTINUE
 C
          F = F + H
 C     .......... RATIONAL QL TRANSFORMATION ..........
@@ -7668,7 +7671,8 @@ C     .......... GUARD AGAINST UNDERFLOW IN CONVERGENCE TEST ..........
          IF (ABS(E2(L)) .LE. ABS(C/H)) GO TO 210
          E2(L) = H * E2(L)
          IF (E2(L) .NE. 0.0E0) GO TO 130
-  210    P = D(L) + F
+  210    CONTINUE
+         P = D(L) + F
 C     .......... ORDER EIGENVALUES ..........
          IF (L .EQ. 1) GO TO 250
 C     .......... FOR I=L STEP -1 UNTIL 2 DO -- ..........
@@ -10137,7 +10141,8 @@ C
 C
 C***FIRST EXECUTABLE STATEMENT  TRED1
       DO 100 I = 1, N
-  100 D(I) = A(I,I)
+         D(I) = A(I,I)
+  100 CONTINUE
 C     .......... FOR I=N STEP -1 UNTIL 1 DO -- ..........
       DO 300 II = 1, N
          I = N + 1 - II
@@ -10147,14 +10152,17 @@ C     .......... FOR I=N STEP -1 UNTIL 1 DO -- ..........
          IF (L .LT. 1) GO TO 130
 C     .......... SCALE ROW (ALGOL TOL THEN NOT NEEDED) ..........
          DO 120 K = 1, L
-  120    SCALE = SCALE + ABS(A(I,K))
+            SCALE = SCALE + ABS(A(I,K))
+  120    CONTINUE
 C
          IF (SCALE .NE. 0.0E0) GO TO 140
-  130    E(I) = 0.0E0
+  130    CONTINUE
+         E(I) = 0.0E0
          E2(I) = 0.0E0
          GO TO 290
 C
-  140    DO 150 K = 1, L
+  140    CONTINUE
+         DO 150 K = 1, L
             A(I,K) = A(I,K) / SCALE
             H = H + A(I,K) * A(I,K)
   150    CONTINUE
@@ -10172,15 +10180,18 @@ C
             G = 0.0E0
 C     .......... FORM ELEMENT OF A*U ..........
             DO 180 K = 1, J
-  180       G = G + A(J,K) * A(I,K)
+                G = G + A(J,K) * A(I,K)
+  180       CONTINUE
 C
             JP1 = J + 1
             IF (L .LT. JP1) GO TO 220
 C
             DO 200 K = JP1, L
-  200       G = G + A(K,J) * A(I,K)
+               G = G + A(K,J) * A(I,K)
+  200       CONTINUE
 C     .......... FORM ELEMENT OF P ..........
-  220       E(J) = G / H
+  220       CONTINUE
+            E(J) = G / H
             F = F + E(J) * A(I,J)
   240    CONTINUE
 C
@@ -10191,14 +10202,18 @@ C     .......... FORM REDUCED A ..........
             G = E(J) - H * F
             E(J) = G
 C
-            DO 260 K = 1, J
+            DO 265 K = 1, J
                A(J,K) = A(J,K) - F * E(K) - G * A(I,K)
+  265       CONTINUE
   260    CONTINUE
 C
-  270    DO 280 K = 1, L
-  280    A(I,K) = SCALE * A(I,K)
+  270    CONTINUE
+         DO 280 K = 1, L
+            A(I,K) = SCALE * A(I,K)
+  280    CONTINUE
 C
-  290    H = D(I)
+  290    CONTINUE
+         H = D(I)
          D(I) = A(I,I)
          A(I,I) = H
   300 CONTINUE
@@ -10264,8 +10279,9 @@ C
 C***FIRST EXECUTABLE STATEMENT  TRED2
       DO 100 I = 1, N
 C
-         DO 100 J = 1, I
+         DO 110 J = 1, I
             Z(I,J) = A(I,J)
+  110    CONTINUE
   100 CONTINUE
 C
       IF (N .EQ. 1) GO TO 320
@@ -10278,13 +10294,15 @@ C     .......... FOR I=N STEP -1 UNTIL 2 DO -- ..........
          IF (L .LT. 2) GO TO 130
 C     .......... SCALE ROW (ALGOL TOL THEN NOT NEEDED) ..........
          DO 120 K = 1, L
-  120    SCALE = SCALE + ABS(Z(I,K))
+            SCALE = SCALE + ABS(Z(I,K))
+  120    CONTINUE
 C
          IF (SCALE .NE. 0.0E0) GO TO 140
   130    E(I) = Z(I,L)
          GO TO 290
 C
-  140    DO 150 K = 1, L
+  140    CONTINUE
+         DO 150 K = 1, L
             Z(I,K) = Z(I,K) / SCALE
             H = H + Z(I,K) * Z(I,K)
   150    CONTINUE
@@ -10301,13 +10319,15 @@ C
             G = 0.0E0
 C     .......... FORM ELEMENT OF A*U ..........
             DO 180 K = 1, J
-  180       G = G + Z(J,K) * Z(I,K)
+               G = G + Z(J,K) * Z(I,K)
+  180       CONTINUE
 C
             JP1 = J + 1
             IF (L .LT. JP1) GO TO 220
 C
             DO 200 K = JP1, L
-  200       G = G + Z(K,J) * Z(I,K)
+               G = G + Z(K,J) * Z(I,K)
+  200       CONTINUE
 C     .......... FORM ELEMENT OF P ..........
   220       E(J) = G / H
             F = F + E(J) * Z(I,J)
@@ -10320,8 +10340,9 @@ C     .......... FORM REDUCED A ..........
             G = E(J) - HH * F
             E(J) = G
 C
-            DO 260 K = 1, J
+            DO 265 K = 1, J
                Z(J,K) = Z(J,K) - F * E(K) - G * Z(I,K)
+  265       CONTINUE
   260    CONTINUE
 C
   290    D(I) = H
@@ -10338,13 +10359,16 @@ C
             G = 0.0E0
 C
             DO 340 K = 1, L
-  340       G = G + Z(I,K) * Z(K,J)
+               G = G + Z(I,K) * Z(K,J)
+  340       CONTINUE
 C
-            DO 360 K = 1, L
+            DO 365 K = 1, L
                Z(K,J) = Z(K,J) - G * Z(K,I)
+  365       CONTINUE
   360    CONTINUE
 C
-  380    D(I) = Z(I,I)
+  380    CONTINUE
+         D(I) = Z(I,I)
          Z(I,I) = 1.0E0
          IF (L .LT. 1) GO TO 500
 C

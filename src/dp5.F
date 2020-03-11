@@ -16571,7 +16571,7 @@ C
      1         'ELEMENTS = ',G15.7)
         CALL DPWRST('XXX','BUG ')
       ENDIF
-      XYCORR=1.0
+      XYCORR=0.0
       GOTO9000
   139 CONTINUE
 C
@@ -16589,7 +16589,7 @@ C
      1         'ELEMENTS = ',G15.7)
         CALL DPWRST('XXX','BUG ')
       ENDIF
-      XYCORR=1.0
+      XYCORR=0.0
       GOTO9000
   149 CONTINUE
 C
@@ -18293,7 +18293,7 @@ C***FIRST EXECUTABLE STATEMENT  CPEVL
          BI=0.0
          BIM1=0.0
          MINI=MIN0(M+1,N+2-J)
-            DO 1 I=1,MINI
+            DO 11 I=1,MINI
                IF(J .NE. 1) CI=C(I)
                IF(I .NE. 1) CIM1=C(I-1)
                C(I)=CIM1+Z*CI
@@ -18305,6 +18305,7 @@ C***FIRST EXECUTABLE STATEMENT  CPEVL
                S=AIMAG(ZA(Z)*T)
                B(I)=(1.+8.*D1)*(BIM1+D1*ZA(CIM1)+CMPLX(R,S))
                IF(J .EQ. 1) B(I)=0.0
+   11       CONTINUE
     1 CONTINUE
       RETURN
       END
@@ -20019,12 +20020,14 @@ C
       N=IN
       N1=N+1
       IF(IFLG .NE. 0) GO TO 14
-    1 N1=N+1
+    1 CONTINUE
+      N1=N+1
       IF(N .GT. 1) GO TO 2
          R(1)=-A(2)/A(1)
          S(1)=0.0
          RETURN
-    2 IF( CABS(A(N1)) .NE. 0.0 ) GO TO 3
+    2 CONTINUE
+         IF( CABS(A(N1)) .NE. 0.0 ) GO TO 3
          R(N)=0.0
          S(N)=0.0
          N=N-1
@@ -20032,7 +20035,8 @@ C
 C
 C          IF INITIAL ESTIMATES FOR ZEROS NOT GIVEN, FIND SOME
 C
-    3 TEMP=-A(2)/(A(1)*FLOAT(N))
+    3 CONTINUE
+      TEMP=-A(2)/(A(1)*FLOAT(N))
       CALL CPEVL(N,N,A,TEMP,T,T,.FALSE.)
       IMAX=N+2
       T(N1)=CABS(T(N1))
@@ -20041,13 +20045,15 @@ C
          IF(REAL(T(N+I)) .LT. REAL(T(IMAX))) IMAX=N+I
     6 CONTINUE
       X=(-REAL(T(IMAX))/REAL(T(N1)))**(1./FLOAT(IMAX-N1))
-    7 X=2.*X
+    7 CONTINUE
+         X=2.*X
          CALL CPEVL(N,0,T(N1),CMPLX(X,0.0),PNTEMP,PNTEMP,.FALSE.)
          PN=PNTEMP(1)
       IF (REAL(PN).LT.0.) GO TO 7
       U=.5*X
       V=X
-   10 X=.5*(U+V)
+   10 CONTINUE
+         X=.5*(U+V)
          CALL CPEVL(N,0,T(N1),CMPLX(X,0.0),PNTEMP,PNTEMP,.FALSE.)
          PN=PNTEMP(1)
          IF (REAL(PN).GT.0.) V=X
@@ -20055,11 +20061,13 @@ C
          IF((V-U) .GT. .001*(1.+V)) GO TO 10
       DO 13 I=1,N
          U=(3.14159265/FLOAT(N))*(.5+2.*FLOAT(I-1))
-   13    R(I)=AMAX1(X,.001*CABS(TEMP))*CMPLX(COS(U),SIN(U))+TEMP
+         R(I)=AMAX1(X,.001*CABS(TEMP))*CMPLX(COS(U),SIN(U))+TEMP
+   13 CONTINUE
 C
 C          MAIN ITERATION LOOP STARTS HERE
 C
-   14 NR=0
+   14 CONTINUE
+      NR=0
       NMAX=25*N
       DO 19 NIT=1,NMAX
          DO 18 I=1,N
@@ -20074,11 +20082,13 @@ C
                   GO TO 18
    16          TEMP=A(1)
                DO 17 J=1,N
-   17             IF(J .NE. I) TEMP=TEMP*(R(I)-R(J))
+                  IF(J .NE. I) TEMP=TEMP*(R(I)-R(J))
+   17          CONTINUE
                T(I)=PN/TEMP
    18    CONTINUE
          DO 15 I=1,N
-   15       R(I)=R(I)-T(I)
+            R(I)=R(I)-T(I)
+   15    CONTINUE
          IF(NR .EQ. N) GO TO 21
    19 CONTINUE
       GO TO 26
@@ -20093,14 +20103,18 @@ C
             X=X*FLOAT(N1-I)/FLOAT(I)
             TEMP=CMPLX(AMAX1(ABS(REAL(T(I+1)))-REAL(T(N1+I)),0.0),
      1           AMAX1(ABS(AIMAG(T(I+1)))-AIMAG(T(N1+I)),0.0))
-   23       S(NR)=AMAX1(S(NR),(CABS(TEMP)/X)**(1./FLOAT(I)))
-   25    S(NR)=1./S(NR)
-         IFLG=0
+            S(NR)=AMAX1(S(NR),(CABS(TEMP)/X)**(1./FLOAT(I)))
+   23    CONTINUE
+         S(NR)=1./S(NR)
+   25 CONTINUE
+      IFLG=0
       RETURN
 C        ERROR EXITS
-   26 IFLG=2
+   26 CONTINUE
+      IFLG=2
       RETURN
-   30 IFLG=1
+   30 CONTINUE
+      IFLG=1
       RETURN
       END
       SUBROUTINE CRAMER(Y1,Y2,N,IWRITE,XIDTEM,XIDTE2,TEMP1,STAT,

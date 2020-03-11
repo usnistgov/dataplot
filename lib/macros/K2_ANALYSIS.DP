@@ -1,0 +1,183 @@
+. This is dataplot macro     k2_analysis.dp
+. Purpose: Carry out k=2 factor analysis (where both factors are "discrete")
+. Date: 3/29/19
+.
+. Input (Required):
+.   y     (vector) = response
+.   x1    (vector) = factor 1
+.   x2    (vector) = factor 2
+.
+. Input (Optional):
+.   sty   (string) = Vertical axis label                (default = Response)
+.   stx1  (string) = Horizontal axis label for factor 1 (default = X1)
+.   stx2  (string) = Horizontal axis label for factor 2 (default = X2)
+.   frame (string) = subset/except specification        (default = full data set)
+.
+. -----start point-----
+.
+let string show = 1;. this setting dictates as to whether the header2 question shows up or not
+.
+. -----Step 1: extract distinct settings of each factor-----
+.
+let dx1 = distinct x1
+let dx1 = sort dx1
+let ndx1 = number dx1
+.
+let dx2 = distinct x2
+let dx2 = sort dx2
+let ndx2 = number dx2
+.
+print ndx1 ndx2
+print dx1 dx2
+. pause
+.
+. -----Step 10: Plot the data-----
+.
+label size 2.6
+.
+let n = number y
+legend 1 n = ^n
+legend 1 just right; legend 1 coor 84 87; legend 1 size 2.4 1.2
+.
+. -----Step 11: Generate scatter plots-----
+.
+let string header3 = Scatter Plot
+.
+if show = 1; let string header2 = Q. X1: Are the ^ndx1 ^stx1&s Equivalent? Best/Worst?; end if
+char X all; lines bl all
+y1label ^sty; x1label X1: ^stx1 (^ndx1)
+plot y x1 x1
+call annotate.dp
+.
+if show = 1; let string header2 = Q. X2: Are the ^ndx1 ^stx2&s Equivalent? Best/Worst?; end if
+char X all; lines bl all
+y1label ^sty; x1label X2: ^stx2 (^ndx2)
+plot y x2 x2
+call annotate.dp
+.
+. -----Step 12: Generate dex ordered data plot, dex scatter plot, dex mean plot-----
+.
+let k = 2
+let annotate = 1
+delete header3
+.
+if show = 1; let string header2 = Q. Best/Worst (X1, X2): (^stx1, ^stx2)?; end if
+call dexodp.dp
+.
+if show = 1; let string header2 = Q. Most Important Factor?  Best/Worst Settings?; end if
+call dexsp.dp
+.
+if show = 1; let string header2 = Q. Most Important Factor?  Best/Worst Settings?; end if
+call dexmp.dp
+.
+. -----Step 13: do multitrace plots (first with focus on X1 and then with focus on x2)----------
+.
+let string header3 = Multitrace Plot
+.
+if show = 1; let string header2 = Q. Best/Worst Setting for X1 (^stx1); end if
+char bl all; lines solid all
+loop for j = 1 1 ndx1
+   let string stjunk = ^j
+   if stx1l exists; let stjunk = string word  stx1l ^j; end if
+   let plot character ^j = ^stjunk
+end loop
+y1label ^sty; x1label X2: ^stx2 (^ndx2)
+plot y x2 x1
+move 16 87; just left; hw 2.4 1.2; text Plot Character = X1: ^stx1 (^ndx1)
+call annotate.dp
+.
+if show = 1; let string header2 = Q. Best/Worst Setting for X2 (^stx2); end if
+char bl all; lines solid all
+loop for j = 1 1 ndx2
+   let string stjunk = ^j
+   if stx2l exists; let stjunk = string word  stx2l ^j; end if
+   let plot character ^j = ^stjunk
+end loop
+y1label ^sty; x1label X1: ^stx1 (^ndx1)
+plot y x1 x2
+move 16 87; just left; hw 2.4 1.2; text Plot Character = X2: ^stx2 (^ndx2)
+call annotate.dp
+.
+. -----Step 14: do character plots (first with focus on x1 and then with focus on x2)-----
+.
+let string header3 = Character Plot
+.
+if show = 1; let string header2 = Q. Best/Worst Setting for X1 (^stx1); end if
+char bl all; lines solid all
+loop for j = 1 1 ndx1
+   let string stjunk = ^j
+   if stx1l exists; let stjunk = string word  stx1l ^j; end if
+   let plot character ^j = ^stjunk
+   let plot line ^j = blank
+end loop
+. let plot char color 1 = red
+. let plot char color 7 = gold
+y1label ^sty; x1label X2: ^stx2 (^ndx2)
+let minx2 = minimum dx2; let maxx2 = maximum dx2
+xlim ^minx2 ^maxx2
+major x1tic number ^ndx2; minor x1tic number 0
+plot y x2 x1
+move 16 87; just left; hw 2.4 1.2; text Plot Character = X1: ^stx1 (^ndx1)
+call annotate.dp
+.
+if show = 1; let string header2 = Q. Best/Worst Setting for X2 (^stx2); end if
+char bl all; lines solid all
+loop for j = 1 1 ndx2
+   let string stjunk = ^j
+   if stx2l exists; let stjunk = string word  stx2l ^j; end if
+   let plot character ^j = ^stjunk
+   let plot line ^j = blank
+end loop
+. let plot char color 1 = red
+. let plot char color 7 = gold
+y1label ^sty; x1label X1: ^stx1 (^ndx1)
+let minx1 = minimum dx1; let maxx1 = maximum dx1
+xlim ^minx1 ^maxx1
+major x1tic number ^ndx1; minor x1tic number 0
+plot y x1 x2
+move 16 87; just left; hw 2.4 1.2; text Plot Character = X2: ^stx2 (^ndx2)
+call annotate.dp
+.
+. -----Step 15: do block plots (first with focus on x1 and then with focus on x2)-----
+.
+let string header3 = Block Plot
+.
+if show = 1; let string header2 = Q. Best/Worst Setting for X1 (^stx1); end if
+char bl all; lines solid all
+loop for j = 1 1 ndx1
+   let string stjunk = ^j
+   if stx1l exists; let stjunk = string word  stx1l ^j; end if
+   let plot character ^j = ^stjunk
+   let plot line ^j = blank
+end loop
+. let plot char color 1 = red
+. let plot char color 7 = gold
+y1label ^sty; x1label X2: ^stx2 (^ndx2)
+let minx2 = minimum dx2; let maxx2 = maximum dx2
+xlim ^minx2 ^maxx2
+major x1tic number ^ndx2; minor x1tic number 0
+block plot y x2 x1
+move 16 87; just left; hw 2.4 1.2; text Plot Character = X1: ^stx1 (^ndx1)
+call annotate.dp
+.
+if show = 1; let string header2 = Q. Best/Worst Setting for X2 (^stx2); end if
+char bl all; lines solid all
+loop for j = 1 1 ndx2
+   let string stjunk = ^j
+   if stx2l exists; let stjunk = string word  stx2l ^j; end if
+   let plot character ^j = ^stjunk
+   let plot line ^j = blank
+end loop
+. let plot char color 1 = red
+. let plot char color 7 = gold
+y1label ^sty; x1label X1: ^stx1 (^ndx1)
+let minx1 = minimum dx1; let maxx1 = maximum dx1
+xlim ^minx1 ^maxx1
+major x1tic number ^ndx1; minor x1tic number 0
+block plot y x1 x2
+move 16 87; just left; hw 2.4 1.2; text Plot Character = X2: ^stx2 (^ndx2)
+call annotate.dp
+.
+. -----Step 99: Finish up-----
+.
+delete header2

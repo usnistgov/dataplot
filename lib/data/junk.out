@@ -1,0 +1,73 @@
+COMMANDS:
+  
+skip 25
+read weicen.dat y x
+set write decimals 4
+set weibull bias correction on
+.
+weibull censored mle y x
+
+
+
+
+OUTPUT:
+
+             Two-Parameter Weibull (Minimum) Parameter Estimation:
+                            Multiply Censored Case
+  
+
+
+ Summary Statistics:
+ Total Number of Observations:                 18
+ Number of Uncensored Observations:                   13
+ Number of Censored Observations:                      5
+ Sample Mean:                                  1088.0000
+ Sample Standard Deviation:                     638.2456
+ Sample Minimum:                                211.0000
+ Sample Maximum:                               2585.0000
+  
+ Maximum Likelihood:
+ Estimate of Shape (Gamma):                1.8983
+ Standard Error of Shape:                         0.4046
+ Estimate of Scale:                            1467.7609
+ Standard Error of Scale:                       215.5427
+ Shape/Scale Covariance:                          2.9663
+  
+ Maximum Likelihood (Bias Corrected):
+ Estimate of Shape (Gamma):                       1.6931
+ Standard Error of Shape:                         0.3609
+ Estimate of Scale:                               0.0000
+ Standard Error of Scale:                       215.5427
+ Shape/Scale Covariance:                          2.8013
+  
+             Confidence Interval for Scale Parameter
+  
+ ------------------------------------------
+                      Normal  Approximation
+   Confidence          Lower          Upper
+  Coefficient          Limit          Limit
+ ------------------------------------------
+        50.00      1322.3795      1613.1423
+        75.00      1219.8115      1715.7103
+        90.00      1113.2247      1822.2971
+        95.00      1045.3049      1890.2169
+        99.00       912.5597      2022.9621
+        99.90       758.5118      2177.0100
+ ------------------------------------------
+  
+  
+             Confidence Interval for Shape Parameter
+  
+ ------------------------------------------
+                      Normal  Approximation
+   Confidence          Lower          Upper
+  Coefficient          Limit          Limit
+ ------------------------------------------
+        50.00         1.4497         1.9365
+        75.00         1.2779         2.1082
+        90.00         1.0995         2.2866
+        95.00         0.9858         2.4003
+        99.00         0.7635         2.6226
+        99.90         0.5056         2.8805
+ ------------------------------------------
+  

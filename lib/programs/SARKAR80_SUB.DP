@@ -1,0 +1,201 @@
+. This is dataclassification macro   sarkar80_sub.dp   multiplot classif./pred. analysis   4/12/19
+. Purpose: classification/prediction plots with multiple plots per page
+.
+. Q. What protocol and what protocol setting rule best predict the 11 conditions?
+.
+. Ans. 1: 64 subsetted scatter plots of Y vs condition--one plot for each protocol
+.      Does protocol  1 discriminate/predict best?
+.      Does protocol  2 discriminate/predict best?
+.      ...
+.      Does protocol 64 discriminate/predict best?
+.
+. Ans. 2: 16 subsetted scatter plots of Y vs condition--one plot for each setting 
+.         of each of the 8 protocol factors
+.      Does protocol factor 1 at the low  setting discriminate/predict best?
+.      Does protocol factor 1 at the high setting discriminate/predict best?
+.      Does protocol factor 2 at the low  setting discriminate/predict best?
+.      Does protocol factor 2 at the high setting discriminate/predict best?
+.      ...
+.      Does protocol factor 8 at the low  setting discriminate/predict best?
+.      Does protocol factor 8 at the high setting discriminate/predict best?
+.
+. Date: 4/10/19
+.
+. Input (required):
+.   jresp (parameter) = id of the response variable used (in a multi-response system)
+.   k     (parameter) = number of protocol factors
+.
+.   y     (vector)    = response
+.   prot  (vector)    = bio-image analysis protocol id (^ndprot = 2**(8-2) levels)
+.   cond  (vector)    = the condition of the sample cells being imaged (^ndcond levels)
+.   image (vector)    = the image id of the cells (^ndimage pictures thus ^ndimage levels)
+.   Note that the vertical axis limits (as defined by ylim) must be done in the calling program.
+.
+. Input (optional):
+.
+. Output:
+.    many fewer than 81 (= 1 + 64 + 2*8) pages of plots
+.
+. Example of calling program: sarkar80.dp
+.
+. -----start point-----
+.
+let dprot = distinct prot
+let ndprot = number dprot
+.
+let dcond = distinct cond
+let ndcond = number dcond
+.
+let dimage = distinct image
+let ndimage = number dimage
+.
+. -----Step 10: Prepare to plot the data-----
+.
+let string stcorn1 = Y^jresp:
+let string stcorn2 = ^stysh^jresp
+let cornh = 4; let cornw = 2     ; . (default: cornh  = 6 and cornw  =  3)
+let cornxp = 3; let cornyp = 97  ; . (default: cornxp = 2 and cornyp = 96)
+ygrid on
+minor x1tic number 0
+.
+y1label log(^sty^jresp + 1)
+x1label Cell Condition (^ndcond)
+.
+. -----Step 11: For all data, scatter plot vs condition (11)-----
+.
+let string header2 = For all the Data, Are the 11 Conditions Different?  Prediction Rules?
+.
+delete qsub
+.
+let string corncol = ^darkgree
+char X all
+lines bl all
+let string header3 = Character Plot
+plot y cond prot
+.
+call write_condition_names_under_horizontal_axis.dp
+let n = number y
+call overlap_score.dp
+move 16 87; just left; hw 2.4 1.2; text n = ^n
+move 84 87; just right; hw 2.4 1.2; text Score = ^score/^npairs
+call write_factors_and_settings_upper_right.dp
+let string stcorn3 = All Prot
+call upperleft.dp
+call annotate.dp
+.
+. -----Step 12: For each protocol (64), scatter plot vs condition (11)-----
+.
+let dothis = 1
+if dothis = 1
+.
+let string header2 = What Protocol Setting (64) Best Discriminates/Predicts the 11 Conditions?  Prediction Rules?
+.
+. ylim 0 5
+frame corner coordinates 0 0 100 100
+grid off
+delete qsub
+.
+x3label
+y1label displacement 15
+x1label displacement 10
+let string corncol = blue
+loop for jprot = 1 1 ^ndprot
+   y1label; x1label
+   x1tics off; x1tic labesl off
+   y1tics off; y1tic labels off
+   let jmod = mod(jprot,8); if jmod = 0; let jmod = 8; end if
+   if jmod = 1; multiplot 2 4; multiplot scale factor 2; delete jprot1; let jprot1 = jprot; end if
+   if jmod = 5; y1label log(^sty^jresp + 1); x1label Condition (^ndcond); end if
+   if jmod >= 5; x1tics on; x1tic labels on; end if
+   if jmod = 1 or jmod = 5; y1tics on; y1tic labels on; end if
+   char 1 2 3 4 5 6 7 8 9 10 11; lines bl
+   let string qsub = subset prot ^jprot
+   plot y cond cond ^qsub
+   .
+   . call write_condition_names_under_horizontal_axis.dp
+   let n = number y ^qsub
+   call overlap_score.dp
+   move 03   95; just left;  hw 2.2 1.1; color blue; text Prot. ^jprot: (^stprot^jprot)
+   move 98.5 95; just right; hw 2.2 1.1; color red;  text ^score; color blue
+   print "----------jprot = ^jprot----------"
+   print scorev1 scorev2
+   print "above jprot = ^jprot   score = ^score"
+   print " "; print " "; print " "
+   . pause
+   . move 01 94; . text n = ^n
+   if jmod = 8
+      multiplot off
+      let jprot2 = jprot
+      call write_factors_and_settings_upper_right.dp
+      call write_conditions_bottom.dp
+      . call check_mark_the_factor_settings.dp
+      let string stcorn3 = Prot
+      let string stcorn4 = ^jprot1-^jprot2
+      call upperleft.dp
+      call annotate.dp
+   end if
+end loop
+multiplot off
+.
+. -----Step 13: For each of the 16 protocol factor settings (8 factors x 2 settings each),  scatter plot vs condition (11)-----
+.
+let dothis13 = 1
+if dothis13 = 1
+let string header2 = What Prot. Factor Setting (8*2 = 16) Best Discriminates/Predicts the 11 Conditions?  Prediction Rules?
+.
+delete qsub
+.
+let string corncol = red
+let count = 0
+loop for jx = 1 1 k
+   loop for jset = -1 2 1
+      let count = count + 1
+      y1label; x1label
+      x1tics off; x1tic labesl off
+      y1tics off; y1tic labels off
+      let jmod = mod(count,8); if jmod = 0; let jmod = 8; end if
+      if jmod = 1; multiplot 2 4; multiplot scale factor 2; delete jx1; let jx1 = jx; end if
+      if jmod = 5; y1label log(^sty^jresp + 1); x1label Condition (^ndcond); end if
+      if jmod >= 5; x1tics on; x1tic labels on; end if
+      if jmod = 1 or jmod = 5; y1tics on; y1tic labels on; end if
+      char 1 2 3 4 5 6 7 8 9 10 11; char color red all; if jset = 1; char color blue all; end if; lines bl
+      let string stout = - (minus); if jset = 1; let string stout = + (plus); end if
+      let string header3 = Scatter Plot Subsetted to a Specific Protocol Factor & Setting
+      let string qsub = subset x^jx ^jset
+      plot y cond cond ^qsub
+      .
+      . call write_condition_names_under_horizontal_axis.dp
+      let n = number y subset x^jx ^jset
+      call overlap_score.dp
+      color red; if jset = 1; color blue; end if
+      move 03   95; just left;  hw 2.2 1.1; text Factor ^jx Setting ^stout; end if
+      move 98.5 95; just right; hw 2.2 1.1; color red;  text ^score; color blue
+      print "----------jx = ^jx    jset = ^jset----------"
+      print scorev1 scorev2
+      print "above jx = ^jx    jset = ^jset   score = ^score"
+      print " "; print " "; print " "
+      . pause
+      . move 16 84; . text n = ^n
+      if jmod = 8
+         multiplot off
+         let jx2 = jx
+         call write_factors_and_settings_upper_right.dp
+         call write_conditions_bottom.dp
+         let string stcorn3 = Factors
+         let string stcorn4 = X^jx1-X^jx2
+         call upperleft.dp
+         call annotate.dp
+      end if
+   end loop
+end loop
+end if;. end of dothis13
+end if;. end of dothis
+.
+. -----Step 99: Finish up-----
+.
+frame corner coordinates 15 20 85 90
+x1tics on; x1tic labels on
+y1tics on; y1tic labels on
+y1label displacement
+x1label displacement
+x2label

@@ -1,8 +1,8 @@
- 66200.   (VERSION 2019.03)   total number of lines in file (including this line)
+ 66800.   (VERSION 2019.09)   total number of lines in file (including this line)
  3.                          number of     sections below
   100.    A                  first line number of A section
  8100.    B                  first line number of B section
-32400.    C                  first line number of C section
+32600.    C                  first line number of C section
  
 ----------------------------------------------------------
  
@@ -15765,7 +15765,7 @@ Applications:
     Exploratory Data Analysis
  
 Implementation Date:
-    88/9
+    88/09
  
 Program:
     LET Y1 = NORMAL RANDOM NUMBERS FOR I = 1 1 100
@@ -15913,6 +15913,7 @@ BINARY ASYMMETRIC SOKAL MATCH SIMILARITY
 BINARY ASYMMETRIC DICE MATCH DISSIMILARITY
 BINARY ASYMMETRIC DICE MATCH SIMILARITY
 YULES Q
+YULES Y
 YOUDEN INDEX
  
 Name:
@@ -15929,6 +15930,7 @@ Name:
     BINARY ASYMMETRIC DICE MATCH DISSIMILARITY (LET)
     BINARY ASYMMETRIC DICE MATCH SIMILARITY (LET)
     YULES Q
+    YULES Y
     YOUDEN INDEX
  
 Type:
@@ -15989,8 +15991,10 @@ Description:
            Dice Coefficient:       (B+C)/(2*A+B+C)
            Sokal Coefficient:      2*(B+C)/(A+2(B+C))
 
-    Two related statistics are
+    Three related statistics are
            Yule's Q:               (A*D - B*C)/(A*D + B*C)
+           Yule's Y:               (SQRT(A*D) - SQRT(B*C))/
+                                   (SQRT(A*D) + SQRT(B*C))
            Youden index:           (A*D - B*C)/((A+B)*(C+D))
 
     These statistics are often used to create dissimilarity or
@@ -16016,6 +16020,16 @@ Description:
     in the following way
 
        Q = (Odds ratio - 1)/(Odds ratio + 1)
+
+    Yule's Y can be defined in terms of Yule's Q as
+
+       Y = (1 - SQRT(1 - Q**2))/Q
+
+    or in terms of the odds ratio
+
+       Y = (SQRT(Odds ratio) - 1)/(SQRT(Odds ratio) + 1)
+
+    Yule's Y is also known as the coefficient of colligation.
 
 Syntax 1:
     LET <par> = BINARY MATCH DISSIMILARITY <y1> <y2>
@@ -16139,6 +16153,13 @@ Syntax 14:
           <par> is a parameter where the computed Yule's Q is stored;
     and where the <SUBSET/EXCEPT/FOR qualification> is optional.
 
+Syntax 15:
+    LET <par> = YULES Y <y1> <y2>  <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first  response variable;
+          <y2> is the second response variable;
+          <par> is a parameter where the computed Yule's Y is stored;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
 Examples:
     LET A = BINARY MATCHING DISSIMILARITY Y1 Y2
     LET A = BINARY MATCHING DISSIMILARITY Y1 Y2 ...
@@ -16228,6 +16249,7 @@ Applications:
 Implementation Date:
     2017/08
     2019/01: Support for Youden index
+    2019/08: Support for Yule's Y
  
 Program:
     .  Example from page 24 of Kaufman and Rousseeuw text.
@@ -24727,11 +24749,77 @@ Note:
     when generating box plots for large data sets in that it may avoid
     exceeding Dataplot's limit on the maximum number of rows.
 
+Note:
+    The FENCES ON command is used to help identify outliers.  One criticism
+    of the box plot is that the method used identifies too many potential
+    outliers for skewed data.
+
+    Walker proposed the following alternative for the fences
+
+        f(L) = q1 - 1.5*IQR*(SIQR(L)/SIQR(U))
+        f(U) = q3 + 1.5*IQR*(SIQR(U)/SIQR(L))
+
+    where
+
+        q1      = the lower quartile
+        q3      = the upper quartile
+        IQR     = the interquartile range
+                = q3 - q1
+        SIQR(L) = the lower semi-interquartile range
+                = q2 - q1
+        SIQR(U) = the upper semi-interquartile range
+                = q3 - q2
+        q2 = the median
+
+    This formulation is based on the Galton (or Bowley) formula for
+    skewness
+
+        B(c) = (q2 + q1 - 2*q2)/(q3 - q1)
+             = (SIQR(U) - SIQR(L))/IQR
+             = (SIQR(U) - SIQR(L))/(SIQR(U) + SIQR(L))
+
+    For a more complete explanation of this method, see the Walker
+    paper.
+
+    Kimber had earlier proposed
+
+        f(L) = q1 - 1.5*(2*(q2 - q1))
+        f(U) = q3 + 1.5*(2*(q3 - q2))
+
+    For skewed data, the Kimber method tends to be intermediate between
+    the default method and the Walker method in the number of potential
+    outliers it identifies.  For symmetric data, the Kimber and Walker
+    methods are essentially equivalent to the default method.  However,
+    for skewed data, the Kimber and Walker methods will identify fewer
+    potential outliers than the default method.
+
+    The above formulas are for the "inner fences" boundary.  For the
+    "outer fences" boundary, replace 1.5 with 3.0.
+
+    To use the Walker method, enter the command
+
+        SET BOXPLOT FENCE SKEWNESS WALKER
+
+    To use the Kimber method, enter the command
+
+        SET BOXPLOT FENCE SKEWNESS KIMBER
+
+    To reset the default method, enter
+
+        SET BOXPLOT FENCE SKEWNESS OFF
+
+    Note that using the Walker or Kimber methods is recommended when
+    you are specifically interested in identifying outliers.  For
+    exploratory purposes, it may be preferrable to use the default
+    method (i.e., showing the skewness may be desirable).
+
 Default:
     None
  
 Synonyms:
     The word REPLICATED is optional in the REPLICATED BOX PLOT syntax.
+    SET BOXPLOT FENCE SKEWNESS OFF and SET BOXPLOT FENCE SKEWNESS BOWLEY
+    are synonyms for SET BOXPLOT FENCE SKEWNESS WALKER.
  
 Related Commands:
     CHARACTERS    = Sets the types for plot characters.
@@ -24742,6 +24830,17 @@ Related Commands:
     CONTROL CHART = Generates a control chart.
     PLOT          = Generates a data or function plot.
  
+References:
+    Tukey (1977), "Exploratory Data Analysis", Addison-Wesley.
+
+    Walker, Dovedo, Chakraborti and Hilton (2019), "An Improved Boxplot
+    for Univariate Data". American Statistician, Vol. 72, No. 4,
+    pp. 348-353.
+
+    Kimber (1990), "Exploratory Data Analysis for Possibly Censored
+    Data from Skewed Distribution", Applied Statistics, Vol. 39,
+    pp. 21-30.
+
 Applications:
     Exploratory Data Analysis, Comparing Distributions
  
@@ -24755,6 +24854,7 @@ Implementation Date:
     2016/06: Support for the SET BOX PLOT EXTREME PERCENTILES
     2016/06: For MULTIPLE option, four or fewer response variables
              not stacked internally
+    2019/08: Support for the SET BOXPLOT FENCE SKEWNESS command
  
 Program 1:
     LET X = SEQUENCE 0 1 999
@@ -24872,6 +24972,38 @@ Program 2:
     .
     multiple box plot y1 y2 y3
  
+Program 3:
+    . Step 1:   Create data (skewed)
+    .
+    let nu = 1
+    let y = chisquare random numbers for i = 1 1 100
+    .
+    . Step 2:   Define plot control
+    .
+    character box plot
+    line box plot
+    fences on
+    title case asis
+    x1tic marks off
+    x1tic mark labels off
+    tic mark offset units screen
+    y1tic mark offset 3 3
+    .
+    . Step 3:   Generate the box plots
+    .
+    multiplot 1 3
+    multiplot scale factor 1 3
+    title Default Box Plot
+    box plot y
+    set box plot fence skewness galton
+    title Fences Based oncr()Semi-Interquartile Ranges
+    box plot y
+    set box plot fence skewness kimber
+    title Fences Based oncr()Kimber Method
+    box plot y
+    .
+    end of multiplot
+
 -----BRACDF (LET)--------------------------------
  
 BRACDF
@@ -25174,6 +25306,134 @@ Program:
     X1LABEL BETA = ^B
     PLOT BRAPPF(P,B) FOR P = 0.01 0.01 0.99
     END OF MULTIPLOT
+ 
+-----BREAK LOCATIONS (LET)-------------------------------------
+ 
+BREAK LOCATIONS
+FRAGMENT LOCATIONS
+FRAGMENT LENGTHS
+ 
+Name:
+    BREAK LOCATIONS (LET)
+    FRAGMENT LOCATIONS (LET)
+    FRAGMENT LENGTHS (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Given a variable that contains the X coordinates of the
+    four corners of breaks, compute either the break locations,
+    the fragment locations, or the fragment lengths.
+ 
+Description:
+    Given a fiber that has been subjected to stress, it is desired
+    to identify the break locations.  This command assumes that the
+    input variable is a sequence of points where each point contains
+    four X coordinates.  These coordinates identify the boundary of
+    the breaks.  This command can return one of the following:
+
+       1. break location - the break location is defined to be the
+          break centroid, i.e., the average of the four points.
+
+       2. fragment location - given two successive breaks, define the
+          lower boundary of the fragment by the average of the right
+          corner points of the first break and the upper boundary by
+          the average of the left corner points of the second break.
+          The fragment location is then the average of the lower
+          and upper boundary values.
+
+       3. fragment length - the fragment length is distance between
+          the lower boundary and the upper boundary.
+
+    The input variable will be interpreted in sequences of four
+    values.  For break locations, the breaks do not have to be
+    in a sorted order.  However, for the fragment locations and
+    fragment lengths, the points are assumed to be in order (they can
+    be in either left to right order or right to left order).  Within
+    the sequence of four points for a single break, no particular
+    order is required.
+
+Syntax 1:
+    LET <y> = BREAK LOCATIONS <x>   <SUBSET/EXCEPT/FOR qualification>
+    where <x> is the response variable;
+          <y> is a variable where the break locations are saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Syntax 2:
+    LET <y> = FRAGMENT LOCATIONS <x>   <SUBSET/EXCEPT/FOR qualification>
+    where <x> is the response variable;
+          <y> is a variable where the fragment locations are saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Syntax 3:
+    LET <y> = FRAGMENT LEGNTHS <x>   <SUBSET/EXCEPT/FOR qualification>
+    where <x> is the response variable;
+          <y> is a variable where the fragment legnths are saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET BREAKLOC = BREAK LOCATIONS X
+    LET FRAGLOC = FRAGMENT LOCATIONS X
+    LET FRAGLEN = FRAGMENT LEGNTHS X
+ 
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    PROBABILITY PLOT         = Generate a probability plot.
+    PPCC PLOT                = Generate a probability plot correlation
+                               coefficient plot.
+    BEST DISTRIBUTIONAL FIT  = Generate a ranked list of best
+                               distributional fit.
+
+Applications:
+    Reliability
+ 
+Implementation Date:
+    2019/08
+ 
+Program:
+    . Step 1:   Read the data
+    .
+    skip 25
+    read BREAKS.DAT marker x y
+    .
+    . Step 2:   Set some basic plot control
+    .
+    title offset 2
+    title case asis
+    case asis
+    label cases asis
+    character circle
+    character hw 1.0 0.75
+    character fill on
+    line blank
+    ylimits 0 30000
+    major ytic mark number 4
+    minor ytic mark number 1
+    xlimits 0 1
+    major xtic mark number 6
+    minor xtic mark number 1
+    .
+    . Step 3:   Generate uniform probablity plot of break locations
+    .
+    let break = break locations x
+    let n = size break
+    y1label Sorted Data
+    x1label Uniform Order Statistic Medians
+    title Uniform Probability Plot of Breaks for File BREAK.DAT
+    uniform probability plot break
+    .
+    justification left
+    move 17 82
+    text N: ^n
+    let ppcc = round(ppcc,3)
+    move 17 79
+    text PPCC: ^ppcc
  
 -----BREAK LOOP------------------------------------------------------
 
@@ -32337,66 +32597,6 @@ Program:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -------------------------  *C*  ZZZZZ--------------------
 
 -----C CHART-----------------------------------------------------
@@ -35465,10 +35665,10 @@ Related Commands:
     COPY               = Copies the screen (immediately).
  
 Applications:
-    XX
+    Presentation Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
  
 Program:
     VERTICAL SPACING 6
@@ -35494,6 +35694,131 @@ Program:
     HW 2 1
     MOVE 5 10
     TEXT SOURCE: Q.C. TRENDS WINTER 1985, PAGES 22-23.
+ 
+-----CAT---------------------------------------------------
+
+CAT
+
+Name:
+    CAT
+ 
+Type:
+    Support Command
+ 
+Purpose:
+    This command lists the contents of a file.
+ 
+Description:
+    This command uses an operating system command to list the
+    contents a file.
+
+    For Unix/Linux/MacOS systems, the CAT command issues a
+
+        cat ....
+
+    command to the operating system.
+
+    For Windows systems, the CAT command issues a
+
+        TYPE ....
+
+    command to the operating system.
+
+    The string that follows the CAT on the command line
+    is passed to the operating system as is.  Dataplot does no
+    error checking of this string.
+
+    This is a system dependent command.  It is currently supported
+    for Unix/Linux/MacOS and Windows platforms.
+
+Syntax:
+    CAT <file-list>
+    where <file-list> is a string containing the name of a file.
+
+Examples:
+    CAT FIT.DP
+    CAT FIT.OUT
+ 
+Note:
+    The CAT capability can be implemented by direct use of the
+    SYSTEM command.  For example, under Linux do something like
+
+         system cat  fit.dp
+
+    The motivation for adding this as a separate command is to
+    allow the capability to be implemented in an operating
+    system independent way.  This can be useful when writing
+    general purpose macros that may be used on different
+    operating systems.
+
+Note:
+    The Dataplot LIST command can also list the contents of a
+    file.  However, there are some distinctions in how they
+    work.  The LIST command explicitly opens the file and
+    reads each line of the file and then prints it (a maximum
+    of 240 characters per line will be read).  The CAT command
+    issues an operating system command to display the file.
+
+    One advantage of the LIST command is that the Dataplot
+    directories will be searched if the file is not found in
+    the current directory.  The CAT command will simply pass the
+    file name to the operating system as entered.  The CAT command
+    is not limited to 240 characters per line.  Also, the CAT
+    command supports the use of wild cards in specifying the
+    file name.
+
+Note:
+    By default, the output will be displayed one screen at a
+    time.  If you want to suppress this pause, enter the command
+
+         SET CAT MORE OFF
+
+    To reset the default
+
+         SET CAT MORE ON
+
+Note:
+    File names are case sensitive on Unix/Linux/MacOS file
+    systems.  For this reason, case is preserved in passing the
+    file name to the operating system.
+
+Note:
+    On Windows platforms, this command will be issued in "persistent"
+    mode.  That is, the command prompt window that is initiated to run
+    the command will remain up until you explicitly close it.  Enter
+    HELP SYSTEM for more information on the persistent mode.
+
+Default:
+    None
+ 
+Synonyms:
+    TYPE is a synonym for CAT
+
+Related Commands:
+    SYSTEM      = Enter an operating system command within a
+                  Dataplot session.
+    LIST        = List the contents of a file.
+    CD          = Change the current working directory.
+    PWD         = Retrieve the current working directory.
+    MKDIR       = Create a new directory.
+    RM          = Delete one or more files.
+    DIR         = List the contents of a directory.
+ 
+Applications:
+    Interactive Usage
+ 
+Implementation Date:
+    2019/09
+ 
+Program:
+    SKIP 25
+    READ BERGER1.DAT Y X
+    .
+    CAPTURE FIT.OUT
+    FIT Y X
+    END OF CAPTURE
+    .
+    CAT FIT.OUT
  
 -----CATCHER MATRIX (LET)----------------------------------------
  
@@ -40782,7 +41107,7 @@ Program:
     PLOT POT X ID2 AND
     PLOT LEAD X ID2
  
------CHARACTER THICKNES------------------------------------------------
+-----CHARACTER THICKNESS-----------------------------------------------
  
 CHARACTER THICKNESS
  
@@ -41072,6 +41397,112 @@ Program:
     .
     character units ds all
     plot zfacts zx zcode
+ 
+-----CHARACTER VARIABLE (SET)-------------------------------------------
+ 
+CHARACTER VARIABLE (SET)
+ 
+Name:
+    CHARACTER VARIABLE (SET)
+ 
+Type:
+    Subcommand under SET
+ 
+Purpose:
+    Specify whether the READ command and the LET ... = STRING VARIABLE
+    command will overwrite the contents of the "dpzchf.dat" file or
+    append new character variables to the current contents of
+    "dpzchf.dat".
+ 
+Description:
+    Dataplot primarily works with numeric data.  However, there is
+    limited support for character variables.  Note that since character
+    variables have limited use in Dataplot, they are not saved in memory
+    as are numeric variables.  Instead, they are written to the file
+    "dpzchf.dat".
+
+    Dataplot has two commands for creating character variables.  If
+    the SET CONVERT CHARACTER command is set to ON or CATEGORICAL, then
+    the READ command will parse character variables and save them to the
+    file "dpzchf.dat".  The LET ... = STRING VARIABLE command can create
+    a character variable from a list of pre-defined strings (or literal
+    text enclosed in quotes).  This command will also save the character
+    variable to "dpzchf.dat".
+
+    By default, either of these commands will overwrite the current
+    contents of "dpzchf.dat".  However, you can request that the new
+    character variables be appended to the current contents of
+    "dpzchf.dat" instead.
+
+    Typically, the append option is most likely to be used with the
+    LET ... = STRING VARIABLE command.
+
+Syntax:
+    SET CHARACTER VARIABLE   <OVERWRITE/APPEND>
+    where OVERWRITE specifies that the current contents of "dpzchf.dat"
+    will be overwritten and APPEND specifies that the new character
+    variables will be appended to the current contetns of "dpzchf.dat".
+ 
+Examples:
+    SET CHARACTER VARIABLE OVERWRITE
+    SET CHARACTER VARIABLE APPEND
+ 
+Note:
+    The "dpzchf.dat" file is simply an ASCII file.  Its contents look
+    something like (this is the file created in the Program example
+    below)
+
+              3
+       IX               3
+       IY               3
+       IW               4
+       Row_1                    xxxxx                    aaaa
+       Row_2                    yyyyy                    bbbb
+       Row_3                    zzzzz                    cccc
+                                                         dddd
+
+    The first row specifies the number of character variables in the
+    file.  The next several rows identify the variable name and the
+    number of rows for that character variable.  The remaining rows
+    contain the contents for the character variables.  Character
+    variables currently have a maximum length of 24 characters.
+
+Default:
+    OVERWRITE
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    READ             = Carries out a column-wise input of data.
+    STRING VARIABLE  = Create a character variable from a list of
+                       previously defined strings.
+ 
+Applications:
+    Input/Output
+ 
+Implementation Date:
+    2020/01
+ 
+Program:
+    rm dpzchf.dat
+    set convert character on
+    read ix iy
+    Row_1   xxxxx
+    Row_2   yyyyy
+    Row_3   zzzzz
+    end of data
+    list dpzchf.dat
+    pause
+    .
+    set character variable append
+    read iw
+    aaaa
+    bbbb
+    cccc
+    dddd
+    end of data
+    list dpzchf.dat
  
 -----CHARACTER WIDTH---------------------------------------------------
  
@@ -56898,6 +57329,20 @@ Note:
 
     This is demonstrated in the example programs below.
 
+Note:
+    The default is to put the method results on the left side of
+    the plot and the lab data results on the right side of the
+    plot.  To reverse this (i.e., lab data results on the left
+    and the method results on the right side), enter the command
+
+        SET CONSENSUS MEAN PLOT DATA LEFT
+
+    To reset the default, enter the commnd
+
+        SET CONSENSUS MEAN PLOT DATA RIGHT
+
+    This option is demonstrated in the Program 4 example below.
+
 Default:
     None
  
@@ -56945,6 +57390,7 @@ Implementation Date:
     2017/03: Support for SET CONSENSUS MEAN PLOT OMIT METHOD
     2017/07: Changed default for Schiller-Eberhardt, Fairweather, and
              Bayesian consensus procedure to OFF
+    2019/08: Added the command SET CONSENSUS MEAN PLOT DATA
  
 Program 1:
     . Step 1: Read the data
@@ -57220,6 +57666,117 @@ Program 3:
     text Consensus Method: Two Standard Errors
     moveds 9 5
     text Laboratorycr()meansp()+/-2*sd/sqrt(n)
+
+Program 4:
+    . Step 1:   Read the data
+    .
+    SKIP 25
+    READ STUTZ86.DAT ALITE JUNK2 JUNK3 JUNK4 JUNK5 LABID
+    .
+    . Step 2:   Define consensus means options
+    .
+    set write decimals 5
+    set bob on
+    set dersimonian laird bootstrap on
+    set dersimonian laird minmax off
+    set modified mandel paule off
+    set schiller eberhardt off
+    set mean of means off
+    set grand mean off
+    set graybill deal off
+    set generalized confidence interval off
+    set fairweather off
+    set bayesian consensus procedure off
+    set random number generator fibonacci congruential
+    seed 55631
+    bootstrap samples 100000
+    .
+    .  iflagm  = 1   => 95% Confidence Interval
+    .          = 2   => Two Standard Errors Confidence Interval
+    .          = 3   => One Standard Errors Confidence Interval
+    .
+    let iflagm = 2
+    if iflagm = 1
+       set consensus mean plot error confidence intervals
+    else if iflagm = 2
+       set consensus mean plot error two standard errors
+    else if iflagm = 3
+       set consensus mean plot error one standard errors
+    end of if
+    .
+    .
+    . Step 3:   Define strings containing Method id's
+    .
+    let nlab = unique labid
+    loop for k = 1 1 nlab
+         let string sx^k = ^k
+    end of loop
+    .
+    let icnt = nlab + 1
+    let string sx^icnt = MP
+    let icnt = icnt + 1
+    let string sx^icnt = VR
+    let icnt = icnt + 1
+    let string sx^icnt = DSLcr()Original
+    let icnt = icnt + 1
+    let string sx^icnt = DSLcr()HHD
+    let icnt = icnt + 1
+    let string sx^icnt = DSLcr()Bootstrap
+    let icnt = icnt + 1
+    let string sx^icnt = BOB
+    let nmeth = 6
+    .
+    . Step 4:   Set plot control options
+    .
+    line solid all
+    character blank all
+    character fill on
+    character hw 1 0.75
+    character circle
+    line      blank
+    .
+    case asis
+    title case asis
+    label case asis
+    tic mark label case asis
+    title offset 2
+    title Consensus Means Plot - With Data, Unsorted
+    y1label Percentage of Alite
+    .
+    let ntot = nmeth + nlab
+    xlimits 1 ntot
+    major xtic mark number ntot
+    minor xtic mark number 0
+    tic mark offset units data
+    xtic mark offset 0.5   0.5
+    x1tic mark label format group label
+    let igx = group label sx1 to sx^ntot
+    x1tic mark label content igx
+    .
+    . Step 5:   Generate the consensus mean plot
+    .
+    set consensus mean plot data left
+    . printing off
+    capture screen on
+    capture cmplot.out
+    consensus mean plot alite labid
+    end of capture
+    . printing on
+    .
+    line dotted
+    drawdsds  5.5 20  5.5 90
+    .
+    justification center
+    moveds 8.5 8
+    if iflagm = 1
+       text Consensus Method:cr()95% Confidence Limits
+    else if iflagm = 2
+       text Consensus Method:cr()Two Standard Errors
+    else if iflagm = 3
+       text Consensus Method:cr()One Standard Error
+    end of if
+    moveds 2.5 8
+    text Method/Laboratorycr()meansp()+/-2*sd/sqrt(n)
 
 -----CONCLUSIONS-------------------------------------------------------
  
@@ -66147,6 +66704,49 @@ Program:
     CYCLE PLOT
  
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

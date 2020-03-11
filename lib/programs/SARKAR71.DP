@@ -1,0 +1,125 @@
+. This is dataplot program     sarkar71.dp     pass 1   4/2/19
+. Purpose: Analyze the long file (7700 records = 11 conditions x 70 protocols x 10 images per condtion)
+.          11 conditions x 70 protocols x 10 "coded images" (actually 50))
+. Contacts: Sumona Sarkar, Laura Pierce, John Elliott
+. Date: 4/2/19
+.
+. -----start point-----
+.
+dimension 100 variables
+feedback off
+printing off
+.
+let string header = Optimization of Image Analysis Settings for Automated Cell Counting via Trypan
+let string headhw = 2.6 1.4; let string headhw2 = 2.6 1.3; let string headhw3 = 2.6 1.3
+let string trailer = sarkar71.dp
+let string trailer2 = Datafile: sarkar71_allresponses_040219.dat
+let string currdate = 4/2/19
+let pagecoun = 0
+.
+. -----Step 1: Define the desired response variable-----
+.
+. let jresp = 1;. use this for total cell counts
+. let jresp = 2;. use this for viable cell counts
+. let jresp = 3;. use this for dead cell counts
+. let jresp = 4;. use this for % viability
+. let jresp = 5;. use this for |error| total cell counts
+. let jresp = 6;. use this for |error| viable cell counts
+. let jresp = 7;. use this for |error| dead cell counts
+let jresp = 8;. use this for |error| % viability
+
+. -----Step 2: Define strings-----
+.
+let numresp = 8
+.
+let string sty1 = Total Cell Counts
+let string sty2 = Viable Cell Counts
+let string sty3 = Dead Cell Counts
+let string sty4 = % Viability
+let string sty5 = |Error| Total Cell Counts
+let string sty6 = |Error| Viable Cell Counts
+let string sty7 = |Error| Dead Cell Counts
+let string sty8 = |Error| % Viability
+.
+let string stysh1 = TCC
+let string stysh2 = VCC
+let string stysh3 = DCC
+let string stysh4 = %Viab
+let string stysh5 = |Err|TCC
+let string stysh6 = |Err|VCC
+let string stysh7 = |Err|DCC
+let string stysh8 = |Err|%Viab
+.
+let string stx1 = Min Diameter
+let string stx2 = Max Diameter
+let string stx3 = Cell Brightness (%)
+let string stx4 = Cell Sharpness
+let string stx5 = VCS Brightness (%)
+let string stx6 = VCS Area (%)
+let string stx7 = Min Circularity
+let string stx8 = Decluster Degree
+.
+let string stx1l = 5 8
+let string stx2l = 30 60
+let string stx3l = 75 90
+let string stx4l = 60 100
+let string stx5l = 65 85
+let string stx6l = 5 20
+let string stx7l = 0.1 0.5
+let string stx8l = Low Med
+.
+let string stcond1 = Bead Spiked	
+let string stcond2 = FPTB Spike-in	
+let string stcond3 = Heat Spike-in	
+let string stcond4 = LF Spike-in 50	
+let string stcond5 = LFP	
+let string stcond6 = Healthy	
+let string stcond7 = OG	
+let string stcond8 = Heat Comp (2hr)	
+let string stcond9 = Heat Comp (4hr)	
+let string stcond10 = H2O2	
+let string stcond11 = DMSO THAW
+.
+. -----Step 3: Read in the data-----
+.
+let k = 8
+skip 60
+read   sarkar71_allresponses_040219.dat   y1 to y8   cond image prot   x1 to x^k
+let x9 = cond
+let x10 = image
+let x11 = prot
+stat v
+let norig = number y1
+print "n (original) = ^norig"
+. pause
+.
+. -----Step 4: Retain only the 64 core points-----
+.
+let target = prot
+let string q = subset target 1 to 64
+retain y1 y2 y3 y4 y5 y6 y7 y8 ^q
+retain cond image prot ^q
+retain x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 ^q
+delete target
+stat v
+let nnew = number y1
+print "n (new) = ^nnew"
+delete q
+. pause
+.
+. -----Step 5: Convert the 8 factor settings into (-1,+1)-----
+.
+loop for j = 1 1 k
+   delete junk; let junk = x^j; let a = minimum junk; let b = maximum junk
+   let a = minimum junk; let b = maximum junk
+   let x^j = -1 subset junk a; let x^j = +1 subset junk b
+   . print x^j
+   . pause
+end loop
+.
+. -----Step 10: Plot the data-----
+.
+let y = y^jresp
+let string sty = ^sty^jresp
+call sarkar71_sub.dp
+.

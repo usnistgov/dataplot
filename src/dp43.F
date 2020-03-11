@@ -3041,14 +3041,15 @@ C           Entry to input and float integer seeds from previous run
       ENTRY RLUXIN(ISDEXT)
          TWOM24 = 1.
          DO 195 I= 1, 24
-         NEXT(I) = I-1
-  195    TWOM24 = TWOM24 * 0.5
+           NEXT(I) = I-1
+           TWOM24 = TWOM24 * 0.5
+  195    CONTINUE
          NEXT(1) = 24
          TWOM12 = TWOM24 * 4096.
 CCCCC WRITE(6,'(A)') ' FULL INITIALIZATION OF RANLUX WITH 25 INTEGERS:'
 CCCCC WRITE(6,'(5X,5I12)') ISDEXT
       DO 200 I= 1, 24
-      SEEDS(I) = REAL(ISDEXT(I))*TWOM24
+        SEEDS(I) = REAL(ISDEXT(I))*TWOM24
   200 CONTINUE
       CARRY = 0.
       IF (ISDEXT(25) .LT. 0)  CARRY = TWOM24
@@ -5463,9 +5464,10 @@ C
       FINVAL = 0.0D0
       VARSQR = 0.0D0
       NPTS = MAXPTS/2
+      IRESET=0
       DO 100 M = 1,NPTS
          DO 200 K = 1,NDIM
-            X(K) = UNI()
+            X(K) = UNI(IRESET)
   200    CONTINUE
          FUN = FUNCTN(NDIM, X)
          DO 300 K = 1,NDIM
@@ -8268,16 +8270,18 @@ C-----------------------------------------------------------------------
       ALFA=-1.E-15
       BETA=0.
       DO 1 N=1,11,2 
-      BETA=-(BETA+2.*ALFA)
-      ITEMP = 13 - N
-    1 ALFA = - X2 * BETA - ALFA + B(ITEMP)
+        BETA=-(BETA+2.*ALFA)
+        ITEMP = 13 - N
+        ALFA = - X2 * BETA - ALFA + B(ITEMP)
+    1 CONTINUE
       EVEN=(ALFA+.5*BETA)*X2-ALFA+.92187 02936 5045
       ALFA=-.34E-13 
       BETA=0.
       DO 2 N=2,12,2 
-      BETA=-(BETA+2.*ALFA)
-      ITEMP = 13 - N
-    2 ALFA = - X2 * BETA - ALFA + B(ITEMP)
+        BETA=-(BETA+2.*ALFA)
+        ITEMP = 13 - N
+        ALFA = - X2 * BETA - ALFA + B(ITEMP)
+    2 CONTINUE
       ODD=2.*(ALFA+BETA)
       RG=ODD*X+EVEN 
       RETURN
@@ -11672,19 +11676,20 @@ C
      &  0.2379500774082828D+01,  0.2440221797979943D+01,
      &  0.2507511701865317D+01,  0.2583465835225429D+01,
      &  0.2671391590320836D+01,4*0.2776994269662875D+01 /
-      Y = UNI()
-      J = MOD( INT( TN*UNI() ), N )
+      IRESET=0
+      Y = UNI(IRESET)
+      J = MOD( INT( TN*UNI(IRESET) ), N )
       XT = X(J+1)
       RNOR = ( Y + Y - 1 )*XT
       IF ( ABS(RNOR) .GT. X(J) ) THEN
          XX = B*( XT - ABS(RNOR) )/( XT - X(J) )
-         Y = UNI()
+         Y = UNI(IRESET)
          IF ( Y .GT. C - AA*EXP( -XX**2/2 ) ) THEN
             RNOR = SIGN( XX, RNOR )
          ELSE
             IF ( EXP(-XT**2/2)+Y/(TWOPIS*XT).GT.EXP(-RNOR**2/2) ) THEN
- 10            XX = XDN*LOG( UNI() )
-               IF ( -2*LOG( UNI() ) .LE. XX**2 ) GO TO 10
+ 10            XX = XDN*LOG( UNI(IRESET) )
+               IF ( -2*LOG( UNI(IRESET) ) .LE. XX**2 ) GO TO 10
                RNOR = SIGN( X(N) - XX, RNOR )
             END IF
          END IF
@@ -14475,47 +14480,68 @@ c
       itop = 2 ** (ipow - 1)
       i = 20 - ipow
       do 5 k = 1, i
-    5   l(k) = ii
+        l(k) = ii
+    5 continue
       l0 = ii
       i = i + 1
       do 6 k = i, 19
         ii = ii * 2
         l(k) = ii
-    6   continue
+    6 continue
 c
       ii = 0
-      do 9 j1 = 1, l1, l0
-        do 9 j2 = j1, l2, l1
-          do 9 j3 = j2, l3, l2
-            do 9 j4 = j3, l4, l3
-            do 9 j5 = j4, l5, l4
-              do 9 j6 = j5, l6, l5
-                do 9 j7 = j6, l7, l6
-                  do 9 j8 = j7, l8, l7
-                  do 9 j9 = j8, l9, l8
-                    do 9 j10 = j9, l10, l9
-                      do 9 j11 = j10, l11, l10
-                        do 9 j12 = j11, l12, l11
-                        do 9 j13 = j12, l13, l12
-                          do 9 j14 = j13, l14, l13
-                            do 9 j15 = j14, l15, l14
-                              do 9 j16 = j15, l16, l15
-                              do 9 j17 = j16, l17, l16
-                                do 9 j18 = j17, l18, l17
-                                  do 9 j19 = j18, l19, l18
+      do 30 j1 = 1, l1, l0
+        do 29 j2 = j1, l2, l1
+          do 28 j3 = j2, l3, l2
+            do 27 j4 = j3, l4, l3
+            do 26 j5 = j4, l5, l4
+              do 25 j6 = j5, l6, l5
+                do 24 j7 = j6, l7, l6
+                  do 23 j8 = j7, l8, l7
+                  do 22 j9 = j8, l9, l8
+                    do 21 j10 = j9, l10, l9
+                      do 20 j11 = j10, l11, l10
+                        do 19 j12 = j11, l12, l11
+                        do 18 j13 = j12, l13, l12
+                          do 17 j14 = j13, l14, l13
+                            do 16 j15 = j14, l15, l14
+                              do 15 j16 = j15, l16, l15
+                              do 14 j17 = j16, l17, l16
+                                do 13 j18 = j17, l18, l17
+                                  do 12 j19 = j18, l19, l18
                                     j20 = j19
-                                    do 9 i = 1, 2
-                                    ii = ii + 1
-                                    if (ii .lt. j20) then
+                                    do 11 i = 1, 2
+                                      ii = ii + 1
+                                      if (ii .lt. j20) then
 c
-c       J20 is the bit-reverse of II pairwise interchange.
+c                                       J20 is the bit-reverse of
+c                                       II pairwise interchange.
 c
-                                      tempr = xreal(ii)
-                                      xreal(ii) = xreal(j20)
-                                      xreal(j20) = tempr
-                                    end if
-                                    j20 = j20 + itop
-    9   continue
+                                        tempr = xreal(ii)
+                                        xreal(ii) = xreal(j20)
+                                        xreal(j20) = tempr
+                                      end if
+                                      j20 = j20 + itop
+   11                               continue
+   12                             continue
+   13                           continue
+   14                         continue
+   15                         continue
+   16                       continue
+   17                     continue
+   18                   continue
+   19                   continue
+   20                 continue
+   21               continue
+   22             continue
+   23             continue
+   24           continue
+   25         continue
+   26       continue
+   27       continue
+   28     continue
+   29   continue
+   30 continue
 c
       return
       end
@@ -27494,14 +27520,16 @@ CCC20    GO TO NEXT,(30, 50, 70, 110)
       ELSEIF(NEXT.EQ.110)THEN
         GOTO110
       ENDIF
-   30 IF( ABS(SX(I)) .GT. CUTLO) GO TO 85
+   30 CONTINUE
+      IF( ABS(SX(I)) .GT. CUTLO) GO TO 85
 CCCCC ASSIGN 50 TO NEXT
       NEXT=50
       XMAX = ZERO
 C
 C                        PHASE 1.  SUM IS ZERO
 C
-   50 IF( SX(I) .EQ. ZERO) GO TO 200
+   50 CONTINUE
+      IF( SX(I) .EQ. ZERO) GO TO 200
       IF( ABS(SX(I)) .GT. CUTLO) GO TO 85
 C
 C                                PREPARE FOR PHASE 2.
@@ -27511,45 +27539,53 @@ CCCCC ASSIGN 70 TO NEXT
 C
 C                                PREPARE FOR PHASE 4.
 C
-  100 I = J
+  100 CONTINUE
+      I = J
 CCCCC ASSIGN 110 TO NEXT
       NEXT=110
       SUM = (SUM / SX(I)) / SX(I)
-  105 XMAX = ABS(SX(I))
+  105 CONTINUE
+      XMAX = ABS(SX(I))
       GO TO 115
 C
 C                   PHASE 2.  SUM IS SMALL.
 C                             SCALE TO AVOID DESTRUCTIVE UNDERFLOW.
 C
-   70 IF( ABS(SX(I)) .GT. CUTLO ) GO TO 75
+   70 CONTINUE
+      IF( ABS(SX(I)) .GT. CUTLO ) GO TO 75
 C
 C                     COMMON CODE FOR PHASES 2 AND 4.
 C                     IN PHASE 4 SUM IS LARGE.  SCALE TO AVOID OVERFLOW.
 C
-  110 IF( ABS(SX(I)) .LE. XMAX ) GO TO 115
+  110 CONTINUE
+      IF( ABS(SX(I)) .LE. XMAX ) GO TO 115
          SUM = ONE + SUM * (XMAX / SX(I))**2
          XMAX = ABS(SX(I))
          GO TO 200
 C
-  115 SUM = SUM + (SX(I)/XMAX)**2
+  115 CONTINUE
+      SUM = SUM + (SX(I)/XMAX)**2
       GO TO 200
 C
 C
 C                  PREPARE FOR PHASE 3.
 C
-   75 SUM = (SUM * XMAX) * XMAX
+   75 CONTINUE
+      SUM = (SUM * XMAX) * XMAX
 C
 C
 C     FOR REAL OR D.P. SET HITEST = CUTHI/N
 C     FOR COMPLEX      SET HITEST = CUTHI/(2*N)
 C
-   85 HITEST = CUTHI/FLOAT( N )
+   85 CONTINUE
+      HITEST = CUTHI/FLOAT( N )
 C
 C                   PHASE 3.  SUM IS MID-RANGE.  NO SCALING.
 C
       DO 95 J =I,NN,INCX
-      IF(ABS(SX(J)) .GE. HITEST) GO TO 100
-   95    SUM = SUM + SX(J)**2
+         IF(ABS(SX(J)) .GE. HITEST) GO TO 100
+         SUM = SUM + SX(J)**2
+   95 CONTINUE
       SNRM2 = SQRT( SUM )
       GO TO 300
 C
@@ -33838,8 +33874,9 @@ C
 C     COPY UPPER TRIANGLE TO LOWER
 C
       DO 10 J=1,N
-      DO 10 I=1,J
-         A(J,I)=A(I,J)
+         DO 11 I=1,J
+            A(J,I)=A(I,J)
+   11    CONTINUE
    10 CONTINUE
 C
       IF(JOB.NE.0) GO TO 20
@@ -34094,8 +34131,10 @@ C ALTER ARRAY X TO GET DECREASING ORDER IF NEEDED
 C
    15 IF (KFLAG.GE.1) GO TO 30
       DO 20 I=1,NN
-   20 X(I) = -X(I)
-   30 GO TO (100,200),KK
+         X(I) = -X(I)
+   20 CONTINUE
+   30 CONTINUE
+      GO TO (100,200),KK
 C
 C SORT X ONLY
 C
@@ -34281,9 +34320,11 @@ C                                  THE UNSORTED ARRAY
 C
 C CLEAN UP
 C
-  300 IF (KFLAG.GE.1) RETURN
+  300 CONTINUE
+      IF (KFLAG.GE.1) RETURN
       DO 310 I=1,NN
-  310 X(I) = -X(I)
+         X(I) = -X(I)
+  310 CONTINUE
       RETURN
       END
       SUBROUTINE SSQ(X,N,XCAP,IWRITE,XSSQ,IBUGA3,ISUBRO,IERROR)
@@ -37136,7 +37177,8 @@ CCCCC         CALL GAMMA(VB,GB)
            DO 40 K=2,N
               BF=2.0D0*(K-1.0+U0)/X*BF1-BF0
               BF0=BF1
-40            BF1=BF
+              BF1=BF
+40         CONTINUE
            IF (N.EQ.0) BYV=BY0
            IF (N.EQ.1) BYV=BY1
            IF (N.GT.1) BYV=BF
@@ -37305,7 +37347,8 @@ CCCCC         CALL GAMMA(VB,GB)
            DO 40 K=2,N
               BF=-2.0D0*(K-1.0+U0)/X*BF1+BF0
               BF0=BF1
-40            BF1=BF
+              BF1=BF
+40         CONTINUE
            IF (N.EQ.0) BIV=BIV0
            IF (N.GT.1) BIV=BF
            SLV=DEXP(X)/DSQRT(2.0D0*PI*X)*BIV+S0

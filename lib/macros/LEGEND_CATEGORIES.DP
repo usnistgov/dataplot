@@ -1,0 +1,43 @@
+. This is dataplot macro     legend_categories.dp    3/1/19
+. Purpose: For multivariate classification, write list of categories in the legend area
+. Date: 3/1/19
+.
+. Input:
+.    numcat (parameter) = number of categories
+.    stcat1, stcat2, . . . (strings) = category names
+.
+. -----start point-----
+.
+. -----Step 0: check input arguments-----
+.
+let string stmacro = legend_categories.dp
+let string stall = numcat
+call checkinput.dp
+.
+loop for jcat = 1 1 numcat
+   let string stall = stcat^jcat
+   call checkinput.dp
+end loop
+.
+. -----Step 2: Write out the list of categories-----
+.
+let xp = 16
+let yp0 = 87
+let ypdel = 3
+let yp = yp0 + ypdel
+.
+let numarg = $0
+if numarg >= 1; let yp0 = $1; end if
+reset command line arguments
+.
+if stcat1 exists
+   just left; hw 2.5 1.25
+   loop for jcat = 1 1 numcat
+      let yp = yp - ypdel
+      if stcolor exists; let stcolj = string word stcolor ^jcat; end if
+      color ^stcolj
+      move xp yp; text Cat^jcat: ^stcat^jcat
+   end loop
+end if
+color blue
+.

@@ -17602,10 +17602,10 @@ C
         CALL DPWRST('XXX','BUG ')
         IF(NUMVAR.GT.0)THEN
           DO285I=1,NUMVAR
-            WRITE(ICOUT,287)I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),
-     1                      ICOLR(I)
-  287       FORMAT('I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),',
-     1             'ICOLR(I) = ',I8,2X,A4,A4,2X,3I8)
+            WRITE(ICOUT,287)I,IVARN1(I),IVARN2(I),IVARTY(I),
+     1                      ILIS(I),NRIGHT(I),ICOLR(I)
+  287       FORMAT('I,IVARN1(I),IVARN2(I),IVARTY(I),ILIS(I),',
+     1             'NRIGHT(I),ICOLR(I) = ',I8,2X,2A4,2X,A4,2X,3I8)
             CALL DPWRST('XXX','BUG ')
   285     CONTINUE
         ENDIF
@@ -17630,6 +17630,9 @@ C
           IERROR='YES'
           GOTO9000
         ENDIF
+        ISTART=1
+        ISTOP=NUMVAR-1
+        AMU0=PVAR(NUMVAR)
       ELSEIF(IVARTY(1).EQ.'PARA')THEN
         ICASA2='ONES'
         ISTART=2
@@ -17710,6 +17713,7 @@ C
             WRITE(ICOUT,5212)I,J,NS1,NS2,MAXN
  5212       FORMAT('I,J,NS1,NS2,MAXN = ',5I8)
             CALL DPWRST('XXX','BUG ')
+            IF(ICASA2.EQ.'ONES')NS2=NS1
             DO5215II=1,MAX(NS1,NS2)
               WRITE(ICOUT,5216)II,Y(II),X(II)
  5216         FORMAT('I,Y(I),X(I) = ',I8,2G15.7)

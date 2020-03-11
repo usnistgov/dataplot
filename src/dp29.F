@@ -21662,6 +21662,10 @@ C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--2018/02
 C     ORIGINAL VERSION--FEBRUARY  2018.
+C     UPDATED         --SEPTEMBER 2019. ALLOW USER TO SPECIFY THE
+C                                       SEPARATOR CHARACTER
+C     UPDATED         --FEBRUARY  2020. FIX:
+C                                       LET S = STRING COMBINE X1 TO X1
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -21680,6 +21684,7 @@ C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
+      CHARACTER*4 ISEPZZ
 C
       CHARACTER*4 ILAB(10)
 C
@@ -21696,6 +21701,7 @@ C
       INCLUDE 'DPCOPA.INC'
       INCLUDE 'DPCOHK.INC'
       INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOST.INC'
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
@@ -21712,6 +21718,7 @@ C
       ISUBN1='DPST'
       ISUBN2='CB  '
       IERROR='NO'
+      ISEPZZ='    '
 C
       ILOC3=0
 C
@@ -21721,8 +21728,8 @@ C
         WRITE(ICOUT,51)
    51   FORMAT('***** AT THE BEGINNING OF DPSTCB--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,52)IBUGA3,ISUBRO,NUMNAM
-   52   FORMAT('IBUGA3,ISUBRO,NUMNAM = ',A4,2X,A4,2X,I8)
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,ISTRCS,NUMNAM
+   52   FORMAT('IBUGA3,ISUBRO,ISTRCS,NUMNAM = ',3(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
         DO55I=1,NUMNAM
           WRITE(ICOUT,56)I,IHNAME(I),IHNAM2(I),IUSE(I),IVSTAR(I),
@@ -21754,6 +21761,20 @@ C
       NIOLD1=0
       ICOLL=0
 C
+      IF(ISTRCS.EQ.'SP()' .OR. ISTRCS.EQ.'    ')THEN
+        ISEPZZ=' '
+        NCSEP=1
+      ELSE
+        DO110II=4,1,-1
+          IF(ISTRCS(II:II).NE.' ')THEN
+            ISEPZZ(1:II)=ISTRCS(1:II)
+            NCSEP=II
+            GOTO119
+          ENDIF
+  110   CONTINUE
+  119   CONTINUE
+      ENDIF
+C
 C               ******************************************************
 C               **  STEP 2--                                         *
 C               **  EXAMINE THE ARGUMENT ON THE                      *
@@ -21762,9 +21783,13 @@ C               **  IF THIS IS A PREVIOUSLY DEFINED NAME, IT SHOULD  *
 C               **  BE A STRING    (IF NOT, REPORT AN ERROR).        *
 C               ******************************************************
 C
-      ISTEPN='2'
-      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'STCB')
-     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'STCB')THEN
+        ISTEPN='2'
+        CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+        WRITE(ICOUT,101)NCSEP,ISEPZZ
+  101   FORMAT('NCSEP,ISEPZZ = ',I5,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       IHLEFT=IHARG(1)
       IHLEF2=IHARG2(1)
@@ -21863,6 +21888,18 @@ C
      1            IVARN1,IVARN2,IVARTY,PVAR,NUMIND,
      1            IFLAGM,IFLAGP,IFLAGT,
      1            IBUGA3,ISUBRO,IERROR)
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'STCB')THEN
+        WRITE(ICOUT,3006)IERROR,NUMIND
+ 3006   FORMAT('AFTER EXTVA2: IERROR,NUMIND = ',A4,2X,I5)
+        CALL DPWRST('XXX','BUG ')
+        DO3007KK=1,NUMIND
+          WRITE(ICOUT,3008)KK,IVARN1(KK),IVARN2(KK),IVARTY(KK)
+ 3008     FORMAT('KK,IVARN1(KK),IVARN2(KK),IVARTY(KK) = ',I5,3(2X,A4))
+          CALL DPWRST('XXX','BUG ')
+ 3007   CONTINUE
+      ENDIF
+C
       IF(IERROR.EQ.'YES')GOTO9000
 C
 C     NOW LOOP THROUGH EACH NAME.  IF NAME IS A PREVIOUSLY DEFINED
@@ -21873,10 +21910,11 @@ C
       DO3000I=1,NUMIND
 C
         IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'STCB')THEN
-          ISTEPN='3'
+          ISTEPN='3B'
           CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-          WRITE(ICOUT,3001)ICASEL,I,IVARN1(I),IVARN2(I),IVARTY(I)
- 3001     FORMAT('I,IVARN1(I),IVARN2(I),IVARTY(I) = ',I5,2X,2A4,2X,A4)
+          WRITE(ICOUT,3001)I,ICASEL,IVARN1(I),IVARN2(I),IVARTY(I)
+ 3001     FORMAT('I,ICASEL,IVARN1(I),IVARN2(I),IVARTY(I) = ',
+     1           I5,A4,2X,2A4,2X,A4)
           CALL DPWRST('XXX','BUG ')
         ENDIF
 C
@@ -21913,11 +21951,16 @@ C
           ENDIF
 C
           IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'STCB')THEN
-            ISTEPN='3A'
+            ISTEPN='3C'
             CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-            WRITE(ICOUT,3127)I,NLEN,ICNT,IFUNC2(1:MIN(ICNT,100))
- 3127       FORMAT('I,NLEN,ICNT,IFUNC2(1:ICNT) = ',3I8,2X,A100)
+            WRITE(ICOUT,3127)I,NLEN,ICNT
+ 3127       FORMAT('I,NLEN,ICNT = ',3I8)
             CALL DPWRST('XXX','BUG ')
+            DO3128KK=1,ICNT
+              WRITE(ICOUT,3129)KK,IFUNC2(KK)
+ 3129         FORMAT('KK,IFUNC2(KK) = ',I8,2X,A4)
+            CALL DPWRST('XXX','BUG ')
+ 3128       CONTINUE
           ENDIF
 C
         ELSE
@@ -21927,6 +21970,13 @@ C               **  STEP 3B--                                      **
 C               **  ADD THE CURRENT STRING                         **
 C               *****************************************************
 C
+          DO3201KK=1,NUMNAM
+            IF(IVARN1(I).EQ.IHNAME(KK).AND.IVARN2(I).EQ.IHNAM2(KK))THEN
+              I4=KK
+              GOTO3209
+            ENDIF
+ 3201     CONTINUE
+ 3209     CONTINUE
           ISTART=IVSTAR(I4)
           ISTOP=IVSTOP(I4)
           NLEN=ISTOP-ISTART+1
@@ -21934,8 +21984,8 @@ C
           IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'STCB')THEN
             ISTEPN='3B'
             CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-            WRITE(ICOUT,3211)ICASEL,I,ISTART,ISTOP,NLEN
- 3211       FORMAT('ICASEL: I,ISTART,ISTOP,NLEN = ',A4,2X,4I8)
+            WRITE(ICOUT,3211)ICASEL,I,I4,ISTART,ISTOP,NLEN
+ 3211       FORMAT('ICASEL: I,I4,ISTART,ISTOP,NLEN = ',A4,2X,5I8)
             CALL DPWRST('XXX','BUG ')
           ENDIF
 C
@@ -21947,9 +21997,26 @@ C
           ENDIF
         ENDIF
 C
+ 1010   CONTINUE
+C
+        IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'STCB')THEN
+          WRITE(ICOUT,3311)I,NUMIND,NCSEP,ICNT
+ 3311     FORMAT('I,NUMIND,NCSEP,ICNT = ',4I5)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
         IF(I.LT.NUMIND)THEN
-          ICNT=ICNT+1
-          IFUNC2(ICNT)=' '
+          DO3315II=1,NCSEP
+            ICNT=ICNT+1
+            IFUNC2(ICNT)=ISEPZZ(II:II)
+C
+            IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'STCB')THEN
+              WRITE(ICOUT,3318)II,ICNT,IFUNC2(ICNT)
+ 3318         FORMAT('II,ICNT,IFUNC2(ICNT) = ',2I5,2X,A4)
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+C
+ 3315     CONTINUE
         ENDIF
 C
  3100   CONTINUE
@@ -29710,6 +29777,7 @@ C     UPDATED         --AUGUST    2018. SUPPORT STREAM READ PERCENTILES
 C     UPDATED         --AUGUST    2018. SUPPORT STREAM READ CROSS
 C                                               TABULATE PERCENTILES
 C     UPDATED         --JULY      2019. TWEAK SCRATCH SPACE
+C     UPDATED         --SEPTEMBER 2019. CALL LIST TO DPREAL
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -31517,6 +31585,7 @@ C
       ICNT2=0
       IEOF=0
       IMAXRW=IFRMAX-IFRMIN+1
+      IFLGSV=0
       DO7400IFROW=IFRMIN,IFRMAX
 C
         IIN=IIN+1
@@ -31525,7 +31594,7 @@ C
 C         CASE 1: NO SET READ FORMAT GIVEN
 C
           NXC=0
-          CALL DPREAL(IRD2,IFCOL3,IFCOL4,MINCO2,MAXCO2,X0,NUMDPL,
+          CALL DPREAL(IRD2,IFCOL3,IFCOL4,MINCO2,MAXCO2,X0,NUMDPL,IFLGSV,
      1                IXC,NXC,
      1                ICASRE,IFUNC2,N2,MAXN2,
      1                IMACRO,IMACNU,IMACCS,
@@ -31537,7 +31606,7 @@ C
      1                MAXRDV,MAXCHV,IFIETY,
      1                IDECPT,IDATMV,IDATNN,
      1                IREACD,IREACM,IREADS,IREAPM,IREAMC,ITABNC,
-     1                IREAAS,
+     1                IREAAS,IREAPC,
      1                IB,
      1                IOTERM,IANSLO,MAXLIL,MAXCIL,ILOOST,ILOOLI,
      1                IREPCH,IMALEV,
@@ -38490,6 +38559,608 @@ C
      1           'IVSTOP(I)=',I8,2X,A4,A4,2X,A4,I8,I8)
           CALL DPWRST('XXX','BUG ')
  9015   CONTINUE
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPSTVA(ISUBRO,IBUGA3,IERROR)
+C
+C     PURPOSE--CREATE A STRING VARIABLE.  THE STRING VARIABLE WILL BE
+C              SAVED AS "CHARACTER VARIABLE" IN DPZCHF.DAT.
+C     EXAMPLE--LET SOUT = STRING VARIABLE S1 TO S50
+C              LET SOUT = STRING VARIABLE "abcd"  "efgh" "ijkl"
+C
+C              DO NOT CHECK IF SOUT IS A CURRENTLY DEFINED STRING
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2019/09
+C     ORIGINAL VERSION--SEPTEMBER 2019.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 IHLEFT
+      CHARACTER*4 IHLEF2
+      CHARACTER*4 IHRIGH
+      CHARACTER*4 IHRIG2
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+C
+      CHARACTER*9999 ISTR
+      CHARACTER*20 IFRMT
+      CHARACTER*20 IFRMT2
+      CHARACTER*4 IOP
+      CHARACTER*4 IOPEN
+      CHARACTER*8 IACC
+      CHARACTER*4 IEXIST
+      CHARACTER*4 MESSAG
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ICASE
+      CHARACTER*4 ISUBN0
+      CHARACTER*4 IERRFI
+      CHARACTER*25 ISTR2
+      CHARACTER*255 ISTRIN
+      CHARACTER*255 ISTRI2
+      PARAMETER(MAXIND=100)
+      CHARACTER*4 ISTRN1(MAXIND)
+      CHARACTER*4 ISTRN2(MAXIND)
+      CHARACTER*4 IHTEMP(255)
+      CHARACTER*4 IFILQ2
+C
+      CHARACTER*80 IFILE1
+      CHARACTER*12 ISTAT1
+      CHARACTER*12 IFORM1
+      CHARACTER*12 IACCE1
+      CHARACTER*12 IPROT1
+      CHARACTER*12 ICURS1
+      CHARACTER*4 IERRF1
+      CHARACTER*4 IENDF1
+      CHARACTER*4 IREWI1
+C
+      CHARACTER*80 IFILE2
+      CHARACTER*12 ISTAT2
+      CHARACTER*12 IFORM2
+      CHARACTER*12 IACCE2
+      CHARACTER*12 IPROT2
+      CHARACTER*12 ICURS2
+      CHARACTER*4 IERRF2
+      CHARACTER*4 IENDF2
+      CHARACTER*4 IREWI2
+C
+      CHARACTER*80 IFILE3
+      CHARACTER*12 ISTAT3
+      CHARACTER*12 IFORM3
+      CHARACTER*12 IACCE3
+      CHARACTER*12 IPROT3
+      CHARACTER*12 ICURS3
+      CHARACTER*4 IERRF3
+      CHARACTER*4 IENDF3
+      CHARACTER*4 IREWI3
+C
+      CHARACTER*80 IFILE4
+      CHARACTER*12 ISTAT4
+      CHARACTER*12 IFORM4
+      CHARACTER*12 IACCE4
+      CHARACTER*12 IPROT4
+      CHARACTER*12 ICURS4
+      CHARACTER*4 IERRF4
+      CHARACTER*4 IENDF4
+      CHARACTER*4 IREWI4
+C
+      CHARACTER*80 IFILE5
+      CHARACTER*12 ISTAT5
+      CHARACTER*12 IFORM5
+      CHARACTER*12 IACCE5
+      CHARACTER*12 IPROT5
+      CHARACTER*12 ICURS5
+      CHARACTER*4 IERRF5
+      CHARACTER*4 IENDF5
+      CHARACTER*4 IREWI5
+C
+      COMMON/FILTMP/IFILE1, ISTAT1, IFORM1, IACCE1, IPROT1, ICURS1,
+     1              IERRF1, IENDF1, IREWI1,
+     1              IFILE2, ISTAT2, IFORM2, IACCE2, IPROT2, ICURS2,
+     1              IERRF2, IENDF2, IREWI2,
+     1              IFILE3, ISTAT3, IFORM3, IACCE3, IPROT3, ICURS3,
+     1              IERRF3, IENDF3, IREWI3,
+     1              IFILE4, ISTAT4, IFORM4, IACCE4, IPROT4, ICURS4,
+     1              IERRF4, IENDF4, IREWI4,
+     1              IFILE5, ISTAT5, IFORM5, IACCE5, IPROT5, ICURS5,
+     1              IERRF5, IENDF5, IREWI5
+C
+C---------------------------------------------------------------------
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOF2.INC'
+      INCLUDE 'DPCOST.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='DPST'
+      ISUBN2='VA  '
+      IERROR='NO'
+      IFILQ2=IFILQU
+C
+      ILOC3=0
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'STVA')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPSTVA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,NUMARG
+   52   FORMAT('IBUGA3,ISUBRO,NUMARG = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NUMARG.GE.1)THEN
+          DO70I=1,NUMARG
+            WRITE(ICOUT,76)I,IHARG(I),IHARG2(I),IARGT(I),IARG(I)
+   76       FORMAT('I,IHARG(I),IHARG2(I),IARGT(I),IARG(I) = ',
+     1             I8,2X,2A4,2X,A4,2X,I8)
+            CALL DPWRST('XXX','BUG ')
+   70     CONTINUE
+        ENDIF
+      ENDIF
+C
+C               **********************************
+C               **  STEP 1--                    **
+C               **  INITIALIZE SOME VARIABLES.  **
+C               **********************************
+C
+      ISTEPN='1'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'STVA')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      ISTR=' '
+      ISTR2=' '
+C
+C               ******************************************************
+C               **  STEP 2--                                         *
+C               **  EXAMINE THE ARGUMENT ON THE LEFT-HAND SIDE       *
+C               ******************************************************
+C
+      ISTEPN='2'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'STVA')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IHLEFT=IHARG(1)
+      IHLEF2=IHARG2(1)
+C
+C     AS THIS VARIABLE WILL BE SAVED IN THE DPZCHF.DAT FILE AND NOT THE
+C     INTERNAL NAME TABLE, CHECK THE DPZCHF.DAT FILE FOR AN EXISTING NAME.
+C
+      IOUNI4=IZCHNU
+      IFILE4=IZCHNA
+      ISTAT4=IZCHST
+      IFORM4=IZCHFO
+      IACCE4=IZCHAC
+      IPROT4=IZCHPR
+      ICURS4=IZCHCS
+C
+C     IF "SET STRING VARIABLE OVERWRITE" ENTERED, THEN ALSO
+C     SET DPZCHF.DAT AS "NOT EXIST".
+C
+      IF(ISTRVA.EQ.'OVER')THEN
+        IEXIST='NO'
+      ELSE
+        IERRFI='NO'
+        ISUBN0='STVA'
+        IERRFI='NO'
+        CALL DPINFI(IFILE4,IEXIST,IOPEN,IACC,ISUBN0,IBUGA3,
+     1              ISUBRO,IERROR)
+       ENDIF
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'STVA')THEN
+        WRITE(ICOUT,111)IEXIST
+  111   FORMAT('IEXIST = ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      CALL DPOPFI(IOUNI4,IFILE4,ISTAT4,IFORM4,IACCE4,IPROT4,ICURS4,
+     1            IREWI4,ISUBN0,IERRFI,IBUGA3,ISUBRO,IERROR)
+C
+      IOP='OPEN'
+      IFLG11=0
+      IFLG21=1
+      IFLG31=0
+      IFLAG4=0
+      IFLAG5=0
+      CALL DPAUFI(IOP,IFLG11,IFLG21,IFLG31,IFLAG4,IFLAG5,
+     1            IOUNI1,IOUNI2,IOUNI3,IOUNI4,IOUNI5,
+     1            IBUGA3,ISUBRO,IERROR)
+C
+      MXROW=0
+      IVAR=0
+      IFLAG1=0
+      IF(IEXIST.EQ.'YES')THEN
+        READ(IOUNI4,*,ERR=210,END=210)IVAR
+        IFLAG1=1
+      ENDIF
+      GOTO300
+C
+  210 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,211)
+  211 FORMAT('*****ERROR IN LET ... = CHARACTER VARIABLE (DPSTVA)--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,213)IFILE4
+  213 FORMAT('     ERROR OR END OF FILE READING FIRST LINE OF ',A80)
+      CALL DPWRST('XXX','BUG ')
+      IERROR='YES'
+      GOTO9000
+C
+C               *************************************************
+C               **  STEP 3--                                   **
+C               **  PROCESS RIGHT HAND SIDE.                   **
+C               *************************************************
+C
+  300 CONTINUE
+      ISTEPN='3'
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'STVA')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      JMIN=5
+      JMAX=NUMARG
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'STVA')THEN
+        WRITE(ICOUT,4001)JMIN,JMAX,MAXIND
+ 4001   FORMAT('JMIN,JMAX,MAXIND = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      IF(JMAX.LT.JMIN)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,211)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,301)
+  301   FORMAT('     NO STRINGS ON THE RIGHT HAND SIDE.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+      IWRITE='OFF'
+      IERROR='NO'
+C
+      CALL EXTSTR(IHARG,IHARG2,NUMARG,JMIN,JMAX,MAXIND,
+     1            IHNAME,IHNAM2,IUSE,NUMNAM,
+     1            ISTRN1,ISTRN2,NUMSTR,
+     1            IWRITE,IBUGA3,ISUBRO,IERROR)
+C
+      IF(IERROR.EQ.'NO')THEN
+        ICASE='STRI'
+      ELSE
+        ICASE='LITE'
+      ENDIF
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'STVA')THEN
+        WRITE(ICOUT,303)IERROR,ICASE,NUMSTR
+  303   FORMAT('AFTER CALL EXTSTR: IERROR,ICASE,NUMSTR = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C     STEP 1: DETERMINE NUMBER OF STRINGS FOR LITERAL CASE
+C
+      IF(ICASE.EQ.'LITE')THEN
+        ICNT=0
+        NUMSTR=0
+        IFRST=5
+        IFILQU='ON'
+        ISTRIN=' '
+        DO318I=1,IWIDTH
+          ISTRIN(I:I)=IANSLC(I)(1:1)
+  318   CONTINUE
+C
+  320   CONTINUE
+        IFRST=IFRST+1
+        ICNT=ICNT+1
+        ISTART=1
+        ISTOP=IWIDTH
+        IERROR='NO'
+        CALL DPEXWO(ISTRIN,ISTART,ISTOP,IFRST,
+     1              ICOL1,ICOL2,ISTRI2,NCSTR2,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(NCSTR2.GT.0)THEN
+          NUMSTR=NUMSTR+1
+          IF(ICOL2.LT.IWIDTH)GOTO320
+        ENDIF
+      ENDIF
+C
+C     STEP 2: UPDATE HEADER FOR DPZCHF.DAT FILE AND WRITE TO dpst2f.dat
+C
+      IVARSV=IVAR
+      IVAR=IVAR+1
+      NTEMP1=25*IVARSV
+      NTEMP2=25*IVAR
+      IF(NTEMP2.GT.9999)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,211)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,331)
+  331   FORMAT('      MAXIMUM NUMBER OF CHARACTER VARIABLES EXCEEDED.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+      IF(IEXIST.EQ.'YES')THEN
+        REWIND(IOUNI4)
+        READ(IOUNI4,*,ERR=897,END=897)IJUNK
+        WRITE(IOUNI2,'(I8)')IVAR
+        DO330KK=1,IVARSV
+          READ(IOUNI4,'(2A4,I10)',ERR=897,END=897)IHRIGH,IHRIG2,NTEMP
+          WRITE(IOUNI2,'(2A4,I10)')IHRIGH,IHRIG2,NTEMP
+          IF(NTEMP.GT.MXROW)MXROW=NTEMP
+  330   CONTINUE
+        WRITE(IOUNI2,'(2A4,I10)')IHLEFT,IHLEF2,NUMSTR
+        IF(NUMSTR.GT.MXROW)MXROW=NUMSTR
+      ELSE
+        WRITE(IOUNI2,'(I8)')IVAR
+        WRITE(IOUNI2,'(2A4,I10)')IHLEFT,IHLEF2,NUMSTR
+        IFLAG2=1
+        MXROW=NUMSTR
+      ENDIF
+C
+C     STEP 3: NOW LOOP THROUGH THE ROWS OF THE STRING VARIABLES
+C
+      IFRMT=' '
+      IFRMT='(A    )'
+      WRITE(IFRMT(3:6),'(I4)')NTEMP1
+      IFRMT2=' '
+      IFRMT2='(A    ,A25)'
+      WRITE(IFRMT2(3:6),'(I4)')NTEMP1
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'STVA')THEN
+        WRITE(ICOUT,313)MXROW
+  313   FORMAT('MXROW = ',I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      IF(ICASE.EQ.'STRI')THEN
+C
+C       STEP 3A: ARGUMENTS ON RHS ARE NAMES OF PRE-EXISTING STRINGS
+C
+        DO360I2=1,MXROW
+          ILAST=0
+          ISTR2=' '
+          NH=0
+          IF(I2.GT.NUMSTR)GOTO379
+          DO365I=1,NUMNAM
+            II=I
+            IF(ISTRN1(I2).EQ.IHNAME(I) .AND.
+     1         ISTRN2(I2).EQ.IHNAM2(I) .AND. IUSE(I).EQ.'F')GOTO369
+  365     CONTINUE
+C
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,211)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,373)ISTRN1(I2),ISTRN2(I2)
+  373     FORMAT('       STRING ',2A4,' NOT MATCHED IN NAME ',
+     1           'TABLE AS A PRE-EXISTING STRING.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+C
+  369     CONTINUE
+          IVAL=IVALUE(II)
+          VAL=VALUE(II)
+          IL1=IVSTAR(II)
+          IL2=IVSTOP(II)
+C
+          IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'STVA')THEN
+            WRITE(ICOUT,381)IL1,IL2
+  381       FORMAT('II,IL1,IL2 = ',3I8)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+C
+          CALL DPCOFH(IL1,IL2,IFUNC,NUMCHF,IHTEMP,NH,IBUGA3,IERROR)
+          ISTRT=NH
+          DO382LL=1,NH
+            IF(IHTEMP(LL)(1:1).NE.' ')THEN
+              ISTRT=LL
+              GOTO383
+            ENDIF
+  382     CONTINUE
+  383     CONTINUE
+C
+  379     CONTINUE
+C
+          IF(NH.GT.0)THEN
+            DO390J=ISTRT,NH
+              ILAST=ILAST+1
+              ISTR2(ILAST:ILAST)=IHTEMP(J)(1:1)
+  390       CONTINUE
+            IF(ILAST.GT.25)ILAST=25
+C
+            IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'STVA')THEN
+              WRITE(ICOUT,394)I2,ILAST,ISTR2(1:ILAST)
+  394         FORMAT('I2,ILAST,ISTR2(1:ILAST) = ',2I8,A25)
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+          ENDIF
+C
+          IF(I2.LE.NUMSTR)THEN
+            ISTR=' '
+            IF(IEXIST.EQ.'YES')THEN
+              READ(IOUNI4,IFRMT,ERR=897,END=897)ISTR(1:NTEMP1)
+              WRITE(IOUNI2,IFRMT2)ISTR(1:NTEMP1),ISTR2(1:25)
+            ELSE
+              WRITE(IOUNI2,'(A25)')ISTR2(1:25)
+            ENDIF
+          ELSE
+            ISTR=' '
+            IF(IEXIST.EQ.'YES')THEN
+              READ(IOUNI4,IFRMT,ERR=897,END=897)ISTR(1:NTEMP1)
+              WRITE(IOUNI2,IFRMT2)ISTR(1:NTEMP1),ISTR2(1:25)
+            ELSE
+              WRITE(IOUNI2,'(A25)')ISTR2(1:25)
+            ENDIF
+          ENDIF
+  360   CONTINUE
+      ELSE
+C
+C       STEP 3B: ARGUMENTS ON RHS ARE LITERAL STRINGS
+C
+        ICNT=0
+        IFRST=5
+        MESSAG='OFF'
+        ISTRIN=' '
+        DO418I=1,IWIDTH
+          ISTRIN(I:I)=IANSLC(I)(1:1)
+  418   CONTINUE
+C
+        DO460I2=1,MXROW
+C
+          ISTR2=' '
+          IF(I2.LE.NUMSTR)THEN
+            IFRST=IFRST+1
+            ICNT=ICNT+1
+            ISTART=1
+            ISTOP=IWIDTH
+            IERROR='NO'
+            CALL DPEXWO(ISTRIN,ISTART,ISTOP,IFRST,
+     1                  ICOL1,ICOL2,ISTRI2,NCSTR2,
+     1                  IBUGA3,ISUBRO,IERROR)
+            ILAST=MIN(25,NCSTR2)
+            IF(ILAST.GT.0)THEN
+              IF(ISTRI2(1:1).EQ.'"' .AND.
+     1           ISTRI2(ILAST:ILAST).EQ.'"')THEN
+                ISTR2(1:ILAST-2)=ISTRI2(2:ILAST-1)
+                ILAST=ILAST-2
+              ELSEIF(ISTRI2(1:1).EQ.'"')THEN
+                ISTR2(1:ILAST-1)=ISTRI2(2:ILAST)
+                ILAST=ILAST-1
+              ELSE
+                ISTR2(1:ILAST)=ISTRI2(1:ILAST)
+              ENDIF
+  463         CONTINUE
+            ENDIF
+C
+            IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'STVA')THEN
+              WRITE(ICOUT,394)I2,ILAST,ISTR2(1:ILAST)
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+          ENDIF
+C
+          IF(I2.LE.NUMSTR)THEN
+            ISTR=' '
+            IF(IEXIST.EQ.'YES')THEN
+              READ(IOUNI4,IFRMT,ERR=897,END=897)ISTR(1:NTEMP1)
+              WRITE(IOUNI2,IFRMT2)ISTR(1:NTEMP1),ISTR2(1:25)
+            ELSE
+              WRITE(IOUNI2,'(A25)')ISTR2(1:25)
+            ENDIF
+          ELSE
+            ISTR=' '
+            IF(IEXIST.EQ.'YES')THEN
+              READ(IOUNI4,IFRMT,ERR=897,END=897)ISTR(1:NTEMP1)
+              WRITE(IOUNI2,IFRMT2)ISTR(1:NTEMP1),ISTR2(1:25)
+            ELSE
+              WRITE(IOUNI2,'(A25)')ISTR2(1:25)
+            ENDIF
+          ENDIF
+  460   CONTINUE
+        GOTO499
+      ENDIF
+C
+C               *****************************************************
+C               **  STEP 4--                                       **
+C               **  NOW COPY dpst2f.dat TO dpzchf.dat              **
+C               *****************************************************
+C
+  499 CONTINUE
+      CALL DPCLFI(IOUNI4,IFILE4,ISTAT4,IFORM4,IACCE4,IPROT4,ICURS4,
+     1            IENDF4,IREWI4,ISUBN0,IERRFI,IBUGA3,ISUBRO,IERROR)
+      IZCHCS='CLOSED'
+C
+      IOP='CLOS'
+      CALL DPAUFI(IOP,IFLG11,IFLG21,IFLG31,IFLAG4,IFLAG5,
+     1            IOUNI1,IOUNI2,IOUNI3,IOUNI4,IOUNI5,
+     1            IBUGA3,ISUBRO,IERROR)
+C
+C      STEP 4B: COPY "dpst2f.dat" TO CHARACTER VARIABLE FILE
+C
+      CALL COPYFI(IFILE2,IFILE4,IBUGA3,ISUBRO,IERROR)
+C
+C               *****************************************************
+C               **  STEP 5--                                       **
+C               **  PRINT FEEDBACK MESSAGE                         **
+C               *****************************************************
+C
+      IF(IFEEDB.EQ.'ON' .AND. IPRINT.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,501)IHLEFT,IHLEF2
+  501   FORMAT('THE NAME ',A4,A4,' HAS BEEN ADDED TO THE CHARACTER ',
+     1         'VARIABLE LIST')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,503)IZCHNA
+  503   FORMAT('IN FILE ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+      GOTO9000
+C
+C     ERROR OR END OF FILE READING dpzchf.dat
+C
+  897 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,211)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,898)
+  898 FORMAT('      ERROR READING THE CHARACTER VARIABLE FILE.')
+      CALL DPWRST('XXX','BUG ')
+      IERROR='YES'
+      GOTO499
+C
+C               ****************
+C               **  STEP 90-- **
+C               **  EXIT.     **
+C               ****************
+C
+ 9000 CONTINUE
+      IFILQU=IFILQ2
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'STVA')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPSTVA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)IERROR
+ 9013   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
       ENDIF
 C
       RETURN

@@ -6231,7 +6231,8 @@ C                AND COMPUTE MATRIX NORM ..........
       DO 50 I = 1, N
 C
          DO 40 J = K, N
-   40    NORM = NORM + ABS(H(I,J))
+            NORM = NORM + ABS(H(I,J))
+   40    CONTINUE
 C
          K = I
          IF (I .GE. LOW .AND. I .LE. IGH) GO TO 50
@@ -6269,7 +6270,8 @@ C     .......... FORM EXCEPTIONAL SHIFT ..........
       T = T + X
 C
       DO 120 I = LOW, EN
-  120 H(I,I) = H(I,I) - X
+         H(I,I) = H(I,I) - X
+  120 CONTINUE
 C
       S = ABS(H(EN,NA)) + ABS(H(NA,ENM2))
       X = 0.75E0 * S
@@ -6479,7 +6481,8 @@ C                AND COMPUTE MATRIX NORM ..........
       DO 50 I = 1, N
 C
          DO 40 J = K, N
-   40    NORM = NORM + ABS(H(I,J))
+            NORM = NORM + ABS(H(I,J))
+   40    CONTINUE
 C
          K = I
          IF (I .GE. LOW .AND. I .LE. IGH) GO TO 50
@@ -6517,7 +6520,8 @@ C     .......... FORM EXCEPTIONAL SHIFT ..........
       T = T + X
 C
       DO 120 I = LOW, EN
-  120 H(I,I) = H(I,I) - X
+         H(I,I) = H(I,I) - X
+  120 CONTINUE
 C
       S = ABS(H(EN,NA)) + ABS(H(NA,ENM2))
       X = 0.75E0 * S
@@ -6695,7 +6699,8 @@ C     .......... FOR I=EN-1 STEP -1 UNTIL 1 DO -- ..........
             IF (M .GT. NA) GO TO 620
 C
             DO 610 J = M, NA
-  610       R = R + H(I,J) * H(J,EN)
+               R = R + H(I,J) * H(J,EN)
+  610       CONTINUE
 C
   620       IF (WI(I) .GE. 0.0E0) GO TO 630
             ZZ = W
@@ -6786,7 +6791,8 @@ C                VECTORS OF ISOLATED ROOTS ..........
          IF (I .GE. LOW .AND. I .LE. IGH) GO TO 840
 C
          DO 820 J = I, N
-  820    Z(I,J) = H(I,J)
+            Z(I,J) = H(I,J)
+  820    CONTINUE
 C
   840 CONTINUE
 C     .......... MULTIPLY BY TRANSFORMATION MATRIX TO GIVE
@@ -6796,13 +6802,15 @@ C                FOR J=N STEP -1 UNTIL LOW DO -- ..........
          J = N + LOW - JJ
          M = MIN0(J,IGH)
 C
-         DO 880 I = LOW, IGH
+         DO 885 I = LOW, IGH
             ZZ = 0.0E0
 C
             DO 860 K = LOW, M
-  860       ZZ = ZZ + Z(I,K) * H(K,J)
+               ZZ = ZZ + Z(I,K) * H(K,J)
+  860       CONTINUE
 C
             Z(I,J) = ZZ
+  885    CONTINUE
   880 CONTINUE
 C
       GO TO 1001
@@ -7539,7 +7547,8 @@ CCCCC      CALL GAMMA(0.5D0+0.5*A,G3)
            R=1.0D0
            DO 10 K=1,NM
               R=R*(A+K-1.0D0)*(B+K-1.0D0)/(K*(C+K-1.0D0))*X
-10            HF=HF+R
+              HF=HF+R
+10         CONTINUE
            RETURN
         ELSE IF (L4.OR.L5) THEN
            IF (L4) NM=INT(ABS(C-A))
@@ -7548,7 +7557,8 @@ CCCCC      CALL GAMMA(0.5D0+0.5*A,G3)
            R=1.0D0
            DO 15 K=1,NM
               R=R*(C-A+K-1.0D0)*(C-B+K-1.0D0)/(K*(C+K-1.0D0))*X
-15            HF=HF+R
+              HF=HF+R
+15         CONTINUE
            HF=(1.0D0-X)**(C-A-B)*HF
            RETURN
         ENDIF
@@ -7585,10 +7595,12 @@ CCCCC         CALL PSI(B,PB)
               PB=DPSI(B)
               IF (M.NE.0) GM=1.0D0
               DO 30 J=1,ABS(M)-1
-30               GM=GM*J
+                 GM=GM*J
+30            CONTINUE
               RM=1.0D0
               DO 35 J=1,ABS(M)
-35               RM=RM*J
+                 RM=RM*J
+35            CONTINUE
               F0=1.0D0
               R0=1.0D0
               R1=1.0D0
@@ -7599,21 +7611,25 @@ CCCCC         CALL PSI(B,PB)
                  C1=-GC*(X-1.0D0)**M/(GA*GB*RM)
                  DO 40 K=1,M-1
                     R0=R0*(A+K-1.0D0)*(B+K-1.0)/(K*(K-M))*(1.0-X)
-40                  F0=F0+R0
+                    F0=F0+R0
+40               CONTINUE
                  DO 45 K=1,M
-45                  SP0=SP0+1.0D0/(A+K-1.0)+1.0/(B+K-1.0)-1.0/K
+                    SP0=SP0+1.0D0/(A+K-1.0)+1.0/(B+K-1.0)-1.0/K
+45               CONTINUE
                  F1=PA+PB+SP0+2.0D0*EL+DLOG(1.0D0-X)
                  DO 55 K=1,250
                     SP=SP+(1.0D0-A)/(K*(A+K-1.0))+(1.0-B)/(K*(B+K-1.0))
                     SM=0.0D0
                     DO 50 J=1,M
-50                     SM=SM+(1.0D0-A)/((J+K)*(A+J+K-1.0))+1.0/
+                       SM=SM+(1.0D0-A)/((J+K)*(A+J+K-1.0))+1.0/
      &                    (B+J+K-1.0)
+50                  CONTINUE
                     RP=PA+PB+2.0D0*EL+SP+SM+DLOG(1.0D0-X)
                     R1=R1*(A+M+K-1.0D0)*(B+M+K-1.0)/(K*(M+K))*(1.0-X)
                     F1=F1+R1*RP
                     IF (DABS(F1-HW).LT.DABS(F1)*EPS) GO TO 60
-55                  HW=F1
+                    HW=F1
+55               CONTINUE
 60               HF=F0*C0+F1*C1
               ELSE IF (M.LT.0) THEN
                  M=-M
@@ -7621,20 +7637,24 @@ CCCCC         CALL PSI(B,PB)
                  C1=-(-1)**M*GC/(GAM*GBM*RM)
                  DO 65 K=1,M-1
                     R0=R0*(A-M+K-1.0D0)*(B-M+K-1.0)/(K*(K-M))*(1.0-X)
-65                  F0=F0+R0
+                    F0=F0+R0
+65               CONTINUE
                  DO 70 K=1,M
-70                  SP0=SP0+1.0D0/K
+                    SP0=SP0+1.0D0/K
+70               CONTINUE
                  F1=PA+PB-SP0+2.0D0*EL+DLOG(1.0D0-X)
                  DO 80 K=1,250
                     SP=SP+(1.0D0-A)/(K*(A+K-1.0))+(1.0-B)/(K*(B+K-1.0))
                     SM=0.0D0
                     DO 75 J=1,M
-75                     SM=SM+1.0D0/(J+K)
+                       SM=SM+1.0D0/(J+K)
+75                  CONTINUE
                     RP=PA+PB+2.0D0*EL+SP-SM+DLOG(1.0D0-X)
                     R1=R1*(A+K-1.0D0)*(B+K-1.0)/(K*(M+K))*(1.0-X)
                     F1=F1+R1*RP
                     IF (DABS(F1-HW).LT.DABS(F1)*EPS) GO TO 85
-80                  HW=F1
+                    HW=F1
+80               CONTINUE
 85               HF=F0*C0+F1*C1
               ENDIF
            ELSE
@@ -7664,7 +7684,8 @@ CCCCC         CALL GAMMA(A+B-C,GABC)
      &              *(1.0-X)
                  HF=HF+R0+R1
                  IF (DABS(HF-HW).LT.DABS(HF)*EPS) GO TO 95
-90               HW=HF
+                 HW=HF
+90            CONTINUE
 95            HF=HF+C0+C1
            ENDIF
         ELSE
@@ -7681,7 +7702,8 @@ CCCCC         CALL GAMMA(A+B-C,GABC)
               R=R*(A+K-1.0D0)*(B+K-1.0D0)/(K*(C+K-1.0D0))*X
               HF=HF+R
               IF (DABS(HF-HW).LE.DABS(HF)*EPS) GO TO 105
-100           HW=HF
+              HW=HF
+100        CONTINUE
 105        HF=A0*HF
         ENDIF
         IF (X1.LT.0.0D0) THEN
@@ -8720,10 +8742,12 @@ C
             F     = 1.0
             IF (M .LT. IX)  THEN
                DO 40 I = M+1,IX
-   40          F      = F * (N1-I+1) * (K-I+1) / (N2-K+I) / I
+                  F      = F * (N1-I+1) * (K-I+1) / (N2-K+I) / I
+   40          CONTINUE
             ELSEIF (M .GT. IX)  THEN
                DO 50 I = IX+1,M
-   50          F      = F * I * (N2-K+I) / (N1-I) / (K-I)
+                  F      = F * I * (N2-K+I) / (N1-I) / (K-I)
+   50          CONTINUE
             ENDIF
             IF (V .LE. F)  THEN
                REJECT = .FALSE.
@@ -13095,7 +13119,8 @@ C***FIRST EXECUTABLE STATEMENT  IMTQL2
       IF (N .EQ. 1) GO TO 1001
 C
       DO 100 I = 2, N
-  100 E(I-1) = E(I)
+        E(I-1) = E(I)
+  100 CONTINUE
 C
       E(N) = 0.0E0
 C
@@ -15715,6 +15740,26 @@ C     UPDATED         --APRIL     2019.  IAUXDP
 C     UPDATED         --APRIL     2019.  IREAAS
 C     UPDATED         --JULY      2019.  IBXPSK
 C     UPDATED         --AUGUST    2019.  I1PTOC
+C     UPDATED         --SEPTEMBER 2019.  IGRPCA, IGRPRE, IGRPLN
+C     UPDATED         --SEPTEMBER 2019.  IGRPNM, IGRPFN, IGRPEM
+C     UPDATED         --SEPTEMBER 2019.  ICATMO
+C     UPDATED         --SEPTEMBER 2019.  IDIRRE, IDIRPA, IDIRLL
+C     UPDATED         --SEPTEMBER 2019.  IDIRSO
+C     UPDATED         --SEPTEMBER 2019.  ISTRVA, ISTRCS, IRATME
+C     UPDATED         --OCTOBER   2019.  IDAVTA, ISKOTA, IKUOTA
+C     UPDATED         --OCTOBER   2019.  IREAPC, IHEALI, ITAILI
+C     UPDATED         --OCTOBER   2019.  PGRUSD, PGRUDF, IGRUTA
+C     UPDATED         --NOVEMBER  2019.  IRLXLE, IOUTLN
+C     UPDATED         --NOVEMBER  2019.  IRRRPA
+C     UPDATED         --NOVEMBER  2019.  IBROHE, IBROWI
+C     UPDATED         --NOVEMBER  2019.  ILSTVW, ILSTNW, ILSTLA,
+C                                        IHELNW, IEXCVW, IWORVW
+C     UPDATED         --DECEMBER  2019.  IPDFVW
+C     UPDATED         --DECEMBER  2019.  IHOMPA
+C     UPDATED         --JANUARY   2020.  IIPLJI
+C     UPDATED         --FEBRUARY  2020.  ICSVWR
+C     UPDATED         --FEBRUARY  2020.  IEXCSH, IEXCNR, IEXCCL
+C     UPDATED         --FEBRUARY  2020.  IINSOW
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -15743,6 +15788,24 @@ C
 C
       CHARACTER*40 IHTMFZ
       COMMON/HTMC1/IHTMFZ,NCFON1
+C
+      INTEGER ILNCNT
+      COMMON/LINNUM/ILNCNT
+C
+      CHARACTER*80 PROFIL
+      CHARACTER*80 P86FIL
+      CHARACTER*80 APPDAT
+      CHARACTER*80 COMNAM
+      CHARACTER*80 UPROFI
+      CHARACTER*80 DEFPRI
+      CHARACTER*20 USRNAM
+      CHARACTER*20 ISHELL
+      CHARACTER*4  WINBIT
+      COMMON/SYSVAR/PROFIL,P86FIL,APPDAT,COMNAM,UPROFI,USRNAM,DEFPRI,
+     1              WINBIT,ISHELL
+      COMMON/SYSVA2/NCPROF,NCP86F,NCAPPD,NCCOMP,NCUPRO,NCUSER,NCPRIN,
+     1              NCSHEL
+C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
@@ -16449,8 +16512,8 @@ C               *******************************************
 C               **  TREAT THE SET HANDBOOK URL           **
 C               *******************************************
 C
-      NCHURL=40
-      IHBURL(1:40)='http://www.itl.nist.gov/div898/handbook/'
+      NCHURL=41
+      IHBURL(1:41)='https://www.itl.nist.gov/div898/handbook/'
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    JULY 1999
 C
@@ -17873,6 +17936,15 @@ C
       NCPYTH=0
       IPYTVR='DEFA'
 C
+CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER 2019
+C
+C               **************************************************
+C               **  TREAT THE SET R      PATH <PATH>             *
+C               **************************************************
+C
+      IRRRPA=' '
+      NCRPAT=0
+C
 CCCCC THE FOLLOWING SECTION WAS ADDED    MARCH 2019
 C
 C               **************************************************
@@ -18116,7 +18188,11 @@ C               ****************************************************************
 C               **  TREAT THE SET WRITE FEEDBACK <ON/OFF>            CASE      **
 C               *****************************************************************
 C
-      IFEEWR='OFF'
+CCCCC 2019/11: CHANGE THE DEFAULT.  THIS SETTING WILL PRINT MOST
+CCCCC          ERROR MESSAGES EVEN IF FEEDBACK SWITCH IS SET TO OFF.
+C
+CCCCC IFEEWR='OFF'
+      IFEEWR='ON'
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    MARCH 2004
 C
@@ -19305,6 +19381,23 @@ C               ******************************************************
 C
       IREADS='ON'
 C
+CCCCC THE FOLLOWING SECTION WAS ADDED    OCTOBER 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET READ PERCENT SIGN IGNORE <ON/OFF> **
+C               ******************************************************
+C
+      IREAPC='ON'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET OUTPUT LINE NUMBERS      <ON/OFF> **
+C               ******************************************************
+C
+      IOUTLN='OFF'
+      ILNCNT=0
+C
 CCCCC THE FOLLOWING SECTION WAS ADDED    APRIL 2017
 C
 C               ******************************************************
@@ -19340,6 +19433,106 @@ C               **                EXTREMELY UNUSUAL>                **
 C               ******************************************************
 C
       I1PTOC='OFF'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    SEPTEMBER 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET GREP CASE <IGNORE/NOIGNORE>       **
+C               **  TREAT THE SET GREP RECURSIVE <ON/OFF>           **
+C               **  TREAT THE SET GREP LINE NUMBERS <ON/OFF>        **
+C               **  TREAT THE SET GREP EXACT MATCH <ON/OFF>         **
+C               **  TREAT THE SET GREP NO MATCH <ON/OFF>            **
+C               **  TREAT THE SET GREP FILE NAME ONLY <ON/OFF>      **
+C               ******************************************************
+C
+      IGRPCA='IGNO'
+      IGRPRE='OFF'
+      IGRPLN='ON'
+      IGRPEM='OFF'
+      IGRPNM='OFF'
+      IGRPFN='OFF'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    SEPTEMBER 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET DIR RECURSIVE <ON/OFF>            **
+C               **  TREAT THE SET DIR PAUSE <ON/OFF>                **
+C               **  TREAT THE SET DIR LONG LISTING <ON/OFF>         **
+C               **  TREAT THE SET DIR SORT <ALPHA/SIZE/DATE>        **
+C               ******************************************************
+C
+      IDIRRE='OFF'
+      IDIRPA='OFF'
+      IDIRLL='OFF'
+      IDIRSO='OFF'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    SEPTEMBER 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET CAT MORE  <ON/OFF>                **
+C               ******************************************************
+C
+      ICATMO='ON'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    SEPTEMBER 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET CAT MORE  <ON/OFF>                **
+C               ******************************************************
+C
+      ICATMO='ON'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    SEPTEMBER 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET STRING VARIABLE <APPEND/OVERWRITE> *
+C               ******************************************************
+C
+      ISTRVA='OVER'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    SEPTEMBER 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET STRING COMBINE SEPARATOR <VAL>     *
+C               ******************************************************
+C
+      ISTRCS='SP()'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    SEPTEMBER 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET RATIO OF MEANS METHOD              *
+C               **                <FIELLER/LOG RATIO/LARGE SAMPLE>   *
+C               ******************************************************
+C
+      IRATME='FIEL'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    OCTOBER 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET DAVID TEST CRITICAL VALUE         **
+C               **                <ASTM/DAVID/OFF>                  **
+C               ******************************************************
+C
+      IDAVTA='ASTM'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    OCTOBER 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET SKEW OUTLIER TEST CRITICAL VALUE  **
+C               **                <ASTM/SIMULATION>                 **
+C               ******************************************************
+C
+      ISKOTA='ASTM'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    OCTOBER 2019
+C
+C               *********************************************************
+C               **  TREAT THE SET KURTOSIS OUTLIER TEST CRITICAL VALUE **
+C               **                <ASTM/SIMULATION>                    **
+C               *********************************************************
+C
+      IKUOTA='ASTM'
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    APRIL 2017
 C
@@ -20004,25 +20197,193 @@ C
 CCCCC THE FOLLOWING SECTION WAS ADDED    AUGUST       2011
 C
 C               *****************************************************
-C               **  TREAT THE SET POSTSCRIPT VIEWER                **
-C               **                <NAME>                           **
+C               **  TREAT THE SET POSTSCRIPT VIEWER <NAME>         **
+C               **            SET PDF        VIEWER <NAME>         **
+C               **            SET IMAGE      VIEWER <NAME>         **
+C               **            SET BACKUP     VIEWER <NAME>         **
 C               *****************************************************
 C
+C     NOTE: COMMENTS FOR LINUX/MacOS SYSTEMS
+C
+C           1. "open" FOR MacOS AND "xdg-open" FOR LINUX USE THE
+C              FILE EXTENSION TO DETERMINE THE APPROPRIATE APPLICATION
+C              TO USE.  HOWEVER, THE "PSVIEW" COMMAND IS OFTEN USED
+C              WITH THE dppl1f.dat AND dppl2f.dat FILES WHICH DO
+C              NOT HAVE THE APPROPRIATE FILE EXTENSIONS.
+C
+C           2. ALSO, THE ghostview APPLICATION IS LESS LIKELY
+C              TO BE INSTALLED BY DEFAULT.  THE "okular" APPLICATION
+C              IS MORE LIKELY TO BE AVAILABLE.
+C
+C           SO TO ALLOW xdg-open AND open TO BE USED AS THE DEFAULT
+C           VIEWER, ALSO DEFINE A "BACKUP" VIEWER.  THIS WILL BE USED
+C           WHEN THE REQUESTED FILE DOES NOT HAVE THE APPROPRIATE
+C           FILE EXTENSION.  FOR LINUX, WE WILL USE THE "okular"
+C           APPLICATION AS THIS IS INSTALLLED BY DEFAULT ON MANY
+C           SYSTEMS AND CAN HANDLE A NUMBER OF IMAGE TYPES AS WELL
+C           AS POSTSCRIPT AND PDF FILES.  FOR MacOS, USE
+C           "/Applications/Preview.app"
+C
       IF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
-        IPSTVW='ghostview'
-        NCPSVW=9
+        IF(IOPSY2.EQ.'MAC ')THEN
+          IPSTVW='open'
+          NCPSVW=4
+          IPDFVW='open'
+          NCPDVW=4
+          IIMAVW='open'
+          NCIMVW=4
+          IBCKVW='/Applications/Preview.app'
+          NCBKVW=25
+        ELSE
+          IPSTVW='xdg-open'
+          NCPSVW=8
+          IPDFVW='xdg-open'
+          NCPDVW=8
+          IIMAVW='xdg-open'
+          NCIMVW=8
+          IBCKVW='okular'
+          NCBKVW=6
+        ENDIF
       ELSEIF(IOPSY1.EQ.'PC-D')THEN
+C
+C       2019/12: TAKE INITIAL PATH FROM SYSTEM ENVIRONMENT
+C                VARIABLES.  THIS IS MORE ROBUST FOR NON-ENGLISH
+C                PLATFORMS.
+C
         CALL DPCONA(92,IBASLC)
-        IPSTVW='C: PROGRAM FILES (x86) GHOSTGUM GSVIEW GSVIEW32.EXE'
-        IPSTVW(3:3)=IBASLC
-        IPSTVW(23:23)=IBASLC
-        IPSTVW(32:32)=IBASLC
-        IPSTVW(39:39)=IBASLC
-        NCPSVW=47
-      ELSE
-        IPSTVW='ghostview'
-        NCPSVW=9
+        IF(WINBIT.EQ.'64')THEN
+          IPSTVW(1:NCP86F)=P86FIL(1:NCP86F)
+          IPDFVW(1:NCP86F)=P86FIL(1:NCP86F)
+          IBCKVW(1:NCP86F)=P86FIL(1:NCP86F)
+          NCPSVW=NCP86F
+          NCPDVW=NCP86F
+          NCBKVW=NCP86F
+        ELSE
+          IPSTVW(1:NCPROF)=PROFIL(1:NCPROF)
+          IPDFVW(1:NCPROF)=PROFIL(1:NCPROF)
+          IBCKVW(1:NCPROF)=PROFIL(1:NCPROF)
+          NCPSVW=NCPROF
+          NCPDVW=NCPROF
+          NCBKVW=NCPROF
+        ENDIF
+C
+        NCPSVW=NCPSVW+1
+        IPSTVW(NCPSVW:NCPSVW)=IBASLC
+        IPSTVW(NCPSVW+1:NCPSVW+8)='GHOSTGUM'
+        NCPSVW=NCPSVW+8
+        IPSTVW(NCPSVW:NCPSVW)=IBASLC
+        IPSTVW(NCPSVW+1:NCPSVW+6)='GSVIEW'
+        NCPSVW=NCPSVW+6
+        NCPSVW=NCPSVW+1
+        IPSTVW(NCPSVW:NCPSVW)=IBASLC
+        IPSTVW(NCPSVW+1:NCPSVW+12)='GSVIEW32.EXE'
+        NCPSVW=NCPSVW+12
+C
+        NCPDVW=NCPDVW+1
+        IPDFVW(NCPDVW:NCPDVW)=IBASLC
+        IPDFVW(NCPDVW+1:NCPDVW+5)='ADOBE'
+        NCPDVW=NCPDVW+5
+        NCPDVW=NCPDVW+1
+        IPDFVW(NCPDVW:NCPDVW)=IBASLC
+        IPDFVW(NCPDVW+1:NCPDVW+17)='Acrobat Reader DC'
+        NCPDVW=NCPDVW+17
+        NCPDVW=NCPDVW+1
+        IPDFVW(NCPDVW:NCPDVW)=IBASLC
+        IPDFVW(NCPDVW+1:NCPDVW+6)='Reader'
+        NCPDVW=NCPDVW+6
+        NCPDVW=NCPDVW+1
+        IPDFVW(NCPDVW:NCPDVW)=IBASLC
+        IPDFVW(NCPDVW+1:NCPDVW+12)='AcroRd32.exe'
+        NCPDVW=NCPDVW+12
+C
+        NCBKVW=NCBKVW+1
+        IBCKVW(NCBKVW:NCBKVW)=IBASLC
+        IBCKVW(NCBKVW+1:NCBKVW+8)='GHOSTGUM'
+        NCBKVW=NCBKVW+8
+        IBCKVW(NCBKVW:NCBKVW)=IBASLC
+        IBCKVW(NCBKVW+1:NCBKVW+6)='GSVIEW'
+        NCBKVW=NCBKVW+6
+        NCBKVW=NCBKVW+1
+        IBCKVW(NCBKVW:NCBKVW)=IBASLC
+        IBCKVW(NCBKVW+1:NCBKVW+12)='GSVIEW32.EXE'
+        NCBKVW=NCBKVW+12
+C
+        IIMAVW=' '
+        NCIMVW=0
       ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER       2019
+C
+C               *****************************************************
+C               **  TREAT THE SET LIST VIEWER   <NAME>             **
+C               **  TREAT THE SET LIST LAUNCHER <NAME>             **
+C               **  TREAT THE SET EXCEL VIEWER  <NAME>             **
+C               **  TREAT THE SET WORD  VIEWER  <NAME>             **
+C               **  TREAT THE SET POWER POINT  VIEWER  <NAME>      **
+C               *****************************************************
+C
+C     FOR WINDOWS, YOU CAN SIMPLY DO A
+C
+C         SYSTEM FILE.
+C
+C     AND THE FILE ASSOCIATIONS WILL INVOKE TO PROPER APPLICATION.
+C     FOR LINUX, YOU NEED TO SPECIFY AN EXPLICIT APPLICATION TO VIEW
+C     AN EXCEL OR WORD FILE.
+C
+C     ON MANY LINUX/UNIX INSTALLATIONS, YOU CAN USE THE
+C     "xdg-open" WHICH WILL USE FILE ASSOCIATIONS ON THE
+C     SYSTEM TO AUTOMATICALLY DETERMINE THE USER'S PREFERRED
+C     APPLICATION.
+C
+C     ON MacOS, "open" HAS SIMILAR FUNCTIONALITY AS "xdg-open"
+C     ON LINUX.
+C
+      IF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
+        ILSTVW='vi'
+        NCLSVW=2
+        ILSTLA='gnome-terminal -e'
+        NCLSLA=17
+CCCCC   IEXCVW='libreoffice --calc'
+CCCCC   NCEXCW=18
+CCCCC   IWORVW='libreoffice --writer'
+CCCCC   NCWOVW=20
+        IF(IOPSY2.EQ.'MAC ')THEN
+          IEXCVW='open'
+          NCEXVW=4
+          IWORVW='open'
+          NCWOVW=4
+          IPPTVW='open'
+          NCPPVW=4
+        ELSE
+          IEXCVW='xdg-open'
+          NCEXVW=8
+          IWORVW='xdg-open'
+          NCWOVW=8
+          IPPTVW='xdg-open'
+          NCPPVW=8
+        ENDIF
+      ELSE
+C
+        ILSTVW='notepad'
+        NCLSVW=7
+        ILSTLA=' '
+        NCLSLA=0
+        IEXCVW=' '
+        NCEXCW=0
+        IWORVW=' '
+        NCWOVW=0
+        IPPTVW=' '
+        NCPPVW=0
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER       2019
+C
+C               *****************************************************
+C               **  TREAT THE SET LIST NEW WINDOW <ON/OFF>         **
+C               **  TREAT THE SET HELP NEW WINDOW <ON/OFF>         **
+C               *****************************************************
+C
+      IHLPNW='OFF'
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    DECEMBER    2011
 C
@@ -20160,6 +20521,21 @@ C               ******************************************************
 C
       PWRTGA=0.1
 C
+CCCCC THE FOLLOWING SECTION WAS ADDED    OCTOBER 2019
+C
+C               *****************************************************
+C               **  TREAT THE SET GRUBB TEST STANDARD DEVIATION   **
+C               **                <VALUE>                         **
+C               **  TREAT THE SET GRUBB TEST DEGREES OF FREEDOM   **
+C               **                <VALUE>                         **
+C               **  TREAT THE SET GRUBB TEST CRITICAL VALUE       **
+C               **                <FORMULA/ASTM/SIMULATION>       **
+C               ****************************************************
+C
+      PGRUSD=CPUMIN
+      PGRUDF=CPUMAX
+      IGRUTA='FORM'
+C
 CCCCC THE FOLLOWING SECTION WAS ADDED    APRIL 2019
 C
 C               ******************************************************
@@ -20168,6 +20544,34 @@ C               **                <VALUE>                           **
 C               ******************************************************
 C
       IAUXDP=7
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    OCTOBER 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET HEAD LINES <VALUE>                **
+C               **  TREAT THE SET TAIL LINES <VALUE>                **
+C               ******************************************************
+C
+      IHEALI=10
+      ITAILI=10
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET BROWSER HEIGHT <VALUE>            **
+C               **  TREAT THE SET BROWSER WIDTH  <VALUE>            **
+C               ******************************************************
+C
+      IBROHE=0
+      IBROWI=0
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER 2019
+C
+C               ******************************************************
+C               **  TREAT THE SET RANLUX LEVEL <1/2/3/4>            **
+C               ******************************************************
+C
+      IRLXLE=3
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    DECEMBER 2012
 C
@@ -20356,6 +20760,50 @@ C               **  TREAT THE SET SYSTEM HIDDEN <ON/OFF>            **
 C               ******************************************************
 C
       ISYSHI='OFF'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    DECEMBER     2019
+C
+C               ******************************************************
+C               **  TREAT THE SET HOME PATH     <ON/OFF>            **
+C               ******************************************************
+C
+      IHOMPA='OFF'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JANUARY     2020
+C
+C               ******************************************************
+C               **  TREAT THE SET IPLOT JITTER  <ON/OFF>            **
+C               ******************************************************
+C
+      IIPLJI='OFF'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    FEBRUARY     2020
+C
+C               ******************************************************
+C               **  TREAT THE SET WRITE CSV     <ON/OFF>            **
+C               ******************************************************
+C
+      ICSVWR='OFF'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    FEBRUARY     2020
+C
+C               ******************************************************
+C               **  TREAT THE SET EXCEL SHEET   <NAME>              **
+C               **  TREAT THE SET EXCEL NUMBER OF ROWS <VALUE>      **
+C               **  TREAT THE SET EXCEL COLUMN LIST <VAR-NAME>      **
+C               ******************************************************
+C
+      IEXCSH='Sheet1'
+      IEXCCL='NULL'
+      IEXCNR=-1
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    FEBRUARY     2020
+C
+C               ******************************************************
+C               **  TREAT THE SET INSERT OVERWRITE <ON/OFF>         **
+C               ******************************************************
+C
+      IINSOW='ON'
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    FEBRUARY     2018
 C
@@ -21272,6 +21720,256 @@ CCCCC   A=ATAN2D(YY,XX)
       ELSE
         IO=1
       END IF
+      RETURN
+      END
+      SUBROUTINE INSERT(Y1,N1,Y2,N2,NLOC,IWRITE,YOUT,NOUT,MAXNXT,
+     1                  IINSOW,IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE INSERTS THE CONTENTS OF Y2 INTO
+C              Y1 STARTING AT ROW NLOC.
+C
+C     INPUT  ARGUMENTS--Y1     = THE SINGLE PRECISION VECTOR OF
+C                                OBSERVATIONS.
+C                     --N1     = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR Y1.
+C                     --Y2     = THE SINGLE PRECISION VECTOR OF
+C                                OBSERVATIONS TO BE INSERTED INTO Y1.
+C                     --N2     = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR Y2.
+C                     --NLOC   = THE INTEGER NUMBER THAT SPECIFIES THE
+C                                STARTING ROW IN Y1.
+C     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF THE
+C                                MERGED VALUES.
+C                     --NOUT   = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE OUTPUT VECTOR YOUT.
+C     OUTPUT--THE COMPUTED SINGLE PRECISION VECTOR OF THE MERGED VALUES.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     REFERENCE--ISO 13528, FIRST EDITION, STATISTICAL METHODS FOR USE
+C                IN PROFICIENCY TESTING BY INTERLABORATORY COMPARISONS,
+C                2005, PP. 25-30.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2020.02
+C     ORIGINAL VERSION--FEBRUARY  2020.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IINSOW
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*9 INAME
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION Y1(*)
+      DIMENSION Y2(*)
+      DIMENSION YOUT(*)
+C
+C---------------------------------------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='INSE'
+      ISUBN2='RT  '
+      IERROR='NO'
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'SERT')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF INSERT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,N1,N2
+   52   FORMAT('IBUGA3,ISUBRO,N1,N2 = ',2(A4,2X),2I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,MAX(N1,N2)
+          WRITE(ICOUT,56)I,Y1(I),Y2(I)
+   56     FORMAT('I,Y1(I),Y2(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      IF(N1.LT.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN INSERT ')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)
+  112   FORMAT('      THE NUMBER OF OBSERVATIONS IN THE FIRST ',
+     1         'RESPONSE VARIABLE IS NON-POSITIVE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)N1
+  117   FORMAT('      THE NUMBER OF OBSERVATIONS = ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ELSEIF(N2.LT.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,122)
+  122   FORMAT('      THE NUMBER OF OBSERVATIONS IN THE SECOND ',
+     1         'RESPONSE VARIABLE IS NON-POSITIVE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)N2
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ELSEIF(NLOC.LT.1 .OR. NLOC.GT.N1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,132)NLOC
+  132   FORMAT('      THE INSERTION ROW, (',I8,') IS GREATER THAN THE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,134)N1
+  134   FORMAT('      NUMBER OF ROWS IN THE FIRST RESPONSE VARIABLE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,136)N1
+  136   FORMAT('      THE NUMBER OF ROWS IN THE FIRST RESPONSE ',
+     1         'VARIABLE = ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C               *****************************
+C               **  STEP 2--               **
+C               **  PERFORM THE INSERTION  **
+C               *****************************
+C
+      NOUT=0
+      DO210II=1,NLOC-1
+        NOUT=NOUT+1
+        YOUT(NOUT)=Y1(II)
+  210 CONTINUE
+C
+      DO220II=1,N2
+        NOUT=NOUT+1
+        IF(NOUT.GT.MAXNXT)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,111)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,222)
+  222     FORMAT('      THE MAXIMUM NUMBER OF ROWS IS EXCEEDED FOR ',
+     1           'THE OUTPUT VARIABLE.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,226)N1
+  226     FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE ',
+     1           'FIRST RESPONSE VARIABLE = ',I8,'.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,227)N2
+  227     FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE ',
+     1           'SECOND RESPONSE VARIABLE = ',I8,'.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,228)MAXNXT
+  228     FORMAT('      THE MAXIMUM NUMBER OF ROWS = ',
+     1           I8,'.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+        YOUT(NOUT)=Y2(II)
+  220 CONTINUE
+C
+      IF(NOUT.LT.N1 .OR. IINSOW.EQ.'OFF')THEN
+        IF(IINSOW.EQ.'ON')THEN
+          NSTRT=NOUT+1
+        ELSE
+          NSTRT=NLOC
+        ENDIF
+        DO230II=NSTRT,N1
+          NOUT=NOUT+1
+C
+          IF(NOUT.GT.MAXNXT)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,111)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,222)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,226)N1
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,227)N2
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,228)MAXNXT
+            CALL DPWRST('XXX','BUG ')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+C
+          YOUT(NOUT)=Y1(II)
+  230   CONTINUE
+      ENDIF
+C
+C               *******************************
+C               **  STEP 3--                 **
+C               **  WRITE OUT A LINE         **
+C               **  OF SUMMARY INFORMATION.  **
+C               *******************************
+C
+  800 CONTINUE
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,811)NOUT
+  811   FORMAT('THE NUMBER OF VALUES GENERATED BY THE INSERT ',
+     1         'COMMAND = ',I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'SERT')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END OF INSERT--')
+        CALL DPWRST('XXX','BUG ')
+        DO9012I=1,NOUT
+          WRITE(ICOUT,9015)I,YOUT(I)
+ 9015     FORMAT('I,YOUT(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9012   CONTINUE
+      ENDIF
+C
       RETURN
       END
       SUBROUTINE INTARR(X,NX,IWRITE,Y,NY,IBUGA3,IERROR)
@@ -30192,7 +30890,8 @@ C
               PP0=PP0+RC
               PN0=PN0+FAC*RC
               QP0=QP0+RS
-85            QN0=QN0+FAC*RS
+              QN0=QN0+FAC*RS
+85         CONTINUE
            XD=X/DSQRT(2.0D0)
            XE1=DEXP(XD)
            XE2=DEXP(-XD)
@@ -30721,8 +31420,9 @@ C
       DOUBLE PRECISION SUMKRO, VK(*), FUNCTN, ALPHA(*), X(*), ONE, UNI
       PARAMETER ( ONE = 1 )
       SUMKRO = 0
+      IRESET=0
       DO 100 J = 1, NDIM
-         ALPHA(J) = UNI()
+         ALPHA(J) = UNI(IRESET)
  100  CONTINUE
       DO 200 K = 1, PRIME
          DO 300 J = 1, NDIM
@@ -31608,7 +32308,8 @@ C
         IF (DABS(X).LT.1.0D-100) THEN
            DO 10 K=0,N
               BL(K)=0.0D0
-10            DL(K)=0.0D0
+              DL(K)=0.0D0
+10         CONTINUE
            BL(0)=1.0D0
            DL(1)=0.5D0
            GOTO9999
@@ -31624,14 +32325,15 @@ C
                  IF (DABS(R).LT.DABS(BK)*1.0D-15) GO TO 20
 15            CONTINUE
 20            BL(K)=BK
-25            IF (K.GE.1) DL(K-1)=-0.5D0*X/K*BK
+              IF (K.GE.1) DL(K-1)=-0.5D0*X/K*BK
+25         CONTINUE
            UK=1.0D0
            R=1.0D0
            DO 30 I=1,50
               R=-0.25D0*R*X2/(I*(I+N+1.0D0))
               UK=UK+R
               IF (DABS(R).LT.DABS(UK)*1.0D-15) GO TO 35
-30            CONTINUE
+30         CONTINUE
 35         DL(N)=-0.5D0*X/(N+1.0D0)*UK
            GOTO9999
         ENDIF
@@ -31650,17 +32352,21 @@ C
            IF (K.LE.NM) BL(K)=F
            IF (K.EQ.2*INT(K/2)) BS=BS+2.0D0*F
            F0=F1
-40         F1=F
+           F1=F
+40      CONTINUE
         BG=BS-F
         DO 45 K=0,NM
-45         BL(K)=BL(K)/BG
+           BL(K)=BL(K)/BG
+45      CONTINUE
         R0=1.0D0
         DO 50 K=1,NM
            R0=2.0D0*R0*K/X
-50         BL(K)=R0*BL(K)
+           BL(K)=R0*BL(K)
+50      CONTINUE
         DL(0)=-0.5D0*X*BL(1)
         DO 55 K=1,NM
-55         DL(K)=2.0D0*K/X*(BL(K-1)-BL(K))
+           DL(K)=2.0D0*K/X*(BL(K-1)-BL(K))
+55      CONTINUE
 C
  9999   CONTINUE
         BL1=BL(NM)
@@ -32125,7 +32831,8 @@ C
               UK=UK+R
               IF (DABS(R).LT.DABS(UK)*1.0D-15) GO TO 25
 20          CONTINUE
-25          DL(K)=-0.5D0*X/(VK+1.0D0)*UK
+            DL(K)=-0.5D0*X/(VK+1.0D0)*UK
+25       CONTINUE
          GOTO9999
       ENDIF
       K0=11
@@ -32138,13 +32845,15 @@ C
          DO 30 K=1,K0
             RP=-0.78125D-2*RP*(VV-(4.0*K-3.0)**2.0)*(VV-
      &            (4.0*K-1.0)**2.0)/(K*(2.0*K-1.0)*X2)
-30            PX=PX+RP
+              PX=PX+RP
+30       CONTINUE
          QX=1.0D0
          RQ=1.0D0
          DO 35 K=1,K0
             RQ=-0.78125D-2*RQ*(VV-(4.0*K-1.0)**2.0)*(VV-
      &            (4.0*K+1.0)**2.0)/(K*(2.0*K+1.0)*X2)
-35            QX=QX+RQ
+              QX=QX+RQ
+35       CONTINUE
          QX=0.125D0*(VV-1.0D0)*QX/X
          XK=X-(0.5D0*(J+V0)+0.25D0)*PI
          A0=DSQRT(RP2/X)
@@ -32181,7 +32890,8 @@ CCCCC   CALL GAM0(V0,GA)
             F=2.0D0*(K+V0-1.0D0)/X*F1-F0
             F0=F1
             F1=F
-45            VL(K)=F
+            VL(K)=F
+45       CONTINUE
       ELSE IF (N.GE.2) THEN
          M=MSTA1(X,200)
          IF (M.LT.N) THEN
@@ -32195,18 +32905,21 @@ CCCCC   CALL GAM0(V0,GA)
             F=2.0D0*(V0+K+1.0D0)/X*F1-F2
             IF (K.LE.N) VL(K)=F
             F2=F1
-50            F1=F
+            F1=F
+50       CONTINUE
          IF (DABS(BJV0).GT.DABS(BJV1)) CS=BJV0/F
          IF (DABS(BJV0).LE.DABS(BJV1)) CS=BJV1/F2
          DO 55 K=0,N
-55            VL(K)=CS*VL(K)
+            VL(K)=CS*VL(K)
+55       CONTINUE
       ENDIF
       VL(0)=FAC*VL(0)
       DO 65 J=1,N
          RC=FAC*R0
          VL(J)=RC*VL(J)
          DL(J-1)=-0.5D0*X/(J+V0)*VL(J)
-65         R0=2.0D0*(J+V0+1)/X*R0
+         R0=2.0D0*(J+V0+1)/X*R0
+65    CONTINUE
       DL(N)=2.0D0*(V0+N)*(VL(N-1)-VL(N))/X
       VM=N+V0
 C
@@ -47598,7 +48311,8 @@ C
       C(LIJL) = PHI(XKI,YKI,XKJ,YKJ)
       C(LIJU) = C(LIJL)
       LIJL = LIJL + LEND3
-  180 LIJU = LIJU + 1
+      LIJU = LIJU + 1
+  180 CONTINUE
 C
       LIJ = LEND3*LEND3 + LI
       C(LIJ) = FI(KI)
@@ -47610,14 +48324,15 @@ C
       C(LIJL) = 0.
       C(LIJU) = 0.
       LIJL = LIJL + LEND3
-  210 LIJU = LIJU + 1
+      LIJU = LIJU + 1
+  210 CONTINUE
       LIJ = LEND3*LEND3 + LEND + LLI
       C(LIJ) = 0.
   215 CONTINUE
 C
       LR = LEND3*LEND3 + 1
       LRR = LR + LEND3
-  216    CONTINUE
+  216 CONTINUE
       CALL SGECO(C,LEND3,LEND3,IP,RCOND,C(LRR))
       IF((.1*RCOND+1.).EQ.1.)GO TO 300
       CALL SGESL(C,LEND3,LEND3,IP,C(LR),0)
@@ -47625,7 +48340,8 @@ C
       DO 220 LI=1,LEND
       IAB = NP(IJ)+LI-1
       AB(IAB) = C(LR)
-  220 LR = LR + 1
+      LR = LR + 1
+  220 CONTINUE
 C
       AL(IALS+1) = C(LR)
       AL(IALS+2) = C(LR+1)
@@ -47699,173 +48415,196 @@ C
 C
       DO 640 JO=1,NYO
 C
-C     DETERMINE THE LOCATION OF THE POINT YO IN TERMS OF THE SMALLEST
-C     VALUE OF J SUCH THAT YO(JO) IS IN SOME RECTANGLE (I,J).
+C       DETERMINE THE LOCATION OF THE POINT YO IN TERMS OF THE SMALLEST
+C       VALUE OF J SUCH THAT YO(JO) IS IN SOME RECTANGLE (I,J).
 C
-      YV = YO(JO)
-      JJS = J+1
-      IF (YV.LT.YG(JJS)) JJS=1
+        YV = YO(JO)
+        JJS = J+1
+        IF (YV.LT.YG(JJS)) JJS=1
 C
-      DO 100 JJ=JJS,NYG
-      IF (YV.LT.YG(JJ+1)) GO TO 120
-  100 CONTINUE
+        DO 100 JJ=JJS,NYG
+          IF (YV.LT.YG(JJ+1)) GO TO 120
+  100   CONTINUE
 C
-      J = NYG
-      GO TO 140
-  120 J = JJ-1
-  140 JD = 3
-      IF (J.GE.1) GO TO 160
-      JD = 0
-      J = 1
-      GO TO 180
-  160 IF (J.LT.NYG) GO TO 180
-      JD = 6
-  180 DY = YG(J+2)-YG(J+1)
-      I = 1
+        J = NYG
+        GO TO 140
+  120   CONTINUE
+        J = JJ-1
+  140   CONTINUE
+        JD = 3
+        IF (J.GE.1) GO TO 160
+        JD = 0
+        J = 1
+        GO TO 180
+  160   CONTINUE
+        IF (J.LT.NYG) GO TO 180
+        JD = 6
+  180   CONTINUE
+        DY = YG(J+2)-YG(J+1)
+        I = 1
 C
-      DO 620 IO=1,NXO
+        DO 620 IO=1,NXO
 C
-C     DETERMINE THE LOCATION OF THE POINT XO IN TERMS OF THE SMALLEST
-C     VALUE OF I SUCH THAT XO(IO) IS IN THE RECTANGLE (I,J).
+C         DETERMINE THE LOCATION OF THE POINT XO IN TERMS OF THE
+C         SMALLEST VALUE OF I SUCH THAT XO(IO) IS IN THE
+C         RECTANGLE (I,J).
 C
-      IIS = I+1
-      XV = XO(IO)
-      IF (XV.LT.XG(IIS)) IIS=1
+          IIS = I+1
+          XV = XO(IO)
+          IF (XV.LT.XG(IIS)) IIS=1
 C
-      DO 200 II=IIS,NXG
-      IF (XV.LT.XG(II+1)) GO TO 220
-  200 CONTINUE
+          DO 200 II=IIS,NXG
+            IF (XV.LT.XG(II+1)) GO TO 220
+  200     CONTINUE
 C
-      I = NXG
-      GO TO 240
-  220 I = II-1
-  240 ID = 2
-      IF (I.GE.1) GO TO 260
-      ID = 1
-      I = 1
-      GO TO 280
-  260 IF (I.LT.NXG) GO TO 280
-      ID = 3
-  280 DX = XG(I+2)-XG(I+1)
-      KD = ID+JD
-      GO TO (300,360,300,440,520,440,300,360,300), KD
+          I = NXG
+          GO TO 240
+  220     CONTINUE
+          I = II-1
+  240     CONTINUE
+          ID = 2
+          IF (I.GE.1) GO TO 260
+          ID = 1
+          I = 1
+          GO TO 280
+  260     CONTINUE
+          IF (I.LT.NXG) GO TO 280
+          ID = 3
+  280     CONTINUE
+          DX = XG(I+2)-XG(I+1)
+          KD = ID+JD
+          GO TO (300,360,300,440,520,440,300,360,300), KD
 C
-C     THIS IS FOR (XO(IO),YO(JO)) POINTS IN A SINGLE RECTANGLE (I,J)
+C         THIS IS FOR (XO(IO),YO(JO)) POINTS IN A SINGLE
+C         RECTANGLE (I,J)
 C
-  300 FV = 0.
-      IJ = (J-1)*NXG+I
-      IAL = 3*IJ-2
-      LMAX = NP(IJ+1)-NP(IJ)
-      DXA = XG(I+2)-XG(I)
-      DYA = YG(J+2)-YG(J)
-      XVD = (XV-XG(I))/DXA
-      YVD = (YV-YG(J))/DYA
+  300     CONTINUE
+          FV = 0.
+          IJ = (J-1)*NXG+I
+          IAL = 3*IJ-2
+          LMAX = NP(IJ+1)-NP(IJ)
+          DXA = XG(I+2)-XG(I)
+          DYA = YG(J+2)-YG(J)
+          XVD = (XV-XG(I))/DXA
+          YVD = (YV-YG(J))/DYA
 C
-      DO 320 L=1,LMAX
-      MPS = NP(IJ)+L-1
-      KI = MP(MPS)
-      XKI = (XI(KI)-XG(I))/DXA
-      YKI = (YI(KI)-YG(J))/DYA
-  320 FV = FV+AB(MPS)*PHI(XKI,YKI,XVD,YVD)
+          DO 320 L=1,LMAX
+            MPS = NP(IJ)+L-1
+            KI = MP(MPS)
+            XKI = (XI(KI)-XG(I))/DXA
+            YKI = (YI(KI)-YG(J))/DYA
+            FV = FV+AB(MPS)*PHI(XKI,YKI,XVD,YVD)
+  320     CONTINUE
 C
-  340 FV = FV + AL(IAL) + AL(IAL+1)*XVD + AL(IAL+2)*YVD
-      GO TO 620
+  340     CONTINUE
+          FV = FV + AL(IAL) + AL(IAL+1)*XVD + AL(IAL+2)*YVD
+          GO TO 620
 C
-C     THIS IS FOR XO(IO),YO(JO)) POINTS WHICH ARE IN TWO RECTANGLES,
-C     (I,J) AND (I+1,J).
+C         THIS IS FOR XO(IO),YO(JO)) POINTS WHICH ARE IN TWO
+C         RECTANGLES, (I,J) AND (I+1,J).
 C
-  360 DYA = YG(J+2)-YG(J)
-      YVD = (YV-YG(J))/DYA
+  360     CONTINUE
+          DYA = YG(J+2)-YG(J)
+          YVD = (YV-YG(J))/DYA
 C
-      DO 420 IP=1,2
-      FC(IP) = 0.
-      IS = I+IP-1
-      IJ = (J-1)*NXG+IS
-      IAL = 3*IJ-2
-      DXA = XG(IS+2)-XG(IS)
-      XVD = (XV-XG(IS))/DXA
-      LMAX = NP(IJ+1)-NP(IJ)
+          DO 420 IP=1,2
+            FC(IP) = 0.
+            IS = I+IP-1
+            IJ = (J-1)*NXG+IS
+            IAL = 3*IJ-2
+            DXA = XG(IS+2)-XG(IS)
+            XVD = (XV-XG(IS))/DXA
+            LMAX = NP(IJ+1)-NP(IJ)
 C
-      DO 380 L=1,LMAX
-      MPS = NP(IJ)+L-1
-      KI = MP(MPS)
-      XKI = (XI(KI)-XG(IS))/DXA
-      YKI = (YI(KI)-YG(J))/DYA
-  380 FC(IP) = FC(IP)+AB(MPS)*PHI(XKI,YKI,XVD,YVD)
+            DO 380 L=1,LMAX
+              MPS = NP(IJ)+L-1
+              KI = MP(MPS)
+              XKI = (XI(KI)-XG(IS))/DXA
+              YKI = (YI(KI)-YG(J))/DYA
+              FC(IP) = FC(IP)+AB(MPS)*PHI(XKI,YKI,XVD,YVD)
+  380       CONTINUE
 C
-  400 FC(IP)=FC(IP)+AL(IAL)+AL(IAL+1)*XVD+AL(IAL+2)*YVD
-  420 CONTINUE
+  400       CONTINUE
+            FC(IP)=FC(IP)+AL(IAL)+AL(IAL+1)*XVD+AL(IAL+2)*YVD
+  420     CONTINUE
 C
-      WI = H3((XV-XG(I+1))/DX)
-      FV = FC(1)*WI+(1.-WI)*FC(2)
-      GO TO 620
+          WI = H3((XV-XG(I+1))/DX)
+          FV = FC(1)*WI+(1.-WI)*FC(2)
+          GO TO 620
 C
-C     THIS IS FOR (XO(IO),YO(JO)) POINTS WHICH ARE IN TWO RECTANGLES,
-C     (I,J) AND (I,J+1).
+C         THIS IS FOR (XO(IO),YO(JO)) POINTS WHICH ARE IN TWO
+C         RECTANGLES, (I,J) AND (I,J+1).
 C
-  440 DXA = XG(I+2)-XG(I)
-      XVD = (XV-XG(I))/DXA
+  440     CONTINUE
+          DXA = XG(I+2)-XG(I)
+          XVD = (XV-XG(I))/DXA
 C
-      DO 500 JP=1,2
-      FC(JP) = 0.
-      JS = J+JP-1
-      IJ = (JS-1)*NXG+I
-      IAL = 3*IJ-2
-      DYA = YG(JS+2)-YG(JS)
-      YVD = (YV-YG(JS))/DYA
-      LMAX = NP(IJ+1)-NP(IJ)
+          DO 500 JP=1,2
+            FC(JP) = 0.
+            JS = J+JP-1
+            IJ = (JS-1)*NXG+I
+            IAL = 3*IJ-2
+            DYA = YG(JS+2)-YG(JS)
+            YVD = (YV-YG(JS))/DYA
+            LMAX = NP(IJ+1)-NP(IJ)
 C
-      DO 460 L=1,LMAX
-      MPS = NP(IJ)+L-1
-      KJ = MP(MPS)
-      XKJ = (XI(KJ)-XG(I))/DXA
-      YKJ = (YI(KJ)-YG(JS))/DYA
-  460 FC(JP) = FC(JP)+AB(MPS)*PHI(XKJ,YKJ,XVD,YVD)
+            DO 460 L=1,LMAX
+              MPS = NP(IJ)+L-1
+              KJ = MP(MPS)
+              XKJ = (XI(KJ)-XG(I))/DXA
+              YKJ = (YI(KJ)-YG(JS))/DYA
+              FC(JP) = FC(JP)+AB(MPS)*PHI(XKJ,YKJ,XVD,YVD)
+  460       CONTINUE
 C
-  480 FC(JP)=FC(JP)+AL(IAL)+AL(IAL+1)*XVD+AL(IAL+2)*YVD
-  500 CONTINUE
+  480       CONTINUE
+            FC(JP)=FC(JP)+AL(IAL)+AL(IAL+1)*XVD+AL(IAL+2)*YVD
+  500     CONTINUE
 C
-      UJ = H3((YV-YG(J+1))/DY)
-      FV = FC(1)*UJ+(1.-UJ)*FC(2)
-      GO TO 620
+          UJ = H3((YV-YG(J+1))/DY)
+          FV = FC(1)*UJ+(1.-UJ)*FC(2)
+          GO TO 620
 C
-C     THIS IS FOR (XO(IO),YO(JO)) POINTS WHICH ARE IN FOUR RECTANGLES,
-C     (I,J), (I+1,J), (I,J+1), AND (I+1,J+1).
+C         THIS IS FOR (XO(IO),YO(JO)) POINTS WHICH ARE IN FOUR
+C         RECTANGLES, (I,J), (I+1,J), (I,J+1), AND (I+1,J+1).
 C
-  520 KFC = 0
+  520     CONTINUE
+          KFC = 0
 C
-      DO 600 JP=1,2
-      JS = J+JP-1
-      DYA = YG(JS+2)-YG(JS)
-      YVD = (YV-YG(JS))/DYA
+          DO 600 JP=1,2
+            JS = J+JP-1
+            DYA = YG(JS+2)-YG(JS)
+            YVD = (YV-YG(JS))/DYA
 C
-      DO 580 IP=1,2
-      IS = I+IP-1
-      IJ = (JS-1)*NXG+IS
-      IAL = 3*IJ-2
-      KFC = KFC+1
-      FC(KFC) = 0.
-      DXA = XG(IS+2)-XG(IS)
-      XVD = (XV-XG(IS))/DXA
-      LMAX = NP(IJ+1)-NP(IJ)
+            DO 580 IP=1,2
+              IS = I+IP-1
+              IJ = (JS-1)*NXG+IS
+              IAL = 3*IJ-2
+              KFC = KFC+1
+              FC(KFC) = 0.
+              DXA = XG(IS+2)-XG(IS)
+              XVD = (XV-XG(IS))/DXA
+              LMAX = NP(IJ+1)-NP(IJ)
 C
-      DO 540 L=1,LMAX
-      MPS = NP(IJ)+L-1
-      KI = MP(MPS)
-      XKI = (XI(KI)-XG(IS))/DXA
-      YKI = (YI(KI)-YG(JS))/DYA
-  540 FC(KFC) = FC(KFC)+AB(MPS)*PHI(XKI,YKI,XVD,YVD)
+              DO 540 L=1,LMAX
+                MPS = NP(IJ)+L-1
+                KI = MP(MPS)
+                XKI = (XI(KI)-XG(IS))/DXA
+                YKI = (YI(KI)-YG(JS))/DYA
+                FC(KFC) = FC(KFC)+AB(MPS)*PHI(XKI,YKI,XVD,YVD)
+  540         CONTINUE
 C
-  560 FC(KFC)=FC(KFC)+AL(IAL)+AL(IAL+1)*XVD+AL(IAL+2)*YVD
-  580 CONTINUE
+  560         CONTINUE
+              FC(KFC)=FC(KFC)+AL(IAL)+AL(IAL+1)*XVD+AL(IAL+2)*YVD
+  580       CONTINUE
 C
-  600 CONTINUE
+  600     CONTINUE
 C
-      WI = H3((XV-XG(I+1))/DX)
-      UJ = H3((YV-YG(J+1))/DY)
-      FV = WI*(UJ*FC(1)+(1.-UJ)*FC(3))+(1.-WI)*(UJ*FC(2)+(1.-UJ)*FC(4))
-  620 FO(IO,JO) = FV
-C
+          WI = H3((XV-XG(I+1))/DX)
+          UJ = H3((YV-YG(J+1))/DY)
+          FV = WI*(UJ*FC(1)+(1.-UJ)*FC(3))+
+     1         (1.-WI)*(UJ*FC(2)+(1.-UJ)*FC(4))
+          FO(IO,JO) = FV
+  620   CONTINUE
   640 CONTINUE
 C
       RETURN
@@ -49881,17 +50620,19 @@ C
       DIMENSION X(*),XG(*),T(*)
 C
       DO 100 I=1,N
-  100 T(I) = X(I)
+        T(I) = X(I)
+  100 CONTINUE
 C
 CCCCC CALL SSORT(T,T,N,1)
       CALL SORT(T,N,T)
 C
       FINC = REAL(N-1)/REAL(NX+1)
   120 DO 140 J=1,NX
-      FK = J*FINC + 1.
-      K = FK
-      WK1 = FK - K
-  140 XG(J+1) = (1. - WK1)*T(K) + WK1*T(K+1)
+        FK = J*FINC + 1.
+        K = FK
+        WK1 = FK - K
+        XG(J+1) = (1. - WK1)*T(K) + WK1*T(K+1)
+  140 CONTINUE
 C
       XG(1) = T(1)
       XG(NX+2) = T(N)
@@ -50701,51 +51442,53 @@ C
       L = 0
 C
       DO 200 J=1,NYG
-      YGA = (YG(J+2)+YG(J))/2.
-      DYG = YG(J+2)-YG(J)
+        YGA = (YG(J+2)+YG(J))/2.
+        DYG = YG(J+2)-YG(J)
 C
-      DO 180 I=1,NXG
-      XGA = (XG(I+2)+XG(I))/2.
-      DXG = XG(I+2)-XG(I)
-      IJ = IJ+1
+        DO 180 I=1,NXG
+          XGA = (XG(I+2)+XG(I))/2.
+          DXG = XG(I+2)-XG(I)
+          IJ = IJ+1
 C
-C     DETERMINE THE POINTS IN THE (I,J)TH RECTANGLE.
+C         DETERMINE THE POINTS IN THE (I,J)TH RECTANGLE.
 C
-      DO 120 NK=1,NPI
-      D(NK) = AMAX1(ABS(XI(NK) - XGA)/DXG,ABS(YI(NK) - YGA)/DYG)
-      IF(D(NK).GT..6125)GO TO 120
-      D(NK) = 1.E10
-      L = L + 1
-      LL = MIN0(L,MPM)
-      MP(LL) = NK
-  120 CONTINUE
+          DO 120 NK=1,NPI
+            D(NK) = AMAX1(ABS(XI(NK) - XGA)/DXG,ABS(YI(NK) - YGA)/DYG)
+            IF(D(NK).GT..6125)GO TO 120
+            D(NK) = 1.E10
+            L = L + 1
+            LL = MIN0(L,MPM)
+            MP(LL) = NK
+  120     CONTINUE
 C
-      NP(IJ) = L+1
-      IF (NP(IJ)-NP(IJ-1).GE.MINPTS) GO TO 180
+          NP(IJ) = L+1
+          IF (NP(IJ)-NP(IJ-1).GE.MINPTS) GO TO 180
 C
-C     ADD THE CLOSEST POINTS IF THERE ARE LESS THAN MINPTS IN THE
-C     RECTANGLE.
+C         ADD THE CLOSEST POINTS IF THERE ARE LESS THAN MINPTS IN THE
+C         RECTANGLE.
 C
-      LM = MINPTS-(NP(IJ)-NP(IJ-1))
+          LM = MINPTS-(NP(IJ)-NP(IJ-1))
 C
-      DO 160 II=1,LM
-      L = L+1
-      LL = MIN0(L,MPM)
-      MP(LL) = 1
-      DM = D(1)
+          DO 160 II=1,LM
+            L = L+1
+            LL = MIN0(L,MPM)
+            MP(LL) = 1
+            DM = D(1)
 C
-      DO 140 NK=2,NPI
-      IF (D(NK).GE.DM) GO TO 140
-      DM = D(NK)
-      MP(LL) = NK
-  140 CONTINUE
+            DO 140 NK=2,NPI
+              IF (D(NK).GE.DM) GO TO 140
+              DM = D(NK)
+              MP(LL) = NK
+  140       CONTINUE
 C
-      NK = MP(LL)
-  160 D(NK) = 1.E10
+            NK = MP(LL)
+            D(NK) = 1.E10
+  160     CONTINUE
 C
-      NP(IJ) = L+1
-  180 NMAX = MAX0(NMAX,NP(IJ)-NP(IJ-1))
+          NP(IJ) = L+1
+          NMAX = MAX0(NMAX,NP(IJ)-NP(IJ-1))
 C
+  180   CONTINUE
   200 CONTINUE
 C
       RETURN
@@ -54736,6 +55479,9 @@ C                  DIXON TEST Y                                (HLR)
 C                  GRUBB TEST Y                                (HLR)
 C                  TIETJEN-MOORE TEST Y                        (HLR)
 C                  EXTREME STUDENTIZED DEVIATE TEST Y          (HLR)
+C                  DAVID TEST Y                                (HLR)
+C                  SKEWNESS OUTLIER TEST Y                     (HLR)
+C                  KURTOSIS OUTLIER TEST Y                     (HLR)
 C
 C                  RELIABILITY TREND TESTS Y                   (HLR)
 C
@@ -55035,6 +55781,10 @@ C                                       CONFIDENCE LIMITS
 C     UPDATED         --DECEMBER  2017. COEFFICIENT OF QUARTILE DISPERSION
 C                                       CONFIDENCE LIMITS
 C     UPDATED         --AUGUST    2018. HEDGES G CONFIDENCE LIMIT
+C     UPDATED         --OCTOBER   2019. RATIO OF MEANS CONFIDENCE LIMIT
+C     UPDATED         --OCTOBER   2019. DAVID TEST
+C     UPDATED         --OCTOBER   2019. SKEWNESS OUTLIER TEST
+C     UPDATED         --OCTOBER   2019. KURTOSIS OUTLIER TEST
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -56537,6 +57287,18 @@ C
          ENDIF
       ENDIF
 C
+CCCCC THE FOLLOWING SECTION WAS ADDED     OCTOBER 2019
+C               *******************************************************
+C               **  TREAT THE RATIO OF MEANS CONNFIDENCE LIMITS CASE **
+C               *******************************************************
+C
+      IF(ICOM.EQ.'RATI' .AND. IHARG(1).EQ.'OF  ' .AND.
+     1   IHARG(2).EQ.'MEAN')THEN
+        CALL DPMRCL(ICASAN,ICAPSW,IFORSW,
+     1              IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ENDIF
+C
 C               ****************************************
 C               **  TREAT THE FOLLOWING CASES:        **
 C               **    1) CONFIDENCE LIMITS            **
@@ -57631,6 +58393,51 @@ C
           ENDIF
  7150   CONTINUE
  7159   CONTINUE
+      ENDIF
+      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED     OCTOBER 2019
+C               *********************************************
+C               **  TREAT THE DAVID            TEST  CASE  **
+C               *********************************************
+C
+      IF(ICOM.EQ.'DAVI')THEN
+        CALL DPDAVI(XTEMP1,MAXNXT,
+     1              ICAPSW,ICASAN,IFORSW,
+     1              IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+      ELSE
+        DO7160I=1,NUMARG
+          IF(IHARG(I).EQ.'DAVI')THEN
+            CALL DPDAVI(XTEMP1,MAXNXT,
+     1                  ICAPSW,ICASAN,IFORSW,
+     1                  IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+            GOTO7169
+          ENDIF
+ 7160   CONTINUE
+ 7169   CONTINUE
+      ENDIF
+      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED     OCTOBER 2019
+C               *********************************************
+C               **  TREAT THE SKEWNESS OUTLIER TEST  CASE  **
+C               **  TREAT THE KURTOSIS OUTLIER TEST  CASE  **
+C               *********************************************
+C
+      IF(ICOM.EQ.'SKEW' .OR. ICOM.EQ.'KURT')THEN
+        CALL DPSKOU(XTEMP1,MAXNXT,
+     1              ICAPSW,ICASAN,IFORSW,
+     1              IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+      ELSE
+        DO7170I=1,NUMARG
+          IF(IHARG(I).EQ.'SKEW' .OR. IHARG(I).EQ.'KURT')THEN
+            CALL DPSKOU(XTEMP1,MAXNXT,
+     1                  ICAPSW,ICASAN,IFORSW,
+     1                  IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+            GOTO7179
+          ENDIF
+ 7170   CONTINUE
+ 7179   CONTINUE
       ENDIF
       IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
 C

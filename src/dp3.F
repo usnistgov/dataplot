@@ -9332,7 +9332,8 @@ C
   170 CONTINUE
 C     .......... NOW BALANCE THE SUBMATRIX IN ROWS K TO L ..........
       DO 180 I = K, L
-  180 SCALE(I) = 1.0E0
+        SCALE(I) = 1.0E0
+  180 CONTINUE
 C     .......... ITERATIVE LOOP FOR NORM REDUCTION ..........
   190 NOCONV = .FALSE.
 C
@@ -9366,10 +9367,12 @@ C     .......... NOW BALANCE ..........
          NOCONV = .TRUE.
 C
          DO 250 J = K, N
-  250    A(I,J) = A(I,J) * G
+           A(I,J) = A(I,J) * G
+  250    CONTINUE
 C
          DO 260 J = 1, L
-  260    A(J,I) = A(J,I) * F
+           A(J,I) = A(J,I) * F
+  260    CONTINUE
 C
   270 CONTINUE
 C
@@ -9445,12 +9448,14 @@ C     .......... LEFT HAND EIGENVECTORS ARE BACK TRANSFORMED
 C                IF THE FOREGOING STATEMENT IS REPLACED BY
 C                S=1.0E0/SCALE(I). ..........
          DO 100 J = 1, M
-  100    Z(I,J) = Z(I,J) * S
+           Z(I,J) = Z(I,J) * S
+  100    CONTINUE
 C
   110 CONTINUE
 C     ......... FOR I=LOW-1 STEP -1 UNTIL 1,
 C               IGH+1 STEP 1 UNTIL N DO -- ..........
-  120 DO 140 II = 1, N
+  120 CONTINUE
+      DO 140 II = 1, N
          I = II
          IF (I .GE. LOW .AND. I .LE. IGH) GO TO 140
          IF (I .LT. LOW) I = LOW - II
@@ -9781,10 +9786,12 @@ C
       IF(R.LT.0.0) R = 0.0D0
       IF(J) GOTO 30
       DO 25 I = 1,N
-   25 W(I) = W(I)/(1.0D0+R*(W(I)-1.0D0))
+        W(I) = W(I)/(1.0D0+R*(W(I)-1.0D0))
+   25 CONTINUE
       J = .TRUE.
       GOTO 10
-   30 MEW = TP
+   30 CONTINUE
+      MEW = TP
       IF(R.GE.1.0D0) GOTO 35
       THETA = R/(1.0D0-R)
       IF(THETA.LE.INF) RETURN
@@ -10552,7 +10559,8 @@ C
    10 CONTINUE
       IFAULT = 2
       RETURN
-   15 DO 20 I = 1,N
+   15 CONTINUE
+      DO 20 I = 1,N
         IF(IX(I).LT.IN(I)) GOTO 25
    20 CONTINUE
       IFAULT = 3
@@ -10560,11 +10568,13 @@ C
 C
 C        FORM MATRIX OF COUNTS
 C
-   25 IFAULT = 4
+   25 CONTINUE
+      IFAULT = 4
       DO 30 I = 1,3
         LM(I) = 0
-        DO 30 J = 1,MRL
+        DO 32 J = 1,MRL
           RL(J,I) = 0
+   32   CONTINUE
    30 CONTINUE
       DO 65 I = 1,N
         JJ = IX(I)
@@ -15203,8 +15213,9 @@ C
       BI(1)=-CC*BB*BI(1)
       MAXP=NMAX+2
       DO 1 N=2,MAXP 
-      BI(N)=BI(N)*BB
-    1 BB=CC*BB
+        BI(N)=BI(N)*BB
+        BB=CC*BB
+    1 CONTINUE
       RETURN
       END 
       SUBROUTINE BESJCF(ZZ,AA,NMAX,BJ)
@@ -15393,26 +15404,32 @@ C THE BACK-RECURSION IS FINISHED.  CALCULATE THE NORMALIZATION FACTOR
       BJ(2)=B*FAC
       IF(MAXN.EQ.0) GO TO 70
       DO 34 M=3,MAXP
-   34 BJ(M)=FAC*BJ(M)
+        BJ(M)=FAC*BJ(M)
+   34 CONTINUE
 C
 C THIS IS THE ONLY RETURN STATEMENT IN THE ROUTINE
 C
-   70 RETURN
+   70 CONTINUE
+      RETURN
 C
 C FOR VERY SMALL Z, CALCULATE J*S VIA ASYMPTOTIC FORMULA 9.1.7 OF (1) 
 C
-   72 BJ(2)=BBB
+   72 CONTINUE
+      BJ(2)=BBB
       BB=(Z*BJ(2))*(.5/(1.+A))
       BJ(1)=-BB
       IF(.NOT.LOGICL(4)) BJ(1)=(ZI*BJ(2))*AA
       IF(MAXP.GE.3) BJ(3)=BB
       IF(MAXP.LT.4) GO TO 70
       DO 74 N=4,MAXP
-   74 BJ(N)=(Z*BJ(N-1))*(.5/(A+REAL(N-2)))
+        BJ(N)=(Z*BJ(N-1))*(.5/(A+REAL(N-2)))
+   74 CONTINUE
       GO TO 70
 C UNDERFLOW. SET J*S ZERO
-   80 DO 81 M=N,MAXN
-   81 BJ(M + 2) = (0.0, 0.0)
+   80 CONTINUE
+      DO 81 M=N,MAXN
+        BJ(M + 2) = (0.0, 0.0)
+   81 CONTINUE
       BJ(N+2)=B
       GO TO 8
 C CONK OUT
@@ -15526,14 +15543,17 @@ C IF A.LE.0, CALCULATE KSUB(A+1) VIA 2.9
       IF(A.GT.0.) GO TO 6
       HH=-G*(EN*(EN*FF+QQ)-A*PP)
       GO TO 8
-    6 HH=-G*(EN*(EN*FF+PP)+A*QQ)
-    8 FF=G*(EN*FF+PP+QQ)
+    6 CONTINUE
+      HH=-G*(EN*(EN*FF+PP)+A*QQ)
+    8 CONTINUE
+      FF=G*(EN*FF+PP+QQ)
       CC=CC*DD/EN
       AK(N+1) =CC*FF
       AK1(N+1)=CC*HH
       IF(MAX(ABS(REALP(AK(N+1))),ABS(AIMAGP(AK(N+1)))).LE.TEST) GO TO 12
       PP=PP/(EN-A)
-   10 QQ=QQ/(EN+A)
+      QQ=QQ/(EN+A)
+   10 CONTINUE
       RETURN
    12 N=N+1
       M=N+1
@@ -15541,15 +15561,17 @@ C IF A.LE.0, CALCULATE KSUB(A+1) VIA 2.9
       HH = (0.0, 0.0)
       DO 14 L=1,N
          ITEMP = M - L
-      GG=GG+AK(ITEMP)
-   14 HH=HH+AK1(ITEMP)
+         GG=GG+AK(ITEMP)
+         HH=HH+AK1(ITEMP)
+   14 CONTINUE
       BK(2)=GG
       BK(1)=HH*ZINV 
       GO TO 40
 C FOR ABS(Z) BETWEEN 3 AND 14, CALCULATE K*S VIA THE ALGORITHM GIVEN
 C IN SECTION 3 OF THE REFERENCE.  THE ALGORITHM IS GIVEN FOR REAL Z, BUT
 C CAN BE USED WHEN THE REAL PART OF Z IS NON-NEGATIVE.
-   20 TEST=DYOUKI*COS(A*PI)/(E*PI)
+   20 CONTINUE
+      TEST=DYOUKI*COS(A*PI)/(E*PI)
       E=1.
       PP = (1.0, 0.0)
       QQ = (0.0, 0.0)
@@ -15567,7 +15589,8 @@ C CAN BE USED WHEN THE REAL PART OF Z IS NON-NEGATIVE.
       IF(MAX(ABS(REALP(PP)),ABS(AIMAGP(PP))).GE.EN*TEST) GO TO 23
    22 CONTINUE
       RETURN
-   23 PP=E/PP
+   23 CONTINUE
+      PP=E/PP
       QQ = (0.0, 0.0)
       EE=PP
       M=N 
@@ -15579,7 +15602,8 @@ C CAN BE USED WHEN THE REAL PART OF Z IS NON-NEGATIVE.
       AINV=REAL(N*N+N)/(REAL(N*N-N)+C)
       BB=2.*(REAL(N)+FF)/REAL(N+1)
       PP=(BB*QQ-RR)*AINV
-   25 EE=EE+PP
+      EE=EE+PP
+   25 CONTINUE
       BB=LOG(2.*FF) 
       GG=EXP(-BB*(A+.5))/EE
       BK(2)=SQRTPI*EXP(A*BB-FF)*GG*PP
@@ -15616,12 +15640,14 @@ C USE FORMULA 9.6.31, RECURRING FORWARD ON K OF ARGUMENT (-Z)
       FF=GG
       GG=HH
       DD=-DD
-      HH=(ZINV*(A+REAL(N-3)))*GG+FF
-   28 BK(N)=DD*HH-EE*BK(N)
+        HH=(ZINV*(A+REAL(N-3)))*GG+FF
+        BK(N)=DD*HH-EE*BK(N)
+   28 CONTINUE
       GO TO 70
 C FOR LARGE Z, CALCULATE K*S VIA PHASE-AMPLITUDE EQUATION 9.7.2 OF
 C REFERENCE (1) LISTED IN BESJCF.
-   30 FF=Z
+   30 CONTINUE
+      FF=Z
       EE=ZINV
       IF(REALP(Z).LT.0.) FF=-FF
       IF(REALP(Z).LT.0.) EE=-EE
@@ -15630,12 +15656,14 @@ C REFERENCE (1) LISTED IN BESJCF.
       R=1.
       IF(A.GT.0.) R=-1.
       DO 32 M=1,2
-      IF(M.EQ.2) C=C+R
-      CALL PHASMP(C,EE,1,PP,QQ)
-      ITEMP = 3 - M 
-   32 BK(ITEMP) = DD * PP
+        IF(M.EQ.2) C=C+R
+        CALL PHASMP(C,EE,1,PP,QQ)
+        ITEMP = 3 - M 
+        BK(ITEMP) = DD * PP
+   32 CONTINUE
       IF(REALP(Z).LT.0.) GO TO 26
-   40 M=3 
+   40 CONTINUE
+      M=3 
       IF(A.GT.0.) GO TO 60
       M=4 
       IF(MAXP.GE.3) BK(3)=BK(1)
@@ -15644,10 +15672,14 @@ C CALCULATE K*S VIA FORWARD RECURSION, CHECKING FOR POSSIBLE OVERFLOW
    60 IF(M.GT.MAXP) GO TO 70
       DO 65 N=M,MAXP
       IF(MAX(ABS(REALP(BK(N-1))),ABS(AIMAGP(BK(N-1)))).GT.BIG) GO TO 82
-   65 BK(N)=(ZINV*(A+REAL(N-3)))*BK(N-1)+BK(N-2)
-   70 RETURN
-   82 DO 83 M=N,MAXP
-   83 BK(M) = (0.0, 0.0)
+      BK(N)=(ZINV*(A+REAL(N-3)))*BK(N-1)+BK(N-2)
+   65 CONTINUE
+   70 CONTINUE
+      RETURN
+   82 CONTINUE
+      DO 83 M=N,MAXP
+         BK(M) = (0.0, 0.0)
+   83 CONTINUE
       GO TO 70
    86 CONTINUE
       WRITE (ICOUT, 88)NMAX
@@ -16758,14 +16790,17 @@ C OF THE REFERENCE INTO 1.3.
 C RECUR DIRECTLY ON GG AND HH WITHOUT USING FF AS IN THE ORIGINAL PROG.
       HH=-G*(EN*(EN*GG+C*QQ)-A*PP)
       GO TO 8
-    6 HH= G*(EN*(EN*GG+PP)+A*C*QQ)
-    8 GG=G*(EN*GG+PP+C*QQ)
+    6 CONTINUE
+      HH= G*(EN*(EN*GG+PP)+A*C*QQ)
+    8 CONTINUE
+      GG=G*(EN*GG+PP+C*QQ)
       CC=CC*DD/EN
       YA(N+1)=CC*GG 
       YA1(N+1)=CC*HH
       IF(MAX(ABS(REALP(YA(N+1))),ABS(AIMAGP(YA(N+1)))).LE.TEST)GOTO12
       PP=PP/(EN-A)
-   10 QQ=QQ/(EN+A)
+      QQ=QQ/(EN+A)
+   10 CONTINUE
       RETURN
    12 N=N+1
       M=N+1
@@ -16773,8 +16808,9 @@ C RECUR DIRECTLY ON GG AND HH WITHOUT USING FF AS IN THE ORIGINAL PROG.
       HH = (0.0, 0.0)
       DO 14 L=1,N
          ITEMP = M - L
-      GG=GG+YA(ITEMP)
-   14 HH=HH+YA1(ITEMP)
+         GG=GG+YA(ITEMP)
+         HH=HH+YA1(ITEMP)
+   14 CONTINUE
       BY(2)=-GG
       BY(1)=-HH*ZINV
       M=3 
@@ -16786,7 +16822,8 @@ CCCCC IF(A) 40,40,60
       ENDIF
 C FOR MAG(Z) BETWEEN 3 AND 14, OR FOR ABS(IM(Z)).GT.3, CALCULATE Y VIA
 C EQUATIONS 9.6.3 AND 9.6.5 OF REFERENCE 1 LISTED IN BESJCF 
-   20 CALL BESJCF(Z,A,NMAX,BY)
+   20 CONTINUE
+      CALL BESJCF(Z,A,NMAX,BY)
       C=-1.
       IF(AIMAGP(Z).LT.0.) C=1.
       CC=CMPLX(0.,C)
@@ -16807,16 +16844,18 @@ C IN THIS LOOP, HH IS THE FUNCTION K (OF ARGUMENT IZ OR -IZ) AND CAN BE
 C CALCULATED BY FORWARD RECURSION, SINCE THE REAL PART OF THE ARGUMENT
 C IS NON-NEGATIVE
       DO 24 N=4,MAXP
-      IF(MAX(ABS(REALP(HH)),ABS(AIMAGP(HH))).GT.BIG) GO TO 82
-      FF=GG
-      GG=HH
-      DD=CC*DD
-      HH=(ZINV*(A+REAL(N-3)))*GG+FF
-   24 BY(N)=-CC*BY(N)-DD*HH
+        IF(MAX(ABS(REALP(HH)),ABS(AIMAGP(HH))).GT.BIG) GO TO 82
+        FF=GG
+        GG=HH
+        DD=CC*DD
+        HH=(ZINV*(A+REAL(N-3)))*GG+FF
+        BY(N)=-CC*BY(N)-DD*HH
+   24 CONTINUE
       GO TO 70
 C FOR LARGE Z, USE PHASE-AMPLITUDE EQUATIONS 9.2.5 AND 9.2.6 OF REFER-
 C ENCE 1 AS LISTED IN BESJCF
-   30 BB=Z
+   30 CONTINUE
+      BB=Z
       EE=ZINV
 C Set FF and GG here to avoid Univac FTN compiler warnings
 C that arise due to logic here and in 38-loop below. 
@@ -16832,7 +16871,8 @@ C that arise due to logic here and in 38-loop below.
       S=SIN(-E*A*PI)
       FF=CMPLX(C,S) 
       GG=CMPLX(0.,2.*E*C)
-   32 BB=BB-.5*PI*(A+.5)
+   32 CONTINUE
+      BB=BB-.5*PI*(A+.5)
       CC=COS(BB)
       SS=SIN(BB)
       DD=SQRT(PINV*EE)
@@ -16877,10 +16917,14 @@ C CALCULATE Y*S BY FORWARD RECURSION, CHECKING FOR POSSIBLE OVERFLOW
    60 IF(M.GT.MAXP) GO TO 70
       DO 65 N=M,MAXP
       IF(MAX(ABS(REALP(BY(N-1))),ABS(AIMAGP(BY(N-1)))).GT.BIG) GO TO 82
-   65 BY(N)=(ZINV*(A+REAL(N-3)))*BY(N-1)-BY(N-2)
-   70 RETURN
-   82 DO 83 L=N,MAXP
-   83 BY(L) = (0.0, 0.0)
+      BY(N)=(ZINV*(A+REAL(N-3)))*BY(N-1)-BY(N-2)
+   65 CONTINUE
+   70 CONTINUE
+      RETURN
+   82 CONTINUE
+      DO 83 L=N,MAXP
+         BY(L) = (0.0, 0.0)
+   83 CONTINUE
       GO TO 70
    86 CONTINUE
       WRITE (ICOUT, 88)NMAX

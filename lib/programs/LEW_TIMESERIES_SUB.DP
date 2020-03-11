@@ -1,0 +1,39 @@
+. This is dataplot macro     lew_timeseries_sub.dp
+. Purpose: Carry out time series & fitting analysis of H.S. Lew Beam Deflection data
+. Date: 4/30/19
+.
+. -----Start Point-----
+.
+. -----Step 1: Carry out univariate analysis-----
+.
+call 4plot_noargs.dp
+.
+. -----Step 2: Carry out time series analsyis-----
+.
+call lagplot.dp
+.
+let string header3 = Autocorrelation Plot
+char X
+autocorrelation plot y
+call annotate.dp
+.
+let string header3 = Partial Autocorrelation Plot
+partial autocorrelation plot y
+call annotate.dp
+.
+let string header3 = Spectral Plot
+spectral plot y
+call annotate.dp
+.
+. -----Step 3: Carry out sinusoidal fitting analysis.dp
+.
+let freq = .3
+let m = mean y
+let r = range y
+let amp = r/2
+let phase = 0
+let n = number y
+let t = 1 1 n
+let function f = m + amp*sin(2*^pi*freq*t + phase)
+fit y = f
+.

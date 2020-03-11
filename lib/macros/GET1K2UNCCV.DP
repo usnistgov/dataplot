@@ -1,0 +1,104 @@
+. This is dataplot macor   get1k2unccv.dp
+. Purpose: For many WAOS and WAO2 CV estimators, compute the k=2 Unc(CV est.)
+. Note:    This macro is called by getallcvestimates.dp
+. Note:    This routine is    not   called (by getallcvestimates.dp) for WA (weighted average) estimators
+. Date: October 24, 2012
+.
+. Input (2):
+.    jest         (parameter)           = ID for the estimator
+.    ybarvs        (vector)             = lab means (assumed to be ordered)
+. Output (1):
+.    sd2est(jest) (element of a vector) = the k = 2 unc(CV est.) for estimotor ^jest
+.
+. -----start point-----
+.
+let bugswgun = 0
+. let bugswgun = 1
+.
+. -----Step 1: check input arguments-----
+.
+let string stmacro = get1k2unccv.dp
+let string stall = jest ybarvs
+call checkinput.dp
+.
+. -----Step 2: Compute k = 2 Uncertainty for this ^jest CV estimate-----
+.
+if bugswgun = 1
+   print "---get1k2unccv.dp: start of step 2---"
+   pause
+end if
+.
+let nybarvs = number ybarvs
+let numboot = 1000
+feedback off
+.
+delete bindex bybarvs prod
+let denom = sum w^jest
+let w^jest = w^jest/denom
+.
+. loop for jboot = 1 1 numboot
+.    let jbootmod = mod(jboot,100)
+.    if jbootmod = 0; . print "jboot = ^jboot"; . end if
+.    let bindex = bootstrap index for i = 1 1 nybarv
+.    let bybarv = bootstrap sample ybarv bindex
+.    let bybarv = sort bybarv
+.    let prod = w^jest*bybarv
+.    let bstat(jboot) = sum prod
+. end loop
+. title raw bootstrap
+. plot bstat
+. let s = sd bstat
+. move 16 87; . just left; . hw 2 1; . text s = ^s
+. print "s = ^s"
+. pause
+.
+. title fast bootstrap
+.
+if bugswgun = 1
+   print "---get1k2unccv.dp: start of step 2.1---"
+   print "---get1k2unccv: before the behind-the-scenes plot---"
+   pause
+end if
+.
+feedback off
+printing off
+device 1 off
+device 2 off
+   bootstrap sample 1000
+   . bootstrap sample 10000
+   bootstrap weighted order statistic mean plot ybarvs w^jest
+device 2 on
+device 1 on
+. feedback on
+. printing on
+.
+if bugswgun = 1
+   print "bsd = ^bsd"
+   pause
+end if
+.
+. move 16 87; . just left; . hw 2 1; . text bsd = ^bsd
+. pause
+.
+if bugswgun = 1
+   print "---get1k2unccv.dp: start of step 2.2---"
+   pause
+end if
+.
+. feedback on
+. let sdesti = sd bstat
+let sdesti = bsd
+let sd2esti = 2*sdesti
+.
+if bugswgun = 1
+   print sdesti sd2esti
+   pause
+end if
+.
+let sd2est(jest) = sd2esti
+.
+if bugswgun = 1
+   print sd2est
+   pause
+end if
+.

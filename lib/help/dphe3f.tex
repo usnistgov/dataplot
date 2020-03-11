@@ -1,13 +1,13 @@
- 76600.    (VERSION 2019.03)   total number of lines in file (including this line)
+ 78100.    (VERSION 2020.02)   total number of lines in file (including this line)
  8.                          number of     sections below
   100.    D                  first line number of D section
-18100.    E                  first line number of E section
-27100.    F                  first line number of F section
-36500.    G                  first line number of G section
-53100.    H                  first line number of H section
-60300.    I                  first line number of I section
-69200.    J                  first line number of J section
-71200.    K                  first line number of K section
+18600.    E                  first line number of E section
+27600.    F                  first line number of F section
+37000.    G                  first line number of G section
+53900.    H                  first line number of H section
+61200.    I                  first line number of I section
+70400.    J                  first line number of J section
+72400.    K                  first line number of K section
 
 ----------------------------------------------------------
  
@@ -308,6 +308,261 @@ Implementation Date:
 Program:
     XX
  
+-----DAVID TEST------------------------------------
+ 
+DAVID TEST
+ 
+Name:
+    DAVID TEST
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Perform the David, Hartley and Pearson test for univariate outliers
+    from a normal distribution.
+ 
+Description:
+    The David, Hartley and Pearson statistic tests whether the minimum
+    and maximum values from a univariate dataset are simultaneously
+    outliers.  This test assumes that the data come from an approximately
+    normal distribution.
+
+    The test statistic is
+
+        D = r/s
+
+    with r and s denoting the sample range and sample standard deviation,
+    respectively.
+
+    Dataplot supports several methods for deterining the critical values
+    for this test.
+
+       1. The ASTM E178-16a standard provides tables for n = 3 to 50
+          and alpha levels of 0.10, 0.05 and 0.01.  Linear interpolation
+          is used for values of n not given in the table.  For values of
+          n > 50, the simulation (see below) method is used.
+
+       2. The original paper by David contains tables for n = 3 to
+          1,000 and alpha levels of 0.10, 0.05, 0.025, 0.01 and 0.005.
+          Linear interpolation is used for values of n not given in the
+          table.
+
+       3. The David paper suggests the following formula (equation 6
+          on page 485)
+
+             cv = SQRT[{2*(n-1)*t((1-alpha)/(n*(n-1)),n-2)}/
+                       {(n-2) + t((1-alpha)/(n*n-1)),n-2)}]
+
+          with t denoting the percent point function of the t
+          distribution.
+
+       4. Critical values can be obtained via simulation.  
+
+    To specify the method used to compute the critical value, enter
+    one of the following commands (the default is ASTM)
+
+        SET DAVID TEST CRITICAL VALUES ASTM
+        SET DAVID TEST CRITICAL VALUES DAVID
+        SET DAVID TEST CRITICAL VALUES FORMULA
+        SET DAVID TEST CRITICAL VALUES SIMULATION
+
+    This test is included in the ASTM E178 standard for outliers.
+
+Syntax 1:
+    DAVID TEST  <y>  <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable being tested;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Syntax 2:
+    MULTIPLE DAVID TEST <y1> ... <yk>   
+                        <SUBSET/EXCEPT/FOR qualification>
+    where <y1> ... <yk> is a list of up to k response variables;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs the David test on <y1>, then on <y2>, and so
+    on.  Up to 30 response variables may be specified.
+
+    Note that the syntax
+
+         MULTIPLE DAVID TEST Y1 TO Y4
+
+    is supported.  This is equivalent to
+
+         MULTIPLE DAVID TEST Y1 Y2 Y3 Y4
+
+Syntax 3:
+    REPLICATED DAVID TEST <y> <x1> ... <xk>   
+                          <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <x1> ... <xk> is a list of up to k group-id variables;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs a cross-tabulation of <x1> ... <xk> and performs
+    a David test for each unique combination of cross-tabulated values.
+    For example, if X1 has 3 levels and X2 has 2 levels, there will be a
+    total of 6 David tests performed.
+
+    Up to six group-id variables can be specified.
+
+    Note that the syntax
+
+         REPLICATED DAVID TEST Y X1 TO X4
+
+    is supported.  This is equivalent to
+
+         REPLICATED DAVID TEST Y X1 X2 X3 X4
+
+Examples:
+    DAVID TEST Y1
+    MULTIPLE DAVID TEST Y1 Y2 Y3
+    REPLICATED DAVID TEST Y X1 X2
+    DAVID TEST Y1   SUBSET TAG > 2
+
+Note:
+    Tests for outliers are dependent on knowing the distribution of
+    the data.  The David test assumes that the data come from an
+    approximately normal distribution.  For this reason, it is
+    strongly recommended that the David test be complemented with
+    a normal probability test.  If the data are not approximately
+    normally distributed, then the David test may be detecting
+    the non-normality of the data rather than the presence of an
+    outlier.
+
+Note:
+    You can specify the number of digits in the David output with
+    the command
+
+        SET WRITE DECIMALS <value>
+
+Note:
+    The DAVID TEST command automatically saves the following
+    parameters:
+
+       STATVAL    = the value of the test statistic
+       STATDCF    = the CDF value of the test statistic
+       PVALUE     = the p-value of the test statistic
+       CUTOFF80   = the 80 percent point of the reference distribution
+       CUTOFF90   = the 90 percent point of the reference distribution
+       CUTOFF95   = the 95 percent point of the reference distribution
+       CUTOF975   = the 97.5 percent point of the reference distribution
+       CUTOFF99   = the 99 percent point of the reference distribution
+
+    The STATCDF and PVALUE are only saved when the simulation method
+    is used to obtain critical values.  If the ASTM method is used to
+    obtain critical values, the CUTOFF80 and CUTOF975 values are not
+    saved.  When the DAVID method is used to obtain critical values,
+    the CUTOFF80 value is not saved.
+
+    If the MULTIPLE or REPLICATED option is used, these values will
+    be written to the file "dpst1f.dat" instead.
+
+Note:
+    In addition to the DAVID TEST command, the following commands
+    can also be used:
+
+        LET A = DAVID TEST Y
+        LET A = DAVID TEST CDF Y
+        LET A = DAVID TEST PVALUE Y
+        LET A = DAVID TEST MINIMUM INDEX Y
+        LET A = DAVID TEST MAXIMUM INDEX Y
+
+        LET ALPHA = <value>
+        LET A = DAVID TEST CRITICAL VALUE Y
+
+    The DAVID TEST, DAVID TEST CDF, and DAVID TEST PVALUE return the
+    values of the test statistic, the cdf of the test statistic and
+    the pvalue of the test statistic, respectively.  For the
+    DAVID TEST CDF and DAVID TEST PVALUE commands, the simulation method
+    will be used.  Otherwise, the method specified by the
+    SET DAVID TEST CRITICAL VALUE command will be used.
+
+    The DAVID TEST MINIMUM INDEX and DAVID TEST MAXIMUM INDEX return the
+    row index of the minimum and maximum values of the response
+    variable, respectively.
+
+    The DAVID TEST CRITICAL VALUE returns the critical value for
+    the specified value of ALPHA.  If ALPHA is not specified,
+    it will be set to 0.05.  Note that if the ASTM or DAVID
+    methods are specified for the critical values, only a few select
+    values for alpha are supported (0.01, 0.05 and 0.10 for ASTM and
+    0.005, 0.01, 0.025, 0.05 and 0.10 for DAVID).
+
+    In addition to the above LET command, built-in statistics are
+    supported for about 25 different commands (enter HELP STATISTICS
+    for details).
+
+Default:
+    The ASTM method is used to obtain critical values
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    GRUBBS TEST                 = Perform the Grubbs outlier test.
+    TIETJEN-MOORE TEST          = Perform the Tietjen-Moore outlier
+                                  test.
+    EXTREME STUDENTIZED DEVIATE = Perform the generalized extreme
+                                  studentized deviate outlier test.
+    DIXON TEST                  = Perform the Dixon outlier test.
+    SKEWNESS OUTLIER TEST       = Perform the skewness outlier test.
+    KURTOSIS OUTLIER TEST       = Perform the kurtosis outlier test.
+    ANDERSON DARLING TEST       = Perform the Anderson-Darling test for
+                                  normality.
+    WILK SHAPIRO TEST           = Perform the Wilk-Shapiro test for
+                                  normality.
+    PROBABILITY PLOT            = Generates a probability plot.
+    HISTOGRAM                   = Generate a histogram.
+    BOX PLOT                    = Generate a box plot.
+ 
+Reference:
+    David, Hartley, and Pearson (1954), "The Distribution of the Ratio,
+    in a Single Normal Sample, of Range to Standard Deviation",
+    Biometrika, Vol. 41, pp. 482-493.
+
+    E178 - 16A (2016), "Standard Practice for Dealing with Outlying
+    Observations", ASTM International, 100 Barr Harbor Drive,
+    PO Box C700, West Conshohocken, PA 19428-2959, USA.
+
+Applications:
+    Outlier Detection
+ 
+Implementation Date:
+    2019/10
+ 
+Program:
+    . Step 1:   Read the data - example from ASTM E178 standard
+    .
+    read y
+    -1.40
+    -0.44
+    -0.30
+    -0.24
+    -0.22
+    -0.13
+    -0.05
+    0.06
+    0.10
+    0.18
+    0.20
+    0.39
+    0.48
+    0.63
+    1.01
+    end of data
+    .
+    . Step 2:   Perform the DAVID TEST
+    .
+    set write decimals 3
+    set david test critical values astm
+    david test y
+    set david test critical values david
+    david test y
+    set david test critical values formula
+    david test y
+    set david test critical values simulation
+    david test y
+
 -----DAWSON (LET)--------------------------------
  
 DAWSON
@@ -11200,6 +11455,169 @@ Implementation Date:
 Program:
     XX
  
+-----DIR---------------------------------------------------
+
+DIR
+
+Name:
+    DIR
+ 
+Type:
+    Support Command
+ 
+Purpose:
+    This command lists the contents of a directory.
+ 
+Description:
+    This command uses an operating system command to list the
+    contents a directory.
+
+    For Unix/Linux/MacOS systems, the DIR command issues a
+
+        ls ....
+
+    command to the operating system.
+
+    For Windows systems, the DIR command issues a
+
+        DIR  ....
+
+    command to the operating system.
+
+    The string that follows the DIR on the command line
+    is passed to the operating system as is.  Dataplot does no
+    error checking of this string.
+
+    This is a system dependent command.  It is currently supported
+    for Unix/Linux/MacOS and Windows platforms.
+
+Syntax:
+    DIR <file-list>
+    where <file-list> is an optional string specifying what files
+          should be listed.
+
+    If <file-list> is omitted, then the contents of the current
+    directory are listed.
+
+Examples:
+    DIR
+    DIR macros/*.dp
+    DIR macros
+ 
+Note:
+    The DIR capability can be implemented by direct use of the
+    SYSTEM command.  For example, under Linux do something like
+
+         SYSTEM ls *.dp
+
+    The motivation for adding this as a separate command is to
+    allow the capability to be implemented in an operating
+    system independent way.  This can be useful when writing
+    general purpose macros that may be used on different
+    operating systems.
+
+Note:
+    Both the Linux ls command and the Windows DIR commands
+    support a number of different options for displaying
+    the output.  A few of these are supported as follows.
+
+    If you would like to display the results one screen at
+    a time, enter the command
+
+         SET DIR PAUSE ON
+
+    This adds a "/P" option under Windows.  For Linux, the
+    output will be piped to the Linux more command.  To reset
+    the default (no pause), enter the command
+
+         SET DIR PAUSE OFF
+
+    If you would like the contents of any listed directories
+    to be displayed, enter the command
+
+         SET DIR RECURSIVE ON
+
+    This adds a "/S" option under Windows and a "-R" option under
+    Linux.  To reset the default (no recursive listing of directory
+    contents), enter the command
+
+         SET DIR RECURSIVE OFF
+
+    To specify "long listing" (i.e., more detailed information
+    about each file), enter the command
+
+         SET DIR LONG LISTING ON
+
+    This adds a "/N" option under Windows and a "-l" option under
+    Linux.  To reset the default ("/W" option under Windows and
+    no "-l" option under Linux), enter the command
+
+         SET DIR LONG LISTING OFF
+
+    By default, files are listed alphabetically.  To specify
+    sorting by size, enter the command
+
+         SET DIR SORT SIZE
+
+    This adds a "/O:S" option under Windows and a "-s" option under
+    Linux.
+
+    To specify sorting by date, enter the command
+
+         SET DIR SORT DATE
+
+    This adds a "/O:D" option under Windows and a "-t" option under
+    Linux.
+
+    To reset alphabetic sorting, enter the command
+
+         SET DIR SORT ALPHABETIC
+
+    This adds a "/O:N" option under Windows.  No option is given
+    for Linux.
+
+    If you want to use options not supported by one of the above
+    SET commands, you can enter them manually.  For example,
+    under Linux you can do something like
+
+         DIR -aFC *
+
+Note:
+    File names are case sensitive on Unix/Linux/MacOS file
+    systems.  For this reason, case is preserved in passing the
+    file name to the operating system.
+
+Default:
+    None
+ 
+Synonyms:
+    LS is a synonym for DIR
+
+Related Commands:
+    SYSTEM      = Enter an operating system command within a
+                  Dataplot session.
+    CD          = Change the current working directory.
+    PWD         = Retrieve the current working directory.
+    MKDIR       = Create a new di
+    RM          = Delete one or more files.
+    CAT         = List the contents of a file.
+ 
+Applications:
+    Interactive Usage
+ 
+Implementation Date:
+    2019/09
+ 
+Program:
+    SKIP 25
+    READ BERGER1.DAT Y X
+    .
+    CAPTURE FIT.OUT
+    FIT Y X
+    END OF CAPTURE
+    .
+    DIR *.OUT  FIT.*
+ 
 -----DIRECTORY-------------------------------------------------------
  
 DIRECTORY
@@ -18060,6 +18478,88 @@ Program:
     END OF MULTIPLOT
  
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -50711,10 +51211,212 @@ Applications:
     XX
  
 Implementation Date:
-    XX
+    Pre-1987
  
 Program:
     XX
+ 
+-----GREP-------------------------------------------------
+
+GREP
+
+Name:
+    GREP
+ 
+Type:
+    Support Command
+ 
+Purpose:
+    This command searches one or more files for a specified
+    string using an operating system specific command.
+ 
+Description:
+    This command uses an operating system command to search
+    one or more files for a specified string.
+
+    For Unix/Linux/MacOS systems, the GREP command issues a
+
+        grep ....
+
+    command to the operating system.
+
+    For Windows systems, the GREP command issues a
+
+        FINDSTR ....
+
+    command to the operating system.
+
+    The string that follows the GREP on the command line
+    is passed to the operating system as is.  Dataplot does no
+    error checking of this string.
+
+    This is a system dependent command.  It is currently supported
+    for Unix/Linux/MacOS and Windows platforms.
+
+Syntax:
+    GREP  <str>  <file-list>
+    where <str> is a string to be matched;
+    and   <file-list> is a string specifying the files to search.
+
+    If <str> contains spaces, it should be enclosed in quotes.
+
+Examples:
+    GREP FIT  *.DP
+    GREP RESSD  *.OUT
+    GREP FIT  *.DP  >  FIT_COMMANDS.OUT
+ 
+Note:
+    The GREP capability can be implemented by direct use of the
+    SYSTEM command.  For example, under Linux do something like
+
+         system grep  fit  *.dp
+
+    The motivation for adding this as a separate command is to
+    allow the capability to be implemented in an operating
+    system independent way.  This can be useful when writing
+    general purpose macros that may be used on different
+    operating systems.
+
+Note:
+    The Dataplot SEARCH command can also be used to search
+    files.
+
+    The SEARCH command has the advantage that it can find files in the
+    Dataplot directories without specifying the full path name and
+    supports a few special keywords for a few specific files.  The
+    GREP command has the advantage that it can search multiple files
+    and you can use wild cards in specifying the file names to search.
+    The GREP command is also not limited to printing a maximum of
+    80 characters for matching lines.
+
+Note:
+    Both the Linux grep command and the Windows FINDSTR commands
+    support a number of different options for displaying
+    the output.  A few of these are supported as follows.
+
+    By default, the search will not be case sensitive.  To specify
+    a case sensitive search, enter the command
+
+         SET GREP CASE NOIGNORE
+
+    To reset the default of case insenstive search, enter the command
+
+         SET GREP CASE IGNORE
+
+    This adds an "/I" option under Windows and a "-i" option under Linux.
+
+    If you specify a directory name to search and you want the files
+    in that directory to be searched, enter the command
+
+         SET GREP RECURSIVE ON
+
+    To reset the default of no recursive search, enter the command
+
+         SET GREP RECURSIVE OFF
+
+    This adds a "/S" option under Windows and a "-r" option under Linux.
+
+    By default, the line number in the file where a match is found will
+    be included in the output.  If you want to suppress the line number,
+    enter the command
+
+         SET GREP LINE NUMBERS OFF
+
+    To reset the default of including the line numbers, enter the command
+
+         SET GREP LINE NUMBERS ON
+
+    This adds a "/N" option under Windows and a "-n" option under Linux.
+
+    If you only want to return lines that match exactly, enter the
+    command
+
+         SET GREP EXACT MATCH ON
+
+    To reset the default of not requiring an exact line match, enter the
+    command
+
+         SET GREP EXACT MATCH OFF
+
+    This adds a "/X" option under Windows and a "-x" option under Linux.
+
+    If you want to return lines that do not match, then enter the command
+
+         SET GREP NO MATCH ON
+
+    To reset the default of not requiring an exact line match, enter the
+    command
+
+         SET GREP NO MATCH OFF
+
+    This adds a "/V" option under Windows and a "-v" option under Linux.
+
+    If you want to only print the file name where a match is found,
+    enter the command
+
+         SET GREP FILE NAME ONLY ON
+
+    To reset the default of including the specific lines in the file
+    that match, enter the command
+
+         SET GREP FILE NAME ONLY OFF
+
+    This adds a "/M" option under Windows and a "-l" option under Linux.
+
+    If you want to use options not supported by one of the above
+    SET commands, you can enter them manually.  For example,
+    under Linux you can do something like
+
+         grep -w  FIT  *.DP
+
+    The "-w" match will only match FIT where FIT is a complete word
+    in the file.
+
+Note:
+    If you would like to save the output of the GREP command to
+    a file there are two ways to do it.
+
+    The first way is to use the CAPTURE command.  For example
+
+        CAPTURE GREP  grep.out
+        GREP FIT  *.DP *.TXT
+        END OF CAPTURE
+
+    Alternativey, you can use the ">" syntax at the end of the
+    command.   For example
+
+        GREP FIT  *.DP *.TXT   > grep.out
+
+Note:
+    File names are case sensitive on Unix/Linux/MacOS file
+    systems.  For this reason, case is preserved in passing the
+    file name to the operating system.
+
+Default:
+    None
+ 
+Synonyms:
+    FINDSTR is a synonym for GREP
+
+Related Commands:
+    SYSTEM      = Enter an operating system command within a
+                  Dataplot session.
+    SEARCH      = Search a file for a given string.
+    CAT         = Display the contents of a file.
+    CD          = Change the current working directory.
+    PWD         = Retrieve the current working directory.
+    MKDIR       = Create a new di
+    RM          = Delete one or more files.
+    DIR         = List the contents of a directory.
+ 
+Applications:
+    Interactive Usage
+ 
+Implementation Date:
+    2019/09
+ 
+Program:
+    grep FIT  *.DP *.TXT  macros/*.DP macros/*.TXT
  
 -----GRID-------------------------------------------------------
  
@@ -51869,6 +52571,52 @@ Note:
     supported for about 17 different commands (enter HELP STATISTICS
     for details).
 
+Note:
+    The ASTM E178-16a addresses the case where an independent estimate
+    of the standard deviation is available.  In this case, this
+    independent estimate of the standard deviation replaces the
+    standard deviation based on the current sample data in the
+    test statistic for Grubbs test.  This independent estimate of
+    the standard deviation will also have an associated degrees of
+    freedom (typically the sample size of the data used to compute
+    this independent estimate of standard deviation).
+
+    Alternatively, the population standard deviation may be considered
+    to be known accurately (usually based on extensive historical
+    data).
+
+    In either of these cases, the critical values for the Grubbs
+    test are modified.
+
+    To support these options, enter the commands
+
+       SET GRUBB STANDARD DEVIATION <value>
+       SET GRUBB DEGREES OF FREEDOM <value>
+
+    If the specified standard deviation is positive, Dataplot
+    uses the formulas based on the independent estimate of the
+    standard deviation.  If the degrees of freedom are not specified,
+    a value of 10,000 will be used.  Essentially, any value greater
+    than 120 is effectively treated as a "known" population standard
+    deviation.
+
+    To compute the critical values using simulation, enter the command
+
+        SET GRUBB TEST CRITICAL VALUES SIMULATION
+
+    To reset the default of basing the critical values on a
+    formula, enter
+
+        SET GRUBB TEST CRITICAL VALUES FORMULA
+
+    The formula from the E178 standard is
+
+        Tn(alpha) = t(alpha/n,nu)*SQRT(1 - (1/n))
+
+    where t is the percent point function of the t distribution and nu
+    is the degrees of freedom.  For the "known" standard deviation case,
+    the t distribution is replaced with a normal distribution.
+
 Default:
     None
  
@@ -51882,6 +52630,10 @@ Related Commands:
     EXTREME STUDENTIZED DEVIATE = Perform the generalized extreme
                                   studentized deviate outlier test.
     DIXON TEST                  = Perform the Dixon outlier test.
+    DAVID TEST                  = Perform the David, Hartley and
+                                  Pearson outlier test.
+    SKEWNESS OUTLIER TEST       = Perform the skewness outlier test.
+    KURTOSIS OUTLIER TEST       = Perform the kurtosis outlier test.
     ANDERSON DARLING TEST       = Perform the Anderson-Darling test for
                                   normality.
     WILK SHAPIRO TEST           = Perform the Wilk-Shapiro test for
@@ -51898,6 +52650,10 @@ Reference:
     Stefansky, W., "Rejecting Outliers in Factorial Designs",
     Technometrics, Vol. 14, 1972, pp. 469-479. 
  
+    E178 - 16A (2016), "Standard Practice for Dealing with Outlying
+    Observations", ASTM International, 100 Barr Harbor Drive,
+    PO Box C700, West Conshohocken, PA 19428-2959, USA.
+
 Applications:
     Outlier Detection
  
@@ -51911,6 +52667,8 @@ Implementation Date:
             Syntax 2 and Syntax 3
     2009/10: Significantly modified the output format
     2009/10: Added support for Syntax 4, Syntax 5, and Syntax 6
+    2019/10: Added support for an independent estimate of the
+             standard deviation
  
 Program:
     SKIP 25
@@ -53070,6 +53828,48 @@ Program:
  
  
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -57577,6 +58377,91 @@ Program 2:
     MOVE 50 96
     TEXT HODGES LEHMANN BOOTSTRAP: NORMAL
  
+-----HOME PATH (SET)--------------------------------------------
+ 
+HOME PATH
+ 
+Name:
+    HOME PATH (SET)
+ 
+Type:
+    Set Subcommand
+ 
+Purpose:
+    Specify whether the user's home directory will be included in the
+    Dataplot search path for file names.
+ 
+Description:
+    When Dataplot encounters a file name (on the LIST, READ, WRITE, or CALL
+    commands), it will do the following:
+
+       1. It will first look for the file in the current directory (you
+          can enter the PWD command if you are not sure what that is).
+
+       2. If it does not find the file, it will look for the file in
+          the Dataplot auxiliary directory.  By default, this will be
+          "C:\Program Files (x86)\NIST\DATAPLOT" under Windows systems
+          and "/usr/local/lib/dataplot" under Unix/Linux/Mac OS X
+          systems.  However, this may be different on your platform.
+
+          Dataplot first searches this directory and then the following
+          sub-directories "help", "data", "dex", "macros", "programs",
+          "text", "menu", "ps", and "tex" are searched (in the order
+          given).
+
+    This command can be used to specify that your home directory will
+    also be searched for the file name.  If so, it will be searched after
+    the current directory but before the Dataplot auxiliary directories.
+
+    Note that under Unix/Linux/Mac OS X systems, which are case sensitive,
+    Datatplot will first try to open the file name as given.  If the file
+    is not found, then Dataplot will convert the file name to all upper
+    case and try to open the file.  If the file is not found, then Dataplot
+    will convert the file name to all lower case and try to open the
+    file.  Note that this file name conversion is performed in each
+    directory before moving to the next directory.
+
+    To see what your home directory is, enter
+
+        PROBE HOME
+
+Syntax:
+    SET HOME PATH <ON/OFF>
+    where ON specifies that the user's home directory will be searched
+          and OFF specifies that it will not be searched.
+ 
+Examples:
+    SET HOME PATH ON
+    SET HOME PATH OFF
+ 
+Default:
+    OFF
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    SET SEARCH DIRECTORY = Specify a directory to be added to Dataplot's
+                           search path.
+    SET PATH             = Define the location for Dataplot's auxiliary
+                           files.
+    LIST                 = List the contents of a file.
+    READ                 = Read data from a file.
+    WRITE                = Write data to a file.
+    CALL                 = Execute commands stored in a file.
+ 
+Applications:
+    Interactive Usage
+ 
+Implementation Date:
+    2019/12
+ 
+Program:
+    . Assume "sample.dp" is in your home directory
+    .
+    SET HOME PATH ON
+    CALL sample.dp
+
 -----HOMOSCEDASTICITY PLOT--------------------------------------
  
 HOMOSCEDASTICITY PLOT
@@ -60214,6 +61099,21 @@ Program:
     PLOT HYPPPF(P,100,300,1000) FOR P = 0 0.01 1
  
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -63033,6 +63933,8 @@ Description:
        15) Agresti Coull limits (for binomial proportions)
        16) difference of means confidence limits
        17) difference of proportions confidence limits (for binomial proportions)
+       18) correlation confidence limits
+       19) ratio of means confidence limits
 
 Syntax 1:
     <stat> I PLOT  <y>  <x>   <SUBSET/EXCEPT/FOR qualification>
@@ -63077,6 +63979,8 @@ Syntax 3:
     where <stat> is one of:
                DIFFERENCE OF MEANS CONFIDENCE LIMIT
                DIFFERENCE OF PROPORTION CONFIDENCE LIMIT
+               CORRELATION CONFIDENCE LIMIT
+               RATIO OF MEANS CONFIDENCE LIMIT
           <y1> is the first response variable;
           <y2> is the second response variable;
           <x> is the group-id variable;
@@ -63281,6 +64185,8 @@ Implementation Date:
     2017/11: Support for DIFFERENCE OF PROPORTIONS CONFIDENCE LIMIT
     2017/11: Support for COEFFICIENT OF VARIATION CONFIDENCE LIMIT
     2017/11: Support for COEFFICIENT OF DISPERSION CONFIDENCE LIMIT
+    2017/12: Support for CORRELATION CONFIDENCE LIMIT
+    2019/10: Support for RATIO OF MEANS CONFIDENCE LIMIT
  
 Program 1:
     . Step 1:   Read the data
@@ -63744,6 +64650,112 @@ Implementation Date:
 Program:
     XX
  
+-----INSERT (LET)-----------------------------------------
+ 
+INSERT
+ 
+Name:
+    INSERT (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Insert the contents of one variable into another variable at a
+    specified row location.
+
+Description:
+    The motivation for this command is the following.  Suppose we have
+
+        LET U1 = UNIFORM RANDOM NUMBERS FOR I = 1 1 10
+        LET U2 = UNIFORM RANDOM NUMBERS FOR I = 1 1 5
+
+    and we want to replace rows 6 to 10 of U1 with the values in U2.
+    The INSERT command can be used do this.
+
+    There are two cases for INSERT.  In the above example, the values of
+    U2 overwrite the current contents of U1.  Alternatively, you can
+    request that the values of U2 be added at the specified location but
+    that the values of U1 are not overwritten.  That is, the output
+    variable will have rows 1 to 5 of U1, then rows 6 to 10 will have the
+    U2 values, and then rows 11 to 16 will be rows 6 to 10 of U1.
+
+    To specify that values of the first variable will be overwritten (the
+    default), enter
+
+         SET INSERT OVERWRITE ON
+
+    To specify that the values of the second variable will be inserted
+    and the values of the first variable will be shifted rather than
+    overwritten, enter
+
+         SET INSERT OVERWRITE OFF
+
+    When the two variables are the same length and we are replacing
+    corresponding rows of the first variable with the second variable,
+    an appropriate SUBSET or FOR clause can typically be used.  When the
+    values of the second variable are added to either the beginning or
+    end of the first variable, then the APPEND, EXTEND or COMBINE
+    commands can be used.  The INSERT command is useful when the contents
+    of the second variable are inserted at an arbitrary location of the
+    first variable.
+
+Syntax:
+    LET <y3> = INSERT <y1> <y2> <nloc>
+    where <y1> is the first response variable;
+          <y2> is the second reponse variable;
+          <nloc> is a parameter that defines the starting row in <y1>
+               where the <y2> values will be inserted;
+    and   <y3> is the output variable.
+
+    The <y1> and <y2> variables do not need to be the same length.  The
+    <y3> variable will be at least the same length as <y1> (it can be
+    longer).
+
+    If the value of <nloc> is non-positive or greater than the length of
+    <y1>, an error will be returned and <y3> will not be created.
+
+    The <y3> variable can be the same as <y1>.
+
+Examples:
+    LET NLOC = 50
+    LET Y1 = INSERT Y1 Y2 NLOC
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    APPEND     = Append a variable to the end of another variable.
+    EXTEND     = Extend a variable by another variable.
+    COMBINE    = Combine one or more variables and parameters into a
+                 single variable.
+
+Applications:
+    Data Management
+ 
+Implementation Date:
+    2020/02
+
+Program 1:
+    let u1 = uniform random numbers for i = 1 1 10
+    let u2 = uniform random numbers for i = 1 1 10
+    let nloc = 6
+    let u1 = insert u1 u2 nloc
+    set write decimals 4
+    print u1
+
+Program 2:
+    let u1 = uniform random numbers for i = 1 1 10
+    let u2 = uniform random numbers for i = 1 1 10
+    set insert overwrite off
+    let nloc = 6
+    let u1 = insert u1 u2 nloc
+    set write decimals 4
+    print u1
+
 -----INSERT COMMAND LINE ARGUMENTS--------------------------------------
  
 INSERT COMMAND LINE ARGUMENTS
@@ -66429,6 +67441,120 @@ Program:
     LET C2 = INTERVAL COUNT Y2
     PRINT "NUMBER OF NORMAL RANDOM NUMBERS > 3 (OUT OF 10,000) = ^C1"
     PRINT "NUMBER OF CAUCHY RANDOM NUMBERS > 3 (OUT OF 10,000) = ^C2"
+
+-----INTRACLASS CORRELATION (LET)--------------------------
+ 
+INTRACLASS CORRELATION
+CORRELATION RATIO
+ 
+Name:
+    INTRACLASS CORRELATION (LET)
+    CORRELATION RATIO (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Given a response variable and a group-id variable, compute the
+    correlation ratio or the intraclass correlation coefficient.
+ 
+Description:
+    The formula for the intraclass correlation coefficient is
+
+        eta**2 = SUM[i=1 to p][N(i)*(YBAR(i) - YBAR)**2/
+                 SUM[i=1 to p][SUM[j=1 to N(i)][Y(ij) - YBAR)**2]
+               = sigma(ybar)**2/sigma(y)**2
+
+    The intraclass correlation is the ratio of the weighted
+    variance of the group means divided by the variance of all
+    samples.
+
+    The intraclass correlation coefficient can have values between
+    0 and 1.  A value of 0 indicates no variance between the means
+    of the different groups while a value of 1 indicates that the
+    sample variance is due to the variance between groups rather
+    than the variance within groups.  So the intraclass correlation
+    indicates the relative importance of the "between group variance"
+    (values closer to 1) and "within group variance" (values closer
+    to 0).
+
+    The correlation ratio is the square root of the intraclass
+    correlation coefficient.
+
+Syntax 1:
+    LET <par> = INTRACLASS CORRELATION <y> <x>
+                           <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <x> is the group-id variable;
+          <par> is a parameter where the intraclass correlation value
+              is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Syntax 2:
+    LET <par> = CORRELATION RATIO <y> <x>
+                                  <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <x> is the group-id variable;
+          <par> is a parameter where the correlation ratio value
+              is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET ICC = INTRACLASS CORRELATION Y X
+    LET CR  = CORRELATION RATIO Y X
+    LET CR  = CORRELATION RATIO Y X  SUBSET X > 2
+ 
+Note:
+    Dataplot's built-in statistics can be used with a number of
+    commands.  For details, enter HELP STATISTIC.
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    CORRELATION         = Compute the correlation coefficient.
+    REPEATABILITY SD    = Compute the repeatability standard deviation.
+    REPRODUCABILITY SD  = Compute the reproducability standard deviation.
+    ANOVA               = Perform a fixed effects analysis of variance.
+    LINEAR CORRELATION  = Compute the correlation from a linear least
+                          squares fit.
+ 
+Applications:
+    One Factor Analysis
+ 
+Implementation Date:
+    2019/08
+ 
+Program:
+    . Step 1:   Create some data (from Wikipedia page on Correlation Ratio)
+    .
+    read x y
+     1   45
+     1   70
+     1   29
+     1   15
+     1   21
+     2   40
+     2   20
+     2   30
+     2   42
+     3   65
+     3   95
+     3   80
+     3   70
+     3   85
+     3   73
+    end of data
+    .
+    . Step 2:   Compute the statistics
+    .
+    let cr  = correlation ratio y x
+    let icc = intraclass correlation y x
+    set write decimals 4
+    print cr icc
 
 -----INVERSE FFT (LET)------------------------------------------------
  
@@ -69193,6 +70319,80 @@ Program:
     END OF MULTIPLOT
  
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -73007,6 +74207,40 @@ Description:
     Ties add 0.5 to both the concordant and discordant counts.
     There are (n 2) possible pairs in the bivariate sample.
 
+    The above definition of Kendall's tau is from Conover.  This is
+    equivalent to the Goodman and Kruskal gamma coefficient. There are
+    several alternative definitions of Kendall's tau in the literature.
+    In particular, Kendall's original definition, referred to as tau-a, is
+
+       tau-a = (Nc - Nd)/(N*(N-1)/2)
+
+    where the Nc and Nd do not add 0.5 for tied values.
+
+    The Conover formulation accounts for ties while the Kendall tau-a
+    statistic does not.
+    <P>
+    Kendall's tau-b is defined as
+
+       tau-b = (N_c - N_d)/SQRT{(Nc + Nd + Tx)*(Nc + Nd + Ty)}
+
+    with Tx denoting the number of pairs tied for the first response
+    variable only and Ty denoting the number of pairs tied for the second
+    variable only.  As with Kendall's tau-a, the Nc and Nd do not add 0.5
+    for tied values.  Kendall's tau-b is equal to Kendall's tau-a when
+    there are no ties but is preferred to Kendall's tau-a when there are
+    ties.
+
+    Kendall's tau-c is used when the two response variables can only take
+    a discrete number of values, but the scales for the response variables
+    are different.  For example, X can take integer values from 1 to 10
+    while Y can take integer values from 1 to 20.  The formula for Kendall's
+    tau-c is
+
+       tau-c = (2*(N_c - N_d)/(N**2*(m - 1)/m)
+
+    where m is the minimun of Xd and Yd where X_d is the number of
+    distinct values of X and Yd is the number of distinct values for Y.
+
     Kendall's tau is an alternative to the Spearman's rho
     rank correlation.
 
@@ -73022,7 +74256,7 @@ Description:
       3) When the normality assumption for two variables is not
          valid.
 
-Syntax:
+Syntax 1:
     LET <par> = KENDALLS TAU <y1> <y2>
                <SUBSET/EXCEPT/FOR qualification>
     where <y1> is the first response variable;
@@ -73030,6 +74264,41 @@ Syntax:
           <par> is a parameter where the computed Kendall's tau is
                stored;
     and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax computes Kendall's tau as formulated by Conover.
+ 
+Syntax 2:
+    LET <par> = KENDALLS TAU A <y1> <y2>
+               <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first response variable;
+          <y2> is the second response variable;
+          <par> is a parameter where the computed Kendall's tau is
+               stored;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax computes Kendall's tau-a.
+ 
+Syntax 3:
+    LET <par> = KENDALLS TAU B <y1> <y2>
+               <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first response variable;
+          <y2> is the second response variable;
+          <par> is a parameter where the computed Kendall's tau is
+               stored;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax computes Kendall's tau-b.
+ 
+Syntax 4:
+    LET <par> = KENDALLS TAU C <y1> <y2>
+               <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first response variable;
+          <y2> is the second response variable;
+          <par> is a parameter where the computed Kendall's tau is
+               stored;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax computes Kendall's tau-c.
  
 Examples:
     LET A = KENDALLS TAU Y1  Y2
@@ -73067,7 +74336,10 @@ Applications:
     Exploratory Data Analysis
  
 Implementation Date:
-    10/2004
+    2004/10
+    2019/08: Added KENDALL TAU A
+    2019/08: Added KENDALL TAU B
+    2019/08: Added KENDALL TAU C
  
 Program:
     . Following data from page 320 of Conover, "Practical
@@ -76318,6 +77590,254 @@ Program:
     MOVE 50 97
     TEXT Kumaraswamy Percent Point Functions
  
+-----KURTOSIS OUTLIER TEST------------------------------------
+ 
+KURTOSIS OUTLIER TEST
+ 
+Name:
+    KURTOSIS OUTLIER TEST
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Perform the kurtosis test for univariate outliers from a normal
+    distribution.
+ 
+Description:
+    The ASTM E178-16a standard for detecting outliers from a univariate
+    normal distribution includes the kurtosis outlier test.
+
+    The test statistic is the kurtosis coefficient
+
+       g2 = n*(n+1)*SUM[i=1 to n][(x(i)-xbar)**4]/
+            ((n-1)*(n-2)*(n-3)*s**2) -
+            3*(n-1)**2/((n-2)*(n-3))
+
+    with n, xbar and s denoting the sample size, the sample mean
+    and the sample standard deviation, respectively.  Note that this
+    definition is different than the one used by Dataplot's
+    EXCESS KURTOSIS command.
+
+    The critical values are obtained via simulation.  The ASTM standard
+    provides table values for n = 3 to 50 and alpha levels of 0.10, 0.05
+    and 0.01.  Linear interpolation is used for values of n not given in
+    the table.  Alternatively, you can perform a dynamic simulation
+    to obtain the critical values.
+
+    To specify the method used to compute the critical value, enter
+    one of the following commands (the default is ASTM)
+
+        SET KURTOSIS OUTLIER TEST CRITICAL VALUES ASTM
+        SET KURTOSIS OUTLIER TEST CRITICAL VALUES SIMULATION
+
+    If n > 50, the simulation method will be used.
+
+Syntax 1:
+    KURTOSIS OUTLIER TEST  <y>  <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable being tested;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Syntax 2:
+    MULTIPLE KURTOSIS OUTLIER TEST <y1> ... <yk>   
+                                   <SUBSET/EXCEPT/FOR qualification>
+    where <y1> ... <yk> is a list of up to k response variables;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs the kurtosis outlier test on <y1>, then on
+    <y2>, and so on.  Up to 30 response variables can be specified.
+
+    Note that the syntax
+
+         MULTIPLE KURTOSIS OUTLIER TEST Y1 TO Y4
+
+    is supported.  This is equivalent to
+
+         MULTIPLE KURTOSIS OUTLIER TEST Y1 Y2 Y3 Y4
+
+Syntax 3:
+    REPLICATED KURTOSIS OUTLIER TEST <y> <x1> ... <xk>   
+                                     <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <x1> ... <xk> is a list of up to k group-id variables;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs a cross-tabulation of <x1> ... <xk> and performs
+    a kurtosis outlier test for each unique combination of cross-tabulated
+    values.  For example, if X1 has 3 levels and X2 has 2 levels, there
+    will be a total of 6 kurtosis outlier tests performed.
+
+    Up to six group-id variables can be specified.
+
+    Note that the syntax
+
+         REPLICATED KURTOSIS OUTLIER TEST Y X1 TO X4
+
+    is supported.  This is equivalent to
+
+         REPLICATED KURTOSIS OUTLIER TEST Y X1 X2 X3 X4
+
+Examples:
+    KURTOSIS OUTLIER TEST Y1
+    MULTIPLE KURTOSIS OUTLIER TEST Y1 Y2 Y3
+    REPLICATED KURTOSIS OUTLIER TEST Y X1 X2
+    SKEWNESS KURTOSIS TEST Y1   SUBSET TAG > 2
+
+Note:
+    Tests for outliers are dependent on knowing the distribution of the
+    data.  The kurtosis outlier test assumes that the data come from an
+    approximately normal distribution.  For this reason, it is strongly
+    recommended that the kurtosis outlier test be complemented with a
+    normal probability test.  If the data are not approximately normally
+    distributed, then the kurtosis outlier test may be detecting the
+    non-normality of the data rather than the presence of an outlier.
+
+Note:
+    You can specify the number of digits in the skewness outlier test
+    output with the command
+
+        SET WRITE DECIMALS <value>
+
+Note:
+    The KURTOSIS OUTLIER TEST command automatically saves the following
+    parameters:
+
+       STATVAL    = the value of the test statistic
+       STATDCF    = the CDF value of the test statistic
+       PVALUE     = the p-value of the test statistic
+       CUTOFF80   = the 80 percent point of the reference distribution
+       CUTOFF90   = the 90 percent point of the reference distribution
+       CUTOFF95   = the 95 percent point of the reference distribution
+       CUTOF975   = the 97.5 percent point of the reference distribution
+       CUTOFF99   = the 99 percent point of the reference distribution
+
+    The STATCDF and PVALUE are only saved when the simulation method
+    is used to obtain critical values.  If the ASTM method is used to
+    obtain critical values, the CUTOFF80 and CUTOF975 values are not
+    saved.
+
+    If the MULTIPLE or REPLICATED option is used, these values will
+    be written to the file "dpst1f.dat" instead.
+
+Note:
+    In addition to the KURTOSIS OUTLIER TEST command, the following
+    commands can also be used:
+
+        LET A = KURTOSIS OUTLIER TEST Y
+        LET A = KURTOSIS OUTLIER TEST CDF Y
+        LET A = KURTOSIS OUTLIER TEST PVALUE Y
+        LET A = KURTOSIS OUTLIER TEST INDEX Y
+
+        LET ALPHA = <value>
+        LET A = KURTOSIS OUTLIER TEST CRITICAL VALUE Y
+
+    The KURTOSIS OUTLIER TEST, KURTOSIS OUTLIER TEST CDF, and
+    KURTOSIS OUTLIER TEST PVALUE return the values of the test statistic,
+    the cdf of the test statistic and the pvalue of the test statistic,
+    respectively.  For the KURTOSIS OUTLIER TEST CDF and
+    KURTOSIS OUTLIER TEST PVALUE commands, the simulation method will be
+    used.  Otherwise, the method specified by the
+    SET KURTOSIS OUTLIER TEST CRITICAL VALUE command will be used.
+
+    The KURTOSIS OUTLIER TEST INDEX returns the row index of the most
+    extreme value in the response variable.  The most extreme value is
+    defined as the value furtherest from the mean.
+
+    The KURTOSIS OUTLIER TEST CRITICAL VALUE returns the critical value
+    for the specified value of ALPHA.  If ALPHA is not specified, it will
+    be set to 0.05.  Note that if the ASTM method is specified for the
+    critical values, only a few select values for alpha are supported
+    (0.01, 0.05 and 0.10).
+
+    In addition to the above LET command, built-in statistics are
+    supported for 30+ different commands (enter HELP STATISTICS
+    for details).
+
+Default:
+    The ASTM method is used to obtain critical values
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    SKEWNESS OUTLIER TEST       = Perform the skewness outlier test.
+    GRUBBS TEST                 = Perform the Grubbs outlier test.
+    DAVID TEST                  = Perform the David outlier test.
+    TIETJEN-MOORE TEST          = Perform the Tietjen-Moore outlier
+                                  test.
+    EXTREME STUDENTIZED DEVIATE = Perform the generalized extreme
+                                  studentized deviate outlier test.
+    DIXON TEST                  = Perform the Dixon outlier test.
+    SKEWNESS OUTLIER TEST       = Perform the skewness outlier test.
+    KURTOSIS OUTLIER TEST       = Perform the kurtosis outlier test.
+    ANDERSON DARLING TEST       = Perform the Anderson-Darling test for
+                                  normality.
+    WILK SHAPIRO TEST           = Perform the Wilk-Shapiro test for
+                                  normality.
+    PROBABILITY PLOT            = Generates a probability plot.
+    HISTOGRAM                   = Generate a histogram.
+    BOX PLOT                    = Generate a box plot.
+ 
+Reference:
+    E178 - 16A (2016), "Standard Practice for Dealing with Outlying
+    Observations", ASTM International, 100 Barr Harbor Drive,
+    PO Box C700, West Conshohocken, PA 19428-2959, USA.
+
+    Ferguson, T.S. (1961), "On the Rejection of Outliers," Fourth
+    Berkeley Symposium on Mathematical Statistics and Probability,
+    edited by Jerzy Neyman, University of California Press, Berkeley
+    and Los Angeles, CA.
+
+    Ferguson, T.S. (1961), "Rules for Rejection of Outliers," Revue
+    Inst. Int. de Stat., RINSA, Vol. 29, No. 3, pp. 29-43.
+
+Applications:
+    Outlier Detection
+ 
+Implementation Date:
+    2019/10
+ 
+Program:
+    . Step 1:   Read the data (from ASTM E-178 document)
+    .
+    read y
+    -1.40
+    -0.44
+    -0.30
+    -0.24
+    -0.22
+    -0.13
+    -0.05
+    0.06
+    0.10
+    0.18
+    0.20
+    0.39
+    0.48
+    0.63
+    1.01
+    end of data
+    .
+    . Step 2:   Compute the statistics
+    .
+    let stat = kurtosis outlier test y
+    set kurtosis outlier test critical values astm
+    let cv1 = kurtosis outlier test critical value y
+    set kurtosis outlier test critical values simulation
+    let cv2 = kurtosis outlier test critical value y
+    .
+    let pval = kurtosis outlier test pvalue y
+    let statcdf = kurtosis outlier test cdf y
+    let iindx = kurtosis outlier test index y
+    .
+    set write decimals 3
+    print stat cv1 cv2 pval statcdf iindx
+    .
+    set kurtosis outlier test critical values astm
+    kurtosis outlier test y
+    set kurtosis outlier test critical values simulation
+    kurtosis outlier test y
+
 -----KURTOSIS (LET)-------------------------------------
  
 KURTOSIS
@@ -76502,26 +78022,6 @@ Program:
  
 -------------------------------------------------------------
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

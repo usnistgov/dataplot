@@ -1,0 +1,19 @@
+. This is dataplot macro     write_condition_names_under_horizontal_axis.dp     4/11/19
+. Purpose: Write the 11 condition names under the horizontal axis
+. Date: 4/11/19
+. Input (Required):
+.   A preexisting plot with the 11 conditions on the horizontal axis
+.   ndcond (parameter)              = Number of conditions (here = 11) 
+.   stcosh1, stcosh2, etc (strings) = (Short) names of the 11 conditions
+. Output:
+.   The 11 names written under the horizontal axis on the plot
+.
+. -----start point-----
+.
+let yp = 13
+just center; hw 2 1
+.
+loop for jcond = 1 1 ndcond
+   moveds jcond yp; text ^stcosh^jcond
+end loop
+.

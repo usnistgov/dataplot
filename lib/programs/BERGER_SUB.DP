@@ -1,0 +1,167 @@
+. This is dataplot macro     berger_sub.dp     4/30/19
+. Purpose: Fit and plot and transform the Alaska Pipeline Calibration data
+. Date: 4/30/19
+.
+. -----start point-----
+.
+multiplot corner coordinates 10 10 90 85
+multiplot 2 3
+label size 4
+title size 4
+title offset 2
+.
+. ----------page 1----------
+.
+title 1. Model Selection
+char x
+lines
+xlabel plot y x
+plot y x
+.
+xlabel
+title 2. Model Fitting
+plot
+capture junk1.
+   linear fit y x
+   let pred1 = pred
+end of capture
+.
+multiplot 2 3 4
+title 3. Model Validation
+char x blank
+lines blank solid
+xlabel plot y pred versus x
+plot y pred versus x
+.
+xlabel plot res x
+plot res x
+.
+xlabel normal probability plot res
+normal probability plot res
+.
+multiplot off
+just center
+move 50 92
+hw 2.5 1.5
+text example
+text alaska pipeline calibration
+.
+. ----------page 2----------
+.
+multiplot 2 2
+title 1. model selection
+xlabel x
+.
+y1label y
+plot y x
+.
+let y2 = sqrt(y)
+y1label sqrt(y)
+plot y2 x
+.
+let y2 = log(y)
+y1label log(y)
+plot y2 x
+.
+let y2 = 1/y
+y1label 1/y
+plot y2 x
+.
+y1label
+.
+multiplot off
+just center
+move 50 92
+hw 2.5 1.5
+text example
+text alaska pipeline calibration
+text what transformation for y?
+.
+. ----------page 3----------
+.
+multiplot 2 2
+title 1. model selection
+let y2 = log(y)
+y1label log(y)
+.
+xlabel x
+plot y2 x
+.
+let x2 = sqrt(x)
+xlabel sqrt(x)
+plot y2 x2
+.
+let x2 = log(x)
+xlabel log(x)
+plot y2 x2
+.
+let x2 = 1/x
+xlabel 1/x
+plot y2 x2
+.
+xlabel
+.
+multiplot off
+just center
+move 50 92
+hw 2.5 1.5
+text example
+text alaska pipeline calibration
+text what transformation for x?
+.
+. ----------page 4----------
+.
+multiplot 2 2
+label size 4
+title size 4
+title offset 2
+.
+title 1. model selection
+char x
+lines
+xlabel plot y2 x2
+let y2 = log(y)
+let x2 = log(x)
+plot y2 x2
+.
+xlabel
+title 2. model fitting
+plot
+capture junk2.
+   linear fit y2 x2
+   let pred2 = pred
+   let pred3 = exp(pred2)
+   let res3 = y-pred3
+   let res3sq = res3*res3
+   let sum = sum res3sq
+   let n = number y
+   let ratio = sum/(n-2)
+   let ressd3 = sqrt(ratio)
+   write " "
+   write "ressd back in original units = ^ressd3 "
+end of capture
+.
+multiplot 2 3 4
+title 3. model validation
+char x blank
+lines blank solid
+xlabel plot y2 pred versus x2
+plot y2 pred vs x2
+.
+xlabel plot res x2
+plot res x2
+.
+xlabel normal probability plot res
+normal probability plot res
+.
+. ----------page 5----------
+.
+multiplot off
+title comparison of 2 models (alaska pipeline calib.)
+y1label y
+xlabel x
+char x blank blank
+lines blank solid dotted
+let pred2b = exp(pred2)
+plot y pred1 pred2b versus x
+.

@@ -1,0 +1,848 @@
+. This is dataplot macro     consensus_value_plot.dp       Generate plot with left = data and right = consensus values
+. Purpose: Generate a a consensus-value plot (== half-and-half interlab plot (left = data, right = consensus values)
+. Date: 10/23/12 ==> 8/3/18
+. Assumption: labs have iterger ids (not always sequential)--gaps may exist
+. Note: The 1+13 estimators of the mean are
+.        0 = GM     Grand mean
+.
+.        1 = MM     Mean of means
+.        2 = MP     Mandel-Paule
+.        3 = MMP    Modified Mandel-Paule
+.        4 = VR     Vangel-Rukhin
+.        5 = DL     DerSimonian-laird
+.        .
+.        6 = TrM    Triangular Mean of Means
+.        7 = TM     Trimmed Mean of Means
+.        8 = TrTM   Trimmed Triangular Mean of Means
+.        9 = MdM    Midmean of Means
+.       10 = TrMdM  Triangular Midmean of Means
+.       11 = MedM   Median of Means
+.       .
+.       12 = IZ     Inverse Means
+.       13 = IZZ    Inverse Means (Z**2)
+.
+. Input (Required):
+.    y        (variable)  = responses (length = n)
+.    lab      (variable)  = lab ids (integer) (length = n)
+.
+. Input (Optional):
+.    sty      (string)    = Vertical axis label                           (default = Raw Data)
+.    stx      (string)    = Horizontal axis label                         (default = Lab)
+.    frame    (string)    = subset/except qualification                   (default = full data set)
+.    sort     (parameter) = (0,1) switch to dictate sort by means or not  (default = 0 = not sort)
+.    decplace (parameter) = number of decimals places for rounding        (default = 4)
+.    maxlabid (parameter) = the id for the largest lab (==xmax)           (default = computed max lab id)
+.
+. Output:
+.    A single-page, 2-pane consensus-value plot (== half-and-half interlab plot)
+.
+. Note 1: Examples of calling program: nour111.dp   and   cline92.dp (6/16)
+. Note 2: This macro is usually preceeded by calling the computelabstats.dp macro  ??????
+.
+. -----start point-----
+.
+. print " ";. print "start of    consensus_value_plot.dp"
+. pause
+.
+let bugswcvp = 1
+. let pausesw = 1
+.
+if bugswcvp = 1; print " "; print "At beginning of    consensus_value_plot.dp"
+   stat v
+   . print y lab
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 1: Check input arguments for existence-----
+.
+if bugswcvp = 1; print " At (consensus_value_plot.dp, step 1): check input args"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+let string stmacro = consensus_value_plot.dp
+let string stall = y lab
+call checkinput.dp
+.
+. -----Step 2: Check for existence of stx string-----
+.
+if bugswcvp = 1; print " At (consensus_value_plot.dp, step 2): check existence of stxz string"
+   if pausesw = 1; pause; end if
+end if
+.
+let string stxz = Lab
+if stx exists; let string stxz = ^stx; end if
+.
+. -----Step 3: Extract out the target subset for analysis-----
+.
+if bugswcvp = 1; print " At (consensus_value_plot.dp, step 3): at start of subsetting via frame"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+delete yz labz
+let yz = y
+let labz = lab
+.
+if frame exists
+   retain yz labz ^frame
+end if
+.
+. let n = number yz
+. let gm = mean yz
+. let sd = sd yz
+. let sdgm = sd/sqrt(n)
+. let sdgm2 = 2*sdgm
+. print jdc jd n gm sd sdgm sdgm2
+. pause
+.
+if bugswcvp = 1
+   print " "
+   print " At (consensus_value_plot.dp, end of step 3): after subsetting via frame"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 4: Define the 13 cv estimator strings-----
+.
+if bugswcvp = 1; print " At (consensus_value_plot.dp, step 4): sort the labs"
+   if pausesw = 1; pause; end if
+end if
+.
+let string stest1 = MM        ;. Mean of means
+let string stest2 = MP        ;. Mandel-Paule
+let string stest3 = MMP       ;. Modified Mandel-Paule
+let string stest4 = VR        ;. Vangel-Rukhin
+let string stest5 = DL        ;. DerSimonian-laird
+.
+let string stest6 = TrM       ;. Triangular Mean of Means
+let string stest7 = TM        ;. Trimmed Mean of Means
+let string stest8 = TrTM      ;. Trimmed Triangular Mean of Means
+let string stest9 = MdM       ;. Midmean of Means
+let string stest10 = TrMdM    ;. Triangular Midmean of Means
+let string stest11 = MedM     ;. Median of Means
+.
+let string stest12 = IZ       ;. Inverse Means
+let string stest13 = IZZ      ;. Inverse Means (Z**2)
+.
+. -----Step 5: If called for, sort the labs (by lab mean) and carry along y-----
+.
+if bugswcvp = 1; print " At (consensus_value_plot.dp, step 5): sort the labs"
+   if pausesw = 1; pause; end if
+end if
+.
+if bugswcvp = 1; print "---(step 5.1) get coded labs"
+   if pausesw = 1; pause; end if
+end if
+.
+let labcz = coded labz
+. print labz labcz
+. stat v
+. pause
+.
+if bugswcvp = 1; print "---(step 5.2) get distinct labs"
+   if pausesw = 1; pause; end if
+end if
+.
+delete dlabcz; let dlabcz = distinct labcz
+. let ndlabcz = number dlabcz   12/6/18
+let ndlabcz = maximum dlabcz
+delete dlabz; let dlabz = distinct labz
+let ndlabz = number dlabz
+.
+if buswcvp = 1; print "end of step of 5.2"
+   print "ndlabcz = ^ndlabcz"
+   print "ndlabz = ^ndlabz"
+   print dlabcz dlabz
+   if pausesw = 1; pause; end if
+end if
+.
+if bugswcvp = 1; print "---(step 5.3) get means for each lab"
+   if pausesw = 1; pause; end if
+end if
+.
+delete mvz
+loop for jlabc = 1 1 ndlabcz
+   let jlab = dlabz(jlabc)
+   . print " "
+   . print "jlabc = ^jlabc"
+   . print "jlab = ^jlab"
+   . pause
+   let mvz(jlabc) = mean yz subset labz jlab
+end loop
+.
+if bugswcvp = 1; print "---(step 5.4) get xxx"
+   if pausesw = 1; pause; end if
+end if
+.
+. print "laborigz"
+. pause
+.
+delete laborigz mvz2
+let mvz2 = mvz
+let laborigz = 1 1 ndlabcz
+if sort exists; if sort = 1
+   let mvz2 = sortc mvz laborigz
+end if; end if
+if bugswcvp = 1
+   . print mvz mvz2 laborigz dlabcz
+   . pause
+end if
+.
+if bugswcvp = 1; print "---(step 5.5) get xxx"
+   if pausesw = 1; pause; end if
+end if
+.
+. print "laborigz 2"
+. pause
+.
+delete labz2
+. print "ndlabcz = ^ndlabcz"
+. pause
+. print laborigz
+. pause
+.
+let dothis = 0
+if dothis = 1
+.
+if bugswcvp = 1; print "---(step 5.6) get xxx"
+   print "===error==="
+   if pausesw = 1; pause; end if
+end if
+.
+print labz laborigz
+pause
+.
+loop for j = 1 1 ndlabcz
+   let j2 = laborigz(j)
+   let labcz2 = j subset labcz j2
+end loop
+print labcz2
+pause
+.
+print "laborigz 3"
+pause
+.
+if bugswcvp = 1; print "---(step 5.7) get xxx"
+   if pausesw = 1; pause; end if
+end if
+.
+delete ynewz labz3
+let ynewz = yz
+let labz3 = sortc labz2 ynewz
+if bugswcvp = 1
+   print yz labz ynewz labz3
+   pause
+end if
+.
+if bugswcvp = 1; print "---(step 5.8) get xxx"
+   if pausesw = 1; pause; end if
+end if
+.
+print "laborigz 4"
+pause
+.
+let yz = ynewz
+let labz = labz3
+if bugswcvp = 1
+   print yz labz
+   pause
+   print mvz mvz2 laborigz
+   pause
+end if
+let labzc = labz
+if bugswcvp = 1
+   print labzc
+   pause
+end if
+.
+end if;. end of dothis
+.
+. -----Step 8: Compute lab statistics-----
+.
+if bugswcvp = 1; print "---(step 8) compute lab stats"
+   if pausesw = 1; pause; end if
+end if
+.
+let labcz = coded labz
+. print y lab
+. pause
+call computelabstats.dp
+. print "numlab = ^numlab"
+. pause
+.
+. -----Step 9: Sort the labs by the value of the lab means-----
+.
+if sort exists; if sort = 1
+   delete tagzz; let tagzz = 1 1 ndlabcz
+   let ybarvs = sortc ybarv tagzz
+   .
+   loop for j = 1 1 ndlabcz
+      let j2 = tagzz(j)
+      let labcsz = j subset labcz j2
+   end loop
+   .
+end if; end if
+.
+. -----Step 9xxx: Form the vector of sorted lab means-----
+.
+let ybarvs = sort ybarv
+.
+. --------------------------------------------------------
+. -----Step 10: Do the left  half plot: the raw data-----
+. --------------------------------------------------------
+.
+. -----Step 11: Sub-plot 1: In the left-side frame, plot out the data-----
+.
+. -----Step 11.1: Generate the plot of the raw data and superimposed lab means-----
+.
+       . print "---consensus_value_plot.dp: at start of step 11.1 (pre-leftside plot)---"
+       . pause
+.
+feedback off
+.
+. frame corner coordinates 15 20 50 90
+if xmidline exists; frame corner coordinates 15 20 xmidline 90; end if
+if xmidline not exist; frame corner coordinates 15 20 60 90; end if
+.
+y1tic offset units screen; y1tic offset 15 20
+if ndlabcz <= 7; x1tic offset units screen; x1tic offset 5 5; end if
+if ndlabcz >  8; x1tic offset units screen; x1tic offset 3 3; end if
+.
+y1label Raw Data
+if sty not exist; y1label Raw Data; end if
+if sty exists; y1label Raw Data: ^sty; end if
+.
+if sort exists; if sort = 1
+   x1label Sorted ^stxz
+end if; end if
+if sort exists; if sort = 0
+   x1label ^stxz
+end if; end if
+if sort not exist
+   x1label ^stxz
+end if
+.
+x3label
+x1tic labels off
+minor x1tic number 0
+.
+. xlim 1 ndlabcz
+. let maxlabiz = ndlabcz        ;. 12/6/18
+let maxlabiz = maximum lab
+if maxlabid exists; let maxlabiz = maxlabid; end if
+xlim 1 maxlabiz
+major x1tic number ^maxlabiz
+.
+label size 2.6
+char X all; char offset 0 .2 all
+lines solid all
+. plot y labcsz labcsz
+plot yz labz labz         ;. <==================================
+.
+. -----Step 11.2: Write out lab info inside the bottom axis-----
+.
+if bugswcvp = 1; print "---(step 11.2) print out info in inside bottom"
+   if pausesw = 1; pause; end if
+end if
+.
+feedback off
+.
+let dp1 = 3
+let dp2 = 3
+let dp3 = 1
+loop for j = 1 1 ndlabcz
+   delete ni ybari si zi ybarir sir zir
+   let j2 = dlabz(j)
+   let ni = nv(j)
+   let ybari = ybarv(j)
+   let si = sdv(j)
+   if zv exists; let zi = zv(j); end if
+   let ybarir = round(ybari,dp1)
+   let sir = round(si,dp2)
+   if zi exists; let zir = round(zi,dp3); end if
+   moveds j2 27; just center; hw 1.8 0.9; text ^ni
+   moveds j2 25; just center; hw 1.8 0.9; text ^ybarir
+   moveds j2 23; just center; hw 1.8 0.9; text ^sir
+   if zir exists; moveds j2 21; just center; hw 1.8 0.9; text ^zir; end if
+end loop
+move 14 27; just right; hw 1.8 0.9; text ^stxz Sample Size
+move 14 25; just right; hw 1.8 0.9; text ^stxz Mean
+move 14 23; just right; hw 1.8 0.9; text ^stxz SD
+move 14 21; just right; hw 1.8 0.9; text ^stxz Z
+.
+. -----Step 11.3: Write out legend info in upper left corner of plot-----
+.
+if bugswcvp = 1; print "---(step 11.3) write upper left legend info"
+   if pausesw = 1; pause; end if
+end if
+.
+let hz = 2.3; let wz = hz/2
+let xpz = 15.5; let ypz = 87.8; let ypdelz = 2.5
+let ypz = ypz + ypdelz
+.
+just left; hw hz wz
+let ypz = ypz - ypdelz; move xpz ypz; text Number of ^stxz&s = ^ndlabcz
+let ypz = ypz - ypdelz; move xpz ypz; text Number of Obs. (Total) = ^n
+
+let dpzz = 4
+if decplace exists; let dpzz = decplace; end if
+.
+if numlab = 1
+   let nsolo = number yz
+   let msolo = mean yz
+   let sdsolo = sd yz
+   let sdmsolo = sd of mean yz
+   let rsdsolo = 100*(sdsolo/msolo)
+   let rsdmsolo = 100*(sdmsolo/msolo)
+   let medsolo = median yz
+   .
+   set write decimal ^decplace
+   let msolor = number to string msolo
+   let sdsolor = number to string sdsolo
+   let sdmsolor = number to string sdmsolo
+   let medsolor = number to string medsolo
+   set write decimals 2
+   let rsdsolor = number to string rsdsolo
+   let rsdmsolr = number to string rsdmsolo
+   .
+   let ypz = ypz - ypdelz; move xpz ypz; text Mean        of the 1 lab = ^msolor
+   let ypz = ypz - ypdelz; move xpz ypz; text SD(Data)  of the 1 lab = ^sdsolor (^rsdsolor%)
+   let ypz = ypz - ypdelz; move xpz ypz; text SD(Mean) of the 1 lab = ^sdmsolor (^rsdmsolr%)
+   let ypz = ypz - ypdelz; move xpz ypz; text Median     of the 1 lab = ^medsolor
+end if
+.
+if numlab >= 2
+   let ypz = ypz - ypdelz; move xpz ypz; text Mean    of ^ndlabcz ^stxz Means = ^mmeanr
+   let ypz = ypz - ypdelz; move xpz ypz; text Median of ^ndlabcz ^stxz Means = ^medmeanr
+   .
+   let sdpoolr = round(sdpool,dpzz)
+   let rsdpool = 100*sdpool/mmean
+   let dpzz = 1; let rsdpoolr = round(rsdpool,dpzz)
+   let ypz = ypz - ypdelz; move xpz ypz; text Pooled    SD = ^sdpoolr (^rsdpoolr%)
+   .
+   let sdbetw = sdb
+   let dpzz = 4
+   if decplace exists; let dpzz = decplace; end if
+   let sdbetwr = round(sdbetw,dpzz)
+   .
+   let rsdbetw = 100*sdbetw/mmean
+   let dpzz = 1; let rsdbetwr = round(rsdbetw,dpzz)
+   let ypz = ypz - ypdelz; move xpz ypz; text Between SD = ^sdbetwr (^rsdbetwr%)
+   .
+.    print "============================="
+.    print "pre-anova: numlab = ^numlab"
+.    pause
+   anova yz labz
+   call getanovafcdf.dp
+   color blue; if fstatcdf >= 95; color red; end if
+   let ypz = ypz - ypdelz; move xpz ypz; text Fixed-Effects ANOVA FCDF = ^fcdfr2%
+   color blue
+   . let ypz = ypz - ypdelz; . move xpz ypz; . text Random-Effects ANOVA FCDF = xxx
+end if
+.
+. -----Step 11.4: Write out the lab index & original lab id's below the bottom axis-----
+.
+if bugswcvp = 1; print "---(step 11.4) write lab index & lab id's below left bottom axis"
+   print "ndlabcz = ^ndlabcz"
+   print "maxlabiz = ^maxlabiz"
+   if pausesw = 1; pause; end if
+end if
+.
+. print laborigz
+. pause
+. loop for j = 1 1 ndlabcz
+hw 2 1; just center
+loop for j2 = 1 1 maxlabiz
+   if sort exists; if sort = 1
+      moveds j2 15; text ^j2
+      moveds j2 13; text ^j2
+   end if; end if
+   if sort exists; if sort = 0
+      moveds j2 15; text ^j2
+      if stxz^j2 exists; moveds j2 13; text ^stxz^j2; end if
+   end if; end if
+   if sort not exist
+      moveds j2 15; text ^j2
+      if stxz^j2 exists; moveds j2 13; text ^stxz^j2; end if
+   end if
+end loop
+.
+if sort exists; if sort = 1
+   move 14.5 15; just right; hw 2 1; text ^stxz (Coded: 1-^ndlabcz)
+   move 14.5 13; just right; hw 2 1; text ^stxz (Original)
+end if; end if
+.
+if sort exists; if sort = 0
+   move 14.5 15; just right; hw 2 1; . text ^stxz (Original)
+end if; end if
+.
+if sort not exist
+   move 14.5 15; just right; hw 2 1; . text ^stxz (Original)
+end if
+.
+. -----Step 11.5: Draw red tics at each lab mean values-----
+.
+if bugswcvp = 1; print "---(step 11.5) draw red horiz. tic at each lab median"
+   if pausesw = 1; pause; end if
+end if
+.
+. print labvz ybarvz
+. pause
+let del = .2
+loop for j = 1 1 ndlabcz
+   let j2 = dlabz(j)
+   . let ybariz = ybarvz(j2)
+   let ybariz = mvz2(j)
+   . print j j2 ybariz
+   . pause
+   let left = j2-del
+   let right = j2+del
+. print "j=^j   j2=^j2   left=^left   right=^right"
+. pause
+   lines solid
+   line color red
+   line thickness .4
+   drawdddd left ybariz right ybariz
+end loop
+line thickness .1
+line color blue
+.
+. -----Step 11.6: Draw horizontal global mean and median lines-----
+.
+if bugswcvp = 1; print "---(step 11.6) draw red global mean & median lines"
+   print "mmean = ^mmean    medmean = ^medmeanr"
+   if pausesw = 1; pause; end if
+end if
+.
+call nour81justification.dp
+.
+lines solid; line color blue; drawsdsd 15 mmean 85 mmean
+if mmean > medmean
+   movesd 15.25 mmean; move relative 0 .4; just lebo; hw 1.6 0.8; color blue; text Mean = ^mmeanr
+end if
+.
+if mmean = medmean
+   movesd 15.25 mmean; move relative 0 .4; just lebo; hw 1.6 0.8; color blue; text ^mmeanr
+end if
+.
+if mmean < medmean
+   let yp = mmean
+   movesd 15.25 yp; just leto; hw 1.6 0.8; color blue; text Mean = ^mmeanr
+end if
+.
+lines solid; line color blue; drawsdsd 15 medmean 85 medmean
+if medmean > mmean
+   movesd 15.25 medmean; move relative 0 .4; just lebo; hw 1.6 0.8; color blue; text Median = ^medmeanr
+end if
+.
+if medmean < mmean
+   let yp = medmean
+   movesd 15.25 yp; just leto; hw 1.6 0.8; color blue; text Median = ^medmeanr
+end if
+.
+. print mmean medmean
+. pause
+line color blue; color blue
+just lebo
+.
+. print " "
+. prInt "consensus_value_plot.dp, at end of step 11.6"
+. print " "
+.
+.
+.
+.
+.
+.
+.
+.
+
+. --------------------------------------------------------
+. -----Step 20: Do the right half plot: the estimates-----
+. --------------------------------------------------------
+
+.
+. -----Step 21: Sub-plot 2: In the right-side frame, plot out all 1+13 consensus values (and k=2 uncertainties)-----
+.
+if bugswcvp = 1
+   print "---At (consensus_value_plot.dp: step 21) pre-rightside plot---"
+   if pausesw = 1; pause; end if
+end if
+.
+feedback off
+.
+       . Note: the following 2 lines must be h ere (because the call to the getallcvestimates.dp macro-----
+       .       will generate behind-the-scenes bootstrap plots that will change the limits-----
+       .       and contaminate the   limits freeze   command of the succeeding righthand plot)-----
+.
+pre-erase off
+ylimits freeze
+.
+. -----Step 21.1: Get 13 consensus values and their l=2 uncertainties via Consensus Mean command-----
+.
+ if bugswcvp = 1
+    print " "; print " --At (consensus_value_plot.dp: step 21.1) before-call to getallcvestimates.dp---"
+    print "numlab = ^numlab"
+    if pausesw = 1; pause; end if
+ end if
+.
+call getallcvestimates.dp
+.
+if bugswcvp = 1
+   print " "; print " --At (consensus_value_plot.dp: step 21.1) after call to getallcvestimates.dp---"
+   print cvest cvestr sd2est
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 21.2: Generate the plot of CV estimates-----
+.
+if bugswcvp = 1
+    print "---At (consensus_value_plot.dp: step 21.2) post-call to getallcvestimates.dp---"
+    if pausesw = 1; pause; end if
+end if
+.
+pre-erase off
+ylimits freeze
+. x1tic offset units screen; x1tic offset 5 5
+x1tic offset units screen; x1tic offset 1 1
+.
+. frame corner coordinates 50 20 85 90
+if xmidline exists; frame corner coordinates xmidline 20 85 90; end if
+if xmidline not exist; frame corner coordinates 60 20 85 90; end if
+xlim 1 17
+x1tic number 17
+.
+delete hor; let hor = data 3 4 5 6 7 9 10 11 12 13 14 16 17
+y1tic offset units screen; y1tic offset 15 20
+.
+y1label
+y2label Consensus Value
+y2label displacement 3
+y2label offset -9
+x1label CV Estimator (^numest)
+x2label and (k=2) Unc(CV Estimator)
+x3label
+y1tic labels
+y1tics off
+x1tic labels off
+x1tics off
+label size 2.6
+char X all; char offset 0 .2 all
+lines bl all
+plot cvest hor subset cvest <> -999       ;. <======================================
+.
+let gm = mean yz
+let cvestgm(1) = gm
+let horgm(1) = 1
+plot cvestgm horgm
+.
+if bugswcvp = 1
+   print cvest hor
+   . pause
+end if
+.
+. -----Step 21.3: Draw out k=2 Vertical Uncertainty Limits-----
+.
+if bugswcvp = 1; print "---(step 21.3) draw out k=2 vertical uncertainty limits"
+   if pausesw = 1; pause; end if
+end if
+. stat v
+. pause
+. print cvest sd2est
+. pause
+.
+. here
+let n = number yz
+let gm = mean yz
+let sd = sd yz
+let sdgm = sd/sqrt(n)
+let sdgm2 = 2*sdgm
+let upperi = gm + sdgm2
+let loweri = gm - sdgm2
+lines solid; drawdddd 1 loweri 1 upperi
+.
+let jestp = 0
+loop for jest = 1 1 numest
+   let jestp = jest + 2
+   if jest >= 6; let jestp = jest + 3; end if
+   if jest >= 12; let jestp = jest + 4; end if
+   let cvesti = cvest(jest)
+   let sd2esti = sd2est(jest)
+   if cvesti <> -999
+      let upperi = cvesti + sd2esti
+      let loweri = cvesti - sd2esti
+      . print jest loweri upperi
+      lines solid; drawdddd jestp loweri jestp upperi
+   end if
+end loop
+.
+. -----Step 21.4: Write out the 1+13 estimator names inside the bottom axis-----
+.
+if bugswcvp = 1; print "---(step 21.4) write 1+13 est. names inside right bottom axis"
+   if pausesw = 1; pause; end if
+end if
+.
+hw 2 1; just center
+.
+let yp = 31
+let xp = 1
+moveds xp yp; text GM
+lines solid; drawdsds xp 20 xp 18
+.
+let yp = 33
+loop for jest = 1 1 5
+   let xp = jest + 2
+   let yp = yp -2
+   moveds xp yp; text ^stest^jest
+   lines solid; drawdsds xp 20 xp 18
+end loop
+.
+let yp = 33
+loop for jest = 6 1 11
+   let xp = jest + 3
+   let yp = yp - 2
+   moveds xp yp; text ^stest^jest
+   lines solid; drawdsds xp 20 xp 18
+end loop
+.
+let yp = 33
+loop for jest = 12 1 13
+   let xp = jest + 4
+   let yp = yp - 2
+   moveds xp yp; text ^stest^jest
+   lines solid; drawdsds xp 20 xp 18
+end loop
+.
+. -----Step 21.5: Write out WA WAOS WAOZ underneath the bottom axis-----
+.
+lines solid all
+lines dotted; drawdsds 2 20 2 90
+lines dotted; drawdsds 8 20 8 90
+lines dotted; drawdsds 15 20 15 90
+lines solid
+.
+moveds 5 15; hw 2.4 1.2; just center; text WA
+moveds 11.5 15; hw 2.4 1.2; just center; text WAOS
+moveds 17 15; hw 2.4 1.2; just center; text WAOZ
+.
+. -----Step 21.6: Write out the 1+13 CV values in upper right margin-----
+.
+if bugswcvp = 1; print "---(step 21.6) write out 1+13 cv values in upper right margin"
+   if pausesw = 1; pause; end if
+end if
+.
+let yp = 90
+let ypdel = 1.8
+let xp1 = 90
+let xp2 = 91
+if xp3 not exist; let xp3 = 97; end if
+.
+let yp = yp - ypdel
+move xp1 yp; just right; hw 1.8 0.9; text GM
+.
+let dpzz = 4
+if decplace exists; let dpzz = decplace; end if
+. let gmr = round(gm,dpzz)
+set write decimals dpzz; let gmr = number to string gm
+move xp2 yp; just left; hw 1.8 0.9; text ^gmr
+.
+let dpzz = 4
+if decplace exists; let dpzz = decplace; end if
+. let sdgm2r = round(sdgm2,dpzz)
+set write decimals dpzz; let sdgm2r = number to string sdgm2
+move xp3 yp; just left; hw 1.8 0.9; text ^sdgm2r
+.
+. print cvest sd2est
+. pause
+let yp = yp - ypdel
+loop for jest = 1 1 numest
+   let yp = yp - ypdel
+   if jest = 6; let yp = yp - ypdel; end if
+   if jest = 12; let yp = yp - ypdel; end if
+   .
+   move xp1 yp; just right; hw 1.8 0.9; text ^stest^jest                           ;. <=====
+   .
+   let cvesti = cvest(jest)
+   let dpzz = 4
+   if decplace exists; let dpzz = decplace; end if
+   set write decimals dpzz; let cvestir = number to string cvesti
+   if cvesti <> -999; move xp2 yp; just left; hw 1.8 0.9; text ^cvestir; end if    ;. <=====
+   .
+   let sd2esti = sd2est(jest)
+   let dpzz = 4
+   if decplace exists; let dpzz = decplace; end if
+   set write decimals dpzz; let sd2estir = number to string sd2esti
+   . print "sd2esti = ^sd2esti    sd2estir = ^sd2estir"
+   . pause
+   if sd2esti <> -999; move xp3 yp; just left; hw 1.8 0.9; text ^sd2estir; end if  ;. <======
+end loop
+.
+let yp = 90.75
+move xp1 yp; just right; hw 1.8 0.9; text EstID
+.
+let xp2p = xp2 + 2
+move xp2p yp; just center; hw 1.8 0.9; text CV
+.
+let xp3p = xp3 + 0.5
+move xp3p yp; just left; hw 1.8 0.9; text (k=2)
+.
+let yp2 = yp + ypdel
+let xp3p = xp3 - 0.5
+move xp3p yp2; just left; hw 1.8 0.9; text Unc(CV)
+.
+lines solid; draw 86 90 108 90
+.
+just left; hw 1.8 0.9
+move 86 31; text Note: Unc(CV)
+move 86 29; text    Computation Method
+move 86 27; text    Utilized for This
+move 86 25; text    Plot: Non-Parametric
+move 86 23; text    Bootstrap of
+move 86 21; text    Original ^stxz Means
+.
+. -----Step 99: Finish up-----
+.
+if header exists or header1 exists
+   call annotate.dp
+end if
+.
+if bugswcvp = 1; print " "; print "At end of    consensus_value_plot.dp"
+   stat v
+   . print y lab
+   if pausesw = 1; pause; end if
+end if
+.
+set write decimals 2; if decplace exists; set write decimals ^decplace; end if
+delete gmr; let gmr = number to string gm
+delete sdr; let sdr = number to string sd
+move 50 91.5; just center; hw 2.5 1.25; text Consensus Value Plot    (n = ^n    Mean(Data) = ^gmr    SD(Data) = ^sdr)
+.
+pre-erase on
+ylim
+xlim
+frame corner coordinates
+.
+y1label
+y2label
+x1label
+x2label
+.
+y1tics on
+y1tic labels on
+x1tics on
+x1tic labels on
+.
+y1tic offset units screen; y1tic offset 5 5
+x1tic offset units screen; x1tic offset 5 5
+.
+y1tic number
+x1tic number
+.
+y1label displacement
+y2label displacement
+x1label displacement
+x2label displacement
+.
+char hw 2 1 all
+.

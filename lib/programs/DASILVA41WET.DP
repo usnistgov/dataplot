@@ -1,0 +1,121 @@
+. This is dataplot macro    dasilva41wet.dp      wetting agent
+. Purpose: generate a mean block plot with primary factor = wet (= wetting agent)
+. Date: March 6, 2012
+.
+. -----start point-----
+.
+frame color black
+tic color black
+tic label color black
+.
+. -----Step 1: Form the tag variable-----
+.
+delete tag tag2 yrank
+let tag = 10*surf + 5*(rh - 1) + mat
+.
+. -----Step 2: Generate the mean block plot-----
+.
+char bl all; char T H P uc()PT; char color red black black black
+char offset 0 0 all
+lines solid all; lines bl bl bl bl
+line color black all
+.
+if casemeth = 1; y1label Mean Spore Recovery (%); end if
+if casemeth = 2; y1label Mean Spore Recovery (%); end if
+.
+label color black
+labels size 3.0
+x1tics off
+ylim 0 100
+xlim 11 28
+x1tic labels off
+ytic offset units screen
+. ytic offset 13 5
+ytic offset 13 15
+x3label
+. bar expansion factor 1 1.4
+bar expansion factor 1 1.5
+mean block plot y tag wet except y -999
+.
+move 50 92.5; just center; hw 3.0 1.5; color black
+if casemeth = 1; text Wetting Agent (Plate Count Method); end if
+if casemeth = 2; text Wetting Agent (Fluorescence Microscopy Method); end if
+.
+. let xp = 35
+let xp = 28
+let xpp = xp + 5.5
+move xp 84; color red; just left; hw 2.6 1.3; text T = T80
+move xp 81; color black; . text H = Hsub()2unsb()O
+move xp 81; color black; just left; hw 2.6 1.3; text H = H O
+move xpp 80; color black; just center; hw 1.5 0.75; text 2
+move xp 78; color black; just left; hw 2.6 1.3; text P = PBS
+move xp 75; color black; just left; hw 2.6 1.3; text PT = PBST
+color black
+.
+let tag2 = distinct tag
+let tag2 = sort tag2
+let ntag2 = number tag2
+.
+just center; hw 2 1
+let j = 0
+loop for jsurf = 1 1 2
+   loop for jrh = 1 1 2
+      loop for jmat = 1 1 3
+         let j = j + 1
+         let xp = tag2(j)
+         moveds xp 27; hw 2 1; text ^stsurf^jsurf
+         moveds xp 24; hw 2 1; text ^strh^jrh
+         moveds xp 21; hw 2 1; text ^stmat^jmat
+         let string q = subset surf ^jsurf subset rh ^jrh subset mat ^jmat except y -999
+         let yrank = rank y ^q
+      end loop
+   end loop
+end loop
+just right; hw 2 1
+move 14.5 27; text Surface:
+move 14.5 24; text Relative Humidity:
+move 14.5 21; text Wipe Material:
+.
+move 50 15; just center; hw 3.0 1.5
+text Surface (2) x Relative Humidity (2) x Wipe Material (3) = 12 Combinations
+.
+. -----Step 3: Write out conclusions-----
+.
+let dothis = 0
+if dothis = 1
+.
+let tailpro2 = 100*tailprob
+let tailpro2 = round(tailpro2,2)
+just left; hw 2.6 1.3; color black
+move 10 10; color black; text T80 is best in 7 out of 12 cases
+move 60 10; color black; text (Binomial Prob. by Chance < 1%)
+move 10 7; color black; text T80 is best or next-best in 10 out the 12 cases
+move 60 7; color black; text (Binomial Prob. by Chance < 2%)
+.
+end if
+.
+. -----Step 4: Write out summary info in legend-----
+.
+let case = 1
+call dasilva41computestats.dp
+.
+just left; hw 2.6 1.3; color black
+. let xp = 50
+let xp = 43
+let xpmhalf = xp - 0.5
+let xpp10 = xp + 10
+let xpp10m4 = xpp10 - 4
+move xpmhalf 87; color black; text Mean
+move xp 84; color red; text ^m1
+move xp 81; color black; text ^m2
+move xp 78; color black; text ^m3
+move xp 75; color black; text ^m4
+.
+move xpp10m4 87; color black; text Mean Rank
+move xpp10 84; color red; text ^mrank1
+move xpp10 81; color black; text ^mrank2
+move xpp10 78; color black; text ^mrank3
+move xpp10 75; color black; text ^mrank4
+.
+call annotate.dp
+.

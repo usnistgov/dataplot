@@ -883,7 +883,7 @@ C
 C     PURPOSE--TRANSLATE THE REAL (= FLOATING POINT) NUMBER X
 C              INTO ITS CHARACTER EQUIVALENT.
 C              NCHTOT = DESIRED NUMBER OF CHARACTERS FOR TOTAL NUMBER.
-C              NCTDEC = DESIRED NUMBER OF CHARACTERS FOR DECIMAL PART OF NUMBER.
+C              NCHDEC = DESIRED NUMBER OF CHARACTERS FOR DECIMAL PART OF NUMBER.
 C              THE OUTPUT WILL CORRESPOND TO A FORTRAN F FORMAT.
 C              AS IN    F NCHTOT.NCHDEC     FORMAT (E.G., F10.5).
 C
@@ -974,12 +974,10 @@ C
 C
 C     ROUND NUMBER FIRST
 C
+      XSAVE=X
+      X=ABS(X)
       EPS=5./(10**(NCHDEC+1))
-      IF(X.GE.0.0)THEN
-        XRND=X+EPS
-      ELSE
-        XRND=X-EPS
-      ENDIF
+      XRND=X+EPS
 C
 C
 C               ********************************************
@@ -1061,7 +1059,7 @@ C               **   WITH ASTERISKS                                **
 C               *****************************************************
 C
       NUMTOT=NUMIND+1+NUMDED
-      IF(X.LT.0.0)NUMTOT=NUMTOT+1
+      IF(XSAVE.LT.0.0)NUMTOT=NUMTOT+1
 C
       IF(NUMTOT.GT.NCHTOT)THEN
         DO1500I=1,NCHTOT
@@ -1097,8 +1095,8 @@ C
         J=NCSOLD+(NCHTOT-NUMTOT)
       ENDIF
 C
-      IF(X.LT.0.0)J=J+1
-      IF(X.LT.0.0)ICSTR(J:J)='-'
+      IF(XSAVE.LT.0.0)J=J+1
+      IF(XSAVE.LT.0.0)ICSTR(J:J)='-'
 C
       DO1610I=1,NUMIND
         IREV=NUMIND-I+1

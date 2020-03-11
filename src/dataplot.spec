@@ -1,13 +1,13 @@
 Name:		dataplot
-Version:	20190419
+Version:	20200229
 Release:	1%{?dist}
 Summary:	Scientific visualization, statistical analysis, and non-linear modeling
 Group:		Applications/Engineering
 License:	Public Domain
 URL:		http://www.itl.nist.gov/div898/software/dataplot/
 #Source:		ftp://ftp.nist.gov/pub/dataplot/unix/dataplot-%{version}.tar.gz
-#Source:		dataplot-%{version}.tar.gz
-Source:		https://www.itl.nist.gov/div898/software/dataplot/ftp/unix/dataplot-%{version}.tar.gz
+Source:		dataplot-%{version}.tar.gz
+#Source:		https://www.itl.nist.gov/div898/software/dataplot/ftp/unix/dataplot-%{version}.tar.gz
 BuildRequires:	gcc-gfortran
 BuildRequires:	gd-devel, libpng, libjpeg, zlib, freetype, readline-devel, cairo-devel
 
@@ -61,7 +61,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 #%doc %{dplibdir}/frmenus/interp/README.DOC
-%doc README INSTALL
+%doc README.md INSTALL
 /usr/bin/*
 %{dplibdir}/*
 

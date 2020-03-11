@@ -1,4 +1,4 @@
-      SUBROUTINE DPREAL(IRD2,ICOL1,ICOL2,MINCO2,MAXCO2,X,N,
+      SUBROUTINE DPREAL(IRD2,ICOL1,ICOL2,MINCO2,MAXCO2,X,N,IFLGSV,
      1                  IXC,NXC,
      1                  ICASRE,IFUNC2,N2,MAXN2,
      1                  IMACRO,IMACNU,IMACCS,
@@ -10,7 +10,7 @@
      1                  MAXRDV,MAXCHV,IFIETY,
      1                  IDECPT,IDATMV,IDATNN,
      1                  IREACD,IREACM,IREADS,IREAPM,IREAMC,ITABNC,
-     1                  IREAAS,
+     1                  IREAAS,IREAPC,
      1                  IB,
      1                  IOTERM,IANSLO,MAXLIL,MAXCIL,ILOOST,ILOOLI,
      1                  IREPCH,IMALEV,
@@ -206,6 +206,14 @@ C     UPDATED         --JUNE      2019. MAXIMUM NUMBER OF CHARACTER
 C                                       VARIABLES RAISED TO 50
 C     UPDATED         --JUNE      2019. BETTER CHECKING FOR LIMITS
 C                                       WHEN READING CHARACTER DATA
+C     UPDATED         --SEPTEMBER 2019. TO ALLOW READING CHARACTER
+C                                       VARIABLES FROM THE TERMINAL,
+C                                       USE "IFLGSV" TO PARSE A SAVED
+C                                       LINE (TERMINAL READ WILL USE A
+C                                       SAVED LINE FOR THE FIRST LINE)
+C     UPDATED         --OCTOBER   2019. ADD "IREAPR" TO CHECK FOR
+C                                       PERCENT SIGN IN NUMERIC
+C                                       VARIABLES
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -249,6 +257,7 @@ C
       CHARACTER*4 IREACD
       CHARACTER*4 IREACM
       CHARACTER*4 IREADS
+      CHARACTER*4 IREAPC
       CHARACTER*4 IREAPM
       CHARACTER*4 IREAAS
       CHARACTER*8 IREAMC
@@ -418,9 +427,9 @@ C
         WRITE(ICOUT,62)PREAMV,N2,MAXN2
    62   FORMAT('PREAMV,N2,MAXN2=',F10.5,2I8)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,63)IREAMC,IREADS,IREAPM,IREACD,IREACM,IREAAS
-   63   FORMAT('IREAMC,IREADS,IREAPM,IREACD,IREACM,IREAAS = ',
-     1         A8,5(2X,A4))
+        WRITE(ICOUT,63)IREAMC,IREADS,IREAPM,IREACD,IREACM,IREAAS,IREAPC
+   63   FORMAT('IREAMC,IREADS,IREAPM,IREACD,IREACM,IREAAS,IREAPC = ',
+     1         A8,6(2X,A4))
         CALL DPWRST('XXX','BUG ')
         DO65I=1,5
           WRITE(ICOUT,67)I,ICOLL(I),ICOLU(I)
@@ -481,14 +490,26 @@ C
 C
       IF(IOFILE.EQ.'NO')THEN
 C
-        IF(IRD2.EQ.IRD)THEN
-          READ(IRD2,93,END=8000)(IB(IZ),IZ=1,ICOL2)
-   93     FORMAT(255A1)
-        ELSEIF(IMACCS.EQ.'OPEN')THEN
-          NUMCHA=MAXCO2
-          CALL DPREFI(IOUNIT,IFILE,ISTAT,IFORM,IACCES,IPROT,ICURST,
-     1                IB,NUMCHA,
-     1                ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
+        IF(IFLGSV.EQ.0)THEN
+          IF(IRD2.EQ.IRD)THEN
+            READ(IRD2,93,END=8000)(IB(IZ),IZ=1,ICOL2)
+   93       FORMAT(255A1)
+          ELSEIF(IMACCS.EQ.'OPEN')THEN
+            NUMCHA=MAXCO2
+            CALL DPREFI(IOUNIT,IFILE,ISTAT,IFORM,IACCES,IPROT,ICURST,
+     1                  IB,NUMCHA,
+     1                  ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
+          ENDIF
+        ELSE
+          NUMCHA=1
+          DO2993KK=MAXCO2,1,-1
+            IF(IB(KK).NE.' ')THEN
+              NUMCHA=KK
+              GOTO2995
+            ENDIF
+ 2993     CONTINUE
+ 2995     CONTINUE
+          IFLGSV=0
         ENDIF
 C
       ELSE
@@ -518,9 +539,21 @@ C
           ENDIF
         ELSE
           NUMCHA=MAXCO2
-          CALL DPREFI(IOUNIT,IFILE,ISTAT,IFORM,IACCES,IPROT,ICURST,
-     1                IB,NUMCHA,
-     1                ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
+          IF(IFLGSV.EQ.0)THEN
+            CALL DPREFI(IOUNIT,IFILE,ISTAT,IFORM,IACCES,IPROT,ICURST,
+     1                  IB,NUMCHA,
+     1                  ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
+          ELSE
+            NUMCHA=1
+            DO2998KK=ICOL2,1,-1
+              IF(IB(KK).NE.' ')THEN
+                NUMCHA=KK
+                GOTO2999
+              ENDIF
+ 2998       CONTINUE
+ 2999       CONTINUE
+            IFLGSV=0
+          ENDIF
         ENDIF
       ENDIF
 C
@@ -1384,6 +1417,8 @@ C
         IF(IREAAS.EQ.'ON' .AND. IB(IFRST).EQ.'*')IFRST=IFRST+1
         IF(IREAPM.EQ.'ON' .AND. IB(ILAST).EQ.'+')IB(ILAST)=' '
         IF(IREAPM.EQ.'ON' .AND. IB(ILAST).EQ.'-')IB(ILAST)=' '
+        IF(IREAPC.EQ.'ON' .AND. IB(ILAST).EQ.'%')IB(ILAST)=' '
+        IF(IREAPC.EQ.'ON' .AND. IB(IFRST).EQ.'%')IFRST=IFRST+1
         IF(IREAAS.EQ.'ON' .AND. IB(ILAST).EQ.'*')THEN
           IB(ILAST)=' '
           IF(IB(ILAST-1).EQ.'*')THEN
@@ -1546,6 +1581,8 @@ C               *****************************
 C
 C     CHECK IF LAST CHARACTER IS THE READ DELIMITER
 C
+C     2019/10: IGNORE "%" IF LAST CHARACTER IN FIELD
+C
       IBASCI=ICHAR(IB(I)(1:1)) - IZERO
       IF(IBASCI.GE.0 .AND. IBASCI.LE.9)THEN
         IF(NC.EQ.0 .AND. NSIGN.EQ.0)NSIGN=NSIGN+1
@@ -1557,6 +1594,11 @@ C
       ELSEIF(IB(I).EQ.',' .AND. IREACM.EQ.'ON')THEN
         I=I+1
         GOTO160
+      ELSEIF(IB(I).EQ.'%')THEN
+        IF(IREAPC.EQ.'ON')THEN
+          IF(I.EQ.ILAST)GOTO1050
+          IF(IB(I+1).EQ.IREADL .AND. I.EQ.ILAST-1)GOTO1050
+        ENDIF
       ELSEIF(IB(I).EQ.'+' .OR. IB(I).EQ.'-')THEN
 C
 C               **************************
@@ -1574,7 +1616,7 @@ C
         IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'REAL')
      1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-C       IGNORE TRAILING +/- IF REQUESTED
+C       IGNORE TRAILING +/- OR TRAILING % IF REQUESTED
 C
 C       NOTE THAT ILAST MAY BE THE DELIMITER, SO MAY NEED TO
 C       CHECK CHARACTER BEFORE DELIMITER

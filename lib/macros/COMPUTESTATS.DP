@@ -1,0 +1,90 @@
+. This is dataplot program   computestats.dp
+. Purpose: Generate (via "offline" plots) statistics in connection with dex mean plots
+. Date: October 11, 2011 ==> September 14, 2012
+. Motivation: Error bars on dex mean plots
+.
+. *****DANGER***** This routine assumes that the factors in the dex mean plot
+.                  are in fact residing in x1 to x^k
+.
+. Input:
+.   k (parameter) = number of factors
+.   y (vector) (= response variable)
+.   x1, x2, . . . xk (vectors) = factors
+. Output:
+.   xplotnum (vector) = horizontal axis plot values for each setting of each factor
+.   yplotnum (vector) = computed "number of points" for each level of each factor
+.   tplotnum (vector) = coded factor settings for "number of points"
+.
+.   xplotm   (vector) = horizontal axis plot values for each setting of each factor
+.   yplotm   (vector) = computed "mean" for each level of each factor
+.   tplotm   (vector) = coded factor settings for "mean"
+.
+.   xplotsd  (vector) = horizontal axis plot values for each setting of each factor
+.   yplotsd  (vector) = computed "standard deviation" for each level of each factor
+.   tplotsd  (vector) = coded factor settings for "standard deviation"
+.
+.   xplotsdm (vector) = horizontal axis plot values for each setting of each factor
+.   yplotsdm (vector) = computed "standard deviation of mean" for each level of each factor
+.   tagplot (vector)  = coded factor settings for "standard deviation of mean"
+.
+. xplot (vector)   = usual (k+1 sets) graphics out from dex mean plot command
+. yplot (vector)   = usual (k+1 sets) graphics out from dex mean plot command
+. tagplot (vector) = usual (k+1 sets) graphics out from dex mean plot command
+.
+. -----start point-----
+.
+delete xplotm yplotlcl yplotucl
+delete xplotnum yplotnum tplotnum subset tagplot maxtagpl
+delete xplotm yplotm tplotm subset tagplot maxtagpl
+delete xplotsd yplotsd tplotsd subset tagplot maxtagpl
+delete xplotsdm yplotsdm tagplot subset tagplot maxtagpl
+.
+device 1 off
+device 2 off
+   if k = 1
+      number plot y x1
+      let xplotnum = xplot; let yplotnum = yplot; let tplotnum = tagplot
+      .
+      sd plot y x1
+      let xplotsd = xplot; let yplotsd = yplot; let tplotsd = tagplot
+      .
+      sd of mean plot y x1
+      let xplotsdm = xplot; let yplotsdm = yplot; let tplotsdm = tagplot
+      .
+      mean plot y x1
+      let xplotm = xplot; let yplotm = yplot; let tplotm = tagplot
+   end if
+   .
+   if k >= 2
+      dex number plot y x1 to x^k
+      let xplotnum = xplot; let yplotnum = yplot; let tplotnum = tagplot
+      .
+      dex sd plot y x1 to x^k
+      let xplotsd = xplot; let yplotsd = yplot; let tplotsd = tagplot
+      .
+      dex sd of mean plot y x1 to x^k
+      let xplotsdm = xplot; let yplotsdm = yplot; let tplotsdm = tagplot
+      .
+      dex mean plot y x1 to x^k
+      let xplotm = xplot; let yplotm = yplot; let tplotm = tagplot
+   end if
+device 1 on
+device 2 on
+.
+retain xplotnum yplotnum tplotnum subset tagplot <= k
+retain xplotsd yplotsd tplotsd subset tagplot <= k
+retain xplotsdm yplotsdm tplotsdm subset tagplot <= k
+retain xplotm yplotm tplotm subset tagplot <= k
+.
+let yplotlcl = yplotm - 2*yplotsdm
+let yplotucl = yplotm + 2*yplotsdm
+. print xplotm yplotlcl yplotucl
+. print computestats.out xplotm yplotlcl yplotucl
+. pause
+.
+let maxtagpl = max tagplot
+delete xplotnum yplotnum tplotnum subset tagplot maxtagpl
+delete yplotm tplotm subset tagplot maxtagpl
+delete xplotsd yplotsd tplotsd subset tagplot maxtagpl
+delete xplotsdm yplotsdm tagplot subset tagplot maxtagpl
+.

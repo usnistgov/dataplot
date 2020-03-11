@@ -1,0 +1,562 @@
+. This is dataplot macro file   getallcvestimates.dp
+. Purpose: For a given interlab exp., compute a variety (= 14 = 1+5+6+2)  of WA, WAOS, WAOZ consensus value estimates
+. Date: 10/23/12 ==> 7/20/16
+.
+. Input (7):
+.   yz      (vector)    = vector of observations
+.   labz    (vector)    = vector of associated lab IDs (same length as y)
+.   numlab (parameter)  = number of distinct labs
+.
+.   nv     (vector)     = vector of number of within-lab observations (length = numlab)
+.   ybarv  (vector)     = vector of means (length = numlab)
+.   sdvp   (vector)     = vector of modified (labs with 1 obs. get si = pooled sd) within-lab SDs (length = numlab)
+.
+. Output (3) (from multiple calls to    get1cvestimate.dp and get1k2unccv.dp)
+.   cvest  (vector)     = ^numest CV estimates
+.   cvestr (vector)     = ^numest rounded CV estimates
+.   sd2est (vector)     = vector of k=2 uncertainties for the estimates
+.
+. Called by: consensus_value_plot < fletcher293.dp
+.
+. -----start point-----
+.
+let bugswacv = 0
+. let pausesw = 1
+.
+if bugswacv = 1
+   print " "; print "At beginning of      getallcvestimates.dp"
+   if pause = 1; pause; end if
+end if
+.
+let tracesw = 100
+. let tracesw = 1
+. let tracesw = -1
+. let tracesw = 1
+.
+if tracesw <= 1
+   print "---getallcvestimates.dp: at start of macro-----"
+   print yz labz
+   print nv ybarv sdvp
+   pause
+end if
+.
+. -----Step 1: Check input arguments-----
+.
+let string stmacro = getallcvestimates.dp
+let string stall = y lab nv ybarv sdvp numlab
+call checkinput.dp
+.
+. -----Step 2: Define number of estimators-----
+.
+let numest = 13
+let numestp1 = numest + 1
+.
+. -----Step 3: Initialize the 3 output vectors: cvest, cvestr, and sd2est-----
+.
+delete cvest; let cvest = -999 for i = 1 1 numestp1
+delete cvestr; let cvestr = -999 for i = 1 1 numestp1
+delete sd2est; let sd2est = -999 for i = 1 1 numestp1
+.
+. -----Step 9: Execute the Consensus mean command,-----
+. -----        get consensus value weights    for 5 WA (Weighted Average) estimators, and-----
+. -----        get consensus value statistics for 5 WA (Weighted Average) estimators-----
+.
+if tracesw <= 1
+   print "---getallcvestimates.dp: at start of step 0---"
+   pause
+end if
+.
+. print "sdpool = ^sdpool"
+. print nv ybarv sdvp
+. print "---getallcvestimates.dp: before consensus mean command---"
+. pause
+   capture screen on
+capture getallcvestimates.out
+   set median of means on
+   . consensus mean y lab
+   print "numlab = ^numlab"
+   if numlab >= 2; consensus mean ybarv sdvp nv; end if
+end capture
+. stat p
+.
+.
+.
+.
+. -----Step 10: Estimator : Grand Mean-----
+.
+if tracesw <= 0
+   print "---getallcvestimates.dp: at start of step 10 (Est. 0: GM)---"
+   pause
+end if
+.
+let jest = 0
+let string st^jest = Grand Mean
+.
+let nz = number yz
+let gm = mean yz
+let sd = sd yz
+let sdgm = sd/sqrt(nz)
+. let w^jest(jest) = gm
+. let sd2est(jest) = 2*sdgm
+. pause
+.
+.
+.
+.
+. -----Step 11: Estimator 1: Mean of Means (Compute weights, CV, and Unc(CV)-----
+.
+if tracesw <= 1
+   print "---getallcvestimates.dp: at start of step 11 (Est. 1: MM)---"
+   pause
+end if
+.
+let jest = 1
+let string st^jest = Mean of Mean
+.
+delete exist^jest
+let exist^jest = 0
+if numlab >= 2; let exist^jest = 1; end if
+.
+if exist^jest = 1
+   delete w^jest
+   call get1wacvweightsand3statistics.dp
+   let w^jest = wmm
+   .
+   let sorted = 0
+   call get1cvestimate.dp
+   let sd2est(jest) = sd2mm
+end if
+. pause
+.
+.
+.
+.
+. -----Step 12: Estimator 2: Mandel-Paule (Compute weights, CV, and Unc(CV)-----
+.
+if tracesw <= 2
+   print "---getallcvestimates.dp: at start of step 12 (Est. 2: MP)---"
+   pause
+end if
+.
+let jest = 2
+let string st^jest = Mandel-Paule of Means
+.
+delete exist^jest
+let exist^jest = 0
+if numlab >= 2; let exist^jest = 1; end if
+.
+if exist^jest = 1
+   delete w^jest
+   call get1wacvweightsand3statistics.dp
+   let w^jest = wmp
+   .
+   let sorted = 0
+   call get1cvestimate.dp
+   let sd2est(jest) = sd2mp
+end if
+. pause
+.
+.
+.
+.
+. -----Step 13: Estimator 3: Modified Mandel-Paule (Compute weights, CV, and Unc(CV)-----
+.
+if tracesw <= 3
+   print "---getallcvestimates.dp: at start of step 13 (Est. 3: MMP)---"
+   pause
+end if
+.
+let jest = 3
+let string st^jest = Modified Mandel-Paule of Means
+.
+delete exist^jest
+let exist^jest = 0
+if numlab >= 2; let exist^jest = 1; end if
+.
+if exist^jest = 1
+   delete w^jest
+   call get1wacvweightsand3statistics.dp
+   let w^jest = wmmp
+   .
+   let sorted = 0
+   call get1cvestimate.dp
+   let sd2est(jest) = sd2mmp
+end if
+. pause
+.
+.
+.
+.
+. -----Step 14: Estimator 4: Vangel-Rukhin (Compute weights, CV, and Unc(CV)-----
+.
+if tracesw <= 4
+   print "---getallcvestimates.dp: at start of step 14 (Est. 4: VR)---"
+   pause
+end if
+.
+let jest = 4
+let string st^jest = Vangel-Rukhin of Means
+.
+delete exist^jest
+let exist^jest = 0
+if numlab >= 2; let exist^jest = 1; end if
+.
+if exist^jest = 1
+   delete w^jest
+   call get1wacvweightsand3statistics.dp
+   let w^jest = wvr
+   .
+   let sorted = 0
+   call get1cvestimate.dp
+   let sd2est(jest) = sd2vr
+end if
+. pause
+.
+.
+.
+.
+. -----Step 15: Estimator 5: DerSimonian-Laird (Compute weights, CV, and Unc(CV)-----
+.
+if tracesw <= 5
+   print "---getallcvestimates.dp: at start of step 15 (Est. 5: DL)---"
+   pause
+end if
+.
+let jest = 5
+let string st^jest = DerSimonian-Laird of Means
+.
+delete exist^jest
+let exist^jest = 0
+if numlab >= 2; let exist^jest = 1; end if
+.
+if exist^jest = 1
+   delete w^jest
+   call get1wacvweightsand3statistics.dp
+   let w^jest = wdl
+   .
+   let sorted = 0
+   call get1cvestimate.dp
+   let sd2est(jest) = sd2dl
+end if
+. pause
+.
+.
+.
+.
+. -----Step 16: Estimator 6: Triangular Mean of All Means (Compute weights, CV, and Unc(CV)-----
+.
+if tracesw <= 6
+   print "---getallcvestimates.dp: at start of step 16 (Est. 6: TrMM)---"
+   print "numlab = ^numlab"
+   pause
+end if
+.
+let jest = 6
+let string st^jest = Triangular Mean of All Means
+.
+delete exist^jest
+let exist^jest = 0
+if numlab >= 2; let exist^jest = 1; end if
+.
+if exist^jest = 1
+   delete w^jest
+   let mid = (numlab+1)/2
+   loop for jlab = 1 1 numlab
+      let wi1 = jlab
+      let wi2 = numlab - jlab + 1
+      delete wjunk; let wjunk = wi1; if wi2 <= wi1; let wjunk = wi2; end if
+      let w^jest(jlab) = wjunk
+   end loop
+   if bugswacv = 1
+      print "Triangular Mean of All Means"
+      print w^jest
+      if pausesw = 1; pause; end if
+   end if
+   .
+   if tracesw <= 6
+      print "---getallcvestimates,dp: before calling get1cvestimate.dp---"
+      pause
+   end if
+   let sorted = 1
+   call get1cvestimate.dp
+   .
+   if tracesw <= 6
+      print "---getallcvestimates.dp: before calling get1k2unccv.dp---"
+      pause
+   end if
+   call get1k2unccv.dp
+end if
+.pause
+.
+.
+.
+.
+. -----Step 17: Estimator 7: (1,1) Trimmed Mean of Means (Compute weights, CV, and Unc(CV)-----
+.
+if tracesw <= 7
+   print "---getallcvestimates.dp: at start of step 17 (Est. 7: TMM)---"
+   . pause
+end if
+.
+let jest = 7
+let string st^jest = (1,1) Trimmed Mean of Means (Olympics)
+.
+delete exist^jest
+let exist^jest = 0
+if numlab >= 3; let exist^jest = 1; end if
+.
+if exist^jest = 1
+   delete w^jest
+   let w^jest = ybarv - ybarv
+   let wi = 1/(numlab-2)
+   let numlabm1 = numlab - 1
+   loop for jlab = 2 1 numlabm1
+      let w^jest(jlab) = wi
+   end loop
+   if bugswacv = 1
+      print "(1,1) Trimmed Mean of All Means (Olympics)"
+      print w^jest
+      if pausesw = 1; pause; end if
+   end if
+   .
+   let sorted = 1
+   call get1cvestimate.dp
+   call get1k2unccv.dp
+end if
+. pause
+.
+.
+.
+.
+. -----Step 18: Estimator 8: (1,1) Trimmed Triangular Mean of Means (Compute weights, CV, and Unc(CV)-----
+.
+if tracesw <= 99
+   print "---getallcvestimates.dp: at start of step 18 (Est. 8: (1,1)TTrMM)---"
+   . pause
+end if
+.
+let jest = 8
+let string st^jest = (1,1) Trimmed Triangular Mean of Means
+.
+delete exist^jest
+let exist^jest = 0
+if numlab >= 3; let exist^jest = 1; end if
+.
+if exist^jest = 1
+   delete w^jest
+   let mid = (numlab+1)/2
+   let w^jest = ybarv - ybarv
+   let numlabm1 = numlab - 1
+   loop for jlab = 2 1 numlabm1
+      let wi1 = jlab
+      let wi2 = numlab - jlab + 1
+      delete wjunk; let wjunk = wi1; if wi2 <= wi1; let wjunk = wi2; end if
+      let w^jest(jlab) = wjunk
+   end loop
+   if bugswacv = 1
+      print "(1,1) Trimmed Triangular Mean of Means"
+      print w^jest
+      if pausesw = 1; pause; end if
+   end if
+   .
+   let sorted = 1
+   call get1cvestimate.dp
+   call get1k2unccv.dp
+end if
+. pause
+.
+.
+.
+.
+. -----Step 19: Estimator 9: Midmean of Means (Compute weights, CV, and Unc(CV)-----
+.
+if tracesw <= 99
+   print "---getallcvestimates.dp: at start of step 19 (Est. 9: MMM)---"
+   . pause
+end if
+.
+let jest = 9
+let string st^jest = Midmean of Means
+.
+delete exist^jest
+let exist^jest = 0
+if numlab >= 3; let exist^jest = 1; end if
+.
+if exist^jest = 1
+   delete w^jest
+   let w^jest = ybarv - ybarv
+   let cut1 = numlab/4
+   let cut1 = int(cut1)
+   let cut2 = numlab - cut1 + 1
+   let cut1p = cut1 + 1
+   let cut2p = cut2 - 1
+   let nmidmean = cut2p - cut1p + 1
+   let wi = 1/nmidmean
+   loop for jlab = cut1p 1 cut2p
+      let w^jest(jlab) = wi
+   end loop
+   if bugswacv = 1
+      print "Midmean of Means"
+      print w^jest
+      if pausesw = 1; pause; end if
+   end if
+   .
+   let sorted = 1
+   call get1cvestimate.dp
+   call get1k2unccv.dp
+end if
+. pause
+.
+.
+.
+.
+. -----Step 20: Estimator 10: Triangular MidMean of Means (Compute weights, CV, and Unc(CV)-----
+.
+if tracesw <= 99
+   print "---getallcvestimates.dp: at start of step 20 (Est. 10: TrMMM)---"
+   . pause
+end if
+.
+let jest = 10
+let string st^jest = Triangular Midmean of Means
+.
+delete exist^jest
+let exist^jest = 0
+if numlab >= 3; let exist^jest = 1; end if
+.
+if exist^jest = 1
+   delete w^jest
+   let w^jest = ybarv - ybarv
+   let mid = (numlab+1)/2
+   let cut1 = numlab/4
+   let cut1 = int(cut1)
+   let cut2 = numlab - cut1 + 1
+   let cut1p = cut1 + 1
+   let cut2p = cut2 - 1
+   let nmidmean = cut2p - cut1p + 1
+   let wi = 1/nmidmean
+   loop for jlab = cut1p 1 cut2p
+      let wi1 = jlab
+      let wi2 = numlab - jlab + 1
+      delete wjunk; let wjunk = wi1; if wi2 <= wi1; let wjunk = wi2; end if
+      let w^jest(jlab) = wjunk - 1
+   end loop
+   if bugswacv = 1
+      print "Triangular Midmean of Means"
+     print w^jest
+      if pausesw = 1; pause; end if
+   end if
+   .
+   let sorted = 1
+   call get1cvestimate.dp
+   call get1k2unccv.dp
+end if
+. pause
+.
+.
+.
+.
+. -----Step 21: Estimator 11: Median of Means (Compute weights, CV, and Unc(CV)-----
+.
+if tracesw <= 99
+   print "---getallcvestimates.dp: at start of step 21 (Est. 11: MedM)---"
+   . pause
+end if
+.
+let jest = 11
+let string st^jest = Median of Means
+.
+delete exist^jest
+let exist^jest = 0
+if numlab >= 2; let exist^jest = 1; end if
+.
+if exist^jest = 1
+   delete w^jest
+   let w^jest = ybarv - ybarv
+   let mid = (numlab+1)/2
+   let evenodd = mod(numlab,2)
+   if evenodd = 1; let cut1 = mid; let cut2 = cut1; end if
+   if evenodd = 0; let cut1 = int(mid); let cut2 = cut1+1; end if
+   let ninner = cut2 - cut1 + 1
+   let wi = 1/ninner
+   loop for jlab = cut1 1 cut2
+      let w^jest(jlab) = wi
+   end loop
+   if bugswacv = 1
+      print "Median of Means"
+      print w^jest
+      if pausesw = 1; pause; end if
+   end if
+   .
+   let sorted = 1
+   call get1cvestimate.dp
+   call get1k2unccv.dp
+end if
+. pause
+.
+.
+.
+.
+. -----Step 22: Estimator 12: Inverse Means (Z) (Compute weights, CV, and Unc(CV)-----
+.
+if tracesw <= 99
+   print "---getallcvestimates.dp: at start of step 22 (Est. 12: InvMM)---"
+   . pause
+end if
+.
+let jest = 12
+let string st^jest = Inverse (Z) Mean of Means
+.
+delete exist^jest
+let exist^jest = 0
+if numlab >= 3; let exist^jest = 1; end if
+.
+if exist^jest = 1
+   delete w^jest
+   let w^jest = 1 / (abs(zv) + sdmvp)
+   .
+   let sorted = 0
+   call get1cvestimate.dp
+   call get1k2unccv.dp
+end if
+. pause
+.
+.
+.
+.
+. -----Step 23: Estimator 13: Inverse Means (Z**2) (Compute weights, CV, and Unc(CV)-----
+.
+if tracesw <= 99
+   print "---getallcvestimates.dp: at start of step 23 (Est. 13: InvMM**2)---"
+   . pause
+end if
+.
+let jest = 13
+let string st^jest = Inverse (Z**2) Mean of Means
+.
+delete exist^jest
+let exist^jest = 0
+if numlab >= 3; let exist^jest = 1; end if
+.
+if exist^jest = 1
+   delete w^jest
+   let w^jest = 1 / ((zv*zv) + sdmvp)
+   .
+   let sorted = 0
+   call get1cvestimate.dp
+   call get1k2unccv.dp
+end if
+. pause
+.
+.
+.
+.
+. -----Step 99: Finish up-----
+.
+if bugswacv = 1
+   print " "; print "At end of      getallcvestimates.dp"
+   print sdb sdbmp sdbmmp sdbvr sdbdl
+   print cvest cvestr sd2est
+   if pause = 1; pause; end if
+end if
+.

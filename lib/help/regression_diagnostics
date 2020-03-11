@@ -1,0 +1,192 @@
+----- *REGRESSION DIAGNOSTICS* -------------------------------------
+
+REGRESSION DIAGNOSTICS
+Regression Diagnostics
+
+After a fit, it is recommended that various diagnostics be generated
+to assess the adequacy of the model.  The typical assumptions for
+a good model are that the errors from the model are independent and
+identically distributed.  It is often desired that the distribution
+for the errors is a normal distribution.
+
+At a minimum, the following diagnostics should be generated
+
+   1. a 4-plot of the residuals.  The 4-plot generates a run sequence
+      plot (to assess common location and scale for the residuals),
+      a lag plot (to check for first order autocorrelation of the
+      residuals), a histogram, and a normal probability plot.
+
+      This plot provides a useful check on the basic assumptions
+      for the error term.  If the assumptions are violated, this
+      is an indication that there is structure in the data that is
+      not accounted for.
+
+   2. If there is a single independent variable, then it is useful
+      to plot the predicted values and the dependent variable against
+      the independent variable.
+
+The term "regression diagnostics" is typically used to denote more
+
+This is a brief discussion of "regression diagnostics" with respect to
+linear fits performed with an exact algorithm (as distinct from an
+iterative algorithm used for non-linear fits with linear fits as a
+special case).  Linear fits include simple linear fits, polynomial models,
+and mulit-linear (i.e., more than one independent variable) fits.
+
+Linear fits in Dataplot are generated with commands like
+
+    FIT Y X
+    FIT Y X1 X2 X3
+    QUADRATIC FIT Y X
+
+Fits entered with an explicit function such as
+
+    FIT Y = A0 + A1*X1 + A2*X2
+
+are fit with an iterative non-linear algorithm and the discussion below
+does not apply.
+
+For more information on fitting linear models, enter HELP LINEAR FIT and
+for more information on fitting non-linear models enter HELP FIT.
+
+Regression diagnostics are used to identify outliers in the dependent
+variable, identify influential points, to identify high leverage points,
+or in general to uncover features of the data that could cause difficulties
+for the fitted regression.
+
+High leverage points are those that are outliers with respect to the
+independent variables. Influential points are those that cause large
+changes in the fitted function when they are deleted. Although an
+influential point typically has high leverage, a high leverage point is
+not necessarily influential.
+
+The books by Belsley, Kuh, and Welsch and by Cook and Weisberg listed in
+the References section discuss regression diagnostics in detail.  The
+mathematical derivations for the diagnostics covered here can be found
+in these books.  Chapter 11 of the Neter, Wasserman, and Kuntner book
+listed in the References section discusses regression diagnostics in a
+less theoretical way.  We will only give a brief overview of the various
+regression diagnostics.  For more thorough guidance on when these
+various diagnostics are appropriate and how to interpret them, see one
+of these texts (or some other text on regression that covers these
+topics).
+
+At a minimum, diagnostic analysis of a linear fit typically includes
+various plots of the residuals and predicted values as outlined in the
+NOTE section above. For more complete diagnostics, the variables written
+to the file DPSTS3F.DAT can be analyzed (see the DESCRIPTION section
+above). This file contains the diagonals of the hat matrix, 4 alternate
+forms of the residuals, Cook’s distance, the DFFITS values, and the
+variance of the residuals.
+
+The standardized residuals are the residuals divided by the square root
+of the mean square error. The internally studentized residuals are the
+residuals divided by their standard deviations. Many analysts prefer to
+use one of these forms in the standard residual analysis. The deleted
+residuals are the residuals obtained from deleting one case at a time from
+the regression (i.e., the ith deleted residual is the difference between
+the original Y data value and the predicted value obtained when the ith
+case is deleted from the fit). The externally studentized residuals (also
+called the studentized deleted residuals) are the deleted residuals
+divided by their standard deviations.  Deleted residuals and externally
+deleted residuals are used to identify outlying Y observations that the
+normal residuals do not identify (cases with high leverage tend to
+generate small residuals even if they are outliers).
+
+Many recently developed regression diagnostics depend on the Hat matrix.
+This matrix is X(X T X) -1 X T . The limit of 100 columns for matrices
+limits the Hat matrix to cases with 100 observations or less. Fortunately,
+most of the relevant statistics can be derived from the diagonal elements
+of this matrix (which can be read from the DPST3F.DAT file). These are
+also referred to as the leverage points. The minimum leverage is (1/N),
+the maximum leverage is 1.0, and the average leverage is (P/N) where P is
+the number of variables in the fit.  As a rule of thumb, leverage points
+greater than twice the average leverage can be considered high leverage.
+High leverage points are outliers in terms of the X matrix and have an
+unduly large influence on the predicted values. High leverage points also
+tend to have small residuals, so they are not typically detected by
+standard residual analysis.
+
+The DFFITS values are a measure of influence that observation i has on
+the ith predicted value. As a rule of thumb, for small or moderate size
+data sets, values greater than 1 indicate an influential case. For large
+data sets, values greater than 2*SQRT(P/N) indicate influential cases.
+
+Cook’s distance is a measure of the combined impact of the ith
+observation on all of the regression coefficients. It is typically
+compared to the F distribution. Values near or above the 50th percentile
+imply that observation has substantial influence on the regression
+parameters.
+
+The DFFITS values and the Cook’s distance are used to identify high
+leverage points that are also influential (in the sense that they have
+a large effect on the fitted model).
+
+MULTI-COLINEARITY
+
+These variables can be read in as follows (you can modify the SET READ FORMAT line to skip over variables you don’t want):
+FIT ....
+SKIP 1
+SET READ FORMAT 8(E15.7,1X)
+READ DPST3F.DAT PREDSD HII VARRES STDRES ISTUDRES DELRES ESTUDRES COOK DFFITS
+SKIP 0
+SET READ FORMAT
+Once these variables have been read in, they can be printed, plotted, and used in further calculations like any other variable. This is
+demonstrated in the PROGRAM 3 example. They can also be used to derive additional diagnostic statistics. The PROGRAM 3 example
+shows how to compute the Mahalanobis distance and Cook’s V statistic. The Mahalanobis distance is a measure of the distance of an
+observation from the “center” of the observations and is essentially an alternate measure of leverage. The Cook’s V statistic is the ratio
+of the variances of the predicted values and the variances of the residuals.
+Another popular diagnostic is the DFBETA statistic. This is similar to Cook’s distance in that it tries to identify points that have a large
+influence on the estimated regression coefficients. The distinction is that DFBETA assesses the influence on each individual parameter
+rather than the parameters as a whole. The DFBETA statistics require the catcher matrix, which is described in the NOTE - MULTI-
+COLLINEARITY section below, for easy computation. The usual recommendation for DFBETA is that absolute values larger than 1
+for small and medium size data sets and larger than (2/SQRT(N)) for large data sets should be considered influential.
+The variables written to file DPST3F.DAT are calculated without computing any additional regressions. The statistics based on a case
+being deleted are computed from mathematically equivalent formulas that do not require additional regressions to be performed. The
+Neter, Wasserman, and Kunter text gives the formulas that are actually used.
+Robust regression is often recommended when there are significant outliers in the data. One common robust technique is called
+iteratively reweighted least squares (or M-estimation). Note that these techniques protect against outlying Y values, but they do not
+protect against outliers in the X matrix. Also, they test for single outliers and are not as sensitive for a group of similar outliers. See the
+documentation for WEIGHTS, BI-WEIGHT, and TRI-CUBE for more information on performing iteratively reweighted least squares
+regression in DATAPLOT. Techniques for protecting against outliers in the X matrix use alternatives to least squares. Two such methods
+are least median squares regression (also called LSQ regression) and least trimmed squares regression (also called LTS regression).
+DATAPLOT does not support these techniques at this time. The documentation for the WEIGHTS command in the Support chapter
+discusses one approach for dealing with outliers in the X matrix in the context of iteratively reweighted least squares.
+NOTE - MULTI-COLLINEARITY
+Multi-collinearity results when the columns of the X matrix have significant interdependence (that is, one column is close to a linear
+combination of some collection of other columns). Multi-collinearity typically results in numerically unstable estimates in the sense
+that small changes in the X matrix can result in significant changes in the estimated regression coefficients. It can also cause other
+significant problems. Pairwise collinearity can be determined from correlation coefficients between independent variables (or from
+pairwise plots). However, this does not detect higher order multi-collinearity. One measure of this is the multiple correlation coefficient
+between the jth variable and the rest of the independent variables. The Variance Inflation Factor (VIF) is a scaled version of this with the
+following formula:
+1
+VI F j = --------------------
+( 1 – R 2 j )
+(EQ 3-51)
+The VIF values are often given as their reciprocals (this is called the tolerance) . Fortunately, these values can be computed without
+performing any additional regressions. The computing formulas are based on the catcher matrix, which is X(X T X) -1 . The equation is:
+VI F j =
+N N
+i = 1 i = 1
+∑ c ij 2 ∑ ( x ij – x j ) 2
+(EQ 3-52)
+where c is the catcher matrix. This is a straightforward calculation in DATAPLOT if N is less than the maximum number of rows that
+DATAPLOT matrix commands can handle (typically 500 if the maximum number of rows for a variable is 10,000 and 1,000 if the
+maximum number of rows for a variable is 20,000). If N is greater than this maximum, the catcher matrix cannot be computed easily.
+The PROGRAM 3 example shows how to compute the catcher matrix (for less than 500 rows), the R j2 , and the VIF’s.
+Another measure of multi-collinearity are the condition indices. The condition indices are calculated as follows:
+1. Scale the columns of the X matrix to have unit sums of squares.
+2. Calculate the singular values of the scaled X matrix and square them.
+
+References:
+    Cook and Weisberg (1982), "Residuals and Influence in Regression",
+    Chapman and Hall.
+ 
+    Belsley, Kuh, and Welsch, (1980),  "Regression Diagnostics",
+    John Wiley.
+
+    Neter, Wasserman, and Kunter (1990), "Applied Linear Statistical
+    Models", 3rd ed., Irwin.
+
+

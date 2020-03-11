@@ -1,0 +1,27 @@
+. this is dataplot macro color.dp
+. purpose--change colors to all plot components
+. date--february 2004
+.
+. -----start point-----
+.
+if foreground not exist; let string foreground = white; end if
+if background not exist; let string background = blue; end if
+.
+background color ^background
+.
+char color ^foreground all
+line color ^foreground all
+bar border color ^foreground all
+spike color ^foreground all
+frame color ^foreground
+tic color ^foreground
+tic label color ^foreground
+label color ^foreground
+title color ^foreground
+legend color ^foreground
+color ^foreground
+grid color ^foreground
+.
+let string darkgree = 76
+let string olivegre = 10
+.

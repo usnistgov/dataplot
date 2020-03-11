@@ -13,19 +13,15 @@ For Windows 7/8/10 platforms, see
 
 INSTALLATION FROM PACKAGES
 
- 1. Red Hat Package Manager (RPM):
+We are currently working on making RPM package files.  This
+section will be updated when these are available.
 
-      ... add instructions here when this becomes publically available ...
 
-    Thanks to Chris Schanzle for putting this package together.
-
-Package managers for other systems (e.g., Debian/Ubuntu)
-are under consideration but are not yet available.
 
 SOURCE BASED INSTALLATION
 
 If you are installing Dataplot on a system for which you cannot
-use the RHPM file, you can build Dataplot from source.  It is
+use the RHM file, you can build Dataplot from source.  It is
 assumed that you have gfortran/gcc already installed.
 
  1. Download the zip file
@@ -34,8 +30,8 @@ assumed that you have gfortran/gcc already installed.
 
        https://github.com/usnistgov/dataplot
 
-    select the "Close or Download" menu and then select the
-    "Download ZIP" option.  This will download the file
+    select the "Clone or Download" menu and then select the
+    "Download tar" option.  This will download the file
 
            dataplot-master.zip
 
@@ -195,7 +191,7 @@ assumed that you have gfortran/gcc already installed.
 
            -O2
 
-     v. Dataplot's default workspace is 10 columns by 1,500,000
+     v. Dataplot's default workspace is 10 columns by 2,000,000
         rows.  You can re-dimension to obtain more columns at the
         expense of fewer rows.  If your local machine has sufficient
         memory, say 16GB or more, and you would like to increase the

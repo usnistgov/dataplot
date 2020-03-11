@@ -1,0 +1,51 @@
+. This is dataplot program file    dasilva141.dp    (for rm8320)    3/29/19
+. Purpose: Determine if the 8 vials are statistically equivalent (wrt location)
+.          (based on 8 bottles and 3 reps per bottle).
+           Then determine if a subset of 5 vials (3, 5, 6, 7, 8) are statisticall equivalent.
+. Date: 3/29/19
+.
+. -----start point-----
+.
+call jjfcolor.dp
+call jjferror.dp
+.
+let string headhw = 2.6 1.3; let string headhw2 = 2.6 1.3; let string headhw3 = 2.6 1.3
+let string trailer = dasilva141.dp
+let string trailer2 = Datafile: dasilva141.dat
+let string currdate = 3/29/19
+.
+. -----Step 2: Read in the data-----
+.
+delete y vial
+skip 25; read     dasilva141.dat    y vial
+let y = y/1000000
+stat v
+.
+. -----Step 3: Analyze the full data set-----
+.
+feedback off
+.
+let string header = RM 8320: Powder for Forensics (Full Data Set: 8 Vials)
+let x = vial
+let string sty = Coulter / 10**6
+let string stx = Vial
+call comparative_k1_analysis.dp
+.
+let lab = vial
+call consensus_value_plot.dp
+.
+. -----Step 4: Analyze the partial data set (vials 3, 5, 6, 7, 8)-----
+.
+feedback off
+.
+let string header = RM 8320: Powder for Forensics (Partial Data Set: 5 Vials)
+let string frame = subset x 3 5 6 7 8
+.
+let x = vial
+let string sty = Coulter / 10**6
+let string stx = Vial
+call comparative_k1_analysis.dp
+.
+let lab = vial
+call consensus_value_plot.dp
+.

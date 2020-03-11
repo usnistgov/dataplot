@@ -1,0 +1,97 @@
+. This is datapolot macro tolerance.dp    normal tolerance analysis   3/12/19
+. Purpose: carry out normal tolerance limits analysis
+. Date: 3/12/19
+.
+. -----start point-----
+.
+. -----Step 1: Define the normal l factors-----
+.
+. Note: The following have been fixed for n = 20         TO BE FIXED OTHERWISE
+.
+.
+let alpha = .90
+let gamma = .90; let k9090 = normal tolerance k factor y
+let gamma = .95; let k9095 = normal tolerance k factor y
+let gamma = .99; let k9099 = normal tolerance k factor y
+.
+let alpha = .95
+let gamma = .90; let k9590 = normal tolerance k factor y
+let gamma = .95; let k9595 = normal tolerance k factor y
+let gamma = .99; let k9599 = normal tolerance k factor y
+.
+let alpha = .99
+let gamma = .90; let k9990 = normal tolerance k factor y
+let gamma = .95; let k9995 = normal tolerance k factor y
+let gamma = .99; let k9999 = normal tolerance k factor y
+.
+. print k9090 k9095 k9099 k9590 k9595 k9599 k9990 k9995 k9999
+. pause
+.
+. -----Step 2: Draw the box and grid and write out annotation-----
+.
+erase
+box color blue
+box 20 20 80 80
+lines solid
+draw 40 20 40 80
+draw 60 20 60 80
+draw 20 40 80 40
+draw 20 60 80 60
+.
+just center; hw 2.6 1.3
+move 16 70; text 90%
+move 16 50; text 95%
+move 16 30; text 99%
+move 30 82; text 90%
+move 50 82; text 95%
+move 70 82; text 99%
+.
+just center; hw 3 1.5
+move 50 87; text Coverage
+move 10 50; direction vertical; text Confidence; direction horizontal
+.
+. -----Step 3: Compute general stats-----
+. 
+let stdpz = 4; if dp exists; let stdpz = ^dp; end if; set write decimals ^stdpz
+let n = number y
+let m = mean y; let mr = number to string m
+let s = sd y; let sr = number to string s
+let rels = 100*s/m; let relsr = number to string rels
+let sdm = s/sqrt(n); let sdmr = number to string sdm
+let relsdm = 100*sdm/m; let relsdmr = number to string relsdm
+let sdm2 = 2*sdm; let sdm2r = number to string sdm2
+let relsdm2 = 100*sdm2/m; let relsdm2r = number to string relsdm2
+let nm1 = n - 1; let t95 = tppf(0.975,nm1)
+let sdmt = t95*sdm; let sdmtr = number to string sdmt
+let relsdmt = 100*sdmt/m; let relsdmtr = number to string relsdmt
+.
+. ------Step 4: Write out the general stats-----
+..
+hw 2.5 1.25
+move 20 87; just left; text n = ^n
+move 80 87; just right; text Mean = ^mr
+just left
+move 20 15; text SD(Data)        = ^sr (^relsr%)
+move 20 12; text SD(Mean)       = ^sdmr (^relsdmr%)   
+move 20 09; text 2*SD(Mean)    = ^sdm2r (^relsdm2r%)
+move 20 06; text t95*SD(Mean) = ^sdmtr (^relsdmtr%)
+.
+. -----Step 5: Compute within-cell stats and write them out-----
+.
+let kv = data ^k9090 ^k9095 ^k9099 ^k9590 ^k9595 ^k9599 ^k9990 ^k9995 ^k9999
+let xpv = data 30 50 70 30 50 70 30 50 70
+let ypv = data 70 70 70 50 50 50 30 30 30
+just center; hw 2.5 1.25
+loop for j = 1 1 9
+   let xp = xpv(j); let yp = ypv(j); let yp = yp + 1
+   let kvj = kv(j); let kvj = kvj*s
+   let relkvj = 100*kvj/m
+   let stout = number to string kvj
+   let stout2 = number to string relkvj
+   .
+   move xp yp; text +-()^stout   
+   let yp2 = yp - 4
+   move xp yp2; text (+-()^stout2%)
+end loop
+.
+

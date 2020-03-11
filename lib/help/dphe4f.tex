@@ -1,9 +1,9 @@
-47400.      (VERSION 2019.03)   total number of lines in file (including this line)
+47800.      (VERSION 2020.01)   total number of lines in file (including this line)
  4.                          number of     sections below
   100.    L                  first line number of L section
-19100.    M                  first line number of M section
-37600.    N                  first line number of N section
-43800.    O                  first line number of O section
+19400.    M                  first line number of M section
+38000.    N                  first line number of N section
+44200.    O                  first line number of O section
  
 ----------------------------------------------------------
  
@@ -11914,18 +11914,51 @@ Type:
     Support Command
  
 Purpose:
-    Lists (i.e., prints) the contents of any mass storage file.  The
-    file can contain data, program, or whatever.  Several special
-    files are recognized (see the syntax section below).
+    Lists (i.e., print) the contents of a mass storage file.
  
+Description:
+    The file being listed can be any ASCII text file.  For example,
+    you may want to see the contents of a data file, a Dataplot
+    macro or the output from the Dataplot CAPTURE command.  However,
+    you are not limited to Dataplot related files.
+
+    There are a number of special keywords that are recognized for
+    the LIST command.  Specifically,
+
+         DICTIONARY      - lists the Dataplot dictionary file (dpdicf.tex)
+         DIRECTORY       - lists the Dataplot directory file (dpdirf.tex)
+         MASTER          - lists the Dataplot directory file (dpdirf.tex)
+         DEFINITIONS     - lists any definitions that have been created
+                           with the DEFINE command
+         DATASETS        - lists Dataplot datasets (datasets)
+         DESIGNS         - lists a number of experimental designs (designs)
+         DISTRIBU        - lists probability distributions supported in
+                           Dataplot (distribu)
+         COMMANDS        - lists a number of Dataplot commands (commands)
+         SYNTAX          - lists the syntax file (syntax)
+         FUNCTION        - lists functions supported in Dataplot (function)
+         PROGRAMS        - lists Dataplot programs (programs)
+         MACROS          - lists Dataplot macros (macros)
+         CONCLUSIONS     - lists the Dataplot conclusions file (dpconf.tex)
+         CLIPBOARD       - lists the contents of the clipboard (operating
+                           system dependent)
+         FUNCTION BLOCK  - lists functions defined by the FUNCTION BLOCK
+                           command
+         STATISTIC BLOCK - lists functions defined by the STATISTIC BLOCK
+                           command
+         LOOP LINES      - lists the contents of the stored LOOP
+                           commands
+         COMMAND LINE ARGUMENTS - lists the currently defined command
+                                  line arguments
+
 Syntax 1:
     LIST
     L
  
-    This lists the last 20 DATAPLOT commands.  The SET LIST LINES
+    This lists the last 20 Dataplot commands.  The SET LIST LINES
     command can be used to specify how many commands are listed (up to
     a maximum of 200).  This command is typically used before a REPEAT
-    or SAVE command to selectively re-execute recent DATAPLOT commands.
+    or SAVE command to selectively re-execute recent Dataplot commands.
     Enter HELP REPEAT or HELP SAVE for details.
  
 Syntax 2:
@@ -11947,85 +11980,337 @@ Syntax 3:
     This syntax is useful for listing out selected parts of long files.
  
 Syntax 4:
-    LIST  CONCLUSIONS
+    LIST  <keyword>
+    where <keyword> is one of DICTIONARY, DIRECTORY, MASTER, DEFINITIONS,
+          DATASETS, PROGRAMS, MACROS, DESIGNS, DISTRIBU, COMMANDS,
+          SYNTAX, FUNCTIONS, CONCLUSIONS, CLIPBOARD, FUNCTION BLOCK,
+          STATISTIC BLOCK, LOOP LINES, or COMMAND LINE ARGUMENTS.
+
+Syntax 5:
+    LIST  NEW WINDOW <file name>
+    where <file name> is the name of a file.
  
-    This list the contents of the conclusions file (DPCONF.DAT on most
-    systems).  Certain commands (AUTOCORRELATION PLOT, PPCC PLOT) write
-    statistical conclusions to this file.
+    This syntax displays the LIST output in a separate window.
+    See the Note section below for details.
+
+Syntax 6:
+    LIST HEAD <file name>
+    where <file name> is the name of a file.
  
-Syntax: 5
-    LIST  DEFINITIONS
+    This syntax displays the first 10 lines of the file.  To
+    modify the number of lines LIST HEAD prints, enter
+
+       SET HEAD LINES <value>
+
+    where <value> is a positive integer.
+
+Syntax 7:
+    LIST TAIL <file name>
+    where <file name> is the name of a file.
  
-    This lists the current user-defined definitions.  Enter HELP DEFINE
-    for details on creating definitions.
+    This syntax displays the last 10 lines of the file.  To
+    modify the number of lines LIST TAIL prints, enter
+
+       SET TAIL LINES <value>
+
+    where <value> is a positive integer.
+
+Syntax 8:
+    LIST  EXCEL <file name>
+    where <file name> is the name of a spreadsheet file.
  
-Syntax: 6
-    LIST  SAVE
+    This syntax will display a spreadsheet file (not necessarily
+    limited to Excel spreadsheets).
+
+    See the Note section below for further information.
+
+Syntax 9:
+    LIST  WORD <file name>
+    where <file name> is the name of a document file.
  
-    This lists the current saved lines (from a SAVE command).  Enter
-    HELP SAVE for details on saving commands for later execution.
+    This syntax will display a document file (not necessarily
+    limited to Word files).
+
+    See the Note section below for further information.
+
+Syntax 10:
+    LIST  POWER POINT <file name>
+    where <file name> is the name of a presentation file.
  
-Syntax: 7
-    LIST  DIRECTORY
- 
-    This list the contents of the directory file (DPDIRF.TEX in the
-    DATAPLOT directory on most systems).  The directory file contains
-    a list of DATAPLOT commands grouped by category.
- 
-Syntax: 8
-    LIST  DICTIONARY
- 
-    This list the contents of the dictionary file (DPDICF.TEX in the
-    DATAPLOT directory on most systems).  The dictionary file contains
-    a list of DATAPLOT commands grouped alphabetically.
- 
+    This syntax will display a presentation file (not necessarily
+    limited to Power Point files).
+
+    See the Note section below for further information.
+
 Examples:
     LIST PLOTCALIB.
     LIST PROG.PLOTLAB
     LIST
     L
     LIST PLOT.DAT FOR I = 1 1 50
-    LIST DEFINITIONS
+    LIST DATASETS
+    LIST CLIPBOARD
  
 Note:
     The LIST command lists 20 lines at a time.  You are then prompted
     with a "MORE?".  Enter <CR> to continue, NO to terminate the
-    listing.
+    listing.  You can use the SET LIST LINES command to specify how
+    many lines are listed at a time.
  
 Note:
     The LIST command with a file name is often used to preview a file
     before carrying out a READ or a CALL--just to double-check the
     contents of the file.
  
+Note:
+    File names are currently limited to a maximum of 80 characters.
+    File names are case sensitive on Linux/Unix/MacOS platforms, but
+    not on Windows platforms.
+
+    Dataplot will first try to open the file as given.  If it cannot
+    find the file, it will then try to match the file with all
+    upper case characters and then with all lower case characters.
+    If it still cannot match the file name, it will search the Dataplot
+    directories for the file.
+
+    Currently, the maximum line length for the LIST command is
+    255 characters.
+
+Note:
+    The CAT command is an alternative to the LIST command.  The CAT
+    command issues an operating system command (cat for Linux/Unix/
+    MacOS, TYPE for Windows) to list the file.
+
+    The CAT command does not have the limits on the number of characters
+    in the file name (the maximum number of characters on a command line
+    is currently 255) and the limit on the number of characters on a
+    single line.  However, the CAT command does not support the keywords
+    in Syntax 4 and does not automatically search the Dataplot
+    directories.
+
+Note:
+    The 2019/11 version of Dataplot added the following command
+
+        SET LIST NEW WINDOW <ON/OFF>
+
+    When this switch is set to ON, Dataplot will display the
+    contents of the output from the LIST command in a separate
+    window.
+
+    Under Windows, the following command is issued to the operating
+    system to display the dpst1f.dat file
+
+       notepad  dpst1f.dat
+
+    Under Linux/Unix/MacOS, the following command is issued to the
+    operating system to display the dpst1f.dat file
+
+       gnome-terminal -e "vi dpst1f.dat"
+
+    You can specify a different viewer by entering the command
+
+       SET LIST VIEWER <name>
+
+    For example, you could enter the following
+
+       SET LIST VIEWER emacs;   . Use emacs viewer for Linux
+
+       . Use Notepad++ for Windows
+       SET LIST VIEWER "C:\Program Files (x86)\Notepad++\notepad++.exe"
+
+       . Use Wordpad for Windows
+       SET LIST VIEWER write.exe; . Use Wordpad
+
+    If <name> contains spaces or hypens, it should be enclosed
+    in double quotes.
+
+    For Linux/Unix/MacOS, you may need to specify something
+    other than gnome-terminal to launch the new window.  We have
+    tested the following
+
+       SET LIST LAUNCHER  xterm -e
+       SET LIST LAUNCHER  kconsole -e
+
+    For Linux, the appropriate choice may depend on which
+    desktops and applications are installed on your system.
+    The gnome-terminal should be available if you run the
+    gnome desktop and kconsole should be available if you
+    run the KDE desktop.  Note that xterm is no longer
+    installed by default on some newer Linux installations.
+
+    Control is returned to the Dataplot window after the
+    operating system command is entered (i.e., you can
+    leave the LIST window open while you enter new Dataplot
+    commands).
+
+    To reset the default of LIST output appearing in the
+    Dataplot window, enter
+
+       SET LIST NEW WINDOW OFF
+
+    For a single LIST command, you can enter
+
+       LIST NEW WINDOW <file-name>
+
+Note:
+    The 2019/12 version of Dataplot added the following commands
+
+        LIST EXCEL <file-name>
+        LIST WORD <file-name>
+        LIST POWER POINT <file-name>
+
+    These commands are used to view various types of office files
+    such as spreadsheets and document files.  Although we use EXCEL,
+    WORD and POWER POINT in the command names, you are not limited
+    to Microsoft Office files.
+
+    By default, under Windows these commands will issue the following
+    command
+
+        SYSTEM <file-name>
+
+    By default, under Linux/Unix these commands will issue the following
+    command
+
+        SYSTEM xdg-open <file-name>
+
+    By default, under MacOS these commands will issue the following
+    command
+
+        SYSTEM open <file-name>
+
+    These defaults will use the file name extension to determine the
+    application to view the file.  This depends on an appropriate
+    file association being defined on your system for a given file
+    extension.  There may be cases where you do not want to use the
+    default application.  For example, the default applications may
+    be set by a system administrator and you prefer to use a different
+    application.  Also, you may have a file with an extension for which
+    no file association has been created.  Dataplot allows you to
+    define a specific application to use for these types of files.
+
+    To specify specific applications to use, you can enter the following
+    commands
+
+        SET EXCEL VIEWER "<application-name>"
+        SET WORD VIEWER "<application-name>"
+        SET POWER POINT VIEWER "<application-name>"
+
+    Dataplot does no error checking to see if <application-name>
+    is in fact installed on your system.
+
+    For example, to explicitly use libreoffice applications under Linux,
+    you could enter
+
+        SET EXCEL VIEWER       "libreoffice --calc"
+        SET WORD  VIEWER       "libreoffice --writer"
+        SET POWER POINT VIEWER "libreoffice --impress"
+
+    A few comments on this.
+
+        i. The Dataplot LIST command does not check the file name
+           extension.  You need to explicitly use LIST EXCEL, LIST WORD,
+           or LIST POWER POINT to invoke the application.
+
+       ii. Once the application is invoked, control returns to the
+           Dataplot window.  So you can view the spreadsheet or document
+           while still entering Dataplot commands.
+
+      iii. There are a large number of spreadsheet and word processing
+           programs each which tends to have their own file extensions.
+           Although the Microsoft extensions (.xls, .xlsx, .doc, .docx,
+           .ppt, .pptx) are likely to have file associations defined on
+           most systems, this is less likely to be true for other
+           spreadsheet or word processing programs.  In this case, you
+           can either create the file association or use the
+           SET EXCEL VIEWER, SET WORD VIEWER, or SET POWER POINT VIEWER
+           commands to specify the desired application.
+
+Note:
+    If a Dataplot command starts with a file name, Dataplot interprets
+    this as a CALL command.  For example, entering
+
+        test.dp
+
+    is equivalent to entering
+
+        call test.dp
+
+    Dataplot will now check the extension on the file name.
+    Specifically
+
+        i) If the file has a ".dat", ".DAT", ".csv", ".CSV", ".out",
+           or ".OUT" extension, the following will be done
+
+               LIST NEW WINDOW  <file-name>
+
+       ii) If the file has a ".xls", ".XLS", ".xlsx", or ".XLSX"
+           extension, the following will be done
+
+               LIST EXCEL  <file-name>
+
+           If the file has a ".doc", ".DOC", ".docx", or ".DOCX"
+           extension, the following will be done
+
+               LIST WORD  <file-name>
+
+           If the file has a ".ppt", ".PPT", ".pptx", or ".PPTX"
+           extension, the following will be done
+
+               LIST POWER POINT  <file-name>
+
 Default:
     If no file name or arguments are  provided, then the last 20
-    entered DATAPLOT commands are listed.
+    entered Dataplot commands are listed.
  
 Synonyms:
-    None
+    L, VIEW, and PREVIEW are synonyms for LIST.
  
 Related Commands:
+    CAT              = List a file using an appropriate operating
+                       system command.
+    NLIST            = List a file with line numbers.
+    SEARCH           = Search a file for a specified string.
     REPEAT           = Re-execute prior commands.
+    SAVE             = Re-execute prior saved commands.
     READ             = Reads data (column-wise) into variables.
-    SERIAL READ      = Reads data (row-wise) into variables.
     WRITE            = Writes variables, parameters, or functions to
                        the screen or to a file.
     CALL             = Executes the commands in a "macro" file.
-    STATUS           = Displays the dimension, variables, parameters,
-                       functions, etc.
-    PROBE            = Displays the value of an internal variable.
-    CORRELATION PLOT = Generates a correlation plot.
-    PPCC PLOT        = Generates a probability plot correlation
-                       coefficient plot.
  
 Applications:
-    XX
+    Interactive Usage
  
 Implementation Date:
-    XX
+    Pre-1987
+    1987/01: Support for DIRECTORY keyword
+    1988/08: Support for DICTIONARY keyword
+    1989/07: Support list output one page at a time
+    1993/11: Support for DATASETS, DESIGNS, DISTRIBUTIONS, COMMANDS,
+             SYNTAX, FUNCTIONS, PROGRAMS, and MACROS keywords
+    2014/11: Support for CLIPBOARD keyword
+    2015/09: Support for FUNCTION BLOCK keyword
+    2016/08: Support for STATISTIC BLOCK keyword
+    2016/10: Support for LIST COMMAND LINE ARGUMENTS keyword
+    2017/07: Support for LOOP LINES keyword
+    2018/06: Increase maximum line length from 80 to 255
+    2019/11: Added LIST HEAD syntax
+    2019/11: Added LIST TAIL syntax
+    2019/11: Added LIST NEW WINDOW syntax
+    2019/12: Added LIST EXCEL syntax
+    2019/12: Added LIST WORD syntax
+    2019/12: Added LIST POWER POINT syntax
  
 Program:
-    XX
+    SKIP 25
+    READ BERGER1.DAT Y X
+    .
+    SET WRITE DECIMALS 5
+    CAPTURE FIT.OUT
+    FIT Y X
+    END OF CAPTURE
+    .
+    LIST FIT.OUT
  
 -----LIST LINES (SET)--------------------------------------------
  
@@ -19071,6 +19356,21 @@ Program:
  
  
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -34518,7 +34818,7 @@ Applications:
     Presentation Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
  
 Program:
     . POLLUTION SOURCE ANALYSIS, LLOYD CURRIE, DATE--1990
@@ -34546,6 +34846,107 @@ Program:
     MINOR YTIC MARK NUMBER 4
     .
     PLOT LEAD VS POTASSIUM
+ 
+-----MKDIR---------------------------------------------------
+ 
+MKDIR
+ 
+Name:
+    MKDIR
+ 
+Type:
+    Support Command
+ 
+Purpose:
+    This command creates a new directory.
+ 
+Description:
+    This command uses an operating system command to create
+    a new directory.
+
+    For Unix/Linux/MacOS systems, the MKDIR command issues a
+
+        mkdir ....
+
+    command to the operating system.
+
+    For Windows systems, the MKDIR command issues an
+
+        MKDIR ....
+
+    command to the operating system.
+
+    The string that follows the MKDIR on the command line
+    is passed to the operating system as is.  Dataplot does no
+    error checking of this string.
+
+    This is a system dependent command.  It is currently supported
+    for Unix/Linux/MacOS and Windows platforms.
+
+Syntax:
+    MKDIR <file-list>
+    where <file-list> is a string containing a list of one or more
+               directories to create.
+
+Examples:
+    MKDIR  macros
+    MKDIR  tmp
+    MKDIR  macros tmp
+ 
+Note:
+    The MKDIR capability can be implemented by direct use of the
+    SYSTEM command.  For example, under Linux do something like
+
+         system  mkdir  macros
+
+    The motivation for adding this as a separate command is to
+    allow the capability to be implemented in an operating
+    system independent way.  This can be useful when writing
+    general purpose macros that may be used on different
+    operating systems.
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Note:
+    Dataplot does no checking to ensure that a valid directory
+    name was specified.  The entered string is passed to the
+    operating system as entered.
+
+Note:
+    File names are case sensitive on Unix/Linux/MacOS file
+    systems.  For this reason, case is preserved in passing the
+    directory name to the operating system.
+ 
+Related Commands:
+    SYSTEM      = Enter an operating system command within a
+                  Dataplot session.
+    CD          = Change the current working directory.
+    PWD         = Retrieve the current working directory.
+    CAT         = List the contents of a file.
+    RM          = Delete one or more files.
+    DIR         = List the contents of a directory.
+ 
+Applications:
+    Interactive Usage
+ 
+Implementation Date:
+    2019/09
+ 
+Program:
+    SKIP 25
+    READ BERGER1.DAT Y X
+    .
+    MKDIR PLOT_FILES
+    SET POSTSCRIPT CONVERT PDF
+    SET IPL1NA PLOT_FILES/PLOT.PS
+    .
+    CHARACTER X
+    LINE BLANK
+    PLOT Y X
  
 -----MOD (LET)--------------------------------
  
@@ -37530,7 +37931,6 @@ Program:
     TEXT Muth Percent Point Functions
  
 -------------------------------------------------------------
-
 
 
 
@@ -47092,13 +47492,68 @@ Related Commands:
                          plots.
  
 Applications:
-    XX
+    3D Graphics
  
 Implementation Date:
     XX
  
 Program:
     XX
+ 
+-----OUTPUT LINE NUMBERS (SET)---------------------------------------
+ 
+OUTPUT LINE NUMBER (SET)
+ 
+Name:
+    SET OUTPUT LINE NUMBERS
+ 
+Type:
+    Support Command
+ 
+Purpose:
+    Specify whether alphanumeric output will have line numbers
+    at the beginning of each line.
+ 
+Description:
+    By default, Dataplot does not insert a line number to the
+    beginning of output lines.  However, there may be occassions
+    where this is convenient (e.g., for debugging purposes).
+
+Syntax:
+    SET OUTPUT LINE NUMBERS <ON/OFF>
+    where ON specifies that line numbers will be added to the output
+               and OFF specifies that line numbers will not be added.
+ 
+Examples:
+    SET OUTPUT LINE NUMBERS ON
+    SET OUTPUT LINE NUMBERS OFF
+ 
+Default:
+    OFF
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    CAPTURE       = Re-direct output to a file.
+ 
+Applications:
+    Debugging
+ 
+Implementation Date:
+    2019/12
+ 
+Program:
+    SKIP 25
+    READ BERGER1.DAT Y X BATCH
+    .
+    SET OUTPUT LINE NUMBERS ON
+    CAPTURE FIT.OUT
+    FIT Y X
+    QUADRATIC FIT Y X
+    END OF CAPTURE
+    .
+    LIST FIT.OUT
  
 -----OVAL-------------------------------------------------------
  
@@ -47294,61 +47749,6 @@ Program:
  
  
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

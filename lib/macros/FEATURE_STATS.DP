@@ -1,0 +1,70 @@
+. This is dataplot macro     feature_stats.dp    1/10/17
+. Purpose: For multivariate classification, write Fcdf for each feature across the inside bottom
+. Date: 1/10/16
+.
+. Input:
+.    numf (parameter)   = number of features
+.    yt1, yt1, yt3, ... = raw or z-transformed, or u-transformed features
+
+.
+. -----start point-----
+.
+. -----Step 0: check input arguments-----
+.
+let string stmacro = feature_stats.dp
+let string stall = numf numcat
+call checkinput.dp
+.
+. -----Step 2: Write out the list of features-----
+.
+just center; hw 1.8 0.9
+set write decimals 1
+delete fcdfv indexv
+loop for jf = 1 1 numf
+   loop for jcat = 1 1 numcat
+      let string q = subset cat ^jcat
+      let maxz  = maximum yt^jf ^q; let stmaxz = number to string maxz
+      let meanz = mean    yt^jf ^q; let stmeanz = number to string meanz
+      let minz  = minimum yt^jf ^q; let stminz = number to string minz
+      let sdz   = sd      yt^jf ^q; let stsdz = number to string sdz
+      let stcolj = string word stcolor ^jcat
+      .
+      color ^stcolj
+      let xp = jf + (fudge*(jcat-2))
+
+      . let yp = 27; . moveds xp yp; . text ^stmaxz
+      . let yp = 25; . moveds xp yp; . text ^stmeanz
+      . let yp = 23; . moveds xp yp; . text ^stminz
+      . let yp = 21; . moveds xp yp; . text ^stsdz
+   end loop
+   .
+   anova yt^jf cat; let fcdf = statcdf
+   set write decimals 2; let stfcdf = number to string fcdf
+   color blue; if fcdf >= 95; color red; end if
+   let xp = jf
+   let yp = 21; moveds xp yp; text ^stfcdf%
+   color blue
+   .
+   let fcdfv(jf) = fcdf
+   let indexv(jf) = jf
+end loop
+.
+. -----Step 3: Sort the features-----
+.
+set sort direction descending
+let fcdfv = sortc fcdfv indexv
+set sort direction ascending
+print fcdfv indexv
+. pause
+.
+. -----Step 4: Write out the stat identifiers in the left margin-----
+.
+let xp = 14
+color blue; just right; hw 1.8 0.9
+let yp = 21; move xp yp; text ANOVA Fcdf
+. let yp = 27; . move xp yp; . text Max
+. let yp = 25; . move xp yp; . text Mean
+. let yp = 23; . move xp yp; . text Min
+. let yp = 21; . move xp yp; . text SD
+just left; color blue
+.

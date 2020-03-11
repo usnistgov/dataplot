@@ -1,0 +1,87 @@
+. This is dataplot program     luther_sub.dp    ~1980
+. Purpose: Analyze Newton's gravidational constant data
+. Contact: Gabe Luther
+. Date: ~1980
+.
+. -----start point-----
+.
+. -----Step 1: Do univariate analysis-----
+.
+char X; lines solid
+let string header3 = Scatter Plot
+y1label Response; x1label Time
+plot y
+call annotate.dp
+.
+let string header3 = 4-Plot
+x3label automatic
+call 4plot_noargs.dp
+x3label automatic
+.
+. -----Step 2: Do typical time series analysis-----
+.
+let string header3 = Autocorrelation Plot
+y1label Autocorrelation; x1label Lag
+char X; lines solid
+autocorrelation plot y
+call annotate.dp
+.
+let string header3 = Spectral Plot
+y1label Power (= Variance); x1label Frequency (Cycles per Observation)
+char bl; lines solid
+spectrum y
+call annotate.dp
+.
+xlim 0 .05; spectrum y; xlim
+call annotate.dp
+.
+. -----Step 3: Do complex demodulation time series analysis-----
+.
+let string header3 = Complex Demodulation Phase Plot
+y1label Phase; x1label Time
+let theta = .02
+demodulation frequency theta
+complex demod phase plot y
+call annotate.dp
+move 16 87; just left; hw 2 1; text Theta = ^theta
+.
+let string header3 = Complex Demodulation Amplitude Plot
+y1label Phase; x1label Time
+char X; lines bl
+multiplot 3 3; multiplot scale factor 3
+loop for theta = .0190 .00025 0.0210
+   demodulation frequency theta
+   complex demod phase plot y
+   move 16 84; just left; hw 2 1; text Theta = ^theta
+end loop
+multiplot off
+call annotate.dp
+.
+let string header3 = Complex Demodulation Phase Plot
+y1label Phase; x1label Time
+char X; lines bl
+multiplot 3 3; multiplot scale factor 3
+loop for theta = .0198 .00005 0.0202
+   demodulation frequency theta
+   complex demod phase plot y
+   move 16 84; just left; hw 2 1; text Theta = ^theta
+end loop
+multiplot off
+call annotate.dp
+.
+let string header3 = Complex Demodulation Amplitude Plot
+y1label Amplitude; x1label Time
+let theta = .02
+demodulation frequency theta
+complex demod amplitude plot y
+move 16 87; just left; hw 2 1; text Theta = ^theta (Good Estimate)
+call annotate.dp
+.
+let string header3 = Complex Demodulation Amplitude Plot
+y1label Amplitude; x1label Time
+let theta = .015
+demodulation frequency theta
+complex demod amplitude plot y
+move 16 87; just left; hw 2 1; text Theta = ^theta (Poor Estimate)
+call annotate.dp
+.

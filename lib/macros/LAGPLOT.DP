@@ -1,0 +1,12 @@
+skip 25
+read lew.dat y
+char X; lines bl
+lag plot y
+.
+let yplot2 = yplot
+let xplot2 = xplot
+let tag = 1 1 199
+char X all
+let n = number y
+loop for jz = 1 1 100; let plot character ^jz = ^jz; end loop
+plot yplot2 xplot2 tag

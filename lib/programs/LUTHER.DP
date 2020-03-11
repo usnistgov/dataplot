@@ -1,0 +1,25 @@
+. This is dataplot program     luther.dp    ~1980
+. Purpose: Analyze Newton's gravidational constant data
+. Contact: Gabe Luther
+. Date: ~1980
+.
+. -----start point-----
+.
+. -----Step 1: Read in the data-----
+.
+skip 25; read   luther.dat   y
+.
+. -----Step 2: Define strings for plot annotation-----
+.
+let string header = Analysis of Newton's Gravitation Constant via Torsion Pendulum
+let string header2 = Gabe Luther (NIST)
+let string trailer = luther.dp
+let string trailer2 = luther.dat
+let string currdate = 4/10/19
+.
+let string sty = Response
+.
+. -----Step 3: Carry out time series analysis-----
+.
+call luther_sub.dp
+.

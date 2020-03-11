@@ -1,0 +1,42 @@
+. This is dataplot macro     u_conclusions.dp     3/1/19
+. Purpose: Based on u-scores, hardwire, print out, and draw dotted line at decision rule cut values
+. Note: The cutoff values in this macro must be post-plot manually defined.
+. Date: 3/1/19
+.
+. -----start point-----
+.
+. -----Step 1: Do the Anderson iris case (k = 4, n = xx, numclass = 3)-----
+.
+if casedata = 1
+   let numrule = 3
+   let cut1 = .26
+   let cut2 = .43
+   .
+   let string strule1 = .    if uf3 <= ^cut1, then cat = 1
+   let string strule2 = else if uf4 >=  ^cut2, then cat = 3
+   let string strule3 = else                      cat = 2
+   let string stcolorr = blue ^darkgree red
+  end if
+.
+. -----Step 2: Do the Flury forge Swiss notes case (k = 6, n = 150, numclass = 2)-----
+.
+if casedata = 2
+   let numrule = 2
+   let cut1 = 0
+   .
+   let string strule1 = .    if uf6 >= ^cut1, then cat = 1
+   let string strule2 = else                   cat = 2
+   let string stcolorr = red blue
+end if
+.
+. -----Step 3: Do the Joe Chalfoun cell homogeneity case (k = 10, n = 37, numclass = 2)-----
+.
+if casedata = 3
+   let numrule = 2
+   let cut1 = 0
+   .
+   let string strule1 = .    if uf6 >= ^cut1, then cat = 1
+   let string strule2 = else                   cat = 2
+   let string stcolorr = red blue
+end if
+.

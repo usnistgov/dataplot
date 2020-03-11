@@ -1,0 +1,57 @@
+. This is dataplot macro     right_margin_sorted_features.dp    3/1/19
+. Purpose: For multivariate classification, write list of sorted features in upper right margin
+.          (sorting based on descending Fcdf values)
+. Date: 1/10/16
+.
+. Input:
+.    numf (parameter) = number of features
+.    stf1, stf2, . . . (strings) = feature names
+.    indexv (vector) = order of features (indexv(1) = id of best feature)
+.    fcdfv  (vector) = corresponding fcdf values (%)
+. -----start point-----
+.
+. -----Step 0: check input arguments-----
+.
+let string stmacro = right_margin_sorted_features.dp
+let string stall = numf indexv fcdfv
+call checkinput.dp
+.
+loop for jf = 1 1 numf
+   let string stall = stf^jf
+   call checkinput.dp
+end loop
+.
+. -----Step 2: Write out the list of features-----
+.
+let xp = 86
+let yp0 = 88
+let ypdel = 3
+.
+let hzz = 2.5
+let wzz = hzz/2
+.
+let numarg = $0
+if numarg >= 1; let yp0 = $1; end if
+if numarg >= 2; let ypdel = $2; end if
+if numarg >= 3; let hzz = $3; end if
+if numarg >= 4; let wzz = $4; end if
+reset command line arguments
+.
+let yp = yp0 + ypdel
+let xpp = xp + 3
+if stf1 exists
+   just left; hw hzz wzz
+   set write decimals 2
+   loop for jf = 1 1 numf
+      let jf2 = indexv(jf)
+      let fcdfvj = fcdfv(jf)
+      let stout = number to string fcdfvj
+      color blue; if fcdfvj >= 95; color red; end if
+      let yp = yp - ypdel 
+      move xp yp; text F^jf2: ^stf^jf2
+      let yp = yp - ypdel
+      move xpp yp; text Fcdf = ^stout%
+   end loop
+   color blue
+end if
+.

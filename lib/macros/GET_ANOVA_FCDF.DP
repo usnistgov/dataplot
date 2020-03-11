@@ -1,0 +1,60 @@
+. This is dataplot macro   get_anova_fcdf.dp
+. Purpose: After a 1-way anova, retrieve cdf (and pvalue) info from dpst1f.dat
+. Date: April 14, 2011 ==> August 30, 2011  ==> 4/29/15 ==> 6/18/18 ==> 4/3/19
+.
+. Input:
+.    Must have done a prior    ANOVA Y Xi   before calling this macro
+.       thus    statcdf   (0 to 100) exists
+. Output:
+.    fstatcdf  (parameter) = F cdf value (0 to 100%)
+.    fcdfr0    (parameter) = F cdf value rounded to 0 decimal places
+.    fcdfr1    (parameter) = F cdf value rounded to 1 decimal place
+.    fcdfr2    (parameter) = F cdf value rounded to 2 decimal places
+.    fcdfr3    (parameter) = F cdf value rounded to 3 decimal places
+.    fpvalue   (parameter) = F pvalue (raw) (0,1)
+.    fpvaluer  (parameter) = F pvalue (rounded to 3 decimal places) (0,1)
+.    fpvalue3  (parameter) = F pvalue (rounded to 3 decimal places) (0,1)
+.    fpvalue4  (parameter) = F pvalue (rounded to 4 decimal places) (0,1)
+.    fpvalue5  (parameter) = F pvalue (rounded to 5 decimal places) (0,1)
+. Example of calling routine: sarkar71_sub.dp (4/3/19)
+.
+. -----start point-----
+.
+. -----Step 1: Get fstatcdf (this will be (0,100)% (as of 6/18/18)
+.
+delete fstatcdf fcdf0 fcdf1 fcdf2
+. list dpst1f.dat
+skip 0
+read parameter dpst1f.dat junk1zz junk2zz junk3zz msb fstat fstatcdf
+. print "fstatcdf = ^fstatcdf"
+. pause
+.
+. -----Step 2: Get ressd-----
+.
+delete ressd
+. list dpst3f.dat
+skip 1
+read parameter dpst3f.dat ressd
+skip 0
+. print "ressd = ^ressd"
+. pause
+.
+. -----Step 3: Round, compute pvalue, and print-----
+.
+let msw = ressd**2
+let fcdfr0 = round(fstatcdf,0)
+let fcdfr1 = round(fstatcdf,1)
+let fcdfr2 = round(fstatcdf,2)
+let fcdfr3 = round(fstatcdf,3)
+.
+let fpvalue = 100 - fstatcdf
+let fpvalue = fpvalue/100
+let fpvaluer = round(fpvalue,3)
+let fpvalue3 = round(fpvalue,3)
+let fpvalue4 = round(fpvalue,4)
+let fpvalue5 = round(fpvalue,5)
+.
+. print fstatcdf fcdfr0 fcdfr1 fcdfr2 fpvalue fpvaluer
+. print ressd msb msw fstat
+. pause
+.

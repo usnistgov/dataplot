@@ -1,0 +1,46 @@
+. This is dataplot macro     z_conclusions.dp     3/1/19
+. Purpose: Based on z-scores, hardwire, print out, and draw dotted line at decision rule cut values
+. Note: The cutoff values in this macro must be post-plot manually defined.
+. Date: 3/1/19
+.
+. -----start point-----
+.
+. -----Step 1: Do the Anderson iris case (k = 4, n = xx, numclass = 3)-----
+.
+if casedata = 1
+   let numrule = 3
+   let cut1 = -.7
+   let cut2 = .3
+   let string strule1 = .    if zf3 <= ^cut1, then cat = 1
+   let string strule2 = else if zf4 >=  ^cut2, then cat = 3
+   let string strule3 = else                      cat = 2
+   let string stcolorr = blue ^darkgree red
+   .
+   lines dotted; line color black; drawsdsd 15 ^cut1 85 ^cut1
+   lines dotted; line color black; drawsdsd 15 ^cut2 85 ^cut2
+end if
+.
+. -----Step 2: Do the Flury forge Swiss notes case (k = 6, n = 150, numclass = 2)-----
+.
+if casedata = 2
+   let numrule = 2
+   let cut1 = 0
+   let string strule1 = .    if zf6 >= ^cut1, then cat = 1
+   let string strule2 = else                   cat = 2
+   let string stcolorr = red blue
+   .
+   . lines dotted; . line color black; . drawsdsd 15 ^cut1 85 ^cut1
+end if
+.
+. -----Step 3: Do the Joe Chalfoun cell homogeneity case (k = 10, n = 37, numclass = 2)-----
+.
+if casedata = 3
+   let numrule = 2
+   let cut1 = 0
+   let string strule1 = .    if zf6 >= ^cut1, then cat = 1
+   let string strule2 = else                   cat = 2
+   let string stcolorr = red blue
+   .
+   . lines dotted;. line color black;. drawsdsd 15 ^cut1 85 ^cut1
+end if
+.

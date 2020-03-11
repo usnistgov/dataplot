@@ -32,7 +32,8 @@ dataplot unix     dataplot
 #dataplot unix    /home/heckert/bin/dataplot
 #dataplot unix    /home/heckert/dataplot/dataplot_test/bin/dataplot
 
-library  unix    /usr/lib/dataplot
+library  unix    /usr/local/lib/dataplot
+#library  unix    /usr/lib/dataplot
 #library  unix    /home/heckert/dataplot/dataplot/lib
 #library  unix    /home/heckert/dataplot/dataplot_test/lib
 

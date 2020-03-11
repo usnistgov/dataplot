@@ -1,0 +1,114 @@
+. This is dataplot macro     blockplot_horizontal_axis_sorted.dp     2/6/19
+. Purpose: For a given case, write out the horizontal axis annotation (= robustness factors settings)
+. Date: 2/4/19
+.
+. Input:
+.   a pre-existng block plot with no horizontal axis annotation
+.   numrob                 (parameter) = number of robustness factors
+.   xrob1 xrob2 xrob3 etc. (vectors)   = robustness factors                                  (length = n)
+.   index                  (vector)    = index of robustness conditions based on sorted stat (length = shorter)
+.   stxsh1, stxsh2, etc.   (strings)   = short names for X1, X2, X3, etc.
+. Output:
+.   numrob lines (for xrob1, xrob2, etc.) of factor level info written below the horiz. axis
+.                          of the pre-existing block plot
+.
+. -----start point-----
+.
+let bugbpax = 0
+.
+if bugbpax = 1
+   print " "
+   print "---At beginning of blockplot_horizontal_axis_sorted.dp"
+
+   print "numrob = ^numrob"
+   print xrob1 xrob2 xrob3
+   pause
+   print index
+   pause
+end if
+.
+. -----Step 1: Extract unique settings for each robustness factor-----
+.
+set let cross tabulate collapse
+let stroball = string combine xrob1 to xrob^numrob
+loop for jrob = 1 1 numrob
+   delete v^jrob; let v^jrob = cross tabulate group ^jrob ^stroball
+end loop
+let numcond = number v1
+.
+if bugbpax = 1;
+   print " "
+   print "---At middle of step 1 of blockplot_horizontal_axis_sorted.dp"
+   print v1 v2 v3
+   pause
+end if
+.
+loop for jrob = 1 1 numrob
+   delete dv^jrob ndv^jrob
+   let dv^jrob = distinct v^jrob
+   let dv^jrob = sort dv^jrob
+   let ndv^jrob = number dv^jrob
+end loop
+.
+if bugbpax = 1;
+   print " "
+   print "---At end of step 1 of blockplot_horizontal_axis_sorted.dp"
+   print dv1 dv2 dv3
+   print ndv1 ndv2 ndv3
+   pause
+end if
+.
+. -----Step 2: Write out numrob lines of robustness factor settings-----
+.
+let string stcolall = blue red ^darkgree ^purple orange black cyan brown blue blue blue blue
+.
+loop for jrob = 1 1 numrob
+   let ypz = 16 - 2*(jrob-1)
+   loop for xpos = 1 1 numcond
+      if index not exist; let xpz = xpos; end if
+      if index exists; let xpz = index(xpos); end if
+      .
+      if jrob = 1
+         let string stout = ^xpz
+         moveds xpos 21; just center; hw 2 1; color blue; text ^stout
+      end if
+      .
+      let level = v^jrob(xpz)
+      if bugbpax = 1
+         print " "
+         print "mid step 2"
+         print "jrob = ^jrob   xpos = ^xpos   xpz = ^xpz   level = ^level"
+         pause
+      end if
+      .
+      let hit = 1
+      let jlevmax = ndv^jrob
+      loop for jlev = 1 1 jlevmax
+         let dvzz = dv^jrob(jlev)
+         if level = dvzz; let hit = jlev; end if
+      end loop
+      if bugbpax = 1;
+         print "jrob = ^jrob   xpos = ^xpos   xpz = ^xpz  level = ^level  color hit = ^hit"
+         pause
+      end if
+      .
+      let string stcolj = blue
+      let stcolj = string word stcolall hit
+      let string stout = ^level
+      moveds xpos ypz; just center; hw 2 1; color ^stcolj; text ^stout
+   end loop
+   .
+   . -----Step 3: Write out the factor names on the left side-----
+   .
+   if stxsh^rid^jrob exists
+      let string stout = ^stxsh^rid^jrob
+      move 15 ypz; just right; hw 2 1; color blue; text ^stout = X^rid^jrob:
+   end if
+   if stxsh^rid^jrob not exist
+      if stx^rid^jrob exists
+         move 15 ypz; just right; hw 2 1; color blue; text X^rid^jrob:
+      end if
+   end if
+   .
+end loop
+

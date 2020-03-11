@@ -1,0 +1,214 @@
+. This is dataplot macro     fletcher306_sub.dp     3/27/19
+. Purpose: Regression modeling of updated 4-lab round fobin mean data
+. Date: 3/27/19
+.
+. -----start point-----
+.
+. -----Step 10: Plot the means-----
+.
+char  1 2 3 4 5 6
+char color blue dgre black red cyan orange
+char mapping exact
+char 1 2 3 4 5 6
+char mapping exact
+lines bl all
+y1label Y
+x1label Diameter
+ylim 0 100000
+plot y x
+ylim
+call annotate.dp
+.
+. -----step 11: fit T(conc) vs diam-----
+.
+title Box-Cox Linearity Plot
+title size 2.6
+y1label Correlation
+x1label Lambda Exponent in Power Transformation T(Y) = Y**lambda
+box cox linearity plot x y
+call annotate.dp
+.
+if casetran = 1
+   let y2 = log(y)                    ;. <==============
+   let string sttrany = Log(Y)
+end if
+.
+if casetran = 2
+   let y2 = y**(-0.2)                 ;. <==============
+   let string sttrany = Y**(-0.2)
+end if
+y1label ^sttrany
+x1label Diameter
+title
+
+plot y2 x
+call annotate.dp
+.
+title Linear Fit ^sttrany = f(Diameter)
+title size 2.6
+linear fit y2 x
+set write decimals 4; let stressd = number to string ressd
+let m = mean y2
+let rressd = 100*ressd/m; let strressd = number to string rressd
+char X bl
+lines bl solid
+plot y2 pred vs x
+move 16 87; just left; hw 2.4 1.2; text Linear ResSD = ^stressd (^strressd%)
+call annotate.dp
+.
+title Quadratic Fit ^sttrany = f(Diameter)
+quadratic fit y2 x
+let stressd = number to string ressd
+let rressd = 100*ressd/m; let strressd = number to string rressd
+plot y2 pred vs x
+move 16 87; just left; hw 2.4 1.2; text Quadratic ResSD = ^stressd (^strressd%)
+call annotate.dp
+.
+title Cubic Fit ^sttrany = f(Diameter)
+cubic fit y2 x
+let stressd = number to string ressd
+let rressd = 100*ressd/m; let strressd = number to string rressd
+plot y2 pred vs x
+move 16 87; just left; hw 2.4 1.2; text Cubic ResSD = ^stressd (^strressd%)
+call annotate.dp
+.
+title Quartic Fit ^sttrany = f(Diameter)
+quartic fit y2 x
+let stressd = number to string ressd
+let rressd = 100*ressd/m; let strressd = number to string rressd
+plot y2 pred vs x
+move 16 87; just left; hw 2.4 1.2; text Quartic ResSD = ^stressd (^strressd%)
+call annotate.dp
+.
+title Quintic Fit ^sttrany = f(Diameter)
+quintic fit y2 x
+. pause
+let stressd = number to string ressd
+let rressd = 100*ressd/m; let strressd = number to string rressd
+plot y2 pred vs x
+move 16 87; just left; hw 2.4 1.2; text Quintic ResSD = ^stressd (^strressd%)
+call annotate.dp
+.
+. -----step 12: fit T(conc) vs T(diam)-----
+.
+print "step 12"
+. pause
+title Box-Cox Linearity Plot
+y1label Correlation
+x1label Lambda Exponent in Power Transformation T(X) = X**lambda
+box cox linearity plot y2 x
+.
+if casetran = 1
+   let x2 = sqrt(x)               ;. <==============
+   let string sttranx = Sqrt(Diameter)
+end if
+.
+if casetran = 2
+   let x2 = x                     ;. <==============
+   let string sttranx = Diameter
+end if
+y1label ^sttrany
+x1label ^sttranx
+title
+.
+lines bl all
+plot y2 x2
+call annotate.dp
+.
+title Linear Fit ^sttrany = f(^sttranx)
+linear fit y2 x2
+let stressd = number to string ressd
+let rressd = 100*ressd/m; let strressd = number to string rressd
+char X bl
+lines bl solid
+plot y2 pred vs x2
+move 16 87; just left; hw 2.4 1.2; text Linear ResSD = ^stressd (^strressd%)
+call annotate.dp
+.
+title Quadratic Fit ^sttrany = f(^sttranx))
+quadratic fit y2 x2
+let stressd = number to string ressd
+let rressd = 100*ressd/m; let strressd = number to string rressd
+plot y2 pred vs x2
+move 16 87; just left; hw 2.4 1.2; text Quadratic ResSD = ^stressd (^strressd%)
+call annotate.dp
+.
+title Cubic Fit ^sttrany = f(^sttranx))
+cubic fit y2 x2
+let stressd = number to string ressd
+let rressd = 100*ressd/m; let strressd = number to string rressd
+plot y2 pred vs x2
+move 16 87; just left; hw 2.4 1.2; text Cubic ResSD = ^stressd (^strressd%)
+call annotate.dp
+.
+title Quartic Fit ^sttrany = f(^sttranx))
+quartic fit y2 x2
+let stressd = number to string ressd
+let rressd = 100*ressd/m; let strressd = number to string rressd
+plot y2 pred vs x2
+move 16 87; just left; hw 2.4 1.2; text Quartic ResSD = ^stressd (^strressd%)
+call annotate.dp
+.
+title Quintic Fit ^sttrany = f(^sttranx))
+quintic fit y2 x2
+let stressd = number to string ressd
+let rressd = 100*ressd/m; let strressd = number to string rressd
+plot y2 pred vs x2
+move 16 87; just left; hw 2.4 1.2; text Quintic ResSD = ^stressd (^strressd%)
+call annotate.dp
+.
+. -----Step xx: write out to file predicted values back in original space-----
+.
+print x2 y2 pred res
+.
+if casetran = 1
+   let pred2 = exp(pred)               ;. <==============
+   end if
+.
+if casetran = 2
+   let pred2 = pred**(1/(-.2))         ;. <==============
+   let string sttranx = Diameter
+end if
+.
+print x x2 pred y pred2
+let res2 = y-pred2
+let rres2 = 100*(res2/y)
+let res2sq = res2*res2
+let sum2 = sum res2sq
+let ratio2 = sum2 / (n-6)
+let ressd2 = sqrt(ratio2)
+.
+let res3 = abs(res2)
+let rres3 = 100*(res3/y)
+let mrres3 = mean rres3; let mrres4 = round(mrres3,4)
+let minrres3 = minimum rres3; let minrres4 = round(minrres3,4)
+let maxrres3 = maximum rres3; let maxrres4 = round(maxrres3,4)
+.
+set write format 10f12.4
+if casetran = 1; capture fletcher306_logy_sqrtx.out; end if
+if casetran = 2; capture fletcher306_ypower_x.out; end if
+   if casetran = 1; print "This is file fletcher306_logy_sqrtx.out      ^currdate"; end if
+   if casetran = 2; print "This is file fletcher306_ypower_x.out      ^currdate"; end if
+   print "T(y) = ^sttrany     Y(x) = ^sttranx"
+   . print "ResSD2 = ^ressd2           "
+   print "Min(RelRes) = ^minrres4%    Mean(RelRes) = ^mrres4%    Max(RelRes) = ^maxrres4"
+   print " "
+   print "       x           x2          pred        y         pred2       res2        rres2(%)   "
+   print "----------------------------------------------------------------------------------------------"
+   print x x2 pred y pred2 res2 rres2
+end capture
+.
+. -----Step xx: plot out predicted values back in original space-----
+.
+char X J B; char color blue red ^darkgree; lines bl solid bl; lines color blue red ^darkgree
+ylim 0 10000
+y1label Y
+x1label X
+plot y pred2 vs x
+.
+xlim 15 30
+y1label Y
+x1label X
+plot y pred2 vs x
+
+.

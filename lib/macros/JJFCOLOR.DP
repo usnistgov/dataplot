@@ -1,0 +1,16 @@
+. This is dataplot macro   colorjjf.dp
+. Purpose: Define my usual color settings and activate such colors
+. Date: June 30, 2008
+.
+. -----start point-----
+.
+device 2 color on
+set postscript font helvetica bold
+. set postscript font helvetica
+let string foreground = blue
+let string background = white
+call color.dp
+.
+let string darkgree = 76
+let string olivegre = 10
+.

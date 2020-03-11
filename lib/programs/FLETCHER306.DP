@@ -1,0 +1,48 @@
+. This is dataplot program file fletcher306.dp   (from fletcher305.dp) (Raw data)    (Regression Modeling of updated 4-lab round robin mean data) 3/27/19
+. Purpose: Interlab Consensus Value Analysis of 4-lab Round Robin data for Secondary Calibration Suspension Material
+.          (Using RM 8631a in Hydraulic Fluid)
+. Date: 3/27/19
+.
+. -----start point-----
+.
+feedback off
+.
+let bugsw = 0
+. let pausesw = 1
+.
+let string header = ISO RM 11171 Round Robin Modeling of Secondary (China) Material (All Data)
+let string headhw1 = 2.8 1.4
+let string headhw2 = 2.8 1.4
+let string headhw3 = 2.8 1.4
+. let string currdate = 10/26/18
+. let string currdate = 11/14/17
+let string currdate = 3/27/19
+let pagecoun = 0
+let string trailer = fletcher306.dp
+let string trailer2 = Datafile: fletcher306.dat
+.
+. -----Step 1: Define the c ase for the transformations-----
+.
+let casetran = 1;. use this for y2 = log(y)    and x2 = sqrt(x)
+. let casetran = 2;. use this for y2 = y**(-0.2) and x2 = x
+.
+. -----Step 1: Read in the data-----
+.
+skip 25
+read    fletcher306.dat    diam conc unc1conc
+let y = conc
+let x = diam
+stat v
+. pause
+let ddiam = distinct diam
+let ddiam = sort ddiam
+let nddiam = number ddiam
+.
+let n = number y
+legend 1 hw 2.5 1.25; legend 1 coordinates 84 87; legend 1 just right
+legend 1 n = ^n
+.
+. -----Step 2: Plot the data-----
+.
+call fletcher306_sub.dp
+.

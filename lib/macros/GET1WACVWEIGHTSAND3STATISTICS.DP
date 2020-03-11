@@ -1,0 +1,143 @@
+. This is dataplot macro     get1wacvweightsand3statistics.dp
+. Purpose: For estimator ^jest of the 5 WA (Weighted Average) CV estimators,
+.          get the cv weights vector      (from the Consensus Mean command file dpst5f.dat),and
+.          get the following 3 statistics (from the Consensus Mean command file dpst4f.dat):
+.             1. consensus mean estimate
+.             2. k=2 uncertainty for the consensus mean estimate
+.             3. k=2 relative uncertainty for the consensus mean estimate
+. The following 5 CV estimators are:
+.             ^jest = 1. mean of means
+.             ^jest = 2. mandel-paule
+.             ^jest = 3. modified mandel-paule
+.             ^jest = 4. vangel-rukhin
+.             ^jest = 5. dersimonian-laird (hhc)
+. Date: November 8, 2012
+. Note: This macro is called by   getallcvestimates.dp
+. Note: The consensus mean command must have been previously executed
+.       (because this macro will use info from the resulting    dpst4f.dat   file).
+.
+. Input (2):
+.    Note that the Consensus mean command must have been previously executed
+.    numlab  (parameter) = number of labs
+.    jest    (parameter) = ID for the estimator
+.
+. Output (3):
+.    if ^jest = 1:
+.    wmm     (vector)    = weight vector for Means (all = 1/numlab)
+.    cvmm    (parameter) = CV estimate         for Mean of Means
+.    sd2mm   (parameter) = k=2 Unc(CV est.)    for Mean of Means
+.    rsd2mm  (parameter) = k=2 RelUnc(CV est.) for Mean of Means
+.
+.    if ^jest = 2:
+.    wmp     (vector)    = weight vector for Mandel-Paule
+.    cvmp    (parameter) = CV estimate         for Mandel-Paule
+.    sd2mp   (parameter) = k=2 Unc(CV est.)    for Mandel-Paule
+.    rsd2mp  (parameter) = k=2 RelUnc(CV est.) for Mandel-Paule
+.
+.    if ^jest = 3:
+.    wmmp    (vector)    = weight vector for modified Mandel-Paule
+.    cvmmp   (parameter) = CV estimate         for modified Mandel-Paule
+.    sd2mmp  (parameter) = k=2 Unc(CV est.)    for modified Mandel-Paule
+.    rsd2mmp (parameter) = k=2 RelUnc(CV est.) for modified Mandel-Paule
+.
+.    if ^jest = 4:
+.    wvr     (vector)    = weight vector for Vangel-Rukhin
+.    cvvr    (parameter) = CV estimate         for Vangel-Rukhin
+.    sd2vr   (parameter) = k=2 Unc(CV est.)    for Vangel-Rukhin
+.    rsd2vr  (parameter) = k=2 RelUnc(CV est.) for Vangel-Rukhin
+.
+.    if ^jest = 5:
+.    wdl    (vector)     = weight vector for DerSimonian-Laird
+.    cvdl    (parameter) = CV estimate         for DerSimonian-Laird
+.    sd2dl   (parameter) = k=2 Unc(CV est.)    for DerSimonian-Laird
+.    rsd2dl  (parameter) = k=2 RelUnc(CV est.) for DerSimonian-Laird
+.
+. -----start point-----
+.
+. -----Step 1: check input arguments-----
+.
+let string stmacro = get1wacvweightsand3statistics.dp
+let string stall = numlab jest
+call checkinput.dp
+.
+. -----Step 2: Read in the parameters from file dpst4f.dat-----
+.
+skip 0
+.
+if jest = 1
+   delete cvmm sd2mm rsd2mm
+   let rowlim = 9
+   row limits rowlim rowlim
+   read parameter dpst4f.dat cvmm sd2mm rsd2mm
+   .
+   delete wmm
+   let wmm = 1/numlab for i = 1 1 numlab
+end if
+.
+if jest = 2
+   delete cvmp sd2mp rsd2mp
+   let rowlim = 1
+   row limits rowlim rowlim
+   read parameter dpst4f.dat cvmp sd2mp rsd2mp
+   .
+   delete wmp
+   let rowlim1 = 2
+   let rowlim2 = 2 + (numlab - 1)
+   row limits rowlim1 rowlim2
+   read dpst5f.dat wmp
+end if
+.
+if jest = 3
+   delete cvmmp sd2mmp rsd2mmp
+   let rowlim = 2
+   row limits rowlim rowlim
+   read parameter dpst4f.dat cvmmp sd2mmp rsd2mmp
+   .
+   delete wmmp
+   let rowlim1 = 2 + (numlab - 1) + 2
+   let rowlim2 = 2*(2 + (numlab - 1))
+   row limits rowlim1 rowlim2
+   read dpst5f.dat wmmp
+end if
+.
+if jest = 4
+   delete cvvr sd2vr rsd2vr
+   let rowlim = 3
+   row limits rowlim rowlim
+   read parameter dpst4f.dat cvvr sd2vr rsd2vr
+   .
+   delete wvr
+   let rowlim1 = 2*(2 + (numlab - 1)) + 2
+   let rowlim2 = 3*(2 + (numlab - 1))
+   row limits rowlim1 rowlim2
+   read dpst5f.dat wvr
+end if
+.
+if jest = 5
+   delete cvdl sd2dl rsd2dl
+   let rowlim = 5
+   row limits rowlim rowlim
+   read parameter dpst4f.dat cvdl sd2dl rsd2dl
+   .
+   delete wdl
+   let rowlim1 = 3*(2 + (numlab - 1)) + 2
+   let rowlim2 = 4*(2 + (numlab - 1))
+   row limits rowlim1 rowlim2
+   read dpst5f.dat wdl
+end if
+.
+. -----Step 2: reset row limits back to original settings (to protect future reads)----
+.
+row limits
+.
+. -----Step 3: if called for, print everything out-----
+.
+. print wmm wmp wmmp wvr wdl
+.
+. print cvmm sd2mm rsd2mm
+. print cvmp sd2mp rsd2mp
+. print cvmmp sd2mmp rsd2mmp
+. print cvvr sd2vr rsd2vr
+. print cvdl sd2dl rsd2dl
+. pause
+.

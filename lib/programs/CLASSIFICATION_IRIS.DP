@@ -1,0 +1,58 @@
+. This is dataplot program     classification_iris.dp     3/6/19
+. Purpose: Carry out a general classification analysis for the classic iris data set (3 categories, 4 features)
+. Reference: Google of "kdnuggest best classification algorithms"
+. Link: https://www.kdnuggets.com/2018/02/tour-top-10-algorithms-machine-learning-newbies.html
+. Project Question: What is a good prediction rule/function/algorithm for classifying elements in a data set
+. Deliverables: 1. insight
+.               2. (multiple) prediction rules and accuracies
+. Date: 1/10/17 => 11/9/17 => 2/25/19 => 3/6/19 => 4/2/19
+.
+. -----start point-----
+.
+dimension 100 variables
+feedback off
+let casedata = 1;. this is used in the u_conclusions macro
+.
+. -----Step 1: Define header info-----
+.
+let string header = Iris Classification Analysis (k=4, n=152, classes=3)
+let string header2 = Optimal Feature-Based Classification/Prediction Rules = ?
+let string headhw = 2.6 1.3; let string headhw2 = 2.6 1.3; let string headhw3 = 2.6 1.3
+let string trailer = classification_iris.dp
+let string trailer2 = Datafile: iris.dat
+let string currdate = 4/2/19
+let pagecoun = 0
+.
+. -----Step 2: Read in the data-----
+.
+let k = 4; let numf = k
+skip 25; read    iris.dat    f1 f2 f3 f4 cat
+let dcat = distinct cat
+let numcat = number dcat
+.
+let vert = 1 subset cat 1
+let vert = 0 subset cat 2
+let vert = -1 subset cat 3
+.
+. -----Step 3: Define strings-----
+.
+let string stf1 = Sepal Length
+let string stf2 = Sepal Width
+let string stf3 = Petal Length
+let string stf4 = Petal Width
+let string stlab = SL SW PL PW
+.
+let string stcat = Iris Classification
+let string stcat1 = Setosa
+let string stcat2 = Versicolor
+let string stcat3 = Virginica
+let string stcolor = blue red ^darkgree
+.
+let string header2 = k = ^numf Features     The Category Variable (^stcat) has ^numcat Levels
+.
+. -----Step 4: Carry out classification analysis-----
+.
+. pause
+call classification_analysis.dp
+.
+

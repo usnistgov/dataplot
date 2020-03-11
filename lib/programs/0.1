@@ -1,0 +1,193 @@
+. This is dataplot program file      0.1     4/1/19
+.
+copy minitest.dp dpscript.dp
+copy minitest.dp dpscript.txt
+.
+call minitest.dp
+.
+. This is the dataplot program file      minitest.dp      3/3/86 => 4/1/19
+. Purpose--execute 23 selected dataplot test problems
+.          used for implementation testing and time trials.
+. Date: 3/3/86 => 4/1/19
+.
+. -----start point-----
+.
+. -----Problem  1 = smoothing (n = 1000)-----
+.
+let z = normal random numbers for i = 1 1 1000
+smooth z
+delete z
+.
+. -----Problem  2 = plot 5 traces (n = 100 each)-----
+.
+plot x for x = 0 .01 1 and
+plot x**2 for x = 0 .01 1 and
+plot x**3 for x = 0 .01 1 and
+plot x**4 for x = 0 .01 1 and
+plot x**5 for x = 0 .01 1
+.
+. -----Problem  3 = write out 10 var. (n = 100 each)-----
+.
+let x1 = sequence 1 1 100
+let x2 = x1
+let x3 = x1
+let x4 = x1
+let x5 = x1
+let x6 = x1
+let x7 = x1
+let x8 = x1
+let x9 = x1
+let x10 = x1
+write junk1. x1 x2 x3 x4 x5 x6 x7 x8 x9 x10
+delete x1 x2 x3 x4 x5 x6 x7 x8 x9 x10
+.
+. -----Problem  4 = plot sin(x**2), solid, no char (n = 100)-----
+.
+lines solid
+char blank
+plot sin(x**2) for x = .1 .1 10
+.
+. -----Problem  5 = anova (1 var., 10 levels, n = 1000)-----
+.
+let x = sequence 0 1 999
+let x = x/100
+let x = int(x)+1
+let z = normal random numbers for i = 1 1 1000
+anova z x
+delete x z
+.
+. -----Problem  6 = plot sin(x**2), solid, x (n = 100)-----
+.
+lines solid
+char x
+plot sin(x**2) for x = .1 .1 10
+char
+.
+. -----Problem  7 = plot sin(x**2), solid, spike (n = 100)-----
+.
+lines solid
+spike on
+plot sin(x**2) for x = .1 .1 10
+spike off
+.
+. -----Problem  8 = box plot, 10 levels (n = 1000)-----
+.
+let x = sequence 0 1 999
+let x = x/100
+let x = int(x)+1
+let z = normal random numbers for i = 1 1 1000
+characters box plot
+lines box plot
+box plot z x
+delete x z
+lines solid all
+char blank all
+.
+. -----Problem  9 = write out 10 var. (n = 1000 each)-----
+.
+let x1 = sequence 1 1 1000
+let x2 = x1
+let x3 = x1
+let x4 = x1
+let x5 = x1
+let x6 = x1
+let x7 = x1
+let x8 = x1
+let x9 = x1
+let x10 = x1
+write junk2. x1 x2 x3 x4 x5 x6 x7 x8 x9 x10
+delete x1 x2 x3 x4 x5 x6 x7 x8 x9 x10
+.
+. -----Problem 10 = read in 10 var. (n = 100 each)-----
+.
+read junk1. x1 x2 x3 x4 x5 x6 x7 x8 x9 x10
+delete x1 x2 x3 x4 x5 x6 x7 x8 x9 x10
+.
+. -----Problem 11 = 4-plot (n = 100)-----
+.
+let z = normal random numbers for i = 1 1 100
+char x all
+lines solid all
+4-plot z
+delete z
+.
+. -----Problem 12 = roots sin(x**2) (0 to 10)-----
+.
+let r = roots sin(x**2) wrt x for x = 0 to 10
+delete r
+.
+. -----Problem 13 = 3d-plot sin(x**2+y**2) (n = 400)-----
+.
+char bl all
+3d-plot sin(x**2+y**2) for x = -2 .2 2 for y = -2 .2 2
+.
+. -----Problem 14 = 3d-plot exp(-x**2-y**2) (n = 400)-----
+.
+3d-plot exp(-x**2-y**2) for x = -2 .2 2 for y = -2 .2 2
+.
+. -----Problem 15 = plot 2 traces (n = 500 each)-----
+.
+let x = sequence .002 .002 1
+let y1 = x
+let y2 = x*x
+lines solid dot
+char blank blank
+plot y1 y2 versus x
+delete x y1 y2
+.
+. -----Problem 16 = plot sin(x**2), solid, no char (n = 1000)-----
+.
+lines solid
+char blank
+plot sin(x**2) for x = .01 .01 10
+.
+. -----Problem 17 = integral sin(x**2) (0 to 10)
+.
+let integ = integral sin(x**2) wrt x for x = 0 to 10
+delete integ
+.
+. -----Problem 18 = plot sin(x**2), solid, x (n = 1000)-----
+.
+lines solid
+char x
+plot sin(x**2) for x = .01 .01 10
+char
+.
+. -----Problem 19 = plot sin(x**2), solid, spike (n = 1000)-----
+.
+lines solid
+char
+spike on
+plot sin(x**2) for x = .01 .01 10
+spike off
+.
+. -----Problem 20 = 4-plot (n = 1000)-----
+.
+lines solid
+char
+let z = normal random numbers for i = 1 1 1000
+4-plot z
+delete z
+.
+. -----Problem 21 = quadratic fit (n = 100)-----
+.
+let x = sequence 1 1 100
+let y = x**2
+quadratic fit y x
+.
+. -----Problem 22 = read in 10 var. (n = 1000 each)-----
+.
+read junk2. x1 x2 x3 x4 x5 x6 x7 x8 x9 x10
+.
+. -----Problem 23 = quadratic fit (n = 1000)-----
+.
+let x = sequence 1 1 1000
+let y = x**2
+quadratic fit y x
+delete x y
+.
+.
+. note--you have just completed the execution of
+.       the dataplot macro (= script file) minitest.dp
+.       to run the file again,          type    call minitest.dp
+.       to view (but not run) the file, type    list minitest.dp

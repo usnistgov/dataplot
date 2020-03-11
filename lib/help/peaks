@@ -1,0 +1,85 @@
+-----PEAKS (LET)---------------------------------------------------
+ 
+PEAKS
+ 
+Name:
+    PEAKS (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Given a set of points (Y,X), filter the points to return the peaks
+    of the data.  Alternatively, return the areas of the triangles formed
+    by the peak points.
+ 
+Description:
+    A peak is defined as:
+
+       1) a point that is strictly greater than both the point to the left and
+          the point to the right
+
+       2) a point that is strictly less than both the point to the left and
+          the point to the right
+
+    One complication is if there is a plateau of points.  For example,  given
+    the points
+
+             Index      X      Y
+             ===================
+             I-1        1      2
+             I          2      4
+             I+1        3      4
+             I+2        4      4
+             I+3        5      3
+
+    In this case, we take the point (4,4) as the peak point.
+
+Syntax 1:
+    LET <y2> <x2> = PEAKS <y1> <x1>   <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is a variable containing the y-coordinates of the points;
+          <x1> is a variable containing the x-coordinates of the points;
+          <y2> is a variable containing the y-coordinates of the peak
+               points;
+          <x2> is a variable containing the x-coordinates of the peak
+               points;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Syntax 2:
+    LET <area>  = PEAK TRIANGLE AREAS <y1> <x1>
+                                      <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is a variable containing the y-coordinates of the points;
+          <x1> is a variable containing the x-coordinates of the points;
+          <area> is a variable containing the areas of the triangles
+               formed by the peak points;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET Y2 X2 = PEAKS Y1 X1
+    LET YAREA = PEAK TRIANGLE AREAS Y1 X1
+ 
+Note:
+    The values of the x-coordinates must all be unique.  If duplicate
+    x-coordinates are detected, an error message will be returned.
+
+    The data will be sorted by the values of the x-coordinates.
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    PEAKS OF FREQUENCY TABLE  = Compute the peaks of a frequency table.
+    INTEGRAL                  = Compute the integral.
+    
+Applications:
+    Data Analysis
+ 
+Implementation Date:
+    2013/09
+ 
+Program:
+ 
+ 

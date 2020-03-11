@@ -1,5 +1,5 @@
 9.
-                                                       August  2019
+                                                     January  2020
 This is the DATAPLOT News file DPNEWF.TEX.  This NEWS file contains a
 list of DATAPLOT enhancements.  Some commands may be documented here
 that are not yet available in the standard documentation.
@@ -7,6 +7,502 @@ that are not yet available in the standard documentation.
 The complete news file can be viewed at
 
     http://www.itl.nist.gov/div898/software/dataplot/news.htm
+
+-----------------------------------------------------------------------
+The following enhancements were made to DATAPLOT
+September 2019 - February 2020.
+-----------------------------------------------------------------------
+
+ 1) The following operating system dependent commands were added
+
+      RM      <file-list>    - remove one or more files
+      RMDIR   <file-list>    - remove one or more directories
+      MKDIR   <file-list>    - make a new directory
+      CAT     <file>         - list the contents of a file
+      DIR     <file-list>    - list files
+      GREP <string> <file-list> - perform an operating system based
+                                  matching of a string to one or more
+                                  files
+      RSCRIPT <file-name>    - run an R script
+      PYTHON <file-name>     - run a Python script
+
+    Enter HELP RM, HELP MKDIR, HELP CAT, HELP DIR, HELP GREP,
+    HELP RSCRIPT or HELP PYTHON for details.
+
+ 2) The following updates were made to the READ and WRITE commands.
+
+    a) Added the commands
+
+          WRITE EXCEL <excel-file>  <var-list>
+          READ  EXCEL <excel-file>  <var-list>
+
+       Note that these commands invoke Python scripts to read/write the
+       Excel files.  So a requirement for using these commands is that
+       version 3.x of Python is already installed on your system and that
+       the Pandas and xlsxwriter packages are also installed.
+
+       For additional information on using these commands, enter
+       HELP WRITE EXCEL or HELP READ EXCEL.
+
+    b) Reading character data from the terminal is now permitted.
+       For example,
+
+          SET CONVERT CHARACTER ON
+          READ IMONTH VALUE
+          January    21205
+          February   19867
+          March      24991
+          April      16523
+          May        17341
+          June       27912
+          July       29105
+          August     28766
+          September  23332
+          October    20211
+          November   18298
+          December   13112
+          END OF DATA
+
+    c) When reading a data file that contains character variables,
+       Dataplot saves the character data to the file "dpzchf.dat".
+       If a subsequent READ command also contains character variables,
+       the contents of dpzchf.dat are overwritten.
+
+       To specify that new character variables should be appended to
+       the current dpzchf.dat file, enter the command
+
+           SET CHARACTER VARIABLE APPEND
+
+       To reset the default, enter
+
+           SET CHARACTER VARIABLE OVERWRITE
+
+       If you specify APPEND, it is recommended that you delete the
+       current dpzchf.dat file at the beginning of the Dataplot session
+       with the command
+
+           RM dpzchf.dat
+
+    d) Some ASCII files may include a percent sign at the end of a
+       numeric field to indicate the value is a percentage.  To ignore
+       these percent signs, enter the command
+
+           SET READ PERCENT SIGN IGNORE ON
+
+    e) For the READ CLIPBOARD command on Windows platforms, made two
+       corrections.
+
+         i. If the last column contained an empty field, this missing
+            value was not added to the data read.  This caused a
+            misalingment of the data.  This was corrected.
+
+        ii. If the number of variables on the READ command did not
+            match the number of columns in the clipboard, this caused a
+            misalignment of the data.  This has been corrected.
+
+            If the number of variables on the READ CLIPBOARD command is
+            greater than the number of columns in the clipboard, the
+            extra columns will be set to the missing value.  This value
+            can be specified with the command
+
+                SET READ MISSING VALUE <value>
+
+ 3) Added the following graphics commands.
+
+    a) Added the following option to the I PLOT command
+
+          RATIO OF MEANS CONFIDENCE LIMIT PLOT Y1 Y2 X
+
+ 4) Added the following analysis commands.
+
+    a) Generate a confidence interval for the ratio of two means
+       (i.e., E(Y)/E(X)) for the case of paired data where both X and Y
+       are approximately normal
+
+          RATIO OF MEANS CONFIDENCE LIMITS Y X
+
+       Note that numerous methods have been proposed for this problem.
+       Dataplot currently supports the Fieller method, the large sample
+       approximation method, and the log ratio method.  To specify which
+       method is used, enter
+
+          SET RATIO OF MEANS METHOD FIELLER
+          SET RATIO OF MEANS METHOD LARGE SAMPLE
+          SET RATIO OF MEANS METHOD LOG RATIO
+
+       The default is the Fieller method.  
+
+    b) Added the following outlier commands
+
+         DAVID TEST Y
+         SKEWNESS OUTLIER TEST Y
+         KURTOSIS OUTLIER TEST Y
+
+       In addition, the GRUBS TEST now supports the case where the
+       standard deviation is available from previous data.  For
+       this case, enter the commands
+
+            SET GRUBB STANDARD DEVIATION <value>
+            SET GRUBB DEGREES OF FREEDOM <value>
+
+       If the specified standard deviation is positive, Dataplot
+       uses the formulas based on an independent estimate of the
+       standard deviation.  The independent standard deviation also
+       has an associated degrees of freedom (typically the sample
+       size used to compute that standard deviation).  If the
+       degrees of freedom is not specified, a value of 10,000 will
+       be used.  Essentially, any value greater than 120 is
+       effectively treated as a "known" standard deviation.
+
+       These new outlier commands were added to support the
+       2016 edition of the ASTM-178 standard for outliers.
+
+ 5) Added the following Statistics LET sub-commands.
+
+      LET A = RATIO OF MEANS Y X
+      LET A = RATIO OF MEANS LOWER CONFIDENCE LIMIT Y X
+      LET A = RATIO OF MEANS UPPER CONFIDENCE LIMIT Y X
+
+      LET A = DAVID TEST Y
+      LET A = DAVID TEST CDF Y
+      LET A = DAVID TEST PVALUE Y
+      LET A = DAVID TEST MINIMUM INDEX Y
+      LET A = DAVID TEST MAXIMUM INDEX Y
+
+      LET A = SKEWNESS OUTLIER TEST Y
+      LET A = SKEWNESS OUTLIER TEST CDF Y
+      LET A = SKEWNESS OUTLIER TEST PVALUE Y
+      LET A = SKEWNESS OUTLIER TEST CRITICAL VALUE Y
+      LET A = SKEWNESS OUTLIER TEST INDEX Y
+
+      LET A = KURTOSIS OUTLIER TEST Y
+      LET A = KURTOSIS OUTLIER TEST CDF Y
+      LET A = KURTOSIS OUTLIER TEST PVALUE Y
+      LET A = KURTOSIS OUTLIER TEST CRITICAL VALUE Y
+      LET A = KURTOSIS OUTLIER TEST INDEX Y
+
+ 6) Added the following Math LET sub-commands.
+
+      LET Y3 = INSERT Y1 Y2 NLOC
+
+ 7) Added the following commands for strings.
+
+    a) The LET ... = STRING COMBINE ... command is used to concatenate 
+       two or more strings.  By default, this command puts a space
+       between the concatenated strings.  To specify a different 
+       separator character, enter the command
+
+           SET STRING COMBINE SEPARATOR <string>
+
+    b) Added the command
+
+          let ix = string variable s1 s3 s3
+
+       where s1, s2 and s3 are previously defined strings.  This adds
+       "ix" to the list of character variables in the character variable
+       file dpzchf.dat.
+
+ 8) Added the following miscellanous commands.
+
+    a) Added the following options to the LIST command
+
+          LIST HEAD <file>
+          LIST TAIL <file>
+
+       LIST HEAD will list the first 10 lines of the file and LIST TAIL
+       will list the last 10 lines of the file.
+
+       To modify the number of lines the HEAD and TAIL options print,
+       enter
+
+          SET HEAD LINES <value>
+          SET TAIL LINES <value>
+
+       Also added the option
+
+          LIST NEW WINDOW <file>
+
+       This will open up the file in a new window.  For Windows, the
+       default application is Wordpad.  For Linux, a gnome terminal window
+       will be opened and the file will be displayed in the vi editor.
+
+       To change the default application, enter
+
+          SET LIST VIEWER <name>
+
+       Note that Dataplot does no error checking on this name.  If
+       an invalid application is given, the file will not be displayed.
+
+       To make opening a new window the default for the LIST command,
+       enter
+
+          SET LIST NEW WINDOW ON
+
+       To reset the default of listing the contents in the Dataplot
+       window, enter
+
+          SET LIST NEW WINDOW OFF
+
+       Similarly, you can open the output from the HELP command in a
+       new window by entering
+
+          SET HELP NEW WINDOW ON
+
+       To reset the default enter
+
+          SET HELP NEW WINDOW OFF
+
+       For Linux systems, you can specify which command is used
+       to launch the new window (for either the LIST or HELP
+       command) with the command
+
+          SET LIST LAUNCHER  "gnome-terminal -e"
+
+       This is the default.  Other choices include
+
+          SET LIST LAUNCHER  "xterm -e"
+          SET LIST LAUNCHER  "konsole -e"
+
+       There are many desktops available on various types of Linux
+       systems and each of these desktops may have its own
+       command for initiating a new terminal window.  We have
+       explicitly tested xterm, konsole, and gnome-terminal on
+       CentOS and Fedora.  However, depending on what desktop you
+       use, these options may not be available on your local system.
+
+       In addition to LIST NEW WINDOW, the following are also available
+
+          LIST EXCEL <file-name>
+          LIST WORD <file-name>
+          LIST POWER POINT <file-name>
+
+       On Windows systems, the default is equivalent to entering
+       the following command
+
+             SYSTEM "<file-name>"
+
+       On Linux systems, the default is the equivalent to entering
+
+             SYSTEM xdg-open "<file-name>"
+
+       On MacOS systems, the default is the equivalent to entering
+
+             SYSTEM open "<file-name>"
+
+       The "xdg-open" and "open" commands under Linux and MacOS
+       will select the application based on the file name extension.
+       Typically there will be a file name association defined for
+       many file name extensions.  However, there may be file name
+       extensions for which no association has been defined.  In this
+       case, or if you simply want to be explicit about what application
+       to use, you can specify which application will be used with the
+       following commands
+
+             SET EXCEL VIEWER        "<application-name>"
+             SET WORD VIEWER         "<application-name>"
+             SET POWER POINT VIEWER  "<application-name>"
+
+       Dataplot does not error checking to see if <application-name>
+       is in fact installed on your system.
+
+       For example, to explicitly use libreoffice applications
+       under Linux, you could enter
+
+             SET EXCEL VIEWER       "libreoffice --calc"
+             SET WORD  VIEWER       "libreoffice --writer"
+             SET POWER POINT VIEWER "libreoffice --impress"
+
+       These commands are not restricted to Microsoft Office
+       applications.
+
+       A few comments on this.
+
+           i. Dataplot does not check the file name extension.
+              You need to explicitly use LIST EXCEL, LIST WORD,
+              or LIST POWER POINT to invoke the application.
+
+          ii. Once the application is invoked, control returns
+              to the Dataplot window.  So you can view the
+              spreadsheet or document while still entering Dataplot
+              commands.
+
+         iii. There are a large number of spreadsheet and word
+              processing programs each which tends to have their
+              own file extensions.  Although the Microsoft extensions
+              (.xls, .xlsx, .doc, .docx, .ppt, .pptx) are likely to
+              have file associations defined on most systems, this is
+              less likely to be true for other spreadsheet or word
+              processing programs.  In this case, you can either
+              create the file association or use the SET EXCEL VIEWER,
+              SET WORD VIEWER, or SET POWER POINT VIEWER commands to
+              specify the desired application.
+
+    b) The PSVIEW command was updated to view PDF and image files
+       in addition to Postscript files.  Enter HELP PSVIEW for
+       details.
+
+    c) Added the following commands
+
+          HEAD <var-list>
+          TAIL <var-list>
+
+       HEAD and TAIL are synonyms for the WRITE command.  However, only
+       the first (or last) 10 lines will be printed.
+
+       To modify the number of lines the HEAD and TAIL options print,
+       enter
+
+          SET HEAD LINES <value>
+          SET TAIL LINES <value>
+
+    d) Added the following command
+
+          SET OUTPUT LINE NUMBERS <ON/OFF>
+
+       If this switch is ON, the alphanumeric output will
+       contain line numbers.
+
+    e) Fixed a bug where the ONE SAMPLE T TEST was not
+       interpreted correctly.
+
+    f) Corrected several of the random number generators to
+       properly reset the sequence when a new SEED value is
+       entered.
+
+    g) If you enter a command without arguments and the command
+       is not matched, then Dataplot will try adding  PRINT to the
+       beginning of the command.  That is, the command
+
+           Y
+
+       willl be interpreted as 
+
+           PRINT Y
+
+       However, be aware that a check is made to see if it is
+       a legitimate command first.  For example, R, REPEAT, X,
+       S, SAVE, L, and LIST are valid commands without arguments.
+       So if you have a variable called R, you need to enter
+       PRINT R rather than just R.
+
+    h) The TIC MARK LABEL FORMAT VARIABLE option now supports
+       character variables as well as numeric variables.
+
+    i) The following command returns the current value of the
+       seed for various random number generators
+
+           PROBE SEED
+
+    j) The following commands return the values for certain
+       operating system defined enviornment variables.
+
+           PROBE HOME  (or PROBE USER PROFILE)
+           PROBE USER  (or PROBE USER NAME)
+           PROBE HOST  (or PROBE HOST NAME or PROBE COMPUTER NAME)
+           PROBE DEFAULT PRINTER (Linux only)
+           PROBE PROGRAM FILES X86 (64-bit Windows only)
+           PROBE PROGRAM FILES     (Windows only)
+           PROBE WINDOW BITS       (Windows only)
+
+      Specifically, PROBE HOME returns the user's home directory,
+      PROBE USER returns the user name, PROBE HOST returns the computer
+      name, PROBE DEFAULT PRINTER returns the name of the default
+      printer, PROBE PROGRAM FILES X86 returns the location of
+      64-bit applications under Windows, PROBE PROGRAM FILES returns
+      the location of 32-bit applications under Windows, and
+      PROBE WINDOW BITS returns "32" if you are running on a
+      32-bit machine and "64" if you are running on a 64-bit
+      machine.
+
+      Remember that you can define a string after the PROBE.  For
+      example,
+
+          PROBE USER
+          LET STRING USERNAME = PROBESTR
+
+    k) To include your home directory in the list of directories that
+       are searched when looking for a file enter
+
+          SET HOME PATH ON
+
+       To reset the default of not including your home directory, enter
+
+          SET HOME PATH OFF
+
+       To see what your home directory is, enter
+
+          PROBE HOME
+
+    l) Previously if a command is recognized as a file name, Dataplot
+       would interpret this as a CALL command.  For example
+
+           test.dp
+
+       would be equivalent to
+
+           call test.dp
+
+       This has been expanded to recognize certain file extensions.
+       Specifically, if <file-name> is the command
+
+           i) If the file has a ".ps", ".PS", ".eps" or ".EPS" extension,
+              the following will be done
+
+                  PSVIEW  <file-name>
+
+              This command will view the file using the Postscript
+              viewer.  The SET POSTSCRIPT VIEWER command can be used to
+              specify what application will be used to view the
+              Postscript file.
+
+          ii) If the file has a ".pdf" or ".PDF" extension, the following
+              will be done
+
+                  PSVIEW  <file-name>
+
+              This command will view the file using the PDF viewer.  The
+              SET PDF VIEWER command can be used to specify what
+              application will be used to view the PDF file.
+
+         iii) If the file has a ".jpg", ".JPG", ".jpeg", ".JPEG", ".png",
+              ".PNG", ".gif", ".GIF", ".tif", ".TIF", ".tiff",  or ".TIFF"
+              extension, the following will be done
+
+                  PSVIEW  <file-name>
+
+              This command will view the file using the image viewer.  The
+              SET IMAGE VIEWER command can be used to specify what
+              application will be used to view the image file.
+
+          iv) If the file has a ".dat", ".DAT", ".csv", ".CSV", ".out",
+              or ".OUT" extension, the following will be done
+
+                  LIST NEW WINDOW  <file-name>
+
+              The command SET LIST VIEWER can be used to specify what
+              application is used to view ASCII files.
+
+           v) If the file has a ".xls", ".XLS", ".xlsx", or ".XLSX"
+              extension, the following will be done
+
+                  LIST EXCEL  <file-name>
+
+              If the file has a ".doc", ".DOC", ".docx", or ".DOCX"
+              extension, the following will be done
+
+                  LIST WORD  <file-name>
+
+              If the file has a ".ppt", ".PPT", ".pptx", or ".PPTX"
+              extension, the following will be done
+
+                  LIST POWER POINT  <file-name>
+
+              The following commands can be used to set the viewers
+              for these types of files
+
+                  SET EXCEL VIEWER
+                  SET WORD VIEWER
+                  SET POWER POINT VIEWER
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
@@ -69,18 +565,13 @@ May 2019 - August 2019.
       LET Y = FRAGMENT LOCATIONS X
       LET Y = FRAGMENT LENGTHS X
 
-      LET Y1 Y2 = 2D GRIDDED X1 X2
-      LET Y1 Y2 Y3 = 3D GRIDDED X1 X2 X3
-      LET Y1 Y2 Y3 Y4 = 4D GRIDDED X1 X2 X3 X4
-
  6) Added the following Statistics LET sub-commands.
 
-      LET A = LOWER SEMI INTERQUARTILE RANGE Y
-      LET A = UPPER SEMI INTERQUARTILE RANGE Y
+      LET A = LOWER SEMI-INTERQUARTILE RANGE Y
+      LET A = UPPER SEMI-INTERQUARTILE RANGE Y
 
       LET A = KENDALLS TAU A  Y1 Y2
       LET A = KENDALLS TAU B  Y1 Y2
-      LET A = KENDALLS TAU C  Y1 Y2
       LET A = YULES Y  Y1 Y2
 
       LET A = CORRELATION RATIO Y X
@@ -100,8 +591,16 @@ May 2019 - August 2019.
        uses Ghostscript to perform the conversion and CONVERT uses
        the "convert" command from ImageMagick.
 
-       The PS2PDF option uses the "ps2pdf" script that is installed
-       with Ghostscript.
+       The PS2PDF option uses the ps2pdf program to perform the
+       conversion.  The ps2pdf program is a batch script file that
+       is typically installed as part of the Ghostscript installation.
+       The GHOSTSCRIPT option generates a Ghostscript command to
+       perform the conversion, so the GHOSTSCRIPT and PS2PDF options
+       perform essentially the same conversion.  The advantage of the
+       PS2PDF option is that it has a simpler syntax.  The advantage
+       of the GHOSTSCRIPT option is that it is not limited to
+       converting the Postscript to PDF format (it also supports
+       JPEG, TIFF, PBM, PBM, PGM, PPM, and PNM).
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
@@ -133,7 +632,7 @@ April 2019 - April (18) 2019.
          the missing value number (as specified by the SET READ MISSING
          VALUE command) will be inserted.  So in the above example, the
          two values will be inserted into Y and X1 while X2 and X3 will be
-         assinged the missing value code.
+         assigned the missing value code.
 
          Note that this can still be problematic if the missing fields are
          not the end columns (values will be assigned to variables in the

@@ -1,0 +1,112 @@
+. This is dataplot macro   computelabstats.dp    (yz,labz)
+. Purpose: For a given radionulcide (radionulcide jrn), compute global and lab stats
+. Note: this macro is usually called within a (jrn) loop
+. Date: 9/26/12 => 8/1/18
+.
+. Input (3):
+.   yz        (vector)    = responses for all labs
+.   labz      (vector)    = lab ID (coded or uncoded, sorted or unsorted--as done before)
+.   decplace  (parameter) = number of decimal places for rounding (optional)
+.
+. Output (16):
+.   nv       (vector)    = number of observations per lab
+.   ybarv    (vector)    = lab means                    (= within-lab means)
+.   sdv      (vector)    = lab data standard deviations (= within-lab SDs)
+.   sdmv     (vector)    = lab means standard deviations
+.   labv     (vector)    = coded lab IDs (1, 2, . . .)
+.   sdvp     (vector)    = adjusted lab standard deviations (where if ni = 1, then sdi  ==> sdpool)
+.   sdmvp    (vector)    = adjusted lab mean SDs            (where if ni = 1, then sdmi ==> sdpool)
+.   zv       (vector)    = standardized lab means (= ybarv - mmean) / sdmean
+.   .
+.   numlab    (parameter) = number of labs
+.   n         (parameter) = number of observations in y
+.   mmean     (parameter) = mean of lab means
+.   mmeanr    (parameter) = rounded mean of lab means
+.   medmean   (parameter) = median of lab means
+.   medmeanr  (parameter) = rounded median of lab means
+.   sdmean    (parameter) = SD of the lab means
+.   sdb       (parameter) = SD of the lab means (is identical to sdmean)
+.   sdpool    (parameter) = pooled standard deviation = replication SD from ANOVA
+.
+. -----start point-----
+.
+. -----Step 1: Check input arguments-----
+.
+let string stmacro = computelabstats.dp
+let string stall = yz labz
+call checkinput.dp
+.
+. -----Step 2: Compute within-lab statistics-----
+.
+delete dlabz; let dlabz = distinct labz
+let numlab = number dlabz
+let n = number yz
+.
+delete nv ybarv sdv labv sdmv
+loop for j = 1 1 numlab
+   let jorig = dlabz(j)
+   let string qzz = subset labz jorig
+   let nv(j) = number yz ^qzz
+   let ybarv(j) = mean yz ^qzz
+   let ni = nv(j)
+   let sdv(j) = 0
+   if ni >= 1; let sdv(j) = sd yz ^qzz; end if
+   let labv(j) = j
+end loop
+let sdmv = sdv/sqrt(nv)
+.
+. -----Step 3: Treat the special case for sd(mean) when a lab only has a single observation-----
+.
+. print "---computelabstats.dp: at start of step 3 (pre-anova)---"
+. pause
+.
+printing off
+delete sdvp sdmvp
+if numlab = 1; let sdvp = sdv for i = 1 1 1; end if
+if numlab >= 2
+   anova yz labz
+   let sdpool = ressd
+   . print "sdpool = ^sdpool"
+   .
+   delete sdvp sdmvp
+   let sdvp = sdv
+   let sdmvp = sdmv
+   . print sdvp sdmvp nv
+   . pause
+   .
+   let nvmin = minimum nv
+   if nvmin <= 1
+      let sdvp = sdpool subset nv 1
+      let sdmvp = sdpool subset nv 1
+   end if
+end if
+.
+. -----Step 4: Compute global statistics-----
+.
+   let dpz = 4
+   if decplace exists; let dpz = decplace; end if
+   .
+   let mmean = mean ybarv
+   let mmeanr = round(mmean,dpz)
+   .
+   let medmean = median ybarv
+   let medmeanr = round(medmean,dpz)
+   .
+if numlab >= 2
+   let sdmean = sd ybarv
+   . print ybarv
+   . pause
+   let sdmeanr = round(sdmean,dpz)
+   let sdb = sdmean
+   let sdbr = sdmeanr
+end if
+.
+. -----Step 5: Compute standardized deviates-----
+.
+if numlab >= 2
+   delete zv
+   set write decimals 6
+   let zv = (ybarv-mmean)/sdmean
+   . print nv ybarv zv
+   . pause
+end if

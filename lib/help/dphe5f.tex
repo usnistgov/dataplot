@@ -1,9 +1,9 @@
-64100.      (VERSION 2019.04)  total number of lines in file (including this line)
+66100.      (VERSION 2020.02)  total number of lines in file (including this line)
  4.                          number of     sections below
   100.    P                  first line number of P section
-21900.    Q                  first line number of Q section
-25000.    R                  first line number of R section
-41100.    S                  first line number of S section
+22300.    Q                  first line number of Q section
+25400.    R                  first line number of R section
+42400.    S                  first line number of S section
  
 ----------------------------------------------------------
  
@@ -4470,15 +4470,39 @@ Description:
 
     So for those systems where an appropriate environment variable has
     been properly defined, there is no need to enter a SET PATH command.
+
+    The SET PATH command is most typically used by developers who would
+    like to set the default Dataplot directory to a test directory
+    rather than the default installation directory.
  
 Syntax:
     SET PATH <string>
     where <string> specifies the desired path name.
  
+    This string is currently limited to a maxium of 80 characters.
+
 Examples:
     SET PATH D:\DATAPLOT
     SET PATH /usr/local/lib/dataplot
     PROBE PATH
+
+Note:
+    Starting with the 2019/04 version, Linux and MacOS systems allow
+    the default path to be set in the Makefile.  So it is no longer
+    neccessary to create a DATAPLOT_FILES environment variable on
+    these systems.
+
+    The order of determining the default path for Linux/MacOS
+    platforms is:
+
+        1. First check for the DATAPLOT_FILES environment variable.
+
+        2. If DATAPLOT_FILES has not been defined, use the path
+           specified in the Makefile (this will be called DPLIBDIR).
+
+        3. If DATAPLOT_FILES has not been defined and DPLIBDIR has
+           not been defined in the Makefile, then default to
+           /usr/local/lib/dataplot.
 
 Note:
     When Dataplot attempts to open a file, it will first do so in the
@@ -4497,10 +4521,11 @@ Default:
     "C:\Program Files (x86)\NIST\DATAPLOT".  Non-English platforms will
     typically have a different name for "Program Files".
 
-    On Linux/Unix and Mac OS X systems, the default path is determined by
+    On Linux/Unix and MacOS systems, the default path is determined by
     the DATAPLOT_FILES environment variable.  If the this environment
-    variable is not defined, the default path is
-    "/usr/local/src/dataplot".
+    variable is not defined, then check to see if DPLIBDIR was defined
+    in the Makefile.  If neither of these has been set, the default path is
+    "/usr/local/lib/dataplot".
  
 Synonyms:
     None
@@ -4517,6 +4542,7 @@ Applications:
  
 Implementation Date:
     1994/01
+    2019/08: Use of DPLIBDIR in Makefile for Linux/MacOS systems
  
 Program:
     SET PATH /home/heckert/lib/dataplot/
@@ -8303,6 +8329,7 @@ Program 4:
     set histogram outliers on
     set histogram empty bins off
     replicated percent point plot y x
+
 -----PERCERR (LET)--------------------------------
  
 PERCERR
@@ -15100,9 +15127,23 @@ Description:
     PBM formats (PBM, PGM, PPM, and PNM) are supported by most image
     conversion programs.
 
-Syntax:
+    Alternatively, you can also use the "convert" program from the
+    Image Magick software or the PS2PDF program (part of the Ghostscript
+    installation).  See the Note section below for details.
+
+Syntax 1:
     SET POSTSCRIPT CONVERT <device>
     where <device> is one of JPEG, PDF, TIFF, PBM, PGM, PPM, or PNM
+          (any other choice is converted to NULL).
+ 
+Syntax 2:
+    SET POSTSCRIPT CONVERT <program>
+    where <program> is one of GHOSTSCRIPT, CONVERT, or PS2PDF.
+
+Syntax 3:
+    SET POSTSCRIPT CONVERT <program> <device>
+    where <program> is one of GHOSTSCRIPT, CONVERT, or PS2PDF;
+    and   <device> is one of JPEG, PDF, TIFF, PBM, PGM, PPM, or PNM
           (any other choice is converted to NULL).
  
 Examples:
@@ -15131,13 +15172,13 @@ Note:
          <ghostscript path>\GSWIN32C.EXE
 
     where <ghostscript path> is the directory defined by the
-    SET GHOSTSCRIPT PATH command.  As of the 05/2016 version of
+    SET GHOSTSCRIPT PATH command.  As of the 08/2019 version of
     Dataplot, the default path is
 
-        C:\Program Files\GS\GS9.10\BIN
+        C:\Program Files\GS\GS9.27\BIN
 
     If Ghostscript is installed in a different directory (typically the
-    "GS9.10" will be different if you have installed a different version
+    "GS9.27" will be different if you have installed a different version
     of Ghostscript), you can specify the correct directory with the command
 
         SET GHOSTSCRIPT PATH  <path-name>
@@ -15155,6 +15196,52 @@ Note:
 
          SET GHOSTSCRIPT VERSION 32
 
+    If you select the CONVERT option, you must have the Image Magick
+    software installed on your local platform and the convert program
+    should be in your default path.
+
+Note:
+    If you use the GHOSTSCRIPT or PS2PDF option on Windows platforms,
+    there are two addtional issues to consider.
+
+       1. Dataplot will typically try to run the underlying SYSTEM
+          command in "hidden" mode.  In "hidden" mode, the command
+          prompt window will not pop up.
+
+          However, if either the program name or the file name
+          contains spaces, the hidden mode cannot currently be
+          used.  In particular, the path name for the Ghostscript
+          directory contains a space (i.e., the "Program Files")
+
+          One solution is to add the following directory to
+          your default path
+
+             C:\Program Files\gs\gs9.27\bin
+
+          Change 9.27 to match the version of Ghostscript you have
+          installed.  Also, non-English systems will typically have a
+          slightly different name for "Program Files".
+
+       2. For the PS2PDF option, the PS2PDF.BAT script is actually
+          in the "lib" directory.  In addition, the script calls
+          the Ghostscript executable without a path name.  So if
+          you want to use PS2PDF, then the following directories
+          need to be added to your default path
+
+             C:\Program Files\gs\gs9.27\bin
+             C:\Program Files\gs\gs9.27\lib
+
+    To add directories to your default path, do the following
+
+       1. Bring up the Control Panel.
+       2. Select "System and Security".
+       3. Select "System".
+       4. Select "Advanced System Settings".
+       5. Select "Environment Variables".
+
+    Then use the "Enviroment Variables" menu to add the needed
+    directories.
+
 Note:
     By default, the conversion is performed by Ghostscript.  You can also
     specify the "convert" program that is part of the Image Magick software
@@ -15165,6 +15252,20 @@ Note:
     To reset the use of Ghostscript, enter
 
         SET POSTSCRIPT CONVERT GHOSTSCRIPT
+
+    You can also specify the use of the ps2pdf program to perform the
+    conversion.  The ps2pdf program is a batch script file that is
+    typically installed as part of the Ghostscript installation.  Linux
+    installations will typically have Ghostcript and ps2pdf installed.
+
+    The GHOSTSCRIPT option generates a Ghostscript command to perform the
+    conversion, so the GHOSTSCRIPT and PS2PDF options perform essentially
+    the same conversion.  The advantage of the PS2PDF option is that it
+    has a simpler syntax.  The advantage of the GHOSTSCRIPT option is
+    that it is not limited to converting the Postscript to PDF format
+    (it also supports JPEG, TIFF, PBM, PBM, PGM, PPM, and PNM).
+
+    The SET GHOSTSCRIPT PATH applies to the PS2PDF option as well.
 
 Note:
     The converted image is created with a density of 72 dots per inch
@@ -15234,8 +15335,9 @@ Applications:
  
 Implementation Date:
     2003/01
-    2007/10: Added support for "convert" program from ImageMagick
+    2007/10: Added support for the "convert" program from ImageMagick
     2009/03: Added support for user specified density
+    2019/08: Added support for the "ps2pdf" program
  
 Program:
     SET GHOSTSCRIPT PATH /usr/local/src/bin/
@@ -20246,6 +20348,28 @@ Note:
     these tables in Latex format.  You can use the CAPTURE RTF command
     to generate these tables in Rich Text Format (RTF).
 
+Note:
+    In table 2 of the one sample proficiency test, if multiple
+    laboratories have the same value, only the first laboratory id is
+    printed along with the number of occurrences of that value.
+
+    For the "Unusual" and "Extremely Unusual" categories, it may be
+    desirable to print the individual laboratory id's in the table.
+
+    To specify that for both the "Unusual" and "Extremely Unusual"
+    categories all laborotories will be identified, enter
+
+        SET ONE SAMPLE PROFICIENCY TEST IDENTIFY LAB UNUSUAL
+
+    To specify that for only the "Extremely Unusual" category all
+    laborotories will be identified, enter
+
+        SET ONE SAMPLE PROFICIENCY TEST IDENTIFY LAB EXTREMELY UNUSUAL
+
+    To reset the default, enter
+
+        SET ONE SAMPLE PROFICIENCY TEST IDENTIFY LAB DEFAULT
+
 Default:
     None
  
@@ -20271,7 +20395,9 @@ Applications:
     Interlaboratory Studies
  
 Implementation Date:
-    2009/1
+    2009/01
+    2019/08: Added the SET ONE SAMPLE PROFICIENCY TEST IDENTIFY LAB
+             command
  
 Program 1:
     .
@@ -21378,6 +21504,78 @@ Description:
            Syntax 2 below).
 
         2. You can view an arbitrary Postscript file (see Syntax 3 below).
+    The December, 2019 version of Dataplot made the following updates
+    to this command.
+
+        1. The default Postscript viewer for Linux is "xdg-open" and
+           the default viewer for MacOS is "open".  These applications
+           will select the default Postscript viewer for files that
+           have a ".ps" or ".eps" extension.  You can use the
+           SET POSTSCRIPT VIEWER command to request a specific
+           Postscript viewer.
+
+           One issue is that the default names for DEVICE 2 and
+           DEVICE 3 have a ".dat" extension rather than a ".ps"
+           extension.  For this reason, Dataplot added the command
+
+               SET BACKUP VIEWER <viewer>
+
+           The viewer specified by this command will be used when
+           the given file name does not have a recognized extension.
+
+        2. You can now view PDF files.  To specify the application
+           that will be used to view the PDF file, enter the command
+
+               SET PDF VIEWER <viewer>
+
+           The PDF VIEWER will be used when the file has a
+           ".pdf" extension.
+
+           The default viewer will be the Adobe Acrobat reader under
+           Windows.  For Linux systems, the default is to use "xdg-open"
+           and for MacOS systems the default is to use "open".  These
+           applications will select the default PDF viewer for the
+           local platform.
+
+        3. You can now view image files (e.g., PNG, JPG and GIF files).
+           To specify the application that will be used to view the
+           image file, enter the command
+
+               SET IMAGE VIEWER <viewer>
+
+           The IMAGE VIEWER will be used when the file has a
+           ".png", ".jpg", ".jpeg", ".gif", ".tif",".tiff",
+           ".bmp" or ".svg" extension.  There are a large number of
+           image file extensions.  When an unrecognized file extension
+           is found, Dataplot will use the viewer specified by the
+           SET BACKUP VIEWER command.
+
+           For Windows, the default is to simply specify the file
+           name and let the operating system select the appropriate
+           application (this is determined by the "file association").
+           For Linux systems, the default is to use "xdg-open" and for
+           MacOS systems the default is to use "open".  These
+           applications will select the default image viewer for the
+           local platform based on the file extension.
+
+        4. This command will issue the following commands before
+           invoking the viewer application
+
+               SET SYSTEM HIDDEN ON
+               SET SYSTEM PERSIST OFF
+               SET COMMAND LINE EXECUTE WAIT OFF
+
+           Enter HELP SYSTEM for details on the effect of these
+           commands.  These settings will be reset to their previous
+           values after the viewer is invoked.
+
+    Although the default viewers will typically work well, you may
+    prefer to specify the specific application to use.  You can
+    use the SET POSTSCRIPT VIEWER, SET PDF VIEWER, and SET IMAGE
+    VIEWER commands to use specific applications rather than selecting
+    system defaults (i.e., "xdg-open" or "open").  These commands can
+    be added to your dplogf.tex file to make them your personal
+    defaults.
 
 Syntax 1:
     PSVIEW
@@ -21393,11 +21591,11 @@ Syntax 2:
 Syntax 3:
     PSVIEW <file-name>
 
-    This syntax displays the plots in an arbitrary Postscript file.  Note
-    that Dataplot does no checking for file existence or whether or not
-    the file is a Postscript file.  The invoked Postscript viewer will do
-    this checking.
- 
+    This syntax displays the plot or imgage specified by <file-name>.
+    An appropriate viewer (Postscript, PDF, image) is selected based on
+    the file name extension.  Dataplot does not check for the existence
+    of the file before invoking the application.
+
 Examples:
     SET POSTSCRIPT VIEWER evince
     PSVIEW
@@ -21408,6 +21606,10 @@ Examples:
     PSVIEW DEVICE 2
  
     PSVIEW PLOTS.PS
+    PSVIEW PLOTS.PDF
+
+    SET IMAGE VIEWER gimp
+    PSVIEW PLOTS.PNG
 
 Note:
     By default, the PSVIEW DEVICE 2 command will close the plot file
@@ -21442,11 +21644,25 @@ Note:
     The disadvantage is that you will create multiple plot files.
 
 Note:
-    Although this command was created with Postscript graphics files in
-    mind, you may be able to use it with other graphics formats.  For
-    example, if you use DEVICE 2 SVG to create SVG format files, you can
-    use the SET POSTSCRIPT VIEWER command to specify GIMP or some other
-    software program that can view SVG files.
+    If a Dataplot command starts with a file name, Dataplot interprets
+    this as a CALL command.  For example, entering
+
+        test.dp
+
+    is equivalent to entering
+
+        call test.dp
+
+    Dataplot will now check the extension on the file name.
+    Specifically if the file has a ".ps", ".PS", ".eps", ".EPS", ".jpg",
+    ".JPG", ".jpeg", ".JPEG", ".png", ".PNG", ".gif", ".GIF", ".tif",
+    ".TIF", ".tiff", or ".TIFF" extension, the following command will
+    be executed
+
+       PSVIEW  <file-name>
+
+    As discussed above, the appropriate viewer (Postscript, PDF or
+    image) will be selected based on the file extension.
 
 Default:
     For Linux, the default viewer is "ghostview".  For Windows, the
@@ -21458,6 +21674,8 @@ Synonyms:
 Related Commands:
     PP           = Print the most recent plot.
     SET IPL1NA   = Specify the name of the plot file for DEVICE 2.
+    SYSTEM       = Invoke an operating system command.
+    LIST         = List the contents of a file.
  
 Applications:
     Interactive Usage
@@ -21467,6 +21685,7 @@ Implementation Date:
     2016/10: Support for PSVIEW DEVICE 2
     2016/10: Support for arbitrary Postscript files
     2018/04: Added SHOW as a synonym
+    2019/12: Support for PDF and image files
  
 Program 1:
     .  Generate a plot and use the "evince" program (Linux) to view the
@@ -21817,7 +22036,188 @@ Program:
     READ ZARR13.DAT Y
     LET YMEAN = PYTHON MEAN Y
  
+-----PYTHON-------------------------------------------------------
+ 
+PYTHON
+ 
+Name:
+    PYTHON
+ 
+Type:
+    Support Command
+ 
+Purpose:
+    Run a Python script within a Dataplot session.
+ 
+Description:
+    It may on occassion be useful to run a Python script within a Dataplot
+    session.  Dataplot assumes that Python is already installed on your
+    local system.  Also, any Python packages that your script needs should
+    already be installed.  Dataplot does not initiate an install of Python
+    or of any Python packages if it not already installed.
+
+    If Python is not installed on your default path, you can specify it
+    using the SET PYTHON PATH command.  For example, the following is
+    for the Anaconda installation of Python 3 under Windows (where
+    Anaconda is installed for the single user heckert)
+
+       set python path c:\Users\heckert\AppData\Local\Continum\anaconda3\
+
+    There are several different Python distributions.  The appropriate
+    Python path will depend on the specific distribution you used to
+    install Python and whether you choose to install it for a single
+    user or for all users.
+
+    If you need to specify that you want to run version 3 of Python, you
+    can enter
+
+       set python version 3
+
+    If you need to specify that you want to run version 2 of Python, you
+    can enter
+
+       set python version 2
+
+    On Windows platforms, the PYTHON command is equivalent to entering
+
+        set system persist off
+        set system hidden on
+        system <python-path>\python.exe <python-script-file>  <arg-list>
+
+    Note that if either the Python path or the <python-script-file>
+    contains spaces (and so will be quoted), then "set system hidden" will
+    be set to "off".
+
+    On Linux platforms, the PYTHON command is equivalent to entering
+
+        system <python-path>/python  <python-script-file>  <arg-list>
+
+Syntax:
+    PYTHON <script-file> <arg-list>
+    where <script-file> contains the name of a file containing a Python
+          script;
+    and where <arg-list> is an optional list of arguments to the script.
+ 
+Examples:
+    PYTHON  plot.py
+ 
+Note:
+    This command is host dependent.  It has been tested on Windows
+    and Linux systems.  Note that the SYSTEM command must be activated
+    for this command to work.
+
+Note:
+    Dataplot does no error checking on the specified script file.  It
+    is passed as is to Python command.
+ 
+Note:
+    The CAPTURE SCRIPT command can be used to generate the Python script
+    within a Dataplot macro.  This is demonstrated in the Program
+    example below.
+
+Note:
+    The name of the script file is case sensitive on Linux and MacOS
+    systems.  It is not case sensitive on Windows systems.
+
+    If Dataplot does not find the Python script file, it will search for
+    it in the "scripts" sub-directory in the Dataplot auxiliary
+    directory.  Currently (2019/12), there are no Python scripts in that
+    directory, although this may change in future releases of Dataplot.
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    SYSTEM          = Issue an operating system command within Dataplot.
+    RSCRIPT         = Run a R script within Dataplot.
+    CAPTURE SCRIPT  = Create a script file within Dataplot.
+ 
+Applications:
+    Run Python scripts
+ 
+Implementation Date:
+    2019/12
+ 
+Program:
+    . Step 1:   Create the Python script using "capture script"
+    .
+    .           This example is just meant to demostrate the
+    .           mechanics of calling Python scripts.
+    .
+    rm output.txt
+    rm test.py
+    .
+    capture script test.py
+    # Step 1:   Open the output file
+    #
+    fout = open('output.txt', 'w')
+    #
+    # Step 2:   Now write some output lines
+    #
+    line1 = "Line 1\n"
+    line2 = "Line 2\n"
+    line3 = "Line 3\n"
+    fout.write(line1)
+    fout.write(line2)
+    fout.write(line3)
+    #
+    # Step 3:   Now close the file
+    #
+    fout.close()
+    #
+    end of capture
+    .
+    list test.py
+    pause
+    .
+    . Step 2:   Determine if running on Windows or Linux and set
+    .           Python path and version
+    .
+    let computer = 1
+    probe iopsy1
+    if probeval = 1
+       let computer = 2
+    end of if
+    .
+    if computer = 1
+       . Following should be modified for your system
+       set python path c:\Users\heckert\AppData\Local\Continum\anaconda3\
+       set python version 3
+    else
+      .
+      .  On my CentOS Linux box, I need to do the following to invoke
+      .  version 3 of Python
+      .
+      .        scl enable rh-python36 csh
+      .
+      set python version 3
+    end of if
+    .
+    . Step 3:   Run the Python script
+    .
+    python  test.py
+    .
+    . Step 4:   Display the results
+    .
+    list output.txt
+
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -27018,6 +27418,373 @@ Program:
     LET Y2 = 10 FOR I = 1 1 10
     LET A = RATIO Y1 Y2
  
+-----RATIO OF MEANS CONFIDENCE INTERVAL--------------------------
+ 
+RATIO OF MEANS CONFIDENCE INTERVAL
+ 
+Name:
+    RATIO OF MEANS CONFIDENCE INTERVAL
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Generates a confidence interval for the ratio of two means
+    for paired samples.
+ 
+Description:
+    There are cases where a measurement is actually the ratio of
+    two different measurements.  That is,
+
+         R(i) = Y(i)/X(i)
+
+    It is often desired to generate the confidence interval for
+    this ratio.  Note that computing a standard confidence interval
+    for R does not generate satisfactory results.  This is due to
+    the fact that, assuming Y and X are independent,
+
+            E[Rhat] = E[Yhat/Xhat]
+                    = E[Yhat]*E[1/Xhat]
+
+    However, E[1/Xhat] is not equal to 1/E[Xhat].
+
+    There have been a number of approaches to this problem.  This
+    command supports three different methods.
+
+    Fieller derived confidence intervals for the case where Y and X are
+    distributed as bivariate normal.  Define the quantities
+
+        Xbar                = mean of X
+        Ybar                = mean of Y
+        sigmahat**2(Xbar)   = variance of Xbar
+                            = 1/(N*(N-1))*SUM[i=1 to N][(X(i)-Xbar)**2]
+        sigmahat**2(Ybar)   = variance of Ybar
+                            = 1/(N*(N-1))*SUM[i=1 to N][(Y(i)-Ybar)**2]
+        sigmahat(Ybar,Xbar) = 1/(N*(N-1))*
+                              SUM[i=1 to N][X(i) - Xbar)*(Y(i)-Ybar)]
+        t(q)                = t percent point value with N - 1 degrees of
+                              freedom
+
+    The test statistic is
+
+          Rhat = Ybar/Xbar
+
+    For Fieller's confidence limits, we first compute
+
+          Xbar**2/sigmahat(Xbar)**2
+
+    If this quantity is less than or equal to t**2(q), then an unbounded
+    interval results and Dataplot will not generate the confidence
+    interval.  Basically, this results if the confidence interval for X
+    contains zero.
+
+    If this quantity is less than or equal to t**2(q), then the following
+    confidence interval is obtained
+
+       Lower Limit = {(Xbar*Ybar - t**2(q)*sigmahat(Xbar,Ybar)) -
+                      SQRT[(Xbar*Ybar - t**2(q)*sigmahat(Xbar,Ybar))**2 -
+                      (Xbar**2 - t**2(q)*sigmahat**2(Xbar)*
+                      (Ybar**2 - t**2(q)*sigmahat**2(Ybar)]}/
+                      (Xbar**2 - t**2(q)*sigmahat(Xbar))
+
+       Upper Limit = {(Xbar*Ybar - t**2(q)*sigmahat(Xbar,Ybar)) +
+                      SQRT[(Xbar*Ybar - t**2(q)*sigmahat(Xbar,Ybar))**2 -
+                      (Xbar**2 - t**2(q)*sigmahat**2(Xbar)*
+                      (Ybar**2 - t**2(q)*sigmahat**2(Ybar)]}/
+                      (Xbar**2 - t**2(q)*sigmahat(Xbar))
+
+    The large sample approximation method (this is called the Taylor or
+    delta-method in the Franz paper) generates the following confidence
+    interval
+
+        Lower Limit = Rhat - t(alpha/2,n-1)*Rhat*
+                      SQRT{C(Ybar,Ybar) + C(Xbar,Xbar) - 2*C(Ybar,Xbar)}
+
+        Upper Limit = Rhat + t(alpha/2,n-1)*Rhat*
+                      SQRT{C(Ybar,Ybar) + C(Xbar,Xbar) - 2*C(Ybar,Xbar)}
+
+    where
+
+        C(Ybar,Ybar) = (1/N)*s**2(Y)/Ybar**2
+        C(Xbar,Xbar) = (1/N)*s**2(X)/Xbar**2
+        C(Ybar,Xbar) = (1/N)*s(Y,X))/(Xbar*Ybar)
+
+    with s(Y), s(X), and s(Y,X) denoting the standard deviation of X,
+    the standard deviation of Y and the covariance between Y and X,
+    respectively.
+
+    The log ratio method generates the following confidence interval
+
+        Lower Limit = Rhat*EXP{-t(alpha/2,n-1)*
+                      SQRT{C(YBAR,YBAR) + C(XBAR,XBAR) - 2*C(YBAR,XBAR)}
+        Upper Limit = Rhat*EXP{t(alpha/2,n-1)*
+                      SQRT{C(YBAR,YBAR) + C(XBAR,XBAR) - 2*C(YBAR,XBAR)}
+
+    The large sample approximation and the log ratio method do not
+    generate unbounded intervals.  Also, the log ratio method can
+    generate asymmetric intervals.
+
+    Note that there is some disagreement in the literature about the
+    appropriateness of these methods.  For example, Franz argues that
+    the unbounded intervals are a result of the denominator being close
+    to zero with the consequence that the ratio can assume arbitrarily
+    large values.  Therefore any method that does not allow for unbounded
+    intervals is not valid.  On the other hand, Sherman argues that the
+    unbounded Fieler intervals are simply nonsensical and advocates the
+    use of the large sample approximation and log ratio methods.
+
+    To specify the method to use, enter the command
+
+        SET RATIO OF MEANS METHOD <FIELER/LOG RATIO/LARGE SAMPLE>
+
+Syntax:
+    RATIO OF MEANS CONFIDENCE INTERVAL  <y1>  <y2>
+                                        <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first (numerator) response variable;
+          <y2> is the second (denominator) response variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    The variables <y1> and <y2> must be of the same length and are assumed
+    to be paired.
+
+Examples:
+    RATIO OF MEANS CONFIDENCE INTERVAL Y X
+    RATIO OF MEANS CONFIDENCE INTERVAL Y X  SUBSET TAG > 2
+    RATIO OF MEANS CONFIDENCE INTERVAL Y1 Y2  SUBSET Y1 > 0
+ 
+Note:
+    A table of confidence intervals is printed for alpha levels of
+    50.0, 75.0, 90.0, 95.0, 99.0, 99.9, 99.99, and 99.999.  The sample
+    sizes, sample means, sample standard deviations, and the standard
+    error are also printed.  The t-value and t-value X standard
+    error are printed in the table.
+ 
+Note:
+    The RATIO OF MEANS CONFIDENCE LIMIT command automatically saves the
+    following parameters:
+
+       CUTLOW90   = the lower 90% confidence limit
+       CUTUPP90   = the upper 90% confidence limit
+       CUTLOW95   = the lower 95% confidence limit
+       CUTUPP95   = the upper 95% confidence limit
+       CUTLOW99   = the lower 99% confidence limit
+       CUTUPP99   = the upper 99% confidence limit
+       CTLOW999   = the lower 99.9% confidence limit
+       CTUPP999   = the upper 99.9% confidence limit
+
+Note:
+    In addition to the RATIO OF MEANS CONFIDENCE LIMIT command, the
+    following commands can also be used:
+
+        LET A = RATIO OF MEANS Y X
+
+        LET ALPHA = <value>
+        LET A = RATIO OF MEANS LOWER CONFIDENCE LIMIT Y X
+        LET A = RATIO OF MEANS UPPER CONFIDENCE LIMIT Y X
+
+    These statistics can be used in a number of commands.  For
+    details, enter
+
+         HELP STATISTICS
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    CONFIDENCE LIMITS                   = Generate a confidence interval
+                                          for the mean.
+    DIFFERENCE OF MEANS CONF LIMIT      = Generate a confidence interval
+                                          for the difference of two means.
+    T-TEST                              = Perform a two sample t-test.
+    BIHISTOGRAM                         = Generate a bihistogram.
+    QUANTILE-QUANTILE PLOT              = Generate a quantile-quantile
+                                          plot.
+    KOLMOGOROV-SMIRNOV TWO SAMPLE TEST  = Generate a Kolmogorov-
+                                          Smirnov two sample test.
+ 
+Reference:
+    V. H. Franz ((2007), "Ratios: A Short Guide to Confidence Limits and
+    Proper Use," arXiv:0710.2024 [stat.AP].
+
+    E. C. Fieler (1940), "The Biological Standardization of Insulin,"
+    Supplement to the Journal of the Royal Statistical Society, Vol. 7,
+    No. 1, pp. 1-64.
+
+    E. C. Fieler (1940), "A Fundamental Formula in the Statistics of
+    Biological Assays and Some Applications", Quarterly Journal of
+    Pharmacy and Pharmacology, Vol. 17, pp. 117-123.
+
+    E. C. Fieler (1940), "Some Problems in Interval Estimation," Journal
+    of the Royal Statistical Society (B), Vol. 16, No. 2, pp. 175-185.
+
+    Sherman, Maity, and Wang (2011), "Inferences for the Ratio: Fieller's
+    Interval, Log Ratio, and Large Sample Based Confidence Intervals",
+    AStA Adv Stat Anal 95:313–323.
+
+    Cochran (1977), "Sampling Techniques," Wiley, New York.
+
+    Lohr (2009), "Sampling: Design and Analysis," Second Edition,
+    Brooks/Cole, Pacific Grove.
+
+Applications:
+    Confirmatory Data Analysis
+ 
+Implementation Date:
+    2019/09
+ 
+Program 1:
+    . Step 1:   Define data (taken from Sherman article, original source
+    .
+    .           Lehtonen and Pahkinen (2004), "Practical Methods for
+    .           Design and Analysis of Complex Surveys," 2nd Edition,
+    .           New York: Wiley.
+    .
+    read y x
+     4123   26881
+      760    4896
+      721    3730
+      142     556
+      187    1463
+      331    1946
+      127     834
+      219     932
+    end of data
+    .
+    . Step 2:   Large sample interval
+    .
+    let alpha = 0.95
+    set write decimals 4
+    set ratio of means method large sample
+    let r1   = ratio of means y x
+    let r1ll = ratio of means lower confidence limit y x
+    let r1ul = ratio of means upper confidence limit y x
+    .
+    ratio of means confidence limit y x
+    pause
+    .
+    set ratio of means method log ratio
+    let r2   = ratio of means y x
+    let r2ll = ratio of means lower confidence limit y x
+    let r2ul = ratio of means upper confidence limit y x
+    .
+    ratio of means confidence limit y x
+    pause
+    .
+    set ratio of means method fieler
+    let r3   = ratio of means y x
+    let r3ll = ratio of means lower confidence limit y x
+    let r3ul = ratio of means upper confidence limit y x
+    .
+    ratio of means confidence limit y x
+ 
+Program 2:
+    . Step 1:   Define data
+    .
+    read y x
+      0.1268825E+10  0.1246669E+10
+      0.1295448E+10  0.1246669E+10
+      0.1295448E+10  0.1268825E+10
+      0.1168487E+08  0.1014325E+08
+      0.1141398E+08  0.1014325E+08
+      0.1168487E+08  0.1141398E+08
+      0.3298360E+06  0.2902920E+06
+      0.3298360E+06  0.1718490E+06
+      0.2902920E+06  0.1718490E+06
+      0.2415666E+07  0.1637297E+07
+      0.2415666E+07  0.1347629E+07
+      0.1637297E+07  0.1347629E+07
+      0.9904356E+08  0.9530938E+08
+      0.1049126E+09  0.9530938E+08
+      0.1049126E+09  0.9904356E+08
+      0.4930919E+08  0.4662120E+08
+      0.4934958E+08  0.4662120E+08
+      0.4934958E+08  0.4930919E+08
+      0.1278483E+08  0.1232513E+08
+      0.1286868E+08  0.1232513E+08
+      0.1286868E+08  0.1278483E+08
+      0.7029193E+07  0.4878485E+07
+      0.7029193E+07  0.3244763E+07
+      0.4878485E+07  0.3244763E+07
+      0.1490000E+07  0.1040000E+07
+      0.1860000E+07  0.1040000E+07
+      0.1860000E+07  0.1490000E+07
+      0.2680523E+07  0.2601516E+07
+      0.2724237E+07  0.2601516E+07
+      0.2724237E+07  0.2680523E+07
+      0.8905137E+07  0.8303097E+07
+      0.8905137E+07  0.8271071E+07
+      0.8303097E+07  0.8271071E+07
+      0.6956520E+06  0.6798450E+06
+      0.6921780E+06  0.6798450E+06
+      0.6956520E+06  0.6921780E+06
+      0.3290000E+09  0.2890000E+09
+      0.3300000E+09  0.2890000E+09
+      0.3300000E+09  0.3290000E+09
+      0.7091179E+05  0.6553055E+05
+      0.7443393E+05  0.6553055E+05
+      0.7443393E+05  0.7091179E+05
+      0.8031739E+08  0.5416613E+08
+      0.8031739E+08  0.4975062E+08
+      0.5416613E+08  0.4975062E+08
+      0.6830980E+07  0.6738330E+07
+      0.6973430E+07  0.6738330E+07
+      0.6973430E+07  0.6830980E+07
+      0.2010000E+07  0.1980000E+07
+      0.2600000E+07  0.2010000E+07
+      0.2600000E+07  0.1980000E+07
+      0.3193846E+08  0.3059341E+08
+      0.3222820E+08  0.3059341E+08
+      0.3222820E+08  0.3193846E+08
+      0.1784258E+08  0.1460987E+08
+      0.1784258E+08  0.1099276E+08
+      0.1460987E+08  0.1099276E+08
+      0.3150562E+09  0.3052555E+09
+      0.3150562E+09  0.2994084E+09
+      0.3052555E+09  0.2994084E+09
+      0.7998000E+08  0.7574000E+08
+      0.8017000E+08  0.7574000E+08
+      0.8017000E+08  0.7998000E+08
+      0.3983000E+08  0.3886000E+08
+      0.4086000E+08  0.3886000E+08
+      0.4086000E+08  0.3983000E+08
+      0.2334030E+07  0.1387010E+07
+      0.2544590E+07  0.2334030E+07
+      0.2544590E+07  0.1387010E+07
+      0.3126721E+09  0.2310785E+09
+      0.2490103E+09  0.2310785E+09
+      0.3126721E+09  0.2490103E+09
+      0.1000900E+03  0.9977000E+02
+      0.1255000E+03  0.9977000E+02
+      0.1255000E+03  0.1000900E+03
+      0.9860323E+04  0.9400626E+04
+      0.9882525E+04  0.9400626E+04
+      0.9882525E+04  0.9860323E+04
+      0.2548997E+04  0.2482806E+04
+      0.2640000E+08  0.2510000E+08
+      0.2680000E+08  0.2510000E+08
+      0.2680000E+08  0.2640000E+08
+    end of data
+    .
+    set write decimals 4
+    .
+    . Step 2:   Large sample interval
+    .
+    set ratio of means method large sample
+    ratio of means confidence limit y x
+    .
+    . Step 3:   Log Ratio interval
+    .
+    set ratio of means method log ratio
+    ratio of means confidence limit y x
+    .
+    . Step 4:   Fieler interval
+    .
+    set ratio of means method fieler
+    ratio of means confidence limit y x
+
 -----RAYCDF (LET)--------------------------------
  
 RAYCDF
@@ -27706,7 +28473,7 @@ Description:
       14) Reading date and time fields
       15) Reading IP addresses
       16) Reading monetary data (e.g., $23,461.58)
-      17) Reading numeric values with trailing"+" or "-"
+      17) Reading numeric values with trailing "+" or "-" or "*" or "%"
       18) Commas within character fields
       19) Reading binary data
       20) Reading image data
@@ -28043,7 +28810,7 @@ Description:
     With the January 2004 version, we have introduced some limited
     support for character data.  Specifically, we have added the command
     
-         SET CONVERT CHARACTER <ON/IGNORE/ERROR>
+         SET CONVERT CHARACTER <ON/CATEGORICAL/IGNORE/ERROR>
     
     Setting this to ERROR will continue the current Dataplot action of
     reporting character data as an error.  This is recommended for the
@@ -28064,6 +28831,11 @@ Description:
     separate name table for the character data fields (the names for
     character variables are stored in the file "dpzchf.dat").
     
+    Setting this to CATEGORICAL is similar to ON.  However, CATEGORICAL
+    will additionally create a coded numeric variable in addtion to
+    the character variable.  The numeric variable is useful for computing
+    purposes while the character variable is used for labeling purposes.
+
     There are some restrictions on when Dataplot will try to
     read character data:
     
@@ -28076,6 +28848,10 @@ Description:
           READ is specified with no file name), character data
           will be ignored when a SET CONVERT CHARACTER ON is
           specified.
+
+          Note: The 2020/01 version of Dataplot has removed this
+                restriction.  You can now read character data from
+                the terminal.
     
        3) This capability is not supported for the SERIAL READ
           case.
@@ -28415,14 +29191,16 @@ Description:
     currently handle the case where the comma is used both for monetary
     data and also as a field delimiter.
 
-    READING NUMERIC VALUES WITH TRAILING "+" OR "-"
+    READING NUMERIC VALUES WITH TRAILING "+" OR "-" OR "*" OR "%"
 
-    On occassion, numeric fields may have a trailing "+" or a
-    trailing "-".  The "+" is typically used to indicate that the
-    value is greater than or equal to the entered value.  Likewise, the
-    "-" is used to indicate that the value is less than or equal to the
-    entered value.  This may be used when data is truncated at a high
-    or low value.  If you have data that uses this convention, enter
+    On occassion, numeric fields may have a trailing "+", a trailing
+    "-", a trailing "*" or a trailing "%".
+
+    The "+" is typically used to indicate that the value is greater
+    than or equal to the entered value.  Likewise, the "-" is used to
+    indicate that the value is less than or equal to the entered value.
+    This may be used when data is truncated at a high or low value.  If
+    you have data that uses this convention, enter
 
         set read trailing plus minus ignore on
 
@@ -28433,6 +29211,26 @@ Description:
     To reset the defualt, enter
 
         set read trailing plus minus ignore off
+
+    Trailing asterisks ("*") are sometimes used to indicate statistical
+    significance.  To ignore these asterisks, enter
+
+        set read asterisk ignore on
+
+    If this command is not given, the field will be treated as a
+    character field.  To reset the default, enter
+
+        set read asterisk ignore off
+
+    Percentage data will sometimes include a trailing percent sign
+    ("%").  To ignore the percent sign, enter
+
+        set read percent sign ignore on
+
+    If this command is not given, the field will be treated as a
+    character field.  To reset the default, enter
+
+        set read percent sign ignore off
 
     COMMAS WITHIN CHARACTER FIELDS
 
@@ -28746,6 +29544,8 @@ Implementation Date:
     2016/06 Support for SET DATE DELIMITER
     2016/06 Support for SET TIME DELIMITER
     2016/06 Support for SET READ IP ADDRESSES
+    2019/03 Support for SET READ ASTERISK IGNORE
+    2019/12 Support for SET READ PERCENT SIGN IGNORE
     Numerous bug fixes over the years
  
 Program 1:
@@ -28894,6 +29694,178 @@ Program:
     READ DUMMY.CSV  Y X
     PLOT Y X   SUBSET Y > -99 SUBSET X > -99
  
+-----READ EXCEL-------------------------------------------------
+ 
+READ EXCEL
+ 
+Name:
+    READ EXCEL
+ 
+Type:
+    Support Command
+ 
+Purpose:
+    Read variables (vectors) from an Excel file.
+
+Description:
+    Spreadsheet programs are a popular method for saving data.  Most
+    spreadsheet programs support the Microsoft Excel file format.
+
+    Dataplot does not natively support reading or writing to Excel format
+    files.  The READ EXCEL command works as follows
+
+        1. Dataplot writes the name of the Excel file to line 1
+           of the file "dpst5f.dat".  It writes the name of the
+           Excel sheet to line 2 of "dpst5f.dat".  The default
+           sheet name is "Sheet1".  To change the sheet name, enter
+           the command
+
+               SET EXCEL SHEET <sheet-name>
+
+        2. Dataplot then invokes a Python script to read the variables
+           from the specified Excel file and then writes the variables
+           to the file "dpst1f.dat".
+
+           The Python script, "read_excel.py", is located in the
+           "scripts" subdirectory of the Dataplot auxiliary directory.
+           This script uses the Pandas function "dataframe.read_excel"
+           to read the data from the Excel file.  It then uses the
+           Pandas function "pandas.to_csv" to write the variables as
+           a comma separated file (CSV) to the file "dpst1f.dat".
+
+        3. Dataplot reads the contents of the variables from the
+           file "dpst1f.dat".
+
+    This command assumes that Python and the Python package Pandas
+    are already installed on your local platform.  Dataplot does not
+    check if Python is installed and it does not initiate the
+    Python installation if it is not already installed.
+
+    As Python is used by many popular applications on Linux platforms,
+    most Linux platforms will already have Python installed.  However,
+    this is not the case for Windows and MacOS platforms.
+
+    If you need to install Python, there are a number of Python
+    distributions (see https://wiki.python.org/moin/PythonDistributions).
+    However, the most common are ActivePython from ActiveState and
+    Anaconda from Continuum Analytics.  Dataplot does not depend on a
+    specific Python distribution and we make no recommendation for the
+    preferred distribution.
+
+    This command will typically work well with Excel files that are
+    clean rectangular data sets.  If you have added graphs, formulas,
+    cross-tabulations, and so on to the Excel sheet, then the
+    READ EXCEL command is likely to be unsatisfactory.  You can either
+    copy the data portion of the spreadsheet to a new sheet or use
+    one of the other methods for reading data from spreadsheets
+    listed below.
+
+    If you infrequently need to read Excel files and do not already
+    have Python installed on your local platform, there are several
+    additional methods for reading the data from Excel files.  However,
+    if you anticipate the need for frequently reading Excel files, then
+    going through the Python installation is probably worth the effort.
+
+    In addition to READ EXCEL, the following methods can also be used
+    to read data from Excel files.
+
+         1. Spreadsheets typically support writing data to ASCII files.
+            For example, Excel can write formatted text (space delimited)
+            (.PRN extension), comma delimited files (.CSV extension), or
+            tab delimited files (.TXT extension).  Enter HELP READ for
+            details of this.
+
+            As with READ EXCEL, this option works best with clean
+            rectangular data sets.  If you do not have a clean Excel
+            sheet, you will probably need to manually edit the ASCII
+            file before trying to read it with Dataplot.  However, it is
+            a viable alternative to READ EXCEL when you do not have Python
+            installed on your platform and do not wish to install it.
+
+         2. You can also use Copy and Paste.  On Windows platforms,
+            you can Copy the desired data to the clipboard and then use
+            the READ CLIPBOARD command.  Alternatively, you can paste
+            the data into an ASCII editor (e.g., Notepad or Wordpad on
+            Windows, vi or Emacs on Linux), save the file and then use
+            the Dataplot READ command.
+
+            This option is particularly useful when your spreadsheet is
+            not a clean rectangular data set.
+
+Syntax:
+    READ EXCEL <fname> <variable list>
+               <SUBSET/EXCEPT/FOR qualification>
+    where <fname> is the name of the Excel file;
+          <variable list> is the list of variables to read;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Examples:
+    READ EXCEL FILE.XLSX Y1 Y2 Y3 X
+
+Note:
+    The Pandas pandas.to_csv function will typically add a row id
+    variable to the ASCII file.
+
+Note:
+    The python script will currently read the entire spreadsheet.
+    Additional commands to specify columns and rows in the spreadsheet
+    to read are under development but not yet available.
+
+    Also, Dataplot will not search for the Excel file in the
+    Dataplot auxiliary files directories as it does for the
+    READ for ASCII files.
+
+Note:
+    Excel (or some other spreadsheet program) does not need to be
+    installed on your local platform.  For example, you can create
+    the Excel file on a Windows platform and then move the Excel file
+    to a Linux platform.
+
+Note:
+    If Python is not installed on your default path, you can specify it
+    using the SET PYTHON PATH command. For example, the following is for
+    the Anaconda installation of Python 3 under Windows (where Anaconda
+    is installed for the single user heckert)
+
+       set python path c:\Users\heckert\AppData\Local\Continum\anaconda3\
+
+    There are several different Python distributions. The appropriate
+    Python path will depend on the specific distribution you used to
+    install Python and whether you choose to install it for a single user
+    or for all users. 
+
+Note:
+    On Windows platforms, the "read_excel.py" script will be copied to
+    the current directory.
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    WRITE EXCEL = Write variables to an Excel file.
+    PYTHON      = Run a user specified Python script from within Dataplot.
+    READ        = Read variables, strings, parameters and matrices.
+ 
+Applications:
+    Data Input
+ 
+Implementation Date:
+    2020/02
+
+Program:
+    dimension 40 columns
+    . Path name for Windows
+    . read excel "C:\Program Files (x86)\NIST\DATAPLOT\LIB\DATA\FIBERS.XLSX" ...
+    .     rowid breakid xcent ycent xc1 yc1 xc2 yc2 xc3 yc3 xc4 yc4 length
+    . Path name for Linux
+    read excel /usr/local/lib/data/FIBERS.XLSX ...
+         rowid breakid xcent ycent xc1 yc1 xc2 yc2 xc3 yc3 xc4 yc4 length
+    set write decimals 3
+    print breakid xcent length
+
 -----READ FORMAT (SET)-------------------------------------------
  
 READ FORMAT (SET)
@@ -29039,7 +30011,7 @@ Applications:
     Input/Output
  
 Implementation Date:
-    88/3 (support for reading unformatted Fortran files added 95/4)
+    1988/03 (support for reading unformatted Fortran files added 1995/04)
  
 Program:
     SET READ FORMAT 2F10.1
@@ -37603,6 +38575,134 @@ Program 1:
     set write decimals 4
     tabulate rlp z matid labid
 
+-----RM-------------------------------------------------------
+ 
+RM
+RMDIR
+ 
+Name:
+    RM
+    RMDIR
+ 
+Type:
+    Support Command
+ 
+Purpose:
+    This command deletes one or more files or directories.
+ 
+Description:
+    This command uses an operating system command to delete
+    one or more files or one or more directories.
+
+    For Unix/Linux/MacOS systems, the RM command issues a
+
+        rm ....
+
+    command to the operating system and the RMDIR command issues a
+
+        rm -r ...
+
+    command to the operating system.
+
+    For Windows systems, the RM command issues an
+
+        ERASE ....
+
+    command to the operating system and the RMDIR command issues a
+
+        DELTRE ...
+
+    command to the operating system.
+
+    The RMDIR command will remove any files or sub-directories
+    under the directory being removed.
+
+    The string that follows the RM or RMDIR on the command line
+    is passed to the operating system as is.  Dataplot does no
+    error checking of this string.
+
+    This command should be used with caution so that files
+    are not accidentally deleted.
+
+    This is a system dependent command.  It is currently supported
+    for Unix/Linux/MacOS and Windows platforms.
+
+Syntax 1:
+    RM <file-list>
+    where <file-list> is a string containing a list of one or more
+               files to delete.
+ 
+Syntax 2:
+    RMDIR <file-list>
+    where <file-list> is a string containing a list of one or more
+               directories to delete.
+ 
+Examples:
+    RM  *.ps
+    RM  macro.out  macro.ps  macro.pdf
+    RMDIR  macros tmp
+ 
+Note:
+    The RM capability can be implemented by direct use of the
+    SYSTEM command.  For example, under Linux do something like
+
+         system  rm  junk*.out
+
+    The motivation for adding this as a separate command is to
+    allow the capability to be implemented in an operating
+    system independent way.  This can be useful when writing
+    general purpose macros that may be used on different
+    operating systems.
+
+Default:
+    None
+ 
+Synonyms:
+    None (we have not added DELETE or ERASE as synonyms as these
+    commands are already used in Dataplot)
+ 
+Note:
+    Dataplot does no checking to ensure that a valid file name
+    or directory name was specified.  The entered string is
+    passed to the operating system as entered.
+
+Note:
+    File names are case sensitive on Unix/Linux/MacOS file
+    systems.  For this reason, case is preserved in passing the
+    file list to the operating system.
+ 
+Related Commands:
+    SYSTEM      = Enter an operating system command within a
+                  Dataplot session.
+    CD          = Change the current working directory.
+    PWD         = Retrieve the current working directory.
+    CAT         = List the contents of a file.
+    MKDIR       = Create a new directory.
+    DIR         = List the contents of a directory.
+ 
+Applications:
+    Interactive Usage
+ 
+Implementation Date:
+    2019/09
+ 
+Program:
+    . Automatically convert Postscript output to PDF and then
+    . delete the original Postscript file
+    .
+    SKIP 25
+    READ BERGER1.DAT Y X
+    .
+    SET POSTSCRIPT CONVERT PDF
+    SET IPL1NA PLOT.PS
+    CHARACTER X
+    LINE BLANK
+    .
+    PLOT Y X
+    .
+    DEVICE 2 CLOSE
+    RM PLOT.PS
+ 
 -----ROBUST POOLED STANDARD DEVIATION (LET)-----------------------------
  
 ROBUST POOLED STANDARD DEVIATION
@@ -39952,6 +41052,161 @@ Program:
     MOVE 50 97
     TEXT Reflected Power Percent Point Functions
  
+-----RSCRIPT-------------------------------------------------------
+ 
+RSCRIPT
+ 
+Name:
+    RSCRIPT
+ 
+Type:
+    Support Command
+ 
+Purpose:
+    Run an R script within a Dataplot session.
+ 
+Description:
+    It may on occassion be useful to run an R script within a Dataplot
+    session.  Note that Dataplot assumes that R is already installed on
+    your local system.  Also, any R packages that your script needs should
+    already be installed.  Dataplot does not initiate an install of R if
+    it not already installed.
+
+    If R is not installed on your default path, you can specify it
+    using the SET R PATH command.  For example, the following can
+    be used for version 3.6.1 under Windows
+
+       set r path "c:\program files\r\r-3.6.1\bin\"
+
+    On Linux systems, R is typically installed in "/usr/bin" which is in
+    the default path on most systems.  So for Linux systems, the
+    SET R PATH command is typically not required.  However, if R is not
+    in the default path, you can use the SET R PATH command.
+
+    On Windows platforms, the RSCRIPT command is equivalent to entering
+
+        set system persist off
+        set system hidden on
+        system <r-path>\rscript.exe <r-script-file>  <arg-list>
+
+    Note that if either the R path or the <r-script-file> contains
+    spaces (and so will be quoted), then "set system hidden" will be
+    set to "off".
+
+    On Linux platforms, the RSCRIPT command is equivalent to entering
+
+        system <r-path>/Rscript  <r-script-file>  <arg-list>
+
+    Rscript is a binary front end to R for scripting with R.
+
+Syntax:
+    RSCRIPT <script-file> <arg-list>
+    where <script-file> contains the name of a file containing an
+              R script;
+    and where <arg-list> is an optional list of arguments to the script.
+ 
+Examples:
+    RSCRIPT  plot.R
+ 
+Note:
+    This command is host dependent.  It has been tested on Windows
+    and Linux systems.  Note that the SYSTEM command must be activated
+    for this command to work.
+
+Note:
+    Dataplot does no error checking on the specified script file.  It
+    is passed as is to the Rscript (RSCRIPT.EXE) command.
+ 
+Note:
+    The CAPTURE SCRIPT command can be used to generate the R script
+    within a Dataplot macro.  This is demonstrated in the Program
+    example below.
+
+Note:
+    The name of the script file is case sensitive on Linux and MacOS
+    systems.  It is not case sensitive on Windows systems.
+
+    If Dataplot does not find the R script file, it will search for
+    it in the "scripts" sub-directory in the Dataplot auxiliary
+    directory.  Currently (2019/12), there are no R scripts in that
+    directory, although this may change in future releases of Dataplot.
+
+Note:
+    Dataplot does not support R as a synonym for RSCRIPT.  This is
+    due to the fact that R has long been used as a synonym for the
+    REPEAT command.
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    SYSTEM          = Issue an operating system command within Dataplot.
+    PYTHON          = Run a Python script within Dataplot.
+    CAPTURE SCRIPT  = Create a script file within Dataplot.
+    PSVIEW          = View Postscript, PDF and image files.
+    LIST            = View the contents of a file.
+ 
+Applications:
+    Run R scripts
+ 
+Implementation Date:
+    2019/12
+ 
+Program:
+    . Step 1: Create the R script using "capture script"
+    .
+    rm rout.txt  rout.pdf  r_test.r
+    .
+    capture script r_test.r
+    # This is R program file     r_test.r     11/4/19
+    # Purpose: Generate a sequence, square it, and plot it
+    # Date: 11/4/19
+    #
+    # -----start point-----
+    #
+    x=seq(1,20,length.out=20)
+    y=x^2
+    both=c(x,y)
+    
+    sink("rout.txt")
+       both
+    sink()
+    
+    pdf("rout.pdf")
+    plot(x,y)
+    dev.off()
+    end of capture
+    .
+    list r_test.r
+    .
+    . Step 2:   Determine if running on Windows or Linux and set R path
+    .
+    let computer = 1
+    probe iopsy1
+    if probeval = 1
+       let computer = 2
+    end of if
+    .
+    .           May need to tweak path for R based on version and
+    .           optionally set desired Postscript viewer
+    .
+    if computer = 1
+       set r path "c:\program files\r\r-3.6.1\bin\"
+    end of if
+    .
+    . Step 3:   Run the R script
+    .
+    rscript  r_test.r
+    .
+    . Step 4:   Display the outputs in Dataplot
+    .
+    list rout.txt
+    .
+    psview rout.pdf
+
 -----RUKHIN 1 TEST (LET)--------------------------
  
 RUKHIN 1 TEST
@@ -41001,6 +42256,51 @@ Program:
     PLOT YIELD
  
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -43646,17 +44946,70 @@ Description:
     (the seed allows the random number generator to duplicate the same
     sequence of random numbers).
  
+    Dataplot supports several different random number generators.
+    The desired generator can be set with the command
+
+        SET RANDOM NUMBER GENERATOR <generator>
+
+    where <generator> is one of the following:
+ 
+        FIBONACCI
+        LINEAR CONGRUENTIAL
+        MULTIPLICATIVE CONGRUENTIAL
+        GFSR
+        FUSHIMI
+        AS183
+        GENZ
+        LUXURY
+        FIBONACCI CONGRUENTIAL
+
+    The deault generator is the FIBONACCI CONGRUENTIAL generator
+    (the default prior to 2018/05 was the FIBONACCI generator).
+
+    The seed value applies to the following generators
+
+        FIBONACCI
+        FIBONACCI CONGRUENTIAL
+        MULTIPLICATIVE CONGRUENTIAL
+        AS183
+
+    For the FIBONACCI and FIBONACCI CONGRUENTIAL generators, the
+    minimum seed value should be 305 and the seed should be an
+    odd number.  Values of the seed less than 305 are equivalent
+    to 305 and even values of the seed are equivalent to the
+    nearest odd number.
+
+    For the other generators, if you want to obtain a different
+    sequence of random numbers you can do something like the
+    following
+
+        LET ISKIP = 50000
+        LET NRAND = 10000
+        LET YJUNK = UNIFORM RANDOM NUMBERS FOR I = 1 1 ISKIP
+        LET Y = UNIFORM RANDOM NUMBERS FOR I = 1 1 NRAND
+
+    This example will first generate 50,000 random numbers that
+    will not be used.  It then generates 10,000 random numbers
+    that will be used.  To obtain a different sequence of random
+    numbers, modify the value of ISKIP.
+
 Syntax:
     SEED    <iseed>
     where <iseed> is an integer number or parameter that defines the
                seed.
  
 Examples:
-    SEED 6
+    SEED 55671
     SEED DEFAULT
  
+Note:
+    To return the current value of the seed, enter
+
+        PROBE SEED
+
 Default:
-    305
+    305 (Pre-2019/03)
+    3005 (2019/03)
  
 Synonyms:
     None
@@ -43666,14 +45019,22 @@ Related Commands:
                             distributions..
  
 Applications:
-    XX
+    Random Number Generation
  
 Implementation Date:
-    XX
+    Pre-1987
  
 Program:
-    SEED 6
-    LET Y = NORMAL RANDOM NUMBERS FOR I = 1 1 100
+    SEED 4021
+    LET Y1 = NORMAL RANDOM NUMBERS FOR I = 1 1 100
+    SEED 34201
+    LET Y2 = NORMAL RANDOM NUMBERS FOR I = 1 1 100
+    SEED 19793
+    LET Y3 = NORMAL RANDOM NUMBERS FOR I = 1 1 100
+    SEED 46987
+    LET Y4 = NORMAL RANDOM NUMBERS FOR I = 1 1 100
+    LINE COLOR BLACK BLUE RED GREEN
+    MULTIPLE KERNEL DENSITY PLOT Y1 Y2 Y3 Y4
  
 -----SEGMENT COLOR----------------------------------------------------
  
@@ -44250,6 +45611,102 @@ Program:
     REGION PATTERN SPACING 3
     SEMI-CIRCLE 75 60 90 72
  
+-----SEMI INTERQUARTILE RANGE (LET)-------------------------------
+ 
+SEMI INTERQUARTILE RANGE
+LOWER SEMI INTERQUARTILE RANGE
+UPPER SEMI INTERQUARTILE RANGE
+ 
+Name:
+    SEMI INTERQUARTILE RANGE (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute either the lower semi-interquartile range or the upper
+    semi-interquartile range for a variable.
+ 
+Description:
+    The interquartile range is:
+
+        IQ = UPPER QUARTILE - LOWER QUARTILE
+
+    That is, it is the difference betweeen the 75th and 25th
+    percentiles of a variable.
+ 
+    The lower semi-interquartile range is:
+
+        SIQR(L) = q2 - q1
+
+    and the upper semi-interquartile range is:
+
+        SIQR(U) = q3 - q2
+
+    with q1, q2, and q3 denoting the lower quartile, median, and
+    upper quartile respectively.
+
+    The semi-interquartile range is sometimes used in place of the
+    interquartile range when there is significant skewness in the
+    data.  For example, it can be used to provide an alternate
+    definition of the fences in a box plot.
+
+Syntax 1:
+    LET <par> = LOWER SEMI INTERQUARTILE RANGE <y>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <par> is a parameter where the computed lower semi-interquartile
+               range is stored;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Syntax 2:
+    LET <par> = UPPER SEMI INTERQUARTILE RANGE <y>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <par> is a parameter where the computed upper semi-interquartile
+               range is stored;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET A = LOWER SEMI INTERQUARTILE RANGE Y1
+    LET A = UPPER SEMI INTERQUARTILE RANGE Y1
+    LET A = UPPER SEMI INTERQUARTILE RANGE Y1 SUBSER TAG > 2
+    LET A = INTERQUARTILE RANGE Y1 SUBSET TAG > 2
+ 
+Note:
+    Dataplot statistics can be used in a number of commands.  For
+    details, enter
+
+        HELP STATISTICS
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    INTERQUARTILE RANGE    = Compute the interquartile range of a variable.
+    BOX PLOT               = Generate a box plot.
+ 
+References:
+    Walker, Dovedo, Chakraborti and Hilton (2019), "An Improved Boxplot
+    for Univariate Data". American Statistician, Vol. 72, No. 4,
+    pp. 348-353.
+
+Applications:
+    Robust Data Analysis
+ 
+Implementation Date:
+    2019/08
+ 
+Program:
+    LET NU = 1
+    LET Y = CHISQUARE RANDOM NUMBERS FOR I = 1 1 100
+    LET SIQRL = LOWER SEMI INTERQUARTILE RANGE Y
+    LET SIQRU = UPPER SEMI INTERQUARTILE RANGE Y
+    PRINT SIQRL SIQRU
+
 -----SEMPDF (LET)--------------------------------
  
 SEMPDF
@@ -49269,6 +50726,246 @@ Implementation Date:
 Program:
     XX
  
+-----SKEWNESS OUTLIER TEST------------------------------------
+ 
+SKEWNESS OUTLIER TEST
+ 
+Name:
+    SKEWNESS OUTLIER TEST
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Perform the skewness test for univariate outliers from a normal
+    distribution.
+ 
+Description:
+    The ASTM E178-16a standard for detecting outliers from a univariate
+    normal distribution includes the skewness outlier test.
+
+    The test statistic is the adjusted Fisher-Pearson skewness
+    coefficient
+
+       g1 = n*SUM[i=1 to n][(x(i)-xbar)**2]/((n-1)*(n-2)*s**2)
+
+    with n, xbar and s denoting the sample size, the sample mean
+    and the sample standard deviation, respectively.
+
+    The critical values are obtained via simulation.  The ASTM standard
+    provides table values for n = 3 to 50 and alpha levels of 0.10, 0.05
+    and 0.01.  Linear interpolation is used for values of n not given in
+    the table.  Alternatively, you can perform a dynamic simulation
+    to obtain the critical values.
+
+    To specify the method used to compute the critical value, enter
+    one of the following commands (the default is ASTM)
+
+        SET SKEW OUTLIER TEST CRITICAL VALUES ASTM
+        SET SKEW OUTLIER TEST CRITICAL VALUES SIMULATION
+
+    If n > 50, the simulation method will be used.
+
+Syntax 1:
+    SKEWNESS OUTLIER TEST  <y>  <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable being tested;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Syntax 2:
+    MULTIPLE SKEWNESS OUTLIER TEST <y1> ... <yk>   
+                                   <SUBSET/EXCEPT/FOR qualification>
+    where <y1> ... <yk> is a list of up to k response variables;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs the skewness outlier test on <y1>, then on
+    <y2>, and so on.  Up to 30 response variables can be specified.
+
+    Note that the syntax
+
+         MULTIPLE SKEWNESS OUTLIER TEST Y1 TO Y4
+
+    is supported.  This is equivalent to
+
+         MULTIPLE SKEWNESS OUTLIER TEST Y1 Y2 Y3 Y4
+
+Syntax 3:
+    REPLICATED SKEWNESS OUTLIER TEST <y> <x1> ... <xk>   
+                                     <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <x1> ... <xk> is a list of up to k group-id variables;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs a cross-tabulation of <x1> ... <xk> and performs
+    a skewness outlier test for each unique combination of cross-tabulated
+    values.  For example, if X1 has 3 levels and X2 has 2 levels, there
+    will be a total of 6 skewness outlier tests performed.
+
+    Up to six group-id variables can be specified.
+
+    Note that the syntax
+
+         REPLICATED SKEWNESS OUTLIER TEST Y X1 TO X4
+
+    is supported.  This is equivalent to
+
+         REPLICATED SKEWNESS OUTLIER TEST Y X1 X2 X3 X4
+
+Examples:
+    SKEWNESS OUTLIER TEST Y1
+    MULTIPLE SKEWNESS OUTLIER TEST Y1 Y2 Y3
+    REPLICATED SKEWNESS OUTLIER TEST Y X1 X2
+    SKEWNESS OUTLIER TEST Y1   SUBSET TAG > 2
+
+Note:
+    Tests for outliers are dependent on knowing the distribution of the
+    data.  The skewness outlier test assumes that the data come from an
+    approximately normal distribution.  For this reason, it is strongly
+    recommended that the skewness outlier test be complemented with a
+    normal probability test.  If the data are not approximately normally
+    distributed, then the skewness outlier test may be detecting the
+    non-normality of the data rather than the presence of an outlier.
+
+Note:
+    You can specify the number of digits in the skewness outlier test
+    output with the command
+
+        SET WRITE DECIMALS <value>
+
+Note:
+    The SKEWNESS OUTLIER TEST command automatically saves the following
+    parameters:
+
+       STATVAL    = the value of the test statistic
+       STATDCF    = the CDF value of the test statistic
+       PVALUE     = the p-value of the test statistic
+       CUTOFF80   = the 80 percent point of the reference distribution
+       CUTOFF90   = the 90 percent point of the reference distribution
+       CUTOFF95   = the 95 percent point of the reference distribution
+       CUTOF975   = the 97.5 percent point of the reference distribution
+       CUTOFF99   = the 99 percent point of the reference distribution
+
+    The STATCDF and PVALUE are only saved when the simulation method
+    is used to obtain critical values.  If the ASTM method is used to
+    obtain critical values, the CUTOFF80 and CUTOF975 values are not
+    saved.
+
+    If the MULTIPLE or REPLICATED option is used, these values will
+    be written to the file "dpst1f.dat" instead.
+
+Note:
+    In addition to the SKEWNESS OUTLIER TEST command, the following
+    commands can also be used:
+
+        LET A = SKEWNESS OUTLIER TEST Y
+        LET A = SKEWNESS OUTLIER TEST CDF Y
+        LET A = SKEWNESS OUTLIER TEST PVALUE Y
+        LET A = SKEWNESS OUTLIER TEST INDEX Y
+
+        LET ALPHA = <value>
+        LET A = SKEWNESS OUTLIER TEST CRITICAL VALUE Y
+
+    The SKEWNESS OUTLIER TEST, SKEWNESS OUTLIER TEST CDF, and
+    SKEWNESS OUTLIER TEST PVALUE return the values of the test statistic,
+    the cdf of the test statistic and the pvalue of the test statistic,
+    respectively.  For the SKEWNESS OUTLIER TEST CDF and
+    SKEWNESS OUTLIER TEST PVALUE commands, the simulation method will be
+    used.  Otherwise, the method specified by the
+    SET SKEWNESS OUTLIER TEST CRITICAL VALUE command will be used.
+
+    The SKEWNESS OUTLIER TEST INDEX returns the row index of the most
+    extreme value in the response variable.  The most extreme value is
+    defined as the value furtherest from the mean.
+
+    The SKEWNESS OUTLIER TEST CRITICAL VALUE returns the critical value
+    for the specified value of ALPHA.  If ALPHA is not specified, it will
+    be set to 0.05.  Note that if the ASTM method is specified for the
+    critical values, only a few select values for alpha are supported
+    (0.01, 0.05 and 0.10).
+
+    In addition to the above LET command, built-in statistics are
+    supported for 30+ different commands (enter HELP STATISTICS
+    for details).
+
+Default:
+    The ASTM method is used to obtain critical values
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    KURTOSIS OUTLIER TEST       = Perform the kurtosis outlier test.
+    GRUBBS TEST                 = Perform the Grubbs outlier test.
+    DAVID TEST                  = Perform the David outlier test.
+    TIETJEN-MOORE TEST          = Perform the Tietjen-Moore outlier
+                                  test.
+    EXTREME STUDENTIZED DEVIATE = Perform the generalized extreme
+                                  studentized deviate outlier test.
+    DIXON TEST                  = Perform the Dixon outlier test.
+    SKEWNESS OUTLIER TEST       = Perform the skewness outlier test.
+    KURTOSIS OUTLIER TEST       = Perform the kurtosis outlier test.
+    ANDERSON DARLING TEST       = Perform the Anderson-Darling test for
+                                  normality.
+    WILK SHAPIRO TEST           = Perform the Wilk-Shapiro test for
+                                  normality.
+    PROBABILITY PLOT            = Generates a probability plot.
+    HISTOGRAM                   = Generate a histogram.
+    BOX PLOT                    = Generate a box plot.
+ 
+Reference:
+    E178 - 16A (2016), "Standard Practice for Dealing with Outlying
+    Observations", ASTM International, 100 Barr Harbor Drive,
+    PO Box C700, West Conshohocken, PA 19428-2959, USA.
+
+    Ferguson, T.S. (1961), "On the Rejection of Outliers," Fourth
+    Berkeley Symposium on Mathematical Statistics and Probability,
+    edited by Jerzy Neyman, University of California Press, Berkeley
+    and Los Angeles, CA.
+
+    Ferguson, T.S. (1961), "Rules for Rejection of Outliers," Revue
+    Inst. Int. de Stat., RINSA, Vol. 29, No. 3, pp. 29-43.
+
+Applications:
+    Outlier Detection
+ 
+Implementation Date:
+    2019/10
+ 
+Program:
+    . Step 1:   Read the data (from ASTM E-178 document)
+    .
+    read y
+    3.73
+    3.59
+    3.94
+    4.13
+    3.04
+    2.22
+    3.23
+    4.05
+    4.11
+    2.02
+    end of data
+    set write decimals 3
+    .
+    . Step 2:   Compute the statistics
+    .
+    let stat = skew outlier test y
+    set skew outlier test critical values astm
+    let cv1 = skew outlier test critical value y
+    set skew outlier test critical values simulation
+    let cv2 = skew outlier test critical value y
+    .
+    let pval = skew outlier test pvalue y
+    let statcdf = skew outlier test cdf y
+    let iindx = skew outlier test index y
+    .
+    print stat cv1 cv2 pval statcdf iindx
+    .
+    set skew outlier test critical values astm
+    skewness outlier test y
+    set skew outlier test critical values simulation
+    skewness outlier test y
+
 -----SKEWNESS (LET)---------------------------------------------------
  
 SKEWNESS
@@ -58478,6 +60175,14 @@ Note:
         LET SOUT = STRING COMBINE S1 S2 S3
 
 Note:
+    By default, a space character is used as the separator character.
+    To specify a different separator command, enter
+
+        SET STRING SEPARATOR <char>
+
+    where <char> denotes the character to be used as the separator.
+
+Note:
     The total number of characters that DATAPLOT can use for storing
     functions and strings is set when DATAPLOT is built.  The current
     default (11/2008) is 50,000 characters.  Previous versions may set
@@ -58519,6 +60224,7 @@ Applications:
  
 Implementation Date:
     2018/02
+    2019/12: Added SET STRING SEPARATOR
  
 Program 1:
     SKIP 25
@@ -61003,6 +62709,199 @@ Program:
     LET STRING S2 = @
     LET NNAMES = STRING SUBSET COUNT S1 S2
 
+-----STRING VARIABLE (SET)---------------------------------------
+ 
+SET STRING VARIABLE
+ 
+Name:
+    STRING VARIABLE (SET)
+ 
+Type:
+    Set Subcommand
+ 
+Purpose:
+    Specify whether the READ and STRING VARIABLE commands will overwrite
+    the contents of the dpzchf.dat file or append the new data to the
+    current contents of the dpzchf.dat file.
+ 
+Description:
+    The READ command can optionally read character variables
+    (HELP SET CONVERT CHARACTER).  Dataplot saves the character
+    variables in the file "dpzchf.dat".  In addition, the
+    LET ... = STRING VARIABLE command can be used to create a character
+    variable from a list of strings.  This variable will be saved in
+    the "dpzchf.dat" as well.
+
+    By default, Dataplot overwrites the current contents of the
+    "dpzchf.dat" file whenever a READ or STRING VARIABLE command
+    creates new character variables.  To have these commands append
+    the contents of the new character variables to the current contents
+    of "dpzchf.dat", enter the command
+
+         SET STRING VARIABLE APPEND
+
+    To reset the default of overwriting the current contents of
+    "dpzchf.dat", enter
+
+         SET STRING VARIABLE OVERWRITE
+
+Syntax:
+    SET STRING VARIABLE <OVERWRITE/APPEND>
+    where OVERWRITE replaces the current contents of "dpzchf.dat"
+    and APPEND appends to the current contents of "dpzchf.dat".
+
+Examples:
+    SET STRING VARIABLE APPEND
+    SET STRING VARIABLE OVERWRITE
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    STRING VARIABLE    = Create a character variable from a list of
+                         strings.
+    READ               = Read numeric/character variables from a file.
+ 
+Applications:
+    Character Data
+ 
+Implementation Date:
+    2019/09
+ 
+Program:
+    set string variable overwrite
+    let string s1 = Group 1
+    let string s2 = Group 2
+    let string s3 = Group 3
+    let ix = string variable s1 s2 s3
+    list dpzchf.dat
+    pause
+    .
+    set string variable append
+    let string s4 = Group 4
+    let string s5 = Group 5
+    let string s6 = Group 6
+    let iy = string variable s4 s5 s6
+    list dpzchf.dat
+
+-----STRING VARIABLE-------------------------------------------
+ 
+STRING VARIABLE
+ 
+Name:
+    STRING VARIABLE
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Create a string variable from a list of strings and save it to
+    the file dpzchf.dat.
+
+Description:
+    The Dataplot READ command can optionally read character data.  The
+    READ command saves these character variables to the file
+    "dpzchf.dat".
+
+    The STRING VARIABLE command allows you to add character variables
+    to "dpzchf.dat" from a list of scalar strings.
+
+    You can specify whether you want Dataplot to overwrite the current
+    contents of "dpzchf.dat" or append the new variable to the current
+    contents of "dpzchf.dat".
+
+    To have the STRING VARIABLE command overwrite the current contents
+    of "dpzchf.dat", enter
+
+        SET CHARACTER VARIABLE OVERWRITE
+
+    To have the STRING VARIABLE command append the new string variable to
+    the current contents of "dpzchf.dat", enter
+
+        SET CHARACTER VARIABLE APPEND
+
+Syntax:
+    LET <sout> = STRING VARIABLE  <s1>  ... <sk>
+    where <sout> is the name of the resulting string variable;
+    and   <s1> ... <sk> is a list of one or more previously defined
+          strings or literal text strings.
+ 
+    Literal text strings should be enclosed in quotes.  If an
+    argument on the right hand side of the equal sign is not enclosed
+    in quotes, it will be assumed to be a previously defined string.
+    If an argument is not enclosed in quotes and is not the name of
+    a previously defined string, an error message will be returned and
+    <sout> will not be created.
+
+    The TO syntax is supported for the argument list (see the Examples).
+
+Examples:
+    LET IX = STRING VARIABLE  S1 S2 S3
+    LET IX = STRING VARIABLE  S1 TO S10
+    LET IX = STRING VARIABLE  "Group 1"  "Group 2"  "Group 3"
+    LET IX = STRING VARIABLE  "Group 1"  S2  "Group 3" S4
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    READ                = Read variables from the terminal or a file.
+    READ STRING         = Reads a string from a file.
+    LET STRING          = Defines a string.
+    STRING CONCATENATE  = Concatenate two or more strings.
+    &                   = Concatenate two strings.
+    SUBSTITUTE CHARACTE = Substitute the value of a string or parameter.
+    LET FUNCTION        = Defines a function.
+    SUBTRING            = Extract a substring from an existing string.
+    STRING INDEX        = Extract the start/stop positions of a substring
+                          within a string.
+    STRING EDIT         = Edit a string.
+    STRING LENGTH       = Return the length of a string.
+    STRING MERGE        = Insert a string into another string without
+                          overwrite.
+    STRING REPLACE      = Insert a string into another string with
+                          overwrite.
+    LOWER CASE          = Convert a string to lower case.
+    UPPER CASE          = Convert a string to upper case.
+    CHARACTER           = Convert numeric values to strings based on
+                          the ASCII collating sequence.
+    ICHAR               = Convert a string to numeric values based on
+                          the ASCII collating sequence.
+    GROUP LABEL         = Define the text for group labels.
+ 
+Applications:
+    Data Management
+ 
+Implementation Date:
+    2019/10
+ 
+Program 1:
+    set string variable overwrite
+    let ix = string variable "Group 1" "Group 2"  "Group 3"
+    list dpzchf.dat
+
+Program 2:
+    set string variable overwrite
+    let string s1 = Group 1
+    let string s2 = Group 2
+    let string s3 = Group 3
+    let ix = string variable s1 s2 s3
+    list dpzchf.dat
+    pause
+    .
+    set string variable append
+    let string s4 = Group 4
+    let string s5 = Group 5
+    let string s6 = Group 6
+    let iy = string variable s4 s5 s6
+    list dpzchf.dat
+
 -----STRING WORD-----------------------------------------------------
  
 STRING WORD
@@ -63442,6 +65341,146 @@ Program:
     DEVICE 2 CLOSE
     SYSTEM lpr dppl1f.dat 
  
+-----SYSTEM SWITCHES (SET)--------------------------------------------
+ 
+SYSTEM SWITCHES
+ 
+Name:
+    SYSTEM SWITCHES (SET)
+ 
+Type:
+    Set Subcommand
+ 
+Purpose:
+    Probe for values pertaining to certain operating system values.
+ 
+Description:
+    Dataplot extracts the values of several operating system
+    environment variables.  These values can be obtained by the user
+    using the PROBE command.  Note that these settings cannot be
+    modified with the SET command.
+
+    The list of available environment variable switches is
+
+        HOME              - Returns the user's home directory.
+
+                            On Windows platforms, this is the value of
+                            the USERPROFILE environment variable.
+
+                            On Linux platforms, this is the value of the
+                            HOME environment variable.
+
+        USER              - Returns the user name.
+
+                            On Windows platforms, this is the value of the
+                            USERPNAME environment variable.
+
+                            On Linux platforms, this is the value of the
+                            USER environment variable.
+
+        HOST              - Returns the computer name.
+
+                            On Windows platforms, this is the value of the
+                            COMPUTERNAME environment variable.
+
+                            On Linux platforms, this is the value of the
+                            HOST environment variable for the c-shell or
+                            t-shell and the HOSTNAME variable for the
+                            bash shell.
+
+        DEFAULT PRINTER   - Returns the default printer.
+
+                            On Linux platforms, this is the value of the
+                            PRINTER environment variable.
+
+                            This is not supported on Windows platforms.
+
+        SHELL             - Returns the current shell.
+
+                            On Linux platforms, this is the value of the
+                            SHELL environment variable.
+
+                            This is not supported on Windows platforms.
+
+        WINDOWS BITS      - Returns "64" if the machine is a 64-bit
+                            machine and "32" if the machine is a
+                            32-bit machine.
+
+                            On Windows platforms, this is determined
+                            from the PROCESSOR_ARCHITECTURE environment
+                            variable.
+
+                            This is not supported on Linux platforms.
+
+        PROGRAM FILES     - On Windows platforms, this is the value of
+                            the PROGRAMFILES environment variable.
+
+                            This is not supported on Linux platforms.
+
+        PROGRAM FILES X86 - On Windows platforms, this is the value
+                            of the PROGRAMFILES(X86) environment
+                            variable.
+
+                            This is not supported on Linux platforms.
+
+Syntax:
+    PROBE <SYSTEM SWITCH>
+    where <SYSTEM SWITCH> is one of the names listed above.
+ 
+Examples:
+    PROBE HOME
+    PROBE USER
+    PROBE HOST
+    PROBE DEFAULT PRINTER
+    PROBE SHELL
+    PROBE PROGRAM FILES X86
+    PROBE PROGRAM FILES
+    PROBE WINDOW BITS
+
+Note:
+    The value is saved in the string PROBESTR.  You can save the
+    value to your own string as follows
+
+        PROBE USER
+        LET STRING USERNAME = ^PROBESTR
+
+Default:
+    Dataplot queries the values of these settings when Dataplot
+    is first initialized.
+ 
+Synonyms:
+    USER PROFILE is a synonym for HOME
+    USER NAME is a synonym for USER
+    HOST NAME is a synonym for HOST
+    COMPUTER NAME is a synonym for HOST
+ 
+Related Commands:
+    WORKSPACE SWITCHES     = Probe for values pertaining to the Dataplot
+                             workspace.
+    HOUSEKEEPING SWITCHES  = Probe for values pertaining to certain
+                             Dataplot housekeeping settings.
+    SYSTEM LIMITS          = Parameters defining certain Dataplot limits.
+    MACHINE CONSTANTS      = Return the values for certain machine
+                             constants.
+
+Applications:
+    Debugging
+ 
+Implementation Date:
+    2020/01
+ 
+Program:
+    PROBE USER
+    LET STRING USERNAME = ^PROBESTR
+    PROBE HOST
+    LET STRING COMPNAME = ^PROBESTR
+    PROBE HOME
+    LET STRING USERHOME = ^PROBESTR
+    .
+    PRINT "Computer Name:   ^COMPNAME"
+    PRINT "User Name:       ^USERNAME"
+    PRINT "Home Directory:  ^USERHOME"
+ 
 -----SUN-------------------------------------------------------
  
 SUN
@@ -63999,45 +66038,6 @@ Program 2:
     feedback on
 
 ---------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

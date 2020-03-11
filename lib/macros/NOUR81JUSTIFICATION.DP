@@ -1,0 +1,53 @@
+. This is datplot program    nour81justification.dp
+. Purpose: Define the justification for the right margin Mean and Median value
+. Date: September 26, 2012
+. Input
+.    jrn    (parameter) = the radionuclide id (1 to 19) (optional)
+. Output:
+.   stjmean (string)    = justifcation for the mean
+.   stjmed  (string)    = jsutification for the median
+.
+. -----start point-----
+.
+. -----Step 1: Check input arguments-----
+.
+. let string stmacro = nour81justification
+. let string stall = jrn
+. call checkinput.dp
+.
+. -----Step 2: Define the justification-----
+.
+let string stjmean = lebo
+let string stjmed = leto
+.
+if jrn exists
+   if jrn = 4;
+      let string stjmean = leto
+      let string stjmed = lebo
+   end if
+   .
+   if jrn = 11;
+      let string stjmean = leto
+      let string stjmed = lebo
+   end if
+   .
+   if jrn = 12;
+      let string stjmean = leto
+      let string stjmed = lebo
+   end if
+   .
+   if jrn = 14;
+      let string stjmean = leto
+      let string stjmed = lebo
+   end if
+   .
+   if jrn = 17;
+      let string stjmean = leto
+      let string stjmed = lebo
+   end if
+   .
+   if jrn = 19;
+      let string stjmean = leto
+      let string stjmed = lebo
+   end if
+end if

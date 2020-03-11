@@ -40,6 +40,9 @@ C
 C                    FOLLOWING ADDED 04/2018:
 C                    CORRELATION CONFIDENCE LIMIT PLOT
 C
+C                    FOLLOWING ADDED 10/2019:
+C                    RATIO OF MEANS CONFIDENCE LIMIT PLOT
+C
 C                 RATHER THAN THE LOCATION/MIN/MAX FORM OF THE
 C                 PLOT, THESE WILL GENERATE A POINT ESTIMATE,
 C                 LOWER INTERVAL, AND UPPER INTERVAL.
@@ -118,6 +121,8 @@ C     UPDATED         --JUNE      2018. SUPPORT FOR UNEQUAL SAMPLE SIZES
 C                                       FOR DIFFERENCE OF MEAN AND
 C                                       DIFFERENCE OF PROPORTION
 C     UPDATED         --JULY      2019. TWEAK SCRATCH SPACE
+C     UPDATED         --OCTOBER   2019. RATIO OF MEANS CONFIDENCE LIMIT
+C                                       PLOT
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -317,6 +322,10 @@ C     NOTE 2018/04: FOLLOWING ADDITIONAL COMMANDS ADDED:
 C
 C          CORRELATION CONFIDENCE LIMIT PLOT
 C
+C     NOTE 2019/10: FOLLOWING ADDITIONAL COMMANDS ADDED:
+C
+C          RATIO OF MEANS CONFIDENCE LIMIT PLOT
+C
       ISTEPN='1'
       IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'DPI')
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
@@ -343,6 +352,8 @@ C
       IF(ICOM.EQ.'COEF')GOTO89
       IF(ICOM.EQ.'DIFF')GOTO89
       IF(ICOM.EQ.'CORR')GOTO89
+      IF(ICOM.EQ.'RATI' .AND. IHARG(1).EQ.'OF  ' .AND.
+     1   IHARG(2).EQ.'MEAN')GOTO89
       GOTO9000
 C
    89 CONTINUE
@@ -609,6 +620,16 @@ C
         ELSEIF(IA1.EQ.'CORR' .AND. IA2.EQ.'CONF' .AND.
      1         IA3.EQ.'LIMI' .AND. IA4.EQ.'PLOT')THEN
           ICASPL='CRCL'
+          IFOUN1='YES'
+          IFOUN2='YES'
+          ILASTC=MAX(ILASTC,I+3)
+          NRESP=2
+          GOTO109
+        ELSEIF(IA1.EQ.'RATI' .AND. IA2.EQ.'OF  ' .AND.
+     1         IA3.EQ.'MEAN' .AND. IA4.EQ.'CONF' .AND.
+     1         (IA5.EQ.'LIMI' .OR. IA5.EQ.'INTE') .AND.
+     1         IA6.EQ.'PLOT')THEN
+          ICASPL='RMEA'
           IFOUN1='YES'
           IFOUN2='YES'
           ILASTC=MAX(ILASTC,I+3)
@@ -1010,8 +1031,8 @@ C
           IF(K.EQ.1)JD=0
           CALL DPI2(XTEMP5,XTEMP6,TEMPZ,XTEMP6,ICNT,ICNT,NUMV2,
      1              ICASPL,IBINME,IBI2ME,ICVACI,PSTAMV,
-     1              ITOLGC,ITOLM2,PTOLDF,
-     1              ISIZE,ICONT,IQUAME,IQUASE,MAXOBV,ISEED,
+     1              ITOLGC,ITOLM2,PTOLDF,IIPLJI,
+     1              ISIZE,ICONT,IQUAME,IQUASE,IRATME,MAXOBV,ISEED,
      1              ALPHA,GAMMA,P1,P2,P100,NNEW,JD,
      1              XIDTEM,XIDTE2,TEMP,XTEMP4,TEMP1,TEMP2,
      1              Y,X,D,NPLOTP,NPLOTV,IBUGG2,ISUBRO,IERROR)
@@ -1068,8 +1089,8 @@ C
             NPLOTP=0
             CALL DPI2(Y1,X1,Y2,X2,NLOCAL,NLOCA2,NUMVAR,
      1                ICASPL,IBINME,IBI2ME,ICVACI,PSTAMV,
-     1                ITOLGC,ITOLM2,PTOLDF,
-     1                ISIZE,ICONT,IQUAME,IQUASE,MAXOBV,ISEED,
+     1                ITOLGC,ITOLM2,PTOLDF,IIPLJI,
+     1                ISIZE,ICONT,IQUAME,IQUASE,IRATME,MAXOBV,ISEED,
      1                ALPHA,GAMMA,P1,P2,P100,NNEW,JD,
      1                XIDTEM,XIDTE2,TEMP,TEMPZ,TEMP1,TEMP2,
      1                Y,X,D,NPLOTP,NPLOTV,IBUGG3,ISUBRO,IERROR)
@@ -1189,8 +1210,8 @@ C
         NPLOTP=0
         CALL DPI2(Y1,X1,Y2,X1,NLOCAL,NLOCAL,NUMVAR,
      1            ICASPL,IBINME,IBI2ME,ICVACI,PSTAMV,
-     1            ITOLGC,ITOLM2,PTOLDF,
-     1            ISIZE,ICONT,IQUAME,IQUASE,MAXOBV,ISEED,
+     1            ITOLGC,ITOLM2,PTOLDF,IIPLJI,
+     1            ISIZE,ICONT,IQUAME,IQUASE,IRATME,MAXOBV,ISEED,
      1            ALPHA,GAMMA,P1,P2,P100,NNEW,JD,
      1            XIDTEM,XIDTE2,TEMP,TEMPZ,TEMP1,TEMP2,
      1            Y,X,D,NPLOTP,NPLOTV,IBUGG3,ISUBRO,IERROR)
@@ -1275,8 +1296,8 @@ C
         JD=0
         CALL DPI2(Y1,X1,Y2,X1,NLOCAL,NLOCAL,NUMVAR,
      1            ICASPL,IBINME,IBI2ME,ICVACI,PSTAMV,
-     1            ITOLGC,ITOLM2,PTOLDF,
-     1            ISIZE,ICONT,IQUAME,IQUASE,MAXOBV,ISEED,
+     1            ITOLGC,ITOLM2,PTOLDF,IIPLJI,
+     1            ISIZE,ICONT,IQUAME,IQUASE,IRATME,MAXOBV,ISEED,
      1            ALPHA,GAMMA,P1,P2,P100,NNEW,JD,
      1            XIDTEM,XIDTE2,TEMP,TEMPZ,TEMP1,TEMP2,
      1            Y,X,D,NPLOTP,NPLOTV,IBUGG3,ISUBRO,IERROR)
@@ -1317,8 +1338,8 @@ C
       END
       SUBROUTINE DPI2(Y,X,YZ,XZ,N,NZ,NUMV2,
      1                ICASPL,IBINME,IBI2ME,ICVACI,PSTAMV,
-     1                ITOLGC,ITOLM2,PTOLDF,
-     1                ISIZE,ICONT,IQUAME,IQUASE,MAXNXT,ISEED,
+     1                ITOLGC,ITOLM2,PTOLDF,IIPLJI,
+     1                ISIZE,ICONT,IQUAME,IQUASE,IRATME,MAXNXT,ISEED,
      1                ALPHA,GAMMA,P1,P2,P100,NNEW,JD,
      1                XIDTEM,XIDTE2,TEMP,TEMPZ,XTEMP1,XTEMP2,
      1                Y2,X2,D2,N2,NPLOTV,IBUGG3,ISUBRO,IERROR)
@@ -1355,6 +1376,8 @@ C     UPDATED         --APRIL     2018. CORRELATION
 C     UPDATED         --JUNE      2018. SUPPORT UNEQUAL SAMPLE SIZES FOR:
 C                                          DIFFERENCE OF MEAN
 C                                          DIFFERENCE OF PROPORTIONS
+C     UPDATED         --OCTOBER   2019. RATIO OF MEANS
+C     UPDATED         --JANUARY   2020. SUPPORT JITTER
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -1364,9 +1387,11 @@ C
       CHARACTER*4 ICVACI
       CHARACTER*4 ICONT
       CHARACTER*4 IQUAME
+      CHARACTER*4 IRATME
       CHARACTER*4 IQUASE
       CHARACTER*4 ITOLGC
       CHARACTER*4 ITOLM2
+      CHARACTER*4 IIPLJI
       CHARACTER*4 IBUGG3
       CHARACTER*4 ISUBRO
       CHARACTER*4 IERROR
@@ -1430,7 +1455,7 @@ C              SIZES.
 C
       IFLAGD=0
       IF(ICASPL.EQ.'DPRO' .OR. ICASPL.EQ.'DMEA' .OR.
-     1   ICASPL.EQ.'CRCL')THEN
+     1   ICASPL.EQ.'CRCL' .OR. ICASPL.EQ.'RMEA')THEN
         NRESP=2
         IF(ICASPL.EQ.'DPRO' .OR. ICASPL.EQ.'DMEA')THEN
           IF(NUMV2.EQ.4)IFLAGD=1
@@ -1663,7 +1688,7 @@ C
 C             NOTE: CORRELATION DATA VALUES MUST BE PAIRED, SO ELIMINATE
 C                   ANY ROWS WHERE EITHER DATA VALUE IS MISSING
 C
-              IF(ICASPL.EQ.'CORR')THEN
+              IF(ICASPL.EQ.'CORR' .OR. ICASPL.EQ.'RMEA')THEN
                 IF(Y(I).NE.PSTAMV .AND. YZ(I).NE.PSTAMV)THEN
                   K=K+1
                   TEMP(K)=Y(I)
@@ -1920,6 +1945,28 @@ C
           CALL CORR(TEMP,TEMPZ,NI,IWRITE,Y50,IBUGG3,IERROR)
           CALL DPCRC3(Y50,NI,ALPHA,U,Z,YMIN,YMAX,
      1                IBUGG3,ISUBRO,IERROR)
+        ELSEIF(ICASPL.EQ.'RMEA')THEN
+          ALPHAT(1)=ALPHA
+          NALPHA=1
+          IF(IRATME.EQ.'FIEL')THEN
+            CALL DPMRC3(TEMP,TEMPZ,NI,ALPHAT,NALPHA,
+     1                  RATIO,ALOWLV,AUPPLV,
+     1                  YBAR,XBAR,YVAR,XVAR,
+     1                  ISUBRO,IBUGG3,IERROR)
+          ELSEIF(IRATME.EQ.'LSAM')THEN
+            CALL DPMRC4(TEMP,TEMPZ,NI,ALPHAT,NALPHA,
+     1                  RATIO,ALOWLV,AUPPLV,
+     1                  YBAR,XBAR,YVAR,XVAR,XYCOV,
+     1                  ISUBRO,IBUGG3,IERROR)
+          ELSEIF(IRATME.EQ.'LRAT')THEN
+            CALL DPMRC5(TEMP,TEMPZ,NI,ALPHAT,NALPHA,
+     1                  RATIO,ALOWLV,AUPPLV,
+     1                  YBAR,XBAR,YVAR,XVAR,XYCOV,
+     1                  ISUBRO,IBUGG3,IERROR)
+          ENDIF
+          Y50=RATIO
+          YMAX=AUPPLV(1)
+          YMIN=ALOWLV(1)
         ELSEIF(ICASPL.EQ.'CQCL')THEN
           ALPHAT(1)=ALPHA
           NALPHA=1
@@ -3768,13 +3815,15 @@ C
 C
       IF(NUMARG.LE.1)THEN
         IF(JPASS.GE.1)THEN
-          WRITE(ICOUT,999)
-          CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,60)ICASIF
-   60     FORMAT('       COMBINED IF STATUS   = ',A4)
-          CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,999)
-          CALL DPWRST('XXX','BUG ')
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,60)ICASIF
+   60       FORMAT('       COMBINED IF STATUS   = ',A4)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
         ELSE
            ICASIF='FALS'
            IF(IFEEDB.EQ.'ON')THEN
@@ -12455,16 +12504,17 @@ C
             HOLD2=XIDTE2(IMAT)
             ICNT2=ICNT2+1
             AMEAN=YMEAN(ICNT2)
-            DO2030IROW=1,N
+            DO2035IROW=1,N
               IF(ROUND(IROW).EQ.HOLD .AND. AMATID(IROW).EQ.HOLD2 .AND.
      1           ALABID(IROW).EQ.HOLD3)THEN
-              NPLOTP=NPLOTP+1
-              Y(NPLOTP)=Z(IROW)
-              X(NPLOTP)=AMEAN
-              IINDX=ICNT+INT(AMATID(IROW)+0.1)
-              D(NPLOTP)=REAL(IINDX)
-              NTEMP=NTEMP+1
-            ENDIF
+                NPLOTP=NPLOTP+1
+                Y(NPLOTP)=Z(IROW)
+                X(NPLOTP)=AMEAN
+                IINDX=ICNT+INT(AMATID(IROW)+0.1)
+                D(NPLOTP)=REAL(IINDX)
+                NTEMP=NTEMP+1
+              ENDIF
+ 2035       CONTINUE
  2030     CONTINUE
  2020   CONTINUE
 C
@@ -26144,6 +26194,1266 @@ C
         WRITE(ICOUT,9025)STATVA,STATCD,PVAL
  9025   FORMAT('STATVA,STATCD,PVAL = ',3G15.7)
         CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPKUO2(Y,X,N,MAXNXT,IKUOTA,
+     1                  TEMP1,TEMP2,PID,IVARID,IVARI2,NREPL,NLABID,
+     1                  ICAPSW,ICAPTY,IFORSW,
+     1                  STATVA,STATCD,PVAL,
+     1                  CUT80,CUT90,CUT95,
+     1                  CUT975,CUT99,CUT995,
+     1                  ISUBRO,IBUGA3,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES AN OUTLIER TEST BASED ON THE
+C              SAMPLE KURTOSIS.  IF THE SAMPLE KURTOSIS IS ABOVE THE
+C              CRITICAL VALUE, ASSUME THE OBSERVATION FURTHERST FROM
+C              THE MEAN IS AN OUTLIER.  THIS TEST CAN BE REPEATED BY
+C              REMOVING THE OUTLIER AND REPEATING THE TEST UNTIL THE
+C              TEST INDICATES NO OUTLIER.  THIS TEST ASSUMES NORMALITY.
+C              THIS ROUTINE ONLY TESTS FOR A SINGLE OUTLIER.  FOR
+C              MULTIPLE OUTLIERS, THE USER SHOULD DELETE THE CURRENT
+C              OUTLIER AND REPEAT THE TEST.
+C
+C              THIS TEST WAS ADDED TO SUPPORT THE ASTM E-178 STANDARD
+C              (2016 EDITION).
+C
+C              CRITICAL VALUES CAN BE DETERMINED IN THE FOLLOWING
+C              WAYS:
+C
+C                1. TABLES FROM ASTM E178 - 16a
+C                2. SIMULATION
+C
+C     REFERENCE--E178 - 16A (2016), "Standard Practice for Dealing with
+C                Outlying Observations", ASTM International, 100 Barr
+C                Harbor Drive, PO BOX C700, West Conshohocken, PA
+C                19428-2959, USA. 
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2019/10
+C     ORIGINAL VERSION--OCTOBER   2019.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+      CHARACTER*4 IVARID(*)
+      CHARACTER*4 IVARI2(*)
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 ICAPTY
+      CHARACTER*4 IFORSW
+      CHARACTER*4 IKUOTA
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IKUOT2
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+C
+      REAL ALPHA(6)
+      REAL CV(6)
+C
+      CHARACTER*40 IRTFFF
+      CHARACTER*40 IRTFFP
+      CHARACTER*4 IRTFMD
+      COMMON/COMRTF/IRTFMD
+C
+      PARAMETER(NUMCLI=5)
+      PARAMETER(MAXLIN=2)
+      PARAMETER (MAXROW=30)
+      CHARACTER*60 ITITLE
+      CHARACTER*60 ITITLZ
+      CHARACTER*1  ITITL9
+      CHARACTER*60 ITEXT(MAXROW)
+      CHARACTER*4  ALIGN(NUMCLI)
+      CHARACTER*4  VALIGN(NUMCLI)
+      REAL         AVALUE(MAXROW)
+      INTEGER      NCTEXT(MAXROW)
+      INTEGER      IDIGIT(MAXROW)
+      INTEGER      NTOT(MAXROW)
+      CHARACTER*60 ITITL2(MAXLIN,NUMCLI)
+      CHARACTER*15 IVALUE(MAXROW,NUMCLI)
+      CHARACTER*4  ITYPCO(NUMCLI)
+      INTEGER      NCTIT2(MAXLIN,NUMCLI)
+      INTEGER      NCVALU(MAXROW,NUMCLI)
+      INTEGER      IWHTML(NUMCLI)
+      INTEGER      IWRTF(NUMCLI)
+      REAL         AMAT(MAXROW,NUMCLI)
+      LOGICAL IFRST
+      LOGICAL ILAST
+      LOGICAL IFLAG1
+      LOGICAL IFLAG2
+      LOGICAL IFLAG3
+      LOGICAL IFLAGA
+      LOGICAL IFLAGB
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION Y(*)
+      DIMENSION X(*)
+      DIMENSION TEMP1(*)
+      DIMENSION TEMP2(*)
+      DIMENSION PID(*)
+C
+C---------------------------------------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='DPKU'
+      ISUBN2='O2  '
+      IERROR='NO'
+      STATVA=CPUMIN
+      STATCD=CPUMIN
+      PVAL=CPUMIN
+      CUT80=CPUMIN
+      CUT90=CPUMIN
+      CUT95=CPUMIN
+      CUT975=CPUMIN
+      CUT99=CPUMIN
+      CUT995=CPUMIN
+C
+      IKUOT2=IKUOTA
+      IF(IKUOTA.EQ.'ASTM' .AND. N.GT.50)IKUOT2='SIMU'
+      IF(IKUOT2.EQ.'ASTM')THEN
+        NALPHA=3
+        ALPHA(1)=90.
+        ALPHA(2)=95.
+        ALPHA(3)=99.
+      ELSE
+        NALPHA=6
+        ALPHA(1)=80.
+        ALPHA(2)=90.
+        ALPHA(3)=95.
+        ALPHA(4)=97.5
+        ALPHA(5)=99.
+        ALPHA(6)=99.5
+      ENDIF
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'KUO2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,51)
+   51   FORMAT('**** AT THE BEGINNING OF DPKUO2--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,52)ISUBRO,IBUGA3,IKUOTA,N,MAXNXT
+   52   FORMAT('ISUBRO,IBUGA3,IKUOTA,N,MAXNXT = ',3(A4,2X),2I8)
+        CALL DPWRST('XXX','WRIT')
+        DO56I=1,N
+          WRITE(ICOUT,57)I,Y(I),X(I)
+   57     FORMAT('I,Y(I),X(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','WRIT')
+   56   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 11--                             **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      ISTEPN='11'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'KUO2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(N.LT.4)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,1111)
+ 1111   FORMAT('***** ERROR IN KURTOSIS OUTLIER TEST--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,1113)
+ 1113   FORMAT('      THE NUMBER OF OBSERVATIONS IS LESS THAN 4.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,1114)N
+ 1114   FORMAT('SAMPLE SIZE = ',I8)
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+      HOLD=Y(1)
+      DO1135I=2,N
+        IF(Y(I).NE.HOLD)GOTO1139
+ 1135 CONTINUE
+ 1130 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','WRIT')
+      WRITE(ICOUT,1111)
+      CALL DPWRST('XXX','WRIT')
+      WRITE(ICOUT,1131)HOLD
+ 1131 FORMAT('      THE RESPONSE VARIABLE HAS ALL ELEMENTS = ',G15.7)
+      CALL DPWRST('XXX','WRIT')
+      IERROR='YES'
+      GOTO9000
+ 1139 CONTINUE
+C
+C               ***********************************
+C               **  STEP 21--                    **
+C               **  CARRY OUT CALCULATIONS       **
+C               **  FOR  KURTOSIS OUTLIER  TEST  **
+C               ***********************************
+C
+ 2100 CONTINUE
+C
+      ISTEPN='41'
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'KUO2')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IWRITE='OFF'
+      CALL DPKUO3(Y,N,TEMP1,TEMP2,IWRITE,PSTAMV,
+     1            MAXNXT,IKUOT2,ISEED,
+     1            ALPHA,CV,NALPHA,
+     1            STATVA,YMEAN,YSD,YMIN,YMAX,YKURT,
+     1            PVAL,STATCD,YIND,
+     1            ISUBRO,IBUGA3,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+      IF(IKUOT2.EQ.'ASTM')THEN
+        CUT90=CV(1)
+        CUT95=CV(2)
+        CUT99=CV(3)
+        NCDF=3
+      ELSE
+        CUT80=CV(1)
+        CUT90=CV(2)
+        CUT95=CV(3)
+        CUT975=CV(4)
+        CUT99=CV(5)
+        CUT995=CV(6)
+        NCDF=6
+      ENDIF
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'KUO2')THEN
+        WRITE(ICOUT,2111)YMEAN,YSD,YKURT
+ 2111   FORMAT('YMEAN,YSD,YKURT=',3G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2113)STATVA,PVAL,CDF,YIND
+ 2113   FORMAT('STATVA,PVAL,CDF,YIND =',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C
+C               *********************************
+C               **   STEP 42--                 **
+C               **   WRITE OUT EVERYTHING      **
+C               **   FOR KURTOSIS OUTLIER TEST **
+C               *********************************
+C
+      ISTEPN='42'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'KUO2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(IPRINT.EQ.'OFF')GOTO9000
+C
+      NUMDIG=7
+      IF(IFORSW.EQ.'1')NUMDIG=1
+      IF(IFORSW.EQ.'2')NUMDIG=2
+      IF(IFORSW.EQ.'3')NUMDIG=3
+      IF(IFORSW.EQ.'4')NUMDIG=4
+      IF(IFORSW.EQ.'5')NUMDIG=5
+      IF(IFORSW.EQ.'6')NUMDIG=6
+      IF(IFORSW.EQ.'7')NUMDIG=7
+      IF(IFORSW.EQ.'8')NUMDIG=8
+      IF(IFORSW.EQ.'9')NUMDIG=9
+      IF(IFORSW.EQ.'0')NUMDIG=0
+      IF(IFORSW.EQ.'E')NUMDIG=-2
+      IF(IFORSW.EQ.'-2')NUMDIG=-2
+      IF(IFORSW.EQ.'-3')NUMDIG=-3
+      IF(IFORSW.EQ.'-4')NUMDIG=-4
+      IF(IFORSW.EQ.'-5')NUMDIG=-5
+      IF(IFORSW.EQ.'-6')NUMDIG=-6
+      IF(IFORSW.EQ.'-7')NUMDIG=-7
+      IF(IFORSW.EQ.'-8')NUMDIG=-8
+      IF(IFORSW.EQ.'-9')NUMDIG=-9
+C
+      ITITLE(1:26)='Kurtosis Test for Outliers'
+      NCTITL=26
+      ITITLZ='(Assumption: Normality)'
+      NCTITZ=23
+C
+      ICNT=1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=0
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Response Variable: '
+      WRITE(ITEXT(ICNT)(20:23),'(A4)')IVARID(1)(1:4)
+      WRITE(ITEXT(ICNT)(24:27),'(A4)')IVARI2(1)(1:4)
+      NCTEXT(ICNT)=27
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+C
+      IF(NREPL.GT.0)THEN
+        NRESP=1
+        IADD=NLABID+NRESP
+        DO4101I=1,NREPL
+          ICNT=ICNT+1
+          ITEMP=I+IADD
+          ITEXT(ICNT)='Factor Variable  : '
+          WRITE(ITEXT(ICNT)(17:17),'(I1)')I
+          WRITE(ITEXT(ICNT)(20:23),'(A4)')IVARID(ITEMP)(1:4)
+          WRITE(ITEXT(ICNT)(24:27),'(A4)')IVARI2(ITEMP)(1:4)
+          NCTEXT(ICNT)=27
+          AVALUE(ICNT)=PID(ITEMP)
+          IDIGIT(ICNT)=NUMDIG
+ 4101   CONTINUE
+      ENDIF
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)='H0: The most extreme point is not'
+      NCTEXT(ICNT)=33
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    an outlier'
+      NCTEXT(ICNT)=14
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      AVALUE(ICNT)=0.0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Ha: The most extreme point is not'
+      NCTEXT(ICNT)=33
+      IDIGIT(ICNT)=-1
+      AVALUE(ICNT)=0.0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    an outlier'
+      NCTEXT(ICNT)=14
+      IDIGIT(ICNT)=-1
+      AVALUE(ICNT)=0.0
+C
+      IINDX=INT(YIND+0.1)
+      YEXT=Y(IINDX)
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Potential outlier value tested:'
+      NCTEXT(ICNT)=31
+      AVALUE(ICNT)=YEXT
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='ID for potential outlier:'
+      NCTEXT(ICNT)=25
+      AVALUE(ICNT)=X(INT(YIND))
+      IDIGIT(ICNT)=0
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Summary Statistics:'
+      NCTEXT(ICNT)=19
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Number of Observations:'
+      NCTEXT(ICNT)=23
+      AVALUE(ICNT)=REAL(N)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Minimum:'
+      NCTEXT(ICNT)=15
+      AVALUE(ICNT)=YMIN
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Maximum:'
+      NCTEXT(ICNT)=15
+      AVALUE(ICNT)=YMAX
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Mean:'
+      NCTEXT(ICNT)=12
+      AVALUE(ICNT)=YMEAN
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample SD:'
+      NCTEXT(ICNT)=10
+      AVALUE(ICNT)=YSD
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Kurtosis:'
+      NCTEXT(ICNT)=16
+      AVALUE(ICNT)=YKURT
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Kurtosis Outlier Test Statistic Value:'
+      NCTEXT(ICNT)=38
+      AVALUE(ICNT)=STATVA
+      IDIGIT(ICNT)=NUMDIG
+C
+CCCCC NOTE: CDF AND P-VALUE ONLY PRINTED IF CRITICAL
+CCCCC       VALUES DETERMINED FROM SIMUMLATION
+C
+      IF(IKUOT2.EQ.'SIMU')THEN
+        ICNT=ICNT+1
+        ITEXT(ICNT)='CDF Value:'
+        NCTEXT(ICNT)=10
+        AVALUE(ICNT)=STATCD
+        IDIGIT(ICNT)=NUMDIG
+        ICNT=ICNT+1
+        ITEXT(ICNT)='P-Value:'
+        NCTEXT(ICNT)=7
+        AVALUE(ICNT)=PVAL
+        IDIGIT(ICNT)=NUMDIG
+        ICNT=ICNT+1
+        ITEXT(ICNT)=' '
+        NCTEXT(ICNT)=1
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+      ENDIF
+C
+      NUMROW=ICNT
+      DO4210I=1,NUMROW
+        NTOT(I)=15
+ 4210 CONTINUE
+C
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+C
+      ISTEPN='42A'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'KUO2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      CALL DPDTA1(ITITLE,NCTITL,ITITLZ,NCTITZ,ITEXT,NCTEXT,
+     1            AVALUE,IDIGIT,
+     1            NTOT,NUMROW,
+     1            ICAPSW,ICAPTY,ILAST,IFRST,
+     1            ISUBRO,IBUGA3,IERROR)
+C
+      ISTEPN='42B'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'KUO2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      ISTEPN='42D'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'KUO2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      ITITL9=' '
+      NCTIT9=0
+      ITITLE='Conclusions (Upper 1-Tailed Test)'
+      NCTITL=33
+      NUMLIN=1
+      NUMROW=NCDF
+      NUMCOL=5
+      ITITL2(1,1)='Alpha'
+      ITITL2(1,2)='CDF'
+      ITITL2(1,3)='Statistic'
+      ITITL2(1,4)='Critical Value'
+      ITITL2(1,5)='Conclusion'
+      NCTIT2(1,1)=5
+      NCTIT2(1,2)=3
+      NCTIT2(1,3)=9
+      NCTIT2(1,4)=14
+      NCTIT2(1,5)=10
+C
+      NMAX=0
+      DO4321I=1,NUMCOL
+        VALIGN(I)='b'
+        ALIGN(I)='r'
+        NTOT(I)=15
+        IF(I.EQ.1 .OR. I.EQ.2)NTOT(I)=7
+        IF(I.EQ.4)NTOT(I)=17
+        NMAX=NMAX+NTOT(I)
+        IDIGIT(I)=3
+        ITYPCO(I)='ALPH'
+ 4321 CONTINUE
+      ITYPCO(3)='NUME'
+      ITYPCO(4)='NUME'
+      IDIGIT(1)=0
+      IDIGIT(2)=0
+      DO4323I=1,NUMROW
+        DO4325J=1,NUMCOL
+          NCVALU(I,J)=0
+          IVALUE(I,J)=' '
+          NCVALU(I,J)=0
+          AMAT(I,J)=0.0
+ 4325   CONTINUE
+ 4323 CONTINUE
+      IF(IKUOT2.EQ.'ASTM')THEN
+        IVALUE(1,1)='10%'
+        IVALUE(2,1)='5%'
+        IVALUE(3,1)='1%'
+        IVALUE(1,2)='90%'
+        IVALUE(2,2)='95%'
+        IVALUE(3,2)='99%'
+        NCVALU(1,1)=3
+        NCVALU(2,1)=2
+        NCVALU(3,1)=2
+        NCVALU(1,2)=3
+        NCVALU(2,2)=3
+        NCVALU(3,2)=3
+      ELSE
+        IVALUE(1,1)='20%'
+        IVALUE(2,1)='10%'
+        IVALUE(3,1)='5%'
+        IVALUE(4,1)='2.5%'
+        IVALUE(5,1)='1%'
+        IVALUE(6,1)='0.5%'
+        IVALUE(1,2)='80%'
+        IVALUE(2,2)='90%'
+        IVALUE(3,2)='95%'
+        IVALUE(4,2)='97.5%'
+        IVALUE(5,2)='99%'
+        IVALUE(6,2)='99.5%'
+        NCVALU(1,1)=3
+        NCVALU(2,1)=3
+        NCVALU(3,1)=2
+        NCVALU(4,1)=4
+        NCVALU(5,1)=2
+        NCVALU(6,1)=4
+        NCVALU(1,2)=3
+        NCVALU(2,2)=3
+        NCVALU(3,2)=3
+        NCVALU(4,2)=5
+        NCVALU(5,2)=3
+        NCVALU(6,2)=5
+      ENDIF
+      IVALUE(1,5)='Accept H0'
+      IVALUE(2,5)='Accept H0'
+      IVALUE(3,5)='Accept H0'
+      IVALUE(4,5)='Accept H0'
+      IVALUE(5,5)='Accept H0'
+      IVALUE(6,5)='Accept H0'
+      NCVALU(1,5)=9
+      NCVALU(2,5)=9
+      NCVALU(3,5)=9
+      NCVALU(4,5)=9
+      NCVALU(5,5)=9
+      NCVALU(6,5)=9
+      DO4410KK=1,NCDF
+        AMAT(KK,3)=STATVA
+        IF(STATVA.GT.CV(KK))IVALUE(KK,5)='Reject H0'
+CCCC    AMAT(KK,4)=RND(CV(KK),IDIGIT(3))
+        AMAT(KK,4)=CV(KK)
+ 4410 CONTINUE
+C
+      IWHTML(1)=150
+      IWHTML(2)=150
+      IWHTML(3)=150
+      IWHTML(4)=150
+      IWHTML(5)=150
+      IWRTF(1)=1500
+      IWRTF(2)=IWRTF(1)+1500
+      IWRTF(3)=IWRTF(2)+2000
+      IWRTF(4)=IWRTF(3)+2000
+      IWRTF(5)=IWRTF(4)+2000
+      IFRST=.FALSE.
+      ILAST=.TRUE.
+C
+      ISTEPN='42E'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'KUO2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      CALL DPDTA4(ITITL9,NCTIT9,
+     1            ITITLE,NCTITL,ITITL2,NCTIT2,
+     1            MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1            IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,NUMROW,
+     1            IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1            ICAPSW,ICAPTY,IFRST,ILAST,
+     1            ISUBRO,IBUGA3,IERROR)
+C
+      IF(IKUOT2.EQ.'SIMU')THEN
+        ITITLE='Critical Values Based on 50,000 Simulations'
+        NCTEMP=43
+      ELSEIF(IKUOT2.EQ.'ASTM')THEN
+        ITITLE='Critical Values Based on ASTM E-178 Tables'
+        NCTEMP=42
+      ENDIF
+      IRTFMD='OFF'
+      IFNTSZ=-1
+      IFLAGA=.TRUE.
+      IFLAGB=.TRUE.
+      ISIZE=-1
+      NTOTAL=NCTEMP
+      NBLNK1=2
+      NBLNK2=1
+      ITYPE=2
+      AVAL=CPUMIN
+      CALL DPDTXT(ITITLE,NCTEMP,AVAL,NUMDIG,
+     1            NTOTAL,NBLNK1,NBLNK2,IFLAGA,IFLAGB,ISIZE,
+     1            ICAPSW,ICAPTY,ITYPE,
+     1            ISUBRO,IBUGA3,IERROR)
+      ISIZE=-99
+      IFNTSZ=0
+C
+      ISTEPN='42F'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'KUO2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'KUO2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPKUO2--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9013)IERROR,STATVA,STATCD,PVAL
+ 9013   FORMAT('IERROR,STATVA,STATCD,PVAL = ',A4,2X,3G15.7)
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPKUO3(X,N,TEMP1,TEMP2,IWRITE,PSTAMV,
+     1                  MAXNXT,IKUOTA,ISEED,
+     1                  ALPHA,CV,NALPHA,
+     1                  STATVA,XMEAN,XSD,XMIN,XMAX,XKURT,
+     1                  PVAL,STATCD,XIND,
+     1                  ISUBRO,IBUGA3,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES AN OUTLIER TEST BASED ON THE
+C              SAMPLE KURTOSIS.  IF THE SAMPLE KURTOSIS IS ABOVE THE
+C              CRITICAL VALUE, ASSUME THE OBSERVATION FURTHERST FROM
+C              THE MEAN IS AN OUTLIER.  THIS TEST CAN BE REPEATED BY
+C              REMOVING THE OUTLIER AND REPEATING THE TEST UNTIL THE
+C              TEST INDICATES NO OUTLIER.  THIS TEST ASSUMES NORMALITY.
+C              THIS ROUTINE ONLY TESTS FOR A SINGLE OUTLIER.  FOR
+C              MULTIPLE OUTLIERS, THE USER SHOULD DELETE THE CURRENT
+C              OUTLIER AND REPEAT THE TEST.
+C
+C              THIS TEST WAS ADDED TO SUPPORT THE ASTM E-178 STANDARD
+C              (2016 EDITION).
+C
+C              CRITICAL VALUES CAN BE DETERMINED IN THE FOLLOWING
+C              WAYS:
+C
+C                1. TABLES FROM ASTM E178 - 16a
+C                2. SIMULATION
+C
+C     REFERENCE--E178 - 16A (2016), "Standard Practice for Dealing with
+C                Outlying Observations", ASTM International, 100 Barr
+C                Harbor Drive, PO BOX C700, West Conshohocken, PA
+C                19428-2959, USA. 
+C     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+C                                (UNSORTED OR SORTED) OBSERVATIONS.
+C                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR X.
+C     OUTPUT ARGUMENTS--STATVA = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED DAVID STATISTIC.
+C                     --STATCD = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED CDF OF THE TEST STATISTIC.
+C                     --PVAL   = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED P-VALUE OF THE TEST STATISTIC.
+C                     --XIND   = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED INDEX OF THE POTENTIAL
+C                                OUTLIER.
+C     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE STATISTIC.
+C     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+C                   OF N FOR THIS SUBROUTINE.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, MEAN, SD.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2019.10
+C     ORIGINAL VERSION--OCTOBER   2019.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IKUOTA
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 IKUOT2
+      CHARACTER*4 IOP
+      CHARACTER*4 IDIR
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION X(*)
+      DIMENSION TEMP1(*)
+      DIMENSION TEMP2(*)
+      DIMENSION ALPHA(*)
+      DIMENSION CV(*)
+C
+      REAL LININ3
+      EXTERNAL LININ3
+C
+      DOUBLE PRECISION DN
+      DOUBLE PRECISION DCORR
+      DOUBLE PRECISION DFACT
+      DOUBLE PRECISION DSUM1
+      DOUBLE PRECISION DENOM
+C
+C---------------------------------------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='DPKU'
+      ISUBN2='O3  '
+      IERROR='NO'
+      IKUOT2=IKUOTA
+      IF(IKUOTA.EQ.'ASTM')THEN
+        IF(N.GT.50)IKUOT2='SIMU'
+        IF(NALPHA.EQ.1)THEN
+          ALPT=ALPHA(1)
+          IF(ALPT.GT.1.0 .AND. ALPT.LT.100.0)ALPT=ALPT/100.0
+          IF(ALPT.LT.0.5)ALPT=1.0 - ALPT
+          IF(ALPT.NE.0.90 .AND. ALPT.NE.0.95 .AND.
+     1       ALPT.NE.0.99)IKUOT2='SIMU'
+        ENDIF
+      ENDIF
+C
+      STATVA=CPUMIN
+      XSD=CPUMIN
+      XMEAN=CPUMIN
+      XMIN=CPUMIN
+      XMAX=CPUMIN
+      XIND=CPUMIN
+      XKURT=CPUMIN
+      STATCD=CPUMIN
+      PVAL=CPUMIN
+      XIND=0.0
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'KUO3')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPKUO3--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,IKUOTA,IKUOT2,ISEED,N
+   52   FORMAT('IBUGA3,ISUBRO,IKUOTA,IKUOT2,ISEED,N = ',4(A4,2X),2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)NALPHA,ALPHA(1)
+   54   FORMAT('NALPHA,ALPHA(1) = ',I5,F10.5)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,X(I)
+   56     FORMAT('I,X(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      AN=N
+C
+      IF(N.LT.4)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN KURTOSIS OUTLIER TEST STATISTIC--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)
+  112   FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE RESPONSE ',
+     1         'VARIABLE MUST BE AT LEAST 4.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)N
+  117   FORMAT('      THE NUMBER OF OBSERVATIONS = ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+C               ******************************************
+C               **  STEP 2--                            **
+C               **  COMPUTE THE SKEW OUTLIER STATISTIC. **
+C               ******************************************
+C
+      IWRITE='OFF'
+      CALL SORT(X,N,TEMP1)
+      XMIN=TEMP1(1)
+      XMAX=TEMP1(N)
+      CALL MEAN(X,N,IWRITE,XMEAN,IBUGA3,IERROR)
+      CALL SD(X,N,IWRITE,XSD,IBUGA3,IERROR)
+C
+C     USE DEFINITION OF KURTOSIS GIVEN IN ASTM E-178
+C
+C         N*(N+1)*SUM[(X(i)-XBAR)**2]/((N-1)*(N-2)*(N-3)*S**4) -
+C         3*(N-1)**2/((N-2)*(N-3))
+C
+      DN=DBLE(N)
+      DCORR=3.0D0*(DN - 1.0D0)**2/((DN - 2.0D0)*(DN - 3.0D0))
+      DFACT=DN*(DN + 1.0D0)/((DN - 1.0D0)*(DN - 2.0D0)*(DN - 3.D0))
+C
+      DENOM=DBLE(XSD)**4
+      DSUM1=0.0D0
+      DO210II=1,N
+        DSUM1=DSUM1 + (DBLE(X(II)) - DBLE(XMEAN))**4
+  210 CONTINUE
+      XKURT=REAL((DFACT*DSUM1/DENOM) - DCORR)
+      STATVA=XKURT
+C
+      CALL MAXIND(X,N,IWRITE,PSTAMV,XINDMX,ISUBRO,IBUGA3,IERROR)
+      CALL MININD(X,N,IWRITE,PSTAMV,XINDMN,ISUBRO,IBUGA3,IERROR)
+      D1=XMEAN - XMIN
+      D2=XMAX - XMEAN
+      IF(D1.GT.D2)THEN
+        XIND=XINDMN
+      ELSE
+        XIND=XINDMX
+      ENDIF
+C
+C               *****************************************
+C               **  STEP 3--                           **
+C               **  COMPUTE THE CRITICAL VALUES        **
+C               *****************************************
+C
+      IF(IKUOT2.EQ.'SIMU')THEN
+        IOP='OPEN'
+        IFLAG1=0
+        IFLAG2=1
+        IFLAG3=0
+        IFLAG4=0
+        IFLAG5=0
+        CALL DPAUFI(IOP,IFLAG1,IFLAG2,IFLAG3,IFLAG4,IFLAG5,
+     1              IOUNI1,IOUNI2,IOUNI3,IOUNI4,IOUNI5,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO9000
+C
+        NSIM=50000
+        DO3200II=1,NSIM
+          CALL NORRAN(N,ISEED,TEMP2)
+          CALL MEAN(TEMP2,N,IWRITE,XMEAN2,IBUGA3,IERROR)
+          CALL SD(TEMP2,N,IWRITE,XSD2,IBUGA3,IERROR)
+          DENOM=DBLE(XSD2)**4
+          DSUM1=0.0D0
+          DO3201JJ=1,N
+            DSUM1=DSUM1 + (DBLE(TEMP2(JJ)) - DBLE(XMEAN2))**4
+ 3201     CONTINUE
+          TEMP1(II)=REAL((DFACT*DSUM1/DENOM) - DCORR)
+          WRITE(IOUNI2,'(E15.7)')TEMP1(II)
+ 3200   CONTINUE
+C
+        IOP='CLOS'
+        CALL DPAUFI(IOP,IFLAG1,IFLAG2,IFLAG3,IFLAG4,IFLAG5,
+     1              IOUNI1,IOUNI2,IOUNI3,IOUNI4,IOUNI5,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO9000
+C
+        CALL SORT(TEMP1,NSIM,TEMP1)
+C
+        DO3210II=1,NALPHA
+          ALPT=ALPHA(II)
+          IF(ALPT.GT.1.0 .AND. ALPT.LT.100.0)ALPT=ALPT/100.0
+          IF(ALPT.LE.0.0 .OR. ALPT.GT.1.0)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,111)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,3111)ALPHA(II)
+ 3111       FORMAT('      INVALID VALUE OF ALPHA (',G15.7,'),')
+            CALL DPWRST('XXX','WRIT')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+          IF(ALPT.LT.0.5)ALPT=1.0 - ALPT
+          P100=100.0*ALPT
+          CALL PERCEN(P100,TEMP1,NSIM,IWRITE,TEMP2,MAXNXT,
+     1                XPERC,IBUGA3,IERROR)
+          CV(II)=XPERC
+ 3210   CONTINUE
+        IDIR='UPPE'
+        CALL DPGOF8(TEMP1,NSIM,STATVA,PVAL,IDIR,IBUGA3,ISUBRO,IERROR)
+        STATCD=1.0 - PVAL
+      ELSEIF(IKUOT2.EQ.'ASTM')THEN
+        DO3300II=1,NALPHA
+          ALPT=ALPHA(II)
+          IF(ALPT.GT.1.0 .AND. ALPT.LT.100.0)ALPT=ALPT/100.0
+          IF(ALPT.LE.0.0 .OR. ALPT.GT.1.0)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,111)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,3111)ALPHA(II)
+            CALL DPWRST('XXX','WRIT')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+          IF(ALPT.LT.0.5)ALPT=1.0 - ALPT
+          IF(ALPT.EQ.0.90)THEN
+            IF(N.EQ.4)THEN
+              CV(II)=3.075
+            ELSEIF(N.EQ.5)THEN
+              CV(II)=2.772
+            ELSEIF(N.EQ.6)THEN
+              CV(II)=2.482
+            ELSEIF(N.EQ.7)THEN
+              CV(II)=2.257
+            ELSEIF(N.EQ.8)THEN
+              CV(II)=2.067
+            ELSEIF(N.EQ.9)THEN
+              CV(II)=1.904
+            ELSEIF(N.EQ.10)THEN
+              CV(II)=1.778
+            ELSEIF(N.EQ.11)THEN
+              CV(II)=1.678
+            ELSEIF(N.EQ.12)THEN
+              CV(II)=1.597
+            ELSEIF(N.EQ.13)THEN
+              CV(II)=1.529
+            ELSEIF(N.EQ.14)THEN
+              CV(II)=1.471
+            ELSEIF(N.EQ.15)THEN
+              CV(II)=1.422
+            ELSEIF(N.EQ.16)THEN
+              CV(II)=1.378
+            ELSEIF(N.EQ.17)THEN
+              CV(II)=1.340
+            ELSEIF(N.EQ.18)THEN
+              CV(II)=1.303
+            ELSEIF(N.EQ.19)THEN
+              CV(II)=1.271
+            ELSEIF(N.EQ.20)THEN
+              CV(II)=1.243
+            ELSEIF(N.EQ.21)THEN
+              CV(II)=1.214
+            ELSEIF(N.EQ.22)THEN
+              CV(II)=1.188
+            ELSEIF(N.EQ.23)THEN
+              CV(II)=1.167
+            ELSEIF(N.EQ.24)THEN
+              CV(II)=1.143
+            ELSEIF(N.EQ.25)THEN
+              CV(II)=1.123
+            ELSEIF(N.EQ.26)THEN
+              CV(II)=1.102
+            ELSEIF(N.EQ.27)THEN
+              CV(II)=1.085
+            ELSEIF(N.EQ.28)THEN
+              CV(II)=1.066
+            ELSEIF(N.EQ.29)THEN
+              CV(II)=1.052
+            ELSEIF(N.EQ.30)THEN
+              CV(II)=1.035
+            ELSEIF(N.GE.31 .AND. N.LE.34)THEN
+              X1=30.
+              X2=35.
+              X3=REAL(N)
+              Y1=1.035
+              Y2=0.969
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.35)THEN
+              CV(II)=0.969
+            ELSEIF(N.GE.36 .AND. N.LE.39)THEN
+              X1=35.
+              X2=40.
+              X3=REAL(N)
+              Y1=0.969
+              Y2=0.913
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.40)THEN
+              CV(II)=0.913
+            ELSEIF(N.GE.41 .AND. N.LE.44)THEN
+              X1=40.
+              X2=45.
+              X3=REAL(N)
+              Y1=0.913
+              Y2=0.867
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.45)THEN
+              CV(II)=0.867
+            ELSEIF(N.GE.46 .AND. N.LE.49)THEN
+              X1=45.
+              X2=50.
+              X3=REAL(N)
+              Y1=0.867
+              Y2=0.830
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.50)THEN
+              CV(II)=0.830
+            ENDIF
+          ELSEIF(ALPT.EQ.0.95)THEN
+            IF(N.EQ.4)THEN
+              CV(II)=3.518
+            ELSEIF(N.EQ.5)THEN
+              CV(II)=3.506
+            ELSEIF(N.EQ.6)THEN
+              CV(II)=3.319
+            ELSEIF(N.EQ.7)THEN
+              CV(II)=3.110
+            ELSEIF(N.EQ.8)THEN
+              CV(II)=2.935
+            ELSEIF(N.EQ.9)THEN
+              CV(II)=2.772
+            ELSEIF(N.EQ.10)THEN
+              CV(II)=2.627
+            ELSEIF(N.EQ.11)THEN
+              CV(II)=2.505
+            ELSEIF(N.EQ.12)THEN
+              CV(II)=2.399
+            ELSEIF(N.EQ.13)THEN
+              CV(II)=2.300
+            ELSEIF(N.EQ.14)THEN
+              CV(II)=2.217
+            ELSEIF(N.EQ.15)THEN
+              CV(II)=2.145
+            ELSEIF(N.EQ.16)THEN
+              CV(II)=2.081
+            ELSEIF(N.EQ.17)THEN
+              CV(II)=2.021
+            ELSEIF(N.EQ.18)THEN
+              CV(II)=1.966
+            ELSEIF(N.EQ.19)THEN
+              CV(II)=1.921
+            ELSEIF(N.EQ.20)THEN
+              CV(II)=1.873
+            ELSEIF(N.EQ.21)THEN
+              CV(II)=1.831
+            ELSEIF(N.EQ.22)THEN
+              CV(II)=1.788
+            ELSEIF(N.EQ.23)THEN
+              CV(II)=1.757
+            ELSEIF(N.EQ.24)THEN
+              CV(II)=1.719
+            ELSEIF(N.EQ.25)THEN
+              CV(II)=1.690
+            ELSEIF(N.EQ.26)THEN
+              CV(II)=1.658
+            ELSEIF(N.EQ.27)THEN
+              CV(II)=1.630
+            ELSEIF(N.EQ.28)THEN
+              CV(II)=1.601
+            ELSEIF(N.EQ.29)THEN
+              CV(II)=1.578
+            ELSEIF(N.EQ.30)THEN
+              CV(II)=1.550
+            ELSEIF(N.GE.31 .AND. N.LE.34)THEN
+              X1=30.
+              X2=35.
+              X3=REAL(N)
+              Y1=1.550
+              Y2=1.446
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.35)THEN
+              CV(II)=1.446
+            ELSEIF(N.GE.36 .AND. N.LE.39)THEN
+              X1=35.
+              X2=40.
+              X3=REAL(N)
+              Y1=1.446
+              Y2=1.358
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.40)THEN
+              CV(II)=1.358
+            ELSEIF(N.GE.41 .AND. N.LE.44)THEN
+              X1=40.
+              X2=45.
+              X3=REAL(N)
+              Y1=1.358
+              Y2=1.285
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.45)THEN
+              CV(II)=1.285
+            ELSEIF(N.GE.46 .AND. N.LE.49)THEN
+              X1=45.
+              X2=50.
+              X3=REAL(N)
+              Y1=1.285
+              Y2=1.223
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.50)THEN
+              CV(II)=1.223
+            ENDIF
+          ELSEIF(ALPT.EQ.0.99)THEN
+            IF(N.EQ.4)THEN
+              CV(II)=3.900
+            ELSEIF(N.EQ.5)THEN
+              CV(II)=4.454
+            ELSEIF(N.EQ.6)THEN
+              CV(II)=4.685
+            ELSEIF(N.EQ.7)THEN
+              CV(II)=4.735
+            ELSEIF(N.EQ.8)THEN
+              CV(II)=4.687
+            ELSEIF(N.EQ.9)THEN
+              CV(II)=4.586
+            ELSEIF(N.EQ.10)THEN
+              CV(II)=4.467
+            ELSEIF(N.EQ.11)THEN
+              CV(II)=4.350
+            ELSEIF(N.EQ.12)THEN
+              CV(II)=4.234
+            ELSEIF(N.EQ.13)THEN
+              CV(II)=4.106
+            ELSEIF(N.EQ.14)THEN
+              CV(II)=4.000
+            ELSEIF(N.EQ.15)THEN
+              CV(II)=3.887
+            ELSEIF(N.EQ.16)THEN
+              CV(II)=3.784
+            ELSEIF(N.EQ.17)THEN
+              CV(II)=3.702
+            ELSEIF(N.EQ.18)THEN
+              CV(II)=3.605
+            ELSEIF(N.EQ.19)THEN
+              CV(II)=3.524
+            ELSEIF(N.EQ.20)THEN
+              CV(II)=3.450
+            ELSEIF(N.EQ.21)THEN
+              CV(II)=3.370
+            ELSEIF(N.EQ.22)THEN
+              CV(II)=3.298
+            ELSEIF(N.EQ.23)THEN
+              CV(II)=3.233
+            ELSEIF(N.EQ.24)THEN
+              CV(II)=3.169
+            ELSEIF(N.EQ.25)THEN
+              CV(II)=3.116
+            ELSEIF(N.EQ.26)THEN
+              CV(II)=3.051
+            ELSEIF(N.EQ.27)THEN
+              CV(II)=2.995
+            ELSEIF(N.EQ.28)THEN
+              CV(II)=2.943
+            ELSEIF(N.EQ.29)THEN
+              CV(II)=2.903
+            ELSEIF(N.EQ.30)THEN
+              CV(II)=2.845
+            ELSEIF(N.GE.31 .AND. N.LE.34)THEN
+              X1=30.
+              X2=35.
+              X3=REAL(N)
+              Y1=2.845
+              Y2=2.642
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.35)THEN
+              CV(II)=2.642
+            ELSEIF(N.GE.36 .AND. N.LE.39)THEN
+              X1=35.
+              X2=40.
+              X3=REAL(N)
+              Y1=2.642
+              Y2=2.470
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.40)THEN
+              CV(II)=2.470
+            ELSEIF(N.GE.41 .AND. N.LE.44)THEN
+              X1=40.
+              X2=45.
+              X3=REAL(N)
+              Y1=2.470
+              Y2=2.322
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.45)THEN
+              CV(II)=2.322
+            ELSEIF(N.GE.46 .AND. N.LE.49)THEN
+              X1=45.
+              X2=50.
+              X3=REAL(N)
+              Y1=2.322
+              Y2=2.210
+              AVAL=LININ3(X1,Y1,X2,Y2,X3,IBUGA3,ISUBRO,IERROR)
+              CV(II)=AVAL
+            ELSEIF(N.EQ.50)THEN
+              CV(II)=2.210
+            ENDIF
+          ELSE
+            CV(II)=CPUMIN
+          ENDIF
+          IF(CV(II).NE.CPUMIN)CV(II)=CV(II)
+ 3300   CONTINUE
+      ENDIF
+C
+C               *******************************
+C               **  STEP 3--                 **
+C               **  WRITE OUT A LINE         **
+C               **  OF SUMMARY INFORMATION.  **
+C               *******************************
+C
+  800 CONTINUE
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,811)N,STATVA
+  811   FORMAT('THE VALUE OF THE KURTOSIS OUTLIER STATISTIC OF THE ',
+     1         I8,' OBSERVATIONS = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'KUO3')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPKUO3--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IBUGA3,IERROR
+ 9012   FORMAT('IBUGA3,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)N
+ 9013   FORMAT('N = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)XMIN,XMAX,XMEAN,XSD,XKURT
+ 9015   FORMAT('XMIN,XMAX,XMEAN,XSD,XKURT = ',5G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9016)STATVA,CDF,PVAL,XIND
+ 9016   FORMAT('STATVA,CDF,PVAL,XIND = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
       ENDIF
 C
       RETURN

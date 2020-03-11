@@ -96,26 +96,30 @@ C      8. DPWRST   - write to the terminal window
 C      9. GRWRST   - write to the graphics device
 C     10. DPSLEE   - implement the "sleep" command
 C         DPSLE2   - similar to DPSLEE, but for internal use
-C     11. DPCDIR   - change the current directory
-C     12. DPFLSH   - flush an output file
-C     13. RANLP/   - various random number generators
+C     11. DPFLSH   - flush an output file
+C     12. RANLP/   - various random number generators
 C         RANFT/
 C         R250IN/
 C         RND250
-C     14. DPPID2   - return the process id
-C     15. DPINF2   - check existence of a file
-C     16. DPPRMP   - specify "advance" behavior for the command prompt
-C     17. DPCPUT   - CPU time/usage
-C     18. DPPWD    - return current working directory
-C     19. IQWNHE/  - implement some functionality for the
+C     13. DPPID2   - return the process id
+C     14. DPINF2   - check existence of a file
+C     15. DPPRMP   - specify "advance" behavior for the command prompt
+C     16. DPCPUT   - CPU time/usage
+C     17. IQWNHE/  - implement some functionality for the
 C         IQWNBR     Quick Win menu items
-C     20. ISNANZ   - test for "not a number"
-C     21. DPCLIP   - read from system clipboard
-C     22. DPCLI2   - view/copy/run from system clipboard
-C     23. DPCLI3   - clear clipboard
-C     24. DPCLI4   - write strings/parameters to clipboard
-C     25. DPCLI5   - write variables to clipboard
-C     26. DPCLI6   - copy file to clipboard
+C     18. ISNANZ   - test for "not a number"
+C     19. DPCLIP   - read from system clipboard
+C     20. DPCLI2   - view/copy/run from system clipboard
+C     21. DPCLI3   - clear clipboard
+C     22. DPCLI4   - write strings/parameters to clipboard
+C     23. DPCLI5   - write variables to clipboard
+C     24. DPCLI6   - copy file to clipboard
+C     25. DPCDIR   - change the current directory
+C     26. DPPWD    - return current working directory
+C     27. DPRM     - remove a file or a directory
+C     28. DPMKDR   - make a new directory
+C     29. DPCAT    - list contents of a file
+C     30. DPDIR    - list files (Windows DIR or Linux ls command)
 C
       SUBROUTINE INITMC(IBUGIN)
 C
@@ -1816,6 +1820,9 @@ CC
 CC  FOR INTEGERS - SPECIFY "-DI32"  OR  "-DI64"  BASED ON WHETHER
 CC  YOU ARE RUNNING ON A 32-BIT OR A 64-BIT MACHINE.
 CC
+CC  2019/11: ALLOW SETTING IOPSY2 FOR MacOS AS THERE ARE A
+CC           FEW OCCASIONS WHERE MacOS MAY NEED SLIGHTLY
+CC           DIFFERENT OPTIONS THAN STANDARD LINUX.
 #if defined(INTEGER32)
       DATA I2MACH( 1) /    5 /
       DATA I2MACH( 2) /    6 /
@@ -1920,6 +1927,9 @@ C
       IHMOD2='    '
       IOPSY1='UNIX'
       IOPSY2='    '
+#if defined(MACOS)
+      IOPSY2='MAC '
+#endif
       ICOMPI='gfor'
       ISITE='    '
 #endif
@@ -2845,6 +2855,25 @@ C     UPDATED         --MARCH     2019. METHOD FOR EXTRACTING LOCATION
 C                                       OF AUXILIARY FILES FOR LINUX
 C     UPDATED         --MARCH     2019. FOR LINUX, USE "xdg-open" IF NO
 C                                       BROWSER ENVIRONMENT VARIABLE SET
+C     UPDATED         --DECEMBER  2019. RETRIEVE THE FOLLOWING
+C                                       ENVIRONMENT VARIABLES FOR
+C                                       WINDOWS:
+C                                         1. %PROGRAMFILES%
+C                                         2. %PROGRAMFILES(X86)%
+C                                         3. %USERNAME%
+C                                         4. %LOCALAPPDATA%
+C                                         5. %COMPUTERNAME%
+C                                         6. %USERPROFILE%
+C                                         7. %PROCESSOR_ARCHITECTURE%
+C                                       SAVE IN A COMMON BLOCK
+C     UPDATED         --DECEMBER  2019. RETRIEVE THE FOLLOWING
+C                                       ENVIRONMENT VARIABLES FOR
+C                                       WINDOWS:
+C                                         1. $HOME
+C                                         2. $USER
+C                                         3. $HOST
+C                                         4. $PRINTER
+C                                       SAVE IN A COMMON BLOCK
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -2859,6 +2888,7 @@ C
 C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
+      CHARACTER*4 IBASLC
 C
 C  NOVEMBER 1991.  FOLLOWING BLOCK ADDED
 C
@@ -2883,6 +2913,7 @@ C
 CCCCC THE FOLLOWING LINE WAS ADDED SEPTEMBER 1990
       CHARACTER*80 ICDIR
       CHARACTER*80 IVALZZ
+      CHARACTER*80 CTEMP
 C  FOLLOWING 2 LINES ADDED APRIL 1992.
       CHARACTER*4 ISUBRO
       CHARACTER*4 IERROR
@@ -2900,6 +2931,19 @@ CCCCC AUGUST 1992.  FOLLOWING COMMON BLOCK FOR EDIT COMMAND
       COMMON/ICEDI4/
      1NCEDT1,NCEDT2
 C
+      CHARACTER*80 PROFIL
+      CHARACTER*80 P86FIL
+      CHARACTER*80 APPDAT
+      CHARACTER*80 COMNAM
+      CHARACTER*80 UPROFI
+      CHARACTER*80 DEFPRI
+      CHARACTER*20 USRNAM
+      CHARACTER*20 ISHELL
+      CHARACTER*4  WINBIT
+      COMMON/SYSVAR/PROFIL,P86FIL,APPDAT,COMNAM,UPROFI,USRNAM,DEFPRI,
+     1              WINBIT,ISHELL
+      COMMON/SYSVA2/NCPROF,NCP86F,NCAPPD,NCCOMP,NCUPRO,NCUSER,NCPRIN,
+     1              NCSHEL
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
@@ -2917,6 +2961,24 @@ C
       ISUBN2='FO  '
       IFHOME='NO'
       IGUIIO='PIPE'
+C
+      PROFIL='C:\Program Files'
+      NCPROF=16
+      P86FIL='C:\Program Files (x86)'
+      NCP86F=22
+      APPDAT=' '
+      NCP86F=0
+      USRNAM=' '
+      NCUSER=0
+      ISHELL=' '
+      NCSHEL=0
+      COMNAM=' '
+      NCCOMP=0
+      UPROFI=' '
+      NCUPRO=0
+      WINBIT='64'
+      DEFPRI=' '
+      NCPRIN=0
 C
       IF(IBUGIN.EQ.'ON')THEN
         WRITE(ICOUT,999)
@@ -3113,6 +3175,48 @@ C
           NCP3=NCP3+1
           IPATH3(NCP3:NCP3)='/'
         ENDIF
+        UPROFI(1:NCP3)=IPATH3(1:NCP3)
+        NCUPRO=NCP3
+C
+        CALL getenv('USER',USRNAM)
+        IF(USRNAM.NE.' ')THEN
+          DO7002I=20,1,-1
+            NCUSER=I
+            IF(USRNAM(I:I).NE.' ')GOTO7003
+ 7002     CONTINUE
+ 7003     CONTINUE
+        ENDIF
+C
+        CALL getenv('SHELL',ISHELL)
+        IF(ISHELL.NE.' ')THEN
+          DO7007I=20,1,-1
+            NCSHEL=I
+            IF(ISHELL(I:I).NE.' ')GOTO7008
+ 7007     CONTINUE
+ 7008     CONTINUE
+        ENDIF
+C
+        IF(ISHELL.EQ.'/bin/bash')THEN
+          CALL getenv('HOSTNAME',COMNAM)
+        ELSE
+          CALL getenv('HOST',COMNAM)
+        ENDIF
+        IF(COMNAM.NE.' ')THEN
+          DO7012I=80,1,-1
+            NCCOMP=I
+            IF(COMNAM(I:I).NE.' ')GOTO7013
+ 7012     CONTINUE
+ 7013     CONTINUE
+        ENDIF
+C
+        CALL getenv('PRINTER',DEFPRI)
+        IF(DEFPRI.NE.' ')THEN
+          DO7022I=80,1,-1
+            NCPRIN=I
+            IF(DEFPRI(I:I).NE.' ')GOTO7023
+ 7022     CONTINUE
+ 7023     CONTINUE
+        ENDIF
 C
         IEDDIR=IPATH1
         NCEDT1=NCP1
@@ -3257,12 +3361,132 @@ CCCCC     NCEDT1=12
 #endif
         ELSE IF(ICOMPI.EQ.'MS-F')THEN
 #ifdef INTEL
+          IRESLT=GETENVQQ('USERNAME',USRNAM)
+          IF(IRESLT.GT.0)THEN
+            DO7111II=20,1,-1
+              IF(USRNAM(II:II).NE.' ')THEN
+                NCUSER=II
+                GOTO7119
+              ENDIF
+ 7111       CONTINUE
+ 7119       CONTINUE
+          ENDIF
+C
+          IRESLT=GETENVQQ('COMPUTERNAME',COMNAM)
+          IF(IRESLT.GT.0)THEN
+            DO7121II=80,1,-1
+              IF(COMNAM(II:II).NE.' ')THEN
+                NCCOMP=II
+                GOTO7129
+              ENDIF
+ 7121       CONTINUE
+ 7129       CONTINUE
+          ENDIF
+C
+          IRESLT=GETENVQQ('LOCALAPPDATA',APPDAT)
+          IF(IRESLT.GT.0)THEN
+            DO7131II=80,1,-1
+              IF(APPDAT(II:II).NE.' ')THEN
+                NCAPPD=II
+                GOTO7139
+              ENDIF
+ 7131       CONTINUE
+ 7139       CONTINUE
+          ENDIF
+C
+          IRESLT=GETENVQQ('USERPROFILE',UPROFI)
+          IF(IRESLT.GT.0)THEN
+            DO7141II=80,1,-1
+              IF(UPROFI(II:II).NE.' ')THEN
+                NCUPRO=II
+                GOTO7149
+              ENDIF
+ 7141       CONTINUE
+ 7149       CONTINUE
+          ENDIF
+C
+          WINBIT='64'
+          CTEMP=' '
+          IRESLT=GETENVQQ('PROCESSOR_ARCHITECTURE',CTEMP)
+          IF(IRESLT.GT.0)THEN
+            DO7101II=1,80
+              IF(CTEMP(II:II+1).EQ.'32')THEN
+                WINBIT='32'
+              ENDIF
+ 7101       CONTINUE
+ 7109       CONTINUE
+          ENDIF
+C
+          IRESLT=GETENVQQ('PROGRAMFILES',PROFIL)
+          IF(IRESLT.GT.0)THEN
+            DO7151II=80,1,-1
+              IF(PROFIL(II:II).NE.' ')THEN
+                NCPROF=II
+                GOTO7159
+              ENDIF
+ 7151       CONTINUE
+ 7159       CONTINUE
+            IF(WINBIT.EQ.'64')THEN
+              DO7153II=1,NCPROF-5
+                IF(PROFIL(II:II+5).EQ.' (x86)')THEN
+                  NCPROF=II-1
+                  PROFIL(II:80)=' '
+                  GOTO7155
+                ELSEIF(PROFIL(II:II+5).EQ.' (X86)')THEN
+                  NCPROF=II-1
+                  PROFIL(II:80)=' '
+                  GOTO7155
+                ENDIF
+ 7153         CONTINUE
+ 7155         CONTINUE
+            ENDIF
+          ENDIF
+C
+          IF(WINBIT.EQ.'64')THEN
+            IRESLT=GETENVQQ('PROGRAMFILES(X86)',P86FIL)
+            IF(IRESLT.GT.0)THEN
+              DO7161II=80,1,-1
+                IF(P86FIL(II:II).NE.' ')THEN
+                  NCP86F=II
+                  GOTO7169
+                ENDIF
+ 7161         CONTINUE
+ 7169         CONTINUE
+            ENDIF
+          ENDIF
+C
           IRESLT=GETENVQQ('DATAPLO$',ICDIR)
           IF(IRESLT.LE.0)THEN
 CCCCC       ICDIR='C:\DATAPLOT\'
-            ICDIR='C:\PROGRAM FILES (x86)\NIST\DATAPLOT\'
-            NCP1=37
-            NCDIR=37
+            IF(WINBIT.EQ.'32')THEN
+              ICDIR(1:NCPROF)=PROFIL(1:NCPROF)
+              NCP1=NCPROF
+              NCP1=NCP1+1
+              ICDIR(NCP1:NCP1)=IBASLC
+              ICDIR(NCP1+1:NCP1+4)='NIST'
+              NCP1=NCP1+4
+              NCP1=NCP1+1
+              ICDIR(NCP1:NCP1)=IBASLC
+              ICDIR(NCP1+1:NCP1+8)='DATAPLOT'
+              NCP1=NCP1+8
+              NCP1=NCP1+1
+              ICDIR(NCP1:NCP1)=IBASLC
+              NCDIR=NCP1
+            ELSE
+              ICDIR(1:NCP86F)=P86FIL(1:NCP86F)
+              NCP1=NCP86F
+              NCP1=NCP1+1
+              ICDIR(NCP1:NCP1)=IBASLC
+              ICDIR(NCP1+1:NCP1+4)='NIST'
+              NCP1=NCP1+4
+              NCP1=NCP1+1
+              ICDIR(NCP1:NCP1)=IBASLC
+              ICDIR(NCP1+1:NCP1+8)='DATAPLOT'
+              NCP1=NCP1+8
+              NCP1=NCP1+1
+              ICDIR(NCP1:NCP1)=IBASLC
+              NCDIR=NCP1
+            ENDIF
           ELSE
             NCDIR=80
             NMAX=80
@@ -3278,16 +3502,8 @@ CCCCC       ICDIR='C:\DATAPLOT\'
             WRITE(ICOUT,1112)
  1112       FORMAT('      ERROR IN DEFINING THE DATAPLOT DIRECTORY')
             CALL DPWRST('XXX','BUG ')
-            WRITE(ICOUT,1114)
- 1114       FORMAT('      PROBABLE CAUSE--BAD  AUTOEXEC.BAT  FILE')
-            WRITE(ICOUT,1115)
- 1115       FORMAT('      MISSING OR INCORRECT    SET   STATEMENT:')
-            CALL DPWRST('XXX','BUG ')
-            WRITE(ICOUT,1116)
- 1116       FORMAT('      SET DATAPLO$ = etc.')
-            CALL DPWRST('XXX','BUG ')
-            WRITE(ICOUT,1121)ICDIR(1:40)
- 1121       FORMAT('ICDIR(1:40) = ',A40)
+            WRITE(ICOUT,1121)ICDIR(1:80)
+ 1121       FORMAT('ICDIR(1:40) = ',A80)
             CALL DPWRST('XXX','BUG ')
             WRITE(ICOUT,1122)NCDIR
  1122       FORMAT('NCDIR = ',I8)
@@ -3297,18 +3513,46 @@ CCCCC       ICDIR='C:\DATAPLOT\'
           ENDIF
           IPATH1(1:NCP1)=ICDIR(1:NCP1)
 C
-          IRESLT=GETENVQQ('FED$',ICDIR)
+          IRESLT=GETENVQQ('FED$',IEDDIR)
           IF(IRESLT.EQ.0)THEN
 CCCCC       ICDIR='C:\FED\'
 CCCCC       NCEDT1=7
 CCCCC       NCDIR=7
-            ICDIR='C:\PROGRAM FILES\NIST\DATAPLOT\'
-            NCEDT1=31
-            NCDIR=31
+            IF(WINBIT.EQ.'32')THEN
+              ICDIR(1:NCPROF)=PROFIL(1:NCPROF)
+              NCEDT1=NCPROF
+              NCEDT1=NCEDT1+1
+              ICDIR(NCEDT1:NCEDT1)=IBASLC
+              ICDIR(NCEDT1+1:NCEDT1+4)='NIST'
+              NCEDT1=NCEDT1+4
+              NCEDT1=NCEDT1+1
+              ICDIR(NCEDT1:NCEDT1)=IBASLC
+              ICDIR(NCEDT1+1:NCEDT1+8)='DATAPLOT'
+              NCEDT1=NCEDT1+8
+              NCEDT1=NCEDT1+1
+              ICDIR(NCEDT1:NCEDT1)=IBASLC
+              NCDIR=NCEDT1
+            ELSE
+              ICDIR(1:NCP86F)=P86FIL(1:NCP86F)
+              NCEDT1=NCP86F
+              NCEDT1=NCEDT1+1
+              ICDIR(NCEDT1:NCEDT1)=IBASLC
+              ICDIR(NCEDT1+1:NCEDT1+4)='NIST'
+              NCEDT1=NCEDT1+4
+              NCEDT1=NCEDT1+1
+              ICDIR(NCEDT1:NCEDT1)=IBASLC
+              ICDIR(NCEDT1+1:NCEDT1+8)='DATAPLOT'
+              NCEDT1=NCEDT1+8
+              NCEDT1=NCEDT1+1
+              ICDIR(NCEDT1:NCEDT1)=IBASLC
+              NCDIR=NCEDT1
+            ENDIF
+            NCDIR=NCEDT1
+            IEDDIR(1:NCDIR)=ICDIR(1:NCDIR)
           ELSE
             NCDIR=80
             NMAX=80
-            CALL DPDB80(ICDIR,NCDIR,NMAX,IBUGIN,ISUBRO,IERROR)
+            CALL DPDB80(IEDDIR,NCDIR,NMAX,IBUGIN,ISUBRO,IERROR)
             NCEDT1=NCDIR
           ENDIF
 C
@@ -3323,14 +3567,8 @@ C
             WRITE(ICOUT,1213)
  1213       FORMAT('      FED (= THE DATAPLOT EDITOR) DIRECTORY')
             CALL DPWRST('XXX','BUG ')
-            WRITE(ICOUT,1114)
-            CALL DPWRST('XXX','BUG ')
-            WRITE(ICOUT,1115)
-            CALL DPWRST('XXX','BUG ')
-            WRITE(ICOUT,1216)
- 1216       FORMAT('      SET FED$ = etc.')
-            CALL DPWRST('XXX','BUG ')
-            WRITE(ICOUT,1121)ICDIR(1:40)
+            WRITE(ICOUT,1221)ICDIR(1:80)
+ 1221       FORMAT('ICDIR(1:40) = ',A80)
             CALL DPWRST('XXX','BUG ')
             WRITE(ICOUT,1122)NCDIR
             CALL DPWRST('XXX','BUG ')
@@ -3344,8 +3582,8 @@ C
           IDPURL=' '
           IRESLT=GETENVQQ('BROWSER',IBROWS)
           IF(IRESLT.EQ.0)THEN
-            IBROWS(1:45)='"C:\Program Files\NETSCAPE\NAVIGATOR\PROGRAM\'
-            IBROWS(46:58)='netscape.exe"'
+            IBROWS(1:42)='"C:\Program Files (x86)\Internet Explorer\'
+            IBROWS(43:55)='iexplore.exe"'
           ENDIF
 C
           IRESLT=GETENVQQ('DP_URL',IDPURL)
@@ -4867,6 +5105,23 @@ CCCCC APRIL 1996.  SOFT-CODE BACKSLASH CHARACTER
 C
 C-----COMMON------------------------------------------------
 C
+      CHARACTER*80 IFILSV
+      COMMON/FILSAV/IFILSV
+C
+      CHARACTER*80 PROFIL
+      CHARACTER*80 P86FIL
+      CHARACTER*80 APPDAT
+      CHARACTER*80 COMNAM
+      CHARACTER*80 UPROFI
+      CHARACTER*80 DEFPRI
+      CHARACTER*20 USRNAM
+      CHARACTER*20 ISHELL
+      CHARACTER*4  WINBIT
+      COMMON/SYSVAR/PROFIL,P86FIL,APPDAT,COMNAM,UPROFI,USRNAM,DEFPRI,
+     1              WINBIT,ISHELL
+      COMMON/SYSVA2/NCPROF,NCP86F,NCAPPD,NCCOMP,NCUPRO,NCUSER,NCPRIN,
+     1              NCSHEL
+C
       INCLUDE 'DPCOHO.INC'
       INCLUDE 'DPCOF2.INC'
       INCLUDE 'DPCOST.INC'
@@ -4888,6 +5143,7 @@ C
       IFILE2=' '
       IFILEL=' '
       IFILEU=' '
+      IFILSV=' '
 C
       IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'OPFI')THEN
         WRITE(ICOUT,999)
@@ -5098,7 +5354,14 @@ C
       CALL DPLO80(FTEMP,IFILEL,NMAX,IBUGS2,IERROR)
       CALL DPUP80(FTEMP,IFILEU,NMAX,IBUGS2,IERROR)
 C
-      DO1141K=1,13
+C     NOTE: K =  1 IS THE THE CURRENT DIRECTORY
+C           K =  2 IS THE THE HOME DIRECTORY
+C                (IT IS USER SETTABLE WHETHER THIS DIRECTORY
+C                WILL BE SEARCHED)
+C           K =  3 IS THE USER SPECIFIED SEARCH DIRECTORY
+C           K >= 4 ARE THE DATAPLOT AUXILIARY DIRECTORIES
+C
+      DO1141K=1,14
 C
         NC1=0
         IFILE2=' '
@@ -5106,6 +5369,18 @@ C
         IFILE4=' '
 C
         IF(K.EQ.2)THEN
+          IF(IHOMPA.EQ.'OFF' .OR. NCUPRO.LT.1)GOTO1141
+          IFILE2(1:NCUPRO)=UPROFI(1:NCUPRO)
+          IFILE3(1:NCUPRO)=UPROFI(1:NCUPRO)
+          IFILE4(1:NCUPRO)=UPROFI(1:NCUPRO)
+          NC1=NCUPRO
+          IF(UPROFI(NCUPRO:NCUPRO).NE.IPATSE)THEN
+            NC1=NC1+1
+            IFILE2(NC1:NC1)=IPATSE
+            IFILE3(NC1:NC1)=IPATSE
+            IFILE4(NC1:NC1)=IPATSE
+          ENDIF
+        ELSEIF(K.EQ.3)THEN
           IF(NCSEDI.GE.1)THEN
             IFILE2(1:NCSEDI)=ISEADI(1:NCSEDI)
             IFILE3(1:NCSEDI)=ISEADI(1:NCSEDI)
@@ -5120,7 +5395,7 @@ C
           ELSE
             GOTO1141
           ENDIF
-        ELSEIF(K.GE.3)THEN
+        ELSEIF(K.GE.4)THEN
 C
 C         ADD DATAPLOT AUXILLARY PATH
 C
@@ -5139,7 +5414,7 @@ C
 C
 C       DATATPLOT HELP DIRECTORY
 C
-        IF(K.EQ.4)THEN
+        IF(K.EQ.5)THEN
           IFILE2(NC1+1:NC1+5)='help/'
           IFILE3(NC1+1:NC1+5)='help/'
           IFILE4(NC1+1:NC1+5)='help/'
@@ -5147,7 +5422,7 @@ C
           IFILE2(NC1:NC1)=IPATSE
           IFILE3(NC1:NC1)=IPATSE
           IFILE4(NC1:NC1)=IPATSE
-        ELSEIF(K.EQ.5)THEN
+        ELSEIF(K.EQ.6)THEN
           IFILE2(NC1+1:NC1+5)='data/'
           IFILE3(NC1+1:NC1+5)='data/'
           IFILE4(NC1+1:NC1+5)='data/'
@@ -5155,7 +5430,7 @@ C
           IFILE2(NC1:NC1)=IPATSE
           IFILE3(NC1:NC1)=IPATSE
           IFILE4(NC1:NC1)=IPATSE
-        ELSEIF(K.EQ.6)THEN
+        ELSEIF(K.EQ.7)THEN
           IFILE2(NC1+1:NC1+4)='dex/'
           IFILE3(NC1+1:NC1+4)='dex/'
           IFILE4(NC1+1:NC1+4)='dex/'
@@ -5163,7 +5438,7 @@ C
           IFILE2(NC1:NC1)=IPATSE
           IFILE3(NC1:NC1)=IPATSE
           IFILE4(NC1:NC1)=IPATSE
-        ELSEIF(K.EQ.7)THEN
+        ELSEIF(K.EQ.8)THEN
           IFILE2(NC1+1:NC1+7)='10step/'
           IFILE3(NC1+1:NC1+7)='10step/'
           IFILE4(NC1+1:NC1+7)='10step/'
@@ -5171,7 +5446,7 @@ C
           IFILE2(NC1:NC1)=IPATSE
           IFILE3(NC1:NC1)=IPATSE
           IFILE4(NC1:NC1)=IPATSE
-        ELSEIF(K.EQ.8)THEN
+        ELSEIF(K.EQ.9)THEN
           IFILE2(NC1+1:NC1+7)='macros/'
           IFILE3(NC1+1:NC1+7)='macros/'
           IFILE4(NC1+1:NC1+7)='macros/'
@@ -5179,7 +5454,7 @@ C
           IFILE2(NC1:NC1)=IPATSE
           IFILE3(NC1:NC1)=IPATSE
           IFILE4(NC1:NC1)=IPATSE
-        ELSEIF(K.EQ.9)THEN
+        ELSEIF(K.EQ.10)THEN
           IFILE2(NC1+1:NC1+9)='programs/'
           IFILE3(NC1+1:NC1+9)='programs/'
           IFILE4(NC1+1:NC1+9)='programs/'
@@ -5187,7 +5462,7 @@ C
           IFILE2(NC1:NC1)=IPATSE
           IFILE3(NC1:NC1)=IPATSE
           IFILE4(NC1:NC1)=IPATSE
-        ELSEIF(K.EQ.10)THEN
+        ELSEIF(K.EQ.11)THEN
           IFILE2(NC1+1:NC1+5)='text/'
           IFILE3(NC1+1:NC1+5)='text/'
           IFILE4(NC1+1:NC1+5)='text/'
@@ -5195,7 +5470,7 @@ C
           IFILE2(NC1:NC1)=IPATSE
           IFILE3(NC1:NC1)=IPATSE
           IFILE4(NC1:NC1)=IPATSE
-        ELSEIF(K.EQ.11)THEN
+        ELSEIF(K.EQ.12)THEN
           IFILE2(NC1+1:NC1+5)='menu/'
           IFILE3(NC1+1:NC1+5)='menu/'
           IFILE4(NC1+1:NC1+5)='menu/'
@@ -5203,7 +5478,7 @@ C
           IFILE2(NC1:NC1)=IPATSE
           IFILE3(NC1:NC1)=IPATSE
           IFILE4(NC1:NC1)=IPATSE
-        ELSEIF(K.EQ.12)THEN
+        ELSEIF(K.EQ.13)THEN
           IFILE2(NC1+1:NC1+3)='ps/'
           IFILE3(NC1+1:NC1+3)='ps/'
           IFILE4(NC1+1:NC1+3)='ps/'
@@ -5211,7 +5486,7 @@ C
           IFILE2(NC1:NC1)=IPATSE
           IFILE3(NC1:NC1)=IPATSE
           IFILE4(NC1:NC1)=IPATSE
-        ELSEIF(K.EQ.13)THEN
+        ELSEIF(K.EQ.14)THEN
           IFILE2(NC1+1:NC1+8)='scripts/'
           IFILE3(NC1+1:NC1+8)='scripts/'
           IFILE4(NC1+1:NC1+8)='scripts/'
@@ -5244,11 +5519,16 @@ C
 C       OPEN FILE NAME AS IS
 C
         IOSTA2=0
-        OPEN(UNIT=IOUNIT,FILE=IFILE2,STATUS=ISTAT,FORM=IFORM,
-     1       IOSTAT=IOSTA2)
+        IF(IFORM.EQ.'NULL')THEN
+          OPEN(UNIT=IOUNIT,FILE=IFILE2,STATUS=ISTAT,IOSTAT=IOSTA2)
+        ELSE
+          OPEN(UNIT=IOUNIT,FILE=IFILE2,STATUS=ISTAT,FORM=IFORM,
+     1         IOSTAT=IOSTA2)
+        ENDIF
         IF(IOSTA2.NE.0)THEN
           CLOSE(UNIT=IOUNIT,ERR=1141)
         ELSE
+          IFILSV=IFILE2
           GOTO1190
         ENDIF
 C
@@ -5261,6 +5541,7 @@ C
           IF(IOSTA2.NE.0)THEN
             CLOSE(UNIT=IOUNIT,ERR=1141)
           ELSE
+            IFILSV=IFILE3
             GOTO1190
           ENDIF
 C
@@ -5272,6 +5553,7 @@ C
           IF(IOSTA2.NE.0)THEN
             CLOSE(UNIT=IOUNIT,ERR=1141)
           ELSE
+            IFILSV=IFILE4
             GOTO1190
           ENDIF
         ENDIF
@@ -6024,6 +6306,7 @@ C
       CHARACTER*4 IARGXX
       CHARACTER*4 IBUGS2
       CHARACTER*4 IFOUND
+      CHARACTER*4 IBASLC
 C
       INTEGER IESTAT
       INTEGER ICSTAT
@@ -6164,13 +6447,13 @@ C
  2344       FORMAT('      COMMAND EXECUTION NOT SUPPORTED.')
             CALL DPWRST('XXX','BUG ')
           ELSE
-            IF(IFEEDB.EQ.'ON')THEN
-              WRITE(ICOUT,999)
-              CALL DPWRST('XXX','BUG ')
-              WRITE(ICOUT,2346)IESTAT
- 2346         FORMAT('      COMMAND COMPLETED WITH STATUS ',I8)
-              CALL DPWRST('XXX','BUG ')
-            ENDIF
+CCCCC       IF(IFEEDB.EQ.'ON')THEN
+CCCCC         WRITE(ICOUT,999)
+CCCCC         CALL DPWRST('XXX','BUG ')
+CCCCC         WRITE(ICOUT,2346)IESTAT
+C2346         FORMAT('      COMMAND COMPLETED WITH STATUS ',I8)
+CCCCC         CALL DPWRST('XXX','BUG ')
+CCCCC       ENDIF
           ENDIF
 #else
           WRITE(ICOUT,2311)
@@ -6277,6 +6560,37 @@ C
             GOTO9000
           ENDIF
 C
+CCCCC     IF(NQUOTE.GE.1)THEN
+CCCCC       IWIDSV=IWIDTH
+CCCCC       CALL DPCONA(92,IBASLC)
+CCCCC       print *,'nquote,ibaslc = ',nquote,ibaslc
+CCCCC       IFLAG=0
+CCCCC       DO2621II=IWIDTH,1,-1
+CCCCC         IF(IFLAG.EQ.1)THEN
+CCCCC           IFLAG=0
+CCCCC           GOTO2621
+CCCCC         ENDIF
+CCCCC         CALL DPCOAN(ITEXT(II:II),IVAL)
+CCCCC         print *,'ii,itext(ii:ii),ival = ',ii,itext(ii:ii),ival
+CCCCC         IF(ITEXT(II:II).EQ.IBASLC)THEN
+CCCCC         IF(IVAL.EQ.92)THEN
+CCCCC           print *,'itext(ii:ii) = \ case'
+CCCCC           IF(II.GT.1 .AND.ITEXT(II-1:II-1).EQ.IBASLC)THEN
+CCCCC             print *,'previous character also \'
+CCCCC             IFLAG=1
+CCCCC           ELSE
+CCCCC             print *,'add \ character case'
+CCCCC             ITEXT(II+1:IWIDSV+1)=ITEXT(II:IWIDSV)
+CCCCC             ITEXT(II:II)=IBASLC
+CCCCC             IWIDSV=IWIDSV+1
+CCCCC           ENDIF
+CCCCC         ELSE
+CCCCC           print *,'no match \ case'
+CCCCC         ENDIF
+C2621       CONTINUE
+CCCCC       IWIDTH=IWIDSV
+CCCCC     ENDIF
+C
 C         STEP 2: 2019/03 - IF "HIDDEN" IS SPECIFIED OR A
 C                 "SET QWIN SYSTEM EXECUTE COMMAND LINE" COMMAND GIVEN,
 C                 THEN USE "CALL EXECUTE COMMAND LINE".
@@ -6292,6 +6606,7 @@ C
 #ifdef HAVE_EXECUTE_COMMAND_LINE
           IF(ISYSHI.EQ.'ON' .OR. IQWNSY.EQ.'COMM')THEN
             NC=0
+            ISTRIN=' '
             DO2410II=1,IWIDTH
               NC=NC+1
               ISTRIN(NC:NC)=ITEXT(II:II)
@@ -6315,13 +6630,13 @@ CCCCC       ISTRIN(NC:NC)="'"
  2644         FORMAT('      COMMAND EXECUTION NOT SUPPORTED.')
               CALL DPWRST('XXX','BUG ')
             ELSE
-              IF(IFEEDB.EQ.'ON')THEN
-                WRITE(ICOUT,999)
-                CALL DPWRST('XXX','BUG ')
-                WRITE(ICOUT,2646)IESTAT
- 2646           FORMAT('      COMMAND COMPLETED WITH STATUS ',I8)
-                CALL DPWRST('XXX','BUG ')
-              ENDIF
+CCCCC         IF(IFEEDB.EQ.'ON')THEN
+CCCCC           WRITE(ICOUT,999)
+CCCCC           CALL DPWRST('XXX','BUG ')
+CCCCC           WRITE(ICOUT,2646)IESTAT
+C2646           FORMAT('      COMMAND COMPLETED WITH STATUS ',I8)
+CCCCC           CALL DPWRST('XXX','BUG ')
+CCCCC         ENDIF
             ENDIF
 C
             IF(ISUBRO.EQ.'SYS2')THEN
@@ -6413,13 +6728,13 @@ C
               CALL DPWRST('XXX','BUG ')
             ENDIF
           ELSE
-            IF(IFEEDB.EQ.'ON')THEN
-              WRITE(ICOUT,999)
-              CALL DPWRST('XXX','BUG ')
-              WRITE(ICOUT,2641)ISTATUS
- 2641         FORMAT('STATUS FROM SYSTEM COMMAND: ',L4)
-              CALL DPWRST('XXX','BUG ')
-            ENDIF
+CCCCC.       IF(IFEEDB.EQ.'ON')THEN
+CCCCC.         WRITE(ICOUT,999)
+CCCCC.         CALL DPWRST('XXX','BUG ')
+CCCCC.         WRITE(ICOUT,2641)ISTATUS
+C2641         FORMAT('STATUS FROM SYSTEM COMMAND: ',L4)
+CCCCC.         CALL DPWRST('XXX','BUG ')
+CCCCC.       ENDIF
           ENDIF
 C
 CCCCC     IF(IQWNSY.EQ.'WINE')THEN
@@ -7138,9 +7453,14 @@ C
       CHARACTER*4 IBRANC
       CHARACTER*1 IBASLC
       CHARACTER*1 IJUNK
+      CHARACTER*2 ISTR
+      CHARACTER*20 IFORMT
 C
       CHARACTER*4 IRTFMD
       COMMON/COMRTF/IRTFMD
+C
+      INTEGER ILNCNT
+      COMMON/LINNUM/ILNCNT
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -7208,10 +7528,9 @@ C               **  (BY IGNORING BLANK CHARACTERS AT THE END)   **
 C               **************************************************
 C
       NCOUT=1
-      DO1200I=1,MAXCLN
-        J=MAXCLN-I+1
-        IF(ICOUT(J:J).NE.' ')THEN
-          NCOUT=J
+      DO1200I=MAXCLN,1,-1
+        IF(ICOUT(I:I).NE.' ')THEN
+          NCOUT=I
           GOTO1290
         ENDIF
  1200 CONTINUE
@@ -7253,13 +7572,69 @@ CCCCC IF(IFEEDB.EQ.'ON')THEN
                ENDIF
             ELSEIF((IHOST1.EQ.'VAX'.AND.ICOUT(1:1).EQ.'$') .OR.
      1        (IFORFM.EQ.'OFF'))THEN
-               WRITE(IOUNIT,1311,IOSTAT=IOS,ERR=8800)
-     1               (ICOUT(I:I),I=1,NCOUT)
- 1311          FORMAT(240A1)
+               IF(IOUTLN.EQ.'ON')THEN
+                 ILNCNT=ILNCNT+1
+                 IFORMT='(I ,A2,240A1)'
+                 IF(ILNCNT.GE.100000000)THEN
+                   IDIGIT=9
+                 ELSEIF(ILNCNT.GE.10000000)THEN
+                   IDIGIT=8
+                 ELSEIF(ILNCNT.GE.1000000)THEN
+                   IDIGIT=7
+                 ELSEIF(ILNCNT.GE.100000)THEN
+                   IDIGIT=6
+                 ELSEIF(ILNCNT.GE.10000)THEN
+                   IDIGIT=5
+                 ELSEIF(ILNCNT.GE.1000)THEN
+                   IDIGIT=4
+                 ELSEIF(ILNCNT.GE.100)THEN
+                   IDIGIT=3
+                 ELSEIF(ILNCNT.GE.10)THEN
+                   IDIGIT=2
+                 ELSE
+                   IDIGIT=1
+                 ENDIF
+                 WRITE(IFORMT(3:3),'(I1)')IDIGIT
+                 ISTR=': '
+                 WRITE(IOUNIT,IFORMT,IOSTAT=IOS,ERR=8800)
+     1                 ILNCNT,ISTR,(ICOUT(I:I),I=1,NCOUT)
+               ELSE
+                 WRITE(IOUNIT,1311,IOSTAT=IOS,ERR=8800)
+     1                 (ICOUT(I:I),I=1,NCOUT)
+ 1311            FORMAT(240A1)
+               ENDIF
             ELSE
-               WRITE(IOUNIT,1312,IOSTAT=IOS,ERR=8800)
-     1               (ICOUT(I:I),I=1,NCOUT)
- 1312          FORMAT(1X,240A1)
+               IF(IOUTLN.EQ.'ON')THEN
+                 ILNCNT=ILNCNT+1
+                 IFORMT='(1X,I ,A2,240A1)'
+                 IF(ILNCNT.GE.100000000)THEN
+                   IDIGIT=9
+                 ELSEIF(ILNCNT.GE.10000000)THEN
+                   IDIGIT=8
+                 ELSEIF(ILNCNT.GE.1000000)THEN
+                   IDIGIT=7
+                 ELSEIF(ILNCNT.GE.100000)THEN
+                   IDIGIT=6
+                 ELSEIF(ILNCNT.GE.10000)THEN
+                   IDIGIT=5
+                 ELSEIF(ILNCNT.GE.1000)THEN
+                   IDIGIT=4
+                 ELSEIF(ILNCNT.GE.100)THEN
+                   IDIGIT=3
+                 ELSEIF(ILNCNT.GE.10)THEN
+                   IDIGIT=2
+                 ELSE
+                   IDIGIT=1
+                 ENDIF
+                 WRITE(IFORMT(6:6),'(I1)')IDIGIT
+                 ISTR=': '
+                 WRITE(IOUNIT,IFORMT,IOSTAT=IOS,ERR=8800)
+     1                 ILNCNT,ISTR,(ICOUT(I:I),I=1,NCOUT)
+               ELSE
+                 WRITE(IOUNIT,1312,IOSTAT=IOS,ERR=8800)
+     1                 (ICOUT(I:I),I=1,NCOUT)
+ 1312            FORMAT(1X,240A1)
+              ENDIF
             ENDIF
          ENDIF
       ENDIF
@@ -7964,426 +8339,6 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPCDIR(IANS,IANSLC,IWIDTH,
-     1                  IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
-     1                  IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,
-     1                  IBUGD2,ISUBRO,IFOUND,IERROR)
-C
-C     PURPOSE--CHANGE THE CURRENT DIRECTORY.  NOTE THAT THIS COMMAND
-C              IS SITE AND HOST DEPENDENT.  IT IS PROVIODED AS A
-C              CONVENIENCE FUNCTION.  FOR EXAMPLE, THE WINDOWS NT
-C              VERSION SETS THE CURRENT DIRECTORY TO THE DIRECTORY
-C              WHERE THE DATAPLOT EXECUTABLE RESIDES.
-C
-C     WRITTEN BY--ALAN HECKERT
-C                 STATISTICAL ENGINEERING DIVISION
-C                 INFORMATION TECHNOLOGY LABORATORY
-C                 NATIONAL INSTIUTE OF STANDARDS AND TECHNOLOGY
-C                 GAITHERSBURG, MD 20899
-C                 PHONE--301-975-2899
-C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
-C           OF THE NATIONAL BUREAU OF STANDARDS.
-C     LANGUAGE--ANSI FORTRAN (1977)
-C               HOST DEPENDENT
-C     VERSION NUMBER--97.8
-C     ORIGINAL VERSION--AUGUST     1997.
-C
-C-----NON-COMMON VARIABLES -------------------------------------------
-C
-#ifdef INTEL
-      USE MSFLIB
-#endif
-      LOGICAL ISTATUS
-CCCCC LOGICAL IRESLT
-      CHARACTER*4 IANS
-      CHARACTER*4 IANSLC
-C
-      CHARACTER*4 ITEXTE
-      CHARACTER*4 ITEXTF
-C
-      CHARACTER*4 IHNAME
-      CHARACTER*4 IHNAM2
-      CHARACTER*4 IUSE
-C
-      CHARACTER*4 IBUGD2
-      CHARACTER*4 ISUBRO
-      CHARACTER*4 IFOUND
-      CHARACTER*4 IERROR
-C
-      CHARACTER*4 IFUNC
-      CHARACTER*1 IREPCH
-C
-      DIMENSION IANS(*)
-      DIMENSION IANSLC(*)
-C
-      PARAMETER(MAXCH=256)
-      DIMENSION ITEXTE(MAXCH)
-      DIMENSION ITEXTF(MAXCH)
-      CHARACTER*256 ITEXT2
-      CHARACTER*256 ITEXT3
-C
-      DIMENSION IHNAME(*)
-      DIMENSION IHNAM2(*)
-      DIMENSION IUSE(*)
-      DIMENSION IVALUE(*)
-      DIMENSION VALUE(*)
-      DIMENSION IVSTAR(*)
-      DIMENSION IVSTOP(*)
-      DIMENSION IFUNC(*)
-C
-C-----COMMON----------------------------------------------------------
-C
-      INCLUDE 'DPCOHO.INC'
-      INCLUDE 'DPCOBE.INC'
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
-C
-C-----START POINT-----------------------------------------------------
-C
-C
-      IFOUND='NO'
-      IERROR='NO'
-C
-      ITEXT2=' '
-      ITEXT3=' '
-      J2=0
-C
-      IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'CD  ')THEN
-        WRITE(ICOUT,999)
-  999   FORMAT(1X)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF DPCD--')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,53)IBUGD2,ISUBRO,IWIDTH,NUMNAM
-   53   FORMAT('IBUGD2,ISUBRO,IWIDTH,NUMNAM = ',2(A4,2X),2I8)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,54)(IANS(I),I=1,IWIDTH)
-   54   FORMAT('(IANS(I),I=1,IWIDTH) = ',25A4)
-        CALL DPWRST('XXX','BUG ')
-        DO76I=1,NUMNAM
-          WRITE(ICOUT,77)I,IHNAME(I),IHNAM2(I),IUSE(I),
-     1                   IVALUE(I),VALUE(I)
-   77     FORMAT('I,IHNAME(I),IHNAM2(I),IUSE(I),IVALUE(I),VALUE(I)= ',
-     1           I8,3(2X,A4),I8,G15.7)
-          CALL DPWRST('XXX','BUG ')
-   76   CONTINUE
-      ENDIF
-C
-C               *****************************************************
-C               **  STEP 1--                                       **
-C               **  EXTRACT THE TEXT STRING FROM THE COMMAND LINE  **
-C               *****************************************************
-C
-C               *****************************************
-C               **  STEP 1.1--                         **
-C               **  DETERMINE THE COMMAND              **
-C               **  (CD)  AND ITS LOCATION             **
-C               **  ON THE LINE.                       **
-C               **  DETERMINE THE START POSITION       **
-C               **  (XSTART) OF THE FIRST CHARACTER    **
-C               **  FOR THE STRING TO BE PRINTED.      **
-C               *****************************************
-C
-C  CHECK FOR "CD" FIRST
-C
-      DO1115I=1,IWIDTH-1
-        ISTART=I+2
-        IF(IANS(I).EQ.'C'.AND.IANS(I+1).EQ.'D'.AND.
-     1     IANS(I+2).EQ.' ')GOTO1190
- 1115 CONTINUE
-C
-C     NO MATCH
-C
- 1180 CONTINUE
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1181)
- 1181 FORMAT('***** ERROR IN DPCD--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1182)
- 1182 FORMAT('      COMMAND NOT EQUAL CD')
-      CALL DPWRST('XXX','BUG ')
-      IERROR='YES'
-      GOTO9000
- 1190 CONTINUE
-C
-C               *******************************************************
-C               **  STEP 1.2--                                       **
-C               **  DEFINE THE STOP  POSITION (ISTOP) FOR THE STRING.**
-C               *******************************************************
-C
-      IFOUND='YES'
-C
-      ISTOP=0
-      IF(ISTART.LE.IWIDTH)THEN
-        DO1220I=ISTART,IWIDTH
-          IREV=IWIDTH-I+ISTART
-          IF(IANS(IREV).NE.' ')THEN
-            ISTOP=IREV
-            GOTO1229
-          ENDIF
- 1220   CONTINUE
- 1229   CONTINUE
-      ENDIF
-C
-C               *****************************************
-C               **  STEP 1.3--                         **
-C               **  COPY OVER THE STRING OF INTEREST.  **
-C               *****************************************
-C
-      NCTEX=0
-      IF(ISTART.LE.ISTOP .AND. ISTOP.GT.0)THEN
-        ITEMP=ISTOP-ISTART+1
-        IF(ITEMP.GT.MAXCH)ITEMP=MAXCH
-        ISTOP=ISTART+ITEMP-1
-C
-        J=0
-        DO1310I=ISTART,ISTOP
-          J=J+1
-          J2=J
-          ITEXTE(J)=IANS(I)
-          ITEXTF(J)=IANSLC(I)
- 1310   CONTINUE
-        NCTEX=J2
-      ENDIF
-C
-C               ******************************************************
-C               **  STEP 1.4--                                      **
-C               **  CALL THE SUBROUTINE DPREPL                      **
-C               **  WHICH WILL SCAN THE STRING FOR ALL OCCURRANCES  **
-C               **  OF THE SUBSTRING VALU()                         **
-C               **  AND REPLACE THEM BY THEIR LITERAL VALUES.       **
-C               ******************************************************
-C
-      NCTEXT=NCTEX
-      IF(NCTEXT.GE.1)CALL DPREPL(ITEXTE,NCTEXT,
-     1IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
-     1IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,
-     1IBUGD2,IERROR)
-      IF(NCTEXT.GE.1)THEN
-        DO1510I=1,NCTEXT
-          ITEXT2(I:I)=ITEXTE(I)(1:1)
- 1510   CONTINUE
-      ENDIF
-C
-      NCTEXT=NCTEX
-CCCCC IF(NCTEXT.GE.1)CALL DPREPL(ITEXTF,NCTEXT,
-CCCCC1IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
-CCCCC1IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,
-CCCCC1IBUGD2,IERROR)
-      IF(NCTEXT.GE.1)THEN
-        DO1610I=1,NCTEXT
-          ITEXT3(I:I)=ITEXTF(I)(1:1)
- 1610   CONTINUE
-      ENDIF
-C
-C               ********************************
-C               **  STEP 2--                  **
-C               **  STEP THROUGH EACH HOST    **
-C               ********************************
-C
-      IF(IHOST1.EQ.'IBM-'.AND.ICOMPI.EQ.'MS-F')THEN
-C
-C       ****************************************************
-C       *  IBM/PC 386 - MICROSOFT WINDOWS 95/NT COMPILER   *
-C       ****************************************************
-C
-#ifdef INTEL
-        ISTATUS=.TRUE.
-        DO2510I=1,NCTEXT
-          ISTART=I
-          IF(ITEXT3(I:I).NE.' ')GOTO2519
- 2510   CONTINUE
- 2519   CONTINUE
-        DO2520I=NCTEXT,1,-1
-          ISTOP=I
-          IF(ITEXT3(I:I).NE.' ')GOTO2529
- 2520   CONTINUE
- 2529   CONTINUE
-        ISTATUS=.FALSE.
-        ISTATUS=CHANGEDIRQQ(ITEXT3(ISTART:ISTOP))
-        IF(ISTATUS)THEN
-          WRITE(ICOUT,2501)
- 2501     FORMAT('THE CURRENT DIRECTORY HAS BEEN CHANGED TO ')
-          CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,2502)ITEXT3(1:80)
- 2502     FORMAT(5X,A80)
-          CALL DPWRST('XXX','BUG ')
-        ELSE
-          WRITE(ICOUT,2503)
- 2503     FORMAT('*****WARNING: DATAPLOT WAS UNSUCCESSFUL IN ',
-     1           'CHANGING THE CURRENT DIRECTORY')
-          CALL DPWRST('XXX','BUG ')
-        ENDIF
-#endif
-        GOTO9000
-      ELSEIF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
-C
-C       *********************************************
-C       *  UNIX/LINUX - USE CHDIR CALL              *
-C       *********************************************
-C
-#ifdef LINUX
-        DO2310I=1,NCTEXT
-          ISTART=I
-          IF(ITEXT3(I:I).NE.' ')GOTO2319
- 2310   CONTINUE
- 2319   CONTINUE
-        DO2320I=NCTEXT,1,-1
-          ISTOP=I
-          IF(ITEXT3(I:I).NE.' ')GOTO2329
- 2320   CONTINUE
- 2329   CONTINUE
-C
-        IRESLT=0
-        IRESLT=CHDIR(ITEXT3(ISTART:ISTOP))
-        IF(IRESLT.EQ.0)THEN
-          WRITE(ICOUT,2301)
- 2301     FORMAT('THE CURRENT DIRECTORY HAS BEEN CHANGED TO ')
-          CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,2302)ITEXT3(1:80)
- 2302     FORMAT(A80)
-          CALL DPWRST('XXX','BUG ')
-        ELSE
-          WRITE(ICOUT,2303)
- 2303     FORMAT('*****WARNING: DATAPLOT WAS UNSUCCESSFUL IN ',
-     1           'CHANGING THE CURRENT DIRECTORY')
-          CALL DPWRST('XXX','BUG ')
-        ENDIF
-#endif
-        GOTO9000
-      ELSEIF(IHOST1.EQ.'NVE')THEN
-C
-C       *********************************************************
-C       *  CDC - NOS/VE OPERATING CD  EM.  USE "SCLCMD" TO PASS *
-C       *  COMMANDS TO THE OPERATING CD  EM.                    *
-C       *  DATAPLOT WILL DO NO ERROR CHECKING ON THE COMMAND    *
-C       *********************************************************
-C
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,2111)
- 2111   FORMAT('***** ERROR IN DPCD--')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,2112)
- 2112   FORMAT('      THE INTERFACE TO CD OPERATIONS')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,2113)
- 2113   FORMAT('      HAS NOT YET BEEN IMPLEMEMNTED FOR THE ',
-     1         'NOS/VE VERSION')
-        CALL DPWRST('XXX','BUG ')
-        GOTO9000
-      ELSEIF(IHOST1.EQ.'VAX')THEN
-C
-C       **********************************************
-C       *  VAX/VMS - LEFT TO IMPLEMENTOR             *
-C       **********************************************
-C
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,2211)
- 2211   FORMAT('***** ERROR IN DPCD--')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,2212)
- 2212   FORMAT('      THE INTERFACE TO CD OPERATIONS')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,2213)
- 2213   FORMAT('      HAS NOT YET BEEN IMPLEMEMNTED FOR THE ',
-     1         'VAX/VMS VERSION')
-        CALL DPWRST('XXX','BUG ')
-        GOTO9000
-      ELSEIF(IHOST1.EQ.'IBM-'.AND.ICOMPI.EQ.'OTG ')THEN
-C
-C       *****************************************
-C       *  IBM/PC 386 - OTG COMPILER            *
-C       *****************************************
-C
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,2411)
- 2411   FORMAT('***** ERROR IN DPCD--')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,2412)
- 2412   FORMAT('      THE INTERFACE TO CD OPERATIONS')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,2413)
- 2413   FORMAT('      HAS NOT YET BEEN IMPLEMEMNTED FOR THE ',
-     1         'OTG VERSION')
-        CALL DPWRST('XXX','BUG ')
-        GOTO9000
-      ELSE
-C
-C       *********************************************************
-C       *  OTHER   - LEFT TO IMPLEMENTOR                        *
-C       *********************************************************
-C
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,8011)
- 8011   FORMAT('***** ERROR IN DPCD--')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,8012)
- 8012   FORMAT('      THE INTERFACE TO CD OPERATIONS')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,8013)
- 8013   FORMAT('      HAS NOT YET BEEN DONE FOR THIS')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,8014)
- 8014   FORMAT('      COMPUTER/MODEL/OP-SYS/COMPILER/SITE')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,8021)IHOST1
- 8021   FORMAT(' HOST     = ',A4)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,8022)IHMOD1
- 8022   FORMAT(' MODEL    = ',A4)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,8023)IOPSY1
- 8023   FORMAT(' OP-SYS   = ',A4)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,8024)ICOMPI
- 8024   FORMAT(' COMPILER = ',A4)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,8025)ISITE
- 8025   FORMAT(' SITE     = ',A4)
-        CALL DPWRST('XXX','BUG ')
-        IERROR='YES'
-        GOTO9000
-      ENDIF
-C
-C               *****************
-C               **  STEP 90--  **
-C               **  EXIT       **
-C               *****************
-C
- 9000 CONTINUE
-      IF(IBUGD2.EQ.'ON'.OR.ISUBRO.EQ.'CD  ')THEN
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9011)
- 9011   FORMAT('***** AT THE END       OF DPCD--')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9015)IFOUND,IERROR,NCTEX,NCTEXT
- 9015   FORMAT('IFOUND,IERROR,NCTEX,NCTEXT  = ',2(A4,2X),2I8,2X,A1)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9016)(ITEXTE(I),I=1,NCTEX)
- 9016   FORMAT('(ITEXTE(I),I =1,NCTEX) = ',25A4)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9018)(ITEXT2(J:J),J=1,NCTEXT)
- 9018   FORMAT('(ITEXT2(I),I=1,NCTEXT) = ',25A4)
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
-C
-      RETURN
-      END
       SUBROUTINE DPFLSH(IUNIT,IBUGD2,ISUBRO,IFOUND,IERROR)
 C
 C     PURPOSE--ENTER A "FLUSH" COMMAND TO CLEAR STANDARD OUTPUT.
@@ -8561,10 +8516,11 @@ C
 C
       RETURN
       END
-      REAL FUNCTION RANLP(IDUM)
+      REAL FUNCTION RANLP(IDUM,IRESET)
 C
       INTEGER TABPTJ
       INTEGER ITABLE(98)
+      INTEGER ITABSV(98)
 C   LEWIS-PAYNE GFSR UNIFORM RANDOM NUMBER GENERATOR
 C
 C  T. G. LEWIS & W. H. PAYNE (1973) GENERALIZED FEEDBACK SHIFT REGISTER
@@ -8590,11 +8546,12 @@ C  PARAMETERS OF TAUSWORTHE SEQUENCE
       REAL    FN
 C
       SAVE TABPTJ
+      SAVE TABPSV
       SAVE ITABLE
 C
       DATA P /98/
       DATA Q /27/
-      DATA TABTJ /0/
+      DATA TABPTJ /0/
 C  FN = 2**31
       DATA FN / 2147483648. /
 C
@@ -8619,7 +8576,37 @@ C
      & 1348681739,84379947,1955819746,941474606,984690559,
      & 1794209263,1704575856,1253913135 /
 C
+      DATA ITABSV /346256726,591599773,1943131421,1173234223,
+     & 1776849374,1119416586,172236044,985756773,1554281477,
+     & 1503137291,650397619,1618395655,639939067,1448259547,
+     & 1046853128,659170036,1034934222,279813371,326930100,
+     & 367002640,648480182,1909733845,618563844,845531267,
+     & 292262469,299413367,2139821356,1005803337,390139420,
+     & 1161028423,2034360736,334070487,565633315,124796253,
+     & 2104169336,2009751844,1999687407,83223028,1591328966,
+     & 646701838,1935362333,795013136,680356918,1771711842,
+     & 1324935502,1869840308,356745634,1061920662,614951490,
+     & 261876461,703987800,797463948,178239686,1641708282,
+     & 1539695556,1334926802,940547749,1957646566,1878491364,
+     & 2033904942,1711106005,2138438575,647734238,1555990485,
+     & 1210108489,1793192836,1819829578,751843064,345621400,
+     & 575445974,1640918761,1379191461,1617832156,542966103,
+     & 1305854952,1476721677,1466811698,1842260101,1666639833,
+     & 217007402,685228354,902087789,32432242,789712994,702791444,
+     & 1081111755,1572116899,321512624,644413114,863989644,
+     & 1348681739,84379947,1955819746,941474606,984690559,
+     & 1794209263,1704575856,1253913135 /
+C
 C     START EXECUTABLE CODE
+C
+C     RESET INITIAL TABLE IF REQUESTED
+C
+      IF(IRESET.EQ.1)THEN
+        DO100LL=1,P
+          ITABLE(LL)=ITABSV(LL)
+  100   CONTINUE
+        TABPTJ = 0
+      ENDIF
 C
 C     UPDATE POINTER
 C
@@ -8641,10 +8628,11 @@ C
 C
       RETURN
       END
-      REAL FUNCTION RANFT(IDUM)
+      REAL FUNCTION RANFT(IDUM,IRESET)
 C
       INTEGER TABPTJ
       INTEGER ITABLE(521)
+      INTEGER ITABSV(521)
 C
 C     FUSHIMI-TEZUKA GFSR UNIFORM RANDOM NUMBER GENERATOR
 C
@@ -8680,7 +8668,7 @@ C
 C
       DATA P /521/
       DATA Q /32/
-      DATA TABTJ /0/
+      DATA TABPTJ /0/
 C  FN = 2**31
       DATA FN / 2147483648. /
 C
@@ -8888,7 +8876,218 @@ C
      & 1480946742,  936424064, 1719078432,
      &  306219886, 1266805790/
 C
+      DATA (ITABSV(I),I=1,18)/
+     &  1464221660, 1158328647, 1090310074,
+     &  363453867, 1125650601, 1626204584, 
+     &  596067919,  102301378, 1392342446,
+     & 2117672210, 1470351739, 1107351344,
+     & 1160753706, 1046087394,  142212969,
+     &   24070872,  832220068, 561689965/
+      DATA (ITABSV(I),I=19,36)/
+     & 2132613190, 1327815900, 2099255323,
+     & 1175377098, 2008300980, 1514090961,
+     & 1793048224,  123482417,  899779517,
+     & 14500045, 1036604204, 1819512164,
+     & 373807068, 1185724401, 1969247094,
+     & 117941294,  111922077, 2026157014/
+      DATA (ITABSV(I),I=37,54)/
+     &  972743819,  112361322,  818613141,
+     & 1650818105, 1958655142, 340146731,
+     &  244639603, 1374107263,  581629403,
+     &   99815077,  407270832, 970490435,
+     &  894442080,  502509560, 1772474916,
+     &   92762028, 2125760521, 2119124955/
+      DATA (ITABSV(I),I=55,72)/
+     &  116833190,  815370972,  846774897,
+     &  371565210,   14038994, 1877654635,
+     &  469257780, 1255556676,  966738110,
+     &  106141568, 1509906366, 182036763,
+     & 1475162413,  355970676, 2057194637, 
+     & 783547359,  710739309, 1091521749/
+      DATA (ITABSV(I),I=73,90)/
+     & 1400722769, 1231840169, 1795363303,
+     &  378309524, 1696574748, 43924770,
+     & 1656718469,  194341481, 2122127727,
+     & 1192298313,  787836434, 1930262483,
+     & 2033580199, 1180162588,  833652824,
+     & 1019699940, 1177388520, 1454532182/
+      DATA (ITABSV(I),I=91,108)/
+     & 1516029073,    7158256, 49724360, 
+     & 346179837,  711320736, 126147103,
+     &  588000532, 1952681477,  872490485,
+     &  929239679, 1230203969, 65553667,
+     &  101370358,  777074835, 1448694438,
+     & 37829780,  149952948, 1260879105/
+      DATA (ITABSV(I),I=109,126)/
+     &  226489139, 1261936689,  821434251,
+     & 1820573641, 1034181831, 1908878446,
+     & 1261839389, 1333596798,  474560247,
+     &  179806371,  496186068, 720243575,
+     & 1915930533, 1674665013, 1174195909,
+     & 1483410280, 1538917937, 300722691/
+      DATA (ITABSV(I),I=127,144)/
+     & 1217246246, 1328435200, 1770412188,
+     & 1931714531,  668347171, 1571429187, 
+     & 1256455103, 1034215170,  321723372,
+     & 1988373705, 1603828968, 338728032,
+     &   22885627,  239160176, 1623174495,
+     & 1208969624, 1809686301, 586768446/
+      DATA (ITABSV(I),I=145,162)/
+     &  572364898, 1157585773, 1489728638,
+     &  357378493, 2096054839, 1071933685,
+     &  749129112, 2063846670,  915116346,
+     &   82547408, 99850294, 999162951,
+     & 1757081564, 1222216251, 1107447002,
+     &  620994065,  276726035, 1632374490/
+      DATA (ITABSV(I),I=163,180)/
+     & 1214463005, 1795143947,  986560526,
+     &  401521995,  986551091, 242947950,
+     &  859782703, 2097912305,   78110042,
+     &  682967577,  335973424, 970829205,
+     &  145698529,  623819323,  516197007,
+     & 2036646416, 1174464179, 1697256876/
+      DATA (ITABSV(I),I=181,198)/
+     &  771031831,  815657619, 1369483732,
+     &  183355178,   11443201, 1199834624,
+     &  749080238, 1242421352, 1392163283,
+     & 1253963316, 2104424001, 2146002364,
+     &  873880383,  666935248, 1463559443,
+     &  765865763, 2036382270, 1029929651/
+      DATA (ITABSV(I),I=199,216)/
+     & 1309449537,  505953903, 1679489248,
+     &  650734968, 1915876652, 769087046,
+     &  341910829, 1976547278,  405565903,
+     &  233036143, 1775766920, 1734382081,
+     & 1964094636, 1567409215,  264778756,
+     &  550435508, 1957515327, 510628849/
+      DATA (ITABSV(I),I=217,234)/
+     &  794411731,  772129518, 2084613852,
+     &  2056793406,  482508883, 628545509,
+     &  492310170,    2535299, 1808581000,
+     & 1337327362,  897123632, 474197437,
+     &  524509642,   13182159,  361730672,
+     & 81199647, 1070351284, 2071002916/
+      DATA (ITABSV(I),I=235,252)/
+     &  931058636, 1736643210, 1312184093,
+     & 1368480008,  493635086, 795562041,
+     &  778036865,  437663472,  678482929,
+     &  124422133, 1661200800, 366950953,
+     & 1919116534, 1534692645,  153200398,
+     &    6196433, 1064234375, 195844762/
+      DATA (ITABSV(I),I=253,270)/
+     & 1617967730, 1745699796, 1054886058,
+     & 1992470821, 1744580876, 1576550441,
+     & 1430025201, 1944059630, 1993995952,
+     & 1607653829,  198657449, 1646157905,
+     &  944085034, 1627982402,  411083987,
+     &  633677110,  839782297, 958537595/
+      DATA (ITABSV(I),I=271,288)/
+     & 1866523018,  211248150,  657188559,
+     &  859714592,  953170728, 1859902523,
+     &  609738329,   80132019,  306596664,
+     & 1156862695, 74374927, 183915535,
+     &  839428712, 1458285441,  172543676,
+     &  838639082, 1071875913, 1925638755/
+      DATA (ITABSV(I),I=289,306)/
+     & 1631994995, 1278741481, 1939215638,
+     &   37917347, 1621691517, 2054362142,
+     &  422444128,  437522314,  453524070,
+     &  959581287,   80501639, 76349063,
+     & 1150964582, 1876521145,  746044173,
+     & 1754884425,  802123077, 1527702920/
+      DATA (ITABSV(I),I=307,324)/
+     &  788492908,   78719119,  182306481,
+     & 1713345545,  590352192, 674841804,
+     & 1205060021,  525498090, 1593642166,
+     &  927838578, 1304219579, 652879324,
+     & 1448845945,  436724282, 2073385775,
+     &  177580556, 1741619009, 1188575653/
+      DATA (ITABSV(I),I=325,342)/
+     &  498115577,  937246633,  511610086,
+     &  106192814,  223714241, 1868866237,
+     &  939024237,  323029456,  317407376, 
+     & 316389284,  385186216, 1309020254,
+     & 1880929110, 1816267930, 1682541052,
+     &  402797268,  945227932, 1509316265/
+      DATA (ITABSV(I),I=343,360)/
+     & 1001627491,  228932404, 1523702251,
+     &  121242082, 1901174818, 635982413,
+     &  930304172, 1941268644,  183050837,
+     & 1338834955,  465435419, 1437644759,
+     & 1156952116, 1577273674,  700500350,
+     &  804029596, 1358313048, 1416230126/
+      DATA (ITABSV(I),I=361,378)/
+     & 2018467981,  592185008, 1414209258,
+     &  265994210, 1651218063, 90814660,
+     & 1608601250, 1089576667,  921984300,
+     & 1695616995, 1126839275, 129412032,
+     & 1774571060,  962915884,  290498596,
+     & 1179573341, 1667596730, 489164113/
+      DATA (ITABSV(I),I=379,396)/
+     &  813846475,  994357582,  450139720,
+     & 2060869306,  266683479, 350860264,
+     & 2065846033,  158671935, 1772005618,
+     &  795205130, 1221884629, 1976326989,
+     &  998135974, 1676548301,  614362620,
+     &  491179564,  327793080, 922741005/
+      DATA (ITABSV(I),I=397,414)/
+     & 1528656048, 1775329675,  828056307,
+     & 1448319189,  173470778, 1388056867,
+     &  956906308,  219286173,  460771359,
+     &  358199631,  864535676, 376750930,
+     & 1271089154,   28090922, 1825207361,
+     & 1603702579,  361991756, 174271141/
+      DATA (ITABSV(I),I=415,432)/
+     & 1954855926,  911232829, 1384270246,
+     & 1739676571,  754274892, 502141603,
+     & 2030672558, 1703564182, 1551225070,
+     &  988276910, 1331500472, 1748831164,
+     & 2144180506,  318684035,  298360627,
+     &  172742244, 2028487811, 1491743352/
+      DATA (ITABSV(I),I=433,450)/
+     & 2006421986, 2146093508,  258253944,
+     &  409586221, 1230527712, 1211734974,
+     & 1042283517,  634961640,  954041537,
+     & 1463203857, 1231982802, 2045112487,
+     & 1729798774,   94381532, 1427476838,
+     & 2063395629, 1924404847, 221056062/
+      DATA (ITABSV(I),I=451,468)/
+     &  142524724,  968769863, 2041559534,
+     & 2144859819,  998479391, 1005906879,
+     & 1285646169, 2022189916,  869720790,
+     & 1623616048,   40216307, 1605606591,
+     &  150466735, 1306162626, 1097415548,
+     & 1673554800, 1842198841, 1564181888/
+      DATA (ITABSV(I),I=469,486)/
+     & 1857668689, 1720395937,  974689951,
+     &  608747141,  601104479, 999903065,
+     & 1311275680, 1133168246, 1273728926,
+     & 1445065986, 1331462779, 1115324913,
+     & 2028541775,  251232653,  514348969,
+     & 1041442808, 1537551006, 949033491/
+      DATA (ITABSV(I),I=487,504)/
+     & 1044836968,  601139657, 1591139711,
+     & 1818750333,  454615333, 2120569352,
+     &  770493452,  357056354,  976831960,
+     &  102270405,  871779235, 1860162811,
+     &  689431451, 1600121392,  302523963,
+     & 1426453692, 2047249983, 1147472047/
+      DATA (ITABSV(I),I=505,521)/
+     & 1159543869,   39709758, 1681972136,
+     & 1578444291, 1047707446, 1600623169,
+     &  145955414,  646318224,  698104242,
+     & 1334831733, 1902759969, 1507811506,
+     & 1480946742,  936424064, 1719078432,
+     &  306219886, 1266805790/
+C
 C     START EXECUTABLE CODE
+C
+      IF(IRESET.EQ.1)THEN
+        DO100LL=1,521
+          ITABLE(LL)=ITABSV(LL)
+  100   CONTINUE
+        TABPTJ = 0
+      ENDIF
 C
 C     UPDATE POINTER
 C
@@ -9434,90 +9633,6 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPPWD(CURDIR,NLAST,IBUGS2,ISUBRO,IFOUND,IERROR)
-C
-C     PURPOSE--RETURN CURRENT WORKING DIRECTORY.  THIS ROUTINE
-C              UTILIZES THE "GETCWD" LIBRARY CALL.  THIS IS NOT
-C              PART OF THE FORTRAN 90 STANDARD, BUT IT SHOULD BE
-C              AVAILABLE ON MOST CURRENTLY SUPPORTED PLATFORMS.
-C
-C     WRITTEN BY--ALAN HECKERT
-C                 STATISTICAL ENGINEERING DIVISION
-C                 INFORMATION TECHNOLOGY LABORATORY
-C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
-C                 GAITHERSBURG, MD 20899-8980
-C                 PHONE--301-975-2855
-C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
-C           OF THE NATIONAL BUREAU OF STANDARDS.
-C     LANGUAGE--ANSI FORTRAN (1990)
-C     VERSION NUMBER--2011/1
-C     ORIGINAL VERSION--JANUARY   2011.
-C
-C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-C
-      CHARACTER*255 CURDIR
-      CHARACTER*4 IBUGS2
-      CHARACTER*4 ISUBRO
-      CHARACTER*4 IFOUND
-      CHARACTER*4 IERROR
-C
-C-----COMMON----------------------------------------------------------
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
-C
-C-----START POINT-----------------------------------------------------
-C
-      IFOUND='YES'
-      IERROR='NO'
-C
-      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'PPWD')THEN
-        WRITE(ICOUT,999)
-  999   FORMAT(1X)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,51)
-   51   FORMAT('AT THE BEGINNING OF DPPWD')
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
-C
-      CURDIR=' '
-      CALL GETCWD(CURDIR)
-      NLAST=255
-C
-      DO100I=255,1,-1
-        IF(CURDIR(I:I).NE.' ')THEN
-          NLAST=I
-          GOTO109
-        ENDIF
-  100 CONTINUE
-  109 CONTINUE
-C
-      IF(IFEEDB.EQ.'ON')THEN
-        WRITE(ICOUT,111)CURDIR(1:NLAST)
-  111   FORMAT('THE CURRENT WORKING DIRECTORY IS: ',A)
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
-C
-      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'PPWD')THEN
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9051)
- 9051   FORMAT('AT THE END OF DPPWD')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9053)CURDIR
- 9053   FORMAT('CURDIR = ',A)
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
-C
-      RETURN
-      END
       SUBROUTINE IQWNHE(CHECKED)
 C
 C  CALL BACK ROUTINE FOR WHEN THE "USING HELP" MENU ITEM IS
@@ -9628,7 +9743,8 @@ C
       RETURN
       END
 #ifdef INTEL
-      SUBROUTINE DPCLIP(XSCRT,MAXVAL,NVAL,NUME,PREAMV,ISKIP,IGRPAU,
+      SUBROUTINE DPCLIP(XSCRT,MAXVAL,NVAL,NUME,NUMVLN,PREAMV,
+     1                  ISKIP,IGRPAU,
      1                  IVLIST,IVLIS2,IAVANM,MAXRDV,
      1                  ITYPE,ISTR,NCSTR,IEOF,
      1                  IBUGS2,ISUBRO,IERROR)
@@ -9669,6 +9785,7 @@ C
       CHARACTER*4 IERROR
       CHARACTER*80 IATEMP
       CHARACTER*1  ICHR
+      CHARACTER*1  ICHR2
       CHARACTER*1  ICHRN
 C
 C     FOLLOWING DECLARATIONS FOR INTEL FORTRAN COMPILER UNDER WINDOWS
@@ -10020,6 +10137,26 @@ C              DELIMITERS.  IF NUMBER OF VARIABLES NOT SPECIFIED
 C              ON READ, CHECK NUMBER OF VALUES READ ON FIRST LINE.
 C
                ELSEIF(IVAL.EQ.10 .OR. IVAL.EQ.13)THEN
+C
+C                2020/02: IF LAST CHARACTER IS COMMA OR TAB, THEN
+C                         ADD A MISSING VALUE.
+C
+                 ICHR2=STEXT(ICNTR-1)(1:1)
+                 IVAL2=ICHAR(ICHR2)
+                 IF(IVAL2.EQ.9 .OR. ICHR2.EQ.',')THEN
+                   NVAL=NVAL+1
+                   IF(NVAL.GT.MAXVAL)THEN
+                     WRITE(ICOUT,1003)
+                     CALL DPWRST('XXX','BUG ')
+                     WRITE(ICOUT,1005)
+                     CALL DPWRST('XXX','BUG ')
+                     WRITE(ICOUT,1007)MAXVAL
+                     CALL DPWRST('XXX','BUG ')
+                     IERROR='YES'
+                     GOTO1099
+                   ENDIF
+                   XSCRT(NVAL)=PREAMV
+                 ENDIF
                  ICHRN=STEXT(ICNTR+1)(1:1)
                  IVALN=ICHAR(ICHRN)
                  IF((IVAL.EQ.10 .AND. IVALN.EQ.13) .OR.
@@ -10032,6 +10169,8 @@ C
                      NUME=NVAL
                      IF(ICHCNT.GT.0)NUME=NVAL+1
                    ENDIF
+                   NUMVLN=NVAL
+                   IF(ICHCNT.GT.0)NUMVLN=NUMVLN+1
                  ENDIF
                  NLNRD=NLNRD+1
                  IF(ICHCNT.GT.0)GOTO1080
@@ -12054,3 +12193,1409 @@ C
       RETURN
       END
 #endif
+      SUBROUTINE DPCDIR(IANS,IANSLC,IWIDTH,
+     1                  IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
+     1                  IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,
+     1                  IBUGD2,ISUBRO,IFOUND,IERROR)
+C
+C     PURPOSE--CHANGE THE CURRENT DIRECTORY.  NOTE THAT THIS COMMAND
+C              IS SITE AND HOST DEPENDENT.  IT IS PROVIODED AS A
+C              CONVENIENCE FUNCTION.  FOR EXAMPLE, THE WINDOWS NT
+C              VERSION SETS THE CURRENT DIRECTORY TO THE DIRECTORY
+C              WHERE THE DATAPLOT EXECUTABLE RESIDES.
+C
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTIUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL BUREAU OF STANDARDS.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C               HOST DEPENDENT
+C     VERSION NUMBER--97.8
+C     ORIGINAL VERSION--AUGUST     1997.
+C
+C-----NON-COMMON VARIABLES -------------------------------------------
+C
+#ifdef INTEL
+      USE MSFLIB
+#endif
+      LOGICAL ISTATUS
+CCCCC LOGICAL IRESLT
+      CHARACTER*4 IANS
+      CHARACTER*4 IANSLC
+C
+      CHARACTER*4 ITEXTE
+      CHARACTER*4 ITEXTF
+C
+      CHARACTER*4 IHNAME
+      CHARACTER*4 IHNAM2
+      CHARACTER*4 IUSE
+C
+      CHARACTER*4 IBUGD2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 IFUNC
+      CHARACTER*1 IREPCH
+C
+      DIMENSION IANS(*)
+      DIMENSION IANSLC(*)
+C
+      PARAMETER(MAXCH=256)
+      DIMENSION ITEXTE(MAXCH)
+      DIMENSION ITEXTF(MAXCH)
+      CHARACTER*256 ITEXT2
+      CHARACTER*256 ITEXT3
+C
+      DIMENSION IHNAME(*)
+      DIMENSION IHNAM2(*)
+      DIMENSION IUSE(*)
+      DIMENSION IVALUE(*)
+      DIMENSION VALUE(*)
+      DIMENSION IVSTAR(*)
+      DIMENSION IVSTOP(*)
+      DIMENSION IFUNC(*)
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOBE.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+C
+      IFOUND='NO'
+      IERROR='NO'
+C
+      ITEXT2=' '
+      ITEXT3=' '
+      J2=0
+C
+      IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'CD  ')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCD--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGD2,ISUBRO,IWIDTH,NUMNAM
+   53   FORMAT('IBUGD2,ISUBRO,IWIDTH,NUMNAM = ',2(A4,2X),2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)(IANS(I),I=1,IWIDTH)
+   54   FORMAT('(IANS(I),I=1,IWIDTH) = ',25A4)
+        CALL DPWRST('XXX','BUG ')
+        DO76I=1,NUMNAM
+          WRITE(ICOUT,77)I,IHNAME(I),IHNAM2(I),IUSE(I),
+     1                   IVALUE(I),VALUE(I)
+   77     FORMAT('I,IHNAME(I),IHNAM2(I),IUSE(I),IVALUE(I),VALUE(I)= ',
+     1           I8,3(2X,A4),I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   76   CONTINUE
+      ENDIF
+C
+C               *****************************************************
+C               **  STEP 1--                                       **
+C               **  EXTRACT THE TEXT STRING FROM THE COMMAND LINE  **
+C               *****************************************************
+C
+C               *****************************************
+C               **  STEP 1.1--                         **
+C               **  DETERMINE THE COMMAND              **
+C               **  (CD)  AND ITS LOCATION             **
+C               **  ON THE LINE.                       **
+C               **  DETERMINE THE START POSITION       **
+C               **  (XSTART) OF THE FIRST CHARACTER    **
+C               **  FOR THE STRING TO BE PRINTED.      **
+C               *****************************************
+C
+C  CHECK FOR "CD" FIRST
+C
+      DO1115I=1,IWIDTH-1
+        ISTART=I+2
+        IF(IANS(I).EQ.'C'.AND.IANS(I+1).EQ.'D'.AND.
+     1     IANS(I+2).EQ.' ')GOTO1190
+ 1115 CONTINUE
+C
+C     NO MATCH
+C
+ 1180 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1181)
+ 1181 FORMAT('***** ERROR IN DPCD--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1182)
+ 1182 FORMAT('      COMMAND NOT EQUAL CD')
+      CALL DPWRST('XXX','BUG ')
+      IERROR='YES'
+      GOTO9000
+ 1190 CONTINUE
+C
+C               *******************************************************
+C               **  STEP 1.2--                                       **
+C               **  DEFINE THE STOP  POSITION (ISTOP) FOR THE STRING.**
+C               *******************************************************
+C
+      IFOUND='YES'
+C
+      ISTOP=0
+      IF(ISTART.LE.IWIDTH)THEN
+        DO1220I=ISTART,IWIDTH
+          IREV=IWIDTH-I+ISTART
+          IF(IANS(IREV).NE.' ')THEN
+            ISTOP=IREV
+            GOTO1229
+          ENDIF
+ 1220   CONTINUE
+ 1229   CONTINUE
+      ENDIF
+C
+C               *****************************************
+C               **  STEP 1.3--                         **
+C               **  COPY OVER THE STRING OF INTEREST.  **
+C               *****************************************
+C
+      NCTEX=0
+      IF(ISTART.LE.ISTOP .AND. ISTOP.GT.0)THEN
+        ITEMP=ISTOP-ISTART+1
+        IF(ITEMP.GT.MAXCH)ITEMP=MAXCH
+        ISTOP=ISTART+ITEMP-1
+C
+        J=0
+        DO1310I=ISTART,ISTOP
+          J=J+1
+          J2=J
+          ITEXTE(J)=IANS(I)
+          ITEXTF(J)=IANSLC(I)
+ 1310   CONTINUE
+        NCTEX=J2
+      ENDIF
+C
+C               ******************************************************
+C               **  STEP 1.4--                                      **
+C               **  CALL THE SUBROUTINE DPREPL                      **
+C               **  WHICH WILL SCAN THE STRING FOR ALL OCCURRANCES  **
+C               **  OF THE SUBSTRING VALU()                         **
+C               **  AND REPLACE THEM BY THEIR LITERAL VALUES.       **
+C               ******************************************************
+C
+      NCTEXT=NCTEX
+      IF(NCTEXT.GE.1)CALL DPREPL(ITEXTE,NCTEXT,
+     1IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
+     1IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,
+     1IBUGD2,IERROR)
+      IF(NCTEXT.GE.1)THEN
+        DO1510I=1,NCTEXT
+          ITEXT2(I:I)=ITEXTE(I)(1:1)
+ 1510   CONTINUE
+      ENDIF
+C
+      NCTEXT=NCTEX
+CCCCC IF(NCTEXT.GE.1)CALL DPREPL(ITEXTF,NCTEXT,
+CCCCC1IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
+CCCCC1IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,
+CCCCC1IBUGD2,IERROR)
+      IF(NCTEXT.GE.1)THEN
+        DO1610I=1,NCTEXT
+          ITEXT3(I:I)=ITEXTF(I)(1:1)
+ 1610   CONTINUE
+      ENDIF
+C
+C               ********************************
+C               **  STEP 2--                  **
+C               **  STEP THROUGH EACH HOST    **
+C               ********************************
+C
+      IF(IHOST1.EQ.'IBM-'.AND.ICOMPI.EQ.'MS-F')THEN
+C
+C       ****************************************************
+C       *  IBM/PC 386 - MICROSOFT WINDOWS 95/NT COMPILER   *
+C       ****************************************************
+C
+#ifdef INTEL
+        ISTATUS=.TRUE.
+        DO2510I=1,NCTEXT
+          ISTART=I
+          IF(ITEXT3(I:I).NE.' ')GOTO2519
+ 2510   CONTINUE
+ 2519   CONTINUE
+        DO2520I=NCTEXT,1,-1
+          ISTOP=I
+          IF(ITEXT3(I:I).NE.' ')GOTO2529
+ 2520   CONTINUE
+ 2529   CONTINUE
+        ISTATUS=.FALSE.
+        ISTATUS=CHANGEDIRQQ(ITEXT3(ISTART:ISTOP))
+        IF(ISTATUS)THEN
+          WRITE(ICOUT,2501)
+ 2501     FORMAT('THE CURRENT DIRECTORY HAS BEEN CHANGED TO ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2502)ITEXT3(1:80)
+ 2502     FORMAT(5X,A80)
+          CALL DPWRST('XXX','BUG ')
+        ELSE
+          WRITE(ICOUT,2503)
+ 2503     FORMAT('*****WARNING: DATAPLOT WAS UNSUCCESSFUL IN ',
+     1           'CHANGING THE CURRENT DIRECTORY')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+#endif
+        GOTO9000
+      ELSEIF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
+C
+C       *********************************************
+C       *  UNIX/LINUX - USE CHDIR CALL              *
+C       *********************************************
+C
+#ifdef LINUX
+        DO2310I=1,NCTEXT
+          ISTART=I
+          IF(ITEXT3(I:I).NE.' ')GOTO2319
+ 2310   CONTINUE
+ 2319   CONTINUE
+        DO2320I=NCTEXT,1,-1
+          ISTOP=I
+          IF(ITEXT3(I:I).NE.' ')GOTO2329
+ 2320   CONTINUE
+ 2329   CONTINUE
+C
+        IRESLT=0
+        IRESLT=CHDIR(ITEXT3(ISTART:ISTOP))
+        IF(IRESLT.EQ.0)THEN
+          WRITE(ICOUT,2301)
+ 2301     FORMAT('THE CURRENT DIRECTORY HAS BEEN CHANGED TO ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2302)ITEXT3(1:80)
+ 2302     FORMAT(A80)
+          CALL DPWRST('XXX','BUG ')
+        ELSE
+          WRITE(ICOUT,2303)
+ 2303     FORMAT('*****WARNING: DATAPLOT WAS UNSUCCESSFUL IN ',
+     1           'CHANGING THE CURRENT DIRECTORY')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+#endif
+        GOTO9000
+      ELSEIF(IHOST1.EQ.'NVE')THEN
+C
+C       *********************************************************
+C       *  CDC - NOS/VE OPERATING CD  EM.  USE "SCLCMD" TO PASS *
+C       *  COMMANDS TO THE OPERATING CD  EM.                    *
+C       *  DATAPLOT WILL DO NO ERROR CHECKING ON THE COMMAND    *
+C       *********************************************************
+C
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2111)
+ 2111   FORMAT('***** ERROR IN DPCD--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2112)
+ 2112   FORMAT('      THE INTERFACE TO CD OPERATIONS')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2113)
+ 2113   FORMAT('      HAS NOT YET BEEN IMPLEMEMNTED FOR THE ',
+     1         'NOS/VE VERSION')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ELSEIF(IHOST1.EQ.'VAX')THEN
+C
+C       **********************************************
+C       *  VAX/VMS - LEFT TO IMPLEMENTOR             *
+C       **********************************************
+C
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2211)
+ 2211   FORMAT('***** ERROR IN DPCD--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2212)
+ 2212   FORMAT('      THE INTERFACE TO CD OPERATIONS')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2213)
+ 2213   FORMAT('      HAS NOT YET BEEN IMPLEMEMNTED FOR THE ',
+     1         'VAX/VMS VERSION')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ELSEIF(IHOST1.EQ.'IBM-'.AND.ICOMPI.EQ.'OTG ')THEN
+C
+C       *****************************************
+C       *  IBM/PC 386 - OTG COMPILER            *
+C       *****************************************
+C
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2411)
+ 2411   FORMAT('***** ERROR IN DPCD--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2412)
+ 2412   FORMAT('      THE INTERFACE TO CD OPERATIONS')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2413)
+ 2413   FORMAT('      HAS NOT YET BEEN IMPLEMEMNTED FOR THE ',
+     1         'OTG VERSION')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ELSE
+C
+C       *********************************************************
+C       *  OTHER   - LEFT TO IMPLEMENTOR                        *
+C       *********************************************************
+C
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,8011)
+ 8011   FORMAT('***** ERROR IN DPCD--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,8012)
+ 8012   FORMAT('      THE INTERFACE TO CD OPERATIONS')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,8013)
+ 8013   FORMAT('      HAS NOT YET BEEN DONE FOR THIS')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,8014)
+ 8014   FORMAT('      COMPUTER/MODEL/OP-SYS/COMPILER/SITE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,8021)IHOST1
+ 8021   FORMAT(' HOST     = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,8022)IHMOD1
+ 8022   FORMAT(' MODEL    = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,8023)IOPSY1
+ 8023   FORMAT(' OP-SYS   = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,8024)ICOMPI
+ 8024   FORMAT(' COMPILER = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,8025)ISITE
+ 8025   FORMAT(' SITE     = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGD2.EQ.'ON'.OR.ISUBRO.EQ.'CD  ')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPCD--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)IFOUND,IERROR,NCTEX,NCTEXT
+ 9015   FORMAT('IFOUND,IERROR,NCTEX,NCTEXT  = ',2(A4,2X),2I8,2X,A1)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9016)(ITEXTE(I),I=1,NCTEX)
+ 9016   FORMAT('(ITEXTE(I),I =1,NCTEX) = ',25A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9018)(ITEXT2(J:J),J=1,NCTEXT)
+ 9018   FORMAT('(ITEXT2(I),I=1,NCTEXT) = ',25A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPPWD(CURDIR,NLAST,IBUGS2,ISUBRO,IFOUND,IERROR)
+C
+C     PURPOSE--RETURN CURRENT WORKING DIRECTORY.  THIS ROUTINE
+C              UTILIZES THE "GETCWD" LIBRARY CALL.  THIS IS NOT
+C              PART OF THE FORTRAN 90 STANDARD, BUT IT SHOULD BE
+C              AVAILABLE ON MOST CURRENTLY SUPPORTED PLATFORMS.
+C
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2855
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL BUREAU OF STANDARDS.
+C     LANGUAGE--ANSI FORTRAN (1990)
+C     VERSION NUMBER--2011/1
+C     ORIGINAL VERSION--JANUARY   2011.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*255 CURDIR
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+C
+C-----COMMON----------------------------------------------------------
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      IFOUND='YES'
+      IERROR='NO'
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'PPWD')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('AT THE BEGINNING OF DPPWD')
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      CURDIR=' '
+      CALL GETCWD(CURDIR)
+      NLAST=255
+C
+      DO100I=255,1,-1
+        IF(CURDIR(I:I).NE.' ')THEN
+          NLAST=I
+          GOTO109
+        ENDIF
+  100 CONTINUE
+  109 CONTINUE
+C
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,111)CURDIR(1:NLAST)
+  111   FORMAT('THE CURRENT WORKING DIRECTORY IS: ',A)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'PPWD')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9051)
+ 9051   FORMAT('AT THE END OF DPPWD')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9053)CURDIR
+ 9053   FORMAT('CURDIR = ',A)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPRM(IANS,IANSLC,IWIDTH,IBUGD2,ISUBRO,IFOUND,IERROR)
+C
+C     PURPOSE--DELETE FILES OR DIRECTORIES USING OPERATING SYSTEM
+C              COMMAND.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTIUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL BUREAU OF STANDARDS.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C               HOST DEPENDENT
+C     VERSION NUMBER--2019.09
+C     ORIGINAL VERSION--SEPTEMBER  2019.
+C
+C-----NON-COMMON VARIABLES -------------------------------------------
+C
+      CHARACTER*4 IANS(*)
+      CHARACTER*4 IANSLC(*)
+      CHARACTER*4 IBUGD2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+C
+      PARAMETER(MAXCH=256)
+      CHARACTER*256 ITEXT2
+      CHARACTER*4 ICASE
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOST.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      IFOUND='NO'
+      IERROR='NO'
+      ITEXT2=' '
+C
+      IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'DPRM')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPRM--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGD2,ISUBRO,IWIDTH
+   53   FORMAT('IBUGD2,ISUBRO,IWIDTH = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)(IANSLC(I),I=1,IWIDTH)
+   54   FORMAT('(IANSLC(I),I=1,IWIDTH) = ',25A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************************************************
+C               **  STEP 1--                                       **
+C               **  EXTRACT THE TEXT STRING FROM THE COMMAND LINE  **
+C               *****************************************************
+C
+C               *****************************************
+C               **  STEP 1.1--                         **
+C               **  DETERMINE THE COMMAND              **
+C               **  (CD)  AND ITS LOCATION             **
+C               **  ON THE LINE.                       **
+C               **  DETERMINE THE START POSITION       **
+C               **  (XSTART) OF THE FIRST CHARACTER    **
+C               **  FOR THE STRING TO BE PRINTED.      **
+C               *****************************************
+C
+C  CHECK FOR "RM" FIRST
+C
+      ISTRT=1
+      DO1115I=1,IWIDTH-1
+        IF(IANS(I).EQ.'R'.AND.IANS(I+1).EQ.'M'.AND.
+     1     IANS(I+2).EQ.' ')THEN
+          ICASE='FILE'
+          ISTRT=I+3
+          GOTO1190
+        ELSEIF(IANS(I).EQ.'R'   .AND. IANS(I+1).EQ.'M' .AND.
+     1         IANS(I+2).EQ.'D' .AND. IANS(I+3).EQ.'I' .AND.
+     1         IANS(I+4).EQ.'R' .AND. IANS(I+5).EQ.' ')THEN
+          ICASE='DIRE'
+          ISTRT=I+6
+          GOTO1190
+        ENDIF
+ 1115 CONTINUE
+C
+C     NO MATCH
+C
+ 1180 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1181)
+ 1181 FORMAT('***** ERROR IN RM (DPRM)--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1182)
+ 1182 FORMAT('      COMMAND NOT EQUAL TO RM')
+      CALL DPWRST('XXX','BUG ')
+      IERROR='YES'
+      GOTO9000
+ 1190 CONTINUE
+C
+C               *******************************************************
+C               **  STEP 1.2--                                       **
+C               **  DEFINE THE STOP  POSITION (ISTOP) FOR THE STRING.**
+C               *******************************************************
+C
+      IFOUND='YES'
+C
+      ISTOP=0
+      DO1220I=IWIDTH,ISTRT,-1
+        IF(IANS(I)(1:1).NE.' ')THEN
+          ISTOP=I
+          GOTO1229
+        ENDIF
+ 1220 CONTINUE
+ 1229 CONTINUE
+C
+      IF(ISTOP.LT.ISTRT)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1181)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1223)
+ 1223   FORMAT('      NO ARGUMENT FOR RM/RMDIR COMMAND.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C               *****************************************
+C               **  STEP 1.3--                         **
+C               **  COPY OVER THE STRING OF INTEREST.  **
+C               *****************************************
+C
+      IF(IHOST1.EQ.'IBM-'.AND.ICOMPI.EQ.'MS-F')THEN
+        IF(ICASE.EQ.'FILE')THEN
+          NCSTR=6
+          ITEXT2(1:NCSTR)='ERASE '
+        ELSE
+          NCSTR=7
+          ITEXT2(1:NCSTR)='DELTRE '
+        ENDIF
+      ELSEIF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
+        IF(ICASE.EQ.'FILE')THEN
+          NCSTR=3
+          ITEXT2(1:NCSTR)='rm '
+        ELSE
+          NCSTR=6
+          ITEXT2(1:NCSTR)='rm -r '
+        ENDIF
+      ELSE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1181)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1291)
+ 1291   FORMAT('      RM/RMDIR COMMAND NOT SUPPORTED ON THIS ',
+     1         'PLATFORM.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+      DO1310I=ISTRT,ISTOP
+        NCSTR=NCSTR+1
+        IF(NCSTR.GT.MAXCH)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1181)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1293)MAXCH
+ 1293     FORMAT('      MAXIMUM NUMBER OF CHARACTERS (',I3,
+     1           ') EXCEEDED.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+        ITEXT2(NCSTR:NCSTR)=IANSLC(I)(1:1)
+ 1310 CONTINUE
+C
+      ISSAV1=ISYSPE
+      ISSAV2=ISYSHI
+      ISYSPE='OFF'
+      ISYSHI='ON'
+      CALL DPSYS2(ITEXT2,NCSTR,ISUBRO,IERROR)
+      ISYSPE=ISSAV1
+      ISYSHI=ISSAV2
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGD2.EQ.'ON'.OR.ISUBRO.EQ.'DPRM')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPRM--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)IFOUND,IERROR,NCSTR,ISTRT,ISTOP
+ 9015   FORMAT('IFOUND,IERROR,NCSTR,ISTRT,ISTOP  = ',2(A4,2X),3I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9018)(ITEXT2(J:J),J=1,MIN(100,NCSTR))
+ 9018   FORMAT('(ITEXT2(1:NCSTR) = ',100A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPMKDR(IANS,IANSLC,IWIDTH,IBUGD2,ISUBRO,IFOUND,IERROR)
+C
+C     PURPOSE--MAKE A NEW DIRECTORY.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTIUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL BUREAU OF STANDARDS.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C               HOST DEPENDENT
+C     VERSION NUMBER--2019.09
+C     ORIGINAL VERSION--SEPTEMBER  2019.
+C
+C-----NON-COMMON VARIABLES -------------------------------------------
+C
+      CHARACTER*4 IANS(*)
+      CHARACTER*4 IANSLC(*)
+      CHARACTER*4 IBUGD2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+C
+      PARAMETER(MAXCH=256)
+      CHARACTER*256 ITEXT2
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHO.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      IFOUND='NO'
+      IERROR='NO'
+      ITEXT2=' '
+C
+      IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'MKDR')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPMKDR--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGD2,ISUBRO,IWIDTH
+   53   FORMAT('IBUGD2,ISUBRO,IWIDTH = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)(IANSLC(I),I=1,IWIDTH)
+   54   FORMAT('(IANSLC(I),I=1,IWIDTH) = ',25A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************************************************
+C               **  STEP 1--                                       **
+C               **  EXTRACT THE TEXT STRING FROM THE COMMAND LINE  **
+C               *****************************************************
+C
+C               *****************************************
+C               **  STEP 1.1--                         **
+C               **  DETERMINE THE COMMAND              **
+C               **  (CD)  AND ITS LOCATION             **
+C               **  ON THE LINE.                       **
+C               **  DETERMINE THE START POSITION       **
+C               **  (XSTART) OF THE FIRST CHARACTER    **
+C               **  FOR THE STRING TO BE PRINTED.      **
+C               *****************************************
+C
+C  CHECK FOR "MKDIR" FIRST
+C
+      ISTRT=1
+      DO1115I=1,IWIDTH-1
+        IF(IANS(I).EQ.'M'   .AND. IANS(I+1).EQ.'K' .AND.
+     1         IANS(I+2).EQ.'D' .AND. IANS(I+3).EQ.'I' .AND.
+     1         IANS(I+4).EQ.'R' .AND. IANS(I+5).EQ.' ')THEN
+          ISTRT=I+6
+          GOTO1190
+        ENDIF
+ 1115 CONTINUE
+C
+C     NO MATCH
+C
+ 1180 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1181)
+ 1181 FORMAT('***** ERROR IN MKDIR (DPMKDR)--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1182)
+ 1182 FORMAT('      COMMAND NOT EQUAL TO RM')
+      CALL DPWRST('XXX','BUG ')
+      IERROR='YES'
+      GOTO9000
+ 1190 CONTINUE
+C
+C               *******************************************************
+C               **  STEP 1.2--                                       **
+C               **  DEFINE THE STOP  POSITION (ISTOP) FOR THE STRING.**
+C               *******************************************************
+C
+      IFOUND='YES'
+C
+      ISTOP=0
+      DO1220I=IWIDTH,ISTRT,-1
+        IF(IANS(I)(1:1).NE.' ')THEN
+          ISTOP=I
+          GOTO1229
+        ENDIF
+ 1220 CONTINUE
+ 1229 CONTINUE
+C
+      IF(ISTOP.LT.ISTRT)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1181)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1223)
+ 1223   FORMAT('      NO ARGUMENT FOR MKDIR COMMAND.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C               *****************************************
+C               **  STEP 1.3--                         **
+C               **  COPY OVER THE STRING OF INTEREST.  **
+C               *****************************************
+C
+      IF(IHOST1.EQ.'IBM-'.AND.ICOMPI.EQ.'MS-F')THEN
+        NCSTR=6
+        ITEXT2(1:NCSTR)='MKDIR '
+      ELSEIF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
+        NCSTR=6
+        ITEXT2(1:NCSTR)='mkdir '
+      ELSE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1181)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1291)
+ 1291   FORMAT('      MKDIR COMMAND NOT SUPPORTED ON THIS ',
+     1         'PLATFORM.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+      DO1310I=ISTRT,ISTOP
+        NCSTR=NCSTR+1
+        IF(NCSTR.GT.MAXCH)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1181)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1293)MAXCH
+ 1293     FORMAT('      MAXIMUM NUMBER OF CHARACTERS (',I3,
+     1           ') EXCEEDED.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+        ITEXT2(NCSTR:NCSTR)=IANSLC(I)(1:1)
+ 1310 CONTINUE
+C
+      CALL DPSYS2(ITEXT2,NCSTR,ISUBRO,IERROR)
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGD2.EQ.'ON'.OR.ISUBRO.EQ.'MKDR')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPMKDR--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)IFOUND,IERROR,NCSTR,ISTRT,ISTOP
+ 9015   FORMAT('IFOUND,IERROR,NCSTR,ISTRT,ISTOP  = ',2(A4,2X),3I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9018)(ITEXT2(J:J),J=1,MIN(100,NCSTR))
+ 9018   FORMAT('(ITEXT2(1:NCSTR) = ',100A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPCAT(IANS,IANSLC,IWIDTH,IBUGD2,ISUBRO,IFOUND,IERROR)
+C
+C     PURPOSE--USE OPERATING SYSTEM COMMAND TO DISPLAY CONTENTS OF A
+C              FILE.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTIUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL BUREAU OF STANDARDS.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C               HOST DEPENDENT
+C     VERSION NUMBER--2019.09
+C     ORIGINAL VERSION--SEPTEMBER  2019.
+C
+C-----NON-COMMON VARIABLES -------------------------------------------
+C
+      CHARACTER*4 IANS(*)
+      CHARACTER*4 IANSLC(*)
+      CHARACTER*4 IBUGD2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+C
+      PARAMETER(MAXCH=256)
+      CHARACTER*256 ITEXT2
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOST.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      IFOUND='NO'
+      IERROR='NO'
+      ITEXT2=' '
+C
+      IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'PCAT')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPRM--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGD2,ISUBRO,IWIDTH
+   53   FORMAT('IBUGD2,ISUBRO,IWIDTH = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)(IANSLC(I),I=1,IWIDTH)
+   54   FORMAT('(IANSLC(I),I=1,IWIDTH) = ',25A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************************************************
+C               **  STEP 1--                                       **
+C               **  EXTRACT THE TEXT STRING FROM THE COMMAND LINE  **
+C               *****************************************************
+C
+C               *****************************************
+C               **  STEP 1.1--                         **
+C               **  DETERMINE THE COMMAND              **
+C               **  (CD)  AND ITS LOCATION             **
+C               **  ON THE LINE.                       **
+C               **  DETERMINE THE START POSITION       **
+C               **  (XSTART) OF THE FIRST CHARACTER    **
+C               **  FOR THE STRING TO BE PRINTED.      **
+C               *****************************************
+C
+C  CHECK FOR "CAT" FIRST
+C
+      ISTRT=1
+      DO1115I=1,IWIDTH-1
+        IF(IANS(I).EQ.'C'   .AND. IANS(I+1).EQ.'A'.AND.
+     1     IANS(I+2).EQ.'T' .AND. IANS(I+3).EQ.' ')THEN
+          ISTRT=I+4
+          GOTO1190
+        ELSEIF(IANS(I).EQ.'T'   .AND. IANS(I+1).EQ.'Y' .AND.
+     1         IANS(I+2).EQ.'P' .AND. IANS(I+3).EQ.'E' .AND.
+     1         IANS(I+4).EQ.' ')THEN
+          ISTRT=I+5
+          GOTO1190
+        ENDIF
+ 1115 CONTINUE
+C
+C     NO MATCH
+C
+ 1180 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1181)
+ 1181 FORMAT('***** ERROR IN CAT (DPCAT)--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1182)
+ 1182 FORMAT('      COMMAND NOT EQUAL TO CAT (OR TYPE)')
+      CALL DPWRST('XXX','BUG ')
+      IERROR='YES'
+      GOTO9000
+ 1190 CONTINUE
+C
+C               *******************************************************
+C               **  STEP 1.2--                                       **
+C               **  DEFINE THE STOP  POSITION (ISTOP) FOR THE STRING.**
+C               *******************************************************
+C
+      IFOUND='YES'
+C
+      ISTOP=0
+      DO1220I=IWIDTH,ISTRT,-1
+        IF(IANS(I)(1:1).NE.' ')THEN
+          ISTOP=I
+          GOTO1229
+        ENDIF
+ 1220 CONTINUE
+ 1229 CONTINUE
+C
+      IF(ISTOP.LT.ISTRT)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1181)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1223)
+ 1223   FORMAT('      NO ARGUMENT FOR CAT COMMAND.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C               *****************************************
+C               **  STEP 1.3--                         **
+C               **  COPY OVER THE STRING OF INTEREST.  **
+C               *****************************************
+C
+      IF(IHOST1.EQ.'IBM-'.AND.ICOMPI.EQ.'MS-F')THEN
+        NCSTR=5
+        ITEXT2(1:NCSTR)='TYPE '
+      ELSEIF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
+        NCSTR=4
+        ITEXT2(1:NCSTR)='cat '
+      ELSE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1181)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1291)
+ 1291   FORMAT('      CAT COMMAND NOT SUPPORTED ON THIS PLATFORM.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+      DO1310I=ISTRT,ISTOP
+        NCSTR=NCSTR+1
+        IF(NCSTR.GT.MAXCH)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1181)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1293)MAXCH
+ 1293     FORMAT('      MAXIMUM NUMBER OF CHARACTERS (',I3,
+     1           ') EXCEEDED.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+        ITEXT2(NCSTR:NCSTR)=IANSLC(I)(1:1)
+ 1310 CONTINUE
+C
+      IF(ICATMO.EQ.'ON' .AND. NCSTR.LE.248)THEN
+        IF(IHOST1.EQ.'IBM-'.AND.ICOMPI.EQ.'MS-F')THEN
+          ITEXT2(NCSTR+1:NCSTR+7)=' | more'
+          NCSTR=NCSTR+7
+        ELSEIF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
+          ITEXT2(NCSTR+1:NCSTR+7)=' | more'
+          NCSTR=NCSTR+7
+        ENDIF
+      ENDIF
+C
+      ISSAV1=ISYSPE
+      ISSAV2=ISYSHI
+      ISYSPE='ON'
+      ISYSHI='OFF'
+      CALL DPSYS2(ITEXT2,NCSTR,ISUBRO,IERROR)
+      ISYSPE=ISSAV1
+      ISYSHI=ISSAV2
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGD2.EQ.'ON'.OR.ISUBRO.EQ.'PCAT')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPCAT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)IFOUND,IERROR,NCSTR,ISTRT,ISTOP
+ 9015   FORMAT('IFOUND,IERROR,NCSTR,ISTRT,ISTOP  = ',2(A4,2X),3I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9018)(ITEXT2(J:J),J=1,MIN(100,NCSTR))
+ 9018   FORMAT('(ITEXT2(1:NCSTR) = ',100A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPDIR(IANS,IANSLC,IWIDTH,IBUGD2,ISUBRO,IFOUND,IERROR)
+C
+C     PURPOSE--USE OPERATING SYSTEM COMMAND TO PERFORM A "DIR" COMMAND
+C              UNDER WINDOWS AND A "ls" COMMAND UNDER LINUX.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTIUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL BUREAU OF STANDARDS.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C               HOST DEPENDENT
+C     VERSION NUMBER--2019.09
+C     ORIGINAL VERSION--SEPTEMBER  2019.
+C
+C-----NON-COMMON VARIABLES -------------------------------------------
+C
+      CHARACTER*4 IANS(*)
+      CHARACTER*4 IANSLC(*)
+      CHARACTER*4 IBUGD2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+C
+      PARAMETER(MAXCH=256)
+      CHARACTER*256 ITEXT2
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+      CHARACTER*4 ICLESV
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOST.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      IFOUND='NO'
+      IERROR='NO'
+      ITEXT2=' '
+C
+      IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'PDIR')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPRM--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGD2,ISUBRO,IWIDTH
+   53   FORMAT('IBUGD2,ISUBRO,IWIDTH = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)(IANSLC(I),I=1,IWIDTH)
+   54   FORMAT('(IANSLC(I),I=1,IWIDTH) = ',25A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************************************************
+C               **  STEP 1--                                       **
+C               **  EXTRACT THE TEXT STRING FROM THE COMMAND LINE  **
+C               *****************************************************
+C
+C               *****************************************
+C               **  STEP 1.1--                         **
+C               **  DETERMINE THE COMMAND              **
+C               **  (CD)  AND ITS LOCATION             **
+C               **  ON THE LINE.                       **
+C               **  DETERMINE THE START POSITION       **
+C               **  (XSTART) OF THE FIRST CHARACTER    **
+C               **  FOR THE STRING TO BE PRINTED.      **
+C               *****************************************
+C
+C  CHECK FOR "CAT" FIRST
+C
+      ISTRT=1
+      DO1115I=1,IWIDTH-1
+        IF(IANS(I).EQ.'D'   .AND. IANS(I+1).EQ.'I'.AND.
+     1     IANS(I+2).EQ.'R' .AND. IANS(I+3).EQ.' ')THEN
+          ISTRT=I+4
+          GOTO1190
+        ELSEIF(IANS(I).EQ.'L'   .AND. IANS(I+1).EQ.'S' .AND.
+     1         IANS(I+2).EQ.' ')THEN
+          ISTRT=I+3
+          GOTO1190
+        ENDIF
+ 1115 CONTINUE
+C
+C     NO MATCH
+C
+ 1180 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1181)
+ 1181 FORMAT('***** ERROR IN DIR (DPDIR)--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1182)
+ 1182 FORMAT('      COMMAND NOT EQUAL TO DIR (OR LS)')
+      CALL DPWRST('XXX','BUG ')
+      IERROR='YES'
+      GOTO9000
+ 1190 CONTINUE
+C
+C               *******************************************************
+C               **  STEP 1.2--                                       **
+C               **  DEFINE THE STOP  POSITION (ISTOP) FOR THE STRING.**
+C               *******************************************************
+C
+      IFOUND='YES'
+C
+      ISTOP=0
+      DO1220I=IWIDTH,ISTRT,-1
+        IF(IANS(I)(1:1).NE.' ')THEN
+          ISTOP=I
+          GOTO1229
+        ENDIF
+ 1220 CONTINUE
+ 1229 CONTINUE
+C
+C               *****************************************
+C               **  STEP 1.3--                         **
+C               **  COPY OVER THE STRING OF INTEREST.  **
+C               *****************************************
+C
+      IF(IHOST1.EQ.'IBM-'.AND.ICOMPI.EQ.'MS-F')THEN
+        NCSTR=4
+        ITEXT2(1:NCSTR)='DIR '
+      ELSEIF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
+        NCSTR=3
+        ITEXT2(1:NCSTR)='ls '
+      ELSE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1181)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1291)
+ 1291   FORMAT('      DIR COMMAND NOT SUPPORTED ON THIS PLATFORM.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+      IF(IHOST1.EQ.'IBM-'.AND.ICOMPI.EQ.'MS-F')THEN
+        NCSTR=4
+        ITEXT2(1:NCSTR)='DIR '
+        IF(IDIRPA.EQ.'ON')THEN
+          ITEXT2(NCSTR+1:NCSTR+3)='/P '
+          NCSTR=NCSTR+3
+        ENDIF
+        IF(IDIRLL.EQ.'ON')THEN
+          ITEXT2(NCSTR+1:NCSTR+3)='/N '
+          NCSTR=NCSTR+3
+        ELSE
+          ITEXT2(NCSTR+1:NCSTR+3)='/W '
+          NCSTR=NCSTR+3
+        ENDIF
+        IF(IDIRRE.EQ.'ON')THEN
+          ITEXT2(NCSTR+1:NCSTR+3)='/S '
+          NCSTR=NCSTR+3
+        ENDIF
+        IF(IDIRSO.EQ.'ALPH')THEN
+          ITEXT2(NCSTR+1:NCSTR+5)='/O:N '
+          NCSTR=NCSTR+5
+        ELSEIF(IDIRSO.EQ.'SIZE')THEN
+          ITEXT2(NCSTR+1:NCSTR+5)='/O:S '
+          NCSTR=NCSTR+5
+        ELSEIF(IDIRSO.EQ.'DATE')THEN
+          ITEXT2(NCSTR+1:NCSTR+5)='/O:D '
+          NCSTR=NCSTR+5
+        ENDIF
+      ELSEIF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
+        NCSTR=3
+        ITEXT2(1:NCSTR)='ls '
+        IF(IDIRLL.EQ.'ON')THEN
+          ITEXT2(NCSTR+1:NCSTR+3)='-l '
+          NCSTR=NCSTR+3
+        ENDIF
+        IF(IDIRRE.EQ.'ON')THEN
+          ITEXT2(NCSTR+1:NCSTR+3)='-R '
+          NCSTR=NCSTR+3
+        ENDIF
+        IF(IDIRSO.EQ.'SIZE')THEN
+          ITEXT2(NCSTR+1:NCSTR+3)='-s '
+          NCSTR=NCSTR+3
+        ELSEIF(IDIRSO.EQ.'DATE')THEN
+          ITEXT2(NCSTR+1:NCSTR+3)='-t '
+          NCSTR=NCSTR+3
+        ENDIF
+      ENDIF
+C
+      IF(ISTRT.LE.ISTOP)THEN
+        DO1310I=ISTRT,ISTOP
+          NCSTR=NCSTR+1
+          IF(NCSTR.GT.MAXCH)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1181)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1293)MAXCH
+ 1293       FORMAT('      MAXIMUM NUMBER OF CHARACTERS (',I3,
+     1             ') EXCEEDED.')
+            CALL DPWRST('XXX','BUG ')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+          ITEXT2(NCSTR:NCSTR)=IANSLC(I)(1:1)
+ 1310   CONTINUE
+      ENDIF
+C
+      IF((IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU') .AND.
+     1  IDIRPA.EQ.'ON' .AND. NCSTR.LE.248)THEN
+        ITEXT2(NCSTR+1:NCSTR+7)=' | more'
+        NCSTR=NCSTR+7
+      ENDIF
+C
+      ISSAV1=ISYSPE
+      ISSAV2=ISYSHI
+      ICLESV=ICLEWT
+      ISYSPE='ON'
+      ISYSHI='OFF'
+      ICLEWT='OFF'
+      CALL DPSYS2(ITEXT2,NCSTR,ISUBRO,IERROR)
+      ISYSPE=ISSAV1
+      ISYSHI=ISSAV2
+      ICLEWT=ICLESV
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGD2.EQ.'ON'.OR.ISUBRO.EQ.'PDIR')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPDIR--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)IFOUND,IERROR,NCSTR,ISTRT,ISTOP
+ 9015   FORMAT('IFOUND,IERROR,NCSTR,ISTRT,ISTOP  = ',2(A4,2X),3I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9018)(ITEXT2(J:J),J=1,MIN(100,NCSTR))
+ 9018   FORMAT('(ITEXT2(1:NCSTR) = ',100A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END

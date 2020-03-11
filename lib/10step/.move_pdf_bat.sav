@@ -1,0 +1,11 @@
+#!/bin/csh -f
+mv boxreactor_5_16.pdf BOXREACTOR_5_16.PDF
+mv boxreactor_5_32.pdf BOXREACTOR_5_32.PDF
+mv boxreactor_5_8.pdf  BOXREACTOR_5_8.PDF
+mv boxsprings_3_8.pdf  BOXSPRINGS_3_8.PDF
+mv inn_8_16.pdf INN_8_16.PDF
+mv kneifel_7_128.pdf KNEIFEL_7_128.PDF
+mv ma_10_16.pdf MA_10_16.PDF
+mv scott_8_16.pdf SCOTT_8_16.PDF
+mv washburn_4_16.pdf WASHBURN_4_16.PDF
+mv wtc_13_16.pdf WTC_13_16.PDF

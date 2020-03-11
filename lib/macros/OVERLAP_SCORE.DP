@@ -1,0 +1,64 @@
+. This is dataplot macro     overlap_score.dp     4/12/19
+. Purpose: Compute the overlap score = number of overlaps out of k-choose-2
+. Date: 4/12/19
+.
+. Input (Required);
+.    ndcond  (parameter) = number of distinct conditions
+.    y       (vector)    = response variable
+.    cond    (vector)    = factor
+.
+. Input (Optional);
+.    qsub    (vector)    = subset/except/for specification (default = none = full data set)
+.
+. Output:
+.    score   (parameter) = number of times the responses for all pairs of conditions do NOT overlap
+.    npairs  (parameter) = number of pairs of conditions
+.    scorev1 (vector)    = first  component in a non-overlapping condition pair
+.    scorev2 (vector)    = second component in a non-overlapping condition pair
+.
+. Example: if have 11 conditions, then npairs = 11*10/2 = 55, and
+.          if all conditions overlap, then score =  0, but
+.          if no  conditions overlap, then score = 55.
+.
+. Example of calling routine: sarkar80_sub.dp 
+.         
+. -----start point-----
+.
+let ndcondm1 = ndcond - 1
+.
+delete qsubz
+if qsub exists; let string qsubz = ^qsub; end if
+.
+delete score;  let score = 0
+delete npairs; let npairs = 0
+delete scorev1 scorev2
+loop for jcond1 = 1 1 ndcondm1
+   let jcond1p1 = jcond1 + 1
+   loop for jcond2 = jcond1p1 1 ndcond
+      let npairs = npairs + 1
+      let min1 = minimum y subset cond jcond1 ^qsubz
+      let max1 = maximum y subset cond jcond1 ^qsubz
+      let min2 = minimum y subset cond jcond2 ^qsubz
+      let max2 = maximum y subset cond jcond2 ^qsubz
+      if  max1 < min2
+         let score = score + 1; 
+         let scorev1(score) = jcond1
+         let scorev2(score) = jcond2 
+      end if
+      if  max2 < min1
+         let score = score + 1; 
+         let scorev1(score) = jcond1
+         let scorev2(score) = jcond2 
+      end if
+   end loop
+end loop
+.
+delete qsubz
+.
+
+. print score
+. print npairs
+. print scorev1 scorev2
+. print "qsub = ^qsub"
+
+

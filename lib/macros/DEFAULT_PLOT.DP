@@ -1,0 +1,17 @@
+. This is dataplot macro     default_plot.dp      11/14/16
+. Purpose: Revert plot frames and tics and labels back to default
+. Date: 11/14/16
+.
+. -----start point-----
+.
+frame corner coorindates
+frame on
+y1tics on; y1tic labels on
+x1tics on; x1tic labels on
+. call size.dp 2
+limits
+lines solid all
+x3label automatic
+x1tic label format
+major x1tic number
+.

@@ -10968,6 +10968,17 @@ C     ORIGINAL VERSION--SEPTEMBER   2011. EXTRACT FROM DPSET
 C     UPDATED         --JANUARY     2019. PYTHON PATH
 C     UPDATED         --MARCH       2019. CHANGE DEFAULT BROWSER FOR
 C                                         LINUX TO "xdg-open"
+C     UPDATED         --NOVEMBER    2019. R PATH
+C     UPDATED         --NOVEMBER    2019. LIST VIEWER
+C     UPDATED         --NOVEMBER    2019. EXCEL VIEWER
+C     UPDATED         --NOVEMBER    2019. WORD VIEWER
+C     UPDATED         --NOVEMBER    2019. POWER POINT VIEWER
+C     UPDATED         --NOVEMBER    2019. LIST LAUNCHER
+C     UPDATED         --NOVEMBER    2019. FOR MACOS, USE "open" RATHER
+C                                         THAN "xdg-open"
+C     UPDATED         --DECEMBER    2019. PDF VIEWER
+C     UPDATED         --DECEMBER    2019. IMAGE VIEWER
+C     UPDATED         --DECEMBER    2019. BACKUP VIEWER
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -10989,6 +11000,20 @@ C
 C
       INCLUDE 'DPCOHO.INC'
 C
+      CHARACTER*80 PROFIL
+      CHARACTER*80 P86FIL
+      CHARACTER*80 APPDAT
+      CHARACTER*80 COMNAM
+      CHARACTER*80 UPROFI
+      CHARACTER*80 DEFPRI
+      CHARACTER*20 USRNAM
+      CHARACTER*20 ISHELL
+      CHARACTER*4  WINBIT
+      COMMON/SYSVAR/PROFIL,P86FIL,APPDAT,COMNAM,UPROFI,USRNAM,DEFPRI,
+     1              WINBIT,ISHELL
+      COMMON/SYSVA2/NCPROF,NCP86F,NCAPPD,NCCOMP,NCUPRO,NCUSER,NCPRIN,
+     1              NCSHEL
+C
 C---------------------------------------------------------------------
 C
       CHARACTER*4 IFEEDB
@@ -11006,6 +11031,8 @@ C
       DO1011I=1,MAXTMP
         ICANS(I:I)=IANSLC(I)
  1011 CONTINUE
+      IVAL=92
+      CALL DPCONA(IVAL,IBASLC)
 C
       IF(NUMARG+1.LT.IWORD)THEN
         NCSTRI=0
@@ -11024,6 +11051,12 @@ C
       CALL DPCONA(92,IBASLC)
       IFILEZ=' '
       NCTEMP=0
+      IF(ICOL1.LE.0 .OR. ICOL1.GE.255)THEN
+        GOTO9000
+      ELSEIF(ICOL4.LE.0 .OR. ICOL4.GE.255)THEN
+        GOTO9000
+      ENDIF
+C
       IF(IANS(ICOL1)(1:1).EQ.'O'.AND.IANS(ICOL1+1)(1:1).EQ.'N')THEN
         NCSTRI=0
       ELSEIF(IANS(ICOL1)(1:1).EQ.'O' .AND.
@@ -11047,6 +11080,8 @@ C
         NCSTRI=0
       ENDIF
 C
+ 1019 CONTINUE
+C
       IF(NCSTRI.GE.1)THEN
         NCTEMP=NCSTRI
         IFILEZ=' '
@@ -11057,20 +11092,36 @@ C
 C
       ELSE
         IF(IOPSY1.EQ.'PC-D')THEN
-          IF(ICASE.EQ.'PATH')THEN
-            IFILEZ='C: Program Files NIST DATAPLOT\' 
-            IFILEZ(3:3)=IBASLC
-            IFILEZ(17:17)=IBASLC
-            IFILEZ(22:22)=IBASLC
-            IFILEZ(31:31)=IBASLC
-            NCTEMP=31
-          ELSEIF(ICASE.EQ.'MPAT')THEN
-            IFILEZ='C: Program Files NIST DATAPLOT ' 
-            IFILEZ(3:3)=IBASLC
-            IFILEZ(17:17)=IBASLC
-            IFILEZ(22:22)=IBASLC
-            IFILEZ(31:31)=IBASLC
-            NCTEMP=31
+          IF(ICASE.EQ.'PATH' .OR. ICASE.EQ.'MPAT')THEN
+            IF(WINBIT.EQ.'32')THEN
+              IFILEZ(1:NCPROF)=PROFIL(1:NCPROF)
+              NCTEMP=NCPROF
+              NCTEMP=NCTEMP+1
+              IFILEZ(NCTEMP:NCTEMP)=IBASLC
+              IFILEZ(NCTEMP+1:NCTEMP+4)='NIST'
+              NCTEMP=NCTEMP+4
+              NCTEMP=NCTEMP+1
+              IFILEZ(NCTEMP:NCTEMP)=IBASLC
+              IFILEZ(NCTEMP+1:NCTEMP+8)='DATAPLOT'
+              NCTEMP=NCTEMP+8
+              NCTEMP=NCTEMP+1
+              IFILEZ(NCTEMP:NCTEMP)=IBASLC
+              NCDIR=NCTEMP
+            ELSE
+              IFILEZ(1:NCP86F)=P86FIL(1:NCP86F)
+              NCTEMP=NCP86F
+              NCTEMP=NCTEMP+1
+              IFILEZ(NCTEMP:NCTEMP)=IBASLC
+              IFILEZ(NCTEMP+1:NCTEMP+4)='NIST'
+              NCTEMP=NCTEMP+4
+              NCTEMP=NCTEMP+1
+              IFILEZ(NCTEMP:NCTEMP)=IBASLC
+              IFILEZ(NCTEMP+1:NCTEMP+8)='DATAPLOT'
+              NCTEMP=NCTEMP+8
+              NCTEMP=NCTEMP+1
+              IFILEZ(NCTEMP:NCTEMP)=IBASLC
+              NCDIR=NCTEMP
+            ENDIF
           ELSEIF(ICASE.EQ.'PSVW')THEN
 CCCCC       IFILEZ='"C: Program Files GHOSTGUM GSVIEW GSVIEW32.EXE"' 
 CCCCC       IFILEZ(4:4)=IBASLC
@@ -11078,19 +11129,88 @@ CCCCC       IFILEZ(18:18)=IBASLC
 CCCCC       IFILEZ(27:27)=IBASLC
 CCCCC       IFILEZ(34:34)=IBASLC
 CCCCC       NCTEMP=47
-            IFILEZ(1:39)='C: Program Files (x86) GHOSTGUM GSVIEW '
-            IFILEZ(40:52)='GSVIEW32.EXE"'
+            IF(WINBIT.EQ.'64')THEN
+              IFILEZ(1:NCP86F)=P86FIL(1:NCP86F)
+            ELSE
+              IFILEZ(1:NCPROF)=PROFIL(1:NCPROF)
+            ENDIF
+            NCTEMP=NCTEMP+1
+            IFILEZ(NCTEMP:NCTEMP)=IBASLC
+            IFILEZ(NCTEMP+1:NCTEMP+8)='GHOSTGUM'
+            NCTEMP=NCTEMP+8
+            IFILEZ(NCTEMP:NCTEMP)=IBASLC
+            IFILEZ(NCTEMP+1:NCTEMP+6)='GSVIEW'
+            NCTEMP=NCTEMP+6
+            NCTEMP=NCTEMP+1
+            IFILEZ(NCTEMP:NCTEMP)=IBASLC
+            IFILEZ(NCTEMP+1:NCTEMP+12)='GSVIEW32.EXE'
+            NCTEMP=NCTEMP+12
+          ELSEIF(ICASE.EQ.'PDVW')THEN
+            IFILEZ(1:23)='C: PROGRAM FILES (x86) '
             IFILEZ(3:3)=IBASLC
             IFILEZ(23:23)=IBASLC
-            IFILEZ(32:32)=IBASLC
-            IFILEZ(39:39)=IBASLC
-            NCTEMP=52
+            IFILEZ(24:66)='ADOBE ACROBAT READER DC READER AcroRd32.EXE'
+            IFILEZ(29:29)=IBASLC
+            IFILEZ(47:47)=IBASLC
+            IFILEZ(47:47)=IBASLC
+            IFILEZ(54:54)=IBASLC
+            NCTEMP=66
+            IF(WINBIT.EQ.'64')THEN
+              IFILEZ(1:NCP86F)=P86FIL(1:NCP86F)
+            ELSE
+              IFILEZ(1:NCPROF)=PROFIL(1:NCPROF)
+            ENDIF
+            NCTEMP=NCTEMP+1
+            IFILEZ(NCTEMP:NCTEMP)=IBASLC
+            IFILEZ(NCTEMP+1:NCTEMP+5)='ADOBE'
+            NCTEMP=NCTEMP+5
+            NCTEMP=NCTEMP+1
+            IFILEZ(NCTEMP:NCTEMP)=IBASLC
+            IFILEZ(NCTEMP+1:NCTEMP+17)='Acrobat Reader DC'
+            NCTEMP=NCTEMP+17
+            NCTEMP=NCTEMP+1
+            IFILEZ(NCTEMP:NCTEMP)=IBASLC
+            IFILEZ(NCTEMP+1:NCTEMP+6)='Reader'
+            NCTEMP=NCTEMP+6
+            NCTEMP=NCTEMP+1
+            IFILEZ(NCTEMP:NCTEMP)=IBASLC
+            IFILEZ(NCTEMP+1:NCTEMP+12)='AcroRd32.exe'
+            NCTEMP=NCTEMP+12
+          ELSEIF(ICASE.EQ.'IMVW')THEN
+            IFILEZ=' '
+            NCTEMP=0
+          ELSEIF(ICASE.EQ.'LSVW')THEN
+            IFILEZ='notepad'
+            NCTEMP=7
+          ELSEIF(ICASE.EQ.'EXVW')THEN
+            IFILEZ=' '
+            NCTEMP=0
+          ELSEIF(ICASE.EQ.'WOVW')THEN
+            IFILEZ=' '
+            NCTEMP=0
+          ELSEIF(ICASE.EQ.'PPVW')THEN
+            IFILEZ=' '
+            NCTEMP=0
+          ELSEIF(ICASE.EQ.'LSLA')THEN
+            IFILEZ=' '
+            NCTEMP=0
           ELSEIF(ICASE.EQ.'BROW')THEN
             IFILEZ='"C: Program Files Internet Explorer iexplore.exe"'
             IFILEZ(4:4)=IBASLC
             IFILEZ(18:18)=IBASLC
             IFILEZ(36:36)=IBASLC
             NCTEMP=49
+C
+CCCCC       IFILEZ(1:NCPROF)=PROFIL(1:NCPROF)
+CCCCC       NCTEMP=NCTEMP+1
+CCCCC       IFILEZ(NCTEMP:NCTEMP)=IBASLC
+CCCCC       IFILEZ(NCTEMP+1:NCTEMP+17)='Internet Explorer'
+CCCCC       NCTEMP=NCTEMP+17
+CCCCC       NCTEMP=NCTEMP+1
+CCCCC       IFILEZ(NCTEMP:NCTEMP)=IBASLC
+CCCCC       IFILEZ(NCTEMP+1:NCTEMP+12)='iexplore.exe'
+CCCCC       NCTEMP=NCTEMP+12
+C
           ELSEIF(ICASE.EQ.'DPUR')THEN
             IFILEZ='http://www.itl.nist.gov/div898/software/dataplot/'
             NCTEMP=49
@@ -11101,33 +11221,40 @@ CCCCC       NCTEMP=47
             IFILEZ='http://www.nist.gov/div898/handbook/'
             NCTEMP=36
           ELSEIF(ICASE.EQ.'GVPA')THEN
-CCCCC       IFILEZ='C: PROGRAM FILES GHOSTGUM GSVIEW '
-CCCCC       IFILEZ(3:3)=IBASLC
-CCCCC       IFILEZ(17:17)=IBASLC
-CCCCC       IFILEZ(26:26)=IBASLC
-CCCCC       IFILEZ(33:33)=IBASLC
-CCCCC       NCTEMP=33
-            IFILEZ(1:39)='C: Program Files (x86) GHOSTGUM GSVIEW '
-            IFILEZ(3:3)=IBASLC
-            IFILEZ(23:23)=IBASLC
-            IFILEZ(32:32)=IBASLC
-            IFILEZ(39:39)=IBASLC
-            NCTEMP=39
+            IF(WINBIT.EQ.'64')THEN
+              IFILEZ(1:NCP86F)=P86FIL(1:NCP86F)
+            ELSE
+              IFILEZ(1:NCPROF)=PROFIL(1:NCPROF)
+            ENDIF
+            NCTEMP=NCTEMP+1
+            IFILEZ(NCTEMP:NCTEMP)=IBASLC
+            IFILEZ(NCTEMP+1:NCTEMP+8)='GHOSTGUM'
+            NCTEMP=NCTEMP+8
+            IFILEZ(NCTEMP:NCTEMP)=IBASLC
+            IFILEZ(NCTEMP+1:NCTEMP+6)='GSVIEW'
+            NCTEMP=NCTEMP+6
+            NCTEMP=NCTEMP+1
+            IFILEZ(NCTEMP:NCTEMP)=IBASLC
           ELSEIF(ICASE.EQ.'GSPA')THEN
-CCCCC       IFILEZ='C: PROGRAM FILES GS GS8.63 BIN '
-CCCCC       IFILEZ(3:3)=IBASLC
-CCCCC       IFILEZ(17:17)=IBASLC
-CCCCC       IFILEZ(20:20)=IBASLC
-CCCCC       IFILEZ(27:27)=IBASLC
-CCCCC       IFILEZ(31:31)=IBASLC
-CCCCC       NCTEMP=31
-            IFILEZ='C: Program Files GS GS9.10 BIN '
-            IFILEZ(3:3)=IBASLC
-            IFILEZ(17:17)=IBASLC
-            IFILEZ(20:20)=IBASLC
-            IFILEZ(27:27)=IBASLC
-            IFILEZ(31:31)=IBASLC
-            NCTEMP=31
+            IF(WINBIT.EQ.'64')THEN
+              IFILEZ(1:NCP86F)=P86FIL(1:NCP86F)
+            ELSE
+              IFILEZ(1:NCPROF)=PROFIL(1:NCPROF)
+            ENDIF
+            NCTEMP=NCTEMP+1
+            IFILEZ(NCTEMP:NCTEMP)=IBASLC
+            IFILEZ(NCTEMP+1:NCTEMP+2)='GS'
+            NCTEMP=NCTEMP+2
+            NCTEMP=NCTEMP+1
+            IFILEZ(NCTEMP:NCTEMP)=IBASLC
+            IFILEZ(NCTEMP+1:NCTEMP+6)='GS9.27'
+            NCTEMP=NCTEMP+6
+            NCTEMP=NCTEMP+1
+            IFILEZ(NCTEMP:NCTEMP)=IBASLC
+            IFILEZ(NCTEMP+1:NCTEMP+3)='BIN'
+            NCTEMP=NCTEMP+3
+            NCTEMP=NCTEMP+1
+            IFILEZ(NCTEMP:NCTEMP)=IBASLC
           ELSEIF(ICASE.EQ.'HHTM')THEN
             IFILEZ='NULL'
             NCTEMP=4
@@ -11143,6 +11270,9 @@ CCCCC       NCTEMP=31
           ELSEIF(ICASE.EQ.'PYPA')THEN
             IFILEZ=' '
             NCTEMP=0
+          ELSEIF(ICASE.EQ.'RPAT')THEN
+            IFILEZ=' '
+            NCTEMP=0
           ELSEIF(ICASE.EQ.'EDIT')THEN
             IFILEZ='FED'
             NCTEMP=3
@@ -11155,22 +11285,88 @@ CCCCC       NCTEMP=31
             IFILEZ='/usr/local/lib/dataplot/'
             NCTEMP=24
           ELSEIF(ICASE.EQ.'PSVW')THEN
-            IFILEZ='ghostview'
-            NCTEMP=9
+CCCCC       IFILEZ='ghostview'
+CCCCC       NCTEMP=9
+            IF(IOPSY2.EQ.'MAC ')THEN
+              IFILEZ='open'
+              NCTEMP=4
+            ELSE
+              IFILEZ='xdg-open'
+              NCTEMP=8
+            ENDIF
+          ELSEIF(ICASE.EQ.'PDVW')THEN
+            IF(IOPSY2.EQ.'MAC ')THEN
+              IFILEZ='open'
+              NCTEMP=4
+            ELSE
+              IFILEZ='xdg-open'
+              NCTEMP=8
+            ENDIF
+          ELSEIF(ICASE.EQ.'IMVW')THEN
+            IF(IOPSY2.EQ.'MAC ')THEN
+              IFILEZ='open'
+              NCTEMP=4
+            ELSE
+              IFILEZ='xdg-open'
+              NCTEMP=8
+            ENDIF
+          ELSEIF(ICASE.EQ.'BKVW')THEN
+            IF(IOPSY2.EQ.'MAC ')THEN
+              IFILEZ='/Applications/Preview.app'
+              NCTEMP=25
+            ELSE
+              IFILEZ='okular'
+              NCTEMP=6
+            ENDIF
+          ELSEIF(ICASE.EQ.'LSVW')THEN
+            IFILEZ='vi'
+            NCTEMP=2
+          ELSEIF(ICASE.EQ.'LSLA')THEN
+            IFILEZ='gnome-terminal -e'
+            NCTEMP=17
+          ELSEIF(ICASE.EQ.'EXVW')THEN
+            IF(IOPSY2.EQ.'MAC ')THEN
+              IFILEZ='open'
+              NCTEMP=4
+            ELSE
+              IFILEZ='xdg-open'
+              NCTEMP=8
+            ENDIF
+          ELSEIF(ICASE.EQ.'WOVW')THEN
+            IF(IOPSY2.EQ.'MAC ')THEN
+              IFILEZ='open'
+              NCTEMP=4
+            ELSE
+              IFILEZ='xdg-open'
+              NCTEMP=8
+            ENDIF
+          ELSEIF(ICASE.EQ.'PPVW')THEN
+            IF(IOPSY2.EQ.'MAC ')THEN
+              IFILEZ='open'
+              NCTEMP=4
+            ELSE
+              IFILEZ='xdg-open'
+              NCTEMP=8
+            ENDIF
           ELSEIF(ICASE.EQ.'BROW')THEN
-            IFILEZ='xdg-open'
-            NCTEMP=8
+            IF(IOPSY2.EQ.'MAC ')THEN
+              IFILEZ='open'
+              NCTEMP=4
+            ELSE
+              IFILEZ='xdg-open'
+              NCTEMP=8
+            ENDIF
 CCCCC       IFILEZ='firefox'
 CCCCC       NCTEMP=7
           ELSEIF(ICASE.EQ.'DPUR')THEN
-            IFILEZ='http://www.itl.nist.gov/div898/software/dataplot/'
-            NCTEMP=49
+            IFILEZ='https://www.itl.nist.gov/div898/software/dataplot/'
+            NCTEMP=50
           ELSEIF(ICASE.EQ.'IURL')THEN
-            IFILEZ='http://www.nist.gov/'
-            NCTEMP=20
+            IFILEZ='https://www.nist.gov/'
+            NCTEMP=21
           ELSEIF(ICASE.EQ.'HBUR')THEN
-            IFILEZ='http://www.nist.gov/div898/handbook/'
-            NCTEMP=36
+            IFILEZ='https://www.nist.gov/div898/handbook/'
+            NCTEMP=37
           ELSEIF(ICASE.EQ.'GVPA')THEN
             IFILEZ='/usr/bin/'
             NCTEMP=9
@@ -11190,6 +11386,9 @@ CCCCC       NCTEMP=7
             IFILEZ='NULL'
             NCTEMP=4
           ELSEIF(ICASE.EQ.'PYPA')THEN
+            IFILEZ=' '
+            NCTEMP=0
+          ELSEIF(ICASE.EQ.'RPAT')THEN
             IFILEZ=' '
             NCTEMP=0
           ELSEIF(ICASE.EQ.'EDIT')THEN
@@ -13810,6 +14009,1233 @@ C
 C
       RETURN
       END
+      SUBROUTINE DPEXRP(IANS,IANSLC,IWIDTH,ICOM,ICOM2,
+     1                  IBUGS2,ISUBRO,IFOUND,IERROR)
+C
+C     PURPOSE--RUN EITHER AN R OR A PYTHON SCRIPT.  FOR EXAMPLE,
+C
+C                  RSCRIPT  file.r
+C                  PYTHON   file.py
+C
+C              IN ORDER FOR THIS COMMAND TO WORK CORRECTLY, THE
+C              FOLLOWING NEEDS TO BE DONE:
+C
+C                 1) R (OR PYTHON) NEEDS TO BE INSTALLED ON YOUR LOCAL
+C                    PLATFORM.
+C
+C                 2) YOU MAY NEED TO SET THE PATH FOR R OR PYTHON WITH
+C                    THE COMMANDS
+C
+C                       SET PYTHON PATH ...
+C                       SET R      PATH ...
+C
+C                 3) FOR PYTHON, YOU MAY NEED TO SPECIFY THE VERSION
+C                    WITH THE COMMAND
+C
+C                       SET PYTHON VERSION <2/3>
+C
+C               FOR BUILT-IN SCRIPTS (I.E., FROM THE "lib/scripts"
+C               DIRECTORY), SET ITYPE TO "SYST".  FOR USER DEFINED
+C               SCRIPTS, SET ITYPE TO "USER".
+C
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK OF THE
+C           NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2019/11
+C     ORIGINAL VERSION--NOVEMBER   2019.
+C
+C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
+C
+      CHARACTER*4 ICOM
+      CHARACTER*4 ICOM2
+      CHARACTER*4 IANS
+      CHARACTER*4 IANSLC
+      CHARACTER*4 ITYPE
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+C
+      DIMENSION IANS(*)
+      DIMENSION IANSLC(*)
+C
+      CHARACTER*255 ICANS
+      CHARACTER*255 ITEXT2
+      CHARACTER*255 ITEXT3
+C
+      CHARACTER*80 IFILE1
+      CHARACTER*80 IFILE2
+      CHARACTER*12 ISTAT1
+      CHARACTER*12 IFORM1
+      CHARACTER*12 IACCE1
+      CHARACTER*12 IPROT1
+      CHARACTER*12 ICURS1
+C
+      CHARACTER*4 IERRFI
+      CHARACTER*4 IREWIN
+      CHARACTER*4 ICASE
+      CHARACTER*4 IEXIST
+      CHARACTER*4 IOPEN
+      CHARACTER*4 IFILSV
+      CHARACTER*4 IFILQ2
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ISUBN0
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+      CHARACTER*12 IACC
+      CHARACTER*80 ARGLST
+      CHARACTER*1 IBASLC
+      CHARACTER*1 IATEMP
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCOST.INC'
+      INCLUDE 'DPCOF2.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      IFOUND='NO'
+      IERROR='NO'
+      ISUBN1='DPEX'
+      ISUBN2='RP  '
+      CALL DPCONA(92,IBASLC)
+C
+      J2=0
+      IPROG=0
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXRP')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPEXRP--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGS2,ISUBRO,IWIDTH
+   53   FORMAT('IBUGS2,ISUBRO,IWIDTH = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)(IANS(I),I=1,MIN(255,IWIDTH))
+   54   FORMAT('(IANS(I),I=1,IWIDTH) = ',255A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************************************************
+C               **  STEP 1--                                       **
+C               **  EXTRACT THE TEXT STRING FROM THE COMMAND LINE  **
+C               *****************************************************
+C
+C               ********************************************
+C               **  STEP 1.1--                            **
+C               **  DETERMINE THE COMMAND                 **
+C               **  (RSCRIPT OR PYTHON) AND ITS LOCATION  **
+C               **  ON THE LINE.                          **
+C               ********************************************
+C
+C     CHECK FOR "RSCRIPT" OR "PYTHON" FIRST
+C
+      IF(ICOM.EQ.'RSCR' .AND. ICOM2.EQ.'IPT ')THEN
+        ICASE='R   '
+        IFOUND='YES'
+      ELSEIF(ICOM.EQ.'PYTH' .AND. ICOM2.EQ.'ON  ')THEN
+        ICASE='PYTH'
+        IFOUND='YES'
+      ELSE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1001)
+ 1001   FORMAT('***** ERROR IN RSCRIPT/PYTHON COMMAND--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1002)
+ 1002   FORMAT('      COMMAND NOT EQUAL TO:  RSCRIPT OR PYTHON.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C               **************************
+C               **  STEP 11--           **
+C               **  COPY OVER VARIABLES **
+C               **************************
+C
+      ISTEPN='11'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXRP')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IOUNI1=ILISNU
+      IFILE1=ILISNA
+      ISTAT1=ILISST
+      IFORM1=ILISFO
+      IACCE1=ILISAC
+      IPROT1=ILISPR
+      ICURS1=ILISCS
+C
+C               ***************************************
+C               **  STEP 13--                        **
+C               **  EXTRACT THE INPUT  FILE NAME.    **
+C               ***************************************
+C
+      ISTEPN='13'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXRP')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      DO1310I=1,255
+        ICANS(I:I)=IANSLC(I)(1:1)
+ 1310 CONTINUE
+C
+      IFILQ2=IFILQU
+      IFILQU='ON'
+      ISTART=1
+      ISTOP=IWIDTH
+      IWORD=2
+      CALL DPEXWO(ICANS,ISTART,ISTOP,IWORD,
+     1            ICOL1,ICOL2,IFILE1,NCFIL1,
+     1            IBUGS2,ISUBRO,IERROR)
+      IFILQU=IFILQ2
+      IF(IFILE1(1:1).EQ.'"' .AND. IFILE1(NCFIL1:NCFIL1).EQ.'"')THEN
+        IFILE1(1:NCFIL1-2)=IFILE1(2:NCFIL1-1)
+        NCFIL1=NCFIL1-2
+        IFILE1(NCFIL1+1:NCFIL1+2)='  '
+      ENDIF
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXRP')THEN
+        WRITE(ICOUT,1351)ICOL1,ICOL2,NCFIL1
+ 1351   FORMAT('AFTER DPEXWO: ICOL1,ICOL2,NCFIL1 = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1353)IFILE1
+ 1353   FORMAT('IFILE1 = ',A80)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      IF(IERROR.EQ.'YES')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1001)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1332)
+ 1332   FORMAT('      UNABLE TO EXTRACT FILE NAME')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+C     CHECK FOR COMMAND LINE ARGUMENTS
+C
+      ARGLST=' '
+      ISTRT=ICOL2+1
+      DO1340II=255,ISTRT,-1
+        IF(ICANS(II:II).NE.' ')THEN
+          ILAST=II
+          GOTO1349
+        ENDIF
+ 1340 CONTINUE
+      ILAST=ICOL2
+ 1349 CONTINUE
+      IF(ISTRT.LT.ILAST)THEN
+        NCARG=ILAST-ISTRT+1
+        IF(NCARG.GT.80)NCARG=80
+        ARGLST(1:NCARG)=ICANS(ISTRT:ILAST)
+      ENDIF
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXRP')THEN
+        WRITE(ICOUT,1393)NCARG,ARGLST
+ 1393   FORMAT('NCARG,ARGLST = ',I8,2X,A80)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C
+C
+C            ****************************************************
+C            **  STEP 2--                                      **
+C            **  SEE IF SPECIFIED FILE EXISTS                  **
+C            ****************************************************
+C
+      ISTEPN='2'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXRP')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+C     FIRST INQUIRE IF FILE EXISTS AS GIVEN
+C
+      CALL DPINFI(IFILE1,IEXIST,IOPEN,IACC,
+     1            ISUBN0,IBUGS2,ISUBRO,IERROR)
+      IF(IEXIST.EQ.'YES' .OR. IEXIST.EQ.'ON')GOTO290
+C
+C     CHECK ALL UPPER CASE
+C
+      IFILE2=' '
+      IWIDTH=80
+      CALL DPUP80(IFILE1,IFILE2,IWIDTH,IBUGS2,IERROR)
+      CALL DPINFI(IFILE2,IEXIST,IOPEN,IACC,
+     1            ISUBN0,IBUGS2,ISUBRO,IERROR)
+      IF(IEXIST.EQ.'YES' .OR. IEXIST.EQ.'ON')THEN
+        IFILE1(1:IWIDTH)=IFILE2(1:IWIDTH)
+        GOTO290
+      ENDIF
+C
+C     CHECK ALL LOWER CASE
+C
+      IFILE2=' '
+      IWIDTH=80
+      CALL DPLO80(IFILE1,IFILE2,IWIDTH,IBUGS2,IERROR)
+      CALL DPINFI(IFILE2,IEXIST,IOPEN,IACC,
+     1            ISUBN0,IBUGS2,ISUBRO,IERROR)
+      IF(IEXIST.EQ.'YES' .OR. IEXIST.EQ.'ON')THEN
+        IFILE1(1:IWIDTH)=IFILE2(1:IWIDTH)
+        GOTO290
+      ENDIF
+C
+C     CHECK FOR FILE IN "scripts" DIRECTORY
+C
+C
+C     ADD DATAPLOT AUXILLARY PATH
+C
+      IF(IOPSY1.EQ.'UNIX') THEN
+        IFILE2(1:IUNXNC)=UNIXPN(1:IUNXNC)
+        NC1=IUNXNC
+        IF(IFILE2(NC1:NC1).EQ.'/')THEN
+          IFILE2(NC1+1:NC1+8)='scripts/'
+          NC1=NC1+8
+        ELSE
+          IFILE2(NC1+1:NC1+9)='/scripts/'
+          NC1=NC1+9
+        ENDIF
+      ELSE
+        IFILE2(1:NCPATH)=PATH(1:NCPATH)
+        NC1=NCPATH
+        IF(IFILE2(NC1:NC1).EQ.'\')THEN
+          IFILE2(NC1+1:NC1+8)='scripts\'
+          NC1=NC1+8
+        ELSE
+          IFILE2(NC1+1:NC1+9)='\scripts\'
+          NC1=NC1+9
+        ENDIF
+      ENDIF
+C
+      DO210II=IWIDTH,1,-1
+        IF(IFILE1(II:II).NE.' ')THEN
+          ILAST=II
+          GOTO219
+        ENDIF
+  210 CONTINUE
+      ILAST=1
+  219 CONTINUE
+C
+      IF(NC1+ILAST.GT.IWIDTH)GOTO8000
+C
+C     FIRST, NAME AS IS
+C
+      NCNT=NC1
+      DO220II=1,ILAST
+        NCNT=NCNT+1
+        IFILE2(NCNT:NCNT)=IFILE1(II:II)
+  220 CONTINUE
+      IF(NCNT.LT.IWIDTH)IFILE2(NCNT+1:IWIDTH)=' '
+      CALL DPINFI(IFILE2,IEXIST,IOPEN,IACC,
+     1            ISUBN0,IBUGS2,ISUBRO,IERROR)
+      IF(IEXIST.EQ.'YES' .OR. IEXIST.EQ.'ON')THEN
+        IFILE1(1:IWIDTH)=IFILE2(1:IWIDTH)
+        GOTO290
+      ENDIF
+C
+C     NOW CONVERT TO UPPER CASE
+C
+      DO230II=NC1+1,NCNT
+        IATEMP=IFILE2(II:II)
+        CALL DPCOAN(IATEMP,IVAL)
+        IF(IVAL.GE.97 .AND. IVAL.LE.122)THEN
+          IVAL=IVAL-32
+          CALL DPCONA(IVAL,IATEMP)
+          IFILE2(II:II)=IATEMP
+        ENDIF
+  230 CONTINUE
+      CALL DPINFI(IFILE2,IEXIST,IOPEN,IACC,
+     1            ISUBN0,IBUGS2,ISUBRO,IERROR)
+      IF(IEXIST.EQ.'YES' .OR. IEXIST.EQ.'ON')THEN
+        IFILE1(1:IWIDTH)=IFILE2(1:IWIDTH)
+        GOTO290
+      ENDIF
+C
+C     NOW CONVERT TO LOWER CASE
+C
+      DO240II=NC1+1,NCNT
+        IATEMP=IFILE2(II:II)
+        CALL DPCOAN(IATEMP,IVAL)
+        IF(IVAL.GE.65 .AND. IVAL.LE.90)THEN
+          IVAL=IVAL+32
+          CALL DPCONA(IVAL,IATEMP)
+          IFILE2(II:II)=IATEMP
+        ENDIF
+  240 CONTINUE
+      CALL DPINFI(IFILE2,IEXIST,IOPEN,IACC,
+     1            ISUBN0,IBUGS2,ISUBRO,IERROR)
+      IF(IEXIST.EQ.'YES' .OR. IEXIST.EQ.'ON')THEN
+        IFILE1(1:IWIDTH)=IFILE2(1:IWIDTH)
+        GOTO290
+      ENDIF
+C
+      GOTO8000
+C
+ 290  CONTINUE
+      IFLAG1=0
+      DO293II=80,1,-1
+        IF(IFILE1(II:II).NE.' ')THEN
+          NCFILE=II
+          GOTO295
+        ENDIF
+  293 CONTINUE
+      NCFILE=1
+  295 CONTINUE
+      DO297II=1,NCFIL1
+        IF(IFILE1(II:II).EQ.' ')THEN
+          IFLAG1=1
+          GOTO299
+        ENDIF
+  297 CONTINUE
+  299 CONTINUE
+C
+C               *****************************************
+C               **  STEP 3--                           **
+C               **  CALL DPSYS2 TO EXECUTE THE COMMAND **
+C               *****************************************
+C
+      ISTEPN='3'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXRP')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IFLAG2=0
+      NCHAR=0
+      IF(ICASE.EQ.'R   ')THEN
+        IF(NCRPAT.GE.1)THEN
+          DO311II=1,NCRPAT
+            IF(IRRRPA(II:II).EQ.' ')THEN
+              IFLAG2=1
+              GOTO319
+            ENDIF
+  311     CONTINUE
+  319     CONTINUE
+          IF(IFLAG2.EQ.1 .AND. IRRRPA(1:1).NE.'"')THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR)='"'
+          ENDIF
+          ITEXT3(NCHAR+1:NCHAR+NCRPAT)=IRRRPA(1:NCRPAT)
+          NCHAR=NCHAR+NCRPAT
+        ENDIF
+C
+        IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXRP')THEN
+          WRITE(ICOUT,351)NCRPAT,NCHAR,IFLAG2,IRRRPA(1:1)
+  351     FORMAT('DPEXRP STEP 3: NCRPAT,NCHAR,IFLAG2,IRRRPA(1:1) = ',
+     1           3I8,2X,A4)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,353)IRRRPA
+  353     FORMAT('IRRRPA: ',A80)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,355)(ITEXT3(JJ:JJ),JJ=1,MIN(100,NCHAR))
+  355     FORMAT('ITEXT3: ',100A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+        IF(IHOST1.EQ.'IBM-')THEN
+          IF(NCHAR.GT.0 .AND. ITEXT3(NCHAR:NCHAR).NE.IBASLC)THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR)=IBASLC
+          ENDIF
+          ITEXT3(NCHAR+1:NCHAR+11)='RSCRIPT.EXE'
+          NCHAR=NCHAR+11
+          IF(IFLAG2.EQ.1 .AND. IRRRPA(1:1).NE.'"')THEN
+            ITEXT3(NCHAR+1:NCHAR+2)='" '
+            NCHAR=NCHAR+2
+          ELSE
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR)=' '
+          ENDIF
+        ELSEIF(IOPSY1.EQ.'UNIX')THEN
+          IF(NCHAR.GT.0 .AND. ITEXT3(NCHAR:NCHAR).NE.'/')THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR)='/'
+          ENDIF
+          ITEXT3(NCHAR+1:NCHAR+7)='Rscript'
+          NCHAR=NCHAR+7
+          IF(IFLAG2.EQ.1 .AND. IRRRPA(1:1).NE.'"')THEN
+            ITEXT3(NCHAR+1:NCHAR+2)='" '
+            NCHAR=NCHAR+2
+          ELSE
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR)=' '
+          ENDIF
+        ENDIF
+C
+        IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXRP')THEN
+          WRITE(ICOUT,356)NCHAR
+  356     FORMAT('DPEXRP STEP 3A: NCHAR = ',I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,355)(ITEXT3(JJ:JJ),JJ=1,MIN(100,NCHAR))
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+        NTEMP=NCHAR+NCFILE
+        IF(IFLAG1.EQ.1)NTEMP=NTEMP+2
+        IF(NTEMP.GT.255)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1001)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,301)
+  301     FORMAT('      SPECIFIED STRING EXCEEDS 255 ',
+     1           'CHARACTERS.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+        IF(IFLAG1.EQ.1)THEN
+          NCHAR=NCHAR+1
+          ITEXT3(NCHAR:NCHAR)='"'
+        ENDIF
+        ITEXT3(NCHAR+1:NCHAR+NCFILE)=IFILE1(1:NCFILE)
+        NCHAR=NCHAR+NCFILE
+        IF(IFLAG1.EQ.1)THEN
+          NCHAR=NCHAR+1
+          ITEXT3(NCHAR:NCHAR)='"'
+        ENDIF
+C
+        IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXRP')THEN
+          WRITE(ICOUT,366)NCHAR,IFLAG1
+  366     FORMAT('DPEXRP STEP 3B: NCHAR,IFLAG1 = ',2I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,355)(ITEXT3(JJ:JJ),JJ=1,MIN(100,NCHAR))
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+        IF(NCARG.GT.0)THEN
+          IF(NCHAR+NCARG+1.GT.255)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1001)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,301)
+            CALL DPWRST('XXX','BUG ')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+          NCHAR=NCHAR+1
+          ITEXT3(NCHAR:NCHAR)=' '
+          ITEXT3(NCHAR+1:NCHAR+NCARG)=ARGLST(1:NCARG)
+          NCHAR=NCHAR+NCARG
+        ENDIF
+      ELSEIF(ICASE.EQ.'PYTH')THEN
+        IF(NCPYTH.GE.1)THEN
+          DO361II=1,NCPYTH
+            IF(IPYTPA(II:II).EQ.' ')THEN
+              IFLAG2=1
+              GOTO369
+            ENDIF
+  361     CONTINUE
+  369     CONTINUE
+          IF(IFLAG2.EQ.1 .AND. IPYTPA(1:1).NE.'"')THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR)='"'
+          ENDIF
+          ITEXT3(NCHAR+1:NCHAR+NCRPAT)=IRRRPA(1:NCRPAT)
+          NCHAR=NCHAR+NCRPAT
+        ENDIF
+        IF(IHOST1.EQ.'IBM-')THEN
+          IF(NCHAR.GT.0 .AND. ITEXT3(NCHAR:NCHAR).NE.IBASLC)THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR)=IBASLC
+          ENDIF
+          ITEXT3(NCHAR+1:NCHAR+6)='PYTHON'
+          NCHAR=NCHAR+6
+          IF(IFLAG2.EQ.1 .AND. IPYTPA(1:1).NE.'"')THEN
+            ITEXT3(NCHAR+1:NCHAR+2)='" '
+            NCHAR=NCHAR+2
+          ELSE
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR)=' '
+          ENDIF
+        ELSEIF(IOPSY1.EQ.'UNIX')THEN
+          IF(NCHAR.GT.0 .AND. ITEXT3(NCHAR:NCHAR).NE.'/')THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR)='/'
+          ENDIF
+          ITEXT3(NCHAR+1:NCHAR+6)='python'
+          NCHAR=NCHAR+6
+          IF(IFLAG2.EQ.1 .AND. IPYTPA(1:1).NE.'"')THEN
+            ITEXT3(NCHAR+1:NCHAR+2)='" '
+            NCHAR=NCHAR+2
+          ELSE
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR)=' '
+          ENDIF
+        ENDIF
+        NTEMP=NCHAR+NCFILE
+        IF(IFLAG1.EQ.1)NTEMP=NTEMP+2
+        IF(NTEMP.GT.255)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1001)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,301)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+        IF(IFLAG1.EQ.1)THEN
+          NCHAR=NCHAR+1
+          ITEXT3(NCHAR:NCHAR)='"'
+        ENDIF
+        ITEXT3(NCHAR+1:NCHAR+NCFILE)=IFILE1(1:NCFILE)
+        NCHAR=NCHAR+NCFILE
+        IF(IFLAG1.EQ.1)THEN
+          NCHAR=NCHAR+1
+          ITEXT3(NCHAR:NCHAR)='"'
+        ENDIF
+        IF(NCARG.GT.0)THEN
+          IF(NCHAR+NCARG+1.GT.255)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1001)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,301)
+            CALL DPWRST('XXX','BUG ')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+          NCHAR=NCHAR+1
+          ITEXT3(NCHAR:NCHAR)=' '
+          ITEXT3(NCHAR+1:NCHAR+NCARG)=ARGLST(1:NCARG)
+          NCHAR=NCHAR+NCARG
+        ENDIF
+      ENDIF
+C
+      ISSAV1=ISYSPE
+      ISSAV2=ISYSHI
+      ISYSPE='OFF'
+      ISYSHI='ON'
+      IF(IFLAG1.EQ.1 .OR. IFLAG2.EQ.1)ISYSHI='OFF'
+      CALL DPSYS2(ITEXT3,NCHAR,ISUBRO,IERROR)
+      ISYSPE=ISSAV1
+      ISYSHI=ISSAV2
+      GOTO9000
+C
+ 8000 CONTINUE
+      IERROR='YES'
+      GOTO9000
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXRP')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPEXRP--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9017)IFOUND,IERROR,NCHAR
+ 9017   FORMAT('IFOUND,IERROR,NCHAR = ',2(A4,2X),I5)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9018)(ITEXT3(J:J),J=1,MIN(NCHAR,220))
+ 9018   FORMAT('(ITEXT3(I),I=1,NCHAR) = ',220A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPEXR2(ICASE,IFILE1,NCFIL1,ARGLST,NCARG,
+     1                  IBUGS2,ISUBRO,IFOUND,IERROR)
+C
+C     PURPOSE--RUN EITHER AN R OR A PYTHON SCRIPT THAT EXISTS IN THE
+C              "/lib/scripts" DIRECTORY.  THESE SCRIPTS ARE CALLED BY
+C              OTHER DATAPLOT SUBROUTINES TO PERFORM SPECIFIC TASKS.
+C
+C              IN ORDER FOR THIS COMMAND TO WORK CORRECTLY, THE
+C              FOLLOWING NEEDS TO BE DONE:
+C
+C                 1) R (OR PYTHON) NEEDS TO BE INSTALLED ON YOUR LOCAL
+C                    PLATFORM.
+C
+C                 2) YOU MAY NEED TO SET THE PATH FOR R OR PYTHON WITH
+C                    THE COMMANDS
+C
+C                       SET PYTHON PATH ...
+C                       SET R      PATH ...
+C
+C                 3) FOR PYTHON, YOU MAY NEED TO SPECIFY THE VERSION
+C                    WITH THE COMMAND
+C
+C                       SET PYTHON VERSION <2/3>
+C
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK OF THE
+C           NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2020/02
+C     ORIGINAL VERSION--FEBRUARY   2020.
+C
+C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
+C
+      CHARACTER*4 ICASE
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+      CHARACTER*80 IFILE1
+      CHARACTER*80 ARGLST
+C
+      CHARACTER*255 ITEXT3
+      CHARACTER*80 IFILE2
+      CHARACTER*80 IFILE3
+      CHARACTER*4 IEXIST
+      CHARACTER*4 IOPEN
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ISUBN0
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+      CHARACTER*12 IACC
+      CHARACTER*1 IBASLC
+      CHARACTER*1 IATEMP
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOST.INC'
+      INCLUDE 'DPCOF2.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----START POINT-----------------------------------------------------
+C
+      IFOUND='NO'
+      IERROR='NO'
+      ISUBN1='DPEX'
+      ISUBN2='R2  '
+      CALL DPCONA(92,IBASLC)
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXR2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPEXR2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGS2,ISUBRO,ICASE,NCFIL1,NCARG
+   53   FORMAT('IBUGS2,ISUBRO,ICASE,NCFIL1,NCARG = ',3(A4,2X),2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)IFILE1
+   54   FORMAT('IFILE1 = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,55)ARGLST
+   55   FORMAT('ARGLST = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        IF(IOPSY1.EQ.'UNIX') THEN
+          WRITE(ICOUT,61)IUNXNC,UNIXPN
+   61     FORMAT('IUNXNC,UNIXPN = ',I5,2X,A80)
+          CALL DPWRST('XXX','BUG ')
+        ELSE
+          WRITE(ICOUT,63)NCPATH,PATH
+   63     FORMAT('NCPATH,PATH = ',I5,2X,A80)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
+C
+C            ****************************************************
+C            **  STEP 2--                                      **
+C            **  SEE IF SPECIFIED FILE EXISTS                  **
+C            ****************************************************
+C
+C     NOTE: HAVING AN ISSUE GETTING QUOTES FOR THE SCRIPT FILE
+C           TO WORK CORRECTLY UNDER WINDOWS.  SO AS A HACK, COPY
+C           THE SCRIPT FILE TO THE CURRENT DIRECTORY BEFORE INVOKE
+C           PYTHON.
+C
+      ISTEPN='2'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXR2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+C     CHECK FOR FILE IN "scripts" DIRECTORY
+C
+C     ADD DATAPLOT AUXILLARY PATH
+C
+      IFILE2=' '
+      NC1=0
+      IFLAGQ=0
+      IFILE3=' '
+      IFILE3(1:NCFIL1)=IFILE1(1:NCFIL1)
+C
+      IF(IOPSY1.EQ.'UNIX') THEN
+C
+C       UNIX: REPLACE SPACE CHARACTER WITH "\ "
+C
+        ISTEPN='2B'
+        IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXR2')
+     1     CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+        DO105II=1,IUNXNC
+          IF(UNIXPN(II:II).EQ.' ')THEN
+            NC1=NC1+1
+            IFILE2(NC1:NC1+1)='\ '
+            NC=NC+1
+          ELSE
+            NC1=NC1+1
+            IFILE2(NC1:NC1)=UNIXPN(II:II)
+          ENDIF
+  105   CONTINUE
+        IF(IFILE2(NC1:NC1).EQ.'/')THEN
+          IFILE2(NC1+1:NC1+8)='scripts/'
+          NC1=NC1+8
+        ELSE
+          IFILE2(NC1+1:NC1+9)='/scripts/'
+          NC1=NC1+9
+        ENDIF
+      ELSE
+C
+C       FOR WINDOWS, IF THERE ARE SPACE CHARACTERS NEED TO
+C       QUOTE THE FILE NAME.  HOWEVER, DO NOT ADD QUOTES UNTIL
+C       AFTER "DPINFI" CALLS.
+C
+        ISTEPN='2C'
+        IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXR2')
+     1     CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+        DO110II=1,NCPATH
+          IF(PATH(II:II).EQ.' ')THEN
+            IFLAGQ=1
+            GOTO119
+          ENDIF
+  110   CONTINUE
+  119   CONTINUE
+        NC1=NCPATH
+        IFILE2(1:NC1)=PATH(1:NC1)
+C
+        IF(IFILE2(NC1:NC1).EQ.'\')THEN
+          IFILE2(NC1+1:NC1+8)='scripts\'
+          NC1=NC1+8
+        ELSE
+          IFILE2(NC1+1:NC1+9)='\scripts\'
+          NC1=NC1+9
+        ENDIF
+      ENDIF
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXR2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,151)NC1,IFILE2
+  151   FORMAT('AT 151: NC1,IFILE2 = ',I6,2X,A80)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      ILAST=NCFIL1
+C
+      IF(NC1+ILAST.GT.80)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1001)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,211)
+  211   FORMAT('      THE MAXIMUM NUMBER OF CHARACTERS FOR THE ',
+     1         'SCRIPT FILE NAME EXCEEDED.')
+        CALL DPWRST('XXX','BUG ')
+        GOTO8000
+      ENDIF
+C
+C     FIRST, NAME AS IS
+C
+      IWIDTH=80
+      NCNT=NC1
+      DO220II=1,ILAST
+        NCNT=NCNT+1
+        IFILE2(NCNT:NCNT)=IFILE1(II:II)
+  220 CONTINUE
+      IF(NCNT.LT.IWIDTH)IFILE2(NCNT+1:IWIDTH)=' '
+      CALL DPINFI(IFILE2,IEXIST,IOPEN,IACC,
+     1            ISUBN0,IBUGS2,ISUBRO,IERROR)
+C
+      ISTEPN='2E'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXR2')
+     1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(IEXIST.EQ.'YES' .OR. IEXIST.EQ.'ON')THEN
+        IFILE1(1:IWIDTH)=IFILE2(1:IWIDTH)
+        GOTO290
+      ENDIF
+C
+C     NOW CONVERT TO UPPER CASE
+C
+      DO230II=NC1+1,NCNT
+        IATEMP=IFILE2(II:II)
+        CALL DPCOAN(IATEMP,IVAL)
+        IF(IVAL.GE.97 .AND. IVAL.LE.122)THEN
+          IVAL=IVAL-32
+          CALL DPCONA(IVAL,IATEMP)
+          IFILE2(II:II)=IATEMP
+        ENDIF
+  230 CONTINUE
+      CALL DPINFI(IFILE2,IEXIST,IOPEN,IACC,
+     1            ISUBN0,IBUGS2,ISUBRO,IERROR)
+      IF(IEXIST.EQ.'YES' .OR. IEXIST.EQ.'ON')THEN
+        IFILE1(1:IWIDTH)=IFILE2(1:IWIDTH)
+        GOTO290
+      ENDIF
+C
+      ISTEPN='2F'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXR2')
+     1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+C     NOW CONVERT TO LOWER CASE
+C
+      DO240II=NC1+1,NCNT
+        IATEMP=IFILE2(II:II)
+        CALL DPCOAN(IATEMP,IVAL)
+        IF(IVAL.GE.65 .AND. IVAL.LE.90)THEN
+          IVAL=IVAL+32
+          CALL DPCONA(IVAL,IATEMP)
+          IFILE2(II:II)=IATEMP
+        ENDIF
+  240 CONTINUE
+      CALL DPINFI(IFILE2,IEXIST,IOPEN,IACC,
+     1            ISUBN0,IBUGS2,ISUBRO,IERROR)
+      IF(IEXIST.EQ.'YES' .OR. IEXIST.EQ.'ON')THEN
+        IFILE1(1:IWIDTH)=IFILE2(1:IWIDTH)
+        GOTO290
+      ENDIF
+C
+      ISTEPN='2G'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXR2')
+     1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1001)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,251)
+  251 FORMAT('      THE SPECIFIED SCRIPT WAS NOT FOUND IN THE ',
+     1       'lib/scripts DIRECTORY.')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,253)IFILE1
+  253 FORMAT('      SCRIPT NAME: ',A80)
+      CALL DPWRST('XXX','BUG ')
+      GOTO8000
+C
+ 290  CONTINUE
+C
+C     ADD QUOTES IF NEEDED
+C
+      IF(IFLAGQ.EQ.1)THEN
+        IFILE2(2:NCNT+1)=IFILE1(1:NCNT)
+        IFILE2(1:1)='"'
+        IFILE2(NCNT+2:NCNT+2)='"'
+        IFILE1(1:NCNT+2)=IFILE2(1:NCNT+2)
+        NCNT=NCNT+2
+C
+C       FOR WINDOWS SYSTEMS, COPY SCRIPT FILE TO CURRENT
+C       DIRECTORY
+C
+        IF(IHOST1.EQ.'IBM-')THEN
+          CALL COPYFI(IFILE2,IFILE3,IBUGS2,ISUBRO,IERROR)
+          IF(IERROR.EQ.'YES')GOTO9000
+          IFILE1=' '
+          IFILE1=IFILE3
+          IFLAGQ=0
+        ENDIF
+      ENDIF
+C
+      DO293II=80,1,-1
+        IF(IFILE1(II:II).NE.' ')THEN
+          NCFILE=II
+          GOTO295
+        ENDIF
+  293 CONTINUE
+      NCFILE=1
+  295 CONTINUE
+C
+C               *****************************************
+C               **  STEP 3--                           **
+C               **  CALL DPSYS2 TO EXECUTE THE COMMAND **
+C               *****************************************
+C
+      ISTEPN='3'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXR2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      NCHAR=0
+      IFLAGQ=0
+C
+      IF(ICASE.EQ.'R   ')THEN
+        IF(NCRPAT.GE.1)THEN
+          DO311II=1,NCRPAT
+            IF(IRRRPA(II:II).EQ.' ')THEN
+              IF(IHOST1.EQ.'IBM-')THEN
+                NCHAR=NCHAR+1
+                ITEXT3(NCHAR:NCHAR)=IRRRPA(II:II)
+                IFLAGQ=1
+              ELSE
+                NCHAR=NCHAR+1
+                ITEXT3(NCHAR:NCHAR+1)='\ '
+              ENDIF
+            ELSE
+              NCHAR=NCHAR+1
+              ITEXT3(NCHAR:NCHAR)=IRRRPA(II:II)
+            ENDIF
+  311     CONTINUE
+        ENDIF
+C
+        IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXR2')THEN
+          WRITE(ICOUT,351)NCRPAT,NCHAR,IFLAG2,IRRRPA(1:1)
+  351     FORMAT('DPEXRP STEP 3: NCRPAT,NCHAR,IFLAG2,IRRRPA(1:1) = ',
+     1           3I8,2X,A4)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,353)IRRRPA
+  353     FORMAT('IRRRPA: ',A80)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,355)(ITEXT3(JJ:JJ),JJ=1,MIN(100,NCHAR))
+  355     FORMAT('ITEXT3: ',100A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+        IF(IHOST1.EQ.'IBM-')THEN
+          IF(NCHAR.GT.0 .AND. ITEXT3(NCHAR:NCHAR).NE.IBASLC)THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR)=IBASLC
+          ENDIF
+          ITEXT3(NCHAR+1:NCHAR+11)='RSCRIPT.EXE'
+          NCHAR=NCHAR+11
+        ELSEIF(IOPSY1.EQ.'UNIX')THEN
+          IF(NCHAR.GT.0 .AND. ITEXT3(NCHAR:NCHAR).NE.'/')THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR)='/'
+          ENDIF
+          ITEXT3(NCHAR+1:NCHAR+7)='Rscript'
+          NCHAR=NCHAR+7
+        ENDIF
+C
+        IF(IFLAGQ.EQ.1)THEN
+          NCTEMP=0
+          DO356II=NCHAR,1,-1
+            ITEXT3(II+1:II+1)=ITEXT3(II:II)
+  356     CONTINUE
+          ITEXT3(1:1)='"'
+          ITEXT3(NCHAR+2:NCHAR+2)='"'
+          NCHAR=NCHAR+2
+        ENDIF
+        NCHAR=NCHAR+1
+        ITEXT3(NCHAR:NCHAR)=' '
+C
+        IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXR2')THEN
+          WRITE(ICOUT,359)NCHAR
+  359     FORMAT('DPEXRP STEP 3A: NCHAR = ',I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,355)(ITEXT3(JJ:JJ),JJ=1,MIN(100,NCHAR))
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+        NTEMP=NCHAR+NCFILE
+        IF(NTEMP.GT.255)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1001)
+ 1001     FORMAT('***** ERROR IN RSCRIPT/PYTHON COMMAND--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,301)
+  301     FORMAT('      SPECIFIED STRING EXCEEDS 255 ',
+     1           'CHARACTERS.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+        ITEXT3(NCHAR+1:NCHAR+NCFILE)=IFILE1(1:NCFILE)
+        NCHAR=NCHAR+NCFILE
+C
+        IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXR2')THEN
+          WRITE(ICOUT,366)NCHAR,IFLAG1
+  366     FORMAT('DPEXRP STEP 3B: NCHAR,IFLAG1 = ',2I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,355)(ITEXT3(JJ:JJ),JJ=1,MIN(100,NCHAR))
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+        IF(NCARG.GT.0)THEN
+          IF(NCHAR+NCARG+1.GT.255)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1001)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,301)
+            CALL DPWRST('XXX','BUG ')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+          NCHAR=NCHAR+1
+          ITEXT3(NCHAR:NCHAR)=' '
+          ITEXT3(NCHAR+1:NCHAR+NCARG)=ARGLST(1:NCARG)
+          NCHAR=NCHAR+NCARG
+        ENDIF
+      ELSEIF(ICASE.EQ.'PYTH')THEN
+        IF(NCPYTH.GE.1)THEN
+          DO361II=1,NCPYTH
+            IF(IPYTPA(II:II).EQ.' ')THEN
+              IF(IHOST1.EQ.'IBM-')THEN
+                NCHAR=NCHAR+1
+                ITEXT3(NCHAR:NCHAR)=IPYTPA(II:II)
+                IFLAGQ=1
+              ELSE
+                NCHAR=NCHAR+1
+                ITEXT3(NCHAR:NCHAR)='\ '
+                NCHAR=NCHAR+1
+              ENDIF
+            ELSE
+              NCHAR=NCHAR+1
+              ITEXT3(NCHAR:NCHAR)=IPYTPA(II:II)
+            ENDIF
+  361     CONTINUE
+        ENDIF
+C
+        IF(IHOST1.EQ.'IBM-')THEN
+          IF(NCHAR.GT.0 .AND. ITEXT3(NCHAR:NCHAR).NE.IBASLC)THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR)=IBASLC
+          ENDIF
+          ITEXT3(NCHAR+1:NCHAR+6)='PYTHON'
+          NCHAR=NCHAR+6
+        ELSEIF(IOPSY1.EQ.'UNIX')THEN
+          IF(NCHAR.GT.0 .AND. ITEXT3(NCHAR:NCHAR).NE.'/')THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR)='/'
+          ENDIF
+          ITEXT3(NCHAR+1:NCHAR+6)='python'
+          NCHAR=NCHAR+6
+        ENDIF
+C
+        IF(IFLAGQ.EQ.1)THEN
+          NCTEMP=0
+          DO386II=NCHAR,1,-1
+            ITEXT3(II+1:II+1)=ITEXT3(II:II)
+  386     CONTINUE
+          ITEXT3(1:1)='"'
+          ITEXT3(NCHAR+2:NCHAR+2)='"'
+          NCHAR=NCHAR+2
+        ENDIF
+        NCHAR=NCHAR+1
+        ITEXT3(NCHAR:NCHAR)=' '
+C
+        NTEMP=NCHAR+NCFILE
+        IF(NTEMP.GT.255)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1001)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,301)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+C
+        ITEXT3(NCHAR+1:NCHAR+NCFILE)=IFILE1(1:NCFILE)
+        NCHAR=NCHAR+NCFILE
+        IF(NCARG.GT.0)THEN
+          IF(NCHAR+NCARG+1.GT.255)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1001)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,301)
+            CALL DPWRST('XXX','BUG ')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+          NCHAR=NCHAR+1
+          ITEXT3(NCHAR:NCHAR)=' '
+          ITEXT3(NCHAR+1:NCHAR+NCARG)=ARGLST(1:NCARG)
+          NCHAR=NCHAR+NCARG
+        ENDIF
+      ENDIF
+C
+C     FOR WINDOWS, ADD BEGINNING AND ENDING QUOTES IF
+C     STRING CONTAINS ANY QUOTES.
+C
+      IF(IHOST1.EQ.'IBM-')THEN
+        IF(IFLAGQ.EQ.0)THEN
+          DO7010II=1,NCHAR
+            IF(ITEXT3(II:II).EQ.'"')THEN
+              ITEXT3(2:NCHAR+1)=ITEXT3(1:NCHAR)
+              ITEXT3(1:1)='"'
+              ITEXT3(NCHAR+2:NCHAR+2)='"'
+              NCHAR=NCHAR+2
+              GOTO7019
+            ENDIF
+ 7010     CONTINUE
+ 7019     CONTINUE
+        ENDIF
+      ENDIF
+C
+      ISSAV1=ISYSPE
+      ISSAV2=ISYSHI
+      ISYSPE='OFF'
+      ISYSHI='ON'
+      IF(IFLAG1.EQ.1 .OR. IFLAG2.EQ.1)ISYSHI='OFF'
+      CALL DPSYS2(ITEXT3,NCHAR,ISUBRO,IERROR)
+      ISYSPE=ISSAV1
+      ISYSHI=ISSAV2
+      GOTO9000
+C
+ 8000 CONTINUE
+      IERROR='YES'
+      GOTO9000
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXR2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPEXR2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9017)IFOUND,IERROR,NCHAR
+ 9017   FORMAT('IFOUND,IERROR,NCHAR = ',2(A4,2X),I5)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9018)(ITEXT3(J:J),J=1,MIN(NCHAR,220))
+ 9018   FORMAT('(ITEXT3(I),I=1,NCHAR) = ',220A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
       SUBROUTINE DPEXS1(ISTRIN,NCOLMX,ISTART,ISTOP,K,MESSAG,
      1                  ICOL1,ICOL2,ISTRI2,NCSTR2,
      1                  IBUGS2,ISUBRO,IERROR)
@@ -16192,7 +17618,7 @@ C
       RETURN
       END
       SUBROUTINE DPEXTL(IHRE11,IHRE12,IHRE21,IHRE22,
-     1KNUMB,IVAL1,IVAL2,IBUGS2,ISUBRO,IERROR)
+     1                  KNUMB,IVAL1,IVAL2,IBUGS2,ISUBRO,IERROR)
 C
 C     PURPOSE--EXTRACT "TO" LIMITS.
 C              DO A CHARACTER-BY-CHARACTER COMPARISON
@@ -16251,20 +17677,20 @@ C
       IVAL2=(-999)
       IERROR='NO'
 C
-      IF(IBUGS2.EQ.'OFF'.AND.ISUBRO.NE.'EXTL')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPEXTL--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBUGS2,ISUBRO,IERROR
-   52 FORMAT('IBUGS2,ISUBRO,IERROR = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)IHRE11,IHRE12,IHRE21,IHRE22
-   53 FORMAT('IHRE11,IHRE12,IHRE21,IHRE22 = ',A4,2X,A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXTL')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPEXTL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGS2,ISUBRO,IERROR
+   52   FORMAT('IBUGS2,ISUBRO,IERROR = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IHRE11,IHRE12,IHRE21,IHRE22
+   53   FORMAT('IHRE11,IHRE12,IHRE21,IHRE22 = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               ****************************************************
 C               **  STEP 11--                                     **
@@ -16290,10 +17716,10 @@ C
       IS2(5:8)=IHRE22
 C
       DO 1100 K=1,8
-      IS3(K)='    '
-      IS4(K)='    '
-      IS3(K)=IS1(K:K)
-      IS4(K)=IS2(K:K)
+        IS3(K)='    '
+        IS4(K)='    '
+        IS3(K)=IS1(K:K)
+        IS4(K)=IS2(K:K)
  1100 CONTINUE
 C
 C               ****************************************************
@@ -16306,20 +17732,26 @@ C               **  PART OF IS4.                                  **
 C               ****************************************************
 C
       DO1210K=1,8
-      KREV=8-K+1
-      IF(IS3(KREV).NE.'    ')GOTO1219
+        KREV=8-K+1
+        IF(IS3(KREV).NE.'    ')GOTO1219
  1210 CONTINUE
       KREV=0
  1219 CONTINUE
       NS3=KREV
 C
       DO1220K=1,8
-      KREV=8-K+1
-      IF(IS4(KREV).NE.'    ')GOTO1229
+        KREV=8-K+1
+        IF(IS4(KREV).NE.'    ')GOTO1229
  1220 CONTINUE
       KREV=0
  1229 CONTINUE
       NS4=KREV
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXTL')THEN
+        WRITE(ICOUT,1231)NS3,N
+ 1231   FORMAT('AT 1229: NS3,NS4 = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               *******************************************
 C               **  STEP 13--                            **
@@ -16334,10 +17766,21 @@ C     JULY 2009: DO NOT TREAT "Y1 TO Y1" AS AN ERROR AS THIS
 C                CONSTRUCT MAY BE USEFUL IN MACROS WHERE THE
 C                NUMBER OF VARIABLES MAY NOT BE KNOWN.
 C
+C     MARCH 2020: IF NO DIFFERENCE FOUND, SET KDIFF TO LAST
+C                 NON-BLANK CHARACTER
+C
       DO1300K=1,8
-      KDIFF=K
-      IF(IS3(K).NE.IS4(K))GOTO1390
+        KDIFF=K
+        IF(IS3(K).NE.IS4(K))GOTO1390
  1300 CONTINUE
+C
+      DO1310K=8,1,-1
+        IF(IS3(K).NE.' ')THEN
+          KDIFF=K
+          GOTO1319
+        ENDIF
+ 1310 CONTINUE
+ 1319 CONTINUE
 C
 CCCCC IERROR='YES'
 CCCCC WRITE(ICOUT,999)
@@ -16377,18 +17820,24 @@ C
       KDIFM1=KDIFF-1
       IF(KDIFM1.LE.0)GOTO1490
       DO1400K=1,KDIFM1
-      KREV=KDIFM1-K+1
-      IC=IS1(KREV:KREV)
-      CALL DPCOAN(IC,IX)
-      IF(IX.LE.47)GOTO1490
-      IF(IX.GE.58)GOTO1490
-      KNUMB=KREV
+        KREV=KDIFM1-K+1
+        IC=IS1(KREV:KREV)
+        CALL DPCOAN(IC,IX)
+        IF(IX.LE.47)GOTO1490
+        IF(IX.GE.58)GOTO1490
+        KNUMB=KREV
  1400 CONTINUE
  1490 CONTINUE
       K31=KNUMB
       K32=NS3
       K41=KNUMB
       K42=NS4
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EXTL')THEN
+        WRITE(ICOUT,1491)K31,K32,K41,K42
+ 1491   FORMAT('AT 1490: K31,K32,K41,K42 = ',4I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               *************************************************
 C               **  STEP 15--                                  **

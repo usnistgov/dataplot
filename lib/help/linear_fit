@@ -1,0 +1,401 @@
+-----LINEAR FIT----------------------------------------------------
+ 
+LINEAR FIT
+ 
+Name:
+    ... FIT
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Estimate the parameters for a linear, polynomial, or multi-linear
+    least squares fit (this is one of Dataplot's most powerful and
+    heavily used commands).
+ 
+Description:
+    The FIT command can be used for both linear or non-linear fits.
+    Both weighted and unweighted fits are supported.
+
+    Non-linear fits are performed using an iterative modified
+    Levenberg-Marquardt algorithm.  In addition, the FIT command can
+    perform linear, multi-linear and polynomoal fits using an exact
+    algorithm.  Since the exact algorithm supports a much broader
+    range of output, we document that separately here.  Enter
+    HELP FIT for the documentation for the non-linear case.
+
+    When the FIT command gives a list of variables without a functional
+    equation, the exact (linear) algorithm is used.
+
+    For linear fits, Dataplot adopted the fitting code from the
+    OMNITAB II statistical program.  This is a modified Gramm-Schmidt
+    with iterative refinement algorithm.  The Gramm-Schmidt algorithm
+    is based on the QR decomposition and is intended for full rank
+    models.  Since Gramm-Schmidt algorithms and QR decompositions are
+    well documented in the literature, we do not give the mathematical
+    details here.
+
+    For linear fits, the FIT command generates the following output.
+
+    1) A table containing the parameter estimates, the parameter standard
+       deviations, and the parameter t-values is printed.  The t-value is
+       used to determine if a given paramater is statistically
+       significant.
+
+       These values are also written to the file dpst1f.dat.  In addition,
+       lower and upper Bonferroni joint confidence limits for the
+       parameters are written to dpst1f.dat with a 5E15.7 format.  By
+       default, 95% intervals are used for the Bonferroni intervals.  You
+       can define the parameter ALPHA to change the significance level.
+       For example, to use 90% intervals, enter the command:
+
+           LET ALPHA = 0.9
+
+       To read these values into Dataplot variables, enter the command
+
+            READ DPST1F.DAT COEF COEFSD TVAL BONL BONU
+
+    2) The following are written to the file dpst2f.dat
+
+           Column 1: standard deviations of the predicted values
+           Column 2: 95% lower confidence limit for the predicted values
+           Column 3: 95% upper confidence limit for the predicted values
+           Column 4: 99% lower confidence limit for the predicted values
+           Column 5: 99% upper confidence limit for the predicted values
+           Column 6: 95% lower joint Bonferroni confidence limit for the
+                     predicted values
+           Column 7: 95% upper joint Bonferroni confidence limit for the
+                     predicted values
+           Column 8: 95% lower joint Hotelling confidence limit for the
+                     predicted values
+           Column 9: 95% upper joint Hotelling confidence limit for the
+                     predicted values
+
+       These values are written with a 9E15.7 format.  By default, 95%
+       intervals are used for the Bonferroni and Hotelling intervals.  You
+       can define the parameter ALPHA to change the significance level.
+       For example, to use 90% intervals, enter the command:
+
+           LET ALPHA = 0.9
+
+       To read these values into Dataplot after the FIT, enter the
+       command
+
+           SET READ FORMAT 9E15.7
+           READ DPST2F.DAT PREDSD PRED95LL PRED95UL PREDBLL PREDBUL ...
+                           PREDHLL PREDHUL
+
+    3) The following are written to the file dpst3f.dat
+
+       The variables written to this file are used in "regression
+       diagnostics".  More will be said about this later.
+
+           Column 1: the diagonals of the hat matrix (the hat matrix is
+                     X(X-transpose*X)X-transpose.  In themselves, the
+                     diagonal elements are measures of the leverage of a
+                     given point.  The minimum leverage is (1/N), the
+                     maximum leverage is 1.0 and the average leverage is
+                     (P/N) where P is the number of variables in the fit.
+                     These elements are also used to calculate many other
+                     diagnostic statistics.
+
+                     H(ii) = VAR(Predicted value)/Residual Variance
+
+           Column 2: the variance of the residuals.
+
+                      VAR(res) = MSE*(1 - H(ii))
+
+           Column 3: the standardized residuals.  These are the residuals
+                     divided by the square root of the mean square error.
+
+                     STRES = Residual/SQRT(MSE)
+
+           Column 4: the internally studentized residuals.  These are
+                     the residuals divided by their standard deviations.
+           Column 5: the deleted residuals.  These are residuals obtained
+                     from subtracting the predicted values with the ith
+                     case omitted from the observed value.
+           Column 6: the externally studentized residuals.  These are the
+                     deleted residuals divided by their standard
+                     deviation.
+           Column 7: Cook's distance.  This is a measure of the
+                     impact of the ith case on all of the estimated
+                     regression coefficients.
+
+                     Cook = (res**2/(p*MSE))*H(ii)/(1 - H(ii))**2
+
+           Column 8: DFFITS = EXTSRES*SQRT(H(ii)*(1 - H(ii))
+
+       Additional diagnostic statistics can be computed from these
+       values.  Several of the texts in the REFERENCE section
+       below discuss the use and interpretation of these statistics
+       in more detail.  These variables can be read in as follows:
+
+            FIT ....
+            SKIP 1
+            READ DPST2F.DAT HII VARRES STDRES ISTUDRES DELRES ...
+                            ESTUDRES COOK DFFITS
+            SKIP 0
+
+    4) The the variance-covariance matrix of the parameters and the
+       inverse of the (X-transpose*X) matrix are written to the file
+       dpst4f.dat.  These values can be used in deriving additional
+       statistics, intervals, and tests.  This will be demonstrated
+       in the Program 2 example below.
+
+    5) A regression ANOVA table is written to dpst5f.dat.  In addition
+       to the ANOVA table, the R**2, adjusted R**2, and Press P statistic
+       are printed.  These three parameters are also saved as the
+       internal parameters RSQUARE, ADJRSQUA, and PRESSP, respectively.
+
+    6) The residual standard deviation and its corresponding degrees of
+       freedom are are stored in the parameters RESSD and RESDF,
+       respectively.  RESDF is the number of observations minus the
+       number of independent variables in the fit (including the
+       constant term).  The formula for RESSD is:
+
+            RESSD = SQRT(SUM(Y - PREDICTED VALUE)**2)/RESDF)
+
+    7) If there is replication in the independent variables, the
+       replication standard deviation and corresponding degrees of
+       freedom are printed.  In addition, a lack of fit F test is
+       performed.  These are stored in the parameters REPDF, REPSD, and
+       LOFCDF respectively.  The formulas are:
+
+             REPDF = SUM(number of observations in replication - 1)
+             REPSD = SQRT(SUM((Y - replication mean)**2)/REPDF)
+ 
+    8) Dataplot saves the predicted values from a fit in the variable
+       PRED and the residual values in the variable RES.  These variables
+       can be used in subsequent LET and PLOT commands to generate
+       diagnostic plots of residuals and predicted values.
+ 
+
+
+
+
+    DATAPLOT prints the following analytic information.
+    1) The parameter estimates, the parameter standard deviations, and
+       the parameter t-values.  The t-value is used to determine if a
+       given paramater is significant in the FIT.  The parameters and
+       their standard deviations are written to the file DPST1F.DAT
+       (the name may vary slightly on some implementations).  Enter
+          READ DPST1F.DAT COEF COEFSD
+       to store these values in the arrays COEF and COEFSD for later
+       use.
+    2) The residual standard deviation and its corresponding degrees of
+       freedom.  These are stored in the parameters RESSD and RESDF
+       respectively.  RESDF is the number of observations minus the
+       number of independent variables in the fit (including the
+       constant term).  The formula for RESSD is:
+            RESSD = SQRT(SUM(Y - PREDICTED VALUE)**2)/RESDF)
+    3) If there is replication in the independent variables, the
+       replication standard deviation and corresponding degrees of
+       freedom are printed.  In addition, a lack of fit F test is
+       performed.  These are stored in the parameters REPDF, REPSD, and
+       LOFCDF respectively.  The formulas are:
+             REPDF = SUM(number of observations in replication - 1)
+             REPSD = SQRT(SUM((Y - replication mean)**2)/REPDF)
+    4) For linear fits, the following diagnostic information is
+       printed to the file DPST2F.DAT (the name may vary on some
+       implementations):
+ 
+    DATAPLOT saves the predicted values from a fit in the variable PRED
+    and the residual values in the variable RES.  These variables can
+    be used in subsequent LET and PLOT commands to generate diagnostic
+    plots of residuals and predicted values.
+ 
+Syntax:
+    <d>  FIT  <y>  <x>  <SUBSET/EXCEPT/FOR qualification>
+    where <d> is the optional specification of the desired degree:
+              LINEAR    or FIRST-DEGREE  (the default)
+              QUADRATIC or SECOND-DEGREE
+              CUBIC     or THIRD-DEGREE
+              QUARTIC   or FOURTH-DEGREE
+              QUINTIC   or FIFTH-DEGREE
+              SEXTIC    or SIXTH-DEGREE
+              SEPTIC    or SEVENTH-DEGREE
+              OCTIC     or EIGHT-DEGREE
+              NONIC     or NINTH-DEGREE
+              DEXIC     or TENTH-DEGREE;
+          <y> is the response (= dependent) variable;
+          <x1 ... xn> is a list of 1 to 35 independent variables;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    The estimated parameters are stored in A0, A1, ... , An.
+ 
+    This syntax is appropriate only for linear and polynomial
+    models.  In practice, the linear and quadratic fits receive heavy
+    use while the other degrees are rarely used.
+ 
+Examples:
+    FIT Y X
+    LINEAR FIT Y X
+    FIT Y X1 X2 X5
+    FIT Y X1 X2 X5  SUBSET TAG > 1
+    QUADRATIC FIT PRESSURE TEMP
+    CUBIC FIT V R
+ 
+Note:
+    DATAPLOT does not provide any automatic subset selection procedure
+    for multi-linear fits.
+ 
+    NOTE: a BEST CP command was added 7/2002.  This performs a
+          "best subsets" analysis based on Mallows C(p).  Enter
+          HELP BEST CP for details.
+
+Note:
+    In addition to standard least squares fits, DATAPLOT also supports:
+    1) Weighted fits via the WEIGHT LET subcommand.
+    2) Spline fits via the SPLINE FIT command.
+    3) Robust fits via the BIWEIGHT LET subcommand.
+    4) Locally weighted least squares via the LOWESS command.
+    5) Smoothing via the SMOOTH command.
+    6) Cubic spline interpolation via the INTERPOLATION LET subcommand.
+    7) Exact rational function fitting via the EXACT FIT command.
+    8) Principle components regression via the PRINCIPLE COMPONMENTS
+       LET subcommand.
+ 
+Note:
+    The following enhancements were made 7/2002.
+
+       1) Added the following plots:
+
+            PARTIAL RESIDUAL PLOT
+            PARTIAL REGRESSION PLOT
+            PARTIAL LEVERAGE PLOT
+            CCPR PLOT
+
+          Enter HELP PARTIAL RESIDUAL PLOT, PARTIAL REGRESSION PLOT,
+          HELP PARTIAL LEVERAGE PLOT, or HELP CCPR PLOT for details.
+
+       5) Added the following matrix commands that can be useful
+          in regresssion diagnostics:
+
+              LET VIF = VARIANCE INFLATION FACTORS
+              LET C = CONDITION INDICES X
+              LET XTXINV = XTXINV MATRIX X
+              LET C = CATCHER MATRIX X
+
+       6) For multi-linear fits, added the command:
+
+              SET FIT ADDITIVE CONSTANT <ON/OFF>
+
+          If ON (the default), a constant term is included
+          in the model.  If OFF, the constant term is omitted
+          from the model (i.e., regression through the orgin).
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    FIT ITERATIONS     = Sets the maximum number of iterations for the
+                         fit command.
+    FIT STANDARD DEVI  = Sets the minimum standard deviation for the
+                         fit command.
+    WEIGHTS            = Sets the weights for the fit command.
+    PRED               = A variable where predicted values are stored.
+    RES                = A variable where residuals are stored.
+    RESSD              = A parameter where the residual standard
+                         deviation is stored.
+    RESDF              = A parameter where the residual degrees of
+                         freedom is stored.
+    REPSD              = A parameter where the replication standard
+                         deviation is stored.
+    REPDF              = A parameter where the replication degrees of
+                         freedom is stored.
+    LOFCDF             = A parameter where the lack of fit cdf is
+                         stored.
+    EXACT RATIONAL FIT = Carries out an exact rational fit.
+    PRE-FIT            = Carries out a least squares pre-fit.
+    SPLINE FIT         = Carries out a spline fit.
+    SMOOTH             = Carries out a smoothing.
+    ANOVA              = Carries out an ANOVA.
+    MEDIAN POLISH      = Carries out a median polish.
+    PLOT               = Generates a data/function plot.
+ 
+References:
+    Draper and Smith (1981), "Applied Regression Analysis", 2nd ed., 
+    John Wiley,
+ 
+    Mosteller and Tukey (1977), "Data Analysis and Regression",
+    Addison-Wesley.
+ 
+    Cook and Weisberg (1982), "Residuals and Influence in Regression",
+    Chapman and Hall.
+ 
+    Belsley, Kuh, and Welsch, (1980),  "Regression Diagnostics",
+    John Wiley.
+
+    Neter, Wasserman, and Kunter (1990), "Applied Linear Statistical
+    Models", 3rd ed., Irwin.
+
+    Note that there are many books linear regression is covered in most 
+
+Applications:
+    Fitting
+ 
+Implementation Date:
+    1987/07
+ 
+Program 1: (LINEAR EXAMPLE)
+    . ALASKA PIPELINE RADIOGRAPHIC DEFECT BIAS CURVE
+    . PERFORM A LINEAR REGRESSION
+    SKIP 25
+    READ BERGER1.DAT TRUE MEAS
+    CAPTURE FIT_1_OUT.DAT
+    FIT MEAS TRUE
+    END OF CAPTURE
+    .
+    MULTIPLOT 2 2
+    MULTIPLOT CORNER COORDINATES 0 0 100 100
+    TITLE ORIGINAL DATA
+    X1LABEL TRUE DEPTH (IN .001 INCH)
+    Y1LABEL MEASURED DEPTH
+    CHARACTERS X
+    LINES BLANK
+    PLOT MEAS TRUE
+    TITLE PREDICTED VALUES
+    PLOT MEAS PRED VS TRUE
+    TITLE RESIDUALS
+    Y1LABEL
+    PLOT RES VS TRUE
+    X1LABEL
+    TITLE NORMAL PROBABILITY PLOT
+    NORMAL PROBABILITY PLOT RES
+    END OF MULTIPLOT
+ 
+Program 2: (NON-LINEAR EXAMPLE)
+    . DAN CHWIRUT ULTRASONIC REFERENCE BLOCK ANALYSIS
+    . PERFORM A NON-LINEAR REGRESSION
+    SKIP 25
+    READ CHWIRUT1.DAT Y X
+    CAPTURE FIT_2_OUT.DAT
+    LET ALPHA = 0.15
+    LET A = 0.004
+    LET B = 0.01
+    FIT Y = EXP(-ALPHA*X)/(A+B*X)
+    END OF CAPTURE
+    .
+    MULTIPLOT 2 2
+    MULTIPLOT CORNER COORDINATES 0 0 100 100
+    TITLE ORIGINAL DATA
+    CHARACTERS X ALL
+    X1LABEL METAL DISTANCE
+    Y1LABEL ULTRASONIC RESPONSE
+    PLOT Y X X
+    TITLE PREDICTED VALUES
+    LINE BLANK SOLID
+    CHARACTER X BLANK
+    PLOT Y PRED VS X
+    TITLE RESIDUALS
+    Y1LABEL
+    PLOT RES VS X
+    X1LABEL
+    TITLE NORMAL PROBABILITY PLOT
+    NORMAL PROBABILITY PLOT RES
+    END OF MULTIPLOT
+ 

@@ -4924,8 +4924,9 @@ C        ZERO OUTPUT ARRAYS
 C
       L=(MU2-MU1)+NUDIFF+1
       DO 290 I=1,L
-      PQA(I)=0.D0
-  290 IPQA(I)=0
+        PQA(I)=0.D0
+        IPQA(I)=0
+  290 CONTINUE
 C
 C        CHECK FOR VALID INPUT VALUES
 C
@@ -5427,8 +5428,9 @@ C
       K=2*MU
       IF(K.EQ.0) GO TO 222
       DO 220 L=1,K
-      PROD=PROD*(DMU-NU-L)
-  220 CALL DXADJ(PROD,IPROD,IERROR)
+        PROD=PROD*(DMU-NU-L)
+        CALL DXADJ(PROD,IPROD,IERROR)
+  220 CONTINUE
       IF (IERROR.NE.0) RETURN
   222 CONTINUE
       DO 240 I=J,N
@@ -5508,8 +5510,9 @@ C
       K=2*MU
       IF(K.LE.0) GO TO 520
       DO 510 I=1,K
-      PROD=PROD*SQRT(NU+DMU+1.D0-I)
-  510 CALL DXADJ(PROD,IPROD,IERROR)
+        PROD=PROD*SQRT(NU+DMU+1.D0-I)
+        CALL DXADJ(PROD,IPROD,IERROR)
+  510 CONTINUE
       IF (IERROR.NE.0) RETURN
   520 DO 540 I=J,L
       C1=PROD*SQRT(NU+.5D0)
@@ -5594,8 +5597,9 @@ C        CALCULATE MU FACTORIAL
       FACTMU=1.D0
       IF=0
       DO 50 I=1,K
-      FACTMU=FACTMU*I
-   50 CALL DXADJ(FACTMU,IF,IERROR)
+        FACTMU=FACTMU*I
+        CALL DXADJ(FACTMU,IF,IERROR)
+   50 CONTINUE
       IF (IERROR.NE.0) RETURN
    60 IF(K.EQ.0) FACTMU=1.D0
       IF(K.EQ.0) IF=0
@@ -5639,8 +5643,9 @@ C
       X1=PQ
       K=MU
       DO 77 I=1,K
-      X1=X1*X2
-   77 CALL DXADJ(X1,IPQ,IERROR)
+        X1=X1*X2
+        CALL DXADJ(X1,IPQ,IERROR)
+   77 CONTINUE
       IF (IERROR.NE.0) RETURN
       PQ=X1/FACTMU
       IPQ=IPQ-IF
@@ -5776,8 +5781,9 @@ C        SERIES EXPANSION FOR A .GT. IPSIX USING IPSIK-1 TERMS.
 C
       C=0.D0
       DO 12 I=1,K1
-      K=IPSIK-I
-   12 C=(C+CNUM(K)/CDENOM(K))/B**2
+        K=IPSIK-I
+        C=(C+CNUM(K)/CDENOM(K))/B**2
+   12 CONTINUE
       DXPSI=LOG(B)-(C+.5D0/B)
       IF(N.EQ.0) GO TO 20
       B=0.D0
@@ -5785,7 +5791,8 @@ C
 C        RECURRENCE FOR A .LE. IPSIX.
 C
       DO 15 M=1,N
-   15 B=B+1.D0/(N-M+A)
+        B=B+1.D0/(N-M+A)
+   15 CONTINUE
       DXPSI=DXPSI-B
    20 RETURN
       END
@@ -32977,6 +32984,12 @@ C                 CUMULATIVE SUM FORWARD TEST
 C                 CUMULATIVE SUM FORWARD TEST PVALUE
 C                 CUMULATIVE SUM BACKWARD TEST
 C                 CUMULATIVE SUM BACKWARD TEST PVALUE
+C                 DAVID
+C                 DAVID CDF
+C                 DAVID CRITICAL VALUE
+C                 DAVID MINIMUM INDEX
+C                 DAVID MAXIMUM INDEX
+C                 DAVID PVALUE
 C                 DIXON TEST
 C                 DIXON MINIMUM TEST
 C                 DIXON MAXIMUM TEST
@@ -32992,6 +33005,11 @@ C                 GRUBB INDEX
 C                 JARQUE BERA
 C                 JARQUE BERA PVALUE
 C                 JARQUE BERA CDF
+C                 KURTOSIS OUTLIER
+C                 KURTOSIS OUTLIER CDF
+C                 KURTOSIS OUTLIER CRITICAL VALUE
+C                 KURTOSIS OUTLIER INDEX
+C                 KURTOSIS OUTLIER PVALUE
 C                 LOWER COEFFICIENT OF DISPERSION CONFIDENCE LIMIT
 C                 LOWER COEFFICIENT OF QUARTILE DISPERSION CONFIDENCE LIMIT
 C                 LOWER COEFFICIENT OF VARIATION CONFIDENCE LIMIT
@@ -33061,6 +33079,11 @@ C                 ONE-SIDED UPPER STANDARD DEVIATION PREDICTION LIMIT
 C                 POISSON DISPERSION TEST
 C                 POISSON DISPERSION TEST CDF
 C                 POISSON DISPERSION TEST CDF PVALUE
+C                 SKEW OUTLIER
+C                 SKEW OUTLIER CDF
+C                 SKEW OUTLIER CRITICAL VALUE
+C                 SKEW OUTLIER INDEX
+C                 SKEW OUTLIER PVALUE
 C                 TWO-SIDED LOWER AGRESTI-COUL
 C                 TWO-SIDED UPPER AGRESTI-COUL
 C                 TWO-SIDED LOWER EXACT BINOMIAL
@@ -33512,6 +33535,9 @@ C                 POLLARD FOUR TEST
 C                 POLLARD FIVE CDF
 C                 POLLARD FIVE PVALUE
 C                 POLLARD FIVE TEST
+C                 RATIO OF MEANS
+C                 RATIO OF MEANS LOWER CONFIDENCE LIMIT
+C                 RATIO OF MEANS UPPER CONFIDENCE LIMIT
 C                 SQUARED RANK TEST
 C                 SQUARED RANK TEST CDF
 C                 SQUARED RANK TEST PVALUE
@@ -34015,6 +34041,25 @@ C     UPDATED         --AUGUST    2019. KENDALL TAU A
 C     UPDATED         --AUGUST    2019. KENDALL TAU B
 C     UPDATED         --AUGUST    2019. KENDALL TAU C
 C     UPDATED         --AUGUST    2019. YULES Y
+C     UPDATED         --SEPTEMBER 2019. RATIO OF MEANS
+C     UPDATED         --SEPTEMBER 2019. RATIO OF MEANS LOWER CONFIDENCE
+C                                       LIMIT
+C     UPDATED         --SEPTEMBER 2019. RATIO OF MEANS UPPER CONFIDENCE
+C                                       LIMIT
+C     UPDATED         --OCTOBER   2019. DAVID TEST, DAVID TEST CDF
+C     UPDATED         --OCTOBER   2019. DAVID TEST PVALUE
+C     UPDATED         --OCTOBER   2019. DAVID TEST MINIMUM INDEX
+C     UPDATED         --OCTOBER   2019. DAVID TEST MAXIMUM INDEX
+C     UPDATED         --OCTOBER   2019. SKEW OUTLIER TEST
+C     UPDATED         --OCTOBER   2019. SKEW OUTLIER CDF
+C     UPDATED         --OCTOBER   2019. SKEW OUTLIER CRITICAL VALUE
+C     UPDATED         --OCTOBER   2019. SKEW OUTLIER INDEX
+C     UPDATED         --OCTOBER   2019. SKEW OUTLIER PVALUE
+C     UPDATED         --OCTOBER   2019. KURTOSIS OUTLIER TEST
+C     UPDATED         --OCTOBER   2019. KURTOSIS OUTLIER CDF
+C     UPDATED         --OCTOBER   2019. KURTOSIS OUTLIER CRITICAL VALUE
+C     UPDATED         --OCTOBER   2019. KURTOSIS OUTLIER INDEX
+C     UPDATED         --OCTOBER   2019. KURTOSIS OUTLIER PVALUE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -34040,7 +34085,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      PARAMETER (MAXSTA=1518)
+      PARAMETER (MAXSTA=1557)
       PARAMETER (MAXSCL=8)
       INTEGER      INFLAV(MAXSTA)
       CHARACTER*4  INAME(MAXSTA,MAXSCL)
@@ -34404,11 +34449,11 @@ C
       DATA INFLAV(55)/1/
       DATA INLONG(55)/'SKEWNESS'/
 C
-      DATA INCASE(56)/'SKEW'/
+      DATA INCASE(56)/'SOPV'/
       DATA (INAME(56,J),J=1,MAXSCL)/
-     1'SKEW','    ','    ','    ','    ','    ','    ','    '/
+     1'SKEW','    ','OUTL','TEST','PVAL','    ','    ','    '/
       DATA INFLAV(56)/1/
-      DATA INLONG(56)/'SKEWNESS'/
+      DATA INLONG(56)/'SKEWNESS OUTLIER TEST PVALUE'/
 C
       DATA INCASE(57)/'KURT'/
       DATA (INAME(57,J),J=1,MAXSCL)/
@@ -34422,11 +34467,11 @@ C
       DATA INFLAV(58)/1/
       DATA INLONG(58)/'KURTOSIS'/
 C
-      DATA INCASE(59)/'KURT'/
+      DATA INCASE(59)/'KOPV'/
       DATA (INAME(59,J),J=1,MAXSCL)/
-     1'KURT','    ','    ','    ','    ','    ','    ','    '/
+     1'KURT','    ','OUTL','TEST','PVAL','    ','    ','    '/
       DATA INFLAV(59)/1/
-      DATA INLONG(59)/'KURTOSIS'/
+      DATA INLONG(59)/'KURTOSIS OUTLIER TEST PVALUE'/
 C
       DATA INCASE(60)/'AUCV'/
       DATA (INAME(60,J),J=1,MAXSCL)/
@@ -35411,11 +35456,11 @@ C
       DATA INFLAV(222)/1/
       DATA INLONG(222)/'BINOMIAL PROPORTION (CONTINUITY CORRECTION)'/
 C
-      DATA INCASE(223)/'RATI'/
+      DATA INCASE(223)/'RMLL'/
       DATA (INAME(223,J),J=1,MAXSCL)/
-     1'RATI','    ','    ','    ','    ','    ','    ','    '/
+     1'RATI','    ','OF  ','MEAN','LOWE','CONF','LIMI','    '/
       DATA INFLAV(223)/2/
-      DATA INLONG(223)/'RATIO'/
+      DATA INLONG(223)/'RATIO OF MEANS LOWER CONFIDENCE LIMIT'/
 C
       DATA INCASE(224)/'ORSE'/
       DATA (INAME(224,J),J=1,MAXSCL)/
@@ -43289,6 +43334,240 @@ C
       DATA INFLAV(1518)/2/
       DATA INLONG(1518)/'KENDALLS TAU'/
 C
+      DATA INCASE(1519)/'RMLL'/
+      DATA (INAME(1519,J),J=1,MAXSCL)/
+     1'RATI','    ','OF  ','MEAN','LOWE','CONF','INTE','    '/
+      DATA INFLAV(1519)/2/
+      DATA INLONG(1519)/'RATIO OF MEANS LOWER CONFIDENCE LIMIT'/
+C
+      DATA INCASE(1520)/'RMUL'/
+      DATA (INAME(1520,J),J=1,MAXSCL)/
+     1'RATI','    ','OF  ','MEAN','UPPE','CONF','LIMI','    '/
+      DATA INFLAV(1520)/2/
+      DATA INLONG(1520)/'RATIO OF MEANS UPPER CONFIDENCE LIMIT'/
+C
+      DATA INCASE(1521)/'RMUL'/
+      DATA (INAME(1521,J),J=1,MAXSCL)/
+     1'RATI','    ','OF  ','MEAN','UPPE','CONF','INTE','    '/
+      DATA INFLAV(1521)/2/
+      DATA INLONG(1521)/'RATIO OF MEANS UPPER CONFIDENCE LIMIT'/
+C
+      DATA INCASE(1522)/'RMEA'/
+      DATA (INAME(1522,J),J=1,MAXSCL)/
+     1'RATI','    ','OF  ','MEAN','    ','    ','    ','    '/
+      DATA INFLAV(1522)/2/
+      DATA INLONG(1522)/'RATIO OF MEANS'/
+C
+      DATA INCASE(1523)/'RATI'/
+      DATA (INAME(1523,J),J=1,MAXSCL)/
+     1'RATI','    ','    ','    ','    ','    ','    ','    '/
+      DATA INFLAV(1523)/2/
+      DATA INLONG(1523)/'RATIO'/
+C
+      DATA INCASE(1524)/'DCDF'/
+      DATA (INAME(1524,J),J=1,MAXSCL)/
+     1'DAVI','    ','TEST','CDF ','    ','    ','    ','    '/
+      DATA INFLAV(1524)/1/
+      DATA INLONG(1524)/'DAVID TEST CDF'/
+C
+      DATA INCASE(1525)/'DCDF'/
+      DATA (INAME(1525,J),J=1,MAXSCL)/
+     1'DAVI','    ','CDF ','    ','    ','    ','    ','    '/
+      DATA INFLAV(1525)/1/
+      DATA INLONG(1525)/'DAVID TEST CDF'/
+C
+      DATA INCASE(1526)/'DPVA'/
+      DATA (INAME(1526,J),J=1,MAXSCL)/
+     1'DAVI','    ','TEST','PVAL','    ','    ','    ','    '/
+      DATA INFLAV(1526)/1/
+      DATA INLONG(1526)/'DAVID TEST P-VALUE'/
+C
+      DATA INCASE(1527)/'DPVA'/
+      DATA (INAME(1527,J),J=1,MAXSCL)/
+     1'DAVI','    ','TEST','P   ','VALU','    ','    ','    '/
+      DATA INFLAV(1527)/1/
+      DATA INLONG(1527)/'DAVID TEST P-VALUE'/
+C
+      DATA INCASE(1528)/'DPVA'/
+      DATA (INAME(1528,J),J=1,MAXSCL)/
+     1'DAVI','    ','PVAL','    ','    ','    ','    ','    '/
+      DATA INFLAV(1528)/1/
+      DATA INLONG(1528)/'DAVID TEST P-VALUE'/
+C
+      DATA INCASE(1529)/'DPVA'/
+      DATA (INAME(1529,J),J=1,MAXSCL)/
+     1'DAVI','    ','P   ','VALU','    ','    ','    ','    '/
+      DATA INFLAV(1529)/1/
+      DATA INLONG(1529)/'DAVID TEST P-VALUE'/
+C
+      DATA INCASE(1530)/'DMNI'/
+      DATA (INAME(1530,J),J=1,MAXSCL)/
+     1'DAVI','    ','TEST','MINI','INDE','    ','    ','    '/
+      DATA INFLAV(1530)/1/
+      DATA INLONG(1530)/'DAVID TEST MINIMUM INDEX'/
+C
+      DATA INCASE(1531)/'DMNI'/
+      DATA (INAME(1531,J),J=1,MAXSCL)/
+     1'DAVI','    ','MINI','INDE','    ','    ','    ','    '/
+      DATA INFLAV(1531)/1/
+      DATA INLONG(1531)/'DAVID TEST MINIMUM INDEX'/
+C
+      DATA INCASE(1532)/'DMXI'/
+      DATA (INAME(1532,J),J=1,MAXSCL)/
+     1'DAVI','    ','TEST','MAXI','INDE','    ','    ','    '/
+      DATA INFLAV(1532)/1/
+      DATA INLONG(1532)/'DAVID TEST MAXIMUM INDEX'/
+C
+      DATA INCASE(1533)/'DMXI'/
+      DATA (INAME(1533,J),J=1,MAXSCL)/
+     1'DAVI','    ','MINI','INDE','    ','    ','    ','    '/
+      DATA INFLAV(1533)/1/
+      DATA INLONG(1533)/'DAVID TEST MAXIMUM INDEX'/
+C
+      DATA INCASE(1534)/'DACV'/
+      DATA (INAME(1534,J),J=1,MAXSCL)/
+     1'DAVI','    ','TEST','CRIT','VALU','    ','    ','    '/
+      DATA INFLAV(1534)/1/
+      DATA INLONG(1534)/'DAVID TEST CRITICAL VALUE'/
+C
+      DATA INCASE(1535)/'DACV'/
+      DATA (INAME(1535,J),J=1,MAXSCL)/
+     1'DAVI','    ','CRIT','VALU','    ','    ','    ','    '/
+      DATA INFLAV(1535)/1/
+      DATA INLONG(1535)/'DAVID TEST CRITICAL VALUE'/
+C
+      DATA INCASE(1536)/'DAVI'/
+      DATA (INAME(1536,J),J=1,MAXSCL)/
+     1'DAVI','    ','TEST','    ','    ','    ','    ','    '/
+      DATA INFLAV(1536)/1/
+      DATA INLONG(1536)/'DAVID TEST'/
+C
+      DATA INCASE(1537)/'DAVI'/
+      DATA (INAME(1537,J),J=1,MAXSCL)/
+     1'DAVI','    ','    ','    ','    ','    ','    ','    '/
+      DATA INFLAV(1537)/1/
+      DATA INLONG(1537)/'DAVID TEST'/
+C
+      DATA INCASE(1538)/'SOCD'/
+      DATA (INAME(1538,J),J=1,MAXSCL)/
+     1'SKEW','    ','OUTL','CDF ','    ','    ','    ','    '/
+      DATA INFLAV(1538)/1/
+      DATA INLONG(1538)/'SKEWNESS OUTLIER TEST CDF'/
+C
+      DATA INCASE(1539)/'SOCD'/
+      DATA (INAME(1539,J),J=1,MAXSCL)/
+     1'SKEW','    ','OUTL','TEST','CDF ','    ','    ','    '/
+      DATA INFLAV(1539)/1/
+      DATA INLONG(1539)/'SKEWNESS OUTLIER TEST CDF'/
+C
+      DATA INCASE(1540)/'SOCV'/
+      DATA (INAME(1540,J),J=1,MAXSCL)/
+     1'SKEW','    ','OUTL','CRIT','VALU','    ','    ','    '/
+      DATA INFLAV(1540)/1/
+      DATA INLONG(1540)/'SKEWNESS OUTLIER TEST CRITICAL VALUE'/
+C
+      DATA INCASE(1541)/'SOCV'/
+      DATA (INAME(1541,J),J=1,MAXSCL)/
+     1'SKEW','    ','OUTL','TEST','CRIT','VALU','    ','    '/
+      DATA INFLAV(1541)/1/
+      DATA INLONG(1541)/'SKEWNESS OUTLIER TEST CDF'/
+C
+      DATA INCASE(1542)/'SOIN'/
+      DATA (INAME(1542,J),J=1,MAXSCL)/
+     1'SKEW','    ','OUTL','INDE','    ','    ','    ','    '/
+      DATA INFLAV(1542)/1/
+      DATA INLONG(1542)/'SKEWNESS OUTLIER TEST INDEX'/
+C
+      DATA INCASE(1543)/'SOIN'/
+      DATA (INAME(1543,J),J=1,MAXSCL)/
+     1'SKEW','    ','OUTL','TEST','INDE','    ','    ','    '/
+      DATA INFLAV(1543)/1/
+      DATA INLONG(1543)/'SKEWNESS OUTLIER TEST INDEX'/
+C
+      DATA INCASE(1544)/'SOPV'/
+      DATA (INAME(1544,J),J=1,MAXSCL)/
+     1'SKEW','    ','OUTL','PVAL','    ','    ','    ','    '/
+      DATA INFLAV(1544)/1/
+      DATA INLONG(1544)/'SKEWNESS OUTLIER TEST PVALUE'/
+C
+      DATA INCASE(1545)/'SOUT'/
+      DATA (INAME(1545,J),J=1,MAXSCL)/
+     1'SKEW','    ','OUTL','TEST','    ','    ','    ','    '/
+      DATA INFLAV(1545)/1/
+      DATA INLONG(1545)/'SKEWNESS OUTLIER TEST'/
+C
+      DATA INCASE(1546)/'SOUT'/
+      DATA (INAME(1546,J),J=1,MAXSCL)/
+     1'SKEW','    ','OUTL','    ','    ','    ','    ','    '/
+      DATA INFLAV(1546)/1/
+      DATA INLONG(1546)/'SKEWNESS OUTLIER TEST'/
+C
+      DATA INCASE(1547)/'SKEW'/
+      DATA (INAME(1547,J),J=1,MAXSCL)/
+     1'SKEW','    ','    ','    ','    ','    ','    ','    '/
+      DATA INFLAV(1547)/1/
+      DATA INLONG(1547)/'SKEWNESS'/
+C
+      DATA INCASE(1548)/'KOCD'/
+      DATA (INAME(1548,J),J=1,MAXSCL)/
+     1'KURT','    ','OUTL','CDF ','    ','    ','    ','    '/
+      DATA INFLAV(1548)/1/
+      DATA INLONG(1548)/'KURTOSIS OUTLIER TEST CDF'/
+C
+      DATA INCASE(1549)/'KOCD'/
+      DATA (INAME(1549,J),J=1,MAXSCL)/
+     1'KURT','    ','OUTL','TEST','CDF ','    ','    ','    '/
+      DATA INFLAV(1549)/1/
+      DATA INLONG(1549)/'KURTOSIS OUTLIER TEST CDF'/
+C
+      DATA INCASE(1550)/'KOCV'/
+      DATA (INAME(1550,J),J=1,MAXSCL)/
+     1'KURT','    ','OUTL','CRIT','VALU','    ','    ','    '/
+      DATA INFLAV(1550)/1/
+      DATA INLONG(1550)/'KURTOSIS OUTLIER TEST CRITICAL VALUE'/
+C
+      DATA INCASE(1551)/'KOCV'/
+      DATA (INAME(1551,J),J=1,MAXSCL)/
+     1'KURT','    ','OUTL','TEST','CRIT','VALU','    ','    '/
+      DATA INFLAV(1551)/1/
+      DATA INLONG(1551)/'KURTOSIS OUTLIER TEST CDF'/
+C
+      DATA INCASE(1552)/'KOIN'/
+      DATA (INAME(1552,J),J=1,MAXSCL)/
+     1'KURT','    ','OUTL','INDE','    ','    ','    ','    '/
+      DATA INFLAV(1552)/1/
+      DATA INLONG(1552)/'KURTOSIS OUTLIER TEST INDEX'/
+C
+      DATA INCASE(1553)/'KOIN'/
+      DATA (INAME(1553,J),J=1,MAXSCL)/
+     1'KURT','    ','OUTL','TEST','INDE','    ','    ','    '/
+      DATA INFLAV(1553)/1/
+      DATA INLONG(1553)/'KURTOSIS OUTLIER TEST INDEX'/
+C
+      DATA INCASE(1554)/'KOPV'/
+      DATA (INAME(1554,J),J=1,MAXSCL)/
+     1'KURT','    ','OUTL','PVAL','    ','    ','    ','    '/
+      DATA INFLAV(1554)/1/
+      DATA INLONG(1554)/'KURTOSIS OUTLIER TEST PVALUE'/
+C
+      DATA INCASE(1555)/'KOUT'/
+      DATA (INAME(1555,J),J=1,MAXSCL)/
+     1'KURT','    ','OUTL','TEST','    ','    ','    ','    '/
+      DATA INFLAV(1555)/1/
+      DATA INLONG(1555)/'KURTOSIS OUTLIER TEST'/
+C
+      DATA INCASE(1556)/'KOUT'/
+      DATA (INAME(1556,J),J=1,MAXSCL)/
+     1'KURT','    ','OUTL','    ','    ','    ','    ','    '/
+      DATA INFLAV(1556)/1/
+      DATA INLONG(1556)/'KURTOSIS OUTLIER TEST'/
+C
+      DATA INCASE(1557)/'KURT'/
+      DATA (INAME(1557,J),J=1,MAXSCL)/
+     1'KURT','    ','    ','    ','    ','    ','    ','    '/
+      DATA INFLAV(1557)/1/
+      DATA INLONG(1557)/'KURTOSIS'/
+C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EXTS'
@@ -43542,23 +43821,21 @@ C
       RETURN
       END
       SUBROUTINE EXTSTR(IHARG,IHARG2,NUMARG,JMIN,JMAX,MAXIND,
-     1IHNAME,IHNAM2,IUSE,NUMNAM,
-     1ISTRN1,ISTRN2,NUMSTR,
-     1IWRITE,IBUGA2,ISUBRO,IERROR)
+     1                  IHNAME,IHNAM2,IUSE,NUMNAM,
+     1                  ISTRN1,ISTRN2,NUMSTR,
+     1                  IWRITE,IBUGA2,ISUBRO,IERROR)
 C
-C     PURPOSE--EXAMINE IHARG(.) AND IHARG2(.) FROM JMIN TO JMAX,
-C              EXTRACT ALL NAMES
-C              (INCLUDING THOSE IMPLIED BY A   TO   KEYWORD)
+C     PURPOSE--EXAMINE IHARG(.) AND IHARG2(.) FROM JMIN TO JMAX, EXTRACT
+C              ALL NAMES (INCLUDING THOSE IMPLIED BY A   TO   KEYWORD)
 C              AND PLACE THESE NAMES IN ISTRN1(.) AND ISTRN2(.).
 C              NOTE THE NUMBER OF SUCH NAMES AND PLACE IT IN NUMSTR.
 C              NUMSTR STANDS FOR NUMBER OF STRINGS.
 C     NOTE--JMIN   = START POINT IN IHARG/IHARG2 FOR THE SCAN
 C           JMAX   = STOP POINT  IN IHARG/IHARG2 FOR THE SCAN
 C           MAXIND = MAXIMUM PERMITTED NUMBER OF STRINGS
-C     NOTE--THIS SUBROUTINE ALSO CHECKS TO MAKE SURE THE
-C           LIST ITEMS ARE IN FACT STRINGS (AS OPPOSED
-C           TO PARAMETERS, VARIABLES, MATRICES, OR
-C           UNKNOWNS).
+C     NOTE--THIS SUBROUTINE ALSO CHECKS TO MAKE SURE THE LIST ITEMS ARE
+C           IN FACT STRINGS (AS OPPOSED TO PARAMETERS, VARIABLES,
+C           MATRICES, OR UNKNOWNS).
 C     OUTPUT--ISTRN1(.), ISTRN2(.), AND NUMSTR.
 C     ORIGINAL VERSION--JANUARY   2006.
 C     UPDATED         --JULY      2009. ALLOW "Y1 TO Y1" (USEFUL FOR
@@ -43621,24 +43898,18 @@ C
         WRITE(ICOUT,53)IBUGA2,ISUBRO
    53   FORMAT('IBUGA2,ISUBRO = ',A4,2X,A4)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,54)JMIN,JMAX,MAXIND,NUMSTR
-   54   FORMAT('JMIN,JMAX,MAXIND,NUMSTR = ',4I8)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,61)NUMARG
-   61   FORMAT('NUMARG = ',A4)
+        WRITE(ICOUT,54)JMIN,JMAX,MAXIND,NUMSTR,NUMARG,NUMNAM
+   54   FORMAT('JMIN,JMAX,MAXIND,NUMSTR,NUMARG,NUMNAM = ',5I6)
         CALL DPWRST('XXX','BUG ')
         DO62I=1,NUMARG
           WRITE(ICOUT,63)I,IHARG(I),IHARG2(I)
-   63     FORMAT('I,IHARG(I),IHARG2(I) = ',I8,2X,A4,2X,A4)
+   63     FORMAT('I,IHARG(I),IHARG2(I) = ',I8,2(2X,A4))
           CALL DPWRST('XXX','BUG ')
    62   CONTINUE
-        WRITE(ICOUT,71)NUMNAM
-   71   FORMAT('NUMNAM = ',I8)
-        CALL DPWRST('XXX','BUG ')
         DO72I=1,NUMNAM
           WRITE(ICOUT,73)I,IHNAME(I),IHNAM2(I),IUSE(I)
    73     FORMAT('I,IHNAME(I),IHNAM2(I),IUSE(I) = ',
-     1           I8,2X,A4,A4,2X,A4,I8,I8,E15.7)
+     1           I8,2X,2A4,2X,A4,2I8,G15.7)
         CALL DPWRST('XXX','BUG ')
    72   CONTINUE
       ENDIF
@@ -43765,29 +44036,9 @@ C
         WRITE(ICOUT,9014)JMIN,JMAX,NUMSTR
  9014   FORMAT('JMIN,JMAX,NUMSTR = ',3I8)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9021)NUMARG
- 9021   FORMAT('NUMARG = ',A4)
-        CALL DPWRST('XXX','BUG ')
-        DO9022I=1,NUMARG
-          WRITE(ICOUT,9023)I,IHARG(I),IHARG2(I)
- 9023     FORMAT('I,IHARG(I),IHARG2(I) = ',I8,2X,A4,2X,A4)
-          CALL DPWRST('XXX','BUG ')
- 9022   CONTINUE
-        WRITE(ICOUT,9031)NUMNAM
- 9031   FORMAT('NUMNAM = ',I8)
-        CALL DPWRST('XXX','BUG ')
-        DO9032I=1,NUMNAM
-          WRITE(ICOUT,9033)I,IHNAME(I),IHNAM2(I),IUSE(I)
-          CALL DPWRST('XXX','BUG ')
- 9033     FORMAT('I,IHNAME(I),IHNAM2(I),IUSE(I) = ',
-     1           I8,2X,A4,A4,2X,A4,I8,I8,E15.7)
- 9032   CONTINUE
-        WRITE(ICOUT,9041)NUMSTR
- 9041   FORMAT('NUMSTR = ',I8)
-        CALL DPWRST('XXX','BUG ')
         DO9042I=1,NUMSTR
           WRITE(ICOUT,9043)I,ISTRN1(I),ISTRN2(I)
- 9043     FORMAT('I,ISTRN1(I),ISTRN2(I) = ',I8,2X,A4,2X,A4)
+ 9043     FORMAT('I,ISTRN1(I),ISTRN2(I) = ',I8,2(2X,A4))
           CALL DPWRST('XXX','BUG ')
  9042   CONTINUE
       ENDIF
@@ -44207,8 +44458,10 @@ C
         IH2=IHARG2(J)
         ICASTO='OFF'
 C
-        IF(IH1.NE.'TO  ')GOTO1220
+        IF(IH1.EQ.'TO  ')GOTO1210
+        GOTO1220
 C
+ 1210   CONTINUE
           ICASTO='ON'
           JM1=J-1
           JP1=J+1
@@ -44277,6 +44530,7 @@ C
               IVARTY(NUMIND)='F   '
               PVAR(NUMIND)=CPUMIN
               IF(ICASTO.EQ.'ON')GOTO1215
+              GOTO1200
             ENDIF
           ENDIF
  1300   CONTINUE
@@ -53989,7 +54243,8 @@ c       ITYPE < 0 indicates inverse transform required.
 c       Calculate conjugate.
 c
       do 4 k = 1, n
-    4   ximag(k) = -ximag(k)
+        ximag(k) = -ximag(k)
+    4 continue
 c
 c       Following code is executed for IFACA = N/4, N/16, N/64, ...
 c       until IFACA <= 1.
@@ -54075,7 +54330,8 @@ c
 c       Inverse transform; conjugate the result.
 c
         do 16 k = 1, n
-   16     ximag(k) = -ximag(k)
+          ximag(k) = -ximag(k)
+   16   continue
         return
       end if
 c

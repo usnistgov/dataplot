@@ -1,0 +1,149 @@
+. This is dataplot macro     dasilva41surf.dp     surface substrate
+. Purpose: Generate a mean block plot with primary factor = surf (= surface substrate)
+. Date: March 6, 2012
+.
+. -----start point-----
+.
+frame color black
+tic color black
+tic label color black
+.
+. -----Step 1: Form the tag variable-----
+.
+delete tag tag2 yrank
+. let tag = 10*surf + 5*(rh - 1) + mat
+let tag = 10*wet + 5*(rh-1) + mat
+.
+. -----Step 2: Generate the mean block plot-----
+.
+char bl all; char S G; char color red black
+char offset 0 0 all
+lines solid all; lines bl bl
+line color black all
+.
+if casemeth = 1; y1label Mean Spore Recovery (%); end if
+if casemeth = 2; y1label Mean Spore Recovery (%); end if
+.
+label color black
+labels size 3.0
+x1tics off
+ylim 0 100
+xlim 11 48
+x1tic labels off
+.
+ytic offset units screen
+. ytic offset 13 5
+ytic offset 13 15
+.
+x3label
+bar expansion factor 1 1.4
+capture junk.
+print y tag surf
+stat v
+end capture
+mean block plot y tag surf except y -999
+.
+move 50 97; just center; hw 3.0 1.5; color black
+. text Determination of Optimal Settings for Extraction of BA Spores
+move 50 94; just center; hw 3.0 1.5; color black
+. text Primary Factor = Surface (2 levels: Stainless Steel and Glass)
+.
+move 50 92.5; just center; hw 3.0 1.5; color black
+.
+if casemeth = 1; text Surface Substrate (Plate Count Method); end if
+if casemeth = 2; text Surface Substrate (Fluorescence Microscopy Method); end if
+.
+move 16 87; just left; hw 2.6 1.3; color black; . text Plot Character = Surface:
+just left; hw 2.6 1.3
+. let xp = 21
+let xp = 16
+move xp 84; color red; text S = Stainless Steel
+move xp 81; color black; text G = Glass
+color black
+.
+let tag2 = distinct tag
+let tag2 = sort tag2
+let ntag2 = number tag2
+.
+just center; hw 2 1
+let j = 0
+loop for jwet = 1 1 4
+   loop for jrh = 1 1 2
+      loop for jmat = 1 1 3
+         let j = j + 1
+         let xp = tag2(j)
+         if jmat = 2; moveds xp 27; hw 2 1; text ^stwet^jwet; end if
+         if jmat = 2; moveds xp 24; hw 2 1; text ^strh^jrh; end if
+         just center
+         if jmat = 3; just left; end if
+         if jmat = 3; let xp = xp - 0.25; end if
+         moveds xp 21; hw 1.5 0.75; text ^stmat^jmat
+         just center
+         let string q = subset wet ^jwet subset rh ^jrh subset mat ^jmat except y -999
+         let yrank = rank y ^q
+      end loop
+   end loop
+end loop
+just right; hw 2 1
+move 14.5 27; text Wetting Agent:
+move 14.5 24; text Relative Humidity:
+move 14.5 21; text Wipe Material:
+.
+move 50 15; just center; hw 3.0 1.5
+text Wetting Agent (4) x Relative Humidity (2) x Wipe Material (3) = 24 Combinations
+.
+. -----Step 3: Write out conclusions-----
+.
+let dothis = 0
+if dothis = 1
+.
+let tailpro2 = 100*tailprob
+let tailpro2 = round(tailpro2,2)
+.
+just center; hw 2.6 1.3; color red
+move 50 10; color black; . text G (Glass) is better than S (Stainless Steel) in
+. ^heads out of the ^ntag2 cases ( Binomial Prob{ Count >= ^heads } = ^tailpro2%--Sig.)
+move 50 7; color black; just center; . text Conclusion: Optimal Surface Setting = Glass
+. (4-term ANOVA Tail Probability = 0.04%--Significant)
+.
+here
+just left; hw 2.6 1.3; color black
+move 05 10; color black; text G (Glass) is better than S (StSt) in ^heads out of ^ntag2 cases
+move 55 10; color black; text (Binomial Prob. by Chance = ^tailpro2%--Sig.)
+move 10 7; color black; . text T80 is best or next-best in 10 out the 12 cases
+move 60 7; color black;  . text (Binomial Prob. by Chance < 2%)
+.
+end if
+.
+. -----Step 4: Write out summary info in legend-----
+.
+. let case = 2
+. call dasilva41computestats.dp
+move 70 87; color black; . text Mean
+move 70 84; color red; . text ^m1
+move 70 81; color black; . text ^m2
+.
+move 80 87; color black; . text Mean Rank
+move 80 84; color red; . text ^mrank1
+move 80 81; color black; . text ^mrank2
+.
+let case = 2
+call dasilva41computestats.dp
+.
+just left; hw 2.6 1.3; color black
+. let xp = 50
+. let xp = 43
+let xp = 38
+let xpmhalf = xp - 0.5
+let xpp10 = xp + 10
+let xpp10m4 = xpp10 - 4
+move xpmhalf 87; color black; text Mean
+move xp 84; color red; text ^m1
+move xp 81; color black; text ^m2
+.
+move xpp10m4 87; color black; text Mean Rank
+move xpp10 84; color red; text ^mrank1
+move xpp10 81; color black; text ^mrank2
+.
+call annotate.dp
+.

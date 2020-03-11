@@ -1,0 +1,249 @@
+. This is dataplot macro   4plot_noargs.dp      (no arguments)    2/16/17
+. Purpose: Generate the usual 4plot y but augment it with stats
+. Date: 6/3/16 ==> 10/18/16 ==> 2/16/17
+. Note: This macro takes no arguments
+. Input :
+.    y  (variable)  = response
+.    q  (string)    = subset/except specification
+.    dp (parameter) = desired number of decimal places
+. Output:
+.    4-plot with appropriate stats as legends
+.
+. Reserved Words Within (therefore avoid using in the calling routine(s)):
+.    dp   (parameter) = desired number of decimal places
+.    strespq   (string) = combination of response variable and subset/except qualification
+.
+. Example of calling program: cline121.dp
+.
+. -----start point-----
+.
+feedback save
+feedback off
+.
+let bugsw4p = 0
+. let pausesw = 1
+.
+if bugsw4p = 1
+   print "At beginning of 4plot_noargs.dp"
+   print "stchar = ^stchar"
+   stat char
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 1: Define strings to be used internally-----
+.
+let string strespq = y
+if q exists; let string strespq = y ^q; end if
+.
+let string stdp = 4
+if dp exists; let string stdp = ^dp; end if
+
+if bugsw4p = 1
+   print "strespq = ^strespq"
+   print "stdp = ^stdp"
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 2: Check input arguments-----
+.
+let string stmacro = 4plot_noargs.dp
+. let string stall = ^stresp
+. call checkinput.dp  TEMPORARILY COMMENTED OUT    FIX THIS
+.
+. -----10: Generate the plot-----
+.
+multiplot scale factor 1
+.
+. -----Step 11: Generate the 4-plot (need stresp, stq, stdp, and strespq (derived))-----
+.
+x3label
+title size 7
+multiplot 2 2
+   multiplot corner coordinates 10 15 90 90
+   frame corner coordinates 15 10 95 85
+   .
+   . -----Step 11.1: run sequence plot-----
+   .
+   char X; if stchar exists; char ^stchar; end if
+   char hw 5 2.5; if stcharhw exists; char hw ^stcharhw; end if
+   label size 6; tic labels size 5
+   lines bl
+   . y1tic offset units screen; . y1tic offset 5 23
+   . y1tic offset units screen; . y1tic offset 5 28
+   y1tic offset units screen; y1tic offset 5 33
+   title Run Sequence Plot
+   y1label Y(i)
+   y1label displacement 15
+   x1label Dummy Index i
+   plot ^strespq     ;. <========================================
+   .
+   y1tic offset units screen; y1tic offset 5 10
+   y1label
+   y1label displacement
+   .
+   . -----Step 11.2: lag plot-----
+   .
+   title Lag Plot
+   char X all; if stchar exists; char ^stchar all; end if
+   lines bl all
+   y2label Y(i)
+   x1label Y(i+1)
+   lag plot ^strespq     ;. <=======================================
+   y2label
+   .
+   . -----Step 11.3: histogram-----
+   .
+   title Histogram
+   y1label Frequency
+   y1label displacement 15
+   x1label Y(i)
+   char bl all
+   lines bl all
+   histogram ^strespq     ;. <=======================================
+   .
+   y1label
+   y1label displacement
+   .
+   . -----Step 11.4: normal probability plot-----
+   .
+   char X all; if stchar exists; char ^stchar all; end if
+   lines blank all
+   title Normal Probability Plot
+   y2label Ordered Y(i)
+   x1label Normal Order Statistic Medians(i)
+   normal probability plot ^strespq     ;. <==========================
+   .
+   y2label
+multiplot off
+. call size2.dp
+.
+. -----Step 12: Compute appropriate stats-----
+.
+let n = number ^strespq
+let m = mean ^strespq
+let med = median ^strespq
+.
+let s = sd ^strespq
+let sdm = sd of the mean ^strespq
+let rels = 0;   if m <> 0; let rels   = 100*s/m;   end if
+let relsdm = 0; if m <> 0; let relsdm = 100*sdm/m; end if
+delete xjunk; let xjunk = 1 1 n
+fit y xjunk
+delete slope; let slope = a1
+delete junk1v junk2v tv
+skip 1; read dpst1f.dat junk1v junk2v tv; skip 0
+delete tslope; let tslope = tv(2)
+.
+let c = autocorrelation ^strespq
+let c = 100*c
+.
+let ppcc = normal ppcc ^strespq
+let ppcc = 100*ppcc
+if n <= 1000
+   let ppcc05 = 100*norppcv(n,0.05)
+   let ppcc01 = 100*norppcv(n,0.01)
+end if
+call norppcc_05.dp
+let cutoff05 = 100*cutoff05
+.
+. let dpzz = 2
+. if dp exists; . let dpzz = dp; . end if
+. print "dpzz = ^dpzz"
+. pause
+.
+. -----Step 13: Round the statistics-----
+.
+. print "stdp = ^stdp"
+. pause
+set write decimals ^stdp
+. print "stdp = ^stdp"
+. pause
+. print m mr
+. pause
+let stmr = number to string m
+let stmedr = number to string med
+let stsr = number to string s
+let stsdmr = number to string sdm
+let stsloper = number to string slope
+set write decimals 2
+let strelsr = number to string rels
+let strelsmr = number to string relsdm
+let sttslope = number to string tslope
+.
+set write dcimals ^stdp
+set write decimals 2
+let stcr = number to string c
+let stppccr = number to string ppcc
+if n <= 1000
+   let stppcc05 = number to string ppcc05
+   let stppcc01 = number to string ppcc01
+   let stcut05  = number to string cutoff05
+end if
+.
+. -----Step 14: Write out the stats-----
+.
+hw 2 1
+.
+just left
+let xpzz = 16.5
+let xp2zz = 24.5
+let ypzz = 82.5; move xpzz ypzz; text n
+               move xp2zz ypzz; text = ^n
+let ypzz = 80.5; move xpzz ypzz; text Mean
+               move xp2zz ypzz; text = ^stmr
+let ypzz = 78.5; move xpzz ypzz; text Median
+               move xp2zz ypzz; text = ^stmedr
+let ypzz = 76.5; move xpzz ypzz; text SD(Data)
+               move xp2zz ypzz; text = ^stsr (^strelsr%)
+let ypzz = 74.5; move xpzz ypzz; text SD(Mean)
+               move xp2zz ypzz; text = ^stsdmr (^strelsmr%)
+let ypzz = 72.5; move xpzz ypzz; text Slope
+               move xp2zz ypzz; text = ^stsloper (t = ^sttslope)
+.
+let xpzz = 56.5
+let ypzz = 82.5
+let cutr975 = 1.96/sqrt(n)
+let cutr975 = 100*cutr975
+let cabs = abs(c)
+if cabs < cutr975;  color blue; move xpzz ypzz; text Autocorr = ^stcr%; end if
+if cabs >= cutr975; color red;  move xpzz ypzz; text Autocorr = ^stcr% (=> non-random); end if
+color blue
+.
+let xpzz = 56.5
+let xp2zz = 67.5
+let ypzz = 44.75; move xpzz ypzz; text Normal PPCC
+if ppcc >  cutoff05; color blue; move xp2zz ypzz; text = ^stppccr%; end if
+if ppcc <= cutoff05; color red;  move xp2zz ypzz; text = ^stppccr% (=> non-normal); end if
+move xp2zz ypzz; text = ^stppccr%
+color blue
+if n <= 1000
+   let ypzz = 42.75; move xpzz ypzz; text 5% Pt.
+                   move xp2zz ypzz; text = ^stppcc05%
+   let ypzz = 40.75; move xpzz ypzz; text 1% Pt.
+                   move xp2zz ypzz; text = ^stppcc01%
+end if
+.
+. -----Step 15: Finish up-----
+.
+if header exists or header1 exists
+   call annotate.dp
+end if
+.
+char bl all
+lines solid all
+char hw 2 1; tic label size 2
+label size 2.6
+title size 2.6
+.
+title
+y1label
+x1label
+label size
+label size 2
+tic size 2
+.
+feedback restore
+set write decimals 4
+frame corner coordinates 15 20 85 90
+multiplot corner coordinates 15 20 85 90
+.

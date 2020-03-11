@@ -1,0 +1,294 @@
+. This is dataplot program     classification_analysis.dp     3/6/19
+. Purpose: Carry out a general classification analysis for a dataset.
+. Reference: Google of "kdnuggest best classification algorithms"
+. Link: https://www.kdnuggets.com/2018/02/tour-top-10-algorithms-machine-learning-newbies.html
+. Project Question:
+. Deliverables: 1. insight
+.               2. (multiple) prediction rules and accuracies
+. Date: 1/10/17 => 11/9/17 => 2/25/19 => 3/6/19
+. Input (Required):
+.
+. numf
+. numcat
+. y
+. x1 x2 . . . xnumf
+. stcolor
+. x1lab
+
+.
+. Input (Optional):
+.
+. Output:
+.
+.
+. -----start point-----
+.
+
+. -----Step 1: Compute means and standard deviations for each feature-----
+.
+if bugsw = 1; print " "; print "---beginning of step 2---"; print "k=^k numf=^numf"; paused; end if
+.
+let dpz = 4
+loop for jf = 1 1 numf
+   let meanf^jf = mean f^jf
+   let sdf^jf = sd f^jf
+   let meanf^jf = round(meanf^jf,^dpz)
+   let sdf^jf = round(sdf^jf,^dpz)
+end loop
+.
+. -----Step 2: Translate factors to z-scores and u-scores-----
+.
+loop for jf = 1 1 numf
+   let z^jf = zscore f^jf
+   let u^jf = uscore f^jf
+end loop
+.
+. -----Step 3: Based on raw data, generate matrix of pairwise character plots-----
+.
+let dothis = 1
+if dothis = 1
+.
+let string header2 = Based on Raw Data
+.
+y1tic offset units screen; y1tic offset 10 10
+char bl all; char 1 2 3
+char color blue red ^darkgree
+lines bl all
+limits
+multiplot numf numf
+   multiplot scale factor numf
+   frame corner coor 0 0 100 100
+   tics off; tic labels off
+   x3label
+   .
+   subregion on
+   subregion xlimits 0.35 0.42
+   subregion ylimits 2000 3000
+   region fill on
+   region border line dash
+   region color g90
+   .
+   let numfm1 = numf - 1
+   loop for j1 = 1 1 numf
+      let j1p1 = j1 + 1
+      loop for j2 = 1 1 numf
+         if j1 = numf; if j2 = 1
+            y1tics on; y1tic labels on
+            x1tics on; x1tic labels on
+         end if; end if
+         .
+         plot z^j1 z^j2 cat
+         .
+         if numf <> 6
+            if j1 = j2; move 3 87.5; just left; hw 3 1.5; color brown; text F^j1: ^stf^j1; end if
+         end if
+         if numf = 6
+            if j1 = j2; move 3 87; just left; hw 2 0.8; color brown; text F^j1: ^stf^j1; end if
+         end if
+         .
+         color blue
+         tics off; tic labels off
+      end loop
+   end loop
+multiplot off
+call size2.dp
+call annotate.dp
+end if
+.
+. -----Step 4: Based on z-standardized data, generate matrix of pairwise character plots-----
+.
+let dothis = 1
+if dothis = 1
+.
+let string header2 = Based on Z-Standardized Data
+.
+y1tic offset units screen; y1tic offset 10 10
+char bl all; char 1 2 3
+char color blue red ^darkgree
+lines bl all
+.
+limits -4 4
+.
+multiplot numf numf; multiplot scale factor numf
+   frame corner coor 0 0 100 100
+   tics off; tic labels off
+   x3label
+   . call size.dp 10
+   let numfm1 = numf - 1
+   loop for j1 = 1 1 numf
+      let j1p1 = j1 + 1
+      loop for j2 = 1 1 numf
+         if j1 = numf; if j2 = 1
+            y1tics on; y1tic labels on
+            x1tics on; x1tic labels on
+         end if; end if
+         .
+         if j1 <> j2; plot z^j1 z^j2 cat; end if     ;. <======================
+         if j1 = j2; plot vert z^j1 cat; end if      ;. <======================
+         .
+         if numf <> 6
+            if j1 = j2; move 3 87.5; just left; hw 3 1.5; color brown; text F^j1: ^stf^j1; end if
+         end if
+         if numf = 6
+            if j1 = j2; move 3 87; just left; hw 2 0.8; color brown; text F^j1: ^stf^j1; end if
+         end if
+         .
+         color blue
+         tics off; tic labels off
+      end loop
+   end loop
+multiplot off
+call size2.dp
+call annotate.dp
+.
+call default_plot.dp
+.
+end if
+.
+. -----Step 5: Based on u-standardized data, generate matrix of pairwise character plots-----
+.
+let dothis = 1
+if dothis = 1
+.
+let string header2 = Based on U-Standardized Data
+.
+y1tic offset units screen; y1tic offset 10 10
+char bl all; char 1 2 3
+char color blue red ^darkgree
+lines bl all
+.
+limits 0 1
+.
+multiplot numf numf; multiplot scale factor numf
+   frame corner coor 0 0 100 100
+   tics off; tic labels off
+   x3label
+   . call size.dp 10
+   let numfm1 = numf - 1
+   loop for j1 = 1 1 numf
+      let j1p1 = j1 + 1
+      loop for j2 = 1 1 numf
+         if j1 = numf; if j2 = 1
+            y1tics on; y1tic labels on
+            x1tics on; x1tic labels on
+         end if; end if
+         .
+         if j1 <> j2; plot u^j1 u^j2 cat; end if     ;. <======================
+         if j1 = j2; plot vert u^j1 cat; end if      ;. <======================
+         .
+         if numf <> 6
+            if j1 = j2; move 3 87.5; just left; hw 3 1.5; color brown; text F^j1: ^stf^j1; end if
+         end if
+         if numf = 6
+            if j1 = j2; move 3 87; just left; hw 2 0.8; color brown; text F^j1: ^stf^j1; end if
+         end if
+         .
+         color blue
+         tics off; tic labels off
+      end loop
+   end loop
+multiplot off
+call size2.dp
+call annotate.dp
+.
+call default_plot.dp
+.
+end if
+.
+. -----Step 6: classification scatter plot for the raw features, the z-scores, and the u-scores-----
+.
+let dothis = 1
+if dothis = 1
+.
+if bugsw = 1; print " "; print "---beginning of step 21---"; paused; end if
+.
+loop for caseresp = 1 1 3
+   if caseresp = 1; loop for jf = 1 1 numf; delete yt^jf; let yt^jf = f^jf; end loop; end if
+   if caseresp = 2; loop for jf = 1 1 numf; delete yt^jf; let yt^jf = z^jf; end loop; end if
+   if caseresp = 3; loop for jf = 1 1 numf; delete yt^jf; let yt^jf = u^jf; end loop; end if
+   .
+   . let fudge = .15
+   if numcat = 3; let fudge = .10; end if
+   if numcat = 2; let fudge = .30; end if
+   let midcat = (1 + numcat)/2
+   loop for jf = 1 1 numf
+      let catp^jf = jf + (cat-midcat)*fudge
+   end loop
+   .
+   if bugsw = 1; print " "; print "---beginning of step 21.2---"; paused; end if
+   .
+   y1tic offset units screen; y1tic offset 15 10
+   x1tic offset units screen; x1tic offset 10 10
+   .
+   xlim 1 numf
+   minor x1tics number 0
+   major x1tic number numf
+   x1tic label format alphabetic
+   .
+   if bugsw = 1; print " "; print "---beginning of step 21.3---"; paused; end if
+   .
+   if caseresp = 1; ylim; end if
+   if caseresp = 2; ylim -4 4; end if
+   if caseresp = 3; ylim 0 1; end if
+   .
+   . call set_class_characters_lines.dp
+   char bl all; char 1 2 3; char color ^stcolor
+   lines solid all; line color ^stcolor
+   x1tic label contents ^x1lab
+   .
+   label size 3
+   if caseresp = 1; y1label Raw Features; end if
+   if caseresp = 2; y1label Z-Standardized Feature; end if
+   if caseresp = 3; y1label U-Standardized Feature; end if
+   x1label Feature ID (^numf)
+   x3label
+   .
+   if bugsw = 1; print " "; print "---beginning of step 21.4---"; paused; end if
+   .
+   plot yt1 catp1 catp1                ;. <================================
+   pre-erase off
+   y1label; x1label; y1tic label; x1tic label
+   loop for jf = 2 1 numf
+      plot yt^jf catp^jf catp^jf       ;. <=================================
+   end loop
+   pre-erase on
+   y1tic label automatic; x1tic label automatic
+   .
+   if bugsw = 1; print " "; print "---beginning of step 21.5---"; paused; end if
+   .
+   loop for jf = 1 1 numf
+      moveds jf 12.5; just center; hw 2 1; text F^jf
+   end loop
+   .
+   if caseresp = 2
+      call z_conclusions.dp
+   end if
+   if caseresp = 3
+      call u_conclusions.dp
+   end if
+   .
+   if bugsw = 1; print " "; print "---beginning of step 21.6---"; paused; end if
+   .
+   call feature_stats.dp
+   .
+   if bugsw = 1; print " "; print "---beginning of step 21.7---"; paused; end if
+   .
+   . call right_margin_features_means_sds.dp 88 2.5 2 1
+   call right_margin_sorted_features.dp 87.6 2.5 2 1
+   let yp = 50
+   call legend_categories.dp yp stcolor
+   call annotate.dp
+   .
+end loop
+end if
+.
+limits
+minor x1tics number ; major x1tic number; x1tic label format
+lines bl all
+let j1 = indexv(1); let j2 = indexv(2)
+y1label F^j1: ^stf^j1 (U-standardized); x1label F^j2: ^stf^j2 (U-standardized)
+plot yt^j1 yt^j2 cat
+move 16 87; just left; hw 2.4 1.2; text Plot Character = ^stcat (^numcat classes)
+call annotate.dp
+.
+

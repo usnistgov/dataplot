@@ -1,4 +1,4 @@
-7000.       (VERSION 2019.04)  total number of lines in file (including this line)
+7100.       (VERSION 2019.04)  total number of lines in file (including this line)
 29.                          number of     sections below
    50.    OVERVIEW           first line number of OVERVIEW          section
   150.    GRAPHICS           first line number of GRAPHICS          section
@@ -14,21 +14,21 @@
  1900.    PROBABIL FUNCTIONS first line number of PROB FUNCTIONS    section
  2700.    LET SUBCOMMANDS    first line number of LET SUBCOMMANDS   section
  2800.    STATISTICS         first line number of STATISTICS        section
- 3700.    MATH OPERATIONS    first line number of MATH OPERATIONS   section
- 3900.    MATRIX OPERATIONS  first line number of MATH OPERATIONS   section
- 4000.    RANDOM NUMBERS     first line number of RANDOM NUMBERS    section
- 4400.    TEXT SUBCOMMANDS   first line number of TEXT SUBCOMMANDS  section
- 4500.    CAPITALIZATION     first line number of CAPITALIZATION    section
- 4600.    SUBSCRIPTS         first line number of SUBSCRIPTS        section
- 4700.    GREEK SYMBOLS      first line number of GREEK SYMBOLS     section
- 4800.    MATH SYMBOLS       first line number of MATH SYMBOLS      section
- 4900.    MISC SYMBOLS       first line number of MISC SYMBOLS      section
- 5000.    CHARACTER TYPES    first line number of CHARACTER TYPES   section
- 5100.    LINE TYPES         first line number of LINE TYPES        section
- 5200.    COLOR TYPES        first line number of COLOR TYPES       section
- 5400.    ASCII FILES        first line number of ASCII FILES       section
- 6400.    SYSTEM LIMITS      first line number of SYSTEM LIMITS     section
- 6600.    PROBABILITY DIST   first line number of DISTRIBUTIONS     section
+ 3800.    MATH OPERATIONS    first line number of MATH OPERATIONS   section
+ 4000.    MATRIX OPERATIONS  first line number of MATH OPERATIONS   section
+ 4100.    RANDOM NUMBERS     first line number of RANDOM NUMBERS    section
+ 4500.    TEXT SUBCOMMANDS   first line number of TEXT SUBCOMMANDS  section
+ 4600.    CAPITALIZATION     first line number of CAPITALIZATION    section
+ 4700.    SUBSCRIPTS         first line number of SUBSCRIPTS        section
+ 4800.    GREEK SYMBOLS      first line number of GREEK SYMBOLS     section
+ 4900.    MATH SYMBOLS       first line number of MATH SYMBOLS      section
+ 5000.    MISC SYMBOLS       first line number of MISC SYMBOLS      section
+ 5100.    CHARACTER TYPES    first line number of CHARACTER TYPES   section
+ 5200.    LINE TYPES         first line number of LINE TYPES        section
+ 5300.    COLOR TYPES        first line number of COLOR TYPES       section
+ 5500.    ASCII FILES        first line number of ASCII FILES       section
+ 6500.    SYSTEM LIMITS      first line number of SYSTEM LIMITS     section
+ 6700.    PROBABILITY DIST   first line number of DISTRIBUTIONS     section
  
 ----------------------------------------------------------
 
@@ -2827,19 +2827,27 @@ Supported statistics can be used in the following commands:
   10. BOOTSTRAP <STAT> PLOT
   11. JACKNIFE <STAT> PLOT
   12. DEX <STAT> PLOT
-  13. <STAT> INFLUENCE CURVE
-  14. CROSS TABULATE <STAT>
-  15. POSITIONAL TABULATION <STAT>
-  16. LET V = MATRIX COLUMN <STAT>
-  17. LET V = MATRIX ROW <STAT>
-  18. LET A = MATRIX GRAND <STAT>
-  19. LET M = MATRIX PARTITION <STAT>
-  20. LET V = CROSS TABULATE <STAT>
-  21. LET V = CROSS TABULATE CUMULATIVE <STAT>
-  22. LET V = SORT BY <STAT>
-  23. LET YOUT = MOVING <STAT>
-  24. LET YOUT = CUMULATIVE <STAT>
-  25. <STAT> INTERACTION PLOT <STAT>
+  13. DEX <STAT> EFFECTS PLOT
+  14. DEX <STAT> ABSOLUTE EFFECTS PLOT
+  15. DEX <STAT> PARETO PLOT
+  16. DEX <STAT> PARETO EFFECTS PLOT
+  17. DEX <STAT> PARETO ABSOLUTE EFFECTS PLOT
+  18. DEX <STAT> YOUDEN PLOT
+  19. CLASSIFICATION <STAT> CURVE
+  20. <STAT> INFLUENCE CURVE
+  21. CROSS TABULATE <STAT>
+  22. POSITIONAL TABULATION <STAT>
+  23. LET V = MATRIX COLUMN <STAT>
+  24. LET V = MATRIX ROW <STAT>
+  25. LET A = MATRIX GRAND <STAT>
+  26. LET M = MATRIX PARTITION <STAT>
+  27. LET M = GENERATE MATRIX <STAT>
+  28. LET V = CROSS TABULATE <STAT>
+  29. LET V = CROSS TABULATE CUMULATIVE <STAT>
+  30. LET V = SORT BY <STAT>
+  31. LET YOUT = MOVING <STAT>
+  32. LET YOUT = CUMULATIVE <STAT>
+  33. <STAT> INTERACTION PLOT <STAT>
 
 Some of the above commands only support the case where the
 statistic is computed from a single response variable.
@@ -2978,6 +2986,11 @@ Statistical Tests:
    CUMULATIVE SUM FORWARD TEST PVALUE
    CUMULATIVE SUM BACKWARD TEST
    CUMULATIVE SUM BACKWARD TEST PVALUE
+   DAVID TEST
+   DAVID TEST CDF
+   DAVID TEST MAXIMUM INDEX
+   DAVID TEST MINIMUM INDEX
+   DAVID TEST PVALUE
    DIXON TEST
    DIXON MAXIMUM TEST
    DIXON MINIMUM TEST
@@ -2993,6 +3006,11 @@ Statistical Tests:
    JARQUE BERA
    JARQUE BERA CDF
    JARQUE BERA PVALUE
+   KURTOSIS OUTLIER TEST
+   KURTOSIS OUTLIER TEST CDF
+   KURTOSIS OUTLIER TEST CRITICAL VALUE
+   KURTOSIS OUTLIER TEST INDEX
+   KURTOSIS OUTLIER TEST PVALUE
    LOWER COEFFICIENT OF DISPERSION CONFIDENCE LIMIT
    LOWER ONESIDED COEFFICIENT OF DISPERSION CONFIDENCE LIMIT
    LOWER CONFIDENCE LIMIT
@@ -3057,6 +3075,14 @@ Statistical Tests:
    POISSON DISPERSION TEST
    POISSON DISPERSION TEST CDF
    POISSON DISPERSION TEST PVALUE
+   SKEWNESS OUTLIER TEST
+   SKEWNESS OUTLIER TEST CDF
+   SKEWNESS OUTLIER TEST CRITICAL VALUE
+   SKEWNESS OUTLIER TEST INDEX
+   SKEWNESS OUTLIER TEST PVALUE
+   TIETJEN-MOORE TEST
+   TIETJEN-MOORE MAXIMUM TEST
+   TIETJEN-MOORE MINIMUM TEST
    TWO-SIDED LOWER AGRESTI-COUL
    TWO-SIDED UPPER AGRESTI-COUL
    TWO-SIDED LOWER EXACT BINOMIAL
@@ -3464,6 +3490,9 @@ Statistical Tests
    POLLARD FIVE CDF
    POLLARD FIVE PVALUE
    POLLARD FIVE TEST
+   RATIO OF MEANS
+   RATIO OF MEANS LOWER CONFIDENCE LIMIT
+   RATIO OF MEANS UPPER CONFIDENCE LIMIT
    SQUARED RANK TEST
    SQUARED RANK TEST CDF
    SQUARED RANK TEST PVALUE
@@ -3634,6 +3663,77 @@ Consensus Means
    SUMMARY GRAYBILL DEAL ZHANG TWO STANDARD ERROR
 
 ----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

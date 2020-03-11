@@ -16298,7 +16298,8 @@ C
 C
       RETURN
       END 
-      SUBROUTINE DPSEAR(IANSLC,IWIDTH,ICOM,IHARG,IHARG2,NUMARG,ISEART,
+      SUBROUTINE DPSEAR(IANS,IANSLC,IWIDTH,ICOM,IHARG,IHARG2,NUMARG,
+     1                  ISEART,
      1                  ICOM3,ICOM4,ICOM5,NUMCOM,NCOM5,
 CCCCC                   FEBRUARY 2003: ADD FOLLOWING LINE TO CALL LIST
      1                  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
@@ -16334,22 +16335,26 @@ C                                       "HANDBK.TEX" SEARCHES
 C     UPDATED         --APRIL     2018. ADD VARIOUS SYNONYMS
 C     UPDATED         --APRIL     2018. SUPPORT MORE THAN ONE
 C                                       WORD FOR STRING TO MATCH
+C     UPDATED         --SEPTEMBER 2019. ADD "GREP" OPTION TO USE
+C                                       AN OPERATING SYSTEM BASED
+C                                       SEARCH
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-      CHARACTER*4 IANSLC
+      CHARACTER*4 IANSLC(*)
+      CHARACTER*4 IANS(*)
       CHARACTER*4 ICOM
-      CHARACTER*4 IHARG
-      CHARACTER*4 IHARG2
+      CHARACTER*4 IHARG(*)
+      CHARACTER*4 IHARG2(*)
 C
-      CHARACTER*4 IHNAME
-      CHARACTER*4 IHNAM2
-      CHARACTER*4 IUSE
+      CHARACTER*4 IHNAME(*)
+      CHARACTER*4 IHNAM2(*)
+      CHARACTER*4 IUSE(*)
 C
       CHARACTER*4 ISEART
-      CHARACTER*4 ICOM3
-      CHARACTER*4 ICOM4
-      CHARACTER*40 ICOM5
+      CHARACTER*4 ICOM3(*)
+      CHARACTER*4 ICOM4(*)
+      CHARACTER*40 ICOM5(*)
       CHARACTER*4 IBUGS2
       CHARACTER*4 IBUGQ
       CHARACTER*4 ISUBRO
@@ -16380,24 +16385,16 @@ C
 C
       CHARACTER*100 ITAST
       CHARACTER*100 ITASTU
+      CHARACTER*255 IAOUT
       CHARACTER*4 IHIT
       CHARACTER*4 IGO
       CHARACTER*4 IH
       CHARACTER*4 IH2
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
 C
-      DIMENSION IANSLC(*)
-C
-      DIMENSION IHARG(*)
-      DIMENSION IHARG2(*)
-      DIMENSION IHNAME(*)
-      DIMENSION IHNAM2(*)
-      DIMENSION IUSE(*)
       DIMENSION VALUE(*)
       DIMENSION IVALUE(*)
-C
-      DIMENSION ICOM3(*)
-      DIMENSION ICOM4(*)
-      DIMENSION ICOM5(*)
       DIMENSION NCOM5(*)
 C
 C-----COMMON----------------------------------------------------------
@@ -16405,6 +16402,7 @@ C
       INCLUDE 'DPCOPA.INC'
       INCLUDE 'DPCODA.INC'
       INCLUDE 'DPCOF2.INC'
+      INCLUDE 'DPCOST.INC'
       INCLUDE 'DPCOHO.INC'
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
@@ -16425,10 +16423,12 @@ C
       IERROR='NO'
       IHIT='NO'
       IGO='NO'
+      IAOUT=' '
 C
       ILISAV=1
       MINN2=1
       NCSTRI=(-999)
+      MAXLEN=9999
 C
       IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')THEN
         WRITE(ICOUT,999)
@@ -16470,6 +16470,196 @@ C
    83   FORMAT('IDICST,IDICFO,IDICAC,IDICFO,IDICCS = ',
      1         4(A12,2X),A12)
         CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *************************************************
+C               **  STEP 10--                                  **
+C               **  PERFORM AN OPERATION SYSTEM BASED SEARCH   **
+C               *************************************************
+C
+C     2019/09: THE "GREP" VARIANT WILL DO AN OPERATIONG SYSTEM
+C              BASED SEARCH.
+C
+C                 1. FOR LINUX/UNIX (AND MACOS) SYSTEMS, USE THE
+C                    GREP COMMAND.
+C
+C                 2. FOR WINDOWS SYSTEMS, USE THE FINDSTR COMMAND.
+C
+C              NOTE THAT WHILE THIS CAN EASILY BE DONE JUST USING
+C              THE "SYSTEM" COMMAND, IMPLEMENTING THIS AS A DISTINCT
+C              COMMAND ALLOWS GENERAL PURPOSE MACROS TO BE WRITTEN
+C              THAT DON'T REQUIRE SPECIAL CODING BASED ON THE HOST
+C              OPERATING SYSTEM.
+C
+      ISTEPN='10'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(ISEART.EQ.'GREP' .OR. ISEART.EQ.'FIND')THEN
+C
+C       STEP 1: FIND FIRST NON-BLANK CHARACTER AFTER "GREP "
+C               OR "FINDSTR ".
+C
+        ISTRT=-1
+        IF(ISEART.EQ.'GREP')THEN
+          DO101II=1,MIN(250,IWIDTH-5)
+            IF(IANS(II)(1:1)  .EQ.'G' .AND. IANS(II+1)(1:1).EQ.'R' .AND.
+     1         IANS(II+2)(1:1).EQ.'E' .AND. IANS(II+3)(1:1).EQ.'P' .AND.
+     1         IANS(II+4)(1:1).EQ.' ')THEN
+              ISTRT=II+5
+              GOTO109
+            ENDIF
+  101     CONTINUE
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1211)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,103)
+  103     FORMAT('      GREP NOT FOUND AT BEGINNING OF COMMAND LINE.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+  109     CONTINUE
+        ELSEIF(ISEART.EQ.'FIND')THEN
+          DO111II=1,MIN(247,IWIDTH-8)
+            IF(IANS(II)(1:1)  .EQ.'F' .AND. IANS(II+1)(1:1).EQ.'I' .AND.
+     1         IANS(II+2)(1:1).EQ.'N' .AND. IANS(II+3)(1:1).EQ.'D' .AND.
+     1         IANS(II+4)(1:1).EQ.'S' .AND. IANS(II+5)(1:1).EQ.'T' .AND.
+     1         IANS(II+6)(1:1).EQ.'R' .AND. IANS(II+7)(1:1).EQ.' ')THEN
+              ISTRT=II+8
+              GOTO119
+            ENDIF
+  111     CONTINUE
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1211)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,113)
+  113     FORMAT('      FINDSTR NOT FOUND AT BEGINNING OF COMMAND ',
+     1           'LINE.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+  119     CONTINUE
+C
+          DO121II=ISTRT,IWIDTH
+            IF(IANS(II)(1:1).NE.' ')THEN
+              ISTRT=II
+              GOTO129
+            ENDIF
+  121     CONTINUE
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1211)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,123)
+  123     FORMAT('      NO TEXT FOUND AFTER GREP (OR FINDSTR) ',
+     1           'ON THE COMMAND LINE.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+  129     CONTINUE
+        ENDIF
+C
+C       STEP 2: FIND LAST NON-BLANK CHARACTER
+C
+        DO131II=IWIDTH,ISTRT,-1
+          IF(IANS(II)(1:1).NE.' ')THEN
+            ILAST=II
+            GOTO139
+          ENDIF
+  131   CONTINUE
+  139   CONTINUE
+C
+C       STEP 3: CREATE STRING TO BE SENT TO SYSTEM COMMAND.
+C               NOTE THAT DATAPLOT DOES NO ERROR CHECKING, IT
+C               JUST PASSES WHAT THE USER ENTERED.
+C
+        IF(IHOST1.EQ.'IBM-')THEN
+          IF(IGRPCA.EQ.'IGNO')THEN
+            NCSTR=11
+            IAOUT(1:NCSTR)='FINDSTR /I '
+          ELSE
+            NCSTR=8
+            IAOUT(1:NCSTR)='FINDSTR '
+          ENDIF
+          IF(IGRPRE.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='/S '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPLN.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='/N '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPEM.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='/X '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPNM.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='/V '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPFN.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='/M '
+            NCSTR=NCSTR+3
+          ENDIF
+        ELSE
+          IF(IGRPCA.EQ.'IGNO')THEN
+            NCSTR=8
+            IAOUT(1:NCSTR)='grep -i '
+          ELSE
+            NCSTR=5
+            IAOUT(1:NCSTR)='grep '
+          ENDIF
+          IF(IGRPRE.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='-r '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPLN.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='-n '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPEM.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='-x '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPNM.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='-v '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPFN.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='-l '
+            NCSTR=NCSTR+3
+          ENDIF
+        ENDIF
+C
+        MAXNCH=255
+        DO141II=ISTRT,ILAST
+          NCSTR=NCSTR+1
+          IF(NCSTR.GT.MAXNCH)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1211)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1291)MAXNCH
+ 1291       FORMAT('      MAXIMUM NUMBER OF CHARACTERS (',I3,
+     1             ') EXCEEDED.')
+            CALL DPWRST('XXX','BUG ')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+          IAOUT(NCSTR:NCSTR)=IANSLC(II)(1:1)
+  141   CONTINUE
+C
+        ISSAV1=ISYSPE
+        ISSAV2=ISYSHI
+        ISYSPE='ON'
+        ISYSHI='OFF'
+        CALL DPSYS2(IAOUT,NCSTR,ISUBRO,IERROR)
+        ISYSPE=ISSAV1
+        ISYSHI=ISSAV2
+C
+        GOTO9000
       ENDIF
 C
 C               **************************
@@ -16612,6 +16802,7 @@ C
      1       (ICOM.EQ.'?   '))THEN
         IFILE='refman.tex'
         NCFILE=10
+        MAXLEN=40
       ELSE
 C
 C       2018/04: CHECK IF FIRST ARGUMENT IS A FILE NAME (I.E.,
@@ -16853,7 +17044,9 @@ C
 C
       ILISAV=-1
 C
-      NMAX=100
+      NMAX=MAXLEN
+      IF(MAXLEN.GT.100)NMAX=100
+CCCCC NMAX=100
       DO4110I=1,IMAX
 C
         ILICUR=I

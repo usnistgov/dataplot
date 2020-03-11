@@ -1,0 +1,9 @@
+. This is dataplot macro size2.dp
+. Purpose: Change all plot-related size to 2
+. Date: August 2005, January 2007
+.
+. -----start point-----
+.
+let sizezzz = 2
+.
+call size_orig.dp

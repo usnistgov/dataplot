@@ -1,0 +1,73 @@
+-----SET TEMPORARY FILE (SET)--------------------------------------------
+ 
+TEMPORARY FILE
+ 
+Name:
+    SET TEMPORARY FILE (SET)
+ 
+Type:
+    Set Subcommand
+ 
+Purpose:
+    If Dataplot cannot open the plot files (dppl1f.dat, dppl2f.dat),
+    specify whether Dataplot should append the process-id to the name
+    of the file and try again to open the file.
+ 
+Description:
+    On some operating systems, a file that is opened in write mode will
+    lock other applications from also opening that file in write mode.
+    This is the case on Microsoft Windows platforms.  Linux/Unix platforms
+    allow multiple platforms to open the same file in write mode.
+
+    So if you start multiple Dataplot sessions with the same current
+    directory, only the first will be successful in opening the
+    DEVICE 3 (dppl2f.dat) graphics output file.
+
+    If a Dataplot session is unable to open the plot file in write mode,
+    you can use this command to specify that Dataplot should append the
+    process id to the name (specifically, dppl2f_<process-id>.dat) and
+    try to open the file again.  The process id should give the plot file
+    a unique name.
+
+    On Linux/Unix systems, multiple Dataplot sessions will write to the
+    same dppl2f.dat file.  This may result in a corrupt plot file, but
+    it will not crash the Dataplot session.
+
+    Although this command was implemented primarily with the DEVICE 3
+    plot file in mind, it also applies to the DEVICE 2 plot file.  It
+    currently does not apply to other temporary files (e.g., dpst1f.dat -
+    dpst5f.dat).
+
+Syntax:
+    SET TEMPORARY FILE <PID/IGNORE>
+    where <PID> specifies that Dataplot will append the process id and
+                attempt to re-open the plot
+               suppressed while <OFF> specifies that it will not.
+ 
+Examples:
+    SET TEMPORARY FILE ON
+    SET TEMPORARY FILE OFF
+    PROBE TEMPORARY FILE
+
+Note:
+    The SET TEMPORARY FILE ON will be ignored when running the graphical
+    user interface (GUI) is running.
+
+Default:
+    OFF
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    PROMPT     = Specify whether the prompt will be printed.
+ 
+Applications:
+    Terminal usage
+ 
+Implementation Date:
+    2009/07
+ 
+Program:
+    SET TEMPORARY FILE ON
+ 

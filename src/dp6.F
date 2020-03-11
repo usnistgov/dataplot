@@ -6381,13 +6381,15 @@ C
 C     FOR REAL OR D.P. SET HITEST = CUTHI/N
 C     FOR COMPLEX      SET HITEST = CUTHI/(2*N)
 C
-   85 HITEST = CUTHI/FLOAT( N )
+   85 CONTINUE
+      HITEST = CUTHI/FLOAT( N )
 C
 C                   PHASE 3.  SUM IS MID-RANGE.  NO SCALING.
 C
       DO 95 J =I,NN,INCX
-      IF(DABS(DX(J)) .GE. HITEST) GO TO 100
-   95    SUM = SUM + DX(J)**2
+         IF(DABS(DX(J)) .GE. HITEST) GO TO 100
+         SUM = SUM + DX(J)**2
+   95 CONTINUE
       DNRM2 = DSQRT( SUM )
       GO TO 300
 C
@@ -19158,7 +19160,8 @@ C
       INIT = 3
       CONTIN = .TRUE.
 C
-  130 N = N+1
+  130 CONTINUE
+      N = N+1
       IF(.NOT. CONTIN) GOTO 800
 C
       IF(INIT.EQ.3) THEN
@@ -19183,7 +19186,8 @@ C             AND NEVILLE EXTRAPOLATION ALGORITHM
               E(1) = 5.
               E(2) = 6.3
               DO 160 I = 3,NMAX
-  160             E(I) = 6.81 
+                  E(I) = 6.81 
+  160         CONTINUE
         ELSEIF((METHOD.NE.2.AND.IORD.EQ.1) .OR. (METHOD.EQ.2.AND.
      +            IORD.EQ.2)) THEN
               E(1) = 10.
@@ -19192,10 +19196,12 @@ C             AND NEVILLE EXTRAPOLATION ALGORITHM
               E(4) = 23.
               E(5) = 24.46
               DO 165 I = 6,NMAX
-  165             E(I) = 26.
+                  E(I) = 26.
+  165         CONTINUE
               IF(METHOD.EQ.2.AND.IORD.EQ.2) THEN
                   DO 170 I = 1,NMAX
-  170                  E(I)=2*E(I)
+                       E(I)=2*E(I)
+  170             CONTINUE
               ENDIF 
           ELSEIF(METHOD.NE.2.AND.IORD.EQ.2) THEN
               E(1) = 17.78
@@ -19204,7 +19210,8 @@ C             AND NEVILLE EXTRAPOLATION ALGORITHM
               E(4) = 46.16
               E(5) = 50.26
               DO 175 I = 6,NMAX
-  175             E(I) = 55.
+                  E(I) = 55.
+  175         CONTINUE
           ELSEIF(METHOD.EQ.2.AND.IORD.EQ.3) THEN
               E(1) = 25.97
               E(2) = 41.22
@@ -19212,7 +19219,8 @@ C             AND NEVILLE EXTRAPOLATION ALGORITHM
               E(4) = 56.4
               E(5) = 59.3
               DO 180 I = 6,NMAX
-  180             E(I) = 62.
+                  E(I) = 62.
+  180         CONTINUE
           ELSE
               E(1) = 24.5
               E(2) = 40.4
@@ -19220,7 +19228,8 @@ C             AND NEVILLE EXTRAPOLATION ALGORITHM
               E(4) = 61.2
               E(5) = 66.55
               DO 185 I = 6,NMAX
-  185             E(I) = 73.
+                  E(I) = 73.
+  185         CONTINUE
               C0F0 = -TWOF0/(3.*BETA)
               C1 = 3./(3.*BETA-1.)
               C2 = -1./(3.*(BETA-1.))
@@ -19320,7 +19329,8 @@ C
       IF(N.GT.NMAX) THEN
           N = NMAX
           DO 400 I = 1,N
-  400         MAXF(I-1) = MAXF(I)
+              MAXF(I-1) = MAXF(I)
+  400     CONTINUE
       ENDIF
       IF(METHOD.EQ.2) THEN
           MAXF(N) = (ABS(F1)+ABS(F2))/2.

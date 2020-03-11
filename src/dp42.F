@@ -4942,7 +4942,8 @@ C
 C        FIND MIN AND MAX DATA VALUE
 C
       DO 10 I = 1, 6
-  10  VCOV(I) = ZERO
+        VCOV(I) = ZERO
+  10  CONTINUE
       IFAULT = 1
       IF (N .LE. 2) GOTO 170
       XMIN = X(1)
@@ -5284,8 +5285,10 @@ C
       PARA(3) = G
       RETURN
 C
-  170 DO 180 I = 1, 3
-  180 PARA(I) = ZERO
+  170 CONTINUE
+      DO 180 I = 1, 3
+        PARA(I) = ZERO
+  180 CONTINUE
       RETURN
 C
       END
@@ -5851,7 +5854,8 @@ C
 C
       FAULT = .FALSE.
       DO 10 I = 1, 6
-   10 C(I) = ZERO
+        C(I) = ZERO
+   10 CONTINUE
       W = G / D
 C
 C        TRIAL VALUE OF H
@@ -5869,7 +5873,8 @@ C
    20 K = K + 1
       IF (K .GT. LIMIT) GOTO 140
       DO 30 I = 1, 6
-   30 C(I) = A(I)
+        C(I) = A(I)
+   30 CONTINUE
 C
 C        NO CONVERGENCE YET - TRY SMALLER H
 C
@@ -5880,7 +5885,8 @@ C
       X = TWO * Y
       A(1) = ONE / E
       DO 50 I = 2, 6
-   50 A(I) = A(I - 1) / E
+        A(I) = A(I - 1) / E
+   50 CONTINUE
       V = Y
       F = R * H
       M = 0
@@ -5891,7 +5897,8 @@ C
    60 M = M + 1
       IF (M .GT. LIMIT) GOTO 140
       DO 70 I = 1, 6
-   70 B(I) = A(I)
+         B(I) = A(I)
+   70 CONTINUE
       U = U - F
       Z = ONE
       IF (U .GT. -EXPB) Z = ZEXP(U) + Z
@@ -5916,18 +5923,19 @@ C
   100 Y = Y + X
       V = V + Y
       DO 110 I = 1, 6
-      IF (A(I) .EQ. ZERO) GOTO 140
-      IF (ZABS((A(I) - B(I)) / A(I)) .GT. VV) GOTO 60
+         IF (A(I) .EQ. ZERO) GOTO 140
+         IF (ZABS((A(I) - B(I)) / A(I)) .GT. VV) GOTO 60
   110 CONTINUE
 C
 C        END OF INNER LOOP
 C
       V = RRTPI * H
       DO 120 I = 1, 6
-  120 A(I) = V * A(I)
+         A(I) = V * A(I)
+  120 CONTINUE
       DO 130 I = 1, 6
-      IF (A(I) .EQ. ZERO) GOTO 140
-      IF (ZABS((A(I) - C(I)) / A(I)) .GT. ZZ) GOTO 20
+         IF (A(I) .EQ. ZERO) GOTO 140
+         IF (ZABS((A(I) - C(I)) / A(I)) .GT. ZZ) GOTO 20
   130 CONTINUE
 C
 C        END OF OUTER LOOP
@@ -7070,7 +7078,8 @@ C
            N0=N1
            F0=F1
            N1=NN
- 10        F1=F
+           F1=F
+ 10     CONTINUE
  20     MSTA1=NN
         RETURN
         END
@@ -7107,7 +7116,8 @@ C
            N0=N1
            F0=F1
            N1=NN
-10         F1=F
+           F1=F
+10      CONTINUE
 20      MSTA2=NN+10
         RETURN
         END
@@ -22386,7 +22396,8 @@ C
          SCALE = 0.0E0
 C     .......... SCALE COLUMN (ALGOL TOL THEN NOT NEEDED) ..........
          DO 90 I = M, IGH
-   90    SCALE = SCALE + ABS(A(I,M-1))
+            SCALE = SCALE + ABS(A(I,M-1))
+   90    CONTINUE
 C
          IF (SCALE .EQ. 0.0E0) GO TO 180
          MP = M + IGH
@@ -22412,7 +22423,8 @@ C
             F = F / H
 C
             DO 120 I = M, IGH
-  120       A(I,J) = A(I,J) - F * ORT(I)
+               A(I,J) = A(I,J) - F * ORT(I)
+  120       CONTINUE
 C
   130    CONTINUE
 C     .......... FORM (I-(U*UT)/H)*A*(I-(U*UT)/H) ..........
@@ -22427,7 +22439,8 @@ C
             F = F / H
 C
             DO 150 J = M, IGH
-  150       A(I,J) = A(I,J) - F * ORT(J)
+               A(I,J) = A(I,J) - F * ORT(J)
+  150       CONTINUE
 C
   160    CONTINUE
 C
@@ -22502,7 +22515,8 @@ C***FIRST EXECUTABLE STATEMENT  ORTRAN
       DO 80 I = 1, N
 C
          DO 60 J = 1, N
-   60    Z(I,J) = 0.0E0
+            Z(I,J) = 0.0E0
+   60    CONTINUE
 C
          Z(I,I) = 1.0E0
    80 CONTINUE
@@ -22516,19 +22530,22 @@ C     .......... FOR MP=IGH-1 STEP -1 UNTIL LOW+1 DO -- ..........
          MP1 = MP + 1
 C
          DO 100 I = MP1, IGH
-  100    ORT(I) = A(I,MP-1)
+            ORT(I) = A(I,MP-1)
+  100    CONTINUE
 C
          DO 130 J = MP, IGH
             G = 0.0E0
 C
             DO 110 I = MP, IGH
-  110       G = G + ORT(I) * Z(I,J)
+               G = G + ORT(I) * Z(I,J)
+  110       CONTINUE
 C     .......... DIVISOR BELOW IS NEGATIVE OF H FORMED IN ORTHES.
 C                DOUBLE DIVISION AVOIDS POSSIBLE UNDERFLOW ..........
             G = (G / ORT(MP)) / A(MP,MP-1)
 C
             DO 120 I = MP, IGH
-  120       Z(I,J) = Z(I,J) + G * ORT(I)
+               Z(I,J) = Z(I,J) + G * ORT(I)
+  120       CONTINUE
 C
   130    CONTINUE
 C
@@ -26836,7 +26853,8 @@ C
               PDF=X*PD1-(K+V0-1.0D0)*PD0
               DV(K)=PDF
               PD0=PD1
-15            PD1=PDF
+              PD1=PDF
+15         CONTINUE
         ELSE
            IF (X.LE.0.0) THEN
               IF (XA.LE.5.8D0)  THEN
@@ -26854,7 +26872,8 @@ C
                  PD=(-X*PD1+PD0)/(K-1.0D0-V0)
                  DV(K)=PD
                  PD0=PD1
-20               PD1=PD
+                 PD1=PD
+20            CONTINUE
            ELSE IF (X.LE.2.0) THEN
               V2=NV+V0
               IF (NV.EQ.0) V2=V2-1.0D0
@@ -26868,7 +26887,8 @@ C
                  F=X*F0+(K-V0+1.0D0)*F1
                  DV(K)=F
                  F1=F0
-25               F0=F
+                 F0=F
+25            CONTINUE
            ELSE
               IF (XA.LE.5.8) CALL DVSA(V0,X,PD0)
               IF (XA.GT.5.8) CALL DVLA(V0,X,PD0)
@@ -26880,10 +26900,12 @@ C
                  F=X*F0+(K-V0+1.0D0)*F1
                  IF (K.LE.NA) DV(K)=F
                  F1=F0
-30               F0=F
+                 F0=F
+30            CONTINUE
               S0=PD0/F
               DO 35 K=0,NA
-35               DV(K)=S0*DV(K)
+                 DV(K)=S0*DV(K)
+35            CONTINUE
            ENDIF
         ENDIF
         DO 40 K=0,NA-1
@@ -27495,7 +27517,8 @@ C
               F=X*F1+(K-V0-2.0D0)*F0
               VV(K)=F
               F0=F1
-15            F1=F
+              F1=F
+15         CONTINUE
         ELSE
            IF (X.GE.0.0.AND.X.LE.7.5D0) THEN
               V2=V
@@ -27510,7 +27533,8 @@ C
                  F=X*F0-(K+V0+2.0D0)*F1
                  IF (K.LE.NA) VV(K)=F
                  F1=F0
-20               F0=F
+                 F0=F
+20            CONTINUE
            ELSE IF (X.GT.7.5D0) THEN
               CALL VVLA(V0,X,PV0)
               M=100+ABS(NA)
@@ -27521,10 +27545,12 @@ C
                  F=X*F0-(K+V0+2.0D0)*F1
                  IF (K.LE.NA) VV(K)=F
                  F1=F0
-25               F0=F
+                 F0=F
+25            CONTINUE
               S0=PV0/F
               DO 30 K=0,NA
-30               VV(K)=S0*VV(K)
+                 VV(K)=S0*VV(K)
+30            CONTINUE
            ELSE
               IF (XA.LE.7.5D0) THEN
                  CALL VVSA(V0,X,F0)
@@ -27541,7 +27567,8 @@ C
                  F=(X*F1-F0)/(K+V0)
                  VV(K)=F
                  F0=F1
-35               F1=F
+                 F1=F
+35            CONTINUE
            ENDIF
         ENDIF
         DO 40 K=0,NA-1
@@ -27599,7 +27626,8 @@ CCCCC   IMPLICIT COMPLEX *16 (C,Z)
            HL=A*H1-0.25D0*(L1-2.0D0)*(L1-3.0D0)*H0
            H(M)=HL
            H0=H1
-10         H1=HL
+           H1=HL
+10      CONTINUE
         Y1F=1.0D0
         R=1.0D0
         DO 15 K=1,100
@@ -27626,7 +27654,8 @@ CCCCC   IMPLICIT COMPLEX *16 (C,Z)
            DL=A*D2-0.25D0*(L2-2.0D0)*(L2-3.0D0)*D1
            D(M)=DL
            D1=D2
-40         D2=DL
+           D2=DL
+40      CONTINUE
         Y2F=1.0D0
         R=1.0D0
         DO 45 K=1,100
@@ -28672,7 +28701,13 @@ C
 C        SET D(I)=0 UNLESS DATA ARE STRICTLY MONOTONIC.
 C
          D(1,I) = ZERO
-         IF ( PCHST(DEL1,DEL2) )  42, 41, 45
+         IF ( PCHST(DEL1,DEL2) .LT.0.0)THEN
+            GOTO42
+         ELSEIF ( PCHST(DEL1,DEL2) .EQ.0.0)THEN
+            GOTO41
+         ELSEIF ( PCHST(DEL1,DEL2) .GT.0.0)THEN
+            GOTO45
+         ENDIF
 C
 C        COUNT NUMBER OF CHANGES IN DIRECTION OF MONOTONICITY.
 C
@@ -38735,12 +38770,19 @@ C               **  ON THE DEVICES AND ON THE GRAPHICS SOFTWARE  **
 C               ***************************************************
 C
         IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'OTG2')THEN
-          WRITE(ICOUT,90012)
-90012     FORMAT('BEFORE CALL DPCLDE')
+          WRITE(ICOUT,90012)ICLGRS
+90012     FORMAT('BEFORE CALL DPCLDE: ICLGRS = ',A4)
           CALL DPWRST('XXX','BUG ')
         ENDIF
 C
         IF(ICLGRS.EQ.'ON')CALL DPCLDE
+C
+        IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'OTG2')THEN
+          WRITE(ICOUT,90014)ISQUAR,ICASPL,PSAVE
+90014     FORMAT('AFTER CALL DPCLDE: ISQUAR,ICASPL,PSAVE = ',
+     1           2(A4,2X),G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
 C
         IF(ISQUAR.EQ.'ON' .OR. ICASPL.EQ.'PIEC' .OR.
      1     ICASPL.EQ.'ROSE')THEN

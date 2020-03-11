@@ -1,22 +1,37 @@
-. THIS IS THE DATAPLOT PROGRAM FILE     WRIGHT11.DP
-. PURPOSE--ANALYZE WRIGHT BROTHERS DATA
-. DATE--APRIL 1992
+. This is dataplot program   wright11.dp        3/29/19
+. Purpose: Do 2-Way table Analysis of Wright Up-Pressure data
+. Purpose: Do k=2 Analysis of Wright Up-Pressure Data
+. X1 = Wing Type (16)     X2 = Angle (14)
+. Date: October 16, 2009 => March 29, 2019
 .
-. -----START POINT---------------
+. -----start point-----
 .
-DEVICE 2 POSTSCRIPT
+call jjfcolor.dp
+. call jjfcapture.dp
+feedback off
 .
-. STEP 1--READ IN THE DATA
+let string header = Wright Brothers Airplane Wing & Angle Pressure Analysis
+let string headhw = 2.6 1.3; let string headhw2 = 2.6 1.3; let string headhw3 = 2.6 1.3
+let string currdate = 3/29/19
+let pagecoun = 0
+let string trailer = wright11.dp
+let string trailer2 = Datafile: wright11.dat
 .
-SKIP 25
-READ WRIGHT11.DAT PRES ANGLE WING
+. -----Step 1: Read in the data-----
 .
-. STEP 2--PLOT OUT THE DATA
+skip 25; read    wright11.dat    y angle wing
 .
-X3LABEL AUTOMATIC
-CHAR 1 2 3 4 5 6 7 8 9 0 A B C D E F G H I J
-CHAR HW 4 2 ALL
-MULTIPLOT 2 1
-PLOT PRES ANGLE WING
-PLOT PRES WING ANGLE
+. -----Step 2: Define strings for the rows and columns-----
+.
+let string sty = Pressure
+let string stx1 = Wing Type
+let string stx2 = Wing Angle
+let string stx1l = 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+let string stx2l = 0 2.5 5 7.5 10 12.5 15 17.5 20 25 30 35 40 45
+.
+. -----Step 10: Plot the data-----
+.
+let x1 = wing
+let x2 = angle
+call k2_analysis.dp
 .

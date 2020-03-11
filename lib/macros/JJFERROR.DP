@@ -1,0 +1,10 @@
+. This is dataplot macro   jjferror.dp
+. Purpose: If dataplot encounters an error (e.g., undefined variable)
+.          then stop the execution and
+.          prompt the user before proceeding
+. Date: February 13, 2009
+.
+. -----start point-----
+.
+set fatal error prompt
+.

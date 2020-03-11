@@ -29885,6 +29885,8 @@ C     UPDATED         --OCTOBER  2016. ADD PRE-PROCESSOR DIRECTIVES
 C     UPDATED         --OCTOBER  2016. ADD TEMPLATES FOR SEVERL FUTURE
 C     UPDATED         --OCTOBER  2016. REMOVE THE "TERMINAL" DEVICES AS
 C                                      THESE DO NOT SUPPORT GRAPHICS
+C     UPDATED         --DECEMBER 2019. CHECK FEEDBACK SETTING FOR OUTPUT
+C                                      MESSAGES
 C
 C---------------------------------------------------------------------
 C
@@ -30274,50 +30276,51 @@ C
             IHPGPM(J)=IHPGPM(ITEMP)
  6060     CONTINUE
         END IF
-        WRITE(ICOUT,999)
-  999   FORMAT(1X)
-        CALL DPWRST('XXX','BUG ')
-        IF(IDMODE(I).EQ.'2622')THEN
-          WRITE(ICOUT,6021)
- 6021     FORMAT('HEWLETT-PACKARD 26XX-TYPE TERMINAL')
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+  999     FORMAT(1X)
           CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,6022)
- 6022     FORMAT('INCLUDING 981X, 983X, 21X, 23X TERMINALS')
-          CALL DPWRST('XXX','BUG ')
-          GOTO6090
-        ENDIF
-        IF(IDMODE(I).EQ.'7221')THEN
-          WRITE(ICOUT,6001)
- 6001     FORMAT('HEWLETT-PACKARD 7221T')
-          CALL DPWRST('XXX','BUG ')
-        ELSE
-          WRITE(ICOUT,6002)
- 6002     FORMAT('HEWLETT-PACKARD WITH HP-GL')
-          CALL DPWRST('XXX','BUG ')
-        ENDIF
-        WRITE(ICOUT,6010)
- 6010   FORMAT('PEN SETTINGS--')
-        CALL DPWRST('XXX','BUG ')
-C
-        IF(IDMODE(I).NE.'7221')THEN
-          DO6079J=1,IHPGCL
-            WRITE(ICOUT,6072)J,IHPGPM(J)
- 6072       FORMAT('PEN ',I2,' = ',A8,'(3 MM)')
+          IF(IDMODE(I).EQ.'2622')THEN
+            WRITE(ICOUT,6021)
+ 6021       FORMAT('HEWLETT-PACKARD 26XX-TYPE TERMINAL')
             CALL DPWRST('XXX','BUG ')
- 6079     CONTINUE
-        ELSE
-          WRITE(ICOUT,6011)
- 6011     FORMAT(12X,'PEN 1 = BLACK (3 MM)')
+            WRITE(ICOUT,6022)
+ 6022       FORMAT('INCLUDING 981X, 983X, 21X, 23X TERMINALS')
+            CALL DPWRST('XXX','BUG ')
+            GOTO6090
+          ELSEIF(IDMODE(I).EQ.'7221')THEN
+            WRITE(ICOUT,6001)
+ 6001       FORMAT('HEWLETT-PACKARD 7221T')
+            CALL DPWRST('XXX','BUG ')
+          ELSE
+            WRITE(ICOUT,6002)
+ 6002       FORMAT('HEWLETT-PACKARD WITH HP-GL')
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          WRITE(ICOUT,6010)
+ 6010     FORMAT('PEN SETTINGS--')
           CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,6012)
- 6012     FORMAT(12X,'PEN 2 = RED   (3 MM)')
-          CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,6013)
- 6013     FORMAT(12X,'PEN 3 = BLUE  (3 MM)')
-          CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,6014)
- 6014     FORMAT(12X,'PEN 4 = GREEN (3 MM)')
-          CALL DPWRST('XXX','BUG ')
+C
+          IF(IDMODE(I).NE.'7221')THEN
+            DO6079J=1,IHPGCL
+              WRITE(ICOUT,6072)J,IHPGPM(J)
+ 6072         FORMAT('PEN ',I2,' = ',A8,'(3 MM)')
+              CALL DPWRST('XXX','BUG ')
+ 6079       CONTINUE
+          ELSE
+            WRITE(ICOUT,6011)
+ 6011       FORMAT(12X,'PEN 1 = BLACK (3 MM)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,6012)
+ 6012       FORMAT(12X,'PEN 2 = RED   (3 MM)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,6013)
+ 6013       FORMAT(12X,'PEN 3 = BLUE  (3 MM)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,6014)
+ 6014       FORMAT(12X,'PEN 4 = GREEN (3 MM)')
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
         ENDIF
 C
  6090   CONTINUE
@@ -30393,7 +30396,7 @@ C
             IDNHOF(I)=100
           END IF
         END IF
-        IF(IDMODE(I).EQ.'4662')THEN
+        IF(IDMODE(I).EQ.'4662' .AND. IFEEDB.EQ.'ON')THEN
           WRITE(ICOUT,999)
           CALL DPWRST('XXX','BUG ')
           WRITE(ICOUT,6411)
@@ -30497,11 +30500,13 @@ C
           IDNHPP(I)=621
           IDNHOF(I)=73
         END IF
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,7102)
- 7102   FORMAT('DEC WITH REGIS')
-        CALL DPWRST('XXX','BUG ')
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,7102)
+ 7102     FORMAT('DEC WITH REGIS')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
         GOTO8900
       ELSEIF(IDMANU(I).EQ.'SUN')THEN
         IDCONT(I)='ON'
@@ -30594,11 +30599,13 @@ C
         IDNVPP(I)=480
         IDNVOF(I)=0
         IDNHOF(I)=0
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,7702)
- 7702   FORMAT('TURBO-C/VGA')
-        CALL DPWRST('XXX','BUG ')
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,7702)
+ 7702     FORMAT('TURBO-C/VGA')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
         GOTO8900
       ELSEIF(IDMANU(I).EQ.'LAHE')THEN
         IDCONT(I)='ON'
@@ -30640,11 +30647,13 @@ C
         IDNVPP(I)=-1
         IDNVOF(I)=0
         IDNHOF(I)=0
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,7902)
- 7902   FORMAT('MICROSOFT QUICK-WIN DRIVER')
-        CALL DPWRST('XXX','BUG ')
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,7902)
+ 7902     FORMAT('MICROSOFT QUICK-WIN DRIVER')
+          CALL DPWRST('XXX','BUG ')
+         ENDIF
         GOTO8900
       ELSEIF(IDMANU(I).EQ.'GKS ')THEN
         IDCONT(I)='ON'
@@ -30653,11 +30662,13 @@ C
         IDNVPP(I)=1000
         IDNVOF(I)=0
         IDNHOF(I)=0
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,8002)
- 8002   FORMAT('GKS LIBRARY')
-        CALL DPWRST('XXX','BUG ')
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,8002)
+ 8002     FORMAT('GKS LIBRARY')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
         GOTO8900
       ELSEIF(IDMANU(I).EQ.'GD  ')THEN
         IDCONT(I)='ON'
@@ -30681,11 +30692,13 @@ C
           IDNHOF(I)=0
         ENDIF
         IDFONT(I)='SIMP'
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,8202)IDMODE(I)
- 8202   FORMAT('GD LIBRARY--',A4)
-        CALL DPWRST('XXX','BUG ')
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,8202)IDMODE(I)
+ 8202     FORMAT('GD LIBRARY--',A4)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
         GOTO8900
       ELSEIF(IDMANU(I).EQ.'OPGL')THEN
         IDCONT(I)='ON'
@@ -30703,11 +30716,13 @@ C
           IDNVOF(I)=125
           IDNHOF(I)=0
         ENDIF
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,8302)
- 8302   FORMAT('OPEN-GL (BASED ON f90gl)')
-        CALL DPWRST('XXX','BUG ')
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,8302)
+ 8302     FORMAT('OPEN-GL (BASED ON f90gl)')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
         GOTO8900
       ELSEIF(IDMANU(I).EQ.'ABSO')THEN
         IDCONT(I)='ON'
@@ -30730,11 +30745,13 @@ C
           IDNVOF(I)=0
           IDNHOF(I)=0
         ENDIF
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,5102)
- 5102   FORMAT('ABSOFT (=PLPLOT) LIBRARY)')
-        CALL DPWRST('XXX','BUG ')
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,5102)
+ 5102     FORMAT('ABSOFT (=PLPLOT) LIBRARY)')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
         GOTO8900
       ELSEIF(IDMANU(I).EQ.'LATE' .OR. IDMANU(I).EQ.'EEPI')THEN
 C
@@ -30773,7 +30790,7 @@ C
           IDNHPP(I)=6.25*ADOTPI
           IDNVPP(I)=(6.25*ADOTPI)*(8.5/11.0)
         ENDIF
-        IF(IFLAG9.EQ.0)THEN
+        IF(IFLAG9.EQ.0 .AND. IFEEDB.EQ.'ON')THEN
           WRITE(ICOUT,999)
           CALL DPWRST('XXX','BUG ')
           WRITE(ICOUT,8402)IDMODE(I)
@@ -30890,20 +30907,22 @@ C
         IDNVOF(I)=0
         IDNHOF(I)=0
       ENDIF
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      IF(IDMANU(I).EQ.'AQUA')THEN
-        WRITE(ICOUT,8612)
- 8612   FORMAT('AQUATERM (FOR MAC OSX)')
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
-      ELSEIF(IDMANU(I).EQ.'SVG')THEN
-        WRITE(ICOUT,8613)
- 8613   FORMAT('SCALABLE VECTOR GRAPHICS (SVG)')
-        CALL DPWRST('XXX','BUG ')
-      ELSEIF(IDMANU(I).EQ.'CAIR')THEN
-        WRITE(ICOUT,8615)IDMODE(I)
- 8615   FORMAT('CAIRO (',A4,')')
-        CALL DPWRST('XXX','BUG ')
+        IF(IDMANU(I).EQ.'AQUA')THEN
+          WRITE(ICOUT,8612)
+ 8612     FORMAT('AQUATERM (FOR MAC OSX)')
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(IDMANU(I).EQ.'SVG')THEN
+          WRITE(ICOUT,8613)
+ 8613     FORMAT('SCALABLE VECTOR GRAPHICS (SVG)')
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(IDMANU(I).EQ.'CAIR')THEN
+          WRITE(ICOUT,8615)IDMODE(I)
+ 8615     FORMAT('CAIRO (',A4,')')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
       ENDIF
       GOTO8900
 C

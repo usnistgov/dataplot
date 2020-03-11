@@ -1,0 +1,27 @@
+. This is dataplot macro     write_conditions_bottom.dp     4/12/19
+. Purpose: Write conditions out across bottom of page
+. Date: 4/12/19
+. Input:
+.    k                                (parameter) = number of factors
+.    stcosh1, stcosh2, . . . stcosh^k (strings)   = (short) condition names names
+.
+. Output:
+.    Conditions written out across bottom of page
+.
+. -----start point-----
+.
+if stcosh1 exists
+   let yp = 11
+   let xp0 = 8
+   let xpdel = 8
+   let xp = xp0 - xpdel
+   .
+   just left; hw 2 1; color blue
+   loop for jcond = 1 1 ndcond
+      let xp = xp + xpdel
+      move xp yp; text ^jcond: ^stcosh^jcond
+   end loop
+end if
+.
+delete xp0 xpdel xp yp
+.

@@ -1,0 +1,262 @@
+. This is dataplot macro     sarkar71_sub.dp   macro for plot analysis     4/3/19
+. Purpose: dex scatter and mean plots
+. Date: 4/3/19
+. Input (requied):
+.   y (vector) = response
+.   jresp (parameter) = id of the response variable used (in a multi-response system)
+.   prot (vector) = bio-image analysis protocol id (^ndprot = 2**(8-2) levels)
+.   cond (vector) = the condition of the sample cells being imaged (^ndcond levels)
+.   image (vector) = the image id of the cells (^ndimage pictures thus ^ndimage levels)
+.
+. Input (optional):
+.
+. Output:
+.    3+3+^ndcond*3 = 42 pages of plots
+
+. -----start point-----
+.
+let dprot = distinct prot
+let ndprot = number dprot
+.
+let dcond = distinct cond
+let ndcond = number dcond
+.
+let dimage = distinct image
+let ndimage = number dimage
+.
+. -----Step 11: For all data, scatter plot vs protocol (64)-----
+.
+let string stcorn1 = Y^jresp:
+let string stcorn2 = ^stysh^jresp
+let string stcorn3 = All Cond.
+let string corncol = ^darkgree
+.
+let string header2 = Q. Are the ^ndprot Protocols equivalent?
+let string header3 = Scatter Plot
+y1label ^sty
+x1label Image Analysis Protocol (^ndprot)
+char X all
+plot y prot prot
+.
+delete q
+call get_write_n_mean.dp
+anova y prot
+call get_anova_fcdf.dp
+color blue; if fstatcdf >= 95; color red; end if
+move 16 84; just left; hw 2.4 1.2; text ANOVA Fcdf = ^fcdfr3%; color blue
+call upperleft.dp
+call annotate.dp
+.
+. -----Step 12: For all data, scatter plot vs cell condition (11)-----
+.
+let string header2 = Q. Are the ^ndcond Cell Conditions equivalent?
+let string header3 = Scatter Plot
+char X all
+y1label ^sty
+x1label Cell Condition (^ndcond)
+plot y cond cond
+.
+delete q
+call get_write_n_mean.dp
+anova y prot
+call get_anova_fcdf.dp
+color blue; if fstatcdf >= 95; color red; end if
+move 16 84; just left; hw 2.4 1.2; text ANOVA Fcdf = ^fcdfr3%; color blue
+call upperleft.dp
+call annotate.dp
+.
+. -----Step 13: For all data, scatter plot vs images (10 => 50)-----
+.
+let string header2 = Q. Are the ^ndimage Images equivalent?
+let string header3 = Scatter Plot
+char X all
+y1label ^sty
+x1label Image (^ndimage)
+plot y image image
+.
+delete q
+call get_write_n_mean.dp
+anova y prot
+call get_anova_fcdf.dp
+color blue; if fstatcdf >= 95; color red; end if
+move 16 84; just left; hw 2.4 1.2; text ANOVA Fcdf = ^fcdfr3%; color blue
+call upperleft.dp
+call annotate.dp
+.
+. -----Step 21: For all data, Main effects plot vs protocol (64) & cell condition (11)
+.
+let string header2 = Q. What is the Relative Importance of Protocol (^ndprot) & Cell Condition (^ndcond)?
+let string header3 = Scatter Plot
+y1label Mean ^sty
+x1label Image Analysis Protocol (^ndprot) & Cell Condition (^ndcond)
+xlim 0 3; major x1tic number 4; minor x1tic number 0
+char X bl; lines solid dotted
+dex mean plot y prot cond
+.
+delete q
+call get_write_n_mean.dp
+.
+call upperleft.dp
+call annotate.dp
+xlim ; major x1tic number ; minor x1tic number
+. pause
+.
+. -----Step 22: For all data, Main effects plot vs protocol (64) & cell condition (11) & image (10 => 50)
+.
+let string header2 = Q. What is the Relative Importance of Protocol (^ndprot) & Cell Condition (^ndcond) & Image (^ndimage)?
+let string header3 = Scatter Plot
+y1label Mean ^sty
+x1label Image Analysis Protocol (^ndprot) & Cell Condition (^ndcond) & Image (^ndimage)
+xlim 0 4; major x1tic number 5; minor x1tic number 0
+char X bl; lines solid dotted
+dex mean plot y prot cond image
+.
+delete q
+call get_write_n_mean.dp
+.
+call upperleft.dp
+call annotate.dp
+xlim ; major x1tic number ; minor x1tic number
+. pause
+.
+. -----Step 23: For all data, Main effects plot vs protocol (64) & cell condition (11) & image (10 => 50) & 8 Factors (2)
+.
+let string header2 = Q. What is the Relative Importance of Protocol (^ndprot), Condition (^ndcond), Image (^ndimage), & the 8 Factors (2)?
+let string header3 = Scatter Plot
+y1label Mean ^sty
+x1label Image Analysis Protocol (^ndprot) & Cell Condition (^ndcond) & Image (^ndimage) & Each of 8 Factors (2)
+xlim 0 12; major x1tic number 4; minor x1tic number 0
+char X bl; lines solid dotted
+dex mean plot y prot cond image x1 x2 x3 x4 x5 x6 x7 x8
+.
+delete q
+call get_write_n_mean.dp
+.
+call upperleft.dp
+call annotate.dp
+xlim ; major x1tic number ; minor x1tic number
+. pause
+.
+. -----Step 31: For full data set, generate dex scatter plot and 2 dex mean plots (=> 3 plots)-----
+.
+minor x1tic number 0
+.
+let string header2 = Response = ^stysh^jresp     Scope: All Cell Conditions
+let string stcorn1 = Y^jresp:
+let string stcorn2 = ^stysh^jresp
+let string stcorn3 = All Cond.
+let string corncol = ^darkgree
+.
+x1label Image Analysis Factor (8)
+char X bl; lines solid dotted
+let string header3 = DEX Scatter Plot
+set dex statistics plot interaction 1
+y1label ^sty
+dex scatter plot y x1 to x8
+.
+delete q
+call get_write_n_mean.dp
+call get_write_anova_fcdf_dexmp.dp
+call write_factors_and_settings_upper_right.dp
+call upperleft.dp
+call annotate.dp
+.
+. ---
+.
+. character offset -.5 -.5 all
+let string header3 = Main Effects Plot
+set dex statistics plot interaction 1
+y1label Mean ^sty
+x1label Image Analysis Factor (8)
+dex mean plot y x1 to x8
+.
+delete q
+call get_write_n_mean.dp
+call get_write_anova_fcdf_dexmp.dp
+call write_factors_and_settings_upper_right.dp
+call upperleft.dp
+call annotate.dp
+.
+. ---
+.
+let string header3 = Main Effects Plot & 2-Term Interactions
+set dex statistics plot interaction 2
+y1label Mean ^sty
+x1label Image Analysis Factor (8) & 2-Term Interactions (28)
+dex mean plot y x1 to x8
+.
+move 16 87; just left; hw 2.6 1.3; text n = ^n
+move 84 87; just right; hw 2.6 1.3; text Mean = ^stmr
+print junk.out yplot xplot tagplot
+call draw_dex_vertical_lines.dp
+call write_factors_and_settings_upper_right.dp
+let yp0 = 40; let dp = 4
+call estimate_and_write_effects.dp
+delete yp0
+call upperleft.dp
+call annotate.dp
+set dex statistics plot interaction 1
+.
+. -----Step 32: For each of the ^ndcond cell conditions, generate dex scatter plot and  2 dex mean plots (=> 11*3 = 33 plots)-----
+.
+let dcond = distinct cond
+let ndcond = number dcond
+char X bl; lines solid dotted
+loop for jcond = 1 1 ndcond
+   let string q = subset cond ^jcond
+   let string header2 = Response = ^stysh^jresp     Scope: Cell Condition ^jcond (^stcond^jcond) Only
+   let string stcorn1 = Y^jresp:
+   let string stcorn2 = ^stysh^jresp
+   let string stcorn3 = Cond ^jcond
+   let string corncol = blue
+   let evodd = mod(jcond,2); if evodd = 0; let string corncol = red; end if
+   .
+   let string header3 = DEX Scatter Plot
+   set dex statistics plot interaction 1
+   y1label ^sty
+   x1label Image Analysis Factor (8)
+   dex scatter plot y x1 to x8 ^q
+   .
+   call get_write_n_mean.dp
+   call get_write_anova_fcdf_dexmp.dp
+   call write_factors_and_settings_upper_right.dp
+   call upperleft.dp
+   call annotate.dp
+   .
+   . ---
+   .
+   let string header3 = Main Effects Plot
+   set dex statistics plot interaction 1
+   y1label Mean ^sty
+   x1label Image Analysis Factor (8)
+   dex mean plot y x1 to x8 ^q
+   .
+   call get_write_n_mean.dp
+   call get_write_anova_fcdf_dexmp.dp
+   call write_factors_and_settings_upper_right.dp
+   call upperleft.dp
+   call annotate.dp
+   .
+   . ---
+   .
+   let string header3 = Main Effects Plot & 2-Term Interactions
+   set dex statistics plot interaction 2
+   y1label Mean ^sty
+   x1label Image Analysis Factor (8) & 2-Term Interactions (28)
+   dex mean plot y x1 to x8 ^q
+   .
+   call get_write_n_mean.dp
+   print junk.out yplot xplot tagplot
+   call draw_dex_vertical_lines.dp
+   call write_factors_and_settings_upper_right.dp
+   let yp0 = 40; let dp = 4
+   call estimate_and_write_effects.dp
+   delete yp0
+   call upperleft.dp
+   call annotate.dp
+end loop
+.
+set dex statistics plot interaction 1
+let string header2 = sp()
+let string header3 = sp()
+.

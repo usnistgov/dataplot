@@ -4454,6 +4454,7 @@ C
 CCCCC SAVE ISED1,ISED2,ISED3,ISED4,ISED5,ISED6
 CCCCC SAVE ISED7,ISED8,ISED9,ISED10,ISED11
       SAVE ISDSAV
+      SAVE T
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -4577,16 +4578,16 @@ C               **  GENERATE THE N RANDOM NUMBERS  **
 C               *************************************
 C
       DO300L=1,N
-      K=M(I)-M(J)
-      IF(K.LT.0)K=K+M1
-      M(J)=K
-      I=I-1
-      IF(I.EQ.0)I=17
-      J=J-1
-      IF(J.EQ.0)J=17
-      AK=K
-      AM1=M1
-      X(L)=AK/AM1
+        K=M(I)-M(J)
+        IF(K.LT.0)K=K+M1
+        M(J)=K
+        I=I-1
+        IF(I.EQ.0)I=17
+        J=J-1
+        IF(J.EQ.0)J=17
+        AK=K
+        AM1=M1
+        X(L)=AK/AM1
   300 CONTINUE
 C
 C               *****************************************************
@@ -4648,39 +4649,53 @@ C               **  USING THE LINEAR CONGRUENTIAL  **
 C               **  GENERATOR RUNIF (FROM CMLIB).  **
 C               *************************************
 C
+C     NOTE: THIS GENERATOR DOES NOT HAVE A SEED VALUE.  SO DON'T
+C           CHECK FOR THE SEED.
+C
  2000 CONTINUE
       NSIZE=32
       NSTRT=1
 C
 C  INITIALIZE IF NECESSARY
 C
+CCCCC IF(ISED3.EQ.0)THEN
+CCCCC   NSTRT=2
+CCCCC   IF(ISEED.GT.0)THEN
+CCCCC     ISDSAV=ISEED
+CCCCC     X(1)=RUNIF(T,NSIZE)
+CCCCC     ISEED=(-1)
+CCCCC   ELSE
+CCCCC     X(1)=RUNIF(T,NSIZE)
+CCCCC   ENDIF
+CCCCC   ISED3=-1
+CCCCC ELSE
+CCCCC   IF(ISEED.GT.0)THEN
+CCCCC     ISDSAV=ISEED
+CCCCC     X(1)=RUNIF(T,NSIZE)
+CCCCC     ISEED=(-1)
+CCCCC     NSTRT=2
+CCCCC   ENDIF
+CCCCC ENDIF
+C
       IF(ISED3.EQ.0)THEN
         NSTRT=2
-        IF(ISEED.GT.0)THEN
-          ISDSAV=ISEED
-          X(1)=RUNIF(T,NSIZE)
-          ISEED=(-1)
-        ELSE
-          X(1)=RUNIF(T,NSIZE)
-        ENDIF
         ISED3=-1
       ELSE
-        IF(ISEED.GT.0)THEN
-          ISDSAV=ISEED
-          X(1)=RUNIF(T,NSIZE)
-          ISEED=(-1)
-          NSTRT=2
-        ENDIF
+        NSTRT=1
       ENDIF
 C
 C  END OF INITIALIZATION
+C
+      IF(NSTRT.EQ.2)THEN
+        X(1)=RUNIF(T,NSIZE)
+      ENDIF
 C
       IF(NSTRT.LE.N)THEN
         DO2020L=NSTRT,N
           X(L)=RUNIF(T,NSIZE)
  2020   CONTINUE
       ENDIF
-      ISEED=(-1)
+CCCCC ISEED=(-1)
       GOTO9000
 C
 C               **********************************************
@@ -4764,9 +4779,26 @@ C               **  REGISTER (GFSR) GENERATOR RANLP (FROM   **
 C               **  MONOHAM, 2001).                         **
 C               **********************************************
 C
+C     2019/11: ALTHOUGH THIS METHOD DOES NOT UTILIZED A SEED,
+C              DO ALLOW IT TO BE RESET (THIS CAN BE USEFUL FOR
+C              TESTING PURPOSES).
+C
  4000 CONTINUE
+C
+      IRESET=0
+      IF(ISED4.EQ.0)THEN
+        ISED4=-1
+        ISDSAV=ISEED
+      ELSE
+        IF(ISEED.GT.0 .AND. ISDSAV.NE.ISEED)THEN
+          IRESET=1
+          ISDSAV=ISEED
+        ENDIF
+      ENDIF
+C
       DO4020L=1,N
-        X(L)=RANLP(L)
+        X(L)=RANLP(L,IRESET)
+        IRESET=0
  4020 CONTINUE
       GOTO9000
 C
@@ -4778,9 +4810,25 @@ C               **  REGISTER (GFSR) GENERATOR RANFT (FROM   **
 C               **  MONOHAM, 2001).                         **
 C               **********************************************
 C
+C     2019/11: ALTHOUGH THIS METHOD DOES NOT UTILIZED A SEED,
+C              DO ALLOW IT TO BE RESET (THIS CAN BE USEFUL FOR
+C              TESTING PURPOSES).
+C
  5000 CONTINUE
+      IRESET=0
+      IF(ISED5.EQ.0)THEN
+        ISED5=-1
+        ISDSAV=ISEED
+      ELSE
+        IF(ISEED.GT.0 .AND. ISDSAV.NE.ISEED)THEN
+          IRESET=1
+          ISDSAV=ISEED
+        ENDIF
+      ENDIF
+C
       DO5020L=1,N
-        X(L)=RANFT(L)
+        X(L)=RANFT(L,IRESET)
+        IRESET=0
  5020 CONTINUE
       GOTO9000
 C
@@ -4796,7 +4844,7 @@ C
 C
 C  INITIALIZE IF NECESSARY
 C
-      IF(ISED4.EQ.0)THEN
+      IF(ISED6.EQ.0)THEN
         IF(ISEED.GT.0)THEN
           ISDSAV=ISEED
         ELSE
@@ -4813,7 +4861,7 @@ C
         IY=INT(30000.*XTEMP)
         XTEMP=SUNIF(ISEED2)
         IZ=INT(30000.*XTEMP)
-        ISED4=-1
+        ISED6=-1
         ISEED=(-1)
       ELSE
         IF(ISEED.GT.0)THEN
@@ -4860,8 +4908,24 @@ C               **********************************************
 C
  7000 CONTINUE
 C
+C     2019/11: ALTHOUGH THIS METHOD DOES NOT UTILIZED A SEED,
+C              DO ALLOW IT TO BE RESET (THIS CAN BE USEFUL FOR
+C              TESTING PURPOSES).
+C
+      IRESET=0
+      IF(ISED7.EQ.0)THEN
+        ISED7=-1
+        ISDSAV=ISEED
+      ELSE
+        IF(ISEED.GT.0 .AND. ISDSAV.NE.ISEED)THEN
+          IRESET=1
+          ISDSAV=ISEED
+        ENDIF
+      ENDIF
+C
       DO7020L=1,N
-        X(L)=REAL(UNI())
+        X(L)=REAL(UNI(IRESET))
+        IRESET=0
  7020 CONTINUE
       GOTO9000
 C               **********************************************
@@ -4889,7 +4953,7 @@ C
 C
 C  INITIALIZE IF NECESSARY
 C
-      IF(ISED5.EQ.0)THEN
+      IF(ISED8.EQ.0)THEN
         IF(ISEED.GT.0)THEN
           ISDSAV=ISEED
           CALL R250IN(ISEED)
@@ -4897,7 +4961,7 @@ C
         ELSE
           CALL R250IN(ISDSAV)
         ENDIF
-        ISED5=-1
+        ISED8=-1
       ELSE
         IF(ISEED.GT.0)THEN
           ISDSAV=ISEED
@@ -4940,7 +5004,7 @@ C
 C
 C  INITIALIZE IF NECESSARY
 C
-CCCCC IF(ISED6.EQ.0)THEN
+CCCCC IF(ISED10.EQ.0)THEN
 CCCCC   IF(ISEED.GT.0)THEN
 CCCCC     ISDSAV=ISEED
 CCCCC     CALL SGRND(ISEED)
@@ -4949,7 +5013,7 @@ CCCCC   ELSE
 CCCCC     ISEED=ISDSAV
 CCCCC     CALL SGRND(ISEED)
 CCCCC   ENDIF
-CCCCC   ISED6=-1
+CCCCC   ISED10=-1
 CCCCC ELSE
 CCCCC   IF(ISEED.GT.0)THEN
 CCCCC     ISDSAV=ISEED
@@ -7527,6 +7591,54 @@ C                                         SET CONSENSUS MEAN PLOT DATA
 C     UPDATED         --JULY       2019.  SET BOXPLOT SKEWNESS
 C     UPDATED         --AUGUST     2019.  SET ONE SAMPLE PROFICIENCY
 C                                             TEST IDENTIFY LAB
+C     UPDATED         --SEPTEMBER  2019.  SET GREP CASE
+C     UPDATED         --SEPTEMBER  2019.  SET GREP RECURSIVE
+C     UPDATED         --SEPTEMBER  2019.  SET GREP LINE NUMBERS
+C     UPDATED         --SEPTEMBER  2019.  SET GREP EXACT MATCH
+C     UPDATED         --SEPTEMBER  2019.  SET GREP NO MATCH
+C     UPDATED         --SEPTEMBER  2019.  SET GREP FILE NAME ONLY
+C     UPDATED         --SEPTEMBER  2019.  SET CAT MORE
+C     UPDATED         --SEPTEMBER  2019.  SET DIR RECURSIVE
+C     UPDATED         --SEPTEMBER  2019.  SET DIR PAUSE
+C     UPDATED         --SEPTEMBER  2019.  SET DIR LONG LISTING
+C     UPDATED         --SEPTEMBER  2019.  SET DIR SORT
+C     UPDATED         --SEPTEMBER  2019.  SET CAT MORE
+C     UPDATED         --SEPTEMBER  2019.  SET STRING VARIABLE
+C     UPDATED         --SEPTEMBER  2019.  SET STRING COMBINE
+C                                               SEPARATOR
+C     UPDATED         --SEPTEMBER  2019.  SET RATIO OF MEANS METHOD
+C     UPDATED         --OCTOBER    2019.  SET DAVID TEST CRITICAL VALUES
+C     UPDATED         --OCTOBER    2019.  SET SKEW OUTLIER TEST CRITICAL
+C                                             VALUES
+C     UPDATED         --OCTOBER    2019.  SET KURTOSIS OUTLIER TEST
+C                                             CRITICAL VALUES
+C     UPDATED         --OCTOBER    2019.  SET READ PERCENT SIGN IGNORE
+C     UPDATED         --OCTOBER    2019.  SET HEAD LINES
+C     UPDATED         --OCTOBER    2019.  SET TAIL LINES
+C     UPDATED         --OCTOBER    2019.  SET GRUBB TEST STANDARD
+C                                             DEVIATION
+C     UPDATED         --OCTOBER    2019.  SET GRUBB TEST DEGREES
+C                                             OF FREEDOM
+C     UPDATED         --OCTOBER    2019.  SET GRUBB TEST CRITICAL VALUES
+C     UPDATED         --NOVEMBER   2019.  SET RANLUX LEVEL
+C     UPDATED         --NOVEMBER   2019.  SET OUTPUT LINE NUNBERS
+C     UPDATED         --NOVEMBER   2019.  SET R PATH
+C     UPDATED         --NOVEMBER   2019.  SET BROWSER HEIGHT
+C     UPDATED         --NOVEMBER   2019.  SET BROWSER WIDTH
+C     UPDATED         --NOVEMBER   2019.  SET LIST VIEWER
+C     UPDATED         --NOVEMBER   2019.  SET LIST NEW WINDOW
+C     UPDATED         --NOVEMBER   2019.  SET HELP NEW WINDOW
+C     UPDATED         --NOVEMBER   2019.  SET EXCEL VIEWER
+C     UPDATED         --NOVEMBER   2019.  SET WORD VIEWER
+C     UPDATED         --NOVEMBER   2019.  SET POWER POINT VIEWER
+C     UPDATED         --DECEMBER   2019.  SET PDF VIEWER
+C     UPDATED         --DECEMBER   2019.  SET IMAGE VIEWER
+C     UPDATED         --DECEMBER   2019.  SET BACKUP VIEWER
+C     UPDATED         --DECEMBER   2019.  SET HOME PATH
+C     UPDATED         --JANUARY    2020.  SET IPLOT JITTER
+C     UPDATED         --FEBRUARY   2020.  SET IZCHNA
+C     UPDATED         --FEBRUARY   2020.  SET WRITE CSV
+C     UPDATED         --FEBRUARY   2020.  SET INSERT OVERWRITE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -8135,6 +8247,167 @@ C
          GOTO9000
       ENDIF
 C
+C               ***************************************
+C               **  CHECK FOR SET PDF        VIEWER  **
+C               ***************************************
+C
+      IPART1='PDF '
+      IPART2='VIEW'
+      IF(NUMARG.GE.2.AND.IHARG(1).EQ.IPART1.AND.
+     1   IHARG(2).EQ.IPART2)THEN
+C
+         IWORD=4
+         IF(IHARG(3).EQ.'=   ')IWORD=5
+         ICASEZ='PDVW'
+         ICMDTI='THE PATH FOR THE PDF VIEWER ='
+         CALL DPEXFN(IANS,IANSLC,ICANS,MAXTMP,IWIDTH,NUMARG,
+     1               ISTRIN,IWORD,ICMDTI,ITEMP,
+     1               ICASEZ,IPDFVW,NCPDVW,
+     1               IBUGS2,ISUBRO,IFOUND,IERROR)
+         GOTO9000
+      ENDIF
+C
+C               ***************************************
+C               **  CHECK FOR SET IMAGE      VIEWER  **
+C               ***************************************
+C
+      IPART1='IMAG'
+      IPART2='VIEW'
+      IF(NUMARG.GE.2.AND.IHARG(1).EQ.IPART1.AND.
+     1   IHARG(2).EQ.IPART2)THEN
+C
+         IWORD=4
+         IF(IHARG(3).EQ.'=   ')IWORD=5
+         ICASEZ='IMVW'
+         ICMDTI='THE PATH FOR THE IMAGE VIEWER ='
+         CALL DPEXFN(IANS,IANSLC,ICANS,MAXTMP,IWIDTH,NUMARG,
+     1               ISTRIN,IWORD,ICMDTI,ITEMP,
+     1               ICASEZ,IIMAVW,NCIMVW,
+     1               IBUGS2,ISUBRO,IFOUND,IERROR)
+         GOTO9000
+      ENDIF
+C
+C               ***************************************
+C               **  CHECK FOR SET BACKUP     VIEWER  **
+C               ***************************************
+C
+      IPART1='BACK'
+      IPART2='VIEW'
+      IF(NUMARG.GE.2.AND.IHARG(1).EQ.IPART1.AND.
+     1   IHARG(2).EQ.IPART2)THEN
+C
+         IWORD=4
+         IF(IHARG(3).EQ.'=   ')IWORD=5
+         ICASEZ='BKVW'
+         ICMDTI='THE PATH FOR THE POSTSCRIPT VIEWER ='
+         CALL DPEXFN(IANS,IANSLC,ICANS,MAXTMP,IWIDTH,NUMARG,
+     1               ISTRIN,IWORD,ICMDTI,ITEMP,
+     1               ICASEZ,IBCKVW,NCBKVW,
+     1               IBUGS2,ISUBRO,IFOUND,IERROR)
+         GOTO9000
+      ENDIF
+C
+C               ***************************************
+C               **  CHECK FOR SET LIST       VIEWER  **
+C               ***************************************
+C
+      IPART1='LIST'
+      IPART2='VIEW'
+      IF(NUMARG.GE.2.AND.IHARG(1).EQ.IPART1.AND.
+     1   IHARG(2).EQ.IPART2)THEN
+C
+         IWORD=4
+         IF(IHARG(3).EQ.'=   ')IWORD=5
+         ICASEZ='LSVW'
+         ICMDTI='THE PATH FOR THE LIST VIEWER ='
+         CALL DPEXFN(IANS,IANSLC,ICANS,MAXTMP,IWIDTH,NUMARG,
+     1               ISTRIN,IWORD,ICMDTI,ITEMP,
+     1               ICASEZ,ILSTVW,NCLSVW,
+     1               IBUGS2,ISUBRO,IFOUND,IERROR)
+         GOTO9000
+      ENDIF
+C
+C               ***************************************
+C               **  CHECK FOR SET EXCEL      VIEWER  **
+C               ***************************************
+C
+      IPART1='EXCE'
+      IPART2='VIEW'
+      IF(NUMARG.GE.2.AND.IHARG(1).EQ.IPART1.AND.
+     1   IHARG(2).EQ.IPART2)THEN
+C
+         IWORD=4
+         IF(IHARG(3).EQ.'=   ')IWORD=5
+         ICASEZ='EXVW'
+         ICMDTI='THE PATH FOR THE EXCEL VIEWER ='
+         CALL DPEXFN(IANS,IANSLC,ICANS,MAXTMP,IWIDTH,NUMARG,
+     1               ISTRIN,IWORD,ICMDTI,ITEMP,
+     1               ICASEZ,IEXCVW,NCEXVW,
+     1               IBUGS2,ISUBRO,IFOUND,IERROR)
+         GOTO9000
+      ENDIF
+C
+C               ***************************************
+C               **  CHECK FOR SET WORD       VIEWER  **
+C               ***************************************
+C
+      IPART1='WORD'
+      IPART2='VIEW'
+      IF(NUMARG.GE.2.AND.IHARG(1).EQ.IPART1.AND.
+     1   IHARG(2).EQ.IPART2)THEN
+C
+         IWORD=4
+         IF(IHARG(3).EQ.'=   ')IWORD=5
+         ICASEZ='WOVW'
+         ICMDTI='THE PATH FOR THE WORD VIEWER ='
+         CALL DPEXFN(IANS,IANSLC,ICANS,MAXTMP,IWIDTH,NUMARG,
+     1               ISTRIN,IWORD,ICMDTI,ITEMP,
+     1               ICASEZ,IWORVW,NCWOVW,
+     1               IBUGS2,ISUBRO,IFOUND,IERROR)
+         GOTO9000
+      ENDIF
+C
+C               ***************************************
+C               **  CHECK FOR SET POWER POINT VIEWER **
+C               ***************************************
+C
+      IPART1='POWE'
+      IPART2='POIN'
+      IPART3='VIEW'
+      IF(NUMARG.GE.2.AND.IHARG(1).EQ.IPART1.AND.
+     1   IHARG(2).EQ.IPART2.AND.IHARG(3).EQ.IPART3)THEN
+C
+         IWORD=5
+         IF(IHARG(3).EQ.'=   ')IWORD=6
+         ICASEZ='PPVW'
+         ICMDTI='THE PATH FOR THE POWER POINT VIEWER ='
+         CALL DPEXFN(IANS,IANSLC,ICANS,MAXTMP,IWIDTH,NUMARG,
+     1               ISTRIN,IWORD,ICMDTI,ITEMP,
+     1               ICASEZ,IPPTVW,NCPPVW,
+     1               IBUGS2,ISUBRO,IFOUND,IERROR)
+         GOTO9000
+      ENDIF
+C
+C               ***************************************
+C               **  CHECK FOR SET LIST     LAUNCHER  **
+C               ***************************************
+C
+      IPART1='LIST'
+      IPART2='LAUN'
+      IF(NUMARG.GE.2.AND.IHARG(1).EQ.IPART1.AND.
+     1   IHARG(2).EQ.IPART2)THEN
+C
+         IWORD=4
+         IF(IHARG(3).EQ.'=   ')IWORD=5
+         ICASEZ='LSLA'
+         ICMDTI='THE PATH FOR THE LIST LAUNCHER ='
+         CALL DPEXFN(IANS,IANSLC,ICANS,MAXTMP,IWIDTH,NUMARG,
+     1               ISTRIN,IWORD,ICMDTI,ITEMP,
+     1               ICASEZ,ILSTLA,NCLSLA,
+     1               IBUGS2,ISUBRO,IFOUND,IERROR)
+         GOTO9000
+      ENDIF
+C
 C               *********************************************
 C               **  TREAT THE    SET BROWSER        CASE   **
 C               *********************************************
@@ -8495,6 +8768,46 @@ C
         GOTO5160
       ENDIF
 C
+CCCCC THE FOLLOWING SECTION WAS ADDED        NOVEMBER 2019.
+C     **************************************************
+C     **  SET LIST NEW WINDOW           <ON/OFF>      **
+C     **************************************************
+C
+      IPART1='LIST'
+      IPART2='NEW '
+      IPART3='WIND'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'ON' .OR. IHV(1:3).EQ.'YES' .OR.
+     1     IHV.EQ.'TRUE')THEN
+          ILSTNW='ON'
+        ELSE
+          ILSTNW='OFF'
+        ENDIF
+        IHV=ILSTNW
+        GOTO5160
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        NOVEMBER 2019.
+C     **************************************************
+C     **  SET HELP NEW WINDOW           <ON/OFF>      **
+C     **************************************************
+C
+      IPART1='HELP'
+      IPART2='NEW '
+      IPART3='WIND'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'ON' .OR. IHV(1:3).EQ.'YES' .OR.
+     1     IHV.EQ.'TRUE')THEN
+          IHLPNW='ON'
+        ELSE
+          IHLPNW='OFF'
+        ENDIF
+        IHV=IHLPNW
+        GOTO5160
+      ENDIF
+C
 CCCCC THE FOLLOWING SECTION WAS ADDED        JUNE 2016.
 C     ******************************************
 C     **  SET STATUS DISTINCT <ON/OFF>        **
@@ -8649,6 +8962,25 @@ C
         ENDIF
         IHV=IPYTVR
         GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED NOVEMBER  2019
+C               ***********************************************
+C               **  TREAT THE    SET R           PATH CASE   **
+C               ***********************************************
+C
+      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'R   '.AND.
+     1   IHARG(2).EQ.'PATH')THEN
+C
+         IWORD=4
+         IF(IHARG(3).EQ.'=   ')IWORD=5
+         ICASEZ='RPAT'
+         ICMDTI='THE R PATH HAS BEEN SET TO'
+         CALL DPEXFN(IANS,IANSLC,ICANS,MAXTMP,IWIDTH,NUMARG,
+     1               ISTRIN,IWORD,ICMDTI,ITEMP,
+     1               ICASEZ,IRRRPA,NCRPAT,
+     1               IBUGS2,ISUBRO,IFOUND,IERROR)
+         GOTO9000
       ENDIF
 C
 CCCCC FOLLOWING SECTION ADDED MARCH  2019
@@ -10095,6 +10427,29 @@ C
         GOTO5160
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED OCTOBER 2019.
+C     *************************************************************
+C     **  SET READ PERCENT SIGN IGNORE <ON/OFF>                  **
+C     *************************************************************
+C
+      IPART1='READ'
+      IPART2='PERC'
+      IPART3='SIGN'
+      IPART4='IGNO'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'TRUE')THEN
+          IHV='ON'
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'FALS' .OR.
+     1         IHV.EQ.'DEFA')THEN
+          IHV='OFF'
+        ELSE
+          IHV='OFF'
+        ENDIF
+        IREAPC=IHV
+        GOTO5160
+      ENDIF
+C
 CCCCC FOLLOWING SECTION ADDED APRIL 2017.
 C     *************************************************************
 C     **  SET READ TRAILING PLUS MINUS IGNORE <ON/OFF>           **
@@ -10183,6 +10538,28 @@ C
           IREAMC(1:4)=IHARG(5)
           IREAMC(5:8)=IHARG2(5)
         ENDIF
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED NOVEMBER 2019.
+C     *************************************************************
+C     **  SET OUTPUT LINE NUMBERS      <ON/OFF>                  **
+C     *************************************************************
+C
+      IPART1='OUTP'
+      IPART2='LINE'
+      IPART3='NUMB'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'TRUE')THEN
+          IHV='ON'
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'FALS' .OR.
+     1         IHV.EQ.'DEFA')THEN
+          IHV='OFF'
+        ELSE
+          IHV='OFF'
+        ENDIF
+        IOUTLN=IHV
         GOTO5160
       ENDIF
 C
@@ -11943,6 +12320,93 @@ C
         GOTO9000
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED FEBRUARY 2020.
+C     ***********************************************************
+C     **  SET EXCEL SHEET <NAME>                               **
+C     ***********************************************************
+C
+      IPART1='EXCE'
+      IPART2='SHEE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'NO' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'FALS')THEN
+          IEXCSH='SHEET1'
+        ELSEIF(IHV.EQ.'YES' .OR. IHV.EQ.'ON' .OR. IHV.EQ.'TRUE' .OR.
+     1         IHV.EQ.'DEFA')THEN
+          IEXCSH='SHEET1'
+        ELSE
+          IEXCSH(1:4)=IHV
+          IEXCSH(5:8)=IHV2
+        ENDIF
+        IFOUND='YES'
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,55371)IEXCSH
+55371     FORMAT('THE EXCEL SHEET NAME HAS BEEN SET TO ',A8)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED FEBRUARY 2020.
+C     ***********************************************************
+C     **  SET EXCEL COLUMN LIST <VAR-NAME>                     **
+C     ***********************************************************
+C
+      IPART1='EXCE'
+      IPART2='COLU'
+      IPART3='LIST'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'NO' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'FALS')THEN
+          IEXCCL='NULL'
+        ELSEIF(IHV.EQ.'YES' .OR. IHV.EQ.'ON' .OR. IHV.EQ.'TRUE' .OR.
+     1         IHV.EQ.'DEFA')THEN
+          IEXCCL='NULL'
+        ELSE
+          IEXCCL(1:4)=IHV
+          IEXCCL(5:8)=IHV2
+        ENDIF
+        IFOUND='YES'
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,55373)IEXCCL
+55373     FORMAT('THE EXCEL COLUMN LIST VARIABLE HAS BEEN SET TO ',A8)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED FEBRUARY 2020.
+C     ***********************************************************
+C     **  SET EXCEL NUMBER OF ROWS <VALUE>                     **
+C     ***********************************************************
+C
+      IPART1='EXCE'
+      IPART2='NUMB'
+      IPART3='OF  '
+      IPART4='ROWS'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(IHV.EQ.'NO' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'FALS')THEN
+          IEXCNR=-1
+          IV=-1
+        ELSEIF(IHV.EQ.'YES' .OR. IHV.EQ.'ON' .OR. IHV.EQ.'TRUE' .OR.
+     1         IHV.EQ.'DEFA')THEN
+          IEXCNR=-1
+          IV=-1
+        ELSEIF(NUMARG.LT.5)THEN
+          IEXCNR=-1
+          IV=-1
+        ELSE
+          IV=IARG(5)
+          IF(IV.LT.1)IV=-1
+          IEXCNR=IV
+        ENDIF
+        GOTO5150
+      ENDIF
+C
 CCCCC FOLLOWING SECTION ADDED SEPTEMBER  2012
 C     *************************************************************
 C     **  SET FIELD <ICOL> TYPE <NUMERIC/CHARACTER>              **
@@ -12160,6 +12624,27 @@ C
           IHV='ON'
         ENDIF
         ILODPC=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED FEBRUARY  2020
+C     *************************************************************
+C     **  SET INSERT OVERWRITE     <ON/OFF>                      **
+C     *************************************************************
+C
+      IPART1='INSE'
+      IPART2='OVER'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'TRUE' .OR.
+     1     IHV.EQ.'DEFA')THEN
+          IHV='ON'
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE' .OR.
+     1         IHV.EQ.'FALS')THEN
+          IHV='OFF'
+        ELSE
+          IHV='ON'
+        ENDIF
+        IINSOW=IHV
         GOTO5160
       ENDIF
 C
@@ -14201,6 +14686,309 @@ C
         ENDIF
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2019
+C     *****************************************************
+C     **  SET GREP CASE <IGNORE/NOIGNORE>                **
+C     *****************************************************
+C
+      IPART1='GREP'
+      IPART2='CASE'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        IF(NUMARG.EQ.2 .OR. IHARG(3).EQ.'IGNO' .OR.
+     1     IHARG(3).EQ.'OFF ' .OR. IHARG(3).EQ.'NO  ' .OR.
+     1     IHARG(3).EQ.'FALS' .OR. IHARG(3).EQ.'DEFA')THEN
+          IGRPCA='IGNO'
+          IHV=IGRPCA
+          GOTO5160
+        ELSEIF(IHARG(3).EQ.'ON  ' .OR. IHARG(3).EQ.'YES ' .OR.
+     1     IHARG(3).EQ.'TRUE' .OR. IHARG(3).EQ.'NOIG')THEN
+          IGRPCA='NOIG'
+          IHV=IGRPCA
+          GOTO5160
+        ELSE
+          IGRPCA='NOIG'
+          IHV=IGRPCA
+          GOTO5160
+        ENDIF
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2019
+C     *****************************************************
+C     **  SET GREP RECURSIVE <ON/OFF>                    **
+C     *****************************************************
+C
+      IPART1='GREP'
+      IPART2='RECU'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'FALS')THEN
+          IGRPRE='OFF'
+        ELSE
+          IGRPRE='ON'
+        ENDIF
+        IHV=IGRPRE
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2019
+C     *****************************************************
+C     **  SET GREP LINE NUMBERS <ON/OFF>                 **
+C     *****************************************************
+C
+      IPART1='GREP'
+      IPART2='LINE'
+      IPART3='NUMB'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'FALS')THEN
+          IGRPLN='OFF'
+        ELSE
+          IGRPLN='ON'
+        ENDIF
+        IHV=IGRPLN
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2019
+C     *****************************************************
+C     **  SET GREP EXACT MATCH <ON/OFF>                  **
+C     *****************************************************
+C
+      IPART1='GREP'
+      IPART2='EXAC'
+      IPART3='MATC'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'FALS')THEN
+          IGRPEM='OFF'
+        ELSE
+          IGRPEM='ON'
+        ENDIF
+        IHV=IGRPEM
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2019
+C     *****************************************************
+C     **  SET GREP NO    MATCH <ON/OFF>                  **
+C     *****************************************************
+C
+      IPART1='GREP'
+      IPART2='NO  '
+      IPART3='MATC'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'FALS')THEN
+          IGRPNM='OFF'
+        ELSE
+          IGRPNM='ON'
+        ENDIF
+        IHV=IGRPNM
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2019
+C     *****************************************************
+C     **  SET GREP FILE NAME ONLY <ON/OFF>               **
+C     *****************************************************
+C
+      IPART1='GREP'
+      IPART2='FILE'
+      IPART3='NAME'
+      IPART4='ONLY'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4)THEN
+        IF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'FALS')THEN
+          IGRPFN='OFF'
+        ELSE
+          IGRPFN='ON'
+        ENDIF
+        IHV=IGRPFN
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2019
+C     *****************************************************
+C     **  SET DIR PAUSE <ON/OFF>                         **
+C     *****************************************************
+C
+      IPART1='DIR '
+      IPART2='PAUS'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'FALS')THEN
+          IDIRPA='OFF'
+        ELSE
+          IDIRPA='ON'
+        ENDIF
+        IHV=IDIRPA
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2019
+C     *****************************************************
+C     **  SET DIR LONG LISTING <ON/OFF>                  **
+C     *****************************************************
+C
+      IPART1='DIR '
+      IPART2='LONG'
+      IPART3='LIST'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'FALS')THEN
+          IDIRLL='OFF'
+        ELSE
+          IDIRLL='ON'
+        ENDIF
+        IHV=IDIRLL
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2019
+C     *****************************************************
+C     **  SET DIR RECURSIVE <ON/OFF>                     **
+C     *****************************************************
+C
+      IPART1='DIR '
+      IPART2='RECU'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'FALS')THEN
+          IDIRRE='OFF'
+        ELSE
+          IDIRRE='ON'
+        ENDIF
+        IHV=IDIRRE
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2019
+C     *****************************************************
+C     **  SET DIR SORT <ALPHA/SIZE/DATE>                 **
+C     *****************************************************
+C
+      IPART1='DIR '
+      IPART2='SORT'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'SIZE')THEN
+          IDIRSO='SIZE'
+        ELSEIF(IHV.EQ.'DATE')THEN
+          IDIRSO='DATE'
+        ELSE
+          IDIRSO='ALPH'
+        ENDIF
+        IHV=IDIRSO
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2019
+C     *****************************************************
+C     **  SET CAT MORE  <ON/OFF>                         **
+C     *****************************************************
+C
+      IPART1='CAT '
+      IPART2='MORE'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'FALS')THEN
+          ICATMO='OFF'
+        ELSE
+          ICATMO='ON'
+        ENDIF
+        IHV=ICATMO
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2019
+C     *****************************************************
+C     **  SET STRING VARIABLE  <APPEND/OVERWRITE>        **
+C     *****************************************************
+C
+      IPART1='STRI '
+      IPART2='VARI'
+      IPART3='CHAR '
+      IF((IHARG(1).EQ.IPART1 .OR. IHARG(1).EQ.IPART3) .AND.
+     1    IHARG(2).EQ.IPART2)THEN
+        IF(IHARG(3).EQ.'OVER')THEN
+          ISTRVA='OVER'
+        ELSE
+          ISTRVA='APPE'
+        ENDIF
+        IHV=ISTRVA
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2019
+C     *****************************************************
+C     **  SET STRING COMBINE SEPARATOR  <VALUE>          **
+C     *****************************************************
+C
+      IPART1='STRI'
+      IPART2='COMB'
+      IPART3='SEPA'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(NUMARG.LE.3 .OR. IHARG(4).EQ.'    ')THEN
+          ISTRCS='SP()'
+        ELSEIF(IHARG(4).EQ.'DEFA' .OR. IHARG(4).EQ.'ON  ' .OR.
+     1         IHARG(4).EQ.'YES ' .OR. IHARG(4).EQ.'TRUE' .OR.
+     1         IHARG(4).EQ.'NO  ' .OR. IHARG(4).EQ.'FALS' .OR.
+     1         IHARG(4).EQ.'OFF ')THEN
+          ISTRCS='SP()'
+        ELSE
+          ISTRCS=IHARG(4)
+        ENDIF
+        IHV=ISTRCS
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2019
+C     *****************************************************
+C     **  SET RATIO OF MEANS METHOD                      **
+C     **      <FIELLER/LOG RATIO/LARGE SAMPLE>           **
+C     *****************************************************
+C
+      IPART1='RATI'
+      IPART2='OF  '
+      IPART3='MEAN'
+      IPART4='METH'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4)THEN
+        IF(IHARG(5).EQ.'LARG' .AND. IHARG(6).EQ.'SAMP')THEN
+          IRATME='LSAM'
+        ELSEIF(IHARG(5).EQ.'LOG ' .AND. IHARG(6).EQ.'RATI')THEN
+          IRATME='LRAT'
+        ELSE
+          IRATME='FIEL'
+        ENDIF
+        IHV=IRATME
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER 2019
+C     *****************************************************
+C     **  SET DAVID TEST CRITIVAL VALUES                 **
+C     **      <ASTM/DAVID/SIMULATION/FORMULA>            **
+C     *****************************************************
+C
+      IPART1='DAVI'
+      IPART2='TEST'
+      IPART3='CRIT'
+      IPART4='VALU'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4)THEN
+        IF(IHARG(5).EQ.'ASTM' .OR. IHARG(5).EQ.'E178')THEN
+          IDAVTA='ASTM'
+        ELSEIF(IHARG(5).EQ.'DAVI' .OR. IHARG(5).EQ.'HART' .OR.
+     1         IHARG(5).EQ.'PEAR')THEN
+          IDAVTA='DAVI'
+        ELSEIF(IHARG(5).EQ.'SIMU')THEN
+          IDAVTA='SIMU'
+        ELSEIF(IHARG(5).EQ.'FORM')THEN
+          IDAVTA='FORM'
+        ELSE
+          IDAVTA='ASTM'
+        ENDIF
+        IHV=IDAVTA
+        GOTO5160
+      ENDIF
+C
 CCCCC FOLLOWING SECTION ADDED JULY   2017
 C     **********************************************************
 C     **  SET BLAND ALTMAN PLOT STATISTIC <MEAN/MEDIAN>       **
@@ -14218,6 +15006,50 @@ C
           IHV='MEAN'
         ENDIF
         IBAPST=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER 2019
+C     **************************************************************
+C     **  SET SKEW OUTLIER TEST CRITICAL VALUES <ASTM/SIMULATION> **
+C     **************************************************************
+C
+      IPART1='SKEW'
+      IPART2='OUTL'
+      IPART3='TEST'
+      IPART4='CRIT'
+      IPART5='VALU'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4 .AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IF(IHARG(6).EQ.'SIMU')THEN
+          ISKOTA='SIMU'
+        ELSE
+          ISKOTA='ASTM'
+        ENDIF
+        IHV=ISKOTA
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER 2019
+C     ******************************************************************
+C     **  SET KURTOSIS OUTLIER TEST CRITICAL VALUES <ASTM/SIMULATION> **
+C     ******************************************************************
+C
+      IPART1='KURT'
+      IPART2='OUTL'
+      IPART3='TEST'
+      IPART4='CRIT'
+      IPART5='VALU'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4 .AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IF(IHARG(6).EQ.'SIMU')THEN
+          IKUOTA='SIMU'
+        ELSE
+          IKUOTA='ASTM'
+        ENDIF
+        IHV=IKUOTA
         GOTO5160
       ENDIF
 C
@@ -15990,6 +16822,66 @@ C
         GOTO5160
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED DECEMBER  2019
+C     ******************************************************
+C     **  SET HOME PATH      <ON/OFF>                     **
+C     ******************************************************
+C
+      IPART1='HOME'
+      IPART2='PATH'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'TRUE')THEN
+          IHV='ON'
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE' .OR.
+     1         IHV.EQ.'FALS' .OR. IHV.EQ.'DEFA')THEN
+          IHV='OFF'
+        ELSE
+          IHV='OFF'
+        ENDIF
+        IHOMPA=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JANUARY  2020
+C     ******************************************************
+C     **  SET IPLOT JITTER   <ON/OFF>                     **
+C     ******************************************************
+C
+      IPART1='IPLO'
+      IPART2='JITT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'TRUE')THEN
+          IHV='ON'
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE' .OR.
+     1         IHV.EQ.'FALS' .OR. IHV.EQ.'DEFA')THEN
+          IHV='OFF'
+        ELSE
+          IHV='OFF'
+        ENDIF
+        IIPLJI=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED FEBRUARY  2020
+C     ******************************************************
+C     **  SET WRITE CSV      <ON/OFF>                     **
+C     ******************************************************
+C
+      IPART1='WRIT'
+      IPART2='CSV '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'TRUE')THEN
+          IHV='ON'
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE' .OR.
+     1         IHV.EQ.'FALS' .OR. IHV.EQ.'DEFA')THEN
+          IHV='OFF'
+        ELSE
+          IHV='OFF'
+        ENDIF
+        ICSVWR=IHV
+        GOTO5160
+      ENDIF
+C
 CCCCC FOLLOWING SECTION ADDED FEBRUARY  2018
 C     ******************************************************
 C     **  SET DEX ORDERED PLOT UNCERTAINTY <ON/OFF>       **
@@ -16787,6 +17679,144 @@ C
         GOTO5170
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED OCTOBER       2019
+C     **********************************************
+C     **  SET GRUBB STANDARD DEVIATION <VALUE>    **
+C     **********************************************
+C
+      IPART1='GRUB'
+      IPART2='STAN'
+      IPART3='DEVI'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'DEFA')THEN
+          AV=CPUMIN
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          AV=CPUMNIN
+        ENDIF
+        PGRUSD=AV
+        GOTO5170
+      ENDIF
+      IPART2='SD  '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'DEFA')THEN
+          AV=CPUMIN
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          AV=CPUMNIN
+        ENDIF
+        PGRUSD=AV
+        GOTO5170
+      ENDIF
+C
+      IPART1='GRUB'
+      IPART2='TEST'
+      IPART3='STAN'
+      IPART4='DEVI'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'DEFA')THEN
+          AV=CPUMIN
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          AV=CPUMNIN
+        ENDIF
+        PGRUSD=AV
+        GOTO5170
+      ENDIF
+      IPART3='SD  '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'DEFA')THEN
+          AV=CPUMIN
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          AV=CPUMNIN
+        ENDIF
+        PGRUSD=AV
+        GOTO5170
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER       2019
+C     **********************************************
+C     **  SET GRUBB DEGREES OF FREEDOM <VALUE>    **
+C     **********************************************
+C
+      IPART1='GRUB'
+      IPART2='DEGR'
+      IPART3='OF  '
+      IPART4='FREE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'DEFA')THEN
+          AV=CPUMIN
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          AV=CPUMNIN
+        ENDIF
+        PGRUDF=AV
+        GOTO5170
+      ENDIF
+      IPART2='DF  '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'DEFA')THEN
+          AV=CPUMIN
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          AV=CPUMNIN
+        ENDIF
+        PGRUDF=AV
+        GOTO5170
+      ENDIF
+C
+      IPART1='GRUB'
+      IPART2='TEST'
+      IPART3='DEGR'
+      IPART4='OF  '
+      IPART5='FREE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'DEFA')THEN
+          AV=CPUMIN
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          AV=CPUMNIN
+        ENDIF
+        PGRUDF=AV
+        GOTO5170
+      ENDIF
+      IPART3='DF  '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'DEFA')THEN
+          AV=CPUMIN
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          AV=CPUMNIN
+        ENDIF
+        PGRUDF=AV
+        GOTO5170
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER 2019
+C     *****************************************************
+C     **  SET GRUBB TEST CRITIVAL VALUES                 **
+C     **      <SIMULATION/FORMULA/ASTM>                  **
+C     *****************************************************
+C
+      IPART1='GRUB'
+      IPART2='TEST'
+      IPART3='CRIT'
+      IPART4='VALU'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4)THEN
+        IF(IHARG(5).EQ.'ASTM' .OR. IHARG(5).EQ.'E178')THEN
+          IGRUTA='ASTM'
+        ELSEIF(IHARG(5).EQ.'SIMU')THEN
+          IGRUTA='SIMU'
+        ELSEIF(IHARG(5).EQ.'FORM')THEN
+          IGRUTA='FORM'
+        ELSE
+          IGRUTA='FORM'
+        ENDIF
+        IHV=IGRUTA
+        GOTO5160
+      ENDIF
+C
 CCCCC FOLLOWING SECTION ADDED APRIL         2019
 C     **************************************************
 C     **  SET AUXILLARY FILES DECIMAL POINTS <VALUE>  **
@@ -16808,6 +17838,108 @@ C
         IF(IV.LE.0)IV=7
         IF(IV.GE.14)IV=14
         IAUXDP=IV
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER       2019
+C     **************************************************
+C     **  SET HEAD LINES <VALUE>                      **
+C     **************************************************
+C
+      IPART1='HEAD'
+      IPART2='LINE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'DEFA')THEN
+          IV=10
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          IV=10
+        ELSEIF(NUMARG.LE.2)THEN
+          IV=10
+        ENDIF
+        IF(IV.LE.0)IV=10
+        IHEALI=IV
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER       2019
+C     **************************************************
+C     **  SET TAIL LINES <VALUE>                      **
+C     **************************************************
+C
+      IPART1='TAIL'
+      IPART2='LINE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'DEFA')THEN
+          IV=10
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          IV=10
+        ELSEIF(NUMARG.LE.2)THEN
+          IV=10
+        ENDIF
+        IF(IV.LE.0)IV=10
+        ITAILI=IV
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED NOVEMBER      2019
+C     **************************************************
+C     **  SET BROWSER HEIGHT <VALUE>                  **
+C     **************************************************
+C
+      IPART1='BROW'
+      IPART2='HEIG'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'DEFA')THEN
+          IV=0
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          IV=0
+        ELSEIF(NUMARG.LE.2)THEN
+          IV=0
+        ENDIF
+        IF(IV.LE.100)IV=0
+        IF(IV.GT.2000)IV=0
+        IBROHE=IV
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED NOVEMBER      2019
+C     **************************************************
+C     **  SET BROWSER WIDTH  <VALUE>                  **
+C     **************************************************
+C
+      IPART1='BROW'
+      IPART2='WIDT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'DEFA')THEN
+          IV=0
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          IV=0
+        ELSEIF(NUMARG.LE.2)THEN
+          IV=0
+        ENDIF
+        IF(IV.LE.100)IV=0
+        IF(IV.GT.2000)IV=0
+        IBROWI=IV
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED NOVEMBER      2019
+C     **************************************************
+C     **  SET RANLUX LEVEL <1/2/3/4>                  **
+C     **************************************************
+C
+      IPART1='RANL'
+      IPART2='LEVE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'DEFA')THEN
+          IV=3
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          IV=3
+        ELSEIF(NUMARG.LE.2)THEN
+          IV=3
+        ENDIF
+        IF(IV.LE.0 .OR. IV.GE.5)IV=3
+        IRLXLE=IV
         GOTO5150
       ENDIF
 C
@@ -23187,6 +24319,13 @@ C
       IF(IHARG(1).EQ.IPART1.AND.IHARG2(1).EQ.IPART2)IPL2NA=ISTRIN
       IF(IHARG(1).EQ.IPART1.AND.IHARG2(1).EQ.IPART2)GOTO5370
 C
+C     2020/02: ALLOW USER TO SPECIFY NAME OF CHARACTER DATA FILE
+C
+      IPART1='IZCH'
+      IPART2='NA  '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG2(1).EQ.IPART2)IZCHNA=ISTRIN
+      IF(IHARG(1).EQ.IPART1.AND.IHARG2(1).EQ.IPART2)GOTO5370
+C
 C ..........
 C
       IPART1='IMES'
@@ -26426,7 +27565,7 @@ C
      1                  IREARW,IWRIRW,NPLOTP,IPRITY,
      1                  IUNFOF,IUNFNR,IUNFMC,IMACRO,IMALEV,
      1                  IANSLO,ILOOST,ILOOLI,
-     1                  NUMIF,
+     1                  NUMIF,ISEED,
      1                  IFOUND,IERROR)
 C
 C     PURPOSE--PROBE AND WRITE OUT THE VALUE
@@ -27152,6 +28291,66 @@ C     UPDATED         --APRIL      2019.  PROBE READ ASTERISK IGNORE
 C     UPDATED         --JULY       2019.  PROBE BOXPLOT FENCE SKEWNESS
 C     UPDATED         --AUGUST     2019.  PROBE ONE SAMPLE PROFICIENCY
 C                                               TEST IDENTIFY LAB
+C     UPDATED         --SEPTEMBER  2019.  PROBE GREP CASE
+C     UPDATED         --SEPTEMBER  2019.  PROBE GREP RECURSIVE
+C     UPDATED         --SEPTEMBER  2019.  PROBE GREP LINE NUMBERS
+C     UPDATED         --SEPTEMBER  2019.  PROBE GREP EXACT MATCH
+C     UPDATED         --SEPTEMBER  2019.  PROBE GREP NO MATCH
+C     UPDATED         --SEPTEMBER  2019.  PROBE GREP FILE NAME ONLY
+C     UPDATED         --SEPTEMBER  2019.  PROBE DIR RECURSIVE
+C     UPDATED         --SEPTEMBER  2019.  PROBE DIR PAUSE
+C     UPDATED         --SEPTEMBER  2019.  PROBE DIR LONG LISTING
+C     UPDATED         --SEPTEMBER  2019.  PROBE DIR SORT
+C     UPDATED         --SEPTEMBER  2019.  PROBE CAT MORE
+C     UPDATED         --SEPTEMBER  2019.  PROBE STRING VARIABLE
+C     UPDATED         --SEPTEMBER  2019.  PROBE STRING COMBINE
+C                                               SEPARATOR
+C     UPDATED         --SEPTEMBER  2019.  PROBE RATIO OF MEANS METHOD
+C     UPDATED         --OCTOBER    2019.  PROBE DAVID TEST CRITICAL
+C                                               VALUES
+C     UPDATED         --OCTOBER    2019.  PROBE SKEW OUTLIER TEST
+C                                               CRITICAL VALUES
+C     UPDATED         --OCTOBER    2019.  PROBE KURTOSIS OUTLIER TEST
+C                                               CRITICAL VALUES
+C     UPDATED         --OCTOBER    2019.  PROBE READ PERCENT SIGN IGNORE
+C     UPDATED         --OCTOBER    2019.  PROBE HEAD LINES
+C     UPDATED         --OCTOBER    2019.  PROBE TAIL LINES
+C     UPDATED         --OCTOBER    2019.  PROBE GRUBB TEST CRITICAL
+C                                               VALUES
+C     UPDATED         --OCTOBER    2019.  PROBE GRUBB TEST STANDARD
+C                                               DEVIATION
+C     UPDATED         --OCTOBER    2019.  PROBE GRUBB TEST DEGREES
+C                                               OF FREEDOM
+C     UPDATED         --NOVEMBER   2019.  PROBE RANLUX LEVEL
+C     UPDATED         --NOVEMBER   2019.  PROBE OUTPUT LINE NUMBERS
+C     UPDATED         --NOVEMBER   2019.  PROBE R PATH
+C     UPDATED         --NOVEMBER   2019.  PROBE BROWSER HEIGHT
+C     UPDATED         --NOVEMBER   2019.  PROBE BROWSER WIDTH
+C     UPDATED         --NOVEMBER   2019.  PROBE LIST VIEWER
+C     UPDATED         --NOVEMBER   2019.  PROBE LIST LAUNCHER
+C     UPDATED         --NOVEMBER   2019.  PROBE LIST NEW WINDOW
+C     UPDATED         --NOVEMBER   2019.  PROBE HELP NEW WINDOW
+C     UPDATED         --NOVEMBER   2019.  PROBE EXCEL VIEWER
+C     UPDATED         --NOVEMBER   2019.  PROBE WORD VIEWER
+C     UPDATED         --NOVEMBER   2019.  PROBE POWER POINT VIEWER
+C     UPDATED         --DECEMBER   2019.  PROBE SEED
+C     UPDATED         --DECEMBER   2019.  PROBE PDF VIEWER
+C     UPDATED         --DECEMBER   2019.  PROBE IMAGE VIEWER
+C     UPDATED         --DECEMBER   2019.  PROBE BACKUP VIEWER
+C     UPDATED         --DECEMBER   2019.  PROBE HOME PATH
+C     UPDATED         --DECEMBER   2019.  PROBE USER
+C     UPDATED         --DECEMBER   2019.  PROBE HOST
+C     UPDATED         --DECEMBER   2019.  PROBE DEFAULT PRINTER
+C     UPDATED         --DECEMBER   2019.  PROBE PROGRAM FILES X86
+C     UPDATED         --DECEMBER   2019.  PROBE PROGRAM FILES
+C     UPDATED         --DECEMBER   2019.  PROBE WINDOW BITS
+C     UPDATED         --JANUARY    2020.  PROBE SHELL
+C     UPDATED         --JANUARY    2020.  PROBE IPLOT JITTER
+C     UPDATED         --FEBRUARY   2020.  PROBE IZCHNA
+C     UPDATED         --FEBRUARY   2020.  PROBE EXCEL SHEET
+C     UPDATED         --FEBRUARY   2020.  PROBE EXCEL NUMBER OF ROWS
+C     UPDATED         --FEBRUARY   2020.  PROBE EXCEL COLUMN LIST
+C     UPDATED         --FEBRUARY   2020.  PROBE INSERT OVERWRITE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -27242,6 +28441,21 @@ CCCCC THE FOLLOWING LINE WAS ADDED APRIL 1997
 C
       CHARACTER*4 IANSLO(MAXLIL,MAXCIL)
 C
+      CHARACTER*80 PROFIL
+      CHARACTER*80 P86FIL
+      CHARACTER*80 APPDAT
+      CHARACTER*80 COMNAM
+      CHARACTER*80 UPROFI
+      CHARACTER*80 DEFPRI
+      CHARACTER*20 USRNAM
+      CHARACTER*20 ISHELL
+      CHARACTER*4  WINBIT
+      COMMON/SYSVAR/PROFIL,P86FIL,APPDAT,COMNAM,UPROFI,USRNAM,DEFPRI,
+     1              WINBIT,ISHELL
+      COMMON/SYSVA2/NCPROF,NCP86F,NCAPPD,NCCOMP,NCUPRO,NCUSER,NCPRIN,
+     1              NCSHEL
+C
+C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
       CHARACTER*4 IFEEDB
@@ -27314,6 +28528,11 @@ C
      1         IHARG(4).EQ.'IGNO')THEN
           IHV=IREADS
           GOTO5160
+        ELSEIF(IHARG(2).EQ.'PERC' .AND. IHARG(3).EQ.'SIGN' .AND.
+     1         IHARG(4).EQ.'IGNO')THEN
+          IHV=IREAPC
+          GOTO5160
+        ELSEIF(IHARG(2).EQ.'ASTE' .AND. IHARG(3).EQ.'IGNO')THEN
         ELSEIF(IHARG(2).EQ.'ASTE' .AND. IHARG(3).EQ.'IGNO')THEN
           IHV=IREAAS
           GOTO5160
@@ -27453,6 +28672,19 @@ C
           IHV=IFEEWR
           GOTO5160
         ENDIF
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED FEBRUARY     2020.
+C               *************************************************
+C               **  STEP 20.A--                                **
+C               **  PROBE WRITE CSV  <ON/OFF>                  **
+C               *************************************************
+C
+      IPART1='WRIT'
+      IPART2='CSV '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IHV=ICSVWR
+        GOTO5160
       ENDIF
 C
 C               *********************************************
@@ -27669,6 +28901,218 @@ C
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
         IHV=IWRDDL
         GOTO5160
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        DECEMBER  2019.
+C     ******************************************
+C     **  PROBE SEED                          **
+C     ******************************************
+C
+      IPART1='SEED'
+      IPART2='    '
+      IF(IHARG(1).EQ.IPART1)THEN
+        IV=ISEED
+        GOTO5150
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        DECEMBER  2019.
+C     ******************************************
+C     **  PROBE HOME (OR USER PROFILE)        **
+C     ******************************************
+C
+      IPART1='HOME'
+      IPART2='    '
+      IPART3='USER'
+      IPART4='PROF'
+      IF((IHARG(1).EQ.IPART1 .AND. IHARG(2).NE.'PATH') .OR.
+     1   (IHARG(1).EQ.IPART3 .AND. IHARG(2).EQ.IPART4))THEN
+        IFOUND='YES'
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,67001)
+67001     FORMAT('THE HOME (USER PROFILE) VARIABLE = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1717)UPROFI
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NCUPRO)=UPROFI(1:NCUPRO)
+        NCPROB=NCUPRO
+        GOTO8100
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        DECEMBER  2019.
+C     ******************************************
+C     **  PROBE USER (OR USER NAME)           **
+C     ******************************************
+C
+      IPART1='USER'
+      IPART2='    '
+      IPART3='USER'
+      IPART4='NAME'
+      IF((IHARG(1).EQ.IPART1) .OR.
+     1   (IHARG(1).EQ.IPART3 .AND. IHARG(2).EQ.IPART4))THEN
+        IFOUND='YES'
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,67003)
+67003     FORMAT('THE USER NAME VARIABLE = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,67004)USRNAM
+67004     FORMAT(A20)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NCUSER)=USRNAM(1:NCUSER)
+        NCPROB=NCUSER
+        GOTO8100
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        DECEMBER  2019.
+C     *************************************************
+C     **  PROBE HOST (OR HOST NAME OR COMPUTER NAME) **
+C     *************************************************
+C
+      IPART1='HOST'
+      IPART2='    '
+      IPART3='HOST'
+      IPART4='NAME'
+      IPART5='COMP'
+      IPART6='NAME'
+      IF((IHARG(1).EQ.IPART1) .OR.
+     1   (IHARG(1).EQ.IPART3 .AND. IHARG(2).EQ.IPART4) .OR.
+     1   (IHARG(1).EQ.IPART5 .AND. IHARG(2).EQ.IPART6))THEN
+        IFOUND='YES'
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,67005)
+67005     FORMAT('THE HOST NAME VARIABLE = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1717)COMNAM
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NCCOMP)=COMNAM(1:NCCOMP)
+        NCPROB=NCCOMP
+        GOTO8100
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        DECEMBER  2019.
+C     ******************************************
+C     **  PROBE DEFAULT PRINTER (LINUX ONLY)  **
+C     ******************************************
+C
+      IPART1='DEFA'
+      IPART2='PRIN'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        IFOUND='YES'
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,67007)
+67007     FORMAT('THE OS DEFAULT PRINTER VARIABLE = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1717)DEFPRI
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NCPRIN)=DEFPRI(1:NCPRIN)
+        NCPROB=NCPRIN
+        GOTO8100
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        DECEMBER  2019.
+C     **********************************************
+C     **  PROBE PROGRAM FILES X86 (WINDOWS ONLY)  **
+C     **********************************************
+C
+      IPART1='PROG'
+      IPART2='FILE'
+      IPART3='X86 '
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IFOUND='YES'
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,67009)
+67009     FORMAT('THE WINDOWS Program Files (x86) DIRECTORY = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1717)P86FIL
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NC86OF)=P86FIL(1:NCP86F)
+        NCPROB=NCP86F
+        GOTO8100
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        DECEMBER  2019.
+C     ******************************************
+C     **  PROBE PROGRAM FILES (WINDOWS ONLY)  **
+C     ******************************************
+C
+      IPART1='PROG'
+      IPART2='FILE'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        IFOUND='YES'
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,67011)
+67011     FORMAT('THE WINDOWS Program Files DIRECTORY = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1717)PROFIL
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NCPROF)=PROFIL(1:NCPROF)
+        NCPROB=NCPROF
+        GOTO8100
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        DECEMBER  2019.
+C     ******************************************
+C     **  PROBE WINDOWS BITS (WINDOWS ONLY)   **
+C     ******************************************
+C
+      IPART1='WIND'
+      IPART2='BITS'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2)(1:3).EQ.IPART2(1:3))THEN
+        IFOUND='YES'
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          IF(WINBIT.EQ.'64')THEN
+            WRITE(ICOUT,67013)
+67013       FORMAT('WINDOWS 64-BIT MACHINE (WINDOWS ONLY)')
+            CALL DPWRST('XXX','BUG ')
+          ELSE
+            WRITE(ICOUT,67015)
+67015       FORMAT('WINDOWS 32-BIT MACHINE (WINDOWS ONLY)')
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
+        IPROBS(1:2)=WINBIT(1:2)
+        NCPROB=2
+        GOTO8100
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        JANUARY  2019.
+C     ******************************************
+C     **  PROBE SHELL         R (LINUX ONLY)  **
+C     ******************************************
+C
+      IPART1='SHEL'
+      IF(IHARG(1).EQ.IPART1)THEN
+        IFOUND='YES'
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,67017)ISHELL
+67017     FORMAT('THE OS SHELL VARIABLE = ',A20)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NCSHEL)=ISHELL(1:NCSHEL)
+        NCPROB=NCSHEL
+        GOTO8100
       ENDIF
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED        SEPTEMBER 2018.
@@ -28113,6 +29557,52 @@ C
         GOTO5150
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED FEBRUARY      2020.
+C               *****************************************************
+C               **  STEP 20.A--                                    **
+C               **  PROBE EXCEL SHEET <NAME>                       **
+C               **  PROBE EXCEL NUMBER OF ROWS <VALUE>             **
+C               **  PROBE EXCEL COLUMN LIST <VAR-NAME>             **
+C               *****************************************************
+C
+      IPART1='EXCE'
+      IPART2='SHEE'
+      IPART3='NUMB'
+      IPART4='OF  '
+      IPART5='ROWS'
+      IPART6='COLU'
+      IPART7='LIST'
+      IF(IHARG(1).EQ.IPART1)THEN
+        IF(IHARG(2).EQ.IPART2)THEN
+          IFOUND='YES'
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,55371)IEXCSH
+55371     FORMAT('THE EXCEL SHEET NAME HAS BEEN SET TO ',A8)
+          CALL DPWRST('XXX','BUG ')
+          IPROBS=' '
+          IPROBS(1:8)=IEXCSH(1:8)
+          NCPROB=8
+          GOTO8100
+        ELSEIF(IHARG(2).EQ.IPART6 .AND. IHARG(3).EQ.IPART7)THEN
+          IFOUND='YES'
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,55373)IEXCCL
+55373     FORMAT('THE EXCEL COLUMN LIST VARIABLE HAS BEEN SET TO ',A8)
+          CALL DPWRST('XXX','BUG ')
+          IPROBS=' '
+          IPROBS(1:8)=IEXCCL(1:8)
+          NCPROB=8
+          GOTO8100
+        ELSEIF(IHARG(2).EQ.IPART3 .AND. IHARG(3).EQ.IPART4 .AND.
+     1         IHARG(4).EQ.IPART5)THEN
+          IFOUND='YES'
+          IV=IEXCNR
+          GOTO5150
+        ENDIF
+      ENDIF
+C
 CCCCC THE FOLLOWING SECTION WAS ADDED        JUNE 2016.
 C     ******************************************
 C     **  PROBE DATE DELIMITER                **
@@ -28134,6 +29624,18 @@ C
       IPART2='DELI'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
         IHV=ITIMDL
+        GOTO5160
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        FEBRUARY 2020.
+C     ******************************************
+C     **  PROBE INSERT OVERWRITE              **
+C     ******************************************
+C
+      IPART1='INSE'
+      IPART2='OVER'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IHV=IINSOW
         GOTO5160
       ENDIF
 C
@@ -28631,6 +30133,28 @@ C
         GOTO8100
       ENDIF
 C
+CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER 2019
+C     *****************************************
+C     **  CHECK FOR PROBE R           PATH   **
+C     *****************************************
+C
+      IF(NUMARG.GE.2.AND.
+     1  IHARG(1).EQ.'R   ' .AND. IHARG(2).EQ.'PATH')THEN
+        IFOUND='YES'
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,31757)
+31757     FORMAT('THE CURRENT R DIRECTORY = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1717)IRRRPA
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NCRPAT)=IRRRPA(1:NCRPAT)
+        NCPROB=NCRPAT
+        GOTO8100
+      ENDIF
+C
 CCCCC THE FOLLOWING SECTION WAS ADDED    MARCH 2019
 C     *****************************************
 C     **  CHECK FOR PROBE EDITOR             **
@@ -28684,6 +30208,251 @@ C
         ENDIF
         IPROBS(1:NCPSVW)=IPSTVW(1:NCPSVW)
         NCPROB=NCPSVW
+        GOTO8100
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    DECEMBER 2019
+C     *****************************************
+C     **  CHECK FOR PROBE PDF        VIEWER  **
+C     *****************************************
+C
+      IF(NUMARG.GE.2.AND.
+     1  IHARG(1).EQ.'PDF ' .AND. IHARG(2).EQ.'VIEW')THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,18758)
+18758     FORMAT('THE CURRENT PDF VIEWER = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1717)IPDFVW
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NCPDVW)=IPDFVW(1:NCPDVW)
+        NCPROB=NCPDVW
+        GOTO8100
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    DECEMBER 2019
+C     *****************************************
+C     **  CHECK FOR PROBE IMAGE      VIEWER  **
+C     *****************************************
+C
+      IF(NUMARG.GE.2.AND.
+     1  IHARG(1).EQ.'IMAG' .AND. IHARG(2).EQ.'VIEW')THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,18759)
+18759     FORMAT('THE CURRENT IMAGE VIEWER = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1717)IIMAVW
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NCIMVW)=IIMAVW(1:NCIMVW)
+        NCPROB=NCIMVW
+        GOTO8100
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    DECEMBER 2019
+C     *****************************************
+C     **  CHECK FOR PROBE BACKUP     VIEWER  **
+C     *****************************************
+C
+      IF(NUMARG.GE.2.AND.
+     1  IHARG(1).EQ.'BACK' .AND. IHARG(2).EQ.'VIEW')THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,18769)
+18769     FORMAT('THE CURRENT BACKUP VIEWER = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1717)IBCKVW
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NCBKVW)=IBCKVW(1:NCBKVW)
+        NCPROB=NCBKVW
+        GOTO8100
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        NOVEMBER 2019.
+C     ******************************************
+C     **  PROBE LIST NEW WINDOW <ON/OFF>      **
+C     ******************************************
+C
+      IPART1='LIST'
+      IPART2='NEW '
+      IPART3='WIND'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=ILSTNW
+        GOTO5160
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        NOVEMBER 2019.
+C     ******************************************
+C     **  PROBE HELP NEW WINDOW <ON/OFF>      **
+C     ******************************************
+C
+      IPART1='HELP'
+      IPART2='NEW '
+      IPART3='WIND'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IHLPNW
+        GOTO5160
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER 2019
+C     *****************************************
+C     **  CHECK FOR PROBE LIST       VIEWER  **
+C     *****************************************
+C
+      IF(NUMARG.GE.2.AND.
+     1  IHARG(1).EQ.'LIST' .AND. IHARG(2).EQ.'VIEW')THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        DO11751II=80,1,-1
+          IF(ILSTVW(II:II).NE.' ')THEN
+            NCLSVW=II
+            GOTO11753
+          ENDIF
+11751   CONTINUE
+        NCLSVW=1
+11753   CONTINUE
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,11759)
+11759     FORMAT('THE CURRENT LIST VIEWER = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1717)ILSTVW
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NCLSVW)=ILSTVW(1:NCLSVW)
+        NCPROB=NCLSVW
+        GOTO8100
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER 2019
+C     *****************************************
+C     **  CHECK FOR PROBE LIST LAUNCHER      **
+C     *****************************************
+C
+      IF(NUMARG.GE.2.AND.
+     1  IHARG(1).EQ.'LIST' .AND. IHARG(2).EQ.'LAUN')THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        DO11851II=80,1,-1
+          IF(ILSTLA(II:II).NE.' ')THEN
+            NCLSLA=II
+            GOTO11853
+          ENDIF
+11851   CONTINUE
+        NCLSLA=1
+11853   CONTINUE
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,11859)
+11859     FORMAT('THE CURRENT LIST LAUNCHER = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1717)ILSTLA
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NCLSLA)=ILSTLA(1:NCLSLA)
+        NCPROB=NCLSLA
+        GOTO8100
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER 2019
+C     *****************************************
+C     **  CHECK FOR PROBE EXCEL      VIEWER  **
+C     *****************************************
+C
+      IF(NUMARG.GE.2.AND.
+     1  IHARG(1).EQ.'EXCE' .AND. IHARG(2).EQ.'VIEW')THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        DO11051II=80,1,-1
+          IF(IEXCVW(II:II).NE.' ')THEN
+            NCEXVW=II
+            GOTO11053
+          ENDIF
+11051   CONTINUE
+        NCEXVW=1
+11053   CONTINUE
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,11009)
+11009     FORMAT('THE CURRENT EXCEL VIEWER = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1717)IEXCVW
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NCEXVW)=IEXCVW(1:NCEXVW)
+        NCPROB=NCEXVW
+        GOTO8100
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER 2019
+C     *****************************************
+C     **  CHECK FOR PROBE WORD       VIEWER  **
+C     *****************************************
+C
+      IF(NUMARG.GE.2.AND.
+     1  IHARG(1).EQ.'WORD' .AND. IHARG(2).EQ.'VIEW')THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        DO11151II=80,1,-1
+          IF(IWORVW(II:II).NE.' ')THEN
+            NCWOVW=II
+            GOTO11153
+          ENDIF
+11151   CONTINUE
+        NCWOVW=1
+11153   CONTINUE
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,11719)
+11719     FORMAT('THE CURRENT WORD VIEWER = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1717)IWORVW
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NCWOVW)=IWORVW(1:NCWOVW)
+        NCPROB=NCWOVW
+        GOTO8100
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER 2019
+C     *****************************************
+C     **  CHECK FOR PROBE POWER POINT VIEWER **
+C     *****************************************
+C
+      IF(NUMARG.GE.3.AND.
+     1  IHARG(1).EQ.'POWE' .AND. IHARG(2).EQ.'POIN' .AND.
+     1  IHARG(3).EQ.'VIEW')THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        DO11211II=80,1,-1
+          IF(IPPTVW(II:II).NE.' ')THEN
+            NCPPVW=II
+            GOTO11253
+          ENDIF
+11211   CONTINUE
+        NCPPVW=1
+11253   CONTINUE
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,11209)
+11209     FORMAT('THE CURRENT POWER POINT VIEWER = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1717)IPPTVW
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IPROBS(1:NCPPVW)=IPPTVW(1:NCPPVW)
+        NCPROB=NCPPVW
         GOTO8100
       ENDIF
 C
@@ -29226,6 +30995,20 @@ C
      1   IHARG(3).EQ.IPART3)THEN
         IV=IRWLCO
         GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED NOVEMBER 2019
+C               ***********************************************
+C               **  PROBE OUTPUT LINE NUMBERS                **
+C               ***********************************************
+C
+      IPART1='OUTP'
+      IPART2='LINE'
+      IPART3='NUMB'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IOUTLN
+        GOTO5160
       ENDIF
 C
 CCCCC FOLLOWING SECTION ADDED JULY 2018
@@ -31575,6 +33358,354 @@ C
         GOTO5160
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER    2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE GREP CASE <IGNORE/NOIGNORE>               **
+C               ******************************************************
+C
+      IPART1='GREP'
+      IPART2='CASE'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        IHV=IGRPCA
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER    2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE GREP RECURSIVE <ON/OFF>                   **
+C               ******************************************************
+C
+      IPART1='GREP'
+      IPART2='RECU'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        IHV=IGRPRE
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER    2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE GREP LINE NUMBERS <ON/OFF>                **
+C               ******************************************************
+C
+      IPART1='GREP'
+      IPART2='LINE'
+      IPART3='NUMB'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IGRPLN
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER    2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE GREP EXACT MATCH <ON/OFF>                 **
+C               ******************************************************
+C
+      IPART1='GREP'
+      IPART2='EXAC'
+      IPART3='MATC'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IGRPEM
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER    2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE GREP NO MATCH <ON/OFF>                    **
+C               ******************************************************
+C
+      IPART1='GREP'
+      IPART2='NO  '
+      IPART3='MATC'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IGRPNM
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER    2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE GREP FILE NAME ONLY <ON/OFF>              **
+C               ******************************************************
+C
+      IPART1='GREP'
+      IPART2='FILE'
+      IPART3='NAME'
+      IPART4='ONLY'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4)THEN
+        IHV=IGRPFN
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER    2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE CAT MORE  <ON/OFF>                        **
+C               ******************************************************
+C
+      IPART1='CAT '
+      IPART2='MORE'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        IHV=ICATMO
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER    2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE DIR PAUSE  <ON/OFF>                       **
+C               ******************************************************
+C
+      IPART1='DIR '
+      IPART2='PAUS'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        IHV=IDIRPA
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER    2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE DIR SORT   <ALPHA/SIZE/DATE>              **
+C               ******************************************************
+C
+      IPART1='DIR '
+      IPART2='SORT'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        IHV=IDIRSO
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER    2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE DIR RECURSIVE  <ON/OFF>                   **
+C               ******************************************************
+C
+      IPART1='DIR '
+      IPART2='RECU'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        IHV=IDIRRE
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER    2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE DIR LONG LISTING  <ON/OFF>                **
+C               ******************************************************
+C
+      IPART1='DIR '
+      IPART2='LONG'
+      IPART3='LIST'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IDIRLL
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER    2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE STRING VARIABLE <APPEND/OVERWRITE>        **
+C               ******************************************************
+C
+      IPART1='STRI'
+      IPART2='VARI'
+      IPART3='CHAR'
+      IF((IHARG(1).EQ.IPART1 .OR. IHARG(1).EQ.IPART3) .AND.
+     1    IHARG(2).EQ.IPART2)THEN
+        IHV=ISTRVA
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER    2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE STRING COMBINE SEPARATOR  <VALUE>         **
+C               ******************************************************
+C
+      IPART1='STRI'
+      IPART2='COMB'
+      IPART3='SEPA'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=ISTRCS
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER    2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE RATIO OF MEANS METHOD                     **
+C               **        <FIELLER/LOG RATIO/LARGE SAMPLE>          **
+C               ******************************************************
+C
+      IPART1='RATI'
+      IPART2='OF  '
+      IPART3='MEAN'
+      IPART4='METH'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4)THEN
+        IHV=IRATME
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER      2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE DAVID TEST CRITICAL VALUES                **
+C               **        <ASTM/DAVID/OFF>                          **
+C               ******************************************************
+C
+      IPART1='DAVI'
+      IPART2='TEST'
+      IPART3='CRIT'
+      IPART4='VALU'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4)THEN
+        IHV=IDAVTA
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER      2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE SKEW OUTLIER TEST CRITICAL VALUES         **
+C               **        <ASTM/SIMULATION>                         **
+C               ******************************************************
+C
+      IPART1='SKEW'
+      IPART2='OUTL'
+      IPART3='TEST'
+      IPART4='CRIT'
+      IPART5='VALU'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4 .AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IHV=ISKOTA
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER      2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE KURTOSIS OUTLIER TEST TABLE               **
+C               **        <ASTM/SIMULATION>                         **
+C               ******************************************************
+C
+      IPART1='KURT'
+      IPART2='OUTL'
+      IPART3='TEST'
+      IPART4='CRIT'
+      IPART5='VALU'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4 .AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IHV=IKUOTA
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER      2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE GRUBB TEST CRITICAL VALUES                **
+C               **        <ASTM/FORMULA/SIMULATION>                 **
+C               ******************************************************
+C
+      IPART1='GRUB'
+      IPART2='TEST'
+      IPART3='CRIT'
+      IPART4='VALU'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4)THEN
+        IHV=IGRUTA
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER      2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE GRUBB TEST STANDARD DEVIATION <VALUE>     **
+C               ******************************************************
+C
+      IPART1='GRUB'
+      IPART2='TEST'
+      IPART3='STAN'
+      IPART4='DEVI'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4)THEN
+        AV=PGRUSD
+        GOTO5170
+      ENDIF
+      IPART3='SD  '
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        AV=PGRUSD
+        GOTO5170
+      ENDIF
+C
+      IPART1='GRUB'
+      IPART2='STAN'
+      IPART3='DEVI'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        AV=PGRUSD
+        GOTO5170
+      ENDIF
+      IPART2='SD  '
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        AV=PGRUSD
+        GOTO5170
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER      2019.
+C               ******************************************************
+C               **  STEP 20.A--                                     **
+C               **  PROBE GRUBB TEST DEGREES OF FREEDOM <VALUE>     **
+C               ******************************************************
+C
+      IPART1='GRUB'
+      IPART2='TEST'
+      IPART3='DEGR'
+      IPART4='OF  '
+      IPART5='FREE'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4 .AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        AV=PGRUDF
+        GOTO5170
+      ENDIF
+      IPART3='DF  '
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        AV=PGRUDF
+        GOTO5170
+      ENDIF
+C
+      IPART1='GRUB'
+      IPART2='DEGR'
+      IPART3='OF  '
+      IPART4='FREE'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND. IHARG(4).EQ.IPART4)THEN
+        AV=PGRUDF
+        GOTO5170
+      ENDIF
+      IPART2='DF  '
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
+        AV=PGRUDF
+        GOTO5170
+      ENDIF
+C
 CCCCC FOLLOWING SECTION ADDED JUNE         2017.
 C               *******************************************************
 C               **  STEP 20.A--                                      **
@@ -32627,6 +34758,32 @@ C
         GOTO5160
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED DECEMBER    2019.
+C               *************************************************
+C               **  STEP 20.A--                                **
+C               **  PROBE HOME PATH     <ON/OFF>               **
+C               *************************************************
+C
+      IPART1='HOME'
+      IPART2='PATH'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IHV=IHOMPA
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JANUARY     2020.
+C               *************************************************
+C               **  STEP 20.A--                                **
+C               **  PROBE IPLOT JITTER  <ON/OFF>               **
+C               *************************************************
+C
+      IPART1='IPLO'
+      IPART2='JITT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IHV=IIPLJI
+        GOTO5160
+      ENDIF
+C
 CCCCC FOLLOWING SECTION ADDED FEBRUARY     2018.
 C               *************************************************
 C               **  STEP 20.A--                                **
@@ -33289,6 +35446,71 @@ C
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
      1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
         IV=IAUXDP
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER      2019.
+C               *************************************************
+C               **  STEP 20.A--                                **
+C               **  PROBE HEAD LINES                           **
+C               *************************************************
+C
+      IPART1='HEAD'
+      IPART2='LINE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IV=IHEALI
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER      2019.
+C               *************************************************
+C               **  STEP 20.A--                                **
+C               **  PROBE TAIL LINES                           **
+C               *************************************************
+C
+      IPART1='TAIL'
+      IPART2='LINE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IV=ITAILI
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED NOVEMBER     2019.
+C               *************************************************
+C               **  STEP 20.A--                                **
+C               **  PROBE BROWSER HEIGHT                       **
+C               *************************************************
+C
+      IPART1='BROW'
+      IPART2='HEIG'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IV=IBROHE
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED NOVEMBER     2019.
+C               *************************************************
+C               **  STEP 20.A--                                **
+C               **  PROBE BROWSER WIDTH                        **
+C               *************************************************
+C
+      IPART1='BROW'
+      IPART2='WIDT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IV=IBROWI
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED NOVEMBER     2019.
+C               *************************************************
+C               **  STEP 20.A--                                **
+C               **  PROBE RANLUX LEVEL                         **
+C               *************************************************
+C
+      IPART1='RANL'
+      IPART2='LEVE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IV=IRLXLE
         GOTO5150
       ENDIF
 C
@@ -36814,6 +39036,11 @@ C
       IPART1='IPL2'
       IPART2='NA  '
       IF(IHARG(1).EQ.IPART1.AND.IHARG2(1).EQ.IPART2)ISTRIN=IPL2NA
+      IF(IHARG(1).EQ.IPART1.AND.IHARG2(1).EQ.IPART2)GOTO5370
+C
+      IPART1='IZCH'
+      IPART2='NA  '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG2(1).EQ.IPART2)ISTRIN=IZCHNA
       IF(IHARG(1).EQ.IPART1.AND.IHARG2(1).EQ.IPART2)GOTO5370
 C
 C ..........
@@ -41194,7 +43421,7 @@ C
         ISTRIN(N0:N0)=' '
         ISTRIN(N0+1:N0+N2)=FILE2(1:N2)
         N0=N0+N2
-        CALL DPSYS2(ISTRIN,N012,ISUBRO,IERROR)
+        CALL DPSYS2(ISTRIN,N0,ISUBRO,IERROR)
       ELSEIF(IHOST1.EQ.'VAX')THEN
 C
 C               ********************************
@@ -41262,7 +43489,7 @@ C
 C
       RETURN
       END
-      SUBROUTINE VIEWFI(FILE1,IBUGS2,ISUBRO,IERROR)
+      SUBROUTINE VIEWFI(FILE1,ICASE2,IBUGS2,ISUBRO,IERROR)
 C
 C     PURPOSE--VIEW DPPL2F.DAT USING POSTSCRIPT VIEWER
 C              (PSVIEW COMMAND)
@@ -41280,10 +43507,14 @@ C                                       TO SET THE FILE TO THE
 C                                       CONVERTED FILE INSTEAD
 C     UPDATED         --MARCH     2019. SET SYSTEM PERSIST
 C                                       SET SYSTEM HIDDEN
+C     UPDATED         --DECEMBER  2019. ALLOW VIEWING PDF AND IMAGE
+C                                       FILES AS WELL AS POSTSCRIPT
+C                                       FILES.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*80 FILE1
+      CHARACTER*4 ICASE2
       CHARACTER*4 IBUGS2
       CHARACTER*4 ISUBRO
       CHARACTER*4 IERROR
@@ -41291,6 +43522,8 @@ C
       CHARACTER*1 IQUOTE
       CHARACTER*4 ISSAV1
       CHARACTER*4 ISSAV2
+      CHARACTER*4 ICLESV
+      CHARACTER*4 ICASE
 C
       CHARACTER*255 ISTRIN
 C
@@ -41322,14 +43555,23 @@ C
         WRITE(ICOUT,51)
    51   FORMAT('***** AT THE BEGINNING OF VIEWFI--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,53)IBUGS2,ISUBRO,IERROR
-   53   FORMAT('IBUGS2,ISUBRO,IERROR = ',2(A4,2X),A4)
+        WRITE(ICOUT,53)ICASE2,IBUGS2,ISUBRO,IERROR
+   53   FORMAT('ICASE2,IBUGS2,ISUBRO,IERROR = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)FILE1
    54   FORMAT('FILE1 = ',A80)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,56)IPSTVW
    56   FORMAT('POSTSCRIPT VIEWER = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,57)IPDFVW
+   57   FORMAT('PDF VIEWER = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,58)IIMAVW
+   58   FORMAT('IMAGE VIEWER = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,59)IBCKVW
+   59   FORMAT('BACKUP VIEWER = ',A80)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,61)IHOST1,IHMOD1,IOPSYS1,ICOMPI,ISITE
    61   FORMAT(' HOST,MODEL,OP-SYS,COMPILER,SITE = ',5(A4,2X),A4)
@@ -41345,14 +43587,101 @@ C     2016/06: IF SET POSTSCRIPT CONVERT IS SET, VIEW THE
 C              CONVERTED FILE INSTEAD OF THE ORIGINAL
 C              POSTSCRIPT FILE.
 C
-      IF(IPSTDV.EQ.'NULL' .OR. NCFIL2.EQ.0)THEN
+      IF(ICASE2.EQ.'FILE')THEN
         CALL STRLEZ(FILE1,N1)
         FILE2(1:N1)=FILE1(1:N1)
-      ELSE
-        N1=NCFIL2
+      ELSEIF(ICASE2.EQ.'IPL1')THEN
+CCCCC   CALL STRLEZ(FILE1,N1)
+CCCCC   FILE2(1:N1)=FILE1(1:N1)
+        IF(IPSTDV.EQ.'NULL' .OR. NCFIL2.EQ.0)THEN
+          CALL STRLEZ(FILE1,N1)
+          FILE2(1:N1)=FILE1(1:N1)
+        ELSE
+          N1=NCFIL2
+        ENDIF
+      ELSEIF(ICASE2.EQ.'IPL2')THEN
+        IF(IPSTDV.EQ.'NULL' .OR. NCFIL2.EQ.0)THEN
+          CALL STRLEZ(FILE1,N1)
+          FILE2(1:N1)=FILE1(1:N1)
+        ELSE
+          N1=NCFIL2
+        ENDIF
       ENDIF
 C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EWFI')THEN
+        WRITE(ICOUT,94)N1,FILE2
+   94   FORMAT('N1,FILE2 = ',I5,2X,A80)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C     NOTE 2019/12: CHECK FOR VARIOUS FILE EXTENSIONS:
+C
+C                   .DAT   - USE POSTSCRIPT VIEWER
+C                            (THESE ARE TYPICALLY DPPL1F.DAT OR
+C                            DPPL2F.DAT)
+C                   .PS    - USE POSTSCRIPT VIEWER
+C                   .PDF   - USE PDF VIEWER
+C                   .GIF   - USE IMAGE VIEWER
+C                   .JPG   - USE IMAGE VIEWER
+C                   .TIF   - USE IMAGE VIEWER
+C                   .PNG   - USE IMAGE VIEWER
+C
+C                   IF AN UNKNOWN EXTENSION GIVEN, THEN USE IMAGE
+C                   VIEWER.
+C
+      ICASE='UNKN'
+      IF(N1.GE.4)THEN
+        DO110II=N1-2,1,-1
+          IF(FILE2(II:II).EQ.'.')THEN
+            IF(FILE2(II+1:II+3).EQ.'DAT' .OR.
+     1         FILE2(II+1:II+3).EQ.'dat')THEN
+              ICASE='DAT'
+            ELSEIF(FILE2(II+1:II+2).EQ.'PS' .OR.
+     1             FILE2(II+1:II+2).EQ.'ps')THEN
+              ICASE='POST'
+            ELSEIF(FILE2(II+1:II+3).EQ.'EPS' .OR.
+     1             FILE2(II+1:II+3).EQ.'eps')THEN
+              ICASE='POST'
+            ELSEIF(FILE2(II+1:II+3).EQ.'PDF' .OR.
+     1             FILE2(II+1:II+3).EQ.'pdf')THEN
+              ICASE='PDF'
+            ELSEIF(FILE2(II+1:II+3).EQ.'PNG' .OR.
+     1             FILE2(II+1:II+3).EQ.'png')THEN
+              ICASE='IMAG'
+            ELSEIF(FILE2(II+1:II+3).EQ.'JPG' .OR.
+     1             FILE2(II+1:II+3).EQ.'jpg')THEN
+              ICASE='IMAG'
+            ELSEIF(FILE2(II+1:II+3).EQ.'JPEG' .OR.
+     1             FILE2(II+1:II+3).EQ.'jpeg')THEN
+              ICASE='IMAG'
+            ELSEIF(FILE2(II+1:II+3).EQ.'GIF' .OR.
+     1             FILE2(II+1:II+3).EQ.'gif')THEN
+              ICASE='IMAG'
+            ELSEIF(FILE2(II+1:II+3).EQ.'TIF' .OR.
+     1             FILE2(II+1:II+3).EQ.'tif')THEN
+              ICASE='IMAG'
+            ELSEIF(FILE2(II+1:II+3).EQ.'BMP' .OR.
+     1           FILE2(II+1:II+3).EQ.'bmp')THEN
+              ICASE='IMAG'
+            ELSEIF(FILE2(II+1:II+3).EQ.'SVG' .OR.
+     1             FILE2(II+1:II+3).EQ.'svg')THEN
+              ICASE='IMAG'
+            ENDIF
+            GOTO119
+          ENDIF
+  110   CONTINUE
+  119   CONTINUE
+      ENDIF
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EWFI')THEN
+        WRITE(ICOUT,116)ICASE
+  116   FORMAT('ICASE = ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      N0=0
       IFLAG=0
+      IFLAG9=0
       DO120II=1,N1
         IF(FILE2(II:II).EQ.' ')THEN
           IF(FILE2(1:1).NE.'"' .OR. FILE2(N1:N1).NE.'"')THEN
@@ -41364,7 +43693,9 @@ C
   129 CONTINUE
 C
       ISTRIN=' '
-      IF(NCPSVW.LE.0)THEN
+      IF(IOPSY1.EQ.'UNIX' .AND.
+     1  (ICASE.EQ.'POST' .OR. ICASE.EQ.'DAT') .AND.
+     1   NCPSVW.LE.0)THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,3001)
@@ -41375,20 +43706,145 @@ C
         CALL DPWRST('XXX','BUG ')
         IERROR='YES'
         GOTO9000
+      ELSEIF(IOPSY1.EQ.'UNIX' .AND. ICASE.EQ.'PDF' .AND.
+     1   NCPDVW.LE.0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3001)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3005)
+ 3005   FORMAT('      NO PDF VIEWER DEFINED.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ELSEIF(IOPSY1.EQ.'UNIX' .AND.
+     1      (ICASE.EQ.'IMAG' .OR. ICASE.EQ.'UNKN') .AND.
+     1   NCIMVW.LE.0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3001)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3007)
+ 3007   FORMAT('      NO IMAGE VIEWER DEFINED.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
       ELSE
         IQUOTE='"'
-        IF(ISTRIN(1:1).NE.IQUOTE)THEN
+C
+        IFLAG2=0
+        DO3110II=1,NCPSVW
+          IF(IPSTVW(II:II).EQ.' ')THEN
+            IFLAG2=1
+            GOTO3119
+          ENDIF
+ 3110   CONTINUE
+ 3119   CONTINUE
+C
+        IFLAG3=0
+        DO3120II=1,NCPDVW
+          IF(IPDFVW(II:II).EQ.' ')THEN
+            IFLAG3=1
+            GOTO3129
+          ENDIF
+ 3120   CONTINUE
+ 3129   CONTINUE
+C
+        IFLAG4=0
+        DO3130II=1,NCIMVW
+          IF(IIMAVW(II:II).EQ.' ')THEN
+            IFLAG4=1
+            GOTO3139
+          ENDIF
+ 3130   CONTINUE
+ 3139   CONTINUE
+C
+        IFLAG5=0
+        DO3140II=1,NCBKVW
+          IF(IBCKVW(II:II).EQ.' ')THEN
+            IFLAG5=1
+            GOTO3149
+          ENDIF
+ 3140   CONTINUE
+ 3149   CONTINUE
+C
+        IF(ICASE.EQ.'POST')THEN
           N0=NCPSVW
-          ISTRIN(1:1)=IQUOTE
-          ISTRIN(2:N0+1)=IPSTVW(1:NCPSVW)
-          ISTRIN(N0+2:N0+2)=IQUOTE
-          N0=NCPSVW+2
-        ELSE
-          N0=NCPSVW
-          ISTRIN(1:N0)=IPSTVW(1:NCPSVW)
-          IF(ISTRIN(N0:N0).NE.IQUOTE)THEN
+          IF(IFLAG2.EQ.1)THEN
+            ISTRIN(1:1)=IQUOTE
+            N0=1
+            IFLAG9=1
+          ELSE
+            N0=0
+          ENDIF
+          ISTRIN(N0+1:N0+NCPSVW)=IPSTVW(1:NCPSVW)
+          N0=N0+NCPSVW
+          IF(IFLAG2.EQ.1)THEN
+            ISTRIN(N0+1:N0+1)=IQUOTE
             N0=N0+1
-            ISTRIN(N0:N0)=IQUOTE
+          ENDIF
+        ELSEIF(ICASE.EQ.'DAT')THEN
+          IF((IOPSY2.EQ.'MAC ' .AND. IPSTVW(1:4).EQ.'open') .OR.
+     1       (IOPSY1.EQ.'UNIX' .AND. IPSTVW(1:8).EQ.'xdg-open'))THEN
+            N0=NCBKVW
+            IF(IFLAG5.EQ.1)THEN
+              ISTRIN(1:1)=IQUOTE
+              N0=1
+              IFLAG9=1
+            ELSE
+              N0=0
+            ENDIF
+            ISTRIN(N0+1:N0+NCBKVW)=IBCKVW(1:NCBKVW)
+            N0=N0+NCBKVW
+            IF(IFLAG5.EQ.1)THEN
+              ISTRIN(N0+1:N0+1)=IQUOTE
+              N0=N0+1
+            ENDIF
+          ELSE
+            N0=NCPSVW
+            IF(IFLAG2.EQ.1)THEN
+              ISTRIN(1:1)=IQUOTE
+              N0=1
+              IFLAG9=1
+            ELSE
+              N0=0
+            ENDIF
+            ISTRIN(N0+1:N0+NCPSVW)=IPSTVW(1:NCPSVW)
+            N0=N0+NCPSVW
+            IF(IFLAG2.EQ.1)THEN
+              ISTRIN(N0+1:N0+1)=IQUOTE
+              N0=N0+1
+            ENDIF
+          ENDIF
+        ELSEIF(ICASE.EQ.'PDF')THEN
+          N0=NCPDVW
+          IF(IFLAG3.EQ.1)THEN
+            ISTRIN(1:1)=IQUOTE
+            N0=1
+            IFLAG9=1
+          ELSE
+            N0=0
+          ENDIF
+          ISTRIN(N0+1:N0+NCPDVW)=IPDFVW(1:NCPDVW)
+          N0=N0+NCPDVW
+          IF(IFLAG3.EQ.1)THEN
+            ISTRIN(N0+1:N0+1)=IQUOTE
+            N0=N0+1
+          ENDIF
+        ELSEIF(ICASE.EQ.'IMAG' .OR. ICASE.EQ.'UNKN')THEN
+          N0=NCIMVW
+          IF(IFLAG4.EQ.1)THEN
+            ISTRIN(1:1)=IQUOTE
+            N0=1
+            IFLAG9=1
+          ELSE
+            N0=0
+          ENDIF
+          ISTRIN(N0+1:N0+NCIMVW)=IIMAVW(1:NCIMVW)
+          N0=N0+NCIMVW
+          IF(IFLAG4.EQ.1)THEN
+            ISTRIN(N0+1:N0+1)=IQUOTE
+            N0=N0+1
           ENDIF
         ENDIF
       ENDIF
@@ -41404,13 +43860,19 @@ C
         ISTRIN(N0+1:N0+N1)=FILE2(1:N1)
         N0=N0+N1
         N0=N0+1
-        ISTRIN(N0:N01)='"'
+        ISTRIN(N0:N0)='"'
       ELSE
         ISTRIN(N0+1:N0+N1)=FILE2(1:N1)
         N0=N0+N1
       ENDIF
-      N0=N0+1
-      ISTRIN(N0:N0)=' '
+CCCCC N0=N0+1
+CCCCC ISTRIN(N0:N0)=' '
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'EWFI')THEN
+        WRITE(ICOUT,3090)N0,ISTRIN(1:n0)
+ 3090   FORMAT('N0,ISTRIN = ',I5,2X,255A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       IF(IOPSY1.EQ.'PC-D')THEN
 C
@@ -41421,15 +43883,17 @@ C               ********************************
 C
         ISSAV1=ISYSPE
         ISSAV2=ISYSHI
+        ICLESV=ICLEWT
         ISYSPE='OFF'
-        IF(IFLAG.EQ.0)THEN
-          ISYSHI='ON'
-        ELSE
-          ISYSHI='OFF'
+        ICLEWT='OFF'
+        ISYSHI='ON'
+        IF(IFLAG.EQ.1 .OR. IFLAG9.EQ.1)THEN
+CCCCC     ISYSHI='OFF'
         ENDIF
         CALL DPSYS2(ISTRIN,N0,ISUBRO,IERROR)
         ISYSPE=ISSAV1
         ISYSHI=ISSAV2
+        ICLEWT=ICLESV
       ELSEIF(IOPSY1.EQ.'UNIX')THEN
 C
 C               ********************************
@@ -41474,7 +43938,7 @@ C
  9013   FORMAT('N0,N1,IERROR = ',2I8,2X,A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,9015)ISTRIN(1:N0)
- 9015   FORMAT('ISTRIN(1:N0) = ',A255)
+ 9015   FORMAT('ISTRIN(1:N0) = ',255A1)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C

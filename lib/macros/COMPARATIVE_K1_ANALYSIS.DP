@@ -1,0 +1,169 @@
+. This is dataplot macro     comparative_k1_analysis.dp.dp     3/28/19 => 4/11/19
+. Purpose: Assess equivalence (and drift) across the k=1 single factor (usually discrete)
+. Date: 3/28/19
+.
+. Input (Required):
+.   y        (vector) = Response variable
+.   x        (vector) = Factor 1 (^ndx levels)
+.   sty      (string) = Vertical   axis label
+.   stx      (string) = Horizontal axis label
+.
+. Input (Optional):
+.   frame    (string) = subset of interest                             (default = all data)
+.   header1  (string) = first header line       (usually a title line) (default = none)
+.   trailer  (string) = name of calling routine (e.g., draft69.dp)     (default = none)
+.   trailer2 (string) = name of input data file (e.g., draft69.dat)    (default = none)
+.   currdate (string) = current date            (e.g., 3/28/19)        (default = none)
+.
+. Output:
+.    pages of plots
+.
+. -----start point-----
+.
+let bugsw = 0
+.
+. -----Step 1: Extract out the target subset for analysis-----
+.
+if bugswcvp = 1; print " At (k1_equivalence_plot.dp, step 1): at start of subsetting via frame"
+   stat v
+end if
+.
+delete yz; let yz = y
+delete xz; let xz = x
+.
+if frame exists
+   retain yz xz ^frame
+end if
+.
+if bugsw = 1
+   print " "
+   print " At (k1_equivalence_plot.dp, end of step 1): after subsetting via frame"
+   stat v
+   pause
+end if
+.
+. -----Step 10: Plot the data-----
+.
+delete dx; let dx = distinct x
+delete ndx; let ndxz = number dx
+delete mindx; let mindx = minimum dx
+delete maxdx; let maxdx = maximum dx
+.
+delete dxz; let dxz = distinct xz
+delete ndxz; let ndxz = number dxz
+delete mindxz; let mindxz = minimum dxz
+delete maxdxz; let maxdxz = maximum dxz
+.
+let lowerxz = mindx
+let upperxz = maxdx
+. let lowerxz = mindxz
+. let upperxz = maxdxz
+.
+minor x1tic number 0
+.
+. -----Step 11: Scatter plot of the data-----
+.
+let string header2 = Scatter Plot
+char X all; lines bl all
+y1label ^sty; x1label ^stx
+xlim ^lowerxz ^upperxz
+plot yz xz
+.
+call annotate.dp
+.
+. -----Step 12: Scatter plot of the data  with Superimposed Means-----
+.
+char X all; lines bl all
+plot yz xz
+.
+delete jz j2z mz
+loop for jz = 1 1 ^ndxz; let j2z = dxz(jz); let mz(jz) = mean yz subset xz ^j2z; end loop
+pre-erase off; limits freeze; char circle; char hw 1.3 1; char fill on; char color red
+plot mz dxz
+.
+call annotate.dp
+pre-erase on; limits; xlim ^lowerxz ^upperxz
+char color blue
+.
+. -----Step 13: Scatter plot of the data  with Superimposed Means (& ANOVA results)-----
+.
+char X all; char hw 2 1; char color blue all
+lines bl all
+plot yz xz
+.
+delete jz j2z mz
+loop for jz = 1 1 ^ndxz; let j2z = dxz(jz); let mz(jz) = mean yz subset xz ^j2z; end loop
+pre-erase off; limits freeze; char circle; char hw 1.3 1; char fill on; char color red
+plot mz dxz
+. pause
+.
+anova yz xz
+.
+let fcdf = statcdf; set write decimals 4; let stout = number to string fcdf
+color blue; let string stout2 = ^stout% (=> ^stx&s not significantly different)
+if fcdf >= 95;
+   color red; let string stout2 = ^stout% (=> ^stx&s are significantly different)
+end if
+move 16 87; just left; hw 2.4 1.2; text ANOVA Fcdf = ^stout2
+.
+color blue
+call annotate.dp
+pre-erase on; limits; xlim ^lowerxz ^upperxz
+char color blue
+.
+. -----Step 14a: Scatter plot of the data  with fitted line-----
+.
+fit yz xz
+. pause
+.
+char bl all; char X bl; char hw 2 1
+lines bl all; lines bl solid; line color red red
+plot yz pred vs xz
+call annotate.dp
+.
+. -----Step 14b: Scatter plot of the data  with fitted line (and t slope)-----
+.
+fit yz xz
+.
+char bl all; char X bl
+lines bl all; lines bl solid; line color red red
+plot yz pred vs xz
+.
+skip 1
+read parameter dpst1f.dat slope sdslope tslope
+let tslope2 = abs(tslope)
+print slope sdslope tslope tslope2
+print dpst1f.dat
+. pause
+.
+move 16 87, just left; hw 2.4 1.2
+color blue; let string stout = Slope = ^slope   t(Slope) = ^tslope (=> Drift over ^stx is not significant)
+delete nz; let nz = number yz; let nuz = nz - 2
+delete cutz; let cutz = tppf(.975,nuz)
+if tslope2 >= cutz
+   color red; let string stout =  Slope = ^slope   t(Slope) = ^tslope (=> Drift over ^stx is significant)
+end if
+move 16 87; text ^stout
+.
+color blue
+call annotate.dp
+.
+. -----Step 15: Mean plot of the data-----
+.
+let string header2 = Mean Plot
+xlim ^lowerxz ^upperxz
+line color blue all
+char circle bl; char fill on off; char hw 1.1 0.9; lines solid dotted
+char offset -.05 .10
+y1label: Mean ^sty; x1label ^stx
+mean plot yz xz
+.
+call annotate.dp
+delete header2
+.
+.
+. -----Step 99: Finish up-----
+.
+char hw 2 1 all
+xlim
+.
