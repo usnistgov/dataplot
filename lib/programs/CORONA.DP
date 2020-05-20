@@ -1,0 +1,118 @@
+. Name:     corona.dp
+. Purpose:  Use Python script to extract Excel file to a CSV
+.           file.  From this, create a space separeated file with a
+.           descriptive header for subsequent Dataplot use.  Finally,
+.           generate a Dataplot macro tha will read the space
+.           delimited file.
+.
+.           This macro demonstrates the use of the PYTHON and
+.           the WRITE1 and WRITE2 commands.
+.           extract the Excel file to a CSV file.
+.
+. Step 0:   Define some basic strings and file names
+.
+let string base = CORONA_VIRUS_COUNTRY_RANKINGS_042920
+let string ext1 = .CSV
+let string ext2 = .TXT
+let string ext3 = .DP
+let string ext4 = .XLSX
+let fname1 = string concatenate base ext1
+let fname2 = string concatenate base ext2
+let fname3 = string concatenate base ext3
+let fname4 = string concatenate base ext4
+.
+. Step 1:   Use Python to create the CSV file
+.
+capture script read_corona.py
+#  This Python script will read an Excel file and write the in
+#  contents as a CSV file".  This script is specific to the Corona
+#  virus Excel file, so omit the error checking code.
+#
+#  Step 1: Import needed packages
+#
+import pandas as pd
+from pandas import ExcelWriter
+from pandas import ExcelFile
+#
+#  Step 2: Read the Corona virus Excel file file with Pandas
+#
+df = pd.read_excel("^fname4")
+
+#
+#  Step 3: Now use Pandas to write the Excel file
+df.to_csv("^fname1")
+#
+end of capture
+.
+.           May need to use SET PYTHON PATH command
+.
+python read_corona.py
+.
+. Step 2:   Read Original File
+.
+set convert character categorical
+set read delimiter ,
+set read missing value -9999
+.
+skip 5
+read ^fname1 rowindex fileno country pop popurban medage areakm2 ...
+             areami2 denstkm2 denstmi2 junk cumcases cumdeath
+skip 0
+delete rowindex junk
+.
+let ig = character code string country
+let ntemp = size cumdeath
+.
+. Step 2:   Now create new output file
+.
+.           First generate the header
+.
+write1 ^fname2 "Name:        ^fname2"
+write1 ^fname2 "Description: Corona virus country rankings"
+write1 ^fname2 "Source:      xxxx"
+write1 ^fname2 "Data:        Column  1: Country"
+write1 ^fname2 "             Column  2: Population (millions)"
+write1 ^fname2 "             Column  3: Urban Population (millions)"
+write1 ^fname2 "             Column  4: Median Age"
+write1 ^fname2 "             Column  5: Area (1000 kilometers**2)"
+write1 ^fname2 "             Column  6: Area (1000 miles**2)"
+write1 ^fname2 "             Column  7: Population Density (1000 kilometers**2)"
+write1 ^fname2 "             Column  8: Population Density (1000 miles**2)"
+write1 ^fname2 "             Column  9: Cumulative Cases"
+write1 ^fname2 "             Column 10: Cumulative Deaths"
+write1 ^fname2 " "
+write1 ^fname2 " "
+write1 ^fname2 " "
+write1 ^fname2 " "
+write1 ^fname2 " "
+write1 ^fname2 " "
+write1 ^fname2 " "
+write1 ^fname2 " "
+write1 ^fname2 " "
+write1 ^fname2 " "
+write1 ^fname2 "COUNTRY  POP POPURBAN MEDAGE AREAKM2 AREAMI2 DENSTKM2 DENSTMI2 CUMCASES CUMDEATH"
+write1 ^fname2 "--------------------------------------------------------------------------------"
+.
+.           Now write the data
+.
+set write format F5.0,3F10.1,4F10.0,2F12.0
+write1 ^fname2 country pop popurban medage areakm2 ...
+               areami2 denstkm2 denstmi2 cumcases cumdeath
+set write format
+.
+. Step 3:   Now create Dataplot macro to read the new file
+.
+write2 ^fname3  ". Name:    ^fname3"
+write2 ^fname3  ". Purpose: Read ^fname2"
+write2 ^fname3  "."
+write2 ^fname3  "skip 25"
+write2 ^fname3  "set read format F5.0,3F10.1,4F10.0,2F12.0"
+write2 ^fname3  "read ^fname2 country pop popurban medage areakm2 areami2 denstkm2 denstmi2 cumcases cumdeath"
+write2 ^fname3  "skip 0"
+write2 ^fname3  "set read format"
+write2 ^fname3  "."
+loop for k = 1 1 ntemp
+write2 ^fname3  "let string cntry^k = ^ig^k"
+end of loop
+write2 ^fname3  "."
+.

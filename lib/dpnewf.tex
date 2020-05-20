@@ -1,5 +1,5 @@
 9.
-                                                     January  2020
+                                                     April     2020
 This is the DATAPLOT News file DPNEWF.TEX.  This NEWS file contains a
 list of DATAPLOT enhancements.  Some commands may be documented here
 that are not yet available in the standard documentation.
@@ -7,6 +7,62 @@ that are not yet available in the standard documentation.
 The complete news file can be viewed at
 
     http://www.itl.nist.gov/div898/software/dataplot/news.htm
+
+-----------------------------------------------------------------------
+The following enhancements were made to DATAPLOT
+March 2020 - April 2020.
+-----------------------------------------------------------------------
+
+ 1) The SET SEARCH DIRECTORY command has been enhanced to allow five
+    additional directories that can added to Dataplot's list of directories
+    to search for file names.
+
+       SET SEARCH2 DIRECTORY <directory-name>
+       SET SEARCH3 DIRECTORY <directory-name>
+       SET SEARCH4 DIRECTORY <directory-name>
+       SET SEARCH5 DIRECTORY <directory-name>
+       SET SEARCH6 DIRECTORY <directory-name>
+
+ 2) Added the command
+
+       OUTPUT  <name>
+
+    This command executes the following command
+
+       DEVICE 2 CLOSE
+       SET IPL1NA <name>.ps
+       DEVICE 2 POSTSCRIPT
+
+ 3) Added the command
+
+       SET WRITE CSV  <ON/OFF>
+
+    If this is set to ON, the WRITE command will use commas rather
+    than spaces as the delimiter between fields.  This is primarily
+    intended for importing into other programs that may require
+    comma separated variables (CSV) for ASCII files.
+
+ 4) For the commands BEST DISTRIBUTIONAL FIT and DISTRIBUTIONAL FIT PLOT,
+    you can now specify which distributions to include.  Enter
+    HELP BEST DISTRIBUTIONAL FIT command for details.
+
+ 5) The READ EXCEL command was updated so that you can specify the
+    first and last rows of the Excel file to read.
+
+        SET EXCEL START ROW <value>
+        SET EXCEL STOP  ROW <value>
+
+    One use of this is to skip over header lines in the Excel file.
+
+ 6) The maximum number of characters for the command line was
+    increased from 255 to 1024.  The maximum number of characters
+    for a file name was increased from 80 to 256.
+
+ 7) A large number of changes were made to remove warning messages
+    when using a more strigent level of warning messages for the
+    gfortran and Intel compilers.  These changes do not change
+    any Dataplot commands, but it did correct several potential
+    bugs.
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
@@ -302,7 +358,7 @@ September 2019 - February 2020.
              SET WORD VIEWER         "<application-name>"
              SET POWER POINT VIEWER  "<application-name>"
 
-       Dataplot does not error checking to see if <application-name>
+       Dataplot does no error checking to see if <application-name>
        is in fact installed on your system.
 
        For example, to explicitly use libreoffice applications

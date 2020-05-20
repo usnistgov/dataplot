@@ -1,4 +1,4 @@
-34400.      (VERSION 2020.02)   total number of lines in file (including this line)
+34400.      (VERSION 2020.05)   total number of lines in file (including this line)
  8.                          number of     sections below
   100.    T                  first line number of T section
 15700.    U                  first line number of U section
@@ -27872,6 +27872,16 @@ Note:
 
         WRITE Y1 Y2 Y3
 
+Note:
+    The 2020/05 version of Dataplot added the following command
+
+        SET WRITE CSV <ON/OFF>
+
+    Setting this to ON will write the file as a comma separated values
+    (CSV) file.  This option in intended primarily for the case where you
+    want to import the file into another program that expects ASCII files
+    to be in CSV format.
+
 Default:
     None
  
@@ -28561,16 +28571,6 @@ Program:
     XX
 
 ---------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
 
 
 

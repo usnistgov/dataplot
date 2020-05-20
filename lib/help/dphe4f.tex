@@ -1,4 +1,4 @@
-47800.      (VERSION 2020.01)   total number of lines in file (including this line)
+47800.      (VERSION 2020.05)   total number of lines in file (including this line)
  4.                          number of     sections below
   100.    L                  first line number of L section
 19400.    M                  first line number of M section
@@ -47555,6 +47555,64 @@ Program:
     .
     LIST FIT.OUT
  
+-----OUTPUT-------------------------------------------------------
+ 
+OUTPUT
+ 
+Name:
+    OUTPUT
+ 
+Type:
+    Output Device Command
+ 
+Purpose:
+    Specifies the name of the DEVICE 2 output file.
+
+Description:
+    Entering
+
+         OUTPUT PLOT
+
+    is equivalent to entering the commands
+
+         DEVICE 2 CLOSE
+         SET IPL1NA PLOT.PS
+         DEVICE 2 POSTSCRIPT
+
+    This is a convenience command to simplify renaming the DEVICE 2
+    output file.
+
+Syntax:
+    OUTPUT <name>
+    where <name> is the base name of the graphics output file.
+ 
+    Dataplot will automatically add ".PS" to <name>.
+ 
+Examples:
+    OUTPUT PLOT1
+    OUTPUT HISTOGRAM
+ 
+Default:
+    The default name for the DEVICe 2 output file is "dppl1f.dat".
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    DEVICE       = Specify a grahics device.
+    SET IPL1NA   = Specify the name of the DEVICE 2 graphics output file.
+ 
+Applications:
+    Managing Graphics Output
+ 
+Implementation Date:
+    2020/05
+ 
+Program:
+    OUTPUT HISTOGRAM
+    LET Y = NORMAL RANDOM NUMBERS FOR I = 1 1 500
+    HISTOGRAM Y
+ 
 -----OVAL-------------------------------------------------------
  
 OVAL
@@ -47733,64 +47791,6 @@ Program:
  
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

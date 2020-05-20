@@ -1,9 +1,9 @@
-66100.      (VERSION 2020.02)  total number of lines in file (including this line)
+66300.      (VERSION 2020.05)  total number of lines in file (including this line)
  4.                          number of     sections below
   100.    P                  first line number of P section
-22300.    Q                  first line number of Q section
-25400.    R                  first line number of R section
-42400.    S                  first line number of S section
+22400.    Q                  first line number of Q section
+25500.    R                  first line number of R section
+42500.    S                  first line number of S section
  
 ----------------------------------------------------------
  
@@ -22141,7 +22141,7 @@ Applications:
 Implementation Date:
     2019/12
  
-Program:
+Program 1:
     . Step 1:   Create the Python script using "capture script"
     .
     .           This example is just meant to demostrate the
@@ -22203,39 +22203,139 @@ Program:
     . Step 4:   Display the results
     .
     list output.txt
+ 
+Program 2:
+    . Purpose:  Use Python script to extract Excel file to a CSV
+    .           file.  From this, create a space separeated file with a
+    .           descriptive header for subsequent Dataplot use.  Finally,
+    .           generate a Dataplot macro tha will read the space
+    .           delimited file.
+    .
+    .           This macro demonstrates the use of the PYTHON and
+    .           the WRITE1 and WRITE2 commands.
+    .           extract the Excel file to a CSV file.
+    .
+    . Step 0:   Define some basic strings and file names
+    .
+    probe path
+    let string ipath = probestr
+    probe iopsy1
+    if probeval = 2
+       let string islash = \
+    else
+       let string islash = /
+    end of if
+    let string subdir = data
+    let ipath = string concatenate ipath subdir
+    .
+    let string base = CORONA_VIRUS_COUNTRY_RANKINGS_042920
+    let base = string concatenate ipath base
+    let string ext1 = .CSV
+    let string ext2 = .TXT
+    let string ext3 = .DP
+    let string ext4 = .XLSX
+    let fname1 = string concatenate base ext1
+    let fname2 = string concatenate base ext2
+    let fname3 = string concatenate base ext3
+    let fname4 = string concatenate base ext4
+    .
+    . Step 1:   Use Python to create the CSV file
+    .
+    capture script read_corona.py
+    #  This Python script will read an Excel file and write the in
+    #  contents as a CSV file".  This script is specific to the Corona
+    #  virus Excel file, so omit the error checking code.
+    #
+    #  Step 1: Import needed packages
+    #
+    import pandas as pd
+    from pandas import ExcelWriter
+    from pandas import ExcelFile
+    #
+    #  Step 2: Read the Corona virus Excel file file with Pandas
+    #
+    df = pd.read_excel("^fname4")
+    
+    #
+    #  Step 3: Now use Pandas to write the Excel file
+    df.to_csv("^fname1")
+    #
+    end of capture
+    .
+    .           May need to use SET PYTHON PATH command
+    .
+    python read_corona.py
+    .
+    . Step 2:   Read Original File
+    .
+    set convert character categorical
+    set read delimiter ,
+    set read missing value -9999
+    .
+    skip 5
+    read ^fname1 rowindex fileno country pop popurban medage areakm2 ...
+                 areami2 denstkm2 denstmi2 junk cumcases cumdeath
+    skip 0
+    delete rowindex junk
+    .
+    let ig = character code string country
+    let ntemp = size cumdeath
+    .
+    . Step 2:   Now create new output file
+    .
+    .           First generate the header
+    .
+    write1 ^fname2 "Name:        ^fname2"
+    write1 ^fname2 "Description: Corona virus country rankings"
+    write1 ^fname2 "Source:      xxxx"
+    write1 ^fname2 "Data:        Column  1: Country"
+    write1 ^fname2 "             Column  2: Population (millions)"
+    write1 ^fname2 "             Column  3: Urban Population (millions)"
+    write1 ^fname2 "             Column  4: Median Age"
+    write1 ^fname2 "             Column  5: Area (1000 kilometers**2)"
+    write1 ^fname2 "             Column  6: Area (1000 miles**2)"
+    write1 ^fname2 "             Column  7: Population Density (1000 kilometers**2)"
+    write1 ^fname2 "             Column  8: Population Density (1000 miles**2)"
+    write1 ^fname2 "             Column  9: Cumulative Cases"
+    write1 ^fname2 "             Column 10: Cumulative Deaths"
+    write1 ^fname2 " "
+    write1 ^fname2 " "
+    write1 ^fname2 " "
+    write1 ^fname2 " "
+    write1 ^fname2 " "
+    write1 ^fname2 " "
+    write1 ^fname2 " "
+    write1 ^fname2 " "
+    write1 ^fname2 " "
+    write1 ^fname2 " "
+    write1 ^fname2 "COUNTRY  POP POPURBAN MEDAGE AREAKM2 AREAMI2 DENSTKM2 DENSTMI2 CUMCASES CUMDEATH"
+    write1 ^fname2 "--------------------------------------------------------------------------------"
+    .
+    .           Now write the data
+    .
+    set write format F5.0,3F10.1,4F10.0,2F12.0
+    write1 ^fname2 country pop popurban medage areakm2 ...
+                   areami2 denstkm2 denstmi2 cumcases cumdeath
+    set write format
+    .
+    . Step 3:   Now create Dataplot macro to read the new file
+    .
+    write2 ^fname3  ". Name:    ^fname3"
+    write2 ^fname3  ". Purpose: Read ^fname2"
+    write2 ^fname3  "."
+    write2 ^fname3  "skip 25"
+    write2 ^fname3  "set read format F5.0,3F10.1,4F10.0,2F12.0"
+    write2 ^fname3  "read ^fname2 country pop popurban medage areakm2 areami2 denstkm2 denstmi2 cumcases cumdeath"
+    write2 ^fname3  "skip 0"
+    write2 ^fname3  "set read format"
+    write2 ^fname3  "."
+    loop for k = 1 1 ntemp
+    write2 ^fname3  "let string cntry^k = ^ig^k"
+    end of loop
+    write2 ^fname3  "."
+    .
 
 -------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -29003,6 +29103,10 @@ Description:
       cases, this may provide the simplest way to retrieve data from a
       spreadsheet.
 
+      Note: The 2020/02 version of Dataplot added the READ EXCEL command
+            to read Excel files using a Python script.  Enter
+            HELP READ EXCEL for details.
+
     CUT AND PASTE
 
     In some contexts, it may be desirable to simply cut and paste relevant
@@ -29814,6 +29918,15 @@ Note:
     Also, Dataplot will not search for the Excel file in the
     Dataplot auxiliary files directories as it does for the
     READ for ASCII files.
+
+    Note: The 2020/05 version of Dataplot now supports specifying the
+          first and last rows of the Excel file to read with the following
+          commands 
+
+              SET EXCEL START ROW <value>
+              SET EXCEL STOP  ROW <value>
+
+          One use of this is to skip over header lines in the Excel file.
 
 Note:
     Excel (or some other spreadsheet program) does not need to be
@@ -42384,19 +42497,6 @@ Program:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 -------------------------  *S*  ZZZZZ--------------------
  
 -----S CHART-----------------------------------------------------
@@ -44001,16 +44101,22 @@ Description:
        1. It will first look for the file in the current directory (you
           can enter the PWD command if you are not sure what that is).
 
-       2. If it does not find the file, it will look for the file in
+       2. If the command
+
+             SET HOME PATH ON
+
+          has been given, then your home directory will be searched next.
+
+       3. If it does not find the file, it will look for the file in
           the Dataplot auxillary directory.  By default, this will be
           "C:\Program Files (x86)\NIST\DATAPLOT" under Windows systems
           and "/usr/local/lib/dataplot" under Unix/Linux/Mac OS X
           systems.  However, this may be different on your platform.
 
           Dataplot first searches this directory and then the following
-          sub-directories "help", "data", "dex", "macros", "programs",
-          "text", "menu", "ps", and "tex" are searched (in the order
-          given).
+          sub-directories "help", "data", "dex", "10step", "macros",
+          "programs", "text", "menu", "ps", and "scripts" are searched
+          (in the order given).
 
     Note that under Unix/Linux/Mac OS X systems, which are case sensitive,
     Datatplot will first try to open the file name as given.  If the file
@@ -44028,14 +44134,56 @@ Description:
 
     Currently, this command is limited to a single directory.
 
-Syntax:
+    Note: The 2020/05 version of Dataplot added the SET SEARCH2 DIRECTORY,
+          SET SEARCH3 DIRECTORY, SET SEARCH4 DIRECTORY,
+          SET SEARCH5 DIRECTORY and SET SEARCH6 DIRECTORY commands to
+          allow up to six user specified directories to be searched.
+
+          The 2 to 6 suffix specifies the order in which the directories
+          are searched.  However, you do not have to define them in any
+          particular order.  For example, you can enter a SET SEARCH4
+          DIRECTORY command without entering a SET SEARCH3 DIRECTORY or
+          a SET SEARCH2 DIRECTORY command.
+
+Syntax 1:
     SET SEARCH DIRECTORY <string>
     where <string> specifies the desired directory name.
  
+Syntax 2:
+    SET SEARCH2 DIRECTORY <string>
+    where <string> specifies the desired directory name.
+ 
+    This specifies a second user specified directory.
+
+Syntax 3:
+    SET SEARCH3 DIRECTORY <string>
+    where <string> specifies the desired directory name.
+ 
+    This specifies a third user specified directory.
+
+Syntax 4:
+    SET SEARCH4 DIRECTORY <string>
+    where <string> specifies the desired directory name.
+ 
+    This specifies a fourth user specified directory.
+
+Syntax 5:
+    SET SEARCH5 DIRECTORY <string>
+    where <string> specifies the desired directory name.
+ 
+    This specifies a fifth user specified directory.
+
+Syntax 6:
+    SET SEARCH6 DIRECTORY <string>
+    where <string> specifies the desired directory name.
+ 
+    This specifies a sixth user specified directory.
+
 Examples:
     SET SEARCH DIRECTORY C:\DATAPLOT_MACROS
     SET SEARCH DIRECTORY C:\DATAPLOT_DATASETS
     SET SEARCH DIRECTORY /home/heckert/dataplot_macros
+    SET SEARCH2 DIRECTORY C:\MY_DATAPLOT_FILES
  
 Default:
     None
@@ -44055,6 +44203,7 @@ Applications:
  
 Implementation Date:
     2014/10
+    2020/05: Added SEARCH2, SEARCH3, SEARCH4, SEARCH5 and SEARCH6 options
  
 Program:
     . Assume "sample.dp" is in the /home/heckert/dataplot/macros directory
@@ -66038,6 +66187,57 @@ Program 2:
     feedback on
 
 ---------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -143,7 +143,7 @@ static int set_deftext ()
 /*
 static void usage()
 {
-  fprintf (stderr, "%s: usage: %s [-p prompt] [-u unit] [-d default] [-n nchars]\n",
+  printf ("%s: usage: %s [-p prompt] [-u unit] [-d default] [-n nchars]\n",
 		progname, progname);
 }
 */

@@ -22,20 +22,19 @@ C
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
 C
-C-----COMMON VARIABLES (EDITING)-----------------------------------------------
+C-----COMMON VARIABLES (EDITING)--------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
-C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDAB'
       ISUBN2='OR  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -72,20 +71,20 @@ C
  1208 FORMAT('NUMBER OF LINES   = ',I8)
       WRITE(ICOUT,999)
       CALL EDWRST('EDABOR')
+C
 C               *****************
 C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'ABOR')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDABOR')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDABOR')
- 9011 FORMAT('*****AT THE END       OF EDABOR--')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'ABOR')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDABOR')
+        WRITE(ICOUT,9011)
+        CALL EDWRST('EDABOR')
+ 9011   FORMAT('*****AT THE END       OF EDABOR--')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       IF(ICOM.EQ.'ABR'.OR.ICOM.EQ.'ABRR')RETURN
 CCCCC THE FOLLOWING LINE WAS FIXED JULY 1992
@@ -119,7 +118,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -145,14 +144,13 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'PRIN')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDACPR')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDACPR')
- 9011 FORMAT('***** AT THE END       OF EDACPR--')
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'PRIN')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDACPR')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDACPR--')
+        CALL EDWRST('EDACPR')
+      ENDIF
 C
       RETURN
       END
@@ -166,7 +164,10 @@ C     UPDATED         --APRIL   1993. FORMAT CHANGED FROM 80 TO 130
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -176,8 +177,6 @@ C
       CHARACTER*4 IENDFI
       CHARACTER*4 IREWIN
 C
-CCCCC THE FOLLOWING LINE WAS FIXED APRIL 1993
-CCCCC CHARACTER*80 IREC
       CHARACTER*240 IREC
       CHARACTER*1 ISTRIN
       CHARACTER*4 IFOUEX
@@ -190,18 +189,16 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDAD'
       ISUBN2='D   '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -398,7 +395,6 @@ C
       I=I+1
       ICHA(J)=IREC(I:I)
  2420 CONTINUE
- 2429 CONTINUE
       ICURLN=ICURLP
       NUMLIN=NUMLP1
       NUMROW=NUMRP1
@@ -479,7 +475,7 @@ C
       WRITE(ICOUT,9011)
       CALL EDWRST('EDADD ')
  9011 FORMAT('***** AT THE END       OF EDADD--')
-      WRITE(ICOUT,9013)IFILE
+      WRITE(ICOUT,9013)IFILE(1:80)
       CALL EDWRST('EDADD ')
  9013 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,9014)IOUNIT
@@ -601,7 +597,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -751,7 +747,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -825,7 +821,10 @@ C     ORIGINAL VERSION--JANUARY 1985.
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -844,30 +843,28 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDCA'
       ISUBN2='LL  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
-      IF(IBUGFI.EQ.'OFF'.AND.ISUBRO.NE.'CALL')GOTO90
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDCALL')
-  999 FORMAT(1X)
-      WRITE(ICOUT,51)
-      CALL EDWRST('EDCALL')
-   51 FORMAT('***** AT THE BEGINNING OF EDCALL--')
-      IF(IBUGT1.EQ.'ON')CALL EDTRA1
-   90 CONTINUE
+      IF(IBUGFI.EQ.'ON' .OR. ISUBRO.EQ.'CALL')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDCALL')
+  999   FORMAT(1X)
+        WRITE(ICOUT,51)
+        CALL EDWRST('EDCALL')
+   51   FORMAT('***** AT THE BEGINNING OF EDCALL--')
+        IF(IBUGT1.EQ.'ON')CALL EDTRA1
+      ENDIF
 C
 C
 C               *******************************************
@@ -909,7 +906,7 @@ C
       ISUBN0='CALP'
       IERRFI='NO'
 C
-      ICALNA=IFILE
+      ICALNA=IFILE(1:255)
       ICALST=ISTAT
 C
 C               *********************
@@ -944,25 +941,22 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGFI.EQ.'OFF'.AND.ISUBRO.NE.'CALL')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDCALL')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDCALL')
- 9011 FORMAT('***** AT THE END       OF EDCALL--')
-      WRITE(ICOUT,9013)IFILE
-      CALL EDWRST('EDCALL')
- 9013 FORMAT('IFILE = ',A80)
-      WRITE(ICOUT,9014)IOUNIT
-      CALL EDWRST('EDCALL')
- 9014 FORMAT('IOUNIT = ',I8)
-      WRITE(ICOUT,9015)ISTAT
-      CALL EDWRST('EDCALL')
- 9015 FORMAT('ISTAT = ',A12)
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDCALL')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGFI.EQ.'ON' .OR. ISUBRO.EQ.'CALL')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDCALL')
+        WRITE(ICOUT,9011)
+        CALL EDWRST('EDCALL')
+ 9011   FORMAT('***** AT THE END       OF EDCALL--')
+        WRITE(ICOUT,9013)IFILE(1:80)
+        CALL EDWRST('EDCALL')
+ 9013   FORMAT('IFILE = ',A80)
+        WRITE(ICOUT,9014)IOUNIT,ISTAT
+        CALL EDWRST('EDCALL')
+ 9014   FORMAT('IOUNIT,ISTAT = ',I8,2X,A12)
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDCALL')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -987,49 +981,42 @@ C
       CHARACTER*4 ISUBN2
 CCCCC CHARACTER*4 ISTEPN
 C
-C-----COMMON VARIABLES (EDITING)-----------------------------------------------
+C-----COMMON VARIABLES (EDITING)---------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
-C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
+C-----COMMON VARIABLES (GENERAL)---------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDCE'
       ISUBN2='N2  '
 C
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'CEN2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL EDWRST('EDCEN2')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF EDCEN2--')
+        CALL EDWRST('EDCEN2')
+        WRITE(ICOUT,71)NUMCOL,NUMCNL,ICENTC
+   71   FORMAT('NUMCOL,NUMCNL,ICENTC = ',3I8)
+        CALL EDWRST('EDCEN2')
+        WRITE(ICOUT,72)(IOLDLI(I),I=1,MIN(110,NUMCOL))
+   72   FORMAT('(IOLDLI(I),I=1,NUMCOL) = ',110A1)
+        CALL EDWRST('EDCEN2')
+        WRITE(ICOUT,74)(INEWLI(I),I=1,MIN(110,NUMCNL))
+   74   FORMAT('(INEWLI(I),I=1,NUMCNL) = ',110A1)
+        CALL EDWRST('EDCEN2')
+      ENDIF
 C
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'CEN2')GOTO90
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDCEN2')
-  999 FORMAT(1X)
-      WRITE(ICOUT,51)
-      CALL EDWRST('EDCEN2')
-   51 FORMAT('***** AT THE BEGINNING OF EDCEN2--')
-      WRITE(ICOUT,71)NUMCOL
-      CALL EDWRST('EDCEN2')
-   71 FORMAT('NUMCOL = ',I8)
-      WRITE(ICOUT,72)(IOLDLI(I),I=1,NUMCOL)
-      CALL EDWRST('EDCEN2')
-   72 FORMAT('(IOLDLI(I),I=1,NUMCOL) = ',110A1)
-      WRITE(ICOUT,73)NUMCNL
-      CALL EDWRST('EDCEN2')
-   73 FORMAT('NUMCNL = ',I8)
-      WRITE(ICOUT,74)(INEWLI(I),I=1,NUMCNL)
-      CALL EDWRST('EDCEN2')
-   74 FORMAT('(INEWLI(I),I=1,NUMCNL) = ',110A1)
-      WRITE(ICOUT,81)ICENTC
-      CALL EDWRST('EDCEN2')
-   81 FORMAT('ICENTC = ',I8)
-   90 CONTINUE
-C
-C               ************************************************************
-C               **  STEP 1--                                              **
-C               **  DETERMINE THE FIRST NON-BLANK CHARACTER IN IOLDLI(.)  **
-C               ************************************************************
+C               *********************************************************
+C               **  STEP 1--                                           **
+C               **  DETERMINE THE FIRST NON-BLANK CHARACTER IN IOLDLI(.)*
+C               *********************************************************
 C
       I2=0
       IF(NUMCOL.LE.0)GOTO1190
@@ -1105,29 +1092,25 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'CEN2')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDCEN2')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDCEN2')
- 9011 FORMAT('***** AT THE END       OF EDCEN2--')
-      WRITE(ICOUT,9031)NUMCOL
-      CALL EDWRST('EDCEN2')
- 9031 FORMAT('NUMCOL = ',I8)
-      WRITE(ICOUT,9032)(IOLDLI(I),I=1,NUMCOL)
-      CALL EDWRST('EDCEN2')
- 9032 FORMAT('(IOLDLI(I),I=1,NUMCOL) = ',110A1)
-      WRITE(ICOUT,9033)NUMCNL
-      CALL EDWRST('EDCEN2')
- 9033 FORMAT('NUMCNL = ',I8)
-      WRITE(ICOUT,9034)(INEWLI(I),I=1,NUMCNL)
-      CALL EDWRST('EDCEN2')
- 9034 FORMAT('(INEWLI(I),I=1,NUMCNL) = ',110A1)
-      WRITE(ICOUT,9041)IFIRST,ILAST,ICENT1,ICENT2,ISHIFT
-      CALL EDWRST('EDCEN2')
- 9041 FORMAT('IFIRST,ILAST,ICENT1,ICENT2,ISHIFT = ',5I8)
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'CEN2')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDCEN2')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDCEN2--')
+        CALL EDWRST('EDCEN2')
+        WRITE(ICOUT,9031)NUMCOL,NUMCNL
+ 9031   FORMAT('NUMCOL,NUMCNL = ',2I8)
+        CALL EDWRST('EDCEN2')
+        WRITE(ICOUT,9032)(IOLDLI(I),I=1,NUMCOL)
+ 9032   FORMAT('(IOLDLI(I),I=1,MIN(110,NUMCOL)) = ',110A1)
+        CALL EDWRST('EDCEN2')
+        WRITE(ICOUT,9034)(INEWLI(I),I=1,NUMCNL)
+ 9034   FORMAT('(INEWLI(I),I=1,MIN(110,NUMCNL)) = ',110A1)
+        CALL EDWRST('EDCEN2')
+        WRITE(ICOUT,9041)IFIRST,ILAST,ICENT1,ICENT2,ISHIFT
+ 9041   FORMAT('IFIRST,ILAST,ICENT1,ICENT2,ISHIFT = ',5I8)
+        CALL EDWRST('EDCEN2')
+      ENDIF
 C
       RETURN
       END
@@ -1161,7 +1144,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -1299,7 +1282,6 @@ C
       CALL EDCHSI(NUMCH9)
       IF(IERROR.EQ.'YES')GOTO9000
 C
- 2450 CONTINUE
       IF(ILINE.LT.1)GOTO2460
       IF(ILINE.GT.NUMLIN)GOTO2470
       GOTO2490
@@ -1315,7 +1297,6 @@ C
          CALL EDWRST('EDCENT')
       ENDIF
  2462 FORMAT(10X,'[TOP]')
- 2469 CONTINUE
       GOTO2100
 C
  2470 CONTINUE
@@ -1329,7 +1310,6 @@ C
          CALL EDWRST('EDCENT')
       ENDIF
  2472 FORMAT(10X,'[BOTTOM]')
- 2479 CONTINUE
       GOTO9000
 C
  2490 CONTINUE
@@ -1497,12 +1477,15 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDCH'
       ISUBN2='A2  '
+      DO10I=1,240
+        IMASKV(I)=' '
+   10 CONTINUE
 C
       JPIM1=(-999)
 C
@@ -1733,7 +1716,6 @@ CCCCC TO ALLOW FOR WORD MASK       APRIL 1990
       J=JPIM1
       IF(IGLOBA.EQ.'ON')GOTO2100
 C
- 2400 CONTINUE
 CCCCC THE FOLLOWING LINE WAS FIXED APRIL 1990
 CCCCC J=J+1
       IF(IMWSW.EQ.'ON')J=J-1
@@ -1842,7 +1824,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -2098,7 +2080,6 @@ C
       CALL EDCHSI(NUMCH2)
       IF(IERROR.EQ.'YES')GOTO9000
 C
- 2450 CONTINUE
       IF(ILINE.LT.1)GOTO2460
       IF(ILINE.GT.NUMLIN)GOTO2470
       GOTO2490
@@ -2114,7 +2095,6 @@ C
          CALL EDWRST('EDCHAN')
       ENDIF
  2462 FORMAT(10X,'[TOP]')
- 2469 CONTINUE
       GOTO2100
 C
  2470 CONTINUE
@@ -2128,7 +2108,6 @@ C
          CALL EDWRST('EDCHAN')
       ENDIF
  2472 FORMAT(10X,'[BOTTOM]')
- 2479 CONTINUE
       GOTO9000
 C
  2490 CONTINUE
@@ -2303,13 +2282,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-------------------------------------------
 C
       ISUBN1='EDCH'
       ISUBN2='SI  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -2461,7 +2439,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -2510,23 +2488,16 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGFI.EQ.'OFF'.AND.ISUBRO.NE.'CLFI')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDCLFI')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDCLFI')
- 9011 FORMAT('***** AT THE END       OF EDCLFI--')
-      WRITE(ICOUT,9012)IOUNIT
-      CALL EDWRST('EDCLFI')
- 9012 FORMAT('IOUNIT = ',I8)
-      WRITE(ICOUT,9013)IENDFI
-      CALL EDWRST('EDCLFI')
- 9013 FORMAT('IENDFI = ',A4)
-      WRITE(ICOUT,9014)IENDFI
-      CALL EDWRST('EDCLFI')
- 9014 FORMAT('IENDFI = ',A4)
- 9090 CONTINUE
+      IF(IBUGFI.EQ.'ON' .OR. ISUBRO.EQ.'CLFI')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDCLFI')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDCLFI--')
+        CALL EDWRST('EDCLFI')
+        WRITE(ICOUT,9012)IOUNIT,IENDFI
+ 9012   FORMAT('IOUNIT,IENDFI = ',I8,2X,A4)
+        CALL EDWRST('EDCLFI')
+      ENDIF
 C
       RETURN
       END
@@ -2543,7 +2514,10 @@ C     ORIGINAL VERSION--JANUARY 1985.
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -2565,18 +2539,16 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDLI'
       ISUBN2='ST  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -2676,7 +2648,7 @@ C
 C
       WRITE(ICOUT,999)
       CALL EDWRST('EDCLOS')
-      WRITE(ICOUT,1305)IFILE
+      WRITE(ICOUT,1305)IFILE(1:80)
       CALL EDWRST('EDCLOS')
  1305 FORMAT(10X,'FILE = ',A80)
       WRITE(ICOUT,999)
@@ -2686,26 +2658,22 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'ADD')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDCLOS')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDCLOS')
- 9011 FORMAT('***** AT THE END       OF EDCLOS--')
-      WRITE(ICOUT,9013)IFILE
-      CALL EDWRST('EDCLOS')
- 9013 FORMAT('IFILE = ',A80)
-      WRITE(ICOUT,9014)IOUNIT
-      CALL EDWRST('EDCLOS')
- 9014 FORMAT('IOUNIT = ',I8)
-      WRITE(ICOUT,9015)ISTAT
-      CALL EDWRST('EDCLOS')
- 9015 FORMAT('ISTAT = ',A12)
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDCLOS')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'CLOS')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDCLOS')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDCLOS--')
+        CALL EDWRST('EDCLOS')
+        WRITE(ICOUT,9013)IFILE(1:80)
+ 9013   FORMAT('IFILE = ',A80)
+        CALL EDWRST('EDCLOS')
+        WRITE(ICOUT,9014)IOUNIT,ISTAT
+ 9014   FORMAT('IOUNIT,ISTAT = ',I8,2X,A12)
+        CALL EDWRST('EDCLOS')
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDCLOS')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -2737,7 +2705,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -2920,7 +2888,10 @@ CCCCC UPDATED         --APRIL   1993.  FORMAT CHANGED FROM 80 TO 130
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -2941,18 +2912,16 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDCO'
       ISUBN2='P1  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -3138,35 +3107,28 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'COP1')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDCOP1')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDCOP1')
- 9011 FORMAT('***** AT THE END       OF EDCOP1--')
-      WRITE(ICOUT,9013)IFILE
-      CALL EDWRST('EDCOP1')
- 9013 FORMAT('IFILE = ',A80)
-      WRITE(ICOUT,9014)IOUNIT
-      CALL EDWRST('EDCOP1')
- 9014 FORMAT('IOUNIT = ',I8)
-      WRITE(ICOUT,9015)ISTAT
-      CALL EDWRST('EDCOP1')
- 9015 FORMAT('ISTAT = ',A12)
-      WRITE(ICOUT,9016)NUMLIN,NUMCHA
-      CALL EDWRST('EDCOP1')
- 9016 FORMAT('NUMLIN,NUMCHA = ',2I8)
-      WRITE(ICOUT,9017)ICURLN,IFOUEX
-      CALL EDWRST('EDCOP1')
- 9017 FORMAT('ICURLN,IFOUEX = ',I8,2X,A4)
-      WRITE(ICOUT,9018)IBLIM1,IBLIM2,IMIN,IMAX
-      CALL EDWRST('EDCOP1')
- 9018 FORMAT('IBLIM1,IBLIM2,IMIN,IMAX = ',4I8)
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDCOP1')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'COP1')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDCOP1')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDCOP1--')
+        CALL EDWRST('EDCOP1')
+        WRITE(ICOUT,9013)IFILE(1:80)
+ 9013   FORMAT('IFILE = ',A80)
+        CALL EDWRST('EDCOP1')
+        WRITE(ICOUT,9014)IOUNIT,NUMLIN,NUMCHA,ICURLN
+ 9014   FORMAT('IOUNIT,NUMLIN,NUMCHA,ICURLN = ',4I8)
+        CALL EDWRST('EDCOP1')
+        WRITE(ICOUT,9015)ISTAT,IFOUEX
+ 9015   FORMAT('ISTAT,IFOUEX = ',A12,2X,A4)
+        CALL EDWRST('EDCOP1')
+        WRITE(ICOUT,9018)IBLIM1,IBLIM2,IMIN,IMAX
+ 9018   FORMAT('IBLIM1,IBLIM2,IMIN,IMAX = ',4I8)
+        CALL EDWRST('EDCOP1')
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDCOP1')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -3188,7 +3150,10 @@ CCCCC UPDATED         --APRIL   1993.  FORMAT CHANGED FROM 80 TO 130
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -3209,12 +3174,11 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -3539,7 +3503,7 @@ C
       WRITE(ICOUT,9011)
       CALL EDWRST('EDCOP2')
  9011 FORMAT('***** AT THE END       OF EDCOP2--')
-      WRITE(ICOUT,9013)IFILE
+      WRITE(ICOUT,9013)IFILE(1:80)
       CALL EDWRST('EDCOP2')
  9013 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,9014)IOUNIT
@@ -3578,7 +3542,10 @@ CCCCC UPDATED         --APRIL   1993.  FORMAT CHANGED FROM 80 TO 130
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -3598,18 +3565,16 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDCO'
       ISUBN2='P3  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -3829,7 +3794,6 @@ C
       I=I+1
       ICHA(J)=IREC(I:I)
  3420 CONTINUE
- 3429 CONTINUE
       ICURLN=ICURLP
       NUMLIN=NUMLP1
       NUMROW=NUMRP1
@@ -3911,7 +3875,7 @@ C
       WRITE(ICOUT,9011)
       CALL EDWRST('EDCOP3')
  9011 FORMAT('*****AT THE END       OF EDCOP3--')
-      WRITE(ICOUT,9013)IFILE
+      WRITE(ICOUT,9013)IFILE(1:80)
       CALL EDWRST('EDCOP3')
  9013 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,9014)IOUNIT
@@ -3962,7 +3926,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -4021,36 +3985,29 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'COST')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDCOST')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDCOST')
- 9011 FORMAT('***** AT THE END       OF EDCOST--')
-      WRITE(ICOUT,9012)NCTEMP
-      CALL EDWRST('EDCOST')
- 9012 FORMAT('NCTEMP = ',I8)
-      IF(NCTEMP.GE.1)THEN
-         WRITE(ICOUT,9013)(ICTEMP(I:I),I=1,NCTEMP)
-         CALL EDWRST('EDCOST')
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'COST')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDCOST')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDCOST--')
+        CALL EDWRST('EDCOST')
+        WRITE(ICOUT,9012)NCTEMP,IWIDTH,IMAX
+ 9012   FORMAT('NCTEMP,IWIDTH,IMAX = ',3I8)
+        CALL EDWRST('EDCOST')
+        IF(NCTEMP.GE.1)THEN
+          WRITE(ICOUT,9013)(ICTEMP(I:I),I=1,NCTEMP)
+ 9013     FORMAT('(ICTEMP(I:I),I=1,NCTEMP) = ',110A1)
+          CALL EDWRST('EDCOST')
+        ENDIF
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,9023)(IANS(I),I=1,IWIDTH)
+ 9023     FORMAT('(IANS(I),I=1,IWIDTH) = ',110A1)
+          CALL EDWRST('EDCOST')
+        ENDIF
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDCOST')
+        IF(IBUGT1.EQ.'ON')CALL EDTRA1
       ENDIF
- 9013 FORMAT('(ICTEMP(I:I),I=1,NCTEMP) = ',110A1)
-      WRITE(ICOUT,9022)IWIDTH
-      CALL EDWRST('EDCOST')
- 9022 FORMAT('IWIDTH = ',I8)
-      IF(IWIDTH.GE.1)THEN
-         WRITE(ICOUT,9023)(IANS(I),I=1,IWIDTH)
-         CALL EDWRST('EDCOST')
-      ENDIF
- 9023 FORMAT('(IANS(I),I=1,IWIDTH) = ',110A1)
-      WRITE(ICOUT,9032)IMAX
-      CALL EDWRST('EDCOST')
- 9032 FORMAT('IMAX = ',I8)
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDCOST')
-      IF(IBUGT1.EQ.'ON')CALL EDTRA1
- 9090 CONTINUE
 C
       RETURN
       END
@@ -4085,24 +4042,24 @@ C
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
 C
-C-----COMMON VARIABLES (EDITING)-----------------------------------------------
+C-----COMMON VARIABLES (EDITING)---------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
-C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
+C-----COMMON VARIABLES (GENERAL)---------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDCU'
       ISUBN2='T   '
-C
       IFOUND='YES'
       IERROR='NO'
-C
       IEOF='NO'
+C
+      NUMCST=0
       IARG1=(-999)
       IARG2=(-999)
       J=(-999)
@@ -4219,7 +4176,6 @@ C
  2310 CONTINUE
       IF(IC1.LE.(-1))GOTO9000
 C
- 2390 CONTINUE
       IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'CUT')GOTO2399
       WRITE(ICOUT,2391)IC1
       CALL EDWRST('EDCUT ')
@@ -4387,7 +4343,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -4423,27 +4379,28 @@ C               **  EXIT       **
 C               *****************
 C
 C
- 9000 CONTINUE
-      IF(IBUGMA.EQ.'OFF'.AND.ISUBRO.NE.'DEBL')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDDEBL')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDDEBL')
- 9011 FORMAT('***** AT THE END       OF EDDEBL--')
-      WRITE(ICOUT,9012)IBUGMA,IERROR
-      CALL EDWRST('EDDEBL')
- 9012 FORMAT('IBUGMA,IERROR = ',A4,2X,A4)
-      WRITE(ICOUT,9013)NUMCST
-      CALL EDWRST('EDDEBL')
- 9013 FORMAT('NUMCST = ',I8)
-      IF(NUMCST.GE.1)WRITE(ICOUT,9014)(ISTRIN(I),I=1,NUMCST)
-      IF(NUMCST.GE.1)CALL EDWRST('EDDEBL')
- 9014 FORMAT('(ISTRIN(I),I=1,NUMCST) = ',80A1)
- 9090 CONTINUE
+      IF(IBUGMA.EQ.'ON' .OR. ISUBRO.EQ.'DEBL')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDDEBL')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDDEBL--')
+        CALL EDWRST('EDDEBL')
+        WRITE(ICOUT,9012)IBUGMA,IERROR
+ 9012   FORMAT('IBUGMA,IERROR = ',A4,2X,A4)
+        CALL EDWRST('EDDEBL')
+        WRITE(ICOUT,9013)NUMCST
+ 9013   FORMAT('NUMCST = ',I8)
+        CALL EDWRST('EDDEBL')
+        IF(NUMCST.GE.1)THEN
+          WRITE(ICOUT,9014)(ISTRIN(I),I=1,NUMCST)
+ 9014     FORMAT('(ISTRIN(I),I=1,NUMCST) = ',80A1)
+          CALL EDWRST('EDDEBL')
+        ENDIF
+      ENDIF
 C
       RETURN
       END
-      SUBROUTINE EDDEFI(IHARLC,IHARL2)
+      SUBROUTINE EDDEFI(IHARLC)
 C
 C     PURPOSE--CREATE USER-DEFINED COMMANDS.
 C     USED INPUT  ARGUMENTS--IHARLC  (A CHARACTER VECTOR)
@@ -4469,7 +4426,6 @@ C
 C-----NON-COMMON VARIABLES----------------------------------------
 C
       CHARACTER*4 IHARLC
-      CHARACTER*4 IHARL2
 C
       CHARACTER*30 ICOM5J
       CHARACTER*4 IC4
@@ -4479,13 +4435,12 @@ C
       CHARACTER*30 ICTE30
 C
       DIMENSION IHARLC(*)
-      DIMENSION IHARL2(*)
 C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
 CCCCC CHARACTER*4 ISTEPN
 C
-C-----COMMON VARIABLES (EDITING)-----------------------------------------------
+C-----COMMON VARIABLES (EDITING)---------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
@@ -4493,13 +4448,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDDE'
       ISUBN2='FI  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -4741,13 +4695,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDDE'
       ISUBN2='LE  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -4977,13 +4930,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDDE'
       ISUBN2='LI  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -5185,13 +5137,12 @@ CCCCC THE FOLLOWING LINE WAS ADDED (FOR MENU/GUI)   MAY 1993
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-------------------------------------------
 C
       ISUBN1='EDDE'
       ISUBN2='MN  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -5370,7 +5321,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -5396,14 +5347,13 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'PRIN')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDDEPR')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDDEPR')
- 9011 FORMAT('***** AT THE END       OF EDDEPR--')
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'PRIN')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDDEPR')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDDEPR--')
+        CALL EDWRST('EDDEPR')
+      ENDIF
 C
       RETURN
       END
@@ -5439,7 +5389,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -5602,7 +5552,6 @@ C
       I=I+1
       ICHA(J)=ISTRIN(I)
  1585 CONTINUE
- 1589 CONTINUE
       NUMROW=NUMRP1
       NUMCHA=J2
       GOTO9000
@@ -5654,7 +5603,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-------------------------------------------
 C
@@ -5667,7 +5616,6 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
       RETURN
       END
       SUBROUTINE EDDUPL
@@ -5699,13 +5647,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDDU'
       ISUBN2='PL  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -5801,7 +5748,6 @@ C
       CALL EDCHSI(NUMCHP)
       IF(IERROR.EQ.'YES')GOTO9000
 C
- 1550 CONTINUE
       DO1555IDUP=1,NUMDUP
 C
       IF(ICURLN.GT.NUMLIN)ICURLN=NUMLIN
@@ -5836,7 +5782,6 @@ C
       I=I+1
       ICHA(J)=ISTRIN(I:I)
  1570 CONTINUE
- 1579 CONTINUE
       ICURLN=ICURLP
       IF(IDUP.EQ.1)IMIN=ICURLN
       NUMLIN=NUMLP1
@@ -5963,28 +5908,27 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDEA'
       ISUBN2='    '
-C
       IFOUND='YES'
       IERROR='NO'
 C
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'EA')GOTO90
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDEA  ')
-  999 FORMAT(1X)
-      WRITE(ICOUT,51)
-      CALL EDWRST('EDEA  ')
-   51 FORMAT('***** AT THE BEGINNING OF EDEA--')
-      WRITE(ICOUT,52)NUMARG,IWIDTH
-      CALL EDWRST('EDEA  ')
-   52 FORMAT('NUMARG,IWIDTH = ',2I8)
-      IF(IBUGT1.EQ.'ON')CALL EDTRA1
-   90 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'EA')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL EDWRST('EDEA  ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF EDEA--')
+        CALL EDWRST('EDEA  ')
+        WRITE(ICOUT,52)NUMARG,IWIDTH
+   52   FORMAT('NUMARG,IWIDTH = ',2I8)
+        CALL EDWRST('EDEA  ')
+        IF(IBUGT1.EQ.'ON')CALL EDTRA1
+      ENDIF
 C
 C               *******************************************
 C               **  STEP 11--                            **
@@ -6031,7 +5975,7 @@ C
       IF(IANS0(I).EQ.' ')IWIDTH=J
       IF(IANS0(I).EQ.' ')GOTO2118
       J=J+1
-      IANS(J)=IANS0(I)
+      IANS(J)=IANS0(I)(1:1)
       IF(IBUGED.EQ.'OFF'.AND.ISUBRO.EQ.'EA')THEN
          WRITE(ICOUT,2111)I,J,IANS0(I),IANS(J)
          CALL EDWRST('EDEA  ')
@@ -6054,7 +5998,7 @@ C
  2170 CONTINUE
       IWIDTH=IWIDT0
       DO2175I=1,IWIDT0
-      IANS(I)=IANS0(I)
+        IANS(I)=IANS0(I)(1:1)
  2175 CONTINUE
       ICOM='EA  '
       ICOM2='    '
@@ -6067,29 +6011,25 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'EA')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDEA  ')
-      WRITE(ICOUT,9021)
-      CALL EDWRST('EDEA  ')
- 9021 FORMAT('***** AT THE END       OF EDEA--')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDEA  ')
-      WRITE(ICOUT,9012)NUMARG,IWIDTH
-      CALL EDWRST('EDEA  ')
- 9012 FORMAT('NUMARG,IWIDTH = ',2I8)
-      WRITE(ICOUT,9013)(IANS(I),I=1,IWIDTH)
-      CALL EDWRST('EDEA  ')
- 9013 FORMAT('(IANS(I),I=1,IWIDTH) = ',210A1)
-      WRITE(ICOUT,9014)IWIDT0
-      CALL EDWRST('EDEA  ')
- 9014 FORMAT('IWIDT0 = ',I8)
-      WRITE(ICOUT,9015)(IANS0(I),I=1,IWIDT0)
-      CALL EDWRST('EDEA  ')
- 9015 FORMAT('(IANS0(I),I=1,IWIDT0) = ',80A1)
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'EA')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDEA  ')
+        WRITE(ICOUT,9021)
+ 9021   FORMAT('***** AT THE END       OF EDEA--')
+        CALL EDWRST('EDEA  ')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDEA  ')
+        WRITE(ICOUT,9012)NUMARG,IWIDTH,IWIDTO
+ 9012   FORMAT('NUMARG,IWIDTH,IWIDTO = ',3I8)
+        CALL EDWRST('EDEA  ')
+        WRITE(ICOUT,9013)(IANS(I),I=1,IWIDTH)
+ 9013   FORMAT('(IANS(I),I=1,IWIDTH) = ',210A1)
+        CALL EDWRST('EDEA  ')
+        WRITE(ICOUT,9015)(IANS0(I),I=1,MIN(80,IWIDT0))
+ 9015   FORMAT('(IANS0(I),I=1,IWIDT0) = ',80A1)
+        CALL EDWRST('EDEA  ')
+      ENDIF
 C
       RETURN
       END
@@ -6117,13 +6057,12 @@ C
       INCLUDE 'EDCOMM.INC'
 C
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDEC'
       ISUBN2='CO  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -6169,18 +6108,17 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'ECCO')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDECCO')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDECCO')
- 9011 FORMAT('*****AT THE END       OF EDECCO--')
-      WRITE(ICOUT,9012)IWIDTH,IMAX
-      CALL EDWRST('EDECCO')
- 9012 FORMAT('IWIDTH,IMAX = ',2I8)
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'ECCO')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDECCO')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('*****AT THE END       OF EDECCO--')
+        CALL EDWRST('EDECCO')
+        WRITE(ICOUT,9012)IWIDTH,IMAX
+ 9012   FORMAT('IWIDTH,IMAX = ',2I8)
+        CALL EDWRST('EDECCO')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -6201,56 +6139,52 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-------------------------------------------
 C
       ISUBN1='EDED'
       ISUBN2='IT  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'EDIT')GOTO90
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDEDIT')
-  999 FORMAT(1X)
-      WRITE(ICOUT,51)
-      CALL EDWRST('EDEDIT')
-   51 FORMAT('*****AT THE BEGINNING OF EDEDIT--')
-      IF(IBUGT1.EQ.'ON')CALL EDTRA1
-   90 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.NE.'EDIT')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL EDWRST('EDEDIT')
+        WRITE(ICOUT,51)
+   51   FORMAT('*****AT THE BEGINNING OF EDEDIT--')
+        CALL EDWRST('EDEDIT')
+        IF(IBUGT1.EQ.'ON')CALL EDTRA1
+      ENDIF
 C
       IMODE='EDIT'
 C
 CCCCC IF(IFEESW.EQ.'OFF')GOTO1159
       IF(IPRISW.EQ.'OFF'.AND.INUMSW.EQ.'OFF')THEN
          WRITE(ICOUT,1151)
+ 1151    FORMAT('YOU HAVE JUST ENTERED EDIT MODE')
          CALL EDWRST('EDEDIT')
       ENDIF
- 1151 FORMAT('YOU HAVE JUST ENTERED EDIT MODE')
       IF(IPRISW.EQ.'ON'.OR.INUMSW.EQ.'ON')THEN
          WRITE(ICOUT,1152)
+ 1152    FORMAT(10X,'YOU HAVE JUST ENTERED EDIT MODE')
          CALL EDWRST('EDEDIT')
       ENDIF
- 1152 FORMAT(10X,'YOU HAVE JUST ENTERED EDIT MODE')
- 1159 CONTINUE
-      GOTO9000
 C
 C               *****************
 C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'EDIT')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDEDIT')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDEDIT')
- 9011 FORMAT('*****AT THE END       OF EDEDIT--')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'EDIT')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDEDIT')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('*****AT THE END       OF EDEDIT--')
+        CALL EDWRST('EDEDIT')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -6283,30 +6217,30 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDER'
       ISUBN2='AS  '
-C
       IFOUND='YES'
       IERROR='NO'
-C
       ISUBN0='ERAS'
 C
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'ERAS')GOTO90
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDERAS')
-  999 FORMAT(1X)
-      WRITE(ICOUT,51)
-      CALL EDWRST('EDERAS')
-   51 FORMAT('***** AT THE BEGINNING OF EDERAS--')
-      WRITE(ICOUT,52)IMANUF,IMODEL
-      CALL EDWRST('EDERAS')
-   52 FORMAT('IMANUF,IMODEL = ',A4,2X,A4)
-      IF(IBUGT1.EQ.'ON')CALL EDTRA1
-   90 CONTINUE
+      JCOL=0
+C
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'ERAS')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDERAS')
+  999   FORMAT(1X)
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF EDERAS--')
+        CALL EDWRST('EDERAS')
+        WRITE(ICOUT,52)IMANUF,IMODEL
+   52   FORMAT('IMANUF,IMODEL = ',A4,2X,A4)
+        CALL EDWRST('EDERAS')
+        IF(IBUGT1.EQ.'ON')CALL EDTRA1
+      ENDIF
 C
 C               ***************************
 C               **  STEP 11--            **
@@ -6753,13 +6687,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDEX'
       ISUBN2='IT  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -6824,27 +6757,23 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'EXIT')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDEXIT')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDEXIT')
- 9011 FORMAT('*****AT THE END       OF EDEXIT--')
-      WRITE(ICOUT,9012)NUMLIN
-      CALL EDWRST('EDEXIT')
- 9012 FORMAT('NUMLIN = ',I8)
-      WRITE(ICOUT,9013)IORINA
-      CALL EDWRST('EDEXIT')
- 9013 FORMAT('IORINA = ',A80)
-      WRITE(ICOUT,9014)IORIST
-      CALL EDWRST('EDEXIT')
- 9014 FORMAT('IORIST = ',A12)
-      WRITE(ICOUT,9015)IORINU
-      CALL EDWRST('EDEXIT')
- 9015 FORMAT('IORINU = ',I8)
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'EXIT')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDEXIT')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('*****AT THE END       OF EDEXIT--')
+        CALL EDWRST('EDEXIT')
+        WRITE(ICOUT,9012)NUMLIN,IORINU
+ 9012   FORMAT('NUMLIN,IORINU = ',2I8)
+        CALL EDWRST('EDEXIT')
+        WRITE(ICOUT,9013)IORINA
+ 9013   FORMAT('IORINA = ',A80)
+        CALL EDWRST('EDEXIT')
+        WRITE(ICOUT,9014)IORIST
+ 9014   FORMAT('IORIST = ',A12)
+        CALL EDWRST('EDEXIT')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       IF(ICOM.EQ.'ER'.OR.ICOM.EQ.'ERR'.OR.ICOM.EQ.'EXRR')RETURN
       IF(ICOM.NE.'ER'.AND.ICOM.NE.'ERR'.AND.ICOM.NE.'EXRR'
@@ -6883,7 +6812,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -7078,32 +7007,31 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE3.EQ.'OFF'.AND.ISUBRO.NE.'EXST')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDEXST')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDEXST')
- 9011 FORMAT('***** AT THE END       OF EDEXST--')
-      WRITE(ICOUT,9012)IBUGE3,ISUBRO
-      CALL EDWRST('EDEXST')
- 9012 FORMAT('IBUGE3,ISUBRO = ',A4,2X,A4)
-      WRITE(ICOUT,9014)NUMCST,IFOUST
-      CALL EDWRST('EDEXST')
- 9014 FORMAT('NUMCST,IFOUST = ',I8,2X,A4)
+      IF(IBUGE3.EQ.'ON' .OR. ISUBRO.EQ.'EXST')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDEXST')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDEXST--')
+        CALL EDWRST('EDEXST')
+        WRITE(ICOUT,9012)IBUGE3,ISUBRO
+ 9012   FORMAT('IBUGE3,ISUBRO = ',A4,2X,A4)
+        CALL EDWRST('EDEXST')
+        WRITE(ICOUT,9014)NUMCST,IFOUST
+ 9014   FORMAT('NUMCST,IFOUST = ',I8,2X,A4)
+        CALL EDWRST('EDEXST')
 C
-      IF(NUMCST.LE.0)GOTO9019
-      DO9016I=1,NUMCST
-      WRITE(ICOUT,9017)I,ISTRIN(I)
-      CALL EDWRST('EDEXST')
- 9017 FORMAT('I,ISTRIN(I) = ',I8,A4)
- 9016 CONTINUE
- 9019 CONTINUE
+        IF(NUMCST.GE.1)THEN
+          DO9016I=1,NUMCST
+            WRITE(ICOUT,9017)I,ISTRIN(I)
+ 9017       FORMAT('I,ISTRIN(I) = ',I8,A4)
+            CALL EDWRST('EDEXST')
+ 9016     CONTINUE
+        ENDIF
 C
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDEXST')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDEXST')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -7136,13 +7064,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDEX'
       ISUBN2='TE  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -7299,7 +7226,6 @@ C
       IPOINT(ICURLN)=IROW
       NUMCPL(IROW)=(J20-J10+1)+NUMCST
 C
- 1579 CONTINUE
       NUMROW=NUMRP1
       NUMCHA=J
 C
@@ -7405,7 +7331,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -7562,7 +7488,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -7679,13 +7605,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDFI'
       ISUBN2='ND  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -7879,13 +7804,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDFI'
       ISUBN2='ST  '
-C
       IFOUND='NO'
       IERROR='NO'
 C
@@ -7979,29 +7903,34 @@ C                                    XXX
 C     NOTE--THIS SUBROUTINE IS VAX-DEPENDENT.
 C     DATE--OCTOBER 15, 1985
 C
-C------------------------------------------------------------------------------
+C----------------------------------------------------------------------
  
-      CHARACTER*80 IFORIG
+CCCCC CHARACTER*80 IFORIG
+      CHARACTER (LEN=*) :: IFORIG
  
 CCCCC CHARACTER*4 ISUBN1
 CCCCC CHARACTER*4 ISUBN2
 CCCCC CHARACTER*4 ISTEPN
 C
-C-----COMMON VARIABLES (EDITING)-----------------------------------------------
+C-----COMMON VARIABLES (EDITING)---------------------------------------
 C
       INCLUDE 'DPCOHO.INC'
       INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
-C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
+C-----COMMON VARIABLES (GENERAL)---------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
-CCCCC IF(IHOST1.EQ.'VAX ')IJUNK=CLI$GET_VALUE('PARAM1',IFORIG)
-CCCCC IF(IHOST1.EQ.'UNIX ')IJUNK=GETARG(etc.)
 C
+      IF(IHOST1.EQ.'VAX ')THEN
+        PRINT *,'EDGETF: IFORIG = ',IFORIG
+CCCCC   IF(IHOST1.EQ.'VAX ')IJUNK=CLI$GET_VALUE('PARAM1',IFORIG)
+      ELSEIF(IHOST1.EQ.'UNIX ')THEN
+CCCCC   IJUNK=GETARG(etc.)
+      ENDIF
       RETURN
       END
       SUBROUTINE EDGO(IMARK)
@@ -8026,13 +7955,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDGO'
       ISUBN2='    '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -8167,13 +8095,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDGO'
       ISUBN2='NU  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -8288,7 +8215,10 @@ C     UPDATED         --JULY     1992.  PRINT ONE PAGE AT A TIME
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -8339,12 +8269,11 @@ C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
       INCLUDE 'DPCOHO.INC'
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -8446,7 +8375,7 @@ C
       WRITE(ICOUT,1193)IOUNIT
       CALL EDWRST('EDHELP')
  1193 FORMAT('IOUNIT = ',I8)
-      WRITE(ICOUT,1194)IFILE
+      WRITE(ICOUT,1194)IFILE(1:80)
       CALL EDWRST('EDHELP')
  1194 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,1195)ISTAT,IFORM,IACCES,IREWR
@@ -8531,20 +8460,21 @@ CCCCC NUMLF=ANUMLF+0.5
       NUMLF=1000000
       READ(IOUNIT,1412)ANUMSF
  1412 FORMAT(F10.0)
-      NUMSEC=ANUMSF+0.5
+      NUMSEC=INT(ANUMSF+0.5)
       READ(IOUNIT,1413)ASECNA
  1413 FORMAT(F10.0)
-      ISECNA=ASECNA+0.5
+      ISECNA=INT(ASECNA+0.5)
       IF(NUMSEC.LE.0)GOTO1490
       DO1420I=1,NUMSEC
-      READ(IOUNIT,1421)ATABLN,ITABID(I)
- 1421 FORMAT(F10.0,A4)
-      ITABLN(I)=ATABLN+0.5
-      IF(IBUGE2.EQ.'ON'.OR.ISUBRO.EQ.'HELP')THEN
-         WRITE(ICOUT,1422)I,ATABLN,ITABLN(I),ITABID(I)
-         CALL EDWRST('EDHELP')
-      ENDIF
- 1422 FORMAT('I,ATABLN,ITABLN(I),ITABID(I) = ',I8,E15.7,I8,2X,A4)
+        READ(IOUNIT,1421)ATABLN,ITABID(I)
+ 1421   FORMAT(F10.0,A4)
+        ITABLN(I)=INT(ATABLN+0.5)
+C
+        IF(IBUGE2.EQ.'ON'.OR.ISUBRO.EQ.'HELP')THEN
+          WRITE(ICOUT,1422)I,ATABLN,ITABLN(I),ITABID(I)
+ 1422     FORMAT('I,ATABLN,ITABLN(I),ITABID(I) = ',I8,G15.7,I8,2X,A4)
+          CALL EDWRST('EDHELP')
+        ENDIF
  1420 CONTINUE
  1490 CONTINUE
 C
@@ -8606,16 +8536,17 @@ C
       IF(JSECP1.LE.NUMSEC)ISTOP=ITABLN(JSECP1)
       IF(ISTOP.LE.ISTART)ISTOP=NUMLF
  
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'HELP')
-     1GOTO1590
- 1511 FORMAT('***** FROM 1511 IN MIDDLE OF EDHELP--')
-      WRITE(ICOUT,1512)ICHAR1,JCHAR1,IWORD1,IWOR12
-      CALL EDWRST('EDHELP')
- 1512 FORMAT('ICHAR1,JCHAR1,IWORD1,IWOR12 = ',A1,2X,I8,2X,A4,2X,A4)
-      WRITE(ICOUT,1513)JSEC,JSECP1,ISTART,ISTOP
-      CALL EDWRST('EDHELP')
- 1513 FORMAT('JSEC,JSECP1,ISTART,ISTOP = ',4I8)
- 1590 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'HELP')THEN
+        WRITE(ICOUT,1511)
+ 1511   FORMAT('***** FROM 1511 IN MIDDLE OF EDHELP--')
+        CALL EDWRST('EDHELP')
+        WRITE(ICOUT,1512)ICHAR1,JCHAR1,IWORD1,IWOR12
+ 1512   FORMAT('ICHAR1,JCHAR1,IWORD1,IWOR12 = ',A1,2X,I8,2X,A4,2X,A4)
+        CALL EDWRST('EDHELP')
+        WRITE(ICOUT,1513)JSEC,JSECP1,ISTART,ISTOP
+ 1513   FORMAT('JSEC,JSECP1,ISTART,ISTOP = ',4I8)
+        CALL EDWRST('EDHELP')
+      ENDIF
 C
 C               *************************************************
 C               *************************************************
@@ -8759,7 +8690,6 @@ C
  1738 FORMAT('ILOC2P,ILOC3P,ILOC4P = ',3I8)
  1739 CONTINUE
 C
- 1752 CONTINUE
       IF(NUMAR2.LE.1)GOTO1790
       IF(NUMWOR.LE.1)GOTO1790
       IF(IZ2.EQ.IWORD2)GOTO1753
@@ -8931,13 +8861,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDHO'
       ISUBN2='LD  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -9032,29 +8961,22 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'HOLD')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDHOLD')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDHOLD')
- 9011 FORMAT('***** AT THE END       OF EDHOLD--')
-      WRITE(ICOUT,9016)ICURLN,IARG1
-      CALL EDWRST('EDHOLD')
- 9016 FORMAT('ICURLN,IARG1 = ',2I8)
-      WRITE(ICOUT,9017)J1,N1,J2
-      CALL EDWRST('EDHOLD')
- 9017 FORMAT('J1,N1,J2 = ',3I8)
-      WRITE(ICOUT,9018)NUMCST
-      CALL EDWRST('EDHOLD')
- 9018 FORMAT('NUMCST = ',A4)
-      WRITE(ICOUT,9019)(ISTRIN(I:I),I=1,NUMCST)
-      CALL EDWRST('EDHOLD')
- 9019 FORMAT('(ISTRIN(I:I),I=1,NUMCST) = ',80A1)
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDHOLD')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'HOLD')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDHOLD')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDHOLD--')
+        CALL EDWRST('EDHOLD')
+        WRITE(ICOUT,9016)ICURLN,IARG1,J1,N1,J2,NUMCST
+ 9016   FORMAT('ICURLN,IARG1,J1,N1,J2,NUMCST = ',6I8)
+        CALL EDWRST('EDHOLD')
+        WRITE(ICOUT,9019)(ISTRIN(I:I),I=1,MIN(80,NUMCST))
+ 9019   FORMAT('(ISTRIN(I:I),I=1,NUMCST) = ',80A1)
+        CALL EDWRST('EDHOLD')
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDHOLD')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -9086,7 +9008,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -9169,29 +9091,22 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'IND2')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDIND2')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDIND2')
- 9011 FORMAT('***** AT THE END       OF EDIND2--')
-      WRITE(ICOUT,9031)NUMCOL
-      CALL EDWRST('EDIND2')
- 9031 FORMAT('NUMCOL = ',I8)
-      WRITE(ICOUT,9032)(IOLDLI(I),I=1,NUMCOL)
-      CALL EDWRST('EDIND2')
- 9032 FORMAT('(IOLDLI(I),I=1,NUMCOL) = ',110A1)
-      WRITE(ICOUT,9033)NUMCNL
-      CALL EDWRST('EDIND2')
- 9033 FORMAT('NUMCNL = ',I8)
-      WRITE(ICOUT,9034)(INEWLI(I),I=1,NUMCNL)
-      CALL EDWRST('EDIND2')
- 9034 FORMAT('(INEWLI(I),I=1,NUMCNL) = ',110A1)
-      WRITE(ICOUT,9041)IINDEC,IINDE2
-      CALL EDWRST('EDIND2')
- 9041 FORMAT('IINDEC,IINDE2 = ',2I8)
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'IND2')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDIND2')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDIND2--')
+        CALL EDWRST('EDIND2')
+        WRITE(ICOUT,9031)NUMCOL,NUMCNL,IINDEC,IINDE2
+ 9031   FORMAT('NUMCOL,NUMCNL,IINDEC,IINDE2 = ',4I8)
+        CALL EDWRST('EDIND2')
+        WRITE(ICOUT,9032)(IOLDLI(I),I=1,MIN(110,NUMCOL))
+ 9032   FORMAT('(IOLDLI(I),I=1,NUMCOL) = ',110A1)
+        CALL EDWRST('EDIND2')
+        WRITE(ICOUT,9034)(INEWLI(I),I=1,MIN(110,NUMCNL))
+ 9034   FORMAT('(INEWLI(I),I=1,NUMCNL) = ',110A1)
+        CALL EDWRST('EDIND2')
+      ENDIF
 C
       RETURN
       END
@@ -9227,13 +9142,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDIN'
       ISUBN2='DE  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -9365,7 +9279,6 @@ C
       CALL EDCHSI(NUMCH9)
       IF(IERROR.EQ.'YES')GOTO9000
 C
- 2450 CONTINUE
       IF(ILINE.LT.1)GOTO2460
       IF(ILINE.GT.NUMLIN)GOTO2470
       GOTO2490
@@ -9373,29 +9286,27 @@ C
  2460 CONTINUE
       IF(IPRISW.EQ.'OFF'.AND.INUMSW.EQ.'OFF')THEN
          WRITE(ICOUT,2461)
+ 2461    FORMAT('[TOP]')
          CALL EDWRST('EDINDE')
       ENDIF
- 2461 FORMAT('[TOP]')
       IF(IPRISW.EQ.'ON'.OR.INUMSW.EQ.'ON')THEN
          WRITE(ICOUT,2462)
+ 2462    FORMAT(10X,'[TOP]')
          CALL EDWRST('EDINDE')
       ENDIF
- 2462 FORMAT(10X,'[TOP]')
- 2469 CONTINUE
       GOTO2100
 C
  2470 CONTINUE
       IF(IPRISW.EQ.'OFF'.AND.INUMSW.EQ.'OFF')THEN
          WRITE(ICOUT,2471)
+ 2471    FORMAT('[BOTTOM]')
          CALL EDWRST('EDINDE')
       ENDIF
- 2471 FORMAT('[BOTTOM]')
       IF(IPRISW.EQ.'ON'.OR.INUMSW.EQ.'ON')THEN
          WRITE(ICOUT,2472)
+ 2472    FORMAT(10X,'[BOTTOM]')
          CALL EDWRST('EDINDE')
       ENDIF
- 2472 FORMAT(10X,'[BOTTOM]')
- 2479 CONTINUE
       GOTO9000
 C
  2490 CONTINUE
@@ -9516,7 +9427,8 @@ C     ORIGINAL VERSION--JULY 1986.
 C
 C------------------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=*) :: IFILE
       CHARACTER*4 IEXIST
       CHARACTER*4 ISUBN0
       CHARACTER*4 IERRFI
@@ -9535,13 +9447,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDIN'
       ISUBN2='FI  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -9552,7 +9463,7 @@ C
       WRITE(ICOUT,51)
       CALL EDWRST('EDINFI')
    51 FORMAT('*****AT THE BEGINNING OF EDINFI--')
-      WRITE(ICOUT,52)IFILE
+      WRITE(ICOUT,52)IFILE(1:80)
       CALL EDWRST('EDINFI')
    52 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,54)IEXIST
@@ -9606,7 +9517,7 @@ C
       WRITE(ICOUT,9011)
       CALL EDWRST('EDINFI')
  9011 FORMAT('*****AT THE END       OF EDINFI--')
-      WRITE(ICOUT,9012)IFILE
+      WRITE(ICOUT,9012)IFILE(1:80)
       CALL EDWRST('EDINFI')
  9012 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,9014)IEXIST
@@ -9653,13 +9564,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDIN'
       ISUBN2='IN  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -9728,7 +9638,6 @@ C
       CALL EDCHSI(NUMCH2)
       IF(IERROR.EQ.'YES')GOTO9000
 C
- 1550 CONTINUE
       IF(ICURLN.GT.NUMLIN)ICURLN=NUMLIN
       ICURLP=ICURLN+1
       NUMLP1=NUMLIN+1
@@ -9761,7 +9670,6 @@ C
       I=I+1
       ICHA(J)=ISTRIN(I)
  1570 CONTINUE
- 1579 CONTINUE
       ICURLN=ICURLP
       NUMLIN=NUMLP1
       NUMROW=NUMRP1
@@ -9837,13 +9745,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDIN'
       ISUBN2='LI  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -9940,7 +9847,6 @@ C
       CALL EDCHSI(NUMCH2)
       IF(IERROR.EQ.'YES')GOTO9000
 C
- 1550 CONTINUE
       IF(ICURL2.GT.NUMLIN)ICURLN=NUMLIN
       ICURLP=ICURL2+1
       NUMLP1=NUMLIN+1
@@ -9973,7 +9879,6 @@ C
       I=I+1
       ICHA(J)=ISTRIN(I)
  1570 CONTINUE
- 1579 CONTINUE
       ICURL2=ICURLP
       NUMLIN=NUMLP1
       NUMROW=NUMRP1
@@ -10042,13 +9947,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-------------------------------------------
 C
       ISUBN1='EDIN'
       ISUBN2='PU  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -10075,7 +9979,6 @@ CCCCC IF(IFEESW.EQ.'OFF')GOTO1159
          CALL EDWRST('EDINPU')
       ENDIF
  1152 FORMAT(10X,'YOU HAVE JUST ENTERED INPUT MODE')
- 1159 CONTINUE
       GOTO9000
 C
 C               *****************
@@ -10084,14 +9987,14 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'INPU')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDINPU')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDINPU')
- 9011 FORMAT('*****AT THE END       OF EDINPU--')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'INPU')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDINPU')
+        WRITE(ICOUT,9011)
+        CALL EDWRST('EDINPU')
+ 9011   FORMAT('*****AT THE END       OF EDINPU--')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -10127,13 +10030,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDIN'
       ISUBN2='SE  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -10212,7 +10114,6 @@ C
       CALL EDCHSI(NUMCH2)
       IF(IERROR.EQ.'YES')GOTO9000
 C
- 1550 CONTINUE
       IF(ICURLN.GT.NUMLIN)ICURLN=NUMLIN
       ICURLP=ICURLN+1
       NUMLP1=NUMLIN+1
@@ -10245,7 +10146,6 @@ C
       I=I+1
       ICHA(J)=ISTRIN(I)
  1570 CONTINUE
- 1579 CONTINUE
       ICURLN=ICURLP
       NUMLIN=NUMLP1
       NUMROW=NUMRP1
@@ -10328,12 +10228,14 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDJU'
       ISUBN2='ST  '
+C
+      IP=0
 C
       CALL EDZERO(ICNEW2,NCNEW2)
       NUMTRB=(-999)
@@ -10348,23 +10250,23 @@ C
       ICNB=(-999)
       NUMCLA=(-999)
 C
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'JUST')GOTO90
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDJUST')
-  999 FORMAT(1X)
-      WRITE(ICOUT,51)
-      CALL EDWRST('EDJUST')
-   51 FORMAT('***** AT THE BEGINNING OF EDJUST--')
-      WRITE(ICOUT,52)IJUST
-      CALL EDWRST('EDJUST')
-   52 FORMAT('IJUST = ',A4)
-      WRITE(ICOUT,53)NCNEWL,ICOLL1,ICOLL2
-      CALL EDWRST('EDJUST')
-   53 FORMAT('NCNEWL,ICOLL1,ICOLL2 = ',3I8)
-      WRITE(ICOUT,54)(ICNEWL(I:I),I=1,100)
-      CALL EDWRST('EDJUST')
-   54 FORMAT('(ICNEWL(I:I),I=1,100) = ',100A1)
-   90 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'JUST')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL EDWRST('EDJUST')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF EDJUST--')
+        CALL EDWRST('EDJUST')
+        WRITE(ICOUT,52)IJUST
+   52   FORMAT('IJUST = ',A4)
+        CALL EDWRST('EDJUST')
+        WRITE(ICOUT,53)NCNEWL,ICOLL1,ICOLL2
+   53   FORMAT('NCNEWL,ICOLL1,ICOLL2 = ',3I8)
+        CALL EDWRST('EDJUST')
+        WRITE(ICOUT,54)(ICNEWL(I:I),I=1,100)
+   54   FORMAT('(ICNEWL(I:I),I=1,100) = ',100A1)
+        CALL EDWRST('EDJUST')
+      ENDIF
 C
 C               ***********************************************
 C               **  STEP 10--                                **
@@ -10397,8 +10299,6 @@ C               **  STEP 21--                                **
 C               **  DETERMINE THE NUMBER OF TRAILING BLANKS  **
 C               ***********************************************
 C
- 2100 CONTINUE
-C
       ISTEPN='21'
       IF(IBUGE2.EQ.'ON'.OR.ISUBRO.EQ.'JUST')
      1CALL EDTRA3(ISTEPN,ISUBN1,ISUBN2)
@@ -10426,8 +10326,8 @@ C
 C
       CALL EDZERO(ICNEW2,NCNEW2)
       DO2210I=1,NUMBEG
-      IP=I+NUMTRB
-      ICNEW2(IP:IP)=ICNEWL(I:I)
+        IP=I+NUMTRB
+        ICNEW2(IP:IP)=ICNEWL(I:I)
  2210 CONTINUE
       NCNEW2=IP
 C
@@ -10461,8 +10361,6 @@ C               ***********************************************
 C               **  STEP 31--                                **
 C               **  DETERMINE THE NUMBER OF TRAILING BLANKS  **
 C               ***********************************************
-C
- 3100 CONTINUE
 C
       ISTEPN='31'
       IF(IBUGE2.EQ.'ON'.OR.ISUBRO.EQ.'JUST')
@@ -10610,8 +10508,6 @@ C               ***********************************************
 C               **  STEP 41--                                **
 C               **  DETERMINE THE NUMBER OF LEADING BLANKS   **
 C               ***********************************************
-C
- 4100 CONTINUE
 C
       ISTEPN='41'
       IF(IBUGE2.EQ.'ON'.OR.ISUBRO.EQ.'JUST')
@@ -10781,13 +10677,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDLA'
       ISUBN2='ST  '
-C
       IFOUND='NO'
       IERROR='NO'
 C
@@ -10902,13 +10797,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDLB'
       ISUBN2='    '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -11107,7 +11001,10 @@ C     ORIGINAL VERSION--JUNE 1986.
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -11125,18 +11022,16 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDLI'
       ISUBN2='ME  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -11153,7 +11048,7 @@ C
       WRITE(ICOUT,53)IMESNU
       CALL EDWRST('EDLIME')
    53 FORMAT('IMESNU = ',I8)
-      WRITE(ICOUT,54)IMESNA
+      WRITE(ICOUT,54)IMESNA(1:80)
       CALL EDWRST('EDLIME')
    54 FORMAT('IMESNA = ',A80)
       WRITE(ICOUT,55)IMESST
@@ -11286,7 +11181,7 @@ C
       WRITE(ICOUT,9011)
       CALL EDWRST('EDLIME')
  9011 FORMAT('***** AT THE END       OF EDLIME--')
-      WRITE(ICOUT,9013)IFILE
+      WRITE(ICOUT,9013)IFILE(1:80)
       CALL EDWRST('EDLIME')
  9013 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,9014)IOUNIT
@@ -11314,7 +11209,10 @@ C     ORIGINAL VERSION--JUNE 1986.
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -11332,18 +11230,16 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDLI'
       ISUBN2='ME  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -11360,7 +11256,7 @@ C
       WRITE(ICOUT,53)INEWNU
       CALL EDWRST('EDLINE')
    53 FORMAT('INEWNU = ',I8)
-      WRITE(ICOUT,54)INEWNA
+      WRITE(ICOUT,54)INEWNA(1:80)
       CALL EDWRST('EDLINE')
    54 FORMAT('INEWNA = ',A80)
       WRITE(ICOUT,55)INEWST
@@ -11493,7 +11389,7 @@ C
       WRITE(ICOUT,9011)
       CALL EDWRST('EDLINE')
  9011 FORMAT('***** AT THE END       OF EDLINE--')
-      WRITE(ICOUT,9013)IFILE
+      WRITE(ICOUT,9013)IFILE(1:80)
       CALL EDWRST('EDLINE')
  9013 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,9014)IOUNIT
@@ -11526,7 +11422,10 @@ C     ORIGINAL VERSION--JANUARY 1985.
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -11548,18 +11447,16 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDLI'
       ISUBN2='ST  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -11573,7 +11470,7 @@ C
       WRITE(ICOUT,53)ILISNU
       CALL EDWRST('EDLIST')
    53 FORMAT('ILISNU = ',I8)
-      WRITE(ICOUT,54)ILISNA
+      WRITE(ICOUT,54)ILISNA(1:80)
       CALL EDWRST('EDLIST')
    54 FORMAT('ILISNA = ',A80)
       WRITE(ICOUT,55)ILISST
@@ -11644,7 +11541,7 @@ C
 C
       WRITE(ICOUT,999)
       CALL EDWRST('EDLIST')
-      WRITE(ICOUT,1205)IFILE
+      WRITE(ICOUT,1205)IFILE(1:80)
       CALL EDWRST('EDLIST')
  1205 FORMAT(10X,'FILE = ',A80)
       WRITE(ICOUT,999)
@@ -11744,7 +11641,7 @@ C
       WRITE(ICOUT,9011)
       CALL EDWRST('EDLIST')
  9011 FORMAT('***** AT THE END       OF EDLIST--')
-      WRITE(ICOUT,9013)IFILE
+      WRITE(ICOUT,9013)IFILE(1:80)
       CALL EDWRST('EDLIST')
  9013 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,9014)IOUNIT
@@ -11789,13 +11686,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDLO'
       ISUBN2='BL  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -11969,7 +11865,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -12072,13 +11968,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDLO'
       ISUBN2='CA  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -12302,7 +12197,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -12425,13 +12320,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDLO'
       ISUBN2='PE  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -12605,7 +12499,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -12710,7 +12604,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)----------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -12808,13 +12702,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDNE'
       ISUBN2='AT  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -13141,27 +13034,23 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'NEAT')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDNEAT')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDNEAT')
- 9011 FORMAT('*****AT THE END       OF EDNEAT--')
-      WRITE(ICOUT,9012)ICURLN,ISTART,ISTOP
-      CALL EDWRST('EDNEAT')
- 9012 FORMAT('ICURLN,ISTART,ISTOP = ',3I8)
-      WRITE(ICOUT,9013)IPRISW
-      CALL EDWRST('EDNEAT')
- 9013 FORMAT('IPRISW = ',A4)
-      WRITE(ICOUT,9014)ISTART,ISTOP,ISTAR2,ISTOP2
-      CALL EDWRST('EDNEAT')
- 9014 FORMAT('ISTART,ISTOP,ISTAR2,ISTOP2 = ',4I8)
-      WRITE(ICOUT,9015)ICOLL1,ICOLL2,IBLASW,IJUST
-      CALL EDWRST('EDNEAT')
- 9015 FORMAT('ICOLL1,ICOLL2,IBLASW,IJUST = ',2I8,2X,A4,2X,A4)
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'NEAT')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDNEAT')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('*****AT THE END       OF EDNEAT--')
+        CALL EDWRST('EDNEAT')
+        WRITE(ICOUT,9012)ICURLN,ISTART,ISTOP,IPRISW
+ 9012   FORMAT('ICURLN,ISTART,ISTOP,IPRISW = ',3I8,2X,A4)
+        CALL EDWRST('EDNEAT')
+        WRITE(ICOUT,9014)ISTART,ISTOP,ISTAR2,ISTOP2
+ 9014   FORMAT('ISTART,ISTOP,ISTAR2,ISTOP2 = ',4I8)
+        CALL EDWRST('EDNEAT')
+        WRITE(ICOUT,9015)ICOLL1,ICOLL2,IBLASW,IJUST
+ 9015   FORMAT('ICOLL1,ICOLL2,IBLASW,IJUST = ',2I8,2(2X,A4))
+        CALL EDWRST('EDNEAT')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -13187,13 +13076,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDNE'
       ISUBN2='XT  '
-C
       IFOUND='NO'
       IERROR='NO'
 C
@@ -13328,7 +13216,10 @@ C                                      MODIFY ADDITIONAL FILES)
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -13350,18 +13241,16 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDLI'
       ISUBN2='ST  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -13375,7 +13264,7 @@ C
       WRITE(ICOUT,53)IOPENU
       CALL EDWRST('EDOPEN')
    53 FORMAT('IOPENU = ',I8)
-      WRITE(ICOUT,54)IOPENA
+      WRITE(ICOUT,54)IOPENA(1:80)
       CALL EDWRST('EDOPEN')
    54 FORMAT('IOPENA = ',A80)
       WRITE(ICOUT,55)IOPEST
@@ -13446,7 +13335,7 @@ C
 C
       WRITE(ICOUT,999)
       CALL EDWRST('EDOPEN')
-      WRITE(ICOUT,1205)IFILE
+      WRITE(ICOUT,1205)IFILE(1:80)
       CALL EDWRST('EDOPEN')
  1205 FORMAT(10X,'FILE = ',A80)
       WRITE(ICOUT,999)
@@ -13480,7 +13369,7 @@ C
       WRITE(ICOUT,9011)
       CALL EDWRST('EDOPEN')
  9011 FORMAT('***** AT THE END       OF EDOPEN--')
-      WRITE(ICOUT,9013)IFILE
+      WRITE(ICOUT,9013)IFILE(1:80)
       CALL EDWRST('EDOPEN')
  9013 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,9014)IOUNIT
@@ -13497,7 +13386,7 @@ C
       RETURN
       END
       SUBROUTINE EDOPFI(IOUNIT,IFILE,ISTAT,IFORM,IACCES,IREWR,
-     1ISUBN0,IERRFI)
+     1                  ISUBN0,IERRFI)
 C
 C     PURPOSE--OPEN A FILE
 C              (BUT THERE MAY BE SOME SMALL DIFFERENCES
@@ -13506,10 +13395,14 @@ C
 C     WRITTEN BY--JAMES J. FILLIBEN
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     ORIGINAL VERSION--NOVEMBER 1985.
+C     UPDATED         --APRIL    2020. USE DATAPLOT DPOPFI ROUTINE
 C
-C------------------------------------------------------------------------------
+C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -13518,66 +13411,45 @@ C
       CHARACTER*4 IERRFI
 CCCCC CHARACTER*12 ICC
 C
+      CHARACTER*12 ICURST
+      CHARACTER*4 IREWIN
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
 C
-C-----COMMON VARIABLES (EDITING)-----------------------------------------------
+C-----COMMON VARIABLES (EDITING)--------------------------------------
 C
       INCLUDE 'DPCOHO.INC'
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
-C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDOP'
       ISUBN2='FI  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
-      IF(IBUGFI.EQ.'OFF'.AND.ISUBRO.NE.'OPFI')GOTO90
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDOPFI')
-  999 FORMAT(1X)
-      WRITE(ICOUT,51)
-      CALL EDWRST('EDOPFI')
-   51 FORMAT('***** AT THE BEGINNING OF EDOPFI--')
-      WRITE(ICOUT,52)IBUGFI,ISUBRO
-      CALL EDWRST('EDOPFI')
-   52 FORMAT('IBUGFI,ISUBRO = ',A4,2X,A4)
-      WRITE(ICOUT,53)IOUNIT
-      CALL EDWRST('EDOPFI')
-   53 FORMAT('IOUNIT = ',I8)
-      WRITE(ICOUT,54)IFILE
-      CALL EDWRST('EDOPFI')
-   54 FORMAT('IFILE = ',A80)
-      WRITE(ICOUT,55)ISTAT
-      CALL EDWRST('EDOPFI')
-   55 FORMAT('ISTAT = ',A12)
-      WRITE(ICOUT,56)IFORM
-      CALL EDWRST('EDOPFI')
-   56 FORMAT('IFORM = ',A12)
-      WRITE(ICOUT,57)IACCES
-      CALL EDWRST('EDOPFI')
-   57 FORMAT('IACCES = ',A12)
-      WRITE(ICOUT,58)IREWR
-      CALL EDWRST('EDOPFI')
-   58 FORMAT('IREWR = ',A12)
-      WRITE(ICOUT,59)ISUBN0
-      CALL EDWRST('EDOPFI')
-   59 FORMAT('ISUBN0 = ',A4)
-      WRITE(ICOUT,60)IERRFI
-      CALL EDWRST('EDOPFI')
-   60 FORMAT('IERRFI = ',A4)
-      WRITE(ICOUT,61)IHOST1
-      CALL EDWRST('EDOPFI')
-   61 FORMAT('IHOST1 = ',A4)
-   90 CONTINUE
+      IF(IBUGFI.EQ.'ON' .OR. ISUBRO.EQ.'OPFI')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDOPFI')
+  999   FORMAT(1X)
+        WRITE(ICOUT,51)
+        CALL EDWRST('EDOPFI')
+   51   FORMAT('***** AT THE BEGINNING OF EDOPFI--')
+        WRITE(ICOUT,52)IBUGFI,ISUBRO,ISUBN0,IHOST1,IOUNIT
+        CALL EDWRST('EDOPFI')
+   52   FORMAT('IBUGFI,ISUBRO,ISUBN0,IHOST1,IOUNIT = ',3(A4,2X),I8)
+        WRITE(ICOUT,54)IFILE(1:80)
+        CALL EDWRST('EDOPFI')
+   54   FORMAT('IFILE(1:80) = ',A80)
+        WRITE(ICOUT,55)ISTAT,IFORM,IACCES,IREWR
+        CALL EDWRST('EDOPFI')
+   55   FORMAT('ISTAT,IFORM,IACCES,IREWR = ',3(A12,2X),A12)
+      ENDIF
 C
 C               ********************************************************
 C               **  STEP 1--                                          **
@@ -13595,82 +13467,91 @@ C
       IF(IBUGFI.EQ.'ON'.OR.ISUBRO.EQ.'OPFI')
      1CALL EDTRA3(ISTEPN,ISUBN1,ISUBN2)
 C
-      IF(IHOST1.EQ.'VAX')GOTO1100
-      IF(IHOST1.EQ.'HONE')GOTO1300
-      IF(IHOST1.EQ.'IBM-')GOTO1400
-      GOTO1200
+C     2020/04: USE DATAPLOT DPOPFI ROUTINE
 C
- 1100 CONTINUE
+      IREWIN='ON'
+      ICURST='CLOS'
+      CALL DPOPFI(IOUNIT,IFILE,ISTAT,IFORM,IACCES,IREWR,ICURST,
+     1            IREWIN,ISUBN0,IERRFI,IBUGFI,ISUBRO,IERROR)
+C
+CCCCC IF(IHOST1.EQ.'VAX')GOTO1100
+CCCCC IF(IHOST1.EQ.'HONE')GOTO1300
+CCCCC IF(IHOST1.EQ.'IBM-')GOTO1400
+CCCCC GOTO1200
+C
+C1100 CONTINUE
 CCCCC IF(IREWR.EQ.'READONLY')
 CCCCC1OPEN(UNIT=IOUNIT,FILE=IFILE,STATUS='OLD',FORM=IFORM,
 CCCCC1ERR=5100,ACCESS=IACCES,CARRIAGE CONTROL='LIST',READONLY)
 CCCCC IF(IREWR.NE.'READONLY')
 CCCCC1OPEN(UNIT=IOUNIT,FILE=IFILE,STATUS=ISTAT,FORM=IFORM,
 CCCCC1ERR=5100,ACCESS=IACCES,CARRIAGE CONTROL='LIST')
-      GOTO9000
+CCCCC GOTO9000
 C
- 1200 CONTINUE
-      IF(IREWR.EQ.'READONLY')
-     1OPEN(UNIT=IOUNIT,FILE=IFILE,STATUS='OLD',FORM=IFORM,
-     1ERR=5100)
-      IF(IREWR.NE.'READONLY')
-     1OPEN(UNIT=IOUNIT,FILE=IFILE,STATUS=ISTAT,FORM=IFORM,
-     1ERR=5100)
-      GOTO9000
+C1200 CONTINUE
+CCCCC IF(IREWR.EQ.'READONLY')
+CCCCC1OPEN(UNIT=IOUNIT,FILE=IFILE,STATUS='OLD',FORM=IFORM,
+CCCCC1ERR=5100)
+CCCCC IF(IREWR.NE.'READONLY')
+CCCCC1OPEN(UNIT=IOUNIT,FILE=IFILE,STATUS=ISTAT,FORM=IFORM,
+CCCCC1ERR=5100)
+CCCCC GOTO9000
 C
- 1300 CONTINUE
+C1300 CONTINUE
 CCCCC IF(IREWR.EQ.'READONLY')
 CCCCC1OPEN(UNIT=IOUNIT,FILE=IFILE,STATUS='OLD',FORM=IFORM,
 CCCCC1MODE="IN",ERR=5100)
 CCCCC IF(IREWR.NE.'READONLY')
 CCCCC1OPEN(UNIT=IOUNIT,FILE=IFILE,FORM=IFORM,
 CCCCC1ERR=5100)
-      GOTO9000
+CCCCC GOTO9000
 C
- 1400 CONTINUE
-      IF(IREWR.EQ.'READONLY')
-     1OPEN(UNIT=IOUNIT,FILE=IFILE,STATUS='OLD',FORM=IFORM,
-     1ERR=5100)
-      IF(IREWR.NE.'READONLY')
-     1OPEN(UNIT=IOUNIT,FILE=IFILE,FORM=IFORM,
-     1ERR=5100)
-      GOTO9000
+C1400 CONTINUE
+CCCCC IF(IREWR.EQ.'READONLY')
+CCCCC1OPEN(UNIT=IOUNIT,FILE=IFILE,STATUS='OLD',FORM=IFORM,
+CCCCC1ERR=5100)
+CCCCC IF(IREWR.NE.'READONLY')
+CCCCC1OPEN(UNIT=IOUNIT,FILE=IFILE,FORM=IFORM,
+CCCCC1ERR=5100)
+CCCCC GOTO9000
 C
- 5100 CONTINUE
-      IERRFI='YES'
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDOPFI')
-      WRITE(ICOUT,5101)
-      CALL EDWRST('EDOPFI')
- 5101 FORMAT('***** ERROR IN EDOPFI--')
-      WRITE(ICOUT,5102)
-      CALL EDWRST('EDOPFI')
- 5102 FORMAT('ERROR IN ATTEMPTING TO OPEN A FILE.')
-      WRITE(ICOUT,5103)IOUNIT
-      CALL EDWRST('EDOPFI')
- 5103 FORMAT('I/O UNIT    = ',I8)
-      WRITE(ICOUT,5104)IFILE
-      CALL EDWRST('EDOPFI')
- 5104 FORMAT('FILE NAME   = ',A80)
-      WRITE(ICOUT,5105)ISTAT
-      CALL EDWRST('EDOPFI')
- 5105 FORMAT('FILE STATUS = ',A12)
-      WRITE(ICOUT,5106)IFORM
-      CALL EDWRST('EDOPFI')
- 5106 FORMAT('FILE FORMAT = ',A12)
-      WRITE(ICOUT,5107)IACCES
-      CALL EDWRST('EDOPFI')
- 5107 FORMAT('FILE ACCESS = ',A12)
-      WRITE(ICOUT,5108)IREWR
-      CALL EDWRST('EDOPFI')
- 5108 FORMAT('FILE READ/WRITE SETTING         = ',A12)
-      WRITE(ICOUT,5109)ISUBN0
-      CALL EDWRST('EDOPFI')
- 5109 FORMAT('PREVIOUS (= CALLING) SUBROUTINE = ',A4)
-      WRITE(ICOUT,5110)IHOST1
-      CALL EDWRST('EDOPFI')
- 5110 FORMAT('HOST COMPUTER                   = ',A4)
-      GOTO9000
+C5100 CONTINUE
+      IF(IERROR.EQ.'YES')THEN
+        IERRFI='YES'
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDOPFI')
+        WRITE(ICOUT,5101)
+        CALL EDWRST('EDOPFI')
+ 5101   FORMAT('***** ERROR IN EDOPFI--')
+        WRITE(ICOUT,5102)
+        CALL EDWRST('EDOPFI')
+ 5102   FORMAT('      ERROR IN ATTEMPTING TO OPEN A FILE.')
+        WRITE(ICOUT,5103)IOUNIT
+        CALL EDWRST('EDOPFI')
+ 5103   FORMAT('I/O UNIT    = ',I8)
+        WRITE(ICOUT,5104)IFILE(1:80)
+        CALL EDWRST('EDOPFI')
+ 5104   FORMAT('FILE NAME (1:80)  = ',A80)
+        WRITE(ICOUT,5105)ISTAT
+        CALL EDWRST('EDOPFI')
+ 5105   FORMAT('FILE STATUS = ',A12)
+        WRITE(ICOUT,5106)IFORM
+        CALL EDWRST('EDOPFI')
+ 5106   FORMAT('FILE FORMAT = ',A12)
+        WRITE(ICOUT,5107)IACCES
+        CALL EDWRST('EDOPFI')
+ 5107   FORMAT('FILE ACCESS = ',A12)
+        WRITE(ICOUT,5108)IREWR
+        CALL EDWRST('EDOPFI')
+ 5108   FORMAT('FILE READ/WRITE SETTING         = ',A12)
+        WRITE(ICOUT,5109)ISUBN0
+        CALL EDWRST('EDOPFI')
+ 5109   FORMAT('PREVIOUS (= CALLING) SUBROUTINE = ',A4)
+        WRITE(ICOUT,5110)IHOST1
+        CALL EDWRST('EDOPFI')
+ 5110   FORMAT('HOST COMPUTER                   = ',A4)
+        GOTO9000
+      ENDIF
 C
 C               *****************
 C               **  STEP 90--  **
@@ -13678,43 +13559,22 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGFI.EQ.'OFF'.AND.ISUBRO.NE.'OPFI')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDOPFI')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDOPFI')
- 9011 FORMAT('***** AT THE END       OF EDOPFI--')
-      WRITE(ICOUT,9012)IBUGFI,ISUBRO
-      CALL EDWRST('EDOPFI')
- 9012 FORMAT('IBUGFI,ISUBRO = ',A4,2X,A4)
-      WRITE(ICOUT,9013)IOUNIT
-      CALL EDWRST('EDOPFI')
- 9013 FORMAT('IOUNIT = ',I8)
-      WRITE(ICOUT,9014)IFILE
-      CALL EDWRST('EDOPFI')
- 9014 FORMAT('IFILE = ',A80)
-      WRITE(ICOUT,9015)ISTAT
-      CALL EDWRST('EDOPFI')
- 9015 FORMAT('ISTAT = ',A12)
-      WRITE(ICOUT,9016)IFORM
-      CALL EDWRST('EDOPFI')
- 9016 FORMAT('IFORM = ',A12)
-      WRITE(ICOUT,9017)IACCES
-      CALL EDWRST('EDOPFI')
- 9017 FORMAT('IACCES = ',A12)
-      WRITE(ICOUT,9018)IREWR
-      CALL EDWRST('EDOPFI')
- 9018 FORMAT('IREWR = ',A12)
-      WRITE(ICOUT,9019)ISUBN0
-      CALL EDWRST('EDOPFI')
- 9019 FORMAT('ISUBN0 = ',A4)
-      WRITE(ICOUT,9020)IERRFI
-      CALL EDWRST('EDOPFI')
- 9020 FORMAT('IERRFI = ',A4)
-      WRITE(ICOUT,9021)IHOST1
-      CALL EDWRST('EDOPFI')
- 9021 FORMAT('IHOST1 = ',A4)
- 9090 CONTINUE
+      IF(IBUGFI.EQ.'ON' .OR. ISUBRO.EQ.'OPFI')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDOPFI')
+        WRITE(ICOUT,9011)
+        CALL EDWRST('EDOPFI')
+ 9011   FORMAT('***** AT THE END       OF EDOPFI--')
+        WRITE(ICOUT,9013)IOUNIT
+        CALL EDWRST('EDOPFI')
+ 9013   FORMAT('IOUNIT = ',I8)
+        WRITE(ICOUT,9014)IFILE(1:80)
+        CALL EDWRST('EDOPFI')
+ 9014   FORMAT('IFILE = ',A80)
+        WRITE(ICOUT,9015)ISTAT,IFORM,IACCES,IREWR,IERRFI
+        CALL EDWRST('EDOPFI')
+ 9015   FORMAT('ISTAT,IFORM,IACCES,IREWR,IERRFI = ',3(A12,2X),A4)
+      ENDIF
 C
       RETURN
       END
@@ -13743,7 +13603,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -13769,14 +13629,13 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'PRIN')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDOPPR')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDOPPR')
- 9011 FORMAT('***** AT THE END       OF EDOPPR--')
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'PRIN')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDOPPR')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDOPPR--')
+        CALL EDWRST('EDOPPR')
+      ENDIF
 C
       RETURN
       END
@@ -13794,7 +13653,10 @@ C     ORIGINAL VERSION--JANUARY 1985.
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -13812,18 +13674,16 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDPR'
       ISUBN2='IN  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -13913,7 +13773,7 @@ C
       WRITE(ICOUT,2181)
       CALL EDWRST('EDPA  ')
  2181 FORMAT('***** FROM THE MIDDLE OF EDPA--')
-      WRITE(ICOUT,2183)IFILE
+      WRITE(ICOUT,2183)IFILE(1:80)
       CALL EDWRST('EDPA  ')
  2183 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,2184)IOUNIT
@@ -14007,21 +13867,17 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'PRIN')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDPA  ')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDPA  ')
- 9011 FORMAT('***** AT THE END       OF EDPA--')
-      WRITE(ICOUT,9012)ICURLN,ISTART,ISTOP
-      CALL EDWRST('EDPA  ')
- 9012 FORMAT('ICURLN,ISTART,ISTOP = ',3I8)
-      WRITE(ICOUT,9013)IPRISW
-      CALL EDWRST('EDPA  ')
- 9013 FORMAT('IPRISW = ',A4)
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'PRIN')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDPA  ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDPA--')
+        CALL EDWRST('EDPA  ')
+        WRITE(ICOUT,9012)ICURLN,ISTART,ISTOP,IPRISW
+ 9012   FORMAT('ICURLN,ISTART,ISTOP,IPRISW = ',3I8,2X,A4)
+        CALL EDWRST('EDPA  ')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -14047,13 +13903,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDPE'
       ISUBN2='RI  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -14072,15 +13927,14 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'PERI')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDPERI')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDPERI')
- 9011 FORMAT('*****AT THE END       OF EDPERI--')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'PERI')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDPERI')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('*****AT THE END       OF EDPERI--')
+        CALL EDWRST('EDPERI')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -14118,13 +13972,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDPL'
       ISUBN2='    '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -14255,43 +14108,37 @@ C
          CALL EDWRST('EDPL  ')
       ENDIF
  1552 FORMAT(10X,'===BOTTOM===')
- 1559 CONTINUE
       GOTO1590
 C
  1590 CONTINUE
-      GOTO9000
 C
 C               *****************
 C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'PL')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDPL  ')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDPL  ')
- 9011 FORMAT('*****AT THE END       OF EDPL--')
-      WRITE(ICOUT,9012)ICURLN,ISTART,ISTOP
-      CALL EDWRST('EDPL  ')
- 9012 FORMAT('ICURLN,ISTART,ISTOP = ',3I8)
-      WRITE(ICOUT,9016)IFIRBL,IMIN,IWIDTH
-      CALL EDWRST('EDPL  ')
- 9016 FORMAT('IFIRBL,IMIN,IWIDTH = ',3I8)
-      WRITE(ICOUT,9017)J1,N1,J2
-      CALL EDWRST('EDPL  ')
- 9017 FORMAT('J1,N1,J2 = ',3I8)
-      WRITE(ICOUT,9018)J1,J2,IHIT,ICURLN
-      CALL EDWRST('EDPL  ')
- 9018 FORMAT('J1,J2,IHIT,ICURLN = ',4I8)
-      WRITE(ICOUT,9019)IFOUST
-      CALL EDWRST('EDPL  ')
- 9019 FORMAT('IFOUST = ',A4)
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDPL  ')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.NE.'PL')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDPL  ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('*****AT THE END       OF EDPL--')
+        CALL EDWRST('EDPL  ')
+        WRITE(ICOUT,9012)ICURLN,ISTART,ISTOP,IFOUST
+ 9012   FORMAT('ICURLN,ISTART,ISTOP,IFOUST = ',3I8,2X,A4)
+        CALL EDWRST('EDPL  ')
+        WRITE(ICOUT,9016)IFIRBL,IMIN,IWIDTH
+ 9016   FORMAT('IFIRBL,IMIN,IWIDTH = ',3I8)
+        CALL EDWRST('EDPL  ')
+        WRITE(ICOUT,9017)J1,N1,J2
+ 9017   FORMAT('J1,N1,J2 = ',3I8)
+        CALL EDWRST('EDPL  ')
+        WRITE(ICOUT,9018)J1,J2,IHIT,ICURLN
+ 9018   FORMAT('J1,J2,IHIT,ICURLN = ',4I8)
+        CALL EDWRST('EDPL  ')
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDPL  ')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -14312,7 +14159,10 @@ C     UPDATED         --DECEMBER  1988.  ELIMINATE MULTI-PRINTING OF SAME PAGE
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -14330,18 +14180,16 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDPP'
       ISUBN2='    '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -14432,7 +14280,7 @@ C
       WRITE(ICOUT,2181)
       CALL EDWRST('EDPP  ')
  2181 FORMAT('***** FROM THE MIDDLE OF EDPP--')
-      WRITE(ICOUT,2183)IFILE
+      WRITE(ICOUT,2183)IFILE(1:80)
       CALL EDWRST('EDPP  ')
  2183 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,2184)IOUNIT
@@ -14611,7 +14459,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -14719,7 +14567,10 @@ C     ORIGINAL VERSION--JANUARY 1985.
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -14737,18 +14588,16 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDPR'
       ISUBN2='IN  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -14856,7 +14705,7 @@ C
       WRITE(ICOUT,2181)
       CALL EDWRST('EDPRIN')
  2181 FORMAT('***** FROM THE MIDDLE OF EDPRIN--')
-      WRITE(ICOUT,2183)IFILE
+      WRITE(ICOUT,2183)IFILE(1:80)
       CALL EDWRST('EDPRIN')
  2183 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,2184)IOUNIT
@@ -15011,13 +14860,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDPR'
       ISUBN2='NE  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -15123,7 +14971,6 @@ C
  1522 FORMAT(I6,':',3X,230A1)
  1510 CONTINUE
 C
- 1550 CONTINUE
       IF(IEOF.EQ.'NO')GOTO1559
       IF(IPRISW.EQ.'OFF'.AND.INUMSW.EQ.'OFF')THEN
          WRITE(ICOUT,1551)
@@ -15146,17 +14993,17 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'PRNE')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDPRNE')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDPRNE')
- 9011 FORMAT('*****AT THE END       OF EDPRNE--')
-      WRITE(ICOUT,9012)ICURLN,ICURLP,ISTART,ISTOP
-      CALL EDWRST('EDPRNE')
- 9012 FORMAT('ICURLN,ICURLP,ISTART,ISTOP = ',4I8)
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'PRNE')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDPRNE')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('*****AT THE END       OF EDPRNE--')
+        CALL EDWRST('EDPRNE')
+        WRITE(ICOUT,9012)ICURLN,ICURLP,ISTART,ISTOP
+ 9012   FORMAT('ICURLN,ICURLP,ISTART,ISTOP = ',4I8)
+        CALL EDWRST('EDPRNE')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -15171,7 +15018,10 @@ C     UPDATED--JULY 1986.
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -15194,12 +15044,11 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -15264,7 +15113,7 @@ C
 C
  1190 CONTINUE
       IF(IBUGFI.EQ.'OFF')GOTO1199
-      WRITE(ICOUT,1193)IFILE
+      WRITE(ICOUT,1193)IFILE(1:80)
       CALL EDWRST('EDREFW')
  1193 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,1194)IOUNIT
@@ -15446,7 +15295,7 @@ C
       WRITE(ICOUT,9012)ID,IEXIST
       CALL EDWRST('EDREFW')
  9012 FORMAT('ID,IEXIST = ',A4,2X,A4)
-      WRITE(ICOUT,9013)IFILE
+      WRITE(ICOUT,9013)IFILE(1:80)
       CALL EDWRST('EDREFW')
  9013 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,9014)IOUNIT
@@ -15489,13 +15338,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDRE'
       ISUBN2='ST  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -15551,27 +15399,23 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'SAVE')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDREST')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDREST')
- 9011 FORMAT('***** AT THE END       OF EDREST--')
-      WRITE(ICOUT,9012)NUMLIN
-      CALL EDWRST('EDREST')
- 9012 FORMAT('NUMLIN = ',I8)
-      WRITE(ICOUT,9013)ISAVNA
-      CALL EDWRST('EDREST')
- 9013 FORMAT('ISAVNA = ',A80)
-      WRITE(ICOUT,9014)ISAVST
-      CALL EDWRST('EDREST')
- 9014 FORMAT('ISAVST = ',A12)
-      WRITE(ICOUT,9015)ISAVNU
-      CALL EDWRST('EDREST')
- 9015 FORMAT('ISAVNU = ',I8)
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.NE.'SAVE')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDREST')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDREST--')
+        CALL EDWRST('EDREST')
+        WRITE(ICOUT,9012)NUMLIN,ISAVNU
+ 9012   FORMAT('NUMLIN,ISAVNU = ',2I8)
+        CALL EDWRST('EDREST')
+        WRITE(ICOUT,9013)ISAVNA
+ 9013   FORMAT('ISAVNA = ',A80)
+        CALL EDWRST('EDREST')
+        WRITE(ICOUT,9014)ISAVST
+ 9014   FORMAT('ISAVST = ',A12)
+        CALL EDWRST('EDREST')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -15597,13 +15441,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDSA'
       ISUBN2='CP  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -15658,29 +15501,28 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'SACP')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDSACP')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDSACP')
- 9011 FORMAT('*****AT THE END       OF EDSACP--')
-      WRITE(ICOUT,9012)NUMLOL,NUMROL,NCHAOL,IOLDLN
-      CALL EDWRST('EDSACP')
- 9012 FORMAT('NUMLOL,NUMROL,NCHAOL,IOLDLN = ',4I8)
-      WRITE(ICOUT,9013)NUMLIN,NUMROW,NUMCHA,ICURLN
-      CALL EDWRST('EDSACP')
- 9013 FORMAT('NUMLIN,NUMROW,NUMCHA,ICURLN = ',4I8)
-      IF(NUMLIN.LE.0)GOTO9019
-      DO9015I=1,NUMLIN
-CCCCC WRITE(ICOUT,9016)I,IPOIOL(I),IPOINT(I)
-C9016 FORMAT('I,IPOIOL(I),IPOINT(I) = ',3I8)
- 9015 CONTINUE
- 9019 CONTINUE
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDSACP')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'SACP')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDSACP')
+        WRITE(ICOUT,9011)
+       CALL EDWRST('EDSACP')
+ 9011   FORMAT('*****AT THE END       OF EDSACP--')
+        WRITE(ICOUT,9012)NUMLOL,NUMROL,NCHAOL,IOLDLN
+ 9012   FORMAT('NUMLOL,NUMROL,NCHAOL,IOLDLN = ',4I8)
+        CALL EDWRST('EDSACP')
+        WRITE(ICOUT,9013)NUMLIN,NUMROW,NUMCHA,ICURLN
+ 9013   FORMAT('NUMLIN,NUMROW,NUMCHA,ICURLN = ',4I8)
+        CALL EDWRST('EDSACP')
+        IF(NUMLIN.GE.1)THEN
+          DO9015I=1,NUMLIN
+CCCCC       WRITE(ICOUT,9016)I,IPOIOL(I),IPOINT(I)
+C9016       FORMAT('I,IPOIOL(I),IPOINT(I) = ',3I8)
+ 9015     CONTINUE
+        ENDIF
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDSACP')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -15708,13 +15550,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDSA'
       ISUBN2='VE  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -15770,27 +15611,23 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'SAVE')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDSAVE')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDSAVE')
- 9011 FORMAT('***** AT THE END       OF EDSAVE--')
-      WRITE(ICOUT,9012)NUMLIN
-      CALL EDWRST('EDSAVE')
- 9012 FORMAT('NUMLIN = ',I8)
-      WRITE(ICOUT,9013)ISAVNA
-      CALL EDWRST('EDSAVE')
- 9013 FORMAT('ISAVNA = ',A80)
-      WRITE(ICOUT,9014)ISAVST
-      CALL EDWRST('EDSAVE')
- 9014 FORMAT('ISAVST = ',A12)
-      WRITE(ICOUT,9015)ISAVNU
-      CALL EDWRST('EDSAVE')
- 9015 FORMAT('ISAVNU = ',I8)
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'SAVE')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDSAVE')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDSAVE--')
+        CALL EDWRST('EDSAVE')
+        WRITE(ICOUT,9012)NUMLIN,ISAVNU
+ 9012   FORMAT('NUMLIN,ISAVNU = ',2I8)
+        CALL EDWRST('EDSAVE')
+        WRITE(ICOUT,9013)ISAVNA
+ 9013   FORMAT('ISAVNA = ',A80)
+        CALL EDWRST('EDSAVE')
+        WRITE(ICOUT,9014)ISAVST
+ 9014   FORMAT('ISAVST = ',A12)
+        CALL EDWRST('EDSAVE')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -15823,13 +15660,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDSC'
       ISUBN2='AL  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -15904,20 +15740,19 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'SCAL')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDSCAL')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDSCAL')
- 9011 FORMAT('*****AT THE END       OF EDSCAL--')
-      WRITE(ICOUT,9012)IHOLD1,IHOLD2,ISTART,ISTOP
-      CALL EDWRST('EDSCAL')
- 9012 FORMAT('IHOLD1,IHOLD2,ISTART,ISTOP = ',4I8)
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDSCAL')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'SCAL')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDSCAL')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('*****AT THE END       OF EDSCAL--')
+        CALL EDWRST('EDSCAL')
+        WRITE(ICOUT,9012)IHOLD1,IHOLD2,ISTART,ISTOP
+ 9012   FORMAT('IHOLD1,IHOLD2,ISTART,ISTOP = ',4I8)
+        CALL EDWRST('EDSCAL')
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDSCAL')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -15949,7 +15784,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -15998,28 +15833,23 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'PRIN')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDSELM')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDSELM')
- 9011 FORMAT('***** AT THE END       OF EDSELM--')
-      WRITE(ICOUT,9012)ILMARG
-      CALL EDWRST('EDSELM')
- 9012 FORMAT('ILMARG = ',I8)
-      WRITE(ICOUT,9013)NCOUT,ILOUT
-      CALL EDWRST('EDSELM')
- 9013 FORMAT('NCOUT,ILOUT = ',2I8)
-      IF(NCOUT.LE.0)GOTO9019
-      DO9015I=1,NCOUT
-      WRITE(ICOUT,9016)I,ICOUT(I:I)
-      CALL EDWRST('EDSELM')
- 9016 FORMAT('I,ICOUT(I:I) = ',I8,2X,A1)
- 9015 CONTINUE
- 9019 CONTINUE
-C
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'PRIN')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDSELM')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDSELM--')
+        CALL EDWRST('EDSELM')
+        WRITE(ICOUT,9012)ILMARG,NCOUT,ILOUT
+ 9012   FORMAT('ILMARG,NCOUT,ILOUT = ',3I8)
+        CALL EDWRST('EDSELM')
+        IF(NCOUT.GE.1)THEN
+          DO9015I=1,NCOUT
+            WRITE(ICOUT,9016)I,ICOUT(I:I)
+ 9016       FORMAT('I,ICOUT(I:I) = ',I8,2X,A1)
+            CALL EDWRST('EDSELM')
+ 9015     CONTINUE
+        ENDIF
+      ENDIF
 C
       RETURN
       END
@@ -16046,13 +15876,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDSE'
       ISUBN2='RA  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -16116,18 +15945,17 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'SERA')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDSERA')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDSERA')
- 9011 FORMAT('*****AT THE END       OF EDSERA--')
-      WRITE(ICOUT,9012)ICERAS
-      CALL EDWRST('EDSERA')
- 9012 FORMAT('ICERAS = ',A1)
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'SERA')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDSERA')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('*****AT THE END       OF EDSERA--')
+        CALL EDWRST('EDSERA')
+        WRITE(ICOUT,9012)ICERAS
+ 9012   FORMAT('ICERAS = ',A1)
+        CALL EDWRST('EDSERA')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -16138,7 +15966,7 @@ C     PURPOSE--SET SYSTEM SWITCHES AND VARIABLES.
 C
 C     DATE--JANUARY 24,1985
 C
-C-------------------------------------------------------------------------------
+C-----------------------------------------------------------------------
 C
       CHARACTER*4 IERASW
 C
@@ -16152,38 +15980,37 @@ C
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
 C
-C-----COMMON VARIABLES (EDITING)-----------------------------------------------
+C-----COMMON VARIABLES (EDITING)---------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
-C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
+C-----COMMON VARIABLES (GENERAL)---------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-------------------------------------------
 C
       ISUBN1='EDSE'
       ISUBN2='T   '
-C
       IFOUND='YES'
       IERROR='NO'
 C
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'SET')GOTO90
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDSET ')
-  999 FORMAT(1X)
-      WRITE(ICOUT,51)
-      CALL EDWRST('EDSET ')
-   51 FORMAT('*****AT THE BEGINNING OF EDSET--')
-      WRITE(ICOUT,53)ILPOFF
-      CALL EDWRST('EDSET ')
-   53 FORMAT('ILPOFF = ',I8)
-      WRITE(ICOUT,61)NUMARG,IHARG(1),IHARG(2)
-      CALL EDWRST('EDSET ')
-   61 FORMAT('NUMARG,IHARG(1),IHARG(2) = ',I8,2X,A4,2X,A4)
-      IF(IBUGT1.EQ.'ON')CALL EDTRA1
-   90 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'SET')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL EDWRST('EDSET ')
+        WRITE(ICOUT,51)
+   51   FORMAT('*****AT THE BEGINNING OF EDSET--')
+        CALL EDWRST('EDSET ')
+        WRITE(ICOUT,53)ILPOFF
+   53   FORMAT('ILPOFF = ',I8)
+        CALL EDWRST('EDSET ')
+        WRITE(ICOUT,61)NUMARG,IHARG(1),IHARG(2)
+   61   FORMAT('NUMARG,IHARG(1),IHARG(2) = ',I8,2(2X,A4))
+        CALL EDWRST('EDSET ')
+        IF(IBUGT1.EQ.'ON')CALL EDTRA1
+      ENDIF
 C
 CCCCC IF(NUMARG.LE.1)IERROR='YES'
 CCCCC IF(NUMARG.LE.1)GOTO1000
@@ -16252,7 +16079,6 @@ C               **  STEP 11--          **
 C               **  SET BUG VARIABLES  **
 C               *************************
 C
- 1000 CONTINUE
       WRITE(ICOUT,1011)
       CALL EDWRST('EDSET ')
  1011 FORMAT(10X,'[AVAILABLE SETTINGS UNDER')
@@ -16702,7 +16528,7 @@ C
 C
  6510 CONTINUE
       IF(NUMARG.LE.1)IMASK=':'
-      IF(NUMARG.GE.2)IMASK=IHARG(2)
+      IF(NUMARG.GE.2)IMASK=IHARG(2)(1:1)
       IF(IFEESW.EQ.'ON')WRITE(ICOUT,6511)IMASK
       IF(IFEESW.EQ.'ON')CALL EDWRST('EDSET ')
  6511 FORMAT(10X,'[MASK CHARACTER        = ',A4,']')
@@ -16741,55 +16567,54 @@ C
       GOTO9000
 C
  7100 CONTINUE
-      IF(NUMCOM.LE.0)GOTO7118
-      DO7110I=1,NUMCOM
-      IHTEM8=ICOM3(I)
-      IF(IHARG(2).EQ.IHTEM8(1:4).AND.IHARG2(2).EQ.IHTEM8(5:8))GOTO7115
-      GOTO7110
- 7115 CONTINUE
-      I2=I
-      GOTO7119
- 7110 CONTINUE
- 7118 CONTINUE
+      IF(NUMCOM.GE.1)THEN
+        DO7110I=1,NUMCOM
+          IHTEM8=ICOM3(I)
+          IF(IHARG(2).EQ.IHTEM8(1:4).AND.IHARG2(2).EQ.IHTEM8(5:8))THEN
+            I2=I
+            GOTO7119
+          ENDIF
+ 7110   CONTINUE
+      ENDIF
+C
       I2=NUMCOM+1
       IHTEM8(1:4)=IHARG(2)
       IHTEM8(5:8)=IHARG2(2)
-      ICOM3(I2)=IHTEM8
+      ICOM3(I2)=IHTEM8(1:4)
       NUMCOM=I2
-      GOTO7119
+C
  7119 CONTINUE
 C
-      IF(I2.LE.MAXCMN)GOTO7129
-      WRITE(ICOUT,7121)
-      CALL EDWRST('EDSET ')
- 7121 FORMAT('***** ERROR IN EDSET--')
-      WRITE(ICOUT,7122)
-      CALL EDWRST('EDSET ')
- 7122 FORMAT('      TOO MANY USER-DEFINED COMMANDS.')
-      WRITE(ICOUT,7123)I2
-      CALL EDWRST('EDSET ')
- 7123 FORMAT('      NUMBER OF COMMANDS         = ',I8)
-      WRITE(ICOUT,7124)MAXCMN
-      CALL EDWRST('EDSET ')
- 7124 FORMAT('      MAXIMUM NUMBER OF COMMANDS = ',I8)
-      IERROR='YES'
-      GOTO9000
- 7129 CONTINUE
+      IF(I2.GT.MAXCMN)THEN
+        WRITE(ICOUT,7121)
+ 7121   FORMAT('***** ERROR IN EDSET--')
+        CALL EDWRST('EDSET ')
+        WRITE(ICOUT,7122)
+ 7122   FORMAT('      TOO MANY USER-DEFINED COMMANDS.')
+        CALL EDWRST('EDSET ')
+        WRITE(ICOUT,7123)I2
+ 7123   FORMAT('      NUMBER OF COMMANDS         = ',I8)
+        CALL EDWRST('EDSET ')
+        WRITE(ICOUT,7124)MAXCMN
+ 7124   FORMAT('      MAXIMUM NUMBER OF COMMANDS = ',I8)
+        CALL EDWRST('EDSET ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
 C
       IHTE20='                    '
       J=0
       IF(NUMARG.LE.2)GOTO7135
       DO7130I=3,NUMARG
-      IHARGI=IHARG(I)
-      CALL EDTRNP(IHARGI,ICHAR1,IHIT)
-      J=J+1
-      IF(IHIT.EQ.'YES')IHTE20(J:J)=ICHAR1
-      IF(IHIT.EQ.'NO')IHTE20(J:J)=IHARGI(1:1)
+        IHARGI=IHARG(I)
+        CALL EDTRNP(IHARGI,ICHAR1,IHIT)
+        J=J+1
+        IF(IHIT.EQ.'YES')IHTE20(J:J)=ICHAR1
+        IF(IHIT.EQ.'NO')IHTE20(J:J)=IHARGI(1:1)
  7130 CONTINUE
  7135 CONTINUE
-      ICOM4(I2)=IHTE20
+      ICOM4(I2)=IHTE20(1:4)
       NCCOM4(I2)=J
- 7139 CONTINUE
 C
       IF(I2.LE.0)GOTO7149
       IF(NUMCOM.LE.0.OR.NUMCOM.GT.MAXCMN)GOTO7149
@@ -16805,35 +16630,26 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'SET')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDSET ')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDSET ')
- 9011 FORMAT('*****AT THE END       OF EDSET--')
-      WRITE(ICOUT,9012)ICURLN
-      CALL EDWRST('EDSET ')
- 9012 FORMAT('ICURLN = ',I8)
-      WRITE(ICOUT,9013)ICLIM1,ICLIM2
-      CALL EDWRST('EDSET ')
- 9013 FORMAT('ICLIM1,ICLIM2 = ',2I8)
-      WRITE(ICOUT,9014)I2,NUMCOM,MAXCMN
-      CALL EDWRST('EDSET ')
- 9014 FORMAT('I2,NUMCOM,MAXCMN = ',3I8)
-      WRITE(ICOUT,9015)IHARGI,ICHAR1,IHIT
-      CALL EDWRST('EDSET ')
- 9015 FORMAT('IHARGI,ICHAR1,IHIT = ',A4,2X,A1,2X,A4)
-      WRITE(ICOUT,9018)ITRANS
-      CALL EDWRST('EDSET ')
- 9018 FORMAT('ITRANS = ',A4)
-      WRITE(ICOUT,9019)ILPOFF
-      CALL EDWRST('EDSET ')
- 9019 FORMAT('ILPOFF = ',I8)
-      WRITE(ICOUT,9021)IFEESW,LOOPCT
-      CALL EDWRST('EDSET ')
- 9021 FORMAT('IFEESW,LOOPCT = ',A4,I8)
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'SET')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDSET ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('*****AT THE END       OF EDSET--')
+        CALL EDWRST('EDSET ')
+        WRITE(ICOUT,9013)ICLIM1,ICLIM2,ICURLN
+ 9013   FORMAT('ICLIM1,ICLIM2,ICURLN = ',3I8)
+        CALL EDWRST('EDSET ')
+        WRITE(ICOUT,9014)I2,NUMCOM,MAXCMN,ILPOFF
+ 9014   FORMAT('I2,NUMCOM,MAXCMN,ILPOFF = ',4I8)
+        CALL EDWRST('EDSET ')
+        WRITE(ICOUT,9015)IHARGI,ICHAR1,IHIT,ITRANS
+ 9015   FORMAT('IHARGI,ICHAR1,IHIT,ITRANS = ',A4,2X,A1,2(2X,A4))
+        CALL EDWRST('EDSET ')
+        WRITE(ICOUT,9021)IFEESW,LOOPCT
+ 9021   FORMAT('IFEESW,LOOPCT = ',A4,I8)
+        CALL EDWRST('EDSET ')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -16846,7 +16662,10 @@ C     ORIGINAL VERSION--JUNE 1986.
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -16864,18 +16683,16 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDSE'
       ISUBN2='UC  '
-C
       IFOUND='NO'
       IERROR='NO'
 C
@@ -16951,7 +16768,7 @@ C
       WRITE(ICOUT,2181)
       CALL EDWRST('EDSEUC')
  2181 FORMAT('***** FROM THE MIDDLE OF EDSEUC--')
-      WRITE(ICOUT,2183)IFILE
+      WRITE(ICOUT,2183)IFILE(1:80)
       CALL EDWRST('EDSEUC')
  2183 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,2184)IOUNIT
@@ -17125,13 +16942,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDSH'
       ISUBN2='IF  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -17266,7 +17082,6 @@ C
       CALL EDCHSI(NUMCH9)
       IF(IERROR.EQ.'YES')GOTO9000
 C
- 2450 CONTINUE
       IF(ILINE.LT.1)GOTO2460
       IF(ILINE.GT.NUMLIN)GOTO2470
       GOTO2490
@@ -17274,29 +17089,27 @@ C
  2460 CONTINUE
       IF(IPRISW.EQ.'OFF'.AND.INUMSW.EQ.'OFF')THEN
          WRITE(ICOUT,2461)
+ 2461    FORMAT('[TOP]')
          CALL EDWRST('EDSHIF')
       ENDIF
- 2461 FORMAT('[TOP]')
       IF(IPRISW.EQ.'ON'.OR.INUMSW.EQ.'ON')THEN
          WRITE(ICOUT,2462)
+ 2462    FORMAT(10X,'[TOP]')
          CALL EDWRST('EDSHIF')
       ENDIF
- 2462 FORMAT(10X,'[TOP]')
- 2469 CONTINUE
       GOTO2100
 C
  2470 CONTINUE
       IF(IPRISW.EQ.'OFF'.AND.INUMSW.EQ.'OFF')THEN
          WRITE(ICOUT,2471)
+ 2471    FORMAT('[BOTTOM]')
          CALL EDWRST('EDSHIF')
       ENDIF
- 2471 FORMAT('[BOTTOM]')
       IF(IPRISW.EQ.'ON'.OR.INUMSW.EQ.'ON')THEN
          WRITE(ICOUT,2472)
+ 2472    FORMAT(10X,'[BOTTOM]')
          CALL EDWRST('EDSHIF')
       ENDIF
- 2472 FORMAT(10X,'[BOTTOM]')
- 2479 CONTINUE
       GOTO9000
 C
  2490 CONTINUE
@@ -17435,7 +17248,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -17547,29 +17360,22 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'SHI2')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDSHI2')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDSHI2')
- 9011 FORMAT('***** AT THE END       OF EDSHI2--')
-      WRITE(ICOUT,9012)ISHIFN
-      CALL EDWRST('EDSHI2')
- 9012 FORMAT('ISHIFN = ',I8)
-      WRITE(ICOUT,9031)NUMCOL
-      CALL EDWRST('EDSHI2')
- 9031 FORMAT('NUMCOL = ',I8)
-      WRITE(ICOUT,9032)(IOLDLI(I),I=1,NUMCOL)
-      CALL EDWRST('EDSHI2')
- 9032 FORMAT('(IOLDLI(I),I=1,NUMCOL) = ',110A1)
-      WRITE(ICOUT,9033)NUMCNL
-      CALL EDWRST('EDSHI2')
- 9033 FORMAT('NUMCNL = ',I8)
-      WRITE(ICOUT,9034)(INEWLI(I),I=1,NUMCNL)
-      CALL EDWRST('EDSHI2')
- 9034 FORMAT('(INEWLI(I),I=1,NUMCNL) = ',110A1)
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'SHI2')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDSHI2')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDSHI2--')
+        CALL EDWRST('EDSHI2')
+        WRITE(ICOUT,9012)ISHIFN,NUMCOL,NUMCNL
+ 9012   FORMAT('ISHIFN,NUMCOL,NUMCNL = ',3I8)
+        CALL EDWRST('EDSHI2')
+        WRITE(ICOUT,9032)(IOLDLI(I),I=1,MIN(110,NUMCOL))
+ 9032   FORMAT('(IOLDLI(I),I=1,NUMCOL) = ',110A1)
+        CALL EDWRST('EDSHI2')
+        WRITE(ICOUT,9034)(INEWLI(I),I=1,MIN(110,NUMCNL))
+ 9034   FORMAT('(INEWLI(I),I=1,NUMCNL) = ',110A1)
+        CALL EDWRST('EDSHI2')
+      ENDIF
 C
       RETURN
       END
@@ -17596,7 +17402,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -17681,13 +17487,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-------------------------------------------
 C
       ISUBN1='EDSH'
       ISUBN2='OW  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -18063,13 +17868,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-------------------------------------------
 C
       ISUBN1='EDST'
       ISUBN2='AT  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -18226,15 +18030,14 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'STAT')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDSTAT')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDSTAT')
- 9011 FORMAT('***** AT THE END       OF EDSTAT--')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'STAT')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDSTAT')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDSTAT--')
+        CALL EDWRST('EDSTAT')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -18264,13 +18067,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDTO'
       ISUBN2='P   '
-C
       IFOUND='NO'
       IERROR='NO'
 C
@@ -18370,7 +18172,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-------------------------------------------
 C
@@ -18522,7 +18324,6 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
       RETURN
       END
       SUBROUTINE EDTRA2
@@ -18543,7 +18344,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-------------------------------------------
 C
@@ -18554,7 +18355,6 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
       RETURN
       END
       SUBROUTINE EDTRA3(ISTEPN,ISUBN1,ISUBN2)
@@ -18570,7 +18370,7 @@ C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
 C
-C-----COMMON VARIABLES (EDITING)-----------------------------------------------
+C-----COMMON VARIABLES (EDITING)--------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
@@ -18580,7 +18380,7 @@ C
 CCCCC CHARACTER*4 IFEESW
 CCCCC CHARACTER*4 IPRINT
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 CCCCC COMMON /PRINT/IFEESW,IPRINT
 C
 C-----START POINT-----------------------------------------------------
@@ -18627,7 +18427,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----DATA STATEMENTS-------------------------------------
 C
@@ -18742,13 +18542,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDCE'
       ISUBN2='NT  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -18881,7 +18680,6 @@ C
       CALL EDCHSI(NUMCH9)
       IF(IERROR.EQ.'YES')GOTO9000
 C
- 2450 CONTINUE
       IF(ILINE.LT.1)GOTO2460
       IF(ILINE.GT.NUMLIN)GOTO2470
       GOTO2490
@@ -18889,29 +18687,27 @@ C
  2460 CONTINUE
       IF(IPRISW.EQ.'OFF'.AND.INUMSW.EQ.'OFF')THEN
          WRITE(ICOUT,2461)
+ 2461     FORMAT('[TOP]')
          CALL EDWRST('EDTRUN')
       ENDIF
- 2461 FORMAT('[TOP]')
       IF(IPRISW.EQ.'ON'.OR.INUMSW.EQ.'ON')THEN
          WRITE(ICOUT,2462)
+ 2462    FORMAT(10X,'[TOP]')
          CALL EDWRST('EDTRUN')
       ENDIF
- 2462 FORMAT(10X,'[TOP]')
- 2469 CONTINUE
       GOTO2100
 C
  2470 CONTINUE
       IF(IPRISW.EQ.'OFF'.AND.INUMSW.EQ.'OFF')THEN
          WRITE(ICOUT,2471)
+ 2471    FORMAT('[BOTTOM]')
          CALL EDWRST('EDTRUN')
       ENDIF
- 2471 FORMAT('[BOTTOM]')
       IF(IPRISW.EQ.'ON'.OR.INUMSW.EQ.'ON')THEN
          WRITE(ICOUT,2472)
+ 2472    FORMAT(10X,'[BOTTOM]')
          CALL EDWRST('EDTRUN')
       ENDIF
- 2472 FORMAT(10X,'[BOTTOM]')
- 2479 CONTINUE
       GOTO9000
 C
  2490 CONTINUE
@@ -19048,7 +18844,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -19133,29 +18929,22 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'TRU2')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDTRU2')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDTRU2')
- 9011 FORMAT('***** AT THE END       OF EDTRU2--')
-      WRITE(ICOUT,9031)NUMCOL
-      CALL EDWRST('EDTRU2')
- 9031 FORMAT('NUMCOL = ',I8)
-      WRITE(ICOUT,9032)(IOLDLI(I),I=1,NUMCOL)
-      CALL EDWRST('EDTRU2')
- 9032 FORMAT('(IOLDLI(I),I=1,NUMCOL) = ',110A1)
-      WRITE(ICOUT,9033)NUMCNL
-      CALL EDWRST('EDTRU2')
- 9033 FORMAT('NUMCNL = ',I8)
-      WRITE(ICOUT,9034)(INEWLI(I),I=1,NUMCNL)
-      CALL EDWRST('EDTRU2')
- 9034 FORMAT('(INEWLI(I),I=1,NUMCNL) = ',110A1)
-      WRITE(ICOUT,9041)ILAST,ITRUNC,ITRUN2
-      CALL EDWRST('EDTRU2')
- 9041 FORMAT('ILAST,ITRUNC,ITRUN2 = ',3I8)
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'TRU2')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDTRU2')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDTRU2--')
+        CALL EDWRST('EDTRU2')
+        WRITE(ICOUT,9031)NUMCOL,NUMCNL,ILAST,ITRUNC,ITRUN2
+ 9031   FORMAT('NUMCOL,NUMCNL,ILAST,ITRUNC,ITRUN2 = ',5I8)
+        CALL EDWRST('EDTRU2')
+        WRITE(ICOUT,9032)(IOLDLI(I),I=1,MIN(110,NUMCOL))
+ 9032   FORMAT('(IOLDLI(I),I=1,NUMCOL) = ',110A1)
+        CALL EDWRST('EDTRU2')
+        WRITE(ICOUT,9034)(INEWLI(I),I=1,MIN(110,NUMCNL))
+ 9034   FORMAT('(INEWLI(I),I=1,NUMCNL) = ',110A1)
+        CALL EDWRST('EDTRU2')
+      ENDIF
 C
       RETURN
       END
@@ -19225,7 +19014,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -19881,13 +19670,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDUN'
       ISUBN2='DO  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -19955,30 +19743,29 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'UNDO')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDUNDO')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDUNDO')
- 9011 FORMAT('*****AT THE END       OF EDUNDO--')
-      WRITE(ICOUT,9012)NUMLOL,NUMROL,NCHAOL,IOLDLN
-      CALL EDWRST('EDUNDO')
- 9012 FORMAT('NUMLOL,NUMROL,NCHAOL,IOLDLN = ',4I8)
-      WRITE(ICOUT,9013)NUMLIN,NUMROW,NUMCHA,ICURLN
-      CALL EDWRST('EDUNDO')
- 9013 FORMAT('NUMLIN,NUMROW,NUMCHA,ICURLN = ',4I8)
-      IF(NUMLIN.LE.0)GOTO9019
-      DO9015I=1,NUMLIN
-      WRITE(ICOUT,9016)I,IPOIOL(I),IPOINT(I)
-      CALL EDWRST('EDUNDO')
- 9016 FORMAT('I,IPOIOL(I),IPOINT(I) = ',3I8)
- 9015 CONTINUE
- 9019 CONTINUE
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDUNDO')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'UNDO')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDUNDO')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('*****AT THE END       OF EDUNDO--')
+        CALL EDWRST('EDUNDO')
+        WRITE(ICOUT,9012)NUMLOL,NUMROL,NCHAOL,IOLDLN
+ 9012   FORMAT('NUMLOL,NUMROL,NCHAOL,IOLDLN = ',4I8)
+        CALL EDWRST('EDUNDO')
+        WRITE(ICOUT,9013)NUMLIN,NUMROW,NUMCHA,ICURLN
+ 9013   FORMAT('NUMLIN,NUMROW,NUMCHA,ICURLN = ',4I8)
+        CALL EDWRST('EDUNDO')
+        IF(NUMLIN.GE.1)THEN
+          DO9015I=1,NUMLIN
+            WRITE(ICOUT,9016)I,IPOIOL(I),IPOINT(I)
+ 9016       FORMAT('I,IPOIOL(I),IPOINT(I) = ',3I8)
+            CALL EDWRST('EDUNDO')
+ 9015      CONTINUE
+        ENDIF
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDUNDO')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -20004,13 +19791,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDUP'
       ISUBN2='    '
-C
       IFOUND='NO'
       IERROR='NO'
 C
@@ -20146,7 +19932,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)----------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -20236,7 +20022,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)----------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -20322,14 +20108,11 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--83.6
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MAY       1983.
 C
-C-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
+C-----NON-COMMON VARIABLES (GRAPHICS)-----------------------------------
 C
       CHARACTER*238 ICSTR
 C
@@ -20347,7 +20130,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -20355,43 +20138,31 @@ C
 C
       IGUNIT=IPR
 C
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'WRGS')GOTO90
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDWRGS')
-  999 FORMAT(1X)
-      WRITE(ICOUT,51)
-      CALL EDWRST('EDWRGS')
-   51 FORMAT('***** AT THE BEGINNING OF EDWRGS--')
-      WRITE(ICOUT,52)ISUBN0
-      CALL EDWRST('EDWRGS')
-   52 FORMAT('ISUBN0 (NAME OF THE CALLING SUBROUTINE) = ',A4)
-      WRITE(ICOUT,53)IGUNIT,IMANUF
-      CALL EDWRST('EDWRGS')
-   53 FORMAT('IGUNIT,IMANUF = ',I8,2X,A4)
-      WRITE(ICOUT,54)NCSTR
-      CALL EDWRST('EDWRGS')
-   54 FORMAT('NCSTR = ',I8)
-      IF(NCSTR.LE.0)GOTO57
-      DO55I=1,NCSTR
-      IASCNE=ICHAR(ICSTR(I:I))
-      WRITE(ICOUT,56)I,ICSTR(I:I),IASCNE
-      CALL EDWRST('EDWRGS')
-   56 FORMAT('I,ICSTR(I:I),IASCNE = ',I8,2X,A1,I8)
-   55 CONTINUE
-   57 CONTINUE
-CCCCC WRITE(ICOUT,61)NUMTRA
-CCC61 FORMAT('NUMTRA = ',I8)
-CCCCC IF(NUMTRA.LE.0)GOTO69
-CCCCC DO62I=1,NUMTRA
-CCCCC WRITE(ICOUT,63)I,NCTRA1(I),ICTRA1(I),NCTRA2(I),ICTRA2(I)
-CCC63 FORMAT('I,NCTRA1(I),ICTRA1(I),NCTRA2(I),ICTRA2(I) = ',
-CCCCC1I8,I8,2X,A30,I8,2X,A30)
-CCC62 CONTINUE
-CCC69 CONTINUE
-      WRITE(ICOUT,79)IBUGE2,ISUBRO,IERROR
-      CALL EDWRST('EDWRGS')
-   79 FORMAT('IBUGE2,ISUBRO,IERROR = ',A4,2X,A4,2X,A4)
-   90 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'WRGS')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL EDWRST('EDWRGS')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF EDWRGS--')
+        CALL EDWRST('EDWRGS')
+        WRITE(ICOUT,52)ISUBN0
+   52   FORMAT('ISUBN0 (NAME OF THE CALLING SUBROUTINE) = ',A4)
+        CALL EDWRST('EDWRGS')
+        WRITE(ICOUT,53)IGUNIT,NCSTR,IMANUF
+   53   FORMAT('IGUNIT,NCSTR,IMANUF = ',2I8,2X,A4)
+        CALL EDWRST('EDWRGS')
+        IF(NCSTR.GE.1)THEN
+          DO55I=1,NCSTR
+            IASCNE=ICHAR(ICSTR(I:I))
+            WRITE(ICOUT,56)I,ICSTR(I:I),IASCNE
+   56       FORMAT('I,ICSTR(I:I),IASCNE = ',I8,2X,A1,I8)
+            CALL EDWRST('EDWRGS')
+   55     CONTINUE
+        ENDIF
+        WRITE(ICOUT,79)IBUGE2,ISUBRO,IERROR
+   79   FORMAT('IBUGE2,ISUBRO,IERROR = ',2(A4,2X),A4)
+        CALL EDWRST('EDWRGS')
+      ENDIF
 C
 C               *********************************************
 C               **  STEP 11--                              **
@@ -20447,34 +20218,26 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'WRGS')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDWRGS')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDWRGS')
- 9011 FORMAT('***** AT THE END       OF EDWRGS--')
-      WRITE(ICOUT,9012)IBRANC
-      CALL EDWRST('EDWRGS')
- 9012 FORMAT('IBRANC = ',A4)
-      WRITE(ICOUT,9013)IGUNIT,IMANUF
-      CALL EDWRST('EDWRGS')
- 9013 FORMAT('IGUNIT,IMANUF = ',I8,2X,A4)
-      WRITE(ICOUT,9014)NCSTR
-      CALL EDWRST('EDWRGS')
- 9014 FORMAT('NCSTR = ',I8)
-      IF(NCSTR.LE.0)GOTO9017
-      IF(NCSTR.LE.0)GOTO9017
-      DO9015I=1,NCSTR
-      IASCNE=ICHAR(ICSTR(I:I))
-      WRITE(ICOUT,9016)I,ICSTR(I:I),IASCNE
-      CALL EDWRST('EDWRGS')
- 9016 FORMAT('I,ICSTR(I:I),IASCNE = ',I8,2X,A1,I8)
- 9015 CONTINUE
- 9017 CONTINUE
-      WRITE(ICOUT,9019)IBUGE2,ISUBRO,IERROR
-      CALL EDWRST('EDWRGS')
- 9019 FORMAT('IBUGE2,ISUBRO,IERROR = ',A4,2X,A4,2X,A4)
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'WRGS')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDWRGS')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDWRGS--')
+        CALL EDWRST('EDWRGS')
+        WRITE(ICOUT,9012)IBRANC,IGUNIT,NCSTR,IMANUF
+ 9012   FORMAT('IBRANC,IGUNIT,NCSTR,IMANUF = ',3I8,A4)
+        CALL EDWRST('EDWRGS')
+        IF(NCSTR.GE.1)THEN
+          DO9015I=1,NCSTR
+            IASCNE=ICHAR(ICSTR(I:I))
+            WRITE(ICOUT,9016)I,ICSTR(I:I),IASCNE
+ 9016       FORMAT('I,ICSTR(I:I),IASCNE = ',I8,2X,A1,I8)
+            CALL EDWRST('EDWRGS')
+ 9015     CONTINUE
+        ENDIF
+        WRITE(ICOUT,9019)IBUGE2,ISUBRO,IERROR
+ 9019   FORMAT('IBUGE2,ISUBRO,IERROR = ',2(A4,2X),A4)
+        CALL EDWRST('EDWRGS')
 CCCCC WRITE(ICOUT,9021)NUMTRA
 C9021 FORMAT('NUMTRA = ',I8)
 CCCCC IF(NUMTRA.LE.0)GOTO9029
@@ -20484,7 +20247,7 @@ C9023 FORMAT('I,ICTRA1(I),NCTRA1(I),NCTRA2(I),ICTRA2(I) = ',
 CCCCC1I8,2X,A30,I8,2X,A30,I8)
 C9022 CONTINUE
 C9029 CONTINUE
- 9090 CONTINUE
+      ENDIF
 C
       RETURN
       END
@@ -20507,34 +20270,34 @@ C
       CHARACTER*4 ISUBN2
 CCCCC CHARACTER*4 ISTEPN
 C
-C-----COMMON VARIABLES (EDITING)-----------------------------------------------
+C-----COMMON VARIABLES (EDITING)----------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
-C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
+C-----COMMON VARIABLES (GENERAL)----------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDWR'
       ISUBN2='LI  '
 C
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'INSE')GOTO90
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDWRLI')
-  999 FORMAT(1X)
-      WRITE(ICOUT,51)
-      CALL EDWRST('EDWRLI')
-   51 FORMAT('***** AT THE BEGINNING OF EDNEAT--')
-      WRITE(ICOUT,52)NCNEWL,ILINE
-      CALL EDWRST('EDWRLI')
-   52 FORMAT('NCNEWL,ILINE = ',2I8)
-      WRITE(ICOUT,53)(ICNEWL(I:I),I=1,100)
-      CALL EDWRST('EDWRLI')
-   53 FORMAT('(ICNEWL(I:I),I=1,100) = ',100A1)
-   90 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'INSE')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL EDWRST('EDWRLI')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF EDNEAT--')
+        CALL EDWRST('EDWRLI')
+        WRITE(ICOUT,52)NCNEWL,ILINE
+   52   FORMAT('NCNEWL,ILINE = ',2I8)
+        CALL EDWRST('EDWRLI')
+        WRITE(ICOUT,53)(ICNEWL(I:I),I=1,100)
+   53   FORMAT('(ICNEWL(I:I),I=1,100) = ',100A1)
+        CALL EDWRST('EDWRLI')
+      ENDIF
 C
 C               ****************************************
 C               **  STEP 11--                         **
@@ -20542,7 +20305,7 @@ C               **  WRITE OUT THE CHARACTER VARIABLE  **
 C               ****************************************
 C
       DO1100I=1,240
-      ICOUT(I:I)=ICNEWL(I:I)
+        ICOUT(I:I)=ICNEWL(I:I)
  1100 CONTINUE
       NCOUT=NCNEWL
       ILOUT=ILINE
@@ -20553,20 +20316,19 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'INSE')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDWRLI')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDWRLI')
- 9011 FORMAT('***** AT THE END       OF EDNEAT--')
-      WRITE(ICOUT,9012)NCOUT,ILOUT
-      CALL EDWRST('EDWRLI')
- 9012 FORMAT('NCOUT,ILOUT = ',2I8)
-      WRITE(ICOUT,9013)(ICOUT(I:I),I=1,100)
-      CALL EDWRST('EDWRLI')
- 9013 FORMAT('(ICOUT(I:I),I=1,100) = ',100A1)
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'INSE')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDWRLI')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDNEAT--')
+        CALL EDWRST('EDWRLI')
+        WRITE(ICOUT,9012)NCOUT,ILOUT
+ 9012   FORMAT('NCOUT,ILOUT = ',2I8)
+        CALL EDWRST('EDWRLI')
+        WRITE(ICOUT,9013)(ICOUT(I:I),I=1,100)
+ 9013   FORMAT('(ICOUT(I:I),I=1,100) = ',100A1)
+        CALL EDWRST('EDWRLI')
+      ENDIF
 C
       RETURN
       END
@@ -20580,7 +20342,10 @@ C     ORIGINAL VERSION--JANUARY 1985.
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -20598,20 +20363,17 @@ C
 C
 C-----COMMON VARIABLES (EDITING)-----------------------------------------------
 C
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'EDCOMM.INC'
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDWR'
       ISUBN2='WF  '
-C
       ISUBN0='WRWF'
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -20667,7 +20429,7 @@ C
 C
  1190 CONTINUE
       IF(IBUGFI.EQ.'OFF')GOTO1199
-      WRITE(ICOUT,1193)IFILE
+      WRITE(ICOUT,1193)IFILE(1:80)
       CALL EDWRST('EDWRWF')
  1193 FORMAT('IFILE = ',A80)
       WRITE(ICOUT,1194)IOUNIT
@@ -20737,32 +20499,22 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGFI.EQ.'OFF'.AND.ISUBRO.NE.'WRWF')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDWRWF')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDWRWF')
- 9011 FORMAT('*****AT THE END       OF EDWRWF--')
-      WRITE(ICOUT,9012)ID
-      CALL EDWRST('EDWRWF')
- 9012 FORMAT('ID = ',A4)
-      WRITE(ICOUT,9013)IFILE
-      CALL EDWRST('EDWRWF')
- 9013 FORMAT('IFILE = ',A80)
-      WRITE(ICOUT,9014)IOUNIT
-      CALL EDWRST('EDWRWF')
- 9014 FORMAT('IOUNIT = ',I8)
-      WRITE(ICOUT,9015)ISTAT
-      CALL EDWRST('EDWRWF')
- 9015 FORMAT('ISTAT = ',A12)
-      WRITE(ICOUT,9016)NUMLIN,NUMCHA
-      CALL EDWRST('EDWRWF')
- 9016 FORMAT('NUMLIN,NUMCHA = ',2I8)
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDWRWF')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGFI.EQ.'ON' .OR. ISUBRO.EQ.'WRWF')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDWRWF')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('*****AT THE END       OF EDWRWF--')
+        CALL EDWRST('EDWRWF')
+        WRITE(ICOUT,9012)IOUNIT,NUMLIN,NUMCHA,ID,ISTAT
+ 9012   FORMAT('IOUNIT,NUMLIN,NUMCHA,ID,ISTAT = ',3I5,2X,A4,2X,A12)
+        CALL EDWRST('EDWRWF')
+        WRITE(ICOUT,9013)IFILE(1:80)
+ 9013   FORMAT('IFILE = ',A80)
+        CALL EDWRST('EDWRWF')
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDWRWF')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -20787,13 +20539,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='EDX '
       ISUBN2='    '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -20852,20 +20603,19 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGFI.EQ.'OFF'.AND.ISUBRO.NE.'CALL')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDX   ')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDX   ')
- 9011 FORMAT('***** AT THE END       OF EDX--')
-      WRITE(ICOUT,9013)ICXQT,IXQT
-      CALL EDWRST('EDX   ')
- 9013 FORMAT('ICXQT,IXQT = ',A4,I8)
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDX   ')
-      IF(IBUGT2.EQ.'ON')CALL EDTRA2
- 9090 CONTINUE
+      IF(IBUGFI.EQ.'ON' .OR. ISUBRO.EQ.'CALL')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDX   ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDX--')
+        CALL EDWRST('EDX   ')
+        WRITE(ICOUT,9013)ICXQT,IXQT
+ 9013   FORMAT('ICXQT,IXQT = ',A4,I8)
+        CALL EDWRST('EDX   ')
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDX   ')
+        IF(IBUGT2.EQ.'ON')CALL EDTRA2
+      ENDIF
 C
       RETURN
       END
@@ -20893,7 +20643,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -20931,20 +20681,19 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGE2.EQ.'OFF'.AND.ISUBRO.NE.'INSE')GOTO9090
-      WRITE(ICOUT,999)
-      CALL EDWRST('EDZERO')
-      WRITE(ICOUT,9011)
-      CALL EDWRST('EDZERO')
- 9011 FORMAT('***** AT THE END       OF EDZERO--')
-      WRITE(ICOUT,9012)NCNEWL
-      CALL EDWRST('EDZERO')
- 9012 FORMAT('NCNEWL = ',I8)
-      WRITE(ICOUT,9013)(ICNEWL(I:I),I=1,100)
-      CALL EDWRST('EDZERO')
- 9013 FORMAT('(ICNEWL(I:I),I=1,100) = ',100A1)
- 9090 CONTINUE
+      IF(IBUGE2.EQ.'ON' .OR. ISUBRO.EQ.'INSE')THEN
+        WRITE(ICOUT,999)
+        CALL EDWRST('EDZERO')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EDZERO--')
+        CALL EDWRST('EDZERO')
+        WRITE(ICOUT,9012)NCNEWL
+ 9012   FORMAT('NCNEWL = ',I8)
+        CALL EDWRST('EDZERO')
+        WRITE(ICOUT,9013)(ICNEWL(I:I),I=1,100)
+        CALL EDWRST('EDZERO')
+ 9013   FORMAT('(ICNEWL(I:I),I=1,100) = ',100A1)
+      ENDIF
 C
       RETURN
       END

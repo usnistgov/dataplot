@@ -49,17 +49,10 @@ C
       CHARACTER*4 IBUGG3
       CHARACTER*4 IBUGQ
       CHARACTER*4 IFOUND
-      CHARACTER*4 IFOUN1
-      CHARACTER*4 IFOUN2
       CHARACTER*4 IERROR
 C
       CHARACTER*4 ICASE2
-      CHARACTER*4 IHWUSE
-      CHARACTER*4 MESSAG
       CHARACTER*4 ICASE
-      CHARACTER*4 ICASEQ
-      CHARACTER*4 IERRO4
-C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
@@ -97,16 +90,7 @@ C
       INCLUDE 'DPCOHK.INC'
       INCLUDE 'DPCODA.INC'
       INCLUDE 'DPCOS2.INC'
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -136,8 +120,8 @@ C
         WRITE(ICOUT,51)
    51   FORMAT('***** AT THE BEGINNING OF DPTIQP--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,52)ICASPL,IAND1,IAND2
-   52   FORMAT('ICASPL,IAND1,IAND2 = ',2(A4,2X),A4)
+        WRITE(ICOUT,52)ICASPL,IAND1,IAND2,NS
+   52   FORMAT('ICASPL,IAND1,IAND2,NS = ',3(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,53)IBUGG2,IBUGG3,IBUGQ,ISUBRO
    53   FORMAT('IBUGG2,IBUGG3,IBUGQ,ISUBRO = ',3(A4,2X),A4)
@@ -548,17 +532,10 @@ C
       DIMENSION X2(*)
       DIMENSION D2(*)
 C
+C-----COMMON----------------------------------------------------------
+C
       INCLUDE 'DPCOST.INC'
-C
-C---------------------------------------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -1044,15 +1021,9 @@ C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -1439,9 +1410,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--SEPTEMBER 1980.
@@ -1465,15 +1433,9 @@ C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -1860,9 +1822,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--SEPTEMBER 1980.
@@ -1886,15 +1845,9 @@ C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -2276,9 +2229,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--SEPTEMBER 1980.
@@ -2298,15 +2248,9 @@ C
       DIMENSION IARGT(*)
       DIMENSION ARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -2325,7 +2269,6 @@ C
       IF(IHARG(NUMARG).EQ.'AUTO')GOTO1150
       IF(IHARG(NUMARG).EQ.'DEFA')GOTO1150
 C
- 1120 CONTINUE
       IERROR='YES'
       WRITE(ICOUT,1121)
  1121 FORMAT('***** ERROR IN DPTISZ--')
@@ -2422,9 +2365,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--JANUARY    1978.
@@ -2469,15 +2409,9 @@ CCCCC THE FOLLOWING LINE WAS ADDED AUGUST 1992
 C
       DIMENSION ITITTE(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -2681,9 +2615,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--89/8
 C     ORIGINAL VERSION--JULY      1989.
@@ -2699,15 +2630,9 @@ C
       DIMENSION IHARG(*)
       DIMENSION ARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -2774,9 +2699,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--89/2
 C     ORIGINAL VERSION--JANUARY   1989.
@@ -2792,15 +2714,9 @@ C
       DIMENSION IHARG(*)
       DIMENSION ARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -2870,9 +2786,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--SEPTEMBER 1980.
@@ -2898,15 +2811,9 @@ C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -2950,7 +2857,6 @@ C
      1IHARG(2).EQ.'LABE'.AND.IHARG(3).EQ.'CONT')GOTO1900
       IF(NUMARG.GE.3.AND.IHARG(1).EQ.'MARK'.AND.
      1IHARG(2).EQ.'LABE'.AND.IHARG(3).EQ.'NUMB')GOTO1900
- 1090 CONTINUE
 C
 C               *****************************************************
 C               **  TREAT THE CASE WHEN                            **
@@ -3294,9 +3200,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--89/2
 C     ORIGINAL VERSION--JANUARY   1989.
@@ -3315,15 +3218,9 @@ C
       DIMENSION IHARG(*)
       DIMENSION ARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -3679,9 +3576,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--89/2
 C     ORIGINAL VERSION--JANUARY   1989.
@@ -3707,15 +3601,9 @@ C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -4071,9 +3959,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--SEPTEMBER 1980.
@@ -4101,15 +3986,9 @@ C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -4506,15 +4385,9 @@ CCCCC THE FOLLOWING LINE WAS ADDED       SEPTEMBER 1993
 CCCCC TO ALLOW FOR LOWER CASE            SEPTEMBER 1993
       DIMENSION IANSLC(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -4933,9 +4806,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--89/2
 C     ORIGINAL VERSION--JANUARY   1989.
@@ -4961,15 +4831,9 @@ C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -5328,9 +5192,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--91/9
 C     ORIGINAL VERSION--AUGUST    1991.
@@ -5349,15 +5210,9 @@ C
       DIMENSION IARGT(*)
       DIMENSION ARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -5754,9 +5609,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--89/2
 C     ORIGINAL VERSION--JANUARY   1989.
@@ -5782,15 +5634,9 @@ C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -6176,15 +6022,9 @@ C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -6556,15 +6396,9 @@ C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -6926,9 +6760,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--JULY      1987.
@@ -6948,15 +6779,9 @@ C
       DIMENSION IARGT(*)
       DIMENSION ARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -7376,9 +7201,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--89/2
 C     ORIGINAL VERSION--JANUARY   1989.
@@ -7404,15 +7226,9 @@ C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -7773,9 +7589,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--OCTOBER   1980.
@@ -7796,15 +7609,9 @@ C
       DIMENSION IARGT(*)
       DIMENSION ARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -8218,9 +8025,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--89/2
 C     ORIGINAL VERSION--JANUARY   1989.
@@ -8239,15 +8043,9 @@ C
       DIMENSION IHARG(*)
       DIMENSION ARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -8622,20 +8420,14 @@ C
       CHARACTER*4 ICASEQ
       CHARACTER*4 IH
       CHARACTER*4 IH2
-C
       CHARACTER*4 ICASAN
       CHARACTER*4 ICASE
-C
-      CHARACTER*4 ISUBN0
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
-C
       CHARACTER*4 IFLAGU
       CHARACTER*4 IREPL
       CHARACTER*4 IMULT
-      CHARACTER*4 ICTMP1
-      CHARACTER*4 ICTMP2
 C
       LOGICAL IFRST
       LOGICAL ILAST
@@ -8690,21 +8482,14 @@ C
       INCLUDE 'DPCODA.INC'
       INCLUDE 'DPCOHO.INC'
       INCLUDE 'DPCOST.INC'
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPTM'
       ISUBN2='CO  '
+      IFOUND='YES'
+      IERROR='NO'
 C
       MAXCP1=MAXCOL+1
       MAXCP2=MAXCOL+2
@@ -8712,9 +8497,6 @@ C
       MAXCP4=MAXCOL+4
       MAXCP5=MAXCOL+5
       MAXCP6=MAXCOL+6
-C
-      IFOUND='YES'
-      IERROR='NO'
 C
 C               *****************************************************
 C               **  TREAT THE TRIMMED MEAN CONFIDENCE LIMITS CASE  **
@@ -9021,7 +8803,7 @@ C
      1              PID,IVARID,IVARI2,NREPL,
      1              CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
      1              CTL999,CTU999,
-     1              ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
+     1              ICAPSW,ICAPTY,IFORSW,
      1              ICASAN,ISUBRO,IBUGA3,IERROR)
 C
         IFLAGU='ON'
@@ -9102,7 +8884,7 @@ C
      1                PID,IVARID,IVARI2,NREPL,
      1                CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
      1                CTL999,CTU999,
-     1                ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
+     1                ICAPSW,ICAPTY,IFORSW,
      1                ICASAN,ISUBRO,IBUGA3,IERROR)
 C
           IFLAGU='FILE'
@@ -9248,7 +9030,7 @@ C
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
      1                    CTL999,CTU999,
-     1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
+     1                    ICAPSW,ICAPTY,IFORSW,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
 C
@@ -9288,7 +9070,7 @@ C
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
      1                    CTL999,CTU999,
-     1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
+     1                    ICAPSW,ICAPTY,IFORSW,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
             NPLOT2=NPLOTP
@@ -9331,7 +9113,7 @@ C
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
      1                    CTL999,CTU999,
-     1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
+     1                    ICAPSW,ICAPTY,IFORSW,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
             IFLAGU='FILE'
@@ -9377,7 +9159,7 @@ C
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
      1                    CTL999,CTU999,
-     1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
+     1                    ICAPSW,ICAPTY,IFORSW,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
             IFLAGU='FILE'
@@ -9427,7 +9209,7 @@ C
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
      1                    CTL999,CTU999,
-     1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
+     1                    ICAPSW,ICAPTY,IFORSW,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
             IFLAGU='FILE'
@@ -9481,7 +9263,7 @@ C
      1                    PID,IVARID,IVARI2,NREPL,
      1                    CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
      1                    CTL999,CTU999,
-     1                    ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
+     1                    ICAPSW,ICAPTY,IFORSW,
      1                    ICASAN,ISUBRO,IBUGA3,IERROR)
             ENDIF
             IFLAGU='FILE'
@@ -9530,7 +9312,7 @@ C
      1                  PID,IVARID,IVARI2,NREPL,
      1                  CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
      1                  CTL999,CTU999,
-     1                  ICAPSW,ICAPTY,IFORSW,IRTFFF,IRTFFP,
+     1                  ICAPSW,ICAPTY,IFORSW,
      1                  ICASAN,ISUBRO,IBUGA3,IERROR)
 C
 C     PURPOSE--THIS ROUTINE GENERATES TRIMMED MEAN CONFIDENCE LIMITS
@@ -9575,8 +9357,6 @@ C
       CHARACTER*4 ICAPSW
       CHARACTER*4 ICAPTY
       CHARACTER*4 IFORSW
-      CHARACTER*40 IRTFFF
-      CHARACTER*40 IRTFFP
 C
       CHARACTER*4 IVARID(*)
       CHARACTER*4 IVARI2(*)
@@ -9606,28 +9386,17 @@ C
       PARAMETER (MAXROW=20)
       CHARACTER*60 ITITLE
       CHARACTER*60 ITITLZ
-      CHARACTER*1  ITITL9
       CHARACTER*60 ITEXT(MAXROW)
-      CHARACTER*4  ALIGN(NUMCLI)
-      CHARACTER*4  VALIGN(NUMCLI)
       REAL         AVALUE(MAXROW)
       INTEGER      NCTEXT(MAXROW)
       INTEGER      IDIGIT(MAXROW)
       INTEGER      NTOT(MAXROW)
-      INTEGER      IWHTML(NUMCLI)
-      INTEGER      IWRTF(NUMCLI)
       LOGICAL IFRST
       LOGICAL ILAST
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -9706,7 +9475,6 @@ C
       DO135I=2,N
       IF(Y(I).NE.HOLD)GOTO139
   135 CONTINUE
-  130 CONTINUE
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','WRIT')
       WRITE(ICOUT,111)
@@ -10032,7 +9800,6 @@ C
       DOUBLE PRECISION V3P
       DOUBLE PRECISION DNTOT
       DOUBLE PRECISION DNFULL
-      DOUBLE PRECISION DC
       DOUBLE PRECISION DPDF
       DOUBLE PRECISION DCDF
       DOUBLE PRECISION DTERM1
@@ -10040,7 +9807,6 @@ C
       DOUBLE PRECISION DNUM2
       DOUBLE PRECISION DDENOM
       DOUBLE PRECISION DDENO2
-      DOUBLE PRECISION DALPHA
       DOUBLE PRECISION DOMEGA
       DOUBLE PRECISION DLAMB
       DOUBLE PRECISION DQ
@@ -10071,21 +9837,15 @@ C
       DOUBLE PRECISION DC1
       DOUBLE PRECISION DH
       COMMON/TNRCOM/DC1,DH
-C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
+C-----COMMON----------------------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPTN'
       ISUBN2='S1  '
-C
       IERROR='NO'
       IWRITE='OFF'
 C
@@ -10403,7 +10163,6 @@ C
       CHARACTER*4 ICASAN
       CHARACTER*4 ICASA2
       CHARACTER*4 ICAPSW
-      CHARACTER*4 ICAPAN
       CHARACTER*4 ICASDI
       CHARACTER*4 IFORSW
       CHARACTER*4 IBUGA2
@@ -10413,30 +10172,10 @@ C
       CHARACTER*4 IFOUND
       CHARACTER*4 IERROR
 C
-      CHARACTER*4 IWRITE
-      CHARACTER*4 ICASP2
-C
-      CHARACTER*4 IHWUSE
-      CHARACTER*4 MESSAG
       CHARACTER*4 IDATSW
-      CHARACTER*4 IHP
-      CHARACTER*4 IHP2
-C
-      CHARACTER*4 IH
-      CHARACTER*4 IH2
-      CHARACTER*4 ISUBN0
-C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
-C
-      CHARACTER*4 IFLAGU
-      LOGICAL IFRST
-      LOGICAL ILAST
-C
-      CHARACTER*4 LOWLTY
-      CHARACTER*4 UPPLTY
-      CHARACTER*4 IMETHD
       CHARACTER*4 IREPL
       CHARACTER*4 IMULT
       CHARACTER*4 ICTMP1
@@ -10501,16 +10240,7 @@ C
       INCLUDE 'DPCOHO.INC'
       INCLUDE 'DPCOMC.INC'
       INCLUDE 'DPCOST.INC'
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -10545,8 +10275,8 @@ C
         WRITE(ICOUT,51)
    51   FORMAT('***** AT THE BEGINNING OF DPTOLI--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,52)ICASAN
-   52   FORMAT('ICASAN = ',A4)
+        WRITE(ICOUT,52)ICASAN,MAXNXT
+   52   FORMAT('ICASAN,MAXNXT = ',A4,2X,I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,53)IBUGA2,IBUGA3,IBUGQ,ISUBRO
    53   FORMAT('IBUGA2,IBUGA3,IBUGQ,ISUBRO = ',3(A4,2X),A4)
@@ -11557,13 +11287,9 @@ C
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
+C-----COMMON----------------------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -11686,7 +11412,7 @@ C     OPTIONALLY APPLY GUENTHER'S CORRECTION
 C
       AN=REAL(N)
       IF(ICASAN(1:1).EQ.'2')THEN
-        IF(PTOLDF.GT.0.0)THEN
+        IF(ANU.GT.0.0)THEN
           NU=INT(ANU+0.5)
         ELSE
           NU=N-1
@@ -11731,8 +11457,8 @@ C       NON-CENTRAL T IS CONSIDERED MORE ACCURATE, BUT NON-CENTRAL T
 C       MAY LOSE ACCURACY AS N BECOMES LARGE.
 C
         IF(ITOLM2.EQ.'NONC')THEN
-          IF(PTOLDF.GT.0.0)THEN
-            NU=INT(PTOLDF+0.5)
+          IF(ANU.GT.0.0)THEN
+            NU=INT(ANU+0.5)
             IF(NU.LT.2)NU=2
             AF=REAL(NU-1)
           ELSE
@@ -11805,9 +11531,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--DECEMBER  1983.
@@ -11832,21 +11555,14 @@ C
       DIMENSION IHARG(*)
       DIMENSION ITEPCO(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
-C
       ISUBN1='DPTP'
       ISUBN2='CO  '
 C
@@ -12068,9 +11784,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--DECEMBER  1983.
@@ -12100,21 +11813,14 @@ CCCCC AUGUST 1995.  ADD FOLLOWING LINE
       DIMENSION IHARG2(*)
       DIMENSION ITEPLI(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
-C
       ISUBN1='DPTP'
       ISUBN2='LI  '
 C
@@ -12353,9 +12059,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--DECEMBER  1983.
@@ -12380,21 +12083,14 @@ C
       DIMENSION ARG(*)
       DIMENSION PTEPSP(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
-C
       ISUBN1='DPTP'
       ISUBN2='SP  '
 C
@@ -12621,9 +12317,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--DECEMBER  1983.
@@ -12648,21 +12341,14 @@ C
       DIMENSION ARG(*)
       DIMENSION PTEPTH(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
-C
       ISUBN1='DPTP'
       ISUBN2='TH  '
 C
@@ -12887,9 +12573,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--DECEMBER  1983.
@@ -12914,21 +12597,14 @@ C
       DIMENSION IHARG(*)
       DIMENSION ITEPTY(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
-C
       ISUBN1='DPTP'
       ISUBN2='TY  '
 C
@@ -13126,8 +12802,7 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPTREN(XTEMP1,XTEMP2,MAXNXT,
-     1                  ICAPSW,IFORSW,
+      SUBROUTINE DPTREN(XTEMP2,MAXNXT,ICAPSW,IFORSW,
      1                  IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
 C
 C     PURPOSE--CARRY OUT 3 TRENDS TEST FOR RELIABILITY ANALYSIS.
@@ -13190,7 +12865,6 @@ C---------------------------------------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
 C
-      DIMENSION XTEMP1(*)
       DIMENSION XTEMP2(*)
 C
       DIMENSION Y1(MAXOBV)
@@ -13219,21 +12893,14 @@ C
       INCLUDE 'DPCOHK.INC'
       INCLUDE 'DPCOSU.INC'
       INCLUDE 'DPCODA.INC'
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPTR'
       ISUBN2='EN  '
+      IFOUND='YES'
+      IERROR='NO'
 C
       MAXCP1=MAXCOL+1
       MAXCP2=MAXCOL+2
@@ -13241,9 +12908,6 @@ C
       MAXCP4=MAXCOL+4
       MAXCP5=MAXCOL+5
       MAXCP6=MAXCOL+6
-C
-      IFOUND='YES'
-      IERROR='NO'
 C
       NGROUP=0
       NCENS=0
@@ -13372,8 +13036,7 @@ C
 C
       CALL DPTRE2(Y1,NS,X1,NGROUP,XCEN,NCENS,
      1            ICAPSW,ICAPTY,IFORSW,
-     1            XTEMP1,XTEMP2,
-     1            TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,TEMP6,
+     1            XTEMP2,TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,TEMP6,
      1            TEND,MAXNXT,
      1            ISUBRO,IBUGA3,IERROR)
 C
@@ -13398,8 +13061,7 @@ C
       END
       SUBROUTINE DPTRE2(Y,N,X1,NGROUP,XCEN,NCENS,
      1                  ICAPSW,ICAPTY,IFORSW,
-     1                  XTEMP1,XTEMP2,
-     1                  XIDTEM,TEMP2,TEMP3,TEMP4,TEMP5,TEMP6,
+     1                  XTEMP1,XIDTEM,TEMP2,TEMP3,TEMP4,TEMP5,TEMP6,
      1                  TEND,MAXNXT,
      1                  ISUBRO,IBUGA3,IERROR)
 C
@@ -13460,7 +13122,6 @@ C
       CHARACTER*4 IBUGA3
       CHARACTER*4 IERROR
 C
-      CHARACTER*4 IWRITE
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
@@ -13475,13 +13136,10 @@ C
 C
 C---------------------------------------------------------------------
 C
-      DOUBLE PRECISION DSUM
-C
       DIMENSION Y(*)
       DIMENSION X1(*)
       DIMENSION XCEN(*)
       DIMENSION XTEMP1(*)
-      DIMENSION XTEMP2(*)
       DIMENSION XIDTEM(*)
       DIMENSION TEMP2(*)
       DIMENSION TEMP3(*)
@@ -13518,21 +13176,14 @@ C
       LOGICAL IFLAGE
 C
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPTR'
       ISUBN2='E2  '
-C
       IERROR='NO'
 C
       MAXSYS=10000
@@ -13584,7 +13235,6 @@ C
       DO135I=2,N
       IF(Y(I).NE.HOLD)GOTO139
   135 CONTINUE
-  130 CONTINUE
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,111)
@@ -13609,7 +13259,7 @@ C     CASE 1: NO GROUP OR CENSORING VARIABLE
 C
       IF(NGROUP.EQ.0 .AND. NCENS.EQ.0)THEN
         ISET=1
-        CALL DPTRE3(Y,N,XTEMP1,XTEMP2,TEND,MAXNXT,
+        CALL DPTRE3(Y,N,XTEMP1,TEND,MAXNXT,
      1              RATPVA,MHTPVA,DSUM1,DVAL2,DVAL3,
      1              ISET,ICAPSW,ICAPTY,IFORSW,
      1              ISUBRO,IBUGA3,IERROR)
@@ -13646,7 +13296,7 @@ C
             ENDIF
 1091      CONTINUE
           NI=K
-          CALL DPTRE3(TEMP2,NI,XTEMP1,XTEMP2,TEND,MAXNXT,
+          CALL DPTRE3(TEMP2,NI,XTEMP1,TEND,MAXNXT,
      1                RATPVA,MHTPVA,DSUM1,DVAL2,DVAL3,
      1                ISET,ICAPSW,ICAPTY,IFORSW,
      1                ISUBRO,IBUGA3,IERROR)
@@ -13760,7 +13410,7 @@ C
 C       STEP 2C: COMPUTE THE TREND TEST FOR A SINGLE SYSTEM
 C
           TEND=ACEN
-          CALL DPTRE3(TEMP2,NTEMPR,XTEMP1,XTEMP2,TEND,MAXNXT,
+          CALL DPTRE3(TEMP2,NTEMPR,XTEMP1,TEND,MAXNXT,
      1                RATPVA,MHTPVA,DSUM1,DVAL2,DVAL3,
      1                ISET,ICAPSW,ICAPTY,IFORSW,
      1                ISUBRO,IBUGA3,IERROR)
@@ -14411,7 +14061,7 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPTRE3(Y,N,XTEMP1,XTEMP2,TEND,MAXNXT,
+      SUBROUTINE DPTRE3(Y,N,XTEMP1,TEND,MAXNXT,
      1                  RATPVA,MHTPVA,DSUM1,DVAL2,DVAL3,
      1                  ISET,ICAPSW,ICAPTY,IFORSW,
      1                  ISUBRO,IBUGA3,IERROR)
@@ -14472,7 +14122,6 @@ C
 C
       DIMENSION Y(*)
       DIMENSION XTEMP1(*)
-      DIMENSION XTEMP2(*)
 C
       PARAMETER (NUMALP=3)
       PARAMETER(NUMCLI=5)
@@ -14502,22 +14151,22 @@ C
       LOGICAL IFLAGS
       LOGICAL IFLAGE
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPTR'
       ISUBN2='E3  '
-C
       IERROR='NO'
+C
+      IRMN01=0
+      IRMN05=0
+      IRMN10=0
+      IRMN90=0
+      IRMN95=0
+      IRMN99=0
 C
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'TRE3')THEN
         WRITE(ICOUT,999)
@@ -14526,8 +14175,8 @@ C
         WRITE(ICOUT,51)
    51   FORMAT('**** AT THE BEGINNING OF DPTRE3--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,52)N,IBUGA3
-   52   FORMAT('N,IBUGA3 = ',I8,2X,A4)
+        WRITE(ICOUT,52)N,MAXNXT,IBUGA3
+   52   FORMAT('N,MAXNXT,IBUGA3 = ',2I8,2X,A4)
         CALL DPWRST('XXX','BUG ')
         DO56I=1,N
           WRITE(ICOUT,57)I,Y(I)
@@ -14565,7 +14214,6 @@ C
       DO135I=2,N
         IF(Y(I).NE.HOLD)GOTO139
   135 CONTINUE
-  130 CONTINUE
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,111)ISET
@@ -14592,7 +14240,6 @@ C
 C
       IWRITE='NO'
       CALL INTARR(Y,N,IWRITE,XTEMP1,NX,IBUGA3,IERROR)
-  100 CONTINUE
 C
 C               ********************************************
 C               **  STEP 11B-                             **
@@ -14701,12 +14348,12 @@ C
         IRMN95=46
         IRMN99=50
       ELSEIF(N.GT.12)THEN
-        IRMN01=PPF01*RSD + REXP - 0.5
-        IRMN05=PPF05*RSD + REXP - 0.5
-        IRMN10=PPF10*RSD + REXP - 0.5
-        IRMN90=PPF90*RSD + REXP - 0.5
-        IRMN95=PPF95*RSD + REXP - 0.5
-        IRMN99=PPF99*RSD + REXP - 0.5
+        IRMN01=INT(PPF01*RSD + REXP - 0.5)
+        IRMN05=INT(PPF05*RSD + REXP - 0.5)
+        IRMN10=INT(PPF10*RSD + REXP - 0.5)
+        IRMN90=INT(PPF90*RSD + REXP - 0.5)
+        IRMN95=INT(PPF95*RSD + REXP - 0.5)
+        IRMN99=INT(PPF99*RSD + REXP - 0.5)
       ENDIF
 C
 C               ****************************
@@ -15761,9 +15408,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--APRIL     1981.
@@ -15818,16 +15462,7 @@ C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOGR.INC'
       INCLUDE 'DPCOBE.INC'
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -15933,7 +15568,6 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
       IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'TRI2')GOTO9090
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
@@ -16024,9 +15658,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--APRIL     1981.
@@ -16123,16 +15754,7 @@ C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOGR.INC'
       INCLUDE 'DPCOBE.INC'
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -16397,7 +16019,6 @@ CCCCC THE FOLLOWING LINE WAS ADDED JULY 1997
       IF(UNITSW.EQ.'DATA')CALL DPCODS('Y',Y2,Y2,IBUGD2,ISUBRO,IERROR)
       IF(ITYPEO.EQ.'RELA')Y2=Y1+Y2
 C
- 1170 CONTINUE
       J=J+1
       IF(J.GT.NUMARG)GOTO1190
       X3=ARG(J)
@@ -16511,9 +16132,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--NOVEMBER  1980.
@@ -16535,24 +16153,16 @@ C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
-C
       IFOUND='YES'
 C
- 1110 CONTINUE
       IF(NUMARG.LE.0)GOTO1120
       IF(IHARG(NUMARG).EQ.'ON')GOTO1130
       IF(IHARG(NUMARG).EQ.'OFF')GOTO1120
@@ -16644,17 +16254,11 @@ C
       CHARACTER*4 IFOUND
       CHARACTER*4 IERROR
 C
-      CHARACTER*4 IHWUSE
-      CHARACTER*4 MESSAG
-C
-      CHARACTER*4 ISUBN0
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
-C
       CHARACTER*4 IREPL
 C
-      CHARACTER*4 ICASE
       CHARACTER*40 INAME
       PARAMETER (MAXSPN=20)
       CHARACTER*4 IVARN1(MAXSPN)
@@ -16690,24 +16294,16 @@ C
       EQUIVALENCE (GARBAG(IGARB7),TEMP3(1))
       EQUIVALENCE (GARBAG(IGARB8),TEMP4(1))
 C
-      INCLUDE 'DPCOHK.INC'
-      INCLUDE 'DPCODA.INC'
-C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
-C
       ISUBN1='DPTR'
       ISUBN2='PL  '
 C
@@ -16839,8 +16435,7 @@ C
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       CALL DPTRP2(Y1,Y2,Y3,GROUP,NS,
-     1            ICASPL,IREPL,MAXN,
-     1            TEMP1,TEMP2,TEMP3,TEMP4,
+     1            ICASPL,IREPL,MAXN,TEMP1,
      1            Y,X,X3D,D,NPLOTP,NPLOTV,
      1            IBUGG3,ISUBRO,IERROR)
 C
@@ -16879,8 +16474,7 @@ C
       RETURN
       END
       SUBROUTINE DPTRP2(Y1,Y2,Y3,GROUP,NS,
-     1            ICASPL,IREPL,MAXN,
-     1            TEMP1,TEMP2,TEMP3,TEMP4,
+     1            ICASPL,IREPL,MAXN,TEMP1,
      1            Y,X,X3D,D,NPLOTP,NPLOTV,
      1            IBUGG3,ISUBRO,IERROR)
 C
@@ -16895,9 +16489,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--2006/12
 C     ORIGINAL VERSION--DECEMBER  2006.
@@ -16910,7 +16501,6 @@ C
       CHARACTER*4 ISUBRO
       CHARACTER*4 IERROR
 C
-      CHARACTER*4 ISUBN0
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
@@ -16921,9 +16511,6 @@ C
       DIMENSION Y3(*)
       DIMENSION GROUP(*)
       DIMENSION TEMP1(*)
-      DIMENSION TEMP2(*)
-      DIMENSION TEMP3(*)
-      DIMENSION TEMP4(*)
       DIMENSION Y(*)
       DIMENSION X(*)
       DIMENSION X3D(*)
@@ -16931,15 +16518,7 @@ C
 C
 C-----COMMON----------------------------------------------------------
 C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -17182,13 +16761,9 @@ C
       CHARACTER*4 IBUGA3
       CHARACTER*4 IERROR
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
+C-----COMMON----------------------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
       DATA PI / 3.1415926535 8979323846 2643383279 503 D0 /
 C
@@ -17285,8 +16860,7 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPTTES(XTEMP1,XTEMP2,MAXNXT,
-     1                  ICAPSW,IFORSW,
+      SUBROUTINE DPTTES(XTEMP1,MAXNXT,ICAPSW,IFORSW,
      1                  IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
 C
 C     PURPOSE--CARRY OUT A 1-SAMPLE OR A 2-SAMPLE T TEST
@@ -17333,17 +16907,9 @@ C
       CHARACTER*4 IREPL
       CHARACTER*4 IMULT
       CHARACTER*4 IPAIR
-C
-      CHARACTER*4 IHWUSE
-      CHARACTER*4 MESSAG
-C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
-C
-      CHARACTER*4 IH
-      CHARACTER*4 IH2
-      CHARACTER*4 ISUBN0
 C
       CHARACTER*4 ICASE
       CHARACTER*4 IVARID
@@ -17367,7 +16933,6 @@ C
 C---------------------------------------------------------------------
 C
       DIMENSION XTEMP1(*)
-      DIMENSION XTEMP2(*)
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -17377,21 +16942,14 @@ C
       INCLUDE 'DPCODA.INC'
       INCLUDE 'DPCOHO.INC'
       INCLUDE 'DPCOST.INC'
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPTT'
       ISUBN2='ES  '
+      IFOUND='NO'
+      IERROR='NO'
 C
       MAXCP1=MAXCOL+1
       MAXCP2=MAXCOL+2
@@ -17399,9 +16957,6 @@ C
       MAXCP4=MAXCOL+4
       MAXCP5=MAXCOL+5
       MAXCP6=MAXCOL+6
-C
-      IFOUND='NO'
-      IERROR='NO'
 C
 C               ********************************
 C               **  TREAT THE T TEST CASE  **
@@ -17726,7 +17281,7 @@ C
           IVARI3=IVARN1(J)
           IVARI4=IVARN2(J)
           CALL DPTTE2(Y,NS1,X,NS2,AMU0,ICASA2,ICASA3,IPAIR,
-     1                XTEMP1,XTEMP2,MAXNXT,
+     1                XTEMP1,MAXNXT,
      1                ICAPSW,ICAPTY,IFORSW,ITTEVA,
      1                IVARID,IVARI2,IVARI3,IVARI4,
      1                STATVA,STATCD,STATNU,POOLSD,
@@ -17805,7 +17360,7 @@ C
       RETURN
       END
       SUBROUTINE DPTTE2(Y1,N1,Y2,N2,AMU0,ICASA2,ICASA3,IPAIR,
-     1                  XTEMP1,XTEMP2,MAXNXT,
+     1                  XTEMP1,MAXNXT,
      1                  ICAPSW,ICAPTY,IFORSW,ITTEVA,
      1                  IVARID,IVARI2,IVARI3,IVARI4,
      1                  STATVA,STATCD,STATNU,POOLSD,
@@ -17865,7 +17420,6 @@ C
       CHARACTER*4 IERROR
 C
       CHARACTER*4 IWRITE
-C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
@@ -17875,7 +17429,6 @@ C
       DIMENSION Y1(*)
       DIMENSION Y2(*)
       DIMENSION XTEMP1(*)
-      DIMENSION XTEMP2(*)
 C
       PARAMETER (NUMALP=6)
       REAL ALPHA(NUMALP)
@@ -17907,15 +17460,9 @@ C
       LOGICAL IFLAGS
       LOGICAL IFLAGE
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
       DATA ALPHA/0.50, 0.80, 0.90, 0.95, 0.99, 0.999/
 C
@@ -17923,7 +17470,6 @@ C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPTT'
       ISUBN2='E2  '
-C
       IERROR='NO'
       IWRITE='OFF'
 C
@@ -17958,8 +17504,8 @@ C
         WRITE(ICOUT,52)IBUGA3,ISUBRO,ICASA2,ITTEVA
    52   FORMAT('IBUGA3,ISUBRO = ',3(A4,2X),A4)
         CALL DPWRST('XXX','WRIT')
-        WRITE(ICOUT,55)N1,N2,NUMDIG,AMU
-   55   FORMAT('N1,N2,NUMDIG,AMU = ',3I8,G15.7)
+        WRITE(ICOUT,55)N1,N2,NUMDIG,MAXNXT,AMU
+   55   FORMAT('N1,N2,NUMDIG,MAXNXT,AMU = ',4I8,G15.7)
         CALL DPWRST('XXX','WRIT')
         IF(N1.GE.1)THEN
           DO56I=1,N1
@@ -19409,15 +18955,9 @@ C---------------------------------------------------------------------
 C
       DIMENSION X(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -19518,7 +19058,6 @@ C               **  WRITE OUT A LINE         **
 C               **  OF SUMMARY INFORMATION.  **
 C               *******************************
 C
-  800 CONTINUE
       IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
@@ -19620,22 +19159,15 @@ C
       DIMENSION Y1(*)
       DIMENSION Y2(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPTT'
       ISUBN2='E4  '
       IWRTSV=IWRITE
-C
       IERROR='NO'
 C
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'TTE4')THEN
@@ -19683,8 +19215,6 @@ C
       PVALUT=-99.0
       IWRITE='OFF'
 C
-      AN=N
-C
       IF(N1.LT.2)THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','WRIT')
@@ -19706,7 +19236,6 @@ C
       DO135I=2,N1
         IF(Y1(I).NE.HOLD)GOTO139
   135 CONTINUE
-  130 CONTINUE
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','WRIT')
       WRITE(ICOUT,111)
@@ -19737,7 +19266,6 @@ C
       DO155I=2,N1
         IF(Y2(I).NE.HOLD)GOTO159
   155 CONTINUE
-  150 CONTINUE
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','WRIT')
       WRITE(ICOUT,111)
@@ -19815,7 +19343,6 @@ C               **  WRITE OUT A LINE         **
 C               **  OF SUMMARY INFORMATION.  **
 C               *******************************
 C
-  800 CONTINUE
       IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
@@ -19912,15 +19439,7 @@ C
 C
 C-----COMMON----------------------------------------------------------
 C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -20044,7 +19563,7 @@ C
      1                IANS,IWIDTH,IBUGA3,IERROR)
         ENDIF
 C
-        IF(CUTUL0.NE.CPUMIN)THEN
+        IF(CUTL50.NE.CPUMIN)THEN
           IH='CUTL'
           IH2='OW50'
           VALUE0=CUTU50
@@ -20249,22 +19768,15 @@ C
       DIMENSION Y2(*)
       DIMENSION YTEMP(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPTT'
       ISUBN2='E6  '
       IWRTSV=IWRITE
-C
       IERROR='NO'
 C
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'TTE6')THEN
@@ -20346,7 +19858,6 @@ C
       DO135I=2,N1
         IF(Y1(I).NE.HOLD)GOTO139
   135 CONTINUE
-  130 CONTINUE
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','WRIT')
       WRITE(ICOUT,111)
@@ -20377,7 +19888,6 @@ C
       DO155I=2,N1
         IF(Y2(I).NE.HOLD)GOTO159
   155 CONTINUE
-  150 CONTINUE
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','WRIT')
       WRITE(ICOUT,111)
@@ -20436,7 +19946,6 @@ C               **  WRITE OUT A LINE         **
 C               **  OF SUMMARY INFORMATION.  **
 C               *******************************
 C
-  800 CONTINUE
       IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
@@ -20564,22 +20073,12 @@ C
       INCLUDE 'DPCOHK.INC'
       INCLUDE 'DPCODA.INC'
       INCLUDE 'DPCOST.INC'
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPTU'
       ISUBN2='MD  '
-C
       IFOUND='NO'
       IERROR='NO'
 C
@@ -20837,7 +20336,7 @@ C
  9021       FORMAT('I,Y(I),X(I),D(I) = ',I8,3F12.5)
             CALL DPWRST('XXX','BUG ')
  9020     CONTINUE
- 9029   ENDIF
+        ENDIF
       ENDIF
 C
       RETURN
@@ -20902,15 +20401,9 @@ C
       DIMENSION TEMP1(*)
       DIMENSION TEMP2(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -21354,14 +20847,10 @@ C
       CHARACTER*4 IFOUND
       CHARACTER*4 IERROR
 C
-      CHARACTER*4 IH
-      CHARACTER*4 IH2
-      CHARACTER*4 ISUBN0
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
 C
-      CHARACTER*4 ICASE
       CHARACTER*40 INAME
       PARAMETER (MAXSPN=10)
       CHARACTER*4 IVARN1(MAXSPN)
@@ -21399,16 +20888,7 @@ C
       INCLUDE 'DPCOHO.INC'
       INCLUDE 'DPCOHK.INC'
       INCLUDE 'DPCODA.INC'
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -21669,7 +21149,6 @@ C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
-      CHARACTER*4 ICASAN
 C
 C---------------------------------------------------------------------
 C
@@ -21685,15 +21164,9 @@ C
       REAL X(*)
       REAL D(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -22014,11 +21487,9 @@ C
       CHARACTER*4 IFOUND
       CHARACTER*4 IERROR
 C
-      CHARACTER*4 IHWUSE
-      CHARACTER*4 MESSAG
-      CHARACTER*4 ICASEQ
-      CHARACTER*4 IH
-      CHARACTER*4 IH2
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
 C
       CHARACTER*40 INAME
       PARAMETER (MAXSPN=30)
@@ -22032,11 +21503,6 @@ C
       CHARACTER*12 IX1LAB
       CHARACTER*12 IX2LAB
       CHARACTER*25 IYLAB
-C
-      CHARACTER*4 ISUBN0
-      CHARACTER*4 ISUBN1
-      CHARACTER*4 ISUBN2
-      CHARACTER*4 ISTEPN
 C
 C---------------------------------------------------------------------
 C
@@ -22071,16 +21537,7 @@ C
       INCLUDE 'DPCODA.INC'
       INCLUDE 'DPCOHO.INC'
       INCLUDE 'DPCOST.INC'
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -22373,13 +21830,9 @@ C
       PARAMETER(MAXLIN=2)
       PARAMETER (MAXROW=45)
       CHARACTER*65 ITITLE
-      CHARACTER*65 ITITLZ
       CHARACTER*1  ITITL9
-      CHARACTER*60 ITEXT(MAXROW)
       CHARACTER*4  ALIGN(NUMCLI)
       CHARACTER*4  VALIGN(NUMCLI)
-      REAL         AVALUE(MAXROW)
-      INTEGER      NCTEXT(MAXROW)
       INTEGER      IDIGIT(MAXROW)
       INTEGER      NTOT(MAXROW)
       CHARACTER*60 ITITL2(MAXLIN,NUMCLI)
@@ -22394,9 +21847,6 @@ C
       REAL         AMAT(MAXROW,NUMCLI)
       LOGICAL IFRST
       LOGICAL ILAST
-      LOGICAL IFLAG1
-      LOGICAL IFLAG2
-      LOGICAL IFLAG3
       LOGICAL IFLAGA
       LOGICAL IFLAGB
 C
@@ -22425,13 +21875,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -22447,12 +21891,14 @@ C
         CALL DPWRST('XXX','WRIT')
       ENDIF
 C
+      ATAG=0.0
+C
       IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'TWP2')THEN
         WRITE(ICOUT,70)
    70   FORMAT('AT THE BEGINNING OF DPTWP2--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,71)IBUGG3,ISUBRO,ICASPL,ICASP2,N
-   71   FORMAT('IBUGG3,ISUBRO,ICASPL,ICASP2,N = ',4(A4,2X),I8)
+        WRITE(ICOUT,71)IBUGG3,ISUBRO,ICASPL,ICASP2,N,NUMV2
+   71   FORMAT('IBUGG3,ISUBRO,ICASPL,ICASP2,N,NUMV2 = ',4(A4,2X),2I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,72)ITWOYA,ITWOFI,ITWOAV,ITWOAN
    72   FORMAT('ITWOYA,ITWOFI,ITWOAV,ITWOAN = ',3(A4,2X),A4)
@@ -22776,7 +22222,7 @@ C
 C       NOW COMPUTE DEVIATIONS FROM COLUMN AVERAGES FOR EACH ROW
 C
         J=0
-        ATAG1=0.0
+        ATAG=0.0
         DSUM=0.0D0
         ICNTRW=0
         DO1100ISET1=1,NUMSE1
@@ -23778,7 +23224,7 @@ C
       SUBROUTINE DPTY3B(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,
      1                  IBUGA3,
      1                  IFOUZ2,ISTAR2,ISTOP2,
-     1                  ITYPE2,IHOL,IHOL2,INT,FLOAT,IERROR)
+     1                  ITYPE2,IHOL,IHOL2,INTZ,FLOAT,IERROR)
 C
 C     NOTE--THIS SUBROUTINE IS IDENTICAL TO DPTYP3
 C           AND HAS BEEN DUPLICATED ONLY FOR MAPPING PURPOSES.
@@ -23870,9 +23316,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--FEBRUARY  1978.
@@ -23913,43 +23356,33 @@ C
 C
       DIMENSION ISTRI3(20)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPTY'
       ISUBN2='P3  '
-C
       IERROR='NO'
 C
       I2=0
       IPJM1=0
 C
-      IF(IBUGA3.EQ.'OFF')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPTY3B--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBUGA3
-   52 FORMAT('IBUGA3 = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)ISTAR1,ISTOP1
-   53 FORMAT('ISTAR1,ISTOP1 = ',I8,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,54)ISTRIN,ISTRI2
-   54 FORMAT('ISTRIN,ISTRI2 = ',A4,A4)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPTY3B--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)ISTAR1,ISTOP1
+   53   FORMAT('ISTAR1,ISTOP1 = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)IBUGA3,ISTRI,ISTRI2
+   54   FORMAT('IBUGA3,ISTRIN,ISTRI2 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       NUMASC=4
 C
@@ -23984,7 +23417,7 @@ C
       ITYPE2='9999'
       IHOL ='9999'
       IHOL2='9999'
-      INT = -999999
+      INTZ = -999999
       FLOAT=-999999.0
 C
 C               ************************************************************
@@ -24326,23 +23759,21 @@ C
       GOTO2800
  2725 IDIG=IDIG+1
       TERM2=10.0**(IDIG-1)
-      ITERM2=TERM2 + 0.01
+      ITERM2=INT(TERM2 + 0.01)
       ISUM=ISUM+ITERM*ITERM2
  2700 CONTINUE
       IF(IDIG.LE.0)GOTO2800
       IF(ISIGN.GE.2)GOTO2800
-      INT=ISUM
+      INTZ=ISUM
  2800 CONTINUE
       IF(IFLUNK.EQ.'YES')ITYPE2='WORD'
- 2100 CONTINUE
- 2999 CONTINUE
 C
-C               ********************************************************
-C               **  STEP 7--                                          **
-C               **  CONVERT (IF POSSIBLE) THE STRING INTO A FLOATING  **
-C               **  POINT ARGUMENT.                                   **
-C               **  OUTPUT THIS FLOATING POINT VALUE IN FLOAT.        **
-C               ********************************************************
+C               *******************************************************
+C               **  STEP 7--                                         **
+C               **  CONVERT (IF POSSIBLE) THE STRING INTO A FLOATING **
+C               **  POINT ARGUMENT.                                  **
+C               **  OUTPUT THIS FLOATING POINT VALUE IN FLOAT.       **
+C               *******************************************************
 C
       ISTEPN='7'
       IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
@@ -24505,25 +23936,24 @@ C
  3900 CONTINUE
       IF(IFLUNK.EQ.'YES')ITYPE2='WORD'
  3000 CONTINUE
- 3999 CONTINUE
       GOTO9000
 C
  9000 CONTINUE
-      IF(IBUGA3.EQ.'OFF')GOTO9900
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9001)
- 9001 FORMAT('AT THE END OF DPTY3B--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9002)IFOUZ2,ISTAR2,ISTOP2
- 9002 FORMAT('IFOUZ2, ISTAR2, ISTOP2 = ',A4,I8,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9003)ITYPE2,IHOL,IHOL2,INT,FLOAT,IERROR
- 9003 FORMAT('ITYPE2,IHOL,IHOL2,INT,FLOAT,IERROR = ',A4,2X,A4,A4,2X,
-     1I8,F15.7,2X,A4)
-      CALL DPWRST('XXX','BUG ')
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9001)
+ 9001   FORMAT('AT THE END OF DPTY3B--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9002)IFOUZ2,ISTAR2,ISTOP2
+ 9002   FORMAT('IFOUZ2, ISTAR2, ISTOP2 = ',A4,2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9003)ITYPE2,IHOL,IHOL2,INTZ,FLOAT,IERROR
+ 9003   FORMAT('ITYPE2,IHOL,IHOL2,INTZ,FLOAT,IERROR = ',A4,2X,2A4,2X,
+     1         I8,F15.7,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
- 9900 CONTINUE
       RETURN
       END
       SUBROUTINE DPTYP2(IANS,IWIDTH,IHNAME,IHNAM2,NUMNAM,MAXNAM,IBUGA3,
@@ -24655,9 +24085,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--MARCH     1978
@@ -24708,7 +24135,6 @@ C
       CHARACTER*4 IHMAN
       CHARACTER*4 IHMAN2
       CHARACTER*4 IERROR
-C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
@@ -24739,15 +24165,9 @@ C
       DIMENSION IHSTAT(25)
       DIMENSION IHSTA2(25)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -24791,30 +24211,25 @@ C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPTY'
       ISUBN2='P2  '
-C
       IERROR='NO'
+      IQUAL='UNKN'
 C
       IMAXR=0
 C
-      IQUAL='UNKN'
-C
-      IF(IBUGA3.EQ.'OFF')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPTYP2--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBUGA3
-   52 FORMAT('IBUGA3 = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)IWIDTH
-   53 FORMAT('IWIDTH = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,54)(IANS(I),I=1,IWIDTH)
-   54 FORMAT('IANS(.) = ',80A1)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPTYP2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,IWIDTH,MAXNAM,IN(1)
+   52   FORMAT('IBUGA3,IWIDTH,MAXNAM,IN(1) = ',A4,2X,2I5,I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)(IANS(I),I=1,MIN(80,IWIDTH))
+   54   FORMAT('IANS(.) = ',80A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               ******************************************************
 C               **  STEP 1--                                        **
@@ -25017,8 +24432,6 @@ C               **  COMPONENT 10 = )                                 **
 C               **  IF CASE 2 (THE SUBSET CASE), JUMP TO STEP 4      **
 C               **  IF CASE 3 (THE FOR CASE), JUMP TO STEP 5.        **
 C               *******************************************************
-C
- 3000 CONTINUE
 C
       ISTEPN='3'
       IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
@@ -25409,23 +24822,22 @@ C
       CALL DPTYP3(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGA3,
      1      IFOUNZ(14),IBEGIN(14),IEND(14),
      1      ITYPE(14),IHOL(14),IHOL2(14),INT1(14),FLOAT1(14),IERRO1(14))
- 4900 CONTINUE
       GOTO6000
 C
-C               **********************************************************
-C               **  STEP 5--                                            **
-C               **  FOR THE CASE WHEN HAVE     LET X(I) =               **
-C               **  EXAMINE THE RIGHT-HAND SIDE FOR    FOR I = A  B  C  **
-C               **  COMPONENT 7  = VARIABLE NAME                        **
-C               **  COMPONENT 8  = (                                    **
-C               **  COMPONENT 9  = ARGUMENT (THAT IS, ROW OF TABLE)     **
-C               **  COMPONENT 10 = )                                    **
-C               **  COMPONENT 21 = FOR                                  **
-C               **  COMPONENT 22 = =                                    **
-C               **  COMPONENT 23 = START     VALUE FOR DUMMY INDEX      **
-C               **  COMPONENT 24 = INCREMENT VALUE FOR DUMMY INDEX      **
-C               **  COMPONENT 25 = STOP      VALUE FOR SUMMY INDEX      **
-C               **********************************************************
+C               *******************************************************
+C               **  STEP 5--                                         **
+C               **  FOR THE CASE WHEN HAVE     LET X(I) =            **
+C               **  EXAMINE THE RIGHT-HAND SIDE FOR    FOR I = A  B  C*
+C               **  COMPONENT 7  = VARIABLE NAME                     **
+C               **  COMPONENT 8  = (                                 **
+C               **  COMPONENT 9  = ARGUMENT (THAT IS, ROW OF TABLE)  **
+C               **  COMPONENT 10 = )                                 **
+C               **  COMPONENT 21 = FOR                               **
+C               **  COMPONENT 22 = =                                 **
+C               **  COMPONENT 23 = START     VALUE FOR DUMMY INDEX   **
+C               **  COMPONENT 24 = INCREMENT VALUE FOR DUMMY INDEX   **
+C               **  COMPONENT 25 = STOP      VALUE FOR SUMMY INDEX   **
+C               *******************************************************
 C
  5000 CONTINUE
       ISTEPN='5'
@@ -25675,7 +25087,6 @@ C
       DO6200I=IMIN,IMAX
       IF(IANS(I).EQ.'('.OR.IANS(I).EQ.')')ISUM=ISUM+1
  6200 CONTINUE
- 6250 CONTINUE
       NUMPL=ISUM
 C
 C     STEP 6.3--
@@ -25692,7 +25103,6 @@ C
       IF(IANS(I).EQ.'+'.OR.IANS(I).EQ.'-'.
      1OR.IANS(I).EQ.'*'.OR.IANS(I).EQ.'/')ISUM=ISUM+1
  6300 CONTINUE
- 6350 CONTINUE
       NUMAOL=ISUM
 C
 C     STEP 6.4--
@@ -25728,7 +25138,6 @@ C
       IVARL=IHOL(2)
       IVARL2=IHOL2(2)
 C
- 6610 CONTINUE
       IF(INLI1L.EQ.'YES'.AND.IVARL.NE.'COLU')GOTO6615
       IF(INLI1L.EQ.'YES'.AND.IVARL.NE.'COL ')GOTO6615
       IF(INLI1L.EQ.'YES'.AND.IVARL.EQ.'COLU'.AND.IVARL2.EQ.'MN  '.AND.
@@ -25787,31 +25196,27 @@ C
 C
  6900 CONTINUE
 C
-C               *********************************************************
-C               **  STEP 7--                                           **
-C               **  DETERMINE VARIOUS SUMMARY VARIABLES                **
-C               **  FOR THE RIGHT SIDE                                 **
-C               **  OF THE COMMAND LINE                                **
-C               **  WHICH WILL BE HELPFUL BACK IN DPLET                **
-C               **  FOR BRANCHING TO THE CORRECT                       **
-C               **  TYPE OF OPERATION.                                 **
-C               **  NOTE THAT THE    RIGHT SIDE                            **
-C               **  WILL BE FROM THE = SIGN                            **
-C               **  TO THE           END OF THE LINE,                  **
-C               **  OR TO AN         ISOLATED FOR,                     **
-C               **  OR TO AN         ISOLATED SUBSET                   **
-C               **  (WHICHEVER OF THE 3 IS SMALLEST).                  **
-C               **  ALSO DETERMINE WHETHER THE QUALIFICATION           **
-C               **  ON THE FAR RIGHT OF THE CARD IS                    **
-C               **           1) BLANK (THAT IS, NO QUALIFICATION)      **
-C               **           2) SUBSET                                 **
-C               **           3) FOR                                    **
-C               **  THE VARIABLE IQUAL WILL BE DEFINED IN              **
-C               **  THIS REGARD                                        **
-C               **  IQUAL WILL = 'NONE', 'FOR', 'SUBS', OR 'ERRO'.  **
-C               *********************************************************
+C               *******************************************************
+C               **  STEP 7--                                         **
+C               **  DETERMINE VARIOUS SUMMARY VARIABLES FOR THE      **
+C               **  RIGHT SIDE OF THE COMMAND LINE WHICH WILL BE     **
+C               **  HELPFUL BACK IN DPLET FOR BRANCHING TO THE       **
+C               **  CORRECT TYPE OF OPERATION.  NOTE THAT THE        **
+C               **  RIGHT SIDE WILL BE FROM THE = SIGN               **
+C               **  TO THE           END OF THE LINE,                **
+C               **  OR TO AN         ISOLATED FOR,                   **
+C               **  OR TO AN         ISOLATED SUBSET                 **
+C               **  (WHICHEVER OF THE 3 IS SMALLEST).                **
+C               **  ALSO DETERMINE WHETHER THE QUALIFICATION         **
+C               **  ON THE FAR RIGHT OF THE CARD IS                  **
+C               **           1) BLANK (THAT IS, NO QUALIFICATION)    **
+C               **           2) SUBSET                               **
+C               **           3) FOR                                  **
+C               **  THE VARIABLE IQUAL WILL BE DEFINED IN            **
+C               **  THIS REGARD                                      **
+C               **  IQUAL WILL = 'NONE', 'FOR', 'SUBS', OR 'ERRO'.   **
+C               *******************************************************
 C
- 7000 CONTINUE
       ISTEPN='7'
       IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
@@ -25878,7 +25283,6 @@ C
       DO7200I=IMIN,IMAX
       IF(IANS(I).EQ.'('.OR.IANS(I).EQ.')')ISUM=ISUM+1
  7200 CONTINUE
- 7250 CONTINUE
       NUMPR=ISUM
 C
 C     STEP 7.3--
@@ -25892,10 +25296,9 @@ C
       IMIN=IMINR
       IMAX=IMAXR
       DO7300I=IMIN,IMAX
-      IF(IANS(I).EQ.'+'.OR.IANS(I).EQ.'-'.
-     1OR.IANS(I).EQ.'*'.OR.IANS(I).EQ.'/')ISUM=ISUM+1
+      IF(IANS(I).EQ.'+'.OR.IANS(I).EQ.'-'.OR.
+     1   IANS(I).EQ.'*'.OR.IANS(I).EQ.'/')ISUM=ISUM+1
  7300 CONTINUE
- 7350 CONTINUE
       NUMAOR=ISUM
 C
 C     STEP 7.4--
@@ -25930,7 +25333,6 @@ C
       IVARR=IHOL(7)
       IVARR2=IHOL2(7)
 C
- 7610 CONTINUE
       IF(INLI1R.EQ.'YES'.AND.IVARR.NE.'COLU')GOTO7615
       IF(INLI1R.EQ.'YES'.AND.IVARR.NE.'COL ')GOTO7615
       IF(INLI1R.EQ.'YES'.AND.IVARR.EQ.'COLU'.AND.IVARR2.EQ.'MN  '.AND.
@@ -25995,47 +25397,45 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGA3.EQ.'OFF')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('****** AT THE END      OF DPTYP2--')
-      CALL DPWRST('XXX','BUG ')
-      DO9020I=1,30
-      IF(18.LE.I.AND.I.LE.20)GOTO9020
-      IF(I.GE.25)GOTO9020
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9022)
- 9022 FORMAT('I--IFOUNZ,IBEGIN,IEND,',
-     1'ITYPE,IHOL,IHOL2,INT1,FLOAT1,IERRO1')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9025)I,IFOUNZ(I),IBEGIN(I),IEND(I),
-     1ITYPE(I),IHOL(I),IHOL2(I),INT1(I),FLOAT1(I),IERRO1(I)
- 9025 FORMAT(I3,'--',A4,2X,I2,2X,I2,4X,
-     1A4,2X,A4,2X,A4,2X,I8,2X,D15.7,2X,A4)
-      CALL DPWRST('XXX','BUG ')
- 9020 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('****** AT THE END      OF DPTYP2--')
+        CALL DPWRST('XXX','BUG ')
+        DO9020I=1,30
+          IF(18.LE.I.AND.I.LE.20)GOTO9020
+          IF(I.GE.25)GOTO9020
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,9022)
+ 9022     FORMAT('I--IFOUNZ,IBEGIN,IEND,',
+     1           'ITYPE,IHOL,IHOL2,INT1,FLOAT1,IERRO1')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,9025)I,IFOUNZ(I),IBEGIN(I),IEND(I),ITYPE(I),
+     1                     IHOL(I),IHOL2(I),INT1(I),FLOAT1(I),IERRO1(I)
+ 9025     FORMAT(I3,'--',A4,2(2X,I2),4X,3(A4,2X),I8,2X,D15.7,2X,A4)
+          CALL DPWRST('XXX','BUG ')
+ 9020   CONTINUE
 C
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9031)NUMCL,NUMPL,NUMAOL,ITYW1L,ITYW2L,INLI1L,ICAT1L
- 9031 FORMAT('NUMCL,NUMPL,NUMAOL,ITYW1L,ITYW2L,INLI1L,ICAT1L = ',
-     1I8,I8,I8,2X,A4,2X,A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9032)NUMCR,NUMPR,NUMAOR,ITYW1R,ITYW2R,INLI1R,ICAT1R
- 9032 FORMAT('NUMCR,NUMPR,NUMAOR,ITYW1R,ITYW2R,INLI1R,ICAT1R = ',
-     1I8,I8,I8,2X,A4,2X,A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      GOTO9090
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9031)NUMCL,NUMPL,NUMAOL,ITYW1L,ITYW2L,INLI1L,ICAT1L
+ 9031   FORMAT('NUMCL,NUMPL,NUMAOL,ITYW1L,ITYW2L,INLI1L,ICAT1L = ',
+     1         3I8,4(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9032)NUMCR,NUMPR,NUMAOR,ITYW1R,ITYW2R,INLI1R,ICAT1R
+ 9032   FORMAT('NUMCR,NUMPR,NUMAOR,ITYW1R,ITYW2R,INLI1R,ICAT1R = ',
+     1         3I8,4(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
- 9090 CONTINUE
       RETURN
       END
       SUBROUTINE DPTYP3(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,
      1                  IBUGA3,
      1                  IFOUZ2,ISTAR2,ISTOP2,
-     1                  ITYPE2,IHOL,IHOL2,INT,FLOAT,IERROR)
+     1                  ITYPE2,IHOL,IHOL2,INTZ,FLOATZ,IERROR)
 C
 C     NOTE--THIS SUBROUTINE IS IDENTICAL TO DPTY3C
 C           AND HAS BEEN DUPLICATED ONLY FOR MAPPING PURPOSES.
@@ -26127,9 +25527,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--FEBRUARY  1978.
@@ -26158,7 +25555,6 @@ C
       CHARACTER*4 IFLUNK
       CHARACTER*4 ISTRI3
       CHARACTER*4 ILAST
-C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
@@ -26169,40 +25565,32 @@ C
 C
       DIMENSION ISTRI3(20)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPTY'
       ISUBN2='P3  '
-C
       IERROR='NO'
 C
-      IF(IBUGA3.EQ.'OFF')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPTYP3--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBUGA3
-   52 FORMAT('IBUGA3 = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)ISTAR1,ISTOP1
-   53 FORMAT('ISTAR1,ISTOP1 = ',I8,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,54)ISTRIN,ISTRI2
-   54 FORMAT('ISTRIN,ISTRI2 = ',A4,A4)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IPJM1=0
+C
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPTYP3--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)ISTAR1,ISTOP1
+   53   FORMAT('ISTAR1,ISTOP1 = ',I8,I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)IBUGA3,ISTRIN,ISTRI2
+   54   FORMAT('IBUGA3,ISTRIN,ISTRI2 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       NUMASC=4
 C
@@ -26234,13 +25622,12 @@ C
       ITYPE2='9999'
       IHOL ='9999'
       IHOL2='9999'
-      INT = -999999
-      FLOAT=-999999.0
+      FLOATZ=-999999.0
 C
-C               ************************************************************
-C               **  STEP 2--                                              **
-C               **  DECOMPOSE THE INPUT SEARCH STRING INTO A1 CHARACTERS  **
-C               ************************************************************
+C               *********************************************************
+C               **  STEP 2--                                           **
+C               **  DECOMPOSE THE INPUT SEARCH STRING INTO A1 CHARACTERS*
+C               *********************************************************
 C
       ISTEPN='2'
       IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
@@ -26600,23 +25987,21 @@ C
       GOTO2800
  2725 IDIG=IDIG+1
       TERM2=10.0**(IDIG-1)
-      ITERM2=TERM2 + 0.01
+      ITERM2=INT(TERM2 + 0.01)
       ISUM=ISUM+ITERM*ITERM2
  2700 CONTINUE
       IF(IDIG.LE.0)GOTO2800
       IF(ISIGN.GE.2)GOTO2800
-      INT=ISUM
+      INTZ=ISUM
  2800 CONTINUE
       IF(IFLUNK.EQ.'YES')ITYPE2='WORD'
- 2100 CONTINUE
- 2999 CONTINUE
 C
-C               ********************************************************
-C               **  STEP 7--                                          **
-C               **  CONVERT (IF POSSIBLE) THE STRING INTO A FLOATING  **
-C               **  POINT ARGUMENT.                                   **
-C               **  OUTPUT THIS FLOATING POINT VALUE IN FLOAT.        **
-C               ********************************************************
+C               *******************************************************
+C               **  STEP 7--                                         **
+C               **  CONVERT (IF POSSIBLE) THE STRING INTO A FLOATING **
+C               **  POINT ARGUMENT.                                  **
+C               **  OUTPUT THIS FLOATING POINT VALUE IN FLOAT.       **
+C               *******************************************************
 C
       ISTEPN='7'
       IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
@@ -26624,7 +26009,7 @@ C
       AMAX=+1000000.
       IFLUNK='NO'
       ITYPE2='NUMB'
-      FLOAT=-1.0
+      FLOATZ=-1.0
 C
       ILOC=0
       IDECPT=0
@@ -26771,15 +26156,14 @@ C
       IF(IBUGA3.EQ.'ON')CALL DPWRST('XXX','BUG ')
       IDIGT=IDIGI+IDIGD
       IF(IDIGT.LE.0)GOTO3900
-      FLOAT=SUMI+SUMD
-      IF(SIGN.LT.0.0)FLOAT=-FLOAT
-      IF(AMIN.LE.FLOAT.AND.FLOAT.LE.AMAX)GOTO3000
+      FLOATZ=SUMI+SUMD
+      IF(SIGN.LT.0.0)FLOATZ=-FLOATZ
+      IF(AMIN.LE.FLOATZ.AND.FLOATZ.LE.AMAX)GOTO3000
       GOTO3900
 C
  3900 CONTINUE
       IF(IFLUNK.EQ.'YES')ITYPE2='WORD'
  3000 CONTINUE
- 3999 CONTINUE
       GOTO9000
 C
  9000 CONTINUE
@@ -26792,9 +26176,9 @@ C
       WRITE(ICOUT,9002)IFOUZ2,ISTAR2,ISTOP2
  9002 FORMAT('IFOUZ2, ISTAR2, ISTOP2 = ',A4,I8,I8)
       CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9003)ITYPE2,IHOL,IHOL2,INT,FLOAT,IERROR
- 9003 FORMAT('ITYPE2,IHOL,IHOL2,INT,FLOAT,IERROR = ',A4,2X,A4,A4,2X,
-     1I8,F15.7,2X,A4)
+      WRITE(ICOUT,9003)ITYPE2,IHOL,IHOL2,INTZ,FLOATZ,IERROR
+ 9003 FORMAT('ITYPE2,IHOL,IHOL2,INTZ,FLOATZ,IERROR = ',
+     1       A4,2X,2A4,2X,I8,F15.7,2X,A4)
       CALL DPWRST('XXX','BUG ')
 C
  9900 CONTINUE
@@ -26921,17 +26305,10 @@ C
       DIMENSION ISTOP(MAXZZZ)
       DIMENSION IB(MAXZZZ)
 C
+C-----COMMON----------------------------------------------------------
+C
       INCLUDE 'DPCOST.INC'
-C
-C---------------------------------------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C

@@ -345,15 +345,7 @@ C
       CHARACTER*4 IERROR
       CHARACTER*4 IWRITE
 C
-      REAL CPUMIN
-      REAL CPUMAX
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
       IF(IBUGA3.EQ.'ON')THEN
         WRITE(ICOUT,999)
@@ -449,6 +441,10 @@ C   REFERENCE: NIJENHUIS, ALBERT AND WILF, HERBERT S., 'COMBINATORIAL
 C              ALGORITHMS', SECOND EDITION, ACADEMIC PRESS, 1978,
 C              CH. 18, P. 141-142. 
 C=====================================================================
+C
+      L1=0
+      L=0
+      N1=0
 C
       IF (INDEX.LT.0)THEN
          IF (INDEX .EQ. -1) THEN
@@ -565,6 +561,7 @@ C
       integer u(*),endpt1(*),endpt2(*)
       dimension y(*),dist(maxrow,*)
 c
+      imin=0
       l=0
       do 21  i=2,n
          u(i)=1
@@ -634,7 +631,6 @@ C
          MTC=R(K).NE.N
       ENDIF
 C
- 9000 CONTINUE
       RETURN
       END
       SUBROUTINE NEXEQU(N,NC,P,Q,MTC)
@@ -710,6 +706,8 @@ C
 C
       SAVE H
 C
+      M2=0
+C
       IF(MTC .AND. K.EQ.KLAST .AND. N.EQ.NLAST) THEN
         DO 41  H=1,K
            I=K+1-H
@@ -731,7 +729,6 @@ C
    51 CONTINUE
       MTC=(A(1).NE.N-K+1)
 C
- 9000 CONTINUE
       RETURN
       END
       SUBROUTINE NEXPAR(N,R,M,D,MTC)
@@ -784,7 +781,6 @@ C
         MTC=M(D).NE.N
       ENDIF
 C
- 9000 CONTINUE
       RETURN
       END
       SUBROUTINE NEXPER (RED,PINK,BROWN)
@@ -816,6 +812,13 @@ C-----------------------------------------------------------------------
       LOGICAL BROWN 
       DIMENSION RED(*)
       DATA MAROON / 0 /
+C
+      SILVER=0
+      PURPLE=0
+      BLACK=0
+      ORANGE=0
+      BLUE=0
+C
       IF (PINK.EQ.MAROON) GO TO 40
    10 MAROON = PINK 
       ORANGE = 1
@@ -909,7 +912,7 @@ C                'COMBINATORIAL ALGORITHMS', SECOND EDITION,
 C                ACADEMIC PRESS, 1978, CHAPTER 14.
 C
       LOGICAL MTC
-      INTEGER LAMBDA(N), Y(N), R, S, S1, T
+      INTEGER LAMBDA(N), Y(N), R, T
 C
       T=N
       IF (.NOT. MTC) GO TO 40
@@ -1242,7 +1245,6 @@ c
          q(i)=l
       endif
 c
-  100 continue
       if (i.eq.m) then
          do 131  i=1,k
             j=a(i)
@@ -1297,9 +1299,9 @@ C
       DO 85 M = 1,N
 40       CONTINUE
          CALL UNIRAN(NTEMP,ISEED,XJUNK)
-         I=1+XJUNK(1)*Y(1)
+         I=1+INT(XJUNK(1)*Y(1))
          CALL UNIRAN(NTEMP,ISEED,XJUNK)
-         J=1+XJUNK(1)*LAM(1)
+         J=1+INT(XJUNK(1)*LAM(1))
          IF (I .GT. Y(J) .OR. J .GT. LAM(I)) GO TO 40
 70       CONTINUE
          H=Y(J)+LAM(I)-I-J
@@ -1312,7 +1314,7 @@ C
          ENDIF
 C
          CALL UNIRAN(NTEMP,ISEED,XJUNK)
-         L=1+H*XJUNK(1)
+         L=INT(1.0+REAL(H)*XJUNK(1))
          IF (L .GT. LAM(I)-J) THEN
             I=L-LAM(I)+1+J
          ELSE
@@ -1396,7 +1398,7 @@ ccccc     a(i1,j1)=t1
           k=k-1
           if(i1.ne.i) go to 50
           j2=iabs(tau(j2))
-55        continue
+c
           if(k.ne.0) go to 40
 30      continue
 10    continue
@@ -1475,7 +1477,7 @@ c
            k=k-1
            if(i1.ne.i) go to 50
            j2=iabs(tau(j2))
-55         continue
+c
            if(k.ne.0) go to 40
 30       continue
 10    continue
@@ -1524,7 +1526,6 @@ c
       v1=endpt(1,j)
       v2=endpt(2,j)
 c
-25    continue
       t1=x(v1)
       if(t1.lt.0)  t1=v1
       t2=x(v2)
@@ -1577,7 +1578,7 @@ c
         x(i)=y(t)
 80    continue
       if(k.eq.1)  return
-90    continue
+c
       i2=nv(1)
       nv(1)=1
       do 100  l=2,k
@@ -1616,18 +1617,17 @@ C
       integer a,comp,e,end,endpt,stack,x,y
       dimension a(n),stack(nstk),endpt(2,e),end(2,n),nv(n),y(n),x(n)
 C
-10    continue
-      if(k.ne.1) go to 30
-20    continue
-      n2=e-n+1
-      do 21  i=1,n2
-        stack(i)=i
-21    continue
-      m=n2+1
-      stack(m)=n2
-      return
+      if(k.eq.1) then
 c
-30    continue
+        n2=e-n+1
+        do 21  i=1,n2
+          stack(i)=i
+21      continue
+        m=n2+1
+        stack(m)=n2
+        return
+      endif
+c
       k1=k-1
       do 31  i=1,k1
          i3=a(i)
@@ -1639,7 +1639,7 @@ c
       i1=a(k1)+1
       i2=e-n+k
       m1=m
-32    continue
+c
       do 35  i=i1,i2
          i3=endpt(1,i)
          i4=endpt(2,i)
@@ -1764,7 +1764,7 @@ c
 c
 20    continue
       m=m+1
-30    continue
+c
       if (sig(m).eq.0) go to 40
 c
 130   continue
@@ -1795,7 +1795,7 @@ c
       go to 60
 c
       end
-      SUBROUTINE YTBHOO (VAL, ROWID, Y, N,
+      SUBROUTINE YTBHOO (VAL,ROWID,Y,N,
      1                   HOOKLE,COLID,
      1                   IBUGA3,IERROR)
 C
@@ -1844,17 +1844,8 @@ C
 C
       CHARACTER*4 IBUGA3
       CHARACTER*4 IERROR
-      CHARACTER*4 IWRITE
 C
-      REAL CPUMIN
-      REAL CPUMAX
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
       IF(IBUGA3.EQ.'ON')THEN
         WRITE(ICOUT,999)
@@ -1863,8 +1854,8 @@ C
    11   FORMAT('FROM YTBHOO: N = ',I8)
         CALL DPWRST('XXX','WRIT')
         DO20I=1,N
-          WRITE(ICOUT,21)I,VAL(I),ROWID(I)
-   21     FORMAT('I,VAL(I),ROWID(I) = ',I8,2G15.7)
+          WRITE(ICOUT,21)I,VAL(I),ROWID(I),Y(I)
+   21     FORMAT('I,VAL(I),ROWID(I),Y(I) = ',I8,3G15.7)
           CALL DPWRST('XXX','WRIT')
    20   CONTINUE
       ENDIF

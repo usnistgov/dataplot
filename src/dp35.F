@@ -1,5 +1,5 @@
       SUBROUTINE DRTIL1(ICHARN,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,
-     1IBUGD2,IFOUND,IERROR)
+     1                  IBUGD2,IFOUND,IERROR)
 C
 C     PURPOSE--DEFINE AND SET THE HERSHEY CHARACTER SET COORDINATES
 C              FOR ROMAN TRIPLEX ITALIC LOWER CASE (PART 1).
@@ -11,9 +11,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -45,15 +42,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -449,7 +440,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -515,9 +505,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -551,13 +538,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -961,7 +942,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -1027,9 +1007,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -1061,15 +1038,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -1474,7 +1445,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -1540,9 +1510,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -1574,15 +1541,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -1771,7 +1732,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -1837,9 +1797,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -1871,15 +1828,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -2264,7 +2215,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -2330,9 +2280,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -2364,15 +2311,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -2615,7 +2556,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -2681,9 +2621,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -2715,15 +2652,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -3095,7 +3026,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -3161,9 +3091,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -3195,15 +3122,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -3607,7 +3528,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -3673,9 +3593,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -3707,15 +3624,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -4106,7 +4017,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -4172,9 +4082,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -4206,15 +4113,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -4550,7 +4451,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -4616,9 +4516,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -4650,15 +4547,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -4980,7 +4871,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -5046,9 +4936,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -5080,15 +4967,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -5434,7 +5315,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -5500,9 +5380,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -5534,15 +5411,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -5921,7 +5792,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -5987,9 +5857,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -6021,15 +5888,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -6373,7 +6234,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -6439,9 +6299,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -6473,15 +6330,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -6830,7 +6681,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -6896,9 +6746,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -6930,15 +6777,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -7246,7 +7087,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -7312,9 +7152,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -7347,15 +7184,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -7755,7 +7586,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1
@@ -7822,9 +7652,6 @@ C                 WASHINGTON, D. C. 20234
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL BUREAU OF STANDARDS.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/4
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
@@ -7858,15 +7685,9 @@ C
       DIMENSION ISTARD(30)
       DIMENSION NUMCOO(30)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -8268,7 +8089,6 @@ C               **  EXTRACT THE COORDINATES         **
 C               **  FOR THIS PARTICULAR CHARACTER.  **
 C               **************************************
 C
- 1000 CONTINUE
       ISTART=ISTARD(ICHARN)
       NC=NUMCOO(ICHARN)
       ISTOP=ISTART+NC-1

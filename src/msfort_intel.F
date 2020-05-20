@@ -8,6 +8,8 @@ C              -echo            - echo mode for command line argument
 C              -svga            - set frame to width 950 and height 700
 C              -large           - set frame to width 1150 and height 1000
 C              -filliben        - same as "-large"
+C              -laptop          - same width as "-large", but height
+C                                 same as "-svga"
 C              -extrawide       - set frame to width 1600 and height 1000
 C              -w <value>       - set number of horizontal pixels (width)
 C                                 for frame
@@ -23,7 +25,7 @@ CQWIN USE DFLIB
       USE IFPORT
       USE IFQWIN
       INTEGER I, ISTAT
-      LOGICAL(4) RESULT
+CCCCC LOGICAL(4) RESULT
       TYPE (QWINFO) QWI
       CHARACTER*80 BUF
       TYPE (WINDOWCONFIG) DPSCREEN
@@ -100,6 +102,11 @@ C
             QWI.W = 1150
             QWI.H = 1000
             QWSCRN='LARG'
+          ELSEIF(ISTAT.GE.7 .AND. BUF(1:7).EQ.'-LAPTOP' .OR.
+     &           BUF(1:7).EQ.'-laptop')THEN
+            QWI.W = 1150
+            QWI.H = 700
+            QWSCRN='LAPTOP'
           ELSEIF(ISTAT.GE.9 .AND. BUF(1:9).EQ.'-FILLIBEN' .OR.
      &           BUF(1:9).EQ.'-filliben')THEN
             QWI.W = 1150

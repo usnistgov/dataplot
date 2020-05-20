@@ -34,13 +34,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -249,13 +243,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -405,37 +393,30 @@ C               **  STEP 90-- **
 C               **  EXIT.     **
 C               ****************
 C
- 9000 CONTINUE
-      IF(IBUGA3.EQ.'OFF')GOTO9090
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END OF DPC4IH--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)IVAL
- 9012 FORMAT('IVAL = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)ISIGN,NUMDIG,NUMASC,IMAX
- 9013 FORMAT('ISIGN,NUMDIG,NUMASC,IMAX = ',A4,3I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9014)NTEMP
- 9014 FORMAT('NTEMP = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9015)(IHTEMP(I),I=1,NTEMP)
- 9015 FORMAT('IHTEMP(.) = ',80A1)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9016)ISTAR2,IHVAL
- 9016 FORMAT('ISTAR2,IHVAL = ',I8,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9017)IBUGA3,IERROR
- 9017 FORMAT('IBUGA3,IERROR = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
- 9090 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END OF DPC4IH--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)ISIGN,NUMDIG,NUMASC,IMAX,IVAL,NTEMP
+ 9013   FORMAT('ISIGN,NUMDIG,NUMASC,IMAX,IVAL,NTEMP = ',A4,5I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)(IHTEMP(I),I=1,NTEMP)
+ 9015   FORMAT('IHTEMP(.) = ',80A1)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9016)ISTAR2,IHVAL
+ 9016   FORMAT('ISTAR2,IHVAL = ',I8,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9017)IBUGA3,IERROR
+ 9017   FORMAT('IBUGA3,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END
-      SUBROUTINE DPCAAN(XTEMP1,XTEMP2,MAXNXT,
+      SUBROUTINE DPCAAN(XTEMP1,MAXNXT,
      1                  ICASAN,ICAPSW,IFORSW,
      1                  IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
 C
@@ -471,31 +452,25 @@ C
       CHARACTER*4 IFOUND
       CHARACTER*4 IERROR
 C
-      CHARACTER*4 IWRITE
       CHARACTER*4 IHWUSE
       CHARACTER*4 MESSAG
       CHARACTER*4 IH
       CHARACTER*4 IH2
-      CHARACTER*4 ISUBN0
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
-C
-      CHARACTER*4 IFLAGU
-      LOGICAL IFRST
-      LOGICAL ILAST
-C
-      CHARACTER*4 LOWLTY
-      CHARACTER*4 UPPLTY
-      CHARACTER*4 IMETHD
       CHARACTER*4 IREPL
       CHARACTER*4 IMULT
       CHARACTER*4 ICTMP1
       CHARACTER*4 ICTMP2
       CHARACTER*4 ICTMP3
       CHARACTER*4 ICTMP4
-      CHARACTER*4 ICTMP5
       CHARACTER*4 ICASE
+C
+C
+      CHARACTER*4 IFLAGU
+      LOGICAL IFRST
+      LOGICAL ILAST
 C
       CHARACTER*40 INAME
       PARAMETER (MAXSPN=30)
@@ -515,7 +490,6 @@ C
       INCLUDE 'DPCOPA.INC'
 C
       DIMENSION XTEMP1(*)
-      DIMENSION XTEMP2(*)
       DIMENSION W(MAXOBV)
 C
       DIMENSION XDESGN(MAXOBV,7)
@@ -551,13 +525,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -909,7 +877,7 @@ C
             ENDIF
           ENDIF
 C
-          CALL DPCAA2(Y,W,NS1,XTEMP1,XTEMP2,MAXNXT,
+          CALL DPCAA2(Y,W,NS1,XTEMP1,MAXNXT,
      1                CCLSL,CCUSL,CCTARG,CCUSLC,
      1                YCP,YCPLL,YCPUL,YCPK,YCPKLL,YCPKUL,
      1                YCPL,YCPLLL,YCPLUL,YCPU,YCPULL,YCPUUL,
@@ -1062,7 +1030,7 @@ C
             NTEMP=K
             NCURVE=NCURVE+1
             IF(NTEMP.GT.0)THEN
-              CALL DPCAA2(TEMP1,W,NTEMP,XTEMP1,XTEMP2,MAXNXT,
+              CALL DPCAA2(TEMP1,W,NTEMP,XTEMP1,MAXNXT,
      1                    CCLSL,CCUSL,CCTARG,CCUSLC,
      1                    YCP,YCPLL,YCPUL,YCPK,YCPKLL,YCPKUL,
      1                    YCPL,YCPLLL,YCPLUL,YCPU,YCPULL,YCPUUL,
@@ -1105,7 +1073,7 @@ C
             NTEMP=K
             NCURVE=NCURVE+1
             IF(NTEMP.GT.0)THEN
-              CALL DPCAA2(TEMP1,W,NTEMP,XTEMP1,XTEMP2,MAXNXT,
+              CALL DPCAA2(TEMP1,W,NTEMP,XTEMP1,MAXNXT,
      1                    CCLSL,CCUSL,CCTARG,CCUSLC,
      1                    YCP,YCPLL,YCPUL,YCPK,YCPKLL,YCPKUL,
      1                    YCPL,YCPLLL,YCPLUL,YCPU,YCPULL,YCPUUL,
@@ -1153,7 +1121,7 @@ C
             NCURVE=NCURVE+1
             NPLOT1=NPLOTP
             IF(NTEMP.GT.0)THEN
-              CALL DPCAA2(TEMP1,W,NTEMP,XTEMP1,XTEMP2,MAXNXT,
+              CALL DPCAA2(TEMP1,W,NTEMP,XTEMP1,MAXNXT,
      1                    CCLSL,CCUSL,CCTARG,CCUSLC,
      1                    YCP,YCPLL,YCPUL,YCPK,YCPKLL,YCPKUL,
      1                    YCPL,YCPLLL,YCPLUL,YCPU,YCPULL,YCPUUL,
@@ -1205,7 +1173,7 @@ C
             NCURVE=NCURVE+1
             NPLOT1=NPLOTP
             IF(NTEMP.GT.0)THEN
-              CALL DPCAA2(TEMP1,W,NTEMP,XTEMP1,XTEMP2,MAXNXT,
+              CALL DPCAA2(TEMP1,W,NTEMP,XTEMP1,MAXNXT,
      1                    CCLSL,CCUSL,CCTARG,CCUSLC,
      1                    YCP,YCPLL,YCPUL,YCPK,YCPKLL,YCPKUL,
      1                    YCPL,YCPLLL,YCPLUL,YCPU,YCPULL,YCPUUL,
@@ -1261,7 +1229,7 @@ C
             NCURVE=NCURVE+1
             NPLOT1=NPLOTP
             IF(NTEMP.GT.0)THEN
-              CALL DPCAA2(TEMP1,W,NTEMP,XTEMP1,XTEMP2,MAXNXT,
+              CALL DPCAA2(TEMP1,W,NTEMP,XTEMP1,MAXNXT,
      1                    CCLSL,CCUSL,CCTARG,CCUSLC,
      1                    YCP,YCPLL,YCPUL,YCPK,YCPKLL,YCPKUL,
      1                    YCPL,YCPLLL,YCPLUL,YCPU,YCPULL,YCPUUL,
@@ -1321,7 +1289,7 @@ C
             NCURVE=NCURVE+1
             NPLOT1=NPLOTP
             IF(NTEMP.GT.0)THEN
-              CALL DPCAA2(TEMP1,W,NTEMP,XTEMP1,XTEMP2,MAXNXT,
+              CALL DPCAA2(TEMP1,W,NTEMP,XTEMP1,MAXNXT,
      1                    CCLSL,CCUSL,CCTARG,CCUSLC,
      1                    YCP,YCPLL,YCPUL,YCPK,YCPKLL,YCPKUL,
      1                    YCPL,YCPLLL,YCPLUL,YCPU,YCPULL,YCPUUL,
@@ -1381,7 +1349,7 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPCAA2(Y,W,N,XTEMP1,XTEMP2,MAXNXT,
+      SUBROUTINE DPCAA2(Y,W,N,XTEMP1,MAXNXT,
      1                  CCLSL,CCUSL,CCTARG,CCUSLC,
      1                  YCP,YCPLL,YCPUL,YCPK,YCPKLL,YCPKUL,
      1                  YCPL,YCPLLL,YCPLUL,YCPU,YCPULL,YCPUUL,
@@ -1441,7 +1409,6 @@ C
 C
       CHARACTER*4 IWRITE
       CHARACTER*4 IFLAG
-C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
@@ -1451,7 +1418,6 @@ C
       DIMENSION Y(*)
       DIMENSION W(*)
       DIMENSION XTEMP1(*)
-      DIMENSION XTEMP2(*)
       DIMENSION PID(*)
 C
       PARAMETER (NUMALP=5)
@@ -1482,13 +1448,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
       DATA ALPHA /50.0, 80.0, 90.0, 95.0, 99.0/
 C
@@ -1551,7 +1511,6 @@ C
       DO135I=2,N
         IF(Y(I).NE.HOLD)GOTO139
   135 CONTINUE
-  130 CONTINUE
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,111)
@@ -2286,33 +2245,24 @@ C
       CHARACTER*4 IH
       CHARACTER*4 IH2
       CHARACTER*4 ISUBN0
-C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
+      CHARACTER*4 IOP
+      CHARACTER*20 IFORMT
 C
 C---------------------------------------------------------------------
+C
+      SAVE IOUNI1
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
       INCLUDE 'DPCOHK.INC'
       INCLUDE 'DPCOHO.INC'
       INCLUDE 'DPCOST.INC'
 C
-      CHARACTER*20 IFORMT
-      CHARACTER*4 IOP
-      SAVE IOUNI1
-C
-C-----COMMON----------------------------------------------------------
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -2324,6 +2274,9 @@ C
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
    51   FORMAT('***** AT THE BEGINNING OF DPCAA5--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)CCLSL,CCUSL,CCTARG,CCUSLC
+   53   FORMAT('CCLSL,CCUSL,CCTARG,CCUSLC = ',4G15.7)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
@@ -2741,13 +2694,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -3015,15 +2962,14 @@ CCCCC THE FOLLOWING LINE WAS ADDED JULY 1997
       IF(UNITSW.EQ.'DATA')CALL DPCODS('Y',Y2,Y2,IBUGD2,ISUBRO,IERROR)
       IF(ITYPEO.EQ.'RELA')Y2=Y1+Y2
 C
- 1170 CONTINUE
       CALL DPCAP2(X1,Y1,X2,Y2,
-     1IFIG,
-     1ILINPA,ILINCO,PLINTH,
-     1AREGBA,
-     1IREBLI,IREBCO,PREBTH,
-     1IREFSW,IREFCO,
-     1IREPTY,IREPLI,IREPCO,PREPTH,PREPSP,
-     1PTEXHE,PTEXWI,PTEXVG,PTEXHG)
+     1            IFIG,
+     1            ILINPA,ILINCO,PLINTH,
+     1            AREGBA,
+     1            IREBLI,IREBCO,PREBTH,
+     1            IREFSW,IREFCO,
+     1            IREPTY,IREPLI,IREPCO,PREPTH,PREPSP,
+     1            PTEXHE,PTEXWI,PTEXVG,PTEXHG)
 C
       X1=X2
       Y1=Y2
@@ -3166,13 +3112,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -3227,7 +3167,7 @@ C               *********************************
 C
       DELX=X2-X1
       DELY=Y2-Y1
-      LEN=SQRT((X2-X1)**2+(Y2-Y1)**2)
+      LEN=INT(SQRT((X2-X1)**2+(Y2-Y1)**2))
       ALEN=LEN
       IF(ABS(DELX).GE.0.00001)THETA=ATAN(DELY/DELX)
       IF(ABS(DELX).LT.0.00001.AND.DELY.GE.0.0)THETA=3.1415926/2.0
@@ -3305,25 +3245,21 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'CAP2')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF DPCAP2--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9014)NP
- 9014 FORMAT('NP = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      DO9015I=1,NP
-      WRITE(ICOUT,9016)I,PX(I),PY(I)
- 9016 FORMAT('I,PX(I),PY(I) = ',I8,2E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9015 CONTINUE
-      WRITE(ICOUT,9039)IBUGG4,ISUBG4,IERRG4
- 9039 FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
- 9090 CONTINUE
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'CAP2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPCAP2--')
+        CALL DPWRST('XXX','BUG ')
+        DO9015I=1,NP
+          WRITE(ICOUT,9016)I,PX(I),PY(I)
+ 9016     FORMAT('I,PX(I),PY(I) = ',I8,2E15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9015   CONTINUE
+        WRITE(ICOUT,9039)IERRG4,NP
+ 9039   FORMAT('IERRG4,NP = ',A4,2X,I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END
@@ -3437,7 +3373,6 @@ C
       CHARACTER*4 IOFILE
 C
       CHARACTER*240 IATEMP
-      CHARACTER*4   IATMP2
       CHARACTER*1   ITEMP
 C
       CHARACTER*1 IREPCH
@@ -3448,7 +3383,10 @@ C
       CHARACTER*4 IFOUND
       CHARACTER*4 IERROR
 C
-      CHARACTER*80 IFILE
+      INCLUDE 'DPCOPA.INC'
+C
+CCCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
       CHARACTER*12 ISTAT
       CHARACTER*12 IFORM
       CHARACTER*12 IACCES
@@ -3459,7 +3397,8 @@ C
       CHARACTER*4 ISUBN0
       CHARACTER*4 IERRFI
 C
-      CHARACTER*80 IFILE2
+CCCCC CHARACTER*80 IFILE2
+      CHARACTER (LEN=MAXFNC) :: IFILE2
       CHARACTER*12 ISTAT2
       CHARACTER*12 IFORM2
       CHARACTER*12 IACCE2
@@ -3472,17 +3411,6 @@ C
       CHARACTER*4 IANSI
 CCCCC CHARACTER*80 ICANS
       CHARACTER*200 ICANS
-C
-      CHARACTER*4 IH
-      CHARACTER*4 IH2
-C
-      CHARACTER*4 ISUBN1
-      CHARACTER*4 ISUBN2
-      CHARACTER*4 ISTEPN
-C
-      CHARACTER*4 IFILQ2
-C
-      CHARACTER*1 IBASLC
 C
 C ---------------------------------------------------------------------
 C
@@ -3515,6 +3443,13 @@ C
       CHARACTER*4 IDFONT
 C
       CHARACTER*4 IFLAG
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 IH
+      CHARACTER*4 IH2
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 IFILQ2
+      CHARACTER*1 IBASLC
 C
       DIMENSION IDMANU(*)
       DIMENSION IDMODE(*)
@@ -3545,19 +3480,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPCA'
       ISUBN2='PT  '
-C
       IFOUND='YES'
       IERROR='NO'
 C
@@ -3615,8 +3543,9 @@ C
         CALL DPWRST('XXX','BUG ')
         IF(NUMARG.GT.0)THEN
           DO57I=1,NUMARG
-            WRITE(ICOUT,58)I,IHARG(I),IHARG2(I)
-   58       FORMAT('I,IHARG(I),IHARG2(I) = ',I8,2(2X,A4,2X))
+            WRITE(ICOUT,58)I,IHARG(I),IHARG2(I),IARGT(I),IARG(I),ARG(I)
+   58       FORMAT('I,IHARG(I),IHARG2(I),IARGT(I),IARG(I),ARG(I) = ',
+     1             I8,3(2X,A4),I8,G15.7)
             CALL DPWRST('XXX','BUG ')
    57     CONTINUE
         ENDIF
@@ -3638,6 +3567,9 @@ C
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,83)ICAPST,ICAPFO,ICAPAC,ICAPFO
    83   FORMAT('ICAPST,ICAPFO,ICAPAC,ICAPCO = ',3(A12,2X),A12)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,85)(IANS(I),I=1,MIN(100,IWIDTH))
+   85   FORMAT('IANS(.) = ',100A1)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
@@ -3747,7 +3679,6 @@ C               **  IF NO FILE NAME GIVEN,                  **
 C               **  THEN GENERATE AN ERROR MESSAGE.         **
 C               **********************************************
 C
- 1401 CONTINUE
       ISTEPN='14'
       IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CAPT')
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
@@ -4250,7 +4181,6 @@ C
      1     IHARG(1).EQ.'DIVE' .OR. IHARG(1).EQ.'PIPE'))GOTO4000
       ENDIF
 C
- 2900 CONTINUE
       IERROR='YES'
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
@@ -5234,13 +5164,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -5268,7 +5192,6 @@ C               ************************************************
 C               **  TREAT THE CASE (UPPER VERSUS LOWER) CASE  **
 C               ************************************************
 C
- 1110 CONTINUE
       IF(ICOM.EQ.'CASE')GOTO1120
       IF(ICOM.EQ.'UPPE')GOTO1130
       IF(ICOM.EQ.'LOWE')GOTO1140
@@ -5492,7 +5415,6 @@ C
 C
       CHARACTER*4 IHWUSE
       CHARACTER*4 MESSAG
-      CHARACTER*4 ICASEQ
       CHARACTER*4 IH
       CHARACTER*4 IH2
       CHARACTER*4 IERRO2
@@ -5551,13 +5473,7 @@ CCCCC ADD FOLLOWING LINE APRIL 1997
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -5942,7 +5858,7 @@ C
         IF(IERRO2.EQ.'YES')THEN
           ISIZE=1
         ELSE
-          ISIZE=VALUE(ILOCP)+0.5
+          ISIZE=INT(VALUE(ILOCP)+0.5)
         ENDIF
       ENDIF
 C
@@ -6127,7 +6043,6 @@ C
       IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'DPCC')
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-  809 CONTINUE
       CALL DPCC2(Y1,Y2,X1,XHIGH,NLOCAL,NUMVAR,ICASPL,IHIGH,ISIZE,ICONT,
      1           XIDTEM,TEMP,TEMP2,YPREV,
      1           CCLSL,CCUSL,CCTARG,P,KWIDTH,
@@ -6229,6 +6144,9 @@ C
       CHARACTER*4 ICASPL
       CHARACTER*4 IHIGH
       CHARACTER*4 ICONT
+      CHARACTER*4 ICCHPR
+      CHARACTER*4 ICCHWT
+      CHARACTER*4 ICONWC
       CHARACTER*4 IBUGG3
       CHARACTER*4 ISUBRO
       CHARACTER*4 IERROR
@@ -6237,10 +6155,6 @@ C
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
       CHARACTER*4 IWRITE
-C
-      CHARACTER*4 ICCHPR
-      CHARACTER*4 ICCHWT
-      CHARACTER*4 ICONWC
 C
 C---------------------------------------------------------------------
 C
@@ -6269,13 +6183,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -6357,12 +6265,20 @@ C
       ISUBN2='2   '
       IWRITE='OFF'
 C
+      XTMAX=0.0
+      XTMIN=0.0
+      D3FACT=0.0D0
+      D4FACT=0.0D0
+C
       IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'PCC2')THEN
         WRITE(ICOUT,70)
    70   FORMAT('AT THE BEGINNING OF DPCC2--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,71)N,NUMV2,ISIZE,MAXSET,ICASPL,ICONT
    71   FORMAT('N,NUMV2,ISIZE,MAXSET,ICASPL,ICONT = ',4I8,2(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,75)ICCHPR,ICCHWT,ICONWC,USRSIG
+   75   FORMAT('ICCHPR,ICCHWT,ICONWC,USRSIG = ',3(A4,2X),G15.7)
         CALL DPWRST('XXX','BUG ')
         DO72I=1,N
           WRITE(ICOUT,73)I,Y(I),YN(I),X(I),XHIGH(I)
@@ -7148,7 +7064,7 @@ C
 C
           CI=Y(ISET)
           ANI=YN(ISET)
-          NI=ANI+0.5
+          NI=INT(ANI+0.5)
           IF(NI.LE.0)GOTO1550
 C
           PI=CI/ANI
@@ -7213,7 +7129,7 @@ C
 C
           CI=Y(ISET)
           ANI=YN(ISET)
-          NI=ANI+0.5
+          NI=INT(ANI+0.5)
           IF(NI.LE.0)GOTO1650
 C
           PI=CI/ANI
@@ -7268,7 +7184,7 @@ C
 C
           CI=Y(ISET)
           SIZEI=YN(ISET)
-          NSIZEI=SIZEI+0.5
+          NSIZEI=INT(SIZEI+0.5)
           IF(NSIZEI.LE.0)GOTO1750
           STAT=-1.0
           IF(SIZEI.NE.0.0)STAT=CI/SIZEI
@@ -7325,7 +7241,7 @@ C
 C
           CI=Y(ISET)
           SIZEI=YN(ISET)
-          NSIZEI=SIZEI+0.5
+          NSIZEI=INT(SIZEI+0.5)
           IF(NSIZEI.LE.0)GOTO1850
           YMID=CBARG
           VARCI=0.0
@@ -8226,13 +8142,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -8250,6 +8160,8 @@ C
    74   FORMAT('IHIGH,XHIGH,SIGMA = ',A4,2X,2G15.7)
         CALL DPWRST('XXX','BUG ')
       ENDIF
+C
+      IERROR='NO'
 C
       ICNT=1
       J=J+1
@@ -8431,7 +8343,6 @@ C               **   STEP 90--  **
 C               **   EXIT       **
 C               ******************
 C
- 9000 CONTINUE
       IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'PCC3')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
@@ -8482,9 +8393,6 @@ C
       CHARACTER*4 IFOUND
       CHARACTER*4 IERROR
 C
-      CHARACTER*4 IHWUSE
-      CHARACTER*4 MESSAG
-C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
@@ -8517,13 +8425,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -8914,13 +8816,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -8931,17 +8827,17 @@ C
       ISUBN1='DPCD'
       ISUBN2='2   '
 C
-      IF(IBUGG3.EQ.'OFF')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPCD2--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)N,ICASPL
-   52 FORMAT('N,ICASPL = ',I8,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'PCD2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCD2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)N,ICASPL
+   52   FORMAT('N,ICASPL = ',I8,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       ILOWER=3
       IUPPER=MAXOBV
@@ -8995,34 +8891,34 @@ C               **  FORM THE COSINE SERIES  **
 C               ******************************
 C
       DO100I=1,N
-      AI=I
-      Y2(I)=Y(I)*COS(2.0*PI*F*AI)
+        AI=I
+        Y2(I)=Y(I)*COS(2.0*PI*F*AI)
   100 CONTINUE
 C
 C     DEFINE THE LENGTH OF THE 2 MOVING AVERAGES
 C
-      LENMA1=1.0/F
-      LENMA2=1.0/F
-      ALEN1=LENMA1
-      ALEN2=LENMA2
+      LENMA1=INT(1.0/F)
+      LENMA2=INT(1.0/F)
+      ALEN1=REAL(LENMA1)
+      ALEN2=REAL(LENMA2)
       IMAX1=N-LENMA1
       IMAX2=IMAX1-LENMA2
 C
-C               ***********************************************************
-C               **  STEP 2--                                             **
-C               **  FORM THE FIRST MOVING AVERAGE FOR THE COSINE SERIES  **
-C               ***********************************************************
+C               *********************************************************
+C               **  STEP 2--                                           **
+C               **  FORM THE FIRST MOVING AVERAGE FOR THE COSINE SERIES**
+C               *********************************************************
 C
       DO200I=1,IMAX1
-      ISTART=I+1
-      IEND=I+LENMA1-1
-      IENDP1=I+LENMA1
-      SUM=0.0
-      DO300J=ISTART,IEND
-      SUM=SUM+Y2(J)
-  300 CONTINUE
-      SUM=SUM+Y2(I)/2.0+Y2(IENDP1)/2.0
-      D2(I)=SUM/ALEN1
+        ISTART=I+1
+        IEND=I+LENMA1-1
+        IENDP1=I+LENMA1
+        SUM=0.0
+        DO300J=ISTART,IEND
+          SUM=SUM+Y2(J)
+  300   CONTINUE
+        SUM=SUM+Y2(I)/2.0+Y2(IENDP1)/2.0
+        D2(I)=SUM/ALEN1
   200 CONTINUE
 C
 C               ************************************************************
@@ -9031,15 +8927,15 @@ C               **  FORM THE SECOND MOVING AVERAGE FOR THE COSINE SERIES  **
 C               ************************************************************
 C
       DO400I=1,IMAX2
-      ISTART=I+1
-      IEND=I+LENMA2-1
-      IENDP1=I+LENMA2
-      SUM=0.0
-      DO500J=ISTART,IEND
-      SUM=SUM+D2(J)
-  500 CONTINUE
-      SUM=SUM+D2(I)/2.0+D2(IENDP1)/2.0
-      Y2(I)=SUM/ALEN2
+        ISTART=I+1
+        IEND=I+LENMA2-1
+        IENDP1=I+LENMA2
+        SUM=0.0
+        DO500J=ISTART,IEND
+          SUM=SUM+D2(J)
+  500   CONTINUE
+        SUM=SUM+D2(I)/2.0+D2(IENDP1)/2.0
+        Y2(I)=SUM/ALEN2
   400 CONTINUE
 C
 C               ****************************
@@ -9048,8 +8944,8 @@ C               **  FORM THE SINE SERIES  **
 C               ****************************
 C
       DO700I=1,N
-      AI=I
-      X2(I)=Y(I)*SIN(2.0*PI*F*AI)
+        AI=I
+        X2(I)=Y(I)*SIN(2.0*PI*F*AI)
   700 CONTINUE
 C
 C               *********************************************************
@@ -9058,15 +8954,15 @@ C               **  FORM THE FIRST MOVING AVERAGE FOR THE SINE SERIES  **
 C               *********************************************************
 C
       DO800I=1,IMAX1
-      ISTART=I+1
-      IEND=I+LENMA1-1
-      IENDP1=I+LENMA1
-      SUM=0.0
-      DO900J=ISTART,IEND
-      SUM=SUM+X2(J)
-  900 CONTINUE
-      SUM=SUM+X2(I)/2.0+X2(IENDP1)/2.0
-      D2(I)=SUM/ALEN1
+        ISTART=I+1
+        IEND=I+LENMA1-1
+        IENDP1=I+LENMA1
+        SUM=0.0
+        DO900J=ISTART,IEND
+          SUM=SUM+X2(J)
+  900   CONTINUE
+        SUM=SUM+X2(I)/2.0+X2(IENDP1)/2.0
+        D2(I)=SUM/ALEN1
   800 CONTINUE
 C
 C               **********************************************************
@@ -9075,15 +8971,15 @@ C               **  FORM THE SECOND MOVING AVERAGE FOR THE SINE SERIES  **
 C               **********************************************************
 C
       DO1000I=1,IMAX2
-      ISTART=I+1
-      IEND=I+LENMA1-1
-      IENDP1=I+LENMA1
-      SUM=0.0
-      DO1100J=ISTART,IEND
-      SUM=SUM+D2(J)
- 1100 CONTINUE
-      SUM=SUM+D2(I)/2.0+D2(IENDP1)/2.0
-      X2(I)=SUM/ALEN2
+        ISTART=I+1
+        IEND=I+LENMA1-1
+        IENDP1=I+LENMA1
+        SUM=0.0
+        DO1100J=ISTART,IEND
+          SUM=SUM+D2(J)
+ 1100   CONTINUE
+        SUM=SUM+D2(I)/2.0+D2(IENDP1)/2.0
+        X2(I)=SUM/ALEN2
  1000 CONTINUE
 C
 C     CHECK FOR DESIRED CASE
@@ -9150,9 +9046,9 @@ C               *************************************
 C
  1700 CONTINUE
       DO1750I=1,IMAX2
-      Y2(I)=ATAN(Y2(I)/X2(I))
-      X2(I)=I
-      D2(I)=1.0
+        Y2(I)=ATAN(Y2(I)/X2(I))
+        X2(I)=I
+        D2(I)=1.0
  1750 CONTINUE
       N2=IMAX2
       NPLOTV=2
@@ -9170,14 +9066,14 @@ C
       Y2MIN=Y2(1)
       Y2MAX=Y2(1)
       DO1800I=1,IMAX2M
-      IP1=I+1
-      DEL=Y2(IP1)-Y2(I)
-      IF(DEL.GT.2.5)IFLAG=IFLAG-1
-      IF(DEL.LT.-2.5)IFLAG=IFLAG+1
-      AIFLAG=IFLAG
-      Y2NEW=Y2(IP1)+AIFLAG*PI
-      IF(Y2NEW.LT.Y2MIN)Y2MIN=Y2NEW
-      IF(Y2NEW.GT.Y2MAX)Y2MAX=Y2NEW
+        IP1=I+1
+        DEL=Y2(IP1)-Y2(I)
+        IF(DEL.GT.2.5)IFLAG=IFLAG-1
+        IF(DEL.LT.-2.5)IFLAG=IFLAG+1
+        AIFLAG=REAL(IFLAG)
+        Y2NEW=Y2(IP1)+AIFLAG*PI
+        IF(Y2NEW.LT.Y2MIN)Y2MIN=Y2NEW
+        IF(Y2NEW.GT.Y2MAX)Y2MAX=Y2NEW
  1800 CONTINUE
       RANGE=Y2MAX-Y2MIN
       SLOPER=RANGE/AIMAX2
@@ -9193,8 +9089,6 @@ CCCCC WRITE(ICOUT,2030)SLOPER,SLOPEH,FEST
 C2030 FORMAT(8HSLOPE = ,E14.8,11H RADIANS = ,E14.6,52H CYCLES PER UN
 CCCCC1IT TIME    EST. OF NEW DEMOD. FREQ. = ,E15.8,15H CYC./UNIT TIME)
 CCCCC CALL DPWRST('XXX','BUG ')
-C
-      GOTO9000
 C
 C               *****************
 C               **  STEP 90--  **
@@ -9276,13 +9170,7 @@ C
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -9301,8 +9189,8 @@ C
         WRITE(ICOUT,52)IBUGA3,ISUBRO,ICASA2,ICASA4
    52   FORMAT('IBUGA3,ISUBRO,ICASA2,ICASA4 = ',3(A4,2X),A4)
         CALL DPWRST('XXX','WRIT')
-        WRITE(ICOUT,53)N,NALPHA,ALPHA(1)
-   53   FORMAT('N,NALPHA,ALPHA(1) = ',2I8,G15.7)
+        WRITE(ICOUT,53)N,NALPHA,ISEED,ALPHA(1)
+   53   FORMAT('N,NALPHA,ISEED,ALPHA(1) = ',3I8,G15.7)
         CALL DPWRST('XXX','WRIT')
         DO56I=1,N
           WRITE(ICOUT,57)I,Y(I)
@@ -9509,16 +9397,16 @@ C
       RETURN
       END 
       SUBROUTINE DPCDF1(Y,Y2,N,ICASPL,IFLAGD,
-     1SHAPE1,SHAPE2,SHAPE3,SHAPE4,
-     1SHAPE5,SHAPE6,SHAPE7,
-     1YLOWLM,YUPPLM,A,B,MINMAX,
-     1ICAPSW,ICAPTY,
-     1IADEDF,IGEPDF,IMAKDF,IBEIDF,
-     1ILGADF,ISKNDF,IGLDDF,IBGEDF,
-     1IGETDF,ICONDF,IGOMDF,IKATDF,
-     1IGIGDF,IGEODF,
-     1KSLOC,KSSCAL,
-     1IBUGA3,ISUBRO,IERROR)
+     1                  SHAPE1,SHAPE2,SHAPE3,SHAPE4,
+     1                  SHAPE5,SHAPE6,SHAPE7,
+     1                  YLOWLM,YUPPLM,A,B,MINMAX,
+     1                  ICAPSW,ICAPTY,
+     1                  IADEDF,IGEPDF,IMAKDF,IBEIDF,
+     1                  ILGADF,ISKNDF,IGLDDF,IBGEDF,
+     1                  IGETDF,ICONDF,IGOMDF,IKATDF,
+     1                  IGIGDF,IGEODF,
+     1                  KSLOC,KSSCAL,
+     1                  IBUGA3,ISUBRO,IERROR)
 C
 C     PURPOSE--COMPUTE THE CDF VALUE AT GIVEN SET OF POINTS.  THIS
 C              WILL BE USED BY VARIOUS K-S AND ANDERSON DARLING
@@ -9568,7 +9456,6 @@ C
       CHARACTER*4 IKATDF
       CHARACTER*4 IGIGDF
       CHARACTER*4 IGEODF
-      CHARACTER*4 IGIGSV
       CHARACTER*4 IBUGA3
       CHARACTER*4 ISUBRO
       CHARACTER*4 IERROR
@@ -9576,7 +9463,6 @@ C
       CHARACTER*4 IWRITE
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
-      CHARACTER*4 ISTEPN
 C
       REAL KSLOC
       REAL KSSCAL
@@ -9595,13 +9481,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -9665,8 +9545,8 @@ C
         WRITE(ICOUT,71)
    71   FORMAT('***** AT THE BEGINNING OF DPCDF1--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,72)ICASPL,N,MINMAX
-   72   FORMAT('ICASPL,N,MINMAX = ',A4,2X,2X,I8,I8)
+        WRITE(ICOUT,72)ICASPL,ICAPSW,ICAPTY,N,MINMAX
+   72   FORMAT('ICASPL,ICAPSW,ICAPTY,N,MINMAX = ',3(A4,2X),2I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,74)KSLOC,KSSCAL,SHAPE1,SHAPE2
    74   FORMAT('KSLOC,KSSCAL,SHAPE1,SHAPE2 = ',4G15.7)
@@ -9732,7 +9612,7 @@ C
           CALL LGNCDF(XL,SHAPE1,Y2(I))
  1070   CONTINUE
 C
-      ELSEIF(ICASPL.EQ.'HNOR')THEN
+      ELSEIF(ICASPL.EQ.'HNOR' .OR. ICASPL.EQ.'1HNO')THEN
         DO1080I=1,N
           XL=(Y(I) - KSLOC)/KSSCAL
           CALL HFNCDF(XL,Y2(I))
@@ -10050,7 +9930,8 @@ C
         IF(IFLAGD.EQ.1)GOTO8000
         DO1460I=1,N
           XL=Y(I)
-          CALL WARCDF(XL,SHAPE1,SHAPE2,Y2(I),'NOTR')
+CCCCC     CALL WARCDF(XL,SHAPE1,SHAPE2,Y2(I),'NOTR')
+          CALL WARCDF(XL,SHAPE1,SHAPE2,Y2(I))
  1460   CONTINUE
 C
       ELSEIF(ICASPL.EQ.'YULE')THEN
@@ -10081,7 +9962,7 @@ C
         IF(SHAPE1.NE.CPUMIN .AND. SHAPE2.NE.CPUMIN)THEN
           AVAL1=SHAPE1
           AVAL2=SHAPE2
-        ELSEIF(KSLOC.NE.CPUMIN .AND. KSSCALE.NE.CPUMIN)THEN
+        ELSEIF(KSLOC.NE.CPUMIN .AND. KSSCAL.NE.CPUMIN)THEN
           AVAL1=KSLOC
           AVAL2=KSSCAL
         ELSE
@@ -10533,7 +10414,7 @@ C
           XL=(Y(I) - KSLOC)/KSSCAL
 CCCCC     CALL BEKCDF(DBLE(XL),DBLE(SHAPE1),DBLE(SHAPE2),DBLE(SHAPE3),
 CCCCC1                IBEIDF,DXOUT)
-          Y2(I)=REAL(DXOUT)
+CCCCC     Y2(I)=REAL(DXOUT)
  2070   CONTINUE
 C
       ELSEIF(ICASPL.EQ.'GMCL')THEN
@@ -11032,7 +10913,7 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPCHAL(ICHAR2,ICHARN,IBUG,IFOUND)
+      SUBROUTINE DPCHAL(ICHAR2,ICHARN,IBUGXX,IFOUND)
 C
 C     PURPOSE--CONVERT AN ALPHABETIC CHARACTER
 C              (A TO Z) INTO A NUMERIC VALUE
@@ -11061,7 +10942,7 @@ C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICHAR2
-      CHARACTER*4 IBUG
+      CHARACTER*4 IBUGXX
       CHARACTER*4 IFOUND
 C
       CHARACTER*1 ICH1
@@ -11073,38 +10954,28 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
-C
       ICH1='-'
       ICH2='-'
 C
       ICH1N=(-999)
       ICH2N=(-999)
 C
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'CHAL')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPCHAL--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)ICHAR2
-   52 FORMAT('ICHAR2 = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,59)IBUGG4,ISUBG4
-   59 FORMAT('IBUGG4,ISUBG4 = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(IBUGXX.EQ.'ON' .OR. ISUBG4.EQ.'CHAL')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCHAL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,59)IBUGXX,IBUGG4,ISUBG4,ICHAR2
+   59   FORMAT('IBUGXX,IBUGXX,ISUBG4,ICHAR2 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               **********************************
 C               **  STEP 1--                    **
@@ -11150,25 +11021,19 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'CHAL')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF DPCHAL--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)ICH1,ICH1N
- 9012 FORMAT('ICH1,ICH1N = ',A1,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)ICH2,ICH2N
- 9013 FORMAT('ICH2,ICH2N = ',A1,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9014)ICHAR2,ICHARN
- 9014 FORMAT('ICHAR2,ICHARN = ',A4,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9019)IBUGG4,ISUBG4,IFOUND
- 9019 FORMAT('IBUGG4,ISUBG4,IFOUND = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
- 9090 CONTINUE
+      IF(IBUGXX.EQ.'ON' .OR. ISUBG4.EQ.'CHAL')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPCHAL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)ICH1,ICH1N,ICH2,ICH2N
+ 9012   FORMAT('ICH1,ICH1N,ICH2,ICH2N = ',A1,2X,I8,2X,A1,2X,I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)IFOUND,ICHAR2,ICHARN
+ 9014   FORMAT('IFOUND,ICHAR2,ICHARN = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END
@@ -11242,23 +11107,14 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPCH'
       ISUBN2='AN  '
-C
       IFOUND='NO'
       IERROR='NO'
-C
- 1100 CONTINUE
 C
       IF(NUMARG.EQ.1.AND.IHARG(1).EQ.'ANGL')GOTO1160
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'ANGL')GOTO1105
@@ -11755,13 +11611,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -11773,14 +11623,14 @@ C
       IHYPSV=IHYPSW
       IHYPSW='OFF'
 C
+      NCCHAR=0
+C
       IF(IBUGP2.EQ.'ON' .OR. ISUBRO.EQ.'CHAR')THEN
         WRITE(ICOUT,11)ICOM,IHARG(1),IHARG(2),IHARG(3),NUMARG
    11   FORMAT('IN DPCHAR: ICOM,IHARG(1),IHARG(2),IHARG(3),NUMARG = ',
      1         4(2X,A4),I8)
         CALL DPWRST('XXX','BUG ')
       ENDIF
-C
- 1100 CONTINUE
 C
       IF(NUMARG.GE.1.AND.IHARG(1).EQ.'COLO')GOTO9000
       IF(NUMARG.GE.1.AND.IHARG(1).EQ.'SIZE')GOTO9000
@@ -12038,7 +11888,7 @@ CCCCC       ICHAPA(1)(5:8)=IHARL2(1)
             CALL DPEXWO(ISTRIN,ISTART,ISTOP,IWORD,
      1                  ICOL1,ICOL2,ISTRCH,NCCHAR,
      1                  IBUGP2,ISUBRO,IERROR)
-            IF(INCCHAR.GT.24)NCCHAR=24
+            IF(NCCHAR.GT.24)NCCHAR=24
             ICHAPA(1)=' '
             ICHAPA(1)(1:NCCHAR)=ISTRCH(1:NCCHAR)
           ENDIF
@@ -12073,7 +11923,7 @@ CCCCC       ICHAPA(I)(5:8)=IHARL2(2)
             CALL DPEXWO(ISTRIN,ISTART,ISTOP,IWORD,
      1                  ICOL1,ICOL2,ISTRCH,NCCHAR,
      1                  IBUGP2,ISUBRO,IERROR)
-            IF(INCCHAR.GT.24)NCCHAR=24
+            IF(NCCHAR.GT.24)NCCHAR=24
             ICHAPA(I)=' '
             ICHAPA(I)(1:NCCHAR)=ISTRCH(1:NCCHAR)
           ENDIF
@@ -12107,7 +11957,7 @@ CCCCC       ICHAPA(I)(5:8)=IHARL2(1)
             CALL DPEXWO(ISTRIN,ISTART,ISTOP,IWORD,
      1                  ICOL1,ICOL2,ISTRCH,NCCHAR,
      1                  IBUGP2,ISUBRO,IERROR)
-            IF(INCCHAR.GT.24)NCCHAR=24
+            IF(NCCHAR.GT.24)NCCHAR=24
             ICHAPA(I)=' '
             ICHAPA(I)(1:NCCHAR)=ISTRCH(1:NCCHAR)
           ENDIF
@@ -12222,8 +12072,8 @@ C
             GOTO3290
           ENDIF
  3200   CONTINUE
-C
  3290   CONTINUE
+C
         IF(IBUGP2.EQ.'OFF')THEN
           WRITE(ICOUT,3291)NUMARG,ILOCQ
  3291     FORMAT('NUMARG,ILOCQ = ',2I8)
@@ -12392,8 +12242,8 @@ C
         DO3650I=1,IMAX
           ICHAPA(I+ICHAOF)=' '
           VAL=X(I)
-          IVAL=VAL+0.5
-          IF(VAL.LT.0.0)IVAL=VAL-0.5
+          IVAL=INT(VAL+0.5)
+          IF(VAL.LT.0.0)IVAL=INT(VAL-0.5)
           NUMDID=(-1)
           CALL DPCON2(IVAL,VAL,ICTEXT,NCTEXT,NUMDID,IBUGP2,IERROR)
           JMAX=NCTEXT
@@ -12442,7 +12292,7 @@ CCCCC       ICHAPA(I)(5:8)=IHARL2(I)
             CALL DPEXWO(ISTRIN,ISTART,ISTOP,IWORD,
      1                  ICOL1,ICOL2,ISTRCH,NCCHAR,
      1                  IBUGP2,ISUBRO,IERROR)
-            IF(INCCHAR.GT.24)NCCHAR=24
+            IF(NCCHAR.GT.24)NCCHAR=24
             ICHAPA(I)=' '
             ICHAPA(I)(1:NCCHAR)=ISTRCH(1:NCCHAR)
           ENDIF
@@ -12567,7 +12417,7 @@ CCCCC   ICHAPA(I)(5:8)=IHARL2(1)
         CALL DPEXWO(ISTRIN,ISTART,ISTOP,IWORD,
      1              ICOL1,ICOL2,ISTRCH,NCCHAR,
      1              IBUGP2,ISUBRO,IERROR)
-        IF(INCCHAR.GT.24)NCCHAR=24
+        IF(NCCHAR.GT.24)NCCHAR=24
         ICHAPA(I)=' '
         ICHAPA(I)(1:NCCHAR)=ISTRCH(1:NCCHAR)
  4310 CONTINUE
@@ -12693,20 +12543,13 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
 C
- 1100 CONTINUE
       IF(NUMARG.EQ.1.AND.IHARG(1).EQ.'CASE')GOTO1160
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'CASE')GOTO1105
       GOTO1199
@@ -12869,20 +12712,13 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
 C
- 1100 CONTINUE
       IF(NUMARG.EQ.1.AND.IHARG(1).EQ.'COLO')GOTO1160
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'COLO')GOTO1105
       GOTO1199
@@ -13048,13 +12884,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -13193,30 +13023,31 @@ C---------------------------------------------------------------------
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
-C               ****************************************************************
-C               **  THE FOLLOWING CODE WILL CARRY OUT
-C               **  THE CHARACTER EXTRACTION FOR ALL COMPUTERS
-C               **  WITH AN ANSI 77 FORTRAN COMPILER--IT MAKES
-C               **  USE OF THE ANSI FORTRAN 77 CONSTRUCT--
-C               **  IY(IC:ID)=IX(IA:IB)
-C               **  WHERE IX AND IY ARE CHARACTER*4 VARIABLES,
-C               **  WHERE IA, IB, IC, AND ID ARE INTEGER VARIABLES,
-C               **  AND WHERE IY(IC:ID)=IX(IA:IB) MEANS
+C               ********************************************************
+C               **  THE FOLLOWING CODE WILL CARRY OUT                 **
+C               **  THE CHARACTER EXTRACTION FOR ALL COMPUTERS        **
+C               **  WITH AN ANSI 77 FORTRAN COMPILER--IT MAKES        **
+C               **  USE OF THE ANSI FORTRAN 77 CONSTRUCT--            **
+C               **  IY(IC:ID)=IX(IA:IB)                               **
+C               **  WHERE IX AND IY ARE CHARACTER*4 VARIABLES,        **
+C               **  WHERE IA, IB, IC, AND ID ARE INTEGER VARIABLES,   **
+C               **  AND WHERE IY(IC:ID)=IX(IA:IB) MEANS               **
 C               **  TO COPY CHARACTERS IA THROUGH IB OF VARIABLE IX AND
 C               **  PLACE THEM INTO CHARACTERS IC THROUGH ID OF VARIABLE IY.
-C               **  WITH ALL OTHER CHARACTERS IN IY BEING UNAFFECTED.
-C               **  USUALLY IA, IB, IC, AND ID RANGE FROM 1 TO 4.
-C               ****************************************************************
+C               **  WITH ALL OTHER CHARACTERS IN IY BEING UNAFFECTED. **
+C               **  USUALLY IA, IB, IC, AND ID RANGE FROM 1 TO 4.     **
+C               ********************************************************
+C
+      IF(ISUBG4.EQ.'CHEX')THEN
+        WRITE(ICOUT,51)ISTAR1,ILEN1,IX1,ISTAR2,ILEN2,IX2
+   51   FORMAT('FROM DPCHEX: ISTAR1,ILEN1,IX1,ISTAR2,ILEN2,IX2 = ',6I5)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       IBYTE1=(ISTAR1+NUMBPC)/NUMBPC
       IBYTE2=(ISTAR2+NUMBPC)/NUMBPC
@@ -13313,20 +13144,13 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
 C
- 1100 CONTINUE
       IF(NUMARG.EQ.1.AND.IHARG(1).EQ.'FILL')GOTO1160
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'FILL')GOTO1105
       GOTO1199
@@ -13498,20 +13322,13 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
 C
- 1100 CONTINUE
       IF((NUMARG.EQ.1.AND.IHARG(1).EQ.'FONT') .OR.
      1   (NUMARG.EQ.2.AND.IHARG(2).EQ.'ALL'))THEN
         DO1165I=1,MAXCHA
@@ -13599,7 +13416,6 @@ C
 C
       IFOUND='YES'
 C
- 1199 CONTINUE
       RETURN
       END
       SUBROUTINE DPCHGR(ICHAR2,ICHARN,IBUG,IFOUND)
@@ -13637,7 +13453,7 @@ C
       CHARACTER*4 IBUG
       CHARACTER*4 IFOUND
 C
-C-----COMMON VARIABLES (BUGS & ERROR)-------------------------------------------
+C-----COMMON VARIABLES (BUGS & ERROR)---------------------------------
 C
       CHARACTER*4 IBUGG4
       CHARACTER*4 ISUBG4
@@ -13647,32 +13463,23 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
 C
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'CHGR')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPCHGR--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)ICHAR2
-   52 FORMAT('ICHAR2 = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,59)IBUGG4,ISUBG4
-   59 FORMAT('IBUGG4,ISUBG4 = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(IBUG.EQ.'ON' .OR. ISUBG4.EQ.'CHGR')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCHGR--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,59)ICHAR2,IBUG,ISUBG4
+   59   FORMAT('ICHAR2,IBUG,ISUBG4 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               **********************************
 C               **  STEP 1--                    **
@@ -13826,29 +13633,23 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'CHGR')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF DPCHGR--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)IFOUND
- 9012 FORMAT('IFOUND = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)ICHAR2,ICHARN
- 9013 FORMAT('ICHAR2,ICHARN = ',A4,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9019)IBUGG4,ISUBG4,IFOUND
- 9019 FORMAT('IBUGG4,ISUBG4,IFOUND = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
- 9090 CONTINUE
+      IF(IBUG.EQ.'ON' .OR. ISUBG4.EQ.'CHGR')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPCHGR--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)IFOUND,ICHAR2,ICHARN
+ 9013   FORMAT('IFOUND,ICHAR2,ICHARN = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END
-      SUBROUTINE DPCHHW(IHARG,IARGT,IARG,ARG,NUMARG,
-     1MAXCHA,
-     1PCHAHE,PCHAWI,PDEFHE,PDEFWI,
-     1IFOUND,IERROR)
+      SUBROUTINE DPCHHW(IHARG,IARGT,ARG,NUMARG,
+     1                  MAXCHA,
+     1                  PCHAHE,PCHAWI,PDEFHE,PDEFWI,
+     1                  IFOUND,IERROR)
 C
 C     PURPOSE--DEFINE PLOT CHARACTER HEIGHT AND WIDTH
 C              FOR USE IN MULTI-TRACE PLOTS.
@@ -13899,7 +13700,6 @@ C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
       DIMENSION IARGT(*)
-      DIMENSION IARG(*)
       DIMENSION ARG(*)
 C
       DIMENSION PCHAHE(*)
@@ -13907,20 +13707,12 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
-C
- 1100 CONTINUE
 C
       IF(NUMARG.EQ.1.AND.IHARG(1).EQ.'HW')GOTO1160
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'HW')GOTO1105
@@ -14152,20 +13944,13 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
 C
- 1100 CONTINUE
       IF(NUMARG.EQ.1.AND.IHARG(1).EQ.'JUST')GOTO1160
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'JUST')GOTO1105
       GOTO1199
@@ -14311,13 +14096,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -14456,39 +14235,30 @@ C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOBE.INC'
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOULR='NO'
       IERROR='NO'
 C
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'CHLR')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPCHLR--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)NUMCHS,ILOCLP,ILOCRP
-   52 FORMAT('NUMCHS,ILOCLP,ILOCRP = ',I8,I8,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)(ISTRIN(I),I=1,NUMCHS)
-   53 FORMAT('(ISTRIN(I),I=1,NUMCHS) = ',100A1)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,59)IBUGG4,ISUBG4,IERRG4
-   59 FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(IBUG.EQ.'ON' .OR. ISUBG4.EQ.'CHLR')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCHLR--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)NUMCHS,ILOCLP,ILOCRP
+   52   FORMAT('NUMCHS,ILOCLP,ILOCRP = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)(ISTRIN(I),I=1,MIN(100,NUMCHS))
+   53   FORMAT('(ISTRIN(I),I=1,NUMCHS) = ',100A1)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,59)IBUG,ISUBG4,IERRG4
+   59   FORMAT('IBUG,ISUBG4,IERRG4 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       IF(ILOCLP.LT.1)GOTO1200
       IF(ILOCLP.GT.NUMCHS)GOTO1200
@@ -14499,7 +14269,6 @@ C
       IF(ISTRIN(ILOCLP).NE.'(')GOTO1200
       IF(ISTRIN(ILOCRP).NE.')')GOTO1200
 C
- 1100 CONTINUE
       IFOULR='YES'
       GOTO9000
 C
@@ -14513,19 +14282,16 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'CHLR')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END      OF DPCHLR--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)IFOULR
- 9012 FORMAT('IFOULR = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9019)IBUGG4,ISUBG4,IERRG4
- 9019 FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
- 9090 CONTINUE
+      IF(IBUG.EQ.'ON' .OR. ISUBG4.EQ.'CHLR')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END      OF DPCHLR--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IFOULR,IERRG4
+ 9012   FORMAT('IFOULR,IERRG4 = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END
@@ -14573,32 +14339,23 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
 C
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'CHMA')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPCHMA--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)ICHAR2
-   52 FORMAT('ICHAR2 = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,59)IBUGG4,ISUBG4
-   59 FORMAT('IBUGG4,ISUBG4 = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(IBUG.EQ.'ON' .OR. ISUBG4.EQ.'CHMA')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCHMA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,59)ICHAR2,IBUGG4,ISUBG4
+   59   FORMAT('ICHAR2,IBUGG4,ISUBG4 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               **********************************
 C               **  STEP 1--                    **
@@ -15115,22 +14872,16 @@ C               **  EXIT       **
 C               *****************
 C
 19000 CONTINUE
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'CHMA')GOTO19090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,19011)
-19011 FORMAT('***** AT THE END       OF DPCHMA--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,19012)IFOUND
-19012 FORMAT('IFOUND = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,19013)ICHAR2,ICHARN
-19013 FORMAT('ICHAR2,ICHARN = ',A4,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,19019)IBUGG4,ISUBG4,IFOUND
-19019 FORMAT('IBUGG4,ISUBG4,IFOUND = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-19090 CONTINUE
+      IF(IBUG.EQ.'ON' .OR. ISUBG4.EQ.'CHMA')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,19011)
+19011   FORMAT('***** AT THE END       OF DPCHMA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,19013)IFOUND,ICHAR2,ICHARN
+19013   FORMAT('IFOUND,ICHAR2,ICHARN = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END
@@ -15175,13 +14926,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -15193,20 +14938,17 @@ C
       ICH1N=(-999)
       ICH2N=(-999)
 C
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'CHNU')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPCHNU--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)ICHAR2
-   52 FORMAT('ICHAR2 = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,59)IBUGG4,ISUBG4
-   59 FORMAT('IBUGG4,ISUBG4 = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(IBUG.EQ.'ON' .OR. ISUBG4.EQ.'CHNU')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCHNU--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,59)ICHAR2,IBUGG4,ISUBG4
+   59   FORMAT('ICHAR2,IBUGG4,ISUBG4 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               **********************************
 C               **  STEP 1--                    **
@@ -15252,32 +14994,26 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'CHNU')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF DPCHAL--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)ICH1,ICH1N
- 9012 FORMAT('ICH1,ICH1N = ',A1,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)ICH2,ICH2N
- 9013 FORMAT('ICH2,ICH2N = ',A1,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9014)ICHAR2,ICHARN
- 9014 FORMAT('ICHAR2,ICHARN = ',A4,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9019)IBUGG4,ISUBG4,IFOUND
- 9019 FORMAT('IBUGG4,ISUBG4,IFOUND = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
- 9090 CONTINUE
+      IF(IBUG.EQ.'ON' .OR. ISUBG4.EQ.'CHNU')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPCHAL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)ICH1,ICH1N,ICH2,ICH2N
+ 9012   FORMAT('ICH1,ICH1N,ICH2,ICH2N = ',A1,2X,I8,2X,A1,2X,I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)IFOUND,ICHAR2,ICHARN
+ 9014   FORMAT('IFOUND,ICHAR2,ICHARN = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END
-      SUBROUTINE DPCHOF(IHARG,IARGT,IARG,ARG,NUMARG,
-     1MAXCHA,
-     1PCHAHO,PCHAVO,
-     1IFOUND,IERROR)
+      SUBROUTINE DPCHOF(IHARG,IARGT,ARG,NUMARG,
+     1                  MAXCHA,
+     1                  PCHAHO,PCHAVO,
+     1                  IFOUND,IERROR)
 C
 C     PURPOSE--DEFINE PLOT CHARACTER (HORIZONTAL AND VERTICAL) OFFSET
 C              FOR USE IN MULTI-TRACE PLOTS.
@@ -15330,7 +15066,6 @@ C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
       DIMENSION IARGT(*)
-      DIMENSION IARG(*)
       DIMENSION ARG(*)
 C
       DIMENSION PCHAHO(*)
@@ -15338,20 +15073,12 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
-C
- 1100 CONTINUE
 C
       IF(NUMARG.EQ.1.AND.IHARG(1).EQ.'OFFS')GOTO1160
       IF(NUMARG.EQ.1.AND.IHARG(1).EQ.'DISP')GOTO1160
@@ -15529,13 +15256,12 @@ C
       SUBROUTINE DPCHS3(ICASPL,IDIST,NUMSHA,IFORSW,ICASP3,
      1                  PID,IVARID,IVARI2,NREPL,
      1                  N,XMEAN,XSD,XMIN,XMAX,
-     1                  YLOWLM,YUPPLM,A,B,MINMAX,
+     1                  A,B,MINMAX,
      1                  SHAPE1,SHAPE2,SHAPE3,SHAPE4,
      1                  SHAPE5,SHAPE6,SHAPE7,
-     1                  KSLOC,KSSCAL,ICAPSW,ICAPTY,IRTFFF,IRTFFP,
+     1                  KSLOC,KSSCAL,ICAPSW,ICAPTY,
      1                  STATVA,STATCD,PVAL,NCELLS,IDF,IDISFL,MINSZ,
      1                  CDF1,CDF2,CDF3,CDF4,
-     1                  XTEMP,MAXNXT,
      1                  IBUGA3,ISUBRO,IERROR)
 C
 C     PURPOSE--PRINT THE OUTPUT FOR THE CHI-SQUARE TEST (GROUPED,
@@ -15555,7 +15281,6 @@ C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       REAL PID(*)
-      REAL XTEMP(*)
 C
       CHARACTER*4 IVARID(*)
       CHARACTER*4 IVARI2(*)
@@ -15569,12 +15294,9 @@ C
       CHARACTER*4 IBUGA3
       CHARACTER*4 ISUBRO
       CHARACTER*4 IWRITE
-      CHARACTER*4 IWRIT2
       CHARACTER*4 IERROR
 C
       CHARACTER*60 IDIST
-      CHARACTER*40 IRTFFF
-      CHARACTER*40 IRTFFP
 C
       CHARACTER*4 IRTFMD
       COMMON/COMRTF/IRTFMD
@@ -15582,10 +15304,6 @@ C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
-C
-      CHARACTER*6 ICONC1
-      CHARACTER*6 ICONC2
-      CHARACTER*6 ICONC3
 C
       REAL KSLOC
       REAL KSSCAL
@@ -15621,19 +15339,10 @@ C
       REAL         AMAT(MAXROW,NUMCLI)
       LOGICAL IFRST
       LOGICAL ILAST
-      LOGICAL IFLAG1
-      LOGICAL IFLAG2
-      LOGICAL IFLAG3
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
       DATA ALPHA/
      1 0.0, 50.0, 75.0, 90.0, 95.0, 97.5, 99.0, 99.5/
@@ -15657,8 +15366,8 @@ C
         WRITE(ICOUT,72)ICASPL,IDIST
    72   FORMAT('ICASPL,IDIST = ',A4,2X,A60)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,73)N,XMIN,XMAX,XMEAN,XSD
-   73   FORMAT('N,XMIN,XMAX,XMEAN,XSD = ',I8,4G15.7)
+        WRITE(ICOUT,73)N,MINMAX,XMIN,XMAX,XMEAN,XSD
+   73   FORMAT('N,MINMAX,XMIN,XMAX,XMEAN,XSD = ',2I8,4G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,75)STATVA,STATCD,PVAL
    75   FORMAT('STATVA,STATCD,PVAL = ',3G15.7)
@@ -16179,32 +15888,23 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
 C
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'CHSY')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPCHSY--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)ICHAR2
-   52 FORMAT('ICHAR2 = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,59)IBUGG4,ISUBG4
-   59 FORMAT('IBUGG4,ISUBG4 = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(IBUG.EQ.'ON' .OR. ISUBG4.EQ.'CHSY')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCHSY--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,59)ICHAR2,IBUGG4,ISUBG4
+   59   FORMAT('ICHAR2,IBUGG4,ISUBG4 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               **********************************
 C               **  STEP 1--                    **
@@ -16358,22 +16058,16 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'CHSY')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF DPCHSY--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)IFOUND
- 9012 FORMAT('IFOUND = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)ICHAR2,ICHARN
- 9013 FORMAT('ICHAR2,ICHARN = ',A4,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9019)IBUGG4,ISUBG4,IFOUND
- 9019 FORMAT('IBUGG4,ISUBG4,IFOUND = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
- 9090 CONTINUE
+      IF(IBUG.EQ.'ON' .OR. ISUBG4.EQ.'CHSY')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPCHSY--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)IFOUND,ICHAR2,ICHARN
+ 9013   FORMAT('IFOUND,ICHAR2,ICHARN = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END
@@ -16459,23 +16153,14 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPCH'
       ISUBN2='SZ  '
-C
       IFOUND='NO'
       IERROR='NO'
-C
- 1100 CONTINUE
 C
       IF(NUMARG.GE.3.AND.IHARG(1).EQ.'SIZE'.AND.
      1IHARG(2).EQ.'BOX'.AND.IHARG(3).EQ.'PLOT')GOTO2110
@@ -17002,20 +16687,13 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
 C
- 1100 CONTINUE
       IF(NUMARG.EQ.1.AND.IHARG(1).EQ.'THIC')GOTO1160
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'THIC')GOTO1105
       GOTO1199
@@ -17184,13 +16862,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -17198,7 +16870,6 @@ C
       IERROR='NO'
       IDEFTY='DD'
 C
- 1100 CONTINUE
       IF((NUMARG.EQ.1.AND.IHARG(1).EQ.'UNIT') .OR.
      1   (NUMARG.EQ.2.AND.IHARG(2).EQ.'ALL'))THEN
         DO1165I=1,MAXCHA
@@ -17322,11 +16993,9 @@ C
         IFOUND='NO'
       ENDIF
 C
-C
- 1199 CONTINUE
       RETURN
       END
-      SUBROUTINE DPCHIS(XTEMP1,MAXNXT,
+      SUBROUTINE DPCHIS(MAXNXT,
      1                  ICASAN,ICAPSW,IFORSW,
      1                  IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
 C
@@ -17363,23 +17032,14 @@ C
       CHARACTER*4 IFOUND
       CHARACTER*4 IERROR
 C
-      CHARACTER*4 MESSAG
       CHARACTER*4 ICASEQ
-C
-      CHARACTER*4 IHWUSE
-C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
-C
-      CHARACTER*4 IUSE1
-      CHARACTER*4 IUSE2
-C
       CHARACTER*4 IH
       CHARACTER*4 IH2
       CHARACTER*4 IHOST1
       CHARACTER*4 ISUBN0
-C
       CHARACTER*4 ICASE
 C
       CHARACTER*40 INAME
@@ -17394,8 +17054,6 @@ C
       INTEGER ICOLR(MAXSPN)
 C
 C---------------------------------------------------------------------
-C
-      DIMENSION XTEMP1(*)
 C
       PARAMETER(MAXLEV=1000)
 C
@@ -17433,13 +17091,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -17487,8 +17139,8 @@ C
         WRITE(ICOUT,51)
    51   FORMAT('***** AT THE BEGINNING OF DPCHIS--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,52)IBUGA2,IBUGA3,IBUGQ
-   52   FORMAT('IBUGA2,IBUGA3,IBUGQ = ',2(A4,2X),A4)
+        WRITE(ICOUT,52)IBUGA2,IBUGA3,IBUGQ,ICASAN
+   52   FORMAT('IBUGA2,IBUGA3,IBUGQ,ICASAN = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,55)MAXNXT,NUMARG
    55   FORMAT('MAXNXT,NUMARG = ',2I8)
@@ -17860,8 +17512,6 @@ C
       CHARACTER*4 IFORSW
 C
       CHARACTER*4 IWRITE
-      CHARACTER*4 IBASLC
-C
       CHARACTER*6 ICONC1
       CHARACTER*6 ICONC2
       CHARACTER*6 ICONC3
@@ -17898,11 +17548,11 @@ C
       DOUBLE PRECISION COLTOT(*)
 C
       PARAMETER (NUMALP=6)
-      DIMENSION SIGVAL(NUMALP)
-      DIMENSION ALOWCL(NUMALP)
-      DIMENSION AUPPCL(NUMALP)
-      DIMENSION ALOWC2(NUMALP)
-      DIMENSION AUPPC2(NUMALP)
+CCCCC DIMENSION SIGVAL(NUMALP)
+CCCCC DIMENSION ALOWCL(NUMALP)
+CCCCC DIMENSION AUPPCL(NUMALP)
+CCCCC DIMENSION ALOWC2(NUMALP)
+CCCCC DIMENSION AUPPC2(NUMALP)
 C
       DOUBLE PRECISION GTOTAL
       DOUBLE PRECISION VALTMP
@@ -17941,21 +17591,14 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
+      INCLUDE 'DPCOP2.INC'
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
-C
-      DATA SIGVAL /0.50, 0.80, 0.90, 0.95, 0.975, 0.99/
+CCCCC DATA SIGVAL /0.50, 0.80, 0.90, 0.95, 0.975, 0.99/
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPCH'
       ISUBN2='I2  '
-C
       IERROR='NO'
       IWRITE='NO'
 C
@@ -17988,8 +17631,8 @@ C
         WRITE(ICOUT,51)
    51   FORMAT('**** AT THE BEGINNING OF DPCHI2--')
         CALL DPWRST('XXX','WRIT')
-        WRITE(ICOUT,52)IBUGA3,ISUBRO,ICASE
-   52   FORMAT('IBUGA3,ISUBRO,ICASE = ',3(A4,2X))
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,ICASE,MAXNXT
+   52   FORMAT('IBUGA3,ISUBRO,ICASE,MAXNXT = ',4(A4,2X),I8)
         CALL DPWRST('XXX','WRIT')
         IF(ICASE.EQ.'VARI')THEN
           WRITE(ICOUT,55)N1
@@ -18968,11 +18611,11 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPCHWI(IHARG,IARGT,IARG,ARG,NUMARG,
-     1PDEFWI,
-     1MAXCHA,
-     1PCHAWI,PCHAHG,
-     1IFOUND,IERROR)
+      SUBROUTINE DPCHWI(IHARG,IARGT,ARG,NUMARG,
+     1                  PDEFWI,
+     1                  MAXCHA,
+     1                  PCHAWI,PCHAHG,
+     1                  IFOUND,IERROR)
 C
 C     PURPOSE--DEFINE PLOT CHARACTER WIDTHS FOR USE IN MULTI-TRACE PLOTS.
 C              THE WIDTH FOR THE CHARACTER FOR THE I-TH TRACE
@@ -19020,7 +18663,6 @@ C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
       DIMENSION IARGT(*)
-      DIMENSION IARG(*)
       DIMENSION ARG(*)
 C
       DIMENSION PCHAWI(*)
@@ -19028,20 +18670,12 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
-C
- 1100 CONTINUE
 C
       IF(NUMARG.GE.3.AND.IHARG(1).EQ.'WIDTH'.AND.
      1IHARG(2).EQ.'BOX'.AND.IHARG(3).EQ.'PLOT')GOTO2110
@@ -19292,13 +18926,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -19412,13 +19040,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C

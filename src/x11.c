@@ -1573,7 +1573,7 @@ void XRESTG(file_name, title, iwind, iwindn, error_flag)
 #if INTEGER_PRECISION == 0
 int     *error_flag;
 int     file_name[];
-int     iwind[], iwindn[2];
+int     iwind[], iwindn[2], title[];
 #else
 int     *error_flag[2];
 int     file_name[];

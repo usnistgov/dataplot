@@ -76,21 +76,14 @@ C
 C
       DIMENSION X(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='TAGU'
       ISUBN2='CH  '
-C
       IERROR='NO'
 C
       DMEAN=0.0D0
@@ -183,8 +176,6 @@ C
       XTAGUC=0.0
       GOTO9000
   139 CONTINUE
-C
-  190 CONTINUE
 C
 C               **************************************************
 C               **  STEP 10--                                   **
@@ -498,15 +489,9 @@ C
 C
       EXTERNAL DBETAI
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -695,10 +680,11 @@ C
 *     Crude Monte-Carlo Algorithm for Deak method with
 *      weighted results on restart
 *
-      INTEGER NDIM, MAXPTS, M, K, IR, NPTS
-      DOUBLE PRECISION FINEST, ABSEST, X(100), SPMVT, UNI, 
+      INTEGER NDIM, MAXPTS, M, IR
+      DOUBLE PRECISION FINEST, ABSEST, SPMVT,
      *     VARSQR, VAREST, VARPRD, FINDIF, FINVAL
       SAVE VAREST
+C
       IF ( IR .LE. 0 ) THEN
          VAREST = 0.0D0
          FINEST = 0.0D0
@@ -925,15 +911,9 @@ C
       DOUBLE PRECISION B31,B32,B33,B34,B35,B36,B37
       DOUBLE PRECISION D1,D3,D5,D7,D9,D11
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -1177,15 +1157,9 @@ C
       DOUBLE PRECISION AI
       DOUBLE PRECISION DSQRT
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -1310,23 +1284,17 @@ C
       DIMENSION Y2(*)
       DIMENSION TAG(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='THRE'
       ISUBN2='SH  '
-C
       IERROR='NO'
       IWRITE='OFF'
+C
       NOUT=0
 C
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RESH')THEN
@@ -1491,7 +1459,7 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--83.6
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MAY       1983.
 C
-C-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
+C-----NON-COMMON VARIABLES (GRAPHICS)----------------------------------
 C
       CHARACTER*1 IBHIX
       CHARACTER*1 IBLOX
@@ -1502,16 +1470,7 @@ C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOGR.INC'
       INCLUDE 'DPCOBE.INC'
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -1577,50 +1536,31 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'TRBY')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF TKTRBY--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9021)IBHIX
- 9021 FORMAT('IBHIX = ',A1)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9022)IBLOX
- 9022 FORMAT('IBLOX = ',A1)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9023)IBHIY
- 9023 FORMAT('IBHIY = ',A1)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9024)IBLOY
- 9024 FORMAT('IBLOY = ',A1)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9025)IFACTO
- 9025 FORMAT('IFACTO = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9031)IHIX,ILOX,IHIY,ILOY
- 9031 FORMAT('IHIX,ILOX,IHIY,ILOY = ',4I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9032)IHIX2,ILOX2,IHIY2,ILOY2
- 9032 FORMAT('IHIX2,ILOX2,IHIY2,ILOY2 = ',4I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9033)IHIX3,ILOX3,IHIY3,ILOY3
- 9033 FORMAT('IHIX3,ILOX3,IHIY3,ILOY3 = ',4I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9034)IX3,IY3
- 9034 FORMAT('IX3,IY3 = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9035)IX4,IY4
- 9035 FORMAT('IX4,IY4 = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9036)IX,IY
- 9036 FORMAT('IX,IY = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9039)IBUGG4,ISUBG4,IERRG4
- 9039 FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
- 9090 CONTINUE
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'TRBY')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF TKTRBY--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9021)IBHIX,IBLOX,IBHIY,IBLOY,IFACTO
+ 9021   FORMAT('IBHIX,IBLOX,IBHIY,IBLOY,IFACTO = ',4(A1,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9031)IHIX,ILOX,IHIY,ILOY
+ 9031   FORMAT('IHIX,ILOX,IHIY,ILOY = ',4I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9032)IHIX2,ILOX2,IHIY2,ILOY2
+ 9032   FORMAT('IHIX2,ILOX2,IHIY2,ILOY2 = ',4I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9033)IHIX3,ILOX3,IHIY3,ILOY3
+ 9033   FORMAT('IHIX3,ILOX3,IHIY3,ILOY3 = ',4I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9034)IX3,IY3,IX4,IY4,IX,IY
+ 9034   FORMAT('IX3,IY3,IX4,IY4,IX,IY = ',6I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9039)IBUGG4,ISUBG4,IERRG4
+ 9039   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END
@@ -1671,16 +1611,7 @@ C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOGR.INC'
       INCLUDE 'DPCOBE.INC'
-C
-C-----COMMON VARIABLES (GENERAL)--------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS----------------------------------------
 C
@@ -1808,7 +1739,6 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
       IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'TRPT')GOTO9090
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
@@ -1906,22 +1836,14 @@ C     ORIGINAL VERSION--MARCH     2008.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
-C
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       DOUBLE PRECISION NU
-      REAL CPUMIN
-      REAL CPUMAX
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
+C-----COMMON----------------------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
-C---------------------------------------------------------------------
+C-----START POINT-----------------------------------------------------
 C
 C     CHECK THE INPUT ARGUMENTS FOR ERRORS
 C
@@ -2020,19 +1942,20 @@ C
       DOUBLE PRECISION DTERM3
       DOUBLE PRECISION DR
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
 C  COMPUTE SOME SUMS
+C
+      IF(ISUBG4.EQ.'PFUN')THEN
+        WRITE(ICOUT,52)GAMMAT,X(1)
+   52   FORMAT('GAMMAT,X(1) = ',2G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       DTERM1=DLOG(DMNMAX)
       DR=DBLE(IR2)
@@ -2132,26 +2055,19 @@ C
       DOUBLE PRECISION DXSTRT
       DOUBLE PRECISION DXLOW
       DOUBLE PRECISION DXUP
-      DOUBLE PRECISION XLOWSV
-      DOUBLE PRECISION XUPSV
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='TNPM'
       ISUBN2='L1  '
-C
       IWRITE='OFF'
       IERROR='NO'
+C
+      IRP1=0
 C
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'PML1')THEN
         WRITE(ICOUT,999)
@@ -2297,22 +2213,14 @@ C     ORIGINAL VERSION--MARCH     2008.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
-C
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
-      REAL CPUMIN
-      REAL CPUMAX
       DOUBLE PRECISION NU
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
+C-----COMMON----------------------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
-C---------------------------------------------------------------------
+C-----START POINT-----------------------------------------------------
 C
 C     CHECK THE INPUT ARGUMENTS FOR ERRORS
 C
@@ -2420,22 +2328,14 @@ C     ORIGINAL VERSION--MARCH     2008.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
-C
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       DOUBLE PRECISION NU
-      REAL CPUMIN
-      REAL CPUMAX
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
+C-----COMMON----------------------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
-C---------------------------------------------------------------------
+C-----START POINT-----------------------------------------------------
 C
 C     CHECK THE INPUT ARGUMENTS FOR ERRORS
 C
@@ -2552,15 +2452,9 @@ C
       REAL NU
       DOUBLE PRECISION DTEMP
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -2643,10 +2537,6 @@ C                                       LIMIT
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
       DOUBLE PRECISION DX
       DOUBLE PRECISION DA
       DOUBLE PRECISION DB
@@ -2657,14 +2547,13 @@ C
       DOUBLE PRECISION DTERM1
       DOUBLE PRECISION DTERM2
       DOUBLE PRECISION DTERM3
-      DOUBLE PRECISION DTERM4
       DOUBLE PRECISION CONST
       DOUBLE PRECISION ALL
       DOUBLE PRECISION AUL
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -2788,15 +2677,9 @@ C
       DOUBLE PRECISION DC1
       COMMON/TNRCOM/DC1,DH
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -2851,13 +2734,9 @@ C
       DOUBLE PRECISION ALL
       DOUBLE PRECISION AUL
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
+C-----COMMON----------------------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -2943,16 +2822,6 @@ C                                       LIMIT
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
-C
       DOUBLE PRECISION P
       DOUBLE PRECISION P1
       DOUBLE PRECISION A
@@ -2960,7 +2829,7 @@ C
       DOUBLE PRECISION U
       DOUBLE PRECISION SD
       DOUBLE PRECISION PPF
-      DOUBLE PRECISION DPI
+CCCCC DOUBLE PRECISION DPI
       DOUBLE PRECISION EPS
       DOUBLE PRECISION SIG
       DOUBLE PRECISION ZERO
@@ -2980,7 +2849,11 @@ C
 C
       CHARACTER*4 IDIR
 C
-      DATA DPI /3.14159265358979D0/
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+CCCCC DATA DPI /3.14159265358979D0/
       DATA EPS /0.00000001D0/
       DATA SIG /1.0D-9/
       DATA ZERO /0.D0/
@@ -2990,6 +2863,7 @@ C-----START POINT-----------------------------------------------------
 C
 C     CHECK THE INPUT ARGUMENTS FOR ERRORS
 C
+      XINC=0.0
       ALL=A
       AUL=B
       IF(A.LE.DBLE(CPUMIN+1.0) .AND. B.LE.DBLE(CPUMIN+1.0))THEN
@@ -3045,7 +2919,7 @@ C  AFTER SUCCESSFULLY FIND BRACKETING INTERVAL, THEN SWITCH TO
 C  MORE EFFICIENT BISECTION METHOD.
 C
       MAXIT=1000
-      IF(ALL.GT.DBLE(CPUMINi+1.0) .AND. AUL.GT.DBLE(CPUMIN+1.0))THEN
+      IF(ALL.GT.DBLE(CPUMIN+1.0) .AND. AUL.GT.DBLE(CPUMIN+1.0))THEN
         XL=ALL
         XR=AUL
         IF(P.LE.0.0D0)THEN
@@ -3222,15 +3096,9 @@ C
       DIMENSION X(*)
       DIMENSION Y(2)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -3358,20 +3226,14 @@ C     ORIGINAL VERSION--OCTOBER   1995.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
-C
       DOUBLE PRECISION DX
       DOUBLE PRECISION DX0
       DOUBLE PRECISION DCDF
       DOUBLE PRECISION DTERM1
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 ICOUTINT
-      CHARACTER*240 ICOUT
+C-----COMMON----------------------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,ICOUTINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -3486,20 +3348,14 @@ C     ORIGINAL VERSION--OCTOBER   1995.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
-C
       DOUBLE PRECISION DX
       DOUBLE PRECISION DX0
       DOUBLE PRECISION DPDF
       DOUBLE PRECISION DTERM1
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 ICOUTINT
-      CHARACTER*240 ICOUT
+C-----COMMON----------------------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,ICOUTINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -3623,21 +3479,15 @@ C     ORIGINAL VERSION--OCTOBER   1995.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
-C
 CCCCC DOUBLE PRECISION DP
 CCCCC DOUBLE PRECISION DX0
 CCCCC DOUBLE PRECISION DPPF
 CCCCC DOUBLE PRECISION DTERM1
 CCCCC DOUBLE PRECISION DTERM2
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
+C-----COMMON----------------------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
       DATA EPS /1.0E-6/
       DATA SIG /1.0E-5/
@@ -3648,53 +3498,44 @@ C-----START POINT-----------------------------------------------------
 C
 C     CHECK THE INPUT ARGUMENTS FOR ERRORS
 C
+      PPF=0.0
       IF(P.LT.0.0.OR.P.GT.1.0)THEN
         WRITE(ICOUT,1)
+    1   FORMAT('***** ERROR--THE FIRST ARGUMENT TO TNEPPF ',
+     1         'IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,46)P
+   46   FORMAT('***** THE VALUE OF THE ARGUMENT IS ',G15.7,'.')
         CALL DPWRST('XXX','BUG ')
         GOTO9999
-      ENDIF
-      IF(X0.LT.AMAX1(0.0,U))THEN
+      ELSEIF(X0.LT.AMAX1(0.0,U))THEN
         WRITE(ICOUT,14)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,15)
+   14   FORMAT('***** ERROR--THE SECOND ARGUMENT TO TNEPPF ',
+     1        'IS EITHER NON-POSITIVE OR LESS THAN U.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,46)X0
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,48)U
+   48   FORMAT('***** THE VALUE OF U IS ',G15.7,'.')
         CALL DPWRST('XXX','BUG ')
-        PDF=0.0
         GOTO9999
-      ENDIF
-      IF(U.LT.0.0)THEN
+      ELSEIF(U.LT.0.0)THEN
         WRITE(ICOUT,24)
+   24   FORMAT('***** ERROR--THE THIRD ARGUMENT TO ',
+     1         'THE TNEPPF ROUTINE IS NEGATIVE.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,46)U
         CALL DPWRST('XXX','BUG ')
-        PDF=0.0
         GOTO9999
-      ENDIF
-      IF(SD.LE.0.0)THEN
+      ELSEIF(SD.LE.0.0)THEN
         WRITE(ICOUT,34)
+   34   FORMAT('***** ERROR--THE FOURTH ARGUMENT TO ',
+     1         'THE TNEPPF ROUTINE IS NON-POSITIVE.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,46)SD
         CALL DPWRST('XXX','BUG ')
-        PDF=0.0
         GOTO9999
       ENDIF
-    1 FORMAT('***** FATAL ERROR--THE 1ST  INPUT ARGUMENT TO THE ',
-     1'TNEPPF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL')
-   46 FORMAT('***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-   14 FORMAT('***** FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO ',
-     1'THE TNEPPF ROUTINE IS')
-   15 FORMAT('      EITHER NON-POSITIVE OR LESS THAN U.')
-   24 FORMAT('***** FATAL DIAGNOSTIC--THE THIRD INPUT ARGUMENT TO ',
-     1'THE TNEPPF ROUTINE IS NEGATIVE.')
-   34 FORMAT('***** FATAL DIAGNOSTIC--THE FOURTH INPUT ARGUMENT TO ',
-     1'THE TNEPPF ROUTINE IS NON-POSITIVE.')
-   47 FORMAT('***** THE VALUE OF X0 IS ',E15.8,' *****')
-   48 FORMAT('***** THE VALUE OF U IS ',E15.8,' *****')
 C
       IF(P.EQ.0.0)THEN
         PPF=U
@@ -3736,7 +3577,7 @@ CCCCC IF(IERR.NE.0)THEN
 CCCCC   WRITE(ICOUT,120)
 CCCCC   CALL DPWRST('XXX','BUG ')
 CCCCC ENDIF
-CC120 FORMAT('***** FATAL ERROR--ERROR IN BETCDF ROUTINE.  *****')
+CC120 FORMAT('***** ERROR--ERROR IN BETCDF ROUTINE.  *****')
       FCS = P1 - P
       IF(FCS*FXL.GT.ZERO)GOTO110
       XR = X
@@ -3752,7 +3593,7 @@ CC120 FORMAT('***** FATAL ERROR--ERROR IN BETCDF ROUTINE.  *****')
       IF(IC.LE.MAXIT)GOTO105
       WRITE(ICOUT,130)
       CALL DPWRST('XXX','BUG ')
-  130 FORMAT('***** FATAL ERROR--TNEPPF ROUTINE DID NOT CONVERGE. ***')
+  130 FORMAT('***** ERROR--TNEPPF ROUTINE DID NOT CONVERGE.')
       GOTO9999
 C
  9999 CONTINUE
@@ -3832,19 +3673,13 @@ C---------------------------------------------------------------------
 C
       DIMENSION X(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
-      DATA PI/3.14159265359/
+CCCCC DATA PI/3.14159265359/
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -3852,51 +3687,48 @@ C     CHECK THE INPUT ARGUMENTS FOR ERRORS
 C
       IF(N.LT.1)THEN
         WRITE(ICOUT,5)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,6)
+    5   FORMAT('***** ERROR--THE REQUESTED NUMBER OF TRUNCATED ',
+     1         'EXPONENTIAL RANDOM NUMBERS IS NON-POSITIVE.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,47)N
+   47   FORMAT('***** THE VALUE OF THE ARGUMENT IS ',I8,'.')
         CALL DPWRST('XXX','BUG ')
         GOTO9000
-      ENDIF
-    5 FORMAT('***** FATAL ERROR--THE REQUESTED NUMBER OF TRUNCATED')
-    6 FORMAT('      EXPONENTIAL RANDOM NUMBERS IS NON-POSITIVE.')
-   47 FORMAT('***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-      IF(X0.LT.AMAX1(0.0,U))THEN
+      ELSEIF(X0.LT.AMAX1(0.0,U))THEN
         WRITE(ICOUT,14)
+   14   FORMAT('***** ERROR--THE TRUNCATION PARAMETER FOR THE ',
+     1         'THE TRUNCATED EXPONENTIAL DISTRIBUTION')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,15)
+   15   FORMAT('      IS EITHER NON-POSITIVE OR LESS THAN U.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,46)X0
+   46   FORMAT('***** THE VALUE OF THE TRUNCATION PARAMETER IS ',
+     1         G15.7,'.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,48)U
+   48   FORMAT('***** THE VALUE OF THE LOCATION PARAMETER IS ',
+     1         G15.7,'.')
         CALL DPWRST('XXX','BUG ')
         GOTO9000
-      ENDIF
-      IF(U.LT.0.0)THEN
+      ELSEIF(U.LT.0.0)THEN
         WRITE(ICOUT,24)
+   24   FORMAT('***** ERROR--THE LOCATION PARAMETER FOR THE ',
+     1         'TRUNCATED EXPONENTIAL DISTRIBUTION IS NEGATIVE.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,49)U
+   49   FORMAT('***** THE VALUE OF THE PARAMETER IS ',G15.7,'.')
         CALL DPWRST('XXX','BUG ')
         GOTO9000
-      ENDIF
-      IF(SD.LE.0.0)THEN
+      ELSEIF(SD.LE.0.0)THEN
         WRITE(ICOUT,34)
+   34   FORMAT('***** ERROR--THE SCALE PARAMETER FOR THE ',
+     1         'TRUNCATED EXPONENTIAL DISTRIBUTION IS NON-POSITIVE.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,49)SD
         CALL DPWRST('XXX','BUG ')
         GOTO9000
       ENDIF
-   14 FORMAT('***** FATAL DIAGNOSTIC--THE TRUNCATION PARAMETER FOR',
-     1' THE TRUNCATED EXPONENTIAL DISTRIBUTION')
-   15 FORMAT('      IS EITHER NON-POSITIVE OR LESS THAN U.')
-   24 FORMAT('***** FATAL DIAGNOSTIC--THE LOCATION PARAMETER FOR THE ',
-     1'TRUNCATED EXPONENTIAL DISTRIBUTION IS NEGATIVE.')
-   34 FORMAT('***** FATAL DIAGNOSTIC--THE SCALE PARAMETER FOR THE ',
-     1'TRUNCATED EXPONENTIAL DISTRIBUTION IS NON-POSITIVE.')
-   46 FORMAT('***** THE VALUE OF THE TRUNCATION PARAMETER IS ',E15.7)
-   48 FORMAT('***** THE VALUE OF THE LOCATION PARAMETER IS ',E15.7)
-   49 FORMAT('***** THE VALUE OF THE PARAMETER IS ',E15.7)
 C
 C     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
 C     THEN GENERATE 2 ADDITIONAL UNIFORM (0,1) RANDOM NUMBERS
@@ -4042,18 +3874,9 @@ C
       REAL         AMAT(MAXROW,NUMCLI)
       LOGICAL IFRST
       LOGICAL ILAST
-      LOGICAL IFLAGS
-      LOGICAL IFLAGE
 C
       INCLUDE 'DPCOST.INC'
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -4084,9 +3907,13 @@ C
 C
       ISUBN1='TOL '
       ISUBN2='    '
-C
       IWRITE='OFF'
       IERROR='NO'
+C
+      CCORG=CPUMIN
+      CCMAX=CPUMIN
+      ALOC=CPUMIN
+      ALAMBA=CPUMIN
 C
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'TOL ')THEN
         WRITE(ICOUT,999)
@@ -5283,18 +5110,9 @@ C
       REAL         AMAT(MAXROW,NUMCLI)
       LOGICAL IFRST
       LOGICAL ILAST
-      LOGICAL IFLAGS
-      LOGICAL IFLAGE
 C
       INCLUDE 'DPCOST.INC'
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -5739,7 +5557,6 @@ C
       DIMENSION TMIN(NCOV,NCONF)
       DIMENSION TMAX(NCOV,NCONF)
 C
-      CHARACTER*4 ICASPL
       CHARACTER*4 IWRITE
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
@@ -5769,17 +5586,8 @@ C
       REAL         AMAT(MAXROW,NUMCLI)
       LOGICAL IFRST
       LOGICAL ILAST
-      LOGICAL IFLAGS
-      LOGICAL IFLAGE
 C
-C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -5788,7 +5596,6 @@ C
 C
       ISUBN1='TOLW'
       ISUBN2='EI  '
-C
       IWRITE='OFF'
       IERROR='NO'
       IWEIFL='WEIB'
@@ -5803,16 +5610,11 @@ C
         WRITE(ICOUT,52)IBUGA3,ISUBRO,ICASAN,N
    52   FORMAT('IBUGA3,ISUBRO,ICASAN,N = ',3(A4,2X),I8)
         CALL DPWRST('XXX','WRIT')
-        WRITE(ICOUT,53)XMEAN,XSD,AN
-   53   FORMAT('XMEAN,XSD,AN = ',3G15.7)
-        CALL DPWRST('XXX','WRIT')
-        IF(XMEAN.EQ.CPUMIN)THEN
-          DO56I=1,N
-            WRITE(ICOUT,57)I,X(I)
-   57       FORMAT('I,X(I) = ',I8,G15.7)
-            CALL DPWRST('XXX','WRIT')
-   56     CONTINUE
-        ENDIF
+        DO56I=1,N
+          WRITE(ICOUT,57)I,X(I)
+   57     FORMAT('I,X(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','WRIT')
+   56   CONTINUE
       ENDIF
 C
 C               ********************************************
@@ -6293,20 +6095,14 @@ C     ORIGINAL VERSION--FEBRUARY  2007.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
-C
       DOUBLE PRECISION X
       DOUBLE PRECISION BETA
       DOUBLE PRECISION CDF
       DOUBLE PRECISION DTERM1
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
+C-----COMMON----------------------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -6389,7 +6185,6 @@ C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
-      CHARACTER*1 IBASLC
 C
       DOUBLE PRECISION DX
       DOUBLE PRECISION DBETA
@@ -6408,21 +6203,14 @@ C
       DIMENSION Y(*)
       DIMENSION TEMP1(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='TOPM'
       ISUBN2='L1  '
-C
       IERROR='NO'
 C
       ALIK=CPUMIN
@@ -6511,7 +6299,6 @@ C
       AICC=REAL(-2.0D0*DLIK + 2.0D0*DNP + DTERM3)
       BIC=REAL(-2.0D0*DLIK + DNP*LOG(DN))
 C
- 9000 CONTINUE
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'PLI1')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','WRIT')
@@ -6579,21 +6366,14 @@ C---------------------------------------------------------------------
 C
       DIMENSION Y(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='TOPM'
       ISUBN2='L1  '
-C
       IWRITE='OFF'
       IERROR='NO'
 C
@@ -6733,20 +6513,14 @@ C     ORIGINAL VERSION--FEBRUARY  2007.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
-C
       DOUBLE PRECISION X
       DOUBLE PRECISION BETA
       DOUBLE PRECISION PDF
       DOUBLE PRECISION DTERM1
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
+C-----COMMON----------------------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -6841,45 +6615,37 @@ C     ORIGINAL VERSION--FEBRUARY  2007.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
-C
       DOUBLE PRECISION P
       DOUBLE PRECISION BETA
       DOUBLE PRECISION PPF
-      DOUBLE PRECISION DTERM1
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
+C-----COMMON----------------------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
 C     CHECK THE INPUT ARGUMENTS FOR ERRORS
 C
+      PPF=0.0D0
       IF(P.LT.0.0D0 .OR. P.GT.1.0D0)THEN
         WRITE(ICOUT,2)
+    2   FORMAT('***** ERROR--THE FIRST ARGUMENT TO TOPPPF IS ',
+     1         'OUTSIDE THE (0,1) INTERVAL.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,46)P
+   46   FORMAT('***** THE VALUE OF THE ARGUMENT IS ',G15.7,'.')
         CALL DPWRST('XXX','BUG ')
-        PPF=0.0D0
         GOTO9000
       ELSEIF(BETA.LE.0.0D0)THEN
         WRITE(ICOUT,12)
+   12   FORMAT('***** ERROR--THE SECOND ARGUMENT TO TOPPPF IS ',
+     1         'NON-POSITIVE.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,46)BETA
         CALL DPWRST('XXX','BUG ')
-        PPF=0.0D0
         GOTO9000
       ENDIF
-    2 FORMAT('***** ERROR--THE FIRST ARGUMENT TO TOPPPF IS ',
-     1       'OUTSIDE THE (0,1) INTERVAL.')
-   12 FORMAT('***** ERROR--THE SECOND ARGUMENT TO TOPPPF IS ',
-     1       'NON-POSITIVE.')
-   46 FORMAT('***** THE VALUE OF THE ARGUMENT IS ',G15.7)
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -6954,15 +6720,9 @@ C
       DOUBLE PRECISION DTEMP
       DIMENSION X(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -7089,15 +6849,9 @@ C
 C
       EXTERNAL DLNGAM
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -7188,7 +6942,7 @@ C
       DTERM2=0.5D0*(DLOG(DNU) + DLOG(DPI))
       DTERM3=DLNGAM(DNU/2.0D0)
       DTERM4=((DNU+1.0D0)/2.0D0)*DLOG(1.0D0 + DX**2/DNU)
-      DDENOM=DTERM2 + DTERM3 + DTERM4 + DTERM5
+      DDENOM=DTERM2 + DTERM3 + DTERM4
       DPDF=DNUM - DDENOM
       DPDF=DEXP(DPDF)
       PDF=REAL(DPDF)
@@ -7293,16 +7047,11 @@ C
       DOUBLE PRECISION B51,B52,B53,B54,B55,B56
       DOUBLE PRECISION D1,D3,D5,D7,D9
 C
-      DOUBLE PRECISION DC
-      DOUBLE PRECISION DALPHA
       DOUBLE PRECISION EPS
       DOUBLE PRECISION SIG
       DOUBLE PRECISION ZERO
-      DOUBLE PRECISION DMEAN
-      DOUBLE PRECISION DSD
       DOUBLE PRECISION XL
       DOUBLE PRECISION XR
-      DOUBLE PRECISION XINC
       DOUBLE PRECISION X
       DOUBLE PRECISION FXL
       DOUBLE PRECISION FXR
@@ -7310,21 +7059,13 @@ C
       DOUBLE PRECISION FCS
       DOUBLE PRECISION XRML
       DOUBLE PRECISION DCDF
-      DOUBLE PRECISION CDFL
-      DOUBLE PRECISION CDFR
       DOUBLE PRECISION DBETAI
 C
       EXTERNAL DBETAI
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -7596,8 +7337,16 @@ C
       REAL B,C,F,G,H,P,R,S,MACHEP
       REAL PYTHAG
 C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
       DATA MACHEP/1.0E0/
+C
 C***FIRST EXECUTABLE STATEMENT  TQLRAT
+C
+      C=CPUMIN
+C
       IF (MACHEP .NE. 1.0E0) GO TO 10
    05 MACHEP = 0.5E0*MACHEP
       IF (1.0E0 + MACHEP .GT. 1.0E0) GO TO 05
@@ -7733,13 +7482,7 @@ C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -7815,13 +7558,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -7917,22 +7654,14 @@ C                                       OF FREEDOM
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
-C
       DIMENSION X(*)
       DIMENSION Y(2),Z(2)
 C
       CHARACTER*4 ICASE
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----DATA STATEMENTS-------------------------------------------------
 C
@@ -8102,13 +7831,7 @@ C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOMC.INC'
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 CCCCC DATA FNNAME/'TRAN02'/
 CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
@@ -8140,6 +7863,8 @@ C
 C  Start execution
 C
       X = XVALUE
+      XLOW1 = 0.0D0
+      XHIGH1 = 0.0D0
 C
 C  Error test
 C
@@ -8304,13 +8029,7 @@ C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOMC.INC'
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 CCCCC DATA FNNAME/'TRAN03'/
 CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
@@ -8342,6 +8061,10 @@ C
 C  Start execution
 C
       X = XVALUE
+      XLOW1 = 0.0D0
+      XLOW2 = 0.0D0
+      XHIGH1 = 0.0D0
+      XHIGH2 = 0.0D0
 C
 C  Error test
 C
@@ -8511,13 +8234,7 @@ C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOMC.INC'
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 CCCCC DATA FNNAME/'TRAN04'/
 CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
@@ -8549,6 +8266,10 @@ C
 C  Start execution
 C
       X = XVALUE
+      XLOW1 = 0.0D0
+      XLOW2 = 0.0D0
+      XHIGH1 = 0.0D0
+      XHIGH2 = 0.0D0
 C
 C  Error test
 C
@@ -8719,13 +8440,7 @@ C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOMC.INC'
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 CCCCC DATA FNNAME/'TRAN05'/
 CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
@@ -8757,6 +8472,10 @@ C
 C  Start execution
 C
       X = XVALUE
+      XLOW1 = 0.0D0
+      XLOW2 = 0.0D0
+      XHIGH1 = 0.0D0
+      XHIGH2 = 0.0D0
 C
 C  Error test
 C
@@ -8926,13 +8645,7 @@ C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOMC.INC'
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 CCCCC DATA FNNAME/'TRAN06'/
 CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
@@ -8964,6 +8677,10 @@ C
 C  Start execution
 C
       X = XVALUE
+      XLOW1 = 0.0D0
+      XLOW2 = 0.0D0
+      XHIGH1 = 0.0D0
+      XHIGH2 = 0.0D0
 C
 C  Error test
 C
@@ -9133,13 +8850,7 @@ C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOMC.INC'
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 CCCCC DATA FNNAME/'TRAN07'/
 CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
@@ -9171,6 +8882,10 @@ C
 C  Start execution
 C
       X = XVALUE
+      XLOW1 = 0.0D0
+      XLOW2 = 0.0D0
+      XHIGH1 = 0.0D0
+      XHIGH2 = 0.0D0
 C
 C  Error test
 C
@@ -9341,13 +9056,7 @@ C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOMC.INC'
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 CCCCC DATA FNNAME/'TRAN08'/
 CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
@@ -9379,6 +9088,10 @@ C
 C  Start execution
 C
       X = XVALUE
+      XLOW1 = 0.0D0
+      XLOW2 = 0.0D0
+      XHIGH1 = 0.0D0
+      XHIGH2 = 0.0D0
 C
 C  Error test
 C
@@ -9548,13 +9261,7 @@ C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOMC.INC'
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 CCCCC DATA FNNAME/'TRAN09'/
 CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
@@ -9586,6 +9293,10 @@ C
 C  Start execution
 C
       X = XVALUE
+      XLOW1 = 0.0D0
+      XLOW2 = 0.0D0
+      XHIGH1 = 0.0D0
+      XHIGH2 = 0.0D0
 C
 C  Error test
 C
@@ -9714,15 +9425,9 @@ C     ORIGINAL VERSION--JUNE      2003.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -9793,18 +9498,18 @@ C     UPDATED         --MAY       1982.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
-C
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
+C
+      IF(ISUBG4.EQ.'RANS')THEN
+        WRITE(ICOUT,52)X,Y,THETA,DELX,DELY
+   52   FORMAT('X,Y,THETA,DELX,DELY = ',5G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       XROT=X*COS(THETA)-Y*SIN(THETA)
       YROT=X*SIN(THETA)+Y*COS(THETA)
@@ -9823,8 +9528,8 @@ C
       GOTO900
 C
   900 CONTINUE
-      IXP=XP+0.5
-      IYP=YP+0.5
+      IXP=INT(XP+0.5)
+      IYP=INT(YP+0.5)
 C
       RETURN
       END
@@ -9870,15 +9575,9 @@ C     ORIGINAL VERSION--JUNE      2003.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -10019,15 +9718,9 @@ C---------------------------------------------------------------------
 C
       DIMENSION X(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -10796,15 +10489,9 @@ C
       DIMENSION X2(25,25)
       DIMENSION RIGHT2(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -10985,6 +10672,7 @@ C
       RETURN
       END
       SUBROUTINE TRICUB(RES,N,IWRITE,WEIGHT,IBUGA3,IERROR)
+C
 C     PURPOSE--DETERMINE THE N VERTICAL (ROBUST) WEIGHTS WEIGHT(.)
 C              BASED ON A TRICUBE WEIGHTING SCHEME OF
 C              THE RESIDUALS IN RES(.).
@@ -11021,89 +10709,76 @@ C
       DIMENSION RES(*)
       DIMENSION WEIGHT(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='TRIC'
       ISUBN2='UB  '
-C
       IERROR='NO'
 C
-      IF(IBUGA3.EQ.'OFF')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF TRICUB--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBUGA3,IERROR
-   52 FORMAT('IBUGA3,IERROR = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)N
-   53 FORMAT('N = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      IF(N.LE.0)GOTO63
-      DO61I=1,N
-      WRITE(ICOUT,62)I,RES(I)
-   62 FORMAT('I,RES(I) = ',I8,E15.7)
-      CALL DPWRST('XXX','BUG ')
-   61 CONTINUE
-   63 CONTINUE
-   90 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF TRICUB--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,IERROR,IWRITE,N
+   52   FORMAT('IBUGA3,IERROR,IWRITE = ',3(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(N.GE.1)THEN
+          DO61I=1,N
+           WRITE(ICOUT,62)I,RES(I)
+   62      FORMAT('I,RES(I) = ',I8,G15.7)
+           CALL DPWRST('XXX','BUG ')
+   61    CONTINUE
+        ENDIF
+      ENDIF
 C
 C               ********************************************
 C               **  STEP 1--                              **
 C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
 C               ********************************************
 C
-      IF(N.GE.1)GOTO119
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,111)
-  111 FORMAT('***** ERROR IN TRICUB--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,112)
-  112 FORMAT('      THE INPUT FULL SAMPLE SIZE,')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,113)
-  113 FORMAT('      FOR WHICH TRICUBE WEIGHTS')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,114)
-  114 FORMAT('      ARE TO BE COMPUTED, MUST BE 1 OR LARGER.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,115)
-  115 FORMAT('      SUCH WAS NOT THE CASE HERE.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,116)N
-  116 FORMAT('      THE FULL SAMPLE SIZE N = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      IERROR='YES'
-      GOTO9000
-  119 CONTINUE
+      IF(N.LT.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN TRICUB--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)
+  112   FORMAT('      THE INPUT FULL SAMPLE SIZE FOR WHICH TRICUBE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,114)
+  114   FORMAT('      WEIGHTS ARE TO BE COMPUTED, MUST BE 1 OR LARGER.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,115)
+  115   FORMAT('      SUCH WAS NOT THE CASE HERE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,116)N
+  116   FORMAT('      THE FULL SAMPLE SIZE N = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
 C
-C               ***********************************************
-C               **  STEP 11--                                **
-C               **  COMPUTE THE TRICUBE WEIGHTING           **
-C               **     1) COMPUTE ABSOLUTE VALUE OF RESIDUALS
-C               **     2) COMPUTE MEDIAN ABSOLUTE VALUE RESIDUAL
-C               **     3) COMPUTE CUTOFF = +-6*M.A.R.
-C               **     4) ASSIGN 0 WEIGHTS OUTSIDE OF REGION
-C               **     5) ASSIGN TRICUBES INSIDE OF REGION
-C               ***********************************************
+C               ***************************************************
+C               **  STEP 11--                                    **
+C               **  COMPUTE THE TRICUBE WEIGHTING                **
+C               **     1) COMPUTE ABSOLUTE VALUE OF RESIDUALS    **
+C               **     2) COMPUTE MEDIAN ABSOLUTE VALUE RESIDUAL **
+C               **     3) COMPUTE CUTOFF = +-6*M.A.R.            **
+C               **     4) ASSIGN 0 WEIGHTS OUTSIDE OF REGION     **
+C               **     5) ASSIGN TRICUBES INSIDE OF REGION       **
+C               ***************************************************
 C
       DO1100I=1,N
-      WEIGHT(I)=ABS(RES(I))
+        WEIGHT(I)=ABS(RES(I))
  1100 CONTINUE
 C
       CALL SORT(WEIGHT,N,WEIGHT)
@@ -11113,27 +10788,20 @@ C
       IF(IEVODD.EQ.0)XMEDAR=(WEIGHT(NMID)+WEIGHT(NMIDP1))/2.0
       IF(IEVODD.EQ.1)XMEDAR=WEIGHT(NMIDP1)
 C
-      IF(XMEDAR.EQ.0.0)GOTO1110
-      GOTO1120
-C
- 1110 CONTINUE
-      CONST=(-999.0)
-      DO1111I=1,N
-      WEIGHT(I)=1.0
- 1111 CONTINUE
-      GOTO1190
-C
- 1120 CONTINUE
-      CONST=6.0*XMEDAR
-      DO1121I=1,N
-      U=RES(I)/CONST
-      U2=ABS(U)
-      WEIGHT(I)=0.0
-      IF(-1.0.LE.U.AND.U.LE.1.0)WEIGHT(I)=(1.0-U2**3)**3
- 1121 CONTINUE
-      GOTO1190
-C
- 1190 CONTINUE
+      IF(XMEDAR.EQ.0.0)THEN
+        CONST=(-999.0)
+        DO1111I=1,N
+          WEIGHT(I)=1.0
+ 1111   CONTINUE
+      ELSE
+        CONST=6.0*XMEDAR
+        DO1121I=1,N
+          U=RES(I)/CONST
+          U2=ABS(U)
+          WEIGHT(I)=0.0
+          IF(-1.0.LE.U.AND.U.LE.1.0)WEIGHT(I)=(1.0-U2**3)**3
+ 1121   CONTINUE
+      ENDIF
 C
 C               *****************
 C               **  STEP 90--  **
@@ -11141,29 +10809,23 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGA3.EQ.'OFF')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF TRICUB--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)IBUGA3,IERROR
- 9012 FORMAT('IBUGA3,IERROR = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)N
- 9013 FORMAT('N = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9014)XMEDAR
- 9014 FORMAT('XMEDAR = ',E15.7)
-      CALL DPWRST('XXX','BUG ')
-      IF(N.LE.0)GOTO9023
-      DO9021I=1,N
-      WRITE(ICOUT,9022)I,RES(I),WEIGHT(I)
- 9022 FORMAT('I,RES(I),WEIGHT(I) = ',I8,2E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9021 CONTINUE
- 9023 CONTINUE
- 9090 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF TRICUB--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)IERROR,XMEDAR
+ 9014   FORMAT('IERROR,XMEDAR = ',A4,2X,G15.7)
+        CALL DPWRST('XXX','BUG ')
+        IF(N.GE.1)THEN
+          DO9021I=1,N
+            WRITE(ICOUT,9022)I,RES(I),WEIGHT(I)
+ 9022       FORMAT('I,RES(I),WEIGHT(I) = ',I8,2G15.7)
+            CALL DPWRST('XXX','BUG ')
+ 9021     CONTINUE
+        ENDIF
+      ENDIF
 C
       RETURN
       END
@@ -11244,15 +10906,9 @@ C
       DIMENSION IDERZ1(*)
       DIMENSION IDERZ2(*)
 C
-C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
+C-----COMMON VARIABLES (GENERAL)----------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -11479,15 +11135,9 @@ C
       DIMENSION IDERZ1(*)
       DIMENSION IDERZ2(*)
 C
-C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -11834,15 +11484,9 @@ C
       DIMENSION IDERZ1(*)
       DIMENSION IDERZ2(*)
 C
-C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -12069,15 +11713,9 @@ C
       DIMENSION IDERZ1(*)
       DIMENSION IDERZ2(*)
 C
-C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -12463,22 +12101,16 @@ C
       DIMENSION X(*)
       DIMENSION XTEMP(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='TRIM'
       ISUBN2='ME  '
-C
       IERROR='NO'
+C
 CCCCC IUPPER=1000
 C
       NPROP1=0
@@ -12655,7 +12287,7 @@ C
       CALL SORT(X,N,XTEMP)
 C
       IF(IFLAG1.EQ.0)THEN
-        NPROP1=(PROP1/100.0)*AN+0.0001
+        NPROP1=INT((PROP1/100.0)*AN+0.0001)
         ISTART=NPROP1+1
       ELSE
         NPROP1=NTRIM1
@@ -12663,7 +12295,7 @@ C
       ENDIF
 C
       IF(IFLAG2.EQ.0)THEN
-        NPROP2=(PROP2/100.0)*AN+0.0001
+        NPROP2=INT((PROP2/100.0)*AN+0.0001)
         ISTOP=N-NPROP2
       ELSE
         NPROP2=NTRIM2
@@ -12753,7 +12385,7 @@ C
 C
       RETURN
       END
-      SUBROUTINE TRIMSD(X,N,PROP1,PROP2,NTRIM1,NTRIM2,IWRITE,
+      SUBROUTINE TRIMSD(X,N,PROP1,PROP2,NTRIM1,NTRIM2,IWRITE,IUPPER,
      1                  XTEMP,XTRIM,
      1                  IBUGA3,ISUBRO,IERROR)
 C
@@ -12821,21 +12453,14 @@ C
       DIMENSION X(*)
       DIMENSION XTEMP(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='TRIM'
       ISUBN2='SD  '
-C
       IERROR='NO'
 C
       NPROP1=0
@@ -12864,7 +12489,7 @@ C
         CALL DPWRST('XXX','BUG ')
         DO55I=1,N
           WRITE(ICOUT,56)I,X(I)
-   56     FORMAT('I,X(I) = ',I8,E15.7)
+   56     FORMAT('I,X(I) = ',I8,G15.7)
           CALL DPWRST('XXX','BUG ')
    55   CONTINUE
       ENDIF
@@ -13000,7 +12625,7 @@ C
       CALL SORT(X,N,XTEMP)
 C
       IF(IFLAG1.EQ.0)THEN
-        NPROP1=(PROP1/100.0)*AN+0.0001
+        NPROP1=INT((PROP1/100.0)*AN+0.0001)
         ISTART=NPROP1+1
       ELSE
         NPROP1=NTRIM1
@@ -13008,7 +12633,7 @@ C
       ENDIF
 C
       IF(IFLAG2.EQ.0)THEN
-        NPROP2=(PROP2/100.0)*AN+0.0001
+        NPROP2=INT((PROP2/100.0)*AN+0.0001)
         ISTOP=N-NPROP2
       ELSE
         NPROP2=NTRIM2
@@ -13190,21 +12815,14 @@ C
       DIMENSION XTEMP(*)
       DIMENSION XTEMP2(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='TRIM'
       ISUBN2='ME  '
-C
       IERROR='NO'
 C
 C               ********************************************
@@ -13402,15 +13020,9 @@ C     ORIGINAL VERSION--SEPTEMBER 1994.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -13517,15 +13129,16 @@ C
       DOUBLE PRECISION DTERM2
       DOUBLE PRECISION DTERM3
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
+C
+      IF(ISUBG4.EQ.'IFUN')THEN
+        WRITE(ICOUT,52)Q,X(1)
+   52   FORMAT('Q,X(1) = ',2G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       DTERM1=DSQRT((1.0D0 - R)/(1.0D0 - Q))
       DTERM2=(M - AP)*(1.0D0 - DTERM1)
@@ -13579,13 +13192,7 @@ C
       DOUBLE PRECISION DPROD1
       DOUBLE PRECISION DPROD2
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -13659,13 +13266,7 @@ C
       DOUBLE PRECISION TRIFU2
       EXTERNAL TRIFU2
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -13742,17 +13343,12 @@ C
       DOUBLE PRECISION TRIFU2
       EXTERNAL TRIFU2
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
 C
+      IINDX=0
       DMAXMR=0.0D0
       DO100I=1,N
         IR=I
@@ -13838,17 +13434,12 @@ C
       DOUBLE PRECISION TRIFU2
       EXTERNAL TRIFU2
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
 C
+      IINDX=0
       DMAXMR=0.0D0
       DO100I=1,N
         IR=I
@@ -13928,18 +13519,13 @@ C
       DOUBLE PRECISION TRIFU2
       EXTERNAL TRIFU2
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
 C
       DMAXMR=0.0D0
+      IINDX=0
       DO100I=1,N
         IR=I
         DTEMP1=TRIFU2(A,B,IR,X,N)
@@ -14017,17 +13603,12 @@ C
       DOUBLE PRECISION TRIFU2
       EXTERNAL TRIFU2
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
 C
+      IINDX=0
       DMAXMR=0.0D0
       DO100I=1,N
         IR=I
@@ -14107,17 +13688,12 @@ C
       DOUBLE PRECISION DX1
       DOUBLE PRECISION DX2
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
 C
+      IINDX=0
       DMAXFB=0.0D0
       DO100I=1,N-1
         IR=I
@@ -14244,21 +13820,14 @@ C
       DOUBLE PRECISION DMK
       DOUBLE PRECISION DGK
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='TRIM'
       ISUBN2='L1  '
-C
       IWRITE='OFF'
       IERROR='NO'
 C
@@ -14703,13 +14272,7 @@ C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -14847,13 +14410,7 @@ C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -14977,13 +14534,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -15114,19 +14665,12 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='TRUN'
       ISUBN2='EG  '
-C
       IERROR='NO'
 C
 C
@@ -15267,7 +14811,7 @@ C
         ELSE
           ATEMP1=MIN(XIDTEM(1),XIDTEM(2))
           ATEMP2=MAX(XIDTEM(1),XIDTEM(2))
-          DO2208I=1,N1
+          DO2208I=1,N
             IF(X(I).EQ.ATEMP1)X(I)=0.0
             IF(X(I).EQ.ATEMP2)X(I)=1.0
  2208     CONTINUE
@@ -15480,19 +15024,12 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='TRUP'
       ISUBN2='OS  '
-C
       IERROR='NO'
 C
 C
@@ -15633,7 +15170,7 @@ C
         ELSE
           ATEMP1=MIN(XIDTEM(1),XIDTEM(2))
           ATEMP2=MAX(XIDTEM(1),XIDTEM(2))
-          DO2208I=1,N1
+          DO2208I=1,N
             IF(X(I).EQ.ATEMP1)X(I)=0.0
             IF(X(I).EQ.ATEMP2)X(I)=1.0
  2208     CONTINUE
@@ -15856,19 +15393,10 @@ C
       DOUBLE PRECISION AUPPLM
       DOUBLE PRECISION A
       DOUBLE PRECISION B
-      DOUBLE PRECISION DTERM1
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
-C
-C-----DATA STATEMENTS-------------------------------------------------
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -16002,15 +15530,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
-C
-C-----DATA STATEMENTS-------------------------------------------------
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -16022,7 +15542,6 @@ C
       CALL TSOPDF(DX,DN,DTHETA,DA,DB,DPDF)
       TSOFUN=DPDF
 C
- 9000 CONTINUE
       RETURN
       END
       DOUBLE PRECISION FUNCTION TSOFU2(DX)
@@ -16084,15 +15603,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
-C
-C-----DATA STATEMENTS-------------------------------------------------
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -16106,7 +15617,6 @@ C
       TSOFU2=DP - DCDF
       DTHETA=DTHETS
 C
- 9000 CONTINUE
       RETURN
       END
       SUBROUTINE TSOPDF(X,N,THETA,ALOWLM,AUPPLM,PDF)
@@ -16168,20 +15678,12 @@ C     ORIGINAL VERSION--OCTOBER     2007.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
-C
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       DOUBLE PRECISION N
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
+C-----COMMON----------------------------------------------------------
 C
-      REAL CPUMIN
-      REAL CPUMAX
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -16362,15 +15864,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      REAL CPUMIN
-      REAL CPUMAX
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -16392,9 +15886,8 @@ C
         CALL DPWRST('XXX','WRIT')
         WRITE(ICOUT,48)P
         CALL DPWRST('XXX','WRIT')
-        PPF=0.0D0
         GOTO9000
-    4   FORMAT('***** ERROR--THE FIRST INPUT ARGUMENT TO TSOPPF IS ',
+    4   FORMAT('***** ERROR--THE FIRST ARGUMENT TO TSOPPF IS ',
      1         'OUTSIDE THE (0,1) INTERVAL.')
 C
       ELSEIF(N.LT.0.5D0)THEN
@@ -16402,9 +15895,8 @@ C
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,48)N
         CALL DPWRST('XXX','BUG ')
-        PDF=0.0D0
         GOTO9000
-   12   FORMAT('***** ERROR--THE SECOND INPUT ARGUMENT TO OGIPDF IS ',
+   12   FORMAT('***** ERROR--THE SECOND ARGUMENT TO OGIPDF IS ',
      1         'LESS THAN 0.5')
    48   FORMAT('      VALUE OF ARGUMENT IS: ',G15.7)
       ELSEIF(A.GE.B)THEN
@@ -16452,7 +15944,6 @@ C               **  STEP 2--                           **
 C               **  COMPUTE THE PERCENT POINT FUNCTION.**
 C               *****************************************
 C
-  300 CONTINUE
       XLOW=A
       XUP=B
       XUP2=(A+B)/2.0D0
@@ -16510,7 +16001,7 @@ CCCCC   CALL DPWRST('XXX','BUG ')
       ENDIF
 C
  9000 CONTINUE
-      THETA=THETSV
+CCCCC THETA=THETSV
       RETURN
       END
       SUBROUTINE TSORAN(N,AN,THETA,A,B,ISEED,X)
@@ -16594,13 +16085,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -16726,13 +16211,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -16872,19 +16351,12 @@ C
 C
       DOUBLE PRECISION DTEMP1
       DOUBLE PRECISION DMAXMR
-      DOUBLE PRECISION DG
       DOUBLE PRECISION NUHAT
 C
       DOUBLE PRECISION TRIFU2
       EXTERNAL TRIFU2
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -16965,17 +16437,12 @@ C
       DOUBLE PRECISION TRIFU2
       EXTERNAL TRIFU2
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
 C
+      IINDX=0
       DMAXMR=0.0D0
       DO100I=1,N
         IR=I
@@ -17063,17 +16530,12 @@ C
       DOUBLE PRECISION TRIFU2
       EXTERNAL TRIFU2
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
 C
+      IINDX=0
       DMAXMR=0.0D0
       DO100I=1,N
         IR=I
@@ -17138,7 +16600,6 @@ C     VERSION NUMBER--2010/07
 C     ORIGINAL VERSION--JULY      2010. EXTRACTED AS A SEPARATE
 C                                       SUBROUTINE (FROM DPMLTS)
 C
-      CHARACTER*4 ICASPL
       CHARACTER*4 ISUBRO
       CHARACTER*4 IBUGA3
       CHARACTER*4 IERROR
@@ -17159,7 +16620,6 @@ C
 C
 C---------------------------------------------------------------------
 C
-      DOUBLE PRECISION DSUM
       DOUBLE PRECISION TRIFU2
       DOUBLE PRECISION TSPFU3
       DOUBLE PRECISION TSPFU4
@@ -17169,11 +16629,7 @@ C
       EXTERNAL TSPFU4
       EXTERNAL TSPFU5
 C
-      DOUBLE PRECISION DPROD
-      DOUBLE PRECISION DPROD2
       DOUBLE PRECISION DTERM1
-      DOUBLE PRECISION DTERM2
-      DOUBLE PRECISION DTERM3
       DOUBLE PRECISION DMAXMR
 C
       DOUBLE PRECISION DA
@@ -17187,25 +16643,20 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='TSPM'
       ISUBN2='L1  '
-C
       IWRITE='OFF'
       IERROR='NO'
+C
       AML=CPUMIN
       BML=CPUMIN
       THETML=CPUMIN
       ANML=CPUMIN
+      IINDX=0
 C
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'PML1')THEN
         WRITE(ICOUT,999)
@@ -17423,6 +16874,11 @@ C
         WRITE(ICOUT,9057)AML,BML,THETML,ANML
  9057   FORMAT('AML,BML,THETML,ANML = ',4G15.7)
         CALL DPWRST('XXX','WRIT')
+        DO9066I=1,MIN(N,100)
+          WRITE(ICOUT,9067)I,XTEMP(I),TEMP1(I),TEMP2(I),TEMP3(I)
+ 9067     FORMAT('I,XTEMP(I),TEMP1(I),TEMP2(I),TEMP3(I) = ',I8,4G15.7)
+          CALL DPWRST('XXX','WRIT')
+ 9066   CONTINUE
       ENDIF
 C
       RETURN
@@ -17480,13 +16936,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -17629,13 +17079,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -17783,13 +17227,7 @@ C
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -17911,13 +17349,7 @@ C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -17930,43 +17362,39 @@ C
 C
       IF(A.GE.B)THEN
         WRITE(ICOUT,101)
+  101   FORMAT('***** ERROR IN TSSCDF--LOWER LIMIT GREATER THAN OR ',
+     1         'EQUAL TO UPPER LIMIT.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,102)A
+  102   FORMAT('      THE VALUE OF THE LOWER LIMIT IS ',G15.7,'.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,103)B
+  103   FORMAT('      THE VALUE OF THE UPPER LIMIT IS ',G15.7,'.')
         CALL DPWRST('XXX','BUG ')
         GOTO9000
-      ENDIF
-  101 FORMAT('***** ERROR IN TSSCDF--LOWER LIMIT GREATER THAN OR ',
-     1       'EQUAL TO UPPER LIMIT')
-  102 FORMAT('      THE VALUE OF THE LOWER LIMIT IS ',G15.7)
-  103 FORMAT('      THE VALUE OF THE UPPER LIMIT IS ',G15.7)
-C
-      IF(THETA.LT.A .OR. THETA.GT.B)THEN
+      ELSEIF(THETA.LT.A .OR. THETA.GT.B)THEN
         WRITE(ICOUT,111)
+  111  FORMAT('***** ERROR IN TSSCDF--THETA IS OUTSIDE THE ',
+     1        'LOWER AND UPPER LIMITS')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,113)THETA
+  113   FORMAT('      THE VALUE OF THETA IS ',G15.7,'.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,102)A
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,103)B
         CALL DPWRST('XXX','BUG ')
         GOTO9000
-      ENDIF
-  111 FORMAT('***** ERROR IN TSSCDF--THETA IS OUTSIDE THE ',
-     1       'LOWER AND UPPER LIMITS')
-  113 FORMAT('      THE VALUE OF THETA IS ',G15.7)
-C
-      IF(ALPHA.LT.0.0 .OR. ALPHA.GT.2.0)THEN
+      ELSEIF(ALPHA.LT.0.0 .OR. ALPHA.GT.2.0)THEN
         WRITE(ICOUT,121)
+  121   FORMAT('***** ERROR--THE SECOND ARGUMENT TO TSSCDF IS ',
+     1         'OUTSIDE THE (0,2) INTERVAL.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,46)ALPHA
+   46   FORMAT('***** THE VALUE OF THE ARGUMENT IS ',G15.7,'.')
         CALL DPWRST('XXX','BUG ')
-        CDF=0.0
         GOTO9000
       ENDIF
-  121 FORMAT('***** ERROR--THE SECOND INPUT ARGUMENT TO TSSCDF IS ',
-     1       'OUTSIDE THE (0,2) INTERVAL.')
 C
 CCCCC IF(X.LT.A)THEN
 CCCCC   WRITE(ICOUT,131)
@@ -17977,9 +17405,9 @@ CCCCC   WRITE(ICOUT,102)A
 CCCCC   CALL DPWRST('XXX','BUG ')
 CCCCC   GOTO9000
 CCCCC ENDIF
-  131 FORMAT('***** ERROR IN TSSCDF--THE FIRST INPUT ARGUMENT IS ',
-     1       'LESS THAN THE LOWER LIMIT')
-  133 FORMAT('      THE VALUE OF THE FIRST INPUT ARGUMENT IS ',G15.7)
+CC131 FORMAT('***** ERROR IN TSSCDF--THE FIRST INPUT ARGUMENT IS ',
+CCCCC1       'LESS THAN THE LOWER LIMIT')
+CC133 FORMAT('      THE VALUE OF THE FIRST INPUT ARGUMENT IS ',G15.7)
 C
 CCCCC IF(X.GT.B)THEN
 CCCCC   WRITE(ICOUT,141)
@@ -17989,10 +17417,8 @@ CCCCC   CALL DPWRST('XXX','BUG ')
 CCCCC   CDF=1.0
 CCCCC   GOTO9000
 CCCCC ENDIF
-  141 FORMAT('***** ERROR IN TSSCDF--THE FIRST INPUT ARGUMENT IS ',
-     1       'GREATER THAN THE UPPER LIMIT')
-C
-   46 FORMAT('***** THE VALUE OF THE ARGUMENT IS ',G15.7)
+CC141 FORMAT('***** ERROR IN TSSCDF--THE FIRST INPUT ARGUMENT IS ',
+CCCCC1       'GREATER THAN THE UPPER LIMIT')
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -18068,13 +17494,7 @@ C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -18232,13 +17652,7 @@ C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
 C---------------------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -18246,7 +17660,7 @@ C     CHECK THE INPUT ARGUMENTS FOR ERRORS
 C
       A=MIN(ALOWLM,AUPPLM)
       B=MAX(ALOWLM,AUPPLM)
-C
+      THETSV=THETA
       PPF=0.0
 C
       IF(P.LT.0.0 .OR. P.GT.1.0)THEN
@@ -18298,7 +17712,6 @@ C
 C
 C-----START POINT-----------------------------------------------------
 C
-      THETSV=THETA
       THETA=(THETA-A)/(B-A)
 C
 C     IF ALPHA = 1, THEN WE HAVE A UNIFORM DISTRIBUTION.
@@ -18403,19 +17816,11 @@ C     ORIGINAL VERSION--OCTOBER   2007.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-C---------------------------------------------------------------------
-C
       DIMENSION X(*)
 C
-C---------------------------------------------------------------------
+C-----COMMON----------------------------------------------------------
 C
-      CHARACTER*4 IFEEDB
-      CHARACTER*4 IPRINT
-      CHARACTER*240 ICOUT
-C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-      COMMON /PRINT/IFEEDB,IPRINT
-      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+      INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C

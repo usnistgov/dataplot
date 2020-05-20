@@ -82,7 +82,7 @@ C
      1              GY1MNS,GY1MXS,GY2MNS,GY2MXS,
      1              PX1LD2,PX2LD2,PY1LD2,PY2LD2,
      1              PX1ZD2,PX2ZD2,PY1ZD2,PY2ZD2,
-     1              PTITDZ
+     1              PTITDZ,PY1LA2
 C
       CHARACTER*4 ISU2SW(MAXSUB)
       COMMON/ISPMC5/ISU2SW

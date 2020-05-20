@@ -27,7 +27,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-------------------------------------------
 C
@@ -115,31 +115,31 @@ C        3) SPLM (= SET PRINTER'S LEFT MARGIN)
 C
 C     DEFINE COMMAND 1 = ERASE = ESCAPE FORMFEED
 C
-      ICOM3(1)='ERASE   '
-      NCCOM3(1)=5
+      ICOM3(1)='ERAS'
+      NCCOM3(1)=4
       ICJUNK='                    '
       ICJUNK(1:1)=CHAR(27)
       ICJUNK(2:2)=CHAR(12)
-      ICOM4(1)=ICJUNK
+      ICOM4(1)=ICJUNK(1:2)
       NCCOM4(1)=2
 C
 C     DEFINE COMMAND 2 = EJECT = FORMFEED
 C
-      ICOM3(2)='EJECT   '
-      NCCOM3(2)=5
+      ICOM3(2)='EJEC'
+      NCCOM3(2)=4
       ICJUNK='                    '
       ICJUNK(1:1)=CHAR(12)
-      ICOM4(2)=ICJUNK
+      ICOM4(2)=ICJUNK(1:1)
       NCCOM4(2)=1
 C
 C     DEFINE COMMAND 3 =  (= SET PRINTER'S LEFT MARGIN) = ESCAPE 9
 C
-      ICOM3(3)='SPLM    '
+      ICOM3(3)='SPLM'
       NCCOM3(3)=4
       ICJUNK='                    '
       ICJUNK(1:1)=CHAR(27)
       ICJUNK(2:2)=CHAR(57)
-      ICOM4(3)=ICJUNK
+      ICOM4(3)=ICJUNK(1:2)
       NCCOM4(3)=2
 C
       IOLDLN=ICURLN
@@ -222,6 +222,5 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
       RETURN
       END

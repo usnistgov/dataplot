@@ -13,16 +13,67 @@ For Windows 7/8/10 platforms, see
 
 INSTALLATION FROM PACKAGES
 
-We are currently working on making RPM package files.  This
-section will be updated when these are available.
+There are a large number of Linux/Unix distros and each of these distros
+typically provide a package manager for binary installations of software.
+This section documents the Red Hat Package Manager (RPM).  Thanks to Chris
+Schanzle for putting the RPM package together.
+
+You typically need super user privleges to create and run packages.
+
+ 1. Red Hat Package Manager (RPM):
 
 
+    1a. INSTALLING PRE-BUILT RPM's:
+
+           i) Download the appropriate RPM for your distro and architecture
+              from
+
+                https://www.itl.nist.gov/div898/software/dataplot/ftp/unix/homepage.htm.
+
+          ii) "cd" to the directory where the file was downloaded.  This often
+              defaults to ~/Downloads, but this will depend on how you have
+              configured your browser.
+
+         iii) Perform the install with
+
+                sudo yum install ./dataplot-20200521-1.el7.x86_64.rpm
+
+              The date "20200521" given in the above line may vary depending 
+              on when the specific RPM was created.
+
+        Note yum will install any required dependencies.
+
+    1b. BUILD YOUR OWN RPM
+
+        RPM packages are generated for a specific version of the
+        operating system.  We have a limited number of systems on
+        which to build the RPM packages, so you may want to create
+        your own.
+ 
+        A "dataplot.spec" file is included in the dataplot sources which is
+        the recipe to create the binary packages.  To create the RPM
+        package, do the following
+
+             src/buildrpm.sh
+
+        We tested with Fedora 29 Server, Fedora 30 and CentOS 7.6 minimal
+        install.
+
+Package managers for other systems (e.g., Ubuntu) are under consideration
+but are not yet available.   We are aware of packages created for other
+Linux distros, but we are not involved in their creation.  If you have
+created a Dataplot package for other package managers and would like to
+contribute it to the Dataplot web site, please contact Alan Heckert at
+alan.heckert@nist.gov.
 
 SOURCE BASED INSTALLATION
 
 If you are installing Dataplot on a system for which you cannot
-use the RHM file, you can build Dataplot from source.  It is
+use the RPM file, you can build Dataplot from source.  It is
 assumed that you have gfortran/gcc already installed.
+
+We currently build Dataplot from source for CentOS, Fedora, Cygwin,
+Ubuntu, Manjaro (an Arch derivative), and MSYS2 (Windows).
 
  1. Download the zip file
 
@@ -30,8 +81,8 @@ assumed that you have gfortran/gcc already installed.
 
        https://github.com/usnistgov/dataplot
 
-    select the "Clone or Download" menu and then select the
-    "Download tar" option.  This will download the file
+    select the "Close or Download" menu and then select the
+    "Download ZIP" option.  This will download the file
 
            dataplot-master.zip
 
@@ -42,11 +93,16 @@ assumed that you have gfortran/gcc already installed.
     After the files are unpacked, you should have a "src"
     directory and a "lib" directory.
 
- 3. Build from source
+    Alternatively, you can perform the download and unpack with the
+    following command
+
+        curl -L https://github.com/usnistgov/dataplot/tarball/master  | tar -xz
+
+ 2. Build from source
 
     There is a Makefile in the "src" directory.
 
-    You should check the "PREFIX=..." and the "FEATURES=..." line.  The
+    You should check the "PREFIX=..." and the "FEATURES=..." lines.  The
     following comments in this section give more detail, but most users
     should be able to just check those 2 lines before running make.
 
@@ -143,8 +199,8 @@ assumed that you have gfortran/gcc already installed.
             sudo apt install libplot2c2; # For PLOT
             sudo apt install libplot-dev
 
-            sudo apt install readline6; # For READLINE
-            sudo apt install readline6-dev
+            sudo apt install readline; # For READLINE
+            sudo apt install readline-dev
 
             sudo apt install libcairo-dev; # For CAIRO
 
@@ -191,7 +247,7 @@ assumed that you have gfortran/gcc already installed.
 
            -O2
 
-     v. Dataplot's default workspace is 10 columns by 2,000,000
+     v. Dataplot's default workspace is 10 columns by 1,500,000
         rows.  You can re-dimension to obtain more columns at the
         expense of fewer rows.  If your local machine has sufficient
         memory, say 16GB or more, and you would like to increase the

@@ -21,7 +21,7 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
 C
-      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+CCCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
 C
 C-----START POINT-------------------------------------------
 C
@@ -145,7 +145,6 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
- 9000 CONTINUE
       IF(IBUGWR.EQ.'OFF'.AND.ISUBRO.NE.'WRST')GOTO9090
       WRITE(IPR,999)
       WRITE(IPR,9011)
