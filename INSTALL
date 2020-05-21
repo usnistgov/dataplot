@@ -38,6 +38,10 @@ You typically need super user privleges to create and run packages.
 
                 sudo yum install ./dataplot-20200521-1.el7.x86_64.rpm
 
+              The name of the Dataplot ".rpm" file may vary slightly
+              from the above depending on the date and the specific
+              system.
+
               The date "20200521" given in the above line may vary depending 
               on when the specific RPM was created.
 
