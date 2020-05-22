@@ -1157,7 +1157,8 @@ int    jheigh[2], ifontz[2];
    int    len;                  /* number of characters in string */
    int    len2;                 /* number of characters in font name */
    int    string_width;         /* width of string in pixels */
-   char   string2[130];         /* converted string */
+   /* char   string2[130]; */        /* converted string */
+   unsigned char   string2[130];         /* converted string */
    char   font_name[130];       /* string for font name */
    int    i;
    int    ixpos_temp, iypos_temp, ijusth_temp, ijustv_temp;
@@ -1410,7 +1411,8 @@ int    jheigh[2], ifontz[2];
    int    len;                  /* number of characters in string */
    int    len2;                 /* number of characters in font name */
    int    string_width;         /* width of string in pixels */
-   char   string2[130];         /* converted string */
+   /* char   string2[130]; */        /* converted string */
+   unsigned char   string2[130];         /* converted string */
    char   font_name[130];       /* string for font name */
    int    i;
    int    ixpos_temp, iypos_temp, ijusth_temp, ijustv_temp;

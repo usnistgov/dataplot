@@ -839,12 +839,15 @@ double  jgreen[2];
             XGetWindowAttributes(dsp,da,&returned_attributes);
             ixret_temp = returned_attributes.width;
             iyret_temp = returned_attributes.height;
+         } else {
+            ixret_temp = 0;
+            iyret_temp = 0;
          }
 #else
          ixret_temp=cairo_xlib_surface_get_width(surface1);
          iyret_temp=cairo_xlib_surface_get_height(surface1);
 #endif
-         if (ixret_temp != (int)anumhp_temp || iyret_temp != (int)height) {
+         if (ixret_temp != (int)anumhp_temp || iyret_temp != (int)anumvp_temp) {
             width=(float)ixret_temp;
             height=(float)iyret_temp;
             xscale = width/anumhp_temp;
