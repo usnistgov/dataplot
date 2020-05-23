@@ -1,5 +1,5 @@
 Name:		dataplot
-Version:	20200522
+Version:	20200523
 Release:	1%{?dist}
 Summary:	Scientific visualization, statistical analysis, and non-linear modeling
 Group:		Applications/Engineering
@@ -30,10 +30,10 @@ leading to compiler flags: -fdefault-real-8 -fdefault-double-8.
 %build
 # source will emit lots of warnings when -Wall is used, so brute-force remove it, but leave the rest.
 # 2020/05/21: Dataplot source has been upgraded so that -Wall will not emit a lot of warnings
-# export FFLAGS=$(sed 's/\s-Wall\s/ /g' <<<" %{optflags} ")
+export FFLAGS=$(sed 's/\s-Werror=format-security\s/ /g' <<<" %{optflags} ")
+#export FFLAGS=$(sed 's/\s-Wall\s/ /g' <<<" %{optflags} ")
 # below leaves all in but excludes some of the less serious warnings
 #export FFLAGS=" %{optflags} -Wno-unused-variable -Wno-unused-but-set-variable -Wno-maybe-uninitialized -Wno-unused-dummy-argument -Wno-unused-label"
-export FFLAGS=" %{optflags} "
 
 # Fedora 29 compiles with -Werror=format-security which is an error without -Wformat (i.e., without -Wall).
 #export CFLAGS=$(sed 's/\s-Wall\s/ -Wformat /g' <<< "%{optflags} ")
