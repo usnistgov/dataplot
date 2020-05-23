@@ -33,7 +33,7 @@ leading to compiler flags: -fdefault-real-8 -fdefault-double-8.
 # export FFLAGS=$(sed 's/\s-Wall\s/ /g' <<<" %{optflags} ")
 # below leaves all in but excludes some of the less serious warnings
 #export FFLAGS=" %{optflags} -Wno-unused-variable -Wno-unused-but-set-variable -Wno-maybe-uninitialized -Wno-unused-dummy-argument -Wno-unused-label"
-export FFLAGS=" %{optflags}
+export FFLAGS=" %{optflags} "
 
 # Fedora 29 compiles with -Werror=format-security which is an error without -Wformat (i.e., without -Wall).
 #export CFLAGS=$(sed 's/\s-Wall\s/ -Wformat /g' <<< "%{optflags} ")
