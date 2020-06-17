@@ -99,12 +99,9 @@
 #define MIN_Y_SIZE      100
 
 /* common parameters */
-int    color_flag;               /* 0 - monochrome, 1 - color */
-int    max_colors;                     /* maximum colors actually allocated */
-int    CURRENT_COLOR;                  /* Define current color */
 
 /* flags for current attribute settings */
-static int    OPEN_FLAG = 0;            /* 0 - libplot closed,
+static int    OPEN_FLAG_CAIRO = 0;            /* 0 - libplot closed,
                                            1 - libplot open */
 int           PL_DEVICE_TYPE = 0;       /* define device */
                                         /*  1 - X */
@@ -120,10 +117,9 @@ int           PL_DEVICE_TYPE = 0;       /* define device */
                                         /* 11 - svg */
                                         /* 12 - png */
 int           BITMAP = 0;               /* selected device is a bitmap */
-int           LINE_STYLE_CURRENT = -1;  /* current line style */
-int           JOIN_STYLE_CURRENT = -1;  /* current line style */
-int           CAP_STYLE_CURRENT = -1;   /* current line style */
-char          FONT_NAME_DEFAULT[80];    /* name of default font */
+int           LINE_STYLE_CURRENT_CAIRO = -1;  /* current line style */
+int           JOIN_STYLE_CURRENT_CAIRO = -1;  /* current line style */
+int           CAP_STYLE_CURRENT_CAIRO = -1;   /* current line style */
 
 FILE              *outfile;
 FILE              *outfile_null;
@@ -473,7 +469,7 @@ int  itype[2], ierror[2];
     PL_DEVICE_TYPE = itype_temp;
 
     pl_openpl_r (plotter);
-    OPEN_FLAG = 1;
+    OPEN_FLAG_CAIRO = 1;
 
 }
 
@@ -531,7 +527,7 @@ int  red[2], green[2], blue[2];
 
    /* First, check if a graph is currently open, if so write it
       to the current file name. */
-   if (OPEN_FLAG == 1) {
+   if (OPEN_FLAG_CAIRO == 1) {
 
       if (BITMAP == 1) {
          strcpy(pixel_size," ");
@@ -579,7 +575,7 @@ int    ierror[2];
       ierror[0] = 2;
 #endif
    }
-   OPEN_FLAG = 0;
+   OPEN_FLAG_CAIRO = 0;
    if (PL_DEVICE_TYPE == 1) {
    } else if (PL_DEVICE_TYPE == 9) {
    } else {
@@ -662,7 +658,7 @@ double         avalue_temp;
           pl_flinewidth_r(plotter,avalue_temp);
           break;
       case 2:         /* set the line style */
-          if (icode_temp == LINE_STYLE_CURRENT) break;
+          if (icode_temp == LINE_STYLE_CURRENT_CAIRO) break;
           switch (icode_temp) {    /* index determines the style */
              case 0:         /* solid line */
                  pl_linemod_r(plotter,"solid");
@@ -690,10 +686,10 @@ double         avalue_temp;
                  pl_linemod_r(plotter,"solid");
                  break;
           }
-          LINE_STYLE_CURRENT = icode_temp;
+          LINE_STYLE_CURRENT_CAIRO = icode_temp;
           break;
       case 3:         /* set the line cap style */
-          if (icode_temp == CAP_STYLE_CURRENT) break;
+          if (icode_temp == CAP_STYLE_CURRENT_CAIRO) break;
           switch (icode_temp) {  /* index determines the style */
              case 0:         /* cap butt */
                  pl_capmod_r(plotter,"butt");
@@ -709,10 +705,10 @@ double         avalue_temp;
                  pl_capmod_r(plotter,"butt");
                  break;
           }
-          CAP_STYLE_CURRENT = icode_temp;
+          CAP_STYLE_CURRENT_CAIRO = icode_temp;
           break;
       case 4:         /* set the join style */
-          if (icode_temp == JOIN_STYLE_CURRENT) break;
+          if (icode_temp == JOIN_STYLE_CURRENT_CAIRO) break;
           switch (icode_temp) {  /* index determines the style */
              case 0:         /* miter join */
                  pl_joinmod_r(plotter,"miter");
@@ -728,7 +724,7 @@ double         avalue_temp;
                  pl_joinmod_r(plotter,"miter");
                  break;
           }
-          JOIN_STYLE_CURRENT = icode_temp;
+          JOIN_STYLE_CURRENT_CAIRO = icode_temp;
           break;
       default:
           break;
@@ -825,7 +821,7 @@ int   red[2], green[2], blue[2];
    blue_temp  = blue[0];
 #endif
 
-   if (OPEN_FLAG > 0) {
+   if (OPEN_FLAG_CAIRO > 0) {
       pl_color_r(plotter,red_temp, green_temp, blue_temp);
    }
 

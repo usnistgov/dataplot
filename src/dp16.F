@@ -25176,18 +25176,20 @@ C
       IERROR='NO'
       IWRIT2='OFF'
 C
-      K=(-999)
       DCLMDJ=(-999.0D0)
-      KP3=0
       AN3=0.0
       DENOM=0.0
-      IBELAB=0
-C
       DCLWID=CLWID
       DXSTAR=XSTART
       DXSTOP=XSTOP
       DN3=0.0D0
       DN4=0.0D0
+C
+      K=(-999)
+      KP3=0
+      IBELOW=0
+      IABOVE=0
+      IBELAB=0
 C
       IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'HIS2')THEN
         WRITE(ICOUT,999)
@@ -25394,9 +25396,10 @@ C                3. IF IHSTOP IS ON, HAVE THE OUTLIERS DRAWN AS POINTS
 C                   RATHER THAN BARS.  THIS CAN BE USEFUL FOR CASES
 C                   WHERE THERE ARE EXTREME OUTLIERS.
 C
-        IBELOW=0
-        IABOVE=0
         IF(IDATSW.EQ.'RAW')THEN
+          IBELOW=0
+          IABOVE=0
+          IBELAB=0
           CALL SORT(XTEMP2,NTEMP,XTEMP2)
           JLOW=1
 C

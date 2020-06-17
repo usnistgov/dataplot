@@ -11562,6 +11562,7 @@ C                XSTAR(I) = PHI     IF  X(I) > PHI
 C                         = X(I)    OTHERWISE
 C             3) UPDATED WSTAR = EPS*SQRT(SUM[i=1 to n][(XSTAR(I)**2)/N])
 C
+      NU=0
       IF(ICASE.EQ.'SD')THEN
         NU=NREPL-1
       ELSEIF(ICASE.EQ.'RANG')THEN
@@ -13357,7 +13358,8 @@ C
             CALL ADAPT( M, NEWCLS, MAXCLS, FNCMVT, ABSEPS, RELEPS,
      *                  LENWRK, WORK, ERROR, VALUE, INFORM  )
             TOTCLS = TOTCLS + NEWCLS
-            ERROR = ABS(VALUE-OLDVAL) + SQRT(RULCLS*ERROR**2/TOTCLS)
+            ERROR = ABS(VALUE-OLDVAL) +
+     *              SQRT(REAL(RULCLS)*ERROR**2/REAL(TOTCLS))
             IF ( ERROR .GT. MAX( ABSEPS, RELEPS*ABS(VALUE) ) ) THEN
                IF ( MAXPTS - TOTCLS .GT. 2*RULCLS ) GO TO 10
             ELSE
@@ -21172,6 +21174,7 @@ C
       ILOCXP=0
       ILOCB=0
       JMAX=0
+      NUMVAR=0
 C
       CPUEPS=R1MACH(3)
 C
@@ -31486,6 +31489,11 @@ C
       DOUBLE PRECISION A(NL), B(NL), U(NL,NL), Y(NL)
       INTEGER INFI(NL), IS(NL), IC(NL)
       DOUBLE PRECISION RS, TMP, BT, RNOR, SPHLIM, SPNRNT
+C
+CCCCC INCLUDE 'DPCOPA.INC'
+CCCCC INCLUDE 'DPCOZD.INC'
+CCCCC EQUIVALENCE (DGARBG(IDGA10),U(1,1))
+C
       SAVE A, B, INFI, U
 *
 *    First generate U = COV*(random orthogonal matrix)
@@ -31518,7 +31526,7 @@ C
          IC(I) = I
  600  CONTINUE
       IC(ND+1) = N+1
-      SPNRML = 0
+      SPNRML = 0.0D0
       NS = 0
  10   DO 650 I = 1,ND
          IS(I) = -1
@@ -31541,8 +31549,8 @@ C
          IC(I) = IC(I) + 1
          IF ( IC(I) .LT. IC(I+1)  ) GO TO 10
          IC(I) = I
- 850  CoNTINUE
-      SPNRML = SPNRML/2
+ 850  CONTINUE
+      SPNRML = SPNRML/2.0D0
       RETURN
       ENTRY SPNRNT( N, CORREL, LOWER, UPPER, INFIN, INFIS, D, E, NSO )
       SPNRNT = 0
@@ -31556,17 +31564,17 @@ C
          IF ( INFI(I) .LT. 0 ) THEN
             INFIS = INFIS + 1
          ELSE 
-            A(I) = 0
-            B(I) = 0
+            A(I) = 0.0D0
+            B(I) = 0.0D0
             IF ( INFI(I) .NE. 0 ) A(I) = LOWER(I)
             IF ( INFI(I) .NE. 1 ) B(I) = UPPER(I)
          ENDIF
          DO 910 J = 1, I-1
             IJ = IJ + 1
             U(I,J) = CORREL(IJ)
-            U(J,I) = 0
+            U(J,I) = 0.0D0
   910    CONTINUE
-         U(I,I) = 1
+         U(I,I) = 1.D0
   900 CONTINUE
       NSO = 1
       DO 920 I = 1,ND
@@ -31624,7 +31632,7 @@ C
             ELSE IF ( U(I,I) .GT. 0 ) THEN
                U(I,J) = TMP/U(J,J)
             ELSE
-               U(I,J) = 0
+               U(I,J) = 0.0D0
             END IF
  982     CONTINUE
  980  CONTINUE
@@ -35815,11 +35823,11 @@ CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
       DATA ASTROM(25)/ 0.6                        D  -19/
       DATA ASTROM(26)/-0.1                        D  -19/
 C
+      XLOW0=0.0
+      XLOW1=0.0
 C  Start execution
 C
       X = XVALUE
-      XLOW0 = 0.0D0
-      XLOW1 = 0.0D0
 C
 C  Error test
 C
@@ -38284,11 +38292,11 @@ CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
       DATA ASYNCA(23)/0.11                       D  -18/
       DATA ASYNCA(24)/0.2                        D  -19/
 C
+      XLOW=0.0
+C
 C   Start calculation
 C 
       X = XVALUE
-      XLOW = 0.0D0
-C
       IF ( X .LT. ZERO ) THEN
 CCCCC    CALL ERRPRN(FNNAME,ERRMSG)
          WRITE(ICOUT,999)
@@ -38499,10 +38507,11 @@ CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
      7            0.29                       D  -18,
      8            0.3                        D  -19/
 C
+      XLOW=0.0
+C
 C   Start calculation
 C 
       X = XVALUE
-      XLOW = 0.0D0
       IF ( X .LT. ZERO ) THEN
 CCCCC    CALL ERRPRN(FNNAME,ERRMSG)
          WRITE(ICOUT,999)

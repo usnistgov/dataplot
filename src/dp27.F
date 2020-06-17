@@ -15924,7 +15924,7 @@ C
       MINN2=1
       NCSTRI=(-999)
       MAXLEN=9999
-      ILAST=0
+      NQ=0
 C
       IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')THEN
         WRITE(ICOUT,999)
@@ -16059,6 +16059,7 @@ C
 C
 C       STEP 2: FIND LAST NON-BLANK CHARACTER
 C
+        ILAST=ISTRT
         DO131II=IWIDTH,ISTRT,-1
           IF(IANS(II)(1:1).NE.' ')THEN
             ILAST=II

@@ -373,10 +373,12 @@ CCCCC DATA ERRMSG/'FUNCTION CALLED WITH ARGUMENT < 0'/
       DATA GVAL0/0.13417 65026 47700 70909 D 0/
       DATA ONERPI/0.56418 95835 47756 28695 D 0/
 C
+      XLOW=0.0
+      XLOW1=0.0
+C
 C   Start computation
 C
       X = XVALUE
-      XLOW1 = 0.0
 C
 C   Error test
 C
@@ -602,10 +604,11 @@ CCCCC DATA ERRMSG/'FUNCTION CALLED WITH ARGUMENT < 0'/
       DATA RT3BPI/ 0.97720 50238 05839 84317 D 0/
       DATA ONERPI/ 0.56418 95835 47756 28695 D 0/
 C
+      XLOW=0.0D0
+      XLOW1=0.0D0
+C
 C   Start calculation
 C
-      XLOW  = 0.0
-      XLOW1 = 0.0
       X = XVALUE
 C
 C   Error test
@@ -836,10 +839,11 @@ CCCCC DATA ERRMSG/'FUNCTION CALLED WITH ARGUMENT < 0'/
       DATA RTPIB4/ 0.44311 34627 26379 00682 D 0/
       DATA ONERPI/ 0.56418 95835 47756 28695 D 0/
 C
+      XLOW=0.0
+      XLOW1=0.0
+C
 C   Start calculation
 C
-      XLOW  = 0.0
-      XLOW1 = 0.0
       X = XVALUE
 C
 C   Error test
@@ -2688,13 +2692,14 @@ C
       DATA RT2B3P/0.46065 88659 61780 63902 D 0/
       DATA AIRZER/0.35502 80538 87817 23926 D 0/
 C
+      XHIGH1=0.0
+C
 C   Start computation
 C
       X = XVALUE
 C
 C   Compute the machine-dependent constants.
 C
-      XHIGH1 = 0.0
       Z = D1MACH(3)
       XLOW1 = TWO * Z
       ARG = D1MACH(4)
@@ -3057,13 +3062,14 @@ C
       DATA PIBY4/0.78539 81633 97448 30962 D 0/
       DATA RTPIIN/0.56418 95835 47756 28695 D 0/
 C
+      XHIGH2=0.0
+C
 C   Start computation
 C
       X = XVALUE
 C
 C   Compute the machine-dependent constants.
 C
-      XHIGH2 = 0.0
       Z = D1MACH(3)
       XLOW1 = Z
       ARG = D1MACH(4)
@@ -12520,6 +12526,8 @@ C
       DATA BI0CS(12) /    .0000000000 0000000245E0 /
       DATA FIRST /.TRUE./
 C***FIRST EXECUTABLE STATEMENT  BESI0
+      BESI0 = 0.0
+C
       IF (FIRST) THEN
          NTI0 = INITS (BI0CS, 12, 0.1*R1MACH(3))
          XSML = SQRT (4.5*R1MACH(3))
@@ -12658,9 +12666,10 @@ C
       DATA AI02CS(21) /   -.0000000000 0000027E0 /
       DATA AI02CS(22) /    .0000000000 0000003E0 /
       DATA FIRST /.TRUE./
-C***FIRST EXECUTABLE STATEMENT  BESI0E
+C
       BESI0E = 0.0
 C
+C***FIRST EXECUTABLE STATEMENT  BESI0E
       IF (FIRST) THEN
          NTI0 = INITS (BI0CS, 12, 0.1*R1MACH(3))
          NTAI0 = INITS (AI0CS, 21, 0.1*R1MACH(3))

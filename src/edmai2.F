@@ -181,7 +181,7 @@ C
       IPPOFF=0
       ILPOFF=0
       IPASS=0
-      IWIDT0=IWIDTH
+      IWIDT0=0
 C
       IBLASW='YES'
       IEXEIM='NO'

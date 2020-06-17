@@ -3289,6 +3289,8 @@ C
       IFILSV=IFILQU
       IFILQU='ON'
 C
+      IVAL=0
+C
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'CLOS')THEN
         WRITE(ICOUT,999)
   999   FORMAT(1X)
@@ -18340,7 +18342,7 @@ C
      1                  IVLIST,TEMP1,TEMP2,
      1                  IBUGA3,ISUBRO,IERROR)
 C
-C     IMPLEMENT THE FOLLWOING COMMAND
+C     IMPLEMENT THE FOLLOWING COMMAND
 C
 C         LET COREFAC = DEX CORE X1 ... XK
 C
@@ -39576,16 +39578,16 @@ C
       IMULT='OFF'
       ISUBN1='DPCU'
       ISUBN2='SU  '
-      IFOUND='NO'
-      IERROR='NO'
 C
-      NLOCAL=0
       MAXCP1=MAXCOL+1
       MAXCP2=MAXCOL+2
       MAXCP3=MAXCOL+3
       MAXCP4=MAXCOL+4
       MAXCP5=MAXCOL+5
       MAXCP6=MAXCOL+6
+C
+      IFOUND='NO'
+      IERROR='NO'
 C
 C               ********************************************
 C               **  TREAT THE CUMULATIVE SUM   TEST CASE  **

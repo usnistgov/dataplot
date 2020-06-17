@@ -146,13 +146,10 @@
 
 /* global definitions */
 
-#define FONT_HEIGHT_CURRENT  0
-#define FONT_GAP_CURRENT     0
-
 int decodeEvent(char *event, int *x, int *y);
 
 /* flags for current attribute settings */
-static int    OPEN_FLAG = 0;          /* 0 - closed, 1 - open */
+static int    OPEN_FLAG_AQUA = 0;          /* 0 - closed, 1 - open */
 
 #if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
 void  aqend_(), aqdraw_(), aqpoin_(), aqcirc_(), aqrgfl_();
@@ -203,8 +200,8 @@ float  val1, val2, val3;
     anumhp_temp = *anumhp;
     anumvp_temp = *anumvp;
     
-    if (OPEN_FLAG == 0) {           /*  Device currently closed */
-       OPEN_FLAG = 1;
+    if (OPEN_FLAG_AQUA == 0) {           /*  Device currently closed */
+       OPEN_FLAG_AQUA = 1;
        aqtInit();
        aqtOpenPlot(nplot_temp);
        aqtSetPlotSize(anumhp_temp,anumvp_temp);
@@ -259,7 +256,7 @@ int  *nplot, *anumhp, *anumvp, *iback;
    iback_temp  = *iback;
 
    /* Use "erase rectangle" method to clear screen  */
-   if (OPEN_FLAG > 0) {
+   if (OPEN_FLAG_AQUA > 0) {
       /* aqtTakeBackgroundColorFromColormapEntry(iback_temp); */
       /* aqtOpenPlot(nplot_temp); */
       /* aqtSetPlotSize(anumhp_temp,anumvp_temp); */
@@ -289,10 +286,10 @@ void AQEND()
 #endif
 
 {
-   if (OPEN_FLAG > 0) {
+   if (OPEN_FLAG_AQUA > 0) {
       aqtClosePlot();
       aqtTerminate();
-      OPEN_FLAG = 0;
+      OPEN_FLAG_AQUA = 0;
    }
 }
 
@@ -310,7 +307,7 @@ void AQREND()
 #endif
 
 {
-   if (OPEN_FLAG > 0) {
+   if (OPEN_FLAG_AQUA > 0) {
       aqtRenderPlot();
    }
 }
@@ -352,7 +349,7 @@ int   *icap;
    npts_temp = *npts;
    icap_temp = *icap;
 
-   if (OPEN_FLAG > 0) {
+   if (OPEN_FLAG_AQUA > 0) {
       if (icap_temp == 2) {
         aqtSetLineCapStyle(AQTRoundLineCapStyle);
       } else if (icap_temp == 3) {
@@ -425,7 +422,7 @@ int   *jcol;
 
    jcol_temp = *jcol;
 
-   if (OPEN_FLAG > 0) {
+   if (OPEN_FLAG_AQUA > 0) {
       if (jcol_temp > 0) {
          aqtTakeColorFromColormapEntry(jcol_temp-1);
       } else {
@@ -483,7 +480,7 @@ float   *jblue;
       avalue3=1.0;
    }
 
-   if (OPEN_FLAG > 0) {
+   if (OPEN_FLAG_AQUA > 0) {
       aqtSetColor(avalue1,avalue2,avalue3);
    }
 
@@ -529,7 +526,7 @@ int    *iopt;
        xpatt_temp[i] = xpatt[iindx];
    }
 
-   if (OPEN_FLAG > 0) {
+   if (OPEN_FLAG_AQUA > 0) {
       if (iopt_temp == 1) {
          if (npatt_temp <= 1) {
             aqtSetLinestyleSolid();
@@ -564,7 +561,7 @@ double *pheigh;
 
    pheigh_temp = *pheigh;
 
-   if (OPEN_FLAG > 0) {
+   if (OPEN_FLAG_AQUA > 0) {
       aqtSetFontsize(pheigh_temp);
    }
 
@@ -644,7 +641,7 @@ int   *iy2;
    ix2_temp = *ix2;
    iy2_temp = *iy2;
 
-   if (OPEN_FLAG > 0) {
+   if (OPEN_FLAG_AQUA > 0) {
       aqtAddFilledRect(ix1_temp, iy1_temp, ix2_temp, iy2_temp);
    }
 
@@ -693,7 +690,7 @@ int   *npts;
        ypts_temp[i] = ypts[iindx];
    }
 
-   if (OPEN_FLAG > 0) {
+   if (OPEN_FLAG_AQUA > 0) {
       aqtAddPolygon(xpts_temp, ypts_temp, npts_temp);
    }
 

@@ -5067,7 +5067,7 @@ C
 C  FOR 8S (SIGNIFICANT DECIMAL DIGITS) PRECISION AUXILIARY ROUTINE
 C  FUNCTION BESRAT(V) MUST BE SET TO AT LEAST 9.3S
       DATA V1 /0.642/, V2 /0.95/
-      X=0.0
+      X = 0.0
       A = R
       S = -1.0
 C
@@ -17538,9 +17538,10 @@ C
       DATA ARY0A2(17)/-0.6                        D  -19/
       DATA ARY0A2(18)/ 0.1                        D  -19/
 C
+      XLOW = 0.0D0
+C
 C   Start computation
 C
-      XLOW=0.0
       X = XVALUE
 C
 C   First error test

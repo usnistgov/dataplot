@@ -4219,6 +4219,7 @@ CCCCC MAXPT2=10*MAXOBV
       NLOOP=0
       ILOCXP=0
       ILOCB=0
+      NUMVAR=0
 C
       CPUEPS=R1MACH(3)
 C
@@ -5591,6 +5592,8 @@ C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
+C
+      HOLD=CPUMIN
 C
       IF(NUMARG.EQ.0)GOTO1199
       IF(NUMARG.GE.2.AND.IHARG(2).EQ.'=')GOTO1140

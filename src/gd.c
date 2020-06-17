@@ -188,7 +188,7 @@
 
 /* global definitions */
 
-#define MAX_COLORS       89
+#define MAX_COLORS_GD    89
 #define MAX_GRAY        100
 #define BORDER_WIDTH      3
 #define DEFAULT_X_SIZE  600
@@ -206,16 +206,12 @@ FILE          *jpegin;            /* File ID for Image (reading) */
 char          file_string_2[160]; /* Name of current file (reading) */
 
 /* common parameters */
-unsigned int  width, height;      /* last known window size */
-unsigned long black, white;       /* values for black and white */
-int    color_flag;               /* 0 - monochrome, 1 - color */
-int    max_colors;                     /* maximum colors actually allocated */
-int    COLOR_OPTION = 0;               /* Define current color */
-int    CURRENT_COLOR;                  /* Define current color */
-int    CURRENT_LINE_STYLE[12];         /* Define current line style */
-int    NPTS_STYLE = 0;                 /* Number of points in style */
-int    color_table[MAX_COLORS + 100];  /* color table */
-int red[MAX_COLORS] = {
+int    COLOR_OPTION_GD = 0;            /* Define current color */
+int    CURRENT_COLOR_GD;               /* Define current color */
+int    CURRENT_LINE_STYLE_GD[12];      /* Define current line style */
+int    NPTS_STYLE_GD = 0;              /* Number of points in style */
+int    color_table[MAX_COLORS_GD + 100];  /* color table */
+int red[MAX_COLORS_GD] = {
     /*  0 -  7 */ 255,   0, 255,   0,   0, 255, 255,   0,
     /*  8 - 15 */ 255, 154,   0, 173, 138, 208,  47, 211,
     /* 16 - 23 */ 127, 165,  95, 255, 100,  85, 153,  72,
@@ -229,7 +225,7 @@ int red[MAX_COLORS] = {
     /* 80 - 87 */ 238, 205, 139, 238, 205, 139, 238, 205,
     /* 88 - 88 */ 139
 };
-int green[MAX_COLORS] = {
+int green[MAX_COLORS_GD] = {
     /*  0 -  7 */ 255,   0,   0,   0, 255,   0, 165, 255,
     /*  8 - 15 */ 255, 205, 100, 216,  43,  32,  79, 211,
     /* 16 - 23 */ 255,  42, 158, 127, 149, 107,  50,  61,
@@ -243,7 +239,7 @@ int green[MAX_COLORS] = {
     /* 80 - 87 */ 154, 133,  90,   0,   0,   0,   0,   0,
     /* 88 - 88 */   0
 };
-int blue[MAX_COLORS] = {
+int blue[MAX_COLORS_GD] = {
     /*  0 -  7 */ 255,   0,   0, 255,   0, 255,   0, 255,
     /*  8 - 15 */   0,  50,   0, 230, 226, 144,  79, 211,
     /* 16 - 23 */ 212,  42, 160,  80, 237,  47, 204, 139,
@@ -259,17 +255,11 @@ int blue[MAX_COLORS] = {
 };
 
 /* flags for current attribute settings */
-static int    OPEN_FLAG = 0;          /* 0 - GD closed, 1 - GD open */
-int           DEVICE_TYPE = 0;        /* define device */
+static int    OPEN_FLAG_GD = 0;       /* 0 - GD closed, 1 - GD open */
+int           DEVICE_TYPE_GD = 0;     /* define device */
                                       /* 1 - jpeg */
                                       /* 2 - png */
                                       /* 3 - windows bmp */
-char          FONT_NAME_CURRENT[80];  /* name of current font */
-char          FONT_NULL[80];          /* null font */
-char          FONT_NAME_DEFAULT[80];  /* name of default font */
-int           FONT_HEIGHT_CURRENT;    /* pixel ascent of current font */
-int           FONT_DESCENT_CURRENT;   /* descent of current font */
-int           FONT_GAP_CURRENT;       /* vertical gap of current font */
 
 #if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
 void  gdend_(), gddraw_(), gdpoin_(), gdcirc_(), gdrgfl_();
@@ -294,14 +284,14 @@ void  i_to_s_2();
  *           For GD device, simply set flag saying this routine
  *           has been called, initialize a few variables.
  *
- *           DEVICE_TYPE = 1 -- jpeg
- *           DEVICE_TYPE = 2 -- png
- *           DEVICE_TYPE = 3 -- wbmp
- *           DEVICE_TYPE = 4 -- gif
- *           DEVICE_TYPE = 5 -- tiff (requires Tiff library)
- *           DEVICE_TYPE = 6 -- bmp
- *           DEVICE_TYPE = 7 -- webp (requires VPX library)
- *           DEVICE_TYPE = 8 -- tga (this code currently not active)
+ *           DEVICE_TYPE_GD = 1 -- jpeg
+ *           DEVICE_TYPE_GD = 2 -- png
+ *           DEVICE_TYPE_GD = 3 -- wbmp
+ *           DEVICE_TYPE_GD = 4 -- gif
+ *           DEVICE_TYPE_GD = 5 -- tiff (requires Tiff library)
+ *           DEVICE_TYPE_GD = 6 -- bmp
+ *           DEVICE_TYPE_GD = 7 -- webp (requires VPX library)
+ *           DEVICE_TYPE_GD = 8 -- tga (this code currently not active)
  *
  */
 #if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
@@ -327,8 +317,8 @@ int  itype[2];
 #else
    itype_temp = itype[0];
 #endif
-    DEVICE_TYPE = itype_temp;
-    OPEN_FLAG = 0;
+    DEVICE_TYPE_GD = itype_temp;
+    OPEN_FLAG_GD = 0;
 
 }
 
@@ -413,37 +403,37 @@ int file_name[];
     *    6 - BMP
     *    7 - WEBP
     */
-   if (OPEN_FLAG == 1) {
+   if (OPEN_FLAG_GD == 1) {
       /* interlaced images load faster on web, but leave for now */
       /* gdImageInterlace(im,1); */
       jpegout = fopen(file_string,"wb");
-      if (DEVICE_TYPE == 1) {
+      if (DEVICE_TYPE_GD == 1) {
          quality = -1;
          gdImageJpeg(im,jpegout,quality);
       }
-      else if (DEVICE_TYPE == 2) {
+      else if (DEVICE_TYPE_GD == 2) {
          gdImagePng(im,jpegout);
       }
-      else if (DEVICE_TYPE == 3) {
+      else if (DEVICE_TYPE_GD == 3) {
          itemp=1;
          gdImageWBMP(im,itemp,jpegout);
       }
-      else if (DEVICE_TYPE == 4) {
+      else if (DEVICE_TYPE_GD == 4) {
          gdImageGif(im,jpegout);
       }
-      else if (DEVICE_TYPE == 5) {
+      else if (DEVICE_TYPE_GD == 5) {
          bitdepth = 8;
 #ifdef HAVE_GD_TIFF
          gdImageTiff(im,jpegout);
 #endif
       }
-      else if (DEVICE_TYPE == 6) {
+      else if (DEVICE_TYPE_GD == 6) {
          compression=1;
 #ifdef HAVE_GD_BMP
          gdImageBmp(im,jpegout,compression);
 #endif
       }
-      else if (DEVICE_TYPE == 7) {
+      else if (DEVICE_TYPE_GD == 7) {
 #ifdef HAVE_GD_VPX
          gdImageWebp(im,jpegout);
 #else
@@ -451,7 +441,7 @@ int file_name[];
          gdImageJpeg(im,jpegout,quality);
 #endif
       }
-      else if (DEVICE_TYPE == 8) {
+      else if (DEVICE_TYPE_GD == 8) {
          /*
           * printf("%s \n","gd.c: Before TGA");
           * gdImageTga(im,jpegout);
@@ -485,12 +475,12 @@ int file_name[];
       back_col_temp = back_col_temp - 1;
       gdImageColorAllocate(im,red[back_col_temp],green[back_col_temp],
                            blue[back_col_temp]);
-      for (i=0; i < MAX_COLORS; i++) {
+      for (i=0; i < MAX_COLORS_GD; i++) {
          color_table[i] = gdImageColorAllocate(im,red[i],green[i],
                           blue[i]);
       }
       for (i=0; i < 100; i++) {
-         itemp1 = i + MAX_COLORS;
+         itemp1 = i + MAX_COLORS_GD;
          ai = i;
          atemp2 = 255.*(ai/100.);
          itemp2 = atemp2;
@@ -502,12 +492,12 @@ int file_name[];
       /*  Step 1: Open Image */
       im = gdImageCreateTrueColor(xpixels_temp, ypixels_temp);
       /*  Step 2: Allocate colors for Dataplot's basic color map */
-      for (i=0; i < MAX_COLORS; i++) {
+      for (i=0; i < MAX_COLORS_GD; i++) {
          color_table[i] = gdImageColorAllocate(im,red[i],green[i],
                           blue[i]);
       }
       for (i=0; i < 100; i++) {
-         itemp1 = i + MAX_COLORS;
+         itemp1 = i + MAX_COLORS_GD;
          ai = i;
          atemp2 = 255.*(ai/100.);
          itemp2 = atemp2;
@@ -527,11 +517,11 @@ int file_name[];
          gdImageFilledRectangle(im,0,0,xpixels_temp,ypixels_temp,
                                 jcol_temp);
          */
-         CURRENT_COLOR = jcol_temp;
-         COLOR_OPTION = 1;
+         CURRENT_COLOR_GD = jcol_temp;
+         COLOR_OPTION_GD = 1;
       }
    }
-   OPEN_FLAG = 1;
+   OPEN_FLAG_GD = 1;
 
 }
 
@@ -571,37 +561,37 @@ int file_name[];
     *    7 - WEBP
     *    8 - TGA
     */
-   if (OPEN_FLAG == 1) {
+   if (OPEN_FLAG_GD == 1) {
       /* interlaced images load faster on web, but leave for now */
       /* gdImageInterlace(im,1); */
       jpegout = fopen(file_string,"wb");
-      if (DEVICE_TYPE == 1) {
+      if (DEVICE_TYPE_GD == 1) {
          quality = -1;
          gdImageJpeg(im,jpegout,quality);
       }
-      else if (DEVICE_TYPE == 2) {
+      else if (DEVICE_TYPE_GD == 2) {
          gdImagePng(im,jpegout);
       }
-      else if (DEVICE_TYPE == 3) {
+      else if (DEVICE_TYPE_GD == 3) {
          itemp=1;
          gdImageWBMP(im,itemp,jpegout);
       }
-      else if (DEVICE_TYPE == 4) {
+      else if (DEVICE_TYPE_GD == 4) {
          gdImageGif(im,jpegout);
       }
-      else if (DEVICE_TYPE == 5) {
+      else if (DEVICE_TYPE_GD == 5) {
          /* If libtiff not installed, default to jpeg */
 #ifdef HAVE_GD_TIFF
          gdImageTiff(im,jpegout);
 #endif
       }
-      else if (DEVICE_TYPE == 6) {
+      else if (DEVICE_TYPE_GD == 6) {
          compression=1;
 #ifdef HAVE_GD_BMP
          gdImageBmp(im,jpegout,compression);
 #endif
       }
-      else if (DEVICE_TYPE == 7) {
+      else if (DEVICE_TYPE_GD == 7) {
 #ifdef HAVE_GD_VPX
          gdImageWebp(im,jpegout);
 #else
@@ -609,7 +599,7 @@ int file_name[];
          gdImageJpeg(im,jpegout,quality);
 #endif
       }
-      else if (DEVICE_TYPE == 8) {
+      else if (DEVICE_TYPE_GD == 8) {
          /*
           * printf("%s \n","gd.c: Before TGA");
           * gdImageTga(im,jpegout);
@@ -622,7 +612,7 @@ int file_name[];
       fclose(jpegout);
       gdImageDestroy(im);
    }
-   OPEN_FLAG = 0;
+   OPEN_FLAG_GD = 0;
 
 }
 
@@ -668,17 +658,17 @@ int   ix1[2], iy1[2], ix2[2], iy2[2];
    iy2_temp = iy2[0];
 #endif
 
-   if (NPTS_STYLE <= 0) {            /* Solid Line */
-      if (COLOR_OPTION == 0) {
+   if (NPTS_STYLE_GD <= 0) {            /* Solid Line */
+      if (COLOR_OPTION_GD == 0) {
          gdImageLine(im, ix1_temp, iy1_temp, ix2_temp, iy2_temp,
-                     color_table[CURRENT_COLOR]);
+                     color_table[CURRENT_COLOR_GD]);
       } else {
          gdImageLine(im, ix1_temp, iy1_temp, ix2_temp, iy2_temp,
-                     CURRENT_COLOR);
+                     CURRENT_COLOR_GD);
       }
    }
    else {      /* Dashed or Dotted Line */
-      gdImageSetStyle(im, CURRENT_LINE_STYLE, NPTS_STYLE);
+      gdImageSetStyle(im, CURRENT_LINE_STYLE_GD, NPTS_STYLE_GD);
       gdImageLine(im,ix1_temp,iy1_temp,ix2_temp,iy2_temp,gdStyled);
    }
 
@@ -715,21 +705,21 @@ int   jcol[2];
    jcol_temp = jcol[0];
 #endif
 
-   if (COLOR_OPTION == 0) {
+   if (COLOR_OPTION_GD == 0) {
       if (jcol_temp >= 0 ) {
          jcol_temp = jcol_temp - 1;
-         CURRENT_COLOR = jcol_temp;
+         CURRENT_COLOR_GD = jcol_temp;
       } else {
          jcol_temp = -jcol_temp;
-         jcol_temp = jcol_temp + MAX_COLORS - 1;
-         CURRENT_COLOR = jcol_temp;
+         jcol_temp = jcol_temp + MAX_COLORS_GD - 1;
+         CURRENT_COLOR_GD = jcol_temp;
       }
    } else {
       jred_temp = red[jcol_temp-1];
       jgreen_temp = green[jcol_temp-1];
       jblue_temp = blue[jcol_temp-1];
       jcol_temp = gdImageColorExact(im,jred_temp,jgreen_temp,jblue_temp);
-      CURRENT_COLOR = jcol_temp;
+      CURRENT_COLOR_GD = jcol_temp;
    }
 
 }
@@ -793,7 +783,7 @@ int   iretco[2];
    }
 
    jcol_temp = gdImageColorExact(im,jred_temp,jgreen_temp,jblue_temp);
-   CURRENT_COLOR = jcol_temp;
+   CURRENT_COLOR_GD = jcol_temp;
 #if INTEGER_PRECISION == 0
     *iretco = jcol_temp;
 #else
@@ -831,89 +821,89 @@ int   jpatt[2];
 #endif
 
    if (jpatt_temp == 1) {            /* Solid Line */
-      CURRENT_LINE_STYLE[0] = 0;
-      NPTS_STYLE = 0;
+      CURRENT_LINE_STYLE_GD[0] = 0;
+      NPTS_STYLE_GD = 0;
    }
    else if (jpatt_temp == 2) {      /* Dashed Line */
-      if (COLOR_OPTION == 0) {
-         CURRENT_LINE_STYLE[0] = color_table[CURRENT_COLOR];
-         CURRENT_LINE_STYLE[1] = color_table[CURRENT_COLOR];
-         CURRENT_LINE_STYLE[2] = color_table[CURRENT_COLOR];
+      if (COLOR_OPTION_GD == 0) {
+         CURRENT_LINE_STYLE_GD[0] = color_table[CURRENT_COLOR_GD];
+         CURRENT_LINE_STYLE_GD[1] = color_table[CURRENT_COLOR_GD];
+         CURRENT_LINE_STYLE_GD[2] = color_table[CURRENT_COLOR_GD];
       } else {
-         CURRENT_LINE_STYLE[0] = CURRENT_COLOR;
-         CURRENT_LINE_STYLE[1] = CURRENT_COLOR;
-         CURRENT_LINE_STYLE[2] = CURRENT_COLOR;
+         CURRENT_LINE_STYLE_GD[0] = CURRENT_COLOR_GD;
+         CURRENT_LINE_STYLE_GD[1] = CURRENT_COLOR_GD;
+         CURRENT_LINE_STYLE_GD[2] = CURRENT_COLOR_GD;
       }
-      CURRENT_LINE_STYLE[3] = gdTransparent;
-      CURRENT_LINE_STYLE[4] = gdTransparent;
-      CURRENT_LINE_STYLE[5] = gdTransparent;
-      NPTS_STYLE = 6;
+      CURRENT_LINE_STYLE_GD[3] = gdTransparent;
+      CURRENT_LINE_STYLE_GD[4] = gdTransparent;
+      CURRENT_LINE_STYLE_GD[5] = gdTransparent;
+      NPTS_STYLE_GD = 6;
    }
    else if (jpatt_temp == 3) {      /* Dotted Line */
-      CURRENT_LINE_STYLE[0] = color_table[CURRENT_COLOR];
-      CURRENT_LINE_STYLE[1] = gdTransparent;
-      NPTS_STYLE = 2;
+      CURRENT_LINE_STYLE_GD[0] = color_table[CURRENT_COLOR_GD];
+      CURRENT_LINE_STYLE_GD[1] = gdTransparent;
+      NPTS_STYLE_GD = 2;
    }
    else if (jpatt_temp == 4) {      /* DA2 Line */
-      if (COLOR_OPTION == 0) {
-         CURRENT_LINE_STYLE[0] = color_table[CURRENT_COLOR];
-         CURRENT_LINE_STYLE[1] = color_table[CURRENT_COLOR];
-         CURRENT_LINE_STYLE[2] = color_table[CURRENT_COLOR];
+      if (COLOR_OPTION_GD == 0) {
+         CURRENT_LINE_STYLE_GD[0] = color_table[CURRENT_COLOR_GD];
+         CURRENT_LINE_STYLE_GD[1] = color_table[CURRENT_COLOR_GD];
+         CURRENT_LINE_STYLE_GD[2] = color_table[CURRENT_COLOR_GD];
       } else {
-         CURRENT_LINE_STYLE[0] = CURRENT_COLOR;
-         CURRENT_LINE_STYLE[1] = CURRENT_COLOR;
-         CURRENT_LINE_STYLE[2] = CURRENT_COLOR;
+         CURRENT_LINE_STYLE_GD[0] = CURRENT_COLOR_GD;
+         CURRENT_LINE_STYLE_GD[1] = CURRENT_COLOR_GD;
+         CURRENT_LINE_STYLE_GD[2] = CURRENT_COLOR_GD;
       }
-      CURRENT_LINE_STYLE[3] = color_table[CURRENT_COLOR];
-      CURRENT_LINE_STYLE[4] = gdTransparent;
-      CURRENT_LINE_STYLE[5] = gdTransparent;
-      NPTS_STYLE = 6;
+      CURRENT_LINE_STYLE_GD[3] = color_table[CURRENT_COLOR_GD];
+      CURRENT_LINE_STYLE_GD[4] = gdTransparent;
+      CURRENT_LINE_STYLE_GD[5] = gdTransparent;
+      NPTS_STYLE_GD = 6;
    }
    else if (jpatt_temp == 5) {      /* DA3 Line */
-      if (COLOR_OPTION == 0) {
-         CURRENT_LINE_STYLE[0] = color_table[CURRENT_COLOR];
-         CURRENT_LINE_STYLE[1] = color_table[CURRENT_COLOR];
-         CURRENT_LINE_STYLE[2] = color_table[CURRENT_COLOR];
+      if (COLOR_OPTION_GD == 0) {
+         CURRENT_LINE_STYLE_GD[0] = color_table[CURRENT_COLOR_GD];
+         CURRENT_LINE_STYLE_GD[1] = color_table[CURRENT_COLOR_GD];
+         CURRENT_LINE_STYLE_GD[2] = color_table[CURRENT_COLOR_GD];
       } else {
-         CURRENT_LINE_STYLE[0] = CURRENT_COLOR;
-         CURRENT_LINE_STYLE[1] = CURRENT_COLOR;
-         CURRENT_LINE_STYLE[2] = CURRENT_COLOR;
+         CURRENT_LINE_STYLE_GD[0] = CURRENT_COLOR_GD;
+         CURRENT_LINE_STYLE_GD[1] = CURRENT_COLOR_GD;
+         CURRENT_LINE_STYLE_GD[2] = CURRENT_COLOR_GD;
       }
-      CURRENT_LINE_STYLE[3] = gdTransparent;
-      CURRENT_LINE_STYLE[4] = gdTransparent;
-      CURRENT_LINE_STYLE[5] = gdTransparent;
-      CURRENT_LINE_STYLE[6] = color_table[CURRENT_COLOR];
-      CURRENT_LINE_STYLE[7] = gdTransparent;
-      NPTS_STYLE = 8;
+      CURRENT_LINE_STYLE_GD[3] = gdTransparent;
+      CURRENT_LINE_STYLE_GD[4] = gdTransparent;
+      CURRENT_LINE_STYLE_GD[5] = gdTransparent;
+      CURRENT_LINE_STYLE_GD[6] = color_table[CURRENT_COLOR_GD];
+      CURRENT_LINE_STYLE_GD[7] = gdTransparent;
+      NPTS_STYLE_GD = 8;
    }
    else if (jpatt_temp == 6) {      /* DA4 Line */
-      if (COLOR_OPTION == 0) {
-         CURRENT_LINE_STYLE[0] = color_table[CURRENT_COLOR];
-         CURRENT_LINE_STYLE[1] = color_table[CURRENT_COLOR];
+      if (COLOR_OPTION_GD == 0) {
+         CURRENT_LINE_STYLE_GD[0] = color_table[CURRENT_COLOR_GD];
+         CURRENT_LINE_STYLE_GD[1] = color_table[CURRENT_COLOR_GD];
       } else {
-         CURRENT_LINE_STYLE[0] = CURRENT_COLOR;
-         CURRENT_LINE_STYLE[1] = CURRENT_COLOR;
+         CURRENT_LINE_STYLE_GD[0] = CURRENT_COLOR_GD;
+         CURRENT_LINE_STYLE_GD[1] = CURRENT_COLOR_GD;
       }
-      CURRENT_LINE_STYLE[2] = gdTransparent;
-      CURRENT_LINE_STYLE[3] = gdTransparent;
-      NPTS_STYLE = 4;
+      CURRENT_LINE_STYLE_GD[2] = gdTransparent;
+      CURRENT_LINE_STYLE_GD[3] = gdTransparent;
+      NPTS_STYLE_GD = 4;
    }
    else if (jpatt_temp == 7) {      /* DA5 Line */
-      if (COLOR_OPTION == 0) {
-         CURRENT_LINE_STYLE[0] = color_table[CURRENT_COLOR];
-         CURRENT_LINE_STYLE[1] = color_table[CURRENT_COLOR];
+      if (COLOR_OPTION_GD == 0) {
+         CURRENT_LINE_STYLE_GD[0] = color_table[CURRENT_COLOR_GD];
+         CURRENT_LINE_STYLE_GD[1] = color_table[CURRENT_COLOR_GD];
       } else {
-         CURRENT_LINE_STYLE[0] = CURRENT_COLOR;
-         CURRENT_LINE_STYLE[1] = CURRENT_COLOR;
+         CURRENT_LINE_STYLE_GD[0] = CURRENT_COLOR_GD;
+         CURRENT_LINE_STYLE_GD[1] = CURRENT_COLOR_GD;
       }
-      CURRENT_LINE_STYLE[2] = gdTransparent;
-      CURRENT_LINE_STYLE[3] = color_table[CURRENT_COLOR];
-      CURRENT_LINE_STYLE[4] = gdTransparent;
-      NPTS_STYLE = 5;
+      CURRENT_LINE_STYLE_GD[2] = gdTransparent;
+      CURRENT_LINE_STYLE_GD[3] = color_table[CURRENT_COLOR_GD];
+      CURRENT_LINE_STYLE_GD[4] = gdTransparent;
+      NPTS_STYLE_GD = 5;
    }
    else {
-      CURRENT_LINE_STYLE[0] = 0;
-      NPTS_STYLE = 0;
+      CURRENT_LINE_STYLE_GD[0] = 0;
+      NPTS_STYLE_GD = 0;
    }
 
 }
@@ -941,16 +931,16 @@ int   ix[2], iy[2], jcol[2];
 #endif
 {
 #if INTEGER_PRECISION == 0
-   if (COLOR_OPTION == 0) {
+   if (COLOR_OPTION_GD == 0) {
       gdImageSetPixel(im, *ix, *iy, color_table[*jcol]);
    } else {
-      gdImageSetPixel(im, *ix, *iy, CURRENT_COLOR);
+      gdImageSetPixel(im, *ix, *iy, CURRENT_COLOR_GD);
    }
 #else
-   if (COLOR_OPTION == 0) {
+   if (COLOR_OPTION_GD == 0) {
       gdImageSetPixel(im, ix[0], iy[0], color_table[jcol[0]]);
    } else {
-      gdImageSetPixel(im, ix[0], iy[0], CURRENT_COLOR);
+      gdImageSetPixel(im, ix[0], iy[0], CURRENT_COLOR_GD);
    }
 #endif
 
@@ -999,12 +989,12 @@ int   ix[2], iy[2], irad[2], ifill[2], jcol[2];
 #endif
    iwidth = 2 * ir;
    iheight = 2 * ir;
-   if (COLOR_OPTION == 0) {
+   if (COLOR_OPTION_GD == 0) {
       gdImageArc(im, xpos, ypos, iwidth, iheight, iang1, iang2,
                  color_table[jcol_t]);
    } else {
       gdImageArc(im, xpos, ypos, iwidth, iheight, iang1, iang2,
-                 CURRENT_COLOR);
+                 CURRENT_COLOR_GD);
    }
 
 }
@@ -1073,11 +1063,11 @@ int   npts[2], jcol[2];
         y1 = ypts[indx];
         y2 = ypts[0];
       }
-      if (COLOR_OPTION == 0) {
+      if (COLOR_OPTION_GD == 0) {
          gdImageFilledRectangle(im, x1, y1, x2, y2, 
                                 color_table[jcol_temp-1]);
       } else {
-         gdImageFilledRectangle(im, x1, y1, x2, y2, CURRENT_COLOR);
+         gdImageFilledRectangle(im, x1, y1, x2, y2, CURRENT_COLOR_GD);
       }
    }
    else if (npts_temp > 2) {     /* convex polygon */
@@ -1094,10 +1084,10 @@ int   npts[2], jcol[2];
          points[i].y = ypts[2*i];
 #endif
       }
-      if (COLOR_OPTION == 0) {
+      if (COLOR_OPTION_GD == 0) {
          gdImageFilledPolygon(im,points,temp,color_table[jcol_temp-1]);
       } else {
-         gdImageFilledPolygon(im,points,temp,CURRENT_COLOR);
+         gdImageFilledPolygon(im,points,temp,CURRENT_COLOR_GD);
       }
 */
    }
@@ -1157,8 +1147,7 @@ int    jheigh[2], ifontz[2];
    int    len;                  /* number of characters in string */
    int    len2;                 /* number of characters in font name */
    int    string_width;         /* width of string in pixels */
-   /* char   string2[130]; */        /* converted string */
-   unsigned char   string2[130];         /* converted string */
+   char   string2[130];         /* converted string */
    char   font_name[130];       /* string for font name */
    int    i;
    int    ixpos_temp, iypos_temp, ijusth_temp, ijustv_temp;
@@ -1216,12 +1205,12 @@ int    jheigh[2], ifontz[2];
       } else if (ijusth_temp == 2) {
          ixpos_temp = ixpos_temp - len*width;
       }
-      if (COLOR_OPTION == 0) {
+      if (COLOR_OPTION_GD == 0) {
          gdImageString(im, im_font, ixpos_temp, iypos_temp, string2,
-                       color_table[CURRENT_COLOR]);
+                       color_table[CURRENT_COLOR_GD]);
       } else {
          gdImageString(im, im_font, ixpos_temp, iypos_temp, string2,
-                       CURRENT_COLOR);
+                       CURRENT_COLOR_GD);
       }
    } else if (ifontz_temp == 2) {
       im_font = gdFontGetLarge();
@@ -1242,12 +1231,12 @@ int    jheigh[2], ifontz[2];
       } else if (ijusth_temp == 2) {
          ixpos_temp = ixpos_temp - len*width;
       }
-      if (COLOR_OPTION == 0) {
+      if (COLOR_OPTION_GD == 0) {
          gdImageString(im, im_font, ixpos_temp, iypos_temp, string2,
-                       color_table[CURRENT_COLOR]);
+                       color_table[CURRENT_COLOR_GD]);
       } else {
          gdImageString(im, im_font, ixpos_temp, iypos_temp, string2,
-                       CURRENT_COLOR);
+                       CURRENT_COLOR_GD);
       }
    } else if (ifontz_temp == 3) {
       im_font = gdFontGetMediumBold();
@@ -1268,12 +1257,12 @@ int    jheigh[2], ifontz[2];
       } else if (ijusth_temp == 2) {
          ixpos_temp = ixpos_temp - len*width;
       }
-      if (COLOR_OPTION == 0) {
+      if (COLOR_OPTION_GD == 0) {
          gdImageString(im, im_font, ixpos_temp, iypos_temp, string2,
-                       color_table[CURRENT_COLOR]);
+                       color_table[CURRENT_COLOR_GD]);
       } else {
          gdImageString(im, im_font, ixpos_temp, iypos_temp, string2,
-                       CURRENT_COLOR);
+                       CURRENT_COLOR_GD);
       }
    } else if (ifontz_temp == 4) {
       im_font = gdFontGetGiant();
@@ -1294,12 +1283,12 @@ int    jheigh[2], ifontz[2];
       } else if (ijusth_temp == 2) {
          ixpos_temp = ixpos_temp - len*width;
       }
-      if (COLOR_OPTION == 0) {
+      if (COLOR_OPTION_GD == 0) {
          gdImageString(im, im_font, ixpos_temp, iypos_temp, string2,
-                       color_table[CURRENT_COLOR]);
+                       color_table[CURRENT_COLOR_GD]);
       } else {
          gdImageString(im, im_font, ixpos_temp, iypos_temp, string2,
-                       CURRENT_COLOR);
+                       CURRENT_COLOR_GD);
       }
    } else if (ifontz_temp == 5) {
       im_font = gdFontGetTiny();
@@ -1320,12 +1309,12 @@ int    jheigh[2], ifontz[2];
       } else if (ijusth_temp == 2) {
          ixpos_temp = ixpos_temp - len*width;
       }
-      if (COLOR_OPTION == 0) {
+      if (COLOR_OPTION_GD == 0) {
          gdImageString(im, im_font, ixpos_temp, iypos_temp, string2,
-                       color_table[CURRENT_COLOR]);
+                       color_table[CURRENT_COLOR_GD]);
       } else {
          gdImageString(im, im_font, ixpos_temp, iypos_temp, string2,
-                       CURRENT_COLOR);
+                       CURRENT_COLOR_GD);
       }
    } else {
       /*  Obtain brect to set the justification */
@@ -1347,11 +1336,11 @@ int    jheigh[2], ifontz[2];
       } else if (ijusth_temp == 2) {
          ixpos_temp = ixpos_temp - width;
       }
-      if (COLOR_OPTION == 0) {
-         err = gdImageStringFT(im, &brect[0],color_table[CURRENT_COLOR],
+      if (COLOR_OPTION_GD == 0) {
+         err = gdImageStringFT(im, &brect[0],color_table[CURRENT_COLOR_GD],
                font_name,ptsize,0.,ixpos_temp,iypos_temp,string2);
       } else {
-         err = gdImageStringFT(im, &brect[0],CURRENT_COLOR,
+         err = gdImageStringFT(im, &brect[0],CURRENT_COLOR_GD,
                font_name,ptsize,0.,ixpos_temp,iypos_temp,string2);
       }
    }
@@ -1411,8 +1400,7 @@ int    jheigh[2], ifontz[2];
    int    len;                  /* number of characters in string */
    int    len2;                 /* number of characters in font name */
    int    string_width;         /* width of string in pixels */
-   /* char   string2[130]; */        /* converted string */
-   unsigned char   string2[130];         /* converted string */
+   char   string2[130];         /* converted string */
    char   font_name[130];       /* string for font name */
    int    i;
    int    ixpos_temp, iypos_temp, ijusth_temp, ijustv_temp;
@@ -1470,12 +1458,12 @@ int    jheigh[2], ifontz[2];
       } else if (ijusth_temp == 2) {
          iypos_temp = iypos_temp + len*width;
       }
-      if (COLOR_OPTION == 0) {
+      if (COLOR_OPTION_GD == 0) {
          gdImageStringUp(im, im_font, ixpos_temp, iypos_temp, string2,
-                         color_table[CURRENT_COLOR]);
+                         color_table[CURRENT_COLOR_GD]);
       } else {
          gdImageStringUp(im, im_font, ixpos_temp, iypos_temp, string2,
-                         CURRENT_COLOR);
+                         CURRENT_COLOR_GD);
       }
    } else if (ifontz_temp == 2) {
       im_font = gdFontGetLarge();
@@ -1495,12 +1483,12 @@ int    jheigh[2], ifontz[2];
       } else if (ijusth_temp == 2) {
          iypos_temp = iypos_temp + len*width;
       }
-      if (COLOR_OPTION == 0) {
+      if (COLOR_OPTION_GD == 0) {
          gdImageStringUp(im, im_font, ixpos_temp, iypos_temp, string2,
-                         color_table[CURRENT_COLOR]);
+                         color_table[CURRENT_COLOR_GD]);
       } else {
          gdImageStringUp(im, im_font, ixpos_temp, iypos_temp, string2,
-                         CURRENT_COLOR);
+                         CURRENT_COLOR_GD);
       }
    } else if (ifontz_temp == 3) {
       im_font = gdFontGetMediumBold();
@@ -1520,12 +1508,12 @@ int    jheigh[2], ifontz[2];
       } else if (ijusth_temp == 2) {
          iypos_temp = iypos_temp + len*width;
       }
-      if (COLOR_OPTION == 0) {
+      if (COLOR_OPTION_GD == 0) {
          gdImageStringUp(im, im_font, ixpos_temp, iypos_temp, string2,
-                         color_table[CURRENT_COLOR]);
+                         color_table[CURRENT_COLOR_GD]);
       } else {
          gdImageStringUp(im, im_font, ixpos_temp, iypos_temp, string2,
-                         CURRENT_COLOR);
+                         CURRENT_COLOR_GD);
       }
    } else if (ifontz_temp == 4) {
       im_font = gdFontGetGiant();
@@ -1545,12 +1533,12 @@ int    jheigh[2], ifontz[2];
       } else if (ijusth_temp == 2) {
          iypos_temp = iypos_temp + len*width;
       }
-      if (COLOR_OPTION == 0) {
+      if (COLOR_OPTION_GD == 0) {
          gdImageStringUp(im, im_font, ixpos_temp, iypos_temp, string2,
-                         color_table[CURRENT_COLOR]);
+                         color_table[CURRENT_COLOR_GD]);
       } else {
          gdImageStringUp(im, im_font, ixpos_temp, iypos_temp, string2,
-                         CURRENT_COLOR);
+                         CURRENT_COLOR_GD);
       }
    } else if (ifontz_temp == 5) {
       im_font = gdFontGetTiny();
@@ -1570,12 +1558,12 @@ int    jheigh[2], ifontz[2];
       } else if (ijusth_temp == 2) {
          iypos_temp = iypos_temp + len*width;
       }
-      if (COLOR_OPTION == 0) {
+      if (COLOR_OPTION_GD == 0) {
          gdImageStringUp(im, im_font, ixpos_temp, iypos_temp, string2,
-                         color_table[CURRENT_COLOR]);
+                         color_table[CURRENT_COLOR_GD]);
       } else {
          gdImageStringUp(im, im_font, ixpos_temp, iypos_temp, string2,
-                         CURRENT_COLOR);
+                         CURRENT_COLOR_GD);
       }
    } else {
       /*  Obtain brect to set the justification */
@@ -1597,11 +1585,11 @@ int    jheigh[2], ifontz[2];
       } else if (ijusth_temp == 2) {                /* Top */
          iypos_temp = iypos_temp + width;
       }
-      if (COLOR_OPTION == 0) {
-         err = gdImageStringFT(im, &brect[0],color_table[CURRENT_COLOR],
+      if (COLOR_OPTION_GD == 0) {
+         err = gdImageStringFT(im, &brect[0],color_table[CURRENT_COLOR_GD],
                font_name,ptsize,1.5708,ixpos_temp,iypos_temp,string2);
       } else {
-         err = gdImageStringFT(im, &brect[0],CURRENT_COLOR,
+         err = gdImageStringFT(im, &brect[0],CURRENT_COLOR_GD,
                font_name,ptsize,1.5708,ixpos_temp,iypos_temp,string2);
       }
    }

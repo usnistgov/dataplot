@@ -24467,7 +24467,9 @@ C
       CHARACTER*4 ISTEPN
 C
       INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOZC.INC'
       CHARACTER*4 IFSAVE(MAXF1)
+      EQUIVALENCE (CGARBG(1),IFSAVE(1))
 C
 C---------------------------------------------------------------------
 C

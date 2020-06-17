@@ -14780,7 +14780,7 @@ C
 C***FIRST EXECUTABLE STATEMENT  EXINT
       IERR = 0
       NZ = 0
-      ML=0
+      ML = 0
       ETOL = MAX(R1MACH(4),0.5E-18)
       IF (X.LT.0.0E0) IERR = 1
       IF (N.LT.1) IERR = 1
@@ -21236,16 +21236,6 @@ C
       T3=ABS(T1)
       T4=ABS(T2)
       T34=0.0
-C
-      IF(IBUGEV.EQ.'ON')THEN
-        WRITE(ICOUT,991)
-  991   FORMAT('AT 1100')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,993)I,T1,T2,T3,T4
-  993   FORMAT('I,T1,T2,T3,T4 = ',I6,4G15.7)
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
-C
       IF(T3.GT.0.0.AND.T4.GT.0.0)T34=T4*LOG(T3)
       IF(T34.GT.ALCPUM)GOTO8011
       IF(T1.NE.CPUMIN.AND.T1.NE.CPUMAX.AND.
@@ -21283,8 +21273,8 @@ C
         ABST2=ABS(T2)
         ISIGN=(-1)
         IF(T2.GE.0.0)ISIGN=1
-        IABST2=INT(ABST2+0.5)
-        AIABS2=IABST2
+        IABST2=INT(ABST2)
+        IABS2=IABST2
         REM=ABST2-AIABS2
         ABSREM=ABS(REM)
         IF(ABSREM.GE.CUTOFF)THEN
@@ -53513,12 +53503,10 @@ c
       data    zero, half, one, one5, two, four
      +          /0.0D0,  0.5D0, 1.0D0,  1.5D0, 2.0D0,  4.0D0/
 c
-      sw1=0.0
-      sw2=0.0
-      sw3=0.0
-      cw1=0.0
-      cw2=0.0
-      cw3=0.0
+      sw2=0.0d0
+      sw3=0.0d0
+      cw3=0.0d0
+      cw2=0.0d0
 c
       pi = four * atan(one)
       ifaca = n / 4

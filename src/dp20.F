@@ -183,8 +183,6 @@ C
       CHARACTER*4 IWEIEP
       CHARACTER*4 IWEILM
 C
-      DOUBLE PRECISION DSUM
-C
       REAL ALOC
       REAL ASCALE
 C
@@ -1011,14 +1009,11 @@ C
         ELSE
           ALOC=CPUMIN
           ASCALE=CPUMIN
+          CALL IGML1(Y,N,PSTAMV,
+     1               XMEAN,XSD,XMIN,XSKEW,
+     1               ALOCML,AMUML,SIGMML,GAMMML,
+     1               ISUBRO,IBUGA3,IERROR)
           SH2=XMEAN
-          DSUM=0.0D0
-          DO120I=1,N
-            DSUM=DSUM + (1.0D0/DBLE(Y(I)) - 1.0D0/DBLE(XMEAN))
-  120     CONTINUE
-          GAMMML=REAL(DBLE(N)/DSUM)
-          AMUML=XMEAN
-          SIGMML=SQRT(AMUML**3/GAMMML)
           IF(IGAUDF.EQ.'CHAN')THEN
             SH1=SIGMML
           ELSE
@@ -7831,6 +7826,7 @@ C
       F1FREQ=DBLE(F1)
       IF(AMMOM.LE.1.0)THEN
         AMMOM=1.5
+        XMID=DBLE(AMMOM)
       ELSE
         XMID=DBLE(AMMOM)
       ENDIF
@@ -43369,10 +43365,10 @@ C
         ALPHMO=0.0
         ALPHML=0.0
         ALPHFR=0.0
-        CALL DPMLZE(Y,TEMP1,NS1,NUMV,MAXNXT,
+        CALL DPMLZE(Y,TEMP1,NS1,NUMV,
      1              TEMP2,TEMP3,TEMP4,
      1              ALPHML,ALPHFR,ALPHMO,AFRVAR,AMLVAR,
-     1              ICAPSW,ICAPTY,IFORSW,
+     1              ICAPSW,ICAPTY,IFORSW,MAXNXT,
      1              ISUBRO,IBUGA3,IERROR)
 C
         INAME1(1)='ALPH'
@@ -47697,10 +47693,10 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPMLZE(Y,X,N,NVAR,MAXNXT,
+      SUBROUTINE DPMLZE(Y,X,N,NVAR,
      1                  TEMP1,TEMP2,TEMP3,
      1                  ALPHML,ALPHFR,ALPHMO,AFRVAR,AMLVAR,
-     1                  ICAPSW,ICAPTY,IFORSW,
+     1                  ICAPSW,ICAPTY,IFORSW,MAXNXT,
      1                  ISUBRO,IBUGA3,IERROR)
 C
 C     PURPOSE--THIS ROUTINE COMPUTES ESTIMATES FOR THE ZETA

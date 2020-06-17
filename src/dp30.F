@@ -3745,10 +3745,11 @@ C
       IFOUND='NO'
       ISUBN1='DPSY'
       ISUBN2='MM  '
+C
       IHIGH='OFF'
       IMULT='OFF'
       IREPL='OFF'
-      ICASE='    '
+      ICASE='NONE'
 C
       MAXCP1=MAXCOL+1
       MAXCP2=MAXCOL+2

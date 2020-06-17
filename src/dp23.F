@@ -8532,6 +8532,7 @@ C
       MAXCP6=MAXCOL+6
 C
       NS2=0
+      NRAN=0
       RANLOC=0.0
       RANSCA=1.0
 C

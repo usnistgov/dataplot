@@ -11073,7 +11073,6 @@ C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPMA'
       ISUBN2='H2  '
-C
       IERROR='NO'
       IWRITE='NO'
 C
@@ -11083,6 +11082,8 @@ C
       ICONC4='ACCEPT'
       ICONC5='ACCEPT'
       ICONC6='ACCEPT'
+C
+      NSUMM=0
 C
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MAH2')THEN
         WRITE(ICOUT,999)
@@ -28706,7 +28707,6 @@ C
      1       ICASL7.EQ.'CTCU'.OR.
      1       ICASL7(1:2).EQ.'CT')THEN
 C
-        IFOUND='YES'
         IF(ICASL7.EQ.'CTCU')THEN
           ICASE='CTCU'
           ICASE2=ICASL7
@@ -30774,6 +30774,7 @@ C
       ISUBN2='T2  '
       IFOUND='NO'
       IERROR='NO'
+      IMATSW='NO'
 C
       MAXCP1=MAXCOL+1
       MAXCP2=MAXCOL+2
@@ -30782,6 +30783,7 @@ C
       MAXCP5=MAXCOL+5
       MAXCP6=MAXCOL+6
 C
+      NUMVAR=0
       NJ=-99
       NIFOR=0
       ILOCR(1)=ILOCV
@@ -30793,8 +30795,6 @@ C
         NEWNAM(I)='NO'
    12 CONTINUE
       NUMVAL=1
-C
-      IMATSW='NO'
 C
       ITYP91='VECT'
       SCAL91=(-999.0)

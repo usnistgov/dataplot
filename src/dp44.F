@@ -2864,6 +2864,8 @@ C
 C     CHECK THE INPUT ARGUMENTS FOR ERRORS
 C
       XINC=0.0
+      XL=0.0
+      XR=0.0
       ALL=A
       AUL=B
       IF(A.LE.DBLE(CPUMIN+1.0) .AND. B.LE.DBLE(CPUMIN+1.0))THEN
@@ -5610,11 +5612,6 @@ C
         WRITE(ICOUT,52)IBUGA3,ISUBRO,ICASAN,N
    52   FORMAT('IBUGA3,ISUBRO,ICASAN,N = ',3(A4,2X),I8)
         CALL DPWRST('XXX','WRIT')
-        DO56I=1,N
-          WRITE(ICOUT,57)I,X(I)
-   57     FORMAT('I,X(I) = ',I8,G15.7)
-          CALL DPWRST('XXX','WRIT')
-   56   CONTINUE
       ENDIF
 C
 C               ********************************************
@@ -7860,11 +7857,11 @@ CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
      8           0.16                       D  -18,
      9          -0.1                        D  -19/
 C
+      XLOW1 = 0.0D0
+C
 C  Start execution
 C
       X = XVALUE
-      XLOW1 = 0.0D0
-      XHIGH1 = 0.0D0
 C
 C  Error test
 C
@@ -8058,13 +8055,12 @@ CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
      8           0.16                       D  -18,
      9          -0.1                        D  -19/
 C
+      XLOW1 = 0.0D0
+      XLOW2 = 0.0D0
+C
 C  Start execution
 C
       X = XVALUE
-      XLOW1 = 0.0D0
-      XLOW2 = 0.0D0
-      XHIGH1 = 0.0D0
-      XHIGH2 = 0.0D0
 C
 C  Error test
 C
@@ -8263,13 +8259,12 @@ CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
      8           0.15                       D  -18,
      9          -0.1                        D  -19/
 C
+      XLOW1 = 0.0D0
+      XLOW2 = 0.0D0
+C
 C  Start execution
 C
       X = XVALUE
-      XLOW1 = 0.0D0
-      XLOW2 = 0.0D0
-      XHIGH1 = 0.0D0
-      XHIGH2 = 0.0D0
 C
 C  Error test
 C
@@ -8469,13 +8464,12 @@ CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
      8           0.15                       D  -18,
      9          -0.1                        D  -19/
 C
+      XLOW1 = 0.0D0
+      XLOW2 = 0.0D0
+C
 C  Start execution
 C
       X = XVALUE
-      XLOW1 = 0.0D0
-      XLOW2 = 0.0D0
-      XHIGH1 = 0.0D0
-      XHIGH2 = 0.0D0
 C
 C  Error test
 C
@@ -8674,13 +8668,12 @@ CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
      8           0.15                       D  -18,
      9          -0.1                        D  -19/
 C
+      XLOW1 = 0.0D0
+      XLOW2 = 0.0D0
+C
 C  Start execution
 C
       X = XVALUE
-      XLOW1 = 0.0D0
-      XLOW2 = 0.0D0
-      XHIGH1 = 0.0D0
-      XHIGH2 = 0.0D0
 C
 C  Error test
 C
@@ -8879,13 +8872,12 @@ CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
      8           0.14                       D  -18,
      9          -0.1                        D  -19/
 C
+      XLOW1 = 0.0D0
+      XLOW2 = 0.0D0
+C
 C  Start execution
 C
       X = XVALUE
-      XLOW1 = 0.0D0
-      XLOW2 = 0.0D0
-      XHIGH1 = 0.0D0
-      XHIGH2 = 0.0D0
 C
 C  Error test
 C
@@ -9085,13 +9077,12 @@ CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
      8           0.14                       D  -18,
      9          -0.1                        D  -19/
 C
+      XLOW1 = 0.0D0
+      XLOW2 = 0.0D0
+C
 C  Start execution
 C
       X = XVALUE
-      XLOW1 = 0.0D0
-      XLOW2 = 0.0D0
-      XHIGH1 = 0.0D0
-      XHIGH2 = 0.0D0
 C
 C  Error test
 C
@@ -9290,13 +9281,12 @@ CCCCC DATA ERRMSG/'ARGUMENT < 0.0'/
      8           0.13                       D  -18,
      9          -0.1                        D  -19/
 C
+      XLOW1 = 0.0D0
+      XLOW2 = 0.0D0
+C
 C  Start execution
 C
       X = XVALUE
-      XLOW1 = 0.0D0
-      XLOW2 = 0.0D0
-      XHIGH1 = 0.0D0
-      XHIGH2 = 0.0D0
 C
 C  Error test
 C

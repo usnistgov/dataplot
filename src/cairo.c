@@ -187,9 +187,6 @@ static int   argc = 0;
 
 #endif
 
-#define FONT_HEIGHT_CURRENT  0
-#define FONT_GAP_CURRENT     0
-
 /* Save file name for PNG device */
 char     file_string_png_2[160];
 char     file_string_png_3[160];
@@ -839,15 +836,12 @@ double  jgreen[2];
             XGetWindowAttributes(dsp,da,&returned_attributes);
             ixret_temp = returned_attributes.width;
             iyret_temp = returned_attributes.height;
-         } else {
-            ixret_temp = 0;
-            iyret_temp = 0;
          }
 #else
          ixret_temp=cairo_xlib_surface_get_width(surface1);
          iyret_temp=cairo_xlib_surface_get_height(surface1);
 #endif
-         if (ixret_temp != (int)anumhp_temp || iyret_temp != (int)anumvp_temp) {
+         if (ixret_temp != (int)anumhp_temp || iyret_temp != (int)height) {
             width=(float)ixret_temp;
             height=(float)iyret_temp;
             xscale = width/anumhp_temp;

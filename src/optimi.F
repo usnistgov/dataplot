@@ -5931,7 +5931,8 @@ C
 C
       DATA ZERO,ONE /0.0D0,1.0D0/
 C
-        OVERFL=.FALSE.
+      OVERFL=.FALSE.
+      ETA=CPUMIN
 C
         IF(OUTPUT.GT.3) THEN
            WRITE(ICOUT,1)

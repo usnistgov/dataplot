@@ -2088,6 +2088,8 @@ C
       EQUIVALENCE (IGARBG(IIGAR7),NCOLSP(1))
       EQUIVALENCE (IGARBG(IIGAR8),NTOT(1))
       EQUIVALENCE (IGARBG(IIGAR9),ROWSEP(1))
+      EQUIVALENCE (IGARBG(IIGR10),NCTIT2(1))
+C
       EQUIVALENCE (CGARBG(1),IVALZZ(1,1))
 C
 C-----COMMON----------------------------------------------------
@@ -5418,6 +5420,9 @@ C
       IRELAT='OFF'
       IWRIT2='OFF'
       IERROR='NO'
+C
+      AN1=0.0
+      AN2=0.0
 C
 C               ********************************************
 C               **  STEP 1--                              **
@@ -15370,6 +15375,9 @@ C
       ISUBN1='DPAG'
       ISUBN2='C1  '
       IERROR='NO'
+C
+      ALOWLM=0.0
+      AUPPLM=0.0
 C
       IF(IBUGA3.EQ.'ON')THEN
         WRITE(ICOUT,999)

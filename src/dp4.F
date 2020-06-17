@@ -2999,9 +2999,10 @@ CCCCC COMPILATION ERRORS FOR NEW INTEL 11 COMPILER
       DIMENSION       WA(*)      ,NTRYH(4) 
       REAL            IFAC(*)
       DATA NTRYH(1),NTRYH(2),NTRYH(3),NTRYH(4)/3,4,2,5/
-C***FIRST EXECUTABLE STATEMENT  CFFTI1  
-      NTRY=0
 C
+      NTRY = 0
+C
+C***FIRST EXECUTABLE STATEMENT  CFFTI1  
       NL = N   
       NF = 0   
       J = 0    
@@ -4007,8 +4008,8 @@ C
         CHARACTER*4 IERROR
 C
         IERROR='NO'
-        LA=0
         Y1=0.0D0
+        LA=0
 C
         PI=3.141592653589793D0
         A0=A
@@ -19783,9 +19784,10 @@ C
 C
       EXTERNAL CARG
       DATA SQEPS /0.0/
-C***FIRST EXECUTABLE STATEMENT  CLNREL
+C
       CLNREL = CMPLX (0.0, 0.0)
 C
+C***FIRST EXECUTABLE STATEMENT  CLNREL
       IF (SQEPS.EQ.0.) SQEPS = SQRT (R1MACH(4))
 C
       IF (CABS(1.+Z).LT.SQEPS) THEN
@@ -21975,6 +21977,7 @@ C
       MAXCP4=MAXCOL+4
       MAXCP5=MAXCOL+5
       MAXCP6=MAXCOL+6
+      NMAX=0
 C
 C     CHECK THE INPUT ARGUMENTS FOR ERRORS
 C
@@ -22317,7 +22320,6 @@ C
      1                IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
      1                ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCP,IERROR)
           IF(IERROR.EQ.'YES')GOTO9000
-          PROP1=VALUE(ILOCP)
           IF(PROP1.LT.0.0 .OR. PROP1.GT.100.0)THEN
             WRITE(ICOUT,999)
             CALL DPWRST('XXX','BUG ')
@@ -22342,6 +22344,8 @@ C
             CALL DPWRST('XXX','BUG ')
             IERROR='YES'
             GOTO9000
+          ELSE
+            PROP1=VALUE(ILOCP)
           ENDIF
         ENDIF
 C
@@ -22354,7 +22358,6 @@ C
      1                IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
      1                ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCP,IERROR)
           IF(IERROR.EQ.'YES')GOTO9000
-          PROP2=VALUE(ILOCP)
           IF(PROP2.LT.0.0 .OR. PROP2.GT.100.0)THEN
             WRITE(ICOUT,999)
             CALL DPWRST('XXX','BUG ')
@@ -22367,7 +22370,7 @@ C
             WRITE(ICOUT,11583)
             CALL DPWRST('XXX','BUG ')
             WRITE(ICOUT,11594)PROP2
-11594       FORMAT('      PARAMETER P2 = UPPER PROPORTION = ',G15.7)
+11594       FORMAT('      PARAMETER P2 = LOWER PROPORTION = ',G15.7)
             CALL DPWRST('XXX','BUG ')
             WRITE(ICOUT,11596)
 11596       FORMAT('      USE THE LET COMMAND TO PRE-DEFINE P2 AS IN')
@@ -22377,6 +22380,8 @@ C
             CALL DPWRST('XXX','BUG ')
             IERROR='YES'
             GOTO9000
+          ELSE
+            PROP2=VALUE(ILOCP)
           ENDIF
         ENDIF
 C
@@ -23506,8 +23511,6 @@ C
 C
       IF(ICASPL.EQ.'SBL1')THEN
 C
-        NMAX=0
-C
 C       STEP 1: SAVE FULL SAMPLE RESPONSE VALUES
 C
         IF(ISBCP1.GE.1)THEN
@@ -23702,9 +23705,9 @@ C
 C
 C       STEP 1: SAVE FULL SAMPLE RESPONSE VALUES
 C
-        NMAX=0
         IF(ISBCP2.GE.1)THEN
           ICNT=0
+          NMAX=0
           DO8211JJ=1,ISBCP2
             IHP=ISBPL2(JJ)(1:4)
             IHP2=ISBPL2(JJ)(5:8)
@@ -23894,9 +23897,9 @@ C
 C
 C       STEP 1: SAVE FULL SAMPLE RESPONSE VALUES
 C
-        NMAX=0
         IF(ISBCP3.GE.1)THEN
           ICNT=0
+          NMAX=0
           DO8311JJ=1,ISBCP3
             IHP=ISBPL3(JJ)(1:4)
             IHP2=ISBPL3(JJ)(5:8)

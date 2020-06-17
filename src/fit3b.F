@@ -250,6 +250,7 @@ C
       EQUIVALENCE (DUMMY3(1),DCOLOR(1))
       EQUIVALENCE (DUMMY4(1),DCOLOR(MAXOBV+1))
       EQUIVALENCE (DUMMY5(1),DFILL(1))
+      EQUIVALENCE (PARCOV(1,1),DFILL(MAXOBV+1))
       EQUIVALENCE (GARBAG(IGARB1),XMAT(1))
       EQUIVALENCE (DGARBG(IDGAR1),VSCRT(1))
 C
@@ -289,6 +290,7 @@ C
       CUTOFF=2**(ICUTMX-3)
       IVAL=0
       IDEGRE=0
+      K1=0
 C
 C               **************************
 C               **  TREAT THE FIT CASE  **
@@ -686,37 +688,13 @@ C
           IF(IP4.GT.IWIDTH)GOTO4120
           IF(IANS(I).EQ.' '.AND.IANS(IP1).EQ.'F'.AND.
      1       IANS(IP2).EQ.'O'.AND.IANS(IP3).EQ.'R'.AND.
-     1       IANS(IP4).EQ.' ')THEN
-            IF(ISTOP.GT.0)THEN
-              ISTOP=MIN(I,ISTOP)
-            ELSE
-              ISTOP=I
-            ENDIF
-          ENDIF
+     1       IANS(IP4).EQ.' ')ISTOP=I
 C
           IF(IP7.GT.IWIDTH)GOTO4120
           IF(IANS(I).EQ.' '.AND.IANS(IP1).EQ.'S'.AND.
      1       IANS(IP2).EQ.'U'.AND.IANS(IP3).EQ.'B'.AND.
      1       IANS(IP4).EQ.'S'.AND.IANS(IP5).EQ.'E'.AND.
-     1       IANS(IP6).EQ.'T'.AND.IANS(IP7).EQ.' ')THEN
-            IF(ISTOP.GT.0)THEN
-              ISTOP=MIN(I,ISTOP)
-            ELSE
-              ISTOP=I
-            ENDIF
-          ENDIF
-C
-          IF(IP7.GT.IWIDTH)GOTO4120
-          IF(IANS(I).EQ.' '.AND.IANS(IP1).EQ.'E'.AND.
-     1       IANS(IP2).EQ.'X'.AND.IANS(IP3).EQ.'C'.AND.
-     1       IANS(IP4).EQ.'E'.AND.IANS(IP5).EQ.'P'.AND.
-     1       IANS(IP6).EQ.'T'.AND.IANS(IP7).EQ.' ')THEN
-            IF(ISTOP.GT.0)THEN
-              ISTOP=MIN(I,ISTOP)
-            ELSE
-              ISTOP=I
-            ENDIF
-          ENDIF
+     1       IANS(IP6).EQ.'T'.AND.IANS(IP7).EQ.' ')ISTOP=I
 C
  4110   CONTINUE
  4120   CONTINUE
@@ -941,14 +919,11 @@ C
             IKEY='SUBS'
             IF(IHARG(J1).EQ.'EXCE')IKEY='EXCE'
             ILOCQ=J1
-            GOTO409
           ELSEIF(IHARG(J).EQ.'FOR '.AND.IHARG2(J).EQ.'    ')THEN
             ICASEQ='FOR'
             ILOCQ=J1
-            GOTO409
           ENDIF
   400   CONTINUE
-  409   CONTINUE
       ENDIF
 C
       IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PFIT')THEN
@@ -1783,7 +1758,6 @@ C
       IF(ICASFI.EQ.'RFIT')GOTO7900
 C
 CCCCC THE FOLLOWING SECTION (DOWN TO 7640 CONTINUE) WAS REWRITTEN MAY 1989
-      K1=0
       IF(ICASFI.EQ.'MFIT')K1=NUMPAR
       L=0
       DO7600J=1,K1
@@ -11234,6 +11208,7 @@ C
 C
       COS=0.0
       SIN=0.0
+C
       NM1 = N - 1
       IF (NM1 .LT. 1) GO TO 50
       DO 20 NMJ = 1, NM1
@@ -11375,12 +11350,12 @@ C
 C
       DATA ONE,P1,P5,P001,P0001,ZERO
      1     /1.0E0,1.0E-1,5.0E-1,1.0E-3,1.0E-4,0.0E0/
+      XNORM = 0.0
       EPSMCH = R1MACH(4)
       INFO = 0
       IFLAG = 0
       NFEV = 0
       NJEV = 0
-      XNORM=0.0
       IF (IOPT .LT. 1 .OR. IOPT .GT. 2 .OR.
      1    N .LE. 0 .OR. XTOL .LT. ZERO .OR. MAXFEV .LE. 0
      2    .OR. ML .LT. 0 .OR. MU .LT. 0 .OR. FACTOR .LE. ZERO
@@ -12445,8 +12420,8 @@ C
 C
 C     BEGIN BLOCK PERMITTING ...EXITS TO 320
 C***FIRST EXECUTABLE STATEMENT  DNSQ
+         XNORM = 0.0D0
          EPSMCH = D1MACH(4)
-         XNORM = 0.0
 C
          INFO = 0
          IFLAG = 0
@@ -13196,8 +13171,10 @@ C***END PROLOGUE  DENORM
      1     X(*), X1MAX, X3MAX, XABS, ZERO
       SAVE ONE, ZERO, RDWARF, RGIANT
       DATA ONE,ZERO,RDWARF,RGIANT /1.0D0,0.0D0,3.834D-20,1.304D19/
+C
+      DENORM = ZERO
+C
 C***FIRST EXECUTABLE STATEMENT  DENORM
-      DENORM=0.0D0
       S1 = ZERO
       S2 = ZERO
       S3 = ZERO
@@ -13849,10 +13826,10 @@ C
 C     APPLY THE FIRST SET OF GIVENS ROTATIONS TO A.
 C
 C***FIRST EXECUTABLE STATEMENT  D1MPYQ
-      SIN = 0.0D0
-      COS = 0.0D0
       NM1 = N - 1
       IF (NM1 .LT. 1) GO TO 50
+      COS = 0.0
+      SIN = 0.0
       DO 20 NMJ = 1, NM1
          J = N - NMJ
          IF (ABS(V(J)) .GT. ONE) COS = ONE/V(J)
@@ -14271,8 +14248,9 @@ C  ******************************************************************   STE  320
 C
       INCLUDE 'DPCOP2.INC'
 C
-      ID1 = 0
-      ID2 = 0
+      ID1=0
+      ID2=0
+      IB=0
       S = 0
       NCELLS = LSTFI(1)
       DO 40 I=1,NCELLS

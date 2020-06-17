@@ -5766,7 +5766,6 @@ C               **  PRINT OUT GOODNESS OF FIT INFORMATION  **
 C               *********************************************
 C
       IF(IREP.EQ.'YES')THEN
-        IFITDF=IRESDF-IREPDF
         FITDF=IFITDF
         FITSS=RESSS-REPSS
         FITMS=FITSS/FITDF
@@ -13176,6 +13175,7 @@ C     GROUP AS A SEPARATE TABLE.
 C
       IF(IKRUGS.EQ.'ON')THEN
 C
+CCCCC   DO2060I=1,NUMDIS
         DO2060I=1,NDIST
 C
           NUMROW=ICNT
@@ -14385,6 +14385,8 @@ C
       IERROR='NO'
 C
       ILOC3=0
+      ISTRT=0
+      ISTOP=0
 C
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'SSPL')THEN
         WRITE(ICOUT,999)
@@ -15627,7 +15629,6 @@ C
 C
       IF(NUMVIN.LT.3)GOTO700
 C
-      ICOL32=-99
       NUMVAR=3
       ILOCVP=ILOCV+2
       IF(ILOCVP.GT.NUMARG)THEN
@@ -15648,6 +15649,7 @@ C
         GOTO19000
       ENDIF
 C
+      ICOL32=0
       IHARG5=IHARG(ILOCVP)
       IHARG6=IHARG2(ILOCVP)
       DO3310I=1,NUMNAM
@@ -16723,6 +16725,7 @@ C
       INCLUDE 'DPCOF2.INC'
       INCLUDE 'DPCOZZ.INC'
       INCLUDE 'DPCOZC.INC'
+      INCLUDE 'DPCOZI.INC'
       INCLUDE 'DPCOST.INC'
 C
       INTEGER INUMEL(MAXNME)
@@ -16735,6 +16738,9 @@ C
 C
       EQUIVALENCE (GARBAG(IGARB1),TEMP1(1))
       EQUIVALENCE (GARBAG(IGARB2),TEMP2(1))
+      EQUIVALENCE (CGARBG(1),IJUNK(1))
+      EQUIVALENCE (CGARBG(4*MAXNME+1),IJUNK2(1))
+      EQUIVALENCE (IGARBG(1),INUMEL(1))
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
@@ -18329,13 +18335,14 @@ C
       AVAL1=0.0
       AVAL2=0.0
       AVAL3=0.0
+      NUMVAR=0
 C
-C               **********************************************************
-C               **  TREAT THE SUBCASE OF CALCULATING CERTAIN            **
-C               **  ELEMENTARY STATISTICS (MEAN, SD, ETC.)              **
-C               **       1) FOR A FULL VARIABLE, OR                     **
-C               **       2) FOR PART OF A VARIABLE.                     **
-C               **********************************************************
+C               *******************************************************
+C               **  TREAT THE SUBCASE OF CALCULATING CERTAIN         **
+C               **  ELEMENTARY STATISTICS (MEAN, SD, ETC.)           **
+C               **       1) FOR A FULL VARIABLE, OR                  **
+C               **       2) FOR PART OF A VARIABLE.                  **
+C               *******************************************************
 C
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'STC2')THEN
         WRITE(ICOUT,999)
@@ -25863,6 +25870,7 @@ C
       ILOC3=0
       ILIST2=0
       NUMTMP=0
+      IMATCH=0
 C
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'STIN')THEN
         WRITE(ICOUT,999)

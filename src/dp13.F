@@ -7000,20 +7000,6 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-C
-      IF(IERROR.EQ.'YES')THEN
-        WRITE(ICOUT,9001)
- 9001   FORMAT('      THE COMMAND LINE WAS AS FOLLOWS--')
-        CALL DPWRST('XXX','BUG ')
-        IF(IWIDTH.GE.1)THEN
-          WRITE(ICOUT,9003)(IANS(I),I=1,MIN(100,IWIDTH))
- 9003     FORMAT('      ',100A1)
-          CALL DPWRST('XXX','BUG ')
-        ENDIF
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
-C
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'DRAW')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')

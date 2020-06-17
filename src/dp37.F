@@ -469,6 +469,7 @@ C               **  CHECK FOR VALID PARAMETERS         **
 C               *****************************************
 C
       PDF=0.0
+      DSAVE=0.0D0
       IF(IADEDF.EQ.'K')THEN
         IF(AK.LE.0.0)THEN
           WRITE(ICOUT,5)
@@ -498,7 +499,6 @@ C
       DX=X
       DK=AK
       DTAU=TAU
-      DSAVE=0.0D0
 C
 C               *****************************************
 C               **  STEP 2--                           **
@@ -3713,10 +3713,11 @@ C
           GOTO2105
         ENDIF
 C
+        IFLAG=0
         DXSTRT=(DXLOW + DXUP)/2.0D0
         DAE=2.0*0.000001D0*DXSTRT
         DRE=DAE
-        IFLAG=0
+C
         CALL DFZER2(GAMFU5,DXLOW,DXUP,DXSTRT,DRE,DAE,IFLAG,DTEMP1)
 C
         IF(IFLAG.EQ.2)THEN
@@ -25862,8 +25863,8 @@ CCCCC DATA ZERO,HALF,ONE/ 0.0 D 0 , 0.5 D 0 , 1.0 D 0 /
       DATA AGOSTA(22)/-0.9                        D  -19/
       DATA AGOSTA(23)/-0.1                        D  -19/
 C
-      XLOW=0.0
-      XHIGH=0.0
+      XLOW = 0.0
+      XHIGH = 0.0
 C
 C   Start computation
 C
