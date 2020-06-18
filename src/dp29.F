@@ -5765,6 +5765,7 @@ C               **  STEP 13--                              **
 C               **  PRINT OUT GOODNESS OF FIT INFORMATION  **
 C               *********************************************
 C
+      IFITDF=IRESDF-IREPDF
       IF(IREP.EQ.'YES')THEN
         FITDF=IFITDF
         FITSS=RESSS-REPSS
