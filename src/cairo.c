@@ -134,20 +134,20 @@ FILE *file3;
 Display *dsp;
 Drawable da;
 Screen *scr;
-int screen;
-unsigned long white;       /* values for black and white */
-unsigned long black;       /* values for black and white */
-XEvent        event;       /* holds X server events */
-int           expose_flag; /* 0 - expose status has not changed,
+int screen_cairo;
+unsigned long white_cairo;       /* values for black and white */
+unsigned long black_cairo;       /* values for black and white */
+XEvent        event_cairo;       /* holds X server events */
+int           expose_flag_cairo; /* 0 - expose status has not changed,
                               1 - expose status has changed */
-int           configure_flag; /* 0 - configuration up to date,
+int           configure_flag_cairo; /* 0 - configuration up to date,
                                  1 - configuration has been changed */
 XTextProperty  WindowName, IconName;
 char *window_name = "Dataplot";
 char *icon_name = "Dataplot";
-XSetWindowAttributes  window_attributes;    /* attributes structure */
-XWindowAttributes     returned_attributes;  /* returned attributes */
-unsigned long value_mask;         /* value mask for window attributes */
+XSetWindowAttributes  window_attributes_cairo;    /* attributes structure */
+XWindowAttributes     returned_attributes_cairo;  /* returned attributes */
+unsigned long value_mask_cairo;         /* value mask for window attributes */
 #define DEFAULT_X_SIZE  550
 #define DEFAULT_Y_SIZE  425
 #define DEFAULT_X        50
@@ -235,20 +235,20 @@ void  i_to_s_5();
  *           should be done about them.
  */
 #if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void cachec_(expose_flag_2, error_flag)
+void cachec_(expose_flag_cairo_2, error_flag)
 #elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CACHEC_(expose_flag_2, error_flag)
+void CACHEC_(expose_flag_cairo_2, error_flag)
 #elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void cachec(expose_flag_2, error_flag)
+void cachec(expose_flag_cairo_2, error_flag)
 #elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CACHEC(expose_flag_2, error_flag)
+void CACHEC(expose_flag_cairo_2, error_flag)
 #endif
 #if INTEGER_PRECISION == 0
 int  *error_flag;
-int  *expose_flag_2;
+int  *expose_flag_cairo_2;
 #else
 int  error_flag[2];
-int  expose_flag_2[2];
+int  expose_flag_cairo_2[2];
 #endif
 {
 #ifdef HAVE_X11
@@ -256,20 +256,20 @@ int  expose_flag_2[2];
 #endif
 
      *error_flag = 0;
-     *expose_flag_2 = 0;
+     *expose_flag_cairo_2 = 0;
 /*
 #if INTEGER_PRECISION == 0
      *error_flag = 0;
-     *expose_flag_2 = 0;
+     *expose_flag_cairo_2 = 0;
 #else
      error_flag[0] = 0;
-     expose_flag_2[0] = 0;
+     expose_flag_cairo_2[0] = 0;
 #endif
  */
 #ifdef HAVE_X11
      while (XEventsQueued(dsp, QueuedAfterReading) != 0) {/* check queue */
-          XNextEvent(dsp, &event);        /* get next event from queue */
-          switch (event.type) {
+          XNextEvent(dsp, &event_cairo);        /* get next event from queue */
+          switch (event_cairo.type) {
           case DestroyNotify:   /* window has been destroyed */
               cairo_surface_destroy(surface1);
               cairo_destroy(cr1);
@@ -283,18 +283,18 @@ int  expose_flag_2[2];
 #endif
               break;
           case Expose:          /* portion of window has become visible */
-              if(event.xexpose.count == 0) {
-                expose_flag = 1;
+              if(event_cairo.xexpose.count == 0) {
+                expose_flag_cairo = 1;
               }
-              *expose_flag_2 = 1;
+              *expose_flag_cairo_2 = 1;
 #if INTEGER_PRECISION == 0
-              *expose_flag_2 = 1;
+              *expose_flag_cairo_2 = 1;
 #else
-              expose_flag_2[0] = 1;
+              expose_flag_cairo_2[0] = 1;
 #endif
               break;
           case ConfigureNotify: /* window has been reconfigured */
-              configure_flag = 1;
+              configure_flag_cairo = 1;
               break;
           default:
               break;
@@ -437,14 +437,14 @@ double  jgreen[2];
 #endif
              } else {
                 double  x1, y1, width, height;
-                screen = DefaultScreen(dsp);
+                screen_cairo = DefaultScreen(dsp);
                 scr = DefaultScreenOfDisplay(dsp);
-                white = WhitePixel(dsp,screen);
-                black = BlackPixel(dsp,screen);
-                da = XCreateSimpleWindow(dsp, DefaultRootWindow(dsp), 0, 0, numhp, numvp, 0, black, white);
-                window_attributes.bit_gravity = NorthWestGravity;
-                value_mask = CWBitGravity;
-                XChangeWindowAttributes(dsp, da, value_mask, &window_attributes);
+                white_cairo = WhitePixel(dsp,screen_cairo);
+                black_cairo = BlackPixel(dsp,screen_cairo);
+                da = XCreateSimpleWindow(dsp, DefaultRootWindow(dsp), 0, 0, numhp, numvp, 0, black_cairo, white_cairo);
+                window_attributes_cairo.bit_gravity = NorthWestGravity;
+                value_mask_cairo = CWBitGravity;
+                XChangeWindowAttributes(dsp, da, value_mask_cairo, &window_attributes_cairo);
                 if (XStringListToTextProperty(&window_name, 1, &WindowName) == 0) {
                 }
                 if (XStringListToTextProperty(&icon_name, 1, &IconName) == 0) {
@@ -456,11 +456,11 @@ double  jgreen[2];
                 while (XEventsQueued(dsp, QueuedAfterReading) != 0) {/* check queue */
                    XFlush(dsp);
                    do {
-                      XNextEvent(dsp, &event);
-                   } while (event.type != MapNotify || event.xmap.window != da);
+                      XNextEvent(dsp, &event_cairo);
+                   } while (event_cairo.type != MapNotify || event_cairo.xmap.window != da);
                    XFlush(dsp);
                 }
-                surface1 = cairo_xlib_surface_create(dsp, da, DefaultVisual(dsp, screen), numhp, numvp);
+                surface1 = cairo_xlib_surface_create(dsp, da, DefaultVisual(dsp, screen_cairo), numhp, numvp);
                 cairo_xlib_surface_set_size(surface1, numhp, numvp);
                 cr1 = cairo_create(surface1);
                 x1 = 0.;
@@ -833,9 +833,9 @@ double  jgreen[2];
 #ifdef HAVE_X11
          if (imodel_temp == 1) {
             XFlush(dsp);
-            XGetWindowAttributes(dsp,da,&returned_attributes);
-            ixret_temp = returned_attributes.width;
-            iyret_temp = returned_attributes.height;
+            XGetWindowAttributes(dsp,da,&returned_attributes_cairo);
+            ixret_temp = returned_attributes_cairo.width;
+            iyret_temp = returned_attributes_cairo.height;
          }
 #else
          ixret_temp=cairo_xlib_surface_get_width(surface1);
@@ -2366,7 +2366,7 @@ int  error[2];
 #endif
 {
 #ifdef HAVE_X11
-     XEvent   event;            /* holds Xserver events */
+     XEvent   event_cairo;            /* holds Xserver events */
 #endif
      int      idev_temp;
      int      imodel_temp;
@@ -2374,8 +2374,8 @@ int  error[2];
      int      new_x, new_y;     /* a new X pointer position */
      unsigned int dummy;        /* placeholder for unwanted return value */
      int      done;
-     int      expose_flag;
-     int      configure_flag;
+     int      expose_flag_cairo;
+     int      configure_flag_cairo;
 
 #ifdef HAVE_X11
      /* Types of graphic input to accept */
@@ -2413,8 +2413,8 @@ int  error[2];
                 done = 0;
                 while (done == 0) {      /* loop until button press event */
 
-                XNextEvent(dsp, &event); /* get next event from queue */
-                switch (event.type) {
+                XNextEvent(dsp, &event_cairo); /* get next event from queue */
+                switch (event_cairo.type) {
                 case DestroyNotify:      /* window has been destroyed */
                    cairo_surface_destroy(surface1);
                    cairo_destroy(cr1);
@@ -2427,20 +2427,20 @@ int  error[2];
 #endif
                   break;
                 case Expose:          /* portion of window has become visible */
-                   if (event.xexpose.count == 0) {
-                      expose_flag = 1;
+                   if (event_cairo.xexpose.count == 0) {
+                      expose_flag_cairo = 1;
                    }
                    break;
                 case ConfigureNotify: /* window has been reconfigured */
-                   configure_flag = 1;
+                   configure_flag_cairo = 1;
                    break;
                 case ButtonPress:     /* Button event */
 #if INTEGER_PRECISION == 0
-                   *ixret = event.xbutton.x;
-                   *iyret = event.xbutton.y;
+                   *ixret = event_cairo.xbutton.x;
+                   *iyret = event_cairo.xbutton.y;
 #else
-                   ixret[0] = event.xbutton.x;
-                   iyret[0] = event.xbutton.y;
+                   ixret[0] = event_cairo.xbutton.x;
+                   iyret[0] = event_cairo.xbutton.y;
 #endif
                    done = 1;
                    break;
