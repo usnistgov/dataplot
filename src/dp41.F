@@ -153,6 +153,7 @@ C                     BLAND ALTMAN PLOT           JULY      2017
 C                     NORM KERN DENSITY MIXT PLOT JULY      2017
 C                     DEX ORDER PLOT              FEBRUARY  2018
 C                     CLASSIFICATION ... PLOT     FEBRUARY  2019
+C                     TOTAL TIME ON TEST PLOT     JUNE      2020
 C
 C     WRITTEN BY--JAMES J. FILLIBEN
 C                 STATISTICAL ENGINEERING DIVISION
@@ -291,6 +292,7 @@ C     UPDATED         --JULY      2017. NORMAL KERNEL DENSITY MIXTURE PLOT
 C     UPDATED         --FEBRUARY  2018. DEX ORDER PLOT
 C     UPDATED         --FEBRUARY  2019. CLASSIFICATION ... PLOT
 C     UPDATED         --MARCH     2019. CALL LIST TO DPBLOC
+C     UPDATED         --JUNE      2020. TOTAL TIME ON TEST PLOT
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -1730,6 +1732,17 @@ C               ****************************************
 C
       IF(ICOM.EQ.'KAPL' .OR. ICOM.EQ.'MODI')THEN
         CALL DPKAPL(NPLOTV,NPLOTP,NS,ICASPL,IAND1,IAND2,
+     1              IBUGG2,IBUGG3,ISUBRO,IBUGQ,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES')GOTO9000
+      ENDIF
+C
+C               ****************************************
+C               **  TREAT THE TOTAL TIME ON TEST PLOT **
+C               **  CASE (JUNE 2020)                  **
+C               ****************************************
+C
+      IF(ICOM.EQ.'TOTA' .OR. ICOM.EQ.'TTT ')THEN
+        CALL DPTTTP(NPLOTV,NPLOTP,NS,ICASPL,IAND1,IAND2,
      1              IBUGG2,IBUGG3,ISUBRO,IBUGQ,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES')GOTO9000
       ENDIF

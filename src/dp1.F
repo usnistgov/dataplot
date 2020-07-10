@@ -11896,6 +11896,11 @@ C
 C     PURPOSE--CLEAR THE SYSTEM CLIPBOARD.  THIS IS OPERATING
 C              SYSTEM AND COMPILER DEPENDENT.
 C
+C              THIS VERSION IS FOR LINUX.  IT ASSUMES "xclip" IS
+C              INSTALLED.  IT ISSUES THE COMMAND
+C
+C                 echo -n | xclip -selection clipboard
+C
 C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
@@ -11906,22 +11911,27 @@ C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C               HOST DEPENDENT
-C     VERSION NUMBER--2014.11
-C     ORIGINAL VERSION--NOVEMBER   2014.
+C     VERSION NUMBER--2020.06
+C     ORIGINAL VERSION--JUNE       2020.
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
-C
-C     NOTE THAT "USE IFWIN" (FOR INTEL COMPILER UNDER WINDOWS) MUST COME
-C     BEFORE ANY OTHER DECLARATIONS
-CINTE USE IFWIN
 C
       CHARACTER*4 IBUGS2
       CHARACTER*4 ISUBRO
       CHARACTER*4 IERROR
 C
+#ifdef HAVE_XCLIP
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+      CHARACTER*4 ISSAV3
+      CHARACTER*4 ISSAV4
+      CHARACTER*80 ISTRIN
+#endif
+C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOST.INC'
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
@@ -11944,30 +11954,47 @@ C
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
-      IF(IHOST1.EQ.'IBM-'.AND.ICOMPI.EQ.'MS-F')THEN
+#ifdef HAVE_XCLIP
 C
-C       CLEAR THE CLIPBOARD
-C
-CINTE   IF (IsClipboardFormatAvailable(CF_TEXT)) THEN
-CINTE      iSt = OpenClipboard(NULL)
-CINTE      iSt = EmptyClipboard()
-CINTE      iSt = CloseClipboard()
-           IF(IFEEDB.EQ.'ON')THEN
-              WRITE(ICOUT,1011)
- 1011         FORMAT('***** CLIPBOARD CLEARED')
-              CALL DPWRST('XXX','BUG ')
-           ENDIF
-CINTE   ENDIF
+      ISTRIN=' '
+      IF(IX11SE.EQ.'CLIP')THEN
+        ISTRIN='echo -n | xclip -selection clipboard'
+        NCSTR=36
+      ELSEIF(IX11SE.EQ.'PRIM')THEN
+        ISTRIN='echo -n | xclip -selection primary'
+        NCSTR=34
       ELSE
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,1900)
- 1900   FORMAT('***** CLEAR SYSTEM CLIPBOARD NOT ',
-     1         'SUPPORTED ON THIS OS/COMPILER PLATFORM.')
-        CALL DPWRST('XXX','BUG ')
-        IERROR='YES'
+        ISTRIN='echo -n | xclip -selection secondary'
+        NCSTR=36
       ENDIF
 C
+      ISSAV1=ISYSPE
+      ISSAV2=ISYSHI
+      ISSAV3=ICLEWT
+      ISSAV4=ILINSY
+      ISYSPE='ON'
+      ICLEWT='OFF'
+      ILINSY='COMM'
+      CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+      ISYSPE=ISSAV1
+      ISYSHI=ISSAV2
+      ICLEWT=ISSAV3
+      ILINSY=ISSAV4
+#else
+      IERROR='YES'
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1211)
+ 1211 FORMAT('***** ERROR IN CLIPBOARD CLEAR COMMAND')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,2201)
+ 2201 FORMAT('      THE xclip COMMAND IS NOT AVAILABLE.')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,2203)
+ 2203 FORMAT('      THE CONTENTS OF THE CLIPBOARD WILL NOT BE ',
+     1       'CLEARED.')
+      CALL DPWRST('XXX','BUG ')
+#endif
 C
 C               *****************
 C               **  STEP 90--  **

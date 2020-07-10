@@ -20440,28 +20440,24 @@ C-----START POINT-----------------------------------------------------
 C
       ISUBN1='CUMH'
       ISUBN2='AZ  '
-C
       IERROR='NO'
 C
-      IF(IBUGA3.EQ.'OFF')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF CUMHAZ--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBUGA3
-   52 FORMAT('IBUGA3 = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)NX
-   53 FORMAT('NX = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      DO55I=1,NX
-      WRITE(ICOUT,56)I,X(I),TAG(I)
-   56 FORMAT('I,X(I), TAG(I) = ',I8,2E15.7)
-      CALL DPWRST('XXX','BUG ')
-   55 CONTINUE
-   90 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF CUMHAZ--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,NX
+   52   FORMAT('IBUGA3,NX = ',A4,2X,I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,NX
+          WRITE(ICOUT,56)I,X(I),TAG(I)
+   56     FORMAT('I,X(I), TAG(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
 C
 C               **************************************
 C               **  COMPUTE CUMULATIVE HAZARD       **
@@ -20493,24 +20489,21 @@ C               *****************
 C
  9000 CONTINUE
 C
-      IF(IBUGA3.EQ.'OFF')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF CUMHAZ--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)IBUGA3,IERROR
- 9012 FORMAT('IBUGA3,IERROR = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)NX
- 9013 FORMAT('NX = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      DO9015I=1,NX
-      WRITE(ICOUT,9016)I,X(I),Y(I)
- 9016 FORMAT('I,X(I),Y(I) = ',I8,2E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9015 CONTINUE
- 9090 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF CUMHAZ--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        DO9015I=1,NX
+          WRITE(ICOUT,9016)I,X(I),Y(I)
+ 9016     FORMAT('I,X(I),Y(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9015   CONTINUE
+      ENDIF
 C
       RETURN
       END

@@ -7476,6 +7476,7 @@ C     UPDATED         --APRIL      2020.  SET BEST FIT <DIST>
 C     UPDATED         --MARCH      2020.  SET SEARCH4 DIRECTORY
 C     UPDATED         --MARCH      2020.  SET SEARCH5 DIRECTORY
 C     UPDATED         --MARCH      2020.  SET SEARCH6 DIRECTORY
+C     UPDATED         --JUNE       2020.  SET X11 SELECTION
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -12580,6 +12581,25 @@ C
           IHV='ON'
         ENDIF
         IINSOW=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE      2020
+C     *************************************************************
+C     **  SET X11 SELECTION <CLIPBOARD/PRIMARY/SECONDARY>        **
+C     *************************************************************
+C
+      IPART1='X11 '
+      IPART2='SELE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'PRIM')THEN
+          IHV='PRIM'
+        ELSEIF(IHV.EQ.'SECO')THEN
+          IHV='SECO'
+        ELSE
+          IHV='CLIP'
+        ENDIF
+        IX11SE=IHV
         GOTO5160
       ENDIF
 C
@@ -28829,6 +28849,7 @@ C     UPDATED         --APRIL      2020.  PROBE BEST FIT <DIST>
 C     UPDATED         --APRIL      2020.  PROBE SEARCH4 DIRECTORY
 C     UPDATED         --APRIL      2020.  PROBE SEARCH5 DIRECTORY
 C     UPDATED         --APRIL      2020.  PROBE SEARCH6 DIRECTORY
+C     UPDATED         --JUNE       2020.  PROBE X11 SELECTION
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -30160,6 +30181,18 @@ C
       IPART2='OVER'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
         IHV=IINSOW
+        GOTO5160
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        JUNE 2020.
+C     ******************************************
+C     **  PROBE X11 SELECTION                 **
+C     ******************************************
+C
+      IPART1='X11 '
+      IPART2='SELE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IHV=IX11SE
         GOTO5160
       ENDIF
 C

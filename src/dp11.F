@@ -801,6 +801,7 @@ C
       ICOLL=0
       ILISTL=0
       NIOLD=0
+      NSIZE=0
 C
       MAXCP1=MAXCOL+1
       MAXCP2=MAXCOL+2
@@ -808,7 +809,6 @@ C
       MAXCP4=MAXCOL+4
       MAXCP5=MAXCOL+5
       MAXCP6=MAXCOL+6
-C
 C
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CKEL')THEN
         WRITE(ICOUT,999)
@@ -10316,6 +10316,8 @@ C                                       CHARACTERS TO 255
 C     UPDATED  VERSION--FEBRUARY  2020. FOR "CLIPBOARD", CHECK TO SEE
 C                                       IF ARGUMENT IS ACTUALLY A FILE
 C                                       NAME
+C     UPDATED  VERSION--JUNE      2020. FOR "CLIPBOARD" UNDER LINUX,
+C                                       USE "xclip" (IF AVAILABLE)
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -10351,7 +10353,12 @@ C
       CHARACTER*4 IREWIN
       CHARACTER*4 ISUBN0
       CHARACTER*4 IERRFI
-C
+#ifdef HAVE_XCLIP
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+      CHARACTER*4 ISSAV3
+      CHARACTER*4 ISSAV4
+#endif
 C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
@@ -10377,6 +10384,8 @@ C
       INCLUDE 'DPCODA.INC'
       INCLUDE 'DPCOF2.INC'
       INCLUDE 'DPCOZC.INC'
+      INCLUDE 'DPCOST.INC'
+      INCLUDE 'DPCOHO.INC'
 C
       CHARACTER*2000000 ISTR
       EQUIVALENCE (CGARBG(1),ISTR)
@@ -10743,6 +10752,8 @@ C
 C
       IF(ICASE.EQ.'CLIP')THEN
 C
+C       COPY CLIPBOARD TO FILE
+C
         ISTEPN='22A'
         IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'COFI')
      1     CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
@@ -10754,14 +10765,72 @@ C
      1                IREWIN,ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
           IF(IERRFI.EQ.'YES')GOTO9000
         ENDIF
-        ITYPE='COPY'
-        IHELMX=-99
-        CALL DPCLI2(ITYPE,IOUNI2,IHELMX,ILINRD,IBUGS2,ISUBRO,IERROR)
+        IF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
+#ifdef HAVE_XCLIP
+C
+C       ISSUE THE COMMAND
+C
+C          xclip -o -selection <clipboard/primary/secondary>  > IFILE2
+C
+          ISTRIN=' '
+          IF(IX11SE.EQ.'CLIP')THEN
+            ISTRIN='xclip -o -selection clipboard'
+            NCSTR=29
+          ELSEIF(IX11SE.EQ.'PRIM')THEN
+            ISTRIN='xclip -o -selection primary'
+            NCSTR=27
+          ELSE
+            ISTRIN='xclip -o -selection secondary'
+            NCSTR=29
+          ENDIF
+C
+          NCSTR=NCSTR+1
+          ISTRIN(NCSTR:NCSTR+2)=' > '
+          NCSTR=NCSTR+2
+          DO2206II=1,NCFIL2
+            NCSTR=NCSTR+1
+            ISTRIN(NCSTR:NCSTR)=IFILE2(II:II)
+ 2206     CONTINUE
+C
+          ISSAV1=ISYSPE
+          ISSAV2=ISYSHI
+          ISSAV3=ICLEWT
+          ISSAV4=ILINSY
+          ISYSPE='ON'
+          ICLEWT='OFF'
+          ILINSY='COMM'
+          CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+          ISYSPE=ISSAV1
+          ISYSHI=ISSAV2
+          ICLEWT=ISSAV3
+          ILINSY=ISSAV4
+          GOTO9000
+#else
+          IERROR='YES'
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1211)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2201)
+ 2201     FORMAT('      THE xclip COMMAND IS NOT AVAILABLE.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2203)
+ 2203     FORMAT('      THE CONTENTS OF THE CLIPBOARD WILL NOT BE ',
+     1           'COPIED.')
+          CALL DPWRST('XXX','BUG ')
+          GOTO9000
+#endif
+        ELSE
+          ITYPE='COPY'
+          IHELMX=-99
+          CALL DPCLI2(ITYPE,IOUNI2,IHELMX,ILINRD,IBUGS2,ISUBRO,IERROR)
+        ENDIF
 C
         IENDFI='OFF'
         IREWIN='ON'
         CALL DPCLFI(IOUNI2,IFILE2,ISTAT2,IFORM2,IACCE2,IPROT2,ICURS2,
-     1              IENDFI,IREWIN,ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
+     1              IENDFI,IREWIN,ISUBN0,
+     1              IERRFI,IBUGS2,ISUBRO,IERROR)
 C
         GOTO9000
       ELSEIF(ICASE.EQ.'CLI2')THEN
@@ -10777,8 +10846,65 @@ C
      1                IREWIN,ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
           IF(IERRFI.EQ.'YES')GOTO9000
         ENDIF
-        MAXCHR=2000000
-        CALL DPCLI6(IOUNI1,ISTR,MAXCHR,IBUGS2,ISUBRO,IERROR)
+        IF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
+#ifdef HAVE_XCLIP
+C
+C       ISSUE THE COMMAND
+C
+C          xclip -i -selection <clipboard/primary/secondary>  < IFILE1
+C
+          ISTRIN=' '
+          IF(IX11SE.EQ.'CLIP')THEN
+            ISTRIN='xclip -i -selection clipboard'
+            NCSTR=29
+          ELSEIF(IX11SE.EQ.'PRIM')THEN
+            ISTRIN='xclip -i -selection primary'
+            NCSTR=27
+          ELSE
+            ISTRIN='xclip -i -selection secondary'
+            NCSTR=29
+          ENDIF
+C
+          NCSTR=NCSTR+1
+          ISTRIN(NCSTR:NCSTR+2)=' < '
+          NCSTR=NCSTR+2
+          DO2306II=1,NCFIL1
+            NCSTR=NCSTR+1
+            ISTRIN(NCSTR:NCSTR)=IFILE1(II:II)
+ 2306     CONTINUE
+C
+          ISSAV1=ISYSPE
+          ISSAV2=ISYSHI
+          ISSAV3=ICLEWT
+          ISSAV4=ILINSY
+          ISYSPE='ON'
+          ICLEWT='OFF'
+          ILINSY='COMM'
+          CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+          ISYSPE=ISSAV1
+          ISYSHI=ISSAV2
+          ICLEWT=ISSAV3
+          ILINSY=ISSAV4
+          GOTO9000
+#else
+          IERROR='YES'
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1211)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2301)
+ 2301     FORMAT('      THE xclip COMMAND IS NOT AVAILABLE.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2303)
+ 2303     FORMAT('      THE CONTENTS OF THE FILE WILL NOT BE ',
+     1           'COPIED TO THE CLIPBOARD.')
+          CALL DPWRST('XXX','BUG ')
+          GOTO9000
+#endif
+        ELSE
+          MAXCHR=2000000
+          CALL DPCLI6(IOUNI1,ISTR,MAXCHR,IBUGS2,ISUBRO,IERROR)
+        ENDIF
 C
         IENDFI='OFF'
         IREWIN='ON'

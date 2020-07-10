@@ -45,7 +45,8 @@ You typically need super user privleges to create and run packages.
               The date "20200521" given in the above line may vary depending 
               on when the specific RPM was created.
 
-        Note yum will install any required dependencies.
+        Note yum will install any required dependencies.  We currently provide
+        RPM files for CentOS 7.6, CentOS 8.2, Fedora 30, Fedora 31 and Fedora 32.
 
     1b. BUILD YOUR OWN RPM
 
@@ -123,7 +124,7 @@ Ubuntu, Manjaro (an Arch derivative), and MSYS2 (Windows).
 
     ii. The line
 
-           FEATURES = GD TIFF CAIRO X11 READLINE NCURSES
+           FEATURES = GD TIFF CAIRO X11 READLINE NCURSES XCLIP
 
         specifies external dependencies that Dataplot can utilize.
         Specifically,
@@ -172,15 +173,18 @@ Ubuntu, Manjaro (an Arch derivative), and MSYS2 (Windows).
                   otherwise available in Dataplot (Adobe Illustrator,
                   binary CGM, netPBM image format).
 
-        f. OPENGL - this enables the OpenGL device driver.  This driver
+        f. XCLIP - this utilizes the "xclip" program to implement cut
+                   and paste operations under Linux.
+
+        g. OPENGL - this enables the OpenGL device driver.  This driver
                     is still under development, so this feature should
                     NOT be enabled at this time.
 
-        f. GKS - this enables a GKS device driver.  This feature should
+        h. GKS - this enables a GKS device driver.  This feature should
                  NOT be enabled.  This driver is unlikely to ever
                  be activated for production versions of Dataplot.
 
-        g. AQUA - this enables the Aquaterm device driver for MacOS.
+        i. AQUA - this enables the Aquaterm device driver for MacOS.
                   This feature should NOT be enabled for non-MacOS
                   systems.
 
@@ -207,6 +211,11 @@ Ubuntu, Manjaro (an Arch derivative), and MSYS2 (Windows).
             sudo apt install readline-dev
 
             sudo apt install libcairo-dev; # For CAIRO
+
+        The xclip program is typically not installed by default.  You
+        can install it with the following command (for Ubuntu)
+
+            sudo apt install xclip; # For XCLIP
 
         If your platform uses a different package manager, you
         will need to do something similar.  If you are not

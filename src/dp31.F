@@ -19988,6 +19988,491 @@ C
 C
       RETURN
       END
+      SUBROUTINE DPTTTP(NPLOTV,NPLOTP,NS,ICASPL,IAND1,IAND2,
+     1                  IBUGG2,IBUGG3,ISUBRO,IBUGQ,IFOUND,IERROR)
+C
+C     PURPOSE--GENERATE A PAIR OF COORDINATE VECTORS
+C              THAT WILL DEFINE AN EMPIRICAL TOTAL TIME ON TEST PLOT.
+C
+C              FOR UNCENSORED DATA, THE TOTAL TIME ON TEST STATISTIC IS
+C              (X IS SORTED)
+C
+C                  TTT(i) = SUM[j=1 to i][(N-j+1)*(X(j) - X(j-1))]
+C                  X(0) = 0
+C
+C              THE SCALED TOTAL TIME ON TEST IS
+C
+C                  TTT*(i) = TTT(i)/TTT(n)
+C
+C              FOR CENSORED DATA, USE
+C
+C                  TTT*(i) = TTT(i)/TTT(r)
+C
+C              WHERE r IS THE MAXIMUM UNCENSORED FAILURE TIME
+C
+C              FOR THIS PLOT, TTT*(I) IS PLOTTED AGAINST i/N.
+C
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     REFERENCE--HORST RINNE (2010), "Location–Scale Distributions:
+C                Linear Estimation and Probability Plotting Using
+C                MATLAB".
+C              --EPSTEIN, B. AND SOBEL, M. (1953), "Life testing",
+C                Journal of the American Statistical Association,
+C                48, 486–502.
+C              --BARLOW, R.E. and CAMPO, R. (1975), "Time on test
+C                processes and applications to failure data analysis",
+C                in BARLOW, FUSSSELL, and SINGPURWALLA(eds.) "Reliability
+C                and Fault Tree Analysis", SIAM, Philadelphia, 451–481.
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2020/06
+C     ORIGINAL VERSION--JUNE      2020.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ICASPL
+      CHARACTER*4 IAND1
+      CHARACTER*4 IAND2
+      CHARACTER*4 IBUGG2
+      CHARACTER*4 IBUGG3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGQ
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+C
+      CHARACTER*4 ICASE
+      CHARACTER*40 INAME
+      PARAMETER (MAXSPN=10)
+      CHARACTER*4 IVARN1(MAXSPN)
+      CHARACTER*4 IVARN2(MAXSPN)
+      CHARACTER*4 IVARTY(MAXSPN)
+      REAL PVAR(MAXSPN)
+      INTEGER ILIS(MAXSPN)
+      INTEGER NRIGHT(MAXSPN)
+      INTEGER ICOLR(MAXSPN)
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOZZ.INC'
+C
+      DIMENSION Y1(MAXOBV)
+      DIMENSION TAG1(MAXOBV)
+      DIMENSION TEMP1(MAXOBV)
+      DIMENSION TEMP2(MAXOBV)
+      EQUIVALENCE (GARBAG(IGARB1),Y1(1))
+      EQUIVALENCE (GARBAG(IGARB2),TAG1(1))
+      EQUIVALENCE (GARBAG(IGARB3),TEMP1(1))
+      EQUIVALENCE (GARBAG(IGARB4),TEMP2(1))
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOST.INC'
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      IFOUND='NO'
+      IERROR='NO'
+      ISUBN1='DPTT'
+      ISUBN2='TP  '
+C
+      MAXCP1=MAXCOL+1
+      MAXCP2=MAXCOL+2
+      MAXCP3=MAXCOL+3
+      MAXCP4=MAXCOL+4
+      MAXCP5=MAXCOL+5
+      MAXCP6=MAXCOL+6
+C
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'TTTP')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPTTTP--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)ICASPL,IAND1,IAND2,MAXCOL
+   52   FORMAT('ICASPL,IAND1,IAND2,MAXCOL = ',3(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGG2,IBUGG3,IBUGQ,ISUBRO
+   53   FORMAT('IBUGG2,IBUGG3,IBUGQ,ISUBRO = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C
+C               ****************************************
+C               **  TREAT THE TOTAL TIME ON TEST PLOT **
+C               ****************************************
+C
+C               *******************************************
+C               **  STEP 1--                             **
+C               **  SEARCH FOR COMMAND                   **
+C               *******************************************
+C
+      ISTEPN='11'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'TTTP')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(NUMARG.GE.1.AND.ICOM.EQ.'TTT '.AND.IHARG(1).EQ.'PLOT')THEN
+        ILASTC=1
+        ICASPL='TTTP'
+      ELSEIF(NUMARG.GE.4.AND.ICOM.EQ.'TOTA'.AND.
+     1       IHARG(1).EQ.'TIME' .AND. IHARG(2).EQ.'ON  '.AND.
+     1       IHARG(3).EQ.'TEST' .AND. IHARG(4).EQ.'PLOT')THEN
+        ILASTC=4
+        ICASPL='TTTP'
+      ELSE
+        ICASPL='    '
+        IFOUND='NO'
+        GOTO9000
+      ENDIF
+C
+      CALL ADJUST(ILASTC,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG)
+      IFOUND='YES'
+C
+C               ****************************************
+C               **  STEP 2--                          **
+C               **  EXTRACT THE VARIABLE LIST         **
+C               ****************************************
+C
+      ISTEPN='2'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'TTTP')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      INAME='TOTAL TIME ON TEST PLOT'
+      MINNA=1
+      MAXNA=100
+      MINN2=1
+      IFLAGE=1
+      IFLAGM=0
+      IFLAGP=0
+      JMIN=1
+      JMAX=NUMARG
+      MINNVA=1
+      MAXNVA=2
+C
+      CALL DPPARS(IHARG,IHARG2,IARGT,ARG,NUMARG,IANS,IWIDTH,
+     1            IHNAME,IHNAM2,IUSE,NUMNAM,IN,IVALUE,VALUE,
+     1            JMIN,JMAX,
+     1            MINN2,MINNA,MAXNA,MAXSPN,IFLAGE,INAME,
+     1            IVARN1,IVARN2,IVARTY,PVAR,
+     1            ILIS,NRIGHT,ICOLR,ISUB,NQ,ILOCQ,NUMVAR,
+     1            MINNVA,MAXNVA,
+     1            IFLAGM,IFLAGP,
+     1            IBUGG3,IBUGQ,ISUBRO,IFOUND,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'TTTP')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,281)
+  281   FORMAT('***** AFTER CALL DPPARS--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,282)NQ,NUMVAR
+  282   FORMAT('NQ,NUMVAR = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NUMVAR.GT.0)THEN
+          DO285I=1,NUMVAR
+            WRITE(ICOUT,287)I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),
+     1                      ICOLR(I)
+  287       FORMAT('I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),',
+     1             'ICOLR(I) = ',I8,2X,2A4,2X,3I8)
+            CALL DPWRST('XXX','BUG ')
+  285     CONTINUE
+        ENDIF
+      ENDIF
+C
+C
+C               *********************************************************
+C               **  STEP 41--                                          **
+C               **  FORM THE VERTICAL AND HORIZONTALAXIS               **
+C               **  VARIABLES (Y(.) AND X(.), RESPECTIVELY)FOR THE     **
+C               **  PLOT.  FORM THE CURVE DESIGNATION VARIABLED(.)  .  **
+C               **  THIS WILL BE ALL ONES.                             **
+C               **  DEFINE THE NUMBER OF PLOT POINTS   (NPLOTP).       **
+C               **  DEFINE THE NUMBER OF PLOT VARIABLES(NPLOTV).       **
+C               *********************************************************
+C
+      ISTEPN='41'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'TTTP')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      ICOL=1
+      CALL DPPAR3(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,
+     1            INAME,IVARN1,IVARN2,IVARTY,
+     1            ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVAR,
+     1            MAXCOL,MAXCP1,MAXCP2,MAXCP3,
+     1            MAXCP4,MAXCP5,MAXCP6,
+     1            V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,
+     1            Y1,TAG1,Y1,NS,NS,NS,ICASE,
+     1            IBUGG3,ISUBRO,IFOUND,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+      CALL DPTTT2(Y1,TAG1,NS,NUMVAR,ICASPL,MAXOBV,
+     1            TEMP1,TEMP2,
+     1            Y,X,D,NPLOTP,NPLOTV,IBUGG3,ISUBRO,IERROR)
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'TTTP')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPTTTP--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IFOUND,IERROR
+ 9012   FORMAT('IFOUND,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)NPLOTV,NPLOTP,NS,ICASPL,IAND1,IAND2
+ 9013   FORMAT('NPLOTV,NPLOTP,NS,ICASPL,IAND1,IAND2 = ',3I8,3(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        IF(NPLOTP.LE.0)THEN
+          DO9015I=1,NPLOTP
+            WRITE(ICOUT,9016)I,Y(I),X(I),D(I)
+ 9016       FORMAT('I,Y(I),X(I),D(I) = ',I8,3F12.5)
+            CALL DPWRST('XXX','BUG ')
+ 9015     CONTINUE
+        ENDIF
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPTTT2(Y1,TAG1,N,NUMV,ICASPL,MAXNXT,
+     1                  TEMP1,TEMP2,
+     1                  Y,X,D,NPLOTP,NPLOTV,IBUGG3,ISUBRO,IERROR)
+C
+C     PURPOSE--GENERATE A PAIR OF COORDINATE VECTORS
+C              THAT WILL DEFINE AN EMPIRICAL TOTAL TIME ON TEST PLOT.
+C
+C              FOR UNCENSORED DATA, THE TOTAL TIME ON TEST STATISTIC IS
+C              (X IS SORTED)
+C
+C                  TTT(i) = SUM[j=1 to i][(N-j+1)*(X(j) - X(j-1))]
+C                  X(0) = 0
+C
+C              THE SCALED TIME TO FAILURE IS
+C
+C                  TTT*(i) = TTT(i)/TTT(n)
+C
+C              FOR CENSORED DATA, USE
+C
+C                  TTT*(i) = TTT(i)/TTT(r)
+C
+C              WHERE r IS THE MAXIMUM UNCENSORED FAILURE TIME
+C
+C              FOR THIS PLOT, TTT*(I) IS PLOTTED AGAINST i/N.
+C     INPUT ARGUMENTS--Y1     = THE SINGLE PRECISION VECTOR OF
+C                               (UNSORTED) OBSERVATIONS
+C                               FOR THE FIRST  VARIABLE.
+C                      TAG1   = 1 = FAILURE TIME, 0 = CENSORED
+C                      N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                               IN THE VECTOR X.
+C     CAUTION--THE INPUT VARIABLE Y1(.) WILL BE CHANGED HEREIN
+C              (IT WILL BE SORTED)
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2855
+C     PURPOSE--GENERATE A PAIR OF COORDINATE VECTORS
+C              THAT WILL DEFINE AN EMPIRICAL TOTAL TIME ON TEST PLOT.
+C
+C              FOR UNCENSORED DATA, THE TOTAL TIME ON TEST STATISTIC IS
+C              (X IS SORTED)
+C
+C                  TTT(i) = SUM[j=1 to i][(N-j+1)*(X(j) - X(j-1))]
+C                  X(0) = 0
+C
+C              THE SCALED TIME TO FAILURE IS
+C
+C                  TTT*(i) = TTT(i)/TTT(n)
+C
+C              FOR CENSORED DATA, USE
+C
+C                  TTT*(i) = TTT(i)/TTT(r)
+C
+C              WHERE r IS THE MAXIMUM UNCENSORED FAILURE TIME
+C
+C              FOR THIS PLOT, TTT*(I) IS PLOTTED AGAINST i/N.
+C
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2020/06
+C     ORIGINAL VERSION--JUNE      2020.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ICASPL
+      CHARACTER*4 IBUGG3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ICASE
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION Y1(*)
+      DIMENSION TAG1(*)
+      DIMENSION TEMP1(*)
+      DIMENSION TEMP2(*)
+C
+      DIMENSION Y(*)
+      DIMENSION X(*)
+      DIMENSION D(*)
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='DPTT'
+      ISUBN2='T2  '
+      IERROR='NO'
+C
+      NPLOTP=0
+      NPLOTV=0
+      J=0
+C
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'TTT2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPTTT2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGG3,ISUBRO,IERROR
+   52   FORMAT('IBUGG3,ISUBRO,IERROR = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)ICASPL,N,MAXNXT,NUMV
+   53   FORMAT('ICASPL,N,MAXN,NUMV = ',A4,2X,3I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,Y1(I),TAG1(I)
+   56     FORMAT('I, Y1(I), TAG1(I), = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      IF(N.LT.2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN TOTAL TIME ON TEST PLOT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)
+  112   FORMAT('      THE NUMBER OF OBSERVATIONS MUST BE AT LEAST 2.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,114)N
+  114   FORMAT('      THE ENTERED NUMBER OF OBSERVATIONS HERE = ',I6)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+      HOLD=Y1(1)
+      DO120I=1,N
+        IF(Y1(I).NE.HOLD)GOTO129
+  120 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,111)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,122)HOLD
+  122 FORMAT('      ALL ELEMENTS IN THE RESPONSE VARIABLE ARE ',
+     1       'IDENTICALLY EQUAL TO ',G15.7)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      IERROR='YES'
+      GOTO9000
+  129 CONTINUE
+C
+C               ***********************************************
+C               **  STEP 12--                                **
+C               **  COMPUTE COORDINATES FOR KAPLAN MEIER PLOT**
+C               **  (INCORPORATE STAIR-STEP APPEARANCE)      **
+C               ***********************************************
+C
+      IF(NUMV.EQ.1)THEN
+        DO130I=1,N
+          TAG1(I)=1.0
+  130   CONTINUE
+      ENDIF
+C
+      ICASE='SCAL'
+      CALL TTT(Y1,TAG1,N,ICASE,IWRITE,Y,NPLOTP,TEMP1,TEMP2,MAXNXT,
+     1         IBUGG3,ISUBRO,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+      AN=REAL(N)
+      DO150I=1,NPLOTP
+        X(I)=REAL(I)/AN
+        D(I)=1.0
+  150 CONTINUE
+C
+      NPLOTP=NPLOTP+1
+      X(NPLOTP)=0.0
+      Y(NPLOTP)=0.0
+      D(NPLOTP)=2.0
+      NPLOTP=NPLOTP+1
+      X(NPLOTP)=1.0
+      Y(NPLOTP)=1.0
+      D(NPLOTP)=2.0
+C
+      NPLOTV=2
+C
+C               ******************
+C               **   STEP 90--  **
+C               **   EXIT       **
+C               ******************
+C
+ 9000 CONTINUE
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'TTT2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPTTT2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)N,MAXN,NPLOTP,NPLOTV,ICASPL,IERROR
+ 9013   FORMAT('N,MAXN,NPLOTP,NPLOTV,ICASPL,IERROR = ',4I8,2(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        DO9022I=1,NPLOTP
+          WRITE(ICOUT,9023)I,Y(I),X(I),D(I)
+ 9023     FORMAT('I,Y(I),X(I),D(I) = ',I8,3G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9022   CONTINUE
+      ENDIF
+C
+      RETURN
+      END
       SUBROUTINE DPTUMD(NPLOTV,NPLOTP,NS,ICASPL,IAND1,IAND2,
      1                  IANGLU,MAXNPP,
      1                  IBUGG2,IBUGG3,IBUGQ,ISUBRO,IFOUND,IERROR)

@@ -10,6 +10,53 @@ The complete news file can be viewed at
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
+May 2020 - June 2020.
+-----------------------------------------------------------------------
+
+ 1) The Dataplot web site now supports installation of ".rpm" files
+    for CentOS 7, CentOS 8, Fedora 30, Fedora 31 and Fedora 32.
+
+ 2) Added the following graphics commands.
+
+    a) Added the following plot
+
+          TOTAL TIME ON TEST PLOT Y CENSOR
+
+ 3) Added the following Math LET sub-commands.
+
+      LET Y = TOTAL TIME ON TEST        X CENSOR
+      LET Y = SCALED TOTAL TIME ON TEST X CENSOR
+
+ 4) Corrected an issue where commas inside a character field enclosed
+    in quotes were still being interpreted as field delimiters.  Commas
+    inside a quoted field are now treated as part of the character
+    field and not a delimiter.
+
+ 5) Made a number of corrections to address warning messages generated
+    by version 10 of the gfortran/gcc compilers (Fedora 32).
+
+ 6) Support for accessing the clipboard has been extended to Linux
+    (previously this was only supported on Windows platforms).  On
+    Linux, access to the clipboard is through the "xclip" utility.
+    Note that xclip is not installed by default on most Linux systems,
+    so you may need to install it for CLIPBOARD commands to work under
+    Linux.  The following CLIPBOARD commands are currently supported
+
+         LIST CLIPBOARD
+         COPY CLIPBOARD <file>
+         COPY <file> CLIPBOARD
+         CLEAR CLIPBOARD
+
+         READ CLIPBOARD  <var-list>
+         WRITE CLIPBOARD <var-list>
+
+         CALL CLIPBOARD  <file>
+
+ 7) Fixed a bug in the PYTHON/R command.  Fixed a bug when entering the
+    name of a PDF file as a command.
+
+-----------------------------------------------------------------------
+The following enhancements were made to DATAPLOT
 March 2020 - April 2020.
 -----------------------------------------------------------------------
 

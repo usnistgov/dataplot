@@ -1131,6 +1131,10 @@ C                                       "dpst1f.dat".
 C     UPDATED         --FEBRUARY  2020. FOR "READ CLIPBOARD", CHECK IF
 C                                       "CLIPBOARD" ARGUMENT IS ACTUALLY
 C                                       A FILE NAME
+C     UPDATED         --JUNE      2020. SUPPORT READ FROM CLIPBOARD
+C                                       FOR LINUX SYSTEMS (THIS
+C                                       WORKS DIFFERENTLY THAN ON
+C                                       WINDOWS SYSTEMS)
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -1350,6 +1354,14 @@ C
 C
       CHARACTER*4 IANSLO(MAXCIL,MAXLIL)
 C
+#ifdef HAVE_XCLIP
+      CHARACTER (LEN=MAXSTR) :: ISTRIN
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+      CHARACTER*4 ISSAV3
+      CHARACTER*4 ISSAV4
+#endif
+C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOHK.INC'
@@ -1533,43 +1545,43 @@ C
         WRITE(ICOUT,999)
   999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF DPREAD--')
+        WRITE(ICOUT,1)
+    1   FORMAT('***** AT THE BEGINNING OF DPREAD--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,52)IFROW1,AFROW2,IFCOL1,IFCOL2,NUMRCM
-   52   FORMAT('IFROW1,AFROW2,IFCOL1,IFCOL2,NUMRCM = ',I8,2X,E15.7,3I8)
+        WRITE(ICOUT,2)IFROW1,AFROW2,IFCOL1,IFCOL2,NUMRCM
+    2   FORMAT('IFROW1,AFROW2,IFCOL1,IFCOL2,NUMRCM = ',I8,2X,E15.7,3I8)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,54)IRD,IRD2,ISKIP,IBUGS2,IBUGQ,IOSW
-   54   FORMAT('IRD,IRD2,ISKIP,IBUGS2,IBUGQ,IOSW = ',3I8,2X,2(A4,2X),A4)
+        WRITE(ICOUT,4)IRD,IRD2,ISKIP,IBUGS2,IBUGQ,IOSW
+    4   FORMAT('IRD,IRD2,ISKIP,IBUGS2,IBUGQ,IOSW = ',3I8,2X,2(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,56)IMACRO,IMACNU,IMACCS
-   56   FORMAT('IMACRO,IMACNU,IMACCS = ',A4,I8,2X,A12)
+        WRITE(ICOUT,6)IMACRO,IMACNU,IMACCS
+    6   FORMAT('IMACRO,IMACNU,IMACCS = ',A4,I8,2X,A12)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,63)IBUGS2,ISUBRO,IERROR,ICASR3,IWIDTH
-   63   FORMAT('IBUGS2,ISUBRO,IERROR,ICASR3,IWIDTH = ',4(A4,2X),I8)
+        WRITE(ICOUT,7)IBUGS2,ISUBRO,IERROR,ICASR3,IWIDTH
+    7   FORMAT('IBUGS2,ISUBRO,IERROR,ICASR3,IWIDTH = ',4(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
         IF(IWIDTH.GE.1)THEN
-          WRITE(ICOUT,65)(IANSLC(I),I=1,MIN(100,IWIDTH))
-   65     FORMAT('(IANSLC(I),I=1,IWIDTH) = ',100A1)
+          WRITE(ICOUT,8)(IANSLC(I),I=1,MIN(100,IWIDTH))
+    8     FORMAT('(IANSLC(I),I=1,IWIDTH) = ',100A1)
           CALL DPWRST('XXX','BUG ')
         ENDIF
-        WRITE(ICOUT,72)IREANA(1:80)
-   72   FORMAT('IREANA = ',A80)
+        WRITE(ICOUT,22)IREANA(1:80)
+   22   FORMAT('IREANA = ',A80)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,73)IREANU,IREAST,IREAFO,IREAAC,IREAFO,IREACS
-   73   FORMAT('IREANU,IREAST,IREAFO,IREAAC,IREAFO,IREACS = ',
+        WRITE(ICOUT,23)IREANU,IREAST,IREAFO,IREAAC,IREAFO,IREACS
+   23   FORMAT('IREANU,IREAST,IREAFO,IREAAC,IREAFO,IREACS = ',
      1         I8,5(1X,A12))
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,82)NUMNAM,N2,MAXN2,NCREAF
-   82   FORMAT('NUMNAM,N2,MAXN2,NCREAF = ',4I8)
+        WRITE(ICOUT,32)NUMNAM,N2,MAXN2,NCREAF
+   32   FORMAT('NUMNAM,N2,MAXN2,NCREAF = ',4I8)
         CALL DPWRST('XXX','BUG ')
         IF(NCREAF.GE.1)THEN
-          WRITE(ICOUT,85)(ICREAF(I:I),I=1,NCREAF)
-   85     FORMAT('(ICREAF(I:I),I=1,NCREAF) = ',80A1)
+          WRITE(ICOUT,35)(ICREAF(I:I),I=1,NCREAF)
+   35     FORMAT('(ICREAF(I:I),I=1,NCREAF) = ',80A1)
           CALL DPWRST('XXX','BUG ')
         ENDIF
-        WRITE(ICOUT,87)IREARW,ICOMCH,ICOMSW
-   87   FORMAT('IREARW,ICOMCH,ICOMSW = ',2(A4,2X),A4)
+        WRITE(ICOUT,37)IREARW,ICOMCH,ICOMSW
+   37   FORMAT('IREARW,ICOMCH,ICOMSW = ',2(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
@@ -1604,6 +1616,9 @@ C               **    11) ROW READ                     **
 C               **    12) EXCEL                        **
 C               *****************************************
 C
+#ifdef HAVE_XCLIP
+   60 CONTINUE
+#endif
       ICASRE='VARI'
       IF(ICASR3.NE.'0')THEN
         IF(IHARG(1).EQ.'STRI')THEN
@@ -1633,12 +1648,115 @@ C
         GOTO150
       ELSEIF(IHARG(1).EQ.'PARA'.AND.IHARG2(1).EQ.'METE')THEN
         ICASRE='PARA'
-      ELSEIF(IHARG(1).EQ.'FUNC'.AND.IHARG2(1).EQ.'TION' .AND.
-     1       IHARG(2).EQ.'CLIP' .AND. IHARG2(2).EQ.'BOAR')THEN
-        ICASRE='CFUN'
-      ELSEIF(IHARG(1).EQ.'STRI'.AND.IHARG2(1).EQ.'NG  ' .AND.
-     1       IHARG(2).EQ.'CLIP' .AND. IHARG2(2).EQ.'BOAR')THEN
-        ICASRE='CFUN'
+      ELSEIF((IHARG(1).EQ.'FUNC'.AND.IHARG2(1).EQ.'TION' .AND.
+     1       IHARG(2).EQ.'CLIP' .AND. IHARG2(2).EQ.'BOAR') .OR.
+     1       (IHARG(1).EQ.'STRI'.AND.IHARG2(1).EQ.'NG  ' .AND.
+     1       IHARG(2).EQ.'CLIP' .AND. IHARG2(2).EQ.'BOAR'))THEN
+        IF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
+#ifdef HAVE_XCLIP
+C
+C       ISSUE THE COMMAND
+C
+C          xclip -o -selection <clipboard/primary/secondary>  > dpst5f.dat
+C
+          ISTRIN=' '
+          IF(IX11SE.EQ.'CLIP')THEN
+            ISTRIN='xclip -o -selection clipboard'
+            NCSTR=29
+          ELSEIF(IX11SE.EQ.'PRIM')THEN
+            ISTRIN='xclip -o -selection primary'
+            NCSTR=27
+          ELSE
+            ISTRIN='xclip -o -selection secondary'
+            NCSTR=29
+          ENDIF
+C
+          NCSTR=NCSTR+1
+          ISTRIN(NCSTR:NCSTR+12)=' < dpst5f.dat'
+          NCSTR=NCSTR+12
+C
+          ISSAV1=ISYSPE
+          ISSAV2=ISYSHI
+          ISSAV3=ICLEWT
+          ISSAV4=ILINSY
+          ISYSPE='ON'
+          ICLEWT='OFF'
+          ILINSY='COMM'
+          CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+          ISYSPE=ISSAV1
+          ISYSHI=ISSAV2
+          ICLEWT=ISSAV3
+          ILINSY=ISSAV4
+C
+          IHARG(1)='DPST'
+          IHARG(2)='DPST'
+          IHARG2(2)='5F.D'
+          DO65II=1,IWIDTH-10
+            IP1=II+1
+            IP2=II+2
+            IP3=II+3
+            IP4=II+4
+            IP5=II+5
+            IP6=II+6
+            IP7=II+7
+            IP8=II+8
+            IP9=II+9
+            IP10=II+10
+            IF(IANS(II)(1:1).EQ.'C'  .AND. IANS(IP1)(1:1).EQ.'L' .AND.
+     1         IANS(IP2)(1:1).EQ.'I' .AND. IANS(IP3)(1:1).EQ.'P' .AND.
+     1         IANS(IP4)(1:1).EQ.'B' .AND. IANS(IP5)(1:1).EQ.'O' .AND.
+     1         IANS(IP6)(1:1).EQ.'A' .AND. IANS(IP7)(1:1).EQ.'R' .AND.
+     1         IANS(IP8)(1:1).EQ.'D' .AND. IANS(IP9)(1:1).EQ.' ')THEN
+              DO61JJ=IWIDTH,IP10,-1
+                IANSLC(JJ+1)=IANSLC(JJ)
+                IANS(JJ+1)=IANS(JJ)
+   61         CONTINUE
+              IWIDTH=IWIDTH+1
+              IANSLC(II:II)='d'
+              IANSLC(IP1:IP1)='p'
+              IANSLC(IP2:IP2)='s'
+              IANSLC(IP3:IP3)='t'
+              IANSLC(IP4:IP4)='5'
+              IANSLC(IP5:IP5)='f'
+              IANSLC(IP6:IP6)='.'
+              IANSLC(IP7:IP7)='d'
+              IANSLC(IP8:IP8)='a'
+              IANSLC(IP9:IP9)='t'
+              IANSLC(IP10:IP10)=' '
+              IANS(II:II)='D'
+              IANS(IP1:IP1)='P'
+              IANS(IP2:IP2)='S'
+              IANS(IP3:IP3)='T'
+              IANS(IP4:IP4)='5'
+              IANS(IP5:IP5)='F'
+              IANS(IP6:IP6)='.'
+              IANS(IP7:IP7)='D'
+              IANS(IP8:IP8)='A'
+              IANS(IP9:IP9)='T'
+              IANS(IP10:IP10)=' '
+              GOTO60
+            ENDIF
+   65     CONTINUE
+C
+#else
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,71)
+   71     FORMAT('***** ERROR IN READ COMMAND--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,73)
+   73     FORMAT('      THE xclip COMMAND IS NOT AVAILABLE.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,75)
+   75     FORMAT('      THE READ FROM CLIPBOARD WILL NOT BE ',
+     1           'PERFORMED.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+#endif
+        ELSE
+          ICASRE='CFUN'
+        ENDIF
       ELSEIF(IHARG(1).EQ.'FUNC'.AND.IHARG2(1).EQ.'TION')THEN
         ICASRE='FUNC'
       ELSEIF(IHARG(1).EQ.'STRI'.AND.IHARG2(1).EQ.'NG')THEN
@@ -1651,7 +1769,106 @@ C
         IWORD=2
         IOFILE='NO'
         CALL DPFILE(IANSLC,IWIDTH,IWORD,IOFILE,IBUGS2,ISUBRO,IERROR)
-        IF(IOFILE.EQ.'NO')ICASRE='CLIP'
+        IF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
+#ifdef HAVE_XCLIP
+C
+C       ISSUE THE COMMAND
+C
+C          xclip -o -selection <clipboard/primary/secondary>  > dpst5f.dat
+C
+          ISTRIN=' '
+          IF(IX11SE.EQ.'CLIP')THEN
+            ISTRIN='xclip -o -selection clipboard'
+            NCSTR=29
+          ELSEIF(IX11SE.EQ.'PRIM')THEN
+            ISTRIN='xclip -o -selection primary'
+            NCSTR=27
+          ELSE
+            ISTRIN='xclip -o -selection secondary'
+            NCSTR=29
+          ENDIF
+C
+          NCSTR=NCSTR+1
+          ISTRIN(NCSTR:NCSTR+12)=' < dpst5f.dat'
+          NCSTR=NCSTR+12
+C
+          ISSAV1=ISYSPE
+          ISSAV2=ISYSHI
+          ISSAV3=ICLEWT
+          ISSAV4=ILINSY
+          ISYSPE='ON'
+          ICLEWT='OFF'
+          ILINSY='COMM'
+          CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+          ISYSPE=ISSAV1
+          ISYSHI=ISSAV2
+          ICLEWT=ISSAV3
+          ILINSY=ISSAV4
+C
+          IHARG(1)='DPST'
+          IHARG2(1)='5F.D'
+          DO67II=1,IWIDTH-10
+            IP1=II+1
+            IP2=II+2
+            IP3=II+3
+            IP4=II+4
+            IP5=II+5
+            IP6=II+6
+            IP7=II+7
+            IP8=II+8
+            IP9=II+9
+            IP10=II+10
+            IF(IANS(II)(1:1).EQ.'C'  .AND. IANS(IP1)(1:1).EQ.'L' .AND.
+     1         IANS(IP2)(1:1).EQ.'I' .AND. IANS(IP3)(1:1).EQ.'P' .AND.
+     1         IANS(IP4)(1:1).EQ.'B' .AND. IANS(IP5)(1:1).EQ.'O' .AND.
+     1         IANS(IP6)(1:1).EQ.'A' .AND. IANS(IP7)(1:1).EQ.'R' .AND.
+     1         IANS(IP8)(1:1).EQ.'D' .AND. IANS(IP9)(1:1).EQ.' ')THEN
+              DO68JJ=IWIDTH,IP10,-1
+                IANSLC(JJ+1)=IANSLC(JJ)
+                IANS(JJ+1)=IANS(JJ)
+   68         CONTINUE
+              IWIDTH=IWIDTH+1
+              IANSLC(II:II)='d'
+              IANSLC(IP1:IP1)='p'
+              IANSLC(IP2:IP2)='s'
+              IANSLC(IP3:IP3)='t'
+              IANSLC(IP4:IP4)='5'
+              IANSLC(IP5:IP5)='f'
+              IANSLC(IP6:IP6)='.'
+              IANSLC(IP7:IP7)='d'
+              IANSLC(IP8:IP8)='a'
+              IANSLC(IP9:IP9)='t'
+              IANSLC(IP10:IP10)=' '
+              IANS(II:II)='D'
+              IANS(IP1:IP1)='P'
+              IANS(IP2:IP2)='S'
+              IANS(IP3:IP3)='T'
+              IANS(IP4:IP4)='5'
+              IANS(IP5:IP5)='F'
+              IANS(IP6:IP6)='.'
+              IANS(IP7:IP7)='D'
+              IANS(IP8:IP8)='A'
+              IANS(IP9:IP9)='T'
+              IANS(IP10:IP10)=' '
+              GOTO60
+            ENDIF
+   67     CONTINUE
+C
+#else
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,71)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,73)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,75)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+#endif
+        ELSE
+          IF(IOFILE.EQ.'NO')ICASRE='CLIP'
+        ENDIF
       ELSEIF(IHARG(1).EQ.'ROW '.AND.IHARG2(1).EQ.'    ' .AND.
      1       IHARG(2).NE.'LABE')THEN
         ICASRE='ROWR'

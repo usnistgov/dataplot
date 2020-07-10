@@ -1,13 +1,13 @@
-34400.      (VERSION 2020.05)   total number of lines in file (including this line)
+34700.      (VERSION 2020.06)   total number of lines in file (including this line)
  8.                          number of     sections below
   100.    T                  first line number of T section
-15700.    U                  first line number of U section
-17900.    V                  first line number of V section
-21000.    W                  first line number of W section
-28600.    X                  first line number of X section
-29400.    Y                  first line number of Y section
-31000.    Z                  first line number of Z section
-32400.    MISCELLANEOUS      first line number of MISCELLANEOUS section
+16000.    U                  first line number of U section
+18200.    V                  first line number of V section
+21200.    W                  first line number of W section
+28900.    X                  first line number of X section
+29700.    Y                  first line number of Y section
+31300.    Z                  first line number of Z section
+32700.    MISCELLANEOUS      first line number of MISCELLANEOUS section
  
 --------------------------------------------------------------
  
@@ -14465,6 +14465,324 @@ Program:
     JUSTIFICATION CENTER
     TEXT Two-Sided Slope Percent Point Functions
  
+-----TOTAL TIME ON TEST PLOT--------------------------------------
+ 
+TOTAL TIME ON TEST PLOT
+ 
+Name:
+    TOTAL TIME ON TEST PLOT
+ 
+Type:
+    Graphics Command
+ 
+Purpose:
+    Generates a total time on test plot.
+ 
+Description:
+    For uncensored data, the total time on test statistic for uncensored
+    data is (where X is ascending sorted order):
+
+        TTT(i) = SUM[j=1 to i][(N-j+1)*(X(j) - X(j-1))]
+
+    where X(0) is defined to be zero.
+
+    The scaled total time to test is then defined as
+
+        TTT*(i) = TTT(i)/TTT(n)
+
+    The scaled total time on test lies between 0 and 1.
+
+    For type I and type II censored data, the scaled total time on
+    test is defined as
+
+        TTT*(i) = TTT(i)/TTT(r)
+
+    where r is the index of the maximum uncensored failure time.
+    Progressive censoring is not currently supported.
+
+    The TOTAL TIME ON TEST PLOT is then a plot of TTT*(i) against
+    i/n (or i/r for censored data).  In addition, a reference line
+    is plotted from (0,0) to (1,1).
+
+    The primary purpose of this plot is to distinguish between a
+    constant hazard function, an increasing hazard function or a
+    decreasing hazard function.  If the plot shows the data being nearly
+    concave and mostly above the 45 degree line, this indicates the data
+    is from a distribution with an increasing hazard function.  If the
+    plot shows the data being nearly convex and mostly below the 45
+    degree line, this indicates the data is from a distribution with a
+    decreasing hazard function.  If the plot shows the data randomly
+    around the 45 degree line, this indicates the data is from a
+    distribution with a constant hazard function (i.e., an exponential
+    distribution).
+
+Syntax 1:
+    TOTAL TIME ON TEST PLOT <y>    <SUBSET/EXCEPT/FOR qualification>
+    where <y> is a response variable containing failure times;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax is used for uncensored data.
+
+Syntax 2:
+    TOTAL TIME ON TEST PLOT <y> <tag>    <SUBSET/EXCEPT/FOR qualification>
+    where <y> is a response variable containing failure times;
+          <tag> is a tag variable indicating whether the times
+              in <y> are failure times or censoring times;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax is used for censored data.
+
+Examples:
+    TOTAL TIME ON TEST PLOT Y
+    TOTAL TIME ON TEST PLOT Y CENSOR
+
+Note:
+    If any of the response values are negative, an error is returned.
+
+Note:
+    If the censoring variable is included, a value of 0 indicates a
+    censored value and a value of 1 indicates an uncensored value.
+
+    Dataplot will check the number of distinct values in the censoring
+    variable.  If there is only one distinct value, then all observations
+    are treated as uncensored.  If there are two distinct values, then
+    the smaller value indicates censored data and the larger value
+    indicates uncensored data.  If there are more than two distinct
+    values, an error is returned.
+
+Default:
+    None
+ 
+Synonyms:
+    TTT PLOT is a synonym for TOTAL TIME ON TEST PLOT
+ 
+Related Commands:
+    LINES              = Sets the type for plot lines.
+    CHARACTERS         = Sets the type for plot characters.
+    KAPLAN MIER PLOT   = Generate a Kaplan Mier plot.
+    DUANE PLOT         = Generate a Duane plot.
+    EMPIRICAL CDF PLOT = Generates an empirical cdf plot.
+    TAIL AREA PLOT     = Generates a tail area plot.
+    ... HAZARD PLOT    = Generates a hazard plot.
+    PROBABILITY PLOT   = Generates a probability plot.
+    PLOT               = Generates a data or function plot.
+ 
+References:
+    Rinne (2010), "Location–Scale Distributions: Linear Estimation
+    and Probability Plotting Using MATLAB,".
+
+    Epstein and Sobel (1953), "Life Testing," Journal of the American
+    Statistical Association, 48, 486–502.
+
+    Barlow and Campo (1975), "Time on Test Processes and Applications to
+    Failure data analysis," in Barlow, Fusssell and Singpurwalla (eds.)
+    "Reliability and Fault Tree Analysis," SIAM, Philadelphia, 451–481.
+
+Applications:
+    Reliability
+ 
+Implementation Date:
+    2020/06
+ 
+Program 1:
+    SKIP 25
+    READ HAHN.DAT MILES TAG
+    .
+    TITLE CASE ASIS
+    TITLE Total Time on Test Plot for HAHN.DAT
+    LABEL CASE ASIS
+    Y1LABEL TTT*(i)
+    X1LABEL i/n
+    .
+    TOTAL TIME ON TEST PLOT MILES TAG
+ 
+Program 2:
+    . Step 1:   Define some data
+    .
+    let n = 100
+    let gamma = 0.5
+    let y1 = weibull rand numb for i = 1 1 n
+    let gamma = 1.0
+    let y2 = weibull rand numb for i = 1 1 n
+    let gamma = 2.0
+    let y3 = weibull rand numb for i = 1 1 n
+    .
+    . Step 2:   Plot the data
+    .
+    case asis
+    title case asis
+    label case asis
+    title offset 2
+    tic offset units screen
+    tic mark offset 3 3
+    .
+    ylimits 0 1
+    major y1tic mark number 6
+    minor y1tic mark number 3
+    y1label TTT(i)
+    .
+    xlimits 0 1
+    major x1tic mark number 6
+    minor x1tic mark number 3
+    x1label i/n
+    x2label Circle: Gamma = 0.5, Square: Gamma = 1.0, Triangle: Gamma = 2.0
+    .
+    title Scaled Total Time On Test Plot
+    .
+    character circle blank
+    character fill on
+    character hw 1.0 0.75
+    line solid dotted
+    .
+    title Total Time on Test Plot for Weibull Distributions
+    total time on test plot y1
+    .
+    pre-erase off
+    frame off
+    tic mark off
+    tic mark labels off
+    title
+    label
+    .
+    character square
+    total time on test plot y2
+    .
+    character triangle
+    total time on test plot y3
+
+-----TOTAL TIME ON TEST (LET)-------------------------------------
+ 
+TOTAL TIME ON TEST
+ 
+Name:
+    TOTAL TIME ON TEST (LET)
+    SCALED TOTAL TIME ON TEST (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the total time on test for a set of failure times.
+ 
+Description:
+    For uncensored data, the total time on test statistic for uncensored
+    data is (where X is ascending sorted order):
+
+        TTT(i) = SUM[j=1 to i][(N-j+1)*(X(j) - X(j-1))]
+
+    where X(0) is defined to be zero.
+
+    The scaled total time to test is then defined as
+
+        TTT*(i) = TTT(i)/TTT(n)
+
+    The scaled total time on test lies between 0 and 1.
+
+    For type I and type II censored data, the scaled total time on
+    test is defined as
+
+        TTT*(i) = TTT(i)/TTT(r)
+
+    where r is the index of the maximum uncensored failure time.
+    Progressive censoring is not currently supported.
+
+Syntax 1:
+    LET <y> = TOTAL TIME ON TEST <x>  <tag>
+                              <SUBSET/EXCEPT/FOR qualification>
+    where <x> is the variable containing the failure times;
+          <tag> is a variable that indicates whether the corresponding
+              element of <x> is a failure time or a censoring
+              time;
+          <y> is a variable where the total time on test values are saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax returns the unscaled values.
+
+Syntax 2:
+    LET <y> = SCALED TOTAL TIME ON TEST <x>  <tag>
+                                        <SUBSET/EXCEPT/FOR qualification>
+    where <x> is the variable containing the failure times;
+          <tag> is a variable that indicates whether the corresponding
+              element of <x> is a failure time or a censoring
+              time;
+          <y> is a variable where the total time on test values are saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax returns the scaled values.
+
+Examples:
+    LET Y = TOTAL TIME ON TEST  X CENSOR
+ 
+Note:
+    If any of the response values are negative, an error is returned.
+
+Note:
+    For the censoring variable, a value of 0 indicates a censored value
+    and a value of 1 indicates an uncensored value.
+
+    Dataplot will check the number of distinct values in the censoring
+    variable.  If there is only one distinct value, then all observations
+    are treated as uncensored.  If there are two distinct values, then
+    the smaller value indicates censored data and the larger value
+    indicates uncensored data.  If there are more than two distinct
+    values, an error is returned.
+
+    For uncensored data, you can do something like the following
+
+        LET N = SIZE X
+        LET CENSOR = 1 FOR I = 1 1 N
+        LET TTT = SCALED TOTAL TIME ON TEST X CENSOR
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    HAZARD                   = Compute the hazard for a variable.
+    CUMULATIVE HAZARD        = Compute the cumulative hazard for a
+                               variable.
+    INTERARRIVAL TIME        = Compute the interarrival times of a
+                               variable.
+    TOTAL TIME ON TEST PLOT  = Generate a total time on test plot.
+    HAZARD PLOT              = Generate a hazard plot.
+    PROBABILITY PLOT         = Generate a probability plot.
+    WEIBULL PLOT             = Generate a Weibull plot.
+ 
+Applications:
+    Reliability
+ 
+Implementation Date:
+    2020/06
+ 
+Program 1:
+    SKIP 25
+    READ HAHN.DAT Y TAG
+    LET TAG = 0 SUBSET TAG = 2
+    LET Z = SCALED TOTAL TIME ON TEST Y TAG
+ 
+Program 2:
+    . Step 1:   Define some data
+    .
+    let n = 100
+    let gamma = 0.5
+    let y1 = weibull rand numb for i = 1 1 n
+    let gamma = 1.0
+    let y2 = weibull rand numb for i = 1 1 n
+    let gamma = 2.0
+    let y3 = weibull rand numb for i = 1 1 n
+    let tag = 1 for i = 1 1 n
+    .
+    . Step 2:   Compute the total time to failure values
+    .
+    let z1 = scaled total time on test y1 tag
+    let z2 = scaled total time on test y2 tag
+    let z3 = scaled total time on test y3 tag
+    .
+    set write decimals 3
+    print y1 y2 y3 z1 z2 z3
+
 -----TUKEY MEAN DIFFFERENCE PLOT--------------------------------------
  
 TUKEY MEAN-DIFFERENCE PLOT
@@ -15535,24 +15853,6 @@ Program:
        PRINT A
     END OF IF
 -------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

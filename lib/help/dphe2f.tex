@@ -1,4 +1,4 @@
- 67000.   (VERSION 2020.05)  total number of lines in file (including this line)
+ 67100.   (VERSION 2020.06)  total number of lines in file (including this line)
  3.                          number of     sections below
   100.    A                  first line number of A section
  8100.    B                  first line number of B section
@@ -46838,6 +46838,83 @@ Note:
     Extending this support to Unix/Linux and Mac OS X implementations is
     currently being investigated.
 
+    2020/06: Support has been extended to Unix/Linux platforms via the
+             xclip program.  The xclip program is an X11 based command
+             line program for accessing either the clipboard, the primary
+             selection or the secondary selection.  To specify which
+             of these is accessed when a CLIPBOARD command is entered,
+             use the command
+
+                 SET X11 SELECTION <CLIPBOARD/PRIMARY/SECONDARY>
+
+             The default is CLIPBOARD and for Dataplot purposes this is what
+             will typically be used.
+
+             The CLIPBOARD commands work differently under Linux than
+             under Windows.  Under Windows, Dataplot uses library
+             routines to access the clipboard directly.  Under Linux,
+             the xclip command is used to access the contents of the
+             clipboard.  Specifically (in the following, the
+             "-selection clipboard" is replaced with "-selection primary"
+             or "-selection secondary" depending on the value for the
+             SET X11 SELECTION command)
+
+                 LIST CLIPBOARD - the following command is issued
+
+                     xclip -o -selection clipboard
+
+                 COPY CLIPBOARD <file>- the following command is issued
+
+                     xclip -o -selection clipboard > <file>
+
+                 COPY <file> CLIPBOARD - the following command is issued
+
+                     xclip -i -selection clipboard < <file>
+
+                 CLEAR CLIPBOARD - the following command is issued
+
+                     echo -n | xclip -selection clipboard
+
+                 READ CLIPBOARD - the xclip command is used to copy the
+                                  contents of the clipboard to the
+                                  temporary file "dpst5f.dat".  Then the
+                                  READ command reads the file
+                                  "dpst5f.dat".
+
+                 WRITE CLIPBOARD - the WRITE command writes to the
+                                   temporary file "dpst5f.dat".  Then the
+                                   xclip command is used to copy the
+                                   contents of "dpst5f.dat" to the
+                                   clipboard.
+
+                 CALL CLIPBOARD - the xclip command is used to copy the
+                                  contents of the clipboard to the
+                                  temporary file "zzzz_clipboard.dp".
+                                  Then a "call zzzz_clipboard.dp" command
+                                  is issued.
+
+             The commands CLIPBOARD LOOP, CLIPBOARD PAUSE,
+             CLIPBOARD RESUME and SET CLIPBOARD SKIP are not currently
+             supported for Linux.
+
+             The xclip command is not typically installed by default.
+             However, package files are available for most common Linux
+             installations.  For example
+
+               sudo dnf --install xclip - systems that use the Red Hat
+                                          package manager (Fedora)
+
+               sudo apt install xclip - systems that use the apt package
+                                        manager (Ubuntu)
+
+               sudo pacman -S xclip     - systems that use the pacman
+                                          package manager (arch, Manjaro)
+
+             If xclip is not available with your package manager, it can
+             be built from source.  The xclip program is lightweight, so
+             the source build should be quick if you have the gcc
+             compiler installed.
+
 Note:
     Dataplot only supports text for clipboard operations.  If the clipboard
     contains binary data (e.g., image data), then the results for reading
@@ -46869,6 +46946,7 @@ Implementation Date:
     2014/12
     2019/03: Added SET CLIPBOARD RUN CLEAR
     2019/03: Added CALL CLIPBOARD and CB as synonyms for CLIPBOARD RUN
+    2020/06: Added clipboard support for Linux via the xclip program
  
 Program:
     COPY BERGER1.DAT CLIPBOARD
@@ -66904,6 +66982,28 @@ Program:
     CYCLE PLOT
  
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

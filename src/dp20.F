@@ -589,9 +589,10 @@ C
         CALL HFLML1(Y,N,ICASE2,
      1              TEMP1,DTEMP1,
      1              XMEAN,XSD,XMIN,XMAX,
-     1              ALOC,SCALML,SCALBC,SCALSE,
+     1              ALOCMO,SCALMO,ALOC,SCALML,
      1              ISUBRO,IBUGA3,IERROR)
-        ASCALE=SCALML
+        ALOC=ALOCMO
+        ASCALE=SCALMO
         IF(ASCALE.LE.0.0)IERROR='YES'
 C
       ELSEIF(ICASPL.EQ.'WEIB')THEN
@@ -19705,12 +19706,13 @@ C
       END
       SUBROUTINE DPMLHL(Y,N,ICASPL,
      1                  TEMP1,DTEMP1,MAXNXT,
-     1                  ALOCML,SCALML,SCALBC,SCALSE,
+     1                  ALOCMO,SCALMO,ALOCML,SCALML,
      1                  ICAPSW,ICAPTY,IFORSW,
      1                  ISUBRO,IBUGA3,IERROR)
 C
-C     PURPOSE--THIS ROUTINE COMPUTES THE MAXIMUM LIKELIHOOD
+C     PURPOSE--THIS ROUTINE COMPUTES THE MOMENT AND MAXIMUM LIKELIHOOD
 C              ESTIMATES FOR THE HALF-LOGISTIC DISTRIBUTION.
+C
 C     EXAMPLE--HALF LOGISTIC MAXIMUM LIKELIHOOD Y
 C              1-PARAMETER HALF-LOGISTIC MAXIMUM LIKELIHOOD Y
 C     REFERENCE--XXX
@@ -19723,8 +19725,8 @@ C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
-C     VERSION NUMBER--2020/04
-C     ORIGINAL VERSION--ARRIL     2020.
+C     VERSION NUMBER--2020/06
+C     ORIGINAL VERSION--JUNE      2020.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -19813,28 +19815,35 @@ C
       CALL CKDIST(Y,N,NMIN,QP,NPERC,ISUBRO,IBUGA3,IERROR)
       IF(IERROR.EQ.'YES')GOTO9000
 C
-C               ********************************************
-C               **  STEP 21--                             **
-C               **  CARRY OUT CALCULATIONS FOR            **
-C               **  HALF-LOGISTIC MLE (FULL SAMPLE CASE)  **
-C               ********************************************
+C               ***************************************
+C               **  STEP 21--                        **
+C               **  CARRY OUT CALCULATIONS FOR HALF  **
+C               **  LOGISTIC MLE (FULL SAMPLE CASE)  **
+C               ***************************************
 C
       ISTEPN='21'
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MLHL')
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ICASE='2'
-      IF(ICASPL.EQ.'1HAL')ICASE='1'
+      IF(ICASPL.EQ.'1HLO')ICASE='1'
       CALL HFLML1(Y,N,ICASE,
      1            TEMP1,DTEMP1,
      1            XMEAN,XSD,XMIN,XMAX,
-     1            ALOCML,SCALML,SCALBC,SCALSE,
+     1            ALOCMO,SCALMO,ALOCML,SCALML,
      1            ISUBRO,IBUGA3,IERROR)
+      IF(ICASE.EQ.'1')THEN
+        ALOCMO=0.0
+        ALOCML=0.0
+      ENDIF
       CALL HFLLI1(Y,N,ICASE,
-     1            ALOCML,SCALBC,
+     1            ALOCMO,SCALMO,
      1            ALIK,AIC,AICC,BIC,
      1            ISUBRO,IBUGA3,IERROR)
+      print *,'alik,aic,aicc,bic = ',alik,aic,aicc,bic
 C
+CCCCC NU=2*N
+CCCCC DTERM1=DBLE(N)*2.0D0*DBLE(SCALML)**2
 CCCCC DO2120I=1,NUMALP
 CCCCC   ALP=ALPHA(I)
 CCCCC   P=1.0-(ALP/2.0)
@@ -19845,11 +19854,11 @@ CCCCC   ALOWSC(I)=SQRT(REAL(DTERM1)/PPF1)
 CCCCC   AUPPSC(I)=SQRT(REAL(DTERM1)/PPF2)
 C2120 CONTINUE
 C
-C               ****************************************
-C               **   STEP 42--                        **
-C               **   WRITE OUT EVERYTHING             **
-C               **   FOR HALF-LOGISTIC MLE ESTIMATE   **
-C               ****************************************
+C               ***************************************
+C               **   STEP 42--                       **
+C               **   WRITE OUT EVERYTHING            **
+C               **   FOR HALF-LOGISTIC MLE ESTIMATE  **
+C               ***************************************
 C
       ISTEPN='42'
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MLHL')
@@ -19924,8 +19933,8 @@ C
       IDIGIT(ICNT)=-1
 C
       ICNT=ICNT+1
-      ITEXT(ICNT)='Maximum Likelihood:'
-      NCTEXT(ICNT)=19
+      ITEXT(ICNT)='Method of Moments:'
+      NCTEXT(ICNT)=18
       AVALUE(ICNT)=0.0
       IDIGIT(ICNT)=-1
 C
@@ -19933,20 +19942,35 @@ C
         ICNT=ICNT+1
         ITEXT(ICNT)='Estimate of Location:'
         NCTEXT(ICNT)=21
-        AVALUE(ICNT)=ALOCML
+        AVALUE(ICNT)=ALOCMO
         IDIGIT(ICNT)=NUMDIG
       ENDIF
 C
       ICNT=ICNT+1
       ITEXT(ICNT)='Estimate of Scale:'
       NCTEXT(ICNT)=18
-      AVALUE(ICNT)=SCALML
+      AVALUE(ICNT)=SCALMO
       IDIGIT(ICNT)=NUMDIG
-      ICNT=ICNT+1
-      ITEXT(ICNT)='Bias Corrected Estimate of Scale:'
-      NCTEXT(ICNT)=33
-      AVALUE(ICNT)=SCALBC
-      IDIGIT(ICNT)=NUMDIG
+C
+CCCCC ICNT=ICNT+1
+CCCCC ITEXT(ICNT)='Maximum Likelihood:'
+CCCCC NCTEXT(ICNT)=19
+CCCCC AVALUE(ICNT)=0.0
+CCCCC IDIGIT(ICNT)=-1
+C
+CCCCC IF(ICASPL.EQ.'HNOR')THEN
+CCCCC   ICNT=ICNT+1
+CCCCC   ITEXT(ICNT)='Estimate of Location:'
+CCCCC   NCTEXT(ICNT)=21
+CCCCC   AVALUE(ICNT)=ALOCML
+CCCCC   IDIGIT(ICNT)=NUMDIG
+CCCCC ENDIF
+C
+CCCCC ICNT=ICNT+1
+CCCCC ITEXT(ICNT)='Estimate of Scale:'
+CCCCC NCTEXT(ICNT)=18
+CCCCC AVALUE(ICNT)=SCALML
+CCCCC IDIGIT(ICNT)=NUMDIG
 CCCCC ICNT=ICNT+1
 CCCCC ITEXT(ICNT)='Standard Error of Scale:'
 CCCCC NCTEXT(ICNT)=24
@@ -20004,8 +20028,8 @@ C
         WRITE(ICOUT,9011)
  9011   FORMAT('***** AT THE END       OF DPMLHL--')
         CALL DPWRST('XXX','WRIT')
-        WRITE(ICOUT,9012)IERROR,ALOCML,SCALML,SCALBC
- 9012   FORMAT('IERROR,ALOCML,SCALML,SCALBC = ',A4,2X,3G15.7)
+        WRITE(ICOUT,9012)ALOCMO,SCALMO,ALOCML,SCALML,IERROR
+ 9012   FORMAT('ALOCML,SCALML,IERROR = ',4G15.7,2X,A4)
         CALL DPWRST('XXX','WRIT')
       ENDIF
 C
@@ -42949,30 +42973,24 @@ C
 C
         CALL DPMLHL(Y,NS1,ICASAN,
      1              TEMP1,DTEMP1,MAXNXT,
-     1              ALOCML,SCALML,SCALBC,SCALSE,
+     1              ALOCMO,SCALMO,ALOCML,SCALML,
      1              ICAPSW,ICAPTY,IFORSW,
      1              ISUBRO,IBUGA3,IERROR)
         IF(IERROR.EQ.'YES')GOTO9000
 C
         IF(ICASAN.EQ.'HALO')THEN
           INAME1(1)='LOCM'
-          INAME2(1)='L   '
-          AVAL(1)=ALOCML
+          INAME2(1)='OM  '
+          AVAL(1)=ALOCMO
           INAME1(2)='SCAL'
-          INAME2(2)='EML '
-          AVAL(2)=SCALML
-          INAME1(3)='SCAL'
-          INAME2(3)='EBC '
-          AVAL(3)=SCALBC
-          NPAR=3
+          INAME2(2)='EMOM'
+          AVAL(2)=SCALMO
+          NPAR=2
         ELSEIF(ICASAN.EQ.'1HAL')THEN
           INAME1(1)='SCAL'
-          INAME2(1)='EML '
-          AVAL(1)=SCALML
-          INAME1(2)='SCAL'
-          INAME2(2)='EBC '
-          AVAL(2)=SCALBC
-          NPAR=2
+          INAME2(1)='EMOM'
+          AVAL(1)=SCALMO
+          NPAR=1
         ENDIF
         GOTO8900
 C

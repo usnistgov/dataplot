@@ -574,8 +574,13 @@ C
 C
 CCCCC CHARACTER*80 CL
 C
-CCCCC THE FOLLOWING LINE WAS ADDED FEBRUARY 1993
-CCCCC CHARACTER*80 ISTRIN
+#ifdef HAVE_XCLIP
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+      CHARACTER*4 ISSAV3
+      CHARACTER*4 ISSAV4
+      CHARACTER (LEN=MAXSTR) :: ISTRIN
+#endif
 C
 CCCCC THE FOLLOWING 2 LINES WERE ADDED JULY 1993
 C
@@ -1535,9 +1540,17 @@ CCCCC IVERSI='2.3 (2019/10/03)'
 CCCCC IVERSI='2.4 (2019/12/02)'
 CCCCC IVERSI='5.12 (2019/12/13)'
 CCCCC IVERSI='5.02.29 (2020/02/29)'
-      IVERSI='5.04.24 (2020/04/24)'
-      NCVERS=20
+CCCCC IVERSI='5.04.24 (2020/04/24)'
+CCCCC IVERSI='5.04.24 (2020/06/20)'
+CCCCC NCVERS=20
 C
+C     2020/06/30: NAMING CONVENTION:
+C
+C                5 = FIFTH DECADE
+C               00 = YEAR OF DECADE
+C             0630 = MONTH/DAY
+      IVERSI='5.00.0707 (2020/07/07)'
+      NCVERS=22
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
 C
@@ -2713,6 +2726,107 @@ C
      1            IHOST1,IHOST2)
       IEQUCL=IEQUSV
 C
+C     NOTE JUNE 2020: FOR LINUX, CHECK FOR "RUN CLIPBOARD" (AND
+C                     SYNONYMS).  IF FOUND, COPY CLIPBOARD TO
+C                     THE FILE "zzzz_clipboard.dp".  THEN MAKE CURRENT
+C                     COMMAND LINE "call zzzz_clipboard.dp".
+C
+C                     NOTE THAT "HAVE_XCLIP" IMPLIES WE ARE RUNNING ON
+C                     A LINUX PLATFORM.
+C
+#ifdef HAVE_XCLIP
+C
+C       ISSUE THE COMMAND
+C
+C          xclip -o -selection <clipboard/primary/secondary>  > zzzz_clipboard.dp
+C
+      IF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
+        IFLAG=0
+        IF(ICOM.EQ.'CLIP' .AND. ICOM2.EQ.'BOAR' .AND.
+     1     NUMARG.EQ.0)IFLAG=1
+        IF(ICOM.EQ.'CLIP' .AND. ICOM2.EQ.'BOAR' .AND.
+     1     IHARG(1).EQ.'RUN ')IFLAG=1
+        IF(ICOM.EQ.'RUN ' .AND. IHARG(1).EQ.'CLIP' .AND.
+     1     IHARG2(1).EQ.'BOAR')IFLAG=1
+        IF(ICOM.EQ.'CALL' .AND. IHARG(1).EQ.'CLIP' .AND.
+     1     IHARG2(1).EQ.'BOAR')IFLAG=1
+C
+          IF(IFLAG.EQ.1)THEN
+          ISTRIN=' '
+          IF(IX11SE.EQ.'CLIP')THEN
+            ISTRIN='xclip -o -selection clipboard > zzzz_clipboard.dp'
+            NCSTR=49
+          ELSEIF(IX11SE.EQ.'PRIM')THEN
+            ISTRIN='xclip -o -selection primary > zzzz_clipboard.dp'
+            NCSTR=47
+          ELSE
+            ISTRIN='xclip -o -selection secondary > zzzz_clipboard.dp'
+            NCSTR=49
+          ENDIF
+C
+          ISSAV1=ISYSPE
+          ISSAV2=ISYSHI
+          ISSAV3=ICLEWT
+          ISSAV4=ILINSY
+          ISYSPE='OFF'
+          ICLEWT='ON'
+          ILINSY='COMM'
+          CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+          ISYSPE=ISSAV1
+          ISYSHI=ISSAV2
+          ICLEWT=ISSAV3
+          ILINSY=ISSAV4
+          IF(IERROR.EQ.'YES')GOTO1000
+          IANSLC(1)='c'
+          IANSLC(2)='a'
+          IANSLC(3)='l'
+          IANSLC(4)='l'
+          IANSLC(5)=' '
+          IANSLC(6)='z'
+          IANSLC(7)='z'
+          IANSLC(8)='z'
+          IANSLC(9)='z'
+          IANSLC(10)='_'
+          IANSLC(11)='c'
+          IANSLC(12)='l'
+          IANSLC(13)='i'
+          IANSLC(14)='p'
+          IANSLC(15)='b'
+          IANSLC(16)='o'
+          IANSLC(17)='a'
+          IANSLC(18)='r'
+          IANSLC(19)='d'
+          IANSLC(20)='.'
+          IANSLC(21)='d'
+          IANSLC(22)='p'
+          IANS(1)='C'
+          IANS(2)='A'
+          IANS(3)='L'
+          IANS(4)='L'
+          IANS(5)=' '
+          IANS(6)='Z'
+          IANS(7)='Z'
+          IANS(8)='Z'
+          IANS(9)='Z'
+          IANS(10)='_'
+          IANS(11)='C'
+          IANS(12)='L'
+          IANS(13)='I'
+          IANS(14)='P'
+          IANS(15)='B'
+          IANS(16)='O'
+          IANS(17)='A'
+          IANS(18)='R'
+          IANS(19)='D'
+          IANS(20)='.'
+          IANS(21)='D'
+          IANS(22)='P'
+          IWIDTH=22
+          GOTO1309
+        ENDIF
+      ENDIF
+#endif
+C
 C     NOTE JULY 2010: IF THE FIRST WORD ON THE COMMAND LINE IS
 C                     IDENTIFIED AS A FILE NAME, THEN TREAT THIS
 C                     AS AN IMPLICIT CALL.  HOWEVER, SKIP THE
@@ -2752,84 +2866,168 @@ C                A "CALL <FILE>" COMMAND.
 C
         IF(IERROR.EQ.'NO' .AND. IOFILE.EQ.'YES')THEN
           IFLAGT=0
-          DO8121JJ=MAXSTR,1,-1
+          DO8121JJ=IWIDTH,1,-1
             IF(IANSLC(JJ).NE.' ')THEN
               IITEMP=JJ
               IF(JJ.GE.4 .AND. IANSLC(JJ-3).EQ.'.')THEN
                 IF(IANSLC(JJ-2).EQ.'P' .AND. IANSLC(JJ-1).EQ.'D' .AND.
-     1             IANSLC(JJ).EQ.'F')IFLAGT=1
-                IF(IANSLC(JJ-2).EQ.'p' .AND. IANSLC(JJ-1).EQ.'d' .AND.
-     1             IANSLC(JJ).EQ.'f')IFLAGT=1
-                IF(IANSLC(JJ-2).EQ.'E' .AND. IANSLC(JJ-1).EQ.'P' .AND.
-     1             IANSLC(JJ).EQ.'S')IFLAGT=1
-                IF(IANSLC(JJ-2).EQ.'e' .AND. IANSLC(JJ-1).EQ.'p' .AND.
-     1             IANSLC(JJ).EQ.'s')IFLAGT=1
-                IF(IANSLC(JJ-2).EQ.'P' .AND. IANSLC(JJ-1).EQ.'N' .AND.
-     1             IANSLC(JJ).EQ.'G')IFLAGT=1
-                IF(IANSLC(JJ-2).EQ.'p' .AND. IANSLC(JJ-1).EQ.'n' .AND.
-     1             IANSLC(JJ).EQ.'g')IFLAGT=1
-                IF(IANSLC(JJ-2).EQ.'G' .AND. IANSLC(JJ-1).EQ.'I' .AND.
-     1             IANSLC(JJ).EQ.'F')IFLAGT=1
-                IF(IANSLC(JJ-2).EQ.'g' .AND. IANSLC(JJ-1).EQ.'i' .AND.
-     1             IANSLC(JJ).EQ.'f')IFLAGT=1
-                IF(IANSLC(JJ-2).EQ.'J' .AND. IANSLC(JJ-1).EQ.'P' .AND.
-     1             IANSLC(JJ).EQ.'G')IFLAGT=1
-                IF(IANSLC(JJ-2).EQ.'j' .AND. IANSLC(JJ-1).EQ.'p' .AND.
-     1             IANSLC(JJ).EQ.'g')IFLAGT=1
-                IF(IANSLC(JJ-2).EQ.'X' .AND. IANSLC(JJ-1).EQ.'L' .AND.
-     1             IANSLC(JJ).EQ.'S')IFLAGT=2
-                IF(IANSLC(JJ-2).EQ.'x' .AND. IANSLC(JJ-1).EQ.'l' .AND.
-     1             IANSLC(JJ).EQ.'s')IFLAGT=2
-                IF(IANSLC(JJ-2).EQ.'D' .AND. IANSLC(JJ-1).EQ.'O' .AND.
-     1             IANSLC(JJ).EQ.'C')IFLAGT=3
-                IF(IANSLC(JJ-2).EQ.'d' .AND. IANSLC(JJ-1).EQ.'o' .AND.
-     1             IANSLC(JJ).EQ.'c')IFLAGT=3
-                IF(IANSLC(JJ-2).EQ.'R' .AND. IANSLC(JJ-1).EQ.'T' .AND.
-     1             IANSLC(JJ).EQ.'F')IFLAGT=3
-                IF(IANSLC(JJ-2).EQ.'r' .AND. IANSLC(JJ-1).EQ.'t' .AND.
-     1             IANSLC(JJ).EQ.'f')IFLAGT=3
-                IF(IANSLC(JJ-2).EQ.'P' .AND. IANSLC(JJ-1).EQ.'P' .AND.
-     1             IANSLC(JJ).EQ.'T')IFLAGT=4
-                IF(IANSLC(JJ-2).EQ.'p' .AND. IANSLC(JJ-1).EQ.'p' .AND.
-     1             IANSLC(JJ).EQ.'t')IFLAGT=4
-                IF(IANSLC(JJ-2).EQ.'D' .AND. IANSLC(JJ-1).EQ.'A' .AND.
-     1             IANSLC(JJ).EQ.'T')IFLAGT=5
-                IF(IANSLC(JJ-2).EQ.'d' .AND. IANSLC(JJ-1).EQ.'a' .AND.
-     1             IANSLC(JJ).EQ.'t')IFLAGT=5
-                IF(IANSLC(JJ-2).EQ.'C' .AND. IANSLC(JJ-1).EQ.'S' .AND.
-     1             IANSLC(JJ).EQ.'V')IFLAGT=5
-                IF(IANSLC(JJ-2).EQ.'c' .AND. IANSLC(JJ-1).EQ.'s' .AND.
-     1             IANSLC(JJ).EQ.'v')IFLAGT=5
-                IF(IANSLC(JJ-2).EQ.'O' .AND. IANSLC(JJ-1).EQ.'U' .AND.
-     1             IANSLC(JJ).EQ.'T')IFLAGT=5
-                IF(IANSLC(JJ-2).EQ.'o' .AND. IANSLC(JJ-1).EQ.'u' .AND.
-     1             IANSLC(JJ).EQ.'t')IFLAGT=5
+     1             IANSLC(JJ).EQ.'F')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'p' .AND.
+     1             IANSLC(JJ-1).EQ.'d' .AND. IANSLC(JJ).EQ.'f')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'E' .AND.
+     1             IANSLC(JJ-1).EQ.'P' .AND. IANSLC(JJ).EQ.'S')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'e' .AND.
+     1             IANSLC(JJ-1).EQ.'p' .AND. IANSLC(JJ).EQ.'s')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'P' .AND.
+     1             IANSLC(JJ-1).EQ.'N' .AND. IANSLC(JJ).EQ.'G')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'p' .AND.
+     1             IANSLC(JJ-1).EQ.'n' .AND. IANSLC(JJ).EQ.'g')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'G' .AND.
+     1             IANSLC(JJ-1).EQ.'I' .AND. IANSLC(JJ).EQ.'F')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'g' .AND.
+     1             IANSLC(JJ-1).EQ.'i' .AND. IANSLC(JJ).EQ.'f')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'J' .AND.
+     1             IANSLC(JJ-1).EQ.'P' .AND. IANSLC(JJ).EQ.'G')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'j' .AND.
+     1             IANSLC(JJ-1).EQ.'p' .AND. IANSLC(JJ).EQ.'g')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'X' .AND.
+     1             IANSLC(JJ-1).EQ.'L' .AND. IANSLC(JJ).EQ.'S')THEN
+                   IFLAGT=2
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'x' .AND.
+     1             IANSLC(JJ-1).EQ.'l' .AND. IANSLC(JJ).EQ.'s')THEN
+                   IFLAGT=2
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'D' .AND.
+     1             IANSLC(JJ-1).EQ.'O' .AND. IANSLC(JJ).EQ.'C')THEN
+                   IFLAGT=3
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'d' .AND.
+     1             IANSLC(JJ-1).EQ.'o' .AND. IANSLC(JJ).EQ.'c')THEN
+                   IFLAGT=3
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'R' .AND.
+     1             IANSLC(JJ-1).EQ.'T' .AND. IANSLC(JJ).EQ.'F')THEN
+                   IFLAGT=3
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'r' .AND.
+     1             IANSLC(JJ-1).EQ.'t' .AND. IANSLC(JJ).EQ.'f')THEN
+                   IFLAGT=3
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'P' .AND.
+     1             IANSLC(JJ-1).EQ.'P' .AND. IANSLC(JJ).EQ.'T')THEN
+                   IFLAGT=4
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'p' .AND.
+     1             IANSLC(JJ-1).EQ.'p' .AND. IANSLC(JJ).EQ.'t')THEN
+                   IFLAGT=4
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'D' .AND.
+     1             IANSLC(JJ-1).EQ.'A' .AND. IANSLC(JJ).EQ.'T')THEN
+                   IFLAGT=5
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'d' .AND.
+     1             IANSLC(JJ-1).EQ.'a' .AND. IANSLC(JJ).EQ.'t')THEN
+                   IFLAGT=5
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'C' .AND.
+     1             IANSLC(JJ-1).EQ.'S' .AND. IANSLC(JJ).EQ.'V')THEN
+                   IFLAGT=5
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'c' .AND.
+     1             IANSLC(JJ-1).EQ.'s' .AND. IANSLC(JJ).EQ.'v')THEN
+                   IFLAGT=5
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'O' .AND.
+     1             IANSLC(JJ-1).EQ.'U' .AND. IANSLC(JJ).EQ.'T')THEN
+                   IFLAGT=5
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-2).EQ.'o' .AND.
+     1             IANSLC(JJ-1).EQ.'u' .AND. IANSLC(JJ).EQ.'t')THEN
+                   IFLAGT=5
+                   GOTO8122
+                 ENDIF
               ELSEIF(JJ.GE.3 .AND. IANSLC(JJ-2).EQ.'.')THEN
                 IF(IANSLC(JJ-1).EQ.'P' .AND.
-     1             IANSLC(JJ-1).EQ.'S')IFLAGT=1
-                IF(IANSLC(JJ-1).EQ.'p' .AND.
-     1             IANSLC(JJ-1).EQ.'s')IFLAGT=1
+     1             IANSLC(JJ-1).EQ.'S')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-1).EQ.'p' .AND.
+     1             IANSLC(JJ-1).EQ.'s')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ENDIF
               ELSEIF(JJ.GE.5 .AND. IANSLC(JJ-4).EQ.'.')THEN
                 IF(IANSLC(JJ-3).EQ.'J' .AND. IANSLC(JJ-2).EQ.'P' .AND.
-     1             IANSLC(JJ-1).EQ.'E' .AND. IANSLC(JJ).EQ.'G')IFLAGT=1
-                IF(IANSLC(JJ-3).EQ.'j' .AND. IANSLC(JJ-2).EQ.'p' .AND.
-     1             IANSLC(JJ-1).EQ.'e' .AND. IANSLC(JJ).EQ.'g')IFLAGT=1
-                IF(IANSLC(JJ-3).EQ.'T' .AND. IANSLC(JJ-2).EQ.'I' .AND.
-     1             IANSLC(JJ-1).EQ.'F' .AND. IANSLC(JJ).EQ.'F')IFLAGT=1
-                IF(IANSLC(JJ-3).EQ.'t' .AND. IANSLC(JJ-2).EQ.'i' .AND.
-     1             IANSLC(JJ-1).EQ.'f' .AND. IANSLC(JJ).EQ.'f')IFLAGT=1
-                IF(IANSLC(JJ-3).EQ.'X' .AND. IANSLC(JJ-2).EQ.'L' .AND.
-     1             IANSLC(JJ-1).EQ.'S' .AND. IANSLC(JJ).EQ.'X')IFLAGT=2
-                IF(IANSLC(JJ-3).EQ.'x' .AND. IANSLC(JJ-2).EQ.'l' .AND.
-     1             IANSLC(JJ-1).EQ.'s' .AND. IANSLC(JJ).EQ.'x')IFLAGT=2
-                IF(IANSLC(JJ-3).EQ.'D' .AND. IANSLC(JJ-2).EQ.'C' .AND.
-     1             IANSLC(JJ-1).EQ.'O' .AND. IANSLC(JJ).EQ.'X')IFLAGT=3
-                IF(IANSLC(JJ-3).EQ.'d' .AND. IANSLC(JJ-2).EQ.'o' .AND.
-     1             IANSLC(JJ-1).EQ.'c' .AND. IANSLC(JJ).EQ.'x')IFLAGT=3
-                IF(IANSLC(JJ-3).EQ.'P' .AND. IANSLC(JJ-2).EQ.'T' .AND.
-     1             IANSLC(JJ-1).EQ.'T' .AND. IANSLC(JJ).EQ.'X')IFLAGT=4
-                IF(IANSLC(JJ-3).EQ.'p' .AND. IANSLC(JJ-2).EQ.'p' .AND.
-     1             IANSLC(JJ-1).EQ.'t' .AND. IANSLC(JJ).EQ.'x')IFLAGT=4
+     1             IANSLC(JJ-1).EQ.'E' .AND. IANSLC(JJ).EQ.'G')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-3).EQ.'j' .AND.
+     1             IANSLC(JJ-2).EQ.'p' .AND. IANSLC(JJ-1).EQ.'e' .AND.
+     1             IANSLC(JJ).EQ.'g')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-3).EQ.'T' .AND.
+     1             IANSLC(JJ-2).EQ.'I' .AND. IANSLC(JJ-1).EQ.'F' .AND.
+     1             IANSLC(JJ).EQ.'F')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-3).EQ.'t' .AND.
+     1             IANSLC(JJ-2).EQ.'i' .AND. IANSLC(JJ-1).EQ.'f' .AND.
+     1             IANSLC(JJ).EQ.'f')THEN
+                   IFLAGT=1
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-3).EQ.'X' .AND.
+     1             IANSLC(JJ-2).EQ.'L' .AND. IANSLC(JJ-1).EQ.'S' .AND.
+     1             IANSLC(JJ).EQ.'X')THEN
+                   IFLAGT=2
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-3).EQ.'x' .AND.
+     1             IANSLC(JJ-2).EQ.'l' .AND. IANSLC(JJ-1).EQ.'s' .AND.
+     1             IANSLC(JJ).EQ.'x')THEN
+                   IFLAGT=2
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-3).EQ.'D' .AND.
+     1             IANSLC(JJ-2).EQ.'C' .AND. IANSLC(JJ-1).EQ.'O' .AND.
+     1             IANSLC(JJ).EQ.'X')THEN
+                   IFLAGT=3
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-3).EQ.'d' .AND.
+     1             IANSLC(JJ-2).EQ.'o' .AND. IANSLC(JJ-1).EQ.'c' .AND.
+     1             IANSLC(JJ).EQ.'x')THEN
+                   IFLAGT=3
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-3).EQ.'P' .AND.
+     1             IANSLC(JJ-2).EQ.'T' .AND. IANSLC(JJ-1).EQ.'T' .AND.
+     1             IANSLC(JJ).EQ.'X')THEN
+                   IFLAGT=4
+                   GOTO8122
+                ELSEIF(IANSLC(JJ-3).EQ.'p' .AND.
+     1             IANSLC(JJ-2).EQ.'p' .AND. IANSLC(JJ-1).EQ.'t' .AND.
+     1             IANSLC(JJ).EQ.'x')THEN
+                   IFLAGT=4
+                   GOTO8122
+                ENDIF
               ENDIF
               GOTO8122
             ENDIF

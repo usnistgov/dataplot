@@ -39337,7 +39337,7 @@ C     UPDATED         --NOVEMBER  1993. PATH + PROGRAMS.
 C     UPDATED         --NOVEMBER  1993. PATH + MACROS.
 C     UPDATED         --AUGUST    1994. SIMPLIFY CODE THROUGHOUT
 C     UPDATED         --JUNE      1995. REMOVE PATH INFO
-C     UPDATED         --NOVEMBER  2014. LIST CLIPBOARD
+C     UPDATED         --NOVEMBER  2014. LIST CLIPBOARD (FOR WINDOWS)
 C     UPDATED         --SEPTEMBER 2015. LIST FUNCTION BLOCK
 C     UPDATED         --AUGUST    2016. LIST STATISTIC BLOCK
 C     UPDATED         --OCTOBER   2016. LIST COMMAND LINE ARGUMENTS
@@ -39350,6 +39350,9 @@ C     UPDATED         --NOVEMBER  2019. LIST EXCEL/WORD/POWER POINT
 C     UPDATED         --FEBRUARY  2020. IF "LIST CLIPBOARD" DETECTED,
 C                                       CHECK TO SEE IF FIRST ARGUMENT
 C                                       IS ACTUALLY A FILE NAME
+C     UPDATED         --JUNE      2020. LIST CLIPBOARD (FOR LINUX)
+C                                       THIS USES "xclip" IN THE
+C                                       BACKGROUND
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -39699,10 +39702,53 @@ C
         CALL DPFILE(IANSLC,IWIDTH,IWORD,
      1              IOFILE,IBUGS2,ISUBRO,IERROR)
         IF(IOFILE.EQ.'NO')THEN
-          IOUNIT=-99
-          ITYPE='VIEW'
-          CALL DPCLI2(ITYPE,IOUNIT,IHELMX,ILINRD,IBUGS2,ISUBRO,IERROR)
-          GOTO9000
+          IF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
+#ifdef HAVE_XCLIP
+            ISTRIN=' '
+            IF(IX11SE.EQ.'CLIP')THEN
+              ISTRIN='xclip -o -selection clipboard'
+              NCSTR=29
+            ELSEIF(IX11SE.EQ.'PRIM')THEN
+              ISTRIN='xclip -o -selection primary'
+              NCSTR=27
+            ELSE
+              ISTRIN='xclip -o -selection secondary'
+              NCSTR=29
+            ENDIF
+C
+            ISSAV1=ISYSPE
+            ISSAV2=ISYSHI
+            ISSAV3=ICLEWT
+            ISSAV4=ILINSY
+            ISYSPE='ON'
+            ICLEWT='OFF'
+            ILINSY='COMM'
+            CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+            ISYSPE=ISSAV1
+            ISYSHI=ISSAV2
+            ICLEWT=ISSAV3
+            ILINSY=ISSAV4
+            GOTO9000
+#else
+            IERROR='YES'
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1371)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,411)
+  411       FORMAT('      THE xclip COMMAND IS NOT AVAILABLE.')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,413)
+  413       FORMAT('      THE CONTENTS OF THE CLIPBOARD WILL NOT BE ',
+     1             'LISTED.')
+            CALL DPWRST('XXX','BUG ')
+#endif
+          ELSE
+            IOUNIT=-99
+            ITYPE='VIEW'
+            CALL DPCLI2(ITYPE,IOUNIT,IHELMX,ILINRD,IBUGS2,ISUBRO,IERROR)
+            GOTO9000
+          ENDIF
         ENDIF
       ELSEIF(IHARG(1).EQ.'FUNC' .AND. IHARG(2).EQ.'BLOC')THEN
         WRITE(ICOUT,999)

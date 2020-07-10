@@ -370,6 +370,8 @@ C
     9 CONTINUE
 C
       IFLAGD=0
+      IFLAGQ=0
+      IFLGQ2=0
 C
 C               **************************************
 C               **  CHECK FOR VECTOR COLUMN LIMITS  **
@@ -1082,6 +1084,10 @@ C
 C     IF "SET CHARACTER FIELD COMMA DELIMITER ON" COMMAND WAS ENTERED,
 C     SEARCH FOR A ",".
 C
+C     2020/06/22: FOR COMMA DELIMITED FIELDS, CHECK FOR LEADING QUOTE (").
+C                 IF FOUND, THEN IGNORE ALL COMMAS UNTIL MATCHING QUOTE
+C                 FOUND.
+C
       IF(I.GT.ICOL22)GOTO9000
 C
       IFRST=I
@@ -1090,6 +1096,8 @@ C
       IFLAGZ=0
 C
       IF(IREACD.EQ.'ON')THEN
+        IFLAGQ=0
+        IFLGQ2=0
         DO11150L=I,ICOL22
           IF(IB(L).NE.' ')THEN
             IFRST=L
@@ -1098,16 +1106,42 @@ C
 11150   CONTINUE
         IFRST=ICOL22
 11151   CONTINUE
-        DO11153L=IFRST,ICOL22
-          IF(IB(L).EQ.',')THEN
-            ILAST=L
-            ILAST2=L-1
-            GOTO11154
-          ENDIF
-11153   CONTINUE
-        ILAST=ICOL22
-        ILAST2=ILAST
-11154   CONTINUE
+C
+        IF(IB(IFRST).EQ.'"')THEN
+C
+C         IF FIRST CHARACTER IS DOUBLE QUOTE, THEN SEARCH FOR ENDING
+C         MATCHING QUOTE.  FOR NOW, DO NOT SUPPORT QUOTES (E.G., \" OR
+C         """) EMBEDDED WITHIN QUOTED STRING.  ONCE ENDING QUOTE FOUND,
+C         SEARCH FOR THE NEXT COMMA TO INDICATE START OF NEXT FIELD.
+C
+          IFLAGQ=1
+          IFLGQ2=1
+          DO81153L=IFRST+1,ICOL22
+            IF(IFLAGQ.EQ.1)THEN
+              IF(IB(L).EQ.'"')THEN
+                ILAST2=L
+                IFLAGQ=0
+              ENDIF
+            ELSE
+              IF(IB(L).EQ.',')THEN
+                ILAST=L
+                GOTO81156
+              ENDIF
+            ENDIF
+81153     CONTINUE
+          ILAST=ICOL22
+81156     CONTINUE
+        ELSE
+          DO11153L=IFRST,ICOL22
+            IF(IB(L).EQ.',')THEN
+              ILAST=L
+              GOTO11154
+            ENDIF
+11153     CONTINUE
+          ILAST=ICOL22
+11154     CONTINUE
+          ILAST2=ILAST
+        ENDIF
 C
 C       IF USER HAS SPECIFIED A READ DELIMITER OTHER THAN A BLANK SPACE,
 C       THEN SEARCH FOR THE NEXT DELIMITER.
@@ -1267,11 +1301,10 @@ C
           CALL DPWRST('XXX','BUG ')
         ENDIF
 C
-        IFLAGQ=0
+        IF(IB(IFRST).EQ.'"' .AND. IB(ILAST2).EQ.'"')IFLGQ2=1
         DO161II=IFRST,ILAST
           IF(IB(II).NE.' ')THEN
             IFRST=II
-            IF(IB(II).EQ.'"')IFLAGQ=1
             GOTO162
           ENDIF
   161   CONTINUE
@@ -1285,12 +1318,19 @@ C                  SEARCH FOR NEXT ",".
 C               C) OTHERWISE SEARCH FOR SPACE OR DELIMITER.
 C
   162   CONTINUE
-        DO164II=IFRST,ILAST
+        IF(IFLGQ2.EQ.1)THEN
+          ISTRT=IFRST+1
+          IFLAGQ=1
+        ELSE
+          ISTRT=IFRST
+          IFLAGQ=0
+        ENDIF
+        DO164II=ISTRT,ILAST
           IF(IFLAGQ.EQ.1)THEN
             IF(IB(II).EQ.'"')THEN
-              ILAST=II-1
+              ILAST2=II
               IFLAGQ=0
-              GOTO165
+              GOTO164
             ENDIF
           ELSEIF(IREACD.EQ.'ON' .AND. IB(II).EQ.',')THEN
             ILAST=II-1
@@ -1314,7 +1354,14 @@ C
             NXC=NXC+1
             IXC(NXC)=' '
             J=0
-            DO168II=IFRST,ILAST
+            IF(IFLGQ2.EQ.1)THEN
+              ISTRT=IFRST+1
+              ISTOP=ILAST2-1
+            ELSE
+              ISTRT=IFRST
+              ISTOP=ILAST
+            ENDIF
+            DO168II=ISTRT,ISTOP
               IF(J.LE.24)THEN
                 J=J+1
                 IXC(NXC)(J:J)=IB(II)(1:1)
@@ -1451,7 +1498,16 @@ C
           NXC=NXC+1
           IXC(NXC)=' '
           J=0
-          DO7158II=IFRST,ILAST
+C
+          IF(IB(IFRST).EQ.'"' .AND. IB(ILAST2).EQ.'"')IFLGQ2=1
+          IF(IFLGQ2.EQ.1)THEN
+            ISTRT=IFRST+1
+            ISTOP=ILAST2-1
+          ELSE
+            ISTRT=IFRST
+            ISTOP=ILAST
+          ENDIF
+          DO7158II=ISTRT,ISTOP
             IF(II.EQ.ILAST .AND. IB(II).EQ.IREADL)GOTO7158
             IF(J.LE.24)THEN
               J=J+1

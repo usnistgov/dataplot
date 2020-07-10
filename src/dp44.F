@@ -17891,3 +17891,238 @@ C
  9000 CONTINUE
       RETURN
       END
+      SUBROUTINE TTT(X,TAG,NX,ICASE,IWRITE,Y,NOUT,TEMP1,TEMP2,MAXNXT,
+     1               IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--COMPUTE TOTAL TIME ON TEST OF AN ARRAY.  THE TAG VARIABLE
+C              IDENTIFIES CENSORED DATA (1 = FAILURE TIME, 0 = CENSORED).
+C
+C              FOR UNCENSORED DATA, THE FORMULA IS (X IS SORTED)
+C
+C                  TTT(i) = SUM[j=1 to i][(N-j+1)*(X(j) - X(j-1))]
+C                  X(0) = 0
+C
+C              THE SCALED TIME TO FAILURE IS
+C
+C                  TTT*(i) = TTT(i)/TTT(n)
+C
+C              FOR CENSORED DATA, USE
+C
+C                  TTT*(i) = TTT(i)/TTT(r)
+C
+C              WHERE r IS THE MAXIMUM UNCENSORED FAILURE TIME
+C
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGYS
+C                 GAITHERSBURG, MD 20899
+C                 PHONE--301-975-2899
+C     REFERENCE--HORST RINNE (2010), "Location–Scale Distributions:
+C                Linear Estimation and Probability Plotting Using
+C                MATLAB".
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGYS.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2020/06
+C     ORIGINAL VERSION--JUNE      2020.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ICASE
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ICASE2
+C
+      DOUBLE PRECISION DSUM
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION X(*)
+      DIMENSION Y(*)
+      DIMENSION TAG(*)
+      DIMENSION TEMP1(*)
+      DIMENSION TEMP2(*)
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='TTT '
+      ISUBN2='    '
+      IERROR='NO'
+C
+      NOUT=0
+      NR=0
+      NCENS=0
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'TTT ')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF TTT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,ICASE,NX,MAXNXT
+   52   FORMAT('IBUGA3,ISUBRO,ICASE,NX,MAXNXT = ',3(A4,2X),2I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,NX
+          WRITE(ICOUT,56)I,X(I),TAG(I)
+   56     FORMAT('I,X(I), TAG(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+C
+C               **************************************
+C               **  CHECK FOR NEGATIVE DATA         **
+C               **************************************
+      DO90I=1,NX
+        IF(X(I).LT.0.0)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,101)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,93)
+   93     FORMAT('      THE TOTAL TIME ON TEST STATISTIC IS NOT ',
+     1           'SUPPORTED FOR NEGATIVE DATA.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,95)I,X(I)
+   95     FORMAT('      ROW ',I8,' HAS THE VALUE ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+   90 CONTINUE
+C
+C               **************************************
+C               **  COMPUTE TOTAL TIME TO FAILURE   **
+C               **************************************
+C
+      CALL SORTC(X,TAG,NX,X,TAG)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+C     CHECK CENSORING VARIABLE.  TYPICALLY, THE CENSORING VARIABLE WILL
+C     BE CODED AS 0 => CENSORED VALUE AND 1 => UNCENSORED VALUE.  WITH
+C     CODING, THIS WILL BE 1 => CENSORED AND 2 => UNCENSORED SO
+C     SUBTRACT 1 TO RESTORE 0/1 CODING.  IF 0/1 CODING IS NOT USED, THE
+C     SMALLER VALUE IS INTERPRETED AS CENSORED AND THE LARGER VALUE AS
+C     UNCENSORED.  IF THERE IS ONLY 1 DISTINCT VALUE, THEN ASSUME NO
+C     CENSORING.  IF THERE ARE MORE THAN 2 DISTINCT VALUES, THEN TREAT
+C     AS AN ERROR.
+C
+      CALL CODE(TAG,NX,IWRITE,TEMP1,TEMP2,MAXNXT,IBUGA3,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+      DO100II=1,NX
+        TAG(II)=TEMP1(II) - 1.0
+  100 CONTINUE
+      CALL DISTIN(TAG,NX,IWRITE,TEMP2,NDIST,IBUGA3,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+      IF(NDIST.EQ.1)THEN
+        ICASE2='UNCE'
+      ELSEIF(NDIST.EQ.2)THEN
+        ICASE2='CENS'
+      ELSE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,101)
+  101   FORMAT('***** EROR IN TIME TO FAILURE (TTT)--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,103)
+  103   FORMAT('      THERE ARE MORE THAN TWO DISTINCT VALUES FOR THE ',
+     1         'CENSORING VARIABLE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,105)NDIST
+  105   FORMAT('      THE NUMBER OF DISTINCT VALUE = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        ICASE2='ERRO'
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C     CHECK THAT ALL CENSORED VALUES ARE AT THE END
+C
+      IF(ICASE2.EQ.'CENS')THEN
+        IFLAGC=0
+        NCENS=0
+        NR=0
+        DO120I=1,NX
+          IF(TAG(I).EQ.1.0)THEN
+            NR=NR+1
+            IF(IFLAGC.EQ.1)THEN
+              WRITE(ICOUT,999)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,101)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,123)
+  123         FORMAT('      AN UNCENSORED VALUE OCCURRED AFTER A ',
+     1               'CENSORED VALUE.')
+              CALL DPWRST('XXX','BUG ')
+              IERROR='YES'
+              GOTO9000
+            ENDIF
+          ELSEIF(TAG(I).EQ.0.0)THEN
+            NCENS=NCENS+1
+            IFLAGC=1
+          ENDIF
+  120   CONTINUE
+      ENDIF
+C
+      AN=REAL(NX)
+      DO200I=1,NX
+        DSUM=0.0D0
+        DO210J=1,I
+          C=AN - REAL(J) + 1.0
+          TERM1=X(J)
+          IF(J.GT.1)THEN
+            TERM2=X(J-1)
+          ELSE
+            TERM2=0.0
+          ENDIF
+          DSUM=DSUM + DBLE(C*(TERM1 - TERM2))
+  210   CONTINUE
+        Y(I)=REAL(DSUM)
+  200 CONTINUE
+      NOUT=NX
+      IF(ICASE2.EQ.'CENS')NOUT=NR
+C
+      AFACT=0.0
+      IF(ICASE.EQ.'SCAL')THEN
+        AFACT=Y(NOUT)
+        IF(AFACT.EQ.0.0)AFACT=1.0
+        DO310I=1,NOUT
+          Y(I)=Y(I)/AFACT
+  310   CONTINUE
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'TTT ')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF CUMHAZ--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR,ICASE2,NOUT,AFACT
+ 9012   FORMAT('IERROR,ICASE2,NOUT,AFACT = ',2(A4,2X),I8,G15.7)
+        CALL DPWRST('XXX','BUG ')
+        DO9015I=1,NOUT
+          WRITE(ICOUT,9016)I,X(I),TAG(I),Y(I)
+ 9016     FORMAT('I,X(I),TAG(I),Y(I) = ',I8,3G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9015   CONTINUE
+      ENDIF
+C
+      RETURN
+      END

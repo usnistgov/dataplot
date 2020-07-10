@@ -1,5 +1,5 @@
 Name:		dataplot
-Version:	20200619
+Version:	20200710
 Release:	1%{?dist}
 Summary:	Scientific visualization, statistical analysis, and non-linear modeling
 Group:		Applications/Engineering
@@ -9,7 +9,7 @@ URL:		http://www.itl.nist.gov/div898/software/dataplot/
 #Source:		dataplot-%{version}.tar.gz
 Source:		https://www.itl.nist.gov/div898/software/dataplot/ftp/unix/dataplot-%{version}.tar.gz
 BuildRequires:	gcc-gfortran
-BuildRequires:	gd-devel, libpng, libjpeg, zlib, freetype, readline-devel, cairo-devel
+BuildRequires:	gd-devel, libpng, libjpeg, zlib, freetype, readline-devel, cairo-devel, xclip
 
 
 
