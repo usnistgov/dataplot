@@ -1,0 +1,77 @@
+This is file kernmixt.men--Generate Normal Kernel Density Mixture Plot
+ 
+--------------------line 3
+ 1. Kernel Density Mixture Plots
+ 2. KERNEL DENSITY MIXTURE PLOT YMEAN YSD
+ 3.
+ 4. Response Variable Containing the Lab Means:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Response Variable Containing the Lab Standard Deviations:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6.
+ 7. Character Type for Mean Values:
+ 7. @CE 3 0 40 50 * gui-char
+ 8. Character Fill for Data:
+ 8. @CE 4 1 40 44 off
+ 8. @CE 4 2 47 50 on
+ 9. Line Type for Kernel Density Traces:
+ 9. @CE 5 0 40 50 * gui-line
+10. Line Color for Kernel Density Traces:
+10. @CE 6 0 40 50 * gui-color
+11. Line Type for Mean +/- 2*SD Traces:
+11. @CE 7 0 40 50 * gui-line
+12. Line Color for Mean +/- 2*SD Traces:
+12. @CE 8 0 40 50 * gui-color
+13.
+14. Plot Orientation:
+14. @CE 9 1 30 44 vertical
+14. @CE 9 2 45 59 horizontal
+15.
+16. Title:
+16. @CE 10 0 10 50 *
+19. Left Axis Label:
+19. @CE 11 0 22 50 *
+20. Bottom Axis Label:
+20. @CE 12 0 22 50 *
+21.
+22. Subset/Except/For Specification:
+23. @CE 13 0 1 50 *
+24.
+25. Generate the Normal Kernel Density Mixture Plot?:
+--------------------
+TITLE _10
+Y1LABEL _11
+X1LABEL _12
+LET ZZZNTEMP = SIZE _1 _13
+LET ZZZNTEMP = ZZZNTEMP + 1
+HORIZONTAL SWITCH ON
+TIC MARK OFFSET UNITS SCREEN
+@IF 9 2 HORIZONTAL SWITCH OFF
+@IF 9 1 XLIMITS 1 ZZZNTEMP
+@IF 9 1 MAJOR X1TIC MARK NUMBER ZZZNTEMP
+@IF 9 1 MINOR X1TIC MARK NUMBER 0
+@IF 9 1 X1TIC MARK OFFSET 5 15
+@IF 9 1 Y1TIC MARK OFFSET 5 5
+@IF 9 2 YLIMITS 1 ZZZNTEMP
+@IF 9 2 MAJOR Y1TIC MARK NUMBER ZZZNTEMP
+@IF 9 2 MINOR Y1TIC MARK NUMBER 0
+@IF 9 2 Y1TIC MARK OFFSET 5 15
+@IF 9 2 X1TIC MARK OFFSET 5 5
+LINE SOLID ALL
+LINE COLOR BLACK ALL
+LINE BLANK SOLID _5 _7
+LINE THICKNESS 0.1 0.1 0.1 0.2
+LINE COLOR BLACK BLACK _6 _8
+CHARACTER BLANK ALL
+CHARACTER FILL OFF ALL
+CHARACTER _3
+CHARACTER FILL _3
+CHARACTER HW 1 0.75
+. SET NORMAL KERNEL DENSITY MIXTURE PLOT EXPANSION FACTOR 0.7
+NORMAL KERNEL DENSITY MIXTURE PLOT _1 _2 _13
+LINE SOLID
+LINE COLOR _4
+DRAWDS ZZZNTEMP 20 ZZZNTEMP 90
+--------------------last
+WEB HELP NORMAl KERNEL DENSITY MIXTURE PLOT
+--------------------last

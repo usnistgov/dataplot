@@ -4,58 +4,70 @@ This is file dexsignp.men--Generate DEX SIGN Plot
 1. DEX Sign Plot
 2. DEX SIGN PLOT Y X1 X2 X3 X4 X5 ...
 3.
-4. Response Variable:
-4. @CE 1 0 33 50 ? gui-variable
-5. List of Factors/Variables:
-6. @CE 2 0 1 50 ? gui-variable
+4. This plot is typically used when there are 2 levels
+5. for each factor.  The lower level is commonly coded
+6. as a "-" and the higher level as a "+".
 7.
-8. This plot is typically used when there are 2 levels
-9. for each factor.  The lower level is commonly coded
-10. as a "-" and the higher level as a "+".
-11.
-12. Line type connecting the data:
+8. Response Variable:
+8. @CE 1 0 33 50 ? gui-variable
+9. List of Factors/Variables:
+9. @CE 2 0 1 50 ? gui-variable
+10.
+11. Line type connecting the data:
+11. @CE 3 0 33 50 * gui-line
+12. Line type for global mean:
 12. @CE 4 0 33 50 * gui-line
-13. Line type for global mean:
-13. @CE 5 0 33 50 * gui-line
-14. Character type for data (often "- +"):
-14. @CE 6 0 33 50 * gui-character
-15. Character fill for data:
+13. Character type for data (often "- +"):
+13. @CE 5 0 33 50 * gui-character
+14. Character fill for data:
+14. @CE 6 0 33 50 gui-ooff
+15. Character height for data (default = 2):
 15. @CE 7 0 33 50 gui-ooff
-16. Spike to global mean:
+16. Character width for data (default =1):
 16. @CE 8 0 33 50 gui-ooff
-17. Use variable names as X axis labels?
-17. @CE 9 1 40 45 yes
-17. @CE 9 2 47 52 no
-18.       Number of Factors?:
-18. @CE 10 0 47 54 *
+17. Spike to global mean:
+17. @CE 9 0 33 50 gui-ooff
+18. Use variable names as X axis labels?
+18. @CE 10 1 40 45 yes
+18. @CE 10 2 47 52 no
 19.
-20. Subset/Except/For Specification:
-21. @CE 3 0 1 50 *
-22.
+20. Title:
+20. @CE 11 0 10 50 *
+21. Left Axis Label:
+21. @CE 12 0 22 50 *
+22. Bottom Axis Label:
+22. @CE 13 0 22 50 *
 23.
-24. Generate the DEX Sign Plot?:
+24. Subset/Except/For Specification:
+25. @CE 14 0 1 50 *
+26.
+27.
+28. Generate the DEX Sign Plot?:
 --------------------
 GR FE
-@IF 4 0 LINES _4 _4 _5
+LET STRING ZZZSTRING = _2
+LET ZNWORDS = NUMBER OF WORDS ZZZSTRING
+LET ZTEMP1 = ZNWORDS + 1
+LET ZTEMP2 = ZNWORDS + 2
+@IF 3 0 LINES _3 _3 _4
 CHAR BLANK BLANK BLANK
-@IF 6 0 CHAR _6
-CHAR FILL _7
-SPIKE _8
-@IF 8 0 LET ZM = MEAN _1 _3
-@IF 8 0 SPIKE BASE ZM
-@IF 9 1 LET ZTEMP = _10 + 1
-@IF 9 1 XLIMITS 0 ZTEMP
-@IF 9 1 LET ZTEMP= _10 + 2
-@IF 9 1 MAJOR XTIC MARK NUMBER ZTEMP
-@IF 9 1 MINOR XTIC MARK NUMBER 0
-@IF 9 1 X1TIC MARK LABEL FORMAT ALPHA
-@IF 9 1 X1TIC MARK LABEL CONTENT SP() _2 SP()
-DEX SIGN PLOT _1 _2 _3
-@IF 9 1 XLIMITS
-@IF 9 1 MAJOR XTIC MARK NUMBER
-@IF 9 1 MINOR XTIC MARK NUMBER
-@IF 9 1 X1TIC MARK LABEL FORMAT 
-@IF 9 1 X1TIC MARK LABEL CONTENT
+@IF 5 0 CHAR _5
+CHAR FILL _6
+@IF 7 0 CHAR HW _7 _8
+SPIKE _9
+@IF 9 0 LET ZM = MEAN _1 _14
+@IF 9 0 SPIKE BASE ZM
+XLIMITS 0 ZTEMP1
+MAJOR XTIC MARK NUMBER ZTEMP2
+MINOR XTIC MARK NUMBER 0
+@IF 10 1 X1TIC MARK LABEL FORMAT ALPHA
+@IF 10 1 X1TIC MARK LABEL CONTENT SP() _2 SP()
+DEX SIGN PLOT _1 _2 _14
+XLIMITS
+MAJOR XTIC MARK NUMBER
+MINOR XTIC MARK NUMBER
+X1TIC MARK LABEL FORMAT 
+X1TIC MARK LABEL CONTENT
 --------------------
-WEB HELP DEX SCATTER PLOT
+WEB HELP DEX SIGN PLOT
 --------------------

@@ -25,7 +25,10 @@ Regression Designs                      <~dexreg\dexreg.top>
 Response Surface Designs                <~dexopt\dexopt.top>
 Mixture Designs                         <~dexmix\dexmix.top>
 
-Generate Random Run Sequence            <~dex\randruns.men>
+Generate Random Run Sequence            <xemf: ~dex\randruns.men>
+Yates Cube Plot (2**3)                  <xemf: ~dex2k\yatecube.men>
+Yates Cube Plot (2**4)                  <xemf: ~dex2k\yatecub2.men>
+Yates Cube Plot (2**5)                  <xemf: ~dex2k\yatecub3.men>
 
 Built-in Data Sets
      View                               <~dataview\dex.top>

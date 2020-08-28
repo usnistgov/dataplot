@@ -1,0 +1,43 @@
+This is file equaplot.men--Empirical Quantile Plot
+ 
+--------------------
+ 1. Empirical Quantile Plot
+ 2. EMPIRICAL QUANTILE PLOT Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5.
+ 6. Line Types (solid, dot, dash, ...)
+ 6. @CE 2 0 42 50 * gui-line
+ 7. Character Type (blank, x, circ, ...)
+ 7. @CE 3 0 42 50 * gui-char
+ 8. Character Fill (off, on)
+ 8. @CE 4 0 42 50 * gui-ooff
+ 9.
+10. Title:
+10. @CE 5 0 10 50 *
+11. Left Axis Label:
+11. @CE 6 0 22 50 *
+12. Bottom Axis Label:
+12. @CE 7 0 22 50 *
+13.
+14. Subset/Except/For Specification:
+15. @CE 8 0 1 50 *
+16.
+17.
+18. Generate the Empirical Quantile Plot?:
+--------------------
+GR FE
+LINES SOLID
+CHARACTER BLANK
+CHARACTER FILL OFF
+LINE _2
+CHARACTER _3
+CHARACTER FILL _4
+TITLE _5
+Y1LABEL _6
+X1LABEL _7
+EMPIRICAL QUANTILE PLOT _1  _8
+--------------------
+WEB HELP EMPIRICAL QUANTILE PLOT
+--------------------

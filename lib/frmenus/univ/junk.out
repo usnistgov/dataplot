@@ -1,0 +1,1088 @@
+adplsy.men:@IF 2 1 TUKEY-LAMBDA ANDERSON DARLING PLOT _1 _3
+adplsy.men:@IF 2 2 ANDERSON DARLING PLOT _1 _3
+adplsy.men:@IF 2 3 ANDERSON DARLING PLOT _1 _3
+adplsy.men:@IF 2 4 ANDERSON DARLING PLOT _1 _3
+adplsy.men:@IF 2 5 ANDERSON DARLING PLOT _1 _3
+allasdpl.men:@IF 2 0 CHARACTERS _2
+allasdpl.men:@IF 3 0 LINES _3
+allasdpl.men:@IF 4 0 SPIKE _4
+allasdpl.men:@IF 5 0 BAR _5
+allavapl.men:@IF 2 0 CHARACTERS _2
+allavapl.men:@IF 3 0 LINES _3
+allavapl.men:@IF 4 0 SPIKE _4
+allavapl.men:@IF 5 0 BAR _5
+autocopl.men:@IF 2 0 LINES _2
+autocopl.men:@IF 3 0 CHARACTERS _3
+autocopl.men:@IF 4 0 CHARACTER FILL _4
+autocopl.men:@IF 5 0 SPIKE _5
+autocopl.men:@IF 5 0 SPIKE BASE 0
+blockplo.men:@IF 8 0 LINES _8 ALL
+blockplo.men:@IF 6 1 LINES BL BL
+blockplo.men:@IF 6 2 LINES BL BL BL
+blockplo.men:@IF 6 3 LINES BL BL BL BL
+blockplo.men:@IF 6 4 LINES BL BL BL BL BL
+blockplo.men:@IF 6 5 LINES BL BL BL BL BL BL
+blockplo.men:@IF 1 1 BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 2 NUMBER BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 3 MEAN BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 4 MEDIAN BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 5 MIDMEAN BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 6 MIDRANGE BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 7 SD BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 8 VARIANCE BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 9 RANGE BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 10 MINIMUM BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 11 MAXIMUM BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 12 SKEWNESS BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 13 KURTOSIS BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 14 AUTOCORR BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 15 SN0 BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 16 SN+ BLOCK PLOT _2 _4 _3 _5
+blockplo.men:@IF 1 17 SN- BLOCK PLOT _2 _4 _3 _5
+bootmdpl.men:@IF 2 0 CHARACTERS _2
+bootmdpl.men:@IF 3 0 LINES _3
+bootmepl.men:@IF 2 0 CHARACTERS _2
+bootmepl.men:@IF 3 0 LINES _3
+bootmmpl.men:@IF 2 0 CHARACTERS _2
+bootmmpl.men:@IF 3 0 LINES _3
+bootmrpl.men:@IF 2 0 CHARACTERS _2
+bootmrpl.men:@IF 3 0 LINES _3
+bootrapl.men:@IF 2 0 CHARACTERS _2
+bootrapl.men:@IF 3 0 LINES _3
+bootrspl.men:@IF 2 0 CHARACTERS _2
+bootrspl.men:@IF 3 0 LINES _3
+bootrvpl.men:@IF 2 0 CHARACTERS _2
+bootrvpl.men:@IF 3 0 LINES _3
+bootsdpl.men:@IF 2 0 CHARACTERS _2
+bootsdpl.men:@IF 3 0 LINES _3
+boxplot1.men:@IF 3 1 CHARACTERS BOX PLOT
+boxplot1.men:@IF 3 1 LINES BOX PLOT
+boxplot1.men:@IF 3 2 CHARACTERS TUFTE BOX PLOT
+boxplot1.men:@IF 3 2 LINES TUFTE BOX PLOT
+boxplot.men:@IF 3 1 CHARACTERS BOX PLOT
+boxplot.men:@IF 3 1 LINES BOX PLOT
+boxplot.men:@IF 3 2 CHARACTERS TUFTE BOX PLOT
+boxplot.men:@IF 3 2 LINES TUFTE BOX PLOT
+chisgfch.men:@IF 3 0 LET NU1 = _3
+chisgfch.men:@IF 4 0 LET NU2 = _4
+chisgfch.men:@IF 5 0 LET ALPHA = _5
+chisgfch.men:@IF 6 0 LET BETA = _6
+chisgfch.men:@IF 7 0 LET NU = _7
+chisgfch.men:@IF 8 0 LET NU = _8
+chisgfch.men:@IF 9 0 LET C = _9
+chisgfch.men:@IF 10 0 LET K = _10
+chisgfch.men:@IF 11 0 LET BETA = _11
+chisgfch.men:@IF 12 0 LET THETA = _12
+chisgfch.men:@IF 13 0 LET THETA = _13
+chisgfch.men:@IF 14 0 LET N = _14
+chisgfch.men:@IF 2 1 F CHI-SQUARE GOODNESS OF FIT _1 _15
+chisgfch.men:@IF 2 2 BETA CHI-SQUARE GOODNESS OF FIT _1 _15
+chisgfch.men:@IF 2 3 CHI-SQUARE CHI-SQUARE GOODNESS OF FIT _1 _15
+chisgfch.men:@IF 2 4 CHI CHI-SQUARE GOODNESS OF FIT _1 _15
+chisgfch.men:@IF 2 5 POWER CHI-SQUARE GOODNESS OF FIT _1 _15
+chisgfch.men:@IF 2 6 ARCSIN CHI-SQUARE GOODNESS OF FIT _1 _15
+chisgfch.men:@IF 2 7 MIELKE BETA-KAPPA CHI-SQUARE GOODNESS OF FIT _1 _15
+chisgfch.men:@IF 2 8 TWO SIDED POWER CHI-SQUARE GOODNESS OF FIT _1 _15
+chisgfdi.men:@IF 3 0 LET N = _3
+chisgfdi.men:@IF 4 0 LET P = _4
+chisgfdi.men:@IF 5 0 LET P = _5
+chisgfdi.men:@IF 6 0 LET LAMBDA = _6
+chisgfdi.men:@IF 7 0 LET N = _7
+chisgfdi.men:@IF 8 0 LET K = _8
+chisgfdi.men:@IF 9 0 LET N = _9
+chisgfdi.men:@IF 11 0 LET K = _11
+chisgfdi.men:@IF 12 0 LET M = _12
+chisgfdi.men:@IF 13 0 LET N = _13
+chisgfdi.men:@IF 14 0 LET THETA = _14
+chisgfdi.men:@IF 15 0 LET N = _15
+chisgfdi.men:@IF 16 0 LET ALPHA = _16
+chisgfdi.men:@IF 17 0 LET BETA = _17
+chisgfdi.men:@IF 18 0 LET A = _18
+chisgfdi.men:@IF 19 0 LET C = _19
+chisgfex.men:@IF 3 0 LET M = _3
+chisgfex.men:@IF 4 0 LET SD = _4
+chisgfex.men:@IF 5 0 LET X0 = _5
+chisgfex.men:@IF 6 0 LET LAMBDA1 = _6
+chisgfex.men:@IF 7 0 LET LAMBDA2 = _7
+chisgfex.men:@IF 8 0 LET S = _8
+chisgfex.men:@IF 9 0 LET ALPHA = _9
+chisgfex.men:@IF 10 0 LET BETA = _10
+chisgfex.men:@IF 11 0 LET GAMMA = _11
+chisgfex.men:@IF 12 0 LET GAMMA = _12
+chisgfex.men:@IF 13 0 SET MINMAX = _13
+chisgfex.men:@IF 14 0 LET GAMMA = _14
+chisgfex.men:@IF 15 0 SET MINMAX _15
+chisgfex.men:@IF 16 0 LET GAMMA = _16
+chisgfex.men:@IF 17 0 LET GAMMA = _17
+chisgfex.men:@IF 18 0 LET GAMMA = _18
+chisgfex.men:@IF 19 0 LET GAMMA = _19
+chisgfex.men:@IF 20 0 LET C = _20
+chisgfex.men:@IF 21 0 LET THETA = _21
+chisgfex.men:@IF 22 0 LET GAMMA = _22
+chisgfex.men:@IF 23 0 LET GAMMA = _23
+chisgfex.men:@IF 24 0 LET GAMMA = _24
+chisgfex.men:@IF 2 1 EXPONENTIAL  CHI-SQUARE GOODNESS OF FIT _1 _25
+chisgfex.men:@IF 2 2 TRUNCATED EXPONENTIAL  CHI-SQUARE GOODNESS OF FIT _1 _25
+chisgfex.men:@IF 2 3 GENERALIZED EXPONENTIAL  CHI-SQUARE GOODNESS OF FIT _1 _25
+chisgfex.men:@IF 2 4 POWER EXPONENTIAL  CHI-SQUARE GOODNESS OF FIT _1 _25
+chisgfex.men:@IF 2 5 WEIBULL CHI-SQUARE GOODNESS OF FIT _1 _25
+chisgfex.men:@IF 2 6 EXPONENTIATED WEIBULL CHI-SQUARE GOODNESS OF FIT _1 _25
+chisgfex.men:@IF 2 7 EXTREME VALUE TYPE I  CHI-SQUARE GOODNESS OF FIT _1 _25
+chisgfex.men:@IF 2 8 EXTREME VALUE TYPE II  CHI-SQUARE GOODNESS OF FIT _1 _25
+chisgfex.men:@IF 2 9 GENERALIZED EXTREME VALUE  CHI-SQUARE GOODNESS OF FIT _1 _25
+chisgfex.men:@IF 2 10 GAMMA CHI-SQUARE GOODNESS OF FIT _1 _25
+chisgfex.men:@IF 2 11 LOG GAMMA CHI-SQUARE GOODNESS OF FIT _1 _25
+chisgfex.men:@IF 2 12 GENERALIZED GAMMA CHI-SQUARE GOODNESS OF FIT _1 _25
+chisgfex.men:@IF 2 13 INVERTED GAMMA CHI-SQUARE GOODNESS OF FIT _1 _25
+chisgfex.men:@IF 2 14 GEOMETRIC EXTR EXPO CHI-SQUARE GOODNESS OF FIT _1 _25
+chisgfex.men:@IF 2 15 INVERTED GAMMA CHI-SQUARE GOODNESS OF FIT _1 _25
+chisgfmi.men:@IF 3 0 LET C = _3
+chisgfmi.men:@IF 4 0 LET B = _4
+chisgfmi.men:@IF 5 0 LET ALPHA = _5
+chisgfmi.men:@IF 6 0 LET BETA = _6
+chisgfmi.men:@IF 7 0 LET BETA = _7
+chisgfmi.men:@IF 8 0 LET B = _8
+chisgfmi.men:@IF 9 0 LET ALPHA = _9
+chisgfmi.men:@IF 10 0 LET ALPHA1 = _10
+chisgfmi.men:@IF 11 0 LET ALPHA2 = _11
+chisgfmi.men:@IF 12 0 LET ALPHA1 = _12
+chisgfmi.men:@IF 13 0 LET ALPHA2 = _13
+chisgfmi.men:@IF 2 1 GOMPERTZ CHI-SQUARE GOODNESS OF FIT _1 _14
+chisgfmi.men:@IF 2 2 ALPHA CHI-SQUARE GOODNESS OF FIT _1 _14
+chisgfmi.men:@IF 2 3 BRADFORD CHI-SQUARE GOODNESS OF FIT _1 _14
+chisgfmi.men:@IF 2 4 RECIPROCAL CHI-SQUARE GOODNESS OF FIT _1 _14
+chisgfmi.men:@IF 2 5 LOG DOUBLE EXPONENTIAL CHI-SQUARE GOODNESS OF FIT _1 _14
+chisgfmi.men:@IF 2 6 JOHNSON SB CHI-SQUARE GOODNESS OF FIT _1 _14
+chisgfmi.men:@IF 2 7 JOHNSON SU CHI-SQUARE GOODNESS OF FIT _1 _14
+chisgfmx.men:@IF 3 0 LET U1 = _3
+chisgfmx.men:@IF 4 0 LET SD1 = _4
+chisgfmx.men:@IF 5 0 LET U2 = _5
+chisgfmx.men:@IF 6 0 LET SD2 = _6
+chisgfmx.men:@IF 7 0 LET P = _7
+chisgfmx.men:@IF 8 0 LET SCALE1 = _8
+chisgfmx.men:@IF 9 0 LET GAMMA1 = _9
+chisgfmx.men:@IF 10 0 LET LOC2 = _10
+chisgfmx.men:@IF 11 0 LET SCALE2 = _11
+chisgfmx.men:@IF 12 0 LET GAMMA2 = _12
+chisgfmx.men:@IF 2 1 NORMAL MIXTURE CHI-SQUARE GOODNESS OF FIT _1 _13
+chisgfmx.men:@IF 2 2 BIWEIBULL CHI-SQUARE GOODNESS OF FIT _1 _13
+chisgfnc.men:@IF 3 0 LET NU1 = _3
+chisgfnc.men:@IF 4 0 LET NU2 = _4
+chisgfnc.men:@IF 5 0 LET LAMBDA = _5
+chisgfnc.men:@IF 6 0 LET NU1 = _6
+chisgfnc.men:@IF 7 0 LET NU2 = _7
+chisgfnc.men:@IF 8 0 LET LAMBDA1 = _8
+chisgfnc.men:@IF 9 0 LET LAMBDA2 = _9
+chisgfnc.men:@IF 10 0 LET ALPHA = _10
+chisgfnc.men:@IF 11 0 LET BETA = _11
+chisgfnc.men:@IF 12 0 LET LAMBDA = _12
+chisgfnc.men:@IF 13 0 LET NU = _13
+chisgfnc.men:@IF 14 0 LET LAMBDA = _14
+chisgfnc.men:@IF 15 0 LET NU = _15
+chisgfnc.men:@IF 16 0 LET LAMBDA = _16
+chisgfnc.men:@IF 17 0 LET NU1 = _17
+chisgfnc.men:@IF 18 0 LET NU2 = _18
+chisgfnc.men:@IF 19 0 LET LAMBDA = _19
+chisgfnc.men:@IF 2 1 NON-CENTRAL F CHI-SQUARE GOODNESS OF FIT _1 _20
+chisgfnc.men:@IF 2 2 DOUBLY NON-CENTRAL F CHI-SQUARE GOODNESS OF FIT _1 _20
+chisgfnc.men:@IF 2 3 NON-CENTRAL BETA CHI-SQUARE GOODNESS OF FIT _1 _20
+chisgfnc.men:@IF 2 4 NON-CENTRAL CHI-SQUARE CHI-SQUARE GOODNESS OF FIT _1 _20
+chisgfnc.men:@IF 2 5 NON-CENTRAL T CHI-SQUARE GOODNESS OF FIT _1 _20
+chisgfnc.men:@IF 2 6 DOUBLY NON-CENTRAL T CHI-SQUARE GOODNESS OF FIT _1 _20
+chisgfno.men:@IF 3 0 LET SD = _3
+chisgfno.men:@IF 4 0 LET P = _4
+chisgfno.men:@IF 5 0 LET SD = _5
+chisgfno.men:@IF 6 0 LET P = _6
+chisgfno.men:@IF 7 0 LET SD = _7
+chisgfno.men:@IF 8 0 LET U = _8
+chisgfno.men:@IF 9 0 LET SD = _9
+chisgfno.men:@IF 10 0 LET U = _10
+chisgfno.men:@IF 11 0 LET SD = _11
+chisgfno.men:@IF 12 0 LET A = _12
+chisgfno.men:@IF 13 0 LET B = _13
+chisgfno.men:@IF 14 0 LET P = _14
+chisgfno.men:@IF 15 0 LET M = _15
+chisgfno.men:@IF 16 0 LET SD = _16
+chisgfno.men:@IF 17 0 LET U1 = _17
+chisgfno.men:@IF 18 0 LET SD1 = _18
+chisgfno.men:@IF 19 0 LET U2 = _19
+chisgfno.men:@IF 20 0 LET SD2 = _20
+chisgfno.men:@IF 21 0 LET P = _21
+chisgfno.men:@IF 2 1 NORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfno.men:@IF 2 2 HALFNORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfno.men:@IF 2 3 LOGNORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfno.men:@IF 2 4 POWER NORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfno.men:@IF 2 5 POWER LOGNORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfno.men:@IF 2 6 FOLDED NORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfno.men:@IF 2 7 TRUNCATED NORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfno.men:@IF 2 8 CAUCHY CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfno.men:@IF 2 9 HALF CAUCHY CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfno.men:@IF 2 10 WRAPPED CAUCHY CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfno.men:@IF 2 11 FOLDED CAUCHY CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfno.men:@IF 2 12 NORMAL MIXTURE CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfpa.men:@IF 3 0 LET GAMMA = _3
+chisgfpa.men:@IF 4 0 LET GAMMA = _4
+chisgfpa.men:@IF 5 0 SET MINMAX = _5
+chisgfpa.men:@IF 6 0 LET GAMMA = _6
+chisgfpa.men:@IF 7 0 LET DELTA = _7
+chisgfpa.men:@IF 8 0 LET GAMMA = _8
+chisgfpa.men:@IF 9 0 LET ALPHA = _9
+chisgfpa.men:@IF 2 1 PARETO CHI-SQUARE GOODNESS OF FIT _1 _10
+chisgfpa.men:@IF 2 2 GENERALIZED PARETO CHI-SQUARE GOODNESS OF FIT _1 _10
+chisgfpa.men:@IF 2 3 PARETO TYPE 2 CHI-SQUARE GOODNESS OF FIT _1 _10
+chisgfpa.men:@IF 2 4 LOGISTIC CHI-SQUARE GOODNESS OF FIT _1 _10
+chisgfpa.men:@IF 2 5 LOG LOGISTIC CHI-SQUARE GOODNESS OF FIT _1 _10
+chisgfpa.men:@IF 2 6 HALF-LOGISTIC CHI-SQUARE GOODNESS OF FIT _1 _10
+chisgfpa.men:@IF 2 7 GENERALIZED LOGISTIC CHI-SQUARE GOODNESS OF FIT _1 _10
+chisgfsk.men:@IF 3 0 LET NU = _3
+chisgfsk.men:@IF 4 0 LET NU1 = _4
+chisgfsk.men:@IF 5 0 LET NU2 = _5
+chisgfsk.men:@IF 6 0 LET GAMMA = _6
+chisgfsk.men:@IF 7 0 LET ALPHA = _7
+chisgfsk.men:@IF 8 0 LET BETA = _8
+chisgfsk.men:@IF 9 0 LET GAMMA = _9
+chisgfsk.men:@IF 10 0 SET MINMAX = _10
+chisgfsk.men:@IF 11 0 SET MINMAX = _11
+chisgfsk.men:@IF 12 0 LET GAMMA = _12
+chisgfsk.men:@IF 13 0 SET MINMAX = _13
+chisgfsk.men:@IF 14 0 LET GAMMA = _14
+chisgfsk.men:@IF 15 0 LET GAMMA = _15
+chisgfsk.men:@IF 16 0 LET GAMMA = _16
+chisgfsk.men:@IF 17 0 LET GAMMA = _17
+chisgfsk.men:@IF 2 1 LOGNORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfsk.men:@IF 2 2 HALFNORMAL CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfsk.men:@IF 2 3 CHI-SQUARE CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfsk.men:@IF 2 4 F CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfsk.men:@IF 2 5 EXPONENTIAL CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfsk.men:@IF 2 6 GAMMA CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfsk.men:@IF 2 7 BETA CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfsk.men:@IF 2 8 WEIBULL CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfsk.men:@IF 2 9 EXTREME VALUE TYPE 1 CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfsk.men:@IF 2 10 EXTREME VALUE TYPE 2 CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfsk.men:@IF 2 11 PARETO CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfsk.men:@IF 2 12 INVERSE GAUSSIAN CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfsk.men:@IF 2 13 WALD CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfsk.men:@IF 2 14 RECIPROCAL INVERSE GAUSSIAN CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfsk.men:@IF 2 15 FAILURE TIME CHI-SQUARE GOODNESS OF FIT _1 _18
+chisgfsy.men:@IF 3 0 LET LAMBDA = _3
+chisgfsy.men:@IF 4 0 LET NU = _4
+chisgfsy.men:@IF 6 0 LET GAMMA = _6
+chisgfsy.men:@IF 7 0 LET GAMMA = _7
+chisgfsy.men:@IF 8 0 LET C = _8
+chisgfsy.men:@IF 9 0 LET B = _9
+chisgfsy.men:@IF 2 1 UNIFORM CHI-SQUARE GOODNESS OF FIT _1 _5
+chisgfsy.men:@IF 2 2 NORMAL CHI-SQUARE GOODNESS OF FIT _1 _5
+chisgfsy.men:@IF 2 3 LOGISTIC CHI-SQUARE GOODNESS OF FIT _1 _5
+chisgfsy.men:@IF 2 4 DOUBLE EXPONENTIAL CHI-SQUARE GOODNESS OF FIT _1 _5
+chisgfsy.men:@IF 2 5 CAUCHY CHI-SQUARE GOODNESS OF FIT _1 _5
+chisgfsy.men:@IF 2 6 TUKEY-LAMBDA CHI-SQUARE GOODNESS OF FIT _1 _5
+chisgfsy.men:@IF 2 7 T CHI-SQUARE GOODNESS OF FIT _1 _5
+chisgfsy.men:@IF 2 8 DOUBLE WEIBULL CHI-SQUARE GOODNESS OF FIT _1 _5
+chisgfsy.men:@IF 2 9 DOUBLE GAMMA CHI-SQUARE GOODNESS OF FIT _1 _5
+chisgfsy.men:@IF 2 10 SEMI_CIRCULAR CHI-SQUARE GOODNESS OF FIT _1 _5
+chisgfsy.men:@IF 2 11 TRIANGULAR CHI-SQUARE GOODNESS OF FIT _1 _5
+chisgfsy.men:@IF 2 12 VON MISES CHI-SQUARE GOODNESS OF FIT _1 _5
+chisgfsy.men:@IF 2 13 COSINE CHI-SQUARE GOODNESS OF FIT _1 _5
+chisgfsy.men:@IF 2 14 ANGLIT CHI-SQUARE GOODNESS OF FIT _1 _5
+chisgfsy.men:@IF 2 15 HYPERBOLIC SECANT CHI-SQUARE GOODNESS OF FIT _1 _5
+compdeap.men:@IF 3 0 CHARACTERS _3
+compdeap.men:@IF 4 0 LINES _4
+compdeap.men:@IF 5 0 SPIKE _5
+compdeap.men:@IF 6 0 BAR _6
+compdepp.men:@IF 3 0 CHARACTERS _3
+compdepp.men:@IF 4 0 LINES _4
+compdepp.men:@IF 5 0 SPIKE _5
+compdepp.men:@IF 6 0 BAR _6
+conlimme.men:@IF 2 0 LET _2 = ZMEAN
+conlimme.men:@IF 3 0 LET _3 = ZSDM
+conlimme.men:@IF 4 0 LET _4 = Z95L
+conlimme.men:@IF 5 0 LET _5 = Z95U
+conlimme.men:@IF 6 0 LET _6 = Z99L
+conlimme.men:@IF 7 0 LET _7 = Z99U
+histogra.men:@IF 7 1 BAR DIMENSION 2
+histogra.men:@IF 7 2 BAR DIMENSION 3
+histogra.men:@IF 13 1 SET RELATIVE HISTOGRAM AREA
+histogra.men:@IF 13 2 SET RELATIVE HISTOGRAM PERCENT
+histogra.men:@IF 12 1 HISTOGRAM _1 _11
+histogra.men:@IF 12 2 LET STRING ZZZZSTR = CUMULATIVE HISTOGRAM
+histogra.men:@IF 12 3 LET STRING ZZZZSTR = RELATIVE HISTOGRAM
+histogra.men:@IF 12 4 LET STRING ZZZZSTR = CUMULATIVE RELATIVE HISTOGRAM
+inflloca.men:@IF 3 2 MEAN INFLUENCE CURVE _1 _2 _12
+inflloca.men:@IF 3 3 MEDIAN INFLUENCE CURVE _1 _2 _12
+inflloca.men:@IF 3 4 MIDRANGE INFLUENCE CURVE _1 _2 _12
+inflloca.men:@IF 3 5 MIDMEAN INFLUENCE CURVE _1 _2 _12
+inflloca.men:@IF 3 6 BIWEIGHT LOCATION INFLUENCE CURVE _1 _2 _12
+inflloca.men:@IF 3 7 TRIMMED MEAN INFLUENCE CURVE _1 _2 _12
+inflloca.men:@IF 3 8 WINSORIZED MEAN INFLUENCE CURVE _1 _2 _12
+inflloca.men:@IF 3 9 HODGES LEHMAN INFLUENCE CURVE _1 _2 _12
+inflmisc.men:@IF 3 2 NORMAL PPCC INFLUENCE CURVE _1 _2 _10
+inflmisc.men:@IF 3 3 AUTOCORRELATION STATISTIC INFLUENCE CURVE _1 _2 _10
+inflmisc.men:@IF 3 4 AUTOCOVARIANCE STATISTIC INFLUENCE CURVE _1 _2 _10
+inflmisc.men:@IF 3 5 SINE AMPLITUDE INFLUENCE CURVE _1 _2 _10
+inflmisc.men:@IF 3 6 SINE FREQUENCY INFLUENCE CURVE _1 _2 _10
+inflperc.men:@IF 3 1 MINIMUM INFLUENCE CURVE _1 _2 _13
+inflperc.men:@IF 3 2 MAXIMUM INFLUENCE CURVE _1 _2 _13
+inflperc.men:@IF 3 3 EXTREME INFLUENCE CURVE _1 _2 _13
+inflperc.men:@IF 3 4 _6 DECILE INFLUENCE CURVE _1 _2 _13
+inflperc.men:@IF 3 5 LOWER HINGE INFLUENCE CURVE _1 _2 _13
+inflperc.men:@IF 3 6 UPPER HINGE INFLUENCE CURVE _1 _2 _13
+inflperc.men:@IF 3 7 LOWER QUARTILE INFLUENCE CURVE _1 _2 _13
+inflperc.men:@IF 3 8 UPPER QUARTILE INFLUENCE CURVE _1 _2 _13
+inflperc.men:@IF 3 9 PERCENTILE INFLUENCE CURVE _1 _2 _13
+inflperc.men:@IF 3 10 QUANTILE INFLUENCE CURVE _1 _2 _13
+inflqc.men:@IF 3 1 CP INFLUENCE CURVE _1 _2 _14
+inflqc.men:@IF 3 2 CPK INFLUENCE CURVE _1 _2 _14
+inflqc.men:@IF 3 3 CNPK INFLUENCE CURVE _1 _2 _14
+inflqc.men:@IF 3 4 CPM INFLUENCE CURVE _1 _2 _14
+inflqc.men:@IF 3 5 CC INFLUENCE CURVE _1 _2 _14
+inflqc.men:@IF 3 6 EXPECTED LOSS INFLUENCE CURVE _1 _2 _14
+inflqc.men:@IF 3 7 PERCENT DEFECTIVE INFLUENCE CURVE _1 _2 _14
+inflqc.men:@IF 3 8 TAGUCHI SN- INFLUENCE CURVE _1 _2 _14
+inflqc.men:@IF 3 9 TAGUCHI SN+ INFLUENCE CURVE _1 _2 _14
+inflqc.men:@IF 3 10 TAGUCHI SN0 INFLUENCE CURVE _1 _2 _14
+inflqc.men:@IF 3 11 TAGUCHI SN00 INFLUENCE CURVE _1 _2 _14
+inflscal.men:@IF 3 2 AAD INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 3 BIWEIGHT MIDVARIANCE INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 4 BIWEIGHT SCALE INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 5 COEFFICIENT OF VARIATION INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 6 IQ RANGE INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 7 KURTOSIS INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 8 MAD INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 9 PERCENTAGE BEND MIDVARIANCE INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 10 QUANTILE STANDARD ERROR INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 11 RANGE INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 12 RELATIVE SD INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 13 SKEWNESS INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 14 STANDARD DEVIATION INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 15 SD OF THE MEAN INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 16 TRIMMED MEAN STANDARD ERROR INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 17 VARIANCE INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 18 VARIANCE OF THE MEAN INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 19 WINSORIZED SD INFLUENCE CURVE _1 _2 _13
+inflscal.men:@IF 3 20 WINSORIZED VARIANCE INFLUENCE CURVE _1 _2 _13
+jackmdpl.men:@IF 2 0 CHARACTERS _2
+jackmdpl.men:@IF 3 0 LINES _3
+jackmepl.men:@IF 2 0 CHARACTERS _2
+jackmepl.men:@IF 3 0 LINES _3
+jackmmpl.men:@IF 2 0 CHARACTERS _2
+jackmmpl.men:@IF 3 0 LINES _3
+jackmrpl.men:@IF 2 0 CHARACTERS _2
+jackmrpl.men:@IF 3 0 LINES _3
+jackrapl.men:@IF 2 0 CHARACTERS _2
+jackrapl.men:@IF 3 0 LINES _3
+jackrspl.men:@IF 2 0 CHARACTERS _2
+jackrspl.men:@IF 3 0 LINES _3
+jackrvpl.men:@IF 2 0 CHARACTERS _2
+jackrvpl.men:@IF 3 0 LINES _3
+jacksdpl.men:@IF 2 0 CHARACTERS _2
+jacksdpl.men:@IF 3 0 LINES _3
+ksgfch.men:@IF 3 0 LET NU1 = _3
+ksgfch.men:@IF 4 0 LET NU2 = _4
+ksgfch.men:@IF 5 0 LET ALPHA = _5
+ksgfch.men:@IF 6 0 LET BETA = _6
+ksgfch.men:@IF 7 0 LET NU = _7
+ksgfch.men:@IF 8 0 LET NU = _8
+ksgfch.men:@IF 9 0 LET C = _9
+ksgfch.men:@IF 10 0 LET K = _10
+ksgfch.men:@IF 11 0 LET BETA = _11
+ksgfch.men:@IF 12 0 LET THETA = _12
+ksgfch.men:@IF 2 1 F KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _15
+ksgfch.men:@IF 2 2 BETA KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _15
+ksgfch.men:@IF 2 3 KOLMOGOROV-SMIRNOV CHI-SQUARE GOODNESS OF FIT _1 _15
+ksgfch.men:@IF 2 4 CHI KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _15
+ksgfch.men:@IF 2 5 POWER KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _15
+ksgfch.men:@IF 2 6 ARCSIN KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _15
+ksgfch.men:@IF 2 7 MIELKE BETA-KAPPA KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _15
+ksgfch.men:@IF 2 8 TWO SIDED POWER KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _15
+ksgfex.men:@IF 3 0 LET M = _3
+ksgfex.men:@IF 4 0 LET SD = _4
+ksgfex.men:@IF 5 0 LET X0 = _5
+ksgfex.men:@IF 6 0 LET LAMBDA1 = _6
+ksgfex.men:@IF 7 0 LET LAMBDA2 = _7
+ksgfex.men:@IF 8 0 LET S = _8
+ksgfex.men:@IF 9 0 LET ALPHA = _9
+ksgfex.men:@IF 10 0 LET BETA = _10
+ksgfex.men:@IF 11 0 LET GAMMA = _11
+ksgfex.men:@IF 12 0 LET GAMMA = _12
+ksgfex.men:@IF 13 0 SET MINMAX = _13
+ksgfex.men:@IF 14 0 LET GAMMA = _14
+ksgfex.men:@IF 15 0 SET MINMAX _15
+ksgfex.men:@IF 16 0 LET GAMMA = _16
+ksgfex.men:@IF 17 0 LET GAMMA = _17
+ksgfex.men:@IF 18 0 LET GAMMA = _18
+ksgfex.men:@IF 19 0 LET GAMMA = _19
+ksgfex.men:@IF 20 0 LET C = _20
+ksgfex.men:@IF 21 0 LET THETA = _21
+ksgfex.men:@IF 22 0 LET GAMMA = _22
+ksgfex.men:@IF 23 0 LET GAMMA = _22
+ksgfex.men:@IF 24 0 LET GAMMA = _22
+ksgfex.men:@IF 2 1 EXPONENTIAL  KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _25
+ksgfex.men:@IF 2 2 TRUNCATED EXPONENTIAL  KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _25
+ksgfex.men:@IF 2 3 GENERALIZED EXPONENTIAL  KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _25
+ksgfex.men:@IF 2 4 POWER EXPONENTIAL  KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _25
+ksgfex.men:@IF 2 5 WEIBULL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _25
+ksgfex.men:@IF 2 6 EXPONENTIATED WEIBULL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _25
+ksgfex.men:@IF 2 7 EXTREME VALUE TYPE I  KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _25
+ksgfex.men:@IF 2 8 EXTREME VALUE TYPE II  KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _25
+ksgfex.men:@IF 2 9 GENERALIZED EXTREME VALUE  KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _25
+ksgfex.men:@IF 2 10 GAMMA KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _25
+ksgfex.men:@IF 2 11 LOG GAMMA KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _25
+ksgfex.men:@IF 2 12 GENERALIZED GAMMA KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _25
+ksgfex.men:@IF 2 13 INVERTED GAMMA KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _25
+ksgfex.men:@IF 2 14 GEOMETRIC EXTR EXPO KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _25
+ksgfex.men:@IF 2 15 INVERTED WEIBULL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _25
+ksgfmi.men:@IF 3 0 LET C = _3
+ksgfmi.men:@IF 4 0 LET B = _4
+ksgfmi.men:@IF 5 0 LET ALPHA = _5
+ksgfmi.men:@IF 6 0 LET BETA = _6
+ksgfmi.men:@IF 7 0 LET BETA = _7
+ksgfmi.men:@IF 8 0 LET B = _8
+ksgfmi.men:@IF 10 0 LET ALPHA1 = _10
+ksgfmi.men:@IF 11 0 LET ALPHA2 = _11
+ksgfmi.men:@IF 12 0 LET ALPHA1 = _12
+ksgfmi.men:@IF 13 0 LET ALPHA2 = _13
+ksgfmi.men:@IF 2 1 GOMPERTZ KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _14
+ksgfmi.men:@IF 2 2 ALPHA KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _14
+ksgfmi.men:@IF 2 3 BRADFORD KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _14
+ksgfmi.men:@IF 2 4 RECIPROCAL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _14
+ksgfmi.men:@IF 2 5 LOG DOUBLE EXPO KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _14
+ksgfmi.men:@IF 2 6 JOHNSON SB KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _14
+ksgfmi.men:@IF 2 7 JOHNSON SU KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _14
+ksgfmx.men:@IF 3 0 LET U1 = _3
+ksgfmx.men:@IF 4 0 LET SD1 = _4
+ksgfmx.men:@IF 5 0 LET U2 = _5
+ksgfmx.men:@IF 6 0 LET SD2 = _6
+ksgfmx.men:@IF 7 0 LET P = _7
+ksgfmx.men:@IF 8 0 LET SCALE1 = _8
+ksgfmx.men:@IF 9 0 LET GAMMA1 = _9
+ksgfmx.men:@IF 10 0 LET LOC2 = _10
+ksgfmx.men:@IF 11 0 LET SCALE2 = _11
+ksgfmx.men:@IF 12 0 LET GAMMA2 = _12
+ksgfmx.men:@IF 2 1 NORMAL MIXTURE KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _13
+ksgfmx.men:@IF 2 2 BIWEIBULL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _13
+ksgfnc.men:@IF 3 0 LET NU1 = _3
+ksgfnc.men:@IF 4 0 LET NU2 = _4
+ksgfnc.men:@IF 5 0 LET LAMBDA = _5
+ksgfnc.men:@IF 6 0 LET NU1 = _6
+ksgfnc.men:@IF 7 0 LET NU2 = _7
+ksgfnc.men:@IF 8 0 LET LAMBDA1 = _8
+ksgfnc.men:@IF 9 0 LET LAMBDA2 = _9
+ksgfnc.men:@IF 10 0 LET ALPHA = _10
+ksgfnc.men:@IF 11 0 LET BETA = _11
+ksgfnc.men:@IF 12 0 LET LAMBDA = _12
+ksgfnc.men:@IF 13 0 LET NU = _13
+ksgfnc.men:@IF 14 0 LET LAMBDA = _14
+ksgfnc.men:@IF 15 0 LET NU = _15
+ksgfnc.men:@IF 16 0 LET LAMBDA = _16
+ksgfnc.men:@IF 17 0 LET NU1 = _17
+ksgfnc.men:@IF 18 0 LET NU2 = _18
+ksgfnc.men:@IF 19 0 LET LAMBDA = _19
+ksgfnc.men:@IF 2 1 NON-CENTRAL F KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _20
+ksgfnc.men:@IF 2 2 DOUBLY NON-CENTRAL F KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _20
+ksgfnc.men:@IF 2 3 NON-CENTRAL BETA KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _20
+ksgfnc.men:@IF 2 4 NON-CENTRAL KOLMOGOROV-SMIRNOV CHI-SQUARE GOODNESS OF FIT _1 _20
+ksgfnc.men:@IF 2 5 NON-CENTRAL T KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _20
+ksgfnc.men:@IF 2 6 DOUBLY NON-CENTRAL T KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _20
+ksgfno.men:@IF 3 0 LET SD = _3
+ksgfno.men:@IF 4 0 LET P = _4
+ksgfno.men:@IF 5 0 LET SD = _5
+ksgfno.men:@IF 6 0 LET P = _6
+ksgfno.men:@IF 7 0 LET SD = _7
+ksgfno.men:@IF 8 0 LET U = _8
+ksgfno.men:@IF 9 0 LET SD = _9
+ksgfno.men:@IF 10 0 LET U = _10
+ksgfno.men:@IF 11 0 LET SD = _11
+ksgfno.men:@IF 12 0 LET A = _12
+ksgfno.men:@IF 13 0 LET B = _13
+ksgfno.men:@IF 14 0 LET P = _14
+ksgfno.men:@IF 15 0 LET M = _15
+ksgfno.men:@IF 16 0 LET SD = _16
+ksgfno.men:@IF 17 0 LET U1 = _17
+ksgfno.men:@IF 18 0 LET SD1 = _18
+ksgfno.men:@IF 19 0 LET U2 = _19
+ksgfno.men:@IF 20 0 LET SD2 = _20
+ksgfno.men:@IF 21 0 LET P = _21
+ksgfno.men:@IF 2 1 NORMAL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfno.men:@IF 2 2 HALFNORMAL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfno.men:@IF 2 3 LOGNORMAL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfno.men:@IF 2 4 POWER NORMAL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfno.men:@IF 2 5 POWER LOGNORMAL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfno.men:@IF 2 6 FOLDED NORMAL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfno.men:@IF 2 7 TRUNCATED NORMAL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfno.men:@IF 2 8 CAUCHY KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfno.men:@IF 2 9 HALF CAUCHY KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfno.men:@IF 2 10 WRAPPED CAUCHY KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfno.men:@IF 2 11 FOLDED CAUCHY KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfno.men:@IF 2 12 NORMAL MIXTURE KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfpa.men:@IF 3 0 LET GAMMA = _3
+ksgfpa.men:@IF 4 0 LET GAMMA = _4
+ksgfpa.men:@IF 5 0 SET MINMAX = _5
+ksgfpa.men:@IF 6 0 LET GAMMA = _6
+ksgfpa.men:@IF 7 0 LET DELTA = _7
+ksgfpa.men:@IF 8 0 LET GAMMA = _8
+ksgfpa.men:@IF 9 0 LET ALPHA = _9
+ksgfpa.men:@IF 2 1 PARETO KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _10
+ksgfpa.men:@IF 2 2 GENERALIZED PARETO KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _10
+ksgfpa.men:@IF 2 3 PARETO TYPE 2 KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _10
+ksgfpa.men:@IF 2 4 LOGISTIC KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _10
+ksgfpa.men:@IF 2 5 LOG LOGISTIC KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _10
+ksgfpa.men:@IF 2 6 HALF-LOGISTIC KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _10
+ksgfpa.men:@IF 2 7 GENERALIZED LOGISTIC KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _10
+ksgfsk.men:@IF 3 0 LET NU = _3
+ksgfsk.men:@IF 4 0 LET NU1 = _4
+ksgfsk.men:@IF 5 0 LET NU2 = _5
+ksgfsk.men:@IF 6 0 LET GAMMA = _6
+ksgfsk.men:@IF 7 0 LET ALPHA = _7
+ksgfsk.men:@IF 8 0 LET BETA = _8
+ksgfsk.men:@IF 9 0 LET GAMMA = _9
+ksgfsk.men:@IF 10 0 SET MINMAX = _10
+ksgfsk.men:@IF 11 0 SET MINMAX = _11
+ksgfsk.men:@IF 12 0 LET GAMMA = _12
+ksgfsk.men:@IF 13 0 SET MINMAX = _13
+ksgfsk.men:@IF 14 0 LET GAMMA = _14
+ksgfsk.men:@IF 15 0 LET GAMMA = _15
+ksgfsk.men:@IF 16 0 LET GAMMA = _16
+ksgfsk.men:@IF 17 0 LET GAMMA = _17
+ksgfsk.men:@IF 2 1 LOGNORMAL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfsk.men:@IF 2 2 HALFNORMAL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfsk.men:@IF 2 3 KOLMOGOROV-SMIRNOV CHI-SQUARE GOODNESS OF FIT _1 _18
+ksgfsk.men:@IF 2 4 F KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfsk.men:@IF 2 5 EXPONENTIAL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfsk.men:@IF 2 6 GAMMA KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfsk.men:@IF 2 7 BETA KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfsk.men:@IF 2 8 WEIBULL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfsk.men:@IF 2 9 EXTREME VALUE TYPE 1 KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfsk.men:@IF 2 10 EXTREME VALUE TYPE 2 KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfsk.men:@IF 2 11 PARETO KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfsk.men:@IF 2 12 INVERSE GAUSSIAN KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfsk.men:@IF 2 13 WALD KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfsk.men:@IF 2 14 RECIPROCAL INVERSE GAUSSIAN KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfsk.men:@IF 2 15 FAILURE TIME KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _18
+ksgfsy.men:@IF 3 0 LET LAMBDA = _3
+ksgfsy.men:@IF 4 0 LET NU = _4
+ksgfsy.men:@IF 6 0 LET GAMMA = _6
+ksgfsy.men:@IF 7 0 LET GAMMA = _7
+ksgfsy.men:@IF 8 0 LET C = _8
+ksgfsy.men:@IF 9 0 LET B = _9
+ksgfsy.men:@IF 2 1 UNIFORM KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _5
+ksgfsy.men:@IF 2 2 NORMAL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _5
+ksgfsy.men:@IF 2 3 LOGISTIC KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _5
+ksgfsy.men:@IF 2 4 DOUBLE EXPONENTIAL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _5
+ksgfsy.men:@IF 2 5 CAUCHY KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _5
+ksgfsy.men:@IF 2 6 TUKEY-LAMBDA KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _5
+ksgfsy.men:@IF 2 7 T KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _5
+ksgfsy.men:@IF 2 8 DOUBLE WEIBULL KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _5
+ksgfsy.men:@IF 2 9 DOUBLE GAMMA KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _5
+ksgfsy.men:@IF 2 10 SEMI_CIRCULAR KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _5
+ksgfsy.men:@IF 2 11 TRIANGULAR KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _5
+ksgfsy.men:@IF 2 12 VON MISES KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _5
+ksgfsy.men:@IF 2 13 COSINE KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _5
+ksgfsy.men:@IF 2 14 ANGLIT KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _5
+ksgfsy.men:@IF 2 15 HYPERBOLIC SECANT KOLMOGOROV-SMIRNOV GOODNESS OF FIT _1 _5
+lagplot.men:@IF 2 0 LAG _2 PLOT _1 _5
+lagplot.men:@IFNE 2 0 LAG PLOT _1 _5
+locacoli.men:@IF 2 1 LET ZP = .95
+locacoli.men:@IF 2 2 LET ZP = .99
+locacoli.men:@IF 3 0 SET WRITE DECIMALS _3
+locatest.men:@IF 4 2 LET ZP = .99
+locatest.men:@IF 3 2 LET ZCUT1 = TPPF(.001,ZDF)
+locatest.men:@IF 3 2 LET ZCUT2 = TPPF(ZP,ZDF)
+locatest.men:@IF 3 1 LET ZCUT1 = TPPF(ZQ,ZDF)
+locatest.men:@IF 3 1 LET ZCUT2 = TPPF(.999,ZDF)
+locatest.men:@IF 3 3 LET ZCUT1 = TPPF(ZQ2,ZDF)
+locatest.men:@IF 3 3 LET ZCUT2 = TPPF(ZP2,ZDF)
+locatest.men:@IF 3 2 DRAWDDDS ZCUT2 ZPDFCUT2 ZCUT2 5
+locatest.men:@IF 3 2 DRAWDSDS ZCUT2 85 ZCUT2 5
+locatest.men:@IF 3 2 DRAWDSDS ZCUT2 85 ZLOWER2 85
+locatest.men:@IF 3 2 LET ZLOWER2P = ZLOWER2+(ZCUT2-ZLOWER2)/20
+locatest.men:@IF 3 2 DRAWDSDS ZLOWER2P 86 ZLOWER2 85 ZLOWER2P 84
+locatest.men:@IF 3 2 MOVEDS ZCUT2 1; TEXT ^ZCUT2
+locatest.men:@IF 3 1 DRAWDDDS ZCUT1 ZPDFCUT1 ZCUT1 5
+locatest.men:@IF 3 1 DRAWDSDS ZCUT1 85 ZCUT1 5
+locatest.men:@IF 3 1 DRAWDSDS ZCUT1 85 ZUPPER2 85
+locatest.men:@IF 3 1 LET ZUPPER2P = ZUPPER2-(ZUPPER2-ZCUT1)/20
+locatest.men:@IF 3 1 DRAWDSDS ZUPPER2P 86 ZUPPER2 85 ZUPPER2P 84
+locatest.men:@IF 3 1 MOVEDS ZCUT1 1; TEXT ^ZCUT1
+locatest.men:@IF 3 3 DRAWDDDS ZCUT1 ZPDFCUT1 ZCUT1 5
+locatest.men:@IF 3 3 DRAWDSDS ZCUT1 85 ZCUT1 5
+locatest.men:@IF 3 3 DRAWDDDS ZCUT2 ZPDFCUT2 ZCUT2 5
+locatest.men:@IF 3 3 DRAWDSDS ZCUT2 85 ZCUT2 5
+locatest.men:@IF 3 3 DRAWDSDS ZCUT1 85 ZCUT2 85
+locatest.men:@IF 3 3 MOVEDS ZCUT1 1; TEXT ^ZCUT1
+locatest.men:@IF 3 3 MOVEDS ZCUT2 1; TEXT ^ZCUT2
+locest.men:@IF 5 0 SET WRITE DECIMALS _5
+locest.men:@IF 2 0 LET _2 = MEAN _1 _6
+locest.men:@IF 3 0 LET _3 = MEDIAN _1 _6
+locest.men:@IF 4 0 LET _4 = MIDMEAN _1 _6
+meancl.men:@IF 2 0 LET _2 = ZN
+meancl.men:@IF 3 0 LET _3 = ZMEAN
+meancl.men:@IF 4 0 LET _4 = ZS
+meancl.men:@IF 5 0 LET _5 = ZSDM
+meancl.men:@IF 6 0 LET _6 = ZMEAN+Z025*ZSDM
+meancl.men:@IF 7 0 LET _7 = ZMEAN+Z975*ZSDM
+meancl.men:@IF 8 0 LET _8 = 0
+meancl.men:@IF 9 0 LET _9 = ZMEAN+Z95*ZSDM
+meancl.men:@IF 10 0 LET _10 = ZMEAN+Z05*ZSDM
+meancl.men:@IF 11 0 LET _11 = 10**10
+meancl.men:@IF 12 0 LET _12 = ZMEAN+Z005*ZSDM
+meancl.men:@IF 13 0 LET _13 = ZMEAN+Z995*ZSDM
+meancl.men:@IF 14 0 LET _14 = 0
+meancl.men:@IF 15 0 LET _15 = ZMEAN+Z99*ZSDM
+meancl.men:@IF 16 0 LET _16 = ZMEAN+Z01*ZSDM
+meancl.men:@IF 17 0 LET _17 = 10**10
+meancl.men:@IF 18 0 SET WRITE DECIMALS _18
+mean.men:@IF 3 0 SET WRITE DECIMALS _3
+normprp2.men:@IF 2 0 LINES _2
+normprp2.men:@IF 3 0 CHARACTERS _3
+normprp2.men:@IF 4 0 CHARACTER FILL _4
+normprp4.men:@IF 2 0 LINES _2
+normprp4.men:@IF 3 0 CHARACTERS _3
+normprp4.men:@IF 4 0 CHARACTER FILL _4
+normprpl.men:@IF 2 0 LINES _2
+normprpl.men:@IF 3 0 CHARACTERS _3
+normprpl.men:@IF 4 0 CHARACTER FILL _4
+pdfhissy.men:@IF 3 0 LET LAMBDA = _3
+pdfhissy.men:@IF 4 0 LET NU = _4
+periodog.men:@IF 2 0 CHARACTERS _2
+periodog.men:@IF 3 0 LINES _3
+periodog.men:@IF 4 0 SPIKE _4
+periodog.men:@IF 5 0 BAR _5
+ppccpl2p.men:@IF 2 1 GOMPERTZ PPCC PLOT _1 _3
+ppccpl2p.men:@IF 2 2 ALPHA PPCC PLOT _1 _3
+ppccpl2p.men:@IF 2 3 EXPONENTIAL POWER PPCC PLOT _1 _3
+ppccpl2p.men:@IF 2 4 EXPONENTIATED WEIBULL PPCC PLOT _1 _3
+ppccpl2p.men:@IF 2 5 JOHNSON SB PPCC PLOT _1 _3
+ppccpl2p.men:@IF 2 6 JOHNSON SU PPCC PLOT _1 _3
+ppccpl2p.men:@IF 2 7 BETA PPCC PLOT _1 _3
+ppccpl2p.men:@IF 2 8 TWO SIDED POWER PPCC PLOT _1 _3
+ppccpldi.men:@IF 2 1 POISSON PPCC PLOT _1 _3
+ppccpldi.men:@IF 2 2 GEOMETRIC PPCC PLOT _1 _3
+ppccpls2.men:@IF 2 1 GEOMETRIC EXTREME EXPONENTIAL PPCC PLOT _1 _3
+ppccpls2.men:@IF 2 2 INVERTED WEIBULL PPCC PLOT _1 _3
+ppccpls2.men:@IF 2 3 LOG DOUBLE EXPONENTIAL PPCC PLOT _1 _3
+ppccplsk.men:@IF 3 0 SET MINMAX _3
+ppccplsk.men:@IF 4 0 SET MINMAX _4
+ppccplsk.men:@IF 6 0 LET SD = _6
+ppccplsk.men:@IF 7 0 LET SD = _7
+ppccplsk.men:@IF 2 1 LOGNORMAL PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 2 POWER LOGNORMAL PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 3 POWER NORMAL PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 4 WRAPPED CAUCHY PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 5 CHI-SQUARED PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 6 CHI PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 7 GAMMA PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 8 LOG GAMMA PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 9 WEIBULL PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 10 EV2 PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 11 GENERALIZED EXTREME VALUE PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 12 PARETO PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 13 PARETO TYPE 2 PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 14 GENERALIZED PARETO PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 15 INVERSE GAUSSIAN PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 16 RECIPROCAL INVERSE GAUSSIAN PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 17 FATIGUE LIFE PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 18 WALD PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 19 LOG LOGISTIC PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 20 GENERALIZED LOGISTIC PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 21 GENERALIZED HALF LOGISTIC PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 22 POWER FUNCTION PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 23 BRADFORD PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 24 RECIPROCAL PPCC PLOT _1 _5
+ppccplsk.men:@IF 2 25 INVERTED GAMMA PPCC PLOT _1 _5
+ppccplsy.men:@IF 9 1 SET PPCC PLOT AXIS POINTS _9
+ppccplsy.men:@IF 2 1 TUKEY-LAMBDA PPCC PLOT _1 _9
+ppccplsy.men:@IF 2 2 T PPCC PLOT _1 _9
+ppccplsy.men:@IF 2 3 LET GAMMA1 = _10
+ppccplsy.men:@IF 2 3 DOUBLE WEIBULL PPCC PLOT _1 _9
+ppccplsy.men:@IF 2 4 DOUBLE GAMMA PPCC PLOT _1 _9
+ppccplsy.men:@IF 2 5 VON MISES PPCC PLOT _1 _9
+probplch.men:@IF 3 0 LET NU1 = _3
+probplch.men:@IF 4 0 LET NU2 = _4
+probplch.men:@IF 5 0 LET ALPHA = _5
+probplch.men:@IF 6 0 LET BETA = _6
+probplch.men:@IF 7 0 LET NU = _7
+probplch.men:@IF 8 0 LET NU = _8
+probplch.men:@IF 9 0 LET C = _9
+probplch.men:@IF 10 0 LET K = _10
+probplch.men:@IF 11 0 LET BETA = _11
+probplch.men:@IF 12 0 LET THETA = _12
+probplch.men:@IF 13 0 LET THETA = _13
+probplch.men:@IF 14 0 LET N = _14
+probplch.men:@IF 2 1 F PROBABILITY PLOT _1 _13
+probplch.men:@IF 2 2 BETA PROBABILITY PLOT _1 _13
+probplch.men:@IF 2 3 CHI-SQUARE PROBABILITY PLOT _1 _13
+probplch.men:@IF 2 4 CHI PROBABILITY PLOT _1 _13
+probplch.men:@IF 2 5 POWER PROBABILITY PLOT _1 _13
+probplch.men:@IF 2 6 ARCSIN PROBABILITY PLOT _1 _13
+probplch.men:@IF 2 7 MIELKE BETA-KAPPA PROBABILITY PLOT _1 _13
+probplch.men:@IF 2 8 TWO SIDED POWER PROBABILITY PLOT _1 _13
+probpldi.men:@IF 3 0 LET N = _3
+probpldi.men:@IF 4 0 LET P = _4
+probpldi.men:@IF 5 0 LET P = _5
+probpldi.men:@IF 6 0 LET LAMBDA = _6
+probpldi.men:@IF 7 0 LET N = _7
+probpldi.men:@IF 8 0 LET K = _8
+probpldi.men:@IF 9 0 LET N = _9
+probpldi.men:@IF 11 0 LET K = _11
+probpldi.men:@IF 12 0 LET M = _12
+probpldi.men:@IF 13 0 LET N = _13
+probpldi.men:@IF 14 0 LET THETA = _14
+probpldi.men:@IF 15 0 LET N = _15
+probpldi.men:@IF 16 0 LET ALPHA = _16
+probpldi.men:@IF 17 0 LET BETA = _17
+probpldi.men:@IF 18 0 LET A = _18
+probpldi.men:@IF 19 0 LET C = _19
+probplex.men:@IF 3 0 LET M = _3
+probplex.men:@IF 4 0 LET SD = _4
+probplex.men:@IF 5 0 LET X0 = _5
+probplex.men:@IF 6 0 LET LAMBDA1 = _6
+probplex.men:@IF 7 0 LET LAMBDA2 = _7
+probplex.men:@IF 8 0 LET S = _8
+probplex.men:@IF 9 0 LET ALPHA = _9
+probplex.men:@IF 10 0 LET BETA = _10
+probplex.men:@IF 11 0 LET GAMMA = _11
+probplex.men:@IF 12 0 LET GAMMA = _12
+probplex.men:@IF 13 0 SET MINMAX = _13
+probplex.men:@IF 14 0 LET GAMMA = _14
+probplex.men:@IF 15 0 SET MINMAX _15
+probplex.men:@IF 16 0 LET GAMMA = _16
+probplex.men:@IF 17 0 LET GAMMA = _17
+probplex.men:@IF 18 0 LET GAMMA = _18
+probplex.men:@IF 19 0 LET GAMMA = _19
+probplex.men:@IF 20 0 LET C = _20
+probplex.men:@IF 21 0 LET THETA = _21
+probplex.men:@IF 22 0 LET GAMMA = _22
+probplex.men:@IF 24 0 LET GAMMA = _24
+probplex.men:@IF 25 0 LET GAMMA = _25
+probplex.men:@IF 26 0 LET SCALE1 = _26
+probplex.men:@IF 27 0 LET GAMMA1 = _27
+probplex.men:@IF 28 0 LET LOC2 = _28
+probplex.men:@IF 29 0 LET SCALE2 = _29
+probplex.men:@IF 30 0 LET GAMMA2 = _30
+probplex.men:@IF 2 1 EXPONENTIAL  PROBABILITY PLOT _1 _23
+probplex.men:@IF 2 2 TRUNCATED EXPONENTIAL  PROBABILITY PLOT _1 _23
+probplex.men:@IF 2 3 GENERALIZED EXPONENTIAL  PROBABILITY PLOT _1 _23
+probplex.men:@IF 2 4 POWER EXPONENTIAL  PROBABILITY PLOT _1 _23
+probplex.men:@IF 2 5 WEIBULL PROBABILITY PLOT _1 _23
+probplex.men:@IF 2 6 EXPONENTIATED WEIBULL PROBABILITY PLOT _1 _23
+probplex.men:@IF 2 7 EXTREME VALUE TYPE I  PROBABILITY PLOT _1 _23
+probplex.men:@IF 2 8 EXTREME VALUE TYPE II  PROBABILITY PLOT _1 _23
+probplex.men:@IF 2 9 GENERALIZED EXTREME VALUE  PROBABILITY PLOT _1 _23
+probplex.men:@IF 2 10 GAMMA PROBABILITY PLOT _1 _23
+probplex.men:@IF 2 11 LOG GAMMA PROBABILITY PLOT _1 _23
+probplex.men:@IF 2 12 GENERALIZED GAMMA PROBABILITY PLOT _1 _23
+probplex.men:@IF 2 13 INVERTED GAMMA PROBABILITY PLOT _1 _23
+probplex.men:@IF 2 14 INVERTED WEIBULL PROBABILITY PLOT _1 _23
+probplex.men:@IF 2 15 GEOMETRIC EXTREME EXPONENTIAL PROBABILITY PLOT _1 _23
+probplex.men:@IF 2 16 BIWEIBULL PROBABILITY PLOT _1 _23
+probplmi.men:@IF 3 0 LET C = _3
+probplmi.men:@IF 4 0 LET B = _4
+probplmi.men:@IF 5 0 LET ALPHA = _5
+probplmi.men:@IF 6 0 LET BETA = _6
+probplmi.men:@IF 7 0 LET BETA = _7
+probplmi.men:@IF 8 0 LET B = _8
+probplmi.men:@IF 10 0 LET ALPHA1 = _10
+probplmi.men:@IF 11 0 LET ALPHA2 = _11
+probplmi.men:@IF 12 0 LET ALPHA1 = _12
+probplmi.men:@IF 13 0 LET ALPHA2 = _13
+probplmi.men:@IF 14 0 LET ALPHA = _14
+probplmi.men:@IF 2 1 GOMPERTZ PROBABILITY PLOT _1 _9
+probplmi.men:@IF 2 2 ALPHA PROBABILITY PLOT _1 _9
+probplmi.men:@IF 2 3 BRADFORD PROBABILITY PLOT _1 _9
+probplmi.men:@IF 2 4 RECIPROCAL PROBABILITY PLOT _1 _9
+probplmi.men:@IF 2 5 JOHNSON SB PROBABILITY PLOT _1 _9
+probplmi.men:@IF 2 6 JOHNSON SU PROBABILITY PLOT _1 _9
+probplmi.men:@IF 2 7 LOG DOUBLE EXPONENTIAL PROBABILITY PLOT _1 _9
+probplnc.men:@IF 3 0 LET NU1 = _3
+probplnc.men:@IF 4 0 LET NU2 = _4
+probplnc.men:@IF 5 0 LET LAMBDA = _5
+probplnc.men:@IF 6 0 LET NU1 = _6
+probplnc.men:@IF 7 0 LET NU2 = _7
+probplnc.men:@IF 8 0 LET LAMBDA1 = _8
+probplnc.men:@IF 9 0 LET LAMBDA2 = _9
+probplnc.men:@IF 10 0 LET ALPHA = _10
+probplnc.men:@IF 11 0 LET BETA = _11
+probplnc.men:@IF 12 0 LET LAMBDA = _12
+probplnc.men:@IF 13 0 LET NU = _13
+probplnc.men:@IF 14 0 LET LAMBDA = _14
+probplnc.men:@IF 15 0 LET NU = _15
+probplnc.men:@IF 16 0 LET LAMBDA = _16
+probplnc.men:@IF 17 0 LET NU1 = _17
+probplnc.men:@IF 18 0 LET NU2 = _18
+probplnc.men:@IF 19 0 LET LAMBDA = _19
+probplnc.men:@IF 2 1 NON-CENTRAL F PROBABILITY PLOT _1 _20
+probplnc.men:@IF 2 2 DOUBLY NON-CENTRAL F PROBABILITY PLOT _1 _20
+probplnc.men:@IF 2 3 NON-CENTRAL BETA PROBABILITY PLOT _1 _20
+probplnc.men:@IF 2 4 NON-CENTRAL CHI-SQUARE PROBABILITY PLOT _1 _20
+probplnc.men:@IF 2 5 NON-CENTRAL T PROBABILITY PLOT _1 _20
+probplnc.men:@IF 2 6 DOUBLY NON-CENTRAL T PROBABILITY PLOT _1 _20
+probplno.men:@IF 3 0 LET SD = _3
+probplno.men:@IF 4 0 LET P = _4
+probplno.men:@IF 5 0 LET SD = _5
+probplno.men:@IF 6 0 LET P = _6
+probplno.men:@IF 7 0 LET SD = _7
+probplno.men:@IF 8 0 LET U = _8
+probplno.men:@IF 9 0 LET SD = _9
+probplno.men:@IF 10 0 LET U = _10
+probplno.men:@IF 11 0 LET SD = _11
+probplno.men:@IF 12 0 LET A = _12
+probplno.men:@IF 13 0 LET B = _13
+probplno.men:@IF 14 0 LET P = _14
+probplno.men:@IF 15 0 LET M = _15
+probplno.men:@IF 16 0 LET SD = _16
+probplno.men:@IF 17 0 LET U1 = _17
+probplno.men:@IF 18 0 LET SD1 = _18
+probplno.men:@IF 19 0 LET U2 = _19
+probplno.men:@IF 20 0 LET SD2 = _20
+probplno.men:@IF 21 0 LET P = _21
+probplno.men:@IF 2 1 NORMAL PROBABILITY PLOT _1 _18
+probplno.men:@IF 2 2 HALFNORMAL PROBABILITY PLOT _1 _18
+probplno.men:@IF 2 3 LOGNORMAL PROBABILITY PLOT _1 _18
+probplno.men:@IF 2 4 POWER NORMAL PROBABILITY PLOT _1 _18
+probplno.men:@IF 2 5 POWER LOGNORMAL PROBABILITY PLOT _1 _18
+probplno.men:@IF 2 6 FOLDED NORMAL PROBABILITY PLOT _1 _18
+probplno.men:@IF 2 7 TRUNCATED NORMAL PROBABILITY PLOT _1 _18
+probplno.men:@IF 2 8 CAUCHY PROBABILITY PLOT _1 _18
+probplno.men:@IF 2 9 HALF CAUCHY PROBABILITY PLOT _1 _18
+probplno.men:@IF 2 10 WRAPPED CAUCHY PROBABILITY PLOT _1 _18
+probplno.men:@IF 2 11 FOLDED CAUCHY PROBABILITY PLOT _1 _18
+probplno.men:@IF 2 12 NORMAL MIXTURE PROBABILITY PLOT _1 _18
+probplpa.men:@IF 3 0 LET GAMMA = _3
+probplpa.men:@IF 4 0 LET GAMMA = _4
+probplpa.men:@IF 5 0 SET MINMAX = _5
+probplpa.men:@IF 6 0 LET GAMMA = _6
+probplpa.men:@IF 7 0 LET DELTA = _7
+probplpa.men:@IF 8 0 LET GAMMA = _8
+probplpa.men:@IF 9 0 LET ALPHA = _9
+probplpa.men:@IF 2 1 PARETO PROBABILITY PLOT _1 _10
+probplpa.men:@IF 2 2 GENERALIZED PARETO PROBABILITY PLOT _1 _10
+probplpa.men:@IF 2 3 PARETO TYPE 2 PROBABILITY PLOT _1 _10
+probplpa.men:@IF 2 4 LOGISTIC PROBABILITY PLOT _1 _10
+probplpa.men:@IF 2 5 LOG LOGISTIC PROBABILITY PLOT _1 _10
+probplpa.men:@IF 2 6 HALF-LOGISTIC PROBABILITY PLOT _1 _10
+probplpa.men:@IF 2 7 GENERALIZED LOGISTIC PROBABILITY PLOT _1 _10
+probplsk.men:@IF 3 0 LET NU = _3
+probplsk.men:@IF 4 0 LET NU1 = _4
+probplsk.men:@IF 5 0 LET NU2 = _5
+probplsk.men:@IF 6 0 LET GAMMA = _6
+probplsk.men:@IF 7 0 LET ALPHA = _7
+probplsk.men:@IF 8 0 LET BETA = _8
+probplsk.men:@IF 9 0 LET GAMMA = _9
+probplsk.men:@IF 10 0 SET MINMAX = _10
+probplsk.men:@IF 11 0 SET MINMAX = _11
+probplsk.men:@IF 12 0 LET GAMMA = _12
+probplsk.men:@IF 13 0 SET MINMAX = _13
+probplsk.men:@IF 14 0 LET GAMMA = _14
+probplsk.men:@IF 15 0 LET GAMMA = _15
+probplsk.men:@IF 16 0 LET GAMMA = _16
+probplsk.men:@IF 17 0 LET GAMMA = _17
+probplsk.men:@IF 2 1 LOGNORMAL PROBABILITY PLOT _1 _18
+probplsk.men:@IF 2 2 HALFNORMAL PROBABILITY PLOT _1 _18
+probplsk.men:@IF 2 3 CHI-SQUARE PROBABILITY PLOT _1 _18
+probplsk.men:@IF 2 4 F PROBABILITY PLOT _1 _18
+probplsk.men:@IF 2 5 EXPONENTIAL PROBABILITY PLOT _1 _18
+probplsk.men:@IF 2 6 GAMMA PROBABILITY PLOT _1 _18
+probplsk.men:@IF 2 7 BETA PROBABILITY PLOT _1 _18
+probplsk.men:@IF 2 8 WEIBULL PROBABILITY PLOT _1 _18
+probplsk.men:@IF 2 9 EXTREME VALUE TYPE 1 PROBABILITY PLOT _1 _18
+probplsk.men:@IF 2 10 EXTREME VALUE TYPE 2 PROBABILITY PLOT _1 _18
+probplsk.men:@IF 2 11 PARETO PROBABILITY PLOT _1 _18
+probplsk.men:@IF 2 12 INVERSE GAUSSIAN PROBABILITY PLOT _1 _18
+probplsk.men:@IF 2 13 WALD PROBABILITY PLOT _1 _18
+probplsk.men:@IF 2 14 RECIPROCAL INVERSE GAUSSIAN PROBABILITY PLOT _1 _18
+probplsk.men:@IF 2 15 FAILURE TIME PROBABILITY PLOT _1 _18
+probplsy.men:@IF 3 0 LET LAMBDA = _3
+probplsy.men:@IF 4 0 LET NU = _4
+probplsy.men:@IF 6 0 LET GAMMA = _6
+probplsy.men:@IF 7 0 LET GAMMA = _7
+probplsy.men:@IF 8 0 LET C = _8
+probplsy.men:@IF 9 0 LET B = _9
+probplsy.men:@IF 2 1 UNIFORM PROBABILITY PLOT _1 _5
+probplsy.men:@IF 2 2 NORMAL PROBABILITY PLOT _1 _5
+probplsy.men:@IF 2 3 LOGISTIC PROBABILITY PLOT _1 _5
+probplsy.men:@IF 2 4 DOUBLE EXPONENTIAL PROBABILITY PLOT _1 _5
+probplsy.men:@IF 2 5 CAUCHY PROBABILITY PLOT _1 _5
+probplsy.men:@IF 2 6 TUKEY-LAMBDA PROBABILITY PLOT _1 _5
+probplsy.men:@IF 2 7 T PROBABILITY PLOT _1 _5
+probplsy.men:@IF 2 8 DOUBLE WEIBULL PROBABILITY PLOT _1 _5
+probplsy.men:@IF 2 9 DOUBLE GAMMA PROBABILITY PLOT _1 _5
+probplsy.men:@IF 2 10 SEMI_CIRCULAR PROBABILITY PLOT _1 _5
+probplsy.men:@IF 2 11 TRIANGULAR PROBABILITY PLOT _1 _5
+probplsy.men:@IF 2 12 VON MISES PROBABILITY PLOT _1 _5
+probplsy.men:@IF 2 13 COSINE PROBABILITY PLOT _1 _5
+probplsy.men:@IF 2 14 ANGLIT PROBABILITY PLOT _1 _5
+probplsy.men:@IF 2 15 HYPERBOLIC SECANT PROBABILITY PLOT _1 _5
+qqplot2.men:@IF 3 0 CHARACTERS _3
+qqplot2.men:@IF 4 0 CHARACTER FILL _4
+qqplot2.men:@IF 5 0 LINES _5 _5
+qqplot2.men:@IF 2 0 LINES _2
+qqplot4.men:@IF 3 0 CHARACTERS _3
+qqplot4.men:@IF 4 0 CHARACTER FILL _4
+qqplot4.men:@IF 5 0 LINES _5 _5
+qqplot4.men:@IF 2 0 LINES _2
+relscl.men:@IF 2 0 LET _2 = ZN
+relscl.men:@IF 3 0 LET _3 = ZMEAN
+relscl.men:@IF 4 0 LET _4 = ZS
+relscl.men:@IF 5 0 LET _5 = ZRELS
+relscl.men:@IF 6 0 LET _6 = ZRELS*SQRT(ZNU/Z975)
+relscl.men:@IF 7 0 LET _7 = ZRELS*SQRT(ZNU/Z025)
+relscl.men:@IF 8 0 LET _8 = 0
+relscl.men:@IF 9 0 LET _9 = ZRELS*SQRT(ZNU/Z05)
+relscl.men:@IF 10 0 LET _10 = ZRELS*SQRT(ZNU/Z95)
+relscl.men:@IF 11 0 LET _11 = 10**10
+relscl.men:@IF 12 0 LET _12 = ZRELS*SQRT(ZNU/Z995)
+relscl.men:@IF 13 0 LET _13 = ZRELS*SQRT(ZNU/Z005)
+relscl.men:@IF 14 0 LET _14 = 0
+relscl.men:@IF 15 0 LET _15 = ZRELS*SQRT(ZNU/Z01)
+relscl.men:@IF 16 0 LET _16 = ZRELS*SQRT(ZNU/Z99)
+relscl.men:@IF 17 0 LET _17 = 10**10
+relscl.men:@IF 18 0 SET WRITE DECIMALS _18
+relvcoli.men:@IF 2 1 LET ZP = .95
+relvcoli.men:@IF 2 2 LET ZP = .99
+relvcoli.men:@IF 3 0 SET WRITE DECIMALS _3
+relvtest.men:@IF 4 2 LET ZP = .99
+relvtest.men:@IF 3 2 LET ZCUT1 = 0
+relvtest.men:@IF 3 2 LET ZCUT2 = CHSPPF(ZP,ZDF)
+relvtest.men:@IF 3 1 LET ZCUT1 = CHSPPF(ZQ,ZDF)
+relvtest.men:@IF 3 1 LET ZCUT2 = CHSPPF(.99,ZDF)
+relvtest.men:@IF 3 3 LET ZCUT1 = CHSPPF(ZQ2,ZDF)
+relvtest.men:@IF 3 3 LET ZCUT2 = CHSPPF(ZP2,ZDF)
+relvtest.men:@IF 3 2 DRAWDDDS ZCUT2 ZPDFCUT2 ZCUT2 5
+relvtest.men:@IF 3 2 DRAWDSDS ZCUT2 85 ZCUT2 5
+relvtest.men:@IF 3 2 DRAWDSDS ZCUT2 85 ZLOWER2 85
+relvtest.men:@IF 3 2 LET ZLOWER2P = ZLOWER2+(ZCUT2-ZLOWER2)/20
+relvtest.men:@IF 3 2 DRAWDSDS ZLOWER2P 86 ZLOWER2 85 ZLOWER2P 84
+relvtest.men:@IF 3 2 MOVEDS ZCUT2 1; TEXT ^ZCUT2
+relvtest.men:@IF 3 1 DRAWDDDS ZCUT1 ZPDFCUT1 ZCUT1 5
+relvtest.men:@IF 3 1 DRAWDSDS ZCUT1 85 ZCUT1 5
+relvtest.men:@IF 3 1 DRAWDSDS ZCUT1 85 ZUPPER2 85
+relvtest.men:@IF 3 1 LET ZUPPER2P = ZUPPER2-(ZUPPER2-ZCUT1)/20
+relvtest.men:@IF 3 1 DRAWDSDS ZUPPER2P 86 ZUPPER2 85 ZUPPER2P 84
+relvtest.men:@IF 3 1 MOVEDS ZCUT1 1; TEXT ^ZCUT1
+relvtest.men:@IF 3 3 DRAWDDDS ZCUT1 ZPDFCUT1 ZCUT1 5
+relvtest.men:@IF 3 3 DRAWDSDS ZCUT1 85 ZCUT1 5
+relvtest.men:@IF 3 3 DRAWDDDS ZCUT2 ZPDFCUT2 ZCUT2 5
+relvtest.men:@IF 3 3 DRAWDSDS ZCUT2 85 ZCUT2 5
+relvtest.men:@IF 3 3 DRAWDSDS ZCUT1 85 ZCUT2 85
+relvtest.men:@IF 3 3 MOVEDS ZCUT1 1; TEXT ^ZCUT1
+relvtest.men:@IF 3 3 MOVEDS ZCUT2 1; TEXT ^ZCUT2
+sd.men:@IF 3 0 SET WRITE DECIMALS _3
+statplot.men:@IF 3 2 LET ZSTAT = NUMBER _1 _10
+statplot.men:@IF 3 3 LET ZSTAT = MEAN _1 _10
+statplot.men:@IF 3 4 LET ZSTAT = MEDIAN _1 _10
+statplot.men:@IF 3 5 LET ZSTAT = MIDRANGE _1 _10
+statplot.men:@IF 3 6 LET ZSTAT = MIDMEAN _1 _10
+statplot.men:@IF 3 7 LET ZSTAT = TRIMMED MEAN _1 _10
+statplot.men:@IF 3 8 LET ZSTAT = WINSORIZED MEAN _1 _10
+statplot.men:@IF 3 9 LET ZSTAT = SD _1 _10
+statplot.men:@IF 3 10 LET ZSTAT = RELATIVE SD _1 _10
+statplot.men:@IF 3 11 LET ZSTAT = SD OF MEAN _1 _10
+statplot.men:@IF 3 12 LET ZSTAT = VARIANCE _1 _10
+statplot.men:@IF 3 13 LET ZSTAT = RELATIVE VARIANCE _1 _10
+statplot.men:@IF 3 14 LET ZSTAT = VARIANCE OF MEAN _1 _10
+statplot.men:@IF 3 15 LET ZSTAT = MINIMUM _1 _10
+statplot.men:@IF 3 16 LET ZSTAT = MAXIMUM _1 _10
+statplot.men:@IF 3 17 LET ZSTAT = EXTREME _1 _10
+statplot.men:@IF 3 18 LET ZSTAT = RANGE _1 _10
+statplot.men:@IF 3 19 LET ZSTAT = LOWER QUARTILE _1 _10
+statplot.men:@IF 3 20 LET ZSTAT = UPPER QUARTILE _1 _10
+statplot.men:@IF 3 21 LET ZSTAT = LOWER HINGE _1 _10
+statplot.men:@IF 3 22 LET ZSTAT = UPPER HINGE _1 _10
+statplot.men:@IF 3 23 LET ZSTAT = DECILE HINGE _1 _10
+statplot.men:@IF 3 24 LET ZSTAT = SKEWNESS _1 _10
+statplot.men:@IF 3 25 LET ZSTAT = KURTOSIS _1 _10
+statplot.men:@IF 3 26 LET ZSTAT = NORPPCC _1 _10
+statplot.men:@IF 3 27 LET ZSTAT = AUTOCORR _1 _10
+statplot.men:@IF 3 30 LET ZSTAT = SN- _1 _10
+statplot.men:@IF 3 31 LET ZSTAT = SN0 _1 _10
+statplot.men:@IF 3 32 LET ZSTAT = SN+ _1 _10
+statplot.men:@IF 3 33 LET ZSTAT = CP _1 _10
+statplot.men:@IF 3 34 LET ZSTAT = CPK _1 _10
+statplot.men:@IF 3 35 LET ZSTAT = PERCENT DEFECTIVE _1 _10
+statplot.men:@IF 3 36 LET ZSTAT = EXPECTED LOSS _1 _10
+statplot.men:@IF 3 37 LET ZSTAT = COUNTS _1 _10
+statplot.men:@IF 3 38 LET ZSTAT = SUM _1 _10
+statplot.men:@IF 3 39 LET ZSTAT = PROD _1 _10
+statplot.men:@IF 3 40 LET ZSTAT = INTEGRAL _1 _10
+statplot.men:@IF 9 1 SPIKE OFF
+statplot.men:@IF 9 2 SPIKE ON
+statplot.men:@IF 9 2 SPIKE BASE ZSTAT
+statplot.men:@IF 3 1 PLOT _1 _2 _2 _10
+statplot.men:@IF 3 2 NUMBER PLOT _1 _2 _10
+statplot.men:@IF 3 3 MEAN PLOT _1 _2 _10
+statplot.men:@IF 3 4 MEDIAN PLOT _1 _2 _10
+statplot.men:@IF 3 5 MIDRANGE PLOT _1 _2 _10
+statplot.men:@IF 3 6 MIDMEAN PLOT _1 _2 _10
+statplot.men:@IF 3 7 TRIMMED MEAN PLOT _1 _2 _10
+statplot.men:@IF 3 8 WINSORIZED MEAN PLOT _1 _2 _10
+statplot.men:@IF 3 9 SD PLOT _1 _2 _10
+statplot.men:@IF 3 10 RELATIVE SD PLOT _1 _2 _10
+statplot.men:@IF 3 11 SD OF MEAN PLOT _1 _2 _10
+statplot.men:@IF 3 12 VARIANCE PLOT _1 _2 _10
+statplot.men:@IF 3 13 RELATIVE VARIANCE PLOT _1 _2 _10
+statplot.men:@IF 3 14 VARIANCE OF MEAN PLOT _1 _2 _10
+statplot.men:@IF 3 15 MINIMUM PLOT _1 _2 _10
+statplot.men:@IF 3 16 MAXIMUM PLOT _1 _2 _10
+statplot.men:@IF 3 17 EXTREME PLOT _1 _2 _10
+statplot.men:@IF 3 18 RANGE PLOT _1 _2 _10
+statplot.men:@IF 3 19 LOWER QUARTILE PLOT _1 _2 _10
+statplot.men:@IF 3 20 UPPER QUARTILE PLOT _1 _2 _10
+statplot.men:@IF 3 21 LOWER HINGE PLOT _1 _2 _10
+statplot.men:@IF 3 22 UPPER HINGE PLOT _1 _2 _10
+statplot.men:@IF 3 23 _4 DECILE PLOT _1 _2 _10
+statplot.men:@IF 3 24 SKEWNESS PLOT _1 _2 _10
+statplot.men:@IF 3 25 KURTOSIS PLOT _1 _2 _10
+statplot.men:@IF 3 26 NORMAL PPCC PLOT _1 _2 _10
+statplot.men:@IF 3 27 AUTOCORR STATISTIC PLOT _1 _2 _10
+statplot.men:@IF 3 28 SINE AMPLITUDE PLOT _1 _2 _10
+statplot.men:@IF 3 29 SINE FREQUENCY PLOT _1 _2 _10
+statplot.men:@IF 3 30 SN- PLOT _1 _2 _10
+statplot.men:@IF 3 31 SN0 PLOT _1 _2 _10
+statplot.men:@IF 3 32 SN+ PLOT _1 _2 _10
+statplot.men:@IF 3 33 CP PLOT _1 _2 _10
+statplot.men:@IF 3 34 CPK PLOT _1 _2 _10
+statplot.men:@IF 3 35 PERCENT DEFECTIVE PLOT _1 _2 _10
+statplot.men:@IF 3 36 EXPECTED LOSS PLOT _1 _2 _10
+statplot.men:@IF 3 37 COUNTS PLOT _1 _2 _10
+statplot.men:@IF 3 38 SUM PLOT _1 _2 _10
+statplot.men:@IF 3 39 PRODUCT PLOT _1 _2 _10
+statplot.men:@IF 3 40 INTEGRAL PLOT _1 _2 _10
+varicoli.men:@IF 2 1 LET ZP = .95
+varicoli.men:@IF 2 2 LET ZP = .99
+varicoli.men:@IF 2 1 LET ZLOWSKL = 0
+varicoli.men:@IF 2 1 LET ZUPPSKL = ZSTAT*SQRT((ZN-1)/CHSPPF(.95,ZDF))
+varicoli.men:@IF 2 2 LET ZLOWSKR = ZSTAT*SQRT((ZN-1)/CHSPPF(.05,ZDF))
+varicoli.men:@IF 2 2 LET ZUPPSKR = 10**10
+varicoli.men:@IF 3 0 SET WRITE DECIMALS _3
+varitest.men:@IF 4 2 LET ZP = .99
+varitest.men:@IF 3 2 LET ZCUT1 = 0
+varitest.men:@IF 3 2 LET ZCUT2 = CHSPPF(ZP,ZDF)
+varitest.men:@IF 3 1 LET ZCUT1 = CHSPPF(ZQ,ZDF)
+varitest.men:@IF 3 1 LET ZCUT2 = CHSPPF(.99,ZDF)
+varitest.men:@IF 3 3 LET ZCUT1 = CHSPPF(ZQ2,ZDF)
+varitest.men:@IF 3 3 LET ZCUT2 = CHSPPF(ZP2,ZDF)
+varitest.men:@IF 3 2 DRAWDDDS ZCUT2 ZPDFCUT2 ZCUT2 5
+varitest.men:@IF 3 2 DRAWDSDS ZCUT2 85 ZCUT2 5
+varitest.men:@IF 3 2 DRAWDSDS ZCUT2 85 ZLOWER2 85
+varitest.men:@IF 3 2 LET ZLOWER2P = ZLOWER2+(ZCUT2-ZLOWER2)/20
+varitest.men:@IF 3 2 DRAWDSDS ZLOWER2P 86 ZLOWER2 85 ZLOWER2P 84
+varitest.men:@IF 3 2 MOVEDS ZCUT2 1; TEXT ^ZCUT2
+varitest.men:@IF 3 1 DRAWDDDS ZCUT1 ZPDFCUT1 ZCUT1 5
+varitest.men:@IF 3 1 DRAWDSDS ZCUT1 85 ZCUT1 5
+varitest.men:@IF 3 1 DRAWDSDS ZCUT1 85 ZUPPER2 85
+varitest.men:@IF 3 1 LET ZUPPER2P = ZUPPER2-(ZUPPER2-ZCUT1)/20
+varitest.men:@IF 3 1 DRAWDSDS ZUPPER2P 86 ZUPPER2 85 ZUPPER2P 84
+varitest.men:@IF 3 1 MOVEDS ZCUT1 1; TEXT ^ZCUT1
+varitest.men:@IF 3 3 DRAWDDDS ZCUT1 ZPDFCUT1 ZCUT1 5
+varitest.men:@IF 3 3 DRAWDSDS ZCUT1 85 ZCUT1 5
+varitest.men:@IF 3 3 DRAWDDDS ZCUT2 ZPDFCUT2 ZCUT2 5
+varitest.men:@IF 3 3 DRAWDSDS ZCUT2 85 ZCUT2 5
+varitest.men:@IF 3 3 DRAWDSDS ZCUT1 85 ZCUT2 85
+varitest.men:@IF 3 3 MOVEDS ZCUT1 1; TEXT ^ZCUT1
+varitest.men:@IF 3 3 MOVEDS ZCUT2 1; TEXT ^ZCUT2
+vertplo2.men:@IF 2 0 LINES _2 ALL
+vertplo2.men:@IF 3 0 CHARACTERS _3 ALL
+vertplo2.men:@IF 4 0 CHARACTER FILL _4 ALL
+vertplo4.men:@IF 2 0 LINES _2 ALL
+vertplo4.men:@IF 3 0 CHARACTERS _3 ALL
+vertplo4.men:@IF 4 0 CHARACTER FILL _4 ALL

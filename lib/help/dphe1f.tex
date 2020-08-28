@@ -1,4 +1,4 @@
-7100.       (VERSION 2019.04)  total number of lines in file (including this line)
+7100.       (VERSION 2020.08)  total number of lines in file (including this line)
 29.                          number of     sections below
    50.    OVERVIEW           first line number of OVERVIEW          section
   150.    GRAPHICS           first line number of GRAPHICS          section
@@ -5701,7 +5701,7 @@ Specific methods include the following.
      the first line of the file.  For these files, you can
      enter the commands
 
-        SET VARIABLE LABELS ON
+        SET READ VARIABLE LABELS ON
         READ FILE.DAT
 
   3. If you would like Dataplot to simply assign the variable
@@ -5722,6 +5722,34 @@ rules (more than eight characters will simply be ignored, so the
 issue is more one of duplicate variable names in the first eight
 characters).
 
+Note 2020/08: The following tweaks were made to the reading of
+variable names.
+
+  1. Previously, only the first 255 characters of the line were read.
+     This has been extended to support the number of characters
+     specified by the MAXIMUM RECORD LENGTH command (if this command is
+     not given, the default remains 255).
+
+  2) Dataplot will now automatically strip spaces and other special
+     characters out of the variable names.  Specifically, only alphabetic
+     characters (A-Z), numbers (0-9), and underscores are retained.
+
+  3) Dataplot only supports eight characters for variable names.  This
+     can lead to duplicate file names.  To reduce the possibility of
+     duplicate names, Dataplot does the following if a duplicate name
+     is found.
+
+     a) If the name has less than eight characters, a "Z" is appended
+        to the end of one of the names.  The right most name will
+        be modified.
+
+     b) If the name has eight characters exactly, the right most name
+        will change the last character to a Z (or if that character is
+        already a Z, then to a X).
+
+     c) If blank names are encountered, these will be changed to
+        Zxxx where "xxx" is a sequence number (i.e., if there are three
+        blank names encountered, they wiil be set to Z1, Z2, and Z3).
 
 READING FIXED COLUMNS
 
@@ -6060,7 +6088,7 @@ with <char> denoting the desired comment character.
 
 EXCEL FILES
 
-At the current time (1/2004), Dataplot does not support the
+At the current time (2004/01), Dataplot does not support the
 direct reading of Excel data files.  We are planning to add
 this capability in a future release of Dataplot.  Until that
 time, you need to save the data in Excel to an ASCII file and
@@ -6102,6 +6130,10 @@ and writing to the system clipboard under Windows.  Using the
 "copy" function and Excel and then using the READ CLIPBOARD command
 in Dataplot will in many cases be the easiest way to retrieve
 data from Excel files.  Enter HELP CLIPBOARD for details.
+
+Note 2020/08: Dataplot added a READ EXCEL command.  This command
+utilizes Python (and specifically the Pandas package) to read Excel
+files.  Enter HELP READ EXCEL for details.
 
 FILE NAME RESTRICTIONS
 
@@ -6465,38 +6497,6 @@ several things that can potentially be done
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -------------------------  *SYSTEM LIMITS*  ----------------
  
 SYSTEM LIMITS
@@ -6509,12 +6509,12 @@ are the default values, but the limits for your specific system may
 be set differently.
 
 
-  1) MAXOBV   = 1,500,000
+  1) MAXOBV   = 2,000,000
 
      Defines the maximum number of observations for a single
      variable.  This is the parameter most likely to be modified
      before Dataplot is compiled.  It will typically be in the
-     range 100,000 to 1,500,000.
+     range 100,000 to 2,000,000.
 
   2) MAXOBW   = 10*MAXOBV
 

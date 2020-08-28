@@ -40,6 +40,9 @@ Generate E691 Graphs
           Dot Plot                      <xemf: ~nist\e691dok2.men>
           Box Plot                      <xemf: ~nist\e691bpk2.men>
 
+   Cochran Variance Outlier Plot
+       Laboratories within Materials    <xemf: ~nist\e691cvpl.men>
+
 Load Built-In Data Files
    GLUCOSE.DAT  Glucose in Serum           <xcf: ~nist\GLUCOSE.DP>
    MANDEL6.DAT  Pentosans in Wood Pulp     <xcf: ~nist\MANDEL6.DP>

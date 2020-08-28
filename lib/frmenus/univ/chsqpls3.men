@@ -1,0 +1,148 @@
+This is file chsqpls3.men--Chi-Square Plot (Skewed Dist. Family)
+
+--------------------
+1. Chi-Square Plot (Skewed Distributional Families)
+2. <Name of Distributional Family> CHISQUARE PLOT Y X
+3.
+4. The chi-square plot is used for binned data.  That is, the first
+5. variable is the counts for the bin and the "Lower Limit" and "Upper
+6. Limit" variables are the bin lower and upper limits, respectively.
+7. If you have  equal sized bins, the "Lower Limit Variable" is the bin
+8. mid-point variable and no "Upper Limit Variable" is specified.
+9.
+10. Frequency Variable:
+10. @CE 1 0 11 25 ? gui-variable
+11. Lower Limit Variable:
+11. @CE 2 0 11 25 ? gui-variable
+12. Upper Limit Variable:
+12. @CE 3 0 11 25 ? gui-variable
+13.
+14. Distributional Family:
+15. @CE 4 1 11 40 Power
+16. @CE 4 2 11 40 Reflected Power
+17. @CE 4 3 11 40 Exponential Power
+18. @CE 4 4 11 40 Alpha
+19. @CE 4 5 11 40 Muth
+20. @CE 4 6 11 40 Bradford
+21. @CE 4 7 11 40 Reciprocal
+22. @CE 4 8 11 40 Topp and Leone
+23. @CE 4 9 11 40 Triangular
+24. @CE 4 10 11 40 Ogive
+25.
+26. Line Types (solid, dot, dash, ...)
+26. @CE 5 0 42 50 * gui-line
+27. Title:
+27. @CE 6 0 10 50 *
+28. Left Axis Label:
+28. @CE 7 0 22 50 *
+29. Bottom Axis Label:
+29. @CE 8 0 22 50 *
+30.
+31. Optional Number of Values (Default = 50):
+31. @CE 9 0 22 50 *
+32. Optional Lower Limit for Shape Parameter:
+32. @CE 10 0 22 50 *
+33. Optional Upper Limit for Shape Parameter:
+33. @CE 11 0 22 50 *
+34. Maximum Value for Y-Axis:
+34. @CE 12 0 42 50 *
+35. 
+36. Subset/Except/For Specification:
+37. @CE 13 0 -25 50 *
+38.
+39.
+40. Generate the Chi-Square Plot?
+--------------------
+GR FE
+LINES _5
+CHARACTERS BLANK
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+SET PPCC PLOT AXIS POINTS 50
+@IF 9 0 SET PPCC PLOT AXIS POINTS _9
+@IF 10 0 LET SHAPE1 = _10
+@IF 11 0 LET SHAPE2 = _11
+SET CHI-SQUARE LIMIT 1000000
+@IF 12 0 SET CHI-SQUARE LIMIT _12
+@IF 4 1 IF SHAPE1 EXISTS
+@IF 4 1 LET C1 = SHAPE1
+@IF 4 1 END OF IF
+@IF 4 1 IF SHAPE2 EXISTS
+@IF 4 1 LET C2 = SHAPE2
+@IF 4 1 END OF IF
+@IF 4 1 POWER CHI-SQUARE PLOT _1 _2 _3 _13
+@IF 4 2 IF SHAPE1 EXISTS
+@IF 4 2 LET C1 = SHAPE1
+@IF 4 2 END OF IF
+@IF 4 2 IF SHAPE2 EXISTS
+@IF 4 2 LET C2 = SHAPE2
+@IF 4 2 END OF IF
+@IF 4 2 REFLECTED POWER CHI-SQUARE PLOT _1 _2 _3 _13
+@IF 4 3 IF SHAPE1 EXISTS
+@IF 4 3 LET BETA1 = SHAPE1
+@IF 4 3 END OF IF
+@IF 4 3 IF SHAPE2 EXISTS
+@IF 4 3 LET BETA2 = SHAPE2
+@IF 4 3 END OF IF
+@IF 4 3 EXPONENTIAL POWER CHI-SQUARE PLOT _1 _2 _3 _13
+@IF 4 4 IF SHAPE1 EXISTS
+@IF 4 4 LET ALPHA1 = SHAPE1
+@IF 4 4 END OF IF
+@IF 4 4 IF SHAPE2 EXISTS
+@IF 4 4 LET ALPHA2 = SHAPE2
+@IF 4 4 END OF IF
+@IF 4 4 ALPHA CHI-SQUARE PLOT _1 _2 _3 _13
+@IF 4 5 IF SHAPE1 EXISTS
+@IF 4 5 LET BETA1 = SHAPE1
+@IF 4 5 END OF IF
+@IF 4 5 IF SHAPE2 EXISTS
+@IF 4 5 LET BETA2 = SHAPE2
+@IF 4 5 END OF IF
+@IF 4 5 MUTH CHI-SQUARE PLOT _1 _2 _3 _13
+@IF 4 6 IF SHAPE1 EXISTS
+@IF 4 6 LET BETA1 = SHAPE1
+@IF 4 6 END OF IF
+@IF 4 6 IF SHAPE2 EXISTS
+@IF 4 6 LET BETA2 = SHAPE2
+@IF 4 6 END OF IF
+@IF 4 6 BRADFORD CHI-SQUARE PLOT _1 _2 _3 _13
+@IF 4 7 IF SHAPE1 EXISTS
+@IF 4 7 LET B1 = SHAPE1
+@IF 4 7 END OF IF
+@IF 4 7 IF SHAPE2 EXISTS
+@IF 4 7 LET B2 = SHAPE2
+@IF 4 7 END OF IF
+@IF 4 7 RECIPROCAL CHI-SQUARE PLOT _1 _2 _3 _13
+@IF 4 8 IF SHAPE1 EXISTS
+@IF 4 8 LET BETA1 = SHAPE1
+@IF 4 8 END OF IF
+@IF 4 8 IF SHAPE2 EXISTS
+@IF 4 8 LET BETA2 = SHAPE2
+@IF 4 8 END OF IF
+@IF 4 8 TOPP AND LEONE CHI-SQUARE PLOT _1 _2 _3 _13
+@IF 4 9 IF SHAPE1 EXISTS
+@IF 4 9 LET C1 = SHAPE1
+@IF 4 9 END OF IF
+@IF 4 9 IF SHAPE2 EXISTS
+@IF 4 9 LET C2 = SHAPE2
+@IF 4 9 END OF IF
+@IF 4 9 TRIANGULAR CHI-SQUARE PLOT _1 _2 _3 _13
+@IF 4 10 IF SHAPE1 EXISTS
+@IF 4 10 LET N1 = SHAPE1
+@IF 4 10 END OF IF
+@IF 4 10 IF SHAPE2 EXISTS
+@IF 4 10 LET N2 = SHAPE2
+@IF 4 10 END OF IF
+@IF 4 10 OGIVE CHI-SQUARE PLOT _1 _2 _3 _13
+DELETE SHAPE1 SHAPE2
+LET MINCHIS2 = ROUND(MINCHISQ,4)
+LET SHAPE2   = ROUND(SHAPE,2)
+JUSTIFICATION CENTER
+MOVE 50 6
+TEXT Minimum Chi-Square: ^MINCHIS2, Shape: ^SHAPE2
+DELETE SHAPE2 MINCHIS2
+WRITE MINCHISQ SHAPE
+--------------------
+WEB HELP PPCC PLOT
+--------------------

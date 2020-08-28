@@ -1,0 +1,54 @@
+This is file bivtplot.men--Bivariate Normal Tolerance Region Plot
+ 
+--------------------
+ 1. Bivariate Tolerance Region Plot
+ 2. BIVARIATE NORMAL TOLERANCE REGION PLOT Y1 Y2 LAB
+ 3.
+ 4. This plot is a Youden plot with an overlaid
+ 5. tolerance region ellipse for the means of the
+ 6. two data sets.
+ 7.
+ 8. Vertical   Axis Variable:
+ 8. @CE 1 0 42 50 ? gui-vari
+ 9. Horizontal Axis Variable:
+ 9. @CE 2 0 42 50 ? gui-vari
+10. Group Identifier Variable:
+10. @CE 3 0 42 50 ? gui-vari
+11.
+12. Character Type (blank, x, circ, ...)
+12. @CE 4 0 1 50 * gui-char
+13. Character Fill (off, on)
+13. @CE 5 0 1 50 * gui-ooff
+14.
+15. Title:
+15. @CE 6 0 10 50 *
+16. Left Axis Label:
+16. @CE 7 0 22 50 *
+17. Bottom Axis Label:
+17. @CE 8 0 22 50 *
+18.
+19. Confidence Levels:
+19. @CE 9 0 22 50 *
+20. Coverage Levels:
+20. @CE 10 0 22 50 *
+21.
+22. Subset/Except/For Specification:
+23. @CE 11 0 1 50 *
+24.
+25.
+26. Generate the Bivariate Tolerance Region Plot?:
+--------------------
+GR FE
+LINES BLANK ALL
+LINES SOLID
+CHARACTERS BLANK _4
+CHARACTER FILL OFF _5
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+@IF 9 0 LET GAMMA = _9
+@IF 10 0 LET DELTA = _10
+BIVARIATE NORMAL TOLERANCE REGION PLOT _1 _2 _3 _11
+--------------------
+WEB HELP BIVARIATE NORMAL TOLERANCE REGION PLOT
+--------------------

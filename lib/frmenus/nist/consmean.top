@@ -2,18 +2,29 @@
  
 Consensus Means
  
-Discussion                 <~nist\consdisc.top>
+Discussion                                     <~nist\consdisc.top>
  
-Mean Plot                  <xemf: ~stat\meanplot.men>
-Box Plot                   <xemf: ~stat\boxplot.men>
-Standard Deviation Plot    <xemf: ~stat\sdplot.men>
-Youden Plot                <xemf: ~stat\youdplot.men>
+Convert Data to:
+   Summary Data from Raw Data                  <xemf: ~nist\genesumm.men>
+   Response LabID                              <xemf: ~data\stack.men>
+
+Summary Plots:
+   Mean Plot                                   <xemf: ~stat\meanplot.men>
+   Box Plot                                    <xemf: ~stat\boxplot.men>
+   Standard Deviation Plot                     <xemf: ~stat\sdplot.men>
+   Youden Plot                                 <xemf: ~stat\youdplot.men>
+   Normal Kernel Density Mixture Plot          <xemf: ~nist\kernmixt.men>
  
-Compute Consensus Means    <xemf: ~nist\consensu.men>
-Consensus Means Plot       <xemf: ~nist\consplot.men>
- 
+Compute Consensus Means                        <xemf: ~nist\consensu.men>
+Consensus Means Plot
+   Raw Data                                    <xemf: ~nist\consplot.men>
+   Summary Data                                <xemf: ~nist\con2plot.men>
+ANOVA (Fixed Effects, Balanced)                <xemf: ~stat\anova.men>
+ANOVA with Graphics (Fixed Effects, Balanced)  <xemf: ~stat\anovag.men>
+
 Load Built-In Data Files
    SCHANTZ.DAT  Fish tissue                     <xcf: ~dataload\SCHANTZ.DP>
    STUTZ86.DAT  Mass fraction (percent) by QXRD <xcf: ~nist\STUTZ86.DP>
    ZARR94.DAT   Thermal conductivity            <xcf: ~dataload\ZARR94.DP>
+   DUEWER1.DAT  David Duewer Data (mean, sd)    <xcf: ~dataload\DUEWER1.DP>
 

@@ -1,0 +1,48 @@
+This is file repairpl.men--Repair Plot
+ 
+--------------------
+ 1. Repair Plot
+ 2. REPAIR PLOT Y X CENSOR
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-vari
+ 5. Optional Group-ID Variable:
+ 5. @CE 2 0 42 50 ? gui-vari
+ 6. Optional Censoring Variable:
+ 6. @CE 3 0 42 50 ? gui-vari
+ 7.
+ 8. Character Type (blank, x, circ, ...)
+ 8. @CE 4 0 42 50 * gui-char
+ 9. Character Fill (off, on)
+ 9. @CE 5 0 42 50 * gui-ooff
+10. Character Size (default = 2)
+10. @CE 6 0 42 50 *
+11.
+12. Title:
+12. @CE 7 0 10 50 *
+13. Left Axis Label:
+13. @CE 8 0 22 50 *
+14. Bottom Axis Label:
+14. @CE 9 0 22 50 *
+15.
+16. Subset/Except/For Specification:
+17. @CE 10 0 1 50 *
+18.
+19.
+20. Generate the Repair Plot?:
+--------------------
+GR FE
+LINES SOLID ALL
+LINES BLANK
+CHARACTER BLANK ALL
+CHARACTER FILL OFF ALL
+CHARACTER _4
+CHARACTER FILL _5
+CHARACTER SIZE _6
+TITLE _7
+Y1LABEL _8
+X1LABEL _9
+REPAIR PLOT _1 _2 _3 _10
+--------------------
+WEB HELP REPAIR PLOT
+--------------------

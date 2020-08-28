@@ -8,3 +8,4 @@ View Built-in Multifactor Data Files
 4-factor data                            <~dataview\4fac.top>
 >= 5-factor data                         <~dataview\5fac.top>
 
+Design of Experiments data               <~dataview\dex.top>

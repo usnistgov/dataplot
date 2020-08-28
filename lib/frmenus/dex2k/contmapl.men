@@ -16,42 +16,74 @@ This is file contmapl.men--Generate DEX Contour Matrix Plot
  9. @CE 4 2 43 49 Minimum
 10.
 11. The traces for the Dex Contour Plot are defined by:
-12.   trace 1        - edge points (set automatically)
-13.   trace 2        - center point (set automatically)
-14.   trace 3        - edge point square
-15.   trace 4 and up - contour lines
-16. 
-17. Line Style (start with trace 3):
-18. @CE 5 0 1 50 gui-line
-19. Line Thickness (start with trace 3):
-20. @CE 6 0 1 50 gui-thickness
-21. Line Color (start with trace 3):
-22. @CE 7 0 1 50 gui-color
-23.
-24. Set Text Size Scale Factor (default=2):
-24. @CE 8 0 42 50 *
-25.
+12.   trace 1   - X = -1 edge points (z-value)
+13.   trace 2   - X = +1 edge points and center point (z-value)
+14.   trace 3   - center point
+15.   trace 4   - edge point square
+16.   trace 5+  - contour lines
+17. 
+18. Line Style (start with trace 5):
+19. @CE 5 0 1 50 gui-line
+20. Line Thickness (start with trace 5):
+21. @CE 6 0 1 50 gui-thickness
+22. Line Color (start with trace 5):
+23. @CE 7 0 1 50 gui-color
+24.
+25. Set Text Size Scale Factor (default=2):
+25. @CE 8 0 42 50 *
 26.
-27. Generate the Contour Plot?:
+27.
+28. Generate the Contour Plot?:
 --------------------
 GR FE
 MULTIPLOT CORNER COORDINATE 10 10 90 90
 MULTIPLOT SCALE FACTOR 2
 MULTIPLOT SCALE FACTOR _8
-DEVICE 1 FONT SIMPLEX
 SET DEX CONTOUR  PLOT DIRECTION MAXIMUM
-SET DEX CONTOUR  PLOT DIRECTION _4
-LINE BLANK BLANK _5 
-LINE THICKNESS  0.1 0.1 0.1 0.3
-LINE THICKNESS  0.1 0.1 _6
-LINE COLOR _7
+@IF 4 1 SET DEX CONTOUR  PLOT DIRECTION MAXIMUM
+@IF 4 2 SET DEX CONTOUR  PLOT DIRECTION MINIMUM
+LINE SOLID ALL
+LINE BLANK BLANK BLANK
+LINE COLOR BLACK ALL
+LINE THICKNESS 0.1 ALL
+CHARACTER BLANK ALL
+CHARACTER FILL OFF ALL
+CHARACTER HW 2 1.5 ALL
+CHARACTER OFFSET -2 0 1 0
+LET NWORD = 1
+LET STRING ZZZZSTR2 = _2
+LET ZZZZSTR= STRING WORD ZZZZSTR2 NWORD
+LET NZERO = 0
+LET NZERO = SIZE ^ZZZZSTR SUBSET ^ZZZZSTR = 0
+IF NZERO > 0
+   CHARACTER ZVAL ZVAL CIRCLE CIRCLE
+   CHARACTER FILL OFF OFF ON ON
+   LINE BLANK BLANK BLANK SOLID _5 
+   LINE THICKNESS  0.1 0.1 0.1 0.1 0.3
+   @IF 6 0 LINE THICKNESS  0.1 0.1 0.1 0.1 _6
+   LINE COLOR BLACK BLACK BLACK BLACK _7
+ELSE
+   CHARACTER ZVAL ZVAL CIRCLE
+   CHARACTER FILL OFF OFF ON
+   LINE BLANK BLANK SOLID _5 
+   LINE THICKNESS  0.1 0.1 0.1 0.3
+   @IF 6 0 LINE THICKNESS  0.1 0.1 0.1 _6
+   LINE COLOR BLACK BLACK BLACK _7
+END OF IF
 SET MATRIX PLOT TYPE DEX CONTOUR
 SET MATRIX PLOT DIAGONAL BLANK
+TIC MARK OFFSET UNITS SCREEN
+TIC MARK OFFSET 5 5
+LIMITS -2 2
 MATRIX PLOT _1 _2 _3 
-DEVICE 1 FONT TEKTRONIX
 MULTIPLOT SCALE FACTOR 1
 LINE SOLID ALL
 LINE THICKNESS 0.1 ALL
+CHARACTER HW 2 1 ALL
+CHARACTER BLANK ALL
+CHARACTER FILL OFF ALL
+CHARACTER OFFSET 0 0 ALL
+LIMITS
 --------------------
 WEB HELP DEX CONTOUR PLOT
 --------------------

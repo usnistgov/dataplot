@@ -1135,8 +1135,7 @@ C
      1                  IA,NUMCHA,
      1                  ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
 C
-C     PURPOSE--READ FROM A FILE
-C              (BUT THERE MAY BE SOME SMALL DIFFERENCES
+C     PURPOSE--READ FROM A FILE (BUT THERE MAY BE SOME SMALL DIFFERENCES
 C              IN HOW THAT IS DONE FOR DIFFERENT COMPUTERS).
 C
 C     WRITTEN BY--JAMES J. FILLIBEN
@@ -7477,6 +7476,8 @@ C     UPDATED         --MARCH      2020.  SET SEARCH4 DIRECTORY
 C     UPDATED         --MARCH      2020.  SET SEARCH5 DIRECTORY
 C     UPDATED         --MARCH      2020.  SET SEARCH6 DIRECTORY
 C     UPDATED         --JUNE       2020.  SET X11 SELECTION
+C     UPDATED         --JULY       2020.  SET CHARACTER TABULATION
+C                                             PLOT DIGITS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -15892,7 +15893,7 @@ C
 C
 CCCCC FOLLOWING SECTION ADDED NOVEMBER 2015
 C     ******************************************************
-C     **  SET TWO PERCENTILE DIGITS              <VALUE>  **
+C     **  SET PERCENTILE DIGITS                  <VALUE>  **
 C     ******************************************************
 C
       IPART1='PERC'
@@ -15907,6 +15908,48 @@ C
         IF(IV.GT.9)IV=9
         IF(IV.LT.-9)IV=-9
         IPCIDI=IV
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JULY 2020
+C     ******************************************************
+C     **  SET CHARACTER TABULATION PLOT DIGITS  <VALUE>   **
+C     ******************************************************
+C
+      IPART1='CHAR'
+      IPART2='TABU'
+      IPART3='PLOT'
+      IPART4='DIGI'
+      IPART5='DECI'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND.
+     1  (IHARG(4).EQ.IPART4 .OR. IHARG(4).EQ.IPART5))THEN
+        IF(NUMARG.LT.5.OR.IHARG(5).EQ.'DEFA'.OR.IHARG(5).EQ.'ON'.OR.
+     1     IHARG(5).EQ.'OFF')THEN
+          IV=0
+        ELSE
+          IV=IARG(5)
+        ENDIF
+        IF(IV.GT.9)IV=9
+        IF(IV.LT.1)IV=0
+        ITBCDI=IV
+        GOTO5150
+      ENDIF
+C
+      IPART1='TABU'
+      IPART2='CHAR'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND.
+     1  (IHARG(4).EQ.IPART4 .OR. IHARG(4).EQ.IPART5))THEN
+        IF(NUMARG.LT.5.OR.IHARG(5).EQ.'DEFA'.OR.IHARG(5).EQ.'ON'.OR.
+     1     IHARG(5).EQ.'OFF')THEN
+          IV=0
+        ELSE
+          IV=IARG(5)
+        ENDIF
+        IF(IV.GT.9)IV=9
+        IF(IV.LT.1)IV=0
+        ITBCDI=IV
         GOTO5150
       ENDIF
 C
@@ -28850,6 +28893,9 @@ C     UPDATED         --APRIL      2020.  PROBE SEARCH4 DIRECTORY
 C     UPDATED         --APRIL      2020.  PROBE SEARCH5 DIRECTORY
 C     UPDATED         --APRIL      2020.  PROBE SEARCH6 DIRECTORY
 C     UPDATED         --JUNE       2020.  PROBE X11 SELECTION
+C     UPDATED         --JULY       2020.  PROBE CHARACTER TABULATION
+C                                               PLOT DIGITS
+C     UPDATED         --AUGUST     2020.  PROBE NUMRCM
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -34647,6 +34693,32 @@ C
       IPART2='DIGI'
       IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2)THEN
         IV=IPCIDI
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JULY          2020.
+C               ********************************************************
+C               **  PROBE CHARACTER TABULATION PLOT DIGITS  <VALUE>   **
+C               ********************************************************
+C
+      IPART1='CHAR'
+      IPART2='TABU'
+      IPART3='PLOT'
+      IPART4='DIGI'
+      IPART5='DECI'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND.
+     1  (IHARG(4).EQ.IPART4 .OR. IHARG(4).EQ.IPART5))THEN
+        IV=ITBCDI
+        GOTO5150
+      ENDIF
+C
+      IPART1='TABU'
+      IPART2='CHAR'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3 .AND.
+     1  (IHARG(4).EQ.IPART4 .OR. IHARG(4).EQ.IPART5))THEN
+        IV=ITBCDI
         GOTO5150
       ENDIF
 C
@@ -41802,6 +41874,20 @@ C               **  STEP 5--              **
 C               **  PROBE OTHER VARIABLES **
 C               ****************************
 C
+CCCCC THE FOLLOWING SECTION WAS ADDED   AUGUST 2020
+      IPART1='NUMR'
+      IPART2='CM  '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG2(1).EQ.IPART2)THEN
+         IFOUND='YES'
+         WRITE(ICOUT,999)
+         CALL DPWRST('XXX','BUG ')
+         WRITE(ICOUT,7009)IPART1,IPART2,NUMRCM
+ 7009    FORMAT('THE FORTRAN VARIABLE ',2A4,'  HAS THE VALUE ',I8)
+         CALL DPWRST('XXX','BUG ')
+         APROBE=REAL(NUMRCM)
+         GOTO8000
+         GOTO8100
+      ENDIF
 CCCCC THE FOLLOWING SECTION WAS ADDED   MAY 1992
       IPART1='IPL1'
       IPART2='CS  '

@@ -13143,9 +13143,10 @@ C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--NOVEMBER  1980.
 C     UPDATED         --AUGUST    1981.
 C     UPDATED         --MAY       1982.
-C     UPDATED         --FEBRUARY  1989.  SOFT-CODING (ALAN)
-C     UPDATED         --JULY      1989.  MAXCP1/2/3/4/5/6
-C     UPDATED         --JANUARY   1998.  ADD MAXROM, MAXCOM
+C     UPDATED         --FEBRUARY  1989. SOFT-CODING (ALAN)
+C     UPDATED         --JULY      1989. MAXCP1/2/3/4/5/6
+C     UPDATED         --JANUARY   1998. ADD MAXROM, MAXCOM
+C     UPDATED         --AUGUST    2020. ADJUST COMPUTATION OF MAXROM
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -13266,7 +13267,8 @@ C               **  IN A MATRIX                             **
 C               **********************************************
 C
       MAXCOM=100
-      MAXROM=INT((46.0*REAL(MAXOBV)/3.0)/100.0)
+CCCCC MAXROM=INT((46.0*REAL(MAXOBV)/3.0)/100.0)
+      MAXROM=INT((35.0*REAL(MAXOBV)/3.0)/100.0)
 C
 C               *******************************
 C               **  EXIT AND RETURN TO MAIN  **
@@ -20255,6 +20257,7 @@ C               **  TREAT THE SET LIST NEW WINDOW <ON/OFF>         **
 C               **  TREAT THE SET HELP NEW WINDOW <ON/OFF>         **
 C               *****************************************************
 C
+      ILSTNW='OFF'
       IHLPNW='OFF'
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    DECEMBER    2011
@@ -21302,6 +21305,15 @@ C               **  TREAT THE SET PERCENTILE DIGITS <VALUE>          **
 C               *******************************************************
 C
       IPCIDI=3
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JULY 2020
+C
+C               *******************************************************
+C               **  TREAT THE SET CHARACTER TABULATION PLOT DIGITS   **
+C               **                <VALUE>                            **
+C               *******************************************************
+C
+      ITBCDI=0
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER 2015
 C

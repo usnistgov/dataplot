@@ -1,0 +1,19 @@
+----- <~nist\iso13528.top> ISO 13528 Proficiency Analysis
+ 
+ISO 13528 Proficiency Analysis Plots
+ 
+Discussion                         <~nist\dis13528.top>
+ 
+Plots for Multi-Round Proficiency Studies
+
+ISO 13528 Plot                     <xemf: ~nist\iso13528.men>
+ISO 13528 RLP Chart                <xemf: ~nist\rlp13528.men>
+
+ISO 13528 Cusum Control Chart      <xemf: ~nist\cus13528.men>
+ISO 13528 Control Chart            <xemf: ~nist\con13528.men>
+
+ISO 13528 Jscore Chart             <xemf: ~nist\jsc13528.men>
+ISO 13528 Zscore Chart             <xemf: ~nist\zsc13528.men>
+
+Load Built-In Data Files
+

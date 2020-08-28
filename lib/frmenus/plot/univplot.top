@@ -2,10 +2,32 @@
 
 Univariate Plots
 
-Histogram               <xemf: ~univ\histogra.men>
-4-Plot                  <xemf: ~univ\4plot.men>
-Probability Plot        <~univ\probplot.top>
-PPCC Plot               <~univ\ppccplot.top>
+Histogram                  <xemf: ~univ\histogra.men>
+Frequency Plot             <xemf: ~plot\freqplot.men>
+Kernel Density Plot        <xemf: ~plot\kernplot.men>
+Rootogram                  <xemf: ~plot\rootogra.men>
+Average Shifted Histogram  <xemf: ~plot\ash.men>
 
-Influence Curves        <~univ\inflcurv.top>
+4-Plot                     <xemf: ~univ\4plot.men>
+Bootstrap/Jacknife Plot    <~plot\bootstra.top>
+
+Run Sequence Plot          <xemf: ~plot\runsplot.men>
+Lag Plot                   <xemf: ~plot\lagplot.men>
+Autocorrelation Plot       <xemf: ~plot\autoplot.men>
+Spectral Plot              <xemf: ~plot\specplot.men>
+
+Box-Cox Normality Plot     <xemf: ~plot\bcnoplot.men>
+Symmetry Plot              <xemf: ~plot\symmplot.men>
+
+Percent Point Plot         <xemf: ~plot\percplot.men>
+Probability Plot           <~univ\probplot.top>
+PPCC Plot                  <~univ\ppccplot.top>
+AD Plot                    <~univ\adplot.top>
+KS Plot                    <~univ\ksplot.top>
+
+Influence Curves           <~univ\inflcurv.top>
+
+Built-in Datasets
+   View                  <~dataview\univ.top>
+   Load                  <~dataload\univ.top>
 

@@ -11,6 +11,8 @@ Run Sequence Plot        <xemf: ~plot\runsplot.men>
 Autocorrelation Plot     <xemf: ~plot\autoplot.men>
 Partial Autocorrelation Plot  <xemf: ~plot\partplot.men>
 Cross-Correlation Plot   <xemf: ~plot\crosplot.men>
+Comovement Plot          <xemf: ~plot\autocomo.men>
+Cross-Comovement Plot    <xemf: ~plot\croscomo.men>
 
 Spectral Plot            <xemf: ~plot\specplot.men>
 Cross-Spectral Plot      <xemf: ~plot\crspplot.men>
@@ -21,3 +23,6 @@ Complex Demodulation Phase Plot  <xemf: ~time\compdepp.men>
 Allan Variance Plot      <xemf: ~plot\avplot.men>
 Allan Standard Deviation Plot  <xemf: ~plot\asdplot.men>
 
+Built-in Datasets
+   View                  <~dataview\time.top>
+   Load                  <~dataload\time.top>

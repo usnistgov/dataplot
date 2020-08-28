@@ -10,16 +10,18 @@ Frequency Plot           <xemf: ~plot\freqplot.men>
 Rootogram                <xemf: ~plot\rootogra.men>
 Stem and Leaf Plot       <xemf: ~plot\stemleaf.men>
 Kernel Density Plot      <xemf: ~plot\kernplot.men>
+Average Shifted Histogram <xemf: ~plot\ash.men>
 
 Probability Plot         <~prob\probplot.top>
 PPCC Plot                <~prob\ppcc.top>
+AD Plot                  <~univ\adplot.top>
+KS Plot                  <~univ\ksplot.top>
+Chi-Square Plot          <~univ\chisqpl.top>
+   Combine Bins for Minimum Frequency  <~univ/combbins.men>
 Normal Plot              <xemf: ~plot\normplot.men>
 Weibull Plot             <xemf: ~plot\weibplot.men>
 
 Box-Cox Normality Plot   <xemf: ~plot\bcnoplot.men>
-Box-Cox Linearity Plot   <xemf: ~plot\bcliplot.men>
-Box-Cox Homoscedasticity Plot <xemf: ~plot\bchoplot.men>
-
 Percent Point Plot       <xemf: ~plot\percplot.men>
 Quantile-Quantile Plot   <xemf: ~plot\q-qplot.men>
 Tukey Mean-Difference Plot <xemf: ~plot\m-dplot.men>

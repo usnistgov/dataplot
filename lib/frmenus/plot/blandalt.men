@@ -1,0 +1,69 @@
+This is file blandalt.men--Bland Altman Plot
+ 
+--------------------
+1. Bland Altman Plot
+2. BLAND ALTMAN PLOT Y1 Y2
+3.
+4. First Response Variable:
+4. @CE 1 0 33 50 ? gui-variable
+5. Second Response Variable:
+5. @CE 2 0 33 50 ? gui-variable
+6.
+7. Title:
+7. @CE 3 0 18 50 *
+8. Left Axis Label:
+8. @CE 4 0 18 100 *
+9. Bottom Axis Label:
+9. @CE 5 0 18 100 *
+10.
+11. Line Types:
+11. @CE 6 0 1 50 * gui-line
+12. Line Color:
+12. @CE 7 0 1 50 * gui-color
+13. Character Type:
+13. @CE 8 0 1 50 * gui-char
+14. Character Fill:
+14. @CE 9 0 1 50 * gui-ooff
+15. Character Color:
+15. @CE 10 0 1 50 * gui-color
+16.
+17. Scale for Vertical Axis:
+18. @CE 11 1 1 27 raw data
+18. @CE 11 2 29 57 percentage
+19. Used Means or Medians:
+20. @CE 12 1 1 27 means
+20. @CE 12 2 29 57 median
+21. Method for Confidence Intervals:
+22. @CE 13 1 1 27 analytic
+22. @CE 13 2 29 57 bootstrap
+23.
+24. Subset/Except/For Specification: 
+25. @CE 14 0 1 50 *
+26.
+27.
+28. Generate the Bland Altman Plot?:
+--------------------
+GR FE
+TITLE _3
+Y1LABEL _9
+X1LABEL _5
+LINE BLANK SOLID SOLID DASH DASH SOLID DASH DASH SOLID DASH DASH
+LINE COLOR BLACK BLACK RED RED RED BLUE BLUE BLUE BLUE BLUE BLUE
+CHARACTER CIRCLE
+CHARACTER HW 1.0 0.75
+CHARACTER FILL ON
+@IF 6 0 LINE  _6
+@IF 7 0 LINE COLOR  _7
+@IF 8 0 CHARACTER  _8
+@IF 9 0 CHARACTER FILL  _9
+@IF 10 0 CHARACTER COLOR  _10
+SET BLAND ALTMAN PLOT RAW
+@IF 11 2 SET BLAND ALTMAN PLOT PERCENTAGES
+SET BLAND ALTMAN PLOT STATISTIC MEANS
+@IF 12 2 SET BLAND ALTMAN PLOT STATISTIC MEDIANS
+SET BLAND ALTMAN PLOT CONFIDENCE INTERVAlS ANALYTIC
+@IF 13 2 SET BLAND ALTMAN PLOT CONFIDENCE INTERVALS BOOTSTRAP
+BLAND ALTMAN PLOT _1 _2 _14
+--------------------
+WEB HELP BLAND ALTMAN PLOT
+--------------------

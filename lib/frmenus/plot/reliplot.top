@@ -4,16 +4,31 @@ Reliability/Extreme Value Plots
 
 Tail Area Plot                      <xemf: ~plot\tailplot.men>
 Kaplan-Meier Plot                   <xemf: ~plot\kaplplot.men>
+Tail Area Plot                      <xemf: ~plot\tailplot.men>
 Empirical CDF Plot                  <xemf: ~plot\ecdfplot.men>
+Empirical Quantile Plot             <xemf: ~plot\equaplot.men>
+Quantile Box Plot                   <xemf: ~plot\quanboxp.men>
+Truncated Informative Quantile Plot <xemf: ~plot\tiqplot.men>
+Total Time On Test Plot             <xemf: ~plot\tottplot.men>
+
 Duane Plot with Trend Plots         <xemf: ~plot\trenplot.men>
 Duane Plot                          <xemf: ~plot\duanplot.men>
+Repair Plot                         <xemf: ~plot\repairpl.men>
 
 Probability Plots                   <~prob\probplot.top>
 PPCC Plots                          <~prob\ppcc.top>
 Weibull Plot                        <xemf: ~plot\weibplot.men>
+Frechet Plot                        <xemf: ~plot\frecplot.men>
 Normal Plot                         <xemf: ~plot\normplot.men>
 Exponential Hazard Plot             <xemf: ~plot\ehazplot.men>
 Weibull Hazard Plot                 <xemf: ~plot\whazplot.men>
 
 Conditional Mean Exceedance Plot    <xemf: ~plot\cmeplot.men>
+Peaks Over Threshold Plot           <xemf: ~plot\potplot.men>
+
+Built-in Datasets
+   View (Reliability)               <~dataview\reli.top>
+   Load (Reliability)               <~dataload\reli.top>
+   View (Extreme Value)             <~dataview\eva.top>
+   Load (Extreme Value)             <~dataload\eva.top>
 

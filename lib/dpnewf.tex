@@ -10,6 +10,81 @@ The complete news file can be viewed at
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
+July 2020 - August 2020.
+-----------------------------------------------------------------------
+
+ 1) Made the following updates to string functions.
+
+    a) The LET ... = STRING SPLIT command now saves the number of new
+       strings generated in the parameter NUMBWORD.
+
+    b) The LET ... = NUMBER OF WORDS command now supports the 
+       SET WORD DELIMITER option.  Previously, words were delineated by
+       spaces (or any non-printing character).  The SET WORD DELIMITER
+       option lets you specificy the character that will be treated as
+       the delimiter.  For example, SET WORD DELIMITER , will treat
+       the "," as the word delimiter.
+
+ 2) Many data files contain the variable names as the first line of the
+    file.  Dataplot has the ability to extract these variable names by
+    doing something like
+
+        SET READ VARIABLE LABEL ON
+        READ FILE.DAT
+
+    A few tweaks were added to this capability.
+
+    a) Previously, only the first 255 characters of the variable names
+       line were read.  This has been updated to support the number
+       of characters specified by the MAXIMUM RECORD LENGTH command.
+
+    b) Dataplot will now automatically strip spaces and other special
+       characters out of the variable names.  Specifically, only
+       alphabetic characters (A-Z), numbers (0-9), and underscores are
+       retained.
+
+    c) Dataplot only supports eight characters for variable names.  This
+       can lead to duplicate file names.  To reduce the possibility of
+       duplicate names, Dataplot does the following if a duplicate name
+       is found.
+
+          i) If the name has less than eight characters, a "Z" is appended
+             to the end of one of the names.  The right most name will
+             be modified.
+
+         ii) If the name has eight characters exactly, the right most
+             name will change the last character to a Z (or if that
+             character is already a Z, then to a X).
+
+       If blank names are encountered, these will be changed to
+       Zxxx where "xxx" is a sequence number (i.e., if there are three
+       blank names encountered, they wiil be set to Z1, Z2, and Z3).
+
+  3) The Dataplot GUI is somewhat out of date.  We will be updating the
+     GUI in several stages.
+
+     a) The first stage is to update the contents of the menu.  This
+        update has started, but not completed, that process.
+
+     b) After the menu contents are updated, we will begin revising
+        the Tcl/Tk scripts.
+
+  4) Added the command
+
+         SET CHARACTER TABULATION PLOT DIGITS <value>
+
+  5) Added the commands
+
+         HALF NORMAL MAXIMUM LIKELIHOOD Y
+         HALF LOGISTIC MAXIMUM LIKELIHOOD Y
+
+     Note that the half-logistic case actually computes a method
+     of moments estimate.
+
+  6) A number of bug fixes were made.
+
+-----------------------------------------------------------------------
+The following enhancements were made to DATAPLOT
 May 2020 - June 2020.
 -----------------------------------------------------------------------
 
@@ -51,9 +126,6 @@ May 2020 - June 2020.
          WRITE CLIPBOARD <var-list>
 
          CALL CLIPBOARD  <file>
-
- 7) Fixed a bug in the PYTHON/R command.  Fixed a bug when entering the
-    name of a PDF file as a command.
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT

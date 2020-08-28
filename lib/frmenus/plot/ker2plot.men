@@ -1,0 +1,57 @@
+This is file ker2plot.men--Kernel Density Plot for Multiple Variables
+ 
+--------------------
+1. Multiple Kernel Density Plot
+2. MULTIPLE KERNEL DENSITY PLOT Y1 Y2
+3.
+4. List of Response Variables (separate by space):
+4. @CE 1 0 33 50 ? gui-variable
+5.
+6. Kernel Density Width (omit for default):
+6. @CE 2 0 33 50 *
+7. Number of points for kernel density trace:
+8. @CE 3 1 10 45 32
+9. @CE 3 2 10 45 64
+10. @CE 3 3 10 45 128
+11. @CE 3 4 10 45 256 (default)
+12. @CE 3 5 10 45 512
+13. @CE 3 6 10 45 1024
+14. @CE 3 7 10 45 2048
+15.
+16. Title:
+16. @CE 4 0 18 50 *
+17. Left Axis Label:
+17. @CE 5 0 18 100 *
+18. Bottom Axis Label:
+18. @CE 6 0 18 100 *
+19.
+20. Line Types (solid, dashed ...)
+20. @CE 7 0 33 50 ? gui-line
+21. Line Colors:
+21. @CE 8 0 33 50 ? gui-color
+22.
+23. Subset/Except/For Specification: 
+24. @CE 9 0 1 50 *
+25.
+26.
+27. Generate the Kernel Density Plot?:
+--------------------
+GR FE
+TITLE _4
+Y1LABEL _5
+X1LABEL _6
+KERNEL DENSITY POINTS 256
+@IF 3 1 KERNEL DENSITY POINTS 32
+@IF 3 2 KERNEL DENSITY POINTS 64
+@IF 3 3 KERNEL DENSITY POINTS 128
+@IF 3 4 KERNEL DENSITY POINTS 256
+@IF 3 5 KERNEL DENSITY POINTS 512
+@IF 3 6 KERNEL DENSITY POINTS 1024
+@IF 3 7 KERNEL DENSITY POINTS 2048
+@IF 2 1 KERNEL DENSITY WIDTH _2
+@IF 7 0 LINES _7
+@IF 8 0 LINE COLOR _8
+MULTIPLE KERNEL DENSITY PLOT _1 _9
+--------------------
+WEB HELP KERNEL DENSITY PLOT
+--------------------

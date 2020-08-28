@@ -1,0 +1,86 @@
+This is file moviplms.men--Generate Moving Statistic Plots (Miscellaneous)
+ 
+--------------------line 3
+01. Moving Statistic Plots (Miscellanous)
+02. <statistic> MOVING STATISTIC PLOT Y X
+03.
+04. Vertical Axis Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Optional Group ID Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06.
+07. Statistic (Select one):
+08. @CE 3 1 5 25 size
+08. @CE 3 2 30 50 normal PPCC
+09. @CE 3 3 5 25 autocorrelation
+09. @CE 3 4 30 50 autocovariance
+10. @CE 3 5 5 25 sine amplitude
+10. @CE 3 6 30 50 sine frequency
+11.
+12. Character Type for Data
+12. @CE 4 0 42 50 * gui-char
+13. Character Fill for Data
+13. @CE 5 0 42 50 gui-ooff
+14. Line Type for Data-connecting Line
+14. @CE 6 0 42 50 * gui-line
+15. Line Type for Global Stat Line?
+15. @CE 7 0 42 50 * gui-line
+16.
+17. Title:
+17. @CE 8 0 10 50 *
+18. Left Axis Label:
+18. @CE 9 0 22 50 *
+19. Bottom Axis Label:
+19. @CE 10 0 22 50 *
+20.
+21. Number of Points to Compute Statistic (default = 5):
+21. @CE 11 0 42 50 *
+22. Direction of Local Region (default = Center):
+23. @CE 12 1 5 16 Center
+23. @CE 12 2 17 28 Left
+23. @CE 12 3 29 40 Right
+24. End Points (default = Skip):
+25. @CE 13 1 5 16 Skip
+25. @CE 13 2 17 28 Partial
+25. @CE 13 3 29 40 Symmetric
+26.
+27. Subset/Except/For Specification:
+29. @CE 14 0 1 50 *
+29.
+30.
+31. Generate the Moving Statistic Plot?:
+--------------------
+TITLE _8
+Y1LABEL _9
+X1LABEL _10
+CHARACTERS _4
+CHARACTER FILL _5
+LINES _6 _7
+@IF 2 0 LET NGROUP = UNIQUE _2  _14
+@IF 2 0 LOOP FOR K = 1 1 NGROUP
+@IF 2 0     LET IVAL1 = (K-1)*2 + 1
+@IF 2 0     LET IVAL2 = IVAL1 + 1
+@IF 2 0     LET PLOT LINE IVAL1 = _6
+@IF 2 0     LET PLOT LINE IVAL2 = _7
+@IF 2 0     LET PLOT CHARACTER IVAL1 = _4
+@IF 2 0     LET PLOT CHARACTER FILL IVAL1 = _5
+@IF 2 0 END OF LOOP
+FILTER WIDTH
+SET MOVING DIRECTION CENTER
+SET MOVING END POINT SKIP
+@IF 11 0 FILTER WIDTH _11
+@IF 12 1 SET MOVING DIRECTION CENTER
+@IF 12 2 SET MOVING DIRECTION LEFT
+@IF 12 3 SET MOVING DIRECTION RIGHT
+@IF 13 1 SET MOVING END POINT SKIP
+@IF 13 2 SET MOVING END POINT PARTIAL
+@IF 13 3 SET MOVING END POINT SYMMETRIC
+@IF 3 1 SIZE MOVING STATISTIC PLOT _1 _2 _14
+@IF 3 2 NORMAL PPCC MOVING STATISTIC PLOT _1 _2 _14
+@IF 3 3 AUTOCORRELATION STATISTIC MOVING STATISTIC PLOT _1 _2 _14
+@IF 3 4 AUTOCOvARIANCE STATISTIC MOVING STATISTIC PLOT _1 _2 _14
+@IF 3 5 SINE AMPLITUDE MOVING STATISTIC PLOT _1 _2 _14
+@IF 3 6 SINE FREQUENCY MOVING STATISTIC PLOT _1 _2 _14
+--------------------
+WEB HELP MOVING STATISTICS PLOT
+--------------------

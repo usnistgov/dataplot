@@ -5,8 +5,8 @@
 The following menus implement the EDA-based
 10-step analysis of a full factorial design: 
 
- 1. DEX scatter plot                            <xemf: ~dex2k\scatplot.men>
- 2. DEX mean plot (main effects plot)           <xemf: ~dex2k\meanplot.men>
+ 1. DEX scatter plot                            <xemf: ~plot\dexscatp.men>
+ 2. DEX mean plot (main effects plot)           <xemf: ~plot\dexmeanp.men>
  3. Interaction effects matrix                  <xemf: ~dex2k\inteffma.men>
  4. Block plots                                 <xemf: ~dex2k\blocplot.men>
  5. Estimate effects (ranked)                   <xemf: ~dex2k\yates.men>

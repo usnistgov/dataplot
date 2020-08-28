@@ -2,11 +2,26 @@
 
 Multifactor Plots
 
+Mean Plot                    <xemf: ~stat\meanplot.men>
+Standard Deviation Plot      <xemf: ~stat\sdplot.men>
 Statistics for Grouped Data (One Group Variable)  <~plot\statplot.top>
 Statistics for Grouped Data (Two Group Variables) <~plot\crosplot.top>
-Analysis of Proportions Plot               <xemf: ~plot\anopplot.men>
+Cumulative Statistic Plot    <~plot\cumuplot.top>
+Moving Statistic Plot        <~plot\moviplot.top>
+
+Box Plot                     <xemf: ~stat\boxplot.men>
+Violin Plot                  <xemf: ~plot\violin.men>
+Block Plot                   <xemf: ~stat\blockplo.men>
+
+10-Step Screening Analysis Plots           <~dex2k\10step.top>
+
 Homoscedasticity Plot                      <xemf: ~plot\homoplot.men>
 Spread-Location Plot                       <xemf: ~plot\slplot.men>
-Box Plot                                   <xemf: ~stat\boxplot.men>
-Violin Plot                                <xemf: ~plot\violin.men>
+Box-Cox Linearity Plot                     <xemf: ~plot\bcliplot.men>
+Box-Cox Homoscedasticity Plot              <xemf: ~plot\bchoplot.men>
 
+Analysis of Proportions Plot               <xemf: ~plot\anopplot.men>
+
+Built-in Datasets
+   View                  <~dataview\mfac.top>
+   Load                  <~dataload\mfac.top>

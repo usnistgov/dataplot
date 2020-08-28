@@ -1135,6 +1135,8 @@ C     UPDATED         --JUNE      2020. SUPPORT READ FROM CLIPBOARD
 C                                       FOR LINUX SYSTEMS (THIS
 C                                       WORKS DIFFERENTLY THAN ON
 C                                       WINDOWS SYSTEMS)
+C     UPDATED         --AUGUST    2020. SOME TWEAKS WHEN READING VARIABLE
+C                                       NAMES FROM THE FILE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -1324,10 +1326,11 @@ C
 CCCCC THE FOLLOWING LINES ADDED    FEBRUARY  2003.
 C
       CHARACTER*4 IVRLST
+      CHARACTER*4 IASAVE(MAXRCL)
+C
       CHARACTER*4 IECASE(MAXRDV)
       CHARACTER*4 IVLIST(MAXRDV)
       CHARACTER*4 IVLIS2(MAXRDV)
-      CHARACTER*4 IASAVE(MAXRDV)
       CHARACTER*4 ICLIST(MAXRDV)
       CHARACTER*4 ICLIS2(MAXRDV)
 C
@@ -2777,15 +2780,15 @@ C
       ISTEPN='4A'
       IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'READ')THEN
         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-        WRITE(ICOUT,403)ICASRE,IVRLST,JMIN,JMAX,NUMALL
-  403   FORMAT('ICASRE,IVRLST,JMIN,JMAX,NUMALL = ',2(A4,2X),3I8)
+        WRITE(ICOUT,403)ICASRE,IVRLST,JMIN,JMAX,NUMALL,ISKIP
+  403   FORMAT('ICASRE,IVRLST,JMIN,JMAX,NUMALL,ISKIP = ',2(A4,2X),4I8)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
       IF(IVRLST.EQ.'NO' .AND. ICASRE.EQ.'VARI' .AND.
      1   IOTERM.NE.'LOOP')THEN
 C
-C     SKIP AUTOMATIC CASE:
+C       SKIP AUTOMATIC CASE:
 C
 C        1. IF IAVANM = FILE, THEN RETRIEVE VARIABLE LIST FROM LINE JUST
 C           BEFORE THE "----".
@@ -2836,22 +2839,39 @@ C
               ILAST=0
               INEW=0
               IVAR=0
-              NTEMP=255
+              NLAST=1
+              DO44581LL=NUMRCM,1,-1
+                IF(IASAVE(LL).NE.' ')THEN
+                  NLAST=LL
+                  GOTO44582
+                ENDIF
+44581         CONTINUE
+44582         CONTINUE
               CALL DPUPPE(IASAVE,NTEMP,IASAVE,IBUGS2,IERROR)
               DO4583J=1,NTEMP
-                IF(IASAVE(J)(1:1).EQ.' ' .OR. IASAVE(J)(1:1).EQ.',')THEN
+CCCCC           IF(IASAVE(J)(1:1).EQ.' ' .OR. IASAVE(J)(1:1).EQ.',')THEN
+                IF(IASAVE(J)(1:1).EQ.IREADL(1:1) .OR. J.EQ.NLAST)THEN
                   IF(INEW.EQ.1)THEN
                     IVAR=IVAR+1
                     ILAST=J
                     NCHAR=ILAST-IFRST+1
+                    ICNT=0
                     DO4585K=1,MIN(4,NCHAR)
-                      IVLIST(IVAR)(K:K)=IASAVE(IFRST+K-1)(1:1)
+                      CALL DPCOAN(IASAVE(IFRST+K-1)(1:1),IVAL)
+                      IFLAG=0
+                      IF(IVAL.GE.65 .AND. IVAL.LE.90)IFLAG=1
+                      IF(IVAL.GE.48 .AND. IVAL.LE.57)IFLAG=1
+                      IF(IASAVE(IFRST+K-1)(1:1).EQ.'_')IFLAG=1
+                      IF(IFLAG.EQ.1)THEN
+                        ICNT=ICNT+1
+                        IF(ICNT.LE.4)THEN
+                          IVLIST(IVAR)(ICNT:ICNT)=IASAVE(IFRST+K-1)(1:1)
+                        ELSEIF(ICNT.GE.5 .AND. ICNT.LE.8)THEN
+                          IVLIS2(IVAR)(ICNT-4:ICNT-4)=
+     1                           IASAVE(IFRST+K-1)(1:1)
+                        ENDIF
+                      ENDIF
  4585               CONTINUE
-                    IF(NCHAR.GE.5)THEN
-                      DO4587K=5,MIN(8,NCHAR)
-                        IVLIS2(IVAR)(K-4:K-4)=IASAVE(IFRST+K-1)(1:1)
- 4587                 CONTINUE
-                    ENDIF
                     INEW=0
                   ENDIF
                 ELSE
@@ -2890,7 +2910,7 @@ C
      1          IA(4).EQ.'-')THEN
                 GOTO6581
               ELSE
-                DO6511J=1,255
+                DO6511J=1,NUMRCM
                   IASAVE(J)=IA(J)
  6511           CONTINUE
               ENDIF
@@ -2995,7 +3015,10 @@ C        5) SET VARIABLE NAMES TO X1, ..., Xk
 C           (2014/10: THE IAVABN VARIABLE SPECIFIES THE DEFAULT FOR THE
 C           VARIABLE NAMES, THE DEFUALT IS NOW COL1, COL2, ETC.)
 C
-C        IF IVARLA="ON", FIRST LINE READ SHOULD BE VARIABLE NAMES
+C           IF IVARLA="ON", FIRST LINE READ SHOULD BE VARIABLE NAMES
+C
+C           2020/08: FOR COMMA DELIMITED FILES, CHECK FOR COMMA
+C                    WHEN SEPARATING THE VARIABLE NAMES
 C
 C        6) REWIND THE FILE
 C
@@ -3023,7 +3046,7 @@ C
  
                 IF(IA(1).NE.'-'.OR.IA(2).NE.'-'.OR.IA(3).NE.'-'.OR.
      1          IA(4).NE.'-')THEN
-                  DO4513J=1,255
+                  DO4513J=1,NUMRCM
                     IASAVE(J)=IA(J)
  4513             CONTINUE
                 ENDIF
@@ -3127,22 +3150,48 @@ C
                 ILAST=0
                 INEW=0
                 IVAR=0
-                NTEMP=255
+C
+C               2020/08: SET LINE LENGTH TO MAXIMUM RECORD LENGTH RATHER
+C                        THAN 255.  ALSO, ONLY INCLUDE UPPER/LOWER CASE
+C                        CHARACTERS AND UNDERSCORE CHARACTER IN VARIABLE
+C                        NAMES.
+CCCCC           NTEMP=255
+                NTEMP=NUMRCM
+                NLAST=1
+                DO5581LL=NUMRCM,1,-1
+                  IF(IASAVE(LL).NE.' ')THEN
+                    NLAST=LL
+                    GOTO5582
+                  ENDIF
+ 5581           CONTINUE
+ 5582           CONTINUE
+                NTEMP=NLAST
                 CALL DPUPPE(IASAVE,NTEMP,IASAVE,IBUGS2,IERROR)
                 DO5583J=1,NTEMP
-                  IF(IASAVE(J)(1:1).EQ.' '.OR.IASAVE(J)(1:1).EQ.',')THEN
+CCCCC             IF(IASAVE(J)(1:1).EQ.' '.OR.IASAVE(J)(1:1).EQ.',')THEN
+                  IF(IASAVE(J)(1:1).EQ.IREADL(1:1) .OR. J.EQ.NLAST)THEN
                     IF(INEW.EQ.1)THEN
                       IVAR=IVAR+1
                       ILAST=J
                       NCHAR=ILAST-IFRST+1
-                      DO5585K=1,MIN(4,NCHAR)
-                        IVLIST(IVAR)(K:K)=IASAVE(IFRST+K-1)(1:1)
+                      ICNT=0
+                      DO5585K=1,NCHAR
+                        CALL DPCOAN(IASAVE(IFRST+K-1)(1:1),IVAL)
+                        IFLAG=0
+                        IF(IVAL.GE.65 .AND. IVAL.LE.90)IFLAG=1
+                        IF(IVAL.GE.48 .AND. IVAL.LE.57)IFLAG=1
+                        IF(IASAVE(IFRST+K-1)(1:1).EQ.'_')IFLAG=1
+                        IF(IFLAG.EQ.1)THEN
+                          ICNT=ICNT+1
+                          IF(ICNT.LE.4)THEN
+                            IVLIST(IVAR)(ICNT:ICNT)=
+     1                             IASAVE(IFRST+K-1)(1:1)
+                          ELSEIF(ICNT.GE.5 .AND. ICNT.LE.8)THEN
+                            IVLIS2(IVAR)(ICNT-4:ICNT-4)=
+     1                             IASAVE(IFRST+K-1)(1:1)
+                          ENDIF
+                        ENDIF
  5585                 CONTINUE
-                      IF(NCHAR.GE.5)THEN
-                        DO5587K=5,MIN(8,NCHAR)
-                          IVLIS2(IVAR)(K-4:K-4)=IASAVE(IFRST+K-1)(1:1)
- 5587                   CONTINUE
-                      ENDIF
                       INEW=0
                     ENDIF
                   ELSE
@@ -3173,21 +3222,46 @@ C
               ILAST=0
               INEW=0
               IVAR=0
-              CALL DPUPPE(IASAVE,255,IASAVE,IBUGS2,IERROR)
-              DO34583J=1,255
-                IF(IASAVE(J)(1:1).EQ.' ' .OR. IASAVE(J)(1:1).EQ.',')THEN
+C
+C               2020/08: SET LINE LENGTH TO MAXIMUM RECORD LENGTH RATHER
+C                        THAN 255.  ALSO, ONLY INCLUDE ALPHANUMERIC
+C                        CHARACTERS AND UNDERSCORE CHARACTER IN VARIABLE
+C                        NAMES.
+C
+              NLAST=1
+              DO34581LL=NUMRCM,1,-1
+                IF(IASAVE(LL).NE.' ')THEN
+                  NLAST=LL
+                  GOTO34582
+                ENDIF
+34581         CONTINUE
+34582         CONTINUE
+              NTEMP=NLAST
+              CALL DPUPPE(IASAVE,NTEMP,IASAVE,IBUGS2,IERROR)
+              DO34583J=1,NTEMP
+CCCCC           IF(IASAVE(J)(1:1).EQ.' ' .OR. IASAVE(J)(1:1).EQ.',')THEN
+                IF(IASAVE(J)(1:1).EQ.IREADL(1:1) .OR. J.EQ.NLAST)THEN
                   IF(INEW.EQ.1)THEN
                     IVAR=IVAR+1
                     ILAST=J
                     NCHAR=ILAST-IFRST+1
+                    ICNT=0
                     DO34585K=1,MIN(4,NCHAR)
-                      IVLIST(IVAR)(K:K)=IASAVE(IFRST+K-1)(1:1)
+                      CALL DPCOAN(IASAVE(IFRST+K-1)(1:1),IVAL)
+                      IFLAG=0
+                      IF(IVAL.GE.65 .AND. IVAL.LE.90)IFLAG=1
+                      IF(IVAL.GE.48 .AND. IVAL.LE.57)IFLAG=1
+                      IF(IASAVE(IFRST+K-1)(1:1).EQ.'_')IFLAG=1
+                      IF(IFLAG.EQ.1)THEN
+                        ICNT=ICNT+1
+                        IF(ICNT.LE.4)THEN
+                          IVLIST(IVAR)(ICNT:ICNT)=IASAVE(IFRST+K-1)(1:1)
+                        ELSEIF(ICNT.GE.5 .AND. ICNT.LE.8)THEN
+                          IVLIS2(IVAR)(ICNT-4:ICNT-4)=
+     1                           IASAVE(IFRST+K-1)(1:1)
+                        ENDIF
+                      ENDIF
 34585               CONTINUE
-                    IF(NCHAR.GE.5)THEN
-                      DO34587K=5,MIN(8,NCHAR)
-                        IVLIS2(IVAR)(K-4:K-4)=IASAVE(IFRST+K-1)(1:1)
-34587                 CONTINUE
-                    ENDIF
                     INEW=0
                   ENDIF
                 ELSE
@@ -3202,9 +3276,83 @@ C
               JMIN=1
               JMAX=IVAR
             ENDIF
-C
           ENDIF
         ENDIF
+C
+C       2020/08: CHECK FOR DUPLICATE/EMPTY NAMES
+C
+        IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'READ')THEN
+          ISTEPN='4B'
+          CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+        ENDIF
+C
+        IF(IVAR.GE.2)THEN
+          NBLANK=0
+          DO34610JJ=IVAR,2,-1
+            ILAST=JJ-1
+            DO34620KK=1,ILAST
+              IF(IVLIST(JJ).EQ.IVLIST(KK) .AND.
+     1           IVLIS2(JJ).EQ.IVLIS2(KK))THEN
+                NLAST=0
+                DO34630LL=4,1,-1
+                  IF(IVLIS2(JJ)(LL:LL).NE.' ')THEN
+                    NLAST=LL+4
+                    GOTO34639
+                  ENDIF
+34630           CONTINUE
+                DO34635LL=4,1,-1
+                  IF(IVLIST(JJ)(LL:LL).NE.' ')THEN
+                    NLAST=LL
+                    GOTO34639
+                  ENDIF
+34635           CONTINUE
+34639           CONTINUE
+C
+C               NOW CREATE MODIFIED NAME
+C
+C                   1. IF BLANK NAME, USE "Zxxxx"
+C                   2. IF LESS THAN 8 CHARACTERS IN NAME, APPEND
+C                      A "Z" TO NAME
+C                   3. IF 8 CHARACTERS IN NAME, CHANGE LAST CHARACTER
+C                      TO NAME
+C
+                IF(NLAST.EQ.0)THEN
+                  IVLIST(JJ)='Z   '
+                  NBLANK=NBLANK+1
+                  IF(NBLANK.LE.9)THEN
+                    WRITE(IVLIST(JJ)(2:2),'(I1)')NBLANK
+                  ELSEIF(NBLANK.LE.99)THEN
+                    WRITE(IVLIST(JJ)(2:3),'(I2)')NBLANK
+                  ELSEIF(NBLANK.LE.999)THEN
+                    WRITE(IVLIST(JJ)(2:4),'(I3)')NBLANK
+                  ENDIF
+                ELSEIF(NLAST.LT.4)THEN
+                  IVLIST(JJ)(NLAST+1:NLAST+1)='Z'
+                ELSEIF(NLAST.LT.8)THEN
+                  IVLIS2(JJ)(NLAST-3:NLAST-3)='Z'
+                ELSEIF(NLAST.EQ.8)THEN
+                   IF(IVLIS2(JJ)(4:4).EQ.'Z')THEN
+                     IVLIS2(JJ)(4:4)='X'
+                   ELSE
+                     IVLIS2(JJ)(4:4)='Z'
+                   ENDIF
+                ENDIF
+C
+              ENDIF
+34620       CONTINUE
+34610     CONTINUE
+        ENDIF
+C
+        IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'READ')THEN
+          ISTEPN='4C'
+          CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+        ENDIF
+C
+      ENDIF
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'READ')THEN
+        ISTEPN='4D'
+        CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
       ENDIF
 C
       IF(JMIN.GT.JMAX)GOTO4290
@@ -6423,8 +6571,12 @@ C
               IF(IH1.EQ.IHNAME(I).AND.IH2.EQ.IHNAM2(I))THEN
                 JMIN=IVSTAR(I2)
                 JMAX=IVSTOP(I2)
-                WRITE(ICOUT,8326)IH1,IH2,(IFUNC(J),J=JMIN,JMAX)
- 8326           FORMAT(A4,A4,10X,80A1)
+                NC=JMAX-JMIN+1
+                IFRMT=' '
+                IFRMT='(2A4,10X,    A1)'
+                WRITE(IFRMT(10:13),'(I4)')NC
+                WRITE(ICOUT,IFRMT)IH1,IH2,(IFUNC(J),J=JMIN,JMAX)
+C8326           FORMAT(A4,A4,10X,80A1)
                 CALL DPWRST('XXX','BUG ')
               ENDIF
  8320       CONTINUE

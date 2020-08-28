@@ -8719,7 +8719,6 @@ C
       ISUBN2='I1  '
       IERROR='NO'
 C
-      SHAPE=CPUMIN
       SHAPSV=CPUMIN
       ALIK=CPUMIN
       AIC=CPUMIN

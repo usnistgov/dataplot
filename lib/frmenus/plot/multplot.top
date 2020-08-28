@@ -2,15 +2,23 @@
 
 Multivariate Plots
 
-Andrews Plot                    <xemf: ~plot\andrplot.men>
+Scatter Plot Matrix             <~plot\matrplot.top>
+Classification Scatter Plot     <xemf: ~plot\clasplot.men>
+
+Plot of First 2 Principal Components <xemf: ~plot\prinplot.men>
+Principal Coordinates Plot      <xemf: ~plot\pcorplot.men>
 Biplot                          <xemf: ~plot\biplot.men>
+
 Conditioning (and Level) Plot   <~plot\condplot.top>
 Factor Plot                     <~plot\fact.top>
-Graphical Representation of First 2 Principal Components <xemf: ~plot\prinplot.men>
+Symbol Plot                     <xemf: ~plot\symbplot.men>
+
+Andrews Plot                    <xemf: ~plot\andrplot.men>
 Parallel Coordinates Plot       <xemf: ~plot\parcplot.men>
-Principal Coordinates Plot      <xemf: ~plot\pcorplot.men>
 Profile Plot                    <xemf: ~plot\profplot.men>
 Star Plot                       <xemf: ~plot\starplot.men>
-Symbol Plot                     <xemf: ~plot\symbplot.men>
-Scatter Plot Matrix             <~plot\matrplot.top>
+
+Built-in Datasets
+   View                         <~dataview\mvar.top>
+   Load                         <~dataload\mvar.top>
 

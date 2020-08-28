@@ -1,0 +1,62 @@
+This is file potplot.men--Peaks Over Threshold Plot
+ 
+--------------------
+ 1. Peaks Over Threshold Plot
+ 2. PEAKS OVER THRESHOLD PLOT Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5. Optional Mean Recurrence Intervals Variable:
+ 5. @CE 2 0 33 50 ? gui-vari
+ 6.
+ 7. You can specify the threshold either in terms
+ 8. of a threshold value or as the number of observations
+ 9. above the threshold.
+11.
+12. Initial Number of Observations Above the Threshold:
+12. @CE 3 0 42 50 *
+13. Initial Threshold Value:
+13. @CE 4 0 42 50 *
+14. Increment for Threshold (Default: -1):
+14. @CE 5 0 42 50 *
+15. Number of Iterations for the Threshold (Default: 30):
+15. @CE 6 0 42 50 *
+16.
+17. Generalized Pareto Estimation Method:
+18. @CE 7 1 5 15 PPCC
+18. @CE 7 2 17 27 DeHaan
+18. @CE 7 3 29 39 CME
+19.
+20. Title:
+20. @CE 8 0 10 50 *
+21. Left Axis Label:
+21. @CE 9 0 22 50 *
+22. Bottom Axis Label:
+22. @CE 10 0 22 50 *
+23.
+24. Subset/Except/For Specification:
+25. @CE 11 0 1 50 *
+26.
+27.
+28. Generate the Peaks Over Threshold Plot?:
+--------------------
+GR FE
+LINE SOLID DOTTED DOTTED
+LINE THICKNESS 0.2 0.1 0.1
+CHARACTER BLANK ALL
+@IF 3 0 SET PEAKS OVER THRESHOLD INITIAL POINTS _3
+@IF 4 0 SET PEAKS OVER THRESHOLD INITIAL THRESHOLD _4
+SET PEAKS OVER THRESHOLD INCREMENT -1
+SET PEAKS OVER THRESHOLD ITERATIONS 30
+@IF 5 0 SET PEAKS OVER THRESHOLD INCREMENT _5
+@IF 6 0 SET PEAKS OVER THRESHOLD ITERATIONS _6
+@IF 7 1 SET PEAKS OVER THRESHOLD METHOD PPCC
+@IF 7 2 SET PEAKS OVER THRESHOLD METHOD DEHAAN
+@IF 7 3 SET PEAKS OVER THRESHOLD METHOD CME
+TITLE _8
+Y1LABEL _9
+X1LABEL _10
+PEAKS OVER THRESHOLDS PLOT _1 _2 _11
+--------------------
+WEB HELP PEAKS OVER THRESHOLD PLOT
+--------------------

@@ -1,0 +1,37 @@
+This is file genesumm.men--Generate Summary Data from Raw Data
+ 
+--------------------
+ 1. Generate Summary Data From Raw Data
+ 2. Macro
+ 3.
+ 4. This data takes two columns of data (a response
+ 5. variable and a lab-id variable) and returns 3
+ 6. variables: 1) lab means; 2) lab standard deviations;
+ 7. 3) lab sample sizes.
+ 8.
+ 9. Response Variable:
+ 9. @CE 1 0 42 50 ? gui-variable
+10. Lab ID Variable:
+10. @CE 2 0 42 50 ? gui-variable
+11.
+12. Name for Variable to Contain Lab Means:
+12. @CE 3 0 42 50 *
+13. Name for Variable to Contain Lab SD's:
+13. @CE 4 0 42 50 *
+14. Name for Variable to Contain Lab Sample Sizes:
+14. @CE 5 0 42 50 *
+15.
+16. Subset/Except/For Specification:
+17. @CE 6 0 1 50 *
+18.
+19.
+20. Create the Summary Variables?
+--------------------
+SU FE
+SET LET CROSS TABULAT COLLAPSE
+LET _3 = CROSS TABULATE MEAN _1 _2 _6
+LET _4 = CROSS TABULATE SD _1 _2 _6
+LET _5 = CROSS TABULATE SIZE _2 _6
+--------------------
+WEB HELP LET CROSS TABULATE
+--------------------

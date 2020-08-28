@@ -1,4 +1,4 @@
- 78200.    (VERSION 2020.05)   total number of lines in file (including this line)
+ 78200.    (VERSION 2020.08)   total number of lines in file (including this line)
  8.                          number of     sections below
   100.    D                  first line number of D section
 18700.    E                  first line number of E section
@@ -3049,21 +3049,27 @@ Note:
     Specifically, if the design has center points, then
     the line and character settings are controlled by:
 
-       trace 1 = labels for the center point and the points
-                 at (-1,-1), (-1,1), (1,1), (1,-1).  The
-                 character setting is automatically set to
-                 a special type called ZVAL and line is set to
-                 blank.  Although the character type is fixed,
-                 you can still set the attributes.  For example,
-                 you may want to use CHARACTER OFFSET to position
-                 the text.
-       trace 2 = the center point.  The line setting is typically
+       trace 1 = labels for the points at (-1,-1) and (-1,1).  The
+                 character setting is automatically set to a special type
+                 called ZVAL and line is set to blank.  The character
+                 justification is automatically set to RIGHT.  Although
+                 the character type and justification are fixed, you can
+                 still set the other CHARACTER attributes.  For example,
+                 you can use CHARACTER OFFSET to position the text.
+       trace 2 = labels for the points at (+1,-1), (-1,1) and (0,0).  The
+                 character setting is automatically set to a special type
+                 called ZVAL and line is set to blank.  The character
+                 justification is automatically set to LEFT.  Although
+                 the character type and justification are fixed, you can
+                 still set the other CHARACTER attributes.  For example,
+                 you can use CHARACTER OFFSET to position the text.
+       trace 3 = the center point.  The line setting is typically
                  blank and the character type is commonly set to
                  CIRCLE.
-       trace 3 = line connecting (-1,-1), (1,-1), (1,1), (-1,1).
+       trace 4 = line connecting (-1,-1), (1,-1), (1,1), (-1,1).
                  The line type is typically set to SOLID and the
                  character type is typically set to CIRCLE.
-       trace 4+= the contour lines start with trace 4.  There is
+       trace 5+= the contour lines start with trace 5.  There is
                  one trace for each value of YCONT.  This allows
                  you to set the attributes for each contour line
                  individually.  For example, you may want to
@@ -3075,17 +3081,24 @@ Note:
     If the design does not have center points, then
     the line and character settings are controlled by:
 
-       trace 1 = labels for the vertex points at (-1,-1), (-1,1),
-                 (1,1), (1,-1).  The character setting is
-                 automatically set to a special type called ZVAL
-                 and line is set to blank.  Although the character
-                 type is fixed, you can still set the attributes.
-                 For example, you may want to use CHARACTER OFFSET
-                 to position the text.
-       trace 2 = line connecting (-1,-1), (1,-1), (1,1), (-1,1).
+       trace 1 = labels for the points at (-1,-1) and (-1,1).  The
+                 character setting is automatically set to a special type
+                 called ZVAL and line is set to blank.  The character
+                 justification is automatically set to RIGHT.  Although
+                 the character type and justification are fixed, you can
+                 still set the other CHARACTER attributes.  For example,
+                 you can use CHARACTER OFFSET to position the text.
+       trace 2 = labels for the points at (+1,-1) and (-1,1).  The
+                 character setting is automatically set to a special type
+                 called ZVAL and line is set to blank.  The character
+                 justification is automatically set to LEFT.  Although
+                 the character type and justification are fixed, you can
+                 still set the other CHARACTER attributes.  For example,
+                 you can use CHARACTER OFFSET to position the text.
+       trace 3 = line connecting (-1,-1), (1,-1), (1,1), (-1,1).
                  The line type is typically set to SOLID and the
                  character type is typically set to CIRCLE.
-       trace 3+= the contour lines start with trace 3.  There is
+       trace 4+= the contour lines start with trace 4.  There is
                  one trace for each value of YCONT.  This allows
                  you to set the attributes for each contour line
                  individually.  For example, you may want to
@@ -3153,11 +3166,20 @@ Program 1:
     SKIP 25
     READ BOXYIELD.DAT Y X1 X2
     LET YCONT = SEQUENCE 50 2 70
-    CHARACTER ZVAL CIRCLE CIRCLE
-    CHARACTER FILL OFF ON ON
-    LINE SOLID ALL
-    LINE BLANK BLANK
-    LINE THICKNESS 0.1 0.1 0.1 0.3
+    CHARACTER ZVAL ZVAL CIRCLE CIRCLE
+    CHARACTER FILL OFF OFF ON ON
+    CHARACTR HW 2 1.5 2 1.5
+    CHARACTER OFFSET -2 0 1 0
+    LINE SOLID ON ALL
+    LINE BLANK BLANK BLANK
+    LINE THICKNESS 0.1 0.1 0.1 0.1 0.3
+    Y1LABEL X1
+    X1LABEL X2
+    TITLE CASE ASIS
+    TITLE DEX Contour Plot: BOXYIELD.DAT
+    LIMITS -2 2
+    TIC MARK OFFSET UNITS SCREEN
+    TIC MARK OFFSET 5 5
     DEX CONTOUR PLOT Y X1 X2 YCONT
  
 Program 2:
@@ -18624,28 +18646,6 @@ Program:
     END OF MULTIPLOT
  
 -------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,0 +1,178 @@
+This is file chsqpls2.men--Chi-Square Plot (Skewed Dist. Family)
+
+--------------------
+1. Chi-Square Plot (Skewed Distributional Families)
+2. <Name of Distributional Family> CHISQUARE PLOT Y X
+3.
+4. The chi-square plot is used for binned data.  That is, the first
+5. variable is the counts for the bin and the "Lower Limit" and "Upper
+6. Limit" variables are the bin lower and upper limits, respectively.
+7. If you have  equal sized bins, the "Lower Limit Variable" is the bin
+8. mid-point variable and no "Upper Limit Variable" is specified.
+9.
+10. Frequency Variable:
+10. @CE 1 0 11 25 ? gui-variable
+11. Lower Limit Variable:
+11. @CE 2 0 11 25 ? gui-variable
+12. Upper Limit Variable:
+12. @CE 3 0 11 25 ? gui-variable
+13.
+14. Distributional Family:
+15. @CE 4 1 11 40 Power Lognormal
+15.                               SD =
+15. @CE 5 0 63 70 ?
+16. @CE 4 2 11 40 Chi-squared
+17. @CE 4 3 11 40 Chi
+18. @CE 4 4 11 40 Log Logistic
+19. @CE 4 5 11 40 Generalized Logistic
+20. @CE 4 6 11 40 Generalized Half Logistic
+21. @CE 4 7 11 40 Geometric Extreme Expo
+22. @CE 4 8 11 40 Logistic Exponential
+23. @CE 4 9 11 40 Log Double Exponential
+24. @CE 4 10 11 40 Skew Normal
+25. @CE 4 11 11 40 Error
+26. @CE 4 12 11 40 Pareto Second Kind
+27. @CE 4 13 11 40 Gene Logistic Type 5
+28.
+29. Line Types (solid, dot, dash, ...)
+29. @CE 6 0 42 50 * gui-line
+30. Title:
+30. @CE 7 0 10 50 *
+31. Left Axis Label:
+31. @CE 8 0 22 50 *
+32. Bottom Axis Label:
+32. @CE 9 0 22 50 *
+33.
+34. Optional Number of Values (Default = 50):
+34. @CE 10 0 22 50 *
+35. Optional Lower Limit for Shape Parameter:
+35. @CE 11 0 22 50 *
+36. Optional Upper Limit for Shape Parameter:
+36. @CE 12 0 22 50 *
+37. Maximum Value for Y-Axis:
+37. @CE 13 0 42 50 *
+38. 
+39. Subset/Except/For Specification:
+40. @CE 14 0 -25 50 *
+41.
+42.
+43. Generate the Chi-Square Plot?
+--------------------
+GR FE
+LINES _6
+CHARACTERS BLANK
+TITLE _7
+Y1LABEL _8
+X1LABEL _9
+SET PPCC PLOT AXIS POINTS 50
+@IF 10 0 SET PPCC PLOT AXIS POINTS _10
+@IF 11 0 LET SHAPE1 = _11
+@IF 12 0 LET SHAPE2 = _12
+@IF 13 0 SET CHI-SQUARE LIMIT _13
+@IF 5 0 SET MINMAX _5
+@IF 6 0 SET MINMAX _6
+@IF 7 0 SET MINMAX _7
+@IF 8 0 SET MINMAX _8
+@IF 5 0 LET SD = _5
+@IF 4 1 IF SHAPE1 EXISTS
+@IF 4 1 LET SIGMA1 = SHAPE1
+@IF 4 1 END OF IF
+@IF 4 1 IF SHAPE2 EXISTS
+@IF 4 1 LET SIGMA2 = SHAPE2
+@IF 4 1 END OF IF
+@IF 4 1 LOGNORMAL CHI-SQUARE PLOT _1 _2 _3 _14
+@IF 4 2 IF SHAPE1 EXISTS
+@IF 4 2 LET NU1 = SHAPE1
+@IF 4 2 END OF IF
+@IF 4 2 IF SHAPE2 EXISTS
+@IF 4 2 LET NU2 = SHAPE2
+@IF 4 2 END OF IF
+@IF 4 2 CHI-SQUARED CHI-SQUARE PLOT _1 _2 _3 _14
+@IF 4 3 IF SHAPE1 EXISTS
+@IF 4 3 LET NU1 = SHAPE1
+@IF 4 3 END OF IF
+@IF 4 3 IF SHAPE2 EXISTS
+@IF 4 3 LET NU2 = SHAPE2
+@IF 4 3 END OF IF
+@IF 4 3 CHI CHI-SQUARE PLOT _1 _2 _3 _14
+@IF 4 4 IF SHAPE1 EXISTS
+@IF 4 4 LET DELTA1 = SHAPE1
+@IF 4 4 END OF IF
+@IF 4 4 IF SHAPE2 EXISTS
+@IF 4 4 LET DELTA2 = SHAPE2
+@IF 4 4 END OF IF
+@IF 4 4 LOG LOGISTIC CHI-SQUARE PLOT _1 _2 _3 _14
+@IF 4 5 IF SHAPE1 EXISTS
+@IF 4 5 LET ALPHA1 = SHAPE1
+@IF 4 5 END OF IF
+@IF 4 5 IF SHAPE2 EXISTS
+@IF 4 5 LET ALPHA2 = SHAPE2
+@IF 4 5 END OF IF
+@IF 4 5 GENERALIZED LOGISTIC CHI-SQUARE PLOT _1 _2 _3 _14
+@IF 4 6 IF SHAPE1 EXISTS
+@IF 4 6 LET GAMMA1 = SHAPE1
+@IF 4 6 END OF IF
+@IF 4 6 IF SHAPE2 EXISTS
+@IF 4 6 LET GAMMA2 = SHAPE2
+@IF 4 6 END OF IF
+@IF 4 6 GENERALIZED HALF LOGISTIC CHI-SQUARE PLOT _1 _2 _3 _14
+@IF 4 7 IF SHAPE1 EXISTS
+@IF 4 7 LET GAMMA1 = SHAPE1
+@IF 4 7 END OF IF
+@IF 4 7 IF SHAPE2 EXISTS
+@IF 4 7 LET GAMMA2 = SHAPE2
+@IF 4 7 END OF IF
+@IF 4 7 GEOMETRIC EXTREME EXPONENTIAL CHI-SQUARE PLOT _1 _2 _3 _14
+@IF 4 8 IF SHAPE1 EXISTS
+@IF 4 8 LET BETA1 = SHAPE1
+@IF 4 8 END OF IF
+@IF 4 8 IF SHAPE2 EXISTS
+@IF 4 8 LET BETA2 = SHAPE2
+@IF 4 8 END OF IF
+@IF 4 8 LOGISTIC EXPONENTIAL CHI-SQUARE PLOT _1 _2 _3 _14
+@IF 4 9 IF SHAPE1 EXISTS
+@IF 4 9 LET ALPHA1 = SHAPE1
+@IF 4 9 END OF IF
+@IF 4 9 IF SHAPE2 EXISTS
+@IF 4 9 LET ALPHA2 = SHAPE2
+@IF 4 9 END OF IF
+@IF 4 9 LOG DOUBLE EXPONENTIAL CHI-SQUARE PLOT _1 _2 _3 _14
+@IF 4 10 IF SHAPE1 EXISTS
+@IF 4 10 LET LAMBDA1 = SHAPE1
+@IF 4 10 END OF IF
+@IF 4 10 IF SHAPE2 EXISTS
+@IF 4 10 LET LAMBDA2 = SHAPE2
+@IF 4 10 END OF IF
+@IF 4 10 SKEW NORMAL CHI-SQUARE PLOT _1 _2 _3 _14
+@IF 4 11 IF SHAPE1 EXISTS
+@IF 4 11 LET ALPHA1 = SHAPE1
+@IF 4 11 END OF IF
+@IF 4 11 IF SHAPE2 EXISTS
+@IF 4 11 LET ALPHA2 = SHAPE2
+@IF 4 11 END OF IF
+@IF 4 11 ERROR CHI-SQUARE PLOT _1 _2 _3 _14
+@IF 4 12 IF SHAPE1 EXISTS
+@IF 4 12 LET GAMMA1 = SHAPE1
+@IF 4 12 END OF IF
+@IF 4 12 IF SHAPE2 EXISTS
+@IF 4 12 LET GAMMA2 = SHAPE2
+@IF 4 12 END OF IF
+@IF 4 12 PARETO SECOND KIND CHI-SQUARE PLOT _1 _2 _3 _14
+@IF 4 13 IF SHAPE1 EXISTS
+@IF 4 13 LET ALPHA1 = SHAPE1
+@IF 4 13 END OF IF
+@IF 4 13 IF SHAPE2 EXISTS
+@IF 4 13 LET ALPHA2 = SHAPE2
+@IF 4 13 END OF IF
+@IF 4 13 GENERALIZED LOGISTIC TYPE 5 CHI-SQUARE PLOT _1 _2 _3 _14
+DELETE SHAPE1 SHAPE2
+LET MINCHIS2 = ROUND(MINCHISQ,4)
+LET SHAPE2   = ROUND(SHAPE,2)
+JUSTIFICATION CENTER
+MOVE 50 6
+TEXT Minimum Chi-Square: ^MINCHIS2, Shape: ^SHAPE2
+DELETE SHAPE2 MINCHIS2
+WRITE MINCHISQ SHAPE
+--------------------
+WEB HELP PPCC PLOT
+--------------------

@@ -1,4 +1,4 @@
-47800.      (VERSION 2020.05)   total number of lines in file (including this line)
+47800.      (VERSION 2020.08)   total number of lines in file (including this line)
  4.                          number of     sections below
   100.    L                  first line number of L section
 19400.    M                  first line number of M section
@@ -43807,6 +43807,19 @@ Note:
     be reported and the requested parameter will not be created.
 
 Note:
+    The 2020/08 version of Dataplot added support for the
+
+         SET WORD DELIMITER <char>
+
+    command.  Previously, only the space character (non-printing
+    characters are interpreted as spaces) was recognized.  With
+    this command, you can specify a specific character as a delimiter.
+    If a non-space character is specified, spaces and non-printing
+    characters will be treated as part of the word and not as
+    delimiters.
+
+    The most common use for this is in parsing comma delimited files.
+Note:
     The total number of characters that DATAPLOT can use for storing
     functions and strings is set when DATAPLOT is built.  The current
     default (11/2008) is 50,000 characters.  Previous versions may set
@@ -43850,6 +43863,7 @@ Applications:
  
 Implementation Date:
     2010/10
+    2020/08: Support for SET WORD DELIMITER
  
 Program:
     let string s = funnel ramp cone square
@@ -44106,20 +44120,6 @@ Program:
     PLOT Y VS X
 
 ---------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

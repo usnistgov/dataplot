@@ -1,0 +1,56 @@
+This is file ass2plot.men--Association Plot
+ 
+--------------------
+1. Association Plot
+2. ASSOCIATION PLOT M
+3.
+4. For this menu, the data is assumed to be a
+5. matrix containing a two-way table.
+6.
+7. Variable (Name of Matrix):
+7. @CE 1 0 1 50 ? gui-variable
+8.
+9. Title:
+9. @CE 2 0 10 50 *
+10. Left Axis Label:
+10. @CE 3 0 22 50 *
+11. Bottom Axis Label:
+11. @CE 4 0 22 50 *
+12.
+13. Color For "Positive" Residuals:
+13. @CE 5 0 33 50 * gui-color
+14. Color For "Negative" Residuals:
+14. @CE 6 0 33 50 * gui-color
+15.
+16. Subset/Except/For Specification: 
+17. @CE 7 0 1 50 *
+18.
+19.
+20. Generate the Association Plot?:
+--------------------
+GR FE
+LABEL CASE ASIS
+TIC MARK LABEL CASE ASIS
+TITLE CASE ASIS
+TITLE _2
+Y1LABEL DISPLACEMENT 12
+Y1LABEL _3
+X1LABEL _4
+REGION FILL COLOR BLUE RED
+REGION FILL COLOR _5 _6
+TIC MARK OFFSET UNITS DATA
+TIC MARK OFFSET 1 1
+LET NX = MATRIX NUMBER OF COLUMNS _1
+XLIMITS 1 NX
+LET NY = MATRIX NUMBER OF ROWS  _1
+YLIMITS 1 NY
+MAJOR XTIC MARK NUMBER NX
+MINOR XTIC MARK NUMBER 0
+MAJOR YTIC MARK NUMBER NY
+MINOR YTIC MARK NUMBER 0
+LINE SOLID
+ASSOCIATION PLOT _1  _7
+RESET PLOT CONTROL
+--------------------
+WEB HELP ASSOCIATION PLOT
+--------------------

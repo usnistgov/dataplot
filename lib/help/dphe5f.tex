@@ -1,4 +1,4 @@
-66300.      (VERSION 2020.05)  total number of lines in file (including this line)
+66300.      (VERSION 2020.08)  total number of lines in file (including this line)
  4.                          number of     sections below
   100.    P                  first line number of P section
 22400.    Q                  first line number of Q section
@@ -28771,7 +28771,38 @@ Description:
     SET VARIABLE NAMES FILE and the SKIP N worked equivalently to the
     SET VARIABLE NAMES AUTOMATIC.  The default is AUTOMATIC.
     
-    
+    Note 2020/08: The following tweaks were made to the reading of
+    variable names.
+
+      1. Previously, only the first 255 characters of the line were read.
+         This has been extended to support the number of characters
+         specified by the MAXIMUM RECORD LENGTH command (if this command is
+         not given, the default remains 255).
+
+      2. Dataplot will now automatically strip spaces and other special
+         characters out of the variable names.  Specifically, only
+         alphabetic characters (A-Z), numbers (0-9), and underscores are
+         retained.
+
+      3. Dataplot only supports eight characters for variable names.  This
+         can lead to duplicate file names.  To reduce the possibility of
+         duplicate names, Dataplot does the following if a duplicate name
+         is found.
+
+           a. If the name has less than eight characters, a "Z" is
+              appended to the end of one of the names.  The right most
+              name will be modified.
+
+           b. If the name has eight characters exactly, the right most
+              name will change the last character to a Z (or if that
+              character is already a Z, then to a X).
+
+           c. If blank names are encountered, these will be changed to
+              Zxxx where "xxx" is a sequence number (i.e., if there are
+              three blank names encountered, they wiil be set to Z1, Z2,
+              and Z3).
+
+
     READING FIXED COLUMNS
     
     By default, Dataplot performs free format reads.  That is,
@@ -42369,37 +42400,6 @@ Program:
     PLOT YIELD
  
 -------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -62627,6 +62627,11 @@ Note:
     with <char> denoting the character to use as the word delimiter.
 
 Note:
+    Starting with the 2020/08 version of Dataplot, the parameter
+    NUMBWORD is automatically created.  This parameter contains the
+    number of strings that are created by this command.
+
+Note:
     The total number of characters that DATAPLOT can use for storing
     functions and strings is set when DATAPLOT is built.  The current
     default (11/2008) is 50,000 characters.  Previous versions may set
@@ -62668,6 +62673,7 @@ Applications:
  
 Implementation Date:
     2018/10
+    2020/08: Automatically save NUMBWORD parameter
  
 Program:
     LET STRING SORG = X1 X2 X3 X4 X5
@@ -66187,12 +66193,6 @@ Program 2:
     feedback on
 
 ---------------------------------------------------------
-
-
-
-
-
-
 
 
 

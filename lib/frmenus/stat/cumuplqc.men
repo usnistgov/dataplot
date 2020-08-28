@@ -1,0 +1,96 @@
+This is file cumuplqc.men--Generate Cumulative Statistic Plots (Quality Control)
+ 
+--------------------line 3
+01. Cumulative Statistic Plots (Scale)
+02. <statistic> CUMULATIVE STATISTIC PLOT Y X
+03.
+04. Response Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Optional Group ID Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06.
+07. Quality Control Statistic (Select one):
+08. Capability Analysis
+09. @CE 3 1 1 27 Cp
+09. @CE 3 2 29 57 Cpk
+10. @CE 3 3 1 27 Cnpk
+10. @CE 3 4 29 57 Cpm
+11. @CE 3 5 1 27 Cc
+11. @CE 3 6 29 57 Expected Loss
+12. @CE 3 7 1 27 Percent Defective
+13.
+14. Taguchi
+15. @CE 3 8 1 27 Taguchi sn-
+15. @CE 3 9 29 57 Taguchi sn+
+16. @CE 3 10 1 27 Taguchi sn0
+16. @CE 3 11 29 57 Taguchi sn00
+17.
+18. Lower Specification Limit:
+18. @CE 4 0 42 50 ? 
+19. Upper Specification Limit:
+19. @CE 5 0 42 50 ?
+20. Target Value:
+20. @CE 6 0 42 50 ?
+21. Cost Value:
+21. @CE 7 0 42 50 ?
+22.
+23. Character Type for Data
+23. @CE 8 0 42 50 * gui-char
+24. Character Fill for Data
+24. @CE 9 0 42 50 gui-ooff
+25. Line Type for Data-connecting Line
+25. @CE 10 0 42 50 * gui-line
+26. Line Type for Global Stat Line?
+26. @CE 11 0 42 50 * gui-line
+27.
+28. Title:
+28. @CE 12 0 10 50 *
+29. Left Axis Label:
+29. @CE 13 0 22 50 *
+30. Bottom Axis Label:
+30. @CE 14 0 22 50 *
+31.
+32. Minimum Index for Statistic (default = 1):
+32. @CE 15 0 22 50 *
+33.
+34. Subset/Except/For Specification:
+35. @CE 16 0 1 50 *
+36.
+37.
+38. Generate the Cumulative Statistic Plot?:
+--------------------
+TITLE _12
+Y1LABEL _13
+X1LABEL _14
+CHARACTERS _8
+CHARACTER FILL _9
+LINES _10 _11
+@IF 2 0 LET NGROUP = UNIQUE _2  _16
+@IF 2 0 LOOP FOR K = 1 1 NGROUP
+@IF 2 0     LET IVAL1 = (K-1)*2 + 1
+@IF 2 0     LET IVAL2 = IVAL1 + 1
+@IF 2 0     LET PLOT LINE IVAL1 = _10
+@IF 2 0     LET PLOT LINE IVAL2 = _11
+@IF 2 0     LET PLOT CHARACTER IVAL1 = _8
+@IF 2 0     LET PLOT CHARACTER FILL IVAL1 = _9
+@IF 2 0 END OF LOOP
+LET LSL = _4
+LET USL = _5
+LET TARGET = _6
+LET USLCOST = _7
+SET CUMULATIVE STATISTIC START 1
+@IF 15 0 SET CUMULATIVE STATISTIC START _15
+@IF 3 1 CP CUMULATIVE STATISTIC PLOT _1 _2 _16
+@IF 3 2 CPK CUMULATIVE STATISTIC PLOT _1 _2 _16
+@IF 3 3 CNPK CUMULATIVE STATISTIC PLOT _1 _2 _16
+@IF 3 4 CPM CUMULATIVE STATISTIC PLOT _1 _2 _16
+@IF 3 5 CC CUMULATIVE STATISTIC PLOT _1 _2 _16
+@IF 3 6 EXPECTED LOSS CUMULATIVE STATISTIC PLOT _1 _2 _16
+@IF 3 7 PERCENT DEFECTIVE CUMULATIVE STATISTIC PLOT _1 _2 _16
+@IF 3 8 TAGUCHI SN- CUMULATIVE STATISTIC PLOT _1 _2 _16
+@IF 3 9 TAGUCHI SN+ CUMULATIVE STATISTIC PLOT _1 _2 _16
+@IF 3 10 TAGUCHI SN0 CUMULATIVE STATISTIC PLOT _1 _2 _16
+@IF 3 11 TAGUCHI SN00 CUMULATIVE STATISTIC PLOT _1 _2 _16
+--------------------
+WEB HELP CUMULATIVE STATISTICS PLOT
+--------------------

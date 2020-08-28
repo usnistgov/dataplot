@@ -1,0 +1,15 @@
+----- <~plot\moviplot.top> Moving Statistic Plot
+
+Moving Statistic Plot
+
+Moving Statistic Plot
+   Location Statistics                     <xemf: ~stat\movipllo.men>
+   Scale Statistics                        <xemf: ~stat\moviplsc.men>
+   Extremes and Percentiles                <xemf: ~stat\moviplpe.men>
+   Quality Control                         <xemf: ~stat\moviplqc.men>
+   Correlation/Fitting Statistics          <xemf: ~stat\moviplco.men>
+   Miscellaneous Statistics                <xemf: ~stat\moviplms.men>
+   Difference of Location Statistics       <xemf: ~stat\movilodi.men>
+   Difference of Scale Statistics          <xemf: ~stat\moviscdi.men>
+   Difference of Extremes/Quantiles        <xemf: ~stat\moviqudi.men>
+

@@ -1,0 +1,106 @@
+This is file cumuscdi.men--Generate Cumulative Statistic Plots (Diff of Scale)
+ 
+--------------------line 3
+01. Cumulative Statistic Plots (Difference of Scale)
+02. DIFFERENCE OF <statistic> CUMULATIVE STATISTIC PLOT Y1 Y2 X
+03.
+04. First Response  Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Second Response  Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06. Optional Group ID Variable:
+06. @CE 3 0 37 54 ? gui-vari
+07.
+08. Scale Statistic (Select one):
+09. @CE 4 1 1 27 average absolute deviation
+09. @CE 4 2 29 57 biweight midvariance
+10. @CE 4 3 1 27 biweight scale
+10. @CE 4 4 29 57 coefficient of variation
+11. @CE 4 5 1 27 interquartile range
+11. @CE 4 6 29 57 kurtosis
+12. @CE 4 7 1 27 median absolute deviation
+12. @CE 4 8 29 57 percentage bend midvariance
+13. @CE 4 9 1 27  range
+13. @CE 4 10 29 57 relative standard deviation
+14. @CE 4 11 1 27 skewness
+14. @CE 4 12 29 57 standard deviation
+15. @CE 4 13 1 27 sd of the mean
+15. @CE 4 14 29 57 variance
+16. @CE 4 15 1 27 variance of the mean
+16. @CE 4 16 29 57 Winsorized sd
+17. @CE 4 17 1 27 Winsorized variance
+18.
+19. Percentage of values to trim/Winsorize above?:
+19. @CE 5 0 42 50 ? 
+20. Percentage of values to trim/Winsorize below?:
+20. @CE 6 0 42 50 ?
+21. Beta for Percentage Bend (> 0, < 0.5):
+21. @CE 7 0 42 50 ?
+22.
+23. Character Type for Data
+23. @CE 8 0 42 50 * gui-char
+24. Character Fill for Data
+24. @CE 9 0 42 50 gui-ooff
+25. Line Type for Data-connecting Line
+25. @CE 10 0 42 50 * gui-line
+26. Line Type for Global Stat Line?
+26. @CE 11 0 42 50 * gui-line
+27.
+28. Title:
+28. @CE 12 0 10 50 *
+29. Left Axis Label:
+29. @CE 13 0 22 50 *
+30. Bottom Axis Label:
+30. @CE 14 0 22 50 *
+31.
+32. Minimum Index for Statistic (default = 1):
+32. @CE 15 0 22 50 *
+33.
+34. Subset/Except/For Specification:
+35. @CE 16 0 1 50 *
+36.
+37.
+38. Generate the Cumulative Statistic Plot?:
+--------------------
+TITLE _12
+Y1LABEL _13
+X1LABEL _14
+CHARACTERS _8
+CHARACTER FILL _9
+LINES _10 _11
+@IF 3 0 LET NGROUP = UNIQUE _3  _16
+@IF 3 0 LOOP FOR K = 1 1 NGROUP
+@IF 3 0     LET IVAL1 = (K-1)*2 + 1
+@IF 3 0     LET IVAL2 = IVAL1 + 1
+@IF 3 0     LET PLOT LINE IVAL1 = _10
+@IF 3 0     LET PLOT LINE IVAL2 = _11
+@IF 3 0     LET PLOT CHARACTER IVAL1 = _8
+@IF 3 0     LET PLOT CHARACTER FILL IVAL1 = _9
+@IF 3 0 END OF LOOP
+LET P1 = 5
+LET P2 = 5
+LET P1 = _6
+LET P2 = _5
+LET BETA = _7
+SET CUMULATIVE STATISTIC START 1
+@IF 15 0 SET CUMULATIVE STATISTIC START _15
+@IF 4 1 DIFFERENCE OF AAD CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 2 DIFFERENCE OF BIWEIGHT MIDVARIANCE CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 3 DIFFERENCE OF BIWEIGHT SCALE CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 4 DIFFERENCE OF COEFFICIENT OF VARIATION CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 5 DIFFERENCE OF INTERQUARTILE RANGE CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 6 DIFFERENCE OF KURTOSIS CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 7 DIFFERENCE OF MAD CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 8 DIFFERENCE OF PERCENTAGE BEND MIDVARIANCE CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 9 DIFFERENCE OF RANGE CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 10 DIFFERENCE OF RELATIVE SD CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 11 DIFFERENCE OF SKEWNESS CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 12 DIFFERENCE OF STANDARD DEVIATION CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 13 DIFFERENCE OF SD OF THE MEAN CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 14 DIFFERENCE OF VARIANCE CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 15 DIFFERENCE OF VARIANCE OF THE MEAN CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 16 DIFFERENCE OF WINSORIZED SD CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+@IF 4 17 DIFFERENCE OF WINSORIZED VARIANCE CUMULATIVE STATISTIC PLOT _1 _2 _3 _16
+--------------------
+WEB HELP CUMULATIVE STATISTICS PLOT
+--------------------

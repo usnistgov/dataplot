@@ -8,18 +8,26 @@ This is file ppccpldi.men--PPCC Plot (Discrete Distributions)
 4. @CE 1 0 11 25 ? gui-variable
 5.
 6. Distributional Family:
-7. @CE 2 1 11 25 Poisson
-8. @CE 2 2 11 25 Geometric
-9.
-10. Subset/Except/For Specification:
-11. @CE 3 0 -25 50 *
-12.
+7. @CE 2 1 11 40 Poisson
+8. @CE 2 2 11 40 Geometric
+9. @CE 2 3 11 40 Logarithmic Series
+10.
+11. Subset/Except/For Specification:
+12. @CE 3 0 -25 50 *
 13.
-14. Generate the PPCC Plot?
+14.
+15. Generate the PPCC Plot?
 --------------------
 GR FE
 @IF 2 1 POISSON PPCC PLOT _1 _3
 @IF 2 2 GEOMETRIC PPCC PLOT _1 _3
+@IF 2 3 LOGARITHMIC SERIES PPCC PLOT _1 _3
+LET MAXPPCC2 = ROUND(MAXPPCC,4)
+LET SHAPE2   = ROUND(SHAPE,2)
+JUSTIFICATION CENTER
+MOVE 50 6
+TEXT Maximum PPCC: ^MAXPPCC2, Shape: ^SHAPE2
+DELETE SHAPE2 MAXPPCC2
 WRITE MAXPPCC SHAPE
 --------------------
 WEB HELP PPCC PLOT

@@ -1,0 +1,21 @@
+----- <~plot\interlab.top> Plots for Interlaboratory Analysis
+
+Interlaboratory Analysis Plots
+
+Discussion                            <~plot/intlabdi.top>
+
+Youden Analysis
+   Youden Plot                        <xemf: ~stat\youdplot.men>
+   Bivariate Normal Conf Region Plot  <xemf: ~stat\bivcplot.men>
+   Bivariate Normal Tole Region Plot  <xemf: ~stat\bivtplot.men>
+
+Consensus Means                       <~nist\consmean.top>
+
+E-691 Analysis                        <~nist\e691.top>
+   Two Factor Plot                    <xemf: ~nist\twofactp.men>
+   Two Way Plot                       <xemf: ~nist\twowaypl.men>
+   Biplot                             <xemf: ~plot\biplot.men>
+      Convert List of Variables to a Matrix   <xemf: ~plot\var2matr.men>
+
+ISO 13528 Proficiency Analysis        <~nist\iso13528.top>
+

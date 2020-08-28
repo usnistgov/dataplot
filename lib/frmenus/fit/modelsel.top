@@ -13,6 +13,7 @@ Scatter plot matrix           <xemf: ~fit\yscatplm.men>
 Partial Residual Plots                       <xemf: ~fit\partresp.men>
 Partial Regression (= Added Variable) Plots  <xemf: ~fit\partregr.men>
 Partial Leverage Plots                       <xemf: ~fit\partlevp.men>
+Component and Component Plus Residual Plot   <xemf: ~fit\ccpr.men>
 
 Best CP                                      <xemf: ~fit\bestcp.men>
     (for "best subsets" in multilinear regression)

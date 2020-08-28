@@ -1,0 +1,141 @@
+This is file chsqllsk.men--Chi-Square Plot (Skewed Dist. Family)
+
+--------------------
+1. Chi-Square Plot (Skewed Distributional Families)
+2. <Name of Distributional Family> CHISQUARE PLOT Y X
+3.
+4. The chi-square plot is used for binned data.  That is, the first
+5. variable is the counts for the bin and the "Lower Limit" and "Upper
+6. Limit" variables are the bin lower and upper limits, respectively.
+7. If you have  equal sized bins, the "Lower Limit Variable" is the bin
+8. mid-point variable and no "Upper Limit Variable" is specified.
+9.
+10. Frequency Variable:
+10. @CE 1 0 11 25 ? gui-variable
+11. Lower Limit Variable:
+11. @CE 2 0 11 25 ? gui-variable
+12. Upper Limit Variable:
+12. @CE 3 0 11 25 ? gui-variable
+13.
+14. Distributional Family:
+15. @CE 4 1 11 40 Lognormal (for SD)
+16. @CE 4 2 11 40 Power Lognormal
+16.                               SD =
+16. @CE 5 0 63 70 ?
+17. @CE 4 3 11 40 Power Normal
+18. @CE 4 4 11 40 Chi-squared
+19. @CE 4 5 11 40 Chi
+20. @CE 4 6 11 40 Gamma
+21. @CE 4 7 11 40 Log Gamma
+22. @CE 4 8 11 40 Inverted Gamma
+23. @CE 4 9 11 40 Weibull
+23.                             min(1) or max(2) =
+23. @CE 6 0 63 70 ?
+24. @CE 4 10 11 40 EV2 (Frechet)
+24.                             min(1) or max(2) =
+24. @CE 7 0 63 70 ?
+25. @CE 4 11 11 40 Generalized Extreme Value
+25.                             min(1) or max(2) =
+25. @CE 8 0 63 70 ?
+26. @CE 4 12 11 40 Pareto
+27. @CE 4 13 11 40 Generalized Pareto
+27.                             min(1) or max(2) =
+27. @CE 9 0 63 70 ?
+28. @CE 4 14 11 40 Inverse Gaussian
+29. @CE 4 15 11 40 Reciprocal Inverse Gausssian
+30. @CE 4 16 11 40 Fatigue Life (Saunders)
+31. @CE 4 17 11 40 Wald
+32. @CE 4 18 11 40 Log Logistic
+33. @CE 4 19 11 40 Generalized Logistic
+34. @CE 4 20 11 40 Generalized Half Logistic
+35. @CE 4 21 11 40 G
+36.
+21. Line Types (solid, dot, dash, ...)
+21. @CE 10 0 42 50 * gui-line
+22. Character Type (blank, x, circ, ...)
+22. @CE 11 0 42 50 * gui-char
+23. Character Fill (off, on)
+23. @CE 12 0 42 50 * gui-ooff
+24.
+25. Title:
+25. @CE 13 0 10 50 *
+26. Left Axis Label:
+26. @CE 14 0 22 50 *
+27. Bottom Axis Label:
+27. @CE 15 0 22 50 *
+28.
+29. Optional Number of Values (Default = 50):
+29. @CE 16 0 22 50 *
+30. Optional Lower Limit for Shape Parameter:
+30. @CE 17 0 22 50 *
+31. Optional Upper Limit for Shape Parameter:
+31. @CE 18 0 22 50 *
+32.
+33. Maximum Value for Y-Axis:
+33. @CE 19 0 42 50 *
+34. 
+35. Subset/Except/For Specification:
+36. @CE 20 0 -25 50 *
+37.
+38.
+39. Generate the Chi-Square Plot?
+--------------------
+GR FE
+LINES _5
+CHARACTERS _6
+CHARACTER FILL _7
+TITLE _8
+Y1LABEL _9
+X1LABEL _10
+SET PPCC PLOT AXIS POINTS 50
+@IF 11 0 SET PPCC PLOT AXIS POINTS _11
+@IF 12 0 LET SHAPE1 = _12
+@IF 13 0 LET SHAPE2 = _13
+@IF 15 0 SET CHI-SQUARE LIMIT _15
+@IF 4 1 IF SHAPE1 EXISTS
+@IF 4 1 LET LAMBDA1 = SHAPE1
+@IF 4 1 END OF IF
+@IF 4 1 IF SHAPE2 EXISTS
+@IF 4 1 LET LAMBDA2 = SHAPE2
+@IF 4 1 END OF IF
+@IF 4 1 TUKEY-LAMBDA CHI-SQUARE PLOT _1 _2 _3 _16
+@IF 4 2 IF SHAPE1 EXISTS
+@IF 4 2 LET NU1 = SHAPE1
+@IF 4 2 END OF IF
+@IF 4 2 IF SHAPE2 EXISTS
+@IF 4 2 LET NU2 = SHAPE2
+@IF 4 2 END OF IF
+@IF 4 2 T PPCC PLOT _1 _12
+@IF 4 2 T CHI-SQUARE PLOT _1 _2 _3 _16
+@IF 4 3 IF SHAPE1 EXISTS
+@IF 4 3 LET GAMMA1 = SHAPE1
+@IF 4 3 END OF IF
+@IF 4 3 IF SHAPE2 EXISTS
+@IF 4 3 LET GAMMA2 = SHAPE2
+@IF 4 3 END OF IF
+@IF 4 3 DOUBLE WEIBULL CHI-SQUARE PLOT _1 _2 _3 _16
+@IF 4 4 IF SHAPE1 EXISTS
+@IF 4 4 LET GAMMA1 = SHAPE1
+@IF 4 4 END OF IF
+@IF 4 4 IF SHAPE2 EXISTS
+@IF 4 4 LET GAMMA2 = SHAPE2
+@IF 4 4 END OF IF
+@IF 4 4 DOUBLE GAMMA CHI-SQUARE PLOT _1 _2 _3 _16
+@IF 4 5 IF B1 EXISTS
+@IF 4 5 LET GAMMA1 = SHAPE1
+@IF 4 5 END OF IF
+@IF 4 5 IF SHAPE2 EXISTS
+@IF 4 5 LET B2 = SHAPE2
+@IF 4 5 END OF IF
+@IF 4 5 VON MISES CHI-SQUARE PLOT _1 _2 _3 _16
+DELETE SHAPE1 SHAPE2
+LET MINCHIS2 = ROUND(MINCHISQ,4)
+LET SHAPE2   = ROUND(SHAPE,2)
+JUSTIFICATION CENTER
+MOVE 50 6
+TEXT Minimum Chi-Square: ^MINCHIS2, Shape: ^SHAPE2
+DELETE SHAPE2 MINCHIS2
+WRITE MINCHISQ SHAPE
+--------------------
+WEB HELP PPCC PLOT
+--------------------

@@ -26981,6 +26981,7 @@ C
       ISUBN1='DPAS'
       ISUBN2='SO  '
       ICASPL='ASSO'
+      ICASE='PARA'
 C
       MAXCP1=MAXCOL+1
       MAXCP2=MAXCOL+2
@@ -26997,15 +26998,11 @@ C
       AN21=0.0
       AN12=0.0
       AN22=0.0
-C
       NS1=(-999)
       NS2=(-999)
       NS3=(-999)
       NS4=(-999)
-C
-      ICASE='PARA'
       MINN2=2
-C
 C
 C               ****************************************
 C               **  TREAT THE ASSOCIATION PLOT CASE   **
@@ -27019,13 +27016,10 @@ C
    51   FORMAT('***** AT THE BEGINNING OF DPASSO--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)IBUGG2,IBUGG3,IBUGQ,ISUBRO
-   52   FORMAT('IBUGG2,IBUGG3,IBUGQ,ISUBRO = ',A4,2X,A4,2X,A4,2X,A4)
+   52   FORMAT('IBUGG2,IBUGG3,IBUGQ,ISUBRO = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,53)ICASPL,IAND1,IAND2
-   53   FORMAT('ICASPL,IAND1,IAND2 = ',A4,2X,A4,2X,A4)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,54)MAXN,NS
-   54   FORMAT('MAXN,NS = ',2I8)
+        WRITE(ICOUT,53)ICASPL,IAND1,IAND2,MAXN,NS
+   53   FORMAT('ICASPL,IAND1,IAND2,MAXN,NS = ',3(A4,2X),2I8)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
@@ -27199,13 +27193,13 @@ C
 C
         ICASE='VARI'
         ICOL=1
-        IF(NUMVAR.GT.2)THEN
+        IF(NUMVAR.NE.2)THEN
           WRITE(ICOUT,999)
           CALL DPWRST('XXX','BUG ')
           WRITE(ICOUT,2201)
           CALL DPWRST('XXX','BUG ')
           WRITE(ICOUT,2603)
- 2603     FORMAT('      MORE THAN TWO VARIABLES GIVEN.')
+ 2603     FORMAT('      MORE THAN OR LESS THAN TWO VARIABLES GIVEN.')
           CALL DPWRST('XXX','BUG ')
           WRITE(ICOUT,2605)NUMVAR
  2605     FORMAT('      THE NUMBER OF VARIABLES GIVEN  = ',I5)
@@ -27219,11 +27213,22 @@ C
      1              MAXCOL,MAXCP1,MAXCP2,MAXCP3,
      1              MAXCP4,MAXCP5,MAXCP6,
      1              V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,
-     1              Y,X,X,NLOCAL,NLOCA2,NLOCA3,ICASE,
+     1              Y1,Y2,Y2,NLOCAL,NLOCA2,NLOCA3,ICASE,
      1              IBUGG3,ISUBRO,IFOUND,IERROR)
         IF(IERROR.EQ.'YES')GOTO9000
         NS1=NLOCAL
         NS2=NLOCA2
+C
+        IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'ASSO')THEN
+          WRITE(ICOUT,2801)NS1,NS2
+ 2801     FORMAT('NS1,NS2=',2I8)
+          CALL DPWRST('XXX','BUG ')
+          DO2810II=1,NS1
+            WRITE(ICOUT,2811)II,Y1(II),Y2(II)
+ 2811       FORMAT('II,Y1(II),Y2(II)=',I8,2G15.7)
+            CALL DPWRST('XXX','BUG ')
+ 2810     CONTINUE
+        ENDIF
 C
       ELSEIF(IVARTY(1).EQ.'MATR')THEN
         ICASE='MATR'
@@ -27449,7 +27454,7 @@ C
       N22=INT(AN22+0.5)
 C
       ISTEPN='12'
-      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'MCN2')
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'ASS2')
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       IF(N11.LT.0)THEN
@@ -27545,7 +27550,7 @@ C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
 C               ********************************************
 C
       ISTEPN='21'
-      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'MCN2')
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'ASS2')
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       IF(N.LT.2)THEN
@@ -27607,13 +27612,19 @@ C
       ANUMS1=NUMSE1
       ANUMS2=NUMSE2
 C
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'ASS2')THEN
+        WRITE(ICOUT,2191)N,ANUMS1,ANUMS2
+ 2191   FORMAT('N,ANUMS1,ANUMS2 = ',I8,2G15.7)
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
 C               ***********************************************
 C               **  STEP 2.3--                               **
 C               **  CROSS-TABULATE THE TWO VARIABLES         **
 C               ***********************************************
 C
       ISTEPN='23'
-      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'CHI2')
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'ASS2')
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       IWRITE='OFF'
@@ -27623,19 +27634,19 @@ C
       J=0
       DO2310ISET1=1,NUMSE1
         DO2320ISET2=1,NUMSE2
-C
+          XMAT(ISET1,ISET2)=0.0
           K=0
           DO2330I=1,N
             IF(XIDTEM(ISET1).EQ.Y1(I).AND.XIDTE2(ISET2).EQ.Y2(I))THEN
-C
               K=K+1
             ENDIF
  2330     CONTINUE
           XMAT(ISET1,ISET2)=REAL(K)
-C
  2320   CONTINUE
  2310 CONTINUE
 C
+      NROW=NUMSE1
+      NCOL=NUMSE2
       GOTO4000
 C
  3000 CONTINUE
@@ -27758,8 +27769,8 @@ C
         TEMP1(I)=SUM1
 C
         IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'ASS2')THEN
-          WRITE(ICOUT,4111)I,TEMP1(I)
- 4111     FORMAT('      I,TEMP1(I),SUM2 = ',I8,2G15.7)
+          WRITE(ICOUT,4111)I,TEMP1(I),SUM2
+ 4111     FORMAT('I,TEMP1(I),SUM2 = ',I8,2G15.7)
           CALL DPWRST('XXX','WRIT')
         ENDIF
 C
@@ -27775,7 +27786,7 @@ C
 C
         IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'ASS2')THEN
           WRITE(ICOUT,4161)J,TEMP2(J)
- 4161     FORMAT('      J,TEMP2(J) = ',I8,G15.7)
+ 4161     FORMAT('J,TEMP2(J) = ',I8,G15.7)
           CALL DPWRST('XXX','WRIT')
         ENDIF
 C
@@ -27834,6 +27845,16 @@ C
         WRITE(ICOUT,4218)ATOTAL,AMXFRE,AMXRES
  4218   FORMAT('ATOTAL,AMXFRE,AMXRES = ',3G15.7)
         CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
+      IF(AMXRES.LE.0.0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,4291)
+ 4291   FORMAT('MAXIMUM RESIDUAL IS ZERO.  NO PLOT GENERATED.')
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
       ENDIF
 C
 C

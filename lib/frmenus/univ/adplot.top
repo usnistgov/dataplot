@@ -1,0 +1,9 @@
+----- <~univ\adplot.top> Anderson-Darling Plot
+
+Anderson-Darling Plot
+
+symmetric distributions              <xemf: ~univ\adplsy.men>
+skewed distributions                 <xemf: ~univ\adplsk.men>
+additional skewed distributions      <xemf: ~univ\adpls2.men>
+
+2-parameter distributions            <xemf: ~univ\adpl2p.men>

@@ -1,0 +1,19 @@
+----- <~plot\2resplot.top> Two Response Variables Plots
+
+Two Response Variable Plots
+Two Response Variable Plots (Unpaired)
+
+Overlaid Kernel Density Plots  <xemf: ~plot\ker2plot.men>
+Bihistogram                    <xemf: ~plot\bihist.men>
+Quantile-Quantile Plot         <xemf: ~plot\q-qplot.men>
+Tukey Mean Difference Plot     <xemf: ~plot\m-dplot.men>
+Shift Plot                     <xemf: ~plot\shiftplo.men>
+
+Two Response Variable Plots (Paired)
+
+Scatter Plot                       <xemf: ~stat\scatplot.men>
+Youden Plot                        <xemf: ~stat\youdplot.men>
+Bivariate Normal Conf Region Plot  <xemf: ~stat\bivcplot.men>
+Bivariate Normal Tole Region Plot  <xemf: ~stat\bivtplot.men>
+
+Bland-Altman Plot                  <xemf: ~plot\blandalt.men>

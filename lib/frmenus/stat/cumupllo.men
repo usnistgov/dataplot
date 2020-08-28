@@ -1,0 +1,91 @@
+This is file cumupllo.men--Generate Cumulative Statistic Plots (Location)
+ 
+--------------------line 3
+01. Cumulative Statistic Plot (Location)
+02. <statistic> CUMULATIVE STATISTIC PLOT Y X
+03.
+04. Response Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Optional Group ID Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06.
+07. Location Statistic:
+08. @CE 3 1 5 25 mean
+08. @CE 3 2 30 50 median
+09. @CE 3 3 5 25 midrange
+09. @CE 3 4 30 50 midmean
+10. @CE 3 5 5 25 biweight location
+10. @CE 3 6 30 50 trimmed mean
+11. @CE 3 7 5 25 Winsorized mean
+11. @CE 3 8 30 50 harmonic mean
+12. @CE 3 9 5 25 geometric mean
+12. @CE 3 10 30 50 Hodges Lehman
+13.
+14. For trimmed and Winsorized means, you need
+15. to specify the percentage to trim/Winsorize.
+16. 
+17. Percentage of values to trim/Winsorize above?:
+17. @CE 4 0 42 50 ? 
+18. Percentage of values to trim/Winsorize below?:
+18. @CE 5 0 42 50 ?
+19.
+20. Character Type for Data
+20. @CE 6 0 42 50 * gui-char
+21. Character Fill for Data
+21. @CE 7 0 42 50 gui-ooff
+22. Line Type for Data-connecting Line?
+22. @CE 8 0 42 50 * gui-line
+23. Line Type for Global Stat Line (for grouped data)?
+23. @CE 9 0 42 50 * gui-line
+24.
+25. Title:
+25. @CE 10 0 10 50 *
+26. Left Axis Label:
+26. @CE 11 0 22 50 *
+27. Bottom Axis Label:
+27. @CE 12 0 22 50 *
+28.
+29. Minimum Index for Statistic (default = 1):
+29. @CE 13 0 22 50 *
+30.
+31. Subset/Except/For Specification:
+32. @CE 14 0 1 50 *
+33.
+34. Generate the Cumulative Statistic Plot?:
+--------------------
+TITLE _10
+Y1LABEL _11
+X1LABEL _12
+LINE SOLID ALL
+CHARACTER BLANK ALL
+CHARACTERS _6
+CHARACTER FILL _7
+LINES _8 _9
+@IF 2 0 LET NGROUP = UNIQUE _2  _14
+@IF 2 0 LOOP FOR K = 1 1 NGROUP
+@IF 2 0     LET IVAL1 = (K-1)*2 + 1
+@IF 2 0     LET IVAL2 = IVAL1 + 1
+@IF 2 0     LET PLOT LINE IVAL1 = _8
+@IF 2 0     LET PLOT LINE IVAL2 = _9
+@IF 2 0     LET PLOT CHARACTER IVAL1 = _6
+@IF 2 0     LET PLOT CHARACTER FILL IVAL1 = _7
+@IF 2 0 END OF LOOP
+LET P1 = 5
+LET P2 = 5
+LET P1 = _5
+LET P2 = _4
+SET CUMULATIVE STATISTIC START 1
+@IF 14 0 SET CUMULATIVE STATISTIC START _13
+@IF 3 1 MEAN CUMULATIVE STATISTIC PLOT _1 _2 _14
+@IF 3 2 MEDIAN CUMULATIVE STATISTIC PLOT _1 _2 _14
+@IF 3 3 MIDRANGE CUMULATIVE STATISTIC PLOT _1 _2 _14
+@IF 3 4 MIDMEAN CUMULATIVE STATISTIC PLOT _1 _2 _14
+@IF 3 5 BIWEIGHT LOCATION CUMULATIVE STATISTIC PLOT _1 _2 _14
+@IF 3 6 TRIMMED MEAN CUMULATIVE STATISTIC PLOT _1 _2 _14
+@IF 3 7 WINSORIZED MEAN CUMULATIVE STATISTIC PLOT _1 _2 _14
+@IF 3 8 HARMONIC MEAN CUMULATIVE STATISTIC PLOT _1 _2 _14
+@IF 3 9 GEOMETRIC MEAN CUMULATIVE STATISTIC PLOT _1 _2 _14
+@IF 3 10 HODGES LEHMAN CUMULATIVE STATISTIC PLOT _1 _2 _14
+--------------------
+WEB HELP CUMULATIVE STATISTICS PLOT
+--------------------

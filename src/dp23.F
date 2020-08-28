@@ -774,7 +774,7 @@ C               ***********************************************
 C               **  TREAT THE PARTIAL REGRESSION PLOT   CASE **
 C               ***********************************************
 C
-      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.NE.'PRPL')THEN
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'PRPL')THEN
         WRITE(ICOUT,999)
   999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')

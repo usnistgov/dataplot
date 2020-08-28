@@ -25,6 +25,35 @@ let matcode = code matid
 let labcode = code labid
 let alpha = 0.005
 .
+probe h consistency plot laboratory first
+if probeval = 0
+   let ilab1 = 1
+else
+  let ilab1 = probeval
+end of if
+probe h consistency plot laboratory last
+if probeval = 0
+   let ilab2 = nlab
+else
+   let ilab2 = probeval
+end of if
+probe h consistency plot material first
+if probeval = 0
+   let imat1 = 1
+else
+   let imat1 = probeval
+end of if
+probe h consistency plot material last
+if probeval = 0
+   let imat2 = nmat
+else
+   let imat2 = probeval
+end of if
+.
+let nlab = unique labid subset labid = ilab1 to ilab2
+let nmat = unique matid subset matid = imat1 to imat2
+let ntot = nmat*nlab
+.
 .  Step 2: Set plot control features
 .
 label case asis
@@ -84,6 +113,7 @@ end of if
 loop for k = 1 1 ntot
     moveds xcoor ycoor
     let ktemp = mod(k-1,nmat) + 1
+    let ktemp = ktemp + imat1 - 1
     text ^ktemp
     let xcoor = xcoor + 1
 end of loop
@@ -93,7 +123,7 @@ line dash
 height 1.5
 let ycoor = 12
 let xcoor = (nmat/2)+0.5
-loop for k = 1 1 nlab
+loop for k = ilab1 1 ilab2
     moveds xcoor ycoor
     text ^k
     let xcoor = xcoor + nmat

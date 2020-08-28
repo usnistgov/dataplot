@@ -1,0 +1,43 @@
+This is file frecplot.men--Frechet Plot
+ 
+--------------------
+1. Frechet Plot
+2. FRECHET PLOT Y
+3.
+4. Response Variable:
+4. @CE 1 0 33 50 ? gui-variable
+5. Optional Group ID Variable:
+5. @CE 2 0 33 50 * gui-variable
+6.
+7. Line type for plot?:
+7. @CE 3 0 33 50 * gui-line
+8. Character type for plot?:
+8. @CE 4 0 33 50 * gui-character
+9. Line type for fitted line?:
+9. @CE 5 0 33 50 * gui-line
+10.
+11. Title:
+11. @CE 6 0 18 50 *
+12. Left Axis Label:
+12. @CE 7 0 18 100 *
+13. Bottom Axis Label:
+13. @CE 8 0 18 100 *
+14.
+15. Subset/Except/For Specification: 
+16. @CE 9 0 1 50 *
+17.
+18.
+19. Generate the Frechet Plot?:
+--------------------
+GR FE
+LINE BLANK SOLID
+CHARACTER X BLANK
+LINE _3 _5
+CHARACTER _4
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+FRECHET PLOT _1  _9
+--------------------
+WEB HELP FRECHET PLOT
+--------------------

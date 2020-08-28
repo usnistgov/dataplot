@@ -1,0 +1,39 @@
+This is file ash.men--Average Shifted Histogram
+ 
+--------------------
+1. Average Shifted Histogram
+2. AVERAGE SHIFTED HISTOGRAM Y
+3.
+4. Horizontal Axis Variable:
+4. @CE 1 0 33 50 ? gui-variable
+5.
+6. M Parameter (omit for default):
+6. @CE 2 0 33 50 *
+7. Weighting Method:
+8. @CE 3 1 10 45 32 Triangular
+8. @CE 3 2 10 45 32 Biweight
+9.
+10. Title:
+10. @CE 4 0 18 50 *
+11. Left Axis Label:
+11. @CE 5 0 18 100 *
+12. Bottom Axis Label:
+12. @CE 6 0 18 100 *
+13.
+14. Subset/Except/For Specification: 
+15. @CE 7 0 1 50 *
+16.
+17.
+18. Generate the Kernel Density Plot?:
+--------------------
+GR FE
+TITLE _4
+Y1LABEL _5
+X1LABEL _6
+@IF 2 0 LET M = _2
+@IF 3 1 SET AVERAGE SHIFTED HISTOGRAM WEIGHT TRIANGULAR
+@IF 3 2 SET AVERAGE SHIFTED HISTOGRAM WEIGHT BIWEIGHT
+AVERAGE SHIFTED HISTOGRAM _1 _7
+--------------------
+WEB HELP AVERAGE SHIFTED HISTOGRAM
+--------------------

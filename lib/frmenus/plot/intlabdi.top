@@ -1,0 +1,35 @@
+----- <~plot\intlabdi.top> Plots for Interlaboratory Analysis
+ 
+Plots for Interlaboratory Analysis
+ 
+Dataplot can analyze several different types
+of interlaboratory data.
+
+  1. Youden analysis applies to the case where a set of
+     laboratories have made two runs on the same product
+     or one run on two different products.
+
+  2. When multiple laboratories are measuring the same
+     material, a consensus means analysis can be used to
+     determine a consensus value (and associated
+     uncertainty).
+
+  3. The ASTM E-691 standard was developed to analyze
+     data from a two-way table (typically the factors
+     are "material" and "laboratory").  Each cell should
+     have the same number of measurements.  Note that the
+     E-691 standard is primarily meant to identify
+     laboratories that may have measurement issues.
+
+     The two-way plot and two-factor plot are used to
+     model the two-way tables.  These are typically applied
+     after an E-691 analysis where the performance of
+     poorly performing laboratories has been addressed.  The
+     biplot is an alternative to the two-way and two-factor
+     plots.
+
+  4. The ISO 13528 standard is a proficiency analysis standard.
+     This standard discusses both "single round" and
+     "multiple round" data.  The plots in this menu apply to
+     multi-round proficiency data.
+

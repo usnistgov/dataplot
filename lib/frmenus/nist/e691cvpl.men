@@ -1,0 +1,46 @@
+This is file e691cvpl.men--Generate Cochran variance plot: lab within materials
+ 
+--------------------
+ 1. Plot of Cochran Variance: Lab within Materials
+ 2. CALL E691CVPL.DP
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 42 50 ? gui-variable
+ 5. Material ID Variable:
+ 5. @CE 2 0 42 50 ? gui-variable
+ 6. Lab ID Variable:
+ 6. @CE 3 0 42 50 ? gui-variable
+ 7.
+ 8. Title for the Data Set:
+ 8. @CE 4 0 1 50 ? 
+ 9.
+10. First Laboratory (blank for all):
+10. @CE 5 0 1 50 ? 
+11. Last Laboratory (blank for all):
+11. @CE 6 0 1 50 ? 
+12. First Laboratory (blank for all):
+12. @CE 7 0 1 50 ? 
+13. Last Laboratory (blank for all):
+13. @CE 8 0 1 50 ? 
+14.
+15.
+16. Generate the Cochran Variance Outlier Plot?:
+--------------------
+FEEDBACK OFF
+LET Y = _1
+LET MATID = _2
+LET LABID = _3
+LET STRING E691TIT = _4
+SET H CONSISTENCY PLOT LABORATORY FIRST 0
+SET H CONSISTENCY PLOT LABORATORY LAST 0
+SET H CONSISTENCY PLOT MATERIAL FIRST 0
+SET H CONSISTENCY PLOT MATERIAL LAST 0
+@IF 5 0 SET H CONSISTENCY PLOT LABORATORY FIRST _5
+@IF 6 0 SET H CONSISTENCY PLOT LABORATORY LAST _6
+@IF 7 0 SET H CONSISTENCY PLOT MATERIAL FIRST _7
+@IF 8 0 SET H CONSISTENCY PLOT MATERIAL LAST _8
+CALL E691CVPL.DP
+FEEDBACK ON
+--------------------
+WEB HELP COCHRAN VARIANCE PLOT
+--------------------

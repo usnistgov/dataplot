@@ -8,34 +8,42 @@ Graphical Output Devices            <~plot\od.top>
 Basic Plots
    4-Plot                       <xemf: ~univ\4plot.men>
    PLOT Y and PLOT Y X          <xemf: ~stat\scatplot.men>
+
    Histogram                    <xemf: ~univ\histogra.men>
    Probability Plot             <~univ\probplot.top>
-   PPCC Plot                    <~univ\ppccplot.top>
-   DEX Mean Plot                <xemf: ~plot\dexmeanp.men>
+   PPCC                         <~univ\ppccplot.top>
+   AD Plot                      <~univ\adplot.top>
+   KS Plot                      <~univ\ksplot.top>
+
+   Mean Plot                    <xemf: ~stat\meanplot.men>
+   Standard Deviation Plot      <xemf: ~stat\sdplot.men>
+   Statistics for Grouped Data (One Group)  <~plot\statplot.top>
+   Box Plot                     <xemf: ~stat\boxplot.men>
    Control Charts               <~qual\contchar.top>
+
+   DEX Scatter Plot             <xemf: ~plot\dexscatp.men>
+   DEX Mean Plot                <xemf: ~plot\dexmeanp.men>
+   Block Plot                   <xemf: ~stat\blockplo.men>
 
 Regression Plots
    Plot Data and Predicted      <xemf: ~fit\plotpred.men>
    Plot Residuals               <xemf: ~fit\plotres.men>
    6-Plot (Residual Analysis)   <xemf: ~fit\6plot.men>
    Residuals-Fitted Spread Plot <xemf: ~plot\rfplot.men>
+   Model Selection Plots        <~fit\modelsel.top>
 
-Multi-Factor Plots
-   Box Plot                     <xemf: ~stat\boxplot.men>
-   Block Plot                   <xemf: ~stat\blockplo.men>
-   Mean Plot                    <xemf: ~stat\meanplot.men>
-   Standard Deviation Plot      <xemf: ~stat\sdplot.men>
-   Statistics for Grouped Data (One Group)  <~plot\statplot.top>
-   Statistics for Grouped Data (Two Groups) <~plot\crosplot.top>
-   Additional Multi-Factor Plots            <~plot\multfact.top>
 
 Univariate Plots                    <~plot\univplot.top>
 X-Y and 3-D Plots                   <~plot\xyplot.top>
+Two Response Variable Plots         <~plot\2resplot.top>
+Multi-Factor Plots                  <~plot\multfact.top>
+Interlaboratory Plots               <~plot\interlab.top>
 Bar (and Related) Plots             <~plot\bar.top>
 Experiment Design Plots             <~plot\dexplots.top>
 Distributional Plots                <~plot\distplot.top>
 Time Series Plots                   <~plot\timeplot.top>
 Multivariate Plots                  <~plot\multplot.top>
+Categorical Plots                   <~plot\cateplot.top>
 Reliability and Extreme Value Plots <~plot\reliplot.top>
 Bootstrap/Jacknife Plot             <~plot\bootstra.top>
 Maps                                <~plot\map.top>

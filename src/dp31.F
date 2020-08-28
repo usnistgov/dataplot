@@ -20328,6 +20328,7 @@ C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ICASE
+      CHARACTER*4 IWRITE
 C
 C---------------------------------------------------------------------
 C

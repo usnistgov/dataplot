@@ -1,0 +1,119 @@
+This is file moviplco.men--Generate Moving Statistic Plots (Correlation)
+ 
+--------------------line 3
+01. Moving Statistic Plots (Correlation/Fitting)
+02. <statistic> MOVING STATISTIC PLOT Y1 Y2 X
+03.
+04. First Response Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Second Response Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06. Optional Group ID Variable:
+06. @CE 3 0 37 54 ? gui-vari
+07.
+08. Correlation/Fitting Statistic (Select one):
+09. @CE 4 1 1 27 biweight midcorrelation
+09. @CE 4 2 29 57 biweight midcovariance
+10. @CE 4 3 1 27 comovement
+10. @CE 4 4 29 57 correlation
+11. @CE 4 5 1 27 covariance
+11. @CE 4 6 29 57 linear correlation
+12. @CE 4 7 1 27 linear intercept
+12. @CE 4 8 29 57 linear ressd
+13. @CE 4 9 1 27 linear slope
+13. @CE 4 10 29 57 percentage bend correlation
+14. @CE 4 11 1 27 rank comovement
+14. @CE 4 12 29 57 rank correlation
+15. @CE 4 13 1 27 rank covariance
+15. @CE 4 14 29 57 Winsorized correlation
+16. @CE 4 15 1 27 Winsorized covariance
+17.
+18. Percentage of values to Winsorize above?:
+18. @CE 5 0 42 50 ? 
+19. Percentage of values to Winsorize below?:
+19. @CE 6 0 42 50 ?
+20. Beta for percentage bend (0 < beta < 0.5):
+20. @CE 7 0 42 50 ?
+21.
+22. Character Type for Data
+22. @CE 8 0 42 50 * gui-char
+23. Character Fill for Data
+23. @CE 9 0 42 50 gui-ooff
+24. Line Type for Data-connecting Line
+24. @CE 10 0 42 50 * gui-line
+25. Line Type for Global Stat Line?
+25. @CE 11 0 42 50 * gui-line
+26.
+27. Title:
+27. @CE 12 0 10 50 *
+28. Left Axis Label:
+28. @CE 13 0 22 50 *
+29. Bottom Axis Label:
+29. @CE 14 0 22 50 *
+30.
+31. Number of Points to Compute Statistic (default = 5):
+31. @CE 15 0 42 50 *
+32. Direction of Local Region (default = Center):
+33. @CE 16 1 5 16 Center
+33. @CE 16 2 17 28 Left
+33. @CE 16 3 29 40 Right
+34. End Points (default = Skip):
+35. @CE 17 1 5 16 Skip
+35. @CE 17 2 17 28 Partial
+35. @CE 17 3 29 40 Symmetric
+36.
+37. Subset/Except/For Specification:
+38. @CE 18 0 1 50 *
+39.
+40.
+41.
+42. Generate the Moving Statistic Plot?:
+--------------------
+TITLE _12
+Y1LABEL _13
+X1LABEL _14
+CHARACTERS _8
+CHARACTER FILL _9
+LINES _10 _11
+@IF 3 0 LET NGROUP = UNIQUE _3  _18
+@IF 3 0 LOOP FOR K = 1 1 NGROUP
+@IF 3 0     LET IVAL1 = (K-1)*2 + 1
+@IF 3 0     LET IVAL2 = IVAL1 + 1
+@IF 3 0     LET PLOT LINE IVAL1 = _10
+@IF 3 0     LET PLOT LINE IVAL2 = _11
+@IF 3 0     LET PLOT CHARACTER IVAL1 = _8
+@IF 3 0     LET PLOT CHARACTER FILL IVAL1 = _9
+@IF 3 0 END OF LOOP
+LET P1 = 5
+LET P2 = 5
+LET P1 = _6
+LET P2 = _5
+LET BETA = _7
+FILTER WIDTH
+SET MOVING DIRECTION CENTER
+SET MOVING END POINT SKIP
+@IF 15 0 FILTER WIDTH _15
+@IF 16 1 SET MOVING DIRECTION CENTER
+@IF 16 2 SET MOVING DIRECTION LEFT
+@IF 16 3 SET MOVING DIRECTION RIGHT
+@IF 17 1 SET MOVING END POINT SKIP
+@IF 17 2 SET MOVING END POINT PARTIAL
+@IF 17 3 SET MOVING END POINT SYMMETRIC
+@IF 4 1 BIWEIGHT MIDCORRELATION MOVING STATISTIC PLOT _1 _2 _3 _18
+@IF 4 2 BIWEIGHT MIDCOVARIANCE MOVING STATISTIC PLOT _1 _2 _3 _18
+@IF 4 3 COMOVEMENT MOVING STATISTIC PLOT _1 _2 _3 _18
+@IF 4 4 CORRELATION MOVING STATISTIC PLOT _1 _2 _3 _18
+@IF 4 5 COVARIANCE MOVING STATISTIC PLOT _1 _2 _3 _18
+@IF 4 6 LINEAR CORRELATION MOVING STATISTIC PLOT _1 _2 _3 _18
+@IF 4 7 LINEAR INTERCEPT MOVING STATISTIC PLOT _1 _2 _3 _18
+@IF 4 8 LINEAR RESSD MOVING STATISTIC PLOT _1 _2 _3 _18
+@IF 4 9 LINEAR SLOPE MOVING STATISTIC PLOT _1 _2 _3 _18
+@IF 4 10 PERCENTAGE BEND CORRELATION MOVING STATISTIC PLOT _1 _2 _3 _18
+@IF 4 11 RANK COMOVEMENT MOVING STATISTIC PLOT _1 _2 _3 _18
+@IF 4 12 RANK CORRELATION MOVING STATISTIC PLOT _1 _2 _3 _18
+@IF 4 13 RANK COVARIANCE MOVING STATISTIC PLOT _1 _2 _3 _18
+@IF 4 14 WINSORIZED CORRELATION MOVING STATISTIC PLOT _1 _2 _3 _18
+@IF 4 15 WINSORIZED COVARIANCE MOVING STATISTIC PLOT _1 _2 _3 _18
+--------------------
+WEB HELP MOVING STATISTICS PLOT
+--------------------

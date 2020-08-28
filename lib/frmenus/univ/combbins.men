@@ -1,0 +1,38 @@
+This is file combbins.men--Combine bins
+
+--------------------
+1. Combine Frequency Table
+2. LET Y3 XLOW XHIGH = COMBINE FREQUENCY TABLE Y2 X2
+3.
+4. For a chi-square goodness of fit, it is typically
+5. recommended that the minimum frequency for a bin be
+6. at least 5.  This menu allows you to specify a minimum
+7. frequency and combine equal sized bins into unequal
+8. sized bins (i.e., from specifying the mid-point of the
+9. bin to specifying lower and upper limits for the bins.
+10.
+11. Frequency Variable:
+11. @CE 1 0 11 25 ? gui-variable
+12. Variable Containing Bin Mid-Points:
+12. @CE 2 0 11 25 ? gui-variable
+13.
+14. Name for Variable to Contain Combined Frequencies:
+14. @CE 3 0 11 25 *
+15. Name for Variable to Contain Bin Lower Limits:
+15. @CE 4 0 11 25 *
+16. Name for Variable to Contain Bin Upper Limits:
+16. @CE 5 0 11 25 *
+17.
+18. Minimum Frequency for Bins:
+18. @CE 6 0 42 50 *
+19. 
+20.
+21. Create the Combined Bins?
+--------------------
+GR FE
+LET MINSIZE = 5
+@IF 6 0 LET MINSIZE = _6
+LET _3 _4 _5 = COMBINE FREQUENCY TABLE _1 _2
+--------------------
+WEB HELP COMBINE FREQUENCY TABLE
+--------------------

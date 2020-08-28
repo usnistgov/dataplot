@@ -8511,6 +8511,16 @@ C
      1              ITPLRM,ITPLCM,
      1              Y,X,D,X3D,
      1              NPLOTP,NPLOTV,IBUGG3,ISUBRO,IERROR)
+C
+C       2020/07: ROUND VALUES IN X3D IF REQUESTED.
+C
+        IF(ITBCDI.GE.1 .AND. ITBCDI.LE.9)THEN
+          DO7010I=1,NPLOTP
+            AVAL=RND(X3D(I),ITBCDI)
+            X3D(I)=AVAL
+ 7010     CONTINUE
+        ENDIF
+C
       ENDIF
 C
 C               *****************

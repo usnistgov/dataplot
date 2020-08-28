@@ -1,0 +1,14 @@
+----- <~plot\cateplot.top> Categorical Plots
+
+Categorical Plots
+
+Association Plot:
+   Two Response Variables       <xemf: ~plot\assoplot.men>
+   Two Way Table (matrix)       <xemf: ~plot\ass2plot.men>
+Sieve Plot:
+   Two Response Variables       <xemf: ~plot\sievplot.men>
+   Two Way Table (matrix)       <xemf: ~plot\sie2plot.men>
+
+Roc Curve                       <xemf: ~plot\roccurve.men>
+Rose Plot                       <xemf: ~plot\roseplot.men>
+

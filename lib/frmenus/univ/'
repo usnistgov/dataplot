@@ -1,0 +1,92 @@
+This is file chsqpldi.men--Chi-Square Plot (Discrete Dist. Family)
+
+--------------------
+1. Chi-Square Plot (Discrete Distributional Families)
+2. <Name of Distributional Family> CHISQUARE PLOT Y X
+3.
+4. The chi-square plot is used for binned data.  That is, the first
+5. variable is the counts for the bin and the "Lower Limit" and "Upper
+6. Limit" variables are the bin lower and upper limits, respectively.
+7. If you have  equal sized bins, the "Lower Limit Variable" is the bin
+8. mid-point variable and no "Upper Limit Variable" is specified.
+9.
+10. Frequency Variable:
+10. @CE 1 0 11 25 ? gui-variable
+11. Lower Limit Variable:
+11. @CE 2 0 11 25 ? gui-variable
+12. Upper Limit Variable:
+12. @CE 3 0 11 25 ? gui-variable
+13.
+14. Distributional Family:
+15. @CE 4 1 11 40 Poisson
+16. @CE 4 2 11 40 Geometric
+17. @CE 4 3 11 40 Logarithmic Series
+18.
+19. Line Types (solid, dot, dash, ...)
+20. @CE 5 0 42 50 * gui-line
+21. Title:
+21. @CE 6 0 10 50 *
+22. Left Axis Label:
+22. @CE 7 0 22 50 *
+23. Bottom Axis Label:
+23. @CE 8 0 22 50 *
+24.
+25. Optional Number of Values (Default = 50):
+25. @CE 9 0 22 50 *
+26. Optional Lower Limit for Shape Parameter:
+26. @CE 10 0 22 50 *
+27. Optional Upper Limit for Shape Parameter:
+27. @CE 11 0 22 50 *
+28. Maximum Value for Y-Axis:
+28. @CE 12 0 42 50 *
+29. 
+30. Subset/Except/For Specification:
+31. @CE 13 0 -25 50 *
+32.
+33.
+34. Generate the Chi-Square Plot?
+--------------------
+GR FE
+LINES _5
+CHARACTERS BLANK
+TITLE _6
+Y1LABEL _7
+X1LABEL _8
+SET PPCC PLOT AXIS POINTS 50
+@IF 9 0 SET PPCC PLOT AXIS POINTS _9
+@IF 10 0 LET SHAPE1 = _10
+@IF 11 0 LET SHAPE2 = _11
+SET CHI-SQUARE LIMIT 1000000
+@IF 12 0 SET CHI-SQUARE LIMIT _12
+@IF 4 1 IF SHAPE1 EXISTS
+@IF 4 1 LET LAMBDA1 = SHAPE1
+@IF 4 1 END OF IF
+@IF 4 1 IF SHAPE2 EXISTS
+@IF 4 1 LET LAMBDA2 = SHAPE2
+@IF 4 1 END OF IF
+@IF 4 1 POISSON CHI-SQUARE PLOT _1 _2 _3 _13
+@IF 4 2 IF SHAPE1 EXISTS
+@IF 4 2 LET P1 = SHAPE1
+@IF 4 2 END OF IF
+@IF 4 2 IF SHAPE2 EXISTS
+@IF 4 2 LET P2 = SHAPE2
+@IF 4 2 END OF IF
+@IF 4 2 GEOMETRIC CHI-SQUARE PLOT _1 _2 _3 _13
+@IF 4 3 IF SHAPE1 EXISTS
+@IF 4 3 LET THETA1 = SHAPE1
+@IF 4 3 END OF IF
+@IF 4 3 IF SHAPE2 EXISTS
+@IF 4 3 LET THETA2 = SHAPE2
+@IF 4 3 END OF IF
+@IF 4 3 LOGARITHMIC SERIES CHI-SQUARE PLOT _1 _2 _3 _13
+DELETE SHAPE1 SHAPE2
+LET MINCHIS2 = ROUND(MINCHISQ,4)
+LET SHAPE2   = ROUND(SHAPE,2)
+JUSTIFICATION CENTER
+MOVE 50 6
+TEXT Minimum Chi-Square: ^MINCHIS2, Shape: ^SHAPE2
+DELETE SHAPE2 MINCHIS2
+WRITE MINCHISQ SHAPE
+--------------------
+WEB HELP PPCC PLOT
+--------------------

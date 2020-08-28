@@ -1,0 +1,73 @@
+This is file cumuqudi.men--Generate Cumulative Statistic Plots (Diff of Quantiles)
+ 
+--------------------line 3
+01. Cumulative Statistic Plots (Extremes and Quantiles)
+02. DIFFERENCE OF <statistic> CUMULATIVE STATISTIC PLOT Y1 Y2 X
+03.
+04. First Response Variable:
+04. @CE 1 0 37 54 ? gui-vari
+05. Second Response Variable:
+05. @CE 2 0 37 54 ? gui-vari
+06. Optional Group ID Variable:
+06. @CE 3 0 37 54 ? gui-vari
+07.
+08. Statistic (Select one):
+09. @CE 4 1 5 25 minimum
+09. @CE 4 2 30 50 maximum
+10. @CE 4 3 5 25 extreme
+10. @CE 4 4 30 50 quantile
+11.
+12. Desired quantile (> 0, < 1)):
+12. @CE 5 0 42 50 ?
+13.
+14. Character Type for Data
+14. @CE 6 0 42 50 * gui-char
+15. Character Fill for Data
+15. @CE 7 0 42 50 gui-ooff
+16. Line Type for Data-connecting Line
+16. @CE 8 0 42 50 * gui-line
+17. Line Type for Global Stat Line?
+17. @CE 9 0 42 50 * gui-line
+18.
+19. Title:
+19. @CE 10 0 10 50 *
+20. Left Axis Label:
+20. @CE 11 0 22 50 *
+21. Bottom Axis Label:
+21. @CE 12 0 22 50 *
+22.
+23. Minimum Index for Statistic (default = 1):
+23. @CE 13 0 22 50 *
+24.
+25. Subset/Except/For Specification:
+26. @CE 14 0 1 50 *
+27.
+28.
+29. Generate the Cumulative Statistic Plot?:
+--------------------
+TITLE _10
+Y1LABEL _11
+X1LABEL _12
+CHARACTERS _6
+CHARACTER FILL _7
+LINES _8 _9
+@IF 3 0 LET NGROUP = UNIQUE _3  _14
+@IF 3 0 LOOP FOR K = 1 1 NGROUP
+@IF 3 0     LET IVAL1 = (K-1)*2 + 1
+@IF 3 0     LET IVAL2 = IVAL1 + 1
+@IF 3 0     LET PLOT LINE IVAL1 = _8
+@IF 3 0     LET PLOT LINE IVAL2 = _9
+@IF 3 0     LET PLOT CHARACTER IVAL1 = _6
+@IF 3 0     LET PLOT CHARACTER FILL IVAL1 = _7
+@IF 3 0 END OF LOOP
+LET XQ = 0.5
+LET XQ = _5
+SET CUMULATIVE STATISTIC START 1
+@IF 13 0 SET CUMULATIVE STATISTIC START _13
+@IF 4 1 DIFFERENCE OF MINIMUM CUMULATIVE STATISTIC PLOT _1 _2 _3 _14
+@IF 4 2 DIFFERENCE OF MAXIMUM CUMULATIVE STATISTIC PLOT _1 _2 _3 _14
+@IF 4 3 DIFFERENCE OF EXTREME CUMULATIVE STATISTIC PLOT _1 _2 _3 _14
+@IF 4 4 DIFFERENCE OF QUANTILE CUMULATIVE STATISTIC PLOT _1 _2 _3 _14
+--------------------
+WEB HELP CUMULATIVE STATISTICS PLOT
+--------------------

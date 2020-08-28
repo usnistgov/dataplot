@@ -13964,6 +13964,9 @@ C
             CALL GRWRST(ICSTR,NCSTR,ISUBN0)
  3220     CONTINUE
         ENDIF
+        ICSTR(1:4)='ENFI'
+        NCSTR=4
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
       ENDIF
 C
       GOTO9000
@@ -24133,6 +24136,8 @@ C                                      STOP GAP TO IMPLEMENTING FULL RGB
 C                                      SUPPORT.
 C     UPDATED         --OCTOBER  2016. ADD PRE-PROCESSOR DIRECTIVES
 C     UPDATED         --OCTOBER  2016. ADD TEMPLATES FOR SEVERL FUTURE
+C     UPDATED         --JULY     2020. CHECK FOR SUPPORTED COLOR FOR
+C                                      GENERAL AND GENERAL CODED DEVICES
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 C
@@ -24495,12 +24500,16 @@ C
       IF(JCOL.GE.2000 .AND. JCOL.LE.2999)ICOL='GREE'
       IF(JCOL.GE.3000 .AND. JCOL.LE.3999)ICOL='BLUE'
 C
-      ICSTR(1:10)='SET COLOR '
-      ICSTR(11:14)=ICASE
-      ICSTR(15:16)='  '
-      ICSTR(17:20)=ICOL
-      NCSTR=20
-      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      IF(ICOL.EQ.'BLAC' .OR. ICOL.EQ.'WHIT' .OR. ICOL.EQ.'RED ' .OR.
+     1   ICOL.EQ.'GREE' .OR. ICOL.EQ.'BLUE' .OR. ICOL.EQ.'CYAN' .OR.
+     1   ICOL.EQ.'MAGE' .OR. ICOL.EQ.'YELL')THEN
+        ICSTR(1:10)='SET COLOR '
+        ICSTR(11:14)=ICASE
+        ICSTR(15:16)='  '
+        ICSTR(17:20)=ICOL
+        NCSTR=20
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ENDIF
       GOTO9000
 C
 C        ***************************************************************
@@ -24516,12 +24525,16 @@ C
       IF(JCOL.GE.2000 .AND. JCOL.LE.2999)ICOL='GREE'
       IF(JCOL.GE.3000 .AND. JCOL.LE.3999)ICOL='BLUE'
 C
-      ICSTR(1:5)='SECO '
-      ICSTR(6:9)=ICASE
-      ICSTR(10:10)=' '
-      ICSTR(11:14)=ICOL
-      NCSTR=14
-      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      IF(ICOL.EQ.'BLAC' .OR. ICOL.EQ.'WHIT' .OR. ICOL.EQ.'RED ' .OR.
+     1   ICOL.EQ.'GREE' .OR. ICOL.EQ.'BLUE' .OR. ICOL.EQ.'CYAN' .OR.
+     1   ICOL.EQ.'MAGE' .OR. ICOL.EQ.'YELL')THEN
+        ICSTR(1:5)='SECO '
+        ICSTR(6:9)=ICASE
+        ICSTR(10:10)=' '
+        ICSTR(11:14)=ICOL
+        NCSTR=14
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ENDIF
       GOTO9000
 C
 C        ******************************************************

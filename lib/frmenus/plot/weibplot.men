@@ -6,7 +6,7 @@ This is file weibplot.men--Weibull Plot
 3.
 4. Response Variable:
 4. @CE 1 0 33 50 ? gui-variable
-5. Optional Group ID Variable:
+5. Optional Censoring Variable:
 5. @CE 2 0 33 50 * gui-variable
 6.
 7. Line type for plot?:
@@ -34,6 +34,8 @@ This is file weibplot.men--Weibull Plot
 21. Generate the Weibull Plot?:
 --------------------
 GR FE
+LINE SOLID ALL
+CHARACTER BLANK ALL
 LINE _3 _9 _10 _11
 CHARACTER _4
 TITLE _5

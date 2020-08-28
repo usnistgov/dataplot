@@ -1549,7 +1549,7 @@ C
 C                5 = FIFTH DECADE
 C               00 = YEAR OF DECADE
 C             0630 = MONTH/DAY
-      IVERSI='5.00.0707 (2020/07/07)'
+      IVERSI='5.00.0828 (2020/08/28)'
       NCVERS=22
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')

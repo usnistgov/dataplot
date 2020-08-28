@@ -9,12 +9,80 @@ This is file consensu.men--Compute Consensus Means
  5. Lab ID Variable:
  5. @CE 2 0 42 50 ? gui-variable
  6.
- 7. Subset/Except/For Specification:
- 8. @CE 3 0 1 50 *
- 9.
-10. Compute the Consensus Means?:
+ 7. Select Which Methods to Include:
+ 8. Mandel Paule
+ 8. @CD 3 1 41 45 on
+ 8. @CD 3 2 46 50 off
+ 9. Modified Mandel Paule
+ 9. @CD 4 1 41 45 on
+ 9. @CD 4 2 46 50 off
+10. Vangel Ruhkin (maximum likelihood)
+10. @CD 5 1 41 45 on
+10. @CD 5 2 46 50 off
+11. DerSimonian Laird
+11. @CD 6 1 41 45 on
+11. @CD 6 2 46 50 off
+12. Graybill-Deal
+12. @CD 7 1 41 45 on
+12. @CD 7 2 46 50 off
+13. Generalized Confidence Interval
+13. @CD 8 1 41 45 on
+13. @CD 8 2 46 50 off
+14. Mean of Means
+14. @CD 9 1 41 45 on
+14. @CD 9 2 46 50 off
+15. Median of Means
+15. @CD 10 1 41 45 on
+15. @CD 10 2 46 50 off
+16. Huber Mean of Means
+16. @CD 11 1 41 45 on
+16. @CD 11 2 46 50 off
+17. Bounds on Bias (BOB)
+17. @CD 12 1 41 45 on
+17. @CD 12 2 46 50 off
+18.
+19. Subset/Except/For Specification:
+20. @CE 13 0 1 50 *
+21.
+22.
+23. Compute the Consensus Means?:
 --------------------
-CONSENSUS MEAN _1 _2 _3
+LET NTEMP = SiZE _1 _13
+LET NLABTEMP = UNIQUE _2 _13
+SET MANDEL PAULE ON
+SET MODIFIED MANDEL PAULE OFF
+SET VANGEL RUHKIN ON
+SET DERSIMONIAN LAIRD ON
+SET DERSIMONIAN LAIRD HHD ON
+SET DERSIMONIAN LAIRD BOOTSTRAP ON
+SET DERSIMONIAN LAIRD MINMAX ON
+SET GRAYBILL DEAL OFF
+SET GENERALIZED CONFIDENCE INTERVAL OFF
+SET FAIRWEATHER OFF
+SET MEAN OF MEANS OFF
+SET GRAND MEAN OFF
+SET BAYESIAN CONSENSUS PROCEDURE OFF
+SET SCHILLER EBERHARDT OFF
+SET MEDIAN OF MEANS ON
+SET HUBER MEAN OF MEANS OFF
+SET BOB ON
+@IF 3 2 SET MANDEL PAULE OFF
+@IF 4 1 SET MODIFIED MANDEL PAULE ON
+@IF 5 2 SET VANGEL RUHKIN OFF
+@IF 6 2 SET DERSIMONIAN LAIRD OFF
+@IF 7 1 SET GRAYBILL DEAL ON
+@IF 8 1 SET GENERALIZED CONFIDENCE INTERVAL ON
+@IF 9 1 SET MEAN OF MEANS ON
+@IF 10 2 SET MEDIAN OF MEANS OFF
+@IF 11 1 SET HUBER MEAN OF MEANS ON
+@IF 12 2 SET BOB ON
+IF NLABTEMP > 5
+   SET BOB OFF
+END OF IF
+FEEDBACK SAVE
+FEEDBACK OFF
+CONSENSUS MEAN _1 _2 _13
+FEEDBACK RESTORE
 --------------------last
 WEB HELP CONSENSUS MEAN
 --------------------last

@@ -1,0 +1,15 @@
+----- <~plot\cumuplot.top> Cumulative Statistic Plot
+
+Cumulative Statistic Plot
+
+Cumulative Statistic Plot
+   Location Statistics                     <xemf: ~stat\cumupllo.men>
+   Scale Statistics                        <xemf: ~stat\cumuplsc.men>
+   Extremes and Percentiles                <xemf: ~stat\cumuplpe.men>
+   Quality Control                         <xemf: ~stat\cumuplqc.men>
+   Correlation/Fitting Statistics          <xemf: ~stat\cumuplco.men>
+   Miscellaneous Statistics                <xemf: ~stat\cumuplms.men>
+   Difference of Location Statistics       <xemf: ~stat\cumulodi.men>
+   Difference of Scale Statistics          <xemf: ~stat\cumuscdi.men>
+   Difference of Extremes/Quantiles        <xemf: ~stat\cumuqudi.men>
+

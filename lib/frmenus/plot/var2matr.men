@@ -1,0 +1,27 @@
+This is file var2matr.men--Create Matrix from a List of Variables
+ 
+--------------------
+1. Convert a List of Variables to a Matrix
+2. Macro
+3.
+4. List of Response Variables:
+5. @CE 1 0 1 50 ? gui-variable
+6.
+7. Name for Matrix:
+7. @CE 2 0 42 50 *
+8.
+9. Subset/Except/For Specification: 
+10. @CE 3 0 1 50 *
+11.
+12.
+13. Create the Matrix?:
+--------------------
+GR FE
+DELETE ZZZZ
+WRITE ZZZZJUNK.DAT _1 _3
+SKIP 0
+READ MATRIX ZZZZJUNK.DAT _2
+RM ZZZZJUNK.DAT
+--------------------
+WEB HELP READ MATRIX
+--------------------

@@ -1,0 +1,52 @@
+This is file poinplot.men--Poincare Plot
+ 
+--------------------
+ 1. Poincaire Plot
+ 2. POINCARE PLOT Y
+ 3.
+ 4. The Poincare starts with a lag plot.  It
+ 5. then overlays an ellipse on the lag plot
+ 6. (check the WEB HELP button for a description
+ 7. of this ellipse).
+ 8.
+ 9. Response Variable:
+ 9. @CE 1 0 33 50 ?
+10.
+11. Title:
+11. @CE 2 0 10 50 *
+12. Left Axis Label:
+12. @CE 3 0 22 50 *
+13. Bottom Axis Label:
+13. @CE 4 0 22 50 *
+14.
+15. Character Type for Lag Plot Points:
+15. @CE 5 0 42 50 * gui-char
+16. Character Fill for Lag Plot Points:
+16. @CE 6 0 42 50 * gui-ooff
+17.
+18. Subset/Except/For Specification:
+19. @CE 7 0 1 50 *
+20.
+21.
+22. Generate the Poincare Plot?
+--------------------
+GR FE
+TITLE _2
+Y1LABEL _3
+X1LABEL _4
+CHARACTERS BLANK _5 BLANK BLANK
+CHARACTER FILL OFF _6 OFF OFF
+LINES SOLID BLANK DASH DASH
+POINCARE PLOT _1 _7
+LET SD1 = ROUND(SD1,2)
+LET SD2 = ROUND(SD2,2)
+JUSTIFICATION LEFT
+MOVE 16 75
+TEXT SD1: ^SD1
+MOVE 16 72
+TEXT SD2: ^SD2
+LINES SOLID ALL
+CHARACTER BLANK ALL
+--------------------
+WEB HELP POINCARE PLOT
+--------------------

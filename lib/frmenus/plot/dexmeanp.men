@@ -10,47 +10,63 @@ This is file dexmeanp.men--Generate DEX Mean Plot
 6. @CE 2 0 1 50 ? gui-variable
 7.
 8. Line type connecting the data:
-8. @CE 4 0 33 50 * gui-line
+8. @CE 3 0 33 50 * gui-line
 9. Line type for global mean:
-9. @CE 5 0 33 50 * gui-line
+9. @CE 4 0 33 50 * gui-line
 10. Character type for data:
-10. @CE 6 0 33 50 * gui-character
+10. @CE 5 0 33 50 * gui-character
 11. Character fill for data:
-11. @CE 7 0 33 50 gui-ooff
-12. Spike to global mean:
-12. @CE 8 0 33 50 gui-ooff
-13. Use variable names as X axis labels?
-13. @CE 9 1 40 45 yes
-13. @CE 9 2 47 52 no
-14.       Number of Factors?:
-14. @CE 10 0 47 54 *
-15.
-16. Subset/Except/For Specification:
-17. @CE 3 0 1 50 *
-18.
-19.
-20. Generate the DEX Mean Plot?:
+11. @CE 6 0 33 50 gui-ooff
+12. Character height for data (default = 2):
+12. @CE 7 0 33 50 gui-ooff
+13. Character width for data (default =1):
+13. @CE 8 0 33 50 gui-ooff
+14. Spike to global mean:
+14. @CE 9 0 33 50 gui-ooff
+15. Use variable names as X axis labels?
+15. @CE 10 1 40 45 yes
+15. @CE 10 2 47 52 no
+16.
+17. Title:
+17. @CE 11 0 10 50 *
+18. Left Axis Label:
+18. @CE 12 0 22 50 *
+19. Bottom Axis Label:
+19. @CE 13 0 22 50 *
+20.
+21. Subset/Except/For Specification:
+22. @CE 14 0 1 50 *
+23.
+24.
+25. Generate the DEX Mean Plot?:
 --------------------
 GR FE
-@IF 4 0 LINES _4 _5
-@IF 6 0 CHAR _6
-CHAR FILL _7
-SPIKE _8
-@IF 8 0 LET ZM = MEAN _1 _3
-@IF 8 0 SPIKE BASE ZM
-@IF 9 1 LET ZTEMP = _10 + 1
-@IF 9 1 XLIMITS 0 ZTEMP
-@IF 9 1 LET ZTEMP= _10 + 2
-@IF 9 1 MAJOR XTIC MARK NUMBER ZTEMP
-@IF 9 1 MINOR XTIC MARK NUMBER 0
-@IF 9 1 X1TIC MARK LABEL FORMAT ALPHA
-@IF 9 1 X1TIC MARK LABEL CONTENT SP() _2 SP()
-DEX MEAN PLOT _1 _2 _3
-@IF 9 1 XLIMITS
-@IF 9 1 MAJOR XTIC MARK NUMBER
-@IF 9 1 MINOR XTIC MARK NUMBER
-@IF 9 1 X1TIC MARK LABEL FORMAT 
-@IF 9 1 X1TIC MARK LABEL CONTENT
+LET STRING ZZZSTRING = _2
+LET ZNWORDS = NUMBER OF WORDS ZZZSTRING
+LET ZTEMP1 = ZNWORDS + 1
+LET ZTEMP2 = ZNWORDS + 2
+@IF 3 0 LINES _3 _4
+@IF 5 0 CHAR _5
+CHAR FILL _6
+CHAR HW _7 _8
+SPIKE _9
+TITLE _11
+Y1LABEL _12
+X1LABEL _13
+@IF 9 0 LET ZM = MEAN _1 _14
+@IF 9 0 SPIKE BASE ZM
+XLIMITS 0 ZTEMP1
+MAJOR XTIC MARK NUMBER ZTEMP2
+MINOR XTIC MARK NUMBER 0
+@IF 10 1 X1TIC MARK LABEL FORMAT ALPHA
+@IF 10 1 X1TIC MARK LABEL CONTENT SP() _2 SP()
+DEX MEAN PLOT _1 _2 _14
+XLIMITS
+MAJOR XTIC MARK NUMBER
+MINOR XTIC MARK NUMBER
+@IF 10 1 X1TIC MARK LABEL FORMAT 
+@IF 10 1 X1TIC MARK LABEL CONTENT
+DELETE ZZZZSTR ZNWORDS ZTEMP1 ZTEMP2
 --------------------
 WEB HELP DEX PLOT
 --------------------

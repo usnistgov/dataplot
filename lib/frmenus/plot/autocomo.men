@@ -1,0 +1,52 @@
+This is file autocomo.men--Autocomovement Plot
+ 
+--------------------
+ 1. Autocomovement Plot
+ 2. AUTOCOMOVEMENT PLOT Y
+ 3.
+ 4. Response Variable:
+ 4. @CE 1 0 33 50 ? gui-vari
+ 5.
+ 6. Line Type for Autocomovement Values
+ 6. @CE 2 0 42 50 * gui-line
+ 7. Character Type for Autocomovement Values
+ 7. @CE 3 0 42 50 * gui-char
+ 8. Character Fill (off, on)
+ 8. @CE 4 0 42 50 * gui-ooff
+ 9. Spike for Autocomovement Values:
+ 9. @CE 5 0 42 50 * gui-ooff
+10. Bar for Autocomovement Values:
+10. @CE 6 0 42 50 * gui-ooff
+11. Line Type for Zero Reference Line
+11. @CE 7 0 42 50 * gui-line
+12.
+13. Title:
+13. @CE 8 0 10 50 *
+14. Left Axis Label:
+14. @CE 9 0 22 50 *
+15. Bottom Axis Label:
+15. @CE 10 0 22 50 *
+16.
+17. Subset/Except/For Specification:
+18. @CE 11 0 1 50 *
+19.
+20.
+21. Generate the Autocomovement Plot?:
+--------------------
+GR FE
+LINE SOLID ALL
+CHARACTER BLANK ALL
+LINES BLANK _2 _7
+CHARACTERS _3
+CHARACTER FILL _4
+SPIKE _5
+BAR _6
+@IF 5 0 SPIKE BASE 0
+@IF 6 0 BAR BASE 0
+TITLE _8
+Y1LABEL _9
+X1LABEL _10
+AUTOCOMOVEMENT PLOT _1 _11
+--------------------
+WEB HELP COMOVEMENT PLOT
+--------------------
