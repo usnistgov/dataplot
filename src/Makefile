@@ -2,8 +2,8 @@ FC = gfortran
 CC = gcc
 
 # FEATURES to enable during compilation
-# all: READLINE NCURSES GD TIFF VPX CAIRO X11 GKS OPENGL PLOT
-FEATURES = GD CAIRO X11 READLINE NCURSES 
+# all: READLINE NCURSES GD TIFF VPX CAIRO X11 GKS OPENGL PLOT XCLIP
+FEATURES = GD CAIRO X11 READLINE NCURSES XCLIP
 
 # PREFIX is the parent of where are installed
 # for non-root install, consider PREFIX=$(HOME) or /var/tmp
@@ -76,6 +76,10 @@ ifneq (,$(findstring X11,$(FEATURES)))
 OBJS += x11.o
 FFLAGS4 += -DHAVE_X11
 LDFLAGS += -lX11
+endif
+
+ifneq (,$(findstring XCLIP,$(FEATURES)))
+FFLAGS4 += -DHAVE_XCLIP
 endif
 
 ifneq (,$(findstring GKS,$(FEATURES)))

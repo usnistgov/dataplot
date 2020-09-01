@@ -204,6 +204,10 @@ C                                       DISTINGUISH BETWEEN MACRO AND
 C                                       GRAPH/IMAGE FILE
 C     UPDATED         --FEBRUARY  2020. FOR "CALL CLIPBOARD", CHECK IF
 C                                       ARGUMENT 1 IS A FILE NAME.
+C     UPDATED         --AUGUST    2020. ADD "ICONCH" TO CALL LIST TO
+C                                       DPLOST
+C     UPDATED         --AUGUST    2020. CREATE COMMON BLOCK FOR
+C                                       IANSLO AND IANSSV
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -683,6 +687,8 @@ C
       CHARACTER (LEN=MAXFNC) :: IMANAM(10)
       COMMON/IMAC/IMACNU,IMALEV,IMANAM
 C
+      COMMON/IANSLS/IANSLO,IANSSV
+C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
       INCLUDE 'DPCOP2.INC'
@@ -1084,7 +1090,7 @@ CCCCC IREPMX=50     JUNE 1987
       ILISMX=20
 C
       DO310J=1,IREPMX
-      DO320I=1,MAXWID
+      DO320I=1,MAXCIS
       IANSSV(J,I)=' '
   320 CONTINUE
   310 CONTINUE
@@ -4286,7 +4292,7 @@ C
      1              IANSLC,IWIDTH,ICOM,IHARG,IHARG2,NUMARG,
      1              IANSLO,IWIDLL,
      1              MAXCIL,MAXLIL,
-     1              IERRFA,IGUIFL,
+     1              IERRFA,IGUIFL,ICONCH,
      1              IBUGLO,ISUBRO,IERROR)
         GOTO1000
       ENDIF
