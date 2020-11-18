@@ -4343,8 +4343,8 @@ C
       RETURN
       END
       SUBROUTINE DPFIMA(PXMIN,PYMIN,PXMAX,PYMAX,
-     1ICASPL,ICAS3D,
-     1IMARCO)
+     1                  ICASPL,ICAS3D,
+     1                  IMARCO,IMARC2)
 C
 C     PURPOSE--FILL  THE MARGIN REGION ON THE SCREEN
 C              (THE REGION OUTSIDE THE FRAME LINES).
@@ -4363,25 +4363,27 @@ C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--83.6
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MAY       1983.
-C     UPDATED         --FEBRUARY  1988.  STAR PLOT
-C     UPDATED         --JUNE      1988.  CALL TO GRFIRE
-C     UPDATED         --JANUARY   1989.  MODIFY CALL  TO GRFIRE (ALAN)
+C     UPDATED         --FEBRUARY  1988. STAR PLOT
+C     UPDATED         --JUNE      1988. CALL TO GRFIRE
+C     UPDATED         --JANUARY   1989. MODIFY CALL  TO GRFIRE (ALAN)
+C     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 C
       CHARACTER*4 ICASPL
       CHARACTER*4 ICAS3D
-C
       CHARACTER*4 IMARCO
+C
+      DIMENSION IMARC2(3)
 C
       CHARACTER*4 IFIG
       CHARACTER*4 IPATT
       CHARACTER*4 ICOLB
       CHARACTER*4 ICOLP
-C
       CHARACTER*4 ICOL
 C
       CHARACTER*4 ICASE
+      CHARACTER*4 ICASE2
 C
       CHARACTER*4 IHORPA
       CHARACTER*4 IVERPA
@@ -4402,26 +4404,23 @@ C
 C
 C-----START POINT-----------------------------------------------------
 C
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'FIMA')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPFIMA--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)PXMIN,PYMIN,PXMAX,PYMAX
-   52 FORMAT('PXMIN,PYMIN,PXMAX,PYMAX = ',4F10.5)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)ICASPL,ICAS3D
-   53 FORMAT('ICASPL,ICAS3D = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,54)IMARCO
-   54 FORMAT('IMARCO = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,59)IBUGG4,ISUBG4,IERRG4
-   59 FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'FIMA')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPFIMA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)PXMIN,PYMIN,PXMAX,PYMAX
+   52   FORMAT('PXMIN,PYMIN,PXMAX,PYMAX = ',4F10.5)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)ICASPL,ICAS3D,IMARCO
+   53   FORMAT('ICASPL,ICAS3D,IMARCO = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,59)IBUGG4,ISUBG4,IERRG4
+   59   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       IPATT2='SOLI'
 C
@@ -4443,6 +4442,9 @@ C
       PYGAP=0.0
       ICOLB=IMARCO
       ICOLP=IMARCO
+      ICOLFR=IMARC2(1)
+      ICOLFG=IMARC2(2)
+      ICOLFB=IMARC2(3)
 C
 C               **********************************************
 C               **  STEP 1--                                **
@@ -4454,8 +4456,21 @@ C               **  GRAPHICS DEVICE.                        **
 C               **********************************************
 C
       ICOL=ICOLB
-      CALL GRTRCO(ICASE,ICOL,JCOL)
-      JCOLB=JCOL
+C
+C     2020/10: SUPPORT FOR RGB COLOR.
+C
+C               CALL RGB ROUTINE FIRST.  IF RGB NOT SUPPORTED FOR THE
+C               CURRENT DEVICE OR RGB COLORS ARE NOT SPECIFIED, THEN
+C               FALL BACK TO NON-RGB COLOR MODEL.
+C
+      CALL GRTRC2(ICOLFR,ICOLFG,ICOLFB,ARED,AGREEN,ABLUE,
+     1            AALPHA,IRGBFL)
+      IF(IRGBFL.EQ.1)THEN
+        ICASE2='REGI'
+        CALL GRSEC2(ICASE2,IRGBFL,ARED,AGREEN,ABLUE,AALPHA)
+      ELSE
+        CALL GRTRCO(ICASE,ICOL,JCOL)
+        JCOLB=JCOL
 C
 C               *******************************
 C               **  STEP 2--                 **
@@ -4463,7 +4478,8 @@ C               **  SET THE FILL   COLOR     **
 C               **  ON THE GRAPHICS DEVICE.  **
 C               *******************************
 C
-      CALL GRSECO(ICASE,ICOL,JCOL)
+        CALL GRSECO(ICASE,ICOL,JCOL)
+      ENDIF
 C
 C               **********************************************
 C               **  STEP 3--                                **
@@ -4496,8 +4512,14 @@ C               **  GRAPHICS DEVICE.                        **
 C               **********************************************
 C
       ICOL=ICOLP
-      CALL GRTRCO(ICASE,ICOL,JCOL)
-      JCOLP=JCOL
+      CALL GRTRC2(ICOLFR,ICOLFG,ICOLFB,ARED,AGREEN,ABLUE,
+     1            AALPHA,IRGBFL)
+      IF(IRGBFL.EQ.1)THEN
+        ICASE2='REGI'
+        CALL GRSEC2(ICASE2,IRGBFL,ARED,AGREEN,ABLUE,AALPHA)
+      ELSE
+        CALL GRTRCO(ICASE,ICOL,JCOL)
+        JCOLP=JCOL
 C
 C               *******************************
 C               **  STEP 6--                 **
@@ -4505,7 +4527,8 @@ C               **  SET THE PATTERN COLOR    **
 C               **  ON THE GRAPHICS DEVICE.  **
 C               *******************************
 C
-      CALL GRSECO(ICASE,ICOL,JCOL)
+        CALL GRSECO(ICASE,ICOL,JCOL)
+      ENDIF
 C
 C               **********************************************
 C               **  STEP 7--                                **
@@ -4543,10 +4566,11 @@ C
       PY(4)=PYMIN
       NP=4
       CALL GRFIRE(PX,PY,NP,IFIG,
-     1IPATT,JPATT,IHORPA,IVERPA,IDUPPA,IDDOPA,PXGAP2,PYGAP2,
-     1PTHICK,JTHICK,PTHIC2,
-     1ICOLB,JCOLB,ICOLP,JCOLP,
-     1IPATT2)
+     1               IPATT,JPATT,IHORPA,IVERPA,IDUPPA,IDDOPA,
+     1               PXGAP2,PYGAP2,PTHICK,JTHICK,PTHIC2,
+     1               ICOLB,JCOLB,ICOLP,JCOLP,
+     1               ICOLFR,ICOLFG,ICOLFB,ICOLFR,ICOLFG,ICOLFB,
+     1               IRGBFL,IPATT2)
 C
 C               ********************************************
 C               **  STEP 12--                             **
@@ -4564,10 +4588,11 @@ C
       PY(4)=100.0
       NP=4
       CALL GRFIRE(PX,PY,NP,IFIG,
-     1IPATT,JPATT,IHORPA,IVERPA,IDUPPA,IDDOPA,PXGAP2,PYGAP2,
-     1PTHICK,JTHICK,PTHIC2,
-     1ICOLB,JCOLB,ICOLP,JCOLP,
-     1IPATT2)
+     1            IPATT,JPATT,IHORPA,IVERPA,IDUPPA,IDDOPA,
+     1            PXGAP2,PYGAP2,PTHICK,JTHICK,PTHIC2,
+     1            ICOLB,JCOLB,ICOLP,JCOLP,
+     1            ICOLFR,ICOLFG,ICOLFB,ICOLFR,ICOLFG,ICOLFB,
+     1            IRGBFL,IPATT2)
 C
 C               ********************************
 C               **  STEP 13--                 **
@@ -4585,10 +4610,11 @@ C
       PY(4)=100.0
       NP=4
       CALL GRFIRE(PX,PY,NP,IFIG,
-     1IPATT,JPATT,IHORPA,IVERPA,IDUPPA,IDDOPA,PXGAP2,PYGAP2,
-     1PTHICK,JTHICK,PTHIC2,
-     1ICOLB,JCOLB,ICOLP,JCOLP,
-     1IPATT2)
+     1            IPATT,JPATT,IHORPA,IVERPA,IDUPPA,IDDOPA,
+     1            PXGAP2,PYGAP2,PTHICK,JTHICK,PTHIC2,
+     1            ICOLB,JCOLB,ICOLP,JCOLP,
+     1            ICOLFR,ICOLFG,ICOLFB,ICOLFR,ICOLFG,ICOLFB,
+     1            IRGBFL,IPATT2)
 C
 C               ******************************************
 C               **  STEP 14--                           **
@@ -4606,10 +4632,12 @@ C
       PY(4)=PYMAX
       NP=4
       CALL GRFIRE(PX,PY,NP,IFIG,
-     1IPATT,JPATT,IHORPA,IVERPA,IDUPPA,IDDOPA,PXGAP2,PYGAP2,
-     1PTHICK,JTHICK,PTHIC2,
-     1ICOLB,JCOLB,ICOLP,JCOLP,
-     1IPATT2)
+     1            IPATT,JPATT,IHORPA,IVERPA,IDUPPA,IDDOPA,
+     1            PXGAP2,PYGAP2,
+     1            PTHICK,JTHICK,PTHIC2,
+     1            ICOLB,JCOLB,ICOLP,JCOLP,
+     1            ICOLFR,ICOLFG,ICOLFB,ICOLFR,ICOLFG,ICOLFB,
+     1            IRGBFL,IPATT2)
 C
 C               *****************
 C               **  STEP 90--  **
@@ -4617,28 +4645,19 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'FIMA')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF DPFIMA--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)PXMIN,PYMIN,PXMAX,PYMAX
- 9012 FORMAT('PXMIN,PYMIN,PXMAX,PYMAX = ',4F10.5)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)ICASPL,ICAS3D
- 9013 FORMAT('ICASPL,ICAS3D = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9014)IMARCO
- 9014 FORMAT('IMARCO = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9015)IFIG,IPATT,ICOLB,ICOLP
- 9015 FORMAT('IFIG,IPATT,ICOLB,ICOLP = ',A4,2X,A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9019)IBUGG4,ISUBG4,IERRG4
- 9019 FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
- 9090 CONTINUE
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'FIMA')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPFIMA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)PXMIN,PYMIN,PXMAX,PYMAX
+ 9012   FORMAT('PXMIN,PYMIN,PXMAX,PYMAX = ',4F10.5)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9019)IERRG4
+ 9019   FORMAT('IERRG4 = ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END
@@ -4772,8 +4791,11 @@ C
       RETURN
       END
       SUBROUTINE DPFIRE(PX,PY,NP,
-     1                  IFIG,IPATT,PTHICK,PXGAP,PYGAP,ICOLF,ICOLP,
+     1                  IFIG,IPATT,PTHICK,PXGAP,PYGAP,
+     1                  ICOLF,ICOLFR,ICOLFG,ICOLFB,
+     1                  ICOLP,ICOLPR,ICOLPG,ICOLPB,
      1                  IPATT2)
+C
 C  ABOVE LINE ADDED SEPTEMBER, 1987
 C  CONTAINS THE PATTERN FOR THE LINE (I.E., SOLID DASH, ETC.)
 C
@@ -4802,13 +4824,14 @@ C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--83.6
 C     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MAY       1983.
-C     UPDATED         --JANUARY   1989.  ADDED PARAMETER TO CALL LIST (ALAN)
-C     UPDATED         --JANUARY   1989.  MODIFY CALL  TO GRFIRE (ALAN)
-C     UPDATED         --JANUARY   1989.  BUGS FOR BAR PLOT COMMAND (ALAN)
-C     UPDATED         --MARCH     1990.  MOVE CALL TO SEPA BEFORE COLOR
-C                                        ROUTINES.  EITHER SET PATTERN
-C                                        OR FILL COLOR, BUT NOT BOTH (PATTERN
-C                                        COLOR WAS OVER-RIDING FILL COLOR)
+C     UPDATED         --JANUARY   1989. ADDED PARAMETER TO CALL LIST (ALAN)
+C     UPDATED         --JANUARY   1989. MODIFY CALL  TO GRFIRE (ALAN)
+C     UPDATED         --JANUARY   1989. BUGS FOR BAR PLOT COMMAND (ALAN)
+C     UPDATED         --MARCH     1990. MOVE CALL TO SEPA BEFORE COLOR
+C                                       ROUTINES.  EITHER SET PATTERN
+C                                       OR FILL COLOR, BUT NOT BOTH (PATTERN
+C                                       COLOR WAS OVER-RIDING FILL COLOR)
+C     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)----------------------------------
 C
@@ -4842,8 +4865,11 @@ C
         WRITE(ICOUT,51)
    51   FORMAT('***** AT THE BEGINNING OF DPFIRE--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,54)NP,IFIG,IPATT,ICOLF,ICOLP
-   54   FORMAT('NP,IFIG,IPATT,ICOLF,ICOLP = ',I8,4(2X,A4))
+        WRITE(ICOUT,53)NP,IFIG,IPATT,ICOLF,ICOLP
+   53   FORMAT('NP,IFIG,IPATT,ICOLF,ICOLP = ',I8,4(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)ICOLFR,ICOLFG,ICOLFB,ICOLPR,ICOLPG,ICOLPB
+   54   FORMAT('ICOLFR,ICOLFG,ICOLFB,ICOLPR,ICOLPG,ICOLPB = ',6I5)
         CALL DPWRST('XXX','BUG ')
         DO55I=1,NP
           WRITE(ICOUT,56)PX(I),PY(I)
@@ -4884,11 +4910,19 @@ C
       CALL GRSEPA(ICASE,IPATT,PXGAP,PYGAP,
      1JPATT,IHORPA,IVERPA,IDUPPA,IDDOPA,PXGAP2,PYGAP2)
 C
-      IF(IPATT.EQ.'SOLI')GOTO1099
-      IF(IPATT.EQ.'FILL')GOTO1099
-      GOTO1199
- 1099 CONTINUE
+      IF(IPATT.EQ.'SOLI' .OR. IPATT.EQ.'FILL')THEN
 C
+C       2020/10: SUPPORT FOR RGB COLOR.
+C
+C                 CALL RGB ROUTINE FIRST.  IF RGB NOT SUPPORTED FOR THE
+C                 CURRENT DEVICE OR RGB COLORS ARE NOT SPECIFIED, THEN
+C                 FALL BACK TO NON-RGB COLOR MODEL.
+C
+        CALL GRTRC2(ICOLFR,ICOLFG,ICOLFB,ARED,AGREEN,ABLUE,
+     1              AALPHA,IRGBFL)
+        IF(IRGBFL.EQ.1)THEN
+          CALL GRSEC2(ICASE,IRGBFL,ARED,AGREEN,ABLUE,AALPHA)
+        ELSE
 C               **********************************************
 C               **  STEP 1--                                **
 C               **  TRANSLATE THE CHARACTER REPRESENTATION  **
@@ -4898,10 +4932,10 @@ C               **  WHICH CAN BE UNDERSTOOD BY THE          **
 C               **  GRAPHICS DEVICE.                        **
 C               **********************************************
 C
-      ICOL=ICOLF
-      CALL GRTRCO(ICASE,ICOL,JCOL)
-      JCOLF=JCOL
-      JCOLP=JCOL
+          ICOL=ICOLF
+          CALL GRTRCO(ICASE,ICOL,JCOL)
+          JCOLF=JCOL
+          JCOLP=JCOL
 C
 C               *******************************
 C               **  STEP 2--                 **
@@ -4909,45 +4943,17 @@ C               **  SET THE FILL   COLOR     **
 C               **  ON THE GRAPHICS DEVICE.  **
 C               *******************************
 C
-      CALL GRSECO(ICASE,ICOL,JCOL)
-C  FOLLOWING LINE ADDED MARCH 1990.
-      GOTO1999
-C
-C               **********************************************
-C               **  STEP 3--                                **
-C               **  TRANSLATE THE CHARACTER REPRESENTATION  **
-C               **  OF THE FILL PATTERN                     **
-C               **  INTO A NUMERIC REPRESENTATION           **
-C               **  WHICH CAN BE UNDERSTOOD BY THE          **
-C               **  GRAPHICS DEVICE.                        **
-C               **********************************************
-C
-CCCCC CALL GRTRPA(ICASE,IPATT,PXGAP,PYGAP,
-CCCCC1JPATT,IHORPA,IVERPA,IDUPPA,IDDOPA,PXGAP2,PYGAP2)
-C
-C               *******************************
-C               **  STEP 4--                 **
-C               **  SET THE FILL PATTERN     **
-C               **  ON THE GRAPHICS DEVICE.  **
-C               *******************************
-C
-CCCCC CALL GRSEPA(ICASE,IPATT,PXGAP,PYGAP,
-CCCCC1JPATT,IHORPA,IVERPA,IDUPPA,IDDOPA,PXGAP2,PYGAP2)
-C
-C               **********************************************
-C               **  STEP 5--                                **
-C               **  TRANSLATE THE CHARACTER REPRESENTATION  **
-C               **  OF THE PATTERN COLOR                    **
-C               **  INTO A NUMERIC REPRESENTATION           **
-C               **  WHICH CAN BE UNDERSTOOD BY THE          **
-C               **  GRAPHICS DEVICE.                        **
-C               **********************************************
-C
-CCCCC FOLLOWING LINE ADDED MARCH 1990.
- 1199 CONTINUE
-      ICOL=ICOLP
-      CALL GRTRCO(ICASE,ICOL,JCOL)
-      JCOLP=JCOL
+          CALL GRSECO(ICASE,ICOL,JCOL)
+        ENDIF
+      ELSE
+        CALL GRTRC2(ICOLFR,ICOLFG,ICOLFB,ARED,AGREEN,ABLUE,
+     1              AALPHA,IRGBFL)
+        IF(IRGBFL.EQ.1)THEN
+          CALL GRSEC2(ICASE,IRGBFL,ARED,AGREEN,ABLUE,AALPHA)
+        ELSE
+          ICOL=ICOLP
+          CALL GRTRCO(ICASE,ICOL,JCOL)
+          JCOLP=JCOL
 C
 C               *******************************
 C               **  STEP 6--                 **
@@ -4955,9 +4961,9 @@ C               **  SET THE PATTERN COLOR    **
 C               **  ON THE GRAPHICS DEVICE.  **
 C               *******************************
 C
-      CALL GRSECO(ICASE,ICOL,JCOL)
-CCCCC FOLLOWING LINE ADDED MARCH 1990.
- 1999 CONTINUE
+          CALL GRSECO(ICASE,ICOL,JCOL)
+        ENDIF
+      ENDIF
 C
 C               **********************************************
 C               **  STEP 7--                                **
@@ -4989,7 +4995,8 @@ C
      1            IDUPPA,IDDOPA,PXGAP2,PYGAP2,
      1            PTHICK,JTHICK,PTHIC2,
      1            ICOLF,JCOLF,ICOLP,JCOLP,
-     1            IPATT2)
+     1            ICOLFR,ICOLFG,ICOLFB,ICOLPR,ICOLPG,ICOLPB,
+     1            IRGBFL,IPATT2)
 C
 C               *****************
 C               **  STEP 90--  **
@@ -16207,19 +16214,17 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPFRCL(ICOM,IHARG,NUMARG,
-     1IDEFCO,
-     1IX1FCO,IX2FCO,IY1FCO,IY2FCO,
-     1IFOUND,IERROR)
+      SUBROUTINE DPFRCL(ICOM,IHARG,IARG,NUMARG,
+     1                  IDEFCO,ICASCL,IRGBMX,
+     1                  IX1FCO,IX2FCO,IY1FCO,IY2FCO,
+     1                  IX1FC2,IX2FC2,IY1FC2,IY2FC2,
+     1                  IFOUND,IERROR)
 C
-C     PURPOSE--DEFINE THE FRAME COLOR SWITCHES
-C              FOR ANY OF THE 4 FRAME LINES.
-C              SUCH FRAME COLOR SWITCHES DEFINE THE COLOR
-C              FOR EACH OF THE 4 FRAME LINES.
-C              THE CONTENTS OF A FRAME COLOR SWITCH ARE
-C              A COLOR.
-C              THE FRAME COLOR SWITCHES FOR THE 4 FRAME LINES
-C              ARE CONTAINED IN THE 4 VARIABLES
+C     PURPOSE--DEFINE THE FRAME COLOR SWITCHES FOR ANY OF THE 4 FRAME
+C              LINES.  SUCH FRAME COLOR SWITCHES DEFINE THE COLOR FOR
+C              EACH OF THE 4 FRAME LINES.  THE CONTENTS OF A FRAME COLOR
+C              SWITCH ARE A COLOR.  THE FRAME COLOR SWITCHES FOR THE 4
+C              FRAME LINES ARE CONTAINED IN THE 4 VARIABLES
 C              IX1FCO,IX2FCO,IY1FCO,IY2FCO.
 C     INPUT  ARGUMENTS--ICOM
 C                     --IHARG  (A  HOLLERITH VECTOR)
@@ -16239,25 +16244,22 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--OCTOBER   1980.
 C     UPDATED         --MAY       1982.
+C     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICOM
       CHARACTER*4 IHARG
       CHARACTER*4 IDEFCO
-C
+      CHARACTER*4 ICASCL
       CHARACTER*4 IX1FCO
       CHARACTER*4 IX2FCO
       CHARACTER*4 IY1FCO
       CHARACTER*4 IY2FCO
-C
       CHARACTER*4 IFOUND
       CHARACTER*4 IERROR
 C
@@ -16266,7 +16268,11 @@ C
 C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
-C
+      DIMENSION IARG(*)
+      DIMENSION IX1FC2(3)
+      DIMENSION IX2FC2(3)
+      DIMENSION IY1FC2(3)
+      DIMENSION IY2FC2(3)
 C
 C---------------------------------------------------------------------
 C
@@ -16276,6 +16282,9 @@ C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
+      JHOLD1=-1
+      JHOLD2=-1
+      JHOLD3=-1
 C
       IF(NUMARG.LE.0)GOTO1900
       IF(NUMARG.GE.1.AND.IHARG(1).EQ.'COLO')GOTO1090
@@ -16289,309 +16298,503 @@ C               **  TREAT THE CASE WHEN                            **
 C               **  BOTH HORIZONTAL FRAMES    ARE TO BE CHANGED    **
 C               *****************************************************
 C
-      IF(ICOM.EQ.'XFRA')GOTO1100
-      GOTO1199
+      IF(ICOM.EQ.'XFRA')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF' .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.3)THEN
+              JHOLD1=IARG(NUMARG-2)
+              JHOLD2=IARG(NUMARG-1)
+              JHOLD3=IARG(NUMARG)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(NUMARG)
+          ENDIF
+        ENDIF
 C
- 1100 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1150
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1150
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1150
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1150
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1150
-      GOTO1160
+        IFOUND='YES'
+        IF(ICASCL.EQ.'RGB ')THEN
+          IX1FC2(1)=JHOLD1
+          IX1FC2(2)=JHOLD2
+          IX1FC2(3)=JHOLD3
+          IX2FC2(1)=JHOLD1
+          IX2FC2(2)=JHOLD2
+          IX2FC2(3)=JHOLD3
 C
- 1150 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1180
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+  999       FORMAT(1X)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1186)
+ 1186       FORMAT('THE FRAME RGB COLOR (FOR BOTH HORIZONTAL ',
+     1             'FRAME LINES)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1187)JHOLD1,JHOLD2,JHOLD3
+ 1187       FORMAT('HAS JUST BEEN SET TO ',3I5)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          IX1FCO=IHOLD
+          IX2FCO=IHOLD
 C
- 1160 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1180
-C
- 1180 CONTINUE
-      IFOUND='YES'
-      IX1FCO=IHOLD
-      IX2FCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1189
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1181)
- 1181 FORMAT('THE FRAME COLOR (FOR BOTH HORIZONTAL ',
-     1'FRAME LINES)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1182)IHOLD
- 1182 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1189 CONTINUE
-      GOTO1900
-C
- 1199 CONTINUE
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1181)
+ 1181       FORMAT('THE FRAME COLOR (FOR BOTH HORIZONTAL ',
+     1             'FRAME LINES)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1182)IHOLD
+ 1182       FORMAT('HAS JUST BEEN SET TO ',A4)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO1900
+        ENDIF
 C
 C               **************************************************************
 C               **  TREAT THE CASE WHEN                                     **
 C               **  ONLY THE BOTTOM HORIZONTAL FRAME IS      TO BE CHANGED  **
 C               **************************************************************
 C
-      IF(ICOM.EQ.'X1FR')GOTO1200
-      GOTO1299
+      ELSEIF(ICOM.EQ.'X1FR')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.3)THEN
+              JHOLD1=IARG(NUMARG-2)
+              JHOLD2=IARG(NUMARG-1)
+              JHOLD3=IARG(NUMARG)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(NUMARG)
+          ENDIF
+        ENDIF
 C
- 1200 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1250
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1250
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1250
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1250
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1250
-      GOTO1260
+        IFOUND='YES'
+        IF(ICASCL.EQ.'RGB ')THEN
+          IX1FC2(1)=JHOLD1
+          IX1FC2(2)=JHOLD2
+          IX1FC2(3)=JHOLD3
 C
- 1250 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1280
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1286)
+ 1286       FORMAT('THE FRAME RGB COLOR (FOR THE BOTTOM HORIZONTAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1187)JHOLD1,JHOLD2,JHOLD3
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          IX1FCO=IHOLD
 C
- 1260 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1280
-C
- 1280 CONTINUE
-      IFOUND='YES'
-      IX1FCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1289
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1281)
- 1281 FORMAT('THE FRAME COLOR (FOR THE BOTTOM HORIZONTAL ',
-     1'FRAME LINE)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1282)IHOLD
- 1282 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1289 CONTINUE
-      GOTO1900
-C
- 1299 CONTINUE
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1281)
+ 1281       FORMAT('THE FRAME COLOR (FOR THE BOTTOM HORIZONTAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1282)IHOLD
+ 1282       FORMAT('HAS JUST BEEN SET TO ',A4)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
+        GOTO1900
 C
 C               **************************************************************
 C               **  TREAT THE CASE WHEN                                     **
 C               **  ONLY THE TOP    HORIZONTAL FRAME IS      TO BE CHANGED  **
 C               **************************************************************
 C
-      IF(ICOM.EQ.'X2FR')GOTO1300
-      GOTO1399
+      ELSEIF(ICOM.EQ.'X2FR')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.3)THEN
+              JHOLD1=IARG(NUMARG-2)
+              JHOLD2=IARG(NUMARG-1)
+              JHOLD3=IARG(NUMARG)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(NUMARG)
+          ENDIF
+        ENDIF
 C
- 1300 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1350
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1350
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1350
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1350
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1350
-      GOTO1360
+        IFOUND='YES'
+        IF(ICASCL.EQ.'RGB ')THEN
+          IX2FC2(1)=JHOLD1
+          IX2FC2(2)=JHOLD2
+          IX2FC2(3)=JHOLD3
 C
- 1350 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1380
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1386)
+ 1386       FORMAT('THE FRAME RGB COLOR (FOR THE TOP HORIZONTAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1187)JHOLD1,JHOLD2,JHOLD3
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          IX2FCO=IHOLD
 C
- 1360 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1380
-C
- 1380 CONTINUE
-      IFOUND='YES'
-      IX2FCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1389
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1381)
- 1381 FORMAT('THE FRAME COLOR (FOR THE TOP HORIZONTAL ',
-     1'FRAME LINE)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1382)IHOLD
- 1382 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1389 CONTINUE
-      GOTO1900
-C
- 1399 CONTINUE
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1381)
+ 1381       FORMAT('THE FRAME COLOR (FOR THE TOP HORIZONTAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1382)IHOLD
+ 1382       FORMAT('HAS JUST BEEN SET TO ',A4)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
+        GOTO1900
 C
 C               *****************************************************
 C               **  TREAT THE CASE WHEN                            **
 C               **  BOTH VERTICAL   FRAMES    ARE TO BE CHANGED    **
 C               *****************************************************
 C
-      IF(ICOM.EQ.'YFRA')GOTO1400
-      GOTO1499
+      ELSEIF(ICOM.EQ.'YFRA')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF' .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.3)THEN
+              JHOLD1=IARG(NUMARG-2)
+              JHOLD2=IARG(NUMARG-1)
+              JHOLD3=IARG(NUMARG)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(NUMARG)
+          ENDIF
+        ENDIF
 C
- 1400 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1450
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1450
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1450
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1450
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1450
-      GOTO1460
+        IFOUND='YES'
+        IF(ICASCL.EQ.'RGB ')THEN
+          IY1FC2(1)=JHOLD1
+          IY1FC2(2)=JHOLD2
+          IY1FC2(3)=JHOLD3
+          IY2FC2(1)=JHOLD1
+          IY2FC2(2)=JHOLD2
+          IY2FC2(3)=JHOLD3
 C
- 1450 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1480
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1486)
+ 1486       FORMAT('THE FRAME RGB COLOR (FOR BOTH VERTICAL ',
+     1             'FRAME LINES)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1187)JHOLD1,JHOLD2,JHOLD3
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          IY1FCO=IHOLD
+          IY2FCO=IHOLD
 C
- 1460 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1480
-C
- 1480 CONTINUE
-      IFOUND='YES'
-      IY1FCO=IHOLD
-      IY2FCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1489
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1481)
- 1481 FORMAT('THE FRAME COLOR (FOR BOTH VERTICAL ',
-     1'FRAME LINES)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1482)IHOLD
- 1482 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1489 CONTINUE
-      GOTO1900
-C
- 1499 CONTINUE
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1481)
+ 1481       FORMAT('THE FRAME COLOR (FOR BOTH VERTICAL ',
+     1             'FRAME LINES)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1482)IHOLD
+ 1482       FORMAT('HAS JUST BEEN SET TO ',A4)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO1900
+          IFOUND='YES'
+        ENDIF
 C
 C               **************************************************************
 C               **  TREAT THE CASE WHEN                                     **
 C               **  ONLY THE LEFT   VERTICAL   FRAME IS      TO BE CHANGED  **
 C               **************************************************************
 C
-      IF(ICOM.EQ.'Y1FR')GOTO1500
-      GOTO1599
+      ELSEIF(ICOM.EQ.'Y1FR')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.3)THEN
+              JHOLD1=IARG(NUMARG-2)
+              JHOLD2=IARG(NUMARG-1)
+              JHOLD3=IARG(NUMARG)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(NUMARG)
+          ENDIF
+        ENDIF
 C
- 1500 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1550
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1550
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1550
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1550
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1550
-      GOTO1560
+        IFOUND='YES'
+        IF(ICASCL.EQ.'RGB ')THEN
+          IY1FC2(1)=JHOLD1
+          IY1FC2(2)=JHOLD2
+          IY1FC2(3)=JHOLD3
 C
- 1550 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1580
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1586)
+ 1586       FORMAT('THE FRAME RGB COLOR (FOR THE LEFT VERTICAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1187)JHOLD1,JHOLD2,JHOLD3
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          IY1FCO=IHOLD
 C
- 1560 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1580
-C
- 1580 CONTINUE
-      IFOUND='YES'
-      IY1FCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1589
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1581)
- 1581 FORMAT('THE FRAME COLOR (FOR THE LEFT VERTICAL ',
-     1'FRAME LINE)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1582)IHOLD
- 1582 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1589 CONTINUE
-      GOTO1900
-C
- 1599 CONTINUE
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1581)
+ 1581       FORMAT('THE FRAME COLOR (FOR THE LEFT VERTICAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1582)IHOLD
+ 1582       FORMAT('HAS JUST BEEN SET TO ',A4)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
+        IFOUND='YES'
+        GOTO1900
 C
 C               **************************************************************
 C               **  TREAT THE CASE WHEN                                     **
 C               **  ONLY THE RIGHT  VERTICAL   FRAME IS      TO BE CHANGED  **
 C               **************************************************************
 C
-      IF(ICOM.EQ.'Y2FR')GOTO1600
-      GOTO1699
+      ELSEIF(ICOM.EQ.'Y2FR')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.3)THEN
+              JHOLD1=IARG(NUMARG-2)
+              JHOLD2=IARG(NUMARG-1)
+              JHOLD3=IARG(NUMARG)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(NUMARG)
+          ENDIF
+        ENDIF
 C
- 1600 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1650
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1650
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1650
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1650
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1650
-      GOTO1660
+        IFOUND='YES'
+        IF(ICASCL.EQ.'RGB ')THEN
+          IY2FC2(1)=JHOLD1
+          IY2FC2(2)=JHOLD2
+          IY2FC2(3)=JHOLD3
 C
- 1650 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1680
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1686)
+ 1686       FORMAT('THE FRAME RGB COLOR (FOR THE RIGHT VERTICAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1187)JHOLD1,JHOLD2,JHOLD3
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          IY2FCO=IHOLD
 C
- 1660 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1680
-C
- 1680 CONTINUE
-      IFOUND='YES'
-      IY2FCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1689
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1681)
- 1681 FORMAT('THE FRAME COLOR (FOR THE RIGHT VERTICAL ',
-     1'FRAME LINE)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1682)IHOLD
- 1682 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1689 CONTINUE
-      GOTO1900
-C
- 1699 CONTINUE
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1681)
+ 1681       FORMAT('THE FRAME COLOR (FOR THE RIGHT VERTICAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1682)IHOLD
+ 1682       FORMAT('HAS JUST BEEN SET TO ',A4)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
+        IFOUND='YES'
+        GOTO1900
 C
 C               *****************************************************
 C               **  TREAT THE CASE WHEN                            **
 C               **  ALL 4 FRAME FRAME LINES ARE TO BE CHANGED      **
 C               *****************************************************
 C
-      IF(ICOM.EQ.'FRAM')GOTO1700
-      IF(ICOM.EQ.'XYFR')GOTO1700
-      IF(ICOM.EQ.'YXFR')GOTO1700
-      GOTO1799
+      ELSEIF(ICOM.EQ.'FRAM' .OR. ICOM.EQ.'XYFR' .OR.
+     1       ICOM.EQ.'YXFR')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.3)THEN
+              JHOLD1=IARG(NUMARG-2)
+              JHOLD2=IARG(NUMARG-1)
+              JHOLD3=IARG(NUMARG)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(NUMARG)
+          ENDIF
+        ENDIF
 C
- 1700 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1750
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1750
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1750
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1750
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1750
-      GOTO1760
+        IFOUND='YES'
+        IF(ICASCL.EQ.'RGB ')THEN
+          IX1FC2(1)=JHOLD1
+          IX1FC2(2)=JHOLD2
+          IX1FC2(3)=JHOLD3
+          IX2FC2(1)=JHOLD1
+          IX2FC2(2)=JHOLD2
+          IX2FC2(3)=JHOLD3
+          IY1FC2(1)=JHOLD1
+          IY1FC2(2)=JHOLD2
+          IY1FC2(3)=JHOLD3
+          IY2FC2(1)=JHOLD1
+          IY2FC2(2)=JHOLD2
+          IY2FC2(3)=JHOLD3
 C
- 1750 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1780
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1786)
+ 1786       FORMAT('THE FRAME RGB COLOR (FOR ALL 4 FRAME LINES)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1187)JHOLD1,JHOLD2,JHOLD3
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          IX1FCO=IHOLD
+          IX2FCO=IHOLD
+          IY1FCO=IHOLD
+          IY2FCO=IHOLD
 C
- 1760 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1780
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1781)
+ 1781       FORMAT('THE FRAME COLOR (FOR ALL 4 FRAME LINES)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1782)IHOLD
+ 1782       FORMAT('HAS JUST BEEN SET TO ',A4)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
+        IFOUND='YES'
+        GOTO1900
 C
- 1780 CONTINUE
-      IFOUND='YES'
-      IX1FCO=IHOLD
-      IX2FCO=IHOLD
-      IY1FCO=IHOLD
-      IY2FCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1789
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1781)
- 1781 FORMAT('THE FRAME COLOR (FOR ALL 4 ',
-     1'FRAME LINES)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1782)IHOLD
- 1782 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1789 CONTINUE
-      GOTO1900
-C
- 1799 CONTINUE
+      ENDIF
 C
  1900 CONTINUE
       RETURN
@@ -20619,7 +20822,6 @@ C
  1390       CONTINUE
             NTEMP=K
             NCURVE=NCURVE+1
-            NPLOT1=NPLOTP
             IF(NTEMP.GT.0)THEN
               CALL DPFRT2(TEMP1,NTEMP,
      1                    XTEMP1,MAXNXT,
@@ -20669,7 +20871,6 @@ C
  1490       CONTINUE
             NTEMP=K
             NCURVE=NCURVE+1
-            NPLOT1=NPLOTP
             IF(NTEMP.GT.0)THEN
               CALL DPFRT2(TEMP1,NTEMP,
      1                    XTEMP1,MAXNXT,
@@ -20723,7 +20924,6 @@ C
  1590       CONTINUE
             NTEMP=K
             NCURVE=NCURVE+1
-            NPLOT1=NPLOTP
             IF(NTEMP.GT.0)THEN
               CALL DPFRT2(TEMP1,NTEMP,
      1                    XTEMP1,MAXNXT,
@@ -20781,7 +20981,6 @@ C
  1690       CONTINUE
             NTEMP=K
             NCURVE=NCURVE+1
-            NPLOT1=NPLOTP
             IF(NTEMP.GT.0)THEN
               CALL DPFRT2(TEMP1,NTEMP,
      1                    XTEMP1,MAXNXT,
@@ -25551,7 +25750,7 @@ C
         ENDIF
  6600 CONTINUE
 C
-      IF(IPRINT.EQ.'ON' .OR. IFEEDB.EQ.'OFF')THEN
+      IF(IPRINT.EQ.'ON' .AND. IFEEDB.EQ.'ON')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,6111)ILEFT,ILEFT2,IARG4I,RIGHT
@@ -26279,28 +26478,28 @@ C
             CALL DPWRST('XXX','BUG ')
           ENDIF
         ENDIF
-      ENDIF
 C
-      IF(NS2.LE.1)THEN
-        WRITE(ICOUT,10041)
-10041   FORMAT('SINCE THE GENERATED SAMPLE SIZE WAS ONLY 1,')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,10042)
-10042   FORMAT('THE ABOVE VALUE WAS THE SOLE VALUE COMPUTED.')
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
+        IF(NS2.LE.1)THEN
+          WRITE(ICOUT,10041)
+10041     FORMAT('SINCE THE GENERATED SAMPLE SIZE WAS ONLY 1,')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,10042)
+10042     FORMAT('THE ABOVE VALUE WAS THE SOLE VALUE COMPUTED.')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
 C
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,10092)ILEFT,ILEFT2,ICOLL
-10092 FORMAT('THE CURRENT COLUMN FOR THE VARIABLE ',2A4,' = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,10093)ILEFT,ILEFT2,NINEW
-10093 FORMAT('THE CURRENT LENGTH OF  THE VARIABLE ',2A4,' = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      GOTO19000
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,10092)ILEFT,ILEFT2,ICOLL
+10092   FORMAT('THE CURRENT COLUMN FOR THE VARIABLE ',2A4,' = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,10093)ILEFT,ILEFT2,NINEW
+10093   FORMAT('THE CURRENT LENGTH OF  THE VARIABLE ',2A4,' = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        GOTO19000
+      ENDIF
 C
 C               *****************
 C               **  STEP 90--  **

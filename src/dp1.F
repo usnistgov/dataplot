@@ -323,7 +323,7 @@ C
 C
       INCLUDE 'DPCODV.INC'
 C
-      PARAMETER(MAXCLR=89)
+      PARAMETER(MAXCLR=163)
       INTEGER IRED(MAXCLR), IBLUE(MAXCLR), IGREEN(MAXCLR)
 C
 C---------------------------------------------------------------------
@@ -2876,6 +2876,9 @@ C
 #ifdef INTEL_QWIN
       USE IFPORT
 #endif
+#ifdef INTEL_CONSOLE
+      USE IFPORT
+#endif
 #ifdef INTEL
       CHARACTER*80 CTEMP
       CHARACTER*4 IBASLC
@@ -3505,6 +3508,10 @@ CCCCC       ICDIR='C:\DATAPLOT\'
             GOTO9000
           ENDIF
           IPATH1(1:NCP1)=ICDIR(1:NCP1)
+          IF(IPATH1(NCP1:NCP1).NE.'\')THEN
+            NCP1=NCP1+1
+            IPATH1(NCP1:NCP1)='\'
+          ENDIF
 C
           IRESLT=GETENVQQ('FED$',IEDDIR)
           IF(IRESLT.EQ.0)THEN
@@ -3549,6 +3556,10 @@ CCCCC       NCDIR=7
             NCEDT1=NCDIR
           ENDIF
 C
+          IF(IEDDIR(NCDIR:NCDIR).NE.'\')THEN
+            NCDIR=NCDIR+1
+            IEDDIR(NCDIR:NCDIR)='\'
+          ENDIF
           IF(NCDIR.LE.0)THEN
             WRITE(ICOUT,999)
             CALL DPWRST('XXX','BUG ')

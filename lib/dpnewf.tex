@@ -1,5 +1,5 @@
 9.
-                                                     April     2020
+                                                     November  2020
 This is the DATAPLOT News file DPNEWF.TEX.  This NEWS file contains a
 list of DATAPLOT enhancements.  Some commands may be documented here
 that are not yet available in the standard documentation.
@@ -10,10 +10,46 @@ The complete news file can be viewed at
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
-July 2020 - August 2020.
+July 2020 - November 2020.
 -----------------------------------------------------------------------
 
- 1) Made the following updates to string functions.
+ 1) Dataplot's color model was based on the X11 Release 3 color
+    model.  A few additional color names were added based on
+    Release 4.
+
+    This update makes a major update to Dataplot's color model.
+    Specifically,
+
+    a) The list of named colors was extended to be compatible
+       with current releases of X11.  The number of named colors
+       was increased from 89 to 163.  The updated color list can
+       be found at
+
+          https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+    b) For devices that support it, you can now specify RGB colors.
+       Dataplot still supports devices that do not have full RGB
+       support.  To handle this, Dataplot first checks if the
+       device supports RGB color.  If so, and if an RGB color has
+       been specified, then Dataplot uses the RGB color setting.
+       If the device does not support RGB color or if no RGB color
+       has been specified, then Dataplot uses the standard color
+       setting.  For example,
+
+           LINE COLOR RED
+           LINE RGB COLOR 211 11 88
+
+       If a device does not support RGB color, it will use RED and
+       if it does support RGB color it will use the (211,11,88)
+       RGB settings for the color.
+
+       For each COLOR command in Dataplot, there is now a
+       RGB COLOR variant.  An RGB color is specified as as set
+       of three numbers (or parameters).  RGB values are given
+       in the range 0 to 255.  To turn off the RGB color, use
+       "-1 -1 -1" (any negative values will have the same effect).
+
+ 2) Made the following updates to string functions.
 
     a) The LET ... = STRING SPLIT command now saves the number of new
        strings generated in the parameter NUMBWORD.
@@ -25,7 +61,15 @@ July 2020 - August 2020.
        the delimiter.  For example, SET WORD DELIMITER , will treat
        the "," as the word delimiter.
 
- 2) Many data files contain the variable names as the first line of the
+     c) Added the command
+
+           LET IFLAG = IS NUMBER STR
+
+        where STR is a previously defined string.  This command
+        returns a value of 1 to IFLAG if STR can be interpreted as a
+        number and a value of 0 if it cannot.
+
+ 3) Many data files contain the variable names as the first line of the
     file.  Dataplot has the ability to extract these variable names by
     doing something like
 
@@ -60,7 +104,7 @@ July 2020 - August 2020.
        Zxxx where "xxx" is a sequence number (i.e., if there are three
        blank names encountered, they wiil be set to Z1, Z2, and Z3).
 
-  3) The Dataplot GUI is somewhat out of date.  We will be updating the
+  4) The Dataplot GUI is somewhat out of date.  We will be updating the
      GUI in several stages.
 
      a) The first stage is to update the contents of the menu.  This
@@ -69,11 +113,11 @@ July 2020 - August 2020.
      b) After the menu contents are updated, we will begin revising
         the Tcl/Tk scripts.
 
-  4) Added the command
+  5) Added the command
 
          SET CHARACTER TABULATION PLOT DIGITS <value>
 
-  5) Added the commands
+  6) Added the commands
 
          HALF NORMAL MAXIMUM LIKELIHOOD Y
          HALF LOGISTIC MAXIMUM LIKELIHOOD Y
@@ -81,7 +125,7 @@ July 2020 - August 2020.
      Note that the half-logistic case actually computes a method
      of moments estimate.
 
-  6) A number of bug fixes were made.
+  7) A number of bug fixes were made.
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT

@@ -12791,7 +12791,7 @@ CCCCC CHARACTER*8 IRGNAM(64)
 CCCCC CHARACTER*25 IXCLR(67)
 CCCCC CHARACTER*8 IXNAM(67)
       CHARACTER*4 CJUNK
-      PARAMETER(MAXCLR=89)
+      PARAMETER(MAXCLR=163)
       CHARACTER*25 ICLR(MAXCLR)
       CHARACTER*8 INAM(MAXCLR)
       INTEGER J4027(MAXCLR)
@@ -12835,7 +12835,15 @@ C
      6  2,  1,  6,  6,  4,  2,  6,  3,  3,  2,
      7  3,  4,  4,  6,  6,  4,  2,  3,  3,  3,
      8  3,  3,  3,  3,  2,  2,  2,  4,  4,  4,
-     9  5,  5,  5,  1,  1,  1,  6,  6,  6/
+     9  5,  5,  5,  1,  1,  1,  6,  6,  6,  1,
+     *  1,  1,  1,  1,  1,  1,  1,  1,  5,  5,
+     A  4,  4,  4,  4,  4,  4,  4,  6,  6,  6,
+     C  6,  6,  6,  6,  2,  2,  2,  2,  2,  2,
+     C  2,  2,  2,  2,  3,  3,  3,  3,  3,  3,
+     D  3,  3,  1,  1,  1,  1,  1,  1,  1,  1,
+     E  1,  1,  1,  7,  7,  7,  7,  7,  7,  7,
+     F  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,
+     G  7,  7,  7/
 C  TEKTRONIX 4105, GENERAL, GENERAL CODED
 C
       DATA (J4105(I),I=1,MAXCLR)/
@@ -12847,7 +12855,15 @@ C
      6  3,  2,  6,  6,  7,  3,  6,  4,  4,  3,
      7  4,  7,  7,  6,  6,  7,  3,  5,  4,  4,
      8  4,  5,  5,  5,  3,  3,  3,  7,  7,  7,
-     9  7,  7,  7,  2,  2,  2,  6,  6,  6/
+     9  5,  5,  5,  1,  1,  1,  6,  6,  6,  2,
+     *  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
+     A  7,  7,  7,  7,  7,  7,  7,  6,  6,  6,
+     C  6,  6,  6,  6,  3,  3,  3,  3,  3,  3,
+     C  3,  3,  3,  3,  4,  4,  4,  4,  4,  4,
+     D  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,
+     E  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,
+     F  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+     G  0,  0,  0/
 C
 C  PLOTTERS WITH 4 PENS (TEKTRONIX 4662, HP-7221, CALCOMP, ZETA, HP-GL)
 C
@@ -12860,7 +12876,15 @@ C
      6  4,  2,  2,  2,  2,  4,  2,  3,  3,  4,
      7  3,  2,  2,  2,  2,  2,  4,  3,  3,  3,
      8  3,  3,  3,  3,  4,  4,  4,  2,  2,  2,
-     9  2,  2,  2,  2,  2,  2,  4,  4,  4/
+     9  2,  2,  2,  2,  2,  2,  4,  4,  4,  2,
+     *  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
+     A  4,  4,  4,  4,  4,  4,  4,  3,  3,  3,
+     B  3,  3,  3,  3,  4,  4,  4,  4,  4,  4,
+     C  4,  4,  4,  4,  3,  3,  3,  3,  3,  3,
+     D  3,  3,  2,  2,  2,  2,  2,  2,  2,  2,
+     E  2,  2,  2,  1,  1,  1,  1,  1,  1,  1,
+     F  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+     G  1,  1,  1/
 C
 C  PLOTTERS WITH 8 PENS (HP-GL, CALCOMP, ZETA)
 C
@@ -12873,7 +12897,15 @@ C
      6  4,  2,  5,  5,  8,  4,  5,  7,  3,  4,
      7  3,  8,  8,  5,  5,  8,  4,  7,  3,  3,
      8  3,  7,  7,  7,  4,  4,  4,  8,  8,  8,
-     9  6,  6,  6,  2,  2,  2,  5,  5,  5/
+     9  6,  6,  6,  2,  2,  2,  5,  5,  5,  2,
+     *  2,  2,  2,  2,  2,  2,  2,  2,  6,  6,
+     A  8,  8,  8,  8,  8,  8,  8,  5,  5,  5,
+     B  5,  5,  5,  5,  4,  4,  4,  4,  4,  4,
+     C  4,  4,  4,  4,  3,  3,  3,  3,  3,  3,
+     D  3,  3,  2,  2,  2,  2,  2,  2,  2,  2,
+     E  2,  2,  2,  1,  1,  1,  1,  1,  1,  1,
+     F  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+     G  1,  1,  1/
 C
 C  HP-2622 AND RELATED TERMINALS
 C
@@ -12886,20 +12918,36 @@ C
      6  2,  1,  5,  5,  3,  2,  5,  6,  4,  2,
      7  4,  3,  3,  5,  5,  3,  2,  6,  4,  4,
      8  4,  6,  6,  6,  2,  2,  2,  3,  3,  3,
-     9  3,  3,  3,  1,  1,  1,  5,  5,  5/
+     9  3,  3,  3,  1,  1,  1,  5,  5,  5,  1,
+     *  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+     A  3,  3,  3,  3,  3,  3,  3,  5,  5,  5,
+     B  5,  5,  5,  5,  2,  2,  2,  2,  2,  2,
+     C  2,  2,  2,  2,  4,  4,  4,  4,  4,  4,
+     D  4,  4,  1,  1,  1,  1,  1,  1,  1,  1,
+     E  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,
+     F  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+     G  0,  0,  0/
 C
 C  DIRECT RGB DEVICES (CGM, POSTSCRIPT)
 C
       DATA (JCGM(I),I=1,MAXCLR)/
-     1  1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
-     2 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-     3 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-     4 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
-     5 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
-     6 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
-     7 61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
-     8 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
-     9 81, 82, 83, 84, 85, 86, 87, 88, 89/
+     1   1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
+     2  11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+     3  21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+     4  31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+     5  41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+     6  51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+     7  61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
+     8  71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
+     9  81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
+     *  91, 92, 93, 94, 95, 96, 97, 98, 99,100,
+     A 101,102,103,104,105,106,107,108,109,110,
+     B 111,112,113,114,115,116,117,118,119,120,
+     B 121,122,123,124,125,126,127,128,129,130,
+     C 131,132,133,134,135,136,137,138,139,130,
+     D 141,142,143,144,145,146,147,148,149,140,
+     E 151,152,153,154,155,156,157,158,159,150,
+     F 161,162,163/
 C
 C  SUN
 C
@@ -12912,7 +12960,15 @@ C
      6  2,  1,  6,  6,  4,  2,  6,  3,  3,  2,
      7  3,  4,  4,  6,  6,  4,  2,  3,  3,  3,
      8  3,  3,  3,  3,  2,  2,  2,  4,  4,  4,
-     9  4,  4,  4,  1,  1,  1,  6,  6,  6/
+     9  4,  4,  4,  1,  1,  1,  6,  6,  6,  1,
+     *  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+     A  4,  4,  4,  4,  4,  4,  4,  6,  6,  6,
+     B  6,  6,  6,  6,  2,  2,  2,  2,  2,  2,
+     C  2,  2,  2,  2,  3,  3,  3,  3,  3,  3,
+     D  3,  3,  1,  1,  1,  1,  1,  1,  1,  1,
+     E  1,  1,  5,  5,  5,  5,  5,  5,  5,  5,
+     F  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,
+     G  5,  5,  5/
 C
 C  X11
 C
@@ -12925,7 +12981,15 @@ CCCCC5 40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
 CCCCC6 50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
 CCCCC7 60, 61, 62, 63, 64, 65, 66, 67, 68, 69,
 CCCCC8 70, 71, 72, 73, 74, 75, 76, 77, 78, 79,
-CCCCC9 80, 81, 82, 83, 84, 85, 86, 87, 88/
+CCCCC9 80, 81, 82, 83, 84, 85, 86, 87, 88, 89,
+CCCCC0 91, 92, 93, 94, 95, 96, 97, 98, 99,100,
+CCCCCA101,102,103,104,105,106,107,108,109,110,
+CCCCCB111,112,113,114,115,116,117,118,119,120,
+CCCCCB121,122,123,124,125,126,127,128,129,130,
+CCCCCC131,132,133,134,135,136,137,138,139,130,
+CCCCCD141,142,143,144,145,146,147,148,149,140,
+CCCCCE151,152,153,154,155,156,157,158,159,150,
+CCCCCF161,162,163/
 C
 C  REGIS
 C
@@ -12938,7 +13002,15 @@ C
      6 31, 45, 46, 57, 52, 32, 53, 14, 15, 33,
      7 16, 54, 55, 56, 59, 61, 34, 18,  4,  4,
      8  4, 18, 18, 18, 23, 23, 23, 63, 63, 63,
-     9 41, 41, 41, 47, 47, 47, 39, 39, 39/
+     9 41, 41, 41, 47, 47, 47, 39, 39, 39,  3,
+     *  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,
+     A  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,
+     B  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,
+     C  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,
+     D  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,
+     E  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,
+     F  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,
+     G  3,  3,  3/
       DATA (JREG2(I),I=1,64)/
      1 17, 37,  2,  4, 19, 21, 24, 12, 34, 38,
      2 43, 47, 48, 58, 59, 60, 20,  8, 26, 28,
@@ -12959,7 +13031,15 @@ C
      6  2,  4,  5,  5, 14,  2,  5, 11,  1,  2,
      7  1,  6, 14,  5,  5, 14,  2, 11,  1,  1,
      8  1,  3,  3,  3,  2,  2,  2, 14, 14, 14,
-     9 14, 14, 14,  4,  4,  4,  5,  5,  5/
+     9 14, 14, 14,  4,  4,  4,  5,  5,  5,  4,
+     *  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
+     A 14, 14, 14, 14, 14, 14, 14,  5,  5,  5,
+     B  5,  5,  5,  5,  2,  2,  2,  2,  2,  2,
+     C  2,  2,  2,  2,  1,  1,  1,  1,  1,  1,
+     D  1,  1,  6,  6,  6,  6,  6,  6,  6,  6,
+     E  6,  6,  0,  0,  0,  0,  0,  0,  0,  0,
+     F  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+     G  0,  0,  0/
 C
 C
 C  COMMENT OUT FOLLOWING, USE SAME TABLES FOR ALL DEVICES
@@ -13192,7 +13272,7 @@ CCCCC DATA (IXCLR(I),I=61,66)/
      3 'Cyan3',
      4 'Cyan4',
      5 'Green2'/
-      DATA (ICLR(I),I=76,MAXCLR)/
+      DATA (ICLR(I),I=76,89)/
      1 'Green3',
      2 'Green4',
      3 'Yellow2',
@@ -13207,6 +13287,85 @@ CCCCC DATA (IXCLR(I),I=61,66)/
      2 'Magenta2',
      3 'Magenta3',
      4 'Magenta4'/
+      DATA (ICLR(I),I=90,105)/
+     1 'Light Coral',
+     1 'Dark Salmon',
+     1 'Light Salmon',
+     1 'Crimson',
+     1 'Dark Red',
+     1 'Light Pink',
+     1 'Hot Pink',
+     1 'Deep Pink',
+     1 'PaleVioletRed',
+     1 'Tomato',
+     1 'Dark Orange',
+     1 'Light Yellow',
+     1 'Lemon Chifon',
+     1 'Papaya Whip',
+     1 'Mocasin',
+     1 'Peach Puff'/
+      DATA (ICLR(I),I=106,120)/
+     1 'Pale Goldenrod',
+     1 'Dark Khaki',
+     1 'Lavender',
+     1 'Fuchsia',
+     1 'Medium Purple',
+     1 'Amethyst',
+     1 'Dark Violet',
+     1 'Dark Magenta',
+     1 'Indigo',
+     1 'Chartreuse',
+     1 'Lawn Green',
+     1 'Lime',
+     1 'Light Green',
+     1 'Olive Drab',
+     1 'Olive'/
+      DATA (ICLR(I),I=121,135)/
+     1 'Dark Sea Green',
+     1 'Light Sea Green',
+     1 'Dark Cyan',
+     1 'Teal',
+     1 'Pale Turquoise',
+     1 'Aqua',
+     1 'Powder Blue',
+     1 'Light Sky Blue',
+     1 'Deep Sky Blue',
+     1 'Dodger Blue',
+     1 'Royal Blue',
+     1 'Dark Blue',
+     1 'Cornsilk',
+     1 'Blanched Almond',
+     1 'Bisque'/
+      DATA (ICLR(I),I=136,150)/
+     1 'Navajo White',
+     1 'Burly Wood',
+     1 'Rosy Brown',
+     1 'Sandy Brown',
+     1 'Dark Goldenrod',
+     1 'Peru',
+     1 'Chocolate',
+     1 'Saddie Brown',
+     1 'Snow',
+     1 'Honeydew',
+     1 'Mint Cream',
+     1 'Azure',
+     1 'Alice Blue',
+     1 'Ghost White',
+     1 'White Smoke'/
+      DATA (ICLR(I),I=151,163)/
+     1 'Sea Shell',
+     1 'Beige',
+     1 'Old Lace',
+     1 'Floral White',
+     1 'Ivory',
+     1 'Antique White',
+     1 'Linen',
+     1 'Misty Rose',
+     1 'Gainsboro',
+     1 'Silver',
+     1 'DarkGray',
+     1 'Light Slate Gray',
+     1 'Slate Gray'/
 C
 CCCCC DATA (IXNAM(I),I=1,15)/
       DATA (INAM(I),I=1,15)/
@@ -13228,7 +13387,7 @@ CCCCC DATA (IXNAM(I),I=1,15)/
 CCCCC DATA (IXNAM(I),I=16,30)/
       DATA (INAM(I),I=16,30)/
      1 'LGRA',
-     2 'AQUA',
+     2 'AQMA',
      3 'BROWN',
      4 'CABL',
      5 'CORAL',
@@ -13293,7 +13452,7 @@ CCCCC DATA (IXNAM(I),I=61,66)/
      3 'CYA3',
      4 'CYA4',
      5 'GRE2'/
-      DATA (INAM(I),I=76,MAXCLR)/
+      DATA (INAM(I),I=76,89)/
      1 'GRE3',
      2 'GRE4',
      3 'YEL2',
@@ -13308,6 +13467,85 @@ CCCCC DATA (IXNAM(I),I=61,66)/
      2 'MAG2',
      3 'MAG3',
      4 'MAG4'/
+      DATA (INAM(I),I=90,105)/
+     1 'LCOR',
+     1 'DSAL',
+     1 'LSAL',
+     1 'CRIM',
+     1 'DRED',
+     1 'LPIN',
+     1 'HPIN',
+     1 'DPIN',
+     1 'PVRE',
+     1 'TOMA',
+     1 'DORA',
+     1 'LYEL',
+     1 'LCHI',
+     1 'PAPW',
+     1 'MOCA',
+     1 'PPUF'/
+      DATA (INAM(I),I=106,120)/
+     1 'PGRO',
+     1 'DKHA',
+     1 'LAVE',
+     1 'FUCH',
+     1 'MPUR',
+     1 'AMET',
+     1 'DVIO',
+     1 'DMAG',
+     1 'INDI',
+     1 'CHAR',
+     1 'LAGR',
+     1 'LIME',
+     1 'LIGR',
+     1 'ODRA',
+     1 'OLIV'/
+      DATA (INAM(I),I=121,135)/
+     1 'DSGR',
+     1 'LSGR',
+     1 'DCYA',
+     1 'TEAL',
+     1 'PTUR',
+     1 'AQUA',
+     1 'PBLU',
+     1 'LSKB',
+     1 'DSKB',
+     1 'DODB',
+     1 'RBLU',
+     1 'DBLU',
+     1 'CORN',
+     1 'BLAL',
+     1 'BISQ'/
+      DATA (INAM(I),I=136,150)/
+     1 'NAVW',
+     1 'BWOO',
+     1 'ROSB',
+     1 'SANB',
+     1 'DGRO',
+     1 'PERU',
+     1 'CHOC',
+     1 'SADB',
+     1 'SNOW',
+     1 'HONE',
+     1 'MCRE',
+     1 'AZUR',
+     1 'ABLU',
+     1 'GHOS',
+     1 'WSMO'/
+      DATA (INAM(I),I=151,163)/
+     1 'SEAS',
+     1 'BEIG',
+     1 'OLDL',
+     1 'FLOR',
+     1 'IVOR',
+     1 'ANTI',
+     1 'LINE',
+     1 'MROS',
+     1 'GAIN',
+     1 'SILV',
+     1 'DAGR',
+     1 'LSLG',
+     1 'SLGR'/
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -13386,9 +13624,11 @@ C
       IF(INDEX.LT.1.OR.INDEX.GT.16)GOTO1930
       IHPGPM(INDEX)=ICOL
       IHPGPF='ON'
-      IF(IFEEDB.EQ.'OFF')WRITE(ICOUT,1490)IHPGPM(INDEX),INDEX
- 1490 FORMAT('COLOR ',A4,' WILL SELECT PEN ',I2,' FOR HP-GL')
-      IF(IFEEDB.EQ.'OFF')CALL DPWRST('XXX','BUG ')
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,1490)IHPGPM(INDEX),INDEX
+ 1490   FORMAT('COLOR ',A4,' WILL SELECT PEN ',I2,' FOR HP-GL')
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       GOTO9000
 C
  1500 CONTINUE
@@ -13495,9 +13735,11 @@ C
       IF(INDEX.LT.1.OR.INDEX.GT.26)GOTO2930
       IZETPM(INDEX)=ICOL
       IZETPF='ON'
-      IF(IFEEDB.EQ.'OFF')WRITE(ICOUT,2490)IZETPM(INDEX),INDEX
- 2490 FORMAT('COLOR ',A4,' WILL SELECT PEN ',I2,' FOR ZETA')
-      IF(IFEEDB.EQ.'OFF')CALL DPWRST('XXX','BUG ')
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,2490)IZETPM(INDEX),INDEX
+ 2490   FORMAT('COLOR ',A4,' WILL SELECT PEN ',I2,' FOR ZETA')
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       GOTO9000
 C
  2500 CONTINUE
@@ -13542,7 +13784,7 @@ C
       WRITE(ICOUT,2811)IZETPM(I),I
       CALL DPWRST('XXX','BUG ')
  2810 CONTINUE
- 2811 FORMAT('COLOR ',A8,' SET TO PEN ',I2)
+ 2811 FORMAT('COLOR ',A8,' SET TO PEN ',I3)
       GOTO9000
 C
  2910 CONTINUE
@@ -13565,7 +13807,7 @@ C
       GOTO9000
 C
 C  *****************************************
-C  **  CALCOMP CASE                          **
+C  **  CALCOMP CASE                       **
 C  *****************************************
 C
  3100 CONTINUE
@@ -13604,9 +13846,12 @@ C
       IF(INDEX.LT.1.OR.INDEX.GT.16)GOTO3930
       ICALPM(INDEX)=ICOL
       ICALPF='ON'
-      IF(IFEEDB.EQ.'OFF')WRITE(ICOUT,3490)ICALPM(INDEX),INDEX
- 3490 FORMAT('COLOR ',A4,' WILL SELECT PEN ',I2,' FOR CALCOMP ')
-      IF(IFEEDB.EQ.'OFF')CALL DPWRST('XXX','BUG ')
+C
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,3490)ICALPM(INDEX),INDEX
+ 3490   FORMAT('COLOR ',A4,' WILL SELECT PEN ',I2,' FOR CALCOMP ')
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       GOTO9000
 C
  3500 CONTINUE
@@ -13779,9 +14024,11 @@ C
 C
 CCCCC IREGPM(INDEX)=JCOL
       IREGPM(INDEX)=JREGIS(JINDEX)
-      IF(IFEEDB.EQ.'ON')WRITE(ICOUT,4490)INDEX,ICOL
- 4490 FORMAT('REGIS WILL USE COLOR MAP ',I2,' FOR COLOR ',A4)
-      IF(IFEEDB.EQ.'ON')CALL DPWRST('XXX','BUG ')
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,4490)INDEX,ICOL
+ 4490   FORMAT('REGIS WILL USE COLOR MAP ',I3,' FOR COLOR ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       GOTO9000
 C
  4500 CONTINUE
@@ -13817,24 +14064,24 @@ CCCCC IREGPM(16)=35
       IREGPM(14)=14
       IREGPM(15)=16
       IREGPM(16)=15
-      IF(IFEEDB.EQ.'OFF')GOTO4519
-      WRITE(ICOUT,4506)
- 4506 FORMAT('FOR REGIS, THE DEFAULT COLORS ARE:')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,4507)
- 4507 FORMAT('COLOR MAP COLOR NAME')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,4508)
- 4508 FORMAT('========= ==========')
-      CALL DPWRST('XXX','BUG ')
-      DO4510I=1,IREGMC
-CCCCC   WRITE(ICOUT,4511)I,IRGCLR(IREGPM(I))
-CCCCC CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,4511)I,ICLR(IREGPM(I))
-      CALL DPWRST('XXX','BUG ')
- 4510 CONTINUE
- 4511 FORMAT(I2,8X,A25)
- 4519 CONTINUE
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,4506)
+ 4506   FORMAT('FOR REGIS, THE DEFAULT COLORS ARE:')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4507)
+ 4507   FORMAT('COLOR MAP COLOR NAME')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4508)
+ 4508   FORMAT('========= ==========')
+        CALL DPWRST('XXX','BUG ')
+        DO4510I=1,IREGMC
+CCCCC     WRITE(ICOUT,4511)I,IRGCLR(IREGPM(I))
+CCCCC     CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,4511)I,ICLR(IREGPM(I))
+ 4511     FORMAT(I3,8X,A25)
+          CALL DPWRST('XXX','BUG ')
+ 4510   CONTINUE
+      ENDIF
       GOTO9000
 C
  4800 CONTINUE
@@ -13924,7 +14171,7 @@ CCCCC WRITE(ICOUT,5805)
         WRITE(ICOUT,5811)ICLR(I),INAM(I),I
         CALL DPWRST('XXX','BUG ')
  5810 CONTINUE
- 5811 FORMAT(A25,5X,A8,2X,I2)
+ 5811 FORMAT(A25,5X,A8,2X,I3)
       GOTO9000
 C
 C  *****************************************
@@ -14094,17 +14341,17 @@ C
  6210   CONTINUE
       ELSE
         WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
+        CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,6221)IDEV,IDEV2
- 6221 FORMAT('DEVICE ',A4,1X,A4,' NOT RECOGNIZED')
-      CALL DPWRST('XXX','BUG ')
+ 6221   FORMAT('DEVICE ',A4,1X,A4,' NOT RECOGNIZED')
+        CALL DPWRST('XXX','BUG ')
         GOTO9000
       ENDIF
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,6255)IDEV,IDEV2
  6255 FORMAT('THE FOLLOWING SHOWS THE COLOR MAPPING FOR DEVICE: ',
-     11X,A4,1X,A4)
+     1       2(2X,A4))
       CALL DPWRST('XXX','BUG ')
       IF(IGRAY.EQ.'YES')THEN
          WRITE(ICOUT,6261)
@@ -14142,9 +14389,9 @@ C
           IF(IRESP.EQ.'NO')GOTO9000
         END IF
         WRITE(ICOUT,6281)ICLR(I),INAM(I),I-1,INAM(JTEMP(I))
-      CALL DPWRST('XXX','BUG ')
+        CALL DPWRST('XXX','BUG ')
  6280 CONTINUE
- 6281 FORMAT(A24,5X,A8,2X,I2,8X,A8)
+ 6281 FORMAT(A24,5X,A8,2X,I3,7X,A8)
       GOTO9000
 C
  6800 CONTINUE
@@ -14207,7 +14454,7 @@ C
             IF(IRESP.EQ.'NO')GOTO9000
          END IF
          WRITE(ICOUT,6821)ICLR(I),INAM(I),I-1
- 6821    FORMAT(A24,5X,A8,2X,I2)
+ 6821    FORMAT(A24,5X,A8,2X,I3)
          CALL DPWRST('XXX','BUG ')
  6820 CONTINUE
       GOTO9000
@@ -19747,12 +19994,12 @@ C
       RETURN
       END
       SUBROUTINE DPDET2(PMIN,PMAX,FMIN,FMAX,
-     1ITICSW,ISCASW,
-     1NMJT,INMJSW,
-     1PTCOOR,ATCOOR,NMJT2,
-     1NMNT,INMNSW,
-     1PTCOMN,ATCOMN,NMNT2,
-     1PTCOFL,PTCOFR,ITICUN)
+     1                  ITICSW,ISCASW,
+     1                  NMJT,INMJSW,
+     1                  PTCOOR,ATCOOR,NMJT2,
+     1                  NMNT,INMNSW,
+     1                  PTCOMN,ATCOMN,NMNT2,
+     1                  PTCOFL,PTCOFR,ITICUN)
 C  ABOVE LINE ADDED MAY, 1990. (ALAN)
 C
 C     PURPOSE--DETERMINE AND SET TIC MARKS FOR A SINGLE FRAME LINE.
@@ -19844,40 +20091,32 @@ C
       NUMMAJ=0
       NUMMIN=0
 C
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'DET2')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPDET2--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)PMIN,PMAX
-   52 FORMAT('PMIN,PMAX = ',2E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)FMIN,FMAX
-   53 FORMAT('FMIN,FMAX = ',2E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,54)ITICSW,ISCASW
-   54 FORMAT('ITICSW,ISCASW = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,55)NMJT,INMJSW
-   55 FORMAT('NMJT,INMJSW = ',I8,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,56)NMNT,INMNSW
-   56 FORMAT('NMNT,INMNSW = ',I8,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,59)IBUGG4,ISUBG4,IERRG4
-   59 FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,70)ITICUN
-   70 FORMAT('ITICUN = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,71)PTCOFL,PTCOFR
-   71 FORMAT('PTCOFL,PTCOFR = ',2E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,72)PX1TOR,PX2TOR,PY1TOT,PY2TOT
-   72 FORMAT('PX1TOR,PX2TOR,PY1TOT,PY2TOT = ',4E15.7)
-   90 CONTINUE
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'DET2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPDET2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)PMIN,PMAX,FMIN,FMAX
+   52   FORMAT('PMIN,PMAX,FMIN,FMAX = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)ITICSW,ISCASW,ITICUN
+   54   FORMAT('ITICSW,ISCASW,ITICUN = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,55)NMJT,INMJSW,NMNT,INMNSW
+   55   FORMAT('NMJT,INMJSW,NMNT,INMNSW = ',2(I8,2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,59)IBUGG4,ISUBG4,IERRG4
+   59   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,71)PTCOFL,PTCOFR
+   71   FORMAT('PTCOFL,PTCOFR = ',2G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,72)PX1TOR,PX2TOR,PY1TOT,PY2TOT
+   72   FORMAT('PX1TOR,PX2TOR,PY1TOT,PY2TOT = ',4E15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               *************************************
 C               **  STEP 1--                       **
@@ -19893,8 +20132,7 @@ C               **  STEP 2--                  **
 C               **  TREAT THE LOG SCALE CASE  **
 C               ********************************
 C
-      IF(ISCASW.EQ.'LOG')GOTO1200
-      GOTO1290
+      IF(ISCASW.EQ.'LOG')THEN
 C
 C               *******************************
 C               **  STEP 2.1--               **
@@ -19902,167 +20140,166 @@ C               **  COMPUTE MAJOR TIC MARKS  **
 C               **  FOR THE LOG    CASE      **
 C               *******************************
 C
- 1200 CONTINUE
-      IF(FMIN.GT.0.0.AND.FMAX.GT.0.0)GOTO1209
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1201)
- 1201 FORMAT('***** ERROR IN DPDET2--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1202)
- 1202 FORMAT('      A LOG SCALE MAY NOT BE USED')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1203)
- 1203 FORMAT('      WHEN FRAME LIMITS ARE NON-POSITIVE.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1204)FMIN,FMAX
- 1204 FORMAT('      THE FRAME LIMITS = ',2E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1205)
- 1205 FORMAT('      CORRECTIVE ACTION--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1206)
- 1206 FORMAT('      CHANGE DATA OR CHANGE LIMITS.')
-      CALL DPWRST('XXX','BUG ')
-      IERRG4='YES'
-      GOTO9000
- 1209 CONTINUE
+        IF(FMIN.LE.0.0 .OR. FMAX.LE.0.0)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1201)
+ 1201     FORMAT('***** ERROR IN DPDET2--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1202)
+ 1202     FORMAT('      A LOG SCALE MAY NOT BE USED')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1203)
+ 1203     FORMAT('      WHEN FRAME LIMITS ARE NON-POSITIVE.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1204)FMIN,FMAX
+ 1204     FORMAT('      THE FRAME LIMITS = ',2G15.7)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1205)
+ 1205     FORMAT('      CORRECTIVE ACTION--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1206)
+ 1206     FORMAT('      CHANGE DATA OR CHANGE LIMITS.')
+          CALL DPWRST('XXX','BUG ')
+          IERRG4='YES'
+          GOTO9000
+        ENDIF
 C
-CCCCC FOLLOWING CODE MODIFIED TO HANDLE CASE WHERE FMIN=FMAX, I.E.,
-CCCCC ONLY 1 MAJOR TIC, MINOR TICS HANDLED VIA TIC OFFSET,  JULY 1996.
-      EXPMIN=LOG10(FMIN)
-      EXPMAX=LOG10(FMAX)
-      DENOM=EXPMAX-EXPMIN
+CCCCC   FOLLOWING CODE MODIFIED TO HANDLE CASE WHERE FMIN=FMAX, I.E.,
+CCCCC   ONLY 1 MAJOR TIC, MINOR TICS HANDLED VIA TIC OFFSET,  JULY 1996.
+        EXPMIN=LOG10(FMIN)
+        EXPMAX=LOG10(FMAX)
+        DENOM=EXPMAX-EXPMIN
 C
-      IF(FMIN.NE.FMAX)THEN
-        IEXMIN=INT(EXPMIN+0.01)
-        IF(EXPMIN.LT.0.0)IEXMIN=INT(EXPMIN-0.01)
-        IEXMAX=INT(EXPMAX+0.01)
-        IF(EXPMAX.LT.0.0)IEXMAX=INT(EXPMAX-0.01)
-        IF(IEXMAX.EQ.IEXMIN)IEXMAX=IEXMIN+1
+        IF(FMIN.NE.FMAX)THEN
+          IEXMIN=INT(EXPMIN+0.01)
+          IF(EXPMIN.LT.0.0)IEXMIN=INT(EXPMIN-0.01)
+          IEXMAX=INT(EXPMAX+0.01)
+          IF(EXPMAX.LT.0.0)IEXMAX=INT(EXPMAX-0.01)
+          IF(IEXMAX.EQ.IEXMIN)IEXMAX=IEXMIN+1
 C
-        NUMCYC=IEXMAX-IEXMIN
-        NUMCYP=NUMCYC+1
-        PRANGE=PMAX-PMIN
-      ELSE
-        IEXMIN=INT(EXPMIN+0.01)
-        IF(EXPMIN.LT.0.0)IEXMIN=INT(EXPMIN-0.01)
-        IEXMAX=IEXMIN
-        NUMCYC=1
-      ENDIF
-C
-C  ALGORITHIM ADJUSTED MAY, 1990 TO SUPPORT TIC OFFSETS.  NOTE THAT
-C  OFFSET MAY BE DONE IN EITHER DATAPLOT UNITS OR DATA UNITS.
-C
-      IF(ITICUN.NE.'ABSO')GOTO1285
-C
-C  OFFSET IN DATAPLOT UNITS
-C
-      IF(FMIN.NE.FMAX)THEN
-        PMIN2=PMIN+PTCOFL
-        PMAX2=PMAX-PTCOFR
-        IF(PMIN2.LT.PMAX2)GOTO1283
-        PMIN2=PMIN
-        PMAX2=PMAX
-        PRANG2=PRANGE
-        FMIN2=FMIN
-        FMAX2=FMAX
-        GOTO1289
- 1283   CONTINUE
-        PRANG2=PMAX2-PMIN2
-        FMIN2=FMIN
-        FMAX2=FMAX
-        ATEMP=(EXPMAX-EXPMIN)/(PMAX2-PMIN2)
-        ATMPMX=EXPMAX+(PTCOFR*ATEMP)
-        ATMPMN=EXPMIN-(PTCOFL*ATEMP)
-        FMAX=10.**ATMPMX
-        FMIN=10.**ATMPMN
-        GOTO1289
-      ELSE
-CCCCC   FOR 1 CYCLE CASE, TIC OFFSETS WILL BE CALCULATED IN DATA
-CCCCC   UNITS REGARDLESS OF TIC OFFSET UNITS.
-      ENDIF
-C
-C  OFFSET IN DATA UNITS
-C
- 1285 CONTINUE
-      IF(FMIN.NE.FMAX)THEN
-        FMIN2=FMIN
-        FMAX2=FMAX
-        FMIN=FMIN2-PTCOFL
-        FMAX=FMAX2+PTCOFR
-        IF(FMIN.GT.0.0)GOTO1287
-        FMIN=FMIN2
-        FMAX=FMAX2
-        PMIN2=PMIN
-        PMAX2=PMAX
-        PRANG2=PMAX2-PMIN2
-        GOTO1289
- 1287   CONTINUE
-        ATMPMN=LOG10(FMIN)
-        ATMPMX=LOG10(FMAX)
-        ATEMP=(ATMPMX-ATMPMN)/(PMAX-PMIN)
-        PTEMP=(EXPMIN-ATMPMN)/ATEMP
-        PMIN2=PMIN+PTEMP
-        PTEMP=(ATMPMX-EXPMAX)/ATEMP
-        PMAX2=PMAX-PTEMP
-        PRANG2=PMAX2-PMIN2
-        GOTO1289
-      ELSE
-        IF(PTCOFL.EQ.0.0 .AND. PTCOFR.EQ.0.0)THEN
-          FMIN2=FMIN
-          FMAX2=FMAX
-          FMIN=FMIN2-FMIN/2.
-          FMAX=FMAX2+FMAX/2.
+          NUMCYC=IEXMAX-IEXMIN
+          NUMCYP=NUMCYC+1
+          PRANGE=PMAX-PMIN
         ELSE
+          IEXMIN=INT(EXPMIN+0.01)
+          IF(EXPMIN.LT.0.0)IEXMIN=INT(EXPMIN-0.01)
+          IEXMAX=IEXMIN
+          NUMCYC=1
+        ENDIF
+C
+C       ALGORITHIM ADJUSTED MAY, 1990 TO SUPPORT TIC OFFSETS.  NOTE THAT
+C       OFFSET MAY BE DONE IN EITHER DATAPLOT UNITS OR DATA UNITS.
+C
+        IF(ITICUN.NE.'ABSO')GOTO1285
+C
+C       OFFSET IN DATAPLOT UNITS
+C
+        IF(FMIN.NE.FMAX)THEN
+          PMIN2=PMIN+PTCOFL
+          PMAX2=PMAX-PTCOFR
+          IF(PMIN2.LT.PMAX2)THEN
+            PRANG2=PMAX2-PMIN2
+            FMIN2=FMIN
+            FMAX2=FMAX
+            ATEMP=(EXPMAX-EXPMIN)/(PMAX2-PMIN2)
+            ATMPMX=EXPMAX+(PTCOFR*ATEMP)
+            ATMPMN=EXPMIN-(PTCOFL*ATEMP)
+            FMAX=10.**ATMPMX
+            FMIN=10.**ATMPMN
+          ELSE
+            PMIN2=PMIN
+            PMAX2=PMAX
+            PRANG2=PRANGE
+            FMIN2=FMIN
+            FMAX2=FMAX
+          ENDIF
+          GOTO1289
+        ELSE
+CCCCC     FOR 1 CYCLE CASE, TIC OFFSETS WILL BE CALCULATED IN DATA
+CCCCC     UNITS REGARDLESS OF TIC OFFSET UNITS.
+        ENDIF
+C
+C       OFFSET IN DATA UNITS
+C
+ 1285   CONTINUE
+        IF(FMIN.NE.FMAX)THEN
           FMIN2=FMIN
           FMAX2=FMAX
           FMIN=FMIN2-PTCOFL
-          IF(FMIN.LE.0.0)FMIN=FMIN2-FMIN/2.
           FMAX=FMAX2+PTCOFR
+          IF(FMIN.GT.0.0)THEN
+            ATMPMN=LOG10(FMIN)
+            ATMPMX=LOG10(FMAX)
+            ATEMP=(ATMPMX-ATMPMN)/(PMAX-PMIN)
+            PTEMP=(EXPMIN-ATMPMN)/ATEMP
+            PMIN2=PMIN+PTEMP
+            PTEMP=(ATMPMX-EXPMAX)/ATEMP
+            PMAX2=PMAX-PTEMP
+            PRANG2=PMAX2-PMIN2
+          ELSE
+            FMIN=FMIN2
+            FMAX=FMAX2
+            PMIN2=PMIN
+            PMAX2=PMAX
+            PRANG2=PMAX2-PMIN2
+          ENDIF
+          GOTO1289
+        ELSE
+          IF(PTCOFL.EQ.0.0 .AND. PTCOFR.EQ.0.0)THEN
+            FMIN2=FMIN
+            FMAX2=FMAX
+            FMIN=FMIN2-FMIN/2.
+            FMAX=FMAX2+FMAX/2.
+          ELSE
+            FMIN2=FMIN
+            FMAX2=FMAX
+            FMIN=FMIN2-PTCOFL
+            IF(FMIN.LE.0.0)FMIN=FMIN2-FMIN/2.
+            FMAX=FMAX2+PTCOFR
+          ENDIF
+          ATMPMN=LOG10(FMIN)
+          ATMPMX=LOG10(FMAX)
+          ATEMP=(ATMPMX-ATMPMN)/(PMAX-PMIN)
+          PTEMP=(EXPMIN-ATMPMN)/ATEMP
+          PMIN2=PMIN+PTEMP
+          PMAX2=PMIN2
+          PRANG2=PMAX2-PMIN2
+          GOTO1289
         ENDIF
-        ATMPMN=LOG10(FMIN)
-        ATMPMX=LOG10(FMAX)
-        ATEMP=(ATMPMX-ATMPMN)/(PMAX-PMIN)
-        PTEMP=(EXPMIN-ATMPMN)/ATEMP
-        PMIN2=PMIN+PTEMP
-        PMAX2=PMIN2
-        PRANG2=PMAX2-PMIN2
-        GOTO1289
-      ENDIF
 C
- 1289 CONTINUE
+ 1289   CONTINUE
 C
-CCCC A COUPLE OF LINES MODIFIED IN FOLLOWING LOOP MAY, 1990.
-      IF(FMIN2.EQ.FMAX2)THEN
-        PTCOOR(1)=PMIN2
-        ATCOOR(1)=EXPMIN
-        PTCOOR(2)=PMIN
-        ATCOOR(2)=LOG10(FMIN)
-        PTCOOR(3)=PMAX
-        ATCOOR(3)=LOG10(FMAX)
-        NMJT2=3
-        GOTO1231
-      ENDIF
+CCCC   A COUPLE OF LINES MODIFIED IN FOLLOWING LOOP MAY, 1990.
+        IF(FMIN2.EQ.FMAX2)THEN
+          PTCOOR(1)=PMIN2
+          ATCOOR(1)=EXPMIN
+          PTCOOR(2)=PMIN
+          ATCOOR(2)=LOG10(FMIN)
+          PTCOOR(3)=PMAX
+          ATCOOR(3)=LOG10(FMAX)
+          NMJT2=3
+          GOTO1231
+        ENDIF
 C
-      K=0
-      DO1210I=1,NUMCYP
-      AI=I
-CCCCC ACYCST=FMIN*10.0**(I-1)
-      ACYCST=FMIN2*10.0**(I-1)
-      K=K+1
-      XI=ACYCST
-CCCCC XRATIO=(LOG10(XI)-LOG10(FMIN))/DENOM
-      XRATIO=(LOG10(XI)-LOG10(FMIN2))/DENOM
-CCCCC PTCOOR(K)=PMIN+XRATIO*PRANGE
-      PTCOOR(K)=PMIN2+XRATIO*PRANG2
-CCCCC ATCOOR(K)=XI
-      ATCOOR(K)=EXPMIN+(AI-1.0)
-      IF(I.EQ.NUMCYP.AND.J.LE.1)GOTO1229
- 1210 CONTINUE
- 1229 CONTINUE
-      NMJT2=K
- 1231 CONTINUE
+        K=0
+        DO1210I=1,NUMCYP
+          AI=I
+CCCCC     ACYCST=FMIN*10.0**(I-1)
+          ACYCST=FMIN2*10.0**(I-1)
+          K=K+1
+          XI=ACYCST
+CCCCC     XRATIO=(LOG10(XI)-LOG10(FMIN))/DENOM
+          XRATIO=(LOG10(XI)-LOG10(FMIN2))/DENOM
+CCCCC     PTCOOR(K)=PMIN+XRATIO*PRANGE
+          PTCOOR(K)=PMIN2+XRATIO*PRANG2
+CCCCC     ATCOOR(K)=XI
+          ATCOOR(K)=EXPMIN+(AI-1.0)
+          IF(I.EQ.NUMCYP.AND.J.LE.1)GOTO1229
+ 1210   CONTINUE
+ 1229   CONTINUE
+        NMJT2=K
+ 1231   CONTINUE
 C
 C               *******************************
 C               **  STEP 2.2--               **
@@ -20070,100 +20307,97 @@ C               **  COMPUTE MINOR TIC MARKS  **
 C               **  FOR THE LOG    CASE      **
 C               *******************************
 C
-CCCCC COUPLE LINES CHANGED MAY, 1990 IN FOLLOWING LOOP.
-CCCCC JUNE 1994.  ADD ONE CYCLE OF MINOR TICS WHEN THERE IS A TIC
-CCCCC OFFSET.  TWO CASES, AT LOW END AND AT HIGH END.
-      IF(FMIN2.EQ.FMAX2)THEN
+CCCCC   COUPLE LINES CHANGED MAY, 1990 IN FOLLOWING LOOP.
+CCCCC   JUNE 1994.  ADD ONE CYCLE OF MINOR TICS WHEN THERE IS A TIC
+CCCCC   OFFSET.  TWO CASES, AT LOW END AND AT HIGH END.
+        IF(FMIN2.EQ.FMAX2)THEN
+          K=0
+          IF(FMIN2.LE.FMIN)GOTO11259
+          ACYST=FMIN2*10.0**(-1)
+          DO11250J=2,9
+            AJ=J
+            XI=AJ*ACYST
+            IF(XI.LT.FMIN)GOTO11250
+            K=K+1
+            XRATIO=(LOG10(FMIN2)-LOG10(XI))/
+     1             (LOG10(FMIN2)-LOG10(FMIN))
+            PTCOMN(K)=PMIN2-XRATIO*(PMIN2-PMIN)
+            ATCOMN(K)=XI
+11250     CONTINUE
+11259     CONTINUE
+          ACYST=FMIN2*10.0**(0)
+          DO11260J=2,9
+            AJ=J
+            XI=AJ*ACYST
+            IF(XI.GT.FMAX)GOTO11260
+            K=K+1
+            XRATIO=(LOG10(XI)-LOG10(FMIN2))/
+     1             (LOG10(FMAX)-LOG10(FMIN2))
+            PTCOMN(K)=PMIN2+XRATIO*(PMAX-PMIN2)
+            ATCOMN(K)=XI
+11260     CONTINUE
+          NMNT2=K
+          GOTO9000
+        ENDIF
+C
         K=0
-        IF(FMIN2.LE.FMIN)GOTO11259
+CCCCC   JUNE 1994.  CASE FOR LOW END.
+        IF(FMIN2.LE.FMIN)GOTO1259
         ACYST=FMIN2*10.0**(-1)
-        DO11250J=2,9
+        DO1250J=2,9
           AJ=J
           XI=AJ*ACYST
-          IF(XI.LT.FMIN)GOTO11250
+          IF(XI.LT.FMIN)GOTO1250
           K=K+1
-          XRATIO=(LOG10(FMIN2)-LOG10(XI))/
-     1           (LOG10(FMIN2)-LOG10(FMIN))
-          PTCOMN(K)=PMIN2-XRATIO*(PMIN2-PMIN)
+CCCCC     XRATIO=(LOG10(XI)-LOG10(FMIN2))/DENOM
+          XRATIO=(LOG10(FMIN2)-LOG10(XI))/DENOM
+          PTCOMN(K)=PMIN2-XRATIO*PRANG2
           ATCOMN(K)=XI
-11250   CONTINUE
-11259   CONTINUE
-        ACYST=FMIN2*10.0**(0)
-        DO11260J=2,9
+ 1250   CONTINUE
+ 1259   CONTINUE
+C
+        DO1260I=1,NUMCYC
+CCCCC     ACYCST=FMIN*10.0**(I-1)
+          ACYCST=FMIN2*10.0**(I-1)
+          DO1270J=2,9
+            K=K+1
+            AJ=J
+            XI=AJ*ACYCST
+CCCCC       XRATIO=(LOG10(XI)-LOG10(FMIN))/DENOM
+            XRATIO=(LOG10(XI)-LOG10(FMIN2))/DENOM
+CCCCC       PTCOMN(K)=PMIN+XRATIO*PRANGE
+            PTCOMN(K)=PMIN2+XRATIO*PRANG2
+            ATCOMN(K)=XI
+            IF(I.EQ.NUMCYP.AND.J.LE.1)GOTO1279
+ 1270     CONTINUE
+ 1260   CONTINUE
+ 1279   CONTINUE
+CCCCC   JUNE 1994.  CASE FOR HIGH END.
+        IF(FMAX2.GE.FMAX)GOTO1299
+        ACYST=FMAX2
+        DO1280J=2,9
           AJ=J
           XI=AJ*ACYST
-          IF(XI.GT.FMAX)GOTO11260
+          IF(XI.GT.FMAX)GOTO1280
           K=K+1
-          XRATIO=(LOG10(XI)-LOG10(FMIN2))/
-     1           (LOG10(FMAX)-LOG10(FMIN2))
-          PTCOMN(K)=PMIN2+XRATIO*(PMAX-PMIN2)
+          XRATIO=(LOG10(XI)-LOG10(FMAX2))/DENOM
+          PTCOMN(K)=PMAX2+XRATIO*PRANG2
           ATCOMN(K)=XI
-11260   CONTINUE
+ 1280   CONTINUE
+ 1299   CONTINUE
+C
         NMNT2=K
         GOTO9000
-      ENDIF
 C
-      K=0
-CCCCC JUNE 1994.  CASE FOR LOW END.
-      IF(FMIN2.LE.FMIN)GOTO1259
-      ACYST=FMIN2*10.0**(-1)
-      DO1250J=2,9
-      AJ=J
-      XI=AJ*ACYST
-      IF(XI.LT.FMIN)GOTO1250
-      K=K+1
-CCCCC XRATIO=(LOG10(XI)-LOG10(FMIN2))/DENOM
-      XRATIO=(LOG10(FMIN2)-LOG10(XI))/DENOM
-      PTCOMN(K)=PMIN2-XRATIO*PRANG2
-      ATCOMN(K)=XI
- 1250 CONTINUE
- 1259 CONTINUE
-C
-      DO1260I=1,NUMCYC
-CCCCC ACYCST=FMIN*10.0**(I-1)
-      ACYCST=FMIN2*10.0**(I-1)
-      DO1270J=2,9
-      K=K+1
-      AJ=J
-      XI=AJ*ACYCST
-CCCCC XRATIO=(LOG10(XI)-LOG10(FMIN))/DENOM
-      XRATIO=(LOG10(XI)-LOG10(FMIN2))/DENOM
-CCCCC PTCOMN(K)=PMIN+XRATIO*PRANGE
-      PTCOMN(K)=PMIN2+XRATIO*PRANG2
-      ATCOMN(K)=XI
-      IF(I.EQ.NUMCYP.AND.J.LE.1)GOTO1279
- 1270 CONTINUE
- 1260 CONTINUE
- 1279 CONTINUE
-CCCCC JUNE 1994.  CASE FOR HIGH END.
-      IF(FMAX2.GE.FMAX)GOTO1299
-      ACYST=FMAX2
-      DO1280J=2,9
-      AJ=J
-      XI=AJ*ACYST
-      IF(XI.GT.FMAX)GOTO1280
-      K=K+1
-      XRATIO=(LOG10(XI)-LOG10(FMAX2))/DENOM
-      PTCOMN(K)=PMAX2+XRATIO*PRANG2
-      ATCOMN(K)=XI
- 1280 CONTINUE
- 1299 CONTINUE
-C
-      NMNT2=K
-      GOTO9000
-C
- 1290 CONTINUE
-C
-C               ************************************
-C               **  STEP 3--                      **
-C               **  TREAT THE WEIBULL SCALE CASE  **
+C               *****************************************
+C               **  STEP 3--                           **
+C               **  TREAT THE WEIBULL SCALE CASE       **
 C               **  NOTE THAT THE COORDINATES WILL GO  **
 C               **  FROM 0 TO 100 RATHER THAN FROM THE **
 C               **  USUAL 0 TO 1                       **
-C               ************************************
+C               *****************************************
 C
-      IF(ISCASW.EQ.'WEIB')GOTO1300
-      GOTO1390
+      ELSEIF(ISCASW.EQ.'WEIB')THEN
 C
 C               *******************************
 C               **  STEP 2.1--               **
@@ -20171,61 +20405,54 @@ C               **  COMPUTE MAJOR TIC MARKS  **
 C               **  FOR THE WEIBULL CASE     **
 C               *******************************
 C
- 1300 CONTINUE
-      H=100.0
-      IF(0.0.LT.FMIN.AND.FMIN.LT.100.0.AND.
-     1   0.0.LT.FMAX.AND.FMAX.LT.100.0)GOTO1309
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1301)
- 1301 FORMAT('***** ERROR IN DPDET2--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1302)
- 1302 FORMAT('      A WEIBULL SCALE MAY NOT BE USED')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1303)
- 1303 FORMAT('      UNLESS THE FRAME LIMITS ARE ')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1304)
- 1304 FORMAT('      STRICTLY GREATER THAN 0 AND')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1305)
- 1305 FORMAT('      STRICTLY LESS THAN 100.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1306)FMIN,FMAX
- 1306 FORMAT('      THE FRAME LIMITS = ',2E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1307)
- 1307 FORMAT('      CORRECTIVE ACTION--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1308)
- 1308 FORMAT('      CHANGE DATA OR CHANGE LIMITS.')
-      CALL DPWRST('XXX','BUG ')
-      IERRG4='YES'
-      GOTO9000
- 1309 CONTINUE
+        H=100.0
+        IF(FMIN.LE.0.0 .OR. FMIN.GE.100.0 .OR.
+     1     FMAX.LE.0.0 .OR. FMAX.GE.100.0)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1201)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1302)
+ 1302     FORMAT('      A WEIBULL SCALE MAY NOT BE USED UNLESS THE')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1304)
+ 1304     FORMAT('      FRAME LIMITS ARE STRICTLY GREATER THAN 0 AND')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1305)
+ 1305     FORMAT('      STRICTLY LESS THAN 100.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1306)FMIN,FMAX
+ 1306     FORMAT('      THE FRAME LIMITS = ',2G15.7)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1205)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1206)
+          CALL DPWRST('XXX','BUG ')
+          IERRG4='YES'
+          GOTO9000
+        ENDIF
 C
-      EXPMIN=LOG(LOG(H/(H-FMIN)))
-      EXPMAX=LOG(LOG(H/(H-FMAX)))
-      DENOM=EXPMAX-EXPMIN
+        EXPMIN=LOG(LOG(H/(H-FMIN)))
+        EXPMAX=LOG(LOG(H/(H-FMAX)))
+        DENOM=EXPMAX-EXPMIN
 C
-      PRANGE=PMAX-PMIN
-      FRANGE=FMAX-FMIN
+        PRANGE=PMAX-PMIN
+        FRANGE=FMAX-FMIN
 C
-      NUMMAJ=NMJT
-      IF(NMJT.LE.16)NUMMAJ=16
-      IF(NMJT.GE.21)NUMMAJ=21
+        NUMMAJ=NMJT
+        IF(NMJT.LE.16)NUMMAJ=16
+        IF(NMJT.GE.21)NUMMAJ=21
 C
-      K=0
-      DO1310I=1,NUMMAJ
-      K=K+1
-      IP=I+(21-NUMMAJ)
-      XI=WEIB21(IP)
-      XRATIO=(LOG(LOG(H/(H-XI)))-LOG(LOG(H/(H-FMIN))))/DENOM
-      PTCOOR(K)=PMIN+XRATIO*PRANGE
-      ATCOOR(K)=XI
- 1310 CONTINUE
-      NMJT2=K
+        K=0
+        DO1310I=1,NUMMAJ
+          K=K+1
+          IP=I+(21-NUMMAJ)
+          XI=WEIB21(IP)
+          XRATIO=(LOG(LOG(H/(H-XI)))-LOG(LOG(H/(H-FMIN))))/DENOM
+          PTCOOR(K)=PMIN+XRATIO*PRANGE
+          ATCOOR(K)=XI
+ 1310   CONTINUE
+        NMJT2=K
 C
 C               *******************************
 C               **  STEP 2.2--               **
@@ -20233,22 +20460,19 @@ C               **  COMPUTE MINOR TIC MARKS  **
 C               **  FOR THE WEIBULL CASE     **
 C               *******************************
 C
-      NMNT2=0
-      GOTO9000
-C
- 1390 CONTINUE
+        NMNT2=0
+        GOTO9000
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED JUNE 1990
-C               ************************************
-C               **  STEP 4--                      **
-C               **  TREAT THE NORMAL SCALE CASE   **
+C               *****************************************
+C               **  STEP 4--                           **
+C               **  TREAT THE NORMAL SCALE CASE        **
 C               **  NOTE THAT THE COORDINATES WILL GO  **
 C               **  FROM 0 TO 100 RATHER THAN FROM THE **
 C               **  USUAL 0 TO 1                       **
-C               ************************************
+C               *****************************************
 C
-      IF(ISCASW.EQ.'NORM')GOTO1400
-      GOTO1490
+      ELSEIF(ISCASW.EQ.'NORM')THEN
 C
 C               *******************************
 C               **  STEP 2.1--               **
@@ -20256,75 +20480,67 @@ C               **  COMPUTE MAJOR TIC MARKS  **
 C               **  FOR THE NORMAL CASE      **
 C               *******************************
 C
- 1400 CONTINUE
-      H=100.0
-      IF(0.0.LT.FMIN.AND.FMIN.LT.100.0.AND.
-     1   0.0.LT.FMAX.AND.FMAX.LT.100.0)GOTO1409
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1401)
- 1401 FORMAT('***** ERROR IN DPDET2--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1402)
- 1402 FORMAT('      A NORMAL SCALE MAY NOT BE USED')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1403)
- 1403 FORMAT('      UNLESS THE FRAME LIMITS ARE ')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1404)
- 1404 FORMAT('      STRICTLY GREATER THAN 0 AND')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1405)
- 1405 FORMAT('      STRICTLY LESS THAN 100.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1406)FMIN,FMAX
- 1406 FORMAT('      THE FRAME LIMITS = ',2E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1407)
- 1407 FORMAT('      CORRECTIVE ACTION--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1408)
- 1408 FORMAT('      CHANGE DATA OR CHANGE LIMITS.')
-      CALL DPWRST('XXX','BUG ')
-      IERRG4='YES'
-      GOTO9000
- 1409 CONTINUE
+        H=100.0
+        IF(FMIN.LE.0.0 .OR. FMIN.GE.100.0 .OR.
+     1     FMAX.LE.0.0 .OR. FMAX.GE.100.0)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1201)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1402)
+ 1402     FORMAT('      A NORMAL SCALE MAY NOT BE USED UNLESS THE ',
+     1           'FRAME')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1404)
+ 1404     FORMAT('      LIMITS ARE STRICTLY GREATER THAN 0 AND ',
+     1           'STRICTLY LESS THAN 100.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1406)FMIN,FMAX
+ 1406     FORMAT('      THE FRAME LIMITS = ',2G15.7)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1205)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1206)
+          CALL DPWRST('XXX','BUG ')
+          IERRG4='YES'
+          GOTO9000
+        ENDIF
 C
-CCCCC EXPMIN=LOG(LOG(H/(H-FMIN)))
-      ARG=FMIN/H
-      CALL NORPPF(ARG,EXPMIN)
-CCCCC EXPMAX=LOG(LOG(H/(H-FMAX)))
-      ARG=FMAX/H
-      CALL NORPPF(ARG,EXPMAX)
-      DENOM=EXPMAX-EXPMIN
+CCCCC   EXPMIN=LOG(LOG(H/(H-FMIN)))
+        ARG=FMIN/H
+        CALL NORPPF(ARG,EXPMIN)
+CCCCC   EXPMAX=LOG(LOG(H/(H-FMAX)))
+        ARG=FMAX/H
+        CALL NORPPF(ARG,EXPMAX)
+        DENOM=EXPMAX-EXPMIN
 C
-      PRANGE=PMAX-PMIN
-      FRANGE=FMAX-FMIN
+        PRANGE=PMAX-PMIN
+        FRANGE=FMAX-FMIN
 C
-      NUMMAJ=NMJT
-      IF(NMJT.LE.15)NUMMAJ=15
-      IF(NMJT.GE.27)NUMMAJ=27
-      IHALF=NUMMAJ/2
-      I1=14-IHALF
-      I2=14+IHALF
-      IF(I1.LE.1)I1=1
-      IF(I2.GE.NUMMAJ)I2=NUMMAJ
+        NUMMAJ=NMJT
+        IF(NMJT.LE.15)NUMMAJ=15
+        IF(NMJT.GE.27)NUMMAJ=27
+        IHALF=NUMMAJ/2
+        I1=14-IHALF
+        I2=14+IHALF
+        IF(I1.LE.1)I1=1
+        IF(I2.GE.NUMMAJ)I2=NUMMAJ
 C
-      K=0
-      DO1410I=1,NUMMAJ
-      K=K+1
-      IP=I1+(I-1)
-      XI=ANORM(IP)
-CCCCC XRATIO=(LOG(LOG(H/(H-XI)))-LOG(LOG(H/(H-FMIN))))/DENOM
-      ARG1=XI/H
-      ARG2=FMIN/H
-      CALL NORPPF(ARG1,XOUT1)
-      CALL NORPPF(ARG2,XOUT2)
-      XRATIO=(XOUT1-XOUT2)/DENOM
-      PTCOOR(K)=PMIN+XRATIO*PRANGE
-      ATCOOR(K)=XI
- 1410 CONTINUE
-      NMJT2=K
+        K=0
+        DO1410I=1,NUMMAJ
+          K=K+1
+          IP=I1+(I-1)
+          XI=ANORM(IP)
+CCCCC     XRATIO=(LOG(LOG(H/(H-XI)))-LOG(LOG(H/(H-FMIN))))/DENOM
+          ARG1=XI/H
+          ARG2=FMIN/H
+          CALL NORPPF(ARG1,XOUT1)
+          CALL NORPPF(ARG2,XOUT2)
+          XRATIO=(XOUT1-XOUT2)/DENOM
+          PTCOOR(K)=PMIN+XRATIO*PRANGE
+          ATCOOR(K)=XI
+ 1410   CONTINUE
+        NMJT2=K
 C
 C               *******************************
 C               **  STEP 2.2--               **
@@ -20332,10 +20548,8 @@ C               **  COMPUTE MINOR TIC MARKS  **
 C               **  FOR THE NORMAL CASE      **
 C               *******************************
 C
-      NMNT2=0
-      GOTO9000
-C
- 1490 CONTINUE
+        NMNT2=0
+        GOTO9000
 C
 C               ***********************************
 C               **  STEP 38--                    **
@@ -20348,76 +20562,79 @@ C               **  COMPUTE MAJOR TIC MARKS  **
 C               **  FOR THE LINEAR CASE      **
 C               *******************************
 C
-      NUMMAJ=NMJT
-      IF(INMJSW.EQ.'FLOA')CALL DPDETN(FMIN,FMAX,NUMMAJ)
+      ELSE
+        NUMMAJ=NMJT
+        IF(INMJSW.EQ.'FLOA')CALL DPDETN(FMIN,FMAX,NUMMAJ)
 C
-      ANUMMA=NUMMAJ
-      DENOM=ANUMMA-1.0
-      PRANGE=PMAX-PMIN
-      FRANGE=FMAX-FMIN
+        ANUMMA=NUMMAJ
+        DENOM=ANUMMA-1.0
+        PRANGE=PMAX-PMIN
+        FRANGE=FMAX-FMIN
 C
-C  ALGORITHIM ADJUSTED MAY, 1990 TO SUPPORT TIC OFFSETS.  NOTE THAT
-C  OFFSET MAY BE DONE IN EITHER DATAPLOT UNITS OR DATA UNITS.
+C       ALGORITHIM ADJUSTED MAY, 1990 TO SUPPORT TIC OFFSETS.  NOTE THAT
+C       OFFSET MAY BE DONE IN EITHER DATAPLOT UNITS OR DATA UNITS.
 C
-      IF(ITICUN.NE.'ABSO')GOTO4805
+        IF(ITICUN.NE.'ABSO')THEN
 C
-C  OFFSET IN DATAPLOT UNITS
+C         OFFSET IN DATA UNITS
 C
-      PMIN2=PMIN+PTCOFL
-      PMAX2=PMAX-PTCOFR
-      IF(PMIN2.LT.PMAX2)GOTO4803
-      PMIN2=PMIN
-      PMAX2=PMAX
-      PRANG2=PRANGE
-      FMIN2=FMIN
-      FMAX2=FMAX
-      FRANG2=FRANGE
-      GOTO4809
- 4803 CONTINUE
-      PRANG2=PMAX2-PMIN2
-      FMIN2=FMIN
-      FMAX2=FMAX
-      FRANG2=FRANGE
-      FSCALE=FRANG2/PRANG2
-      FMIN=FMIN2-FSCALE*PTCOFL
-      FMAX=FMAX2+FSCALE*PTCOFR
-      FRANGE=FMAX-FMIN
-      GOTO4809
+          FMIN2=FMIN
+          FMAX2=FMAX
+          FMIN=FMIN2-PTCOFL
+          FMAX=FMAX2+PTCOFR
+          FRANG2=FMAX2-FMIN2
+          FRANGE=FMAX-FMIN
+          PSCALE=PRANGE/FRANGE
+          PMIN2=PMIN+PSCALE*PTCOFL
+          PMAX2=PMAX-PSCALE*PTCOFR
+          PRANG2=PMAX2-PMIN2
+          GOTO4809
 C
-C  OFFSET IN DATA UNITS
+C         OFFSET IN DATAPLOT UNITS
 C
- 4805 CONTINUE
-      FMIN2=FMIN
-      FMAX2=FMAX
-      FMIN=FMIN2-PTCOFL
-      FMAX=FMAX2+PTCOFR
-      FRANG2=FMAX2-FMIN2
-      FRANGE=FMAX-FMIN
-      PSCALE=PRANGE/FRANGE
-      PMIN2=PMIN+PSCALE*PTCOFL
-      PMAX2=PMAX-PSCALE*PTCOFR
-      PRANG2=PMAX2-PMIN2
-      GOTO4809
+        ELSE
+          PMIN2=PMIN+PTCOFL
+          PMAX2=PMAX-PTCOFR
+          IF(PMIN2.LT.PMAX2)THEN
+            PRANG2=PMAX2-PMIN2
+            FMIN2=FMIN
+            FMAX2=FMAX
+            FRANG2=FRANGE
+            FSCALE=FRANG2/PRANG2
+            FMIN=FMIN2-FSCALE*PTCOFL
+            FMAX=FMAX2+FSCALE*PTCOFR
+            FRANGE=FMAX-FMIN
+            GOTO4809
+          ELSE
+            PMIN2=PMIN
+            PMAX2=PMAX
+            PRANG2=PRANGE
+            FMIN2=FMIN
+            FMAX2=FMAX
+            FRANG2=FRANGE
+            GOTO4809
+          ENDIF
+        ENDIF
 C
- 4809 CONTINUE
 C
-      K=0
-      IF(NUMMAJ.LE.0)GOTO4819
-      DO4815I=1,NUMMAJ
-      AI=I
-      XRATIO=(AI-1.0)/DENOM
-      K=K+1
-CCCCC PTCOOR(K)=PMIN+XRATIO*PRANGE
-CCCCC ATCOOR(K)=FMIN+XRATIO*FRANGE
-      PTCOOR(K)=PMIN2+XRATIO*PRANG2
-      ATCOOR(K)=FMIN2+XRATIO*FRANG2
-      IF(FRANGE.GE.1.AND.
-     1(-EPS).LE.ATCOOR(K).AND.
-     1ATCOOR(K).LE.EPS)ATCOOR(K)=0.0
- 4815 CONTINUE
+ 4809   CONTINUE
 C
- 4819 CONTINUE
-      NMJT2=K
+        K=0
+        IF(NUMMAJ.GT.0)THEN
+          DO4815I=1,NUMMAJ
+            AI=I
+            XRATIO=(AI-1.0)/DENOM
+            K=K+1
+CCCCC       PTCOOR(K)=PMIN+XRATIO*PRANGE
+CCCCC       ATCOOR(K)=FMIN+XRATIO*FRANGE
+            PTCOOR(K)=PMIN2+XRATIO*PRANG2
+            ATCOOR(K)=FMIN2+XRATIO*FRANG2
+            IF(FRANGE.GE.1.AND.
+     1        (-EPS).LE.ATCOOR(K).AND.
+     1        ATCOOR(K).LE.EPS)ATCOOR(K)=0.0
+ 4815     CONTINUE
+        ENDIF
+        NMJT2=K
 C
 C               *******************************
 C               **  STEP 8.2--               **
@@ -20425,72 +20642,73 @@ C               **  COMPUTE MINOR TIC MARKS  **
 C               **  FOR THE LINEAR CASE      **
 C               *******************************
 C
-      K=0
+        K=0
 C
-      XIMIN=ATCOOR(1)
-      XIMAX=ATCOOR(2)
+        XIMIN=ATCOOR(1)
+        XIMAX=ATCOOR(2)
 C
-      NUMMIN=NMNT
-      IF(INMNSW.EQ.'FLOA')NUMMIN=1
+        NUMMIN=NMNT
+        IF(INMNSW.EQ.'FLOA')NUMMIN=1
 C
-      ANUMMI=NUMMIN
-      DENOM=ANUMMI+1.0
+        ANUMMI=NUMMIN
+        DENOM=ANUMMI+1.0
 C
-      NUMMAM=NUMMAJ-1
-      IF(NUMMAM.LE.0)GOTO4919
-      IF(NMJT2.LE.1)GOTO4919
-CCCCC JUNE 1994.  ADD ONE CYCLE OF MINOR TICS WHEN THERE IS A TIC
-CCCCC OFFSET.  TWO CASES, AT LOW END AND AT HIGH END.
-CCCCC JUNE 1994.  CASE FOR LOW END.
-      IF(NUMMIN.LE.0)GOTO4919
-      IF(FMIN2.LE.FMIN)GOTO4929
-      PRANGE=PTCOOR(2)-PTCOOR(1)
-      FRANGE=ATCOOR(2)-ATCOOR(1)
-      PSTART=PTCOOR(1)-PRANGE
-      FSTART=ATCOOR(1)-FRANGE
-      DO4926J=1,NUMMIN
-      AJ=J
-      XRATIO=AJ/DENOM
-      PTTEMP=PSTART+XRATIO*PRANGE
-      IF(PTTEMP.LT.PMIN)GOTO4926
-      K=K+1
-      PTCOMN(K)=PTTEMP
-      ATCOMN(K)=FSTART+XRATIO*FRANGE
- 4926 CONTINUE
- 4929 CONTINUE
+        NUMMAM=NUMMAJ-1
+        IF(NUMMAM.LE.0)GOTO4919
+        IF(NMJT2.LE.1)GOTO4919
+CCCCC   JUNE 1994.  ADD ONE CYCLE OF MINOR TICS WHEN THERE IS A TIC
+CCCCC   OFFSET.  TWO CASES, AT LOW END AND AT HIGH END.
+CCCCC   JUNE 1994.  CASE FOR LOW END.
+        IF(NUMMIN.LE.0)GOTO4919
+        IF(FMIN2.LE.FMIN)GOTO4929
+        PRANGE=PTCOOR(2)-PTCOOR(1)
+        FRANGE=ATCOOR(2)-ATCOOR(1)
+        PSTART=PTCOOR(1)-PRANGE
+        FSTART=ATCOOR(1)-FRANGE
+        DO4926J=1,NUMMIN
+          AJ=J
+          XRATIO=AJ/DENOM
+          PTTEMP=PSTART+XRATIO*PRANGE
+          IF(PTTEMP.LT.PMIN)GOTO4926
+          K=K+1
+          PTCOMN(K)=PTTEMP
+          ATCOMN(K)=FSTART+XRATIO*FRANGE
+ 4926   CONTINUE
+ 4929   CONTINUE
 C
-      DO4915I=1,NUMMAM
-      IP1=I+1
-      PRANGE=PTCOOR(IP1)-PTCOOR(I)
-      FRANGE=ATCOOR(IP1)-ATCOOR(I)
-      IF(NUMMIN.LE.0)GOTO4919
-      DO4916J=1,NUMMIN
-      AJ=J
-      XRATIO=AJ/DENOM
-      K=K+1
-      PTCOMN(K)=PTCOOR(I)+XRATIO*PRANGE
-      ATCOMN(K)=ATCOOR(I)+XRATIO*FRANGE
- 4916 CONTINUE
- 4915 CONTINUE
+        DO4915I=1,NUMMAM
+          IP1=I+1
+          PRANGE=PTCOOR(IP1)-PTCOOR(I)
+          FRANGE=ATCOOR(IP1)-ATCOOR(I)
+          IF(NUMMIN.LE.0)GOTO4919
+          DO4916J=1,NUMMIN
+            AJ=J
+            XRATIO=AJ/DENOM
+            K=K+1
+            PTCOMN(K)=PTCOOR(I)+XRATIO*PRANGE
+            ATCOMN(K)=ATCOOR(I)+XRATIO*FRANGE
+ 4916     CONTINUE
+ 4915   CONTINUE
 C
-CCCCC JUNE 1994.  CASE FOR HIGH END.
-      IF(FMAX2.GE.FMAX)GOTO4939
-      PRANGE=PTCOOR(2)-PTCOOR(1)
-      FRANGE=ATCOOR(2)-ATCOOR(1)
-      DO4936J=1,NUMMIN
-      AJ=J
-      XRATIO=AJ/DENOM
-      PTTEMP=PTCOOR(NUMMAJ)+XRATIO*PRANGE
-      IF(PTTEMP.GT.PMAX)GOTO4939
-      K=K+1
-      PTCOMN(K)=PTTEMP
-      ATCOMN(K)=ATCOOR(NUMMAJ)+XRATIO*FRANGE
- 4936 CONTINUE
- 4939 CONTINUE
+CCCCC   JUNE 1994.  CASE FOR HIGH END.
+        IF(FMAX2.GE.FMAX)GOTO4939
+        PRANGE=PTCOOR(2)-PTCOOR(1)
+        FRANGE=ATCOOR(2)-ATCOOR(1)
+        DO4936J=1,NUMMIN
+          AJ=J
+          XRATIO=AJ/DENOM
+          PTTEMP=PTCOOR(NUMMAJ)+XRATIO*PRANGE
+          IF(PTTEMP.GT.PMAX)GOTO4939
+          K=K+1
+          PTCOMN(K)=PTTEMP
+          ATCOMN(K)=ATCOOR(NUMMAJ)+XRATIO*FRANGE
+ 4936   CONTINUE
+ 4939   CONTINUE
 C
- 4919 CONTINUE
-      NMNT2=K
-      GOTO9000
+ 4919   CONTINUE
+        NMNT2=K
+        GOTO9000
+      ENDIF
 C
 C               *****************
 C               **  STEP 90--  **
@@ -20498,118 +20716,88 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'DET2')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF DPDET2--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)PMIN,PMAX
- 9012 FORMAT('PMIN,PMAX = ',2E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)FMIN,FMAX
- 9013 FORMAT('FMIN,FMAX = ',2E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9014)ITICSW,ISCASW
- 9014 FORMAT('ITICSW,ISCASW = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9015)NMJT,INMJSW,NUMMAJ
- 9015 FORMAT('NMJT,INMJSW,NUMMAJ = ',I8,2X,A4,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9016)NMNT,INMNSW
- 9016 FORMAT('NMNT,INMNSW = ',I8,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9021)NMJT2
- 9021 FORMAT('NMJT2 = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9022)FMIN,PMIN
- 9022 FORMAT('  FMIN     ,PMIN      = ',8X,2E15.7)
-      CALL DPWRST('XXX','BUG ')
-      IF(NMJT2.LE.0)GOTO9029
-      DO9023I=1,NMJT2
-      WRITE(ICOUT,9024)I,ATCOOR(I),PTCOOR(I)
- 9024 FORMAT('I,ATCOOR(I),PTCOOR(I) = ',I8,2E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9023 CONTINUE
-      WRITE(ICOUT,9025)FMAX,PMAX
- 9025 FORMAT('  FMAX     ,PMAX      = ',8X,2E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9029 CONTINUE
-      WRITE(ICOUT,9031)NMNT2
- 9031 FORMAT('NMNT2 = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9032)FMIN,PMIN
- 9032 FORMAT('  FMIN     ,PMIN      = ',8X,2E15.7)
-      CALL DPWRST('XXX','BUG ')
-      IF(NMNT2.LE.0)GOTO9039
-      DO9033I=1,NMNT2
-      WRITE(ICOUT,9034)I,ATCOMN(I),PTCOMN(I)
- 9034 FORMAT('I,ATCOMN(I),PTCOMN(I) = ',I8,2E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9033 CONTINUE
-      WRITE(ICOUT,9035)FMAX,PMAX
- 9035 FORMAT('  FMAX     ,PMAX      = ',8X,2E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9039 CONTINUE
-      WRITE(ICOUT,9041)EXPMIN,EXPMAX,DENOM
- 9041 FORMAT('EXPMIN,EXPMAX,DENOM = ',3E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9042)IEXMIN,IEXMAX
- 9042 FORMAT('IEXMIN,IEXMAX = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9043)NUMCYC,NUMCYP,PRANGE
- 9043 FORMAT('NUMCYC,NUMCYP,PRANGE = ',2I8,E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9044)NUMMAJ
- 9044 FORMAT('NUMMAJ = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9045)NUMMIN
- 9045 FORMAT('NUMMIN = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9047)XIMIN,XIMAX
- 9047 FORMAT('XIMIN,XIMAX = ',2E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9049)IBUGG4,ISUBG4,IERRG4
- 9049 FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9052)PMIN2,PMAX2
- 9052 FORMAT('PMIN2,PMAX2 = ',2E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9053)FMIN2,FMAX2
- 9053 FORMAT('FMIN2,FMAX2 = ',2E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9054)FRANG2,PRANG2
- 9054 FORMAT('FRANG2,PRANG2 = ',2E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9055)ITICUN
- 9055 FORMAT('ITICUN = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9056)PTCOFL,PTCOFR
- 9056 FORMAT('PTCOFL,PTCOFR = ',2E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9090 CONTINUE
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'DET2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPDET2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9021)NMJT2,NMNT2
+ 9021   FORMAT('NMJT2,NMNT2 = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9022)FMIN,PMIN
+ 9022   FORMAT('  FMIN     ,PMIN      = ',8X,2E15.7)
+        CALL DPWRST('XXX','BUG ')
+        IF(NMJT2.GT.0)THEN
+          DO9023I=1,NMJT2
+            WRITE(ICOUT,9024)I,ATCOOR(I),PTCOOR(I)
+ 9024       FORMAT('I,ATCOOR(I),PTCOOR(I) = ',I8,2G15.7)
+            CALL DPWRST('XXX','BUG ')
+ 9023     CONTINUE
+          WRITE(ICOUT,9025)FMAX,PMAX
+ 9025     FORMAT('  FMAX     ,PMAX      = ',8X,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        WRITE(ICOUT,9032)FMIN,PMIN
+ 9032   FORMAT('  FMIN     ,PMIN      = ',8X,2G15.7)
+        CALL DPWRST('XXX','BUG ')
+        IF(NMNT2.GT.0)THEN
+          DO9033I=1,NMNT2
+            WRITE(ICOUT,9034)I,ATCOMN(I),PTCOMN(I)
+ 9034       FORMAT('I,ATCOMN(I),PTCOMN(I) = ',I8,2G15.7)
+            CALL DPWRST('XXX','BUG ')
+ 9033     CONTINUE
+          WRITE(ICOUT,9035)FMAX,PMAX
+ 9035     FORMAT('  FMAX     ,PMAX      = ',8X,2E15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        WRITE(ICOUT,9041)EXPMIN,EXPMAX,DENOM
+ 9041   FORMAT('EXPMIN,EXPMAX,DENOM = ',3G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9042)IEXMIN,IEXMAX
+ 9042   FORMAT('IEXMIN,IEXMAX = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9043)NUMCYC,NUMCYP,PRANGE
+ 9043   FORMAT('NUMCYC,NUMCYP,PRANGE = ',2I8,E15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9044)NUMMAJ,NUMMIN
+ 9044   FORMAT('NUMMAJ,NUMMIN = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9047)XIMIN,XIMAX
+ 9047   FORMAT('XIMIN,XIMAX = ',2G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9049)IBUGG4,ISUBG4,IERRG4
+ 9049   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9052)PMIN2,PMAX2,FMIN2,FMAX2
+ 9052   FORMAT('PMIN2,PMAX2,FMIN2,FMAX2 = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9054)FRANG2,PRANG2
+ 9054   FORMAT('FRANG2,PRANG2 = ',2E15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END
       SUBROUTINE DPDETM(PXMIN,PYMIN,PXMAX,PYMAX,
-     1ICASPL,ICAS3D,
-     1FX1MIN,FX1MAX,FY1MIN,FY1MAX,
-     1FX2MIN,FX2MAX,FY2MIN,FY2MAX,
-     1IX1TSW,IX2TSW,IY1TSW,IY2TSW,
-     1IX1JSW,IX2JSW,IY1JSW,IY2JSW,
-     1NMJX1T,NMJX2T,NMJY1T,NMJY2T,
-     1IX1TSC,IX2TSC,IY1TSC,IY2TSC,
-     1PX1COO,PX2COO,PY1COO,PY2COO,
-     1X1COOR,X2COOR,Y1COOR,Y2COOR,
-     1NX1COO,NX2COO,NY1COO,NY2COO,
-     1IX1NSW,IX2NSW,IY1NSW,IY2NSW,
-     1NMNX1T,NMNX2T,NMNY1T,NMNY2T,
-     1PX1CMN,PX2CMN,PY1CMN,PY2CMN,
-     1X1COMN,X2COMN,Y1COMN,Y2COMN,
-     1NX1CMN,NX2CMN,NY1CMN,NY2CMN,
-     1PX1TOL,PX2TOL,PY1TOB,PY2TOB,
-     1PX1TOR,PX2TOR,PY1TOT,PY2TOT,
-     1ITICUN)
+     1                  ICASPL,ICAS3D,
+     1                  FX1MIN,FX1MAX,FY1MIN,FY1MAX,
+     1                  FX2MIN,FX2MAX,FY2MIN,FY2MAX,
+     1                  IX1TSW,IX2TSW,IY1TSW,IY2TSW,
+     1                  IX1JSW,IX2JSW,IY1JSW,IY2JSW,
+     1                  NMJX1T,NMJX2T,NMJY1T,NMJY2T,
+     1                  IX1TSC,IX2TSC,IY1TSC,IY2TSC,
+     1                  PX1COO,PX2COO,PY1COO,PY2COO,
+     1                  X1COOR,X2COOR,Y1COOR,Y2COOR,
+     1                  NX1COO,NX2COO,NY1COO,NY2COO,
+     1                  IX1NSW,IX2NSW,IY1NSW,IY2NSW,
+     1                  NMNX1T,NMNX2T,NMNY1T,NMNY2T,
+     1                  PX1CMN,PX2CMN,PY1CMN,PY2CMN,
+     1                  X1COMN,X2COMN,Y1COMN,Y2COMN,
+     1                  NX1CMN,NX2CMN,NY1CMN,NY2CMN,
+     1                  PX1TOL,PX2TOL,PY1TOB,PY2TOB,
+     1                  PX1TOR,PX2TOR,PY1TOT,PY2TOT,
+     1                  ITICUN)
 CCCC ABOVE 3 LINES ADDED TO CALL SEQUENCE MAY, 1990 (TO ADD TIC OFFSETS)
 C
 C     PURPOSE--DETERMINE AND SET TIC MARKS
@@ -20682,66 +20870,66 @@ C
 C
 C-----START POINT-----------------------------------------------------
 C
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'DETM')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPDETM--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)PXMIN,PYMIN,PXMAX,PYMAX
-   52 FORMAT('PXMIN,PYMIN,PXMAX,PYMAX = ',4F10.5)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)FX1MIN,FX1MAX,FY1MIN,FY1MAX
-   53 FORMAT('FX1MIN,FX1MAX,FY1MIN,FY1MAX = ',4E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,54)FX2MIN,FX2MAX,FY2MIN,FY2MAX
-   54 FORMAT('FX2MIN,FX2MAX,FY2MIN,FY2MAX = ',4E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,56)IX1TSW,IX2TSW,IY1TSW,IY2TSW
-   56 FORMAT('IX1TSW,IX2TSW,IY1TSW,IY2TSW = ',A4,2X,A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,57)IX1JSW,IX2JSW,IY1JSW,IY2JSW
-   57 FORMAT('IX1JSW,IX2JSW,IY1JSW,IY2JSW = ',A4,2X,A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,58)NMJX1T,NMJX2T,NMJY1T,NMJY2T
-   58 FORMAT('NMJX1T,NMJX2T,NMJY1T,NMJY2T = ',4I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,61)IX1NSW,IX2NSW,IY1NSW,IY2NSW
-   61 FORMAT('IX1NSW,IX2NSW,IY1NSW,IY2NSW = ',A4,2X,A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,62)NMNX1T,NMNX2T,NMNY1T,NMNY2T
-   62 FORMAT('NMNX1T,NMNX2T,NMNY1T,NMNY2T = ',4I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,63)ICASPL,ICAS3D
-   63 FORMAT('ICASPL,ICAS3D = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,69)IBUGG4,ISUBG4,IERRG4
-   69 FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,70)ITICUN
-   70 FORMAT('ITICUN = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,71)PX1TOL,PX2TOL,PY1TOB,PY2TOB
-   71 FORMAT('PX1TOL,PX2TOL,PY1TOB,PY2TOB = ',4E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,72)PX1TOR,PX2TOR,PY1TOT,PY2TOT
-   72 FORMAT('PX1TOR,PX2TOR,PY1TOT,PY2TOT = ',4E15.7)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'DETM')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPDETM--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)PXMIN,PYMIN,PXMAX,PYMAX
+   52   FORMAT('PXMIN,PYMIN,PXMAX,PYMAX = ',4F10.5)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)FX1MIN,FX1MAX,FY1MIN,FY1MAX
+   53   FORMAT('FX1MIN,FX1MAX,FY1MIN,FY1MAX = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)FX2MIN,FX2MAX,FY2MIN,FY2MAX
+   54   FORMAT('FX2MIN,FX2MAX,FY2MIN,FY2MAX = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,56)IX1TSW,IX2TSW,IY1TSW,IY2TSW
+   56   FORMAT('IX1TSW,IX2TSW,IY1TSW,IY2TSW = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,57)IX1JSW,IX2JSW,IY1JSW,IY2JSW
+   57   FORMAT('IX1JSW,IX2JSW,IY1JSW,IY2JSW = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,58)NMJX1T,NMJX2T,NMJY1T,NMJY2T
+   58   FORMAT('NMJX1T,NMJX2T,NMJY1T,NMJY2T = ',4I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,59)IX1TSC,IX2TSC,IY1TSC,IY2TSC
+   59   FORMAT('IX1TSC,IX2TSC,IY1TSC,IY2TSC = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,61)IX1NSW,IX2NSW,IY1NSW,IY2NSW
+   61   FORMAT('IX1NSW,IX2NSW,IY1NSW,IY2NSW = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,62)NMNX1T,NMNX2T,NMNY1T,NMNY2T
+   62   FORMAT('NMNX1T,NMNX2T,NMNY1T,NMNY2T = ',4I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,63)ICASPL,ICAS3D,ITICUN
+   63   FORMAT('ICASPL,ICAS3D,ITICUN = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,69)IBUGG4,ISUBG4,IERRG4
+   69   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,71)PX1TOL,PX2TOL,PY1TOB,PY2TOB
+   71   FORMAT('PX1TOL,PX2TOL,PY1TOB,PY2TOB = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,72)PX1TOR,PX2TOR,PY1TOT,PY2TOT
+   72   FORMAT('PX1TOR,PX2TOR,PY1TOT,PY2TOT = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
-C               ******************************************************
-C               **  STEP 1--                                        **
+C               ***********************************************************
+C               **  STEP 1--                                             **
 C               **  DETERMINE MAJOR TIC MARKS ON BOTTOM HORIZONTAL AXIS  **
-C               ******************************************************
+C               ***********************************************************
 C
       CALL DPDET2(PXMIN,PXMAX,FX1MIN,FX1MAX,
-     1IX1TSW,IX1TSC,
-     1NMJX1T,IX1JSW,
-     1PX1COO,X1COOR,NX1COO,
-     1NMNX1T,IX1NSW,
-     1PX1CMN,X1COMN,NX1CMN,
-     1PX1TOL,PX1TOR,ITICUN)
+     1            IX1TSW,IX1TSC,
+     1            NMJX1T,IX1JSW,
+     1            PX1COO,X1COOR,NX1COO,
+     1            NMNX1T,IX1NSW,
+     1            PX1CMN,X1COMN,NX1CMN,
+     1            PX1TOL,PX1TOR,ITICUN)
 C  ABOVE LINE ADDED MAY, 1990.
       IF(IERRG4.EQ.'YES')GOTO9000
 C

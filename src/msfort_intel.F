@@ -80,7 +80,9 @@ C
         NCFTMP(I)=0
     5 CONTINUE
       ICNT=0
-      IQWNCL='VGA '
+CCCCC 2020/10: MAKE RGB THE DEFAULT
+CCCCC IQWNCL='VGA '
+      IQWNCL='RGB '
       IQWNTL='OFF'
       IF(NUM.GE.1)THEN
         DO10I=0,NUM
@@ -131,6 +133,15 @@ C
           ELSEIF(ISTAT.GE.5 .AND. BUF(1:5).EQ.'-TRUE' .OR.
      &           BUF(1:5).EQ.'-true')THEN
             IQWNCL='RGB'
+          ELSEIF(ISTAT.GE.7 .AND. BUF(1:5).EQ.'-NOTRUE' .OR.
+     &           BUF(1:7).EQ.'-notrue')THEN
+            IQWNCL='VGA'
+          ELSEIF(ISTAT.GE.4 .AND. BUF(1:4).EQ.'-RGB' .OR.
+     &           BUF(1:4).EQ.'-rgb')THEN
+            IQWNCL='RGB'
+          ELSEIF(ISTAT.GE.6 .AND. BUF(1:6).EQ.'-NORGB' .OR.
+     &           BUF(1:6).EQ.'-norgb')THEN
+            IQWNCL='VGA'
           ELSEIF(ISTAT.GE.4 .AND. BUF(1:4).EQ.'ECHO' .OR.
      &           BUF(1:4).EQ.'echo')THEN
             IECHO(1:4)='ECHO'

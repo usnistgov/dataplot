@@ -1,4 +1,4 @@
-66300.      (VERSION 2020.08)  total number of lines in file (including this line)
+66300.      (VERSION 2020.09)  total number of lines in file (including this line)
  4.                          number of     sections below
   100.    P                  first line number of P section
 22400.    Q                  first line number of Q section
@@ -22206,7 +22206,7 @@ Program 1:
  
 Program 2:
     . Purpose:  Use Python script to extract Excel file to a CSV
-    .           file.  From this, create a space separeated file with a
+    .           file.  From this, create a space separated file with a
     .           descriptive header for subsequent Dataplot use.  Finally,
     .           generate a Dataplot macro tha will read the space
     .           delimited file.
@@ -22217,8 +22217,9 @@ Program 2:
     .
     . Step 0:   Define some basic strings and file names
     .
+    dimension 40 columns
     probe path
-    let string ipath = probestr
+    let string ipath = ^probestr
     probe iopsy1
     if probeval = 2
        let string islash = \
@@ -22226,18 +22227,18 @@ Program 2:
        let string islash = /
     end of if
     let string subdir = data
-    let ipath = string concatenate ipath subdir
+    let ipath = string concatenate ipath subdir islash
     .
     let string base = CORONA_VIRUS_COUNTRY_RANKINGS_042920
-    let base = string concatenate ipath base
+    let base2 = string concatenate ipath base
     let string ext1 = .CSV
     let string ext2 = .TXT
     let string ext3 = .DP
     let string ext4 = .XLSX
-    let fname1 = string concatenate base ext1
-    let fname2 = string concatenate base ext2
-    let fname3 = string concatenate base ext3
-    let fname4 = string concatenate base ext4
+    let fname1 = string concatenate base  ext1
+    let fname2 = string concatenate base  ext2
+    let fname3 = string concatenate base  ext3
+    let fname4 = string concatenate base2 ext4
     .
     . Step 1:   Use Python to create the CSV file
     .
@@ -22333,7 +22334,6 @@ Program 2:
     write2 ^fname3  "let string cntry^k = ^ig^k"
     end of loop
     write2 ^fname3  "."
-    .
 
 -------------------------------------------------------------
 
@@ -29895,6 +29895,11 @@ Description:
     one of the other methods for reading data from spreadsheets
     listed below.
 
+    Broman and Woo (see References below) wrote a useful article
+    in The American Statistician that provides useful guidelines
+    for creating Excel files that can be more easily read by
+    non-Excel programs.
+
     If you infrequently need to read Excel files and do not already
     have Python installed on your local platform, there are several
     additional methods for reading the data from Excel files.  However,
@@ -29934,8 +29939,17 @@ Syntax:
           <variable list> is the list of variables to read;
     and where the <SUBSET/EXCEPT/FOR qualification> is optional.
 
+    Note that Pandas adds a "row index" variable as the first column
+    in the CSV file.  Be sure to add this variable to <variable list>.
+
 Examples:
     READ EXCEL FILE.XLSX Y1 Y2 Y3 X
+
+Note:
+    This command will not work successfully on all Excel files.
+    Spreadsheets commonly contain external information such as
+    cross tabulations and graphs.
+    It tends to work reasonably well for 
 
 Note:
     The Pandas pandas.to_csv function will typically add a row id
@@ -29951,11 +29965,21 @@ Note:
     READ for ASCII files.
 
     Note: The 2020/05 version of Dataplot now supports specifying the
-          first and last rows of the Excel file to read with the following
-          commands 
+          first and last rows of the Excel file to read with the
+          following commands 
 
               SET EXCEL START ROW <value>
               SET EXCEL STOP  ROW <value>
+
+          Python/Pandas start row numbers with 0.  Also, the first
+          line read is assumed to contain the variable names.  So if
+          the first good line is row 3 in the Excel file, use
+
+              SET EXCEL START ROW 1
+
+          Currently you need to specify both the START ROW and the
+          STOP row.  Otherwise, Pandas will include all rows in the
+          Excel sheet.
 
           One use of this is to skip over header lines in the Excel file.
 
@@ -29993,13 +30017,24 @@ Related Commands:
     PYTHON      = Run a user specified Python script from within Dataplot.
     READ        = Read variables, strings, parameters and matrices.
  
+References:
+    McKinney (2018), "Python for Data Analysis," Second Edition,
+    O'Reilly.
+
+    Chen (2018), "Pandas for Everyone: Python Data Analysis,"
+    O'Reilly.
+
+    Broman and Woo (2018), "Data Organization in Spreadsheets,"
+    The American Statistician, Vol. 72, No. 1, pp. 2-10.
+
 Applications:
     Data Input
  
 Implementation Date:
     2020/02
+    2020/05: Added SET EXCEL START ROW and SET EXCEL STOP ROW
 
-Program:
+Program 1:
     dimension 40 columns
     . Path name for Windows
     . read excel "C:\Program Files (x86)\NIST\DATAPLOT\LIB\DATA\FIBERS.XLSX" ...
@@ -30009,6 +30044,35 @@ Program:
          rowid breakid xcent ycent xc1 yc1 xc2 yc2 xc3 yc3 xc4 yc4 length
     set write decimals 3
     print breakid xcent length
+
+Program 2:
+    . Step 1: READ EXCEL does not search Dataplot sub-directories, so need
+    .         to pre-pend the appropriate sub-directory to Excel file name.
+    .
+    probe path
+    let string ipath = ^probestr
+    probe iopsy1
+    if probeval = 2
+       let string islash = \
+    else
+       let string islash = /
+    end of if
+    let string subdir = data
+    let ipath = string concatenate ipath subdir islash
+    .
+    let string fname = TEST.XLSX
+    let fname = string concatenate ipath fname
+    .
+    . Step 2: Read the Excel file
+    .
+    set excel start row 1
+    set excel stop  row 77
+    read excel ^fname rowid labid y1 y2
+    .
+    . Step 3: Print the first few lines of the Excel file
+    .
+    set write decimals 2
+    print rowid labid y1 y2 for i = 1 1 10
 
 -----READ FORMAT (SET)-------------------------------------------
  
@@ -42400,70 +42464,6 @@ Program:
     PLOT YIELD
  
 -------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

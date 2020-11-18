@@ -2027,10 +2027,10 @@ C
       RETURN
       END
       SUBROUTINE DPELL2(X1,Y1,X2,Y2,X3,Y3,PX,PY,
-     1                  IFIG,ILINPA,ILINCO,PLINTH,
-     1                  AREGBA,IREBLI,IREBCO,PREBTH,
-     1                  IREFSW,IREFCO,
-     1                  IREPTY,IREPLI,IREPCO,PREPTH,PREPSP,
+     1                  IFIG,ILINPA,ILINCO,ILINC2,MAXLN,PLINTH,
+     1                  AREGBA,IREBLI,IREBCO,IREBC2,MAXRG,PREBTH,
+     1                  IREFSW,IREFCO,IREFC2,
+     1                  IREPTY,IREPLI,IREPCO,IREPC2,PREPTH,PREPSP,
      1                  PTEXHE,PTEXWI,PTEXVG,PTEXHG)
 C
 C     PURPOSE--DRAW A ELLIPSE WITH ONE END OF THE MAJOR AXIS AT (X1,Y1)
@@ -2052,6 +2052,7 @@ C     UPDATED         --JANUARY   1989. MODIFY CALLS TO DPDRPL (ALAN)
 C     UPDATED         --FEBRUARY  1994. ARRAY TO GARBAGE COMMON
 C     UPDATED         --JULY      2019. MOVE CREATION OF SCRATCH
 C                                       STORAGE FROM DPELL2 TO DPELLI
+C     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
 C
 C-----NON-COMMON VARIABLES-------------------------------------
 C
@@ -2080,17 +2081,21 @@ C
 C
       DIMENSION ILINPA(*)
       DIMENSION ILINCO(*)
+      DIMENSION ILINC2(MAXLN,3)
       DIMENSION PLINTH(*)
 C
       DIMENSION AREGBA(*)
       DIMENSION IREBLI(*)
       DIMENSION IREBCO(*)
+      DIMENSION IREBC2(MAXRG,3)
       DIMENSION PREBTH(*)
       DIMENSION IREFSW(*)
       DIMENSION IREFCO(*)
+      DIMENSION IREFC2(MAXRG,3)
       DIMENSION IREPTY(*)
       DIMENSION IREPLI(*)
       DIMENSION IREPCO(*)
+      DIMENSION IREPC2(MAXRG,3)
       DIMENSION PREPTH(*)
       DIMENSION PREPSP(*)
 C
@@ -2199,9 +2204,21 @@ C
       PXGAP=PREPSP(1)
       PYGAP=PREPSP(1)
       ICOLF=IREFCO(1)
+      ICOLFR=IREFC2(1,1)
+      ICOLFG=IREFC2(1,2)
+      ICOLFB=IREFC2(1,3)
       ICOLP=IREPCO(1)
+      ICOLPR=IREPC2(1,1)
+      ICOLPG=IREPC2(1,2)
+      ICOLPB=IREPC2(1,3)
+      ICOLBR=IREBC2(1,1)
+      ICOLBG=IREBC2(1,2)
+      ICOLBB=IREBC2(1,3)
       CALL DPFIRE(PX,PY,NP,
-     1            IFIG,IPATT,PTHICK,PXGAP,PYGAP,ICOLF,ICOLP,IPATT2)
+     1            IFIG,IPATT,PTHICK,PXGAP,PYGAP,
+     1            ICOLF,ICOLFR,ICOLFG,ICOLFB,
+     1            ICOLP,ICOLPR,ICOLPG,ICOLPB,
+     1            IPATT2)
  2190 CONTINUE
 C
 C               ***************************
@@ -2212,9 +2229,13 @@ C
       IPATT=ILINPA(1)
       PTHICK=PLINTH(1)
       ICOL=ILINCO(1)
+      ICOLR=ILINC2(1,1)
+      ICOLG=ILINC2(1,2)
+      ICOLB=ILINC2(1,3)
       IFLAG='ON'
       CALL DPDRPL(PX,PY,NP,
-     1            IFIG,IPATT,PTHICK,ICOL,
+     1            IFIG,IPATT,PTHICK,
+     1            ICOL,ICOLR,ICOLG,ICOLB,
      1            JPATT,JTHICK,PTHIC2,JCOL,IFLAG)
 C
 C               *****************
@@ -2248,10 +2269,10 @@ C
       END
       SUBROUTINE DPELLI(IHARG,IARGT,ARG,NUMARG,
      1                  PXSTAR,PYSTAR,PXEND,PYEND,
-     1                  ILINPA,ILINCO,PLINTH,
-     1                  AREGBA,IREBLI,IREBCO,PREBTH,
-     1                  IREFSW,IREFCO,
-     1                  IREPTY,IREPLI,IREPCO,PREPTH,PREPSP,
+     1                  ILINPA,ILINCO,ILINC2,MAXLNZ,PLINTH,
+     1                  AREGBA,IREBLI,IREBCO,IREBC2,MAXRGZ,PREBTH,
+     1                  IREFSW,IREFCO,IREFC2,
+     1                  IREPTY,IREPLI,IREPCO,IREPC2,PREPTH,PREPSP,
      1                  PTEXHE,PTEXWI,PTEXVG,PTEXHG,
      1                  IGRASW,IDIASW,
      1                  PGRAXF,PGRAYF,PDIAXC,PDIAYC,PDIAX2,PDIAY2,
@@ -2259,6 +2280,7 @@ C
      1                  NUMDEV,IDMANU,IDMODE,IDMOD2,IDMOD3,
      1                  IDPOWE,IDCONT,IDCOLO,IDNVPP,IDNHPP,IDUNIT,
      1                  IDNVOF,IDNHOF,IDFONT,UNITSW,PDSCAL,
+     1                  IBACCO,IBACC2,
      1                  IBUGD2,IFOUND,IERROR)
 C
 C     PURPOSE--DRAW ONE OR MORE ELLIPSES (DEPENDING ON HOW MANY NUMBERS
@@ -2321,6 +2343,7 @@ C     UPDATED         --DECEMBER  2018. SUPPORT FOR "DEVICE ... SCALE"
 C                                       COMMAND
 C     UPDATED         --JULY      2019. MOVE CREATION OF SCRATCH STORAGE
 C                                       TO DPELLI FROM DPELL2
+C     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
 C
 C-----NON-COMMON VARIABLES-----------------------------------------
 C
@@ -2369,17 +2392,21 @@ C
 C
       DIMENSION ILINPA(*)
       DIMENSION ILINCO(*)
+      DIMENSION ILINC2(MAXLNZ,3)
       DIMENSION PLINTH(*)
 C
       DIMENSION AREGBA(*)
       DIMENSION IREBLI(*)
       DIMENSION IREBCO(*)
+      DIMENSION IREBC2(MAXRGZ,3)
       DIMENSION PREBTH(*)
       DIMENSION IREFSW(*)
       DIMENSION IREFCO(*)
+      DIMENSION IREFC2(MAXRGZ,3)
       DIMENSION IREPTY(*)
       DIMENSION IREPLI(*)
       DIMENSION IREPCO(*)
+      DIMENSION IREPC2(MAXRGZ,3)
       DIMENSION PREPTH(*)
       DIMENSION PREPSP(*)
       DIMENSION PDSCAL(*)
@@ -2397,6 +2424,7 @@ C
       DIMENSION IDUNIT(*)
       DIMENSION IDNVOF(*)
       DIMENSION IDNHOF(*)
+      DIMENSION IBACC2(*)
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -2532,9 +2560,8 @@ C
         IBELSW='OFF'
         NUMRIN=0
         IERASW='OFF'
-        IBACCO='JUNK'
 C
-        CALL DPOPPL(IGRASW,IBELSW,NUMRIN,IERASW,IBACCO)
+        CALL DPOPPL(IGRASW,IBELSW,NUMRIN,IERASW,IBACCO,IBACC2)
 C
 C               *****************************************
 C               **  STEP 2--                           **
@@ -2611,10 +2638,10 @@ C
         IF(ITYPEO.EQ.'RELA')Y3=Y2+Y3
 C
         CALL DPELL2(X1,Y1,X2,Y2,X3,Y3,PX,PY,
-     1              IFIG,ILINPA,ILINCO,PLINTH,
-     1              AREGBA,IREBLI,IREBCO,PREBTH,
-     1              IREFSW,IREFCO,
-     1              IREPTY,IREPLI,IREPCO,PREPTH,PREPSP,
+     1              IFIG,ILINPA,ILINCO,ILINC2,MAXLNZ,PLINTH,
+     1              AREGBA,IREBLI,IREBCO,IREBC2,MAXRGZ,PREBTH,
+     1              IREFSW,IREFCO,IREFC2,
+     1              IREPTY,IREPLI,IREPCO,IREPC2,PREPTH,PREPSP,
      1              PTEXHE,PTEXWI,PTEXVG,PTEXHG)
 C
         X1=X3
@@ -7124,7 +7151,7 @@ C
       RETURN
       END
       SUBROUTINE DPERAS(IHARG,IARGT,IARG,NUMARG,
-     1                  IBACCO,IGRASW,IDIASW,
+     1                  IBACCO,IBACC2,IGRASW,IDIASW,
      1                  PGRAXF,PGRAYF,PDIAXC,PDIAYC,PDIAX2,PDIAY2,
      1                  PDIAHE,PDIAWI,PDIAVG,PDIAHG,
      1                  NUMDEV,IDMANU,IDMODE,IDMOD2,IDMOD3,
@@ -7170,6 +7197,7 @@ C     UPDATED         --DECEMBER  2018. CHECK FOR DISCRETE, NULL, OR
 C                                       NONE DEVICE
 C     UPDATED         --DECEMBER  2018. SUPPORT FOR "DEVICE ... SCALE"
 C                                       COMMAND
+C     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
 C
 C-----NON-COMMON VARIABLES----------------------------------------
 C
@@ -7224,6 +7252,7 @@ CCCCC ADD FOLLOWING LINE MARCH 1997.
       DIMENSION IDNVPP(*)
       DIMENSION IDNHPP(*)
       DIMENSION IDUNIT(*)
+      DIMENSION IBACC2(*)
 C
 CCCCC THE FOLLOWING 2 LINES WERE ADDED               MAY 1989
 CCCCC TO FIX POSTSCRIPT TRANSLATION PROBLEM (ALAN)   MAY 1989
@@ -7399,7 +7428,7 @@ C
           CALL DPWRST('XXX','BUG ')
         ENDIF
 C
-        CALL DPERSC(IBACCO)
+        CALL DPERSC(IBACCO,IBACC2)
 CCCCC   FOLLOWING LINES ADDED FOR X11 (PICTURE POINTS MAY BE DYNAMICALLY
 CCCCC   CHANGED BY ERASE SCREEN ROUTINE, MAKE SURE HAVE UP-TO-DATE VALUES).
 CCCCC   FIX BUG IN FOLLOWING   NOVEMBER 1996.
@@ -8114,7 +8143,7 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPERSC(IBACCO)
+      SUBROUTINE DPERSC(IBACCO,IBACC2)
 C
 C     PURPOSE--ERASE THE SCREEN
 C
@@ -8139,6 +8168,9 @@ C
       CHARACTER*4 ICASE
       CHARACTER*4 ICOL
 C
+      DIMENSION IBACC2(3)
+      DIMENSION IBACC3(3)
+C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOGR.INC'
@@ -8149,44 +8181,39 @@ C-----START POINT-----------------------------------------------------
 C
       ICASE='9999'
 C
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'ERSC')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPERSC--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBACCO
-   52 FORMAT('IBACCO = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)IMANUF,IMODEL
-   53 FORMAT('IMANUF,IMODEL = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,54)IGCOLO
-   54 FORMAT('IGCOLO = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,59)IBUGG4
-   59 FORMAT('IBUGG4 = ',A4)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'ERSC')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPERSC--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBACCO,IMANUF,IMODEL,IGCOLO,IBUGG4
+   53   FORMAT('IBACCO,IMANUF,IMODEL,IGCOLO,IBUGG4 = ',4(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)IBACC2(1),IBACC2(2),IBACC2(3)
+   54   FORMAT('IBACC2(1),IBACC2(2),IBACC2(3) = ',3I5)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               **********************************************
 C               **  STEP 1--                                **
 C               **  BRANCH TO THE COLOR OR NON-COLOR CASES  **
 C               **********************************************
 C
-      IF(IGCOLO.EQ.'OFF')GOTO1100
-      GOTO1200
-C
 C               ********************************
 C               **  STEP 1--                  **
 C               **  TREAT THE NON-COLOR CASE  **
 C               ********************************
 C
- 1100 CONTINUE
-      JCOL=0
-      CALL GRERSC(JCOL,IBACCO)
-      GOTO9000
+      IF(IGCOLO.EQ.'OFF')THEN
+        JCOL=0
+        IBACC3(1)=-1
+        IBACC3(2)=-1
+        IBACC3(3)=-1
+        CALL GRERSC(JCOL,IBACCO,IBACC3)
+        GOTO9000
+      ENDIF
 C
 C               ****************************************************
 C               **  STEP 2--                                      **
@@ -8204,13 +8231,20 @@ C               **  STEP 2.3--                                    **
 C               **        ERASE THE SCREEN                        **
 C               ****************************************************
 C
- 1200 CONTINUE
-CCCCC ICASE='REGI'
       ICASE='BACK'
       ICOL=IBACCO
-      CALL GRTRCO(ICASE,ICOL,JCOL)
-      CALL GRSECO(ICASE,ICOL,JCOL)
-      CALL GRERSC(JCOL,ICOL)
+      ICOLR=IBACC2(1)
+      ICOLG=IBACC2(2)
+      ICOLB=IBACC2(3)
+      CALL GRTRC2(ICOLFR,ICOLFG,ICOLFB,ARED,AGREEN,ABLUE,
+     1            AALPHA,IRGBFL)
+      IF(IRGBFL.EQ.1)THEN
+        CALL GRSEC2(ICASE,IRGBFL,ARED,AGREEN,ABLUE,AALPHA)
+      ELSE
+        CALL GRTRCO(ICASE,ICOL,JCOL)
+        CALL GRSECO(ICASE,ICOL,JCOL)
+      ENDIF
+      CALL GRERSC(JCOL,ICOL,IBACC2)
       GOTO9000
 C
 C               *****************
@@ -8219,25 +8253,19 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'ERSC')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF DPERSC--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)IBACCO,ICOL,JCOL
- 9012 FORMAT('IBACCO,ICOL,JCOL = ',A4,2X,A4,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)ICASE
- 9013 FORMAT('ICASE = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9014)IMANUF,IMODEL
- 9014 FORMAT('IMANUF,IMODEL = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9015)IBUGG4,ISUBG4,IERRG4
- 9015 FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
- 9090 CONTINUE
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'ERSC')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPERSC--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)ICASE,ICOL,JCOL,ICOLR,ICOLG,ICOLB
+ 9012   FORMAT('ICASE,ICOL,JCOL,ICOLR,ICOLG,ICOLB = ',2(A4,2X),4I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)IERRG4
+ 9015   FORMAT('IERRG4 = ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END

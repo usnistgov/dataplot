@@ -1,4 +1,4 @@
-7100.       (VERSION 2020.08)  total number of lines in file (including this line)
+7200.       (VERSION 2020.11)  total number of lines in file (including this line)
 29.                          number of     sections below
    50.    OVERVIEW           first line number of OVERVIEW          section
   150.    GRAPHICS           first line number of GRAPHICS          section
@@ -26,9 +26,9 @@
  5100.    CHARACTER TYPES    first line number of CHARACTER TYPES   section
  5200.    LINE TYPES         first line number of LINE TYPES        section
  5300.    COLOR TYPES        first line number of COLOR TYPES       section
- 5500.    ASCII FILES        first line number of ASCII FILES       section
- 6500.    SYSTEM LIMITS      first line number of SYSTEM LIMITS     section
- 6700.    PROBABILITY DIST   first line number of DISTRIBUTIONS     section
+ 5600.    ASCII FILES        first line number of ASCII FILES       section
+ 6600.    SYSTEM LIMITS      first line number of SYSTEM LIMITS     section
+ 6800.    PROBABILITY DIST   first line number of DISTRIBUTIONS     section
  
 ----------------------------------------------------------
 
@@ -5310,12 +5310,29 @@ color, DATAPLOT maps it to the closest available supported color
 (closest is somewhat arbitrary, although we tried to be reasonably
 consistent).
  
-DATAPLOT borrowed its color scheme from Release 3 of X11 with a few
+DATAPLOT adopted its color scheme from Release 3 of X11 with a few
 additions from Release 4.  It also uses the RGB values from Release 4
-for those devices that support direct RGB specification (currently
-Postscript and CGM).  Although these values should be reasonably
-robust, different devices will generate different colors from them.
+for those devices that support direct RGB specification.  Although these
+values should be reasonably robust, different devices will generate
+different colors from them.
+
+NOTE 2020/11: Dataplot added additional colors from the current X11
+              versions.  Specifically, colors 89 to 162 in the list
+              below were added in the 2020/11 version.
  
+NOTE 2020/11: Dataplot added support for specifying colors as RGB
+              triplets.  This is implemented via RGB COLOR commands.
+              For example, there is now a LINE RGB COLOR command in
+              addition to the LINE COLOR command.
+
+              Dataplot still supports a number of devices that do not
+              provide full RGB color support.  To handle this, Dataplot
+              first checks if the device has full RGB color support.
+              If so, Dataplot uses the settings from the RGB COLOR
+              command (if given).  If the device does not support full
+              RGB colors or if no RGB COLOR command was issued, then
+              the setting from the COLOR command is used.
+
 The following is the list of colors that DATAPLOT recognizes.  Only the
 first 4 characters of the color name are significant and colors can
 also be specified by an index.
@@ -5340,7 +5357,7 @@ also be specified by an index.
         VIOLET RED         13       VRED
         DARK SLATE GRAY    14       DGRA,DGRY
         LIGHT GRAY         15       LGRA,LGRY
-        AQUAMARINE         16       AQUA
+        AQUAMARINE         16       AQMA
         BROWN              17       BROW
         CADET BLUE         18       CABL
         CORAL              19       CORA
@@ -5413,6 +5430,80 @@ also be specified by an index.
         MAGENTA2           86       MAG2, LMAG
         MAGENTA3           87       MAG3
         MAGENTA4           88       MAG4
+        LIGHT CORAL        89       LCOR
+        DARK SALMON        90       DSAL
+        LIGHT SALMON       91       LSAL
+        CRIMSON            92       CRIM
+        DARK RED           93       DRED
+        LIGHT PINK         94       LPIN
+        HOT PINK           95       HPIN
+        DEEP PINK          96       DPIN
+        PALEVIOLETRED      97       PVRE
+        TOMATO             98       TOMA
+        DARK ORANGE        99       DORA
+        LIGHT YELLOW      100       LYEL
+        LEMON CHIFON      101       LCHI
+        PAPAYA WHIP       102       PAPW
+        MOCASIN           103       MOCA
+        PEACH PUFF        104       PPUF
+        PALE GOLDENROD    105       PGRO
+        DARK KHAKI        106       DKHA
+        LAVENDER          107       LAVE
+        FUCHSIA           108       FUCH
+        MEDIUM PURPLE     109       MPUR
+        AMETHYST          110       AMET
+        DARK VIOLET       111       DVIO
+        DARK MAGENTA      112       DMAG
+        INDIGO            113       INDI
+        CHARTEUSE         114       CHAR
+        LAWN GREEN        115       LAGR
+        LIME              116       LIME
+        LIGHT GREEN       117       LIGR
+        OLIVE DRAB        118       ODRA
+        OLIVE             119       OLIV
+        DARK SEA GREEN    120       DSGR
+        LIGHT SEA GREEN   121       LSGR
+        DARK CYAN         122       DCYA
+        TEAL              123       TEAL
+        PALE TURQUOISE    124       PTUR
+        AQUA              125       AQUA
+        POWDER BLUE       126       PBLU
+        LIGHT SKY BLUE    127       LSKB
+        DARK SKY BLUE     128       DSKB
+        DODGER BLUE       129       DODB
+        ROYAL BLUE        130       RBLU
+        DARK BLUE         131       DSKB
+        CORNSILK          132       CORN
+        BLANCHED ALMOND   133       BLAL
+        BISQUE            134       BISQ
+        NAVAJO WHITE      135       NAVW
+        BURLY WOOD        136       BWOO
+        ROSY BROWN        137       ROSB
+        SANDY BROWN       138       SANB
+        DARK GOLDENROD    139       DGRO
+        PERU              140       PERU
+        CHOCOLATE         141       CHOC
+        SADDIE BROWN      142       SADB
+        SNOW              143       SNOW
+        HONEYDEW          144       HONE
+        MINT CREAM        145       MCRE
+        AZURE             146       AZUR
+        ALICE BLUE        147       ABLU
+        GHOST WHITE       148       GHOS
+        WHITE SMOKE       149       WSMO
+        SEA SHELL         150       SEAS
+        BEIGE             151       BEIG
+        OLD LACE          152       OLDL
+        FLORAL WHITE      153       FLOR
+        IVORY             154       IVOR
+        ANTIQUE WHITE     155       ANTI
+        LINEN             156       LINE
+        MISTY ROSE        157       MROS
+        GAINSBORO         158       GAIN
+        SILVER            159       SILV
+        DARK GRAY         160       DAGR
+        LIGHT SLATE GRAY  161       LSLG
+        SLATE GRAY        162       SLGR
  
  
 In addition, gray scale can be specified with the following scheme:
@@ -5424,9 +5515,10 @@ In addition, gray scale can be specified with the following scheme:
 Gray scale values can also be specified with negative indices (that is,
 -1 through -100).
  
-Currently, Postscript and X11 support gray scale.  Other devices will
-map gray scale to either black or white.
- 
+Devices that do not support gray scale will map gray scale colors
+to either black or white.  These are primarily older essentially
+obsolete devices.
+
 Penplotters no longer automatically map an index to the corresponding
 slot.  DATAPLOT assumes the following slot to color mapping:
  
@@ -5489,6 +5581,14 @@ following:
 Note that the order of these commands is relevant.
 
 ----------------------------------------------------------
+
+
+
+
+
+
+
+
 
 
 

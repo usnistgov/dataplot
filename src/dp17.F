@@ -7089,10 +7089,10 @@ C
       RETURN
       END
       SUBROUTINE DPIND2(X1,Y1,X2,Y2,PX,PY,
-     1                  IFIG,ILINPA,ILINCO,PLINTH,
-     1                  AREGBA,IREBLI,IREBCO,PREBTH,
-     1                  IREFSW,IREFCO,
-     1                  IREPTY,IREPLI,IREPCO,PREPTH,PREPSP,
+     1                  IFIG,ILINPA,ILINCO,ILINC2,MAXLN,PLINTH,
+     1                  AREGBA,IREBLI,IREBCO,IREBC2,MAXRG,PREBTH,
+     1                  IREFSW,IREFCO,IREFC2,
+     1                  IREPTY,IREPLI,IREPCO,IREPC2,PREPTH,PREPSP,
      1                  PTEXHE,PTEXWI,PTEXVG,PTEXHG)
 C
 C     PURPOSE--DRAW A INDUCTOR WITH ONE END AT (X1,Y1)
@@ -7111,9 +7111,10 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--APRIL     1981.
 C     UPDATED         --MAY       1982.
-C     UPDATED         --JANUARY   1989.  MODIFY CALLS TO DPDRPL (ALAN)
+C     UPDATED         --JANUARY   1989. MODIFY CALLS TO DPDRPL (ALAN)
 C     UPDATED         --JULY      2019. CREATE SCRATCH STORAGE IN DPINDU
 C                                       RATHER THAN DPIND2
+C     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
 C
 C-----NON-COMMON VARIABLES-------------------------------------
 C
@@ -7139,17 +7140,21 @@ C
 C
       DIMENSION ILINPA(*)
       DIMENSION ILINCO(*)
+      DIMENSION ILINC2(MAXLN,3)
       DIMENSION PLINTH(*)
 C
       DIMENSION AREGBA(*)
       DIMENSION IREBLI(*)
       DIMENSION IREBCO(*)
+      DIMENSION IREBC2(MAXRG,3)
       DIMENSION PREBTH(*)
       DIMENSION IREFSW(*)
       DIMENSION IREFCO(*)
+      DIMENSION IREFC2(MAXRG,3)
       DIMENSION IREPTY(*)
       DIMENSION IREPLI(*)
       DIMENSION IREPCO(*)
+      DIMENSION IREPC2(MAXRG,3)
       DIMENSION PREPTH(*)
       DIMENSION PREPSP(*)
 C
@@ -7181,11 +7186,13 @@ C
         WRITE(ICOUT,62)IFIG,AREGBA(1)
    62   FORMAT('IFIG,AREGBA(1) = ',A4,2X,G15.7)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,63)IREBLI(1),IREBCO(1),PREBTH(1)
-   63   FORMAT('IREBLI(1),IREBCO(1),PREBTH(1) = ',2(A4,2X),G15.7)
+        WRITE(ICOUT,63)IREBLI(1),IREBCO(1),IREBC2(1,1),PREBTH(1)
+   63   FORMAT('IREBLI(1),IREBCO(1),IREBC2(1,1),PREBTH(1) = ',
+     1         2(A4,2X),I5,G15.7)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,64)IREFSW(1),IREFCO(1)
-   64   FORMAT('IREFSW(1),IREFCO(1) = ',A4,2X,A4)
+        WRITE(ICOUT,64)IREFSW(1),IREFCO(1),IREFC2(1,1),IREPC2(1,1)
+   64   FORMAT('IREFSW(1),IREFCO(1),IREFC2(1,1),IREPC2(1,1) = ',
+     1         2(A4,2X),2I5)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,65)IREPTY(1),IREPLI(1),IREPCO(1),PREPTH(1),PREPSP(1)
    65   FORMAT('IREPTY(1),IREPLI(1),IREPCO(1),PREPTH(1),PREPSP(1) = ',
@@ -7257,8 +7264,11 @@ C
       AJX4=XP
       AJY4=YP
 C
+      ICOLR=ILINC2(1,1)
+      ICOLG=ILINC2(1,2)
+      ICOLB=ILINC2(1,3)
       CALL DPIND3(AJX3,AJY3,AJX4,AJY4,PX,PY,K,
-     1            IFIG,IPATT,PTHICK,ICOL)
+     1            IFIG,IPATT,PTHICK,ICOL,ICOLR,ICOLG,ICOLB)
 C
       GOTO1440
 C
@@ -7301,7 +7311,8 @@ C
       ICOL=ILINCO(1)
       IFLAG='ON'
       CALL DPDRPL(PX,PY,NP,
-     1            IFIG,IPATT,PTHICK,ICOL,
+     1            IFIG,IPATT,PTHICK,
+     1            ICOL,ICOLR,ICOLG,ICOLB,
      1            JPATT,JTHICK,PTHIC2,JCOL,IFLAG)
 C
 C               *****************
@@ -7328,7 +7339,7 @@ C
       RETURN
       END
       SUBROUTINE DPIND3(X1,Y1,X2,Y2,PX,PY,K,
-     1                  IFIG,IPATT,PTHICK,ICOL)
+     1                  IFIG,IPATT,PTHICK,ICOL,ICOLR,ICOLG,ICOLB)
 C
 C     PURPOSE--DRAW A SEMI-CIRCLE FOR AN INDUCTOR
 C              WITH ONE END OF THE DIAGONAL AT (X1,Y1)
@@ -7411,11 +7422,10 @@ C
       IF(K.LE.490)GOTO3010
       NP=K
       IFLAG='ON'
-CCCCC CALL DPDRPL(PX,PY,NP,PX3,PY3,NP3,
-CCCCC1IFIG,IPATT,PTHICK,ICOL)
       CALL DPDRPL(PX,PY,NP,
-     1IFIG,IPATT,PTHICK,ICOL,
-     1JPATT,JTHICK,PTHIC2,JCOL,IFLAG)
+     1            IFIG,IPATT,PTHICK,
+     1            ICOL,ICOLR,ICOLG,ICOLB,
+     1            JPATT,JTHICK,PTHIC2,JCOL,IFLAG)
       K=0
       K=K+1
       PX(K)=XP
@@ -7624,10 +7634,10 @@ C
       END
       SUBROUTINE DPINDU(IHARG,IARGT,ARG,NUMARG,
      1                  PXSTAR,PYSTAR,PXEND,PYEND,
-     1                  ILINPA,ILINCO,PLINTH,
-     1                  AREGBA,IREBLI,IREBCO,PREBTH,
-     1                  IREFSW,IREFCO,
-     1                  IREPTY,IREPLI,IREPCO,PREPTH,PREPSP,
+     1                  ILINPA,ILINCO,ILINC2,MAXLNZ,PLINTH,
+     1                  AREGBA,IREBLI,IREBCO,IREBC2,MAXRGZ,PREBTH,
+     1                  IREFSW,IREFCO,IREFC2,
+     1                  IREPTY,IREPLI,IREPCO,IREPC2,PREPTH,PREPSP,
      1                  PTEXHE,PTEXWI,PTEXVG,PTEXHG,
      1                  IGRASW,IDIASW,
      1                  PGRAXF,PGRAYF,PDIAXC,PDIAYC,PDIAX2,PDIAY2,
@@ -7635,6 +7645,7 @@ C
      1                  NUMDEV,IDMANU,IDMODE,IDMOD2,IDMOD3,
      1                  IDPOWE,IDCONT,IDCOLO,IDNVPP,IDNHPP,IDUNIT,
      1                  IDNVOF,IDNHOF,IDFONT,UNITSW,PDSCAL,
+     1                  IBACCO,IBACC2,
      1                  IBUGD2,IFOUND,IERROR)
 C
 C     PURPOSE--DRAW ONE OR MORE INDUCTORS (DEPENDING ON HOW MANY NUMBERS ARE
@@ -7688,6 +7699,7 @@ C     UPDATED         --DECEMBER  2018. SUPPORT FOR "DEVICE ... SCALE"
 C                                       COMMAND
 C     UPDATED         --JULY      2019. CREATE SCRATCH STORAGE IN DPINDU
 C                                       RATHER THAN DPIND2
+C     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLORS
 C
 C-----NON-COMMON VARIABLES-----------------------------------------
 C
@@ -7736,17 +7748,21 @@ C
 C
       DIMENSION ILINPA(*)
       DIMENSION ILINCO(*)
+      DIMENSION ILINC2(MAXLNZ,3)
       DIMENSION PLINTH(*)
 C
       DIMENSION AREGBA(*)
       DIMENSION IREBLI(*)
       DIMENSION IREBCO(*)
+      DIMENSION IREBC2(MAXRGZ,3)
       DIMENSION PREBTH(*)
       DIMENSION IREFSW(*)
       DIMENSION IREFCO(*)
+      DIMENSION IREFC2(MAXRGZ,3)
       DIMENSION IREPTY(*)
       DIMENSION IREPLI(*)
       DIMENSION IREPCO(*)
+      DIMENSION IREPC2(MAXRGZ,3)
       DIMENSION PREPTH(*)
       DIMENSION PREPSP(*)
       DIMENSION PDSCAL(*)
@@ -7764,6 +7780,7 @@ C
       DIMENSION IDUNIT(*)
       DIMENSION IDNVOF(*)
       DIMENSION IDNHOF(*)
+      DIMENSION IBACC2(*)
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -7901,9 +7918,8 @@ C
         IBELSW='OFF'
         NUMRIN=0
         IERASW='OFF'
-        IBACCO='JUNK'
 C
-        CALL DPOPPL(IGRASW,IBELSW,NUMRIN,IERASW,IBACCO)
+        CALL DPOPPL(IGRASW,IBELSW,NUMRIN,IERASW,IBACCO,IBACC2)
 C
 C               *****************************************
 C               **  STEP 2--                           **
@@ -7968,10 +7984,10 @@ C
         IF(ITYPEO.EQ.'RELA')Y2=Y1+Y2
 C
         CALL DPIND2(X1,Y1,X2,Y2,PX,PY,
-     1              IFIG,ILINPA,ILINCO,PLINTH,
-     1              AREGBA,IREBLI,IREBCO,PREBTH,
-     1              IREFSW,IREFCO,
-     1              IREPTY,IREPLI,IREPCO,PREPTH,PREPSP,
+     1              IFIG,ILINPA,ILINCO,ILINC2,MAXLNZ,PLINTH,
+     1              AREGBA,IREBLI,IREBCO,IREBC2,MAXRGZ,PREBTH,
+     1              IREFSW,IREFCO,IREFC2,
+     1              IREPTY,IREPLI,IREPCO,IREPC2,PREPTH,PREPSP,
      1              PTEXHE,PTEXWI,PTEXVG,PTEXHG)
 C
         X1=X2
@@ -11534,6 +11550,315 @@ C
  9018 FORMAT('IJ1,IJN,V(IJ1),V(IJN) = ',2I8,2E15.7)
       CALL DPWRST('XXX','BUG ')
  9090 CONTINUE
+C
+      RETURN
+      END
+      SUBROUTINE DPISNU(ISUBRO,IBUGA3,IERROR)
+C
+C     PURPOSE--GIVEN A STRING, DETERMINE IF THIS IS A VALID NUMBER
+C              OR NOT.  IF IT IS A NUMBER, RETURN A 1, OTHERWISE
+C              RETURN A 0.
+C     EXAMPLE--LET IVAL = IS NUMBER SORG
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2020/11
+C     ORIGINAL VERSION--NOVEMBER  2020.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 NEWNAM
+      CHARACTER*4 NEWCOL
+      CHARACTER*4 ICASEL
+      CHARACTER*4 IHLEFT
+      CHARACTER*4 IHLEF2
+      CHARACTER*4 IHRIGH
+      CHARACTER*4 IHRIG2
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+C
+      CHARACTER*80 SORG
+C
+C---------------------------------------------------------------------
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOZI.INC'
+C
+      INTEGER ITEMP1(MAXOBV)
+C
+      EQUIVALENCE(ITEMP1(1),IGARBG(1))
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='DPIS'
+      ISUBN2='NU  '
+      IERROR='NO'
+C
+C               *****************************************************
+C               **  TREAT THE SUBCASE OF THE LET FUNCTION COMMAND  **
+C               **  WHICH DEFINES A FUNCTION                       **
+C               *****************************************************
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'ISNU')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPISNU--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,NUMNAM
+   52   FORMAT('IBUGA3,ISUBRO,NUMNAM = ',A4,2X,A4,2X,I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,NUMNAM
+          WRITE(ICOUT,56)I,IHNAME(I),IHNAM2(I),IUSE(I),IVSTAR(I),
+     1                   IVSTOP(I)
+   56     FORMAT('I,IHNAME(I),IHNAM2(I),IUSE(I),IVSTAR(I),',
+     1           'IVSTOP(I)=',I8,2X,A4,A4,2X,A4,I8,I8)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+        WRITE(ICOUT,57)NUMCHF,MAXCHF
+   57   FORMAT('NUMCHF,MAXCHF = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,60)(IFUNC(I),I=1,MIN(120,MAXCHF))
+   60   FORMAT('IFUNC(.)  = ',120A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               **********************************
+C               **  STEP 1--                    **
+C               **  INITIALIZE SOME VARIABLES.  **
+C               **********************************
+C
+      ISTEPN='1'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ISNU')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      NEWNAM='NO'
+      NEWCOL='NO'
+      ICASEL='UNKN'
+      NIOLD=0
+      ICOLL=0
+      ICOL2=0
+      ISNUM=0
+C
+C               ******************************************************
+C               **  STEP 2--                                         *
+C               **  EXAMINE THE LEFT-HAND SIDE--                     *
+C               **  IF THIS IS A PREVIOUSLY DEFINED NAME, IT SHOULD  *
+C               **  BE A PARAMETER.                                  *
+C               ******************************************************
+C
+      ISTEPN='2'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ISNU')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IHLEFT=IHARG(1)
+      IHLEF2=IHARG2(1)
+C
+      DO2000I=1,NUMNAM
+        I2=I
+        IF(IHLEFT.EQ.IHNAME(I).AND.IHLEF2.EQ.IHNAM2(I))THEN
+          IF(IUSE(I2).EQ.'P')THEN
+            ICASEL='PARA'
+            ILISTL=I2
+            GOTO2900
+          ELSE
+            WRITE(ICOUT,999)
+  999       FORMAT(1X)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2001)
+ 2001       FORMAT('***** ERROR IN  IS NUMBER  (DPISNU)--')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2003)IHLEFT,IHLEF2
+ 2003       FORMAT('      THE NAME ON THE LEFT HAND SIDE (',2A4,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2005)
+ 2005       FORMAT('      ALREADY EXISTS, BUT NOT AS A PARAMETER.')
+            CALL DPWRST('XXX','BUG ')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+        ENDIF
+ 2000 CONTINUE
+C
+      NEWNAM='YES'
+      ICASEL='PARA'
+C
+      ILISTL=NUMNAM+1
+      IF(ILISTL.GT.MAXNAM)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2001)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2202)
+ 2202   FORMAT('      THE NUMBER OF VARIABLE, PARAMETER, AND ',
+     1         'FUNCTION')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2203)MAXNAM
+ 2203   FORMAT('      NAMES HAS JUST EXCEEDED THE ALLOWABLE ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2204)
+ 2204   FORMAT('      ENTER      STATUS')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2205)
+ 2205   FORMAT('      TO FIND OUT THE FULL LIST OF USED NAMES, AND')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2206)
+ 2206   FORMAT('      THEN REDEFINE OR DELETE SOME OF THE ALREADY ',
+     1         'USED NAMES.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+ 2900 CONTINUE
+C
+C               *****************************************************
+C               **  STEP 3--                                       **
+C               **  EXTRACT THE NAME ON THE RIGHT HAND SIDE        **
+C               *****************************************************
+C
+      ISTEPN='3'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ISNU')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IHRIGH=IHARG(5)
+      IHRIG2=IHARG2(5)
+      DO3000I=1,NUMNAM
+        I4=I
+        IF(IHRIGH.EQ.IHNAME(I).AND.IHRIG2.EQ.IHNAM2(I))THEN
+          IF(IUSE(I4).NE.'F')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2001)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,3003)IHRIGH,IHRIG2
+ 3003       FORMAT('      THE NAME ON THE RIGHT HAND SIDE (',2A4,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,3005)
+ 3005       FORMAT('      ALREADY EXISTS, BUT NOT AS A STRING.')
+            CALL DPWRST('XXX','BUG ')
+            IERROR='YES'
+            GOTO9000
+          ELSE
+            ISTART=IVSTAR(I4)
+            ISTOP=IVSTOP(I4)
+            NLEN=ISTOP-ISTART+1
+            IF(NLEN.GT.80)THEN
+              ISNUM=0
+              GOTO3900
+            ELSE
+              SORG=' '
+              DO3010J=1,NLEN
+                IINDX=ISTART+J-1
+                SORG(J:J)=IFUNC(IINDX)(1:1)
+ 3010         CONTINUE
+C
+              READ(SORG,*,IOSTAT=IE)AVAL
+              IF(IE.EQ.0)ISNUM=1
+              GOTO3900
+            ENDIF
+          ENDIF
+        ENDIF
+ 3000 CONTINUE
+C
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,2001)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,3003)IHRIGH,IHRIG2
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,3015)
+ 3015 FORMAT('      WAS NOT FOUND IN THE CURRENT NAME LIST.')
+      CALL DPWRST('XXX','BUG ')
+      IERROR='YES'
+      GOTO9000
+C
+ 3900 CONTINUE
+C
+C               *****************************************************
+C               **  STEP 4--                                       **
+C               **  SAVE PARAMETER                                 **
+C               *****************************************************
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ISNU')THEN
+        ISTEPN='4'
+        CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+        WRITE(ICOUT,4011)ISTART,ISTOP,NLEN,ISNUM,IE
+ 4011   FORMAT('ISTART,ISTOP,NLEN,IE = ',4I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4013)ICASEL,SORG(1:NLEN)
+ 4013   FORMAT('ICASEL,SORG = ',A4,2X,A80)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      IF(ICASEL.EQ.'PARA')THEN
+C
+        ISTEPN='4A'
+        IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ISNU')
+     1    CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+        IHNAME(ILISTL)=IHLEFT
+        IHNAM2(ILISTL)=IHLEF2
+        IUSE(ILISTL)='P'
+        VALUE(ILISTL)=REAL(ISNUM)
+        IVALUE(ILISTL)=INT(ISNUM)
+        IN(ILISTL)=1
+        IF(NEWNAM.EQ.'YES')NUMNAM=NUMNAM+1
+C
+        IF(IPRINT.EQ.'ON' .AND. IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,15111)IHLEFT,IHLEF2,ISNUM
+15111     FORMAT(2A4,' = ',I6)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
+C
+C
+C               ****************
+C               **  STEP 90-- **
+C               **  EXIT.     **
+C               ****************
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'ISNU')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPISNU--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)NUMNAM,ISTART,ISTOP,NLEN,IE,ISNUM
+ 9013   FORMAT('NUMNAM,ISTART,ISTOP,NLEN,IE,ISNUM = ',6I8)
+        CALL DPWRST('XXX','BUG ')
+        DO9015I=1,NUMNAM
+          WRITE(ICOUT,9016)I,IHNAME(I),IHNAM2(I),IUSE(I),
+     1                     IVSTAR(I),IVSTOP(I)
+ 9016     FORMAT('I,IHNAME(I),IHNAM2(I),IUSE(I),IVSTAR(I),',
+     1           'IVSTOP(I)=',I8,2X,2A4,2X,A4,2I8)
+          CALL DPWRST('XXX','BUG ')
+ 9015   CONTINUE
+      ENDIF
 C
       RETURN
       END

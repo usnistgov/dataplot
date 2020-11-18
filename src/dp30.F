@@ -2497,7 +2497,6 @@ C
  1390       CONTINUE
             NTEMP=K
             NCURVE=NCURVE+1
-            NPLOT1=NPLOTP
             IF(NTEMP.GT.0)THEN
               CALL DPSUM2(TEMP1,W,NTEMP,XTEMP1,XTEMP2,XTEMP3,
      1                    DTEMP1,MAXNXT,
@@ -2533,7 +2532,6 @@ C
  1490       CONTINUE
             NTEMP=K
             NCURVE=NCURVE+1
-            NPLOT1=NPLOTP
             IF(NTEMP.GT.0)THEN
               CALL DPSUM2(TEMP1,W,NTEMP,XTEMP1,XTEMP2,XTEMP3,
      1                    DTEMP1,MAXNXT,
@@ -2573,7 +2571,6 @@ C
  1590       CONTINUE
             NTEMP=K
             NCURVE=NCURVE+1
-            NPLOT1=NPLOTP
             IF(NTEMP.GT.0)THEN
               CALL DPSUM2(TEMP1,W,NTEMP,XTEMP1,XTEMP2,XTEMP3,
      1                    DTEMP1,MAXNXT,
@@ -2617,7 +2614,6 @@ C
  1690       CONTINUE
             NTEMP=K
             NCURVE=NCURVE+1
-            NPLOT1=NPLOTP
             IF(NTEMP.GT.0)THEN
               CALL DPSUM2(TEMP1,W,NTEMP,XTEMP1,XTEMP2,XTEMP3,
      1                    DTEMP1,MAXNXT,
@@ -6831,7 +6827,7 @@ C
           ENDIF
           XCOOR1=XVAL + XVAL2/REAL(NUMSE3)
           YCOOR1=YVAL + YVAL2/REAL(NUMSE4)
-          YCOOR2=YCOOR1 + YINC2
+CCCCC     YCOOR2=YCOOR1 + YINC2
           IF(STAT.LT.YLEVEL(1))THEN
             ILEVEL=1
           ELSEIF(STAT.GE.YLEVEL(NLEVEL))THEN
@@ -11851,22 +11847,21 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPTCCL(ICOM,IHARG,NUMARG,
-     1IDEFCO,
-     1IX1TCO,IX2TCO,IY1TCO,IY2TCO,
-     1IFOUND,IERROR)
+      SUBROUTINE DPTCCL(ICOM,IHARG,IHARG2,IARGT,IARG,ARG,NUMARG,
+     1                  IDEFCO,IRGBMX,
+     1                  IX1TCO,IX2TCO,IY1TCO,IY2TCO,
+     1                  IX1TC2,IX2TC2,IY1TC2,IY2TC2,
+     1                  IBUGPC,IFOUND,IERROR)
 C
-C     PURPOSE--DEFINE THE TIC MARK COLOR SWITCHES
-C              FOR ANY OF THE 4 FRAME LINES.
-C              SUCH TIC MARK SWITCHES DESCRIBE
-C              THE TIC MARK COLOR ON THE 4 FRAME LINES OF A PLOT.
-C              THE CONTENTS OF A TIC MARK COLOR SWITCH ARE
-C              A COLOR.
-C              THE TIC MARK COLOR SWITCHES FOR THE 4 FRAME LINES
-C              ARE CONTAINED IN THE 4 VARIABLES
-C              IX1TCO,IX2TCO,IY1TCO,IY2TCO
+C     PURPOSE--DEFINE THE TIC MARK COLOR SWITCHES FOR ANY OF THE 4 FRAME
+C              LINES.  SUCH TIC MARK SWITCHES DESCRIBE THE TIC MARK
+C              COLOR ON THE 4 FRAME LINES OF A PLOT.  THE CONTENTS OF A
+C              TIC MARK COLOR SWITCH ARE A COLOR.  THE TIC MARK COLOR
+C              SWITCHES FOR THE 4 FRAME LINES ARE CONTAINED IN THE 4
+C              VARIABLES IX1TCO,IX2TCO,IY1TCO,IY2TCO.
 C     INPUT  ARGUMENTS--ICOM
 C                     --IHARG  (A  HOLLERITH VECTOR)
+C                     --IARG
 C                     --NUMARG
 C                     --IDEFCO
 C     OUTPUT ARGUMENTS--IX1TCO = COLOR FOR BOTTOM HORIZ. TICS
@@ -11887,27 +11882,34 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--OCTOBER   1980.
 C     UPDATED         --MAY       1982.
+C     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLORS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICOM
-      CHARACTER*4 IHARG
-C
       CHARACTER*4 IDEFCO
-C
       CHARACTER*4 IX1TCO
       CHARACTER*4 IX2TCO
       CHARACTER*4 IY1TCO
       CHARACTER*4 IY2TCO
-C
+      CHARACTER*4 IBUGPC
       CHARACTER*4 IFOUND
       CHARACTER*4 IERROR
 C
       CHARACTER*4 IHOLD
+      CHARACTER*4 ICASCL
 C
 C---------------------------------------------------------------------
 C
-      DIMENSION IHARG(*)
+      CHARACTER*4 IHARG(*)
+      CHARACTER*4 IHARG2(*)
+      CHARACTER*4 IARGT(*)
+      DIMENSION IARG(*)
+      DIMENSION ARG(*)
+      DIMENSION IX1TC2(3)
+      DIMENSION IX2TC2(3)
+      DIMENSION IY1TC2(3)
+      DIMENSION IY2TC2(3)
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -11917,11 +11919,40 @@ C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
+      ICASCL='STAN'
+      IHOLD=' '
+      JHOLD1=-1
+      JHOLD2=-1
+      JHOLD3=-1
 C
       IF(NUMARG.LE.0)GOTO1900
-      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'COLO')GOTO1090
-      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.
-     1IHARG(2).EQ.'COLO')GOTO1090
+      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'COLO')THEN
+        GOTO1090
+      ELSEIF(NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.
+     1       IHARG(2).EQ.'COLO')THEN
+        GOTO1090
+      ELSEIF(NUMARG.GE.2.AND.IHARG(1).EQ.'RGB '.AND.
+     1       IHARG(2).EQ.'COLO')THEN
+        ICASCL='RGB '
+        ISHIFT=1
+        CALL SHIFTL(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,
+     1              IBUGPC,IERROR)
+        IHARG(1)='COLO'
+        IHARG2(1)='R   '
+        GOTO1090
+      ELSEIF(NUMARG.GE.3.AND.IHARG(1).EQ.'MARK'.AND.
+     1       IHARG(2).EQ.'RGB '.AND.IHARG(3).EQ.'COLO')THEN
+        ICASCL='RGB '
+        ISHIFT=1
+        CALL SHIFTL(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,
+     1              IBUGPC,IERROR)
+        IHARG(1)='MARK'
+        IHARG2(1)='    '
+        IHARG(2)='COLO'
+        IHARG2(2)='R   '
+        GOTO1090
+      ENDIF
+C
       GOTO1900
  1090 CONTINUE
 C
@@ -11930,310 +11961,486 @@ C               **  TREAT THE CASE WHEN                            **
 C               **  BOTH HORIZONTAL AXIS TICS ARE TO BE CHANGED    **
 C               *****************************************************
 C
-      IF(ICOM.EQ.'XTIC')GOTO1100
-      GOTO1199
+      IF(ICOM.EQ.'XTIC')THEN
+        IFOUND='YES'
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.3)THEN
+              JHOLD1=IARG(NUMARG-2)
+              JHOLD2=IARG(NUMARG-1)
+              JHOLD3=IARG(NUMARG)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(NUMARG)
+          ENDIF
+        ENDIF
 C
- 1100 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1150
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1150
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1150
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1150
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1150
-      GOTO1160
+        IF(ICASCL.EQ.'RGB ')THEN
+          IX1TC2(1)=JHOLD1
+          IX1TC2(2)=JHOLD2
+          IX1TC2(3)=JHOLD3
+          IX2TC2(1)=JHOLD1
+          IX2TC2(2)=JHOLD2
+          IX2TC2(3)=JHOLD3
 C
- 1150 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1180
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1186)
+ 1186       FORMAT('THE TIC MARK RGB COLOR (FOR BOTH HORIZONTAL ',
+     1             'FRAME LINES)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1187)JHOLD1,JHOLD2,JHOLD3
+ 1187       FORMAT('HAS JUST BEEN SET TO ',3I5)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          IX1TCO=IHOLD
+          IX2TCO=IHOLD
 C
- 1160 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1180
-C
- 1180 CONTINUE
-      IFOUND='YES'
-      IX1TCO=IHOLD
-      IX2TCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1189
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1181)
- 1181 FORMAT('THE TIC MARK COLOR (FOR BOTH HORIZONTAL ',
-     1'FRAME LINES)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1182)IHOLD
- 1182 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1189 CONTINUE
-      GOTO1900
-C
- 1199 CONTINUE
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+  999       FORMAT(1X)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1181)
+ 1181       FORMAT('THE TIC MARK COLOR (FOR BOTH HORIZONTAL ',
+     1             'FRAME LINES)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1182)IHOLD
+ 1182       FORMAT('HAS JUST BEEN SET TO ',A4)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
 C
 C               **************************************************************
 C               **  TREAT THE CASE WHEN                                     **
 C               **  ONLY THE BOTTOM HORIZONTAL TIC MARKS ARE TO BE CHANGED  **
 C               **************************************************************
 C
-      IF(ICOM.EQ.'X1TI')GOTO1200
-      GOTO1299
+      ELSEIF(ICOM.EQ.'X1TI')THEN
+        IFOUND='YES'
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.3)THEN
+              JHOLD1=IARG(NUMARG-2)
+              JHOLD2=IARG(NUMARG-1)
+              JHOLD3=IARG(NUMARG)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(NUMARG)
+          ENDIF
+        ENDIF
 C
- 1200 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1250
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1250
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1250
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1250
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1250
-      GOTO1260
+        IF(ICASCL.EQ.'RGB ')THEN
+          IX1TC2(1)=JHOLD1
+          IX1TC2(2)=JHOLD2
+          IX1TC2(3)=JHOLD3
 C
- 1250 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1280
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1286)
+ 1286       FORMAT('THE TIC MARK RGB COLOR (FOR THE BOTTOM HORIZONTAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1187)JHOLD1,JHOLD2,JHOLD3
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          IX1TCO=IHOLD
 C
- 1260 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1280
-C
- 1280 CONTINUE
-      IFOUND='YES'
-      IX1TCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1289
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1281)
- 1281 FORMAT('THE TIC MARK COLOR (FOR THE BOTTOM HORIZONTAL ',
-     1'FRAME LINE)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1282)IHOLD
- 1282 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1289 CONTINUE
-      GOTO1900
-C
- 1299 CONTINUE
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1281)
+ 1281       FORMAT('THE TIC MARK COLOR (FOR THE BOTTOM HORIZONTAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1182)IHOLD
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
 C
 C               **************************************************************
 C               **  TREAT THE CASE WHEN                                     **
 C               **  ONLY THE TOP    HORIZONTAL TIC MARKS ARE TO BE CHANGED  **
 C               **************************************************************
 C
-      IF(ICOM.EQ.'X2TI')GOTO1300
-      GOTO1399
+      ELSEIF(ICOM.EQ.'X2TI')THEN
+        IFOUND='YES'
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.3)THEN
+              JHOLD1=IARG(NUMARG-2)
+              JHOLD2=IARG(NUMARG-1)
+              JHOLD3=IARG(NUMARG)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(NUMARG)
+          ENDIF
+        ENDIF
 C
- 1300 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1350
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1350
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1350
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1350
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1350
-      GOTO1360
+        IF(ICASCL.EQ.'RGB ')THEN
+          IX2TC2(1)=JHOLD1
+          IX2TC2(2)=JHOLD2
+          IX2TC2(3)=JHOLD3
 C
- 1350 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1380
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1386)
+ 1386       FORMAT('THE TIC MARK RGB COLOR (FOR THE TOP HORIZONTAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1187)JHOLD1,JHOLD2,JHOLD3
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          IX2TCO=IHOLD
 C
- 1360 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1380
-C
- 1380 CONTINUE
-      IFOUND='YES'
-      IX2TCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1389
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1381)
- 1381 FORMAT('THE TIC MARK COLOR (FOR THE TOP HORIZONTAL ',
-     1'FRAME LINE)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1382)IHOLD
- 1382 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1389 CONTINUE
-      GOTO1900
-C
- 1399 CONTINUE
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1381)
+ 1381       FORMAT('THE TIC MARK COLOR (FOR THE TOP HORIZONTAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1182)IHOLD
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
 C
 C               *****************************************************
 C               **  TREAT THE CASE WHEN                            **
 C               **  BOTH VERTICAL   AXIS TICS ARE TO BE CHANGED    **
 C               *****************************************************
 C
-      IF(ICOM.EQ.'YTIC')GOTO1400
-      GOTO1499
+      ELSEIF(ICOM.EQ.'YTIC')THEN
+        IFOUND='YES'
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.3)THEN
+              JHOLD1=IARG(NUMARG-2)
+              JHOLD2=IARG(NUMARG-1)
+              JHOLD3=IARG(NUMARG)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(NUMARG)
+          ENDIF
+        ENDIF
 C
- 1400 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1450
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1450
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1450
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1450
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1450
-      GOTO1460
+        IF(ICASCL.EQ.'RGB ')THEN
+          IY1TC2(1)=JHOLD1
+          IY1TC2(2)=JHOLD2
+          IY1TC2(3)=JHOLD3
+          IY2TC2(1)=JHOLD1
+          IY2TC2(2)=JHOLD2
+          IY2TC2(3)=JHOLD3
 C
- 1450 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1480
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1486)
+ 1486       FORMAT('THE TIC MARK RGB COLOR (FOR BOTH VERTICAL ',
+     1             'FRAME LINES)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1187)JHOLD1,JHOLD2,JHOLD3
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          IY1TCO=IHOLD
+          IY2TCO=IHOLD
 C
- 1460 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1480
-C
- 1480 CONTINUE
-      IFOUND='YES'
-      IY1TCO=IHOLD
-      IY2TCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1489
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1481)
- 1481 FORMAT('THE TIC MARK COLOR (FOR BOTH VERTICAL ',
-     1'FRAME LINES)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1482)IHOLD
- 1482 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1489 CONTINUE
-      GOTO1900
-C
- 1499 CONTINUE
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1481)
+ 1481       FORMAT('THE TIC MARK COLOR (FOR BOTH VERTICAL ',
+     1             'FRAME LINES)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1182)IHOLD
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
 C
 C               **************************************************************
 C               **  TREAT THE CASE WHEN                                     **
 C               **  ONLY THE LEFT   VERTICAL   TIC MARKS ARE TO BE CHANGED  **
 C               **************************************************************
 C
-      IF(ICOM.EQ.'Y1TI')GOTO1500
-      GOTO1599
+      ELSEIF(ICOM.EQ.'Y1TI')THEN
+        IFOUND='YES'
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.3)THEN
+              JHOLD1=IARG(NUMARG-2)
+              JHOLD2=IARG(NUMARG-1)
+              JHOLD3=IARG(NUMARG)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(NUMARG)
+          ENDIF
+        ENDIF
 C
- 1500 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1550
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1550
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1550
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1550
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1550
-      GOTO1560
+        IF(ICASCL.EQ.'RGB ')THEN
+          IY1TC2(1)=JHOLD1
+          IY1TC2(2)=JHOLD2
+          IY1TC2(3)=JHOLD3
 C
- 1550 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1580
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1586)
+ 1586       FORMAT('THE TIC MARK RGB COLOR (FOR THE LEFT VERTICAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1187)JHOLD1,JHOLD2,JHOLD3
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          IY1TCO=IHOLD
 C
- 1560 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1580
-C
- 1580 CONTINUE
-      IFOUND='YES'
-      IY1TCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1589
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1581)
- 1581 FORMAT('THE TIC MARK COLOR (FOR THE LEFT VERTICAL ',
-     1'FRAME LINE)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1582)IHOLD
- 1582 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1589 CONTINUE
-      GOTO1900
-C
- 1599 CONTINUE
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1581)
+ 1581       FORMAT('THE TIC MARK COLOR (FOR THE LEFT VERTICAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1182)IHOLD
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
 C
 C               **************************************************************
 C               **  TREAT THE CASE WHEN                                     **
 C               **  ONLY THE RIGHT  VERTICAL   TIC MARKS ARE TO BE CHANGED  **
 C               **************************************************************
 C
-      IF(ICOM.EQ.'Y2TI')GOTO1600
-      GOTO1699
+      ELSEIF(ICOM.EQ.'Y2TI')THEN
+        IFOUND='YES'
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.3)THEN
+              JHOLD1=IARG(NUMARG-2)
+              JHOLD2=IARG(NUMARG-1)
+              JHOLD3=IARG(NUMARG)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(NUMARG)
+          ENDIF
+        ENDIF
 C
- 1600 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1650
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1650
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1650
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1650
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1650
-      GOTO1660
+        IF(ICASCL.EQ.'RGB ')THEN
+          IY2TC2(1)=JHOLD1
+          IY2TC2(2)=JHOLD2
+          IY2TC2(3)=JHOLD3
 C
- 1650 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1680
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1686)
+ 1686       FORMAT('THE TIC MARK RGB COLOR (FOR THE RIGHT VERTICAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1187)JHOLD1,JHOLD2,JHOLD3
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          IY2TCO=IHOLD
 C
- 1660 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1680
-C
- 1680 CONTINUE
-      IFOUND='YES'
-      IY2TCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1689
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1681)
- 1681 FORMAT('THE TIC MARK COLOR (FOR THE RIGHT VERTICAL ',
-     1'FRAME LINE)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1682)IHOLD
- 1682 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1689 CONTINUE
-      GOTO1900
-C
- 1699 CONTINUE
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1681)
+ 1681       FORMAT('THE TIC MARK COLOR (FOR THE RIGHT VERTICAL ',
+     1             'FRAME LINE)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1182)IHOLD
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
 C
 C               *****************************************************
 C               **  TREAT THE CASE WHEN                            **
 C               **  ALL 4 FRAME TICS ARE TO BE CHANGED             **
 C               *****************************************************
 C
-      IF(ICOM.EQ.'TIC')GOTO1700
-      IF(ICOM.EQ.'TICS')GOTO1700
-      IF(ICOM.EQ.'XYTI')GOTO1700
-      IF(ICOM.EQ.'YXTI')GOTO1700
-      GOTO1799
+      ELSEIF(ICOM.EQ.'TIC'  .OR. ICOM.EQ.'TICS' .OR.
+     1      ICOM.EQ.'XYTI' .OR. ICOM.EQ.'YXTI')THEN
+        IFOUND='YES'
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.3)THEN
+              JHOLD1=IARG(NUMARG-2)
+              JHOLD2=IARG(NUMARG-1)
+              JHOLD3=IARG(NUMARG)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(NUMARG)
+          ENDIF
+        ENDIF
 C
- 1700 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1750
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1750
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1750
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1750
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1750
-      GOTO1760
+        IF(ICASCL.EQ.'RGB ')THEN
+          IX1TC2(1)=JHOLD1
+          IX1TC2(2)=JHOLD2
+          IX1TC2(3)=JHOLD3
+          IX2TC2(1)=JHOLD1
+          IX2TC2(2)=JHOLD2
+          IX2TC2(3)=JHOLD3
+          IY1TC2(1)=JHOLD1
+          IY1TC2(2)=JHOLD2
+          IY1TC2(3)=JHOLD3
+          IY2TC2(1)=JHOLD1
+          IY2TC2(2)=JHOLD2
+          IY2TC2(3)=JHOLD3
 C
- 1750 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1780
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1786)
+ 1786       FORMAT('THE TIC MARK RGB COLOR (FOR ALL 4 FRAME LINES)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1187)JHOLD1,JHOLD2,JHOLD3
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          IX1TCO=IHOLD
+          IX2TCO=IHOLD
+          IY1TCO=IHOLD
+          IY2TCO=IHOLD
 C
- 1760 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1780
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1781)
+ 1781       FORMAT('THE TIC MARK COLOR (FOR ALL 4 FRAME LINES)')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1182)IHOLD
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
 C
- 1780 CONTINUE
-      IFOUND='YES'
-      IX1TCO=IHOLD
-      IX2TCO=IHOLD
-      IY1TCO=IHOLD
-      IY2TCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1789
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1781)
- 1781 FORMAT('THE TIC MARK COLOR (FOR ALL 4 ',
-     1'FRAME LINES)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1782)IHOLD
- 1782 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1789 CONTINUE
-      GOTO1900
-C
- 1799 CONTINUE
+      ENDIF
 C
  1900 CONTINUE
       RETURN
@@ -15814,10 +16021,10 @@ C
      1                  ITEXTE,NCTEX,
      1                  PXSTAR,PYSTAR,PXEND,PYEND,
      1                  IGRASW,IDIASW,PRV,PDIARV,
-     1                  ILINPA,ILINCO,PLINTH,
-     1                  ATEXBA,ITEBLI,ITEBCO,PTEBTH,
-     1                  ITEFSW,ITEFCO,
-     1                  ITEPTY,ITEPLI,ITEPCO,PTEPTH,PTEPSP,
+     1                  ILINPA,ILINCO,ILINC2,MAXLNZ,PLINTH,
+     1                  ATEXBA,ITEBLI,ITEBCO,ITEBC2,MAXTXZ,PTEBTH,
+     1                  ITEFSW,ITEFCO,ITEFC2,
+     1                  ITEPTY,ITEPLI,ITEPCO,ITEPC2,PTEPTH,PTEPSP,
      1                  PTEXMR,ITEXCV,ATEXAN,PTEXRV,
      1                  IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
      1                  IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,
@@ -15825,6 +16032,7 @@ C
      1                  IDPOWE,IDCONT,IDCOLO,IDNVPP,IDNHPP,IDUNIT,
      1                  IDNVOF,IDNHOF,IDFONT,PDSCAL,
      1                  IMPSW2,AMPSCH,AMPSCW,
+     1                  IBACCO,IBACC2,
      1                  IBUGD2,IFOUND,IERROR)
 C
 C     PURPOSE--WRITE OUT A TEXT STRING.
@@ -15939,17 +16147,21 @@ CCCCC TO ALLOW FOR LOWER CASE            SEPTEMBER 1993
 C
       DIMENSION ILINPA(*)
       DIMENSION ILINCO(*)
+      DIMENSION ILINC2(MAXLNZ,3)
       DIMENSION PLINTH(*)
 C
       DIMENSION ATEXBA(*)
       DIMENSION ITEBLI(*)
       DIMENSION ITEBCO(*)
+      DIMENSION ITEBC2(MAXTXZ,3)
       DIMENSION PTEBTH(*)
       DIMENSION ITEFSW(*)
       DIMENSION ITEFCO(*)
+      DIMENSION ITEFC2(MAXTXZ,3)
       DIMENSION ITEPTY(*)
       DIMENSION ITEPLI(*)
       DIMENSION ITEPCO(*)
+      DIMENSION ITEPC2(MAXTXZ,3)
       DIMENSION PTEPTH(*)
       DIMENSION PTEPSP(*)
       DIMENSION PDSCAL(*)
@@ -15981,6 +16193,7 @@ CCCCC ADD FOLLOWING LINE MARCH 1997.
 C
       DIMENSION IDNVOF(*)
       DIMENSION IDNHOF(*)
+      DIMENSION IBACC2(*)
 C
 CCCCC DIMENSION ICTEXT(130)
       INCLUDE 'DPCOPA.INC'
@@ -16091,8 +16304,17 @@ C
    84     FORMAT('IDNVPP(I),IDNHPP(I),IDUNIT(I) = ',3I8)
           CALL DPWRST('XXX','BUG ')
    81   CONTINUE
-        WRITE(ICOUT,87)ISUBG4,IERRG4,IBUGD2,IFOUND,IERROR,IREPCH
-   87   FORMAT('ISUBG4,IERRG4,IBUGD2,IFOUND,IERROR,IREPCH = ',
+        WRITE(ICOUT,86)ILINC2(1,1),ILINC2(1,2),ILINC2(1,3)
+   86   FORMAT('ILINC2(1,1),ILINC2(1,2),ILINC2(1,3) = ',3I5)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,87)ITEBC2(1,1),ITEBC2(1,2),ITEBC2(1,3)
+   87   FORMAT('ITEBC2(1,1),ITEBC2(1,2),ITEBC2(1,3) = ',3I5)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,88)ITEPC2(1,1),ITEPC2(1,2),ITEPC2(1,3)
+   88   FORMAT('ITEPC2(1,1),ITEPC2(1,2),ITEPC2(1,3) = ',3I5)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,93)ISUBG4,IERRG4,IBUGD2,IFOUND,IERROR,IREPCH
+   93   FORMAT('ISUBG4,IERRG4,IBUGD2,IFOUND,IERROR,IREPCH = ',
      1         5(A4,2X),A1)
         CALL DPWRST('XXX','BUG ')
       ENDIF
@@ -16260,9 +16482,8 @@ C
         IBELSW='OFF'
         NUMRIN=0
         IERASW='OFF'
-        IBACCO='JUNK'
 C
-        CALL DPOPPL(IGRASW,IBELSW,NUMRIN,IERASW,IBACCO)
+        CALL DPOPPL(IGRASW,IBELSW,NUMRIN,IERASW,IBACCO,IBACC2)
 C
 C               *****************************
 C               **  STEP 4--               **
@@ -16276,6 +16497,9 @@ C
         ANGLE=ATEXAN
         IFILL=ITEXFI
         ICOL=ITEXCO
+        ICOLR=-1
+        ICOLG=-1
+        ICOLB=-1
         PHEIGH=PTEXHE
         PWIDTH=PTEXWI
         PHOGAP=PTEXHG
@@ -16290,12 +16514,17 @@ CCCCC   PX1=PXSTAR
 CCCCC   PY1=PYSTAR
 C1610   CONTINUE
 C
-        IF(NCTEXT.GE.1)CALL DPWRTE(PX1,PY1,ICTEXT,NCTEXT,
-     1     IFONT,ICASE,IJUST,IDIR,ANGLE,IFILL,ICOL,
-     1     PHEIGH,PWIDTH,PVEGAP,PHOGAP,PTHICK,
-     1     ISYMBL,ISPAC,
-     1     IMPSW2,AMPSCH,AMPSCW,
-     1     PX99,PY99)
+        ICOLR=ITEFC2(1,1)
+        ICOLR=ITEFC2(1,2)
+        ICOLR=ITEFC2(1,3)
+        IF(NCTEXT.GE.1)
+     1     CALL DPWRTE(PX1,PY1,ICTEXT,NCTEXT,
+     1                 IFONT,ICASE,IJUST,IDIR,ANGLE,IFILL,
+     1                 ICOL,ICOLR,ICOLG,ICOLB,
+     1                 PHEIGH,PWIDTH,PVEGAP,PHOGAP,PTHICK,
+     1                 ISYMBL,ISPAC,
+     1                 IMPSW2,AMPSCH,AMPSCW,
+     1                 PX99,PY99)
 C
 CCCCC   MARCH 1993.  MOVE FOLLOWING SECTION OUTSIDE LOOP.
 CCCCC   IF(IDEVIC.GE.2)GOTO1690
@@ -17135,8 +17364,8 @@ C
       RETURN
       END
       SUBROUTINE DPTIC(ICOM,IHARG,NUMARG,
-     1IX1TSW,IX2TSW,IY1TSW,IY2TSW,
-     1IFOUND,IERROR)
+     1                 IX1TSW,IX2TSW,IY1TSW,IY2TSW,
+     1                 IFOUND,IERROR)
 C
 C     PURPOSE--DEFINE THE 4 TIC MARK SWITCHES CONTAINED IN THE
 C              4 VARIABLES IX1TSW,IX2TSW,IY1TSW,IY2TSW
@@ -17196,6 +17425,8 @@ C
       IERROR='NO'
 C
       IF(NUMARG.GE.1.AND.IHARG(1).EQ.'COLO')GOTO1900
+      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'RGB '.AND.
+     1   IHARG(2).EQ.'COLO')GOTO1900
       IF(NUMARG.GE.1.AND.IHARG(1).EQ.'COOR')GOTO1900
       IF(NUMARG.GE.1.AND.IHARG(1).EQ.'POSI')GOTO1900
       IF(NUMARG.GE.1.AND.IHARG(1).EQ.'SIZE')GOTO1900
@@ -17207,25 +17438,27 @@ C
       IF(NUMARG.GE.1.AND.IHARG(1).EQ.'OFFS')GOTO1900
 C
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.
-     1IHARG(2).EQ.'COLO')GOTO1900
+     1   IHARG(2).EQ.'COLO')GOTO1900
+      IF(NUMARG.GE.3.AND.IHARG(1).EQ.'MARK'.AND.
+     1   IHARG(2).EQ.'RGB '.AND.IHARG(3).EQ.'COLO')GOTO1900
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.
-     1IHARG(2).EQ.'COOR')GOTO1900
+     1   IHARG(2).EQ.'COOR')GOTO1900
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.
-     1IHARG(2).EQ.'POSI')GOTO1900
+     1   IHARG(2).EQ.'POSI')GOTO1900
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.
-     1IHARG(2).EQ.'SIZE')GOTO1900
+     1   IHARG(2).EQ.'SIZE')GOTO1900
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.
-     1IHARG(2).EQ.'HW')GOTO1900
+     1   IHARG(2).EQ.'HW')GOTO1900
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.
-     1IHARG(2).EQ.'LABE')GOTO1900
+     1   IHARG(2).EQ.'LABE')GOTO1900
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.
-     1IHARG(2).EQ.'DECI')GOTO1900
+     1   IHARG(2).EQ.'DECI')GOTO1900
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.
-     1IHARG(2).EQ.'PLAC')GOTO1900
+     1   IHARG(2).EQ.'PLAC')GOTO1900
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.
-     1IHARG(2).EQ.'NUMB')GOTO1900
+     1   IHARG(2).EQ.'NUMB')GOTO1900
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.
-     1IHARG(2).EQ.'OFFS')GOTO1900
+     1   IHARG(2).EQ.'OFFS')GOTO1900
 C
 C               *****************************************************
 C               **  TREAT THE CASE WHEN                            **
@@ -17629,16 +17862,17 @@ C
  1199 CONTINUE
       RETURN
       END
-      SUBROUTINE DPTICL(IHARG,NUMARG,IDEFCO,ITITCO,IFOUND,IERROR)
+      SUBROUTINE DPTICL(IHARG,IARG,NUMARG,IDEFCO,IRGBMX,ITITCO,ITITC2,
+     1                  IFOUND,IERROR)
 C
-C     PURPOSE--DEFINE THE COLOR FOR THE TITLE
-C              (THE HORIZONTAL STRING ABOVE THE UPPER HORIZONTAL FRAME).
-C              THE COLOR FOR THE TITLE WILL BE PLACED
-C              IN THE HOLLERITH VARIABLE ITITCO.
+C     PURPOSE--DEFINE THE COLOR FOR THE TITLE (THE HORIZONTAL STRING
+C              ABOVE THE UPPER HORIZONTAL FRAME).  THE COLOR FOR THE
+C              TITLE WILL BE PLACED IN THE HOLLERITH VARIABLE ITITCO.
 C     INPUT  ARGUMENTS--IHARG  (A  HOLLERITH VECTOR)
 C                     --NUMARG
 C                     --IDEFCO
 C     OUTPUT ARGUMENTS--ITITCO
+C                     --ITITC2
 C                     --IFOUND ('YES' OR 'NO' )
 C                     --IERROR ('YES' OR 'NO' )
 C     WRITTEN BY--JAMES J. FILLIBEN
@@ -17653,6 +17887,7 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--SEPTEMBER 1980.
 C     UPDATED         --MAY       1982.
+C     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -17665,6 +17900,8 @@ C
 C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
+      DIMENSION IARG(*)
+      DIMENSION ITITC2(*)
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -17675,41 +17912,54 @@ C
       IFOUND='NO'
       IERROR='NO'
 C
-      IF(NUMARG.LE.0)GOTO1199
-      IF(IHARG(1).EQ.'COLO')GOTO1110
-      GOTO1199
+      IF(NUMARG.LE.0)GOTO9000
+      IF(IHARG(1).EQ.'COLO')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     NUMARG.EQ.1)THEN
+          ITITCO=IDEFCO
+        ELSE
+          ITITCO=IHARG(NUMARG)
+        ENDIF
 C
- 1110 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1150
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1150
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1150
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1150
-      IF(NUMARG.EQ.1)GOTO1150
-      GOTO1160
+        IFOUND='YES'
 C
- 1150 CONTINUE
-      ITITCO=IDEFCO
-      GOTO1180
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+  999     FORMAT(1X)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1181)ITITCO
+ 1181     FORMAT('THE TITLE COLOR HAS JUST BEEN SET TO ',A4)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ELSEIF(IHARG(1).EQ.'RGB ' .AND. IHARG(2).EQ.'COLO')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     NUMARG.LE.4)THEN
+          ITITC2(1)=-1
+          ITITC2(2)=-1
+          ITITC2(3)=-1
+        ELSE
+          ITITC2(1)=IARG(3)
+          ITITC2(2)=IARG(4)
+          ITITC2(3)=IARG(5)
+          IF(ITITC2(1).LT.0 .OR. ITITC2(1).GT.IRGBMX)ITITC2(1)=-1
+          IF(ITITC2(2).LT.0 .OR. ITITC2(2).GT.IRGBMX)ITITC2(2)=-1
+          IF(ITITC2(3).LT.0 .OR. ITITC2(3).GT.IRGBMX)ITITC2(3)=-1
+        ENDIF
 C
- 1160 CONTINUE
-      ITITCO=IHARG(NUMARG)
-      GOTO1180
+        IFOUND='YES'
 C
- 1180 CONTINUE
-      IFOUND='YES'
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2181)ITITC2(1),ITITC2(2),ITITC2(3)
+ 2181     FORMAT('THE TITLE RGB COLORS HAVE JUST BEEN SET TO ',3I6)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
 C
-      IF(IFEEDB.EQ.'OFF')GOTO1189
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1181)ITITCO
- 1181 FORMAT('THE TITLE COLOR HAS JUST BEEN SET TO ',
-     1A4)
-      CALL DPWRST('XXX','BUG ')
- 1189 CONTINUE
-      GOTO1199
-C
- 1199 CONTINUE
+ 9000 CONTINUE
       RETURN
       END
       SUBROUTINE DPTIET(XTEMP1,MAXNXT,

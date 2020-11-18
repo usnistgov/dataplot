@@ -1,4 +1,4 @@
- 78200.    (VERSION 2020.08)   total number of lines in file (including this line)
+ 78300.    (VERSION 2020.11)   total number of lines in file (including this line)
  8.                          number of     sections below
   100.    D                  first line number of D section
 18700.    E                  first line number of E section
@@ -6,8 +6,8 @@
 37100.    G                  first line number of G section
 54000.    H                  first line number of H section
 61300.    I                  first line number of I section
-70500.    J                  first line number of J section
-72500.    K                  first line number of K section
+70600.    J                  first line number of J section
+72600.    K                  first line number of K section
 
 ----------------------------------------------------------
  
@@ -62095,7 +62095,7 @@ Applications:
     Data Management
  
 Implementation Date:
-    11/2008
+    2008/11
  
 Program:
     LET STRING S1 = file23.dat
@@ -68164,6 +68164,123 @@ Implementation Date:
 Program:
     XX
  
+-----IS NUMBER-------------------------------------------------
+ 
+IS NUMBER
+ 
+Name:
+    IS NUMBER
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Determine whether a previously defined string defines a
+    valid numerical value.
+ 
+Description:
+    There are times where it may be useful to determine if a
+    previously defined string defines a valid numeric value
+    or not.  The primary motivation for this command is to
+    distinguish if a string is a parameter name or a number
+    (e.g., when using command line arguments).
+
+    Dataplot determines this by attempting an internal Fortran
+    read.  That is (where STR is the string being tested),
+
+        READ(STR,*,IOSTAT=IE)AVAL
+
+    If IOSTAT does not indicate an error, then STR is assumed to be a
+    number.  If IOSTAT does indicate an error, then STR is assumed to
+    not be a number.
+
+    Note that there are some strings that are ambiguous in that
+    they can be interpreted as either a valid number or a parameter
+    name.  For example, 1D0 will be read successfully as a number, but
+    it is also a valid parameter name in Dataplot.  Determining
+    whether this should be considered a number or a parameter will
+    be dependent on the specific application.  The basic rule for
+    this command is that if it can be successfully read as a number
+    it will be considered a number.
+
+Syntax:
+    LET <ival> = IS NUMBER  <sorg>
+    where <sorg> is a previously defined string;
+    and   <ival> is a parameter.
+ 
+    The <ival> will be set to 1 if <sorg> is determined to be a
+    number and set to 0 if <sorg> is determined to not be a number.
+
+Examples:
+    LET STRING S1 = PARNAME
+    LET IFLAG = IS NUMBER S1
+    LET STRING S2 = 34.56
+    LET IFLAG = IS NUMBER S2
+ 
+Note:
+    The string on the right hand side of the equal sign must be a
+    previously defined string.  String expressions are not allowed.
+    So
+
+        LET IFLAG = IS NUMBER "45.6"
+
+    should be coded as
+
+        LET STRING S1 = 45.6
+        LET IFLAG = IS NUMBER S1
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    CHARACTER (LET)     = Convert numeric values to strings based on
+                          the ASCII collating sequence.
+    LET FUNCTION        = Defines a function.
+    LET STRING          = Defines a string.
+    READ STRING         = Reads a string from a file.
+    SUBSTITUTE CHARACTE = Substitute the value of a string or parameter.
+    &                   = Concatenate two strings.
+    SUBTRING            = Extract a substring from an existing string.
+    STRING LENGTH       = Return the length of a string.
+    STRING INDEX        = Return the start and stop positions of a 
+                          substring within a string.
+    STRING CONCATENATE  = Concatenate one or more previously defined
+                          strings.
+    STRING EDIT         = Edit a string.
+    STRING MERGE        = Insert a string into another string without
+                          overwrite.
+    STRING REPLACE      = Insert a string into another string with
+                          overwrite.
+    LOWER CASE          = Convert a string to lower case.
+    UPPER CASE          = Convert a string to upper case.
+    GROUP LABEL         = Define the text for group labels.
+ 
+Applications:
+    Data Management
+ 
+Implementation Date:
+    2020/11
+ 
+Program:
+    CALL MACRO.DP  K=3.56
+
+    where MACRO.DP contains
+
+    LET STRING SORG = $k
+    LET IFLAG = IS NUMBER SORG
+    IF IFLAG = 1; . ARGUMENT IS A NUMBER
+       LET AVAL = ^SORG
+    ELSE IF IFLAG = 0; . ARGUMENT IS A STRING
+       IF SORG EXISTS
+          LET AVAL = ^SORG
+       ELSE
+          LET AVAL = -9999
+       END OF IF
+     END OF IF
+
 -----ISO 13528 DIPERCENTAGE SCORE (LET)----------------------------------
  
 ISO 13528 DIPERCENTAGE SCORE
@@ -70419,23 +70536,6 @@ Program:
     END OF MULTIPLOT
  
 -------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

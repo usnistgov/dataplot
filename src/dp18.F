@@ -1,19 +1,10 @@
       SUBROUTINE DPLAB(IANS,IANSLC,IWIDTH,IHARG,IHARG2,NUMARG,
-CCCCC SUBROUTINE DPLAB(IANS,IWIDTH,IHARG,IHARG2,NUMARG, SEPT 1993
-CCCCC SUBROUTINE DPLAB(IANS,IWIDTH,IHARG,NUMARG,
-CCCCC THE ABOVE LINE WAS AUGMENTED AUGUST 1992
-CCCCC THE FOLLOWING 5 LINES WERE AUGMENTED AUGUST 1992
-CCCCC1IX1LTE,NCX1LA,
-CCCCC1IX2LTE,NCX2LA,
-CCCCC1IX3LTE,NCX3LA,
-CCCCC1IY1LTE,NCY1LA,
-CCCCC1IY2LTE,NCY2LA,
-     1IX1LTE,NCX1LA,IX1AUT,
-     1IX2LTE,NCX2LA,IX2AUT,
-     1IX3LTE,NCX3LA,IX3AUT,
-     1IY1LTE,NCY1LA,IY1AUT,
-     1IY2LTE,NCY2LA,IY2AUT,
-     1IBUGP2,IFOUND,IERROR)
+     1                 IX1LTE,NCX1LA,IX1AUT,
+     1                 IX2LTE,NCX2LA,IX2AUT,
+     1                 IX3LTE,NCX3LA,IX3AUT,
+     1                 IY1LTE,NCY1LA,IY1AUT,
+     1                 IY2LTE,NCY2LA,IY2AUT,
+     1                 IBUGP2,IFOUND,IERROR)
 C
 C     PURPOSE--EXTRACT THE STRING TO BE USED AS ONE
 C              ON THE 5 LABELS AVAILABLE AROUND A PLOT--
@@ -1354,10 +1345,10 @@ C
  1900 CONTINUE
       RETURN
       END
-      SUBROUTINE DPLACL(ICOM,IHARG,NUMARG,
-     1IDEFCO,
-     1IX1LCO,IX2LCO,IX3LCO,IY1LCO,IY2LCO,
-     1IFOUND,IERROR)
+      SUBROUTINE DPLACL(ICOM,IARG,IHARG,NUMARG,IDEFCO,
+     1                  IX1LCO,IX2LCO,IX3LCO,IY1LCO,IY2LCO,
+     1                  IX1LC2,IX2LC2,IX3LC2,IY1LC2,IY2LC2,IRGBMX,
+     1                  IFOUND,IERROR)
 C
 C     PURPOSE--DEFINE THE LABEL COLOR SWITCHES
 C              FOR ANY OF THE 5 LABELS.
@@ -1396,20 +1387,18 @@ C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--OCTOBER   1980.
 C     UPDATED         --MARCH     1981.
 C     UPDATED         --MAY       1982.
+C     UPDATED         --OCTOBER   2020.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICOM
       CHARACTER*4 IHARG
-C
       CHARACTER*4 IDEFCO
-C
       CHARACTER*4 IX1LCO
       CHARACTER*4 IX2LCO
       CHARACTER*4 IX3LCO
       CHARACTER*4 IY1LCO
       CHARACTER*4 IY2LCO
-C
       CHARACTER*4 IFOUND
       CHARACTER*4 IERROR
 C
@@ -1418,6 +1407,12 @@ C
 C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
+      DIMENSION IARG(*)
+      DIMENSION IX1LC2(*)
+      DIMENSION IX2LC2(*)
+      DIMENSION IX3LC2(*)
+      DIMENSION IY1LC2(*)
+      DIMENSION IY2LC2(*)
 C
 C---------------------------------------------------------------------
 C
@@ -1427,12 +1422,19 @@ C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
+      IHOLD=IDEFCO
 C
-      IF(NUMARG.LE.0)GOTO1900
-      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'COLO')GOTO1090
-      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.
-     1IHARG(2).EQ.'COLO')GOTO1090
-      GOTO1900
+      IF(NUMARG.LE.0)GOTO9000
+      IF(IHARG(1).EQ.'RGB ' .AND. IHARG(2).EQ.'COLO')GOTO2000
+      IF(IHARG(1).EQ.'MARK' .AND. IHARG(2).EQ.'RGB ' .AND.
+     1   IHARG(3).EQ.'COLO')GOTO2000
+C
+      IF((NUMARG.GE.1.AND.IHARG(1).EQ.'COLO') .OR.
+     1   (NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.
+     1    IHARG(2).EQ.'COLO'))GOTO1090
+C
+      GOTO9000
+C
  1090 CONTINUE
 C
 C               **************************************************************
@@ -1440,310 +1442,521 @@ C               **  TREAT THE CASE WHEN                                     **
 C               **  ONLY THE FIRST  HORIZONTAL LABEL IS      TO BE CHANGED  **
 C               **************************************************************
 C
-      IF(ICOM.EQ.'XLAB')GOTO1100
-      IF(ICOM.EQ.'X1LA')GOTO1100
-      GOTO1199
+      IF(ICOM.EQ.'XLAB' .OR. ICOM.EQ.'X1LA')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IHOLD=IDEFCO
+        ELSE
+          IHOLD=IHARG(NUMARG)
+        ENDIF
 C
- 1100 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1150
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1150
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1150
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1150
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1150
-      GOTO1160
+        IFOUND='YES'
+        IX1LCO=IHOLD
 C
- 1150 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1180
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+  999     FORMAT(1X)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1181)
+ 1181     FORMAT('THE LABEL COLOR (FOR THE FIRST  HORIZONTAL LABEL)')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1182)IHOLD
+ 1182     FORMAT('HAS JUST BEEN SET TO ',A4)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
 C
- 1160 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1180
-C
- 1180 CONTINUE
-      IFOUND='YES'
-      IX1LCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1189
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1181)
- 1181 FORMAT('THE LABEL COLOR (FOR THE FIRST  HORIZONTAL ',
-     1'LABEL)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1182)IHOLD
- 1182 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1189 CONTINUE
-      GOTO1900
-C
- 1199 CONTINUE
 C               **************************************************************
 C               **  TREAT THE CASE WHEN                                     **
 C               **  ONLY THE SECOND HORIZONTAL LABEL IS      TO BE CHANGED  **
 C               **************************************************************
 C
-      IF(ICOM.EQ.'X2LA')GOTO1200
-      GOTO1299
+      ELSEIF(ICOM.EQ.'X2LA')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IHOLD=IDEFCO
+        ELSE
+          IHOLD=IHARG(NUMARG)
+        ENDIF
 C
- 1200 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1250
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1250
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1250
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1250
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1250
-      GOTO1260
+        IFOUND='YES'
+        IX2LCO=IHOLD
 C
- 1250 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1280
-C
- 1260 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1280
-C
- 1280 CONTINUE
-      IFOUND='YES'
-      IX2LCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1289
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1281)
- 1281 FORMAT('THE LABEL COLOR (FOR THE SECOND HORIZONTAL ',
-     1'LABEL)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1282)IHOLD
- 1282 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1289 CONTINUE
-      GOTO1900
-C
- 1299 CONTINUE
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1281)
+ 1281     FORMAT('THE LABEL COLOR (FOR THE SECOND HORIZONTAL LABEL)')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1282)IHOLD
+ 1282     FORMAT('HAS JUST BEEN SET TO ',A4)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
 C
 C               **************************************************************
 C               **  TREAT THE CASE WHEN                                     **
 C               **  ONLY THE THIRD  HORIZONTAL LABEL IS      TO BE CHANGED  **
 C               **************************************************************
 C
-      IF(ICOM.EQ.'X3LA')GOTO1300
-      GOTO1399
+      ELSEIF(ICOM.EQ.'X3LA')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IHOLD=IDEFCO
+        ELSE
+          IHOLD=IHARG(NUMARG)
+        ENDIF
 C
- 1300 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1350
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1350
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1350
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1350
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1350
-      GOTO1360
+        IFOUND='YES'
+        IX3LCO=IHOLD
 C
- 1350 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1380
-C
- 1360 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1380
-C
- 1380 CONTINUE
-      IFOUND='YES'
-      IX3LCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1389
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1381)
- 1381 FORMAT('THE LABEL COLOR (FOR THE THIRD  HORIZONTAL ',
-     1'LABEL)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1382)IHOLD
- 1382 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1389 CONTINUE
-      GOTO1900
-C
- 1399 CONTINUE
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1381)
+ 1381     FORMAT('THE LABEL COLOR (FOR THE THIRD  HORIZONTAL LABEL)')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1382)IHOLD
+ 1382     FORMAT('HAS JUST BEEN SET TO ',A4)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
 C
 C               **************************************************************
 C               **  TREAT THE CASE WHEN                                     **
 C               **  ONLY THE LEFT   VERTICAL   LABEL IS      TO BE CHANGED  **
 C               **************************************************************
 C
-      IF(ICOM.EQ.'Y1LA')GOTO1400
-      GOTO1499
+      ELSEIF(ICOM.EQ.'Y1LA')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IHOLD=IDEFCO
+        ELSE
+          IHOLD=IHARG(NUMARG)
+        ENDIF
 C
- 1400 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1450
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1450
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1450
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1450
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1450
-      GOTO1460
+        IFOUND='YES'
+        IY1LCO=IHOLD
 C
- 1450 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1480
-C
- 1460 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1480
-C
- 1480 CONTINUE
-      IFOUND='YES'
-      IY1LCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1489
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1481)
- 1481 FORMAT('THE LABEL COLOR (FOR THE LEFT   VERTICAL   ',
-     1'LABEL)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1482)IHOLD
- 1482 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1489 CONTINUE
-      GOTO1900
-C
- 1499 CONTINUE
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1481)
+ 1481     FORMAT('THE LABEL COLOR (FOR THE LEFT   VERTICAL   LABEL)')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1482)IHOLD
+ 1482     FORMAT('HAS JUST BEEN SET TO ',A4)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
 C
 C               **************************************************************
 C               **  TREAT THE CASE WHEN                                     **
 C               **  ONLY THE RIGHT  VERTICAL   LABEL IS      TO BE CHANGED  **
 C               **************************************************************
 C
-      IF(ICOM.EQ.'Y2LA')GOTO1500
-      GOTO1599
+      ELSEIF(ICOM.EQ.'Y2LA')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IHOLD=IDEFCO
+        ELSE
+          IHOLD=IHARG(NUMARG)
+        ENDIF
 C
- 1500 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1550
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1550
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1550
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1550
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1550
-      GOTO1560
+        IFOUND='YES'
+        IY2LCO=IHOLD
 C
- 1550 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1580
-C
- 1560 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1580
-C
- 1580 CONTINUE
-      IFOUND='YES'
-      IY2LCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1589
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1581)
- 1581 FORMAT('THE LABEL COLOR (FOR THE RIGHT  VERTICAL   ',
-     1'LABEL)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1582)IHOLD
- 1582 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1589 CONTINUE
-      GOTO1900
-C
- 1599 CONTINUE
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1581)
+ 1581     FORMAT('THE LABEL COLOR (FOR THE RIGHT  VERTICAL   LABEL)')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1582)IHOLD
+ 1582     FORMAT('HAS JUST BEEN SET TO ',A4)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
 C
 C               **************************************************************
 C               **  TREAT THE CASE WHEN                                     **
 C               **  BOTH LEFT AND RIGHT VERTICAL LABELS ARE TO BE CHANGED   **
 C               **************************************************************
 C
-      IF(ICOM.EQ.'YLAB')GOTO1600
-      GOTO1699
+      ELSEIF(ICOM.EQ.'YLAB')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IHOLD=IDEFCO
+        ELSE
+          IHOLD=IHARG(NUMARG)
+        ENDIF
 C
- 1600 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1650
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1650
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1650
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1650
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1650
-      GOTO1660
+        IFOUND='YES'
+        IY1LCO=IHOLD
+        IY2LCO=IHOLD
 C
- 1650 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1680
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1681)
+ 1681     FORMAT('THE LABEL COLOR (FOR THE LEFT AND RIGHT VERTICAL ',
+     1           'LABELS)')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1682)IHOLD
+ 1682     FORMAT('HAS JUST BEEN SET TO ',A4)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
 C
- 1660 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1680
-C
- 1680 CONTINUE
-      IFOUND='YES'
-      IY1LCO=IHOLD
-      IY2LCO=IHOLD
-C
-      IF(IFEEDB.EQ.'OFF')GOTO1689
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1681)
- 1681 FORMAT('THE LABEL COLOR (FOR THE LEFT AND RIGHT VERTICAL ',
-     1'LABELS)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1682)IHOLD
- 1682 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1689 CONTINUE
-      GOTO1900
-C
- 1699 CONTINUE
 C               **************************************************************
 C               **  TREAT THE CASE WHEN                                     **
 C               **  ONLY ALL  5 LABELS ARE                   TO BE CHANGED  **
 C               **************************************************************
 C
-      IF(ICOM.EQ.'LABE')GOTO1700
-      IF(ICOM.EQ.'XYLA')GOTO1700
-      IF(ICOM.EQ.'YXLA')GOTO1700
-      GOTO1799
+      ELSEIF(ICOM.EQ.'LABE' .OR. ICOM.EQ.'XYLA' .OR.
+     1       ICOM.EQ.'YXLA')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          IHOLD=IDEFCO
+        ELSE
+          IHOLD=IHARG(NUMARG)
+        ENDIF
 C
- 1700 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1750
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1750
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1750
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1750
-      IF(IHARG(NUMARG).EQ.'COLO')GOTO1750
-      GOTO1760
+        IFOUND='YES'
+        IY1LCO=IHOLD
+        IY2LCO=IHOLD
+        IX1LCO=IHOLD
+        IX2LCO=IHOLD
+        IX3LCO=IHOLD
 C
- 1750 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1780
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1781)
+ 1781     FORMAT('THE LABEL COLOR (FOR ALL 5 LABELS--3 HORIZONTAL ',
+     1           'AND 2 VERTICAL)')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1782)IHOLD
+ 1782     FORMAT('HAS JUST BEEN SET TO ',A4)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
+      ENDIF
+      GOTO9000
 C
- 1760 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1780
+ 2000 CONTINUE
+      JHOLD1=-1
+      JHOLD2=-1
+      JHOLD3=-1
 C
- 1780 CONTINUE
-      IFOUND='YES'
-      IY1LCO=IHOLD
-      IY2LCO=IHOLD
-      IX1LCO=IHOLD
-      IX2LCO=IHOLD
-      IX3LCO=IHOLD
+      IF((NUMARG.GE.2 .AND. IHARG(1).EQ.'RGB ' .AND.
+     1    IHARG(2).EQ.'COLO') .OR.
+     1   (NUMARG.GE.3 .AND. IHARG(1).EQ.'MARK'.AND.
+     1    IHARG(2).EQ.'RGB ' .AND. IHARG(3).EQ.'COLO'))GOTO2090
 C
-      IF(IFEEDB.EQ.'OFF')GOTO1789
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1781)
- 1781 FORMAT('THE LABEL COLOR (FOR ALL 5 ',
-     1'LABELS--3 HORIZONTAL AND 2 VERTICAL)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1782)IHOLD
- 1782 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1789 CONTINUE
-      GOTO1900
+      GOTO9000
 C
- 1799 CONTINUE
+ 2090 CONTINUE
 C
- 1900 CONTINUE
+C               **************************************************************
+C               **  TREAT THE CASE WHEN                                     **
+C               **  ONLY THE FIRST  HORIZONTAL LABEL IS      TO BE CHANGED  **
+C               **************************************************************
+C
+      IF(ICOM.EQ.'XLAB' .OR. ICOM.EQ.'X1LA')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          JHOLD1=-1
+          JHOLD2=-1
+          JHOLD3=-1
+        ELSE
+          JHOLD1=IARG(NUMARG-2)
+          JHOLD2=IARG(NUMARG-1)
+          JHOLD3=IARG(NUMARG)
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+        ENDIF
+C
+        IFOUND='YES'
+        IX1LC2(1)=JHOLD1
+        IX1LC2(2)=JHOLD2
+        IX1LC2(3)=JHOLD3
+C
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2181)
+ 2181     FORMAT('THE LABEL RGB COLOR (FOR THE FIRST  HORIZONTAL ',
+     1           'LABEL)')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2182)JHOLD1,JHOLD2,JHOLD3
+ 2182     FORMAT('HAS JUST BEEN SET TO ',3I5)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
+C
+C               **************************************************************
+C               **  TREAT THE CASE WHEN                                     **
+C               **  ONLY THE SECOND HORIZONTAL LABEL IS      TO BE CHANGED  **
+C               **************************************************************
+C
+      ELSEIF(ICOM.EQ.'X2LA')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          JHOLD1=-1
+          JHOLD2=-1
+          JHOLD3=-1
+        ELSE
+          JHOLD1=IARG(NUMARG-2)
+          JHOLD2=IARG(NUMARG-1)
+          JHOLD3=IARG(NUMARG)
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+        ENDIF
+C
+        IFOUND='YES'
+        IX2LC2(1)=JHOLD1
+        IX2LC2(2)=JHOLD2
+        IX2LC2(3)=JHOLD3
+C
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2281)
+ 2281     FORMAT('THE LABEL RGB COLOR (FOR THE SECOND HORIZONTAL ',
+     1           'LABEL)')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2282)JHOLD1,JHOLD2,JHOLD3
+ 2282     FORMAT('HAS JUST BEEN SET TO ',3I5)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
+C
+C               **************************************************************
+C               **  TREAT THE CASE WHEN                                     **
+C               **  ONLY THE THIRD  HORIZONTAL LABEL IS      TO BE CHANGED  **
+C               **************************************************************
+C
+      ELSEIF(ICOM.EQ.'X3LA')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          JHOLD1=-1
+          JHOLD2=-1
+          JHOLD3=-1
+        ELSE
+          JHOLD1=IARG(NUMARG-2)
+          JHOLD2=IARG(NUMARG-1)
+          JHOLD3=IARG(NUMARG)
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+        ENDIF
+C
+        IFOUND='YES'
+        IX3LC2(1)=JHOLD1
+        IX3LC2(2)=JHOLD2
+        IX3LC2(3)=JHOLD3
+C
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2381)
+ 2381     FORMAT('THE RGB LABEL COLOR (FOR THE THIRD  HORIZONTAL ',
+     1           'LABEL)')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2382)IHOLD
+ 2382     FORMAT('HAS JUST BEEN SET TO ',A4)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
+C
+C               **************************************************************
+C               **  TREAT THE CASE WHEN                                     **
+C               **  ONLY THE LEFT   VERTICAL   LABEL IS      TO BE CHANGED  **
+C               **************************************************************
+C
+      ELSEIF(ICOM.EQ.'Y1LA')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          JHOLD1=-1
+          JHOLD2=-1
+          JHOLD3=-1
+        ELSE
+          JHOLD1=IARG(NUMARG-2)
+          JHOLD2=IARG(NUMARG-1)
+          JHOLD3=IARG(NUMARG)
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+        ENDIF
+C
+        IFOUND='YES'
+        IY1LC2(1)=JHOLD1
+        IY1LC2(2)=JHOLD2
+        IY1LC2(3)=JHOLD3
+C
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2481)
+ 2481     FORMAT('THE LABEL COLOR (FOR THE LEFT   VERTICAL   LABEL)')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2482)IHOLD
+ 2482     FORMAT('HAS JUST BEEN SET TO ',A4)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
+C
+C               **************************************************************
+C               **  TREAT THE CASE WHEN                                     **
+C               **  ONLY THE RIGHT  VERTICAL   LABEL IS      TO BE CHANGED  **
+C               **************************************************************
+C
+      ELSEIF(ICOM.EQ.'Y2LA')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          JHOLD1=-1
+          JHOLD2=-1
+          JHOLD3=-1
+        ELSE
+          JHOLD1=IARG(NUMARG-2)
+          JHOLD2=IARG(NUMARG-1)
+          JHOLD3=IARG(NUMARG)
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+        ENDIF
+C
+        IFOUND='YES'
+        IY2LC2(1)=JHOLD1
+        IY2LC2(2)=JHOLD2
+        IY2LC2(3)=JHOLD3
+C
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2581)
+ 2581     FORMAT('THE LABEL COLOR (FOR THE RIGHT  VERTICAL  ',
+     1           'LABEL)')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2582)JHOLD1,JHOLD2,JHOLD3
+ 2582     FORMAT('HAS JUST BEEN SET TO ',3I5)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
+C
+C               **************************************************************
+C               **  TREAT THE CASE WHEN                                     **
+C               **  BOTH LEFT AND RIGHT VERTICAL LABELS ARE TO BE CHANGED   **
+C               **************************************************************
+C
+      ELSEIF(ICOM.EQ.'YLAB')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          JHOLD1=-1
+          JHOLD2=-1
+          JHOLD3=-1
+        ELSE
+          JHOLD1=IARG(NUMARG-2)
+          JHOLD2=IARG(NUMARG-1)
+          JHOLD3=IARG(NUMARG)
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+        ENDIF
+C
+        IY1LCO=IHOLD
+        IY2LCO=IHOLD
+        IY1LC2(1)=JHOLD1
+        IY1LC2(2)=JHOLD2
+        IY1LC2(3)=JHOLD3
+        IY2LC2(1)=JHOLD1
+        IY2LC2(2)=JHOLD2
+        IY2LC2(3)=JHOLD3
+C
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2681)
+ 2681     FORMAT('THE LABEL RGB COLOR (FOR THE LEFT AND RIGHT ',
+     1           'VERTICAL LABELS)')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2682)JHOLD1,JHOLD2,JHOLD3
+ 2682     FORMAT('HAS JUST BEEN SET TO ',3I5)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
+C
+C               **************************************************************
+C               **  TREAT THE CASE WHEN                                     **
+C               **  ONLY ALL  5 LABELS ARE                   TO BE CHANGED  **
+C               **************************************************************
+C
+      ELSEIF(ICOM.EQ.'LABE' .OR. ICOM.EQ.'XYLA' .OR.
+     1       ICOM.EQ.'YXLA')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'COLO')THEN
+          JHOLD1=-1
+          JHOLD2=-1
+          JHOLD3=-1
+        ELSE
+          JHOLD1=IARG(NUMARG-2)
+          JHOLD2=IARG(NUMARG-1)
+          JHOLD3=IARG(NUMARG)
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+        ENDIF
+C
+        IFOUND='YES'
+        IX1LC2(1)=JHOLD1
+        IX1LC2(2)=JHOLD2
+        IX1LC2(3)=JHOLD3
+        IX2LC2(1)=JHOLD1
+        IX2LC2(2)=JHOLD2
+        IX2LC2(3)=JHOLD3
+        IX3LC2(1)=JHOLD1
+        IX3LC2(2)=JHOLD2
+        IX3LC2(3)=JHOLD3
+        IY1LC2(1)=JHOLD1
+        IY1LC2(2)=JHOLD2
+        IY1LC2(3)=JHOLD3
+        IY2LC2(1)=JHOLD1
+        IY2LC2(2)=JHOLD2
+        IY2LC2(3)=JHOLD3
+C
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2781)
+ 2781     FORMAT('THE LABEL RGB COLOR (FOR ALL 5 LABELS--3 HORIZONTAL ',
+     1           'AND 2 VERTICAL)')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2782)JHOLD1,JHOLD2,JHOLD3
+ 2782     FORMAT('HAS JUST BEEN SET TO ',3I5)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
+      ENDIF
+      GOTO9000
+C
+ 9000 CONTINUE
       RETURN
       END
       SUBROUTINE DPLACO(ICOM,IHARG,IARGT,ARG,NUMARG,
@@ -7190,10 +7403,10 @@ C
       END
       SUBROUTINE DPLATT(IHARG,IARGT,ARG,NUMARG,
      1                  PXSTAR,PYSTAR,PXEND,PYEND,
-     1                  ILINPA,ILINCO,PLINTH,
-     1                  AREGBA,IREBLI,IREBCO,PREBTH,
-     1                  IREFSW,IREFCO,
-     1                  IREPTY,IREPLI,IREPCO,PREPTH,PREPSP,
+     1                  ILINPA,ILINCO,ILINC2,MAXLNZ,PLINTH,
+     1                  AREGBA,IREBLI,IREBCO,IREBC2,MAXRGZ,PREBTH,
+     1                  IREFSW,IREFCO,IREFC2,
+     1                  IREPTY,IREPLI,IREPCO,IREPC2,PREPTH,PREPSP,
      1                  PTEXHE,PTEXWI,PTEXVG,PTEXHG,
      1                  IGRASW,IDIASW,
      1                  PGRAXF,PGRAYF,PDIAXC,PDIAYC,PDIAX2,PDIAY2,
@@ -7201,6 +7414,7 @@ C
      1                  NUMDEV,IDMANU,IDMODE,IDMOD2,IDMOD3,
      1                  IDPOWE,IDCONT,IDCOLO,IDNVPP,IDNHPP,IDUNIT,
      1                  IDNVOF,IDNHOF,IDFONT,UNITSW,PDSCAL,
+     1                  IBACCO,IBACC2,
      1                  IBUGD2,IFOUND,IERROR)
 C
 C     PURPOSE--DRAW ONE OR MORE LATTICES (DEPENDING ON HOW MANY NUMBERS
@@ -7259,6 +7473,7 @@ C     UPDATED         --DECEMBER  2018. CHECK FOR DISCRETE, NULL, OR
 C                                       NONE DEVICE
 C     UPDATED         --DECEMBER  2018. SUPPORT FOR "DEVICE ... SCALE"
 C                                       COMMAND
+C     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLORS
 C
 C-----NON-COMMON VARIABLES-----------------------------------------
 C
@@ -7309,17 +7524,21 @@ C
 C
       DIMENSION ILINPA(*)
       DIMENSION ILINCO(*)
+      DIMENSION ILINC2(MAXLNZ,3)
       DIMENSION PLINTH(*)
 C
       DIMENSION AREGBA(*)
       DIMENSION IREBLI(*)
       DIMENSION IREBCO(*)
+      DIMENSION IREBC2(MAXRGZ,3)
       DIMENSION PREBTH(*)
       DIMENSION IREFSW(*)
       DIMENSION IREFCO(*)
+      DIMENSION IREFC2(MAXRGZ,3)
       DIMENSION IREPTY(*)
       DIMENSION IREPLI(*)
       DIMENSION IREPCO(*)
+      DIMENSION IREPC2(MAXRGZ,3)
       DIMENSION PREPTH(*)
       DIMENSION PREPSP(*)
       DIMENSION PDSCAL(*)
@@ -7339,6 +7558,7 @@ CCCCC ADD FOLLOWING LINE MARCH 1997.
 C
       DIMENSION IDNVOF(*)
       DIMENSION IDNHOF(*)
+      DIMENSION IBACC2(*)
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -7485,9 +7705,7 @@ C
       IERASW='OFF'
       IBACCO='JUNK'
 C
-      CALL DPOPPL(IGRASW,
-     1IBELSW,NUMRIN,IERASW,
-     1IBACCO)
+      CALL DPOPPL(IGRASW,IBELSW,NUMRIN,IERASW,IBACCO,IBACC2)
 C
 C               *****************************************
 C               **  STEP 2--                           **
@@ -7619,13 +7837,12 @@ CCCCC THE FOLLOWING LINE WAS ADDED JULY 1997
       IF(ITYPEO.EQ.'RELA')Y3=Y2+Y3
 C
       CALL DPLAT2(X1,Y1,X2,Y2,X3,Y3,
-     1IFIG,
-     1ILINPA,ILINCO,PLINTH,
-     1AREGBA,
-     1IREBLI,IREBCO,PREBTH,
-     1IREFSW,IREFCO,
-     1IREPTY,IREPLI,IREPCO,PREPTH,PREPSP,
-     1PTEXHE,PTEXWI,PTEXVG,PTEXHG)
+     1            IFIG,
+     1            ILINPA,ILINCO,ILINC2,MAXLNZ,PLINTH,
+     1            AREGBA,IREBLI,IREBCO,IREBC2,MAXRGZ,PREBTH,
+     1            IREFSW,IREFCO,IREFC2,
+     1            IREPTY,IREPLI,IREPCO,IREPC2,PREPTH,PREPSP,
+     1            PTEXHE,PTEXWI,PTEXVG,PTEXHG)
 C
       X1=X3
       Y1=Y3
@@ -8200,11 +8417,11 @@ C
       END
       SUBROUTINE DPLAT2(X1,Y1,X2,Y2,X3,Y3,
      1                  IFIG,
-     1                  ILINPA,ILINCO,PLINTH,
+     1                  ILINPA,ILINCO,ILINC2,MAXLN,PLINTH,
      1                  AREGBA,
-     1                  IREBLI,IREBCO,PREBTH,
-     1                  IREFSW,IREFCO,
-     1                  IREPTY,IREPLI,IREPCO,PREPTH,PREPSP,
+     1                  IREBLI,IREBCO,IREBC2,MAXRG,PREBTH,
+     1                  IREFSW,IREFCO,IREFC2,
+     1                  IREPTY,IREPLI,IREPCO,IREPC2,PREPTH,PREPSP,
      1                  PTEXHE,PTEXWI,PTEXVG,PTEXHG)
 C
 C     PURPOSE--DRAW A LATTICE
@@ -8224,8 +8441,9 @@ C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--87/6
 C     ORIGINAL VERSION--MAY       1987.
-C     UPDATED         --JANUARY   1989.  MODIFY CALLS TO DPDRPL (ALAN)
-C     UPDATED         --JANUARY   1989.  MODIFY CALL  TO DPFIRE (ALAN)
+C     UPDATED         --JANUARY   1989. MODIFY CALLS TO DPDRPL (ALAN)
+C     UPDATED         --JANUARY   1989. MODIFY CALL  TO DPFIRE (ALAN)
+C     UPDATED         --OCTOBER   2020. SUPPORT RGB COLORS
 C
 C-----NON-COMMON VARIABLES-------------------------------------
 C
@@ -8256,17 +8474,21 @@ CCCCC DIMENSION PY3(10)
 C
       DIMENSION ILINPA(*)
       DIMENSION ILINCO(*)
+      DIMENSION ILINC2(MAXLN,3)
       DIMENSION PLINTH(*)
 C
       DIMENSION AREGBA(*)
       DIMENSION IREBLI(*)
       DIMENSION IREBCO(*)
+      DIMENSION IREBC2(MAXRG,3)
       DIMENSION PREBTH(*)
       DIMENSION IREFSW(*)
       DIMENSION IREFCO(*)
+      DIMENSION IREFC2(MAXRG,3)
       DIMENSION IREPTY(*)
       DIMENSION IREPLI(*)
       DIMENSION IREPCO(*)
+      DIMENSION IREPC2(MAXRG,3)
       DIMENSION PREPTH(*)
       DIMENSION PREPSP(*)
 C
@@ -8278,10 +8500,8 @@ C
 C
       PX31=(-999)
       PY31=(-999)
-C
       PXINC=(-999)
       PYINC=(-999)
-C
       PXCUT=(-999)
       PYCUT=(-999)
 C
@@ -8352,10 +8572,22 @@ C
       PXGAP=PREPSP(1)
       PYGAP=PREPSP(1)
       ICOLF=IREFCO(1)
+      ICOLFR=IREFC2(1,1)
+      ICOLFG=IREFC2(1,2)
+      ICOLFB=IREFC2(1,3)
       ICOLP=IREPCO(1)
+      ICOLPR=IREPC2(1,1)
+      ICOLPG=IREPC2(1,2)
+      ICOLPB=IREPC2(1,3)
+      ICOLBR=IREBC2(1,1)
+      ICOLBG=IREBC2(1,2)
+      ICOLBB=IREBC2(1,3)
       IFIG='BOX'
       CALL DPFIRE(PX,PY,NP,
-     1IFIG,IPATT,PTHICK,PXGAP,PYGAP,ICOLF,ICOLP,IPATT2)
+     1            IFIG,IPATT,PTHICK,PXGAP,PYGAP,
+     1            ICOLF,ICOLFR,ICOLFG,ICOLFB,
+     1            ICOLP,ICOLPR,ICOLPG,ICOLPB,
+     1            IPATT2)
       IFIG='LATT'
 C
  1190 CONTINUE
@@ -8371,6 +8603,9 @@ C
       IPATT=ILINPA(1)
       PTHICK=PLINTH(1)
       ICOL=ILINCO(1)
+      ICOLR=ILINC2(1,1)
+      ICOLG=ILINC2(1,2)
+      ICOLB=ILINC2(1,3)
       NP=2
 C
 C               ***********************************
@@ -8388,14 +8623,16 @@ C
       PY(2)=Y3
       IFLAG='ON'
       CALL DPDRPL(PX,PY,NP,
-     1            IFIG,IPATT,PTHICK,ICOL,
+     1            IFIG,IPATT,PTHICK,
+     1            ICOL,ICOLR,ICOLG,ICOLB,
      1            JPATT,JTHICK,PTHIC2,JCOL,IFLAG)
       PX(1)=X3
       PY(1)=Y1
       PX(2)=X3
       PY(2)=Y3
       CALL DPDRPL(PX,PY,NP,
-     1            IFIG,IPATT,PTHICK,ICOL,
+     1            IFIG,IPATT,PTHICK,
+     1            ICOL,ICOLR,ICOLG,ICOLB,
      1            JPATT,JTHICK,PTHIC2,JCOL,IFLAG)
       GOTO2900
 C
@@ -8420,7 +8657,8 @@ C
         IF(PX31.LT.0.0.AND.PXNEW.LT.PXCUT)GOTO2290
         IFLAG='ON'
         CALL DPDRPL(PX,PY,NP,
-     1              IFIG,IPATT,PTHICK,ICOL,
+     1              IFIG,IPATT,PTHICK,
+     1              ICOL,ICOLR,ICOLG,ICOLB,
      1              JPATT,JTHICK,PTHIC2,JCOL,IFLAG)
  2210 CONTINUE
  2290 CONTINUE
@@ -8442,14 +8680,16 @@ C
       PY(2)=Y1
       IFLAG='ON'
       CALL DPDRPL(PX,PY,NP,
-     1            IFIG,IPATT,PTHICK,ICOL,
+     1            IFIG,IPATT,PTHICK,
+     1            ICOL,ICOLR,ICOLG,ICOLB,
      1            JPATT,JTHICK,PTHIC2,JCOL,IFLAG)
       PX(1)=X1
       PY(1)=Y3
       PX(2)=X3
       PY(2)=Y3
       CALL DPDRPL(PX,PY,NP,
-     1            IFIG,IPATT,PTHICK,ICOL,
+     1            IFIG,IPATT,PTHICK,
+     1            ICOL,ICOLR,ICOLG,ICOLB,
      1            JPATT,JTHICK,PTHIC2,JCOL,IFLAG)
       GOTO3900
 C
@@ -8474,7 +8714,8 @@ C
         IF(PY31.LT.0.0.AND.PYNEW.LT.PYCUT)GOTO3290
         IFLAG='ON'
         CALL DPDRPL(PX,PY,NP,
-     1              IFIG,IPATT,PTHICK,ICOL,
+     1              IFIG,IPATT,PTHICK,
+     1              ICOL,ICOLR,ICOLG,ICOLB,
      1              JPATT,JTHICK,PTHIC2,JCOL,IFLAG)
  3210 CONTINUE
  3290 CONTINUE
@@ -8486,7 +8727,7 @@ C               **  STEP 90--  **
 C               **  EXIT       **
 C               *****************
 C
-      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'TRI2')THEN
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'LAT2')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,9011)
@@ -8858,12 +9099,12 @@ C
  1199 CONTINUE
       RETURN
       END
-      SUBROUTINE DPLECL(IHARG,IARGT,IARG,NUMARG,IDEFCO,
-     1MAXLEG,ILEGCO,IFOUND,IERROR)
+      SUBROUTINE DPLECL(IHARG,IHARG2,IARGT,IARG,ARG,NUMARG,
+     1                  IDEFCO,MAXLEG,ILEGCO,ILEGC2,IRGBMX,
+     1                  IBUGP2,ISUBRO,IFOUND,IERROR)
 C
-C     PURPOSE--DEFINE THE COLOR FOR A LEGEND.
-C              THE COLOR FOR LEGEND I WILL BE PLACED
-C              IN THE I-TH ELEMENT OF THE HOLLERITH
+C     PURPOSE--DEFINE THE COLOR FOR A LEGEND.  THE COLOR FOR LEGEND I
+C              WILL BE PLACED IN THE I-TH ELEMENT OF THE HOLLERITH
 C              VECTOR ILEGCO(.).
 C     INPUT  ARGUMENTS--IHARG  (A  HOLLERITH VECTOR)
 C                     --IARGT  (A HOLLERITH VECTOR)
@@ -8888,25 +9129,31 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--SEPTEMBER 1980.
 C     UPDATED         --MAY       1982.
+C     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-      CHARACTER*4 IHARG
-      CHARACTER*4 IARGT
       CHARACTER*4 IDEFCO
-      CHARACTER*4 ILEGCO
+      CHARACTER*4 IBUGP2
+      CHARACTER*4 ISUBRO
       CHARACTER*4 IFOUND
       CHARACTER*4 IERROR
 C
-      CHARACTER*4 IHOLD
-C
 C---------------------------------------------------------------------
 C
-      DIMENSION IHARG(*)
-      DIMENSION IARGT(*)
+      CHARACTER*4 IHARG(*)
+      CHARACTER*4 IHARG2(*)
+      CHARACTER*4 IARGT(*)
+      CHARACTER*4 ILEGCO(*)
       DIMENSION IARG(*)
+      DIMENSION ARG(*)
+      DIMENSION ILEGC2(MAXLEG,3)
 C
-      DIMENSION ILEGCO(*)
+      CHARACTER*4 IHOLD
+      CHARACTER*4 ICASCL
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
 C
 C---------------------------------------------------------------------
 C
@@ -8916,123 +9163,256 @@ C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
+      ICASCL='STAN'
+      ISUBN1='DPLE'
+      ISUBN2='CL  '
+      IHOLD='    '
+      JHOLD1=-1
+      JHOLD2=-1
+      JHOLD3=-1
 C
-      IF(NUMARG.EQ.0)GOTO1199
-      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'COLO')GOTO1110
-      IF(NUMARG.GE.2.AND.IHARG(2).EQ.'COLO')GOTO1140
-      GOTO1199
+      IF(IBUGP2.EQ.'ON' .OR. ISUBRO.EQ.'LECL')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPLECL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGP2,ISUBRO,IFOUND,IERROR
+   52   FORMAT('IBUGP2,ISUBRO,IFOUND,IERROR = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IDEBCO,MAXLEG,NUMLEG,NUMARG,IRGBMX
+   53   FORMAT('IDEBCO,MAXLEG,NUMLEG,NUMARG,IRGBMX = ',A4,2X,4I8)
+        CALL DPWRST('XXX','BUG ')
+        DO65I=1,NUMARG
+          WRITE(ICOUT,66)I,IARG(I),IHARG(I)
+   66     FORMAT('I,IARG(I),IHARG(I) = ',2I8,2X,A4)
+          CALL DPWRST('XXX','BUG ')
+   65   CONTINUE
+        DO75I=1,10
+          WRITE(ICOUT,76)I,ILEGCO(I),ILEGC2(I,1),ILEGC2(I,2),ILEGC2(I,3)
+   76     FORMAT('I,ILEGCO(I),ILEGC2(I,1),ILEGC2(I,2),ILEGC2(I,3) = ',
+     1           I8,2X,A4,2X,3I5)
+          CALL DPWRST('XXX','BUG ')
+   75   CONTINUE
+      ENDIF
 C
- 1110 CONTINUE
-      IF(NUMARG.LE.1)GOTO1120
-      IF(IHARG(2).EQ.'ON')GOTO1120
-      IF(IHARG(2).EQ.'OFF')GOTO1120
-      IF(IHARG(2).EQ.'AUTO')GOTO1120
-      IF(IHARG(2).EQ.'DEFA')GOTO1120
-      GOTO1125
+      ISTEPN='1'
+      IF(IBUGP2.EQ.'ON' .OR. ISUBRO.EQ.'LECL')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
- 1120 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1130
+      IF(NUMARG.EQ.0)GOTO9000
+      IF(IHARG(1).EQ.'RGB ' .AND. IHARG(2).EQ.'COLO')THEN
+        ICASCL='RGB '
+        ISHIFT=1
+        CALL SHIFTL(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,
+     1              IBUGP2,IERROR)
+      ELSEIF(IHARG(2).EQ.'RGB ' .AND. IHARG(3).EQ.'COLO')THEN
+        ICASCL='RGB '
+        DO45II=2,NUMARG-1
+          IHARG(II)=IHARG(II+1)
+          IHARG2(II)=IHARG2(II+1)
+          IARGT(II)=IARGT(II+1)
+          IARG(II)=IARG(II+1)
+          ARG(II)=ARG(II+1)
+  45    CONTINUE
+        IHARG(NUMARG)=IHARG(II+1)
+        IHARG2(NUMARG)=IHARG2(II+1)
+        IARGT(NUMARG)=IARGT(II+1)
+        IARG(NUMARG)=IARG(II+1)
+        ARG(NUMARG)=ARG(II+1)
+        NUMARG=NUMARG-1
+      ENDIF
 C
- 1125 CONTINUE
-      IHOLD=IHARG(2)
-      GOTO1130
+      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'COLO')THEN
 C
- 1130 CONTINUE
-      IFOUND='YES'
-      DO1135I=1,MAXLEG
-      ILEGCO(I)=IHOLD
- 1135 CONTINUE
+      ISTEPN='2'
+      IF(IBUGP2.EQ.'ON' .OR. ISUBRO.EQ.'LECL')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-      IF(IFEEDB.EQ.'OFF')GOTO1139
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      I=1
-      WRITE(ICOUT,1136)ILEGCO(I)
- 1136 FORMAT('ALL LEGEND COLORS HAVE JUST BEEN SET TO ',
-     1A4)
-      CALL DPWRST('XXX','BUG ')
- 1139 CONTINUE
-      GOTO1199
+        IF(NUMARG.LE.1        .OR. IHARG(2).EQ.'ON'   .OR.
+     1     IHARG(2).EQ.'OFF'  .OR. IHARG(2).EQ.'AUTO' .OR.
+     1     IHARG(2).EQ.'DEFA')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.4)THEN
+              JHOLD1=IARG(2)
+              JHOLD2=IARG(3)
+              JHOLD3=IARG(4)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(2)
+          ENDIF
+        ENDIF
 C
- 1140 CONTINUE
-      IF(IARGT(1).EQ.'NUMB')GOTO1150
-      IERROR='YES'
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1141)
- 1141 FORMAT('***** ERROR IN DPLECL--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1142)
- 1142 FORMAT('      IN THE LEGEND ... COLOR COMMAND,')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1143)
- 1143 FORMAT('      THE LEGEND IS IDENTIFIED BY A NUMBER, AS IN--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1144)
- 1144 FORMAT('      LEGEND 3 COLOR GREEN')
-      CALL DPWRST('XXX','BUG ')
-      GOTO1199
+        IFOUND='YES'
+        IF(ICASCL.EQ.'RGB ')THEN
+          DO1138I=1,MAXLEG
+            ILEGC2(I,1)=JHOLD1
+            ILEGC2(I,2)=JHOLD2
+            ILEGC2(I,3)=JHOLD3
+ 1138     CONTINUE
 C
- 1150 CONTINUE
-      I=IARG(1)
-      IF(1.LE.I.AND.I.LE.MAXLEG)GOTO1160
-      IERROR='YES'
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1151)
- 1151 FORMAT('***** ERROR IN DPLECL--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1152)
- 1152 FORMAT('      IN THE LEGEND ... COLOR COMMAND,')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1153)
- 1153 FORMAT('      THE NUMBER OF LEGENDS MUST BE ')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1154)MAXLEG
- 1154 FORMAT('      BETWEEN 1 AND ',I8,' (INCLUSIVELY);')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1155)
- 1155 FORMAT('      SUCH WAS NOT THE CASE HERE--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1156)I
- 1156 FORMAT('      A REFERENCE WAS MADE TO THE ',I8,'-TH ',
-     1'LEGEND.')
-      CALL DPWRST('XXX','BUG ')
-      GOTO1199
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            I=1
+            WRITE(ICOUT,1139)ILEGC2(I,1),ILEGC2(I,2),ILEGC2(I,3)
+ 1139       FORMAT('ALL LEGEND RGB COLORS HAVE JUST BEEN SET TO ',3I5)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          DO1135I=1,MAXLEG
+            ILEGCO(I)=IHOLD
+ 1135     CONTINUE
 C
- 1160 CONTINUE
-      IF(NUMARG.LE.2)GOTO1170
-      IF(IHARG(3).EQ.'ON')GOTO1170
-      IF(IHARG(3).EQ.'OFF')GOTO1170
-      IF(IHARG(3).EQ.'AUTO')GOTO1170
-      IF(IHARG(3).EQ.'DEFA')GOTO1170
-      GOTO1175
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            I=1
+            WRITE(ICOUT,1136)ILEGCO(I)
+ 1136       FORMAT('ALL LEGEND COLORS HAVE JUST BEEN SET TO ',A4)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
+        GOTO9000
 C
- 1170 CONTINUE
-      IHOLD=IDEFCO
-      GOTO1180
+      ELSEIF(NUMARG.GE.2.AND.IHARG(2).EQ.'COLO')THEN
 C
- 1175 CONTINUE
-      IHOLD=IHARG(3)
-      GOTO1180
+      ISTEPN='3'
+      IF(IBUGP2.EQ.'ON' .OR. ISUBRO.EQ.'LECL')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
- 1180 CONTINUE
-      IFOUND='YES'
-      ILEGCO(I)=IHOLD
+        IF(IARGT(1).NE.'NUMB')THEN
+          IERROR='YES'
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1141)
+ 1141     FORMAT('***** ERROR IN LEGEND COLOR (DPLECL)--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1142)
+ 1142     FORMAT('      IN THE LEGEND ... COLOR COMMAND,')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1143)
+ 1143     FORMAT('      THE LEGEND IS IDENTIFIED BY A NUMBER, AS IN--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1144)
+ 1144     FORMAT('      LEGEND 3 COLOR GREEN')
+          CALL DPWRST('XXX','BUG ')
+          GOTO9000
+        ENDIF
 C
-      IF(IFEEDB.EQ.'OFF')GOTO1189
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1186)I,ILEGCO(I)
- 1186 FORMAT('THE COLOR FOR LEGEND ',I8,
-     1' HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1189 CONTINUE
-      GOTO1199
+        I=IARG(1)
+        IF(I.LT.1 .OR. I.GT.MAXLEG)THEN
+          IERROR='YES'
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1141)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1152)
+ 1152     FORMAT('      IN THE LEGEND ... COLOR COMMAND,THE NUMBER ',
+     1           'OF LEGENDS')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1154)MAXLEG
+ 1154     FORMAT('      MUST BE BETWEEN 1 AND ',I8,' (INCLUSIVELY);')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1155)
+ 1155     FORMAT('      SUCH WAS NOT THE CASE HERE--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1156)I
+ 1156     FORMAT('      A REFERENCE WAS MADE TO THE ',I8,'-TH LEGEND.')
+          CALL DPWRST('XXX','BUG ')
+          GOTO9000
+        ENDIF
 C
- 1199 CONTINUE
+        IF(NUMARG.LE.2        .OR. IHARG(3).EQ.'ON'   .OR.
+     1     IHARG(3).EQ.'OFF'  .OR. IHARG(3).EQ.'AUTO' .OR.
+     1     IHARG(3).EQ.'DEFA')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+            IF(NUMARG.GE.5)THEN
+              JHOLD1=IARG(3)
+              JHOLD2=IARG(4)
+              JHOLD3=IARG(5)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(3)
+          ENDIF
+        ENDIF
+C
+        IFOUND='YES'
+        IF(ICASCL.EQ.'RGB ')THEN
+          ILEGC2(I,1)=JHOLD1
+          ILEGC2(I,2)=JHOLD2
+          ILEGC2(I,3)=JHOLD3
+C
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1286)I,ILEGC2(I,1),ILEGC2(I,2),ILEGC2(I,3)
+ 1286       FORMAT('THE RGB COLOR FOR LEGEND ',I8,
+     1             ' HAS JUST BEEN SET TO ',3I5)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          ILEGCO(I)=IHOLD
+C
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1186)I,ILEGCO(I)
+ 1186       FORMAT('THE COLOR FOR LEGEND ',I8,' HAS JUST BEEN SET TO ',
+     1             A4)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
+      ENDIF
+C
+ 9000 CONTINUE
+C
+      IF(IBUGP2.EQ.'ON' .OR. ISUBRO.EQ.'LECL')THEN
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPLECL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IFOUND,IERROR,NUMLEG
+ 9012   FORMAT('IFOUND,IERROR,NUMLEG = ',2(A4,2X),I5)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)IHOLD,JHOLD1,JHOLD2,JHOLD3
+ 9014   FORMAT('IHOLD,JHOLD1,JHOLD2,JHOLD3 = ',A4,2X,3I5)
+        CALL DPWRST('XXX','BUG ')
+        DO9075I=1,10
+          WRITE(ICOUT,76)I,ILEGCO(I),ILEGC2(I,1),ILEGC2(I,2),ILEGC2(I,3)
+          CALL DPWRST('XXX','BUG ')
+ 9075   CONTINUE
+      ENDIF
+C
       RETURN
       END
       SUBROUTINE DPLECO(IHARG,IHARG2,IARGT,IARG,ARG,NUMARG,
@@ -11527,96 +11907,97 @@ C     UPDATED         --MAY       1982.
 C     UPDATED         --JUNE      1986.
 C     UPDATED         --NOVEMBER  1986.
 C     UPDATED         --APRIL     1987.
-C     UPDATED         --JUNE      1987.  EXP DESIGN
-C     UPDATED         --SEPTEMBER 1987.  PRIME NUMBERS
-C     UPDATED         --AUGUST    1988.  PRINCIPLE COMPONENTS
-C     UPDATED         --SEPTEMBER 1987.  FIBONNACCI NUMBERS
-C     UPDATED         --DECEMBER  1988.  ELIM. SHORT VERS. OF SEQUENCE
-C     UPDATED         --DECEMBER  1988.  SHORTEN: LET Y = SEQU 1 1 N
-C     UPDATED         --JANUARY   1989.  CHECK FOR ARITHMETIC OPERATORS
-C     UPDATED         --JANUARY   1989.  (SIMULATED) EXPERIMENT
-C     UPDATED         --APRIL     1989.  LOGISTIC SEQUENCE
-C     UPDATED         --APRIL     1989.  CANTOR SET
-C     UPDATED         --OCTOBER   1991.  NORMAL ORD. STAT. MED.
-C     UPDATED         --MAY       1993.  EV1, EV2, WEIB. ORD. STAT. MED.
-C     UPDATED         --JULY      1993.  BUG FIX FOR SING VALUE DECOMP
-C     UPDATED         --SEPTEMBER 1993.  ADD ISUBRO TO CALL TO DPRK
-C     UPDATED         --FEBRUARY  1994.  LET A = (TAGUCHI) SN- COMMAND
-C     UPDATED         --FEBRUARY  1994.  LET A = (TAGUCHI) SN+ COMMAND
-C     UPDATED         --FEBRUARY  1994.  ROOTAC ARGUMENT
-C     UPDATED         --JUNE      1994.  ADD OPTIMIZATION COMMAND
-C     UPDATED         --FEBRUARY  1995.  ADD ARGUMENTS TO OPTIMIZATION
-C     UPDATED         --SEPTEMBER 1997.  BERNOULI NUMBERS
-C     UPDATED         --SEPTEMBER 1997.  EULER NUMBERS
-C     UPDATED         --JULY      2002.  ARGUMENT LIST FOR DPSTAC
-C     UPDATED         --APRIL     2003.  ARGUMENT LIST FOR DPSTAC,
-C                                        ADDITIONAL SCRATCH ARRAYS
-C     UPDATED         --JANUARY   2004.  NUMERICAL DERIVATIVE
-C     UPDATED         --JANUARY   2004.  CHARACTER CODE
-C     UPDATED         --JANUARY   2004.  ALPHABETIC CHARACTER CODE
-C     UPDATED         --JANUARY   2004.  GROUP LABEL
-C     UPDATED         --JANUARY   2004.  ROW LABEL
-C     UPDATED         --NOVEMBER  2007.  DOUBLE PRECISION ARRAYS FOR
-C                                        CMPSTA
-C     UPDATED         --AUGUST    2008.  MERGE
-C     UPDATED         --NOVEMBER  2008.  STRING LENGTH
-C     UPDATED         --NOVEMBER  2008.  STRING INDEX
-C     UPDATED         --NOVEMBER  2008.  STRING MERGE
-C     UPDATED         --NOVEMBER  2008.  STRING REPLACE
-C     UPDATED         --NOVEMBER  2008.  STRING EDIT
-C     UPDATED         --NOVEMBER  2008.  SUBSTRING
-C     UPDATED         --NOVEMBER  2008.  ICHAR
-C     UPDATED         --NOVEMBER  2008.  CHARACTER
-C     UPDATED         --NOVEMBER  2008.  UPPER CASE
-C     UPDATED         --NOVEMBER  2008.  LOWER CASE
-C     UPDATED         --SEPTEMBER 2009.  CALL LIST TO CKRAND, DPRAND
-C     UPDATED         --JUNE      2010.  CALL LIST TO DPSTAC
-C     UPDATED         --OCTOBER   2010.  STRING WORD
-C     UPDATED         --OCTOBER   2010.  NUMBER OF WORDS
-C     UPDATED         --OCTOBER   2011.  GROUP LABEL TO STRINGS
-C     UPDATED         --OCTOBER   2011.  CHARACTER CODE STRINGS
-C     UPDATED         --AUGUST    2012.  SEVERAL ENHANCEMENTS TO THE
-C                                        LET ROWLABEL ... COMMAND
-C     UPDATED         --JUNE      2013.  CALL LIST TO DPINTE
-C     UPDATED         --AUGUST    2014.  LET PLOT .... =
-C     UPDATED         --MARCH     2015.  CHECK NAMES
-C     UPDATED         --MARCH     2015.  CHECK EQUAL LENGTH
-C     UPDATED         --MARCH     2015.  STRING REMOVE SPACES
-C     UPDATED         --MARCH     2015.  CHECK TYPE
-C     UPDATED         --MARCH     2015.  DIGITS TO STRING
-C     UPDATED         --JUNE      2015.  IFORSW TO ARGUMENT LIST
-C     UPDATED         --JUNE      2015.  LET ... = NUMBER TO STRING
-C     UPDATED         --SEPTEMBER 2015.  CALL LIST TO SEVERAL ROUTINES
-C                                        TO SUPPORT FUNCTION BLOCKS
-C     UPDATED         --DECEMBER  2015.  LET ... = EXECUTE ...
-C     UPDATED         --DECEMBER  2015.  LET ... = INQUIRE ...
-C     UPDATED         --FEBRUARY  2016.  NAME CONFLICTS FOR SEQUENCE
-C     UPDATED         --JANUARY   2017.  BLANK STRING
-C     UPDATED         --FEBRUARY  2018.  STRING COMBINE
-C     UPDATED         --MARCH     2018.  STRING COMPARE AND REPLACE
-C     UPDATED         --JULY      2018.  REFERENCE CHARACTER CODE
-C     UPDATED         --SEPTEMBER 2018.  STRING HAMMING DISTANCE
-C     UPDATED         --SEPTEMBER 2018.  STRING SPLIT
-C     UPDATED         --SEPTEMBER 2018.  STRING REMOVE PUNCTUATION
-C     UPDATED         --SEPTEMBER 2018.  STRING REMOVE WHITESPACE
-C     UPDATED         --SEPTEMBER 2018.  STRING FIND AS ALIAS FOR
-C                                               STRING INDEX
-C     UPDATED         --SEPTEMBER 2018.  STRING RIGHT INDEX
-C                                        (OR: STRING RIGHT FIND)
-C     UPDATED         --OCTOBER   2018.  STRING DELETE
-C     UPDATED         --JANUARY   2019.  STRING CONTAIN
-C     UPDATED         --JANUARY   2019.  STRING JUSTIFY
-C     UPDATED         --FEBRUARY  2019.  SWAP CASE
-C     UPDATED         --FEBRUARY  2019.  STRING SUBSET COUNT
-C     UPDATED         --FEBRUARY  2019.  STRING EXPAND WHITESPACE
-C     UPDATED         --JUNE      2019.  CODECH, CODEC2, CODEC3,
-C                                        DPRK,
-C                                        DPDERV, DPGENS, DPWEAR:
-C                                        MOVE DIMENSIONING OF SCRATCH
-C                                        ARRAYS TO DPLET
-C     UPDATED         --JULY      2019.  ADD ISUBRO TO CALL LIST FOR
-C                                        DPGENS, DPWEAR
-C     UPDATED         --SEPTEMBER 2019.  STRING VARIABLE
+C     UPDATED         --JUNE      1987. EXP DESIGN
+C     UPDATED         --SEPTEMBER 1987. PRIME NUMBERS
+C     UPDATED         --AUGUST    1988. PRINCIPLE COMPONENTS
+C     UPDATED         --SEPTEMBER 1987. FIBONNACCI NUMBERS
+C     UPDATED         --DECEMBER  1988. ELIM. SHORT VERS. OF SEQUENCE
+C     UPDATED         --DECEMBER  1988. SHORTEN: LET Y = SEQU 1 1 N
+C     UPDATED         --JANUARY   1989. CHECK FOR ARITHMETIC OPERATORS
+C     UPDATED         --JANUARY   1989. (SIMULATED) EXPERIMENT
+C     UPDATED         --APRIL     1989. LOGISTIC SEQUENCE
+C     UPDATED         --APRIL     1989. CANTOR SET
+C     UPDATED         --OCTOBER   1991. NORMAL ORD. STAT. MED.
+C     UPDATED         --MAY       1993. EV1, EV2, WEIB. ORD. STAT. MED.
+C     UPDATED         --JULY      1993. BUG FIX FOR SING VALUE DECOMP
+C     UPDATED         --SEPTEMBER 1993. ADD ISUBRO TO CALL TO DPRK
+C     UPDATED         --FEBRUARY  1994. LET A = (TAGUCHI) SN- COMMAND
+C     UPDATED         --FEBRUARY  1994. LET A = (TAGUCHI) SN+ COMMAND
+C     UPDATED         --FEBRUARY  1994. ROOTAC ARGUMENT
+C     UPDATED         --JUNE      1994. ADD OPTIMIZATION COMMAND
+C     UPDATED         --FEBRUARY  1995. ADD ARGUMENTS TO OPTIMIZATION
+C     UPDATED         --SEPTEMBER 1997. BERNOULI NUMBERS
+C     UPDATED         --SEPTEMBER 1997. EULER NUMBERS
+C     UPDATED         --JULY      2002. ARGUMENT LIST FOR DPSTAC
+C     UPDATED         --APRIL     2003. ARGUMENT LIST FOR DPSTAC,
+C                                       ADDITIONAL SCRATCH ARRAYS
+C     UPDATED         --JANUARY   2004. NUMERICAL DERIVATIVE
+C     UPDATED         --JANUARY   2004. CHARACTER CODE
+C     UPDATED         --JANUARY   2004. ALPHABETIC CHARACTER CODE
+C     UPDATED         --JANUARY   2004. GROUP LABEL
+C     UPDATED         --JANUARY   2004. ROW LABEL
+C     UPDATED         --NOVEMBER  2007. DOUBLE PRECISION ARRAYS FOR
+C                                       CMPSTA
+C     UPDATED         --AUGUST    2008. MERGE
+C     UPDATED         --NOVEMBER  2008. STRING LENGTH
+C     UPDATED         --NOVEMBER  2008. STRING INDEX
+C     UPDATED         --NOVEMBER  2008. STRING MERGE
+C     UPDATED         --NOVEMBER  2008. STRING REPLACE
+C     UPDATED         --NOVEMBER  2008. STRING EDIT
+C     UPDATED         --NOVEMBER  2008. SUBSTRING
+C     UPDATED         --NOVEMBER  2008. ICHAR
+C     UPDATED         --NOVEMBER  2008. CHARACTER
+C     UPDATED         --NOVEMBER  2008. UPPER CASE
+C     UPDATED         --NOVEMBER  2008. LOWER CASE
+C     UPDATED         --SEPTEMBER 2009. CALL LIST TO CKRAND, DPRAND
+C     UPDATED         --JUNE      2010. CALL LIST TO DPSTAC
+C     UPDATED         --OCTOBER   2010. STRING WORD
+C     UPDATED         --OCTOBER   2010. NUMBER OF WORDS
+C     UPDATED         --OCTOBER   2011. GROUP LABEL TO STRINGS
+C     UPDATED         --OCTOBER   2011. CHARACTER CODE STRINGS
+C     UPDATED         --AUGUST    2012. SEVERAL ENHANCEMENTS TO THE
+C                                       LET ROWLABEL ... COMMAND
+C     UPDATED         --JUNE      2013. CALL LIST TO DPINTE
+C     UPDATED         --AUGUST    2014. LET PLOT .... =
+C     UPDATED         --MARCH     2015. CHECK NAMES
+C     UPDATED         --MARCH     2015. CHECK EQUAL LENGTH
+C     UPDATED         --MARCH     2015. STRING REMOVE SPACES
+C     UPDATED         --MARCH     2015. CHECK TYPE
+C     UPDATED         --MARCH     2015. DIGITS TO STRING
+C     UPDATED         --JUNE      2015. IFORSW TO ARGUMENT LIST
+C     UPDATED         --JUNE      2015. LET ... = NUMBER TO STRING
+C     UPDATED         --SEPTEMBER 2015. CALL LIST TO SEVERAL ROUTINES
+C                                       TO SUPPORT FUNCTION BLOCKS
+C     UPDATED         --DECEMBER  2015. LET ... = EXECUTE ...
+C     UPDATED         --DECEMBER  2015. LET ... = INQUIRE ...
+C     UPDATED         --FEBRUARY  2016. NAME CONFLICTS FOR SEQUENCE
+C     UPDATED         --JANUARY   2017. BLANK STRING
+C     UPDATED         --FEBRUARY  2018. STRING COMBINE
+C     UPDATED         --MARCH     2018. STRING COMPARE AND REPLACE
+C     UPDATED         --JULY      2018. REFERENCE CHARACTER CODE
+C     UPDATED         --SEPTEMBER 2018. STRING HAMMING DISTANCE
+C     UPDATED         --SEPTEMBER 2018. STRING SPLIT
+C     UPDATED         --SEPTEMBER 2018. STRING REMOVE PUNCTUATION
+C     UPDATED         --SEPTEMBER 2018. STRING REMOVE WHITESPACE
+C     UPDATED         --SEPTEMBER 2018. STRING FIND AS ALIAS FOR
+C                                              STRING INDEX
+C     UPDATED         --SEPTEMBER 2018. STRING RIGHT INDEX
+C                                       (OR: STRING RIGHT FIND)
+C     UPDATED         --OCTOBER   2018. STRING DELETE
+C     UPDATED         --JANUARY   2019. STRING CONTAIN
+C     UPDATED         --JANUARY   2019. STRING JUSTIFY
+C     UPDATED         --FEBRUARY  2019. SWAP CASE
+C     UPDATED         --FEBRUARY  2019. STRING SUBSET COUNT
+C     UPDATED         --FEBRUARY  2019. STRING EXPAND WHITESPACE
+C     UPDATED         --JUNE      2019. CODECH, CODEC2, CODEC3,
+C                                       DPRK,
+C                                       DPDERV, DPGENS, DPWEAR:
+C                                       MOVE DIMENSIONING OF SCRATCH
+C                                       ARRAYS TO DPLET
+C     UPDATED         --JULY      2019. ADD ISUBRO TO CALL LIST FOR
+C                                       DPGENS, DPWEAR
+C     UPDATED         --SEPTEMBER 2019. STRING VARIABLE
+C     UPDATED         --NOVEMBER  2020. STRING VARIABLE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -12987,6 +13368,19 @@ C
           CALL DPSTVA(ISUBRO,IBUGA3,IERROR)
           GOTO9000
         ENDIF
+      ENDIF
+C
+C               **********************************************
+C               **  STEP 2.19MM--                           **
+C               **  TREAT THE IS NUMBER            SUBCASE  **
+C               **********************************************
+C
+      IF(IHARG(3).EQ.'IS  ' .AND. IHARG(4).EQ.'NUMB')THEN
+        ICASLE='ISNU'
+        IFOUND='YES'
+        ITYPEL='P'
+        CALL DPISNU(ISUBRO,IBUGA3,IERROR)
+        GOTO9000
       ENDIF
 C
 C               **********************************************
@@ -37020,20 +37414,18 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPLICL(IHARG,NUMARG,IDEFCO,MAXLIN,ILINCO,IFOUND,IERROR)
+      SUBROUTINE DPLICL(IHARG,IARG,NUMARG,IDEFCO,MAXLIN,ILINCO,ILINC2,
+     1                  IRGBMX,ICASCL,IFOUND,IERROR)
 C
 C     PURPOSE--DEFINE PLOT LINE COLORS FOR USE IN MULTI-TRACE PLOTS.
-C              THE COLOR FOR THE LINE FOR THE I-TH TRACE
-C              WILL BE PLACED
-C              IN THE I-TH ELEMENT OF THE HOLLERITH
-C              VECTOR ILINCO(.).
+C              THE COLOR FOR THE LINE FOR THE I-TH TRACE WILL BE PLACED
+C              IN THE I-TH ELEMENT OF THE HOLLERITH VECTOR ILINCO(.).
 C     INPUT  ARGUMENTS--IHARG  (A  HOLLERITH VECTOR)
 C                     --NUMARG
 C                     --IDEFCO
 C                     --MAXLIN
 C     OUTPUT ARGUMENTS--ILINCO  (A  HOLLERITH VECTOR
-C                       WHOSE I-TH ELEMENT IS THE COLOR
-C                       FOR THE LINE
+C                       WHOSE I-TH ELEMENT IS THE COLOR FOR THE LINE
 C                       ASSIGNED TO THE I-TH    TRACE    IN
 C                       A MULTI-TRACE PLOT.
 C                     --IFOUND ('YES' OR 'NO' )
@@ -37052,19 +37444,23 @@ C     ORIGINAL VERSION--DECEMBER  1977.
 C     UPDATED         --SEPTEMBER 1980.
 C     UPDATED         --MARCH     1982.
 C     UPDATED         --MAY       1982.
+C     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLORS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 IHARG
       CHARACTER*4 IDEFCO
       CHARACTER*4 ILINCO
+      CHARACTER*4 ICASCL
       CHARACTER*4 IFOUND
       CHARACTER*4 IERROR
 C
 C---------------------------------------------------------------------
 C
       DIMENSION IHARG(*)
+      DIMENSION IARG(*)
       DIMENSION ILINCO(*)
+      DIMENSION ILINC2(MAXLIN,3)
 C
 C---------------------------------------------------------------------
 C
@@ -37074,6 +37470,12 @@ C-----START POINT-----------------------------------------------------
 C
       IFOUND='NO'
       IERROR='NO'
+      NUMLIN=0
+C
+      IF(NUMARG.EQ.0)GOTO9000
+      IF(ICASCL.EQ.'RGB ')GOTO2000
+C
+C     THIS IS FOR THE "STANDARD" CASE
 C
       IF((NUMARG.EQ.1.AND.IHARG(1).EQ.'COLO') .OR.
      1  (NUMARG.EQ.2.AND.IHARG(1).EQ.'COLO'.AND.IHARG(2).EQ.'ALL'))THEN
@@ -37163,7 +37565,110 @@ C
           ENDIF
         ENDIF
       ENDIF
+      GOTO9000
 C
+C     THIS IS FOR THE "RGB" CASE
+C
+ 2000 CONTINUE
+C
+      JHOLD1=-1
+      JHOLD2=-1
+      JHOLD3=-1
+      NUMLIN=MAXLIN
+C
+      IF(NUMARG.EQ.1)THEN
+        GOTO2300
+      ELSEIF(NUMARG.EQ.2 .AND. IHARG(2).EQ.'ALL')THEN
+        GOTO2300
+      ELSEIF(NUMARG.EQ.5)THEN
+        IF(IHARG(2).EQ.'ALL')THEN
+          JHOLD1=IARG(3)
+          JHOLD2=IARG(4)
+          JHOLD3=IARG(5)
+          GOTO2300
+        ELSEIF(IHARG(5).EQ.'ALL')THEN
+          JHOLD1=IARG(2)
+          JHOLD2=IARG(3)
+          JHOLD3=IARG(4)
+          GOTO2300
+        ENDIF
+      ENDIF
+C
+C               *************************************************
+C               **  STEP 2--                                   **
+C               **  TREAT THE SINGLE      SPECIFICATION  CASE  **
+C               *************************************************
+C
+      IF(NUMARG.LE.2)THEN
+        NUMLIN=1
+        ILINC2(1,1)=-1
+        ILINC2(1,2)=-1
+        ILINC2(1,3)=-1
+      ELSE
+        NTEMP=NUMARG-1
+        NUMLIN=NTEMP/3
+        IF(NUMLIN.LT.1)THEN
+          ILINC2(1,1)=-1
+          ILINC2(1,2)=-1
+          ILINC2(1,3)=-1
+        ELSEIF(NUMLIN.GT.MAXLIN)THEN
+          NUMLIN=MAXLIN
+        ENDIF
+        DO2225I=1,NUMLIN
+          J1=(I-1)*3+2
+          J2=J1+1
+          J3=J1+2
+          JHOLD1=IARG(J1)
+          JHOLD2=IARG(J2)
+          JHOLD3=IARG(J3)
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+          ILINC2(I,1)=JHOLD1
+          ILINC2(I,2)=JHOLD2
+          ILINC2(I,3)=JHOLD3
+ 2225   CONTINUE
+      ENDIF
+C
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        DO2278I=1,NUMLIN
+          WRITE(ICOUT,2276)I,ILINC2(I,1),ILINC2(I,2),ILINC2(I,3)
+ 2276     FORMAT('THE RGB COLORS OF LINE ',I6,
+     1           ' HAVE JUST BEEN SET TO ',3I8)
+          CALL DPWRST('XXX','BUG ')
+ 2278   CONTINUE
+      ENDIF
+      IFOUND='YES'
+      GOTO9000
+C
+C               **************************
+C               **  STEP 3--            **
+C               **  TREAT THE ALL CASE  **
+C               **************************
+C
+ 2300 CONTINUE
+      IF(JHOLD1.LT.0)JHOLD1=0
+      IF(JHOLD1.GT.0)JHOLD1=0
+      DO2315II=1,NUMLIN
+        ILINC2(II,1)=JHOLD1
+        ILINC2(II,2)=JHOLD2
+        ILINC2(II,3)=JHOLD3
+ 2315 CONTINUE
+C
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        I=1
+        WRITE(ICOUT,2316)ILINC2(I,1),ILINC2(I,2),ILINC2(I,3)
+ 2316   FORMAT('THE RGB COLORS OF ALL LINES HAVE JUST ',
+     1         'BEEN SET TO ',3I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+      IFOUND='YES'
+C
+ 9000 CONTINUE
       RETURN
       END
       SUBROUTINE DPLICO(IHARG,NUMARG,IANSSV,IREPMX,ILISMX,IPOINT,
@@ -43191,33 +43696,33 @@ C
           CALL DPDTXT(ITTEXT,NCTEMP,ATEMP,NUMDIG,NTOTAL,
      1                NBLNK1,NBLNK2,IFLAGA,IFLAGB,ISIZE,
      1                ICAPSW,ICAPTY,ITYPE2,ISUBRO,IBUGA3,IERROR)
-        ELSE
-          ISIZE=0
-          IRTFMD='OFF'
-          IFLAGA=.TRUE.
-          IFLAGB=.FALSE.
-          NTOTAL=40
-          NBLNK1=0
-          NBLNK2=0
-          ITYPE2=2
-          ITTEXT(1:33)='It is recommended that you take '
-          NCTEMP=33
-          ATEMP=REAL(NMORE)
-          NUMDIG=0
-          CALL DPDTXT(ITTEXT,NCTEMP,ATEMP,NUMDIG,NTOTAL,
-     1                NBLNK1,NBLNK2,IFLAGA,IFLAGB,ISIZE,
-     1                ICAPSW,ICAPTY,ITYPE2,ISUBRO,IBUGA3,IERROR)
-          IFLAGA=.FALSE.
-          ITTEXT(1:30)='additional blank measurements.'
-          NCTEMP=30
-          NBLNK1=0
-          NBLNK2=1
-          IFLAGB=.TRUE.
-          ATEMP=0.0
-          NUMDIG=-1
-          CALL DPDTXT(ITTEXT,NCTEMP,ATEMP,NUMDIG,NTOTAL,
-     1                NBLNK1,NBLNK2,IFLAGA,IFLAGB,ISIZE,
-     1                ICAPSW,ICAPTY,ITYPE2,ISUBRO,IBUGA3,IERROR)
+CCCCC   ELSE
+CCCCC     ISIZE=0
+CCCCC     IRTFMD='OFF'
+CCCCC     IFLAGA=.TRUE.
+CCCCC     IFLAGB=.FALSE.
+CCCCC     NTOTAL=40
+CCCCC     NBLNK1=0
+CCCCC     NBLNK2=0
+CCCCC     ITYPE2=2
+CCCCC     ITTEXT(1:33)='It is recommended that you take '
+CCCCC     NCTEMP=33
+CCCCC     ATEMP=REAL(NMORE)
+CCCCC     NUMDIG=0
+CCCCC     CALL DPDTXT(ITTEXT,NCTEMP,ATEMP,NUMDIG,NTOTAL,
+CCCCC1                NBLNK1,NBLNK2,IFLAGA,IFLAGB,ISIZE,
+CCCCC1                ICAPSW,ICAPTY,ITYPE2,ISUBRO,IBUGA3,IERROR)
+CCCCC     IFLAGA=.FALSE.
+CCCCC     ITTEXT(1:30)='additional blank measurements.'
+CCCCC     NCTEMP=30
+CCCCC     NBLNK1=0
+CCCCC     NBLNK2=1
+CCCCC     IFLAGB=.TRUE.
+CCCCC     ATEMP=0.0
+CCCCC     NUMDIG=-1
+CCCCC     CALL DPDTXT(ITTEXT,NCTEMP,ATEMP,NUMDIG,NTOTAL,
+CCCCC1                NBLNK1,NBLNK2,IFLAGA,IFLAGB,ISIZE,
+CCCCC1                ICAPSW,ICAPTY,ITYPE2,ISUBRO,IBUGA3,IERROR)
         ENDIF
 C
       ENDIF
