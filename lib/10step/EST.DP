@@ -13,9 +13,9 @@
 .    corefac2         (vector)    = vector of   4th   factor in the core vector (where -999 => none)
 .    corefac2         (vector)    = vector of   5th   factor in the core vector (where -999 => none)
 .    conftag1         (vector)    = vector of   1st   factors                   (from conf.dp)
-.    conftag2         (vector)    = vector of second factors                   (from conf.dp)
-.    stt1, stt2, etc. (strings)   = primary tags for the confounding list      (from conf.dp)
-.    stc1, stc2, etc. (strings)   = corresponding confounding for these tags   (from conf.dp)
+.    conftag2         (vector)    = vector of second factors                    (from conf.dp)
+.    stt1, stt2, etc. (strings)   = primary tags for the confounding list       (from conf.dp)
+.    stc1, stc2, etc. (strings)   = corresponding confounding for these tags    (from conf.dp)
 .
 . Output:
 .    ybar     (parameter) = grand mean of the n responses
@@ -37,19 +37,22 @@
 . capture junk.
 feedback save; feedback off
 printing off
-feedback on
-capture screen on
-capture junk.out
 .
 . here   5/31/17 number of elements in conftag1 = 0
-let bugswest = 0
-. let pausesw = 1
 .
-if bugswest = 1
+. capture junk.
+let bugest = 0
+. let pausesw = 1
+. printing on
+. echo on
+. feedback on
+.
+if bugest = 1
    print " "
    print "At the beginning of   est.dp"
    print "k = ^k"
-   if k <= 15
+   . if k <= 15
+   if k <= 10
       print y x1 to x^k
    end if
    if pausesw exists and pausesw = 1; pause; end if
@@ -69,13 +72,15 @@ if bugswest = 1
    end loop
 end if
 .
-print " "
-print "3. Factor and interaction effects  are now being computed . . ."
-print " "
+if bugest = 1
+   print " "
+   print "3. Factor and interaction effects  are now being computed . . ."
+   print " "
+end if
 .
 . -----Step 0: Check input arguments-----
 .
-if bugswest = 1; print "--At est.dp step 0"
+if bugest = 1; print "--At est.dp step 0"
    if pausesw exists and pausesw = 1; pause; end if
 end if
 .
@@ -83,7 +88,7 @@ let string stmacro = est.dp
 set check name output filliben
 feedback on
 let iflag = check name k x1 to x^k
-feedback on
+feedback off
 .
 let n = number x1
 .
@@ -92,7 +97,7 @@ if k >= n
    print "   The number of factors k must not exceed the number of observations"
    print "   k = ^k  n = ^n"
    if pausesw exists and pausesw = 1; pause; end if
-   exit
+.    exit
 end if
 .
 let nexp = log2(n)
@@ -105,14 +110,14 @@ if delnexp <> 0
    print "   The number of observations n was not a power of 2"
    print "   n = ^n"
    print "   delnexp = ^delnexp"
-   if ibatch not exist or ibatch = 0; pause; end if
+   pause
    .
    stat v
-   if ibatch not exist or ibatch = 0; pause; end if
+   pause
    .
    printing on
-   capture dpjunk.out
-      print y x1 to x^k
+   . capture dpjunk.out
+      . print y x1 to x^k
       .
       loop for jfact = 1 1 k
          tabulate x^jfact
@@ -125,7 +130,7 @@ if delnexp <> 0
             tabulate x^jfact x^jfact2
          end loop
       end loop
-   end capture
+   . end capture
    .
    print " "
    print "The   est.dp   macro requires the sample size n to be a power of 2."
@@ -133,13 +138,14 @@ if delnexp <> 0
    print "the DEX 10-step will terminate."
    print "y and x1 to x^k as well as diagnostic info have been written out"
    print "to the junk file   dpjunk.out   for perusal."
-   if ibatch not exist or ibatch = 0; pause; end if
+   pause
    stop
 end if
 .
 . -----Step 1: Compute effect estimates and residual SDs-----
 .
-if bugswest = 1; print "--At est.dp step 1"
+. capture dpjunk2.out
+if bugest = 1; print "--At est.dp step 1"
    if pausesw exists and pausesw = 1; pause; end if
 end if
 .
@@ -156,7 +162,7 @@ let effindex = 1 1 numeff
 retain effindex for i = 1 1 numeff
 retain effid1 effid2 for i = 1 1 numeff
 .
-if bugswest = 1
+if bugest = 1
    print " "
    print effindex effid1 effid2
    print "numeff = ^numeff"
@@ -164,41 +170,49 @@ if bugswest = 1
 end if
 let ybar = mean y
 .
+print "numcore = ^numcore    numeff = ^numeff"
 loop for j = 1 1 numeff
+   print "start of iteration ^j (out of ^numeff)"
    delete prod
    let j1 = effid1(j)
    let j2 = effid2(J)
    let j3 = effid3(J)
    let j4 = effid4(J)
    let j5 = effid5(J)
-   let string stcore^j = X^j1
+   let string stcor^j = X^j1
    if j2 <> -999
-      let string stcore^j = X^j1 * X^j2
+      let string stcor^j = X^j1 * X^j2
       if j3 <> -999
-         let string stcore^j = X^j1 * X^j2 * X^j3
+         let string stcor^j = X^j1 * X^j2 * X^j3
          if j4 <> -999
-            let string stcore^j = X^j1 * X^j2 * X^j3 * X^j4
+            let string stcor^j = X^j1 * X^j2 * X^j3 * X^j4
             if j5 <> -999
-               let string stcore^j = X^j1 * X^j2 * X^j3 * X^j4 * X^j5
+               let string stcor^j = X^j1 * X^j2 * X^j3 * X^j4 * X^j5
             end if
          end if
       end if
    end if
-   let prod = ^stcore^j
-   let string sttemp^j = ^stcore^j
+   .
+   if bugest = 1
+      print "numeff = ^numeff     j = ^j     ^stcor^j"
+   end if
+   .
+   let prod = ^stcor^j
+   let string sttemp^j = ^stcor^j
    .
    let mhj = mean y subset prod +1
    let mlj = mean y subset prod -1
    .
-   let pred = ybar + 0.5*(mhj - mlj)*^stcore^j
-   let res = y - pred
-   let rsdj = sd res
+   delete pred; let pred = ybar + 0.5*(mhj - mlj)*^stcor^j
+   delete res;  let res = y - pred
+   delete rsdj; let rsdj = sd res
    .
    let meanh(j) = mhj
    let meanl(j) = mlj
    let rsd(j) = rsdj
    .
 end loop
+.
 let eff = meanh - meanl
 let rsd = (sqrt((n-1)/(n-2))) * rsd
 let releff = 100*(eff/ybar)
@@ -206,7 +220,8 @@ let sdeff  = 2*rsd/sqrt(n)
 let teff   = 0 for i = 1 1 numeff
 let teff   = eff/sdeff  subset sdeff > 0
 .
-if bugswest = 1
+if bugest = 1
+   print meanh meanl eff
    print "effindex effid1 effid2 effid3 effid4 effid5 meanh meanl eff releff sdeff teff rsd"
    set write format 14f10.4
    print effindex effid1 effid2 effid3 effid4 effid5 meanh meanl eff releff sdeff teff rsd
@@ -217,7 +232,8 @@ end if
 .
 . -----Step 2: Sort the effects vector (based on magnitude) & carry all else----
 .
-if bugswest = 1; print "--At est.dp step 2"
+print "est.dp: 2"
+if bugest = 1; print "--At est.dp step 2"
    if pausesw exists and pausesw = 1; pause; end if
 end if
 .
@@ -229,7 +245,7 @@ let temp2 = sortc temp1 effindex effid1 effid2 effid3 effid4 effid5
 let effabs = temp2
 set sort direction
 .
-if bugswest = 1
+if bugest = 1
    print "effindex effid1 effid2 effid3 effid4 effid5 meanh meanl eff releff sdeff teff rsd"
    set write format 15f10.4
    print effindex effid1 effid2 effid3 effid4 effid5 meanh meanl eff releff sdeff teff rsd
@@ -241,27 +257,29 @@ end if
 . print " "
 . print "1. pre:"
 . loop for j = 1 1 numeff
-.     print "stcore^j = ^stcore^j      stconf^j = ^stconf^j"
+.     print "stcor^j = ^stcor^j      stconf^j = ^stconf^j"
 . end loop
 . print effindex
 . if pausesw exists and pausesw = 1; . pause; . end if
 .
-. -----Step 3: Carry along stcore-----
+. -----Step 3: Carry along stcor-----
 .
-if bugswest = 1; print "--At est.dp step 3 stcore"
+print "3"
+if bugest = 1; print "--At est.dp step 3 stcor"
    if pausesw exists and pausesw = 1; pause; end if
 end if
 .
 loop for j = 1 1 numeff
    let j2 = effindex(j)
-   let string stcore^j = ^sttemp^j2
-   if bugswest = 1; print "j = ^j    stcore^j = ^stcore^j"; end if
+   let string stcor^j = ^sttemp^j2
+   if bugest = 1; print "j = ^j    stcor^j = ^stcor^j"; end if
 end loop
-if bugswest = 1 and pausesw exists and pausesw = 1; pause; end if
+if bugest = 1 and pausesw exists and pausesw = 1; pause; end if
 .
 . -----Step 4: Carry along confounding vectors and strings from conf.dp-----
 .
-if bugswest = 1; print "--From est.dp, at start of step 4: stconf, create stmain, steft, and stefc"
+print "4"
+if bugest = 1; print "--From est.dp, at start of step 4: stconf, create stmain, steft, and stefc"
    print eff effindex effid1 effid2 effid3 effid4 effid5 conftag1 conftag2
    if pausesw exists and pausesw = 1; pause; end if
 end if
@@ -305,7 +323,7 @@ end if
    .
 end loop
 .
-if bugswest = 1
+if bugest = 1
    print "from est.dp, at middle of step 4"                                                                                                 ;. jim 9/28/18
    loop for j = 1 1 numeff
       print "j = ^j   stmain^j = ^stmain^j"
@@ -322,38 +340,119 @@ end if
 . end loop
 .
 .
-echo on
-feedback off
+.
+.
+.
+.
+.
+.
+.
+. Alan: here
+. print "numeff = ^numeff     numconf = ^numconf"
+. pause
+. capture junk.out
+.
+. feedback on
+. print "numeff = ^numeff     numconf = ^numconf"
 loop for j1 = 1 1 numeff
+   . print "-- 4.1 j1 = ^j1 --"
+   . print "numeff = ^numeff    numconf = ^numconf"
    let string steft^j1 = ^stmain^j1
-   delete prod^j1; let prod^j1 = ^stcore^j1
+   delete prod^j1; let prod^j1 = ^stcor^j1
    .
    let string stefc^j1 = -999
-   let stefc^j1 = string compare and replace stmain^j1 stc stt1 to stt^numconf
+   .
+   if bugest = 1
+      print "-- 4.2: loop   j1 = ^j1      numconf = ^numconf --"
+      print "stefc^j1 = ^stefc^j1"
+      print "stmain^j1 = ^stmain^j1"
+      print "stc = ^stc"
+      print "stmain1 = ^stmain1    stt1 = ^stt1     stc1 = ^stc1    stefc1 = ^stefc1"
+      print "stmain2 = ^stmain2    stt2 = ^stt2     stc2 = ^stc2    stefc2 = ^stefc2"
+      print "stmain3 = ^stmain3    stt3 = ^stt3     stc3 = ^stc3    stefc3 = ^stefc3"
+      print "stmain4 = ^stmain4    stt4 = ^stt4     stc4 = ^stc4    stefc4 = ^stefc4"
+      print "stmain5 = ^stmain5    stt5 = ^stt5     stc5 = ^stc5    stefc5 = ^stefc5"
+      print "stmain6 = ^stmain6    stt6 = ^stt6     stc6 = ^stc6    stefc6 = ^stefc6"
+      print "stmain7 = ^stmain7    stt7 = ^stt7     stc7 = ^stc7    stefc7 = ^stefc7"
+      . pause
+   end if
+   .
+.    print " "
+.    print "-- 4.3 j1 = ^j1 --"
+.    print "numconf = ^numconf    stmain^j1 = ^stmain^j1"
+.    print "stt1    = ^stt1       stt^numconf = ^stt^numconf"
+.    stat f
+.    print " "
+.    probe numchf; . let pv = probeval; . print "At start of iteration ^j1--probe value = ^pv"
+.    pause
+   .
+   . set fatal error off   ;. this is a temporary work-around
+   .
+   . ========> the following line bombed 5/1/19    1/7/21 <===========here
+   .
+   let stefc^j1 = string compare and replace stmain^j1 stc stt1 to stt^numconf  ;. <========
+   . echo off
+   .
+   . set fatal error on    ;. this is end of temporary work-aound
    . print "j1: ^j1,  stefc^j1: ^stefc^j1"
+   . pause
+   .
 end loop
-echo off
-end of capture
+.
+. end capture
+.
+.
 .
 . -----Step 5: Carry along cumrsd-----
 .
-if bugswest = 1; print "--At est.dp step 5 cumrsd"
+print "5"
+if bugest = 1; print "--At est.dp step 5 cumrsd"
+   print "numeff = ^numeff"
    if pausesw exists and pausesw = 1; pause; end if
 end if
 .
+. echo on
+. printing on
+.
 let string stcum = prod1
+. print y ^stcum
+. stat v
+. pause
+.
+set error message off      ;. 1/14/21 bug fix
+.
+let j = 1
 fit y ^stcum
 let cumrsd(1) = ressd
+let ressdold = ressd
+print "^j / ^numeff: ressdold = ^ressdold"
+.
+. pause
+let cutperc = .00001
 loop for j = 2 1 numeff
-    let string stcum = ^stcum prod^j
-    fit y ^stcum
-    let cumrsd(j) = ressd
+   let string stcum = ^stcum prod^j
+   let ressdold = ressd
+   fit y ^stcum
+   let cumrsd(j) = ressd
+   let ressdnew = ressd
+   let ressddel = ressdold - ressdnew
+   . let ressdrd = 100*(ressddel/ressdold)
+   . print "^j / ^numeff: ressdold = ^ressdold   ressdnew = ^ressdnew   ressddel = ^ressddel"
+   print "^j / ^numeff: ressdold = ^ressdold   ressdnew = ^ressdnew"
+   . let ressddel = abs(ressddel)
+   . let jcut = j
+   . if ressddel <= cutperc; . break loop; . end if
 end loop
+. print "numeff = ^numeff   jcut = ^jcut"
+.
+set error message on       ;. 1/14/21 bug fix
+.
 .
 . -----Step 6: Since the effect estimations is now done,
 . -----        set a switch to indicate that-----
+print "6"
 .
-if bugswest = 1; print "--At est.dp step 6"
+if bugest = 1; print "--At est.dp step 6"
    if pausesw exists and pausesw = 1; pause; end if
 end if
 .
@@ -361,11 +460,12 @@ let estdone = 1
 .
 . -----Step 8: Finish up-----
 .
-if bugswest = 1; print "--At est.dp step 8 print"
+print "8"
+if bugest = 1; print "--At est.dp step 8 print"
    if pausesw exists and pausesw = 1; pause; end if
 end if
 .
-if bugswest = 1
+if bugest = 1
    yates y
    . print "(k,n) = (^k,^n)"
    set write format 12f10.4
@@ -385,7 +485,7 @@ if bugswest = 1
       let effid2j = effid2(j)
       let effid3j = effid3(j)
       let effj = eff(j)
-      . print "^j        ^effid1j     ^effid2j    ^effid3j        ^stcore^j        ^stconf^j         ^effj"
+      . print "^j        ^effid1j     ^effid2j    ^effid3j        ^stcor^j        ^stconf^j         ^effj"
    end loop
    .
    loop for j = 1 1 numeff
@@ -405,10 +505,12 @@ loop for j = 1 1 numeff
 end loop
 delete prod temp1 temp2
 .
-if bugswest = 1
+if bugest = 1
    print " "
    print "This is the near-last line of est.dp"
 end if
 .
 feedback restore
+. end capture
+. end capture
 . end capture

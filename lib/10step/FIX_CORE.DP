@@ -1,0 +1,148 @@
+. This is dataplot macro     fix_core.dp      1/15/21
+. Purpose: As a follow up to the     dex core     command
+.           within the     compute_effect_estimates_and_confounding.dp    macro,
+.           shorten/eliminate the    corefa1 to corefa5 vectors if
+.           any of the corresponding cross-products degenerate to all 1's (or all -1's)
+. Input:
+.     corefa1 to corefa5 (vectors)   = factor indices
+.     numcore            (parameter) = number of elements in corefa1
+. Output:
+.     corefa1 to corefa5 (vectors)   = updated factor indices
+.     numcore            (parameter) = updated number of elements in corefa1
+.
+. -----start point-----
+.
+let bugfix = 0
+. let pausesw = 1
+.
+   . let numcore = number corefa1
+   . print "numcore = ^numcore"
+   . print junk.out corefa1 corefa2 corefa3 corefa4 corefa5
+   . pause
+   .
+if bugfix = 1
+   print " "; print " "; print " "; print "=====>At beginning of    fix_core.dp<====="
+   print corefa1 corefa2 corefa3 corefa4 corefa5
+   let numcore = number corefa1
+   print "numcore = ^numcore"
+   if pausesw exists and pausesw = 1; pause; end if
+end if
+.
+let numcore = number corefa1
+delete tagzzz
+loop for j = 1 1 numcore
+   .
+   . -----Step 1: Form the cross-product components string-----
+   .
+   if bugfix = 1
+      print " "; print " "; print " "; print "-----iteration ^j (numcore = ^numcore)-----"
+      print " "; print "In (fix_core.dp, step 1): form product string"
+      if pausesw exists and pausesw = 1; pause; end if
+   end if
+   .
+   let numreal = -999
+   let j1 = corefa1(j)
+   let j2 = corefa2(J)
+   let j3 = corefa3(J)
+   let j4 = corefa4(J)
+   let j5 = corefa5(J)
+   let string stcor^j = X^j1
+   let numreal = 1
+   if j2 <> -999
+      let string stcor^j = X^j1 * X^j2
+      let numreal = 2
+      if j3 <> -999
+         let string stcor^j = X^j1 * X^j2 * X^j3
+         let numreal = 3
+         if j4 <> -999
+            let string stcor^j = X^j1 * X^j2 * X^j3 * X^j4
+            let numreal = 4
+            if j5 <> -999
+               let string stcor^j = X^j1 * X^j2 * X^j3 * X^j4 * X^j5
+               let numreal = 5
+            end if
+         end if
+      end if
+   end if
+   .
+   if bugfix = 1
+      print "numcore = ^numcore     j = ^j    nunmreal = ^numreal"
+      print "j1 j2 j3 j4 j5 = ^j1 ^j2 ^j3 ^j4 ^j5"
+      print "stcor^j = ^stcor^j"
+      if pausesw exists and pausesw = 1; pause; end if
+   end if
+   .
+   . -----Step 2: Compute the product vector-----
+   .
+   if bugfix = 1
+      print " "; print "In (fix_core.dp, step 2): form product vector"
+      if pausesw exists and pausesw = 1; pause; end if
+   end if
+   .
+   delete prod; let prod = ^stcor^j
+   .
+   .
+   if bugfix = 1
+      print "numcore = ^numcore    iteration j = ^j     numreal = ^numreal"
+      print "j1 j2 j3 j4 j5 = ^j1 ^j2 ^j3 ^j4 ^j5"
+      let nx1 = number x1
+      if nx1 <= 64
+         if numreal = 1; print prod x^j1;                     end if
+         if numreal = 2; print prod x^j1 x^j2;                end if
+         if numreal = 3; print prod x^j1 x^j2 x^j3;           end if
+         if numreal = 4; print prod x^j1 x^j2 x^j3 x^j4;      end if
+         if numreal = 5; print prod x^j1 x^j2 x^j3 x^j4 x^j5; end if
+        . print prod
+      end if
+      if pausesw exists and pausesw = 1; pause; end if
+   end if
+   .
+   . -----Step 3: Shorten the input vectors if cross-product degenerates to 1's-----
+   .
+   if bugfix = 1
+      print " "; print "In (fix_core.dp, step 3): form tag variable"
+      if pausesw exists and pausesw = 1; pause; end if
+   end if
+
+   let nhj = 0; let nhj = number y subset prod +1
+   let nlj = 0; let nlj = number y subset prod -1
+   let tagzzz(j) = 1; if nhj >= 2; if nlj >= 2; let tagzzz(j) = 2; end if; end if
+   delete tagjzzz; let tagjzzz = tagzzz(j)
+   .
+   if bugfix = 1
+      print "tagzzz(j) = ^tagjzzz <==================="
+      if pausesw exists and pausesw = 1; pause; end if
+   end if
+
+end loop
+.
+. -----Step 4: In fix_core.dp, at start of step 4-----
+.
+if bugfix = 1
+   print " "; print "Before trimming:"
+   print tagzzz corefa1 corefa2 corefa3 corefa4 corefa5
+   print "numcore = ^numcore"
+   if pausesw exists and pausesw = 1; pause; end if
+end if
+.
+let numcore1 = numcore
+retain corefa1 corefa2 corefa3 corefa4  corefa5 tagzzz subset tagzzz >= 2
+let numcore = number corefa1
+let numcore2 = numcore
+.
+if bugfix = 1
+   print " "; print "After trimming:"
+   print tagzzz corefa1 corefa2 corefa3 corefa4 corefa5
+   print "numcore = ^numcore"
+   if pausesw exists and pausesw = 1; pause; end if
+end if
+
+.
+. -----Step 99: Finish up-----
+.
+if bugfix = 1
+   print " "; print "At end of    fix_core.dp"
+   stat v
+   print "numcore1 numcore2 numcore = ^numcore1 ^numcore2 ^numcore"
+end if
+.

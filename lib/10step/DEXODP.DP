@@ -1,6 +1,7 @@
 . This is dataplot macro   DEXODP.DP (updated for Bob Zarr 02/03/14)
 .                                    (updated to use new DEX ORDERED PLOT)
 .                                    (pausesw switch to suppress "pause" calls)
+. updated 8/21/19 for Bill Pitts problem (pitts212.dp) to have integer settings (rather than - + or - 0 +)
 .
 . Purpose: Generate a DEX ordered data plot
 .          (= ste p 1 of the DEXPLOT.DP 10-ste p DEX analysis procedure)
@@ -35,8 +36,8 @@
 .   19. cxl11, cxl12, cxl13, . . ., cxl21, cxl22, cxl23, . . ., cxl31, cxl32, cxl3
 .                                      (optional) (default = no blanking = all settings appear)
 .   20. texth and textw (parameters) = size of horizontal within-frame text strings
-.   21. yunclow (vector)            = lower (typically 95%) confidence limit values (optional)
-.   22. yuncupp (vector)            = upper (typically 95%) confidence limit values (optional)
+.   21. yunclow (vector)             = lower (typically 95%) confidence limit values (optional)
+.   22. yuncupp (vector)             = upper (typically 95%) confidence limit values (optional)
 .
 .   23. yminodp (parameter)          = vertical axis minimum (optional)
 .   24. ymaxodp (parameter)          = vertical axis maximum (optional)
@@ -51,16 +52,18 @@
 .   31. stcorn1 (string)             = string to appear near (user-specified wh ere) upper left corner
 .   32. framet (parameter)           = top    frame line (in %) (optional) (default = 90)
 .   33. frameb (parameter)           = bottom frame line (in %) (optional) (default = 20)
-.    34. meansw (parameter)         = (0,1) swtch for printing out mean value (defau
-.    35. dp (parameter)         = number of decimals places for mean calculation (default = 4)
-.    36. meanloc (parameter) = location for printing out mean (default = 4 = outside of right frame line)
-.                                 1: outside of left  frame line
-.                                 2: inside  of left  frame line
-.                                 3: inside  of right frame line
-.                                 4: outside of right frame line
-. 37. ytarget (parameter) = target response (optional)
-. 38. stepprsw (parameter) = (0,1) switch to dictate whether upper left step id should be printed (default = 1 = yes) ;. 9/17/18
-. 39. stbest (string) = indicator for best arrow direction (up, down, zero) (optional) (default = no arrow)  ;. 11/14/18
+.   34. meansw (parameter)           = (0,1) swtch for printing out mean value (defau
+.   35. dp (parameter)               = number of decimals places for mean calculation (default = 4)
+.   36. meanloc (parameter)          = location for printing out mean (default = 4 = outside of right frame line)
+.                                         1: outside of left  frame line
+.                                         2: inside  of left  frame line
+.                                         3: inside  of right frame line
+.                                         4: outside of right frame line
+.   37. ytarget (parameter)          = target response (optional)
+.   38. stepprsw (parameter)         = (0,1) switch to dictate whether upper left step id should be printed (default = 1 = yes) ;. 9/17/18
+.   39. stbest (string)              = indicator for best arrow direction (up, down, zero) (optional) (default = no arrow)  ;. 11/14/18
+.   40. levint  (parameter)          = 0,1 switch for hor. axis labels (and right margin indices) are integers (opt.)(def = 0 => - +);. 8/21/19
+.   41. frame (string)               = subset/except specification;. 4/16/20
 
 . Output:
 .    An ordered (= sorted) data plot (1 page)
@@ -72,8 +75,6 @@
 .
 . Macro Hierarchy:
 .    dexodp.dp calls the following macros:
-.       1. dexcheck.dp
-.             alertk, alertv
 .       2. dexplotinit.dp
 .       3. dexplotdefplotset.dp
 .       4. dexwriteproject.dp
@@ -87,11 +88,15 @@
 . Date: May 2005, July 2010,  March 2013
 .
 . -----start point-----
+. capture junk.out
+. echo on
+.
+print " "; print "=====> Now generating Plot 1 (Ordered Data plot) <====="
 .
 feedback save
 feedback off
 printing off
-let bugswodp = 0
+let bugodp = 0
 . let pausesw = 1
 .
 if itime exists and itime = 1
@@ -99,12 +104,12 @@ if itime exists and itime = 1
    let t0 = cputime
 end if
 .
-if bugswodp = 1; print "dexodp.dp"; end if
+if bugodp = 1; print "dexodp.dp"; end if
 .
 . print "this is from dexodp.dp"
 . pause
 .
-if bugswodp = 1; print " "; print "--At beginning of DEX Ste p 1 (DEXODP.DP)"
+if bugodp = 1; print " "; print "--At beginning of DEX Ste p 1 (DEXODP.DP)"
    print y
    print x1 x2 x3 x4
    print stx1 stx2 stx3 stx4 stx5
@@ -112,9 +117,32 @@ if bugswodp = 1; print " "; print "--At beginning of DEX Ste p 1 (DEXODP.DP)"
    if pausesw = 1; pause; end if
 end if
 .
+. -----Step 1.0: if frame exists, the save the original data and extract the subset-----
+.
+if bugodp = 1
+   print "--At start of (dexodp.dp, step 1.0): if frame exists, save the original data and extract the subset"
+   if frame not exist; print "      frame does not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   call save_full_dataset.dp
+   delete stallx; let stallx = string combine x1 to x^k
+   retain y ^stallx ^frame
+end if
+.
+if bugodp = 1
+   print "Post-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
 . -----Step 1.1: Check input values for existence and equivalent length-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 1): check input"
+if bugodp = 1; print "--At (dexodp.dp, step 1): check input"
    if pausesw = 1; pause; end if
 end if
 let string stmacro = dexodp.dp
@@ -123,14 +151,15 @@ if k not exist
 end if
 set check name output filliben
 set check length output filliben
-feedback on
-let iflag = check name k y x1 to x^k
-let iflag = check equal length y x1 to x^k
-feedback off
+if k = 1; let iflag = check name k y x1 ; end if
+if k >= 2
+   let iflag = check name k y x1 to x^k
+   let iflag = check equal length y x1 to x^k
+end if
 .
 . -----Step 2: Define plot settings & colors-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 2): plot settings & colors"
+if bugodp = 1; print "--At (dexodp.dp, step 2): plot settings & colors"
    if pausesw = 1; pause; end if
 end if
 .
@@ -145,19 +174,23 @@ call dexplotdefplotset.dp
 .
 . -----Step 3: Define more colors-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 3): more colors"
+if bugodp = 1; print "--At (dexodp.dp, step 3): more colors"
+   print "forecol = ^forecol"
+   print "colorcha = ^colorcha"
+   print "forecol = ^forecol"
+   print "forecol2 = ^forecol2"
    if pausesw = 1; pause; end if
 end if
 .
 let string colorchz = blue
 if forecol exists; let string colorchz = ^forecol; end if
 if colorcha exists; let string colorchz = ^colorcha; end if
-if colorall exists; color ^colorall; end if
-if colorall exists; let string tagcolor = ^colorall; end if
+if forecol exists; color ^forecol; end if
+if forecol exists; let string tagcolor = ^forecol; end if
 .
 . -----Step 4: Collect factor settings-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 4): collect all factor settings"
+if bugodp = 1; print "--At (dexodp.dp, step 4): collect all factor settings"
    if pausesw = 1; pause; end if
 end if
 . echo on
@@ -171,15 +204,23 @@ let n = number ^strss
 let kp1 = k+1
 .
 . -----Step 5: Define vertical axis label-----
-if bugswodp = 1; print "--At (dexodp.dp, step 5): vertical axis label"
+if bugodp = 1; print "--At (dexodp.dp, step 5): vertical axis label"
    if pausesw = 1; pause; end if
 end if
 .
 . echo off
 . feedback off
 .
+. -----BUG FIX (1/4/21): the following 5 lines fixed a bug (too long to plot)-----
+. -----For large n (n >= 1025), the ordered data plot-----
+. -----takes too long drawing out filked circles (peter fontana (k=15,n=32768)
+.
 char X
-call setcircle.dp
+let n = number y
+if n <= 1024
+   call setcircle.dp
+end if
+.
 lines blank
 .
 if titlesw not exist; title Ordered Data Plot; end if
@@ -206,7 +247,7 @@ end if
 .
 . -----Step 6: Define horizontal axis label-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 6): horizontal axis label"
+if bugodp = 1; print "--At (dexodp.dp, step 6): horizontal axis label"
    if pausesw = 1; pause; end if
 end if
 .
@@ -220,7 +261,7 @@ x3label
 .
 . -----Step 7: Define label sizes, tics-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 7): label sizes, tics"
+if bugodp = 1; print "--At (dexodp.dp, step 7): label sizes, tics"
    if pausesw = 1; pause; end if
 end if
 .
@@ -240,7 +281,7 @@ y1tic offset yoffset 5
 .
 . -----Step 8: Define limits-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 8): limits"
+if bugodp = 1; print "--At (dexodp.dp, step 8): limits"
    if pausesw = 1; pause; end if
 end if
 .
@@ -258,9 +299,10 @@ let textwz = 1
 if texth exists; let texthz = texth; end if
 if textw exists; let textwz = textw; end if
 .
-. -----Step 9: GENERATE THE PLOT-----
+. -----here-----
+. -----Step 11: GENERATE THE PLOT-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 9): GENERATE THE PLOT"
+if bugodp = 1; print "--At (dexodp.dp, step 11): GENERATE THE PLOT"
    if pausesw = 1; pause; end if
 end if
 .
@@ -268,119 +310,184 @@ end if
 .
 let nhoriz = n
 .
+. print "From (dexodp.dp, within step 9): yunclow = ^yunclow   yuncupp = ^yuncupp"
+.
 set dex pareto plot order ascending
 set dex ordered plot identification on
+.
 if yunclow exists and yuncupp exists
+.    print "branch point 1 (yunclow and yuncupp exist) and k = ^k"
    line solid all
    line blank
    set dex ordered plot uncertainty on
-   dex ordered plot y yunclow yncupp x1 to x^k
+   .
+   if k = 1
+      dex ordered plot y yunclow yncupp x1                ;. <====================plot
+   end if
+   .
+   if k >= 2
+      dex ordered plot y yunclow yncupp x1 to x^k         ;. <====================plot
+   end if
+   .
 else
-   dex ordered plot y x1 to x^k
+.    print "branch point 2 (yunclow and yuncupp not exist) and k = ^k"
+   if k = 1
+      dex ordered plot y x1                               ;. <====================plot
+   end if
+   .
+   if k >= 2
+      . dex ordered plot y x1 to x^k                      ;. <====================plot
+      let ny = number y
+      delete xysort; let xysort = 1 1 ny
+      let ysort = sortc y xysort
+      delete indexzzz; let indexzzz = 1 1 ny; end if
+      plot ysort                                          ;. <================plot
+   end if
 end if
 .
-. list dpst1f.dat
-. pause
-skip 0
-read dpst1f.dat zx zfact zcode
+if bugodp = 1
+   print "At end of step 11 (post-sorted plot)"
+   print ysort xysort indexzzz for i = 1 1 30
+   pause
+end if
 .
-let zcode = code zcode
-let zfacts = zfact
+. -----Step 12: Write out carry-along horiz. axis factor settings -----
 .
-. -----Step 10: Write out carry-along horiz. axis factor settings (& the right-margin factor names)-----
-.
-if bugswodp = 1; print "--At (dexodp.dp, step 10): write horiz. axis settings +"
+if bugodp = 1; print "--At (dexodp.dp, step 12): write horiz. axis settings +"
    if pausesw = 1; pause; end if
 end if
 .
-let stall = string combine x1 to x^k
+if k = 1; let string stall = x1 ; end if
+.
+if k >= 2; let stall = string combine x1 to x^k; end if
 let classic = dex check classic ^stall
 .
-if bugswodp = 1; print "--From middle of step 10"
+if bugodp = 1; print "--From middle of step 10"
    print "   levelsw = ^levelsw"
    print "   classic = ^classic"
    print "   stx1l   = ^stx1l"
    print "   stx2l   = ^stx2l"
+   print "   stx3l   = ^stx3l"
    if pausesw = 1; pause; end if
 end if
 .
-hw texthz textwz
-.
-let ybase = 20 + yoffset - 2
-if frameb exists; let ybase = frameb + yoffset - 2; end if
-let yinc = 2
-.
-. print zfact
-. pause
-let zfacts = zfact
-delete xposz yposz
-loop for jz = 1 1 k
-   let yposz = ybase-jz*yinc
-   let zfacts = yposz subset zfact = jz
-end of loop
 character hw texthz textwz all
 character units ds all
-let ntemp = maximum zcode
+.
+let jz = 1; let xjunkzzz = coded x^jz; let ntemp = maximum xjunkzzz
+loop for jz = 2 1 k
+   let xjunkzzz = coded x^jz; let ntemploc = maximum xjunkzzz
+   if ntemploc > ntemp; let ntemp = ntemploc; end if
+end loop
+if bugodp = 1; print "ntemp = ^ntemp"; pause; end if
+.
+. print "levint = ^levint"
+. pause
+if bugodp = 1
+   if levint exists; print "levint = ^levint"; end if
+   if levint not exist; print "levint has not been pre-defined, hence horiz axis labels = (-1,+1)"; end if
+   pause
+end if
+.
+if bugodp = 1; print "ntemp = ^ntemp"; pause; end if
 .
 if ntemp = 2
-   character  - +
+   if levint not exist; character - +; end if
+   if levint exists and levint = 1; char 1 2; end if
+   . character  - +    ;. fixed 8/21/19 for bill pitts problem (pitts212.dp)
 else if ntemp = 3
-   character - 0 +
+   if levint not exist; character - 0 +; end if
+   if levint exists and levint = 1; char 1 2 3; end if
+   . character - 0 +    ;. fixed 8/21/19 for bill pitts problem (pitts212.dp)
 else
-   character automatic distinct zcode
+   delete zcodes; let zcodes = sort zcode
+.    character automatic distinct zcode    ;. bug fixed    6/19/20
+   character automatic distinct zcodes
+   let nzcodes = number zcodes
+   print "nzcodes = ^nzcodes"
+   pause
 end if
+.
+. stat char
+. pause
+.
 . character color ^forecol2 all
-if colorl not exist; let string colorl = red blue green black; end if
-character color ^colorl
-if colorall exists; character color ^colorall all; end if
+if levcol not exist; let string levcol = red blue green black; end if
+character color ^levcol
+. if forecol exists; . character color ^forecol all; . end if
 .
 line blank all
 ylimits freeze
 pre-erase off
-plot zfacts zx zcode
+.
+. if bugodp = 1
+.    print zx zfacts zcode
+.    print junk.out zx zfacts zcode
+. end if
+.
+. plot zfacts zx xs^js        ;. <================= this "paints out" the entire array of settings
+.
+hw texthz textwz
+let ybase = 20 + yoffset - 2
+if frame exists; let ybase = frameb + yoffset - 2; end if
+let yinc = 2
+.
+loop for jz = 1 1 k
+   let yposz = ybase-jz*yinc
+   let vertzzz = yposz for i = 1 1 ny
+   delete tagzzz; let tagzzz = x^jz; let ysort = sortc y tagzzz
+   plot vertzzz indexzzz tagzzz  ;. <======= this "paints out" a single row of settings
+end of loop
+.
 ylimits unfreeze
 pre-erase on
 character units dd all
 character automatic
 character blank all
 character hw
+char color blue all; if forecol exists; char color ^forecol all; end if
+color blue all; if forecol exists; color ^forecol all; end if
+.
+. -----Step 13: write out factor labels, left & right, + length of longest run-----
 .
 loop for jz = 1 1 k
    let yposz = ybase-jz*yinc-1
-   color ^forecol2
-   if colorall exists; color ^colorall; end if
+   color ^forecol
+   if forecol exists; color ^forecol; end if
    .
    delete seq dseq
    .
-   . ---Step 10.2: write factor labels, left and right, as well as length of longest run---
    .
-   if bugswodp = 1; print "--At (dexodp.dp, step 10.2): factor labels, lng run"
+   if bugodp = 1; print "--At (dexodp.dp, step 13): factor labels, lng run"
       if pausesw = 1; pause; end if
    end if
    .
    move 15.5 yposz; just left; text X^jz:
    .
-   let xposz = 85.5
-   if xpright exists; let xposz = xpright; end if
-   if stx^jz exists
-      move xposz yposz; just left; text ^jz: ^stx^jz
-   end if
-   .
-   let xposz = 90
-   if xpright2 exists; let xposz = xpright2; end if
-   if cxs^jz exist
-      move xposz yposz; just left; text ^cxs^jz
-   end if
-   .
-   let xposz = 98
-   if xpright2 exists; let xposz = xpright2; end if
-   if lenlong exists
-      color ^forecol2
-      let cut2 = 7; let cut3 = 5;    . this needs to be fixed     11/24/15   <=======
-      if ndseq = 2 and lenlong >= cut2; color red; end if
-      if ndseq = 3 and lenlong >= cut3; color red; end if
-      move xposz yposz; just right; text ^lenlong
-      color ^forecol2
+   if k <= 10            ;. BUG FIX (1/5/21): avoid overwrite--only write out if <= 10 factors
+      let xposz = 85.5
+      if xpright exists; let xposz = xpright; end if
+      if stx^jz exists
+         move xposz yposz; just left; text ^jz: ^stx^jz
+      end if
+      .
+      let xposz = 90
+      if xpright2 exists; let xposz = xpright2; end if
+      if cxs^jz exist
+         move xposz yposz; just left; text ^cxs^jz    ;. <========================
+      end if
+      .
+      let xposz = 98
+      if xpright2 exists; let xposz = xpright2; end if
+      if lenlong exists
+         color ^forecol
+         let cut2 = 7; let cut3 = 5;    . this needs to be fixed     11/24/15   <=======
+pause
+         if ndseq = 2 and lenlong >= cut2; color red; end if
+         if ndseq = 3 and lenlong >= cut3; color red; end if
+         move xposz yposz; just right; text ^lenlong
+         color ^forecol
+      end if
    end if
    .
 end loop
@@ -389,24 +496,24 @@ if cut1odp exists and cut2odp exists
    lines solid; drawdsds xposz 20 xposz 90; lines blank
 end if
 .
-. -----Step 11: Write out the factor settings for ymax and ymin-----
+. -----Step 21: Write out the factor settings for ymax and ymin-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 11): ymax & ymin factor settings"
+if bugodp = 1; print "--At (dexodp.dp, step 21): ymax & ymin factor settings"
    if pausesw = 1; pause; end if
 end if
 .
    call dexodp_settings.dp
 .
-. -----Step 12: Write out project, (k,n), ybar, step, annotate-----
+. -----Step 22: Write out project, (k,n), ybar, step, annotate-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 12): proj,(n,k),ybar,step,annot"
+if bugodp = 1; print "--At (dexodp.dp, step 22): proj,(n,k),ybar,step,annot"
    if pausesw = 1; pause; end if
 end if
 .
-color blue
+color blue; if forecol exists; color ^forecol; end if
 .
 if project exists
-   if projcol exists; color ^projcol; end if
+   if forecol exists; color ^forecol; end if
    call dexwriteproject.dp
    . print "after call to dexwriteproject.dp"
 end if
@@ -425,6 +532,7 @@ let ybar = mean y
 if decplacm not exist; set write decimals 4; end if
 if decplacm exists; set write decimals decplacm; end if
 let stybar = number to string ybar
+color blue; if forecol exists; color ^forecol; end if
 move 85 91; just right; hw 2 1; text Mean = ^stybar; just center
 .
 if step exists
@@ -440,13 +548,13 @@ if step exists
 end if
 .
 if annotate exists and annotate = 1
-   if colorall exists; color ^colorall; end if
+   if forecol exists; color ^forecol; end if
    call annotate.dp
 end if
 .
-. -----Step 12: Write out right margin factor and setting info-----
+. -----Step 23: Write out right margin factor and setting info-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 12): right margin"
+if bugodp = 1; print "--At (dexodp.dp, step 23): right margin"
    if pausesw = 1; pause; end if
 end if
 .
@@ -456,36 +564,37 @@ if rightmsw exists and rightmsw = 1 or rightmsw not exist
       let ypdel = 2
       let lh = 1.8
       let lw = 0.9
-      . let string colorl = blue blue blue blue blue blue blue blue blue blue
+      . let string levcol = blue blue blue blue blue blue blue blue blue blue
       if k >= 9
          let ypdel = 1.5; let lh = 1.6; let lw = 0.8
-         let string colorl = red blue green black
+         let string levcol = red blue green black
       end if
+print "pre call    levcol = ^levcol"
       call dexrightmargin.dp
-      . delete ypdel lh lw colorl
+      . delete ypdel lh lw levcol
       delete ypdel lh lw
    end if
 end if
 .
-. -----Step 13: If called for, write out customized upper left info-----
+. -----Step 24: If called for, write out customized upper left info-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 13): upper left"
+if bugodp = 1; print "--At (dexodp.dp, step 24): upper left"
    if pausesw = 1; pause; end if
 end if
 .
 if stcorn1 exists
-   if colorall exists; let string corncol = ^colorall; end if
-   if colorall exists
+   if forecol exists; let string corncol = ^forecol; end if
+   if forecol exists
       loop for jcorn = 1 1 5
-         let string corncol^j = ^colorall
+         let string corncol^j = ^forecol
       end loop
    end if
    call upperleft.dp
 end if
 .
-. -----Step 14: If called for, print out mean info-----
+. -----Step 25: If called for, print out mean info-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 14): print mean"
+if bugodp = 1; print "--At (dexodp.dp, step 25): print mean"
    if pausesw = 1; pause; end if
 end if
 .
@@ -512,9 +621,9 @@ if meansw exists and meansw = 1
 end if
 move relative 0 0  ;. inserted   7/10/18
 .
-. -----Step 15: If called for, print out a target reference line-----
+. -----Step 26: If called for, print out a target reference line-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 15): target reference line"
+if bugodp = 1; print "--At (dexodp.dp, step 26): target reference line"
    if pausesw = 1; pause; end if
 end if
 .
@@ -525,9 +634,9 @@ if ytarget exists
    just left
 end if
 .
-. -----Step 16: If called for, draw out an arrow for "best"-----
+. -----Step 27: If called for, draw out an arrow for "best"-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 16): arrow for "best"
+if bugodp = 1; print "--At (dexodp.dp, step 27): arrow for "best"
    if pausesw = 1; pause; end if
 end if
 .
@@ -535,16 +644,16 @@ if stbest exists
    call dexarrow.dp
 end if
 .
-. -----Step 17: Compute statistics (de-activated)-----
+. -----Step 28: Compute statistics (de-activated)-----
 .
-if bugswodp = 1; print "--At (dexodp.dp, step 17): compute stats (deactivated)"
+if bugodp = 1; print "--At (dexodp.dp, step 28): compute stats (deactivated)"
    if pausesw = 1; pause; end if
 end if
 .
 let dothis = 0
 if dothis = 1
    .
-   if bugswodp = 1
+   if bugodp = 1
       print " "; print "--At dexodp.dp step 17: compute statistics"
       if pausesw = 1; pause; end if
    end if
@@ -576,9 +685,9 @@ if dothis = 1
    let upper = m+unc
    summary y
    .
-   . -----Step 18: Round to desired number of decimals (default = 4) (de-activated)-----
+   . -----Step 29: Round to desired number of decimals (default = 4) (de-activated)-----
    .
-   if bugswodp = 1; print "--At (dexodp.dp, step 18): round stats (deactivaed)"
+   if bugodp = 1; print "--At (dexodp.dp, step 29;): round stats (deactivaed)"
       if pausesw = 1; pause; end if
    end if
    .
@@ -618,9 +727,33 @@ end if
 let step = 1
 call form_and_write_dex_10_step_conclusions.dp
 .
-. -----Step 99: Finish up-----
+. -----Step 99.1: if frame exists, then restore the original data-----
 .
-if bugswodp = 1; print "--At end of dexodp.dp"
+if bugodp = 1
+   print "--At start of (dexodp.dp, step 99.1): restore original data if frame existed"
+   if frame not exist; print "      frame did not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   delete stallx; let stallx = string combine x1 to x^k
+   delete y; delete ^stallx
+   call restore_full_dataset.dp
+end if
+.
+if bugodp = 1
+   print "Post- data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 99.2: Finish up otherwise-----
+.
+if bugodp = 1
+   print "--At (dexodp.dp, step 99.2): finishing up otherwise"
    if pausesw = 1; pause; end if
 end if
 .
@@ -650,3 +783,4 @@ if itime exists and itime = 1
   cpu time
   let t1 = cputime
 end of if
+. end capture

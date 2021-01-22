@@ -9,8 +9,8 @@ FC = gfortran
 CC = gcc
 
 # FEATURES to enable during compilation
-# all: READLINE NCURSES GD TIFF VPX CAIRO X11 GKS OPENGL PLOT AQUA MOJAVE MACPORTS
-FEATURES = READLINE NCURSES GD TIFF CAIRO AQUA X11 MOJAVE MACPORTS
+# all: READLINE NCURSES GD TIFF VPX CAIRO X11 GKS OPENGL PLOT AQUA_NOMACPORTS AQUA_MACPORTS MOJAVE CATALINA MACPORTS
+FEATURES = READLINE NCURSES GD TIFF CAIRO AQUA_MACPORTS X11 CATALINA MACPORTS
 
 # PREFIX is the parent of where are installed (recommend /usr/local or /usr)
 # For non-root install, consider PREFIX=$(HOME)
@@ -43,6 +43,14 @@ endif
 # than /usr/include
 ifneq (,$(findstring MOJAVE,$(FEATURES)))
 CFLAGS  += -I/Applications/xcode.app/Contents/Developer/Platforms/MacOSX.platform/developer/SDKs/MacOSX.sdk/usr/include
+endif
+
+# Include/Library directories for Catalina
+ifneq (,$(findstring CATALINA,$(FEATURES)))
+FFLAGS += -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
+FFLAGS += -L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib
+CFLAGS += -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
+CFLAGS += -L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib
 endif
 
 #  MacPorts: sudo port install readline
@@ -114,9 +122,16 @@ LDFLAGS += -lGLU -lGL
 FFLAGS4 += -DHAVE_OPEN_GL
 endif
 
-ifneq (,$(findstring AQUA,$(FEATURES)))
+ifneq (,$(findstring AQUA_NOMACPORTS,$(FEATURES)))
 OBJS += aqua.o
 LDFLAGS += -framework AquaTerm -lobjc
+FFLAGS4 += -DHAVE_AQUA
+CFLAGS += -I/usr/local/include
+endif
+
+ifneq (,$(findstring AQUA_MACPORTS,$(FEATURES)))
+OBJS += aqua.o
+LDFLAGS += -F/opt/local/Library/Frameworks -framework AquaTerm -lobjc
 FFLAGS4 += -DHAVE_AQUA
 CFLAGS += -I/usr/local/include
 endif

@@ -1,6 +1,6 @@
 This is Dataplot data file     scott_8_16.dat
 Purpose  : Factors Affecting the HRTEM (High Resolution Transmission
-           Electron Microscopy) Method for Measuring the Ultrathin
+           Electron Microscopy) Method Error for Measuring the Ultrathin
            (Nanotechnology) Amorphous SiO2 Layer in Gate Dielectrics
            for CPUs and Memory
 Scientist: John Henry Scott (NIST's Surface & Microanalysis Science Div.)
@@ -10,14 +10,14 @@ Number of Variables per Line Image = 9
 Order of Variables on a Line Image--
    Response Variable = Error (True - Measured) in SiO2 Layer Thickness
                        where "True" is via computer model
-   Factor 1          = Microscope beam tilt (2 levels: 0 and 25 mrad)
-   Factor 2          = Microscope tilt azimuth (2 levels: 0 and 25 degrees)
-   Factor 3          = Sample     beam thickness (1.2 and 1.9 nm)
-   Factor 4          = Sample     film thickness (1.5 and 2.0 nm)
-   Factor 5          = Microscope defocus (2 levels: -58.4 and -48.4 nm)
-   Factor 6          = Microscope astigmatism mag (2 levels: 0 and .08 nm)
-   Factor 7          = Microscope astigmatism azimuth (2 levels: 0 and 25 degree
-   Factor 8          = Microscope vibration amplitude (2 levels: 0 and .04 nm)
+   Factor 1          = Microscope beam tilt           (2 levels: 0     and 25    mrad)
+   Factor 2          = Microscope tilt azimuth        (2 levels: 0     and 25    degrees)
+   Factor 3          = Sample     beam thickness      (2 levels: 1.2   and 1.9   nm)
+   Factor 4          = Sample     film thickness      (2 levels: 1.5   and 2.0   nm)
+   Factor 5          = Microscope defocus             (2 levels: -58.4 and -48.4 nm)
+   Factor 6          = Microscope astigmatism mag     (2 levels: 0     and .08   nm)
+   Factor 7          = Microscope astigmatism azimuth (2 levels: 0     and 25    degree
+   Factor 8          = Microscope vibration amplitude (2 levels: 0     and .04   nm)
 To read this file into Dataplot--
    skip 25
    read scott_8_16.dat y x1 x2 x3 x4 x5 x6 x7 x8

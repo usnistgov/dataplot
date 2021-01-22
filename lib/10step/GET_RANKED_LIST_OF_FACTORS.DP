@@ -12,39 +12,39 @@
 .
 . -----start point-----
 .
-let bugswrlf = 0
+let buggrlf = 0
 . let pausesw = 1
 .
 . -----Step 1: Do the fit to get the factor (slope) estimates-----
 .
-if bugswrlf = 1; print " "; print "--At beginning of     get_ranked_list_of_factors.dp"
+if buggrlf = 1; print " "; print "--At beginning of     get_ranked_list_of_factors.dp"
    if pausesw = 1; pause; end if
 end if
 .
-feedback on; printing on
-fit y x1 to x^k
-feedback off; printing off
-if bugswrlf = 1; if pausesw = 1; pause; end if; end if
+. feedback on; . printing on
+fit y x1 to x^k            ;. <==========================
+. feedback off; . printing off
+if buggrlf = 1; if pausesw = 1; pause; end if; end if
 .
 . -----Step 2: Form the ranked list of factors-----
 .
 delete indexzz; let indexzz = 0 1 k
 delete coefzz
 skip 1; read dpst1f.dat coefzz
-if bugswwlf = 1; print "At mid1 of (get-ranked_list_of_factors.dp,step 2)"
+if buggrlf  = 1; print "At mid1 of (get-ranked_list_of_factors.dp,step 2)"
    print indexzz coefzz
    if pausesw = 1; pause; end if
 end if
 .
 delete indexzz coefzz subset indexzz 0
-if bugswwlf = 1; print "At mid2 of (get-ranked_list_of_factors.dp,step 2)"
+if buggrlf  = 1; print "At mid2 of (get-ranked_list_of_factors.dp,step 2)"
    print indexzz coefzz
    stat v
    if pausesw = 1; pause; end if
 end if
 .
 let coefzz = abs(coefzz)
-if bugswwlf = 1; print "At mid3 of (get-ranked_list_of_factors.dp,step 2)"
+if buggrlf  = 1; print "At mid3 of (get-ranked_list_of_factors.dp,step 2)"
    print indexzz coefzz
    stat v
    if pausesw = 1; pause; end if
@@ -57,8 +57,10 @@ delete rlf; let rlf = indexzz
 .
 . -----Step 99: Finish up-----
 .
-if bugswrlf = 1; print " "; print "--At end of    get_ranked_list_of_factors.dp"
+if buggrlf = 1; print " "; print "--At end of    get_ranked_list_of_factors.dp"
    print coefzz indexzz rlf
    if pausesw = 1; pause; end if
 end if
 delete indexzz coefzz
+
+

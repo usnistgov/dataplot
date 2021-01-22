@@ -30,7 +30,9 @@
 .   19. framet (parameter)           = top    frame line (in %) (optional) (default = 90)
 .   20. frameb (parameter)           = bottom frame line (in %) (optional) (default = 20)
 .
-.   21. stepprsw (parameter) = (0,1) switch to dictate whether upper left step id should be printed (default = 1 = yes) ;. 9/17/18
+.   21. stepprsw (parameter)         = (0,1) switch to dictate whether upper left step id should be printed (default = 1 = yes) ;. 9/17/18
+.   22. levint   (parameter)         = 0,1 switch dictating whether hor. axis labels (and right margin indices) are integers (optional)
+.   23. frame (string)               = subset/except specification;. 4/16/20
 .
 . Note: Graphics output produced = A 1-page plot: DEX Scatter Plot
 .          Vertical   axis = Response variable
@@ -41,7 +43,6 @@
 .                                then the factor is deemed to "have an effect"
 .
 . Note: Macros called by this macro:
-.       dexcheck.dp, alertk, alertv
 .       dexplotiniti.dp
 .       dexwriteproject.dp
 .       dexknbox.dp
@@ -51,13 +52,15 @@
 .
 . -----start point-----
 .
+print " "; print "=====> Now generating Plot 2 (DEX Scatter plot) <====="
+.
 feedback save
 feedback off
 printing off
-let bugswsp = 0
+let bugsp = 0
 . let pausesw = 1
 .
-if bugswsp = 1; print " "; print "--At beginning of DEX Ste p 2 (DEXSP.DP)"
+if bugsp = 1; print " "; print "--At beginning of DEX Ste p 2 (DEXSP.DP)"
    print "   levelsw = ^levelsw"
    print stx1 stx2 stx3 stx4 stx5
    print stx1l stx2l stx3l stx4l stx5l
@@ -68,8 +71,31 @@ end if
 . -----Do Analysis Ste p 2: DEX Scatter Plot-----
 . ----------------------------------------------
 .
+. -----Step 1.0: if frame exists, the save the original data and extract the subset-----
+.
+if bugsp = 1
+   print "--At start of (dexsp.dp, step 1.0): if frame exists, save the original data and extract the subset"
+   if frame not exist; print "      frame does not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   call save_full_dataset.dp
+   delete stallx; let stallx = string combine x1 to x^k
+   retain y ^stallx ^frame
+end if
+.
+if bugsp = 1
+   print "Post-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
 . -----Step 1.1: Check input values for existence and equal length-----
-if bugswsp = 1; print "--At (dexsp.dp, step 1): check input"
+if bugsp = 1; print "--At (dexsp.dp, step 1.1): check input"
    if pausesw = 1; pause; end if
 end if
 .
@@ -79,10 +105,11 @@ if k not exist
 end if
 set check name output filliben
 set check length output filliben
-feedback on
-let iflag = check name k y x1 to x^k
-let iflag = check equal length y x1 to x^k
-feedback off
+if k = 1; let iflag = check name k y x1 ; end if
+if k >= 2
+   let iflag = check name k y x1 to x^k
+   let iflag = check equal length y x1 to x^k
+end if
 .
 let numlevto = 0
 loop for jz = 1 1 k
@@ -96,7 +123,7 @@ let numlevdi = unique  numlevva
 .
 . -----Step 2: Define plot settings-----
 .
-if bugswsp = 1; print "--At (dexsp.dp, step 2): plot settings"
+if bugsp = 1; print "--At (dexsp.dp, step 2): plot settings"
    if pausesw = 1; pause; end if
 end if
 .
@@ -105,7 +132,7 @@ call dexplotdefplotset.dp
 .
 . -----Step 3: Define more colors-----
 .
-if bugswsp = 1; print "--At (dexsp.dp, step 3): colors"
+if bugsp = 1; print "--At (dexsp.dp, step 3): colors"
    if pausesw = 1; pause; end if
 end if
 .
@@ -113,13 +140,13 @@ let string colorchz = blue
 if forecol exists; let string colorchz = ^forecol; end if
 if colorcha exists; let string colorchz = ^colorcha; end if
 let string coloralz = blue
-if colorall exists; let string coloralz = ^colorall; end if
-if colorall exists; color ^colorall; end if
-if colorall exists; let string tagcolor = ^colorall; end if
+if forecol exists; let string coloralz = ^forecol; end if
+if forecol exists; color ^forecol; end if
+if forecol exists; let string tagcolor = ^forecol; end if
 .
 . -----Step 4: Define plot limits and turn labels off-----
 .
-if bugswsp = 1; print "--At (dexsp.dp, step 4): limits & labels"
+if bugsp = 1; print "--At (dexsp.dp, step 4): limits & labels"
    if pausesw = 1; pause; end if
 end if
 .
@@ -186,14 +213,21 @@ tic mark color ^coloralz
 .
 . -----Step 5: Define titles and labels-----
 .
-if bugswsp = 1; print "--At (dexsp.dp, step 5): titles & labels"
+if bugsp = 1; print "--At (dexsp.dp, step 5): titles & labels"
    if pausesw = 1; pause; end if
 end if
 .
+. -----BUG FIX (1/4/21): the following 7 lines fixed a bug (too long to plot):-----
+. -----For large n (say, n >= 1025), the dex scatter plot-----
+. -----takes too long drawing out filled circles (peter fontana (k=15,n~64000))
+.
 char X blank
 char hw 2 1
-call setcircle.dp
-char offset 0 0 all
+let n = number y
+if n <= 1024
+   call setcircle.dp
+   char offset 0 0 all
+end if
 .
 if titlesw not exist; title Scatter Plot; end if
 if titlesw exist and titlesw = 1; title Scatter Plot; end if
@@ -207,7 +241,7 @@ if ticlabsi exists; tic label size ^ticlabsi; end if
 .
 . -----Step 6: GENERATE THE PLOT-----
 .
-if bugswsp = 1; print "--At (dexsp.dp, step 6): GENERATE THE PLOT"
+if bugsp = 1; print "--At (dexsp.dp, step 6): GENERATE THE PLOT"
    print "k = ^k"
    if pausesw = 1; pause; end if
 end if
@@ -217,9 +251,10 @@ end if
 . ylimits
 . ylimits unfreeze
 .
-dex scatter plot y x1 to x^k              ;. <============================
+if k = 1; dex scatter plot y x1; end if              ;. <============================
+if k >= 2; dex scatter plot y x1 to x^k; end if              ;. <============================
 .
-if bugswsp = 1
+if bugsp = 1
    print "post-plot:"
    print xplot yplot tagplot
    if pausesw = 1; pause; end if
@@ -242,7 +277,7 @@ let nxplot = size xplotd
 .
 . -----Step 7: Write out the factor level labels-----
 .
-if bugswsp = 1; print "--At (dexsp.dp, step 7): factor labels"
+if bugsp = 1; print "--At (dexsp.dp, step 7): factor labels"
    if pausesw = 1; pause; end if
 end if
 .
@@ -250,7 +285,7 @@ call dexsp_write_factor_levels.dp
 .
 . -----Step 11: Write out . . .-----
 .
-if bugswsp = 1; print "--At (dexsp.dp, step 11): xxx"
+if bugsp = 1; print "--At (dexsp.dp, step 11): xxx"
    if pausesw = 1; pause; end if
 end if
 .
@@ -265,7 +300,7 @@ end loop
 .
 . -----Step 8: If called for, draw out an arrow for "best"-----
 .
-if bugswsp = 1; print "--At (dexsp.dp, step 8): arrow for best"
+if bugsp = 1; print "--At (dexsp.dp, step 8): arrow for "best"
    if pausesw = 1; pause; end if
 end if
 .
@@ -277,12 +312,12 @@ end if
 .
 color blue
 .
-if bugswsp = 1; print "--At (dexsp.dp, step 121): proj,(n,k),ybar,step,annotate"
+if bugsp = 1; print "--At (dexsp.dp, step 21): proj,(n,k),ybar,step,annotate"
    if pausesw = 1; pause; end if
 end if
 .
 if project exists
-   if projcol exists; color ^projcol; end if
+   if forecol exists; color ^forecol; end if
    call dexwriteproject.dp
 end if
 .
@@ -307,13 +342,13 @@ if step exists
 end if
 .
 if annotate exists and annotate = 1
-   if colorall exists; color ^colorall; end if
+   if forecol exists; color ^forecol; end if
    call annotate.dp
 end if
 .
 . -----Step 22: Write out right margin factor and setting info-----
 .
-if bugswsp = 1; print "--At (dexsp.dp, step 22): right margin"
+if bugsp = 1; print "--At (dexsp.dp, step 22): right margin"
    if pausesw = 1; pause; end if
 end if
 .
@@ -322,7 +357,7 @@ if rightmsw exists and rightmsw = 1 or rightmsw not exist
       let ypdel = 2; let lh = 1.8; let lw = 0.9
       if k >= 9
          let ypdel = 1.5; let lh = 1.6; let lw = 0.8
-         let string colorl = red blue green black
+         . let string colorl = red blue green black
       end if
       call dexrightmargin.dp
       delete ypdel lh lw
@@ -331,7 +366,7 @@ end if
 .
 . -----Step 23: If called for, write out customized upper left info-----
 .
-if bugswsp = 1; print "--At (dexsp.dp, step 23): upper left"
+if bugsp = 1; print "--At (dexsp.dp, step 23): upper left"
    if pausesw = 1; pause; end if
 end if
 .
@@ -342,7 +377,7 @@ end if
 .
 . -----Step 24: If called for, print out a target reference line-----
 .
-if bugswsp = 1; print "--At (dexsp.dp, step 124): target reference line"
+if bugsp = 1; print "--At (dexsp.dp, step 24): target reference line"
    if pausesw = 1; pause; end if
 end if
 .
@@ -353,14 +388,40 @@ if ytarget exists
    just left
 end if
 .
-. -----Step 99: Finish up-----
+. -----Step 99.1: if frame exists, then restore the original data-----
 .
-if bugswsp = 1; print "--At end of dexsp.dp"
+if bugsp = 1
+   print "--At start of (dexsp.dp, step 99.1): restore original data if frame existed"
+   if frame not exist; print "      frame did not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  data restoration:"
+   stat v
    if pausesw = 1; pause; end if
 end if
 .
-ylim
-xlim
+if frame exists
+   delete stallx; let stallx = string combine x1 to x^k
+   delete y; delete ^stallx
+   call restore_full_dataset.dp
+end if
+.
+if bugsp = 1
+   print "Post- data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 99.2: Finish up otherwise-----
+.
+if bugsp = 1
+   print "--At (dexsp, step 99.2): finishing up otherwise"
+   if pausesw = 1; pause; end if
+end if
+.
+. note--the limits unfreeze command must be AFTER the ylimits command   11/2/18
+xlimits
+ylimits
+limits unfreeze
 .
 char blank all
 char fill off all

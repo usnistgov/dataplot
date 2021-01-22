@@ -1,0 +1,41 @@
+. This is dataplot program    test_dex10stepanalysis_011621.dp      test dex 10-step analysis code    1/16/21
+.
+let case = 3
+.
+if case =  3; let k =  3;  skip 25; read   boxsprings_3_8.dat     y x1 to x^k; end if  
+if case =  4; let k =  4;  skip 25; read   boxcleanser_4_8.dat    y x1 to x^k; end if  
+if case =  5; let k =  5;  skip 25; read   boxreactor_5_32.dat    y x1 to x^k; end if  
+if case =  7; let k =  7;  skip 25; read   kneifel_7_128.dat      y x1 to x^k; end if  
+if case =  8; let k =  8;  skip 25; read   scott_8_16.dat         y x1 to x^k; end if  
+if case = 10; let k = 10;  skip 25; read   ma_10_16.dat           y x1 to x^k; end if  
+if case = 13; let k = 13;  skip 25; read   wtc_13_16.dat          y x1 to x^k; end if  
+if case = 15; let k = 15;  skip 25; read   fontana_15_32768.dat   y x1 to x^k; end if  
+if case = 20; dimension 200 variables; let k = 20;  skip  25; read    mills_20_256.dat    y x1 to x^k; end if 
+.
+stat v
+. pause
+.
+let string forecol = black
+call set_color.dp
+call dex10stepanalysis.dp
+.
+. call dexodp.dp
+. call dexsp.dp
+.
+let dothis = 0
+if dothis = 1
+   call dexodp.dp
+   call dexsp.dp
+   call dexmp.dp
+   call dexiem.dp
+   call dexbp.dp
+   call dexyp.dp
+   call dexep.dp
+   call dexhpp.dp
+   call dexcrsdp.dp
+   call dexcp.dp
+end if
+.
+print " "; print "DEX 10-step analysis all done"
+print " "; print "Output file = dppl1f.pdf"
+.

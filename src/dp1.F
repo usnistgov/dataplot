@@ -7606,6 +7606,9 @@ C     UPDATED            --SEPTEMBER 2018. SET WRITE FEEDBACK
 C     UPDATED            --APRIL     2020. INCREASE MAXIMUM LINE
 C                                          LENGTH (MAKE SETTABLE IN
 C                                          DPCOP2.INC)
+C     UPDATED            --JANUARY   2021. FOR TYPE "ERRO", DON'T PRINT
+C                                          IF "SET ERROR MESSAGE OFF"
+C                                          COMMAND GIVEN
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)----------------------------------
 C
@@ -7662,6 +7665,8 @@ CCCCC IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'WRST')THEN
          WRITE(IPR,63)ICOUT(1:240)
    63    FORMAT('ICOUT = ',A240)
       ENDIF
+C
+      IF(TYPE.EQ.'ERRO' .AND. IERMSG.EQ.'OFF')GOTO9000
 C
 C               *********************************************
 C               **  STEP 11--                              **

@@ -1,20 +1,425 @@
+.  This the Dataplot log-in file dplogf.tex  Note that lines starting
+.  with a "." are comment lines.  This file can be customized for your
+.  own use.  It is heavily commented to make it easier for you to
+.  implement your own preferences.
+.
+.  This version has been adopted from the default dplogf.tex file used
+.  for the Windows implementation of Dataplot.
+.
+.  In the following sections, we set the following flags
+.
+.     LET FLAGUSER = 1  => use Jim Filliben's preferred settings
+.     LET FLAGUSER = 2  => use Alan Heckert's preferred settings
+.     LET FLAGUSER = 3  => use generic preferred settings
+.                          (use these to customize your preferences
+.                          if you do not like either Jim's or Alan's
+.                          preferences)
 FEEDBACK OFF
 .
-.  GLOBAL LOGIN FILE
+.  Uncomment one of the following 3 lines
 .
-.  1) SET THE DESIRED X11 FONT.  USE "FIXED" AS THE
-.     DEFAULT SINCE THIS SHOULD ALWAYS BE AVAILABLE,
-.     BUT FEEL FREE TO CHANGE IT TO A MORE DESIRABLE FONT.
+. LET FLAGUSER = 1; . Jim Filliben's preferred settings
+. LET FLAGUSER = 2; . Alan Heckert's preferred settings
+LET FLAGUSER = 3; . Use to customize your own preferred settings
 .
-.  2) SET THE "PROMPT ADVANCE" BASED ON WHETHER OR NOT THE
-.     THE GUI IS RUNNING (THE GUI WILL ISSUE A "SET GUI ON" COMMAND
-.     BEFORE THE dplogf.tex FILE IS CALLED).
+. -----Step 1: Define Your Graphics Output Devices------------
 .
-. set x11 font -adobe-helvetica-bold-o-normal--10-100-75-75-p-60-iso8859-1$
-SET X11 FONT FIXED
-. PROBE GUI
-. IF PROBEVAL = 0
-.   SET PROMPT ADVANCE ON
-. END OF IF
+. Device 1 is your computer screen,
+.          usually set to X11 in dplogf.tex.
+. Device 2 is user controlled graphics output file,
+.          usually set to Postscript in dplogf.tex at end of script.
+. Device 3 is Dataplot controlled graphics output file (typically Postscript),
+.          usually not set in dplogf.tex.
+.
+. -----Step 2: Define Option Flags------
+.
+IF FLAGUSER = 1;      . Jim Filliben's preferences
+   LET IBROWSE = 0;   . Use default via "xdg-open"
+   LET IOPS = 1;      . 1 => X11, 2 => Aquaterm (MacOS only)
+   LET FLAGCOLO = 3;  . Color settings
+   LET FLAGWS = 1;    . Workspace settings
+   LET FLAGDECI = 1;  . Number of decimals in output
+   LET FLAGTOFF = 1;  . Tic offset
+   LET FLAGCASE = 1;  . Case (upper/lower/asis)
+   LET FLAGTITL = 1;  . Title offset
+   LET FLAGTITS = 1;  . Title size
+   LET FLAGSHAD = 1;  . Box shadow
+   LET FLAGX3LA = 1;  . x3label automatic
+   LET FLAGHEAD = 1;  . Header sizes
+   LET FLAGLABE = 1;  . Label sizes
+   LET FLAGERRO = 1;  . Response to error
+   LET FLAGVERS = 1;  . Print version info
+   LET FLAG4PLO = 1;  . 4-Plot uses MULTIPLOT CORNER COORDINATES
+   LET FLAGDEVI = 1;  . Print message about devices
+   LET FLAGHELP = 1;  . Print various search/help options
+   LET FLAGPDPI = 1;  . Postscript dpi
+   LET FLAGPDF  = 1;  . Automatic creation of pdf files
+   LET FLAGLIST = 1;  . Set number of list lines, open new window for LIST, HELP
+ELSE IF FLAGUSER = 2; . Alan Heckert preferences
+   LET IBROWSE = 0;   . Use default via "xdg-open"
+   LET IOPS = 1;      . 1 => X11, 2 => Aquaterm (MacOS only)
+   LET FLAGCOLO = 1;  . Color settings
+   LET FLAGWS = 1;    . Workspace settings
+   LET FLAGDECI = 2;  . Number of decimals in output
+   LET FLAGTOFF = 2;  . Tic offset
+   LET FLAGCASE = 1;  . Case (upper/lower/asis)
+   LET FLAGTITL = 1;  . Title offset
+   LET FLAGTITS = 0;  . Title size
+   LET FLAGSHAD = 1;  . Box shadow
+   LET FLAGX3LA = 0;  . x3label automatic
+   LET FLAGHEAD = 0;  . Header sizes
+   LET FLAGLABE = 0;  . Label sizes
+   LET FLAGERRO = 3;  . Response to error
+   LET FLAGVERS = 0;  . Print version info
+   LET FLAG4PLO = 1;  . 4-Plot uses MULTIPLOT CORNER COORDINATES
+   LET FLAGDEVI = 0;  . Print message about devices
+   LET FLAGHELP = 0;  . Print various search/help options
+   LET FLAGPDPI = 1;  . Postscript dpi
+   LET FLAGPDF  = 1;  . Automatic creation of pdf files
+   LET FLAGLIST = 1;  . Set number of list lines, open new window for LIST, HELP
+ELSE;                 . User customized settings
+   LET IBROWSE = 0;   . Use default via "xdg-open"
+   LET IOPS = 1;      . 1 => X11, 2 => Aquaterm (MacOS only)
+   LET FLAGCOLO = 1;  . Color settings
+   LET FLAGWS = 1;    . Workspace settings
+   LET FLAGDECI = 1;  . Number of decimals in output
+   LET FLAGTOFF = 1;  . Tic offset
+   LET FLAGCASE = 1;  . Case (upper/lower/asis)
+   LET FLAGTITL = 1;  . Title offset
+   LET FLAGTITS = 1;  . Title size
+   LET FLAGSHAD = 1;  . Box shadow
+   LET FLAGX3LA = 0;  . x3label automatic
+   LET FLAGHEAD = 1;  . Header sizes
+   LET FLAGLABE = 1;  . Label sizes
+   LET FLAGERRO = 1;  . Response to error
+   LET FLAGVERS = 1;  . Print version info
+   LET FLAG4PLO = 1;  . 4-Plot uses MULTIPLOT CORNER COORDINATES
+   LET FLAGDEVI = 1;  . Print message about devices
+   LET FLAGHELP = 0;  . Print various search/help options
+   LET FLAGPDPI = 1;  . Postscript dpi
+   LET FLAGPDF  = 1;  . Automatic creation of pdf files
+   LET FLAGLIST = 1;  . Set number of list lines, open new window for LIST, HELP
+END OF IF
+.
+.  
+IF IOPS = 1 ; . Running in an X11 terminal window
+   . Set the X11 font
+   . set x11 font -adobe-helvetica-bold-o-normal--10-100-75-75-p-60-iso8859-1$
+   SET X11 FONT FIXED
+   DEVICE 1 X11
+ELSE IF IOPS = 2 ; . For MacOS running in standard terminal
+   DEVICE 1 AQUATERM
+ELSE ; . Neither X11 or Aqua set, so set to character type graphs
+   DISCRETE
+END OF IF
+.
+. -----Step 3: Define Your Browser (optional)------------------------
+.
+.      For Linux/Unix, setting to blank will invoke the browser via
+.      "xdg-open" which will initiate the system default.
+.
+IF IBROWSE = 0  ; . Default (i.e., xdg-open)
+   SET BROWSER " "
+ELSE IF IBROWSE = 2  ; . Mozilla Firefox
+   SET BROWSER "firefox"
+ELSE IF IBROWSE = 3  ; . Mozilla Seamonkey
+   SET BROWSER "seamonkey"
+ELSE IF IBROWSE = 4  ; . Google Chrome
+   SET BROWSER "google-chrome"
+ELSE
+   SET BROWSER " "
+END OF IF
+.
+. -----Step 4: Define Dataplot and NIST Handbook URL's (optional)----
+.
+.  Dataplot has a web site.
+.  The NIST e-Handbook of Statistical Methods (a useful 3000-page
+.  companion resource) also has a web site.
+.  By default, the following Dataplot and e-Handbook URL's
+.  are for the NIST public web servers.
+.  If you have installed (free via CD) the Dataplot and e-Handbook
+.  onto your local site, then change the following URL's:
+.
+SET DATAPLOT URL https://www.itl.nist.gov/div898/software/dataplot/
+SET HANDBOOK URL https://www.itl.nist.gov/div898/handbook/
+.
+. -----Step 5: Define Any Dataplot Personal Preferences (optional)---
+.
+. ---Preference 1: Plot Appearance:
+.
+.  The following sets default foreground and background colors.
+.  Set to suit your own taste.
+.
+if flagcolo = 1
+   let string foreground = black
+   let string background = white
+   .
+   if foreground not exist; let string foreground = white; end if
+   if background not exist; let string background = blue; end if
+else if flagcolo = 2
+   let string foreground = yellow
+   let string background = blue
+   .
+   if foreground not exist; let string foreground = white; end if
+   if background not exist; let string background = blue; end if
+else if flagcolo = 3
+   let string foreground = blue
+   let string background = white
+   .
+   if foreground not exist; let string foreground = white; end if
+   if background not exist; let string background = blue; end if
+end of if
+.
+background color ^background
+.
+character color ^foreground all
+line color ^foreground all
+spike color ^foreground all
+bar border color ^foreground all
+bar fill color ^foreground
+region fill color ^foreground
+frame color ^foreground
+tic color ^foreground
+tic label color ^foreground
+label color ^foreground
+title color ^foreground
+legend color ^foreground
+color ^foreground
+grid color ^foreground
+box color ^foreground
+segment color ^foreground
+.
+let string darkgree = 76
+let string olivegre = 10
+.
+. ---Preference 2: Data Workspace Number of Variables:
+.    I like 40 variables (rather than the 10 variable default)
+.    for the data workspace:
+.
+.    Note: updated to 100 variables to accomodate 10-step macros
+.
+if flagws = 1
+   dimension 100 variables
+else if flagws = 2
+   dimension 40 variables
+end of if
+.
+. ---Preference 3: Print Formatting:
+.    I like decimal (rather than exponential) default for printing:
+.
+if flagdeci = 1
+   set write decimals 4
+else if flagdeci = 2
+   set write decimals 5
+else
+   set write decimals
+end if if
+.
+. ---Preference 4: Plot Appearance:
+.    I like margins (spacings) within the frames on my plots:
+.
+if flagtoff = 1
+   tic offset units screen
+   tic offset 5 5
+else if flagtoff = 2
+   tic offset units data
+   tic offset 0 0
+end of if
+.
+. ---Preference 5: Plot Appearance:
+.    I like upper and lower case text on my plots:
+.
+if flagcase = 1
+   case asis
+   title case asis
+   label case asis
+   tic label case asis
+   character case asis all
+   legend case asis
+end of if
+.
+. ---Preference 6: Command Execution Feedback:
+.    I like automatic feedback for executed commands:
+.
+. ---Preference 7: Title Positioning and Size
+.    I like the title to be closer to the top frame line
+.
+if flagtitl = 1
+   title displacement 2
+end of if
+.
+if flagtits = 1
+   title size 2.6
+end of if
+.
+. ---Preference 8: Box Appearance
+.    I like the box to have no shadow
+.
+if flagshad = 1
+   box shadow hw 0 0
+end of if
+.
+. ---Preference 9: Auto-Annotation of Plot Command
+.    I like the command which generates a plot to be printed
+.    immediately below the plot (in x3label)
+.
+if flagx3la = 1
+   x3label automatic
+end of if
+.
+. ---Preference 10: Resolution of Output Graphics
+.    I like output graphics to be 600 dpi rather than the default 300 dpi
+.
+.    Also, specify whether automatic creation of PDF files will be turned on
+.
+if flagpdpi = 1
+   set postscript ppi 600
+end of if
+.
+if flagpdf = 1
+   set postscript convert pdf
+end of if
+.
+. ---Preference 11: Header Size-----
+.    I like the 3 header lines above a plot to be larger than the default of     hw 2 1
+.
+if flaghead = 1
+   let string headhw1 = 2.6 1.3
+   let string headhw2 = 2.6 1.3
+   let string headhw3 = 2.6 1.3
+end of if
+.
+. ---Preference 12: Label and tic label size-----
+.    I like the plot labels and tic labels to be larger than the default of    height = 2
+.
+if flaglabe = 1
+   label size 2.6
+end of if
+.
+. ---Preference 13: Set Fatal Error---
+.    When Dataplot encounters a fatal error, I like Dataplot's response to be a prompt message
+.    (asking as to whether to continue or to exit),
+.    as opposed to the default Dataplot response (= ignore and execute onward)
+.
+if flagerro = 1
+   set fatal error prompt
+else if flagerro = 2
+   set fatal error terminate
+else
+   set fatal error ignore
+end of if
+.
+. ---Preference 14: Print out the date for this version of dataplot-----
+.
+if flagvers = 1
+   print "Dataplot Version Date:"
+   print " "
+   version
+end of if
+.
+. ---Preference 15: Print out note about all graphics being captured in dppl1f.dat (modified 1/7/16)-----
+.
+if flagdevi = 1
+   print "      After a Dataplot run, postscript versions of"
+   print "      all graphics are captured in Dataplot's"
+   print "      graphics output file     dppl1f.dat"
+   print "      for viewing (and conversion to pdf) by ghostscript"
+   print "      via e.g.    okular dppl1f.dat"
+   print " "
+end of if
+.
+. ---Preference 16: Allow 4-plot output to be controlled by the    multiplot corner coordinates    command---
+.
+.    When the 4-plot command is used, the default output is
+.    sitting a bit high on the page to the point that there is not as much
+.    room to write annotations on top of the page.
+.    The following command will solve that problem.
+.    Note: in the program, it is recommended that the user
+.          enter (immediately before the 4plot command):
+.             multiplot 5 10 95 90
+.
+if flag4plo = 1
+   set 4plot multiplot on
+end of if
+.
+. ---Preference 17 Set number of list lines
+.
+.    Note 2020/08: Don't want new window for LIST and HELP if running GUI
+if flaglist = 1
+   set list lines 30
+   set help lines 30
+   probe gui
+   if probeval = 0
+      set list new window on
+      set help new window on
+   else
+      set list new window off
+      set help new window off
+   end of if
+end of if
+.
+. ---Preference 18 (4/9/18): Note the question-mark-based search commands---
+.
+if flaghelp = 1
+   print " "
+   print "      ? = General  search of Dataplot Reference Manual, as in:"
+   print "          ? distributions   ? plot   ? fit   ? let"
+   print "          ? lognormal distribution   ? block plot   ? gallery   etc."
+   print " "
+   print "     ?? = Specific search of Dataplot Reference Manual, as in:"
+   print "          ?? distributions   ?? plot   ?? fit   ?? let"
+   print "          ?? lognormal distribution    ?? block plot   ?? gallery   etc."
+   print " "
+   print "    ??? = General  search of NIST/SEMATECH Handbook, as in:"
+   print "          ??? gallery   ??? fit   ??? 10 step"
+   print "          ??? main effects plot   ??? effects plot"
+   print "          ??? halfnormal plot     ??? fitting   ??? 4plot"
+   print "          ??? lognormal   ??? distributions   ??? spc"
+   print "          ??? block plot  ??? gallery"
+   print " "
+   print "   ???? = Specific search of NIST/SEMATECH Handbook, as in:"
+   print "          ???? gallery   ???? fit   ???? 10 step"
+   print "          ???? main effects plot   ???? effects plot"
+   print "          ???? halfnormal plot     ???? fitting   ???? 4plot"
+   print "          ???? lognormal   ???? distributions   ???? spc"
+   print "          ???? block plot   ???? gallery"
+   print " "
+   print "  ????? = Specific search of internet via Google, as in:"
+   print "          ????? gallery   ????? fit   ????? 10 step"
+   print "          ????? main effects plot   ????? effects plot"
+   print "          ????? halfnormal plot     ????? fitting   ????? 4plot"
+   print "          ????? lognormal   ????? distributions   ????? spc"
+   print "          ????? block plot   ????? gallery"
+end of if
+.
+. -----All done----
+.
+delete idev ibrowse iops flagcolo flagdeci flagshad flagws flagx3la
+delete flagtitl flagcase flagtoff flagpdpi flaghead flaglabe
+delete flagerro flagvers flag4plo flagdevi flagsear flaghelp flaglist
+.
+IF FLAGUSER = 1; . Jim's settings
+   SET POSTSCRIPT VIEWER "okular"
+   SET POSTSCRIPT DEFAULT COLOR ON
+   SET POSTSCRIPT FONT HELVETICA BOLD; . versus arial or verdanna or . . .
+   DEVICE 2 POSTSCRIPT
+   SEED 359
+ELSE IF FLAGUSER = 2; . Alan's settings
+   . SET DATAPLOT URL https://stat.nist.gov/~heckert/sed/software/dataplot/
+   SET GHOSTSCRIPT PATH /usr/bin
+   SET POSTSCRIPT VIEWER okular
+   SET IMAGE VIEWER gimp
+   SET POSTSCRIPT DEFAULT COLOR ON
+   SET POSTSCRIPT FONT HELVETICA BOLD; . versus arial or verdanna or . . .
+   DEVICE 2 POSTSCRIPT
+ELSE; . Custom commands for generic user
+   SET POSTSCRIPT VIEWER okular
+   . SET POSTSCRIPT VIEWER evince
+   . SET POSTSCRIPT VIEWER gv
+   . SET IMAGE VIEWER gimp
+   SET POSTSCRIPT DEFAULT COLOR ON
+   SET POSTSCRIPT FONT HELVETICA BOLD; . versus arial or verdanna or . . .
+   DEVICE 2 POSTSCRIPT
+END OF IF
 .
 FEEDBACK ON

@@ -33055,7 +33055,7 @@ C
 C---------------------------------------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
-      INCLUDE 'DPCOZC.INC'
+CCCCC INCLUDE 'DPCOZC.INC'
 C
       PARAMETER (MAXSTA=1557)
       PARAMETER (MAXSCL=8)
@@ -33064,7 +33064,7 @@ C
       CHARACTER*4  INCASE(MAXSTA)
       CHARACTER*60 INLONG(MAXSTA)
       CHARACTER*4  INTEMP(MAXSCL)
-      EQUIVALENCE (CGARBG(1),INLONG(1))
+CCCCC EQUIVALENCE (CGARBG(1),INLONG(1))
 C
       CHARACTER*4 IPNAM1
       CHARACTER*4 IPNAM2
@@ -44938,6 +44938,9 @@ C     UPDATED         --NOVEMBER  1975.
 C     UPDATED         --OCTOBER   1976.
 C     UPDATED         --DECEMBER  1981.
 C     UPDATED         --MAY       1982.
+C     UPDATED         --JANUARY   2021. SET PRINT TYPE TO "ERRO" (USER
+C                                       CAN SUPPRESS ERROR MESSAGE IF
+C                                       "SET ERROR MESSAGE OFF" ENTERED.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -44974,37 +44977,33 @@ C
 C
 C     CHECK THE INPUT ARGUMENTS FOR ERRORS
 C
-      IF(NU1.LE.0)GOTO50
-      IF(NU2.LE.0)GOTO55
-      IF(X.LT.0.0)GOTO60
-      GOTO90
-   50 WRITE(ICOUT,15)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,47)NU1
-      CALL DPWRST('XXX','BUG ')
       CDF=0.0
-      RETURN
-   55 WRITE(ICOUT,23)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,47)NU2
-      CALL DPWRST('XXX','BUG ')
-      CDF=0.0
-      RETURN
-   60 WRITE(ICOUT,4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,46)X
-      CALL DPWRST('XXX','BUG ')
-      CDF=0.0
-      RETURN
-   90 CONTINUE
-    4 FORMAT('***** NON-FATAL DIAGNOSTIC--THE 1ST INPUT ARGUMENT ',
-     1'TO THE FCDF   SUBROUTINE IS NEGATIVE *****')
-   15 FORMAT('***** FATAL ERROR--THE 2ND INPUT ARGUMENT TO THE ',
-     1'FCDF   SUBROUTINE IS NON-POSITIVE *****')
-   23 FORMAT('***** FATAL ERROR--THE 3RD INPUT ARGUMENT TO THE ',
-     1'FCDF   SUBROUTINE IS NON-POSITIVE *****')
-   46 FORMAT('***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-   47 FORMAT('***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+      IF(NU1.LE.0)THEN
+        WRITE(ICOUT,15)
+   15   FORMAT('***** ERROR--THE SECOND ARGUMENT TO FCDF IS ',
+     1         'NON-POSITIVE.')
+        CALL DPWRST('XXX','ERRO')
+        WRITE(ICOUT,47)NU1
+   47   FORMAT('***** THE VALUE OF THE ARGUMENT IS ',I8,'.')
+        CALL DPWRST('XXX','ERRO')
+        RETURN
+      ELSEIF(NU2.LE.0)THEN
+        WRITE(ICOUT,23)
+   23   FORMAT('***** ERROR--THE THIRD ARGUMENT TO FCDF IS ',
+     1         'NON-POSITIVE.')
+        CALL DPWRST('XXX','ERRO')
+        WRITE(ICOUT,47)NU2
+        CALL DPWRST('XXX','ERRO')
+        RETURN
+      ELSEIF(X.LT.0.0)THEN
+        WRITE(ICOUT,4)
+    4   FORMAT('***** WARNING--THE FIRST ARGUMENT TO FCDF IS NEGATIVE.')
+        CALL DPWRST('XXX','ERRO')
+        WRITE(ICOUT,46)X
+   46   FORMAT('***** THE VALUE OF THE ARGUMENT IS ',E15.7,'.')
+        CALL DPWRST('XXX','ERRO')
+        RETURN
+      ENDIF
 C
       DX=X
       M=NU1
@@ -45064,7 +45063,7 @@ C
       WRITE(ICOUT,99)IBRAN
    99 FORMAT('*****INTERNAL ERROR IN   FCDF SUBROUTINE--',
      1'IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = ',I8)
-      CALL DPWRST('XXX','BUG ')
+      CALL DPWRST('XXX','ERRO')
       RETURN
 C
 C     TREAT THE CASE WHEN NU1 AND NU2
@@ -50032,6 +50031,9 @@ C     VERSION NUMBER--82/7
 C     ORIGINAL VERSION--AUGUST    1977.
 C     UPDATED         --NOVEMBER  1981.
 C     UPDATED         --MAY       1982.
+C     UPDATED         --JANUARY   2021. SET PRINT TYPE TO "ERRO" (USER
+C                                       CAN SUPPRESS ERROR MESSAGE IF
+C                                       "SET ERROR MESSAGE OFF" ENTERED.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -50065,35 +50067,25 @@ C               **  STEP 1--                              **
 C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
 C               ********************************************
 C
-      IF(NU1.LE.0)GOTO110
-      GOTO119
-  110 CONTINUE
-      WRITE(ICOUT,115)
-  115 FORMAT('***** FATAL ERROR--THE SECOND INPUT ARGUMENT ',
-     1'TO THE   FPDF   SUBROUTINE IS NON-POSITIVE *****')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,117)NU1
-  117 FORMAT('***** THE VALUE OF THE ARGUMENT IS ',I8,
-     1' *****')
-      CALL DPWRST('XXX','BUG ')
       PDF=0.0
-      GOTO9000
-  119 CONTINUE
-C
-      IF(NU2.LE.0)GOTO120
-      GOTO129
-  120 CONTINUE
-      WRITE(ICOUT,125)
-  125 FORMAT('***** FATAL ERROR--THE SECOND INPUT ARGUMENT ',
-     1'TO THE   FPDF   SUBROUTINE IS NON-POSITIVE *****')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,127)NU2
-  127 FORMAT('***** THE VALUE OF THE ARGUMENT IS ',I8,
-     1' *****')
-      CALL DPWRST('XXX','BUG ')
-      PDF=0.0
-      GOTO9000
-  129 CONTINUE
+      IF(NU1.LE.0)THEN
+        WRITE(ICOUT,115)
+  115   FORMAT('***** ERROR--THE SECOND ARGUMENT TO FPDF IS ',
+     1         'NON-POSITIVE.')
+        CALL DPWRST('XXX','ERRO')
+        WRITE(ICOUT,117)NU1
+  117   FORMAT('***** THE VALUE OF THE ARGUMENT IS ',I8,'.')
+        CALL DPWRST('XXX','ERRO')
+        GOTO9000
+      ELSEIF(NU2.LE.0)THEN
+        WRITE(ICOUT,125)
+  125   FORMAT('***** ERROR--THE SECOND ARGUMENT TO FPDF IS ',
+     1         'NON-POSITIVE.')
+        CALL DPWRST('XXX','ERRO')
+        WRITE(ICOUT,117)NU2
+        CALL DPWRST('XXX','ERRO')
+        GOTO9000
+      ENDIF
 C
 C               ****************************************************************
 C               **  STEP 2--
@@ -50195,6 +50187,9 @@ C     ORIGINAL VERSION--MAY       1978.
 C     UPDATED         --AUGUST    1979.
 C     UPDATED         --DECEMBER  1981.
 C     UPDATED         --MAY       1982.
+C     UPDATED         --JANUARY   2021. SET PRINT TYPE TO "ERRO" (USER
+C                                       CAN SUPPRESS ERROR MESSAGE IF
+C                                       "SET ERROR MESSAGE OFF" ENTERED.
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -50211,25 +50206,25 @@ C
         WRITE(ICOUT,15)
    15   FORMAT('***** ERROR--THE SECOND ARGUMENT TO FPPF IS ',
      1         'NON-POSITIVE.')
-        CALL DPWRST('XXX','BUG ')
+        CALL DPWRST('XXX','ERRO')
         WRITE(ICOUT,47)NU1
-        CALL DPWRST('XXX','BUG ')
+        CALL DPWRST('XXX','ERRO')
         GOTO9000
       ELSEIF(NU2.LE.0)THEN
         WRITE(ICOUT,23)
    23   FORMAT('***** ERROR--THE THIRD ARGUMENT TO FPPF IS ',
      1         'FCDF NON-POSITIVE.')
-        CALL DPWRST('XXX','BUG ')
+        CALL DPWRST('XXX','ERRO')
         WRITE(ICOUT,47)NU2
-        CALL DPWRST('XXX','BUG ')
+        CALL DPWRST('XXX','ERRO')
         GOTO9000
       ELSEIF(P.LT.0.0.OR.P.GE.1.0)THEN
         WRITE(ICOUT,4)
     4   FORMAT('***** ERROR--THE FIRST ARGUMENT TO FPPF IS ',
      1         'OUTSIDE THE ALLOWABLE (0,1) INTERVAL.')
-        CALL DPWRST('XXX','BUG ')
+        CALL DPWRST('XXX','ERRO')
         WRITE(ICOUT,46)P
-        CALL DPWRST('XXX','BUG ')
+        CALL DPWRST('XXX','ERRO')
         GOTO9000
       ENDIF
    46 FORMAT('***** THE VALUE OF THE ARGUMENT IS ',G15.7,'.')

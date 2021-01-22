@@ -1,0 +1,96 @@
+. This is dataplot macro     dexodp_settings.dp
+. Purpose: Determine min y and max y and print out corresponding factor settings
+. Date: 11/14/18
+.
+. -----start point-----
+.
+let bugds = 0
+.
+if bugds = 1
+   print ">>>>>>>>>>>>>>>>>>>>>>"
+   print " "
+   print "At beginning of     dexodp_settings.dp"
+   print "k = ^k"
+   print "setmin1 = ^setmin1  setmin2 = ^setmin2"
+   print "setmax1 = ^setmax1  setmax2 = ^setmax2"
+   pause
+end if
+.
+. -----Step 1: Determine and print our factor settings for ymax-----
+.
+let ypz = 83
+let ymax = maximum y; print dpjunk.out x1 to x^k subset y ymax
+skip 0; read parameter dpjunk.out setmax1 to setmax^k
+.
+move 16 ypz; just left; hw 2.4 1.2
+if k = 1; text ymax   = ^ymax:  (^setmax1); end if
+if k = 2; text ymax   = ^ymax:  (^setmax1, ^setmax2); end if
+if k = 3; text ymax   = ^ymax:  (^setmax1, ^setmax2, ^setmax3); end if
+if k = 4; text ymax   = ^ymax:  (^setmax1, ^setmax2, ^setmax3, ^setmax4); end if
+if k = 5; text ymax   = ^ymax:  (^setmax1, ^setmax2, ^setmax3, ^setmax4, ^setmax5); end if
+if k = 6; text ymax   = ^ymax:  (^setmax1, ^setmax2, ^setmax3, ^setmax4, ^setmax5, ^setmax6); end if
+if k = 7
+   text ymax   = ^ymax:  (^setmax1, ^setmax2, ^setmax3, ^setmax4, ^setmax5, ^setmax6,^setmax7)
+end if
+if k = 8
+   text ymax   = ^ymax:  (^setmax1, ^setmax2, ^setmax3, ^setmax4, ^setmax5, ^setmax6, ^setmax7, ^setmax8)
+end if
+if k = 9
+   text ymax   = ^ymax:  (^setmax1, ^setmax2, ^setmax3, ^setmax4, ^setmax5, ^setmax6, ^setmax7, ^setmax8, ^setmax9)
+end if
+if k = 10
+   text ymax   = ^ymax:  (^setmax1, ^setmax2, ^setmax3, ^setmax4, ^setmax5, ^setmax6, ^setmax7, ^setmax8, ^setmax9, ^setmax10)
+end if
+.
+. -----Step 2: Determine and print our factor settings for ymin-----
+.
+let ypz = 80
+let ymin = minimum y; print dpjunk.out x1 to x^k subset y ymin
+skip 0; read parameter dpjunk.out setmin1 to setmin^k
+.
+move 16 ypz; just left; hw 2.4 1.2
+if k = 1; text ymin    = ^ymin:  (^setmin1); end if
+if k = 2; text ymin    = ^ymin:  (^setmin1, ^setmin2); end if
+if k = 3; text ymin    = ^ymin:  (^setmin1, ^setmin2, ^setmin3); end if
+if k = 4; text ymin    = ^ymin:  (^setmin1, ^setmin2, ^setmin3, ^setmin4); end if
+if k = 5; text ymin    = ^ymin:  (^setmin1, ^setmin2, ^setmin3, ^setmin4, ^setmin5); end if
+if k = 6; text ymin    = ^ymin:  (^setmin1, ^setmin2, ^setmin3, ^setmin4, ^setmin5, ^setmin6); end if
+if k = 7
+   text ymin    = ^ymin:  (^setmin1, ^setmin2, ^setmin3, ^setmin4, ^setmin5, ^setmin6, ^setmin7)
+end if
+if k = 8
+   text ymin    = ^ymin:  (^setmin1, ^setmin2, ^setmin3, ^setmin4, ^setmin5, ^setmin6, ^setmin7, ^setmin8)
+end if
+if k = 9
+   text ymin    = ^ymin:  (^setmin1, ^setmin2, ^setmin3, ^setmin4, ^setmin5, ^setmin6, ^setmin7, ^setmin8, ^setmin9)
+end if
+if k = 10
+   text ymin    = ^ymin:  (^setmin1, ^setmin2, ^setmin3, ^setmin4, ^setmin5, ^setmin6, ^setmin7, ^setmin8, ^setmin9, ^setmin10)
+end if
+.
+. -----Step 3: Determine and print our factor settings for y closest to 0-----
+.
+let ypz = 77
+delete yabszz; let yabszz = abs(y)
+let yzerzz = minimum yabszz; print dpjunk.out x1 to x^k subset yabszz yzerzz
+skip 0; read parameter dpjunk.out setzer1 to setzer^k
+.
+move 16 ypz; just left; hw 2.4 1.2
+if k = 1; text ynear0 = ^yzerzz:  (^setzer1); end if
+if k = 2; text ynear0 = ^yzerzz:  (^setzer1, ^setzer2); end if
+if k = 3; text ynear0 = ^yzerzz:  (^setzer1, ^setzer2, ^setzer3); end if
+if k = 4; text ynear0 = ^yzerzz:  (^setzer1, ^setzer2, ^setzer3, ^setzer4); end if
+if k = 5; text ynear0 = ^yzerzz:  (^setzer1, ^setzer2, ^setzer3, ^setzer4, ^setzer5); end if
+if k = 6; text ynear0 = ^yzerzz:  (^setzer1, ^setzer2, ^setzer3, ^setzer4, ^setzer5, ^setzer6); end if
+if k = 7
+   text ynear0 = ^yzerzz:  (^setzer1, ^setzer2, ^setzer3, ^setzer4, ^setzer5, ^setzer6, ^setzer7)
+end if
+if k = 8
+   text ynear0 = ^yzerzz:  (^setzer1, ^setzer2, ^setzer3, ^setzer4, ^setzer5, ^setzer6, ^setzer7, ^setzer8)
+end if
+if k = 9
+   text ynear0 = ^yzerzz:  (^setzer1, ^setzer2, ^setzer3, ^setzer4, ^setzer5, ^setzer6, ^setzer7, ^setzer8, ^setzer9)
+end if
+if k = 10
+   text ynear0 = ^yzerzz:  (^setzer1, ^setzer2, ^setzer3, ^setzer4, ^setzer5, ^setzer6, ^setzer7, ^setzer8, ^setzer9, ^setzer10)
+end if

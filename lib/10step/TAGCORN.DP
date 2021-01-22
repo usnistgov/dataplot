@@ -14,8 +14,7 @@
 .
 . -----start point-----
 .
-color blue
-if tagcolor exists; color ^tagcolor; end if
+color blue; if forecol exists; color ^forecol; end if
 .
 hw 6 3
 if hwcorn exists; hw ^hwcorn; end if

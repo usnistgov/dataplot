@@ -10,8 +10,11 @@
 .
 .    4. framet (parameter)          = top    frame line (in %) (optional) (default = 90)
 .    5. frameb (parameter)          = bottom frame line (in %) (optional) (default = 20)
+.    6. frame (string)               = subset/except specification;. 4/16/20
 .
 . -----start point-----
+.
+print " "; print "=====> Now generating plot 6 (DEX Youden Plot) <====="
 .
 . print " "
 . print "From (dexyp.dp, start point)"
@@ -21,15 +24,16 @@
 feedback save
 feedback off
 printing off
-let bugswyp = 0
+let bugyp = 0
 . let pausesw = 1
 .
-. print "start: bugswyp = ^bugswyp"
+. print "start: bugyp = ^bugyp"
 . pause
-if bugswyp = 1; print " "; print "--At beginning of DEX Ste p 6 (DEXYP.DP)"
+if bugyp = 1; print " "; print "--At beginning of DEX Ste p 6 (DEXYP.DP)"
    let n = number y
    print "   k = ^k"
    print "   n = ^n"
+   print "The following is for the first 10 rows of    y x1 to x^k"
    print y x1 to x^k  for i = 1 1 10
    if pausesw = 1; pause; end if
 end if
@@ -38,9 +42,32 @@ end if
 . -----Do Analysis Ste p 6: Youden Plot-----
 . -----------------------------------------
 .
+. -----Step 1.0: if frame exists, the save the original data and extract the subset-----
+.
+if bugyp = 1
+   print "--At start of (dexyp.dp, step 1.0): if frame exists, save the original data and extract the subset"
+   if frame not exist; print "      frame does not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   call save_full_dataset.dp
+   delete stallx; let stallx = string combine x1 to x^k
+   retain y ^stallx ^frame
+end if
+.
+if bugyp = 1
+   print "Post-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
 . -----Step 1.1: Check for missing input values-----
 .
-if bugswyp = 1; print "--At (dexyp.dp, step 1.1): check input"
+if bugyp = 1; print "--At (dexyp.dp, step 1.1): check input"
    if pausesw = 1; pause; end if
 end if
 .
@@ -50,17 +77,23 @@ let string stmacro = dexyp.dp
 if k not exist
    call determine_k.dp
 end if
-set check name output filliben
+.
+set check name   output filliben
 set check length output filliben
-feedback on
-let iflag = check name k y x1 to x^k
-let iflag = check equal length y x1 to x^k
-feedback off
+.
+. feedback on
+if k = 1; let iflag = check name k y x1 ; end if
+if k >= 2
+   let iflag = check name k y x1 to x^k
+   let iflag = check equal length y x1 to x^k
+end if
+. feedback off
+. pause
 .
 . -----Step 1.2: Copy the user's original y and x1 to xk data out to file-----
 .                since y and x1 to xk may potentially be modified within this macro-----
 .
-if bugswyp = 1; print "--At (dexyp.dp, step 1.2): save original data"
+if bugyp = 1; print "--At (dexyp.dp, step 1.2): save original data"
    if pausesw = 1; pause; end if
 end if
 .
@@ -74,7 +107,7 @@ set write format
 .                If not 2 levels, then only the min and max will be used herein.-----
 .                If not -1 and +1, then min => -1 and max => +1-----
 .
-if bugswyp = 1; print "--At (dexyp.dp, step 1.3): normalize to (-1,+1)"
+if bugyp = 1; print "--At (dexyp.dp, step 1.3): normalize to (-1,+1)"
    if pausesw = 1; pause; end if
 end if
 .
@@ -86,7 +119,7 @@ call check_and_fix_original_data_for_2_levels_and_m1_p1.dp
 .
 . -----Step 2: Define plot settings-----
 .
-if bugswyp = 1; print "--At (dexyp.dp, step 2): plot settings"
+if bugyp = 1; print "--At (dexyp.dp, step 2): plot settings"
    if pausesw = 1; pause; end if
 end if
 .
@@ -95,42 +128,45 @@ end if
 call dexplotinit.dp
 call dexplotdefplotset.dp
 .
+. feedback on
+. echo on
+. capture junk.out
+.
 . -----Step 3: Compute effect estimates (ordered) and confounding-----
 .
-if bugswyp = 1; print "--At (dexyp.dp, step 3): confounding"
+if bugyp = 1; print "--At (dexyp.dp, step 3): confounding"
    print "confsw = ^confsw"
    if pausesw = 1; pause; end if
 end if
 .
 call compute_effect_estimates_and_confounding.dp
 .
-if bugswyp = 1; print "--At end of step 3 of dexyp.dp"
+if bugyp = 1; print "--At end of step 3 of dexyp.dp"
    print "numeff = ^numeff"
    loop for jzz = 1 1 numeff
       print steft^jzz
    end loop
    if pausesw = 1; pause; end if
+   pause
 end if
+.
+. end capture
+. echo off
+. feedback off
 .
 . -----Step 4.1: Generate a hidden dex mean plot to get plot limits-----
 .
-if bugswyp = 1; print "--At (dexyp.dp, step 4.1); generate hidden plot =>limits"
+if bugyp = 1; print "--At (dexyp.dp, step 4.1): generate hidden plot =>limits"
    if pausesw = 1; pause; end if
 end if
 .
-if ibatch not exist or ibatch = 0
-   device 1 off
-end of if
-device 2 off; device 3 off
+device 1 off; device 2 off; device 3 off
 dex mean plot y x1 to x^k
-if ibatch not exist or ibatch = 0
-   device 1 on
-end of if
-device 2 on; device 3 on
+device 1 on; device 2 on; device 3 on
 .
 . -----Step 4.2: Compute automatic plot limits-----
 .
-if bugswyp = 1; print "--At (dexyp.dp, step 4.2): compute plot limits"
+if bugyp = 1; print "--At (dexyp.dp, step 4.2): compute plot limits"
    if pausesw = 1; pause; end if
 end if
 .
@@ -195,7 +231,7 @@ if ymaxyp exists; ymax ^ymaxyp; xmax ^ymaxyp; end if
 .
 . -----Step 5: Define labels and generate the blank background plot-----
 .
-if bugswyp = 1; print "--At (dexyp.dp, step 5): labels, blank background plot"
+if bugyp = 1; print "--At (dexyp.dp, step 5): labels, blank background plot"
    if pausesw = 1; pause; end if
 end if
 .
@@ -217,27 +253,29 @@ plot meanh meanl effindex
 .
 . -----Step 6: Determine plot characters and individually plot them out (GENERATE THE PLOT)-----
 .
-if bugswyp = 1; print "--At (dexyp.dp, step 6): plot char one by one"
+if bugyp = 1; print "--At (dexyp.dp, step 6): plot char one by one"
    if pausesw = 1; pause; end if
 end if
 .
+character color blue all; if forecol exists; character color ^forecol all; end if
 character justification cece all
 loop for j = 1 1 numeff
    let plot character j = ^steft^j
 end loop
 let tagzj = sequence 1 1 numeff
-drawdd symbol meanl meanh tagzj
+drawdd symbol meanl meanh tagzj                        ;. <========================= plot
 delete tagzj
 .
-. -----Step 7: Draw a dotted cross-hair at (grand mean, grand mean)-----
+. -----Step 7: Draw a cross-hair at (grand mean, grand mean)-----
 .
-if bugswyp = 1; print "--At (dexyp.dp, step 7): cross-hair"
+if bugyp = 1; print "--At (dexyp.dp, step 7): cross-hair"
    if pausesw = 1; pause; end if
 end if
 .
 . print "project = ^project"
 .
 lines solid
+line color blue; if forecol exists; line color ^forecol; end if
 let ybar = mean y
 . draw data ybar a ybar b
 . draw data a ybar b ybar
@@ -252,12 +290,12 @@ drawsdsd 15 ybar 85 ybar
 .
 . -----Step 8: Write out confounding structure in the right margin-----
 .
-if bugswyp = 1; print "--At (dexyp.dp, step 8): write confounding"
+if bugyp = 1; print "--At (dexyp.dp, step 8): write confounding"
    if pausesw = 1; pause; end if
 end if
 .
 if confsw2 = 1
-   if bugswyp = 1; print "--At (dexyp.dp, step 10.2): inside if"
+   if bugyp = 1; print "--At (dexyp.dp, step 10.2): inside if"
       print "confsw2 = ^confsw2"
       if pausesw = 1; pause; end if
    end if
@@ -284,6 +322,7 @@ if confsw2 = 1
    end loop
    drawsd symbol xpos ypos tagzj
    .
+   color blue; if forecol exists; color ^forecol; end if
    hw 2 1
    let ypz = 89.6
    if framet exists; let ypz = ypz - (90 - framet); end if
@@ -294,7 +333,7 @@ end if
 .
 . -----Step 9: Write ID's at important plot points-----
 .
-if bugswyp = 1; print "--At (dexyp.dp, step 9): write IDs at impt. points"
+if bugyp = 1; print "--At (dexyp.dp, step 9): write IDs at impt. points"
    if pausesw = 1; pause; end if
 end if
 .
@@ -302,7 +341,7 @@ end if
 .
 . -----Step 10: draw crosshairs at (gmeanz,gmeanz)-----
 .
-if bugswyp = 1; print "--At (dexyp.dp, step 10): cross-hairs (why needed?)"
+if bugyp = 1; print "--At (dexyp.dp, step 10): cross-hairs (why needed?)"
    if pausesw = 1; pause; end if
 end if
 .
@@ -316,7 +355,7 @@ lines bl
 .
 . -----Step 11: Write out the mean above upper right corner-----
 .
-if bugswyp = 1; print "--At (dexyp.dp, step 11): mean"
+if bugyp = 1; print "--At (dexyp.dp, step 11): mean"
    if pausesw = 1; pause; end if
 end if
 .
@@ -324,11 +363,12 @@ let ybar = mean y
 if decplacm not exist; set write decimals 4; end if
 if decplacm exists; set write decimals decplacm; end if
 let stybar = number to string ybar
+color blue; if forecol exists; color ^forecol; end if
 move 85 91; just right; hw 2 1; text Mean = ^stybar; just center
 .
 . -----Step 12: Annotate the plot-----
 .
-if bugswyp = 1; print "--At (dexyp.dp, step 12): annotate"
+if bugyp = 1; print "--At (dexyp.dp, step 12): annotate"
    if pausesw = 1; pause; end if
 end if
 .
@@ -348,7 +388,7 @@ if step exists
 end if
 .
 if annotate exists and annotate = 1
-   if colorall exists; color ^colorall; end if
+   color blue; if forecol exists; color ^forecol; end if
    call annotate.dp
 end if
 .
@@ -356,14 +396,15 @@ if stcorn1 exists
    call upperleft.dp
 end if
 .
-if bugswyp = 1
+if bugyp = 1
    end capture
 end if
 .
 . -----Step 98: Restore the user's original y and x1 to xk data from file-----
 .
-if bugswyp = 1; print " "; print "---At (dexyp.dp, step 98): restore orig. data (pre-restore)"
-   print y x1 to x^k
+if bugyp = 1; print " "; print "---At (dexyp.dp, step 98): restore orig. data (pre-restore)"
+   print "The following is for the first 10 rows of    y x1 to x^k"
+   print y x1 to x^k for i = 1 1 10
    if pausesw = 1; pause; end if
 end if
 .
@@ -372,14 +413,39 @@ set read format 40f15.7
 skip 0; read dex_original_data.dat y x1 to x^k
 set read format
 .
-if bugswyp = 1; print " "; print "---At (dexyp.dp, step 98): (post-restore)"
-   print y x1 to x^k
+if bugyp = 1; print " "; print "---At (dexyp.dp, step 98): (post-restore)"
+   print "The following is for the first 10 rows of    y x1 to x^k"
+   print y x1 to x^k for i = 1 1 10
    if pausesw = 1; pause; end if
 end if
 .
-. -----Step 99: Finish up-----
+. -----Step 99.1: if frame exists, then restore the original data-----
 .
-if bugswyp = 1; print " "; print "---At end of dexyp.dp . . ."
+if bugyp = 1
+   print "--At start of (dexyp.dp, step 99.1): restore original data if frame existed"
+   if frame not exist; print "      frame did not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   delete stallx; let stallx = string combine x1 to x^k
+   delete y; delete ^stallx
+   call restore_full_dataset.dp
+end if
+.
+if bugyp = 1
+   print "Post- data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 99.2: Finish up otherwise-----
+.
+if bugyp = 1
+   print "--At (dexyp.dp, step 99.2): finishing up otherwise---"
    if pausesw = 1; pause; end if
 end if
 .
@@ -392,7 +458,7 @@ char hw 2 1 all
 char offset 0 0 all
 char justification cece all
 .
-if bugswyp = 1; print "--At dexyp.dp final line"
+if bugyp = 1; print "--At dexyp.dp final line"
    if pausesw = 1; pause; end if
 end if
 .

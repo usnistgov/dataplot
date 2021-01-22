@@ -7,12 +7,25 @@
 .
 . -----start point-----
 .
+feedback off
 dimension 100 variables
+.
+. -----Step 2: Name the root for the 4 output files (default = dataplot_out.pdf/ps/dp/dat)-----
+. -----        + will allow auto-view of   dataplot_out.pdf   via   v   command or desktop shortcut-----
+.
+let string fileout = dataplot_out
+device 2 close; set ipl1na ^fileout&.ps; device 2 postscript
+capture fileout.bat; print "^fileout.pdf"; end capture
+
 .
 . -----Step 1: Read in the data and define strings-----
 .
 let k = 7
 skip 25; read   kneifel_7_128.dat   y x1 x2 x3 x4 x5 x6 x7
+.
+print y x1 x2 x3 x4 x5 x6 x7; status v; print "Hit 'Enter' to continue . . ."; pause
+.
+. -----Step 2: Define strings for plot annotation-----
 .
 let string header = Sensitivity Analysis of Energy Usage for the NIST Net-Zero House
 let string header2 = Design: 2**7 (k=7,n=128)
@@ -41,7 +54,17 @@ let string stx7l = 23.9 25.9
 let string stbest = down
 let string colorl = red blue
 .
-. -----Step 2: Generate 10-step DEX analysis-----
+. -----Step 3: Generate 10-step DEX analysis-----
 .
 call dex10stepanalysis.dp
-
+.
+. -----Step 99: Finish up-----
+.
+system copy    kneifel_7_128.dp    ^fileout&.dp
+system copy    kneifel_7_128.dat   ^fileout&.dat
+print " "
+print "Output:"
+print "   pdf graphics file: ^fileout&.pdf"
+print "   ps  graphics file: ^fileout&.ps"
+print "   txt program  file: ^fileout&.dp"
+print "   txt data     file: ^fileout&.dat"

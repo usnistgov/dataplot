@@ -24,19 +24,24 @@ if bugcfsw = 1
    print " "
    print "-----At the beginning of check_and_fix_original_factors_for_2_levels_and_m1_p1.dp-----"
    print "k = ^k"
-   print y x1 to x^k
-   if ibatch not exist or ibatch = 0; pause; end if
+   print "The following is the first 10 rows of y x1 to x^k"
+   print y x1 to x^k for i = 1 1 10
+   pause
 end if
 .
 . -----Step 1: Loop through each of the k factors-----
 .
+if bugcfsw = 1; print "At step 1 of xxx"; pause; end if
+
 loop for jz = 1 1 k
-   delete djunk; let djunk = distinct x^jz
+   delete djunk
+   let djunk = distinct x^jz
    let djunk = sort djunk
    let ndjunk = number djunk
    let xminzz = minimum x^jz
    let xmaxzz = maximum x^jz
    . print xminzz xmaxzz ndjunk
+   . pause
    .
    . -----Step 1.1: check for 2 levels, and if more than 2 levels,-----
    .                then subset all to the min and max-----
@@ -64,6 +69,7 @@ loop for jz = 1 1 k
       end loop
       . print "after retain (jz = ^jz)"
       . print y x1 to x^k
+      . pause
       .
    end if
    .
@@ -87,7 +93,8 @@ end loop
 if bugcfsw = 1
    print " "
    print "-----At the end of check_and_fix_original_factors_for_2_levels_and_m1_p1.dp-----"
-   print y x1 to x^k
-   if ibatch not exist or ibatch = 0; pause; end if
+   print "The following is the first 10 rows of y x1 to x^k"
+   print y x1 to x^k for i = 1 1 10
+   pause
 end if
 

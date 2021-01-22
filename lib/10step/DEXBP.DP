@@ -1,7 +1,7 @@
-. This is dataplot macro   DEXBP.DP           Major rewrite: 10/9/18
+. This is dataplot macro     DEXBP.DP      Major rewrite: 10/9/18 => 1/7/21
 . Purpose: Generate DEX block plots
-.          (= step 5 of the DEXPLOT.DP 10-step DEX analysis procedure)
-. Date: May 2005
+.          (= ste p 5 of the DEXPLOT.DP 10-ste p DEX analysis procedure)
+. Date: 5/xx/05 => 10/9/18 => 1/7/21
 . Input
 .    1. k (parameter)               = Total number of plot factors
 .    2. y (vector)                  = Response variable
@@ -9,8 +9,12 @@
 .
 .    4. framet (parameter)          = top    frame line (in %) (optional) (default = 90)
 .    5. frameb (parameter)          = bottom frame line (in %) (optional) (default = 20)
+.    6. frame (string)               = subset/except specification;. 4/16/20
 .
 . -----start point-----
+.
+print " "; print "=====> Now generating plot 5 (DEX Block Plots) <====="
+.
 .
 . print " "
 . print "From (dexbp.dp, start point)"
@@ -20,10 +24,10 @@
 feedback save
 feedback off
 printing off
-let bugswbp = 0
+let bugbp = 0
 . let pausesw = 1
 .
-if bugswbp = 1; print " "; print "---At beginning of DEX Ste p 5 (DEXBP.DP)"
+if bugbp = 1; print " "; print "---At beginning of DEX Ste p 5 (DEXBP.DP)"
   . feedback on
   . echo on
    stat v
@@ -31,12 +35,35 @@ if bugswbp = 1; print " "; print "---At beginning of DEX Ste p 5 (DEXBP.DP)"
 end if
 .
 . -----------------------------------------
-. -----Do Analysis Step 5: Block Plots-----
+. -----Do Analysis Ste p 5: Block Plots-----
 . -----------------------------------------
+.
+. -----Step 1.0: if frame exists, the save the original data and extract the subset-----
+.
+if bugbp = 1
+   print "--At start of (dexbp.dp, step 1.0): if frame exists, save the original data and extract the subset"
+   if frame not exist; print "      frame does not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   call save_full_dataset.dp
+   delete stallx; let stallx = string combine x1 to x^k
+   retain y ^stallx ^frame
+end if
+.
+if bugbp = 1
+   print "Post-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
 .
 . -----Step 1.1: Check for missing input values-----
 .
-if bugswbp = 1; print "--At (dexbp.dp, step 1.1): check input"
+if bugbp = 1; print "--At (dexbp.dp, step 1.1): check input"
    if pausesw = 1; pause; end if
 end if
 .
@@ -46,15 +73,16 @@ if k not exist
 end if
 set check name output filliben
 set check length output filliben
-feedback on
-let iflag = check name k y x1 to x^k
-let iflag = check equal length y x1 to x^k
-feedback off
+if k = 1; let iflag = check name k y x1 ; end if
+if k >= 2
+   let iflag = check name k y x1 to x^k
+   let iflag = check equal length y x1 to x^k
+end if
 .
 . -----Step 1.2: Copy the user's original y and x1 to xk data out to file-----
 .                since y and x1 to xk may potentially be modified within this macro-----
 .
-if bugswbp = 1; print "--At (dexbp.dp, step 1.2): save original data"
+if bugbp = 1; print "--At (dexbp.dp, step 1.2): save original data"
    if pausesw = 1; pause; end if
 end if
 .
@@ -68,7 +96,7 @@ set write format
 .                If not 2 levels, then only the min and max will be used herein.-----
 .                If not -1 and +1, then min => -1 and max => +1-----
 .
-if bugswbp = 1; print "--At (dexbp.dp, step 1.3): normalize to (-1,+1)"
+if bugbp = 1; print "--At (dexbp.dp, step 1.3): normalize to (-1,+1)"
    if pausesw = 1; pause; end if
 end if
 .
@@ -77,7 +105,7 @@ call check_and_fix_original_data_for_2_levels_and_m1_p1.dp
 .
 . -----Step 2: Define plot settings-----
 .
-if bugswbp = 1; print "--At (dexbp.dp, step 2): define plot settings"
+if bugbp = 1; print "--At (dexbp.dp, step 2): define plot settings"
    if pausesw = 1; pause; end if
 end if
 .
@@ -90,7 +118,7 @@ let rangetic = maxtic-mintic
 .
 . -----Step 3: Define char, lines, tics, legend specs-----
 .
-if bugswbp = 1; print "--At (dexbp.dp, step 3): char, lines, tics, legends"
+if bugbp = 1; print "--At (dexbp.dp, step 3): char, lines, tics, legends"
    if pausesw = 1; pause; end if
 end if
 .
@@ -105,16 +133,12 @@ if stylebp exists and stylebp = 2
    lines solid solid
 end if
 .
-line color blue all
-line color red
-character color blue all
-character color red
-if colorall exists
-  line color ^colorall all
-  character color ^colorall all
-  . line color red
-  char co. lor red
-end if
+line color blue all; if forecol exists; line color ^forecol all; end if
+. line color red
+line color ^levcol
+. character color blue all
+. character color red
+character color ^levcol
 .
 x1tics off
 x1tic labels off
@@ -126,7 +150,7 @@ label size 4
 .
 . -----Step 4: Define label specs-----
 .
-if bugswbp = 1; print "--At (dexbp.dp, step 4): labels"
+if bugbp = 1; print "--At (dexbp.dp, step 4): labels"
    if pausesw = 1; pause; end if
 end if
 .
@@ -138,7 +162,7 @@ end if
 .
 . -----Step 5: Define multiplot specs--
 .
-if bugswbp = 1; print "--At (dexbp.dp, step 5): multiplot specs"
+if bugbp = 1; print "--At (dexbp.dp, step 5): multiplot specs"
    if pausesw = 1; pause; end if
 end if
 .
@@ -171,7 +195,7 @@ end if
 . here
 . -----Step 6: Do multi-linear fit to get ranked list of factors-----
 .
-if bugswbp = 1; print "--At (dexbp.dp, step 6): get ranked list of factors---"
+if bugbp = 1; print "--At (dexbp.dp, step 6): get ranked list of factors---"
    print "k = ^k
    if pausesw = 1; pause; end if
 end if
@@ -182,7 +206,7 @@ call get_ranked_list_of_factors.dp
 .
 let n = number y
 .
-if bugswbp = 1; print "--At (dexbp.dp, step 7): GENERATE THE PLOTS"
+if bugbp = 1; print "--At (dexbp.dp, step 7): GENERATE THE PLOTS"
    print rlf
    print "(k,n) = (^k,^n)"
    if pausesw = 1; pause; end if
@@ -195,17 +219,17 @@ loop for jprim = 1 1 k
    if x^jprim exists
       call get_robustness_factors.dp
       if n = 4
-         mean block plot   y   x^jrob1   x^jprim
+         mean block plot   y   x^jrob1   x^jprim   ;. <==========plot
          call annotate_boxplot_subplot.dp
       end if
       if n = 8
-         mean block plot   y   x^jrob1 x^jrob2   x^jprim
+         mean block plot   y   x^jrob1 x^jrob2   x^jprim     ;. <==========plot
          call annotate_boxplot_subplot.dp
       end if
       if n >= 16
          . print x^jrob1 x^jrob2 x^jrob3
          . pause
-         mean block plot   y   x^jrob1 x^jrob2 x^jrob3   x^jprim
+         mean block plot   y   x^jrob1 x^jrob2 x^jrob3   x^jprim  ;. <==========plot
          call annotate_boxplot_subplot.dp
       end if
    end if
@@ -216,12 +240,12 @@ multiplot scale factor 1
 .
 . -----Step 8: Write out project, title, step-----
 .
-if bugswbp = 1; print "--At (dexbp.dp, step 8): project, title, step"
+if bugbp = 1; print "--At (dexbp.dp, step 8): project, title, step"
    if pausesw = 1; pause; end if
 end if
 .
 if project exists
-   if projcol exists; color ^projcol; end if
+   if forecol exists; color ^forecol; end if
    call dexwriteproject.dp
 end if
 .
@@ -230,6 +254,7 @@ if titlesiz exists; let titleh = titlesiz; end if
 let titlew = titleh/2
 hw titleh titlew
 .
+color blue; if forecol exists; color ^forecol; end if
 justification center
 if titlesw exist and titlesw = 1 or titlesw not exist
    move 50 91; text Block Plot
@@ -249,20 +274,20 @@ end if
 .
 . -----Step 9: Annotate-----
 .
-if bugswbp = 1; print "--At (dexbp.dp, step 9): annotate"
+if bugbp = 1; print "--At (dexbp.dp, step 9): annotate"
    if pausesw = 1; pause; end if
 end if
 .
 . call printtrailer.dp
 .
 if annotate existsl and annotate = 1
-   if colorall exists; color ^colorall; end if
+   if forecol exists; color ^forecol; end if
    call annotate.dp
 end if
 .
 . -----Step 10: Write out right margin factor and setting info-----
 .
-if bugswbp = 1; print "--At (dexbp.dp, step 10): right margin"
+if bugbp = 1; print "--At (dexbp.dp, step 10): right margin"
    if pausesw = 1; pause; end if
 end if
 .
@@ -277,7 +302,7 @@ end if
 .
 . -----Step 11: If called for, write out customized upper left info-----
 .
-if bugswbp = 1; print "--At (dexbp.dp, step 11): xupper left"
+if bugbp = 1; print "--At (dexbp.dp, step 11): xupper left"
    if pausesw = 1; pause; end if
 end if
 .
@@ -287,7 +312,7 @@ end if
 .
 . -----Step 98: Restore the user's original y and x1 to xk data from file-----
 .
-if bugswbp = 1; print " "; print "---At (dexbp.dp, step 98): restore orig. data (pre-restore)"
+if bugbp = 1; print " "; print "---At (dexbp.dp, step 98): restore orig. data (pre-restore)"
    print y x1 to x^k
    if pausesw = 1; pause; end if
 end if
@@ -297,14 +322,38 @@ set read format 40f15.7
 skip 0; read dex_original_data.dat y x1 to x^k
 set read format
 .
-if bugswbp = 1; print " "; print "---At (dexbp.dp, step 98): (post-restore)"
+if bugbp = 1; print " "; print "---At (dexbp.dp, step 98): (post-restore)"
    print y x1 to x^k
    if pausesw = 1; pause; end if
 end if
 .
-. -----Step 99: Finish up-----
+. -----Step 99.1: if frame exists, then restore the original data-----
 .
-if bugswbp = 1; print " "; print "---At end of dexbp.dp"
+if bugbp = 1
+   print "--At start of (dexbp.dp, step 99.1): restore original data if frame existed"
+   if frame not exist; print "      frame did not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   delete stallx; let stallx = string combine x1 to x^k
+   delete y; delete ^stallx
+   call restore_full_dataset.dp
+end if
+.
+if bugbp = 1
+   print "Post- data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 99.2: Finish up otherwise-----
+.
+if bugbp = 1
+   print "--At (dexbp.dp, step 99.2): finishing up otherwise---"
    if pausesw = 1; pause; end if
 end if
 .
@@ -321,13 +370,11 @@ x1label
 .
 char bl all
 char color blue all
-if colorall exists; char color ^colorall all; end if
 char hw 2 1 all
 char offset 0 0 all
 char justification cece all
 lines solid all
 line color blue all
-if colorall exists; line color ^colorall all; end if
 .
 delete dxz
 .

@@ -1,3 +1,28 @@
+This is Dataplot data file     BIVGAUSS.DAT
+Bivariate Gaussian Data
+Question: ?
+
+Source--Graybill and Iyer (1994). Regression Analysis: Concepts and 
+        Applications.  Duxbury Press.
+        Page 63 (Chapter 1)
+Number of observations = 1000
+Number of variables per line image = 1
+Order of variables on a line image--
+   1. Y1 = Response Variable 1
+   2. Y2 = Response Variable 2
+
+
+
+
+
+
+
+To read this file into Dataplot--
+   SKIP 25
+   READ BIVGAUSS.DAT Y1 Y2
+     Y1     Y2
+
+----------------
     5.43   11.04
     4.23    3.80
    -2.06   15.51

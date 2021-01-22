@@ -10963,8 +10963,8 @@ C
 C
       NMAX=512
       IFORMT=' '
-      IFORMT='(    A1)'
-      WRITE(IFORMT(2:4),'(I4)')NMAX
+      IFORMT='(   A1)'
+      WRITE(IFORMT(2:4),'(I3)')NMAX
       DO4110I=1,IMAX
 C
         READ(IOUNI1,IFORMT,END=4190)(ISTRIN(J:J),J=1,NMAX)

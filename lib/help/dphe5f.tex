@@ -1,9 +1,9 @@
-66300.      (VERSION 2020.09)  total number of lines in file (including this line)
+66600.      (VERSION 2020.12)  total number of lines in file (including this line)
  4.                          number of     sections below
   100.    P                  first line number of P section
 22400.    Q                  first line number of Q section
 25500.    R                  first line number of R section
-42500.    S                  first line number of S section
+42700.    S                  first line number of S section
  
 ----------------------------------------------------------
  
@@ -36875,11 +36875,18 @@ Syntax:
     If the file name does not contain a period, place a period (no
     spaces) at the end of the file name.
  
+    If no file name is given, the default name "dpsavf.tex" will
+    be used.
+
 Examples:
     RESTORE MEMORY OUT.
     RESTORE MEMORY SCRATCH.
     RESTORE MEMORY TEMP.
  
+Note:
+    This command was significantly updated to reflect many new
+    settings.
+
 Note:
     DATAPLOT has no restrictions on the file name other than it be a
     valid file name on the local operating system and that it contain
@@ -36912,6 +36919,10 @@ Synonyms:
  
 Related Commands:
     SAVE MEMORY    = Dump all internal DATAPLOT settings to a file.
+    RESTORE DATA   = Restore a user specified list of variables and
+                     parameters.
+    SAVE DATA      = Save a user specified list of variables and
+                     parameters.
     RESET          = Reset internal DATAPLOT settings to their default
                      values.
  
@@ -36919,10 +36930,143 @@ Applications:
     XX
  
 Implementation Date:
-    XX
+    Pre-1987
+    2020/12: Updated to include many new settings
+    2020/12: Use "dpsavf.tex" if no file name is given
+    2020/12: Added better error trapping
  
 Program:
     XX
+ 
+-----RESTORE VARIABLE---------------------------------------------
+ 
+RESTORE VARIABLE
+ 
+Name:
+    RESTORE VARIABLE
+ 
+Type:
+    Support Command
+ 
+Purpose:
+    Restore a user specified list of variables and parameters that
+    were saved to a file by the SAVE VARIABLE command.
+
+Description:
+    The primary purpose of this command is for use with general
+    purpose macros.  Specifically, macros can save the current
+    values for certain variables, re-use those variables in the
+    macro and then restore the original values to the variables.
+ 
+    You can save variables and parameters.  However, matrices and
+    strings/functions are not currently supported.
+
+    The SAVE VARIABLE command is used to save the variables to a
+    file.  The RESTORE VARIABLE command can then be used to restore
+    the variables and parameters in this file.
+
+Syntax:
+    RESTORE VARIABLE <file-name>
+    where <file-name> is the name of a file where the variables and
+               parameters were previously saved.
+
+    If no <file-name> is given, the file "dpsavf.tex" is used.
+
+    No variable list is given as the variable and parameter names
+    are contained in the file.
+
+Examples:
+    RESTORE VARIABLES
+    RESTORE VARIABLES VARLIST.DAT
+ 
+Note:
+    The format of the save file is something like
+
+        Y        VARIABLE
+                 3
+          0.1800000E+02
+          0.3800000E+02
+          0.1500000E+02
+        AVAL     PARAMETER
+          0.1000000E+01
+
+    For each name, the first line prints the variable/parameter name
+    and also prints the type (VARIABLE or PARAMETER).  If the name is
+    a variable, the next line specifies the number of elements in
+    the variable.  The contents of the variable are then printed one
+    element per line.  If the name is a parameter, then the value of
+    the parameter is printed on the next line.
+
+    Variables and parameters are printed one at a time.
+
+    When the RESTORE VARIABLE command is given, Dataplot will
+    go through the list of names.  The name will be checked against
+    the current Dataplot name table.  If the name currently exists as
+    a string or a function, the name will not be restored.  If the
+    name exists as a parameter or a variable, it will be overwritten
+    by the values in the file.  One complication is when the type
+    in the current name table does not match the type in the save
+    file.  If the current name is being upgraded from a parameter
+    to a variable, this should not cause any problems.  However,
+    if the current name is being modified from variable to a
+    parameter, it is recommended that you delete the current variable
+    before issuing the RESTORE VARIABLE command.  If no match is
+    found in the current name table, the variable or parameter will
+    be added.  Names that are in the current name table but not in
+    the save file will not be changed.
+
+Note:
+    Dataplot has no restrictions on the file name other than it be a
+    valid file name on the local operating system and that it contain
+    a period "." in the file name itself or as a trailing character.
+    Dataplot strips off trailing periods on those systems where it is
+    appropriate to do so.  On systems where trailing periods can be a
+    valid file name (e.g., Unix), Dataplot opens the file with the
+    trailing period.
+ 
+Note:
+    File names are case sensitive on Unix/Linux and MacOSX file
+    systems.  For these systems, Dataplot opens the file as given.  All
+    other currently supported systems are not case sensitive regarding
+    file names.
+ 
+    As a further caution for Unix hosts, certain expansion characters
+    (specifically ~ to refer to your home directory) are interpreted
+    by the shell and are not recognized by the Fortran compiler.  These
+    expansion characters are interpreted as literal characters and do
+    not yield the intended file name.
+ 
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    SAVE VARIABLE    = Save variables and parameters to a file.
+    SAVE MEMORY      = Save all internal Dataplot settings to a file.
+    RESTORE MEMORY   = Restore all internal Dataplot settings from a
+                       previously saved file.
+    RESET            = Reset internal DATAPLOT settings to their default
+                       values.
+ 
+Applications:
+    Utility for Macros
+ 
+Implementation Date:
+    2020/12
+ 
+Program:
+    SKIP 25
+    READ BERGER1.DAT Y X BATCH
+    SAVE VARIABLES Y X BATCH
+    .
+    LET Y = NORMAL RANDOM NUMBERS FOR I =  1 1 100
+    LET X = SEQUENCE 1 1 10
+    LET BATCH = 1 FOR I = 1 1 10
+    .
+    RESTORE VARIABLES
+    PRINT Y X BATCH
  
 -----RETAIN-------------------------------------------------------
  
@@ -42497,6 +42641,62 @@ Program:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -------------------------  *S*  ZZZZZ--------------------
  
 -----S CHART-----------------------------------------------------
@@ -43110,11 +43310,16 @@ Syntax:
     If the file name does not contain a period, place a period (no
     spaces) at the end of the file name.
  
+    If no file name is given, "dpsavf.tex" will be used.
 Examples:
     SAVE MEMORY OUT.
     SAVE MEMORY SCRATCH.
     SAVE MEMORY TEMP.
  
+Note:
+    This command was significantly updated 2020/12 to incorporate
+    many new settings.
+
 Note:
     DATAPLOT has no restrictions on the file name other than it be a
     valid file name on the local operating system and that it contain
@@ -43144,6 +43349,10 @@ Synonyms:
 Related Commands:
     RESTORE MEMORY = Restore all internal DATAPLOT settings from a
                      previously saved file.
+    RESTORE DATA   = Restore a user specified list of variables and
+                     parameters.
+    SAVE DATA      = Save a user specified list of variables and
+                     parameters.
     RESET          = Reset internal DATAPLOT settings to their default
                      values.
  
@@ -43152,6 +43361,9 @@ Applications:
  
 Implementation Date:
     Pre-1987
+    2020/12: Updated to include many new settings
+    2020/12: Use "dpsavf.tex" if no file name is given
+    2020/12: Added better error trapping
  
 Program:
     XX
@@ -43287,6 +43499,122 @@ Program:
     SAVE PLOT RES.2
     REPEAT PLOT RES.1
     REPEAT PLOT RES.2
+ 
+-----SAVE VARIABLE--------------------------------------------------
+ 
+SAVE VARIABLE
+ 
+Name:
+    SAVE VARIABLE
+ 
+Type:
+    Support Command
+ 
+Purpose:
+    Save a user specified list of variables and parameters to an
+    external file.
+
+Description:
+    The primary purpose of this command is for use with general
+    purpose macros.  Specifically, macros can save the current
+    values for certain variables, re-use those variables in the
+    macro and then restore the original values to the variables.
+ 
+    You can save variables and parameters.  However, matrices and
+    strings/functions are not currently supported.
+
+    The RESTORE VARIABLE command is used to restore the variables
+    saved by this command.
+
+Syntax:
+    SAVE VARIABLE <file-name>  <list-variables>
+    where <file-name> is the name of a file where the variables and
+               parameters are saved;
+    and   <list-variables> is a list of parameters and variables.
+
+    If no <file-name> is given, the file "dpsavf.tex" is used.
+
+    If no variables are specifed, then all currently defined variables
+    and parameters will be saved.
+ 
+Examples:
+    SAVE VARIABLES
+    SAVE VARIABLES VARLIST.DAT
+    SAVE VARIABLES VARLIST.DAT Y X1 X2 X3 X4
+ 
+Note:
+    The format of the save file is something like
+
+        Y        VARIABLE
+                 3
+          0.1800000E+02
+          0.3800000E+02
+          0.1500000E+02
+        AVAL     PARAMETER
+          0.1000000E+01
+
+    For each name, the first line prints the variable/parameter name
+    and also prints the type (VARIABLE or PARAMETER).  If the name is
+    a variable, the next line specifies the number of elements in
+    the variable.  The contents of the variable are then printed one
+    element per line.  If the name is a parameter, then the value of
+    the parameter is printed on the next line.
+
+    Variables and parameters are printed one at a time.
+
+Note:
+    Dataplot has no restrictions on the file name other than it be a
+    valid file name on the local operating system and that it contain
+    a period "." in the file name itself or as a trailing character.
+    Dataplot strips off trailing periods on those systems where it is
+    appropriate to do so.  On systems where trailing periods can be a
+    valid file name (e.g., Unix), Dataplot opens the file with the
+    trailing period.
+ 
+Note:
+    File names are case sensitive on Unix/Linux and MacOSX file
+    systems.  For these systems, Dataplot opens the file as given.  All
+    other currently supported systems are not case sensitive regarding
+    file names.
+ 
+    As a further caution for Unix hosts, certain expansion characters
+    (specifically ~ to refer to your home directory) are interpreted
+    by the shell and are not recognized by the Fortran compiler.  These
+    expansion characters are interpreted as literal characters and do
+    not yield the intended file name.
+ 
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    RESTORE VARIABLE = Restore variables and parameters saved with a
+                       SAVE VARIABLE command.
+    SAVE MEMORY      = Save all internal Dataplot settings to a file.
+    RESTORE MEMORY   = Restore all internal Dataplot settings from a
+                       previously saved file.
+    RESET            = Reset internal DATAPLOT settings to their default
+                       values.
+ 
+Applications:
+    Utility for Macros
+ 
+Implementation Date:
+    2020/12
+ 
+Program:
+    SKIP 25
+    READ BERGER1.DAT Y X BATCH
+    SAVE VARIABLES Y X BATCH
+    .
+    LET Y = NORMAL RANDOM NUMBERS FOR I =  1 1 100
+    LET X = SEQUENCE 1 1 10
+    LET BATCH = 1 FOR I = 1 1 10
+    .
+    RESTORE VARIABLES
+    PRINT Y X BATCH
  
 -----SCATTER PLOT MATRIX--------------------------------------
  
@@ -66193,34 +66521,6 @@ Program 2:
     feedback on
 
 ---------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

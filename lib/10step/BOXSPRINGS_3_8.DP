@@ -1,21 +1,40 @@
-. This is dataplot program   boxsprings_3_8.dp     1/13/15
+. This is dataplot program   boxsprings_3_8.dp     1/13/15 => 1/5/21
 . Purpose: Analyze Box & Bisgaard Defective Springs dataset via 10-step analysis
-. Date: 1/13/15
+. Date: 1/13/15 => 1/5/21
 .
 . -----start point-----
 .
+feedback off
 dimension 100 variables
 .
-. -----Step 1: Read in the data and define strings-----
+. -----Step 1: Name the dataplot code file (= this file), and the input data file-----
 .
-let k = 3
-skip 25; read   boxsprings_3_8.dat   y x1 x2 x3
+let string root = boxsprings_3_8
 .
-let string header = Factors Affecting % Acceptable Metal Springs Production (Box & Bisgaard)
-let string header2 = Design: 2**3 (k=3,n=8)
-let string trailer = boxsprings_3_8.dp
-let string trailer2 = Datafile: boxsprings_3_8.dat
-let string currdate = 1/13/15
+let string filecode = ^root&.dp
+let string filedata = ^root&.dat
+let string fileout  = ^root&.pdf
+device 2 close; set ipl1na ^root&.ps; device 2 postscript
+capture fileout.bat; print "^fileout"; end capture
+.
+. -----Step 3: Read in the data-----
+.
+let k = 3; skip 25; read   ^filedata   y x1 x2 x3
+.
+print y x1 x2 x3; status v;
+print "The data from file     ^filedata    has just been read in."
+let ny = number y; print "Number of data rows = ^ny"
+. print "Hit 'Enter' to continue . . ."
+. pause
+.
+. -----Step 4: Define strings for plot annotation-----
+.
+let string header   = Factors Affecting % Acceptable Metal Springs Production (Box & Bisgaard)
+let string header2  = Design: 2**3 (k=3,n=8)
+let string trailer  = Code file: ^filecode
+let string trailer2 = Data file: ^filedata
+let string trailer3 = Output file: ^fileout
+let string currdate = 1/20/21
 .
 let string sty = % Acceptable Springs
 .
@@ -28,10 +47,15 @@ let string stx2l = .5 .7
 let string stx3l = 70 120
 .
 let string stbest = up
-let string colorl = red blue
 .
-. -----Step 2: Generate 10-step DEX analysis-----
+. -----Step 3: Generate DEX 10-step analysis-----
+.
+let string forecol = black; let string levcol = red blue
+call set_color.dp
 .
 call dex10stepanalysis.dp
 .
+. -----Step 99: Finish up-----
+.
+print " "; print "Output pdf file: ^fileout"
 .

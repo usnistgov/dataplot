@@ -60,7 +60,7 @@ loop for jdummy = 1 1 nzz
    .
    if pausesw = 1
       print jdummy jdummy2 yp1 yp2
-      if ibatch not exist or ibatch = 0; pause; end if
+      if ibatch exists and ibatch = 0; pause; end if
    end if
    .
 end loop

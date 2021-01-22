@@ -5,17 +5,31 @@
 .
 . -----start point-----
 .
+feedback off
 dimension 100 variables
+.
+let string root = boxreactor_5_32
+.
+let string filecode = ^root&.dp
+let string filedata = ^root&.dat
+let string fileout  = ^root&.pdf
+device 2 close; set ipl1na ^root&.ps; device 2 postscript
+capture fileout.bat; print "^fileout"; end capture
 .
 . -----Step 1: Read in the data and define strings-----
 .
 let k = 5
-skip 25; read   boxreactor_5_32.dat   y x1 to x^k
+skip 25; read   ^filedata   y x1 to x^k
 .
-let string header = Factors Affecting Chemical Reactor Yield (Box, Hunter, & Hunter)
-let string header2 = Design: 2**5 (k=5,n=32)
-let string trailer = boxreactor_5_32.dp
-let string trailer2 = Datafile: boxreactor_5_32.dat
+print y x1 x2 x3 x4 x5; status v; print "Hit 'Enter' to continue . . ."; pause
+.
+. -----Step 2: Define strings for plot annotation-----
+.
+let string header   = Factors Affecting Chemical Reactor Yield (Box, Hunter, & Hunter)
+let string header2  = Design: 2**5 (k=5,n=32)
+let string trailer  = Code File: ^filecode
+let string trailer2 = Data File: ^filedata
+let string trailer3 = Output File: ^fileout
 let string currdate = 1/13/15
 .
 let string sty = Chemical Yield (%)
@@ -33,9 +47,13 @@ let string stx4l = 140 180
 let string stx5l = 3 6
 .
 let string stbest = up
-let string colorl = red blue
 .
-. -----Step 2: Generate 10-step DEX analysis-----
+. -----Step 3: Generate 10-step DEX analysis-----
+.
+let string forecol = black; let string levcol = red blue
+call set_color.dp
 .
 call dex10stepanalysis.dp
+.
+print " "; print "Output pdf file: ^fileout"
 .

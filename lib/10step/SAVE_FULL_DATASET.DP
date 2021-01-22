@@ -1,0 +1,10 @@
+. This is dataplot macro     save_full_dataset.dp     10/23/18
+. Purpose: Save the full original dataset (becuse subsetting may later occur)
+. Date: 10/22/18
+.
+. -----start point-----
+.
+set write format 40f15.7
+write full_dataset.dat y x1 to x^k
+set write format
+.

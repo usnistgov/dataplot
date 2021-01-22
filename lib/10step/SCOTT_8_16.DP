@@ -1,23 +1,36 @@
 . This is dataplot program   scott_8_16.dp     5/31/06
-. Purpose: Analyze John Henry Scott HRTEM SiO2 Layer Thickness |Error| (k=8,n=16) via 10-step analysis
+. Purpose: Analyze John Henry Scott HRTEM SiO2 Layer Thickness
+.          |Error| (k=8,n=16) via 10-step analysis
 . Design = 2**(8-4) full factorial  (k=8,n=16)
 . Date: 5/31/06
 .
 . -----start point-----
 .
+feedback off
 dimension 100 variables
 .
-. -----Step 1: Read in the data-----
+. -----Step 1: Name the root for the 4 output files (default = dataplot_out.pdf/ps/dp/dat)-----
+. -----        + will allow auto-view of   dataplot_out.pdf   via   v   command or desktop shortcut-----
+.
+let string fileout = dataplot_out
+device 2 close; set ipl1na ^fileout&.ps; device 2 postscript
+capture fileout.bat; print "^fileout.pdf"; end capture
+.
+. -----Step 2: Read in the data-----
 .
 let k = 8
-skip 25
-read scott_8_16.dat y x1 to x^k
+delete y; delete x1 to x^k
+skip 25; read    scott_8_16.dat    y x1 to x^k
 .
-. -----Step 2: Define strings for plot annotation-----
+print y x1 x2 x3 x4 x5 x6 x7 x8; status v; print "Hit 'Enter' to continue . . ."; pause
+.
+. -----Step 3: Define strings for plot annotation-----
 .
 let string header = HRTEM Factors Affecting Thickness Measurements of Ultrathin Amorphous
 let string header2 = SiO2 Layer in CPU/Memory Gate Dielectrics (Nanotechnology)
 let string trailer = scott_8_16.dp
+let string trailer2 = scott_8_16.dat
+let string currdate = 4/10/19
 .
 let string sty = HRTEM Error in SiO2 Layer Thickness
 .
@@ -42,6 +55,17 @@ let string stx8l = 0 .04
 let string stbest = 0
 let string colorl = red blue
 .
-. -----Step 3: Generate 10-step DEX analysis on the original data-----
+. -----Step 4: Generate 10-step DEX analysis on the original data-----
 .
 call dex10stepanalysis.dp
+.
+. -----Step 99: Finish up-----
+.
+system copy    scott_8_16.dp    ^fileout&.dp
+system copy    scott_8_16.dat   ^fileout&.dat
+print " "
+print "Output:"
+print "   pdf graphics file: ^fileout&.pdf"
+print "   ps  graphics file: ^fileout&.ps"
+print "   txt program  file: ^fileout&.dp"
+print "   txt data     file: ^fileout&.dat"

@@ -14,7 +14,8 @@ BINDIR = $(PREFIX)/bin
 # where to find additional dataplot files (help, menus, etc).
 DPLIBDIR=$(PREFIX)/lib/dataplot
 
-FFLAGS += -O2 -DLINUX -fdefault-real-8 -fdefault-double-8 -fmax-stack-var-size=1000000 -Wall
+#FFLAGS += -O2 -DLINUX -fdefault-real-8 -fdefault-double-8 -fmax-stack-var-size=1000000 -Wall
+FFLAGS += -O2 -DLINUX -fdefault-real-8 -fdefault-double-8 -Wall
 CFLAGS += -O2
 
 # special flags for dp1

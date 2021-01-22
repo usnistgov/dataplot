@@ -789,7 +789,7 @@ C
 C
       IF(RCOND.LE.EPS)THEN
         WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
+        CALL DPWRST('XXX','ERRO')
         WRITE(ICOUT,5171)
         CALL DPWRST('XXX','ERRO ')
         WRITE(ICOUT,5172)

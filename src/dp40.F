@@ -15636,6 +15636,7 @@ C     UPDATED         --APRIL     2020.  ISEAD4, ISEAD5, ISEAD6
 C     UPDATED         --APRIL     2020.  IEXCR1, IEXCR2,
 C                                        IEXCC1, IEXCC2
 C     UPDATED         --JUNE      2020.  IX11SE
+C     UPDATED         --JANUARY   2021.  IERMSG
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -20706,6 +20707,14 @@ C               **                <CLIPBOARD/PRIMARY/SECONDARY>     **
 C               ******************************************************
 C
       IX11SE='CLIP'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JANUARY      2021
+C
+C               ******************************************************
+C               **  TREAT THE SET ERROR MESSAGE <ON/OFF>            **
+C               ******************************************************
+C
+      IERMSG='ON'
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    APRIL     2020
 C

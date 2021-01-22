@@ -39,9 +39,7 @@ delete xplotm yplotm tplotm subset tagplot maxtagpl
 delete xplotsd yplotsd tplotsd subset tagplot maxtagpl
 delete xplotsdm yplotsdm tagplot subset tagplot maxtagpl
 .
-if ibatch not exist or ibatch = 0
-   device 1 off
-end of if
+device 1 off
 device 2 off
    if k = 1
       number plot y x1
@@ -70,9 +68,7 @@ device 2 off
       dex mean plot y x1 to x^k
       let xplotm = xplot; let yplotm = yplot; let tplotm = tagplot
    end if
-if ibatch not exist or ibatch = 0
-   device 1 on
-end of if
+device 1 on
 device 2 on
 .
 retain xplotnum yplotnum tplotnum subset tagplot <= k

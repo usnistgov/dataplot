@@ -15,6 +15,7 @@
 .    8. frameb (parameter)          = bottom frame line (in %) (optional) (default = 20)
 .
 .    9. decplace (parameter)        = number of decimal places for the relative effects (default = 0 = no listing)
+.   10. frame (string)               = subset/except specification;. 4/16/20
 .
 . Output:
 .    a 1 page matrix of plots
@@ -25,6 +26,8 @@
 .
 . -----start point-----
 .
+print " "; print "=====> Now generating plot 4. (Interation Effects Matrix) <====="
+.
 . print " "
 . print "From (dexiem.dp, start point)"
 . print y for i = 1 1 5
@@ -33,34 +36,65 @@
 feedback save
 feedback off
 printing off
-let bugswiem = 0
-. let pausesw = 1
+let bugiem = 0
+let pausesw = 0
 .
-if bugswiem = 1; print " "; print "---At beginning of DEX Ste p 4 (DEXIEM.DP) . . ."
+if bugiem = 1; print " "; print "---At beginning of DEX Ste p 4 (DEXIEM.DP) . . ."
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 1.0: if frame exists, the save the original data and extract the subset-----
+.
+if bugiem = 1
+   print "--At start of (dexiem.dp, step 1.0): if frame exists, save the original data and extract the subset"
+   if frame not exist; print "      frame does not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   call save_full_dataset.dp
+   delete stallx; let stallx = string combine x1 to x^k
+   retain y ^stallx ^frame
+end if
+.
+if bugiem = 1
+   print "Post-  date saving & frame extraction:"
+   stat v
    if pausesw = 1; pause; end if
 end if
 .
 . -----Step 1.1: Check input values for existence and equivalent length-----
 .
-if bugswiem = 1; print "---At (dexiem.dp, step 1.1): check input"
+if bugiem = 1; print "---At (dexiem.dp, step 1.1): check input"
    if pausesw = 1; pause; end if
 end if
+.
+. feedback on; . echo on
 .
 let string stmacro = dexiem.dp
 if k not exist
    call determine_k.dp
 end if
 set check name output filliben
-set check equal length output filliben
-feedback on
-let iflag = check name k y x1 to x^k
-let iflag = check equal length y x1 to x^k
-feedback off
+. set check equal length output filliben
+set check length output filliben
+.
+. pause; . feedback off; . echo off
+.
+if k = 1; let iflag = check name k y x1 ; end if
+if k >= 2
+   let iflag = check name k y x1 to x^k
+   let iflag = check equal length y x1 to x^k
+end if
+.
 .
 . -----Step 1.2: Copy the user's original y and x1 to xk data out to file-----
 .                since y and x1 to xk may potentially be modified within this macro-----
 .
-if bugswiem = 1; print "---At (dexiem.dp, step 1.2): save original y and xi"
+if bugiem = 1; print "---At (dexiem.dp, step 1.2): save original y and xi"
    if pausesw = 1; pause; end if
 end if
 .
@@ -74,22 +108,23 @@ set write format
 .                If not 2 levels, then only the min and max will be used h_erein.-----
 .                If not -1 and +1, then min => -1 and max => +1-----
 .
-if bugswiem = 1; print "---At (dexiem.dp, step 1.3): normalize to (-1,+1)"
+if bugiem = 1; print "---At (dexiem.dp, step 1.3): normalize to (-1,+1)"
    if pausesw = 1; pause; end if
 end if
 .
 let string stcall = dexiem.dp
 call check_and_fix_original_data_for_2_levels_and_m1_p1.dp
 .
-if bugswiem = 1; print "---At (dexiem.dp, end of step 1.3)"
+if bugiem = 1; print "---At (dexiem.dp, end of step 1.3)"
    print "k = ^k"
-   print y x1 to x^k
+   print "The following is the first 10 rows of y x1 to x^k"
+   print y x1 to x^k for i = 1 1 10
    stat v
    if pausesw = 1; pause; end if
 end if
 . -----Step 2: Define plot settings-----
 .
-if bugswiem = 1; print "---At (dexiem.dp, step 2): define tic specs"
+if bugiem = 1; print "---At (dexiem.dp, step 2): define tic specs"
    if pausesw = 1; pause; end if
 end if
 .
@@ -103,7 +138,7 @@ ytic offset 5 yoffupz
 .
 . -----Step 3: plot type-----
 .
-if bugswiem = 1; print "---At (dexiem.dp, step 3): define plot type (= mean)"
+if bugiem = 1; print "---At (dexiem.dp, step 3): define plot type (= mean)"
    if pausesw = 1; pause; end if
 end if
 .
@@ -118,7 +153,7 @@ end if
 .
 . -----Step 4: determine common plot limits-----
 .
-if bugswiem = 1; print "---At (dexiem.dp, step 4): limits"
+if bugiem = 1; print "---At (dexiem.dp, step 4): limits"
    if pausesw = 1; pause; end if
 end if
 .
@@ -166,7 +201,7 @@ delete ytemp
 .
 . -----Step 5: mean & # digits-----
 .
-if bugswiem = 1; print "---At (dexiem.dp, step 5): mean & number of digits"
+if bugiem = 1; print "---At (dexiem.dp, step 5): mean & number of digits"
    if pausesw = 1; pause; end if
 end if
 .
@@ -183,7 +218,7 @@ set write decimals decplace
 .
 . -----Step 6: define type of plot (= mean)-----
 .
-if bugswiem = 1; print "---At (dexiem.dp, step 6): type of plot"
+if bugiem = 1; print "---At (dexiem.dp, step 6): type of plot"
    if pausesw = 1; pause; end if
 end if
 .
@@ -193,7 +228,7 @@ let string stat = mean
 .
 . -----Step 7: plot labels-----
 .
-if bugswiem = 1; print "---At (dexiem.dp, step 7): set labels"
+if bugiem = 1; print "---At (dexiem.dp, step 7): set labels"
    if pausesw = 1; pause; end if
 end if
 .
@@ -223,7 +258,7 @@ end loop
 .
 . -----Step 8: define specs for dex interaction plot-----
 .
-if bugswiem = 1; print "---At (dexiem.dp, step 8): dex int. plot specs"
+if bugiem = 1; print "---At (dexiem.dp, step 8): dex int. plot specs"
    if pausesw = 1; pause; end if
 end if
 .
@@ -255,7 +290,8 @@ set scatter plot matrix x axis bottom
 set scatter plot matrix xtic off
 set scatter plot matrix xtic label off
 set scatter plot matrix lower diagonal off
-set scatter plot matrix x2label filliben
+if k <= 10; set scatter plot matrix x2label filliben; end if   ;. bug fix: 1/13/21
+if k >= 11; set scatter plot matrix x2label off;      end if   ;. bug fix: 1/13/21
 set scatter plot matrix shaded diagonal on
 .
 subregion on
@@ -285,7 +321,7 @@ call label_location_and_size.dp
 
 . -----Step 9: GENERATE THE PLOTS-----
 .
-if bugswiem = 1; print "---At (dexiem.dp, step 9): GENERATE THE PLOTS"
+if bugiem = 1; print "---At (dexiem.dp, step 9): GENERATE THE PLOTS"
    if pausesw = 1; pause; end if
 end if
 .
@@ -295,8 +331,6 @@ end if
 . tic labels on
 . ylim -30 30
 . xlim -5 5
-let x12 = x1*x2
-print junk.out y x1 x2 x12
 .
 . y1tic offset units screen; . y1tic offset 5 10
 .
@@ -309,21 +343,22 @@ if statflag = 0; delete stat; end if
 .
 . -----Step 10: write out the header (redundant with annotation below)-----
 .
-if bugswiem = 1; print "---At (dexiem.dp, step 10): header"
+if bugiem = 1; print "---At (dexiem.dp, step 10): header"
    if pausesw = 1; pause; end if
 end if
 .
 if project exists
-   if projcol exists; color ^projcol; end if
+   if forecol exists; color ^forecol; end if
    call dexwriteproject.dp
 end if
 .
 . -----Step 11: write out title, Step ID, ybar, annotation-----
 .
-if bugswiem = 1; print "---At (dexiem.dp, step 11): title, ID, annotation"
+if bugiem = 1; print "---At (dexiem.dp, step 11): title, ID, annotation"
    if pausesw = 1; pause; end if
 end if
 .
+color blue: if forecol exists; color ^forecol; end if
 hw 2 1
 if titlesiz exists; let titleh = titlesiz; end if
 let titlew = titleh/2
@@ -354,6 +389,7 @@ let ybar = mean y
 if decplacm not exist; set write decimals 4; end if
 if decplacm exists; set write decimals decplacm; end if
 let stybar = number to string ybar
+color blue; if forecol exists; color ^forecol; end if
 move 85 91; just right; hw 2 1; text Mean = ^stybar; just center
 .
 if annotate exists and annotate = 1
@@ -363,7 +399,7 @@ end if
 .
 . -----Step 12: write out right margin-----
 .
-if bugswiem = 1; print "---At (dexiem.dp, step 12): right margin"
+if bugiem = 1; print "---At (dexiem.dp, step 12): right margin"
    if pausesw = 1; pause; end if
 end if
 .
@@ -375,7 +411,7 @@ end if
 .
 . -----Step 13: If called for, write out customized upper left info-----
 .
-if bugswiem = 1; print "---At (dexiem.dp, step 13): upper left"
+if bugiem = 1; print "---At (dexiem.dp, step 13): upper left"
    if pausesw = 1; pause; end if
 end if
 .
@@ -385,8 +421,9 @@ end if
 .
 . -----Step 98: Restore the user's original y and x1 to xk data from file-----
 .
-if bugswiem = 1; print " "; print "---At (dexiem.dp, step 98): restore orig. data (pre-restore)"
-   print y x1 to x^k
+if bugiem = 1; print " "; print "---At (dexiem.dp, step 98): restore orig. data (pre-restore)"
+   print "The following is the first 10 rows of y x1 to x^k"
+   print y x1 to x^k for i = 1 1 10
    if pausesw = 1; pause; end if
 end if
 .
@@ -395,15 +432,39 @@ set read format 40f15.7
 skip 0; read dex_original_data.dat y x1 to x^k
 set read format
 .
-if bugswiem = 1; print " "; print "---At (dexiem.dp, step 98): (post-restore)"
-   print y x1 to x^k
+if bugiem = 1; print " "; print "---At (dexiem.dp, step 98): (post-restore)"
+   print "The following is the first 10 rows of y x1 to x^k"
+   print y x1 to x^k for i = 1 1 10
    if pausesw = 1; pause; end if
 end if
 .
-. -----Step 99: Finish up-----
+. -----Step 99.1: if frame exists, then restore the original data-----
 .
-if bugswiem = 1
-   print " "; print "---At end of dexiem.dp . . ."
+if bugiem = 1
+   print "--At start of (dexiem.dp, step 99.1): restore original data if frame existed"
+   if frame not exist; print "      frame did not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   delete stallx; let stallx = string combine x1 to x^k
+   delete y; delete ^stallx
+   call restore_full_dataset.dp
+end if
+.
+if bugiem = 1
+   print "Post- data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 99.2: Finish up otherwise-----
+.
+if bugiem = 1
+   print "--At (dexiem.dp, step 99.2): finishing up otherwise---"
    if pausesw = 1; pause; end if
 end if
 .

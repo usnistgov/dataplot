@@ -1,7 +1,8 @@
 . This is dataplot macro     dexrightmargin.dp
 . Purpose: Write factors (and levels if available) in right margin (towards the top)
 .          of the plots for the 10-step dex analysis
-. Date: 01/10/14, 6/29/15
+. Date:    01/10/14, 6/29/15
+. Updated:  8/20/19
 . Input:
 .    k (parameter)                        = number of factors
 .    stx1, stx2, stx3, . . . (strings)    = names of each of the k factors
@@ -23,6 +24,7 @@
 .                         (for special cases) (optional, default = not exist)
 .    framet (parameter)  = top    frame line (in %) (optional) (default = 90)
 .    frameb (parameter)  = bottom frame line (in %) (optional) (default = 20)
+.    levint (parameter) = 0,1 switch dictating whether right margin indices s
 .
 . -----start point-----
 .
@@ -35,7 +37,8 @@ let bugswdrm = 0
          print "k: ^k"
          print stx1 stx2 stx3 stx4 stx5 stx6 stx7 sytx8
          print stx1l stx2l stx3l stx4l stx5l stx6l stx7l stx8l
-         print colorl
+         print forecol
+         print levcol
          if pausesw = 1; pause; end if
       end if
       .
@@ -51,7 +54,8 @@ let string stmacro = dexrightmargin.dp
 .
 set check name output filliben
 feedback save; feedback on
-let iflag = check name k stx1 to stx^k
+if k = 1; let iflag = check name k stx1; end if
+if k >= 2; let iflag = check name k stx1 to stx^k; end if
 feedback restore
 delete xposvec yposvec tag numlevva
 .
@@ -167,10 +171,11 @@ end loop
          if pausesw = 1; pause; end if
       end if
       .
-delete nwordcol; let nwordcol = number of words colorl
+      delete nwordcol; let nwordcol = 1
+      if levcol exists; let nwordcol = number of words levcol; end if
       .
       if bugswdrm = 1; print "From near-top of step 5"
-         print "colorl = ^colorl"
+         print "levcol = ^levcol"
          print "nwordcol = ^nwordcol"
          if pausesw = 1; pause; end if
       end if
@@ -191,6 +196,7 @@ loop for jfact = 1 1 k
             if pausesw = 1; pause; end if
          end if
    .
+   color ^forecol
    let ypz = ypz - fudge*ypdelz
    move xp0z ypz; text X^jfact: ^stx^jfact        ;. 6/6/16    ;. <=========================write factor name
    .
@@ -254,21 +260,44 @@ loop for jfact = 1 1 k
           .
           . -----step 5.3.1, case 1: stxjl list as a whole does exist-----
           .
+          if bugswdrm = 1
+             print " "
+             print "      ===========(dexrightmargin.dp, Step 5.3.1, jlev= ^jlev=============="
+             print "levint = ^levint"
+             if pausesw = 1; pause; end if
+          end if
+            .
           let string stoutl = ^jlev
-          if numlevfa = 2 and jlev = 1; let string stoutl = -; end if
-          if numlevfa = 2 and jlev = 2; let string stoutl = +; end if
+          .
+          if levint not exist
+             if numlevfa = 2 and jlev = 1; let string stoutl = -; end if
+             if numlevfa = 2 and jlev = 2; let string stoutl = +; end if
 
-          if numlevfa = 3 and jlev = 1; let string stoutl = -; end if
-          if numlevfa = 3 and jlev = 2; let string stoutl = 0; end if
-          if numlevfa = 3 and jlev = 3; let string stoutl = +; end if
+             if numlevfa = 3 and jlev = 1; let string stoutl = -; end if
+             if numlevfa = 3 and jlev = 2; let string stoutl = 0; end if
+             if numlevfa = 3 and jlev = 3; let string stoutl = +; end if
+          end if
           .
-          . print "jfact = ^jfact   jlev = ^jlev   stoutl = ^stoutl"
-          . pause
+          if levint exists and levint = 1
+             if numlevfa = 2 and jlev = 1; let string stoutl = -; end if
+             if numlevfa = 2 and jlev = 2; let string stoutl = +; end if
+
+             if numlevfa = 3 and jlev = 1; let string stoutl = -; end if
+             if numlevfa = 3 and jlev = 2; let string stoutl = 0; end if
+             if numlevfa = 3 and jlev = 3; let string stoutl = +; end if
+          end if
           .
-          color blue;
-          if colorl exists
-             let ncolorl = number of words colorl
-             if jlev <= ncolorl; let stcolorl = string word colorl ^jlev; color ^stcolorl; end if
+          if bugswdrm = 1
+             print "jfact = ^jfact   jlev = ^jlev"
+             print "levint = ^levint"
+             print "stoutl = ^stoutl"
+             if pausesw = 1; pause; end if
+          end if
+          .
+          color ^forecol;
+          if levcol exists
+             let nlevcol = number of words levcol
+             if jlev <= nlevcol; let stlevcol = string word levcol ^jlev; color ^stlevcol; end if
           end if
           .
           if stx^jfact&l exists
@@ -282,17 +311,17 @@ loop for jfact = 1 1 k
                    if bugswdrm = 1
                       print "--At (dexrightmargin.dp, step 5.3.1, path a): X..j exists and stx.jj exists"
                       print "jfact = ^jfact    jlev = ^jlev    stoutr = ^stoutr"
-                      print "stcolorl = ^stcolorl"
+                      print "stlevcol = ^stlevcol"
                       print "numlevfa = ^numlevfa     numwordj = ^numwordj"
                       if pausesw = 1; pause; end if
                    end if
                    .
                 let ypz = ypz - fudge2*ypdelz
-                move xp3z ypz; just right; text ^stoutl                      ;. <==============write left  side level if stx.l exists
-                color blue
+                move xp3z ypz; just right; text ^stoutl  ;. <=========write left side level if stx.l exists
+                . color ^forecol
                 let xp3zp = xp3z + 1
-                move xp3zp ypz; just right; color blue; text :               ;. <==============write  :               if stx.l exists
-                move xp4z ypz; just  left; text ^stoutr                      ;. <==============write right side level if stx.l exists
+                move xp3zp ypz; just right; text :     ;. <==============write  :               if stx.l exists
+                move xp4z ypz; just  left; text ^stoutr  ;. <==============write right side level if stx.l exists
              end if
              .
              if jlev = numwordj
@@ -300,16 +329,16 @@ loop for jfact = 1 1 k
                    if bugswdrm = 1
                       print "--At (dexrightmargin.dp, step 5.3.2, path b): X..j exists but stx.jj not exist"
                       print "jfact = ^jfact    jlev = ^jlev    stoutr = ^stoutr"
-                      print "stcolorl = ^stcolorl"
+                      print "stlevcol = ^stlevcol"
                       print "numlevfa = ^numlevfa     numwordj = ^numwordj"
                       if pausesw = 1; pause; end if
                    end if
                    .
                 if delzz > 0
                    let ypz = ypz - fudge2*ypdelz
-                   move xp4z ypz; just left; text + ^delzz more levels       ;. <===============write mismatch message
+                   move xp4z ypz; just left; text + ^delzz more levels ;. <===============write mismatch message
                 end if
-                color blue
+                . color ^forecol
              end if
           end if
           .
@@ -327,7 +356,7 @@ loop for jfact = 1 1 k
                       if pausesw = 1; pause; end if
                    end if
                    .
-             move xp2z ypz; just left; text (^numlevfa levels)              ;. <==here===========write level if stx.l not exist
+             move xp2z ypz; just left; text (^numlevfa levels)   ;. <==here===========write level if stx.l not exist
              let jlevdone = 1
           end if
                 .
@@ -344,5 +373,6 @@ loop for jfact = 1 1 k
 . -----Step 99: Finish up-----
 .
 delete xp0z yp0z xpdelz ypdelz xp2z xp3z xp4z yposvec xposvec tag
+character offset -0.5 -0.5 all
 .
-color blue
+color ^forecol

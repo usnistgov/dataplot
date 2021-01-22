@@ -1,0 +1,11 @@
+. This is dataplot macro     restore_full_dataset.dp     10/23/18
+. Purpose: Restore the full original dataset (becuse subsetting may later occur)
+. Date: 10/22/18
+.
+. -----start point-----
+.
+set read format 40f15.7
+skip 0
+read full_dataset.dat y x1 to x^k
+set read format
+.

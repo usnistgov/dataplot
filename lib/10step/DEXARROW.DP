@@ -1,12 +1,18 @@
-. This is dataplot macro     dexarrow.dp     11/14/18
+. This is dataplot macro     dexarrow.dp     11/14/18 => 1/5/21
 . Purpose: Draw an up, down, or value arrow on a dex 10-step analayis plot
 .          + also draw a horizontal line at the value
-. Date: 11/14/18
+. Date: 11/14/18 => 1/5/21
 .
 . -----start point-----
 .
 arrow color red; arrow pattern solid; arrow thickness 0.2;
 region fill on; region fill color red;
+.
+. -----BUG FIX (1/5/21) Allow arrow to have color other than red-----
+. -----Author: With thanks to Peter Fontana (NIST/ITL)-----
+if forecol exists; arrow color ^forecol; region fill color ^forecol; end if
+.
+.
 hw 1 2.5
 hw 0.5 1.5
 hw 0.75 1.5

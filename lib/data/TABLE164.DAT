@@ -1,3 +1,28 @@
+This is Dataplot data file     TABLE164.DAT
+A random sample from a Gaussian population.
+Question: Confidence intervals.
+
+Source--Graybill and Iyer (1994). Regression Analysis: Concepts and 
+        Applications.  Duxbury Press.
+        Page 46 (Chapter 1)
+Number of observations = 30
+Number of variables per line image = 1
+Order of variables on a line image--
+   1. Y = Response Variable
+
+
+
+
+
+
+
+
+To read this file into Dataplot--
+   SKIP 25
+   READ TABLE164.DAT Y
+     Y
+
+------------
    3.48
    7.68
   12.96

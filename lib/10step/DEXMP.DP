@@ -36,7 +36,7 @@
 .   16. bartype (string)             = line type for the error bars (if existent)(default = solid)
 .   17. shiftup (parameter)          = amount to shift up for the within frame effect annotation (def. = not exist = 0)
 .   18. rightmsw (parameter)         = (0,1) switch dictating the listing of factors & levels in right margin
-.   xx. strowlab (string) = (left,right) switch dictating where |Effect|, |Rel.Eff.|, Fcdf is written out
+.   xx. strowlab (string)            = (left,right) switch dictating where |Effect|, |Rel.Eff.|, Fcdf is written out
 .  (default = 1 = yes = list factors and levels, but requires existence of stx1, stx2, . . . and stx1l, stx2l, . . .)
 .   21. stx1, stx2, stx3, . . . (strings) = Names of the 1st, 2nd, 3rd, . . . factors (default = no names)
 .                                            (e.g., let string stx1  = OvenTemp) (default = no names) of the factors
@@ -50,12 +50,17 @@
 .                                            1 = classic (-1,0,1) case
 .                                            2 = integer (1, 2, 3, 4, ...) case
 .                                            3 = pre-existing strings cas
-.   22. yminmp (parameter) = vertical axis minimum                                    (default = float)
-.   23. ymaxmp (parameter) = vertical axis maximum                                    (default = float)
-.   24. statmp (string) = name of statistic (e.g., Median, SD, etc.) (default = mean) ;. 7/10/18.
-.   25. stepprsw (parameter) = (0,1) switch to dictate whether upper left step id should be printed (default = 1 = yes) ;. 9/17/18
-.   26. stylimmp (string) = 2-item string defining personalized ylimits for plot (optional) (default = as computed)
+.   22. yminmp (parameter)           = vertical axis minimum                                    (default = float)
+.   23. ymaxmp (parameter)           = vertical axis maximum                                    (default = float)
+.   24. statmp (string)              = name of statistic (e.g., Median, SD, etc.) (default = mean) ;. 7/10/18.
+.   25. stepprsw (parameter)         = (0,1) switch to dictate whether upper left step id should be printed (default = 1 = yes) ;. 9/17/18
+.   26. stylimmp (string)            = 2-item string defining personalized ylimits for plot (optional) (default = as computed)
 .
+.   27. levint  (parameter)          = 0,1 switch dictating whether hor. axis labels (and right margin indices) are integers (optional)
+.   28. decplacm (parameter)         = vertical location where desire mean value to be printed out (optiona) (def. = 4)
+.   29. ypmean (parameter)           = vertical location where desire mean value to be printed out (optiona) (default = 88)
+.   30. frame (string)               = subset/except specification;. 4/16/20
+.   31. stbest (string) = diretion for best: up, down, zero (optional)
 . Output:
 .    coefout (vector of length k)
 .    tagout
@@ -71,7 +76,6 @@
 .                                then the factor is deemed to "have an effect"
 .
 . Note: Macros called by this macro:
-.       dexcheck.dp, alertk, alertv
 .       dexplotiniti.dp
 .       dexwriteproject.dp
 .       dexknbox.dp
@@ -83,6 +87,8 @@
 .
 . -----start point-----
 .
+print " "; print "=====> Now generating plot 3 (Main Effects Plot) <====="
+.
 . print " "
 . print "From (dexmp.dp, start point)"
 . print y for i = 1 1 5
@@ -91,13 +97,15 @@
 feedback save
 feedback off
 printing off
-let bugswmp = 0
+let bugmp = 0
 . let pausesw = 1
 .
 set write decimals
 .
-if bugswmp = 1; print " "; print "---At beginning of DEX Ste p 3 (DEXMP.DP)"
+if bugmp = 1; print " "; print "---At beginning of DEX Ste p 3 (DEXMP.DP)"
    print "   levelsw = ^levelsw"
+   print "k = ^k"
+   print "frame = ^frame"
    print y x1 x2 x3
    print stx1 stx2 stx3 stx4 stx5
    print stx1l stx2l stx3l stx4l stx5l
@@ -110,10 +118,32 @@ end if
 . -----Do Analysis Ste p 3: Dex Mean Plot-----
 . -------------------------------------------
 .
+. -----Step 1.0: if frame exists, the save the original data and extract the subset-----
+.
+if bugmp = 1
+   print "--At start of (dexmp.dp, step 1.0): if frame exists, save the original data and extract the subset"
+   if frame not exist; print "      frame does not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   call save_full_dataset.dp
+   delete stallx; let stallx = string combine x1 to x^k
+   retain y ^stallx ^frame
+end if
+.
+if bugmp = 1
+   print "Post-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
 .
 . -----Step 1.1: Check input values for existence and equivalent length-----
 .
-if bugswmp = 1; print "--At (dexmp.dp, step 1.1): check input"
+if bugmp = 1; print "--At (dexmp.dp, step 1.1): check input"
    if pausesw = 1; pause; end if
 end if
 .
@@ -123,10 +153,11 @@ if k not exist
 end if
 set check name output filliben
 set check length output filliben
-feedback on
-let iflag = check name k y x1 to x^k
-let iflag = check equal length y x1 to x^k
-feedback off
+if k = 1; let iflag = check name k y x1 ; end if
+if k >= 2
+   let iflag = check name k y x1 to x^k
+   let iflag = check equal length y x1 to x^k
+end if
 .
 loop for jz = 1 1 k
     let numlev^jz = unique x^jz
@@ -139,7 +170,7 @@ let numlevdi = unique numlevva
 .
 . -----Step 2: Define plot settings-----
 .
-if bugswmp = 1; print "--At (dexmp.dp, step 2): plot settings "
+if bugmp = 1; print "--At (dexmp.dp, step 2): plot settings "
    if pausesw = 1; pause; end if
 end if
 .
@@ -153,7 +184,13 @@ xlimits 0 kp1
 major x1tic number kp2
 minor x1tic number 0
 .
-if k <= 2
+if k = 1  ;. 10/21/19
+   xlim 0.8 1.2
+   xtic offset 15 15
+   major x1tic number 3
+end if
+.
+if k = 2
    xlim 1 k
    xtic offset 15 15
    major x1tic number k
@@ -161,16 +198,29 @@ end if
 .
 if stylimmp exists; ylim ^stylimmp; end if    ;. this is a fix for occasional improper ylim   10/23/18
 .
+delete stxlabel
+if ypxlabel not exist; let string stxlabel = x3label;  end if
+if ypxlabel    exists; let string stxlabel = ^ypxlabel; end if
+if bugmp = 1
+   print ">>>>>"
+   print "ypxlabel = ^ypxlabel"
+   print "stxlabel = ^stxlabel"
+   pause
+end if
+.
 xlabel
-x3label Factors (^k)
-x3label size 3
+x2label
+x3label
+^stxlabel Factors (^k)
+^stxlabel size 3
 if stprex exists
-   x3label ^stprex Factors (^k)
+   ^stxlabel ^stprex Factors (^k)
 end if
-x3label displacement 11
+^stxlabel displacement 11
 if k >= 6
-   x3label displacement 13
+   ^stxlabel displacement 13
 end if
+if xlabelsw = 0; x1label; x2label; x3label; end if
 .
 set string space ignore
 let string igtempe = cr()
@@ -217,10 +267,10 @@ x1tic mark label on
 label color blue
 tic mark label color blue
 tic mark color blue
-if colorall exists
-   label color ^colorall
-   tic mark label color ^colorall
-   tic mark color ^colorall
+if forecol exists
+   label color ^forecol
+   tic mark label color ^forecol
+   tic mark color ^forecol
 end if
 .
 . ylim
@@ -235,7 +285,7 @@ if levelsw exists and levelsw = 3; x1tics off; end if
 .
 . -----Step 3: Define character & label contents (and sizes) pre-plot-----
 .
-if bugswmp = 1; print "--At (dexmp.dp, step 3): char, labels, sizes "
+if bugmp = 1; print "--At (dexmp.dp, step 3): char, labels, sizes "
    if pausesw = 1; pause; end if
 end if
 .
@@ -247,9 +297,9 @@ call setcircle.dp
 char offset 0 0
 char color blue all
 line color blue all
-if colorall exists
-   char color ^colorall all
-   line color ^colorall all
+if forecol exists
+   char color ^forecol all
+   line color ^forecol all
 end if
 .
 lines solid dotted
@@ -283,6 +333,7 @@ end if
 if sty exists
    if statmp not exist; y1label Mean Response Y (^sty); end if
    if statmp exists; y1label ^statmp Response Y (^sty); end if
+   if stpitts exists; if stpitts = pitts; y1label Mean Response ^sty; end if; end if  ;. april 27, 2020
 end if
 .
 label size 3
@@ -291,13 +342,15 @@ if ticlabsi exists; tic label size ^ticlabsi; end if
 .
 . -----Step 4: GENERATE THE PLOT-----
 .
-if bugswmp = 1; print "--At (dexmp.dp, step 4): GENERATE THE PLOT"
+if bugmp = 1; print "--At (dexmp.dp, step 4): GENERATE THE PLOT"
    if pausesw = 1; pause; end if
 end if
 .
 . print statmp
 . pause
 .
+y1label size 3
+. pause
 ylim
 ylimits unfreeze
 if statmp not exist
@@ -308,7 +361,8 @@ if statmp not exist
 end if
 .
 if statmp exists
-   dex ^statmpz plot y x1 to x^k
+   if k = 1; dex ^statmpz plot y x1; end if
+   if k >= 2; dex ^statmpz plot y x1 to x^k; end if
    save
 end if
 .
@@ -327,7 +381,7 @@ end if
 .
 . -----Step 5: Write out the factor level (labels)-----
 .
-if bugswmp = 1; print "--At (dexmp.dp, step 5): write xi labels"
+if bugmp = 1; print "--At (dexmp.dp, step 5): write xi labels"
    if pausesw = 1; pause; end if
 end if
 .
@@ -337,7 +391,7 @@ call dexmp_write_factor_levels.dp
 .
 . -----Step 6: Write out . . .-----
 .
-if bugswmp = 1; print "--At (dexmp.dp, step 6): write xxx "
+if bugmp = 1; print "--At (dexmp.dp, step 6): write xxx "
    if pausesw = 1; pause; end if
 end if
 .
@@ -363,7 +417,7 @@ end loop
 . -----Step 8.1: For classical dex mean plot, do multiple ANOVAs, and
 . -----        Write out 3 rows:  |effect|, |relative effect|, and fcdf (or pvalue)-----
 .
-if bugswmp = 1; print "--At (dexmp.dp, step 7.1): anova"
+if bugmp = 1; print "--At (dexmp.dp, step 7.1): anova"
    if pausesw = 1; pause; end if
 end if
 .
@@ -374,7 +428,7 @@ end if
 . -----Step 7.2: For  dex sd plot, do multiple LEVENE TESTs, and
 . -----        Write out 4 rows:  max si, min si, ratio, and leven test fcdf (or pvalue)-----
 .
-if bugswmp = 1; print "--At (dexmp.dp, step 7.2): levene"
+if bugmp = 1; print "--At (dexmp.dp, step 7.2): levene"
    if pausesw = 1; pause; end if
 end if
 .
@@ -384,7 +438,7 @@ end if
 .
 . -----Step 8: If called for, plot out error bars (confidence bars)-----
 .
-if bugswmp = 1; print "--At (dexmp.dp, step 8): conf. limits"
+if bugmp = 1; print "--At (dexmp.dp, step 8): conf. limits"
    if pausesw = 1; pause; end if
 end if
 .
@@ -397,7 +451,7 @@ end if
 .
 . -----Step 8: If called for, draw out an arrow for "best"-----
 .
-if bugswmp = 1; print "--At (dexmp.dp, step 8): arrow for "best"
+if bugmp = 1; print "--At (dexmp.dp, step 8): arrow for "best"
    if pausesw = 1; pause; end if
 end if
 .
@@ -407,22 +461,24 @@ end if
 .
 . -----Step 21: Write out project title, (n,k) box, ybar, and "Step"-----
 .
-if bugswmp = 1; print "--At (dexmp.dp, step 21): proj,(n,k),ybar,step,annotate"
+if bugmp = 1; print "--At (dexmp.dp, step 21): proj,(n,k),ybar,step,annotate"
    if pausesw = 1; pause; end if
 end if
 .
 if project exists
-   if projcol exists; color ^projcol; end if
+   if forecol exists; color ^forecol; end if
    call dexwriteproject.dp
 end if
 .
 call dexknbox.dp
 .
 let ybar = mean y
-if decplacm not exist; set write decimals 4; end if
-if decplacm exists; set write decimals decplacm; end if
-let stybar = number to string ybar
-move 85 91; just right; hw 2 1; text Mean = ^stybar; just center
+delete dpmeanzz; let dpmeanzz = 4
+if decplacm exists; let dpmeanzz = decplacm; end if
+set write decimals dpmeanzz; let stybarr = number to string ybar
+delete ypmeanzz; . let ypmeanzz = 88; let ypmeanzz = 91
+if ypmean exists; let ypmeanzz = ypmean; end if
+move 85 ypmeanzz; just right; hw 2 1; text Mean = ^stybarr; just center
 .
 if step exists
    let step = step + 1; hw 2 1; just left; move 5 95
@@ -437,13 +493,13 @@ if step exists
 end if
 .
 if annotate exists and annotate = 1
-   if colorall exists; color ^colorall; end if
+   if forecol exists; color ^forecol; end if
    call annotate.dp
 end if
 .
 . -----Step 22: Write out right margin factor and setting info-----
 .
-if bugswmp = 1; print "--At (dexmp.dp, step 22): right margin"
+if bugmp = 1; print "--At (dexmp.dp, step 22): right margin"
    if pausesw = 1; pause; end if
 end if
 .
@@ -455,7 +511,7 @@ if rightmsw exists and rightmsw = 1 or rightmsw not exist
       let ypdel = 2; let lh = 1.8; let lw = 0.9
       if k >= 9
          let ypdel = 1.5; let lh = 1.6; let lw = 0.8
-         let string colorl = red blue green black
+         . let string colorl = red blue green black
       end if
       call dexrightmargin.dp
       delete ypdel lh lw
@@ -464,17 +520,17 @@ end if
 .
 . -----Step 23: If called for, write out customized upper left info-----
 .
-if bugswmp = 1; print "--At (dexmp.dp, step 11): upper left"
+if bugmp = 1; print "--At (dexmp.dp, step 23): upper left"
    if pausesw = 1; pause; end if
 end if
 .
 if stcorn1 exists
-   call upperleft.dp
+   . call upperleft.dp
 end if
 .
 . -----Step 24: If called for, print out a target reference line-----
 .
-if bugswmp = 1; print "--At (dexmp.dp, step 24): target ref. line"
+if bugmp = 1; print "--At (dexmp.dp, step 24): target ref. line"
    if pausesw = 1; pause; end if
 end if
 .
@@ -487,7 +543,7 @@ end if
 .
 . -----Step 25: Create the 4 output vectors-----
 .
-if bugswmp = 1; print "--At (dexmp.dp, step 25): 4 output vectors"
+if bugmp = 1; print "--At (dexmp.dp, step 25): 4 output vectors"
    if pausesw = 1; pause; end if
 end if
 .
@@ -508,13 +564,37 @@ let cdfout = cdfz
 let step = 3
 call form_and_write_dex_10_step_conclusions.dp
 .
-. -----Step 99: Finish up-----
+. -----Step 99.1: if frame exists, then restore the original data-----
 .
-if bugswmp = 1; print "--At end of dexmp.dp"
+if bugmp = 1
+   print "--At start of (dexmp.dp, step 99.1): restore original data if frame existed"
+   if frame not exist; print "      frame did not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  data restoration:"
+   stat v
    if pausesw = 1; pause; end if
 end if
 .
-. note--the limits unfreeze command must be AFTER the ylimits command   11/2/1
+if frame exists
+   delete stallx; let stallx = string combine x1 to x^k
+   delete y; delete ^stallx
+   call restore_full_dataset.dp
+end if
+.
+if bugmp = 1
+   print "Post- data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 99.2: Finish up otherwise-----
+.
+if bugmp = 1
+   print "--At (dexmp.dp, step 99.2): finishing up otherwise"
+   if pausesw = 1; pause; end if
+end if
+.
+. note--the limits unfreeze command must be AFTER the ylimits command   11/2/1x
 xlimits
 ylimits
 limits unfreeze

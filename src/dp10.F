@@ -12744,7 +12744,7 @@ C
             ICHACO(I)=IDEFCO
  1115     CONTINUE
 C
-          IF(IFEEDB.EQ.'OFF')THEN
+          IF(IFEEDB.EQ.'ON')THEN
             WRITE(ICOUT,999)
             CALL DPWRST('XXX','BUG ')
             I=1
@@ -12782,7 +12782,7 @@ C
             ICHACO(I)=IHARG(2)
  1145     CONTINUE
 C
-          IF(IFEEDB.EQ.'OFF')THEN
+          IF(IFEEDB.EQ.'ON')THEN
             WRITE(ICOUT,999)
             CALL DPWRST('XXX','BUG ')
             I=1

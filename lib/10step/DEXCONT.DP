@@ -1,4 +1,4 @@
-. This is the dataplot macro file     dexcont.dp
+. This is the dataplot macro file     dexcont.dp    Generate contour plot    1/7/21
 . Purpose: Generate a dex contour plot for 2-level designs
 .          this macro generates a contour plot
 .          of y versus u1 and u2
@@ -23,7 +23,7 @@
 .       than -1 and +1 will    not    be used in the computation
 .       of the model coefficients
 .       and the subsequent contour lines.
-. Updated: June 1995, April 2007, 11/18/15
+. Updated: June 1995=> April 2007 => 11/18/15 => 1/7/21
 .
 . Note: This macro creates several intermediate variables.
 .       Note that a common cause for this macro to fail is that the user    ******
@@ -53,12 +53,12 @@ let bugswcon = 0
 . let pausesw = 1
 .
 if bugswcon = 1; print " "; print "--At beginning of    dexcont.dp"
-print y u1 u2
-pause
-print ycont
-pause
-print qual
-pause
+   print y u1 u2
+   pause
+   print ycont
+   pause
+   print qual
+   pause
    if pausesw = 1; pause; end if
 end if
 .
@@ -84,6 +84,8 @@ tic offset 0 0
 . -----Step 2: Extract only the corner points of the design
 .              (ignore center points, for example)-----
 .
+. echo on
+. feedback on
 if bugswcon = 1; print "--At (dexcont.dp, step 2): extract corner points"
    if pausesw = 1; pause; end if
 end if
@@ -91,14 +93,10 @@ end if
 let dpcontz = 3
 if dpcont exists; let dpcontz = dpcont; end if
 .
-color blue
-line color blue all
-character color blue all
-if colorall exists
-   color ^colorall
-   character color ^colorall all
-   line color ^colorall all
-end if
+color blue; if forecol exists; color ^forecol; end if
+line color blue all; if forecol exists; line color ^forecol all; end if
+char color blue all; if forecol exists; char color ^forecol all; end if
+.
 line solid all
 character blank all
 character fill blank all
@@ -131,12 +129,13 @@ end if
 .
 set parameter expand digits ^dpcontz
 if ycont not exist
-   dex contour plot y u1 u2 ^qual
+   dex contour plot y u1 u2 ^qual                ;. <==========plot
 else
-   dex contour plot y u1 u2 ycont ^qual
+   dex contour plot y u1 u2 ycont ^qual          ;. <==========plot
 end if
 set parameter expand digits
 .
+. pause
 . -----Step 3: Check for replicated center points.
 .              if have replicated center points,
 .              then do curvature check via t test-----

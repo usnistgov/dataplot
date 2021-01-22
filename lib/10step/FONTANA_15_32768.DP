@@ -1,0 +1,105 @@
+. This is dataplot program    fontana_15_32768.dp     1/5/21
+. Purpose: Analyze Peter Fontana's AI/ML test problem (baseball mvp) via 10-step analysis
+. Date: 1/5/21
+.
+. -----start point-----
+.
+feedback off
+dimension 100 variables
+.
+. -----Step 1: Name the dataplot code file (= this file), and the input data file-----
+.
+let string filecode = fontana_15_32768.dp
+let string filedata = fontana_15_32768.dp
+.
+. -----Step 2: Name the root for the 4 output files (default = dataplot_out.pdf/ps/dp/dat)-----
+. -----        + will allow auto-view of   dataplot_out.pdf   via   v   command or desktop shortcut-----
+.
+let string fileout = dataplot_out
+device 2 close; set ipl1na ^fileout&.ps; device 2 postscript
+capture fileout.bat; print "^fileout.pdf"; end capture
+
+. -----Step 3: Read in the data-----
+.
+print "The data from file     ^filedata     is being read in . . ."
+let k = 15
+skip 0; read   ^filedata   y x1 to x^k
+.
+print y x1 to x^k for i = 1 1 20; status v;
+print "The data from file     ^filedata    has just been read in."
+let ny = number y; print "Number of data rows = ^ny"
+. print "Hit 'Enter' to continue . . ."
+. pause
+.
+. -----Step 4: Define strings for plot annotation-----
+.
+let string header   = Baseball MVP Selection Sensitivity Analysis
+let string header2  = Design: 2**15 (k=15,n=2**15~32000)
+let string trailer  = Program file: ^filedp
+let string trailer2 = Data file: ^filedata
+let string trailer3 = Output file: ^fileout&.pdf
+let string currdate = 1/5/21
+.
+let string sty = Probability of Hall of Fame
+
+let string stx1   = #Seasons
+let string stx2   = GamesPlayed
+let string stx3   = AtBats
+let string stx4   = Runs
+let string stx5   = Hits
+let string stx6   = Doubles
+let string stx7   = Triples
+let string stx8   = HomeRuns
+let string stx9   = RBIs
+let string stx10  = Walks
+let string stx11  = BatAvg
+let string stx12  = OnBase%
+let string stx13  = Slugging%
+let string stx14  = FieldAve
+let string stx15  = Position
+
+let string stx1l  = 11 16
+let string stx2l  = 964	1659
+let string stx3l  = 3028 5839
+let string stx4l  = 357	851
+let string stx5l  = 778	1617
+let string stx6l  = 117	266
+let string stx7l  = 23	71
+let string stx8l  = 23	107
+let string stx9l  = 318	736
+let string stx10l  = 235 587
+let string stx11l  = 0.253 0.285
+let string stx12l  = 0.315 0.358
+let string stx13l  = 0.344 0.426
+let string stx14l  = 0.957 0.983
+let string stx15l  = 2 4
+.
+let string stbest = up
+let string colorl = blue red
+.
+. -----Step 5: Generate DEX 10-step analysis-----
+.
+let string forecol = blue
+call dex10stepanalysis.dp
+
+. call dexodp.dp
+. call dexsp.dp
+. call dexmp.dp
+. call dexyp.dp
+.
+. -----Step 99: Finish up-----
+.
+. print "At start of step 99 (= finish up) of ^fileout&.dp"
+. pause
+.
+system del     ^fileout&.dp
+system del     ^fileout&.dat
+system copy    ^filecode     ^fileout&.dp
+system copy    ^filedata     ^fileout&.dat
+.
+print " "
+print "Output files:"
+print "   pdf graphics file: ^fileout&.pdf"
+print "   ps  graphics file: ^fileout&.ps"
+print "   txt program  file: ^fileout&.dp"
+print "   txt data     file: ^fileout&.dat"

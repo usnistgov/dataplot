@@ -15,7 +15,7 @@ let wrel = 1
 if writerel exists; let wrel = writerel; end if
 .
 if bugswmp = 1; print "--At dexmp.dp step 8"
-   if ibatch not exist or ibatch = 0; pause; end if
+   if ibatch exists and ibatch = 0; pause; end if
 end if
 .
 let ybar = mean y

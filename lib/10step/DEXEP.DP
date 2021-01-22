@@ -11,21 +11,24 @@
 .    5. frameb (parameter)          = bottom frame line (in %) (optional) (default = 20)
 .    6. maxnumef
 .    7. dpep   (parameter)          = number of decimal places for effects and average (optional, default = ???)
+.    8. frame (string)              = subset/except specification;. 4/16/20
 .
 . -----start point-----
+.
+print " "; print "=====> Now generating plot 7 (DEX |Effects| Plot) <====="
 .
 . print " "
 . print "From (dexep.dp, start point)"
 . print y for i = 1 1 5
-. if ibatch not exist or ibatch = 0; . pause; . end if
+. pause
 .
 feedback save
 feedback off
 printing off
-let bugswep = 0
+let bugep = 0
 . let pausesw = 1
 .
-if bugswep = 1; print " "; print "--At beginning of DEX Ste p 7 (DEXEP.DP)"
+if bugep = 1; print " "; print "--At beginning of DEX Ste p 7 (DEXEP.DP)"
    print y x1 x2 x3
    print "   numeff = ^numeff"
    loop for jz = 1 1 numeff
@@ -42,9 +45,32 @@ end if
 . -----Do Analysis Ste p 7: |Effects| Plot-----
 . --------------------------------------------
 .
+. -----Step 1.0: if frame exists, the save the original data and extract the subset-----
+.
+if bugep = 1
+   print "--At start of (dexep.dp, step 1.0): if frame exists, save the original data and extract the subset"
+   if frame not exist; print "      frame does not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   call save_full_dataset.dp
+   delete stallx; let stallx = string combine x1 to x^k
+   retain y ^stallx ^frame
+end if
+.
+if bugep = 1
+   print "Post-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
 . -----Step 1.1: Check for missing input values-----
 .
-if bugswep = 1; print "--At (dexep.dp, step 1.1): check input"
+if bugep = 1; print "--At (dexep.dp, step 1.1): check input"
    if pausesw = 1; pause; end if
 end if
 .
@@ -54,15 +80,13 @@ if k not exist
 end if
 set check name output filliben
 set check length output filliben
-feedback on
 let iflag = check name k y x1 to x^k
 let iflag = check equal length y x1 to x^k
-feedback off
 .
 . -----Step 1.2: Copy the user's original y and x1 to xk data out to file-----
 .                since y and x1 to xk may potentially be modified within this macro-----
 .
-if bugswep = 1; print "--At (dexep.dp, step 1.2): save original data"
+if bugep = 1; print "--At (dexep.dp, step 1.2): save original data"
    if pausesw = 1; pause; end if
 end if
 .
@@ -76,7 +100,7 @@ set write format
 .                If not 2 levels, then only the min and max will be used herein.-----
 .                If not -1 and +1, then min => -1 and max => +1-----
 .
-if bugswep = 1; print "--At (dexep.dp, step 1.3): normalitze to (-1,+1)"
+if bugep = 1; print "--At (dexep.dp, step 1.3): normalitze to (-1,+1)"
    if pausesw = 1; pause; end if
 end if
 .
@@ -85,7 +109,7 @@ call check_and_fix_original_data_for_2_levels_and_m1_p1.dp
 .
 . -----Step 2: Define plot settings-----
 .
-if bugswep = 1; print "--At (dexep.dp, step 2): plot settings"
+if bugep = 1; print "--At (dexep.dp, step 2): plot settings"
    if pausesw = 1; pause; end if
 end if
 .
@@ -93,24 +117,25 @@ call dexplotinit.dp
 .
 . -----Step 3: Compute effect estimates (ordered) and confounding-----
 .
-if bugswep = 1; print "--At (dexep.dp, step 3): confounding"
+if bugep = 1; print "--At (dexep.dp, step 3): confounding"
    print "confsw = ^confsw"
    if pausesw = 1; pause; end if
 end if
 .
 call compute_effect_estimates_and_confounding.dp
 .
-if bugswep = 1; print "--At end of step 3 of dexep.dp"
+if bugep = 1; print "--At end of step 3 of dexep.dp"
    print "numeff = ^numeff"
    loop for jzz = 1 1 numeff
       print steft^jzz
    end loop
    if pausesw = 1; pause; end if
+   pause
 end if
 .
 . -----Step 4: Define characters, lines, spikes, and axis labels for upcoming
 .
-if bugswep = 1; print "--At (dexep.dp, step 4): char,lines,spikes,labels"
+if bugep = 1; print "--At (dexep.dp, step 4): char,lines,spikes,labels"
    if pausesw = 1; pause; end if
 end if
 .
@@ -121,8 +146,7 @@ x3label
 label size labelsiz
 tic label size ticlabsi
 ygrid
-grid color blue
-if colorall exists; grid color ^colorall; end if
+grid color ^forecol
 x1tics off
 x1tic label off
 y1tic offset 10
@@ -136,7 +160,7 @@ let s = sd y
 .
 . -----Step 5: GENERATE THE PLOT-----
 .
-if bugswep = 1; print "--At (dexep.dp, step 5): GENERATE THE PLOT"
+if bugep = 1; print "--At (dexep.dp, step 5): GENERATE THE PLOT"
    if pausesw = 1; pause; end if
 end if
 .
@@ -146,7 +170,7 @@ plot eff2 index
 .
 . -----Step 6: Write out the ordered factor IDs along the horizontal axis-----
 .
-if bugswep = 1; print "--At (dexep.dp, step 6): horiz axis ordered factor id's"
+if bugep = 1; print "--At (dexep.dp, step 6): horiz axis ordered factor id's"
    if pausesw = 1; pause; end if
 end if
 .
@@ -162,13 +186,8 @@ character hw texth textw all
 if n > 35
    character hw 1.5 0.75 all
 end if
-character color blue all
-spike color blue all
-if colorall exists
-   let coltemp = string word colorall 1
-   character color ^coltemp all
-   spike color ^coltemp all
-end if
+character color ^forecol all
+spike color ^forecol all
 loop for j = 1 1 numeff
    let plot character j = ^steft^j
 end loop
@@ -176,7 +195,7 @@ drawds symbol x0pos y0pos tagzzz
 .
 . -----Step 7: write out the box (and contents) in upper right corner within the plot-----
 .
-if bugswep = 1; print "--At (dexep.dp, step 7): write box contents"
+if bugep = 1; print "--At (dexep.dp, step 7): write box contents"
    print "numeff = ^numeff"
    loop for jz = 1 1 numeff
       print "stefc^jz = ^stefc^jz"
@@ -195,7 +214,7 @@ call dexep_box.dp
 .
 . -----Step 8: Write out the grand mean above upper right corner of the plot-----
 .
-if bugswep = 1; print "--At (dexep.dp, step 8): write ybar"
+if bugep = 1; print "--At (dexep.dp, step 8): write ybar"
    if pausesw = 1; pause; end if
 end if
 .
@@ -204,9 +223,9 @@ let dpepz = 4
 if dpep exists; let dpepz = dpep; end if
 set write decimals dpepz; let stybar = number to string ybar
 .
-if colorall exists; color ^colorall; end if
-hw texth textw
-. justification left     these 4 lines were commented out 10/15/18
+if forecol exists; color ^forecol; end if
+. hw texth textw; hw 2 1       ;. bug fix 1/7/21
+. justification left           ;. these 4 lines were commented out 10/15/18
 . let y0 = 90 - texth
 . let x0 = 17
 . move x0 y0; . text Mean = ^stybar
@@ -219,7 +238,7 @@ justification left
 .
 . -----Step 9: Annotate the plot-----
 .
-if bugswep = 1; print "--At (dexep.dp, step 9): annotate"
+if bugep = 1; print "--At (dexep.dp, step 9): annotate"
    if pausesw = 1; pause; end if
 end if
 .
@@ -227,7 +246,7 @@ call dexknbox.dp
 .
 .
 if project exists
-   if projcol exists; color ^projcol; end if
+   if forecol exists; color ^forecol; end if
    call dexwriteproject.dp
 end if
 .
@@ -244,13 +263,13 @@ if step exists
 end if
 .
 if annotate exists and annotate = 1
-   if colorall exists; color ^colorall; end if
+   if forecol exists; color ^forecol; end if
    call annotate.dp
 end if
 .
 . -----Step 10: Write out right margin factor and setting info-----
 .
-if bugswep = 1; print "--At (dexep.dp, step 10): right margin"
+if bugep = 1; print "--At (dexep.dp, step 10): right margin"
    if pausesw = 1; pause; end if
 end if
 .
@@ -262,7 +281,7 @@ end if
 .
 . -----Step 11: If called for, write out customized upper left info-----
 if stcorn1 exists
-if bugswep = 1; print "--At (dexep.dp, step 11): upper left"
+if bugep = 1; print "--At (dexep.dp, step 11): upper left"
    if pausesw = 1; pause; end if
 end if
 .
@@ -271,7 +290,7 @@ end if
 .
 . -----Step 98: Restore the user's original y and x1 to xk data from file-----
 .
-if bugswep = 1; print " "; print "---At (dexep.dp, step 98): restore orig. data (pre-restore)"
+if bugep = 1; print " "; print "---At (dexep.dp, step 98): restore orig. data (pre-restore)"
    print y x1 to x^k
    if pausesw = 1; pause; end if
 end if
@@ -281,7 +300,7 @@ set read format 40f15.7
 skip 0; read dex_original_data.dat y x1 to x^k
 set read format
 .
-if bugswep = 1; print " "; print "---At (dexep.dp, step 98): (post-restore)"
+if bugep = 1; print " "; print "---At (dexep.dp, step 98): (post-restore)"
    print y x1 to x^k
    if pausesw = 1; pause; end if
 end if
@@ -291,9 +310,33 @@ end if
 let step = 7
 call form_and_write_dex_10_step_conclusions.dp
 .
-. -----Step 99: Finish up-----
+. -----Step 99.1: if frame exists, then restore the original data-----
 .
-if bugswep = 1; print " "; print "---At end of dexep.dp . . ."
+if bugep = 1
+   print "--At start of (dexep.dp, step 99.1): restore original data if frame existed"
+   if frame not exist; print "      frame did not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   delete stallx; let stallx = string combine x1 to x^k
+   delete y; delete ^stallx
+   call restore_full_dataset.dp
+end if
+.
+if bugep = 1
+   print "Post- data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 99.2: Finish up otherwise-----
+.
+if bugep = 1
+   print "--At (dexep.dp, step 99.2): finishing up otherwise---"
    if pausesw = 1; pause; end if
 end if
 .

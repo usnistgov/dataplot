@@ -32,16 +32,16 @@
 .
 . -----start point-----
 .
-let bugsweec = 0
+let bugceec = 0
 . let pausesw = 1
 .
-if bugsweec = 1; print " "; print "--At the beginning of compute_effect_estimates_and_confounding.dp"
+if bugceec = 1; print " "; print "--At the beginning of compute_effect_estimates_and_confounding.dp"
    if pausesw = 1; pause; end if
 end if
 .
 . -----Step 1: Determine the confounding switch-----
 .
-if bugsweec = 1; print "--At (compute_effect_estimates_and_confounding.dp, step 1): determine confounding switch"
+if bugceec = 1; print "--At (compute_effect_estimates_and_confounding.dp, step 1): determine confounding switch"
    print "confsw = ^confsw"
    print "confdone = ^confdone"
    if pausesw = 1; pause; end if
@@ -53,7 +53,7 @@ if confsw exists and confsw = 1; let confsw2 = 1; end if
 .
 . -----Step 2: Treat the needs-to-be-done case-----
 .
-if bugsweec = 1; print "--At (compute_effect_estimates_and_confounding.dp, step 2): do estimation & confounding"
+if bugceec = 1; print "--At (compute_effect_estimates_and_confounding.dp, step 2): do estimation & confounding"
    print "confsw = ^confsw"
    print "confsw2 = ^confsw2"
    print confdone = ^confdone"
@@ -65,7 +65,13 @@ if confsw2 = 1
       . call 2_level_design_effects_and_confounding.dp
       let stall = string combine x1 to x^k
       let conftag1 conftag2 = dex confound ^stall
+      print "1. pre-dex core command"
       let corefac = dex core ^stall
+      print "2. post-dex core command"
+      print "3. pre-fix_core.dp"
+      call fix_core.dp
+      print "4. post-fix_core.dp"
+      .
       let corefac1 = corefa1
       let corefac2 = corefa2
       let corefac3 = corefa3
@@ -75,14 +81,14 @@ if confsw2 = 1
       let confdone = 1
       let coredone = 1
       .
-      call est.dp     ;. <================================
+      call est.dp                 ;. <================================
       .
    end if
 end if
 .
 . -----Step 99: Finish up-----
 .
-if bugsweec = 1; print " "; print "--At the end of compute_effect_estimates_and_confounding.dp"
+if bugceec = 1; print " "; print "--At the end of compute_effect_estimates_and_confounding.dp"
    print "confsw = ^confsw"
    print "confsw2 = ^confsw2"
    print "confdone = ^confdone"

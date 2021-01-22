@@ -1,16 +1,19 @@
-. This is dataplot macro   DEXKNBOX.DP
+. This is dataplot macro   DEXKNBOX.DP    (draw upper left corner (k,n) box    1/7/21
 . Purpose: Write out k = ...  n = ... is upper left  corner of plot frame
 . Note   : Used by DEXPLOT.DP macros
-. Date   : March 2, 2005
+. Date   : 3/2/05 => 1/7/21
 . Input:
-.    y      (vector)    = response variable
-.    k      (parameter) = number of plot factors (usually = number of real factors)
-.    k0     (parameter) = number of factors (no interactions) (optional) (default = k)
-.    n      (parameter) = total number of observations in y
-.    textboxh  (parameter) = desired height for text box annotation (in %)
-.    textboxw  (parameter) = desired width for text box annotation (in %)
-.    framet (parameter) = top    frame line (in %) (optional) (default = 90)
-.    frameb (parameter) = bottom frame line (in %) (optional) (default = 20)
+.    y        (vector)    = response variable
+.    k        (parameter) = number of plot factors (usually = number of real factors)
+.    k0       (parameter) = number of factors (no interactions) (optional) (default = k)
+.    n        (parameter) = total number of observations in y
+.    textboxh (parameter) = desired height for text box annotation (in %)
+.    textboxw (parameter) = desired width for text box annotation (in %)
+.    framet   (parameter) = top    frame line (in %) (optional) (default = 90)
+.    frameb   (parameter) = bottom frame line (in %) (optional) (default = 20)
+.    forecol  (string)    = color for within-box text (and derived color for box background)
+.  Output:
+.    On a pre-existing plot: a drawn (upper left corner) box with (k,n) values within
 .
 . -----start point-----
 .
@@ -63,12 +66,16 @@ if njunk <= 999; let boxright = 17 + 5*textwzzz; end if
 . if njunk <= 99;. let boxright = 15 + 5*textwzzz;. end if
 if njunk <= 99; let boxright = 16 + 5*textwzzz; end if
 .
-if forecol2 exists
-   box color ^colorall
+. if forecol2 exists   1/7/21
+. print "forecol = ^forecol"
+. pause
+. if forecol exists
+   . box color ^colorall
+   box color blue; if forecol exists; box color ^forecol; end if
    box fill pattern solid
-   box fill color 67  
+   box fill color 67; if forecol exists; if forecol = black; box fill color gray; end if ; end if
 .    box fill color skbl
-end if
+. end if
 if brfudge exists
    let boxright = boxright + brfudge
 end if
@@ -88,7 +95,7 @@ end if
 if bugswknb = 1; print "--At (dexknbox.dp, step 3): write text"
    if pausesw = 1; pause; end if
 end if
-color blue
+color blue; if forecol exists; color ^forecol; end if
 if leecolor exists; color ^leecolor; end if
 .
 . let ypz = 87.75

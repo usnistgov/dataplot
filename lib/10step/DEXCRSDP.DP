@@ -9,16 +9,19 @@
 .
 .    4. framet (parameter)          = top    frame line (in %) (optional) (default = 90)
 .    5. frameb (parameter)          = bottom frame line (in %) (optional) (default = 20)
+.    6. frame (string)              = subset/except specification;. 4/16/20
 .
 . -----start point-----
+.
+print " "; print "=====> Now generating plot 9 (Cumulative ResSD Plot) <====="
 .
 feedback save
 feedback off
 printing off
-let bugswcrs = 0
+let bugcrs = 0
 . let pausesw = 1
 .
-if bugswcrs = 1; print " "; print "--At beginning of DEX Ste p 9 (DEXCRSDP.DP)"
+if bugcrs = 1; print " "; print "--At beginning of DEX Ste p 9 (DEXCRSDP.DP)"
    if pausesw = 1; pause; end if
 end if
 .
@@ -26,9 +29,32 @@ end if
 . -----Do Analysis Ste p 9: Cumulative Residual SD Plot-----
 . ---------------------------------------------------------
 .
+. -----Step 1.0: if frame exists, the save the original data and extract the subset-----
+.
+if bugcrs = 1
+   print "--At start of (dexcrsdp.dp, step 1.0): if frame exists, save the original data and extract the subset"
+   if frame not exist; print "      frame does not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   call save_full_dataset.dp
+   delete stallx; let stallx = string combine x1 to x^k
+   retain y ^stallx ^frame
+end if
+.
+if bugcrs = 1
+   print "Post-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
 . -----Step 1.1: Check for missing input values-----
 .
-if bugswcrs = 1; print "--At (dexcsdp.dp, step 1.1): check input"
+if bugcrs = 1; print "--At (dexcsdp.dp, step 1.1): check input"
    if pausesw = 1; pause; end if
 end if
 .
@@ -38,15 +64,16 @@ if k not exist
 end if
 set check name output filliben
 set check length output filliben
-feedback on
-let iflag = check name k y x1 to x^k
-let iflag = check equal length y x1 to x^k
-feedback off
+if k = 1; let iflag = check name k y x1 ; end if
+if k >= 2
+   let iflag = check name k y x1 to x^k
+   let iflag = check equal length y x1 to x^k
+end if
 .
 . -----Step 1.2: Copy the user's original y and x1 to xk data out to file-----
 .                since y and x1 to xk may potentially be modified within this macro-----
 .
-if bugswcrs = 1; print "--At (dexcsdp.dp, step 1.2): save original data"
+if bugcrs = 1; print "--At (dexcsdp.dp, step 1.2): save original data"
    if pausesw = 1; pause; end if
 end if
 .
@@ -60,7 +87,7 @@ set write format
 .                If not 2 levels, then only the min and max will be used herein.-----
 .                If not -1 and +1, then min => -1 and max => +1-----
 .
-if bugswcrs = 1; print "--At (dexcsdp.dp, step 1.3): Normalize to [-1,+1]"
+if bugcrs = 1; print "--At (dexcsdp.dp, step 1.3): Normalize to [-1,+1]"
    if pausesw = 1; pause; end if
 end if
 .
@@ -69,7 +96,7 @@ call check_and_fix_original_data_for_2_levels_and_m1_p1.dp
 .
 . -----Step 2: Define Plot settings-----
 .
-if bugswcrs = 1; print "--At (dexcsdp.dp, step 2): plot settings"
+if bugcrs = 1; print "--At (dexcsdp.dp, step 2): plot settings"
    if pausesw = 1; pause; end if
 end if
 .
@@ -77,24 +104,25 @@ call dexplotinit.dp
 
 . -----Step 3: Compute effect estimates (ordered) and confounding-----
 .
-if bugswcrs = 1; print "--At (dexcrsdp.dp, step 3): confounding"
+if bugcrs = 1; print "--At (dexcrsdp.dp, step 3): confounding"
    print "confsw = ^confsw"
    if pausesw = 1; pause; end if
 end if
 .
 call compute_effect_estimates_and_confounding.dp
 .
-if bugswcrs = 1; print "--At end of step 3 of dexcrsdp.dp"
+if bugcrs = 1; print "--At end of step 3 of dexcrsdp.dp"
    print "numeff = ^numeff"
    loop for jzz = 1 1 numeff
       print steft^jzz
    end loop
    if pausesw = 1; pause; end if
+   pause
 end if
 .
 . -----Step 4: GENERATE THE PLOT-----
 .
-if bugswcrs = 1; print "--At (dexcsdp.dp, step 4): GENERATE THE PLOT"
+if bugcrs = 1; print "--At (dexcsdp.dp, step 4): GENERATE THE PLOT"
    if pausesw = 1; pause; end if
 end if
 .
@@ -105,8 +133,7 @@ x3label
 label size labelsiz
 tic label size ticlabsi
 ygrid
-grid color blue
-if colorall exists; grid color ^colorall; end if
+grid color blue; if forecol exists; grid color ^forecol; end if
 x1tics off
 x1tic label off
 y1tic offset 10
@@ -123,7 +150,7 @@ let horv = 1 1 numeff
 . pause
 .
 spike on
-if colorall exists; spike color ^colorall; end if
+spike color blue; if forecol exists; spike color ^forecol; end if
 let numeffp1 = numeff+1
 let s = sd y
 let vertv(numeffp1) = s
@@ -138,7 +165,7 @@ let yplotsv = yplot
 .
 . -----Step 5: Write ordered factor ids along horizontal axis-----
 .
-if bugswcrs = 1; print "--At (dexcsdp.dp, step 5): ordered horiz. axis factors"
+if bugcrs = 1; print "--At (dexcsdp.dp, step 5): ordered horiz. axis factors"
    if pausesw = 1; pause; end if
 end if
 .
@@ -146,8 +173,7 @@ character hw 2 1 all
 if n > 20; character hw 1.5 .75 all; end if
 character justificiation cece all
 character blank all
-character color blue all
-if colorall exists; character color ^colorall all; end if
+character color blue all; if forecol exists; character color ^forecol all; end if
 let cadd = 0
 if frameb exists; let cadd = 20 - frameb; end if
 .
@@ -165,14 +191,13 @@ drawds symbol xpos ypos tagzj
 .
 . -----Step 6: Write confounding along right margin-----
 .
-if bugswcrs = 1; print "--At (dexcsdp.dp, step 6): right margin confounding"
+if bugcrs = 1; print "--At (dexcsdp.dp, step 6): right margin confounding"
    if pausesw = 1; pause; end if
 end if
 .
 hw 2 1
 just lece
-color blue
-if colorall exists; color ^colorall; end if
+color blue; if forecol exists; color ^forecol; end if
 .
 let numyplot = number yplot
 let numyplm1 = numyplot-1
@@ -206,7 +231,7 @@ if n > 20; text Ave.; end if
 .
 . -----Step 7: Write the mean value in the upper right corner of the plot----
 .
-if bugswcrs = 1; print "--At (dexcsdp.dp, step 7): mean"
+if bugcrs = 1; print "--At (dexcsdp.dp, step 7): mean"
    if pausesw = 1; pause; end if
 end if
 .
@@ -214,7 +239,7 @@ let ybar = average y
 let dpmeanz = 4
 if dpmean exists; let dpmeanz = dpmean; end if
 set write decimals dpmeanz; let stybar = number to string ybar
-if colorall exists; color ^colorall; end if
+color blue; if forecol exists; color ^forecol; end if
 hw texth textw
 justification left
 move 85 91; just right; hw 2 1; text Mean = ^stybar; just center
@@ -231,12 +256,12 @@ call dexcrsdp_box.dp
 .
 . -----Step 9: write out project, (k,n), step, and annotation-----
 .
-if bugswcrs = 1; print "--At (dexcsdp.dp, step 9): proj,(k,n),step,annotate"
+if bugcrs = 1; print "--At (dexcsdp.dp, step 9): proj,(k,n),step,annotate"
    if pausesw = 1; pause; end if
 end if
 .
 if project exists
-   if projcol exists; color ^projcol; end if
+   color blue; if forecol exists; color ^forecol; end if
    call dexwriteproject.dp
 end if
 .
@@ -255,13 +280,13 @@ if step exists
 end if
 .
 if annotate exists and annotate = 1
-   if colorall exists; color ^colorall; end if
+   color blue; if forecol exists; color ^forecol; end if
    call annotate.dp
 end if
 .
 . -----Step 10: If called for, write out customized upper left info-----
 .
-if bugswcrs = 1; print "--At (dexcsdp.dp, step 10): upper left"
+if bugcrs = 1; print "--At (dexcsdp.dp, step 10): upper left"
    if pausesw = 1; pause; end if
 end if
 .
@@ -276,7 +301,7 @@ call form_and_write_dex_10_step_conclusions.dp
 .
 . -----Step 98: Restore the user's original y and x1 to xk data from file-----
 .
-if bugswcrs = 1; print " "; print "---At (dexcrsdp.dp, step 98): restore orig. data (pre-restore)"
+if bugcrs = 1; print " "; print "---At (dexcrsdp.dp, step 98): restore orig. data (pre-restore)"
    print y x1 to x^k
    if pausesw = 1; pause; end if
 end if
@@ -286,14 +311,38 @@ set read format 40f15.7
 skip 0; read dex_original_data.dat y x1 to x^k
 set read format
 .
-if bugswcrs = 1; print " "; print "---At (dexcrsdp.dp, step 98): (post-restore)"
+if bugcrs = 1; print " "; print "---At (dexcrsdp.dp, step 98): (post-restore)"
    print y x1 to x^k
    if pausesw = 1; pause; end if
 end if
 .
-. -----Step 99: Finish up-----
+. -----Step 99.1: if frame exists, then restore the original data-----
 .
-if bugswcrs = 1; print " "; print "---At end of dexcrsdp.dp . . ."
+if bugcrs = 1
+   print "--At start of (dexcrsdp.dp, step 99.1): restore original data if frame existed"
+   if frame not exist; print "      frame did not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   delete stallx; let stallx = string combine x1 to x^k
+   delete y; delete ^stallx
+   call restore_full_dataset.dp
+end if
+.
+if bugcrs = 1
+   print "Post- data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 99.2: Finish up otherwise-----
+.
+if bugcrs = 1
+   print "--At (dexcrsdp.dp, step 99.2): finishing up otherwise---"
    if pausesw = 1; pause; end if
 end if
 .

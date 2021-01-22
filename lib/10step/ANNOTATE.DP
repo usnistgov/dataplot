@@ -79,7 +79,7 @@ if yheader3 not exist; let yheader3 = 92; end if
 if yheader4 not exist; let yheader4 = 89.5; end if
 if yheader5 not exist; let yheader5 = 87; end if
 .
-hw 3 1.5
+hw 2.8 1.4
 if headhw exists; hw ^headhw; end if    ;. not working
 if headhw1 exists; hw ^headhw1; end if
 if head1hw exists; hw ^head1hw; end if
@@ -88,7 +88,7 @@ if headhw exists; hw ^headhw; end if
 if hwhead1 exists; hw ^hwhead1; end if
 just center; move 50 yheader1; text ^header
 .
-hw 3 1.5
+hw 2.8 1.4
 if head2hw exists; hw ^head2hw; end if
 if headhw2 exists; hw ^headhw2; end if
 if hwhead2 exists; hw ^hwhead2; end if
@@ -130,7 +130,8 @@ end if
 . print "--From annotate.dp: at step 3. In pause mode . . .";. pause
 .
 . hw 1.5 .75; just right; move 98 1; . text ^trailer
-hw 1.6 0.8; just right; move 98 2.5; text ^trailer
+hw 1.6 0.8; just right; move 98 2.5; . text ^trailer  ;. changed 5/9/20
+hw 1.6 0.8; just right; move 98 3.25; text ^trailer
 .
 if trailerm exists
    hw 1.6 0.8; just right; move 98 1; text ^trailerm
@@ -146,13 +147,16 @@ if trailer2 exists
      .
      let xtrail2z = 98
      . let ytrail2z = 5   commented out 6/21/17
-     let ytrail2z = 1
+     . let ytrail2z = 1   ;. changed 5/8/20
+     let ytrail2z = 1.75
      .
    if xtrail2 exists; let xtrail2z = xtrail2; end if
    if ytrail2 exists; let ytrail2z = ytrail2; end if
    let string xjzz = right
    if xtrail2j exists; let string xjzz = ^xtrail2j; end if
    . move xtrail2z ytrail2z; . just ^xjzz; . hw 1.8 0.9; . text ^trailer2
+. print "xtrail2z = ^xtrail2z     ytrail2z = ^ytrail2z"
+. pause
    move xtrail2z ytrail2z; just ^xjzz; hw 1.6 0.8; text ^trailer2
    . move xtrail2z ytrail2z; . just right; . hw 1.8 0.9; . text ^trailer2
 end if
@@ -175,3 +179,6 @@ hw 2 1; just left
 . if stcorn exists or stcorn1 exists    ;. inserted ~ 5/18/18    deleted 6/18/18
 .    call upperleft.dp
 . end if
+.
+. system pdf dppl2f.pdf
+.

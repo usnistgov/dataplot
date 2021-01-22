@@ -1,7 +1,8 @@
 . This is dataplot macro     dexmp_write_factor_levels.dp      10/29/18
 . Purpose: Write out the factor levels for the dexmp.dp (and dexsp.dp) macros
-. Date: 10/29/18
-. Note: This routine is called by   dexmp.dp (and also by dexsp.dp)
+. Date:    10/29/18
+. Updated:  8/20/19
+. Note: This routine is called by   dexmp.dp
 . Input:
 .    k        (parameter) = number of factors
 .    xplott, yplot, tagplot (vectors0 from previous dex mean plot
@@ -9,7 +10,7 @@
 .    k                      (parameter) = number of factors
 .    xplott, yplot, tagplot (vectors)   = plot output vectors from previous dex mean plot
 .    numlevva               (vector)    = number of levels of each factor
-.
+.    levint                 (parameter) = 0,1 switch dictating whether hor. axis labels are integers (optional)
 .
 . Output:
 .    Horzontal axis tic annotation gets wrrten out on an existing plot
@@ -62,6 +63,10 @@ loop for jfact = 1 1 k
    if numlevfa =  1; let string stoutv = 1  ;                                                 end if
    if numlevfa =  2; let string stoutv = - +;                                                 end if
    if numlevfa =  3; let string stoutv = - 0 +;                                               end if
+   if levint exists and levint = 1
+      if numlevfa =  2; let string stoutv = 1 2;                                              end if
+      if numlevfa =  3; let string stoutv = 1 2 3;                                            end if
+   end if
    if numlevfa =  4; let string stoutv = 1 2 3 4;                                             end if
    if numlevfa =  5; let string stoutv = 1 3 5;     retain xpv indexv subset indexv 1 3 5;    end if
    if numlevfa =  6; let string stoutv = 1 . . 6;   retain xpv indexv subset indexv 1 3 4 6;  end if
@@ -101,10 +106,7 @@ loop for jfact = 1 1 k
    end if
    .
    let nstoutv = number of words stoutv
-   if stoutv not exist
-      print "Error-stoutv not exists
-      if pausesw = 1; pause; end if
-   end if
+   if stoutv not exist; print "Error-stoutv not exists; pause; end if
    .
    if bugswwfl = 1
       print "stoutv = ^stoutv"
@@ -116,9 +118,9 @@ loop for jfact = 1 1 k
       let stout = string word stoutv ^jword
       let xp = xpv(^jword)
       color blue;
-      if colorl exists
-         let ncolorl = number of words colorl
-         if jword <= ncolorl; let stcolorl = string word colorl ^jword; color ^stcolorl; end if
+      if levcol exists
+         let nlevcol = number of words levcol
+         if jword <= nlevcol; let stlevcol = string word levcol ^jword; color ^stlevcol; end if
       end if
       moveds xp yp; text ^stout                  ;. <=======================write text
    end loop

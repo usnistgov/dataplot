@@ -5,15 +5,22 @@
 .
 . -----start point-----
 .
+feedback off
 dimension 1000 variables     ;. note expanded dimension for k = 13  ***
+.
+. The following line will name the 4 output files as dataplot_out.pdf/ps/dp/dat
+let string outfile = dataplot_out; device 2 close; set ipl1na ^outfile.ps; device 2 postscript
 .
 . -----Step 1: Read in the data-----
 .
 let k = 13
 skip 50; read   wtc_13_16.dat   y x1 to x^k
-delete  y x1 to x^k for i = 9 1 9
+print y x1 to x13; status v; print "Hit 'Enter' to continue . . ."; pause
 .
-. -----Step 2: Define strings-----
+delete  y x1 to x^k for i = 9 1 9
+print y x1 to x13; status v; print "Hit 'Enter' to continue . . ."; pause
+.
+. -----Step 2: Define strings for plot annotation-----
 .
 let string header = Factors Affecting World Trade Center Inner Core Column Damage
 let string header2 = Design: 2**(13-9) (k=13,n=16)
@@ -58,3 +65,14 @@ let string colorl = red blue
 .
 call dex10stepanalysis.dp
 .
+. -----Step 99: Finish up-----
+.
+copy    wtc_13_16.dp    ^outfile&.dp
+copy    wtc_13_16.dat   ^outfile&.dat
+print " "
+print "Output:"
+print "   pdf graphics file: ^outfile&.pdf"
+print "   ps  graphics file: ^outfile&.ps"
+print "   txt program  file: ^outfile&.dp"
+print "   txt data     file: ^outfile&.dat"
+

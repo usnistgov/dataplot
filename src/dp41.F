@@ -8584,6 +8584,8 @@ C     UPDATED         --AUGUST    2020. FOR CYCLE GRAPH COMMAND, CHECK
 C                                       FOR CONFLICT WITH:
 C                                           CP CUMULATIVE STATISTIC PLOT
 C                                           CP MOVING     STATISTIC PLOT
+C     UPDATED         --DECEMBER  2020. ADDED SAVE VARIABLE COMMAND
+C     UPDATED         --DECEMBER  2020. ADDED RESTORE VARIABLE COMMAND
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -9528,22 +9530,26 @@ C
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
       ENDIF
 C
-C               ******************************
-C               **  TREAT THE RESTORE CASE  **
-C               ******************************
+C               ****************************************
+C               **  TREAT THE RESTORE           CASE  **
+C               **  TREAT THE RESTORE VARIABLE  CASE  **
+C               ****************************************
 C
-      IF(NUMARG.GE.1.AND.ICOM.EQ.'REST'.AND.
-     1IHARG(1).EQ.'MEMO'.AND.IHARG2(1).EQ.'RY  ')GOTO4000
-      IF(NUMARG.GE.1.AND.ICOM.EQ.'REST'.AND.
-     1IHARG(1).EQ.'ALL '.AND.IHARG2(1).EQ.'    ')GOTO4000
-      IF(ICOM.EQ.'REST')GOTO4000
-      GOTO4099
-C
- 4000 CONTINUE
-      CALL DPREST(IFOUND,IERROR)
-      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-C
- 4099 CONTINUE
+      IF(NUMARG.GE.1.AND.ICOM.EQ.'REST')THEN
+        IF(IHARG(1).EQ.'MEMO'.AND.IHARG2(1).EQ.'RY  ')THEN
+          CALL DPREST(IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+        ELSEIF(IHARG(1).EQ.'ALL '.AND.IHARG2(1).EQ.'    ')THEN
+          CALL DPREST(IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+        ELSEIF(IHARG(1).EQ.'VARI'.AND.IHARG2(1).EQ.'ABLE')THEN
+          CALL DPREVA(IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+        ELSEIF(ICOM.EQ.'REST')THEN
+          CALL DPREST(IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+        ENDIF
+      ENDIF
 C
 C               *****************************
 C               **  TREAT THE RETAIN CASE  **
@@ -10491,23 +10497,22 @@ CCCCC1            IANSSV,IREPMX,IPOINT,
       GOTO9509
 C
 C
-C               **********************************
-C               **  TREAT THE SAVE MEMORY CASE  **
-C               **********************************
+C               ************************************
+C               **  TREAT THE SAVE MEMORY CASE    **
+C               **  TREAT THE SAVE VARIABLE CASE  **
+C               ************************************
 C
  9509 CONTINUE
-      IF(NUMARG.GE.1.AND.ICOM.EQ.'SAVE'.AND.
-     1IHARG(1).EQ.'MEMO'.AND.IHARG2(1).EQ.'RY  ')GOTO9510
-      IF(NUMARG.GE.1.AND.ICOM.EQ.'SAVE'.AND.
-     1IHARG(1).EQ.'ALL '.AND.IHARG2(1).EQ.'    ')GOTO9510
-      GOTO9599
-C
- 9510 CONTINUE
-      CALL DPSAVE(IFOUND,IERROR)
-      IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-      GOTO9599
-C
- 9599 CONTINUE
+      IF(NUMARG.GE.1 .AND. ICOM.EQ.'SAVE')THEN
+        IF((IHARG(1).EQ.'MEMO' .AND. IHARG2(1).EQ.'RY  ') .OR.
+     1     (IHARG(1).EQ.'ALL ' .AND. IHARG2(1).EQ.'    '))THEN
+          CALL DPSAVE(IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+        ELSEIF(IHARG(1).EQ.'VARI' .AND. IHARG2(1).EQ.'ABLE')THEN
+          CALL DPSAVA(IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+        ENDIF
+      ENDIF
 C
 C               **************************************
 C               **  TREAT THE GUI SAVE PLOT CONTROL **

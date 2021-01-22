@@ -1,6 +1,6 @@
 . This is dataplot macro     dexmp_anova.dp     7/10/18
-. Purpose: For each of the k factors, complute local ANOVA,
-.          and write out effect inof above horixontal axis
+. Purpose: For each of the k factors, compute local ANOVA,
+.          and write out effect info above horixontal axis
 . Date: 7/10/18
 .
 . -----start point-----
@@ -24,14 +24,17 @@ if writerel exists; let wrel = writerel; end if
 let ybar = mean y
 just cece
 . hw 1.75 .85   zzzzzz 6/6/16
+if texthz not exist; let texthz = 2; end if
+if textwz not exist; let textwz = 1; end if
 hw texthz textwz
-if texth = 3
+.
+if texthz = 3
    hw 2.8 1.4; let b2z = 20.8+1.4; let b1z = b2z+2.8
-else if texth = 4
+else if texthz = 4
    hw 3.4 1.7; let b2z = 20.8+1.7; let b1z = b2z+3.4
-else if texth = 5
+else if texthz = 5
    hw 4.0 2.0; let b2z = 20.8+2.0; let b1z = b2z+4.0
-else if texth = 6
+else if texthz = 6
    hw 4.6 2.3; let b2z = 20.8+2.3; let b1z = b2z+4.6
 end if
 if frameb exists and b1z exists; let b1z = b1z - (20 - frameb); end if
@@ -116,6 +119,8 @@ loop for jz = 1 1 k
    if cdf >= 95; color red; end if
    if cdf >= 99; color red; end if
    .
+hw 2 1
+
    if wrel = 1
       moveds az b1z; text ^stdel                      ;. <============
       moveds az b2z; text ^streldel                   ;. <============

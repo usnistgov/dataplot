@@ -80,9 +80,14 @@ color ^corncolz
 .
 if stcorn exists
    . let cornxpz = 5
-   let cornxpz = 2
+   let cornxpz = 4
+   let cornypz = 97
    . let cornypz = 100 - cornhz
-   let cornypz = 100 - cornhz + 2
+.
+. print "cornypz = ^cornypz     cornhz = ^cornhz"
+. pause
+.
+   if connhz exists; let cornypz = 100 - cornhz + 2; end if
    if cornxp exists; let cornxpz = cornxp; end if
    if cornyp exists; let cornypz = cornyp; end if
    move cornxpz cornypz; text ^stcorn

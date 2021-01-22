@@ -1,11 +1,11 @@
-. This is dataplot macro    dexplotinit.dp
+. This is dataplot macro    dexplotinit.dp    (set dex 10step plot settings)    1/7/21
 . Purpose: This is an initialization routine called by DEXPLOT.DP
 .          Define the height for the project header
 .                 the height for the title,
 .                 the height for the labels,
 .                 the title displacement,
 .                 and other plot appearance specs
-. Date: 7/21/06 => 1/26/15
+. Date: 7/21/06 => 1/26/15 => 1/7/21
 .
 . -----start point-----
 .
@@ -16,13 +16,13 @@ end if
 .
 feedback save; feedback off
 .
-. . . set text size . . .
+. -----Step 1: Set text size-----
 .
 if pauseloc = 1
    print " "; print "At the beginning of dexplotinit.dp . . ."
-   if ibatch not exist or ibatch = 0; pause; end if
+   if ibatch exists and ibatch = 0; pause; end if
    print " "; print "Step 1 of dexplotinit.dp . . ."
-   if ibatch not exist or ibatch = 0; pause; end if
+   if ibatch exists and ibatch = 0; pause; end if
 end if
 .
 . if projecth not exist
@@ -62,7 +62,7 @@ if titledis not exist; let titledis = 1; end if
 .
 if pauseloc = 1
    print " "; print "Step 2 of dexplotinit.dp . . ."
-   if ibatch not exist or ibatch = 0; pause; end if
+   if ibatch exists and ibatch = 0; pause; end if
 end if
 .
 if projectw not exist; let projectw = projecth/2; end if
@@ -74,7 +74,7 @@ if textw not exist; let textw = texth/2; end if
 if pauseloc = 1
    print " "; print "Step 3 of dexplotinit.dp . . ."
    print "projecth = ^projecth"
-   if ibatch not exist or ibatch = 0; pause; end if
+   if ibatch exists and ibatch = 0; pause; end if
 end if
 .
 title size titlesiz
@@ -82,12 +82,12 @@ label size labelsiz
 tic label size ticlabsi
 title displacement titledis
 .
-. . . set misc . . .
+. -----Step 2: Set miscellaneous-----
 .
 if pauseloc = 1
    print " "; print "Step 4 of dexplotinit.dp . . ."
    print "projecth = ^projecth"
-   if ibatch not exist or ibatch = 0; pause; end if
+   if ibatch exists and ibatch = 0; pause; end if
 end if
 .
 tic offset units screen
@@ -96,12 +96,12 @@ set write decimals 2
 box shadow hw 0 0
 character justification cece
 .
-. . . set case . . .
+. -----Step 3: Set case-----
 .
 if pauseloc = 1
    print " "; print "Step 5 of dexplotinit.dp . . ."
    print "projecth = ^projecth"
-   if ibatch not exist or ibatch = 0; pause; end if
+   if ibatch exists and ibatch = 0; pause; end if
 end if
 .
 title case asis
@@ -110,37 +110,39 @@ tic label case asis
 character case asis all
 tic label case asis
 .
-. . . set colors . . .
+. -----Step 4: Set colors-----
 .
 if pauseloc = 1
    print " "; print "Step 6 of dexplotinit.dp . . ."
    print "projecth = ^projecth"
-   if ibatch not exist or ibatch = 0; pause; end if
+   if ibatch exists and ibatch = 0; pause; end if
 end if
 .
 . feedback on
 . echo on
 .
 . let string forecol2 = black
-let string forecol2 = blue
-if forecol exist; let string forecol2 = ^forecol; end if
+. let string forecol2 = blue
+. if forecol exist; . let string forecol2 = ^forecol; . end if
 .
 color ^forecol2
-box color ^forecol2
+box color ^forecol
 background color white
-label color ^forecol2
-tic mark color ^forecol2
-tic mark label color ^forecol2
-title color ^forecol2
-legend color ^forecol2
-frame color ^forecol2
-spike color ^forecol2 all
+label color ^forecol
+tic mark color ^forecol
+tic mark label color ^forecol
+title color ^forecol
+legend color ^forecol
+frame color ^forecol
+spike color ^forecol all
+.
+. -----Step 99: Finish up-----
 .
 . print " "
 if pauseloc = 1
    print " "; print "At the end of dexplotinit.dp . . ."
    print "projecth = ^projecth"
-   if ibatch not exist or ibatch = 0; pause; end if
+   if ibatch exists and ibatch = 0; pause; end if
 end if
 .
 let pauseloc = 0

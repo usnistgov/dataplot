@@ -19,7 +19,7 @@ if paused10 = 1
    print "At the beginning of   dex10stepanalysis.dp"
    print plotid
    print "Hit   Enter   to continue . . ."
-   if ibatch not exist or ibatch = 0; pause; end if
+   pause
 end if
 .
 . -----Step 1: Set initialization preferences-----
@@ -87,7 +87,7 @@ if k not exist
    print "-----Error in      dex10stepanalysis.dp     macro-----"
    print "The parameter   k (= number of factors) is undefined."
    print " "
-   if ibatch not exist or ibatch = 0; pause; end if
+   pause
    stop
 end if
 .
@@ -98,7 +98,7 @@ if k exists; if k <= 0
    print "must be a positive integer, but is not."
    print "The value of k = ^k"
    print " "
-   if ibatch not exist or ibatch = 0; pause; end if
+   pause
    stop
 end if
 .
@@ -143,7 +143,7 @@ if plotid6 = 1
       . stat f
       . pause
       . stat p
-      . if ibatch not exist or ibatch = 0; . pause; . end if
+      . pause
    . end capture
    call dexyp.dp
 end if

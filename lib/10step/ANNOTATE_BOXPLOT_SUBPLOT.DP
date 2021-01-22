@@ -24,6 +24,10 @@ let bugswwrf = 1
 .
 . -----Step 1: Within each subplot, write out the within-subplot primary factor ID in upper left corner-----
 .
+. print "forecol = ^forecol"
+. pause
+.
+color blue; if forecol exists; color ^forecol; end if
 just left
 let xp = 17; let yp = 81.5; hw 4 2
 if         k > 16 and k <= 20; let xp = 17; let yp = 81.5; hw 4 2
@@ -61,11 +65,11 @@ let nxpv = number xpv
 if k = 3 or n = 8
    loop for j = 1 1 nxpv
       let xpvj = xpv(j)
-      let string stout = -; color blue
-      if j = 3 4; let string stout = +; color red; end if
+      let string stout = -; color red
+      if j = 3 4; let string stout = +; color blue; end if
       moveds xpvj yp1;  text ^stout
-      let string stout = -; color blue
-      if j = 2 4; let string stout = +; color red; end if
+      let string stout = -; color red
+      if j = 2 4; let string stout = +; color blue; end if
       moveds xpvj yp2;  text ^stout
    end loop
 end if
@@ -73,21 +77,22 @@ end if
 if k >= 4 and n >= 16
    loop for j = 1 1 nxpv
       let xpvj = xpv(j)
-      let string stout = -; color blue
-      if j = 5 6 7 8; let string stout = +; color red; end if
+      let string stout = -; color red
+      if j = 5 6 7 8; let string stout = +; color blue; end if
       moveds xpvj yp1;  text ^stout
-      let string stout = -; color blue
-      if j = 3 4 7 8; let string stout = +; color red; end if
+      let string stout = -; color red
+      if j = 3 4 7 8; let string stout = +; color blue; end if
       moveds xpvj yp2;  text ^stout
-      let string stout = -; color blue
-      if j = 2 4 6 8; let string stout = +; color red; end if
+      let string stout = -; color red
+      if j = 2 4 6 8; let string stout = +; color blue; end if
       moveds xpvj yp3;  text ^stout
    end loop
 end if
 .
 . -----Step 2.3: For each of the 3 robustness factors, write out the factor ID's-----
 .
-hw 4 2; just right; color blue
+hw 4 2; just right
+color blue; if forecol exists; color ^forecol; end if
 if k >= 12; hw 2.8 1.4; end if
 let xp = 21
 move xp yp1; text X^jrob1&:
@@ -124,6 +129,7 @@ if jprim = leftcorn
    .
    if cy not exist; let string stout = Mean Y      ; end if
    if cy exists   ; let string stout = Mean Y (^cy); end if
+   color blue; if forecol exists; color ^forecol; end if
    move vxp vyp; just center; direction vertical; text ^stout
    direction horizontal
    .

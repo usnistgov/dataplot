@@ -10,19 +10,22 @@
 .
 .    5. framet (parameter)          = top    frame line (in %) (optional) (default = 90)
 .    6. frameb (parameter)          = bottom frame line (in %) (optional) (default = 20)
+.    7. frame (string)              = subset/except specification;. 4/16/20
 .
 . Pre-call: dexplotinit.dp
 . Caution/Danger: j will get overwritten in the lower-level called macros
 .
 . -----start point-----
 .
+print " "; print "=====> Now generating plot 8 (DEX Halfnormal Probability Plot) <====="
+.
 feedback save
 feedback off
 printing off
-let bugswhpp = 0
+let bughpp = 0
 let pausesw = 0
 .
-if bugswhpp = 1; print " "; print "--At beginning of DEX Ste p 8 (DEXHPP.DP)"
+if bughpp = 1; print " "; print "--At beginning of DEX Ste p 8 (DEXHPP.DP)"
    print "   numeffec = ^numeffec"
    print y x1 x2 x3
    . feedback on
@@ -34,9 +37,32 @@ end if
 . -----Do Analysis Ste p 8: Halfnormal Probability Plot-----
 . ---------------------------------------------------------
 .
+. -----Step 1.0: if frame exists, the save the original data and extract the subset-----
+.
+if bughpp = 1
+   print "--At start of (dexhpp.dp, step 1.0): if frame exists, save the original data and extract the subset"
+   if frame not exist; print "      frame does not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   call save_full_dataset.dp
+   delete stallx; let stallx = string combine x1 to x^k
+   retain y ^stallx ^frame
+end if
+.
+if bughpp = 1
+   print "Post-  date saving & frame extraction:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
 . -----Step 1.1: Check for missing input values-----
 .
-if bugswhpp = 1; print "--At (dexhpp.dp, step 1.1): check input"
+if bughpp = 1; print "--At (dexhpp.dp, step 1.1): check input"
    if pausesw = 1; pause; end if
 end if
 .
@@ -46,15 +72,16 @@ if k not exist
 end if
 set check name output filliben
 set check length output filliben
-feedback on
-let iflag = check name k y x1 to x^k
-let iflag = check equal length y x1 to x^k
-feedback off
+if k = 1; let iflag = check name k y x1 ; end if
+if k >= 2
+   let iflag = check name k y x1 to x^k
+   let iflag = check equal length y x1 to x^k
+end if
 .
 . -----Step 1.2: Copy the user's original y and x1 to xk data out to file-----
 .                since y and x1 to xk may potentially be modified within this macro-----
 .
-if bugswhpp = 1; print "--At (dexhpp.dp, step 1.2): save original data"
+if bughpp = 1; print "--At (dexhpp.dp, step 1.2): save original data"
    if pausesw = 1; pause; end if
 end if
 .
@@ -68,7 +95,7 @@ set write format
 .                If not 2 levels, then only the min and max will be used herein.-----
 .                If not -1 and +1, then min => -1 and max => +1-----
 .
-if bugswhpp = 1; print "--At (dexhpp.dp, step 1.3): normalize to (-1,+1)"
+if bughpp = 1; print "--At (dexhpp.dp, step 1.3): normalize to (-1,+1)"
    if pausesw = 1; pause; end if
 end if
 .
@@ -77,7 +104,7 @@ call check_and_fix_original_data_for_2_levels_and_m1_p1.dp
 .
 . -----Step 2: Define plot settings-----
 .
-if bugswhpp = 1; print "--At (dexhpp.dp, step 2): plot settings"
+if bughpp = 1; print "--At (dexhpp.dp, step 2): plot settings"
    if pausesw = 1; pause; end if
 end if
 .
@@ -85,24 +112,25 @@ call dexplotinit.dp
 .
 . -----Step 3: Compute effect estimates (ordered) and confounding-----
 .
-if bugswhpp = 1; print "--At (dexhpp.dp, step 3): confounding"
+if bughpp = 1; print "--At (dexhpp.dp, step 3): confounding"
    print "confsw = ^confsw"
    if pausesw = 1; pause; end if
 end if
 .
 call compute_effect_estimates_and_confounding.dp
 .
-if bugswhpp = 1; print "--At end of step 3 of dexhpp.dp"
+if bughpp = 1; print "--At end of step 3 of dexhpp.dp"
    print "numeff = ^numeff"
    loop for jzz = 1 1 numeff
       print steft^jzz
    end loop
    if pausesw = 1; pause; end if
+   pause
 end if
 .
 . -----Step 4: GENERATE THE PLOT-----
 .
-if bugswhpp = 1; print "--At (dexhpp.dp, step 4): GENERATE THE PLOT"
+if bughpp = 1; print "--At (dexhpp.dp, step 4): GENERATE THE PLOT"
    if pausesw = 1; pause; end if
 end if
 .
@@ -130,15 +158,14 @@ halfnormal probability plot eff2
 .
 . -----Step 5: Write out confounding structure in the right margin-----
 .
-if bugswhpp = 1; print "--At (dexhpp.dp, step 5): Write confounding on right"
+if bughpp = 1; print "--At (dexhpp.dp, step 5): Write confounding on right"
    if pausesw = 1; pause; end if
 end if
 .
 hw 2 1;. new 5/11/05
 character justification lece all
 character blank all
-character color blue all
-if colorall exists; character color ^colorall all; end if
+character color blue all; if forecol exists; character color ^forecol all; end if
 delete xpos ypos tagzj
 let ypos = yplot
 let ypos = combine ypos ypos
@@ -158,6 +185,7 @@ loop for j = 1 1 numeff
 end loop
 drawsd symbol xpos ypos tagzj
 .
+color blue; if forecol exists; color ^forecol; end if
 hw 2 1
 let ypz = 89.6
 if framet exists; let ypz = ypz - (90 - framet); end if
@@ -166,12 +194,12 @@ text Factor: Confounding
 .
 . -----Step 6: Annotate the plot-----
 .
-if bugswhpp = 1; print "--At (dexhpp.dp, step 6): annotate"
+if bughpp = 1; print "--At (dexhpp.dp, step 6): annotate"
    if pausesw = 1; pause; end if
 end if
 .
 if project exists
-   if projcol exists; color ^projcol; end if
+   if forecol exists; color ^forecol; end if
    call dexwriteproject.dp
 end if
 .
@@ -194,13 +222,13 @@ if stcorn1 exists
 end if
 .
 if annotate exists and annotate = 1
-   if colorall exists; color ^colorall; end if
+   if forecol exists; color ^forecol; end if
    call annotate.dp
 end if
 .
 . -----Step 98: Restore the user's original y and x1 to xk data from file-----
 .
-if bugswhpp = 1; print " "; print "---At (dexhpp.dp, step 98): restore orig. data (pre-restore)"
+if bughpp = 1; print " "; print "---At (dexhpp.dp, step 98): restore orig. data (pre-restore)"
    print y x1 to x^k
    if pausesw = 1; pause; end if
 end if
@@ -210,14 +238,38 @@ set read format 40f15.7
 skip 0; read dex_original_data.dat y x1 to x^k
 set read format
 .
-if bugswhpp = 1; print " "; print "---At (dexhpp.dp, step 98): (post-restore)"
+if bughpp = 1; print " "; print "---At (dexhpp.dp, step 98): (post-restore)"
    print y x1 to x^k
    if pausesw = 1; pause; end if
 end if
 .
-. -----Step 99: Finish up-----
+. -----Step 99.1: if frame exists, then restore the original data-----
 .
-if bugswhpp = 1; print " "; print "---At end of dexhpp.dp"
+if bughpp = 1
+   print "--At start of (dexhpp.dp, step 99.1): restore original data if frame existed"
+   if frame not exist; print "      frame did not exist"; end if
+   if frame exists;    print "      frame = ^frame"; end if
+   print "Pre-  data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+if frame exists
+   delete stallx; let stallx = string combine x1 to x^k
+   delete y; delete ^stallx
+   call restore_full_dataset.dp
+end if
+.
+if bughpp = 1
+   print "Post- data restoration:"
+   stat v
+   if pausesw = 1; pause; end if
+end if
+.
+. -----Step 99.2: Finish up otherwise-----
+.
+if bughpp = 1
+   print "--At (dexhpp.dp, step 99.2): finishing up otherwise---"
    if pausesw = 1; pause; end if
 end if
 .

@@ -1,5 +1,5 @@
 9.
-                                                     November  2020
+                                                     January   2021
 This is the DATAPLOT News file DPNEWF.TEX.  This NEWS file contains a
 list of DATAPLOT enhancements.  Some commands may be documented here
 that are not yet available in the standard documentation.
@@ -7,6 +7,66 @@ that are not yet available in the standard documentation.
 The complete news file can be viewed at
 
     http://www.itl.nist.gov/div898/software/dataplot/news.htm
+
+-----------------------------------------------------------------------
+The following enhancements were made to DATAPLOT
+December 2020 - January 2021.
+-----------------------------------------------------------------------
+
+ 1. The SAVE MEMORY and RESTORE MEMORY commands were updated to
+    include many new settings.
+
+ 2. You can save a specified list of variables/parameters to a
+    file with the command
+
+        SAVE VARIABLES <file-name> <var-list>
+
+    If no file name is given, "dpsavf.tex" will be used.  If
+    no variable list is given, all currently defined variables
+    and parameters will be saved.
+
+    This variable list can be restored with the command
+
+        RESTORE VARIABLES <file-name>
+
+    If no file name is given, "dpsavf.tex" is used.  If you
+    have currently defined variables/parameters with the same
+    name, they will be overwritten.  Currently defined variables
+    and parameters that are not in the save file will not be
+    changed.
+
+ 3. Added the command
+
+        SET ERROR MESSAGE <ON/OFF>
+
+    If this switch is set to OFF, certain error messages may not
+    be printed.  Currently this only applies to a few commands
+    (specifically FCDF, FPDF, FPPF), but the list of supported commands
+    should increase in subsequent releases.
+
+ 4. The "dplogf.tex" file was updated for Linux/MacOS systems to be more
+    consistent with the Windows version.  The Makefile for MacOS was
+    updated to support Catalina.
+
+ 5. Fixed several bugs.  Specifically
+
+    a. Fixed a bug with named arguments on the CALL command.
+
+    b. Fixed a bug with color Postscript output (this was introduced
+       with full RGB color support for Postscript) where the second
+       and later graphs generated a black background by default.
+
+    c. Fixed a bug in the STRING COMPARE AND REPLACE command (used
+       by the DEX 10-step macros) when no match is found and the
+       feedback switch is off.  A few other minor tweaks were made
+       in support of the 10-step macros (both in the macros and in
+       the Dataplot source code).
+
+    d. A few minor changes were made to remove warning messages for
+       version 10 of the gcc/gfortran compiler.  These changes should
+       not have any effect on Dataplot usage.
+
+    e. A few other minor bugs were also fixed.
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT

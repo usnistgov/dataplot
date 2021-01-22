@@ -1,0 +1,44 @@
+. This is dataplot program   boxcleanser_4_8.dp     1/25/16
+. Purpose: Analyze Box, Hunter, & Hunter (k=4,n=8) Household Cleanser Stability Example
+.          via 10-Step analysis
+. Date: 1/25/16
+.
+. -----start point-----
+.
+let string root = boxcleanser_4_8.dp
+.
+let string filecode = ^root&.dp
+let string filedata = ^root&.dat
+let string fileout  = ^root&.pdf
+device 2 close; set ipl1na ^root&.ps; device 2 postscript
+capture fileout.bat; print "^fileout"; end capture. -----Step 1: Read in the data and define strings-----
+.
+. -----Step 1: Read in the data-----
+.
+let k = 4; skip 25; read    ^filedata     y x1 to x^k
+.
+. -----Step 2: Define strings for plot annotation-----
+.
+let string project = BHH Household Cleanser Stability
+let string sty = Stability
+.
+let string stx1 = Acid Concentration
+let string stx2 = Catalyst Concentration
+let string stx3 = Temperature
+let string stx4 = Monomer Concentration
+let string stx1l = 20 30
+let string stx2l = 1 2
+let string stx3l = 100 150
+let string stx4l = 25 50
+.
+let string colorl = red blue
+.
+. -----Step 3: Generate 10-step DEX analysis-----
+.
+let string forecol = black; let string levcol = red blue
+call set_color.dp
+.
+call dex10stepanalysis.dp
+.
+print " "; print "Output pdf file: ^fileout"
+.

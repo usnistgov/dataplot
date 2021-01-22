@@ -7478,6 +7478,10 @@ C     UPDATED         --MARCH      2020.  SET SEARCH6 DIRECTORY
 C     UPDATED         --JUNE       2020.  SET X11 SELECTION
 C     UPDATED         --JULY       2020.  SET CHARACTER TABULATION
 C                                             PLOT DIGITS
+C     UPDATED         --JANUARY    2021.  SET CHECK EQUAL LENGTH OUTPUT
+C                                         AS ALIAS FOR
+C                                         SET CHECK LENGTH OUTPUT
+C     UPDATED         --JANUARY    2021.  SET ERROR MESSAGE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -8545,6 +8549,23 @@ C
       IPART3='OUTP'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
      1   IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'FILL' .OR. IHV.EQ.'10ST')THEN
+          ICHKLE='FILL'
+        ELSE
+          ICHKLE='DEFA'
+        ENDIF
+        IHV=ICHKLE
+        GOTO5160
+      ENDIF
+C
+CCCCC 2021/01: ADD SET CHECK EQUAL LENGTH OUTPUT FILLIBEN AS AN ALIAS
+C
+      IPART1='CHEC'
+      IPART2='EQUA'
+      IPART3='LENG'
+      IPART4='OUTP'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
         IF(IHV.EQ.'FILL' .OR. IHV.EQ.'10ST')THEN
           ICHKLE='FILL'
         ELSE
@@ -12582,6 +12603,27 @@ C
           IHV='ON'
         ENDIF
         IINSOW=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JANUARY   2021
+C     *************************************************************
+C     **  SET ERROR MESSAGE        <ON/OFF>                      **
+C     *************************************************************
+C
+      IPART1='ERRO'
+      IPART2='MESS'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'TRUE' .OR.
+     1     IHV.EQ.'DEFA')THEN
+          IHV='ON'
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE' .OR.
+     1         IHV.EQ.'FALS')THEN
+          IHV='OFF'
+        ELSE
+          IHV='ON'
+        ENDIF
+        IERMSG=IHV
         GOTO5160
       ENDIF
 C
@@ -28897,6 +28939,10 @@ C     UPDATED         --JULY       2020.  PROBE CHARACTER TABULATION
 C                                               PLOT DIGITS
 C     UPDATED         --AUGUST     2020.  PROBE NUMRCM
 C     UPDATED         --OCTOBER    2020.  PROBE CALL COMMAND LINE
+C     UPDATED         --JANUARY    2021.  PROBE CHECK EQUAL LENGTH OUTPUT
+C                                         AS ALIAS FOR
+C                                         PROBE CHECK LENGTH OUTPUT
+C     UPDATED         --JANUARY    2021.  PROBE ERROR MESSAGE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -30265,6 +30311,18 @@ C
         GOTO5160
       ENDIF
 C
+CCCCC THE FOLLOWING SECTION WAS ADDED        JANUARY  2021.
+C     ******************************************
+C     **  PROBE ERROR MESSAGE                 **
+C     ******************************************
+C
+      IPART1='ERRO'
+      IPART2='MESS'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IHV=IERMSG
+        GOTO5160
+      ENDIF
+C
 CCCCC THE FOLLOWING SECTION WAS ADDED        JUNE 2020.
 C     ******************************************
 C     **  PROBE X11 SELECTION                 **
@@ -30646,6 +30704,18 @@ C
       IPART3='OUTP'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
      1   IHARG(3).EQ.IPART3)THEN
+        IHV=ICHKLE
+        GOTO5160
+      ENDIF
+C
+C     2021/01: PROBE CHECK EQUAL LENGTH OUTPUT AS ALIAS
+C
+      IPART1='CHEC'
+      IPART2='EQUA'
+      IPART3='LENG'
+      IPART4='OUTP'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
         IHV=ICHKLE
         GOTO5160
       ENDIF
