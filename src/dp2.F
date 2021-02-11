@@ -7482,6 +7482,8 @@ C     UPDATED         --JANUARY    2021.  SET CHECK EQUAL LENGTH OUTPUT
 C                                         AS ALIAS FOR
 C                                         SET CHECK LENGTH OUTPUT
 C     UPDATED         --JANUARY    2021.  SET ERROR MESSAGE
+C     UPDATED         --FEBRUARY   2021.  ALLOW EMPTY ARGUMENT FOR
+C                                         SET LIST VIEWER
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -8147,14 +8149,19 @@ C
       IF(NUMARG.GE.2.AND.IHARG(1).EQ.IPART1.AND.
      1   IHARG(2).EQ.IPART2)THEN
 C
-         IWORD=4
-         IF(IHARG(3).EQ.'=   ')IWORD=5
-         ICASEZ='LSVW'
-         ICMDTI='THE PATH FOR THE LIST VIEWER ='
-         CALL DPEXFN(IANS,IANSLC,ICANS,MAXTMP,IWIDTH,NUMARG,
-     1               ISTRIN,IWORD,ICMDTI,ITEMP,
-     1               ICASEZ,ILSTVW,NCLSVW,
-     1               IBUGS2,ISUBRO,IFOUND,IERROR)
+         IF(NUMARG.EQ.2)THEN
+           ILSTVW=' '
+           NCLSVW=0
+         ELSE
+           IWORD=4
+           IF(IHARG(3).EQ.'=   ')IWORD=5
+           ICASEZ='LSVW'
+           ICMDTI='THE PATH FOR THE LIST VIEWER ='
+           CALL DPEXFN(IANS,IANSLC,ICANS,MAXTMP,IWIDTH,NUMARG,
+     1                 ISTRIN,IWORD,ICMDTI,ITEMP,
+     1                 ICASEZ,ILSTVW,NCLSVW,
+     1                 IBUGS2,ISUBRO,IFOUND,IERROR)
+         ENDIF
          GOTO9000
       ENDIF
 C
@@ -8258,12 +8265,42 @@ C
          IBROWS=' '
 C
 C        2014/10: ENCLOSE BROWSWER PATH IN QUOTES
+C        2021/02: FOR MACOS:
 C
-         IBROWS(2:NCBROW+1)=ISTRIZ(1:NCBROW)
-         IBROWS(1:1)='"'
-         IBROWS(1:1)='"'
-         NCBROW=NCBROW+2
-         IBROWS(NCBROW:NCBROW)='"'
+C                 safari   =>  open -a safari
+C                 firefox  =>  open -a firefox
+C                 chrome   =>  open -a "google chrome"
+C
+         IF(IOPSY1.EQ.'UNIX' .AND. IOPSY2.EQ.'MAC ')THEN
+           IBROWS=' '
+           IF(ISTRIZ(1:6).EQ.'safari')THEN
+             NCBROW=14
+             IBROWS(1:NCBROW)='open -a safari'
+           ELSEIF(ISTRIZ(1:6).EQ.'SAFARI')THEN
+             NCBROW=14
+             IBROWS(1:NCBROW)='open -a safari'
+           ELSEIF(ISTRIZ(1:7).EQ.'firefox')THEN
+             NCBROW=15
+             IBROWS(1:NCBROW)='open -a firefox'
+           ELSEIF(ISTRIZ(1:7).EQ.'FIREFOX')THEN
+             NCBROW=15
+             IBROWS(1:NCBROW)='open -a firefox'
+           ELSEIF(ISTRIZ(1:6).EQ.'chrome')THEN
+             NCBROW=23
+             IBROWS(1:NCBROW)='open -a "google chrome"'
+           ELSEIF(ISTRIZ(1:6).EQ.'CHROME')THEN
+             NCBROW=23
+             IBROWS(1:NCBROW)='open -a "google chrome"'
+           ELSE
+             IBROWS(1:NCBROW)=ISTRIZ(1:NCBROW)
+           ENDIF
+         ELSE
+           IBROWS(2:NCBROW+1)=ISTRIZ(1:NCBROW)
+           IBROWS(1:1)='"'
+           IBROWS(1:1)='"'
+           NCBROW=NCBROW+2
+           IBROWS(NCBROW:NCBROW)='"'
+         ENDIF
          GOTO9000
       ENDIF
 C
@@ -21634,7 +21671,7 @@ C
      1   IHARG(5).EQ.IPART5)THEN
         IF(IHARG(NUMARG).EQ.'PPCC')THEN
           IGOFFM='PPCC'
-        ELSEIF(IHARG(NUMARG).EQ.'ML')THEN
+        ELSEIF(IHARG(NUMARG).EQ.'ML' .OR. IHARG(NUMARG).EQ.'MLE ')THEN
           IGOFFM='ML'
         ELSEIF(IHARG(6).EQ.'MAXI' .AND. IHARG(7).EQ.'LIKE')THEN
           IGOFFM='ML'

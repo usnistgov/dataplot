@@ -39858,6 +39858,8 @@ C                                       IS ACTUALLY A FILE NAME
 C     UPDATED         --JUNE      2020. LIST CLIPBOARD (FOR LINUX)
 C                                       THIS USES "xclip" IN THE
 C                                       BACKGROUND
+C     UPDATED         --FEBRUARY  2021.  SOME TWEAKS FOR HELP IN NEW
+C                                        WINDOW FOR MACOS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -40815,11 +40817,18 @@ CCCCC     ISTR(1:NCSTR)='xterm -e "'
           IF(NCLSLA.GE.1)THEN
             NCSTR=NCLSLA
             ISTR(1:NCLSLA)=ILSTLA(1:NCLSLA)
-            ISTR(NCSTR+1:NCSTR+2)=' "'
-            NCSTR=NCSTR+2
+            IF(IOPSY2.NE.'MAC ')THEN
+              ISTR(NCSTR+1:NCSTR+2)=' "'
+              NCSTR=NCSTR+2
+            ENDIF
           ELSE
-            NCSTR=19
-            ISTR(1:NCSTR)='gnome-terminal -e "'
+            IF(IOPSY2.EQ.'MAC ')THEN
+              NCSTR=8
+              ISTR(1:NCSTR)='open -t '
+            ELSE
+              NCSTR=19
+              ISTR(1:NCSTR)='gnome-terminal -e "'
+            ENDIF
           ENDIF
         ELSEIF(IFLAGQ.EQ.1)THEN
           NCSTR=NCSTR+1
@@ -40833,8 +40842,10 @@ C
           ISTR(NCSTR+1:NCSTR+9)='write.exe'
           NCSTR=NCSTR+9
         ELSE
-          ISTR(NCSTR+1:NCSTR+NCLSVW)=ILSTVW(1:NCLSVW)
-          NCSTR=NCSTR+NCLSVW
+          IF(NCLSVW.GE.1)THEN
+            ISTR(NCSTR+1:NCSTR+NCLSVW)=ILSTVW(1:NCLSVW)
+            NCSTR=NCSTR+NCLSVW
+          ENDIF
         ENDIF
 C
         IF(IFLAGQ.EQ.1 .AND. IOPSY1.NE.'UNIX')THEN
@@ -40875,6 +40886,10 @@ C
             NCSTR=NCSTR+1
             ISTR(NCSTR:NCSTR)='"'
           ENDIF
+        ENDIF
+        IF(IOPSY1.EQ.'UNIX' .AND. IOPSY2.EQ.'MAC ')THEN
+          NCSTR=NCSTR+1
+          ISTR(NCSTR:NCSTR)='"'
         ENDIF
         ISTR(NCSTR+1:NCSTR+ILAST)=IFILSV(1:ILAST)
         NCSTR=NCSTR+ILAST

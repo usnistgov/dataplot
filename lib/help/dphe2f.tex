@@ -1,8 +1,8 @@
- 67100.   (VERSION 2020.06)  total number of lines in file (including this line)
+ 67400.   (VERSION 2021.01)  total number of lines in file (including this line)
  3.                          number of     sections below
   100.    A                  first line number of A section
  8100.    B                  first line number of B section
-32800.    C                  first line number of C section
+33000.    C                  first line number of C section
  
 ----------------------------------------------------------
  
@@ -8540,13 +8540,61 @@ Purpose:
     Specifies the border color for bars on subsequent plots.
  
 Description:
-    Bar borders are specified by trace.  All bars belonging to the
-    same trace will have the same border color.
- 
-Syntax:
-    BAR BORDER COLOR  <color>  <color>  <color>  etc.
-    where <color> specifies the desired color.  Up to 100 colors can be
-    specified.  Enter HELP COLOR TYPES for a list of available colors.
+    Dataplot defines the points on a plot by "traces".  A trace is a set
+    of points that are drawn with the same attributes.  For example,
+
+        PLOT Y1 X1 AND
+        PLOT Y2 X2
+
+    has two traces.  The first is the points defined by Y1 and X1 and the
+    second is the points defined by Y2 and X2.  Attributes can be set for
+    up to 100 traces.
+
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the bar border color, Dataplot first checks if the device
+    supports RGB colors. If not, the named color will be used.  If the
+    device does support RGB color, Dataplot will check if an RGB color
+    has been specified.  If yes, then that RGB color is used.  If not,
+    the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
+    BAR BORDER COLORS <color 1> <color 2> ... <color n>
+    where <color 1>, ..., <color n> specify the desired bar border colors.
+
+    Up to 100 such bar border colors may be specified.
+
+Syntax 2:
+    BAR BORDER RGB COLORS <red-1> <green-1> <blue-1> ...
+                          <red-n> <green-n> <red-n>
+    where <red-1>, <green-1>, <blue-1>, ..., <red-n>, <green-n>, <blue-n>
+    is a list of integer values that specify the desired RGB bar border
+    colors.
+
+    Up to 100 such triplets of color values can be specified.
+
+    To turn off the RGB color, set the values to -1 (any negative value
+    will work).  Values greater than 255 will be set to 255.
  
 Examples:
     BAR BORDER COLOR BLACK RED BLUE
@@ -8554,6 +8602,8 @@ Examples:
     BAR BORDER COLOR BLACK ALL
     BAR BORDER COLOR ALL BLACK
     BAR BORDER COLOR
+    BAR BORDER RGB COLOR 220 109 88 240 220 160
+    BAR BORDER RGB COLOR 220 109 88 ALL
  
 Note:
     The BAR BORDER COLOR command with no arguments sets the bar border
@@ -8568,7 +8618,7 @@ Note:
     spike or a bar or any combination of the above.
  
 Default:
-    All bar borders are black
+    All bar borders are set to black and RGB colors are off
  
 Synonyms:
     None
@@ -8579,6 +8629,8 @@ Related Commands:
     LINES               = Sets the line types for plot points.
     SPIKES              = Sets on/off switches for plot spikes.
     BAR                 = Sets on/off switches for plot bars.
+    BAR BORDER LINE     = Sets the types for bar border lines.
+    BAR BORDER THICK    = Sets line thicknesses for bar border lines.
     BAR BASE            = Sets the base locations for bars on plots
     BAR FILL            = Sets the on/off switches for plot bar fills.
     BAR FILL COLOR      = Sets the colors of bar fills.
@@ -8589,15 +8641,17 @@ Related Commands:
     BAR PATTERN LINE    = Sets the line types for bar fill patterns.
     BAR PATTERN SPACING = Sets the line spacings for bar fill patterns.
     BAR PATTERN THICK   = Sets line thicknesses for bar fill patterns.
-    BAR BORDER LINE     = Sets the types for bar border lines.
-    BAR BORDER THICKNESS= Sets line thicknesses for bar border lines.
     BAR WIDTH           = Sets the widths for plot bars.
+    LINE COLOR          = Sets the color for plot lines.
+    CHARACTER COLOR     = Sets the color for plot characters.
+    SPIKE COLOR         = Sets the color for plot spikes.
  
 Applications:
     Presentation Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
+    2020/11: Support for RGB color
  
 Program:
     LET CARTER = DATA 66 30 11 43 44 41 35 82 54 36
@@ -8619,9 +8673,19 @@ Program:
     BAR ON ON
     BAR WIDTH 0.2 ALL
     BAR BORDER THICKNESS 0.3 ALL
+    .
+    BAR BORDER COLOR G20 G80
+    TITLE DEMONSTRATE BAR BORDER GREYSCALE COLOR
+    PLOT CARTER X1 AND
+    PLOT REAGAN X2
+    .
     BAR BORDER COLOR RED BLUE
     TITLE DEMONSTRATE BAR BORDER COLOR
+    PLOT CARTER X1 AND
+    PLOT REAGAN X2
     .
+    BAR BORDER COLOR 220 109 88 240 220 160
+    TITLE DEMONSTRATE BAR BORDER RGB COLOR
     PLOT CARTER X1 AND
     PLOT REAGAN X2
  
@@ -9236,20 +9300,70 @@ Purpose:
     Specifies the color to use for bar fills on subsequent plots.
  
 Description:
-    Bar fill colors are specified by trace.  All bars belonging to the
-    same trace will have the same bar fill color.
+    Dataplot defines the points on a plot by "traces".  A trace is a set
+    of points that are drawn with the same attributes.  For example,
+
+        PLOT Y1 X1 AND
+        PLOT Y2 X2
+
+    has two traces.  The first is the points defined by Y1 and X1 and the
+    second is the points defined by Y2 and X2.  Attributes can be set for
+    up to 100 traces.
+
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the bar fill color, Dataplot first checks if the device
+    supports RGB colors. If not, the named color will be used.  If the
+    device does support RGB color, Dataplot will check if an RGB color
+    has been specified.  If yes, then that RGB color is used.  If not,
+    the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
  
-Syntax:
-    BAR FILL COLOR  <color>  <color>  <color>  etc.
-    where <color> specifies the desired color.  Up to 100 bar fill
-             colors can be specified.  Enter HELP COLOR TYPES for a
-             list of available colors.
+Syntax 1:
+    BAR FILL COLOR <color-1> <color-2> ... <color-n>
+    where <color-1> ... <color-n> specifies the desired colors.
+
+    Up to 100 bar fill colors can be specified.
+
+Syntax 2:
+    BAR FILL COLOR RGB COLORS <red-1> <green-1> <blue-1> ...
+                              <red-n> <green-n> <red-n>
+    where <red-1>, <green-1>, <blue-1>, ..., <red-n>, <green-n>, <blue-n>
+    is a list of integer values that specify the desired RGB bar fill
+    colors.
+
+    Up to 100 such triplets of color values can be specified.
+
+    To turn off the RGB color, set the values to -1 (any negative value
+    will work).  Values greater than 255 will be set to 255.
  
 Examples:
     BAR FILL COLOR RED GREEN BLUE
     BAR FILL COLOR BLACK ALL
     BAR FILL COLOR ALL BLACK
     BAR FILL COLOR
+    BAR FILL RGB COLORS 220 109 88 240 220 160
+    BAR FILL RGB COLORS 220 109 88 ALL
  
 Note:
     The BAR FILL command must be used in order for the bars to be
@@ -9257,7 +9371,7 @@ Note:
     is ignored.
  
 Note:
-    DATAPLOT can generate either solid fills or hatch pattern fills.
+    Dataplot can generate either solid fills or hatch pattern fills.
     This is controlled by the bar pattern command.  If no BAR PATTERN
     command is entered, solid fills are generated.  The BAR FILL
     COLOR command only applies to solid fill bars.  Use the BAR
@@ -9271,7 +9385,7 @@ Note:
     ALL BLACK plots bar fills with black for all bars.
  
 Default:
-    All bar fills are black.
+    All bar fills are black and RGB colors are off.
  
 Synonyms:
     None
@@ -9295,12 +9409,16 @@ Related Commands:
     BAR BORDER LINE     = Sets the types for bar border lines.
     BAR BORDER THICKNESS= Sets line thicknesses for bar border lines.
     BAR WIDTH           = Sets the widths for plot bars.
+    LINE COLOR          = Sets the colors for plot lines.
+    CHARACTER COLOR     = Sets the colors for plot characters.
+    SPIKE COLOR         = Sets the colors for plot spikes.
  
 Applications:
     Presentation Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
+    2020/11: Support for RGB colors.
  
 Program:
     LET CARTER = DATA 66 30 11 43 44 41 35 82 54 36
@@ -9322,10 +9440,22 @@ Program:
     LINE BLANK ALL
     BAR ON ALL
     BAR FILL ON ALL
-    BAR FILL COLOR RED BLUE GREEN
     BAR WIDTH 0.2 ALL
-    TITLE DEMONSTRATE BAR FILL COLOR
     .
+    BAR FILL COLOR G10 G50 G90
+    TITLE DEMONSTRATE GRAYSCALE BAR FILL COLOR
+    PLOT CARTER X1 AND
+    PLOT REAGAN X AND
+    PLOT ANDERSON X2
+    .
+    BAR FILL COLOR RED BLUE GREEN
+    TITLE DEMONSTRATE BAR FILL COLORS
+    PLOT CARTER X1 AND
+    PLOT REAGAN X AND
+    PLOT ANDERSON X2
+    .
+    BAR FILL RGB COLOR 175 238 238 220 20 60 127 255 0
+    TITLE DEMONSTRATE BAR FILL COLORS
     PLOT CARTER X1 AND
     PLOT REAGAN X AND
     PLOT ANDERSON X2
@@ -9460,28 +9590,88 @@ Type:
     Plot Control Command
  
 Purpose:
-    Specifies the color used to fill bars on subsequent plots.
+    Specifies the color used for bar patterns on subsequent plots.
  
 Description:
-    Bar pattern colors are specified by trace.  All bars belonging to
-    the same trace will have the same bar pattern color.
+    Dataplot supports two methods for filling the interiors of plot bars:
+
+        1) Bars can be solid filled.  The BAR FILL COLOR command is used
+           in this case.
+
+        2) Bars can be filled with a cross-hatch pattern.  The BAR
+           PATTERN COLOR command is used in this case.
+
+    Dataplot defines the points on a plot by "traces".  A trace is a set
+    of points that are drawn with the same attributes.  For example,
+
+        PLOT Y1 X1 AND
+        PLOT Y2 X2
+
+    has two traces.  The first is the points defined by Y1 and X1 and the
+    second is the points defined by Y2 and X2.  Attributes can be set for
+    up to 100 traces.
+
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the bar pattern color, Dataplot first checks if the
+    device supports RGB colors. If not, the named color will be used.  If
+    the device does support RGB color, Dataplot will check if an RGB
+    color has been specified.  If yes, then that RGB color is used.  If
+    not, the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
+    BAR PATTERN COLORS  <color 1> <color 2> ... <color n>
+    where <color 1>, ..., <color n> specify the desired bar pattern
+    colors.
+
+    Up to 100 such bar pattern colors may be specified.
+
+Syntax 2:
+    BAR PATTERN RGB COLORS <red-1> <green-1> <blue-1> ...
+                    <red-n> <green-n> <red-n>
+    where <red-1>, <green-1>, <blue-1>, ..., <red-n>, <green-n>, <blue-n>
+    is a list of integer values that specify the desired RGB bar pattern
+    colors.
+
+    Up to 100 such triplets of color values can be specified.
+
+    To turn off the RGB color, set the values to -1 (any negative value
+    will work).  Values greater than 255 will be set to 255.
  
-Syntax:
-    BAR PATTERN COLOR  <color>  <color>  <color>  etc.
-    where <color> specifies the desired color.  Up to 100 bar pattern
-              colors can be specified.  Enter HELP COLOR TYPES for a
-              list of available colors.
  
 Examples:
     BAR PATTERN COLOR RED BLUE GREEN
     BAR PATTERN COLOR BLACK ALL
     BAR PATTERN COLOR ALL BLACK
     BAR PATTERN COLOR
+    BAR PATTERN RGB COLORS 220 109 88 240 220 160
+    BAR PATTERN RGB COLORS 220 109 88 ALL
  
 Note:
     The BAR FILL command must be used in order for bars to be filled
     with a pattern.  If the bar fill switch is off (the default), this
-    command is ignored.
+    command is ignored.  The pattern is specified with the BAR PATTERN
+    command.
  
 Note:
     The BAR PATTERN COLOR command with no arguments sets the bar
@@ -9497,7 +9687,7 @@ Note:
     spike or a bar or any combination of the above.
  
 Default:
-    All black
+    All bar pattern colors are set to black and RGB colors are off.
  
 Synonyms:
     None
@@ -9510,7 +9700,6 @@ Related Commands:
     BAR                 = Sets on/off switches for plot bars.
     BAR BASE            = Sets the base locations for bars on plots
     BAR FILL            = Sets the on/off switches for plot bar fills.
-    BAR FILL COLOR      = Sets the colors of bar fills.
     BAR DIMENSION       = Sets the bar dimensions to 2d or 3d.
     BAR DIRECTION       = Sets the bar directions (H/V).
     BAR PATTERN         = Sets the types for bar fill patterns.
@@ -9521,20 +9710,25 @@ Related Commands:
     BAR BORDER LINE     = Sets the types for bar border lines.
     BAR BORDER THICKNESS= Sets line thicknesses for bar border lines.
     BAR WIDTH           = Sets the widths for plot bars.
+    BAR FILL COLOR      = Sets the colors of bar fills.
+    LINE COLOR          = Set the color for plot lines.
+    CHARACTER COLOR     = Set the color for plot characters.
+    SPIKE COLOR         = Set the color for plot spikes.
  
 Applications:
     Presentation Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
+    2020/11: Support for RGB color
  
 Program:
     LET CARTER = DATA 66 30 11 43 44 41 35 82 54 36
     LET REAGAN = DATA 26 54 84 47 51 51 52 14 36 55
     LET ANDERSON = DATA 6 12 4 8 3 6 10 3 7 8
     LET X = DATA 1 2 3 5 6 7 8 10 11 12
-    LET X1 = X - 0.2
-    LET X2 = X + 0.2
+    LET X1 = X - 0.3
+    LET X2 = X + 0.3
     .
     XLIMITS 1 12
     XTIC OFFSET 1 1
@@ -9548,12 +9742,24 @@ Program:
     LINE BLANK ALL
     BAR ON ALL
     BAR FILL ON ALL
-    BAR WIDTH 0.2 ALL
-    BAR PATTERN VERTICAL ALL
+    BAR WIDTH 0.3 ALL
+    BAR PATTERN D1 D1D2 D2
     BAR PATTERN THICK 0.3 ALL
+    .
+    BAR PATTERN COLOR G10 G50 G90
+    TITLE DEMONSTRATE BAR PATTERN GRAYSCALE COLORS
+    PLOT CARTER X1 AND
+    PLOT REAGAN X AND
+    PLOT ANDERSON X2
+    .
     BAR PATTERN COLOR RED GREEN BLUE
     TITLE DEMONSTRATE BAR PATTERN COLORS
+    PLOT CARTER X1 AND
+    PLOT REAGAN X AND
+    PLOT ANDERSON X2
     .
+    BAR PATTERN RGB COLOR 175 238 238 220 20 60 127 255 0
+    TITLE DEMONSTRATE BAR PATTERN RGB COLORS
     PLOT CARTER X1 AND
     PLOT REAGAN X AND
     PLOT ANDERSON X2
@@ -32791,12 +32997,6 @@ Program:
 
 
 
-
-
-
-
-
-
 -------------------------  *C*  ZZZZZ--------------------
 
 -----C CHART-----------------------------------------------------
@@ -40393,12 +40593,63 @@ Type:
 Purpose:
     Specifies the colors of the characters to appear at the plot points
     of each trace on subsequent plots.
+
+Description:
+    Dataplot defines the points on a plot by "traces".  A trace is a set
+    of points that are drawn with the same attributes.  For example,
+
+        PLOT Y1 X1 AND
+        PLOT Y2 X2
+
+    has two traces.  The first is the points defined by Y1 and X1 and the
+    second is the points defined by Y2 and X2.  Attributes can be set for
+    up to 100 traces.
+
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the character color, Dataplot first checks if the device
+    supports RGB colors. If not, the named color will be used.  If the
+    device does support RGB color, Dataplot will check if an RGB color
+    has been specified.  If yes, then that RGB color is used.  If not,
+    the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
+    CHARACTER COLORS <color1> <color2>  ... <colorn>
+    where <color1>, <color2>, ..., <colorn> specifies the desired colors.
+
+    Up to 100 character colors can be specifed.
  
-Syntax:
-    CHARACTER COLORS  <color>  <color>  <color>  etc.
-    where <color> specifies the desired color.  Up to 100 character
-    colors can be specifed.  Enter HELP COLOR TYPES for a list of
-    available colors.
+Syntax 2:
+    CHARACTER RGB COLORS <red-1> <green-1> <blue-1> ...
+                    <red-n> <green-n> <red-n>
+    where <red-1>, <green-1>, <blue-1>, ..., <red-n>, <green-n>, <blue-n>
+    is a list of integer values that specify the desired RGB character
+    colors.
+
+    Up to 100 such triplets of color values can be specified.
+
+    To turn off the RGB color, set the values to -1 (any negative value
+    will work).  Values greater than 255 will be set to 255.
  
 Examples:
     CHARACTER COLORS RED BLUE RED
@@ -40406,16 +40657,9 @@ Examples:
     CHARACTER COLORS ALL YELLOW
     CHARACTER COLORS YELLOW ALL
     CHARACTERS COLORS
- 
-Note:
-    Characters are specified by trace.  All characters belonging to the
-    same trace are plotted with the same plot symbol.
- 
-Note:
-    The BAR, SPIKE, CHARACTER, and LINE switch all work independently
-    of each other.  That is, a plot point can be a line, a character, a
-    spike or a bar or any combination of the above.
- 
+    CHARACTER RGB COLORS 220 109 88 240 220 160
+    CHARACTER RGB COLORS 220 109 88 ALL
+
 Note:
     The CHARACTER COLORS command with no arguments sets the character
     color to default for all traces.  The CHARACTER COLORS command with
@@ -40425,7 +40669,7 @@ Note:
     on all traces.
  
 Default:
-    All character colors are black.
+    All character colors are set to black and RGB colors are off.
  
 Synonyms:
     None
@@ -40447,10 +40691,6 @@ Related Commands:
     CHARACTERS SIZES    = Sets the sizes for plot characters.
     CHARACTER THICKNESS = Sets the thicknesses for plot characters.
     CHARACTER WIDTH     = Sets the widths for plot characters.
- 
-    LINES               = Sets the types for plot lines.
-    SPIKES              = Sets the on/off switches for plot spikes.
-    BARS                = Sets the on/off switches for plot bars.
  
     LINE COLORS         = Sets the colors for plot lines.
     SPIKE COLORS        = Sets the colors for plot spikes.
@@ -40475,10 +40715,11 @@ Related Commands:
     COLOR               = Sets the color for TEXT characters.
  
 Applications:
-    XX
+    Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
+    2020/11: Support for RGB colors
  
 Program:
     . POLLUTION SOURCE ANALYSIS, LLOYD CURRIE, DATE--1990
@@ -40491,17 +40732,27 @@ Program:
     SERIAL READ POT
     106 175 61 79 94 121 424 328 107 218 140 179 246 231 245 339 99
     END OF DATA
+    LET X = SEQUENCE 1 1 17
     .
     CHARACTER CIRCLE CIRCLE SQUARE SQUARE
     CHARACTER FILL ON ALL
-    CHARACTER COLOR G10 G90 G10 G90
     LINE BLANK ALL
     LEGEND FONT SIMPLEX
     LEGEND 1 CIRC() - POTASSIUM
     LEGEND 2 SQUA() - LEAD
     .
+    CHARACTER COLOR G10 G90 G10 G90
+    TITLE DEMONSTRATE GRAYSCALE CHARACTER COLOR COMMAND
+    PLOT POT X ID2 AND
+    PLOT LEAD X ID2
+    .
+    CHARACTER COLOR RED BLUE RED BLUE
     TITLE DEMONSTRATE CHARACTER COLOR COMMAND
-    LET X = SEQUENCE 1 1 17
+    PLOT POT X ID2 AND
+    PLOT LEAD X ID2
+    .
+    CHARACTER RGB COLOR 175 238 238 220 20 60 175 238 238 220 20 60
+    TITLE DEMONSTRATE CHARACTER COLOR COMMAND
     PLOT POT X ID2 AND
     PLOT LEAD X ID2
  
@@ -66982,6 +67233,55 @@ Program:
     CYCLE PLOT
  
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

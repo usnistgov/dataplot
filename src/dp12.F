@@ -3406,7 +3406,7 @@ C
       CHARACTER*24 STJ2
       CHARACTER*24 STROWJ
       CHARACTER*24 STCOLJ
-      CHARACTER*4  ISTR(40)
+      CHARACTER*4  ISTR(80)
 C
 C---------------------------------------------------------------------
 C
@@ -3427,12 +3427,12 @@ C
       INTEGER NCSTC(*)
       INTEGER NCSTT(*)
 C
-      CHARACTER*40 STME(*)
-      CHARACTER*40 STMEC(*)
-      CHARACTER*40 ST2T(*)
-      CHARACTER*40 ST2TC(*)
-      CHARACTER*40 STC(*)
-      CHARACTER*40 STT(*)
+      CHARACTER*80 STME(*)
+      CHARACTER*80 STMEC(*)
+      CHARACTER*80 ST2T(*)
+      CHARACTER*80 ST2TC(*)
+      CHARACTER*80 STC(*)
+      CHARACTER*80 STT(*)
 C
       INCLUDE 'DPCOPA.INC'
       INCLUDE 'DPCOHK.INC'
@@ -3454,7 +3454,9 @@ C
       NCC=0
       NC1=0
       NC2=0
+      NC3=0
       NC=0
+      MAXCHS=80
 C
       DO10J=1,MAX2T
         DO11I=1,NINP
@@ -3698,6 +3700,8 @@ C
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DCF2')
      1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
+C     2021/01: CHECK FOR MAXIMUM STRING LENGTH OF 40
+C
       ICNT=0
       DO320J1=1,NUMFAC
         CALL RANGDP(XMAT(1,J1),NINP,IWRITE,RJ1,IBUGA3,IERROR)
@@ -3736,12 +3740,16 @@ C
                 NC=5
               ENDIF
               IF(STMEC(J1).NE.'-999')THEN
-                NC2=NCMEC(J1)+1
-                STMEC(J1)(NC2:NC2)='+'
-                NC2=NC2+1
-                NC3=NC2+NC-1
-                STMEC(J1)(NC2:NC3)=STCOLJ(1:NC)
-                NCMEC(J1)=NC3
+                IF(NC2.LE.39)THEN
+                  NC2=NCMEC(J1)+1
+                  STMEC(J1)(NC2:NC2)='+'
+                  NC2=NC2+1
+                ENDIF
+                IF(NC3.LE.39)THEN
+                  NC3=NC2+NC-1
+                  STMEC(J1)(NC2:NC3)=STCOLJ(1:NC)
+                  NCMEC(J1)=NC3
+                ENDIF
               ELSE
                 STMEC(J1)=' '
                 STMEC(J1)(1:NC)=STCOLJ(1:NC)
@@ -3835,21 +3843,27 @@ C
                 NCC=5
               ENDIF
               IF(STMEC(J1).NE.'-999')THEN
-                NC2=NCMEC(J1)+1
-                STMEC(J1)(NC2:NC2)='+'
-                NC2=NC2+1
-                NC3=NC2+NCR-1
-                STMEC(J1)(NC2:NC3)=STROWJ(1:NCR)
-                NC2=NC3+1
-                NC3=NC2+NCC-1
-                STMEC(J1)(NC2:NC3)=STCOLJ(1:NCC)
-                NCMEC(J1)=NC3
+                IF(NC2.LE.39)THEN
+                  NC2=NCMEC(J1)+1
+                  STMEC(J1)(NC2:NC2)='+'
+                  NC2=NC2+1
+                ENDIF
+                IF(NC2+NCR-1.LE.MAXCHS)THEN
+                  NC3=NC2+NCR-1
+                  STMEC(J1)(NC2:NC3)=STROWJ(1:NCR)
+                  NC2=NC3+1
+                  NC3=NC2+NCC-1
+                  STMEC(J1)(NC2:NC3)=STCOLJ(1:NCC)
+                  NCMEC(J1)=NC3
+                ENDIF
               ELSE
                 STMEC(J1)=' '
                 STMEC(J1)(1:NCR)=STROWJ(1:NCR)
                 NC=NCR+1
-                STMEC(J1)(NC:NC+NCC-1)=STCOLJ(1:NCC)
-                NCMEC(J1)=NC+NCC-1
+                IF(NC+NCC-1.LE.MAXCHS)THEN
+                  STMEC(J1)(NC:NC+NCC-1)=STCOLJ(1:NCC)
+                  NCMEC(J1)=NC+NCC-1
+                ENDIF
               ENDIF
 C
               IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DCF2')THEN
@@ -3980,12 +3994,16 @@ C
                 NC=5
               ENDIF
               IF(ST2TC(J1).NE.'-999')THEN
-                NC2=NCST2C(J1)+1
-                ST2TC(J1)(NC2:NC2)='+'
-                NC2=NC2+1
-                NC3=NC2+NC-1
-                ST2TC(J1)(NC2:NC3)=STJ2(1:NC)
-                NCST2C(J1)=NC3
+                IF(NCST2C(J1)+1.LE.MAXCHS)THEN
+                  NC2=NCST2C(J1)+1
+                  ST2TC(J1)(NC2:NC2)='+'
+                  NC2=NC2+1
+                ENDIF
+                IF(NC2+NC-1.LE.MAXCHS)THEN
+                  NC3=NC2+NC-1
+                  ST2TC(J1)(NC2:NC3)=STJ2(1:NC)
+                  NCST2C(J1)=NC3
+                ENDIF
               ELSE
                 ST2TC(J1)=' '
                 ST2TC(J1)(1:NC)=STJ2(1:NC)
@@ -4057,15 +4075,21 @@ C
                 NCC=5
               ENDIF
               IF(ST2TC(J1).NE.'-999')THEN
-                NC2=NCST2C(J1)+1
-                ST2TC(J1)(NC2:NC2)='+'
-                NC2=NC2+1
-                NC3=NC2+NCR-1
-                ST2TC(J1)(NC2:NC3)=STROWJ(1:NCR)
-                NC2=NC3+1
-                NC3=NC2+NCC-1
-                ST2TC(J1)(NC2:NC3)=STCOLJ(1:NCC)
-                NCST2C(J1)=NC3
+                IF(NCST2C(J1)+1.LE.MAXCHS)THEN
+                  NC2=NCST2C(J1)+1
+                  ST2TC(J1)(NC2:NC2)='+'
+                  NC2=NC2+1
+                ENDIF
+                IF(NC2+NCR-1.LE.MAXCHS)THEN
+                  NC3=NC2+NCR-1
+                  ST2TC(J1)(NC2:NC3)=STROWJ(1:NCR)
+                  NC2=NC3+1
+                ENDIF
+                IF(NC2+NCC-1.LE.MAXCHS)THEN
+                  NC3=NC2+NCC-1
+                  ST2TC(J1)(NC2:NC3)=STCOLJ(1:NCC)
+                  NCST2C(J1)=NC3
+                ENDIF
               ELSE
                 ST2TC(J1)=' '
                 ST2TC(J1)(1:NCR)=STROWJ(1:NCR)
@@ -4181,7 +4205,7 @@ C
           WRITE(ICOUT,713)J,NCSTT(J),STT(J),NCSTC(J),STC(J),
      1                    IHLEFT,IHLEF2
   713     FORMAT('J,NCSTT(J),STT(J),NCSTC(J),STC(J),IHLEFT,IHLEF2 = ',
-     1           I3,2(I5,2X,A40),2X,2A4)
+     1           I3,2(I5,2X,A80),2X,2A4)
           CALL DPWRST('XXX','BUG ')
         ENDIF
 C
@@ -4268,6 +4292,13 @@ C
           WRITE(ICTEMP(1:3),'(I3)')J
           IHLEFT(4:4)=ICTEMP(1:1)
           IHLEF2(1:2)=ICTEMP(2:3)
+        ENDIF
+C
+        IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DCF2')THEN
+          WRITE(ICOUT,7713)J,NCSTC(J),STC(J),IHLEFT,IHLEF2
+ 7713     FORMAT('J,NCSTC(J),STC(J),IHLEFT,IHLEF2 = ',
+     1           I3,I5,2X,A80,2X,2A4)
+          CALL DPWRST('XXX','BUG ')
         ENDIF
 C
         NEWNAM='NO'

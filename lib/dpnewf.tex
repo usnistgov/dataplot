@@ -1,5 +1,5 @@
 9.
-                                                     January   2021
+                                                     February   2021
 This is the DATAPLOT News file DPNEWF.TEX.  This NEWS file contains a
 list of DATAPLOT enhancements.  Some commands may be documented here
 that are not yet available in the standard documentation.
@@ -7,6 +7,61 @@ that are not yet available in the standard documentation.
 The complete news file can be viewed at
 
     http://www.itl.nist.gov/div898/software/dataplot/news.htm
+
+-----------------------------------------------------------------------
+The following enhancements were made to DATAPLOT
+February 2021 - February 2021.
+
+ 1. Made a few tweaks for MacOS.
+
+    a. Added MACOS switch to Makefile.mac.
+
+    b. Set the default for SET LIST LAUNCHER to
+
+           open -t
+
+       and the default for SET LIST VIEWER to blank.  So LIST
+       will use (when SET LIST WINDOW NEW ON is set).
+
+           open -t file-name
+
+       This is equivalent to entering
+
+           SET LIST LAUNCHER "open -t"
+           SET LIST VIEWER
+
+       This opens the specified file using the default editor
+       (typically TextEdit) on your system.
+
+    c. Allow empty argument for SET LIST VIEWER.  This is needed
+       for systems where the SET LIST LAUNCHER does not require
+       specification of the editor.
+
+    d. Updated the SET BROWSER command to extract to the end of the
+       command line without quotes.  This allows the following to be
+       entered
+
+           SET BROWSER open -a safari
+           SET BROWSER open -a firefox
+           SET BROWSER open -a "google chrome"
+
+       The following aliases will be recognized
+
+           SET BROWSER safari
+           SET BROWSER firefox
+           SET BROWSER chrome
+
+       These will automatically add the "open -a" (and the
+       "google chrome" for chrome).
+
+       Note that using the default, SET BROWSER open, will use the
+       default browser on your platform.  So using a SET BROWSER is
+       only needed if you want to override the use of the default
+       browser.
+
+    e. Fixed a bug in the AQUA driver when generating histograms.
+
+ 2. Made a few minor bug fixes.
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT

@@ -25,7 +25,7 @@ FFLAGS += -O2 -DLINUX -fdefault-real-8 -fdefault-double-8
 CFLAGS += -O2
 
 # special flags for dp1
-DP1FLAGS = -DDDOUBLE -DINTEGER32 -DHAVE_ISNAN -DHAVE_EXECUTE_COMMAND_LINE -DDPLIBDIR=\'$(DPLIBDIR)\'
+DP1FLAGS = -DDDOUBLE -DINTEGER32 -DHAVE_ISNAN -DHAVE_EXECUTE_COMMAND_LINE -DMACOS -DDPLIBDIR=\'$(DPLIBDIR)\'
 
 
 # object files sorted by size for fastest parallel compilation; dp2.o first as it takes the longest

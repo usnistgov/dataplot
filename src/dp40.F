@@ -20226,15 +20226,15 @@ C     ON MacOS, "open" HAS SIMILAR FUNCTIONALITY AS "xdg-open"
 C     ON LINUX.
 C
       IF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
-        ILSTVW='vi'
-        NCLSVW=2
-        ILSTLA='gnome-terminal -e'
-        NCLSLA=17
 CCCCC   IEXCVW='libreoffice --calc'
 CCCCC   NCEXCW=18
 CCCCC   IWORVW='libreoffice --writer'
 CCCCC   NCWOVW=20
         IF(IOPSY2.EQ.'MAC ')THEN
+          ILSTVW=' '
+          NCLSVW=0
+          ILSTLA='open -t '
+          NCLSLA=8
           IEXCVW='open'
           NCEXVW=4
           IWORVW='open'
@@ -20242,6 +20242,10 @@ CCCCC   NCWOVW=20
           IPPTVW='open'
           NCPPVW=4
         ELSE
+          ILSTVW='vi'
+          NCLSVW=2
+          ILSTLA='gnome-terminal -e'
+          NCLSLA=17
           IEXCVW='xdg-open'
           NCEXVW=8
           IWORVW='xdg-open'

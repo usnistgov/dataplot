@@ -1,9 +1,9 @@
-47800.      (VERSION 2020.08)   total number of lines in file (including this line)
+47900.      (VERSION 2021.01)   total number of lines in file (including this line)
  4.                          number of     sections below
   100.    L                  first line number of L section
-19400.    M                  first line number of M section
-38000.    N                  first line number of N section
-44200.    O                  first line number of O section
+19500.    M                  first line number of M section
+38100.    N                  first line number of N section
+44300.    O                  first line number of O section
  
 ----------------------------------------------------------
  
@@ -11711,17 +11711,70 @@ Purpose:
     Specifies the colors of the lines to appear between the plot points
     of each trace on subsequent plots.
  
-Syntax:
+Description:
+    Dataplot defines the points on a plot by "traces".  A trace is a set
+    of points that are drawn with the same attributes.  For example,
+
+        PLOT Y1 X1 AND
+        PLOT Y2 X2
+
+    has two traces.  The first is the points defined by Y1 and X1 and the
+    second is the points defined by Y2 and X2.  Attributes can be set for
+    up to 100 traces.
+
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the line color, Dataplot first checks if the device
+    supports RGB colors. If not, the named color will be used.  If the
+    device does support RGB color, Dataplot will check if an RGB color
+    has been specified.  If yes, then that RGB color is used.  If not,
+    the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
     LINE COLORS  <color 1>  <color 2>  ... <color n>
     where <color 1>, ..., <color n> specify the desired line colors.
+
     Up to 100 such line colors may be specified.
  
+Syntax 2:
+    LINE RGB COLORS <red-1> <green-1> <blue-1> ...
+                    <red-n> <green-n> <red-n>
+    where <red-1>, <green-1>, <blue-1>, ..., <red-n>, <green-n>, <blue-n>
+    is a list of integer values that specify the desired RGB line colors.
+
+    Up to 100 such triplets of color values can be specified.
+
+    To turn off the RGB color, set the values to -1 (any negative value
+    will work).  Values greater than 255 will be set to 255.
+ 
 Examples:
-    LINE COLORS BLUE 0.2 ORANGE
+    LINE COLORS BLUE ORANGE
     LINE COLORS BLUE BLUE YELLOW YELLOW
     LINE COLORS ALL RED
     LINE COLORS RED ALL
     LINE COLORS
+    LINE RGB COLORS 220 109 88 240 220 160
+    LINE RGB COLORS 220 109 88 ALL
  
 Note:
     The LINE COLORS command with no arguments sets all line colors to
@@ -11731,11 +11784,12 @@ Note:
     color green to all traces.
  
 Note:
-    Many diagrammatic graphics commands use the LINE COLOR command to
-    set the line color for a figure to be drawn.
+    Many diagrammatic graphics commands (e.g., DRAW, CIRCLE) use the
+    LINE COLOR command to set the line color for the figure to be drawn.
+    Diagrammatic graphics only use the settings for the first trace.
  
 Default:
-    All line colors are set to black.
+    All line colors are set to black and RGB colors are off.
  
 Synonyms:
     None
@@ -11763,10 +11817,11 @@ Related Commands:
     BACKGROUND COLOR    = Sets the color for plot background.
  
 Applications:
-    XX
+    Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
+    2020/11: RGB color support added
  
 Program:
     . POLLUTION SOURCE ANALYSIS, LLOYD CURRIE, DATE--1990
@@ -11781,7 +11836,14 @@ Program:
     LET N = SIZE LEAD; LET X = SEQUENCE 1 1 N
     .
     LINE COLOR G20 G80
+    TITLE DEMONSTRATE GRAYSCALE LINE COLOR
+    PLOT POT LEAD VS X
     .
+    LINE COLOR BLUE RED
+    TITLE DEMONSTRATE LINE COLOR
+    PLOT POT LEAD VS X
+    .
+    LINE RGB COLOR 175 238 238 220 20 60
     TITLE DEMONSTRATE LINE COLOR
     PLOT POT LEAD VS X
  
@@ -19356,6 +19418,44 @@ Program:
  
  
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

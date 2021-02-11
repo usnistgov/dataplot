@@ -5544,9 +5544,9 @@ C
       EQUIVALENCE (GARBAG(IGAR17),ZTEMP8(1))
       EQUIVALENCE (GARBAG(IGAR18),ZTEMP9(1))
       EQUIVALENCE (GARBAG(IGAR19),ZTMP10(1))
-      EQUIVALENCE (GARBAG(IGAR20),ZTMP11(1))
-      EQUIVALENCE (GARBAG(IGAR21),XLEVEL(1))
-      EQUIVALENCE (DSYMB(1),XDESGN(1,1))
+      EQUIVALENCE (GARBAG(IGAR20),XDESGN(1,1))
+      EQUIVALENCE (DSYMB(1),ZTMP11(1))
+      EQUIVALENCE (DFILL(1),XLEVEL(1))
 C
       EQUIVALENCE (DGARBG(IDGAR1),DTEMP(1))
       EQUIVALENCE (DGARBG(IDGAR2),DTEMP2(1))
@@ -7603,6 +7603,7 @@ C
       SH1NEW=CPUMIN
       SH2NEW=CPUMIN
       ITYPE=0
+      NMCSAM=10000
 C
       IGOFF2=IGOFFM
       IF(IGOFF2.EQ.'DEFA')THEN
@@ -7632,8 +7633,8 @@ C
         WRITE(ICOUT,11)
    11   FORMAT('***** AT THE BEGINNING OF DPGOF2--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,12)ICASPL,ICASP2,N,MINMAX
-   12   FORMAT('ICASPL,ICASP2,N,MINMAX = ',2(A4,2X),2I8)
+        WRITE(ICOUT,12)ICASPL,ICASP2,N,MINMAX,NMCSAM
+   12   FORMAT('ICASPL,ICASP2,N,MINMAX,NMCSAM = ',2(A4,2X),3I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,15)KSLOC,KSSCAL,ILEVEL
    15   FORMAT('KSLOC,KSSCAL,ILEVEL = ',2G15.7,2X,A4)
@@ -7797,8 +7798,8 @@ C
           WRITE(ICOUT,211)
   211     FORMAT('AFTER INITIAL CALL TO DPGOF9:')
           CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,213)XMEAN,XSD,XMIN,XMAX,STATVA
-  213     FORMAT('XMEAN,XSD,XMIN,XMAX,STATVA = ',5G15.7)
+          WRITE(ICOUT,213)XMEAN,XSD,XMIN,XMAX,STATVA,NMCSAM
+  213     FORMAT('XMEAN,XSD,XMIN,XMAX,STATVA,NMCSAM = ',5G15.7,I8)
           CALL DPWRST('XXX','BUG ')
         ENDIF
 C
@@ -20202,6 +20203,8 @@ C     UPDATED         --FEBRUARY  2016.  CONFLICT BETWEEN FUNCTION BLOCK
 C                                        AND FUNCTION
 C     UPDATED         --NOVEMBER  2019.  OPTION TO OPEN HELP OUTPUT IN A
 C                                        SEPARATE WINDOW
+C     UPDATED         --FEBRUARY  2021.  SOME TWEAKS FOR HELP IN NEW
+C                                        WINDOW FOR MACOS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -21256,13 +21259,15 @@ C
       IF(IHLPNW.EQ.'ON' .AND. IERROR.EQ.'NO')THEN
         ISTR=' '
         IFLAGQ=0
-        DO93160II=1,NCLSVW
-          IF(ILSTVW(II:II).EQ.' ')THEN
-            IFLAGQ=1
-            GOTO93169
-          ENDIF
-93160   CONTINUE
-93169   CONTINUE
+        IF(NCLSVW.GE.1)THEN
+          DO93160II=1,NCLSVW
+            IF(ILSTVW(II:II).EQ.' ')THEN
+              IFLAGQ=1
+              GOTO93169
+            ENDIF
+93160     CONTINUE
+93169     CONTINUE
+        ENDIF
         NCSTR=0
         IF(IOPSY1.EQ.'UNIX')THEN
 C
@@ -21278,12 +21283,19 @@ C
               ISTR(NCSTR+1:NCSTR+1)=' '
               NCSTR=NCSTR+1
             ELSE
-              ISTR(NCSTR+1:NCSTR+2)=' "'
-              NCSTR=NCSTR+2
+              IF(IOPSY2.NE.'MAC ')THEN
+                ISTR(NCSTR+1:NCSTR+2)=' "'
+                NCSTR=NCSTR+2
+              ENDIF
             ENDIF
           ELSE
-            NCSTR=19
-            ISTR(1:NCSTR)='gnome-terminal -e "'
+            IF(IOPSY2.EQ.'MAC ')THEN
+              NCSTR=8
+              ISTR(1:NCSTR)='open -t '
+            ELSE
+              NCSTR=19
+              ISTR(1:NCSTR)='gnome-terminal -e "'
+            ENDIF
           ENDIF
         ELSEIF(IFLAGQ.EQ.1)THEN
           NCSTR=NCSTR+1
@@ -21297,8 +21309,10 @@ C
           ISTR(NCSTR+1:NCSTR+9)='write.exe'
           NCSTR=NCSTR+9
         ELSE
-          ISTR(NCSTR+1:NCSTR+NCLSVW)=ILSTVW(1:NCLSVW)
-          NCSTR=NCSTR+NCLSVW
+          IF(NCLSVW.GE.1)THEN
+            ISTR(NCSTR+1:NCSTR+NCLSVW)=ILSTVW(1:NCLSVW)
+            NCSTR=NCSTR+NCLSVW
+          ENDIF
         ENDIF
 C
         IF(IFLAGQ.EQ.1 .AND. IOPSY1.NE.'UNIX')THEN
@@ -21331,8 +21345,10 @@ C
           IF(NCLSLA.GE.10 .AND.
      1       ILSTLA(NCLSLA-9:NCLSLA).EQ.'konsole -e')THEN
           ELSE
-            NCSTR=NCSTR+1
-            ISTR(NCSTR:NCSTR)='"'
+            IF(IOPSY2.NE.'MAC ')THEN
+              NCSTR=NCSTR+1
+              ISTR(NCSTR:NCSTR)='"'
+            ENDIF
           ENDIF
         ENDIF
         ISSAV1=ISYSPE

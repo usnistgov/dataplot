@@ -1,4 +1,4 @@
-66600.      (VERSION 2020.12)  total number of lines in file (including this line)
+66700.      (VERSION 2021.01)  total number of lines in file (including this line)
  4.                          number of     sections below
   100.    P                  first line number of P section
 22400.    Q                  first line number of Q section
@@ -54938,20 +54938,71 @@ Purpose:
  
 Description:
     A spike is a vertical line from the plot point to the spike base
-    (most typically the x axis).  Spikes are specified by trace.  That
-    is, all points belonging to the same trace are drawn with the same
-    spike attributes.
+    (most typically the x axis).
  
-Syntax:
+    Dataplot defines the points on a plot by "traces".  A trace is a set
+    of points that are drawn with the same attributes.  For example,
+
+        PLOT Y1 X1 AND
+        PLOT Y2 X2
+
+    has two traces.  The first is the points defined by Y1 and X1 and the
+    second is the points defined by Y2 and X2.  Attributes can be set for
+    up to 100 traces.
+
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the spike color, Dataplot first checks if the device
+    supports RGB colors. If not, the named color will be used.  If the
+    device does support RGB color, Dataplot will check if an RGB color
+    has been specified.  If yes, then that RGB color is used.  If not,
+    the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
     SPIKE COLOR  <color>  <color>  <color>  etc.
     where <color> is a character string that specifies the desired
-                color.  Up to 100 spike colors can be specified.
+                color.
+
+    Up to 100 spike colors can be specified.
+ 
+Syntax 2:
+    SPIKE RGB COLORS <red-1> <green-1> <blue-1> ...
+                     <red-n> <green-n> <red-n>
+    where <red-1>, <green-1>, <blue-1>, ..., <red-n>, <green-n>, <blue-n>
+    is a list of integer values that specify the desired RGB spike colors.
+
+    Up to 100 such triplets of color values can be specified.
+
+    To turn off the RGB color, set the values to -1 (any negative value
+    will work).  Values greater than 255 will be set to 255.
  
 Examples:
     SPIKE COLOR RED BLUE GREEN
     SPIKE COLORS BLACK ALL
     SPIKE COLORS ALL RED
     SPIKE COLORS
+    SPIKE RGB COLORS 220 109 88 240 220 160
+    SPIKE RGB COLORS 220 109 88 ALL
  
 Note:
     The SPIKE COLOR command with no arguments sets the spike color to
@@ -54960,13 +55011,8 @@ Note:
     traces; thus SPIKE COLOR RED ALL or SPIKE LINE ALL RED plots spikes
     with red lines for all traces.
  
-Note:
-    The BAR, SPIKE, CHARACTER, and LINE switch all work independently
-    of each other.  That is, a plot point can be a line, a character,
-    a spike or a bar or any combination of the above.
- 
 Default:
-    All spikes are drawn with black lines.
+    All spikes are drawn with black lines and RGB colors are off.
  
 Synonyms:
     SPIKE PATTERN
@@ -54978,42 +55024,62 @@ Related Commands:
     SPIKE DIRECTION   = Sets the directions for plot spikes.
     SPIKE LINE        = Sets the line types for plot spikes.
     SPIKE THICKNESS   = Sets the line thicknesses for plot spikes.
+    LINE COLOR        = Sets the color for plot lines.
+    CHARACTER COLOR   = Sets the color for plot characters.
+    BAR COLOR         = Sets the color for plot bars.
  
 References:
-    "Elements of Graphing Data" by William S. Cleveland, Wadsworth
-    Advanced Books and Software, 1985.
+    William S. Cleveland (1985), "Elements of Graphing Data,"
+    Wadsworth Advanced Books and Software.
  
-    "Visualizing Data", William S. Cleveland, Hobart Press, 1993.
+    William S. Cleveland (1993), "Visualizing Data," Hobart Press.
  
 Applications:
     Presentation Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
+    2020/11: Support for RGB colors
  
 Program:
     LET CARTER = DATA 66 30 11 43 44 41 35 82 54 36
     LET REAGAN = DATA 26 54 84 47 51 51 52 14 36 55
     LET X = DATA 1 2 3 5 6 7 8 10 11 12
     .
-    TIC MARK LABEL FORMAT ALPHA; YLIMITS 1 12; YTIC OFFSET 1 1
+    LET CART2 = -CARTER
+    LET XJUNK = DATA 0.5 12.5; LET YJUNK = DATA 0 0
+    .
+    TIC MARK LABEL FORMAT ALPHA
+    YLIMITS 1 12
+    YTIC OFFSET 1 1
     Y1TIC LABEL CONTENT DEMOCRATS INDEPENDENTS REPUBLICANS SP() ...
-       EAST SOUTH MIDWEST WEST SP() BLACKS HISPANICS WHITES SP()
+          EAST SOUTH MIDWEST WEST SP() BLACKS HISPANICS WHITES SP()
     MINOR Y1TIC MARK NUMBER 0
     X1LABEL PERCENT
     XLIMITS -100 100
-    MAJOR XTIC MARK NUMBER 11; MINOR XTIC MARK NUMBER 1
+    MAJOR XTIC MARK NUMBER 11
+    MINOR XTIC MARK NUMBER 1
     XTIC MARK LABEL CONTENT 100 80 60 40 20 0 20 40 60 80 100
     .
     LINE BLANK BLANK SOLID
-    SPIKE ON ON OFF; SPIKE THICKNESS 0.5 ALL; SPIKE DIRECTION H ALL
-    SPIKE COLOR G25 G75
-    TITLE DEMONSTRATE SPIKE COLOR COMMAND
-    LEGEND 1 CARTER; LEGEND 1 COORDINATES 17 85
-    LEGEND 2 REAGAN; LEGEND 2 COORDINATES 83 85; LEGEND 2 JUST RIGHT
+    SPIKE ON ON OFF
+    SPIKE THICKNESS 0.5 ALL
+    SPIKE DIRECTION H ALL
     .
-    LET CART2 = -CARTER
-    LET XJUNK = DATA 0.5 12.5; LET YJUNK = DATA 0 0
+    SPIKE COLOR G25 G75
+    TITLE DEMONSTRATE GRAYSCALE SPIKE COLOR COMMAND
+    PLOT X VS REAGAN AND
+    PLOT X VS CART2 AND
+    PLOT XJUNK YJUNK
+    .
+    SPIKE COLOR RED BLUE
+    TITLE DEMONSTRATE SPIKE COLOR COMMAND
+    PLOT X VS REAGAN AND
+    PLOT X VS CART2 AND
+    PLOT XJUNK YJUNK
+    .
+    SPIKE RGB COLORS 220 109 88 240 220 160
+    TITLE DEMONSTRATE SPIKE RGB COLOR COMMAND
     PLOT X VS REAGAN AND
     PLOT X VS CART2 AND
     PLOT XJUNK YJUNK
@@ -55032,6 +55098,25 @@ Purpose:
     Specifies if a spike will be drawn horizontally or vertically
     on subsequent plots.
  
+    TIC MARK LABEL FORMAT ALPHA
+    YLIMITS 1 12
+    YTIC OFFSET 1 1
+    Y1TIC LABEL CONTENT DEMOCRATS INDEPENDENTS REPUBLICANS SP() ...
+       EAST SOUTH MIDWEST WEST SP() BLACKS HISPANICS WHITES SP()
+    MINOR Y1TIC MARK NUMBER 0
+    X1LABEL PERCENT
+    XLIMITS -100 100
+    MAJOR XTIC MARK NUMBER 11
+    MINOR XTIC MARK NUMBER 1
+    XTIC MARK LABEL CONTENT 100 80 60 40 20 0 20 40 60 80 100
+    .
+    LINE BLANK BLANK SOLID
+    SPIKE ON ON OFF
+    SPIKE THICKNESS 0.5 ALL
+    SPIKE DIRECTION H ALL
+    LEGEND 1 CARTER; LEGEND 1 COORDINATES 17 85
+    LEGEND 2 REAGAN; LEGEND 2 COORDINATES 83 85; LEGEND 2 JUST RIGHT
+    .
 Description:
     A spike is a vertical line from the plot point to the spike base.
     Vertical spikes are drawn from the x-axis to the plot point while
@@ -66521,6 +66606,21 @@ Program 2:
     feedback on
 
 ---------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

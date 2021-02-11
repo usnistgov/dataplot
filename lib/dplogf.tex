@@ -55,6 +55,7 @@ IF FLAGUSER = 1;      . Jim Filliben's preferences
    LET FLAGPDPI = 1;  . Postscript dpi
    LET FLAGPDF  = 1;  . Automatic creation of pdf files
    LET FLAGLIST = 1;  . Set number of list lines, open new window for LIST, HELP
+   LET FLAGMAC  = 0;  . 1 => MacOS, 0 => not MacOS
 ELSE IF FLAGUSER = 2; . Alan Heckert preferences
    LET IBROWSE = 0;   . Use default via "xdg-open"
    LET IOPS = 1;      . 1 => X11, 2 => Aquaterm (MacOS only)
@@ -77,6 +78,7 @@ ELSE IF FLAGUSER = 2; . Alan Heckert preferences
    LET FLAGPDPI = 1;  . Postscript dpi
    LET FLAGPDF  = 1;  . Automatic creation of pdf files
    LET FLAGLIST = 1;  . Set number of list lines, open new window for LIST, HELP
+   LET FLAGMAC  = 0;  . 1 => MacOS, 0 => not MacOS
 ELSE;                 . User customized settings
    LET IBROWSE = 0;   . Use default via "xdg-open"
    LET IOPS = 1;      . 1 => X11, 2 => Aquaterm (MacOS only)
@@ -99,6 +101,7 @@ ELSE;                 . User customized settings
    LET FLAGPDPI = 1;  . Postscript dpi
    LET FLAGPDF  = 1;  . Automatic creation of pdf files
    LET FLAGLIST = 1;  . Set number of list lines, open new window for LIST, HELP
+   LET FLAGMAC  = 0;  . 1 => MacOS, 0 => not MacOS
 END OF IF
 .
 .  
@@ -405,18 +408,38 @@ IF FLAGUSER = 1; . Jim's settings
    DEVICE 2 POSTSCRIPT
    SEED 359
 ELSE IF FLAGUSER = 2; . Alan's settings
+   IF FLAGMAC = 0 ; . Linux defaults
+      SET GHOSTSCRIPT PATH /usr/bin
+      SET POSTSCRIPT VIEWER okular
+      SET PDF VIEWER okular
+      SET IMAGE VIEWER gimp
+   ELSE IF FLAGMAC = 0 ; . MacOS defaults
+      SET IMAGE VIEWER gimp
+      set postscript convert off ; . Turn off automatic PDF conversion
+   ENDIF
    . SET DATAPLOT URL https://stat.nist.gov/~heckert/sed/software/dataplot/
-   SET GHOSTSCRIPT PATH /usr/bin
-   SET POSTSCRIPT VIEWER okular
-   SET IMAGE VIEWER gimp
    SET POSTSCRIPT DEFAULT COLOR ON
    SET POSTSCRIPT FONT HELVETICA BOLD; . versus arial or verdanna or . . .
    DEVICE 2 POSTSCRIPT
 ELSE; . Custom commands for generic user
-   SET POSTSCRIPT VIEWER okular
-   . SET POSTSCRIPT VIEWER evince
-   . SET POSTSCRIPT VIEWER gv
-   . SET IMAGE VIEWER gimp
+   IF FLAGMAC = 0 ; . Linux defaults
+      SET POSTSCRIPT VIEWER okular
+      SET PDF VIEWER okular
+      . SET POSTSCRIPT VIEWER evince
+      . SET PDF VIEWER evince
+      . SET POSTSCRIPT VIEWER gv
+      . SET IMAGE VIEWER gimp
+   ELSE IF FLAGMAC = 1 ;
+      . MacOS will use the "open" command in most cases, so typically
+      . only use these commands if you want to override the default
+      . on your local platform.
+      . SET BROWSER safari
+      . SET BROWSER chrome
+      . SET BROWSER firefox
+      . SET POSTSCRIPT VIEWER xxxx
+      . SET IMAGE VIEWER gimp
+      set postscript convert off ; . Turn off automatic PDF conversion
+   END OF IF
    SET POSTSCRIPT DEFAULT COLOR ON
    SET POSTSCRIPT FONT HELVETICA BOLD; . versus arial or verdanna or . . .
    DEVICE 2 POSTSCRIPT

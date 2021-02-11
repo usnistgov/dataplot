@@ -3278,7 +3278,11 @@ C
         UNIXPV='BROWSER'
         CALL getenv(UNIXPV,IBROWS)
 CCCCC   IF(IBROWS.EQ.' ')IBROWS='firefox'
-        IF(IBROWS.EQ.' ')IBROWS='xdg-open'
+        IF(IOPSY2.EQ.'MAC ')THEN
+          IF(IBROWS.EQ.' ')IBROWS='open'
+        ELSE
+          IF(IBROWS.EQ.' ')IBROWS='xdg-open'
+        ENDIF
 C
         UNIXPV='DATAPLOT_URL'
         CALL getenv(UNIXPV,IDPURL)
