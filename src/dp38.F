@@ -15889,6 +15889,7 @@ C               **  TREAT THE UNIX LIBPLOT                    CASE      **
 C               **********************************************************
 C
  2600 CONTINUE
+      ILAST=0
       ITYPE=10
       IF(IMODEL.EQ.'X')ITYPE=1
       IF(IMODEL.EQ.'PNM')ITYPE=2

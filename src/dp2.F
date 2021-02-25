@@ -7484,6 +7484,8 @@ C                                         SET CHECK LENGTH OUTPUT
 C     UPDATED         --JANUARY    2021.  SET ERROR MESSAGE
 C     UPDATED         --FEBRUARY   2021.  ALLOW EMPTY ARGUMENT FOR
 C                                         SET LIST VIEWER
+C     UPDATED         --FEBRUARY   2021.  FIX BUG IN
+C                                         SET BEST FIT <DIST> <ON/OFF>
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -17134,10 +17136,11 @@ C     ******************************************************
 C
       IPART1='BEST'
       IPART2='FIT '
-      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+      IPART3='DIST'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
 C
-        IF(IHARG(3).EQ.'DIST' .AND.
-     1     (IHARG(4).EQ.'ALL ' .OR. IHARG(4).EQ.'DEFAU'))THEN
+        IF(IHARG(4).EQ.'ALL ' .OR. IHARG(4).EQ.'DEFAU')THEN
           IBFINO='ON'
           IBFIUN='ON'
           IBFI2B='ON'
@@ -17215,8 +17218,7 @@ C
           ENDIF
           IFOUND='YES'
           GOTO9000
-        ELSEIF(IHARG(3).EQ.'DIST' .AND.
-     1     (IHARG(4).EQ.'NONE' .OR. IHARG(4).EQ.'OFF '))THEN
+        ELSEIF(IHARG(4).EQ.'NONE' .OR. IHARG(4).EQ.'OFF ')THEN
           IBFINO='OFF'
           IBFIUN='OFF'
           IBFI2B='OFF'
@@ -17294,376 +17296,406 @@ C
           ENDIF
           IFOUND='YES'
           GOTO9000
-        ENDIF
-C
-        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'TRUE' .OR.
-     1     IHV.EQ.'DEFA')THEN
-          IHV='ON'
-        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE' .OR.
-     1         IHV.EQ.'FALS')THEN
-          IHV='OFF'
         ELSE
-          IHV='ON'
-        ENDIF
 C
-        IF(IHARG(3).EQ.'NORM')THEN
-          IBFINO=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'UNIF')THEN
-          IBFIUN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'2   ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'BETA')THEN
-          IBFI2B=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'TWO ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'BETA')THEN
-          IBFI2B=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'4   ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'BETA')THEN
-          IBFI4B=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'FOUR' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'BETA')THEN
-          IBFI4B=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'POWE')THEN
-          IBFIPW=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'REFL' .AND. IHARG(4).EQ.'POWE')THEN
-          IBFIPW=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'ARCS')THEN
-          IBFIAR=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'TRIA')THEN
-          IBFITR=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'TOPP' .AND. IHARG(4).EQ.'AND ' .AND.
-     1         IHARG(5).EQ.'LEON')THEN
-          IBFITO=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'REFL' .AND. IHARG(4).EQ.'GENE' .AND.
-     1         IHARG(5).EQ.'TOPP' .AND. IHARG(6).EQ.'AND ' .AND.
-     1         IHARG(7).EQ.'LEON')THEN
-          IBFIRG=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'TWO ' .AND. IHARG(4).EQ.'SIDE' .AND.
-     1         IHARG(5).EQ.'POWE')THEN
-          IBFITS=IHV
-        ELSEIF(IHARG(3).EQ.'2   ' .AND. IHARG(4).EQ.'SIDE' .AND.
-     1         IHARG(5).EQ.'POWE')THEN
-          IBFITS=IHV
-        ELSEIF(IHARG(3).EQ.'2   ' .AND. IHARG(4).EQ.'COMP' .AND.
-     1         IHARG(5).EQ.'NORM' .AND. IHARG(6).EQ.'MIXT')THEN
-          IBFINX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'TWO ' .AND. IHARG(4).EQ.'COMP' .AND.
-     1         IHARG(5).EQ.'NORM' .AND. IHARG(6).EQ.'MIXT')THEN
-          IBFINX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'GENE' .AND. IHARG(4).EQ.'EXTR' .AND.
-     1         IHARG(5).EQ.'VALU' .AND. IHARG(6)(1:3).EQ.'MIN')THEN
-          IBFGVN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'GENE' .AND. IHARG(4).EQ.'EXTR' .AND.
-     1         IHARG(5).EQ.'VALU' .AND. IHARG(6)(1:3).EQ.'MAX')THEN
-          IBFGVX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'GENE' .AND. IHARG(4).EQ.'PARE' .AND.
-     1         IHARG(5)(1:3).EQ.'MIN')THEN
-          IBFGPN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'GENE' .AND. IHARG(4).EQ.'PARE' .AND.
-     1         IHARG(5)(1:3).EQ.'MAX')THEN
-          IBFGPX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'FREC' .AND. IHARG(4)(1:3).EQ.'MAX')THEN
-          IBFFRX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'EXTR' .AND. IHARG(4).EQ.'VALU' .AND.
-     1         IHARG(5).EQ.'TYPE' .AND. IHARG(6).EQ.'2   ' .AND.
-     1         IHARG(7)(1:3).EQ.'MAX')THEN
-          IBFFRX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'EXTR' .AND. IHARG(4).EQ.'VALU' .AND.
-     1         IHARG(5).EQ.'TYPE' .AND. IHARG(6).EQ.'TWO ' .AND.
-     1         IHARG(7)(1:3).EQ.'MAX')THEN
-          IBFFRX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'EXTR' .AND. IHARG(4).EQ.'VALU' .AND.
-     1         IHARG(5).EQ.'TYPE' .AND. IHARG(6).EQ.'II  ' .AND.
-     1         IHARG(7)(1:3).EQ.'MAX')THEN
-          IBFFRX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'FREC' .AND. IHARG(4)(1:3).EQ.'MIN')THEN
-          IBFFRN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'EXTR' .AND. IHARG(4).EQ.'VALU' .AND.
-     1         IHARG(5).EQ.'TYPE' .AND. IHARG(6).EQ.'2   ' .AND.
-     1         IHARG(7)(1:3).EQ.'MAX')THEN
-          IBFFRN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'EXTR' .AND. IHARG(4).EQ.'VALU' .AND.
-     1         IHARG(5).EQ.'TYPE' .AND. IHARG(6).EQ.'TWO ' .AND.
-     1         IHARG(7)(1:3).EQ.'MAX')THEN
-          IBFFRN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'EXTR' .AND. IHARG(4).EQ.'VALU' .AnD.
-     1         IHARG(5).EQ.'TYPE' .AND. IHARG(6).EQ.'II  ' .AND.
-     1         IHARG(7)(1:3).EQ.'MAX')THEN
-          IBFFRN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'GUMB' .AND. IHARG(4)(1:3).EQ.'MAX')THEN
-          IBFGUX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'GENE' .AND. IHARG(4).EQ.'EXTR' .AND.
-     1         IHARG(5).EQ.'VALU' .AND. IHARG(6).EQ.'TYPE' .AND.
-     1         IHARG(7).EQ.'1   ' .AND. IHARG(8)(1:3).EQ.'MAX')THEN
-          IBFGUX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'GENE' .AND. IHARG(4).EQ.'EXTR' .AND.
-     1         IHARG(5).EQ.'VALU' .AND. IHARG(6).EQ.'TYPE' .AND.
-     1         IHARG(7).EQ.'ONE ' .AND. IHARG(8)(1:3).EQ.'MAX')THEN
-          IBFGUX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'GENE' .AND. IHARG(4).EQ.'EXTR' .AND.
-     1         IHARG(5).EQ.'VALU' .AND. IHARG(6).EQ.'TYPE' .AND.
-     1         IHARG(7).EQ.'I   ' .AND. IHARG(8)(1:3).EQ.'MAX')THEN
-          IBFGUX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'GUMB' .AND. IHARG(4)(1:3).EQ.'MIN')THEN
-          IBFGUN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'GENE' .AND. IHARG(4).EQ.'EXTR' .AND.
-     1         IHARG(5).EQ.'VALU' .AND. IHARG(6).EQ.'TYPE' .AND.
-     1         IHARG(7).EQ.'1   ' .AND. IHARG(8)(1:3).EQ.'MIN')THEN
-          IBFGUN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'GENE' .AND. IHARG(4).EQ.'EXTR' .AND.
-     1         IHARG(5).EQ.'VALU' .AND. IHARG(6).EQ.'TYPE' .AND.
-     1         IHARG(7).EQ.'ONE ' .AND. IHARG(8)(1:3).EQ.'MIN')THEN
-          IBFGUN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'GENE' .AND. IHARG(4).EQ.'EXTR' .AND.
-     1         IHARG(5).EQ.'VALU' .AND. IHARG(6).EQ.'TYPE' .AND.
-     1         IHARG(7).EQ.'I   ' .AND. IHARG(8)(1:3).EQ.'MIN')THEN
-          IBFGUN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'PARE')THEN
-          IBFIPA=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'LOGI')THEN
-          IBFILO=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'HYPE' .AND. IHARG(4).EQ.'SECA')THEN
-          IBFIHS=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'DOUB' .AND. IHARG(4).EQ.'EXPO')THEN
-          IBFIDX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'LAPL')THEN
-          IBFIDX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'DOUB' .AND. IHARG(4).EQ.'WEIB')THEN
-          IBFIDW=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'DOUB' .AND. IHARG(4).EQ.'GAMM')THEN
-          IBFIDG=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'ASYM' .AND. IHARG(4).EQ.'DOUB' .AND.
-     1         IHARG(5).EQ.'EXPO')THEN
-          IBFIAX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'ASYM' .AND. IHARG(4).EQ.'LAPL')THEN
-          IBFIAX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'TUKE' .AND. IHARG(4).EQ.'LAMB')THEN
-          IBFITL=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'GENE' .AND. IHARG(4).EQ.'TUKE' .AND.
-     1         IHARG(5).EQ.'LAMB')THEN
-          IBFIGT=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'ERRO')THEN
-          IBFIER=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'G   ' .AND. IHARG(4).EQ.'AND ' .AND.
-     1         IHARG(5).EQ.'H   ')THEN
-          IBFIGH=IHV
-        ELSEIF(IHARG(3).EQ.'G   ')THEN
-          IBFIG=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'SLAS')THEN
-          IBFISL=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'CAUC')THEN
-          IBFICA=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'COSI')THEN
-          IBFICO=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'FOLD' .AND. IHARG(4).EQ.'NORM')THEN
-          IBFIFN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'LOG ' .AND. IHARG(4).EQ.'LOGI')THEN
-          IBFILL=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'BRAD')THEN
-          IBFIBR=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'ANGL')THEN
-          IBFIAN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'2   ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'EXPO')THEN
-          IBFI2E=IHV
-        ELSEIF(IHARG(3).EQ.'TWO ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'EXPO')THEN
-          IBFI2E=IHV
-        ELSEIF(IHARG(3).EQ.'1   ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'EXPO')THEN
-          IBFI1E=IHV
-        ELSEIF(IHARG(3).EQ.'ONE ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'EXPO')THEN
-          IBFI1E=IHV
-        ELSEIF(IHARG(3).EQ.'EXPO')THEN
-          IBFI2E=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'RAYL')THEN
-          IBFIRA=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'MAXW')THEN
-          IBFIMX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'2   ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'WEIB' .AND. IHARG(6)(1:3).EQ.'MAX')THEN
-          IBF2WX=IHV
-        ELSEIF(IHARG(3).EQ.'TWO ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'WEIB' .AND. IHARG(6)(1:3).EQ.'MAX')THEN
-          IBF2WX=IHV
-        ELSEIF(IHARG(3).EQ.'2   ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'WEIB' .AND. IHARG(6)(1:3).EQ.'MIN')THEN
-          IBF2WN=IHV
-        ELSEIF(IHARG(3).EQ.'TWO ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'WEIB' .AND. IHARG(6)(1:3).EQ.'MIN')THEN
-          IBF2WN=IHV
-        ELSEIF(IHARG(3).EQ.'2   ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'WEIB')THEN
-          IBF2WX=IHV
-        ELSEIF(IHARG(3).EQ.'TWO ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'WEIB')THEN
-          IBF2WX=IHV
-        ELSEIF(IHARG(3).EQ.'3   ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'WEIB' .AND. IHARG(6)(1:3).EQ.'MIN')THEN
-          IBF3WN=IHV
-        ELSEIF(IHARG(3).EQ.'THRE' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'WEIB' .AND. IHARG(6)(1:3).EQ.'MIN')THEN
-          IBF3WN=IHV
-        ELSEIF(IHARG(3).EQ.'3   ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'WEIB' .AND. IHARG(6)(1:3).EQ.'MAX')THEN
-          IBF3WX=IHV
-        ELSEIF(IHARG(3).EQ.'THRE' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'WEIB' .AND. IHARG(6)(1:3).EQ.'MAX')THEN
-          IBF3WX=IHV
-        ELSEIF(IHARG(3).EQ.'INVE' .AND. IHARG(4).EQ.'WEIB')THEN
-          IBFIIW=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'2   ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'LOGN')THEN
-          IBFI2L=IHV
-        ELSEIF(IHARG(3).EQ.'TWO ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'LOGN')THEN
-          IBFI2L=IHV
-        ELSEIF(IHARG(3).EQ.'3   ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'LOGN')THEN
-          IBFI3L=IHV
-        ELSEIF(IHARG(3).EQ.'THRE' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'LOGN')THEN
-          IBFI3L=IHV
-        ELSEIF(IHARG(3).EQ.'GAMM')THEN
-          IBFIGA=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'LOG ' .AND. IHARG(4).EQ.'GAMM')THEN
-          IBFILG=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'INVE' .AND. IHARG(4).EQ.'GAMM')THEN
-          IBFIIG=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'FATI' .AND. IHARG(4).EQ.'LIFE')THEN
-          IBFIFL=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'BURR' .AND. IHARG(4).EQ.'TYPE' .AND.
-     1         IHARG(5).EQ.'10  ')THEN
-          IBFB10=IHV
-        ELSEIF(IHARG(3).EQ.'BURR' .AND. IHARG(4).EQ.'TYPE' .AND.
-     1         IHARG(5).EQ.'TEN ')THEN
-          IBFB10=IHV
-        ELSEIF(IHARG(3).EQ.'WALD')THEN
-          IBFIWA=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'2   ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'INVE' .AND. IHARG(6).EQ.'GAUS')THEN
-          IBF2IG=IHV
-        ELSEIF(IHARG(3).EQ.'TWO ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'INVE' .AND. IHARG(6).EQ.'GAUS')THEN
-          IBF2IG=IHV
-        ELSEIF(IHARG(3).EQ.'3   ' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'INVE' .AND. IHARG(6).EQ.'GAUS')THEN
-          IBF3IG=IHV
-        ELSEIF(IHARG(3).EQ.'THRE' .AND. IHARG(4).EQ.'PARA' .AND.
-     1         IHARG(5).EQ.'INVE' .AND. IHARG(6).EQ.'GAUS')THEN
-          IBF3IG=IHV
-        ELSEIF(IHARG(3).EQ.'LOGI' .AND. IHARG(4).EQ.'EXPO')THEN
-          IBFILX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'GEOM' .AND. IHARG(4).EQ.'EXTR' .AND.
-     1         IHARG(4).EQ.'EXPO')THEN
-          IBFIGX=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'LOG ' .AND. IHARG(4).EQ.'DOUB' .AND.
-     1         IHARG(4).EQ.'EXPO')THEN
-          IBFILD=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'1   ' .AND. IHARG(4)(1:3).EQ.'PAR' .AND.
-     1         IHARG(5).EQ.'HALF' .AND. IHARG(6).EQ.'NORM')THEN
-          IBF1HN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'ONE ' .AND. IHARG(4)(1:3).EQ.'PAR' .AND.
-     1         IHARG(5).EQ.'HALF' .AND. IHARG(6).EQ.'NORM')THEN
-          IBF1HN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'2   ' .AND. IHARG(4)(1:3).EQ.'PAR' .AND.
-     1         IHARG(5).EQ.'HALF' .AND. IHARG(6).EQ.'NORM')THEN
-          IBF2HN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'TWO ' .AND. IHARG(4)(1:3).EQ.'PAR' .AND.
-     1         IHARG(5).EQ.'HALF' .AND. IHARG(6).EQ.'NORM')THEN
-          IBF2HN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'HALF' .AND. IHARG(4).EQ.'NORM')THEN
-          IBF2HN=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'1   ' .AND. IHARG(4)(1:3).EQ.'PAR' .AND.
-     1         IHARG(5).EQ.'HALF' .AND. IHARG(6).EQ.'LOGI')THEN
-          IBF1HL=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'ONE ' .AND. IHARG(4)(1:3).EQ.'PAR' .AND.
-     1         IHARG(5).EQ.'HALF' .AND. IHARG(6).EQ.'LOGI')THEN
-          IBF1HL=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'2   ' .AND. IHARG(4)(1:3).EQ.'PAR' .AND.
-     1         IHARG(5).EQ.'HALF' .AND. IHARG(6).EQ.'LOGI')THEN
-          IBF2HL=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'TWO ' .AND. IHARG(4)(1:3).EQ.'PAR' .AND.
-     1         IHARG(5).EQ.'HALF' .AND. IHARG(6).EQ.'LOGI')THEN
-          IBF2HL=IHV
-          GOTO5160
-        ELSEIF(IHARG(3).EQ.'HALF' .AND. IHARG(4).EQ.'LOGI')THEN
-          IBF2HL=IHV
-          GOTO5160
+          IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'TRUE' .OR.
+     1       IHV.EQ.'DEFA')THEN
+            IHV='ON'
+          ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE' .OR.
+     1           IHV.EQ.'FALS')THEN
+            IHV='OFF'
+          ELSE
+            IHV='ON'
+          ENDIF
+C
+C         2021/02: CORRECT THIS SECTION TO START WITH ARGUMENT 4 INSTEAD
+C                  OF ARGUMENT 3
+C
+          IF(IHARG(4).EQ.'NORM')THEN
+            IBFINO=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'UNIF')THEN
+            IBFIUN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'2   ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'BETA')THEN
+            IBFI2B=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'TWO ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'BETA')THEN
+            IBFI2B=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'4   ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'BETA')THEN
+            IBFI4B=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'FOUR' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'BETA')THEN
+            IBFI4B=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'POWE')THEN
+            IBFIPW=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'REFL' .AND. IHARG(5).EQ.'POWE')THEN
+            IBFIPW=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'ARCS')THEN
+            IBFIAR=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'TRIA')THEN
+            IBFITR=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'TOPP' .AND. IHARG(5).EQ.'AND ' .AND.
+     1           IHARG(6).EQ.'LEON')THEN
+            IBFITO=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'REFL' .AND. IHARG(5).EQ.'GENE' .AND.
+     1           IHARG(6).EQ.'TOPP' .AND. IHARG(7).EQ.'AND ' .AND.
+     1           IHARG(8).EQ.'LEON')THEN
+            IBFIRG=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'TWO ' .AND. IHARG(5).EQ.'SIDE' .AND.
+     1           IHARG(6).EQ.'POWE')THEN
+            IBFITS=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'2   ' .AND. IHARG(5).EQ.'SIDE' .AND.
+     1           IHARG(6).EQ.'POWE')THEN
+            IBFITS=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'2   ' .AND. IHARG(5).EQ.'COMP' .AND.
+     1           IHARG(6).EQ.'NORM' .AND. IHARG(7).EQ.'MIXT')THEN
+            IBFINX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'TWO ' .AND. IHARG(5).EQ.'COMP' .AND.
+     1           IHARG(6).EQ.'NORM' .AND. IHARG(7).EQ.'MIXT')THEN
+            IBFINX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'GENE' .AND. IHARG(5).EQ.'EXTR' .AND.
+     1           IHARG(6).EQ.'VALU' .AND. IHARG(7)(1:3).EQ.'MIN')THEN
+            IBFGVN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'GENE' .AND. IHARG(5).EQ.'EXTR' .AND.
+     1           IHARG(6).EQ.'VALU' .AND. IHARG(7)(1:3).EQ.'MAX')THEN
+            IBFGVX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'GENE' .AND. IHARG(5).EQ.'PARE' .AND.
+     1           IHARG(6)(1:3).EQ.'MIN')THEN
+            IBFGPN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'GENE' .AND. IHARG(5).EQ.'PARE' .AND.
+     1           IHARG(6)(1:3).EQ.'MAX')THEN
+            IBFGPX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'FREC' .AND. IHARG(5)(1:3).EQ.'MAX')THEN
+            IBFFRX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'EXTR' .AND. IHARG(5).EQ.'VALU' .AND.
+     1           IHARG(6).EQ.'TYPE' .AND. IHARG(7).EQ.'2   ' .AND.
+     1           IHARG(8)(1:3).EQ.'MAX')THEN
+            IBFFRX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'EXTR' .AND. IHARG(5).EQ.'VALU' .AND.
+     1           IHARG(6).EQ.'TYPE' .AND. IHARG(7).EQ.'TWO ' .AND.
+     1           IHARG(8)(1:3).EQ.'MAX')THEN
+            IBFFRX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'EXTR' .AND. IHARG(5).EQ.'VALU' .AND.
+     1           IHARG(6).EQ.'TYPE' .AND. IHARG(7).EQ.'II  ' .AND.
+     1           IHARG(8)(1:3).EQ.'MAX')THEN
+            IBFFRX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'FREC' .AND. IHARG(5)(1:3).EQ.'MIN')THEN
+            IBFFRN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'EXTR' .AND. IHARG(5).EQ.'VALU' .AND.
+     1           IHARG(6).EQ.'TYPE' .AND. IHARG(7).EQ.'2   ' .AND.
+     1           IHARG(8)(1:3).EQ.'MAX')THEN
+            IBFFRN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'EXTR' .AND. IHARG(5).EQ.'VALU' .AND.
+     1           IHARG(6).EQ.'TYPE' .AND. IHARG(7).EQ.'TWO ' .AND.
+     1           IHARG(8)(1:3).EQ.'MAX')THEN
+            IBFFRN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'EXTR' .AND. IHARG(5).EQ.'VALU' .AnD.
+     1           IHARG(6).EQ.'TYPE' .AND. IHARG(7).EQ.'II  ' .AND.
+     1           IHARG(8)(1:3).EQ.'MAX')THEN
+            IBFFRN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'GUMB' .AND. IHARG(5)(1:3).EQ.'MAX')THEN
+            IBFGUX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'GENE' .AND. IHARG(5).EQ.'EXTR' .AND.
+     1           IHARG(6).EQ.'VALU' .AND. IHARG(7).EQ.'TYPE' .AND.
+     1           IHARG(8).EQ.'1   ' .AND. IHARG(9)(1:3).EQ.'MAX')THEN
+            IBFGUX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'GENE' .AND. IHARG(5).EQ.'EXTR' .AND.
+     1           IHARG(6).EQ.'VALU' .AND. IHARG(7).EQ.'TYPE' .AND.
+     1           IHARG(8).EQ.'ONE ' .AND. IHARG(9)(1:3).EQ.'MAX')THEN
+            IBFGUX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'GENE' .AND. IHARG(5).EQ.'EXTR' .AND.
+     1           IHARG(6).EQ.'VALU' .AND. IHARG(7).EQ.'TYPE' .AND.
+     1           IHARG(8).EQ.'I   ' .AND. IHARG(9)(1:3).EQ.'MAX')THEN
+            IBFGUX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'GUMB' .AND. IHARG(5)(1:3).EQ.'MIN')THEN
+            IBFGUN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'GENE' .AND. IHARG(5).EQ.'EXTR' .AND.
+     1           IHARG(6).EQ.'VALU' .AND. IHARG(7).EQ.'TYPE' .AND.
+     1           IHARG(8).EQ.'1   ' .AND. IHARG(9)(1:3).EQ.'MIN')THEN
+            IBFGUN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'GENE' .AND. IHARG(5).EQ.'EXTR' .AND.
+     1           IHARG(6).EQ.'VALU' .AND. IHARG(7).EQ.'TYPE' .AND.
+     1           IHARG(8).EQ.'ONE ' .AND. IHARG(9)(1:3).EQ.'MIN')THEN
+            IBFGUN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'GENE' .AND. IHARG(5).EQ.'EXTR' .AND.
+     1           IHARG(6).EQ.'VALU' .AND. IHARG(7).EQ.'TYPE' .AND.
+     1           IHARG(8).EQ.'I   ' .AND. IHARG(9)(1:3).EQ.'MIN')THEN
+            IBFGUN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'PARE')THEN
+            IBFIPA=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'LOGI')THEN
+            IBFILO=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'HYPE' .AND. IHARG(5).EQ.'SECA')THEN
+            IBFIHS=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'DOUB' .AND. IHARG(5).EQ.'EXPO')THEN
+            IBFIDX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'LAPL')THEN
+            IBFIDX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'DOUB' .AND. IHARG(5).EQ.'WEIB')THEN
+            IBFIDW=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'DOUB' .AND. IHARG(5).EQ.'GAMM')THEN
+            IBFIDG=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'ASYM' .AND. IHARG(5).EQ.'DOUB' .AND.
+     1           IHARG(6).EQ.'EXPO')THEN
+            IBFIAX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'ASYM' .AND. IHARG(5).EQ.'LAPL')THEN
+            IBFIAX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'TUKE' .AND. IHARG(5).EQ.'LAMB')THEN
+            IBFITL=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'GENE' .AND. IHARG(5).EQ.'TUKE' .AND.
+     1           IHARG(6).EQ.'LAMB')THEN
+            IBFIGT=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'ERRO')THEN
+            IBFIER=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'G   ' .AND. IHARG(5).EQ.'AND ' .AND.
+     1           IHARG(6).EQ.'H   ')THEN
+            IBFIGH=IHV
+          ELSEIF(IHARG(4).EQ.'G   ')THEN
+            IBFIG=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'SLAS')THEN
+            IBFISL=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'CAUC')THEN
+            IBFICA=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'COSI')THEN
+            IBFICO=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'FOLD' .AND. IHARG(5).EQ.'NORM')THEN
+            IBFIFN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'LOG ' .AND. IHARG(5).EQ.'LOGI')THEN
+            IBFILL=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'BRAD')THEN
+            IBFIBR=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'ANGL')THEN
+            IBFIAN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'2   ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'EXPO')THEN
+            IBFI2E=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'TWO ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'EXPO')THEN
+            IBFI2E=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'1   ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'EXPO')THEN
+            IBFI1E=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'ONE ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'EXPO')THEN
+            IBFI1E=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'EXPO')THEN
+            IBFI2E=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'RAYL')THEN
+            IBFIRA=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'MAXW')THEN
+            IBFIMX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'2   ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'WEIB' .AND. IHARG(7)(1:3).EQ.'MAX')THEN
+            IBF2WX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'TWO ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'WEIB' .AND. IHARG(7)(1:3).EQ.'MAX')THEN
+            IBF2WX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'2   ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'WEIB' .AND. IHARG(7)(1:3).EQ.'MIN')THEN
+            IBF2WN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'TWO ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'WEIB' .AND. IHARG(7)(1:3).EQ.'MIN')THEN
+            IBF2WN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'2   ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'WEIB')THEN
+            IBF2WX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'TWO ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'WEIB')THEN
+            IBF2WX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'3   ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'WEIB' .AND. IHARG(7)(1:3).EQ.'MIN')THEN
+            IBF3WN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'THRE' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'WEIB' .AND. IHARG(7)(1:3).EQ.'MIN')THEN
+            IBF3WN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'3   ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'WEIB' .AND. IHARG(7)(1:3).EQ.'MAX')THEN
+            IBF3WX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'THRE' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'WEIB' .AND. IHARG(7)(1:3).EQ.'MAX')THEN
+            IBF3WX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'INVE' .AND. IHARG(5).EQ.'WEIB')THEN
+            IBFIIW=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'2   ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'LOGN')THEN
+            IBFI2L=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'TWO ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'LOGN')THEN
+            IBFI2L=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'3   ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'LOGN')THEN
+            IBFI3L=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'THRE' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'LOGN')THEN
+            IBFI3L=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'GAMM')THEN
+            IBFIGA=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'LOG ' .AND. IHARG(5).EQ.'GAMM')THEN
+            IBFILG=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'INVE' .AND. IHARG(5).EQ.'GAMM')THEN
+            IBFIIG=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'FATI' .AND. IHARG(5).EQ.'LIFE')THEN
+            IBFIFL=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'BURR' .AND. IHARG(5).EQ.'TYPE' .AND.
+     1           IHARG(6).EQ.'10  ')THEN
+            IBFB10=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'BURR' .AND. IHARG(5).EQ.'TYPE' .AND.
+     1           IHARG(6).EQ.'TEN ')THEN
+            IBFB10=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'WALD')THEN
+            IBFIWA=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'2   ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'INVE' .AND. IHARG(7).EQ.'GAUS')THEN
+            IBF2IG=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'TWO ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'INVE' .AND. IHARG(7).EQ.'GAUS')THEN
+            IBF2IG=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'3   ' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'INVE' .AND. IHARG(7).EQ.'GAUS')THEN
+            IBF3IG=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'THRE' .AND. IHARG(5).EQ.'PARA' .AND.
+     1           IHARG(6).EQ.'INVE' .AND. IHARG(7).EQ.'GAUS')THEN
+            IBF3IG=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'LOGI' .AND. IHARG(5).EQ.'EXPO')THEN
+            IBFILX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'GEOM' .AND. IHARG(5).EQ.'EXTR' .AND.
+     1           IHARG(6).EQ.'EXPO')THEN
+            IBFIGX=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'LOG ' .AND. IHARG(5).EQ.'DOUB' .AND.
+     1           IHARG(6).EQ.'EXPO')THEN
+            IBFILD=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'1   ' .AND. IHARG(5)(1:3).EQ.'PAR' .AND.
+     1           IHARG(6).EQ.'HALF' .AND. IHARG(7).EQ.'NORM')THEN
+            IBF1HN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'ONE ' .AND. IHARG(5)(1:3).EQ.'PAR' .AND.
+     1           IHARG(6).EQ.'HALF' .AND. IHARG(7).EQ.'NORM')THEN
+            IBF1HN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'2   ' .AND. IHARG(5)(1:3).EQ.'PAR' .AND.
+     1           IHARG(6).EQ.'HALF' .AND. IHARG(7).EQ.'NORM')THEN
+            IBF2HN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'TWO ' .AND. IHARG(5)(1:3).EQ.'PAR' .AND.
+     1           IHARG(6).EQ.'HALF' .AND. IHARG(7).EQ.'NORM')THEN
+            IBF2HN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'HALF' .AND. IHARG(5).EQ.'NORM')THEN
+            IBF2HN=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'1   ' .AND. IHARG(5)(1:3).EQ.'PAR' .AND.
+     1           IHARG(6).EQ.'HALF' .AND. IHARG(7).EQ.'LOGI')THEN
+            IBF1HL=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'ONE ' .AND. IHARG(5)(1:3).EQ.'PAR' .AND.
+     1           IHARG(6).EQ.'HALF' .AND. IHARG(7).EQ.'LOGI')THEN
+            IBF1HL=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'2   ' .AND. IHARG(5)(1:3).EQ.'PAR' .AND.
+     1           IHARG(6).EQ.'HALF' .AND. IHARG(7).EQ.'LOGI')THEN
+            IBF2HL=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'TWO ' .AND. IHARG(5)(1:3).EQ.'PAR' .AND.
+     1           IHARG(6).EQ.'HALF' .AND. IHARG(7).EQ.'LOGI')THEN
+            IBF2HL=IHV
+            GOTO5160
+          ELSEIF(IHARG(4).EQ.'HALF' .AND. IHARG(5).EQ.'LOGI')THEN
+            IBF2HL=IHV
+            GOTO5160
+          ENDIF
         ENDIF
 C
       ENDIF

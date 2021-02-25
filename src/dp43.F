@@ -36346,6 +36346,7 @@ C
         PU0=0.0D0
         QU0=0.0D0
         BYV=0.0D0
+        BF=0.0D0
 C
         PI=3.141592653589793D0
         IF (X.EQ.0.0D0) THEN
@@ -36533,6 +36534,8 @@ C       Routine called: GAMMA to compute the gamma function
 C       ======================================================
 C
         IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+C
+        BF=0.0D0
         PI=3.141592653589793D0
         IF (X.EQ.0.0D0) THEN
            IF (V.GT.-1.0.OR.INT(V)-V.EQ.0.5D0) THEN

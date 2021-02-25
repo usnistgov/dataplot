@@ -42984,7 +42984,7 @@ C
      1              ISUBRO,IBUGA3,IERROR)
         IF(IERROR.EQ.'YES')GOTO9000
 C
-        IF(ICASAN.EQ.'HFNO')THEN
+        IF(ICASAN.EQ.'HNOR')THEN
           INAME1(1)='LOCM'
           INAME2(1)='L   '
           AVAL(1)=ALOCML

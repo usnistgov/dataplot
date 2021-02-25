@@ -23272,6 +23272,7 @@ C
       NUMVAR=0
       NUMCOM=0
       NUMFAC=0
+      NSTOP=0
 C
       IDEXPA='NONP'
       IDEXYO='NONY'
