@@ -15329,6 +15329,7 @@ C
 C
       NCSAVE=0
       ISTRT1=0
+      N0=0
 C
       IF(IBUGO2.EQ.'ON'.OR.ISUBRO.EQ.'DEP3')THEN
         WRITE(ICOUT,999)

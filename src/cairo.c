@@ -480,8 +480,10 @@ double  jgreen[2];
              int  width2, height2;
              width2=anumhp_temp;
              height2=anumvp_temp;
+             /*
              surface1 = cairo_quartz_surface_create (cr1,width2,height2);
              cr1 = cairo_create (surface1);
+             */
              x1 = 0.;
              y1 = 0.;
              width=anumhp_temp;

@@ -1,5 +1,5 @@
 9.
-                                                     February   2021
+                                                     March   2021
 This is the DATAPLOT News file DPNEWF.TEX.  This NEWS file contains a
 list of DATAPLOT enhancements.  Some commands may be documented here
 that are not yet available in the standard documentation.
@@ -10,7 +10,55 @@ The complete news file can be viewed at
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
+March 2021 - March 2021.
+
+ 1. Added the command
+
+      SET GRID ORDER <BEFORE/AFTER>
+
+    By default, Dataplot draws the lines, characters, bars and
+    spikes on a plot before drawing the frame, tic marks, tic mark
+    labels and grid lines.  In some cases, you may want the lines,
+    characters, bars and spikes to be drawn on top of the grid lines.
+    To do this, specify BEFORE on this command.  To reset the default,
+    specify AFTER for this command.
+
+ 2. Corrected several issues with the CALL command and arguments.
+
+    a. Spaces around non-quoted equal signs are now ignored.  That is,
+
+           CALL X=X2 Y=Y1
+
+        and
+
+           CALL X = X2 Y = Y1
+
+        are now equivalent.  Previously, the spaces around the equal
+        sign resulted in an error.
+
+     b. Fixed a bug where
+
+            CALL X=X2 Y=Y1 STR="Z(13)"
+
+        stripped off the ending parenthesis for STR="Z(13)".  This was
+        only an issue when the ending parenthesis occurs in the last
+        argument on the CALL command.
+
+     c. Fixed a bug with
+
+            CALL STTAG=Day STTAG2=Season
+
+         This was not performing the correct substitution for STTAG2.
+
+ 3. Fixed a few other minor bugs.
+
+-----------------------------------------------------------------------
+
+ 1. Made a few tweaks for MacOS.
+-----------------------------------------------------------------------
+The following enhancements were made to DATAPLOT
 February 2021 - February 2021.
+-----------------------------------------------------------------------
 
  1. Made a few tweaks for MacOS.
 
@@ -61,7 +109,31 @@ February 2021 - February 2021.
 
     e. Fixed a bug in the AQUA driver when generating histograms.
 
- 2. Made a few minor bug fixes.
+ 2. Made a few minor bug fixes.  In particular,
+
+    a. For one-sided normal tolerance intervals, the default method
+       in the documentation states that the non-central t method is
+       used for n <= 100 and the normal approximation for n > 100.
+       Dataplot was actually using the normal approximation for all
+       values of n.  This was corrected to agree with the documentation.
+
+    b. For the two sample t-test, the unequal variances case can
+       generate a fractional degrees of freedom.  This was in some
+       cases generating many warning messages in the computation of
+       the t percent point function.  This was modified to round the
+       degrees of freedom to the closest integer value.  In addition,
+       the parameters that are automatically saved (STATVAL, STATCDF,
+       and so on) are based on the command
+
+           SET T TEST VARIANCE <EQUAL/UNEQUAL/BOTH>
+
+       If EQUAL is specified (BOTH is the default), then these saved
+       parameters are based on the equal variances case.  Otherwise,
+       they are based on the unequal variances cases.  Some of the
+       saved parameters were not checking this setting.  This has been
+       corrected.
+
+    c. A few other minor bugs were corrected.
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT

@@ -20720,6 +20720,14 @@ C               ******************************************************
 C
       IERMSG='ON'
 C
+CCCCC THE FOLLOWING SECTION WAS ADDED    MARCH        2021
+C
+C               ******************************************************
+C               **  TREAT THE SET GRID ORDER    <BEFORE/AFTER>      **
+C               ******************************************************
+C
+      IGRDOR='AFTE'
+C
 CCCCC THE FOLLOWING SECTION WAS ADDED    APRIL     2020
 C
 C               ******************************************************

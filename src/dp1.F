@@ -3113,7 +3113,8 @@ C
         IF(UNIXPN.EQ.' ')THEN
           UNIXPN=STRZZZ(DPLIBDIR)
           NLAST=0
-          DO111II=80,1,-1
+CCCCC     DO111II=80,1,-1
+          DO111II=255,1,-1
             IF(UNIXPN(II:II).NE.' ')THEN
               NLAST=II
               GOTO119
@@ -3137,7 +3138,8 @@ C
           PATH(1:NCP1)=UNIXPN(1:NCP1)
           NCPATH=NCP1
         ELSE
-          DO1001I=80,1,-1
+CCCCC     DO1001I=80,1,-1
+          DO1001I=255,1,-1
             NCP1=I
             IF(UNIXPN(I:I).NE.' ')GOTO1009
  1001     CONTINUE

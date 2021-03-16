@@ -8437,7 +8437,8 @@ C
         IAMPER='NO'
 C
         IMIN=ILOC2+1
-        IMAX=IMIN+7
+CCCCC   IMAX=IMIN+7
+        IMAX=IMIN+8
         IF(IMAX.GT.NUMTEC)IMAX=NUMTEC
         J=0
 C
@@ -8449,9 +8450,9 @@ C
           I2=I
           ITEMP=ICHAR(ITEXHO(I)(1:1))
 C
-          IF(IBUGD2.EQ.'ON')THEN
-            WRITE(ICOUT,1251)I,IPASS,ITEXHO(I)
- 1251       FORMAT('I,IPASS,ITEXHO(I) = ',2I8,1X,A4)
+          IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'REP2')THEN
+            WRITE(ICOUT,1251)I,IPASS,ITEMP,ITEXHO(I)
+ 1251       FORMAT('AT 1250: I,IPASS,ITEMP,ITEXHO(I) = ',3I8,2X,A4)
             CALL DPWRST('XXX','BUG ')
           ENDIF
 C
@@ -8470,9 +8471,10 @@ C
 C
  1290   CONTINUE
         NUMCHN=J
+C
         IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'REP2')THEN
-          WRITE(ICOUT,1291)ILOC1,ILOC2,ILOC3
- 1291     FORMAT('ILOC1,ILOC2,ILOC3 = ',3I8)
+          WRITE(ICOUT,1291)ILOC1,ILOC2,ILOC3,IAMP
+ 1291     FORMAT('ILOC1,ILOC2,ILOC3,IAMP = ',3I8,2X,A4)
           CALL DPWRST('XXX','BUG ')
           WRITE(ICOUT,1292)IMIN,IMAX,NUMCHN
  1292     FORMAT('IMIN,IMAX,NUMCHN = ',3I8)
@@ -8488,14 +8490,16 @@ C
         IWORD1='    '
         IWORD2='    '
         DO1310I=1,4
-          IWORD1(I:I)=ISTR(I)(1:1)
-          IWORD2(I:I)=ISTR(I+4)(1:1)
+          IF(I.LE.NUMCHN)IWORD1(I:I)=ISTR(I)(1:1)
+          IF(I+4.LE.NUMCHN)IWORD2(I:I)=ISTR(I+4)(1:1)
 1310    CONTINUE
-        IF(IBUGD2.EQ.'ON')THEN
+C
+        IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'REP2')THEN
           WRITE(ICOUT,1302)IWORD1,IWORD2
-1302      FORMAT('IWORD1,IWORD2=',A4,A4)
+1302      FORMAT('IWORD1,IWORD2=',2A4)
           CALL DPWRST('XXX','BUG ')
         ENDIF
+C
         IHNAP1=IWORD1
         IHNAP2=IWORD2
 C
@@ -8745,10 +8749,24 @@ C
         ILOC1M=ILOC1-1
         ILOC3P=ILOC3+1
         J=ILOC1M
+C
+        IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'REP2')THEN
+          WRITE(ICOUT,2102)ILOC1M,ILOC3P,NUMTEC
+2102      FORMAT('AT 2100: ILOC1M,ILOC3P,NUMTEC=',3I8)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
         IF(NUMTEC.GE.ILOC3P)THEN
           DO2110I=ILOC3P,NUMTEC
             J=J+1
             ITEXHO(J)=ITEXHO(I)
+C
+            IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'REP2')THEN
+               WRITE(ICOUT,2112)I,J,ITEXHO(J),ITEXHO(I)
+2112           FORMAT('AT 2110: I,J,ITEXHO(I),ITEXHO(J)=',2I8,2(2X,A4))
+               CALL DPWRST('XXX','BUG ')
+            ENDIF
+C
  2110     CONTINUE
         ENDIF
         NUMTE2=J
@@ -8765,6 +8783,15 @@ C
             IREV=NUMTE2-I+ILOC1
             IREVNH=IREV+NH
             ITEXHO(IREVNH)=ITEXHO(IREV)
+C
+            IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'REP2')THEN
+               WRITE(ICOUT,2202)I,IREV,IREVNH,
+     1                          ITEXHO(IREV),ITEXHO(IREVNH)
+ 2202          FORMAT('AT 2200: I,IREV,IREVNH,ITEXHO(IREV),',
+     1                'ITEXHO(J)=',3I8,2(2X,A4))
+               CALL DPWRST('XXX','BUG ')
+            ENDIF
+C
  2200     CONTINUE
         ENDIF
 C
@@ -8772,6 +8799,13 @@ C
           DO2300I=1,NH
             J=ILOC1M+I
             ITEXHO(J)=IH(I)
+C
+            IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'REP2')THEN
+               WRITE(ICOUT,2302)I,J,IH(I),ITEXHO(J)
+ 2302          FORMAT('AT 2302: I,J,IH(I),ITEXHO(J),',2I8,2(2X,A4))
+               CALL DPWRST('XXX','BUG ')
+            ENDIF
+C
  2300     CONTINUE
         ENDIF
         NUMTE3=NUMTE2+NH
@@ -8791,10 +8825,25 @@ C
           ILOC4M=ILOC4-1
           ILOC4P=ILOC4+1
           J=ILOC4M
+C
+          IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'REP2')THEN
+            WRITE(ICOUT,2422)ILOC1,NH,ILOC4,ILOC4M,ILOC4P,J
+ 2422       FORMAT('AT 2422: ILOC1,NH,ILOC4,ILOC4M,ILOC4P,J = ',6I6)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+C
           IF(NUMTEC.GE.ILOC4P)THEN
             DO2420I=ILOC4P,NUMTEC
               J=J+1
               ITEXHO(J)=ITEXHO(I)
+C
+              IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'REP2')THEN
+                WRITE(ICOUT,2427)I,J,ITEXHO(I),ITEXHO(J)
+ 2427           FORMAT('AT 2420: I,J,ITEXHO(I),ITEXHO(J) = ',
+     1                 2I6,2(2X,A4))
+                CALL DPWRST('XXX','BUG ')
+              ENDIF
+C
  2420       CONTINUE
             NUMTEC=J
           ENDIF
@@ -8944,14 +8993,18 @@ C                        CHARACTER.  ANY OTHER CHARACTER TERMINATES
 C                        CURRENT NAME.
 C
                 NMAXCH=0
-                DO2640JJ=IP1+1,NUMTEC
+CCCCC           DO2640JJ=IP1+1,NUMTEC
+                DO2640JJ=IP1,NUMTEC
                   NMAXCH=NMAXCH+1
 CCCCC             2020/12: BUG FIX IN FOLLOWING LINE
 CCCCC             IC1=ITEXHO(IP1+KK-1)(1:1)
                   IINDX=JJ
                   IC1=ITEXHO(IINDX)(1:1)
-                  IF(IC1.EQ.'_')GOTO2640
-                  CALL DPCOAN(IC1,IVAL1)
+                  IF(IC1.EQ.'_')THEN
+                    IVAL1=38
+                  ELSE
+                    CALL DPCOAN(IC1,IVAL1)
+                  ENDIF
 C
                   IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'REP2')THEN
                     WRITE(ICOUT,22801)JJ,IINDX,IC1,IVAL1,ITEXHO(IINDX)

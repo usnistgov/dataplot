@@ -16227,7 +16227,7 @@ C                        SUM[i=1 to N][EXP(-X(I)/SHAT)] = 0
 C
 C              FOR THE MINIMUM CASE:
 C
-C                 SHAT - XBAR + SUM[i=1 to N][X(I)*EXP(X(I)/SHAT)]/
+C                 SHAT + XBAR + SUM[i=1 to N][X(I)*EXP(X(I)/SHAT)]/
 C                        SUM[i=1 to N][EXP(X(I)/SHAT)] = 0
 C
 C              WITH

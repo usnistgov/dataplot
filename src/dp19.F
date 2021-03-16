@@ -9051,7 +9051,7 @@ C
      1                  IMACRO,IMACNU,IMACCS,
      1                  IMACL1,IMACL2,IMACLR,IMALEV,
      1                  IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,MAXNAM,
-     1                  IANSLC,IWIDTH,
+     1                  IANSLC,IANS,IWIDTH,
      1                  IHARG,IHARG2,IARGT,IARG,ARG,NUMARG,
      1                  IOFILE,
      1                  ILOOST,ILOOLI,NUMLIL,NUMLOS,
@@ -9162,6 +9162,11 @@ C                                       LINES.
 C     UPDATED         --MAY       2018. SUPPORT VARIOUS NEW FORMS FOR
 C                                       PASSING COMMAND LINE ARGUMENTS
 C     UPDATED         --OCTOBER   2020. SAVE CURRENT CALL COMMAND LINE
+C     UPDATED         --MARCH     2021. FOR
+C                                          CALL X = X2
+C                                       REMOVE SPACES AROUND "="
+C     UPDATED         --MARCH     2021. FIX BUG WITH
+C                                          CALL MACRO.DP STR="Y(23)"
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -9175,6 +9180,7 @@ C
       CHARACTER*4 IHNAM2(*)
       CHARACTER*4 IUSE
       CHARACTER*4 IANSLC(*)
+      CHARACTER*4 IANS(*)
       CHARACTER*4 IHARG(*)
       CHARACTER*4 IHARG2(*)
       CHARACTER*4 IARGT(*)
@@ -9308,8 +9314,11 @@ C
    53    FORMAT('IBUGS2,IERROR,ICOM,ICOM2,MAXOBV,IWIDTH = ',
      1          4(A4,2X),2I8)
          CALL DPWRST('XXX','BUG ')
+         WRITE(ICOUT,55)(IANS(I),I=1,MIN(120,IWIDTH))
+   55    FORMAT('IANS(1...120) = ',120A1)
+         CALL DPWRST('XXX','BUG ')
          WRITE(ICOUT,56)(IANSLC(I),I=1,MIN(120,IWIDTH))
-   56    FORMAT('IANSLC(.) = ',120A1)
+   56    FORMAT('IANSLC(1...120) = ',120A1)
          CALL DPWRST('XXX','BUG ')
 C
          WRITE(ICOUT,57)NUMARG
@@ -9958,18 +9967,112 @@ CCCCC                  COMMAND WILL RESTORE THE COMMAND LINE ARGUMENTS.
 CCCCC
 CCCCC MAY       2018.  IF NO COMMAND LINE ARGUMENTS GIVEN, THEN
 CCCCC                  DON'T CLEAR PREVIOUS LIST.
+CCCCC
+CCCCC MARCH     2021.  FOR NAMED ARGUMENTS, REMOVE SPACES AROUND "="
+CCCCC                  SIGNS
 C
       IF(NUMARG.LT.NSARG)GOTO6399
 C
       IBLANK=0
       ICNT=0
-      DO6290I=1,MIN(IWIDTH,255)
+      IFLAGP=0
+C
+C     2021/03: 1) COMMAND LINE LENGTH RAISED FROM 255 TO 1024
+C              2) REMOVE SPACES AROUND EQUAL SIGNS NOT EMBEDDED
+C                 IN QUOTES
+C
+      IMACCL=' '
+      DO6290I=1,MIN(IWIDTH,1024)
         IF(IBLANK.EQ.0 .AND. IANSLC(I)(1:1).EQ.' ')GOTO6290
         IBLANK=1
         ICNT=ICNT+1
         IMACCL(ICNT:ICNT)=IANSLC(I)(1:1)
  6290 CONTINUE
-      NMACCL=IWIDTH
+      NMACCL=ICNT
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'MACR')THEN
+        WRITE(ICOUT,6291)NMACCL,IMACCL(1:NMACCL)
+ 6291   FORMAT('AFTER 6290: NMACCL,IMACCL(1:NMACCL) = ',I6,2X,A)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C     2021/03: STRIP OUT SPACES AROUND EQUAL SIGNS NOT EMBEDDED
+C              IN QUOTES
+C
+      IFLAGQ=0
+      IFLAGE=0
+      ICNT=0
+      ISTR=' '
+      DO6293I=1,NMACCL
+        IF(IMACCL(I:I).EQ.'"')THEN
+C
+C         CHECK FOR QUOTE AND DETERMINE WHETHER OPENING OR CLOSING QUOTE
+C
+          ICNT=ICNT+1
+          ISTR(ICNT:ICNT)=IMACCL(I:I)
+          IF(IFLAGQ.EQ.0)THEN
+            IFLAGQ=1
+          ELSE
+            IFLAGQ=0
+          ENDIF
+        ELSEIF(IFLAGE.EQ.1)THEN
+C
+C         NON-QUOTED EQUAL SIGN, REMOVE BLANKS AFTER
+C
+          IF(IMACCL(I:I).NE.' ')THEN
+            ICNT=ICNT+1
+            ISTR(ICNT:ICNT)=IMACCL(I:I)
+            IFLAGE=0
+          ELSE
+            GOTO6293
+          ENDIF
+        ELSEIF(IMACCL(I:I).EQ.'=' .AND. IFLAGQ.EQ.0)THEN
+C
+C         NON-QUOTED EQUAL, REMOVE PRECEEDING BLANKS
+C
+          ISKIP=0
+          IF(I.GT.1)THEN
+            DO6295JJ=I-1,1,-1
+              IF(IMACCL(JJ:JJ).NE.' ')THEN
+                GOTO6296
+              ELSE
+                ISKIP=ISKIP+1
+              ENDIF
+ 6295       CONTINUE
+ 6296       CONTINUE
+            IF(ISKIP.GT.0)ICNT=ICNT-ISKIP
+            ICNT=ICNT+1
+            ISTR(ICNT:ICNT)=IMACCL(I:I)
+            IFLAGE=1
+          ENDIF
+        ELSE
+          ICNT=ICNT+1
+          ISTR(ICNT:ICNT)=IMACCL(I:I)
+        ENDIF
+ 6293 CONTINUE
+C
+      IF(ICNT.NE.NMACCL)THEN
+        IMACCL=' '
+        IMACCL(1:ICNT)=ISTR(1:ICNT)
+        NMACCL=ICNT
+        DO6297II=1,NMACCL
+          IANSLC(II)=IMACCL(II:II)
+          IANS(II)=IMACCL(II:II)
+          ICANS(II:II)=IANSLC(II)(1:1)
+ 6297   CONTINUE
+        DO6298II=NMACCL+1,IWIDTH
+          IANSLC(II)=' '
+          IANS(II)=' '
+          ICANS(II:II)=IANSLC(II)(1:1)
+ 6298   CONTINUE
+        IWIDTH=NMACCL
+      ENDIF
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'MACR')THEN
+        WRITE(ICOUT,6299)NMACCL,IMACCL(1:NMACCL)
+ 6299   FORMAT('AFTER 6299: NMACCL,IMACCL(1:NMACCL) = ',I6,2X,A)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       IMACL1=1
       IMACL2=100000
@@ -10439,8 +10542,10 @@ C         STEP 1: CHECK IF EITHER FIRST LABEL OR FIRST ARGUMENT IS
 C                 STARTS WITH A PARENTHESIS.  CHECK LABEL FIRST.
 C
           IFLAG=0
+          IFLAGL=0
           IF(IMACLA(1)(1:1).EQ.'(')THEN
             IFLAG=1
+            IFLAGL=1
             DO16392KK=1,7
               IMACLA(1)(KK:KK)=IMACLA(1)(KK+1:KK+1)
 16392       CONTINUE
@@ -10463,6 +10568,7 @@ C
 16396       CONTINUE
           ELSEIF(IMACAR(1)(1:1).EQ.'(')THEN
             IFLAG=2
+            IFLAGL=2
             DO16393KK=1,79
               IMACAR(1)(KK:KK)=IMACAR(1)(KK+1:KK+1)
 16393       CONTINUE
@@ -10478,11 +10584,16 @@ C
 C         STEP 2: CHECK IF LAST ARGUMENT VALUE ENDS WITH RIGHT
 C                 PARENTHESIS
 C
-          DO16391JJ=80,1,-1
-            IF(IMACAR(NMACAG)(JJ:JJ).EQ.')')THEN
-              IMACAR(NMACAG)(JJ:JJ)=' '
-            ENDIF
-16391     CONTINUE
+C                 2021/03/15: ONLY DO THIS IF THERE WAS A BEGINNING
+C                             LEFT PARETHESIS
+C
+          IF(IFLAGL.GT.0)THEN
+            DO16391JJ=80,1,-1
+              IF(IMACAR(NMACAG)(JJ:JJ).EQ.')')THEN
+                IMACAR(NMACAG)(JJ:JJ)=' '
+              ENDIF
+16391       CONTINUE
+          ENDIF
 C
           IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'MACR')THEN
             WRITE(ICOUT,46391)
@@ -14788,7 +14899,8 @@ C
       CALL DISTIN(Y2,NPTS,IWRITE,Y3,NLAB,IBUGA3,IERROR)
 C
       IF(IERROR.EQ.'YES')GOTO9000
-      IF(NLAB.LT.2 .OR. NLAB.GE.NPTS)THEN
+CCCCC IF(NLAB.LT.2 .OR. NLAB.GE.NPTS)THEN
+      IF(NLAB.LT.2)THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','WRIT')
         WRITE(ICOUT,211)

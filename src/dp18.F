@@ -38548,19 +38548,22 @@ C
 CCCCC                  NOVEMBER 1997.  ADD FOLLOWING 2 LINES
      1                 FX1MNZ,FX1MXZ,FX2MNZ,FX2MXZ,
      1                 FY1MNZ,FY1MXZ,FY2MNZ,FY2MXZ,
+     1                 GX1MNX,GX1MXX,GY1MNX,GY1MXX,
+     1                 GX2MNX,GX2MXX,GY2MNX,GY2MXX,
+     1                 IX1MNX,IX1MXX,IY1MNX,IY1MXX,
+     1                 IX2MNX,IX2MXX,IY2MNX,IY2MXX,
      1                 IFOUND,IERROR)
 C
-C     PURPOSE--DEFINE AXIS LIMITS
-C              (HORIZONTAL AXIS OR VERTICAL AXIS OR BOTH)
-C              WHICH IN TURN WILL DEFINE THE EXTREMES
-C              WHICH WILL APPEAR ON THE PLOT.
-C              THE LIMITS WILL BE PLACED IN THE 8 VARIABLES
-C              GX1MIN,GX1MAX,GY1MIN,GY1MAX,
-C              GX2MIN,GX2MAX,GY2MIN,GY2MAX,
-C              THE STATUS (FIXED OR LOAT) WILL BE PLACED
-C              IN THE 8 VARIABLES
-C              IX1MIN,IX1MAX,IY1MIN,IY1MAX,
-C              IX2MIN,IX2MAX,IY2MIN,IY2MAX
+C     PURPOSE--DEFINE AXIS LIMITS (HORIZONTAL AXIS OR VERTICAL AXIS OR
+C              BOTH) WHICH IN TURN WILL DEFINE THE EXTREMES WHICH WILL
+C              APPEAR ON THE PLOT.  THE LIMITS WILL BE PLACED IN THE 8
+C              VARIABLES:
+C                 GX1MIN,GX1MAX,GY1MIN,GY1MAX,
+C                 GX2MIN,GX2MAX,GY2MIN,GY2MAX,
+C              THE STATUS (FIXED OR FLOAT) WILL BE PLACED IN THE 8
+C              VARIABLES:
+C                 IX1MIN,IX1MAX,IY1MIN,IY1MAX,
+C                 IX2MIN,IX2MAX,IY2MIN,IY2MAX
 C     INPUT  ARGUMENTS--ICOM  (A  HOLLERITH VARIABLE)
 C                     --IHARG  (A  HOLLERITH VECTOR)
 C                     --IARGT  (A  HOLLERITH VECTOR)
@@ -38608,6 +38611,7 @@ C                                       VARY OVER SMALL RANGE)
 C     UPDATED         --NOVEMBER  1997. FIX BUG WITH TIC OFFSET AND
 C                                       LIMITS FREEZE.
 C     UPDATED         --OCTOBER   2018. RECODE FOR BETTER READABILITY
+C     UPDATED         --MARCH     2021. ADD "SAVE" AND "RESTORE" OPTIONS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -38623,6 +38627,14 @@ C
       CHARACTER*4 IX2MAX
       CHARACTER*4 IY2MIN
       CHARACTER*4 IY2MAX
+      CHARACTER*4 IX1MNX
+      CHARACTER*4 IX1MXX
+      CHARACTER*4 IY1MNX
+      CHARACTER*4 IY1MXX
+      CHARACTER*4 IX2MNX
+      CHARACTER*4 IX2MXX
+      CHARACTER*4 IY2MNX
+      CHARACTER*4 IY2MXX
 C
       CHARACTER*4 IFOUND
       CHARACTER*4 IERROR
@@ -38768,6 +38780,54 @@ C
             CALL DPWRST('XXX','BUG ')
           ENDIF
           GOTO9000
+        ELSEIF(IHARG(1).EQ.'SAVE')THEN
+          IFOUND='YES'
+          GX1MNX=FX1MNZ
+          GX1MXX=FX1MXZ
+          GX2MNX=FX2MNZ
+          GX2MXX=FX2MXZ
+          IX1MNX='FIXE'
+          IX1MXX='FIXE'
+          IX2MNX='FIXE'
+          IX2MXX='FIXE'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1145)
+ 1145       FORMAT('THE CURRENT X AXIS LIMITS (FOR BOTH HORIZONTAL ',
+     1             'FRAME LINES) HAVE JUST')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1147)
+ 1147       FORMAT('BEEN SAVED FROM THE VALUES FROM THE PREVIOUS PLOT,')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1138)GX1MIN,GX1MAX
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
+        ELSEIF(IHARG(1).EQ.'REST')THEN
+          IFOUND='YES'
+          GX1MIN=GX1MNX
+          GX1MAX=GX1MXX
+          GX2MIN=GX2MNX
+          GX2MAX=GX2MXX
+          IX1MIN='FIXE'
+          IX1MAX='FIXE'
+          IX2MIN='FIXE'
+          IX2MAX='FIXE'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1155)
+ 1155       FORMAT('THE CURRENT X AXIS LIMITS (FOR BOTH HORIZONTAL ',
+     1             'FRAME LINES) HAVE JUST')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1157)
+ 1157       FORMAT('BEEN RESTORED FROM THE PREVIOUS LIMITS SAVE,')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1138)GX1MIN,GX1MAX
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
         ELSE
           IFOUND='YES'
           GX1MIN=CPUMIN
@@ -38845,6 +38905,46 @@ C
             CALL DPWRST('XXX','BUG ')
           ENDIF
           GOTO9000
+        ELSEIF(IHARG(1).EQ.'SAVE')THEN
+          IFOUND='YES'
+          GX1MNX=FX1MNZ
+          GX1MXX=FX1MXZ
+          IX1MNX='FIXE'
+          IX1MXX='FIXE'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1245)
+ 1245       FORMAT('THE CURRENT X AXIS LIMITS (FOR THE BOTTOM ',
+     1             'HORIZONTAL FRAME LINE) HAS JUST')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1247)
+ 1247       FORMAT('BEEN SAVED FROM THE VALUES FROM THE PREVIOUS PLOT,')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1138)GX1MIN,GX1MAX
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
+        ELSEIF(IHARG(1).EQ.'REST')THEN
+          IFOUND='YES'
+          GX1MIN=GX1MNX
+          GX1MAX=GX1MXX
+          IX1MIN='FIXE'
+          IX1MAX='FIXE'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1255)
+ 1255       FORMAT('THE CURRENT X AXIS LIMITS (FOR THE BOTTOM ',
+     1             'HORIZONTAL FRAME LINE) HAS JUST')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1257)
+ 1257       FORMAT('BEEN RESTORED FROM THE PREVIOUS LIMITS SAVE,')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1138)GY1MIN,GY1MAX
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
         ELSE
           IFOUND='YES'
           GX1MIN=CPUMIN
@@ -38915,6 +39015,46 @@ C
             CALL DPWRST('XXX','BUG ')
             WRITE(ICOUT,1338)GX2MIN,GX2MAX
  1338       FORMAT('NAMELY--',2E15.7)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
+        ELSEIF(IHARG(1).EQ.'SAVE')THEN
+          IFOUND='YES'
+          GX2MNX=FX2MNZ
+          GX2MXX=FX2MXZ
+          IX2MNX='FIXE'
+          IX2MXX='FIXE'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1345)
+ 1345       FORMAT('THE CURRENT X AXIS LIMITS (FOR THE TOP HORIZONTAL ',
+     1             'FRAME LINE) HAS JUST')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1347)
+ 1347       FORMAT('BEEN SAVED FROM THE VALUES FROM THE PREVIOUS PLOT,')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1138)GX2MIN,GX2MAX
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
+        ELSEIF(IHARG(1).EQ.'REST')THEN
+          IFOUND='YES'
+          GX2MIN=GX2MNX
+          GX2MAX=GX2MXX
+          IX2MIN='FIXE'
+          IX2MAX='FIXE'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1355)
+ 1355       FORMAT('THE CURRENT X AXIS LIMITS (FOR THE TOP HORIZONTAL ',
+     1             'FRAME LINE) HAS JUST')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1357)
+ 1357       FORMAT('BEEN RESTORED FROM THE PREVIOUS LIMITS SAVE,')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1138)GX1MIN,GX1MAX
             CALL DPWRST('XXX','BUG ')
           ENDIF
           GOTO9000
@@ -39001,6 +39141,54 @@ C
             CALL DPWRST('XXX','BUG ')
           ENDIF
           GOTO9000
+        ELSEIF(IHARG(1).EQ.'SAVE')THEN
+          IFOUND='YES'
+          GY1MNX=FY1MNZ
+          GY1MXX=FY1MXZ
+          GY2MNX=FY2MNZ
+          GY2MXX=FY2MXZ
+          IY1MNX='FIXE'
+          IY1MXX='FIXE'
+          IY2MNX='FIXE'
+          IY2MXX='FIXE'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1445)
+ 1445       FORMAT('THE CURRENT Y AXIS LIMITS (FOR BOTH VERTICAL ',
+     1             'FRAME LINES) HAVE JUST')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1447)
+ 1447       FORMAT('BEEN SAVED FROM THE VALUES FROM THE PREVIOUS PLOT,')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1138)GY1MIN,GY1MAX
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
+        ELSEIF(IHARG(1).EQ.'REST')THEN
+          IFOUND='YES'
+          GY1MIN=GY1MNX
+          GY1MAX=GY1MXX
+          GY2MIN=GY2MNX
+          GY2MAX=GY2MXX
+          IY1MIN='FIXE'
+          IY1MAX='FIXE'
+          IY2MIN='FIXE'
+          IY2MAX='FIXE'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1455)
+ 1455       FORMAT('THE CURRENT Y AXIS LIMITS (FOR BOTH VERTICAL ',
+     1             'FRAME LINES) HAVE JUST')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1457)
+ 1457       FORMAT('BEEN RESTORED FROM THE PREVIOUS LIMITS SAVE,')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1138)GY1MIN,GY1MAX
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
         ELSE
           IFOUND='YES'
           GY1MIN=CPUMIN
@@ -39078,6 +39266,46 @@ C
             CALL DPWRST('XXX','BUG ')
           ENDIF
           GOTO9000
+        ELSEIF(IHARG(1).EQ.'SAVE')THEN
+          IFOUND='YES'
+          GY1MNX=FY1MNZ
+          GY1MXX=FY1MXZ
+          IY1MNX='FIXE'
+          IY1MXX='FIXE'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1545)
+ 1545       FORMAT('THE CURRENT Y AXIS LIMITS (FOR THE LEFT VERTICAL ',
+     1             'FRAME LINE) HAS JUST')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1547)
+ 1547       FORMAT('BEEN SAVED FROM THE VALUES FROM THE PREVIOUS PLOT,')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1138)GY1MIN,GY1MAX
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
+        ELSEIF(IHARG(1).EQ.'REST')THEN
+          IFOUND='YES'
+          GY1MIN=GY1MNX
+          GY1MAX=GY1MXX
+          IY1MIN='FIXE'
+          IY1MAX='FIXE'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1555)
+ 1555       FORMAT('THE CURRENT Y AXIS LIMITS (FOR THE LEFT VERTICAL ',
+     1             'FRAME LINE) HAS JUST')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1557)
+ 1557       FORMAT('BEEN RESTORED FROM THE PREVIOUS LIMITS SAVE,')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1138)GY1MIN,GY1MAX
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
         ELSE
           IFOUND='YES'
           GY1MIN=CPUMIN
@@ -39148,6 +39376,46 @@ C
             CALL DPWRST('XXX','BUG ')
             WRITE(ICOUT,1638)GY2MIN,GY2MAX
  1638       FORMAT('NAMELY--',2E15.7)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
+        ELSEIF(IHARG(1).EQ.'SAVE')THEN
+          IFOUND='YES'
+          GY2MNX=FY2MNZ
+          GY2MXX=FY2MXZ
+          IY2MNX='FIXE'
+          IY2MXX='FIXE'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1645)
+ 1645       FORMAT('THE CURRENT Y AXIS LIMITS (FOR THE RIGHT VERTICAL ',
+     1             'FRAME LINE) HAS JUST')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1647)
+ 1647       FORMAT('BEEN SAVED FROM THE VALUES FROM THE PREVIOUS PLOT,')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1138)GY2MIN,GY2MAX
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
+        ELSEIF(IHARG(1).EQ.'REST')THEN
+          IFOUND='YES'
+          GY2MIN=GY2MNX
+          GY2MAX=GY2MXX
+          IY2MIN='FIXE'
+          IY2MAX='FIXE'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1655)
+ 1655       FORMAT('THE CURRENT Y AXIS LIMITS (FOR THE RIGHT VERTICAL ',
+     1             'FRAME LINE) HAS JUST')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1657)
+ 1657       FORMAT('BEEN RESTORED FROM THE PREVIOUS LIMITS SAVE,')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1138)GY2MIN,GY2MAX
             CALL DPWRST('XXX','BUG ')
           ENDIF
           GOTO9000
@@ -39251,6 +39519,68 @@ C
             CALL DPWRST('XXX','BUG ')
             WRITE(ICOUT,1738)GX1MIN,GX1MAX
  1738       FORMAT('NAMELY--',2E15.7)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
+        ELSEIF(IHARG(1).EQ.'SAVE')THEN
+          IFOUND='YES'
+          GX1MNX=FX1MNZ
+          GX1MXX=FX1MXZ
+          GX2MNX=FX2MNZ
+          GX2MXX=FX2MXZ
+          GY1MNX=FY1MNZ
+          GY1MXX=FY1MXZ
+          GY2MNX=FY2MNZ
+          GY2MXX=FY2MXZ
+          IX1MNX='FIXE'
+          IX1MXX='FIXE'
+          IX2MNX='FIXE'
+          IX2MXX='FIXE'
+          IY1MNX='FIXE'
+          IY1MXX='FIXE'
+          IY2MNX='FIXE'
+          IY2MXX='FIXE'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1745)
+ 1745       FORMAT('THE AXIS LIMITS (FOR ALL 4 FRAME LINES) HAVE JUST')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1747)
+ 1747       FORMAT('BEEN SAVED FROM THE VALUES FROM THE PREVIOUS PLOT,')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1138)GX1MIN,GX1MAX
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
+        ELSEIF(IHARG(1).EQ.'REST')THEN
+          IFOUND='YES'
+          GX1MIN=GX1MNX
+          GX1MAX=GX1MXX
+          GX2MIN=GX2MNX
+          GX2MAX=GX2MXX
+          GY1MIN=GY1MNX
+          GY1MAX=GY1MXX
+          GY2MIN=GY2MNX
+          GY2MAX=GY2MXX
+          IX1MIN='FIXE'
+          IX1MAX='FIXE'
+          IX2MIN='FIXE'
+          IX2MAX='FIXE'
+          IY1MIN='FIXE'
+          IY1MAX='FIXE'
+          IY2MIN='FIXE'
+          IY2MAX='FIXE'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1755)
+ 1755       FORMAT('THE AXIS LIMITS (FOR ALL 4 FRAME LINES) HAVE JUST')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1757)
+ 1757       FORMAT('BEEN RESTORED FROM THE PREVIOUS LIMITS SAVE,')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1138)GX1MIN,GX1MAX
             CALL DPWRST('XXX','BUG ')
           ENDIF
           GOTO9000

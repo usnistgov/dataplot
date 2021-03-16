@@ -93,13 +93,13 @@ ELSE;                 . User customized settings
    LET FLAGX3LA = 0;  . x3label automatic
    LET FLAGHEAD = 1;  . Header sizes
    LET FLAGLABE = 1;  . Label sizes
-   LET FLAGERRO = 1;  . Response to error
+   LET FLAGERRO = 0;  . Response to error
    LET FLAGVERS = 1;  . Print version info
    LET FLAG4PLO = 1;  . 4-Plot uses MULTIPLOT CORNER COORDINATES
    LET FLAGDEVI = 1;  . Print message about devices
    LET FLAGHELP = 0;  . Print various search/help options
    LET FLAGPDPI = 1;  . Postscript dpi
-   LET FLAGPDF  = 1;  . Automatic creation of pdf files
+   LET FLAGPDF  = 0;  . Automatic creation of pdf files
    LET FLAGLIST = 1;  . Set number of list lines, open new window for LIST, HELP
    LET FLAGMAC  = 0;  . 1 => MacOS, 0 => not MacOS
 END OF IF
@@ -216,7 +216,7 @@ else if flagdeci = 2
    set write decimals 5
 else
    set write decimals
-end if if
+end if
 .
 . ---Preference 4: Plot Appearance:
 .    I like margins (spacings) within the frames on my plots:

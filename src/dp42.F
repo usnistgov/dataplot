@@ -34418,7 +34418,11 @@ C
         IOPGRS='ON'
         IOPG2S='ON'
         IDELIS='ON'
-        IDRFRS='OFF'
+        IF(IGRDOR.EQ.'BEFO')THEN
+          IDRFRS='ON'
+        ELSE
+          IDRFRS='OFF'
+        ENDIF
         IWRLAS='OFF'
         IWRLES='OFF'
         IDRTRS='OFF'
@@ -34440,7 +34444,7 @@ C
      1                IWRLES,IDRTRS,ICLG2S,ICLGRS,
      1                IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
      1                ASETSZ,ISETSY,ISETCL,ISETFI,
-     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,
+     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,
      1                IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
         ELSEIF(ICAS3D.EQ.'ON')THEN
           CALL PLOTG3(X,X3D,Y,N,DSIZE,
@@ -34581,7 +34585,7 @@ C
      1                IDRTRS,ICLG2S,ICLGRS,
      1                IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
      1                ASETSZ,ISETSY,ISETCL,ISETFI,
-     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,
+     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,
      1                IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
  1520   CONTINUE
         GOTO1900
@@ -34640,7 +34644,7 @@ C
      1                IWRLES,IDRTRS,ICLG2S,ICLGRS,
      1                IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
      1                ASETSZ,ISETSY,ISETCL,ISETFI,
-     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,
+     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,
      1                IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
 C
  1610   CONTINUE
@@ -34692,7 +34696,7 @@ C
      1                  IWRLES,IDRTRS,ICLG2S,ICLGRS,
      1                  IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
      1                  ASETSZ,ISETSY,ISETCL,ISETFI,
-     1                  NUMSBR,ICAPSW,IDEVO3,IDV2SP,
+     1                  NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,
      1                  IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
           ENDIF
  1670   CONTINUE
@@ -34748,7 +34752,7 @@ C
      1                IWRLES,IDRTRS,ICLG2S,ICLGRS,
      1                IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
      1                ASETSZ,ISETSY,ISETCL,ISETFI,
-     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,
+     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,
      1                IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
         ENDIF
 C
@@ -34785,7 +34789,7 @@ C
      1                IWRLES,IDRTRS,ICLG2S,ICLGRS,
      1                IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
      1                ASETSZ,ISETSY,ISETCL,ISETFI,
-     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,
+     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,
      1                IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
         ENDIF
 C
@@ -34868,7 +34872,7 @@ C
      1              IWRLES,IDRTRS,ICLG2S,ICLGRS,
      1              IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
      1              ASETSZ,ISETSY,ISETCL,ISETFI,
-     1              NUMSBR,ICAPSW,IDEVO3,IDV2SP,
+     1              NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,
      1              IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
         ELSEIF(ICAS3D.EQ.'ON')THEN
           CALL PLOTG3(X,X3D,Y,N,DSIZE,
@@ -34941,7 +34945,7 @@ C
      1                IWRLES,IDRTRS,ICLG2S,ICLGRS,
      1                IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
      1                ASETSZ,ISETSY,ISETCL,ISETFI,
-     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,
+     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,
      1                IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
         ELSEIF(ICAS3D.EQ.'ON')THEN
           CALL PLOTG3(X2,X3D2,Y2,N2,DSYMB,
@@ -35256,7 +35260,7 @@ C
      1                IWRLES,IDRTRS,ICLG2S,ICLGRS,
      1                IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
      1                ASETSZ,ISETSY,ISETCL,ISETFI,
-     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,
+     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,
      1                IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
         ELSEIF(ICAS3D.EQ.'ON')THEN
           CALL PLOTG3(X2,X3D2,Y2,N2,DSYMB,
@@ -35554,7 +35558,7 @@ C
      1                IWRLES,IDRTRS,ICLG2S,ICLGRS,
      1                IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
      1                ASETSZ,ISETSY,ISETCL,ISETFI,
-     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,
+     1                NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,
      1                IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
         ELSEIF(ICAS3D.EQ.'ON')THEN
           CALL PLOTG3(X2,X3D2,Y2,N2,DSYMB,
@@ -35594,7 +35598,11 @@ C
         IOPGRS='OFF'
         IOPG2S='OFF'
         IDELIS='OFF'
-        IDRFRS='ON'
+        IF(IGRDOR.EQ.'BEFO')THEN
+          IDRFRS='OFF'
+        ELSE
+          IDRFRS='ON'
+        ENDIF
         IWRLAS='ON'
         IWRLES='ON'
         IDRTRS='OFF'
@@ -35616,7 +35624,7 @@ C
      1              IWRLES,IDRTRS,ICLG2S,ICLGRS,
      1              IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
      1              ASETSZ,ISETSY,ISETCL,ISETFI,
-     1              NUMSBR,ICAPSW,IDEVO3,IDV2SP,
+     1              NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,
      1              IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
         ELSEIF(ICAS3D.EQ.'ON')THEN
           CALL PLOTG3(X,X3D,Y,N,DSIZE,
@@ -35683,7 +35691,7 @@ C
      1                  IDRTRS,ICLG2S,ICLGRS,
      1                  IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,
      1                  ASETSZ,ISETSY,ISETCL,ISETFI,
-     1                  NUMSBR,ICAPSW,IDEVO3,IDV2SP,
+     1                  NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,
      1                  IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
 C
 C     PURPOSE--GENERATE A COMPLETE 2-D PLOT OF A SINGLE TRACE OF Y VERSUS X
@@ -35775,6 +35783,7 @@ C     UPDATED         --JANUARY   2018. CALL LIST TO DPDELI
 C     UPDATED         --OCTOBER   2018. LABEL COORDINATES
 C     UPDATED         --DECEMBER  2018. SUPPORT FOR "DEVICE ... SCALE"
 C                                       COMMAND
+C     UPDATED         --MARCH     2021. SUPPORT FOR "GRID ORDER"
 C
 C-----FOR NON-COMMON VARIABLES-----------------------------------------
 C
@@ -35787,6 +35796,7 @@ C
       CHARACTER*4 IHGMSW
       CHARACTER*4 ICASPL
       CHARACTER*4 ICAS3D
+      CHARACTER*4 IGRDOR
       CHARACTER*24 ICH3PA
 C
       CHARACTER*4 ILI2SW
@@ -36950,6 +36960,12 @@ C
           ENDIF
         ENDIF
 C
+        IF(IGRDOR.EQ.'BEFO')THEN
+          IF(IDRFRS.EQ.'ON')
+     1      CALL DPDRFR(ICASPL,ICAS3D,IVGMSW,IHGMSW)
+          IF(IERRG4.EQ.'YES')GOTO9000
+        ENDIF
+C
 C               *********************************************
 C               **  STEP 41--                              **
 C               **  DRAW A DATA-DEFINED GENERALIZED TRACE. **
@@ -37216,9 +37232,11 @@ C
           CALL DPWRST('XXX','BUG ')
         ENDIF
 C
-        IF(IDRFRS.EQ.'ON')
-     1    CALL DPDRFR(ICASPL,ICAS3D,IVGMSW,IHGMSW)
-        IF(IERRG4.EQ.'YES')GOTO9000
+        IF(IGRDOR.EQ.'AFTE')THEN
+          IF(IDRFRS.EQ.'ON')
+     1      CALL DPDRFR(ICASPL,ICAS3D,IVGMSW,IHGMSW)
+          IF(IERRG4.EQ.'YES')GOTO9000
+        ENDIF
 C
 C               *********************************
 C               **  STEP 57--                  **

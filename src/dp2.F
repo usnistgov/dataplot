@@ -7486,6 +7486,7 @@ C     UPDATED         --FEBRUARY   2021.  ALLOW EMPTY ARGUMENT FOR
 C                                         SET LIST VIEWER
 C     UPDATED         --FEBRUARY   2021.  FIX BUG IN
 C                                         SET BEST FIT <DIST> <ON/OFF>
+C     UPDATED         --MARCH      2021.  SET GRID ORDER
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -12663,6 +12664,23 @@ C
           IHV='ON'
         ENDIF
         IERMSG=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED MARCH     2021
+C     *************************************************************
+C     **  SET GRID ORDER           <BEFORE/AFTER>                **
+C     *************************************************************
+C
+      IPART1='GRID'
+      IPART2='ORDE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHARG(3).EQ.'BEFO')THEN
+          IHV='BEFO'
+        ELSE
+          IHV='AFTE'
+        ENDIF
+        IGRDOR=IHV
         GOTO5160
       ENDIF
 C
@@ -29012,6 +29030,7 @@ C     UPDATED         --JANUARY    2021.  PROBE CHECK EQUAL LENGTH OUTPUT
 C                                         AS ALIAS FOR
 C                                         PROBE CHECK LENGTH OUTPUT
 C     UPDATED         --JANUARY    2021.  PROBE ERROR MESSAGE
+C     UPDATED         --MARCH      2021.  PROBE GRID ORDER
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -30389,6 +30408,18 @@ C
       IPART2='MESS'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
         IHV=IERMSG
+        GOTO5160
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        MARCH    2021.
+C     ******************************************
+C     **  PROBE GRID ORDER                    **
+C     ******************************************
+C
+      IPART1='GRID'
+      IPART2='ORDE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IHV=IGRDOR
         GOTO5160
       ENDIF
 C

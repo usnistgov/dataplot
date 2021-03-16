@@ -35059,8 +35059,15 @@ C               **  2) PNG                                          **
 C               **  3) WINDOWS BMP (BLACK/WHITE ONLY)               **
 C               ******************************************************
 C
+C     2021/03/11: TURN OFF RGB COLOR FLAG IF GD COLOR SET TO FIXED
+C
 12000 CONTINUE
       IRGBFL=1
+      IF(IGDCO.EQ.'FIXE')IRGBFL=0
+      print *,'igdco,irgbfl=',igdco,irgbfl
+      WRITE(ICOUT,12001)IGDCO,IRGBFL
+12001 FORMAT('GRTRC2 - GD DEVICE: IGDCO,IRGBFL = ',A4,2X,I5)
+      CALL DPWRST('XXX','BUG ')
       GOTO9000
 C
 C               ******************************************************

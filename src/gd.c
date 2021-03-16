@@ -188,7 +188,14 @@
 
 /* global definitions */
 
-#define MAX_COLORS_GD    89
+/* 2021/03/12: with recent upgrade of color model, need to
+ *             increase max colors to 163 from 89.
+ *
+ *             Color table limited to 255 entried, so truncate
+ *             at 145 colors.
+ */
+#define MAX_COLORS_GD   163
+/* #define MAX_COLORS_GD   145 */
 #define MAX_GRAY        100
 #define BORDER_WIDTH      3
 #define DEFAULT_X_SIZE  600
