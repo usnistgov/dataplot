@@ -8590,14 +8590,11 @@ C
       ELSEIF(NUMARG.GE.2.AND.IHARG(2).EQ.'FONT')THEN
         IF(IARGT(1).EQ.'NUMB')THEN
           I=IARG(1)
-          IF(1.LT.I .OR. I.GT.MAXDEV)THEN
+          IF(I.LT.1 .OR. I.GT.MAXDEV)THEN
             IERROR='YES'
             WRITE(ICOUT,999)
             CALL DPWRST('XXX','BUG ')
             WRITE(ICOUT,1141)
-            CALL DPWRST('XXX','BUG ')
-            WRITE(ICOUT,1152)
- 1152       FORMAT('      IN THE DEVICE ... FONT COMMAND,')
             CALL DPWRST('XXX','BUG ')
             WRITE(ICOUT,1153)
  1153       FORMAT('      THE NUMBER OF DEVICES MUST BE ')
@@ -8667,10 +8664,8 @@ C
           WRITE(ICOUT,999)
           CALL DPWRST('XXX','BUG ')
           WRITE(ICOUT,1141)
- 1141     FORMAT('***** ERROR IN DPDEFT--')
-          CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,1142)
- 1142     FORMAT('      IN THE DEVICE ... FONT COMMAND,')
+ 1141     FORMAT('***** ERROR IN THE DEVICE ... FONT COMMAND ',
+     1           '(DPDEFT)--')
           CALL DPWRST('XXX','BUG ')
           WRITE(ICOUT,1143)
  1143     FORMAT('      THE DEVICE IS IDENTIFIED BY A NUMBER, AS IN--')

@@ -35064,10 +35064,11 @@ C
 12000 CONTINUE
       IRGBFL=1
       IF(IGDCO.EQ.'FIXE')IRGBFL=0
-      print *,'igdco,irgbfl=',igdco,irgbfl
-      WRITE(ICOUT,12001)IGDCO,IRGBFL
-12001 FORMAT('GRTRC2 - GD DEVICE: IGDCO,IRGBFL = ',A4,2X,I5)
-      CALL DPWRST('XXX','BUG ')
+      IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'TRC2')THEN
+        WRITE(ICOUT,12001)IGDCO,IRGBFL
+12001   FORMAT('GRTRC2 - GD DEVICE: IGDCO,IRGBFL = ',A4,2X,I5)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       GOTO9000
 C
 C               ******************************************************
