@@ -11,6 +11,7 @@ The complete news file can be viewed at
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
 March 2021 - March 2021.
+-----------------------------------------------------------------------
 
  1. Added the command
 
@@ -36,25 +37,60 @@ March 2021 - March 2021.
         are now equivalent.  Previously, the spaces around the equal
         sign resulted in an error.
 
-     b. Fixed a bug where
+    b. Fixed a bug where
 
-            CALL X=X2 Y=Y1 STR="Z(13)"
+           CALL X=X2 Y=Y1 STR="Z(13)"
 
-        stripped off the ending parenthesis for STR="Z(13)".  This was
-        only an issue when the ending parenthesis occurs in the last
-        argument on the CALL command.
+       stripped off the ending parenthesis for STR="Z(13)".  This was
+       only an issue when the ending parenthesis occurs in the last
+       argument on the CALL command.
 
-     c. Fixed a bug with
+    c. Fixed a bug with
 
-            CALL STTAG=Day STTAG2=Season
+           CALL STTAG=Day STTAG2=Season
 
-         This was not performing the correct substitution for STTAG2.
+        This was not performing the correct substitution for STTAG2.
 
- 3. Fixed a few other minor bugs.
+     d. Allowing spaces around the "=" for named arguments introduced
+        some issues with empty arguments.  Empty arguments are most
+        likely to occur when using parameter/string substitution
+        (e.g., call sub.dp frame="^frame").  If the name indicated by
+        the "^" character is not a previously defined parameter or
+        string, then this results in an empty argument.
 
------------------------------------------------------------------------
+        If named arguments are quoted, this should prevent any
+        ambiguity.  For example,
 
- 1. Made a few tweaks for MacOS.
+            call sub.dp   x=x1  y=vial  frame="^frame" tag = "day"
+
+        If no string or parameter called frame exists, this results in
+
+            call sub.dp   x=x1  y=vial  frame=" " tag = "day"
+
+        This does not cause an issue.  Howver, if the argument is not
+        qouted
+
+            call sub.dp   x=x1  y=vial  frame=^frame tag = "day"
+
+        then we get
+
+            call sub.dp   x=x1  y=vial  frame=  tag = "day"
+
+        Since spaces around the "=" are allowed, this results in an
+        ambiguous interpretation.  That is, tag could be interpreted
+        as either the value for the frame argument or as a separate
+        named argument.
+
+        When Dataplot encounters something like this, it will look
+        ahead to the next unquoted equal sign.  If there is a single
+        argument, then Dataplot assumes that this is a separate named
+        argument.  If there is more than one argument, Dataplot will
+        process this from left to right in the standard way.
+
+ 3. Corrected issues with setting the background color and the margin
+    color.  Also corrected an issue with colors for the QuickWin device
+    (the green component was not being set correctly).
+
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
 February 2021 - February 2021.

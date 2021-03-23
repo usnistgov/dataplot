@@ -4342,9 +4342,8 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPFIMA(PXMIN,PYMIN,PXMAX,PYMAX,
-     1                  ICASPL,ICAS3D,
-     1                  IMARCO,IMARC2)
+      SUBROUTINE DPFIMA(PXMIN,PYMIN,PXMAX,PYMAX,ICASPL,ICAS3D,
+     1                  IMARCO,IMARC2,IRGBFL)
 C
 C     PURPOSE--FILL  THE MARGIN REGION ON THE SCREEN
 C              (THE REGION OUTSIDE THE FRAME LINES).
@@ -4367,6 +4366,8 @@ C     UPDATED         --FEBRUARY  1988. STAR PLOT
 C     UPDATED         --JUNE      1988. CALL TO GRFIRE
 C     UPDATED         --JANUARY   1989. MODIFY CALL  TO GRFIRE (ALAN)
 C     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
+C     UPDATED         --MARCH     2021. FOR POSTSCRIPT, NEED TO RESET
+C                                       COLOR
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 C
@@ -4417,8 +4418,11 @@ C
         WRITE(ICOUT,53)ICASPL,ICAS3D,IMARCO
    53   FORMAT('ICASPL,ICAS3D,IMARCO = ',2(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,55)IMARC2(1),IMARC2(2),IMARC2(3),IRGBFL
+   55   FORMAT('IMARC2(1),IMARC2(2),IMARC2(3),IRGBFL = ',4I6)
+        CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,59)IBUGG4,ISUBG4,IERRG4
-   59   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
+   59   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',2(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
@@ -4463,8 +4467,11 @@ C               CALL RGB ROUTINE FIRST.  IF RGB NOT SUPPORTED FOR THE
 C               CURRENT DEVICE OR RGB COLORS ARE NOT SPECIFIED, THEN
 C               FALL BACK TO NON-RGB COLOR MODEL.
 C
-      CALL GRTRC2(ICOLFR,ICOLFG,ICOLFB,ARED,AGREEN,ABLUE,
-     1            AALPHA,IRGBFL)
+      IF(IRGBFL.EQ.1)THEN
+        CALL GRTRC2(ICOLFR,ICOLFG,ICOLFB,ARED,AGREEN,ABLUE,
+     1              AALPHA,IRGBFL)
+      ENDIF
+C
       IF(IRGBFL.EQ.1)THEN
         ICASE2='REGI'
         CALL GRSEC2(ICASE2,IRGBFL,ARED,AGREEN,ABLUE,AALPHA)
@@ -4512,8 +4519,10 @@ C               **  GRAPHICS DEVICE.                        **
 C               **********************************************
 C
       ICOL=ICOLP
-      CALL GRTRC2(ICOLFR,ICOLFG,ICOLFB,ARED,AGREEN,ABLUE,
-     1            AALPHA,IRGBFL)
+      IF(IRGBFL.EQ.1)THEN
+        CALL GRTRC2(ICOLFR,ICOLFG,ICOLFB,ARED,AGREEN,ABLUE,
+     1              AALPHA,IRGBFL)
+      ENDIF
       IF(IRGBFL.EQ.1)THEN
         ICASE2='REGI'
         CALL GRSEC2(ICASE2,IRGBFL,ARED,AGREEN,ABLUE,AALPHA)
@@ -4566,17 +4575,46 @@ C
       PY(4)=PYMIN
       NP=4
       CALL GRFIRE(PX,PY,NP,IFIG,
-     1               IPATT,JPATT,IHORPA,IVERPA,IDUPPA,IDDOPA,
-     1               PXGAP2,PYGAP2,PTHICK,JTHICK,PTHIC2,
-     1               ICOLB,JCOLB,ICOLP,JCOLP,
-     1               ICOLFR,ICOLFG,ICOLFB,ICOLFR,ICOLFG,ICOLFB,
-     1               IRGBFL,IPATT2)
+     1            IPATT,JPATT,IHORPA,IVERPA,IDUPPA,IDDOPA,
+     1            PXGAP2,PYGAP2,PTHICK,JTHICK,PTHIC2,
+     1            ICOLB,JCOLB,ICOLP,JCOLP,
+     1            ICOLFR,ICOLFG,ICOLFB,ICOLFR,ICOLFG,ICOLFB,
+     1            IRGBFL,IPATT2)
 C
 C               ********************************************
 C               **  STEP 12--                             **
 C               **  FILL  THE REGION                      **
 C               **  TO THE RIGHT OF THE RIGHT FRAME LINE  **
 C               ********************************************
+C
+      ICOL=ICOLB
+      IF(IRGBFL.EQ.1)THEN
+        CALL GRTRC2(ICOLFR,ICOLFG,ICOLFB,ARED,AGREEN,ABLUE,
+     1              AALPHA,IRGBFL)
+      ENDIF
+C
+      IF(IRGBFL.EQ.1)THEN
+        ICASE2='REGI'
+        CALL GRSEC2(ICASE2,IRGBFL,ARED,AGREEN,ABLUE,AALPHA)
+      ELSE
+        CALL GRTRCO(ICASE,ICOL,JCOL)
+        JCOLB=JCOL
+        CALL GRSECO(ICASE,ICOL,JCOL)
+      ENDIF
+C
+      ICOL=ICOLP
+      IF(IRGBFL.EQ.1)THEN
+        CALL GRTRC2(ICOLFR,ICOLFG,ICOLFB,ARED,AGREEN,ABLUE,
+     1              AALPHA,IRGBFL)
+      ENDIF
+      IF(IRGBFL.EQ.1)THEN
+        ICASE2='REGI'
+        CALL GRSEC2(ICASE2,IRGBFL,ARED,AGREEN,ABLUE,AALPHA)
+      ELSE
+        CALL GRTRCO(ICASE,ICOL,JCOL)
+        JCOLP=JCOL
+        CALL GRSECO(ICASE,ICOL,JCOL)
+      ENDIF
 C
       PX(1)=PXMAX
       PY(1)=PYMIN
@@ -4600,6 +4638,35 @@ C               **  FILL  THE REGION          **
 C               **  ABOVE THE TOP FRAME LINE  **
 C               ********************************
 C
+      ICOL=ICOLB
+      IF(IRGBFL.EQ.1)THEN
+        CALL GRTRC2(ICOLFR,ICOLFG,ICOLFB,ARED,AGREEN,ABLUE,
+     1              AALPHA,IRGBFL)
+      ENDIF
+C
+      IF(IRGBFL.EQ.1)THEN
+        ICASE2='REGI'
+        CALL GRSEC2(ICASE2,IRGBFL,ARED,AGREEN,ABLUE,AALPHA)
+      ELSE
+        CALL GRTRCO(ICASE,ICOL,JCOL)
+        JCOLB=JCOL
+        CALL GRSECO(ICASE,ICOL,JCOL)
+      ENDIF
+C
+      ICOL=ICOLP
+      IF(IRGBFL.EQ.1)THEN
+        CALL GRTRC2(ICOLFR,ICOLFG,ICOLFB,ARED,AGREEN,ABLUE,
+     1              AALPHA,IRGBFL)
+      ENDIF
+      IF(IRGBFL.EQ.1)THEN
+        ICASE2='REGI'
+        CALL GRSEC2(ICASE2,IRGBFL,ARED,AGREEN,ABLUE,AALPHA)
+      ELSE
+        CALL GRTRCO(ICASE,ICOL,JCOL)
+        JCOLP=JCOL
+        CALL GRSECO(ICASE,ICOL,JCOL)
+      ENDIF
+C
       PX(1)=0.0
       PY(1)=PYMAX
       PX(2)=PXMAX
@@ -4621,6 +4688,35 @@ C               **  STEP 14--                           **
 C               **  FILL  THE REGION                    **
 C               **  TO THE LEFT OF THE LEFT FRAME LINE  **
 C               ******************************************
+C
+      ICOL=ICOLB
+      IF(IRGBFL.EQ.1)THEN
+        CALL GRTRC2(ICOLFR,ICOLFG,ICOLFB,ARED,AGREEN,ABLUE,
+     1              AALPHA,IRGBFL)
+      ENDIF
+C
+      IF(IRGBFL.EQ.1)THEN
+        ICASE2='REGI'
+        CALL GRSEC2(ICASE2,IRGBFL,ARED,AGREEN,ABLUE,AALPHA)
+      ELSE
+        CALL GRTRCO(ICASE,ICOL,JCOL)
+        JCOLB=JCOL
+        CALL GRSECO(ICASE,ICOL,JCOL)
+      ENDIF
+C
+      ICOL=ICOLP
+      IF(IRGBFL.EQ.1)THEN
+        CALL GRTRC2(ICOLFR,ICOLFG,ICOLFB,ARED,AGREEN,ABLUE,
+     1              AALPHA,IRGBFL)
+      ENDIF
+      IF(IRGBFL.EQ.1)THEN
+        ICASE2='REGI'
+        CALL GRSEC2(ICASE2,IRGBFL,ARED,AGREEN,ABLUE,AALPHA)
+      ELSE
+        CALL GRTRCO(ICASE,ICOL,JCOL)
+        JCOLP=JCOL
+        CALL GRSECO(ICASE,ICOL,JCOL)
+      ENDIF
 C
       PX(1)=0.0
       PY(1)=PYMIN

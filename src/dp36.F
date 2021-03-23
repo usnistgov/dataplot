@@ -8583,7 +8583,7 @@ C
       IF(IFLAG.EQ.1)
      1CALL DPFIMA(PXMIN,PYMIN,PXMAX,PYMAX,
      1            ICASPL,ICAS3D,
-     1            IMARCO,IMARC2)
+     1            IMARCO,IMARC2,IRGBFL)
 C
 C               ****************************
 C               **  STEP 2--              **
