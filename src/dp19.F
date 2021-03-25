@@ -10069,35 +10069,63 @@ C
             ICNT=ICNT+1
             ISTR(ICNT:ICNT)=IMACCL(I:I)
             IFLAGE=1
-C
-            IF(I.LT.NMACCL)THEN
-              NWORD=0
-              IFLAGC=0
-              DO67291JJ=I+1,NMACCL
-                IF(IMACCL(JJ:JJ).EQ.'"')GOTO6293
-                IF(IMACCL(JJ:JJ).EQ.'=')THEN
-                  IF(NWORD.LE.1)THEN
-                    ICNT=ICNT+1
-                    ISTR(ICNT:ICNT)='"'
-                    ICNT=ICNT+1
-                    ISTR(ICNT:ICNT)=' '
-                    ICNT=ICNT+1
-                    ISTR(ICNT:ICNT)='"'
-                    ICNT=ICNT+1
-                    ISTR(ICNT:ICNT)=' '
-                  ENDIF
-                  GOTO6293
-                ENDIF
-                IF(IMACCL(JJ:JJ).EQ.' ')THEN
-                  IF(IFLAGC.EQ.0)GOTO67291
-                  NWORD=NWORD+1
-                ELSE
-                  IFLAGC=1
-                ENDIF
-67291         CONTINUE
-            ENDIF
-C
           ENDIF
+C
+          IF(I.LT.NMACCL)THEN
+            NWORD=0
+            IFLAGC=0
+            DO67291JJ=I+1,NMACCL
+C
+              IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'MACR')THEN
+                WRITE(ICOUT,96299)I,JJ,IMACCL(JJ:JJ)
+96299           FORMAT('AT 6729: I,JJ,IMACCL(JJ:JJ) = ',2I6,2X,A1)
+                CALL DPWRST('XXX','BUG ')
+              ENDIF
+C
+              IF(IMACCL(JJ:JJ).EQ.'"')GOTO6293
+              IF(IMACCL(JJ:JJ).EQ.'=')THEN
+C
+                IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'MACR')THEN
+                  WRITE(ICOUT,96291)NWORD
+96291             FORMAT('AT NEXT =: NWORD = ',I6)
+                  CALL DPWRST('XXX','BUG ')
+                ENDIF
+C
+                IF(NWORD.LE.1)THEN
+                  ICNT=ICNT+1
+                  ISTR(ICNT:ICNT)='"'
+                  ICNT=ICNT+1
+                  ISTR(ICNT:ICNT)=' '
+                  ICNT=ICNT+1
+                  ISTR(ICNT:ICNT)='"'
+                  ICNT=ICNT+1
+                  ISTR(ICNT:ICNT)=' '
+                ENDIF
+                GOTO6293
+              ENDIF
+C
+              IF(IMACCL(JJ:JJ).EQ.' ')THEN
+C
+                IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'MACR')THEN
+                  WRITE(ICOUT,96292)IFLAGC
+96292             FORMAT('SPACE CHARACTER: IFLAGC = ',I6)
+                  CALL DPWRST('XXX','BUG ')
+                ENDIF
+C
+                IF(IFLAGC.EQ.1)IFLAGC=0
+              ELSE
+                IF(IFLAGC.EQ.0)NWORD=NWORD+1
+                IFLAGC=1
+C
+                IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'MACR')THEN
+                  WRITE(ICOUT,96293)IMACCL(JJ:JJ)
+96293             FORMAT('NON-SPACE CHARACTER: IMACCL(JJ:JJ) = ',A1)
+                  CALL DPWRST('XXX','BUG ')
+                ENDIF
+              ENDIF
+67291       CONTINUE
+          ENDIF
+C
         ELSE
           ICNT=ICNT+1
           ISTR(ICNT:ICNT)=IMACCL(I:I)

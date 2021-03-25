@@ -1,5 +1,5 @@
 Name:		dataplot
-Version:	20210323
+Version:	20210325
 Release:	1%{?dist}
 Summary:	Scientific visualization, statistical analysis, and non-linear modeling
 Group:		Applications/Engineering
