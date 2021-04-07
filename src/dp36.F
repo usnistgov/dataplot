@@ -13414,6 +13414,302 @@ C
 C
       RETURN
       END
+      SUBROUTINE ENTROP(X,N,IWRITE,ICASE,XE,XMEAN,XVAR,XSD,
+     1                  IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES SHANNON'S ENTROPY
+C              STATISTIC, AND ALTERNATIVELY THE MEAN, VARIANCE
+C              AND STANDARD DEVIATION.  ENTROPY HAS DIFFERENT
+C              DEFINITIONS IN DIFFERENT FIELDS, SO WE REFER TO
+C              THESE AS "SHANNON ENTROPY" TO DISTINGUISH
+C              THAT WE ARE REFERRING TO SHANNON'S DEFINITION.
+C
+C                 1) SHANNON'S ENTROPY:
+C
+C                      E = -SUM[i=1 to k][p(i)*LOG(p(i))]
+C
+C                    WHERE p(i)*LOG(p(i)) = 0 FOR p(i) = 0
+C
+C                 2) MEAN OF SHANNON'S ENTROPY:
+C
+C                     U = SUM[i=1 to k][i*p(i)]
+C
+C                 3) VARIANCE OF SHANNON'S ENTROPY:
+C
+C                     SIGMA^2 = SUM[i=1 to k][(i-U)**2*p(i)]
+C
+C                 4) SD OF SHANNON'S ENTROPY:
+C
+C                     SIGMA = SQRT(SIGMA^2)
+C
+C              THE p(i) IS THE PROBABILITY OF THE i-THE VALUE.
+C              THESE SHOULD SUM TO 1.  IF THE VALUES IN X DO NOT
+C              SUM TO 1, THEN ASSUME THAT THE X DENOTE A FREQUENCY
+C              TABLE.
+C
+C     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+C                                (UNSORTED OR SORTED) OBSERVATIONS.
+C                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR X.
+C     OUTPUT ARGUMENTS--XE     = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED SHANNON'S ENTROPY.
+C                     --XMEAN  = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED MEAN OF SHANNON'S ENTROPY.
+C                     --XVAR   = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED VARIANCE OF SHANNON'S ENTROPY.
+C                     --XSD    = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED SD OF SHANNON'S ENTROPY.
+C     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE SAMPLE ENTROPY.
+C     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+C                   OF N FOR THIS SUBROUTINE.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     REFERENCES--SHANNON (1948), "A MATHEMATICAL THEORY OF
+C                 COMMUNICATION", BELL SYSTEM TECHNICAL JOURNAL,
+C                 Vol. 27, PP. 379-423.
+C               --CRESSIE (1993), "STATISTICS FOR SPATIAL DATA: REVISED
+C                 EDITION", WILEY, p. 1.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2021.03
+C     ORIGINAL VERSION--MARCH     2021.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ICASE
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+      DOUBLE PRECISION DX
+      DOUBLE PRECISION DU
+      DOUBLE PRECISION DVAR
+      DOUBLE PRECISION DVAL
+      DOUBLE PRECISION DSUM
+C
+      DIMENSION X(*)
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOST.INC'
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='ENTR'
+      ISUBN2='OP  '
+      IERROR='NO'
+C
+      XE=CPUMIN
+      XMEAN=CPUMIN
+      XVAR=CPUMIN
+      XSD=CPUMIN
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'TROP')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF MEAN--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,ISHALB,N
+   52   FORMAT('IBUGA3,ISUBRO,ISHALB,N = ',3(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,X(I)
+   56     FORMAT('I,X(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      AN=N
+C
+      IF(N.LT.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN SHANNON ENTROPY--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)
+  112   FORMAT('      THE NUMBER OF OBSERVATIONS IN THE RESPONSE ',
+     1         'VARIABLE IS LESS THAN 1.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)N
+  117   FORMAT('      THE NUMBER OF OBSERVATIONS = ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+      DSUM=0.0D0
+      DO120I=1,N
+        IF(X(I).LE.0.0)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,111)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,122)I,X(I)
+  122     FORMAT('      THE ',I8,'-TH OBSERVATION IS NEGATIVE (',
+     1           G15.7,').')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+        DSUM=DSUM + DBLE(X(I))
+  120 CONTINUE
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'TROP')THEN
+        WRITE(ICOUT,126)DSUM
+  126   FORMAT('AFTER 120: DSUM = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      DEPS=1.0D-7
+      IF(DSUM.LT.1.0D0-DEPS)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,132)
+  132   FORMAT('      THE SUM OF THE OBSERVATIONS IS LESS THAN 1.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,134)N,DSUM
+  134   FORMAT('      THE SUM OF THE ',I8,' OBSERVATIONS IS ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ELSEIF(DSUM.GT.1.0D0+DEPS)THEN
+C
+C       SUM GREATER THAN ONE.  DIVIDE ALL OBSERVATIONS BY THE SUM
+C
+        DO140I=1,N
+          DX=DBLE(X(I))
+          DVAL=DX/DSUM
+          X(I)=REAL(DVAL)
+  140   CONTINUE
+      ENDIF
+C
+C               ***************************
+C               **  STEP 2--             **
+C               **  COMPUTE THE ENTROPY  **
+C               ***************************
+C
+      DSUM=0.0D0
+      DU=0.0D0
+      DO200I=1,N
+        DX=DBLE(X(I))
+        IF(DX.GT.0.0D0)THEN
+          IF(ISHALB.EQ.'10  ')THEN
+            DXLOG=DLOG(DX)/DLOG(10.0D0)
+          ELSEIF(ISHALB.EQ.'2   ')THEN
+            DXLOG=DLOG(DX)/DLOG(2.0D0)
+          ELSE
+            DXLOG=DLOG(DX)
+          ENDIF
+          DSUM=DSUM+DX*DXLOG
+          DU=DU+DBLE(I)*DX
+        ENDIF
+  200 CONTINUE
+      XE=-REAL(DSUM)
+      XMEAN=REAL(XE)
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'TROP')THEN
+        WRITE(ICOUT,206)DSUM,DU,XE,XMEAN
+  206   FORMAT('AFTER 200: DSUM,DU,XE,XMEAN = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      DVAR=0.0D0
+      DO300I=1,N
+        DX=DBLE(X(I))
+        IF(DX.GT.0.0D0)THEN
+          DVAR=DVAR+(DBLE(I)-DU)**2*DX
+        ENDIF
+  300 CONTINUE
+      XVAR=REAL(DVAR)
+      XSD=REAL(DSQRT(DVAR))
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'TROP')THEN
+        WRITE(ICOUT,306)DVAR
+  306   FORMAT('AFTER 300: DVAR = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *******************************
+C               **  STEP 3--                 **
+C               **  WRITE OUT A LINE         **
+C               **  OF SUMMARY INFORMATION.  **
+C               *******************************
+C
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IF(ICASE.EQ.'ENTR')THEN
+          WRITE(ICOUT,811)N,XE
+  811     FORMAT('THE SHANNON ENTROPY OF THE ',I8,' OBSERVATIONS = ',
+     1           G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASE.EQ.'MEAN')THEN
+          WRITE(ICOUT,813)N,XMEAN
+  813     FORMAT('THE MEAN OF THE SHANNON ENTROPY OF THE ',I8,
+     1           ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASE.EQ.'VARI')THEN
+          WRITE(ICOUT,815)N,XVAR
+  815     FORMAT('THE VARIANCE OF THE SHANNON ENTROPY OF THE ',I8,
+     1           ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASE.EQ.'SD')THEN
+          WRITE(ICOUT,817)N,XSD
+  817     FORMAT('THE STANDARD DEVIATION OF THE SHANNON ENTROPY OF ',
+     1           'THE ',I8,' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSE
+          WRITE(ICOUT,819)ICASE
+  819     FORMAT('CASE ',A4,' IS NOT RECOGNIZED.')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'TROP')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF ENTROP--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR,XE,XMEAN,XVAR,XSD
+ 9012   FORMAT('IERROR,XE,XMEAN,XVAR,XSD = ',A4,2X,4G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
       DOUBLE PRECISION FUNCTION ENVJ(N,X)
       DOUBLE PRECISION X
       ENVJ=0.5D0*DLOG10(6.28D0*N)-N*DLOG10(1.36D0*X/N)
@@ -31827,6 +32123,8 @@ C                 MEDIAN
 C                 MIDHINGE
 C                 MIDMEAN
 C                 MIDRANGE
+C                 SHANNON ENTROPY
+C                 SHANNON ENTROPY MEAN
 C                 SHORTEST HALF MIDMEAN
 C                 SHORTEST HALF MIDRANGE
 C                 STANDARD DEVIATION OF LP LOCATION
@@ -31871,6 +32169,8 @@ C                 ROBUST POOLED RANGE
 C                 ROBUST POOLED STANDARD DEVIATION
 C                 ROOT MEAN SQUARE ERROR (OR RMS)
 C                 SCALED MEDIAN ABSOLUTE DEVIATION (MADe)
+C                 SHANNON ENTROPY STANDARD DEVIATION
+C                 SHANNON ENTROPY VARIANCE
 C                 SIGNAL TO NOISE RATIO
 C                 SN
 C                 STANDARD DEVIATION (OR SD)
@@ -33029,6 +33329,11 @@ C     UPDATED         --OCTOBER   2019. KURTOSIS OUTLIER CDF
 C     UPDATED         --OCTOBER   2019. KURTOSIS OUTLIER CRITICAL VALUE
 C     UPDATED         --OCTOBER   2019. KURTOSIS OUTLIER INDEX
 C     UPDATED         --OCTOBER   2019. KURTOSIS OUTLIER PVALUE
+C     UPDATED         --MARCH     2021. SHANNON ENTROPY
+C     UPDATED         --MARCH     2021. SHANNON ENTROPY MEAN
+C     UPDATED         --MARCH     2021. SHANNON ENTROPY STANDARD
+C                                       DEVIATION
+C     UPDATED         --MARCH     2021. SHANNON ENTROPY VARIANCE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -33057,7 +33362,7 @@ C
       INCLUDE 'DPCOPA.INC'
 CCCCC INCLUDE 'DPCOZC.INC'
 C
-      PARAMETER (MAXSTA=1557)
+      PARAMETER (MAXSTA=1562)
       PARAMETER (MAXSCL=8)
       INTEGER      INFLAV(MAXSTA)
       CHARACTER*4  INAME(MAXSTA,MAXSCL)
@@ -42531,6 +42836,36 @@ C
      1'KURT','    ','    ','    ','    ','    ','    ','    '/
       DATA INFLAV(1557)/1/
       DATA INLONG(1557)/'KURTOSIS'/
+C
+      DATA INCASE(1558)/'SEME'/
+      DATA (INAME(1558,J),J=1,MAXSCL)/
+     1'SHAN','    ','ENTR','MEAN','    ','    ','    ','    '/
+      DATA INFLAV(1558)/1/
+      DATA INLONG(1558)/'SHANNON ENTROPY MEAN'/
+C
+      DATA INCASE(1559)/'SEVA'/
+      DATA (INAME(1559,J),J=1,MAXSCL)/
+     1'SHAN','    ','ENTR','VARI','    ','    ','    ','    '/
+      DATA INFLAV(1559)/1/
+      DATA INLONG(1559)/'SHANNON ENTROPY VARIANCE'/
+C
+      DATA INCASE(1560)/'SESD'/
+      DATA (INAME(1560,J),J=1,MAXSCL)/
+     1'SHAN','    ','ENTR','SD  ','    ','    ','    ','    '/
+      DATA INFLAV(1560)/1/
+      DATA INLONG(1560)/'SHANNON ENTROPY STANDARD DEVIATION'/
+C
+      DATA INCASE(1561)/'SESD'/
+      DATA (INAME(1561,J),J=1,MAXSCL)/
+     1'SHAN','    ','ENTR','STAN','DEVI','    ','    ','    '/
+      DATA INFLAV(1561)/1/
+      DATA INLONG(1561)/'SHANNON ENTROPY STANDARD DEVIATION'/
+C
+      DATA INCASE(1562)/'SENT'/
+      DATA (INAME(1562,J),J=1,MAXSCL)/
+     1'SHAN','    ','ENTR','    ','    ','    ','    ','    '/
+      DATA INFLAV(1562)/1/
+      DATA INLONG(1562)/'SHANNON ENTROPY'/
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -52940,18 +53275,23 @@ c
       end
       double precision function ff (x)
 c
-c      NOTE: This subroutine used in computing the consensus mean
-c            using the Iyer and Wang generalized tolerance interval
-c            approach.
+c     NOTE: This subroutine used in computing the consensus mean
+c           using the Iyer and Wang generalized tolerance interval
+c           approach.
 c
-c            Modified for Dataplot 3/2006.
+c           Modified for Dataplot 3/2006.
+c
+c           Modified for Dataplot 4/2021.
+c
+c           1) Allow maximum of 1,000 labs
 c
       implicit none
 c
       double precision  x
 c
       integer kk
-      double precision aa, ybar, cc, bb(100), yy(100)
+ccccc double precision aa, ybar, cc, bb(100), yy(100)
+      double precision aa, ybar, cc, bb(1000), yy(1000)
       common /cmn1/ kk
       common /cmn2/ aa, ybar, cc, bb, yy
 c

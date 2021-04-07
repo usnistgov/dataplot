@@ -1,9 +1,9 @@
-66700.      (VERSION 2021.01)  total number of lines in file (including this line)
+67000.      (VERSION 2021.03)  total number of lines in file (including this line)
  4.                          number of     sections below
   100.    P                  first line number of P section
 22400.    Q                  first line number of Q section
 25500.    R                  first line number of R section
-42700.    S                  first line number of S section
+43000.    S                  first line number of S section
  
 ----------------------------------------------------------
  
@@ -33457,18 +33457,64 @@ Description:
     HEXAGON, PYRAMID, SEMI-CIRCLE, and TRIANGLE can be filled using the
     REGION FILL command.  The BOX command has its own attribute
     setting commands.
- 
-Syntax:
+
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the region fill color, Dataplot first checks if the
+    device supports RGB colors. If not, the named color will be used.
+    If the device does support RGB color, Dataplot will check if an RGB
+    color has been specified.  If yes, then that RGB color is used.  If
+    not, the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
     REGION FILL COLOR  <color>  <color>  <color>  etc.
     where <color> is a character string or index number that specifies
                 the desired color.  Up to 100 region fill colors can
                 be specified.
  
+Syntax 2:
+    REGION FILL RGB COLOR  <ired>  <igreen>  <iblue>
+                           <ired>  <igreen>  <iblue>  etc.
+    where <ired> specifies the red component of the region fill color;
+          <igreen> specifies the green component of the region fill color;
+    and   <iblue> specifies the blue component of the region fill color.
+
+    Up to 100 triplets of RGB colors can be specified.
+
+    The components should be integer values in the range 0 - 255.  To turn
+    off the RGB color, set the components to -1 (any negative value will
+    work and if any of the three components is negative the RGB color will
+    be turned off).
+
 Examples:
     REGION FILL COLOR RED BLUE GREEN
     REGION FILL COLOR BLACK ALL
     REGION FILL COLOR ALL BLACK
     REGION FILL COLOR
+    REGION FILL RGB COLOR 201 101 88
+    REGION FILL RGB COLOR 201 101 88 ALL
+    REGION FILL RGB COLOR 201 101 88 240 200 175
+    REGION FILL RGB COLOR -1 -1 -1 ALL
  
 Default:
     All solid region fills are black.
@@ -33506,18 +33552,18 @@ Related Commands:
                              patterns.
     REGION PATTERN THICK   = Sets the line thickness for region fill
                              patterns.
-    LINE BORDER COLOR      = Sets the color for region border lines.
-    LINE BORDER LINE       = Sets the types for region border lines.
-    LINE BORDER THICKNESS  = Sets the line thickness for region border
-                             lines.
+    LINE                   = Sets the types for plot lines.
+    LINE COLOR             = Sets the color for plot lines.
+    LINE THICKNESS         = Sets the line thickness for plot lines.
  
 Applications:
     Presentation Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
+    2021/11: Support for RGB color
  
-Program:
+Program 1:
     SKIP 25
     READ TEXAS.DAT X Y
     .
@@ -33539,6 +33585,82 @@ Program:
     PLOT Y X
     END OF MULTIPLOT
  
+Program 2:
+    skip 25
+    read wright11.dat pressure angle wing
+    let angled = distinct angle
+    let nangle = size angled
+    let wingd = distinct wing
+    let nwing = size wingd
+    .
+    title case asis
+    title offset 2
+    title Response Variable = Pressure
+    label case asis
+    x1label Wing Type
+    y1label uc()Alc()ngle
+    y1label displacement 12
+    tic offset units data
+    x1limits 1 nwing
+    major xtic mark number nwing
+    minor xtic mark number 0
+    xtic mark offset 0.8 0.8
+    x1tic mark label format alpha
+    x1tic mark label content 1 2 3 4 5 6 7 8 9 10 11 12 13 15 16 17
+    y1limits 1 nangle
+    major ytic mark number nangle
+    minor ytic mark number 0
+    y1tic mark offset 0.8 0.8
+    y1tic mark label format alpha
+    y1tic mark label content 0 2.5 5 7.5 10 12.5 15 17.5 20 25 30 35 40 45
+    .
+    let ylevel = data 10 20 30 40 50
+    region fill on all
+    region fill color   red orange yellow green cyan blue
+    region border color red orange yellow green cyan blue
+    line color          red orange yellow green cyan blue
+    region fill rgb color   239 243 255  198 219 239  158 202 225 ...
+                            107 174 214   49 130 189    8  81 156
+    region border rgb color 239 243 255  198 219 239  158 202 225 ...
+                            107 174 214   49 130 189    8  81 156
+    line color              239 243 255  198 219 239  158 202 225 ...
+                            107 174 214   49 130 189    8  81 156
+    .
+    tabulation mean plot pressure angle wing ylevel
+    .
+    box fill pattern solid
+    box shadow hw 0 0
+    .
+    box fill color blue
+    box fill rgb color 8 81 156
+    box 86 90 90 86
+    move 91 87; text > 50
+    .
+    box fill color cyan
+    box fill rgb color 49 130 189
+    box 86 86 90 82
+    move 91 83; text 40 - 50
+    .
+    box fill color green
+    box fill rgb color 107 174 214
+    box 86 82 90 78
+    move 91 79; text 30 - 40
+    .
+    box fill color yellow
+    box fill rgb color 158 202 225
+    box 86 78 90 74
+    move 91 75; text 20 - 30
+    .
+    box fill color orange
+    box fill rgb color 198 219 239
+    box 86 74 90 70
+    move 91 71; text 10 - 20
+    .
+    box fill color red
+    box fill rgb color 239 243 255
+    box 86 70 90 66
+    move 91 67; text < 10
+
 -----REGION PATTERN---------------------------------------------------
  
 REGION PATTERN
@@ -33707,21 +33829,69 @@ Description:
     REGION FILL command.  The BOX command has its own attribute
     setting commands.
  
-Syntax:
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the region pattern color, Dataplot first checks if the
+    device supports RGB colors. If not, the named color will be used.
+    If the device does support RGB color, Dataplot will check if an RGB
+    color has been specified.  If yes, then that RGB color is used.  If
+    not, the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
     REGION PATTERN COLOR  <color>  <color>  <color>  etc.
     where <color> is a character string or index number that specifies
               the desired color.  Up to 100 region pattern colors can
               be specified.
  
+Syntax 2:
+    REGION PATTERN RGB COLOR  <ired>  <igreen>  <iblue>
+                              <ired>  <igreen>  <iblue>  etc.
+    where <ired> specifies the red component of the region pattern color;
+          <igreen> specifies the green component of the region pattern
+                   color;
+    and   <iblue> specifies the blue component of the region pattern
+                   color.
+
+    Up to 100 triplets of RGB colors can be specified.
+
+    The components should be integer values in the range 0 - 255.  To turn
+    off the RGB color, set the components to -1 (any negative value will
+    work and if any of the three components is negative the RGB color will
+    be turned off).
+
 Examples:
     REGION PATTERN COLOR RED BLUE GREEN
     REGION PATTERN COLOR BLACK ALL
     REGION PATTERN COLOR ALL BLACK
     REGION PATTERN COLOR
+    REGION PATTERN RGB COLOR 201 101 88
+    REGION PATTERN RGB COLOR 201 101 88 ALL
+    REGION PATTERN RGB COLOR 201 101 88 240 200 175
+    REGION PATTERN RGB COLOR -1 -1 -1 ALL
  
 Note:
     The diagrammatic graphics commands use the first setting of the
-    REGION FILL command only.
+    REGION PATTERN COLOR command only.
  
 Note:
     The REGION PATTERN COLOR command with no arguments sets the region
@@ -33755,40 +33925,113 @@ Related Commands:
                              patterns.
     REGION PATTERN THICK   = Sets the line thickness for region fill
                              patterns.
-    LINE COLOR             = Sets the color for region border lines.
-    LINE                   = Sets the types for region border lines.
-    LINE THICKNESS         = Sets the line thickness for region border
-                             lines.
+    LINE COLOR             = Sets the color for plot lines.
+    LINE                   = Sets the types for plot lines.
+    LINE THICKNESS         = Sets the line thickness for plot lines.
  
 Applications:
     Presentation Graphics
  
 Implementation Date:
-    The capability to do cross-hatch fills for non-rectangular regions
-    was added 93/10.
+    Pre-1987
+    1993/10: Added the capability to do cross-hatch fills for non-rectangular
+             regions
+    2020/11: Added support for RGB colors
  
-Program:
-    LET C = 1
-    LET FUNCTION F1 = C
-    LET FUNCTION F2 = -1.5*X + 9
-    LET FUNCTION F3 = 6
-    LET FUNCTION F4 = 1+0.3*X**2
+Program 1:
+    REGION FILL ON
+    REGION PATTERN D1D2
+    REGION PATTERN SPACING 3
+    REGION PATTERN THICKNESS 0.3
+    REGION PATTERN COLOR RED
+    LINE COLOR BLUE
+    LINE THICKNESS 0.5
     .
-    XMINIMUM 0; YLIMITS 0 10
-    TITLE PLOT INEQUALITY REGIONS
+    Y1LABEL X**2
+    X1LABEL X
+    TITLE DEMONSTRATE THE REGION PATTERN COLOR COMMAND
     .
-    REGION FILL ON ALL
-    REGION BASE 0 10 10 0
-    REGION PATTERN D1 HORI D2 VERT
-    REGION PATTERN SPACING 5 ALL
-    REGION PATTERN THICKNESS 0.5 0.5 0.5 0.5
-    REGION PATTERN COLOR G10 G30 G50 G80
-    .
-    PLOT F1 FOR X = 0 5 5 AND
-    PLOT F2 FOR X = 0 5 5 AND
-    PLOT F3 FOR X = 0 5 5 AND
-    PLOT F4 FOR X = 0 0.01 5
+    PLOT X**2 FOR X = 1 1 9
  
+Program 2:
+    skip 25
+    read wright11.dat pressure angle wing
+    let angled = distinct angle
+    let nangle = size angled
+    let wingd = distinct wing
+    let nwing = size wingd
+    .
+    title case asis
+    title offset 2
+    title Response Variable = Pressure
+    label case asis
+    x1label Wing Type
+    y1label uc()Alc()ngle
+    y1label displacement 12
+    tic offset units data
+    x1limits 1 nwing
+    major xtic mark number nwing
+    minor xtic mark number 0
+    xtic mark offset 0.8 0.8
+    x1tic mark label format alpha
+    x1tic mark label content 1 2 3 4 5 6 7 8 9 10 11 12 13 15 16 17
+    y1limits 1 nangle
+    major ytic mark number nangle
+    minor ytic mark number 0
+    y1tic mark offset 0.8 0.8
+    y1tic mark label format alpha
+    y1tic mark label content 0 2.5 5 7.5 10 12.5 15 17.5 20 25 30 35 40 45
+    .
+    let ylevel = data 10 20 30 40 50
+    region fill on all
+    region pattern d1d2 all
+    region pattern thickness 0.5
+    region pattern spacing 3
+    .
+    region pattern color       red orange yellow green cyan blue
+    line color                 red orange yellow green cyan blue
+    region pattern rgb color   239 243 255  198 219 239  158 202 225 ...
+                               107 174 214   49 130 189    8  81 156
+    line rgb color             239 243 255  198 219 239  158 202 225 ...
+                               107 174 214   49 130 189    8  81 156
+    .
+    tabulation mean plot pressure angle wing ylevel
+    .
+    box fill thickness 0.5
+    box fill pattern d1d2
+    box fill gap 3
+    box shadow hw 0 0
+    .
+    box fill color blue
+    box fill rgb color 8 81 156
+    box 86 90 90 86
+    move 91 87; text > 50
+    .
+    box fill color cyan
+    box fill rgb color 49 130 189
+    box 86 86 90 82
+    move 91 83; text 40 - 50
+    .
+    box fill color green
+    box fill rgb color 107 174 214
+    box 86 82 90 78
+    move 91 79; text 30 - 40
+    .
+    box fill color yellow
+    box fill rgb color 158 202 225
+    box 86 78 90 74
+    move 91 75; text 20 - 30
+    .
+    box fill color orange
+    box fill rgb color 198 219 239
+    box 86 74 90 70
+    move 91 71; text 10 - 20
+    .
+    box fill color red
+    box fill rgb color 239 243 255
+    box 86 70 90 66
+    move 91 67; text < 10
+
 -----REGION PATTERN LINE----------------------------------------------
  
 REGION PATTERN LINE
@@ -42608,6 +42851,63 @@ Program:
     PLOT YIELD
  
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

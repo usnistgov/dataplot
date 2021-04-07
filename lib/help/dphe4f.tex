@@ -1,9 +1,9 @@
-47900.      (VERSION 2021.01)   total number of lines in file (including this line)
+48000.      (VERSION 2021.03)   total number of lines in file (including this line)
  4.                          number of     sections below
   100.    L                  first line number of L section
 19500.    M                  first line number of M section
-38100.    N                  first line number of N section
-44300.    O                  first line number of O section
+38200.    N                  first line number of N section
+44400.    O                  first line number of O section
  
 ----------------------------------------------------------
  
@@ -11844,7 +11844,7 @@ Program:
     PLOT POT LEAD VS X
     .
     LINE RGB COLOR 175 238 238 220 20 60
-    TITLE DEMONSTRATE LINE COLOR
+    TITLE DEMONSTRATE LINE RGB COLOR
     PLOT POT LEAD VS X
  
 -----LINE THICKNESS---------------------------------------------------
@@ -22211,20 +22211,60 @@ Purpose:
     the frame) on subsequent plots.  The margin is "painted" whenever a
     subsequent screen erasure takes place.
  
-Syntax:
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the margin color, Dataplot first checks if the device
+    supports RGB colors. If not, the named color will be used.  If the
+    device does support RGB color, Dataplot will check if an RGB color
+    has been specified.  If yes, then that RGB color is used.  If not,
+    the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
     MARGIN COLOR   <color>
     where <color> specifies the desired margin color.
  
+Syntax 2:
+    MARGIN RGB COLOR  <ired>  <igreen>  <iblue>
+    where <ired> specifies the red component of the margin color;
+          <igreen> specifies the green component of the margin color;
+    and   <iblue> specifies the blue component of the margin color.
+
+    The components should be integer values in the range 0 - 255.  To turn
+    off the RGB color, set the components to -1 (any negative value will
+    work and if any of the three components is negative the RGB color will
+    be turned off).
+
 Examples:
     MARGIN COLOR GREEN
     MARGIN COLOR YELLOW
+    MARGIN RGB COLOR 90 167 102
  
 Note:
-    When the background color is changed, the margin color should
-    typically be changed as well.  If not, the margin is drawn in the
-    different color immediately after the screen is erased and filled
-    with the background color.
- 
+    When you enter the BACKGROUND COLOR command, this will also set the
+    MARGIN COLOR to the same color.  If you want the MARGIN COLOR to be
+    different than the BACKGROUND COLOR, then enter the MARGIN COLOR
+    after the BACKGROUND COLOR command.
+
 Note:
     The MARGIN COLOR command with no arguments reverts the margin color
     to default.
@@ -22244,9 +22284,24 @@ Applications:
  
 Implementation Date:
     Pre-1987
+    2021/03: Support for RGB margin color
  
 Program:
-    XX
+    background color cyan
+    background rgb color 110 205 65
+    margin color yellow
+    margin rgb color 90 167 102
+    .
+    line thickness 0.5
+    line color yellow
+    title case asis
+    title offset 2
+    title Sample Plot
+    label case asis
+    x1label x
+    y1label x**2
+    .
+    plot x**2 for x = 1 1 9
  
 -----MATCDF (LET)--------------------------------
  
@@ -38031,6 +38086,51 @@ Program:
     TEXT Muth Percent Point Functions
  
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

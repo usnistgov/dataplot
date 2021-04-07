@@ -1,8 +1,8 @@
- 67400.   (VERSION 2021.01)  total number of lines in file (including this line)
+ 67500.   (VERSION 2021.03)  total number of lines in file (including this line)
  3.                          number of     sections below
   100.    A                  first line number of A section
  8100.    B                  first line number of B section
-33000.    C                  first line number of C section
+33100.    C                  first line number of C section
  
 ----------------------------------------------------------
  
@@ -8121,20 +8121,62 @@ Description:
     entire screen.  For diagrammatic graphics (e.g., TEXT, ARC, BOX,
     CIRCLE, etc..), the background region is also the entire screen.
  
-Syntax:
-    BACKGROUND COLOR   <color>
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the background color, Dataplot first checks if the device
+    supports RGB colors. If not, the named color will be used.  If the
+    device does support RGB color, Dataplot will check if an RGB color
+    has been specified.  If yes, then that RGB color is used.  If not,
+    the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
+    BACKGROUND COLOR  <color>
     where <color> is the desired background color.
  
+Syntax 2:
+    BACKGROUND RGB COLOR  <ired>  <igreen>  <iblue>
+    where <ired> specifies the red component of the background color;
+          <igreen> specifies the green component of the background color;
+    and   <iblue> specifies the blue component of the background color.
+
+    The components should be integer values in the range 0 - 255.  To turn
+    off the RGB color, set the components to -1 (any negative value will
+    work and if any of the three components is negative the RGB color will
+    be turned off).
+
 Examples:
     BACKGROUND COLOR GREEN
     BACKGROUND COLOR YELLOW
-    BACKGROUND COLOR
+    BACKGROUND COLOR YELLOW
+    BACKGROUND RGB COLOR 90 167 102
+    BACKGROUND RGB COLOR 110 205 65
  
 Note:
-    Typically when you change the background color, you also need to
-    change the margin color (equal to the background).  Enter HELP
-    MARGIN COLOR for details.
- 
+    When you enter the BACKGROUND COLOR command, this will also set the
+    MARGIN COLOR to the same color.  If you want the MARGIN COLOR to be
+    different than the BACKGROUND COLOR, then enter the MARGIN COLOR
+    after the BACKGROUND COLOR command.
+
 Note:
     The BACKGROUND COLOR command with no arguments sets the background
     color to default. For a list of available colors, enter HELP COLOR
@@ -8144,6 +8186,13 @@ Note:
     This command is device dependent in that some device may not let
     you set the background color.  In addition, devices vary in the
     colors that they support.
+
+    Postscript and SVG devices set the background color for the first
+    plot when the device is initialized, not at the first clear screen
+    (e.g., the first PLOT command).  For this reason, if you want to set
+    the background color for the first plot, the BACKGROUND COLOR command
+    should be entered before the DEVICE 2 POSTSCRIPT or DEVICE 2 SVG
+    command.
  
 Default:
     The default background color is white.
@@ -8176,10 +8225,23 @@ Applications:
  
 Implementation Date:
     Pre-1987
+    2021/03: Support for the BACKGROUND RGB COLOR option
  
 Program:
-    XX
- 
+    background color cyan
+    background rgb color 110 205 65
+    .
+    line thickness 0.5
+    line color yellow
+    title case asis
+    title offset 2
+    title Sample Plot
+    label case asis
+    x1label x
+    y1label x**2
+    .
+    plot x**2 for x = 1 1 9
+
 -----BAIRY (LET)--------------------------------
  
 BAIRY
@@ -9455,7 +9517,7 @@ Program:
     PLOT ANDERSON X2
     .
     BAR FILL RGB COLOR 175 238 238 220 20 60 127 255 0
-    TITLE DEMONSTRATE BAR FILL COLORS
+    TITLE DEMONSTRATE BAR FILL RGB COLORS
     PLOT CARTER X1 AND
     PLOT REAGAN X AND
     PLOT ANDERSON X2
@@ -32997,6 +33059,44 @@ Program:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -------------------------  *C*  ZZZZZ--------------------
 
 -----C CHART-----------------------------------------------------
@@ -40656,7 +40756,7 @@ Examples:
     CHARACTER COLORS RED RED BLUE BLUE
     CHARACTER COLORS ALL YELLOW
     CHARACTER COLORS YELLOW ALL
-    CHARACTERS COLORS
+    CHARACTER COLORS
     CHARACTER RGB COLORS 220 109 88 240 220 160
     CHARACTER RGB COLORS 220 109 88 ALL
 
@@ -40752,7 +40852,7 @@ Program:
     PLOT LEAD X ID2
     .
     CHARACTER RGB COLOR 175 238 238 220 20 60 175 238 238 220 20 60
-    TITLE DEMONSTRATE CHARACTER COLOR COMMAND
+    TITLE DEMONSTRATE CHARACTER RGB COLOR COMMAND
     PLOT POT X ID2 AND
     PLOT LEAD X ID2
  

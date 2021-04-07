@@ -1149,16 +1149,21 @@ C
       END
       subroutine maxofq
 c
-c      NOTE: This subroutine used in computing the consensus mean
-c            using the Iyer and Wang generalized tolerance interval
-c            approach.
+c     NOTE: This subroutine used in computing the consensus mean
+c           using the Iyer and Wang generalized tolerance interval
+c           approach.
 c
-c            Modified for Dataplot 3/2006.
+c           Modified for Dataplot 3/2006.
+c
+c           Modified for Dataplot 4/2021.
+c
+c           1) Allow maximum of 1,000 labs
 c
       implicit none
 c
       integer kk
-      double precision aa, ybar, cc, bb(100), yy(100)
+ccccc double precision aa, ybar, cc, bb(100), yy(100)
+      double precision aa, ybar, cc, bb(1000), yy(1000)
       common /cmn1/ kk
       common /cmn2/ aa, ybar, cc, bb, yy
 c

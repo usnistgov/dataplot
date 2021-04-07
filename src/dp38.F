@@ -7921,8 +7921,8 @@ C
               JGREEN=JRED
             ELSE
               JRED=ICOLR
-              JBLUE=ICOLG
-              JGREEN=ICOLB
+              JGREEN=ICOLG
+              JBLUE=ICOLB
             ENDIF
           ELSE
             IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
@@ -8036,8 +8036,8 @@ C
               JGREEN=JRED
             ELSE
               JRED=ICOLR
-              JBLUE=ICOLG
-              JGREEN=ICOLB
+              JGREEN=ICOLG
+              JBLUE=ICOLB
             ENDIF
           ELSE
             IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
@@ -8047,8 +8047,8 @@ C
               JBLUE=IBLUE(JTEMP)
             ELSE
               JRED=ICOLR
-              JBLUE=ICOLG
-              JGREEN=ICOLB
+              JGREEN=ICOLG
+              JBLUE=ICOLB
             ENDIF
           ENDIF
           CALL DPCONX(JRED,ICJUNK)
@@ -8156,8 +8156,8 @@ C
               JGREEN=JRED
             ELSE
               JRED=ICOLR
-              JBLUE=ICOLG
-              JGREEN=ICOLB
+              JGREEN=ICOLG
+              JBLUE=ICOLB
             ENDIF
           ELSE
             IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
@@ -8167,8 +8167,8 @@ C
               JBLUE=IBLUE(JTEMP)
             ELSE
               JRED=ICOLR
-              JBLUE=ICOLG
-              JGREEN=ICOLB
+              JGREEN=ICOLG
+              JBLUE=ICOLB
             ENDIF
           ENDIF
           CALL DPCONX(JRED,ICJUNK)
@@ -10020,8 +10020,8 @@ C
             JGREEN=JRED
           ELSE
             JRED=ICOLR
-            JBLUE=ICOLG
-            JGREEN=ICOLB
+            JGREEN=ICOLG
+            JBLUE=ICOLB
           ENDIF
         ELSE
           IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
@@ -10140,8 +10140,8 @@ C
             JBLUE=IBLUE(JTEMP)
           ELSE
             JRED=ICOLR
-            JBLUE=ICOLG
-            JGREEN=ICOLB
+            JGREEN=ICOLG
+            JBLUE=ICOLB
           ENDIF
         ENDIF
         CALL DPCONX(JRED,ICJUNK)
@@ -14888,8 +14888,8 @@ C
               JGREEN=JRED
             ELSE
               JRED=ICOLFR
-              JBLUE=ICOLFB
               JGREEN=ICOLFG
+              JBLUE=ICOLFB
             ENDIF
           ELSE
             IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
@@ -14899,8 +14899,8 @@ C
               JBLUE=IBLUE(JTEMP)
             ELSE
               JRED=ICOLFR
-              JBLUE=ICOLFB
               JGREEN=ICOLFG
+              JBLUE=ICOLFB
             ENDIF
           ENDIF
           CALL DPCONX(JRED,ICJUNK)
@@ -14950,8 +14950,8 @@ C
               JGREEN=JRED
             ELSE
               JRED=ICOLFR
-              JBLUE=ICOLFB
               JGREEN=ICOLFG
+              JBLUE=ICOLFB
             ENDIF
           ELSE
             IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
@@ -14961,8 +14961,8 @@ C
               JBLUE=IBLUE(JTEMP)
             ELSE
               JRED=ICOLFR
-              JBLUE=ICOLFB
               JGREEN=ICOLFG
+              JBLUE=ICOLFB
             ENDIF
           ENDIF
           CALL DPCONX(JRED,ICJUNK)
@@ -26092,7 +26092,7 @@ C
 C
 #ifdef HAVE_QWIN
       IF(IQWNCL.EQ.'RGB')THEN
-        JTEMP=RGBTOINTEGER(IREDT,IGREER,IBLUET)
+        JTEMP=RGBTOINTEGER(IREDT,IGREENT,IBLUET)
         ISTATUS=SETCOLORRGB(JTEMP)
       ENDIF
 #endif
@@ -40723,8 +40723,8 @@ C
             JGREEN=JRED
           ELSE
             JRED=ICOLR
-            JBLUE=ICOLG
-            JGREEN=ICOLB
+            JGREEN=ICOLG
+            JBLUE=ICOLB
           ENDIF
         ELSE
           IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
@@ -40734,8 +40734,8 @@ C
             JBLUE=IBLUE(JTEMP)
           ELSE
             JRED=ICOLR
-            JBLUE=ICOLG
-            JGREEN=ICOLB
+            JGREEN=ICOLG
+            JBLUE=ICOLB
           ENDIF
         ENDIF
         CALL DPCONX(JRED,ICJUNK)
@@ -40839,8 +40839,8 @@ C
             JGREEN=JRED
           ELSE
             JRED=ICOLR
-            JBLUE=ICOLG
-            JGREEN=ICOLB
+            JGREEN=ICOLG
+            JBLUE=ICOLB
           ENDIF
         ELSE
           IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
@@ -40850,8 +40850,8 @@ C
             JBLUE=IBLUE(JTEMP)
           ELSE
             JRED=ICOLR
-            JBLUE=ICOLG
-            JGREEN=ICOLB
+            JGREEN=ICOLG
+            JBLUE=ICOLB
           ENDIF
         ENDIF
         CALL DPCONX(JRED,ICJUNK)
@@ -43389,8 +43389,8 @@ C
             JGREEN=JRED
           ELSE
             JRED=ICOLR
-            JBLUE=ICOLG
-            JGREEN=ICOLB
+            JGREEN=ICOLG
+            JBLUE=ICOLB
           ENDIF
         ELSE
           IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
@@ -43400,8 +43400,8 @@ C
             JBLUE=IBLUE(JTEMP)
           ELSE
             JRED=ICOLR
-            JBLUE=ICOLG
-            JGREEN=ICOLB
+            JGREEN=ICOLG
+            JBLUE=ICOLB
           ENDIF
         ENDIF
         CALL DPCONX(JRED,ICJUNK)
@@ -43506,8 +43506,8 @@ C
             JGREEN=JRED
           ELSE
             JRED=ICOLR
-            JBLUE=ICOLG
-            JGREEN=ICOLB
+            JGREEN=ICOLG
+            JBLUE=ICOLB
           ENDIF
         ELSE
           IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
@@ -43517,8 +43517,8 @@ C
             JBLUE=IBLUE(JTEMP)
           ELSE
             JRED=ICOLR
-            JBLUE=ICOLG
-            JGREEN=ICOLB
+            JGREEN=ICOLG
+            JBLUE=ICOLB
           ENDIF
         ENDIF
         CALL DPCONX(JRED,ICJUNK)

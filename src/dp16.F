@@ -694,6 +694,21 @@ C
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
+      IF(NLAB.GT.1000)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,91)
+   91   FORMAT('***** ERROR IN IYER AND WANG GENERALIZED CONFIDENCE ',
+     1         'INTERVAL (DPGCI)')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,93)NLAB
+   93   FORMAT('      THE NUMBER OF LABS (',I8,') IS GREATER THAN ',
+     1         '1,000.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
       IFLAG=0
       DO100I=1,NLAB
         IINDX1=I

@@ -7487,6 +7487,7 @@ C                                         SET LIST VIEWER
 C     UPDATED         --FEBRUARY   2021.  FIX BUG IN
 C                                         SET BEST FIT <DIST> <ON/OFF>
 C     UPDATED         --MARCH      2021.  SET GRID ORDER
+C     UPDATED         --MARCH      2021.  SET SHANNON LOG BASE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -12681,6 +12682,27 @@ C
           IHV='AFTE'
         ENDIF
         IGRDOR=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED MARCH     2021
+C     *************************************************************
+C     **  SET SHANNON LOG BASE     <E/2/10>                      **
+C     *************************************************************
+C
+      IPART1='SHAN'
+      IPART2='LOG '
+      IPART3='BASE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHARG(4).EQ.'10  ')THEN
+          IHV='10  '
+        ELSEIF(IHARG(4).EQ.'2   ')THEN
+          IHV='2   '
+        ELSE
+          IHV='E   '
+        ENDIF
+        ISHALB=IHV
         GOTO5160
       ENDIF
 C
@@ -29031,6 +29053,7 @@ C                                         AS ALIAS FOR
 C                                         PROBE CHECK LENGTH OUTPUT
 C     UPDATED         --JANUARY    2021.  PROBE ERROR MESSAGE
 C     UPDATED         --MARCH      2021.  PROBE GRID ORDER
+C     UPDATED         --MARCH      2021.  PROBE SHANNON LOG BASE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -30420,6 +30443,20 @@ C
       IPART2='ORDE'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
         IHV=IGRDOR
+        GOTO5160
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        MARCH    2021.
+C     ******************************************
+C     **  PROBE SHANNON LOG BASE              **
+C     ******************************************
+C
+      IPART1='SHAN'
+      IPART2='LOG '
+      IPART3='BASE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=ISHALB
         GOTO5160
       ENDIF
 C

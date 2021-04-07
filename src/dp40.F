@@ -15637,6 +15637,8 @@ C     UPDATED         --APRIL     2020.  IEXCR1, IEXCR2,
 C                                        IEXCC1, IEXCC2
 C     UPDATED         --JUNE      2020.  IX11SE
 C     UPDATED         --JANUARY   2021.  IERMSG
+C     UPDATED         --MARCH     2021.  IGRDOR
+C     UPDATED         --MARCH     2021.  ISHALB
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -20727,6 +20729,14 @@ C               **  TREAT THE SET GRID ORDER    <BEFORE/AFTER>      **
 C               ******************************************************
 C
       IGRDOR='AFTE'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    MARCH        2021
+C
+C               ******************************************************
+C               **  TREAT THE SET SHANNON LOG BASE <E/2/10>         **
+C               ******************************************************
+C
+      ISHALB='E   '
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    APRIL     2020
 C
