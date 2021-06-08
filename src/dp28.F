@@ -235,6 +235,7 @@ C     ORIGINAL VERSION--AUGUST    2014.
 C     UPDATED         --JUNE      2018. SET IHYPSW TO OFF FOR DPEXWO
 C                                       (ISSUE WITH
 C                                          LET PLOT CHAR 4 = -  )
+C     UPDATED         --MAY       2021. SUPPORT FOR RGB COLORS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -255,6 +256,8 @@ C
       CHARACTER*4 IVAL2
       CHARACTER*4 IVAL3
       CHARACTER*4 IVAL4
+      CHARACTER*4 IVAL5
+      CHARACTER*4 IVAL6
       CHARACTER*4 IHYPSV
       CHARACTER*4 IHLEFT
       CHARACTER*4 IHLEF2
@@ -340,6 +343,12 @@ C
             ICASE3='COLO'
             ISTR='CHARACTER COLOR'
             NINDX=4
+          ELSEIF(IHARG(3).EQ.'RGB ' .AND. IHARG(4).EQ.'COLO' .AND.
+     1           IHARG(6).EQ.'=   ')THEN
+            ICASE3='RGBC'
+            ISTR='CHARACTER RGB COLOR'
+            NINDX=5
+            NARG=3
           ELSEIF(IHARG(3).EQ.'FILL' .AND. IHARG(5).EQ.'=   ')THEN
             ICASE3='FILL'
             ISTR='CHARACTER FILL'
@@ -396,6 +405,12 @@ C
             ICASE3='COLO'
             ISTR='LINE COLOR'
             NINDX=4
+          ELSEIF(IHARG(3).EQ.'RGB ' .AND. IHARG(4).EQ.'COLO' .AND.
+     1           IHARG(6).EQ.'=   ')THEN
+            ICASE3='RGBC'
+            ISTR='LINE RGB COLOR'
+            NINDX=5
+            NARG=3
           ELSEIF(IHARG(3).EQ.'THIC' .AND. IHARG(5).EQ.'=   ')THEN
             ICASE3='THIC'
             ISTR='LINE THICKNESS'
@@ -414,6 +429,12 @@ C
             ICASE3='COLO'
             ISTR='SPIKE COLOR'
             NINDX=4
+          ELSEIF(IHARG(3).EQ.'RGB ' .AND. IHARG(4).EQ.'COLO' .AND.
+     1           IHARG(6).EQ.'=   ')THEN
+            ICASE3='RGBC'
+            ISTR='SPIKE RGB COLOR'
+            NINDX=5
+            NARG=3
           ELSEIF(IHARG(3).EQ.'LINE' .AND. IHARG(5).EQ.'=   ')THEN
             ICASE3='LINE'
             ISTR='SPIKE LINE'
@@ -445,6 +466,12 @@ C
             ICASE3='COLO'
             ISTR='BAR COLOR'
             NINDX=4
+          ELSEIF(IHARG(3).EQ.'RGB ' .AND. IHARG(4).EQ.'COLO' .AND.
+     1           IHARG(6).EQ.'=   ')THEN
+            ICASE3='RGBC'
+            ISTR='BAR RGB COLOR'
+            NINDX=5
+            NARG=3
           ELSEIF(IHARG(3).EQ.'FILL' .AND. IHARG(5).EQ.'=   ')THEN
             ICASE3='FILL'
             ISTR='BAR FILL'
@@ -464,6 +491,12 @@ C
             ICASE3='PCOL'
             ISTR='BAR PATTERN COLOR'
             NINDX=5
+          ELSEIF(IHARG(3).EQ.'PATT' .AND. IHARG(4).EQ.'RGB ' .AND.
+     1           IHARG(5).EQ.'COLO' .AND. IHARG(7).EQ.'=   ')THEN
+            ICASE3='PCOR'
+            ISTR='BAR PATTERN RGB COLOR'
+            NINDX=6
+            NARG=3
           ELSEIF(IHARG(3).EQ.'PATT' .AND. IHARG(4).EQ.'THIC' .AND.
      1           IHARG(6).EQ.'=   ')THEN
             ICASE3='PTHI'
@@ -485,6 +518,12 @@ C
             ICASE3='FCOL'
             ISTR='BAR FILL COLOR'
             NINDX=5
+          ELSEIF(IHARG(3).EQ.'FILL' .AND. IHARG(4).EQ.'RGB ' .AND.
+     1           IHARG(5).EQ.'COLO' .AND. IHARG(7).EQ.'=   ')THEN
+            ICASE3='FCOR'
+            ISTR='BAR FILL RGB COLOR'
+            NINDX=6
+            NARG=3
           ELSEIF(IHARG(3).EQ.'FILL' .AND. IHARG(5).EQ.'=   ')THEN
             ICASE3='FILL'
             ISTR='BAR FILL'
@@ -494,6 +533,12 @@ C
             ICASE3='BCOL'
             ISTR='BAR BORDER COLOR'
             NINDX=5
+          ELSEIF(IHARG(3).EQ.'BORD' .AND. IHARG(4).EQ.'RGB ' .AND.
+     1           IHARG(5).EQ.'COLO' .AND. IHARG(7).EQ.'=   ')THEN
+            ICASE3='BCOR'
+            ISTR='BAR BORDER RGB COLOR'
+            NINDX=6
+            NARG=3
           ELSEIF(IHARG(3).EQ.'BORD' .AND. IHARG(4).EQ.'THIC' .AND.
      1           IHARG(6).EQ.'=   ')THEN
             ICASE3='BTHI'
@@ -542,11 +587,23 @@ C
             ICASE3='FCOL'
             ISTR='REGION FILL COLOR'
             NINDX=5
+          ELSEIF(IHARG(3).EQ.'FILL' .AND. IHARG(4).EQ.'RGB ' .AND.
+     1           IHARG(5).EQ.'COLO' .AND. IHARG(7).EQ.'=   ')THEN
+            ICASE3='FCOR'
+            ISTR='REGION FILL RGB COLOR'
+            NINDX=6
+            NARG=3
           ELSEIF(IHARG(3).EQ.'PATT' .AND. IHARG(4).EQ.'COLO' .AND.
      1           IHARG(6).EQ.'=   ')THEN
             ICASE3='PCOL'
             ISTR='REGION PATTERN COLOR'
             NINDX=5
+          ELSEIF(IHARG(3).EQ.'PATT' .AND. IHARG(4).EQ.'RGB ' .AND.
+     1           IHARG(5).EQ.'COLO' .AND. IHARG(7).EQ.'=   ')THEN
+            ICASE3='PCOR'
+            ISTR='REGION PATTERN RGB COLOR'
+            NINDX=5
+            NARG=3
           ELSEIF(IHARG(3).EQ.'PATT' .AND. IHARG(4).EQ.'LINE' .AND.
      1           IHARG(6).EQ.'=   ')THEN
             ICASE3='PLIN'
@@ -574,6 +631,12 @@ C
             ICASE3='BCOL'
             ISTR='REGION BORDER COLOR'
             NINDX=5
+          ELSEIF(IHARG(3).EQ.'BORD' .AND. IHARG(4).EQ.'RGB ' .AND.
+     1           IHARG(5).EQ.'COLO' .AND. IHARG(7).EQ.'=   ')THEN
+            ICASE3='BCOR'
+            ISTR='REGION BORDER RGB COLOR'
+            NINDX=5
+            NARG=3
           ELSEIF(IHARG(3).EQ.'BORD' .AND. IHARG(4).EQ.'LINE' .AND.
      1           IHARG(6).EQ.'=   ')THEN
             ICASE3='BLIN'
@@ -738,22 +801,33 @@ C
 C
         AVAL1=CPUMIN
         AVAL2=CPUMIN
+        AVAL3=CPUMIN
         IVAL1='NULL'
         IVAL2='NULL'
         IVAL3='NULL'
         IVAL4='NULL'
+        IVAL5='NULL'
+        IVAL6='NULL'
         IVAL1=IHARG(NINDX)
         IVAL2=IHARG2(NINDX)
         IF(IARGT(NINDX).EQ.'NUMB')THEN
           AVAL1=ARG(NINDX)
         ENDIF
-        IF(NARG.EQ.2)THEN
+        IF(NARG.GE.2)THEN
           NINDX=NINDX+1
           IF(IARGT(NINDX).EQ.'NUMB')THEN
             AVAL2=ARG(NINDX)
           ENDIF
           IVAL3=IHARG(NINDX)
           IVAL4=IHARG2(NINDX)
+        ENDIF
+        IF(NARG.GE.3)THEN
+          NINDX=NINDX+1
+          IF(IARGT(NINDX).EQ.'NUMB')THEN
+            AVAL3=ARG(NINDX)
+          ENDIF
+          IVAL5=IHARG(NINDX)
+          IVAL6=IHARG2(NINDX)
         ENDIF
 C
 C         2018/04: FOR CHARACTER COMMAND, CAN HAVE MORE THAN EIGHT
@@ -801,6 +875,25 @@ C
             ELSE
               IERROR='YES'
             ENDIF
+          ELSEIF(ICASE3.EQ.'RGBC')THEN
+            IF(AVAL1.GE.0.0)THEN
+              ICHAC2(IINDX,1)=INT(AVAL1)
+            ELSE
+              ICHAC2(IINDX,1)=-1
+            ENDIF
+            IF(AVAL2.GE.0.0)THEN
+              ICHAC2(IINDX,2)=INT(AVAL2)
+            ELSE
+              ICHAC2(IINDX,2)=-1
+            ENDIF
+            IF(AVAL3.GE.0.0)THEN
+              ICHAC2(IINDX,3)=INT(AVAL3)
+            ELSE
+              ICHAC2(IINDX,3)=-1
+            ENDIF
+            AVAL1=REAL(ICHAC2(IINDX,1))
+            AVAL2=REAL(ICHAC2(IINDX,2))
+            AVAL3=REAL(ICHAC2(IINDX,3))
           ELSEIF(ICASE3.EQ.'FILL')THEN
             IF(IVAL1.NE.'NULL')THEN
               ICHAFI(IINDX)=IVAL1
@@ -879,6 +972,25 @@ C
             ELSE
               IERROR='YES'
             ENDIF
+          ELSEIF(ICASE3.EQ.'RGB')THEN
+            IF(AVAL1.GE.0.0)THEN
+              ILINC2(IINDX,1)=INT(AVAL1)
+            ELSE
+              ILINC2(IINDX,1)=-1
+            ENDIF
+            IF(AVAL2.GE.0.0)THEN
+              ILINC2(IINDX,2)=INT(AVAL2)
+            ELSE
+              ILINC2(IINDX,2)=-1
+            ENDIF
+            IF(AVAL3.GE.0.0)THEN
+              ILINC2(IINDX,3)=INT(AVAL3)
+            ELSE
+              ILINC2(IINDX,3)=-1
+            ENDIF
+            AVAL1=REAL(ILINC2(IINDX,1))
+            AVAL2=REAL(ILINC2(IINDX,2))
+            AVAL3=REAL(ILINC2(IINDX,3))
           ELSEIF(ICASE3.EQ.'THIC')THEN
             IF(AVAL1.NE.CPUMIN)THEN
               PLINTH(IINDX)=AVAL1
@@ -901,6 +1013,25 @@ C
             ELSE
               IERROR='YES'
             ENDIF
+          ELSEIF(ICASE3.EQ.'RGBC')THEN
+            IF(AVAL1.GE.0.0)THEN
+              ISPIC2(IINDX,1)=INT(AVAL1)
+            ELSE
+              ISPIC2(IINDX,1)=-1
+            ENDIF
+            IF(AVAL2.GE.0.0)THEN
+              ISPIC2(IINDX,2)=INT(AVAL2)
+            ELSE
+              ISPIC2(IINDX,2)=-1
+            ENDIF
+            IF(AVAL3.GE.0.0)THEN
+              ISPIC2(IINDX,3)=INT(AVAL3)
+            ELSE
+              ISPIC2(IINDX,3)=-1
+            ENDIF
+            AVAL1=REAL(ISPIC2(IINDX,1))
+            AVAL2=REAL(ISPIC2(IINDX,2))
+            AVAL3=REAL(ISPIC2(IINDX,3))
           ELSEIF(ICASE3.EQ.'LINE')THEN
             IF(IVAL1.NE.'NULL')THEN
               ISPILI(IINDX)=IVAL1
@@ -947,6 +1078,25 @@ C
             ELSE
               IERROR='YES'
             ENDIF
+          ELSEIF(ICASE3.EQ.'RGBC')THEN
+            IF(AVAL1.GE.0.0)THEN
+              IBABC2(IINDX,1)=INT(AVAL1)
+            ELSE
+              IBABC2(IINDX,1)=-1
+            ENDIF
+            IF(AVAL2.GE.0.0)THEN
+              IBABC2(IINDX,2)=INT(AVAL2)
+            ELSE
+              IBABC2(IINDX,2)=-1
+            ENDIF
+            IF(AVAL3.GE.0.0)THEN
+              IBABC2(IINDX,3)=INT(AVAL3)
+            ELSE
+              IBABC2(IINDX,3)=-1
+            ENDIF
+            AVAL1=REAL(IBABC2(IINDX,1))
+            AVAL2=REAL(IBABC2(IINDX,2))
+            AVAL3=REAL(IBABC2(IINDX,3))
           ELSEIF(ICASE3.EQ.'THIC')THEN
             IF(AVAL1.NE.CPUMIN)THEN
               PBABTH(IINDX)=AVAL1
@@ -967,6 +1117,25 @@ C
             ELSE
               IERROR='YES'
             ENDIF
+          ELSEIF(ICASE3.EQ.'PCOR')THEN
+            IF(AVAL1.GE.0.0)THEN
+              IBAPC2(IINDX,1)=INT(AVAL1)
+            ELSE
+              IBAPC2(IINDX,1)=-1
+            ENDIF
+            IF(AVAL2.GE.0.0)THEN
+              IBAPC2(IINDX,2)=INT(AVAL2)
+            ELSE
+              IBAPC2(IINDX,2)=-1
+            ENDIF
+            IF(AVAL3.GE.0.0)THEN
+              IBAPC2(IINDX,3)=INT(AVAL3)
+            ELSE
+              IBAPC2(IINDX,3)=-1
+            ENDIF
+            AVAL1=REAL(IBAPC2(IINDX,1))
+            AVAL2=REAL(IBAPC2(IINDX,2))
+            AVAL3=REAL(IBAPC2(IINDX,3))
           ELSEIF(ICASE3.EQ.'PTHI')THEN
             IF(AVAL1.NE.CPUMIN)THEN
               PBAPTH(IINDX)=AVAL1
@@ -993,6 +1162,25 @@ C
             ELSE
               IERROR='YES'
             ENDIF
+          ELSEIF(ICASE3.EQ.'FCOR')THEN
+            IF(AVAL1.GE.0.0)THEN
+              IBAFC2(IINDX,1)=INT(AVAL1)
+            ELSE
+              IBAFC2(IINDX,1)=-1
+            ENDIF
+            IF(AVAL2.GE.0.0)THEN
+              IBAFC2(IINDX,2)=INT(AVAL2)
+            ELSE
+              IBAFC2(IINDX,2)=-1
+            ENDIF
+            IF(AVAL3.GE.0.0)THEN
+              IBAFC2(IINDX,3)=INT(AVAL3)
+            ELSE
+              IBAFC2(IINDX,3)=-1
+            ENDIF
+            AVAL1=REAL(IBAFC2(IINDX,1))
+            AVAL2=REAL(IBAFC2(IINDX,2))
+            AVAL3=REAL(IBAFC2(IINDX,3))
           ELSEIF(ICASE3.EQ.'BCOL')THEN
             IF(IVAL1.NE.'NULL')THEN
               IBABCO(IINDX)=IVAL1
@@ -1001,6 +1189,25 @@ C
             ELSE
               IERROR='YES'
             ENDIF
+          ELSEIF(ICASE3.EQ.'BCOR')THEN
+            IF(AVAL1.GE.0.0)THEN
+              IBABC2(IINDX,1)=INT(AVAL1)
+            ELSE
+              IBABC2(IINDX,1)=-1
+            ENDIF
+            IF(AVAL2.GE.0.0)THEN
+              IBABC2(IINDX,2)=INT(AVAL2)
+            ELSE
+              IBABC2(IINDX,2)=-1
+            ENDIF
+            IF(AVAL3.GE.0.0)THEN
+              IBABC2(IINDX,3)=INT(AVAL3)
+            ELSE
+              IBABC2(IINDX,3)=-1
+            ENDIF
+            AVAL1=REAL(IBABC2(IINDX,1))
+            AVAL2=REAL(IBABC2(IINDX,2))
+            AVAL3=REAL(IBABC2(IINDX,3))
           ELSEIF(ICASE3.EQ.'BTHI')THEN
             IF(AVAL1.NE.CPUMIN)THEN
               PBABTH(IINDX)=AVAL1
@@ -1047,6 +1254,25 @@ C
             ELSE
               IERROR='YES'
             ENDIF
+          ELSEIF(ICASE3.EQ.'FCOR')THEN
+            IF(AVAL1.GE.0.0)THEN
+              IREFC2(IINDX,1)=INT(AVAL1)
+            ELSE
+              IREFC2(IINDX,1)=-1
+            ENDIF
+            IF(AVAL2.GE.0.0)THEN
+              IREFC2(IINDX,2)=INT(AVAL2)
+            ELSE
+              IREFC2(IINDX,2)=-1
+            ENDIF
+            IF(AVAL3.GE.0.0)THEN
+              IREFC2(IINDX,3)=INT(AVAL3)
+            ELSE
+              IREFC2(IINDX,3)=-1
+            ENDIF
+            AVAL1=REAL(IREFC2(IINDX,1))
+            AVAL2=REAL(IREFC2(IINDX,2))
+            AVAL3=REAL(IREFC2(IINDX,3))
           ELSEIF(ICASE3.EQ.'PATT')THEN
             IF(IVAL1.NE.'NULL')THEN
               IREPTY(IINDX)=IVAL1
@@ -1061,6 +1287,25 @@ C
             ELSE
               IERROR='YES'
             ENDIF
+          ELSEIF(ICASE3.EQ.'PCOR')THEN
+            IF(AVAL1.GE.0.0)THEN
+              IREPC2(IINDX,1)=INT(AVAL1)
+            ELSE
+              IREPC2(IINDX,1)=-1
+            ENDIF
+            IF(AVAL2.GE.0.0)THEN
+              IREPC2(IINDX,2)=INT(AVAL2)
+            ELSE
+              IREPC2(IINDX,2)=-1
+            ENDIF
+            IF(AVAL3.GE.0.0)THEN
+              IREPC2(IINDX,3)=INT(AVAL3)
+            ELSE
+              IREPC2(IINDX,3)=-1
+            ENDIF
+            AVAL1=REAL(IREPC2(IINDX,1))
+            AVAL2=REAL(IREPC2(IINDX,2))
+            AVAL3=REAL(IREPC2(IINDX,3))
           ELSEIF(ICASE3.EQ.'PLIN')THEN
             IF(IVAL1.NE.'NULL')THEN
               IREPLI(IINDX)=IVAL1
@@ -1075,6 +1320,25 @@ C
             ELSE
               IERROR='YES'
             ENDIF
+          ELSEIF(ICASE3.EQ.'BCOR')THEN
+            IF(AVAL1.GE.0.0)THEN
+              IREBC2(IINDX,1)=INT(AVAL1)
+            ELSE
+              IREBC2(IINDX,1)=-1
+            ENDIF
+            IF(AVAL2.GE.0.0)THEN
+              IREBC2(IINDX,2)=INT(AVAL2)
+            ELSE
+              IREBC2(IINDX,2)=-1
+            ENDIF
+            IF(AVAL3.GE.0.0)THEN
+              IREBC2(IINDX,3)=INT(AVAL3)
+            ELSE
+              IREBC2(IINDX,3)=-1
+            ENDIF
+            AVAL1=REAL(IREBC2(IINDX,1))
+            AVAL2=REAL(IREBC2(IINDX,2))
+            AVAL3=REAL(IREBC2(IINDX,3))
           ELSEIF(ICASE3.EQ.'BLIN')THEN
             IF(IVAL1.NE.'NULL')THEN
               IREBLI(IINDX)=IVAL1
@@ -1118,22 +1382,36 @@ C
      1    CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
         IF(IFEEDB.EQ.'ON')THEN
-          IF(ICASE4.EQ.'NUME' .AND. NARG.EQ.1)THEN
-            WRITE(ICOUT,8011)IINDX,ISTR,AVAL1
- 8011       FORMAT('INDEX ',I3,' OF ',A24,' HAS BEEN SET TO ',G15.7)
-            CALL DPWRST('XXX','BUG ')
-          ELSEIF(ICASE4.EQ.'NUME' .AND. NARG.EQ.2)THEN
-            WRITE(ICOUT,8013)IINDX,ISTR,AVAL1,AVAL2
- 8013       FORMAT('INDEX ',I3,' OF ',A24,' HAS BEEN SET TO ',G15.7,
-     1             ' AND ',G15.7)
-            CALL DPWRST('XXX','BUG ')
-          ELSEIF(ICASE4.EQ.'ALPH' .AND. NARG.EQ.1)THEN
-            WRITE(ICOUT,8015)IINDX,ISTR,IVAL1
- 8015       FORMAT('INDEX ',I3,' OF ',A24,' HAS BEEN SET TO ',A4)
-            CALL DPWRST('XXX','BUG ')
-          ELSEIF(ICASE4.EQ.'ALPH' .AND. NARG.EQ.2)THEN
-            WRITE(ICOUT,8017)IINDX,ISTR,IVAL1,IVAL2
- 8017       FORMAT('INDEX ',I3,' OF ',A24,' HAS BEEN SET TO ',2A4)
+C
+          IFLAGR=0
+          IF(ICASE3.EQ.'RGBC')IFLAGR=1
+          IF(ICASE3.EQ.'PCOR')IFLAGR=1
+          IF(ICASE3.EQ.'FCOR')IFLAGR=1
+          IF(ICASE3.EQ.'BCOR')IFLAGR=1
+C
+          IF(IFLAGR.EQ.0)THEN
+            IF(ICASE4.EQ.'NUME' .AND. NARG.EQ.1)THEN
+              WRITE(ICOUT,8011)IINDX,ISTR,AVAL1
+ 8011         FORMAT('INDEX ',I3,' OF ',A24,' HAS BEEN SET TO ',G15.7)
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(ICASE4.EQ.'NUME' .AND. NARG.EQ.2)THEN
+              WRITE(ICOUT,8013)IINDX,ISTR,AVAL1,AVAL2
+ 8013         FORMAT('INDEX ',I3,' OF ',A24,' HAS BEEN SET TO ',G15.7,
+     1               ' AND ',G15.7)
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(ICASE4.EQ.'ALPH' .AND. NARG.EQ.1)THEN
+              WRITE(ICOUT,8015)IINDX,ISTR,IVAL1
+ 8015         FORMAT('INDEX ',I3,' OF ',A24,' HAS BEEN SET TO ',A4)
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(ICASE4.EQ.'ALPH' .AND. NARG.EQ.2)THEN
+              WRITE(ICOUT,8017)IINDX,ISTR,IVAL1,IVAL2
+ 8017         FORMAT('INDEX ',I3,' OF ',A24,' HAS BEEN SET TO ',2A4)
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+          ELSE
+            WRITE(ICOUT,8117)IINDX,ISTR,
+     1                       INT(AVAL1),INT(AVAL2),INT(AVAL3)
+ 8117       FORMAT('INDEX ',I3,' OF ',A24,' HAS BEEN SET TO ',3I6)
             CALL DPWRST('XXX','BUG ')
           ENDIF
         ENDIF
@@ -1180,23 +1458,35 @@ C
 C
           AVAL1=CPUMIN
           AVAL2=CPUMIN
+          AVAL3=CPUMIN
           IVAL1='NULL'
           IVAL2='NULL'
           IVAL3='NULL'
           IVAL4='NULL'
+          IVAL5='NULL'
+          IVAL6='NULL'
           IF(IARGT(NINDX).EQ.'NUMB')THEN
             AVAL1=ARG(NINDX)
           ELSE
             IVAL1=IHARG(NINDX)
             IVAL2=IHARG2(NINDX)
           ENDIF
-          IF(NARG.EQ.2)THEN
+          IF(NARG.GE.2)THEN
             NINDX=NINDX+1
             IF(IARGT(NINDX).EQ.'NUMB')THEN
               AVAL2=ARG(NINDX)
             ELSE
               IVAL3=IHARG(NINDX)
               IVAL4=IHARG2(NINDX)
+            ENDIF
+          ENDIF
+          IF(NARG.GE.3)THEN
+            NINDX=NINDX+1
+            IF(IARGT(NINDX).EQ.'NUMB')THEN
+              AVAL3=ARG(NINDX)
+            ELSE
+              IVAL5=IHARG(NINDX)
+              IVAL6=IHARG2(NINDX)
             ENDIF
           ENDIF
           NINDX=NINDX+1
@@ -1234,6 +1524,7 @@ C
                 ICHAPA(IINDXT)(1:4)=IVAL1
                 ICHAPA(IINDXT)(5:8)=IVAL2
               ELSE
+                IERROR='YES'
               ENDIF
             ELSEIF(ICASE3.EQ.'COLO')THEN
               IF(IVAL1.NE.'NULL')THEN
@@ -1241,6 +1532,25 @@ C
               ELSE
                 IERROR='YES'
               ENDIF
+            ELSEIF(ICASE3.EQ.'RGBC')THEN
+              IF(AVAL1.GE.0.0)THEN
+                ICHAC2(IINDXT,1)=INT(AVAL1)
+              ELSE
+                ICHAC2(IINDXT,1)=-1
+              ENDIF
+              IF(AVAL2.GE.0.0)THEN
+                ICHAC2(IINDXT,2)=INT(AVAL2)
+              ELSE
+                ICHAC2(IINDXT,2)=-1
+              ENDIF
+              IF(AVAL3.GE.0.0)THEN
+                ICHAC2(IINDXT,3)=INT(AVAL3)
+              ELSE
+                ICHAC2(IINDXT,3)=-1
+              ENDIF
+              AVAL1=REAL(ICHAC2(IINDXT,1))
+              AVAL2=REAL(ICHAC2(IINDXT,2))
+              AVAL3=REAL(ICHAC2(IINDXT,3))
             ELSEIF(ICASE3.EQ.'FILL')THEN
               IF(IVAL1.NE.'NULL')THEN
                 ICHAFI(IINDXT)=IVAL1
@@ -1319,6 +1629,25 @@ C
               ELSE
                 IERROR='YES'
               ENDIF
+            ELSEIF(ICASE3.EQ.'RGBC')THEN
+              IF(AVAL1.GE.0.0)THEN
+                ILINC2(IINDXT,1)=INT(AVAL1)
+              ELSE
+                ILINC2(IINDXT,1)=-1
+              ENDIF
+              IF(AVAL2.GE.0.0)THEN
+                ILINC2(IINDXT,2)=INT(AVAL2)
+              ELSE
+                ILINC2(IINDXT,2)=-1
+              ENDIF
+              IF(AVAL3.GE.0.0)THEN
+                ILINC2(IINDXT,3)=INT(AVAL3)
+              ELSE
+                ILINC2(IINDXT,3)=-1
+              ENDIF
+              AVAL1=REAL(ILINC2(IINDXT,1))
+              AVAL2=REAL(ILINC2(IINDXT,2))
+              AVAL3=REAL(ILINC2(IINDXT,3))
             ELSEIF(ICASE3.EQ.'THIC')THEN
               IF(AVAL1.NE.CPUMIN)THEN
                 PLINTH(IINDXT)=AVAL1
@@ -1339,6 +1668,25 @@ C
               ELSE
                 IERROR='YES'
               ENDIF
+            ELSEIF(ICASE3.EQ.'RGBC')THEN
+              IF(AVAL1.GE.0.0)THEN
+                ISPIC2(IINDXT,1)=INT(AVAL1)
+              ELSE
+                ISPIC2(IINDXT,1)=-1
+              ENDIF
+              IF(AVAL2.GE.0.0)THEN
+                ISPIC2(IINDXT,2)=INT(AVAL2)
+              ELSE
+                ISPIC2(IINDXT,2)=-1
+              ENDIF
+              IF(AVAL3.GE.0.0)THEN
+                ISPIC2(IINDXT,3)=INT(AVAL3)
+              ELSE
+                ISPIC2(IINDXT,3)=-1
+              ENDIF
+              AVAL1=REAL(ISPIC2(IINDXT,1))
+              AVAL2=REAL(ISPIC2(IINDXT,2))
+              AVAL3=REAL(ISPIC2(IINDXT,3))
             ELSEIF(ICASE3.EQ.'LINE')THEN
               IF(IVAL1.NE.'NULL')THEN
                 ISPILI(IINDXT)=IVAL1
@@ -1383,6 +1731,25 @@ C
               ELSE
                 IERROR='YES'
               ENDIF
+            ELSEIF(ICASE3.EQ.'RGBC')THEN
+              IF(AVAL1.GE.0.0)THEN
+                IBABC2(IINDXT,1)=INT(AVAL1)
+              ELSE
+                IBABC2(IINDXT,1)=-1
+              ENDIF
+              IF(AVAL2.GE.0.0)THEN
+                IBABC2(IINDXT,2)=INT(AVAL2)
+              ELSE
+                IBABC2(IINDXT,2)=-1
+              ENDIF
+              IF(AVAL3.GE.0.0)THEN
+                IBABC2(IINDXT,3)=INT(AVAL3)
+              ELSE
+                IBABC2(IINDXT,3)=-1
+              ENDIF
+              AVAL1=REAL(IBABC2(IINDXT,1))
+              AVAL2=REAL(IBABC2(IINDXT,2))
+              AVAL3=REAL(IBABC2(IINDXT,3))
             ELSEIF(ICASE3.EQ.'THIC')THEN
               IF(AVAL1.NE.CPUMIN)THEN
                 PBABTH(IINDXT)=AVAL1
@@ -1401,6 +1768,25 @@ C
               ELSE
                 IERROR='YES'
               ENDIF
+            ELSEIF(ICASE3.EQ.'PCOR')THEN
+              IF(AVAL1.GE.0.0)THEN
+                IBAPC2(IINDXT,1)=INT(AVAL1)
+              ELSE
+                IBAPC2(IINDXT,1)=-1
+              ENDIF
+              IF(AVAL2.GE.0.0)THEN
+                IBAPC2(IINDXT,2)=INT(AVAL2)
+              ELSE
+                IBAPC2(IINDXT,2)=-1
+              ENDIF
+              IF(AVAL3.GE.0.0)THEN
+                IBAPC2(IINDXT,3)=INT(AVAL3)
+              ELSE
+                IBAPC2(IINDXT,3)=-1
+              ENDIF
+              AVAL1=REAL(IBAPC2(IINDXT,1))
+              AVAL2=REAL(IBAPC2(IINDXT,2))
+              AVAL3=REAL(IBAPC2(IINDXT,3))
             ELSEIF(ICASE3.EQ.'PTHI')THEN
               IF(AVAL1.NE.CPUMIN)THEN
                 PBAPTH(IINDXT)=AVAL1
@@ -1425,12 +1811,50 @@ C
               ELSE
                 IERROR='YES'
               ENDIF
+            ELSEIF(ICASE3.EQ.'FCOR')THEN
+              IF(AVAL1.GE.0.0)THEN
+                IBAFC2(IINDXT,1)=INT(AVAL1)
+              ELSE
+                IBAFC2(IINDXT,1)=-1
+              ENDIF
+              IF(AVAL2.GE.0.0)THEN
+                IBAFC2(IINDXT,2)=INT(AVAL2)
+              ELSE
+                IBAFC2(IINDXT,2)=-1
+              ENDIF
+              IF(AVAL3.GE.0.0)THEN
+                IBAFC2(IINDXT,3)=INT(AVAL3)
+              ELSE
+                IBAFC2(IINDXT,3)=-1
+              ENDIF
+              AVAL1=REAL(IBAFC2(IINDXT,1))
+              AVAL2=REAL(IBAFC2(IINDXT,2))
+              AVAL3=REAL(IBAFC2(IINDXT,3))
             ELSEIF(ICASE3.EQ.'BCOL')THEN
               IF(IVAL1.NE.'NULL')THEN
                 IBABCO(IINDXT)=IVAL1
               ELSE
                 IERROR='YES'
               ENDIF
+            ELSEIF(ICASE3.EQ.'BCOR')THEN
+              IF(AVAL1.GE.0.0)THEN
+                IBABC2(IINDXT,1)=INT(AVAL1)
+              ELSE
+                IBABC2(IINDXT,1)=-1
+              ENDIF
+              IF(AVAL2.GE.0.0)THEN
+                IBABC2(IINDXT,2)=INT(AVAL2)
+              ELSE
+                IBABC2(IINDXT,2)=-1
+              ENDIF
+              IF(AVAL3.GE.0.0)THEN
+                IBABC2(IINDXT,3)=INT(AVAL3)
+              ELSE
+                IBABC2(IINDXT,3)=-1
+              ENDIF
+              AVAL1=REAL(IBABC2(IINDXT,1))
+              AVAL2=REAL(IBABC2(IINDXT,2))
+              AVAL3=REAL(IBABC2(IINDXT,3))
             ELSEIF(ICASE3.EQ.'BTHI')THEN
               IF(AVAL1.NE.CPUMIN)THEN
                 PBABTH(IINDXT)=AVAL1
@@ -1475,6 +1899,25 @@ C
               ELSE
                 IERROR='YES'
               ENDIF
+            ELSEIF(ICASE3.EQ.'FCOR')THEN
+              IF(AVAL1.GE.0.0)THEN
+                IREFC2(IINDXT,1)=INT(AVAL1)
+              ELSE
+                IREFC2(IINDXT,1)=-1
+              ENDIF
+              IF(AVAL2.GE.0.0)THEN
+                IREFC2(IINDXT,2)=INT(AVAL2)
+              ELSE
+                IREFC2(IINDXT,2)=-1
+              ENDIF
+              IF(AVAL3.GE.0.0)THEN
+                IREFC2(IINDXT,3)=INT(AVAL3)
+              ELSE
+                IREFC2(IINDXT,3)=-1
+              ENDIF
+              AVAL1=REAL(IREFC2(IINDXT,1))
+              AVAL2=REAL(IREFC2(IINDXT,2))
+              AVAL3=REAL(IREFC2(IINDXT,3))
             ELSEIF(ICASE3.EQ.'PATT')THEN
               IF(IVAL1.NE.'NULL')THEN
                 IREPTY(IINDXT)=IVAL1
@@ -1487,6 +1930,25 @@ C
               ELSE
                 IERROR='YES'
               ENDIF
+            ELSEIF(ICASE3.EQ.'PCOR')THEN
+              IF(AVAL1.GE.0.0)THEN
+                IREPC2(IINDXT,1)=INT(AVAL1)
+              ELSE
+                IREPC2(IINDXT,1)=-1
+              ENDIF
+              IF(AVAL2.GE.0.0)THEN
+                IREPC2(IINDXT,2)=INT(AVAL2)
+              ELSE
+                IREPC2(IINDXT,2)=-1
+              ENDIF
+              IF(AVAL3.GE.0.0)THEN
+                IREPC2(IINDXT,3)=INT(AVAL3)
+              ELSE
+                IREPC2(IINDXT,3)=-1
+              ENDIF
+              AVAL1=REAL(IREPC2(IINDXT,1))
+              AVAL2=REAL(IREPC2(IINDXT,2))
+              AVAL3=REAL(IREPC2(IINDXT,3))
             ELSEIF(ICASE3.EQ.'PLIN')THEN
               IF(IVAL1.NE.'NULL')THEN
                 IREPLI(IINDXT)=IVAL1
@@ -1499,6 +1961,25 @@ C
               ELSE
                 IERROR='YES'
               ENDIF
+            ELSEIF(ICASE3.EQ.'BCOR')THEN
+              IF(AVAL1.GE.0.0)THEN
+                IREBC2(IINDXT,1)=INT(AVAL1)
+              ELSE
+                IREBC2(IINDXT,1)=-1
+              ENDIF
+              IF(AVAL2.GE.0.0)THEN
+                IREBC2(IINDXT,2)=INT(AVAL2)
+              ELSE
+                IREBC2(IINDXT,2)=-1
+              ENDIF
+              IF(AVAL3.GE.0.0)THEN
+                IREBC2(IINDXT,3)=INT(AVAL3)
+              ELSE
+                IREBC2(IINDXT,3)=-1
+              ENDIF
+              AVAL1=REAL(IREBC2(IINDXT,1))
+              AVAL2=REAL(IREBC2(IINDXT,2))
+              AVAL3=REAL(IREBC2(IINDXT,3))
             ELSEIF(ICASE3.EQ.'BLIN')THEN
               IF(IVAL1.NE.'NULL')THEN
                 IREBLI(IINDXT)=IVAL1
@@ -1544,17 +2025,30 @@ C
             IERROR='YES'
           ELSE
             IF(IFEEDB.EQ.'ON')THEN
-              IF(ICASE4.EQ.'NUME' .AND. NARG.EQ.1)THEN
-                WRITE(ICOUT,8011)IINDXT,ISTR,AVAL1
-                CALL DPWRST('XXX','BUG ')
-              ELSEIF(ICASE4.EQ.'NUME' .AND. NARG.EQ.2)THEN
-                WRITE(ICOUT,8013)IINDXT,ISTR,AVAL1,AVAL2
-                CALL DPWRST('XXX','BUG ')
-              ELSEIF(ICASE4.EQ.'ALPH' .AND. NARG.EQ.1)THEN
-                WRITE(ICOUT,8015)IINDXT,ISTR,IVAL1
-                CALL DPWRST('XXX','BUG ')
-              ELSEIF(ICASE4.EQ.'ALPH' .AND. NARG.EQ.2)THEN
-                WRITE(ICOUT,8017)IINDXT,ISTR,IVAL1,IVAL2
+C
+              IFLAGR=0
+              IF(ICASE3.EQ.'RGBC')IFLAGR=1
+              IF(ICASE3.EQ.'PCOR')IFLAGR=1
+              IF(ICASE3.EQ.'FCOR')IFLAGR=1
+              IF(ICASE3.EQ.'BCOR')IFLAGR=1
+C
+              IF(IFLAGR.EQ.0)THEN
+                IF(ICASE4.EQ.'NUME' .AND. NARG.EQ.1)THEN
+                  WRITE(ICOUT,8011)IINDXT,ISTR,AVAL1
+                  CALL DPWRST('XXX','BUG ')
+                ELSEIF(ICASE4.EQ.'NUME' .AND. NARG.EQ.2)THEN
+                  WRITE(ICOUT,8013)IINDXT,ISTR,AVAL1,AVAL2
+                  CALL DPWRST('XXX','BUG ')
+                ELSEIF(ICASE4.EQ.'ALPH' .AND. NARG.EQ.1)THEN
+                  WRITE(ICOUT,8015)IINDXT,ISTR,IVAL1
+                  CALL DPWRST('XXX','BUG ')
+                ELSEIF(ICASE4.EQ.'ALPH' .AND. NARG.EQ.2)THEN
+                  WRITE(ICOUT,8017)IINDXT,ISTR,IVAL1,IVAL2
+                  CALL DPWRST('XXX','BUG ')
+                ENDIF
+              ELSE
+                WRITE(ICOUT,8117)IINDXT,ISTR,
+     1                           INT(AVAL1),INT(AVAL2),INT(AVAL3)
                 CALL DPWRST('XXX','BUG ')
               ENDIF
             ENDIF

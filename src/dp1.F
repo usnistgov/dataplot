@@ -7615,6 +7615,13 @@ C                                          DPCOP2.INC)
 C     UPDATED            --JANUARY   2021. FOR TYPE "ERRO", DON'T PRINT
 C                                          IF "SET ERROR MESSAGE OFF"
 C                                          COMMAND GIVEN
+C     UPDATED            --APRIL     2021. ISSUE WITH
+C
+C                                             CAPTURE SCREEN ON
+C                                             WRITE <file> ...
+C
+C                                          CHECK IF "WRITE" COMMAND IS
+C                                          THE ISSUING COMMAND
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)----------------------------------
 C
@@ -7634,6 +7641,9 @@ C
       INTEGER ILNCNT
       COMMON/LINNUM/ILNCNT
 C
+      CHARACTER*4 IWRIFC
+      COMMON/WRIFIL/IWRIFC
+C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
@@ -7644,6 +7654,7 @@ C
       INCLUDE 'DPCOSU.INC'
       INCLUDE 'DPCOST.INC'
       INCLUDE 'DPCOF2.INC'
+      INCLUDE 'DPCOHK.INC'
       INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
@@ -7734,7 +7745,19 @@ CCCCC IF(IFEEDB.EQ.'ON')THEN
                WRITE(IFORMT(5:8),'(I4)')NCOUT
                WRITE(IOUNIT,IFORMT,IOSTAT=IOS,ERR=8800)
      1               (ICOUT(I:I),I=1,NCOUT)
-               WRITE(6,IFORMT)(ICOUT(I:I),I=1,NCOUT)
+C
+C              2021/04: CHECK FOR WRITE (OR PRINT) TO A FILE
+C                       CASE.
+C
+               IFLAGT=1
+               IF(ICOM.EQ.'WRIT' .OR.
+     1           (ICOM.EQ.'PRIN' .AND. ICOM2.EQ.'T   '))THEN
+                 IF(IWRIFC.EQ.'FILE')IFLAGT=0
+               ENDIF
+C
+               IF(IFLAGT.EQ.1)THEN
+                 WRITE(6,IFORMT)(ICOUT(I:I),I=1,NCOUT)
+               ENDIF
                IF(ICAPSP.EQ.'ON')THEN
                  WRITE(ICPNU2,IFORMT)(ICOUT(I:I),I=1,NCOUT)
                ENDIF

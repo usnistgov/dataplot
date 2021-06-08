@@ -1,5 +1,5 @@
 9.
-                                                     March   2021
+                                                     May   2021
 This is the DATAPLOT News file DPNEWF.TEX.  This NEWS file contains a
 list of DATAPLOT enhancements.  Some commands may be documented here
 that are not yet available in the standard documentation.
@@ -10,7 +10,7 @@ The complete news file can be viewed at
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
-March 2021 - March 2021.
+March 2021 - May 2021.
 -----------------------------------------------------------------------
 
  1. Added the command
@@ -94,6 +94,50 @@ March 2021 - March 2021.
     color.  Also corrected an issue with colors for the QuickWin device
     (the green component was not being set correctly).  Fixed issue with
     RGB colors for SVG device.
+
+ 5. Added the command
+
+        ALIAS  <name>  <string>
+
+    This can be used to create user defined shortcuts for commands.
+    For example,
+
+        alias v  psview dppl1f.dat
+
+    So if you enter "v", the command "psview dppl1f.dat" will be
+    executed.
+
+ 6. For the command
+
+        LET PLOT <command> <index> = <setting>
+
+    added support for RGB colors.  Specifically, added
+
+        LET PLOT CHARACTER       RGB COLOR <index> = <red> <green> <blue>
+        LET PLOT LINE            RGB COLOR <index> = <red> <green> <blue>
+        LET PLOT SPIKE           RGB COLOR <index> = <red> <green> <blue>
+        LET PLOT BAR             RGB COLOR <index> = <red> <green> <blue>
+        LET PLOT BAR             RGB COLOR <index> = <red> <green> <blue>
+        LET PLOT BAR BORDER      RGB COLOR <index> = <red> <green> <blue>
+        LET PLOT BAR FILL        RGB COLOR <index> = <red> <green> <blue>
+        LET PLOT BAR PATTERN     RGB COLOR <index> = <red> <green> <blue>
+        LET PLOT REGION FILL     RGB COLOR <index> = <red> <green> <blue>
+        LET PLOT REGION PATTERN  RGB COLOR <index> = <red> <green> <blue>
+
+    In order to make the RGB color commands more useful, added the file
+    "rgb_color_schemes.txt" to the "help" sub-directory.  This file
+    contains 271 color palettes.  The first is due to Okabe and Ito and
+    defines a color palette that is useful for addressing color blindness.
+    The remaining palettes are the "ColorBrewer" palettes developed by
+    Dr. Cynthia Brewer of Penn State University.  There are many color
+    palettes that have been proposed, but these palettes should provide
+    a good starting point for Dataplot applications.  The files
+    "rgb_color_palettes.dp" and "rgb_color_palettes_labels.dp" were added
+    to the "programs" sub-directory.  These files are used to generate
+    a Postscript file displaying the color palettes in
+    "rgb_color_schemes.txt".
+
+ 7. Fixed several miscellaneous bugs.
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT

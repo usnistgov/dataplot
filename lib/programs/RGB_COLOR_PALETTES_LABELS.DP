@@ -1,0 +1,310 @@
+. Name:     rgb_color_palettes_labels.dp
+. Purpose:  Define labels for color palettes in: rgb_color_schemes.txt
+.
+feedback save
+feedback off
+.
+let string rgbla1   = Okabe-Ito
+.
+let string rgbla2   = YellowGreen Sequential: 3 colors
+let string rgbla3   = YellowGreen Sequential: 4 colors
+let string rgbla4   = YellowGreen Sequential: 5 colors
+let string rgbla5   = YellowGreen Sequential: 6 colors
+let string rgbla6   = YellowGreen Sequential: 7 colors
+let string rgbla7   = YellowGreen Sequential: 8 colors
+let string rgbla8   = YellowGreen Sequential: 9 colors
+.
+let string rgbla9   = YellowGreenBlue Sequential: 3 colors
+let string rgbla10  = YellowGreenBlue Sequential: 4 colors
+let string rgbla11  = YellowGreenBlue Sequential: 5 colors
+let string rgbla12  = YellowGreenBlue Sequential: 6 colors
+let string rgbla13  = YellowGreenBlue Sequential: 7 colors
+let string rgbla14  = YellowGreenBlue Sequential: 8 colors
+let string rgbla15  = YellowGreenBlue Sequential: 9 colors
+.
+let string rgbla16  = GreenBlue Sequential: 3 colors
+let string rgbla17  = GreenBlue Sequential: 4 colors
+let string rgbla18  = GreenBlue Sequential: 5 colors
+let string rgbla19  = GreenBlue Sequential: 6 colors
+let string rgbla20  = GreenBlue Sequential: 7 colors
+let string rgbla21  = GreenBlue Sequential: 8 colors
+let string rgbla22  = GreenBlue Sequential: 9 colors
+.
+let string rgbla23  = BlueGreen Sequential: 3 colors
+let string rgbla24  = BlueGreen Sequential: 4 colors
+let string rgbla25  = BlueGreen Sequential: 5 colors
+let string rgbla26  = BlueGreen Sequential: 6 colors
+let string rgbla27  = BlueGreen Sequential: 7 colors
+let string rgbla28  = BlueGreen Sequential: 8 colors
+let string rgbla29  = BlueGreen Sequential: 9 colors
+.
+let string rgbla30  = PaleBlueGreen Sequential: 3 colors
+let string rgbla31  = PaleBlueGreen Sequential: 4 colors
+let string rgbla32  = PaleBlueGreen Sequential: 5 colors
+let string rgbla33  = PaleBlueGreen Sequential: 6 colors
+let string rgbla34  = PaleBlueGreen Sequential: 7 colors
+let string rgbla35  = PaleBlueGreen Sequential: 8 colors
+let string rgbla36  = PaleBlueGreen Sequential: 9 colors
+.
+let string rgbla37  = PaleBlue Sequential: 3 colors
+let string rgbla38  = PaleBlue Sequential: 4 colors
+let string rgbla39  = PaleBlue Sequential: 5 colors
+let string rgbla40  = PaleBlue Sequential: 6 colors
+let string rgbla41  = PaleBlue Sequential: 7 colors
+let string rgbla42  = PaleBlue Sequential: 8 colors
+let string rgbla43  = PaleBlue Sequential: 9 colors
+.
+let string rgbla44  = BluePurple Sequential: 3 colors
+let string rgbla45  = BluePurple Sequential: 4 colors
+let string rgbla46  = BluePurple Sequential: 5 colors
+let string rgbla47  = BluePurple Sequential: 6 colors
+let string rgbla48  = BluePurple Sequential: 7 colors
+let string rgbla49  = BluePurple Sequential: 8 colors
+let string rgbla50  = BluePurple Sequential: 9 colors
+.
+let string rgbla51  = RedPurple Sequential: 3 colors
+let string rgbla52  = RedPurple Sequential: 4 colors
+let string rgbla53  = RedPurple Sequential: 5 colors
+let string rgbla54  = RedPurple Sequential: 6 colors
+let string rgbla55  = RedPurple Sequential: 7 colors
+let string rgbla56  = RedPurple Sequential: 8 colors
+let string rgbla57  = RedPurple Sequential: 9 colors
+.
+let string rgbla58  = PurpleRed Sequential: 3 colors
+let string rgbla59  = PurpleRed Sequential: 4 colors
+let string rgbla60  = PurpleRed Sequential: 5 colors
+let string rgbla61  = PurpleRed Sequential: 6 colors
+let string rgbla62  = PurpleRed Sequential: 7 colors
+let string rgbla63  = PurpleRed Sequential: 8 colors
+let string rgbla64  = PurpleRed Sequential: 9 colors
+.
+let string rgbla65  = OrangeRed Sequential: 3 colors
+let string rgbla66  = OrangeRed Sequential: 4 colors
+let string rgbla67  = OrangeRed Sequential: 5 colors
+let string rgbla68  = OrangeRed Sequential: 6 colors
+let string rgbla69  = OrangeRed Sequential: 7 colors
+let string rgbla70  = OrangeRed Sequential: 8 colors
+let string rgbla71  = OrangeRed Sequential: 9 colors
+.
+let string rgbla72  = YellowOrangeRed Sequential: 3 colors
+let string rgbla73  = YellowOrangeRed Sequential: 4 colors
+let string rgbla74  = YellowOrangeRed Sequential: 5 colors
+let string rgbla75  = YellowOrangeRed Sequential: 6 colors
+let string rgbla76  = YellowOrangeRed Sequential: 7 colors
+let string rgbla77  = YellowOrangeRed Sequential: 8 colors
+let string rgbla78  = YellowOrangeRed Sequential: 9 colors
+.
+let string rgbla79  = YellowOrangeBrown Sequential: 3 colors
+let string rgbla80  = YellowOrangeBrown Sequential: 4 colors
+let string rgbla81  = YellowOrangeBrown Sequential: 5 colors
+let string rgbla82  = YellowOrangeBrown Sequential: 6 colors
+let string rgbla83  = YellowOrangeBrown Sequential: 7 colors
+let string rgbla84  = YellowOrangeBrown Sequential: 8 colors
+let string rgbla85  = YellowOrangeBrown Sequential: 9 colors
+.
+let string rgbla86  = Purples Sequential: 3 colors
+let string rgbla87  = Purples Sequential: 4 colors
+let string rgbla88  = Purples Sequential: 5 colors
+let string rgbla89  = Purples Sequential: 6 colors
+let string rgbla90  = Purples Sequential: 7 colors
+let string rgbla91  = Purples Sequential: 8 colors
+let string rgbla92  = Purples Sequential: 9 colors
+.
+let string rgbla93  = Blues Sequential: 3 colors
+let string rgbla94  = Blues Sequential: 4 colors
+let string rgbla95  = Blues Sequential: 5 colors
+let string rgbla96  = Blues Sequential: 6 colors
+let string rgbla97  = Blues Sequential: 7 colors
+let string rgbla98  = Blues Sequential: 8 colors
+let string rgbla99  = Blues Sequential: 9 colors
+.
+let string rgbla100 = Greens Sequential: 3 colors
+let string rgbla101 = Greens Sequential: 4 colors
+let string rgbla102 = Greens Sequential: 5 colors
+let string rgbla103 = Greens Sequential: 6 colors
+let string rgbla104 = Greens Sequential: 7 colors
+let string rgbla105 = Greens Sequential: 8 colors
+let string rgbla106 = Greens Sequential: 9 colors
+.
+let string rgbla107 = Oranges Sequential: 3 colors
+let string rgbla108 = Oranges Sequential: 4 colors
+let string rgbla109 = Oranges Sequential: 5 colors
+let string rgbla110 = Oranges Sequential: 6 colors
+let string rgbla111 = Oranges Sequential: 7 colors
+let string rgbla112 = Oranges Sequential: 8 colors
+let string rgbla113 = Oranges Sequential: 9 colors
+.
+let string rgbla114 = Reds Sequential: 3 colors
+let string rgbla115 = Reds Sequential: 4 colors
+let string rgbla116 = Reds Sequential: 5 colors
+let string rgbla117 = Reds Sequential: 6 colors
+let string rgbla118 = Reds Sequential: 7 colors
+let string rgbla119 = Reds Sequential: 8 colors
+let string rgbla120 = Reds Sequential: 9 colors
+.
+let string rgbla121 = Greys Sequential: 3 colors
+let string rgbla122 = Greys Sequential: 4 colors
+let string rgbla123 = Greys Sequential: 5 colors
+let string rgbla124 = Greys Sequential: 6 colors
+let string rgbla125 = Greys Sequential: 7 colors
+let string rgbla126 = Greys Sequential: 8 colors
+let string rgbla127 = Greys Sequential: 9 colors
+.
+let string rgbla128 = PurpleOrange Diverging: 3 colors
+let string rgbla129 = PurpleOrange Diverging: 4 colors
+let string rgbla130 = PurpleOrange Diverging: 5 colors
+let string rgbla131 = PurpleOrange Diverging: 6 colors
+let string rgbla132 = PurpleOrange Diverging: 7 colors
+let string rgbla133 = PurpleOrange Diverging: 8 colors
+let string rgbla134 = PurpleOrange Diverging: 9 colors
+let string rgbla135 = PurpleOrange Diverging: 10 colors
+let string rgbla136 = PurpleOrange Diverging: 11 colors
+.
+let string rgbla137 = BrownBlue-Green Diverging: 3 colors
+let string rgbla138 = BrownBlue-Green Diverging: 4 colors
+let string rgbla139 = BrownBlue-Green Diverging: 5 colors
+let string rgbla140 = BrownBlue-Green Diverging: 6 colors
+let string rgbla141 = BrownBlue-Green Diverging: 7 colors
+let string rgbla142 = BrownBlue-Green Diverging: 8 colors
+let string rgbla143 = BrownBlue-Green Diverging: 8 colors
+let string rgbla144 = BrownBlue-Green Diverging: 10 colors
+let string rgbla145 = BrownBlue-Green Diverging: 11 colors
+.
+let string rgbla146 = Purple-Green Diverging: 3 colors
+let string rgbla147 = Purple-Green Diverging: 4 colors
+let string rgbla148 = Purple-Green Diverging: 5 colors
+let string rgbla149 = Purple-Green Diverging: 6 colors
+let string rgbla150 = Purple-Green Diverging: 7 colors
+let string rgbla151 = Purple-Green Diverging: 8 colors
+let string rgbla152 = Purple-Green Diverging: 9 colors
+let string rgbla153 = Purple-Green Diverging: 10 colors
+let string rgbla154 = Purple-Green Diverging: 11 colors
+.
+let string rgbla155 = PinkYellow-Green Diverging: 3 colors
+let string rgbla156 = PinkYellow-Green Diverging: 4 colors
+let string rgbla157 = PinkYellow-Green Diverging: 5 colors
+let string rgbla158 = PinkYellow-Green Diverging: 6 colors
+let string rgbla159 = PinkYellow-Green Diverging: 7 colors
+let string rgbla160 = PinkYellow-Green Diverging: 8 colors
+let string rgbla161 = PinkYellow-Green Diverging: 9 colors
+let string rgbla162 = PinkYellow-Green Diverging: 10 colors
+let string rgbla163 = PinkYellow-Green Diverging: 11 colors
+.
+let string rgbla164 = RedBlue Diverging: 3 colors
+let string rgbla165 = RedBlue Diverging: 4 colors
+let string rgbla166 = RedBlue Diverging: 5 colors
+let string rgbla167 = RedBlue Diverging: 6 colors
+let string rgbla168 = RedBlue Diverging: 7 colors
+let string rgbla169 = RedBlue Diverging: 8 colors
+let string rgbla170 = RedBlue Diverging: 9 colors
+let string rgbla171 = RedBlue Diverging: 10 colors
+let string rgbla172 = RedBlue Diverging: 11 colors
+.
+let string rgbla173 = RedGrey Diverging: 3 colors
+let string rgbla174 = RedGrey Diverging: 4 colors
+let string rgbla175 = RedGrey Diverging: 5 colors
+let string rgbla176 = RedGrey Diverging: 6 colors
+let string rgbla177 = RedGrey Diverging: 7 colors
+let string rgbla178 = RedGrey Diverging: 8 colors
+let string rgbla179 = RedGrey Diverging: 9 colors
+let string rgbla180 = RedGrey Diverging: 10 colors
+let string rgbla181 = RedGrey Diverging: 11 colors
+.
+let string rgbla182 = RedYellowBlue Diverging: 3 colors
+let string rgbla183 = RedYellowBlue Diverging: 4 colors
+let string rgbla184 = RedYellowBlue Diverging: 5 colors
+let string rgbla185 = RedYellowBlue Diverging: 6 colors
+let string rgbla186 = RedYellowBlue Diverging: 7 colors
+let string rgbla187 = RedYellowBlue Diverging: 8 colors
+let string rgbla188 = RedYellowBlue Diverging: 9 colors
+let string rgbla189 = RedYellowBlue Diverging: 10 colors
+let string rgbla190 = RedYellowBlue Diverging: 11 colors
+.
+let string rgbla191 = Spectral Diverging: 3 colors
+let string rgbla192 = Spectral Diverging: 4 colors
+let string rgbla193 = Spectral Diverging: 5 colors
+let string rgbla194 = Spectral Diverging: 6 colors
+let string rgbla195 = Spectral Diverging: 7 colors
+let string rgbla196 = Spectral Diverging: 8 colors
+let string rgbla197 = Spectral Diverging: 9 colors
+let string rgbla198 = Spectral Diverging: 10 colors
+let string rgbla199 = Spectral Diverging: 11 colors
+.
+let string rgbla200 = RedYellowGreen Diverging: 3 colors
+let string rgbla201 = RedYellowGreen Diverging: 4 colors
+let string rgbla202 = RedYellowGreen Diverging: 5 colors
+let string rgbla203 = RedYellowGreen Diverging: 6 colors
+let string rgbla204 = RedYellowGreen Diverging: 7 colors
+let string rgbla205 = RedYellowGreen Diverging: 8 colors
+let string rgbla206 = RedYellowGreen Diverging: 9 colors
+let string rgbla207 = RedYellowGreen Diverging: 10 colors
+let string rgbla208 = RedYellowGreen Diverging: 11 colors
+.
+let string rgbla209 = Set3 Qualitative: 3 colors
+let string rgbla210 = Set3 Qualitative: 4 colors
+let string rgbla211 = Set3 Qualitative: 5 colors
+let string rgbla212 = Set3 Qualitative: 6 colors
+let string rgbla213 = Set3 Qualitative: 7 colors
+let string rgbla214 = Set3 Qualitative: 8 colors
+let string rgbla215 = Set3 Qualitative: 9 colors
+let string rgbla216 = Set3 Qualitative: 10 colors
+let string rgbla217 = Set3 Qualitative: 11 colors
+let string rgbla218 = Set3 Qualitative: 12 colors
+.
+let string rgbla219 = Pastel1 Qualitative: 3 colors
+let string rgbla220 = Pastel1 Qualitative: 4 colors
+let string rgbla221 = Pastel1 Qualitative: 5 colors
+let string rgbla222 = Pastel1 Qualitative: 6 colors
+let string rgbla223 = Pastel1 Qualitative: 7 colors
+let string rgbla224 = Pastel1 Qualitative: 8 colors
+let string rgbla225 = Pastel1 Qualitative: 9 colors
+.
+let string rgbla226 = Set1 Qualitative: 3 colors
+let string rgbla227 = Set1 Qualitative: 4 colors
+let string rgbla228 = Set1 Qualitative: 5 colors
+let string rgbla229 = Set1 Qualitative: 6 colors
+let string rgbla230 = Set1 Qualitative: 7 colors
+let string rgbla231 = Set1 Qualitative: 8 colors
+let string rgbla232 = Set1 Qualitative: 9 colors
+.
+let string rgbla233 = Pastel2 Qualitative: 3 colors
+let string rgbla234 = Pastel2 Qualitative: 4 colors
+let string rgbla235 = Pastel2 Qualitative: 5 colors
+let string rgbla236 = Pastel2 Qualitative: 6 colors
+let string rgbla237 = Pastel2 Qualitative: 7 colors
+let string rgbla238 = Pastel2 Qualitative: 8 colors
+.
+let string rgbla239 = Set2 Qualitative: 3 colors
+let string rgbla240 = Set2 Qualitative: 4 colors
+let string rgbla241 = Set2 Qualitative: 5 colors
+let string rgbla242 = Set2 Qualitative: 6 colors
+let string rgbla243 = Set2 Qualitative: 7 colors
+let string rgbla244 = Set2 Qualitative: 8 colors
+.
+let string rgbla245 = Dark2 Qualitative: 3 colors
+let string rgbla246 = Dark2 Qualitative: 4 colors
+let string rgbla247 = Dark2 Qualitative: 5 colors
+let string rgbla248 = Dark2 Qualitative: 6 colors
+let string rgbla249 = Dark2 Qualitative: 7 colors
+let string rgbla250 = Dark2 Qualitative: 8 colors
+.
+let string rgbla251 = Paired Qualitative: 3 colors
+let string rgbla252 = Paired Qualitative: 4 colors
+let string rgbla253 = Paired Qualitative: 5 colors
+let string rgbla254 = Paired Qualitative: 6 colors
+let string rgbla255 = Paired Qualitative: 7 colors
+let string rgbla256 = Paired Qualitative: 8 colors
+let string rgbla257 = Paired Qualitative: 9 colors
+let string rgbla258 = Paired Qualitative: 10 colors
+let string rgbla259 = Paired Qualitative: 11 colors
+let string rgbla260 = Paired Qualitative: 12 colors
+.
+let string rgbla261 = Accent Qualitative: 3 colors
+let string rgbla262 = Accent Qualitative: 4 colors
+let string rgbla263 = Accent Qualitative: 5 colors
+let string rgbla264 = Accent Qualitative: 6 colors
+let string rgbla265 = Accent Qualitative: 7 colors
+let string rgbla266 = Accent Qualitative: 8 colors
+.
+feedback restore
+.

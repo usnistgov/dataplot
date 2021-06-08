@@ -1,4 +1,4 @@
-67000.      (VERSION 2021.03)  total number of lines in file (including this line)
+67100.      (VERSION 2021.05)  total number of lines in file (including this line)
  4.                          number of     sections below
   100.    P                  first line number of P section
 22400.    Q                  first line number of Q section
@@ -45838,12 +45838,54 @@ Description:
     Segments are most typically used in legend boxes to identify
     curves.
  
-Syntax:
-    SEGMENT   <id>   COLOR   <color>
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the segment RGB color, Dataplot first checks if the
+    device supports RGB colors. If not, the named color will be used.
+    If the device does support RGB color, Dataplot will check if an RGB
+    color has been specified.  If yes, then that RGB color is used.  If
+    not, the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
+    SEGMENT  <id>  COLOR  <color>
     where <id> is an integer number or parameter in the range 1 to 100
             that specifies the segment identifier;
     and   <color> is a character string or index number that specifies
             the desired color.
+ 
+Syntax 2:
+    SEGMENT  <id>  RGB COLORS <red> <green> <blue>
+    where <id> is an integer number or parameter in the range 1 to 100
+              that specifies the segment identifier;
+          <red> is a number or parameter that specifies the red
+              component;
+          <green> is a number or parameter that specifies the green
+              component;
+          <blue> is a number or parameter that specifies the blue
+              component.
+
+    To turn off the RGB color, set the values to -1 (any negative value
+    will work).  Values greater than 255 will be set to 255.
  
 Examples:
     SEGMENT 2 COLOR GREEN
@@ -45876,9 +45918,10 @@ Applications:
     Presentation Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
+    2020/11: Support for RGB colors
  
-Program:
+Program 1:
     . POLLUTION SOURCE ANALYSIS, LLOYD CURRIE, DATE--1990
     . SUBSET OF CURRIE.DAT REFERENCE FILE
     .
@@ -45890,16 +45933,47 @@ Program:
     END OF DATA
     LET N = SIZE LEAD; LET X = SEQUENCE 1 1 N
     .
-    LINE COLOR G20 G80
+    LINE COLOR RED BLUE
     LINE THICKNESS 0.3 ALL
     SEGMENT 1 COORDINATES 17 87 22 87
     SEGMENT 2 COORDINATES 17 83 22 83
-    SEGMENT 1 COLOR G20
-    SEGMENT 2 COLOR G80
+    SEGMENT 1 COLOR RED
+    SEGMENT 2 COLOR BLUE
     SEGMENT THICKNESS 0.3
-    LEGEND 1 COORDINATES 23 86; LEGEND 1 POTASSIUM
-    LEGEND 2 COORDINATES 23 82; LEGEND 2 LEAD
+    LEGEND 1 COORDINATES 23 86
+    LEGEND 1 POTASSIUM
+    LEGEND 2 COORDINATES 23 82
+    LEGEND 2 LEAD
     TITLE DEMONSTRATE SEGMENT COLOR
+    PLOT POT LEAD VS X
+ 
+Program 2:
+    . POLLUTION SOURCE ANALYSIS, LLOYD CURRIE, DATE--1990
+    . SUBSET OF CURRIE.DAT REFERENCE FILE
+    .
+    SERIAL READ LEAD
+    164 426 59 98 312 263 607 497 213 54 160 262 547 325 419 94 70
+    END OF DATA
+    SERIAL READ POT
+    106 175 61 79 94 121 424 328 107 218 140 179 246 231 245 339 99
+    END OF DATA
+    LET N = SIZE LEAD; LET X = SEQUENCE 1 1 N
+    .
+    LINE COLOR RED BLUE
+    LINE RGB COLOR 220 109 88 175 238 238
+    LINE THICKNESS 0.3 ALL
+    SEGMENT 1 COORDINATES 17 87 22 87
+    SEGMENT 2 COORDINATES 17 83 22 83
+    SEGMENT 1 COLOR RED
+    SEGMENT 2 COLOR BLUE
+    SEGMENT 1 RGB COLOR 220 109 88
+    SEGMENT 2 RGB COLOR 175 238 238
+    SEGMENT THICKNESS 0.3
+    LEGEND 1 COORDINATES 23 86
+    LEGEND 1 POTASSIUM
+    LEGEND 2 COORDINATES 23 82
+    LEGEND 2 LEAD
+    TITLE DEMONSTRATE SEGMENT RGB COLOR
     PLOT POT LEAD VS X
  
 -----SEGMENT COORDINATES----------------------------------------------
@@ -66906,6 +66980,32 @@ Program 2:
     feedback on
 
 ---------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

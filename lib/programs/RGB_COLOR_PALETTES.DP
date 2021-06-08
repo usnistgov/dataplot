@@ -1,0 +1,89 @@
+. Name:     rgb_color_palettes.dp
+. Purpose:  Display the color maps given in the rgb_color_schemes.txt
+.
+. Step 0:   Define the output devices
+.
+device 2 close
+let string fplot = rgb_color_palettes.ps
+set ipl1na ^fplot
+device 2 postscript
+device 2 color on
+.
+. Step 1:   Read the RGB palettes file
+.
+skip 50
+set read format f3.0,f9.0,f8.0,f8.0,f7.0
+read ../lib/help/rgb_color_schemes.txt paletid iindx ired igreen iblue
+set read format
+skip 0
+.
+let np = unique paletid
+box shadow hw 0 0
+box fill pattern on
+.
+call rgb_color_palettes_labels.dp
+.
+. Step 2:   Now loop through the various palettes
+.
+let xinc1 = 4
+let xinc2 = 1.5
+let yinc1 = 4
+let yinc2 = 3
+let nrows = 12
+.
+capture screen on
+. echo on
+. capture rgb_color.out
+loop for k = 1 1 np
+    let irow    = k
+    let idt     = paletid
+    let iindxt  = iindx
+    let iredt   = ired
+    let igreent = igreen
+    let ibluet  = iblue
+    retain idt iindxt iredt igreent ibluet  subset idt = irow
+    let ncol = size iindxt
+    let irowmod = mod(k,nrows)
+    if irowmod = 1
+       erase
+       let ycoor1 = 95
+    end of if
+    .
+    let xcoor1 = 5
+    let xcoor2 = xcoor1 + xinc1
+    let ycoor2 = ycoor1 - yinc1
+    loop for l = 1 1 ncol
+        let ival1 = iredt(l)
+        let ival2 = igreent(l)
+        let ival3 = ibluet(l)
+        .
+        box fill rgb color ival1 ival2 ival3
+        box xcoor1 ycoor1 xcoor2 ycoor2
+        let xcoor3 = (xcoor1+xcoor2)/2
+        let ycoor3 = ycoor2 - 2
+        height 1.2
+        justification center
+        move xcoor3 ycoor3
+        text ^ival1 ^ival2 ^ival3
+        .
+        let xcoor1 = xcoor2 + xinc2
+        let xcoor2 = xcoor1 + xinc1
+    end of loop
+    height 1.4
+    let xcoor4 = 81
+    let ycoor4 = (ycoor1 + ycoor2)/2
+    justification left
+    move xcoor4 ycoor4
+    text ^k: ^rgbla^k
+    .
+    let ycoor1 = ycoor2 - yinc2
+end of loop
+. end of capture
+. echo off
+.
+. Step x:   Close
+.
+device 2 close
+system ps2pdf ^fplot
+.
+quit

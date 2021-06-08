@@ -12101,6 +12101,11 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--85/7
 C     ORIGINAL VERSION--JULY      1985.
 C     UPDATED         --FEBRUARY  1994. CHECK FOR X CHART, X CONTROL CHART
+C     UPDATED         --APRIL     2021. "X" WITH NO ARGUMENTS SHOULD DO
+C                                       NOTHING (AND IFOUND SHOULD BE
+C                                       SET TO "NO").  "X" WITH NO
+C                                       ARGUMENTS IS NOW TREATED AS A
+C                                       SYNONYM FOR "CALL CLIPBOARD".
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -12145,38 +12150,33 @@ C               ******************************************
 C               **  TREAT THE    EXECUTE STRING   CASE  **
 C               ******************************************
 C
-      IF(IBUGMA.EQ.'OFF')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPEXEC--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBUGMA,IFOUND,IERROR
-   52 FORMAT('IBUGMA,IFOUND,IERROR = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)NUMNAM
-   53 FORMAT('NUMNAM = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      DO55I=1,NUMNAM
-      WRITE(ICOUT,56)I,IHNAME(I),IHNAM2(I),IUSE(I),IVSTAR(I),IVSTOP(I)
-   56 FORMAT('I,IHNAME(I),IHNAM2(I),IUSE(I),IVSTAR(I),IVSTOP(I)=',
-     1I8,2X,A4,A4,2X,A4,I8,I8)
-      CALL DPWRST('XXX','BUG ')
-   55 CONTINUE
-      WRITE(ICOUT,57)NUMCHF,MAXCHF
-   57 FORMAT('NUMCHF,MAXCHF = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,60)(IFUNC(I),I=1,MAXCHF)
-   60 FORMAT('IFUNC(.)  = ',120A1)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,61)IWIDTH,MAXWID
-   61 FORMAT('IWIDTH,MAXWID = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,62)(IANS(I),I=1,IWIDTH)
-   62 FORMAT('(IANS(.) = ',110A1)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(IBUGMA.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPEXEC--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGMA,IFOUND,IERROR,NUMNAM
+   52   FORMAT('IBUGMA,IFOUND,IERROR,NUMNAM = ',3(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,NUMNAM
+          WRITE(ICOUT,56)I,IHNAME(I),IHNAM2(I),IUSE(I),
+     1                   IVSTAR(I),IVSTOP(I)
+   56     FORMAT('I,IHNAME(I),IHNAM2(I),IUSE(I),IVSTAR(I),IVSTOP(I)=',
+     1           I8,2X,2A4,2X,A4,2I8)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+        WRITE(ICOUT,57)NUMCHF,MAXCHF,IWIDTH,MAXWID
+   57   FORMAT('NUMCHF,MAXCHF,IWIDTH,MAXWID = ',4I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,60)(IFUNC(I),I=1,MAXCHF)
+   60   FORMAT('IFUNC(.)  = ',120A1)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,62)(IANS(I),I=1,MIN(110,IWIDTH))
+   62   FORMAT('(IANS(.) = ',110A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               **********************************
 C               **  STEP 11--                   **
@@ -12191,7 +12191,7 @@ C
       MAXN3=MAXCHF
 C
       DO1100I=1,1000
-      IANSEX(I)=' '
+        IANSEX(I)=' '
  1100 CONTINUE
 C
 C               ***********************************************************
@@ -12202,8 +12202,13 @@ C
       ISTEPN='12'
       IF(IBUGMA.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-      IF(IWIDTH.EQ.1.AND.
-     1IANS(1).EQ.'X')GOTO1210
+      IF(IWIDTH.EQ.1.AND.IANS(1).EQ.'X')THEN
+        IFOUND='NO'
+        GOTO9000
+      ELSEIF(ICOM.EQ.'X   ' .AND. NUMARG.EQ.0)THEN
+        IFOUND='NO'
+        GOTO9000
+      ENDIF
 C
       IF(IWIDTH.GE.2.AND.
      1IANS(1).EQ.'X'.AND.IANS(2).EQ.' ')GOTO1210

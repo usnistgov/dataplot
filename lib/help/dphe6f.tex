@@ -1,13 +1,13 @@
-34700.      (VERSION 2020.06)   total number of lines in file (including this line)
+34900.      (VERSION 2021.05)   total number of lines in file (including this line)
  8.                          number of     sections below
   100.    T                  first line number of T section
-16000.    U                  first line number of U section
-18200.    V                  first line number of V section
-21200.    W                  first line number of W section
-28900.    X                  first line number of X section
-29700.    Y                  first line number of Y section
-31300.    Z                  first line number of Z section
-32700.    MISCELLANEOUS      first line number of MISCELLANEOUS section
+16200.    U                  first line number of U section
+18400.    V                  first line number of V section
+21500.    W                  first line number of W section
+29100.    X                  first line number of X section
+29900.    Y                  first line number of Y section
+31500.    Z                  first line number of Z section
+32900.    MISCELLANEOUS      first line number of MISCELLANEOUS section
  
 --------------------------------------------------------------
  
@@ -4292,7 +4292,36 @@ Type:
 Purpose:
     Specifies the color of the tic marks on subsequent plots.
  
-Syntax:
+Description:
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the tic mark RGB color, Dataplot first checks if the
+    device supports RGB colors. If not, the named color will be used.  If
+    the device does support RGB color, Dataplot will check if an RGB color
+    has been specified.  If yes, then that RGB color is used.  If not,
+    the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
     <prefix>TIC MARK COLOR   <color>
     where
               no prefix     refers to all 4 sides;
@@ -4301,8 +4330,28 @@ Syntax:
               the prefix X1 refers to the lower horizontal side;
               the prefix X2 refers to the upper horizontal side;
               the prefix Y1 refers to the left  vertical   side;
-              the prefix Y2 refers to the right vertical   side.
+              the prefix Y2 refers to the right vertical   side;
     and <color> is a character string that specifies the desired color.
+ 
+Syntax 2:
+    <prefix>TIC MARK RGB COLOR <red> <green> <blue>
+    where
+              no prefix     refers to all 4 sides;
+              the prefix X  refers to both horizontal sides;
+              the prefix Y  refers to both vertical sides;
+              the prefix X1 refers to the lower horizontal side;
+              the prefix X2 refers to the upper horizontal side;
+              the prefix Y1 refers to the left  vertical   side;
+              the prefix Y2 refers to the right vertical   side;
+          <red> is a number or parameter that specifies the red
+              component;
+          <green> is a number or parameter that specifies the green
+              component;
+    and   <blue> is a number or parameter that specifies the blue
+              component.
+
+    To turn off the RGB color, set the values to -1 (any negative value
+    will work).  Values greater than 255 will be set to 255.
  
 Examples:
     TIC MARK COLOR GREEN
@@ -4310,6 +4359,7 @@ Examples:
     TIC MARK COLOR
     X2TIC MARK COLOR GREEN
     Y2TIC MARK COLOR GREEN
+    TIC MARK RGB COLOR 175 238 238
  
 Note:
     It is rare to assign different colors to tic marks on the 4
@@ -4336,7 +4386,6 @@ Synonyms:
  
 Related Commands:
     TIC MARK            = Specifies whether or not tics are drawn.
-    TIC MARK COLOR      = Sets the color for tic marks.
     TIC MARK OFFSET     = Sets the offset for the first and last tic
                            marks.
     TIC MARK POSITION   = Sets location of tic marks (inside/outside
@@ -4345,12 +4394,13 @@ Related Commands:
     TIC MARK THICKNESS  = Sets the thickness of tic marks.
  
 Applications:
-    XX
+    Presentation Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
+    2020/11: Support for RGB colors.
  
-Program:
+Program 1:
     . POLLUTION SOURCE ANALYSIS, LLOYD CURRIE, DATE--1990
     . SUBSET OF CURRIE.DAT REFERENCE FILE
     .
@@ -4361,11 +4411,35 @@ Program:
        106 175 61 79 94 121 424 328 107 218 140 179 246 231 245 339 99
     .
     TIC MARK THICKNESS 0.5
-    X1LABEL LEAD; Y1LABEL POTASSIUM
-    LINE BLANK ALL; CHARACTER CIRCLE; CHARACTER FILL ON
+    X1LABEL LEAD
+    Y1LABEL POTASSIUM
+    LINE BLANK ALL
+    CHARACTER CIRCLE
+    CHARACTER FILL ON
     .
-    TIC MARK COLOR G75
-    TITLE TICS WITH G75
+    TIC MARK COLOR RED
+    TITLE DEMONSTRATE TIC MARK COLOR
+    PLOT POT LEAD
+
+Program 2:
+    . POLLUTION SOURCE ANALYSIS, LLOYD CURRIE, DATE--1990
+    . SUBSET OF CURRIE.DAT REFERENCE FILE
+    .
+    LET ID2 = DATA 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2
+    LET LEAD = DATA ...
+        164 426 59 98 312 263 607 497 213 54 160 262 547 325 419 94 70
+    LET POT = DATA ...
+       106 175 61 79 94 121 424 328 107 218 140 179 246 231 245 339 99
+    .
+    TIC MARK THICKNESS 0.5
+    X1LABEL LEAD
+    Y1LABEL POTASSIUM
+    LINE BLANK ALL
+    CHARACTER CIRCLE
+    CHARACTER FILL ON
+    .
+    TIC MARK RGB COLOR 220 109 88
+    TITLE DEMONSTRATE TIC MARK RGB COLOR
     PLOT POT LEAD
  
 -----TIC MARK POSITION------------------------------------------------
@@ -5047,7 +5121,36 @@ Purpose:
     Specifies the color of the labels associated with the major tic
     marks on subsequent plots.
  
-Syntax:
+Description:
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the tic mark label RGB color, Dataplot first checks if
+    the device supports RGB colors. If not, the named color will be used.
+    If the device does support RGB color, Dataplot will check if an RGB
+    color has been specified.  If yes, then that RGB color is used.  If
+    not, the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
     <prefix>TIC MARK LABEL COLOR   <color>
     where
             no prefix     refers to all 4 sides;
@@ -5060,11 +5163,33 @@ Syntax:
     and <color> is a character string that specifies the desired color
             for the tic label.
  
+Syntax 2:
+    <prefix>TIC MARK LABEL RGB COLOR <red> <green> <blue>
+    where
+              no prefix     refers to all 4 sides;
+              the prefix X  refers to both horizontal sides;
+              the prefix Y  refers to both vertical sides;
+              the prefix X1 refers to the lower horizontal side;
+              the prefix X2 refers to the upper horizontal side;
+              the prefix Y1 refers to the left  vertical   side;
+              the prefix Y2 refers to the right vertical   side.
+          <red> is a number or parameter that specifies the red
+              component;
+          <green> is a number or parameter that specifies the green
+              component;
+    and   <blue> is a number or parameter that specifies the blue
+              component.
+
+    To turn off the RGB color, set the values to -1 (any negative value
+    will work).  Values greater than 255 will be set to 255.
+ 
 Examples:
     TIC MARK LABEL COLOR GREEN
     TIC MARK LABEL COLOR
     X2TIC MARK LABEL COLOR GREEN
     Y2TIC MARK LABEL COLOR GREEN
+    TIC MARK LABEL RGB COLOR 220 109 88
+    TIC MARK LABEL RGB COLOR 175 238 238
  
 Note:
     It is rare to assign different colors to tic mark labels on the 4
@@ -5114,30 +5239,66 @@ Related Commands:
     TIC MARK LABEL THICKNESS   = Sets the line width for tic labels.
  
 Applications:
-    XX
+    Presentation Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
+    2020/11: Support for RGB colors.
  
-Program:
+Program 1:
     LEGEND 1 PRESENTATION GRAPHICS
     LEGEND 2 3-D BAR HISTOGRAM
     LET Y = DATA 392 341 307 203 115 59 38 32 29 28
     LET N = NUMBER Y
     LET X = SEQUENCE 1 1 N
     .
-    LINES BLANK ALL; BAR ON ALL
-    BAR WIDTH .5 ALL; BAR DIMENSION 3 ALL; BAR FILL ONTS ALL
+    LINES BLANK ALL
+    BAR ON ALL
+    BAR WIDTH .5 ALL
+    BAR DIMENSION 3 ALL
+    BAR FILL ONTS ALL
     .
-    XLIMITS 1 10; XTIC OFFSET 1 1
-    MAJOR XTIC MARK NUMBER 10; MINOR XTIC MARK NUMBER 0
+    XLIMITS 1 10
+    XTIC OFFSET 1 1
+    MAJOR XTIC MARK NUMBER 10
+    MINOR XTIC MARK NUMBER 0
     X1TIC MARK LABEL FORMAT ALPHA
     X1TIC MARK LABEL CONTENT Apollo Sun HP DEC SYM SGI IBM DG TI Xerox
     X1TIC MARK LABEL CASE ASIS
-    X1TIC MARK LABEL COLOR G75
+    X1TIC MARK LABEL COLOR RED
+    Y1TIC MARK LABEL COLOR BLUE
     YLIMITS 0 500
     .
-    TITLE DEMONSTRATE TIC LABEL COLOR
+    TITLE DEMONSTRATE TIC MARK LABEL COLOR
+    PLOT Y X X
+ 
+Program 2:
+    LEGEND 1 PRESENTATION GRAPHICS
+    LEGEND 2 3-D BAR HISTOGRAM
+    LET Y = DATA 392 341 307 203 115 59 38 32 29 28
+    LET N = NUMBER Y
+    LET X = SEQUENCE 1 1 N
+    .
+    LINES BLANK ALL
+    BAR ON ALL
+    BAR WIDTH .5 ALL
+    BAR DIMENSION 3 ALL
+    BAR FILL ONTS ALL
+    .
+    XLIMITS 1 10
+    XTIC OFFSET 1 1
+    MAJOR XTIC MARK NUMBER 10
+    MINOR XTIC MARK NUMBER 0
+    X1TIC MARK LABEL FORMAT ALPHA
+    X1TIC MARK LABEL CONTENT Apollo Sun HP DEC SYM SGI IBM DG TI Xerox
+    X1TIC MARK LABEL CASE ASIS
+    X1TIC MARK LABEL COLOR RED
+    Y1TIC MARK LABEL COLOR BLUE
+    X1TIC MARK LABEL RGB COLOR 220 109 88
+    Y1TIC MARK LABEL RGB COLOR 175 238 238
+    YLIMITS 0 500
+    .
+    TITLE DEMONSTRATE TIC MARK LABEL COLOR
     PLOT Y X X
  
 -----TIC MARK LABEL CONTENTS------------------------------------------
@@ -7437,15 +7598,56 @@ Description:
     defaulted (via the TITLE COLOR command with no arguments) or
     overridden with new title colors.
  
-Syntax:
-    TITLE COLOR   <color>
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the title RGB color, Dataplot first checks if the device
+    supports RGB colors. If not, the named color will be used.  If the
+    device does support RGB color, Dataplot will check if an RGB color
+    has been specified.  If yes, then that RGB color is used.  If not,
+    the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
+    TITLE COLOR  <color>
     where <color> is a character string that specifies the desired
-              color.   Enter HELP COLOR for a list of available colors.
+              color.
+ 
+Syntax 2:
+    TITLE RGB COLOR <red> <green> <blue>
+    where <red> is a number or parameter that specifies the red
+              component;
+          <green> is a number or parameter that specifies the green
+              component;
+    and   <blue> is a number or parameter that specifies the blue
+              component.
+
+    To turn off the RGB color, set the values to -1 (any negative value
+    will work).  Values greater than 255 will be set to 255.
  
 Examples:
     TITLE COLOR BLUE
     TITLE COLOR YELLOW
     TITLE COLOR WHITE
+    TITLE RGB COLOR 220 109 88
  
 Default:
     The title color is black.
@@ -7464,16 +7666,39 @@ Related Commands:
     TITLE THICKNESS     = Sets the title thickness.
  
 Applications:
-    XX
+    Presentation Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
+    2020/11: Support for RGB colors.
  
-Program:
+Program 1:
     SKIP 25
     READ GEAR.DAT DIAMETER BATCH
     .
-    TITLE COLOR G50
+    TITLE COLOR BLUE
+    TITLE CASE ASIS
+    LABEL CASE ASIS
+    LEGEND CASE ASIS
+    TITLE  Gear Diameter Analysis
+    Y1LABEL Cpk
+    X1LABEL Batch
+    LEGEND 1 Process Capability
+    LEGEND 2 Cpk Plot
+    XTIC OFFSET 0.5 0.5
+    CHARACTER X BLANK
+    LINE BLANK SOLID
+    .
+    LET LSL = 0.98
+    LET USL = 1.02
+    CPK PLOT DIAMETER BATCH
+ 
+Program 2:
+    SKIP 25
+    READ GEAR.DAT DIAMETER BATCH
+    .
+    TITLE COLOR BLUE
+    TITLE RGB COLOR 175 238 238
     TITLE CASE ASIS
     LABEL CASE ASIS
     LEGEND CASE ASIS
@@ -15853,31 +16078,6 @@ Program:
        PRINT A
     END OF IF
 -------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

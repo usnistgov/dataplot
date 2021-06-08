@@ -4072,12 +4072,11 @@ C
           GOTO9999
         ENDIF
       ELSE
-        IF(P.LT.0.0.OR.P.GT.1.0)THEN
+        IF(P.LT.0.0.OR.P.GE.1.0)THEN
           WRITE(ICOUT,1)
           CALL DPWRST('XXX','BUG ')
           WRITE(ICOUT,46)P
           CALL DPWRST('XXX','BUG ')
-          PPF=0.0
           GOTO9999
         ENDIF
       ENDIF
@@ -4224,6 +4223,12 @@ C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
 C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE:  301-921-2315
 C     ORIGINAL VERSION--APRIL     1994. 
+C     UPDATED         --APRIL     2021. TREAT X = 0 AS SPECIAL CASE.
+C                                       USE HIGHER ACCURACY VERSION
+C                                       OF NORCDF
+C
+      DOUBLE PRECISION DX
+      DOUBLE PRECISION DCDF
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -4235,26 +4240,26 @@ C---------------------------------------------------------------------
 C
 C     CHECK THE INPUT ARGUMENTS FOR ERRORS
 C
-      IF(X.LT.0.0)GOTO50
-      GOTO90
-   50 CONTINUE
-      WRITE(ICOUT,4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,5)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,46)X
-      CALL DPWRST('XXX','BUG ')
       CDF=0.0
-      RETURN
-   90 CONTINUE
-    4 FORMAT('***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT')
-    5 FORMAT('      TO THE HFNCDF SUBROUTINE IS NEGATIVE *****')
-   46 FORMAT('***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      IF(X.LT.0.0)THEN
+        WRITE(ICOUT,4)
+    4   FORMAT('***** WARNING--THE FIRST ARGUMENT TO HFNCDF IS ',
+     1         'NEGATIVE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,46)X
+   46   FORMAT('***** THE VALUE OF THE ARGUMENT IS ',G15.7,'.')
+        CALL DPWRST('XXX','BUG ')
+      ELSEIF(X.EQ.0.0)THEN
+        CDF=0.0
+      ELSE
 C
-C-----START POINT-----------------------------------------------------
+C-------START POINT-----------------------------------------------------
 C
-      CALL NORCDF(X,CDF)
-      CDF=2.0*CDF-1.0
+        DX=DBLE(X)
+        CALL NODCDF(X,DCDF)
+        DCDF=2.0D0*DCDF-1.0D0
+        CDF=REAL(DCDF)
+      ENDIF
 C
       RETURN
       END
@@ -4567,6 +4572,10 @@ C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
 C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE:  301-921-2315
 C     ORIGINAL VERSION--APRIL     1994. 
+C     UPDATED         --APRIL     2021. USE NODPDF INSTEAD OF NORPDF
+C
+      DOUBLE PRECISION DX
+      DOUBLE PRECISION DPDF
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -4578,27 +4587,26 @@ C---------------------------------------------------------------------
 C
 C     CHECK THE INPUT ARGUMENTS FOR ERRORS
 C
-      IF(X.LT.0.0)GOTO50
-      GOTO90
-   50 CONTINUE
-      WRITE(ICOUT,4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,5)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,46)X
-      CALL DPWRST('XXX','BUG ')
       PDF=0.0
-      RETURN
-   90 CONTINUE
-    4 FORMAT('***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT')
-    5 FORMAT('      TO THE HFNPDF SUBROUTINE IS NEGATIVE *****')
-   46 FORMAT('***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      IF(X.LT.0.0)THEN
+        WRITE(ICOUT,4)
+    4   FORMAT('***** WARNING--THE FIRST ARGUMENT TO HFNPDF IS ',
+     1         'NEGATIVE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,46)X
+   46   FORMAT('***** THE VALUE OF THE ARGUMENT IS ',G15.7,'.')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
 C
 C-----START POINT-----------------------------------------------------
 C
-      CALL NORPDF(X,PDF)
-      PDF=2.0*PDF
+      DX=DBLE(X)
+      CALL NODPDF(DX,DPDF)
+      DPDF=2.0D0*DPDF
+      PDF=REAL(DPDF)
 C
+ 9000 CONTINUE
       RETURN
       END 
       SUBROUTINE HFNPPF(P,PPF)
@@ -58001,16 +58009,19 @@ CCCCC MODIFIED TO SUPPORT "BOX DATA" OPTION.  JULY 1997.
 CCCCC IF(ICOM.EQ.'BOX'.AND.NUMARG.GE.1.AND.
 CCCCC1IHARG(1).NE.'PLOT'.AND.IHARG(1).NE.'COX')GOTO2500
       IF(NUMARG.GE.1.AND.
-     1IHARG(1).EQ.'PLOT'.OR.IHARG(1).EQ.'COX'.OR.
-     1IHARG(1).EQ.'PATT'.OR.IHARG(1).EQ.'THIC'.OR.
-     1IHARG(1).EQ.'SHAD'.OR.
-     1IHARG(1).EQ.'COLO'.OR.IHARG(1).EQ.'FILL')
+     1   IHARG(1).EQ.'PLOT'.OR.IHARG(1).EQ.'COX'.OR.
+     1   IHARG(1).EQ.'PATT'.OR.IHARG(1).EQ.'THIC'.OR.
+     1   IHARG(1).EQ.'SHAD'.OR.
+     1   IHARG(1).EQ.'CORN'.OR.IHARG(1).EQ.'COOR'.OR.
+     1   IHARG(1).EQ.'COLO'.OR.IHARG(1).EQ.'FILL')
      1GOTO2599
       IF(NUMARG.GE.2.AND.
-     1IHARG(2).EQ.'PATT'.OR.IHARG(2).EQ.'THIC'.OR.
-     1IHARG(2).EQ.'SHAD'.OR.
-     1IHARG(2).EQ.'COLO'.OR.IHARG(2).EQ.'FILL')
+     1   IHARG(2).EQ.'PATT'.OR.IHARG(2).EQ.'THIC'.OR.
+     1   IHARG(2).EQ.'SHAD'.OR.
+     1   IHARG(2).EQ.'CORN'.OR.IHARG(2).EQ.'COOR'.OR.
+     1   IHARG(2).EQ.'COLO'.OR.IHARG(2).EQ.'FILL')
      1GOTO2599
+C
       IF(ICOM.EQ.'BOX')GOTO2500
       GOTO2599
 C

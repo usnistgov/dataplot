@@ -1,13 +1,13 @@
- 78300.    (VERSION 2020.11)   total number of lines in file (including this line)
+ 78500.    (VERSION 2021.05)   total number of lines in file (including this line)
  8.                          number of     sections below
   100.    D                  first line number of D section
 18700.    E                  first line number of E section
 27700.    F                  first line number of F section
-37100.    G                  first line number of G section
-54000.    H                  first line number of H section
-61300.    I                  first line number of I section
-70600.    J                  first line number of J section
-72600.    K                  first line number of K section
+37200.    G                  first line number of G section
+54200.    H                  first line number of H section
+61500.    I                  first line number of I section
+70800.    J                  first line number of J section
+72800.    K                  first line number of K section
 
 ----------------------------------------------------------
  
@@ -34595,7 +34595,35 @@ Description:
     all of the sides of the frame by specifying the pre-fix in the
     command (see the SYNTAX section below).
  
-Syntax:
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the frame color, Dataplot first checks if the device
+    supports RGB colors. If not, the named color will be used.  If the
+    device does support RGB color, Dataplot will check if an RGB color
+    has been specified.  If yes, then that RGB color is used.  If not,
+    the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
     <prefix>FRAME COLOR   <color>
     where <color> specifies the desired color;
     and   <prefix> is as follows:
@@ -34607,12 +34635,34 @@ Syntax:
        the prefix Y1 refers to the left  vertical   side
        the prefix Y2 refers to the right vertical   side.
  
+Syntax 2:
+    <prefix>FRAME RGB COLOR  <red>  <green>  <blue>
+    where <red> is an integer number or parameter that specifies
+                the red component;
+          <green> is an integer number or parameter that specifies
+                the green component;
+          <blue> is an integer number or parameter that specifies
+                the blue component;
+    and   <prefix> is as follows:
+       no prefix     refers to all 4 sides
+       the prefix X  refers to both horizontal sides
+       the prefix Y  refers to both vertical sides
+       the prefix X1 refers to the lower horizontal side
+       the prefix X2 refers to the upper horizontal side
+       the prefix Y1 refers to the left  vertical   side
+       the prefix Y2 refers to the right vertical   side.
+
+    To turn off the RGB color, set the values to -1 (any negative value
+    will work).  Values greater than 255 will be set to 255.
+
 Examples:
     FRAME COLOR YELLOW
     FRAME COLOR RED
     FRAME COLOR
     X2FRAME COLOR CYAN
     Y2FRAME COLOR MAGENTA
+    FRAME RGB COLOR 220 109 88
+    XFRAME RGB COLOR 175 238 238
  
 Note:
     A ...FRAME COLOR command with no arguments reverts the setting to
@@ -34659,12 +34709,13 @@ Related Commands:
     SEGMENT COORDINATES = Sets the locations for plot segments.
  
 Applications:
-    XX
+    Presentation Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
+    2020/11: Support for RGB colors
  
-Program:
+Program 1:
     SERIAL READ LEAD
     164 426 59 98 312 263 607 497 213 54 160 262 547 325 419 94 70
     END OF DATA
@@ -34673,11 +34724,9 @@ Program:
     END OF DATA
     .
     TITLE DEMONSTRATE FRAME COLOR COMMAND
-    X1FRAME COLOR G10
-    X2FRAME COLOR G90
-    Y1FRAME COLOR G25
-    Y2FRAME COLOR G75
-    FRAME THICKNESS 0.3
+    XFRAME COLOR RED
+    YFRAME COLOR BLUE
+    FRAME THICKNESS 0.5
     X1LABEL LEAD
     Y1LABEL POTASSIUM
     CHARACTER CIRCLE
@@ -34685,6 +34734,27 @@ Program:
     LINE BLANK ALL
     PLOT POT VS LEAD
  
+Program 2:
+    SERIAL READ LEAD
+    164 426 59 98 312 263 607 497 213 54 160 262 547 325 419 94 70
+    END OF DATA
+    SERIAL READ POT
+    106 175 61 79 94 121 424 328 107 218 140 179 246 231 245 339 99
+    END OF DATA
+    .
+    TITLE DEMONSTRATE FRAME RGB COLOR COMMAND
+    XFRAME COLOR RED
+    YFRAME COLOR BLUE
+    XFRAME RGB COLOR 220 109 88
+    YFRAME RGB COLOR 175 238 238
+    FRAME THICKNESS 0.5
+    X1LABEL LEAD
+    Y1LABEL POTASSIUM
+    CHARACTER CIRCLE
+    CHARACTER SIZE 1.5
+    LINE BLANK ALL
+    PLOT POT VS LEAD
+
 -----FRAME COORDINATES------------------------------------------------
  
 FRAME COORDINATES
@@ -37087,6 +37157,36 @@ Program:
  
  
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -51630,7 +51730,35 @@ Description:
     The analyst can independently control the color of the horizontal
     and vertical grid lines by specifying the pre-fix in the command.
  
-Syntax:
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the grid RGB color, Dataplot first checks if the device
+    supports RGB colors. If not, the named color will be used.  If the
+    device does support RGB color, Dataplot will check if an RGB color
+    has been specified.  If yes, then that RGB color is used.  If not,
+    the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
     <prefix>GRID COLOR   <color>
     where <color> specifies the desired color;
     and   <prefix> is one of the following:
@@ -51638,12 +51766,30 @@ Syntax:
        the prefix X  refers to vertical grids
        the prefix Y  refers to horizontal grids.
  
+Syntax 2:
+    <prefix>GRID RGB COLOR  <red>  <green>  <blue>
+    where <red> is an integer number or parameter that specifies
+                the red component;
+          <green> is an integer number or parameter that specifies
+                the green component;
+          <blue> is an integer number or parameter that specifies
+                the blue component;
+    and   <prefix> is one of the following:
+       no prefix     refers to both grid lines
+       the prefix X  refers to vertical grids
+       the prefix Y  refers to horizontal grids.
+ 
+    To turn off the RGB color, set the values to -1 (any negative value
+    will work).  Values greater than 255 will be set to 255.
+
 Examples:
     GRID COLOR YELLOW
     GRID COLOR RED
     GRID COLOR
     XGRID COLOR CYAN
     YGRID COLOR MAGENTA
+    GRID RGB COLOR 220 109 88
+    YGRID RGB COLOR 175 238 238
  
 Note:
     The GRID COLOR command with no arguments reverts the grid color to
@@ -51672,7 +51818,6 @@ Related Commands:
     LOG                 = Sets the on/off switch for a log scale.
     TIC                 = Sets the on/off switch for the plot tics.
     MAJOR TIC NUMBER    = Sets the number of major tics.
-    MINOR TIC NUMBER    = Sets the number of minor tics.
     TIC LABEL           = Sets the on/off switch for plot tic labels.
     TIC LABEL DECIMALS  = Sets the number of decimal places for plot
                           tic mark labels.
@@ -51683,24 +51828,45 @@ Related Commands:
     LEGEND              = Sets the plot legends.
     LEGEND COORDINATES  = Sets the locations for plot legends.
     BOX COORDINATES     = Sets the locations for plot boxes.
-    ARROW COORDINATES   = Sets the locations for plot arrows.
-    SEGMENT COORDINATES = Sets the locations for plot segments.
  
 Applications:
     Presentation Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
+    2020/11: Support for RGB colors
  
-Program:
+Program 1:
     LET LEAD = DATA ...
        164 426 59 98 312 263 607 497 213 54 160 262 547 325 419 94 70
     LET POT = DATA ...
        106 175 61 79 94 121 424 328 107 218 140 179 246 231 245 339 99
     TITLE DEMONSTRATE GRID COLOR COMMAND
     GRID ON
-    XGRID COLOR G10
-    YGRID COLOR G90
+    GRID THICKNESS 0.3
+    GRID PATTERN DASH
+    XGRID COLOR RED
+    YGRID COLOR BLUE
+    X1LABEL LEAD
+    Y1LABEL POTASSIUM
+    CHARACTER CIRCLE
+    CHARACTER SIZE 1.5
+    LINE BLANK ALL
+    PLOT POT VS LEAD
+ 
+Program 2:
+    LET LEAD = DATA ...
+       164 426 59 98 312 263 607 497 213 54 160 262 547 325 419 94 70
+    LET POT = DATA ...
+       106 175 61 79 94 121 424 328 107 218 140 179 246 231 245 339 99
+    TITLE DEMONSTRATE GRID RGB COLOR COMMAND
+    GRID ON
+    GRID THICKNESS 0.3
+    GRID PATTERN DASH
+    XGRID COLOR RED
+    YGRID COLOR BLUE
+    XGRID RGB COLOR 220 109 88
+    YGRID RGB COLOR 175 238 238
     X1LABEL LEAD
     Y1LABEL POTASSIUM
     CHARACTER CIRCLE
@@ -53928,6 +54094,40 @@ Program:
  
  
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

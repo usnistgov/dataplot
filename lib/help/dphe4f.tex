@@ -1,9 +1,9 @@
-48000.      (VERSION 2021.03)   total number of lines in file (including this line)
+48100.      (VERSION 2021.05)   total number of lines in file (including this line)
  4.                          number of     sections below
   100.    L                  first line number of L section
-19500.    M                  first line number of M section
-38200.    N                  first line number of N section
-44400.    O                  first line number of O section
+19600.    M                  first line number of M section
+38300.    N                  first line number of N section
+44500.    O                  first line number of O section
  
 ----------------------------------------------------------
  
@@ -424,12 +424,42 @@ Description:
     ...LABEL COLOR command with no arguments) or until overridden with
     new label colors.  The analyst can define colors for all 5 plot
     labels:
+
        1) 3 below the bottom horizontal frame;
        2) 1 to the left of the left vertical frame;
        3) 1 to the right of the right vertical frame line.
+
     The label is specified by the prefix in the command.
  
-Syntax:
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the label RGB color, Dataplot first checks if the device
+    supports RGB colors. If not, the named color will be used.  If the
+    device does support RGB color, Dataplot will check if an RGB color
+    has been specified.  If yes, then that RGB color is used.  If not,
+    the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
     <prefix>LABEL COLOR   <color>
     where <color> specifies the desired color;
     and   <prefix> is one of the following:
@@ -447,11 +477,38 @@ Syntax:
     one (with no prefix) which defines the color uniformly for all 5
     labels.
  
+Syntax 2:
+    <prefix>LABEL RGB COLOR  <red>  <green>  <blue>
+    where <red> is a number or parameter that specifies the red
+                component;
+          <green> is a number or parameter that specifies the green
+                component;
+          <blue> is a number or parameter that specifies the blue
+                component;
+    and   <prefix> is one of the following:
+             X1        refers to the first horizontal label
+             X2        refers to the second horizontal label
+             X3        refers to the third  horizontal label
+             X         refers to the first horizontal label
+             Y1        refers to the left vertical label
+             Y2        refers to the right vertical label
+             Y         refers to the left and right vertical labels
+             no prefix refers to all 5 axis labels.
+ 
+    The specification of each individual label with a different color
+    is rare.  The most common form (by far) for this command is the last
+    one (with no prefix) which defines the color uniformly for all 5
+    labels.
+ 
+    To turn off the RGB color, set the values to -1 (any negative value
+    will work).  Values greater than 255 will be set to 255.
+
 Examples:
     Y1LABEL COLOR BLUE
     YLABEL COLOR BLUE
     LABEL COLOR YELLOW
     LABEL COLOR WHITE
+    LABEL RGB COLOR 238 238 75
  
 Default:
     All label colors are black.
@@ -480,10 +537,6 @@ Related Commands:
     TEXT                = Writes a text string.
     TITLE               = Sets the plot title.
     LEGEND              = Sets the plot legends.
-    LEGEND COORDINATES  = Sets the locations for plot legends.
-    BOX COORDINATES     = Sets the locations for plot boxes.
-    ARROW COORDINATES   = Sets the locations for plot arrows.
-    SEGMENT COORDINATES = Sets the locations for plot segments.
     FRAME               = Sets the on/off switch for the plot frame.
     TITLE COLOR         = Sets the color for the plot title.
     LEGEND COLOR        = Sets the color for plot legends.
@@ -509,8 +562,9 @@ Applications:
  
 Implementation Date:
     Pre-1987
+    2020/10: Added support for RGB color
  
-Program:
+Program 1:
     . POLLUTION SOURCE ANALYSIS, LLOYD CURRIE, DATE--1990
     . SUBSET OF CURRIE.DAT REFERENCE FILE
     .
@@ -524,7 +578,31 @@ Program:
     TITLE DEMONSTRATE LABEL COLOR
     X1LABEL LEAD
     Y1LABEL POTASSIUM
-    LABEL COLOR G50
+    X1LABEL COLOR RED
+    Y1LABEL COLOR BLUE
+    CHARACTER CIRCLE
+    CHARACTER SIZE 1.5
+    LINE BLANK ALL
+    PLOT POT VS LEAD
+ 
+Program 2:
+    . POLLUTION SOURCE ANALYSIS, LLOYD CURRIE, DATE--1990
+    . SUBSET OF CURRIE.DAT REFERENCE FILE
+    .
+    SERIAL READ LEAD
+    164 426 59 98 312 263 607 497 213 54 160 262 547 325 419 94 70
+    END OF DATA
+    SERIAL READ POT
+    106 175 61 79 94 121 424 328 107 218 140 179 246 231 245 339 99
+    END OF DATA
+    .
+    TITLE DEMONSTRATE LABEL RGB COLOR
+    X1LABEL LEAD
+    Y1LABEL POTASSIUM
+    X1LABEL COLOR RED
+    Y1LABEL COLOR BLUE
+    X1LABEL RGB COLOR 220 109 88
+    Y1LABEL RGB COLOR 175 238 238
     CHARACTER CIRCLE
     CHARACTER SIZE 1.5
     LINE BLANK ALL
@@ -5429,17 +5507,61 @@ Description:
     (via the LEGEND ... COLOR command with no arguments) or until
     overridden with new legend colors.
  
-Syntax:
-    LEGEND   <id>   COLOR   <color>
+    Dataplot provides two methods for specifying colors.
+
+        1. Colors can be defined by name (or by the corresponding index).
+           Dataplot adopted it's named colors from the X11 project.
+           Currently, 162 named colors and 100 levels of grayscale are
+           supported.  Grayscale can be specified with either G0, G1, ...,
+           G100 (or -1, -2, ..., -100).  Many older devices support only a
+           limited number of colors.  For these devices, unsupported colors
+           will be mapped to one of the available colors.  To specify a
+           named color, see Syntax 1.
+
+        2. Most modern graphics devices support full RGB (RedBlueGreen)
+           color.  You can alternatively specify RGB colors by entering
+           three integer values to represent the Red, Green and Blue
+           components, respectively.  These values should be in the range
+           0 to 255.
+
+    When setting the legend RGB color, Dataplot first checks if the device
+    supports RGB colors. If not, the named color will be used.  If the
+    device does support RGB color, Dataplot will check if an RGB color
+    has been specified.  If yes, then that RGB color is used.  If not,
+    the named color will be used.
+
+    To see the list of supported named colors (with the associated index
+    number), see
+
+    https://www.itl.nist.gov/div898/software/dataplot/refman1/ch11/homepage.htm
+
+Syntax 1:
+    LEGEND  <id>  COLOR  <color>
     where <id> is an integer number or parameter in the range 1 to 100
               that specifies the legend identifier;
     and   <color> is the desired legend color.
+ 
+Syntax 2:
+    LEGEND  <id>  RGB COLORS <red> <green> <blue>
+    where <id> is an integer number or parameter in the range 1 to 100
+              that specifies the legend identifier;
+          <red> is a number or parameter that specifies the red
+              component;
+          <green> is a number or parameter that specifies the green
+              component;
+          <blue> is a number or parameter that specifies the blue
+              component.
+
+    To turn off the RGB color, set the values to -1 (any negative value
+    will work).  Values greater than 255 will be set to 255.
  
 Examples:
     LEGEND 1 COLOR YELLOW
     LEGEND 2 COLOR BLACK
     LEGEND 1 COLOR
     LEGEND COLOR
+    LEGEND 1 RGB COLOR 220 109 88
+    LEGEND 2 RGB COLOR 175 238 238
  
 Note:
     A LEGEND ... COLOR command with no color reverts the color to
@@ -5487,12 +5609,13 @@ Related Commands:
     COLOR                = Sets the color of TEXT characters.
  
 Applications:
-    XX
+    Presentation Graphics
  
 Implementation Date:
-    XX
+    Pre-1987
+    2020/10: Support for RGB colors
  
-Program:
+Program 1:
     . POLLUTION SOURCE ANALYSIS, LLOYD CURRIE, DATE--1990
     . SUBSET OF CURRIE.DAT REFERENCE FILE
     .
@@ -5505,18 +5628,45 @@ Program:
     END OF DATA
     .
     CHARACTER X1 X2 Y1 Y2
-    CHARACTER COLOR G50 G50 G90 G90
+    CHARACTER COLOR RED RED BLUE BLUE
     LINE BLANK ALL
     LEGEND 1 X - POTASSIUM
     LEGEND 2 Y - LEAD
-    LEGEND 1 COLOR G50
-    LEGEND 2 COLOR G90
+    LEGEND 1 COLOR RED
+    LEGEND 2 COLOR BLUE
     .
     TITLE DEMONSTRATE LEGEND COLOR COMMAND
     LET X = SEQUENCE 1 1 17
     PLOT POT X ID2 AND
     PLOT LEAD X ID2
  
+Program 2:
+    . POLLUTION SOURCE ANALYSIS, LLOYD CURRIE, DATE--1990
+    . SUBSET OF CURRIE.DAT REFERENCE FILE
+    .
+    LET ID2 = DATA 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2
+    SERIAL READ LEAD
+    164 426 59 98 312 263 607 497 213 54 160 262 547 325 419 94 70
+    END OF DATA
+    SERIAL READ POT
+    106 175 61 79 94 121 424 328 107 218 140 179 246 231 245 339 99
+    END OF DATA
+    .
+    CHARACTER X1 X2 Y1 Y2
+    CHARACTER COLOR RED RED BLUE BLUE
+    LINE BLANK ALL
+    LEGEND 1 X - POTASSIUM
+    LEGEND 2 Y - LEAD
+    LEGEND 1 COLOR RED
+    LEGEND 2 COLOR BLUE
+    LEGEND 1 RGB COLOR 220 109 88
+    LEGEND 2 RGB COLOR 175 238 238
+    .
+    TITLE DEMONSTRATE LEGEND RGB COLOR COMMAND
+    LET X = SEQUENCE 1 1 17
+    PLOT POT X ID2 AND
+    PLOT LEAD X ID2
+
 -----LEGEND COORDINATES-----------------------------------------------
  
 LEGEND COORDINATES
@@ -19418,56 +19568,6 @@ Program:
  
  
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

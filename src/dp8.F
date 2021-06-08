@@ -16367,6 +16367,281 @@ C
 C
       RETURN
       END
+      SUBROUTINE DPALIA(IBUGS2,ISUBRO,IFOUND,IERROR)
+C
+C     PURPOSE--CREATE USER-DEFINED COMMANDS.
+C
+C              FOR EXAMPLE:
+C
+C                  ALIAS RX  RESET DATA; CALL CLIPBOARD
+C                  ALIAS V   PSVIEW ^FILEOUT
+C
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2021/04
+C     ORIGINAL VERSION--APRIL     2021.
+C
+C-----NON-COMMON VARIABLES----------------------------------------
+C
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+C
+      INCLUDE 'DPCOPA.INC'
+C
+      CHARACTER (LEN=MAXSTR) :: ICANS
+      CHARACTER (LEN=MAXSTR) :: ISTRIN
+      CHARACTER (LEN=10)     :: IFORMT
+      CHARACTER (LEN=4)      :: ICASE
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      IFOUND='YES'
+      IERROR='NO'
+      ISTRIN=' '
+      ICANS=' '
+      IFORMT=' '
+C
+      NCSTRI=0
+      IROW=1
+C
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'ALIA')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('AT THE BEGINNING OF DPALIA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGS2,ISUBRO,IFOUND,IERROR
+   52   FORMAT('IBUGS2,ISUBRO,IFOUND,IERROR = ',4(A4,2X))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)MAXALI,NUMALI,IWIDTH
+   53   FORMAT('MAXALI,NUMALI,IWIDTH = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NUMALI.GE.1)THEN
+          DO56I=1,NUMALI
+            WRITE(ICOUT,57)I,IALNAM(I),IALIAS(I)(1:100)
+   57       FORMAT('I,IALNAM(I),IALIAS(I)(1:100) = ',I5,2X,A8,2X,A100)
+            CALL DPWRST('XXX','BUG ')
+   56     CONTINUE
+        ENDIF
+      ENDIF
+C
+C               ***************************************************
+C               **  STEP 1--                                     **
+C               **  DETERMINE THE ELEMENT NUMBER FOR THE ALIAS.  **
+C               ***************************************************
+C
+      IF(ICOM.NE.'ALIA')GOTO9000
+C
+      IF(NUMARG.GE.1 .AND. IHARG(1).EQ.'CLEA' .AND.
+     1   IHARG2(1).EQ.'R   ')THEN
+        IF(NUMARG.EQ.2 .AND. IHARG(2).EQ.'ALL ')THEN
+          DO80I=1,NUMALI
+            IALIAS(I)=' '
+            IALNAM(I)=' '
+   80     CONTINUE
+          NUMALI=0
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,81)
+   81     FORMAT('ALL ALIAS COMMANDS HAVE BEEN CLEARED')
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(NUMARG.EQ.2)THEN
+          DO91I=1,NUMALI
+            IF(IHARG(2).EQ.IALNAM(I)(1:4) .AND.
+     1         IHARG2(2).EQ.IALNAM(I)(5:8))THEN
+              IF(I.EQ.NUMALI)THEN
+                IALNAM(I)=' '
+                IALIAS(I)=' '
+                NUMALI=NUMALI-1
+              ELSE
+                DO96J=I,NUMALI-1
+                  IALIAS(J)=' '
+                  IALIAS(J)=IALIAS(I+1)
+                  IALNAM(J)=IALNAM(I+1)
+   96           CONTINUE
+                IALIAS(NUMALI)=' '
+                IALNAM(NUMALI)=' '
+                NUMALI=NUMALI-1
+              ENDIF
+              GOTO92
+            ENDIF
+   91     CONTINUE
+   92     CONTINUE
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,97)IHARG(2),IHARG2(2)
+   97     FORMAT('ALIAS ',2A4,' HAS BEEN CLEARED.')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
+      ENDIF
+C
+      IF(NUMARG.LE.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,101)
+  101   FORMAT('***** ERROR IN ALIAS (DPALIA)--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,102)
+  102   FORMAT('      THE ALIAS COMMAND REQUIRES AT LEAST TWO ',
+     1         'ARGUMENTS.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,103)ICOM,ICOM2
+  103   FORMAT('      THE COMMAND IS: ',2A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,105)IHARG(1),IHARG2(1)
+  105   FORMAT('      THE FIRST ARGUMENT IS: ',2A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,106)NUMARG
+  106   FORMAT('      NUMARG = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C     CHECK TO SEE IF ALIAS NAME CURRENTLY USED
+C
+      ICASE='NEW'
+C
+      IF(NUMALI.GE.1)THEN
+        DO110I=1,NUMALI
+          IF(IHARG(1).EQ.IALNAM(I)(1:4) .AND.
+     1       IHARG2(1).EQ.IALNAM(I)(5:8))THEN
+            IROW=I
+            IALIAS(I)=' '
+            ICASE='OLD'
+            GOTO119
+          ENDIF
+  110   CONTINUE
+  119   CONTINUE
+      ENDIF
+C
+      IF(ICASE.EQ.'NEW')THEN
+C
+        IF(NUMALI.GE.MAXALI)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,101)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,122)
+  122     FORMAT('      THE MAXIMUM NUMBER OF ALIASES HAS BEEN ',
+     1           'EXCEEDED.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,123)MAXALI
+  123     FORMAT('      THE MAXIMUM NUMBER OF ALIASES ALLOWED IS:   ',
+     1           I6)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,125)NUMALI
+  125     FORMAT('      THE NUMBER OF CURRENTLY DEFINED ALIASES IS: ',
+     1           I6)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+C
+        NUMALI=NUMALI+1
+        IALNAM(NUMALI)(1:4)=IHARG(1)
+        IALNAM(NUMALI)(5:8)=IHARG2(1)
+        IALIAS(NUMALI)=' '
+        IROW=NUMALI
+      ENDIF
+C
+C               *************************************************
+C               **  STEP 2--                                   **
+C               **  DETERMINE THE COMMAND STRING.              **
+C               *************************************************
+C
+      ICANS=' '
+      DO130I=1,IWIDTH
+        ICANS(I:I)=IANSLC(I)
+  130 CONTINUE
+C
+      ISTART=1
+      ISTOP=IWIDTH
+      IWORD=3
+      CALL DPEXW3(ICANS,ISTART,ISTOP,IWORD,
+     1            ICOL1,ICOL2,ISTRIN,NCSTRI,
+     1            IBUGS2,ISUBRO,IERROR)
+C
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'ALIA')THEN
+        WRITE(ICOUT,131)ICOL1,ICOL2,NCSTRI
+  131   FORMAT('AFTER CALL DPEXW3: ICOL1,ICOL2,NCSTRI = ',3I6)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,133)ISTRIN(1:NCSTRI)
+  133   FORMAT('ISTRIN(1:NCSTRI) = ',A)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      IF(NCSTRI.GE.1)THEN
+        IALIAS(IROW)(1:NCSTRI)=ISTRIN(1:NCSTRI)
+        IFOUND='YES'
+C
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,141)IALNAM(IROW)
+  141     FORMAT('THE ALIAS, ',A8,', HAS BEEN SET TO')
+          CALL DPWRST('XXX','BUG ')
+          IFORMT='(A    )'
+          WRITE(IFORMT(3:6),'(I4)')NCSTRI
+          WRITE(ICOUT,IFORMT)IALIAS(IROW)(1:NCSTRI)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
+      ELSE
+        NCSTRI=0
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,151)
+  151   FORMAT('NO COMMAND DEFINED FOR THE ALIAS.')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'ALIA')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('AT THE END       OF DPALIA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9021)IFOUND,IERROR,NUMALI
+ 9021   FORMAT('IFOUND,IERROR,NUMALI = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NUMALI.GE.1)THEN
+          DO9026I=1,NUMALI
+            WRITE(ICOUT,57)I,IALNAM(I),IALIAS(I)(1:100)
+            CALL DPWRST('XXX','BUG ')
+ 9026     CONTINUE
+        ENDIF
+      ENDIF
+C
+      RETURN
+      END
       SUBROUTINE DPALLA(NPLOTV,NPLOTP,NS,ICASPL,IAND1,IAND2,
      1                  IBUGG2,IBUGG3,IBUGQ,ISUBRO,IFOUND,IERROR)
 C

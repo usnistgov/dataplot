@@ -774,7 +774,7 @@ C
      1                BARHEF,BARWEF,
      1                IRHSTG,IHSTCW,IHSTEB,IHSTOU,IASHWT,IHSTMC,IHSTOP,
      1                ICAPSW,IFORSW,
-     1                IGUIFL,IERRFA,
+     1                IGUIFL,IERRFA,IFRALI,
      1                IAND1,IAND2,ICONT,NUMHPP,NUMVPP,
      1                MAXNXT,
      1                ISUBRO,IFOUND,IERROR)
@@ -26520,10 +26520,10 @@ C
 10021     FORMAT('THE FIRST          COMPUTED VALUE OF ',2A4,
      1           ' = ',E13.6,' (ROW ',I5,')')
           CALL DPWRST('XXX','BUG ')
-          IF(NS2.NE.1)THEN
+          IF(NS2.NE.1 .AND. IJN.LE.MAXOBV)THEN
             WRITE(ICOUT,10031)NS2,ILEFT,ILEFT2,V(IJN),IROWN
 10031       FORMAT('THE LAST (',I5,'TH) COMPUTED VALUE OF ',2A4,
-     1             ' = ',E13.6,' (ROW ',I5,')')
+     1             ' = ',E13.6,' (ROW ',I10,')')
             CALL DPWRST('XXX','BUG ')
           ENDIF
         ELSEIF(ICOLL.EQ.MAXCP1)THEN

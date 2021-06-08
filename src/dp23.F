@@ -1193,7 +1193,7 @@ C
      1                BARHEF,BARWEF,
      1                IRHSTG,IHSTCW,IHSTEB,IHSTOU,IASHWT,IHSTMC,IHSTOP,
      1                ICAPSW,IFORSW,
-     1                IGUIFL,IERRFA,
+     1                IGUIFL,IERRFA,IFRALI,
      1                IAND1,IAND2,ICONT,NUMHPP,NUMVPP,
 CCCCC1                TEMP,TEMP2,TEMP3,XTEMP1,XTEMP2,MAXNXT,
      1                MAXNXT,

@@ -1,0 +1,1747 @@
+Name:         rgb_color_schemes.txt
+Description:  List of RGB color palettes where
+              RGB values are in the range 0 - 255.
+Sources:      1. Masataka Okabe and Kei Ito palette designed
+                 for color blindness (pallette 1)
+              2. ColorBrewer (palettes 2 to 271)
+                 A large number of Palettes developed by
+                 Cynthia Brewer of Penn State University.
+                 The original web site is at
+
+                     https://colorbrewer2.org/
+
+                 These values were extracted from an Excel file that
+                 can be downloaded from this site.
+
+To read this file into Dataplot, do
+
+    SKIP 50
+    SET READ FORMAT F3.0,F9.0,F8.0,F8.0,F7.0
+    READ RGB_COLOR_SCHEMES.TXT PALETID INDEX IRED IGREEN IBLUE
+    SET READ FORMAT
+    SKIP 0
+
+To extract a specific palette, do something like
+
+    RETAIN PALETID INDEX IRED IGREEN IBLUE  SUBSET PALETID 18
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Palette                               Color
+ ID      Index   Red   Green   Blue   Name              Description
+-------------------------------------------------------------------
+  1        1       0       0      0   Black             Okabe-Ito
+  1        2     230     159      0   Orange            (designed for color
+  1        3      86     180    233   SkyBlue           blindness) with
+  1        4       0     158    115   Bluish-Green      8 colors
+  1        5     240     228     66   Yellow
+  1        6       0     114    178   Blue
+  1        7     213      94      0   Vermillion
+  1        8     204     121    167   Reddish Purple
+  2        1     247     252    185   C                 ColorBrewer YellowGreen
+  2        2     173     221    142   F                 Sequential Scheme with
+  2        3      49     163     84   I                 3 colors
+  3        1     255     255    204   B                 ColorBrewer YellowGreen
+  3        2     194     230    153   E                 Sequential Scheme with
+  3        3     120     198    121   G                 4 colors
+  3        4      35     132     67   J
+  4        1     255     255    204   B                 ColorBrewer YellowGreen
+  4        2     194     230    153   E                 Sequential Scheme with
+  4        3     120     198    121   G                 5 colors
+  4        4      49     163     84   I
+  4        5       0     104     55   K
+  5        1     255     255    204   B                 ColorBrewer YellowGreen
+  5        2     217     240    163   D                 Sequential Scheme with
+  5        3     173     221    142   F                 6 colors
+  5        4     120     198    121   G
+  5        5      49     163     84   I
+  5        6       0     104     55   K
+  6        1     255     255    204   B                 ColorBrewer YellowGreen
+  6        2     217     240    163   D                 Sequential Scheme with
+  6        3     173     221    142   F                 7 colors
+  6        4     120     198    121   G
+  6        5      65     171     93   H
+  6        6      35     132     67   J
+  6        7       0      90     50   L
+  7        1     255     255    229   A                 ColorBrewer YellowGreen
+  7        2     247     252    185   C                 Sequential Scheme with
+  7        3     217     240    163   D                 8 colors
+  7        4     173     221    142   F                 7 colors
+  7        5     120     198    121   G
+  7        6      65     171     93   H
+  7        7      35     132     67   J
+  7        8       0      90     50   L
+  8        1     255     255    229   A                 ColorBrewer YellowGreen
+  8        2     247     252    185   C                 Sequential Scheme with
+  8        3     217     240    163   D                 9 colors
+  8        4     173     221    142   F
+  8        5     120     198    121   G
+  8        6      65     171     93   H
+  8        7      35     132     67   J
+  8        8       0     104     55   K
+  8        9       0      69     41   M
+  9        1     237     248    177   C                 ColorBrewer YellowGreenBlue
+  9        2     127     205    187   F                 Sequential Scheme with
+  9        3      44     127    184   I                 3 colors
+ 10        1     255     255    204   B                 ColorBrewer YellowGreenBlue
+ 10        2     161     218    180   E                 Sequential Scheme with
+ 10        3      65     182    196   G                 4 colors
+ 10        4      34      94    168   J
+ 11        1     255     255    204   B                 ColorBrewer YellowGreenBlue
+ 11        2     161     218    180   E                 Sequential Scheme with
+ 11        3      65     182    196   G                 5 colors
+ 11        4      44     127    184   I
+ 11        5      37      52    148   K
+ 12        1     255     255    204   B                 ColorBrewer YellowGreenBlue
+ 12        2     199     233    180   D                 Sequential Scheme with
+ 12        3     127     205    187   F                 6 colors
+ 12        4      65     182    196   G
+ 12        5      44     127    184   I
+ 12        6      37      52    148   K
+ 13        1     255     255    204   B                 ColorBrewer YellowGreenBlue
+ 13        2     199     233    180   D                 Sequential Scheme with
+ 13        3     127     205    187   F                 7 colors
+ 13        4      65     182    196   G
+ 13        5      29     145    192   H
+ 13        6      34      94    168   J
+ 13        7      12      44    132   L
+ 14        1     255     255    217   A                 ColorBrewer YellowGreenBlue
+ 14        2     237     248    177   C                 Sequential Scheme with
+ 14        3     199     233    180   D                 8 colors
+ 14        4     127     205    187   F
+ 14        5      65     182    196   G
+ 14        6      29     145    192   H
+ 14        7      34      94    168   J
+ 14        8      12      44    132   L
+ 15        1     255     255    217   A                 ColorBrewer YellowGreenBlue
+ 15        2     237     248    177   C                 Sequential Scheme with
+ 15        3     199     233    180   D                 9 colors
+ 15        4     127     205    187   F
+ 15        5      65     182    196   G
+ 15        6      29     145    192   H
+ 15        7      34      94    168   J
+ 15        8      37      52    148   K
+ 15        9       8      29     88   M
+ 16        1     224     243    219   C                 ColorBrewer GreenBlue
+ 16        2     168     221    181   F                 Sequential Scheme with
+ 16        3      67     162    202   I                 3 colors
+ 17        1     240     249    232   B                 ColorBrewer GreenBlue
+ 17        2     186     228    188   E                 Sequential Scheme with
+ 17        3     123     204    196   G                 4 colors
+ 17        4      43     140    190   J
+ 18        1     240     249    232   B                 ColorBrewer GreenBlue
+ 18        2     186     228    188   E                 Sequential Scheme with
+ 18        3     123     204    196   G                 5 colors
+ 18        4      67     162    202   I
+ 18        5       8     104    172   K
+ 19        1     240     249    232   B                 ColorBrewer GreenBlue
+ 19        2     204     235    197   D                 Sequential Scheme with
+ 19        3     168     221    181   F                 6 colors
+ 19        4     123     204    196   G
+ 19        5      67     162    202   I
+ 19        6       8     104    172   K
+ 20        1     240     249    232   B                 ColorBrewer GreenBlue
+ 20        2     204     235    197   D                 Sequential Scheme with
+ 20        3     168     221    181   F                 7 colors
+ 20        4     123     204    196   G
+ 20        5      78     179    211   H
+ 20        6      43     140    190   J
+ 20        7       8      88    158   L
+ 21        1     247     252    240   A                 ColorBrewer GreenBlu
+ 21        2     224     243    219   C                 Sequential Scheme with
+ 21        3     204     235    197   D                 8 colors
+ 21        4     168     221    181   F
+ 21        5     123     204    196   G
+ 21        6      78     179    211   H
+ 21        7      43     140    190   J
+ 21        8       8      88    158   L
+ 22        1     247     252    240   A                 ColorBrewer GreenBlu
+ 22        2     224     243    219   C                 Sequential Scheme with
+ 22        3     204     235    197   D                 9 colors
+ 22        4     168     221    181   F
+ 22        5     123     204    196   G
+ 22        6      78     179    211   H
+ 22        7      43     140    190   J
+ 22        8       8     104    172   K
+ 22        9       8      64    129   M
+ 23        1     229     245    249   C                 ColorBrewer BlueGreen
+ 23        2     153     216    201   F                 Sequential Scheme with
+ 23        3      44     162     95   I                 3 colors
+ 24        1     237     248    251   B                 ColorBrewer BlueGreen
+ 24        2     178     226    226   E                 Sequential Scheme with
+ 24        3     102     194    164   G                 4 colors
+ 24        4      35     139     69   J
+ 25        1     237     248    251   B                 ColorBrewer BlueGreen
+ 25        2     178     226    226   E                 Sequential Scheme with
+ 25        3     102     194    164   G                 5 colors
+ 25        4      44     162     95   I
+ 25        5       0     109     44   K
+ 26        1     237     248    251   B                 ColorBrewer BlueGreen
+ 26        2     204     236    230   D                 Sequential Scheme with
+ 26        3     153     216    201   F                 6 colors
+ 26        4     102     194    164   G
+ 26        5      44     162     95   I
+ 26        6       0     109     44   K
+ 27        1     237     248    251   B                 ColorBrewer BlueGreen
+ 27        2     204     236    230   D                 Sequential Scheme with
+ 27        3     153     216    201   F                 7 colors
+ 27        4     102     194    164   G
+ 27        5      65     174    118   H
+ 27        6      35     139     69   J
+ 27        7       0      88     36   L
+ 28        1     247     252    253   A                 ColorBrewer BlueGreen
+ 28        2     229     245    249   C                 Sequential Scheme with
+ 28        3     204     236    230   D                 8 colors
+ 28        4     153     216    201   F
+ 28        5     102     194    164   G
+ 28        6      65     174    118   H
+ 28        7      35     139     69   J
+ 28        8       0      88     36   L
+ 29        1     247     252    253   A                 ColorBrewer BlueGreen
+ 29        2     229     245    249   C                 Sequential Scheme with
+ 29        3     204     236    230   D                 9 colors
+ 29        4     153     216    201   F
+ 29        5     102     194    164   G
+ 29        6      65     174    118   H
+ 29        7      35     139     69   J
+ 29        8       0     109     44   K
+ 29        9       0      68     27   M
+ 30        1     236     226    240   C                 ColorBrewer PaleBlueGreen
+ 30        2     166     189    219   F                 Sequential Scheme with
+ 30        3      28     144    153   I                 3 colors
+ 31        1     246     239    247   B                 ColorBrewer PaleBlueGreen
+ 31        2     189     201    225   E                 Sequential Scheme with
+ 31        3     103     169    207   G                 4 colors
+ 31        4       2     129    138   J
+ 32        1     246     239    247   B                 ColorBrewer PaleBlueGreen
+ 32        2     189     201    225   E                 Sequential Scheme with
+ 32        3     103     169    207   G                 5 colors
+ 32        4      28     144    153   I
+ 32        5       1     108     89   K
+ 33        1     246     239    247   B                 ColorBrewer PaleBlueGreen
+ 33        2     208     209    230   D                 Sequential Scheme with
+ 33        3     166     189    219   F                 6 colors
+ 33        4     103     169    207   G
+ 33        5      28     144    153   I
+ 33        6       1     108     89   K
+ 34        1     246     239    247   B                 ColorBrewer PaleBlueGreen
+ 34        2     208     209    230   D                 Sequential Scheme with
+ 34        3     166     189    219   F                 7 colors
+ 34        4     103     169    207   G
+ 34        5      54     144    192   H
+ 34        6       2     129    138   J
+ 34        7       1     100     80   L
+ 35        1     255     247    251   A                 ColorBrewer PaleBlueGreen
+ 35        2     236     226    240   C                 Sequential Scheme with
+ 35        3     208     209    230   D                 8 colors
+ 35        4     166     189    219   F
+ 35        5     103     169    207   G
+ 35        6      54     144    192   H
+ 35        7       2     129    138   J
+ 35        8       1     100     80   L
+ 36        1     255     247    251   A                 ColorBrewer PaleBlueGreen
+ 36        2     236     226    240   C                 Sequential Scheme with
+ 36        3     208     209    230   D                 9 colors
+ 36        4     166     189    219   F
+ 36        5     103     169    207   G
+ 36        6      54     144    192   H
+ 36        7       2     129    138   J
+ 36        8       1     108     89   K
+ 36        9       1      70     54   M
+ 37        1     236     231    242   C                 ColorBrewer PaleBlue
+ 37        2     166     189    219   F                 Sequential Scheme with
+ 37        3      43     140    190   I                 3 colors
+ 38        1     241     238    246   B                 ColorBrewer PaleBlue
+ 38        2     189     201    225   E                 Sequential Scheme with
+ 38        3     116     169    207   G                 4 colors
+ 38        4       5     112    176   J
+ 39        1     241     238    246   B                 ColorBrewer PaleBlue
+ 39        2     189     201    225   E                 Sequential Scheme with
+ 39        3     116     169    207   G                 5 colors
+ 39        4      43     140    190   I
+ 39        5       4      90    141   K
+ 40        1     241     238    246   B                 ColorBrewer PaleBlue
+ 40        2     208     209    230   D                 Sequential Scheme with
+ 40        3     166     189    219   F                 6 colors
+ 40        4     116     169    207   G
+ 40        5      43     140    190   I
+ 40        6       4      90    141   K
+ 41        1     241     238    246   B                 ColorBrewer PaleBlue
+ 41        2     208     209    230   D                 Sequential Scheme with
+ 41        3     166     189    219   F                 7 colors
+ 41        4     116     169    207   G
+ 41        5      54     144    192   H
+ 41        6       5     112    176   J
+ 41        7       3      78    123   L
+ 42        1     255     247    251   A                 ColorBrewer PaleBlue
+ 42        2     236     231    242   C                 Sequential Scheme with
+ 42        3     208     209    230   D                 8 colors
+ 42        4     166     189    219   F
+ 42        5     116     169    207   G
+ 42        6      54     144    192   H
+ 42        7       5     112    176   J
+ 42        8       3      78    123   L
+ 43        1     255     247    251   A                 ColorBrewer PaleBlue
+ 43        2     236     231    242   C                 Sequential Scheme with
+ 43        3     208     209    230   D                 9 colors
+ 43        4     166     189    219   F
+ 43        5     116     169    207   G
+ 43        6      54     144    192   H
+ 43        7       5     112    176   J
+ 43        8       4      90    141   K
+ 43        9       2      56     88   M
+ 44        1     224     236    244   C                 ColorBrewer BluePurple
+ 44        2     158     188    218   F                 Sequential Scheme with
+ 44        3     136      86    167   I                 3 colors
+ 45        1     237     248    251   B                 ColorBrewer BluePurple
+ 45        2     179     205    227   E                 Sequential Scheme with
+ 45        3     140     150    198   G                 4 colors
+ 45        4     136      65    157   J
+ 46        1     237     248    251   B                 ColorBrewer BluePurple
+ 46        2     179     205    227   E                 Sequential Scheme with
+ 46        3     140     150    198   G                 5 colors
+ 46        4     136      86    167   I
+ 46        5     129      15    124   K
+ 47        1     237     248    251   B                 ColorBrewer BluePurple
+ 47        2     191     211    230   D                 Sequential Scheme with
+ 47        3     158     188    218   F                 6 colors
+ 47        4     140     150    198   G
+ 47        5     136      86    167   I
+ 47        6     129      15    124   K
+ 48        1     237     248    251   B                 ColorBrewer BluePurple
+ 48        2     191     211    230   D                 Sequential Scheme with
+ 48        3     158     188    218   F                 7 colors
+ 48        4     140     150    198   G
+ 48        5     140     107    177   H
+ 48        6     136      65    157   J
+ 48        7     110       1    107   L
+ 49        1     247     252    253   A                 ColorBrewer BluePurple
+ 49        2     224     236    244   C                 Sequential Scheme with
+ 49        3     191     211    230   D                 8 colors
+ 49        4     158     188    218   F
+ 49        5     140     150    198   G
+ 49        6     140     107    177   H
+ 49        7     136      65    157   J
+ 49        8     110       1    107   L
+ 50        1     247     252    253   A                 ColorBrewer BluePurple
+ 50        2     224     236    244   C                 Sequential Scheme with
+ 50        3     191     211    230   D                 9 colors
+ 50        4     158     188    218   F
+ 50        5     140     150    198   G
+ 50        6     140     107    177   H
+ 50        7     136      65    157   J
+ 50        8     129      15    124   K
+ 50        9      77       0     75   M
+ 51        1     253     224    221   C                 ColorBrewer RedPurple
+ 51        2     250     159    181   F                 Sequential Scheme with
+ 51        3     197      27    138   I                 3 colors
+ 52        1     254     235    226   B                 ColorBrewer RedPurple
+ 52        2     251     180    185   E                 Sequential Scheme with
+ 52        3     247     104    161   G                 4 colors
+ 52        4     174       1    126   J
+ 53        1     254     235    226   B                 ColorBrewer RedPurple
+ 53        2     251     180    185   E                 Sequential Scheme with
+ 53        3     247     104    161   G                 5 colors
+ 53        4     197      27    138   I
+ 53        5     122       1    119   K
+ 54        1     254     235    226   B                 ColorBrewer RedPurple
+ 54        2     252     197    192   D                 Sequential Scheme with
+ 54        3     250     159    181   F                 6 colors
+ 54        4     247     104    161   G
+ 54        5     197      27    138   I
+ 54        6     122       1    119   K
+ 55        1     254     235    226   B                 ColorBrewer RedPurple
+ 55        2     252     197    192   D                 Sequential Scheme with
+ 55        3     250     159    181   F                 7 colors
+ 55        4     247     104    161   G
+ 55        5     221      52    151   H
+ 55        6     174       1    126   J
+ 55        7     122       1    119   L
+ 56        1     255     247    243   A                 ColorBrewer RedPurple
+ 56        2     253     224    221   C                 Sequential Scheme with
+ 56        3     252     197    192   D                 8 colors
+ 56        4     250     159    181   F
+ 56        5     247     104    161   G
+ 56        6     221      52    151   H
+ 56        7     174       1    126   J
+ 56        8     122       1    119   L
+ 57        1     255     247    243   A                 ColorBrewer RedPurple
+ 57        2     253     224    221   C                 Sequential Scheme with
+ 57        3     252     197    192   D                 9 colors
+ 57        4     250     159    181   F
+ 57        5     247     104    161   G
+ 57        6     221      52    151   H
+ 57        7     174       1    126   J
+ 57        8     122       1    119   K
+ 57        9      73       0    106   M
+ 58        1     231     225    239   C                 ColorBrewer PurpleRed
+ 58        2     201     148    199   F                 Sequential Scheme with
+ 58        3     221      28    119   I                 3 colors
+ 59        1     241     238    246   B                 ColorBrewer PurpleRed
+ 59        2     215     181    216   E                 Sequential Scheme with
+ 59        3     223     101    176   G                 4 colors
+ 59        4     206      18     86   J
+ 60        1     241     238    246   B                 ColorBrewer PurpleRed
+ 60        2     215     181    216   E                 Sequential Scheme with
+ 60        3     223     101    176   G                 5 colors
+ 60        4     221      28    119   I
+ 60        5     152       0     67   K
+ 61        1     241     238    246   B                 ColorBrewer PurpleRed
+ 61        2     212     185    218   D                 Sequential Scheme with
+ 61        3     201     148    199   F                 6 colors
+ 61        4     223     101    176   G
+ 61        5     221      28    119   I
+ 61        6     152       0     67   K
+ 62        1     241     238    246   B                 ColorBrewer PurpleRed
+ 62        2     212     185    218   D                 Sequential Scheme with
+ 62        3     201     148    199   F                 7 colors
+ 62        4     223     101    176   G
+ 62        5     231      41    138   H
+ 62        6     206      18     86   J
+ 62        7     145       0     63   L
+ 63        1     247     244    249   A                 ColorBrewer PurpleRed
+ 63        2     231     225    239   C                 Sequential Scheme with
+ 63        3     212     185    218   D                 8 colors
+ 63        4     201     148    199   F
+ 63        5     223     101    176   G
+ 63        6     231      41    138   H
+ 63        7     206      18     86   J
+ 63        8     145       0     63   L
+ 64        1     247     244    249   A                 ColorBrewer PurpleRed
+ 64        2     231     225    239   C                 Sequential Scheme with
+ 64        3     212     185    218   D                 9 colors
+ 64        4     201     148    199   F
+ 64        5     223     101    176   G
+ 64        6     231      41    138   H
+ 64        7     206      18     86   J
+ 64        8     152       0     67   K
+ 64        9     103       0     31   M
+ 65        1     254     232    200   C                 ColorBrewer OrangeRed
+ 65        2     253     187    132   F                 Sequential Scheme with
+ 65        3     227      74     51   I                 3 colors
+ 66        1     254     240    217   B                 ColorBrewer OrangeRed
+ 66        2     253     204    138   E                 Sequential Scheme with
+ 66        3     252     141     89   G                 4 colors
+ 66        4     215      48     31   J
+ 67        1     254     240    217   B                 ColorBrewer OrangeRed
+ 67        2     253     204    138   E                 Sequential Scheme with
+ 67        3     252     141     89   G                 5 colors
+ 67        4     227      74     51   I
+ 67        5     179       0      0   K
+ 68        1     254     240    217   B                 ColorBrewer OrangeRed
+ 68        2     253     212    158   D                 Sequential Scheme with
+ 68        3     253     187    132   F                 6 colors
+ 68        4     252     141     89   G
+ 68        5     227      74     51   I
+ 68        6     179       0      0   K
+ 69        1     254     240    217   B                 ColorBrewer OrangeRed
+ 69        2     253     212    158   D                 Sequential Scheme with
+ 69        3     253     187    132   F                 7 colors
+ 69        4     252     141     89   G
+ 69        5     239     101     72   H
+ 69        6     215      48     31   J
+ 69        7     153       0      0   L
+ 70        1     255     247    236   A                 ColorBrewer OrangeRed
+ 70        2     254     232    200   C                 Sequential Scheme with
+ 70        3     253     212    158   D                 8 colors
+ 70        4     253     187    132   F
+ 70        5     252     141     89   G
+ 70        6     239     101     72   H
+ 70        7     215      48     31   J
+ 70        8     153       0      0   L
+ 71        1     255     247    236   A                 ColorBrewer OrangeRed
+ 71        2     254     232    200   C                 Sequential Scheme with
+ 71        3     253     212    158   D                 9 colors
+ 71        4     253     187    132   F
+ 71        5     252     141     89   G
+ 71        6     239     101     72   H
+ 71        7     215      48     31   J
+ 71        8     179       0      0   K 
+ 71        9     127       0      0   M 
+ 72        1     255     237    160   C                 ColorBrewer YellowOrangeRed
+ 72        2     254     178     76   F                 Sequential Scheme with
+ 72        3     240      59     32   I                 3 colors
+ 73        1     255     255    178   B                 ColorBrewer YellowOrangeRed
+ 73        2     254     204     92   E                 Sequential Scheme with
+ 73        3     253     141     60   G                 4 colors
+ 73        4     227      26     28   J
+ 74        1     255     255    178   B                 ColorBrewer YellowOrangeRed
+ 74        2     254     204     92   E                 Sequential Scheme with
+ 74        3     253     141     60   G                 5 colors
+ 74        4     240      59     32   I
+ 74        5     189       0     38   K
+ 75        1     255     255    178   B                 ColorBrewer YellowOrangeRed
+ 75        2     254     217    118   D                 Sequential Scheme with
+ 75        3     254     178     76   F                 6 colors
+ 75        4     253     141     60   G
+ 75        5     240      59     32   I
+ 75        6     189       0     38   K
+ 76        1     255     255    178   B                 ColorBrewer YellowOrangeRed
+ 76        2     254     217    118   D                 Sequential Scheme with
+ 76        3     254     178     76   F                 7 colors
+ 76        4     253     141     60   G
+ 76        5     252      78     42   H
+ 76        6     227      26     28   J
+ 76        7     177       0     38   L
+ 77        1     255     255    204   A                 ColorBrewer YellowOrangeRed
+ 77        2     255     237    160   C                 Sequential Scheme with
+ 77        3     254     217    118   D                 8 colors
+ 77        4     254     178     76   F
+ 77        5     253     141     60   G
+ 77        6     252      78     42   H
+ 77        7     227      26     28   J
+ 77        8     177       0     38   L
+ 78        1     255     255    204   A                 ColorBrewer YellowOrangeRed
+ 78        2     255     237    160   C                 Sequential Scheme with
+ 78        3     254     217    118   D                 9 colors
+ 78        4     254     178     76   F
+ 78        5     253     141     60   G
+ 78        6     252      78     42   H
+ 78        7     227      26     28   J
+ 78        8     189       0     38   K
+ 78        9     128       0     38   M
+ 79        1     255     247    188   C                 ColorBrewer YellowOrangeBrown
+ 79        2     254     196     79   F                 Sequential Scheme with
+ 79        3     217      95     14   I                 3 colors
+ 80        1     255     255    212   B                 ColorBrewer YellowOrangeBrown
+ 80        2     254     217    142   E                 Sequential Scheme
+ 80        3     254     153     41   G                 4 colors
+ 80        4     204      76      2   J
+ 81        1     255     255    212   B                 ColorBrewer YellowOrangeBrown
+ 81        2     254     217    142   E                 Sequential Scheme
+ 81        3     254     153     41   G                 5 colors
+ 81        4     217      95     14   I
+ 81        5     153      52      4   K
+ 82        1     255     255    212   B                 ColorBrewer YellowOrangeBrown
+ 82        2     254     227    145   D                 Sequential Scheme with
+ 82        3     254     196     79   F                 6 colors
+ 82        4     254     153     41   G
+ 82        5     217      95     14   I
+ 82        6     153      52      4   K
+ 83        1     255     255    212   B                 ColorBrewer YellowOrangeBrown
+ 83        2     254     227    145   D                 Sequential Scheme with
+ 83        3     254     196     79   F                 7 colors
+ 83        4     254     153     41   G
+ 83        5     236     112     20   H
+ 83        6     204      76      2   J
+ 83        7     140      45      4   L
+ 84        1     255     255    229   A                 ColorBrewer YellowOrangeBrown
+ 84        2     255     247    188   C                 Sequential Scheme with
+ 84        3     254     227    145   D                 8 colors
+ 84        4     254     196     79   F
+ 84        5     254     153     41   G
+ 84        6     236     112     20   H
+ 84        7     204      76      2   J
+ 84        8     140      45      4   L
+ 85        1     255     255    229   A                 ColorBrewer YellowOrangeBrown
+ 85        2     255     247    188   C                 Sequential Scheme with
+ 85        3     254     227    145   D                 9 colors
+ 85        4     254     196     79   F
+ 85        5     254     153     41   G
+ 85        6     236     112     20   H
+ 85        7     204      76      2   J
+ 85        8     153      52      4   K
+ 85        9     102      37      6   M
+ 86        1     239     237    245   C                 ColorBrewer Purples
+ 86        2     188     189    220   F                 Sequential Scheme with
+ 86        3     117     107    177   I                 3 colors
+ 87        1     242     240    247   B                 ColorBrewer Purples
+ 87        2     203     201    226   E                 Sequential Scheme with
+ 87        3     158     154    200   G                 4 colors
+ 87        4     106      81    163   J
+ 88        1     242     240    247   B                 ColorBrewer Purples
+ 88        2     203     201    226   E                 Sequential Scheme with
+ 88        3     158     154    200   G                 5 colors
+ 88        4     117     107    177   I
+ 88        5      84      39    143   K
+ 89        1     242     240    247   B                 ColorBrewer Purples
+ 89        2     218     218    235   D                 Sequential Scheme with
+ 89        3     188     189    220   F                 6 colors
+ 89        4     158     154    200   G
+ 89        5     117     107    177   I
+ 89        5      84      39    143   K
+ 90        1     242     240    247   B                 ColorBrewer Purples
+ 90        2     218     218    235   D                 Sequential Scheme with
+ 90        3     188     189    220   F                 7 colors
+ 90        4     158     154    200   G
+ 90        5     128     125    186   H
+ 90        6     106      81    163   J
+ 90        7      74      20    134   L
+ 91        1     252     251    253   A                 ColorBrewer Purples
+ 91        2     239     237    245   C                 Sequential Scheme
+ 91        3     218     218    235   D                 8 colors
+ 91        4     188     189    220   F
+ 91        5     158     154    200   G
+ 91        6     128     125    186   H
+ 91        7     106      81    163   J
+ 91        8      74      20    134   L
+ 92        1     252     251    253   A                 ColorBrewer Purples
+ 92        2     239     237    245   C                 Sequential Scheme
+ 92        3     218     218    235   D                 9 colors
+ 92        4     188     189    220   F
+ 92        5     158     154    200   G
+ 92        6     128     125    186   H
+ 92        7     106      81    163   J
+ 92        8      84      39    143   K
+ 92        9      63       0    125   M
+ 93        1     222     235    247   C                 ColorBrewer Blues
+ 93        2     158     202    225   F                 Sequential Scheme with
+ 93        3      49     130    189   I                 3 colors
+ 94        1     239     243    255   B                 ColorBrewer Blues
+ 94        2     189     215    231   E                 Sequential Scheme with
+ 94        3     107     174    214   G                 4 colors
+ 94        4      33     113    181   J
+ 95        1     239     243    255   B                 ColorBrewer Blues
+ 95        2     189     215    231   E                 Sequential Scheme with
+ 95        3     107     174    214   G                 5 colors
+ 95        4      49     130    189   I
+ 95        5       8      81    156   K
+ 96        1     239     243    255   B                 ColorBrewer Blues
+ 96        2     198     219    239   D                 Sequential Scheme with
+ 96        3     158     202    225   F                 6 colors
+ 96        4     107     174    214   G
+ 96        5      49     130    189   I
+ 96        6       8      81    156   K
+ 97        1     239     243    255   B                 ColorBrewer Blues
+ 97        2     198     219    239   D                 Sequential Scheme with
+ 97        3     158     202    225   F                 7 colors
+ 97        4     107     174    214   G
+ 97        5      66     146    198   H
+ 97        6      33     113    181   J
+ 97        7       8      69    148   L
+ 98        1     247     251    255   A                 ColorBrewer Blues
+ 98        2     222     235    247   C                 Sequential Scheme with
+ 98        3     198     219    239   D                 8 colors
+ 98        4     158     202    225   F
+ 98        5     107     174    214   G
+ 98        6      66     146    198   H
+ 98        7      33     113    181   J
+ 98        8       8      69    148   L
+ 99        1     247     251    255   A                 ColorBrewer Blues
+ 99        2     222     235    247   C                 Sequential Scheme with
+ 99        3     198     219    239   D                 9 colors
+ 99        4     158     202    225   F
+ 99        5     107     174    214   G
+ 99        6      66     146    198   H
+ 99        7      33     113    181   J
+ 99        8       8      81    156   K
+ 99        9       8      48    107   M
+100        1     229     245    224   C                 ColorBrewer Greens
+100        2     161     217    155   F                 Sequential Scheme with
+100        3      49     163     84   I                 3 colors
+101        1     237     248    233   B                 ColorBrewer Greens
+101        2     186     228    179   E                 Sequential Scheme with
+101        3     116     196    118   G                 4 colors
+101        4      35     139     69   J
+102        1     237     248    233   B                 ColorBrewer Greens
+102        2     186     228    179   E                 Sequential Scheme with
+102        3     116     196    118   G                 5 colors
+102        4      49     163     84   I
+102        5       0     109     44   K
+103        1     237     248    233   B                 ColorBrewer Greens
+103        2     199     233    192   D                 Sequential Scheme with
+103        3     161     217    155   F                 6 colors
+103        4     116     196    118   G
+103        5      49     163     84   I
+103        6       0     109     44   K
+104        1     237     248    233   B                 ColorBrewer Greens
+104        2     199     233    192   D                 Sequential Scheme with
+104        3     161     217    155   F                 7 colors
+104        4     116     196    118   G
+104        5      65     171     93   H
+104        6      35     139     69   J
+104        7       0      90     50   L
+105        1     247     252    245   A                 ColorBrewer Greens
+105        2     229     245    224   C                 Sequential Scheme with
+105        3     199     233    192   D                 8 colors
+105        4     161     217    155   F
+105        5     116     196    118   G
+105        6      65     171     93   H
+105        7      35     139     69   J
+105        8       0      90     50   L
+106        1     247     252    245   A                 ColorBrewer Greens
+106        2     229     245    224   C                 Sequential Scheme with
+106        3     199     233    192   D                 9 colors
+106        4     161     217    155   F
+106        5     116     196    118   G
+106        6      65     171     93   H
+106        7      35     139     69   J
+106        8       0     109     44   K
+106        9       0      68     27   M
+107        1     254     230    206   C                 ColorBrewer Oranges
+107        2     253     174    107   F                 Sequential Scheme with
+107        3     230      85     13   I                 3 colors
+108        1     254     237    222   B                 ColorBrewer Oranges
+108        2     253     190    133   E                 Sequential Scheme with
+108        3     253     141     60   G                 4 colors
+108        4     217      71      1   J
+109        1     254     237    222   B                 ColorBrewer Oranges
+109        2     253     190    133   E                 Sequential Scheme with
+109        3     253     141     60   G                 5 colors
+109        4     230      85     13   I
+109        5     166      54      3   K
+110        1     254     237    222   B                 ColorBrewer Oranges
+110        2     253     208    162   D                 Sequential Scheme with
+110        3     253     174    107   F                 6 colors
+110        4     253     141     60   G
+110        5     230      85     13   I
+110        6     166      54      3   K
+111        1     254     237    222   B                 ColorBrewer Oranges
+111        2     253     208    162   D                 Sequential Scheme with
+111        3     253     174    107   F                 7 colors
+111        4     253     141     60   G
+111        5     241     105     19   H
+111        6     217      72      1   J
+111        7     140      45      4   L
+112        1     255     245    235   A                 ColorBrewer Oranges
+112        2     254     230    206   C                 Sequential Scheme with
+112        3     253     208    162   D                 8 colors
+112        4     253     174    107   F
+112        5     253     141     60   G
+112        6     241     105     19   H
+112        7     217      72      1   J
+112        8     140      45      4   L
+113        1     255     245    235   A                 ColorBrewer Oranges
+113        2     254     230    206   C                 Sequential Scheme with
+113        3     253     208    162   D                 9 colors
+113        4     253     174    107   F
+113        5     253     141     60   G
+113        6     241     105     19   H
+113        7     217      72      1   J
+113        8     166      54      3   K
+113        9     127      39      4   M
+114        1     254     224    210   C                 ColorBrewer Reds
+114        2     252     146    114   F                 Sequential Scheme with
+114        3     222      45     38   I                 3 colors
+115        1     254     229    217   B                 ColorBrewer Reds
+115        2     252     174    145   E                 Sequential Scheme with
+115        3     251     106     74   G                 4 colors
+115        4     203      24     29   J
+116        1     254     229    217   B                 ColorBrewer Reds
+116        2     252     174    145   E                 Sequential Scheme with
+116        3     251     106     74   G                 5 colors
+116        4     222      45     38   I
+116        5     165      15     21   K
+117        1     254     229    217   B                 ColorBrewer Reds
+117        2     252     187    161   D                 Sequential Scheme with
+117        3     252     146    114   F                 6 colors
+117        4     251     106     74   G
+117        5     222      45     38   I
+117        6     165      15     21   K
+118        1     254     229    217   B                 ColorBrewer Reds
+118        2     252     187    161   D                 Sequential Scheme with
+118        3     252     146    114   F                 7 colors
+118        4     251     106     74   G
+118        5     239      59     44   H
+118        6     203      24     29   J
+118        7     153       0     13   L
+119        1     255     245    240   A                 ColorBrewer Reds
+119        2     254     224    210   C                 Sequential Scheme with
+119        3     252     187    161   D                 8 colors
+119        4     252     146    114   F
+119        5     251     106     74   G
+119        6     239      59     44   H
+119        7     203      24     29   J
+119        8     153       0     13   L
+120        1     255     245    240   A                 ColorBrewer Reds
+120        2     254     224    210   C                 Sequential Scheme with
+120        3     252     187    161   D                 9 colors
+120        4     252     146    114   F
+120        5     251     106     74   G
+120        6     239      59     44   H
+120        7     203      24     29   J
+120        8     165      15     21   K
+120        9     103       0     13   M
+121        1     240     240    240   C                 ColorBrewer Greys
+121        2     189     189    189   F                 Sequential Scheme with
+121        3      99      99     99   I                 3 colors
+122        1     247     247    247   B                 ColorBrewer Greys
+122        2     204     204    204   E                 Sequential Scheme with
+122        3     150     150    150   G                 4 colors
+122        4      82      82     82   J
+123        1     247     247    247   B                 ColorBrewer Greys
+123        2     204     204    204   E                 Sequential Scheme with
+123        3     150     150    150   G                 5 colors
+123        4      99      99     99   I
+123        5      37      37     37   K
+124        1     247     247    247   B                 ColorBrewer Greys
+124        2     217     217    217   D                 Sequential Scheme with
+124        3     189     189    189   F                 6 colors
+124        4     150     150    150   G
+124        5      99      99     99   I
+124        6      37      37     37   K
+125        1     247     247    247   B                 ColorBrewer Greys
+125        2     217     217    217   D                 Sequential Scheme with
+125        3     189     189    189   F                 7 colors
+125        4     150     150    150   G
+125        5     115     115    115   H
+125        6      82      82     82   J
+125        7      37      37     37   L
+126        1     255     255    255   A                 ColorBrewer Greys
+126        2     240     240    240   C                 Sequential Scheme with
+126        3     217     217    217   D                 8 colors
+126        4     189     189    189   F
+126        5     150     150    150   G
+126        6     115     115    115   H
+126        7      82      82     82   J
+126        8      37      37     37   L
+127        1     255     255    255   A                 ColorBrewer Greys
+127        2     240     240    240   C                 Sequential Scheme with
+127        3     217     217    217   D                 9 colors
+127        4     189     189    189   F
+127        5     150     150    150   G
+127        6     115     115    115   H
+127        7      82      82     82   J
+127        8      37      37     37   K
+127        9       0       0      0   M
+128        1     241     163     64   E                 ColorBrewer PurpleOrange
+128        2     247     247    247   H                 Diverging Scheme with
+128        3     153     142    195   K                 3 colors
+129        1     230      97      1   C                 ColorBrewer PurpleOrange
+129        2     253     184     99   F                 Diverging Scheme with
+129        3     178     171    210   J                 4 colors
+129        4      94      60    153   M
+130        1     230      97      1   C                 ColorBrewer PurpleOrange
+130        2     253     184     99   F                 Diverging Scheme with
+130        3     247     247    247   H                 5 colors
+130        4     178     171    210   J
+130        5      94      60    153   M
+131        1     179      88      6   B                 ColorBrewer PurpleOrange
+131        2     241     163     64   E                 Diverging Scheme with
+131        3     254     224    182   G                 6 colors
+131        4     216     218    235   I
+131        5     153     142    195   K
+131        6      84      39    136   N
+132        1     179      88      6   B                 ColorBrewer PurpleOrange
+132        2     241     163     64   E                 Diverging Scheme with
+132        3     254     224    182   G                 7 colors
+132        4     247     247    247   H
+132        5     216     218    235   I
+132        6     153     142    195   K
+132        7      84      39    136   N
+133        1     179      88      6   B                 ColorBrewer PurpleOrange
+133        2     224     130     20   D                 Diverging Scheme with
+133        3     253     184     99   F                 8 colors
+133        4     254     224    182   G
+133        5     216     218    235   I
+133        6     178     171    210   J
+133        7     128     115    172   L
+133        8      84      39    136   N
+134        1     179      88      6   B                 ColorBrewer PurpleOrange
+134        2     224     130     20   D                 Diverging Scheme with
+134        3     253     184     99   F                 9 colors
+134        4     254     224    182   G
+134        5     247     247    247   H
+134        6     216     218    235   I
+134        7     178     171    210   J
+134        8     128     115    172   L
+134        9      84      39    136   N
+135        1     127      59      8   A                 ColorBrewer PurpleOrange
+135        2     179      88      6   B                 Diverging Scheme with
+135        3     224     130     20   D                 10 colors
+135        4     253     184     99   F
+135        5     254     224    182   G
+135        6     216     218    235   I
+135        7     178     171    210   J
+135        8     128     115    172   L
+135        9      84      39    136   N
+135       10      45       0     75   O
+136        1     127      59      8   A                 ColorBrewer PurpleOrange
+136        2     179      88      6   B                 Diverging Scheme with
+136        3     224     130     20   D                 11 colors
+136        4     253     184     99   F
+136        5     254     224    182   G
+136        6     247     247    247   H
+136        7     216     218    235   I
+136        8     178     171    210   J
+136        9     128     115    172   L
+136       10      84      39    136   N
+136       11      45       0     75   O
+137        1     216     179    101   E                 ColorBrewer BrownBlue-Green
+137        2     245     245    245   H                 Diverging Scheme with
+137        3      90     180    172   K                 3 colors
+138        1     166      97     26   C                 ColorBrewer BrownBlue-Green
+138        2     223     194    125   F                 Diverging Scheme with
+138        3     128     205    193   J                 4 colors
+138        4       1     133    113   M
+139        1     166      97     26   C                 ColorBrewer BrownBlue-Green
+139        2     223     194    125   F                 Diverging Scheme with
+139        3     245     245    245   H                 5 colors
+139        4     128     205    193   J
+139        5       1     133    113   M
+140        1     140      81     10   B                 ColorBrewer BrownBlue-Green
+140        2     216     179    101   E                 Diverging Scheme with
+140        3     246     232    195   G                 6 colors
+140        4     199     234    229   I
+140        5      90     180    172   K
+140        6       1     102     94   N
+141        1     140      81     10   B                 ColorBrewer BrownBlue-Green
+141        2     216     179    101   E                 Diverging Scheme with
+141        3     246     232    195   G                 7 colors
+141        4     245     245    245   H
+141        5     199     234    229   I
+141        6      90     180    172   K
+141        7       1     102     94   N
+142        1     140      81     10   B                 ColorBrewer BrownBlue-Green
+142        2     191     129     45   D                 Diverging Scheme with
+142        3     223     194    125   F                 8 colors
+142        4     246     232    195   G
+142        5     199     234    229   I
+142        6     128     205    193   J
+142        7      53     151    143   L
+142        8       1     102     94   N
+143        1     140      81     10   B                 ColorBrewer BrownBlue-Green
+143        2     191     129     45   D                 Diverging Scheme with
+143        3     223     194    125   F                 9 colors
+143        4     246     232    195   G
+143        5     245     245    245   H
+143        6     199     234    229   I
+143        7     128     205    193   J
+143        8      53     151    143   L
+143        9       1     102     94   N
+144        1      84      48      5   A                 ColorBrewer BrownBlue-Green
+144        2     140      81     10   B                 Diverging Scheme with
+144        3     191     129     45   D                 10 colors
+144        4     223     194    125   F
+144        5     246     232    195   G
+144        6     199     234    229   I
+144        7     128     205    193   J
+144        8      53     151    143   L
+144        9       1     102     94   N
+144       10       0      60     48   O
+145        1      84      48      5   A                 ColorBrewer BrownBlue-Green
+145        2     140      81     10   B                 Diverging Scheme with
+145        3     191     129     45   D                 11 colors
+145        4     223     194    125   F
+145        5     246     232    195   G
+145        6     245     245    245   H
+145        7     199     234    229   I
+145        8     128     205    193   J
+145        9      53     151    143   L
+145       10       1     102     94   N
+145       11       0      60     48   O
+146        1     175     141    195   E                 ColorBrewer PurpleGreen
+146        2     247     247    247   H                 Diverging Scheme with
+146        3     127     191    123   K                 3 colors
+147        1     123      50    148   C                 ColorBrewer PurpleGreen
+147        2     194     165    207   F                 Diverging Scheme with
+147        3     166     219    160   J                 4 colors
+147        4       0     136     55   M
+148        1     123      50    148   C                 ColorBrewer PurpleGreen
+148        2     194     165    207   F                 Diverging Scheme with
+148        3     247     247    247   H                 5 colors
+148        4     166     219    160   J
+148        5       0     136     55   M
+149        1     118      42    131   B                 ColorBrewer PurpleGreen
+149        2     175     141    195   E                 Diverging Scheme with
+149        3     231     212    232   G                 6 colors
+149        4     217     240    211   I
+149        5     127     191    123   K
+149        6      27     120     55   N
+150        1     118      42    131   B                 ColorBrewer PurpleGreen
+150        2     175     141    195   E                 Diverging Scheme with
+150        3     231     212    232   G                 7 colors
+150        4     247     247    247   H
+150        5     217     240    211   I
+150        6     127     191    123   K
+150        7      27     120     55   N
+151        1     118      42    131   B                 ColorBrewer PurpleGreen
+151        2     153     112    171   D                 Diverging Scheme with
+151        3     194     165    207   F                 8 colors
+151        4     231     212    232   G
+151        5     217     240    211   I
+151        6     166     219    160   J
+151        7      90     174     97   L
+151        8      27     120     55   N
+152        1     118      42    131   B                 ColorBrewer PurpleGreen
+152        2     153     112    171   D                 Diverging Scheme with
+152        3     194     165    207   F                 9 colors
+152        4     231     212    232   G
+152        5     247     247    247   H
+152        6     217     240    211   I
+152        7     166     219    160   J
+152        8      90     174     97   L
+152        9      27     120     55   N
+153        1      64       0     75   A                 ColorBrewer PurpleGreen
+153        2     118      42    131   B                 Diverging Scheme with
+153        3     153     112    171   D                 10 colors
+153        4     194     165    207   F
+153        5     231     212    232   G
+153        6     217     240    211   I
+153        7     166     219    160   J
+153        8      90     174     97   L
+153        9      27     120     55   N
+153       10       0      68     27   O
+154        1      64       0     75   A                 ColorBrewer PurpleGreen
+154        2     118      42    131   B                 Diverging Scheme with
+154        3     153     112    171   D                 11 colors
+154        4     194     165    207   F
+154        5     231     212    232   G
+154        6     247     247    247   H
+154        7     217     240    211   I
+154        8     166     219    160   J
+154        9      90     174     97   L
+154       10      27     120     55   N
+154       11       0      68     27   O
+155        1     233     163    201   E                 ColorBrewer PinkYellow-Green
+155        2     247     247    247   H                 Diverging Scheme with
+155        3     161     215    106   K                 3 colors
+156        1     208      28    139   C                 ColorBrewer PinkYellow-Green
+156        2     241     182    218   F                 Diverging Scheme with
+156        3     184     225    134   J                 4 colors
+156        4      77     172     38   M
+157        1     208      28    139   C                 ColorBrewer PinkYellow-Green
+157        2     241     182    218   F                 Diverging Scheme with
+157        3     247     247    247   H                 5 colors
+157        4     184     225    134   J
+157        5      77     172     38   M
+158        1     197      27    125   B                 ColorBrewer PinkYellow-Green
+158        2     233     163    201   E                 Diverging Scheme with
+158        3     253     224    239   G                 6 colors
+158        4     230     245    208   I
+158        5     161     215    106   K
+158        6      77     146     33   N
+159        1     197      27    125   B                 ColorBrewer PinkYellow-Green
+159        2     233     163    201   E                 Diverging Scheme with
+159        3     253     224    239   G                 7 colors
+159        4     247     247    247   H
+159        5     230     245    208   I
+159        6     161     215    106   K
+159        7      77     146     33   N
+160        1     197      27    125   B                 ColorBrewer PinkYellow-Green
+160        2     222     119    174   D                 Diverging Scheme with
+160        3     241     182    218   F                 8 colors
+160        4     253     224    239   G
+160        5     230     245    208   I
+160        6     184     225    134   J
+160        7     127     188     65   L
+160        8      77     146     33   N
+161        1     197      27    125   B                 ColorBrewer PinkYellow-Green
+161        2     222     119    174   D                 Diverging Scheme with
+161        3     241     182    218   F                 9 colors
+161        4     253     224    239   G
+161        5     247     247    247   H
+161        6     230     245    208   I
+161        7     184     225    134   J
+161        8     127     188     65   L
+161        9      77     146     33   N
+162        1     142       1     82   A                 ColorBrewer PinkYellow-Green
+162        2     197      27    125   B                 Diverging Scheme with
+162        3     222     119    174   D                 10 colors
+162        4     241     182    218   F
+162        5     253     224    239   G
+162        6     230     245    208   I
+162        7     184     225    134   J
+162        8     127     188     65   L
+162        9      77     146     33   N
+162       10      39     100     25   O
+163        1     142       1     82   A                 ColorBrewer PinkYellow-Green
+163        2     197      27    125   B                 Diverging Scheme with
+163        3     222     119    174   D                 11 colors
+163        4     241     182    218   F
+163        5     253     224    239   G
+163        6     247     247    247   H
+163        7     230     245    208   I
+163        8     184     225    134   J
+163        9     127     188     65   L
+163       10      77     146     33   N
+163       11      39     100     25   O
+164        1     239     138     98   E                 ColorBrewer RedBlue
+164        2     247     247    247   H                 Diverging Scheme with
+164        3     103     169    207   K                 3 colors
+165        1     202       0     32   C                 ColorBrewer RedBlue
+165        2     244     165    130   F                 Diverging Scheme with
+165        3     146     197    222   J                 4 colors
+165        4       5     113    176   M
+166        1     202       0     32   C                 ColorBrewer RedBlue
+166        2     244     165    130   F                 Diverging Scheme with
+166        3     247     247    247   H                 5 colors
+166        4     146     197    222   J
+166        5       5     113    176   M
+167        1     178      24     43   B                 ColorBrewer RedBlue
+167        2     239     138     98   E                 Diverging Scheme with
+167        3     253     219    199   G                 6 colors
+167        4     209     229    240   I
+167        5     103     169    207   K
+167        6      33     102    172   N
+168        1     178      24     43   B                 ColorBrewer RedBlue
+168        2     239     138     98   E                 Diverging Scheme with
+168        3     253     219    199   G                 7 colors
+168        4     247     247    247   H
+168        5     209     229    240   I
+168        6     103     169    207   K
+168        7      33     102    172   N
+169        1     178      24     43   B                 ColorBrewer RedBlue
+169        2     214      96     77   D                 Diverging Scheme with
+169        3     244     165    130   F                 8 colors
+169        4     253     219    199   G
+169        5     209     229    240   I
+169        6     146     197    222   J
+169        7      67     147    195   L
+169        8      33     102    172   N
+170        1     178      24     43   B                 ColorBrewer RedBlue
+170        2     214      96     77   D                 Diverging Scheme with
+170        3     244     165    130   F                 9 colors
+170        4     253     219    199   G
+170        5     247     247    247   H
+170        6     209     229    240   I
+170        7     146     197    222   J
+170        8      67     147    195   L
+170        9      33     102    172   N
+171        1     103       0     31   A                 ColorBrewer RedBlue
+171        2     178      24     43   B                 Diverging Scheme with
+171        3     214      96     77   D                 10 colors
+171        4     244     165    130   F
+171        5     253     219    199   G
+171        6     209     229    240   I
+171        7     146     197    222   J
+171        8      67     147    195   L
+171        9      33     102    172   N
+171       10       5      48     97   O
+172        1     103       0     31   A                 ColorBrewer RedBlue
+172        2     178      24     43   B                 Diverging Scheme with
+172        3     214      96     77   D                 11 colors
+172        4     244     165    130   F
+172        5     253     219    199   G
+172        6     247     247    247   H
+172        7     209     229    240   I
+172        8     146     197    222   J
+172        9      67     147    195   L
+172       10      33     102    172   N
+172       11       5      48     97   O
+173        1     239     138     98   E                 ColorBrewer RedGrey
+173        2     255     255    255   H                 Diverging Scheme with
+173        3     153     153    153   K                 3 colors
+174        1     202       0     32   C                 ColorBrewer RedGrey
+174        2     244     165    130   F                 Diverging Scheme with
+174        3     186     186    186   J                 4 colors
+174        4      64      64     64   M
+175        1     202       0     32   C                 ColorBrewer RedGrey
+175        2     244     165    130   F                 Diverging Scheme with
+175        3     255     255    255   H                 5 colors
+175        4     186     186    186   J
+175        5      64      64     64   M
+176        1     178      24     43   B                 ColorBrewer RedGrey
+176        2     239     138     98   E                 Diverging Scheme with
+176        3     253     219    199   G                 6 colors
+176        4     224     224    224   I
+176        5     153     153    153   K
+176        6      77      77     77   N
+177        1     178      24     43   B                 ColorBrewer RedGrey
+177        2     239     138     98   E                 Diverging Scheme with
+177        3     253     219    199   G                 7 colors
+177        4     255     255    255   H
+177        5     224     224    224   I
+177        5     153     153    153   K
+177        6      77      77     77   N
+178        1     178      24     43   B                 ColorBrewer RedGrey
+178        2     214      96     77   D                 Diverging Sheme
+178        3     244     165    130   F                 8 colors
+178        4     253     219    199   G
+178        5     224     224    224   I
+178        6     186     186    186   J
+178        7     135     135    135   L
+178        8      77      77     77   N
+179        1     178      24     43   B                 ColorBrewer RedGrey
+179        2     214      96     77   D                 Diverging Sheme
+179        3     244     165    130   F                 9 colors
+179        4     253     219    199   G
+179        5     255     255    255   H
+179        6     224     224    224   I
+179        7     186     186    186   J
+179        8     135     135    135   L
+179        9      77      77     77   N
+180        1     103       0     31   A                 ColorBrewer RedGrey
+180        2     178      24     43   B                 Diverging Scheme with
+180        3     214      96     77   D                 10 colors
+180        4     244     165    130   F
+180        5     253     219    199   G
+180        6     224     224    224   I
+180        7     186     186    186   J
+180        8     135     135    135   L
+180        9      77      77     77   N
+180       10      26      26     26   O
+181        1     103       0     31   A                 ColorBrewer RedGrey
+181        2     178      24     43   B                 Diverging Scheme with
+181        3     214      96     77   D                 11 colors
+181        4     244     165    130   F
+181        5     253     219    199   G
+181        6     255     255    255   H
+181        7     224     224    224   I
+181        8     186     186    186   J
+181        9     135     135    135   L
+181       10      77      77     77   N
+181       11      26      26     26   O
+182        1     252     141     89   E                 ColorBrewer RedYellowBlue
+182        2     255     255    191   H                 Diverging Scheme with
+182        3     145     191    219   K                 3 colors
+183        1     215      25     28   C                 ColorBrewer RedYellowBlue
+183        2     253     174     97   F                 Diverging Scheme with
+183        3     171     217    233   J                 4 colors
+183        4      44     123    182   M
+184        1     215      25     28   C                 ColorBrewer RedYellowBlue
+184        2     253     174     97   F                 Diverging Scheme with
+184        3     255     255    191   H                 5 colors
+184        4     171     217    233   J
+184        5      44     123    182   M
+185        1     215      48     39   B                 ColorBrewer RedYellowBlue
+185        2     252     141     89   E                 Diverging Scheme with
+185        3     254     224    144   G                 6 colors
+185        4     224     243    248   I
+185        5     145     191    219   K
+185        6      69     117    180   N
+186        1     215      48     39   B                 ColorBrewer RedYellowBlue
+186        2     252     141     89   E                 Diverging Scheme with
+186        3     254     224    144   G                 7 colors
+186        4     255     255    191   H
+186        5     224     243    248   I
+186        6     145     191    219   K
+186        7      69     117    180   N
+187        1     215      48     39   B                 ColorBrewer RedYellowBlue
+187        2     244     109     67   D                 Diverging Scheme with
+187        3     253     174     97   F                 8 colors
+187        4     254     224    144   G
+187        5     224     243    248   I
+187        6     171     217    233   J
+187        7     116     173    209   L
+187        8      69     117    180   N
+188        1     215      48     39   B                 ColorBrewer RedYellowBlue
+188        2     244     109     67   D                 Diverging Scheme with
+188        3     253     174     97   F                 9 colors
+188        4     254     224    144   G
+188        5     255     255    191   H
+188        6     224     243    248   I
+188        6     171     217    233   J
+188        7     116     173    209   L
+188        8      69     117    180   N
+189        1     165       0     38   A                 ColorBrewer RedYellowBlue
+189        2     215      48     39   B                 Diverging Scheme with
+189        3     244     109     67   D                 10 colors
+189        4     253     174     97   F
+189        5     254     224    144   G
+189        6     224     243    248   I
+189        7     171     217    233   J
+189        8     116     173    209   L
+189        9      69     117    180   N
+189       10      49      54    149   O
+190        1     165       0     38   A                 ColorBrewer RedYellowBlue
+190        2     215      48     39   B                 Diverging Scheme with
+190        3     244     109     67   D                 11 colors
+190        4     253     174     97   F
+190        5     254     224    144   G
+190        6     255     255    191   H
+190        7     224     243    248   I
+190        8     171     217    233   J
+190        9     116     173    209   L
+190       10      69     117    180   N
+190       11      49      54    149   O
+191        1     252     141     89   E                 ColorBrewer Spectral
+191        2     255     255    191   H                 Diverging Scheme with
+191        3     153     213    148   K                 3 colors
+192        1     215      25     28   C                 ColorBrewer Spectral
+192        2     253     174     97   F                 Diverging Scheme with
+192        3     171     221    164   J                 4 colors
+192        4      43     131    186   M
+193        1     215      25     28   C                 ColorBrewer Spectral
+193        2     253     174     97   F                 Diverging Scheme with
+193        3     255     255    191   H                 5 colors
+193        4     171     221    164   J
+193        5      43     131    186   M
+194        1     213      62     79   B                 ColorBrewer Spectral
+194        2     252     141     89   E                 Diverging Scheme with
+194        3     254     224    139   G                 6 colors
+194        4     230     245    152   I
+194        5     153     213    148   K
+194        6      50     136    189   N
+195        1     213      62     79   B                 ColorBrewer Spectral
+195        2     252     141     89   E                 Diverging Scheme with
+195        3     254     224    139   G                 7 colors
+195        4     255     255    191   H
+195        5     230     245    152   I
+195        6     153     213    148   K
+195        7      50     136    189   N
+196        1     213      62     79   B                 ColorBrewer Spectral
+196        2     244     109     67   D                 Diverging Scheme with
+196        3     253     174     97   F                 8 colors
+196        4     254     224    139   G
+196        5     230     245    152   I
+196        6     171     221    164   J
+196        7     102     194    165   L
+196        8      50     136    189   N
+197        1     213      62     79   B                 ColorBrewer Spectral
+197        2     244     109     67   D                 Diverging Scheme with
+197        3     253     174     97   F                 9 colors
+197        4     254     224    139   G
+197        5     255     255    191   H
+197        6     230     245    152   I
+197        7     171     221    164   J
+197        8     102     194    165   L
+197        9      50     136    189   N
+198        1     158       1     66   A                 ColorBrewer Spectral
+198        2     213      62     79   B                 Diverging Scheme with
+198        3     244     109     67   D                 10 colors
+198        4     253     174     97   F
+198        5     254     224    139   G
+198        6     230     245    152   I
+198        7     171     221    164   J
+198        8     102     194    165   L
+198        9      50     136    189   N
+198       10      94      79    162   O
+199        1     158       1     66   A                 ColorBrewer Spectral
+199        2     213      62     79   B                 Diverging Scheme with
+199        3     244     109     67   D                 11 colors
+199        4     253     174     97   F
+199        5     254     224    139   G
+199        6     255     255    191   H
+199        7     230     245    152   I
+199        8     171     221    164   J
+199        9     102     194    165   L
+199       10      50     136    189   N
+199       11      94      79    162   O
+200        1     252     141     89   E                 ColorBrewer RedYellowGreen
+200        2     255     255    191   H                 Diverging Scheme with
+200        3     145     207     96   K                 3 colors
+201        1     215      25     28   C                 ColorBrewer RedYellowGreen
+201        2     253     174     97   F                 Diverging Scheme with
+201        3     166     217    106   J                 4 colors
+201        4      26     150     65   M
+202        1     215      25     28   C                 ColorBrewer RedYellowGreen
+202        2     253     174     97   F                 Diverging Scheme with
+202        3     255     255    191   H                 5 colors
+202        4     166     217    106   J
+202        5      26     150     65   M
+203        1     215      48     39   B                 ColorBrewer RedYellowGreen
+203        2     252     141     89   E                 Diverging Scheme with
+203        3     254     224    139   G                 6 colors
+203        4     217     239    139   I
+203        5     145     207     96   K
+203        6      26     152     80   N
+204        1     215      48     39   B                 ColorBrewer RedYellowGreen
+204        2     252     141     89   E                 Diverging Scheme with
+204        3     254     224    139   G                 7 colors
+204        4     255     255    191   H
+204        5     217     239    139   I
+204        6     145     207     96   K
+204        7      26     152     80   N
+205        1     215      48     39   B                 ColorBrewer RedYellowGreen
+205        2     244     109     67   D                 Diverging Scheme with
+205        3     253     174     97   F                 8 colors
+205        4     254     224    139   G
+205        5     217     239    139   I
+205        6     166     217    106   J
+205        7     102     189     99   L
+205        8      26     152     80   N
+206        1     215      48     39   B                 ColorBrewer RedYellowGreen
+206        2     244     109     67   D                 Diverging Scheme with
+206        3     253     174     97   F                 9 colors
+206        4     254     224    139   G
+206        5     255     255    191   H
+206        6     217     239    139   I
+206        7     166     217    106   J
+206        8     102     189     99   L
+206        9      26     152     80   N
+207        1     165       0     38   A                 ColorBrewer RedYellowGreen
+207        2     215      48     39   B                 Diverging Scheme with
+207        3     244     109     67   D                 10 colors
+207        4     253     174     97   F
+207        5     254     224    139   G
+207        6     217     239    139   I
+207        7     166     217    106   J
+207        8     102     189     99   L
+207        9      26     152     80   N
+207       10       0     104     55   O
+208        1     165       0     38   A                 ColorBrewer RedYellowGreen
+208        2     215      48     39   B                 Diverging Scheme with
+208        3     244     109     67   D                 11 colors
+208        4     253     174     97   F
+208        5     254     224    139   G
+208        6     255     255    191   H
+208        7     217     239    139   I
+208        8     166     217    106   J
+208        9     102     189     99   L
+208       10      26     152     80   N
+208       11       0     104     55   O
+209        1     141     211    199   A                 ColorBrewer Set3
+209        2     255     255    179   B                 Qualitative with
+209        3     190     186    218   C                 3 colors
+210        1     141     211    199   A                 ColorBrewer Set3
+210        2     255     255    179   B                 Qualitative with
+210        3     190     186    218   C                 4 colors
+210        4     251     128    114   D
+211        1     141     211    199   A                 ColorBrewer Set3
+211        2     255     255    179   B                 Qualitative with
+211        3     190     186    218   C                 5 colors
+211        4     251     128    114   D
+211        5     128     177    211   E
+212        1     141     211    199   A                 ColorBrewer Set3
+212        2     255     255    179   B                 Qualitative with
+212        3     190     186    218   C                 6 colors
+212        4     251     128    114   D
+212        5     128     177    211   E
+212        6     253     180     98   F
+213        1     141     211    199   A                 ColorBrewer Set3
+213        2     255     255    179   B                 Qualitative with
+213        3     190     186    218   C                 7 colors
+213        4     251     128    114   D
+213        5     128     177    211   E
+213        6     253     180     98   F
+213        7     179     222    105   G
+214        1     141     211    199   A                 ColorBrewer Set3
+214        2     255     255    179   B                 Qualitative with
+214        3     190     186    218   C                 8 colors
+214        4     251     128    114   D
+214        5     128     177    211   E
+214        6     253     180     98   F
+214        7     179     222    105   G
+214        8     252     205    229   H
+215        1     141     211    199   A                 ColorBrewer Set3
+215        2     255     255    179   B                 Qualitative with
+215        3     190     186    218   C                 9 colors
+215        4     251     128    114   D
+215        5     128     177    211   E
+215        6     253     180     98   F
+215        7     179     222    105   G
+215        8     252     205    229   H
+215        9     217     217    217   I
+216        1     141     211    199   A                 ColorBrewer Set3
+216        2     255     255    179   B                 Qualitative with
+216        3     190     186    218   C                 10 colors
+216        4     251     128    114   D
+216        5     128     177    211   E
+216        6     253     180     98   F
+216        7     179     222    105   G
+216        8     252     205    229   H
+216        9     217     217    217   I
+216       10     188     128    189   J
+217        1     141     211    199   A                 ColorBrewer Set3
+217        2     255     255    179   B                 Qualitative with
+217        3     190     186    218   C                 11 colors
+217        4     251     128    114   D
+217        5     128     177    211   E
+217        6     253     180     98   F
+217        7     179     222    105   G
+217        8     252     205    229   H
+217        9     217     217    217   I
+217       10     188     128    189   J
+217       11     204     235    197   K
+218        1     141     211    199   A                 ColorBrewer Set3
+218        2     255     255    179   B                 Qualitative with
+218        3     190     186    218   C                 12 colors
+218        4     251     128    114   D
+218        5     128     177    211   E
+218        6     253     180     98   F
+218        7     179     222    105   G
+218        8     252     205    229   H
+218        9     217     217    217   I
+218       10     188     128    189   J
+218       11     204     235    197   K
+218       12     255     237    111   L
+219        1     251     180    174   A                 ColorBrewer Pastel1
+219        2     179     205    227   B                 Qualitative with
+219        3     204     235    197   C                 3 colors
+220        1     251     180    174   A                 ColorBrewer Pastel1
+220        2     179     205    227   B                 Qualitative with
+220        3     204     235    197   C                 4 colors
+220        4     222     203    228   D
+221        1     251     180    174   A                 ColorBrewer Pastel1
+221        2     179     205    227   B                 Qualitative with
+221        3     204     235    197   C                 5 colors
+221        4     222     203    228   D
+221        5     254     217    166   E
+222        1     251     180    174   A                 ColorBrewer Pastel1
+222        2     179     205    227   B                 Qualitative with
+222        3     204     235    197   C                 6 colors
+222        4     222     203    228   D
+222        5     254     217    166   E
+222        6     255     255    204   F
+223        1     251     180    174   A                 ColorBrewer Pastel1
+223        2     179     205    227   B                 Qualitative with
+223        3     204     235    197   C                 7 colors
+223        4     222     203    228   D
+223        5     254     217    166   E
+223        6     255     255    204   F
+223        7     229     216    189   G
+224        1     251     180    174   A                 ColorBrewer Pastel1
+224        2     179     205    227   B                 Qualitative with
+224        3     204     235    197   C                 8 colors
+224        4     222     203    228   D
+224        5     254     217    166   E
+224        6     255     255    204   F
+224        7     229     216    189   G
+224        8     253     218    236   H
+225        1     251     180    174   A                 ColorBrewer Pastel1
+225        2     179     205    227   B                 Qualitative with
+225        3     204     235    197   C                 9 colors
+225        4     222     203    228   D
+225        5     254     217    166   E
+225        6     255     255    204   F
+225        7     229     216    189   G
+225        8     253     218    236   H
+225        9     242     242    242   I
+226        1     228      26     28   A                 ColorBrewer Set1
+226        2      55     126    184   B                 Qualitative with
+226        3      77     175     74   C                 3 colors
+227        1     228      26     28   A                 ColorBrewer Set1
+227        2      55     126    184   B                 Qualitative with
+227        3      77     175     74   C                 4 colors
+227        4     152      78    163   D
+228        1     228      26     28   A                 ColorBrewer Set1
+228        2      55     126    184   B                 Qualitative with
+228        3      77     175     74   C                 5 colors
+228        4     152      78    163   D
+228        5     255     127      0   E
+229        1     228      26     28   A                 ColorBrewer Set1
+229        2      55     126    184   B                 Qualitative with
+229        3      77     175     74   C                 6 colors
+229        4     152      78    163   D
+229        5     255     127      0   E
+229        6     255     255     51   F
+230        1     228      26     28   A                 ColorBrewer Set1
+230        2      55     126    184   B                 Qualitative with
+230        3      77     175     74   C                 7 colors
+230        4     152      78    163   D
+230        5     255     127      0   E
+230        6     255     255     51   F
+230        7     166      86     40   G
+231        1     228      26     28   A                 ColorBrewer Set1
+231        2      55     126    184   B                 Qualitative with
+231        3      77     175     74   C                 8 colors
+231        4     152      78    163   D
+231        5     255     127      0   E
+231        6     255     255     51   F
+231        7     166      86     40   G
+231        8     247     129    191   H
+232        1     228      26     28   A                 ColorBrewer Set1
+232        2      55     126    184   B                 Qualitative with
+232        3      77     175     74   C                 9 colors
+232        4     152      78    163   D
+232        5     255     127      0   E
+232        6     255     255     51   F
+232        7     166      86     40   G
+232        8     247     129    191   H
+232        9     153     153    153   I
+233        1     179     226    205   A                 ColorBrewer Pastel2
+233        2     253     205    172   B                 Qualitative with
+233        3     203     213    232   C                 3 colors
+234        1     179     226    205   A                 ColorBrewer Pastel2
+234        2     253     205    172   B                 Qualitative with
+234        3     203     213    232   C                 4 colors
+234        4     244     202    228   D
+235        1     179     226    205   A                 ColorBrewer Pastel2
+235        2     253     205    172   B                 Qualitative with
+235        3     203     213    232   C                 5 colors
+235        4     244     202    228   D
+235        5     230     245    201   E
+236        1     179     226    205   A                 ColorBrewer Pastel2
+236        2     253     205    172   B                 Qualitative with
+236        3     203     213    232   C                 6 colors
+236        4     244     202    228   D
+236        5     230     245    201   E
+236        6     255     242    174   F
+237        1     179     226    205   A                 ColorBrewer Pastel2
+237        2     253     205    172   B                 Qualitative with
+237        3     203     213    232   C                 7 colors
+237        4     244     202    228   D
+237        5     230     245    201   E
+237        6     255     242    174   F
+237        7     241     226    204   G
+238        1     179     226    205   A                 ColorBrewer Pastel2
+238        2     253     205    172   B                 Qualitative with
+238        3     203     213    232   C                 8 colors
+238        4     244     202    228   D
+238        5     230     245    201   E
+238        6     255     242    174   F
+238        7     241     226    204   G
+238        8     204     204    204   H
+239        1     102     194    165   A                 ColorBrewer Set2
+239        2     252     141     98   B                 Qualitative with
+239        3     141     160    203   C                 3 colors
+240        1     102     194    165   A                 ColorBrewer Set2
+240        2     252     141     98   B                 Qualitative with
+240        3     141     160    203   C                 4 colors
+240        4     231     138    195   D
+241        1     102     194    165   A                 ColorBrewer Set2
+241        2     252     141     98   B                 Qualitative with
+241        3     141     160    203   C                 5 colors
+241        4     231     138    195   D
+241        5     166     216     84   E
+242        1     102     194    165   A                 ColorBrewer Set2
+242        2     252     141     98   B                 Qualitative with
+242        3     141     160    203   C                 6 colors
+242        4     231     138    195   D
+242        5     166     216     84   E
+242        6     255     217     47   F
+243        1     102     194    165   A                 ColorBrewer Set2
+243        2     252     141     98   B                 Qualitative with
+243        3     141     160    203   C                 7 colors
+243        4     231     138    195   D
+243        5     166     216     84   E
+243        6     255     217     47   F
+243        7     229     196    148   G
+244        1     102     194    165   A                 ColorBrewer Set2
+244        2     252     141     98   B                 Qualitative with
+244        3     141     160    203   C                 8 colors
+244        4     231     138    195   D
+244        5     166     216     84   E
+244        6     255     217     47   F
+244        7     229     196    148   G
+244        8     179     179    179   H
+245        1      27     158    119   A                 ColorBrewer Dark2
+245        2     217      95      2   B                 Qualitative with
+245        3     117     112    179   C                 3 colors
+246        1      27     158    119   A                 ColorBrewer Dark2
+246        2     217      95      2   B                 Qualitative with
+246        3     117     112    179   C                 4 colors
+246        4     231      41    138   D
+247        1      27     158    119   A                 ColorBrewer Dark2
+247        2     217      95      2   B                 Qualitative with
+247        3     117     112    179   C                 5 colors
+247        4     231      41    138   D
+247        5     102     166     30   E
+248        1      27     158    119   A                 ColorBrewer Dark2
+248        2     217      95      2   B                 Qualitative with
+248        3     117     112    179   C                 6 colors
+248        4     231      41    138   D
+248        5     102     166     30   E
+248        6     230     171      2   F
+249        1      27     158    119   A                 ColorBrewer Dark2
+249        2     217      95      2   B                 Qualitative with
+249        3     117     112    179   C                 7 colors
+249        4     231      41    138   D
+249        5     102     166     30   E
+249        6     230     171      2   F
+249        7     166     118     29   G
+250        1      27     158    119   A                 ColorBrewer Dark2
+250        2     217      95      2   B                 Qualitative with
+250        3     117     112    179   C                 8 colors
+250        4     231      41    138   D
+250        5     102     166     30   E
+250        6     230     171      2   F
+250        7     166     118     29   G
+250        8     102     102    102   H
+251        1     166     206    227   A                 ColorBrewer Paired
+251        2      31     120    180   B                 Qualitative with
+251        3     178     223    138   C                 3 colors
+252        1     166     206    227   A                 ColorBrewer Paired
+252        2      31     120    180   B                 Qualitative with
+252        3     178     223    138   C                 4 colors
+252        4      51     160     44   D
+253        1     166     206    227   A                 ColorBrewer Paired
+253        2      31     120    180   B                 Qualitative with
+253        3     178     223    138   C                 5 colors
+253        4      51     160     44   D
+253        5     251     154    153   E
+254        1     166     206    227   A                 ColorBrewer Paired
+254        2      31     120    180   B                 Qualitative with
+254        3     178     223    138   C                 6 colors
+254        4      51     160     44   D
+254        5     251     154    153   E
+254        6     227      26     28   F
+255        1     166     206    227   A                 ColorBrewer Paired
+255        2      31     120    180   B                 Qualitative with
+255        3     178     223    138   C                 7 colors
+255        4      51     160     44   D
+255        5     251     154    153   E
+255        6     227      26     28   F
+255        7     253     191    111   G
+256        1     166     206    227   A                 ColorBrewer Paired
+256        2      31     120    180   B                 Qualitative with
+256        3     178     223    138   C                 8 colors
+256        4      51     160     44   D
+256        5     251     154    153   E
+256        6     227      26     28   F
+256        7     253     191    111   G
+256        8     255     127      0   H
+257        1     166     206    227   A                 ColorBrewer Paired
+257        2      31     120    180   B                 Qualitative with
+257        3     178     223    138   C                 9 colors
+257        4      51     160     44   D
+257        5     251     154    153   E
+257        6     227      26     28   F
+257        7     253     191    111   G
+257        8     255     127      0   H
+257        9     202     178    214   I
+258        1     166     206    227   A                 ColorBrewer Paired
+258        2      31     120    180   B                 Qualitative with
+258        3     178     223    138   C                 10 colors
+258        4      51     160     44   D
+258        5     251     154    153   E
+258        6     227      26     28   F
+258        7     253     191    111   G
+258        8     255     127      0   H
+258        9     202     178    214   I
+258       10     106      61    154   J
+259        1     166     206    227   A                 ColorBrewer Paired
+259        2      31     120    180   B                 Qualitative with
+259        3     178     223    138   C                 11 colors
+259        4      51     160     44   D
+259        5     251     154    153   E
+259        6     227      26     28   F
+259        7     253     191    111   G
+259        8     255     127      0   H
+259        9     202     178    214   I
+259       10     106      61    154   J
+259       11     255     255    153   K
+260        1     166     206    227   A                 ColorBrewer Paired
+260        2      31     120    180   B                 Qualitative with
+260        3     178     223    138   C                 12 colors
+260        4      51     160     44   D
+260        5     251     154    153   E
+260        6     227      26     28   F
+260        7     253     191    111   G
+260        8     255     127      0   H
+260        9     202     178    214   I
+260       10     106      61    154   J
+260       11     255     255    153   K
+260       12     177      89     40   L
+261        1     127     201    127   A                 ColorBrewer Accent
+261        2     190     174    212   B                 Qualitative with
+261        3     253     192    134   C                 3 colors
+262        1     127     201    127   A                 ColorBrewer Accent
+262        2     190     174    212   B                 Qualitative with
+262        3     253     192    134   C                 4 colors
+262        4     255     255    153   D
+263        1     127     201    127   A                 ColorBrewer Accent
+263        2     190     174    212   B                 Qualitative with
+263        3     253     192    134   C                 5 colors
+263        4     255     255    153   D
+263        5      56     108    176   E
+264        1     127     201    127   A                 ColorBrewer Accent
+264        2     190     174    212   B                 Qualitative with
+264        3     253     192    134   C                 6 colors
+264        4     255     255    153   D
+264        5      56     108    176   E
+264        6     240       2    127   F
+265        1     127     201    127   A                 ColorBrewer Accent
+265        2     190     174    212   B                 Qualitative with
+265        3     253     192    134   C                 7 colors
+265        4     255     255    153   D
+265        5      56     108    176   E
+265        6     240       2    127   F
+265        7     191      91     23   G
+266        1     127     201    127   A                 ColorBrewer Accent
+266        2     190     174    212   B                 Qualitative with
+266        3     253     192    134   C                 8 colors
+266        4     255     255    153   D
+266        5      56     108    176   E
+266        6     240       2    127   F
+266        7     191      91     23   G
+266        8     102     102    102   H

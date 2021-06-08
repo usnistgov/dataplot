@@ -14299,6 +14299,10 @@ C     UPDATED  VERSION--DECEMBER  2018. SUPPORT FOR WRITE1/WRITE2/
 C                                       WRITE3
 C     UPDATED  VERSION--FEBRUARY  2020. FOR WRITE EXCEL OPTION, FIRST
 C                                       WRITE VAARIABLES TO "dpst1f.dat"
+C     UPDATED  VERSION--APRIL     2021. ADD "WRIFIL" COMMON BLOCK TO
+C                                       ALLOW DPWRST TO DETERMINE IF
+C                                       WRITE COMMAND IS TO FILE OR THE
+C                                       SCREEN
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -14355,6 +14359,9 @@ C---------------------------------------------------------------------
 C
 C-----COMMON----------------------------------------------------------
 C
+      CHARACTER*4 IWRIFC
+      COMMON/WRIFIL/IWRIFC
+C
       INCLUDE 'DPCOHK.INC'
       INCLUDE 'DPCODA.INC'
       INCLUDE 'DPCOF2.INC'
@@ -14368,6 +14375,7 @@ C
       IERROR='NO'
       IOFILE='-999'
       IOTERM='-999'
+      IWRIFC='NULL'
 C
       IFQUOT=0
       ILAST=0
@@ -14462,6 +14470,7 @@ C
           IOFILE='NO'
           IOTERM='YES'
         ENDIF
+        IF(IOFILE.EQ.'YES')IWRIFC='FILE'
       ENDIF
 C
       IF(IEXCEL.EQ.'ON')THEN
@@ -14992,6 +15001,10 @@ C     UPDATED         --JUNE      2020. SUPPORT WRITE TO CLIPBOARD
 C                                       FOR LINUX SYSTEMS (THIS
 C                                       WORKS DIFFERENTLY THAN ON
 C                                       WINDOWS SYSTEMS)
+C     UPDATED         --APRIL     2021. ADD COMMON BLOCK "WRIFIL" TO
+C                                       ALLOW DPWRST TO KNOW WHETHER
+C                                       WRITE IS TO A FILE OR TO THE
+C                                       SCREEN
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -15181,6 +15194,9 @@ C
       CHARACTER*40 IHTMFZ
       COMMON/HTMC1/IHTMFZ,NCFON1
 C
+      CHARACTER*4 IWRIFC
+      COMMON/WRIFIL/IWRIFC
+C
       LOGICAL IFLAG1
       LOGICAL IFLAG2
       LOGICAL IFLAG3
@@ -15210,6 +15226,7 @@ C
       ICASW2='0'
       IEXCEL='OFF'
       ICSVSV=ICSVWR
+      IWRIFC='NULL'
 C
       IFLAGH=0
       IFLAGT=0
@@ -15410,6 +15427,7 @@ C
         IWORD=2
         IOFILE='NO'
         CALL DPFILE(IANSLC,IWIDTH,IWORD,IOFILE,IBUGS2,ISUBRO,IERROR)
+        IF(IOFILE.EQ.'YES')IWRIFC='FILE'
 C
         IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'WRIT')THEN
           WRITE(ICOUT,91)IOFILE
@@ -22017,9 +22035,9 @@ C
       CALL GRSEFI(ITYPE,IFILLT,JFILLT)
 C
       ICOL=IY1ZCO
-      ICOLR=IX1ZC2(1)
-      ICOLG=IX1ZC2(2)
-      ICOLB=IX1ZC2(3)
+      ICOLR=IY1ZC2(1)
+      ICOLG=IY1ZC2(2)
+      ICOLB=IY1ZC2(3)
       ICASE2='TEXT'
       CALL GRTRC2(ICOLR,ICOLG,ICOLB,ARED,AGREEN,ABLUE,
      1            AALPHA,IRGBFL)

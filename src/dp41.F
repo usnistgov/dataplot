@@ -5,7 +5,7 @@
      1                  BARHEF,BARWEF,
      1                  IRHSTG,IHSTCW,IHSTEB,IHSTOU,IASHWT,
      1                  IHSTMC,IHSTOP,
-     1                  ICAPSW,IFORSW,IGUIFL,IERRFA,
+     1                  ICAPSW,IFORSW,IGUIFL,IERRFA,IFRALI,
      1                  IAND1,IAND2,ICONT,NUMHPP,NUMVPP,MAXNXT,
      1                  ISUBRO,IFOUND,IERROR)
 C
@@ -293,6 +293,8 @@ C     UPDATED         --FEBRUARY  2018. DEX ORDER PLOT
 C     UPDATED         --FEBRUARY  2019. CLASSIFICATION ... PLOT
 C     UPDATED         --MARCH     2019. CALL LIST TO DPBLOC
 C     UPDATED         --JUNE      2020. TOTAL TIME ON TEST PLOT
+C     UPDATED         --APRIL     2021. IMPROVE ALGORITHM FOR
+C                                       DEFAULT SUBREGIONS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -329,9 +331,12 @@ CCCCC CHARACTER*4 ICASSW
       CHARACTER*4 IASHWT
       CHARACTER*4 IGUIFL
       CHARACTER*4 IERRFA
+      CHARACTER*4 IFRALI
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
+      CHARACTER*4 ICASZZ
 C
+      DIMENSION TEMPZZ(2)
 CCCCC DIMENSION TEMP(*)
 CCCCC DIMENSION TEMP2(*)
 CCCCC DIMENSION TEMP3(*)
@@ -2500,22 +2505,97 @@ C
               D(II+5)=D(II)+1.0
 10220       CONTINUE
             NPLOTP=NPLOTP+5
-            X(1)=ASUBXL(I)
-            IF(X(1).EQ.CPUMIN)X(1)=AXMIN
-            X(2)=ASUBXU(I)
-            IF(X(2).EQ.CPUMAX)X(2)=AXMAX
-            X(3)=ASUBXU(I)
-            IF(X(3).EQ.CPUMAX)X(3)=AXMAX
-            X(4)=ASUBXL(I)
-            IF(X(4).EQ.CPUMIN)X(4)=AXMIN
-            Y(1)=ASUBYL(I)
-            IF(Y(1).EQ.CPUMIN)Y(1)=AYMIN
-            Y(2)=ASUBYL(I)
-            IF(Y(2).EQ.CPUMIN)Y(2)=AYMIN
-            Y(3)=ASUBYU(I)
-            IF(Y(3).EQ.CPUMAX)Y(3)=AYMAX
-            Y(4)=ASUBYU(I)
-            IF(Y(4).EQ.CPUMAX)Y(4)=AYMAX
+C
+            TEMPZZ(1)=AXMIN
+            TEMPZZ(2)=AXMAX
+            NZTEMP=2
+            ICASZZ='X'
+            CALL DPFRLI(ICASZZ,IFRALI,TEMPZZ,NZTEMP,
+     1                  GX1MIN,GX1MAX,GY1MIN,GY1MAX,
+     1                  IX1TSC,IX1TSW,IY1TSC,IY1TSW,
+     1                  IX1JSW,IY1JSW,
+     1                  NMJX1T,NMNX1T,IX1NSW,NMJY1T,NMNY1T,IY1NSW,
+     1                  PX1COO,X1COOR,NX1COO,
+     1                  PY1COO,Y1COOR,NY1COO,
+     1                  PX1CMN,X1COMN,NX1CMN,PX1TOL,PX1TOR,
+     1                  PY1CMN,Y1COMN,NY1CMN,PY1TOB,PY1TOT,
+     1                  ITICUN,PXMIN,PXMAX,PYMIN,PYMAX,
+     1                  AVALXL,AVALXU,
+     1                  IBUGG3,ISUBRO,IERROR)
+C
+            IF(ASUBXL(I).EQ.CPUMIN)THEN
+CCCCC         X(1)=AXMIN
+              X(1)=AVALXL
+            ELSE
+              X(1)=ASUBXL(I)
+            ENDIF
+C
+            IF(ASUBXU(I).EQ.CPUMAX)THEN
+CCCCC         X(2)=AXMAX
+              X(2)=AVALXU
+            ELSE
+              X(2)=ASUBXU(I)
+            ENDIF
+C
+            IF(ASUBXU(I).EQ.CPUMAX)THEN
+CCCCC         X(3)=AXMAX
+              X(3)=AVALXU
+            ELSE
+              X(3)=ASUBXU(I)
+            ENDIF
+C
+            IF(ASUBXL(I).EQ.CPUMIN)THEN
+CCCCC         X(4)=AXMIN
+              X(4)=AVALXL
+            ELSE
+              X(4)=ASUBXL(I)
+            ENDIF
+C
+            TEMPZZ(1)=AYMIN
+            TEMPZZ(2)=AYMAX
+            NZTEMP=2
+            ICASZZ='Y'
+            CALL DPFRLI(ICASZZ,IFRALI,TEMPZZ,NZTEMP,
+     1                  GX1MIN,GX1MAX,GY1MIN,GY1MAX,
+     1                  IX1TSC,IX1TSW,IY1TSC,IY1TSW,
+     1                  IX1JSW,IY1JSW,
+     1                  NMJX1T,NMNX1T,IX1NSW,NMJY1T,NMNY1T,IY1NSW,
+     1                  PX1COO,X1COOR,NX1COO,
+     1                  PY1COO,Y1COOR,NY1COO,
+     1                  PX1CMN,X1COMN,NX1CMN,PX1TOL,PX1TOR,
+     1                  PY1CMN,Y1COMN,NY1CMN,PY1TOB,PY1TOT,
+     1                  ITICUN,PXMIN,PXMAX,PYMIN,PYMAX,
+     1                  AVALYL,AVALYU,
+     1                  IBUGG3,ISUBRO,IERROR)
+C
+            IF(ASUBYL(I).EQ.CPUMIN)THEN
+CCCCC         Y(1)=AYMIN
+              Y(1)=AVALYL
+            ELSE
+              Y(1)=ASUBYL(I)
+            ENDIF
+C
+            IF(ASUBYL(I).EQ.CPUMIN)THEN
+CCCCC         Y(2)=AYMIN
+              Y(2)=AVALYL
+            ELSE
+              Y(2)=ASUBYL(I)
+            ENDIF
+C
+            IF(ASUBYU(I).EQ.CPUMAX)THEN
+CCCCC         Y(3)=AYMAX
+              Y(3)=AVALYU
+            ELSE
+              Y(3)=ASUBYU(I)
+            ENDIF
+C
+            IF(ASUBYU(I).EQ.CPUMAX)THEN
+CCCCC         Y(4)=AYMAX
+              Y(4)=AVALYU
+            ELSE
+              Y(4)=ASUBYU(I)
+            ENDIF
+C
             X(5)=X(1)
             Y(5)=Y(1)
             DO10225JJ=1,5
@@ -4770,7 +4850,7 @@ C
         ENDIF
         IF(NUMARG.GE.4)THEN
           IF(IHARG(2).EQ.'FILL'.AND.IHARG(3).EQ.'RGB '.AND.
-     1       IHARG(3).EQ.'COLO')THEN
+     1       IHARG(4).EQ.'COLO')THEN
             ICASCL='RGB'
             ISHIFT=1
             IMIN=2
@@ -8591,6 +8671,9 @@ C                                           CP CUMULATIVE STATISTIC PLOT
 C                                           CP MOVING     STATISTIC PLOT
 C     UPDATED         --DECEMBER  2020. ADDED SAVE VARIABLE COMMAND
 C     UPDATED         --DECEMBER  2020. ADDED RESTORE VARIABLE COMMAND
+C     UPDATED         --APRIL     2021. ADD "X" AS SYNOMYM FOR "CALL
+C                                       CLIPBOARD"
+C     UPDATED         --APRIL     2021. ADD ALIAS COMMAND
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -8827,6 +8910,36 @@ C               ******************************
 C
 C     2015/03: CALL EXIT AND CALL EXIT ALL CASES SUPPORTED
 C
+C     2021/04: ADD "X" AS A SYNONYM FOR "CALL CLIPBOARD"
+C
+      IF(ICOM.EQ.'X   ' .AND. NUMARG.LE.0)THEN
+        ISHIFT=1
+        CALL SHIFTR(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,
+     1              IBUGS2,IERROR)
+        IHARG(1)='CLIP'
+        IHARG2(1)='BOAR'
+        ICOM='CALL'
+        ICOM2='    '
+        IANS(1)='C'
+        IANS(2)='A'
+        IANS(3)='L'
+        IANS(4)='L'
+        IANS(5)=' '
+        IANS(6)='C'
+        IANS(7)='L'
+        IANS(8)='I'
+        IANS(9)='P'
+        IANS(10)='B'
+        IANS(11)='O'
+        IANS(12)='A'
+        IANS(13)='R'
+        IANS(14)='D'
+        IWIDTH=14
+        DO2031II=1,IWIDTH
+          IANSLC(II)=IANS(II)
+ 2031   CONTINUE
+      ENDIF
+C
       IF(ICOM.EQ.'ADD' .OR. ICOM.EQ.'CALL' .OR.
      1   ICOM.EQ.'EXEC' .OR. ICOM.EQ.'RUN ')THEN
 C
@@ -8968,7 +9081,6 @@ C
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
       ENDIF
 C
-C
 C               ******************************
 C               **  TREAT THE DEFINE  CASE  **
 C               ******************************
@@ -8979,6 +9091,15 @@ C
      1              ICPREP,NCPREP,ICPOST,NCPOST,
      1              ICPREH,NCPREH,ICPOSH,NCPOSH,
      1              IBUGS2,ISUBRO,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ENDIF
+C
+C               ******************************
+C               **  TREAT THE ALIAS   CASE  **
+C               ******************************
+C
+      IF(ICOM.EQ.'ALIA')THEN
+        CALL DPALIA(IBUGS2,ISUBRO,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
       ENDIF
 C
@@ -10463,9 +10584,9 @@ C
      1   IHARG(1).NE.'=   ')THEN
 CCCCC    2 LINES OF ARGS (IHELMX THROUGH NCPOSH) WERE ADDED JULY 1989
 CCCCC    THE FOLLOWING LINE WAS CHANGED NOVEMBER 1989
-        CALL DPLIST(ICOM,IANSLC,IWIDTH,IHARG,IHARG2,IARGT,
-     1              IARG,ARG,NUMARG,
-     1              ICOM3,ICOM4,ICOM5,NUMCOM,NCOM5,
+CCCCC   CALL DPLIST(ICOM,IANSLC,IWIDTH,IHARG,IHARG2,IARGT,
+CCCCC1              IARG,ARG,NUMARG,
+        CALL DPLIST(ICOM3,ICOM4,ICOM5,NUMCOM,NCOM5,
 CCCCC1              IHELMX,
      1              ILISMX,
      1              ICPREH,NCPREH,ICPOSH,NCPOSH,
