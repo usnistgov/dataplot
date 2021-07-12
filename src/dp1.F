@@ -5805,14 +5805,16 @@ C     PURPOSE--CHECK THE COMMAND LINE (IN DOS) TO INVOKE DATAPLOT,
 C              DETERMINE IF THE COMMAND LINE HAS ATTACHED ARGUMENTS,
 C              AND RECORD SUCH ARGUMENTS.
 C     ORIGINAL VERSION--FEBRUARY 1992
-C     UPDATED         --APRIL    1992  ADD OPERATING SYSTEM SPECIFIC
-C                                      SUPPORT (ALAN)
-C     UPDATED         --MAY      2001  COMMAND LINE ARGUMENT FOR
-C                                      MICROSOFT FORTRAN.  NOTE
-C                                      THIS ACTUALLY DONE IN 
-C                                      "MSFORT.F", THIS ROUTINE JUST
-C                                      EXTRACTS FROM A COMMON BLOCK.
-C     UPDATED         --AUGUST   2016  CALL LIST TO DPINFI
+C     UPDATED         --APRIL    1992 ADD OPERATING SYSTEM SPECIFIC
+C                                     SUPPORT (ALAN)
+C     UPDATED         --MAY      2001 COMMAND LINE ARGUMENT FOR
+C                                     MICROSOFT FORTRAN.  NOTE
+C                                     THIS ACTUALLY DONE IN 
+C                                     "MSFORT.F", THIS ROUTINE JUST
+C                                     EXTRACTS FROM A COMMON BLOCK.
+C     UPDATED         --AUGUST   2016 CALL LIST TO DPINFI
+C     UPDATED         --JUNE     2021 CHECK FOR "-GUI" AND "-NOGUI"
+C                                     OPTIONS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -5844,6 +5846,10 @@ C
       CHARACTER*4 IEXIST
       CHARACTER*4 IOPEN
       CHARACTER*8 IACC
+C
+      CHARACTER*4 IQWNFL
+      COMMON/QUICKW5/IQWNFL
+      CHARACTER*80 BUF
 C
 C-----COMMON VARIABLES (GENERAL)---------------------------------------
 C  APRIL 1992.  ADD FOLLOWING INCLUDE FILE
@@ -5908,10 +5914,98 @@ C               **  EXTRACTION, SIMPLY GET OUT**
 C               **  OF COMMON HERE.           **
 C               ********************************
 C
+C       2021/06: FOR WINDOWS, COMMAND LINE ARGUMENTS ARE PROCESSED
+C                IN "MSFORT_INTEL.F".  HOWEVER, THIS IS NOT EXECUTED
+C                BY THE INTEL CONSOLE EXECUTABLE.  SO ADD SECTION
+C                FOR PROCESSING COMMAND LINE ARGUMENTS WHEN RUNNING
+C                THE CONSOLE VERSION RATHER THAN THE QUICKWIN VERSION.
+C
+C
+        NUMARG=0
+        IF(IQWNFL.EQ.'OFF')THEN
+          NPCARG=0
+          NUM=0
+#ifdef INTEL_CONS
+          NUM=IARGC()
+#endif
+          IF(NUM.GE.1)THEN
+            DO210I=0,NUM
+#ifdef INTEL_CONS
+              CALL GETARG(I,BUF,ISTAT)
+#else
+              BUF=' '
+              ISTAT=0
+#endif
+              IF(I.EQ.0)GOTO210
+              IF(ISTAT.GE.2 .AND. BUF(1:2).EQ.'-W' .OR.
+     &           BUF(1:2).EQ.'-w')THEN
+                CONTINUE
+              ELSEIF(ISTAT.GE.2 .AND. BUF(1:2).EQ.'-H' .OR.
+     &               BUF(1:2).EQ.'-h')THEN
+                CONTINUE
+              ELSEIF(ISTAT.GE.5 .AND. BUF(1:5).EQ.'-SVGA' .OR.
+     &               BUF(1:5).EQ.'-svga')THEN
+                CONTINUE
+              ELSEIF(ISTAT.GE.6 .AND. BUF(1:6).EQ.'-LARGE' .OR.
+     &               BUF(1:6).EQ.'-large')THEN
+                CONTINUE
+              ELSEIF(ISTAT.GE.7 .AND. BUF(1:7).EQ.'-LAPTOP' .OR.
+     &               BUF(1:7).EQ.'-laptop')THEN
+                CONTINUE
+              ELSEIF(ISTAT.GE.9 .AND. BUF(1:9).EQ.'-FILLIBEN' .OR.
+     &               BUF(1:9).EQ.'-filliben')THEN
+                CONTINUE
+              ELSEIF(ISTAT.GE.10 .AND. BUF(1:10).EQ.'-EXTRAWIDE' .OR.
+     &               BUF(1:10).EQ.'-extrawide')THEN
+                CONTINUE
+              ELSEIF(ISTAT.GE.16 .AND.
+     &               BUF(1:16).EQ.'-TILE_HORIZONTAL' .OR.
+     &               BUF(1:16).EQ.'-tile_horizontal')THEN
+                CONTINUE
+              ELSEIF(ISTAT.GE.5 .AND. BUF(1:5).EQ.'-TILE' .OR.
+     &               BUF(1:5).EQ.'-tile')THEN
+                CONTINUE
+              ELSEIF(ISTAT.GE.7 .AND. BUF(1:7).EQ.'-NOTILE' .OR.
+     &               BUF(1:7).EQ.'-notile')THEN
+                CONTINUE
+              ELSEIF(ISTAT.GE.5 .AND. BUF(1:5).EQ.'-TRUE' .OR.
+     &               BUF(1:5).EQ.'-true')THEN
+                CONTINUE
+              ELSEIF(ISTAT.GE.7 .AND. BUF(1:5).EQ.'-NOTRUE' .OR.
+     &               BUF(1:7).EQ.'-notrue')THEN
+                CONTINUE
+              ELSEIF(ISTAT.GE.4 .AND. BUF(1:4).EQ.'-RGB' .OR.
+     &               BUF(1:4).EQ.'-rgb')THEN
+                CONTINUE
+              ELSEIF(ISTAT.GE.6 .AND. BUF(1:6).EQ.'-NORGB' .OR.
+     &               BUF(1:6).EQ.'-norgb')THEN
+                CONTINUE
+              ELSEIF(ISTAT.GE.4 .AND. BUF(1:4).EQ.'ECHO' .OR.
+     &               BUF(1:4).EQ.'echo')THEN
+                IECHFL=1
+              ELSEIF(ISTAT.GE.3 .AND. BUF(1:3).EQ.'GUI' .OR.
+     &               BUF(1:3).EQ.'gui')THEN
+                IGUIFL='ON'
+              ELSEIF(ISTAT.GE.5 .AND. BUF(1:5).EQ.'NOGUI' .OR.
+     &               BUF(1:5).EQ.'nogui')THEN
+                IGUIFL='OFF'
+              ELSE
+                IF(ISTAT.GE.1 .AND. ISTAT.LE.80 .AND. ICNT.LE.49)THEN
+                  ICNT=ICNT+1
+                  NCFTMP(ICNT)=ISTAT
+                  FTEMP(ICNT)(1:ISTAT)=BUF(1:ISTAT)
+                ENDIF
+              ENDIF
+  210       CONTINUE
+            NPCARG=ICNT
+          ENDIF
+        ELSEIF(IQWNFL.EQ.'ON')THEN
+          NUMARG=NPCARG
+          IECHFL=0
+        ENDIF
+C
         NUMCLA=0
-        NUMARG=NPCARG
         NMACLA=0
-        IECHFL=0
 C
 CCCCC   DATAPLOT SPECIFIC SWITCHES (E.G., -tile) ARE PROCESSED IN
 CCCCC   MSFORT_INTEL.F.
@@ -6189,6 +6283,8 @@ CCCCC
 CCCCC             -gui
 CCCCC             -nogui
 CCCCC             -echo
+CCCCC
+CCCCC   2021/06: SET IGUIFL FOR "-gui" AND "-nogui" SWITCHES
 C
         IF(NUMARG.GE.1)THEN
           ICNT=0
@@ -6199,9 +6295,10 @@ C
             CALL getarg(IJUNK,ITEMP)
             IF(ITEMP(1:4).EQ.'-gui' .OR. ITEMP(1:4).EQ.'-GUI')THEN
               IPROAD='OFF'
+              IGUIFL='ON'
             ELSEIF(ITEMP(1:6).EQ.'-nogui' .OR.
      1             ITEMP(1:6).EQ.'-NOGUI')THEN
-              IPROAD='ON'
+              IGUIFL='OFF'
             ELSEIF(ITEMP(1:5).EQ.'-echo' .OR.
      1             ITEMP(1:5).EQ.'-ECHO')THEN
               IECHFL=1

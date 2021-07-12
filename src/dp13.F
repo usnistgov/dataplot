@@ -18338,6 +18338,218 @@ C
 C
       RETURN
       END
+      SUBROUTINE DPDT8E(ALO1LL,AUP1LL,ALO2UL,AUP2UL,ALPHA,NUMALP,
+     1                  ICAPSW,ICAPTY,NUMDIG,ISUBRO,IBUGA3,IERROR)
+C
+C     PURPOSE--FOR DISTRIBUTIONS DEFINED BY LOWER AND UPPER LIMITS
+C              (E.G., UNIFORM DISTRIBUTION) CONFIDENCE INTERVALS FOR:
+C
+C                 1) LOWER LIMIT PARAMETER
+C                 2) UPPER LIMIT PARAMETER
+C
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2855
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2021/07
+C     ORIGINAL VERSION--JULY      2021.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 ICAPTY
+C
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION ALPHA(*)
+      DIMENSION ALO1LL(*)
+      DIMENSION AUP1LL(*)
+      DIMENSION ALO2UL(*)
+      DIMENSION AUP2UL(*)
+C
+      INCLUDE 'DPCOST.INC'
+C
+      PARAMETER (MAXROW=10)
+      CHARACTER*60 ITITLE
+      CHARACTER*1  ITITL9
+      CHARACTER*40 ITEXT(NUMALP)
+      CHARACTER*4  ALIGN(NUMALP)
+      CHARACTER*4  VALIGN(NUMALP)
+      INTEGER      NCTEXT(MAXROW)
+      INTEGER      IDIGIT(MAXROW)
+      INTEGER      NTOT(MAXROW)
+C
+      PARAMETER(NUMCLI=3)
+      PARAMETER(MAXLIN=2)
+      CHARACTER*60 ITITL2(MAXLIN,NUMCLI)
+      INTEGER      NCTIT2(MAXLIN,NUMCLI)
+      INTEGER      IWHTML(NUMCLI)
+      INTEGER      IWRTF(NUMCLI)
+      REAL         AMAT(MAXROW,NUMCLI)
+      LOGICAL IFRST
+      LOGICAL ILAST
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='DPDT'
+      ISUBN2='8E  '
+      IERROR='NO'
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DT8A')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,51)
+   51   FORMAT('**** AT THE BEGINNING OF DPDT8A--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,NUMALP
+   52   FORMAT('IBUGA3,ISUBRO,NUMALP = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','WRIT')
+        DO56I=1,NUMALP
+          WRITE(ICOUT,57)I,ALO1LL(I),AUP1LL(I),ALO2UL(I),AUP2UL(I)
+   57     FORMAT('I,ALO1LL(I),AUP1LL(I),ALO2UL(I),AUP2UL(I) = ',
+     1            I8,4G15.7)
+          CALL DPWRST('XXX','WRIT')
+   56   CONTINUE
+      ENDIF
+C
+      ITITL9=' '
+      NCTIT9=0
+C
+      IF(ALO1LL(1).NE.CPUMIN)THEN
+        ITITLE(1:45)='Confidence Interval for Lower Limit Parameter'
+        NCTITL=45
+        NUMLIN=2
+        NUMCOL=3
+        ITITL2(1,1)='Confidence'
+        ITITL2(2,1)='Coefficient'
+        NCTIT2(1,1)=10
+        NCTIT2(2,1)=11
+        ITITL2(1,2)='Lower'
+        ITITL2(2,2)='Limit'
+        NCTIT2(1,2)=5
+        NCTIT2(2,2)=5
+        ITITL2(1,3)='Upper'
+        ITITL2(2,3)='Limit'
+        NCTIT2(1,3)=5
+        NCTIT2(2,3)=5
+C
+        NMAX=0
+        DO1521I=1,NUMCOL
+          VALIGN(I)='b'
+          ALIGN(I)='r'
+          NTOT(I)=15
+          IF(I.EQ.1)NTOT(I)=12
+          NMAX=NMAX+NTOT(I)
+          IDIGIT(I)=NUMDIG
+ 1521   CONTINUE
+        IDIGIT(1)=2
+        DO1523I=1,NUMALP
+          NCTEXT(I)=0
+          AMAT(I,1)=100.0*(1.0 - ALPHA(I))
+          AMAT(I,2)=ALO1LL(I)
+          AMAT(I,3)=AUP1LL(I)
+ 1523   CONTINUE
+        IWHTML(1)=150
+        IWHTML(2)=150
+        IWHTML(3)=150
+        IWRTF(1)=2000
+        IWRTF(2)=IWRTF(1)+2000
+        IWRTF(3)=IWRTF(2)+2000
+C
+        IFRST=.TRUE.
+        ILAST=.TRUE.
+        CALL DPDTA2(ITITLE,NCTITL,
+     1              ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1              MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1              ITEXT,NCTEXT,AMAT,MAXROW,NUMALP,
+     1              IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1              ICAPSW,ICAPTY,IFRST,ILAST,
+     1              ISUBRO,IBUGA3,IERROR)
+      ENDIF
+C
+      IF(ALO2UL(1).NE.CPUMIN)THEN
+        ITITLE(1:45)='Confidence Interval for Upper Limit Parameter'
+        NCTITL=45
+        NUMLIN=2
+        NUMCOL=3
+        ITITL2(1,1)='Confidence'
+        ITITL2(2,1)='Coefficient'
+        NCTIT2(1,1)=10
+        NCTIT2(2,1)=11
+        ITITL2(1,2)='Lower'
+        ITITL2(2,2)='Limit'
+        NCTIT2(1,2)=5
+        NCTIT2(2,2)=5
+        ITITL2(1,3)='Upper'
+        ITITL2(2,3)='Limit'
+        NCTIT2(1,3)=5
+        NCTIT2(2,3)=5
+C
+        NMAX=0
+        DO2521I=1,NUMCOL
+          VALIGN(I)='b'
+          ALIGN(I)='r'
+          NTOT(I)=15
+          IF(I.EQ.1)NTOT(I)=12
+          NMAX=NMAX+NTOT(I)
+          IDIGIT(I)=NUMDIG
+ 2521   CONTINUE
+        IDIGIT(1)=2
+        DO2523I=1,NUMALP
+          NCTEXT(I)=0
+          AMAT(I,1)=100.0*(1.0 - ALPHA(I))
+          AMAT(I,2)=ALO2UL(I)
+          AMAT(I,3)=AUP2UL(I)
+ 2523   CONTINUE
+        IWHTML(1)=150
+        IWHTML(2)=150
+        IWHTML(3)=150
+        IWRTF(1)=2000
+        IWRTF(2)=IWRTF(1)+2000
+        IWRTF(3)=IWRTF(2)+2000
+C
+        IFRST=.TRUE.
+        ILAST=.TRUE.
+        CALL DPDTA2(ITITLE,NCTITL,
+     1              ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1              MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1              ITEXT,NCTEXT,AMAT,MAXROW,NUMALP,
+     1              IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1              ICAPSW,ICAPTY,IFRST,ILAST,
+     1              ISUBRO,IBUGA3,IERROR)
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DT8E')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPDT8E--')
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
+      RETURN
+      END
       SUBROUTINE DPDTA9(QP,XQPHAT,XQPLCL,XQPUCL,XQPSE,NPERC,
      1                  ICAPSW,ICAPTY,ILIKFL,NUMDIG,ALPHAP,
      1                  ISUBRO,IBUGA3,IERROR)

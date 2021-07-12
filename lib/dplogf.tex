@@ -12,20 +12,36 @@
 .     LET FLAGUSER = 2  => use Alan Heckert's preferred settings
 .     LET FLAGUSER = 3  => use generic preferred settings
 .                          (use these to customize your preferences
-.                          if you do not like either Jim's or Alan's
-.                          preferences)
+.                          if you do not like either Jim's or Alan's.
+.                          These settings for "interactive" use.
+.     LET FLAGUSER = 4  => use generic preferred settings
+.                          (use these to customize your preferences
+.                          if you do not like either Jim's or Alan's.
+.                          These settings for "batch" use, for example
+.                          when using it for a web application.
+.     LET FLAGUSER = 5  => Create a "null" dplogf.tex file
+.
 FEEDBACK OFF
+.
+.  Determine if a "-gui" option was given when the Dataplot executable
+.  was initiated.  A few features may be set differently if Dataplot
+.  is spawned from the GUI.
+.
+PROBE GUI
+LET STRING FLAGGUI = ^PROBESTR
 .
 .  Uncomment one of the following 3 lines
 .
 . LET FLAGUSER = 1; . Jim Filliben's preferred settings
 . LET FLAGUSER = 2; . Alan Heckert's preferred settings
-LET FLAGUSER = 3; . Use to customize your own preferred settings
+LET FLAGUSER = 3; . Use to customize your own preferred settings (interactive use)
+. LET FLAGUSER = 4; . Use if you prefer a "null" dplogf.tex file (batch used)
+. LET FLAGUSER = 5; . Use if you prefer a "null" dplogf.tex file
 .
 . -----Step 1: Define Your Graphics Output Devices------------
 .
 . Device 1 is your computer screen,
-.          usually set to X11 in dplogf.tex.
+.          usually set to QWIN in dplogf.tex.
 . Device 2 is user controlled graphics output file,
 .          usually set to Postscript in dplogf.tex at end of script.
 . Device 3 is Dataplot controlled graphics output file (typically Postscript),
@@ -55,7 +71,6 @@ IF FLAGUSER = 1;      . Jim Filliben's preferences
    LET FLAGPDPI = 1;  . Postscript dpi
    LET FLAGPDF  = 1;  . Automatic creation of pdf files
    LET FLAGLIST = 1;  . Set number of list lines, open new window for LIST, HELP
-   LET FLAGMAC  = 0;  . 1 => MacOS, 0 => not MacOS
 ELSE IF FLAGUSER = 2; . Alan Heckert preferences
    LET IBROWSE = 0;   . Use default via "xdg-open"
    LET IOPS = 1;      . 1 => X11, 2 => Aquaterm (MacOS only)
@@ -76,10 +91,9 @@ ELSE IF FLAGUSER = 2; . Alan Heckert preferences
    LET FLAGDEVI = 0;  . Print message about devices
    LET FLAGHELP = 0;  . Print various search/help options
    LET FLAGPDPI = 1;  . Postscript dpi
-   LET FLAGPDF  = 1;  . Automatic creation of pdf files
+   LET FLAGPDF  = 0;  . Automatic creation of pdf files
    LET FLAGLIST = 1;  . Set number of list lines, open new window for LIST, HELP
-   LET FLAGMAC  = 0;  . 1 => MacOS, 0 => not MacOS
-ELSE;                 . User customized settings
+ELSE IF FLAGUSER = 3; . Generic dplogf.tex file (interactive use)
    LET IBROWSE = 0;   . Use default via "xdg-open"
    LET IOPS = 1;      . 1 => X11, 2 => Aquaterm (MacOS only)
    LET FLAGCOLO = 1;  . Color settings
@@ -96,24 +110,73 @@ ELSE;                 . User customized settings
    LET FLAGERRO = 0;  . Response to error
    LET FLAGVERS = 1;  . Print version info
    LET FLAG4PLO = 1;  . 4-Plot uses MULTIPLOT CORNER COORDINATES
-   LET FLAGDEVI = 1;  . Print message about devices
+   LET FLAGDEVI = 0;  . Print message about devices
+   LET FLAGHELP = 0;  . Print various search/help options
+   LET FLAGPDPI = 1;  . Postscript dpi
+   LET FLAGPDF  = 1;  . Automatic creation of pdf files
+   LET FLAGLIST = 0;  . Set number of list lines, open new window for LIST, HELP
+ELSE IF FLAGUSER = 4; . Generic dplogf.tex file (batch use)
+   LET IBROWSE = 0;   . Use default via "xdg-open"
+   LET IOPS = 0;      . 1 => X11, 2 => Aquaterm (MacOS only)
+   LET FLAGCOLO = 1;  . Color settings
+   LET FLAGWS = 1;    . Workspace settings
+   LET FLAGDECI = 1;  . Number of decimals in output
+   LET FLAGTOFF = 1;  . Tic offset
+   LET FLAGCASE = 1;  . Case (upper/lower/asis)
+   LET FLAGTITL = 1;  . Title offset
+   LET FLAGTITS = 1;  . Title size
+   LET FLAGSHAD = 1;  . Box shadow
+   LET FLAGX3LA = 0;  . x3label automatic
+   LET FLAGHEAD = 1;  . Header sizes
+   LET FLAGLABE = 1;  . Label sizes
+   LET FLAGERRO = 0;  . Response to error
+   LET FLAGVERS = 0;  . Print version info
+   LET FLAG4PLO = 1;  . 4-Plot uses MULTIPLOT CORNER COORDINATES
+   LET FLAGDEVI = 0;  . Print message about devices
    LET FLAGHELP = 0;  . Print various search/help options
    LET FLAGPDPI = 1;  . Postscript dpi
    LET FLAGPDF  = 0;  . Automatic creation of pdf files
-   LET FLAGLIST = 1;  . Set number of list lines, open new window for LIST, HELP
-   LET FLAGMAC  = 0;  . 1 => MacOS, 0 => not MacOS
+   LET FLAGLIST = 0;  . Set number of list lines, open new window for LIST, HELP
+ELSE;                 . Null dplogf.tex file
+   LET IBROWSE = 0;   . Use default via "xdg-open"
+   LET IOPS = 0;      . 1 => X11, 2 => Aquaterm (MacOS only)
+   LET FLAGCOLO = 0;  . Color settings
+   LET FLAGWS = 0;    . Workspace settings
+   LET FLAGDECI = 0;  . Number of decimals in output
+   LET FLAGTOFF = 0;  . Tic offset
+   LET FLAGCASE = 0;  . Case (upper/lower/asis)
+   LET FLAGTITL = 0;  . Title offset
+   LET FLAGTITS = 0;  . Title size
+   LET FLAGSHAD = 0;  . Box shadow
+   LET FLAGX3LA = 0;  . x3label automatic
+   LET FLAGHEAD = 0;  . Header sizes
+   LET FLAGLABE = 0;  . Label sizes
+   LET FLAGERRO = 0;  . Response to error
+   LET FLAGVERS = 0;  . Print version info
+   LET FLAG4PLO = 0;  . 4-Plot uses MULTIPLOT CORNER COORDINATES
+   LET FLAGDEVI = 0;  . Print message about devices
+   LET FLAGHELP = 0;  . Print various search/help options
+   LET FLAGPDPI = 0;  . Postscript dpi
+   LET FLAGPDF  = 0;  . Automatic creation of pdf files
+   LET FLAGLIST = 0;  . Set number of list lines, open new window for LIST, HELP
 END OF IF
 .
 .  
 IF IOPS = 1 ; . Running in an X11 terminal window
    . Set the X11 font
    . set x11 font -adobe-helvetica-bold-o-normal--10-100-75-75-p-60-iso8859-1$
-   SET X11 FONT FIXED
-   DEVICE 1 X11
+   IF FLAGGUI = OFF
+      SET X11 FONT FIXED
+      DEVICE 1 X11
+   END OF IF
 ELSE IF IOPS = 2 ; . For MacOS running in standard terminal
-   DEVICE 1 AQUATERM
+   IF FLAGGUI = OFF
+      DEVICE 1 AQUATERM
+   END OF IF
 ELSE ; . Neither X11 or Aqua set, so set to character type graphs
-   DISCRETE
+   IF FLAGGUI = OFF
+      DISCRETE
+   END OF IF
 END OF IF
 .
 . -----Step 3: Define Your Browser (optional)------------------------
@@ -171,6 +234,9 @@ else if flagcolo = 3
    .
    if foreground not exist; let string foreground = white; end if
    if background not exist; let string background = blue; end if
+else
+   let string foreground = black
+   let string background = white
 end of if
 .
 background color ^background
@@ -216,7 +282,7 @@ else if flagdeci = 2
    set write decimals 5
 else
    set write decimals
-end if
+end if if
 .
 . ---Preference 4: Plot Appearance:
 .    I like margins (spacings) within the frames on my plots:
@@ -311,6 +377,9 @@ else if flagerro = 2
 else
    set fatal error ignore
 end of if
+if flaggui = ON
+   set fatal error ignore
+end of if
 .
 . ---Preference 14: Print out the date for this version of dataplot-----
 .
@@ -347,18 +416,28 @@ end of if
 .
 . ---Preference 17 Set number of list lines
 .
-.    Note 2020/08: Don't want new window for LIST and HELP if running GUI
+.    Note 2021/07: GUI was hanging on LIST command.  Problem
+.                  was the prompting for a "MORE" when the
+.                  number of list lines reached.  The DPMORE
+.                  subroutine was fixed to suppress this, but
+.                  set the number of list and help line very
+.                  high when GUI is running in case an older
+.                  executable is running.
+.
 if flaglist = 1
    set list lines 30
    set help lines 30
-   probe gui
-   if probeval = 0
-      set list new window on
-      set help new window on
-   else
-      set list new window off
-      set help new window off
-   end of if
+   set list new window on
+   set help new window on
+else
+   set list new window off
+   set help new window off
+end of if
+if flaggui = ON
+   set list lines 1000000
+   set help lines 1000000
+   set list new window off
+   set help new window off
 end of if
 .
 . ---Preference 18 (4/9/18): Note the question-mark-based search commands---
@@ -398,7 +477,7 @@ end of if
 . -----All done----
 .
 delete idev ibrowse iops flagcolo flagdeci flagshad flagws flagx3la
-delete flagtitl flagcase flagtoff flagpdpi flaghead flaglabe
+delete flagtitl flagcase flagtoff flagpdpi flaghead flaglabe flaggui
 delete flagerro flagvers flag4plo flagdevi flagsear flaghelp flaglist
 .
 IF FLAGUSER = 1; . Jim's settings
@@ -408,38 +487,26 @@ IF FLAGUSER = 1; . Jim's settings
    DEVICE 2 POSTSCRIPT
    SEED 359
 ELSE IF FLAGUSER = 2; . Alan's settings
-   IF FLAGMAC = 0 ; . Linux defaults
-      SET GHOSTSCRIPT PATH /usr/bin
-      SET POSTSCRIPT VIEWER okular
-      SET PDF VIEWER okular
-      SET IMAGE VIEWER gimp
-   ELSE IF FLAGMAC = 0 ; . MacOS defaults
-      SET IMAGE VIEWER gimp
-      set postscript convert off ; . Turn off automatic PDF conversion
-   END OF IF
    . SET DATAPLOT URL https://stat.nist.gov/~heckert/sed/software/dataplot/
+   SET GHOSTSCRIPT PATH /usr/bin
+   SET POSTSCRIPT VIEWER okular
+   SET IMAGE VIEWER gimp
+   SET POSTSCRIPT DEFAULT COLOR ON
+   SET POSTSCRIPT FONT HELVETICA BOLD; . versus arial or verdanna or . . .
+   . DEVICE 2 POSTSCRIPT
+ELSE IF FLAGUSER = 3; . Custom commands for generic user (interactive)
+   SET POSTSCRIPT VIEWER okular
+   . SET POSTSCRIPT VIEWER evince
+   . SET POSTSCRIPT VIEWER gv
+   . SET IMAGE VIEWER gimp
    SET POSTSCRIPT DEFAULT COLOR ON
    SET POSTSCRIPT FONT HELVETICA BOLD; . versus arial or verdanna or . . .
    DEVICE 2 POSTSCRIPT
-ELSE; . Custom commands for generic user
-   IF FLAGMAC = 0 ; . Linux defaults
-      SET POSTSCRIPT VIEWER okular
-      SET PDF VIEWER okular
-      . SET POSTSCRIPT VIEWER evince
-      . SET PDF VIEWER evince
-      . SET POSTSCRIPT VIEWER gv
-      . SET IMAGE VIEWER gimp
-   ELSE IF FLAGMAC = 1 ;
-      . MacOS will use the "open" command in most cases, so typically
-      . only use these commands if you want to override the default
-      . on your local platform.
-      . SET BROWSER safari
-      . SET BROWSER chrome
-      . SET BROWSER firefox
-      . SET POSTSCRIPT VIEWER xxxx
-      . SET IMAGE VIEWER gimp
-      set postscript convert off ; . Turn off automatic PDF conversion
-   END OF IF
+ELSE IF FLAGUSER = 4; . Custom commands for generic user (batch)
+   SET POSTSCRIPT VIEWER okular
+   . SET POSTSCRIPT VIEWER evince
+   . SET POSTSCRIPT VIEWER gv
+   . SET IMAGE VIEWER gimp
    SET POSTSCRIPT DEFAULT COLOR ON
    SET POSTSCRIPT FONT HELVETICA BOLD; . versus arial or verdanna or . . .
    DEVICE 2 POSTSCRIPT

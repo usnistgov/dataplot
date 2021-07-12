@@ -38347,6 +38347,10 @@ C                PP. 170-174
 C                JOHNSON, KOTZ, AND BALAKRISHNAN.  "CONTINUOUS
 C                UNIVARIATE DISTRIBUTIONS, VOLUME II", SECOND
 C                EDITION, WILEY, 1994.
+C              --NECHVAL, NECHVAL, VASERMANIS AND MAKEEV (2002),
+C                "CONSTRUCTING SHORTEST-LENGTH CONFIDENCE INTERVALS",
+C                TRANSPORT AND TELECOMMUNICATION, VOL. 3, NO. 1,
+C                PP. 95-103.
 C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
@@ -38366,6 +38370,8 @@ C                                       ROUTINES TO OBTAIN THE ML
 C                                       ESTIMATES)
 C     UPDATED         --OCTOBER   2009. USE DPDTA1, DPDTA2 TO PRINT
 C                                       ML OUTPUT
+C     UPDATED         --JUNE      2021. CONFIDENCE LIMITS FOR UNIFORM
+C                                       (METHOD FROM NECHVAL PAPER)
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -38393,8 +38399,12 @@ C
       INCLUDE 'DPCOST.INC'
 C
       PARAMETER (NUMALP=8)
-CCCCC REAL ALPHA(NUMALP)
+      REAL ALPHA(NUMALP)
       REAL QP(1)
+      DIMENSION ALO1LL(NUMALP)
+      DIMENSION AUP1LL(NUMALP)
+      DIMENSION ALO2UL(NUMALP)
+      DIMENSION AUP2UL(NUMALP)
 C
       PARAMETER (MAXROW=50)
       CHARACTER*60 ITITLE
@@ -38411,7 +38421,7 @@ C---------------------------------------------------------------------
 C
       INCLUDE 'DPCOP2.INC'
 C
-CCCCC DATA ALPHA /0.50, 0.25, 0.10, 0.05, 0.025, 0.01, 0.005, 0.001/
+      DATA ALPHA /0.50, 0.25, 0.10, 0.05, 0.025, 0.01, 0.005, 0.001/
 C
 C-----START POINT-----------------------------------------------------
 C
@@ -38435,7 +38445,7 @@ C
         CALL DPWRST('XXX','WRIT')
         DO56I=1,MIN(N,100)
           WRITE(ICOUT,57)I,Y(I)
-   57     FORMAT('I,Y(I) = ',I8,E15.7)
+   57     FORMAT('I,Y(I) = ',I8,G15.7)
           CALL DPWRST('XXX','WRIT')
    56   CONTINUE
       ENDIF
@@ -38476,10 +38486,35 @@ C
      1            ALIK,AIC,AICC,BIC,
      1            ISUBRO,IBUGA3,IERROR)
 C
+      DO210II=1,NUMALP
+        ALP=ALPHA(II)
+        AVAL1=XMAX
+        AVAL2=AVAL1/(ALP**(1.0/REAL(N)))
+        ADIFF=AVAL2 - AVAL1
+        AVAL3=XMIN
+        AVAL4=AVAL3 - ADIFF
+C
+        IF(IUNILI.EQ.'BOTH' .OR. IUNILI.EQ.'UPPE')THEN
+          ALO2UL(II)=AVAL1
+          AUP2UL(II)=AVAL2
+        ELSE
+          ALO2UL(II)=CPUMIN
+          AUP2UL(II)=CPUMIN
+        ENDIF
+C
+        IF(IUNILI.EQ.'BOTH' .OR. IUNILI.EQ.'UPPE')THEN
+          ALO1LL(II)=AVAL4
+          AUP1LL(II)=AVAL3
+        ELSE
+          ALO1LL(II)=CPUMIN
+          AUP1LL(II)=CPUMIN
+        ENDIF
+  210 CONTINUE
+C
 C               *********************************
 C               **   STEP 42--                 **
 C               **   WRITE OUT EVERYTHING      **
-C               **   FOR UNIFORM MLE ESTIMATE   **
+C               **   FOR UNIFORM MLE ESTIMATE  **
 C               **********************************
 C
       ISTEPN='42'
@@ -38647,6 +38682,11 @@ C
      1            ICAPSW,ICAPTY,ILAST,IFRST,
      1            ISUBRO,IBUGA3,IERROR)
 C
+      IF(IUNILI.NE.'NONE')THEN
+        CALL DPDT8E(ALO1LL,AUP1LL,ALO2UL,AUP2UL,ALPHA,NUMALP,
+     1              ICAPSW,ICAPTY,NUMDIG,ISUBRO,IBUGA3,IERROR)
+      ENDIF
+C
 C               *****************
 C               **  STEP 90--  **
 C               **  EXIT       **
@@ -38659,8 +38699,8 @@ C
         WRITE(ICOUT,9011)
  9011   FORMAT('***** AT THE END       OF DPMLUN--')
         CALL DPWRST('XXX','WRIT')
-        WRITE(ICOUT,9012)N,IBUGA3,IERROR
- 9012   FORMAT('N,IBUGA3,IERROR = ',I8,2X,A4,2X,A4)
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
         CALL DPWRST('XXX','WRIT')
       ENDIF
 C

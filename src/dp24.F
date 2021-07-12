@@ -2282,6 +2282,13 @@ C
             WRITE(IOUNI5,'(I8)')IVAL1
             WRITE(IOUNI5,'(I8)')IVAL2
           ENDIF
+          IF(IEXCHE.EQ.'0')THEN
+            WRITE(IOUNI5,'(A1)')'0'
+          ELSEIF(IEXCHE.EQ.'None')THEN
+            WRITE(IOUNI5,'(A2)')'-1'
+          ELSE
+            WRITE(IOUNI5,'(A4)')'-1'
+          ENDIF
           IF(IEXCC1.LE.IEXCC2)THEN
             IF(IEXCC1.GE.1)THEN
               IVAL1=IEXCC1

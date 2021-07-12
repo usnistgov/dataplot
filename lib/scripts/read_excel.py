@@ -6,6 +6,9 @@
 #
 #  It requires that the "pandas" package be installed.
 #
+#
+#  2021/07: Option for header added
+#
 #  Step 1: Import needed packages
 #
 import pandas as pd
@@ -17,6 +20,7 @@ iflagc = 0
 nskip = 0
 nlines = 0
 cols = 'None'
+iheader = "'None'"
 #
 #  Step 1: Open the "dpst5f.dat" file and extract the names
 #          for the Excel file and the sheet to write to.
@@ -83,6 +87,22 @@ except:
     exit()
 
 #
+#   Option for header line (0 for first line being header, -1
+#   for no header
+#
+try:
+    iline = fhand.readline()
+    iheader = 0
+    if int(iline) < 0:
+       iheader = -1
+
+except:
+    print('Unable to read the header option for the Excel file in dpst5f.dat')
+    print('iline: ',iline)
+    print('iheader: ',iheader)
+    exit()
+
+#
 #   Read column list
 #
 #   2020/05: Having an issue getting the usecols option to work, so
@@ -120,19 +140,37 @@ fhand.close()
 
 if iflagr == 0:
     if iflagc == 0:
-       df = pd.read_excel(excel_name,sheet_name=excel_sheet,usecols=None)
+       if iheader  == -1:
+          df = pd.read_excel(excel_name,sheet_name=excel_sheet,header=None,usecols=None)
+       else:
+          df = pd.read_excel(excel_name,sheet_name=excel_sheet,usecols=None)
     elif iflagc == 1:
-       df = pd.read_excel(excel_name,sheet_name=excel_sheet,usecols={cols})
+       if iheader == -1:
+          df = pd.read_excel(excel_name,sheet_name=excel_sheet,header=None,usecols={cols})
+       else:
+          df = pd.read_excel(excel_name,sheet_name=excel_sheet,usecols={cols})
 elif iflagr == 1:
     if iflagc == 0:
-       df = pd.read_excel(excel_name,sheet_name=excel_sheet,skiprows=nskip,usecols=None)
+       if iheader == -1:
+          df = pd.read_excel(excel_name,sheet_name=excel_sheet,header=None,skiprows=nskip,usecols=None)
+       else:
+          df = pd.read_excel(excel_name,sheet_name=excel_sheet,skiprows=nskip,usecols=None)
     elif iflagc == 1:
-       df = pd.read_excel(excel_name,sheet_name=excel_sheet,skiprows=nskip,usecols={cols})
+       if iheader == -1:
+          df = pd.read_excel(excel_name,sheet_name=excel_sheet,skiprows=nskip,header=None,usecols={cols})
+       else:
+          df = pd.read_excel(excel_name,sheet_name=excel_sheet,skiprows=nskip,usecols={cols})
 elif iflagr == 2:
     if iflagc == 0:
-       df = pd.read_excel(excel_name,sheet_name=excel_sheet,skiprows=nskip,nrows=nread,usecols=None)
+       if iheader == -1:
+          df = pd.read_excel(excel_name,sheet_name=excel_sheet,skiprows=nskip,nrows=nread,header=None,usecols=None)
+       else:
+          df = pd.read_excel(excel_name,sheet_name=excel_sheet,skiprows=nskip,nrows=nread,usecols=None)
     elif iflagc == 1:
-       df = pd.read_excel(excel_name,sheet_name=excel_sheet,skiprows=nskip,nrows=nread,usecols={cols})
+       if iheader == -1:
+          df = pd.read_excel(excel_name,sheet_name=excel_sheet,skiprows=nskip,nrows=nread,header=None,usecols={cols})
+       else:
+          df = pd.read_excel(excel_name,sheet_name=excel_sheet,skiprows=nskip,nrows=nread,usecols={cols})
 
 #
 #  Step 3: Now use Pandas to write the Excel file

@@ -1,5 +1,5 @@
 9.
-                                                     May   2021
+                                                     June   2021
 This is the DATAPLOT News file DPNEWF.TEX.  This NEWS file contains a
 list of DATAPLOT enhancements.  Some commands may be documented here
 that are not yet available in the standard documentation.
@@ -10,7 +10,7 @@ The complete news file can be viewed at
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
-March 2021 - May 2021.
+March 2021 - June 2021.
 -----------------------------------------------------------------------
 
  1. Added the command
@@ -137,7 +137,68 @@ March 2021 - May 2021.
     a Postscript file displaying the color palettes in
     "rgb_color_schemes.txt".
 
- 7. Fixed several miscellaneous bugs.
+ 7. Added the following library commands
+
+       LET YOUT = GT(Y1,Y2)
+       LET YOUT = GE(Y1,Y2)
+       LET YOUT = LT(Y1,Y2)
+       LET YOUT = LE(Y1,Y2)
+
+    These library functions perform "greater than", "greater than
+    or equal to", "less than" and "less than or equal to" comparisons.
+    Y1 is compared to Y2 and a 1 is returned for "true" and a 0 is
+    returned for "false".
+
+    EQ and EQUAL were added as synonyms for AGREE and NE and NOTEQUAL
+    were added as synonyms for DISAGREE.
+
+ 8. Added confidence intervals for the lower and upper limit
+    parameters for the UNIFORM MLE command.  Added the command
+
+        SET UNIFORM CONFIDENCE LIMIT <BOTH/UPPER/LOWER/NONE>
+
+    where UPPER specificies that only confidence intervals for the
+    upper limit will be generated, LOWER specifies that only confidence
+    intervals for the lower limit will be generated, BOTH specifies
+    that confidence intervals for both the lower and upper limits will
+    be generated and NONE specifies that no confidence intervals will
+    be generated.  This command is useful to address cases where one
+    or both the limits may be bounded by a physical limit.  For example,
+    in many cases, the uniform distribution will be bounded at zero.
+    The default is BOTH.
+
+ 8. Added the command line switches "-gui" and "-nogui".  Entering
+    this as a command line option allows the PROBE GUI command to
+    be used in the "dplogf.tex" file.  The SET GUI command is not
+    entered by the Tcl/Tk scripts until after the "dplogf.tex" file
+    is run.  This switch (specifically the "-gui" switch) is most
+    typically used by the Tcl/Tk scripts when initiating Dataplot.
+    The "-nogui" switch is the default and does not need to be
+    entered when running the command line version.
+
+    Several commands (most specifically, the LIST and HELP commands)
+    prompt if you want to continue after every n-th line (where n
+    is specified by the SET LIST LINES and SET HELP LINES).  This
+    prompt causes the GUI to hang.  Dataplot has been modified so
+    that if the GUI switch has been specified (either via the
+    "-gui" command line switch or the SET GUI ON command) this
+    prompt will not be issued.  If you do not have the latest
+    version of the Dataplot executable, then it is recommended
+    that you enter SET HELP LINES 1000000 and SET LIST LINES 1000000
+    before using the HELP or LIST commands in the GUI.
+
+ 9. For the READ EXCEL command, Pandas by default assumes that the
+    first row of the Excel file is a header row containing the variable
+    names.  If the first row in fact contains data, you can now enter
+    the command
+
+        SET EXCEL HEADER NONE
+
+    To reset the default that the first row is a header row, enter
+
+        SET EXCEL HEADER ON
+
+10. Fixed several miscellaneous bugs.
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT

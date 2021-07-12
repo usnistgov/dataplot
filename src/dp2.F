@@ -7488,6 +7488,8 @@ C     UPDATED         --FEBRUARY   2021.  FIX BUG IN
 C                                         SET BEST FIT <DIST> <ON/OFF>
 C     UPDATED         --MARCH      2021.  SET GRID ORDER
 C     UPDATED         --MARCH      2021.  SET SHANNON LOG BASE
+C     UPDATED         --JUNE       2021.  SET UNIFORM CONFIDENCE LIMIT
+C     UPDATED         --JULY       2021.  SET EXCEL HEADER
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -12380,7 +12382,7 @@ C
 C
 CCCCC FOLLOWING SECTION ADDED APRIL 2020.
 C     ***********************************************************
-C     **  SET EXCEL STAOP COLUMN   <VALUE>                     **
+C     **  SET EXCEL STOP COLUMN    <VALUE>                     **
 C     ***********************************************************
 C
       IPART1='EXCE'
@@ -12404,6 +12406,25 @@ C
           IEXCC2=IV
         ENDIF
         GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED APRIL 2020.
+C     *******************************************
+C     **  SET EXCEL HEADER  <ON/NONE>          **
+C     *******************************************
+C
+      IPART1='EXCE'
+      IPART2='HEAD'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'YES' .OR. IHV.EQ.'ON' .OR. IHV.EQ.'TRUE' .OR.
+     1         IHV.EQ.'DEFA' .OR. IHV.EQ.'0')THEN
+          IEXCHE='0'
+          IHV='0'
+        ELSE
+          IEXCHE='None'
+          IHV='NONE'
+        ENDIF
+        GOTO5160
       ENDIF
 C
 CCCCC FOLLOWING SECTION ADDED SEPTEMBER  2012
@@ -12705,6 +12726,33 @@ C
         ISHALB=IHV
         GOTO5160
       ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE      2021
+C     *************************************************************
+C     **  SET UNIFORM CONFIDENCE LIMIT   <LOWER/UPPER/BOTH>      **
+C     *************************************************************
+C
+      IPART1='UNIF'
+      IPART2='CONF'
+      IPART3='LIMI'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHARG(4).EQ.'LOWE')THEN
+          IHV='LOWE'
+        ELSEIF(IHARG(4).EQ.'UPPE')THEN
+          IHV='UPPE'
+        ELSEIF(IHARG(4).EQ.'NONE')THEN
+          IHV='NONE'
+        ELSEIF(IHARG(4).EQ.'OFF ')THEN
+          IHV='NONE'
+        ELSE
+          IHV='BOTH'
+        ENDIF
+        IUNILI=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE      2020
 C
 CCCCC FOLLOWING SECTION ADDED JUNE      2020
 C     *************************************************************
@@ -29054,6 +29102,9 @@ C                                         PROBE CHECK LENGTH OUTPUT
 C     UPDATED         --JANUARY    2021.  PROBE ERROR MESSAGE
 C     UPDATED         --MARCH      2021.  PROBE GRID ORDER
 C     UPDATED         --MARCH      2021.  PROBE SHANNON LOG BASE
+C     UPDATED         --JUNE       2021.  PROBE UNIFORM CONFIDENCE
+C                                               LIMIT
+C     UPDATED         --JULY       2021.  PROBE EXCEL HEADER
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -29172,6 +29223,16 @@ C
       IPROBS=' '
       ICASPR='    '
       ISTRIN=' '
+      IHV='    '
+      IPART1='    '
+      IPART2='    '
+      IPART3='    '
+      IPART4='    '
+      IPART5='    '
+      IPART6='    '
+      IPART7='    '
+      IPART8='    '
+      IPART9='    '
 C
       IF(NUMARG.LE.0)GOTO5410
 C
@@ -29831,6 +29892,7 @@ C     **  PROBE SHELL         R (LINUX ONLY)  **
 C     ******************************************
 C
       IPART1='SHEL'
+      IPART2='    '
       IF(IHARG(1).EQ.IPART1)THEN
         IFOUND='YES'
         IF(IFEEDB.EQ.'ON')THEN
@@ -30347,6 +30409,7 @@ C               **  STEP 20.A--                                    **
 C               **  PROBE EXCEL SHEET <NAME>                       **
 C               **  PROBE EXCEL NUMBER OF ROWS <VALUE>             **
 C               **  PROBE EXCEL COLUMN LIST <VAR-NAME>             **
+C               **  PROBE EXCEL HEADER <ON/OFF>                    **
 C               *****************************************************
 C
       IPART1='EXCE'
@@ -30355,6 +30418,7 @@ C
       IPART4='STOP'
       IPART5='ROW '
       IPART6='COLU'
+      IPART7='HEAD'
       IF(IHARG(1).EQ.IPART1)THEN
         IF(IHARG(2).EQ.IPART2)THEN
           IFOUND='YES'
@@ -30383,6 +30447,10 @@ C
           IFOUND='YES'
           IV=IEXCC2
           GOTO5150
+        ELSEIF(IHARG(2).EQ.IPART7)THEN
+          IFOUND='YES'
+          IHV=IEXCHE
+          GOTO5160
         ENDIF
       ENDIF
 C
@@ -30457,6 +30525,21 @@ C
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
      1   IHARG(3).EQ.IPART3)THEN
         IHV=ISHALB
+        GOTO5160
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED        JUNE    2021.
+C     ******************************************
+C     **  PROBE UNIFORM CONFIDENCE LIMIT      **
+C     **        <LOWER/UPPER/BOTH>            **
+C     ******************************************
+C
+      IPART1='UNIF'
+      IPART2='CONF'
+      IPART3='LIMI'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IUNILI
         GOTO5160
       ENDIF
 C
@@ -36997,6 +37080,7 @@ C               **  PROBE GUI <ON/OFF>                         **
 C               *************************************************
 C
       IPART1='GUI '
+      IPART2='    '
       IF(IHARG(1).EQ.IPART1)THEN
         IHV=IGUIFL
         GOTO5160
@@ -39668,6 +39752,7 @@ C               **  PROBE NETSCAPE           **
 C               *******************************
 C
       IPART1='NETS'
+      IPART2='    '
       IF(IHARG(1).EQ.IPART1)IHV=INETSW
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)GOTO5160
 C

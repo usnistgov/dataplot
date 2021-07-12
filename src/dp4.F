@@ -9264,6 +9264,7 @@ C     UPDATED         --MAY       2014.  IGASURV, IGAISURV
 C     UPDATED         --MAY       2014.  IWESURV, IWEISURV
 C     UPDATED         --SEPTEMBER 2014.  GCDF, GPDF, GPPF
 C     UPDATED         --AUGUST    2015.  BINOCTAL, BINDEC, DECBIN
+C     UPDATED         --JUNE      2021.  GT, GE, EQ, EQUAL
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -10150,6 +10151,8 @@ C               **       EV2SURV          **
 C               **       EV2ISURV         **
 C               **       EWESURV          **
 C               **       EWEISURV         **
+C               **  JUNE      2021:       **
+C               **       EQ, EQUAL        **
 C               ****************************
 C
       IF(IA(I).EQ.'E')GOTO509
@@ -10183,6 +10186,9 @@ C
       IF(IA(IP1).EQ.'R'.AND.IA(IP2).EQ.'F')GOTO7300
       IF(IA(IP1).EQ.'R'.AND.IA(IP2).EQ.'R')GOTO505
       IF(IA(IP1).EQ.'E'.AND.IA(IP2).EQ.'W')GOTO505
+      IF(IA(IP1).EQ.'Q'.AND.IA(IP2).EQ.'U'.AND.IA(IP3).EQ.'A'.AND.
+     1   IA(IP4).EQ.'L')GOTO7500
+      IF(IA(IP1).EQ.'Q')GOTO7200
       GOTO9000
 C
   505 CONTINUE
@@ -10452,6 +10458,8 @@ C               **       GOMSURV             **
 C               **       GOMISURV            **
 C               **  SEPTEMBER 2014           **
 C               **       GCDF, GPDF, CPPF    **
+C               **  JUNE 2021                **
+C               **       GT, GE              **
 C               *******************************
 C
       IF(IA(I).EQ.'G')GOTO709
@@ -10521,6 +10529,8 @@ C
       IF(IA(IP1).EQ.'O'.AND.IA(IP2).EQ.'O'.AND.
      1IA(IP3).EQ.'D'.AND.IA(IP4).EQ.'S'.AND.IA(IP5).EQ.'T')
      1GOTO7600
+      IF(IA(IP1).EQ.'T')GOTO7200
+      IF(IA(IP1).EQ.'E')GOTO7200
 C
       GOTO9000
 C
@@ -11071,6 +11081,8 @@ C     UPDATED         --MAY       2014.  UNISURV, UNIISURV
 C     UPDATED         --JULY      2014.  NORPPCV
 C     UPDATED         --AUGUST    2015.  OCTBIN
 C     UPDATED         --AUGUST    2015.  VSUM, VSUM2, VSSQ
+C     UPDATED         --JUNE      2021.  LT, LE
+C     UPDATED         --JUNE      2021.  NE, NOTEQUAL
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -11280,6 +11292,8 @@ C               **       LGNSURV          **
 C               **       LGNISURV         **
 C               **       LOGSURV          **
 C               **       LOGISURV         **
+C               **  ADD: JUNE    2021     **
+C               **       LT, LE           **
 C               ****************************
 C
       IF(IA(I).EQ.'L')GOTO1209
@@ -11346,6 +11360,8 @@ C
       IF(IA(IP1).EQ.'0')GOTO7200
       IF(IA(IP1).EQ.'1')GOTO7200
       IF(IA(IP1).EQ.'V')GOTO7200
+      IF(IA(IP1).EQ.'E')GOTO7200
+      IF(IA(IP1).EQ.'T')GOTO7200
       GOTO9000
 C
  1210 CONTINUE
@@ -11548,6 +11564,8 @@ C               **       NORSURV          **
 C               **       NORISURV         **
 C               **  ADD: JULY      2014   **
 C               **       NORPPCV          **
+C               **  ADD: JUNE      2021   **
+C               **       NE, NOTEQUL      **
 C               ****************************
 C
       IF(IA(I).EQ.'N')GOTO1409
@@ -11561,6 +11579,10 @@ C
       IP5=I+5
       IP6=I+6
       IP7=I+7
+C
+      IF(IA(IP1).EQ.'O'.AND.IA(IP2).EQ.'T'.AND.
+     1IA(IP3).EQ.'E'.AND.IA(IP4).EQ.'Q'.AND.IA(IP5).EQ.'U'.AND.
+     1IA(IP6).EQ.'A'.AND.IA(IP7).EQ.'L')GOTO7800
 C
       IF(IA(IP1).EQ.'O')GOTO1410
       IF(IA(IP1).EQ.'B')GOTO1420
@@ -11583,6 +11605,8 @@ CCCCC1IA(IP6).EQ.'Q')GOTO7700
      1IA(IP3).EQ.'L'.AND.IA(IP4).EQ.'A'.AND.IA(IP5).EQ.'G'.AND.
      1IA(IP6).EQ.'L')
      1GOTO7700
+C
+      IF(IA(IP1).EQ.'E')GOTO7200
 C
       GOTO9000
 C

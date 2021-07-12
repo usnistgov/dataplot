@@ -1,4 +1,4 @@
-67100.      (VERSION 2021.05)  total number of lines in file (including this line)
+67100.      (VERSION 2021.07)  total number of lines in file (including this line)
  4.                          number of     sections below
   100.    P                  first line number of P section
 22400.    Q                  first line number of Q section
@@ -29952,8 +29952,8 @@ Note:
     It tends to work reasonably well for 
 
 Note:
-    The Pandas pandas.to_csv function will typically add a row id
-    variable to the ASCII file.
+    The Pandas pandas.to_csv function will add a row id variable to
+    the ASCII file.
 
 Note:
     The python script will currently read the entire spreadsheet.
@@ -29982,6 +29982,20 @@ Note:
           Excel sheet.
 
           One use of this is to skip over header lines in the Excel file.
+
+Note:
+    Pandas by default assumes that the first row of the Excel file
+    is a header line containing the variable names.  If your Excel
+    file does not contain a header line, enter the command
+
+        SET EXCEL HEADER NONE
+
+    To reset the default of a header line, enter the command
+
+        SET EXCEL HEADER ON
+
+    This command was added 2021/07.  The "read_python.py" script
+    was also updated at this time to support this option.
 
 Note:
     Excel (or some other spreadsheet program) does not need to be
@@ -30033,6 +30047,7 @@ Applications:
 Implementation Date:
     2020/02
     2020/05: Added SET EXCEL START ROW and SET EXCEL STOP ROW
+    2021/07: Added SET EXCEL HEADER
 
 Program 1:
     dimension 40 columns
@@ -42851,21 +42866,6 @@ Program:
     PLOT YIELD
  
 -------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

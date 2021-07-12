@@ -20,6 +20,12 @@ C              -notile          - do not tile text and graphics windows vertical
 C              -tile_horizontal - tile text and graphics windows
 C                                 horizontally
 C
+C  JUNE 2021: IF THIS ROUTINE IS CALLED, THIS IMPLIES THAT THE
+C             COMMAND LINE VERSION IS BEING EXECUTED.  SO SET
+C             IGUIFL TO "OFF".  BUT CHECK FOR "-gui" AND "-nogui"
+C             SWITCHES.  NOTE THAT QUICKWIN EXECUTABLE WILL ALWAYS
+C             RUN AS IF "-nogui" SWITCH ENTERED.
+C
 CQWIN USE DFWIN
 CQWIN USE DFLIB
       USE IFPORT
@@ -38,6 +44,8 @@ CCCCC LOGICAL(4) RESULT
       COMMON/QUICKW3/NCFTMP,NPCARG
       CHARACTER*4 IQWNTL
       COMMON/QUICKW4/IQWNTL
+      CHARACTER*4 IQWNFL
+      COMMON/QUICKW5/IQWNFL
 C
       CHARACTER*4 IQWNFC
       CHARACTER*4 IQWNCL
@@ -46,6 +54,8 @@ C
       CHARACTER*4 IQWNPM
       CHARACTER*4 IQWNTC
       COMMON/CQWNCP/IQWNFC,IQWNCL,IQWNFZ,IQWNPF,IQWNTC,IQWNPM(255)
+C
+      INCLUDE 'DPCOST.INC'
 C
 C     MAY 2001.     EXTRACT FILE NAME AND ECHO ARGUMENTS OFF COMMAND
 C                   LINE FOR PROCESSING IN CKCLAR ROUTINE
@@ -62,6 +72,8 @@ C
 C     APRIL 2018.   ADD THE FOLLOWING OPTIONS:
 C
 C                   1.  -tile_landscape
+C
+      IQWNFL='ON'
 C
 C  SET DEFAULT SIZE OF FRAME WINDOW
 C
@@ -145,6 +157,12 @@ CCCCC IQWNCL='VGA '
           ELSEIF(ISTAT.GE.4 .AND. BUF(1:4).EQ.'ECHO' .OR.
      &           BUF(1:4).EQ.'echo')THEN
             IECHO(1:4)='ECHO'
+          ELSEIF(ISTAT.GE.3 .AND. BUF(1:3).EQ.'GUI' .OR.
+     &           BUF(1:3).EQ.'gui')THEN
+            IGUIFL='OFF'
+          ELSEIF(ISTAT.GE.5 .AND. BUF(1:5).EQ.'NOGUI' .OR.
+     &           BUF(1:5).EQ.'nogui')THEN
+            IGUIFL='OFF'
           ELSE
             IF(ISTAT.GE.1 .AND. ISTAT.LE.80 .AND. ICNT.LE.49)THEN
               ICNT=ICNT+1

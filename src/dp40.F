@@ -15647,6 +15647,8 @@ C     UPDATED         --JUNE      2020.  IX11SE
 C     UPDATED         --JANUARY   2021.  IERMSG
 C     UPDATED         --MARCH     2021.  IGRDOR
 C     UPDATED         --MARCH     2021.  ISHALB
+C     UPDATED         --JUNE      2021.  IUNILI
+C     UPDATED         --JULY      2021.  IEXCHE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -20696,10 +20698,12 @@ C               **  TREAT THE SET EXCEL START ROW <VALUE>           **
 C               **  TREAT THE SET EXCEL STOP  ROW    <VALUE>        **
 C               **  TREAT THE SET EXCEL START COLUMN <VALUE>        **
 C               **  TREAT THE SET EXCEL STOP  COLUMN <VALUE>        **
+C               **  TREAT THE SET EXCEL HEADER <ON/NONE>            **
 C               ******************************************************
 C
       IEXCSH='Sheet1'
       IEXCCL='NULL'
+      IEXCHE='ON'
       IEXCR1=-1
       IEXCR2=-1
       IEXCC1=-1
@@ -20745,6 +20749,15 @@ C               **  TREAT THE SET SHANNON LOG BASE <E/2/10>         **
 C               ******************************************************
 C
       ISHALB='E   '
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JUNE        2021
+C
+C               ******************************************************
+C               **  TREAT THE SET UNIFORM CONFIDENCE LIMIT          **
+C               **                <LOWER/UPPER/BOTH>                **
+C               ******************************************************
+C
+      IUNILI='BOTH'
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    APRIL     2020
 C
