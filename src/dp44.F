@@ -449,9 +449,6 @@ C                 GAITHERSBURG, MD 20899-8980
 C                 PHONE--301-921-3651
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1966)
 C               EXCEPTION--HOLLERITH STRINGS IN FORMAT STATEMENTS
 C                          DENOTED BY QUOTES RATHER THAN NH.
@@ -6994,6 +6991,8 @@ C              BY 3 ITERATIONS OF NEWTON'S METHOD FOR
 C              ROOT DETERMINATION.
 C              THIS IMPROVES THE ACCURACY--ESPECIALLY FOR
 C              VALUES OF P NEAR 0 OR 1.
+C            --2022/10: FOR DEGREES OF FREEDOM FROM 7 TO 30, USE THE
+C              HILL ALGORITHM AS THIS SEEMS TO BE MORE ACCURATE.
 C     REFERENCES--NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY APPLIED MATHMATICS
 C                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.
 C               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
@@ -7004,6 +7003,8 @@ C                 PERCENTAGE POINTS OF STUDENT'S T
 C                 DISTRIBUTION, JOURNAL OF THE
 C                 AMERICAN STATISTICAL ASSOCIATION,
 C                 1969, PAGES 683-688.
+C               --Hill, G.W (1970) "Algorithm 396: Student's t-quantiles"
+C                 CACM 13(10), 619-620.
 C               --HASTINGS AND PEACOCK, STATISTICAL
 C                 DISTRIBUTIONS--A HANDBOOK FOR
 C                 STUDENTS AND PRACTITIONERS, 1975,
@@ -7026,6 +7027,8 @@ C     UPDATED         --DECEMBER  1981.
 C     UPDATED         --MAY       1982.
 C     UPDATED         --OCTOBER   2006. SUPPORT FOR FRACTIONAL
 C                                       DEGREES OF FREEDOM
+C     UPDATED         --OCTOBER   2022. USE HILL ALGORITHM FOR
+C                                       7 <= NU <= 30
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -7057,6 +7060,7 @@ C
       DOUBLE PRECISION XRML
       DOUBLE PRECISION DCDF
       DOUBLE PRECISION DBETAI
+      DOUBLE PRECISION DX
 C
       EXTERNAL DBETAI
 C
@@ -7075,6 +7079,8 @@ C
       DATA B51,B52,B53,B54,B55,B56/0.00001085069444D0,79.0D0,776.0D0,
      1                             1482.0D0,-1920.0D0,-945.0D0/
 C
+      DATA HP/1.5707963268/
+C
       DATA EPS /0.0001D0/
       DATA SIG /1.0D-7/
       DATA ZERO /0.0D0/
@@ -7088,16 +7094,14 @@ C     CHECK THE INPUT ARGUMENTS FOR ERRORS
 C
       IF(P.LE.0.0.OR.P.GE.1.0)THEN
         WRITE(ICOUT,1)
+    1   FORMAT('***** ERROR--THE FIRST ARGUMENT TO TPPF IS OUTSIDE ',
+     1         'THE ALLOWABLE (0,1) INTERVAL.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,46)P
+   46   FORMAT('      THE VALUE OF THE ARGUMENT IS ',G15.7)
         CALL DPWRST('XXX','BUG ')
         GOTO9000
-      ENDIF
-    1 FORMAT('***** ERROR--THE FIRST ARGUMENT TO TPPF ',
-     1       'IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL')
-   46 FORMAT('***** THE VALUE OF THE ARGUMENT IS ',G15.7)
-C
-      IF(ANU.LT.1.0)THEN
+      ELSEIF(ANU.LT.1.0)THEN
         WRITE(ICOUT,11)
    11   FORMAT('***** ERROR--THE SECOND ARGUMENT TO TPPF ',
      1         'IS LESS THAN 1')
@@ -7114,6 +7118,8 @@ C
 C
       NU=INT(ANU)
       IF(ABS(ANU-REAL(NU)).GT.0.000001)GOTO8000
+C
+C     CASE FOR INTEGER DEGREES OF FREEDOM
 C
       DNU=NU
       DP=P
@@ -7135,12 +7141,51 @@ C
         TERM3=DSQRT(DP*(1.0D0-DP))
         PPF=TERM1*TERM2/TERM3
         GOTO9000
+      ELSEIF(NU.GE.7 .AND. NU.LE.30)THEN
+C
+C       FOR 7 <= NU <= 30, USE HILL ALGORITHM
+C
+        RL=1.
+        IF(P .GE. 0.5) THEN
+          PT=2.*(1. - P)
+        ELSE
+          RL=-1.
+          PT=2.*P
+        ENDIF
+C
+        N=NU
+        RN=REAL(N)
+        A=1./(RN-0.5)
+        B=48./(A*A)
+        C=((20700.*A/B-98.)*A-16.)*A+96.36
+        D=((94.5/(B+C)-3.)/B+1.)*SQRT(A*HP)*RN
+        XT=D*P
+        Y=XT**(2./RN)
+        IF(Y .LE. 0.05+A) THEN
+          Y=((1./(((RN+6.)/(RN*Y)-0.089*D-0.822)*(RN+2.)*3.)+
+     1      0.5/(RN+4.))*Y-1.)*(RN+1.)/(RN+2.)+1./Y
+        ELSE
+          PP=0.5*PT
+          CALL NODPPF(DBLE(PP),DX)
+          XT=REAL(DX)
+          Y=XT*XT
+          IF(N .GE. 5) C=C+0.3*(RN-4.5)*(XT+0.6)
+          C=(((0.05*D*XT-5.)*XT-7.)*XT-2.)*XT+B+C
+          Y=(((((0.4*Y+6.3)*Y+36.)*Y+94.5)/C-Y-3.)/B+1.)*XT
+          Y=A*Y*Y
+          IF(Y .LE. 0.002) Y=0.5*Y*Y+Y
+          IF(Y .GT. 0.002) Y=EXP(Y)-1.
+        ENDIF
+C
+        PPF=SQRT(RN*Y)*RL
+        GOTO9000
       ELSE
 C
 C       TREAT THE NU GREATER THAN OR EQUAL TO 3 CASE
 C
-        CALL NORPPF(P,PPFN)
-        DPPFN=PPFN
+CCCCC   CALL NORPPF(P,PPFN)
+CCCCC   DPPFN=PPFN
+        CALL NODPPF(DBLE(P),DPPFN)
         D1=DPPFN
         D3=DPPFN**3
         D5=DPPFN**5

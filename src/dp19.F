@@ -6225,7 +6225,7 @@ C
      1              YTEMP,XTEMP,YMEAN,YMEDIA,T,TBARIV,DTAG,MAXNXT,
      1              TEMP1,TEMP2,TEMP3,TEMP4,
      1              ICAPSW,ICAPTY,IFORSW,IMULT,ILEVGS,
-     1              STATVA,STATCD,
+     1              STATVA,STATCD,PVALUE,
      1              CUT0,CUT50,CUT75,CUT90,CUT95,CUT99,CUT999,
      1              IBUGA3,ISUBRO,IERROR)
 C
@@ -6279,7 +6279,7 @@ C
      1              YTEMP,XTEMP,YMEAN,YMEDIA,T,TBARIV,DTAG,MAXNXT,
      1              TEMP1,TEMP2,TEMP3,TEMP4,
      1              ICAPSW,ICAPTY,IFORSW,IMULT,ILEVGS,
-     1              STATVA,STATCD,
+     1              STATVA,STATCD,PVALUE,
      1              CUT0,CUT50,CUT75,CUT90,CUT95,CUT99,CUT999,
      1              IBUGA3,ISUBRO,IERROR)
 C
@@ -6306,6 +6306,13 @@ C
       IH='STAT'
       IH2='CDF '
       VALUE0=STATCD
+      CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1IANS,IWIDTH,IBUGA3,IERROR)
+C
+      IH='PVAL'
+      IH2='UE  '
+      VALUE0=PVALUE
       CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
      1IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
      1IANS,IWIDTH,IBUGA3,IERROR)
@@ -6385,7 +6392,7 @@ C
      1                  YTEMP,XTEMP,YMEAN,YMEDIA,T,TBARIV,DTAG,MAXNXT,
      1                  TEMP1,TEMP2,TEMP3,TEMP4,
      1                  ICAPSW,ICAPTY,IFORSW,IMULT,ILEVGS,
-     1                  STATVA,STATCD,
+     1                  STATVA,STATCD,PVAL,
      1                  CUT0,CUT50,CUT75,CUT90,CUT95,CUT99,CUT999,
      1                  IBUGA3,ISUBRO,IERROR)
 C
@@ -10295,15 +10302,16 @@ C
             CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
             WRITE(ICOUT,6394)J,IWORD,NMACAG,NCTEMP,IMACAR(NMACAG)
  6394       FORMAT('6370: J,IWORD,NMACAG,NCTEMP,IMACAR(NMACAG) = ',
-     1             4I5,2X,A80)
+     1             4I5,2X,A100)
             CALL DPWRST('XXX','BUG ')
           ENDIF
 C
 C         CHECK IF 80 CHARACTERS EXCEEDED (BE SURE TO MAKE LAST
 C         CHARACTER A QUOTE IF FIRST CHARACTER IS A QUOTE).
 C
-          IF(NCTEMP.GT.80)THEN
-            NCTEMP=80
+CCCCC     IF(NCTEMP.GT.80)THEN
+          IF(NCTEMP.GT.MAXFNC)THEN
+            NCTEMP=MAXFNC
             IF(IMACAR(NMACAG)(1:1).EQ.'"')
      1         IMACAR(NMACAG)(NCTEMP:NCTEMP)='"'
           ENDIF
@@ -10322,7 +10330,7 @@ C
           IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'MACR')THEN
             WRITE(ICOUT,17394)
 17394       FORMAT('AFTER STRIP QUOTES: NMACAG,IMACAR(NMACAG) =',
-     1             I5,2X,A80)
+     1             I5,2X,A100)
             CALL DPWRST('XXX','BUG ')
           ENDIF
 C
@@ -10496,7 +10504,7 @@ C
 46361         FORMAT('NO EQUAL, QUOTE CASE:')
               CALL DPWRST('XXX','BUG ')
               WRITE(ICOUT,46363)NMACAG,NCTEMP,IMACAR(NMACAG)
-46363         FORMAT('NMACAG,NCTEMP,IMACAR(NMACAG) = ',2I8,A80)
+46363         FORMAT('NMACAG,NCTEMP,IMACAR(NMACAG) = ',2I8,A100)
               CALL DPWRST('XXX','BUG ')
             ENDIF
 C
@@ -10527,12 +10535,12 @@ C
 46371         FORMAT('EQUAL, NO QUOTE CASE:')
               CALL DPWRST('XXX','BUG ')
               WRITE(ICOUT,46373)NMACAG,NCTEMP,IMACAR(NMACAG)
-46373         FORMAT('NMACAG,NCTEMP,IMACAR(NMACAG) = ',2I8,2X,A80)
+46373         FORMAT('NMACAG,NCTEMP,IMACAR(NMACAG) = ',2I8,2X,A100)
               CALL DPWRST('XXX','BUG ')
               WRITE(ICOUT,46375)NMACLA,IMACLL(NMACLA),IMACNC(NMACLA),
      1                          IMACLA(NMACLA)
 46375         FORMAT('NMACLA,IMACLL(NMACLA),IMACNC(NMACLA),'
-     1               'IMACLA(NMACLA) = ',3I8,A80)
+     1               'IMACLA(NMACLA) = ',3I8,A8)
               CALL DPWRST('XXX','BUG ')
             ENDIF
 C
@@ -10554,7 +10562,7 @@ C
               IF(ICNT2.GE.1)THEN
                 IMACAR(NMACAG)(1:ICNT2)=
      1            IMACAR(NMACAG)(IPOSEQ+1:NCTEMP-1)
-                IMACAR(NMACAG)(ICNT2+1:80)=' '
+                IMACAR(NMACAG)(ICNT2+1:MAXFNC)=' '
                 NCTEMP=ICNT2
               ELSE
                 IMACAR(NMACAG)='ZZZZEMPTY'
@@ -10569,7 +10577,7 @@ C
               ICNT2=NCTEMP-IPOSEQ
               IF(ICNT2.GE.1)THEN
                 IMACAR(NMACAG)(1:ICNT2)=IMACAR(NMACAG)(IPOSEQ+1:NCTEMP)
-                IMACAR(NMACAG)(ICNT2+1:80)=' '
+                IMACAR(NMACAG)(ICNT2+1:MAXFNC)=' '
                 NCTEMP=ICNT2
               ELSE
                 IMACAR(NMACAG)='ZZZZEMPTY'
@@ -10607,7 +10615,7 @@ C
 C
           IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'MACR')THEN
             WRITE(ICOUT,6373)NMACAG,NCTEMP,IMACAR(NMACAG)
- 6373       FORMAT('NMACAG,NCTEMP,IMACAR(NMACAG) = ',2I5,2X,A80)
+ 6373       FORMAT('NMACAG,NCTEMP,IMACAR(NMACAG) = ',2I5,2X,A100)
             CALL DPWRST('XXX','BUG ')
           ENDIF
 C
@@ -10661,10 +10669,10 @@ C
           ELSEIF(IMACAR(1)(1:1).EQ.'(')THEN
             IFLAG=2
             IFLAGL=2
-            DO16393KK=1,79
+            DO16393KK=1,MAXFNC-1
               IMACAR(1)(KK:KK)=IMACAR(1)(KK+1:KK+1)
 16393       CONTINUE
-            IMACAR(1)(80:80)=' '
+            IMACAR(1)(MAXFNC:MAXFNC)=' '
           ENDIF
 C
           IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'MACR')THEN
@@ -10680,7 +10688,7 @@ C                 2021/03/15: ONLY DO THIS IF THERE WAS A BEGINNING
 C                             LEFT PARETHESIS
 C
           IF(IFLAGL.GT.0)THEN
-            DO16391JJ=80,1,-1
+            DO16391JJ=MAXFNC,1,-1
               IF(IMACAR(NMACAG)(JJ:JJ).EQ.')')THEN
                 IMACAR(NMACAG)(JJ:JJ)=' '
               ENDIF
@@ -10694,7 +10702,7 @@ C
             WRITE(ICOUT,46392)NMACLA,IMACLL(1),IMACNC(1),
      1                        IMACLA(1)
 46392       FORMAT('NMACLA,IMACLL(1),IMACNC(1),IMACLA(1) = ',
-     1             3I8,2X,A80)
+     1             3I8,2X,A8)
             CALL DPWRST('XXX','BUG ')
             WRITE(ICOUT,46375)NMACLA,IMACLL(NMACLA),
      1                        IMACNC(NMACCL),IMACLA(NMACLA)
@@ -10719,7 +10727,7 @@ C
 C
           IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'MACR')THEN
             WRITE(ICOUT,6639)II,NCTEMP,IMACNC(II)
- 6639       FORMAT('II,IMACAR(II) = ',2I6,A80)
+ 6639       FORMAT('II,NCTEMP,IMACNC(II) = ',3I6)
             CALL DPWRST('XXX','BUG ')
           ENDIF
 C
@@ -10744,7 +10752,7 @@ C
         IF(NMACAG.GE.1)THEN
           DO26386JJ=1,NMACAG
             WRITE(ICOUT,26387)JJ,IMACAR(JJ)
-26387       FORMAT('JJ,IMACAR(JJ) = ',I5,2X,A80)
+26387       FORMAT('JJ,IMACAR(JJ) = ',I5,2X,A100)
             CALL DPWRST('XXX','BUG ')
 26386     CONTINUE
         ENDIF
@@ -12563,21 +12571,19 @@ C
 C     PURPOSE--COMPUTE CONSENSUS MEANS USING FOLLOWING APPROACHES:
 C              1) MANDEL-PAULE
 C              2) MODIFIED MANDEL-PAULE
-C              3) MAXIMUM LIKELIHOOD (VANGEL-RUHKIN)
-C              4) DERSIMONIAN LARID
-C                 (3 VARIANCE METHODS)
+C              3) VANGEL-RUKHIN MAXIMUM LIKELIHOOD
+C              4) DERSIMONIAN AND LARID
 C              5) GRAYBILL-DEAL
-C                 (4 VARIANCE METHODS)
 C              6) FAIRWEATHER
-C                 (3 VARIANCE METHODS)
-C              7) GENERALIZED CONFIDENCE INTERVAL
-C              8) MEAN OF MEANS (t-METHOD)
-C              9) GRAND MEAN
-C             10) BOB (ONLY IF NUMBER OF LABS = 2 - 5
+C              7) GENERALIZED CONFIDENCE INTERVALS
+C              8) GRAND MEAN
+C              9) MEAN OF MEANS
+C             10) BOB
 C             11) SCHILLER-EBERHARDT
-C             12) BAYESIAN CONSENSUS MEAN
+C             12) BAYESIAN CONSENSUS PROCEDURE OF GUTHRIE AND HAGWOOD
 C             13) MEDIAN OF MEANS
 C             14) HUBER MEAN OF MEANS
+C             15) LINEAR POOL
 C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
@@ -12618,6 +12624,7 @@ C                                       IS AVAILABLE IN THIS FORM.
 C     UPDATED         --MARCH     2017. MEDIAN OF MEANS
 C     UPDATED         --MARCH     2017. HUBER MEAN OF MEANS
 C     UPDATED         --JULY      2019. TWEAK SCRATCH STORAGE
+C     UPDATED         --APRIL     2023. LINEAR POOL METHOD
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES----------------
 C
@@ -12698,6 +12705,7 @@ C
       DIMENSION XTEMP4(MAXOBV)
       DIMENSION XPLOTZ(MAXOBV)
       DIMENSION YPLOTZ(MAXOBV)
+      DIMENSION WTS(MAXOBV)
 C
       INCLUDE 'DPCOZZ.INC'
       EQUIVALENCE (GARBAG(IGARB1),Y1(1))
@@ -12715,6 +12723,7 @@ C
       EQUIVALENCE (GARBAG(JGAR14),XTEMP4(1))
       EQUIVALENCE (GARBAG(JGAR15),XPLOTZ(1))
       EQUIVALENCE (GARBAG(JGAR16),YPLOTZ(1))
+      EQUIVALENCE (GARBAG(JGAR17),WTS(1))
 C
       INCLUDE 'DPCOZD.INC'
       EQUIVALENCE (DGARBG(IDGAR1),Z2(1))
@@ -12736,6 +12745,7 @@ C
       INCLUDE 'DPCOHK.INC'
       INCLUDE 'DPCODA.INC'
       INCLUDE 'DPCOP2.INC'
+      INCLUDE 'DPCOST.INC'
 C
 C-----START POINT------------------------------------------------
 C
@@ -12963,6 +12973,39 @@ C
       ENDIF
       IF(IDFH.LE.0)IDFH=1
 C
+C     2023/04: LINEAR POOL METHOD SUPPORTS A WEIGHTS VARIABLE
+C              FOR THE LABS
+C
+      DO410JJ=1,MAXOBV
+        WTS(JJ)=0.0
+  410  CONTINUE
+C
+      IF(ILIPCM.EQ.'ON' .AND. ILIPWT.NE.'OFF ')THEN
+        IH=ILIPWT(1:4)
+        IH2=ILIPWT(5:8)
+        IHWUSE='V'
+        MESSAG='NO'
+        CALL CHECKN(IH,IH2,IHWUSE,
+     1       IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
+     1       ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCV,IERROR)
+C
+        IF(IERROR.EQ.'NO')THEN
+          ICOLQP=IVALUE(ILOCV)
+          NTEMP=IN(ILOCV)
+          ICNT=0
+          DO418I=1,NTEMP
+            IJ=MAXN*(ICOLQP-1)+I
+            ICNT=ICNT+1
+            IF(ICOLQP.LE.MAXCOL)WTS(ICNT)=V(IJ)
+            IF(ICOLQP.EQ.MAXCP1)WTS(ICNT)=PRED(I)
+            IF(ICOLQP.EQ.MAXCP2)WTS(ICNT)=RES(I)
+            IF(ICOLQP.EQ.MAXCP3)WTS(ICNT)=YPLOT(I)
+            IF(ICOLQP.EQ.MAXCP4)WTS(ICNT)=XPLOT(I)
+            IF(ICOLQP.EQ.MAXCP5)WTS(ICNT)=X2PLOT(I)
+            IF(ICOLQP.EQ.MAXCP6)WTS(ICNT)=TAGPLO(I)
+  418     CONTINUE
+        ENDIF
+      ENDIF
 C               ***********************************************
 C               **  STEP 9--                                 **
 C               **  CARRY OUT THE CONSENSUS MEANS ANALYSIS   **
@@ -12995,7 +13038,7 @@ C
      1            Z8,Z9,IZ2,
      1            XTEMP1,XTEMP2,XTEMP3,XTEMP4,ITEMP1,
      1            DTEMP1,DTEMP2,DTEMP3,
-     1            XPLOTZ,YPLOTZ,NPLOT,
+     1            XPLOTZ,YPLOTZ,WTS,NPLOT,
      1            IVARN1(1),IVARN2(1),IVARN1(2),IVARN2(2),
      1            IVARN1(3),IVARN2(3),
      1            SIGMAH,IDFH,
@@ -13015,6 +13058,7 @@ CCCCC             MARCH   2006.  ADD FOLLOWING 2 LINES TO CALL LIST
      1            SEGCI,XFW,SEFWK1,SEFWK2,
      1            XBCP,XBCPSE,XBCPK1,XBCPK2,XMEDME,SEMEK1,
      1            XH15,SEHMK1,SEHMK2,H15LCL,H15UCL,
+     1            XLP,XLIPSE,ALOWLP,AUPPLP,
      1            IWRITE,
 CCCCC             OCTOBER 2002.  ADD ICAPSW, ICAPTY TO CALL LIST
 CCCCC             MARCH   2006.  ADD IFORSW TO CALL LIST
@@ -13122,6 +13166,13 @@ C
      1IANS,IWIDTH,IBUGA3,IERROR)
 C
       IH='SEMP'
+      IH2='    '
+      VALUE0=SEMP
+      CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1IANS,IWIDTH,IBUGA3,IERROR)
+C
+      IH='MPSE'
       IH2='    '
       VALUE0=SEMP
       CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
@@ -13373,6 +13424,34 @@ C
      1IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
      1IANS,IWIDTH,IBUGA3,IERROR)
 C
+      IH='LINP'
+      IH2='MEAN'
+      VALUE0=XLP
+      CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1IANS,IWIDTH,IBUGA3,IERROR)
+C
+      IH='LINP'
+      IH2='SE  '
+      VALUE0=XLIPSE
+      CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1IANS,IWIDTH,IBUGA3,IERROR)
+C
+      IH='LINP'
+      IH2='95LL'
+      VALUE0=ALOWLP
+      CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1IANS,IWIDTH,IBUGA3,IERROR)
+C
+      IH='LINP'
+      IH2='95UL'
+      VALUE0=AUPPLP
+      CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1IANS,IWIDTH,IBUGA3,IERROR)
+C
 C               *****************
 C               **  STEP 90--  **
 C               **  EXIT       **
@@ -13401,7 +13480,7 @@ C
      1                  AMEANF,ASDF,NFULL,
      1                  XTEMP1,XTEMP2,XTEMP3,XTEMP4,ITEMP1,
      1                  DTEMP1,DTEMP2,DTEMP3,
-     1                  XPLOT,YPLOT,NPLOT,
+     1                  XPLOT,YPLOT,WTS,NPLOT,
      1                  IHLEFT,IHLEF2,IHRIGH,IHRIG2,IHRI21,IHRI22,
      1                  SIGMAH,IDFH,
      1                  XGRAND,S2WPOO,SW,ASD2,ASD3,
@@ -13419,6 +13498,7 @@ C
      1                  SEGCI,XFW,SEFWK1,SEFWK2,
      1                  XBCP,XBCPSE,XBCPK1,XBCPK2,XMEDME,SEMEK1,
      1                  XH15,SEHMK1,SEHMK2,H15LCL,H15UCL,
+     1                  XLP,XLIPSE,ALOWLP,AUPPLP,
      1                  IWRITE,
 CCCCC                   OCTOBER 2002.  ADD ICAPSW, ICAPTY TO CALL LIST
      1                  ICAPSW,ICAPTY,IFORSW,ISEED,IBOOSS,
@@ -13429,17 +13509,18 @@ C              APPROACHES
 C              1) MANDEL-PAULE
 C              2) MODIFIED MANDEL-PAULE
 C              3) VANGEL-RUKHIN MAXIMUM LIKELIHOOD
-C              4) BOB
-C              5) SCHILLER-EBERHARDT
-C              6) MEAN OF MEANS
-C              7) GRAYBILL-DEAL
+C              4) DERSIMONIAN AND LARID
+C              5) GRAYBILL-DEAL
+C              6) FAIRWEATHER
+C              7) GENERALIZED CONFIDENCE INTERVALS
 C              8) GRAND MEAN
-C              9) GENERALIZED TOLERANCE INTERVALS
-C             10) DERSIMONIAN AND LARID
-C             11) FAIRWEATHER
+C              9) MEAN OF MEANS
+C             10) BOB
+C             11) SCHILLER-EBERHARDT
 C             12) BAYESIAN CONSENSUS PROCEDURE OF GUTHRIE AND HAGWOOD
 C             13) MEDIAN OF MEANS
 C             14) HUBER MEAN OF MEANS
+C             15) LINEAR POOL
 C     WRITTEN BY--CODE FOR MANDEL-PAULE, MAXIMUM LIKELIHOOD 
 C                 PROVIDED BY MARK VANGEL, BOB BASED ON MACROS
 C                 PROVIDED BY STEFAN LEIGH.
@@ -13498,6 +13579,7 @@ C                                       HERE AS THIS IS ALREADY DONE
 C                                       BY THE LAST TABLE ROUTINE
 C     UPDATED         --MARCH     2017. MEDIAN OF MEANS
 C     UPDATED         --MARCH     2017. HUBER MEAN OF MEANS
+C     UPDATED         --APRIL     2023. LINEAR POOL
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES--------------
 C
@@ -13629,6 +13711,7 @@ C
       REAL XTEMP4(*)
       REAL XPLOT(*)
       REAL YPLOT(*)
+      REAL WTS(*)
 C
       INTEGER N(*)
       INTEGER NFULL(*)
@@ -14124,6 +14207,26 @@ C
         ENDIF
       ENDIF
 C
+C     LINEAR POOL
+C
+      IF(ILIPCM.EQ.'ON')THEN
+        IFLAGZ=0
+        IF(ICMET5.EQ.'OFF')IFLAGZ=1
+        IF(IFLAGZ.EQ.1)THEN
+          IPRISV=IPRINT
+          IPRINT='OFF'
+        ENDIF
+        CALL DPLIPO(NLAB,AMEANF,ASDF,WTS,NFULL,
+     1              XTEMP1,XTEMP2,XTEMP3,XTEMP4,
+     1              XLP,XLIPSE,ALOWLP,AUPPLP,
+     1              IWRITE,IOUNI5,
+     1              ICAPSW,ICAPTY,MAXNXT,NUMDIG,ISEED,
+     1              ISUBRO,IBUGA3,IERROR)
+        IF(IFLAGZ.EQ.1)THEN
+          IPRINT=IPRISV
+        ENDIF
+      ENDIF
+C
 C     MEDIAN OF MEANS
 C
 CCCCC IF(IMEMCM.EQ.'ON')THEN
@@ -14165,7 +14268,7 @@ C
      1SEMPK1,SEMMP1,SEMLK1,SEMLBO,AKUK1,SESUK1,SET2K1,
      1SET1K1,SEGDK1,SEDLK1,SEHDK1,SERUK1,SEBOK1,SEGCI,
      1SEFWK1,XBCPK1,SEMEDB,ALOWCL,AUPPCL,SEMEK1,
-     1XH15,SEHMK1,
+     1XH15,SEHMK1,XLP,XLIPSE,ALOWLP,AUPPLP,
      1IWRITE,IOUNI2,
      1ICAPSW,ICAPTY,NUMDIG,IFLAG9,
      1ISUBRO,IBUGA3,IERROR)
@@ -14178,7 +14281,7 @@ C
      1ASM,XGD,XDL,XGCI,XFW,XBCP,
      1SEMPK1,SEMMP1,SEMLK1,SEMLBO,AKUK1,SESUK1,SET1K1,
      1SET2K1,SEGDK1,SEDLK1,SEHDK1,SERUK1,SEBOK1,SEGCI,SEFWK1,XBCPK1,
-     1XMEDME,SEMED,SEMEDB,SEMEK1,XH15,SEHMK1,
+     1XMEDME,SEMED,SEMEDB,SEMEK1,XH15,SEHMK1,XLP,XLIPSE,
      1IWRITE,
      1ICAPSW,ICAPTY,IK,IOUNI3,NUMDIG,IFLAG9,
      1ISUBRO,IBUGA3,IERROR)
@@ -14187,13 +14290,14 @@ C
       SEMLB2=2.0*SEMLBO
       SEMED2=2.0*SEMED
       SEMDB2=2.0*SEMEDB
+      XLIPS2=2.0*XLIPSE
       CALL DPMAN6(NPTS,NLAB,
      1XGRAND,XMPS,XMMPS,XMLS,XSE,
      1ASM,XGD,XDL,XGCI,XFW,XBCP,
      1SEMPK2,SEMMP2,SEMLK2,SEMLB2,AKUK2,SESUK2,SET1K2,
      1SET2K2,SEGDK2,SEDLK2,SEHDK2,SERUK2,SEBOK2,
      12.0*SEGCI,SEFWK2,XBCPK2,
-     1XMEDME,SEMED2,SEMDB2,SEMEK2,XH15,SEHMK2,
+     1XMEDME,SEMED2,SEMDB2,SEMEK2,XH15,SEHMK2,XLP,XLIPS2,
      1IWRITE,
      1ICAPSW,ICAPTY,IK,IOUNI4,NUMDIG,IFLAG9,
      1ISUBRO,IBUGA3,IERROR)
@@ -14639,6 +14743,25 @@ C
         ENDIF
       ENDIF
 C
+      IF(ILIPCM.EQ.'ON')THEN
+        IFLAGZ=0
+        IF(ICMET5.EQ.'OFF')IFLAGZ=1
+        IF(IFLAGZ.EQ.1)THEN
+          IPRISV=IPRINT
+          IPRINT='OFF'
+        ENDIF
+        CALL DPLIPO(NLAB,AMEAN,ASD,WTS,N,
+     1              XTEMP1,XTEMP2,XTEMP3,XTEMP4,
+     1              XLP,XLIPSE,ALOWLP,AUPPLP,
+     1              IWRITE,IOUNI5,
+     1              ICAPSW,ICAPTY,MAXNXT,NUMDIG,ISEED,
+     1              ISUBRO,IBUGA3,IERROR)
+        IF(IFLAGZ.EQ.1)THEN
+          IPRINT=IPRISV
+        ENDIF
+      ENDIF
+C
+C
 C     CONFIDENCE LIMITS TABLE
 C
       CALL DPMAN5(NPTS,NLAB,
@@ -14657,7 +14780,7 @@ C
      1SEMPK1,SEMMP1,SEMLK1,SEMLBO,AKUK1,SESUK1,SET2K1,
      1SET1K1,SEGDK1,SEDLK1,SEHDK1,SERUK1,SEBOK1,SEGCI,
      1SEFWK1,XBCPK1,SEMEDB,ALOWCL,AUPPCL,SEMEK1,
-     1XH15,SEHMK1,
+     1XH15,SEHMK1,XLP,XLIPSE,ALOWLP,AUPPLP,
      1IWRITE,IOUNI2,
      1ICAPSW,ICAPTY,NUMDIG,IFLAG9,
      1ISUBRO,IBUGA3,IERROR)
@@ -14668,7 +14791,7 @@ C
      1ASM,XGD,XDL,XGCI,XFW,XBCP,
      1SEMPK1,SEMMP1,SEMLK1,SEMLBO,AKUK1,SESUK1,SET1K1,
      1SET2K1,SEGDK1,SEDLK1,SEHDK1,SERUK1,SEBOK1,SEGCI,SEFWK1,XBCPK1,
-     1XMEDME,SEMED,SEMEDB,SEMEK1,XH15,SEHMK1,
+     1XMEDME,SEMED,SEMEDB,SEMEK1,XH15,SEHMK1,XLP,XLIPSE,
      1IWRITE,
      1ICAPSW,ICAPTY,IK,IOUNI3,NUMDIG,IFLAG9,
      1ISUBRO,IBUGA3,IERROR)
@@ -14677,13 +14800,14 @@ C
       SEMLB2=2.0*SEMLBO
       SEMED2=2.0*SEMED
       SEMDB2=2.0*SEMEDB
+      XLIPS2=2.0*XLIPSE
       CALL DPMAN6(NPTS,NLAB,
      1XGRAND,XMPS,XMMPS,XMLS,XSE,
      1ASM,XGD,XDL,XGCI,XFW,XBCP,
      1SEMPK2,SEMMP2,SEMLK2,SEMLB2,AKUK2,SESUK2,SET1K2,
      1SET2K2,SEGDK2,SEDLK2,SEHDK2,SERUK2,SEBOK2,
      12.0*SEGCI,SEFWK2,XBCPK2,
-     1XMEDME,SEMED2,SEMDB2,SEMEK2,XH15,SEHMK2,
+     1XMEDME,SEMED2,SEMDB2,SEMEK2,XH15,SEHMK2,XLP,XLIPS2,
      1IWRITE,
      1ICAPSW,ICAPTY,IK,IOUNI4,NUMDIG,IFLAG9,
      1ISUBRO,IBUGA3,IERROR)
@@ -16192,7 +16316,7 @@ C
      1                  SEMPK1,SEMMP1,SEMLK1,SEMLBO,AKUK1,SESUK1,SET2K1,
      1                  SET1K1,SEGDK1,SEDLK1,SEHDK1,SERUK1,SEBOK1,SEGCI,
      1                  SEFWK1,XBCPK1,SEMEDB,ALOWCL,AUPPCL,SEMEK1,
-     1                  XH15,SEHMK1,
+     1                  XH15,SEHMK1,XLP,SELPK1,ALOWLP,AUPPLP,
      1                  IWRITE,IOUNI2,
      1                  ICAPSW,ICAPTY,NUMDIG,IFLAG9,
      1                  ISUBRO,IBUGA3,IERROR)
@@ -16230,6 +16354,7 @@ C     UPDATED  VERSION--JANUARY   2017. OPTION TO SUPPRESS PRINTING
 C                                       TABLE (ICMET3)
 C     UPDATED  VERSION--MARCH     2017. MEDIAN OF MEANS UPDATE
 C     UPDATED  VERSION--MARCH     2017. HUBER H15 MEAN OF MEANS UPDATE
+C     UPDATED  VERSION--APRIL     2023. LINEAR POOL UPDATE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES--------------
 C
@@ -16281,6 +16406,10 @@ C
       REAL SEMEK1
       REAL XH15
       REAL SEHMK1
+      REAL XLP
+      REAL SELPK1
+      REAL ALOWLP
+      REAL AUPPLP
 C
 C----------------------------------------------------------------
 C
@@ -16342,6 +16471,9 @@ C
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,63)SET1K1,SET2K1,XBCPK1,SEHDK1
    63   FORMAT('SET1K1,SET2K1,XBCPK1,SEHDK1 = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,64)XLP,SELPK1,ALOWLP,AUPPLP
+   64   FORMAT('XLP,SELPK1,ALOWLP,AUPPLP = ',4G15.7)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
@@ -16860,6 +16992,23 @@ C
         WRITE(IOUNI2,4001)XH15,H15LCL,H15UCL,AK,IMETH
       ENDIF
 C
+      IF(ILIPCM.EQ.'ON' .AND. XLP.NE.CPUMIN)THEN
+C
+        ICNT=ICNT+1
+        ITEXT(ICNT,1)=' 16. Linear Pool'
+        NCTEXT(ICNT,1)=16
+        AMAT(ICNT,ISTRT+1)=0.0
+        AMAT(ICNT,ISTRT+2)=XLP
+        AMAT(ICNT,ISTRT+3)=ALOWLP
+        AMAT(ICNT,ISTRT+4)=AUPPLP
+        AKT1=XLP - ALOWLP
+        AKT2=AUPPLP - XLP
+        AK=MAX(AKT1,AKT2)
+        AMAT(ICNT,ISTRT+5)=AK
+        IMETH='Linear Pool'
+        WRITE(IOUNI2,4001)XLP,ALOWLP,AUPPLP,AK,IMETH
+      ENDIF
+C
       NUMCOL=5
       NUMLIN=2
       NUMROW=ICNT
@@ -16911,7 +17060,7 @@ C
      1ASM,XGD,XDL,XGCI,XFAIR,XBCP,
      1SEMPK1,SEMMP1,SEMLK1,SEMLBO,AKUK1,SESUK1,SET1K1,
      1SET2K1,SEGDK1,SEDLK1,SEHDK1,SERUK1,SEBOK1,SEGCI,SEFWK1,XBCPK1,
-     1XMEDME,SEMED,SEMEDB,SEMEK1,XH15,SEHMK1,
+     1XMEDME,SEMED,SEMEDB,SEMEK1,XH15,SEHMK1,XLP,SELPK1,
      1IWRITE,
      1ICAPSW,ICAPTY,IK,IOUNIT,NUMDIG,IFLAG9,
      1ISUBRO,IBUGA3,IERROR)
@@ -16943,6 +17092,7 @@ C     UPDATED         --JANUARY   2017. OPTION TO SUPPRESS PRINTING
 C                                       TABLE (ICMET3)
 C     UPDATED         --MARCH     2017. UPDATE TO MEDIAN OF MEANS
 C     UPDATED         --MARCH     2017. HUBER H15 MEAN OF MEANS
+C     UPDATED         --APRIL     2023. LINEAR POOL
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES--------------
 C
@@ -16996,6 +17146,8 @@ C
       REAL SEMEK1
       REAL XH15
       REAL SEHMK1
+      REAL XLP
+      REAL SELPK1
 C
 C----------------------------------------------------------------
 C
@@ -17380,6 +17532,19 @@ C
         WRITE(IOUNIT,4001)XH15,SEHMK1,ATEMP1,IMETH
       ENDIF
 C
+      IF(ILIPCM.EQ.'ON' .AND. XLP.NE.CPUMIN)THEN
+        ICNT=ICNT+1
+        ITEXT(ICNT,1)=' 16. Linear Pool'
+        NCTEXT(ICNT,1)=16
+        AMAT(ICNT,1)=0.0
+        AMAT(ICNT,2)=XLP
+        AMAT(ICNT,3)=SELPK1
+        ATEMP1=100.0*SELPK1/XLP
+        AMAT(ICNT,4)=ATEMP1
+        IMETH='Linear Pool'
+        WRITE(IOUNIT,4001)XLP,SELPK1,ATEMP1,IMETH
+      ENDIF
+C
       NUMCOL=4
       NUMLIN=3
       NUMROW=ICNT
@@ -17564,7 +17729,7 @@ C
           GOTO9000
         ELSEIF(ICTMP1.EQ.'MANN' .AND. ICTMP2.EQ.'WHIT' .AND.
      1         ICTMP3.EQ.'RANK' .AND. ICTMP4.EQ.'SUM ' .AND.
-     1         ICTMP4.EQ.'TEST')THEN
+     1         ICTMP5.EQ.'TEST')THEN
           IFOUND='YES'
           ICASAN='MTES'
           ILASTZ=I+4
@@ -18079,2572 +18244,9 @@ C
       ITAB=0
       IF(NTIES.EQ.0 .AND. N1.LE.20 .AND. N2.LE.20)THEN
         ITAB=1
-        IF(N1.EQ.2)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=3
-            CVL025=3
-            CVL050=3
-            CVL100=3
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=3
-            CVL025=3
-            CVL050=3
-            CVL100=4
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=3
-            CVL025=3
-            CVL050=3
-            CVL100=4
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=3
-            CVL025=3
-            CVL050=4
-            CVL100=5
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=3
-            CVL025=3
-            CVL050=4
-            CVL100=5
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=3
-            CVL025=3
-            CVL050=4
-            CVL100=5
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=3
-            CVL025=4
-            CVL050=5
-            CVL100=6
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=3
-            CVL025=4
-            CVL050=5
-            CVL100=6
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=3
-            CVL025=4
-            CVL050=5
-            CVL100=7
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=3
-            CVL025=5
-            CVL050=5
-            CVL100=7
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=3
-            CVL025=5
-            CVL050=6
-            CVL100=8
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=4
-            CVL025=5
-            CVL050=6
-            CVL100=8
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=4
-            CVL025=5
-            CVL050=7
-            CVL100=8
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=4
-            CVL025=5
-            CVL050=7
-            CVL100=9
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=4
-            CVL025=5
-            CVL050=7
-            CVL100=9
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=4
-            CVL025=6
-            CVL050=7
-            CVL100=10
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=4
-            CVL025=6
-            CVL050=8
-            CVL100=10
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=3
-            CVL005=3
-            CVL010=5
-            CVL025=6
-            CVL050=8
-            CVL100=11
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=3
-            CVL005=4
-            CVL010=5
-            CVL025=6
-            CVL050=8
-            CVL100=11
-          ENDIF
-        ELSEIF(N1.EQ.3)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=6
-            CVL005=6
-            CVL010=6
-            CVL025=6
-            CVL050=6
-            CVL100=7
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=6
-            CVL005=6
-            CVL010=6
-            CVL025=6
-            CVL050=7
-            CVL100=8
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=6
-            CVL005=6
-            CVL010=6
-            CVL025=6
-            CVL050=7
-            CVL100=8
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=6
-            CVL005=6
-            CVL010=6
-            CVL025=7
-            CVL050=8
-            CVL100=9
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=6
-            CVL005=6
-            CVL010=6
-            CVL025=8
-            CVL050=9
-            CVL100=10
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=6
-            CVL005=6
-            CVL010=7
-            CVL025=8
-            CVL050=9
-            CVL100=11
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=6
-            CVL005=6
-            CVL010=7
-            CVL025=9
-            CVL050=10
-            CVL100=12
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=6
-            CVL005=7
-            CVL010=8
-            CVL025=9
-            CVL050=11
-            CVL100=12
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=6
-            CVL005=7
-            CVL010=8
-            CVL025=10
-            CVL050=11
-            CVL100=13
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=6
-            CVL005=7
-            CVL010=8
-            CVL025=10
-            CVL050=12
-            CVL100=14
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=6
-            CVL005=8
-            CVL010=9
-            CVL025=11
-            CVL050=12
-            CVL100=15
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=6
-            CVL005=8
-            CVL010=9
-            CVL025=11
-            CVL050=13
-            CVL100=16
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=6
-            CVL005=8
-            CVL010=9
-            CVL025=12
-            CVL050=14
-            CVL100=17
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=6
-            CVL005=9
-            CVL010=10
-            CVL025=12
-            CVL050=14
-            CVL100=17
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=6
-            CVL005=9
-            CVL010=10
-            CVL025=13
-            CVL050=15
-            CVL100=18
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=7
-            CVL005=9
-            CVL010=11
-            CVL025=13
-            CVL050=16
-            CVL100=19
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=7
-            CVL005=9
-            CVL010=11
-            CVL025=14
-            CVL050=16
-            CVL100=20
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=7
-            CVL005=10
-            CVL010=11
-            CVL025=14
-            CVL050=17
-            CVL100=21
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=7
-            CVL005=10
-            CVL010=12
-            CVL025=15
-            CVL050=18
-            CVL100=22
-          ENDIF
-        ELSEIF(N1.EQ.4)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=10
-            CVL005=10
-            CVL010=10
-            CVL025=10
-            CVL050=10
-            CVL100=11
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=10
-            CVL005=10
-            CVL010=10
-            CVL025=10
-            CVL050=11
-            CVL100=12
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=10
-            CVL005=10
-            CVL010=10
-            CVL025=11
-            CVL050=12
-            CVL100=14
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=10
-            CVL005=10
-            CVL010=11
-            CVL025=12
-            CVL050=13
-            CVL100=15
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=10
-            CVL005=11
-            CVL010=12
-            CVL025=13
-            CVL050=14
-            CVL100=16
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=10
-            CVL005=11
-            CVL010=12
-            CVL025=14
-            CVL050=15
-            CVL100=17
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=10
-            CVL005=12
-            CVL010=13
-            CVL025=15
-            CVL050=16
-            CVL100=18
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=10
-            CVL005=12
-            CVL010=14
-            CVL025=15
-            CVL050=17
-            CVL100=20
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=11
-            CVL005=13
-            CVL010=14
-            CVL025=16
-            CVL050=18
-            CVL100=21
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=11
-            CVL005=13
-            CVL010=15
-            CVL025=17
-            CVL050=19
-            CVL100=22
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=11
-            CVL005=14
-            CVL010=16
-            CVL025=18
-            CVL050=20
-            CVL100=23
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=12
-            CVL005=14
-            CVL010=16
-            CVL025=19
-            CVL050=21
-            CVL100=24
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=12
-            CVL005=15
-            CVL010=17
-            CVL025=20
-            CVL050=22
-            CVL100=26
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=12
-            CVL005=16
-            CVL010=18
-            CVL025=21
-            CVL050=23
-            CVL100=27
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=13
-            CVL005=16
-            CVL010=18
-            CVL025=22
-            CVL050=25
-            CVL100=28
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=13
-            CVL005=17
-            CVL010=19
-            CVL025=22
-            CVL050=26
-            CVL100=29
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=14
-            CVL005=17
-            CVL010=20
-            CVL025=23
-            CVL050=27
-            CVL100=31
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=14
-            CVL005=18
-            CVL010=20
-            CVL025=24
-            CVL050=28
-            CVL100=32
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=14
-            CVL005=19
-            CVL010=21
-            CVL025=25
-            CVL050=29
-            CVL100=33
-          ENDIF
-        ELSEIF(N1.EQ.5)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=15
-            CVL005=15
-            CVL010=15
-            CVL025=15
-            CVL050=16
-            CVL100=17
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=15
-            CVL005=15
-            CVL010=15
-            CVL025=16
-            CVL050=17
-            CVL100=18
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=15
-            CVL005=15
-            CVL010=16
-            CVL025=17
-            CVL050=18
-            CVL100=20
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=15
-            CVL005=16
-            CVL010=17
-            CVL025=18
-            CVL050=20
-            CVL100=21
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=15
-            CVL005=17
-            CVL010=18
-            CVL025=19
-            CVL050=21
-            CVL100=23
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=15
-            CVL005=17
-            CVL010=19
-            CVL025=21
-            CVL050=22
-            CVL100=24
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=16
-            CVL005=18
-            CVL010=20
-            CVL025=22
-            CVL050=24
-            CVL100=26
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=17
-            CVL005=19
-            CVL010=21
-            CVL025=23
-            CVL050=25
-            CVL100=28
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=17
-            CVL005=20
-            CVL010=22
-            CVL025=24
-            CVL050=27
-            CVL100=29
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=18
-            CVL005=21
-            CVL010=23
-            CVL025=25
-            CVL050=28
-            CVL100=31
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=18
-            CVL005=22
-            CVL010=24
-            CVL025=27
-            CVL050=29
-            CVL100=33
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=19
-            CVL005=23
-            CVL010=25
-            CVL025=28
-            CVL050=31
-            CVL100=34
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=19
-            CVL005=23
-            CVL010=26
-            CVL025=29
-            CVL050=32
-            CVL100=36
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=20
-            CVL005=24
-            CVL010=27
-            CVL025=30
-            CVL050=34
-            CVL100=38
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=21
-            CVL005=25
-            CVL010=28
-            CVL025=31
-            CVL050=35
-            CVL100=39
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=21
-            CVL005=26
-            CVL010=29
-            CVL025=33
-            CVL050=36
-            CVL100=41
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=22
-            CVL005=27
-            CVL010=30
-            CVL025=34
-            CVL050=38
-            CVL100=43
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=23
-            CVL005=28
-            CVL010=31
-            CVL025=35
-            CVL050=39
-            CVL100=44
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=23
-            CVL005=29
-            CVL010=32
-            CVL025=36
-            CVL050=41
-            CVL100=46
-          ENDIF
-        ELSEIF(N1.EQ.6)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=21
-            CVL005=21
-            CVL010=21
-            CVL025=21
-            CVL050=22
-            CVL100=23
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=21
-            CVL005=21
-            CVL010=21
-            CVL025=23
-            CVL050=24
-            CVL100=25
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=21
-            CVL005=22
-            CVL010=23
-            CVL025=24
-            CVL050=25
-            CVL100=27
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=21
-            CVL005=23
-            CVL010=24
-            CVL025=25
-            CVL050=27
-            CVL100=29
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=21
-            CVL005=24
-            CVL010=25
-            CVL025=27
-            CVL050=29
-            CVL100=31
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=21
-            CVL005=25
-            CVL010=26
-            CVL025=28
-            CVL050=30
-            CVL100=33
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=23
-            CVL005=26
-            CVL010=28
-            CVL025=30
-            CVL050=32
-            CVL100=35
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=24
-            CVL005=27
-            CVL010=29
-            CVL025=32
-            CVL050=34
-            CVL100=37
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=25
-            CVL005=28
-            CVL010=30
-            CVL025=33
-            CVL050=36
-            CVL100=39
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=26
-            CVL005=29
-            CVL010=31
-            CVL025=35
-            CVL050=38
-            CVL100=41
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=26
-            CVL005=31
-            CVL010=33
-            CVL025=36
-            CVL050=39
-            CVL100=43
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=27
-            CVL005=32
-            CVL010=34
-            CVL025=38
-            CVL050=41
-            CVL100=45
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=28
-            CVL005=33
-            CVL010=35
-            CVL025=39
-            CVL050=43
-            CVL100=47
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=29
-            CVL005=34
-            CVL010=37
-            CVL025=41
-            CVL050=45
-            CVL100=49
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=30
-            CVL005=35
-            CVL010=38
-            CVL025=43
-            CVL050=47
-            CVL100=51
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=31
-            CVL005=37
-            CVL010=40
-            CVL025=44
-            CVL050=48
-            CVL100=53
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=32
-            CVL005=38
-            CVL010=41
-            CVL025=46
-            CVL050=50
-            CVL100=56
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=33
-            CVL005=39
-            CVL010=42
-            CVL025=47
-            CVL050=52
-            CVL100=58
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=34
-            CVL005=40
-            CVL010=44
-            CVL025=49
-            CVL050=54
-            CVL100=60
-          ENDIF
-        ELSEIF(N1.EQ.7)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=28
-            CVL005=28
-            CVL010=28
-            CVL025=28
-            CVL050=29
-            CVL100=30
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=28
-            CVL005=28
-            CVL010=29
-            CVL025=30
-            CVL050=31
-            CVL100=33
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=28
-            CVL005=29
-            CVL010=30
-            CVL025=32
-            CVL050=33
-            CVL100=35
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=28
-            CVL005=30
-            CVL010=32
-            CVL025=34
-            CVL050=35
-            CVL100=37
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=29
-            CVL005=32
-            CVL010=33
-            CVL025=35
-            CVL050=37
-            CVL100=40
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=30
-            CVL005=33
-            CVL010=35
-            CVL025=37
-            CVL050=40
-            CVL100=42
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=31
-            CVL005=35
-            CVL010=36
-            CVL025=39
-            CVL050=42
-            CVL100=45
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=32
-            CVL005=36
-            CVL010=38
-            CVL025=41
-            CVL050=44
-            CVL100=47
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=34
-            CVL005=38
-            CVL010=40
-            CVL025=43
-            CVL050=46
-            CVL100=50
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=35
-            CVL005=39
-            CVL010=41
-            CVL025=45
-            CVL050=48
-            CVL100=52
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=36
-            CVL005=41
-            CVL010=43
-            CVL025=47
-            CVL050=50
-            CVL100=55
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=37
-            CVL005=42
-            CVL010=45
-            CVL025=49
-            CVL050=53
-            CVL100=57
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=38
-            CVL005=44
-            CVL010=46
-            CVL025=51
-            CVL050=55
-            CVL100=60
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=39
-            CVL005=45
-            CVL010=48
-            CVL025=53
-            CVL050=57
-            CVL100=62
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=40
-            CVL005=47
-            CVL010=50
-            CVL025=55
-            CVL050=59
-            CVL100=65
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=42
-            CVL005=48
-            CVL010=52
-            CVL025=57
-            CVL050=62
-            CVL100=67
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=43
-            CVL005=50
-            CVL010=53
-            CVL025=59
-            CVL050=64
-            CVL100=70
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=44
-            CVL005=51
-            CVL010=55
-            CVL025=61
-            CVL050=66
-            CVL100=72
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=45
-            CVL005=53
-            CVL010=57
-            CVL025=63
-            CVL050=68
-            CVL100=75
-          ENDIF
-        ELSEIF(N1.EQ.8)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=36
-            CVL005=36
-            CVL010=36
-            CVL025=37
-            CVL050=38
-            CVL100=39
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=36
-            CVL005=36
-            CVL010=37
-            CVL025=39
-            CVL050=40
-            CVL100=42
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=36
-            CVL005=38
-            CVL010=39
-            CVL025=41
-            CVL050=42
-            CVL100=44
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=37
-            CVL005=39
-            CVL010=41
-            CVL025=43
-            CVL050=45
-            CVL100=47
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=38
-            CVL005=41
-            CVL010=43
-            CVL025=45
-            CVL050=47
-            CVL100=50
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=39
-            CVL005=43
-            CVL010=44
-            CVL025=47
-            CVL050=50
-            CVL100=53
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=41
-            CVL005=44
-            CVL010=46
-            CVL025=50
-            CVL050=52
-            CVL100=56
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=42
-            CVL005=46
-            CVL010=48
-            CVL025=52
-            CVL050=55
-            CVL100=59
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=43
-            CVL005=48
-            CVL010=50
-            CVL025=54
-            CVL050=57
-            CVL100=61
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=45
-            CVL005=50
-            CVL010=52
-            CVL025=56
-            CVL050=60
-            CVL100=64
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=46
-            CVL005=52
-            CVL010=54
-            CVL025=59
-            CVL050=63
-            CVL100=67
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=48
-            CVL005=54
-            CVL010=56
-            CVL025=61
-            CVL050=65
-            CVL100=70
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=49
-            CVL005=55
-            CVL010=59
-            CVL025=63
-            CVL050=68
-            CVL100=73
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=51
-            CVL005=57
-            CVL010=61
-            CVL025=66
-            CVL050=70
-            CVL100=76
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=52
-            CVL005=59
-            CVL010=63
-            CVL025=68
-            CVL050=73
-            CVL100=79
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=54
-            CVL005=61
-            CVL010=65
-            CVL025=71
-            CVL050=76
-            CVL100=82
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=55
-            CVL005=63
-            CVL010=67
-            CVL025=73
-            CVL050=78
-            CVL100=85
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=57
-            CVL005=65
-            CVL010=69
-            CVL025=75
-            CVL050=81
-            CVL100=88
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=58
-            CVL005=67
-            CVL010=71
-            CVL025=78
-            CVL050=84
-            CVL100=91
-          ENDIF
-        ELSEIF(N1.EQ.9)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=45
-            CVL005=45
-            CVL010=45
-            CVL025=46
-            CVL050=47
-            CVL100=48
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=45
-            CVL005=46
-            CVL010=47
-            CVL025=48
-            CVL050=50
-            CVL100=51
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=45
-            CVL005=47
-            CVL010=49
-            CVL025=50
-            CVL050=52
-            CVL100=55
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=47
-            CVL005=49
-            CVL010=51
-            CVL025=53
-            CVL050=55
-            CVL100=58
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=48
-            CVL005=51
-            CVL010=53
-            CVL025=56
-            CVL050=58
-            CVL100=61
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=49
-            CVL005=53
-            CVL010=55
-            CVL025=58
-            CVL050=61
-            CVL100=64
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=51
-            CVL005=55
-            CVL010=57
-            CVL025=61
-            CVL050=64
-            CVL100=68
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=53
-            CVL005=57
-            CVL010=60
-            CVL025=63
-            CVL050=67
-            CVL100=71
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=54
-            CVL005=59
-            CVL010=62
-            CVL025=66
-            CVL050=70
-            CVL100=74
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=56
-            CVL005=62
-            CVL010=64
-            CVL025=69
-            CVL050=73
-            CVL100=77
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=58
-            CVL005=64
-            CVL010=67
-            CVL025=72
-            CVL050=76
-            CVL100=81
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=60
-            CVL005=66
-            CVL010=69
-            CVL025=74
-            CVL050=79
-            CVL100=84
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=61
-            CVL005=68
-            CVL010=72
-            CVL025=77
-            CVL050=82
-            CVL100=87
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=63
-            CVL005=70
-            CVL010=74
-            CVL025=80
-            CVL050=85
-            CVL100=91
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=65
-            CVL005=73
-            CVL010=77
-            CVL025=83
-            CVL050=88
-            CVL100=94
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=67
-            CVL005=75
-            CVL010=79
-            CVL025=85
-            CVL050=91
-            CVL100=98
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=69
-            CVL005=77
-            CVL010=82
-            CVL025=88
-            CVL050=94
-            CVL100=101
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=71
-            CVL005=79
-            CVL010=84
-            CVL025=91
-            CVL050=97
-            CVL100=104
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=72
-            CVL005=82
-            CVL010=86
-            CVL025=94
-            CVL050=100
-            CVL100=108
-          ENDIF
-        ELSEIF(N1.EQ.10)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=55
-            CVL005=55
-            CVL010=55
-            CVL025=56
-            CVL050=57
-            CVL100=59
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=55
-            CVL005=56
-            CVL010=57
-            CVL025=59
-            CVL050=60
-            CVL100=62
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=56
-            CVL005=58
-            CVL010=59
-            CVL025=61
-            CVL050=63
-            CVL100=66
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=57
-            CVL005=60
-            CVL010=62
-            CVL025=64
-            CVL050=67
-            CVL100=69
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=59
-            CVL005=62
-            CVL010=64
-            CVL025=67
-            CVL050=70
-            CVL100=73
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=61
-            CVL005=65
-            CVL010=67
-            CVL025=70
-            CVL050=73
-            CVL100=77
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=62
-            CVL005=67
-            CVL010=69
-            CVL025=73
-            CVL050=76
-            CVL100=80
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=64
-            CVL005=69
-            CVL010=72
-            CVL025=76
-            CVL050=80
-            CVL100=84
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=66
-            CVL005=72
-            CVL010=75
-            CVL025=79
-            CVL050=83
-            CVL100=88
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=68
-            CVL005=74
-            CVL010=78
-            CVL025=82
-            CVL050=87
-            CVL100=92
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=70
-            CVL005=77
-            CVL010=80
-            CVL025=85
-            CVL050=90
-            CVL100=95
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=73
-            CVL005=80
-            CVL010=83
-            CVL025=89
-            CVL050=93
-            CVL100=99
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=75
-            CVL005=82
-            CVL010=86
-            CVL025=92
-            CVL050=97
-            CVL100=103
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=77
-            CVL005=85
-            CVL010=89
-            CVL025=95
-            CVL050=100
-            CVL100=107
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=79
-            CVL005=87
-            CVL010=92
-            CVL025=98
-            CVL050=105
-            CVL100=110
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=81
-            CVL005=90
-            CVL010=94
-            CVL025=101
-            CVL050=107
-            CVL100=114
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=83
-            CVL005=93
-            CVL010=97
-            CVL025=104
-            CVL050=111
-            CVL100=118
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=85
-            CVL005=95
-            CVL010=100
-            CVL025=108
-            CVL050=114
-            CVL100=122
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=88
-            CVL005=98
-            CVL010=103
-            CVL025=111
-            CVL050=118
-            CVL100=126
-          ENDIF
-        ELSEIF(N1.EQ.11)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=66
-            CVL005=66
-            CVL010=66
-            CVL025=67
-            CVL050=68
-            CVL100=70
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=66
-            CVL005=67
-            CVL010=68
-            CVL025=70
-            CVL050=72
-            CVL100=74
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=67
-            CVL005=69
-            CVL010=71
-            CVL025=73
-            CVL050=75
-            CVL100=78
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=69
-            CVL005=72
-            CVL010=74
-            CVL025=76
-            CVL050=79
-            CVL100=82
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=71
-            CVL005=74
-            CVL010=76
-            CVL025=80
-            CVL050=83
-            CVL100=86
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=73
-            CVL005=77
-            CVL010=79
-            CVL025=83
-            CVL050=86
-            CVL100=90
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=75
-            CVL005=80
-            CVL010=82
-            CVL025=86
-            CVL050=90
-            CVL100=94
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=77
-            CVL005=83
-            CVL010=85
-            CVL025=90
-            CVL050=94
-            CVL100=98
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=79
-            CVL005=85
-            CVL010=89
-            CVL025=93
-            CVL050=98
-            CVL100=103
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=82
-            CVL005=88
-            CVL010=92
-            CVL025=97
-            CVL050=101
-            CVL100=107
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=84
-            CVL005=91
-            CVL010=95
-            CVL025=100
-            CVL050=105
-            CVL100=111
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=87
-            CVL005=94
-            CVL010=98
-            CVL025=104
-            CVL050=109
-            CVL100=115
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=89
-            CVL005=97
-            CVL010=101
-            CVL025=107
-            CVL050=113
-            CVL100=119
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=91
-            CVL005=100
-            CVL010=104
-            CVL025=111
-            CVL050=117
-            CVL100=124
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=94
-            CVL005=103
-            CVL010=108
-            CVL025=114
-            CVL050=121
-            CVL100=128
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=96
-            CVL005=106
-            CVL010=111
-            CVL025=118
-            CVL050=124
-            CVL100=132
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=99
-            CVL005=109
-            CVL010=114
-            CVL025=122
-            CVL050=128
-            CVL100=136
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=101
-            CVL005=112
-            CVL010=117
-            CVL025=125
-            CVL050=132
-            CVL100=140
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=104
-            CVL005=115
-            CVL010=120
-            CVL025=129
-            CVL050=136
-            CVL100=145
-          ENDIF
-        ELSEIF(N1.EQ.12)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=78
-            CVL005=78
-            CVL010=78
-            CVL025=80
-            CVL050=81
-            CVL100=83
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=78
-            CVL005=80
-            CVL010=81
-            CVL025=83
-            CVL050=84
-            CVL100=87
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=79
-            CVL005=82
-            CVL010=84
-            CVL025=86
-            CVL050=88
-            CVL100=91
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=81
-            CVL005=85
-            CVL010=87
-            CVL025=90
-            CVL050=92
-            CVL100=96
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=83
-            CVL005=88
-            CVL010=90
-            CVL025=93
-            CVL050=96
-            CVL100=100
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=86
-            CVL005=91
-            CVL010=93
-            CVL025=97
-            CVL050=100
-            CVL100=105
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=88
-            CVL005=94
-            CVL010=96
-            CVL025=101
-            CVL050=105
-            CVL100=109
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=91
-            CVL005=97
-            CVL010=100
-            CVL025=105
-            CVL050=109
-            CVL100=114
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=93
-            CVL005=100
-            CVL010=103
-            CVL025=108
-            CVL050=111
-            CVL100=118
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=96
-            CVL005=103
-            CVL010=107
-            CVL025=112
-            CVL050=117
-            CVL100=123
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=98
-            CVL005=106
-            CVL010=110
-            CVL025=116
-            CVL050=121
-            CVL100=128
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=102
-            CVL005=110
-            CVL010=114
-            CVL025=120
-            CVL050=126
-            CVL100=132
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=104
-            CVL005=113
-            CVL010=117
-            CVL025=124
-            CVL050=130
-            CVL100=137
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=106
-            CVL005=116
-            CVL010=121
-            CVL025=128
-            CVL050=134
-            CVL100=142
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=110
-            CVL005=120
-            CVL010=125
-            CVL025=132
-            CVL050=139
-            CVL100=146
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=113
-            CVL005=123
-            CVL010=128
-            CVL025=136
-            CVL050=143
-            CVL100=151
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=116
-            CVL005=126
-            CVL010=132
-            CVL025=140
-            CVL050=147
-            CVL100=156
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=118
-            CVL005=130
-            CVL010=135
-            CVL025=144
-            CVL050=151
-            CVL100=160
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=131
-            CVL005=133
-            CVL010=139
-            CVL025=148
-            CVL050=156
-            CVL100=165
-          ENDIF
-        ELSEIF(N1.EQ.13)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=91
-            CVL005=91
-            CVL010=92
-            CVL025=93
-            CVL050=94
-            CVL100=96
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=91
-            CVL005=93
-            CVL010=94
-            CVL025=96
-            CVL050=98
-            CVL100=101
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=93
-            CVL005=95
-            CVL010=97
-            CVL025=100
-            CVL050=102
-            CVL100=105
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=95
-            CVL005=99
-            CVL010=101
-            CVL025=104
-            CVL050=107
-            CVL100=110
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=97
-            CVL005=102
-            CVL010=104
-            CVL025=108
-            CVL050=111
-            CVL100=115
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=100
-            CVL005=105
-            CVL010=110
-            CVL025=112
-            CVL050=116
-            CVL100=120
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=103
-            CVL005=109
-            CVL010=112
-            CVL025=116
-            CVL050=120
-            CVL100=125
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=106
-            CVL005=112
-            CVL010=115
-            CVL025=120
-            CVL050=125
-            CVL100=130
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=109
-            CVL005=116
-            CVL010=119
-            CVL025=125
-            CVL050=129
-            CVL100=135
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=112
-            CVL005=119
-            CVL010=123
-            CVL025=129
-            CVL050=134
-            CVL100=140
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=115
-            CVL005=123
-            CVL010=127
-            CVL025=133
-            CVL050=139
-            CVL100=145
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=118
-            CVL005=126
-            CVL010=131
-            CVL025=137
-            CVL050=143
-            CVL100=150
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=121
-            CVL005=130
-            CVL010=135
-            CVL025=142
-            CVL050=148
-            CVL100=155
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=124
-            CVL005=134
-            CVL010=139
-            CVL025=146
-            CVL050=153
-            CVL100=160
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=127
-            CVL005=137
-            CVL010=143
-            CVL025=151
-            CVL050=157
-            CVL100=166
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=130
-            CVL005=141
-            CVL010=147
-            CVL025=155
-            CVL050=162
-            CVL100=171
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=134
-            CVL005=145
-            CVL010=151
-            CVL025=159
-            CVL050=167
-            CVL100=176
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=137
-            CVL005=149
-            CVL010=155
-            CVL025=164
-            CVL050=172
-            CVL100=181
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=140
-            CVL005=152
-            CVL010=159
-            CVL025=168
-            CVL050=176
-            CVL100=186
-          ENDIF
-        ELSEIF(N1.EQ.14)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=105
-            CVL005=105
-            CVL010=106
-            CVL025=107
-            CVL050=109
-            CVL100=110
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=105
-            CVL005=107
-            CVL010=108
-            CVL025=111
-            CVL050=113
-            CVL100=116
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=107
-            CVL005=110
-            CVL010=112
-            CVL025=115
-            CVL050=117
-            CVL100=121
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=109
-            CVL005=113
-            CVL010=116
-            CVL025=119
-            CVL050=122
-            CVL100=126
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=112
-            CVL005=117
-            CVL010=119
-            CVL025=123
-            CVL050=127
-            CVL100=131
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=115
-            CVL005=121
-            CVL010=123
-            CVL025=128
-            CVL050=132
-            CVL100=137
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=118
-            CVL005=124
-            CVL010=128
-            CVL025=132
-            CVL050=137
-            CVL100=142
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=121
-            CVL005=128
-            CVL010=132
-            CVL025=137
-            CVL050=142
-            CVL100=147
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=125
-            CVL005=132
-            CVL010=136
-            CVL025=142
-            CVL050=147
-            CVL100=153
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=128
-            CVL005=136
-            CVL010=140
-            CVL025=146
-            CVL050=152
-            CVL100=158
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=131
-            CVL005=140
-            CVL010=144
-            CVL025=151
-            CVL050=157
-            CVL100=164
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=135
-            CVL005=144
-            CVL010=149
-            CVL025=156
-            CVL050=162
-            CVL100=169
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=138
-            CVL005=148
-            CVL010=153
-            CVL025=161
-            CVL050=167
-            CVL100=175
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=142
-            CVL005=152
-            CVL010=157
-            CVL025=165
-            CVL050=172
-            CVL100=180
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=145
-            CVL005=156
-            CVL010=162
-            CVL025=170
-            CVL050=177
-            CVL100=186
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=149
-            CVL005=160
-            CVL010=166
-            CVL025=175
-            CVL050=183
-            CVL100=191
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=152
-            CVL005=164
-            CVL010=171
-            CVL025=180
-            CVL050=188
-            CVL100=197
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=156
-            CVL005=169
-            CVL010=175
-            CVL025=184
-            CVL050=193
-            CVL100=203
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=160
-            CVL005=173
-            CVL010=179
-            CVL025=189
-            CVL050=198
-            CVL100=208
-          ENDIF
-        ELSEIF(N1.EQ.15)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=120
-            CVL005=120
-            CVL010=121
-            CVL025=122
-            CVL050=124
-            CVL100=126
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=120
-            CVL005=123
-            CVL010=124
-            CVL025=126
-            CVL050=128
-            CVL100=131
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=122
-            CVL005=126
-            CVL010=128
-            CVL025=131
-            CVL050=133
-            CVL100=137
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=125
-            CVL005=129
-            CVL010=132
-            CVL025=135
-            CVL050=139
-            CVL100=143
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=128
-            CVL005=133
-            CVL010=136
-            CVL025=140
-            CVL050=144
-            CVL100=148
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=133
-            CVL005=137
-            CVL010=140
-            CVL025=145
-            CVL050=149
-            CVL100=154
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=135
-            CVL005=141
-            CVL010=145
-            CVL025=150
-            CVL050=154
-            CVL100=160
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=138
-            CVL005=145
-            CVL010=149
-            CVL025=155
-            CVL050=160
-            CVL100=166
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=142
-            CVL005=150
-            CVL010=154
-            CVL025=160
-            CVL050=165
-            CVL100=172
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=145
-            CVL005=154
-            CVL010=158
-            CVL025=165
-            CVL050=171
-            CVL100=178
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=149
-            CVL005=158
-            CVL010=163
-            CVL025=170
-            CVL050=176
-            CVL100=184
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=153
-            CVL005=163
-            CVL010=168
-            CVL025=175
-            CVL050=182
-            CVL100=189
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=157
-            CVL005=167
-            CVL010=172
-            CVL025=180
-            CVL050=187
-            CVL100=195
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=161
-            CVL005=172
-            CVL010=177
-            CVL025=185
-            CVL050=193
-            CVL100=201
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=164
-            CVL005=176
-            CVL010=182
-            CVL025=191
-            CVL050=198
-            CVL100=207
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=168
-            CVL005=181
-            CVL010=187
-            CVL025=196
-            CVL050=204
-            CVL100=213
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=172
-            CVL005=185
-            CVL010=191
-            CVL025=201
-            CVL050=209
-            CVL100=219
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=176
-            CVL005=190
-            CVL010=196
-            CVL025=206
-            CVL050=215
-            CVL100=225
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=180
-            CVL005=194
-            CVL010=201
-            CVL025=211
-            CVL050=221
-            CVL100=231
-          ENDIF
-        ELSEIF(N1.EQ.16)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=136
-            CVL005=136
-            CVL010=137
-            CVL025=138
-            CVL050=140
-            CVL100=142
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=136
-            CVL005=139
-            CVL010=140
-            CVL025=143
-            CVL050=145
-            CVL100=148
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=139
-            CVL005=142
-            CVL010=144
-            CVL025=148
-            CVL050=151
-            CVL100=154
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=142
-            CVL005=146
-            CVL010=149
-            CVL025=152
-            CVL050=156
-            CVL100=160
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=145
-            CVL005=150
-            CVL010=153
-            CVL025=156
-            CVL050=162
-            CVL100=166
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=148
-            CVL005=155
-            CVL010=158
-            CVL025=163
-            CVL050=167
-            CVL100=173
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=152
-            CVL005=159
-            CVL010=163
-            CVL025=168
-            CVL050=173
-            CVL100=179
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=156
-            CVL005=164
-            CVL010=168
-            CVL025=174
-            CVL050=179
-            CVL100=185
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=160
-            CVL005=168
-            CVL010=173
-            CVL025=179
-            CVL050=185
-            CVL100=191
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=164
-            CVL005=173
-            CVL010=178
-            CVL025=184
-            CVL050=191
-            CVL100=198
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=168
-            CVL005=178
-            CVL010=183
-            CVL025=190
-            CVL050=197
-            CVL100=204
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=172
-            CVL005=182
-            CVL010=188
-            CVL025=196
-            CVL050=202
-            CVL100=211
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=176
-            CVL005=187
-            CVL010=193
-            CVL025=201
-            CVL050=208
-            CVL100=217
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=180
-            CVL005=192
-            CVL010=198
-            CVL025=207
-            CVL050=214
-            CVL100=223
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=185
-            CVL005=197
-            CVL010=203
-            CVL025=212
-            CVL050=220
-            CVL100=230
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=189
-            CVL005=202
-            CVL010=208
-            CVL025=218
-            CVL050=226
-            CVL100=236
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=193
-            CVL005=207
-            CVL010=213
-            CVL025=223
-            CVL050=232
-            CVL100=243
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=197
-            CVL005=211
-            CVL010=219
-            CVL025=229
-            CVL050=238
-            CVL100=249
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=202
-            CVL005=216
-            CVL010=224
-            CVL025=235
-            CVL050=244
-            CVL100=256
-          ENDIF
-        ELSEIF(N1.EQ.17)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=153
-            CVL005=153
-            CVL010=154
-            CVL025=156
-            CVL050=157
-            CVL100=160
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=154
-            CVL005=156
-            CVL010=158
-            CVL025=160
-            CVL050=163
-            CVL100=166
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=156
-            CVL005=160
-            CVL010=162
-            CVL025=165
-            CVL050=169
-            CVL100=172
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=159
-            CVL005=164
-            CVL010=167
-            CVL025=171
-            CVL050=174
-            CVL100=179
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=163
-            CVL005=169
-            CVL010=172
-            CVL025=176
-            CVL050=180
-            CVL100=185
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=167
-            CVL005=173
-            CVL010=177
-            CVL025=182
-            CVL050=187
-            CVL100=192
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=171
-            CVL005=178
-            CVL010=182
-            CVL025=188
-            CVL050=193
-            CVL100=199
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=175
-            CVL005=183
-            CVL010=187
-            CVL025=193
-            CVL050=199
-            CVL100=206
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=179
-            CVL005=188
-            CVL010=192
-            CVL025=199
-            CVL050=205
-            CVL100=212
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=183
-            CVL005=193
-            CVL010=198
-            CVL025=205
-            CVL050=211
-            CVL100=219
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=188
-            CVL005=198
-            CVL010=203
-            CVL025=211
-            CVL050=218
-            CVL100=226
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=192
-            CVL005=203
-            CVL010=209
-            CVL025=217
-            CVL050=224
-            CVL100=233
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=197
-            CVL005=208
-            CVL010=214
-            CVL025=223
-            CVL050=231
-            CVL100=239
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=201
-            CVL005=214
-            CVL010=220
-            CVL025=229
-            CVL050=237
-            CVL100=246
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=206
-            CVL005=219
-            CVL010=225
-            CVL025=235
-            CVL050=243
-            CVL100=253
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=211
-            CVL005=224
-            CVL010=231
-            CVL025=241
-            CVL050=250
-            CVL100=260
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=215
-            CVL005=229
-            CVL010=236
-            CVL025=247
-            CVL050=256
-            CVL100=267
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=220
-            CVL005=235
-            CVL010=242
-            CVL025=253
-            CVL050=263
-            CVL100=274
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=224
-            CVL005=240
-            CVL010=247
-            CVL025=259
-            CVL050=269
-            CVL100=281
-          ENDIF
-        ELSEIF(N1.EQ.18)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=171
-            CVL005=171
-            CVL010=172
-            CVL025=174
-            CVL050=176
-            CVL100=178
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=172
-            CVL005=174
-            CVL010=176
-            CVL025=179
-            CVL050=181
-            CVL100=185
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=175
-            CVL005=178
-            CVL010=181
-            CVL025=184
-            CVL050=188
-            CVL100=192
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=178
-            CVL005=183
-            CVL010=186
-            CVL025=190
-            CVL050=194
-            CVL100=199
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=182
-            CVL005=188
-            CVL010=191
-            CVL025=196
-            CVL050=200
-            CVL100=206
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=186
-            CVL005=193
-            CVL010=196
-            CVL025=202
-            CVL050=207
-            CVL100=213
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=190
-            CVL005=198
-            CVL010=202
-            CVL025=208
-            CVL050=213
-            CVL100=220
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=195
-            CVL005=203
-            CVL010=208
-            CVL025=214
-            CVL050=220
-            CVL100=227
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=199
-            CVL005=209
-            CVL010=213
-            CVL025=220
-            CVL050=227
-            CVL100=234
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=204
-            CVL005=214
-            CVL010=219
-            CVL025=227
-            CVL050=233
-            CVL100=241
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=209
-            CVL005=219
-            CVL010=225
-            CVL025=233
-            CVL050=240
-            CVL100=249
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=214
-            CVL005=225
-            CVL010=231
-            CVL025=239
-            CVL050=247
-            CVL100=256
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=218
-            CVL005=230
-            CVL010=237
-            CVL025=246
-            CVL050=254
-            CVL100=263
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=223
-            CVL005=236
-            CVL010=242
-            CVL025=252
-            CVL050=260
-            CVL100=270
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=228
-            CVL005=242
-            CVL010=248
-            CVL025=258
-            CVL050=267
-            CVL100=278
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=233
-            CVL005=247
-            CVL010=254
-            CVL025=265
-            CVL050=274
-            CVL100=285
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=238
-            CVL005=253
-            CVL010=260
-            CVL025=271
-            CVL050=281
-            CVL100=292
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=243
-            CVL005=259
-            CVL010=266
-            CVL025=278
-            CVL050=288
-            CVL100=300
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=248
-            CVL005=264
-            CVL010=272
-            CVL025=284
-            CVL050=295
-            CVL100=307
-          ENDIF
-        ELSEIF(N1.EQ.19)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=190
-            CVL005=191
-            CVL010=192
-            CVL025=193
-            CVL050=195
-            CVL100=198
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=191
-            CVL005=194
-            CVL010=195
-            CVL025=198
-            CVL050=201
-            CVL100=205
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=194
-            CVL005=198
-            CVL010=200
-            CVL025=204
-            CVL050=208
-            CVL100=212
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=198
-            CVL005=203
-            CVL010=206
-            CVL025=210
-            CVL050=214
-            CVL100=219
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=202
-            CVL005=208
-            CVL010=211
-            CVL025=216
-            CVL050=221
-            CVL100=227
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=206
-            CVL005=213
-            CVL010=217
-            CVL025=223
-            CVL050=228
-            CVL100=234
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=211
-            CVL005=219
-            CVL010=223
-            CVL025=229
-            CVL050=235
-            CVL100=242
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=216
-            CVL005=224
-            CVL010=229
-            CVL025=236
-            CVL050=242
-            CVL100=249
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=220
-            CVL005=230
-            CVL010=235
-            CVL025=243
-            CVL050=249
-            CVL100=257
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=225
-            CVL005=236
-            CVL010=241
-            CVL025=249
-            CVL050=256
-            CVL100=264
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=231
-            CVL005=242
-            CVL010=247
-            CVL025=256
-            CVL050=263
-            CVL100=272
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=236
-            CVL005=248
-            CVL010=254
-            CVL025=263
-            CVL050=271
-            CVL100=280
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=241
-            CVL005=254
-            CVL010=260
-            CVL025=269
-            CVL050=278
-            CVL100=288
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=246
-            CVL005=260
-            CVL010=266
-            CVL025=276
-            CVL050=285
-            CVL100=295
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=251
-            CVL005=265
-            CVL010=273
-            CVL025=283
-            CVL050=292
-            CVL100=303
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=257
-            CVL005=272
-            CVL010=279
-            CVL025=290
-            CVL050=300
-            CVL100=311
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=262
-            CVL005=278
-            CVL010=285
-            CVL025=297
-            CVL050=307
-            CVL100=319
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=268
-            CVL005=284
-            CVL010=292
-            CVL025=304
-            CVL050=314
-            CVL100=326
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=273
-            CVL005=290
-            CVL010=298
-            CVL025=310
-            CVL050=321
-            CVL100=334
-          ENDIF
-        ELSEIF(N1.EQ.20)THEN
-          IF(N2.EQ.2)THEN
-            CVL001=210
-            CVL005=211
-            CVL010=212
-            CVL025=213
-            CVL050=215
-            CVL100=218
-          ELSEIF(N2.EQ.3)THEN
-            CVL001=211
-            CVL005=214
-            CVL010=216
-            CVL025=219
-            CVL050=222
-            CVL100=226
-          ELSEIF(N2.EQ.4)THEN
-            CVL001=214
-            CVL005=219
-            CVL010=221
-            CVL025=225
-            CVL050=229
-            CVL100=233
-          ELSEIF(N2.EQ.5)THEN
-            CVL001=218
-            CVL005=224
-            CVL010=227
-            CVL025=231
-            CVL050=236
-            CVL100=241
-          ELSEIF(N2.EQ.6)THEN
-            CVL001=223
-            CVL005=229
-            CVL010=233
-            CVL025=238
-            CVL050=243
-            CVL100=249
-          ELSEIF(N2.EQ.7)THEN
-            CVL001=227
-            CVL005=235
-            CVL010=239
-            CVL025=245
-            CVL050=250
-            CVL100=257
-          ELSEIF(N2.EQ.8)THEN
-            CVL001=232
-            CVL005=241
-            CVL010=245
-            CVL025=251
-            CVL050=258
-            CVL100=265
-          ELSEIF(N2.EQ.9)THEN
-            CVL001=237
-            CVL005=247
-            CVL010=251
-            CVL025=259
-            CVL050=265
-            CVL100=273
-          ELSEIF(N2.EQ.10)THEN
-            CVL001=243
-            CVL005=253
-            CVL010=258
-            CVL025=266
-            CVL050=273
-            CVL100=281
-          ELSEIF(N2.EQ.11)THEN
-            CVL001=248
-            CVL005=259
-            CVL010=264
-            CVL025=273
-            CVL050=280
-            CVL100=289
-          ELSEIF(N2.EQ.12)THEN
-            CVL001=253
-            CVL005=265
-            CVL010=271
-            CVL025=280
-            CVL050=288
-            CVL100=293
-          ELSEIF(N2.EQ.13)THEN
-            CVL001=259
-            CVL005=271
-            CVL010=278
-            CVL025=287
-            CVL050=295
-            CVL100=305
-          ELSEIF(N2.EQ.14)THEN
-            CVL001=265
-            CVL005=278
-            CVL010=284
-            CVL025=294
-            CVL050=303
-            CVL100=313
-          ELSEIF(N2.EQ.15)THEN
-            CVL001=270
-            CVL005=284
-            CVL010=291
-            CVL025=301
-            CVL050=311
-            CVL100=321
-          ELSEIF(N2.EQ.16)THEN
-            CVL001=276
-            CVL005=290
-            CVL010=298
-            CVL025=309
-            CVL050=318
-            CVL100=330
-          ELSEIF(N2.EQ.17)THEN
-            CVL001=281
-            CVL005=297
-            CVL010=304
-            CVL025=316
-            CVL050=326
-            CVL100=338
-          ELSEIF(N2.EQ.18)THEN
-            CVL001=287
-            CVL005=303
-            CVL010=311
-            CVL025=323
-            CVL050=334
-            CVL100=346
-          ELSEIF(N2.EQ.19)THEN
-            CVL001=293
-            CVL005=310
-            CVL010=318
-            CVL025=330
-            CVL050=341
-            CVL100=354
-          ELSEIF(N2.EQ.20)THEN
-            CVL001=299
-            CVL005=316
-            CVL010=325
-            CVL025=338
-            CVL050=349
-            CVL100=362
-          ENDIF
-        ENDIF
+        CALL DPMNN6(N1,N2,
+     1              CVL001,CVL005,CVL010,CVL025,CVL050,CVL100,
+     1              IBUGA3,ISUBRO)
 C
         AN1=REAL(N1)
         AN2=REAL(N2)
@@ -21051,6 +18653,7 @@ C
           NTOT(I)=15
           NMAX=NMAX+NTOT(I)
  2250   CONTINUE
+        ITYPCO(4)='ALPH'
 C
         IF(ITAB.EQ.0)THEN
           ICNT=NUMALP
@@ -21156,6 +18759,7 @@ C
           NTOT(I)=15
           NMAX=NMAX+NTOT(I)
  2350   CONTINUE
+        ITYPCO(4)='ALPH'
 C
         IF(ITAB.EQ.0)THEN
           ICNT=NUMALP
@@ -21483,6 +19087,11 @@ C
         AVAL=ANUM/ADEN
         CALL NORCDF(AVAL,CDF)
         PVAL2T=2.0*CDF
+        IF(AVAL.LE.0.0)THEN
+          PVAL2T=2.0*CDF
+        ELSE
+          PVAL2T=2.0*(1.0 - CDF)
+        ENDIF
         ANUM=T + 0.5 -AN1*(AN+1.0)/2.0
         ADEN=SQRT(AN1*AN2*(AN+1.0)/12.0)
         AVAL=ANUM/ADEN
@@ -21498,11 +19107,16 @@ C
         STATVA=STATV2
         CALL NORCDF(T1,VAL1)
         VAL2=1.0 - VAL1
-        VAL=MIN(VAL1,VAL2)
-        PVAL2T=2.0*VAL
         PVALLT=VAL1
         PVALUT=VAL2
         STATCD=VAL1
+CCCCC   VAL=MIN(VAL1,VAL2)
+CCCCC   PVAL2T=2.0*VAL
+        IF(T1.LE.0.0)THEN
+          PVAL2T=2.0*PVALLT
+        ELSE
+          PVAL2T=2.0*PVALUT
+        ENDIF
       ENDIF
 C
 C               *****************
@@ -21787,6 +19401,2632 @@ C
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,9011)
  9011   FORMAT('***** AT THE END OF DPMNN5--')
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPMNN6(N1,N2,
+     1                  CVL001,CVL005,CVL010,CVL025,CVL050,CVL100,
+     1                  IBUGA3,ISUBRO)
+C
+C     PURPOSE--UTILITY ROUTINE USED BY DPMN2 TO GENERATE CRITICAL
+C              VALUES FOR RANK SUM (MANN-WHITNEY) TEST FOR SMALL
+C              VALUES OF N1 AND N2 (N1 <= 20, N2 <= 20).
+C
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORAOTRY
+C                 NATIONAL INSTITUTE OF STANDARDS OF TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS OF TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2023/06
+C     ORIGINAL VERSION--JUNE      2023. EXTRACTED AS A SEPARATE
+C                                       ROUTINE FROM DPMNN2
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MNN6')THEN
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPMNN6--')
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      CVL001=CPUMIN
+      CVL005=CPUMIN
+      CVL010=CPUMIN
+      CVL025=CPUMIN
+      CVL050=CPUMIN
+      CVL100=CPUMIN
+C
+      IF(N1.EQ.2)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=3
+          CVL025=3
+          CVL050=3
+          CVL100=3
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=3
+          CVL025=3
+          CVL050=3
+          CVL100=4
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=3
+          CVL025=3
+          CVL050=3
+          CVL100=4
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=3
+          CVL025=3
+          CVL050=4
+          CVL100=5
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=3
+          CVL025=3
+          CVL050=4
+          CVL100=5
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=3
+          CVL025=3
+          CVL050=4
+          CVL100=5
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=3
+          CVL025=4
+          CVL050=5
+          CVL100=6
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=3
+          CVL025=4
+          CVL050=5
+          CVL100=6
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=3
+          CVL025=4
+          CVL050=5
+          CVL100=7
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=3
+          CVL025=5
+          CVL050=5
+          CVL100=7
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=3
+          CVL025=5
+          CVL050=6
+          CVL100=8
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=4
+          CVL025=5
+          CVL050=6
+          CVL100=8
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=4
+          CVL025=5
+          CVL050=7
+          CVL100=8
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=4
+          CVL025=5
+          CVL050=7
+          CVL100=9
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=4
+          CVL025=5
+          CVL050=7
+          CVL100=9
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=4
+          CVL025=6
+          CVL050=7
+          CVL100=10
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=4
+          CVL025=6
+          CVL050=8
+          CVL100=10
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=3
+          CVL005=3
+          CVL010=5
+          CVL025=6
+          CVL050=8
+          CVL100=11
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=3
+          CVL005=4
+          CVL010=5
+          CVL025=6
+          CVL050=8
+          CVL100=11
+        ENDIF
+      ELSEIF(N1.EQ.3)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=6
+          CVL005=6
+          CVL010=6
+          CVL025=6
+          CVL050=6
+          CVL100=7
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=6
+          CVL005=6
+          CVL010=6
+          CVL025=6
+          CVL050=7
+          CVL100=8
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=6
+          CVL005=6
+          CVL010=6
+          CVL025=6
+          CVL050=7
+          CVL100=8
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=6
+          CVL005=6
+          CVL010=6
+          CVL025=7
+          CVL050=8
+          CVL100=9
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=6
+          CVL005=6
+          CVL010=6
+          CVL025=8
+          CVL050=9
+          CVL100=10
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=6
+          CVL005=6
+          CVL010=7
+          CVL025=8
+          CVL050=9
+          CVL100=11
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=6
+          CVL005=6
+          CVL010=7
+          CVL025=9
+          CVL050=10
+          CVL100=12
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=6
+          CVL005=7
+          CVL010=8
+          CVL025=9
+          CVL050=11
+          CVL100=12
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=6
+          CVL005=7
+          CVL010=8
+          CVL025=10
+          CVL050=11
+          CVL100=13
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=6
+          CVL005=7
+          CVL010=8
+          CVL025=10
+          CVL050=12
+          CVL100=14
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=6
+          CVL005=8
+          CVL010=9
+          CVL025=11
+          CVL050=12
+          CVL100=15
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=6
+          CVL005=8
+          CVL010=9
+          CVL025=11
+          CVL050=13
+          CVL100=16
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=6
+          CVL005=8
+          CVL010=9
+          CVL025=12
+          CVL050=14
+          CVL100=17
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=6
+          CVL005=9
+          CVL010=10
+          CVL025=12
+          CVL050=14
+          CVL100=17
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=6
+          CVL005=9
+          CVL010=10
+          CVL025=13
+          CVL050=15
+          CVL100=18
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=7
+          CVL005=9
+          CVL010=11
+          CVL025=13
+          CVL050=16
+          CVL100=19
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=7
+          CVL005=9
+          CVL010=11
+          CVL025=14
+          CVL050=16
+          CVL100=20
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=7
+          CVL005=10
+          CVL010=11
+          CVL025=14
+          CVL050=17
+          CVL100=21
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=7
+          CVL005=10
+          CVL010=12
+          CVL025=15
+          CVL050=18
+          CVL100=22
+        ENDIF
+      ELSEIF(N1.EQ.4)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=10
+          CVL005=10
+          CVL010=10
+          CVL025=10
+          CVL050=10
+          CVL100=11
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=10
+          CVL005=10
+          CVL010=10
+          CVL025=10
+          CVL050=11
+          CVL100=12
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=10
+          CVL005=10
+          CVL010=10
+          CVL025=11
+          CVL050=12
+          CVL100=14
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=10
+          CVL005=10
+          CVL010=11
+          CVL025=12
+          CVL050=13
+          CVL100=15
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=10
+          CVL005=11
+          CVL010=12
+          CVL025=13
+          CVL050=14
+          CVL100=16
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=10
+          CVL005=11
+          CVL010=12
+          CVL025=14
+          CVL050=15
+          CVL100=17
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=10
+          CVL005=12
+          CVL010=13
+          CVL025=15
+          CVL050=16
+          CVL100=18
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=10
+          CVL005=12
+          CVL010=14
+          CVL025=15
+          CVL050=17
+          CVL100=20
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=11
+          CVL005=13
+          CVL010=14
+          CVL025=16
+          CVL050=18
+          CVL100=21
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=11
+          CVL005=13
+          CVL010=15
+          CVL025=17
+          CVL050=19
+          CVL100=22
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=11
+          CVL005=14
+          CVL010=16
+          CVL025=18
+          CVL050=20
+          CVL100=23
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=12
+          CVL005=14
+          CVL010=16
+          CVL025=19
+          CVL050=21
+          CVL100=24
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=12
+          CVL005=15
+          CVL010=17
+          CVL025=20
+          CVL050=22
+          CVL100=26
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=12
+          CVL005=16
+          CVL010=18
+          CVL025=21
+          CVL050=23
+          CVL100=27
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=13
+          CVL005=16
+          CVL010=18
+          CVL025=22
+          CVL050=25
+          CVL100=28
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=13
+          CVL005=17
+          CVL010=19
+          CVL025=22
+          CVL050=26
+          CVL100=29
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=14
+          CVL005=17
+          CVL010=20
+          CVL025=23
+          CVL050=27
+          CVL100=31
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=14
+          CVL005=18
+          CVL010=20
+          CVL025=24
+          CVL050=28
+          CVL100=32
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=14
+          CVL005=19
+          CVL010=21
+          CVL025=25
+          CVL050=29
+          CVL100=33
+        ENDIF
+      ELSEIF(N1.EQ.5)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=15
+          CVL005=15
+          CVL010=15
+          CVL025=15
+          CVL050=16
+          CVL100=17
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=15
+          CVL005=15
+          CVL010=15
+          CVL025=16
+          CVL050=17
+          CVL100=18
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=15
+          CVL005=15
+          CVL010=16
+          CVL025=17
+          CVL050=18
+          CVL100=20
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=15
+          CVL005=16
+          CVL010=17
+          CVL025=18
+          CVL050=20
+          CVL100=21
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=15
+          CVL005=17
+          CVL010=18
+          CVL025=19
+          CVL050=21
+          CVL100=23
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=15
+          CVL005=17
+          CVL010=19
+          CVL025=21
+          CVL050=22
+          CVL100=24
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=16
+          CVL005=18
+          CVL010=20
+          CVL025=22
+          CVL050=24
+          CVL100=26
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=17
+          CVL005=19
+          CVL010=21
+          CVL025=23
+          CVL050=25
+          CVL100=28
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=17
+          CVL005=20
+          CVL010=22
+          CVL025=24
+          CVL050=27
+          CVL100=29
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=18
+          CVL005=21
+          CVL010=23
+          CVL025=25
+          CVL050=28
+          CVL100=31
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=18
+          CVL005=22
+          CVL010=24
+          CVL025=27
+          CVL050=29
+          CVL100=33
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=19
+          CVL005=23
+          CVL010=25
+          CVL025=28
+          CVL050=31
+          CVL100=34
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=19
+          CVL005=23
+          CVL010=26
+          CVL025=29
+          CVL050=32
+          CVL100=36
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=20
+          CVL005=24
+          CVL010=27
+          CVL025=30
+          CVL050=34
+          CVL100=38
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=21
+          CVL005=25
+          CVL010=28
+          CVL025=31
+          CVL050=35
+          CVL100=39
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=21
+          CVL005=26
+          CVL010=29
+          CVL025=33
+          CVL050=36
+          CVL100=41
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=22
+          CVL005=27
+          CVL010=30
+          CVL025=34
+          CVL050=38
+          CVL100=43
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=23
+          CVL005=28
+          CVL010=31
+          CVL025=35
+          CVL050=39
+          CVL100=44
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=23
+          CVL005=29
+          CVL010=32
+          CVL025=36
+          CVL050=41
+          CVL100=46
+        ENDIF
+      ELSEIF(N1.EQ.6)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=21
+          CVL005=21
+          CVL010=21
+          CVL025=21
+          CVL050=22
+          CVL100=23
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=21
+          CVL005=21
+          CVL010=21
+          CVL025=23
+          CVL050=24
+          CVL100=25
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=21
+          CVL005=22
+          CVL010=23
+          CVL025=24
+          CVL050=25
+          CVL100=27
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=21
+          CVL005=23
+          CVL010=24
+          CVL025=25
+          CVL050=27
+          CVL100=29
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=21
+          CVL005=24
+          CVL010=25
+          CVL025=27
+          CVL050=29
+          CVL100=31
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=21
+          CVL005=25
+          CVL010=26
+          CVL025=28
+          CVL050=30
+          CVL100=33
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=23
+          CVL005=26
+          CVL010=28
+          CVL025=30
+          CVL050=32
+          CVL100=35
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=24
+          CVL005=27
+          CVL010=29
+          CVL025=32
+          CVL050=34
+          CVL100=37
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=25
+          CVL005=28
+          CVL010=30
+          CVL025=33
+          CVL050=36
+          CVL100=39
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=26
+          CVL005=29
+          CVL010=31
+          CVL025=35
+          CVL050=38
+          CVL100=41
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=26
+          CVL005=31
+          CVL010=33
+          CVL025=36
+          CVL050=39
+          CVL100=43
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=27
+          CVL005=32
+          CVL010=34
+          CVL025=38
+          CVL050=41
+          CVL100=45
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=28
+          CVL005=33
+          CVL010=35
+          CVL025=39
+          CVL050=43
+          CVL100=47
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=29
+          CVL005=34
+          CVL010=37
+          CVL025=41
+          CVL050=45
+          CVL100=49
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=30
+          CVL005=35
+          CVL010=38
+          CVL025=43
+          CVL050=47
+          CVL100=51
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=31
+          CVL005=37
+          CVL010=40
+          CVL025=44
+          CVL050=48
+          CVL100=53
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=32
+          CVL005=38
+          CVL010=41
+          CVL025=46
+          CVL050=50
+          CVL100=56
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=33
+          CVL005=39
+          CVL010=42
+          CVL025=47
+          CVL050=52
+          CVL100=58
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=34
+          CVL005=40
+          CVL010=44
+          CVL025=49
+          CVL050=54
+          CVL100=60
+        ENDIF
+      ELSEIF(N1.EQ.7)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=28
+          CVL005=28
+          CVL010=28
+          CVL025=28
+          CVL050=29
+          CVL100=30
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=28
+          CVL005=28
+          CVL010=29
+          CVL025=30
+          CVL050=31
+          CVL100=33
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=28
+          CVL005=29
+          CVL010=30
+          CVL025=32
+          CVL050=33
+          CVL100=35
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=28
+          CVL005=30
+          CVL010=32
+          CVL025=34
+          CVL050=35
+          CVL100=37
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=29
+          CVL005=32
+          CVL010=33
+          CVL025=35
+          CVL050=37
+          CVL100=40
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=30
+          CVL005=33
+          CVL010=35
+          CVL025=37
+          CVL050=40
+          CVL100=42
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=31
+          CVL005=35
+          CVL010=36
+          CVL025=39
+          CVL050=42
+          CVL100=45
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=32
+          CVL005=36
+          CVL010=38
+          CVL025=41
+          CVL050=44
+          CVL100=47
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=34
+          CVL005=38
+          CVL010=40
+          CVL025=43
+          CVL050=46
+          CVL100=50
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=35
+          CVL005=39
+          CVL010=41
+          CVL025=45
+          CVL050=48
+          CVL100=52
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=36
+          CVL005=41
+          CVL010=43
+          CVL025=47
+          CVL050=50
+          CVL100=55
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=37
+          CVL005=42
+          CVL010=45
+          CVL025=49
+          CVL050=53
+          CVL100=57
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=38
+          CVL005=44
+          CVL010=46
+          CVL025=51
+          CVL050=55
+          CVL100=60
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=39
+          CVL005=45
+          CVL010=48
+          CVL025=53
+          CVL050=57
+          CVL100=62
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=40
+          CVL005=47
+          CVL010=50
+          CVL025=55
+          CVL050=59
+          CVL100=65
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=42
+          CVL005=48
+          CVL010=52
+          CVL025=57
+          CVL050=62
+          CVL100=67
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=43
+          CVL005=50
+          CVL010=53
+          CVL025=59
+          CVL050=64
+          CVL100=70
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=44
+          CVL005=51
+          CVL010=55
+          CVL025=61
+          CVL050=66
+          CVL100=72
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=45
+          CVL005=53
+          CVL010=57
+          CVL025=63
+          CVL050=68
+          CVL100=75
+        ENDIF
+      ELSEIF(N1.EQ.8)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=36
+          CVL005=36
+          CVL010=36
+          CVL025=37
+          CVL050=38
+          CVL100=39
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=36
+          CVL005=36
+          CVL010=37
+          CVL025=39
+          CVL050=40
+          CVL100=42
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=36
+          CVL005=38
+          CVL010=39
+          CVL025=41
+          CVL050=42
+          CVL100=44
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=37
+          CVL005=39
+          CVL010=41
+          CVL025=43
+          CVL050=45
+          CVL100=47
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=38
+          CVL005=41
+          CVL010=43
+          CVL025=45
+          CVL050=47
+          CVL100=50
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=39
+          CVL005=43
+          CVL010=44
+          CVL025=47
+          CVL050=50
+          CVL100=53
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=41
+          CVL005=44
+          CVL010=46
+          CVL025=50
+          CVL050=52
+          CVL100=56
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=42
+          CVL005=46
+          CVL010=48
+          CVL025=52
+          CVL050=55
+          CVL100=59
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=43
+          CVL005=48
+          CVL010=50
+          CVL025=54
+          CVL050=57
+          CVL100=61
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=45
+          CVL005=50
+          CVL010=52
+          CVL025=56
+          CVL050=60
+          CVL100=64
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=46
+          CVL005=52
+          CVL010=54
+          CVL025=59
+          CVL050=63
+          CVL100=67
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=48
+          CVL005=54
+          CVL010=56
+          CVL025=61
+          CVL050=65
+          CVL100=70
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=49
+          CVL005=55
+          CVL010=59
+          CVL025=63
+          CVL050=68
+          CVL100=73
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=51
+          CVL005=57
+          CVL010=61
+          CVL025=66
+          CVL050=70
+          CVL100=76
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=52
+          CVL005=59
+          CVL010=63
+          CVL025=68
+          CVL050=73
+          CVL100=79
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=54
+          CVL005=61
+          CVL010=65
+          CVL025=71
+          CVL050=76
+          CVL100=82
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=55
+          CVL005=63
+          CVL010=67
+          CVL025=73
+          CVL050=78
+          CVL100=85
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=57
+          CVL005=65
+          CVL010=69
+          CVL025=75
+          CVL050=81
+          CVL100=88
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=58
+          CVL005=67
+          CVL010=71
+          CVL025=78
+          CVL050=84
+          CVL100=91
+        ENDIF
+      ELSEIF(N1.EQ.9)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=45
+          CVL005=45
+          CVL010=45
+          CVL025=46
+          CVL050=47
+          CVL100=48
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=45
+          CVL005=46
+          CVL010=47
+          CVL025=48
+          CVL050=50
+          CVL100=51
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=45
+          CVL005=47
+          CVL010=49
+          CVL025=50
+          CVL050=52
+          CVL100=55
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=47
+          CVL005=49
+          CVL010=51
+          CVL025=53
+          CVL050=55
+          CVL100=58
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=48
+          CVL005=51
+          CVL010=53
+          CVL025=56
+          CVL050=58
+          CVL100=61
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=49
+          CVL005=53
+          CVL010=55
+          CVL025=58
+          CVL050=61
+          CVL100=64
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=51
+          CVL005=55
+          CVL010=57
+          CVL025=61
+          CVL050=64
+          CVL100=68
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=53
+          CVL005=57
+          CVL010=60
+          CVL025=63
+          CVL050=67
+          CVL100=71
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=54
+          CVL005=59
+          CVL010=62
+          CVL025=66
+          CVL050=70
+          CVL100=74
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=56
+          CVL005=62
+          CVL010=64
+          CVL025=69
+          CVL050=73
+          CVL100=77
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=58
+          CVL005=64
+          CVL010=67
+          CVL025=72
+          CVL050=76
+          CVL100=81
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=60
+          CVL005=66
+          CVL010=69
+          CVL025=74
+          CVL050=79
+          CVL100=84
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=61
+          CVL005=68
+          CVL010=72
+          CVL025=77
+          CVL050=82
+          CVL100=87
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=63
+          CVL005=70
+          CVL010=74
+          CVL025=80
+          CVL050=85
+          CVL100=91
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=65
+          CVL005=73
+          CVL010=77
+          CVL025=83
+          CVL050=88
+          CVL100=94
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=67
+          CVL005=75
+          CVL010=79
+          CVL025=85
+          CVL050=91
+          CVL100=98
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=69
+          CVL005=77
+          CVL010=82
+          CVL025=88
+          CVL050=94
+          CVL100=101
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=71
+          CVL005=79
+          CVL010=84
+          CVL025=91
+          CVL050=97
+          CVL100=104
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=72
+          CVL005=82
+          CVL010=86
+          CVL025=94
+          CVL050=100
+          CVL100=108
+        ENDIF
+      ELSEIF(N1.EQ.10)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=55
+          CVL005=55
+          CVL010=55
+          CVL025=56
+          CVL050=57
+          CVL100=59
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=55
+          CVL005=56
+          CVL010=57
+          CVL025=59
+          CVL050=60
+          CVL100=62
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=56
+          CVL005=58
+          CVL010=59
+          CVL025=61
+          CVL050=63
+          CVL100=66
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=57
+          CVL005=60
+          CVL010=62
+          CVL025=64
+          CVL050=67
+          CVL100=69
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=59
+          CVL005=62
+          CVL010=64
+          CVL025=67
+          CVL050=70
+          CVL100=73
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=61
+          CVL005=65
+          CVL010=67
+          CVL025=70
+          CVL050=73
+          CVL100=77
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=62
+          CVL005=67
+          CVL010=69
+          CVL025=73
+          CVL050=76
+          CVL100=80
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=64
+          CVL005=69
+          CVL010=72
+          CVL025=76
+          CVL050=80
+          CVL100=84
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=66
+          CVL005=72
+          CVL010=75
+          CVL025=79
+          CVL050=83
+          CVL100=88
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=68
+          CVL005=74
+          CVL010=78
+          CVL025=82
+          CVL050=87
+          CVL100=92
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=70
+          CVL005=77
+          CVL010=80
+          CVL025=85
+          CVL050=90
+          CVL100=95
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=73
+          CVL005=80
+          CVL010=83
+          CVL025=89
+          CVL050=93
+          CVL100=99
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=75
+          CVL005=82
+          CVL010=86
+          CVL025=92
+          CVL050=97
+          CVL100=103
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=77
+          CVL005=85
+          CVL010=89
+          CVL025=95
+          CVL050=100
+          CVL100=107
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=79
+          CVL005=87
+          CVL010=92
+          CVL025=98
+          CVL050=105
+          CVL100=110
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=81
+          CVL005=90
+          CVL010=94
+          CVL025=101
+          CVL050=107
+          CVL100=114
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=83
+          CVL005=93
+          CVL010=97
+          CVL025=104
+          CVL050=111
+          CVL100=118
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=85
+          CVL005=95
+          CVL010=100
+          CVL025=108
+          CVL050=114
+          CVL100=122
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=88
+          CVL005=98
+          CVL010=103
+          CVL025=111
+          CVL050=118
+          CVL100=126
+        ENDIF
+      ELSEIF(N1.EQ.11)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=66
+          CVL005=66
+          CVL010=66
+          CVL025=67
+          CVL050=68
+          CVL100=70
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=66
+          CVL005=67
+          CVL010=68
+          CVL025=70
+          CVL050=72
+          CVL100=74
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=67
+          CVL005=69
+          CVL010=71
+          CVL025=73
+          CVL050=75
+          CVL100=78
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=69
+          CVL005=72
+          CVL010=74
+          CVL025=76
+          CVL050=79
+          CVL100=82
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=71
+          CVL005=74
+          CVL010=76
+          CVL025=80
+          CVL050=83
+          CVL100=86
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=73
+          CVL005=77
+          CVL010=79
+          CVL025=83
+          CVL050=86
+          CVL100=90
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=75
+          CVL005=80
+          CVL010=82
+          CVL025=86
+          CVL050=90
+          CVL100=94
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=77
+          CVL005=83
+          CVL010=85
+          CVL025=90
+          CVL050=94
+          CVL100=98
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=79
+          CVL005=85
+          CVL010=89
+          CVL025=93
+          CVL050=98
+          CVL100=103
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=82
+          CVL005=88
+          CVL010=92
+          CVL025=97
+          CVL050=101
+          CVL100=107
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=84
+          CVL005=91
+          CVL010=95
+          CVL025=100
+          CVL050=105
+          CVL100=111
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=87
+          CVL005=94
+          CVL010=98
+          CVL025=104
+          CVL050=109
+          CVL100=115
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=89
+          CVL005=97
+          CVL010=101
+          CVL025=107
+          CVL050=113
+          CVL100=119
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=91
+          CVL005=100
+          CVL010=104
+          CVL025=111
+          CVL050=117
+          CVL100=124
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=94
+          CVL005=103
+          CVL010=108
+          CVL025=114
+          CVL050=121
+          CVL100=128
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=96
+          CVL005=106
+          CVL010=111
+          CVL025=118
+          CVL050=124
+          CVL100=132
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=99
+          CVL005=109
+          CVL010=114
+          CVL025=122
+          CVL050=128
+          CVL100=136
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=101
+          CVL005=112
+          CVL010=117
+          CVL025=125
+          CVL050=132
+          CVL100=140
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=104
+          CVL005=115
+          CVL010=120
+          CVL025=129
+          CVL050=136
+          CVL100=145
+        ENDIF
+      ELSEIF(N1.EQ.12)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=78
+          CVL005=78
+          CVL010=78
+          CVL025=80
+          CVL050=81
+          CVL100=83
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=78
+          CVL005=80
+          CVL010=81
+          CVL025=83
+          CVL050=84
+          CVL100=87
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=79
+          CVL005=82
+          CVL010=84
+          CVL025=86
+          CVL050=88
+          CVL100=91
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=81
+          CVL005=85
+          CVL010=87
+          CVL025=90
+          CVL050=92
+          CVL100=96
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=83
+          CVL005=88
+          CVL010=90
+          CVL025=93
+          CVL050=96
+          CVL100=100
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=86
+          CVL005=91
+          CVL010=93
+          CVL025=97
+          CVL050=100
+          CVL100=105
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=88
+          CVL005=94
+          CVL010=96
+          CVL025=101
+          CVL050=105
+          CVL100=109
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=91
+          CVL005=97
+          CVL010=100
+          CVL025=105
+          CVL050=109
+          CVL100=114
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=93
+          CVL005=100
+          CVL010=103
+          CVL025=108
+          CVL050=111
+          CVL100=118
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=96
+          CVL005=103
+          CVL010=107
+          CVL025=112
+          CVL050=117
+          CVL100=123
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=98
+          CVL005=106
+          CVL010=110
+          CVL025=116
+          CVL050=121
+          CVL100=128
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=102
+          CVL005=110
+          CVL010=114
+          CVL025=120
+          CVL050=126
+          CVL100=132
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=104
+          CVL005=113
+          CVL010=117
+          CVL025=124
+          CVL050=130
+          CVL100=137
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=106
+          CVL005=116
+          CVL010=121
+          CVL025=128
+          CVL050=134
+          CVL100=142
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=110
+          CVL005=120
+          CVL010=125
+          CVL025=132
+          CVL050=139
+          CVL100=146
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=113
+          CVL005=123
+          CVL010=128
+          CVL025=136
+          CVL050=143
+          CVL100=151
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=116
+          CVL005=126
+          CVL010=132
+          CVL025=140
+          CVL050=147
+          CVL100=156
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=118
+          CVL005=130
+          CVL010=135
+          CVL025=144
+          CVL050=151
+          CVL100=160
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=131
+          CVL005=133
+          CVL010=139
+          CVL025=148
+          CVL050=156
+          CVL100=165
+        ENDIF
+      ELSEIF(N1.EQ.13)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=91
+          CVL005=91
+          CVL010=92
+          CVL025=93
+          CVL050=94
+          CVL100=96
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=91
+          CVL005=93
+          CVL010=94
+          CVL025=96
+          CVL050=98
+          CVL100=101
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=93
+          CVL005=95
+          CVL010=97
+          CVL025=100
+          CVL050=102
+          CVL100=105
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=95
+          CVL005=99
+          CVL010=101
+          CVL025=104
+          CVL050=107
+          CVL100=110
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=97
+          CVL005=102
+          CVL010=104
+          CVL025=108
+          CVL050=111
+          CVL100=115
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=100
+          CVL005=105
+          CVL010=110
+          CVL025=112
+          CVL050=116
+          CVL100=120
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=103
+          CVL005=109
+          CVL010=112
+          CVL025=116
+          CVL050=120
+          CVL100=125
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=106
+          CVL005=112
+          CVL010=115
+          CVL025=120
+          CVL050=125
+          CVL100=130
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=109
+          CVL005=116
+          CVL010=119
+          CVL025=125
+          CVL050=129
+          CVL100=135
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=112
+          CVL005=119
+          CVL010=123
+          CVL025=129
+          CVL050=134
+          CVL100=140
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=115
+          CVL005=123
+          CVL010=127
+          CVL025=133
+          CVL050=139
+          CVL100=145
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=118
+          CVL005=126
+          CVL010=131
+          CVL025=137
+          CVL050=143
+          CVL100=150
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=121
+          CVL005=130
+          CVL010=135
+          CVL025=142
+          CVL050=148
+          CVL100=155
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=124
+          CVL005=134
+          CVL010=139
+          CVL025=146
+          CVL050=153
+          CVL100=160
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=127
+          CVL005=137
+          CVL010=143
+          CVL025=151
+          CVL050=157
+          CVL100=166
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=130
+          CVL005=141
+          CVL010=147
+          CVL025=155
+          CVL050=162
+          CVL100=171
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=134
+          CVL005=145
+          CVL010=151
+          CVL025=159
+          CVL050=167
+          CVL100=176
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=137
+          CVL005=149
+          CVL010=155
+          CVL025=164
+          CVL050=172
+          CVL100=181
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=140
+          CVL005=152
+          CVL010=159
+          CVL025=168
+          CVL050=176
+          CVL100=186
+        ENDIF
+      ELSEIF(N1.EQ.14)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=105
+          CVL005=105
+          CVL010=106
+          CVL025=107
+          CVL050=109
+          CVL100=110
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=105
+          CVL005=107
+          CVL010=108
+          CVL025=111
+          CVL050=113
+          CVL100=116
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=107
+          CVL005=110
+          CVL010=112
+          CVL025=115
+          CVL050=117
+          CVL100=121
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=109
+          CVL005=113
+          CVL010=116
+          CVL025=119
+          CVL050=122
+          CVL100=126
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=112
+          CVL005=117
+          CVL010=119
+          CVL025=123
+          CVL050=127
+          CVL100=131
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=115
+          CVL005=121
+          CVL010=123
+          CVL025=128
+          CVL050=132
+          CVL100=137
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=118
+          CVL005=124
+          CVL010=128
+          CVL025=132
+          CVL050=137
+          CVL100=142
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=121
+          CVL005=128
+          CVL010=132
+          CVL025=137
+          CVL050=142
+          CVL100=147
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=125
+          CVL005=132
+          CVL010=136
+          CVL025=142
+          CVL050=147
+          CVL100=153
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=128
+          CVL005=136
+          CVL010=140
+          CVL025=146
+          CVL050=152
+          CVL100=158
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=131
+          CVL005=140
+          CVL010=144
+          CVL025=151
+          CVL050=157
+          CVL100=164
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=135
+          CVL005=144
+          CVL010=149
+          CVL025=156
+          CVL050=162
+          CVL100=169
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=138
+          CVL005=148
+          CVL010=153
+          CVL025=161
+          CVL050=167
+          CVL100=175
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=142
+          CVL005=152
+          CVL010=157
+          CVL025=165
+          CVL050=172
+          CVL100=180
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=145
+          CVL005=156
+          CVL010=162
+          CVL025=170
+          CVL050=177
+          CVL100=186
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=149
+          CVL005=160
+          CVL010=166
+          CVL025=175
+          CVL050=183
+          CVL100=191
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=152
+          CVL005=164
+          CVL010=171
+          CVL025=180
+          CVL050=188
+          CVL100=197
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=156
+          CVL005=169
+          CVL010=175
+          CVL025=184
+          CVL050=193
+          CVL100=203
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=160
+          CVL005=173
+          CVL010=179
+          CVL025=189
+          CVL050=198
+          CVL100=208
+        ENDIF
+      ELSEIF(N1.EQ.15)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=120
+          CVL005=120
+          CVL010=121
+          CVL025=122
+          CVL050=124
+          CVL100=126
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=120
+          CVL005=123
+          CVL010=124
+          CVL025=126
+          CVL050=128
+          CVL100=131
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=122
+          CVL005=126
+          CVL010=128
+          CVL025=131
+          CVL050=133
+          CVL100=137
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=125
+          CVL005=129
+          CVL010=132
+          CVL025=135
+          CVL050=139
+          CVL100=143
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=128
+          CVL005=133
+          CVL010=136
+          CVL025=140
+          CVL050=144
+          CVL100=148
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=133
+          CVL005=137
+          CVL010=140
+          CVL025=145
+          CVL050=149
+          CVL100=154
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=135
+          CVL005=141
+          CVL010=145
+          CVL025=150
+          CVL050=154
+          CVL100=160
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=138
+          CVL005=145
+          CVL010=149
+          CVL025=155
+          CVL050=160
+          CVL100=166
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=142
+          CVL005=150
+          CVL010=154
+          CVL025=160
+          CVL050=165
+          CVL100=172
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=145
+          CVL005=154
+          CVL010=158
+          CVL025=165
+          CVL050=171
+          CVL100=178
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=149
+          CVL005=158
+          CVL010=163
+          CVL025=170
+          CVL050=176
+          CVL100=184
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=153
+          CVL005=163
+          CVL010=168
+          CVL025=175
+          CVL050=182
+          CVL100=189
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=157
+          CVL005=167
+          CVL010=172
+          CVL025=180
+          CVL050=187
+          CVL100=195
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=161
+          CVL005=172
+          CVL010=177
+          CVL025=185
+          CVL050=193
+          CVL100=201
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=164
+          CVL005=176
+          CVL010=182
+          CVL025=191
+          CVL050=198
+          CVL100=207
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=168
+          CVL005=181
+          CVL010=187
+          CVL025=196
+          CVL050=204
+          CVL100=213
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=172
+          CVL005=185
+          CVL010=191
+          CVL025=201
+          CVL050=209
+          CVL100=219
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=176
+          CVL005=190
+          CVL010=196
+          CVL025=206
+          CVL050=215
+          CVL100=225
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=180
+          CVL005=194
+          CVL010=201
+          CVL025=211
+          CVL050=221
+          CVL100=231
+        ENDIF
+      ELSEIF(N1.EQ.16)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=136
+          CVL005=136
+          CVL010=137
+          CVL025=138
+          CVL050=140
+          CVL100=142
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=136
+          CVL005=139
+          CVL010=140
+          CVL025=143
+          CVL050=145
+          CVL100=148
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=139
+          CVL005=142
+          CVL010=144
+          CVL025=148
+          CVL050=151
+          CVL100=154
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=142
+          CVL005=146
+          CVL010=149
+          CVL025=152
+          CVL050=156
+          CVL100=160
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=145
+          CVL005=150
+          CVL010=153
+          CVL025=156
+          CVL050=162
+          CVL100=166
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=148
+          CVL005=155
+          CVL010=158
+          CVL025=163
+          CVL050=167
+          CVL100=173
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=152
+          CVL005=159
+          CVL010=163
+          CVL025=168
+          CVL050=173
+          CVL100=179
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=156
+          CVL005=164
+          CVL010=168
+          CVL025=174
+          CVL050=179
+          CVL100=185
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=160
+          CVL005=168
+          CVL010=173
+          CVL025=179
+          CVL050=185
+          CVL100=191
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=164
+          CVL005=173
+          CVL010=178
+          CVL025=184
+          CVL050=191
+          CVL100=198
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=168
+          CVL005=178
+          CVL010=183
+          CVL025=190
+          CVL050=197
+          CVL100=204
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=172
+          CVL005=182
+          CVL010=188
+          CVL025=196
+          CVL050=202
+          CVL100=211
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=176
+          CVL005=187
+          CVL010=193
+          CVL025=201
+          CVL050=208
+          CVL100=217
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=180
+          CVL005=192
+          CVL010=198
+          CVL025=207
+          CVL050=214
+          CVL100=223
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=185
+          CVL005=197
+          CVL010=203
+          CVL025=212
+          CVL050=220
+          CVL100=230
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=189
+          CVL005=202
+          CVL010=208
+          CVL025=218
+          CVL050=226
+          CVL100=236
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=193
+          CVL005=207
+          CVL010=213
+          CVL025=223
+          CVL050=232
+          CVL100=243
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=197
+          CVL005=211
+          CVL010=219
+          CVL025=229
+          CVL050=238
+          CVL100=249
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=202
+          CVL005=216
+          CVL010=224
+          CVL025=235
+          CVL050=244
+          CVL100=256
+        ENDIF
+      ELSEIF(N1.EQ.17)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=153
+          CVL005=153
+          CVL010=154
+          CVL025=156
+          CVL050=157
+          CVL100=160
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=154
+          CVL005=156
+          CVL010=158
+          CVL025=160
+          CVL050=163
+          CVL100=166
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=156
+          CVL005=160
+          CVL010=162
+          CVL025=165
+          CVL050=169
+          CVL100=172
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=159
+          CVL005=164
+          CVL010=167
+          CVL025=171
+          CVL050=174
+          CVL100=179
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=163
+          CVL005=169
+          CVL010=172
+          CVL025=176
+          CVL050=180
+          CVL100=185
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=167
+          CVL005=173
+          CVL010=177
+          CVL025=182
+          CVL050=187
+          CVL100=192
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=171
+          CVL005=178
+          CVL010=182
+          CVL025=188
+          CVL050=193
+          CVL100=199
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=175
+          CVL005=183
+          CVL010=187
+          CVL025=193
+          CVL050=199
+          CVL100=206
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=179
+          CVL005=188
+          CVL010=192
+          CVL025=199
+          CVL050=205
+          CVL100=212
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=183
+          CVL005=193
+          CVL010=198
+          CVL025=205
+          CVL050=211
+          CVL100=219
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=188
+          CVL005=198
+          CVL010=203
+          CVL025=211
+          CVL050=218
+          CVL100=226
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=192
+          CVL005=203
+          CVL010=209
+          CVL025=217
+          CVL050=224
+          CVL100=233
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=197
+          CVL005=208
+          CVL010=214
+          CVL025=223
+          CVL050=231
+          CVL100=239
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=201
+          CVL005=214
+          CVL010=220
+          CVL025=229
+          CVL050=237
+          CVL100=246
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=206
+          CVL005=219
+          CVL010=225
+          CVL025=235
+          CVL050=243
+          CVL100=253
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=211
+          CVL005=224
+          CVL010=231
+          CVL025=241
+          CVL050=250
+          CVL100=260
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=215
+          CVL005=229
+          CVL010=236
+          CVL025=247
+          CVL050=256
+          CVL100=267
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=220
+          CVL005=235
+          CVL010=242
+          CVL025=253
+          CVL050=263
+          CVL100=274
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=224
+          CVL005=240
+          CVL010=247
+          CVL025=259
+          CVL050=269
+          CVL100=281
+        ENDIF
+      ELSEIF(N1.EQ.18)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=171
+          CVL005=171
+          CVL010=172
+          CVL025=174
+          CVL050=176
+          CVL100=178
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=172
+          CVL005=174
+          CVL010=176
+          CVL025=179
+          CVL050=181
+          CVL100=185
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=175
+          CVL005=178
+          CVL010=181
+          CVL025=184
+          CVL050=188
+          CVL100=192
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=178
+          CVL005=183
+          CVL010=186
+          CVL025=190
+          CVL050=194
+          CVL100=199
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=182
+          CVL005=188
+          CVL010=191
+          CVL025=196
+          CVL050=200
+          CVL100=206
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=186
+          CVL005=193
+          CVL010=196
+          CVL025=202
+          CVL050=207
+          CVL100=213
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=190
+          CVL005=198
+          CVL010=202
+          CVL025=208
+          CVL050=213
+          CVL100=220
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=195
+          CVL005=203
+          CVL010=208
+          CVL025=214
+          CVL050=220
+          CVL100=227
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=199
+          CVL005=209
+          CVL010=213
+          CVL025=220
+          CVL050=227
+          CVL100=234
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=204
+          CVL005=214
+          CVL010=219
+          CVL025=227
+          CVL050=233
+          CVL100=241
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=209
+          CVL005=219
+          CVL010=225
+          CVL025=233
+          CVL050=240
+          CVL100=249
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=214
+          CVL005=225
+          CVL010=231
+          CVL025=239
+          CVL050=247
+          CVL100=256
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=218
+          CVL005=230
+          CVL010=237
+          CVL025=246
+          CVL050=254
+          CVL100=263
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=223
+          CVL005=236
+          CVL010=242
+          CVL025=252
+          CVL050=260
+          CVL100=270
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=228
+          CVL005=242
+          CVL010=248
+          CVL025=258
+          CVL050=267
+          CVL100=278
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=233
+          CVL005=247
+          CVL010=254
+          CVL025=265
+          CVL050=274
+          CVL100=285
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=238
+          CVL005=253
+          CVL010=260
+          CVL025=271
+          CVL050=281
+          CVL100=292
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=243
+          CVL005=259
+          CVL010=266
+          CVL025=278
+          CVL050=288
+          CVL100=300
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=248
+          CVL005=264
+          CVL010=272
+          CVL025=284
+          CVL050=295
+          CVL100=307
+        ENDIF
+      ELSEIF(N1.EQ.19)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=190
+          CVL005=191
+          CVL010=192
+          CVL025=193
+          CVL050=195
+          CVL100=198
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=191
+          CVL005=194
+          CVL010=195
+          CVL025=198
+          CVL050=201
+          CVL100=205
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=194
+          CVL005=198
+          CVL010=200
+          CVL025=204
+          CVL050=208
+          CVL100=212
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=198
+          CVL005=203
+          CVL010=206
+          CVL025=210
+          CVL050=214
+          CVL100=219
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=202
+          CVL005=208
+          CVL010=211
+          CVL025=216
+          CVL050=221
+          CVL100=227
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=206
+          CVL005=213
+          CVL010=217
+          CVL025=223
+          CVL050=228
+          CVL100=234
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=211
+          CVL005=219
+          CVL010=223
+          CVL025=229
+          CVL050=235
+          CVL100=242
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=216
+          CVL005=224
+          CVL010=229
+          CVL025=236
+          CVL050=242
+          CVL100=249
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=220
+          CVL005=230
+          CVL010=235
+          CVL025=243
+          CVL050=249
+          CVL100=257
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=225
+          CVL005=236
+          CVL010=241
+          CVL025=249
+          CVL050=256
+          CVL100=264
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=231
+          CVL005=242
+          CVL010=247
+          CVL025=256
+          CVL050=263
+          CVL100=272
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=236
+          CVL005=248
+          CVL010=254
+          CVL025=263
+          CVL050=271
+          CVL100=280
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=241
+          CVL005=254
+          CVL010=260
+          CVL025=269
+          CVL050=278
+          CVL100=288
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=246
+          CVL005=260
+          CVL010=266
+          CVL025=276
+          CVL050=285
+          CVL100=295
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=251
+          CVL005=265
+          CVL010=273
+          CVL025=283
+          CVL050=292
+          CVL100=303
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=257
+          CVL005=272
+          CVL010=279
+          CVL025=290
+          CVL050=300
+          CVL100=311
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=262
+          CVL005=278
+          CVL010=285
+          CVL025=297
+          CVL050=307
+          CVL100=319
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=268
+          CVL005=284
+          CVL010=292
+          CVL025=304
+          CVL050=314
+          CVL100=326
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=273
+          CVL005=290
+          CVL010=298
+          CVL025=310
+          CVL050=321
+          CVL100=334
+        ENDIF
+      ELSEIF(N1.EQ.20)THEN
+        IF(N2.EQ.2)THEN
+          CVL001=210
+          CVL005=211
+          CVL010=212
+          CVL025=213
+          CVL050=215
+          CVL100=218
+        ELSEIF(N2.EQ.3)THEN
+          CVL001=211
+          CVL005=214
+          CVL010=216
+          CVL025=219
+          CVL050=222
+          CVL100=226
+        ELSEIF(N2.EQ.4)THEN
+          CVL001=214
+          CVL005=219
+          CVL010=221
+          CVL025=225
+          CVL050=229
+          CVL100=233
+        ELSEIF(N2.EQ.5)THEN
+          CVL001=218
+          CVL005=224
+          CVL010=227
+          CVL025=231
+          CVL050=236
+          CVL100=241
+        ELSEIF(N2.EQ.6)THEN
+          CVL001=223
+          CVL005=229
+          CVL010=233
+          CVL025=238
+          CVL050=243
+          CVL100=249
+        ELSEIF(N2.EQ.7)THEN
+          CVL001=227
+          CVL005=235
+          CVL010=239
+          CVL025=245
+          CVL050=250
+          CVL100=257
+        ELSEIF(N2.EQ.8)THEN
+          CVL001=232
+          CVL005=241
+          CVL010=245
+          CVL025=251
+          CVL050=258
+          CVL100=265
+        ELSEIF(N2.EQ.9)THEN
+          CVL001=237
+          CVL005=247
+          CVL010=251
+          CVL025=259
+          CVL050=265
+          CVL100=273
+        ELSEIF(N2.EQ.10)THEN
+          CVL001=243
+          CVL005=253
+          CVL010=258
+          CVL025=266
+          CVL050=273
+          CVL100=281
+        ELSEIF(N2.EQ.11)THEN
+          CVL001=248
+          CVL005=259
+          CVL010=264
+          CVL025=273
+          CVL050=280
+          CVL100=289
+        ELSEIF(N2.EQ.12)THEN
+          CVL001=253
+          CVL005=265
+          CVL010=271
+          CVL025=280
+          CVL050=288
+          CVL100=293
+        ELSEIF(N2.EQ.13)THEN
+          CVL001=259
+          CVL005=271
+          CVL010=278
+          CVL025=287
+          CVL050=295
+          CVL100=305
+        ELSEIF(N2.EQ.14)THEN
+          CVL001=265
+          CVL005=278
+          CVL010=284
+          CVL025=294
+          CVL050=303
+          CVL100=313
+        ELSEIF(N2.EQ.15)THEN
+          CVL001=270
+          CVL005=284
+          CVL010=291
+          CVL025=301
+          CVL050=311
+          CVL100=321
+        ELSEIF(N2.EQ.16)THEN
+          CVL001=276
+          CVL005=290
+          CVL010=298
+          CVL025=309
+          CVL050=318
+          CVL100=330
+        ELSEIF(N2.EQ.17)THEN
+          CVL001=281
+          CVL005=297
+          CVL010=304
+          CVL025=316
+          CVL050=326
+          CVL100=338
+        ELSEIF(N2.EQ.18)THEN
+          CVL001=287
+          CVL005=303
+          CVL010=311
+          CVL025=323
+          CVL050=334
+          CVL100=346
+        ELSEIF(N2.EQ.19)THEN
+          CVL001=293
+          CVL005=310
+          CVL010=318
+          CVL025=330
+          CVL050=341
+          CVL100=354
+        ELSEIF(N2.EQ.20)THEN
+          CVL001=299
+          CVL005=316
+          CVL010=325
+          CVL025=338
+          CVL050=349
+          CVL100=362
+        ENDIF
+      ENDIF
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MNN6')THEN
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END OF DPMNN6--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)CVL001,CVL005,CVL010
+ 9013   FORMAT('CVL001,CVL005,CVL010 = ',3F12.1)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)CVL025,CVL050,CVL100
+ 9015   FORMAT('CVL025,CVL050,CVL100 = ',3F12.1)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
@@ -23435,6 +23675,14 @@ C                      LET Y2 = ZSCORE Y
 C                      LET Y2 = ZSCORE Y GROUP1
 C                      LET Y2 = ZSCORE Y GROUP1 GROUP2
 C                      LET Y2 = USCORE Y
+C                      LET Y2 = VAN DER WAERDEN SCORE Y
+C                      LET Y2 = SAVAGE SCORE Y, LET Y2 = EXPONENTIAL SCORE Y
+C                      LET Y2 = ANSARI BRADLEY SCORE Y
+C                      LET Y2 = MOOD SCORE Y
+C                      LET Y2 = MEDIAN SCORE Y
+C                      LET Y2 = KLOTZ SCORE Y
+C                      LET Y2 = CONOVER SCORE Y X
+C                      LET Y2 X2 = PLACEMENT SCORE Y X
 C                      LET Y2 = USCORE Y GROUP1
 C                      LET Y2 = USCORE Y GROUP1 GROUP2
 C                      LET Y2 = JSCORE Z ROUNDID
@@ -23467,6 +23715,7 @@ C                      LET Y2 = REPLACE X X2
 C                      LET Y2 = REPLACE X X2 Y
 C                      LET Y2 = WINSORIZED Y
 C                      LET Y2 = SORT BY <STAT> Y GROUP1
+C                      LET Y2 = PERMUTATION TEST <STAT> Y1 Y2
 C
 C                      LET Y X = STACK X1 ... XK
 C                      LET Y X1 X2 = REPLICATED STACK X1 ... XK LAB
@@ -23867,6 +24116,15 @@ C     UPDATED         --AUGUST    2019. 2D GRID, 3D GRID, 4D GRID
 C     UPDATED         --FEBRUARY  2020. INSERT
 C     UPDATED         --JUNE      2020. TOTAL TIME ON TEST
 C     UPDATED         --JUNE      2020. SCALED TOTAL TIME ON TEST
+C     UPDATED         --AUGUST    2022. VAN DER WAERDEN SCORE
+C     UPDATED         --MAY       2023. SAVAGE SCORE
+C     UPDATED         --MAY       2023. PERMUTATION TEST
+C     UPDATED         --JUNE      2023. MOOD SCORE
+C     UPDATED         --JUNE      2023. MEDIAN SCORE
+C     UPDATED         --JUNE      2023. ANSARI BRADLEY SCORE
+C     UPDATED         --JULY      2023. KLOTZ SCORE
+C     UPDATED         --JULY      2023. CONOVER SCORE
+C     UPDATED         --JULY      2023. PLACEMENT SCORE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -24286,7 +24544,7 @@ C
      1            ILEFT,ILEF2,NEWNAM,ILISL,ICOLL,
      1            NUMVAL,NIOLD,
      1            IBUGA3,ISUBRO,IFOUND,IERROR)
-      IF(IERROR.EQ.'YES')GOTO9000
+      IF(IERROR.EQ.'YES')GOTO19000
 C
 C     FEBRUARY 2006: THE REPLACE COMMAND REQUIRES THAT THE
 C                    LEFT-HAND SIDE VARIABLE ALREADY EXISTS.
@@ -24369,7 +24627,9 @@ CCCCC1   ICASL7.EQ.'GATH'.OR.ICASL7.EQ.'SCAT'.OR.
      1   ICASL7.EQ.'GSQP'.OR.ICASL7.EQ.'GSQM'.OR.
      1   ICASL7.EQ.'GQMN'.OR.ICASL7.EQ.'GQMX'.OR.
      1   ICASL7.EQ.'GSQL'.OR.ICASL7.EQ.'GSQU'.OR.
-     1   ICASL7.EQ.'SRNP'.OR.
+     1   ICASL7.EQ.'SRNP'.OR.ICASL7.EQ.'PTES'.OR.
+     1   ICASL7.EQ.'SRNP'.OR.ICASL7.EQ.'PTES'.OR.
+     1   ICASL7.EQ.'PSCO'.OR.ICASL7.EQ.'PTES'.OR.
      1   ICASL7.EQ.'NEPA'.OR.ICASL7.EQ.'NEXE')THEN
 C
         ICASEZ=2
@@ -24377,7 +24637,7 @@ C
      1              ILEFT,ILEF2,NEWNAM,ILISL,ICOLL,
      1              NUMVAL,NIOLD,
      1              IBUGA3,ISUBRO,IFOUND,IERROR)
-        IF(IERROR.EQ.'YES')GOTO9000
+        IF(IERROR.EQ.'YES')GOTO19000
       ENDIF
 C
       IF(ICASL7.EQ.'CFRT' .OR. ICASL7.EQ.'RSTA' .OR.
@@ -24401,7 +24661,7 @@ C
      1              ILEFT,ILEF2,NEWNAM,ILISL,ICOLL,
      1              NUMVAL,NIOLD,
      1              IBUGA3,ISUBRO,IFOUND,IERROR)
-        IF(IERROR.EQ.'YES')GOTO9000
+        IF(IERROR.EQ.'YES')GOTO19000
       ENDIF
 C
       IF(ICASL7.EQ.'SPF2'.OR.ICASL7.EQ.'SOR4'.OR.
@@ -24411,7 +24671,7 @@ C
      1              ILEFT,ILEF2,NEWNAM,ILISL,ICOLL,
      1              NUMVAL,NIOLD,
      1              IBUGA3,ISUBRO,IFOUND,IERROR)
-        IF(IERROR.EQ.'YES')GOTO9000
+        IF(IERROR.EQ.'YES')GOTO19000
       ENDIF
 C
       IF(ICASL7.EQ.'ANNE')THEN
@@ -24420,7 +24680,7 @@ C
      1              ILEFT,ILEF2,NEWNAM,ILISL,ICOLL,
      1              NUMVAL,NIOLD,
      1              IBUGA3,ISUBRO,IFOUND,IERROR)
-        IF(IERROR.EQ.'YES')GOTO9000
+        IF(IERROR.EQ.'YES')GOTO19000
       ENDIF
 C
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MAT2')THEN
@@ -24519,6 +24779,7 @@ C
      1       ICASL7.EQ.'GQMN'.OR.ICASL7.EQ.'GQMX'.OR.
      1       ICASL7.EQ.'GSQL'.OR.ICASL7.EQ.'GSQU'.OR.
      1       ICASL7.EQ.'UNST'.OR.ICASL7.EQ.'WSAT'.OR.
+     1       ICASL7.EQ.'PSCO'.OR.ICASL7.EQ.'CSCO'.OR.
      1       ICASL7.EQ.'NKDM'.OR.ICASL7.EQ.'2DGR'.OR.
      1       ICASL7.EQ.'VEAN'.OR.ICASL7.EQ.'SEUN')THEN
         NUMVAR=2
@@ -24593,6 +24854,9 @@ C
      1       ICASL7.EQ.'RSTA'.OR.ICASL7.EQ.'MTCH'.OR.
      1       ICASL7.EQ.'STAN'.OR.ICASL7.EQ.'ZSCO'.OR.
      1       ICASL7.EQ.'USCO'.OR.ICASL7.EQ.'LSTA'.OR.
+     1       ICASL7.EQ.'VSCO'.OR.ICASL7.EQ.'SSCO'.OR.
+     1       ICASL7.EQ.'MSCO'.OR.ICASL7.EQ.'DSCO'.OR.
+     1       ICASL7.EQ.'ASCO'.OR.
      1       ICASL7.EQ.'CUMI'.OR.ICASL7.EQ.'REPL'.OR.
      1       ICASL7.EQ.'LSST'.OR.ICASL7.EQ.'CRTA'.OR.
      1       ICASL7.EQ.'CTCU'.OR.
@@ -24908,7 +25172,7 @@ C
      1   ICASL7.EQ.'SHIF'.OR.ICASL7.EQ.'CSHI'.OR.
      1   ICASL7.EQ.'LARG'.OR.ICASL7.EQ.'SMAL'.OR.
      1   ICASL7.EQ.'VPER'.OR.ICASL7.EQ.'SRNP'.OR.
-     1   ICASL7.EQ.'INSE'.OR.
+     1   ICASL7.EQ.'INSE'.OR.ICASL7.EQ.'PSCO'.OR.
      1   NUMVAR.LE.1)THEN
         GOTO2190
 C
@@ -24916,12 +25180,16 @@ C  CASE 1A: ALL VARIABLES NEED TO BE SAME LENGTH
 C
       ELSEIF(ICASL7.EQ.'STAN' .OR. ICASL7.EQ.'ZSCO'.OR.
      1       ICASL7.EQ.'USCO' .OR. ICASL7.EQ.'LSTA'.OR.
+     1       ICASL7.EQ.'VSCO' .OR. ICASL7.EQ.'SSCO'.OR.
+     1       ICASL7.EQ.'MSCO' .OR. ICASL7.EQ.'DSCO'.OR.
+     1       ICASL7.EQ.'ASCO' .OR. 
      1       ICASL7.EQ.'LSST' .OR. ICASL7.EQ.'CRTA'.OR.
      1       ICASL7.EQ.'CTCU' .OR. ICASL7(1:2).EQ.'CT' .OR.
      1       ICASL7.EQ.'INTL' .OR. ICASL7.EQ.'SOR3' .OR.
      1       ICASL7.EQ.'SOR4' .OR. ICASL7.EQ.'RAN3' .OR.
      1       ICASL7.EQ.'WIND' .OR. ICASL7.EQ.'WSAT' .OR.
      1       ICASL7.EQ.'MNRK' .OR. ICASL7.EQ.'MDRK' .OR.
+     1       ICASL7.EQ.'CSCO' .OR.
      1       ICASL7.EQ.'MOVI' .OR. ICASL7.EQ.'CUMU')THEN
         DO2199I=2,NUMVAR
           IF(NIRIGH(1).NE.NIRIGH(I))THEN
@@ -24980,6 +25248,9 @@ C
      1       ICASL7.EQ.'GSQL'.OR.ICASL7.EQ.'GSQU'.OR.
      1       (ICASL7.EQ.'ZSCO'.OR.ICASL7.EQ.'LSTA'.OR.
      1        ICASL7.EQ.'USCO'.OR.ICASL7.EQ.'LSST'.OR.
+     1        ICASL7.EQ.'VSCO'.OR.ICASL7.EQ.'SSCO'.OR.
+     1        ICASL7.EQ.'MSCO'.OR.ICASL7.EQ.'DSCO'.OR.
+     1        ICASL7.EQ.'ASCO'.OR.
      1        ICASL7.EQ.'CRTA'.OR.ICASL7.EQ.'STAN'.OR.
      1        ICASL7.EQ.'CTCU'.OR.ICASL7.EQ.'WIND'.OR.
      1        ICASL7.EQ.'MOVI'.OR.ICASL7.EQ.'CUMU'.OR.
@@ -28837,6 +29108,63 @@ CCCCC   IF(IERROR.EQ.'YES')GOTO19000
 CCCCC   DO11825I=1,NITEMX
 CCCCC     TEMP1(I)=TEMP2(I)
 C11825  CONTINUE
+      ELSEIF(ICASL7.EQ.'VSCO')THEN
+        CALL VSCORE(TEMP1,NS1,IWRITE,TEMP3,TEMP4,MAXOBV,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO19000
+        DO11713I=1,NS1
+          TEMP1(I)=TEMP3(I)
+11713   CONTINUE
+      ELSEIF(ICASL7.EQ.'SSCO')THEN
+        CALL SSCORE(TEMP1,NS1,IWRITE,TEMP3,TEMP4,MAXOBV,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO19000
+        DO11714I=1,NS1
+          TEMP1(I)=TEMP3(I)
+11714   CONTINUE
+      ELSEIF(ICASL7.EQ.'ASCO')THEN
+        CALL ASCORE(TEMP1,NS1,IWRITE,TEMP3,TEMP4,MAXOBV,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO19000
+        DO11716I=1,NS1
+          TEMP1(I)=TEMP3(I)
+11716   CONTINUE
+      ELSEIF(ICASL7.EQ.'MSCO')THEN
+        CALL MSCORE(TEMP1,NS1,IWRITE,TEMP3,TEMP4,MAXOBV,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO19000
+        DO11717I=1,NS1
+          TEMP1(I)=TEMP3(I)
+11717   CONTINUE
+      ELSEIF(ICASL7.EQ.'DSCO')THEN
+        CALL DSCORE(TEMP1,NS1,IWRITE,TEMP3,TEMP4,MAXOBV,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO19000
+        DO11718I=1,NS1
+          TEMP1(I)=TEMP3(I)
+11718   CONTINUE
+      ELSEIF(ICASL7.EQ.'KSCO')THEN
+        CALL KSCORE(TEMP1,NS1,IWRITE,TEMP3,TEMP4,MAXOBV,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO19000
+        DO11719I=1,NS1
+          TEMP1(I)=TEMP3(I)
+11719   CONTINUE
+      ELSEIF(ICASL7.EQ.'CSCO')THEN
+        CALL CSCORE(TEMP1,TEMP2,NS1,IWRITE,TEMP3,TEMP4,TEMP5,TEMP6,
+     1              MAXOBV,IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO19000
+        DO11720I=1,NS1
+          TEMP1(I)=TEMP3(I)
+11720   CONTINUE
+      ELSEIF(ICASL7.EQ.'PSCO')THEN
+        CALL PSCORE(TEMP1,NS1,TEMP2,NS2,IWRITE,TEMP3,TEMP4,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO19000
+        DO11721I=1,NS1
+          TEMP1(I)=TEMP3(I)
+          TEMP2(I)=TEMP4(I)
+11721   CONTINUE
       ELSEIF(ICASL7.EQ.'COAD'.OR.ICASL7.EQ.'COSU'.OR.
      1       ICASL7.EQ.'COMU'.OR.ICASL7.EQ.'CODI'.OR.
      1       ICASL7.EQ.'COEX'.OR.ICASL7.EQ.'COSR'.OR.
@@ -29971,6 +30299,7 @@ C
      1   ICASL7.EQ.'IQUF'.OR.ICASL7.EQ.'TIQF'.OR.
      1   ICASL7.EQ.'SRNP'.OR.ICASL7.EQ.'2DGR'.OR.
      1   ICASL7.EQ.'3DGR'.OR.ICASL7.EQ.'4DGR'.OR.
+     1   ICASL7.EQ.'PSCO'.OR.
      1   ICASL7.EQ.'KCO2'.OR.ICASL7.EQ.'SRTB')THEN
 C
         NSX=0
@@ -30982,6 +31311,8 @@ C     UPDATED         --AUGUST    2018. HAMMING <COLUMN/ROW> DISTANCE
 C     UPDATED         --AUGUST    2018. CANBERRA <COLUMN/ROW> SIMILARITY
 C     UPDATED         --SEPTEMBER 2018. DEX CHECK CENTER POINTS
 C     UPDATED         --JULY      2019. TWEAK SCRATCH STORAGE
+C     UPDATED         --SEPTEMBER 2022. INCREASE MAXIMUM NUMBER OF
+C                                       VARIABLES
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -30995,7 +31326,8 @@ C
       CHARACTER*4 IERROR
 C
 CCCCC PARAMETER(MAXCAS=30)
-      PARAMETER(MAXCAS=999)
+CCCCC PARAMETER(MAXCAS=999)
+      PARAMETER(MAXCAS=2000)
       PARAMETER(MAXCA2=4)
 C
       CHARACTER*4 NEWNAM(MAXCA2)
@@ -31008,6 +31340,8 @@ C
 C
       CHARACTER*4 IHRIGH
       CHARACTER*4 IHRIG2
+      CHARACTER*4 IVARN1(MAXCAS)
+      CHARACTER*4 IVARN2(MAXCAS)
 C
       CHARACTER*4 ILEFT(MAXCA2)
       CHARACTER*4 ILEF2(MAXCA2)
@@ -31220,7 +31554,7 @@ C
      1            ILEFT,ILEF2,NEWNAM,ILISL,ICOLL,
      1            NUMVAL,NIOLD,
      1            IBUGA3,ISUBRO,IFOUND,IERROR)
-      IF(IERROR.EQ.'YES')GOTO9000
+      IF(IERROR.EQ.'YES')GOTO19000
 C
       IF(ICASL7.EQ.'MASD' .OR. ICASL7.EQ.'MASF' .OR.
      1   ICASL7.EQ.'MQRD' .OR. ICASL7.EQ.'MATB' .OR.
@@ -31233,7 +31567,7 @@ C
      1              ILEFT,ILEF2,NEWNAM,ILISL,ICOLL,
      1              NUMVAL,NIOLD,
      1              IBUGA3,ISUBRO,IFOUND,IERROR)
-        IF(IERROR.EQ.'YES')GOTO9000
+        IF(IERROR.EQ.'YES')GOTO19000
       ENDIF
 C
       IF(ICASL7.EQ.'MASD' .OR. ICASL7.EQ.'MASF' .OR.
@@ -31244,7 +31578,7 @@ C
      1              ILEFT,ILEF2,NEWNAM,ILISL,ICOLL,
      1              NUMVAL,NIOLD,
      1              IBUGA3,ISUBRO,IFOUND,IERROR)
-        IF(IERROR.EQ.'YES')GOTO9000
+        IF(IERROR.EQ.'YES')GOTO19000
       ENDIF
 C
       IF(ICASL7.EQ.'MFTR' .OR. ICASL7.EQ.'MFTC')THEN
@@ -31253,7 +31587,7 @@ C
      1              ILEFT,ILEF2,NEWNAM,ILISL,ICOLL,
      1              NUMVAL,NIOLD,
      1              IBUGA3,ISUBRO,IFOUND,IERROR)
-        IF(IERROR.EQ.'YES')GOTO9000
+        IF(IERROR.EQ.'YES')GOTO19000
       ENDIF
 C
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MAT2')THEN
@@ -31372,9 +31706,49 @@ C
      1       ICASL7.EQ.'MARE'.OR.ICASL7.EQ.'MATD'.OR.
      1       ICASL7.EQ.'MTRN')THEN
         NUMVAR=4
-      ELSEIF(ICASL7.EQ.'CRMA' .OR. ICASL7.EQ.'CORE' .OR.
-     1       ICASL7.EQ.'CONF' .OR. ICASL7.EQ.'CKCL' .OR.
-     1       ICASL7.EQ.'CKCP')THEN
+C
+C     2023/05: TREAT CREATE MATRIX SEPARATELY
+C
+      ELSEIF(ICASL7.EQ.'CRMA')THEN
+        ISTRT=5
+        ILAST=NUMARG
+C
+C       CHECK FOR LOCATION OF FIRST (IF ANY) SUBSET, EXCEPT OR
+C       FOR CLAUSE
+C
+        DO91051I=ISTRT,NUMARG
+          IHRIGH=IHARG(I)
+          IHRIG2=IHARG2(I)
+          IF(IHRIGH.EQ.'SUBS'.AND.IHRIG2.EQ.'ET  ')THEN
+            ILAST=I-1
+            GOTO91052
+          ELSEIF(IHRIGH.EQ.'EXCE'.AND.IHRIG2.EQ.'PT  ')THEN
+            ILAST=I-1
+            GOTO91052
+          ELSEIF(IHRIGH.EQ.'FOR '.AND.IHRIG2.EQ.'    ')THEN
+            ILAST=I-1
+            GOTO91052
+          ENDIF
+91051   CONTINUE
+91052   CONTINUE
+C
+C       CALL EXTVAR SO THAT " TO " SYNTAX CAN BE USED
+C
+CCCCC   NUMVAR=ILAST-ISTRT+1
+        CALL EXTVAR(IHARG,IHARG2,NUMARG,ISTRT,ILAST,MAXCAS,
+     1              IHNAME,IHNAM2,IUSE,NUMNAM,
+     1              IVARN1,IVARN2,NUMVAR,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO19000
+C
+        CALL DPMAT8(IVARN1,IVARN2,NUMVAR,
+     1              ICOLR,ILISR,NIRIGH,ITYPA,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO19000
+        GOTO7000
+C
+      ELSEIF(ICASL7.EQ.'CORE' .OR. ICASL7.EQ.'CONF' .OR.
+     1       ICASL7.EQ.'CKCL' .OR. ICASL7.EQ.'CKCP')THEN
         ISTRT=5
         IF(ICASL7.EQ.'CONF' .OR. ICASL7.EQ.'CKCL')ISTRT=6
         IF(ICASL7.EQ.'CKCP')ISTRT=7
@@ -31483,6 +31857,24 @@ C
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MAT2')
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
+C     2023/05:  FOR CASES THAT CAN HAVE 5 OR MORE VARIABLES,
+C               TREAT SPECIAL.  SPECIFICALLY SUPPORT "TO" SYNTAX.
+C               ALSO THESE CASES ONLY WANT VARIABLES.
+C
+C               5 VARIABLES OR MORE CURRENTLY ONLY RELEVANT FOR THE
+C               "CREATE MATRIX", "DEX CORE", AND "DEX CONFOUND" COMMANDS.
+C
+      IF(NUMVAR.GE.5)THEN
+        DO1110ICASE=5,NUMVAR
+          IFLAG1=0
+          CALL DPMAT7(ICASL7,ICASE,MAXCAS,ILOCR,
+     1                IHRIGH,IHRIG2,ICOLR,ILISR,NIRIGH,ITYPA,TEMPS,
+     1                IFLAG1,ATEMP,ITEMP,
+     1                IBUGA3,ISUBRO,IFOUND,IERROR)
+ 1110   CONTINUE
+        IF(IERROR.EQ.'YES')GOTO9000
+      ENDIF
+C
       IFLAG1=0
       IF(ICASL7.EQ.'MAAD'.OR.ICASL7.EQ.'MASU'.OR.ICASL7.EQ.'MAMU'.OR.
      1   ICASL7.EQ.'JAIN'.OR.ICASL7.EQ.'MATZ'.OR.ICASL7.EQ.'MAUZ')THEN
@@ -31557,25 +31949,13 @@ C
         IF(IERROR.EQ.'YES')GOTO9000
       ENDIF
 C
-C  5 VARIABLES OR MORE CURRENTLY ONLY RELEVANT FOR THE
-C  "CREATE MATRIX", "DEX CORE", AND "DEX CONFOUND" COMMANDS.
-C
-      IF(NUMVAR.GE.5)THEN
-        DO1110ICASE=5,NUMVAR
-          IFLAG1=0
-          CALL DPMAT7(ICASL7,ICASE,MAXCAS,ILOCR,
-     1                IHRIGH,IHRIG2,ICOLR,ILISR,NIRIGH,ITYPA,TEMPS,
-     1                IFLAG1,ATEMP,ITEMP,
-     1                IBUGA3,ISUBRO,IFOUND,IERROR)
- 1110   CONTINUE
-        IF(IERROR.EQ.'YES')GOTO9000
-      ENDIF
-C
 C     *******************************
 C     **  STEP 7--                 **
 C     **  DETERMINE THE SUBCASE    **
 C     **  AND BRANCH ACCORDINGLY.  **
 C     *******************************
+C
+ 7000 CONTINUE
 C
       ISTEPN='7'
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MAT2')THEN
@@ -31630,6 +32010,25 @@ C
       ENDIF
 C
       IF(ILOCR(NUMVAR).EQ.NUMARG)GOTO8000
+C
+C     2023/05: CREATE MATRIX NOW SUPPORT " TO " SYNATX, SO
+C              HANDLE SEPARETLY FOR SUBSET/EXCEPT/FOR CLAUSES
+C
+      IF(ICASL7.EQ.'CRMA')THEN
+        DO77001II=5,NUMARG
+          IF(IHARG(II).EQ.'SUBS'.AND.IHARG2(II).EQ.'ET  ')THEN
+            IT1=ILOCR(II)
+            GOTO9000
+          ELSEIF(IHARG(II).EQ.'EXCE'.AND.IHARG2(II).EQ.'PT  ')THEN
+            IT1=ILOCR(II)
+            GOTO9000
+          ELSEIF(IHARG(II).EQ.'FOR '.AND.IHARG2(II).EQ.'    ')THEN
+            IT1=ILOCR(II)
+            GOTO10000
+           ENDIF
+77001   CONTINUE
+        GOTO8000
+      ENDIF
 C
       IF(ILOCR(NUMVAR).LT.NUMARG)THEN
         IT1=ILOCR(NUMVAR+1)
@@ -31804,6 +32203,30 @@ C
               NJ=NJ+1
               IF(NJ.GT.MAXROM)GOTO11019
               IJ=MAXN*(ICOLR(K)-1)+I
+              IJ2=(K-1)*MAXROM+NJ
+C
+              IF(IJ2.GT.MAXTOM)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,7011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,62132)
+62132           FORMAT('      IN CREATING A MATRIX, THE NUMBER OF ',
+     1                 'VALUES')
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,62133)
+62133           FORMAT('      (NUMBER OF ROWS TIMES NUMBER OF COLUMNS)')
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,62134)MAXTOMM
+62134           FORMAT('      EXCEEDED THE CURRENT MAXIMUM (',I10,').')
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,62135)
+62135           FORMAT('      THE MATRIX WAS NOT CREATED.')
+                CALL DPWRST('XXX','BUG ')
+                IERROR='YES'
+                GOTO19000
+              ENDIF
+C
               IF(ICOLR(K).LE.MAXCOL)TEMPM1((K-1)*MAXROM+NJ)=V(IJ)
               IF(ICOLR(K).EQ.MAXCP1)TEMPM1((K-1)*MAXROM+NJ)=PRED(I)
               IF(ICOLR(K).EQ.MAXCP2)TEMPM1((K-1)*MAXROM+NJ)=RES(I)
@@ -33734,96 +34157,90 @@ C               **  EXIT       **
 C               *****************
 C
 19000 CONTINUE
-      IF(IBUGA3.EQ.'OFF')GOTO19090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,19011)
-19011 FORMAT('***** AT THE END       OF DPMAT2--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,19012)IFOUND,IERROR
-19012 FORMAT('IFOUND,IERROR = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,19013)IBUGA3,IBUGQ,ISUBRO
-19013 FORMAT('IBUGA3,IBUGQ,ISUBRO = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,19014)ICASL7,ILOCV,ITCASE,IWRITE
-19014 FORMAT('ICASL7,ILOCV,ITCASE,IWRITE = ',A4,2X,I8,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,19016)NSX,NITEMX,NS(1),NS(2)
-19016 FORMAT('NSX,NITEMX,NS(1),NS(2) = ',4I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,19021)ILEFT(1),ILEF2(1),ILISL(1),ICOLL(1)
-19021 FORMAT('ILEFT(1),ILEF2(1),ILISL(1),ICOLL(1) = ',A4,2X,A4,2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,19022)ILEFT(2),ILEF2(2),ILISL(2),ICOLL(2)
-19022 FORMAT('ILEFT(2),ILEF2(2),ILISL(2),ICOLL(2) = ',A4,2X,A4,2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,19023)NUMVAL,NEWNAM(1),NEWNAM(2),NUMVAR
-19023 FORMAT('NUMVAL,NEWNAM(1),NEWNAM(2),NUMVAR = ',I8,2X,A4,2X,A4,I8)
-      CALL DPWRST('XXX','BUG ')
-      DO19025I=1,4
-      WRITE(ICOUT,19024)I,ILISR(I),ICOLR(I),ITYPA(I)
-19024 FORMAT('I,ILISR(I),ICOLR(I),ITYPA(I) = ',I2,I8,I8,1X,A4)
-      CALL DPWRST('XXX','BUG ')
-19025 CONTINUE
-      WRITE(ICOUT,19026)TEMPS(1),TEMPS(2),TEMPS(3),TEMPS(4)
-19026 FORMAT('TEMPS(1),TEMPS(2),TEMPS(3),TEMPS(4) = ',4E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,19031)IMATSW,NUMVAR
-19031 FORMAT('IMATSW,NUMVAR = ',A4,I8)
-      CALL DPWRST('XXX','BUG ')
-      IF(IMATSW.EQ.'NO')GOTO19079
-      WRITE(ICOUT,19032)NR1,NC1,NR2,NC2,NR91,NC91
-19032 FORMAT('NR1,NC1,NR2,NC2,NR91,NC91 = ',6I8)
-      CALL DPWRST('XXX','BUG ')
-      IF(ITYPA(1).EQ.'MATR'.OR.ITYPA(1).EQ.'VARI')THEN
-        WRITE(ICOUT,19033)ILISR(1),IN(ILISR(1)),IVALUE(ILISR(1)),
-     1                    IVALU2(ILISR(1))
-19033 FORMAT(
-     1'ILISR(1),IN(ILISR(1)),IVALUE(ILISR(1)),IVALU2(ILISR(1)) = ',4I8)
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,19011)
+19011   FORMAT('***** AT THE END       OF DPMAT2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,19012)IFOUND,IERROR,IMATSW,NUMVAR
+19012   FORMAT('IFOUND,IERROR,IMATSW,NUMVAR = ',3(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,19014)IILOCV,ICASL7,ITCASE,IWRITE
+19014   FORMAT('ILOCV,ICASL7,ITCASE,IWRITE = ',I8,3(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,19016)NSX,NITEMX,NS(1),NS(2)
+19016   FORMAT('NSX,NITEMX,NS(1),NS(2) = ',4I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,19021)ILEFT(1),ILEF2(1),ILISL(1),ICOLL(1)
+19021   FORMAT('ILEFT(1),ILEF2(1),ILISL(1),ICOLL(1) = ',A4,2X,A4,2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,19022)ILEFT(2),ILEF2(2),ILISL(2),ICOLL(2)
+19022   FORMAT('ILEFT(2),ILEF2(2),ILISL(2),ICOLL(2) = ',A4,2X,A4,2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,19023)NUMVAL,NEWNAM(1),NEWNAM(2),NUMVAR
+19023   FORMAT('NUMVAL,NEWNAM(1),NEWNAM(2),NUMVAR = ',I8,2X,A4,2X,A4,I8)
+        CALL DPWRST('XXX','BUG ')
+        DO19025I=1,4
+          WRITE(ICOUT,19024)I,ILISR(I),ICOLR(I),ITYPA(I)
+19024     FORMAT('I,ILISR(I),ICOLR(I),ITYPA(I) = ',I2,I8,I8,1X,A4)
+          CALL DPWRST('XXX','BUG ')
+19025   CONTINUE
+        WRITE(ICOUT,19026)TEMPS(1),TEMPS(2),TEMPS(3),TEMPS(4)
+19026   FORMAT('TEMPS(1),TEMPS(2),TEMPS(3),TEMPS(4) = ',4E15.7)
+        CALL DPWRST('XXX','BUG ')
+        IF(IMATSW.EQ.'NO')THEN
+          WRITE(ICOUT,19032)NR1,NC1,NR2,NC2,NR91,NC91
+19032     FORMAT('NR1,NC1,NR2,NC2,NR91,NC91 = ',6I8)
+          CALL DPWRST('XXX','BUG ')
+          IF(ITYPA(1).EQ.'MATR'.OR.ITYPA(1).EQ.'VARI')THEN
+            WRITE(ICOUT,19033)ILISR(1),IN(ILISR(1)),IVALUE(ILISR(1)),
+     1                        IVALU2(ILISR(1))
+19033       FORMAT('ILISR(1),IN(ILISR(1)),IVALUE(ILISR(1)),',
+     1             'IVALU2(ILISR(1)) = ',4I8)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          WRITE(ICOUT,19034)(ILOCR(J),J=3,7)
+19034     FORMAT('ILOCR(3),...,ILOCR(7) = ',5I8)
+          CALL DPWRST('XXX','BUG ')
+C
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          IF(NR1.GT.0 .AND. NC1.GT.0)THEN
+            JMAX=NC1
+            IF(JMAX.GT.10)JMAX=10
+            DO19045I=1,NR1
+              WRITE(ICOUT,19046)I,(TEMPM1((J-1)*MAXROM+I),J=1,JMAX)
+19046         FORMAT('I,TEMPM1(I,.) = ',I8,10E10.3)
+              CALL DPWRST('XXX','BUG ')
+19045       CONTINUE
+          ENDIF
+C
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          IF(NR2.GT.0 .AND. NC2.GT.0)THEN
+            JMAX=NC2
+            IF(JMAX.GT.10)JMAX=10
+            DO19055I=1,NR2
+              WRITE(ICOUT,19056)I,(TEMPM2((J-1)*MAXROM+I),J=1,JMAX)
+19056         FORMAT('I,TEMPM2(I,.) = ',I8,10E10.3)
+              CALL DPWRST('XXX','BUG ')
+19055       CONTINUE
+          ENDIF
+C
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          IF(NR91.GT.0 .AND. NC91.GT.0)THEN
+            JMAX=NC91
+            IF(JMAX.GT.10)JMAX=10
+            DO19065I=1,NR91
+              WRITE(ICOUT,19066)I,(TEMM91((J-1)*MAXROM+I),J=1,JMAX)
+19066         FORMAT('I,TEMM91(I,.) = ',I8,10E10.3)
+              CALL DPWRST('XXX','BUG ')
+19065       CONTINUE
+          ENDIF
+        ENDIF
       ENDIF
-      WRITE(ICOUT,19034)(ILOCR(J),J=3,7)
-19034 FORMAT('ILOCR(3),...,ILOCR(7) = ',5I8)
-      CALL DPWRST('XXX','BUG ')
-C
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      IF(NR1.LE.0 .OR. NC1.LE.0)GOTO19049
-      JMAX=NC1
-      IF(JMAX.GT.10)JMAX=10
-      DO19045I=1,NR1
-      WRITE(ICOUT,19046)I,(TEMPM1((J-1)*MAXROM+I),J=1,JMAX)
-19046 FORMAT('I,TEMPM1(I,.) = ',I8,10E10.3)
-      CALL DPWRST('XXX','BUG ')
-19045 CONTINUE
-19049 CONTINUE
-C
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      IF(NR2.LE.0 .OR. NC2.LE.0)GOTO19059
-      JMAX=NC2
-      IF(JMAX.GT.10)JMAX=10
-      DO19055I=1,NR2
-      WRITE(ICOUT,19056)I,(TEMPM2((J-1)*MAXROM+I),J=1,JMAX)
-19056 FORMAT('I,TEMPM2(I,.) = ',I8,10E10.3)
-      CALL DPWRST('XXX','BUG ')
-19055 CONTINUE
-19059 CONTINUE
-C
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      IF(NR91.LE.0 .OR. NC91.LE.0)GOTO19069
-      JMAX=NC91
-      IF(JMAX.GT.10)JMAX=10
-      DO19065I=1,NR91
-      WRITE(ICOUT,19066)I,(TEMM91((J-1)*MAXROM+I),J=1,JMAX)
-19066 FORMAT('I,TEMM91(I,.) = ',I8,10E10.3)
-      CALL DPWRST('XXX','BUG ')
-19065 CONTINUE
-19069 CONTINUE
-19079 CONTINUE
-19090 CONTINUE
 C
       RETURN
       END
@@ -33927,15 +34344,33 @@ C
       ILEFT2(ICASE)=IHARG2(ICASE)
       DO210I=1,NUMNAM
         I2=I
-        IF(ILEFT(ICASE).EQ.IHNAME(I).AND.
-     1     ILEFT2(ICASE).EQ.IHNAM2(I).AND.
-     1     IUSE(I).EQ.'P')GOTO230
-        IF(ILEFT(ICASE).EQ.IHNAME(I).AND.
-     1    ILEFT2(ICASE).EQ.IHNAM2(I).AND.
-     1    IUSE(I).EQ.'V')GOTO280
-        IF(ILEFT(ICASE).EQ.IHNAME(I).AND.
-     1     ILEFT2(ICASE).EQ.IHNAM2(I).AND.
-     1     IUSE(I).EQ.'M')GOTO280
+        IF(ILEFT(ICASE).EQ.IHNAME(I).AND.ILEFT2(ICASE).EQ.IHNAM2(I))THEN
+          IF(IUSE(I).EQ.'P')THEN
+            GOTO230
+          ELSEIF(IUSE(I).EQ.'V' .OR. IUSE(I).EQ.'M')THEN
+            GOTO280
+          ELSE
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,221)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,110)ILEFT(ICASE),ILEFT2(ICASE)
+  110       FORMAT('      AN ATTEMPT WAS MADE TO USE ',2A4,' AS A ',
+     1             'VARIABLE')
+            CALL DPWRST('XXX','BUG ')
+            IF(IUSE(I).EQ.'F')THEN
+              WRITE(ICOUT,111)
+  111         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A STRING.')
+              CALL DPWRST('XXX','BUG ')
+            ELSE
+              WRITE(ICOUT,113)IUSE(I)
+  113         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A ',A4,'.')
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+            IERROR='YES'
+            GOTO19000
+          ENDIF
+        ENDIF
   210 CONTINUE
 C
 C  CASE WHERE NAME NOT FOUND IN CURRENT NAME LIST
@@ -34082,9 +34517,6 @@ C
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,19012)IFOUND,IERROR
 19012   FORMAT('IFOUND,IERROR = ',A4,2X,A4)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,19013)IBUGA3,ISUBRO
-19013   FORMAT('IBUGA3,ISUBRO = ',A4,2X,A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,19021)ILEFT(ICASE),ILEFT2(ICASE),ILISL(ICASE),
      1                    ICOLL(ICASE)
@@ -34341,6 +34773,140 @@ C
         WRITE(ICOUT,19025)TEMPS(ICASE),NIRIGH(ICASE)
 19025   FORMAT('TEMPS(ICASE),NIRIGH(ICASE) = ',E15.7,I8)
         CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPMAT8(IVARN1,IVARN2,NUMVAR,
+     1                  ICOLR,ILISR,NIRIGH,ITYPA,
+     1                  IBUGA3,ISUBRO,IERROR)
+C
+C     NOTE--EXTRACT INFO FROM LIST OF VARIABLES
+C     NOTE--THIS SUBROUTINE IS A UTILITY ROUTINE FOR DPMAT2 AND
+C           SPECIFICALLY FOR THE CREATE MATRIX COMMAND.  THIS COMMAND
+C           CAN HANDLE A POTENTIALLY LARGE NUMBER OF VARIABLES.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2023/05
+C     ORIGINAL VERSION--MAY       2023
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 IVARN1(*)
+      CHARACTER*4 IVARN2(*)
+      CHARACTER*4 ITYPA(*)
+C
+      INTEGER ICOLR(*)
+      INTEGER ILISR(*)
+      INTEGER NIRIGH(*)
+C
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='DPMA'
+      ISUBN2='T8  '
+      IERROR='NO'
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MAT8')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPMAT8--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,NUMVAR
+   52   FORMAT('IBUGA3,ISUBRO,NUMVAR = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        DO60I=1,NUMVAR
+          WRITE(ICOUT,62)I,IVARN1(I),IVARN2(I)
+   62     FORMAT('I,IVARN1(I),IVARN2(I) = ',I8,2(2X,A4))
+          CALL DPWRST('XXX','BUG ')
+   60   CONTINUE
+      ENDIF
+C
+C               ***************************************
+C               **  STEP 1--                         **
+C               **  EXTRACT INFO FOR THE VARIABLES   **
+C               **  IN THE LIST.                     **
+C               ***************************************
+C
+      ISTEPN='1.0'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MAT8')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      DO1053JJ=1,NUMVAR
+        write(18,*)'jj,ivarn1(jj),ivarn2(jj) = ',
+     1              jj,ivarn1(jj),ivarn2(jj)
+        DO1054KK=1,NUMNAM
+          IF(IVARN1(JJ).EQ.IHNAME(KK) .AND.
+     1       IVARN2(JJ).EQ.IHNAM2(KK))THEN
+             ILISR(JJ)=KK
+             ICOLR(JJ)=IVALUE(ILISR(JJ))
+             NIRIGH(JJ)=IN(ILISR(JJ))
+             ITYPA(JJ)='VARI'
+             write(18,*)'ilisr(jj),icolr(jj),nirigh(jj),itypa(jj)=',
+     1                   ilisr(jj),icolr(jj),nirigh(jj),itypa(jj)
+             GOTO1053
+          ENDIF
+ 1054   CONTINUE
+C
+        WRITE(ICOUT,1070)
+ 1070   FORMAT('****** ERROR IN CREATE MATRIX (DPMAT8)')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1071)IVARN1(JJ),IVARN2(JJ)
+ 1071   FORMAT('      VARIABLE ',2A4,' NOT FOUND IN INTERNAL '
+     1         'NAME TABLE.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+C
+ 1053 CONTINUE
+C
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'MAT8')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,19011)
+19011   FORMAT('***** AT THE END       OF DPMAT8--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        DO9020I=1,NUMVAR
+          WRITE(ICOUT,9021)I,ILISR(I),ICOLR(I),NIRIGH(I),ITYPA(I)
+ 9021     FORMAT('I,ILISR(I),ICOLR(I),NIRIGH(I),ITYPA(I) = ',
+     1           4I8,2X,A4)
+          CALL DPWRST('XXX','BUG ')
+ 9020   CONTINUE
       ENDIF
 C
       RETURN

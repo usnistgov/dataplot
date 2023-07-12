@@ -1,0 +1,67 @@
+This is dataplot data file     quinlan2.dat     9/14/18
+Contents: Taguchi L15 post-extrusion shrinkage of thermoplastic speedometer casing
+Jim Quinlan (flex products, inc., midvale, ohio)
+Reference--Quinlan, James (1985). Product Improvement
+           by Taguchi Methods.  1985 Taguchi Application
+           Award winner, American Supplier Institute.
+
+Problem--reduce noise in speedometer cables.
+Note--noise is related to cable shrinkage
+Quality characteristic = post-extrusion shrinkage (%) of casing
+                         (after a 2-hour heat soak)
+Experiment Design      = l16 (examine 15 factors with 16 runs)
+Response Variable      = % shrinkage
+Number of observations = 16 x 4 reps = 64
+Number of variables    = 16 (15 factors + response variable)
+Number of factors      = 15 (each with 2 levels)
+
+Order of variables on a line image:
+ 1. Response  = Taguchi S/N statistics (where small is good)
+ 2. Factor  1 = Liner outside diameter
+ 3. Factor  2 = Liner die
+ 4. Factor  3 = Liner material
+ 5. Factor  4 = Liner line speed
+ 6. Factor  5 = Wire braid type
+ 7. Factor  6 = Braiding tension
+ 8. Factor  7 = Wire diameter
+ 9. Factor  8 = Liner tension
+10. Factor  9 = Liner temperature
+11. Factor 10 = Coating material
+12. Factor 11 = Coating die type
+13. Factor 12 = Melt temp
+14. Factor 13 = Screen pack
+15. Factor 14 = Cooling method
+16. Factor 15 = Line speed
+
+
+To read this data file into Dataplot--
+   skip 50
+   read    quinlan2.dat    y   x1 to x15
+
+
+
+
+
+
+
+
+
+    Y      X1  X2  X3  X4  X5  X6  X7  X8  X9  X10 X11 X12 X13 X14 X15
+-----------------------------------------------------------------------
+   6.26     1   1   1   1   1   1   1   1   1   1   1   1   1   1   1 
+   4.80     1   1   1   1   1   1   1   2   2   2   2   2   2   2   2 
+  21.04     1   1   1   2   2   2   2   1   1   1   1   2   2   2   2 
+  15.11     1   1   1   2   2   2   2   2   2   2   2   1   1   1   1 
+  14.03     1   2   2   1   1   2   2   1   1   2   2   1   1   2   2 
+  16.69     1   2   2   1   1   2   2   2   2   1   1   2   2   1   1 
+  12.91     1   2   2   2   2   1   1   1   1   2   2   2   2   1   1 
+  15.05     1   2   2   2   2   1   1   2   2   1   1   1   1   2   2 
+  17.67     2   1   2   1   2   1   2   1   2   1   2   1   2   1   2 
+  17.27     2   1   2   1   2   1   2   2   1   2   1   2   1   2   1 
+   6.82     2   1   2   2   1   2   1   1   2   1   2   2   1   2   1 
+   5.43     2   1   2   2   1   2   1   2   1   2   1   1   2   1   2 
+  15.27     2   2   1   1   2   2   1   1   2   2   1   1   2   2   1 
+  11.20     2   2   1   1   2   2   1   2   1   1   2   2   1   1   2 
+   9.24     2   2   1   2   1   1   2   1   2   2   1   2   1   1   2 
+   4.68     2   2   1   2   1   1   2   2   1   1   2   1   2   2   1 
+

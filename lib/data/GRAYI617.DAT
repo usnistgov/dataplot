@@ -2,7 +2,7 @@ This is Dataplot data file    GRAYI617.DAT
 Visual Response & Contrast Study
 Source--Graybill & Iyer (1994). Regression Analysis:
         Concepts and Applications, Duxbury, page 617.
-Note--This data file GRAYI617.DAT has equivalent contents
+Note--This data file GRA1617.DAT has equivalent contents
       to the Grabill-Iyer data file CONTRAST.DAT
 Response variable = proportion of times object seen (0 to 1)
 Number of observations = 10
@@ -19,9 +19,9 @@ To read this file into Dataplot--
  
  
  
-  Proportion
-of Times Seen     Contrast
-    PROPORTION     CONTRAST
+ 
+  Proportion      Contrast
+of Times Seen
 ----------------------------
      .02            .000
      .06            .005

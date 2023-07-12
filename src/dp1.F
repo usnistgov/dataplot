@@ -76,10 +76,21 @@ C                    available.  This is primarily for Linux gfortran
 C                    (versions 4.1.2 and older do not support it,
 C                    versions newer than this do).
 C
-C                 3. Added some platform specific directives for older
+C                 3. CYGWIN - defines cut/paste operations for the
+C                    Cygwin platform
+
+C                 4. MACOSX - defines cut/paste operations for the
+C                    MacOSX platform
+
+C                 5. Added some platform specific directives for older
 C                    operating systems (e.g., VAX_VMS, NOS_VE).  These
 C                    systems are generally obsolete, so they will
 C                    typically not be defined.
+C
+C                 6. DISABLE_SYSTEM_COMMAND - specifies that the SYSTEM
+C                    command should be disabled.  This can be useful if
+C                    Dataplot is being used in a CGI script web
+C                    application.
 C
 C     The specific routines in this file are:
 C
@@ -5922,7 +5933,10 @@ C                THE CONSOLE VERSION RATHER THAN THE QUICKWIN VERSION.
 C
 C
         NUMARG=0
-        IF(IQWNFL.EQ.'OFF')THEN
+        NUMCLA=0
+        IECHFL=0
+C
+        IF(IQWNFL.EQ.'OFF' .OR. IQWNFL.EQ.'CLOS')THEN
           NPCARG=0
           NUM=0
 #ifdef INTEL_CONS
@@ -5999,81 +6013,96 @@ C
   210       CONTINUE
             NPCARG=ICNT
           ENDIF
-        ELSEIF(IQWNFL.EQ.'ON')THEN
+          GOTO9000
+        ELSEIF(IQWNFL.EQ.'ON' .OR. IQWNFL.EQ.'OPEN')THEN
           NUMARG=NPCARG
-          IECHFL=0
-        ENDIF
-C
-        NUMCLA=0
-        NMACLA=0
-C
-CCCCC   DATAPLOT SPECIFIC SWITCHES (E.G., -tile) ARE PROCESSED IN
-CCCCC   MSFORT_INTEL.F.
-C
-        IF(NUMARG.GE.1)THEN
-          ICNT=0
-          ICNT2=0
-          DO1010I=1,NUMARG
-            IJUNK=I
-            ITEMP=' '
-            ICNT=ICNT+1
-            NC1=NCFTMP(ICNT)
-            ITEMP(1:NC1)=FTEMP(ICNT)(1:NC1)
-            IF(ICNT.EQ.1)THEN
+          IF(NUMARG.GE.1)THEN
+            ICNT=0
+            ICNT2=0
+            DO1010I=1,NUMARG
+              IJUNK=I
+              ITEMP=' '
+              ICNT=ICNT+1
+              NC1=NCFTMP(ICNT)
+              ITEMP(1:NC1)=FTEMP(ICNT)(1:NC1)
+              IF(ICNT.EQ.1)THEN
 C
 C             CHECK TO SEE IF FIRST UNLABELLED ARGUMENT IS
 C             A FILE NAME.
 C
-              CALL STRLEZ(ITEMP,MAXFNC,NC1)
-              IFLAG=0
-              DO1020KK=1,NC1
-                IF(ITEMP(KK:KK).EQ.'.')THEN
-                  IFLAG=1
-                  GOTO1029
-                ENDIF
- 1020         CONTINUE
- 1029         CONTINUE
+                CALL STRLEZ(ITEMP,MAXFNC,NC1)
+                IFLAG=0
+                DO1020KK=1,NC1
+                  IF(ITEMP(KK:KK).EQ.'.')THEN
+                    IFLAG=1
+                    GOTO1029
+                  ENDIF
+ 1020           CONTINUE
+ 1029           CONTINUE
 C
-              IF(IFLAG.EQ.1)THEN
-                CLARG1=' '
-                CLARG1(1:NC1)=ITEMP(1:NC1)
-                NUMCLA=1
-              ELSE
-                ICNT2=ICNT2+1
-                IF(ICNT2.LE.50)THEN
-                  IMACAR(ICNT2)=' '
-                  IF(NPOSL1.GT.0 .AND. NPOSL2.GT.0)THEN
-                    NLEN=NC1-NPOSR1+1
-                    IF(NLEN.GT.MAXFNC)NLEN=MAXFNC
-                    IMACAR(ICNT2)(1:NLEN)=
-     1                     ITEMP(NPOSR1:NC1)
-                    NMACLA=NMACLA+1
-                    IMACLL(NMACLA)=ICNT2
-                    NLEN2=NPOSL2-NPOSL1+1
-                    IF(NLEN2.GT.8)NLEN2=8
-                    IMACLA(NMACLA)(1:NLEN2)=
-     1                     ITEMP(NPOSL1:NPOSL1+NLEN2-1)
-                    IMACNC(NMACLA)=NLEN2
-                  ELSE
-                    IMACAR(ICNT2)(1:MIN(MAXFNC,NC1))=
+                IF(IFLAG.EQ.1)THEN
+                  CLARG1=' '
+                  CLARG1(1:NC1)=ITEMP(1:NC1)
+                  NUMCLA=1
+                ELSE
+                  ICNT2=ICNT2+1
+                  IF(ICNT2.LE.50)THEN
+                    IMACAR(ICNT2)=' '
+                    IF(NPOSL1.GT.0 .AND. NPOSL2.GT.0)THEN
+                      NLEN=NC1-NPOSR1+1
+                      IF(NLEN.GT.MAXFNC)NLEN=MAXFNC
+                      IMACAR(ICNT2)(1:NLEN)=
+     1                       ITEMP(NPOSR1:NC1)
+                      NMACLA=NMACLA+1
+                      IMACLL(NMACLA)=ICNT2
+                      NLEN2=NPOSL2-NPOSL1+1
+                      IF(NLEN2.GT.8)NLEN2=8
+                      IMACLA(NMACLA)(1:NLEN2)=
+     1                       ITEMP(NPOSL1:NPOSL1+NLEN2-1)
+                      IMACNC(NMACLA)=NLEN2
+                    ELSE
+                      IMACAR(ICNT2)(1:MIN(MAXFNC,NC1))=
      1                     ITEMP(1:MIN(MAXFNC,NC1))
+                    ENDIF
+                  ENDIF
+                  NUMCLA=0
+                ENDIF
+              ELSEIF(ICNT.EQ.2)THEN
+                IF(ITEMP(1:2).EQ.'0 ')THEN
+                  CLARG2='0'
+                  NC2=1
+                  NUMCLA=2
+                ELSEIF(ITEMP(1:2).EQ.'1 ')THEN
+                  CLARG2='1'
+                  NC2=1
+                  NUMCLA=2
+                ELSEIF(ITEMP(1:2).EQ.'2 ')THEN
+                  CLARG2='2'
+                  NC2=1
+                  NUMCLA=2
+                ELSE
+                  CALL STRLEZ(ITEMP,MAXFNC,NCT)
+                  CALL STREQU(ITEMP,NCT,NPOSL1,NPOSL2,NPOSR1)
+                  ICNT2=ICNT2+1
+                  IF(ICNT2.LE.50)THEN
+                    IMACAR(ICNT2)=' '
+                    IF(NPOSL1.GT.0 .AND. NPOSL2.GT.0)THEN
+                      NLEN=NCT-NPOSR1+1
+                      IMACAR(ICNT2)(1:NLEN)=
+     1                       ITEMP(NPOSR1:NCT)
+                      NMACLA=NMACLA+1
+                      IMACLL(NMACLA)=ICNT2
+                      NLEN2=NPOSL2-NPOSL1+1
+                      IF(NLEN2.GT.8)NLEN2=8
+                      IMACLA(NMACLA)(1:NLEN2)=
+     1                       ITEMP(NPOSL1:NPOSL1+NLEN2-1)
+                      IMACNC(NMACLA)=NLEN2
+                    ELSE
+                      IMACAR(ICNT2)(1:MIN(MAXFNC,NCT))=
+     1                       ITEMP(1:MIN(MAXFNC,NCT))
+                    ENDIF
                   ENDIF
                 ENDIF
-                NUMCLA=0
-              ENDIF
-            ELSEIF(ICNT.EQ.2)THEN
-              IF(ITEMP(1:2).EQ.'0 ')THEN
-                CLARG2='0'
-                NC2=1
-                NUMCLA=2
-              ELSEIF(ITEMP(1:2).EQ.'1 ')THEN
-                CLARG2='1'
-                NC2=1
-                NUMCLA=2
-              ELSEIF(ITEMP(1:2).EQ.'2 ')THEN
-                CLARG2='2'
-                NC2=1
-                NUMCLA=2
               ELSE
                 CALL STRLEZ(ITEMP,MAXFNC,NCT)
                 CALL STREQU(ITEMP,NCT,NPOSL1,NPOSL2,NPOSR1)
@@ -6092,38 +6121,17 @@ C
      1                     ITEMP(NPOSL1:NPOSL1+NLEN2-1)
                     IMACNC(NMACLA)=NLEN2
                   ELSE
-                    IMACAR(ICNT2)(1:MIN(MAXFNC,NCT))=
-     1                     ITEMP(1:MIN(MAXFNC,NCT))
+                    IMACAR(ICNT2)(1:MIN(80,NCT))=
+     1                     ITEMP(1:MIN(80,NCT))
                   ENDIF
                 ENDIF
               ENDIF
-            ELSE
-              CALL STRLEZ(ITEMP,MAXFNC,NCT)
-              CALL STREQU(ITEMP,NCT,NPOSL1,NPOSL2,NPOSR1)
-              ICNT2=ICNT2+1
-              IF(ICNT2.LE.50)THEN
-                IMACAR(ICNT2)=' '
-                IF(NPOSL1.GT.0 .AND. NPOSL2.GT.0)THEN
-                  NLEN=NCT-NPOSR1+1
-                  IMACAR(ICNT2)(1:NLEN)=
-     1                   ITEMP(NPOSR1:NCT)
-                  NMACLA=NMACLA+1
-                  IMACLL(NMACLA)=ICNT2
-                  NLEN2=NPOSL2-NPOSL1+1
-                  IF(NLEN2.GT.8)NLEN2=8
-                  IMACLA(NMACLA)(1:NLEN2)=
-     1                   ITEMP(NPOSL1:NPOSL1+NLEN2-1)
-                  IMACNC(NMACLA)=NLEN2
-                ELSE
-                  IMACAR(ICNT2)(1:MIN(80,NCT))=
-     1                   ITEMP(1:MIN(80,NCT))
-                ENDIF
-              ENDIF
-            ENDIF
  1010     CONTINUE
+          ENDIF
+          NMACAG=ICNT2
+          GOTO9000
         ENDIF
-        NMACAG=ICNT2
-        GOTO9000
+C
       ELSEIF(IHOST1.EQ.'IBM-'.AND.ICOMPI.EQ.'OTG')THEN
 C
 C               ********************************
@@ -6508,6 +6516,9 @@ C                                        TO ALLOW SAME CODE TO BE USED
 C                                        ON LINUX AND WINDOWS
 C     UPDATED         --MARCH      2019. SUPPORT FOR "PERSISTANCE" AND
 C                                        "HIDDEN" FOR WINDOWS SYSTEMS
+C     UPDATED         --DECEMBER   2022. PRE-PROCESSOR OPTION TO ALLOW
+C                                        DISABLING SYSTEM COMMAND (E.G.,
+C                                        FOR USE IN WEB APPLICATIONS)
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 C
@@ -6527,15 +6538,18 @@ C
 C
       CHARACTER*(*) ITEXT
 C
-      CHARACTER*100 ICMSG
       CHARACTER*4 ISUBRO
       CHARACTER*4 IERROR
       CHARACTER*1 IQUOT1
       CHARACTER*1 IQUOT2
       CHARACTER*4 IBUGS2
 C
+#ifdef DISABLE_SYSTEM_COMMAND
+#else
+      CHARACTER*100 ICMSG
       INTEGER IESTAT
       INTEGER ICSTAT
+#endif
 C
 C  UNCOMMENT FOLLOWING TWO LINES FOR VAX/VMS
 #ifdef VAX_VMS
@@ -6543,7 +6557,10 @@ C  UNCOMMENT FOLLOWING TWO LINES FOR VAX/VMS
       INTEGER ISTAT2
 #endif
 #ifdef LINUX
+#ifdef DISABLE_SYSTEM_COMMAND
+#else
       LOGICAL system
+#endif
 #endif
       LOGICAL ISTATUS
       LOGICAL IWAIT
@@ -6617,6 +6634,8 @@ C        2. USE THE "SYSTEM" CALL.  THIS WORKS FOR gfortran, BUT IT IS
 C           NOT PART OF ANY FORTRAN STANDARD.  SO IT MAY OR MAY NOT BE
 C           AVAILABLE ON COMPILERS OTHER THAN gfortran.
 C
+ 2311 FORMAT('***** ERROR IN SYSTEM COMMAND--')
+C
       IF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
         IF(IHOST1.EQ.'CRAY')GOTO8000
 #ifdef LINUX
@@ -6652,10 +6671,17 @@ C                  IN THE BUILD FILE, ADD A PRE-PROCESSOR OPTION FOR
 C                  THIS SO WE CAN CONDITIONALLY COMPILE THIS.
 C
 #ifdef HAVE_EXECUTE_COMMAND_LINE
+#ifdef DISABLE_SYSTEM_COMMAND
+          WRITE(ICOUT,2311)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2321)
+ 2321     FORMAT('      THE SYSTEM COMMAND HAS BEEN DISABLED FOR ',
+     1           'THIS IMPLEMENTATION.')
+          CALL DPWRST('XXX','BUG ')
+#else
           CALL EXECUTE_COMMAND_LINE(ITEXT,IWAIT,IESTAT,ICSTAT,ICMSG)
           IF(ICSTAT.GT.0)THEN
             WRITE(ICOUT,2311)
- 2311       FORMAT('***** ERROR IN SYSTEM COMMAND--')
             CALL DPWRST('XXX','BUG ')
             WRITE(ICOUT,2342)ICMSG
  2342       FORMAT('      EXECUTE_COMMAND_LINE FAILED WITH ERROR ',A100)
@@ -6675,16 +6701,25 @@ C2346         FORMAT('      COMMAND COMPLETED WITH STATUS ',I8)
 CCCCC         CALL DPWRST('XXX','BUG ')
 CCCCC       ENDIF
           ENDIF
+#endif
 #else
           WRITE(ICOUT,2311)
- 2311     FORMAT('***** ERROR IN SYSTEM COMMAND--')
           CALL DPWRST('XXX','BUG ')
           WRITE(ICOUT,2342)ICMSG
  2342     FORMAT('      EXECUTE_COMMAND_LINE FAILED WITH ERROR',A100)
           CALL DPWRST('XXX','BUG ')
 #endif
         ELSE
+#ifdef DISABLE_SYSTEM_COMMAND
+          WRITE(ICOUT,2311)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2323)
+ 2323     FORMAT('      THE SYSTEM COMMAND HAS BEEN DISABLED FOR ',
+     1           'THIS IMPLEMENTATION.')
+          CALL DPWRST('XXX','BUG ')
+#else
           ISTAT=system(ITEXT(1:IWIDTH))
+#endif
         ENDIF
 CCCCC   IF(ISTAT)IERROR='YES'
 #endif
@@ -6835,7 +6870,16 @@ CCCCC       NC=NC+1
 CCCCC       ISTRIN(NC:NC)="'"
             IWAIT=.FALSE.
             IF(ICLEWT.EQ.'ON')IWAIT=.TRUE.
+#ifdef DISABLE_SYSTEM_COMMAND
+            WRITE(ICOUT,2311)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2325)
+ 2325       FORMAT('      THE SYSTEM COMMAND HAS BEEN DISABLED FOR ',
+     1             'THIS IMPLEMENTATION.')
+            CALL DPWRST('XXX','BUG ')
+#else
             CALL EXECUTE_COMMAND_LINE(ISTRIN,IWAIT,IESTAT,ICSTAT,ICMSG)
+#endif
             IF(ICSTAT.GT.0)THEN
               WRITE(ICOUT,2611)
               CALL DPWRST('XXX','BUG ')
@@ -6916,6 +6960,14 @@ C
             ENDIF
           ENDIF
 C
+#ifdef DISABLE_SYSTEM_COMMAND
+            WRITE(ICOUT,2311)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2327)
+ 2327       FORMAT('      THE SYSTEM COMMAND HAS BEEN DISABLED FOR ',
+     1             'THIS IMPLEMENTATION.')
+            CALL DPWRST('XXX','BUG ')
+#else
           ISTATUS=SYSTEMQQ(ITEXT(1:IWIDTH))
           IF(.NOT.ISTATUS)THEN
             IERRID=GETLASTERRORQQ()
@@ -6956,6 +7008,7 @@ C2641         FORMAT('STATUS FROM SYSTEM COMMAND: ',L4)
 CCCCC.         CALL DPWRST('XXX','BUG ')
 CCCCC.       ENDIF
           ENDIF
+#endif
 C
 CCCCC     IF(IQWNSY.EQ.'WINE')THEN
 CCCCC       IRET=WinExec(ITEXT(1:IWIDTH)//' 'C,SW_SHOW)
@@ -9909,6 +9962,8 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C               HOST DEPENDENT
 C     VERSION NUMBER--2014.10
 C     ORIGINAL VERSION--OCTOBER    2014.
+C     UPDATED         --APRIL      2023. TWEAK DECLARATIONS FOR NEW
+C                                        ONEAPI VERSION OF COMPILER
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
 C
@@ -9916,6 +9971,7 @@ C     NOTE THAT "USE IFWIN" (FOR INTEL COMPILER UNDER WINDOWS) MUST COME
 C     BEFORE ANY OTHER DECLARATIONS
 C
       USE IFWIN
+      USE IFWINTY
 C
       REAL XSCRT(*)
 C
@@ -9937,7 +9993,8 @@ C     FOLLOWING DECLARATIONS FOR INTEL FORTRAN COMPILER UNDER WINDOWS
 C
       INTEGER IST
       INTEGER I
-      INTEGER HDATA
+CCCCC INTEGER HDATA
+      INTEGER(HANDLE)  ::  hData
       CHARACTER*1 STEXT(*)
       POINTER (PTEXT, STEXT)
 C
@@ -10464,12 +10521,15 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C               HOST DEPENDENT
 C     VERSION NUMBER--2014.11
 C     ORIGINAL VERSION--NOVEMBER   2014.
+C     UPDATED         --APRIL      2023. TWEAK DECLARATIONS FOR NEW
+C                                        ONEAPI VERSION OF COMPILER
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
 C
 C     NOTE THAT "USE IFWIN" MUST COME BEFORE ANY OTHER DECLARATIONS
 C
       USE IFWIN
+      USE IFWINTY
 C
       CHARACTER*4 ITYPE
       CHARACTER*4 IBUGS2
@@ -10483,7 +10543,8 @@ C
 C     FOLLOWING DECLARATIONS FOR INTEL FORTRAN COMPILER UNDER WINDOWS
 C
       INTEGER IST
-      INTEGER HDATA
+CCCCC INTEGER HDATA
+      INTEGER(HANDLE)  ::  hData
       CHARACTER*1 STEXT(*)
       POINTER (PTEXT, STEXT)
 C
@@ -10672,7 +10733,6 @@ C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C               HOST DEPENDENT
 C     VERSION NUMBER--2014.11
-C     ORIGINAL VERSION--NOVEMBER   2014.
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
 C
@@ -10680,6 +10740,7 @@ C     NOTE THAT "USE IFWIN" (FOR INTEL COMPILER UNDER WINDOWS) MUST COME
 C     BEFORE ANY OTHER DECLARATIONS
 C
       USE IFWIN
+      USE IFWINTY
 C
       CHARACTER*4 IBUGS2
       CHARACTER*4 ISUBRO
@@ -10771,6 +10832,8 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C               HOST DEPENDENT
 C     VERSION NUMBER--2014.11
 C     ORIGINAL VERSION--NOVEMBER   2014.
+C     UPDATED         --APRIL      2023. TWEAK DECLARATIONS FOR NEW
+C                                        ONEAPI VERSION OF COMPILER
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
 C
@@ -10778,6 +10841,7 @@ C     NOTE THAT "USE IFWIN" (FOR INTEL COMPILER UNDER WINDOWS) MUST COME
 C     BEFORE ANY OTHER DECLARATIONS
 C
       USE IFWIN
+      USE IFWINTY
 C
       INTEGER NCSTR
 C
@@ -10789,12 +10853,16 @@ C
 C     FOLLOWING DECLARATIONS FOR INTEL FORTRAN COMPILER UNDER WINDOWS
 C
       INTEGER IST
-      INTEGER HDATA
-      INTEGER ILEN
-      INTEGER PSTRING
-      INTEGER PDUMMY
+CCCCC INTEGER HDATA
+CCCCC INTEGER ILEN
+CCCCC INTEGER PSTRING
+CCCCC INTEGER PDUMMY
+      INTEGER(HANDLE)  ::  hData
+      INTEGER(SIZE_T)  ::  ILEN
+      INTEGER(SIZE_T)   ::  PSTRING
+      INTEGER(SIZE_T)   ::  PDUMMY
 C
-      SAVE HDATA
+      SAVE hData
       SAVE PSTRING
       SAVE PDUMMY
 C
@@ -10842,9 +10910,9 @@ CCCCC   IF (IsClipboardFormatAvailable(CF_TEXT)) THEN
            ENDIF
 C
            PSTRING=LOC(ISTR)
-           hData=GlobalAlloc(GMEM_MOVEABLE+GMEM_DDESHARE,ilen)
-           pdummy=GlobalLock(hData)
-           CALL CopyMemory(pdummy,pstring,ilen)
+           hData=GlobalAlloc(GMEM_MOVEABLE+GMEM_DDESHARE,ILEN)
+           PDUMMY=GlobalLock(hData)
+           CALL CopyMemory(PDUMMY,PSTRING,ILEN)
            iSt = SetClipboardData(CF_TEXT,hData)
            iSt = GlobalUnlock(hData)
            IF(ICLOSE.EQ.1)THEN
@@ -10899,6 +10967,8 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C               HOST DEPENDENT
 C     VERSION NUMBER--2014.12
 C     ORIGINAL VERSION--DECEMBER   2014.
+C     UPDATED         --APRIL      2023. TWEAK DECLARATIONS FOR NEW
+C                                        ONEAPI VERSION OF COMPILER
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
 C
@@ -10906,6 +10976,7 @@ C     NOTE THAT "USE IFWIN" (FOR INTEL COMPILER UNDER WINDOWS) MUST COME
 C     BEFORE ANY OTHER DECLARATIONS
 C
       USE IFWIN
+      USE IFWINTY
 C
       REAL XSCRT(*)
 C
@@ -10928,10 +10999,14 @@ C     FOLLOWING DECLARATIONS FOR INTEL FORTRAN COMPILER UNDER WINDOWS
 C
       INTEGER IST
       INTEGER I
-      INTEGER HDATA
-      INTEGER ILEN
-      INTEGER PSTRING
-      INTEGER PDUMMY
+CCCCC INTEGER HDATA
+CCCCC INTEGER ILEN
+CCCCC INTEGER PSTRING
+CCCCC INTEGER PDUMMY
+      INTEGER(HANDLE)  ::  hData
+      INTEGER(SIZE_T)  ::  ILEN
+      INTEGER(SIZE_T)   ::  PSTRING
+      INTEGER(SIZE_T)   ::  PDUMMY
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -10998,9 +11073,9 @@ C
            ISTR(ILEN:ILEN)=CHAR(0)
 C
            PSTRING=LOC(ISTR)
-           hData=GlobalAlloc(GMEM_MOVEABLE+GMEM_DDESHARE,ilen)
-           pdummy=GlobalLock(hData)
-           CALL CopyMemory(pdummy,pstring,ilen)
+           hData=GlobalAlloc(GMEM_MOVEABLE+GMEM_DDESHARE,ILEN)
+           PDUMMY=GlobalLock(hData)
+           CALL CopyMemory(PDUMMY,PSTRING,ILEN)
            iSt = SetClipboardData(CF_TEXT,hData)
            iSt = GlobalUnlock(hData)
            iSt = CloseClipboard()
@@ -11054,6 +11129,8 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C               HOST DEPENDENT
 C     VERSION NUMBER--2014.12
 C     ORIGINAL VERSION--DECEMBER   2014.
+C     UPDATED         --APRIL      2023. TWEAK DECLARATIONS FOR NEW
+C                                        ONEAPI VERSION OF COMPILER
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
 C
@@ -11061,6 +11138,7 @@ C     NOTE THAT "USE IFWIN" (FOR INTEL COMPILER UNDER WINDOWS) MUST COME
 C     BEFORE ANY OTHER DECLARATIONS
 C
       USE IFWIN
+      USE IFWINTY
 C
       CHARACTER*(*) ISTR
 C
@@ -11077,10 +11155,14 @@ C     FOLLOWING DECLARATIONS FOR INTEL FORTRAN COMPILER UNDER WINDOWS
 C
       INTEGER IST
       INTEGER I
-      INTEGER HDATA
-      INTEGER ILEN
-      INTEGER PSTRING
-      INTEGER PDUMMY
+CCCCC INTEGER HDATA
+CCCCC INTEGER ILEN
+CCCCC INTEGER PSTRING
+CCCCC INTEGER PDUMMY
+      INTEGER(HANDLE)  ::  hData
+      INTEGER(SIZE_T)  ::  ILEN
+      INTEGER(SIZE_T)   ::  PSTRING
+      INTEGER(SIZE_T)   ::  PDUMMY
 C
       SAVE HDATA
       SAVE PSTRING
@@ -11201,6 +11283,1671 @@ C
       END
 #endif
 #ifdef LINUX
+      SUBROUTINE DPCLIP(XSCRT,MAXVAL,NVAL,NUME,PREAMV,ISKIP,IGRPAU,
+     1                  IVLIST,IVLIS2,IAVANM,MAXRDV,
+     1                  ITYPE,ISTR,NCSTR,
+     1                  IBUGS2,ISUBRO,IERROR)
+C
+C     PURPOSE--READ FROM THE SYSTEM CLIPBOARD.  THIS IS OPERATING
+C              SYSTEM AND COMPILER DEPENDENT.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C               HOST DEPENDENT
+C     VERSION NUMBER--2014.10
+C     ORIGINAL VERSION--OCTOBER    2014.
+C
+C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
+C
+      REAL XSCRT(*)
+C
+      CHARACTER*4 IVLIST(MAXRDV)
+      CHARACTER*4 IVLIS2(MAXRDV)
+      CHARACTER*4 IAVANM
+      CHARACTER*4 ITYPE
+      CHARACTER*255 ISTR
+      CHARACTER*4 IGRPAU
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+CCCCC CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+CCCCC CHARACTER*80 IATEMP
+CCCCC CHARACTER*1  ICHR
+CCCCC CHARACTER*1  ICHRN
+C
+C     FOLLOWING DECLARATIONS FOR INTEL FORTRAN COMPILER UNDER WINDOWS
+C
+CCCCC INTEGER IST
+      INTEGER I
+CCCCC INTEGER HDATA
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHO.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+C
+      IERROR='NO'
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLIP')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCLIP--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGS2,ISUBRO,ITYPE,IGRPAU
+   53   FORMAT('IBUGS2,ISUBRO,ITYPE,IGRPAU = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,55)MAXVAL,NUME,ISKIP,PREAMV
+   55   FORMAT('MAXVAL,NUME,ISKIP,PREAMV = ',3I10,G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      IF(ITYPE.EQ.'VARI')THEN
+        DO110I=1,MAXVAL
+          XSCRT(I)=CPUMIN
+  110   CONTINUE
+      ELSE
+        ISTR=' '
+      ENDIF
+      NVAL=0
+      NCSTR=0
+C
+      IF(IHOST1.EQ.'IBM-'.AND.ICOMPI.EQ.'MS-F')THEN
+CINTE   IF (IsClipboardFormatAvailable(CF_TEXT)) THEN
+CINTE      iSt = OpenClipboard(NULL)
+CINTE      hData = GetClipboardData(CF_TEXT)
+CINTE      pText = LocalLock(hData)
+C
+CINTE      NLNRD=0
+CINTE      NVAL=0
+CINTE      ICNTR=0
+C
+C          IF HEADER LINES ARE SPECIFIED, CHECK FOR CR/LF UNTIL
+C          ALL HEADER LINES READ.  CHECK FOR VARIABLE NAMES ON
+C          LAST LINE, OR NEXT TO LAST LINE IF LAST LINE IS "----",
+C          IF REQUESTED.
+C
+CINTE      IF(ISKIP.GT.0)THEN
+C
+CINTE        NVAR=0
+CINTE        NLCURR=1
+CINTE        IPTR1=1
+CINTE        IPTR2=0
+CINTE        IPTRP1=0
+CINTE        IPTRP2=0
+C
+CI200        CONTINUE
+CINTE        ICNTR=ICNTR+1
+CINTE        ICHR=STEXT(ICNTR)(1:1)
+CINTE        IVAL=ICHAR(ICHR)
+CINTE        IF(IVAL.EQ.0)GOTO1099
+CINTE        IF(IVAL.EQ.10 .OR. IVAL.EQ.13)THEN
+CINTE          IPTR2=ICNTR-1
+CINTE          ICHRN=STEXT(ICNTR+1)(1:1)
+CINTE          IVALN=ICHAR(ICHRN)
+CINTE          IF(IVALN.EQ.10 .OR. IVALN.EQ.13)THEN
+CINTE            ICNTR=ICNTR+1
+CINTE          ENDIF
+CINTE          IF(NLCURR.EQ.ISKIP-1)THEN
+CINTE            IPTRP1=IPTR1
+CINTE            IPTRP2=IPTR2
+CINTE          ELSEIF(NLCURR.EQ.ISKIP)THEN
+CINTE            IF(STEXT(IPTR1).EQ.'-'.AND.STEXT(IPTR1+1).EQ.'-'.AND.
+CINTE1              STEXT(IPTR1+2).EQ.'-'.AND.STEXT(IPTR1+3).EQ.'-')THEN
+CINTE              IPTR1=IPTRP1
+CINTE              IPTR2=IPTRP2
+CINTE            ENDIF
+C
+C                NOW LOOP THROUGH AND EXTRACT VARIABLE NAMES.
+C                SPACES, COMMAS, TABS, AND DOUBLE QUOTES  WILL BE
+C                TREATED AS DELIMITERS.
+C
+CINTE            IF(ITYPE.EQ.'STRI')GOTO219
+CINTE            NVAR=0
+CINTE            ICHCN2=0
+CINTE            DO210II=IPTR1,IPTR2
+CINTE              ICHRN=STEXT(II)(1:1)
+CINTE              IVAL2=ICHAR(ICHRN)
+CINTE              IF(IVAL2.EQ.32 .OR. IVAL2.EQ.9 .OR.
+CINTE1               ICHRN.EQ.',' .OR. ICHRN.EQ.'"')THEN
+CINTE                IF(ICHCN2.EQ.0)GOTO210
+CINTE                ISTOP=II
+CINTE                NVAR=NVAR+1
+CINTE                IF(NVAR.LE.MAXRDV)THEN
+CINTE                  NCHAR=ISTOP-ISTRT+1
+CINTE                  DO220JJ=1,MIN(NCHAR,4)
+CINTE                    IVLIST(NVAR)(JJ:JJ)=STEXT(ISTRT+JJ-1)(1:1)
+CI220                  CONTINUE
+CINTE                  IF(NCHAR.GE.5)THEN
+CINTE                    DO230JJ=5,MIN(NCHAR,8)
+CINTE                      IVLIS2(NVAR)(JJ-4:JJ-4)=
+CINTE1                     STEXT(ISTRT+JJ-1)(1:1)
+CI230                    CONTINUE
+CINTE                  ENDIF
+CINTE                ELSE
+CINTE                  GOTO219
+CINTE                ENDIF
+CINTE                ICHCN2=0
+CINTE              ELSE
+CINTE                ICHCN2=ICHCN2+1
+CINTE                IF(ICHCN2.EQ.1)ISTRT=II
+CINTE                ICURR=II
+CINTE              ENDIF
+CI210            CONTINUE
+C
+CINTE            IF(ICHCN2.GT.0)THEN
+CINTE              NVAR=NVAR+1
+CINTE              IVLIST(NVAR)='    '
+CINTE              IVLIS2(NVAR)='    '
+CINTE              ISTOP=ICURR
+CINTE              IF(NVAR.LE.MAXRDV)THEN
+CINTE                NCHAR=ISTOP-ISTRT+1
+CINTE                DO270JJ=1,MIN(NCHAR,4)
+CINTE                  IVLIST(NVAR)(JJ:JJ)=STEXT(ISTRT+JJ-1)(1:1)
+CI270                CONTINUE
+CINTE                IF(NCHAR.GE.5)THEN
+CINTE                  DO280JJ=5,MIN(NCHAR,8)
+CINTE                    IVLIS2(NVAR)(JJ-4:JJ-4)=STEXT(ISTRT+JJ-1)(1:1)
+CI280                  CONTINUE
+CINTE                ENDIF
+CINTE              ENDIF
+CINTE            ENDIF
+C
+CI219            CONTINUE
+C
+CINTE            GOTO1000
+CINTE          ENDIF
+CINTE          NLCURR=NLCURR+1
+CINTE          IPTR1=ICNTR+1
+CINTE        ENDIF
+CINTE        GOTO200
+C
+CINTE      ELSEIF(ISKIP.LT.0)THEN
+C
+C            FOR SKIP AUTOMATIC, READ UNTIL A LINE STARTING WITH
+C            "----" IS ENCOUNTERED.
+C
+CINTE        NVAR=0
+CINTE        NLCURR=1
+CINTE        IPTR1=1
+CINTE        IPTR2=0
+CINTE        IPTR3=1
+CINTE        IPTRP1=0
+CINTE        IPTRP2=0
+C
+CI300        CONTINUE
+CINTE        ICNTR=ICNTR+1
+CINTE        ICHR=STEXT(ICNTR)(1:1)
+CINTE        IVAL=ICHAR(ICHR)
+CINTE        IF(IVAL.EQ.0)GOTO1099
+CINTE        IF(IVAL.EQ.10 .OR. IVAL.EQ.13)THEN
+CINTE          IPTRP1=IPTR1
+CINTE          IPTRP2=IPTR2
+CINTE          IPTR1=IPTR3
+CINTE          IPTR2=ICNTR-1
+CINTE          ICHRN=STEXT(ICNTR+1)(1:1)
+CINTE          IVALN=ICHAR(ICHRN)
+CINTE          IF(IVALN.EQ.10 .OR. IVALN.EQ.13)THEN
+CINTE            ICNTR=ICNTR+1
+CINTE          ENDIF
+CINTE          IPTR3=ICNTR+1
+C
+C              CHECK FOR "----"
+C
+CINTE          IF(STEXT(IPTR1).EQ.'-'.AND.STEXT(IPTR1+1).EQ.'-'.AND.
+CINTE1            STEXT(IPTR1+2).EQ.'-'.AND.STEXT(IPTR1+3).EQ.'-')THEN
+CINTE            IPTR1=IPTRP1
+CINTE            IPTR2=IPTRP2
+C
+C                NOW LOOP THROUGH AND EXTRACT VARIABLE NAMES.
+C                SPACES, COMMAS, TABS, AND DOUBLE QUOTES  WILL BE
+C                TREATED AS DELIMITERS.
+C
+CINTE            IF(ITYPE.EQ.'STRI')GOTO319
+CINTE            NVAR=0
+CINTE            ICHCN2=0
+CINTE            DO310II=IPTR1,IPTR2
+CINTE              ICHRN=STEXT(II)(1:1)
+CINTE              IVAL2=ICHAR(ICHRN)
+CINTE              IF(IVAL2.EQ.32 .OR. IVAL2.EQ.9 .OR.
+CINTE1               ICHRN.EQ.',' .OR. ICHRN.EQ.'"')THEN
+CINTE                IF(ICHCN2.EQ.0)GOTO310
+CINTE                ISTOP=II
+CINTE                NVAR=NVAR+1
+CINTE                IVLIST(NVAR)='   '
+CINTE                IVLIS2(NVAR)='   '
+CINTE                IF(NVAR.LE.MAXRDV)THEN
+CINTE                  NCHAR=ISTOP-ISTRT+1
+CINTE                  DO330JJ=1,MIN(NCHAR,4)
+CINTE                    IVLIST(NVAR)(JJ:JJ)=STEXT(ISTRT+JJ-1)(1:1)
+CI330                  CONTINUE
+CINTE                  IF(NCHAR.GE.5)THEN
+CINTE                    DO340JJ=5,MIN(NCHAR,8)
+CINTE                      IVLIS2(NVAR)(JJ-4:JJ-4)=
+CINTE1                     STEXT(ISTRT+JJ-1)(1:1)
+CI340                    CONTINUE
+CINTE                  ENDIF
+CINTE                ELSE
+CINTE                  GOTO319
+CINTE                ENDIF
+CINTE                ICHCN2=0
+CINTE              ELSE
+CINTE                ICHCN2=ICHCN2+1
+CINTE                IF(ICHCN2.EQ.1)ISTRT=II
+CINTE                ICURR=II
+CINTE              ENDIF
+CI310            CONTINUE
+C
+CINTE            IF(ICHCN2.GT.0)THEN
+CINTE              NVAR=NVAR+1
+CINTE              IVLIST(NVAR)='    '
+CINTE              IVLIS2(NVAR)='    '
+CINTE              ISTOP=ICURR
+CINTE              IF(NVAR.LE.MAXRDV)THEN
+CINTE                NCHAR=ISTOP-ISTRT+1
+CINTE                DO370JJ=1,MIN(NCHAR,4)
+CINTE                  IVLIST(NVAR)(JJ:JJ)=STEXT(ISTRT+JJ-1)(1:1)
+CI370                CONTINUE
+CINTE                IF(NCHAR.GE.5)THEN
+CINTE                  DO380JJ=5,MIN(NCHAR,8)
+CINTE                    IVLIS2(NVAR)(JJ-4:JJ-4)=STEXT(ISTRT+JJ-1)(1:1)
+CI380                  CONTINUE
+CINTE                ENDIF
+CINTE              ENDIF
+CINTE            ENDIF
+C
+CI319            CONTINUE
+C
+CINTE            GOTO1000
+CINTE          ENDIF
+CINTE          NLCURR=NLCURR+1
+CINTE        ENDIF
+CINTE        GOTO300
+C
+CINTE      ENDIF
+C
+C1000      CONTINUE
+C
+C            STRING CASE.  FOR NOW, READ FIRST RECORD AS A SINGLE
+C            STRING.
+C
+CINTE        IF(ITYPE.EQ.'STRI')THEN
+CINTE          DO2090II=1,10000
+CINTE            ICNTR=ICNTR+1
+CINTE            ICHR=STEXT(ICNTR)(1:1)
+CINTE            IVAL=ICHAR(ICHR)
+CINTE            IF(IVAL.EQ.0)THEN
+CINTE              GOTO1099
+CINTE            ELSEIF(IVAL.EQ.10 .OR. IVAL.EQ.13)THEN
+CINTE              GOTO1099
+CINTE            ELSE
+CINTE              IF(NCSTR.LT.255)THEN
+CINTE                NCSTR=NCSTR+1
+CINTE                ISTR(NCSTR:NCSTR)=ICHR
+CINTE              ENDIF
+CINTE            ENDIF
+C2090          CONTINUE
+CINTE          GOTO1099
+CINTE        ENDIF
+C
+CINTE        ICHCNT=0
+CINTE        DO1090II=1,80
+C
+CINTE          ICNTR=ICNTR+1
+CINTE          ICHR=STEXT(ICNTR)(1:1)
+CINTE          IVAL=ICHAR(ICHR)
+C
+C              NULL CHARACTER IMPLIES END OF CLIPBOARD DATA
+C
+CINTE          IF(IVAL.EQ.0)THEN
+CINTE            IF(ICHCNT.EQ.0)GOTO1099
+CINTE            GOTO1080
+C
+C              SPACE INTERPRETED AS A DELIMITER THAT DOES NOT ALLOW
+C              FOR "MISSING" COLUMNS
+C
+CINTE          ELSEIF(IVAL.EQ.32)THEN
+CINTE            IF(ICHCNT.GT.0)GOTO1080
+C
+C              COMMA AND TAB ARE ALL INTERPRETED AS FIELD DELIMITERS
+C              THAT ALLOW FOR "MISSING" COLUMNS.  THAT IS, IF SUCCESSIVE
+C              COMMAS OR TABS ARE ENCOUNTERED, INSERT A "MISSING VALUE".
+C
+CINTE          ELSEIF(IVAL.EQ.9 .OR. ICHR.EQ.',')THEN
+CINTE            IF(ICHCNT.GT.0)THEN
+CINTE              GOTO1080
+CINTE            ELSE
+CINTE              NVAL=NVAL+1
+CINTE              IF(NVAL.GT.MAXVAL)THEN
+CINTE                WRITE(ICOUT,1003)
+CINTE                CALL DPWRST('XXX','BUG ')
+CINTE                WRITE(ICOUT,1005)
+CINTE                CALL DPWRST('XXX','BUG ')
+CINTE                WRITE(ICOUT,1007)MAXVAL
+CINTE                CALL DPWRST('XXX','BUG ')
+CINTE                IERROR='YES'
+CINTE                GOTO1099
+CINTE              ENDIF
+CINTE              XSCRT(NVAL)=PREAMV
+CINTE              GOTO1000
+CINTE            ENDIF
+C
+C              LINE FEED/CARRIAGE RETURN SIGNIFY END OF RECORD
+C              DELIMITERS.  IF NUMBER OF VARIABLES NOT SPECIFIED
+C              ON READ, CHECK NUMBER OF VALUES READ ON FIRST LINE.
+C
+CINTE          ELSEIF(IVAL.EQ.10 .OR. IVAL.EQ.13)THEN
+CINTE            ICHRN=STEXT(ICNTR+1)(1:1)
+CINTE            IVALN=ICHAR(ICHRN)
+CINTE            IF(IVALN.EQ.10 .OR. IVALN.EQ.13)THEN
+CINTE              ICNTR=ICNTR+1
+CINTE            ENDIF
+C
+CINTE            IF(NLNRD.EQ.0)THEN
+CINTE              IF(NUME.EQ.0)THEN
+CINTE                NUME=NVAL
+CINTE                IF(ICHCNT.GT.0)NUME=NVAL+1
+CINTE              ENDIF
+CINTE            ENDIF
+CINTE            NLNRD=NLNRD+1
+CINTE            IF(ICHCNT.GT.0)GOTO1080
+C
+C              ADD CURRENT CHARACTER TO TEMPORARY STRING
+C
+CINTE          ELSE
+CINTE            ICHCNT=ICHCNT+1
+CINTE            IATEMP(ICHCNT:ICHCNT)=ICHR
+CINTE          ENDIF
+C
+C1090        CONTINUE
+CINTE        IERROR='YES'
+CINTE        GOTO1099
+C
+C            PROCESS CURRENT FIELD
+C
+C1080        CONTINUE
+CINTE        CALL EXTREA(IATEMP,ICHCNT,AVALUE,IBUGS2,ISUBRO,IERROR)
+CINTE        IF(IERROR.EQ.'YES')GOTO1099
+CINTE        NVAL=NVAL+1
+CINTE        IF(NVAL.GT.MAXVAL)THEN
+CINTE          WRITE(ICOUT,1003)
+C1003          FORMAT('***** ERROR READING FROM CLIPBOARD')
+CINTE          CALL DPWRST('XXX','BUG ')
+CINTE          WRITE(ICOUT,1005)
+C1005          FORMAT('      MAXIMUM NUMBER OF VALUES EXCEEDED.')
+CINTE          CALL DPWRST('XXX','BUG ')
+CINTE          WRITE(ICOUT,1007)MAXVAL
+C1007          FORMAT('      MAXIMUM NUMBER OF VALUES  = ',I10)
+CINTE          CALL DPWRST('XXX','BUG ')
+CINTE          IERROR='YES'
+CINTE          GOTO1099
+CINTE        ENDIF
+CINTE        XSCRT(NVAL)=AVALUE
+CINTE        IF(IVAL.EQ.0)GOTO1099
+CINTE        GOTO1000
+C
+C            PROCESSING OF CLIPBOARD COMPLETED
+C
+C1099      CONTINUE
+CINTE      iSt = LocalUnlock(hData)
+CINTE      iSt = CloseClipboard()
+CINTE      IF(IERROR.EQ.'YES')GOTO9000
+CINTE   ELSE
+CINTE     WRITE(ICOUT,1011)
+C1011     FORMAT('***** NOTHING AVAILABLE FROM CLIPBOARD')
+CINTE     CALL DPWRST('XXX','BUG ')
+CINTE     IERROR='YES'
+CINTE   ENDIF
+      ELSE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2011)
+ 2011   FORMAT('***** READING FROM SYSTEM CLIPBOARD NOT SUPPORTED ',
+     1         'ON THIS OS/COMPILER PLATFORM.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+      ENDIF
+C
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLIP')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPCLIP--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9021)IERROR,IAVANM,NVAL,NLNRD,NUME,NCSTR
+ 9021   FORMAT('IERROR,IAVANM,NVAL,NLNRD,NUME,NCSTR = ',
+     1         2(A4,2X),2I10,2I5)
+        CALL DPWRST('XXX','BUG ')
+        IF(NCSTR.GT.0)THEN
+          DO9025I=1,NCSTR
+            WRITE(ICOUT,9027)I,ISTR(I:I)
+ 9027       FORMAT('I,ISTR(I:I) = ',I5,2X,A1)
+            CALL DPWRST('XXX','BUG ')
+ 9025     CONTINUE
+        ENDIF
+        IF(NVAL.GT.0)THEN
+          DO9035I=1,NVAL
+            WRITE(ICOUT,9037)I,IVLIST(I),IVLIS2(I)
+ 9037       FORMAT('I,IVLIST(I),IVLIS2(I) = ',I8,2X,2A4)
+            CALL DPWRST('XXX','BUG ')
+ 9035     CONTINUE
+        ENDIF
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPCLI2(ITYPE,IOUNIT,IHELMX,ILINRD,IBUGS2,ISUBRO,IERROR)
+C
+C     PURPOSE--READ FROM THE SYSTEM CLIPBOARD.  THIS IS OPERATING
+C              SYSTEM AND COMPILER DEPENDENT.
+C
+C              THE DPCLIP COMMAND IS USED TO EITHER READ A LIST
+C              VARIABLES OR A SINGLE STRING.
+C
+C              DPCLI2 IS USED TO:
+C
+C                1. VIEW THE CONTENTS OF THE CLIPBOARD
+C                2. TO COPY THE CONTENTS OF THE CLIPBOARD
+C                   TO A USER SPECIFIED FILE.
+C                3. TO EXTRACT THE NUMBER OF LINES IN THE CLIPBOARD.
+C
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C               HOST DEPENDENT
+C     VERSION NUMBER--2014.11
+C     ORIGINAL VERSION--NOVEMBER   2014.
+C
+C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
+C
+C     NOTE THAT "USE IFWIN" (FOR INTEL COMPILER UNDER WINDOWS) MUST COME
+C     BEFORE ANY OTHER DECLARATIONS
+CINTE USE IFWIN
+C
+      CHARACTER*4 ITYPE
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+      CHARACTER*255 ISTR
+CCCCC CHARACTER*1  ICHR
+      CHARACTER*4  IRESP
+      CHARACTER*6  IFORMT
+C
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOZI.INC'
+C
+      INTEGER ISTR2(MAXOBV)
+      EQUIVALENCE (IGARBG(IIGAR1),ISTR2(1))
+C
+C     FOLLOWING DECLARATIONS FOR INTEL FORTRAN COMPILER UNDER WINDOWS
+C
+CINTE INTEGER IST
+CINTE INTEGER I
+CINTE INTEGER HDATA
+CINTE CHARACTER*1 STEXT(*)
+CINTE POINTER (PTEXT, STEXT)
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHO.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+C
+      IERROR='NO'
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLI2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCLI2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,81)IBUGS2,ISUBRO,ITYPE,IHELMX
+   81   FORMAT('IBUGS2,ISUBRO,ITYPE= ',3(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      ISTR=' '
+      NCSTR=0
+C
+      IF(IHOST1.EQ.'IBM-'.AND.ICOMPI.EQ.'MS-F')THEN
+C
+C         VIEW THE CONTENTS OF THE CLIPBOARD OR COPY TO A
+C         USER-SPECIFIED FILE
+C
+CINTE   IF(ITYPE.EQ.'VIEW' .OR. ITYPE.EQ.'COPY')THEN
+C
+C         VIEW THE CONTENTS OF THE CLIPBOARD
+C
+CINTE     IF (IsClipboardFormatAvailable(CF_TEXT)) THEN
+CINTE        iSt = OpenClipboard(NULL)
+CINTE        hData = GetClipboardData(CF_TEXT)
+CINTE        pText = LocalLock(hData)
+C
+CINTE        ILINRD=0
+CINTE        ICNTR=0
+C
+C1000        CONTINUE
+C
+C             READ UNTIL NULL STRING OR CR/LF ENCOUNTERED.
+C
+CINTE        DO1090II=1,10000
+CINTE          ICNTR=ICNTR+1
+CINTE          ICHR=STEXT(ICNTR)(1:1)
+CINTE          IVAL=ICHAR(ICHR)
+CINTE          IF(IVAL.EQ.0)THEN
+C
+C                END OF STRING ENCOUNTERED
+C
+CINTE            IF(NCSTR.GE.1)THEN
+CINTE              IF(ITYPE.EQ.'VIEW')THEN
+CINTE                NCSTR=MIN(240,NCSTR)
+CINTE                WRITE(ICOUT,1010)ISTR(1:NCSTR)
+C1010                FORMAT(A)
+CINTE                CALL DPWRST('XXX','BUG ')
+CINTE              ELSEIF(ITYPE.EQ.'COPY')THEN
+CINTE                WRITE(IOUNIT,1020)ISTR(1:NCSTR)
+C1020                FORMAT(A)
+CINTE              ENDIF
+CINTE            ENDIF
+CINTE            NCSTR=0
+CINTE            ISTR=' '
+CINTE            GOTO1099
+CINTE          ELSEIF(IVAL.EQ.10 .OR. IVAL.EQ.13)THEN
+C
+C                END OF CURRENT RECORD
+C
+CINTE            ILINRD=ILINRD+1
+CINTE            IF(ILINRD.GT.IHELMX .AND. ITYPE.EQ.'VIEW')THEN
+CINTE              WRITE(ICOUT,1051)
+C1051              FORMAT('                            MORE...?')
+CINTE              CALL DPWRST('XXX','WRIT')
+CINTE              READ(IRD,1052)IRESP
+C1052              FORMAT(A4)
+CINTE              IF(IRESP.EQ.'N')IRESP='NO'
+CINTE              IF(IRESP.EQ.'n')IRESP='NO'
+CINTE              IF(IRESP.EQ.'no')IRESP='NO'
+CINTE              IF(IRESP.EQ.'NO')GOTO1099
+CINTE              ILINRD=0
+CINTE            ENDIF
+CINTE            IF(NCSTR.GE.1)THEN
+CINTE              IF(ITYPE.EQ.'VIEW')THEN
+CINTE                NCSTR=MIN(240,NCSTR)
+CINTE                WRITE(ICOUT,1010)ISTR(1:NCSTR)
+CINTE                CALL DPWRST('XXX','BUG ')
+CINTE              ELSEIF(ITYPE.EQ.'COPY')THEN
+CINTE                WRITE(IOUNIT,1020)ISTR(1:NCSTR)
+CINTE              ENDIF
+CINTE            ENDIF
+CINTE            NCSTR=0
+CINTE            ISTR=' '
+CINTE            GOTO1000
+CINTE          ELSE
+C
+C                ADD CURRENT CHARACTER TO BUFFER.  FOR VIEWING
+C                ON THE SCREEN, LIMIT BUFFER TO 240 CHARACTERS.
+C                FOR WRITING TO EXTERNAL FILE, LIMIT BUFFER TO
+C                255 CHARACTERS.
+C
+CINTE            IF(NCSTR.LT.255)THEN
+CINTE              NCSTR=NCSTR+1
+CINTE              ISTR(NCSTR:NCSTR)=ICHR
+CINTE            ENDIF
+CINTE          ENDIF
+C1090        CONTINUE
+CINTE        GOTO1000
+C1099        CONTINUE
+C
+C            PROCESSING OF CLIPBOARD COMPLETED
+C
+CINTE        iSt = LocalUnlock(hData)
+CINTE        iSt = CloseClipboard()
+CINTE        IF(IERROR.EQ.'YES')GOTO9000
+CINTE     ELSE
+CINTE       WRITE(ICOUT,1110)
+C1110       FORMAT('***** NOTHING AVAILABLE FROM CLIPBOARD')
+CINTE       CALL DPWRST('XXX','BUG ')
+CINTE       IERROR='YES'
+CINTE     ENDIF
+CINTE   ELSEIF(ITYPE.EQ.'RUN')THEN
+CINTE   ENDIF
+      ELSEIF(IOPSY1.EQ.'UNIX')THEN
+        MAXCHR=MAXOBV
+        NVAL=0
+        ILINRD=0
+        IERR=0
+C
+CCCCC   CALL XFETCH(ISTR2,NVAL,MAXCHR,IERR)
+C
+        IF(ITYPE.EQ.'VIEW' .OR. ITYPE.EQ.'COPY')THEN
+C
+          IF(IERR.EQ.1)THEN
+            WRITE(ICOUT,1001)
+ 1001       FORMAT('***** ERROR IN VIEW CLIPBOARD')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1003)
+ 1003       FORMAT('      THE X11 DEVICE IS NOT CURRENTLY OPEN SO ',
+     1             'THE X11 CLIPBOARD IS NOT AVAILABLE.')
+            CALL DPWRST('XXX','BUG ')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+C
+          IF(NVAL.GT.0)THEN
+            IPTR=0
+            ISTRT=1
+            ISTOP=0
+ 1010       CONTINUE
+              IPTR=IPTR+1
+              ISTOP=0
+              IVAL=ISTR2(IPTR)
+C
+              IF(IVAL.EQ.0)THEN
+C
+C               END OF STRING ENCOUNTERED
+C
+                ISTOP=IPTR-1
+                IF(ISTOP.GE.ISTRT)THEN
+                  NCHAR=ISTOP-ISTRT+1
+                  IF(ITYPE.EQ.'VIEW')THEN
+                    IF(NCHAR.GT.240)NCHAR=240
+                  ELSE
+                    IF(NCHAR.GT.255)NCHAR=255
+                  ENDIF
+                  IF(NCHAR.GE.1)THEN
+                    ICNT=0
+                    DO1015J=ISTRT,ISTRT+NCHAR-1
+                      ICNT=ICNT+1
+                      ISTR(ICNT:ICNT)=CHAR(ISTR2(J))
+ 1015               CONTINUE
+                    IFORMT='(A   )'
+                    WRITE(IFORMT(3:5),'(I3)')NCHAR
+                    IF(ITYPE.EQ.'VIEW')THEN
+                      WRITE(ICOUT,IFORMT)ISTR(1:NCHAR)
+                      CALL DPWRST('XXX','BUG ')
+                    ELSE
+                      WRITE(IOUNIT,IFORMT)ISTR(1:NCHAR)
+                    ENDIF
+                  ENDIF
+                ENDIF
+C
+                GOTO9000
+C
+              ELSEIF(IVAL.EQ.10 .OR. IVAL.EQ.13)THEN
+C
+C               END OF RECORD ENCOUNTERED
+C
+                ISTOP=IPTR-1
+                ILINRD=ILINRD+1
+C
+                IF(ILINRD.GT.IHELMX .AND. ITYPE.EQ.'VIEW')THEN
+                  WRITE(ICOUT,1051)
+ 1051             FORMAT('                            MORE...?')
+                  CALL DPWRST('XXX','WRIT')
+                  READ(IRD,1052)IRESP
+ 1052             FORMAT(A4)
+                  IF(IRESP.EQ.'N')IRESP='NO'
+                  IF(IRESP.EQ.'n')IRESP='NO'
+                  IF(IRESP.EQ.'no')IRESP='NO'
+                  IF(IRESP.EQ.'NO')GOTO9000
+                  ILINRD=0
+                ENDIF
+C
+                IF(IVAL.EQ.10 .AND. ISTR2(IPTR+1).EQ.13)IPTR=IPTR+1
+                IF(IVAL.EQ.13 .AND. ISTR2(IPTR+1).EQ.10)IPTR=IPTR+1
+C
+                IF(ISTOP.GE.ISTRT)THEN
+                  NCHAR=ISTOP-ISTRT+1
+                  IF(ITYPE.EQ.'VIEW')THEN
+                    IF(NCHAR.GT.240)NCHAR=240
+                  ELSE
+                    IF(NCHAR.GT.255)NCHAR=255
+                  ENDIF
+                  IF(NCHAR.GE.1)THEN
+                    ICNT=0
+                    DO1020J=ISTRT,ISTRT+NCHAR-1
+                      ICNT=ICNT+1
+                      ISTR(ICNT:ICNT)=CHAR(ISTR2(J))
+ 1020               CONTINUE
+                    IFORMT='(A   )'
+                    WRITE(IFORMT(3:5),'(I3)')NCHAR
+                    IF(ITYPE.EQ.'VIEW')THEN
+                      WRITE(ICOUT,IFORMT)ISTR(1:NCHAR)
+                      CALL DPWRST('XXX','BUG ')
+                    ELSE
+                      WRITE(IOUNIT,IFORMT)ISTR(1:NCHAR)
+                    ENDIF
+                  ENDIF
+                ENDIF
+                ISTRT=IPTR+1
+              ENDIF
+              IF(IPTR.GE.NVAL)GOTO9000
+              GOTO1010
+          ELSE
+            GOTO9000
+          ENDIF
+        ELSEIF(ITYPE.EQ.'NLIN')THEN
+C
+          IF(IERR.EQ.1)THEN
+            WRITE(ICOUT,3001)
+ 3001       FORMAT('***** ERROR IN PROBE CLIPBOARD LINES')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1003)
+            CALL DPWRST('XXX','BUG ')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+C
+          IF(NVAL.GT.0)THEN
+            IPTR=0
+ 3010       CONTINUE
+              IPTR=IPTR+1
+              IF(ISTR2(IPTR).EQ.10)THEN
+                IF(ISTR2(IPTR+1).EQ.13)IPTR=IPTR+1
+                ILINRD=ILINRD+1
+              ELSEIF(ISTR2(IPTR).EQ.13)THEN
+                IF(ISTR2(IPTR+1).EQ.10)IPTR=IPTR+1
+                ILINRD=ILINRD+1
+              ENDIF
+              IF(IPTR.GE.NVAL)GOTO9000
+              GOTO3010
+          ELSE
+            GOTO9000
+          ENDIF
+        ENDIF
+      ELSE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1900)
+ 1900   FORMAT('***** VIEW/COPY FROM SYSTEM CLIPBOARD NOT ',
+     1         'SUPPORTED ON THIS OS/COMPILER PLATFORM.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+      ENDIF
+C
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLI2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPCLI2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9021)IERROR
+ 9021   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPCLI3(IBUGS2,ISUBRO,IERROR)
+C
+C     PURPOSE--CLEAR THE SYSTEM CLIPBOARD.  THIS IS OPERATING
+C              SYSTEM AND COMPILER DEPENDENT.
+C
+C              THIS VERSION IS FOR LINUX.  IT ASSUMES "xclip" IS
+C              INSTALLED.  IT ISSUES THE COMMAND
+C
+C                 echo -n | xclip -selection clipboard
+C
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C               HOST DEPENDENT
+C     VERSION NUMBER--2020.06
+C     ORIGINAL VERSION--JUNE       2020.
+C
+C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
+C
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+#ifdef HAVE_XCLIP
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+      CHARACTER*4 ISSAV3
+      CHARACTER*4 ISSAV4
+      CHARACTER*80 ISTRIN
+#endif
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOST.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+C
+      IERROR='NO'
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLI3')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCLI3--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,81)IBUGS2,ISUBRO
+   81   FORMAT('IBUGS2,ISUBRO = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+#ifdef HAVE_XCLIP
+C
+      ISTRIN=' '
+      IF(IX11SE.EQ.'CLIP')THEN
+        ISTRIN='echo -n | xclip -selection clipboard'
+        NCSTR=36
+      ELSEIF(IX11SE.EQ.'PRIM')THEN
+        ISTRIN='echo -n | xclip -selection primary'
+        NCSTR=34
+      ELSE
+        ISTRIN='echo -n | xclip -selection secondary'
+        NCSTR=36
+      ENDIF
+C
+      ISSAV1=ISYSPE
+      ISSAV2=ISYSHI
+      ISSAV3=ICLEWT
+      ISSAV4=ILINSY
+      ISYSPE='ON'
+      ICLEWT='OFF'
+      ILINSY='COMM'
+      CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+      ISYSPE=ISSAV1
+      ISYSHI=ISSAV2
+      ICLEWT=ISSAV3
+      ILINSY=ISSAV4
+#else
+      IERROR='YES'
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1211)
+ 1211 FORMAT('***** ERROR IN CLIPBOARD CLEAR COMMAND')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,2201)
+ 2201 FORMAT('      THE xclip COMMAND IS NOT AVAILABLE.')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,2203)
+ 2203 FORMAT('      THE CONTENTS OF THE CLIPBOARD WILL NOT BE ',
+     1       'CLEARED.')
+      CALL DPWRST('XXX','BUG ')
+#endif
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLI3')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPCLI3--')
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPCLI4(ISTR,NCSTR,IOP,ICLOSE,IBUGS2,ISUBRO,IERROR)
+C
+C     PURPOSE--WRITE A STRING TO THE SYSTEM CLIPBOARD.
+C              SYSTEM AND COMPILER DEPENDENT.
+C
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C               HOST DEPENDENT
+C     VERSION NUMBER--2014.11
+C     ORIGINAL VERSION--NOVEMBER   2014.
+C
+C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
+C
+      INTEGER NCSTR
+C
+      CHARACTER*(*) ISTR
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHO.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+C
+      IERROR='NO'
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLI4')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCLI4--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,81)IBUGS2,ISUBRO,NCSTR,IOP,ICLOSE
+   81   FORMAT('IBUGS2,ISUBRO,NCSTR,IOP,ICLOSE = ',2(A4,2X),3I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLI4')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPCLI4--')
+        CALL DPWRST('XXX','BUG ')
+        IF(NCSTR.GE.1)THEN
+          WRITE(ICOUT,9013)ISTR(1:MIN(80,NCSTR))
+ 9013     FORMAT('ISTR(1) = 'A80)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPCLI5(XSCRT,NVAR,NROW,MAXVAL,IBUGS2,ISUBRO,IERROR)
+C
+      REAL XSCRT(*)
+C
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCOP2.INC'
+C
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'CLI6')THEN
+        WRITE(ICOUT,52)NVAR,NROW,MAXVAL,IBUGS2,ISUBRO,IERROR
+   52   FORMAT('NVAR,NROW,MAXVAL,IBUGS2,ISUBRO,IERROR = ',
+     1         I8,2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)XSCRT(1),XSCRT(2),XSCRT(3)
+   54   FORMAT('XSCRT(1),XSCRT(2),XSCRT(3) = ',3G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPCLI6(IOUNIT,IBUGS2,ISUBRO,IERROR)
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCOP2.INC'
+C
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'CLI6')THEN
+        WRITE(ICOUT,52)IOUNIT,IBUGS2,ISUBRO,IERROR
+   52   FORMAT('IOUNIT,IBUGS2,ISUBRO,IERROR = ',I8,2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+#endif
+#ifdef CYGWIN
+      SUBROUTINE DPCLIP(XSCRT,MAXVAL,NVAL,NUME,PREAMV,ISKIP,IGRPAU,
+     1                  IVLIST,IVLIS2,IAVANM,MAXRDV,
+     1                  ITYPE,ISTR,NCSTR,
+     1                  IBUGS2,ISUBRO,IERROR)
+C
+C     PURPOSE--READ FROM THE SYSTEM CLIPBOARD.  THIS IS OPERATING
+C              SYSTEM AND COMPILER DEPENDENT.  THIS VERSION IS FOR
+C              CYGWIN.  CYGWIN USES "/dev/clipboard" TO ACCESS THE
+C              CLIPBOARD.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C               HOST DEPENDENT
+C     VERSION NUMBER--2022.09
+C     ORIGINAL VERSION--SEPTEMBER  2022.
+C
+C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
+C
+      REAL XSCRT(*)
+C
+      CHARACTER*4 IVLIST(MAXRDV)
+      CHARACTER*4 IVLIS2(MAXRDV)
+      CHARACTER*4 IAVANM
+      CHARACTER*4 ITYPE
+      CHARACTER*255 ISTR
+      CHARACTER*4 IGRPAU
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      INTEGER I
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHO.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+C
+      IERROR='NO'
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLIP')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCLIP (CYGWIN)--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGS2,ISUBRO,ITYPE,IGRPAU
+   53   FORMAT('IBUGS2,ISUBRO,ITYPE,IGRPAU = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,55)MAXVAL,NUME,ISKIP,PREAMV
+   55   FORMAT('MAXVAL,NUME,ISKIP,PREAMV = ',3I10,G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      IF(ITYPE.EQ.'VARI')THEN
+        DO110I=1,MAXVAL
+          XSCRT(I)=CPUMIN
+  110   CONTINUE
+      ELSE
+        ISTR=' '
+      ENDIF
+      NVAL=0
+      NCSTR=0
+C
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,2011)
+ 2011 FORMAT('***** READING FROM SYSTEM CLIPBOARD NOT SUPPORTED ',
+             'ON THIS OS/COMPILER PLATFORM.')
+      CALL DPWRST('XXX','BUG ')
+      IERROR='YES'
+C
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLIP')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPCLIP--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9021)IERROR,IAVANM,NVAL,NLNRD,NUME,NCSTR
+ 9021   FORMAT('IERROR,IAVANM,NVAL,NLNRD,NUME,NCSTR = ',
+     1         2(A4,2X),2I10,2I5)
+        CALL DPWRST('XXX','BUG ')
+        IF(NCSTR.GT.0)THEN
+          DO9025I=1,NCSTR
+            WRITE(ICOUT,9027)I,ISTR(I:I)
+ 9027       FORMAT('I,ISTR(I:I) = ',I5,2X,A1)
+            CALL DPWRST('XXX','BUG ')
+ 9025     CONTINUE
+        ENDIF
+        IF(NVAL.GT.0)THEN
+          DO9035I=1,NVAL
+            WRITE(ICOUT,9037)I,IVLIST(I),IVLIS2(I)
+ 9037       FORMAT('I,IVLIST(I),IVLIS2(I) = ',I8,2X,2A4)
+            CALL DPWRST('XXX','BUG ')
+ 9035     CONTINUE
+        ENDIF
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPCLI2(ITYPE,IOUNIT,IHELMX,ILINRD,IBUGS2,ISUBRO,IERROR)
+C
+C     PURPOSE--READ FROM THE SYSTEM CLIPBOARD.  THIS IS OPERATING
+C              SYSTEM AND COMPILER DEPENDENT.
+C
+C              THE DPCLIP COMMAND IS USED TO EITHER READ A LIST
+C              VARIABLES OR A SINGLE STRING.
+C
+C              DPCLI2 IS USED TO:
+C
+C                1. VIEW THE CONTENTS OF THE CLIPBOARD
+C                2. TO COPY THE CONTENTS OF THE CLIPBOARD
+C                   TO A USER SPECIFIED FILE.
+C                3. TO EXTRACT THE NUMBER OF LINES IN THE CLIPBOARD.
+C
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C               HOST DEPENDENT
+C     VERSION NUMBER--2014.11
+C     ORIGINAL VERSION--NOVEMBER   2014.
+C
+C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
+C
+C     NOTE THAT "USE IFWIN" (FOR INTEL COMPILER UNDER WINDOWS) MUST COME
+C     BEFORE ANY OTHER DECLARATIONS
+CINTE USE IFWIN
+C
+      CHARACTER*4 ITYPE
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+      CHARACTER*255 ISTR
+      CHARACTER*4  IRESP
+      CHARACTER*6  IFORMT
+C
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOZI.INC'
+C
+      INTEGER ISTR2(MAXOBV)
+      EQUIVALENCE (IGARBG(IIGAR1),ISTR2(1))
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHO.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+C
+      IERROR='NO'
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLI2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCLI2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,81)IBUGS2,ISUBRO,ITYPE,IHELMX
+   81   FORMAT('IBUGS2,ISUBRO,ITYPE= ',3(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      ISTR=' '
+      NCSTR=0
+C
+      MAXCHR=MAXOBV
+      NVAL=0
+      ILINRD=0
+      IERR=0
+C
+      IF(ITYPE.EQ.'VIEW' .OR. ITYPE.EQ.'COPY')THEN
+C
+        IF(IERR.EQ.1)THEN
+          WRITE(ICOUT,1001)
+ 1001     FORMAT('***** ERROR IN VIEW CLIPBOARD')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1003)
+ 1003     FORMAT('      THE X11 DEVICE IS NOT CURRENTLY OPEN SO ',
+     1           'THE X11 CLIPBOARD IS NOT AVAILABLE.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+C
+        IF(NVAL.GT.0)THEN
+          IPTR=0
+          ISTRT=1
+          ISTOP=0
+ 1010     CONTINUE
+            IPTR=IPTR+1
+            ISTOP=0
+            IVAL=ISTR2(IPTR)
+C
+            IF(IVAL.EQ.0)THEN
+C
+C             END OF STRING ENCOUNTERED
+C
+              ISTOP=IPTR-1
+              IF(ISTOP.GE.ISTRT)THEN
+                NCHAR=ISTOP-ISTRT+1
+                IF(ITYPE.EQ.'VIEW')THEN
+                  IF(NCHAR.GT.240)NCHAR=240
+                ELSE
+                  IF(NCHAR.GT.255)NCHAR=255
+                ENDIF
+                IF(NCHAR.GE.1)THEN
+                  ICNT=0
+                  DO1015J=ISTRT,ISTRT+NCHAR-1
+                    ICNT=ICNT+1
+                    ISTR(ICNT:ICNT)=CHAR(ISTR2(J))
+ 1015             CONTINUE
+                  IFORMT='(A   )'
+                  WRITE(IFORMT(3:5),'(I3)')NCHAR
+                  IF(ITYPE.EQ.'VIEW')THEN
+                    WRITE(ICOUT,IFORMT)ISTR(1:NCHAR)
+                    CALL DPWRST('XXX','BUG ')
+                  ELSE
+                    WRITE(IOUNIT,IFORMT)ISTR(1:NCHAR)
+                  ENDIF
+                ENDIF
+              ENDIF
+C
+              GOTO9000
+C
+            ELSEIF(IVAL.EQ.10 .OR. IVAL.EQ.13)THEN
+C
+C             END OF RECORD ENCOUNTERED
+C
+              ISTOP=IPTR-1
+              ILINRD=ILINRD+1
+C
+              IF(ILINRD.GT.IHELMX .AND. ITYPE.EQ.'VIEW')THEN
+                WRITE(ICOUT,1051)
+ 1051           FORMAT('                            MORE...?')
+                CALL DPWRST('XXX','WRIT')
+                READ(IRD,1052)IRESP
+ 1052           FORMAT(A4)
+                IF(IRESP.EQ.'N')IRESP='NO'
+                IF(IRESP.EQ.'n')IRESP='NO'
+                IF(IRESP.EQ.'no')IRESP='NO'
+                IF(IRESP.EQ.'NO')GOTO9000
+                ILINRD=0
+              ENDIF
+C
+              IF(IVAL.EQ.10 .AND. ISTR2(IPTR+1).EQ.13)IPTR=IPTR+1
+              IF(IVAL.EQ.13 .AND. ISTR2(IPTR+1).EQ.10)IPTR=IPTR+1
+C
+              IF(ISTOP.GE.ISTRT)THEN
+                NCHAR=ISTOP-ISTRT+1
+                IF(ITYPE.EQ.'VIEW')THEN
+                  IF(NCHAR.GT.240)NCHAR=240
+                ELSE
+                  IF(NCHAR.GT.255)NCHAR=255
+                ENDIF
+                IF(NCHAR.GE.1)THEN
+                  ICNT=0
+                  DO1020J=ISTRT,ISTRT+NCHAR-1
+                    ICNT=ICNT+1
+                    ISTR(ICNT:ICNT)=CHAR(ISTR2(J))
+ 1020             CONTINUE
+                  IFORMT='(A   )'
+                  WRITE(IFORMT(3:5),'(I3)')NCHAR
+                  IF(ITYPE.EQ.'VIEW')THEN
+                    WRITE(ICOUT,IFORMT)ISTR(1:NCHAR)
+                    CALL DPWRST('XXX','BUG ')
+                  ELSE
+                    WRITE(IOUNIT,IFORMT)ISTR(1:NCHAR)
+                  ENDIF
+                ENDIF
+              ENDIF
+              ISTRT=IPTR+1
+            ENDIF
+            IF(IPTR.GE.NVAL)GOTO9000
+            GOTO1010
+        ELSE
+          GOTO9000
+        ENDIF
+      ELSEIF(ITYPE.EQ.'NLIN')THEN
+C
+        IF(IERR.EQ.1)THEN
+          WRITE(ICOUT,3001)
+ 3001     FORMAT('***** ERROR IN PROBE CLIPBOARD LINES')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1003)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+C
+        IF(NVAL.GT.0)THEN
+          IPTR=0
+ 3010     CONTINUE
+            IPTR=IPTR+1
+            IF(ISTR2(IPTR).EQ.10)THEN
+              IF(ISTR2(IPTR+1).EQ.13)IPTR=IPTR+1
+              ILINRD=ILINRD+1
+            ELSEIF(ISTR2(IPTR).EQ.13)THEN
+              IF(ISTR2(IPTR+1).EQ.10)IPTR=IPTR+1
+              ILINRD=ILINRD+1
+            ENDIF
+            IF(IPTR.GE.NVAL)GOTO9000
+            GOTO3010
+        ELSE
+          GOTO9000
+        ENDIF
+      ENDIF
+    ELSE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1900)
+ 190  FORMAT('***** VIEW/COPY FROM SYSTEM CLIPBOARD NOT ',
+     1       'SUPPORTED ON THIS OS/COMPILER PLATFORM.')
+      CALL DPWRST('XXX','BUG ')
+      IERROR='YES'
+      ENDIF
+C
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLI2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPCLI2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9021)IERROR
+ 9021   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPCLI3(IBUGS2,ISUBRO,IERROR)
+C
+C     PURPOSE--CLEAR THE SYSTEM CLIPBOARD.  THIS IS OPERATING
+C              SYSTEM AND COMPILER DEPENDENT.
+C
+C              THIS VERSION IS FOR LINUX.  IT ASSUMES "xclip" IS
+C              INSTALLED.  IT ISSUES THE COMMAND
+C
+C                 echo -n | xclip -selection clipboard
+C
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C               HOST DEPENDENT
+C     VERSION NUMBER--2020.06
+C     ORIGINAL VERSION--JUNE       2020.
+C
+C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
+C
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+#ifdef HAVE_XCLIP
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+      CHARACTER*4 ISSAV3
+      CHARACTER*4 ISSAV4
+      CHARACTER*80 ISTRIN
+#endif
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOST.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+C
+      IERROR='NO'
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLI3')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCLI3--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,81)IBUGS2,ISUBRO
+   81   FORMAT('IBUGS2,ISUBRO = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+#ifdef HAVE_XCLIP
+C
+      ISTRIN=' '
+      IF(IX11SE.EQ.'CLIP')THEN
+        ISTRIN='echo -n | xclip -selection clipboard'
+        NCSTR=36
+      ELSEIF(IX11SE.EQ.'PRIM')THEN
+        ISTRIN='echo -n | xclip -selection primary'
+        NCSTR=34
+      ELSE
+        ISTRIN='echo -n | xclip -selection secondary'
+        NCSTR=36
+      ENDIF
+C
+      ISSAV1=ISYSPE
+      ISSAV2=ISYSHI
+      ISSAV3=ICLEWT
+      ISSAV4=ILINSY
+      ISYSPE='ON'
+      ICLEWT='OFF'
+      ILINSY='COMM'
+      CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+      ISYSPE=ISSAV1
+      ISYSHI=ISSAV2
+      ICLEWT=ISSAV3
+      ILINSY=ISSAV4
+#else
+      IERROR='YES'
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1211)
+ 1211 FORMAT('***** ERROR IN CLIPBOARD CLEAR COMMAND')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,2201)
+ 2201 FORMAT('      THE xclip COMMAND IS NOT AVAILABLE.')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,2203)
+ 2203 FORMAT('      THE CONTENTS OF THE CLIPBOARD WILL NOT BE ',
+     1       'CLEARED.')
+      CALL DPWRST('XXX','BUG ')
+#endif
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLI3')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPCLI3--')
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPCLI4(ISTR,NCSTR,IOP,ICLOSE,IBUGS2,ISUBRO,IERROR)
+C
+C     PURPOSE--WRITE A STRING TO THE SYSTEM CLIPBOARD.
+C              SYSTEM AND COMPILER DEPENDENT.
+C
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C               HOST DEPENDENT
+C     VERSION NUMBER--2014.11
+C     ORIGINAL VERSION--NOVEMBER   2014.
+C
+C-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
+C
+      INTEGER NCSTR
+C
+      CHARACTER*(*) ISTR
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOHO.INC'
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+C
+      IERROR='NO'
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLI4')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPCLI4--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,81)IBUGS2,ISUBRO,NCSTR,IOP,ICLOSE
+   81   FORMAT('IBUGS2,ISUBRO,NCSTR,IOP,ICLOSE = ',2(A4,2X),3I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'CLI4')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPCLI4--')
+        CALL DPWRST('XXX','BUG ')
+        IF(NCSTR.GE.1)THEN
+          WRITE(ICOUT,9013)ISTR(1:MIN(80,NCSTR))
+ 9013     FORMAT('ISTR(1) = 'A80)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPCLI5(XSCRT,NVAR,NROW,MAXVAL,IBUGS2,ISUBRO,IERROR)
+C
+      REAL XSCRT(*)
+C
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCOP2.INC'
+C
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'CLI6')THEN
+        WRITE(ICOUT,52)NVAR,NROW,MAXVAL,IBUGS2,ISUBRO,IERROR
+   52   FORMAT('NVAR,NROW,MAXVAL,IBUGS2,ISUBRO,IERROR = ',
+     1         I8,2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)XSCRT(1),XSCRT(2),XSCRT(3)
+   54   FORMAT('XSCRT(1),XSCRT(2),XSCRT(3) = ',3G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPCLI6(IOUNIT,IBUGS2,ISUBRO,IERROR)
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCOP2.INC'
+C
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'CLI6')THEN
+        WRITE(ICOUT,52)IOUNIT,IBUGS2,ISUBRO,IERROR
+   52   FORMAT('IOUNIT,IBUGS2,ISUBRO,IERROR = ',I8,2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+#endif
+#ifdef MACOSX
       SUBROUTINE DPCLIP(XSCRT,MAXVAL,NVAL,NUME,PREAMV,ISKIP,IGRPAU,
      1                  IVLIST,IVLIS2,IAVANM,MAXRDV,
      1                  ITYPE,ISTR,NCSTR,

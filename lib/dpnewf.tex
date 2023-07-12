@@ -1,5 +1,5 @@
 9.
-                                                     June   2021
+                                                     June 2023
 This is the DATAPLOT News file DPNEWF.TEX.  This NEWS file contains a
 list of DATAPLOT enhancements.  Some commands may be documented here
 that are not yet available in the standard documentation.
@@ -7,6 +7,159 @@ that are not yet available in the standard documentation.
 The complete news file can be viewed at
 
     http://www.itl.nist.gov/div898/software/dataplot/news.htm
+
+-----------------------------------------------------------------------
+The following enhancements were made to DATAPLOT
+September 2021 - June 2023.
+-----------------------------------------------------------------------
+
+ 1. Added the following LET commands
+
+        LET Y = EXPONENTIAL ORDER STATISTIC MEDIANS FOR I = 1 1 N
+        LET Y = LOGISTIC    ORDER STATISTIC MEDIANS FOR I = 1 1 N
+
+        LET Y = UNIFORM     ORDER STATISTIC MEANS   FOR I = 1 1 N
+        LET Y = NORMAL      ORDER STATISTIC MEANS   FOR I = 1 1 N
+        LET Y = EXPONENTIAL ORDER STATISTIC MEANS   FOR I = 1 1 N
+
+        LET Y = UNIFORM     ORDER STATISTIC STANDARD DEVIATIONS FOR I = 1 1 N
+        LET Y = NORMAL      ORDER STATISTIC STANDARD DEVIATIONS FOR I = 1 1 N
+        LET Y = EXPONENTIAL ORDER STATISTIC STANDARD DEVIATIONS FOR I = 1 1 N
+
+        LET S = SAVAGE SCORES FOR I = 1 1 N
+        LET S = VAN DER WAERDEN SCORE Y
+        LET S = ANSARI BRADLEY SCORE Y
+        LET S = MOOD SCORE Y
+        LET S = MEDIAN SCORE Y
+        LET S = KLOTZ SCORE Y
+        LET S = CONOVER SCORE Y X
+        LET Y1P X2P = PLACEMENT SCORE Y1 Y2
+
+ 2. Made the following updates to Analysis commands.
+
+    a. Added the linear pool method to the CONSENSUS MEANS and CONSENSUS
+       MEANS PLOT commands.
+
+    b. The F TEST command for equal standard deviations is known to be
+       quite senstive to departures from normality.  Shoemaker and Bonett
+       have proposed modifications to make the test more robust.  Options
+       have been added to use these modifications.
+
+       In addition, added the command
+
+          RATIO OF STANDARD DEVIATIONS CONFIDENCE LIMITS Y1 Y2
+          RATIO OF VARIANCES           CONFIDENCE LIMITS Y1 Y2
+
+       These commands also support the Shoemaker and Bonett modifications.
+
+    c. Added the command
+
+           SIEGEL TUKEY TEST Y1 Y2
+
+    This is a two sample nonparametric test for equal standard deviations.
+
+ 3. Made the following updates to graphics commands.
+
+    a. Added the command
+
+          SET EMPIRICAL CDF PLOT CONFIDENCE LIMITS <ON/OFF>
+
+       If set to ON, then the empirical cdf plot command will generate
+       approximate confidence intervals.  If set to OFF (the default),
+       the confidence intervals will not be generated.
+
+ 4. Added the command
+
+        DEVICE <1/2/3> HARDWARE CHARACTER OFFSET  <horizontal>  <vertical>
+
+ 5. The LET ... = CREATE MATRIX command was updated to support the
+     " TO " syntax.  So you can do something like the following
+
+        LET M = CREATE MATRIX X1 TO X50
+        LET M = CREATE MATRIX X4 X10 TO X19 X35
+
+ 6. Fixed several bugs.  In particular, made some tweaks to the
+    QUICKWIN driver and the CLIPBOARD functions to work with the
+    latest version of the Intel compiler under Windows.
+
+-----------------------------------------------------------------------
+The following enhancements were made to DATAPLOT
+July 2021 - August 2021.
+-----------------------------------------------------------------------
+
+ 1. Modified the command
+
+       SET EXCEL SHEET <name>
+
+    so that <name> preserves the case.  The <name> argument is still
+    restricted to 8 characters.
+
+ 2. Added PROBE GD FONT as a synonym for PROBE GD FONT NAME and
+    PROBE SVG FONT as a synonym for PROBE SVG FONT NAME.
+
+ 3. For the various FONT commands, added HARDWARE as a synonym for
+    TEKTRONIX to denote the use of hardware fonts (i.e., use the
+    fonts available on the specific graphics device).  The use of
+    HARDWARE rather than TEKTRONIX makes the meaning more clear.
+
+ 4. Previously for SUBSET clauses the value to the right of the
+    operator was restricted to being a number or a parameter.  That
+    is, for
+
+         PLOT Y X  SUBSET X > A
+
+    the name A was restricted to a parameter name (i.e., a single
+    value).  This has now been extended to support variables.  So
+    you can now do something like
+
+         LET N = 10
+         LET Y1 = NORMAL RANDOM NUMBERS FOR I = 1 1 N
+         LET Y1 = SORT Y1
+         LET Y2 = LOGISTIC RANDOM NUMBERS FOR I = 1 1 N
+         LET Y2 = SORT Y2
+         LET TAG = 0 FOR I = 1 1 N
+         LET TAG = 1 SUBSET Y1 < Y2
+
+ 5. If you enter a command like
+
+       LET N = SIZE Y
+
+    and Y does not exist, N will be set to zero rather than
+    returning an error message.
+
+ 6. Made the following updates to the STRING commands.
+
+    a. Updated the STRING COMPARE command to have options to
+       ignore the case and to specify how many characters in
+       the string to compare.  Enter HELP STRING COMPARE for
+       details.
+
+    b. Added the command
+
+           LET SOUT = STRING REPEAT SIN COUNT
+
+       This creates the string SOUT by repeating COUNT times
+       the string SIN.
+
+ 7. For linear fits, save the following as internal parameters
+
+       RESSS   - the residual sum of squares
+       SSREG   - the regression sum of squares
+       SSTOTAL - the total sum of squares
+       MSE     - the mean square error
+       MSR     - the mean square of the regression
+       FSTAT   - the value of the F statistic
+       FCV95   - the 95% critical value for the F statistic
+       FCV99   - the 99% critical value for the F statistic
+
+    These values were previously printed in the ANOVA table written to
+    dpst5f.dat, but they were not saved to internal parameters.
+
+ 8. Fixed a bug where multiple SUBSET/FOR/EXCEPT clauses were not
+    working on the FIT command.
+
+    Also fixed a bug for the case where a command line argument
+    (including the argument name) exceeded 80 characters.
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
@@ -167,7 +320,7 @@ March 2021 - June 2021.
     in many cases, the uniform distribution will be bounded at zero.
     The default is BOTH.
 
- 8. Added the command line switches "-gui" and "-nogui".  Entering
+ 9. Added the command line switches "-gui" and "-nogui".  Entering
     this as a command line option allows the PROBE GUI command to
     be used in the "dplogf.tex" file.  The SET GUI command is not
     entered by the Tcl/Tk scripts until after the "dplogf.tex" file
@@ -187,7 +340,7 @@ March 2021 - June 2021.
     that you enter SET HELP LINES 1000000 and SET LIST LINES 1000000
     before using the HELP or LIST commands in the GUI.
 
- 9. For the READ EXCEL command, Pandas by default assumes that the
+10. For the READ EXCEL command, Pandas by default assumes that the
     first row of the Excel file is a header row containing the variable
     names.  If the first row in fact contains data, you can now enter
     the command
@@ -198,7 +351,7 @@ March 2021 - June 2021.
 
         SET EXCEL HEADER ON
 
-10. Fixed several miscellaneous bugs.
+11. Fixed several miscellaneous bugs.
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT

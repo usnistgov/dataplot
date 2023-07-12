@@ -13,7 +13,7 @@ Order of observations per line image--
    2. Censoring variable
 To read this file into Dataplot--
    SKIP 25
-   READ NOR.DAT Y X
+   READ NORCEN.DAT Y X
    SET MAXIMUM LIKELIHOOD PERCENTILE DEFAULT
    NORMAL MAXIMUM LIKELIHOOD Y X
  

@@ -2929,6 +2929,31 @@ C
       DO2000I=1,NUMNAM
         I2=I
         IF(IHLEFT.EQ.IHNAME(I).AND.IHLEF2.EQ.IHNAM2(I))THEN
+          IF(IUSE(I2).NE.'V   ' .AND. IUSE(I2).NE.'P   ')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2201)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2101)IHLEFT,IHLEF2
+ 2101       FORMAT('      AN ATTEMPT WAS MADE TO USE ',2A4,' AS A ',
+     1             'VARIABLE OR PARAMETER')
+            CALL DPWRST('XXX','BUG ')
+            IF(IUSE(I2).EQ.'F')THEN
+              WRITE(ICOUT,2111)
+ 2111         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A STRING.')
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(IUSE(I2).EQ.'M')THEN
+              WRITE(ICOUT,2112)
+ 2112         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A MATRIX.')
+              CALL DPWRST('XXX','BUG ')
+            ELSE
+              WRITE(ICOUT,2113)IUSE(I2)
+ 2113         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A ',A4,'.')
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+            IERROR='YES'
+            GOTO9000
+          ENDIF
           ILISTL=I2
           GOTO2900
         ENDIF

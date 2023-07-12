@@ -12268,8 +12268,8 @@ C
       RETURN
       END
       SUBROUTINE RSURF(X,Y,NP,KOLR,FRM,
-     1           XTEMP,YTEMP,TATEMP,NTEMP,NTRACE,
-     1           IBUGG3,ISUBRO,IERROR)
+     1                 XTEMP,YTEMP,TATEMP,NTEMP,NTRACE,
+     1                 IBUGG3,ISUBRO,IERROR)
 C
 C     PURPOSE--PAINT IN THE ENCLOSED REGION
 C              DEFINED BY THE NP COORDINATES
@@ -12294,26 +12294,28 @@ C
       DIMENSION YTEMP(*)
       DIMENSION TATEMP(*)
 C
-C-----COMMON----------------------------------------------------------
+C---------------------------------------------------------------------
 C
       INCLUDE 'DPCOP2.INC'
 C
 C-----START POINT-----------------------------------------------------
 C
-      IERROR='NO'
       IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'SURF')THEN
         WRITE(ICOUT,999)
   999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,1011)NP,KOLR,NTEMP,NTRACE,FRM
- 1011   FORMAT('FROM RSURF--NP,KOLR,NTEMP,NTRACE,FRM = ',4I8,F10.5)
+        WRITE(ICOUT,1011)NP,NTEMP,NTRACE,KOLR,FRM,ISUBRO,IBUGG3,IERROR
+ 1011   FORMAT('FROM RSURF--NP,NTEMP,NTRACE,KOLR,FRM,',
+     1         'ISUBRO,IBUGG3,IERROR = ',4I8,F10.5,3(2X,A4))
         CALL DPWRST('XXX','BUG ')
         DO1015I=1,NP
-          WRITE(ICOUT,1016)I,X(I),Y(I),TATEMP(I),XTEMP(I),YTEMP(I)
- 1016     FORMAT('I,X(I),Y(I),TATEMP(I),XTEMP(I),YTEMP(I) = ',
-     1           I8,5G15.7)
+          WRITE(ICOUT,1016)I,X(I),Y(I)
+ 1016     FORMAT('            I,X(I),Y(I) = ',I8,2F10.5)
           CALL DPWRST('XXX','BUG ')
  1015   CONTINUE
+        WRITE(ICOUT,1018)XTEMP(1),YTEMP(1),TATEMP(1)
+ 1018   FORMAT('XTEMP(1),YTEMP(1),TATEMP(1) = ',3G15.7)
+        CALL DPWRST('XXX','BUG ')
       ENDIF
 C
 CCCCC NTRACE=NTRACE+1
@@ -21075,7 +21077,8 @@ C          ADJUSTMENTS FOR X .LT. 0
       CHII=-PI
       RETURN
       END 
-      SUBROUTINE SIDEDI(XC,YC,NS,D,IB,JB,X,Y)
+      SUBROUTINE SIDEDI(XC,YC,NS,D,IB,JB,X,Y,
+     1                  IBUGG3,ISUBRO,IERROR)
 C
 C     PURPOSE--XX
 C
@@ -21087,13 +21090,29 @@ C                                        CHANGED DO WHILE/END DO (ALAN HECKERT).
 C
 C---------------------------------------------------------------------
 C
+      CHARACTER*4 IBUGG3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
       DIMENSION IB(*)
       DIMENSION JB(*)
       DIMENSION X(*)
       DIMENSION Y(*)
 C
+      INCLUDE 'DPCOP2.INC'
+C
 C-----START POINT-----------------------------------------------------
 C
+      IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'DEDI')THEN
+        WRITE(ICOUT,101)NBX,NS,XC,YC,D
+  101   FORMAT('FROM SIDEDI: NS,XC,YC,D = ',I8,3G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,103)X(1),X(2),Y(1),Y(2)
+  103   FORMAT('X(1),X(2),Y(1),Y(2) = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      IERROR='NO'
       EPS=0.001*AMIN1(ABS(X(2)-X(1)),ABS(Y(2)-Y(1)))
       NS=0
       D=0.
@@ -21105,6 +21124,22 @@ CCCCC DO WHILE (NS.EQ.0)                 JANUARY 1989
           I=IB(NB)
           J1=JB(NB)
           J2=JB(NB+1)
+C
+          IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'DEDI')THEN
+             WRITE(ICOUT,141)NB,I,J1,J2
+  141        FORMAT('IB(NB) = IB(NB+1) CASE: NB,I,J1,J2 = ',4I6)
+             CALL DPWRST('XXX','BUG ')
+             WRITE(ICOUT,142)XC,X(I),YC,Y(J1),Y(J2)
+  142        FORMAT('XC,X(I),YC,Y(J1),Y(J2) = ',5G15.7)
+             CALL DPWRST('XXX','BUG ')
+             TERM1=ABS(XC-X(I))
+             TERM2=ABS(YC-Y(J1))
+             TERM3=ABS(Y(J2)-Y(J1))
+             WRITE(ICOUT,143)TERM1,TERM2,TERM3
+  143        FORMAT('TERM1,TERM2,TERM3 = ',3G15.7)
+             CALL DPWRST('XXX','BUG ')
+          ENDIF
+C
           IF (ABS(XC-X(I)).LE.EPS.AND.
      1         ABS(YC-Y(J1)).LT.ABS(Y(J2)-Y(J1))) THEN
             D=D+ABS(YC-Y(J1))
@@ -21116,6 +21151,22 @@ CCCCC DO WHILE (NS.EQ.0)                 JANUARY 1989
           J=JB(NB)
           I1=IB(NB)
           I2=IB(NB+1)
+C
+          IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'DEDI')THEN
+             WRITE(ICOUT,151)NB,J,I1,I2
+  151        FORMAT('IB(NB) <> IB(NB+1) CASE: NB,J,I1,I2 = ',4I6)
+             CALL DPWRST('XXX','BUG ')
+             WRITE(ICOUT,152)XC,X(I1),X(I2),YC,Y(J)
+  152        FORMAT('XC,X(I1),X(I2),YC,Y(J) = ',5G15.7)
+             CALL DPWRST('XXX','BUG ')
+             TERM1=ABS(YC-Y(J))
+             TERM2=ABS(XC-X(I1))
+             TERM3=ABS(X(I2)-X(I1))
+             WRITE(ICOUT,153)TERM1,TERM2,TERM3
+  153        FORMAT('TERM1,TERM2,TERM3 = ',3G15.7)
+             CALL DPWRST('XXX','BUG ')
+          ENDIF
+C
           IF (ABS(YC-Y(J)).LE.EPS.AND.
      1         ABS(XC-X(I1)).LT.ABS(X(I2)-X(I1))) THEN
             D=D+ABS(XC-X(I1))
@@ -21126,6 +21177,13 @@ CCCCC DO WHILE (NS.EQ.0)                 JANUARY 1989
         END IF
         NB=NB+1
 CCCCC END DO                             JANUARY 1989
+C
+      IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'DEDI')THEN
+        WRITE(ICOUT,191)NB,D
+  191   FORMAT('FROM SIDEDI END OF LOOP: NB,D = ',I6,G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
       GOTO100
   199 CONTINUE
       RETURN
@@ -33085,6 +33143,179 @@ C
    50 CONTINUE
       RETURN
       END
+      SUBROUTINE SSCORE(X,N,IWRITE,XEOS,IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES THE EXPONENTIAL (OR SAVAGE) SCORES
+C              OF THE N ELEMENTS OF THE SINGLE PRECISION VECTOR X, AND
+C              PUTS THE RESULTING N SCORES INTO THE SINGLE PRECISION
+C              VECTOR XEOS.
+C
+C              THE MEAN ORDER STATISTICS FOR THE EXPONENTIAL
+C              DISTRIBUTION ARE
+C
+C                 1/N, 1/N + 1/(N-1), 1/N + 1/(N-1) + 1/(N-2)
+C
+C              THE SAVAGE (OR EXPONENTIAL SCORES) ARE THEN OBTAINED BY
+C              SUBTRACTING 1 FROM THE EXPONENTIAL MEAN ORDER STATISTICS.
+C
+C              SAVAGE SCORES ARE TYPICALLY USED IN THE CONTEXT OF
+C              NON-PARAMETRIC STATISTICS.
+C
+C     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+C                                OBSERVATIONS TO BE SCORED.
+C                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR X.
+C     OUTPUT ARGUMENTS--XEOS   = THE SINGLE PRECISION VECTOR INTO WHICH
+C                                THE SCORES FROM X WILL BE PLACED.
+C     OUTPUT--THE SINGLE PRECISION VECTOR XEOS CONTAINING THE NORMAL
+C             ORDER SCORES (IN ASCENDING ORDER) OF THE VALUES
+C             IN THE SINGLE PRECISION VECTOR X.
+C     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--NONE
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     COMMENT--THE FIRST AND THIRD ARGUMENTS IN THE CALLING SEQUENCE MAY
+C              BE IDENTICAL; THAT IS, AN 'IN PLACE' SCORING IS
+C              PERMITTED.
+C     REFERENCES--HIGGINS (2004), "INTRODUCTION TO MODERN NONPARAMETRIC
+C                 STATISTICS", DUXBURY ADVANCED SERIES, P. 50.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATION INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2023.05
+C     ORIGINAL VERSION--MAY       2023.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION X(*)
+      DIMENSION XEOS(*)
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='SSCO'
+      ISUBN2='RE  '
+      IERROR='NO'
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CORE')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF SSCORE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)N,IBUGA3,ISUBRO
+   53   FORMAT('N,IBUGA3,ISUBRO = ',I8,(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,X(I)
+   56     FORMAT('I,X(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      AN=N
+C
+      IF(N.LT.1)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN SAVAGE SCORES--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+  113   FORMAT('      THE NUMBER OF OBSERVATIONS IS LESS THAN 1.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,118)N
+  118   FORMAT('      THE NUMBER OF OBSERVATIONS IS ',I8)
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 2--                              **
+C               **  GENERATE THE SAVAGE SCORES            **
+C               ********************************************
+C
+        DO211K=1,N
+          DSUM=0.0D0
+          DO212J=1,K
+            DVAL=1.0D0/DBLE(N-J+1)
+            DSUM=DSUM + DVAL
+  212     CONTINUE
+          XEOS(K)=REAL(DSUM) - 1.0
+  211     CONTINUE
+C
+C
+C               ******************************
+C               **  STEP 4--                **
+C               **  WRITE OUT A FEW LINES   **
+C               **  OF SUMMARY INFORMATION  **
+C               **  ABOUT THE CODING.       **
+C               ******************************
+C
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IINDX=1
+        WRITE(ICOUT,912)IINDX,XEOS(IINDX)
+  912   FORMAT('THE SAVAGE SCORE OF ROW ',I10,' = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        IINDX=N
+        WRITE(ICOUT,912)IINDX,XEOS(IINDX)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CORE')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF SSCORE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        DO9015I=1,N
+          WRITE(ICOUT,9016)I,X(I),XEOS(I)
+ 9016     FORMAT('I,X(I),XEOS(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9015   CONTINUE
+      ENDIF
+C
+      RETURN
+      END
       SUBROUTINE SSIEV(A,LDA,N,E,WORK,JOB,INFO)
 C***BEGIN PROLOGUE  SSIEV
 C***DATE WRITTEN   800808   (YYMMDD)
@@ -34554,7 +34785,7 @@ C
    70   CONTINUE
       RETURN
       END
-      SUBROUTINE START1(A,X,Y,NS,CN,XC,YC)
+      SUBROUTINE START1(A,X,Y,IMX,NS,CN,XC,YC,ISUBRO,IBUGG3)
 C
 C     PURPOSE--XX
 C
@@ -34562,9 +34793,13 @@ C     WRITTEN BY--DAVID W. BEHRINGER NOAA/AOML (MIAMI).
 C                 AS PART OF NOAA'S CONCX V.3   MARCH 1988.
 C     ORIGINAL VERSION (IN DATAPLOT)--AUGUST    1988.
 C
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGG3
+C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOCP.INC'
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -34575,6 +34810,12 @@ C
       DIMENSION Y(2)
 C
 C-----START POINT-----------------------------------------------------
+C
+      IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'ART1')THEN
+        WRITE(ICOUT,51)IMX,MAXIMX
+   51   FORMAT('START1: IMX,MAXIMX = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
         DNM=A(1,1)-A(1,2)
         IF (DNM.NE.0.) THEN
@@ -34592,7 +34833,7 @@ C
         END IF
       RETURN
       END
-      SUBROUTINE START2(A,X,Y,NS,CN,XC,YC)
+      SUBROUTINE START2(A,X,Y,IMX,NS,CN,XC,YC,ISUBRO,IBUGG3)
 C
 C     PURPOSE--XX
 C
@@ -34600,9 +34841,13 @@ C     WRITTEN BY--DAVID W. BEHRINGER NOAA/AOML (MIAMI).
 C                 AS PART OF NOAA'S CONCX V.3   MARCH 1988.
 C     ORIGINAL VERSION (IN DATAPLOT)--AUGUST    1988.
 C
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGG3
+C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOCP.INC'
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -34613,6 +34858,12 @@ C
       DIMENSION Y(2)
 C
 C-----START POINT-----------------------------------------------------
+C
+      IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'ART2')THEN
+        WRITE(ICOUT,51)IMX,MAXIMX
+   51   FORMAT('START2: IMX,MAXIMX = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
         DNM=A(1,1)-A(2,1)
         IF (DNM.NE.0.) THEN
@@ -34630,7 +34881,7 @@ C
         ENDIF
       RETURN
       END
-      SUBROUTINE START3(A,X,Y,NS,CN,XC,YC)
+      SUBROUTINE START3(A,X,Y,IMX,NS,CN,XC,YC,ISUBRO,IBUGG3)
 C
 C     PURPOSE--XX
 C
@@ -34638,9 +34889,14 @@ C     WRITTEN BY--DAVID W. BEHRINGER NOAA/AOML (MIAMI).
 C                 AS PART OF NOAA'S CONCX V.3   MARCH 1988.
 C     ORIGINAL VERSION (IN DATAPLOT)--AUGUST    1988.
 C
+C
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGG3
+C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOCP.INC'
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -34652,23 +34908,29 @@ C
 C
 C-----START POINT-----------------------------------------------------
 C
-        DNM=A(1,2)-A(1,1)
-        IF (DNM.NE.0.) THEN
-          R=(CN-A(1,1))/DNM
-        ELSE
-          R=-1.
-        END IF
-        IF ((R.GT.0..AND.R.LT.1.).OR.
-     1     (R.EQ.0..AND.DNM.LT.0.).OR.
+      IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'ART3')THEN
+        WRITE(ICOUT,51)IMX,MAXIMX
+   51   FORMAT('START3: IMX,MAXIMX = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      DNM=A(1,2)-A(1,1)
+      IF (DNM.NE.0.) THEN
+        R=(CN-A(1,1))/DNM
+      ELSE
+        R=-1.
+      END IF
+      IF ((R.GT.0..AND.R.LT.1.).OR.
+     1    (R.EQ.0..AND.DNM.LT.0.).OR.
      2     (R.EQ.1..AND.DNM.GT.0.)) THEN
-          XC=X(1)
-          YC=Y(1)+R*(Y(2)-Y(1))
-        ELSE
-          NS=-1
-        ENDIF
+        XC=X(1)
+        YC=Y(1)+R*(Y(2)-Y(1))
+      ELSE
+        NS=-1
+      ENDIF
       RETURN
       END
-      SUBROUTINE START4(A,X,Y,NS,CN,XC,YC)
+      SUBROUTINE START4(A,X,Y,IMX,NS,CN,XC,YC,ISUBRO,IBUGG3)
 C
 C     PURPOSE--XX
 C
@@ -34676,9 +34938,13 @@ C     WRITTEN BY--DAVID W. BEHRINGER NOAA/AOML (MIAMI).
 C                 AS PART OF NOAA'S CONCX V.3   MARCH 1988.
 C     ORIGINAL VERSION (IN DATAPLOT)--AUGUST    1988.
 C
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGG3
+C
 C-----COMMON----------------------------------------------------------
 C
       INCLUDE 'DPCOCP.INC'
+      INCLUDE 'DPCOP2.INC'
 C
 C---------------------------------------------------------------------
 C
@@ -34689,6 +34955,12 @@ C
       DIMENSION Y(2)
 C
 C-----START POINT-----------------------------------------------------
+C
+      IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'ART4')THEN
+        WRITE(ICOUT,51)IMX,MAXIMX
+   51   FORMAT('START4: IMX,MAXIMX = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
         DNM=A(2,1)-A(1,1)
         IF (DNM.NE.0.) THEN

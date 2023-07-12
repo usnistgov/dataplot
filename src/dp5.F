@@ -2618,6 +2618,9 @@ C     UPDATED         --APRIL     2017. MODIFY THE FEEDBACK TO SHOW
 C                                       THE ACTUAL MAPPING
 C     UPDATED         --JUNE      2019. DIMENSION SCRATCH REAL ARRAYS IN
 C                                       CALLING ROUTINE
+C     UPDATED         --SEPTEMBER 2021. REPORT AN ERROR IF LHS
+C                                       PREVIOUSLY DEFINED, BUT NOT AS
+C                                       VARIABLE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -2705,8 +2708,39 @@ C
       DO2000I=1,NUMNAM
         I2=I
         IF(IHLEFT.EQ.IHNAME(I).AND.IHLEF2.EQ.IHNAM2(I))THEN
-          ILISTL=I2
-          GOTO2100
+          IF(IUSE(I).EQ.'V   ')THEN
+            ILISTL=I2
+            GOTO2100
+          ELSE
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2201)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2010)IHLEFT,IHLEF2
+ 2010       FORMAT('      AN ATTEMPT WAS MADE TO USE ',2A4,' AS A ',
+     1             'VARIABLE')
+            CALL DPWRST('XXX','BUG ')
+            IF(IUSE(I).EQ.'P')THEN
+              WRITE(ICOUT,2011)
+ 2011         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A ',
+     1               'PARAMETER.')
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(IUSE(I).EQ.'M')THEN
+              WRITE(ICOUT,2012)
+ 2012         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A MATRIX.')
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(IUSE(I).EQ.'F')THEN
+              WRITE(ICOUT,2013)
+ 2013         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A STRING.')
+              CALL DPWRST('XXX','BUG ')
+            ELSE
+              WRITE(ICOUT,2014)IUSE(I)
+ 2014         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A ',A4,'.')
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+            IERROR='YES'
+            GOTO9000
+          ENDIF
         ENDIF
  2000 CONTINUE
       ILISTL=NUMNAM+1
@@ -2714,7 +2748,7 @@ C
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,2201)
- 2201   FORMAT('***** ERROR IN CODECH--')
+ 2201   FORMAT('***** ERROR IN CHARACTER CODE (CODECH)--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,2202)
  2202   FORMAT('      THE NUMBER OF VARIABLE, PARAMETER, AND FUNCTION')
@@ -3028,6 +3062,9 @@ C     UPDATED         --APRIL     2017. MODIFY THE FEEDBACK TO SHOW
 C                                       THE ACTUAL MAPPING
 C     UPDATED         --JUNE      2019. DIMENSION REAL SCRATCH ARRAYS
 C                                       IN CALLING ROUTINE
+C     UPDATED         --SEPTEMBER 2021. REPORT AN ERROR IF LHS
+C                                       PREVIOUSLY DEFINED, BUT NOT AS
+C                                       VARIABLE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -3120,8 +3157,39 @@ C
       DO2000I=1,NUMNAM
         I2=I
         IF(IHLEFT.EQ.IHNAME(I).AND.IHLEF2.EQ.IHNAM2(I))THEN
-          ILISTL=I2
-          GOTO2100
+          IF(IUSE(I).EQ.'V   ')THEN
+            ILISTL=I2
+            GOTO2100
+          ELSE
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2201)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2010)IHLEFT,IHLEF2
+ 2010       FORMAT('      AN ATTEMPT WAS MADE TO USE ',2A4,' AS A ',
+     1             'VARIABLE')
+            CALL DPWRST('XXX','BUG ')
+            IF(IUSE(I).EQ.'P')THEN
+              WRITE(ICOUT,2011)
+ 2011         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A ',
+     1               'PARAMETER.')
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(IUSE(I).EQ.'M')THEN
+              WRITE(ICOUT,2012)
+ 2012         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A MATRIX.')
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(IUSE(I).EQ.'F')THEN
+              WRITE(ICOUT,2013)
+ 2013         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A STRING.')
+              CALL DPWRST('XXX','BUG ')
+            ELSE
+              WRITE(ICOUT,2014)IUSE(I)
+ 2014         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A ',A4,'.')
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+            IERROR='YES'
+            GOTO9000
+          ENDIF
         ENDIF
  2000 CONTINUE
       ILISTL=NUMNAM+1
@@ -3129,7 +3197,7 @@ C
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,2201)
- 2201   FORMAT('***** ERROR IN CODEC2--')
+ 2201   FORMAT('***** ERROR IN ALPHABETIC CHARACTER CODE (CODEC2)--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,2202)
  2202   FORMAT('      THE NUMBER OF VARIABLE, PARAMETER, AND FUNCTION')
@@ -3523,6 +3591,9 @@ C     VERSION NUMBER--2018/06
 C     ORIGINAL VERSION--JUNE      2018.
 C     UPDATED         --JUNE      2019. MOVE DIMENSION OF SCRATCH
 C                                       REAL ARRAY TO CALLING ROUTINE
+C     UPDATED         --SEPTEMBER 2021. REPORT AN ERROR IF LHS
+C                                       PREVIOUSLY DEFINED, BUT NOT AS
+C                                       VARIABLE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -3612,8 +3683,39 @@ C
       DO100I=1,NUMNAM
         I2=I
         IF(IHLEFT.EQ.IHNAME(I).AND.IHLEF2.EQ.IHNAM2(I))THEN
-          ILISTL=I2
-          GOTO110
+          IF(IUSE(I).EQ.'V   ')THEN
+            ILISTL=I2
+            GOTO110
+          ELSE
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,111)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2010)IHLEFT,IHLEF2
+ 2010       FORMAT('      AN ATTEMPT WAS MADE TO USE ',2A4,' AS A ',
+     1             'VARIABLE')
+            CALL DPWRST('XXX','BUG ')
+            IF(IUSE(I).EQ.'P')THEN
+              WRITE(ICOUT,2011)
+ 2011         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A ',
+     1               'PARAMETER.')
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(IUSE(I).EQ.'M')THEN
+              WRITE(ICOUT,2012)
+ 2012         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A MATRIX.')
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(IUSE(I).EQ.'F')THEN
+              WRITE(ICOUT,2013)
+ 2013         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A STRING.')
+              CALL DPWRST('XXX','BUG ')
+            ELSE
+              WRITE(ICOUT,2014)IUSE(I)
+ 2014         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A ',A4,'.')
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+            IERROR='YES'
+            GOTO9000
+          ENDIF
         ENDIF
   100 CONTINUE
       ILISTL=NUMNAM+1
@@ -3621,7 +3723,7 @@ C
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,111)
-  111   FORMAT('***** ERROR IN REFERENCE CHARACTER CODE--')
+  111   FORMAT('***** ERROR IN REFERENCE CHARACTER CODE (CODEC3)--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,112)
   112   FORMAT('      THE NUMBER OF VARIABLE, PARAMETER, AND FUNCTION')
@@ -4993,7 +5095,7 @@ C
       WRITE(ICOUT,111)
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,131)IHRIGH,IHRIG2
-  131 FORMAT('***** VARIABLE ',A4,A4,' NOT FOUND IN THE CHARACTER ',
+  131 FORMAT('***** VARIABLE ',2A4,' NOT FOUND IN THE CHARACTER ',
      1       'DATA FILE:')
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,119)IFILE
@@ -16508,6 +16610,29 @@ C
 C
       RETURN
       END
+      real function correc(i,n)
+c
+c     calculates correction for tail area of the i-th largest of n
+c     order statistics.
+c
+      dimension c1(7),c2(7),c3(7)
+      real mic
+      data c1/9.5, 28.7, 1.9, 0., -7.0, -6.2, -1.6/,
+     1 c2/-6195., -9569., -6728., -17614., -8278., -3570., 1075./,
+     2 c3/9.338e4, 1.7516e5, 4.1040e5, 2.1576e6, 2.376e6, 2.065e6,
+     3 2.065e6/, mic/1.e-6/, c14/1.9e-5/
+c
+      correc = c14
+      if(i*n.eq.4) return
+      correc = 0.0
+      if(i.lt.1.or.i.gt.7) return
+      if(i.ne.4.and.n.gt.20) return
+      if(i.eq.4.and.n.gt.40) return
+      an = n
+      an = 1.0/(an*an)
+      correc = (c1(i) + an*(c2(i) + an*c3(i)))*mic
+      return
+      end
       SUBROUTINE COSCDF(X,CDF)
 C
 C     NOTE--COSINE CDF IS:
@@ -18351,12 +18476,12 @@ C     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT.
 C     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     REFERENCES--R&M 2000 AIR FORCE MANUAL
-C     WRITTEN BY--JAMES J. FILLIBEN
+C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
 C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGYS
 C                 GAITHERSBURG, MD 20899
-C                 PHONE--301-975-2855
+C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGYS.
 C     LANGUAGE--ANSI FORTRAN (1977)
@@ -20193,6 +20318,208 @@ C
         WRITE(ICOUT,9015)T,GTOTAL,Q,STAT
  9015   FORMAT('T,GTOTAL,Q,STAT = ',4G15.7)
         CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE CSCORE(Y,X,N,IWRITE,XSCORE,XIDTEM,TEMP1,TEMP2,MAXNXT,
+     1                  IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES THE CONOVER SCORES OF THE N
+C              ELEMENTS OF THE SINGLE PRECISION VECTOR X, AND PUTS THE
+C              RESULTING N SCORES INTO THE SINGLE PRECISION VECTOR XSCORE.
+C
+C              THE CONOVER SCORES ARE DEFINED AS:
+C
+C                  C(i) = (Rank(U(j))**2
+C
+C              WHERE
+C
+C                  U(j) = ABS(Y(j(i) - XMEAN(i))
+C
+C                  XMEAN(i) = MEAN OF THE i-th GROUP
+C
+C     INPUT  ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF THE
+C                                RESPONSE OBSERVATIONS TO BE SCORED.
+C                     --X      = THE SINGLE PRECISION VECTOR OF THE
+C                                GROUP-ID VALUES
+C                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR X.
+C     OUTPUT ARGUMENTS--XSCORE = THE SINGLE PRECISION VECTOR INTO WHICH
+C                                THE SCORES FROM X WILL BE PLACED.
+C     OUTPUT--THE SINGLE PRECISION VECTOR XSCORE CONTAINING THE KLOTZ
+C             SCORES.
+C     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     REFERENCES--CONOVER (1999), "PRACTICAL NONPARAMETRIC STATISTICS",
+C                 THIRD EDITION, WILEY, PP. 401.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATION INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2023.07
+C     ORIGINAL VERSION--JULY      2022.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION Y(*)
+      DIMENSION X(*)
+      DIMENSION XSCORE(*)
+      DIMENSION XIDTEM(*)
+      DIMENSION TEMP1(*)
+      DIMENSION TEMP2(*)
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='KSCO'
+      ISUBN2='RE  '
+      IERROR='NO'
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CORE')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF CSCORE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)N,MAXNXT,IBUGA3,ISUBRO
+   53   FORMAT('N,MAXNXT,IBUGA3,ISUBRO = ',2I8,2(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,Y(I),X(I)
+   56     FORMAT('I,Y(I),X(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      IF(N.LT.1 .OR. N.GT.MAXNXT)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN CONOVER SCORES (CSCORE)--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)MAXNXT
+  113   FORMAT('      THE NUMBER OF OBSERVATIONS IS LESS THAN 1 OR ',
+     1         'OR LARGER THAN ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,118)N
+  118   FORMAT('      THE NUMBER OF OBSERVATIONS IS ',I8)
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 2--                              **
+C               **  GENERATE THE SQUARED RANKS            **
+C               ********************************************
+C
+      ISTEPN='2'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'SCOR')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+C     DETERMINE DISTINCT VALUES OF GROUP-ID VARIABLE.  SUBTRACT
+C     GROUP MEANS FROM VARIABLE.
+C
+      CALL DISTIN(X,N,IWRITE,XIDTEM,NDIST,IBUGA3,IERROR)
+      DO1010K=1,NDIST
+        HOLD=XIDTEM(K)
+        NTEMP=0
+        DO1020I=1,N
+          IF(X(I).EQ.HOLD)THEN
+            NTEMP=NTEMP+1
+            TEMP2(NTEMP)=Y(I)
+          ENDIF
+ 1020   CONTINUE
+        CALL MEAN(TEMP2,NTEMP,IWRITE,YMEAN,IBUGA3,IERROR)
+        XSCORE(K)=YMEAN
+ 1010 CONTINUE
+C
+      DO1030I=1,N
+        DO1040K=1,NDIST
+          IF(XIDTEM(K).EQ.X(I))THEN
+            TEMP1(I)=ABS(Y(I) - REAL(XSCORE(K)))
+            GOTO1049
+          ENDIF
+ 1040   CONTINUE
+ 1049   CONTINUE
+ 1030 CONTINUE
+C
+C     COMPUTE RANKS AND THEN SQUARE THE RANKS
+C
+      CALL RANK(TEMP1,N,IWRITE,XSCORE,TEMP2,MAXNXT,IBUGA3,IERROR)
+      DO1110I=1,N
+        XSCORE(I)=XSCORE(I)**2
+ 1110 CONTINUE
+C
+C               ******************************
+C               **  STEP 4--                **
+C               **  WRITE OUT A FEW LINES   **
+C               **  OF SUMMARY INFORMATION  **
+C               **  ABOUT THE CODING.       **
+C               ******************************
+C
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IINDX=1
+        WRITE(ICOUT,912)IINDX,XSCORE(IINDX)
+  912   FORMAT('THE CONOVER SCORE OF ROW ',I10,' = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        IINDX=N
+        WRITE(ICOUT,912)IINDX,XSCORE(IINDX)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CORE')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF CSCORE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        DO9015I=1,N
+          WRITE(ICOUT,9016)I,X(I),XSCORE(I)
+ 9016     FORMAT('I,X(I),XSCORE(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9015   CONTINUE
       ENDIF
 C
       RETURN

@@ -3322,16 +3322,18 @@ C
         IARG(1)=1
       ENDIF
 C
-C               ************************************************
-C               **  TREAT THE DEVICE ... POWER CASE           **
-C               **  TREAT THE DEVICE ... CONTINUOUS CASE      **
-C               **  TREAT THE DEVICE ... COLOR      CASE      **
-C               **  TREAT THE DEVICE ... PICTURE POINTS CASE  **
-C               **  TREAT THE DEVICE ... UNIT        CASE     **
-C               **  TREAT THE DEVICE ... FONT       CASE      **
-C               **  TREAT THE DEVICE ... SCALE      CASE      **
-C               **  TREAT THE DEVICE ...  (MANUFACTURER) CASE **
-C               ************************************************
+C               **************************************************
+C               **  TREAT THE DEVICE ... POWER CASE             **
+C               **  TREAT THE DEVICE ... CONTINUOUS CASE        **
+C               **  TREAT THE DEVICE ... COLOR      CASE        **
+C               **  TREAT THE DEVICE ... PICTURE POINTS CASE    **
+C               **  TREAT THE DEVICE ... UNIT        CASE       **
+C               **  TREAT THE DEVICE ... FONT       CASE        **
+C               **  TREAT THE DEVICE ... SCALE      CASE        **
+C               **  TREAT THE DEVICE ... HARDWARE               **
+C               **                       CHARACTER OFFSET  CASE **
+C               **  TREAT THE DEVICE ...  (MANUFACTURER) CASE   **
+C               **************************************************
 C
       IF(ICOM.EQ.'DEVI' .OR. ICOM.EQ.'TERM')THEN
         CALL DPDEPW(IHARG,IHARG2,IARGT,IARG,NUMARG,
@@ -3390,6 +3392,14 @@ C
      1              IDMANU,IDMODE,IDMOD2,IDMOD3,IDPOWE,
      1              IDCONT,IDCOLO,IDFONT,IDNVPP,IDNHPP,IDUNIT,
      1              PDSCAL,
+     1              IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+C
+        CALL DPDEOS(IHARG,IARGT,IARG,ARG,NUMARG,
+     1              NUMDEV,MAXDEV,
+     1              IDMANU,IDMODE,IDMOD2,IDMOD3,IDPOWE,
+     1              IDCONT,IDCOLO,IDFONT,IDNVPP,IDNHPP,IDUNIT,
+     1              PCHOSH,PCHOSV,
      1              IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
 C
@@ -5609,7 +5619,7 @@ C
           IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
         ELSEIF((IHARG(1).EQ.'OFFS'.AND.IHARG2(1).EQ.'ET  ').OR.
      1         (IHARG(1).EQ.'DISP'.AND.IHARG2(1).EQ.'LACE'))THEN
-          CALL DPCHOF(IHARG,IARGT,ARG,NUMARG,
+          CALL DPCHOF(IHARG,IARGT,ARG,IARG,NUMARG,
      1                MAXCHA,PCHAHO,PCHAVO,
      1                IFOUND,IERROR)
           IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000

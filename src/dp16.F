@@ -1278,6 +1278,30 @@ C
           ICOLL=IVALUE(ILISTL)
           NLEFT=IN(ILISTL)
           GOTO390
+        ELSEIF(ILEFT.EQ.IHNAME(I).AND.ILEFT2.EQ.IHNAM2(I))THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,321)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,210)ILEFT,ILEFT2
+  210     FORMAT('      AN ATTEMPT WAS MADE TO USE ',2A4,' AS A ',
+     1           'VARIABLE')
+          CALL DPWRST('XXX','BUG ')
+          IF(IUSE(I).EQ.'F')THEN
+            WRITE(ICOUT,211)
+  211       FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A STRING.')
+            CALL DPWRST('XXX','BUG ')
+          ELSEIF(IUSE(I).EQ.'M')THEN
+            WRITE(ICOUT,212)
+  212       FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A MATRIX.')
+            CALL DPWRST('XXX','BUG ')
+          ELSE
+            WRITE(ICOUT,213)IUSE(I)
+  213       FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A ',A4,'.')
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          IERROR='YES'
+          GOTO9000
         ENDIF
   310 CONTINUE
       NEWNAM='YES'

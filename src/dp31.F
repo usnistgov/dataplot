@@ -6577,10 +6577,9 @@ C
  1900 CONTINUE
       RETURN
       END
-      SUBROUTINE DPTLFO(ICOM,IHARG,NUMARG,
-     1IDEFFO,
-     1IX1ZFO,IX2ZFO,IY1ZFO,IY2ZFO,
-     1IFOUND,IERROR)
+      SUBROUTINE DPTLFO(ICOM,IHARG,NUMARG,IDEFFO,
+     1                  IX1ZFO,IX2ZFO,IY1ZFO,IY2ZFO,
+     1                  IFOUND,IERROR)
 C
 C     PURPOSE--DEFINE THE 4 TIC LABEL FONTS CONTAINED IN THE
 C              4 VARIABLES IX1ZFO,IX2ZFO,IY1ZFO,IY2ZFO
@@ -6652,128 +6651,118 @@ C               **  TREAT THE CASE WHEN                            **
 C               **  BOTH HORIZONTAL AXIS TICS ARE TO BE CHANGED    **
 C               *****************************************************
 C
-      IF(ICOM.EQ.'XTIC')GOTO1100
-      GOTO1199
-C
- 1100 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1150
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1150
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1150
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1150
-      IF(IHARG(NUMARG).EQ.'FONT')GOTO1150
-      GOTO1160
-C
- 1150 CONTINUE
-      IHOLD=IDEFFO
-      GOTO1180
-C
- 1160 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1180
+      IF(ICOM.EQ.'XTIC')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'FONT')THEN
+          IHOLD=IDEFFO
+          GOTO1180
+        ELSE
+          IHOLD=IHARG(NUMARG)
+          GOTO1180
+        ENDIF
+      ELSE
+        GOTO1199
+      ENDIF
 C
  1180 CONTINUE
       IFOUND='YES'
+      IF(IHOLD.EQ.'HARD')IHOLD='TEKT'
       IX1ZFO=IHOLD
       IX2ZFO=IHOLD
+      IF(IX1ZFO.EQ.'HARD')IX1ZFO='TEKT'
+      IF(IX2ZFO.EQ.'HARD')IX2ZFO='TEKT'
 C
-      IF(IFEEDB.EQ.'OFF')GOTO1189
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1181)
- 1181 FORMAT('THE TIC MARK LABEL FONT (FOR BOTH HORIZONTAL ',
-     1'FRAME LINES)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1182)IHOLD
- 1182 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1189 CONTINUE
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1181)
+ 1181   FORMAT('THE TIC MARK LABEL FONT (FOR BOTH HORIZONTAL ',
+     1         'FRAME LINES)')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1182)IHOLD
+ 1182   FORMAT('HAS JUST BEEN SET TO ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       GOTO1900
 C
  1199 CONTINUE
 C
-C               **************************************************************
-C               **  TREAT THE CASE WHEN                                     **
-C               **  ONLY THE BOTTOM HORIZONTAL TIC MARKS ARE TO BE CHANGED  **
-C               **************************************************************
+C               *****************************************************
+C               **  TREAT THE CASE WHEN ONLY THE                   **
+C               **  BOTTOM HORIZONTAL TIC MARKS ARE TO BE CHANGED  **
+C               *****************************************************
 C
-      IF(ICOM.EQ.'X1TI')GOTO1200
-      GOTO1299
-C
- 1200 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1250
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1250
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1250
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1250
-      IF(IHARG(NUMARG).EQ.'FONT')GOTO1250
-      GOTO1260
-C
- 1250 CONTINUE
-      IHOLD=IDEFFO
-      GOTO1280
-C
- 1260 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1280
+      IF(ICOM.EQ.'X1TI')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'FONT')THEN
+          IHOLD=IDEFFO
+          GOTO1280
+        ELSE
+          IHOLD=IHARG(NUMARG)
+          GOTO1280
+        ENDIF
+      ELSE
+        GOTO1299
+      ENDIF
 C
  1280 CONTINUE
       IFOUND='YES'
       IX1ZFO=IHOLD
+      IF(IX1ZFO.EQ.'HARD')IX1ZFO='TEKT'
 C
-      IF(IFEEDB.EQ.'OFF')GOTO1289
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1281)
- 1281 FORMAT('THE TIC MARK LABEL FONT (FOR THE BOTTOM ',
-     1'HORIZONTAL FRAME LINE)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1282)IHOLD
- 1282 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1289 CONTINUE
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1281)
+ 1281   FORMAT('THE TIC MARK LABEL FONT (FOR THE BOTTOM ',
+     1         'HORIZONTAL FRAME LINE)')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1282)IX1ZFO
+ 1282   FORMAT('HAS JUST BEEN SET TO ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       GOTO1900
 C
  1299 CONTINUE
 C
-C               **************************************************************
-C               **  TREAT THE CASE WHEN                                     **
-C               **  ONLY THE TOP    HORIZONTAL TIC MARKS ARE TO BE CHANGED  **
-C               **************************************************************
+C               **********************************************
+C               **  TREAT THE CASE WHEN ONLY THE TOP        **
+C               **  HORIZONTAL TIC MARKS ARE TO BE CHANGED  **
+C               **********************************************
 C
-      IF(ICOM.EQ.'X2TI')GOTO1300
-      GOTO1399
-C
- 1300 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1350
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1350
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1350
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1350
-      IF(IHARG(NUMARG).EQ.'FONT')GOTO1350
-      GOTO1360
-C
- 1350 CONTINUE
-      IHOLD=IDEFFO
-      GOTO1380
-C
- 1360 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1380
+      IF(ICOM.EQ.'X2TI')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'FONT')THEN
+          IHOLD=IDEFFO
+          GOTO1380
+        ELSE
+          IHOLD=IHARG(NUMARG)
+          GOTO1380
+        ENDIF
+      ELSE
+        GOTO1399
+      ENDIF
 C
  1380 CONTINUE
       IFOUND='YES'
       IX2ZFO=IHOLD
+      IF(IX2ZFO.EQ.'HARD')IX2ZFO='TEKT'
 C
-      IF(IFEEDB.EQ.'OFF')GOTO1389
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1381)
- 1381 FORMAT('THE TIC MARK LABEL FONT (FOR THE TOP HORIZONTAL ',
-     1'FRAME LINE)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1382)IHOLD
- 1382 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1389 CONTINUE
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1381)
+ 1381   FORMAT('THE TIC MARK LABEL FONT (FOR THE TOP HORIZONTAL ',
+     1         'FRAME LINE)')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1382)IX2ZFO
+ 1382   FORMAT('HAS JUST BEEN SET TO ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       GOTO1900
 C
  1399 CONTINUE
@@ -6783,127 +6772,117 @@ C               **  TREAT THE CASE WHEN                            **
 C               **  BOTH VERTICAL   AXIS TICS ARE TO BE CHANGED    **
 C               *****************************************************
 C
-      IF(ICOM.EQ.'YTIC')GOTO1400
-      GOTO1499
-C
- 1400 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1450
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1450
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1450
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1450
-      IF(IHARG(NUMARG).EQ.'FONT')GOTO1450
-      GOTO1460
-C
- 1450 CONTINUE
-      IHOLD=IDEFFO
-      GOTO1480
-C
- 1460 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1480
+      IF(ICOM.EQ.'YTIC')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'FONT')THEN
+          IHOLD=IDEFFO
+          GOTO1480
+        ELSE
+          IHOLD=IHARG(NUMARG)
+          GOTO1480
+        ENDIF
+      ELSE
+        GOTO1499
+      ENDIF
 C
  1480 CONTINUE
       IFOUND='YES'
+      IF(IHOLD.EQ.'HARD')IHOLD='TEKT'
       IY1ZFO=IHOLD
       IY2ZFO=IHOLD
+      IF(IY1ZFO.EQ.'HARD')IY1ZFO='TEKT'
+      IF(IY2ZFO.EQ.'HARD')IY2ZFO='TEKT'
 C
-      IF(IFEEDB.EQ.'OFF')GOTO1489
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1481)
- 1481 FORMAT('THE TIC MARK LABEL FONT (FOR BOTH VERTICAL ',
-     1'FRAME LINES)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1482)IHOLD
- 1482 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1489 CONTINUE
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1481)
+ 1481   FORMAT('THE TIC MARK LABEL FONT (FOR BOTH VERTICAL ',
+     1         'FRAME LINES)')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1482)IHOLD
+ 1482   FORMAT('HAS JUST BEEN SET TO ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       GOTO1900
 C
  1499 CONTINUE
 C
-C               **************************************************************
-C               **  TREAT THE CASE WHEN                                     **
-C               **  ONLY THE LEFT   VERTICAL   TIC MARKS ARE TO BE CHANGED  **
-C               **************************************************************
+C               **********************************************
+C               **  TREAT THE CASE WHEN ONLY THE LEFT       **
+C               **  VERTICAL   TIC MARKS ARE TO BE CHANGED  **
+C               **********************************************
 C
-      IF(ICOM.EQ.'Y1TI')GOTO1500
-      GOTO1599
-C
- 1500 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1550
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1550
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1550
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1550
-      IF(IHARG(NUMARG).EQ.'FONT')GOTO1550
-      GOTO1560
-C
- 1550 CONTINUE
-      IHOLD=IDEFFO
-      GOTO1580
-C
- 1560 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1580
+      IF(ICOM.EQ.'Y1TI')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'FONT')THEN
+          IHOLD=IDEFFO
+          GOTO1580
+        ELSE
+          IHOLD=IHARG(NUMARG)
+          GOTO1580
+        ENDIF
+      ELSE
+        GOTO1599
+      ENDIF
 C
  1580 CONTINUE
       IFOUND='YES'
       IY1ZFO=IHOLD
+      IF(IY1ZFO.EQ.'HARD')IY1ZFO='TEKT'
 C
-      IF(IFEEDB.EQ.'OFF')GOTO1589
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1581)
- 1581 FORMAT('THE TIC MARK LABEL FONT (FOR THE LEFT VERTICAL ',
-     1'FRAME LINE)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1582)IHOLD
- 1582 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1589 CONTINUE
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1581)
+ 1581   FORMAT('THE TIC MARK LABEL FONT (FOR THE LEFT VERTICAL ',
+     1         'FRAME LINE)')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1582)IY1ZFO
+ 1582   FORMAT('HAS JUST BEEN SET TO ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       GOTO1900
 C
  1599 CONTINUE
 C
-C               **************************************************************
-C               **  TREAT THE CASE WHEN                                     **
-C               **  ONLY THE RIGHT  VERTICAL   TIC MARKS ARE TO BE CHANGED  **
-C               **************************************************************
+C               *****************************************************
+C               **  TREAT THE CASE WHEN  ONLY THE                  **
+C               **  RIGHT  VERTICAL   TIC MARKS ARE TO BE CHANGED  **
+C               *****************************************************
 C
-      IF(ICOM.EQ.'Y2TI')GOTO1600
-      GOTO1699
-C
- 1600 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1650
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1650
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1650
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1650
-      IF(IHARG(NUMARG).EQ.'FONT')GOTO1650
-      GOTO1660
-C
- 1650 CONTINUE
-      IHOLD=IDEFFO
-      GOTO1680
-C
- 1660 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1680
+      IF(ICOM.EQ.'Y2TI')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'FONT')THEN
+          IHOLD=IDEFFO
+          GOTO1680
+        ELSE
+          IHOLD=IHARG(NUMARG)
+          GOTO1680
+        ENDIF
+      ELSE
+        GOTO1699
+      ENDIF
 C
  1680 CONTINUE
       IFOUND='YES'
       IY2ZFO=IHOLD
+      IF(IY2ZFO.EQ.'HARD')IY2ZFO='TEKT'
 C
-      IF(IFEEDB.EQ.'OFF')GOTO1689
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1681)
- 1681 FORMAT('THE TIC MARK LABEL FONT (FOR THE RIGHT VERTICAL ',
-     1'FRAME LINE)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1682)IHOLD
- 1682 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1689 CONTINUE
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1681)
+ 1681   FORMAT('THE TIC MARK LABEL FONT (FOR THE RIGHT VERTICAL ',
+     1         'FRAME LINE)')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1682)IY2ZFO
+ 1682   FORMAT('HAS JUST BEEN SET TO ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       GOTO1900
 C
  1699 CONTINUE
@@ -6913,46 +6892,44 @@ C               **  TREAT THE CASE WHEN                            **
 C               **  ALL 4 FRAME TICS ARE TO BE CHANGED             **
 C               *****************************************************
 C
-      IF(ICOM.EQ.'TIC')GOTO1700
-      IF(ICOM.EQ.'TICS')GOTO1700
-      IF(ICOM.EQ.'XYTI')GOTO1700
-      IF(ICOM.EQ.'YXTI')GOTO1700
-      GOTO1799
-C
- 1700 CONTINUE
-      IF(IHARG(NUMARG).EQ.'ON')GOTO1750
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO1750
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO1750
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO1750
-      IF(IHARG(NUMARG).EQ.'FONT')GOTO1750
-      GOTO1760
-C
- 1750 CONTINUE
-      IHOLD=IDEFFO
-      GOTO1780
-C
- 1760 CONTINUE
-      IHOLD=IHARG(NUMARG)
-      GOTO1780
+      IF(ICOM.EQ.'TIC'  .OR. ICOM.EQ.'TICS' .OR.
+     1   ICOM.EQ.'XYTI' .OR. ICOM.EQ.'YXTI')THEN
+        IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.
+     1     IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA' .OR.
+     1     IHARG(NUMARG).EQ.'FONT')THEN
+          IHOLD=IDEFFO
+          GOTO1780
+        ELSE
+          IHOLD=IHARG(NUMARG)
+          GOTO1780
+        ENDIF
+      ELSE
+        GOTO1799
+      ENDIF
 C
  1780 CONTINUE
       IFOUND='YES'
+      IF(IHOLD.EQ.'HARD')IHOLD='TEKT'
       IX1ZFO=IHOLD
       IX2ZFO=IHOLD
       IY1ZFO=IHOLD
       IY2ZFO=IHOLD
+      IF(IX1ZFO.EQ.'HARD')IX1ZFO='TEKT'
+      IF(IX2ZFO.EQ.'HARD')IX2ZFO='TEKT'
+      IF(IY1ZFO.EQ.'HARD')IY1ZFO='TEKT'
+      IF(IY2ZFO.EQ.'HARD')IY2ZFO='TEKT'
 C
-      IF(IFEEDB.EQ.'OFF')GOTO1789
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1781)
- 1781 FORMAT('THE TIC MARK LABEL FONT (FOR ALL 4 ',
-     1'FRAME LINES)')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1782)IHOLD
- 1782 FORMAT('HAS JUST BEEN SET TO ',A4)
-      CALL DPWRST('XXX','BUG ')
- 1789 CONTINUE
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1781)
+ 1781   FORMAT('THE TIC MARK LABEL FONT (FOR ALL 4 ',
+     1         'FRAME LINES)')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1782)IHOLD
+ 1782   FORMAT('HAS JUST BEEN SET TO ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       GOTO1900
 C
  1799 CONTINUE
@@ -23982,753 +23959,17 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPTY3B(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,
-     1                  IBUGA3,
-     1                  IFOUZ2,ISTAR2,ISTOP2,
-     1                  ITYPE2,IHOL,IHOL2,INTZ,FLOAT,IERROR)
-C
-C     NOTE--THIS SUBROUTINE IS IDENTICAL TO DPTYP3
-C           AND HAS BEEN DUPLICATED ONLY FOR MAPPING PURPOSES.
-C           DATE--SEPTEMBER 5, 1981.
-C
-C     PURPOSE--SCAN THE CHARACTER ARRAY IANS(.) BETWEEN
-C              COLUMNS ISTAR1 AND ISTOP1
-C              FOR THE STRING DEFINED IN STRIN AND ISTRI2.
-C     NOTE THAT THE STRING DEFINED IN ISTRIN AND ISTRI2
-C     MAY BE EXPRESSED IN SEVERAL WAYS--
-C          1) EXPLICITELY, E.G., LET    FOR    SUBSET, ETC.
-C          2) IMPLICITELY WITH ! REPRESENTING THE FIRST
-C             NON-BLANK CHARACTER THAT IS ENCOUNTERED;
-C          3) IMPLICITELY WITH ; REPRESENTING ANY STRING
-C             (INCLUDING ALL CHARACTERS, EVEN BLANKS));
-C          4) IMPLICITELY WITH : REPRESENTING THE FIRST
-C            BLANK CHARACTER THAT IS ENCOUNTERED.
-C     NOTE--A GIVEN ARGUMENT MAY END UP WITH
-C            3 DIFFERENT REPRESENTATIONS--
-C            HOLLERITH, INTEGER, AND FLOATING POINT.
-C     INPUT  ARGUMENTS--IANS   = A HOLLERITH 1-CHARACTER-PER-WORD
-C                                VARIABLE CONTAINING THE INPUT LINE
-C                                TO BE EXAMINED.
-C                     --IWIDTH = THE (FULL) WIDTH OF THE INPUT LINE
-C                                (THAT IS, THE NUMBER OF COLUMNS)
-C                     --ISTAR1 = THE FIRST COLUMN FOR WHICH THE
-C                                SCAN IS TO BE CARRIED OUT.
-C                     --ISTOP1 = THE LAST  COLUMN FOR WHICH THE
-C                                SCAN IS TO BE CARRIED OUT.
-C                     --ISTRIN = THE HOLLERITH VARIABLE
-C                                WHICH CONTAINS CHARACTERS 1 TO 4
-C                                OF THE STRING TO BE SEARCHED FOR.
-C                                THE DEFINITION OF THE STRING IN ISTRIN MAY
-C                                MAY BE DONE EXPLICTELY (BUT IS LIMITED
-C                                TO 4 CHARACTERS) OR IMPLICITELY
-C                                WHICH IS NOT LIMITED TO 4 CHARACTERS AND IS MOR
-C                                IS MORE GENERAL IN
-C                                OTHER WAYS ALSO.
-C                     --ISTRI2 = THE HOLLERITH VARIABLE
-C                                WHICH CONTAINS CHARACTERS 5 TO 8
-C                                OF THE STRING TO BE SEARCHED FOR.
-C                                THE DEFINITION OF THE STRING IN ISTRIN MAY
-C                                MAY BE DONE EXPLICTELY (BUT IS LIMITED
-C                                TO 4 CHARACTERS) OR IMPLICITELY
-C                                WHICH IS NOT LIMITED TO 4 CHARACTERS AND IS MOR
-C                                IS MORE GENERAL IN
-C                                OTHER WAYS ALSO.
-C                     --INEX   = A HOLLERITH VARIABLE WHICH
-C                                WILL CONTAIN ONE OF THE FOLLOWING 4 VALUES--
-C                                II, IE, EI, EE THAT STANDS FOR
-C                                WHERE I STANDS FOR INCLUSIVE AND
-C                                WHERE E STANDS FOR EXCLUSIVE;
-C                                INEX SPECIFIES WHETHER THE FIRST OR LAST CHARAC
-C                                CHARACTER IS TO BE INCLUDED OR EXCLUDED IN
-C                                IN DEFINING ISTAR2 AND ISTOP2.
-C     OUTPUT ARGUMENTS--IFOUZ2 = A HOLLERITH VARIABLE
-C                                WITH THE VALUE 'YES'
-C                                IF THE STRING WAS FOUND;
-C                                AND THE VALUE 'NO'
-C                                IF THE STRING WAS NOT FOUND.
-C                     --ISTAR2 = THE START COLUMN OF THE FOUND STRING
-C                     --ISTOP2 = THE STOP COLUMN OF THE FIUND STRING.
-C                     --ITYPE2 = A HOLLERITH VARIABLE
-C                                WITH THE VALUE 'WORD' IF THE STRING CONTAINS
-C                                ANY NON-NUMERIC (EXCLUDING BLANKS) CHARACTER;
-C                                AND WITH THE VALUE 'NUMB' IF THE STRING CONTA
-C                                ALL NUMERIC VALUES OR DECIMAL POINT OR + OR -
-C                                (WITH INTERMITTENT BLANKS IGNORED).
-C                     --IHOL   = THE HOLLERITH VARIABLE
-C                                CONTAINING THE PACKED (4 CHARACTERS) VERSION
-C                                OF CHARACTERS 1 TO 4 OF THE FOUND STRING.
-C                     --IHOL2  = THE HOLLERITH VARIABLE
-C                                CONTAINING THE PACKED (4 CHARACTERS) VERSION
-C                                OF CHARACTERS 5 TO 8 OF THE FOUND STRING.
-C                     --INT    = THE INTEGER VARIABLE
-C                                CONTAINING THE INTEGER REPRESENTATION
-C                                (IF POSSIBLE) OF THE FOUND STRING.
-C                     --FLOAT  = THE FLOATING POINT VARIABLE
-C                                CONTAINING THE FLOATING POINT REPRESENTATION
-C                                (IF POSSIBLE) OF THE FOUND STRING.
-C                     --IERROR = A HOLLERITH VARIABLE WITH VALUE
-C                                'YES' OR 'NO' INDICATING IF AN
-C                                ERROR CONDITION EXISTS.
-C     WRITTEN BY--JAMES J. FILLIBEN
-C                 STATISTICAL ENGINEERING DIVISION
-C                 INFORMATION TECHNOLOGY LABORATORY
-C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
-C                 GAITHERSBURG, MD 20899-8980
-C                 PHONE--301-975-2855
-C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
-C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C     LANGUAGE--ANSI FORTRAN (1977)
-C     VERSION NUMBER--82/7
-C     ORIGINAL VERSION--FEBRUARY  1978.
-C     UPDATED         --JULY      1978.
-C     UPDATED         --OCTOBER   1978.
-C     UPDATED         --NOVEMBER  1980.
-C     UPDATED         --JANUARY   1981.
-C     UPDATED         --JUNE      1981.
-C     UPDATED         --MARCH     1982.
-C     UPDATED         --MAY       1982.
-C
-C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-C
-      CHARACTER*4 IANS
-      CHARACTER*4 ISTRIN
-      CHARACTER*4 ISTRI2
-      CHARACTER*4 INEX
-      CHARACTER*4 IBUGA3
-      CHARACTER*4 IFOUZ2
-      CHARACTER*4 ITYPE2
-      CHARACTER*4 IHOL
-      CHARACTER*4 IHOL2
-      CHARACTER*4 IERROR
-C
-      CHARACTER*4 IBUG1
-      CHARACTER*4 IBUG2
-      CHARACTER*4 ITEMP
-      CHARACTER*4 IFLUNK
-      CHARACTER*4 ISTRI3
-C
-      CHARACTER*4 ISUBN1
-      CHARACTER*4 ISUBN2
-      CHARACTER*4 ISTEPN
-C
-C---------------------------------------------------------------------
-C
-      DIMENSION IANS(*)
-C
-      DIMENSION ISTRI3(20)
-C
-C-----COMMON----------------------------------------------------------
-C
-      INCLUDE 'DPCOP2.INC'
-C
-C-----START POINT-----------------------------------------------------
-C
-      ISUBN1='DPTY'
-      ISUBN2='P3  '
-      IERROR='NO'
-C
-      I2=0
-      IPJM1=0
-C
-      IF(IBUGA3.EQ.'ON')THEN
-        WRITE(ICOUT,999)
-  999   FORMAT(1X)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF DPTY3B--')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,53)ISTAR1,ISTOP1
-   53   FORMAT('ISTAR1,ISTOP1 = ',2I8)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,54)IBUGA3,ISTRI,ISTRI2
-   54   FORMAT('IBUGA3,ISTRIN,ISTRI2 = ',2(A4,2X),A4)
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
-C
-      NUMASC=4
-C
-      IBUG1='OFF'
-      IBUG2='OFF'
-C
-C               ******************************************************
-C               **  STEP 1--                                        **
-C               **  INITIALIZE THE OUTPUT PARAMETERS AND VARIABLES  **
-C               ******************************************************
-C
-      ISTEPN='1'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-C
-      IF(IBUG1.EQ.'OFF')GOTO150
-      WRITE(ICOUT,101)
-  101 FORMAT('AT THE BEGINNING OF DPTY3B--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,102)IWIDTH
-  102 FORMAT('IWIDTH = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,103)(IANS(I),I=1,IWIDTH)
-  103 FORMAT('IANS(.) = ',80A1)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,104)ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX
-  104 FORMAT('ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX = ',I8,I8,A4,A4,A4)
-      CALL DPWRST('XXX','BUG ')
-  150 CONTINUE
-      IFOUZ2='NO'
-      ISTAR2=-1
-      ISTOP2=-1
-      ITYPE2='9999'
-      IHOL ='9999'
-      IHOL2='9999'
-      INTZ = -999999
-      FLOAT=-999999.0
-C
-C               ************************************************************
-C               **  STEP 2--                                              **
-C               **  DECOMPOSE THE INPUT SEARCH STRING INTO A1 CHARACTERS  **
-C               ************************************************************
-C
-      ISTEPN='2'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-      IMAX=2*NUMASC
-      DO300I=1,IMAX
-      I2=I
-      J=I
-      IF(I.GT.NUMASC)J=I-NUMASC
-      ISTAR3=NUMBPC*(J-1)
-      ISTAR3=IABS(ISTAR3)
-      ITEMP='    '
-      IF(I.LE.NUMASC)CALL DPCHEX(ISTAR3,NUMBPC,ISTRIN,0,NUMBPC,ITEMP)
-      IF(I.GT.NUMASC)CALL DPCHEX(ISTAR3,NUMBPC,ISTRI2,0,NUMBPC,ITEMP)
-      IF(ITEMP.EQ.'    ')GOTO350
-      ISTRI3(I)=ITEMP
-  300 CONTINUE
-      ILEN2=I2
-      GOTO390
-  350 CONTINUE
-      ILEN2=I2-1
-  390 CONTINUE
-C
-      IF(IBUG2.EQ.'OFF')GOTO399
-      WRITE(ICOUT,391)
-  391 FORMAT('IN THE MIDDLE OF DPTY3B (AFTER STEP 2)--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,392)ILEN2
-  392 FORMAT('ILEN2 = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,393)(ISTRI3(I),I=1,ILEN2)
-  393 FORMAT('ISTRI3(.) = ',6A1)
-      CALL DPWRST('XXX','BUG ')
-  399 CONTINUE
-C
-C               ****************************************************************
-C               **  STEP 3--
-C               **  DISTINGUISH BETWEEN THE 3 TYPES OF POSSIBLE SEARCH STRINGS--
-C               **  1) AN EXPLICITELY-DEFINED STRING; E.G.,
-C               **     LET     FOR     SUBSET     =     5.3     -2.6666666
-C               **     (AS IN COMMANDS, KEY WORDS, AND NUMBERS);
-C               **  2) A STRING STARTING WITH THE FIRST NON-BLANK CHARACTER
-C               **     AND ENDING WITH SOME SPECIFIED CHARACTER; E.G., XXXXX(
-C               **     (AS IN THE VARIABLE NAME OF A SUBSCRIPTED VARIABLE,
-C               **     OR THE ARGUMENT (I. E., THE SUBSCRIPT) IN A SUBSCRIPTED
-C               **     VARIABLE);
-C               **  3) A STRING STARTING WITH THE FIRST NON-BLANK CHARACTER
-C               **     AND ENDING WITH THE FIRST SUBSEQUENT BLANK CHARCTER (EXCL
-C               **     E.G., XXXX
-C               **     (AS IN SOME UNSPECIFIED PARAMETER OR VARIABLE NAME).
-C               ****************************************************************
-C
-      ISTEPN='3'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-      ICASE=1
-      IF(ISTRI3(1).NE.'!'.AND.ISTRI3(2).EQ.';'.AND.ISTRI3(3).NE.':')
-     1ICASE=2
-      IF(ISTRI3(1).EQ.'!'.AND.ISTRI3(2).EQ.';'.AND.ISTRI3(3).NE.':')
-     1ICASE=3
-      IF(ISTRI3(1).EQ.'!'.AND.ISTRI3(2).EQ.';'.AND.ISTRI3(3).EQ.':')
-     1ICASE=4
-      IF(ILEN2.EQ.1.OR.ILEN2.EQ.2)ICASE=1
-C
-      IF(IBUG2.EQ.'OFF')GOTO398
-      WRITE(ICOUT,395)
-  395 FORMAT('AFTER STEP 3 OF DPTY3B--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,396)ICASE
-  396 FORMAT('ICASE = ',I8)
-      CALL DPWRST('XXX','BUG ')
-  398 CONTINUE
-C
-C               *********************************************************
-C               **  STEP 4--                                           **
-C               **  DETERMINE IF THE DESIRED SEARCH STRING IS PRESENT  **
-C               *********************************************************
-C
-      ISTEPN='4'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-      IF(ICASE.EQ.1)GOTO400
-      IF(ICASE.EQ.2)GOTO500
-      IF(ICASE.EQ.3)GOTO600
-      IF(ICASE.EQ.4)GOTO700
-C
-  400 CONTINUE
-      DO410I=ISTAR1,ISTOP1
-      I2=I
-      IF(IANS(I).EQ.ISTRI3(1))GOTO420
-      GOTO410
-  420 CONTINUE
-      DO430J=1,ILEN2
-      IPJM1=J+I-1
-      IF(IPJM1.GT.ISTOP1)GOTO410
-      IF(IANS(IPJM1).EQ.ISTRI3(J))GOTO430
-      GOTO410
-  430 CONTINUE
-      IFOUZ2='YES'
-      IF(INEX.EQ.'II')ISTAR2=I2
-      IF(INEX.EQ.'IE')ISTAR2=I2
-      IF(INEX.EQ.'EI')ISTAR2=I2+1
-      IF(INEX.EQ.'EE')ISTAR2=I2+1
-      IF(INEX.EQ.'II')ISTOP2=IPJM1
-      IF(INEX.EQ.'IE')ISTOP2=IPJM1-1
-      IF(INEX.EQ.'EI')ISTOP2=IPJM1
-      IF(INEX.EQ.'EE')ISTOP2=IPJM1-1
-      IF(ISTAR2.LE.ISTOP2)GOTO990
-      GOTO900
-  410 CONTINUE
-      IFOUZ2='NO'
-      GOTO9000
-C
-  500 CONTINUE
-      DO510I=ISTAR1,ISTOP1
-      I2=I
-      IF(IANS(I).EQ.ISTRI3(1))GOTO520
-  510 CONTINUE
-      IFOUZ2='NO'
-      GOTO9000
-  520 CONTINUE
-      IMIN=I2
-      DO530I=IMIN,ISTOP1
-      I2=I
-      IF(IANS(I).EQ.ISTRI3(ILEN2))GOTO540
-  530 CONTINUE
-      IFOUZ2='NO'
-      GOTO9000
-  540 CONTINUE
-      IFOUZ2='YES'
-      IF(INEX.EQ.'II')ISTAR2=IMIN
-      IF(INEX.EQ.'IE')ISTAR2=IMIN
-      IF(INEX.EQ.'EI')ISTAR2=IMIN+1
-      IF(INEX.EQ.'EE')ISTAR2=IMIN+1
-      IF(INEX.EQ.'II')ISTOP2=I2
-      IF(INEX.EQ.'IE')ISTOP2=I2-1
-      IF(INEX.EQ.'EI')ISTOP2=I2
-      IF(INEX.EQ.'EE')ISTOP2=I2-1
-      IF(ISTAR2.LE.ISTOP2)GOTO990
-      GOTO900
-C
-  600 CONTINUE
-      DO610I=ISTAR1,ISTOP1
-      I2=I
-      IF(IANS(I).NE.' ')GOTO620
-  610 CONTINUE
-      IFOUZ2='NO'
-      GOTO9000
-  620 CONTINUE
-      IMIN=I2
-      DO630I=IMIN,ISTOP1
-      I2=I
-      IF(IANS(I).EQ.ISTRI3(ILEN2))GOTO640
-  630 CONTINUE
-      IFOUZ2='NO'
-      GOTO9000
-  640 CONTINUE
-      IFOUZ2='YES'
-      IF(INEX.EQ.'II')ISTAR2=IMIN
-      IF(INEX.EQ.'IE')ISTAR2=IMIN
-      IF(INEX.EQ.'EI')ISTAR2=IMIN+1
-      IF(INEX.EQ.'EE')ISTAR2=IMIN+1
-      IF(INEX.EQ.'II')ISTOP2=I2
-      IF(INEX.EQ.'IE')ISTOP2=I2-1
-      IF(INEX.EQ.'EI')ISTOP2=I2
-      IF(INEX.EQ.'EE')ISTOP2=I2-1
-      IF(ISTAR2.LE.ISTOP2)GOTO990
-      GOTO900
-C
-  700 CONTINUE
-      DO710I=ISTAR1,ISTOP1
-      I2=I
-      IF(IANS(I).NE.' ')GOTO720
-  710 CONTINUE
-      IFOUZ2='NO'
-      GOTO9000
-  720 CONTINUE
-      IMIN=I2
-      DO730I=IMIN,ISTOP1
-      I2=I
-      IF(IANS(I).EQ.' ')GOTO740
-  730 CONTINUE
-      IFOUZ2='NO'
-      GOTO9000
-  740 CONTINUE
-      IFOUZ2='YES'
-      IF(INEX.EQ.'II')ISTAR2=IMIN
-      IF(INEX.EQ.'IE')ISTAR2=IMIN
-      IF(INEX.EQ.'EI')ISTAR2=IMIN+1
-      IF(INEX.EQ.'EE')ISTAR2=IMIN+1
-      IF(INEX.EQ.'II')ISTOP2=I2
-      IF(INEX.EQ.'IE')ISTOP2=I2-1
-      IF(INEX.EQ.'EI')ISTOP2=I2
-      IF(INEX.EQ.'EE')ISTOP2=I2-1
-      IF(ISTAR2.LE.ISTOP2)GOTO990
-      GOTO900
-C
-  900 CONTINUE
-C
-C     NOTE--THE FOLLOWING SECTION HAS BEEN 'BUGGED' OUT
-C           TO CIRCUMVENT A PROBLEM WITH Y=(...
-C           WHILE IT STILL LOOKED FOR A VARIABLE NAME
-C           BETWEEN THE = AND THE (     .
-C     CAUTION--WHEN IBUGA3 = 'OFF', AS IT USUALLY IS,
-C              IERROR CAN NEVER BE 'YES'
-C              UPON RETURN FROM DPTY3B:
-C              BUT WHEN IBUGA3 = 'ON' (AS IN ERROR TRACING)
-C              IERROR MAY = 'YES' WHICH MAY CHANGE THE
-C              LOGIC PATH BACK IN DPTYP2.
-C
-      IF(IBUGA3.EQ.'OFF')GOTO9000
-      WRITE(ICOUT,921)
-  921 FORMAT('***** INTERNAL ERROR IN DPTY3B SUBROUTINE')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,922)
-  922 FORMAT('ISTAR2 GREATER THAN ISTOP2')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,923)ISTAR2,ISTOP2
-  923 FORMAT('ISTAR2, ISTOP2 = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,924)ICASE
-  924 FORMAT('ICASE = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,925)IWIDTH
-  925 FORMAT('IWIDTH = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,926)(IANS(I),I=1,IWIDTH)
-  926 FORMAT('IANS(.) = ',80A1)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,927)ISTAR1,ISTOP1
-  927 FORMAT('ISTAR1, ISTOP1 = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,928)ILEN2
-  928 FORMAT('ILEN2 = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,929)(ISTRI3(I),I=1,ILEN2)
-  929 FORMAT('ISTRI3(.) = ',80A1)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,930)ISTRIN,ISTRI2
-  930 FORMAT('ISTRIN,ISTRI2 = ',2A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,931)INEX
-  931 FORMAT('INEX = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      IERROR='YES'
-      GOTO9000
-  990 CONTINUE
-C
-C               ********************************************************
-C               **  STEP 5--                                          **
-C               **  CONVERT THE STRING INTO 2 HOLLERITH A4 WORDS.     **
-C               **  IF MORE THAN 8 CHARACTERS, CONVERT ONLY           **
-C               **  THE FIRST 8 CHARACTERS.                           **
-C               **  OUTPUT THESE HOLLERITH WORDS AS IHOL AND IHOL2.   **
-C               ********************************************************
-C
-      ISTEPN='5'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-      IHOL ='    '
-      IHOL2='    '
-      IMAX=2*NUMASC
-      J=0
-      DO1000I=ISTAR2,ISTOP2
-      J=J+1
-      K=J
-      IF(J.GT.NUMASC)K=J-NUMASC
-      ISTAR3=NUMBPC*(K-1)
-      ISTAR3=IABS(ISTAR3)
-      IF(J.LE.NUMASC)CALL DPCHEX(0,NUMBPC,IANS(I),ISTAR3,NUMBPC,IHOL)
-      IF(J.GT.NUMASC)CALL DPCHEX(0,NUMBPC,IANS(I),ISTAR3,NUMBPC,IHOL2)
-      IF(J.GE.IMAX)GOTO1050
- 1000 CONTINUE
- 1050 CONTINUE
-C
-C               ****************************************************************
-C               **  STEP 6--
-C               **  CONVERT (IF POSSIBLE) THE STRING INTO AN INTEGER ARGUMENT.
-C               **  OUTPUT  THIS INTEGER VALUE IN INT.
-C               ****************************************************************
-C
-      ISTEPN='6'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-      IFLUNK='NO'
-      ITYPE2='NUMB'
-      IDIG=0
-      ISIGN=0
-      IDECPT=0
-      ISUM=0
-      DO2700I=ISTAR2,ISTOP2
-      IREV=ISTOP2-(I-ISTAR2)
-      IF(IANS(IREV).EQ.' ')GOTO2700
-      IF(IANS(IREV).EQ.'0')GOTO2710
-      IF(IANS(IREV).EQ.'1')GOTO2711
-      IF(IANS(IREV).EQ.'2')GOTO2712
-      IF(IANS(IREV).EQ.'3')GOTO2713
-      IF(IANS(IREV).EQ.'4')GOTO2714
-      IF(IANS(IREV).EQ.'5')GOTO2715
-      IF(IANS(IREV).EQ.'6')GOTO2716
-      IF(IANS(IREV).EQ.'7')GOTO2717
-      IF(IANS(IREV).EQ.'8')GOTO2718
-      IF(IANS(IREV).EQ.'9')GOTO2719
-      IF(IANS(IREV).EQ.'+')GOTO2720
-      IF(IANS(IREV).EQ.'-')GOTO2721
-      IF(IANS(IREV).EQ.'.')GOTO2722
-      IFLUNK='YES'
-      GOTO2800
- 2710 ITERM=0
-      GOTO2725
- 2711 ITERM=1
-      GOTO2725
- 2712 ITERM=2
-      GOTO2725
- 2713 ITERM=3
-      GOTO2725
- 2714 ITERM=4
-      GOTO2725
- 2715 ITERM=5
-      GOTO2725
- 2716 ITERM=6
-      GOTO2725
- 2717 ITERM=7
-      GOTO2725
- 2718 ITERM=8
-      GOTO2725
- 2719 ITERM=9
-      GOTO2725
- 2720 ISIGN=ISIGN+1
-      GOTO2700
- 2721 ISIGN=ISIGN+1
-      ISUM=-ISUM
-      GOTO2700
- 2722 IDECPT=IDECPT+1
-      IF(IDECPT.EQ.1.AND.IDIG.EQ.0)GOTO2700
-      GOTO2800
- 2725 IDIG=IDIG+1
-      TERM2=10.0**(IDIG-1)
-      ITERM2=INT(TERM2 + 0.01)
-      ISUM=ISUM+ITERM*ITERM2
- 2700 CONTINUE
-      IF(IDIG.LE.0)GOTO2800
-      IF(ISIGN.GE.2)GOTO2800
-      INTZ=ISUM
- 2800 CONTINUE
-      IF(IFLUNK.EQ.'YES')ITYPE2='WORD'
-C
-C               *******************************************************
-C               **  STEP 7--                                         **
-C               **  CONVERT (IF POSSIBLE) THE STRING INTO A FLOATING **
-C               **  POINT ARGUMENT.                                  **
-C               **  OUTPUT THIS FLOATING POINT VALUE IN FLOAT.       **
-C               *******************************************************
-C
-      ISTEPN='7'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-      AMIN=-1000000.
-      AMAX=+1000000.
-      IFLUNK='NO'
-      ITYPE2='NUMB'
-      FLOAT=-1.0
-C
-      ILOC=0
-      IDECPT=0
-      DO3060I=ISTAR2,ISTOP2
-      IF(IANS(I).EQ.'.')ILOC=I
-      IF(IANS(I).EQ.'.')IDECPT=IDECPT+1
- 3060 CONTINUE
-      IF(IDECPT.GE.2)GOTO3900
-      IF(IDECPT.EQ.1)GOTO3150
-      DO3100I=ISTAR2,ISTOP2
-      IREV=ISTOP2-(I-ISTAR2)
-      IF(IANS(IREV).EQ.' ')GOTO3100
-      IF(IANS(IREV).EQ.'0')GOTO3110
-      IF(IANS(IREV).EQ.'1')GOTO3110
-      IF(IANS(IREV).EQ.'2')GOTO3110
-      IF(IANS(IREV).EQ.'3')GOTO3110
-      IF(IANS(IREV).EQ.'4')GOTO3110
-      IF(IANS(IREV).EQ.'5')GOTO3110
-      IF(IANS(IREV).EQ.'6')GOTO3110
-      IF(IANS(IREV).EQ.'7')GOTO3110
-      IF(IANS(IREV).EQ.'8')GOTO3110
-      IF(IANS(IREV).EQ.'9')GOTO3110
-      IFLUNK='YES'
-      IF(IANS(IREV).EQ.'+')GOTO3900
-      IF(IANS(IREV).EQ.'-')GOTO3900
-      GOTO3900
- 3100 CONTINUE
-      IFLUNK='YES'
-      GOTO3900
- 3110 ILOC=IREV+1
- 3150 CONTINUE
-      IF(IBUG2.EQ.'ON')WRITE(ICOUT,3111)ILOC,IDECPT
- 3111 FORMAT('ILOC = ',I8,'    IDECPT = ',I8)
-      IF(IBUG2.EQ.'ON')CALL DPWRST('XXX','BUG ')
-C
-C     SECONDLY, COMPUTE THE INTEGER PART OF THE VALUE
-C
-      SIGN=1.0
-      IDIGI=0
-      ISIGN=0
-      SUMI=0
-      ILOCM1=ILOC-1
-      IF(ILOCM1.LT.ISTAR2)GOTO3250
-      DO3200I=ISTAR2,ILOCM1
-      IREV=ILOCM1-(I-ISTAR2)
-      IF(IANS(IREV).EQ.' ')GOTO3200
-      IF(IANS(IREV).EQ.'0')GOTO3210
-      IF(IANS(IREV).EQ.'1')GOTO3211
-      IF(IANS(IREV).EQ.'2')GOTO3232
-      IF(IANS(IREV).EQ.'3')GOTO3213
-      IF(IANS(IREV).EQ.'4')GOTO3214
-      IF(IANS(IREV).EQ.'5')GOTO3215
-      IF(IANS(IREV).EQ.'6')GOTO3216
-      IF(IANS(IREV).EQ.'7')GOTO3217
-      IF(IANS(IREV).EQ.'8')GOTO3218
-      IF(IANS(IREV).EQ.'9')GOTO3219
-      IF(IANS(IREV).EQ.'+')GOTO3220
-      IF(IANS(IREV).EQ.'-')GOTO3221
-      IFLUNK='YES'
-      GOTO3900
- 3210 ITERM=0
-      GOTO3225
- 3211 ITERM=1
-      GOTO3225
- 3232 ITERM=2
-      GOTO3225
- 3213 ITERM=3
-      GOTO3225
- 3214 ITERM=4
-      GOTO3225
- 3215 ITERM=5
-      GOTO3225
- 3216 ITERM=6
-      GOTO3225
- 3217 ITERM=7
-      GOTO3225
- 3218 ITERM=8
-      GOTO3225
- 3219 ITERM=9
-      GOTO3225
- 3220 ISIGN=ISIGN+1
-      GOTO3200
- 3221 ISIGN=ISIGN+1
-      SIGN=-SIGN
-      GOTO3200
- 3225 IDIGI=IDIGI+1
-      TERM=ITERM
-      IEXP=IDIGI-1
-      SUMI=SUMI+TERM*(10.0**IEXP)
- 3200 CONTINUE
- 3250 CONTINUE
-      IF(ISIGN.GE.2)GOTO3900
-      IF(IBUG2.EQ.'ON')WRITE(ICOUT,3255)IDIGI,SUMI
- 3255 FORMAT('IDIGI = ',I8,'    SUMI = ',F20.10)
-      IF(IBUG2.EQ.'ON')CALL DPWRST('XXX','BUG ')
-C
-C     THIRDLY, COMPUTE THE DECIMAL PART OF THE VALUE
-C
-      IDIGD=0
-      SUMD=0.0
-      ILOCP1=ILOC+1
-      IF(ILOCP1.GT.ISTOP2)GOTO3350
-      DO3300I=ILOCP1,ISTOP2
-      IF(IANS(I).EQ.' ')GOTO3300
-      IF(IANS(I).EQ.'0')GOTO3310
-      IF(IANS(I).EQ.'1')GOTO3311
-      IF(IANS(I).EQ.'2')GOTO3312
-      IF(IANS(I).EQ.'3')GOTO3333
-      IF(IANS(I).EQ.'4')GOTO3314
-      IF(IANS(I).EQ.'5')GOTO3315
-      IF(IANS(I).EQ.'6')GOTO3316
-      IF(IANS(I).EQ.'7')GOTO3317
-      IF(IANS(I).EQ.'8')GOTO3318
-      IF(IANS(I).EQ.'9')GOTO3319
-      IFLUNK='YES'
-      GOTO3900
- 3310 ITERM=0
-      GOTO3325
- 3311 ITERM=1
-      GOTO3325
- 3312 ITERM=2
-      GOTO3325
- 3333 ITERM=3
-      GOTO3325
- 3314 ITERM=4
-      GOTO3325
- 3315 ITERM=5
-      GOTO3325
- 3316 ITERM=6
-      GOTO3325
- 3317 ITERM=7
-      GOTO3325
- 3318 ITERM=8
-      GOTO3325
- 3319 ITERM=9
-      GOTO3325
- 3325 IDIGD=IDIGD+1
-      TERM=ITERM
-      SUMD=SUMD+TERM/(10.0**IDIGD)
- 3300 CONTINUE
- 3350 CONTINUE
-      IF(IBUG2.EQ.'ON')WRITE(ICOUT,3355)IDIGD,SUMD
- 3355 FORMAT('IDIGD = ',I8,'    SUMD = ',F20.10)
-      IF(IBUG2.EQ.'ON')CALL DPWRST('XXX','BUG ')
-      IDIGT=IDIGI+IDIGD
-      IF(IDIGT.LE.0)GOTO3900
-      FLOAT=SUMI+SUMD
-      IF(SIGN.LT.0.0)FLOAT=-FLOAT
-      IF(AMIN.LE.FLOAT.AND.FLOAT.LE.AMAX)GOTO3000
-      GOTO3900
-C
- 3900 CONTINUE
-      IF(IFLUNK.EQ.'YES')ITYPE2='WORD'
- 3000 CONTINUE
-      GOTO9000
-C
- 9000 CONTINUE
-      IF(IBUGA3.EQ.'ON')THEN
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9001)
- 9001   FORMAT('AT THE END OF DPTY3B--')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9002)IFOUZ2,ISTAR2,ISTOP2
- 9002   FORMAT('IFOUZ2, ISTAR2, ISTOP2 = ',A4,2I8)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9003)ITYPE2,IHOL,IHOL2,INTZ,FLOAT,IERROR
- 9003   FORMAT('ITYPE2,IHOL,IHOL2,INTZ,FLOAT,IERROR = ',A4,2X,2A4,2X,
-     1         I8,F15.7,2X,A4)
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
-C
-      RETURN
-      END
       SUBROUTINE DPTYP2(IANS,IWIDTH,IHNAME,IHNAM2,NUMNAM,MAXNAM,IBUGA3,
-     1           IUSE,IVALUE,VALUE,IN,
-     1           IFOUNZ,IBEGIN,IEND,
-     1           ITYPE,IHOL,IHOL2,INT1,FLOAT1,IERRO1,
-     1           NUMCL,NUMPL,NUMAOL,ITYW1L,ICAT1L,INLI1L,ITYW2L,
-     1           NUMCR,NUMPR,NUMAOR,ITYW1R,ICAT1R,INLI1R,ITYW2R)
+     1                  IUSE,IVALUE,VALUE,IN,
+     1                  IFOUNZ,IBEGIN,IEND,
+     1                  ITYPE,IHOL,IHOL2,INT1,FLOAT1,IERRO1,
+     1                  NUMCL,NUMPL,NUMAOL,ITYW1L,ICAT1L,INLI1L,ITYW2L,
+     1                  NUMCR,NUMPR,NUMAOR,ITYW1R,ICAT1R,INLI1R,ITYW2R)
 C
-C     PURPOSE--SCAN THE CHARACTER ARRAY IANS(.)
-C              AND EXTRACT INFORMATION
-C              REGARDING THE EXISTENCE AND LOACTION
-C              OF CERTAIN SUBSTRINGS USED IN THE LET COMMAND.
-C     THIS SUBROUTINE (DPTYP2) IS CALLED BY DPLET.
+C     PURPOSE--SCAN THE CHARACTER ARRAY IANS(.) AND EXTRACT INFORMATION
+C              REGARDING THE EXISTENCE AND LOCATION OF CERTAIN SUBSTRINGS
+C              USED IN THE LET COMMAND.  THIS SUBROUTINE (DPTYP2) IS
+C              CALLED BY DPLET.
 C     OTHER SUBROUINTES NEEDED--DPTYP3
 C     MOST GENERAL FORM--LET X(I) = XXX FOR I = A B C
 C                      --LET X(I) = XXX SUBSET XX A B
@@ -24738,27 +23979,27 @@ C                                TO BE EXAMINED.
 C                     --IWIDTH = AN INTEGER VARIABLE CONTAINING
 C                                THE (FULL) WIDTH OF THE INPUT LINE
 C                                (THAT IS, THE NUMBER OF COLUMNS)
-C     OUTPUT ARGUMENTS--IFOUNZ = A HOLLERITH ARRAY
-C                                WITH THE VALUE 'YES'
-C                                IF THE SUBSTRING WAS FOUND;
-C                                AND THE VALUE 'NO'
-C                                IF THE SUBSTRING WAS NOT FOUND.
+C     OUTPUT ARGUMENTS--IFOUNZ = A HOLLERITH ARRAY WITH THE VALUE 'YES'
+C                                IF THE SUBSTRING WAS FOUND; AND THE
+C                                VALUE 'NO' IF THE SUBSTRING WAS NOT
+C                                FOUND.
 C                     --IBEGIN = AN INTEGER ARRAY WITH
 C                                THE START COLUMN OF THE FOUND SUBSTRING
 C                     --IEND   = AN INTEGER ARRAY WITH
-C                                THE STOP COLUMN OF THE FIUND SUBSTRING.
-C                     --ITYPE  = A HOLLERITH ARRAY
-C                                WITH THE VALUE 'WORD' IF THE SUBSTRING CONTAINS
-C                                ANY NON-NUMERIC (EXCLUDING BLANKS) CHARACTER;
-C                                AND WITH THE VALUE 'NUMB' IF THE SUBSTRING CO
-C                                ALL NUMERIC VALUES OR DECIMAL POINT OR + OR -
-C                                (WITH INTERMITTENT BLANKS IGNORED).
-C                     --IHOL   = AN HOLLERITH ARRAY
-C                                CONTAINING THE PACKED (FIRST 4 CHARACTERS) VERS
-C                                OF THE FOUND SUBSTRING.
-C                     --IHOL2  = AN HOLLERITH ARRAY
-C                                CONTAINING THE PACKED (NEXT 4 CHARACTERS) VERSI
-C                                OF THE FOUND SUBSTRING.
+C                                THE STOP COLUMN OF THE FOUND SUBSTRING.
+C                     --ITYPE  = A HOLLERITH ARRAY WITH THE VALUE 'WORD'
+C                                IF THE SUBSTRING CONTAINS ANY NON-NUMERIC
+C                                (EXCLUDING BLANKS) CHARACTER; AND WITH
+C                                THE VALUE 'NUMB' IF THE SUBSTRING
+C                                CONTAINS ALL NUMERIC VALUES OR DECIMAL
+C                                POINT OR + OR - (WITH INTERMITTENT
+C                                BLANKS IGNORED).
+C                     --IHOL   = AN HOLLERITH ARRAY CONTAINING THE PACKED
+C                                (FIRST 4 CHARACTERS) OF THE FOUND
+C                                SUBSTRING.
+C                     --IHOL2  = AN HOLLERITH ARRAY CONTAINING THE PACKED
+C                                (NEXT 4 CHARACTERS) OF THE FOUND
+C                                SUBSTRING.
 C                     --INT1   = AN INTEGER ARRAY
 C                                CONTAINING THE INTEGER REPRESENTATION
 C                                (IF POSSIBLE) OF THE FOUND SUBSTRING.
@@ -24858,22 +24099,28 @@ C     UPDATED         --JANUARY   1982.
 C     UPDATED         --MARCH     1982.
 C     UPDATED         --MAY       1982.
 C     UPDATED         --JANUARY   1983.
-C     UPDATED         --DECEMBER  1988.  ELIM. SPUR. ERROR MESS. FOR IFRINGE
-C     UPDATED         --JANAURY   1989.  IANS(IENDP) WITH IENDP = 0 (ALAN)
-C     UPDATED         --NOVEMBER  1989.  FIX IANS(IENDP=0) (NELSON)
+C     UPDATED         --DECEMBER  1988. ELIM. SPUR. ERROR MESS. FOR IFRINGE
+C     UPDATED         --JANAURY   1989. IANS(IENDP) WITH IENDP = 0 (ALAN)
+C     UPDATED         --NOVEMBER  1989. FIX IANS(IENDP=0) (NELSON)
+C     UPDATED         --AUGUST    2021. WHEN CHECKING FOR "SUBSET",
+C                                       "EXCEPT", "FOR" AND "IF" SHOULD
+C                                       INCLUDE A LEADING SPACE TO AVOID
+C                                       CONFLICT WITH VARIABLE NAMES
+C                                       THAT MIGHT CONTAIN THESE
+C                                       CHARACTERS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-      CHARACTER*4 IANS
-      CHARACTER*4 IHNAME
-      CHARACTER*4 IHNAM2
+      CHARACTER*4 IANS(*)
+      CHARACTER*4 IHNAME(*)
+      CHARACTER*4 IHNAM2(*)
+      CHARACTER*4 IUSE(*)
+      CHARACTER*4 IFOUNZ(*)
+      CHARACTER*4 ITYPE(*)
+      CHARACTER*4 IHOL(*)
+      CHARACTER*4 IHOL2(*)
+      CHARACTER*4 IERRO1(*)
       CHARACTER*4 IBUGA3
-      CHARACTER*4 IUSE
-      CHARACTER*4 IFOUNZ
-      CHARACTER*4 ITYPE
-      CHARACTER*4 IHOL
-      CHARACTER*4 IHOL2
-      CHARACTER*4 IERRO1
       CHARACTER*4 ITYW1L
       CHARACTER*4 ICAT1L
       CHARACTER*4 INLI1L
@@ -24902,24 +24149,13 @@ C
 C
 C---------------------------------------------------------------------
 C
-      DIMENSION IANS(*)
-      DIMENSION IHNAME(*)
-      DIMENSION IHNAM2(*)
-C
-      DIMENSION IUSE(*)
       DIMENSION IVALUE(*)
       DIMENSION VALUE(*)
       DIMENSION IN(*)
-C
-      DIMENSION IFOUNZ(*)
       DIMENSION IBEGIN(*)
       DIMENSION IEND(*)
-      DIMENSION ITYPE(*)
-      DIMENSION IHOL(*)
-      DIMENSION IHOL2(*)
       DIMENSION INT1(*)
       DIMENSION FLOAT1(*)
-      DIMENSION IERRO1(*)
 C
       DIMENSION IHMAN(10)
       DIMENSION IHMAN2(10)
@@ -24985,7 +24221,7 @@ C
    51   FORMAT('***** AT THE BEGINNING OF DPTYP2--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)IBUGA3,IWIDTH,MAXNAM,IN(1)
-   52   FORMAT('IBUGA3,IWIDTH,MAXNAM,IN(1) = ',A4,2X,2I5,I8)
+   52   FORMAT('IBUGA3,IWIDTH,MAXNAM,IN(1) = ',A4,2X,3I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)(IANS(I),I=1,MIN(80,IWIDTH))
    54   FORMAT('IANS(.) = ',80A1)
@@ -25001,15 +24237,15 @@ C
       IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       DO100I=1,30
-      IFOUNZ(I)='NO'
-      IBEGIN(I)=-1
-      IEND(I)=-1
-      ITYPE(I)='9999'
-      IHOL(I)='9999'
-      IHOL2(I)='9999'
-      INT1(I)=-999999
-      FLOAT1(I)=-999999.0
-      IERRO1(I)='NO'
+        IFOUNZ(I)='NO'
+        IBEGIN(I)=-1
+        IEND(I)=-1
+        ITYPE(I)='9999'
+        IHOL(I)='9999'
+        IHOL2(I)='9999'
+        INT1(I)=-999999
+        FLOAT1(I)=-999999.0
+        IERRO1(I)='NO'
   100 CONTINUE
 C
       NUMCL=0
@@ -25066,6 +24302,9 @@ C
 C
 C     STEP 2.2--SEARCH FOR = SIGN.
 C
+      ISTEPN='2.2'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(1)+1
       ISTOP1=IWIDTH
       ISTRIN='='
@@ -25083,6 +24322,9 @@ C
 C     STEP 2.3--SEARCH FOR LEFT-HAND SIDE (;
 C     SEARCH BETWEEN LET AND =.
 C
+      ISTEPN='2.3'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(1)+1
       ISTOP1=IBEGIN(6)-1
       ISTRIN='('
@@ -25097,6 +24339,9 @@ C
 C
 C     STEP 2.4--SEARCH FOR LEFT-HAND SIDE );
 C     SEARCH BETWEEN ( AND =.
+C
+      ISTEPN='2.4'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ISTAR1=IEND(3)+1
       ISTOP1=IBEGIN(6)-1
@@ -25118,6 +24363,10 @@ C     EXTRACT VARIABLE NAME;
 C     SEARCH BETWEEN LET AND =.
 C
  2500 CONTINUE
+C
+      ISTEPN='2.5'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(1)+1
       ISTOP1=IBEGIN(6)
       ISTRIN='!;='
@@ -25138,6 +24387,10 @@ C     FIRST EXTRACT VARIABLE NAME;
 C     SEARCH BETWEEN LET AND (.
 C
  2600 CONTINUE
+C
+      ISTEPN='2.6'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(1)+1
       ISTOP1=IBEGIN(3)
       ISTRIN='!;('
@@ -25155,6 +24408,9 @@ C
 C     STEP 2.7--ALSO IF LEFT-HAND SIDE PARENTHESES FOUND,
 C     SEARCH FOR LEFT-HAND SIDE ARGUMENT NAME OR VALUE;
 C     SEARCH BETWEEN ( AND ).
+C
+      ISTEPN='2.7'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ISTAR1=IEND(3)
       ISTOP1=IBEGIN(5)
@@ -25203,7 +24459,14 @@ C
       ISTOP1=IWIDTH
       ISTRIN='SUBS'
       ISTRI2='ET  '
-      INEX='II'
+      INEX='IIWO'
+C
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,3001)ISTAR1,ISTOP1
+ 3001   FORMAT('SEARCH FOR SUBSET: ISTAR1,ISTOP1 = ',2I6)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
       CALL DPTYP3(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGA3,
      1      IFOUNZ(11),IBEGIN(11),IEND(11),
      1      ITYPE(11),IHOL(11),IHOL2(11),INT1(11),FLOAT1(11),IERRO1(11))
@@ -25216,10 +24479,20 @@ CCCCC THE SECTION WAS CORRECTED ALSO IN JANUARY 1988 AND NOVEMBER 1989
       IF(IFOUNZ(11).EQ.'YES'.AND.
      1   IENDP.LE.ISTOP1.AND.
      1   IANS(IENDP).NE.' ')IFOUNZ(11)='NO'
+C
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,3003)IENDP,IFOUNZ(11)
+ 3003   FORMAT('AFTER DPTYP3: IENDP,IFOUNZ(11) = ',I6,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
       IF(IFOUNZ(11).EQ.'YES')GOTO4000
  3119 CONTINUE
 C
 C     STEP 3.1B--SEARCH FOR EXCEPT.
+C
+      ISTEPN='3.1B'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ISTAR1=IEND(6)+1
       ISTOP1=IWIDTH
@@ -25243,9 +24516,12 @@ CCCCC THE SECTION WAS CORRECTED ALSO IN JANUARY 1988 AND NOVEMBER 1989
 C
 C     STEP 3.1C--SEARCH FOR FOR.
 C
+      ISTEPN='3.1C'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(6)+1
       ISTOP1=IWIDTH
-      ISTRIN='FOR'
+      ISTRIN='FOR '
       ISTRI2='    '
       INEX='II'
       CALL DPTYP3(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGA3,
@@ -25264,6 +24540,9 @@ CCCCC THE SECTION WAS CORRECTED ALSO IN JANUARY 1988 AND NOVEMBER 1989
  3139 CONTINUE
 C
 C     STEP 3.1D--SEARCH FOR IF.
+C
+      ISTEPN='3.1D'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ISTAR1=IEND(6)+1
       ISTOP1=IWIDTH
@@ -25289,6 +24568,9 @@ C     STEP 3.2--IF NEITHER SUBSET NOR FOR HAVE BEEN FOUND,
 C     SEARCH FOR RIGHT-HAND SIDE (;
 C     SEARCH BETWEEN = AND END OF LINE.
 C
+      ISTEPN='3.2'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(6)+1
       ISTOP1=IWIDTH
       ISTRIN='('
@@ -25304,6 +24586,9 @@ C
 C     STEP 3.3--IF NEITHER SUBSET NOR FOR HAVE BEEN FOUND,
 C     SEARCH FOR RIGHT-HAND SIDE );
 C     SEARCH BETWEEN ( AND END OF LINE.
+C
+      ISTEPN='3.3'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ISTAR1=IEND(8)+1
       ISTOP1=IWIDTH
@@ -25334,6 +24619,10 @@ C     CHECK TO SEE OF 2 ITEMS
 C     FOLLOW THE FIRST VALUE.
 C
  3400 CONTINUE
+C
+      ISTEPN='3.4'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(6)+1
       ISTOP1=IWIDTH
       ISTRIN='!;:'
@@ -25348,6 +24637,10 @@ C
       GOTO9000
 C
  3410 CONTINUE
+C
+      ISTEPN='3.41'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(7)+1
       ISTOP1=IWIDTH
       ISTRIN='!;:'
@@ -25360,6 +24653,10 @@ C
       GOTO3900
 C
  3420 CONTINUE
+C
+      ISTEPN='3.42'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(8)+1
       ISTOP1=IWIDTH
       ISTRIN='!;:'
@@ -25376,6 +24673,10 @@ C     FIRST EXTRACT VARIABLE NAME;
 C     SEARCH BETWEEN = AND (.
 C
  3500 CONTINUE
+C
+      ISTEPN='3.5'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(6)+1
       ISTOP1=IBEGIN(8)
       ISTRIN='!;('
@@ -25394,6 +24695,9 @@ C     STEP 3.6--IF NEITHER SUBSET NOR FOR HAVE BEEN FOUND,
 C     ALSO IF RIGHT-HAND SIDE PARENTHESES FOUND,
 C     SEARCH FOR RIGHT-HAND SIDE ARGUMENT NAME OR VALUE;
 C     SEARCH BETWEEN ( AND ).
+C
+      ISTEPN='3.6'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ISTAR1=IEND(8)
       ISTOP1=IBEGIN(10)
@@ -25431,6 +24735,7 @@ C               **  COMPONENT 13 = UPPER LIMIT (IF EXISTS) OF SUBSET    **
 C               **********************************************************
 C
  4000 CONTINUE
+C
       ISTEPN='4'
       IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
@@ -25454,6 +24759,9 @@ C     STEP 4.3--IF SUBSET HAS BEEN FOUND,
 C     SEARCH FOR RIGHT-HAND SIDE );
 C     SEARCH BETWEEN ( AND SUBSET.
 C
+      ISTEPN='4.3'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(8)+1
       ISTOP1=IBEGIN(11)-1
       ISTRIN=')'
@@ -25475,6 +24783,10 @@ C     EXTRACT VARIABLE NAME OR VALUE;
 C     SEARCH BETWEEN = AND SUBSET.
 C
  4400 CONTINUE
+C
+      ISTEPN='4.4'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(6)+1
       ISTOP1=IBEGIN(11)
       ISTRIN='!;:'
@@ -25496,6 +24808,10 @@ C     FIRST EXTRACT VARIABLE NAME;
 C     SEARCH BETWEEN = AND (.
 C
  4500 CONTINUE
+C
+      ISTEPN='4.5'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(6)+1
       ISTOP1=IBEGIN(8)
       ISTRIN='!;('
@@ -25514,6 +24830,9 @@ C     STEP 4.6--IF SUBSET HAS BEEN FOUND,
 C     ALSO IF RIGHT-HAND SIDE PARENTHESES FOUND,
 C     SEARCH FOR RIGHT-HAND SIDE ARGUMENT NAME OR VALUE;
 C     SEARCH BETWEEN ( AND ).
+C
+      ISTEPN='4.6'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ISTAR1=IEND(8)
       ISTOP1=IBEGIN(10)
@@ -25539,6 +24858,10 @@ C     SEARCH FOR VARIABLE NAME AFTER SUBSET;
 C     SEARCH BETWEEN SUBSET AND THE END OF THE LINE.
 C
  4700 CONTINUE
+C
+      ISTEPN='4.7'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(11)+1
       ISTOP1=IWIDTH
       ISTRIN='!;:'
@@ -25557,6 +24880,9 @@ C     STEP 4.8--IF SUBSET HAS BEEN FOUND,
 C     SEARCH FOR LOWER LIMIT VALUE AFTER     SUBSET XXX
 C     SEARCH BETWEEN VARIABLE NAME AND THE END OF THE LINE.
 C
+      ISTEPN='4.8'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(12)+1
       ISTOP1=IWIDTH
       ISTRIN='!;:'
@@ -25574,6 +24900,9 @@ C
 C     STEP 4.9--IF SUBSET HAS BEEN FOUND,
 C     SEARCH FOR UPPER LIMIT (IF EXISTENT) AFTER     SUBSET XXX
 C     SEARCH BETWEEN LOWER LIMIT AND THE END OF THE LINE.
+C
+      ISTEPN='4.9'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ISTAR1=IEND(13)+1
       ISTOP1=IWIDTH
@@ -25624,6 +24953,9 @@ C     STEP 5.3--IF FOR HAS BEEN FOUND,
 C     SEARCH FOR RIGHT-HAND SIDE );
 C     SEARCH BETWEEN ( AND FOR.
 C
+      ISTEPN='5.3'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(8)+1
       ISTOP1=IBEGIN(21)-1
       ISTRIN=')'
@@ -25645,6 +24977,10 @@ C     EXTRACT VARIABLE NAME OR VALUE;
 C     SEARCH BETWEEN = AND FOR.
 C
  5400 CONTINUE
+C
+      ISTEPN='5.4'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(6)+1
       ISTOP1=IBEGIN(21)
       ISTRIN='!;:'
@@ -25666,6 +25002,10 @@ C     FIRST EXTRACT VARIABLE NAME;
 C     SEARCH BETWEEN = AND (.
 C
  5500 CONTINUE
+C
+      ISTEPN='5.5'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(6)+1
       ISTOP1=IBEGIN(8)
       ISTRIN='!;('
@@ -25684,6 +25024,9 @@ C     STEP 5.6--IF FOR HAS BEEN FOUND,
 C     ALSO IF RIGHT-HAND SIDE PARENTHESES FOUND,
 C     SEARCH FOR RIGHT-HAND SIDE ARGUMENT NAME OR VALUE;
 C     SEARCH BETWEEN ( AND ).
+C
+      ISTEPN='5.6'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ISTAR1=IEND(8)
       ISTOP1=IBEGIN(10)
@@ -25709,6 +25052,10 @@ C     SEARCH FOR VARIABLE NAME AFTER FOR;
 C     SEARCH BETWEEN FOR AND THE END OF THE LINE.
 C
  5700 CONTINUE
+C
+      ISTEPN='5.7'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(21)+1
       ISTOP1=IWIDTH
       ISTRIN='!;:'
@@ -25726,6 +25073,9 @@ C
 C     STEP 5.8--IF FOR HAS BEEN FOUND,
 C     SEARCH FOR = SIGN AFTER    FOR XXX
 C     SEARCH BETWEEN VARIABLE NAME AND END OF LINE.
+C
+      ISTEPN='5.8'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ISTAR1=IEND(22)+1
       ISTOP1=IWIDTH
@@ -25745,6 +25095,9 @@ C     STEP 5.9--IF FOR HAS BEEN FOUND,
 C     SEARCH FOR START VALUE AFTER     FOR XXX =
 C     SEARCH BETWEEN = AND THE END OF THE LINE.
 C
+      ISTEPN='5.9'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(23)+1
       ISTOP1=IWIDTH
       ISTRIN='!;:'
@@ -25763,6 +25116,9 @@ C     STEP 5.10--IF FOR HAS BEEN FOUND,
 C     SEARCH FOR INCREMENT VALUE AFTER     FOR XXX =
 C     SEARCH BETWEEN START VALUE AND THE END OF THE LINE.
 C
+      ISTEPN='5.10'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISTAR1=IEND(24)+1
       ISTOP1=IWIDTH
       ISTRIN='!;:'
@@ -25780,6 +25136,9 @@ C
 C     STEP 5.11--IF FOR HAS BEEN FOUND,
 C     SEARCH FOR STOP VALUE AFTER     FOR XXX =
 C     SEARCH BETWEEN INCREMENT VALUE AND THE END OF THE LINE.
+C
+      ISTEPN='5.11'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ISTAR1=IEND(25)+1
       ISTOP1=IWIDTH
@@ -25831,6 +25190,9 @@ C     STEP 6.1--
 C     DETERMINE THE NUMBER OF COMPONENTS ON THE LEFT.
 C     A COMPONET HERE = A WORD OR A PARENTHESIS.
 C
+      ISTEPN='6.1'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISUM=0
       IMIN=2
       IMAX=5
@@ -25841,6 +25203,9 @@ C
 C
 C     STEP 6.2--
 C     DETERMINE THE NUMBER OF PARENTHESES (LEFT + RIGHT).
+C
+      ISTEPN='6.2'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ISUM=0
       IMIN=IMINL
@@ -25856,6 +25221,9 @@ C     +  -  *  /      ON THE LEFT
 C     (IT SHOULD BE 0).
 C     NOTE THAT THE ARITHMETIC OPERATION   **
 C     WILL BE LUMPED IN WITH    *    .
+C
+      ISTEPN='6.3'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ISUM=0
       IMIN=IMINL
@@ -25873,11 +25241,17 @@ C     THIS SHOULD BE THE VARIABLE OR PARAMETER
 C     DESIGNATION,
 C     AND IT SHOULD BE A 'WORD'.
 C
+      ISTEPN='6.4'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ITYW1L=ITYPE(2)
 C
 C     STEP 6.5--
 C     DETERMINE IF FIRST WORD ON THE LEFT
 C     IS ALREADY IN THE NAME LIST OR NOT.
+C
+      ISTEPN='6.5'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       INLI1L='NO'
       IVARL=IHOL(2)
@@ -25894,6 +25268,9 @@ C     IS A DATA MANIPULATION FUNCTION, OR
 C     IS A STATISTICAL CALCULATION FUNCTION
 C     (SEARCH IS DONE IN THAT ORDER).
 C
+C
+      ISTEPN='6.6'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ICAT1L='NONE'
       IVARL=IHOL(2)
@@ -25952,6 +25329,9 @@ C     ON THE LEFT.
 C     IF EXISTENT, THIS SHOULD BE THE ARGUMENT DESIGNATION
 C     OF A VARIABLE,
 C     AND IT MAY BE EITHER A 'WORD' OR A 'NUMB'.
+C
+      ISTEPN='6.7'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ITYW2L=ITYPE(4)
 C
@@ -26027,6 +25407,9 @@ C     STEP 7.1--
 C     DETERMINE THE NUMBER OF COMPONENTS ON THE RIGHT.
 C     A COMPONENT HERE = A WORD OR A PARENTHESIS.
 C
+      ISTEPN='7.1'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ISUM=0
       IMIN=7
       IMAX=10
@@ -26037,6 +25420,9 @@ C
 C
 C     STEP 7.2--
 C     DETERMINE THE NUMBER OF PARENTHESES (LEFT + RIGHT).
+C
+      ISTEPN='7.2'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ISUM=0
       IMIN=IMINR
@@ -26052,6 +25438,9 @@ C     +  -  *  /      ON THE RIGHT
 C     (IT SHOULD BE 0).
 C     NOTE THAT THE ARITHMETIC OPERATION   **
 C     WILL BE LUMPED IN WITH    *    .
+C
+      ISTEPN='7.3'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ISUM=0
       IMIN=IMINR
@@ -26069,11 +25458,17 @@ C     THIS SHOULD BE THE VARIABLE OR PARAMETER
 C     DESIGNATION,
 C     AND IT SHOULD BE A 'WORD'.
 C
+      ISTEPN='7.4'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ITYW1R=ITYPE(7)
 C
 C     STEP 7.5--
 C     DETERMINE IF FIRST WORD ON THE RIGHT
 C     IS ALREADY IN THE NAME LIST OR NOT.
+C
+      ISTEPN='7.5'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       INLI1R='NO'
       IVARR=IHOL(7)
@@ -26089,6 +25484,9 @@ C     IS A COLUMN NAMING (I.E., THE WORD 'COLU' OR 'COL', OR
 C     IS A DATA MANIPULATION FUNCTION, OR
 C     IS A STATISTICAL CALCULATION FUNCTION
 C     (SEARCH IS DONE IN THAT ORDER).
+C
+      ISTEPN='7.6'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ICAT1R='NONE'
       IVARR=IHOL(7)
@@ -26148,6 +25546,9 @@ C     IF EXISTENT, THIS SHOULD BE THE ARGUMENT DESIGNATION
 C     OF A VARIABLE,
 C     AND IT MAY BE EITHER A 'WORD' OR A 'NUMB'.
 C
+      ISTEPN='7.7'
+      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ITYW2R=ITYPE(9)
 C
  7900 CONTINUE
@@ -26198,21 +25599,16 @@ C
      1                  IFOUZ2,ISTAR2,ISTOP2,
      1                  ITYPE2,IHOL,IHOL2,INTZ,FLOATZ,IERROR)
 C
-C     NOTE--THIS SUBROUTINE IS IDENTICAL TO DPTY3C
-C           AND HAS BEEN DUPLICATED ONLY FOR MAPPING PURPOSES.
-C           DATE--JULY 7, 1978.
-C
-C     PURPOSE--SCAN THE CHARACTER ARRAY IANS(.) BETWEEN
-C              COLUMNS ISTAR1 AND ISTOP1
-C              FOR THE STRING DEFINED IN STRIN AND ISTRI2.
+C     PURPOSE--SCAN THE CHARACTER ARRAY IANS(.) BETWEEN COLUMNS ISTAR1
+C              AND ISTOP1 FOR THE STRING DEFINED IN STRIN AND ISTRI2.
 C     NOTE THAT THE STRING DEFINED IN ISTRIN AND ISTRI2
 C     MAY BE EXPRESSED IN SEVERAL WAYS--
-C          1) EXPLICITELY, E.G., LET    FOR    SUBSET, ETC.
-C          2) IMPLICITELY WITH ! REPRESENTING THE FIRST
+C          1) EXPLICITLY, E.G., LET    FOR    SUBSET, ETC.
+C          2) IMPLICITLY WITH ! REPRESENTING THE FIRST
 C             NON-BLANK CHARACTER THAT IS ENCOUNTERED;
-C          3) IMPLICITELY WITH ; REPRESENTING ANY STRING
+C          3) IMPLICITLY WITH ; REPRESENTING ANY STRING
 C             (INCLUDING ALL CHARACTERS, EVEN BLANKS));
-C          4) IMPLICITELY WITH : REPRESENTING THE FIRST
+C          4) IMPLICITLY WITH : REPRESENTING THE FIRST
 C            BLANK CHARACTER THAT IS ENCOUNTERED.
 C     NOTE--A GIVEN ARGUMENT MAY END UP WITH
 C            3 DIFFERENT REPRESENTATIONS--
@@ -26226,56 +25622,51 @@ C                     --ISTAR1 = THE FIRST COLUMN FOR WHICH THE
 C                                SCAN IS TO BE CARRIED OUT.
 C                     --ISTOP1 = THE LAST  COLUMN FOR WHICH THE
 C                                SCAN IS TO BE CARRIED OUT.
-C                     --ISTRIN = THE HOLLERITH VARIABLE
-C                                WHICH CONTAINS CHARACTERS 1 TO 4
-C                                OF THE STRING TO BE SEARCHED FOR.
-C                                THE DEFINITION OF THE STRING IN ISTRIN MAY
-C                                MAY BE DONE EXPLICTELY (BUT IS LIMITED
-C                                TO 4 CHARACTERS) OR IMPLICITELY
-C                                WHICH IS NOT LIMITED TO 4 CHARACTERS AND IS MOR
-C                                IS MORE GENERAL IN
-C                                OTHER WAYS ALSO.
-C                     --ISTRI2 = THE HOLLERITH VARIABLE
-C                                WHICH CONTAINS CHARACTERS 5 TO 8
-C                                OF THE STRING TO BE SEARCHED FOR.
-C                                THE DEFINITION OF THE STRING IN ISTRIN MAY
-C                                MAY BE DONE EXPLICTELY (BUT IS LIMITED
-C                                TO 4 CHARACTERS) OR IMPLICITELY
-C                                WHICH IS NOT LIMITED TO 4 CHARACTERS AND IS MOR
-C                                IS MORE GENERAL IN
-C                                OTHER WAYS ALSO.
-C                     --INEX   = A HOLLERITH VARIABLE WHICH
-C                                WILL CONTAIN ONE OF THE FOLLOWING 4 VALUES--
-C                                II, IE, EI, EE THAT STANDS FOR
-C                                WHERE I STANDS FOR INCLUSIVE AND
-C                                WHERE E STANDS FOR EXCLUSIVE;
-C                                INEX SPECIFIES WHETHER THE FIRST OR LAST CHARAC
+C                     --ISTRIN = THE HOLLERITH VARIABLE WHICH CONTAINS
+C                                CHARACTERS 1 TO 4 OF THE STRING TO BE
+C                                SEARCHED FOR.  THE DEFINITION OF THE
+C                                STRING IN ISTRIN MAY MAY BE DONE
+C                                EXPLICITLY (BUT IS LIMITED TO 4
+C                                CHARACTERS) OR IMPLICITLY WHICH IS NOT
+C                                LIMITED TO 4 CHARACTERS AND IS MORE
+C                                GENERAL IN OTHER WAYS ALSO.
+C                     --ISTRI2 = THE HOLLERITH VARIABLE WHICH CONTAINS
+C                                CHARACTERS 5 TO 8 OF THE STRING TO BE
+C                                SEARCHED FOR.  THE DEFINITION OF THE
+C                                STRING IN ISTRIN MAY MAY BE DONE
+C                                EXPLICITLY (BUT IS LIMITED TO 4
+C                                CHARACTERS) OR IMPLICITLY WHICH IS NOT
+C                                LIMITED TO 4 CHARACTERS AND IS MORE
+C                                GENERAL IN OTHER WAYS ALSO.
+C                     --INEX   = A HOLLERITH VARIABLE WHICH CONTAINS ONE
+C                                OF THE FOLLOWING 4 VALUES--II, IE, EI, EE
+C                                WHERE I STANDS FOR INCLUSIVE AND E
+C                                STANDS FOR EXCLUSIVE;
+C                                INEX SPECIFIES WHETHER THE FIRST OR LAST
 C                                CHARACTER IS TO BE INCLUDED OR EXCLUDED IN
 C                                IN DEFINING ISTAR2 AND ISTOP2.
-C     OUTPUT ARGUMENTS--IFOUZ2 = A HOLLERITH VARIABLE
-C                                WITH THE VALUE 'YES'
-C                                IF THE STRING WAS FOUND;
-C                                AND THE VALUE 'NO'
-C                                IF THE STRING WAS NOT FOUND.
+C     OUTPUT ARGUMENTS--IFOUZ2 = A HOLLERITH VARIABLE WITH THE VALUE 'YES'
+C                                IF THE STRING WAS FOUND AND THE VALUE
+C                                'NO' IF THE STRING WAS NOT FOUND.
 C                     --ISTAR2 = THE START COLUMN OF THE FOUND STRING
 C                     --ISTOP2 = THE STOP COLUMN OF THE FIUND STRING.
-C                     --ITYPE2 = A HOLLERITH VARIABLE
-C                                WITH THE VALUE 'WORD' IF THE STRING CONTAINS
-C                                ANY NON-NUMERIC (EXCLUDING BLANKS) CHARACTER;
-C                                AND WITH THE VALUE 'NUMB' IF THE STRING CONTA
+C                     --ITYPE2 = A HOLLERITH VARIABLE WITH THE VALUE
+C                                'WORD' IF THE STRING CONTAINS ANY
+C                                NON-NUMERIC (EXCLUDING BLANKS) CHARACTER
+C                                AND THE VALUE 'NUMB' IF THE STRING CONTAINS
 C                                ALL NUMERIC VALUES OR DECIMAL POINT OR + OR -
 C                                (WITH INTERMITTENT BLANKS IGNORED).
-C                     --IHOL   = THE HOLLERITH VARIABLE
-C                                CONTAINING THE PACKED (4 CHARACTERS) VERSION
-C                                OF CHARACTERS 1 TO 4 OF THE FOUND STRING.
-C                     --IHOL2  = THE HOLLERITH VARIABLE
-C                                CONTAINING THE PACKED (4 CHARACTERS) VERSION
-C                                OF CHARACTERS 5 TO 8 OF THE FOUND STRING.
-C                     --INT    = THE INTEGER VARIABLE
-C                                CONTAINING THE INTEGER REPRESENTATION
-C                                (IF POSSIBLE) OF THE FOUND STRING.
-C                     --FLOAT  = THE FLOATING POINT VARIABLE
-C                                CONTAINING THE FLOATING POINT REPRESENTATION
+C                     --IHOL   = THE HOLLERITH VARIABLE CONTAINING THE
+C                                PACKED (4 CHARACTERS) VERSION OF
+C                                CHARACTERS 1 TO 4 OF THE FOUND STRING.
+C                     --IHOL2  = THE HOLLERITH VARIABLE CONTAINING THE
+C                                PACKED (4 CHARACTERS) VERSION OF
+C                                CHARACTERS 5 TO 8 OF THE FOUND STRING.
+C                     --INT    = THE INTEGER VARIABLE CONTAINING THE
+C                                INTEGER REPRESENTATION (IF POSSIBLE) OF
+C                                THE FOUND STRING.
+C                     --FLOAT  = THE FLOATING POINT VARIABLE CONTAINING
+C                                THE FLOATING POINT REPRESENTATION
 C                                (IF POSSIBLE) OF THE FOUND STRING.
 C                     --IERROR = A HOLLERITH VARIABLE WITH VALUE
 C                                'YES' OR 'NO' INDICATING IF AN
@@ -26298,10 +25689,12 @@ C     UPDATED         --JANUARY   1981.
 C     UPDATED         --JUNE      1981.
 C     UPDATED         --MARCH     1982.
 C     UPDATED         --MAY       1982.
+C     UPDATED         --AUGUST    2021. SOME RECODING FOR BETTER
+C                                       READABILITY
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
-      CHARACTER*4 IANS
+      CHARACTER*4 IANS(*)
       CHARACTER*4 ISTRIN
       CHARACTER*4 ISTRI2
       CHARACTER*4 INEX
@@ -26314,17 +25707,11 @@ C
 C
       CHARACTER*4 ITEMP
       CHARACTER*4 IFLUNK
-      CHARACTER*4 ISTRI3
+      CHARACTER*4 ISTRI3(20)
       CHARACTER*4 ILAST
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
-C
-C---------------------------------------------------------------------
-C
-      DIMENSION IANS(*)
-C
-      DIMENSION ISTRI3(20)
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -26337,6 +25724,7 @@ C
       IERROR='NO'
 C
       IPJM1=0
+      NUMASC=4
 C
       IF(IBUGA3.EQ.'ON')THEN
         WRITE(ICOUT,999)
@@ -26345,15 +25733,16 @@ C
         WRITE(ICOUT,51)
    51   FORMAT('***** AT THE BEGINNING OF DPTYP3--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,53)ISTAR1,ISTOP1
-   53   FORMAT('ISTAR1,ISTOP1 = ',I8,I8)
+        WRITE(ICOUT,53)ISTAR1,ISTOP1,IWIDTH
+   53   FORMAT('ISTAR1,ISTOP1,IWIDTH = ',3I8)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,54)IBUGA3,ISTRIN,ISTRI2
-   54   FORMAT('IBUGA3,ISTRIN,ISTRI2 = ',2(A4,2X),A4)
+        WRITE(ICOUT,54)IBUGA3,ISTRIN,ISTRI2,INEX
+   54   FORMAT('IBUGA3,ISTRIN,ISTRI2,INEX = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,61)(IANS(I),I=1,MIN(80,IWIDTH))
+   61   FORMAT('IANS(.) = ',80A1)
         CALL DPWRST('XXX','BUG ')
       ENDIF
-C
-      NUMASC=4
 C
 C               ******************************************************
 C               **  STEP 1--                                        **
@@ -26363,20 +25752,6 @@ C
       ISTEPN='1'
       IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-      IF(IBUGA3.EQ.'OFF')GOTO150
-      WRITE(ICOUT,101)
-  101 FORMAT('AT THE BEGINNING OF DPTYP3--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,102)IWIDTH
-  102 FORMAT('IWIDTH = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,103)(IANS(I),I=1,IWIDTH)
-  103 FORMAT('IANS(.) = ',80A1)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,104)ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX
-  104 FORMAT('ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX = ',I8,I8,A4,A4,A4)
-      CALL DPWRST('XXX','BUG ')
-  150 CONTINUE
       IFOUZ2='NO'
       ISTAR2=-1
       ISTOP2=-1
@@ -26392,57 +25767,66 @@ C               *********************************************************
 C
       ISTEPN='2'
       IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       IMAX=2*NUMASC
       DO300I=1,IMAX
-      I2=I
-      J=I
-      IF(I.GT.NUMASC)J=I-NUMASC
-      ISTAR3=NUMBPC*(J-1)
-      ISTAR3=IABS(ISTAR3)
-      ITEMP='    '
-      IF(I.LE.NUMASC)CALL DPCHEX(ISTAR3,NUMBPC,ISTRIN,0,NUMBPC,ITEMP)
-      IF(I.GT.NUMASC)CALL DPCHEX(ISTAR3,NUMBPC,ISTRI2,0,NUMBPC,ITEMP)
-      IF(ITEMP.EQ.'    ')GOTO350
-      ISTRI3(I)=ITEMP
+        I2=I
+        J=I
+        IF(I.GT.NUMASC)J=I-NUMASC
+        ISTAR3=NUMBPC*(J-1)
+        ISTAR3=IABS(ISTAR3)
+        ITEMP='    '
+        IVALT=0
+        IF(I.LE.NUMASC)THEN
+          CALL DPCHEX(ISTAR3,NUMBPC,ISTRIN,IVALT,NUMBPC,ITEMP)
+        ELSE
+          CALL DPCHEX(ISTAR3,NUMBPC,ISTRI2,IVALT,NUMBPC,ITEMP)
+        ENDIF
+        IF(ITEMP.EQ.'    ')THEN
+          ILEN2=I2-1
+          GOTO390
+        ENDIF
+        ISTRI3(I)=ITEMP
   300 CONTINUE
       ILEN2=I2
-      GOTO390
-  350 CONTINUE
-      ILEN2=I2-1
+C
   390 CONTINUE
 C
-      IF(IBUGA3.EQ.'OFF')GOTO399
-      WRITE(ICOUT,391)
-  391 FORMAT('IN THE MIDDLE OF DPTYP3 (AFTER STEP 2)--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,392)ILEN2
-  392 FORMAT('ILEN2 = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,393)(ISTRI3(I),I=1,ILEN2)
-  393 FORMAT('ISTRI3(.) = ',6A1)
-      CALL DPWRST('XXX','BUG ')
-  399 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,391)
+  391   FORMAT('IN THE MIDDLE OF DPTYP3 (AFTER STEP 2)--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,392)ILEN2,ISTRIN,ISTRI2
+  392   FORMAT('ILEN2,ISTRIN,ISTRI2 = ',I8,2(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,393)(ISTRI3(I),I=1,ILEN2)
+  393   FORMAT('ISTRI3(.) = ',6A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
-C               ****************************************************************
-C               **  STEP 3--
-C               **  DISTINGUISH BETWEEN THE 3 TYPES OF POSSIBLE SEARCH STRINGS--
-C               **  1) AN EXPLICITELY-DEFINED STRING; E.G.,
-C               **     LET     FOR     SUBSET     =     5.3     -2.6666666
-C               **     (AS IN COMMANDS, KEY WORDS, AND NUMBERS);
-C               **  2) A STRING STARTING WITH THE FIRST NON-BLANK CHARACTER
-C               **     AND ENDING WITH SOME SPECIFIED CHARACTER; E.G., XXXXX(
-C               **     (AS IN THE VARIABLE NAME OF A SUBSCRIPTED VARIABLE,
-C               **     OR THE ARGUMENT (I. E., THE SUBSCRIPT) IN A SUBSCRIPTED
-C               **     VARIABLE);
-C               **  3) A STRING STARTING WITH THE FIRST NON-BLANK CHARACTER
-C               **     AND ENDING WITH THE FIRST SUBSEQUENT BLANK CHARACTER
-C               **     (OR ENDING WITH THE END OF THE LINE).
-C               **     E.G., XXXX
-C               **     (AS IN SOME UNSPECIFIED PARAMETER OR VARIABLE NAME).
-C               ****************************************************************
+C               ********************************************************
+C               **  STEP 3--                                          **
+C               **  DISTINGUISH BETWEEN THE 3 TYPES OF POSSIBLE       **
+C               **  SEARCH STRINGS--                                  **
+C               **  1) AN EXPLICITELY-DEFINED STRING; E.G.,           **
+C               **     LET   FOR   SUBSET   =   5.3   -2.6666666      **
+C               **     (AS IN COMMANDS, KEY WORDS, AND NUMBERS);      **
+C               **  2) A STRING STARTING WITH THE FIRST NON-BLANK     **
+C               **     CHARACTER AND ENDING WITH SOME SPECIFIED       **
+C               **     CHARACTER; E.G., XXXXX( (AS IN THE VARIABLE    **
+C               **     NAME OF A SUBSCRIPTED VARIABLE, OR THE ARGUMENT**
+C               **     (I. E., THE SUBSCRIPT) IN A SUBSCRIPTED        **
+C               **     VARIABLE);                                     **
+C               **  3) A STRING STARTING WITH THE FIRST NON-BLANK     **
+C               **     CHARACTER AND ENDING WITH THE FIRST SUBSEQUENT **
+C               **     BLANK CHARACTER (OR ENDING WITH THE END OF THE **
+C               **     LINE).  E.G., XXXX  (AS IN SOME UNSPECIFIED    **
+C               **     PARAMETER OR VARIABLE NAME).                   **
+C               ********************************************************
 C
       ISTEPN='3'
       IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       ICASE=1
       IF(ISTRI3(1).NE.'!'.AND.ISTRI3(2).EQ.';'.AND.ISTRI3(3).NE.':')
      1ICASE=2
@@ -26452,14 +25836,14 @@ C
      1ICASE=4
       IF(ILEN2.EQ.1.OR.ILEN2.EQ.2)ICASE=1
 C
-      IF(IBUGA3.EQ.'OFF')GOTO398
-      WRITE(ICOUT,395)
-  395 FORMAT('AFTER STEP 3 OF DPTYP3--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,396)ICASE
-  396 FORMAT('ICASE = ',I8)
-      CALL DPWRST('XXX','BUG ')
-  398 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,395)
+  395   FORMAT('AFTER STEP 3 OF DPTYP3--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,396)ICASE
+  396   FORMAT('ICASE = ',I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               *********************************************************
 C               **  STEP 4--                                           **
@@ -26468,144 +25852,164 @@ C               *********************************************************
 C
       ISTEPN='4'
       IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-      IF(ICASE.EQ.1)GOTO400
-      IF(ICASE.EQ.2)GOTO500
-      IF(ICASE.EQ.3)GOTO600
-      IF(ICASE.EQ.4)GOTO700
 C
-  400 CONTINUE
-      DO410I=ISTAR1,ISTOP1
-      I2=I
-      IF(IANS(I).EQ.ISTRI3(1))GOTO420
-      GOTO410
-  420 CONTINUE
-      DO430J=1,ILEN2
-      IPJM1=J+I-1
-      IF(IPJM1.GT.ISTOP1)GOTO410
-      IF(IANS(IPJM1).EQ.ISTRI3(J))GOTO430
-      GOTO410
-  430 CONTINUE
-      IFOUZ2='YES'
-      IF(INEX.EQ.'II')ISTAR2=I2
-      IF(INEX.EQ.'IE')ISTAR2=I2
-      IF(INEX.EQ.'EI')ISTAR2=I2+1
-      IF(INEX.EQ.'EE')ISTAR2=I2+1
-      IF(INEX.EQ.'II')ISTOP2=IPJM1
-      IF(INEX.EQ.'IE')ISTOP2=IPJM1-1
-      IF(INEX.EQ.'EI')ISTOP2=IPJM1
-      IF(INEX.EQ.'EE')ISTOP2=IPJM1-1
-      IF(ISTAR2.LE.ISTOP2)GOTO990
-      GOTO900
-  410 CONTINUE
-      IFOUZ2='NO'
-      GOTO9000
+C     2021/10: ADD INEX="IIWO" OPTION.  THIS IS INTENDED FOR
+C              "SUBSET", "EXCEPT", "FOR" AND "IF" CLAUSES.
+C              SPECIFICALLY, CHECK IF CHARACTER BEFORE AND THE
+C              CHARACTER AFTER ARE BLANK.  DO THIS TO ADDRESS
+C              ERROR WHEN VARIABLE NAME INCLUDES THESE AS PART
+C              OF THE VARIABLE NAME.
 C
-  500 CONTINUE
-      DO510I=ISTAR1,ISTOP1
-      I2=I
-      IF(IANS(I).EQ.ISTRI3(1))GOTO520
-  510 CONTINUE
-      IFOUZ2='NO'
-      GOTO9000
-  520 CONTINUE
-      IMIN=I2
-      DO530I=IMIN,ISTOP1
-      I2=I
-      IF(IANS(I).EQ.ISTRI3(ILEN2))GOTO540
-  530 CONTINUE
-      IFOUZ2='NO'
-      GOTO9000
-  540 CONTINUE
-      IFOUZ2='YES'
-      IF(INEX.EQ.'II')ISTAR2=IMIN
-      IF(INEX.EQ.'IE')ISTAR2=IMIN
-      IF(INEX.EQ.'EI')ISTAR2=IMIN+1
-      IF(INEX.EQ.'EE')ISTAR2=IMIN+1
-      IF(INEX.EQ.'II')ISTOP2=I2
-      IF(INEX.EQ.'IE')ISTOP2=I2-1
-      IF(INEX.EQ.'EI')ISTOP2=I2
-      IF(INEX.EQ.'EE')ISTOP2=I2-1
-      IF(ISTAR2.LE.ISTOP2)GOTO990
-      GOTO900
-C
-  600 CONTINUE
-      DO610I=ISTAR1,ISTOP1
-      I2=I
-      IF(IANS(I).NE.' ')GOTO620
-  610 CONTINUE
-      IFOUZ2='NO'
-      GOTO9000
-  620 CONTINUE
-      IMIN=I2
-      DO630I=IMIN,ISTOP1
-      I2=I
-      IF(IANS(I).EQ.ISTRI3(ILEN2))GOTO640
-  630 CONTINUE
-      IFOUZ2='NO'
-      GOTO9000
-  640 CONTINUE
-      IFOUZ2='YES'
-      IF(INEX.EQ.'II')ISTAR2=IMIN
-      IF(INEX.EQ.'IE')ISTAR2=IMIN
-      IF(INEX.EQ.'EI')ISTAR2=IMIN+1
-      IF(INEX.EQ.'EE')ISTAR2=IMIN+1
-      IF(INEX.EQ.'II')ISTOP2=I2
-      IF(INEX.EQ.'IE')ISTOP2=I2-1
-      IF(INEX.EQ.'EI')ISTOP2=I2
-      IF(INEX.EQ.'EE')ISTOP2=I2-1
-      IF(ISTAR2.LE.ISTOP2)GOTO990
-      GOTO900
-C
-  700 CONTINUE
-      ILAST='BLAN'
-      DO710I=ISTAR1,ISTOP1
-      I2=I
-      IF(IANS(I).NE.' ')GOTO720
-  710 CONTINUE
-      IFOUZ2='NO'
-      GOTO9000
-  720 CONTINUE
-      IMIN=I2
-      DO730I=IMIN,ISTOP1
-      I2=I
-      IF(IANS(I).EQ.' ')GOTO740
-  730 CONTINUE
-      ILAST='NOBL'
-      IF(ISTOP1.EQ.IWIDTH)GOTO740
-      IFOUZ2='NO'
-      GOTO9000
-  740 CONTINUE
-      IFOUZ2='YES'
-      IF(INEX.EQ.'II')ISTAR2=IMIN
-      IF(INEX.EQ.'IE')ISTAR2=IMIN
-      IF(INEX.EQ.'EI')ISTAR2=IMIN+1
-      IF(INEX.EQ.'EE')ISTAR2=IMIN+1
-      IF(INEX.EQ.'II'.AND.ISTOP1.NE.IWIDTH)
-     1ISTOP2=I2
-      IF(INEX.EQ.'II'.AND.ISTOP1.EQ.IWIDTH.AND.ILAST.EQ.'BLAN')
-     1ISTOP2=I2
-      IF(INEX.EQ.'II'.AND.ISTOP1.EQ.IWIDTH.AND.ILAST.NE.'BLAN')
-     1ISTOP2=I2
-      IF(INEX.EQ.'IE'.AND.ISTOP1.NE.IWIDTH)
-     1ISTOP2=I2-1
-      IF(INEX.EQ.'IE'.AND.ISTOP1.EQ.IWIDTH.AND.ILAST.EQ.'BLAN')
-     1ISTOP2=I2-1
-      IF(INEX.EQ.'IE'.AND.ISTOP1.EQ.IWIDTH.AND.ILAST.NE.'BLAN')
-     1ISTOP2=I2
-      IF(INEX.EQ.'EI'.AND.ISTOP1.NE.IWIDTH)
-     1ISTOP2=I2
-      IF(INEX.EQ.'EI'.AND.ISTOP1.EQ.IWIDTH.AND.ILAST.EQ.'BLAN')
-     1ISTOP2=I2
-      IF(INEX.EQ.'EI'.AND.ISTOP1.EQ.IWIDTH.AND.ILAST.NE.'BLAN')
-     1ISTOP2=I2
-      IF(INEX.EQ.'EE'.AND.ISTOP1.NE.IWIDTH)
-     1ISTOP2=I2-1
-      IF(INEX.EQ.'EE'.AND.ISTOP1.EQ.IWIDTH.AND.ILAST.EQ.'BLAN')
-     1ISTOP2=I2-1
-      IF(INEX.EQ.'EE'.AND.ISTOP1.EQ.IWIDTH.AND.ILAST.NE.'BLAN')
-     1ISTOP2=I2
-      IF(ISTAR2.LE.ISTOP2)GOTO990
-      GOTO900
+      IF(ICASE.EQ.1)THEN
+  401   CONTINUE
+        DO410I=ISTAR1,ISTOP1
+          I2=I
+          IF(IANS(I).NE.ISTRI3(1))GOTO410
+          DO430J=1,ILEN2
+            IPJM1=J+I-1
+            IF(IPJM1.GT.ISTOP1)GOTO410
+            IF(IANS(IPJM1).EQ.ISTRI3(J))GOTO430
+            GOTO410
+  430     CONTINUE
+          IFOUZ2='YES'
+          IF(INEX.EQ.'IIWO')THEN
+            IF(I2.GT.1 .AND. IANS(I2-1).NE.' ')THEN
+              IFOUZ2='NO'
+              ISTAR1=IPJM1+1
+              GOTO401
+            ELSEIF(I2.LT.IWIDTH .AND. IANS(IPJM1+1).NE.' ')THEN
+              IFOUZ2='NO'
+              ISTAR1=IPJM1+1
+              GOTO401
+            ENDIF
+            ISTAR2=I2
+            ISTOP2=IPJM1
+          ELSEIF(INEX.EQ.'II')THEN
+            ISTAR2=I2
+            ISTOP2=IPJM1
+          ELSEIF(INEX.EQ.'IE')THEN
+            ISTAR2=I2
+            ISTOP2=IPJM1-1
+          ELSEIF(INEX.EQ.'EI')THEN
+            ISTAR2=I2+1
+            ISTOP2=IPJM1
+          ELSEIF(INEX.EQ.'EE')THEN
+            ISTAR2=I2+1
+            ISTOP2=IPJM1-1
+          ENDIF
+          IF(ISTAR2.LE.ISTOP2)GOTO990
+          GOTO900
+  410   CONTINUE
+        IFOUZ2='NO'
+        GOTO9000
+      ELSEIF(ICASE.EQ.2)THEN
+        DO510I=ISTAR1,ISTOP1
+          I2=I
+          IF(IANS(I).EQ.ISTRI3(1))GOTO520
+  510   CONTINUE
+        IFOUZ2='NO'
+        GOTO9000
+  520   CONTINUE
+        IMIN=I2
+        DO530I=IMIN,ISTOP1
+          I2=I
+          IF(IANS(I).EQ.ISTRI3(ILEN2))GOTO540
+  530   CONTINUE
+        IFOUZ2='NO'
+        GOTO9000
+  540   CONTINUE
+        IFOUZ2='YES'
+        IF(INEX.EQ.'II')THEN
+          ISTAR2=IMIN
+          ISTOP2=I2
+        ELSEIF(INEX.EQ.'IE')THEN
+          ISTAR2=IMIN
+          ISTOP2=I2-1
+        ELSEIF(INEX.EQ.'EI')THEN
+          ISTAR2=IMIN+1
+          ISTOP2=I2
+        ELSEIF(INEX.EQ.'EE')THEN
+          ISTAR2=IMIN+1
+          ISTOP2=I2-1
+        ENDIF
+        IF(ISTAR2.LE.ISTOP2)GOTO990
+        GOTO900
+      ELSEIF(ICASE.EQ.3)THEN
+        DO610I=ISTAR1,ISTOP1
+          I2=I
+          IF(IANS(I).NE.' ')GOTO620
+  610   CONTINUE
+        IFOUZ2='NO'
+        GOTO9000
+  620   CONTINUE
+        IMIN=I2
+        DO630I=IMIN,ISTOP1
+          I2=I
+          IF(IANS(I).EQ.ISTRI3(ILEN2))GOTO640
+  630   CONTINUE
+        IFOUZ2='NO'
+        GOTO9000
+  640   CONTINUE
+        IFOUZ2='YES'
+        IF(INEX.EQ.'II')THEN
+          ISTAR2=IMIN
+          ISTOP2=I2
+        ELSEIF(INEX.EQ.'IE')THEN
+          ISTAR2=IMIN
+          ISTOP2=I2-1
+        ELSEIF(INEX.EQ.'EI')THEN
+          ISTAR2=IMIN+1
+          ISTOP2=I2
+        ELSEIF(INEX.EQ.'EE')THEN
+          ISTAR2=IMIN+1
+          ISTOP2=I2-1
+        ENDIF
+        IF(ISTAR2.LE.ISTOP2)GOTO990
+        GOTO900
+      ELSEIF(ICASE.EQ.4)THEN
+        ILAST='BLAN'
+        DO710I=ISTAR1,ISTOP1
+          I2=I
+          IF(IANS(I).NE.' ')GOTO720
+  710   CONTINUE
+        IFOUZ2='NO'
+        GOTO9000
+  720   CONTINUE
+        IMIN=I2
+        DO730I=IMIN,ISTOP1
+          I2=I
+          IF(IANS(I).EQ.' ')GOTO740
+  730   CONTINUE
+        ILAST='NOBL'
+        IF(ISTOP1.EQ.IWIDTH)GOTO740
+        IFOUZ2='NO'
+        GOTO9000
+  740   CONTINUE
+        IFOUZ2='YES'
+        IF(INEX.EQ.'II')THEN
+          ISTAR2=IMIN
+          IF(ISTOP1.NE.IWIDTH)ISTOP2=I2
+          IF(ISTOP1.EQ.IWIDTH.AND.ILAST.EQ.'BLAN')ISTOP2=I2
+          IF(ISTOP1.EQ.IWIDTH.AND.ILAST.NE.'BLAN')ISTOP2=I2
+        ELSEIF(INEX.EQ.'IE')THEN
+          ISTAR2=IMIN
+          IF(ISTOP1.NE.IWIDTH)ISTOP2=I2-1
+          IF(ISTOP1.EQ.IWIDTH.AND.ILAST.EQ.'BLAN')ISTOP2=I2-1
+          IF(ISTOP1.EQ.IWIDTH.AND.ILAST.NE.'BLAN')ISTOP2=I2
+        ELSEIF(INEX.EQ.'EI')THEN
+          ISTAR2=IMIN+1
+          IF(ISTOP1.NE.IWIDTH)ISTOP2=I2
+          IF(ISTOP1.EQ.IWIDTH.AND.ILAST.EQ.'BLAN')ISTOP2=I2
+          IF(ISTOP1.EQ.IWIDTH.AND.ILAST.NE.'BLAN')ISTOP2=I2
+        ELSEIF(INEX.EQ.'EE')THEN
+          ISTAR2=IMIN+1
+          IF(ISTOP1.NE.IWIDTH)ISTOP2=I2-1
+          IF(ISTOP1.EQ.IWIDTH.AND.ILAST.EQ.'BLAN')ISTOP2=I2-1
+          IF(ISTOP1.EQ.IWIDTH.AND.ILAST.NE.'BLAN')ISTOP2=I2
+        ENDIF
+        IF(ISTAR2.LE.ISTOP2)GOTO990
+        GOTO900
+      ENDIF
 C
   900 CONTINUE
 C
@@ -26620,46 +26024,38 @@ C              BUT WHEN IBUGA3 = 'ON' (AS IN ERROR TRACING)
 C              IERROR MAY = 'YES' WHICH MAY CHANGE THE
 C              LOGIC PATH BACK IN DPTYP2.
 C
-      IF(IBUGA3.EQ.'OFF')GOTO9000
-      WRITE(ICOUT,921)
-  921 FORMAT('***** INTERNAL ERROR IN DPTYP3 SUBROUTINE')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,922)
-  922 FORMAT('ISTAR2 GREATER THAN ISTOP2')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,923)ISTAR2,ISTOP2
-  923 FORMAT('ISTAR2, ISTOP2 = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,924)ICASE
-  924 FORMAT('ICASE = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,925)IWIDTH
-  925 FORMAT('IWIDTH = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,926)(IANS(I),I=1,IWIDTH)
-  926 FORMAT('IANS(.) = ',80A1)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,927)ISTAR1,ISTOP1
-  927 FORMAT('ISTAR1, ISTOP1 = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,928)ILEN2
-  928 FORMAT('ILEN2 = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,929)(ISTRI3(I),I=1,ILEN2)
-  929 FORMAT('ISTRI3(.) = ',80A1)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,930)ISTRIN,ISTRI2
-  930 FORMAT('ISTRIN,ISTRI2 = ',2A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,931)INEX
-  931 FORMAT('INEX = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      IERROR='YES'
-      GOTO9000
-  990 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,921)
+  921   FORMAT('***** INTERNAL ERROR IN DPTYP3 SUBROUTINE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,922)
+  922   FORMAT('ISTAR2 GREATER THAN ISTOP2')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,923)ISTAR2,ISTOP2,ICASE
+  923   FORMAT('ISTAR2,ISTOP2,ICASE = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,925)IWIDTH
+  925   FORMAT('IWIDTH = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,926)(IANS(I),I=1,MIN(80,IWIDTH))
+  926   FORMAT('IANS(.) = ',80A1)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,927)ISTAR1,ISTOP1,ILEN2
+  927   FORMAT('ISTAR1,ISTOP1,ILEN2 = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,929)(ISTRI3(I),I=1,ILEN2)
+  929   FORMAT('ISTRI3(.) = ',80A1)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,930)ISTRIN,ISTRI2,INEX
+  930   FORMAT('ISTRIN,ISTRI2,INEX = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
 C
+  990 CONTINUE
 C               ********************************************************
 C               **  STEP 5--                                          **
 C               **  CONVERT THE STRING INTO 2 HOLLERITH A4 WORDS.     **
@@ -26670,19 +26066,23 @@ C               ********************************************************
 C
       ISTEPN='5'
       IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       IHOL ='    '
       IHOL2='    '
       IMAX=2*NUMASC
       J=0
       DO1000I=ISTAR2,ISTOP2
-      J=J+1
-      K=J
-      IF(J.GT.NUMASC)K=J-NUMASC
-      ISTAR3=NUMBPC*(K-1)
-      ISTAR3=IABS(ISTAR3)
-      IF(J.LE.NUMASC)CALL DPCHEX(0,NUMBPC,IANS(I),ISTAR3,NUMBPC,IHOL)
-      IF(J.GT.NUMASC)CALL DPCHEX(0,NUMBPC,IANS(I),ISTAR3,NUMBPC,IHOL2)
-      IF(J.GE.IMAX)GOTO1050
+        J=J+1
+        K=J
+        IF(J.GT.NUMASC)K=J-NUMASC
+        ISTAR3=NUMBPC*(K-1)
+        ISTAR3=IABS(ISTAR3)
+        IF(J.LE.NUMASC)THEN
+          CALL DPCHEX(0,NUMBPC,IANS(I),ISTAR3,NUMBPC,IHOL)
+        ELSE
+          CALL DPCHEX(0,NUMBPC,IANS(I),ISTAR3,NUMBPC,IHOL2)
+        ENDIF
+        IF(J.GE.IMAX)GOTO1050
  1000 CONTINUE
  1050 CONTINUE
 C
@@ -26694,6 +26094,7 @@ C               ****************************************************************
 C
       ISTEPN='6'
       IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       IFLUNK='NO'
       ITYPE2='NUMB'
       IDIG=0
@@ -26701,56 +26102,33 @@ C
       IDECPT=0
       ISUM=0
       DO2700I=ISTAR2,ISTOP2
-      IREV=ISTOP2-(I-ISTAR2)
-      IF(IANS(IREV).EQ.' ')GOTO2700
-      IF(IANS(IREV).EQ.'0')GOTO2710
-      IF(IANS(IREV).EQ.'1')GOTO2711
-      IF(IANS(IREV).EQ.'2')GOTO2712
-      IF(IANS(IREV).EQ.'3')GOTO2713
-      IF(IANS(IREV).EQ.'4')GOTO2714
-      IF(IANS(IREV).EQ.'5')GOTO2715
-      IF(IANS(IREV).EQ.'6')GOTO2716
-      IF(IANS(IREV).EQ.'7')GOTO2717
-      IF(IANS(IREV).EQ.'8')GOTO2718
-      IF(IANS(IREV).EQ.'9')GOTO2719
-      IF(IANS(IREV).EQ.'+')GOTO2720
-      IF(IANS(IREV).EQ.'-')GOTO2721
-      IF(IANS(IREV).EQ.'.')GOTO2722
-      IFLUNK='YES'
-      GOTO2800
- 2710 ITERM=0
-      GOTO2725
- 2711 ITERM=1
-      GOTO2725
- 2712 ITERM=2
-      GOTO2725
- 2713 ITERM=3
-      GOTO2725
- 2714 ITERM=4
-      GOTO2725
- 2715 ITERM=5
-      GOTO2725
- 2716 ITERM=6
-      GOTO2725
- 2717 ITERM=7
-      GOTO2725
- 2718 ITERM=8
-      GOTO2725
- 2719 ITERM=9
-      GOTO2725
- 2720 ISIGN=ISIGN+1
-      GOTO2700
- 2721 ISIGN=ISIGN+1
-      ISUM=-ISUM
-      GOTO2700
- 2722 IDECPT=IDECPT+1
-      IF(IDECPT.EQ.1.AND.IDIG.EQ.0)GOTO2700
-      GOTO2800
- 2725 IDIG=IDIG+1
-      TERM2=10.0**(IDIG-1)
-      ITERM2=INT(TERM2 + 0.01)
-      ISUM=ISUM+ITERM*ITERM2
+        IREV=ISTOP2-(I-ISTAR2)
+        IF(IANS(IREV).EQ.' ')GOTO2700
+        IVALT=ICHAR(IANS(IREV)(1:1))
+        IF(IVALT.GE.48 .AND. IVALT.LE.57)THEN
+          ITERM=IVALT-48
+          IDIG=IDIG+1
+          TERM2=10.0**(IDIG-1)
+          ITERM2=INT(TERM2 + 0.01)
+          ISUM=ISUM+ITERM*ITERM2
+        ELSEIF(IANS(IREV).EQ.'+')THEN
+          ISIGN=ISIGN+1
+          GOTO2700
+        ELSEIF(IANS(IREV).EQ.'-')THEN
+          ISIGN=ISIGN+1
+          ISUM=-ISUM
+          GOTO2700
+        ELSEIF(IANS(IREV).EQ.'.')THEN
+          IDECPT=IDECPT+1
+          IF(IDECPT.EQ.1.AND.IDIG.EQ.0)GOTO2700
+          GOTO2800
+        ELSE
+          IFLUNK='YES'
+          GOTO2800
+        ENDIF
+C
  2700 CONTINUE
+C
       IF(IDIG.LE.0)GOTO2800
       IF(ISIGN.GE.2)GOTO2800
       INTZ=ISUM
@@ -26766,6 +26144,7 @@ C               *******************************************************
 C
       ISTEPN='7'
       IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
       AMIN=-1000000.
       AMAX=+1000000.
       IFLUNK='NO'
@@ -26775,36 +26154,41 @@ C
       ILOC=0
       IDECPT=0
       DO3060I=ISTAR2,ISTOP2
-      IF(IANS(I).EQ.'.')ILOC=I
-      IF(IANS(I).EQ.'.')IDECPT=IDECPT+1
+        IF(IANS(I).EQ.'.')THEN
+          ILOC=I
+          IDECPT=IDECPT+1
+        ENDIF
  3060 CONTINUE
       IF(IDECPT.GE.2)GOTO3900
       IF(IDECPT.EQ.1)GOTO3150
       DO3100I=ISTAR2,ISTOP2
-      IREV=ISTOP2-(I-ISTAR2)
-      IF(IANS(IREV).EQ.' ')GOTO3100
-      IF(IANS(IREV).EQ.'0')GOTO3110
-      IF(IANS(IREV).EQ.'1')GOTO3110
-      IF(IANS(IREV).EQ.'2')GOTO3110
-      IF(IANS(IREV).EQ.'3')GOTO3110
-      IF(IANS(IREV).EQ.'4')GOTO3110
-      IF(IANS(IREV).EQ.'5')GOTO3110
-      IF(IANS(IREV).EQ.'6')GOTO3110
-      IF(IANS(IREV).EQ.'7')GOTO3110
-      IF(IANS(IREV).EQ.'8')GOTO3110
-      IF(IANS(IREV).EQ.'9')GOTO3110
-      IFLUNK='YES'
-      IF(IANS(IREV).EQ.'+')GOTO3900
-      IF(IANS(IREV).EQ.'-')GOTO3900
-      GOTO3900
+        IREV=ISTOP2-(I-ISTAR2)
+        IF(IANS(IREV).EQ.' ')GOTO3100
+        IF(IANS(IREV).EQ.'0')GOTO3110
+        IF(IANS(IREV).EQ.'1')GOTO3110
+        IF(IANS(IREV).EQ.'2')GOTO3110
+        IF(IANS(IREV).EQ.'3')GOTO3110
+        IF(IANS(IREV).EQ.'4')GOTO3110
+        IF(IANS(IREV).EQ.'5')GOTO3110
+        IF(IANS(IREV).EQ.'6')GOTO3110
+        IF(IANS(IREV).EQ.'7')GOTO3110
+        IF(IANS(IREV).EQ.'8')GOTO3110
+        IF(IANS(IREV).EQ.'9')GOTO3110
+        IFLUNK='YES'
+        IF(IANS(IREV).EQ.'+')GOTO3900
+        IF(IANS(IREV).EQ.'-')GOTO3900
+        GOTO3900
  3100 CONTINUE
       IFLUNK='YES'
       GOTO3900
  3110 ILOC=IREV+1
  3150 CONTINUE
-      IF(IBUGA3.EQ.'ON')WRITE(ICOUT,3111)ILOC,IDECPT
- 3111 FORMAT('ILOC = ',I8,'    IDECPT = ',I8)
-      IF(IBUGA3.EQ.'ON')CALL DPWRST('XXX','BUG ')
+C
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,3111)ILOC,IDECPT
+ 3111   FORMAT('ILOC = ',I8,'    IDECPT = ',I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C     SECONDLY, COMPUTE THE INTEGER PART OF THE VALUE
 C
@@ -26815,57 +26199,35 @@ C
       ILOCM1=ILOC-1
       IF(ILOCM1.LT.ISTAR2)GOTO3250
       DO3200I=ISTAR2,ILOCM1
-      IREV=ILOCM1-(I-ISTAR2)
-      IF(IANS(IREV).EQ.' ')GOTO3200
-      IF(IANS(IREV).EQ.'0')GOTO3210
-      IF(IANS(IREV).EQ.'1')GOTO3211
-      IF(IANS(IREV).EQ.'2')GOTO3232
-      IF(IANS(IREV).EQ.'3')GOTO3213
-      IF(IANS(IREV).EQ.'4')GOTO3214
-      IF(IANS(IREV).EQ.'5')GOTO3215
-      IF(IANS(IREV).EQ.'6')GOTO3216
-      IF(IANS(IREV).EQ.'7')GOTO3217
-      IF(IANS(IREV).EQ.'8')GOTO3218
-      IF(IANS(IREV).EQ.'9')GOTO3219
-      IF(IANS(IREV).EQ.'+')GOTO3220
-      IF(IANS(IREV).EQ.'-')GOTO3221
-      IFLUNK='YES'
-      GOTO3900
- 3210 ITERM=0
-      GOTO3225
- 3211 ITERM=1
-      GOTO3225
- 3232 ITERM=2
-      GOTO3225
- 3213 ITERM=3
-      GOTO3225
- 3214 ITERM=4
-      GOTO3225
- 3215 ITERM=5
-      GOTO3225
- 3216 ITERM=6
-      GOTO3225
- 3217 ITERM=7
-      GOTO3225
- 3218 ITERM=8
-      GOTO3225
- 3219 ITERM=9
-      GOTO3225
- 3220 ISIGN=ISIGN+1
-      GOTO3200
- 3221 ISIGN=ISIGN+1
-      SIGN=-SIGN
-      GOTO3200
- 3225 IDIGI=IDIGI+1
-      TERM=ITERM
-      IEXP=IDIGI-1
-      SUMI=SUMI+TERM*(10.0**IEXP)
+        IREV=ILOCM1-(I-ISTAR2)
+        IF(IANS(IREV).EQ.' ')GOTO3200
+        IVALT=ICHAR(IANS(IREV)(1:1))
+        IF(IVALT.GE.48 .AND. IVALT.LE.57)THEN
+          ITERM=IVALT-48
+          IDIGI=IDIGI+1
+          TERM=ITERM
+          IEXP=IDIGI-1
+          SUMI=SUMI+TERM*(10.0**IEXP)
+        ELSEIF(IANS(IREV).EQ.'+')THEN
+          ISIGN=ISIGN+1
+          GOTO3200
+        ELSEIF(IANS(IREV).EQ.'-')THEN
+          ISIGN=ISIGN+1
+          SIGN=-SIGN
+          GOTO3200
+        ELSE
+          IFLUNK='YES'
+          GOTO3900
+        ENDIF
  3200 CONTINUE
  3250 CONTINUE
       IF(ISIGN.GE.2)GOTO3900
-      IF(IBUGA3.EQ.'ON')WRITE(ICOUT,3255)IDIGI,SUMI
- 3255 FORMAT('IDIGI = ',I8,'    SUMI = ',F20.10)
-      IF(IBUGA3.EQ.'ON')CALL DPWRST('XXX','BUG ')
+C
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,3255)IDIGI,SUMI
+ 3255   FORMAT('IDIGI = ',I8,'    SUMI = ',F20.10)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C     THIRDLY, COMPUTE THE DECIMAL PART OF THE VALUE
 C
@@ -26874,47 +26236,26 @@ C
       ILOCP1=ILOC+1
       IF(ILOCP1.GT.ISTOP2)GOTO3350
       DO3300I=ILOCP1,ISTOP2
-      IF(IANS(I).EQ.' ')GOTO3300
-      IF(IANS(I).EQ.'0')GOTO3310
-      IF(IANS(I).EQ.'1')GOTO3311
-      IF(IANS(I).EQ.'2')GOTO3312
-      IF(IANS(I).EQ.'3')GOTO3333
-      IF(IANS(I).EQ.'4')GOTO3314
-      IF(IANS(I).EQ.'5')GOTO3315
-      IF(IANS(I).EQ.'6')GOTO3316
-      IF(IANS(I).EQ.'7')GOTO3317
-      IF(IANS(I).EQ.'8')GOTO3318
-      IF(IANS(I).EQ.'9')GOTO3319
-      IFLUNK='YES'
-      GOTO3900
- 3310 ITERM=0
-      GOTO3325
- 3311 ITERM=1
-      GOTO3325
- 3312 ITERM=2
-      GOTO3325
- 3333 ITERM=3
-      GOTO3325
- 3314 ITERM=4
-      GOTO3325
- 3315 ITERM=5
-      GOTO3325
- 3316 ITERM=6
-      GOTO3325
- 3317 ITERM=7
-      GOTO3325
- 3318 ITERM=8
-      GOTO3325
- 3319 ITERM=9
-      GOTO3325
- 3325 IDIGD=IDIGD+1
-      TERM=ITERM
-      SUMD=SUMD+TERM/(10.0**IDIGD)
+        IF(IANS(I).EQ.' ')GOTO3300
+        IVALT=ICHAR(IANS(I)(1:1))
+        IF(IVALT.GE.48 .AND. IVALT.LE.57)THEN
+          ITERM=IVALT-48
+          IDIGD=IDIGD+1
+          TERM=ITERM
+          SUMD=SUMD+TERM/(10.0**IDIGD)
+        ELSE
+          IFLUNK='YES'
+          GOTO3900
+        ENDIF
  3300 CONTINUE
  3350 CONTINUE
-      IF(IBUGA3.EQ.'ON')WRITE(ICOUT,3355)IDIGD,SUMD
- 3355 FORMAT('IDIGD = ',I8,'    SUMD = ',F20.10)
-      IF(IBUGA3.EQ.'ON')CALL DPWRST('XXX','BUG ')
+C
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,3355)IDIGD,SUMD
+ 3355   FORMAT('IDIGD = ',I8,'    SUMD = ',F20.10)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
       IDIGT=IDIGI+IDIGD
       IF(IDIGT.LE.0)GOTO3900
       FLOATZ=SUMI+SUMD
@@ -26928,21 +26269,20 @@ C
       GOTO9000
 C
  9000 CONTINUE
-      IF(IBUGA3.EQ.'OFF')GOTO9900
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9001)
- 9001 FORMAT('****** AT THE END       OF DPTYP3--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9002)IFOUZ2,ISTAR2,ISTOP2
- 9002 FORMAT('IFOUZ2, ISTAR2, ISTOP2 = ',A4,I8,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9003)ITYPE2,IHOL,IHOL2,INTZ,FLOATZ,IERROR
- 9003 FORMAT('ITYPE2,IHOL,IHOL2,INTZ,FLOATZ,IERROR = ',
-     1       A4,2X,2A4,2X,I8,F15.7,2X,A4)
-      CALL DPWRST('XXX','BUG ')
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9001)
+ 9001   FORMAT('****** AT THE END       OF DPTYP3--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9002)IERROR,IFOUZ2,ISTAR2,ISTOP2
+ 9002   FORMAT('IERROR,IFOUZ2,ISTAR2,ISTOP2 = ',2(A4,2X),2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9003)ITYPE2,IHOL,IHOL2,INTZ,FLOATZ
+ 9003   FORMAT('ITYPE2,IHOL,IHOL2,INTZ,FLOATZ = ',3(A4,2X),I8,G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
- 9900 CONTINUE
       RETURN
       END
       SUBROUTINE DPTYPE(IANSLC,IWIDTH,IBUGTY,

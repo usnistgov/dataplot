@@ -214,6 +214,8 @@ C                                       SAVED LINE FOR THE FIRST LINE)
 C     UPDATED         --OCTOBER   2019. ADD "IREAPR" TO CHECK FOR
 C                                       PERCENT SIGN IN NUMERIC
 C                                       VARIABLES
+C     UPDATED         --APRIL     2023. CHECK IF "EOF" IS EMBEDDED IN
+C                                       LARGER STRING
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -826,12 +828,19 @@ C
       IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'REAL')
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
+CCCCC 2023/04: CHECK IF "EOF" IS EMBEDDED IN A LONGER STRING.  THIS
+CCCCC          CASE SHOULD NOT BE INTERPRETED AS AND END OF FILE.
+C
       JMAX=ICOL22
       IF(JMAX.GE.3)THEN
         DO130J=1,JMAX-2
           IF((IB(J).EQ.'E'.OR.IB(J).EQ.'e').AND.
      1       (IB(J+1).EQ.'O'.OR.IB(J+1).EQ.'o').AND.
-     1       (IB(J+2).EQ.'F'.OR.IB(J+2).EQ.'f'))GOTO8000
+     1       (IB(J+2).EQ.'F'.OR.IB(J+2).EQ.'f'))THEN
+            IF(J.GT.1 .AND. IB(J-1).NE.' ')GOTO130
+            IF(J+3.LE.JMAX .AND. IB(J+3).NE.' ')GOTO130
+            GOTO8000
+          ENDIF
   130   CONTINUE
       ENDIF
 C
@@ -8941,6 +8950,7 @@ CCCCC   MAXNCH=80
 CCCCC         MAXNCH=80
               MAXNCH=MAXFNC
               NCH=0
+              ITTEMP=' '
               DO3630II=MAXNCH,1,-1
                 IF(IMACAR(IITEMP)(II:II).NE.' ')THEN
                   NCH=II
@@ -8949,9 +8959,13 @@ CCCCC         MAXNCH=80
                 ENDIF
  3630         CONTINUE
  3639         CONTINUE
-              ILOC1=I
-              ILOC2=IP2+1
-              GOTO2519
+C
+              IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'REP2')THEN
+                WRITE(ICOUT,33693)NCH,ITTEMP
+33693           FORMAT('AT 3639: NCH: ',I5,' ITTEMP: ',A)
+                CALL DPWRST('XXX','BUG ')
+              ENDIF
+C
             ELSEIF(ITEXHO(IP1).EQ.'1' .OR. ITEXHO(IP1).EQ.'2' .OR.
      1             ITEXHO(IP1).EQ.'3' .OR. ITEXHO(IP1).EQ.'4' .OR.
      1             ITEXHO(IP1).EQ.'4' .OR. ITEXHO(IP1).EQ.'5' .OR.
@@ -8961,6 +8975,7 @@ CCCCC         MAXNCH=80
 CCCCC         MAXNCH=80
               MAXNCH=MAXFNC
               NCH=0
+              ITTEMP=' '
               DO2630II=MAXNCH,1,-1
                 IF(IMACAR(IITEMP)(II:II).NE.' ')THEN
                   NCH=II
@@ -8969,6 +8984,13 @@ CCCCC         MAXNCH=80
                 ENDIF
  2630         CONTINUE
  2639         CONTINUE
+C
+              IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'REP2')THEN
+                WRITE(ICOUT,23693)NCH,ITTEMP
+23693           FORMAT('AT 2639: NCH: ',I5,' ITTEMP: ',A)
+                CALL DPWRST('XXX','BUG ')
+              ENDIF
+C
               ILOC1=I
               ILOC2=IP1+1
               GOTO2519
@@ -9089,6 +9111,7 @@ C
  2645           CONTINUE
 CCCCC           MAXNCH=80
                 MAXNCH=MAXFNC
+                ITTEMP=' '
                 DO2650II=MAXNCH,1,-1
                   IF(IMACAR(IROWXX)(II:II).NE.' ')THEN
                     NCH=II
@@ -9100,10 +9123,10 @@ CCCCC           MAXNCH=80
 C
                 IF(IBUGD2.EQ.'ON' .OR. ISUBRO.EQ.'REP2')THEN
                   WRITE(ICOUT,22721)IMACAR(IROWXX)
-22721             FORMAT('AT 2659: IMACAR(IROWXX) = ',A80)
+22721             FORMAT('AT 2659: IMACAR(IROWXX) = ',A)
                   CALL DPWRST('XXX','BUG ')
-                  WRITE(ICOUT,22722)I,NCH,NCHTMP,ITTEMP(1:80)
-22722             FORMAT('AT 2659: I,NCH,NCHTMP,ITTEMP = ',3I5,A80)
+                  WRITE(ICOUT,22722)I,NCH,NCHTMP,ITTEMP(1:MIN(100,NCH))
+22722             FORMAT('I,NCH,NCHTMP,ITTEMP = ',3I5,A100)
                   CALL DPWRST('XXX','BUG ')
                 ENDIF
 C
@@ -14828,7 +14851,7 @@ C
         ISTRIN='RETA'
         ISTRI2='IN  '
         INEX='II'
-        CALL DPTY3B(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
+        CALL DPTYP3(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
      1              IFOUCO,IBEGCO,IENDCO,
      1              ITYPCO,IHOLCO,IHLCO2,INT1CO,FLOACO,IERRO1)
         IF(IFOUCO.EQ.'NO')THEN
@@ -14872,9 +14895,9 @@ C
       ISTOP1=IWIDTH
       ISTRIN='('
       INEX='II'
-      CALL DPTY3B(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
-     1             IFOULP,IBEGLP,IENDLP,
-     1             ITYPLP,IHOLLP,IHLLP2,INT1LP,FLOALP,IERRO1)
+      CALL DPTYP3(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
+     1            IFOULP,IBEGLP,IENDLP,
+     1            ITYPLP,IHOLLP,IHLLP2,INT1LP,FLOALP,IERRO1)
       IF(IFOULP.EQ.'YES')GOTO338
       IF(IFOULP.EQ.'NO'.AND.IPASS.GE.2)GOTO399
       GOTO7000
@@ -14893,9 +14916,9 @@ C
       ISTOP1=IWIDTH
       ISTRIN=')'
       INEX='II'
-      CALL DPTY3B(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
-     1             IFOURP,IBEGRP,IENDRP,
-     1             ITYPRP,IHOLRP,IHLRP2,INT1RP,FLOARP,IERRO1)
+      CALL DPTYP3(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
+     1            IFOURP,IBEGRP,IENDRP,
+     1            ITYPRP,IHOLRP,IHLRP2,INT1RP,FLOARP,IERRO1)
       IF(IFOURP.EQ.'NO')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
@@ -14945,9 +14968,9 @@ C
       ISTOP1=IENDRP
       ISTRIN='(;)'
       INEX='EE'
-      CALL DPTY3B(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
-     1             IFOURN,IBEGRN,IENDRN,
-     1             ITYPRN,IHOLRN,IHLRN2,INT1RN,FLOARN,IERRO1)
+      CALL DPTYP3(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
+     1            IFOURN,IBEGRN,IENDRN,
+     1            ITYPRN,IHOLRN,IHLRN2,INT1RN,FLOARN,IERRO1)
       IF(IFOURN.EQ.'NO')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
@@ -15002,9 +15025,9 @@ C
       ISTOP1=IENDLP
       ISTRIN='!;('
       INEX='IE'
-      CALL DPTY3B(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
-     1             IFOUVN,IBEGVN,IENDVN,
-     1             ITYPVN,IHOLVN,IHLVN2,INT1VN,FLOAVN,IERRO1)
+      CALL DPTYP3(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
+     1            IFOUVN,IBEGVN,IENDVN,
+     1            ITYPVN,IHOLVN,IHLVN2,INT1VN,FLOAVN,IERRO1)
       IF(IFOUVN.EQ.'NO')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')

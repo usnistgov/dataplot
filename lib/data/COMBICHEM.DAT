@@ -1,0 +1,33 @@
+Optimizat (Minimizing Variability) of a Scintillation Proximity Assay (SPA)
+i Lutz et al Article: statistical Consiserations in High Throughput Screening
+http://www.netsci.org/science/screening/feature05.html
+2**3 full factorial design
+Number of observations = 8
+Total number of variables = 8
+Response variable 1 = Mean
+Response variable 2 = Variability (= SD) of Ki
+Response variable 3 = Signal/Noise
+Factor 1 = Receptor concentration (2 levels: 40 and 120 pM)
+Factor 2 = Ligand concentration (2 levels: 0.1 and 0.4 nM)
+Factor 3 = Bead reagent concentration (2 levels: 0.5 and 2.0 mg/ml)
+To read this into Dataplot--
+   skip 25
+   read combichem.dat y1 y2 y3 x1 x2 x3
+
+
+
+
+
+
+
+   Y1      Y2     Y3          X1        X2        X3
+Mean(Ki) SD(Ki) S/N(kI)    Receptor   Ligand   Radioligand
+----------------------------------------------------------
+  7.03    0.13    54.08       -1        -1        -1
+  6.93    0.06   115.50       +1        -1        -1
+  6.71    0.17    39.47       -1        +1        -1
+  6.72    0.12    56.00       +1        +1        -1
+  6.89    0.19    36.26       -1        -1        +1
+  7.07    0.10    70.70       +1        -1        +1
+  6.81    0.12    56.75       -1        +1        +1
+  6.68    0.10    66.80       +1        +1        +1

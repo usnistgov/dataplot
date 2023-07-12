@@ -25077,6 +25077,8 @@ C                                       ROUTINES (BOOTSTRAP, GOODNESS
 C                                       OF FIT)
 C     UPDATED         --APRIL     2010. USE DPDTA1, DPDTA8, DPDTA9
 C                                       ROUTINES TO PRINT OUTPUT
+C     UPDATED         --JUNE      2022. SUPPORT FOR ONE-SIDED INTERVALS
+C                                       FOR PERCENTILES
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -25216,8 +25218,13 @@ C
       IF(NPERC.GE.1)THEN
 C
         C1=SHAPML/SQRT(AN)
-        ALPHL=ALPHAP/2.0
-        ALPHU=1.0 - ALPHAP/2.0
+        IF(IDTYPR.EQ.'UPPE' .OR. IDTYPR.EQ.'LOWE')THEN
+          ALPHL=ALPHAP
+          ALPHU=1.0 - ALPHAP
+        ELSE
+          ALPHL=ALPHAP/2.0
+          ALPHU=1.0 - ALPHAP/2.0
+        ENDIF
 C
         WRITE(IOUNI1,4191)
  4191   FORMAT(15X,'       POINT     ','     LOWER     ',
@@ -25248,6 +25255,11 @@ C
           ATEMP2=EXP(UHATML + C1*C3)
           XQPLCL(I)=MIN(ATEMP1,ATEMP2)
           XQPUCL(I)=MAX(ATEMP1,ATEMP2)
+          IF(IDTYPR.EQ.'UPPE')THEN
+            XQPLCL(I)=CPUMIN
+          ELSEIF(IDTYPR.EQ.'LOWE')THEN
+            XQPUCL(I)=CPUMIN
+          ENDIF
           WRITE(IOUNI1,'(3E15.7,2X,E15.7)')
      1         QP(I),XQPHAT(I),XQPLCL(I),XQPUCL(I)
 C

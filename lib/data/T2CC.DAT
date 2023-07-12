@@ -1,26 +1,26 @@
-.  This is test data for a Hotelling T-Square
-.  control chart from:
-.    "Statistical Methods for Quality Improvement", Thomas Ryan, p. 220
-.  There are:
-.      2 variables
-.      20 sub-groups
-.      4 observations per sub-group
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
+This is test data for a Hotelling T-Square
+control chart from:
+  "Statistical Methods for Quality Improvement", Thomas Ryan, p. 220
+There are:
+    2 variables
+    20 sub-groups
+    4 observations per sub-group
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    Y1    Y2      X
 -----------------------------------------
    72    23      1

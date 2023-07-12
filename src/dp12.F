@@ -10905,7 +10905,7 @@ C
         ISTRIN='DELE'
         ISTRI2='TE  '
         INEX='II'
-        CALL DPTY3B(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
+        CALL DPTYP3(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
      1               IFOUCO,IBEGCO,IENDCO,
      1               ITYPCO,IHOLCO,IHLCO2,INT1CO,FLOACO,IERRO1)
         IF(IFOUCO.NE.'YES')THEN
@@ -10950,9 +10950,9 @@ C
       ISTOP1=IWIDTH
       ISTRIN='('
       INEX='II'
-      CALL DPTY3B(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
-     1             IFOULP,IBEGLP,IENDLP,
-     1             ITYPLP,IHOLLP,IHLLP2,INT1LP,FLOALP,IERRO1)
+      CALL DPTYP3(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
+     1            IFOULP,IBEGLP,IENDLP,
+     1            ITYPLP,IHOLLP,IHLLP2,INT1LP,FLOALP,IERRO1)
       IF(IFOULP.EQ.'NO')THEN
         IF(IPASS.GE.2)GOTO399
         GOTO7000
@@ -10972,9 +10972,9 @@ C
       ISTOP1=IWIDTH
       ISTRIN=')'
       INEX='II'
-      CALL DPTY3B(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
-     1             IFOURP,IBEGRP,IENDRP,
-     1             ITYPRP,IHOLRP,IHLRP2,INT1RP,FLOARP,IERRO1)
+      CALL DPTYP3(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
+     1            IFOURP,IBEGRP,IENDRP,
+     1            ITYPRP,IHOLRP,IHLRP2,INT1RP,FLOARP,IERRO1)
       IF(IFOURP.EQ.'NO')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
@@ -11025,9 +11025,9 @@ C
       ISTOP1=IENDRP
       ISTRIN='(;)'
       INEX='EE'
-      CALL DPTY3B(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
-     1             IFOURN,IBEGRN,IENDRN,
-     1             ITYPRN,IHOLRN,IHLRN2,INT1RN,FLOARN,IERRO1)
+      CALL DPTYP3(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
+     1            IFOURN,IBEGRN,IENDRN,
+     1            ITYPRN,IHOLRN,IHLRN2,INT1RN,FLOARN,IERRO1)
       IF(IFOURN.EQ.'NO')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
@@ -11077,9 +11077,9 @@ C
       ISTOP1=IENDLP
       ISTRIN='!;('
       INEX='IE'
-      CALL DPTY3B(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
-     1             IFOUVN,IBEGVN,IENDVN,
-     1             ITYPVN,IHOLVN,IHLVN2,INT1VN,FLOAVN,IERRO1)
+      CALL DPTYP3(IANS,IWIDTH,ISTAR1,ISTOP1,ISTRIN,ISTRI2,INEX,IBUGS2,
+     1            IFOUVN,IBEGVN,IENDVN,
+     1            ITYPVN,IHOLVN,IHLVN2,INT1VN,FLOAVN,IERRO1)
       IF(IFOUVN.EQ.'NO')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
@@ -12690,6 +12690,240 @@ C
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
+      RETURN
+      END
+      SUBROUTINE DPDEOS(IHARG,IARGT,IARG,ARG,NUMARG,
+     1                  NUMDEV,MAXDEV,
+     1                  IDMANU,IDMODE,IDMOD2,IDMOD3,IDPOWE,
+     1                  IDCONT,IDCOLO,IDFONT,IDNVPP,IDNHPP,IDUNIT,
+     1                  PCHOSH,PCHOSV,
+     1                  IFOUND,IERROR)
+C
+C     PURPOSE--DEFINE THE CHARACTER OFFSET FACTORS FOR AN OUTPUT DEVICE.
+C              THESE OFFSET FACTORS APPLY TO HARDWARE CHARACTERS
+C              ONLY.  SOME DEVICES MAY NOT FILL THE FULL CHARACTER
+C              BOX SO HARDWARE CHARACTERS MAY NOT APPEAR PROPERLY
+C              CENTERED.  THIS COMMAND ALLOWS A CORRECTION TO BE
+C              SPECIFIED FOR A GIVEN DEVICE SO THAT THE PLOT
+C              CHARACTER IS PROPERLY CENTERED.  NOTE THAT THIS
+C              OFFSET WILL BE ADDED TO THE VALUES GIVEN BY THE
+C              CHARACTER OFFSET COMMAND.  THE OFFSET FACTORS FOR DEVICE
+C              I WILL BE PLACED IN THE I-TH ELEMENT OF THE VECTORS
+C              PCHOSH(.) AND PCHOSV(.).
+C     INPUT  ARGUMENTS--IHARG  (A  CHARACTER VECTOR)
+C                     --IHARG2 (A CHARACTER VECTOR)
+C                     --IARGT  (A CHARACTER VECTOR)
+C                     --IARG   (A CHARACTER VECTOR)
+C                     --NUMARG
+C                     --MAXDEV
+C     OUTPUT ARGUMENTS--PCHOSH (A REAL VECTOR WHOSE I-TH ELEMENT
+C                              CONTAINS THE HORIZONTAL OFFSET FACTOR
+C                              FOR DEVICE I.
+C                     --PCHOSV (A REAL VECTOR WHOSE I-TH ELEMENT
+C                              CONTAINS THE VERTICAL OFFSET FACTOR
+C                              FOR DEVICE I.
+C                     --IFOUND ('YES' OR 'NO' )
+C                     --IERROR ('YES' OR 'NO' )
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2022/05
+C     ORIGINAL VERSION--MAY       2022.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+C
+C---------------------------------------------------------------------
+C
+      CHARACTER*4 IHARG(*)
+      CHARACTER*4 IARGT(*)
+      INTEGER     IARG(*)
+      DIMENSION   ARG(*)
+C
+      CHARACTER*4 IDMANU(*)
+      CHARACTER*4 IDMODE(*)
+      CHARACTER*4 IDMOD2(*)
+      CHARACTER*4 IDMOD3(*)
+C
+      CHARACTER*4 IDPOWE(*)
+      CHARACTER*4 IDCONT(*)
+      CHARACTER*4 IDCOLO(*)
+      CHARACTER*4 IDFONT(*)
+      INTEGER     IDNVPP(*)
+      INTEGER     IDNHPP(*)
+      INTEGER     IDUNIT(*)
+      DIMENSION   PCHOSH(*)
+      DIMENSION   PCHOSV(*)
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      IFOUND='NO'
+      IERROR='NO'
+C
+      PDEFHO=0.0
+      PDEFVO=0.0
+C
+      IF(NUMARG.LE.0)GOTO9000
+      IF(NUMARG.GE.3.AND.IHARG(1).EQ.'HARD' .AND.
+     1   IHARG(2).EQ.'CHAR' .AND. IHARG(3).EQ.'OFFS')THEN
+        IF(NUMARG.LE.3 .OR. IHARG(4).EQ.'ON')THEN
+          PHOLD1=PDEFHO
+          PHOLD2=PDEFVO
+        ELSEIF(IHARG(4).EQ.'OFF' .OR. IHARG(4).EQ.'AUTO' .OR.
+     1         IHARG(4).EQ.'DEFA')THEN
+          PHOLD1=PDEFHO
+          PHOLD2=PDEFVO
+        ELSE
+          IF(IARGT(4).EQ.'NUMB' .AND. IARGT(5).EQ.'NUMB')THEN
+            PHOLD1=ARG(4)
+            PHOLD2=ARG(5)
+          ELSE
+            PHOLD1=PDEFHO
+            PHOLD2=PDEFVO
+          ENDIF
+        ENDIF
+        IF(PHOLD1.LT.0.0)PHOLD1=0.0
+        IF(PHOLD2.LT.0.0)PHOLD2=0.0
+        IF(PHOLD1.GT.10.0)PHOLD1=10.0
+        IF(PHOLD2.GT.10.0)PHOLD2=10.0
+        IFOUND='YES'
+        DO1135I=1,NUMDEV
+          PCHOSH(I)=PHOLD1
+          PCHOSV(I)=PHOLD2
+ 1135   CONTINUE
+C
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+  999     FORMAT(1X)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1136)PHOLD
+ 1136     FORMAT('THE HARDWARE CHARACTER OFFSET FOR ALL DEVICES HAS ',
+     1           'JUST BEEN SET TO ',F7.2)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
+      ELSEIF(NUMARG.GE.4 .AND. IHARG(2).EQ.'HARD' .AND.
+     1       IHARG(3).EQ.'CHAR' .AND. IHARG(4).EQ.'OFFS')THEN
+        IF(IARGT(1).EQ.'NUMB')THEN
+          I=IARG(1)
+          IF(I.LT.1 .OR. I.GT.MAXDEV)THEN
+            IERROR='YES'
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1141)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1152)
+ 1152       FORMAT('      IN THE DEVICE ... CHARACTER OFFSET COMMAND,')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1153)
+ 1153       FORMAT('      THE NUMBER OF DEVICES MUST BE ')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1154)MAXDEV
+ 1154       FORMAT('      BETWEEN 1 AND ',I8,' (INCLUSIVELY);')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1155)
+ 1155       FORMAT('      SUCH WAS NOT THE CASE HERE--')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1156)I
+ 1156       FORMAT('      A REFERENCE WAS MADE TO THE ',I8,'-TH ',
+     1             'DEVICE.')
+            CALL DPWRST('XXX','BUG ')
+            GOTO9000
+          ELSE
+            IF(NUMARG.LE.4 .OR. IHARG(5).EQ.'ON')THEN
+              PHOLD1=PDEFHO
+              PHOLD2=PDEFVO
+            ELSEIF(IHARG(5).EQ.'OFF' .OR. IHARG(5).EQ.'AUTO' .OR.
+     1             IHARG(5).EQ.'DEFA')THEN
+              PHOLD1=PDEFHO
+              PHOLD2=PDEFVO
+            ELSE
+              IF(IARGT(5).EQ.'NUMB' .AND. IARGT(6).EQ.'NUMB')THEN
+                 PHOLD1=ARG(5)
+                 PHOLD2=ARG(6)
+              ELSE
+                PHOLD1=PDEFHO
+                PHOLD2=PDEFVO
+              ENDIF
+            ENDIF
+            IFOUND='YES'
+            IF(PHOLD1.LT.0.0)PHOLD1=0.0
+            IF(PHOLD2.LT.0.0)PHOLD2=0.0
+            IF(PHOLD1.GT.10.0)PHOLD1=10.0
+            IF(PHOLD2.GT.10.0)PHOLD2=10.0
+            PCHOSH(I)=PHOLD1
+            PCHOSV(I)=PHOLD2
+C
+            IF(IFEEDB.EQ.'ON')THEN
+              WRITE(ICOUT,999)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1181)I
+ 1181         FORMAT('            DEVICE           --',I4)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1182)IDUNIT(I)
+ 1182         FORMAT('            I/O UNIT         --',I4)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1183)IDMANU(I)
+ 1183         FORMAT('            MANUFACTURER     --',A4)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1184)IDMODE(I),IDMOD2(I),IDMOD3(I)
+ 1184         FORMAT('            MODEL            --',2(A4,2X),A4)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1185)IDPOWE(I)
+ 1185         FORMAT('            POWER            --',A4)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1186)IDCONT(I)
+ 1186         FORMAT('            CONTINUITY       --',A4)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1187)IDCOLO(I)
+ 1187         FORMAT('            COLOR           --',A4)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1188)IDNHPP(I)
+ 1188         FORMAT('            HORIZONTAL PIXELS--',I8)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1189)IDNVPP(I)
+ 1189         FORMAT('            VERTICAL   PIXELS--',I8)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1191)IDFONT(I)
+ 1191         FORMAT('            FONT             --',A4)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1193)PCHOSH(I)
+ 1193         FORMAT('            HARDWARE CHARACTER OFFSET ',
+     1               '(HORIZONTAL) --',F7.2)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1195)PCHOSV(I)
+ 1195         FORMAT('            HARDWARE CHARACTER OFFSET ',
+     1               '(VERTICAL)   --',F7.2)
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+            GOTO9000
+          ENDIF
+        ELSE
+          IERROR='YES'
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1141)
+ 1141     FORMAT('***** ERROR IN DEVICE ... HARDWARE CHARACTER ',
+     1           'OFFSET--')
+          CALL DPWRST('XXX','BUG ')
+          GOTO9000
+        ENDIF
+      ENDIF
+      GOTO9000
+C
+ 9000 CONTINUE
       RETURN
       END
       SUBROUTINE DPDEPM(ICOM,IHARG,IHARG2,IARGT,IARG,NUMARG,
@@ -17178,6 +17412,9 @@ C     UPDATED         --APRIL     2017. FOR CASE WHERE SAMPLE SIZE IS
 C                                       NEGATIVE, BUT NON-ZERO, USE THIS
 C                                       AS THE SAMPLE SIZE FOR THE
 C                                       BOOTSTRAP
+C     UPDATED         --AUGUST    2022. BOOTSTRAP WOULD OCCASIONALLY
+C                                       GENERATE AN "INFINITE" VALUE,
+C                                       PUT A CHECK IN FOR THIS CASE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES--------------
 C
@@ -17513,6 +17750,7 @@ C       NOTE: FOR BOOTSTRAP OPTION NEED EITHER SAMPLE SIZE OR
 C             EFFECTIVE DEGREES OF FREEDOM.
 C
         IBOOFL='YES'
+        ICNT=0
         DO1110IRESAM=1,NRESAM
           CALL NORRAN(NLAB,ISEED,XTEMP1)
           DO1130IROW=1,NLAB
@@ -17539,16 +17777,26 @@ C
      1                AMEAN2,ASD2,N2,
      1                XDLTMP,XDLS2T,
      1                ISUBRO,IBUGA3,IERROR)
-          XTEMP2(IRESAM)=XDLTMP
-          DTEMP1(IRESAM)=DBLE(XTEMP2(IRESAM))
+          IF(XDLTMP.GE.CPUMAX .OR. XDLTMP.LE.CPUMIN)GOTO1110
+          ICNT=ICNT+1
+          XTEMP2(ICNT)=XDLTMP
+          DTEMP1(ICNT)=DBLE(XTEMP2(ICNT))
           IF(IOUNI5.GT.0)WRITE(IOUNI5,'(E15.7)')XDLTMP
  1110   CONTINUE
 C
+        NRESAM=ICNT
         CALL SD(XTEMP2,NRESAM,IWRITE,XSD,IBUGA3,IERROR)
         SEBOK1=XSD
         SEBOK2=2.0*XSD
         ALPHAL=100.0*0.025
         ALPHAU=100.0*0.975
+        IF(IOUNI5.GT.0)WRITE(IOUNI5,'("Bootstrap SD: ",E15.7)')XSD
+C
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'DERS')THEN
+          WRITE(ICOUT,1112)NRESAM,XSD
+ 1112     FORMAT('AFTER BOOTSTRAP SAMPLES: NRESAM,XSD = ',I10,2X,G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
 C
 C       3 METHODS FOR COMPUTING 95% CONFIDENCE INTERVAL:
 C
@@ -17566,6 +17814,12 @@ C
         CALL PERCEN(ALPHAU,XTEMP2,NRESAM,IWRITE,XTEMP1,NRESAM,
      1              XPERC,IBUGA3,IERROR)
         XPERCU=XPERC
+C
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'DERS')THEN
+          WRITE(ICOUT,1118)XPERCL,XPERCU
+ 1118     FORMAT('XPERCL,XPERCU = ',2G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
 C
         DLOWD4=DBLE(XPERCL)
         DHIGD4=DBLE(XPERCU)
@@ -18532,8 +18786,25 @@ C
       IF(ITYPED.EQ.'V')IHLEFT=IHARG(1)
       IF(ITYPED.EQ.'V')IHLEF2=IHARG2(1)
       DO2000I=1,NUMNAM
-      I2=I
-      IF(IHLEFT.EQ.IHNAME(I).AND.IHLEF2.EQ.IHNAM2(I))GOTO2100
+        I2=I
+        IF(IHLEFT.EQ.IHNAME(I).AND.IHLEF2.EQ.IHNAM2(I))THEN
+          IF(IUSE(I).EQ.'M   ')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2201)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,210)IHLEFT,IHLEF2
+  210       FORMAT('      AN ATTEMPT WAS MADE TO USE ',2A4,' AS A ',
+     1           'VARIABLE OR PARAMETER')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,212)
+  212       FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A MATRIX.')
+            CALL DPWRST('XXX','BUG ')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+          GOTO2100
+        ENDIF
  2000 CONTINUE
       NEWNAM='YES'
       ILISTL=NUMNAM+1

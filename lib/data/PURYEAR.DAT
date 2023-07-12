@@ -1,0 +1,75 @@
+This is Dataplot data file    PURYEAR.DAT
+Purpose--Analyze Stu Hunter's EVOP data in "Quality Progress"
+         in connection with Stephen Puryear
+Date--February 2004
+Number of observations = 50
+Response variable = deviation of an industrial process from target
+Order of variables on a line image:
+   1. Response Y     = Deviation from 100% yield
+   2. Factor 1       = Day (1 to 50)
+   3. Factor 2       = Week (1 to 10)
+Question 1: How do you improve (= optimize = maximize yield)
+            a process which is statistically out of control?
+Question 2: Do you have to stabilize the process first
+            before optimizing the process?
+To read this file into Dataplot:
+   skip 25
+   read puryear.dat y x x2
+
+
+
+
+
+ Response       Day        Week
+    Y           X1          X2
+--------------------------------
+ -2.41           1           1
+ -2.90           2           1
+ -2.27           3           1
+ -2.43           4           1
+ -3.83           5           1
+ -3.64           6           2
+ -4.80           7           2
+ -3.67           8           2
+ -3.79           9           2
+ -4.83          10           2
+ -5.71          11           3
+ -5.89          12           3
+ -5.58          13           3
+ -5.46          14           3
+ -5.56          15           3
+ -6.36          16           4
+ -4.88          17           4
+ -5.15          18           4
+ -6.55          19           4
+ -5.94          20           4
+ -7.00          21           5
+ -5.30          22           5
+ -4.74          23           5
+ -5.67          24           5
+ -4.34          25           5
+ -4.73          26           6
+ -4.28          27           6
+ -4.44          28           6
+ -4.34          29           6
+ -5.45          30           6
+ -5.73          31           7
+ -4.18          32           7
+ -3.49          33           7
+ -3.70          34           7
+ -4.88          35           7
+ -3.56          36           8
+ -3.46          37           8
+ -4.32          38           8
+ -5.26          39           8
+ -4.44          40           8
+ -5.33          41           9
+ -5.16          42           9
+ -6.20          43           9
+ -6.82          44           9
+ -6.05          45           9
+ -5.98          46          10
+ -5.88          47          10
+ -6.16          48          10
+ -6.74          49          10
+ -5.48          50          10

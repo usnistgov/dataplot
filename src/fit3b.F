@@ -115,6 +115,12 @@ C     UPDATED         --JULY     2019. TWEAK SCRATCH SPACE
 C     UPDATED         --JULY     2019. FOR DPFIT3, USE XMAT INSTEAD OF
 C                                      X1 ... X15 TO REDUCE MEMORY
 C                                      REQUIREMENTS
+C     UPDATED         --JULY     2021. FIX BUG WITH MULTIPLE SUBSET/FOR
+C                                      CLAUSES
+C     UPDATED         --AUGUST   2021. ADD: RESSS, SSR, SSTO, RESMS,
+C                                      AMSR, FSTAT, FCV95, FCV99 TO THE
+C                                      CALL LIST TO DPFIT3 AND SAVE
+C                                      THEM AS INTERNAL PARAMETERS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -391,6 +397,12 @@ C
       ILOCQ=J1
       GOTO2120
  2120 CONTINUE
+C
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PFIT')THEN
+        WRITE(ICOUT,2121)NUMARG,ILOCQ
+ 2121   FORMAT('AT 2120: NUMARG,ILOCQ = ',2I6)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       IF(ICASFI.EQ.'FIT' .OR. ICASFI.EQ.'RFIT')THEN
         NUMEQ=0
@@ -688,13 +700,27 @@ C
           IF(IP4.GT.IWIDTH)GOTO4120
           IF(IANS(I).EQ.' '.AND.IANS(IP1).EQ.'F'.AND.
      1       IANS(IP2).EQ.'O'.AND.IANS(IP3).EQ.'R'.AND.
-     1       IANS(IP4).EQ.' ')ISTOP=I
+     1       IANS(IP4).EQ.' ')THEN
+               IF(ISTOP.LE.0)THEN
+                 ISTOP=I
+               ELSEIF(I.LT.ISTOP)THEN
+                 ISTOP=I
+               ENDIF
+               GOTO4120
+          ENDIF
 C
           IF(IP7.GT.IWIDTH)GOTO4120
           IF(IANS(I).EQ.' '.AND.IANS(IP1).EQ.'S'.AND.
      1       IANS(IP2).EQ.'U'.AND.IANS(IP3).EQ.'B'.AND.
      1       IANS(IP4).EQ.'S'.AND.IANS(IP5).EQ.'E'.AND.
-     1       IANS(IP6).EQ.'T'.AND.IANS(IP7).EQ.' ')ISTOP=I
+     1       IANS(IP6).EQ.'T'.AND.IANS(IP7).EQ.' ')THEN
+               IF(ISTOP.LE.0)THEN
+                 ISTOP=I
+               ELSEIF(I.LT.ISTOP)THEN
+                 ISTOP=I
+               ENDIF
+               GOTO4120
+          ENDIF
 C
  4110   CONTINUE
  4120   CONTINUE
@@ -750,6 +776,12 @@ C
  4150   CONTINUE
         NUMCHA=ISTOP-ISTART+1
  4160   CONTINUE
+      ENDIF
+C
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PFIT')THEN
+        WRITE(ICOUT,4161)ISTART,ISTOP
+ 4161   FORMAT('AT 4160: ISTART,ISTOP = ',2I6)
+        CALL DPWRST('XXX','BUG ')
       ENDIF
 C
 C               ***************************************************
@@ -918,12 +950,15 @@ C
             ICASEQ='SUBS'
             IKEY='SUBS'
             IF(IHARG(J1).EQ.'EXCE')IKEY='EXCE'
-            ILOCQ=J1
+            IF(ILOCQ.EQ.NUMARG+1)ILOCQ=J1
+            GOTO409
           ELSEIF(IHARG(J).EQ.'FOR '.AND.IHARG2(J).EQ.'    ')THEN
             ICASEQ='FOR'
-            ILOCQ=J1
+            IF(ILOCQ.EQ.NUMARG+1)ILOCQ=J1
+            GOTO409
           ENDIF
   400   CONTINUE
+  409   CONTINUE
       ENDIF
 C
       IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PFIT')THEN
@@ -1700,6 +1735,7 @@ C
      1              DUMMY1,DUMMY2,DUMMY4,DUMMY5,
      1              IFITAC,ALPHA,
      1              RSQUAR,ADJRSQ,APRESS,
+     1              RESSS,SSR,SSTO,RESMS,AMSR,FSTAT,FCV95,FCV99,
      1              ICAPSW,ICAPTY,IFORSW,IFITAU,IAUXDP,
      1              IBUGA3,IBUGCO,IBUGEV,ISUBRO,IERROR)
         IF(IERROR.EQ.'YES')GOTO8000
@@ -1752,6 +1788,63 @@ C
         CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
      1  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
      1  IANS,IWIDTH,IBUGA3,IERROR)
+C
+        IH='RESS'
+        IH2='S   '
+        VALUE0=RESSS
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1  IANS,IWIDTH,IBUGA3,IERROR)
+C
+        IH='SSRE'
+        IH2='G   '
+        VALUE0=SSR
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1  IANS,IWIDTH,IBUGA3,IERROR)
+C
+        IH='SSTO'
+        IH2='TAL '
+        VALUE0=SSTO
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1  IANS,IWIDTH,IBUGA3,IERROR)
+C
+        IH='MSR '
+        IH2='    '
+        VALUE0=AMSR
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1  IANS,IWIDTH,IBUGA3,IERROR)
+C
+        IH='MSE '
+        IH2='    '
+        VALUE0=RESMS
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1  IANS,IWIDTH,IBUGA3,IERROR)
+C
+        IH='FSTA'
+        IH2='T   '
+        VALUE0=FSTAT
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1  IANS,IWIDTH,IBUGA3,IERROR)
+C
+        IH='FCV9'
+        IH2='5   '
+        VALUE0=FCV95
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1  IANS,IWIDTH,IBUGA3,IERROR)
+C
+        IH='FCV9'
+        IH2='9   '
+        VALUE0=FCV99
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1  IANS,IWIDTH,IBUGA3,IERROR)
+C
       ENDIF
 C
       IF(ICASFI.EQ.'FIT')GOTO7900
@@ -4251,6 +4344,7 @@ C
      1                  IREP,REPSD,REPDF,RESSD,RESDF,PRED2,RES2,ALFCDF,
      1                  BIC,DUM1,DUM2,Z,VSDPRE,
      1                  IFITAC,ALPHA,RSQUAR,ADJRSQ,APRESS,
+     1                  RESSS,SSR,SSTO,RESMS,AMSR,FSTAT,FCV95,FCV99,
      1                  ICAPSW,ICAPTY,IFORSW,IFITAU,IAUXDP,
      1                  IBUGA3,IBUGCO,IBUGEV,ISUBRO,IERROR)
 C
@@ -4342,6 +4436,9 @@ C                                       WRITING TO AUXILLARY FILES
 C     UPDATED         --APRIL     2019. USER CAN SPECIFY NUMBER OF
 C                                       DECIMAL POINTS FOR AUXILLARY
 C                                       FILES
+C     UPDATED         --AUGUST    2021. ADD: RESSS, SSR, SSTO, RESMS,
+C                                       AMSR, FSTAT, FCV95, FCV99 TO
+C                                       CALL LIST
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -5572,6 +5669,8 @@ C
       IF(RESMS.GT.0.0)FSTAT=AMSR/RESMS
       NP=N-NUMPAR
       CALL FCDF(FSTAT,IREGDF,NP,CDF)
+      CALL FPPF(0.95,IREGDF,NP,FCV95)
+      CALL FPPF(0.99,IREGDF,NP,FCV99)
 C
       IF(IFITAU.EQ.'OFF')GOTO8729
 C

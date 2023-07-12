@@ -1,19 +1,9 @@
       SUBROUTINE DPSUBS(NIOLD,ILOCS,NS,IBUGQ,IERROR)
 C
-C     NOTE--THIS SUBROUTINE IS IDENTICAL TO THE DPSUB2 SUBROUTINE
-C           AND THE DPSUB3 SUBROUTINE
-C           AND HAS BEEN DUPLICATED TO THEM ONLY FOR ECONOMY OF MAPPING PURPOSES
-C           THAT IS, TO SAVE STORAGE IN THE MAPPING.
-C           FOR VIRTUAL OPERATING SYSTEMS, THIS DUPLICATION IS NEEDLESS.
-C           ANY CALLS TO SUBROUTINES DPSUB2 AND SPSUB3 COULD BE CHANGED
-C           TO CALLS TO DPSUBS.
-C
-C     PURPOSE--DEFINE AN INTEGER 0-1 VECTOR ISUB
-C              WHICH WILL BE USED IN OTHER SUBROUTINES
-C              FOR EXTRACTING SUBSETS.
-C     NOTE THAT IF THE WORDS   SUBSET   OR   EXCEPT   IS NOT
-C     IN THE ARGUMENT LIST,
-C     THEN THE OUTPUT PARAMETER WILL BE SET TO NUMARG+1.
+C     PURPOSE--DEFINE AN INTEGER 0-1 VECTOR ISUB WHICH WILL BE USED
+C              IN OTHER SUBROUTINES FOR EXTRACTING SUBSETS.
+C     NOTE THAT IF THE WORDS   SUBSET   OR   EXCEPT   IS NOT IN THE
+C     ARGUMENT LIST, THEN THE OUTPUT PARAMETER WILL BE SET TO NUMARG+1.
 C     WRITTEN BY--JAMES J. FILLIBEN
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
@@ -38,8 +28,10 @@ C     UPDATED         --SEPTEMBER 1981.
 C     UPDATED         --DECEMBER  1981.
 C     UPDATED         --MARCH     1982.
 C     UPDATED         --MAY       1982.
-C     UPDATED         --MARCH     1988.  ALLOW    NOT EQUAL   <> >< NOT=
-C     UPDATED         --JANUARY   1989.  CHECK FOR EMPTY SUBSETS (ALAN)
+C     UPDATED         --MARCH     1988. ALLOW    NOT EQUAL   <> >< NOT=
+C     UPDATED         --JANUARY   1989. CHECK FOR EMPTY SUBSETS (ALAN)
+C     UPDATED         --JULY      2021. ALLOW VARIABLES ON BOTH SIDES
+C                                       OF THE OPERATOR
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -49,6 +41,7 @@ C
       CHARACTER*4 ICASSC
       CHARACTER*4 ICASQU
       CHARACTER*4 ICASVA
+      CHARACTER*4 ICASV2
       CHARACTER*4 IHWUSE
       CHARACTER*4 MESSAG
       CHARACTER*4 ICASOP
@@ -81,6 +74,7 @@ C
       MAXCP5=MAXCOL+5
       MAXCP6=MAXCOL+6
       TARGET=0.0
+      ISETV2=-1
 C
 C               ********************************
 C               **  TREAT THE SUBSET CASE     **
@@ -93,11 +87,8 @@ C
         WRITE(ICOUT,51)
    51   FORMAT('***** AT THE BEGINNING OF DPSUBS--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,52)NIOLD,ILOCS,NS
-   52   FORMAT('NIOLD,ILOCS,NS = ',3I8)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,54)IBUGQ,IERROR
-   54   FORMAT('IBUGQ,IERROR = ',A4,2X,A4)
+        WRITE(ICOUT,52)IBUGQ,IERROR,NIOLD,ILOCS,NS
+   52   FORMAT('IBUGQ,IERROR,NIOLD,ILOCS,NS = ',2(A4,2X),3I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,55)NUMARG,NUMNAM,MAXNAM,N,MAXN
    55   FORMAT('NUMARG,NUMNAM,MAXNAM,N,MAXN = ',5I8)
@@ -130,13 +121,13 @@ C
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,111)
-  111   FORMAT('***** ERROR IN DPSUBS--')
+  111   FORMAT('***** ERROR IN SUBSET (DPSUBS)--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,112)
-  112   FORMAT('      THE INPUT NUMBER OF OBSERVATIONS (FROM WHICH')
+  112   FORMAT('      THE NUMBER OF OBSERVATIONS FROM WHICH A SUBSET')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,113)
-  113   FORMAT('      A SUBSET WAS TO HAVE BEEN EXTRACTED) IS 0.')
+  113   FORMAT('      WAS TO HAVE BEEN EXTRACTED IS 0.')
         CALL DPWRST('XXX','BUG ')
         IERROR='YES'
         GOTO9000
@@ -201,70 +192,67 @@ C
       NUMSV=0
       DO300IPASS=1,100
 C
-      IF(IBUGQ.EQ.'ON')THEN
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,301)
-  301   FORMAT('***** AT THE BEGINNING OF ANOTHER PASS--')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,302)IPASS,ILOCTG
-  302   FORMAT('IPASS,ILOCTG = ',2I8)
-        CALL DPWRST('XXX','BUG ')
-        IF(ILOCTG.GE.1)THEN
-          WRITE(ICOUT,303)ICASSC,ILOCTG,IHARG(ILOCTG),IHARG2(ILOCTG)
-  303     FORMAT('ICASSC,ILOCTG,IHARG(ILOCTG),IHARG2(ILOCTG) = ',
-     1           A4,I8,2(2X,A4))
+        IF(IBUGQ.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,301)
+  301     FORMAT('***** AT THE BEGINNING OF ANOTHER PASS--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,302)IPASS,ILOCTG,JMAX
+  302     FORMAT('IPASS,ILOCTG,JMAX = ',3I8)
+          CALL DPWRST('XXX','BUG ')
+          IF(ILOCTG.GE.1)THEN
+            WRITE(ICOUT,303)ICASSC,ILOCTG,IHARG(ILOCTG),IHARG2(ILOCTG)
+  303       FORMAT('ICASSC,ILOCTG,IHARG(ILOCTG),IHARG2(ILOCTG) = ',
+     1             A4,I8,2(2X,A4))
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
+C
+        IF(ICASSC.EQ.'STOP')GOTO1100
+        JMIN=JMAX+1
+        IF(JMIN.GT.NUMARG)GOTO1100
+        IF(JMIN.EQ.NUMARG.AND.IHARG(JMIN).EQ.'AND '.AND.
+     1     IHARG2(JMIN).EQ.'    ')GOTO1100
+C
+        IF(ICASSC.EQ.'CONT')GOTO600
+        DO310I=1,NIOLD
+          ITEMP=ISUB(I)
+          IF(ITEMP.EQ.00)ISUB(I)=00
+          IF(ITEMP.EQ.10)ISUB(I)=00
+          IF(ITEMP.EQ.01)ISUB(I)=00
+          IF(ITEMP.EQ.11)ISUB(I)=11
+  310   CONTINUE
+        ICASQU='UNKN'
+        DO340J=JMIN,NUMARG
+          J2=J
+          IF(IHARG(J).EQ.'SUBS'.AND.IHARG2(J).EQ.'ET  ')THEN
+            ICASQU='SUBS'
+            ILOCS=J2
+CCCCC       THE FOLLOWING 6 LINES WERE INSERTED MARCH 1988.
+            ILOCS2=ILOCS+2
+            IHSET=IHARG(ILOCS2)
+            IHSET2=IHARG2(ILOCS2)
+            IF(IHSET.EQ.'<>  ')ICASQU='EXCE'
+            IF(IHSET.EQ.'><  ')ICASQU='EXCE'
+            IF(IHSET.EQ.'NOT=')ICASQU='EXCE'
+            GOTO390
+          ELSEIF(IHARG(J).EQ.'EXCE'.AND.IHARG2(J).EQ.'PT  ')THEN
+            ICASQU='EXCE'
+            ILOCS=J2
+            GOTO390
+          ENDIF
+  340   CONTINUE
+        ILOCS=NUMARG+1
+        GOTO1100
+C
+  390   CONTINUE
+C
+        IF(IBUGQ.EQ.'ON')THEN
+          WRITE(ICOUT,391)IPASS,ILOCS,ICASQU
+  391     FORMAT('IPASS,ILOCS,ICASQU = ',2I8,2X,A4)
           CALL DPWRST('XXX','BUG ')
         ENDIF
-        WRITE(ICOUT,304)JMAX
-  304   FORMAT('JMAX= ',I8)
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
-C
-      IF(ICASSC.EQ.'STOP')GOTO1100
-      JMIN=JMAX+1
-      IF(JMIN.GT.NUMARG)GOTO1100
-      IF(JMIN.EQ.NUMARG.AND.IHARG(JMIN).EQ.'AND '.AND.
-     1IHARG2(JMIN).EQ.'    ')GOTO1100
-C
-      IF(ICASSC.EQ.'CONT')GOTO600
-      DO310I=1,NIOLD
-        ITEMP=ISUB(I)
-        IF(ITEMP.EQ.00)ISUB(I)=00
-        IF(ITEMP.EQ.10)ISUB(I)=00
-        IF(ITEMP.EQ.01)ISUB(I)=00
-        IF(ITEMP.EQ.11)ISUB(I)=11
-  310 CONTINUE
-      ICASQU='UNKN'
-      DO340J=JMIN,NUMARG
-        J2=J
-        IF(IHARG(J).EQ.'SUBS'.AND.IHARG2(J).EQ.'ET  ')THEN
-          ICASQU='SUBS'
-          ILOCS=J2
-CCCCC     THE FOLLOWING 6 LINES WERE INSERTED MARCH 1988.
-          ILOCS2=ILOCS+2
-          IHSET=IHARG(ILOCS2)
-          IHSET2=IHARG2(ILOCS2)
-          IF(IHSET.EQ.'<>  ')ICASQU='EXCE'
-          IF(IHSET.EQ.'><  ')ICASQU='EXCE'
-          IF(IHSET.EQ.'NOT=')ICASQU='EXCE'
-          GOTO390
-        ELSEIF(IHARG(J).EQ.'EXCE'.AND.IHARG2(J).EQ.'PT  ')THEN
-          ICASQU='EXCE'
-          ILOCS=J2
-          GOTO390
-        ENDIF
-  340 CONTINUE
-      ILOCS=NUMARG+1
-      GOTO1100
-C
-  390 CONTINUE
-C
-      IF(IBUGQ.EQ.'ON')THEN
-        WRITE(ICOUT,391)IPASS,ICASQU,ILOCS
-  391   FORMAT('IPASS,ICASQU,ILOCS = ',I8,2X,A4,I8)
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
 C
 C               *******************************************
 C               **  STEP 3.2--                           **
@@ -274,26 +262,26 @@ C               **  IF HAVE THE EXCEPT CASE,             **
 C               **  INITIALIZE ISUB(.) TO 1X--10 OR 11.  **
 C               *******************************************
 C
-      ISTEPN='3.2'
-      IF(IBUGQ.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+        ISTEPN='3.2'
+        IF(IBUGQ.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-      IF(ICASQU.EQ.'SUBS')THEN
-        DO401I=1,NIOLD
-          ITEMP=ISUB(I)
-          IF(ITEMP.EQ.00)ISUB(I)=00
-          IF(ITEMP.EQ.10)ISUB(I)=00
-          IF(ITEMP.EQ.01)ISUB(I)=01
-          IF(ITEMP.EQ.11)ISUB(I)=01
-  401   CONTINUE
-      ELSE
-        DO406I=1,NIOLD
-          ITEMP=ISUB(I)
-          IF(ITEMP.EQ.00)ISUB(I)=10
-          IF(ITEMP.EQ.10)ISUB(I)=10
-          IF(ITEMP.EQ.01)ISUB(I)=11
-          IF(ITEMP.EQ.11)ISUB(I)=11
-  406   CONTINUE
-      ENDIF
+        IF(ICASQU.EQ.'SUBS')THEN
+          DO401I=1,NIOLD
+            ITEMP=ISUB(I)
+            IF(ITEMP.EQ.00)ISUB(I)=00
+            IF(ITEMP.EQ.10)ISUB(I)=00
+            IF(ITEMP.EQ.01)ISUB(I)=01
+            IF(ITEMP.EQ.11)ISUB(I)=01
+  401     CONTINUE
+        ELSE
+          DO406I=1,NIOLD
+            ITEMP=ISUB(I)
+            IF(ITEMP.EQ.00)ISUB(I)=10
+            IF(ITEMP.EQ.10)ISUB(I)=10
+            IF(ITEMP.EQ.01)ISUB(I)=11
+            IF(ITEMP.EQ.11)ISUB(I)=11
+  406     CONTINUE
+        ENDIF
 C
 C               ********************************************************
 C               **  STEP 4--                                          **
@@ -303,93 +291,94 @@ C               **  THIS SHOULD BE THE SUBSET VARIABLE                **
 C               **  OR THE DUMMY INDEX    I   .                       **
 C               ********************************************************
 C
-      ISTEPN='4'
-      IF(IBUGQ.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+        ISTEPN='4'
+        IF(IBUGQ.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-      ICASVA='UNKN'
-      ILOCS1=ILOCS+1
-      JMAX=ILOCS1
-      IF(ILOCS1.GT.NUMARG)THEN
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,111)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,412)
-  412   FORMAT('      THE WORD    SUBSET    OR    EXCEPT    WAS THE')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,413)
-  413   FORMAT('      FINAL WORD ON THE COMMAND LINE.')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,414)
-  414   FORMAT('      THE WORD    SUBSET  OR   EXCEPT   SHOULD HAVE')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,415)
-  415   FORMAT('      BEEN FOLLOWED BY OTHER ARGUMENTS, AS IN')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,416)
-  416   FORMAT('           SUBSET X = 4')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,417)
-  417   FORMAT('           SUBSET X = 4 7 9 15 22')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,418)
-  418   FORMAT('           SUBSET X = 4 TO 10')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,419)
-  419   FORMAT('           SUBSET X >= 7')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,420)
-  420   FORMAT('           AND SO FORTH.')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,421)
-  421   FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
-        CALL DPWRST('XXX','BUG ')
-        IF(IWIDTH.GE.1)THEN
-          WRITE(ICOUT,422)(IANS(I),I=1,MIN(IWIDTH,100))
-  422     FORMAT('      ',100A1)
+        ICASVA='UNKN'
+        ILOCS1=ILOCS+1
+        JMAX=ILOCS1
+        IF(ILOCS1.GT.NUMARG)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,111)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,412)
+  412     FORMAT('      THE WORD    SUBSET    OR    EXCEPT    WAS THE')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,413)
+  413     FORMAT('      FINAL WORD ON THE COMMAND LINE.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,414)
+  414     FORMAT('      THE WORD    SUBSET  OR   EXCEPT   SHOULD HAVE')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,415)
+  415     FORMAT('      BEEN FOLLOWED BY OTHER ARGUMENTS, AS IN')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,416)
+  416     FORMAT('           SUBSET X = 4')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,417)
+  417     FORMAT('           SUBSET X = 4 7 9 15 22')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,418)
+  418     FORMAT('           SUBSET X = 4 TO 10')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,419)
+  419     FORMAT('           SUBSET X >= 7')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,420)
+  420     FORMAT('           AND SO FORTH.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,421)
+  421     FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
+          CALL DPWRST('XXX','BUG ')
+          IF(IWIDTH.GE.1)THEN
+            WRITE(ICOUT,422)(IANS(I),I=1,MIN(IWIDTH,100))
+  422       FORMAT('      ',100A1)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+C
+        IHSET=IHARG(ILOCS1)
+        IHSET2=IHARG2(ILOCS1)
+C
+        IF(IHSET.EQ.'I   '.AND.IHSET2.EQ.'    ')THEN
+          ICASVA='I   '
+        ELSE
+          IF(NUMNAM.LE.0)GOTO490
+          DO435I=1,NUMNAM
+            IF(IHNAME(I).EQ.IHSET.AND.IHNAM2(I).EQ.IHSET2.AND.
+     1         IUSE(I).EQ.'V   ')THEN
+              ICASVA='V   '
+              IHWUSE='V'
+              MESSAG='YES'
+              CALL CHECKN(IHSET,IHSET2,IHWUSE,
+     1                    IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,
+     1                    NUMNAM,MAXNAM,
+     1                    ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOC,IERROR)
+              IF(IERROR.EQ.'YES')GOTO9000
+              ISETV=IVALUE(ILOC)
+C
+              IF(IBUGQ.EQ.'ON')THEN
+                WRITE(ICOUT,451)ILOCS1,IHSET,IHSET2,ISETV
+  451           FORMAT('ILOCS1,IHSET,IHSET2,ISETV = ',I8,3X,2A4,3X,I8)
+                CALL DPWRST('XXX','BUG ')
+              ENDIF
+C
+              GOTO490
+            ENDIF
+  435     CONTINUE
+        ENDIF
+C
+  490   CONTINUE
+C
+        IF(IBUGQ.EQ.'ON')THEN
+          WRITE(ICOUT,491)IPASS,IHSET,IHSET2,ICASVA,ISETV
+  491     FORMAT('IPASS,IHSET,IHSET2,ICASVA,ISETV = ',I8,3(2X,A4),I8)
           CALL DPWRST('XXX','BUG ')
         ENDIF
-        IERROR='YES'
-        GOTO9000
-      ENDIF
-C
-      IHSET=IHARG(ILOCS1)
-      IHSET2=IHARG2(ILOCS1)
-C
-      IF(IHSET.EQ.'I   '.AND.IHSET2.EQ.'    ')THEN
-        ICASVA='I   '
-        IF(NUMNAM.LE.0)GOTO490
-        DO435I=1,NUMNAM
-          IF(IHNAME(I).EQ.IHSET.AND.IHNAM2(I).EQ.IHSET2.AND.
-     1       IUSE(I).EQ.'V   ')GOTO440
-  435   CONTINUE
-        GOTO490
-      ENDIF
-C
-  440 CONTINUE
-      ICASVA='V   '
-      IHWUSE='V'
-      MESSAG='YES'
-      CALL CHECKN(IHSET,IHSET2,IHWUSE,
-     1            IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
-     1            ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOC,IERROR)
-      IF(IERROR.EQ.'YES')GOTO9000
-      ISETV=IVALUE(ILOC)
-C
-      IF(IBUGQ.EQ.'ON')THEN
-        WRITE(ICOUT,451)ILOCS1,IHSET,IHSET2,ISETV
-  451   FORMAT('ILOCS1,IHSET,IHSET2,ISETV = ',I8,3X,2A4,3X,I8)
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
-C
-      GOTO490
-C
-  490 CONTINUE
-      IF(IBUGQ.EQ.'ON')THEN
-        WRITE(ICOUT,491)IPASS,IHSET,IHSET2,ICASVA,ISETV
-  491   FORMAT('IPASS,IHSET,IHSET2,ICASVA,ISETV = ',I8,3(2X,A4),I8)
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
 C
 C               *******************************************************
 C               **  STEP 5--                                         **
@@ -403,91 +392,85 @@ C               **        <>   ><   NOT=                             **
 C               **  IF NONE OF THE ABOVE, THEN ASSUME  =   .         **
 C               *******************************************************
 C
-      ISTEPN='5'
-      IF(IBUGQ.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+        ISTEPN='5'
+        IF(IBUGQ.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-      ICASOP='UNKN'
-      ILOCS2=ILOCS+2
-      JMAX=ILOCS2
-      IF(ILOCS2.GT.NUMARG)THEN
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,111)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,502)
-  502   FORMAT('      THE SUBSET/EXCEPT VARIABLE NAME WAS THE')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,503)
-  503   FORMAT('      FINAL WORD ON THE COMMAND LINE.')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,504)
-  504   FORMAT('      THE SUBSET/EXCEPT VARIABLE NAME SHOULD HAVE')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,505)
-  505   FORMAT('      BEEN FOLLOWED BY OTHER ARGUMENTS, AS IN')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,506)
-  506   FORMAT('           SUBSET X = 4')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,507)
-  507   FORMAT('           SUBSET X = 4 7 9 15 22')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,508)
-  508   FORMAT('           SUBSET X = 4 TO 10')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,509)
-  509   FORMAT('           SUBSET X >= 7')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,510)
-  510   FORMAT('           AND SO FORTH.')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,521)
-  521   FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
-        CALL DPWRST('XXX','BUG ')
-        IF(IWIDTH.GE.1)THEN
-          WRITE(ICOUT,422)(IANS(I),I=1,MIN(IWIDTH,100))
+        ICASOP='UNKN'
+        ILOCS2=ILOCS+2
+        JMAX=ILOCS2
+C
+        IF(ILOCS2.GT.NUMARG)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,111)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,502)
+  502     FORMAT('      THE SUBSET/EXCEPT VARIABLE NAME WAS THE')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,503)
+  503     FORMAT('      FINAL WORD ON THE COMMAND LINE.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,504)
+  504     FORMAT('      THE SUBSET/EXCEPT VARIABLE NAME SHOULD HAVE')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,415)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,416)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,417)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,418)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,419)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,420)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,421)
+          CALL DPWRST('XXX','BUG ')
+          IF(IWIDTH.GE.1)THEN
+            WRITE(ICOUT,422)(IANS(I),I=1,MIN(IWIDTH,100))
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+C
+        IHSET=IHARG(ILOCS2)
+        IHSET2=IHARG2(ILOCS2)
+C
+        IF(IHSET.EQ.'<   ')THEN
+          ICASOP='<   '
+          ILOCTG=ILOCS2
+        ELSEIF(IHSET.EQ.'<=  ' .OR. IHSET.EQ.'=<  ')THEN
+          ICASOP='<=  '
+          ILOCTG=ILOCS2
+        ELSEIF(IHSET.EQ.'=   ')THEN
+          ICASOP='=   '
+          ILOCTG=ILOCS2
+        ELSEIF(IHSET.EQ.'>=  ' .OR. IHSET.EQ.'=>  ')THEN
+          ICASOP='>=  '
+          ILOCTG=ILOCS2
+        ELSEIF(IHSET.EQ.'>   ')THEN
+          ICASOP='>   '
+          ILOCTG=ILOCS2
+        ELSEIF(IHSET.EQ.'<>  ' .OR. IHSET.EQ.'><  ' .OR.
+     1       IHSET.EQ.'NOT=')THEN
+          ICASOP='=   '
+          ILOCTG=ILOCS2
+        ELSE
+          ICASOP='=ASS'
+          ILOCTG=ILOCS2-1
+          GOTO590
+        ENDIF
+C
+  590   CONTINUE
+C
+        IF(IBUGQ.EQ.'ON')THEN
+          WRITE(ICOUT,591)IPASS,IHSET,IHSET2,ICASVA,ICASOP
+  591     FORMAT('IPASS,IHSET,IHSET2,ICASVA,ICASOP = ',
+     1           I8,4(2X,A4))
           CALL DPWRST('XXX','BUG ')
         ENDIF
-        IERROR='YES'
-        GOTO9000
-      ENDIF
-C
-      IHSET=IHARG(ILOCS2)
-      IHSET2=IHARG2(ILOCS2)
-C
-      IF(IHSET.EQ.'<   ')THEN
-        ICASOP='<   '
-        ILOCTG=ILOCS2
-      ELSEIF(IHSET.EQ.'<=  ' .OR. IHSET.EQ.'=<  ')THEN
-        ICASOP='<=  '
-        ILOCTG=ILOCS2
-      ELSEIF(IHSET.EQ.'=   ')THEN
-        ICASOP='=   '
-        ILOCTG=ILOCS2
-      ELSEIF(IHSET.EQ.'>=  ' .OR. IHSET.EQ.'=>  ')THEN
-        ICASOP='>=  '
-        ILOCTG=ILOCS2
-      ELSEIF(IHSET.EQ.'>   ')THEN
-        ICASOP='>   '
-        ILOCTG=ILOCS2
-      ELSEIF(IHSET.EQ.'<>  ' .OR. IHSET.EQ.'><  ' .OR.
-     1       IHSET.EQ.'NOT=')THEN
-        ICASOP='=   '
-        ILOCTG=ILOCS2
-      ELSE
-        ICASOP='=ASS'
-        ILOCTG=ILOCS2-1
-        GOTO590
-      ENDIF
-C
-  590 CONTINUE
-C
-      IF(IBUGQ.EQ.'ON')THEN
-        WRITE(ICOUT,591)IPASS,IHSET,IHSET2,ICASVA,ICASOP
-  591   FORMAT('IPASS,IHSET,IHSET2,ICASVA,ICASOP = ',
-     1         I8,4(2X,A4))
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
 C
 C               ********************************************************
 C               **  STEP 6--                                          **
@@ -500,138 +483,155 @@ C               **  DETERMINE THE UPPER LIMIT OF THE INTERVAL OF      **
 C               **  INTEREST.                                         **
 C               ********************************************************
 C
-  600 CONTINUE
+C       2021/07: CHECK WHETHER THIS ARGUMENT IS A VARIABLE NAME
 C
-      ISTEPN='6'
-      IF(IBUGQ.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+  600   CONTINUE
 C
-      IF(IBUGQ.EQ.'ON')THEN
-        WRITE(ICOUT,601)
-  601   FORMAT('     AT THE BEGINNING OF STEP 6 IN DPSUBS--')
-        CALL DPWRST('XXX','BUG ')
-        DO605I=1,NIOLD
-          WRITE(ICOUT,606)I,ISUB(I)
-  606     FORMAT('I,ISUB(I) = ',I8,I8)
+        ISTEPN='6'
+        IF(IBUGQ.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+        IF(IBUGQ.EQ.'ON')THEN
+          WRITE(ICOUT,601)
+  601     FORMAT('     AT THE BEGINNING OF STEP 6 IN DPSUBS--')
           CALL DPWRST('XXX','BUG ')
-  605   CONTINUE
-      ENDIF
-C
-      ILOCTG=ILOCTG+1
-      JMAX=ILOCTG
-      IF(ILOCTG.GT.NUMARG)THEN
-C
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,111)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,612)
-  612   FORMAT('      THE SUBSET/EXCEPT OPERATION   <   <=  =  >=  >')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,613)
-  613   FORMAT('      WAS THE FINAL WORD ON THE COMMAND LINE.')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,614)
-  614   FORMAT('      THE SUBSET/EXCEPT VARIABLE NAME SHOULD HAVE')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,615)
-  615   FORMAT('      BEEN FOLLOWED BY OTHER ARGUMENTS, AS IN')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,506)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,507)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,508)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,509)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,510)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,521)
-        CALL DPWRST('XXX','BUG ')
-        IF(IWIDTH.GE.1)THEN
-          WRITE(ICOUT,422)(IANS(I),I=1,MIN(IWIDTH,100))
-          CALL DPWRST('XXX','BUG ')
+          DO605I=1,NIOLD
+            WRITE(ICOUT,606)I,ISUB(I)
+  606       FORMAT('I,ISUB(I) = ',I8,I8)
+            CALL DPWRST('XXX','BUG ')
+  605     CONTINUE
         ENDIF
-        IERROR='YES'
-        GOTO9000
-      ENDIF
 C
-      IF(IARGT(ILOCTG).EQ.'NUMB')THEN
-        DMIN=ARG(ILOCTG)
-        DMAX=ARG(ILOCTG)
-        IF(ICASOP.EQ.'<   ')THEN
-          DMIN=CPUMIN
-          DMAX=ARG(ILOCTG)
-        ELSEIF(ICASOP.EQ.'<=  ')THEN
-          DMIN=CPUMIN
-          DMAX=ARG(ILOCTG)
-        ELSEIF(ICASOP.EQ.'>=  ')THEN
+        ILOCTG=ILOCTG+1
+        JMAX=ILOCTG
+        ICASV2='OFF '
+        IF(ILOCTG.GT.NUMARG)THEN
+C
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,111)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,612)
+  612     FORMAT('      THE SUBSET/EXCEPT OPERATION  < <=  =  >=  >')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,613)
+  613     FORMAT('      WAS THE FINAL WORD ON THE COMMAND LINE.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,614)
+  614     FORMAT('      THE SUBSET/EXCEPT VARIABLE NAME SHOULD HAVE')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,415)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,416)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,417)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,418)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,419)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,420)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,421)
+          CALL DPWRST('XXX','BUG ')
+          IF(IWIDTH.GE.1)THEN
+            WRITE(ICOUT,422)(IANS(I),I=1,MIN(IWIDTH,100))
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+C
+        IF(IARGT(ILOCTG).EQ.'NUMB')THEN
           DMIN=ARG(ILOCTG)
-          DMAX=CPUMAX
-        ELSEIF(ICASOP.EQ.'>   ')THEN
-          DMIN=ARG(ILOCTG)
-          DMAX=CPUMAX
-        ENDIF
-      ELSEIF(IARGT(ILOCTG).EQ.'WORD')THEN
-        IH=IHARG(ILOCTG)
-        IH2=IHARG2(ILOCTG)
-        IHWUSE='P'
-        MESSAG='YES'
-        CALL CHECKN(IH,IH2,IHWUSE,
-     1              IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
-     1              ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOC,IERROR)
-        IF(IERROR.EQ.'YES')GOTO9000
-        DMIN=VALUE(ILOC)
-        DMAX=VALUE(ILOC)
-        IF(ICASOP.EQ.'<   ')THEN
-          DMIN=CPUMIN
-          DMAX=VALUE(ILOC)
-        ELSEIF(ICASOP.EQ.'<=  ')THEN
-          DMIN=CPUMIN
-          DMAX=VALUE(ILOC)
-        ELSEIF(ICASOP.EQ.'>=  ')THEN
+          DMAX=ARG(ILOCTG)
+          IF(ICASOP.EQ.'<   ')THEN
+            DMIN=CPUMIN
+            DMAX=ARG(ILOCTG)
+          ELSEIF(ICASOP.EQ.'<=  ')THEN
+            DMIN=CPUMIN
+            DMAX=ARG(ILOCTG)
+          ELSEIF(ICASOP.EQ.'>=  ')THEN
+            DMIN=ARG(ILOCTG)
+            DMAX=CPUMAX
+          ELSEIF(ICASOP.EQ.'>   ')THEN
+            DMIN=ARG(ILOCTG)
+            DMAX=CPUMAX
+          ENDIF
+        ELSEIF(IARGT(ILOCTG).EQ.'WORD')THEN
+          IH=IHARG(ILOCTG)
+          IH2=IHARG2(ILOCTG)
+C
+          IHWUSE='V'
+          MESSAG='NO'
+          CALL CHECKN(IH,IH2,IHWUSE,
+     1                IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,
+     1                NUMNAM,MAXNAM,
+     1                ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOC,IERROR)
+          IF(IERROR.EQ.'NO')THEN
+            ISETV2=IVALUE(ILOC)
+            ICASV2='V'
+            GOTO899
+          ELSE
+            ICASV2='P'
+          ENDIF
+C
+          IHWUSE='P'
+          MESSAG='YES'
+          CALL CHECKN(IH,IH2,IHWUSE,
+     1                IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
+     1                ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOC,IERROR)
+          IF(IERROR.EQ.'YES')GOTO9000
           DMIN=VALUE(ILOC)
-          DMAX=CPUMAX
-        ELSEIF(ICASOP.EQ.'>   ')THEN
-          DMIN=VALUE(ILOC)
-          DMAX=CPUMAX
+          DMAX=VALUE(ILOC)
+          IF(ICASOP.EQ.'<   ')THEN
+            DMIN=CPUMIN
+            DMAX=VALUE(ILOC)
+          ELSEIF(ICASOP.EQ.'<=  ')THEN
+            DMIN=CPUMIN
+            DMAX=VALUE(ILOC)
+          ELSEIF(ICASOP.EQ.'>=  ')THEN
+            DMIN=VALUE(ILOC)
+            DMAX=CPUMAX
+          ELSEIF(ICASOP.EQ.'>   ')THEN
+            DMIN=VALUE(ILOC)
+            DMAX=CPUMAX
+          ENDIF
+        ELSE
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,111)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,632)
+  632     FORMAT('      AN ARGUMENT TYPE WHICH SHOULD BE ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,633)
+  633     FORMAT('      EITHER A NUMBER OR A WORD, IS NEITHER.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,634)IHARG(ILOCTG),IHARG2(ILOCTG)
+  634     FORMAT('      ARGUMENT                  = ',2A4)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,635)ILOCTG
+  635     FORMAT('      LOCATION IN ARGUMENT LIST = ',I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,636)IARGT(ILOCTG)
+  636     FORMAT('      ARGUMENT TYPE             = ',A4)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,421)
+          CALL DPWRST('XXX','BUG ')
+          IF(IWIDTH.GE.1)THEN
+            WRITE(ICOUT,422)(IANS(I),I=1,MIN(IWIDTH,100))
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          IERROR='YES'
+          GOTO9000
         ENDIF
-      ELSE
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,111)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,632)
-  632   FORMAT('      AN ARGUMENT TYPE WHICH SHOULD BE ')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,633)
-  633   FORMAT('      EITHER A NUMBER OR A WORD, IS NEITHER.')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,634)IHARG(ILOCTG),IHARG2(ILOCTG)
-  634   FORMAT('      ARGUMENT                  = ',2A4)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,635)ILOCTG
-  635   FORMAT('      LOCATION IN ARGUMENT LIST = ',I8)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,636)IARGT(ILOCTG)
-  636   FORMAT('      ARGUMENT TYPE             = ',A4)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,521)
-        CALL DPWRST('XXX','BUG ')
-        IF(IWIDTH.GE.1)THEN
-          WRITE(ICOUT,422)(IANS(I),I=1,MIN(IWIDTH,100))
+C
+        IF(IBUGQ.EQ.'ON')THEN
+          WRITE(ICOUT,691)IPASS,ICASVA,ICASOP,IH,IH2,DMIN,DMAX
+  691     FORMAT('IPASS,ICASVA,ICASOP,IH,IH2,DMIN,DMAX = ',
+     1           I8,4(2X,A4),2G15.7)
           CALL DPWRST('XXX','BUG ')
         ENDIF
-        IERROR='YES'
-        GOTO9000
-      ENDIF
-C
-      IF(IBUGQ.EQ.'ON')THEN
-        WRITE(ICOUT,691)IPASS,ICASVA,ICASOP,IH,IH2,DMIN,DMAX
-  691   FORMAT('IPASS,ICASVA,ICASOP,IH,IH2,DMIN,DMAX = ',
-     1         I8,4(2X,A4),2G15.7)
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
 C
 C               ********************************************************
 C               **  STEP 7--                                          **
@@ -656,135 +656,125 @@ C               **  AND SO THE UPPER LIMIT WILL BE IDENTICAL          **
 C               **  TO THE LOWER LIMIT.                               **
 C               ********************************************************
 C
-      ISTEPN='7'
-      IF(IBUGQ.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+        ISTEPN='7'
+        IF(IBUGQ.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-      IF(ICASOP.EQ.'<   ' .OR. ICASOP.EQ.'<=  ' .OR.
-     1   ICASOP.EQ.'>=  ' .OR. ICASOP.EQ.'>   ')THEN
-        ICASSC='SEAR'
-        GOTO790
-      ENDIF
+        IF(ICASOP.EQ.'<   ' .OR. ICASOP.EQ.'<=  ' .OR.
+     1     ICASOP.EQ.'>=  ' .OR. ICASOP.EQ.'>   ')THEN
+          ICASSC='SEAR'
+          GOTO790
+        ENDIF
 C
-      ILOCTG=ILOCTG+1
+        ILOCTG=ILOCTG+1
 C
-      IF(ILOCTG.GT.NUMARG)GOTO710
-      IF(ILOCTG.EQ.NUMARG.AND.IHARG(ILOCTG).EQ.'AND '.AND.
-     1IHARG2(ILOCTG).EQ.'    ')GOTO710
-      IF(ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'SUBS'.AND.
-     1IHARG2(ILOCTG).EQ.'ET  ')GOTO720
-      IF(ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'EXCE'.AND.
-     1IHARG2(ILOCTG).EQ.'PT  ')GOTO720
-      IF(ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'TO  '.AND.
-     1IHARG2(ILOCTG).EQ.'    ')GOTO750
-      GOTO730
+        IF(ILOCTG.GT.NUMARG .OR.
+     1    (ILOCTG.EQ.NUMARG.AND.IHARG(ILOCTG).EQ.'AND '.AND.
+     1     IHARG2(ILOCTG).EQ.'    '))THEN
+          ILOCTG=ILOCTG-1
+          JMAX=ILOCTG
+          ICASSC='STOP'
+          DMAX=DMIN
+          GOTO790
+        ELSEIF((ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'SUBS'.AND.
+     1          IHARG2(ILOCTG).EQ.'ET  ') .OR.
+     1         (ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'EXCE'.AND.
+     1          IHARG2(ILOCTG).EQ.'PT  '))THEN
+          ILOCTG=ILOCTG-1
+          JMAX=ILOCTG
+          ICASSC='SEAR'
+          DMAX=DMIN
+          GOTO790
+        ELSEIF(ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'TO  '.AND.
+     1         IHARG2(ILOCTG).EQ.'    ')THEN
+          ILOCTG=ILOCTG+1
+          JMAX=ILOCTG
+          IF(ILOCTG.GT.NUMARG)GOTO760
+          IF(ILOCTG.EQ.NUMARG.AND.IHARG(ILOCTG).EQ.'AND '.AND.
+     1       IHARG2(ILOCTG).EQ.'    ')GOTO760
+          IF(ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'SUBS'.AND.
+     1       IHARG2(ILOCTG).EQ.'ET  ')GOTO760
+          IF(ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'EXCE'.AND.
+     1       IHARG2(ILOCTG).EQ.'PT  ')GOTO760
+          IF(ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'TO  '.AND.
+     1       IHARG2(ILOCTG).EQ.'    ')GOTO760
+          GOTO770
+        ELSE
+          ILOCTG=ILOCTG-1
+          JMAX=ILOCTG
+          ICASSC='CONT'
+          DMAX=DMIN
+          GOTO790
+        ENDIF
 C
-  710 CONTINUE
-      ILOCTG=ILOCTG-1
-      JMAX=ILOCTG
-      ICASSC='STOP'
-      DMAX=DMIN
-      GOTO790
-C
-  720 CONTINUE
-      ILOCTG=ILOCTG-1
-      JMAX=ILOCTG
-      ICASSC='SEAR'
-      DMAX=DMIN
-      GOTO790
-C
-  730 CONTINUE
-      ILOCTG=ILOCTG-1
-      JMAX=ILOCTG
-      ICASSC='CONT'
-      DMAX=DMIN
-      GOTO790
-C
-  750 CONTINUE
-      ILOCTG=ILOCTG+1
-      JMAX=ILOCTG
-      IF(ILOCTG.GT.NUMARG)GOTO760
-      IF(ILOCTG.EQ.NUMARG.AND.IHARG(ILOCTG).EQ.'AND '.AND.
-     1IHARG2(ILOCTG).EQ.'    ')GOTO760
-      IF(ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'SUBS'.AND.
-     1IHARG2(ILOCTG).EQ.'ET  ')GOTO760
-      IF(ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'EXCE'.AND.
-     1IHARG2(ILOCTG).EQ.'PT  ')GOTO760
-      IF(ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'TO  '.AND.
-     1IHARG2(ILOCTG).EQ.'    ')GOTO760
-      GOTO770
-C
-  760 CONTINUE
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,111)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,762)
-  762 FORMAT('      THE WORD    TO    SHOULD HAVE')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,763)
-  763 FORMAT('      BEEN FOLLOWED BY A NUMBER OR')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,764)
-  764 FORMAT('      BY A PARAMETER NAME, BUT WAS NOT.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,765)IHARG(ILOCTG),IHARG2(ILOCTG)
-  765 FORMAT('      TO    WAS FOLLOWED BY THE WORD   ',A4,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,521)
-      CALL DPWRST('XXX','BUG ')
-      IF(IWIDTH.GE.1)THEN
-        WRITE(ICOUT,422)(IANS(I),I=1,MIN(IWIDTH,100))
+  760   CONTINUE
+        WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
-      ENDIF
-      IERROR='YES'
-      GOTO9000
-C
-  770 CONTINUE
-      IF(IARGT(ILOCTG).EQ.'NUMB')THEN
-        DMAX=ARG(ILOCTG)
-      ELSEIF(IARGT(ILOCTG).EQ.'WORD')THEN
-        IH=IHARG(ILOCTG)
-        IH2=IHARG2(ILOCTG)
-        IHWUSE='P'
-        MESSAG='YES'
-        CALL CHECKN(IH,IH2,IHWUSE,
-     1              IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
-     1              ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOC,IERROR)
-        IF(IERROR.EQ.'YES')GOTO9000
-        DMAX=VALUE(ILOC)
-      ELSE
-        IBRAN=770
-        WRITE(ICOUT,771)IBRAN
-  771   FORMAT('***** INTERNAL ERROR IN DPSUBS--',
-     1         'IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = ',I8)
+        WRITE(ICOUT,111)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,772)ILOCTG,IARGT(ILOCTG)
-  772   FORMAT('ILOCTG, IARGT(ILOCTG) = ',I8,2X,A4)
+        WRITE(ICOUT,762)
+  762   FORMAT('      THE WORD    TO    SHOULD HAVE BEEN FOLLOWED BY A')
         CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,764)
+  764   FORMAT('      NUMBER OR BY A PARAMETER NAME, BUT WAS NOT.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,765)IHARG(ILOCTG),IHARG2(ILOCTG)
+  765   FORMAT('      TO    WAS FOLLOWED BY THE WORD   ',2A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,421)
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,422)(IANS(I),I=1,MIN(IWIDTH,100))
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
         IERROR='YES'
         GOTO9000
-      ENDIF
 C
-      ILOCTG=ILOCTG+1
-      ICASSC='CONT'
-      IF(ILOCTG.GT.NUMARG)ICASSC='STOP'
-      IF(ILOCTG.EQ.NUMARG.AND.IHARG(ILOCTG).EQ.'AND '.AND.
-     1IHARG2(ILOCTG).EQ.'    ')ICASSC='STOP'
-      IF(ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'SUBS'.AND.
-     1IHARG2(ILOCTG).EQ.'ET  ')ICASSC='SEAR'
-      IF(ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'EXCE'.AND.
-     1IHARG2(ILOCTG).EQ.'PT  ')ICASSC='SEAR'
-      ILOCTG=ILOCTG-1
-      JMAX=ILOCTG
+  770   CONTINUE
+        IF(IARGT(ILOCTG).EQ.'NUMB')THEN
+          DMAX=ARG(ILOCTG)
+        ELSEIF(IARGT(ILOCTG).EQ.'WORD')THEN
+          IH=IHARG(ILOCTG)
+          IH2=IHARG2(ILOCTG)
+          IHWUSE='P'
+          MESSAG='YES'
+          CALL CHECKN(IH,IH2,IHWUSE,
+     1                IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
+     1                ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOC,IERROR)
+          IF(IERROR.EQ.'YES')GOTO9000
+          DMAX=VALUE(ILOC)
+        ELSE
+          IBRAN=770
+          WRITE(ICOUT,771)IBRAN
+  771     FORMAT('***** INTERNAL ERROR IN DPSUBS--',
+     1           'IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = ',I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,772)ILOCTG,IARGT(ILOCTG)
+  772     FORMAT('ILOCTG, IARGT(ILOCTG) = ',I8,2X,A4)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
 C
-  790 CONTINUE
+        ILOCTG=ILOCTG+1
+        ICASSC='CONT'
+        IF(ILOCTG.GT.NUMARG)ICASSC='STOP'
+        IF(ILOCTG.EQ.NUMARG.AND.IHARG(ILOCTG).EQ.'AND '.AND.
+     1     IHARG2(ILOCTG).EQ.'    ')ICASSC='STOP'
+        IF(ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'SUBS'.AND.
+     1     IHARG2(ILOCTG).EQ.'ET  ')ICASSC='SEAR'
+        IF(ILOCTG.LE.NUMARG.AND.IHARG(ILOCTG).EQ.'EXCE'.AND.
+     1     IHARG2(ILOCTG).EQ.'PT  ')ICASSC='SEAR'
+        ILOCTG=ILOCTG-1
+        JMAX=ILOCTG
 C
-      IF(IBUGQ.EQ.'ON')THEN
-        WRITE(ICOUT,791)IPASS,ICASVA,ICASOP,IH,IH2,DMIN,DMAX
-  791   FORMAT('IPASS,ICASVA,ICASOP,IH,IH2,DMIN,DMAX = ',
-     1         I8,4(2X,A4),2G15.7)
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
+  790   CONTINUE
+C
+        IF(IBUGQ.EQ.'ON')THEN
+          WRITE(ICOUT,791)IPASS,ICASVA,ICASOP,IH,IH2,DMIN,DMAX
+  791     FORMAT('IPASS,ICASVA,ICASOP,IH,IH2,DMIN,DMAX = ',
+     1           I8,4(2X,A4),2G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
 C
 C               ***************************************************
 C               **  STEP 8--                                     **
@@ -794,280 +784,366 @@ C               **  JUDICIOUSLY EXPAND THE INTERVAL OF INTEREST  **
 C               **  BY AN    EPSILON    AMOUNT.                  **
 C               ***************************************************
 C
-      ISTEPN='8'
+        ISTEPN='8'
 C
-      IF(IBUGQ.EQ.'ON')THEN
-        CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-        WRITE(ICOUT,801)
-  801   FORMAT('      AT THE BEGINNING OF STEP 8--')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,802)DMIN,DMAX
-  802   FORMAT('DMIN,DMAX = ',2E15.7)
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
+        IF(IBUGQ.EQ.'ON')THEN
+          CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+          WRITE(ICOUT,801)
+  801     FORMAT('      AT THE BEGINNING OF STEP 8--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,802)DMIN,DMAX
+  802     FORMAT('DMIN,DMAX = ',2G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
 C
-      IF(DMIN.LE.DMAX)GOTO809
-      HOLD=DMIN
-      DMIN=DMAX
-      DMAX=HOLD
-  809 CONTINUE
+        IF(DMIN.GT.DMAX)THEN
+          HOLD=DMIN
+          DMIN=DMAX
+          DMAX=HOLD
+        ENDIF
 C
-      IF(DMIN.EQ.CPUMIN)GOTO819
-      IF(DMIN.EQ.CPUMAX)GOTO819
-      IF(ABS(DMIN).EQ.0.0)EPS=0.000001
-      IF(ABS(DMIN).NE.0.0)EPS=ABS(DMIN*0.000001)
-      IF(ICASOP.EQ.'=   ')DMIN=DMIN-EPS
-      IF(ICASOP.EQ.'=ASS')DMIN=DMIN-EPS
-      IF(ICASOP.EQ.'<   ')DMIN=DMIN-EPS
-      IF(ICASOP.EQ.'<=  ')DMIN=DMIN-EPS
-      IF(ICASOP.EQ.'>=  ')DMIN=DMIN-EPS
-      IF(ICASOP.EQ.'>   ')DMIN=DMIN+EPS
-  819 CONTINUE
+        IF(DMIN.EQ.CPUMIN)GOTO819
+        IF(DMIN.EQ.CPUMAX)GOTO819
+        IF(ABS(DMIN).EQ.0.0)EPS=0.000001
+        IF(ABS(DMIN).NE.0.0)EPS=ABS(DMIN*0.000001)
+        IF(ICASOP.EQ.'=   ')DMIN=DMIN-EPS
+        IF(ICASOP.EQ.'=ASS')DMIN=DMIN-EPS
+        IF(ICASOP.EQ.'<   ')DMIN=DMIN-EPS
+        IF(ICASOP.EQ.'<=  ')DMIN=DMIN-EPS
+        IF(ICASOP.EQ.'>=  ')DMIN=DMIN-EPS
+        IF(ICASOP.EQ.'>   ')DMIN=DMIN+EPS
+  819   CONTINUE
 C
-      IF(DMAX.EQ.CPUMAX)GOTO829
-      IF(DMAX.EQ.CPUMIN)GOTO829
-      IF(ABS(DMAX).EQ.0.0)EPS=0.000001
-      IF(ABS(DMAX).NE.0.0)EPS=ABS(DMAX*0.000001)
-      IF(ICASOP.EQ.'=   ')DMAX=DMAX+EPS
-      IF(ICASOP.EQ.'=ASS')DMAX=DMAX+EPS
-      IF(ICASOP.EQ.'<   ')DMAX=DMAX-EPS
-      IF(ICASOP.EQ.'<=  ')DMAX=DMAX+EPS
-      IF(ICASOP.EQ.'>=  ')DMAX=DMAX+EPS
-      IF(ICASOP.EQ.'>   ')DMAX=DMAX+EPS
-  829 CONTINUE
+        IF(DMAX.EQ.CPUMAX)GOTO829
+        IF(DMAX.EQ.CPUMIN)GOTO829
+        IF(ABS(DMAX).EQ.0.0)EPS=0.000001
+        IF(ABS(DMAX).NE.0.0)EPS=ABS(DMAX*0.000001)
+        IF(ICASOP.EQ.'=   ')DMAX=DMAX+EPS
+        IF(ICASOP.EQ.'=ASS')DMAX=DMAX+EPS
+        IF(ICASOP.EQ.'<   ')DMAX=DMAX-EPS
+        IF(ICASOP.EQ.'<=  ')DMAX=DMAX+EPS
+        IF(ICASOP.EQ.'>=  ')DMAX=DMAX+EPS
+        IF(ICASOP.EQ.'>   ')DMAX=DMAX+EPS
+  829   CONTINUE
 C
-      IF(IBUGQ.EQ.'ON')THEN
-        WRITE(ICOUT,891)IPASS,ICASVA,ICASOP,IH,IH2
-  891   FORMAT('IPASS,ICASVA,ICASOP,IH,IH2 = ',I8,4(2X,A4))
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,892)EPS,DMIN,DMAX,CPUMIN,CPUMAX
-  892   FORMAT('EPS,DMIN,DMAX,CPUMIN,CPUMAX = ',5E15.7)
-        CALL DPWRST('XXX','BUG ')
-      ENDIF
+        IF(IBUGQ.EQ.'ON')THEN
+          WRITE(ICOUT,891)IPASS,ICASVA,ICASOP,IH,IH2
+  891     FORMAT('IPASS,ICASVA,ICASOP,IH,IH2 = ',I8,4(2X,A4))
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,892)EPS,DMIN,DMAX,CPUMIN,CPUMAX
+  892     FORMAT('EPS,DMIN,DMAX,CPUMIN,CPUMAX = ',5E15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
 C
-C               ****************************************************
-C               **  STEP 9--                                      **
-C               **  DEFINE THE ISUB(.) VECTOR--                   **
-C               **  FOR ANY K (K = 1 TO NIOLD),                  **
-C               **  IF THE K-TH ELEMENT OF THE                    **
-C               **  SUBSET SPECIFICATION VARIABLE                 **
-C               **  (THE VARIABLE SPECIFIED AFTER    SUBSET   **
-C               **  IN THE COMMAND LINE)                          **
-C               **  IS WITHIN THE SPECIFIED (DMIN,DMAX) LIMITS,   **
-C               **  THEN ISUB(K) SHOULD RESULT IN A VALUE OF 1;   **
-C               **  BUT IF THE K-TH ELEMENT OF THE                **
-C               **  SUBSET SPECIFICATION VARIABLE                 **
-C               **  IS OUTSIDE THE SPECIFIED (DMIN,DMAX) LIMITS,  **
-C               **  THEN ISUB(K) SHOULD RESULT IN A 0 .           **
-C               ****************************************************
+  899   CONTINUE
 C
-      ISTEPN='9'
-      IF(IBUGQ.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C               *****************************************************
+C               **  STEP 9--                                       **
+C               **  DEFINE THE ISUB(.) VECTOR--                    **
+C               **  FOR ANY K (K = 1 TO NIOLD), IF THE K-TH        **
+C               **  ELEMENT OF THE SUBSET SPECIFICATION VARIABLE   **
+C               **  (THE VARIABLE SPECIFIED AFTER    SUBSET        **
+C               **  IN THE COMMAND LINE) IS WITHIN THE SPECIFIED   **
+C               **  (DMIN,DMAX) LIMITS, THEN ISUB(K) SHOULD RESULT **
+C               **  IN A VALUE OF 1; BUT IF THE K-TH ELEMENT OF    **
+C               **  THE SUBSET SPECIFICATION VARIABLE IS OUTSIDE   **
+C               **  THE SPECIFIED (DMIN,DMAX) LIMITS, THEN ISUB(K) **
+C               **  SHOULD RESULT IN A 0 .                         **
+C               *****************************************************
 C
-      IF(IBUGQ.EQ.'ON')WRITE(ICOUT,901)ILOCS1,IHSET,IHSET2,ICASVA,ISETV,
-     1MAXCOL
-  901 FORMAT('ILOCS1,IHSET,IHSET2,ICASVA,ISETV,MAXCOL = ',
-     1I8,2X,A4,2X,A4,2X,A4,I8,I8)
-      IF(IBUGQ.EQ.'ON')CALL DPWRST('XXX','BUG ')
+        ISTEPN='9'
+        IF(IBUGQ.EQ.'ON')THEN
+          CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+          WRITE(ICOUT,901)ILOCS1,IHSET,IHSET2,ICASVA,ISETV,MAXCOL
+  901     FORMAT('ILOCS1,IHSET,IHSET2,ICASVA,ISETV,MAXCOL = ',
+     1           I8,3(2X,A4),2I8)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
 C
-      IF(ICASVA.EQ.'UNKN')GOTO910
-      IF(ICASVA.EQ.'I   ')GOTO930
-      IF(ISETV.LE.MAXCOL)GOTO940
-      IF(ISETV.EQ.MAXCP1)GOTO950
-CCCCC IF(ISETV.EQ.MAXCP2)GOTO960
-      IF(ISETV.EQ.MAXCP2)GOTO950
-      IF(ISETV.EQ.MAXCP3)GOTO950
-      IF(ISETV.EQ.MAXCP4)GOTO950
-      IF(ISETV.EQ.MAXCP5)GOTO950
-      IF(ISETV.EQ.MAXCP6)GOTO950
+        IF(ICASVA.EQ.'UNKN')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,911)
+  911     FORMAT('***** INTERNAL ERROR IN DPSUBS--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,912)
+  912     FORMAT('      IMPROPER VALUE FOR ICASVA AND/OR ISETV')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,913)ICASVA,ISETV,MAXCOL,MAXCP1,MAXCP2
+  913     FORMAT('      ICASVA,ISETV,MAXCOL,MAXCP1,MAXCP2 = ',A4,4I8)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ELSEIF(ICASVA.EQ.'I   ')THEN
+          NS=0
+          ND=0
+          DO931I=1,NIOLD
+            TARGET=I
 C
-  910 CONTINUE
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,911)
-  911 FORMAT('***** INTERNAL ERROR IN DPSUBS--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,912)
-  912 FORMAT('      IMPROPER VALUE FOR ICASVA AND/OR ISETV')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,913)ICASVA,ISETV,MAXCOL,MAXCP1,MAXCP2
-  913 FORMAT('      ICASVA,ISETV,MAXCOL,MAXCP1,MAXCP2 = ',A4,4I8)
-      CALL DPWRST('XXX','BUG ')
-      IERROR='YES'
-      GOTO9000
+            IF(ICASV2.EQ.'V')THEN
+              IJZ=MAXN*(ISETV2-1)+I
+              AVAL=V(IJZ)
+              DMIN=V(IJZ)
+              DMAX=V(IJZ)
+              IF(ICASOP.EQ.'<   ')THEN
+                 DMIN=CPUMIN
+                 DMAX=AVAL
+              ELSEIF(ICASOP.EQ.'<=  ')THEN
+                 DMIN=CPUMIN
+                 DMAX=AVAL
+              ELSEIF(ICASOP.EQ.'>=  ')THEN
+                 DMIN=AVAL
+                 DMAX=CPUMAX
+              ELSEIF(ICASOP.EQ.'>   ')THEN
+                 DMIN=AVAL
+                 DMAX=CPUMAX
+              ENDIF
+              IF(ABS(DMIN).EQ.0.0)EPS=0.000001
+              IF(ABS(DMIN).NE.0.0)EPS=ABS(DMIN*0.000001)
+              IF(DMIN.NE.CPUMIN .AND. DMIN.EQ.CPUMAX)THEN
+                IF(ICASOP.EQ.'=   ')DMIN=DMIN-EPS
+                IF(ICASOP.EQ.'=ASS')DMIN=DMIN-EPS
+                IF(ICASOP.EQ.'<   ')DMIN=DMIN-EPS
+                IF(ICASOP.EQ.'<=  ')DMIN=DMIN-EPS
+                IF(ICASOP.EQ.'>=  ')DMIN=DMIN-EPS
+                IF(ICASOP.EQ.'>   ')DMIN=DMIN+EPS
+              ENDIF
+              IF(ABS(DMAX).EQ.0.0)EPS=0.000001
+              IF(ABS(DMAX).NE.0.0)EPS=ABS(DMAX*0.000001)
+              IF(DMAX.NE.CPUMAX .AND. DMAX.NE.CPUMIN)THEN
+                IF(ICASOP.EQ.'=   ')DMAX=DMAX+EPS
+                IF(ICASOP.EQ.'=ASS')DMAX=DMAX+EPS
+                IF(ICASOP.EQ.'<   ')DMAX=DMAX-EPS
+                IF(ICASOP.EQ.'<=  ')DMAX=DMAX+EPS
+                IF(ICASOP.EQ.'>=  ')DMAX=DMAX+EPS
+                IF(ICASOP.EQ.'>   ')DMAX=DMAX+EPS
+              ENDIF
 C
-  930 CONTINUE
-      NS=0
-      ND=0
-      DO931I=1,NIOLD
-      TARGET=I
-      IF(ICASQU.EQ.'SUBS'.AND.DMIN.LE.TARGET.AND.TARGET.LE.DMAX)
-     1GOTO932
-      IF(ICASQU.EQ.'SUBS')GOTO933
-      IF(ICASQU.EQ.'EXCE'.AND.DMIN.LE.TARGET.AND.TARGET.LE.DMAX)
-     1GOTO934
-      IF(ICASQU.EQ.'EXCE')GOTO935
-      GOTO931
-  932 CONTINUE
-      ITEMP=ISUB(I)
-      IF(ITEMP.EQ.00)ISUB(I)=10
-      IF(ITEMP.EQ.10)ISUB(I)=10
-      IF(ITEMP.EQ.01)ISUB(I)=11
-      IF(ITEMP.EQ.11)ISUB(I)=11
-      NS=NS+1
-      GOTO931
-  933 CONTINUE
-      ND=ND+1
-      GOTO931
-  934 CONTINUE
-      ITEMP=ISUB(I)
-      IF(ITEMP.EQ.00)ISUB(I)=00
-      IF(ITEMP.EQ.10)ISUB(I)=00
-      IF(ITEMP.EQ.01)ISUB(I)=01
-      IF(ITEMP.EQ.11)ISUB(I)=01
-      ND=ND+1
-      GOTO931
-  935 CONTINUE
-      NS=NS+1
-      GOTO931
-  931 CONTINUE
-      GOTO990
+              IF(IBUGQ.EQ.'ON')THEN
+                WRITE(ICOUT,939)I,ISETV2,DMIN,DMAX,AVAL
+  939           FORMAT('AT 939: I,ISETV2,DMIN,DMAX,AVAL = ',2I8,3G15.7)
+                CALL DPWRST('XXX','BUG ')
+              ENDIF
 C
-  940 CONTINUE
-      NS=0
-      ND=0
-      DO941I=1,NIOLD
-      IJ=MAXN*(ISETV-1)+I
-      VIJ=V(IJ)
-      IF(IBUGQ.EQ.'ON')WRITE(9,947)I,NIOLD,ISETV,DMIN,DMAX,VIJ
-  947 FORMAT('I,NIOLD,ISETV,DMIN,DMAX,VIJ = ',
-     13I8,3E12.4)
-      TARGET=VIJ
-      IF(ICASQU.EQ.'SUBS'.AND.DMIN.LE.TARGET.AND.TARGET.LE.DMAX)
-     1GOTO942
-      IF(ICASQU.EQ.'SUBS')GOTO943
-      IF(ICASQU.EQ.'EXCE'.AND.DMIN.LE.TARGET.AND.TARGET.LE.DMAX)
-     1GOTO944
-      IF(ICASQU.EQ.'EXCE')GOTO945
-      GOTO941
-  942 CONTINUE
-      ITEMP=ISUB(I)
-      IF(ITEMP.EQ.00)ISUB(I)=10
-      IF(ITEMP.EQ.10)ISUB(I)=10
-      IF(ITEMP.EQ.01)ISUB(I)=11
-      IF(ITEMP.EQ.11)ISUB(I)=11
-      NS=NS+1
-      GOTO941
-  943 CONTINUE
-      ND=ND+1
-      GOTO941
-  944 CONTINUE
-      ITEMP=ISUB(I)
-      IF(ITEMP.EQ.00)ISUB(I)=00
-      IF(ITEMP.EQ.10)ISUB(I)=00
-      IF(ITEMP.EQ.01)ISUB(I)=01
-      IF(ITEMP.EQ.11)ISUB(I)=01
-      ND=ND+1
-      GOTO941
-  945 CONTINUE
-      NS=NS+1
-      GOTO941
-  941 CONTINUE
-      GOTO990
+            ENDIF
 C
-  950 CONTINUE
-      NS=0
-      ND=0
-      DO951I=1,NIOLD
-CCCCC TARGET=PRED(I)
-      IF(ISETV.EQ.MAXCP1)TARGET=PRED(I)
-      IF(ISETV.EQ.MAXCP2)TARGET=RES(I)
-      IF(ISETV.EQ.MAXCP3)TARGET=YPLOT(I)
-      IF(ISETV.EQ.MAXCP4)TARGET=XPLOT(I)
-      IF(ISETV.EQ.MAXCP5)TARGET=X2PLOT(I)
-      IF(ISETV.EQ.MAXCP6)TARGET=TAGPLO(I)
-      IF(ICASQU.EQ.'SUBS'.AND.DMIN.LE.TARGET.AND.TARGET.LE.DMAX)
-     1GOTO952
-      IF(ICASQU.EQ.'SUBS')GOTO953
-      IF(ICASQU.EQ.'EXCE'.AND.DMIN.LE.TARGET.AND.TARGET.LE.DMAX)
-     1GOTO954
-      IF(ICASQU.EQ.'EXCE')GOTO955
-      GOTO951
-  952 CONTINUE
-      ITEMP=ISUB(I)
-      IF(ITEMP.EQ.00)ISUB(I)=10
-      IF(ITEMP.EQ.10)ISUB(I)=10
-      IF(ITEMP.EQ.01)ISUB(I)=11
-      IF(ITEMP.EQ.11)ISUB(I)=11
-      NS=NS+1
-      GOTO951
-  953 CONTINUE
-      ND=ND+1
-      GOTO951
-  954 CONTINUE
-      ITEMP=ISUB(I)
-      IF(ITEMP.EQ.00)ISUB(I)=00
-      IF(ITEMP.EQ.10)ISUB(I)=00
-      IF(ITEMP.EQ.01)ISUB(I)=01
-      IF(ITEMP.EQ.11)ISUB(I)=01
-      ND=ND+1
-      GOTO951
-  955 CONTINUE
-      NS=NS+1
-      GOTO951
-  951 CONTINUE
-      GOTO990
+            IF(ICASQU.EQ.'SUBS'.AND.DMIN.LE.TARGET.AND.
+     1         TARGET.LE.DMAX)THEN
+              ITEMP=ISUB(I)
+              IF(ITEMP.EQ.00)ISUB(I)=10
+              IF(ITEMP.EQ.10)ISUB(I)=10
+              IF(ITEMP.EQ.01)ISUB(I)=11
+              IF(ITEMP.EQ.11)ISUB(I)=11
+              NS=NS+1
+            ELSEIF(ICASQU.EQ.'SUBS')THEN
+              ND=ND+1
+            ELSEIF(ICASQU.EQ.'EXCE'.AND.DMIN.LE.TARGET.AND.
+     1             TARGET.LE.DMAX)THEN
+              ITEMP=ISUB(I)
+              IF(ITEMP.EQ.00)ISUB(I)=00
+              IF(ITEMP.EQ.10)ISUB(I)=00
+              IF(ITEMP.EQ.01)ISUB(I)=01
+              IF(ITEMP.EQ.11)ISUB(I)=01
+              ND=ND+1
+            ELSEIF(ICASQU.EQ.'EXCE')THEN
+              NS=NS+1
+            ENDIF
+  931     CONTINUE
+          GOTO990
+        ELSEIF(ISETV.LE.MAXCOL)THEN
+          NS=0
+          ND=0
+          DO941I=1,NIOLD
+            IJ=MAXN*(ISETV-1)+I
+            VIJ=V(IJ)
 C
-CC960 CONTINUE
-CCCCC NS=0
-CCCCC ND=0
-CCCCC DO961I=1,NIOLD
-CCCCC TARGET=RES(I)
-CCCCC IF(ICASQU.EQ.'SUBS'.AND.DMIN.LE.TARGET.AND.TARGET.LE.DMAX)
-CCCCC1GOTO962
-CCCCC IF(ICASQU.EQ.'SUBS')GOTO963
-CCCCC IF(ICASQU.EQ.'EXCE'.AND.DMIN.LE.TARGET.AND.TARGET.LE.DMAX)
-CCCCC1GOTO964
-CCCCC IF(ICASQU.EQ.'EXCE')GOTO965
-CCCCC GOTO961
-CC962 CONTINUE
-CCCCC ITEMP=ISUB(I)
-CCCCC IF(ITEMP.EQ.00)ISUB(I)=10
-CCCCC IF(ITEMP.EQ.10)ISUB(I)=10
-CCCCC IF(ITEMP.EQ.01)ISUB(I)=11
-CCCCC IF(ITEMP.EQ.11)ISUB(I)=11
-CCCCC NS=NS+1
-CCCCC GOTO961
-CC963 CONTINUE
-CCCCC ND=ND+1
-CCCCC GOTO961
-CC964 CONTINUE
-CCCCC ITEMP=ISUB(I)
-CCCCC IF(ITEMP.EQ.00)ISUB(I)=00
-CCCCC IF(ITEMP.EQ.10)ISUB(I)=00
-CCCCC IF(ITEMP.EQ.01)ISUB(I)=01
-CCCCC IF(ITEMP.EQ.11)ISUB(I)=01
-CCCCC ND=ND+1
-CCCCC GOTO961
-CC965 CONTINUE
-CCCCC NS=NS+1
-CCCCC GOTO961
-CC961 CONTINUE
-CCCCC GOTO990
+            IF(ICASV2.EQ.'V')THEN
+              IJZ=MAXN*(ISETV2-1)+I
+              AVAL=V(IJZ)
+              DMIN=V(IJZ)
+              DMAX=V(IJZ)
+              IF(ICASOP.EQ.'<   ')THEN
+                 DMIN=CPUMIN
+                 DMAX=AVAL
+              ELSEIF(ICASOP.EQ.'<=  ')THEN
+                 DMIN=CPUMIN
+                 DMAX=AVAL
+              ELSEIF(ICASOP.EQ.'>=  ')THEN
+                 DMIN=AVAL
+                 DMAX=CPUMAX
+              ELSEIF(ICASOP.EQ.'>   ')THEN
+                 DMIN=AVAL
+                 DMAX=CPUMAX
+              ENDIF
+              IF(ABS(DMIN).EQ.0.0)EPS=0.000001
+              IF(ABS(DMIN).NE.0.0)EPS=ABS(DMIN*0.000001)
+              IF(DMIN.NE.CPUMIN .AND. DMIN.EQ.CPUMAX)THEN
+                IF(ICASOP.EQ.'=   ')DMIN=DMIN-EPS
+                IF(ICASOP.EQ.'=ASS')DMIN=DMIN-EPS
+                IF(ICASOP.EQ.'<   ')DMIN=DMIN-EPS
+                IF(ICASOP.EQ.'<=  ')DMIN=DMIN-EPS
+                IF(ICASOP.EQ.'>=  ')DMIN=DMIN-EPS
+                IF(ICASOP.EQ.'>   ')DMIN=DMIN+EPS
+              ENDIF
+              IF(ABS(DMAX).EQ.0.0)EPS=0.000001
+              IF(ABS(DMAX).NE.0.0)EPS=ABS(DMAX*0.000001)
+              IF(DMAX.NE.CPUMAX .AND. DMAX.NE.CPUMIN)THEN
+                IF(ICASOP.EQ.'=   ')DMAX=DMAX+EPS
+                IF(ICASOP.EQ.'=ASS')DMAX=DMAX+EPS
+                IF(ICASOP.EQ.'<   ')DMAX=DMAX-EPS
+                IF(ICASOP.EQ.'<=  ')DMAX=DMAX+EPS
+                IF(ICASOP.EQ.'>=  ')DMAX=DMAX+EPS
+                IF(ICASOP.EQ.'>   ')DMAX=DMAX+EPS
+              ENDIF
 C
-  990 CONTINUE
-      IF(IBUGQ.EQ.'ON')WRITE(ICOUT,991)IPASS,ICASQU,DMIN,DMAX,EPS,
-     1NIOLD,NS,ND
-  991 FORMAT('IPASS,ICASQU,DMIN,DMAX,EPS,NIOLD,NS,ND = ',
-     1I8,2X,A4,3E15.7,3I8)
-      IF(IBUGQ.EQ.'ON')CALL DPWRST('XXX','BUG ')
-      IF(IBUGQ.EQ.'OFF')GOTO994
-      DO992I=1,NIOLD
-      WRITE(ICOUT,993)I,ISUB(I)
-  993 FORMAT('I,ISUB(I) = ',I8,I8)
-      CALL DPWRST('XXX','BUG ')
-  992 CONTINUE
-  994 CONTINUE
+              IF(IBUGQ.EQ.'ON')THEN
+                WRITE(ICOUT,949)I,ISETV2,DMIN,DMAX,AVAL
+  949           FORMAT('AT 949: I,ISETV2,DMIN,DMAX,AVAL = ',2I8,3G15.7)
+                CALL DPWRST('XXX','BUG ')
+              ENDIF
+C
+            ENDIF
+C
+            IF(IBUGQ.EQ.'ON')THEN
+              WRITE(ICOUT,947)I,NIOLD,ISETV,DMIN,DMAX,VIJ
+  947         FORMAT('I,NIOLD,ISETV,DMIN,DMAX,VIJ = ',3I8,3E12.4)
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+C
+            TARGET=VIJ
+            IF(ICASQU.EQ.'SUBS'.AND.DMIN.LE.TARGET.AND.
+     1         TARGET.LE.DMAX)THEN
+              ITEMP=ISUB(I)
+              IF(ITEMP.EQ.00)ISUB(I)=10
+              IF(ITEMP.EQ.10)ISUB(I)=10
+              IF(ITEMP.EQ.01)ISUB(I)=11
+              IF(ITEMP.EQ.11)ISUB(I)=11
+              NS=NS+1
+              GOTO941
+            ELSEIF(ICASQU.EQ.'SUBS')THEN
+              ND=ND+1
+              GOTO941
+            ELSEIF(ICASQU.EQ.'EXCE'.AND.DMIN.LE.TARGET.AND.
+     1             TARGET.LE.DMAX)THEN
+              ITEMP=ISUB(I)
+              IF(ITEMP.EQ.00)ISUB(I)=00
+              IF(ITEMP.EQ.10)ISUB(I)=00
+              IF(ITEMP.EQ.01)ISUB(I)=01
+              IF(ITEMP.EQ.11)ISUB(I)=01
+              ND=ND+1
+              GOTO941
+            ELSEIF(ICASQU.EQ.'EXCE')THEN
+              NS=NS+1
+              GOTO941
+            ELSE
+              GOTO941
+            ENDIF
+  941     CONTINUE
+          GOTO990
+        ELSEIF(ISETV.EQ.MAXCP1 .OR. ISETV.EQ.MAXCP2 .OR.
+     1         ISETV.EQ.MAXCP3 .OR. ISETV.EQ.MAXCP4 .OR.
+     1         ISETV.EQ.MAXCP5 .OR. ISETV.EQ.MAXCP6)THEN
+          NS=0
+          ND=0
+          DO951I=1,NIOLD
+C
+            IF(ICASV2.EQ.'V')THEN
+              IJZ=MAXN*(ISETV2-1)+I
+              AVAL=V(IJZ)
+              DMIN=V(IJZ)
+              DMAX=V(IJZ)
+              IF(ICASOP.EQ.'<   ')THEN
+                 DMIN=CPUMIN
+                 DMAX=AVAL
+              ELSEIF(ICASOP.EQ.'<=  ')THEN
+                 DMIN=CPUMIN
+                 DMAX=AVAL
+              ELSEIF(ICASOP.EQ.'>=  ')THEN
+                 DMIN=AVAL
+                 DMAX=CPUMAX
+              ELSEIF(ICASOP.EQ.'>   ')THEN
+                 DMIN=AVAL
+                 DMAX=CPUMAX
+              ENDIF
+              IF(ABS(DMIN).EQ.0.0)EPS=0.000001
+              IF(ABS(DMIN).NE.0.0)EPS=ABS(DMIN*0.000001)
+              IF(DMIN.NE.CPUMIN .AND. DMIN.EQ.CPUMAX)THEN
+                IF(ICASOP.EQ.'=   ')DMIN=DMIN-EPS
+                IF(ICASOP.EQ.'=ASS')DMIN=DMIN-EPS
+                IF(ICASOP.EQ.'<   ')DMIN=DMIN-EPS
+                IF(ICASOP.EQ.'<=  ')DMIN=DMIN-EPS
+                IF(ICASOP.EQ.'>=  ')DMIN=DMIN-EPS
+                IF(ICASOP.EQ.'>   ')DMIN=DMIN+EPS
+              ENDIF
+              IF(ABS(DMAX).EQ.0.0)EPS=0.000001
+              IF(ABS(DMAX).NE.0.0)EPS=ABS(DMAX*0.000001)
+              IF(DMAX.NE.CPUMAX .AND. DMAX.NE.CPUMIN)THEN
+                IF(ICASOP.EQ.'=   ')DMAX=DMAX+EPS
+                IF(ICASOP.EQ.'=ASS')DMAX=DMAX+EPS
+                IF(ICASOP.EQ.'<   ')DMAX=DMAX-EPS
+                IF(ICASOP.EQ.'<=  ')DMAX=DMAX+EPS
+                IF(ICASOP.EQ.'>=  ')DMAX=DMAX+EPS
+                IF(ICASOP.EQ.'>   ')DMAX=DMAX+EPS
+              ENDIF
+C
+              IF(IBUGQ.EQ.'ON')THEN
+                WRITE(ICOUT,949)I,ISETV2,DMIN,DMAX,AVAL
+                CALL DPWRST('XXX','BUG ')
+              ENDIF
+C
+            ENDIF
+C
+            IF(ISETV.EQ.MAXCP1)TARGET=PRED(I)
+            IF(ISETV.EQ.MAXCP2)TARGET=RES(I)
+            IF(ISETV.EQ.MAXCP3)TARGET=YPLOT(I)
+            IF(ISETV.EQ.MAXCP4)TARGET=XPLOT(I)
+            IF(ISETV.EQ.MAXCP5)TARGET=X2PLOT(I)
+            IF(ISETV.EQ.MAXCP6)TARGET=TAGPLO(I)
+            IF(ICASQU.EQ.'SUBS'.AND.DMIN.LE.TARGET.AND.
+     1         TARGET.LE.DMAX)THEN
+              ITEMP=ISUB(I)
+              IF(ITEMP.EQ.00)ISUB(I)=10
+              IF(ITEMP.EQ.10)ISUB(I)=10
+              IF(ITEMP.EQ.01)ISUB(I)=11
+              IF(ITEMP.EQ.11)ISUB(I)=11
+              NS=NS+1
+              GOTO951
+            ELSEIF(ICASQU.EQ.'SUBS')THEN
+              ND=ND+1
+              GOTO951
+            ELSEIF(ICASQU.EQ.'EXCE'.AND.DMIN.LE.TARGET.AND.
+     1             TARGET.LE.DMAX)THEN
+              ITEMP=ISUB(I)
+              IF(ITEMP.EQ.00)ISUB(I)=00
+              IF(ITEMP.EQ.10)ISUB(I)=00
+              IF(ITEMP.EQ.01)ISUB(I)=01
+              IF(ITEMP.EQ.11)ISUB(I)=01
+              ND=ND+1
+              GOTO951
+            ELSEIF(ICASQU.EQ.'EXCE')THEN
+              NS=NS+1
+              GOTO951
+            ELSE
+              GOTO951
+            ENDIF
+  951     CONTINUE
+          GOTO990
+        ENDIF
+C
+  990   CONTINUE
+C
+        IF(IBUGQ.EQ.'ON')THEN
+          WRITE(ICOUT,991)IPASS,ICASQU,DMIN,DMAX,EPS,
+     1                    NIOLD,NS,ND
+  991     FORMAT('IPASS,ICASQU,DMIN,DMAX,EPS,NIOLD,NS,ND = ',
+     1           I8,2X,A4,3G15.7,3I8)
+          CALL DPWRST('XXX','BUG ')
+          DO992I=1,NIOLD
+            WRITE(ICOUT,993)I,ISUB(I)
+  993       FORMAT('I,ISUB(I) = ',I8,I8)
+            CALL DPWRST('XXX','BUG ')
+  992     CONTINUE
+        ENDIF
 C
 C               *************************************************
 C               **  STEP 10--                                  **
@@ -1083,83 +1159,76 @@ C               **  (THAT IS, THE SUBSET SAMPLE SIZE).         **
 C               **  ALSO, CHECK THAT NS IS POSITIVE.           **
 C               *************************************************
 C
-      ISTEPN='10'
-      IF(IBUGQ.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+        ISTEPN='10'
+        IF(IBUGQ.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-      IF(ICASQU.EQ.'EXCE')GOTO1020
-      GOTO1010
+        IF(ICASQU.EQ.'EXCE')THEN
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1021)
+ 1021       FORMAT('***** NOTE--')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1022)IHARG(ILOCS1),IHARG2(ILOCS1)
+ 1022       FORMAT('      EXCEPTED SUBSET VARIABLE = ',2A4)
+            CALL DPWRST('XXX','BUG ')
+            IF(ICASV2.EQ.'V')THEN
+              WRITE(ICOUT,2023)
+ 2023         FORMAT('      EXCEPTED SUBSET MINIMUM/MAXIMUM VARIES ',
+     1               'WITH VARIABLE ROW.')
+              CALL DPWRST('XXX','BUG ')
+            ELSE
+              WRITE(ICOUT,1023)DMIN
+ 1023         FORMAT('      EXCEPTED SUBSET MINIMUM  = ',E17.10)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1024)DMAX
+ 1024         FORMAT('      EXCEPTED SUBSET MAXIMUM  = ',E17.10)
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+            WRITE(ICOUT,1025)NIOLD
+ 1025       FORMAT('      INPUT  NUMBER OF OBSERVATIONS  = ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1026)ND
+ 1026       FORMAT('      NUMBER OF OBSERVATIONS IGNORED = ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1027)NS
+ 1027       FORMAT('      OUTPUT NUMBER OF OBSERVATIONS  = ',I8)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1011)
+ 1011       FORMAT('***** NOTE--')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1012)IHARG(ILOCS1),IHARG2(ILOCS1)
+ 1012       FORMAT('      SUBSET VARIABLE = ',2A4)
+            CALL DPWRST('XXX','BUG ')
+            IF(ICASV2.EQ.'V')THEN
+              WRITE(ICOUT,2023)
+              CALL DPWRST('XXX','BUG ')
+            ELSE
+              WRITE(ICOUT,1013)DMIN
+ 1013         FORMAT('      SUBSET MINIMUM  = ',E17.10)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1014)DMAX
+ 1014         FORMAT('      SUBSET MAXIMUM  = ',E17.10)
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+            WRITE(ICOUT,1015)NIOLD
+ 1015       FORMAT('      INPUT  NUMBER OF OBSERVATIONS  = ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1016)ND
+ 1016       FORMAT('      NUMBER OF OBSERVATIONS IGNORED = ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1017)NS
+ 1017       FORMAT('      OUTPUT NUMBER OF OBSERVATIONS  = ',I8)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
 C
- 1010 CONTINUE
-      IF(IFEEDB.EQ.'OFF')GOTO1019
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1011)
- 1011 FORMAT('***** NOTE--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1012)IHARG(ILOCS1),IHARG2(ILOCS1)
- 1012 FORMAT('      SUBSET VARIABLE = ',2A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1013)DMIN
- 1013 FORMAT('      SUBSET MINIMUM  = ',E17.10)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1014)DMAX
- 1014 FORMAT('      SUBSET MAXIMUM  = ',E17.10)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1015)NIOLD
- 1015 FORMAT('      INPUT  NUMBER OF OBSERVATIONS  = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1016)ND
- 1016 FORMAT('      NUMBER OF OBSERVATIONS IGNORED = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1017)NS
- 1017 FORMAT('      OUTPUT NUMBER OF OBSERVATIONS  = ',I8)
-      CALL DPWRST('XXX','BUG ')
- 1019 CONTINUE
-      GOTO1050
-C
- 1020 CONTINUE
-      IF(IFEEDB.EQ.'OFF')GOTO1029
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1021)
- 1021 FORMAT('***** NOTE--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1022)IHARG(ILOCS1),IHARG2(ILOCS1)
- 1022 FORMAT('      EXCEPTED SUBSET VARIABLE = ',2A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1023)DMIN
- 1023 FORMAT('      EXCEPTED SUBSET MINIMUM  = ',E17.10)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1024)DMAX
- 1024 FORMAT('      EXCEPTED SUBSET MAXIMUM  = ',E17.10)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1025)NIOLD
- 1025 FORMAT('      INPUT  NUMBER OF OBSERVATIONS  = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1026)ND
- 1026 FORMAT('      NUMBER OF OBSERVATIONS IGNORED = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1027)NS
- 1027 FORMAT('      OUTPUT NUMBER OF OBSERVATIONS  = ',I8)
-      CALL DPWRST('XXX','BUG ')
- 1029 CONTINUE
-      GOTO1050
-C
- 1050 CONTINUE
-CCCCC IF(NS.GE.1)GOTO1059
-CCCCC WRITE(ICOUT,999)
-CCCCC CALL DPWRST('XXX','BUG ')
-CCCCC WRITE(ICOUT,1051)
-C1051 FORMAT('***** ERROR IN DPSUBS--')
-CCCCC CALL DPWRST('XXX','BUG ')
-CCCCC WRITE(ICOUT,1052)
-C1052 FORMAT('      THE SUBSET IS EMPTY--IT HAS NO ELEMENTS IN IT.')
-CCCCC CALL DPWRST('XXX','BUG ')
-CCCCC IERROR='YES'
-CCCCC GOTO9000
-C1059 CONTINUE
-C
-      NUMSV=IPASS
+        NUMSV=IPASS
 C
   300 CONTINUE
 C
@@ -6005,14 +6074,14 @@ C
      1                  NUMV2,ICASCT,ICTNAM,ISTANR,
      1                  XIDTEM,XIDTE2,XIDTE3,XIDTE4,
      1                  TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,
-     1                  TEMP6,TEMP7,TEMP8,TEMP9,TMP10,TMP11,
+     1                  TEMP6,TEMP7,TEMP8,TEMP9,TMP10,TMP11,TMP12,
      1                  XACLOW,XACUPP,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  ISEED,ICTAMV,PSTAMV,PCTAMV,ALPHA,IQUASE,
      1                  NCRTV,MAXOBV,PTPLXI,PTPLYI,ITPLDI,ITPLUN,
      1                  ITPLNI,ITPLCD,ITPLSO,ITPLSR,ITPLSC,
-     1                  ITPLRM,ITPLCM,
+     1                  ITPLRM,ITPLCM,ITPLGM,
      1                  Y,X,D,X3D,
      1                  NPLOTP,NPLOTV,IBUGG3,ISUBRO,IERROR)
 C
@@ -6068,6 +6137,7 @@ C
       CHARACTER*4 ITPLSC
       CHARACTER*4 ITPLCM
       CHARACTER*4 ITPLRM
+      CHARACTER*4 ITPLGM
       CHARACTER*4 ISUBRO
       CHARACTER*4 IBUGG3
       CHARACTER*4 IERROR
@@ -6104,6 +6174,7 @@ C
       DIMENSION TEMP9(*)
       DIMENSION TMP10(*)
       DIMENSION TMP11(*)
+      DIMENSION TMP12(*)
 C
       DIMENSION ITEMP1(*)
       DIMENSION ITEMP2(*)
@@ -6514,7 +6585,7 @@ C
      1              XIDTEM,XIDTE2,
      1              NUMSE1,NUMSE2,
      1              TEMP1,TEMP2,TMP11,TEMP3,TEMP4,TEMP5,
-     1              TMP10,TMP11,ITPLCM,ITPLRM,
+     1              TMP10,TMP11,TMP12,ITPLCM,ITPLRM,ITPLGM,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,ALPHA,
@@ -6595,9 +6666,10 @@ C
 C
  1010   CONTINUE
 C
-C       IF REQUESTED, FLAG COLUMN/ROW MIN/MAX POINTS
+C       IF REQUESTED, FLAG COLUMN/ROW/GRAND MIN/MAX POINTS
 C
-        IF(ITPLCM.EQ.'OFF' .AND. ITPLRM.EQ.'OFF')GOTO5099
+        IF(ITPLCM.EQ.'OFF' .AND. ITPLRM.EQ.'OFF' .AND.
+     1     ITPLGM.EQ.'OFF')GOTO5099
 C
 C       PERFORM DUPLICATION OF ARRAYS FIRST (ADD MIN/MAX PART
 C       AT END)
@@ -6617,6 +6689,9 @@ C
           IADD=0
 C
           IF(ITPLCM.EQ.'ON')THEN
+C
+C           COLUMN MIN/MAX
+C
             IADD=IADD+1
             DO5020I=1,N2
               IF(TMP10(I).EQ.1.0)THEN
@@ -6637,6 +6712,9 @@ C
           ENDIF
 C
           IF(ITPLRM.EQ.'ON')THEN
+C
+C           ROW MIN/MAX
+C
             IADD=IADD+1
             DO5030I=1,N2
               IF(TMP11(I).EQ.1.0)THEN
@@ -6654,6 +6732,30 @@ C
                 D(ICNT)=REAL(2*(NLEVEL+1)+IADD+1)
               ENDIF
  5030       CONTINUE
+            IADD=IADD+1
+          ENDIF
+C
+          IF(ITPLGM.EQ.'ON')THEN
+C
+C           GRAND MIN/MAX
+C
+            IADD=IADD+1
+            DO5035I=1,N2
+              IF(TMP12(I).EQ.1.0)THEN
+                ICNT=ICNT+1
+                X(ICNT)=X(I)
+                Y(ICNT)=Y(I)
+                X3D(ICNT)=X3D(I)
+                D(ICNT)=REAL(2*(NLEVEL+1)+IADD)
+              ENDIF
+              IF(TMP12(I).EQ.2.0)THEN
+                ICNT=ICNT+1
+                X(ICNT)=X(I)
+                Y(ICNT)=Y(I)
+                X3D(ICNT)=X3D(I)
+                D(ICNT)=REAL(2*(NLEVEL+1)+IADD+1)
+              ENDIF
+ 5035       CONTINUE
             IADD=IADD+1
           ENDIF
 C
@@ -6699,6 +6801,27 @@ C
                 D(ICNT)=REAL(NLEVEL+1+IADD+1)
               ENDIF
  5050       CONTINUE
+            IADD=IADD+1
+          ENDIF
+C
+          IF(ITPLGM.EQ.'ON')THEN
+            IADD=IADD+1
+            DO5060I=1,N2
+              IF(TMP12(I).EQ.1.0)THEN
+                ICNT=ICNT+1
+                X(ICNT)=X(I)
+                Y(ICNT)=Y(I)
+                X3D(ICNT)=X3D(I)
+                D(ICNT)=REAL(NLEVEL+1+IADD)
+              ENDIF
+              IF(TMP12(I).EQ.2.0)THEN
+                ICNT=ICNT+1
+                X(ICNT)=X(I)
+                Y(ICNT)=Y(I)
+                X3D(ICNT)=X3D(I)
+                D(ICNT)=REAL(NLEVEL+1+IADD+1)
+              ENDIF
+ 5060       CONTINUE
             IADD=IADD+1
           ENDIF
 C
@@ -7911,6 +8034,7 @@ C
       DIMENSION TEMP9(MAXOBV)
       DIMENSION TMP10(MAXOBV)
       DIMENSION TMP11(MAXOBV)
+      DIMENSION TMP12(MAXOBV)
 C
       DIMENSION XACLOW(MAXOBV)
       DIMENSION XACUPP(MAXOBV)
@@ -7950,6 +8074,7 @@ C
       EQUIVALENCE (GARBAG(IGAR13),XACUPP(1))
       EQUIVALENCE (GARBAG(IGAR14),Y3(1))
       EQUIVALENCE (GARBAG(IGAR15),TMP11(1))
+      EQUIVALENCE (GARBAG(IGAR16),TMP12(1))
 C
       EQUIVALENCE (IGARBG(IIGAR1),ITEMP1(1))
       EQUIVALENCE (IGARBG(IIGAR2),ITEMP2(1))
@@ -8481,7 +8606,7 @@ C
      1              NUMVAR,ICASCT,ICTNAM,ISTANR,
      1              XH1DIS,XH2DIS,XH3DIS,XH4DIS,
      1              TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,
-     1              TEMP6,TEMP7,TEMP8,TEMP9,TMP10,TMP11,
+     1              TEMP6,TEMP7,TEMP8,TEMP9,TMP10,TMP11,TMP12,
      1              XACLOW,XACUPP,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
@@ -8489,7 +8614,7 @@ C
      1              NCRTV,MAXOBV,PTPLXI,PTPLYI,ITPLDI,ITPLUN,
      1              ITPLNI,ITPLCD,
      1              ITPLSO,ITPLSR,ITPLSC,
-     1              ITPLRM,ITPLCM,
+     1              ITPLRM,ITPLCM,ITPLGM,
      1              Y,X,D,DCOLOR,
      1              NPLOTP,NPLOTV,IBUGG3,ISUBRO,IERROR)
       ELSE
@@ -8497,14 +8622,14 @@ C
      1              NUMVAR,ICASCT,ICTNAM,ISTANR,
      1              XH1DIS,XH2DIS,XH3DIS,XH4DIS,
      1              TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,
-     1              TEMP6,TEMP7,TEMP8,TEMP9,TMP10,TMP11,
+     1              TEMP6,TEMP7,TEMP8,TEMP9,TMP10,TMP11,TMP12,
      1              XACLOW,XACUPP,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,ICTAMV,PSTAMV,PCTAMV,ALPHA,IQUASE,
      1              NCRTV,MAXOBV,PTPLXI,PTPLYI,ITPLDI,ITPLUN,
      1              ITPLNI,ITPLCD,ITPLSO,ITPLSR,ITPLSC,
-     1              ITPLRM,ITPLCM,
+     1              ITPLRM,ITPLCM,ITPLGM,
      1              Y,X,D,X3D,
      1              NPLOTP,NPLOTV,IBUGG3,ISUBRO,IERROR)
 C
@@ -8569,14 +8694,14 @@ C
      1                  NUMV2,ICASCT,ICTNAM,ISTANR,
      1                  XIDTEM,XIDTE2,XIDTE3,XIDTE4,
      1                  TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,
-     1                  TEMP6,TEMP7,TEMP8,TEMP9,TMP10,TMP11,
+     1                  TEMP6,TEMP7,TEMP8,TEMP9,TMP10,TMP11,TMP12,
      1                  XACLOW,XACUPP,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  ISEED,ICTAMV,PSTAMV,PCTAMV,ALPHA,IQUASE,
      1                  NCRTV,MAXOBV,PTPLXI,PTPLYI,ITPLDI,ITPLUN,
      1                  ITPLNI,ITPLCD,ITPLSO,ITPLSR,ITPLSC,
-     1                  ITPLRM,ITPLCM,
+     1                  ITPLRM,ITPLCM,ITPLGM,
      1                  Y,X,D,DCOLOR,
      1                  NPLOTP,NPLOTV,IBUGG3,ISUBRO,IERROR)
 C
@@ -8632,6 +8757,7 @@ C
       CHARACTER*4 ITPLSC
       CHARACTER*4 ITPLRM
       CHARACTER*4 ITPLCM
+      CHARACTER*4 ITPLGM
       CHARACTER*4 IBUGG3
       CHARACTER*4 ISUBRO
       CHARACTER*4 IERROR
@@ -8668,6 +8794,7 @@ C
       DIMENSION TEMP9(*)
       DIMENSION TMP10(*)
       DIMENSION TMP11(*)
+      DIMENSION TMP12(*)
 C
       DIMENSION ITEMP1(*)
       DIMENSION ITEMP2(*)
@@ -9187,7 +9314,7 @@ C
      1              XIDTEM,XIDTE2,
      1              NUMSE1,NUMSE2,
      1              TEMP1,TEMP2,TMP11,TEMP3,TEMP4,TEMP5,
-     1              TMP10,TMP11,ITPLRM,ITPLCM,
+     1              TMP10,TMP11,TMP12,ITPLRM,ITPLCM,ITPLGM,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,ALPHA,
@@ -9889,7 +10016,7 @@ C
      1                  XIDTEM,XIDTE2,
      1                  NUMSE1,NUMSE2,
      1                  TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
-     1                  YCMNMX,YRMNMX,ITPLCM,ITPLRM,
+     1                  YCMNMX,YRMNMX,YGMNMX,ITPLCM,ITPLRM,ITPLGM,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  ISEED,ALPHA,
@@ -9916,6 +10043,8 @@ C                                       FOR BINOMIAL RATIO
 C     UPDATED         --AUGUST    2010. FOR EACH VALUE, DETERMINE IF
 C                                       IT A ROW COLUMN MINIMUM OR
 C                                       MAXIMUM VALUE FOR THE STATISTIC
+C     UPDATED         --JULY      2021. SUPPORT FOR "GRAND" MINIMUM OR
+C                                       MAXIMUM
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -9924,6 +10053,7 @@ C
       CHARACTER*4 IQUASE
       CHARACTER*4 ITPLCM
       CHARACTER*4 ITPLRM
+      CHARACTER*4 ITPLGM
       CHARACTER*4 IBUGG3
       CHARACTER*4 ISUBRO
       CHARACTER*4 IERROR
@@ -9956,6 +10086,7 @@ C
       DIMENSION XTEMP3(*)
       DIMENSION YCMNMX(*)
       DIMENSION YRMNMX(*)
+      DIMENSION YGMNMX(*)
 C
       INTEGER ITEMP1(*)
       INTEGER ITEMP2(*)
@@ -10109,13 +10240,15 @@ C
  1110 CONTINUE
       N2=J
 C
-C     DETERMINE THE COLUMN MINIMUM AND MAXIMUM POINTS
+C     DETERMINE THE COLUMN/ROW/GRAND MINIMUM AND MAXIMUM POINTS
 C
-      IF(ITPLCM.EQ.'OFF' .AND. ITPLRM.EQ.'OFF')GOTO9000
+      IF(ITPLCM.EQ.'OFF' .AND. ITPLRM.EQ.'OFF' .AND.
+     1   ITPLGM.EQ.'OFF')GOTO9000
 C
       DO3101I=1,N
         YCMNMX(I)=0.0
         YRMNMX(I)=0.0
+        YGMNMX(I)=0.0
  3101 CONTINUE
 C
       DO3110ISET2=1,NUMSE2
@@ -10191,6 +10324,38 @@ C
  4130   CONTINUE
 C
  4110 CONTINUE
+C
+C     DETERMINE THE GRAND MINIMUM AND MAXIMUM POINTS
+C
+      AGRAMN=CPUMIN
+      AGRAMX=CPUMIN
+C
+C       DETERMINE ROW MIN/MAX
+C
+      DO5120I=1,N
+        IF(Y2(I).NE.PSTAMV .AND. Y2(I).NE.CPUMIN)THEN
+          IF(AGRAMN.EQ.CPUMIN)THEN
+            AGRAMN=Y2(I)
+            AGRAMX=Y2(I)
+          ELSE
+            IF(Y2(I).LE.AGRAMN)AGRAMN=Y2(I)
+            IF(Y2(I).GE.AGRAMX)AGRAMX=Y2(I)
+          ENDIF
+        ENDIF
+ 5120 CONTINUE
+C
+C     NOW SET YGMNMX TO:
+C
+C           0 = NEITHER MIN NOR MAX
+C           1 = EQUAL TO GRAND MINIMUM
+C           2 = EQUAL TO GRAND MAXIMUM
+C
+      DO5130I=1,N
+        YGMNMX(I)=0.0
+        IF(Y2(I).EQ.AGRAMN)YGMNMX(I)=1.0
+        IF(Y2(I).EQ.AGRAMX)YGMNMX(I)=2.0
+ 5130 CONTINUE
+C
 C               ******************
 C               **   STEP 90--  **
 C               **   EXIT       **
@@ -20393,6 +20558,8 @@ C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--89/2
 C     ORIGINAL VERSION--JANUARY   1989.
+C     UPDATED         --JULY      2021. "HARDWARE" AS SYNONYM FOR
+C                                       "TEKTRONIX
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -20438,15 +20605,15 @@ C
  1180 CONTINUE
       IFOUND='YES'
 C
-      IF(IFEEDB.EQ.'OFF')GOTO1189
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1181)ITITFO
- 1181 FORMAT('THE TITLE FONT HAS JUST BEEN SET TO ',
-     1A4)
-      CALL DPWRST('XXX','BUG ')
- 1189 CONTINUE
+      IF(ITITFO.EQ.'HARD')ITITFO='TEKT'
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1181)ITITFO
+ 1181   FORMAT('THE TITLE FONT HAS JUST BEEN SET TO ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       GOTO1199
 C
  1199 CONTINUE

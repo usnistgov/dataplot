@@ -17062,6 +17062,199 @@ C
  9000 CONTINUE
       RETURN
       END
+      SUBROUTINE GINIMD(X,N,IWRITE,XTEMP,GMD,IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES THE SAMPLE GINI MEAN DIFFERENCE
+C              MEASURE OF DISPERSION.  THE FORMULA IS:
+C
+C                 GMD = (2/(N*(N-1))*
+C                       SUM[j=1 to N][SUM[i < j][ABS(X(i) - X(j)]]
+C                     = (2/(N*(N-1))*SUM[i=1 to N-1][i*(N-i)*
+C                       (X(i+1) - X(i))]
+C
+C               WHERE X IS THE SORTED RESPONSES.
+C
+C     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+C                                (UNSORTED OR SORTED) OBSERVATIONS.
+C                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR X.
+C     OUTPUT ARGUMENTS--GMD    = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED SAMPLE GINI MEAN DIFFERENCE.
+C     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE SAMPLE GINI
+C             MEAN DIFFERENCE.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     REFERENCES--TENA (2009), "TEST PROCEDURES FOR EQUALITY OF
+C                 TWO VARIANCES IN DELTA DISTRIBUTIONS,"
+C                 DISSERTATIONS, 695,
+C                 https://scholarworks.wmich.edu/dissertations/695
+C               --GINI (1921), "MEASUREMENT OF INEQUALITY IN
+C                 INCOMES," THE ECONOMIC JOURNAL, 31, pp. 124-126.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2023/07
+C     ORIGINAL VERSION--JULY      2023.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+C
+      DIMENSION X(*)
+      DIMENSION XTEMP(*)
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+      DOUBLE PRECISION DN
+      DOUBLE PRECISION DI
+      DOUBLE PRECISION DX1
+      DOUBLE PRECISION DX2
+      DOUBLE PRECISION DFACT
+      DOUBLE PRECISION DSUM
+      DOUBLE PRECISION DTERM
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='GINI'
+      ISUBN2='MD  '
+      IERROR='NO'
+C
+      GMD=0.0
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'NIMD')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF GINIMD--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,N
+   52   FORMAT('IBUGA3,ISUBRO,N = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,X(I)
+   56     FORMAT('I,X(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      AN=N
+C
+      IF(N.LT.1)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN GINI MEAN DIFFERENCE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)
+  112   FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE RESPONSE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+  113   FORMAT('      VARIABLE IS LESS THAN 1.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)N
+  117   FORMAT('      THE NUMBER OF OBSERVATIONS = ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ELSEIF(N.EQ.1)THEN
+        GMD=0.0
+        GOTO9000
+      ENDIF
+C
+      HOLD=X(1)
+      DO135I=2,N
+        IF(X(I).NE.HOLD)GOTO139
+  135 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,136)
+  136 FORMAT('***** WARNING IN GINI MEAN DIFFERENCE--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,137)HOLD
+  137 FORMAT('      THE RESPONSE VARIABLE HAS ALL ELEMENTS = ',G15.7)
+      CALL DPWRST('XXX','BUG ')
+      GMD=0.0
+      GOTO9000
+  139 CONTINUE
+C
+C               ***********************************************
+C               **  STEP 2--                                 **
+C               **  COMPUTE THE GINI MEAN DIFFERENCE         **
+C               ***********************************************
+C
+      CALL SORT(X,N,XTEMP)
+C
+      DN=DBLE(N)
+      DSUM=0.0D0
+      DO300I=1,N-1
+        DI=DBLE(I)
+        DX1=XTEMP(I+1)
+        DX2=XTEMP(I)
+        DTERM=DI*(DN-DI)*(DX1-DX2)
+        DSUM=DSUM+DTERM
+  300 CONTINUE
+      DFACT=2.0D0/(DN*(DN-1.0D0))
+      DSUM=DFACT*DSUM
+      GMD=REAL(DSUM)
+C
+C               *******************************
+C               **  STEP 3--                 **
+C               **  WRITE OUT A LINE         **
+C               **  OF SUMMARY INFORMATION.  **
+C               *******************************
+C
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,813)N,GMD
+  813   FORMAT('THE GINI MEAN DIFFERENCE OF THE ',I8,
+     1         ' OBSERVATIONS = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'NIMD')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF GINIMD--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR,DSUM,DFACT,GMD
+ 9012   FORMAT('DSUM,DFACT,GMD = ',A4,2X,2G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
       SUBROUTINE GJACC(X,Y,N,ICASPL,IWRITE,STATVA,DIST,
      1                 ISUBRO,IBUGA3,IERROR)
 C
@@ -23064,6 +23257,225 @@ CCCCC   X(I)=APPF
   100 CONTINUE
 C
  9000 CONTINUE
+      RETURN
+      END
+      SUBROUTINE GMDRAT(X1,N1,X2,N2,IWRITE,XTEMP,GRATIO,
+     1                  IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES THE LOG OF THE RATIO OF TWO
+C              SAMPLE GINI MEAN DIFFERENCE STATISTICS.  THE GINI MEAN
+C              DIFFERENCE IS A MEASURE OF DISPERSION WITH THE FORMULA:
+C
+C                 GMD = (2/(N*(N-1))*
+C                       SUM[j=1 to N][SUM[i < j][ABS(X(i) - X(j)]]
+C                     = (2/(N*(N-1))*SUM[i=1 to N-1][i*(N-i)*
+C                       (X(i+1) - X(i))]
+C
+C               WHERE X ARE THE SORTED RESPONSES.
+C
+C               THIS SUBROUTINE COMPUTES
+C
+C                    G = LOG(GMD1/GMD2)
+C
+C               WHERE GMD1 AND GMD2 ARE THE GINI MEAN DIFFERENCES
+C               OF SAMPLE 1 AND SAMPLE 2, RESPECTIVELY.
+C
+C     INPUT  ARGUMENTS--X1     = THE SINGLE PRECISION VECTOR OF
+C                                (UNSORTED OR SORTED) OBSERVATIONS
+C                                FOR SAMPLE ONE.
+C                     --N1     = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR X1.
+C                     --X2     = THE SINGLE PRECISION VECTOR OF
+C                                (UNSORTED OR SORTED) OBSERVATIONS
+C                                FOR SAMPLE TWO.
+C                     --N2     = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR X2.
+C     OUTPUT ARGUMENTS--GRATIO = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED SAMPLE GINI MEAN DIFFERENCE
+C                                LOG RATIO.
+C     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE SAMPLE GINI
+C             MEAN DIFFERENCE LOG RATIO.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--GINIMD.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     REFERENCES--TENA (2009), "TEST PROCEDURES FOR EQUALITY OF
+C                 TWO VARIANCES IN DELTA DISTRIBUTIONS,"
+C                 DISSERTATIONS, 695,
+C                 https://scholarworks.wmich.edu/dissertations/695
+C               --GINI (1921), "MEASUREMENT OF INEQUALITY IN
+C                 INCOMES," THE ECONOMIC JOURNAL, 31, pp. 124-126.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2023/07
+C     ORIGINAL VERSION--JULY      2023.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+C
+      DIMENSION X1(*)
+      DIMENSION X2(*)
+      DIMENSION XTEMP(*)
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='GINI'
+      ISUBN2='MD  '
+      IERROR='NO'
+C
+      GRATIO=0.0
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'DRAT')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF GMDRAT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,N1,N2
+   52   FORMAT('IBUGA3,ISUBRO,N1,N2 = ',2(A4,2X),2I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N1
+          WRITE(ICOUT,56)I,X1(I)
+   56     FORMAT('I,X1(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+        DO65I=1,N2
+          WRITE(ICOUT,66)I,X2(I)
+   66     FORMAT('I,X2(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   65   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      IF(N1.LE.1)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN GINI MEAN DIFFERENCE LOG DIFFERENCE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)
+  112   FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE FIRST ',
+     1         'RESPONSE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+  113   FORMAT('      VARIABLE IS LESS THAN OR EQUAL TO 1.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)N1
+  117   FORMAT('      THE NUMBER OF OBSERVATIONS = ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ELSEIF(N2.LE.1)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,122)
+  122   FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE SECOND ',
+     1         'RESPONSE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)N2
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+C               ***********************************************
+C               **  STEP 2--                                 **
+C               **  COMPUTE THE GINI MEAN DIFFERENCE         **
+C               **  LOG RATIO                                **
+C               ***********************************************
+C
+      CALL GINIMD(X1,N1,IWRITE,XTEMP,GMD1,IBUGA3,ISUBRO,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+      IF(GMD1.LE.0.0)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,201)
+  201   FORMAT('      THE GINI MEAN DIFFERENCE FOR THE FIRST ',
+     1         'RESPONSE VARIABLE IS NON-POSITIVE.')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+      CALL GINIMD(X2,N2,IWRITE,XTEMP,GMD2,IBUGA3,ISUBRO,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+      IF(GMD2.LE.0.0)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,211)
+  211   FORMAT('      THE GINI MEAN DIFFERENCE FOR THE SECOND ',
+     1         'RESPONSE VARIABLE IS NON-POSITIVE.')
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+      GRATIO=LOG(GMD1/GMD2)
+C
+C               *******************************
+C               **  STEP 3--                 **
+C               **  WRITE OUT A LINE         **
+C               **  OF SUMMARY INFORMATION.  **
+C               *******************************
+C
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,813)N,GRATIO
+  813   FORMAT('THE GINI MEAN DIFFERENCE LOG RATIO OF THE ',I8,
+     1         ' OBSERVATIONS = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'DRAT')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF GMDRAT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR,GMD1,GMD2,GRATIO
+ 9012   FORMAT('IERROR,GMD1,GMD2,GRATIO = ',A4,2X,3G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
       RETURN
       END
       SUBROUTINE GNBCDF(X,THETA,BETA,M,CDF)

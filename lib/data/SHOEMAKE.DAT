@@ -1,0 +1,35 @@
+Name:        SHOEMAKE.DAT
+Source:      Shoemaker (2003), "Fixing the F Test for Equal Variances",
+             The American Statistician, Vol. 57, No. 2, pp. 105-114.
+             (originally appeared in Jaffe, Parker and Wilson (1982),
+             "Distribution of Toxic Substances in Rivers", Journal of
+             the Environmental Engineering Division, 108, pp. 639-649.
+Description: Measurements were taken downstream of an abandoned dump
+             site that had previously been used to dispose o pesticide
+             waste products in the Wolf River in Tennessee.  The
+             concentration of aldrin in nanograms per liter.  Ten
+             observations were taken at three depths (bottom, middepth
+             and surface).
+Data:        Column 1:  Bottom measurements
+             Column 2:  Middepth measurements
+             Column 3:  Surface measurements
+
+To read this data into Dataplot, enter
+
+    SKIP 25
+    READ SHOEMAKE.DAT BOTTOM MIDDEPTH SURFACE
+
+This data is used for the intervals/tests for the ratio of two
+standard deviations.
+BOTTOM     MIDDEPTH    SURFACE
+------------------------------
+  4.81         5.17       3.08
+  5.71         6.17       3.58
+  4.90         6.26       3.81
+  5.35         4.26       4.31
+  5.26         3.17       4.35
+  6.26         3.76       4.40
+  3.76         4.76       3.67
+  8.07         4.90       5.17
+  8.79         6.57       5.17
+  7.30         5.17       4.35

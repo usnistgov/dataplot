@@ -6728,6 +6728,174 @@ C
       IER = 129
       RETURN
       END
+      SUBROUTINE MSCORE(X,N,IWRITE,XSCORE,TEMP1,MAXNXT,
+     1                  IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES THE MOOD SCORES
+C              OF THE N ELEMENTS OF THE SINGLE PRECISION VECTOR X, AND
+C              PUTS THE RESULTING N SCORES INTO THE SINGLE PRECISION
+C              VECTOR XSCORE.
+C
+C              THE MOOD SCORES ARE DEFINED AS
+C
+C                 M(X(i)) = (R(i) - (N+1)/2)**2
+C
+C              WITH R(i) DENOTING THE RANK OF THE i-TH OBSERVATION.
+C              THE MOOD SCORE IS THE SQUARE OF THE DIFFERENCE BETWEEN
+C              THE OBSERVED RANK AND THE AVERAGE RANK.
+C
+C     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+C                                OBSERVATIONS TO BE SCORED.
+C                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR X.
+C     OUTPUT ARGUMENTS--XEOS   = THE SINGLE PRECISION VECTOR INTO WHICH
+C                                THE SCORES FROM X WILL BE PLACED.
+C     OUTPUT--THE SINGLE PRECISION VECTOR XSCORE CONTAINING THE MOOD
+C             SCORES IN THE SINGLE PRECISION VECTOR X.
+C     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--RANK
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     COMMENT--THE FIRST AND THIRD ARGUMENTS IN THE CALLING SEQUENCE MAY
+C              BE IDENTICAL; THAT IS, AN 'IN PLACE' SCORING IS
+C              PERMITTED.
+C     REFERENCES--HIGGINS (2004), "INTRODUCTION TO MODERN NONPARAMETRIC
+C                 STATISTICS", DUXBURY ADVANCED SERIES, P. 50.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATION INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2023.06
+C     ORIGINAL VERSION--JUNE      2023.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION X(*)
+      DIMENSION XSCORE(*)
+      DIMENSION TEMP1(*)
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='MSCO'
+      ISUBN2='RE  '
+      IERROR='NO'
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CORE')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF MSCORE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)N,IBUGA3,ISUBRO
+   53   FORMAT('N,IBUGA3,ISUBRO = ',I8,2(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,X(I)
+   56     FORMAT('I,X(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      AN=N
+C
+      IF(N.LT.1)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN MOOD SCORES--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+  113   FORMAT('      THE NUMBER OF OBSERVATIONS IS LESS THAN 1.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,118)N
+  118   FORMAT('      THE NUMBER OF OBSERVATIONS IS ',I8)
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 2--                              **
+C               **  GENERATE THE MOOD   SCORES            **
+C               ********************************************
+C
+        CALL RANK(X,N,IWRITE,XSCORE,TEMP1,MAXNXT,IBUGA3,IERROR)
+        TERM1=(REAL(N)+1.0)/2.0
+        DO211K=1,N
+          XSCORE(K)=(XSCORE(K) - TERM1)**2
+  211   CONTINUE
+C
+C
+C               ******************************
+C               **  STEP 4--                **
+C               **  WRITE OUT A FEW LINES   **
+C               **  OF SUMMARY INFORMATION  **
+C               **  ABOUT THE CODING.       **
+C               ******************************
+C
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IINDX=1
+        WRITE(ICOUT,912)IINDX,XSCORE(IINDX)
+  912   FORMAT('THE MOOD SCORE OF ROW ',I10,' = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        IINDX=N
+        WRITE(ICOUT,912)IINDX,XSCORE(IINDX)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CORE')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF MSCORE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        DO9015I=1,N
+          WRITE(ICOUT,9016)I,X(I),XSCORE(I)
+ 9016     FORMAT('I,X(I),XSCORE(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9015   CONTINUE
+      ENDIF
+C
+      RETURN
+      END
         INTEGER FUNCTION MSTA1(X,MP)
 C
 C       ===================================================
@@ -18631,6 +18799,138 @@ C
  9999 CONTINUE
       RETURN
       END 
+      subroutine nscor1 (s, n, n2, work, ifault)
+c
+c        Algorithm AS 177   Appl. Statist. (1982) Vol. 31, No. 2
+c
+c        Exact calculation of Normal Scores
+c
+      double precision s(n2), work(4,721)
+      double precision zero, one, c, scor, ai1, ani, an, h
+      data one/1.0d0/, zero/0.0d0/, h/0.025d0/, nstep/721/
+c
+      ifault=3
+      if (n2 .ne. n/2) return
+      ifault=1
+      if (n .le. 1) return
+      ifault=0
+      if (n .gt. 2000) ifault=2
+c
+      an=n
+      c=log(an)
+c
+c        Accumulate ordinates for calculation of integral for rankits
+c
+      do 20 i=1, n2
+        i1=i-1
+        ni=n-i
+        ai1=i1
+        ani=ni
+        scor=zero
+        do 10 j=1,nstep
+   10   scor=scor+exp(work(2,j) + ai1 * work(3,j) + ani * work(4,j)
+     *        + c) * work(1,j)
+        s(i)=scor * h
+        c=c+log(ani/dble(i))
+   20 continue
+      return
+      end
+      subroutine nscor2(s,n,n2,ier)
+c
+c     algorithm as 177.3, applied statistics, v.31, 161-165, 1982.
+c
+c     calculates approximate expected values of normal order statistics.
+c     claimed accuracy is 0.0001, though usually accurate to 5-6 dec.
+c
+c***  N.B. This routine is NOT in double precision ***
+c
+c     arguments:
+c     s(n2)   = output, the first n2 expected values.
+c     n       = input, the sample size.
+c     n2      = input, the number of order statistics required; must
+c                      be <= n/2.
+c     ier     = output, error indicator
+c                   = 0 if no error detected
+c                   = 1 if n <= 1.
+c                   = 2 if n > 2000, in which case the order statistics
+c                          are still calculated, but may be inaccurate.
+c                   = 3 if n2 > n/2 (n.b. this differs from the
+c                          published algorithm which returns an error
+c                          if n2 is not equal to n/2.)
+c
+c     calls ppnd = applied statistics algorithm 111.
+c     An alternative is ppnd7 in algorithm AS 241.
+c
+      real s(n2), eps(4), dl1(4), dl2(4), gam(4), lam(4),
+     *   bb, d, b1, an, ai, e1, e2, l1, correc, ppnd
+      data eps/0.419885e0, 0.450536e0, 0.456936e0, 0.468488e0/,
+     1 dl1/0.112063e0, 0.121770e0, 0.239299e0, 0.215159e0/,
+     2 dl2/0.080122e0, 0.111348e0, -0.211867e0, -0.115049e0/,
+     3 gam/0.474798e0, 0.469051e0, 0.208597e0, 0.259784e0/,
+     4 lam/0.282765e0, 0.304856e0, 0.407708e0, 0.414093e0/,
+     5 bb/-0.283833/, d/-0.106136/, b1/0.5641896/
+c
+c     input parameter checks.
+c
+      ier = 3
+      if(n2.gt.n/2) return
+      ier = 1
+      if(n.le.1) return
+      ier = 0
+      if(n.gt.2000) ier = 2
+      s(1) = b1
+      if(n.eq.2) return
+c
+c     calculate normal tail areas for first 3 order statistics.
+c
+      an = n
+      k = 3
+      if(n2.lt.k) k = n2
+      do 5 i = 1,k
+        ai = i
+        e1 = (ai - eps(i))/(an + gam(i))
+        e2 = e1**lam(i)
+        s(i) = e1 + e2*(dl1(i) + e2*dl2(i))/an - correc(i,n)
+    5 continue
+      if(n2.eq.k) go to 20
+c
+c     calculate normal areas for other cases.
+c
+      do 10 i = 4,n2
+        ai = i
+        l1 = lam(4) + bb/(ai + d)
+        e1 = (ai - eps(4))/(an + gam(4))
+        e2 = e1**l1
+        s(i) = e1 + e2*(dl1(4) + e2*dl2(4))/an - correc(i,n)
+   10 continue
+c
+c     convert tail areas to normal deviates.
+c
+   20 do 30 i = 1,n2
+   30 s(i) = -ppnd(s(i),ier)
+      return
+      end
+      subroutine nsinit(work)
+c
+c        Algorithm AS 177.1   Appl. Statist. (1982) Vol. 31, No. 2
+c
+      double precision work(4,721)
+      double precision xstart, h, pi2, half, xx, alnorm
+      data xstart/-9.0d0/, h/0.025d0/, pi2/-0.918938533d0/,
+     *     half/0.5d0/,  nstep/721/
+      xx=xstart
+c
+c        Set up arrays for calculation of integral
+c
+      do 10 i=1,nstep
+        work(1,i)=xx
+        work(2,i)=pi2 - xx * xx * half
+        work(3,i)=log(alnorm(xx, .true.))
+        work(4,i)=log(alnorm(xx, .false.))
+        xx=xstart + dble(i) * h
+   10 continue
+      return
+      end
       SUBROUTINE OCCPDF(X,B,C,PDF)
 C
 C     PURPOSE--THIS SUBROUTINE COMPUTES THE PROBABILITY DENSITY
@@ -35789,6 +36089,8 @@ C     UPDATED         --OCTOBER   2018. LABEL COORDINATES
 C     UPDATED         --DECEMBER  2018. SUPPORT FOR "DEVICE ... SCALE"
 C                                       COMMAND
 C     UPDATED         --MARCH     2021. SUPPORT FOR "GRID ORDER"
+C     UPDATED         --MAY       2022. SUPPORT FOR "DEVICE ...
+C                                       HARDWARE CHARACTER OFFSET"
 C
 C-----FOR NON-COMMON VARIABLES-----------------------------------------
 C
@@ -35910,6 +36212,7 @@ C
       CHARACTER*128 CTEMP
       CHARACTER*4 ICODE
       CHARACTER*4 ICASCO
+      CHARACTER*4 ICH2ST
 C
 C---------------------------------------------------------------------
 C
@@ -36086,6 +36389,8 @@ CCCCC THE FOLLOWING LINE WAS ADDED FEBRUARY 1989
       IF(IHORSW.EQ.'ON')ISP2DI='H'
       PSP2TH=PSPITH(ISET3T)
       ASP2BA=ASPIBA(ISET3T)
+      PCH2HO=PCHAHO(ISET3T)
+      PCH2VO=PCHAVO(ISET3T)
 C
       IBA2SW=IBARSW(ISET3T)
       ABA2WI=ABARWI(ISET3T)
@@ -36839,6 +37144,149 @@ CCCCC   THE FOLLOWING LINE WAS INSERTED FEBRUARY 1989. (ALAN)
         IMODE3=IDMOD3(IDEV)
         IGCODE=IDCODE(IDEV)
         IGUNIT=IDUNIT(IDEV)
+C
+C       2022/05: CHECK IF "DEVICE <1/2/3> HARDWARE CHARACTER OFFSET"
+C                HAS BEEN ENTERED.  BUT ONLY APPLY IF HARDWARE
+C                CHARACTERS ARE IN EFFECT.
+C
+        IF(ICH2FO.EQ.'TEKT')THEN
+          PHOROF=PCHOSH(IDEV)
+          PVEROF=PCHOSV(IDEV)
+          IF(PHOROF.GT.0.0 .OR. PVEROF.GT.0.0)THEN
+            IFLAGS=0
+C
+C           CHECK FOR CHARACTERS THAT WILL BE DRAWN IS SOFTWARE,
+C           CONVERT CHARACTER PATTERN TO UPPER CASE.
+C
+            ICH2ST=ICH2PA(1:4)
+            DO80111KK=1,4
+              ICH2ST(KK:KK)=ICH2PA(KK:KK)
+              CALL DPCOAN(ICH2ST(KK:KK),IVALT)
+              IF(IVALT.GE.97 .AND. IVALT.LE.122)THEN
+                IVAM32=IVALT-32
+                CALL DPCONA(IVAM32,ICH2ST(KK:KK))
+              ENDIF
+80111       CONTINUE
+C
+            IF(ICH2ST(1:4).EQ.'TRIA' .OR. ICH2ST(1:4).EQ.'TR  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'SQUA' .OR. ICH2ST(1:4).EQ.'SQ  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'DIAM' .OR. ICH2ST(1:4).EQ.'DI  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'CIRC' .OR. ICH2ST(1:4).EQ.'CI  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'CUBE')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'PYRA')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'REVT' .OR. ICH2ST(1:4).EQ.'RT  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'TRIR')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'TRII')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'BOX ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'STAR' .OR. ICH2ST(1:4).EQ.'ST  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'AU  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'AD  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'POIN')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'PT  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'PO  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'ARRO')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'ARRH')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'VECT')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'DEGR')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'ALPH')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'BETA')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'GAMM')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'DELT')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'EPSI')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'ZETA')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'ETA ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'THET')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'IOTA')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'KAPP')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'LAMB')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'MU  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'NU  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'XI  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'OMIC')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'PI  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'RHO ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'SIGM')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'TAU ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'UPSI')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'PHI ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'CHI ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'PSI ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'OMEG')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'PART')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'INTE')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'CINT')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'SUMM')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'PROD')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'INFI')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'+-  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'-+  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'TIME')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'DOTP')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'DEL ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'DIVI')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'LT  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'GT  ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'LTEQ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'GTEQ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'NOT=')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'APPR')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'EQUI')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'VARI')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'TILD')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'CARA')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'PRIM')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'RADI')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'LRAD')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'BRAD')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'SUBS')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'SUPE')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'UNSB')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'UNSP')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'UNIO')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'INTR')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'ELEM')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'THEX')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'THFO')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'LAPO')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'RAPO')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'LBRA')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'RBRA')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'LCBR')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'RCBR')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'LELB')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'RELB')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'RACC')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'LACC')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'BREV')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'LQUO')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'NASP')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'IASP')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'RARR')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'LARR')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'UARR')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'DARR')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'PARA')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'DAGG')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'DDAG')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'VBAR')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'DVBA')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'LVBA')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'LHBA')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'BAR ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'DEL ')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'PIXE')IFLAGS=1
+            IF(ICH2ST(1:4).EQ.'DEL ')IFLAGS=1
+C
+C
+C           ADD THE DEVICE OFFSET TO CHARACTER OFFSET
+C
+            IF(IFLAGS.EQ.0)THEN
+              PCH2HO=PCH2HO + PHOROF
+              PCH2VO=PCH2VO + PVEROF
+            ENDIF
+C
+          ENDIF
+        ENDIF
 C
 CCCCC   FEBRUARY 2006: DEVICE 1 LATEX TO CAPTURE FILE
 C
@@ -39671,7 +40119,9 @@ C
       RETURN
       END
       SUBROUTINE PLYSRT(XC,YC,NMX,NSEG,NSGE,NSGCL,NSGCH,NPTS,NTPE,
-     1 NTPCL,NTPCH,SNSE,CLSD,NSGX,X,Y,IMX,JMX,IB,JB,NBX,PRMTR,NS,D)
+     1                  NTPCL,NTPCH,SNSE,CLSD,NSGX,X,Y,IMX,JMX,
+     1                  IB,JB,NBX,PRMTR,NS,D,
+     1                  IBUGG3,ISUBRO,IERROR)
 C
 C     PURPOSE--XX
 C
@@ -39683,6 +40133,10 @@ C                                        CHANGED DO WHILE/END DO (ALAN HECKERT).
 C     UPDATED         --JULY      1996.  EXPLICITLY INITIALIZE SOME
 C                                        ARRAYS (BOMBED ON SGI WHICH
 C                                        DOESN'T PRESET TO 0)
+C
+      CHARACTER*4 IBUGG3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -39731,13 +40185,17 @@ C
       DIMENSION JB(*)
       DIMENSION NS(2,MAXNSG,3)
 C
+      INCLUDE 'DPCOP2.INC'
+C
 C-----START POINT-----------------------------------------------------
 C
+      IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'YSRT')THEN
+        WRITE(ICOUT,101)MAXNSG,MAXNMX,IMX,JMX,NMX,NSGX
+  101   FORMAT('PLYSRT: MAXNSG,MAXNMS,IMX,JMX,NMX,NSGX = ',6I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
 CCCCC JULY 1996.  ADD FOLLOING 9 LINES FOR SGI BUG.
-      IF(NSGX.LT.0)NSGX=0
-      IF(NMX.LT.0)NMX=0
-      IF(JMX.LT.0)JMX=0
-      IF(IMX.LT.0)IMX=0
       NSGE(1)=0
       NSGE(2)=0
       NSGE(3)=0
@@ -39836,9 +40294,17 @@ C    AND THE DISTANCE OF THESE POINTS FROM THE LOWER LEFT CORNER
             LS=LN+1
             LN=LN+NPTS(N,2)
             L=LS
+C
+            IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'YSRT')THEN
+              WRITE(ICOUT,401)
+  401         FORMAT('BEFORE FIRST CALL TO SIDEDI')
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+C
             DO 410 K=1,2
               CALL SIDEDI(XC(L,2),YC(L,2),NS(K,N,2),D(K,N,2),
-     1                    IB,JB,X,Y)
+     1                    IB,JB,X,Y,
+     1                    IBUGG3,ISUBRO,IERROR)
                L=LN
   410       CONTINUE
   400     CONTINUE
@@ -39884,8 +40350,19 @@ C   DETERMINE AREA OF CLOSED SEGMENTS AND STORE IN D(1,*,*)
       END IF
 C     WRITE(9,'(''  EDGE CONTOURS'')')
 C     CALL PRT_STR(9,XC(1,2),YC(1,2),NSGE(2),NPTS(1,2))
-C   SORT BOTH 1 AND 2 EDGE-TO-EDGE SEGMENTS BY DISTANCE OF
-C    ENTRY POINTS FROM LOWER LEFT CORNER.
+C
+      IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'YSRT')THEN
+        WRITE(ICOUT,611)
+  611   FORMAT('EDGE CONTOURS 1')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,612)XC(1,2),YC(1,2),NSGE(2),NPTS(1,2)
+  612   FORMAT('XC(1,2),YC(1,2),NSGE(2),NPTS(1,2) = ',2G15.7,2I6)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C     SORT BOTH 1 AND 2 EDGE-TO-EDGE SEGMENTS BY DISTANCE OF
+C     ENTRY POINTS FROM LOWER LEFT CORNER.
+C
       DO700K=1,2
         IF (NSGE(K).GT.0) THEN
           NSGM=NSGE(K)-1
@@ -39921,6 +40398,22 @@ C     WRITE(9,'(''  SORTED EDGE CONTOURS 1'')')
 C     CALL PRT_STR(9,XC(1,1),YC(1,1),NSGE(1),NPTS(1,1))
 C     WRITE(9,'(''  SORTED EDGE CONTOURS 2'')')
 C     CALL PRT_STR(9,XC(1,2),YC(1,2),NSGE(2),NPTS(1,2))
+C
+      IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'YSRT')THEN
+        WRITE(ICOUT,711)
+  711   FORMAT('SORTED EDGE CONTOURS 1')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,712)XC(1,1),YC(1,1),NSGE(1),NPTS(1,1)
+  712   FORMAT('XC(1,1),YC(1,1),NSGE(1),NPTS(1,1) = ',2G15.7,2I6)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,716)
+  716   FORMAT('SORTED EDGE CONTOURS 2')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,717)XC(1,2),YC(1,2),NSGE(2),NPTS(1,2)
+  717   FORMAT('XC(1,2),YC(1,2),NSGE(2),NPTS(1,2) = ',2G15.7,2I6)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
 C   BEGIN CONVERTING EDGE-TO-EDGE SEGMENTS TO CLOSED SEGMENTS
       L3=0
       N3=0
@@ -39947,7 +40440,15 @@ C   BEGIN CONVERTING EDGE-TO-EDGE SEGMENTS TO CLOSED SEGMENTS
               ESTR=0
   900         CONTINUE
               IF(ESTR.EQ.1)GOTO999
+C
 C     WRITE(9,'('' PRMTR'',F10.2)') PRMTR
+C
+              IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'YSRT')THEN
+                WRITE(ICOUT,907)PRMTR
+  907           FORMAT('PRMTR = ',F10.2)
+                CALL DPWRST('XXX','BUG ')
+              ENDIF
+C
               DD=D(1,N3,3)-D(2,N3,3)
               SGNDD=SIGN(1.0,DD)
               IF (DD.LT.0.) DD=DD+PRMTR
@@ -39977,11 +40478,28 @@ C     1               D(1,NN,KK),D(2,N3,3),D0,SGND0
 C     WRITE(9,'('' KE NE'',2I6)') KE,NE
 C     WRITE(9,'('' NS2 NS1 SGNDD'',2I6,F6.0)')
 C     1               NS(2,N3,3),NS(1,NE,KE),SGNDD
+C
+              IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'YSRT')THEN
+                WRITE(ICOUT,917)KE,NE
+  917           FORMAT('KE,NE = ',2I6)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,918)NS2,NS1,SDGND
+  918           FORMAT('NS2,NS1,SDGND = ',2I6,F6.0)
+                CALL DPWRST('XXX','BUG ')
+              ENDIF
+C
               IF (NS(2,N3,3).NE.NS(1,NE,KE).OR.SGNDD.LT.0.) THEN
                 NB1=NS(2,N3,3)+1
                 NB2=NS(1,NE,KE)
                 LL=L3+NPTS(N3,3)
 C     WRITE(9,'('' NB1 NB2'',2I6)') NB1,NB2
+C
+                IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'YSRT')THEN
+                  WRITE(ICOUT,921)NB1,NB2
+  921             FORMAT('NB1,NB2 = ',2I6)
+                  CALL DPWRST('XXX','BUG ')
+                ENDIF
+C
                 IF (NS(2,N3,3).LT.NS(1,NE,KE)) THEN
                   DO930NB=NB1,NB2
                     LL=LL+1
@@ -40002,8 +40520,16 @@ C     WRITE(9,'('' NB1 NB2'',2I6)') NB1,NB2
   950             CONTINUE
                   NPTS(N3,3)=NPTS(N3,3)+NB2-NB1+NBX
                 END IF
+C
+                IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'YSRT')THEN
+                  WRITE(ICOUT,951)
+  951             FORMAT('BEFORE SECOND CALL TO SIDEDI')
+                  CALL DPWRST('XXX','BUG ')
+                ENDIF
+C
                 CALL SIDEDI(XC(LL,3),YC(LL,3),NS(2,N3,3),
-     1                         D(2,N3,3),IB,JB,X,Y)
+     1                      D(2,N3,3),IB,JB,X,Y,
+     1                      IBUGG3,ISUBRO,IERROR)
                 DD=D(1,NE,KE)-D(2,N3,3)
                 SGNDD=SIGN(1.0,DD)
                 IF (DD.LT.0.) DD=DD+PRMTR
@@ -40189,6 +40715,16 @@ C   HANDLE SITUATION WHERE THERE ARE ONLY CLOSED HIGH SEGMENTS
       NSEG(3)=N3
 C     WRITE(9,'(''  TOTAL CONTOURS'')')
 C     CALL PRT_STR(9,XC(1,3),YC(1,3),NSEG(3),NPTS(1,3))
+C
+      IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'YSRT')THEN
+        WRITE(ICOUT,9001)
+ 9001   FORMAT('AT THE END OF PLYSRT: TOTAL CONTOURS')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9003)XC(1,3),YC(1,3),NSEG(3),NPTS(1,3)
+ 9003   FORMAT('XC(1,3),YC(1,3),NSEG(3),NPTS(1,3) = ',2G15.7,2I6)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
       RETURN
       END
       SUBROUTINE PLNCDF(X,P,SD,CDF)
@@ -47944,6 +48480,238 @@ c
 c
    99 return
       end
+      SUBROUTINE PSCORE(X,N1,Y,N2,IWRITE,XSCORE,YSCORE,
+     1                  IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES THE PLACEMENT SCORES
+C              OF THE N1 ELEMENTS OF THE SINGLE PRECISION VECTOR X AND
+C              THE N2 ELEMENTS OF THE SINGLE PRECISION VECTOR Y, AND
+C              PUTS THE RESULTING SCORES INTO THE SINGLE PRECISION
+C              VECTORS XSCORE AND YSCORE.  THESE ARE USED TO COMPUTE
+C              THE FLIGNER-POLICELLO TWO SAMPLE LOCATION TEST.
+C
+C              THE PLACEMENT SCORE FOR X(i) IS DEFINED AS THE NUMBER
+C              OF OBSERVATIONS IN Y THAT ARE LESS THAN X(i).  VALUES
+C              IN Y THAT ARE EQUAL TO X(i) ADD (1/2) RATHER THAN 1.
+C
+C     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+C                                OBSERVATIONS TO BE SCORED.
+C                     --N1     = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR X.
+C                     --Y      = THE SINGLE PRECISION VECTOR OF
+C                                OBSERVATIONS TO BE SCORED.
+C                     --N2     = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR X.
+C     OUTPUT ARGUMENTS--XSCORE = THE SINGLE PRECISION VECTOR INTO WHICH
+C                                THE SCORES FROM X WILL BE PLACED.
+C                     --YSCORE = THE SINGLE PRECISION VECTOR INTO WHICH
+C                                THE SCORES FROM Y WILL BE PLACED.
+C     OUTPUT--THE SINGLE PRECISION VECTORS XSCORE AND YSCORE CONTAINING
+C             THE PLACEMENT SCORES.
+C     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--NONE
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     REFERENCES--ORBAN AND WOLFE (1979), "A CLASS OF DISTRIBUTION-FREE
+C                 TWO-SAMPLE TESTS BASED ON PLACEMENTS," TECHNICAL
+C                 REPORT 178, DEPARTMENT OF STATISTICS, OHIO STATE
+C                 UNIVERSITY.
+C               --FLIGNER AND POLICELLO (1981), "ROBUST RANK
+C                 PROCEDURES FOR THE BEHRENS-FISHER PROBLEM," JOURNAL
+C                 OF THE AMERICAN STATISTICAL ASSOCIATION, VOL. 76,
+C                 PP. 162-168.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATION INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2023.07
+C     ORIGINAL VERSION--JULY      2023.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION X(*)
+      DIMENSION Y(*)
+      DIMENSION XSCORE(*)
+      DIMENSION YSCORE(*)
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='PSCO'
+      ISUBN2='RE  '
+      IERROR='NO'
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CORE')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF PSCORE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)N1,N2,IBUGA3,ISUBRO
+   53   FORMAT('N1,N2,IBUGA3,ISUBRO = ',2I8,(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N1
+          WRITE(ICOUT,56)I,X(I)
+   56     FORMAT('I,X(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+        DO65I=1,N2
+          WRITE(ICOUT,66)I,Y(I)
+   66     FORMAT('I,Y(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   65   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      IF(N1.LT.1)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN PLACEMENT SCORES--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+  113   FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE FIRST ',
+     1         'RESPONSE VARIABLE IS LESS THAN 1.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,118)N1
+  118   FORMAT('      THE NUMBER OF OBSERVATIONS IS ',I8)
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+      IF(N2.LT.1)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,123)
+  123   FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE SECOND ',
+     1         'RESPONSE VARIABLE IS LESS THAN 1.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,118)N2
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 2--                              **
+C               **  GENERATE THE PLACEMENT   SCORES       **
+C               **  FOR THE FIRST RESPONSE VARIABLE.      **
+C               ********************************************
+C
+        DO211I=1,N1
+          SUM=0.0
+          DO213J=1,N2
+            IF(Y(J).LT.X(I))THEN
+              SUM=SUM + 1.0
+            ELSEIF(Y(J).EQ.X(I))THEN
+              SUM=SUM + 0.5
+            ENDIF
+  213     CONTINUE
+          XSCORE(I)=SUM
+  211   CONTINUE
+C
+C               ********************************************
+C               **  STEP 3--                              **
+C               **  GENERATE THE PLACEMENT   SCORES       **
+C               **  FOR THE SECOND RESPONSE VARIABLE.     **
+C               ********************************************
+C
+        DO311I=1,N2
+          SUM=0.0
+          DO313J=1,N1
+            IF(X(J).LT.Y(I))THEN
+              SUM=SUM + 1.0
+            ELSEIF(X(J).EQ.Y(I))THEN
+              SUM=SUM + 0.5
+            ENDIF
+  313     CONTINUE
+          YSCORE(I)=SUM
+  311   CONTINUE
+C
+C               ******************************
+C               **  STEP 4--                **
+C               **  WRITE OUT A FEW LINES   **
+C               **  OF SUMMARY INFORMATION  **
+C               **  ABOUT THE CODING.       **
+C               ******************************
+C
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IINDX=1
+        WRITE(ICOUT,912)IINDX,XSCORE(IINDX)
+  912   FORMAT('THE PLACEMENT SCORE OF ROW ',I10,
+     1         ' FOR THE FIRST RESPONE VARIABLE = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,922)IINDX,YSCORE(IINDX)
+  922   FORMAT('THE PLACEMENT SCORE OF ROW ',I10,
+     1         ' FOR THE SECOND RESPONE VARIABLE = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        IINDX=N1
+        WRITE(ICOUT,912)IINDX,XSCORE(IINDX)
+        CALL DPWRST('XXX','BUG ')
+        IINDX=N2
+        WRITE(ICOUT,922)IINDX,YSCORE(IINDX)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CORE')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF PSCORE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        DO9015I=1,N1
+          WRITE(ICOUT,9016)I,X(I),XSCORE(I)
+ 9016     FORMAT('I,X(I),XSCORE(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9015   CONTINUE
+        DO9025I=1,N2
+          WRITE(ICOUT,9026)I,Y(I),YSCORE(I)
+ 9026     FORMAT('I,Y(I),YSCORE(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9025   CONTINUE
+      ENDIF
+C
+      RETURN
+      END
       DOUBLE PRECISION FUNCTION psi(xx)
 C---------------------------------------------------------------------
 C

@@ -3774,19 +3774,21 @@ C
       SUBROUTINE DPMRCL(ICASAN,ICAPSW,IFORSW,
      1                  ISUBRO,IBUGA2,IBUGA3,IBUGQ,IFOUND,IERROR)
 C
-C     PURPOSE--GENERATE (SYMMETRIC) CONFIDENCE LIMITS FOR THE MEAN
+C     PURPOSE--GENERATE CONFIDENCE LIMITS FOR THE RATIO OF TWO MEANS
 C              FOR PROBABILITY VALUE P = .90, .95, .99, .999, AND .9999.
-C     WRITTEN BY--JAMES J. FILLIBEN
+C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
 C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
 C                 GAITHERSBURG, MD 20899-8980
-C                 PHONE--301-975-2855
+C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--2019/10
 C     ORIGINAL VERSION--OCTOBER   2019.
+C     UPDATED         --JUNE      2023. SUPPORT FOR RATIO OF SD
+C     UPDATED         --JUNE      2023. SUPPORT FOR RATIO OF VARIANCE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -3801,6 +3803,7 @@ C
       CHARACTER*4 IERROR
 C
       CHARACTER*4 ICASE
+      CHARACTER*4 ICASE2
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
@@ -3863,9 +3866,6 @@ C
         WRITE(ICOUT,52)IBUGA2,IBUGA3,IBUGQ,ISUBRO
    52   FORMAT('IBUGA2,IBUGA3,IBUGQ,ISUBRO = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,55)MAXNXT,MAXV2
-   55   FORMAT('MAXNXT,MAXV2 = ',I8,2X,I5)
-        CALL DPWRST('XXX','BUG ')
       ENDIF
 C
 C               *********************************
@@ -3879,7 +3879,10 @@ C
 C
 C     THE FOLLOWING COMMANDS ARE ACCEPTED:
 C
-C         RATIO OF MEAN CONFIDENCE LIMITS Y X
+C         RATIO OF MEAN                CONFIDENCE LIMITS Y1 Y2
+C         RATIO OF SD                  CONFIDENCE LIMITS Y1 Y2
+C         RATIO OF STANDARD DEVIATIONS CONFIDENCE LIMITS Y1 Y2
+C         RATIO OF VARIANCES           CONFIDENCE LIMITS Y1 Y2
 C
       IFOUND='NO'
       IF(ICOM.EQ.'RATI' .AND. IHARG(1).EQ.'OF  ' .AND.
@@ -3887,6 +3890,30 @@ C
      1   (IHARG(4).EQ.'LIMI' .OR. IHARG(4).EQ.'INTE'))THEN
         IFOUND='YES'
         ISHIFT=4
+        ICASAN='MRCL'
+      ELSEIF(ICOM.EQ.'RATI' .AND. IHARG(1).EQ.'OF  ' .AND.
+     1   (IHARG(2).EQ.'SD  ' .OR. IHARG(2).EQ.'SDS ') .AND.
+     1   IHARG(3).EQ.'CONF' .AND.
+     1   (IHARG(4).EQ.'LIMI' .OR. IHARG(4).EQ.'INTE'))THEN
+        IFOUND='YES'
+        ISHIFT=4
+        ICASAN='SRCL'
+        ICASE2='SD  '
+      ELSEIF(ICOM.EQ.'RATI' .AND. IHARG(1).EQ.'OF  ' .AND.
+     1   IHARG(2).EQ.'STAN' .AND. IHARG(3).EQ.'DEVI' .AND.
+     1   IHARG(4).EQ.'CONF' .AND.
+     1   (IHARG(5).EQ.'LIMI' .OR. IHARG(5).EQ.'INTE'))THEN
+        IFOUND='YES'
+        ISHIFT=5
+        ICASAN='SRCL'
+        ICASE2='SD  '
+      ELSEIF(ICOM.EQ.'RATI' .AND. IHARG(1).EQ.'OF  ' .AND.
+     1   IHARG(2).EQ.'VARI' .AND. IHARG(3).EQ.'CONF' .AND.
+     1   (IHARG(4).EQ.'LIMI' .OR. IHARG(4).EQ.'INTE'))THEN
+        IFOUND='YES'
+        ISHIFT=4
+        ICASAN='SRCL'
+        ICASE2='VARI'
       ELSE
         GOTO9000
       ENDIF
@@ -3904,6 +3931,13 @@ C
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       INAME='RATIO OF MEANS CONFIDENCE LIMIT'
+      IF(ICASAN.EQ.'SRCL')THEN
+        IF(ICASE2.EQ.'SD  ')THEN
+           INAME='RATIO OF SDS CONFIDENCE LIMIT'
+        ELSE
+           INAME='RATIO OF VARIANCES CONFIDENCE LIMIT'
+        ENDIF
+      ENDIF
       MINNA=1
       MAXNA=100
       MINNVA=2
@@ -3913,6 +3947,7 @@ C
       JMAX=NUMARG
       MINN2=3
       IFLAGE=1
+      IF(ICASAN.EQ.'SRCL')IFLAGE=0
       IFLAGM=2
 C
       CALL DPPARS(IHARG,IHARG2,IARGT,ARG,NUMARG,IANS,IWIDTH,
@@ -4000,13 +4035,23 @@ C
         ENDIF
       ENDIF
 C
-      CALL DPMRC2(Y,X,NLOCAL,IVARID,IVARI2,
-     1            CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
-     1            CTL999,CTU999,
-     1            ICAPSW,ICAPTY,IFORSW,IRATME,
-     1            ISUBRO,IBUGA3,IERROR)
+      IF(ICASAN.EQ.'MRCL')THEN
+        CALL DPMRC2(Y,X,NLOCAL,IVARID,IVARI2,
+     1              CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,
+     1              CTL999,CTU999,
+     1              ICAPSW,ICAPTY,IFORSW,IRATME,
+     1              ISUBRO,IBUGA3,IERROR)
+      ELSEIF(ICASAN.EQ.'SRCL')THEN
+        MAXNXT=MAXOBV
+        CALL DPSRC2(Y,NLOCAL,X,NLOCA2,IVARID,IVARI2,TEMP1,
+     1              ICASE2,IFTESH,IFTEDI,PFTEPV,PFTEPM,
+     1              CUTL50,CUTU50,CUTL80,CUTU80,
+     1              CUTL90,CUTU90,CUTL95,CUTU95,
+     1              CUTL99,CUTU99,CTL999,CTU999,
+     1              ICAPSW,ICAPTY,IFORSW,MAXNXT,
+     1              ISUBRO,IBUGA3,IERROR)
+      ENDIF
 C
-      ICASAN='MRCL'
       IFLAGU='ON'
       IFRST=.TRUE.
       ILAST=.TRUE.
@@ -10708,8 +10753,34 @@ C
       DO2000I=1,NUMNAM
         I2=I
         IF(IHLEFT.EQ.IHNAME(I).AND.IHLEF2.EQ.IHNAM2(I))THEN
-          ILISTL=I2
-          GOTO2900
+          IF(IUSE(I).EQ.'V   ' .OR. IUSE(I).EQ.'P   ')THEN
+            ILISTL=I2
+            GOTO2900
+          ELSE
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2201)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,210)IHLEFT,IHLEF2
+  210       FORMAT('      AN ATTEMPT WAS MADE TO USE ',2A4,' AS A ',
+     1           'VARIABLE OR PARAMETER')
+            CALL DPWRST('XXX','BUG ')
+            IF(IUSE(I).EQ.'F')THEN
+              WRITE(ICOUT,211)
+  211         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A STRING.')
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(IUSE(I).EQ.'M')THEN
+              WRITE(ICOUT,212)
+  212         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A MATRIX.')
+              CALL DPWRST('XXX','BUG ')
+            ELSE
+              WRITE(ICOUT,213)IUSE(I)
+  213         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A ',A4,'.')
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+            IERROR='YES'
+            GOTO9000
+          ENDIF
         ENDIF
  2000 CONTINUE
       NEWNAM='YES'
@@ -20720,8 +20791,34 @@ C
       DO2000I=1,NUMNAM
         I2=I
         IF(IHLEFT.EQ.IHNAME(I).AND.IHLEF2.EQ.IHNAM2(I))THEN
-          ILISTL=I2
-          GOTO2900
+          IF(IUSE(I).EQ.'V   ' .OR. IUSE(I).EQ.'P   ')THEN
+            ILISTL=I2
+            GOTO2900
+          ELSE
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2201)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,210)IHLEFT,IHLEF2
+  210       FORMAT('      AN ATTEMPT WAS MADE TO USE ',2A4,' AS A ',
+     1           'VARIABLE OR PARAMETER')
+            CALL DPWRST('XXX','BUG ')
+            IF(IUSE(I).EQ.'F')THEN
+              WRITE(ICOUT,211)
+  211         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A STRING.')
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(IUSE(I).EQ.'M')THEN
+              WRITE(ICOUT,212)
+  212         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A MATRIX.')
+              CALL DPWRST('XXX','BUG ')
+            ELSE
+              WRITE(ICOUT,213)IUSE(I)
+  213         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A ',A4,'.')
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+            IERROR='YES'
+            GOTO9000
+          ENDIF
         ENDIF
  2000 CONTINUE
       NEWNAM='YES'
@@ -27868,6 +27965,7 @@ C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--91/11
 C     ORIGINAL VERSION--OCTOBER 1991.
 C     UPDATED         --MAY     1993. EV1, EV2, WEIBULL
+C     UPDATED         --MARCH   2022. EXPONENTIAL
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -27978,104 +28076,115 @@ C
       ILEFT2=IHARG2(1)
       DO310I=1,NUMNAM
         I2=I
-        IF(ILEFT.EQ.IHNAME(I).AND.ILEFT2.EQ.IHNAM2(I).AND.
-     1     IUSE(I).EQ.'P')GOTO329
-        IF(ILEFT.EQ.IHNAME(I).AND.ILEFT2.EQ.IHNAM2(I).AND.
-     1     IUSE(I).EQ.'V')GOTO380
+        IF(ILEFT.EQ.IHNAME(I).AND.ILEFT2.EQ.IHNAM2(I))THEN
+          IF(IUSE(I).EQ.'P')THEN
+            ILISTL=I2
+            GOTO330
+          ELSEIF(IUSE(I).EQ.'V')THEN
+            ILISTL=I2
+            ICOLL=IVALUE(ILISTL)
+            NLEFT=IN(ILISTL)
+            GOTO390
+          ELSE
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,321)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,210)ILEFT,ILEFT2
+  210       FORMAT('      AN ATTEMPT WAS MADE TO USE ',2A4,' AS A ',
+     1             'VARIABLE')
+            CALL DPWRST('XXX','BUG ')
+            IF(IUSE(I).EQ.'F')THEN
+              WRITE(ICOUT,211)
+  211         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A STRING.')
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(IUSE(I).EQ.'M')THEN
+              WRITE(ICOUT,212)
+  212         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A MATRIX.')
+              CALL DPWRST('XXX','BUG ')
+            ELSE
+              WRITE(ICOUT,213)IUSE(I)
+  213         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A ',A4,'.')
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+        ENDIF
   310 CONTINUE
       NEWNAM='YES'
       ILISTL=NUMNAM+1
-      IF(ILISTL.GT.MAXNAM)GOTO320
-      GOTO330
-C
-  320 CONTINUE
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,321)
-  321 FORMAT('***** ERROR IN DPOSM--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,322)
-  322 FORMAT('      THE NUMBER OF VARIABLE AND/OR PARAMETER')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,323)MAXNAM
-  323 FORMAT('      NAMES HAS JUST EXCEEDED THE MAX ALLOWABLE ',
-     1I8,'  .')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,324)
-  324 FORMAT('      SUGGESTED ACTION--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,325)
-  325 FORMAT('      ENTER      STAT')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,326)
-  326 FORMAT('      TO FIND OUT THE FULL LIST OF USED NAMES,')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,327)
-  327 FORMAT('      AND THEN REDEFINE (REUSE) SOME OF THE')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,328)
-  328 FORMAT('      ALREADY-USED NAMES')
-      CALL DPWRST('XXX','BUG ')
-      IERROR='YES'
-      GOTO9000
-C
-  329 CONTINUE
-      ILISTL=I2
-      GOTO330
+      IF(ILISTL.GT.MAXNAM)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,321)
+  321   FORMAT('***** ERROR IN DPOSM--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,322)
+  322   FORMAT('      THE NUMBER OF VARIABLE AND/OR PARAMETER NAMES')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,323)MAXNAM
+  323   FORMAT('      HAS JUST EXCEEDED THE MAXIMUM ALLOWABLE ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,324)
+  324   FORMAT('      SUGGESTED ACTION--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,325)
+  325   FORMAT('      ENTER      STAT')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,326)
+  326   FORMAT('      TO FIND OUT THE FULL LIST OF USED NAMES, AND ',
+     1         'THEN')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,327)
+  327   FORMAT('      REDEFINE (REUSE) SOME OF THE ALREADY USED NAMES.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
 C
   330 CONTINUE
       NLEFT=0
       ICOLL=NUMCOL+1
-      IF(ICOLL.GT.MAXCOL)GOTO340
-      GOTO390
-C
-  340 CONTINUE
-      WRITE(ICOUT,341)
-  341 FORMAT('***** ERROR IN DPOSM--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,342)
-  342 FORMAT('      THE NUMBER OF DATA COLUMNS')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,343)MAXCOL
-  343 FORMAT('      HAS JUST EXCEEDED THE MAX ALLOWABLE ',I8,'  .')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,344)
-  344 FORMAT('      SUGGESTED ACTION--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,345)
-  345 FORMAT('      ENTER      STAT')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,346)
-  346 FORMAT('      TO FIND OUT THE FULL LIST OF USED COLUMNS')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,347)
-  347 FORMAT('      AND THEN OVERWRITE SOME COLUMNS.   EXAMPLE--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,348)
-  348 FORMAT('      IF       LET X(I) = 3.14         FAILED')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,349)
-  349 FORMAT('      THEN ONE MIGHT ENTER     NAME X 7')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,350)
-  350 FORMAT('      (THEREBY EQUATING THE NAME X WITH COLUMN 7')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,351)
-  351 FORMAT('      FOLLOWED BY              LET X = 3.14')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,352)
-  352 FORMAT('      (WHICH WILL ACTUALLY OVERWRITE COLUMN 7')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,353)
-  353 FORMAT('      WITH THE NUMERIC CONSTANTS 3.14)')
-      CALL DPWRST('XXX','BUG ')
-      IERROR='YES'
-      GOTO9000
-C
-  380 CONTINUE
-      ILISTL=I2
-      ICOLL=IVALUE(ILISTL)
-      NLEFT=IN(ILISTL)
+      IF(ICOLL.GT.MAXCOL)THEN
+        WRITE(ICOUT,321)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,342)
+  342   FORMAT('      THE NUMBER OF DATA COLUMNS HAS JUST EXCEEDED THE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,343)MAXCOL
+  343   FORMAT('      MAXIMUM ALLOWABLE ',I8,'.  SUGGESTED ACTION--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,325)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,346)
+  346   FORMAT('      TO FIND OUT THE FULL LIST OF USED COLUMNS AND ',
+     1         'THEN')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,347)
+  347   FORMAT('      OVERWRITE SOME COLUMNS.   EXAMPLE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,348)
+  348   FORMAT('      IF       LET X(I) = 3.14         FAILED')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,349)
+  349   FORMAT('      THEN ONE MIGHT ENTER     NAME X 7')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,350)
+  350   FORMAT('      (THEREBY EQUATING THE NAME X WITH COLUMN 7')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,351)
+  351   FORMAT('      FOLLOWED BY              LET X = 3.14')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,352)
+  352   FORMAT('      (WHICH WILL ACTUALLY OVERWRITE COLUMN 7')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,353)
+  353   FORMAT('      WITH THE NUMERIC CONSTANTS 3.14)')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
 C
   390 CONTINUE
 C
@@ -28115,44 +28224,43 @@ C
   670 CONTINUE
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,671)
-  671 FORMAT('***** INTERNAL ERROR IN DPOSM')
+      WRITE(ICOUT,321)
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,672)
   672 FORMAT('      AT BRANCH POINT 5081--')
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,673)
-  673 FORMAT('      NUMARG LESS THAN 1 EVEN THOUGH')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,674)
-  674 FORMAT('      NUMARG HAD PREVIOUSLY PASSED THIS TEST')
+  673 FORMAT('      NUMARG LESS THAN 1 EVEN THOUGH NUMARG HAD ',
+     1       'PREVIOUSLY PASSED')
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,675)NUMARG
-  675 FORMAT('      ONCE ALREADY.  VALUE OF NUMARG = ',I8)
+  675 FORMAT('      THIS TEST ONCE ALREADY.  VALUE OF NUMARG = ',I8)
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,676)
   676 FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
       CALL DPWRST('XXX','BUG ')
-      IF(IWIDTH.GE.1)WRITE(ICOUT,677)(IANS(I),I=1,IWIDTH)
-  677 FORMAT(80A1)
-      IF(IWIDTH.GE.1)CALL DPWRST('XXX','BUG ')
+      IF(IWIDTH.GE.1)THEN
+        WRITE(ICOUT,677)(IANS(I),I=1,MIN(80,IWIDTH))
+  677   FORMAT(80A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       IERROR='YES'
       GOTO9000
 C
   680 CONTINUE
-      IF(IBUGA3.EQ.'OFF')GOTO690
-      WRITE(ICOUT,681)NUMARG,ILOCQ,ICASEQ
-  681 FORMAT('NUMARG,ILOCQ,ICASEQ = ',I8,I8,2X,A4)
-      CALL DPWRST('XXX','BUG ')
 C
-  690 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,681)NUMARG,ILOCQ,ICASEQ
+  681   FORMAT('NUMARG,ILOCQ,ICASEQ = ',2I8,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               ******************************************************
 C               **  STEP 7--                                        **
 C               **  BRANCH TO THE APPROPRIATE SUBCASE               **
 C               **  (BASED ON THE QUALIFIER);                       **
 C               **  DETERMINE THE NUMBER (= NOSM)                   **
-C               **  OF ORDER STATISTIC MEDIANS TO BE GENERATED.
+C               **  OF ORDER STATISTIC MEDIANS TO BE GENERATED.     **
 C               **  NOTE THAT THE VARIABLE NIISUB                   **
 C               **  IS THE LENGTH OF THE RESULTING                  **
 C               **  VARIABLE ISUB(.).                               **
@@ -28207,13 +28315,39 @@ C
       IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       CALL UNIMED(NOSM,Y)
+      IFOUND='YES'
 C
-      IF(ICASLE.EQ.'UOSM')GOTO890
-      IF(ICASLE.EQ.'NOSM')GOTO820
-      IF(ICASLE.EQ.'HOSM')GOTO830
+      IF(ICASLE.EQ.'UOSM')THEN
+        GOTO890
+      ELSEIF(ICASLE.EQ.'NOSM')THEN
+        DO821I=1,NOSM
+          CALL NORPPF(Y(I),Y(I))
+  821   CONTINUE
+        GOTO890
+      ELSEIF(ICASLE.EQ.'HOSM')THEN
+        DO831I=1,NOSM
+          CALL HFNPPF(Y(I),Y(I))
+  831   CONTINUE
+        GOTO890
+      ELSEIF(ICASLE.EQ.'E1OM')THEN
+        DO841I=1,NOSM
+          CALL EV1PPF(Y(I),MINMAX,Y(I))
+  841   CONTINUE
+        GOTO890
+      ELSEIF(ICASLE.EQ.'EXPM')THEN
+        DO843I=1,NOSM
+          CALL EXPPPF(Y(I),Y(I))
+  843   CONTINUE
+        GOTO890
+      ELSEIF(ICASLE.EQ.'LOSM')THEN
+        DO845I=1,NOSM
+          CALL LOGPPF(Y(I),Y(I))
+  845   CONTINUE
+        GOTO890
+      ENDIF
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED   MAY 1993
-      IF(ICASLE.EQ.'E1OM'.OR.ICASLE.EQ.'E2OM'.OR.ICASLE.EQ.'WOSM')THEN
+      IF(ICASLE.EQ.'E2OM'.OR.ICASLE.EQ.'WOSM')THEN
          IHP='GAMM'
          IHP2='A   '
          IHWUSE='P'
@@ -28227,12 +28361,11 @@ C
          IF(GAMMA.LE.0.0)THEN
            WRITE(ICOUT,999)
            CALL DPWRST('XXX','BUG ')
-           WRITE(ICOUT,1511)
- 1511      FORMAT('***** ERROR IN DPOSM--')
+           WRITE(ICOUT,321)
            CALL DPWRST('XXX','BUG ')
            WRITE(ICOUT,1512)
  1512      FORMAT('      THE SPECIFIED SHAPE PARAMETER GAMMA FOR THE ',
-     1            'EV1/EV2/WEIBULL')
+     1            'EV2/WEIBULL')
            CALL DPWRST('XXX','BUG ')
            WRITE(ICOUT,1513)
  1513      FORMAT('      DISTRIBUTIONS MUST BE STRICTLY LARGER THAN 0;')
@@ -28248,46 +28381,23 @@ C
         ENDIF
       ENDIF
 C
-CCCCC THE FOLLOWING 3 LINES WERE ADDED    MAY 1993
-      IF(ICASLE.EQ.'E1OM')GOTO840
-      IF(ICASLE.EQ.'E2OM')GOTO850
-      IF(ICASLE.EQ.'WOSM')GOTO860
-C
-  820 CONTINUE
-      DO821I=1,NOSM
-      CALL NORPPF(Y(I),Y(I))
-  821 CONTINUE
-      GOTO890
-C
-  830 CONTINUE
-      DO831I=1,NOSM
-      CALL HFNPPF(Y(I),Y(I))
-  831 CONTINUE
-      GOTO890
-C
-  840 CONTINUE
-      DO841I=1,NOSM
-      CALL EV1PPF(Y(I),MINMAX,Y(I))
-  841 CONTINUE
-      GOTO890
-C
-  850 CONTINUE
-      DO851I=1,NOSM
-      CALL EV2PPF(Y(I),GAMMA,MINMAX,Y(I))
-  851 CONTINUE
-      GOTO890
-C
-  860 CONTINUE
-      DO861I=1,NOSM
-      CALL WEIPPF(Y(I),GAMMA,MINMAX,Y(I))
-  861 CONTINUE
-      GOTO890
+      IF(ICASLE.EQ.'E2OM')THEN
+        DO851I=1,NOSM
+          CALL EV2PPF(Y(I),GAMMA,MINMAX,Y(I))
+  851   CONTINUE
+        GOTO890
+      ELSEIF(ICASLE.EQ.'WOSM')THEN
+        DO861I=1,NOSM
+          CALL WEIPPF(Y(I),GAMMA,MINMAX,Y(I))
+  861   CONTINUE
+        GOTO890
+      ENDIF
 C
   890 CONTINUE
 C
 C               ***********************************************************
 C               **  STEP 8--                                             **
-C               **  IF CALLED FOR (THAT IS, IF IBUGA3 IS ON),      **
+C               **  IF CALLED FOR (THAT IS, IF IBUGA3 IS ON),            **
 C               **  PRINT OUT THE INTERMEDIATE VARIABLE Y(.).            **
 C               **  THIS IS USEFUL FOR DIAGNOSTIC PURPOSES               **
 C               **  IN REVIEWING THE OUTPUT FROM THIS SUBROUTINE.        **
@@ -28489,8 +28599,803 @@ C
         WRITE(ICOUT,9012)IFOUND,IERROR
  9012   FORMAT('IFOUND,IERROR = ',A4,2X,A4)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9013)ICASLE,IBUGA3,IBUGQ
- 9013   FORMAT('ICASLE,IBUGA3,IBUGQ = ',2(A4,2X),A4)
+        WRITE(ICOUT,9016)NS2,NS,NIISUB,NOSM
+ 9016   FORMAT('NS2,NS,NIISUB,NOSM = ',4I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPOSME(ICASLE,ISUBRO,IBUGA3,IBUGQ,IFOUND,IERROR)
+C
+C     PURPOSE--GENERATE ORDER STATISTIC MEANS/STANDARD DEVIATIONS FOR
+C                  UNIFORM DISTRIBUTION
+C                  NORMAL DISTRIBUTION
+C                  EXPONENTIAL DISTRIBUTION
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     REFERENCES--Royston (1982), "Algorithm AS 177: Expected Normal
+C                 Order Statistics (Exact and Approximate)," Applied
+C                 Statistics, 31, pp. 161-165.
+C               --Omondi (2014), "Order Statistics of Uniform, Logistic
+C                 and Exponential Distributions," Masters Thesis for
+C                 University Of Nairobi, College of Biological and
+C                 Physical Sciences, School of Mathematics Chapters
+C                 3 and 5.
+C              --Blom (1958), "Statistical Estimates and Transformed
+C                Beta Variables," Wiley.
+C              --https://stats.stackexchange.com/questions/394960/
+C                variance-of-normal-order-statistics
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2022/03
+C     ORIGINAL VERSION--MARCH   2022.
+C     UPDATED         --MAY     2023. ADD SAVAGE SCORES (OR EXPONENTIAL
+C                                     SCORES)
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ICASLE
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IBUGQ
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 NEWNAM
+      CHARACTER*4 NEWCOL
+      CHARACTER*4 ICASEQ
+      CHARACTER*4 ILEFT
+      CHARACTER*4 ILEFT2
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+C
+      DOUBLE PRECISION DPPF
+      DOUBLE PRECISION DPDF
+      DOUBLE PRECISION DP
+      DOUBLE PRECISION DVAL
+      DOUBLE PRECISION DSUM
+      DOUBLE PRECISION DN
+      DOUBLE PRECISION DK
+      DOUBLE PRECISION DTERM1
+      DOUBLE PRECISION DTERM2
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOZZ.INC'
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOP2.INC'
+C
+      REAL YTEMP(MAXOBV)
+      REAL WORK(4,721)
+C
+      EQUIVALENCE (GARBAG(IGARB1),YTEMP(1))
+      EQUIVALENCE (GARBAG(IGARB2),WORK(1,1))
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='DPOS'
+      ISUBN2='M   '
+      IFOUND='NO'
+      IERROR='NO'
+C
+      MAXCP1=MAXCOL+1
+      MAXCP2=MAXCOL+2
+      MAXCP3=MAXCOL+3
+      MAXCP4=MAXCOL+4
+      MAXCP5=MAXCOL+5
+      MAXCP6=MAXCOL+6
+      NS2=0
+C
+C               ***********************************************
+C               **  TREAT THE ORDER STATISTIC MEDIANS CASE  **
+C               **       1) FOR A FULL VARIABLE, OR          **
+C               **       2) FOR PART OF A VARIABLE.          **
+C               ***********************************************
+C
+      IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPOSME--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)ICASLE,ISUBRO,IBUGA3,IBUGQ
+   52   FORMAT('ICASLE,ISUBRO,IBUGA3,IBUGQ = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               **********************************
+C               **  STEP 1--                    **
+C               **  INITIALIZE SOME VARIABLES.  **
+C               **********************************
+C
+      ISTEPN='1'
+      IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      NEWNAM='NO'
+      NEWCOL='NO'
+C
+C               *******************************************************
+C               **  STEP 2--                                         **
+C               **  CHECK FOR THE PROPER NUMBER OF INPUT ARGUMENTS.  **
+C               *******************************************************
+C
+      ISTEPN='2'
+      IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      MINNA=3
+      MAXNA=100
+      CALL CHECKA(NUMARG,MINNA,MAXNA,IANS,IWIDTH,ISUBN1,ISUBN2,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+C               ****************************************************************
+C               **  STEP 3--                                                   *
+C               **  EXAMINE THE LEFT-HAND SIDE--                               *
+C               **  IS THE PARAMETER OR VARIABLE NAME TO LEFT OF = SIGN        *
+C               **  ALREADY IN THE NAME LIST?                                  *
+C               **  NOTE THAT     ILEFT      IS THE NAME OF THE VARIABLE       *
+C               **  ON THE LEFT.                                               *
+C               **  NOTE THAT     ILISTL    IS THE LINE IN THE TABLE           *
+C               **  OF THE NAME ON THE LEFT.                                   *
+C               **  NOTE THAT     ICOLL    IS THE DATA COLUMN (1 TO 12)        *
+C               **  FOR THE NAME OF THE LEFT.                                  *
+C               ****************************************************************
+C
+      ISTEPN='3'
+      IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      ILEFT=IHARG(1)
+      ILEFT2=IHARG2(1)
+      DO310I=1,NUMNAM
+        I2=I
+        IF(ILEFT.EQ.IHNAME(I).AND.ILEFT2.EQ.IHNAM2(I))THEN
+          IF(IUSE(I).EQ.'P')THEN
+            ILISTL=I2
+            GOTO330
+          ELSEIF(IUSE(I).EQ.'V')THEN
+            ILISTL=I2
+            ICOLL=IVALUE(ILISTL)
+            NLEFT=IN(ILISTL)
+            GOTO390
+          ELSE
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,321)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,210)ILEFT,ILEFT2
+  210       FORMAT('      AN ATTEMPT WAS MADE TO USE ',2A4,' AS A ',
+     1             'VARIABLE')
+            CALL DPWRST('XXX','BUG ')
+            IF(IUSE(I).EQ.'F')THEN
+              WRITE(ICOUT,211)
+  211         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A STRING.')
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(IUSE(I).EQ.'M')THEN
+              WRITE(ICOUT,212)
+  212         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A MATRIX.')
+              CALL DPWRST('XXX','BUG ')
+            ELSE
+              WRITE(ICOUT,213)IUSE(I)
+  213         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A ',A4,'.')
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+        ENDIF
+  310 CONTINUE
+      NEWNAM='YES'
+      ILISTL=NUMNAM+1
+      IF(ILISTL.GT.MAXNAM)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,321)
+  321   FORMAT('***** ERROR IN DPOSME--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,322)
+  322   FORMAT('      THE NUMBER OF VARIABLE AND/OR PARAMETER NAMES')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,323)MAXNAM
+  323   FORMAT('      HAS JUST EXCEEDED THE MAXIMUM ALLOWABLE ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,324)
+  324   FORMAT('      SUGGESTED ACTION--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,325)
+  325   FORMAT('      ENTER      STAT')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,326)
+  326   FORMAT('      TO FIND OUT THE FULL LIST OF USED NAMES, AND ',
+     1         'THEN')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,327)
+  327   FORMAT('      REDEFINE (REUSE) SOME OF THE ALREADY USED NAMES.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+  330 CONTINUE
+      NLEFT=0
+      ICOLL=NUMCOL+1
+      IF(ICOLL.GT.MAXCOL)THEN
+        WRITE(ICOUT,321)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,342)
+  342   FORMAT('      THE NUMBER OF DATA COLUMNS HAS JUST EXCEEDED THE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,343)MAXCOL
+  343   FORMAT('      MAXIMUM ALLOWABLE ',I8,'.  SUGGESTED ACTION--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,325)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,346)
+  346   FORMAT('      TO FIND OUT THE FULL LIST OF USED COLUMNS.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+  390 CONTINUE
+C
+C               *****************************************
+C               **  STEP 6--                           **
+C               **  CHECK TO SEE THE TYPE SUBCASE      **
+C               **  (BASED ON THE QUALIFIER)           **
+C               **    1) UNQUALIFIED (THAT IS, FULL);  **
+C               **    2) SUBSET/EXCEPT; OR             **
+C               **    3) FOR.                          **
+C               *****************************************
+C
+      ISTEPN='6'
+      IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      ICASEQ='FULL'
+      ILOCQ=NUMARG+1
+      IF(NUMARG.LT.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,321)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,672)
+  672   FORMAT('      AT BRANCH POINT 672--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,673)
+  673   FORMAT('      NUMARG LESS THAN 1 EVEN THOUGH NUMARG HAD ',
+     1         'PREVIOUSLY PASSED')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,675)NUMARG
+  675   FORMAT('      THIS TEST ONCE ALREADY.  VALUE OF NUMARG = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,676)
+  676   FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,677)(IANS(I),I=1,MIN(80,IWIDTH))
+  677     FORMAT(80A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+      DO610J=1,NUMARG
+        J1=J
+        IF((IHARG(J).EQ.'SUBS'.AND.IHARG2(J).EQ.'ET  ') .OR.
+     1     (IHARG(J).EQ.'EXCE'.AND.IHARG2(J).EQ.'PT  '))THEN
+          ICASEQ='SUBS'
+          ILOCQ=J1
+          GOTO680
+        ELSEIF(IHARG(J).EQ.'FOR '.AND.IHARG2(J).EQ.'    ')THEN
+          ICASEQ='FOR'
+          ILOCQ=J1
+          GOTO680
+        ENDIF
+  610 CONTINUE
+C
+  680 CONTINUE
+C
+      IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,681)NUMARG,ILOCQ,ICASEQ
+  681   FORMAT('NUMARG,ILOCQ,ICASEQ = ',2I8,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               ******************************************************
+C               **  STEP 7--                                        **
+C               **  BRANCH TO THE APPROPRIATE SUBCASE               **
+C               **  (BASED ON THE QUALIFIER);                       **
+C               **  DETERMINE THE NUMBER (= NOSM)                   **
+C               **  OF ORDER STATISTIC MEDIANS TO BE GENERATED.     **
+C               **  NOTE THAT THE VARIABLE NIISUB                   **
+C               **  IS THE LENGTH OF THE RESULTING                  **
+C               **  VARIABLE ISUB(.).                               **
+C               **  NOTE THAT DPFOR AUTOMATICALLY EXTENDS           **
+C               **  THE INPUT LENGTH OF ISUB(.) IF NECESSARY.       **
+C               **  (HENCE THE REDEFINITION OF NIISUB TO NINEW      **
+C               **  AFTER THE CALL TO DPFOR.                        **
+C               ******************************************************
+C
+      ISTEPN='7'
+      IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(ICASEQ.EQ.'SUBS')THEN
+        NIISUB=MAXN
+        CALL DPSUBS(NIISUB,ILOCS,NS,IBUGQ,IERROR)
+        NOSM=NS
+      ELSEIF(ICASEQ.EQ.'FOR')THEN
+        IF(NEWNAM.EQ.'NO')NIISUB=NLEFT
+        IF(NEWNAM.EQ.'YES')NIISUB=MAXN
+        CALL DPFOR(NIISUB,NINEW,IROW1,IROWN,
+     1             NLOCAL,ILOCS,NS,IBUGQ,IERROR)
+        NIISUB=NINEW
+        NOSM=NS
+      ELSE
+        IF(NEWNAM.EQ.'NO')NIISUB=NLEFT
+        IF(NEWNAM.EQ.'YES')NIISUB=MAXN
+        DO715I=1,NIISUB
+          ISUB(I)=1
+  715   CONTINUE
+        NOSM=NIISUB
+      ENDIF
+C
+C               ******************************************
+C               **  STEP 8--                            **
+C               **  GENERATE    NOSM    ORDER           **
+C               **  STATISTIC MEANS/STANDARD DEVIATIONS **
+C               **  STORE THEM TEMPORARILY IN           **
+C               **  THE VECTOR Y(.).                    **
+C               ******************************************
+C
+      ISTEPN='8'
+      IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      N=NOSM
+C
+      IF(N.LT.1)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,321)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,801)N
+  801     FORMAT('      THE REQUESTED NUMBER OF VALUES (',I6,
+     1           ' IS LESS THAN 1.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+C
+      IF(ICASLE.EQ.'UOSM')THEN
+        IFOUND='YES'
+        ANP1=REAL(N+1)
+        DO811I=1,NOSM
+          Y(I)=REAL(I)/ANP1
+  811   CONTINUE
+      ELSEIF(ICASLE.EQ.'UOSS')THEN
+        IFOUND='YES'
+        AN=REAL(N)
+        ADENOM=(AN+1.0)**2*(AN+2.0)
+        DO813I=1,NOSM
+          Y(I)=REAL(I)*REAL(N-I+1)/ADENOM
+          Y(I)=SQRT(Y(I))
+  813   CONTINUE
+      ELSEIF(ICASLE.EQ.'NOSM')THEN
+C
+        IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')THEN
+          WRITE(ICOUT,8821)N
+ 8821     FORMAT('NORMAL ORDER STATISTIC MEAN CASE: N = ',I8)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+        IFOUND='YES'
+        N2=N/2
+        CALL NSINIT(WORK)
+        CALL NSCOR1(YTEMP,N,N2,WORK,IFAULT)
+C
+        IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')THEN
+          WRITE(ICOUT,8822)IFAULT
+ 8822     FORMAT('AFTER CALL NSCOR1, N2,IFAULT = ',2I3)
+          CALL DPWRST('XXX','BUG ')
+          DO8823I=1,N2
+            WRITE(ICOUT,8824)I,YTEMP(I)
+ 8824       FORMAT('I,YTEMP(I) = ',I5,G15.7)
+            CALL DPWRST('XXX','BUG ')
+ 8823     CONTINUE
+        ENDIF
+C
+        IF(IFAULT.EQ.1)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,321)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,821)N
+  821     FORMAT('      THE REQUESTED NUMBER OF VALUES (',I6,
+     1           ' IS LESS THAN OR EQUAL TO 1.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ELSEIF(IFAULT.EQ.2)THEN
+C
+C         FOR N >= 2000, USE THE BLOOM APPROXIMATION
+C
+          ALPHA=0.375
+          DO7821I=1,N
+            ANUM=REAL(I) - ALPHA
+            ADENOM=REAL(N) - 2.0*ALPHA + 1.0
+            AVAL=ANUM/ADENOM
+            CALL NODPPF(DBLE(AVAL),DPPF)
+            Y(I)=REAL(DPPF)
+ 7821     CONTINUE
+CCCCC     WRITE(ICOUT,999)
+CCCCC     CALL DPWRST('XXX','BUG ')
+CCCCC     WRITE(ICOUT,321)
+CCCCC     CALL DPWRST('XXX','BUG ')
+CCCCC     WRITE(ICOUT,822)N
+CC822     FORMAT('      THE REQUESTED NUMBER OF VALUES (',I6,
+CCCCC1           ' IS GREATER THAN OR EQUAL TO 2000.')
+CCCCC     CALL DPWRST('XXX','BUG ')
+CCCCC     IERROR='YES'
+          GOTO8890
+        ELSEIF(IFAULT.EQ.3)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,321)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,823)
+  823     FORMAT('      N2 IS NOT EQUAL TO N/2')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+        IEVEN=MOD(N,2)
+        IF(IEVEN.EQ.1)THEN
+          Y(N2+1)=0.0
+          ISTRT=N2+1
+          ICNT=0
+          DO824I=N,ISTRT,-1
+            ICNT=ICNT+1
+            Y(I)=YTEMP(ICNT)
+            Y(ICNT)=-YTEMP(ICNT)
+  824     CONTINUE
+        ELSE
+          ISTRT=N2+1
+          ICNT=0
+          DO826I=N,ISTRT,-1
+            ICNT=ICNT+1
+            Y(I)=YTEMP(ICNT)
+            Y(ICNT)=-YTEMP(ICNT)
+  826     CONTINUE
+        ENDIF
+C
+        IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')THEN
+          WRITE(ICOUT,8826)N,N2,ISTRT,IEVEN
+ 8826     FORMAT('N,N2,ISTRT,IEVEN = ',4I6)
+          CALL DPWRST('XXX','BUG ')
+          DO8829I=1,N
+            WRITE(ICOUT,8828)I,YTEMP(I),Y(I)
+ 8828       FORMAT('I,YTEMP(I),Y(I) = ',I5,2G15.7)
+            CALL DPWRST('XXX','BUG ')
+ 8829     CONTINUE
+        ENDIF
+C
+ 8890   CONTINUE
+C
+      ELSEIF(ICASLE.EQ.'NOSS')THEN
+        IFOUND='YES'
+CCCCC   IF(N.LE.1 .OR. N.GE.2000)THEN
+        IF(N.LE.1)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,321)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,831)N
+  831     FORMAT('      THE REQUESTED NUMBER OF VALUES (',I6,
+     1           ' IS LESS THAN 1.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+C
+C       APPROXIMATE FORMULA FOR THE VARIANCE FROM
+C
+C          https://stats.stackexchange.com/questions/394960/variance-of-normal-order-statistics	
+C
+C       SPECIFICALLY, THE VARIANCE IS
+C
+C           C/(NORPDF(NORPPF(I/(N+1)))**2
+C
+C        WHERE C = I*(N-I+1)/((N+1)**2*(N+2))
+C
+        DN=DBLE(N)
+        DTERM1=(DN+1.0D0)**2*(DN+2.0D0)
+        DO835K=1,N
+          DK=DBLE(K)
+          DTERM2=DK*(DN-DK+1.0D0)/DTERM1
+          DP=DK/(DN+1.0D0)
+          CALL NODPPF(DP,DPPF)
+          CALL NODPDF(DPPF,DPDF)
+          DVAL=DTERM2/DPDF**2
+          Y(K)=REAL(DSQRT(DVAL))
+  835   CONTINUE
+      ELSEIF(ICASLE.EQ.'EOSM' .OR. ICASLE.EQ.'SSCO')THEN
+        IFOUND='YES'
+        DO841K=1,N
+          DSUM=0.0D0
+          DO842J=1,K
+            DVAL=1.0D0/DBLE(N-J+1)
+            DSUM=DSUM + DVAL
+  842     CONTINUE
+          Y(K)=REAL(DSUM)
+          IF(ICASLE.EQ.'SSCO')Y(K)=Y(K)-1.0
+  841   CONTINUE
+      ELSEIF(ICASLE.EQ.'EOSS')THEN
+        IFOUND='YES'
+        DO851K=1,N
+          DSUM=0.0D0
+          DO852J=1,K
+            DVAL=1.0D0/(DBLE(N-J+1)**2)
+            DSUM=DSUM + DVAL
+  852     CONTINUE
+          Y(K)=REAL(DSQRT(DSUM))
+  851   CONTINUE
+C
+C       LOGISTIC CASE ISN'T QUITE WORKING YET
+C
+      ELSEIF(ICASLE.EQ.'LOSM')THEN
+C
+        IFOUND='YES'
+        IEVEN=MOD(N,2)
+        N2=N/2
+        IF(IEVEN.EQ.0)THEN
+          DO861K=1,N2
+            DVAL=DPSI(DBLE(K)) - DPSI(DBLE(N-K-1))
+            Y(K)=REAL(DVAL)
+            print *,'k,y(k) = ',k,y(k)
+  861     CONTINUE
+          ICNT=N2
+          DO862K=N2+1,N
+            Y(K)=-Y(ICNT)
+            print *,'k,icnt,y(k),y(icnt) = ',k,icnt,y(k),y(icnt)
+            ICNT=ICNT-1
+  862     CONTINUE
+        ELSE
+          DO863K=1,N2
+            DVAL=DPSI(DBLE(K)) - DPSI(DBLE(N-K-1))
+            Y(K)=REAL(DVAL)
+  863     CONTINUE
+          Y(N2+1)=0.0
+          ICNT=N2
+          DO864K=N2+2,N
+            Y(K)=-Y(ICNT)
+            ICNT=ICNT-1
+  864     CONTINUE
+        ENDIF
+      ELSEIF(ICASLE.EQ.'LOSS')THEN
+        IFOUND='YES'
+        DO866K=1,N
+          Y(K)=0.0
+  866   CONTINUE
+      ELSE
+        IFOUND='NO'
+        GOTO9000
+      ENDIF
+C
+C               ***********************************************************
+C               **  STEP 8--                                             **
+C               **  IF CALLED FOR (THAT IS, IF IBUGA3 IS ON),            **
+C               **  PRINT OUT THE INTERMEDIATE VARIABLE Y(.).            **
+C               **  THIS IS USEFUL FOR DIAGNOSTIC PURPOSES               **
+C               **  IN REVIEWING THE OUTPUT FROM THIS SUBROUTINE.        **
+C               ***********************************************************
+C
+      ISTEPN='9'
+      IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')THEN
+        CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+        WRITE(ICOUT,2051)NOSM
+ 2051   FORMAT('NOSM = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NOSM.GT.0)THEN
+          DO2054I=1,NOSM
+            WRITE(ICOUT,2055)I,Y(I)
+ 2055       FORMAT('I,Y(I) = ',I8,G15.7)
+            CALL DPWRST('XXX','BUG ')
+ 2054     CONTINUE
+        ENDIF
+      ENDIF
+C
+C               ******************************************************
+C               **  STEP 9--                                        **
+C               **  COPY THE ORDER STATISTIC MEDIANS                **
+C               **  FROM THE INTERMEDIATE VECTOR Y(.)               **
+C               **  TO THE APPROPRIATE COLUMN                       **
+C               **  (BASED ON THE QUALIFIER--FULL, SUBSET, OR FOR)  **
+C               **  IN THE INTERNAL DATAPLOT DATA TABLE.            **
+C               ******************************************************
+C
+      ISTEPN='10'
+      IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      NS2=0
+      DO2100I=1,NIISUB
+        IJ=MAXN*(ICOLL-1)+I
+        IF(ISUB(I).EQ.0)GOTO2100
+        NS2=NS2+1
+        IF(ICOLL.LE.MAXCOL)V(IJ)=Y(NS2)
+        IF(ICOLL.EQ.MAXCP1)PRED(I)=Y(NS2)
+        IF(ICOLL.EQ.MAXCP2)RES(I)=Y(NS2)
+        IF(ICOLL.EQ.MAXCP3)YPLOT(I)=Y(NS2)
+        IF(ICOLL.EQ.MAXCP4)XPLOT(I)=Y(NS2)
+        IF(ICOLL.EQ.MAXCP5)X2PLOT(I)=Y(NS2)
+        IF(ICOLL.EQ.MAXCP6)TAGPLO(I)=Y(NS2)
+        IF(NS2.EQ.1)IROW1=I
+        IROWN=I
+ 2100 CONTINUE
+C
+C               *******************************************
+C               **  STEP 10--                            **
+C               **  CARRY OUT THE LIST UPDATING AND      **
+C               **  GENERATE THE INFORMATIVE PRINTING.   **
+C               *******************************************
+C
+      ISTEPN='11'
+      IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(ICASEQ.EQ.'FULL')THEN
+        IF(NEWNAM.EQ.'NO')NINEW=NLEFT
+        IF(NEWNAM.EQ.'YES')NINEW=MAXN
+      ELSEIF(ICASEQ.EQ.'SUBS')THEN
+        IF(NEWNAM.EQ.'NO' .AND. NLEFT.GE.IROWN)NINEW=NLEFT
+        IF(NEWNAM.EQ.'NO' .AND. NLEFT.LT.IROWN)NINEW=IROWN
+        IF(NEWNAM.EQ.'YES')NINEW=IROWN
+      ELSEIF(ICASEQ.EQ.'FOR')THEN
+        IF(NEWNAM.EQ.'NO' .AND. NLEFT.GE.IROWN)NINEW=NLEFT
+        IF(NEWNAM.EQ.'NO' .AND. NLEFT.LT.IROWN)NINEW=IROWN
+        IF(NEWNAM.EQ.'YES')NINEW=IROWN
+      ENDIF
+C
+      IHNAME(ILISTL)=ILEFT
+      IHNAM2(ILISTL)=ILEFT2
+      IUSE(ILISTL)='V'
+      IVALUE(ILISTL)=ICOLL
+      VALUE(ILISTL)=ICOLL
+      IN(ILISTL)=NINEW
+C
+      IF(NEWNAM.EQ.'YES')THEN
+        NUMNAM=NUMNAM+1
+        NUMCOL=NUMCOL+1
+      ENDIF
+C
+      DO4100J4=1,NUMNAM
+        IF(IUSE(J4).EQ.'V'.AND.IVALUE(J4).EQ.ICOLL)GOTO4105
+        GOTO4100
+ 4105 CONTINUE
+      IUSE(J4)='V'
+      IVALUE(J4)=ICOLL
+      VALUE(J4)=ICOLL
+      IN(J4)=NINEW
+ 4100 CONTINUE
+C
+      IF(IPRINT.EQ.'ON' .AND. IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4011)ILEFT,ILEFT2,NS2
+ 4011   FORMAT('THE NUMBER OF VALUES GENERATED FOR ',
+     1         'THE VARIABLE ',2A4,' = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IJ=MAXN*(ICOLL-1)+IROW1
+        IJN=MAXN*(ICOLL-1)+IROWN
+        IF(ICOLL.LE.MAXCOL)THEN
+          WRITE(ICOUT,4021)ILEFT,ILEFT2,V(IJ),IROW1
+          CALL DPWRST('XXX','BUG ')
+          IF(NS2.NE.1)THEN
+            WRITE(ICOUT,4031)NS2,ILEFT,ILEFT2,V(IJN),IROWN
+ 4031       FORMAT('THE LAST (',I5,'-TH) COMPUTED VALUE OF ',2A4,
+     1             ' = ',G15.7,'   (ROW ',I8,')')
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSEIF(ICOLL.EQ.MAXCP1)THEN
+          WRITE(ICOUT,4021)ILEFT,ILEFT2,PRED(IROW1),IROW1
+          CALL DPWRST('XXX','BUG ')
+          IF(NS2.NE.1)THEN
+            WRITE(ICOUT,4031)NS2,ILEFT,ILEFT2,PRED(IROWN),IROWN
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSEIF(ICOLL.EQ.MAXCP2)THEN
+          WRITE(ICOUT,4021)ILEFT,ILEFT2,RES(IROW1),IROW1
+          CALL DPWRST('XXX','BUG ')
+          IF(NS2.NE.1)THEN
+            WRITE(ICOUT,4031)NS2,ILEFT,ILEFT2,RES(IROWN),IROWN
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSEIF(ICOLL.EQ.MAXCP3)THEN
+          WRITE(ICOUT,4021)ILEFT,ILEFT2,YPLOT(IROW1),IROW1
+          CALL DPWRST('XXX','BUG ')
+          IF(NS2.NE.1)THEN
+            WRITE(ICOUT,4031)NS2,ILEFT,ILEFT2,YPLOT(IROWN),IROWN
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSEIF(ICOLL.EQ.MAXCP4)THEN
+          WRITE(ICOUT,4021)ILEFT,ILEFT2,XPLOT(IROW1),IROW1
+          CALL DPWRST('XXX','BUG ')
+          IF(NS2.NE.1)THEN
+            WRITE(ICOUT,4031)NS2,ILEFT,ILEFT2,XPLOT(IROWN),IROWN
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSEIF(ICOLL.EQ.MAXCP5)THEN
+          WRITE(ICOUT,4021)ILEFT,ILEFT2,X2PLOT(IROW1),IROW1
+          CALL DPWRST('XXX','BUG ')
+          IF(NS2.NE.1)THEN
+            WRITE(ICOUT,4031)NS2,ILEFT,ILEFT2,X2PLOT(IROWN),IROWN
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSEIF(ICOLL.EQ.MAXCP6)THEN
+          WRITE(ICOUT,4021)ILEFT,ILEFT2,TAGPLO(IROW1),IROW1
+ 4021     FORMAT('THE FIRST           COMPUTED VALUE OF ',2A4,
+     1           ' = ',G15.7,'   (ROW ',I6,')')
+          CALL DPWRST('XXX','BUG ')
+          IF(NS2.NE.1)THEN
+            WRITE(ICOUT,4031)NS2,ILEFT,ILEFT2,TAGPLO(IROWN),IROWN
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
+C
+        IF(NS2.EQ.1)THEN
+          WRITE(ICOUT,4041)
+ 4041     FORMAT('SINCE THE GENERATED SAMPLE SIZE WAS ONLY 1,')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,4042)
+ 4042     FORMAT('THE ABOVE VALUE WAS THE SOLE VALUE COMPUTED.')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4112)ILEFT,ILEFT2,ICOLL
+ 4112   FORMAT('THE CURRENT COLUMN FOR THE VARIABLE ',2A4,' = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4113)ILEFT,ILEFT2,NINEW
+ 4113   FORMAT('THE CURRENT LENGTH OF THE VARIABLE ',2A4,' = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPOSME--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IFOUND,IERROR
+ 9012   FORMAT('IFOUND,IERROR = ',A4,2X,A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,9016)NS2,NS,NIISUB,NOSM
  9016   FORMAT('NS2,NS,NIISUB,NOSM = ',4I8)
@@ -37307,7 +38212,7 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPPAT(IBUGA3,IBUGQ,IFOUND,IERROR)
+      SUBROUTINE DPPAT(IBUGA3,ISUBRO,IBUGQ,IFOUND,IERROR)
 C
 C     PURPOSE--GENERATE A PATTERN.
 C              GENERATE ELEMENTS OF A PATTERN
@@ -37331,10 +38236,14 @@ C     ORIGINAL VERSION--JULY      1981.
 C     UPDATED         --OCTOBER   1981.
 C     UPDATED         --NOVEMBER  1981.
 C     UPDATED         --MAY       1982.
+C     UPDATED         --SEPTEMBER 2021. ADD ISUBRO TO ARGUMENT LIST
+C     UPDATED         --SEPTEMBER 2021. SOME RECODING FOR BETTER
+C                                       READABILITY
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
       CHARACTER*4 IBUGQ
       CHARACTER*4 IFOUND
       CHARACTER*4 IERROR
@@ -37363,7 +38272,7 @@ C
 C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPPA'
-      ISUBN2='TT  '
+      ISUBN2='T   '
       IFOUND='NO'
       IERROR='NO'
 C
@@ -37391,17 +38300,17 @@ C               **       1) FOR A FULL VARIABLE, OR                   **
 C               **       2) FOR PART OF A VARIABLE.                   **
 C               ********************************************************
 C
-      IF(IBUGA3.EQ.'OFF')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPPAT--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBUGA3,IBUGQ
-   52 FORMAT('IBUGA3,IBUGQ = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PPAT')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPPAT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,IBUGQ
+   52   FORMAT('IBUGA3,ISUBRO,IBUGQ = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               **********************************
 C               **  STEP 1--                    **
@@ -37409,7 +38318,8 @@ C               **  INITIALIZE SOME VARIABLES.  **
 C               **********************************
 C
       ISTEPN='1'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PPAT')
+     1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       NEWNAM='NO'
       NEWCOL='NO'
@@ -37420,12 +38330,12 @@ C               **  CHECK FOR THE PROPER NUMBER OF INPUT ARGUMENTS.  **
 C               *******************************************************
 C
       ISTEPN='2'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PPAT')
+     1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       MINNA=4
       MAXNA=1000
-      CALL CHECKA(NUMARG,MINNA,MAXNA,IANS,IWIDTH,ISUBN1,ISUBN2,
-     1IERROR)
+      CALL CHECKA(NUMARG,MINNA,MAXNA,IANS,IWIDTH,ISUBN1,ISUBN2,IERROR)
       IF(IERROR.EQ.'YES')GOTO9000
 C
 C               ****************************************************************
@@ -37442,112 +38352,111 @@ C               **  FOR THE NAME OF THE LEFT.                                  *
 C               ****************************************************************
 C
       ISTEPN='3'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PPAT')
+     1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-CCCCC ILEFT=IHOL(2)
-CCCCC ILEFT2=IHOL2(2)
       ILEFT=IHARG(1)
       ILEFT2=IHARG2(1)
       DO310I=1,NUMNAM
-      I2=I
-      IF(ILEFT.EQ.IHNAME(I).AND.ILEFT2.EQ.IHNAM2(I).AND.
-     1IUSE(I).EQ.'P')GOTO329
-      IF(ILEFT.EQ.IHNAME(I).AND.ILEFT2.EQ.IHNAM2(I).AND.
-     1IUSE(I).EQ.'V')GOTO380
+        I2=I
+        IF(ILEFT.EQ.IHNAME(I).AND.ILEFT2.EQ.IHNAM2(I).AND.
+     1     IUSE(I).EQ.'P')THEN
+          ILISTL=I2
+          GOTO330
+        ELSEIF(ILEFT.EQ.IHNAME(I).AND.ILEFT2.EQ.IHNAM2(I).AND.
+     1     IUSE(I).EQ.'V')THEN
+          ILISTL=I2
+          ICOLL=IVALUE(ILISTL)
+          NLEFT=IN(ILISTL)
+          GOTO390
+        ELSEIF(ILEFT.EQ.IHNAME(I).AND.ILEFT2.EQ.IHNAM2(I).AND.
+     1         IUSE(I).NE.'V')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,321)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,311)
+  311     FORMAT('      THE NAME ON THE LEFT HAND SIDE ALREADY EXISTS,')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,313)
+  313     FORMAT('      BUT NOT AS A PARAMETER OR A VARIABLE.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,315)IUSE(I)
+  315     FORMAT('      THE CURRENT TYPE IS ',A4,'.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
   310 CONTINUE
       NEWNAM='YES'
       ILISTL=NUMNAM+1
-      IF(ILISTL.GT.MAXNAM)GOTO320
-      GOTO330
-C
-  320 CONTINUE
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,321)
-  321 FORMAT('***** ERROR IN DPPAT--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,322)
-  322 FORMAT('      THE NUMBER OF VARIABLE AND/OR PARAMETER')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,323)MAXNAM
-  323 FORMAT('      NAMES HAS JUST EXCEEDED THE MAX ALLOWABLE ',
-     1I8,'  .')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,324)
-  324 FORMAT('      SUGGESTED ACTION--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,325)
-  325 FORMAT('      ENTER      STAT')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,326)
-  326 FORMAT('      TO FIND OUT THE FULL LIST OF USED NAMES,')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,327)
-  327 FORMAT('      AND THEN REDEFINE (REUSE) SOME OF THE')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,328)
-  328 FORMAT('      ALREADY-USED NAMES')
-      CALL DPWRST('XXX','BUG ')
-      IERROR='YES'
-      GOTO9000
-C
-  329 CONTINUE
-      ILISTL=I2
-      GOTO330
+      IF(ILISTL.GT.MAXNAM)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,321)
+  321   FORMAT('***** ERROR IN DPPAT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,322)
+  322   FORMAT('      THE NUMBER OF VARIABLE AND/OR PARAMETER NAMES ',
+     1         'HAS JUST')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,323)MAXNAM
+  323   FORMAT('      EXCEEDED THE MAX ALLOWABLE ',I8,'.  ',
+     1         'SUGGESTED ACTION--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,325)
+  325   FORMAT('      ENTER    STAT    TO FIND OUT THE FULL LIST OF')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,327)
+  327   FORMAT('      USED NAMES AND THEN REDEFINE (REUSE) SOME OF THE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,328)
+  328   FORMAT('      ALREADY-USED NAMES')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
 C
   330 CONTINUE
       NLEFT=0
       ICOLL=NUMCOL+1
-      IF(ICOLL.GT.MAXCOL)GOTO340
-      GOTO390
-C
-  340 CONTINUE
-      WRITE(ICOUT,341)
-  341 FORMAT('***** ERROR IN DPPAT--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,342)
-  342 FORMAT('      THE NUMBER OF DATA COLUMNS')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,343)MAXCOL
-  343 FORMAT('      HAS JUST EXCEEDED THE MAX ALLOWABLE ',I8,'  .')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,344)
-  344 FORMAT('      SUGGESTED ACTION--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,345)
-  345 FORMAT('      ENTER      STAT')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,346)
-  346 FORMAT('      TO FIND OUT THE FULL LIST OF USED COLUMNS')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,347)
-  347 FORMAT('      AND THEN OVERWRITE SOME COLUMNS.   EXAMPLE--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,348)
-  348 FORMAT('      IF       LET X = 1 2 9         FAILED')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,349)
-  349 FORMAT('      THEN ONE MIGHT ENTER     NAME X 7')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,350)
-  350 FORMAT('      (THEREBY EQUATING THE NAME X WITH COLUMN 7')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,351)
-  351 FORMAT('      FOLLOWED BY              LET X = 1 2 9')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,352)
-  352 FORMAT('      (WHICH WILL ACTUALLY OVERWRITE COLUMN 7')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,353)
-  353 FORMAT('      WITH THE NUMERIC CONSTANTS 3.14)')
-      CALL DPWRST('XXX','BUG ')
-      IERROR='YES'
-      GOTO9000
-C
-  380 CONTINUE
-      ILISTL=I2
-      ICOLL=IVALUE(ILISTL)
-      NLEFT=IN(ILISTL)
+      IF(ICOLL.GT.MAXCOL)THEN
+        WRITE(ICOUT,321)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,342)
+  342   FORMAT('      THE NUMBER OF DATA COLUMNS HAS JUST EXCEEDED THE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,343)MAXCOL
+  343   FORMAT('      MAXIMUM ALLOWABLE ',I8,'.  SUGGESTED ACTION--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,345)
+  345   FORMAT('      ENTER    STAT    TO SEE THE FULL LIST OF USED')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,347)
+  347   FORMAT('      COLUMNS AND THEN OVERWRITE SOME COLUMNS.  ',
+     1         'EXAMPLE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,348)
+  348   FORMAT('      IF       LET X = 1 2 9         FAILED')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,349)
+  349   FORMAT('      THEN ONE MIGHT ENTER     NAME X 7')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,350)
+  350   FORMAT('      (THEREBY EQUATING THE NAME X WITH COLUMN 7')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,351)
+  351   FORMAT('      FOLLOWED BY              LET X = 1 2 9')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,352)
+  352   FORMAT('      (WHICH WILL ACTUALLY OVERWRITE COLUMN 7')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,353)
+  353   FORMAT('      WITH THE NUMERIC CONSTANTS 3.14)')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
 C
   390 CONTINUE
 C
@@ -37561,43 +38470,40 @@ C               **  (ALL OF THE ABOVE ARE ALLOWED.)            **
 C               *************************************************
 C
       ISTEPN='4'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PPAT')
+     1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-      IF(NUMARG.GE.4)GOTO1290
-      WRITE(ICOUT,1211)
- 1211 FORMAT('***** ERROR IN DPPAT--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1212)
- 1212 FORMAT('      ILLEGAL SYNTAX FOR LET COMMAND')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1213)
- 1213 FORMAT('      THERE SHOULD BE AT LEAST 1')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1214)
- 1214 FORMAT('      NUMBER OR WORD')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1215)
- 1215 FORMAT('      TO THE RIGHT OF THE WORD    PATTERN')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1216)
- 1216 FORMAT('      FOR THIS TYPE OF LET COMMAND.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1217)
- 1217 FORMAT('      SUCH WAS NOT THE CASE HERE.')
-      CALL DPWRST('XXX','BUG ')
-      NUMAM3=NUMARG-3
-      WRITE(ICOUT,1218)NUMAM3
- 1218 FORMAT('      NUMBER OF SUCH NUMBERS/WORDS FOUND = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1219)
- 1219 FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
-      CALL DPWRST('XXX','BUG ')
-      IF(IWIDTH.GE.1)WRITE(ICOUT,1220)(IANS(I),I=1,IWIDTH)
- 1220 FORMAT('      ',80A1)
-      IF(IWIDTH.GE.1)CALL DPWRST('XXX','BUG ')
-      IERROR='YES'
-      GOTO9000
- 1290 CONTINUE
+      IF(NUMARG.LT.4)THEN
+        WRITE(ICOUT,321)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1212)
+ 1212   FORMAT('      ILLEGAL SYNTAX FOR LET COMMAND')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1213)
+ 1213   FORMAT('      THERE SHOULD BE AT LEAST ONE NUMBER OR WORD TO')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1215)
+ 1215   FORMAT('      THE RIGHT OF THE WORD    PATTERN    FOR THIS ',
+     1         'TYPE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1217)
+ 1217   FORMAT('      OF LET COMMAND.  SUCH WAS NOT THE CASE HERE.')
+        CALL DPWRST('XXX','BUG ')
+        NUMAM3=NUMARG-3
+        WRITE(ICOUT,1218)NUMAM3
+ 1218   FORMAT('      NUMBER OF SUCH NUMBERS/WORDS FOUND = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1219)
+ 1219   FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,1220)(IANS(I),I=1,MIN(80,IWIDTH))
+ 1220     FORMAT('      ',80A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IERROR='YES'
+        GOTO9000
+      ENDIF
 C
 C               *************************************************
 C               **  STEP 5--                                   **
@@ -37608,134 +38514,124 @@ C               **  THE VECTOR Y(.).                           **
 C               *************************************************
 C
       ISTEPN='5'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PPAT')
+     1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       K=0
       NRAWPA=0
       DO1310J=4,NUMARG
-      J2=J
-      K=K+1
-      IF(IHARG(J).EQ.'SUBS'.AND.IHARG2(J).EQ.'ET  ')GOTO1370
-      IF(IHARG(J).EQ.'EXCE'.AND.IHARG2(J).EQ.'PT  ')GOTO1370
-      IF(IHARG(J).EQ.'FOR '.AND.IHARG2(J).EQ.'    ')GOTO1370
-      IF(IARGT(J).EQ.'NUMB')GOTO1311
-      IF(IARGT(J).EQ.'WORD')GOTO1312
-      GOTO1360
- 1311 CONTINUE
-      Y(K)=ARG(J)
-      GOTO1310
- 1312 CONTINUE
-      IH=IHARG(J)
-      IH2=IHARG2(J)
-      IHWUSE='P'
-      MESSAG='YES'
-      CALL CHECKN(IH,IH2,IHWUSE,
-     1IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
-     1ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOC,IERROR)
-      IF(IERROR.EQ.'YES')GOTO9000
-      Y(K)=VALUE(ILOC)
-      GOTO1310
+        J2=J
+        K=K+1
+        IF((IHARG(J).EQ.'SUBS'.AND.IHARG2(J).EQ.'ET  ') .OR.
+     1     (IHARG(J).EQ.'EXCE'.AND.IHARG2(J).EQ.'PT  ') .OR.
+     1     (IHARG(J).EQ.'FOR '.AND.IHARG2(J).EQ.'    '))THEN
+          NRAWPA=K-1
+          GOTO1380
+        ELSEIF(IARGT(J).EQ.'NUMB')THEN
+          Y(K)=ARG(J)
+          GOTO1310
+        ELSEIF(IARGT(J).EQ.'WORD')THEN
+          IH=IHARG(J)
+          IH2=IHARG2(J)
+          IHWUSE='P'
+          MESSAG='YES'
+          CALL CHECKN(IH,IH2,IHWUSE,
+     1                IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
+     1                ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOC,IERROR)
+          IF(IERROR.EQ.'YES')GOTO9000
+          Y(K)=VALUE(ILOC)
+          GOTO1310
+        ELSE
+          WRITE(ICOUT,321)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1362)
+ 1362     FORMAT('      AN ARGUMENT TYPE WHICH SHOULD BE EITHER A')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1363)
+ 1363     FORMAT('      NUMBER OR A WORD, IS NEITHER.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1364)IHARG(J2),IHARG2(J2)
+ 1364     FORMAT('      ARGUMENT                  = ',2A4)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1365)J2
+ 1365     FORMAT('      LOCATION IN ARGUMENT LIST = ',I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1366)IARGT(J2)
+ 1366     FORMAT('      ARGUMENT TYPE             = ',2A4)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1219)
+          CALL DPWRST('XXX','BUG ')
+          IF(IWIDTH.GE.1)THEN
+            WRITE(ICOUT,1220)(IANS(I),I=1,MIN(80,IWIDTH))
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          IERROR='YES'
+          GOTO9000
+        ENDIF
  1310 CONTINUE
       NRAWPA=K
-      GOTO1380
-C
- 1360 CONTINUE
-      WRITE(ICOUT,1361)
- 1361 FORMAT('***** INTERNAL ERROR IN DPPAT--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1362)
- 1362 FORMAT('      AN ARGUMENT TYPE WHICH SHOULD BE ')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1363)
- 1363 FORMAT('      EITHER A NUMBER OR A WORD, IS NEITHER.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1364)IHARG(J2),IHARG2(J2)
- 1364 FORMAT('      ARGUMENT                  = ',A4,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1365)J2
- 1365 FORMAT('      LOCATION IN ARGUMENT LIST = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1366)IARGT(J2)
- 1366 FORMAT('      ARGUMENT TYPE             = ',A4,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1367)
- 1367 FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
-      CALL DPWRST('XXX','BUG ')
-      IF(IWIDTH.GE.1)WRITE(ICOUT,1368)(IANS(I),I=1,IWIDTH)
- 1368 FORMAT('      ',100A1)
-      IF(IWIDTH.GE.1)CALL DPWRST('XXX','BUG ')
-      IERROR='YES'
-      GOTO9000
-C
- 1370 CONTINUE
-      NRAWPA=K-1
-      GOTO1380
 C
  1380 CONTINUE
       IFOUND='YES'
-      IF(NRAWPA.GE.1)GOTO1390
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1381)
- 1381 FORMAT('***** ERROR IN DPPAT--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1382)
- 1382 FORMAT('      ILLEGAL FORM FOR THE LET COMMAND.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1383)
- 1383 FORMAT('      THERE ARE NO ELEMENTS IN THE PATTERN.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1384)
- 1384 FORMAT('      THIS IS CAUSED BY EITHER THE WORD   PATTERN')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1385)
- 1385 FORMAT('      BEING THE LAST WORD ON THE COMMAND LINE, OR')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1386)
- 1386 FORMAT('      BY THE WORDS    SUBSET  OR  FOR   IMMEDIATELY')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1387)
- 1387 FORMAT('      FOLLOWING THE WORD   PATTERN   ON THE COMMAND ',
-     1'LINE.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1388)
- 1388 FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
-      CALL DPWRST('XXX','BUG ')
-      IF(IWIDTH.GE.1)WRITE(ICOUT,1389)(IANS(I),I=1,IWIDTH)
- 1389 FORMAT('      ',100A1)
-      IF(IWIDTH.GE.1)CALL DPWRST('XXX','BUG ')
-      IERROR='YES'
-      GOTO9000
+      IF(NRAWPA.LT.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,321)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1382)
+ 1382   FORMAT('      ILLEGAL FORM FOR THE LET COMMAND.  THERE ARE NO ',
+     1         'ELEMENTS')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1384)
+ 1384   FORMAT('      IN THE PATTERN.  THIS IS CAUSED BY EITHER THE ',
+     1         'WORD   PATTERN')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1385)
+ 1385   FORMAT('      BEING THE LAST WORD ON THE COMMAND LINE, OR')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1386)
+ 1386   FORMAT('      BY THE WORDS    SUBSET  OR  FOR   IMMEDIATELY')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1387)
+ 1387   FORMAT('      FOLLOWING THE WORD   PATTERN   ON THE COMMAND ',
+     1         'LINE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1219)
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,1220)(IANS(I),I=1,MIN(80,IWIDTH))
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IERROR='YES'
+        GOTO9000
+      ENDIF
 C
- 1390 CONTINUE
-C
-C               ***********************************************************
-C               **  STEP 7--                                             **
+C               *****************************************************
+C               **  STEP 7--                                       **
 C               **  IF CALLED FOR (THAT IS, IF IBUGA3 IS ON),      **
-C               **  PRINT OUT THE INTERMEDIATE VARIABLE Y(.).            **
-C               **  THIS IS USEFUL FOR DIAGNOSTIC PURPOSES               **
-C               **  IN REVIEWING THE OUTPUT FROM THIS SUBROUTINE.        **
-C               ***********************************************************
+C               **  PRINT OUT THE INTERMEDIATE VARIABLE Y(.).      **
+C               **  THIS IS USEFUL FOR DIAGNOSTIC PURPOSES         **
+C               **  IN REVIEWING THE OUTPUT FROM THIS SUBROUTINE.  **
+C               *****************************************************
 C
-      ISTEPN='7'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-C
-      IF(IBUGA3.EQ.'OFF')GOTO1590
-      WRITE(ICOUT,1551)
- 1551 FORMAT('OUTPUT FROM MIDDLE OF DPPAT AFTER THE RAW PATTERN ',
-     1'HAS BEEN GENERATED--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1552)NRAWPA
- 1552 FORMAT('NRAWPA = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      IF(NRAWPA.LE.0)GOTO1590
-      DO1554I=1,NRAWPA
-      WRITE(ICOUT,1555)I,Y(I)
- 1555 FORMAT('I,Y(I) = ',I8,F12.5)
-      CALL DPWRST('XXX','BUG ')
- 1554 CONTINUE
-C
- 1590 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PPAT')THEN
+        ISTEPN='7'
+        CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+        WRITE(ICOUT,1551)
+ 1551   FORMAT('OUTPUT FROM MIDDLE OF DPPAT AFTER THE RAW PATTERN ',
+     1         'HAS BEEN GENERATED--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1552)NRAWPA
+ 1552   FORMAT('NRAWPA = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NRAWPA.GE.1)THEN
+          DO1554I=1,NRAWPA
+            WRITE(ICOUT,1555)I,Y(I)
+ 1555       FORMAT('I,Y(I) = ',I8,F12.5)
+            CALL DPWRST('XXX','BUG ')
+ 1554     CONTINUE
+        ENDIF
+      ENDIF
 C
 C               *****************************************
 C               **  STEP 8--                           **
@@ -37747,63 +38643,57 @@ C               **    3) FOR.                          **
 C               *****************************************
 C
       ISTEPN='8'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PPAT')
+     1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ICASEQ='FULL'
       ILOCQ=NUMARG+1
-      IF(NUMARG.LT.1)GOTO1670
+      IF(NUMARG.LT.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,321)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1672)
+ 1672   FORMAT('      AT BRANCH POINT 1671--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1673)
+ 1673   FORMAT('      NUMARG LESS THAN 1 EVEN THOUGH IT HAD PREVIOUSLY')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1675)NUMARG
+ 1675   FORMAT('      PASSED THIS TEST ONCE ALREADY.  VALUE OF ',
+     1         'NUMARG = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1219)
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,1220)(IANS(I),I=1,MIN(80,IWIDTH))
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
       DO1610J=1,NUMARG
-      J1=J
-      IF(IHARG(J).EQ.'SUBS'.AND.IHARG2(J).EQ.'ET  ')GOTO1620
-      IF(IHARG(J).EQ.'EXCE'.AND.IHARG2(J).EQ.'PT  ')GOTO1620
-      IF(IHARG(J).EQ.'FOR '.AND.IHARG2(J).EQ.'    ')GOTO1630
+        J1=J
+        IF((IHARG(J).EQ.'SUBS'.AND.IHARG2(J).EQ.'ET  ') .OR.
+     1     (IHARG(J).EQ.'EXCE'.AND.IHARG2(J).EQ.'PT  '))THEN
+          ICASEQ='SUBS'
+          ILOCQ=J1
+          GOTO1680
+        ELSEIF(IHARG(J).EQ.'FOR '.AND.IHARG2(J).EQ.'    ')THEN
+          ICASEQ='FOR'
+          ILOCQ=J1
+          GOTO1680
+        ENDIF
  1610 CONTINUE
-      GOTO1680
-C
- 1620 CONTINUE
-      ICASEQ='SUBS'
-      ILOCQ=J1
-      GOTO1680
-C
- 1630 CONTINUE
-      ICASEQ='FOR'
-      ILOCQ=J1
-      GOTO1680
-C
- 1670 CONTINUE
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1671)
- 1671 FORMAT('***** INTERNAL ERROR IN DPPAT')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1672)
- 1672 FORMAT('      AT BRANCH POINT 1671--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1673)
- 1673 FORMAT('      NUMARG LESS THAN 1 EVEN THOUGH')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1674)
- 1674 FORMAT('      NUMARG HAD PREVIOUSLY PASSED THIS TEST')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1675)NUMARG
- 1675 FORMAT('      ONCE ALREADY.  VALUE OF NUMARG = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1676)
- 1676 FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
-      CALL DPWRST('XXX','BUG ')
-      IF(IWIDTH.GE.1)WRITE(ICOUT,1677)(IANS(I),I=1,IWIDTH)
- 1677 FORMAT(80A1)
-      IF(IWIDTH.GE.1)CALL DPWRST('XXX','BUG ')
-      IERROR='YES'
-      GOTO9000
 C
  1680 CONTINUE
-      IF(IBUGA3.EQ.'OFF')GOTO1690
-      WRITE(ICOUT,1681)NUMARG,ILOCQ,ICASEQ
- 1681 FORMAT('NUMARG,ILOCQ,ICASEQ = ',I8,I8,2X,A4)
-      CALL DPWRST('XXX','BUG ')
 C
- 1690 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PPAT')THEN
+        WRITE(ICOUT,1681)NUMARG,ILOCQ,ICASEQ
+ 1681   FORMAT('NUMARG,ILOCQ,ICASEQ = ',2I8,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               ******************************************************
 C               **  STEP 9--                                        **
@@ -37821,39 +38711,28 @@ C               **  AFTER THE CALL TO DPFOR.                        **
 C               ******************************************************
 C
       ISTEPN='9'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PPAT')
+     1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-      IF(ICASEQ.EQ.'FULL')GOTO1710
-      IF(ICASEQ.EQ.'SUBS')GOTO1720
-      IF(ICASEQ.EQ.'FOR')GOTO1730
-C
- 1710 CONTINUE
-CCCCC IF(NEWNAM.EQ.'NO')NIISUB=NLEFT
-CCCCC IF(NEWNAM.EQ.'YES')NIISUB=NRAWPA
-      NIISUB=NRAWPA
-      DO1715I=1,NIISUB
-      ISUB(I)=1
- 1715 CONTINUE
-      NS=NIISUB
-      NNUM=NIISUB
-      GOTO1750
-C
- 1720 CONTINUE
-      NIISUB=MAXN
-      CALL DPSUBS(NIISUB,ILOCS,NS,IBUGQ,IERROR)
-      NNUM=NS
-      GOTO1750
-C
- 1730 CONTINUE
-      IF(NEWNAM.EQ.'NO')NIISUB=NLEFT
-      IF(NEWNAM.EQ.'YES')NIISUB=MAXN
-      CALL DPFOR(NIISUB,NINEW,IROW1,IROWN,
-     1NLOCAL,ILOCS,NS,IBUGQ,IERROR)
-      NIISUB=NINEW
-      NNUM=NS
-      GOTO1750
-C
- 1750 CONTINUE
+      IF(ICASEQ.EQ.'SUBS')THEN
+        NIISUB=MAXN
+        CALL DPSUBS(NIISUB,ILOCS,NS,IBUGQ,IERROR)
+        NNUM=NS
+      ELSEIF(ICASEQ.EQ.'FOR')THEN
+        IF(NEWNAM.EQ.'NO')NIISUB=NLEFT
+        IF(NEWNAM.EQ.'YES')NIISUB=MAXN
+        CALL DPFOR(NIISUB,NINEW,IROW1,IROWN,
+     1             NLOCAL,ILOCS,NS,IBUGQ,IERROR)
+        NIISUB=NINEW
+        NNUM=NS
+      ELSE
+        NIISUB=NRAWPA
+        DO1715I=1,NIISUB
+          ISUB(I)=1
+ 1715   CONTINUE
+        NS=NIISUB
+        NNUM=NIISUB
+      ENDIF
 C
 C               ******************************************************
 C               **  STEP 10--                                       **
@@ -37865,25 +38744,26 @@ C               **  IN THE INTERNAL DATAPLOT DATA TABLE.            **
 C               ******************************************************
 C
       ISTEPN='10'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PPAT')
+     1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       NS2=0
       NS2MOD=0
       DO2100I=1,NIISUB
-      IJ=MAXN*(ICOLL-1)+I
-      IF(ISUB(I).EQ.0)GOTO2100
-      NS2=NS2+1
-      NS2MOD=NS2MOD+1
-      IF(NS2.EQ.1)IROW1=I
-      IF(NS2MOD.GT.NRAWPA)NS2MOD=NS2MOD-NRAWPA
-      IF(ICOLL.LE.MAXCOL)V(IJ)=Y(NS2MOD)
-      IF(ICOLL.EQ.MAXCP1)PRED(I)=Y(NS2MOD)
-      IF(ICOLL.EQ.MAXCP2)RES(I)=Y(NS2MOD)
-      IF(ICOLL.EQ.MAXCP3)YPLOT(I)=Y(NS2MOD)
-      IF(ICOLL.EQ.MAXCP4)XPLOT(I)=Y(NS2MOD)
-      IF(ICOLL.EQ.MAXCP5)X2PLOT(I)=Y(NS2MOD)
-      IF(ICOLL.EQ.MAXCP6)TAGPLO(I)=Y(NS2MOD)
-      IROWN=I
+        IJ=MAXN*(ICOLL-1)+I
+        IF(ISUB(I).EQ.0)GOTO2100
+        NS2=NS2+1
+        NS2MOD=NS2MOD+1
+        IF(NS2.EQ.1)IROW1=I
+        IF(NS2MOD.GT.NRAWPA)NS2MOD=NS2MOD-NRAWPA
+        IF(ICOLL.LE.MAXCOL)V(IJ)=Y(NS2MOD)
+        IF(ICOLL.EQ.MAXCP1)PRED(I)=Y(NS2MOD)
+        IF(ICOLL.EQ.MAXCP2)RES(I)=Y(NS2MOD)
+        IF(ICOLL.EQ.MAXCP3)YPLOT(I)=Y(NS2MOD)
+        IF(ICOLL.EQ.MAXCP4)XPLOT(I)=Y(NS2MOD)
+        IF(ICOLL.EQ.MAXCP5)X2PLOT(I)=Y(NS2MOD)
+        IF(ICOLL.EQ.MAXCP6)TAGPLO(I)=Y(NS2MOD)
+        IROWN=I
  2100 CONTINUE
       NNUM=NS2
 C
@@ -37894,23 +38774,25 @@ C               **  GENERATE THE INFORMATIVE PRINTING.   **
 C               *******************************************
 C
       ISTEPN='11'
-      IF(IBUGA3.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PPAT')
+     1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-      IF(ICASEQ.EQ.'FULL'.AND.NEWNAM.EQ.'NO'.AND.
-     1NLEFT.GE.NRAWPA)NINEW=NLEFT
-      IF(ICASEQ.EQ.'FULL'.AND.NEWNAM.EQ.'NO'.AND.
-     1NLEFT.LT.NRAWPA)NINEW=NRAWPA
-      IF(ICASEQ.EQ.'FULL'.AND.NEWNAM.EQ.'YES')NINEW=NIISUB
-      IF(ICASEQ.EQ.'SUBS'.AND.NEWNAM.EQ.'NO'.AND.
-     1NLEFT.GE.IROWN)NINEW=NLEFT
-      IF(ICASEQ.EQ.'SUBS'.AND.NEWNAM.EQ.'NO'.AND.
-     1NLEFT.LT.IROWN)NINEW=IROWN
-      IF(ICASEQ.EQ.'SUBS'.AND.NEWNAM.EQ.'YES')NINEW=IROWN
-      IF(ICASEQ.EQ.'FOR'.AND.NEWNAM.EQ.'NO'.AND.
-     1NLEFT.GE.IROWN)NINEW=NLEFT
-      IF(ICASEQ.EQ.'FOR'.AND.NEWNAM.EQ.'NO'.AND.
-     1NLEFT.LT.IROWN)NINEW=IROWN
-      IF(ICASEQ.EQ.'FOR'.AND.NEWNAM.EQ.'YES')NINEW=IROWN
+      IF(ICASEQ.EQ.'FULL'.AND.NEWNAM.EQ.'NO')THEN
+        IF(NLEFT.GE.NRAWPA)NINEW=NLEFT
+        IF(NLEFT.LT.NRAWPA)NINEW=NRAWPA
+      ELSEIF(ICASEQ.EQ.'FULL'.AND.NEWNAM.EQ.'YES')THEN
+        NINEW=NIISUB
+      ELSEIF(ICASEQ.EQ.'SUBS'.AND.NEWNAM.EQ.'NO')THEN
+        IF(NLEFT.GE.IROWN)NINEW=NLEFT
+        IF(NLEFT.LT.IROWN)NINEW=IROWN
+      ELSEIF(ICASEQ.EQ.'SUBS'.AND.NEWNAM.EQ.'YES')THEN
+        NINEW=IROWN
+      ELSEIF(ICASEQ.EQ.'FOR'.AND.NEWNAM.EQ.'NO')THEN
+        IF(NLEFT.GE.IROWN)NINEW=NLEFT
+        IF(NLEFT.LT.IROWN)NINEW=IROWN
+      ELSEIF(ICASEQ.EQ.'FOR'.AND.NEWNAM.EQ.'YES')THEN
+        NINEW=IROWN
+      ENDIF
 C
       IHNAME(ILISTL)=ILEFT
       IHNAM2(ILISTL)=ILEFT2
@@ -37919,114 +38801,100 @@ C
       VALUE(ILISTL)=ICOLL
       IN(ILISTL)=NINEW
 C
-CCCCC IUSE(ICOLL)='V'
-CCCCC IVALUE(ICOLL)=ICOLL
-CCCCC VALUE(ICOLL)=ICOLL
-CCCCC IN(ICOLL)=NINEW
-C
-      IF(NEWNAM.EQ.'YES')NUMNAM=NUMNAM+1
-      IF(NEWNAM.EQ.'YES')NUMCOL=NUMCOL+1
-C
-      DO2400J4=1,NUMNAM
-      IF(IUSE(J4).EQ.'V'.AND.IVALUE(J4).EQ.ICOLL)GOTO2405
-      GOTO2400
- 2405 CONTINUE
-      IUSE(J4)='V'
-      IVALUE(J4)=ICOLL
-      VALUE(J4)=ICOLL
-      IN(J4)=NINEW
- 2400 CONTINUE
-C
-      IF(IPRINT.EQ.'OFF')GOTO2459
-      IF(IFEEDB.EQ.'OFF')GOTO2459
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,2411)ILEFT,ILEFT2,NNUM
- 2411 FORMAT('THE NUMBER OF VALUES GENERATED FOR ',
-     1'THE VARIABLE ',A4,A4,' = ',I8)
-      CALL DPWRST('XXX','BUG ')
-C
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      IJ=MAXN*(ICOLL-1)+IROW1
-      IF(ICOLL.LE.MAXCOL)THEN
-         WRITE(ICOUT,2421)ILEFT,ILEFT2,V(IJ),IROW1
- 2421    FORMAT('THE FIRST           COMPUTED VALUE OF ',
-     1   A4,A4,' = ',E15.7,'   (ROW ',I6,')')
-         CALL DPWRST('XXX','BUG ')
-      ELSE IF(ICOLL.EQ.MAXCP1)THEN
-         WRITE(ICOUT,2421)ILEFT,ILEFT2,PRED(IROW1),IROW1
-         CALL DPWRST('XXX','BUG ')
-      ELSE IF(ICOLL.EQ.MAXCP2)THEN
-         WRITE(ICOUT,2421)ILEFT,ILEFT2,RES(IROW1),IROW1
-         CALL DPWRST('XXX','BUG ')
-      ELSE IF(ICOLL.EQ.MAXCP3)THEN
-         WRITE(ICOUT,2421)ILEFT,ILEFT2,YPLOT(IROW1),IROW1
-         CALL DPWRST('XXX','BUG ')
-      ELSE IF(ICOLL.EQ.MAXCP4)THEN
-         WRITE(ICOUT,2421)ILEFT,ILEFT2,XPLOT(IROW1),IROW1
-         CALL DPWRST('XXX','BUG ')
-      ELSE IF(ICOLL.EQ.MAXCP5)THEN
-         WRITE(ICOUT,2421)ILEFT,ILEFT2,X2PLOT(IROW1),IROW1
-         CALL DPWRST('XXX','BUG ')
-      ELSE IF(ICOLL.EQ.MAXCP6)THEN
-         WRITE(ICOUT,2421)ILEFT,ILEFT2,TAGPLO(IROW1),IROW1
-         CALL DPWRST('XXX','BUG ')
+      IF(NEWNAM.EQ.'YES')THEN
+        NUMNAM=NUMNAM+1
+        NUMCOL=NUMCOL+1
       ENDIF
 C
-      IJ=MAXN*(ICOLL-1)+IROWN
-      IF(ICOLL.LE.MAXCOL.AND.
-     1NNUM.NE.1)WRITE(ICOUT,2431)NNUM,ILEFT,ILEFT2,V(IJ),IROWN
- 2431 FORMAT('THE LAST (',I5,'-TH) COMPUTED VALUE OF ',A4,A4,
-     1' = ',E15.7,'   (ROW ',I6,')')
-      IF(ICOLL.LE.MAXCOL.AND.
-     1NNUM.NE.1)CALL DPWRST('XXX','BUG ')
-      IF(ICOLL.EQ.MAXCP1.AND.
-     1NNUM.NE.1)WRITE(ICOUT,2431)NNUM,ILEFT,ILEFT2,PRED(IROWN),IROWN
-      IF(ICOLL.EQ.MAXCP1.AND.
-     1NNUM.NE.1)CALL DPWRST('XXX','BUG ')
-      IF(ICOLL.EQ.MAXCP2.AND.
-     1NNUM.NE.1)WRITE(ICOUT,2431)NNUM,ILEFT,ILEFT2,RES(IROWN),IROWN
-      IF(ICOLL.EQ.MAXCP2.AND.
-     1NNUM.NE.1)CALL DPWRST('XXX','BUG ')
-      IF(ICOLL.EQ.MAXCP3.AND.
-     1NNUM.NE.1)WRITE(ICOUT,2431)NNUM,ILEFT,ILEFT2,YPLOT(IROWN),IROWN
-      IF(ICOLL.EQ.MAXCP3.AND.
-     1NNUM.NE.1)CALL DPWRST('XXX','BUG ')
-      IF(ICOLL.EQ.MAXCP4.AND.
-     1NNUM.NE.1)WRITE(ICOUT,2431)NNUM,ILEFT,ILEFT2,XPLOT(IROWN),IROWN
-      IF(ICOLL.EQ.MAXCP4.AND.
-     1NNUM.NE.1)CALL DPWRST('XXX','BUG ')
-      IF(ICOLL.EQ.MAXCP5.AND.
-     1NNUM.NE.1)WRITE(ICOUT,2431)NNUM,ILEFT,ILEFT2,X2PLOT(IROWN),IROWN
-      IF(ICOLL.EQ.MAXCP5.AND.
-     1NNUM.NE.1)CALL DPWRST('XXX','BUG ')
-      IF(ICOLL.EQ.MAXCP6.AND.
-     1NNUM.NE.1)WRITE(ICOUT,2431)NNUM,ILEFT,ILEFT2,TAGPLO(IROWN),IROWN
-      IF(ICOLL.EQ.MAXCP6.AND.
-     1NNUM.NE.1)CALL DPWRST('XXX','BUG ')
-      IF(NNUM.NE.1)GOTO2449
-      WRITE(ICOUT,2441)
- 2441 FORMAT('SINCE THE GENERATED SAMPLE SIZE WAS ONLY 1,')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,2442)
- 2442 FORMAT('THE ABOVE VALUE WAS THE SOLE VALUE COMPUTED.')
-      CALL DPWRST('XXX','BUG ')
- 2449 CONTINUE
+      DO2400J4=1,NUMNAM
+        IF(IUSE(J4).EQ.'V'.AND.IVALUE(J4).EQ.ICOLL)THEN
+          IUSE(J4)='V'
+          IVALUE(J4)=ICOLL
+          VALUE(J4)=ICOLL
+          IN(J4)=NINEW
+        ENDIF
+ 2400 CONTINUE
 C
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,2451)ILEFT,ILEFT2,ICOLL
- 2451 FORMAT('THE CURRENT COLUMN FOR ',
-     1'THE VARIABLE ',A4,A4,' = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,2453)ILEFT,ILEFT2,NINEW
- 2453 FORMAT('THE CURRENT LENGTH OF  ',
-     1'THE VARIABLE ',A4,A4,' = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
- 2459 CONTINUE
+      IF(IPRINT.EQ.'ON' .AND. IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2411)ILEFT,ILEFT2,NNUM
+ 2411   FORMAT('THE NUMBER OF VALUES GENERATED FOR ',
+     1         'THE VARIABLE ',2A4,' = ',I8)
+        CALL DPWRST('XXX','BUG ')
+C
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IJ=MAXN*(ICOLL-1)+IROW1
+        IF(ICOLL.LE.MAXCOL)THEN
+          WRITE(ICOUT,2421)ILEFT,ILEFT2,V(IJ),IROW1
+ 2421     FORMAT('THE FIRST           COMPUTED VALUE OF ',
+     1           2A4,' = ',E15.7,'   (ROW ',I6,')')
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICOLL.EQ.MAXCP1)THEN
+          WRITE(ICOUT,2421)ILEFT,ILEFT2,PRED(IROW1),IROW1
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICOLL.EQ.MAXCP2)THEN
+          WRITE(ICOUT,2421)ILEFT,ILEFT2,RES(IROW1),IROW1
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICOLL.EQ.MAXCP3)THEN
+          WRITE(ICOUT,2421)ILEFT,ILEFT2,YPLOT(IROW1),IROW1
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICOLL.EQ.MAXCP4)THEN
+          WRITE(ICOUT,2421)ILEFT,ILEFT2,XPLOT(IROW1),IROW1
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICOLL.EQ.MAXCP5)THEN
+          WRITE(ICOUT,2421)ILEFT,ILEFT2,X2PLOT(IROW1),IROW1
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICOLL.EQ.MAXCP6)THEN
+          WRITE(ICOUT,2421)ILEFT,ILEFT2,TAGPLO(IROW1),IROW1
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+        IJ=MAXN*(ICOLL-1)+IROWN
+        IF(ICOLL.LE.MAXCOL.AND.NNUM.NE.1)THEN
+          WRITE(ICOUT,2431)NNUM,ILEFT,ILEFT2,V(IJ),IROWN
+ 2431     FORMAT('THE LAST (',I5,'-TH) COMPUTED VALUE OF ',A4,A4,
+     1           ' = ',E15.7,'   (ROW ',I6,')')
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICOLL.EQ.MAXCP1.AND.NNUM.NE.1)THEN
+          WRITE(ICOUT,2431)NNUM,ILEFT,ILEFT2,PRED(IROWN),IROWN
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICOLL.EQ.MAXCP2.AND.NNUM.NE.1)THEN
+          WRITE(ICOUT,2431)NNUM,ILEFT,ILEFT2,RES(IROWN),IROWN
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICOLL.EQ.MAXCP3.AND.NNUM.NE.1)THEN
+          WRITE(ICOUT,2431)NNUM,ILEFT,ILEFT2,YPLOT(IROWN),IROWN
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICOLL.EQ.MAXCP4.AND.NNUM.NE.1)THEN
+          WRITE(ICOUT,2431)NNUM,ILEFT,ILEFT2,XPLOT(IROWN),IROWN
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICOLL.EQ.MAXCP5.AND.NNUM.NE.1)THEN
+          WRITE(ICOUT,2431)NNUM,ILEFT,ILEFT2,X2PLOT(IROWN),IROWN
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICOLL.EQ.MAXCP6.AND.NNUM.NE.1)THEN
+          WRITE(ICOUT,2431)NNUM,ILEFT,ILEFT2,TAGPLO(IROWN),IROWN
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(NNUM.EQ.1)THEN
+          WRITE(ICOUT,2441)
+ 2441     FORMAT('SINCE THE GENERATED SAMPLE SIZE WAS ONLY 1,')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2442)
+ 2442     FORMAT('THE ABOVE VALUE WAS THE SOLE VALUE COMPUTED.')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2451)ILEFT,ILEFT2,ICOLL
+ 2451   FORMAT('THE CURRENT COLUMN FOR ','THE VARIABLE ',2A4,' = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2453)ILEFT,ILEFT2,NINEW
+ 2453   FORMAT('THE CURRENT LENGTH OF THE VARIABLE ',2A4,' = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               *****************
 C               **  STEP 90--  **
@@ -38034,31 +38902,28 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGA3.EQ.'OFF')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF DPPAT--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)IFOUND,IERROR
- 9012 FORMAT('IFOUND,IERROR = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)IBUGA3,IBUGQ
- 9013 FORMAT('IBUGA3,IBUGQ = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9015)MAXN,NRAWPA,NS2,NS2MOD,NNUM
- 9015 FORMAT('MAXN,NRAWPA,NS2,NS2MOD,NNUM = ',5I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9016)NS,NIISUB,NNUM
- 9016 FORMAT('NS,NIISUB,NNUM = ',I8,I8,I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9018)NLEFT,NRAWPA,NIISUB,IROW1,IROWN,NINEW
- 9018 FORMAT('NLEFT,NRAWPA,NIISUB,IROW1,IROWN,NINEW = ',6I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9019)ILEFT,ILEFT2,NEWNAM,ICOLL,NINEW
- 9019 FORMAT('ILEFT,ILEFT2,NEWNAM,ICOLL,NINEW = ',A4,A4,2X,A4,I8,I8)
-      CALL DPWRST('XXX','BUG ')
- 9090 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PPAT')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPPAT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IFOUND,IERROR
+ 9012   FORMAT('IFOUND,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)MAXN,NRAWPA,NS2,NS2MOD,NNUM
+ 9015   FORMAT('MAXN,NRAWPA,NS2,NS2MOD,NNUM = ',5I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9016)NS,NIISUB,NNUM
+ 9016   FORMAT('NS,NIISUB,NNUM = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9018)NLEFT,NRAWPA,NIISUB,IROW1,IROWN,NINEW
+ 9018   FORMAT('NLEFT,NRAWPA,NIISUB,IROW1,IROWN,NINEW = ',6I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9019)ILEFT,ILEFT2,NEWNAM,ICOLL,NINEW
+ 9019   FORMAT('ILEFT,ILEFT2,NEWNAM,ICOLL,NINEW = ',2A4,2X,A4,2I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END

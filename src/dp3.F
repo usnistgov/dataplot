@@ -3584,6 +3584,34 @@ C
 C
       RETURN
       END
+      double precision function alnfac(j)
+c
+c        algorithm as 177.2  appl. statist. (1982) vol.31, no.2
+c
+c        natural logarithm of factorial for non-negative agrument
+c
+      implicit logical (a-z)
+      integer j
+      double precision r(7), one, half, a0, three, four, fourtn, fortty,
+     *  fivfty, w, z
+      data r(1), r(2), r(3), r(4), r(5), r(6), r(7) /0.0d0, 0.0d0,
+     *  0.69314718056d0, 1.79175946923d0, 3.17805383035d0,
+     *  4.78749174278d0, 6.57925121101d0/
+      data one, half, a0, three, four, fourtn, fortty, fivfty /
+     *  1.0d0, 0.5d0, 0.918938533205d0, 3.0d0, 4.0d0, 14.0d0, 420.0d0,
+     *  5040.0d0/
+      if (j .ge. 0) goto 10
+      alnfac = one
+      return
+   10 if (j .ge. 7) goto 20
+      alnfac = r(j + 1)
+      return
+   20 w = j + 1
+      z = one / (w * w)
+      alnfac = (w - half) * log(w) - w + a0 + (((four - three * z)
+     *  * z - fourtn) * z + fortty) / (fivfty * w)
+      return
+      end
       FUNCTION ALNREL(X)
 C***BEGIN PROLOGUE  ALNREL
 C***DATE WRITTEN   770401   (YYMMDD)
@@ -6289,6 +6317,171 @@ C
       apser = -a* (c+s)
       RETURN
 
+      END
+      SUBROUTINE ASCORE(X,N,IWRITE,XSCORE,TEMP1,MAXNXT,
+     1                  IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES THE ANSARI-BRADLEY SCORES
+C              OF THE N ELEMENTS OF THE SINGLE PRECISION VECTOR X, AND
+C              PUTS THE RESULTING N SCORES INTO THE SINGLE PRECISION
+C              VECTOR XSCORE.
+C
+C              THE ANSARI-BRADLEY SCORES ARE DEFINED AS
+C
+C                 A(X(i)) = (N+1)/2 - |(R(i) - (N+1)/2|
+C
+C              WITH R(i) DENOTING THE RANK OF THE i-TH OBSERVATION.
+C              ANSARI-BRADLEY SCORES ARE TYPICALLY USED TO TEST
+C              FOR EQUAL VARIANCES FOR TWO SAMPLES.
+C
+C     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+C                                OBSERVATIONS TO BE SCORED.
+C                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR X.
+C     OUTPUT ARGUMENTS--XSCORE = THE SINGLE PRECISION VECTOR INTO WHICH
+C                                THE SCORES FROM X WILL BE PLACED.
+C     OUTPUT--THE SINGLE PRECISION VECTOR XSCORE CONTAINING THE MOOD
+C             SCORES IN THE SINGLE PRECISION VECTOR X.
+C     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--RANK
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     REFERENCES--HIGGINS (2004), "INTRODUCTION TO MODERN NONPARAMETRIC
+C                 STATISTICS", DUXBURY ADVANCED SERIES, P. 50.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATION INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2023.06
+C     ORIGINAL VERSION--JUNE      2023.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION X(*)
+      DIMENSION XSCORE(*)
+      DIMENSION TEMP1(*)
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='ASCO'
+      ISUBN2='RE  '
+      IERROR='NO'
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CORE')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF ASCORE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)N,IBUGA3,ISUBRO
+   53   FORMAT('N,IBUGA3,ISUBRO = ',I8,2(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,X(I)
+   56     FORMAT('I,X(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      AN=N
+C
+      IF(N.LT.1)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN ANSARI-BRADLEY SCORES--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+  113   FORMAT('      THE NUMBER OF OBSERVATIONS IS LESS THAN 1.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,118)N
+  118   FORMAT('      THE NUMBER OF OBSERVATIONS IS ',I8)
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 2--                              **
+C               **  GENERATE THE MOOD   SCORES            **
+C               ********************************************
+C
+        CALL RANK(X,N,IWRITE,XSCORE,TEMP1,MAXNXT,IBUGA3,IERROR)
+        TERM1=(REAL(N)+1.0)/2.0
+        DO211K=1,N
+          XSCORE(K)=TERM1 - ABS(XSCORE(K) - TERM1)
+  211   CONTINUE
+C
+C
+C               ******************************
+C               **  STEP 4--                **
+C               **  WRITE OUT A FEW LINES   **
+C               **  OF SUMMARY INFORMATION  **
+C               **  ABOUT THE CODING.       **
+C               ******************************
+C
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IINDX=1
+        WRITE(ICOUT,912)IINDX,XSCORE(IINDX)
+  912   FORMAT('THE ANSARI-BRADLEY SCORE OF ROW ',I10,' = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        IINDX=N
+        WRITE(ICOUT,912)IINDX,XSCORE(IINDX)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CORE')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF ASCORE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        DO9015I=1,N
+          WRITE(ICOUT,9016)I,X(I),XSCORE(I)
+ 9016     FORMAT('I,X(I),XSCORE(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9015   CONTINUE
+      ENDIF
+C
+      RETURN
       END
       SUBROUTINE ASYIK (X, FNU, KODE, FLGIK, RA, ARG, IN, Y)
 C***BEGIN PROLOGUE  ASYIK
@@ -18162,20 +18355,27 @@ C
 C-----START POINT-----------------------------------------------------
 C
       PDF=0.0
-      IF(ALPHA.LE.0.0 .OR. BETA.LE.0.0)THEN
+      IF(ALPHA.LE.0.0)THEN
         WRITE(ICOUT,101)
+  101   FORMAT('***** ERROR IN BETCDF--THE SECOND ARGUMENT TO ',
+     1         'BETPDF (ALPHA) IS NON-POSITIVE.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,103)ALPHA
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,104)BETA
+  103   FORMAT('      THE VALUE OF THE ARGUMENT IS ',G15.7)
         CALL DPWRST('XXX','BUG ')
         GOTO9999
-      ENDIF
+      ELSEIF(BETA.LE.0.0)THEN
+        WRITE(ICOUT,102)
+  102   FORMAT('***** ERROR IN BETCDF--THE THIRD ARGUMENT TO ',
+     1         'BETPDF (BETA) IS NON-POSITIVE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,103)BETA
+        CALL DPWRST('XXX','BUG ')
+      ELSEIF(ALPHA.LT.1.0 .AND. BETA.LT.1.0)THEN
 C
-C     IF ALPHA < 1, UNDEFINED AT 0
-C     IF BETA  < 1, UNDEFINED AT 1
+C       IF ALPHA < 1, UNDEFINED AT 0
+C       IF BETA  < 1, UNDEFINED AT 1
 C
-      IF(ALPHA.LT.1.0 .AND. BETA.LT.1.0)THEN
         IF(X.LE.0.0)THEN
           WRITE(ICOUT,301)X
           CALL DPWRST('XXX','BUG ')
@@ -18214,10 +18414,6 @@ C
           GOTO9999
         ENDIF
       ENDIF
-  101 FORMAT('***** ERROR IN BETCDF--EITHER THE ALPHA OR BETA IS ',
-     1       'NON-POSITIVE.')
-  103 FORMAT('      THE VALUE OF ALPHA IS ',G15.7)
-  104 FORMAT('      THE VALUE OF BETA IS  ',G15.7)
   301 FORMAT('***** ERROR--THE FIRST ARGUMENT TO BETPDF IS ',
      1       'NON-POSITIVE.  IT HAS THE VALUE ',G15.7)
   302 FORMAT('***** ERROR--THE FIRST ARGUMENT TO BETPDF IS ',
@@ -27872,7 +28068,7 @@ C
 C
       RETURN
       END
-      SUBROUTINE BNDRY(A,BOX,IMX,JMX,IB,JB,NB)
+      SUBROUTINE BNDRY(A,BOX,IMX,JMX,IB,JB,NB,ISUBRO,IBUGG3)
 C
 C     PURPOSE--XX
 C
@@ -27901,12 +28097,23 @@ CCCCC BYTE SBOX                          JANUARY 1989
       CHARACTER*1 BOX
 CCCCC CHARACTER*1 SBOX
 C
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGG3
+C
       DIMENSION A(MAXIMX,MAXJMX)
       DIMENSION BOX(4,MAXIMX,MAXJMX)
       DIMENSION IB(*)
       DIMENSION JB(*)
 C
+      INCLUDE 'DPCOP2.INC'
+C
 C-----START POINT-----------------------------------------------------
+C
+      IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'NDRY')THEN
+        WRITE(ICOUT,51)IMX,JMX,MAXIMX,MAXJMX,NB
+   51   FORMAT('FROM BNDRY: IMX,JMX,MAXIMX,MAXJMX,NB = ',5I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 CCCCC THE FOLLOWING LINE WAS ADDED JULY 1990
 CCCCC AND ALL SUBSEQUENT OCCURRANCES OF 999.999   JULY 1990
@@ -27953,6 +28160,19 @@ C
           END IF
  410    CONTINUE
  400  CONTINUE
+C
+      IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'NDRY')THEN
+        DO1050II=1,IMX
+          DO1055JJ=1,JMX
+            WRITE(ICOUT,1059)II,JJ,BOX(1,II,JJ),BOX(2,II,JJ),
+     1                             BOX(3,II,JJ),BOX(4,II,JJ)
+ 1059       FORMAT('II,JJ,BOX(1,II,JJ),BOX(2,II,JJ),BOX(2,II,JJ),',
+     1             'BOX(4,II,JJ) = ',2I6,3X,4(2X,A1))
+            CALL DPWRST('XXX','BUG ')
+ 1055     CONTINUE
+ 1050   CONTINUE
+      ENDIF
+C
       I0=0
       J0=0
       I=0
@@ -28143,6 +28363,20 @@ C
         IF (IB(NB).EQ.IB(1).AND.JB(NB).EQ.JB(1)) IFLG=1
         GOTO700
  799  CONTINUE
+C
+      IF(IBUGG3.EQ.'ON' .OR. ISUBRO.EQ.'NDRY')THEN
+        WRITE(ICOUT,9051)NB
+ 9051   FORMAT('FROM END OF BNDRY: NB = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NB.GT.0)THEN
+          DO9055II=1,NB
+            WRITE(ICOUT,9059)II,IB(II),JB(II)
+ 9059       FORMAT('II,IB(II),JB(II) = ',3I6)
+            CALL DPWRST('XXX','BUG ')
+ 9055     CONTINUE
+        ENDIF
+      ENDIF
+C
       RETURN
       END
       SUBROUTINE BNFAC(W,NROWW,NROW,NBANDL,NBANDU,IFLAG)

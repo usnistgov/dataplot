@@ -469,7 +469,7 @@ C
           GOTO109
         ELSEIF(IA1.EQ.'MEDI' .AND. IA2.EQ.'CONF' .AND.
      1         IA3.EQ.'LIMI' .AND. IA4.EQ.'PLOT')THEN
-          ICASPL='MECL'
+          ICASPL='MDCL'
           IFOUN1='YES'
           IFOUN2='YES'
           ILASTC=MAX(ILASTC,I+3)
@@ -1512,7 +1512,7 @@ C
    71   FORMAT('ICONT,ICASPL,PSTAMV = ',2(A4,2X),G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,77)N,NZ,NRESP,NUMV2,ISIZE,IIPLJI
-   77   FORMAT('N,NZ,NRESP,NUMV2,ISIZE,IIPLJI = ',6I8)
+   77   FORMAT('N,NZ,NRESP,NUMV2,ISIZE,IIPLJI = ',5I8,2X,A4)
         CALL DPWRST('XXX','BUG ')
         DO72I=1,MAX(N,NZ)
           WRITE(ICOUT,73)I,Y(I),X(I),YZ(I),XZ(I)
@@ -1811,6 +1811,7 @@ C
           CALL NORCDF(CDF,TCVAL)
           YMAX=Y50 + TCVAL*XQUASE
           YMIN=Y50 - TCVAL*XQUASE
+          print *,'mdcl: y50,ymin,ymax = ',y50,ymin,ymax
         ELSEIF(ICASPL.EQ.'TMCL' .OR. ICASPL.EQ.'TMIP')THEN
           NTRIM1=-1
           NTRIM2=-1
@@ -10369,8 +10370,34 @@ C
       DO2000I=1,NUMNAM
         I2=I
         IF(IHLEFT.EQ.IHNAME(I).AND.IHLEF2.EQ.IHNAM2(I))THEN
-          ILISTL=I2
-          GOTO2900
+          IF(IUSE(I).EQ.'V   ' .OR. IUSE(I).EQ.'P   ')THEN
+            ILISTL=I2
+            GOTO2900
+          ELSE
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2201)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,210)IHLEFT,IHLEF2
+  210       FORMAT('      AN ATTEMPT WAS MADE TO USE ',2A4,' AS A ',
+     1           'VARIABLE OR PARAMETER')
+            CALL DPWRST('XXX','BUG ')
+            IF(IUSE(I).EQ.'F')THEN
+              WRITE(ICOUT,211)
+  211         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A STRING.')
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(IUSE(I).EQ.'M')THEN
+              WRITE(ICOUT,212)
+  212         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A MATRIX.')
+              CALL DPWRST('XXX','BUG ')
+            ELSE
+              WRITE(ICOUT,213)IUSE(I)
+  213         FORMAT('      EVEN THOUGH IT ALREADY EXISTS AS A ',A4,'.')
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+            IERROR='YES'
+            GOTO9000
+          ENDIF
         ENDIF
  2000 CONTINUE
       NEWNAM='YES'
@@ -15076,6 +15103,12 @@ C
         IF(ICASPL.EQ.'HESE' .AND. IBOOGR.EQ.'INDE')IFLAGI='INDE'
         IF(ICASPL.EQ.'HELC' .AND. IBOOGR.EQ.'INDE')IFLAGI='INDE'
         IF(ICASPL.EQ.'HEUC' .AND. IBOOGR.EQ.'INDE')IFLAGI='INDE'
+        IF(ICASPL.EQ.'SGCD' .AND. IBOOGR.EQ.'INDE')IFLAGI='INDE'
+        IF(ICASPL.EQ.'SG2P' .AND. IBOOGR.EQ.'INDE')IFLAGI='INDE'
+        IF(ICASPL.EQ.'SGLP' .AND. IBOOGR.EQ.'INDE')IFLAGI='INDE'
+        IF(ICASPL.EQ.'SGUP' .AND. IBOOGR.EQ.'INDE')IFLAGI='INDE'
+        IF(ICASPL.EQ.'SGTE' .AND. IBOOGR.EQ.'INDE')IFLAGI='INDE'
+        IF(ICASPL.EQ.'GMDR' .AND. IBOOGR.EQ.'INDE')IFLAGI='INDE'
         IF(IFLAGI.EQ.'INDE')IFLAGD='INDE'
       ENDIF
 C
@@ -24928,7 +24961,7 @@ C
       PARAMETER (NUMALP=8)
       REAL ALPHA(NUMALP)
 C
-      PARAMETER(NUMCLI=6)
+      PARAMETER(NUMCLI=7)
       PARAMETER(MAXLIN=2)
       PARAMETER (MAXROW=50)
       CHARACTER*60 ITITLE
@@ -25045,12 +25078,14 @@ C
             ACV90=AT90*AFACT2*AFACT3
             ACV95=AT95*AFACT2*AFACT3
             ACV99=AT99*AFACT2*AFACT3
+            CALL TCDF(ADIFF,REAL(IDF),ACDF)
+            PVALZ=1.0 - ACDF
             IATEMP='    '
             IF(ADIFF.GE.ACV90)IATEMP(2:2)='*'
             IF(ADIFF.GE.ACV95)IATEMP(3:3)='*'
             IF(ADIFF.GE.ACV99)IATEMP(4:4)='*'
-            WRITE(IOUNI1,2337)I,J,ADIFF,ACV90,ACV95,ACV99,IATEMP
- 2337       FORMAT(I6,2X,I6,2X,4E15.7,A4)
+            WRITE(IOUNI1,2337)I,J,ADIFF,ACV90,ACV95,ACV99,IATEMP,PVALZ
+ 2337       FORMAT(I6,2X,I6,2X,4E15.7,A4,E15.7)
 C
             IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'KRU2')THEN
               WRITE(ICOUT,2341)I,J,ANI,ANJ,ARANK(I),ARANK(J)
@@ -25506,9 +25541,11 @@ C
       NCTIT2(1,5)=6
       ITITL2(1,6)='99% CV'
       NCTIT2(1,6)=6
+      ITITL2(1,6)='P-VALUE'
+      NCTIT2(1,6)=7
 C
       NMAX=0
-      NUMCOL=6
+      NUMCOL=7
       DO4010I=1,NUMCOL
         VALIGN(I)='b'
         ALIGN(I)='r'
@@ -25529,6 +25566,7 @@ C
       IWHTML(4)=150
       IWHTML(5)=150
       IWHTML(6)=150
+      IWHTML(7)=150
       IINC=1600
       IINC2=200
       IINC3=1000
@@ -25538,6 +25576,7 @@ C
       IWRTF(4)=IWRTF(3)+IINC
       IWRTF(5)=IWRTF(4)+IINC
       IWRTF(6)=IWRTF(5)+IINC
+      IWRTF(7)=IWRTF(6)+IINC
 C
       ICNT=0
       DO4081I=1,NUMDIS
@@ -25551,6 +25590,8 @@ C
             ACV90=AT90*AFACT2*AFACT3
             ACV95=AT95*AFACT2*AFACT3
             ACV99=AT99*AFACT2*AFACT3
+            CALL TCDF(ADIFF,REAL(IDF),ACDF)
+            PVALZ=1.0 - ACDF
 C
             IF(ICNT.GE.MAXROW)THEN
               NUMLIN=1
@@ -25588,6 +25629,9 @@ C
             IVALUE(ICNT,6)=' '
             NCVALU(ICNT,6)=0
             AMAT(ICNT,6)=ACV99
+            IVALUE(ICNT,7)=' '
+            NCVALU(ICNT,7)=0
+            AMAT(ICNT,7)=PVALZ
           ENDIF
  4083   CONTINUE
  4081 CONTINUE

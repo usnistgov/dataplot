@@ -1,0 +1,36 @@
+This is data file    anscombe2.dat    (derrived from Anscombe's classic graphics vs stat dataset)
+Number of observations = 11
+Number of variables    =  5
+Order of variables on a line image--
+      y1  y2  y3  y4  y5
+Note--these 5 data sets are different in graphical structure
+      but have the following identical statistics--
+         sample size        = 11
+         mean of x's        = 9.0
+         mean of y's        = 7.5
+         intercept          = 3.0
+         slope              = 0.5
+         resid. stand. dev. = 1.125
+         corr. coefficient  = 81.7%
+Source--Anscombe, Frank J. (1973). "Graphs in Statistical Analysis"
+        American Statistician, Vol. 27, February 1973.
+To read this file into dataplot (& analyze)--
+   skip 25; read    anscombe2.dat    y1 y2 y3 y4
+   characters X; lines blank
+   multiplot 2 2
+      plot y1; plot y2; plot y3; plot y4
+   multiplot off
+
+  y1        y2        y3        y4        y5
+----------------------------------------------
+ 8.81      4.26      3.10      5.39      7.04
+ 6.95      5.68      4.74      5.73      6.89
+ 8.33      7.24      6.13      6.08      7.71
+ 4.82      4.82      7.26      6.42      6.58
+10.84      6.95      8.14      6.77      7.91
+ 4.26      8.81      8.77      7.11      5.76
+ 7.24      8.04      9.14      7.46      8.47
+ 8.04      8.33      9.26      7.81      5.56
+ 9.96     10.84      9.13      8.15      8.84
+ 7.58      7.58      8.74     12.74      5.25
+ 5.68      9.96      8.10      8.84     12.50

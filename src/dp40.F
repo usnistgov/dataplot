@@ -10804,13 +10804,12 @@ C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1966)
-C               EXCEPTION--HOLLERITH STRINGS IN FORMAT STATEMENTS
-C                          DENOTED BY QUOTES RATHER THAN NH.
 C     VERSION NUMBER--2001.10
 C     ORIGINAL VERSION--OCTOBER   2001.
 C     UPDATED  VERSION--JANUARY   2005. BUG IF ROUTINE CALLED MORE
 C                                       THAN ONCE, RESET AA AND AAA
 C                                       AND STORE IN COMMON
+C     UPDATED  VERSION--JULY      2021. DO NOT USE GAMMA METHOD
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -10818,7 +10817,7 @@ C---------------------------------------------------------------------
 C
       DIMENSION X(*)
 C
-      COMMON/SGAMM/AA,AAA
+CCCCC COMMON/SGAMM/AA,AAA
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -10830,42 +10829,42 @@ C     CHECK THE INPUT ARGUMENTS FOR ERRORS
 C
       IF(N.LT.1)THEN
         WRITE(ICOUT, 5)
+    5   FORMAT('***** ERROR--THE FIRST ARGUMENT TO IGARAN IS ',
+     1         'NON-POSITIVE.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,47)N
+   47   FORMAT('***** THE VALUE OF THE ARGUMENT IS ',I8,'.')
         CALL DPWRST('XXX','BUG ')
         GOTO9000
-      ENDIF
-      IF(GAMMA.LE.0.0)THEN
+      ELSEIF(GAMMA.LE.0.0)THEN
         WRITE(ICOUT,15)
+   15   FORMAT('***** ERROR--THE SECOND ARGUMENT TO IGARAN IS ',
+     1         'NON-POSITIVE.')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,46)GAMMA
+   46   FORMAT('***** THE VALUE OF THE ARGUMENT IS ',G15.7,'.')
         CALL DPWRST('XXX','BUG ')
         GOTO9000
       ENDIF
-    5 FORMAT('***** FATAL ERROR--THE 1ST INPUT ARGUMENT TO THE ',
-     1'IGARAN SUBROUTINE IS NON-POSITIVE *****')
-   15 FORMAT('***** FATAL ERROR--THE 2ND INPUT ARGUMENT TO THE ',
-     1'IGARAN SUBROUTINE IS NON-POSITIVE *****')
-   46 FORMAT('***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-   47 FORMAT('***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 C
 C     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
 C
-CCCCC CALL UNIRAN(N,ISEED,X)
-      AA=0.0
-      AAA=0.0
+      CALL UNIRAN(N,ISEED,X)
+CCCCC AA=0.0
+CCCCC AAA=0.0
 C
 C     GENERATE N INVERTED GAMMA DISTRIBUTION RANDOM NUMBERS
 C     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 C
 C     NOTE 6/2004: USE RELATIONSHIP TO GAMMA DISTRIBUTION.
+C     NOTE 7/2021: REVERT TO PERCENT POINT METHOD
 C
 CCCCC C=-1.0
       DO100I=1,N
-        ATEMP=SGAMMA(ISEED,GAMMA)
-        X(I)=1.0/ATEMP
-CCCCC   CALL GGDPPF(X(I),GAMMA,C,XTEMP)
-CCCCC   X(I)=XTEMP
+CCCCC   ATEMP=SGAMMA(ISEED,GAMMA)
+CCCCC   X(I)=1.0/ATEMP
+        CALL IGAPPF(X(I),GAMMA,XTEMP)
+        X(I)=XTEMP
   100 CONTINUE
 C
  9000 CONTINUE
@@ -14340,6 +14339,7 @@ C     UPDATED         --JULY      2015. ISVGBU
 C     UPDATED         --OCTOBER   2015. IQWNFL
 C     UPDATED         --DECEMBER  2015. ICNTD2, ICNTD3
 C     UPDATED         --DECEMBER  2018. PDSCAL
+C     UPDATED         --MAY       2022. PCHOSH, PCHOSV
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -14360,6 +14360,7 @@ CCCCC THE FOLLOWING INCLUDE STATEMENT WAS INSERTED FEBRUARY 1989
 CCCCC THE FOLLOWING INCLUDE STATEMENT WAS INSERTED APRIL 1997
       INCLUDE 'DPCOPM.INC'
 C
+      CHARACTER*4 IQWNFL
       COMMON/QUICKW5/IQWNFL
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
@@ -14511,15 +14512,18 @@ C
  1710 CONTINUE
 CCCCC ADD FOLLOWING SECTION JULY 1996.
 C
-C               ********************************************
-C               **  TREAT THE DEVICE ... FONT       CASE  **
-C               ********************************************
+C               ****************************************************
+C               **  TREAT THE DEVICE ... FONT               CASE  **
+C               **  TREAT THE DEVICE ... CHARACTER OFFSET   CASE  **
+C               ****************************************************
 C
       IDEFFN='OFF'
 C
       DO1810I=1,MAXDEV
         IDFONT(I)=IDEFFN
         PDSCAL(I)=1.0
+        PCHOSH(I)=0.0
+        PCHOSV(I)=0.0
  1810 CONTINUE
 C
 C               ********************************************
@@ -14636,7 +14640,8 @@ C
       IQWNPM(15)='BLUE'
       IQWNPM(16)='GREE'
 C
-      IQWNFL=0
+CCCCC 2021/08: IQWNFL IS INITIALIZED ELSEWHERE
+CCCCC IQWNFL='ON'
 C
 CCCCC ADD LAHEY WINTERACTOR DEVICE INITIALIZATION NOVEMBER 1996.
 C----------QUICK-WIN----------
@@ -15649,6 +15654,13 @@ C     UPDATED         --MARCH     2021.  IGRDOR
 C     UPDATED         --MARCH     2021.  ISHALB
 C     UPDATED         --JUNE      2021.  IUNILI
 C     UPDATED         --JULY      2021.  IEXCHE
+C     UPDATED         --JULY      2021.  ITPLGM
+C     UPDATED         --APRIL     2023.  ILIPCM, ILIPWT, ILIPSS
+C     UPDATED         --MAY       2023.  IECDCL
+C     UPDATED         --MAY       2023.  IPTESS, IPTESC, PPTEVA
+C     UPDATED         --JUNE      2023.  ISGTMC
+C     UPDATED         --JUNE      2023.  IFTESH, PFTEPV, PFTEPM, IFTEDI
+C     UPDATED         --JUNE      2023.  IMNWCC
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -17366,7 +17378,7 @@ CCCCC THE FOLLOWING SECTION WAS ADDED    MAY 2018
 C
 C               *******************************************************
 C               **  TREAT THE SET TOLERANCE LIMITS ONE SIDED METHOD  **
-C               **                <HOWE/WALD>                        **
+C               **                <NORMAL/NONCENTRAL T>              **
 C               *******************************************************
 C
       ITOLM2='DEFA'
@@ -18687,6 +18699,80 @@ C
       IBCPCM='OFF'
       ILPLCM='OFF'
       IHUBCM='OFF'
+      ILIPCM='OFF'
+      ILIPWT='OFF'
+      ILIPSS=50000
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    MAY      2023
+C
+C               *****************************************************
+C               **  TREAT THE SET EMPIRICAL CDF PLOT CONFIDENCE    **
+C               **                LIMITS <ON/OFF>                  **
+C               *****************************************************
+C
+      IECDCL='OFF'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    MAY      2023
+C
+C               *****************************************************
+C               **  TREAT THE SET PERMUTATION TEST SAMPLE SIZE     **
+C               **                <VALUE>                          **
+C               **  TREAT THE SET PERMUTATION TEST SCALE           **
+C               **                <DIFFERENCE/RATIO>               **
+C               **  TREAT THE SET PERMUTATION TEST COMPARISON VALUE**
+C               **                <VALUE>                          **
+C               *****************************************************
+C
+      IPTESS=4000
+      IPTESC='DIFF'
+      PPTEVA=0.0
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JUNE      2023
+C
+C               *******************************************************
+C               **  TREAT THE SET SIEGEL TUKEY TEST MEDIAN CENTERING **
+C               **                <ON/OFF>                           **
+C               *******************************************************
+C
+      ISGTMC='OFF'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JUNE      2023
+C
+C               *******************************************************
+C               **  TREAT THE SET MANN WHITNEY CONTINUITY CORRECTION **
+C               **                <ON/OFF>                           **
+C               *******************************************************
+C
+      IMNWCC='OFF'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JUNE      2023
+C
+C               *******************************************************
+C               **  TREAT THE SET F TEST DEGREES OF FREEDOM          **
+C               **            <DEFAULT/SHOEMAKER/SHOEMAKER ROUNDED/  **
+C               **               BONETT>                             **
+C               *******************************************************
+C
+      IFTESH='DEFA'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JUNE      2023
+C
+C               *******************************************************
+C               **  TREAT THE SET F TEST DIRECTION                   **
+C               **            <UPPER TAILED/TWO SIDED>               **
+C               *******************************************************
+C
+      IFTEDI='UPPE'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JUNE      2023
+C
+C               **************************************************************
+C               **  TREAT THE SET SHOEMAKER F TEST POOLED VARIANCE <VALUE>  **
+C               **  TREAT THE SET SHOEMAKER F TEST POOLED MU       <VALUE>  **
+C               **************************************************************
+C
+      PFTEPV=CPUMIN
+      PFTEPM=CPUMIN
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    JULY     2006
 C
@@ -19026,6 +19112,15 @@ C               **                <ON/OFF>                            **
 C               ********************************************************
 C
       ITPLCM='OFF'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JULY          2021
+C
+C               ********************************************************
+C               **  TREAT THE SET TABULATION PLOT GRAND  MINMAX       **
+C               **                <ON/OFF>                            **
+C               ********************************************************
+C
+      ITPLGM='OFF'
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    JUNE          2010
 C
@@ -31012,6 +31107,173 @@ C
  400     CONTINUE
          SUMKRO = SUMKRO + ( FUNCTN(NDIM,X) - SUMKRO )/( 2*K )
  200  CONTINUE
+C
+      RETURN
+      END
+      SUBROUTINE KSCORE(X,N,IWRITE,XSCORE,XS,MAXNXT,
+     1                  IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES THE KOTZ SCORES OF THE N
+C              ELEMENTS OF THE SINGLE PRECISION VECTOR X, AND PUTS THE
+C              RESULTING N SCORES INTO THE SINGLE PRECISION VECTOR XSCORE.
+C
+C              THE KLOTZ SCORES ARE DEFINED AS:
+C
+C                  K(i) = (NORPPF(R(i)/(N+1)))**2
+C
+C     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+C                                OBSERVATIONS TO BE SCORED.
+C                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR X.
+C     OUTPUT ARGUMENTS--XSCORE = THE SINGLE PRECISION VECTOR INTO WHICH
+C                                THE SCORES FROM X WILL BE PLACED.
+C     OUTPUT--THE SINGLE PRECISION VECTOR XSCORE CONTAINING THE KLOTZ
+C             SCORES.
+C     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     REFERENCES--CONOVER (1999), "PRACTICAL NONPARAMETRIC STATISTICS",
+C                 THIRD EDITION, WILEY, PP. 401.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATION INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2023.07
+C     ORIGINAL VERSION--JULY      2022.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION X(*)
+      DIMENSION XSCORE(*)
+      DIMENSION XS(*)
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='KSCO'
+      ISUBN2='RE  '
+      IERROR='NO'
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CORE')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF KSCORE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)N,MAXNXT,IBUGA3,ISUBRO
+   53   FORMAT('N,MAXNXT,IBUGA3,ISUBRO = ',2I8,(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,X(I)
+   56     FORMAT('I,X(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      IF(N.LT.1 .OR. N.GT.MAXNXT)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN KLOTZ SCORES (KSCORE)--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)MAXNXT
+  113   FORMAT('      THE NUMBER OF OBSERVATIONS IS LESS THAN 1 OR ',
+     1         'OR LARGER THAN ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,118)N
+  118   FORMAT('      THE NUMBER OF OBSERVATIONS IS ',I8)
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 2--                              **
+C               **  GENERATE THE RANKS                    **
+C               ********************************************
+C
+      CALL RANK(X,N,IWRITE,XSCORE,XS,MAXNXT,IBUGA3,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+C               ********************************************
+C               **  STEP 3--                              **
+C               **  NORPPF OF R(i)/(N+1), THEN SQUARE     **
+C               ********************************************
+C
+      ADEN=REAL(N) + 1.0
+      DO300I=1,N
+        CALL NODPPF(DBLE(XSCORE(I)/ADEN),DTERM1)
+        DTERM1=DTERM1**2
+        XSCORE(I)=REAL(DTERM1)
+  300 CONTINUE
+C
+C               ******************************
+C               **  STEP 4--                **
+C               **  WRITE OUT A FEW LINES   **
+C               **  OF SUMMARY INFORMATION  **
+C               **  ABOUT THE CODING.       **
+C               ******************************
+C
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IINDX=1
+        WRITE(ICOUT,912)IINDX,XSCORE(IINDX)
+  912   FORMAT('THE KLOTZ SCORE OF ROW ',I10,' = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        IINDX=N
+        WRITE(ICOUT,912)IINDX,XSCORE(IINDX)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CORE')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF KSCORE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        DO9015I=1,N
+          WRITE(ICOUT,9016)I,X(I),XSCORE(I)
+ 9016     FORMAT('I,X(I),XSCORE(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9015   CONTINUE
+      ENDIF
 C
       RETURN
       END
@@ -53914,6 +54176,7 @@ C                  QUANTILE CONFIDENCE LIMITS                  (HLR)
 C                  DIFFERENCE OF MEANS CONFIDENCE LIMITS       (HLR)
 C                  CORRELATION CONFIDENCE LIMITS               (HLR)
 C                  HEDGES G CONFIDENCE LIMITS                  (HLR)
+C                  RATIO OF SD CONFIDENCE LIMITS               (HLR)
 C
 C                  PROPORTION CONFIDENCE LIMITS                (HLR)
 C                  DIFFERENCE OF PROPORTION CONFIDENCE LIMITS  (HLR)
@@ -53968,6 +54231,7 @@ C                  CHI-SQUARED TEST Y SIGMA or SIGMA Y         (HLR)
 C                  COEFFICIENT OF VARIATION TEST Y X GAMMA0    (HLR)
 C                  COEFFICIENT OF VARIATION TEST Y1 X1 Y2 X2   (HLR)
 C                  F TEST Y1 Y2                                (HLR)
+C                  SIEGEL TUKEY TEST Y1 Y2                     (HLR)
 C                  KLOTZ TEST Y1 Y2                            (HLR)
 C                  SQUARED RANKS TEST Y X                      (HLR)
 C                  MEDIAN TEST Y X                             (HLR)
@@ -54300,6 +54564,8 @@ C     UPDATED         --OCTOBER   2019. RATIO OF MEANS CONFIDENCE LIMIT
 C     UPDATED         --OCTOBER   2019. DAVID TEST
 C     UPDATED         --OCTOBER   2019. SKEWNESS OUTLIER TEST
 C     UPDATED         --OCTOBER   2019. KURTOSIS OUTLIER TEST
+C     UPDATED         --JUNE      2023. SIEGEL-TUKEY TEST
+C     UPDATED         --JUNE      2023. RATIO OF SD CONFIDENCE LIMITS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -55320,6 +55586,21 @@ C
          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
       ENDIF
 C
+CCCCC THE FOLLOWING SECTION WAS ADDED     JULNE 2023
+C               *************************************************
+C               **  TREAT THE SIEGEL TUKEY          TEST  CASE **
+C               *************************************************
+C
+      IF( (ICOM.EQ.'SIEG'     .AND. IHARG(1).EQ.'TUKE') .OR.
+     1    (IHARG(1).EQ.'SIEG' .AND. IHARG(2).EQ.'TUKE') .OR.
+     1    (IHARG(2).EQ.'SIEG' .AND. IHARG(3).EQ.'TUKE') .OR.
+     1    (IHARG(3).EQ.'SIEG' .AND. IHARG(4).EQ.'TUKE')
+     1   )THEN
+         CALL DPSGTU(MAXNXT,ICAPSW,IFORSW,
+     1               IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ENDIF
+C
 CCCCC THE FOLLOWING SECTION WAS ADDED     JUNE 2011
 C               **************************************************
 C               **  TREAT THE FISHER TWO SAMPLE RAND TEST  CASE **
@@ -55764,12 +56045,30 @@ C
       ENDIF
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED     OCTOBER 2019
+CCCCC SUPPORT FOR RATIO OF <SD/VARIANCE>  ADDED     JUNE    2023
 C               *******************************************************
 C               **  TREAT THE RATIO OF MEANS CONNFIDENCE LIMITS CASE **
+C               **  TREAT THE RATIO OF SD    CONNFIDENCE LIMITS CASE **
+C               **  TREAT THE RATIO OF VARI  CONNFIDENCE LIMITS CASE **
 C               *******************************************************
 C
       IF(ICOM.EQ.'RATI' .AND. IHARG(1).EQ.'OF  ' .AND.
      1   IHARG(2).EQ.'MEAN')THEN
+        CALL DPMRCL(ICASAN,ICAPSW,IFORSW,
+     1              IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ELSEIF(ICOM.EQ.'RATI' .AND. IHARG(1).EQ.'OF  ' .AND.
+     1   (IHARG(2).EQ.'SD  ' .OR. IHARG(2).EQ.'SDS '))THEN
+        CALL DPMRCL(ICASAN,ICAPSW,IFORSW,
+     1              IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ELSEIF(ICOM.EQ.'RATI' .AND. IHARG(1).EQ.'OF  ' .AND.
+     1   IHARG(2).EQ.'STAN' .AND. IHARG(3).EQ.'DEVI')THEN
+        CALL DPMRCL(ICASAN,ICAPSW,IFORSW,
+     1              IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ELSEIF(ICOM.EQ.'RATI' .AND. IHARG(1).EQ.'OF  ' .AND.
+     1   IHARG(2).EQ.'VARI')THEN
         CALL DPMRCL(ICASAN,ICAPSW,IFORSW,
      1              IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
@@ -55972,7 +56271,7 @@ C               **  TREAT THE VAN DER WAERDEN TEST         CASE  **
 C               **            ONE WAY NORMAL SCORES TEST   CASE  **
 C               ***************************************************
 C
-CCCCC ADD: FEBRUARY 20111 - MULTIPLE OPTION
+CCCCC ADD: FEBRUARY 2011 - MULTIPLE OPTION
 C
       IMULT='OFF'
       IF(ICOM.EQ.'MULT' .AND. IHARG(1).EQ.'VAN ' .AND.
@@ -57479,6 +57778,8 @@ C     UPDATED         --DECEMBER  2018. CALL LIST TO DPINDU
 C     UPDATED         --DECEMBER  2018. CALL LIST TO DPLATT
 C     UPDATED         --OCTOBER   2020. CALL LIST TO VARIOUS ROUTINES
 C                                       TO SUPPORT RGB COLOR
+C     UPDATED         --MAY       2022. SUPPORT FOR DEVICE HARDWARE
+C                                       CHARACTER OFFSET
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C

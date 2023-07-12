@@ -5853,6 +5853,211 @@ C
  9000 CONTINUE
       RETURN
       END
+      SUBROUTINE VSCORE(X,N,IWRITE,XNOS,XS,MAXOBV,IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES THE VAN DER WAERDEN SCORES
+C              OF THE N ELEMENTS OF THE SINGLE PRECISION VECTOR X,
+C              AND PUTS THE RESULTING N SCORES INTO THE
+C              SINGLE PRECISION VECTOR XNOS.
+C
+C              THE VAN DER WAERDEN SCORES ARE DEFINED AS:
+C
+C                  V(i) = NORPPF(R(X(i)/(N+1))
+C
+C               THIS IS SOMETIMES GIVEN AS
+C
+C                  V(i) = NORPPF(i/(N+1))
+C
+C              WE USE THE FIRST FORM AS IT ACCOMODATES TIED RANKS
+C              AND DOES NOT ASSUME THE DATA IS PRE-SORTED.
+C
+C              WITH R(X(i)) AND NORPPF DENOTING THE RANK OF X(i)
+C              AND THE NORMAL PERCENT POINT FUNCTION, RESPECTIVELY.
+C
+C              THE VAN DER WAERDEN SCORES ARE AN APPROXIMATION TO
+C              THE NORMAL ORDER SCORES WHICH ARE
+C
+C                  NOS(i) =E(Z(i))
+C
+C              WHERE E(Z(i)) IS THE EXPECTED VALUE OF THE i-TH
+C              ORDER STATISTIC FOR A STANDARD NORMAL DISTRIBUTION.
+C
+C              VAN DER WAERDEN AND NORMAL ORDER SCORES ARE TYPICALLY
+C              USED TO TRANSFORM THE RAW DATA BEFORE APPLYING A
+C              PARAMETERIC TEST.  THESE ARE SIMILAR TO RANK
+C              TRANSFORMATION PROCEDURES.  THEY ARE SOMETIMES PREFERRED
+C              TO RANK TRANSFORMATIONS AS THEY SOMETIMES HAVE BETTER
+C              PROPERTIES THAN RANK TRANSFORMATION WHEN THE DATA
+C              ARE APPROXIMATELY NORMAL WHILE STILL PROVIDING
+C              PROTECTION FOR NON-NORMAL DATA.
+C
+C     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+C                                OBSERVATIONS TO BE SCORED.
+C                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTOR X.
+C     OUTPUT ARGUMENTS--XNOS   = THE SINGLE PRECISION VECTOR INTO WHICH
+C                                THE SCORES FROM X WILL BE PLACED.
+C     OUTPUT--THE SINGLE PRECISION VECTOR XNOS CONTAINING THE NORMAL
+C             ORDER SCORES (IN ASCENDING ORDER) OF THE VALUES
+C             IN THE SINGLE PRECISION VECTOR X.
+C     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, NORPPF.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     COMMENT--THE FIRST AND THIRD ARGUMENTS IN THE CALLING SEQUENCE MAY
+C              BE IDENTICAL; THAT IS, AN 'IN PLACE' SCORING IS
+C              PERMITTED.
+C     REFERENCES--CONOVER (1999), "PRACTICAL NONPARAMETRIC STATISTICS",
+C                 THIRD EDITION, WILEY, PP. 397-399, PP. 417-420.
+C               --HIGGINS (2004), "INTRODUCTION TO MODERN NONPARAMETRIC
+C                 STATISTICS", DUXBURY ADVANCED SERIES, P. 50.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATION INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2022.07
+C     ORIGINAL VERSION--JULY      2022.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION X(*)
+      DIMENSION XNOS(*)
+      DIMENSION XS(MAXOBV)
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='VSCO'
+      ISUBN2='RE  '
+      IERROR='NO'
+      IUPPER=MAXOBV
+C
+      K=0
+      RPREV=0.0
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CORE')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF VSCORE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)N,IUPPER,IBUGA3,ISUBRO
+   53   FORMAT('N,IUPPER,IBUGA3,ISUBRO = ',2I8,(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,X(I)
+   56     FORMAT('I,X(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      AN=N
+C
+      IF(N.LT.1 .OR. N.GT.IUPPER)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN VAN DER WAERDEN SCORES (VSCORE)--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)IUPPER
+  113   FORMAT('      THE NUMBER OF OBSERVATIONS IS LESS THAN 1 OR ',
+     1         'OR LARGER THAN ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,118)N
+  118   FORMAT('      THE NUMBER OF OBSERVATIONS IS ',I8)
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 2--                              **
+C               **  GENERATE THE RANKS                    **
+C               ********************************************
+C
+      CALL RANK(X,N,IWRITE,XNOS,XS,MAXOBV,IBUGA3,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+C               ********************************************
+C               **  STEP 3--                              **
+C               **  NORPPF OF R(i)/(N+1)                  **
+C               ********************************************
+C
+      ADEN=AN + 1.0
+      DO300I=1,N
+        CALL NODPPF(DBLE(XNOS(I)/ADEN),DTERM1)
+        XNOS(I)=REAL(DTERM1)
+  300 CONTINUE
+C
+C               ******************************
+C               **  STEP 4--                **
+C               **  WRITE OUT A FEW LINES   **
+C               **  OF SUMMARY INFORMATION  **
+C               **  ABOUT THE CODING.       **
+C               ******************************
+C
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IINDX=1
+        WRITE(ICOUT,912)IINDX,XNOS(IINDX)
+  912   FORMAT('THE VAN DER WAERDEN SCORE OF ROW ',I10,' = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        IINDX=N
+        WRITE(ICOUT,912)IINDX,XNOS(IINDX)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CORE')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF VSCORE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        DO9015I=1,N
+          WRITE(ICOUT,9016)I,X(I),XNOS(I)
+ 9016     FORMAT('I,X(I),XNOS(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9015   CONTINUE
+      ENDIF
+C
+      RETURN
+      END
       SUBROUTINE VVLA(VA,X,PV)
 C
 C       ===================================================

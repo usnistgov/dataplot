@@ -1,0 +1,57 @@
+Name: CERAMIC.DAT
+Source: Said Jahanmir
+        NIST Ceramics Division
+        Material Science and Engineering Laboratory
+Description: Measurements from high performance ceramics
+             experiment with the goal of characterizing the
+             effect of grinding parameters sintered
+             reaction-bonded silicon nitrade
+Data
+    X1: Table Speed
+    X2: Feed Rate
+    X3: Wheel Grit
+    X4: Direction
+    X5: Batch
+     Y: Strength
+ ORDER: Run Order
+
+This example is used on page pri471.htm to demonstrate a
+full factorial experiment (a 2**5 design).
+
+
+
+
+ X1    X2     X3    X4     X5        Y     ORDER
+------------------------------------------------
+-1     -1     -1     -1     -1     680.45     17
+ 1     -1     -1     -1     -1     722.48     30
+-1      1     -1     -1     -1     702.14     14
+ 1      1     -1     -1     -1     666.93      8
+-1     -1      1     -1     -1     703.67     32
+ 1     -1      1     -1     -1     642.14     20
+-1      1      1     -1     -1     692.98     26
+ 1      1      1     -1     -1     669.26     24
+-1     -1     -1      1     -1     491.58     10
+ 1     -1     -1      1     -1     475.52     16
+-1      1     -1      1     -1     478.76     27
+ 1      1     -1      1     -1     568.23     18
+-1     -1      1      1     -1     444.72      3
+ 1     -1      1      1     -1     410.37     19
+-1      1      1      1     -1     428.51     31
+ 1      1      1      1     -1     491.47     15
+-1     -1     -1     -1      1     607.34     12
+ 1     -1     -1     -1      1     620.80      1
+-1      1     -1     -1      1     610.55      4
+ 1      1     -1     -1      1     638.04     23
+-1     -1      1     -1      1     585.19      2
+ 1     -1      1     -1      1     586.17     28
+-1      1      1     -1      1     601.67     11
+ 1      1      1     -1      1     608.31      9
+-1     -1     -1      1      1     442.90     25
+ 1     -1     -1      1      1     434.41     21
+-1      1     -1      1      1     417.66      6
+ 1      1     -1      1      1     510.84      7
+-1     -1      1      1      1     392.11      5
+ 1     -1      1      1      1     343.22     13
+-1      1      1      1      1     385.52     22
+ 1      1      1      1      1     446.73     29

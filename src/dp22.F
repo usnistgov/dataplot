@@ -1002,9 +1002,9 @@ C
       SUBROUTINE DPPLO3(NPLOTV,NPLOTP,NS,ICASPL,IAND1,IAND2,
      1                  PARAM,IPARN,IPARN2,NUMPAR,
      1                  ITYPEH,IW2HOL,IW22HO,W2HOLD,NWHOLD,
-     1                  IFOLOC,MAXNPP,
-     1                  IANGLU,IBUGG3,IBUGCO,IBUGEV,IBUGQ,ISUBRO,
-     1                  IFOUND,IERROR)
+     1                  IFOLOC,
+     1                  MAXNPP,IANGLU,IBUGG3,IBUGCO,IBUGEV,IBUGQ,
+     1                  ISUBRO,IFOUND,IERROR)
 C
 C     PURPOSE--FORM A PLOT OF A FUNCTION
 C              WHEN HAVE 1 OR MORE    =    ENTERED,
@@ -1223,7 +1223,7 @@ C
  3104 FORMAT('      THE ENTIRE COMMAND LINE WAS AS FOLLOWS--')
       CALL DPWRST('XXX','BUG ')
       IF(IWIDTH.GE.1)THEN
-        WRITE(ICOUT,3105)(IANS(I),I=1,IWIDTH)
+        WRITE(ICOUT,3105)(IANS(I),I=1,MIN(100,IWIDTH))
  3105   FORMAT('      ',100A1)
         CALL DPWRST('XXX','BUG ')
       ENDIF
@@ -1266,7 +1266,7 @@ C
         WRITE(ICOUT,3104)
         CALL DPWRST('XXX','BUG ')
         IF(IWIDTH.GE.1)THEN
-          WRITE(ICOUT,3105)(IANS(I),I=1,IWIDTH)
+          WRITE(ICOUT,3105)(IANS(I),I=1,MIN(100,IWIDTH))
           CALL DPWRST('XXX','BUG ')
         ENDIF
         IERROR='YES'
@@ -1829,6 +1829,8 @@ C     UPDATED         --MARCH     1981.
 C     UPDATED         --AUGUST    1981.
 C     UPDATED         --MAY       1982.
 C     UPDATED         --APRIL     1992. FIX PLOT WITH NO ARGS
+C     UPDATED         --JUNE      2022. FIX BUG WHEN HAVE 2 OR MORE
+C                                       SUBSET CLAUSES WITH "="
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -1901,6 +1903,12 @@ CCCCC DO40I=1,225
         IW22HO(I)='    '
         W2HOLD(I)=0.0
    40 CONTINUE
+C
+      DO45I=1,100
+        IVSLOC(I)=-1
+        IEQLOC(I)=-1
+        IFOLOC(I)=-1
+   45 CONTINUE
 C
 C               ***************************
 C               **  TREAT THE PLOT CASE  **
@@ -2013,10 +2021,15 @@ C
         ENDIF
   811 CONTINUE
 C
+C     2022/06: BUG WHEN TWO OR MORE SUBSET CLAUSES HAVE "="
+C              WITH NO FOR CLAUSE
+C
       IF(NUMEQ.EQ.0)ICASPL='NOVE'
       IF(NUMEQ.EQ.1.AND.NUMFO.EQ.1.AND.NUMDV.LE.0)ICASPL='NOVE'
       IF(NUMEQ.EQ.1.AND.NUMFO.EQ.1.AND.NUMDV.GE.1)ICASPL='EFE'
+      IF(NUMEQ.EQ.2.AND.NUMFO.EQ.2.AND.NUMDV.GE.1)ICASPL='EFE'
       IF(NUMEQ.GE.2)ICASPL='EFE'
+      IF(ICASPL.EQ.'EFE' .AND. NUMFO.EQ.0)ICASPL='NOVE'
       IF(NUMVS.GE.1)ICASPL='VS'
 C
 C               ******************************************
@@ -2044,9 +2057,8 @@ C
      1              PARAM,IPARN,IPARN2,NUMPAR,
      1              ITYPEH,IW2HOL,IW22HO,W2HOLD,NWHOLD,
      1              IFOLOC,
-     1              MAXNPP,
-     1              IANGLU,IBUGG3,IBUGCO,IBUGEV,IBUGQ,ISUBRO,
-     1              IFOUND,IERROR)
+     1              MAXNPP,IANGLU,IBUGG3,IBUGCO,IBUGEV,IBUGQ,
+     1              ISUBRO,IFOUND,IERROR)
       ENDIF
 C
 C               *****************

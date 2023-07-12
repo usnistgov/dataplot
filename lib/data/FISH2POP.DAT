@@ -1,27 +1,27 @@
-.  Perform a Fisher's dsicriminant analysis
-.  Case with 2 populations (has simplifications from general case).
-.
-.  Hemophillia data from "Applied Multivariate Statistical Analysis"
-.  by Johnson and Wichern (p. 570).
-.
-.  AHFACT = LOG10(AHF activity)
-.  AHFANT = LOG10(AHF antigen)
-.
-.  TAG = 1 - Noncarriers
-.  TAG = 2 - Carriers
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
+Perform a Fisher's dsicriminant analysis
+Case with 2 populations (has simplifications from general case).
+
+Hemophillia data from "Applied Multivariate Statistical Analysis"
+by Johnson and Wichern (p. 570).
+
+AHFACT = LOG10(AHF activity)
+AHFANT = LOG10(AHF antigen)
+
+TAG = 1 - Noncarriers
+TAG = 2 - Carriers
+
+
+
+
+
+
+
+
+
+
+
+
+
 ----------------------------
 -.0056   -.1657  1
 -.698    -.1585  1

@@ -19,7 +19,7 @@ Statistical Categories--Univariate
                         Control Charts
 To read this file into Dataplot--
    SKIP 25
-   READ YOUDEN67.DAT Y X
+   READ YOUDEN31.DAT Y X1 X2
  
 Thickness    Girl  Replication
 ------------------------------

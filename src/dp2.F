@@ -2356,7 +2356,6 @@ C
       CHARACTER*4 IERROR
 C
       CHARACTER*4 IWRITE
-C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
@@ -2412,10 +2411,6 @@ CCCCC FOLLOWING LINES ADDED JUNE, 1990
       EQUIVALENCE (GARBAG(IGARB4),Y4(1))
       EQUIVALENCE (GARBAG(IGARB5),XD(1))
       EQUIVALENCE (GARBAG(IGARB6),YD(1))
-      EQUIVALENCE (GARBAG(IGARB7),ZMAT(1,1))
-      EQUIVALENCE (GARBAG(IGARB8),BOX(1,1,1))
-      EQUIVALENCE (GARBAG(IGARB9),WLN(1))
-      EQUIVALENCE (GARBAG(IGARB9+MAXNCN),COLR(1))
 CCCCC END CHANGE
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
@@ -2770,18 +2765,6 @@ CCCCC DIMENSION A(IMX,JMX),X(IMX),Y(JMX)
 CCCCC DIMENSION XC(NMX,3),YC(NMX,3),DST(NDX),IB(NMX),JB(NMX),
 CCCCC1 NEES(2,NSGX,3),CNV(NCNN),LBL(NCNN),WLN(NCNN),IDSH(NCNN)
 C
-      DIMENSION X(*)
-      DIMENSION Y(*)
-      DIMENSION XTEMP(*)
-      DIMENSION YTEMP(*)
-      DIMENSION TATEMP(*)
-      DIMENSION WLN(MAXNCN)
-      DIMENSION CNV(MAXNCN)
-      DIMENSION BOX(4,MAXIMX,MAXJMX)
-      DIMENSION A(IMX,JMX)
-      DIMENSION LBL(MAXNCN)
-      DIMENSION IDSH(MAXNCN)
-C
       INTEGER NPTS
       INTEGER SNSE
       INTEGER CLSD
@@ -2799,25 +2782,27 @@ C
       DIMENSION SNSE(MAXNSG,3)
       DIMENSION CLSD(MAXNSG,3)
       DIMENSION NSEG(3)
-      DIMENSION COLR(*)
+      DIMENSION COLR(MAXNCN+1)
 C
-      INCLUDE 'DPCOPA.INC'
-      INCLUDE 'DPCOZZ.INC'
-      INCLUDE 'DPCOZI.INC'
-C
+      DIMENSION A(MAXIMX,MAXJMX)
+      DIMENSION X(MAXIMX)
+      DIMENSION Y(MAXJMX)
       DIMENSION XC(MAXNMX,3)
       DIMENSION YC(MAXNMX,3)
-      DIMENSION DST(MAXNMX)
+      DIMENSION DST(MAXNDX)
       DIMENSION IB(MAXNMX)
       DIMENSION JB(MAXNMX)
       DIMENSION NEES(2,MAXNSG,3)
+      DIMENSION CNV(MAXNCN)
+      DIMENSION LBL(MAXNCN)
+      DIMENSION WLN(MAXNCN)
+      DIMENSION IDSH(MAXNCN)
 C
-      EQUIVALENCE (GARBAG(JGAR12),XC(1,1))
-      EQUIVALENCE (GARBAG(JGAR13),YC(1,1))
-      EQUIVALENCE (GARBAG(JGAR14),DST(1))
-      EQUIVALENCE (IGARBG(IIGAR1),IB(1))
-      EQUIVALENCE (IGARBG(IIGAR2),JB(1))
-      EQUIVALENCE (IGARBG(IIGAR3),NEES(1,1,1))
+      DIMENSION BOX(4,MAXIMX,MAXJMX)
+C
+      DIMENSION XTEMP(*)
+      DIMENSION YTEMP(*)
+      DIMENSION TATEMP(*)
 C
 C---------------------------------------------------------------------
 C
@@ -2978,7 +2963,7 @@ C   CONVERT X & Y FROM USER UNITS TO DEVICE UNITS (MM OR WHATEVER)
 C   SET UP IB, JB & BOX ARRAYS TO CONTROL CONTOURING NEAR BOUNDARIES
 C   DATA VOIDS CONNECTED TO PERIMETER ARE ALLOWED, BUT NO ISOLATED VOIDS
 C
-      CALL BNDRY(A,BOX,IMX,JMX,IB,JB,NBX)
+      CALL BNDRY(A,BOX,IMX,JMX,IB,JB,NBX,ISUBRO,IBUGG3)
       NBM=NBX-1
 C     WRITE(9,'('' A'')')
 C     CALL PRTMTX(9,A,IMX,JMX,1)
@@ -3038,13 +3023,15 @@ C   SEARCH PERIMETER OF AREA FOR CONTOUR-STARTS
                   IF (BOX(1,I,J).EQ.'2') THEN
                     NS=1
                     CALL START1(A(I,J),X(I),Y(J),
-     1                          NS,CN,XC(NP,2),YC(NP,2))
+     1                          IMX,NS,CN,XC(NP,2),YC(NP,2),
+     1                          ISUBRO,IBUGG3)
                     IF (NS.GT.0) THEN
 C          ->  CONTOUR-START FOUND, BEGIN CHASE
                       II=I
                       JJ=J
                       CALL CHASE(A,X,Y,IMX,JMX,II,JJ,
-     1                           NS,CN,XC(NP,2),YC(NP,2),NMX,N,BOX)
+     1                           NS,CN,XC(NP,2),YC(NP,2),NMX,N,BOX,
+     1                           ISUBRO,IBUGG3)
                       IF (N.GT.1) THEN
                         NSG=NSG+1
                         NPTS(NSG,2)=N
@@ -3073,13 +3060,15 @@ C     CALL PRT_STR(9,XC(NP,2),YC(NP,2),1,N)
                   IF (BOX(3,I-1,J).EQ.'2') THEN
                     NS=3
                     CALL START3(A(I,J),X(I),Y(J),
-     1                          NS,CN,XC(NP,2),YC(NP,2))
+     1                          IMX,NS,CN,XC(NP,2),YC(NP,2),
+     1                          ISUBRO,IBUGG3)
                     IF (NS.GT.0) THEN
 C          ->  CONTOUR-START FOUND, BEGIN CHASE
                       II=I-1
                       JJ=J
                       CALL CHASE(A,X,Y,IMX,JMX,II,JJ,
-     1                        NS,CN,XC(NP,2),YC(NP,2),NMX,N,BOX)
+     1                           NS,CN,XC(NP,2),YC(NP,2),NMX,N,BOX,
+     1                           ISUBRO,IBUGG3)
                       IF (N.GT.1) THEN
                         NSG=NSG+1
                         NPTS(NSG,2)=N
@@ -3111,13 +3100,15 @@ C     CALL PRT_STR(9,XC(NP,2),YC(NP,2),1,N)
                 IF (BOX(2,I,J-1).EQ.'2') THEN
                   NS=2
                   CALL START2(A(I,J),X(I),Y(J),
-     1                        NS,CN,XC(NP,2),YC(NP,2))
+     1                        IMX,NS,CN,XC(NP,2),YC(NP,2),
+     1                        ISUBRO,IBUGG3)
                   IF (NS.GT.0) THEN
 C          ->  CONTOUR-START FOUND, BEGIN CHASE
                     II=I
                     JJ=J-1
                     CALL CHASE(A,X,Y,IMX,JMX,II,JJ,
-     1                        NS,CN,XC(NP,2),YC(NP,2),NMX,N,BOX)
+     1                         NS,CN,XC(NP,2),YC(NP,2),NMX,N,BOX,
+     1                         ISUBRO,IBUGG3)
                     IF (N.GT.1) THEN
                       NSG=NSG+1
                       NPTS(NSG,2)=N
@@ -3146,13 +3137,15 @@ C     CALL PRT_STR(9,XC(NP,2),YC(NP,2),1,N)
                 IF (BOX(4,I,J).EQ.'2') THEN
                   NS=4
                   CALL START4(A(I,J),X(I),Y(J),
-     1                        NS,CN,XC(NP,2),YC(NP,2))
+     1                        IMX,NS,CN,XC(NP,2),YC(NP,2),
+     1                        ISUBRO,IBUGG3)
                   IF (NS.GT.0) THEN
 C          ->  CONTOUR-START FOUND, BEGIN CHASE
                     II=I
                     JJ=J
                     CALL CHASE(A,X,Y,IMX,JMX,II,JJ,
-     1                        NS,CN,XC(NP,2),YC(NP,2),NMX,N,BOX)
+     1                         NS,CN,XC(NP,2),YC(NP,2),NMX,N,BOX,
+     1                         ISUBRO,IBUGG3)
                     IF (N.GT.1) THEN
                       NSG=NSG+1
                       NPTS(NSG,2)=N
@@ -3183,13 +3176,15 @@ C   SEARCH INTERIOR FOR CONTOUR-STARTS OF CLOSED CONTOURS
             IF (BOX(1,I,J).EQ.'0') THEN
               NS=1
               CALL START1(A(I,J),X(I),Y(J),
-     1                 NS,CN,XC(NP,2),YC(NP,2))
+     1                 IMX,NS,CN,XC(NP,2),YC(NP,2),
+     1                 ISUBRO,IBUGG3)
               IF (NS.GT.0) THEN
 C           ->  CONTOUR-START FOUND, BEGIN CHASE
                 II=I
                 JJ=J
                 CALL CHASE(A,X,Y,IMX,JMX,II,JJ,
-     1                   NS,CN,XC(NP,2),YC(NP,2),NMX,N,BOX)
+     1                     NS,CN,XC(NP,2),YC(NP,2),NMX,N,BOX,
+     1                     ISUBRO,IBUGG3)
                 IF (N.GT.1) THEN
                   IF (A(I,J).NE.CN) THEN
                     JIO=J
@@ -3298,663 +3293,7 @@ C
 C
       RETURN
       END
-      SUBROUTINE DPCOP3(Z,NX,NY,Z0,
-     1X2,Y2,TAG,N,NTRACE,
-     1IBUGG3,ISUBRO,IERROR)
-C
-C     PURPOSE--OPERATE ON THE MATRIX Z(.,.)
-C              FOR A FIXED VALUE OF Z (Z0),
-C              EXTRACT ALL CONTOUR LINES.
-C              FILL THE ARRAYS Y2(.), X2(.) AND TAG(.)
-C              ACCORDINGLY.
-C
-C     NOTE--Z0     = THE TARGET Z VALUE FOR WHICH A CONTOUR LINE
-C                    IS DESIRED.
-C           K      = THE CURRENT INDEX OF THE Y2(.), X2(.),
-C                    AND TAG(.) VARIABLES.
-C                    (K IS SET TO 0 AT THE BEGINNING
-C                    OF THIS SUBROUTINE).
-C           ITRACE = THE CURRENT TRACE BEING FORMED.
-C                    (ITRACE IS SET TO 0 AT THE BEGINNING
-C                    OF THIS SUBROUTINE).
-C
-C---------------------------------------------------------------------
-C
-      CHARACTER*4 IBUGG3
-      CHARACTER*4 ISUBRO
-      CHARACTER*4 IERROR
-C
-      CHARACTER*4 IDONEH
-      CHARACTER*4 IDONEV
-C
-      DIMENSION Z(100,100)
-      DIMENSION X2(*)
-      DIMENSION Y2(*)
-      DIMENSION TAG(*)
-C
-      DIMENSION IDONEH(20,20,20)
-      DIMENSION IDONEV(20,20,20)
-C
-      DIMENSION IXSAVE(400)
-      DIMENSION IYSAVE(400)
-      DIMENSION KSAVE(400)
-C
-C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
-C
-      INCLUDE 'DPCOP2.INC'
-C
-C-----START POINT-----------------------------------------------------
-C
-      IF(IBUGG3.EQ.'OFF'.AND.ISUBRO.NE.'COP3')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPCOP3--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBUGG3,ISUBRO,IERROR
-   52 FORMAT('IBUGG3,ISUBRO,IERROR = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)Z0
-   53 FORMAT('Z0 = ',E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,54)NX,NY
-   54 FORMAT('NX,NY = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      DO55IY=1,NY
-      DO56IX=1,NX
-      WRITE(ICOUT,57)IX,IY,Z(IX,IY)
-   57 FORMAT('IX,IY,Z(IX,IY) = ',2I8,E15.7)
-      CALL DPWRST('XXX','BUG ')
-   56 CONTINUE
-   55 CONTINUE
-C
-   90 CONTINUE
-C
-      NXP1=NX+1
-      NYP1=NY+1
-C
-      DO1110IX1=1,NX
-      DO1120IX2=1,NX
-      DO1130IY1=1,NY
-      IDONEH(IX1,IX2,IY1)='NO'
- 1130 CONTINUE
- 1120 CONTINUE
- 1110 CONTINUE
-C
-      DO1210IY1=1,NY
-      DO1220IY2=1,NY
-      DO1230IX1=1,NX
-      IDONEV(IY1,IY2,IX1)='NO'
- 1230 CONTINUE
- 1220 CONTINUE
- 1210 CONTINUE
-C
-      K=0
-      ITRACE=0
-      ISAVE=0
-C
-      NYM1=NY-1
-      NXM1=NX-1
-C
-C               *********************************************
-C               *********************************************
-C               **  STEP 21--                              **
-C               **  SCAN THE MATRIX--FOR EACH ROW,         **
-C               **  SCAN ACROSS THE COLUMNS AND            **
-C               **  SEARCH FOR Z VALUES WHICH BRACKET THE  **
-C               **  TARGET Z0 CONTOUR VALUE.               **
-C               *********************************************
-C               *********************************************
-C
-      DO2100IY1=1,NYM1
-      IY2=IY1+1
-      AIY1=IY1
-      AIY2=IY2
-C
-      DO2200IX1=1,NXM1
-      IX2=IX1+1
-      AIX1=IX1
-      AIX2=IX2
-C
-      IF(IDONEH(IX1,IX2,IY1).EQ.'YES')GOTO2200
-CCCCC WRITE(ICOUT,2201)IX1,IY1,Z(IX1,IY1)
-C2201 FORMAT('IX1,IY1,Z(IX1,IY1) = ',2I8,E15.7)
-CCCCC CALL DPWRST('XXX','BUG ')
-CCCCC WRITE(ICOUT,2202)IDONEH(IX1,IX2,IY1),IDONEV(IY1,IY2,IX1)
-C2202 FORMAT('IDONEH(IX1,IX2,IY1),IDONEV(IY1,IY2,IX1) = ',2A4)
-CCCCC CALL DPWRST('XXX','BUG ')
-      IF(Z(IX1,IY1).LE.Z0.AND.Z0.LE.Z(IX2,IY1))GOTO2210
-      IF(Z(IX2,IY1).LE.Z0.AND.Z0.LE.Z(IX1,IY1))GOTO2210
-      GOTO2200
-C
- 2210 CONTINUE
-      ITRACE=ITRACE+1
-      K=K+1
-      ANUM=Z0-Z(IX1,IY1)
-      ADEN=Z(IX2,IY1)-Z(IX1,IY1)
-      P=ANUM/ADEN
-      X2(K)=AIX1+P*(AIX2-AIX1)
-      Y2(K)=IY1
-      TAG(K)=ITRACE
-      IDONEH(IX1,IX2,IY1)='YES'
-C
-C               ********************************************
-C               ********************************************
-C               **  STEP 22--                             **
-C               **  A HIT HAS BEEN FOUND.                 **
-C               **  THEREFORE, FOLLOW THE TRACE THROUGH   **
-C               **  THE MATRIX UNTIL THE TRACE FINISHES.  **
-C               ********************************************
-C               ********************************************
-C
-      ISAVE=ISAVE+1
-      IXSAVE(ISAVE)=IX1
-      IYSAVE(ISAVE)=IY1
-      KSAVE(ISAVE)=K
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-CCCCC WRITE(ICOUT,2355)ISAVE,IXSAVE(ISAVE),IYSAVE(ISAVE),KSAVE(ISAVE)
-C2355 FORMAT('ISAVE,IXSAVE(ISAVE),IYSAVE(ISAVE),KSAVE(ISAVE)= ',4I8)
-CCCCC CALL DPWRST('XXX','BUG ')
-CCCCC WRITE(ICOUT,2356)X2(K),Y2(K)
-C2356 FORMAT('X2(K),Y2(K) = ',2E15.7)
-CCCCC CALL DPWRST('XXX','BUG ')
-C
-      IX3=IX1
-      IY3=IY2
-      ISIDE1=2
-      DO2300I=1,10000
-      IF(IY3.LE.1)GOTO2370
-      IF(IY3.GE.NYP1)GOTO2370
-      IF(IX3.LE.0)GOTO2370
-      IF(IX3.GE.NX)GOTO2370
-      CALL DPCOP4(IX3,IY3,ISIDE1,ITRACE,Z0,
-     1Z,IDONEH,IDONEV,
-     1X2,Y2,TAG,K,ISIDE2,
-     1IBUGG3,ISUBRO,IERROR)
-      IF(IERROR.EQ.'YES')GOTO9000
-      IF(ISIDE2.EQ.0)GOTO2370
-      IF(ISIDE2.EQ.1)IY3=IY3+1
-      IF(ISIDE2.EQ.2)IY3=IY3-1
-      IF(ISIDE2.EQ.3)IX3=IX3-1
-      IF(ISIDE2.EQ.4)IX3=IX3+1
-      IF(ISIDE2.EQ.1)ISIDE1=2
-      IF(ISIDE2.EQ.2)ISIDE1=1
-      IF(ISIDE2.EQ.3)ISIDE1=4
-      IF(ISIDE2.EQ.4)ISIDE1=3
- 2300 CONTINUE
- 2370 CONTINUE
-      IF(ISAVE.LE.0)GOTO2390
-      DO2375I=1,ISAVE
-      I2=I
-      IF(IX3.EQ.IXSAVE(I2).AND.IY3.EQ.IYSAVE(I2))GOTO2380
- 2375 CONTINUE
-      GOTO2390
- 2380 CONTINUE
-      K=K+1
-      KS=KSAVE(I2)
-      X2(K)=X2(KS)
-      Y2(K)=Y2(KS)
-CCCCC TAG(K)=TAG(KS)
-      TAG(K)=ITRACE
-      GOTO2390
- 2390 CONTINUE
-C
- 2200 CONTINUE
- 2100 CONTINUE
-C
-C               *********************************************
-C               *********************************************
-C               **  STEP 31--                              **
-C               **  SCAN THE MATRIX--FOR EACH COLUMN,      **
-C               **  SCAN DOWN   THE ROWS AND               **
-C               **  SEARCH FOR Z VALUES WHICH BRACKET THE  **
-C               **  TARGET Z0 CONTOUR VALUE.               **
-C               *********************************************
-C               *********************************************
-C
-      DO3100IX1=1,NXM1
-      IX2=IX1+1
-      AIX1=IX1
-      AIX2=IX2
-C
-      DO3200IY1=1,NYM1
-      IY2=IY1+1
-      AIY1=IY1
-      AIY2=IY2
-C
-      IF(IDONEV(IY1,IY2,IX1).EQ.'YES')GOTO3200
-CCCCC WRITE(ICOUT,3201)IX1,IY1,Z(IX1,IY1)
-C3201 FORMAT('IX1,IY1,Z(IX1,IY1) = ',2I8,E15.7)
-CCCCC CALL DPWRST('XXX','BUG ')
-CCCCC WRITE(ICOUT,3202)IDONEH(IX1,IX2,IY1),IDONEV(IY1,IY2,IX1)
-C3202 FORMAT('IDONEH(IX1,IX2,IY1),IDONEV(IY1,IY2,IX1) = ',2A4)
-CCCCC CALL DPWRST('XXX','BUG ')
-      IF(Z(IX1,IY1).LE.Z0.AND.Z0.LE.Z(IX1,IY2))GOTO3210
-      IF(Z(IX1,IY2).LE.Z0.AND.Z0.LE.Z(IX1,IY1))GOTO3210
-      GOTO3200
-C
- 3210 CONTINUE
-      ITRACE=ITRACE+1
-CCCCC IF(ITRACE.EQ.5)
-CCCCC1WRITE(ICOUT,3222)IY1,IY2,IX1,IDONEV(IY1,IY2,IX1)
-C3222 FORMAT('IY1,IY2,IX1,IDONEV(IY1,IY2,IX1) = ',3I8,2X,A4)
-CCCCC IF(ITRACE.EQ.5)
-CCCCC1CALL DPWRST('XXX','BUG ')
-      K=K+1
-      ANUM=Z0-Z(IX1,IY1)
-      ADEN=Z(IX1,IY2)-Z(IX1,IY1)
-      P=ANUM/ADEN
-      Y2(K)=AIY1+P*(AIY2-AIY1)
-      X2(K)=IX1
-      TAG(K)=ITRACE
-      IDONEV(IY1,IY2,IX1)='YES'
-C
-C               ********************************************
-C               ********************************************
-C               **  STEP 32--                             **
-C               **  A HIT HAS BEEN FOUND.                 **
-C               **  THEREFORE, FOLLOW THE TRACE THROUGH   **
-C               **  THE MATRIX UNTIL THE TRACE FINISHES.  **
-C               ********************************************
-C               ********************************************
-C
-      ISAVE=ISAVE+1
-      IXSAVE(ISAVE)=IX1
-      IYSAVE(ISAVE)=IY2
-      KSAVE(ISAVE)=K
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-CCCCC WRITE(ICOUT,3355)ISAVE,IXSAVE(ISAVE),IYSAVE(ISAVE),KSAVE(ISAVE)
-C3355 FORMAT('ISAVE,IXSAVE(ISAVE),IYSAVE(ISAVE),KSAVE(ISAVE)= ',4I8)
-CCCCC CALL DPWRST('XXX','BUG ')
-CCCCC WRITE(ICOUT,3356)X2(K),Y2(K)
-C3356 FORMAT('X2(K),Y2(K) = ',2E15.7)
-CCCCC CALL DPWRST('XXX','BUG ')
-C
-      IX3=IX1
-      IY3=IY2
-      ISIDE1=3
-      DO3300I=1,10000
-      IF(IY3.LE.1)GOTO3370
-      IF(IY3.GE.NYP1)GOTO3370
-      IF(IX3.LE.0)GOTO3370
-      IF(IX3.GE.NX)GOTO3370
-      CALL DPCOP4(IX3,IY3,ISIDE1,ITRACE,Z0,
-     1Z,IDONEH,IDONEV,
-     1X2,Y2,TAG,K,ISIDE2,
-     1IBUGG3,ISUBRO,IERROR)
-      IF(IERROR.EQ.'YES')GOTO9000
-      IF(ISIDE2.EQ.0)GOTO3370
-      IF(ISIDE2.EQ.1)IY3=IY3+1
-      IF(ISIDE2.EQ.2)IY3=IY3-1
-      IF(ISIDE2.EQ.3)IX3=IX3-1
-      IF(ISIDE2.EQ.4)IX3=IX3+1
-      IF(ISIDE2.EQ.1)ISIDE1=2
-      IF(ISIDE2.EQ.2)ISIDE1=1
-      IF(ISIDE2.EQ.3)ISIDE1=4
-      IF(ISIDE2.EQ.4)ISIDE1=3
- 3300 CONTINUE
- 3370 CONTINUE
-      IF(ISAVE.LE.0)GOTO3390
-      DO3375I=1,ISAVE
-      I2=I
-CCCCC WRITE(ICOUT,3376)I2,IX3,IY3,IXSAVE(I2),IYSAVE(I2)
-C3376 FORMAT('I2,IX3,IY3,IXSAVE(I2),IYSAVE(I2) = ',5I8)
-CCCCC CALL DPWRST('XXX','BUG ')
-      IF(IX3.EQ.IXSAVE(I2).AND.IY3.EQ.IYSAVE(I2))GOTO3380
- 3375 CONTINUE
-      GOTO3390
- 3380 CONTINUE
-      K=K+1
-      KS=KSAVE(I2)
-      X2(K)=X2(KS)
-      Y2(K)=Y2(KS)
-CCCCC TAG(K)=TAG(KS)
-      TAG(K)=ITRACE
-CCCCC WRITE(ICOUT,3381)K,KS,X2(KS),Y2(KS),TAG(KS)
-C3381 FORMAT('K,KS,X2(KS),Y2(KS),TAG(KS) = ',2I8,3E15.7)
-CCCCC CALL DPWRST('XXX','BUG ')
-      GOTO3390
- 3390 CONTINUE
-C
- 3200 CONTINUE
- 3100 CONTINUE
-C
-      N=K
-      NTRACE=ITRACE
-C
-C               *****************
-C               *****************
-C               **  STEP 90--  **
-C               **  EXIT       **
-C               *****************
-C               *****************
-C
- 9000 CONTINUE
-      IF(IBUGG3.EQ.'OFF'.AND.ISUBRO.NE.'COP3')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF DPCOP3--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)IBUGG3,ISUBRO,IERROR
- 9012 FORMAT('IBUGG3,ISUBRO,IERROR = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)Z0
- 9013 FORMAT('Z0 = ',E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9014)NX,NY
- 9014 FORMAT('NX,NY = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      DO9015IY=1,NY
-      DO9016IX=1,NX
-      WRITE(ICOUT,9017)IX,IY,Z(IX,IY)
- 9017 FORMAT('IX,IY,Z(IX,IY) = ',2I8,E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9016 CONTINUE
- 9015 CONTINUE
-C
- 9090 CONTINUE
-C
-      RETURN
-      END
-      SUBROUTINE DPCOP4(IX3,IY3,ISIDE1,ITRACE,Z0,
-     1Z,IDONEH,IDONEV,
-     1X2,Y2,TAG,K,ISIDE2,
-     1IBUGG3,ISUBRO,IERROR)
-C
-C     PURPOSE--EXAMINE THE BOX WITH LOWER LEFT CORNER
-C              AT (IX3,IY3) AND WITH TRACE ENTRY SIDE
-C              GIVEN BY ISIDE1--
-C                 ISIDE1 = 1 IMPLIES ENTRY FROM BOTTOM
-C                 ISIDE1 = 2 IMPLIES ENTRY FROM TOP
-C                 ISIDE1 = 3 IMPLIES ENTRY FROM LEFT
-C                 ISIDE1 = 4 IMPLIES ENTRY FROM RIGHT
-C              DETERMINE IF THE TRACE EXITS ANYWHERE
-C              FROM THE BOX--THAT IS, IN ANY OF THE
-C              3 REMAINING SIDES OF THE BOX.
-C              IF AN EXIT IS FOUND, RECORD WHICH SIDE
-C              THE EXIT WAS MADE FROM,
-C              INTERPOLATE TO GET AN X AND Y VALUE
-C              FROM THAT SIDE SO THAT Z(.,.) = Z0,
-C              AND UPDATE THE ARRAYS Y2(.), X2(.), AND TAG(.)
-C              ACCORDINGLY.
-C     NOTE--THIS SUBROUTINE USED TO BE CALLED   NEXT
-C
-C---------------------------------------------------------------------
-C
-      CHARACTER*4 IDONEH
-      CHARACTER*4 IDONEV
-C
-      CHARACTER*4 IBUGG3
-      CHARACTER*4 ISUBRO
-      CHARACTER*4 IERROR
-C
-      DIMENSION Z(100,100)
-      DIMENSION IDONEH(20,20,20)
-      DIMENSION IDONEV(20,20,20)
-C
-      DIMENSION X2(1)
-      DIMENSION Y2(1)
-      DIMENSION TAG(1)
-C
-C-----COMMON VARIABLES (GENERAL)-----------------------------------------------
-C
-      INCLUDE 'DPCOP2.INC'
-C
-C-----START POINT-----------------------------------------------------
-C
-CCCCC IF(K.EQ.52.OR.K.EQ.53)IBUGG3='ON'
-CCCCC IBUGG3='OFF'
-CCCCC IF(ITRACE.EQ.3)IBUGG3='ON'
-C
-      IF(IBUGG3.EQ.'OFF'.AND.ISUBRO.NE.'COP4')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPNEXT--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBUGG3,ISUBRO,IERROR
-   52 FORMAT('IBUGG3,ISUBRO,IERROR = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)IX3,IY3
-   53 FORMAT('IX3,IY3 = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,54)ISIDE1
-   54 FORMAT('ISIDE1 = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,55)ITRACE
-   55 FORMAT('ITRACE = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,56)Z0
-   56 FORMAT('Z0 = ',E15.7)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
-C
-      IX1=IX3
-      IY1=IY3
-      IX2=IX3+1
-      IY2=IY3-1
-      AIX1=IX1
-      AIY1=IY1
-      AIX2=IX2
-      AIY2=IY2
-C
-      ISIDE2=0
-      DO1000I=1,4
-      IF(I.EQ.ISIDE1)GOTO1000
-      IF(I.EQ.1)GOTO1100
-      IF(I.EQ.2)GOTO1200
-      IF(I.EQ.3)GOTO1300
-      IF(I.EQ.4)GOTO1400
-C
-C               ***************************************
-C               ***************************************
-C               **  STEP 11--                        **
-C               **  CHECK TO SEE IF THE TRACE EXITS  **
-C               **  ON THE BOTTOM.                   **
-C               ***************************************
-C               ***************************************
-C
- 1100 CONTINUE
-      IF(IBUGG3.EQ.'OFF'.AND.ISUBRO.NE.'COP4')GOTO1109
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1101)
- 1101 FORMAT('CHECK FOR EXIT VIA SIDE 1 (BOTTOM)--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1102)IX1,IX2,IY2,IDONEH(IX1,IX2,IY1)
- 1102 FORMAT('IX1,IX2,IY2,IDONEH(IX1,IX2,IY1) = ',3I8,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1103)Z(IX1,IY1),Z0,Z(IX2,IY1)
- 1103 FORMAT('Z(IX1,IY1),Z0,Z(IX2,IY1) = ',3E15.7)
-      CALL DPWRST('XXX','BUG ')
- 1109 CONTINUE
-      IF(IDONEH(IX1,IX2,IY1).EQ.'YES')GOTO1000
-      IF(Z(IX1,IY1).LE.Z0.AND.Z0.LE.Z(IX2,IY1))GOTO1110
-      IF(Z(IX2,IY1).LE.Z0.AND.Z0.LE.Z(IX1,IY1))GOTO1110
-      GOTO1000
-C
- 1110 CONTINUE
-      K=K+1
-      ANUM=Z0-Z(IX1,IY1)
-      ADEN=Z(IX2,IY1)-Z(IX1,IY1)
-      P=ANUM/ADEN
-      X2(K)=AIX1+P*(AIX2-AIX1)
-      Y2(K)=IY1
-      TAG(K)=ITRACE
-      IDONEH(IX1,IX2,IY1)='YES'
-      ISIDE2=1
-      GOTO9000
-C
-C               ***************************************
-C               ***************************************
-C               **  STEP 12--                        **
-C               **  CHECK TO SEE IF THE TRACE EXITS  **
-C               **  ON THE TOP.                      **
-C               ***************************************
-C               ***************************************
-C
- 1200 CONTINUE
-      IF(IBUGG3.EQ.'OFF'.AND.ISUBRO.NE.'COP4')GOTO1209
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1201)
- 1201 FORMAT('CHECK FOR EXIT VIA SIDE 2 (TOP)--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1202)IX1,IX2,IY2,IDONEH(IX1,IX2,IY2)
- 1202 FORMAT('IX1,IX2,IY2,IDONEH(IX1,IX2,IY2) = ',3I8,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1203)Z(IX1,IY2),Z0,Z(IX2,IY2)
- 1203 FORMAT('Z(IX1,IY2),Z0,Z(IX2,IY2) = ',3E15.7)
-      CALL DPWRST('XXX','BUG ')
- 1209 CONTINUE
-      IF(IDONEH(IX1,IX2,IY2).EQ.'YES')GOTO1000
-      IF(Z(IX1,IY2).LE.Z0.AND.Z0.LE.Z(IX2,IY2))GOTO1210
-      IF(Z(IX2,IY2).LE.Z0.AND.Z0.LE.Z(IX1,IY2))GOTO1210
-      GOTO1000
-C
- 1210 CONTINUE
-      K=K+1
-      ANUM=Z0-Z(IX1,IY2)
-      ADEN=Z(IX2,IY2)-Z(IX1,IY2)
-      P=ANUM/ADEN
-      X2(K)=AIX1+P*(AIX2-AIX1)
-      Y2(K)=IY2
-      TAG(K)=ITRACE
-      IDONEH(IX1,IX2,IY2)='YES'
-      ISIDE2=2
-      GOTO9000
-C
-C               ***************************************
-C               ***************************************
-C               **  STEP 13--                        **
-C               **  CHECK TO SEE IF THE TRACE EXITS  **
-C               **  ON THE LEFT.                     **
-C               ***************************************
-C               ***************************************
-C
- 1300 CONTINUE
-      IF(IBUGG3.EQ.'OFF'.AND.ISUBRO.NE.'COP4')GOTO1309
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1301)
- 1301 FORMAT('CHECK FOR EXIT VIA SIDE 3 (LEFT)--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1302)IY2,IY1,IX1,IDONEV(IY2,IY1,IX1)
- 1302 FORMAT('IY2,IY1,IX1,IDONEV(IY2,IY1,IX1) = ',3I8,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1303)Z(IX1,IY1),Z0,Z(IX1,IY2)
- 1303 FORMAT('Z(IX1,IY1),Z0,Z(IX1,IY2) = ',3E15.7)
-      CALL DPWRST('XXX','BUG ')
- 1309 CONTINUE
-      IF(IDONEV(IY2,IY1,IX1).EQ.'YES')GOTO1000
-      IF(Z(IX1,IY1).LE.Z0.AND.Z0.LE.Z(IX1,IY2))GOTO1310
-      IF(Z(IX1,IY2).LE.Z0.AND.Z0.LE.Z(IX1,IY1))GOTO1310
-      GOTO1000
-C
- 1310 CONTINUE
-      K=K+1
-      ANUM=Z0-Z(IX1,IY1)
-      ADEN=Z(IX1,IY2)-Z(IX1,IY1)
-      P=ANUM/ADEN
-      Y2(K)=AIY1+P*(AIY2-AIY1)
-      X2(K)=IX1
-      TAG(K)=ITRACE
-      IDONEV(IY2,IY1,IX1)='YES'
-      ISIDE2=3
-      GOTO9000
-C
-C               ***************************************
-C               ***************************************
-C               **  STEP 14--                        **
-C               **  CHECK TO SEE IF THE TRACE EXITS  **
-C               **  ON THE RIGHT.                    **
-C               ***************************************
-C               ***************************************
-C
- 1400 CONTINUE
-      IF(IBUGG3.EQ.'OFF'.AND.ISUBRO.NE.'COP4')GOTO1409
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1401)
- 1401 FORMAT('CHECK FOR EXIT VIA SIDE 4 (RIGHT)--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1402)IY2,IY1,IX2,IDONEV(IY2,IY1,IX2)
- 1402 FORMAT('IY2,IY1,IX2,IDONEV(IY2,IY1,IX2) = ',3I8,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1403)Z(IX2,IY1),Z0,Z(IX2,IY2)
- 1403 FORMAT('Z(IX2,IY1),Z0,Z(IX2,IY2) = ',3E15.7)
-      CALL DPWRST('XXX','BUG ')
- 1409 CONTINUE
-      IF(IDONEV(IY2,IY1,IX2).EQ.'YES')GOTO1000
-      IF(Z(IX2,IY1).LE.Z0.AND.Z0.LE.Z(IX2,IY2))GOTO1410
-      IF(Z(IX2,IY2).LE.Z0.AND.Z0.LE.Z(IX2,IY1))GOTO1410
-      GOTO1000
-C
- 1410 CONTINUE
-      K=K+1
-      ANUM=Z0-Z(IX2,IY1)
-      ADEN=Z(IX2,IY2)-Z(IX2,IY1)
-      P=ANUM/ADEN
-      Y2(K)=AIY1+P*(AIY2-AIY1)
-      X2(K)=IX2
-      TAG(K)=ITRACE
-      IDONEV(IY2,IY1,IX2)='YES'
-      ISIDE2=4
-      GOTO9000
-C
- 1000 CONTINUE
-C
-C               *****************
-C               *****************
-C               **  STEP 90--  **
-C               **  EXIT       **
-C               *****************
-C               *****************
-C
- 9000 CONTINUE
-      IF(IBUGG3.EQ.'OFF'.AND.ISUBRO.NE.'COP4')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF DPNEXT--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)IBUGG3,ISUBRO,IERROR
- 9012 FORMAT('IBUGG3,ISUBRO,IERROR = ',A4,2X,A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)IX3,IY3
- 9013 FORMAT('IX3,IY3 = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9014)ISIDE1
- 9014 FORMAT('ISIDE1 = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9015)ITRACE
- 9015 FORMAT('ITRACE = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9016)Z0
- 9016 FORMAT('Z0 = ',E15.7)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9021)ISIDE2
- 9021 FORMAT('ISIDE2 = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9022)K
- 9022 FORMAT('K = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      DO9023I=1,K
-CCCCC WRITE(ICOUT,9024)I,X2(I),Y2(I),TAG(I)
-C9024 FORMAT('I,X2(I),Y2(I),TAG(I) = ',I8,3E15.7)
-CCCCC CALL DPWRST('XXX','BUG ')
- 9023 CONTINUE
- 9090 CONTINUE
-C
-      RETURN
-      END
-      SUBROUTINE DPCORU(ICOM,IHARG,NUMARG,
-     1IFOUND,IERROR)
+      SUBROUTINE DPCORU(ICOM,IHARG,NUMARG,IFOUND,IERROR)
 C
 C     PURPOSE--WRITE OUT A COLUMN RULER (1 TO 132)
 C              TO ALLOW THE USER TO ASSESS WHAT COLUMN LIMITS
@@ -3972,9 +3311,6 @@ C                 GAITHERSBURG, MD 20899
 C                 PHONE--301-975-2855
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
-C           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
-C           MODIFIED, OR OTHERWISE USED IN A CONTEXT
-C           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--89/12
 C     ORIGINAL VERSION--NOVEMBER 1989.
@@ -7490,6 +6826,35 @@ C     UPDATED         --MARCH      2021.  SET GRID ORDER
 C     UPDATED         --MARCH      2021.  SET SHANNON LOG BASE
 C     UPDATED         --JUNE       2021.  SET UNIFORM CONFIDENCE LIMIT
 C     UPDATED         --JULY       2021.  SET EXCEL HEADER
+C     UPDATED         --JULY       2021.  SET TABULATION PLOT GRAND
+C                                             MINMAX
+C     UPDATED         --JULY       2021.  PRESERVE CASE FOR
+C                                         SET EXCEL SHEET
+C     UPDATED         --OCTOBER    2022.  FOR PYTHON VERSION, ALLOW
+C                                         "3.6" AND "3.9"
+C     UPDATED         --APRIL      2023.  SET LINEAR POOL
+C     UPDATED         --APRIL      2023.  SET LINEAR POOL WEIGHTS
+C     UPDATED         --APRIL      2023.  SET LINEAR POOL SAMPLE SIZE
+C     UPDATED         --MAY        2023.  SET EMPIRICAL CDF PLOT
+C                                             CONFIDENCE LIMIT
+C
+C     UPDATED         --MAY        2023.  SET PERMUTATION TEST
+C                                             SAMPLE SIZE
+C     UPDATED         --MAY        2023.  SET PERMUTATION TEST
+C                                             COMPARISON VALUE
+C     UPDATED         --MAY        2023.  SET PERMUTATION TEST
+C                                             SCALE
+C     UPDATED         --JUNE       2023.  SET SIEGEL TUKEY TEST
+C                                             MEDIAN CENTERING
+C     UPDATED         --JUNE       2023.  SET F TEST DEGREES OF
+C                                             FREEDOM
+C     UPDATED         --JUNE       2023.  SET F TEST DIRECTION
+C     UPDATED         --JUNE       2023.  SET SHOEMAKER F TEST POOLED
+C                                             VARIANCE
+C     UPDATED         --JUNE       2023.  SET SHOEMAKER F TEST POOLED
+C                                             MU
+C     UPDATED         --JUNE       2023.  SET MANN WHITNEY CONTINUITY
+C                                             CORRECTION
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -8844,10 +8209,18 @@ C
       IPART1='PYTH'
       IPART2='VERS'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
-        IF(IHV.EQ.'2')THEN
+        IF(IHV(1:1).EQ.'2')THEN
           IPYTVR='2'
         ELSEIF(IHV.EQ.'3')THEN
           IPYTVR='3'
+        ELSEIF(IHV.EQ.'36')THEN
+          IPYTVR='36'
+        ELSEIF(IHV.EQ.'3.6')THEN
+          IPYTVR='36'
+        ELSEIF(IHV.EQ.'39')THEN
+          IPYTVR='39'
+        ELSEIF(IHV.EQ.'3.9')THEN
+          IPYTVR='39'
         ELSE
           IPYTVR='DEFA'
         ENDIF
@@ -10916,7 +10289,7 @@ C
       IPART4='QUAN'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
      1   (IHARG(3).EQ.IPART3.OR.IHARG(3).EQ.IPART4))THEN
-        IF(IHV.EQ.'NO' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'FALSE')THEN
+        IF(IHV.EQ.'NO' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'FALS')THEN
           IQUAVR='NONE'
         ELSEIF(IHV.EQ.'YES' .OR. IHV.EQ.'ON' .OR. IHV.EQ.'TRUE' .OR.
      1         IHV.EQ.'DEFA')THEN
@@ -10948,7 +10321,7 @@ C
       IPART3='RELI'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
      1   IHARG(3).EQ.IPART3)THEN
-        IF(IHV.EQ.'NO' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'FALSE')THEN
+        IF(IHV.EQ.'NO' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'FALS')THEN
           IRELVR='NONE'
         ELSEIF(IHV.EQ.'YES' .OR. IHV.EQ.'ON' .OR. IHV.EQ.'TRUE')THEN
           IRELVR='DEFAULT'
@@ -10963,6 +10336,37 @@ C
           WRITE(ICOUT,55163)IRELVR
 55163     FORMAT('THE MAXIMUM LIKELIHOOD PERCENTILES VARIABLE HAS ',
      1           'BEEN SET TO ',A8)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GOTO9000
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED APRIL 2023.
+C     ***********************************************************
+C     **  SET LINEAR POOL WEIGHTS <NONE/OFF/ VARIABLE NAME>    **
+C     ************************************************************
+C
+      IPART1='LINE'
+      IPART2='POOL'
+      IPART3='WEIG'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'NO' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'FALS' .OR.
+     1     IHV.EQ.'DEFA')THEN
+          ILIPWT='OFF'
+        ELSEIF(IHV.EQ.'YES' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'TRUE')THEN
+          ILIPWT='OFF'
+        ELSE
+          ILIPWT(1:4)=IHV
+          ILIPWT(5:8)=IHV2
+        ENDIF
+        IFOUND='YES'
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,55263)ILIPWT
+55263     FORMAT('THE WEIGHTS VARIABLE FOR THE LINEAR POOL CONSENSUS ',
+     1           'VALUES HAS BEEN SET TO ',A8)
           CALL DPWRST('XXX','BUG ')
         ENDIF
         GOTO9000
@@ -10985,6 +10389,8 @@ C               **  SET   GRAND MEAN                       **
 C               **  SET   GENERALIZED CONFIDENCE INTERVALS **
 C               **  SET   DERSIMONIAN LAIRD                **
 C               **  SET   FAIRWEATHER                      **
+C               **  SET   BAYESIAN CONSENSUS PROCEDURE     **
+C               **  SET   LINEAR POOL                      **
 C               *********************************************
 C
       IPART1='MAND'
@@ -11340,6 +10746,310 @@ C
           IHV='ON'
         ENDIF
         IBCPCM=IHV
+        GOTO5160
+      ENDIF
+C
+      IPART1='LINE'
+      IPART2='POOL'
+      IPART3='SAMP'
+      IPART4='SIZE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR.
+     1     IHV.EQ.'DEFA')THEN
+          IV=50000
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          IV=50000
+        ENDIF
+        ILIPSS=IV
+        GOTO5160
+      ENDIF
+C
+      IPART1='LINE'
+      IPART2='POOL'
+      IPART3='NUMB'
+      IPART4='OF  '
+      IPART5='SAMP'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR.
+     1     IHV.EQ.'DEFA')THEN
+          IV=50000
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          IV=50000
+        ENDIF
+        ILIPSS=IV
+        GOTO5160
+      ENDIF
+C
+      IPART1='LINE'
+      IPART2='POOL'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES')THEN
+          IHV='ON'
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          IHV='OFF'
+        ELSE
+          IHV='ON'
+        ENDIF
+        ILIPCM=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED MAY 2023
+C     *************************************************************
+C     **  SET EMPIRICAL CDF PLOT CONFIDENCE LIMITS <ON/OFF>      **
+C     *************************************************************
+C
+      IPART1='EMPI'
+      IPART2='CDF '
+      IPART3='PLOT'
+      IPART4='CONF'
+      IPART5='LIMI'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES')THEN
+          IHV='ON'
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          IHV='OFF'
+        ELSE
+          IHV='OFF'
+        ENDIF
+        IECDCL=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE 2023
+C     *************************************************************
+C     **  SET SIEGEL TUKEY TEST MEDIAN CENTERING   <ON/OFF>      **
+C     *************************************************************
+C
+      IPART1='SIEG'
+      IPART2='TUKE'
+      IPART3='TEST'
+      IPART4='MEDI'
+      IPART5='CENT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES')THEN
+          IHV='ON'
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          IHV='OFF'
+        ELSE
+          IHV='OFF'
+        ENDIF
+        ISGTMC=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE 2023
+C     *************************************************************
+C     **  SET MANN WHITNEY CONTINUITY CORRECTION   <ON/OFF>      **
+C     *************************************************************
+C
+      IPART1='MANN'
+      IPART2='WHIT'
+      IPART3='CONT'
+      IPART4='CORR'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES')THEN
+          IHV='ON'
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          IHV='OFF'
+        ELSE
+          IHV='OFF'
+        ENDIF
+        IMNWCC=IHV
+        GOTO5160
+      ENDIF
+C
+      IPART1='RANK'
+      IPART2='SUM '
+      IPART3='CONT'
+      IPART4='CORR'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES')THEN
+          IHV='ON'
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          IHV='OFF'
+        ELSE
+          IHV='OFF'
+        ENDIF
+        IMNWCC=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE 2023
+C     *************************************************************
+C     **  SET F TEST DEGREES OF FREEDOM  <DEFAULT/SHOEMAKER/     **
+C     **             SHOEMAKER ROUNDED/BONETT>                   **
+C     *************************************************************
+C
+      IPART1='F   '
+      IPART2='TEST'
+      IPART3='DEGR'
+      IPART4='FREE'
+      IPART5='SHOE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(IHV.EQ.'BONE')THEN
+          IHV='BONE'
+        ELSEIF(IHARG(5).EQ.'SHOE' .AND. IHV.EQ.'ROUN')THEN
+          IHV='SHO2'
+        ELSEIF(IHV.EQ.'SHOE')THEN
+          IHV='SHOE'
+        ELSE
+          IHV='DEFA'
+        ENDIF
+        IFTESH=IHV
+        GOTO5160
+      ENDIF
+C
+      IPART1='F   '
+      IPART2='TEST'
+      IPART3='DEGR'
+      IPART4='OF  '
+      IPART5='FREE'
+      IPART6='SHOE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IF(IHV.EQ.'BONE')THEN
+          IHV='BONE'
+        ELSEIF(IHARG(6).EQ.'SHOE' .AND. IHV.EQ.'ROUN')THEN
+          IHV='SHO2'
+        ELSEIF(IHV.EQ.'SHOE')THEN
+          IHV='SHOE'
+        ELSE
+          IHV='DEFA'
+        ENDIF
+        IFTESH=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE 2023
+C     ********************************************************
+C     **  SET SHOEMAKER F TEST POOLED VARIANCE  <VALUE>     **
+C     ********************************************************
+C
+      IPART1='SHOE'
+      IPART2='F   '
+      IPART3='TEST'
+      IPART4='POOL'
+      IPART5='VARI'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        PFTEPV=AV
+        IF(PFTEPV.LE.0.0)PFTEPV=CPUMIN
+        GOTO5170
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE 2023
+C     ********************************************************
+C     **  SET SHOEMAKER F TEST POOLED MU        <VALUE>     **
+C     ********************************************************
+C
+      IPART1='SHOE'
+      IPART2='F   '
+      IPART3='TEST'
+      IPART4='POOL'
+      IPART5='MU  '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IF(IHARG(6).EQ.'    ')THEN
+          PFTEPM=CPUMIN
+        ELSE
+          PFTEPM=AV
+        ENDIF
+        GOTO5170
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE 2023
+C     *************************************************************
+C     **  SET F TEST DIRECTION <UPPER TAILED/TWO SIDED>          **
+C     *************************************************************
+C
+      IPART1='F   '
+      IPART2='TEST'
+      IPART3='DIRE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHARG(4).EQ.'TWO ' .OR. IHARG(4).EQ.'TWOS')THEN
+          IHV='TWOS'
+        ELSE
+          IHV='UPPE'
+        ENDIF
+        IFTEDI=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED MAY 2023
+C     *************************************************************
+C     **  SET PERMUTATION TEST SAMPLE SIZE <VALUE>               **
+C     *************************************************************
+C
+      IPART1='PERM'
+      IPART2='TEST'
+      IPART3='SAMP'
+      IPART4='SIZE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'DEFA')THEN
+          IV=4000
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          IV=4000
+        ENDIF
+        IPTESS=IV
+        IF(IPTESS.LT.100)IPTESS=100
+        IF(IPTESS.GT.100000)IPTESS=100000
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED MAY 2023
+C     *************************************************************
+C     **  SET PERMUTATION TEST COMPARISON VALUE <VALUE>          **
+C     *************************************************************
+C
+      IPART1='PERM'
+      IPART2='TEST'
+      IPART3='COMP'
+      IPART4='VALU'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'DEFA')THEN
+          AV=0.0
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE')THEN
+          AV=0.0
+        ENDIF
+        PPTEVA=AV
+        IF(PPTEVA.LT.100)PPTEVA=100
+        IF(PPTEVA.GT.100000)PPTEVA=100000
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED MAY 2023
+C     *************************************************************
+C     **  SET PERMUTATION TEST SCALE <DIFFERENCE/RATIO>          **
+C     *************************************************************
+C
+      IPART1='PERM'
+      IPART2='TEST'
+      IPART3='SCAL'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'RATI')THEN
+          IHV='RATI'
+        ELSE
+          IHV='DIFF'
+        ENDIF
+        IPTESC=IHV
         GOTO5160
       ENDIF
 C
@@ -12269,6 +11979,9 @@ C
       ENDIF
 C
 CCCCC FOLLOWING SECTION ADDED FEBRUARY 2020.
+CCCCC
+CCCCC 2021/07: USE IHARLC FOR SHEET NAME TO PRESERVE CASE
+C
 C     ***********************************************************
 C     **  SET EXCEL SHEET <NAME>                               **
 C     ***********************************************************
@@ -12277,13 +11990,15 @@ C
       IPART2='SHEE'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
         IF(IHV.EQ.'NO' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'FALS')THEN
-          IEXCSH='SHEET1'
+          IEXCSH='Sheet1'
         ELSEIF(IHV.EQ.'YES' .OR. IHV.EQ.'ON' .OR. IHV.EQ.'TRUE' .OR.
      1         IHV.EQ.'DEFA')THEN
-          IEXCSH='SHEET1'
+          IEXCSH='Sheet1'
         ELSE
-          IEXCSH(1:4)=IHV
-          IEXCSH(5:8)=IHV2
+CCCCC     IEXCSH(1:4)=IHV
+CCCCC     IEXCSH(5:8)=IHV2
+          IEXCSH(1:4)=IHARLC(3)(1:4)
+          IEXCSH(5:8)=IHARL2(3)(1:4)
         ENDIF
         IFOUND='YES'
         IF(IFEEDB.EQ.'ON')THEN
@@ -13244,7 +12959,7 @@ C
       IPART4='B   '
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
      1   (IHARG(3).EQ.IPART3.OR.IHARG(3).EQ.IPART4))THEN
-        IF(IHV.EQ.'NO' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'FALSE')THEN
+        IF(IHV.EQ.'NO' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'FALS')THEN
           ICMETB='NONE'
         ELSEIF(IHV.EQ.'YES' .OR. IHV.EQ.'ON' .OR. IHV.EQ.'TRUE' .OR.
      1         IHV.EQ.'DEFA')THEN
@@ -13358,6 +13073,7 @@ C
             IF(IHARG(7).EQ.'BCP ')ICMPM1='BCP '
             IF(IHARG(7).EQ.'BAYE')ICMPM1='BCP '
             IF(IHARG(7).EQ.'HUBE')ICMPM1='HUBE'
+            IF(IHARG(7).EQ.'LINE' .AND. IHARG(8).EQ.'POOL')ICMPM1='LPOO'
           ENDIF
           IHV=ICMPM1
         ELSEIF(IHARG(6).EQ.'TWO ')THEN
@@ -13398,6 +13114,7 @@ C
             IF(IHARG(7).EQ.'BCP ')ICMPM2='BCP '
             IF(IHARG(7).EQ.'BAYE')ICMPM2='BCP '
             IF(IHARG(7).EQ.'HUBE')ICMPM2='HUBE'
+            IF(IHARG(7).EQ.'LINE' .AND. IHARG(8).EQ.'POOL')ICMPM2='LPOO'
           ENDIF
           IHV=ICMPM2
         ELSEIF(IHARG(6).EQ.'THRE')THEN
@@ -13438,6 +13155,7 @@ C
             IF(IHARG(7).EQ.'BCP ')ICMPM3='BCP '
             IF(IHARG(7).EQ.'BAYE')ICMPM3='BCP '
             IF(IHARG(7).EQ.'HUBE')ICMPM3='HUBE'
+            IF(IHARG(7).EQ.'LINE' .AND. IHARG(8).EQ.'POOL')ICMPM3='LPOO'
           ENDIF
           IHV=ICMPM3
         ELSE
@@ -13618,7 +13336,7 @@ C
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
      1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
      1   IHARG(5).EQ.IPART5)THEN
-        IF(IHV.EQ.'NO' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'FALSE')THEN
+        IF(IHV.EQ.'NO' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'FALS')THEN
           I691GL='NONE'
         ELSEIF(IHV.EQ.'YES' .OR. IHV.EQ.'ON' .OR. IHV.EQ.'TRUE' .OR.
      1         IHV.EQ.'DEFA')THEN
@@ -16181,7 +15899,7 @@ C
       IPART4='NAME'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
      1   (IHARG(3).EQ.IPART3.OR.IHARG(3).EQ.IPART4))THEN
-        IF(IHV.EQ.'NO' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'FALSE')THEN
+        IF(IHV.EQ.'NO' .OR. IHV.EQ.'OFF' .OR. IHV.EQ.'FALS')THEN
           IAVABN='COL'
         ELSEIF(IHV.EQ.'YES' .OR. IHV.EQ.'ON' .OR. IHV.EQ.'TRUE' .OR.
      1         IHV.EQ.'DEFA')THEN
@@ -20738,6 +20456,42 @@ C
         GOTO5160
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED JULY     2021
+C     *************************************************************
+C     **  SET TABULATION PLOT GRAND  MINMAX <ON/OFF>             **
+C     *************************************************************
+C
+      IPART1='TABU'
+      IPART2='PLOT'
+      IPART3='GRAN'
+      IPART4='MINM'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(IHARG(NUMARG).EQ.'ON')THEN
+          ITPLGM='ON'
+        ELSEIF(IHARG(NUMARG).EQ.'YES')THEN
+          ITPLGM='ON'
+        ELSEIF(IHARG(NUMARG).EQ.'TRUE')THEN
+          ITPLGM='ON'
+        ELSEIF(IHARG(NUMARG).EQ.'DEFA')THEN
+          ITPLGM='ON'
+        ELSEIF(IHARG(NUMARG).EQ.'OFF ')THEN
+          ITPLGM='OFF'
+        ELSEIF(IHARG(NUMARG).EQ.'NO  ')THEN
+          ITPLGM='OFF'
+        ELSEIF(IHARG(NUMARG).EQ.'FALS')THEN
+          ITPLGM='OFF'
+        ELSEIF(IHARG(NUMARG).EQ.'COLU')THEN
+          ITPLGM='COLU'
+        ELSEIF(IHARG(NUMARG).EQ.'ROW')THEN
+          ITPLGM='ROW'
+        ELSE
+          ITPLGM='ON'
+        ENDIF
+        IHV=ITPLGM
+        GOTO5160
+      ENDIF
+C
 CCCCC FOLLOWING SECTION ADDED JUNE     2010
 C     *************************************************************
 C     **  SET FLUCTUATION PLOT SORTED <ON/OFF>                   **
@@ -21293,9 +21047,9 @@ C
         ELSEIF(IHARG(NUMARG).EQ.'INCL')THEN
           ICTAEM='INCL'
         ELSEIF(IHARG(NUMARG).EQ.'ON  ')THEN
-          ICTAEM='EXCL'
+          ICTAEM='INCL'
         ELSEIF(IHARG(NUMARG).EQ.'YES ')THEN
-          ICTAEM='EXCL'
+          ICTAEM='INCL'
         ELSEIF(IHARG(NUMARG).EQ.'OFF ')THEN
           ICTAEM='EXCL'
         ELSEIF(IHARG(NUMARG).EQ.'NO  ')THEN
@@ -29105,6 +28859,30 @@ C     UPDATED         --MARCH      2021.  PROBE SHANNON LOG BASE
 C     UPDATED         --JUNE       2021.  PROBE UNIFORM CONFIDENCE
 C                                               LIMIT
 C     UPDATED         --JULY       2021.  PROBE EXCEL HEADER
+C     UPDATED         --JULY       2021.  PROBE TABULATION PLOT GRAND
+C                                               MINMAX
+C     UPDATED         --APRIL      2023.  PROBE LINEAR POOL
+C     UPDATED         --APRIL      2023.  PROBE LINEAR POOL WEIGHTS
+C     UPDATED         --APRIL      2023.  PROBE LINEAR SAMPLE SIZE
+C     UPDATED         --MAY        2023.  PROBE EMPIRICAL CDF PLOT
+C                                               CONFIDENCE LIMIT
+C     UPDATED         --MAY        2023.  PROBE PERMUTATION TEST
+C                                               SAMPLE SIZE
+C     UPDATED         --MAY        2023.  PROBE PERMUTATION TEST
+C                                               COMPARISON VALUE
+C     UPDATED         --MAY        2023.  PROBE PERMUTATION TEST
+C                                               SCALE
+C     UPDATED         --JUNE       2023.  PROBE SIEGEL TUKEY TEST
+C                                               MEDIAN CENTERING
+C     UPDATED         --JUNE       2023.  PROBE MANN WHITNEY
+C                                               CONTINUITY CORRECTION
+C     UPDATED         --JUNE       2023.  PROBE F TEST DEGREES OF
+C                                               FREEDOM
+C     UPDATED         --JUNE       2023.  PROBE F TEST DIRECTION
+C     UPDATED         --JUNE       2023.  PROBE SHOEMAKER F TEST
+C                                               POOLED VARIANCE
+C     UPDATED         --JUNE       2023.  PROBE SHOEMAKER F TEST
+C                                               POOLED MU
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -32081,6 +31859,30 @@ C
         GOTO5160
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED APRIL       2023.
+C               *************************************************
+C               **  STEP 20.A--                                **
+C               **  PROBE LINEAR POOL WEIGHTS                  **
+C               *************************************************
+C
+      IPART1='LINE'
+      IPART2='POOL'
+      IPART3='WEIG'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1  IHARG(3).EQ.IPART3)THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,55461)ILIPWT
+55461   FORMAT('THE LINEAR POOL WEIGHTS VARIABLE HAS ',
+     1         'BEEN SET TO ',A8)
+        CALL DPWRST('XXX','BUG ')
+        IPROBS=' '
+        IPROBS(1:8)=ILIPWT(1:8)
+        NCPROB=8
+        GOTO8100
+      ENDIF
+C
 CCCCC FOLLOWING SECTION ADDED JUNE     2006.
 C               *********************************************
 C               **  STEP 20.A--                            **
@@ -32104,6 +31906,8 @@ C               **  PROBE DERSIMONIAN LAIRD MINMAX         **
 C               **  PROBE DERSIMONIAN LAIRD BOOTSTRAP      **
 C               **  PROBE DERSIMONIAN LAIRD                **
 C               **  PROBE FAIRWEATHER                      **
+C               **  PROBE BAYESIAN CONSENSUS PROCEDURE     **
+C               **  PROBE LINEAR POOL                      **
 C               *********************************************
 C
       IPART1='MAND'
@@ -32294,6 +32098,213 @@ C
      1   IHARG(3).EQ.IPART3)THEN
         IHV=IBCPCM
         GOTO5160
+      ENDIF
+C
+      IPART1='LINE'
+      IPART2='POOL'
+      IPART3='SAMP'
+      IPART4='SIZE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IV=ILIPSS
+        GOTO5150
+      ENDIF
+C
+      IPART1='LINE'
+      IPART2='POOL'
+      IPART3='NUMB'
+      IPART4='OF  '
+      IPART5='SAMP'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IV=ILIPSS
+        GOTO5150
+      ENDIF
+C
+      IPART1='LINE'
+      IPART2='POOL'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IHV=ILIPCM
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED MAY 2023
+C               *************************************************
+C               **  PROBE PERMUTATION TEST SAMPLE SIZE         **
+C               *************************************************
+C
+      IPART1='PERM'
+      IPART2='TEST'
+      IPART3='SAMP'
+      IPART4='SIZE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IV=IPTESS
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED MAY 2023
+C               *************************************************
+C               **  PROBE PERMUTATION TEST SCALE               **
+C               *************************************************
+C
+      IPART1='PERM'
+      IPART2='TEST'
+      IPART3='SCAL'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IPTESC
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED MAY 2023
+C               *************************************************
+C               **  PROBE PERMUTATION TEST COMPARISON VALUE    **
+C               *************************************************
+C
+      IPART1='PERM'
+      IPART2='TEST'
+      IPART3='COMP'
+      IPART4='VALU'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        AV=PPTEVA
+        GOTO5170
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED MAY 2023
+C               *************************************************
+C               **  PROBE EMPIRICAL CDF PLOT CONFIDENCE LIMIT  **
+C               *************************************************
+C
+      IPART1='EMPI'
+      IPART2='CDF '
+      IPART3='PLOT'
+      IPART4='CONF'
+      IPART5='LIMI'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IHV=IECDCL
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE 2023
+C               *************************************************
+C               **  PROBE SIEGEL TUKEY TEST MEDIAN CENTERING   **
+C               *************************************************
+C
+      IPART1='SIEG'
+      IPART2='TUKE'
+      IPART3='TEST'
+      IPART4='MEDI'
+      IPART5='CENT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IHV=ISGTMC
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE 2023
+C               *************************************************
+C               **  PROBE MANN WHITNEY CONTINUITY CORRECTION   **
+C               *************************************************
+C
+      IPART1='MANN'
+      IPART2='WHIT'
+      IPART3='CONT'
+      IPART4='CORR'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IHV=IMNWCC
+        GOTO5160
+      ENDIF
+C
+      IPART1='RANK'
+      IPART2='SUM '
+      IPART3='CONT'
+      IPART4='CORR'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IHV=IMNWCC
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE 2023
+C               *************************************************
+C               **  PROBE F TEST DEGREES OF FREEDOM            **
+C               *************************************************
+C
+      IPART1='F   '
+      IPART2='TEST'
+      IPART3='DEGR'
+      IPART4='FREE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IHV=IFTESH
+        GOTO5160
+      ENDIF
+C
+      IPART1='F   '
+      IPART2='TEST'
+      IPART3='DEGR'
+      IPART4='OF  '
+      IPART5='FREE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IHV=IFTESH
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE 2023
+C               *************************************************
+C               **  PROBE F TEST DIRECTION                     **
+C               *************************************************
+C
+      IPART1='F   '
+      IPART2='TEST'
+      IPART3='DIRE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IFTEDI
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE 2023
+C               *************************************************
+C               **  PROBE SHOEMAKER F TEST POOLED VARIANCE     **
+C               *************************************************
+C
+      IPART1='SHOE'
+      IPART2='F   '
+      IPART3='TEST'
+      IPART4='POOL'
+      IPART5='VARI'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        AV=PFTEPV
+        GOTO5170
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE 2023
+C               *************************************************
+C               **  PROBE SHOEMAKER F TEST POOLED MU           **
+C               *************************************************
+C
+      IPART1='SHOE'
+      IPART2='F   '
+      IPART3='TEST'
+      IPART4='POOL'
+      IPART5='MU  '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        AV=PFTEPM
+        GOTO5170
       ENDIF
 C
 CCCCC FOLLOWING SECTION ADDED FEBRUARY 2007
@@ -38113,6 +38124,22 @@ C
         GOTO5160
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED JULY        2021
+C               ****************************************************
+C               **  STEP 20.A--                                   **
+C               **  PROBE TABULATION PLOT GRAND  MINMAX <ON/OFF>  **
+C               ****************************************************
+C
+      IPART1='TABU'
+      IPART2='PLOT'
+      IPART3='GRAN'
+      IPART4='MINM'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IHV=ITPLGM
+        GOTO5160
+      ENDIF
+C
 CCCCC FOLLOWING SECTION ADDED JUNE        2010
 C               ****************************************************
 C               **  STEP 20.A--                                   **
@@ -41350,6 +41377,7 @@ C     **  PROBE SVG HARDWARE FILL <EVENODD/NONZERO/OFF>           **
 C     **  PROBE SVG STYLE SHEET <NONE/INTERNAL/EXTERNAL USE/      **
 C     **                      EXTERNAL CREATE>                    **
 C     **  PROBE SVG STYLE SHEET NAME                              **
+C     **  PROBE SVG COORDINATE SYSTEM                             **
 C     **  ADDED JULY  2015                                        **
 C     **************************************************************
 C
@@ -41387,7 +41415,7 @@ C
       IPART2='FONT'
       IPART3='NAME'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
-     1IHARG(3).EQ.IPART3)THEN
+     1   IHARG(3).EQ.IPART3)THEN
         IFOUND='YES'
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
@@ -41397,6 +41425,19 @@ C
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,2763)ISVGFN
  2763   FORMAT(A80)
+        CALL DPWRST('XXX','BUG ')
+        IPROBS=' '
+        IPROBS(1:32)=ISVGFN(1:32)
+        NCPROB=32
+        GOTO8100
+      ELSEIF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IPART3='    '
+        WRITE(ICOUT,2761)IPART1,IPART2,IPART3
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2763)ISVGFN
         CALL DPWRST('XXX','BUG ')
         IPROBS=' '
         IPROBS(1:32)=ISVGFN(1:32)
@@ -41443,7 +41484,7 @@ C     **  CHECK FOR SVG JOIN           **
 C     ***********************************
 C
       IPART1='SVG '
-      IPART3='JOIN'
+      IPART2='JOIN'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
         IHV=ISVGJS
         GOTO5160
@@ -41472,6 +41513,19 @@ C
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
      1IHARG(3).EQ.IPART3)THEN
         IHV=ISVGFS
+        GOTO5160
+      ENDIF
+C
+C     ******************************************
+C     **  CHECK FOR SVG COORDINATE SYSTEM     **
+C     ******************************************
+C
+      IPART1='SVG '
+      IPART2='COOR'
+      IPART3='SYST'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1IHARG(3).EQ.IPART3)THEN
+        IHV=ISVGCS
         GOTO5160
       ENDIF
 C
@@ -41770,6 +41824,19 @@ C
         IFOUND='YES'
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,22761)IPART1,IPART2,IPART3
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2763)IGDFN
+        CALL DPWRST('XXX','BUG ')
+        IPROBS=' '
+        IPROBS(1:80)=IGDFN(1:80)
+        NCPROB=80
+        GOTO8100
+      ELSEIF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IPART3='    '
         WRITE(ICOUT,22761)IPART1,IPART2,IPART3
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,2763)IGDFN
