@@ -3828,8 +3828,13 @@ C
 C---------------------------------------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOZZ.INC'
 C
 C-----COMMON----------------------------------------------------------
+C
+      DIMENSION TEMP1(MAXOBV)
+C
+      EQUIVALENCE (GARBAG(IGARB1),TEMP1(1))
 C
       INCLUDE 'DPCOHK.INC'
       INCLUDE 'DPCOSU.INC'

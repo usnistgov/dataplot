@@ -595,6 +595,7 @@ EXPONENT POWE DIST                      PROBABIL FUNC
 EXPONENT POWE                           PROBABIL FUNC
 EXPONENT PPCC                           STATISTI PPCC
 EXPONENT                                PROBABIL FUNC
+EXPONENT SCOR                           ORDER    STAT MEAN
 EXPONENT WEIB DIST                      EWEPDF
 EXPONENT WEIB DIST                      PROBABIL FUNC
 EXPONENT WEIB                           EWEPDF
@@ -1327,6 +1328,8 @@ ONE      SIDE UPPE BINO EXAC            EXACT    BINO
 ONE      SIDE UPPE EXAC BINO            EXACT    BINO
 ONE      STAN DEVI PLOT                 I        PLOT
 ONE      STAN ERRO PLOT                 I        PLOT
+ORDER    STAT SD                        ORDER    STAT MEAN
+ORDER    STAT STAN DEVI                 ORDER    STAT MEAN
 ORTHOGON DIST DELT                      ORTHOGON DIST FIT
 ORTHOGON DIST DELT WEIG                 ORTHOGON DIST FIT
 ORTHOGON DIST ERRO                      ORTHOGON DIST FIT
@@ -1561,6 +1564,11 @@ RATIO    OF   MEAN LOWE CONF LIMI       RATIO    OF   MEAN CONF INTE
 RATIO    OF   MEAN UPPE CONF LIMI       RATIO    OF   MEAN CONF INTE
 RATIO    OF   MEAN METH                 RATIO    OF   MEAN CONF INTE
 RATIO    OF   MEAN                      RATIO    OF   MEAN CONF INTE
+RATIO    OF   SD   CONF INTE            RATIO    OF   STAN DEVI CONF LIMI
+RATIO    OF   SD   CONF LIMI            RATIO    OF   STAN DEVI CONF LIMI
+RATIO    OF   STAN DEVI CONF INTE       RATIO    OF   STAN DEVI CONF LIMI
+RATIO    OF   VARI CONF INTE            RATIO    OF   STAN DEVI CONF LIMI
+RATIO    OF   VARI CONF LIMI            RATIO    OF   STAN DEVI CONF LIMI
 RAYLEIGH DIST                           RAYPDF
 RAYLEIGH PPCC                           STATISTI PPCC
 RAYLEIGH                                RAYPDF
@@ -1648,6 +1656,7 @@ RUNG                                    RUNGE    KUTT
 RUNNING  R                              RSCRIPT
 SAMPLE   RAND PERM DIST                 SAMPLE   RAND PERM
 SAMPLING                                BOOTSTRA
+SAVAGE   SCOR                           ORDER    STAT MEAN
 SCALABLE VECT GRAP                      SVG
 SCALE    STAT                           STANDARD
 SCALED   TOTA TIME ON   TEST            TOTAL    TIME ON   TEST
@@ -2001,6 +2010,7 @@ SHELL                                   SYSTEM   SWIT
 SHORTES  HALF MID  MEAN                 SHORTES  HALF MIDM
 SHORTES  HALF MID  RANG                 SHORTES  HALF MIDR
 SHOW                                    PSVIEW
+SIEGEL   TUKE                           SIEGEL   TUKE TEST
 SIGNED   RANK                           SIGNED   RANK TEST
 SIMCOV                                  RECIPE
 SIMILA   MATR                           MATRIX   DIST

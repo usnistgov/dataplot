@@ -1,9 +1,9 @@
-67100.      (VERSION 2021.07)  total number of lines in file (including this line)
+68700.      (VERSION 2023.07)  total number of lines in file (including this line)
  4.                          number of     sections below
   100.    P                  first line number of P section
-22400.    Q                  first line number of Q section
-25500.    R                  first line number of R section
-43000.    S                  first line number of S section
+22500.    Q                  first line number of Q section
+25600.    R                  first line number of R section
+44300.    S                  first line number of S section
  
 ----------------------------------------------------------
  
@@ -10044,6 +10044,116 @@ Program:
     SAVE PLOT RES.2
     LIST PLOT
  
+-----PLACEMENT SCORE (LET)-----------------------------------------------
+ 
+PLACEMENT SCORE
+ 
+Name:
+    PLACEMENT SCORE (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the placement scores of two variables.
+ 
+Description:
+    Given two respoonse variables, say Y1 and Y2, the placement score
+    for Y1(i) is defined as the number of observations in Y2 that
+    are less than Y1(i).  Likewise, the placement score for Y2(i) is
+    the number of observations in Y1 that are less than Y2(i).  Values
+    in Y2 that are equal to Y1(i) (or values in Y1 that are equal to
+    Y2(i)) add 0.5 rather than 1.
+
+    Placement scores are used to compute the Fligner-Policello two
+    sample location test.  This is demonstrated in the Program example
+    below.
+
+Syntax:
+    LET <y1p> <y2p> = PLACEMENT SCORES <y1> <y2>
+                      <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first response variable;
+          <y2> is the second response variable;
+          <y1p> is a variable where the computed placement scores for
+              <y1> are saved;
+          <y2p> is a variable where the computed placement scores for
+              <y2> are saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET Y1P Y2P = PLACEMENT SCORES Y1 Y2
+    LET Y1P Y2P = PLACEMENT SCORES Y1 Y2  SUBSET Y1 > 0 SUBSET Y2 > 0
+ 
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    RANK SUM TEST           = Perform a rank sum test.
+    MEDIAN TEST             = Perform a median test.
+    KRUSKAL WALLIS TEST     = Perform a Kruskal Wallis test.
+    T TEST                  = Perform a t test.
+    ANOVA                   = Perform a fixed effects analysis of variance.
+    MEDIAN SCORES           = Generate median scores.
+    MOOD SCORES             = Generate Mood scores.
+    VAN DER WAERDEN SCORES  = Generate Van Der Waerden scores.
+    SAVAGE SCORES           = Generate Savage scores.
+    KLOTZ SCORES            = Generate Klotz scores.
+    CONOVER SCORES          = Generate Conover scores.
+    ANSARI BRADLEY SCORES   = Generate Ansari Bradley scores.
+ 
+Reference:
+    Fligner and Policello (1981), "Robust Rank Procedures for the
+    Behrens-Fisher Problem," Journal of the American Statistical
+    Association, Vol. 76, pp. 162-168.
+
+Applications:
+    Nonparametric statistics
+ 
+Implementation Date:
+    2023/06
+ 
+Program:
+    . Step 1:   Define the data
+    .
+    skip 25
+    read natr323.dat y1 y2
+    retain y2 subset y2 > -90
+    .
+    . Step 2: Compute Fligner-Policello Test
+    .
+    let y1p y2p = placement scores y1 y2
+    let pmean1 = mean y1p
+    let pmean2 = mean y2p
+    let psum1 = sum y1p
+    let psum2 = sum y2p
+    let temp1 = (y1p - pmean1)**2
+    let v1 = sum temp1
+    let temp2 = (y2p - pmean2)**2
+    let v2 = sum temp2
+    let num = psum1 - psum2
+    let den = 2*sqrt(v1 + v2 + pmean1*pmean2)
+    let z = num/den
+    let zabs = abs(z)
+    .
+    . Step 3: Print Fligner-Policello Test Results
+    .
+    feedback off
+    print "Fligner-Policello Test"
+    print "H0: Medians are Equal"
+    print "Ha: Medians are Not Equal"
+    print "alpha: 0.05"
+    print "Test Statistic: ^z"
+    print "Lower Critical Value: -1.96"
+    print "Upper Critical Value:  1.96"
+    if zabs <= 1.96
+       print "Conclusion: Accept H0"
+    else
+       print "Conclusion: Reject H0"
+    end of if
+
 -----PLEM (LET)----------------------------------------------
  
 PLEM
@@ -22387,16 +22497,6 @@ Program 2:
 
 
 
-
-
-
-
-
-
-
-
-
-
 -------------------------  *Q*  ZZZZZ--------------------
  
 -----Q QUANTILE RANGE (LET)-------------------------------
@@ -26810,7 +26910,7 @@ Applications:
     Nonparametric statistics
  
 Implementation Date:
-    XX
+    Pre-1987
  
 Program:
     .  Perform a Kruskal-Wallis non-parametric 1-way ANOVA
@@ -27340,36 +27440,75 @@ Description:
          u = N1*(N1 + N2 + 1)/2
          sigma = SQRT(N2*u/6)
 
-Syntax:
+Syntax 1:
     RANK SUM TEST  <y1>  <y2>    <SUBSET/EXCEPT/FOR qualification>
     where <y1> is the first response variable;
           <y2> is the second response variable;
     and where the <SUBSET/EXCEPT/FOR qualification> is optional.
  
+    This syntax performs a two-sided test.
+
+Syntax 2:
+    LOWER TAILED RANK SUM TEST  <y1>  <y2>
+                                <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first response variable;
+          <y2> is the second response variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs a lower-tailed test.
+
+Syntax 3:
+    UPPER TAILED RANK SUM TEST  <y1>  <y2>
+                                <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first response variable;
+          <y2> is the second response variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs an upper-tailed test.
+
 Examples:
     RANK SUM TEST Y1  Y2
+    LOWER TAILED RANK SUM TEST Y1  Y2
+    UPPER TAILED RANK SUM TEST Y1  Y2
     RANK SUM TEST Y1  Y2  SUBSET TAG > 2
  
+Note:
+    The May, 2011 implementation of Dataplot switched from the
+    formulation of the test given in Walpole and Meyers to the
+    formulation given in Conover.  The primary motivation for
+    this is that Conover provides more extensive tables for
+    small sample sizes.  Specifically, Conover provides tables
+    for N1 <= 20 and N2 <= 20 (both sample sizes have to be
+    <= 20).
+
+    The Conover implementation is
+
+
+
+
+
+
 Note:
     Dataplot saves the following internal parameters after a
     sign test:
 
         STATVAL   = The rank sum test statistic
-        STATCD2   = the normal cdf value of T (only applies for
-                    sufficiently large N1 and N2)
-        CUTLOW90  = 0.05 critical value
-        CUTUPP90  = 0.95 critical value
-        CUTLOW95  = 0.025 critical value
-        CUTUPP95  = 0.975 critical value
-        CUTLOW99  = 0.005 critical value
-        CUTUPP99  = 0.995 critical value
- 
-    Note that the above critical values are the lower and upper
-    tails for two sided tests (i.e., each tail is alpha/2.  For
-    example, CUTLOW90 is the lower 5% of the normal percent point
-    function (adjusted for the mean and standard deviation).  This
-    is the critical regions for alpha = 0.10, so there is 0.05 in
-    each tail.
+        STATCDF   = CDF value for the test statistic
+        PVALUE    = P-value for a two-sided test
+        PVALUELT  = P-value for a lower-tailed test
+        PVALUEUT  = P-value for a upper-tailed test
+        CUTLO001  = 0.001 percent point for test statistic
+        CUTLO005  = 0.005 percent point for test statistic
+        CUTLO025  = 0.025 percent point for test statistic
+        CUTLOW01  = 0.01  percent point for test statistic
+        CUTLOW05  = 0.05  percent point for test statistic
+        CUTLOW10  = 0.10  percent point for test statistic
+        CUTUPP90  = 0.90  percent point for test statistic
+        CUTUPP95  = 0.95  percent point for test statistic
+        CUTUP975  = 0.975 percent point for test statistic
+        CUTUPP99  = 0.99  percent point for test statistic
+        CUTUP995  = 0.995 percent point for test statistic
+        CUTUP999  = 0.999 percent point for test statistic
 
 Note:
     The following statistics are also supported:
@@ -27407,35 +27546,38 @@ Related Commands:
     BOX PLOT                   = Generates a box plot.
  
 Reference:
-    "Statistical Methods", Eigth Edition, Snedecor and Cochran, 
-    1989, Iowa State University Press, pp. 142-144.
+    Walpole and Meyers (19xx), "Engineering Statistics,",
+    xxx, pp. xxx.
+
+    Snedecor and Cochran (1989), "Statistical Methods", Eigth Edition,
+    Iowa State University Press, pp. 142-144.
  
+    Conover (1999), "Practical Nonparametric Statistics," Third
+    Edition, Wiley, pp. 272-281.
+
 Applications:
-    Confirmatory Data Analysis
+    Two sample tests
  
 Implementation Date:
-    1999/5
+    1999/05
+    2011/05: Switch from Walpole and Meyers formulation to Conover
+             formulation (Conover has a more complete set of tables
+             for small sample sizes)
+    2023/06: Fixed a bug where the last column in the decision table
+             for the lower and upper tailed versions of the test
+             was not printing the hypothesis decision
  
-Program:
+Program 1:
     SKIP 25
     READ NATR323.DAT Y1 Y2
     RETAIN Y2 SUBSET Y2 > -90
     RANK SUM TEST Y1 Y2
- 
-    The following output is generated.
-    
-  
-                      MANN WHITNEY RANK SUM TEST
-                         (2-SAMPLE)
-     HYPOTHESIS BEING TESTING--POPULATION MEANS MU1 = MU2
-     SAMPLE SIZE FOR VARIABLE 1              =       13
-     SAMPLE SIZE FOR VARIABLE 2              =        8
-     RANK SUM FOR VARIABLE 1                 =    180.0000
-     RANK SUM FOR VARIABLE 2                 =    51.00000
-     RANK SUM TEST STATITIC (U)              =    51.00000
-      
-     HYPOTHESIS     ACCEPTANCE INTERVAL      CONCLUSION
-     MU1 = MU2      U  >    60.00000         REJECT
+
+Program 2:
+    SKIP 25
+    READ RANKSUM.DAT Y1 Y2
+    RETAIN Y1 SUBSET Y1 > 0
+    RANK SUM TEST Y1 Y2
 
 -----RATIO (LET)-------------------------------------------
  
@@ -27884,6 +28026,330 @@ Program 2:
     .
     set ratio of means method fieler
     ratio of means confidence limit y x
+
+-----RATIO OF STANDARD DEVIATIONS CONFIDENCE LIMITS----------------------
+ 
+RATIO OF STANDARD DEVIATIONS CONFIDENCE LIMITS
+RATIO OF VARIANCES CONFIDENCE LIMITS
+ 
+Name:
+    RATIO OF STANDARD DEVIATIONS CONFIDENCE LIMITS
+    RATIO OF VARIANCES CONFIDENCE LIMITS
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Generates a confidence interval for the ratio of two standard
+    deviations (or variances).
+ 
+Description:
+    This is the confidence interval for the ratio of the standard
+    deviations (or variances) for two unpaired samples.  If the
+    confidence interval for the ratio, this implies that the
+    standard deviations (or variances) are equal.
+
+    The confidence interval or the ratio of the variances is:
+
+       ((s1**2/s2**2)/F(alpha/2,n2,n1), (s1**2/s2**2)*F(alpha/2,n2-1,n1-1))
+
+    where s1**2 and S2**2 are the sample variances, n1 and n2 are the
+    sample sizes and F is the percent point function of the F
+    distribution.  The confidence intervals are given for several values
+    of alpha.  This interval is not necessarily symmetric about the
+    ratio s1**2/s2**2.
+
+    To obtain the confidence interval for the ratio of standard
+    deviations, take the square root of the lower and upper confidence
+    limits for the ratio of the variances.
+
+
+    This confidence interval assumes that both distributions have normal
+    distributions.  It is also known that this interval is quite senstive
+    to departures from normality.  There have been several proposals in
+    the literature to make this test more robust.  This is discussed
+    further in the "Note:" section below.
+
+Syntax 1:
+    RATIO OF STANDARD DEVIATIONS CONFIDENCE LIMITS  <y1>  <y2>
+                                 <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first response variable;
+          <y2> is the second response variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Syntax 2:
+    RATIO OF VARIANCES CONFIDENCE LIMITS  <y1>  <y2>
+                                  <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first response variable;
+          <y2> is the second response variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Examples:
+    RATIO OF STANDARD DEVIATIONS CONFIDENCE LIMITS Y1  Y2
+    RATIO OF SD CONFIDENCE LIMITS Y1  Y2
+    RATIO OF VARIANCE CONFIDENCE LIMITS Y1  Y2
+    RATIO OF SD CONFIDENCE LIMITS Y1  Y2   SUBSET Y2 > 0
+
+Note:
+    This ratio is known to be quite sensitive to departures from
+    normality.
+
+    Shoemaker (2003) proposed the following adjustment to the degrees
+    of freedom to make the F test more robust against non-normality.
+ 
+    The degrees of freedom are
+
+        r(i) = 2*n(i)/[(mu4/sigma**4) - (n(i)-3)/(n(i)-1)]
+
+    where
+
+        mu4 = SUM[i=1 to 2][SUM[j=1 to n(i)]
+                 [[(Y(ij) - YBAR(i))**4]]/(n1+n2)
+
+        sigma**2 = {(n1-1)*s1**2 + (n2-1)**s2**2}/(n1+n2)
+
+    with Y(.j), n(i), s(i) and YBAR(i) denoting the data, the sample size,
+    the standard deviation and the mean, respectively, of the i-th
+    variable.
+
+    This typically results in fractional degrees of freedom.  The
+    Dataplot FCDF, FPDF and FPPF routines were updated to support
+    fractional degrees of freedom (fractional degrees of freedom less
+    than 1 are set to 1).
+
+    The justification and derivation of this modification is given in
+    Shoemaker's paper.  Simulations by Shoemaker indicated that the
+    standard F test tends to be too conservative for light tailed
+    distributions and too liberal for heavy tailed and skewed
+    distributions.  Using the Shoemaker modifications for degrees of
+    freedom generally had good coverage properties with the exception
+    of heavily skewed distributions with small samples where it was
+    still too liberal.
+
+    Bonett (2006) suggested that rounding the numerator degrees of
+    freedom up to the nearest integer degrees of freedom and rounding
+    the denominator degrees of freedom down to the nearest integer
+    degrees of freedom (but not less than 1) prevented some anomalous
+    behavior while reducing coverage performance only slightly.
+
+    Bonett proposed the following interval:
+
+        EXP[LN(c*s1**2/s2**2) +/- NORPPF(alpha/2)*se]
+
+    where
+
+        ak4     = (n1+N2)*SUM[i=1,2]SUM[j=1,n(i)][(Y(ij) - m(i)]/
+                  {SUM[i=1,2]SUM[j=1,n(i)][(Y(ij) - ybar(i)**2)]}**2
+
+        m(i)    = sample trimmed mean of the i-th variable with trimming
+                  proportion 1/SQRT(2*(n(i) - 4))
+        ybar(i) = sample mean of the i-th variable
+
+        se      = SQRT{(ak4-k1)/(n1-1) + (ak4-k2)/(n2-1)}
+        k1      = (n1-3)/n1
+        k2      = (n2-3)/n2
+
+        c       = {n1*(1-NORPPF(alpha/2)}/{n2*(n2-NORPPF(alpha/2))}
+        NORPPF  = the percent point function of the normal distribution
+
+    The parameter c is a small sample adjustment to help equalize the
+    tail probabilities.  It equals 1 when n1 and n2 equal and
+    approaches 1 as n1 and n2 get large.
+
+    The above formula is for the variance.  For the standard
+    deviation, take the square root.
+
+    This interval is based on a standard normal distribution rather
+    than an F distribution.
+
+    The justification and derivation of this test is given in the
+    Bonett paper.  Based on his simulations, he claims this method
+    improves somewhat on the Shoemaker modification for heavy-tailed
+    (particularly skewed) distributions.
+
+    To specify Shoemaker's modification with fractional degrees
+    of freedom, enter
+
+         SET F TEST DEGREES OF FREEDOM SHOEMAKER
+
+    To specify Shoemaker's modification with integral degrees
+    of freedom as suggested by Bonett, enter
+
+         SET F TEST DEGREES OF FREEDOM SHOEMAKER ROUNDED
+
+    To specify Bonett's method, enter
+
+         SET F TEST DEGREES OF FREEDOM BONETT
+
+Note:
+    Shoemaker suggests that when more than two groups of data are
+    available, it can improve accuracy to use all of the groups
+    in the estimates of the pooled location (mu4) and pooled variance
+    (sigma**2) instead of just the two groups being tested.  That is,
+
+        mu4 = SUM[i=1 to k][SUM[j=1 to n(i)]
+                 [[(Y(ij) - YBAR(i))**4]]/(n1+n2+ ... + nk)
+
+        sigma**2 = {(n1-1)*s1**2 + (n2-1)**s2**2 + ... + (nk-1)*sk**2}/
+                   (n1+n2+ ... +nk)
+
+    To use these values, enter the commands
+
+         SET SHOEMAKER F TEST POOLED MU       <value>
+         SET SHOEMAKER F TEST POOLED VARIANCE <value>
+
+    To reset the default of Dataplot computing these from the two groups
+    being tested, enter
+
+         SET SHOEMAKER F TEST POOLED MU
+         SET SHOEMAKER F TEST POOLED VARIANCE 0
+
+Note:
+    The following parameters are saved after the F test is
+    performed.
+
+         CUTUPP90  - upper 90% confidence limit
+         CUTUPP95  - upper 95% confidence limit
+         CUTUPP99  - upper 99% confidence limit
+         CUTUP999  - upper 99.5% confidence limit
+         CUTLOW90  - lower 90% confidence limit
+         CUTLOW95  - lower 95% confidence limit
+         CUTLOW99  - lower 99% confidence limit
+         CUTLW999  - lower 99.5% confidence limit
+
+Note:
+    In addition to the RATIO OF STANDARD DEVIATION CONFIDENCE LIMITS
+    command, the following commands can also be used:
+
+       LET LCL = RATIO OF SD LOWER CONFIDENCE LIMTIS Y1 Y2
+       LET UCL = RATIO OF SD UPPER CONFIDENCE LIMTIS Y1 Y2
+       LET LCL = RATIO OF VARIANCE LOWER CONFIDENCE LIMTIS Y1 Y2
+       LET UCL = RATIO OF VARIANCE UPPER CONFIDENCE LIMTIS Y1 Y2
+
+    In addition to the above LET commands, built-in statistics are
+    supported for 30+ different commands (enter HELP STATISTICS for
+    details).
+
+Note:
+    The F TEST can be used to generate the corresponding hypothesis
+    test.
+ 
+Default:
+    None
+ 
+Synonyms:
+    SD is a synonym for STANDARD DEVIATION
+    CONFIDENCE INTERVAL is a synonym for CONFIDENCE LIMIT
+ 
+Related Commands:
+    F TEST                = Perform a normal-based test that two standard
+                            deviations are equal.
+    SIEGEL TUKEY TEST     = Perform a ranks based test that two standard
+                            deviations are equal.
+    BARTLETTS TEST        = Perform a k-sample Bartlett test for
+                            homogeneous variances.
+    LEVENE TEST           = Perform a k-sample Levene test for
+                            homogeneous variances.
+    SQUARED RANKS TEST    = Perform a k-sample squared ranks test for
+                            homogeneous variances.
+    KLOTZ TEST            = Perform a k-sample Klotz test for homogeneous
+                            variances.
+    SD CONFIDENCE LIMITS  = Compute the confidence limits for the
+                            standard deviation.
+    CHI-SQUARE TEST       = Performs a one sample chi-square test that the
+                            standard deviation is equal to a given value.
+    T TEST                = Performs a two-sample t test for equal means.
+    CONFIDENCE LIMITS     = Compute the confidence limits for the mean of
+                            a sample.
+    STANDARD DEVIATION    = Computes the standard deviation of a variable.
+ 
+Reference:
+    F-based intervals for the ratio of two standard deviations are
+    discussed in most introductory statistics books.
+
+    Shoemaker (2003), "Fixing the F-Test for Equal Variances," The American
+    Statistician, Vol. 57, pp. 105-114.
+
+    Bonett (2006), "Robust Confidence Intervals for a Ratio of Standard
+    Deviations," Applied Pyschological Measurement, Vol. 30, No. 5,
+    pp. 432-439.
+
+Applications:
+    Confirmatory Data Analysis
+ 
+Implementation Date:
+    2023/06
+ 
+Program 1:
+    SKIP 25
+    READ AUTO83B.DAT Y1 Y2
+    DELETE Y2 SUBSET Y2 < 0
+    .
+    RATIO OF SD CONFIDENCE LIMITS Y1 Y2
+     
+Program 2:
+    . Step 1:   Read the data
+    .
+    skip 25
+    read shoemake.dat bottom mid surface
+    let y x = stack bottom mid surface
+    let temp1 = cross tabulate mean y x
+    let temp2 = (y - temp1)**4
+    let num = sum temp2
+    let den = size y
+    let mu4 = num/den
+    let y1var = variance bottom
+    let y2var = variance mid
+    let y3var = variance surface
+    let n1 = size bottom
+    let n2 = size mid
+    let n3 = size surface
+    let num   = (n1 - 1)*y1var + (n2 -1)*y2var + (n3 - 1)*y3var
+    let poolvar = num/den
+    .
+    . Step 2:   Generate a box plot
+    .
+    character box plot
+    line box plot
+    xlimits 1 3
+    major xtic mark number 3
+    minor xtic mark number 0
+    xtic mark offset 0.5 0.5
+    x1tic mark label format alpha
+    x1tic mark label content Bottom Middepth Surface
+    tic mark label case asis
+    set box plot fences on
+    box plot y x
+    .
+    . Step 3:   Default confidence interval
+    .
+    set f test degrees of freedom default
+    print "Standard F interval"
+    ratio of sd confidence limits bottom mid
+    let lcl = ratio of sd lower confidence limit bottom mid
+    let ucl = ratio of sd upper confidence limit bottom mid
+    print lcl ucl
+    .
+    . Step 4:   Shoemaker F-test
+    .
+    set f test degrees of freedom shoemaker
+    print "Shoemaker degrees of freedom interval"
+    ratio of sd confidence limits bottom mid
+    print "Use pooled location and variance for Shoemaker"
+    set shoemaker f test pooled variance poolvar
+    set shoemaker f test pooled mu       mu4
+    ratio of sd confidence limits bottom mid
+    print "Shoemaker rounded degrees of freedom F Test"
+    set f test degrees of freedom shoemaker rounded
+    ratio of sd confidence limits bottom mid
+    set shoemaker f test pooled variance 0
+    set shoemaker f test pooled mu
+    .
+    . Step 5:   Bonett
+    .
+    set f test degrees of freedom bonett
+    print "Bonett method"
+    ratio of sd confidence limits bottom mid
 
 -----RAYCDF (LET)--------------------------------
  
@@ -31331,6 +31797,11 @@ Description:
           reading from the terminal, the full line image is 80
           columns).  For variations on this, see the COLUMN LIMITS
           command.
+       2) In scanning for the matrix, the full line image is scanned.
+          By default, a maximum of 1024 characters are read from
+          a file.  To increase this, use the command
+          MAXIMUM RECORD LENGTH.  When reading from the terminal, a
+          maximum of 255 characters are read.
        3) Data values on a line image must be separated by at least
           one blank.
        4) Data values can be free-format.  They need not be aligned in
@@ -31378,6 +31849,33 @@ Note:
     can be about 10 times faster on many systems.   This can be helpful
     for large data files.  Enter HELP READ FORMAT for more details.
  
+Note:
+    The command
+
+        DIMENSION MATRIX COLUMNS <value>
+
+    defines the maximum number of columns in a matrix whenn executing
+    matrix-based commands.
+
+    If you are using free format reads, this value needs to be set
+    as least as large as the number of columns you want to read.
+
+    If you have entered a SET READ FORMAT command, then this value
+    must be set to exactly the number of columns you want to read.
+    If the value is not exact, then the REASD MATRIX command will
+    not give the expected results.
+
+    The default value is 100 columns.
+
+Note:
+    If you are reading a large number of columns, you may need
+    to enter the following command
+
+          MAXIMUM RECORD LENGTH <value>
+
+    with <value> denoting the maximum number of columns to read
+    in the file.  The default value is 1024.
+
 Note:
     Blank lines in data files are ignored.
  
@@ -31444,10 +31942,10 @@ Related Commands:
     READ STRING        = Read a string.
  
 Applications:
-    XX
+    Data I/O
  
 Implementation Date:
-    XX
+    Pre-1987
  
 Program:
     READ MATRIX M
@@ -34562,6 +35060,884 @@ Program:
     REGIS COLORS GREEN  3
     REGIS COLORS RED 4
  
+-----REGRESSION DIAGNOSTICS------------------------------------
+
+REGRESSION DIAGNOSTICS
+
+Name:
+    REGRESSION DIAGNOSTICS
+
+Description:
+    The help for FIT and LINEAR FIT describe the standard outputs and
+    intervals that are generated by the fits and the standard residual
+    analysis that is typically performed after a fit to validate the
+    model. This help section describes the following.
+
+        1. There are a number of plots that can be generated to
+           help determine the most appropriate model.
+
+        2. A number of additional intervals and tests that are not
+           included in the standard Dataplot outputs can be generated
+           from information that is provided by the fit.
+
+        3. There are a number of regression diagnostics that go beyond
+           standard residual analysis.  
+
+        4. When there are multiple independent variables being
+           considered, it may be useful to assess multi-collinearity.
+
+    The above are demonstrated in the Program example below.  Note
+    that this program example is meant to show the mechanics of
+    the various plots and commands and is not intended to be treated
+    as a case study.
+
+    One purpose of many regression diagnostics is to identify
+    observations with either high leverage or high influence.  High
+    leverage points are those that are outliers with respect to the
+    independent variables.  Influential points are those that cause
+    large changes in the parameter estimates when they are deleted.
+    Although an influential point will typically have high leverage, a
+    high leverage point is not necessarily an influential point.  The
+    leverage is typically defined as the diagonal of the hat matrix
+    (hat matrix = H = X(X'X)**(-1)X').  Dataplot currently writes a
+    number of measures of influence and leverage to the file dpst3f.dat
+    (e.g., the diagonal of the hat matrix, Cook's distance, DFFITS).
+
+Pre-Fit Plots
+    When there are multiple independent variables, it is common to plot
+    the dependent variable against each of the independent variable.
+    However, these basic plots do not account for the effect of the other
+    independent variables in the model into account.  Several plots have
+    been proposed to address this.  Specifically,
+
+        1. Partial Residual Plot
+
+           Partial residual plots attempt to show the relationship
+           between a given independent variable and the response
+           variable given that other independent variables are in the
+           model.
+
+           Partial residual plots are formed as:
+
+               Res + Beta(i)*X(i) versus X(i)
+
+           where
+
+               Res     = residuals from the full model
+               Beta(i) = regression coefficient from the i-th independent
+                         variable in the full model
+               X(i)    = the i-th independent variable
+
+           Partial residual plots are widely discussed in the regression
+           diagnostics literature.  Although they can often be useful, be
+           aware that they can also fail to indicate the proper
+           relationship. In particular, if X(i) is highly correlated with
+           any of the other independent variables, the variance indicated
+           by the partial residual plot can be much less than the actual
+           variance. 
+
+           Enter HELP PARTIAL RESIDUAL PLOT for further information.
+
+        2. Component and Component-Plus-Residual (CCPR) Plot
+
+           The CCPR plot is a refinement of the partial residual plot.
+           It generates a partial residual plot but also adds
+
+              Betahat(i)*X(i) versus X(i)
+
+           This is the "component" part of the plot and is intended to
+           show where the "fitted line" would lie. 
+
+           Enter HELP PARTIAL RESIDUAL PLOT for further information.
+
+        3. Partial Regression Plot
+
+           Partial regression plots are also referred to as added
+           variable plots, adjusted variable plots and individual
+           coefficient plots. 
+
+           Partial regression plots attempt to show the effect of adding
+           an additional variable to the model (given that one or more
+           independent variables are already in the model). Partial
+           regression plots are formed by:
+
+                i. Compute the residuals of regressing the response
+                   variable against the independent variables but
+                   omitting X(i).
+
+               ii. Compute the residuals from regressing X(i) against the
+                   remaining independent variables.
+
+              iii. Plot the residuals from (i) against the residuals from
+                   (ii). 
+
+           Velleman and Welsch (see References below) express this
+           mathematically as:
+
+                 Y.[i] versus Xi.[i] 
+
+           where
+
+                 Y.[i]  = residuals from regressing Y (the response
+                          variable) against all the independent variables
+                          except X(i)
+                 Xi.[i] = residuals from regressing X(i) against the
+                          remaining indpependent variables. 
+
+           Velleman and Welsch list the following useful properties for
+           this plot:
+
+                i. The least squares linear fit to this plot has the
+                   slope Beta(i) and intercept zero.
+
+               ii. The residuals from the least squares linear fit to
+                   this plot are identical to the residuals from the
+                   least squares fit of the original model (Y against all
+                   the independent variables including X(i)).
+
+              iii. The influences of individual data values on the
+                   estimation of a coefficient are easy to see in this
+                   plot.
+
+               iv. It is easy to see many kinds of failures of the model
+                   or violations of the underlying assumptions
+                   (nonlinearity, heteroscedasticity, unusual patterns).
+
+           Partial regression plots are related to, but distinct from,
+           partial residual plots. Partial regression plots are most
+           commonly used to identify leverage points and influential data
+           points that might not be leverage points. Partial residual
+           plots are most commonly used to identify the nature of the
+           relationship between Y and X(i) (given the effect of the other
+           independent variables in the model).  Since the simple
+           correlation betweeen the two sets of residuals plotted is
+           equal to the partial correlation between the response variable
+           and X(i) partial regression plots will show the correct
+           strength of the linear relationship between the response
+           variable and X(i).  This is not true for partial residual
+           plots.  On the other hand, for the partial regression plot,
+           the x axis is not X(i).  This limits its usefulness in
+           determining the need for a transformation (which is the
+           primary purpose of the partial residual plot).
+
+           Enter HELP PARTIAL REGRESSION PLOT for further information.
+
+        4. Partial Leverage Plot
+
+           Partial leverage is used to measure the contribution of the
+           individual independent variables to the leverage of each
+           observation.  That is, if h(i) is the i-th row of the diagonal
+           of the hat matrix, how does h(i) change as we add a variable
+           to the regression model.
+
+           The partial leverage is computed as:
+
+               (PL(j))(i) = (X(j.[j]))**2(i)/
+                            SUM[k=1 to n][(X(j.[j]))**2(k)
+
+           where
+
+               j        = j-th independent variable
+               i        = the i-th observation
+               X(j.[j]) = residuals from regressing X(j) against the
+                          remaining indpependent variables
+
+           The partial leverage is the leverage of the i-th point in the
+           partial regression plot for the j-th variable.
+
+           The interpretation of the partial leverage plot is that data
+           points with large partial leverage for an independent
+           variable can exert undue influence on the selection of that
+           variable in automatic regression model building procedures
+           (e.g., the BEST CP command in Dataplot). 
+
+           Enter HELP PARTIAL LEVERAGE PLOT for further information.
+
+Additional Tests and Intervals:
+    The standard Dataplot output (including what is written to
+    dpst1f.dat, ... , dpst5f.dat) for linear fits includes parameter
+    estimates and associated confidence intervals, prediction limits
+    and associated confidence intervals (including Bonferonni and
+    Hotelling joint confidence intervals), and the parameter
+    covariance and correlation matrices.  There are some additional
+    tests and intervals can also be generated from information provided
+    by the fit.
+
+        1. The Program example demonstrates how to obtain point estimates
+           and confidence intervals (including joint confidence intervals)
+           for one or more new points.
+
+        2. The Program example demonstrates how to compute confidence
+           intervals for the prediction limits when a different
+           significance level is desired.
+
+Regression Diagnostics
+    After a fit, it is recommended that various diagnostics be generated
+    to assess the adequacy of the model.  The typical assumptions for
+    a good model are that the errors from the model are independent and
+    identically distributed (typically a normal distribution).
+
+    At a minimum, the following diagnostics should be generated
+
+       1. a 4-plot of the residuals.  The 4-plot generates a run sequence
+          plot (to assess common location and scale for the residuals),
+          a lag plot (to check for first order autocorrelation of the
+          residuals), a histogram, and a normal probability plot.
+
+          This plot provides a useful check on the basic assumptions
+          for the error term.  If the assumptions are violated, this
+          is an indication that there is structure in the data that is
+          not accounted for.
+
+       2. If there is a single independent variable, then it is useful
+          to plot the predicted values and the dependent variable against
+          the independent variable.
+
+    The term "regression diagnostics" is typically used to denote
+    diagnostic statistics and plots that go beyond the standard residual
+    analysis.  This is a brief discussion of "regression diagnostics"
+    with respect to linear fits performed with a non-iterative algorithm.
+
+    Regression diagnostics are used to identify outliers in the dependent
+    variable, identify influential points, to identify high leverage
+    points, or in general to uncover features of the data that could
+    cause difficulties for the fitted regression model.
+
+    The books by Belsley, Kuh, and Welsch and by Cook and Weisberg listed
+    in the References section discuss regression diagnostics in detail.
+    The mathematical derivations for the diagnostics covered here can be
+    found in these books.  Chapter 11 of the Neter, Wasserman, and
+    Kuntner book listed in the References section discusses regression
+    diagnostics in a less theoretical way.  We will only give a brief
+    overview of the various regression diagnostics.  For more thorough
+    guidance on when these various diagnostics are appropriate and how
+    to interpret them, see one of these texts (or some other text on
+    regression that covers these topics).
+
+    At a minimum, diagnostic analysis of a linear fit includes the
+    various plots of the residuals and predicted values described above.
+    For more complete diagnostics, the variables written to the file
+    dpst3f.dat can be analyzed.  Specifically, this file contains
+
+       Column 1: the diagonals of the hat matrix (the hat matrix is
+                 X(X'*X)X' where X' is the transpose of the X
+                 matrix).  In themselves, the diagonal elements are
+                 measures of the leverage of a given point.  The
+                 minimum leverage is (1/N), the maximum leverage is
+                 1.0 and the average leverage is (P/N) where P is
+                 the number of variables in the fit.  These elements
+                 are also used to calculate many other diagnostic
+                 statistics.  Note that
+
+                     H(ii) = VAR(Predicted value)/Residual Variance
+
+       Column 2: the variance of the residuals.
+
+                     VAR(res) = MSE*(1 - H(ii))
+
+       Column 3: the standardized residuals.  These are the residuals
+                 divided by the square root of the mean square error.
+
+                     STRES = Residual/SQRT(MSE)
+
+       Column 4: the internally studentized residuals.  These are
+                 the residuals divided by their standard deviations.
+
+       Column 5: the deleted residuals.  These are residuals obtained
+                 from subtracting the predicted values with the i-th
+                 case omitted from the observed value.
+
+       Column 6: the externally studentized residuals.  These are the
+                 deleted residuals divided by their standard deviation.
+
+       Column 7: Cook's distance.  This is a measure of the impact of the
+                 i-th case on all of the estimated regression
+                 coefficients.
+
+                     Cook = (res**2/(p*MSE))*H(ii)/(1 - H(ii))**2
+
+       Column 8: DFFITS = EXTSRES*SQRT(H(ii)*(1 - H(ii))
+
+    Additional diagnostic statistics can be computed from these
+    values.  Several of the texts in the REFERENCE section
+    below discuss the use and interpretation of these statistics
+    in more detail.  These variables can be read in as follows:
+
+        SKIP 1
+        SET READ FORMAT 8E15.7
+        READ DPST3F.DAT HII VARRES STDRES ISTUDRES DELRES ...
+                        ESTUDRES COOK DFFITS
+        SKIP 0
+
+    Many analysts prefer to use the standardized residuals or the
+    internally studentized residuals for the basic residual analysis.
+    Deleted residuals and externally deleted residuals are used to
+    identify outlying Y observations that the normal residuals do not
+    identify (cases with high leverage tend to generate small residuals
+    even if they are outliers).
+
+    Many regression diagnostics depend on the Hat matrix (X(X'X)**(-1)X').
+    Dataplot has limits on the maximum number of columns/rows for a
+    matrix which may prohibit the creation of the full hat matrix for
+    some problems.  Fortunately, most of the relevant statistics can be
+    derived from the diagonal elements of this matrix (which can be read
+    from the dpst3f.dat file). These are also referred to as the leverage
+    points. The minimum leverage is (1/N), the maximum leverage is 1.0,
+    and the average leverage is (P/N) where P is the number of variables
+    in the fit.  As a rule of thumb, leverage points greater than twice
+    the average leverage can be considered high leverage.  High leverage
+    points are outliers in terms of the X matrix and have an unduly large
+    influence on the predicted values. High leverage points also tend to
+    have small residuals, so they are not typically detected by standard
+    residual analysis.
+
+    The DFFITS values are a measure of influence that observation i has
+    on the i-th predicted value.  As a rule of thumb, for small or
+    moderate size data sets, values greater than 1 indicate an
+    influential case.  For large data sets, values greater than
+    2*SQRT(P/N) indicate influential cases.
+
+    Cook’s distance is a measure of the combined impact of the i-th
+    observation on all of the regression coefficients. It is typically
+    compared to the F distribution.  Values near or above the 50-th
+    percentile imply that observation has substantial influence on the
+    regression parameters.
+
+    The DFFITS values and the Cook’s distance are used to identify high
+    leverage points that are also influential (in the sense that they have
+    a large effect on the fitted model).
+
+    Once these variables have been read in, they can be printed, plotted,
+    and used in further calculations like any other variable.  This is
+    demonstrated in the program example below.  They can also be used to
+    derive additional diagnostic statistics.  For example, the program
+    example shows how to compute the Mahalanobis distance and Cook’s V
+    statistic.  The Mahalanobis distance is a measure of the distance of
+    an observation from the “center” of the observations and is
+    essentially an alternate measure of leverage.  The Cook’s V statistic
+    is the ratio of the variances of the predicted values and the
+    variances of the residuals.   Another popular diagnostic is the
+    DFBETA statistic. This is similar to Cook’s distance in that it tries
+    to identify points that have a large influence on the estimated
+    regression coefficients.  The distinction is that DFBETA assesses the
+    influence on each individual parameter rather than the parameters as
+    a whole.  The DFBETA statistics require the catcher matrix, which is
+    described in the multi-collinearity section below, for easy
+    computation.  The usual recommendation for DFBETA is that absolute
+    values larger than 1 for small and medium size data sets and larger
+    than (2/SQRT(N)) for large data sets should be considered
+    influential.  The variables written to file dpst3f.dat are
+    calculated without computing any additional regressions.  The
+    statistics based on a case being deleted are computed from
+    mathematically equivalent formulas that do not require additional
+    regressions to be performed. The Neter, Wasserman, and Kunter text
+    gives the formulas that are actually used.
+
+    Robust regression is often recommended when there are significant
+    outliers in the data. One common robust technique is called
+    iteratively reweighted least squares (IRLS) (or M-estimation).  Note
+    that these techniques protect against outlying Y values, but they do
+    not protect against outliers in the X matrix. Also, they test for
+    single outliers and are not as sensitive for a group of similar
+    outliers.  See the documentation for WEIGHTS, BI-WEIGHT, and TRI-CUBE
+    for more information on performing IRLS regression in DATAPLOT.
+    Techniques for protecting against outliers in the X matrix use
+    alternatives to least squares.  Two such methods are least median
+    squares regression (also called LSQ regression) and least trimmed
+    squares regression (also called LTS regression).  Dataplot does not
+    support these techniques at this time.  The documentation for the
+    WEIGHTS command in the Support chapter discusses one approach for
+    dealing with outliers in the X matrix in the context of IRLS.
+
+Multi-collinearity
+    Multi-collinearity results when the columns of the X matrix have
+    significant interdependence (that is, one column is close to a linear
+    combination of some collection of other columns).  Multi-collinearity
+    typically results in numerically unstable estimates in the sense that
+    small changes in the X matrix can result in significant changes in
+    the estimated regression coefficients. It can also cause other
+    significant problems. mPairwise collinearity can be determined from
+    correlation coefficients between independent variables (or from
+    pairwise plots).  However, this does not detect higher order
+    multi-collinearity. One measure of this is the multiple correlation
+    coefficient between the j-th variable and the rest of the independent
+    variables.  The Variance Inflation Factor (VIF) is a scaled version
+    of this with the following formula:
+
+       VIF(j) = 1/(1 - R(j)**2)
+
+    The VIF values are often given as their reciprocals (this is called
+    the tolerance).  Fortunately, these values can be computed without
+    performing any additional regressions. The computing formulas are
+    based on the catcher matrix, which is X(X'X)**(-1).  The equation is:
+
+       VIF(j) = SUM[i=1 to n][c(ij)**2]*
+                SUM[i=1 to n][(x(ij) - xbar(j)**2]
+
+    where c is the catcher matrix.  The CATCHER MATRIX command can be
+    used to compute the catcher matrix.  The program example shows how to
+    compute the R(j)**2  and the VIF’s.
+
+    Another measure of multi-collinearity are the condition indices. The
+    condition indices are calculated as follows:
+
+       1. Scale the columns of the X matrix to have unit sums of squares.
+
+       2. Calculate the singular values of the scaled X matrix and square
+          them.
+
+References:
+    Cook and Weisberg (1982), "Residuals and Influence in Regression",
+    Chapman and Hall.
+ 
+    Belsley, Kuh, and Welsch, (1980),  "Regression Diagnostics",
+    John Wiley.
+
+    Neter, Wasserman, and Kunter (1990), "Applied Linear Statistical
+    Models", 3rd ed., Irwin.
+
+Program:
+    . Note: this program example is meant simply to show how to create
+    .       the various plots, intervals and statistics.  It is not a
+    .       case study.
+    .
+    . ZARTHAN COMPAY EXAMPLE FROM
+    . "APPLIED LINEAR STATISTICAL MODELS", BY NETER, WASSERMAN, KUTNER
+    .
+    . Y = SALES
+    . X1 = CONSTANT TERM
+    . X2 = TARGET POPULATION (IN THOUSANDS)
+    . X3 = PER CAPITA DISCRETIONARY INCOME (DOLLARS)
+    .
+    . Step 1: Read the data
+    .
+    DIMENSION 500 COLUMNS
+    LET NVAR = 2
+    READ DISTRICT Y X2 X3
+    1 162 274 2450
+    2 120 180 3254
+    3 223 375 3802
+    4 131 205 2838
+    5 67 86 2347
+    6 169 265 3782
+    7 81 98 3008
+    8 192 330 2450
+    9 116 195 2137
+    10 55 53 2560
+    11 252 430 4020
+    12 232 372 4427
+    13 144 236 2660
+    14 103 157 2088
+    15 212 370 2605
+    END OF DATA
+    .
+    LET N = SIZE Y
+    LET X1 = 1 FOR I = 1 1 N
+    LET STRING SY  = Sales
+    LET STRING SX2 = Population
+    LET STRING SX3 = Income
+    LET P = NVAR + 1
+    .
+    . Step 1: Basic Preliminary Plots
+    .         1) Independent against dependent
+    .         2) INDEPENDENT AGAINST INDEPENDENT
+    .
+    TITLE OFFSET 2
+    TITLE AUTOMATIC
+    TITLE CASE ASIS
+    LABEL CASE ASIS
+    CASE ASIS
+    .
+    LINE BLANK
+    CHARACTER CIRCLE
+    CHARACTER HW 1 0.75
+    CHARACTER FILL ON
+    Y1LABEL DISPLACEMENT 12
+    X1LABEL DISPLACEMENT 10
+    X2LABEL DISPLACEMENT 15
+    .
+    MULTIPLOT CORNER COORDINATES 5 5 95 95
+    MULTIPLOT SCALE FACTOR 2
+    MULTIPLOT 2 2
+    .
+    Y1LABEL ^SY
+    LOOP FOR K = 2 1 P
+        LET RIJ = CORRELATION Y X^K
+        LET RIJ = ROUND(RIJ,3)
+        X1LABEL ^SX^K
+        X2LABEL Correlation: ^RIJ
+        PLOT Y VS X^K
+    END OF LOOP
+    .
+    LOOP FOR K = 2 1 P
+        LET IK1 = K + 1
+        Y1LABEL ^SX^K
+        LOOP FOR J = IK1 1 P
+            LET RIJ = CORRELATION X^K X^J
+            LET RIJ = ROUND(RIJ,3)
+            X1LABEL ^SX^J
+            X2LABEL Correlation: ^RIJ
+            PLOT X^K VS X^J
+        END OF LOOP
+    END OF LOOP
+    END OF MULTIPLOT
+    LABEL
+    .
+    JUSTIFICATION CENTER
+    MOVE 50 97
+    TEXT Basic Preliminary Plots
+    .
+    . Step 2: Generate the fit
+    .
+    SET WRITE DECIMALS 5
+    SET LIST NEW WINDOW OFF
+    FEEDBACK OFF
+    capture program3.out
+    FIT Y X2 X3
+    WRITE " "
+    WRITE " "
+    WRITE " "
+    WRITE "         ANOVA Table"
+    WRITE " "
+    LIST dpst5f.dat
+    WRITE " "
+    WRITE " "
+    CAPTURE SUSPEND
+    .
+    . Step 3b: Generate the basic residual analysis
+    .
+    TITLE SIZE 4
+    TIC MARK LABEL SIZE 4
+    CHARACTER HW 2 1.5
+    SET 4PLOT MULTIPLOT ON
+    TITLE AUTOMATIC
+    4-PLOT RES
+    TITLE SIZE 2
+    TIC MARK LABEL SIZE 2
+    CHARACTER HW 1 0.75
+    .
+    MULTIPLOT 2 2
+    TITLE AUTOMATIC
+    Y1LABEL Predicted Values
+    X1LABEL Response Values
+    PLOT PRED VS Y
+    Y1LABEL Residuals
+    X1LABEL Predicted Values
+    PLOT RES VS PRED
+    LOOP FOR K = 2 1 P
+        Y1LABEL Residuals
+        X1LABEL Predicted Values
+        PLOT RES VS X^K
+    END OF LOOP
+    END OF MULTIPLOT
+    LABEL
+    TITLE
+    .
+    . Step 3c: Read the information written to auxiliary files.  Some of
+    .          these values will be used later in this macro.
+    .
+    SKIP 1
+    READ dpst1f.dat COEF COEFSD TVALUE PARBONLL PARBONUL
+    READ dpst2f.dat PREDSD PRED95LL PRED95UL PREDBLL PREDBUL PREDHLL PREDHUL
+    READ dpst3f.dat HII VARRES STDRES STUDRES DELRES ESTUDRES COOK DFFITS
+    READ dpst4f.dat TEMP1 TEMP2
+    LET S2B    = VARIABLE TO MATRIX TEMP1 P
+    LET XTXINV = VARIABLE TO MATRIX TEMP2 P
+    DELETE TEMP1 TEMP2
+    SKIP 0
+    .
+    . Step 4: Partial Residual and Partial Regression Plots, CCPR and
+    .         Partial Leverage Plots not generated
+    .
+    MULTIPLOT 2 2
+    TITLE AUTOMATIC
+    Y1LABEL Residuals + A1*X2
+    X1LABEL X2
+    PARTIAL RESIDUAL   PLOT Y X2 X3 X2
+    Y1LABEL Residuals + A2*X3
+    X1LABEL X3
+    PARTIAL RESIDUAL   PLOT Y X2 X3 X3
+    .
+    Y1LABEL Residuals: X2 Removed
+    X1LABEL Residuals: X2 Versus X3
+    PARTIAL REGRESSION PLOT Y X2 X3 X2
+    Y1LABEL Residuals: X3 Removed
+    X1LABEL Residuals: X3 Versus X2
+    PARTIAL REGRESSION PLOT Y X2 X3 X3
+    END OF MULTIPLOT
+    TITLE
+    LABEL
+    JUSTIFICATION CENTER
+    MOVE 50 97
+    Text Partial Residual and Partial Regression Plots
+    .
+    . Step 5: Calculate function to calculate regression estimate
+    .         for new data (F)
+    .
+    LET A0 = COEF(1)
+    LET FUNCTION F = A0
+    LET DUMMY = PREDSD(1)
+    .
+    .         Use (2*NVAR) rather than (2*P) if no constant term in
+    .         joint interval
+    .
+    LOOP FOR K = 1 1 NVAR
+        LET INDX = K + 1
+        LET A^K = COEF(INDX)
+        LET FUNCTION F = F + (A^K)*(Z^K)
+    END OF LOOP
+    .
+    LET Z1 = DATA 220 375
+    LET Z2 = DATA 2500 3500
+    LET YNEW = F
+    .
+    CAPTURE RESUME
+    PRINT " "
+    PRINT " "
+    PRINT "NEW X VALUES, ESTIMATED NEW VALUE"
+    PRINT Z1 Z2 YNEW
+    CAPTURE SUSPEND
+    .
+    . Step 5b: Print the X'X inverse matrix and parameter
+    .          variance-covariance matrix
+    .
+    CAPTURE RESUME
+    PRINT " "
+    PRINT " "
+    PRINT "THE X'X INVERSE MATRIX"
+    PRINT XTXINV
+    .
+    PRINT " "
+    PRINT " "
+    PRINT "THE PARAMETER VARIANCE-COVARIANCE MATRIX"
+    PRINT S2B
+    CAPTURE SUSPEND
+    .
+    . Step 5c: Calculate:
+    .          1) The variance of a new point (S2YHAT)
+    .          2) A confidence interval for a new point
+    .          3) A joint confidence interval for more than one point
+    .          4) A prediction interval for a new point
+    .          5) A Scheffe joint prediction interval for more than one point
+    .
+    LET NPT = SIZE YNEW
+    LET NP = N - P
+    LOOP FOR IK = 1 1 NPT
+        LET XNEW(1) = 1
+        LET XNEW(2) = Z1(IK)
+        LET XNEW(3) = Z2(IK)
+        LOOP FOR K = 1 1 P
+            LET DUMMY2 = VECTOR DOT PRODUCT XNEW S2B^K
+            LET SUMZ(K) = DUMMY2
+        END OF LOOP
+        LET S2YHAT = VECTOR DOT PRODUCT SUMZ XNEW
+        LET S2YPRED = MSE + S2YHAT
+        LET YHATS2(IK) = S2YHAT
+        LET YPREDS2(IK) = S2YPRED
+        LET SYHAT = SQRT(S2YHAT)
+        LET YHATS(IK) = SYHAT
+        LET SYPRED = SQRT(S2YPRED)
+        LET YPREDS(IK) = SYPRED
+        LET YHAT = YNEW(IK)
+        CAPTURE RESUME
+        PRINT " "
+        PRINT " "
+        PRINT "THE PREDICTED VALUE FOR THE NEW POINT = ^YHAT"
+        PRINT "THE VARIANCE OF THE NEW VALUE = ^S2YHAT"
+        PRINT "THE VARIANCE FOR PREDICTION INTERVALS = ^S2YPRED"
+        CAPTURE SUSPEND
+        LET T = TPPF(.975,NP)
+        LET YHATU = YHAT + T*SYHAT
+        LET YHATL = YHAT - T*SYHAT
+        LET YPREDU = YHAT + T*SYPRED
+        LET YPREDL = YHAT - T*SYPRED
+        CAPTURE RESUME
+        PRINT " "
+        PRINT "95% CONFIDENCE INTERVAL FOR YHAT: ^YHATL <= YHAT <= ^YHATU"
+        PRINT "95% PREDICTION INTERVAL FOR YHAT: ^YPREDL <= YHAT <= ^YPREDU"
+        CAPTURE SUSPEND
+    END OF LOOP
+    .
+    LET ALPHA = 0.10
+    LET DUMMY = 1 - ALPHA/(2*NPT)
+    LET B = TPPF(DUMMY,NP)
+    LET JOINTBU = YNEW + B*YHATS
+    LET JOINTBL = YNEW - B*YHATS
+    CAPTURE RESUME
+    PRINT " "
+    PRINT "90% BONFERRONI JOINT CONFIDENCE INTERVALS FOR NEW VALUES"
+    PRINT JOINTBL YNEW JOINTBU
+    CAPTURE SUSPEND
+    LET W = P*FPPF(.90,P,NP)
+    LET W = SQRT(W)
+    LET JOINTWU = YNEW + W*YHATS
+    LET JOINTWL = YNEW - W*YHATS
+    CAPTURE RESUME
+    PRINT " "
+    PRINT "90% HOTELLING JOINT CONFIDENCE INTERVALS FOR NEW VALUES"
+    PRINT JOINTWL YNEW JOINTWU
+    CAPTURE SUSPEND
+    LET JOINTBU = YNEW + B*YPREDS
+    LET JOINTBL = YNEW - B*YPREDS
+    CAPTURE RESUME
+    PRINT " "
+    PRINT "90% BONFERRONI JOINT PREDICTION INTERVALS FOR NEW VALUES"
+    PRINT JOINTBL YNEW JOINTBU
+    CAPTURE SUSPEND
+    LET S = NPT*FPPF(.90,NPT,NP)
+    LET S = SQRT(S)
+    LET JOINTSU = YNEW + S*YPREDS
+    LET JOINTSL = YNEW - S*YPREDS
+    CAPTURE RESUME
+    PRINT " "
+    PRINT "90% SCHEFFE JOINT PREDICTION INTERVALS FOR NEW VALUES"
+    PRINT JOINTSL YNEW JOINTSU
+    CAPTURE SUSPEND
+    .
+    . Step 6: Plot various diagnostic statistics
+    .
+    .         Derive Cook's V statistic and Mahalanobis distance
+    .
+    LET V = (PREDSD**2)/(RESSD**2)
+    LET MAHAL = ((HII-1/N)/(1-HII))*(N*(N-2)/(N-1))
+    LET HBAR = P/N
+    LET DUMMY = SUM HII
+    SET WRITE FORMAT 5F10.5
+    CAPTURE RESUME
+    PRINT " "
+    PRINT "            HII           COOK         DFFITS              V          MAHAL"
+    PRINT HII COOK DFFITS V MAHAL
+    CAPTURE SUSPEND
+    SET WRITE FORMAT
+    .
+    . Step 6b: Plot various diagnostic statistics
+    .
+    .          Plot various residuals
+    .
+    X1LABEL
+    XLIMITS 0 15
+    MAJOR XTIC MARK NUMBER 4
+    XTIC OFFSET 0 1
+    MULTIPLOT 2 2
+    TITLE STANDARDIZED RESIDUALS
+    PLOT STDRES
+    TITLE INTERNALLY STUDENTIZED RESIDUALS
+    PLOT STUDRES
+    TITLE DELETED RESIDUALS
+    X1LABEL PRESS STATISTIC = ^PRESSP
+    PLOT DELRES
+    X1LABEL
+    TITLE EXTERNALLY STUDENTIZED RESIDUALS
+    PLOT ESTUDRES
+    END OF MULTIPLOT
+    .
+    .          Plot several diagnotic statistics
+    .
+    .
+    MULTIPLOT 2 2
+    CHARACTER FILL ON OFF
+    CHARACTER CIRCLE BLANK
+    LINE BLANK SOLID DOTTED
+    TITLE PLOT OF LEVERAGE POINTS
+    Y1LABEL
+    X1LABEL DOTTED LINE AT 2*AVERAGE LEVERAGE
+    YTIC OFFSET 0 0.1
+    LET TEMP6 = DATA 1 N
+    LET DUMMY = 2*HBAR
+    LET TEMP4 = DATA DUMMY DUMMY
+    LET TEMP5 = DATA HBAR HBAR
+    SPIKE ON
+    SPIKE BASE HBAR
+    SPIKE LINE DOTTED
+    .
+    PLOT HII AND
+    PLOT TEMP4 TEMP5 VS TEMP6
+    SPIKE OFF
+    YTIC OFFSET 0 0
+    .
+    CHARACTER CIRCLE BLANK BLANK
+    LINE BLANK DOTTED DOTTED
+    Y1LABEL
+    X1LABEL DOTTED LINES AT 1 AND 2*SQRT(P/N)
+    LET TEMP4 = DATA 1 1
+    LET DUMMY = 2*SQRT(P/N)
+    LET TEMP5 = DATA DUMMY DUMMY
+    TITLE PLOT OF DFFITS POINTS
+    .
+    PLOT DFFITS AND
+    PLOT TEMP4 TEMP5 VS TEMP6
+    .
+    X1LABEL DOTTED LINES AT 20 AND 50TH PERCENTILES OF F DISTRIBUTION
+    LET DUMMY = FPPF(.20,P,NP)
+    LET TEMP4 = DATA DUMMY DUMMY
+    LET DUMMY = FPPF(.50,P,NP)
+    LET TEMP5 = DATA DUMMY DUMMY
+    TITLE PLOT OF COOK'S DISTANCE
+    .
+    PLOT COOK AND
+    PLOT TEMP4 TEMP5 VS TEMP6
+    .
+    X1LABEL
+    TITLE PLOT OF MAHALANOBIS DISTANCE
+    PLOT MAHAL
+    .
+    END OF MULTIPLOT
+    .
+    . Step 6c: Calculate:
+    .
+    .          1. Catcher matrix
+    .          2. Variance inflation factors
+    .          3. Condition numbers of X'X (based on singular
+    .             values of scaled X)
+    .          4. Partial regression plots (also called added variable plots)
+    .          5. Partial leverage plots
+    .          6. DFBETA'S
+    .
+    LET XMAT  = CREATE MATRIX X1 X2 X3
+    LET C     = CATCHER MATRIX XMAT
+    LET VIF   = VARIANCE INFLATION FACTORS XMAT
+    LET RJ    = 0 FOR I = 1 1 NP
+    LET RJ    = 1 - (1/VIF)  SUBSET VIF > 0
+    LET TOL   = 1/VIF        SUBSET VIF > 0
+    LET DCOND = CONDITION INDICES XMAT
+    CAPTURE RESUME
+    PRINT " "
+    PRINT " "
+    PRINT "                                 CONDITION"
+    PRINT " Rj-SQUARE       VIF   TOLERANCE   INDICES"
+    SET WRITE FORMAT 5X,F5.3,F10.5,F12.5,F10.5
+    PRINT RJ VIF TOL DCOND
+    CAPTURE SUSPEND
+    .
+    MULTIPLOT 2 2
+    CHARACTER CIRCLE
+    LINE BLANK
+    SPIKE BLANK
+    LIMITS DEFAULT
+    TIC OFFSET 0 0
+    MAJOR TIC MARK NUMBER DEFAULT
+    .
+    LOOP FOR K = 2 1 P
+        TITLE Partial Regression Plot for X^K
+        PARTIAL REGRESSION PLOT Y X2 X3 X^K
+        .
+        TITLE PARTIAL LEVERAGE FOR X^K
+        PARTIAL LEVERAGE PLOT Y X2 X3 X^K
+        .
+        LET DUMMY = XTXINV^K(K)
+        LET DFBETA^K = (C^K*ESTUDRES)/SQRT(DUMMY*(1-HII))
+    END OF LOOP
+    END OF MULTIPLOT
+    .
+    LET DUMMY = XTXINV1(1)
+    TITLE PLOT OF DFBETA'S (B0, B1, B2)
+    LINE BLANK ALL
+    CHARACTER B0 B1 B2
+    CHARACTER SIZE 2 ALL
+    LET TEMP4 = SEQUENCE 1 1 N
+    LET DFBETA1 = (C1*ESTUDRES)/SQRT(DUMMY*(1-HII))
+    PLOT DFBETA1 DFBETA2 DFBETA3 VS TEMP4
+
 -----RJ (LET)----------------------------------------------
  
 RJ
@@ -42921,82 +44297,6 @@ Program:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -------------------------  *S*  ZZZZZ--------------------
  
 -----S CHART-----------------------------------------------------
@@ -49348,6 +50648,166 @@ Program:
     let y3 = shift y nshift
     set write decimals 3
     print y y2 y3
+
+-----SIEGEL TUKEY TEST------------------------------------------------
+ 
+SIEGEL TUKEY TEST
+ 
+Name:
+    SIEGEL TUKEY TEST
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Perform a two sample Siegel-Tukey test that the standard deviations
+    of two samples are equal.
+ 
+Description:
+    The Siegel-Tukey test is computed as follows:
+
+        1. Combine the data from the two response variables and
+           sort from smallest to largst.
+
+        2. Assign rank 1 to the smallest observation, rank 2 to the
+           largest observation, rank 3 to next largest observation,
+           rank 4 to the second smallest observation.  Continue this
+           pattern until all values are ranked.
+
+           If there are an odd number of total observations, then
+           omit the observation that is the median of the combined
+           observations.
+
+        3. Perform a Mann-Whitney (rank sum) test on the ranked
+           values.
+
+Syntax 1:
+    <LOWER TAILED/UPPER TAILED> SIEGEL TUKEY TEST  <y1>  <y2>
+                                <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first response variable;
+          <y2> is the second response variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    If LOWER TAILED is specified, a lower tailed test is performed
+    (i.e., sigma1 < sigma2).  If UPPER TAILED is specified, an upper
+    tailed test is performed (i.e., sigma1 > sigma2).  If neither
+    LOWER TAILED or UPPER TAILED is specified, a two-tailed test is
+    performed (i.e., sigma1 not equal sigma2).
+
+Syntax 2:
+    <LOWER TAILED/UPPER TAILED> SIEGEL TUKEY TEST  <y1>  ... <yk>
+                                <SUBSET/EXCEPT/FOR qualification>
+    where <y1> ... <yk> is a list of two or more response variables;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs all the two-way Siegel-Tukey tests for the
+    listed variables.  This syntax supports the TO syntax.
+
+    If LOWER TAILED is specified, a lower tailed test is performed
+    (i.e., sigma1 < sigma2).  If UPPER TAILED is specified, an upper
+    tailed test is performed (i.e., sigma1 > sigma2).  If neither
+    LOWER TAILED or UPPER TAILED is specified, a two-tailed test is
+    performed (i.e., sigma1 not equal sigma2).
+
+Examples:
+    SIEGEL TUKEY TEST Y1  Y2
+    SIEGEL TUKEY TEST Y1  Y2 Y3
+    SIEGEL TUKEY TEST Y1  TO Y6
+    SIEGEL TUKEY TEST Y1  Y2  SUBSET Y2 > 0
+    LOWER TAILED SIEGEL TUKEY TEST Y1  Y2
+    UPPER TAILED SIEGEL TUKEY TEST Y1  Y2
+
+Note:
+    The following parameters are saved after the F test is
+    performed.
+
+         STATVAL   - value of the test statistic
+         STATCDF   - CDF of the test statistic
+         PVALUE    - p-value of the two tailed test statistic
+         PVALUELT  - p-value of the lower tailed test statistic
+         PVALUEUT  - p-value of the upper tailed test statistic
+
+    For an upper tailed test, the following parameters are saved
+
+         CUTUPP90  - 90%   upper critical value
+         CUTUPP95  - 95%   upper critical value
+         CUTUPP99  - 99%   upper critical value
+         CUTUP995  - 99.5% upper critical value
+         CUTUP999  - 99.9% upper critical value
+
+         CUTLOW90  - 10%   lower critical value
+         CUTLOW95  - 5%    lower critical value
+         CUTLOW99  - 1%    lower critical value
+         CUTLOW95  - 0.5%  lower critical value
+         CUTLW999  - 0.1%  lower critical value
+
+Note:
+    In addition to the F TEST command, the following commands can
+    also be used:
+
+        LET STATVAL = SIEGEL TUKEY TEST        Y1 Y2
+        LET STATCDF = SIEGEL TUKEY TEST CDF    Y1 Y2
+        LET PVALUE  = SIEGEL TUKEY TEST PVALUE Y1 Y2
+        LET PVALUE  = SIEGEL TUKEY LOWER TAIL TEST PVALUE Y1 Y2
+        LET PVALUE  = SIEGEL TUKEY UPPER TAIL TEST PVALUE Y1 Y2
+
+    In addition to the above LET commands, built-in statistics are
+    supported for 30+ different commands (enter HELP STATISTICS for
+    details).
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    BARTLETTS TEST                 = Perform a k-sample Bartlett test for
+                                     homogeneous variances.
+    LEVENE TEST                    = Perform a k-sample Levene test for
+                                     homogeneous variances.
+    SQUARED RANKS TEST             = Perform a k-sample squared ranks test
+                                     for homogeneous variances.
+    KLOTZ TEST                     = Perform a k-sample Klotz test
+                                     for homogeneous variances.
+    RATIO OF SD CONFIDENCE LIMITS  = Compute the confidence limtis for the
+                                     ratio of two standard deviations.
+    SD CONFIDENCE LIMITS           = Compute the confidence limits for the
+                                     standard deviation.
+    CHI-SQUARE TEST                = Performs a one sample chi-square test
+                                     that the standard deviation is equal
+                                     to a given value.
+    T TEST                         = Performs a two-sample t test for
+                                     equal means.
+    CONFIDENCE LIMITS              = Compute the confidence limits for the
+                                     mean of a sample.
+    STANDARD DEVIATION             = Computes the standard deviation of a
+                                     variable.
+ 
+Reference:
+    Higgins (2004), "Introduction to Modern Nonparametric Statistics,"
+    Duxbury Press, pp. 52-53.
+
+
+Applications:
+    Confirmatory Data Analysis
+ 
+Implementation Date:
+    2023/06:
+ 
+Program:
+    . Step 1:   Define the data (example from Higgin's book)
+    .
+    let y1 = data 16.55 15.36 15.94 16.43 16.01
+    let y2 = data 16.05 15.98 16.10 15.88 15.91
+    .
+    . Step 2:   Compute Siegel Tukey test statistic
+    .
+    let statva  = siegel tukey test        y1 y2
+    let statcdf = siegel tukey test cdf    y1 y2
+    let pvalue  = siegel tukey test pvalue y1 y2
+    .
+    siegel tukey test y1 y2
 
 -----SIEVE PLOT (LET)--------------------------------
  
@@ -61182,15 +62642,59 @@ Purpose:
     Compare two strings and return a 1 if they are identical and
     return a 0 if they are not.
  
-Syntax:
+Syntax 1:
     LET <ival> = STRING COMPARE  <s1>  <s2>
     where <ival> is a parameter containing a 1 if the strings are
               identical and 0 if they are not;
           <s1> is the name of the first string;
     and   <s2> is the name of the second string.
+
+    With this syntax, the comparison is case sensitive and the full
+    strings are compared (if the strings are of unequal length a 0 will
+    be returned even if the strings match up to length of the shorter
+    string).
+ 
+Syntax 2:
+    LET <ival> = STRING COMPARE NOCASE <s1>  <s2>
+    where <ival> is a parameter containing a 1 if the strings are
+              identical and 0 if they are not;
+          <s1> is the name of the first string;
+    and   <s2> is the name of the second string.
+ 
+    With this syntax, the comparison is not case sensitive and the full
+    strings are compared (if the strings are of unequal length a 0 will
+    be returned even if the strings match up to length of the shorter
+    string).
+ 
+Syntax 3:
+    LET <ival> = STRING COMPARE  <s1>  <s2>  <len>
+    where <ival> is a parameter containing a 1 if the strings are
+              identical and 0 if they are not;
+          <s1> is the name of the first string;
+          <s2> is the name of the second string.
+    and   <len> is a number or a parameter that specifies the number of
+               characters in the strings to compare.
+
+    With this syntax, the comparison is case sensitive, but only the
+    first <len> characters in <s1> and <s2> are compared.
+ 
+Syntax 4:
+    LET <ival> = STRING COMPARE NOCASE <s1>  <s2>  <len>
+    where <ival> is a parameter containing a 1 if the strings are
+              identical and 0 if they are not;
+          <s1> is the name of the first string;
+          <s2> is the name of the second string.
+    and   <len> is a number or a parameter that specifies the number of
+               characters in the string to compare.
+
+    With this syntax, the comparison is not case sensitive and only the
+    first <len> characters in <s1> and <s2> are compared.
  
 Examples:
-    LET IVAL = STRING COMPARE S1  S2
+    LET IVAL = STRING COMPARE S1 S2
+    LET IVAL = STRING COMPARE NOCASE S1 S2
+    LET IVAL = STRING COMPARE S1 S2 NCHAR
+    LET IVAL = STRING COMPARE NOCASE S1 S2 NCHAR
  
 Default:
     None
@@ -61227,7 +62731,10 @@ Applications:
     Data Management
  
 Implementation Date:
-    1/2011
+    2011/01
+    2021/08: Support for NOCASE option
+    2021/08: Support for limiting the comparison to a specified
+             number of characters at the start of the string
  
 Program:
     LET STRING S1 = file23.dat
@@ -63093,6 +64600,133 @@ Program:
     let stout = string remove whitespace stin
     print stin stout
 
+-----STRING REPEAT-----------------------------------------------------
+ 
+STRING REPEAT
+
+Name:
+    STRING REPEAT
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Create a string that repeats an input string a user
+    specified number of times.
+
+Syntax:
+    LET <sout> = STRING REPEAT  <sorg>  <count>
+    where <sout> is the name of the resulting string;
+          <sorg> is the name of the original string;
+    and   <count> is a number or parameter that specifies the
+          number of times <sorg> will be repeated.
+
+Examples:
+    LET SOUT = STRING REPEAT S1 NWORD
+    LET SOUT = STRING REPEAT S1 5
+ 
+Note:
+    The name of the new string can be the same as the original
+    string.  For example,
+
+        LET S1 = STRING REPEAT S1 COUNT
+
+Note:
+    The string on the right hand side of the equal sign must be a
+    previously existing string.  That is, expressions are not allowed.
+    For example, instead of
+
+        LET SOUT = STRING REPEAT "a b c d"  2
+
+    you need to do
+
+        LET STRING SORG = a b c d
+        LET SOUT = STRING REPEAT SORG  2
+
+    The repeat factor can be either a parameter or a numeric value.
+    However, it cannot be a numeric expression.  So
+
+        LET SOUT = STRING REPEAT SORG  5
+        LET SOUT = STRING REPEAT SORG  COUNT
+
+    are both allowed but
+
+        LET SOUT = STRING REPEAT SORG  COUNT/2
+
+    is not allowed.  You would need to enter this as
+
+        LET COUNT2 = COUNT/2
+        LET SOUT = STRING REPEAT SORG COUNT2
+
+    The name on the left hand side of the equal sign may be a
+    previously existing string.  However, if it is a previously
+    existing parameter, variable, or matrix name, an error will
+    be reported and the requested string will not be created.
+
+Note:
+    The repeat factor should be in the range 1 to 255.  If the repeat
+    factor is outside this range, an error is reported and the
+    requested string will not be created.
+
+    The maximum length of the string to be repeated is 255 characters.
+    If the the string is longer than this, an error is reported and the
+    requested string will not be created.
+ 
+Note:
+    The total number of characters that Dataplot can use for storing
+    functions and strings is set when DATAPLOT is built.  The current
+    default (08/2021) is 100,000 characters.
+ 
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    NUMBER OF WORDS           = Return the number of words in a string.
+    UPPER CASE                = Convert a string to upper case.
+    LOWER CASE                = Convert a string to lower case.
+    LET FUNCTION              = Defines a function.
+    LET STRING                = Defines a string.
+    READ STRING               = Reads a string from a file.
+    SUBSTITUTE CHARACTER (^)  = Substitute the value of a string or
+                                parameter.
+    CONCATENATE CHARACTER (&) = Concatenate two strings.
+    SUBTRING                  = Extract a substring from an existing
+                                string.
+    STRING INDEX              = Extract the start/stop positions of a
+                                substring within a string.
+    STRING CONCATENATE        = Concatenate one or more previously
+                                defined strings.
+    STRING EDIT               = Edit a string.
+    STRING MERGE              = Insert a string into another string
+                                without overwrite.
+    STRING LENGTH             = Return the length of a string.
+    STRING WORD               = Extract a specified word from a string.
+    CHARACTER                 = Convert numeric values to strings based
+                                on the ASCII collating sequence.
+    ICHAR                     = Convert a string to numeric values based
+                                on the ASCII collating sequence.
+    GROUP LABEL               = Define the text for group labels.
+ 
+Applications:
+    Data Management
+ 
+Implementation Date:
+    2021/08
+ 
+Program:
+    let x = sequence 1 1 10
+    let x2 = x**2
+    let x3 = x**3
+    let string s = -
+    let sdash = string repeat s 30
+    set write format 3F10.0
+    write1 temp.out "         X      X**2      X**3"
+    write1 temp.out "^sdash"
+    write1 temp.out x x2 x3
+
 -----STRING REPLACE-----------------------------------------------------
  
 STRING REPLACE
@@ -64849,6 +66483,16 @@ Examples:
     LET Y1 = Y2 SUBSET TAG = 4
  
 Note:
+    Expressions are not supported.  That is,
+
+        PLOT Y X  SUBSET Y > 2*A
+
+    is not valid.  You need to do something like
+
+        LET B = 2*A
+        PLOT Y X  SUBSET Y > B
+
+Note:
     The SUBSET variable does not have to be one of the variables used
     in the command (e.g., PLOT X SUBSET TAG > 0).
  
@@ -64866,6 +66510,29 @@ Note:
 Note:
     More than one SUBSET clause can be used on a single command.
  
+Note:
+    Previously for SUBSET clauses the value to the right of the
+    operator was restricted to being a number or a parameter.  That
+    is, for
+
+         PLOT Y X  SUBSET X > A
+
+    the name A was restricted to a parameter name (i.e., a single
+    value).
+
+    The 2021/07 version of Dataplot extended this to support variables
+    on he right hand side.  So you can now do something like
+
+         LET N = 10
+         LET Y1 = NORMAL RANDOM NUMBERS FOR I = 1 1 N
+         LET Y1 = SORT Y1
+         LET Y2 = LOGISTIC RANDOM NUMBERS FOR I = 1 1 N
+         LET Y2 = SORT Y2
+         LET TAG = 0 FOR I = 1 1 N
+         LET TAG = 1 SUBSET Y1 < Y2
+
+    This is only supported for Syntax 1.
+
 Default:
     None
  
@@ -64883,13 +66550,18 @@ Related Commands:
     <>     = Allows "not equal" subset.
  
 Applications:
-    XX
+    Data Subsetting
  
 Implementation Date:
     Pre-1987
  
 Program:
-    XX
+    LET X = SEQUENCE 1 1 10
+    LET Y = X**2
+    PRINT X Y
+    PRINT X Y SUBSET Y > 60
+    RETAIN X Y SUBSET Y > 60
+    PRINT X Y
  
 -----SUBSTITUTE CHARACTER--------------------------------------------
  
@@ -66980,78 +68652,6 @@ Program 2:
     feedback on
 
 ---------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
