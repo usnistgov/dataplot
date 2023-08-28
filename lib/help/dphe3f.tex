@@ -1,13 +1,13 @@
- 78500.    (VERSION 2021.05)   total number of lines in file (including this line)
+ 80000.    (VERSION 2023.08)   total number of lines in file (including this line)
  8.                          number of     sections below
   100.    D                  first line number of D section
 18700.    E                  first line number of E section
-27700.    F                  first line number of F section
-37200.    G                  first line number of G section
-54200.    H                  first line number of H section
-61500.    I                  first line number of I section
-70800.    J                  first line number of J section
-72800.    K                  first line number of K section
+27800.    F                  first line number of F section
+37900.    G                  first line number of G section
+55600.    H                  first line number of H section
+62900.    I                  first line number of I section
+72200.    J                  first line number of J section
+74200.    K                  first line number of K section
 
 ----------------------------------------------------------
  
@@ -20851,7 +20851,32 @@ Examples:
     EMPIRICAL CDF PLOT Y1
     EMPIRICAL CDF PLOT Y1 SUBSET TAG > 1
     EMPIRICAL CDF PLOT Y X
+
+Note:
+    You can optionally generate approximate confidence intervals for the
+    empirical cdf plot.  To generate the confidence interval, enter
+
+       SET EMPIRICAL CDF PLOT CONFIDENCE LIMITS ON
+
+    To turn off the confidence limits, enter
  
+       SET EMPIRICAL CDF PLOT CONFIDENCE LIMITS OFF
+
+    These confidence intervals are based on a binomial approximation to
+    the normal distribution (Higgins, pp. 15-16)
+
+       Fhat(x) +/- NORPPF(1-alpha/2)*SQRT(Fhat(x)*(1-Fhat(x)/n)
+
+    with NORPPF  and alpha denoting the percent point function of the
+    standard normal distribution and the confidence level, respectively.
+
+    By default, 95% confidence levels are generated.  To specify a different
+    confidence level, enter the command
+
+       LET ALPHA = <value>
+
+    where common values for <value> are 0.90 or 0.99.
+
 Default:
     None
  
@@ -20867,13 +20892,18 @@ Related Commands:
     PROBABILITY PLOT  = Generates a probability plot.
     PLOT              = Generates a data or function plot.
  
+References:
+    Higgins (2004), "Introduction to Modern Nonparametric Statistics,"
+    Duxbury Press, pp. 15-16.
+
 Applications:
     Reliability
  
 Implementation Date:
     1998/08
+    2023/05: Added support for confidence intervals
  
-Program:
+Program 1:
     SKIP 25
     READ HAHN.DAT MILES  TAG
     TITLE EMPIRICAL CDF PLOT OF HAHN.DAT
@@ -20882,6 +20912,30 @@ Program:
     XLIMITS 0 150000
     EMPIRICAL CDF PLOT MILES SUBSET TAG = 1
  
+Program 2:
+    . Step 1:   Read some data
+    .
+    skip 25
+    read weibbury.dat y
+    skip 0
+    .
+    . Step 2:   Set some plot control
+    .
+    case asis
+    title case asis
+    tic mark label case asis
+    label case asis
+    .
+    line solid dotted dotted
+    line color black blue blue
+    .
+    ylimits 0 1
+    .
+    . Step 3:   Generate plot
+    .
+    set empirical cdf plot confidence limits on
+    empirical cdf plot y
+
 -----EMPIRICAL QUANTILE FUNCTION (LET)-------------------------------------
  
 EMPIRICAL QUANTILE FUNCTION
@@ -25151,13 +25205,15 @@ Related Commands:
     >      = Allows a "greater than" subset.
  
 Applications:
-    XX
+    Data Subsetting
  
 Implementation Date:
     Pre-1987
  
 Program:
-    XX
+    SKIP 25
+    READ BERGER1.DAT Y X BATCH
+    RETAIN Y X BATCH EXCEPT BATCH = 4
  
 -----EXECUTE (LET)---------------------------------------------------
  
@@ -27697,6 +27753,50 @@ Program:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -------------------------  *F*  ZZZZZ--------------------
  
 -----FACTOR PLOT--------------------------------------
@@ -28848,77 +28948,375 @@ Type:
     Analysis Command
  
 Purpose:
-    Perform a two sample F test that the standard deviation are equal.
+    Perform a two sample F test that the ratio of two standard deviations
+    is equal to 1 (i.e., the standard deviations are equal).
  
 Description:
-    The hypothesis test is:
-       H0: sigma1 = sigma2
-       Ha: sigma1 <> sigma2
-       Test Statistic:
-             F = S1**2/S2**2
-           where S1 and S2 are the sample standard deviations
+    This F test can be either an upper tailed test or a two-sided test.
+
+    The two-sided hypothesis test is:
+       H0: sigma1/sigma2 = 1
+       Ha: sigma1/sigma2 <> 1
+       Test Statistic: F = s1**2/s2**2
+                       with s1 and s2 denoting the sample standard
+                       deviations
        Alpha: Typically set to .05
-       Critical Region:
-              F < f(1-alpha/2)(v1,v2) and
-              F > f(alpha/2)(v1,v2)
-            where the critical region is determined from the F
-            distribution function with (N1-1) and (N2-1) degrees of
-            freedom and an alpha of 0.05.
-       Conclusion: Reject null hypothesis if T in critical region
+       Critical Region: F < f(alpha/2)(v1,v2) or
+                        F > f(1-alpha/2)(v1,v2)
+                        and where the critical region is determined from
+                        the F distribution function with (N1-1) and (N2-1)
+                        degrees of freedom
+       Conclusion: Reject the null hypothesis if F in critical region
  
-    DATAPLOT states the acceptance interval in terms of the F
-    cumulative distribution function and calculates the F cdf value
-    for the computed statistic.
+    Note that for the upper tailed test, the larger of s1 and s2 is
+    in the numerator and the smaller is in the denominator of the test
+    statistic.
+
+    The upper tailed hypothesis test is:
+       H0: max(sigma1,sigma2)/min(sigma1,sigma2) = 1
+       Ha: max(sigma1,sigma2)/min(sigma1,sigma2) > 1
+       Test Statistic: F = max(s1,s2)**2/min(s1,s2)**2
+                       with s1 and s2 denoting the sample standard
+                       deviations
+       Alpha: Typically set to .05
+       Critical Region: F > f(1-alpha,v1,v2)
+                        where the critical region is determined from the
+                        F distribution function with (N1-1) and (N2-1)
+                        degrees of freedom
+       Conclusion: Reject null hypothesis if F in critical region
  
-Syntax:
+    To specify the upper tailed test (the default), enter
+
+        SET F TEST TYPE UPPER TAILED
+
+    To specify the two-tailed test, enter
+ 
+        SET F TEST TYPE TWO SIDED
+
+    The test conclusions are given for several values of alpha.
+
+    Note that the F test is known to be quite senstive to departures
+    from normality.  There have been several proposals in the literature
+    to make this test more robust.  This is discussed further in the
+    "Note:" section below.
+
+Syntax 1:
     F TEST  <y1>  <y2>   <SUBSET/EXCEPT/FOR qualification>
     where <y1> is the first response variable;
           <y2> is the second response variable;
     and where the <SUBSET/EXCEPT/FOR qualification> is optional.
  
+Syntax 2:
+    F TEST  <y1>  ... <yk>   <SUBSET/EXCEPT/FOR qualification>
+    where <y1> ... <yk> is a list of two or more response variables;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs all the two-way F tests for the listed
+    variables.  This syntax supports the TO syntax.
+
 Examples:
     F TEST Y1  Y2
+    F TEST Y1  Y2 Y3
+    F TEST Y1  TO Y10
     F TEST Y1  Y2  SUBSET Y2 > 0
  
+    SET F TEST TYPE TWO SIDED
+    F TEST Y1  Y2
+ 
+    SET F TEST TYPE UPPER TAILED
+    F TEST Y1  Y2
+
 Note:
-    To use an alternate value of alpha, simply compare the value on the
-    line labeled F TESTD CDF VALUE to the proper acceptance
-    interval.  For example, for alpha = .10, the acceptance interval
-    is:
-           (0.000,0.900)
+    The F test is known to be quite sensitive to departures from
+    normality.
+
+    Shoemaker (2003) proposed the following adjustment to the degrees
+    of freedom to make the F test more robust against non-normality.
+ 
+    The degrees of freedom are
+
+        r(i) = 2*n(i)/[(mu4/sigma**4) - (n(i)-3)/(n(i)-1)]
+
+    where
+
+        mu4 = SUM[i=1 to 2][SUM[j=1 to n(i)]
+                 [[(Y(ij) - YBAR(i))**4]]/(n1+n2)
+
+        sigma**2 = {(n1-1)*s1**2 + (n2-1)**s2**2}/(n1+n2)
+
+    with Y(.j), n(i), s(i) and YBAR(i) denoting the data, the sample size,
+    the standard deviation and the mean, respectively, of the i-th
+    variable.
+
+    This typically results in fractional degrees of freedom.  The
+    Dataplot FCDF, FPDF and FPPF routines were updated to support
+    fractional degrees of freedom (fractional degrees of freedom less
+    than 1 are set to 1).
+
+    The justification and derivation of this modification is given in
+    Shoemaker's paper.  Simulations by Shoemaker indicated that the
+    standard F test tends to be too conservative for light tailed
+    distributions and too liberal for heavy tailed and skewed
+    distributions.  Using the Shoemaker modifications for degrees of
+    freedom generally had good coverage properties with the exception
+    of heavily skewed distributions with small samples where it was
+    still too liberal.
+
+    Bonett (2006) suggested that rounding the numerator degrees of
+    freedom up to the nearest integer degrees of freedom and rounding
+    the denominator degrees of freedom down to the nearest integer
+    degrees of freedom (but not less than 1) prevented some anomalous
+    behavior while reducing coverage performance only slightly.
+
+    Bonett proposed the following statistic:
+
+        EXP[LN(c*s1**2/s2**2)/se]
+
+    where
+
+        ak4     = (n1+n2)*SUM[i=1,2]SUM[j=1,n(i)][(Y(ij) - m(i)]/
+                  {SUM[i=1,2]SUM[j=1,n(i)][(Y(ij) - ybar(i)**2)]}**2
+
+        m(i)    = sample trimmed mean of the i-th variable with trimming
+                  proportion 1/SQRT(2*(n(i) - 4))
+        ybar(i) = sample mean of the i-th variable
+
+        se      = SQRT{(ak4-k1)/(n1-1) + (ak4-k2)/(n2-1)}
+        k1      = (n1-3)/n1
+        k2      = (n2-3)/n2
+
+        c       = {n1*(1-NORPPF(alpha/2)}/{n2*(n2-NORPPF(alpha/2))}
+        NORPPF  = the percent point function of the normal distribution
+
+    The parameter c is a small sample adjustment to help equalize the
+    tail probabilities.  It equals 1 when n1 and n2 equal and
+    approaches 1 as n1 and n2 get large.  For unequal sample sizes,
+    the value of the test statistic will vary slightly depending on
+    the value of alpha.
+
+    The above formula is for the variance.  For the standard
+    deviation, take the square root.
+
+    This test statistic is compared to a standard normal distribution.
+
+    The justification and derivation of this test is given in the
+    Bonett paper.  Based on his simulations, he claims this method
+    improves somewhat on the Shoemaker modification for heavy-tailed
+    (particularly skewed) distributions.
+
+    To specify Shoemaker's modification with fractional degrees
+    of freedom, enter
+
+         SET F TEST DEGREES OF FREEDOM SHOEMAKER
+
+    To specify Shoemaker's modification with integral degrees
+    of freedom as suggested by Bonett, enter
+
+         SET F TEST DEGREES OF FREEDOM SHOEMAKER ROUNDED
+
+    To specify Bonett's method, enter
+
+         SET F TEST DEGREES OF FREEDOM BONETT
+
+Note:
+    Shoemaker suggests that when more than two groups of data are
+    available, it can improve accuracy to use all of the groups
+    in the estimates of the pooled location (mu4) and pooled variance
+    (sigma**2) instead of just the two groups being tested.  That is,
+
+        mu4 = SUM[i=1 to k][SUM[j=1 to n(i)]
+                 [[(Y(ij) - YBAR(i))**4]]/(n1+n2+ ... + nk)
+
+        sigma**2 = {(n1-1)*s1**2 + (n2-1)**s2**2 + ... + (nk-1)*sk**2}/
+                   (n1+n2+ ... +nk)
+
+    To use these values, enter the commands
+
+         SET SHOEMAKER F TEST POOLED MU       <value>
+         SET SHOEMAKER F TEST POOLED VARIANCE <value>
+
+    To reset the default of Dataplot computing these from the two groups
+    being tested, enter
+
+         SET SHOEMAKER F TEST POOLED MU
+         SET SHOEMAKER F TEST POOLED VARIANCE 0
+
+Note:
+    The following parameters are saved after the F test is
+    performed.
+
+         STATVAL   - value of the test statistic
+         STATCDF   - CDF of the test statistic
+         PVALUE    - p-value of the test statistic
+         STATNU1   - degrees of the freedom of the numerator variable
+         STATNU2   - degrees of the freedom of the denominator variable
+         POOLSD    - pooled standard deviation
+
+    For an upper tailed test, the following parameters are saved
+
+         CUTUPP50  - upper critical value for 50% test
+         CUTUPP75  - upper critical value for 50% test
+         CUTUPP90  - upper critical value for 90% test
+         CUTUPP95  - upper critical value for 95% test
+         CUTUPP99  - upper critical value for 99% test
+         CUTUP999  - upper critical value for 99.9% test
+
+    For a two sided test, the following parameters are saved
+
+         CUTLOW80  - lower critical value for 80% test
+         CUTUPP80  - upper critical value for 80% test
+         CUTLOW90  - lower critical value for 90% test
+         CUTUPP90  - upper critical value for 90% test
+         CUTUPP90  - upper critical value for 90% test
+         CUTLOW95  - lower critical value for 95% test
+         CUTUPP95  - upper critical value for 95% test
+         CUTLOW99  - lower critical value for 99% test
+         CUTUPP99  - upper critical value for 99% test
+         CUTLW999  - lower critical value for 99.9% test
+         CUTUP999  - upper critical value for 99.9% test
+
+    If the Bonett method is specified, a two sided interval will
+    always be used.  Also, STATNU1, STATNU2 and POOLSD will not be
+    saved.
+
+Note:
+    In addition to the F TEST command, the following commands can
+    also be used:
+
+        LET STATVAL = F TEST        Y1 Y2
+        LET STATCDF = F TEST CDF    Y1 Y2
+        LET PVALUE  = F TEST PVALUE Y1 Y2
+
+    In addition to the above LET commands, built-in statistics are
+    supported for 20+ different commands (enter HELP STATISTICS for
+    details).
+
+Note:
+    The RATIO OR STANDARD DEVIATIONS CONFIDENCE LIMITS can be used to
+    generate the corresponding confidence limits.
  
 Default:
-    None
+    An upper tailed test without the Shoemaker or Bonett modifications
+    is performed.
  
 Synonyms:
     None
  
 Related Commands:
-    CONFIDENCE LIMITS   = Compute the confidence limits for the mean of
-                          a sample.
-    T TEST              = Performs a two-sample t test.
-    CHI-SQUARE TEST     = Performs a one sample chi-square test that
-                          the standard deviation is equal to a given
-                          value.
-    STANDARD DEVIATION  = Computes the standard deviation of a
-                          variable.
+    SIEGEL TUKEY TEST              = Perform a ranks based test that two
+                                     standard deviations are equal.
+    BARTLETTS TEST                 = Perform a k-sample Bartlett test for
+                                     homogeneous variances.
+    LEVENE TEST                    = Perform a k-sample Levene test for
+                                     homogeneous variances.
+    SQUARED RANKS TEST             = Perform a k-sample squared ranks test
+                                     for homogeneous variances.
+    KLOTZ TEST                     = Perform a k-sample Klotz test
+                                     for homogeneous variances.
+    RATIO OF SD CONFIDENCE LIMITS  = Compute the confidence limtis for the
+                                     ratio of two standard deviations.
+    SD CONFIDENCE LIMITS           = Compute the confidence limits for the
+                                     standard deviation.
+    CHI-SQUARE TEST                = Performs a one sample chi-square test
+                                     that the standard deviation is equal
+                                     to a given value.
+    T TEST                         = Performs a two-sample t test for
+                                     equal means.
+    CONFIDENCE LIMITS              = Compute the confidence limits for the
+                                     mean of a sample.
+    STANDARD DEVIATION             = Computes the standard deviation of a
+                                     variable.
  
 Reference:
     F tests are discussed in most introductory statistics books.
- 
+
+    Shoemaker (2003), "Fixing the F-Test for Equal Variances," The American
+    Statistician, Vol. 57, pp. 105-114.
+
+    Bonett (2006), "Robust Confidence Intervals for a Ratio of Standard
+    Deviations," Applied Pyschological Measurement, Vol. 30, No. 5,
+    pp. 432-439.
+
 Applications:
     Confirmatory Data Analysis
  
 Implementation Date:
-    94/2
+    1994/02
+    2023/06: Added support for Shoemaker and Bonett modifications
+    2023/06: Added support for two sided tests
  
-Program:
+Program 1:
     SKIP 25
     READ AUTO83B.DAT Y1 Y2
     DELETE Y2 SUBSET Y2 < 0
     .
     F TEST Y1 Y2
- 
+     
+Program 2:
+    . Step 1:   Read the data
+    .
+    skip 25
+    read shoemake.dat bottom mid surface
+    let y x = stack bottom mid surface
+    let temp1 = cross tabulate mean y x
+    let temp2 = (y - temp1)**4
+    let num = sum temp2
+    let den = size y
+    let mu4 = num/den
+    let y1var = variance bottom
+    let y2var = variance mid
+    let y3var = variance surface
+    let n1 = size bottom
+    let n2 = size mid
+    let n3 = size surface
+    let num   = (n1 - 1)*y1var + (n2 -1)*y2var + (n3 - 1)*y3var
+    let poolvar = num/den
+    .
+    . Step 2:   Generate a box plot
+    .
+    character box plot
+    line box plot
+    xlimits 1 3
+    major xtic mark number 3
+    minor xtic mark number 0
+    xtic mark offset 0.5 0.5
+    x1tic mark label format alpha
+    x1tic mark label content Bottom Middepth Surface
+    tic mark label case asis
+    set box plot fences on
+    box plot y x
+    .
+    . Step 3:   Default F-test
+    .
+    set f test degrees of freedom default
+    print "Standard F Test"
+    f test bottom mid
+    let statval = f test        bottom mid
+    let statcdf = f test cdf    bottom mid
+    let pvalue  = f test pvalue bottom mid
+    print statval statcdf pvalue
+    .
+    . Step 4:   Shoemaker F-test
+    .
+    set f test degrees of freedom shoemaker
+    print "Shoemaker degrees of freedom F Test"
+    f test bottom mid
+    print "Use pooled location and variance for Shoemaker"
+    set shoemaker f test pooled variance poolvar
+    set shoemaker f test pooled mu       mu4
+    f test bottom mid
+    print "Shoemaker rounded degrees of freedom F Test"
+    set f test degrees of freedom shoemaker rounded
+    f test bottom mid
+    set shoemaker f test pooled variance 0
+    set shoemaker f test pooled mu
+    .
+    . Step 5:   Bonett
+    .
+    set f test degrees of freedom bonett
+    print "Bonett method"
+    f test bottom mid
+
 -----FCACDF (LET)--------------------------------
  
 FCACDF
@@ -30650,280 +31048,349 @@ Type:
  
 Purpose:
     Estimate the parameters for a linear, polynomial, or non-linear
-    least squares fit (this is one of DATAPLOT's most powerful and
-    heavily used commands).
+    least squares fit.  This is one of Dataplot's most powerful and
+    heavily used commands.
  
 Description:
-    DATAPLOT prints the following analytic information.
-    1) The parameter estimates, the parameter standard deviations, and
-       the parameter t-values.  The t-value is used to determine if a
-       given paramater is significant in the FIT.  The parameters and
-       their standard deviations are written to the file DPST1F.DAT
-       (the name may vary slightly on some implementations).  Enter
-          READ DPST1F.DAT COEF COEFSD
-       to store these values in the arrays COEF and COEFSD for later
-       use.
-    2) The residual standard deviation and its corresponding degrees of
-       freedom.  These are stored in the parameters RESSD and RESDF
+    The FIT command can be used for both linear or non-linear fits.
+    Both weighted and unweighted fits are supported.
+
+    Non-linear fits are performed using an iterative modified
+    Levenberg-Marquardt algorithm (Dataplot implements the algorithm
+    given in the Osborne paper listed in the References section below).
+    This algorithm can fit linear and multi-linear models as well as
+    non-linear models.
+
+    In addition, the FIT command can perform linear and polynomoal fits
+    using a non-iterative algorithm.  Since the non-iterative algorithm
+    supports a much broader range of output, this will be documented
+    separately,  Enter
+
+        HELP LINEAR FIT
+
+    for the documentation for exact linear fits.
+
+    Non-linear fits are specified by entering a function.  For example,
+
+        FIT Y = A0 + A1*X1
+        FIT Y = A0 + A1*EXP(A2*(YEAR-1950)
+        FIT Y = (A0 + A1*X)/(1 + B1*X)
+
+    The function can either be given on the FIT command or be defined
+    with a LET FUNCTION command.
+
+    For non-linear fits, the FIT command generates the following output.
+
+    1) The parameter estimates and associated standard deviations are
+       printed for each iteration.
+
+    2) After convergence, a table containing the parameter estimates, the
+       parameter standard deviations, and the parameter t-values is
+       printed.  The t-value is used to determine if a given paramater is
+       statistically significant.
+
+       These values are also written to the file dpst1f.dat.  To read
+       these values into Dataplot variables, enter the command
+
+            SKIP 1
+            READ DPST1F.DAT COEF COEFSD TVAL
+
+    3) The correlation matrix for the parameter estimates is written to
+       the file dpst2f.dat.  To read this correlation matrix, enter the
+       command
+
+            SKIP 1
+            READ MATRIX DPST2F.DAT CORR
+
+    4) The variance-covariance matrix for the parameter estimates is
+       written to the file dpst3f.dat.  To read this covariance matrix,
+       enter the command
+
+            SKIP 0
+            READ MATRIX DPST3F.DAT COV
+
+    5) The residual standard deviation and its corresponding degrees of
+       freedom are are stored in the parameters RESSD and RESDF,
        respectively.  RESDF is the number of observations minus the
        number of independent variables in the fit (including the
        constant term).  The formula for RESSD is:
+
             RESSD = SQRT(SUM(Y - PREDICTED VALUE)**2)/RESDF)
-    3) If there is replication in the independent variables, the
+
+    6) If there is replication in the independent variables, the
        replication standard deviation and corresponding degrees of
        freedom are printed.  In addition, a lack of fit F test is
        performed.  These are stored in the parameters REPDF, REPSD, and
        LOFCDF respectively.  The formulas are:
+
              REPDF = SUM(number of observations in replication - 1)
              REPSD = SQRT(SUM((Y - replication mean)**2)/REPDF)
-    4) For linear fits, the following diagnostic information is
-       printed to the file DPST2F.DAT (the name may vary on some
-       implementations):
-          Variable 1 - the standard deviations of the predicted
-                       values.  These can be used to derive various
-                       additional intervals and tests.
-          Variable 2 - the diagonals of the hat matrix (the hat matrix
-                       is X(X-transpose*X)X-transpose.  In themselves,
-                       the diagonal elements are measures of the
-                       leverage of a given point.  The minimum leverage
-                       is (1/N), the maximum leverage is 1.0 and the
-                       average leverage is (P/N) where P is the number
-                       of variables in the fit.  These elements are
-                       also used to calculate many other diagnostic
-                       statistics.
-          Variable 3 - the variance of the residuals.
-          Variable 4 - the standardized residuals.  These are the
-                       residuals divided by the square root of the
-                       mean square error.
-          Variable 5 - the internally studentized residuals.  These are
-                       the residuals divided by their standard
-                       deviations.
-          Variable 6 - the deleted residuals.  These are residuals
-                       obtained from subtracting the predicted values
-                       with the ith case omitted from the observed
-                       value.
-          Variable 7 - the externally studentized residuals.  These are
-                       the deleted residuals divided by their standard
-                       deviation.
-          Variable 8 - Cook's distance.  This is a measure of the
-                       impact of the ith case on all of the estimated
-                       regression coefficients.
-       Additional diagnostic statistics can be computed easily from
-       these values.  Several of the texts in the REFERENCE section
-       below discuss the use and interpretation of these statistics
-       in more detail.  These variables can be read in as follows:
-            FIT ....
-            SKIP 1
-            READ DPST2F.DAT PREDSD HII VARRES STDRES ISTUDRES ...
-                            DELRES ESTUDRES COOK
-            SKIP 0
-    5) For linear fits, the variance-covariance matrix of the
-       parameters and the inverse of the (X-transpose*X) matrix are
-       written to the file DPST4F.DAT (the name may vary on some
-       implementations).  These values can be used in deriving
-       additional statistics, intervals, and tests.
  
-    DATAPLOT saves the predicted values from a fit in the variable PRED
-    and the residual values in the variable RES.  These variables can
-    be used in subsequent LET and PLOT commands to generate diagnostic
-    plots of residuals and predicted values.
+    7) Dataplot saves the predicted values from a fit in the variable
+       PRED and the residual values in the variable RES.  These variables
+       can be used in subsequent LET and PLOT commands to generate
+       diagnostic plots of residuals and predicted values.
  
-Syntax 1:
+    It is recommended that a FIT be followed by a residual analysis to
+    assess the model adequacy.  Specifically, the typical assumptions for
+    the residuals are that they are independent with a common
+    distribution having fixed location and variation.  It is usually
+    assumed that the common distribution is a normal distribution.
+    The 4-PLOT command generates 4 plots that are useful in testing
+    these assumptions.  The NIST/SEMATECH e-Handbook contains a
+    more detailed discussion of this issue at
+
+        https://www.itl.nist.gov/div898/handbook/eda/section2/eda2.htm
+
+    In addition, if there is a single independent variable in the model,
+    it can be useful to plot the data with the fitted values overlaid.
+
+    For non-linear fits, up to 15 indepedent variables can be
+    included in the model.
+
+Syntax:
     FIT  <y1>  =  <f>  <SUBSET/EXCEPT/FOR qualification>
     where <y1> is the response (= dependent) variable;
           <f> is:
-               1) any general FORTRAN-like expression; or
+               1) a general Fortran-like expression; or
                2) any function name that the user has already created
                   via the LET FUNCTION command;
     and where the <SUBSET/EXCEPT/FOR qualification> is optional.
  
-    This first syntax is appropriate for all models--linear,
-    polynomial, multi-linear (up to 15 independent variables), and
-    non-linear (up to 15 independent variables).  It uses an iterative
-    modified Levenberg-Marquardt algorithm.  Linear fits are handled as
-    a special case (the fits are still done iteratively).  Only the
-    file DPST1F.DAT is created.
- 
-Syntax 2:
-    <d>  FIT  <y>  <x>  <SUBSET/EXCEPT/FOR qualification>
-    where <d> is the optional specification of the desired degree:
-              LINEAR    or FIRST-DEGREE  (the default)
-              QUADRATIC or SECOND-DEGREE
-              CUBIC     or THIRD-DEGREE
-              QUARTIC   or FOURTH-DEGREE
-              QUINTIC   or FIFTH-DEGREE
-              SEXTIC    or SIXTH-DEGREE
-              SEPTIC    or SEVENTH-DEGREE
-              OCTIC     or EIGHT-DEGREE
-              NONIC     or NINTH-DEGREE
-              DEXIC     or TENTH-DEGREE;
-          <y> is the response (= dependent) variable;
-          <x1 ... xn> is a list of 1 to 35 independent variables;
-    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
- 
-    The estimated parameters are stored in A0, A1, ... , An.
- 
-    This second syntax is appropriate only for linear and polynomial
-    models.  In practice, the linear and quadratic fits receive heavy
-    use while the other degrees are rarely used.  Up to 35 independent
-    variables can be specified in the FIT.  It uses a modified Gramm-
-    Schmidt algorithm (based on the QR decomposition).  Since this
-    generates an exact fit, it is recommended for the linear case.  The
-    code was adapted from the OMNITAB statistical program.
+    This syntax is appropriate for all models--linear, polynomial,
+    multi-linear (up to 15 independent variables), and non-linear (up to
+    15 independent variables).  It uses an iterative modified
+    Levenberg-Marquardt algorithm.  Linear fits are handled as a special
+    case (the fits are still done iteratively).
  
 Examples:
     FIT Y = A+B*EXP(-C*X)
+    FIT Y = A*(EXP(-B*TIME/10) - EXP(-TIME/10))
+    FIT Y = B0 + B1*X**B2
+    FIT Y = K/(1+K*A*X**B)
+    FIT Y = A - B*X - ATAN(C/(X-D))/3.1459
+    FIT Y = A0*BESS0(A1*X)*BESS1(A1*X)
+    FIT Y = (A0 + A1*X)/(1 + B1*X + B2*X**2)
     FIT Y = (A+B*X+C*X**D)/(SIN(EXP(-ALPHA*X2+BETA*X3)))
+
     FIT Y = F1
-    LINEAR FIT Y X
-    Y X1 X2 X5
-    Y X1 X2 X5  SUBSET TAG > 1
-    QUADRATIC FIT PRESSURE TEMP
-    CUBIC FIT V R
- 
+
 Note:
-    The macro files SDPRED.DP and HOTELL.DP in the DATAPLOT reference
-    directory compute the standard deviations for the predicted values
-    and Hotelling simultaneous confidence intervals for the linear
-    regression case with one variable.  These can be used as guides for
-    computing other desired statistics.
- 
+    The following document contains a number of examples of the
+    Dataplot FIT command
+
+    https://www.itl.nist.gov/div898/software/dataplot/NonLinearFitting.pdf
+
 Note:
-    Starting values are not required.  However, they can be sometimes
-    speed up non-linear fits if they are specified.  To specify them,
-    simply assign values to the coefficients before doing the fit.  For
-    example:
+    The non-linear algorithm is iterative with two commands for
+    controlling the iterations.
+
+    By default, a maximum of 50 iterations are allowed before Dataplot
+    assumes the fit is not converging.  You can change this maximum with
+    the FIT ITERATIONS command.
+
+    Dataplot checks for convergence by computing the ratio of sccuessive
+    values of the residual standard deviation.  You can specify the
+    critierion for convergence with the FIT STANDARD DEVIATION command.
+
+Note:
+    Starting values are not required.  The Levenberg-Marquardt algorithm
+    can provide good fits for a wide variety of applications without
+    decent starting values.
+
+    However, decent starting values can often speed up non-linear fits.
+    In addition, some fits may require good starting values in order
+    to converge to accurate values.
+
+    To specify starting values, simply assign values to the coefficients
+    before doing the fit.  For example:
+
        LET ALPHA = 0.15
        LET A = 0.004
        LET B = 0.01
        FIT Y = EXP(-ALPHA*X)/(A+B*X)
- 
-Note:
-    The non-linear algorithm is iterative with two commands for
-    controlling the iterations.  By default, a maximum of 50 iterations
-    are allowed before DATAPLOT assumes the fit is not converging.  You
-    can change this maximum with the FIT ITERATIONS command.  DATAPLOT
-    tests the ratio of successive values of the residual standard
-    deviation to check for convergence.  See the documentation for FIT
-    ITERATIONS and FIT STANDARD DEVIATION for details.
- 
-Note:
-    DATAPLOT does not provide any automatic subset selection procedure
-    for multi-linear fits.
- 
-    NOTE: a BEST CP command was added 7/2002.  This performs a
-          "best subsets" analysis based on Mallows C(p).  Enter
-          HELP BEST CP for details.
+
+    In some cases, good starting values might be known from previous
+    work or from theoretical considerations.  However, if better
+    starting values are needed and reasonable guesses are not available,
+    the PRE-FIT command can be helpful.  Enter HELP PRE-FIT for details.
+
+    Sinusoidal models are one case where good starting values are
+    needed.  See the following example from the NIST/SEMATECH e-Handbook
+    for an example of fitting this kind of model
+
+        https://www.itl.nist.gov/div898/handbook/eda/section4/eda425.htm
+
+    If you have a parameter in the model that you want to set to a fixed
+    value, then enter the literal value or use the substitution
+    character "^".  For example
+
+        FIT Y = A0 + A1*X**1.5
+
+        LET C = 1.5
+        FIT Y = A0 + A1*X**C   - Dataplot will try to fit C
+        FIT Y = A0 + A1*X**^C  - Dataplot will leave C fixed at 1.5
 
 Note:
-    In addition to standard least squares fits, DATAPLOT also supports:
-    1) Weighted fits via the WEIGHT LET subcommand.
-    2) Spline fits via the SPLINE FIT command.
-    3) Robust fits via the BIWEIGHT LET subcommand.
-    4) Locally weighted least squares via the LOWESS command.
-    5) Smoothing via the SMOOTH command.
-    6) Cubic spline interpolation via the INTERPOLATION LET subcommand.
-    7) Exact rational function fitting via the EXACT FIT command.
-    8) Principle components regression via the PRINCIPLE COMPONMENTS
-       LET subcommand.
- 
+    Weighted fits are typically used in the following two situations.
+
+       1. Weighting is one approach for dealing with non-constant
+          variation in the residuals.  It is not uncommon for the
+          variance of the residuals to increase for the largest (or
+          smallest) values of the independent variable.  In this case,
+          weights can be used to give less weight to the less precise
+          measurements.  The NIST/SEMATECH e-Handbook contains a
+          disucssion of weighted fits and an example of using weights
+          to address non-constant variation in the following pages
+
+          https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd432.htm
+          https://www.itl.nist.gov/div898/handbook/pmd/section6/pmd625.htm
+
+       2. Weights can also used to implement certain types of robust
+          fitting.  In this case, weights are used to down weight
+          observations based on the size of the associated residual.
+          Outlier observations can sometimes distort a fit (i.e., in
+          trying to fit the outlier point(s), the bulk of the data
+          is poorly fit).  Weighting based on the residuals can often
+          provide a good fit to the bulk of the data without eliminating
+          the outlier observations from the analysis.
+
+          Enter HELP WEIGHTS and HELP BIWEIGHT for examples of this
+          use of weighted fits in Dataplot.
+
+    To specify weights for a least squares fit, enter the command
+
+         WEIGHTS <var>
+
+    where <var> is a variable containing the weights.
+
+    Note that the RES variable contains the absolute value of the
+    residuals after the fit.  For residual plots and analysis, it
+    may be preferrable to work with the weighted residuals.  You can
+    create this with the command
+
+         LET RESW = W*RES
+
+    where W contains the weight variable.
+
 Note:
-    The following enhancements were made 7/2002.
+    Data transformations are often used to improve the quality of the
+    fit.  For example, some types of non-linear fits can be restated as
+    linear fits with an appropriate transformation.  Also,
+    transformations are often applied to address non-homogeneous
+    variation in the fit.  The NIST/SEMATECH e-Handbook contains a
+    disucssion of this issue at
 
-       1) Added the following plots:
+        https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd452.htm
 
-            PARTIAL RESIDUAL PLOT
-            PARTIAL REGRESSION PLOT
-            PARTIAL LEVERAGE PLOT
-            CCPR PLOT
+    Data transformations can be generated easily if needed via the
+    LET command.  The BOX-COX LINEARITY PLOT can be a useful command for
+    determining an approriate transformation.
 
-          Enter HELP PARTIAL RESIDUAL PLOT, PARTIAL REGRESSION PLOT,
-          HELP PARTIAL LEVERAGE PLOT, or HELP CCPR PLOT for details.
+    Some analysts prefer to standardize the indpendent variables
+    and the dependent variable by subtracting the mean and dividing
+    by the standard deviation.  This is done to provide numerical
+    stability (note that Dataplot scales the data internally before
+    performing the regression calculations) and also so that the
+    data and regression coefficients are on a common scale.  The
+    original regression and standardized model are related as follows
 
-       2) For multi-linear fits, the output for DPST1F.DAT was
-          enhanced.  It now includes:
+         x'(i) = (x(i) - xbar)/s(x)
+         y'(i) = (y(i) - ybar)/s(y)
 
-              Column 1  - the parameter estimates
-              Column 2  - the standard deviations of the parameter
-                          estimates
-              Column 3  - the t-value for the parameter estimate
-              Column 4  - lower Bonferroni joint confidence limit
-                          for the parameter estimates
-              Column 5  - upper Bonferroni joint confidence limit
-                          for the parameter estimate
+    with xbar and s(x) denoting the mean and standard deviation of the
+    independent variable and ybar and s(y) denoting the mean and
+    standard deviation of the dependent variable.
 
-          These are written with a 5E15.7 format.  By default,
-          95% intervals are used for the Bonferroni intervals.  You
-          can define the parameter ALPHA to change the significance
-          level.  For example, to use 90% intervals, enter the
-          command:
+    The parameters are related by
 
-               LET ALPHA = 0.9
+         Beta(k) = (s(y)/s(k))*Beta'(k)
+         Beta'(0) = ybar - Beta(1)*xbar(1) - ... - Beta(p)*xbar(p)
 
-       3) For multi-linear fits, the output for DPST2F.DAT was
-          enhanced.  It now includes:
+    A variation on this is the correlation transformation (also called
+    the standardized regression model).  Specifically
 
-              Column 1  - standard deviation of the predicted values
-              Column 2  - 95% lower confidence limit for the
-                          predicted values
-              Column 3  - 95% upper confidence limit for the
-                          predicted values
-              Column 4  - 99% lower confidence limit for the
-                          predicted values
-              Column 5  - 99% upper confidence limit for the
-                          predicted values
-              Column 6  - lower Bonferroni joint confidence limit
-                          for the predicted values
-              Column 7  - upper Bonferroni joint confidence limit
-                          for the predicted values
-              Column 8  - lower Hotelling joint confidence limit
-                          for the predicted values
-              Column 9  - upper Hotelling joint confidence limit
-                          for the predicted values
+         y'(i) = (1/SQRT(n-1))*(y(i) - ybar)/s(y)
+         x'(ik) = (1/SQRT(n-1))*(x(ik) - xbar(k))/s(x(k))
 
-          These are written with a 9E15.7 format.  By default,
-          95% intervals are used for the Bonferroni and Hotelling
-          intervals.  You can define the parameter ALPHA to change
-          the significance level.  For example, to use 90% intervals,
-          enter the command:
+    With this transformation, the X'X matrix reduces to a correlation
+    matrix of the independent variables.  If there are p independent
+    variables, these transformations can be generated with the commands
 
-               LET ALPHA = 0.9
+         LET N = SIZE Y
+         LET FACT = 1/SQRT(N-1)
+         LOOP FOR K = 1 1 P
+             LET Z^K = STANDARDIZE X^K
+             LET Z^K = AFACT*Z^K
+         END OF LOOP
+         LET YT = STANDARDIZE Y
+         LET YT = AFACT*YT
 
-       4) For multi-linear fits, a regression ANOVA table is now
-          written to DPST5F.DAT.  In addition to the ANOVA table,
-          the R**2, adjusted R**2, and Press P statistic are also
-          printed.  These three parameters are also saved as the
-          internal parameters RSQUARE, ADJRSQUA, and PRESSP,
-          respectively.
+Note:
+    Although the FIT command is the Dataplot workhorse command
+    for fitting, Dataplot supports the additional fit capabilities:
 
-       5) Added the following matrix commands that can be useful
-          in regresssion diagnostics:
+       1. ORTHOGONAL DISTANCE FIT - This command is used to fit
+          errors-in-variables models for for both linear and non-linear
+          models.  It can also fit implicit models.
+       2. BOOTSTRAP FIT - This command is used to fit linear or
+          multilinear models using the bootstrap.
+       3. EXACT RATIONAL FIT - This command is used to determine good
+          starting values for fitting rational function models (the
+          full model is still fit using the FIT command).
 
-              LET VIF = VARIANCE INFLATION FACTORS
-              LET C = CONDITION INDICES X
-              LET XTXINV = XTXINV MATRIX X
-              LET C = CATCHER MATRIX X
+          Rational function models are the ratio of two polynomial
+          functions.  The NIST/SEMATECH e-Handbook contains a detailed
+          discussion of these models at
 
-       6) For multi-linear fits, added the command:
+          https://www.itl.nist.gov/div898/handbook/pmd/section8/pmd812.htm
 
-              SET FIT ADDITIVE CONSTANT <ON/OFF>
+       4. CALIBRATION - This command is used to fit linear or quadratic
+          calibration models.
+       5. YATES ANALYSIS - This command is used to fit full and fractional
+          2-level designs.
+       6. SPLINE FIT - This command is used for spline fits.
+       7. LOWESS SMOOTH - This command is used to fit locally-weighted
+          least squares models.
+       8. ARMA - This command is used for fitting autoregressive/moving
+          average time series models.
+       9. PRINCIPAL COMPONENTS - This LET subcommand can be used to
+          reduce the number of indpendent variables in a multi-linear fit.
+      10. SMOOTH - This command is used for various types of smoothing.
+      11. INTERPOLATION - This LET subcommand performs cubic spline
+          interpolation.
+      12. HERMITE INTERPOLATION - This LET subcommand performs Hermite
+          interpolation.
 
-          If ON (the default), a constant term is included
-          in the model.  If OFF, the constant term is omitted
-          from the model (i.e., regression through the orgin).
+    These commands are documented separately.
+
+Note:
+    If you want to suppress the output to files dpst1f.dat, dpst2f.dat,
+    and dpst3f.dat, enter the command
+
+        SET FIT AUXILLARY FILES OFF
+
+Note:
+    By default, the values written to dpst1f.dat, dpst2f.dat and
+    dpst3f.dat are written using a Fortran E15.7 format (that is,
+    exponential format with 7 significant digits).  You can specify
+    the number of signficant digits with the command
+
+        SET AUXILLARY FILES DECIMAL POINTS <value>
+
+    where the default is 7.
 
 Default:
     None
- 
+
 Synonyms:
     None
  
 Related Commands:
     FIT ITERATIONS     = Sets the maximum number of iterations for the
-                         fit command.
+                         FIT command.
     FIT STANDARD DEVI  = Sets the minimum standard deviation for the
-                         fit command.
-    WEIGHTS            = Sets the weights for the fit command.
+                         convergence criterion in the FIT command.
     PRED               = A variable where predicted values are stored.
     RES                = A variable where residuals are stored.
     RESSD              = A parameter where the residual standard
@@ -30936,93 +31403,137 @@ Related Commands:
                          freedom is stored.
     LOFCDF             = A parameter where the lack of fit cdf is
                          stored.
-    EXACT RATIONAL FIT = Carries out an exact rational fit.
-    PRE-FIT            = Carries out a least squares pre-fit.
-    SPLINE FIT         = Carries out a spline fit.
-    SMOOTH             = Carries out a smoothing.
-    ANOVA              = Carries out an ANOVA.
-    MEDIAN POLISH      = Carries out a median polish.
-    PLOT               = Generates a data/function plot.
+    WEIGHTS            = Sets the weights for the fit command.
+    BIWEIGHT           = Perform a biweight transformation.
+    EXACT RATIONAL FIT = Perform an exact rational fit.
+    CALIBRATION        = Perform a linear or quadratic calibration fit.
+    LOWESS SMOOTH      = Perform a locally weighted least squares
+                         smoothing.
+    BOOTSTRAP FIT      = Perform a linear or multi-linear fit based on
+                         the bootstrap.
+    ORTHOGON DIST FIT  = Perform an orthogonal distance fit (useful for
+                         errors-in-variables models).
+    PRE-FIT            = Perform a least squares pre-fit.
+    SPLINE FIT         = Perform a spline fit.
+    SMOOTH             = Perform a smoothing.
+    ANOVA              = Perform a fixed effects analysis of variance.
+    MEDIAN POLISH      = Perform a median polish.
+    PLOT               = Generate a data/function plot.
+    4-PLOT             = Generate a 4-plot.
  
 References:
-    "Applied Linear Statistical Models", 3rd ed., Neter, Wasserman, and
-    Kunter, 1990, Irwin.
- 
-    "Applied Regression Analysis", 2nd ed., Draper and Smith, John
-    Wiley, 1981.
- 
-    "Residuals and Influence in Regression", Cook and Weisberg, Chapman
-    and Hall, 1982.
- 
-    "Regression Diagnostics", Belsley, Kuh, and Welsch, John Wiley,
-    1980.
- 
-    "Data Analysis and Regression", Mosteller and Tukey,
-    Addison-Wesley, 1977.
- 
+    Osborne (1972), "Some Aspects of Nonlinear Least Squares
+    Calculation", in Numerical Methods for Nonlinear Optimization,
+    Ed. Lootsma, Academic Press.
+
+    Osborne (1976), "Nonlinear Least Squares -- the Levenberg Algorithm
+    Revisited", ANZIAM Journal, Vol. 19, No. 3, pp. 343-357.
+
 Applications:
-    XX
+    Least Squares Fitting
  
 Implementation Date:
-    XX
- 
-Program 1: (LINEAR EXAMPLE)
-    . ALASKA PIPELINE RADIOGRAPHIC DEFECT BIAS CURVE
-    . PERFORM A LINEAR REGRESSION
-    SKIP 25
-    READ BERGER1.DAT TRUE MEAS
-    CAPTURE FIT_1_OUT.DAT
-    FIT MEAS TRUE
-    END OF CAPTURE
+    Pre-1987
+    1987/09: Support for weighted fits
+    1988/03: Save LOFCDF parameter
+    1991/09: Expand number of allowed independent variables from 15 to 5
+    1992/03: Write coefficient, coefficient sd, and t-value to dpst1f.dat
+    1992/03: Write coefficient, coefficient sd, and t-value to dpst1f.dat
+    1997/07: Print summary information if maximum iterations reached
+    2001/04: Print parameter covariance matrix to dpst3f.dat
+    2014/06: Option to suppress output to auxillary files
+    2019/04: Option to suppress output to auxillary files
+
+Program 1:
+    . Step 1:   Read the data
     .
-    MULTIPLOT 2 2
-    MULTIPLOT CORNER COORDINATES 0 0 100 100
-    TITLE ORIGINAL DATA
-    X1LABEL TRUE DEPTH (IN .001 INCH)
-    Y1LABEL MEASURED DEPTH
-    CHARACTERS X
-    LINES BLANK
-    PLOT MEAS TRUE
-    TITLE PREDICTED VALUES
-    PLOT MEAS PRED VS TRUE
-    TITLE RESIDUALS
-    Y1LABEL
-    PLOT RES VS TRUE
-    X1LABEL
-    TITLE NORMAL PROBABILITY PLOT
-    NORMAL PROBABILITY PLOT RES
-    END OF MULTIPLOT
- 
-Program 2: (NON-LINEAR EXAMPLE)
-    . DAN CHWIRUT ULTRASONIC REFERENCE BLOCK ANALYSIS
-    . PERFORM A NON-LINEAR REGRESSION
     SKIP 25
     READ CHWIRUT1.DAT Y X
-    CAPTURE FIT_2_OUT.DAT
+    SKIP 0
+    .
+    . Step 2:   Perform the fit
+    .
+    SET WRITE DECIMALS 5
     LET ALPHA = 0.15
     LET A = 0.004
     LET B = 0.01
+    CAPTURE SCREEN ON
+    CAPTURE FIT1.OUT
     FIT Y = EXP(-ALPHA*X)/(A+B*X)
     END OF CAPTURE
     .
-    MULTIPLOT 2 2
-    MULTIPLOT CORNER COORDINATES 0 0 100 100
-    TITLE ORIGINAL DATA
-    CHARACTERS X ALL
-    X1LABEL METAL DISTANCE
-    Y1LABEL ULTRASONIC RESPONSE
-    PLOT Y X X
-    TITLE PREDICTED VALUES
+    . Step 3:   Generate diagonistic graphs
+    .
+    TITLE OFFSET 2
+    TITLE CASE ASIS
+    LABEL CASE ASIS
+    TITLE Predicted Values Overlaid on Raw Data (CHWIRUT1.DAT)
+    X1LABEL Metal Distance
+    Y1LABEL Ultrasonic Response
+    .
     LINE BLANK SOLID
     CHARACTER X BLANK
+    .
     PLOT Y PRED VS X
-    TITLE RESIDUALS
-    Y1LABEL
-    PLOT RES VS X
-    X1LABEL
-    TITLE NORMAL PROBABILITY PLOT
-    NORMAL PROBABILITY PLOT RES
-    END OF MULTIPLOT
+    .
+    LABEL
+    TITLE
+    SET 4-PLOT MULTIPLOT ON
+    MULTIPLOT CORNER COORDINATES 0 0 100 100
+    TIC MARK LABEL SIZE 4
+    CHARACTER SIZE 4
+    .
+    4-PLOT RES
+    .
+    JUSTIFICATION CENTER
+    MOVE 50 97
+    TEXT 4-Plot of Residuals (CHWIRUT1.DAT)
+
+Program 2:
+    . Step 1:   Read the data
+    .
+    READ ROSZMAN1.DAT X T
+    LET Q = X - SQRT(-109737.3/T)
+    .
+    . Step 2:   Perform the fit
+    .
+    SET WRITE DECIMALS 5
+    LET A = 0.2
+    LET B = -0.00005
+    LET C = 200
+    LET D = -123
+    .
+    CAPTURE SCREEN ON
+    CAPTURE FIT2.OUT
+    FIT Q = A - B*T - ATAN(C/(T-D))/3.14159
+    END OF CAPTURE
+    .
+    . Step 3:   Generate diagonistic graphs
+    .
+    TITLE OFFSET 2
+    TITLE CASE ASIS
+    LABEL CASE ASIS
+    TITLE Predicted Values Overlaid on Raw Data (ROSZMAN1.DAT)
+    X1LABEL Excited State Energy
+    Y1LABEL Quantum Effects for Sulfur I Atom
+    .
+    LINE BLANK SOLID
+    CHARACTER X BLANK
+    .
+    PLOT Q PRED VS T
+    .
+    LABEL
+    TITLE
+    SET 4-PLOT MULTIPLOT ON
+    MULTIPLOT CORNER COORDINATES 0 0 100 100
+    TIC MARK LABEL SIZE 4
+    CHARACTER SIZE 4
+    .
+    4-PLOT RES
+    .
+    JUSTIFICATION CENTER
+    MOVE 50 97
+    TEXT 4-Plot of Residuals (ROSZMAN1.DAT)
  
 -----FIT AUXILLARY FILES (SET)--------------------------------------------
  
@@ -31794,6 +32305,177 @@ Program:
     PLOT FLHAZ(X,0.5) FOR X = 0.2 0.01 3 
     END OF MULTIPLOT 
  
+-----FLIGNER POLICELLO TEST--------------------------------------------
+ 
+FLIGNER POLICELLO TEST
+ 
+Name:
+    FLIGNER POLICELLO TEST
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Perform a two sample Fligner-Policello test for equal medians.
+ 
+Description:
+    The Fligner-Policello test for equal medians is a nonparametric
+    test based on placement scores.  Given two respoonse variables, say
+    Y1 and Y2, the placement score for Y1(i) is defined as the number of
+    observations in Y2 that are less than Y1(i).  Likewise, the placement
+    score for Y2(i) is the number of observations in Y1 that are less
+    than Y2(i).  Values in Y2 that are equal to Y1(i) (or values in Y1
+    that are equal to Y2(i)) add 0.5 rather than 1.
+
+    If the placement scores are in P1 and P2, the Fligner-Policello
+    test statistic is
+
+        Z = (SUM[j=1 to Ny1][P(Y1(j))] - SUM[i=1 to Ny2][P(Y2(i))])/
+            (2*SQRT(Vy1 + Vy2 + Pbar(Y1)*Pbar(Y2)))
+
+    where Pbar(Y1) and Pbar(Y2) are the means of the placement scores
+
+        Pbar(Y1) = (SUM[i=1 to Ny1][P(Y1(i))])/Ny1
+        Pbar(Y2) = (SUM[j=1 to Ny2][P(Y2(i))])/Ny2
+
+    and where
+
+        Vy1 = SUM[i=1 to Ny1][(P(Y1(i)) - Pbar(Y1))**2
+        Vy2 = SUM[i=1 to Ny2][(P(Y2(i)) - Pbar(Y2))**2
+ 
+    The standard deviations of the placements are
+ 
+        SD(P1) = SQRT(Vy1/(Ny1-1))
+        SD(P2) = SQRT(Vy2/(Ny2-1))
+
+    The above test statistic is compared to a standard normal
+    distribution.
+
+Syntax 1:
+    <LOWER TAILED/UPPER TAILED> FLIGNER POLICELLO TEST <y1> <y2>
+                                <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first response variable;
+          <y2> is the second response variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    If LOWER TAILED is specified, a lower tailed test is performed.  If
+    UPPER TAILED is specified, an upper tailed test is performed.  If
+    neither LOWER TAILED or UPPER TAILED is specified, a two-tailed test
+    is performed.
+
+Syntax 2:
+    <LOWER TAILED/UPPER TAILED> FLIGNER POLICELLO TEST
+                                <y1>  ... <yk>
+                                <SUBSET/EXCEPT/FOR qualification>
+    where <y1> ... <yk> is a list of two or more response variables;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs all the two-way Fligner-Policello tests
+    for the listed variables.  This syntax supports the TO syntax.
+
+    If LOWER TAILED is specified, a lower tailed test is performed.  If
+    UPPER TAILED is specified, an upper tailed test is performed.  If
+    neither LOWER TAILED or UPPER TAILED is specified, a two-tailed test
+    is performed.
+
+Examples:
+    FLIGNER POLICELLO TEST Y1  Y2
+    FLIGNER POLICELLO TEST Y1  Y2 Y3
+    FLIGNER POLICELLO TEST Y1  TO Y6
+    FLIGNER POLICELLO TEST Y1  Y2  SUBSET Y2 > 0
+    LOWER TAILED FLIGNER POLICELLO TEST Y1  Y2
+    UPPER TAILED FLIGNER POLICELLO TEST Y1  Y2
+
+Note:
+    The following parameters are saved after the Fligner-Policello
+    test is performed.
+
+         STATVAL   - value of the test statistic
+         STATCDF   - CDF of the test statistic
+         PVALUE    - p-value of the two tailed test statistic
+         PVALUELT  - p-value of the lower tailed test statistic
+         PVALUEUT  - p-value of the upper tailed test statistic
+
+         CUTUPP90  - 90%   upper critical value
+         CUTUPP95  - 95%   upper critical value
+         CUTUP975  - 97.5% upper critical value
+         CUTUPP99  - 99%   upper critical value
+         CUTUP995  - 99.5% upper critical value
+         CUTUP999  - 99.9% upper critical value
+
+         CUTLOW10  - 10%   lower critical value
+         CUTLOW05  - 5%    lower critical value
+         CUTLO025  - 2.5%  lower critical value
+         CUTLOW01  - 1%    lower critical value
+         CUTLO005  - 0.5%  lower critical value
+         CUTLO001  - 0.1%  lower critical value
+
+Note:
+    In addition to the FLIGNER POLICELLO TEST command, the
+    following commands can also be used:
+
+        LET STATVAL = FLIGNER POLICELLO TEST        Y1 Y2
+        LET STATCDF = FLIGNER POLICELLO TEST CDF    Y1 Y2
+        LET PVALUE  = FLIGNER POLICELLO TEST PVALUE Y1 Y2
+        LET PVALUE  = FLIGNER POLICELLO LOWER TAIL TEST PVALUE Y1 Y2
+        LET PVALUE  = FLIGNER POLICELLO UPPER TAIL TEST PVALUE Y1 Y2
+
+    In addition to the above LET commands, built-in statistics are
+    supported for 30+ different commands (enter HELP STATISTICS for
+    details).
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    T TEST                  = Perform a 2-sample t-test for location
+    RANK SUM TEST           = Perform a 2-sample rank sum test for location
+    MEDIAN TEST             = Perform a k-sample medians test
+    VAN DER WAERDEN TEST    = Perform a k-sample Van Der Waerden test
+    KRUSKAL WALLIS TEST     = Perform a k-sample Kruskal-Wallis test
+
+Applications:
+    Two Sample Analysis
+ 
+Implementation Date:
+    2023/08:
+ 
+Program:
+    . Step 1:   Read the data
+    .
+    skip 25
+    read shoemake.dat y1 y2
+    skip 0
+    .
+    . Step 2:   Generate the statistics
+    .
+    let statval = fligner policello test                        y1 y2
+    let statcdf = fligner policello test cdf                    y1 y2
+    let pvalue  = fligner policello test pvalue                 y1 y2
+    let pvallt  = fligner policello test lower tail pvalue      y1 y2
+    let pvalut  = fligner policello test upper tail pvalue      y1 y2
+    let statval = round(statval,2)
+    let statcdf = round(statcdf,2)
+    let pvalue  = round(pvalue,2)
+    let pvallt  = round(pvallt,2)
+    let pvalut  = round(pvalut,2)
+    .
+    print "Fligner-Policello:"
+    print "Test Statistic:                        ^statval"
+    print "Test Statistic CDF:                    ^statcdf"
+    print "Test Statistic P-Value:                ^pvalue"
+    print "Test Statistic Lower Tailed P-Value:   ^pvallt"
+    print "Test Statistic Upper Tailed P-Value:   ^pvalut"
+    .
+    . Step 3:   Perform the tests
+    .
+    fligner policello test                y1 y2
+    lower tailed fligner policello test   y1 y2
+    upper tailed fligner policello test   y1 y2
+
 -----F LOCATION TEST--------------------------------------------------
  
 F LOCATION TEST
@@ -37197,6 +37879,24 @@ Program:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -------------------------  *G*  ZZZZZ--------------------
  
 -----GALCDF (LET)--------------------------------
@@ -38996,7 +39696,7 @@ Applications:
     XX
  
 Implementation Date:
-    94/4
+    1994/04
  
 Program:
     MAJOR XTIC NUMBER 6; MINOR XTIC NUMBER 1
@@ -39049,6 +39749,10 @@ Description:
     use the SCATTER command.   Enter HELP SCATTER for further
     information.
 
+    The first program example shows a simple artificial example to
+    demonstrate the basic syntax.  The second and third examples
+    show non-trivial examples of the GATHER command.
+
 Syntax:
     LET <y> = GATHER <x>  <index>
     where <x> is a response variable;
@@ -39084,7 +39788,7 @@ Applications:
 Implementation Date:
     2008/11
  
-Program:
+Program 1:
     let n = 30
     let xseq = sequence 1 1 n
     let x = normal rand numb for i = 1 1 n
@@ -39094,6 +39798,320 @@ Program:
     set write decimals 3
     print xseq x iindex y
 
+Program 2:
+    .  Purpose: Need to randomly sample bottles from a box of 81 bottles.
+    .
+    .           3 temperatures: -20, 5, 25
+    .           3 times:        1 day, 3 days, 7 days
+    .                           (7 days also has a temperature of -80)
+    .           4 levels
+    .
+    .           This gives us 2*3*4 + 1*4*4 = 40 combinations.  Generate a
+    .           sampling plan for 2 replications for each combination.
+    .
+    .  Step 0:  Set the random number generator
+    .
+    dimension 100 columns
+    set random number generator fibonacci congruential
+    seed 55609
+    set write decimals 0
+    .
+    .  Step 1:  Assign the combinations in arbitrary order
+    .
+    let temp = data -80 -20 -20 -20 5 5 5 25 25 25
+    let time = data   7   1   3   7 1 3 7  1  3  7
+    let ncomb1 = size temp
+    let nlevel = 4
+    let temp = combine temp temp temp temp
+    let time = combine time time time time
+    let level = sequence 1 ncomb1 1 nlevel
+    let ncomb2 = size temp
+    .
+    .  Step 2:  Randomly permute the combinations
+    .
+    let ntemp = size temp
+    let zperm = random permutation for i = 1 1 ntemp
+    let x1 = gather temp  zperm
+    let x2 = gather time  zperm
+    let x3 = gather level zperm
+    delete zperm
+    .
+    let nrepl = 2
+    loop for k = 2 1 nrepl
+        let zperm = random permutation for i = 1 1 ntemp
+        let x1t = gather temp  zperm
+        let x2t = gather time  zperm
+        let x3t = gather level zperm
+        let x1 = combine x1 x1t
+        let x2 = combine x2 x2t
+        let x3 = combine x3 x3t
+    end of loop
+    let n  = size x1
+    .
+    .  Step 2:  Now randomize the vial selection
+    .
+    let nbottle = 81
+    let bottleid = sequence 1 1 nbottle
+    let xperm = random permutation for i = 1 1 nbottle
+    retain bottleid xperm  subset xperm <= n
+    .
+    .  Step 3:  Now match time/temp to bottle id
+    .
+    let temp2  = gather x1 xperm
+    let time2  = gather x2 xperm
+    let level2 = gather x3 xperm
+    .
+    write2 perm.out "Permutation   Temperature   Time   Level   Bottle-ID"
+    write2 perm.out "----------------------------------------------------"
+    set write format  F14.0,F11.0,F7.0,F8.0,F12.0
+    write2 perm.out xperm temp2 time2 level2 bottleid
+ 
+Program 3:
+    . Purpose:  Reproduce the Reliability Analyses given at:
+    .
+    .           https://www.itl.nist.gov/div898/handbook/apr/section4/apr46.htm
+    .
+    .           This script shows a non-trivial use of the GATHER command
+    .           that greatly speeded up the analysis.
+    . Source:   Thanks to Jonathan H. Morgan for submitting this example.
+    . Description: Perform a weighted sampling with replacement.  This example
+    .              builds on the reliability analyses discussed in sections
+    .              8.3.1.5 and 8.4.6 of the NIST/SEMATECH e-Handbook of
+    .              Statistical Methods
+    .              (http://www.itl.nist.gov/div898/handbook).  In these
+    .              analyses, the authors constructed a posterior distribution
+    .              of Mean Time Between Failures (MTBF).  This is a common
+    .              approach because samples of equipment failure rates tend
+    .              to be small, making frequentist approaches impractical in
+    .              many cases.  Based on these analyses, the authors confirmed
+    .              that a 600 hour MTBF objective fell within a 80% credible
+    .              interval.  In addition to summarizing the posterior, it is
+    .              useful to average over our uncertainty to provide an
+    .              intuition about model trends.  What might we expect in the
+    .              future based on what we know of the prior and posterior?
+    .              We do this by performing a weighted re-sampling from the
+    .              prior and posterior distributions based on the prior and
+    .              posterior likelihoods using GATHER.
+    .
+    . Step 0:   Define the output devices and dimension the workspace
+    .
+    dimension 1000000 rows
+    .
+    device 2 close
+    let string fplot = gather_script.ps
+    set ipl1na ^fplot
+    device 2 postscript
+    .
+    . Step 1:  Initialize some plot control settings and the random number
+    .          generator
+    .
+    y2frame off; x2frame off
+    grid thickness 0.01; grid on
+    set random number generator fibonacci congruential
+    seed 33497
+    .
+    . Step 2:  Generate the Data for Mean Time Between Failures Analysis
+    .
+    let prob = sequence 0 0.001 0.999
+    let ngroup = size prob
+    let alpha = 4
+    let beta = 3309
+    .
+    . Step 3: Calculate the MTBF Posterior
+    .
+    let post = igappf(prob,alpha,0, beta) for i = 1 1 ngroup
+    retain post prob for i = 1 1 1000
+    .
+    .         Flipping Probabilities for the Purpose of Plotting
+    .
+    LET prob = REVERSE prob
+    .
+    .         Calculating Intervals for Plotting Purposes
+    .
+    let p09 = igappf(0.9,alpha,0, beta)
+    let p08 = igappf(0.8,alpha,0,beta)
+    let p05 = igappf(0.5,alpha,0,beta)
+    let p01 = igappf(0.1,alpha,0,beta)
+    .
+    . Step 4: Calculate the MTBF Posterior
+    .
+    .         Plotting to Confirm Results
+    .
+    x1label Mean Time Between Failures Objective
+    y1label Probability of Exceeding Objective
+    label size 2
+    y1label displacement 10
+    title Estimated Product Reliability
+    line color brown
+    .
+    plot prob post
+    line color blue
+    drawdata p09 0 p09 0.1
+    drawdata p05 0 p05 0.5
+    drawdata p08 0 p08 0.2
+    drawdata p01 0 p01 0.9
+    case lower
+    font complex
+    move 5 4
+    text alph()' = 2 + 2 fails, beta()' = 1400 + 1909 hours
+    move 63 4
+    text lamb() =
+    case asis
+    move 68 4
+    text 1/GSUP()-1
+    move 75 4
+    text (1/a, 4, 1/3309)
+    .
+    . Step 5: Sampling from the Posterior Distribution with Replacement Using
+    .         GATHER
+    .
+    .          Notes: The routine performs weighted samples by comparing the
+    .                 weights to values generated from a uniform random
+    .                 distribution scaled to encapsulate the range of the 
+    .                 weights, in this case the posterior values.  The
+    .                 routine's scale parameters reduce the number of maxloop
+    .                 draws necessary to generate the sample.  Random draws
+    .                 are included in the random sample if the sample's weight
+    .                 is greater than the random draw from the comparison
+    .                 distribution.  A macro of the routine such as
+    .                 weighted_macro facilitates performing weighted sampling
+    .                 with replacement.
+    .
+    .         Returning Probabilities Back to their Original Order
+    .
+    let prob = reverse prob
+    .
+    .         Specifying the Iteration and Location Parameters for Sampling
+    .         the Posterior
+    .
+    let n_samp = 10000
+    let maxloop = 10*n_samp
+    let loc = minimum post
+    let scale = maximum post
+    let i_loc = 1
+    let i_scale = size prob
+    .
+    .         Generate Two Sets of Uniform Random Numbers for Selecting Based
+    .         on Likelihood
+    .
+    let i_value = uniform random numbers for I = 1 1 maxloop
+    let i_value = loc + scale*i_value
+    .
+    let ind = uniform random numbers for i = 1 1 maxloop
+    let ind = i_loc + i_scale*ind
+    let index = ceil(ind) - 1
+    .
+    .         Now draw weighted samples from the posterior: post_sam
+    .
+    let index2 = sequence 1 1 maxloop
+    let val_i  = gather i_value index2
+    let val    = gather post index
+    .
+    let tag = 0 for i = 1 1 maxloop
+    let diff = val - val_i
+    let tag = 1 subset diff > 0
+    retain index subset tag = 1
+    retain index for i = 1 1 n_samp
+    let post_sam = gather prob index
+    .
+    delete loc scale i_loc i_scale i_value index ind index2 val val_i tag diff
+    .
+    .         Estimating Prior MTBF
+    .
+    let prior = igappf(prob, 2, 0, 1400) for i = 1 1 ngroup 
+    .
+    .         Specifying the iteration and location parameters for sampling
+    .         the prior
+    .
+    let maxloop = 1000000
+    let loc = minimum prior
+    let scale = maximum prior
+    let i_loc = 1
+    let i_scale = size prob
+    .
+    .         Generate two sets of uniform random numbers for selecting
+    .         based on likelihood
+    .
+    let i_value = uniform random numbers for i = 1 1 maxloop
+    let i_value = loc + scale*i_value
+    .
+    let ind = uniform random numbers for i = 1 1 maxloop
+    let ind = i_loc + i_scale*ind
+    let index = ceil(ind) - 1
+    .
+    .         Now draw weighted samples from the prior: pri_samp
+    .
+    let index2 = sequence 1 1 maxloop
+    let val_i  = gather i_value index2
+    let val    = gather post index
+    .
+    let tag = 0 for i = 1 1 maxloop
+    let diff = val - val_i
+    let tag = 1 subset diff > 0
+    retain index subset tag = 1
+    retain index for i = 1 1 n_samp
+    let pri_samp = gather prob index
+    delete loc scale i_loc i_scale i_value index ind index2 val val_i tag diff
+    .
+    .         Assessing the model by generating prior and posterior
+    .         predicative distributions
+    .
+    .         Generating predictions based on weighted samples of the
+    .         prior likelihoods
+    .
+    let n_sim = size pri_samp 
+    let pri_val = igappf(pri_samp, 2, 0, 1400) for i = 1 1 n_sim
+    .
+    .         Generating predictions based on weighted samples of the
+    .         posterior likelihoods
+    .
+    let n_sim = size post_sam 
+    let pred_val = igappf(post_sam, alpha, 0, beta) for i = 1 1 n_sim
+    .
+    .         Plotting Predicative Distributions
+    .
+    x1label Mean Time Between Failures Objective
+    y1label Density
+    x1limit 0 6000
+    y1limit 0 0.001
+    y1label displacement 12
+    major xtic mark number 5
+    major ytic mark number 3
+    title Weighted Predicative Distributions
+    line color brown blue
+    multiple kernel density plot pred_val pri_val
+    .
+    line thickness 0.2
+    line color blue
+    drawdata 3000 0.001 3500 0.001
+    movedata 3550 0.000985
+    hw 2 1
+    text Prior 
+    .
+    line color brown
+    drawdata 3000 0.00085 3500 0.00085
+    movedata 3550 0.00084
+    text Posterior 
+    line thickness 0.1
+    .
+    .         As expected, the weighted posterior predicative distribution is
+    .         centered on higher MTFB values than the prior weighted
+    .         predicative distribution.  Comparing the two distributions, we
+    .         can see the additional information included in the posterior
+    .         has reduced the predictions’ variance.  The weighted posterior
+    .         predicative distribution is skewed to the right compared to the
+    .         posterior prediction (median MTBF of 1213 compared to 901), as
+    .         is the weighted prior predicative distribution.  The rightward
+    .         shift is because most of the mass of the posterior is centered
+    .         on MTFB values between 495 and 1897, and thus more of the
+    .         samples are of values in this range.  The corresponding shift
+    .         in the weighted prior results in a peak occurring at a MTBF of
+    .         967 very close to the posterior’s median. Substantively, these
+    .         findings suggest that the posterior predictions are likely to
+    .         be conservative, as MTBF values under 400 are unlikely.
+    .         Nevertheless, we should take this result with a grain of salt
+    .         given that the posterior itself is based on a very small sample.
+ 
 -----GCD (LET)--------------------------------
  
 GCD
@@ -39444,6 +40462,104 @@ Program:
     PLOT X**3 FOR X = 1 1 9
     DEVICE 2 CLOSE
 
+-----GE (LET)--------------------------------
+ 
+GE
+ 
+Name:
+    GE (LET)
+ 
+Type:
+    Library Function
+ 
+Purpose:
+    Return a 1 if the first number is greater than or equal to the second
+    and return a 0 otherwise.
+
+Description:
+    SUBSET clauses do not support syntax like the following:
+
+         LET Y = Y1  SUBSET Y1 > Y2
+         LET Y = Y1  SUBSET Y1 >= Y2
+         LET Y = Y1  SUBSET Y1 < Y2
+         LET Y = Y1  SUBSET Y1 <= Y2
+         LET Y = Y1  SUBSET Y1 = Y2
+         LET Y = Y1  SUBSET Y1 <> Y2
+
+    where Y1 and Y2 are both variables.
+
+    This command is most typically used to create a tag variable
+    that can be used on subsequent SUBSET clauses.  For example,
+    suppose that Y1 and Y2 are two previously created variables and
+    we want to sum the values of Y1 that are greater than or equal to
+    the corresponding rows of Y2.
+
+        LET TAG = GE(Y1,Y2)
+        LET Y1SUM = SUM Y1 SUBSET TAG = 1
+ 
+Syntax:
+    LET <tag> = GE(<y1>,<y2>)  <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is a variable or a parameter;
+          <y2> is a variable or a parameter;
+          <tag> is a variable or a parameter (depending on what <y1> and
+               <y2> are) where the computed values are stored;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET TAG = GE(Y1,Y2)
+    LET A = GE(3,2)
+
+Note:
+    Library functions are distinguished from let subcommands
+    in the following ways.
+    1) Functions enclose the input value in parenthesis.  Let
+       subcommands use spaces.
+    2) Functions can accept (and return) either parameters
+       (i.e., single values) or variables (i.e., an array of
+       values) while let subcommands are specific in which they
+       accept as input and what they return as output.
+    3) Functions can accept expressions while let subcommands
+       do not.  For example, the following is legal:
+           LET Y2 = ABS(Y1-INT(Y1))
+       For let subcommands, you typically have to do something
+       like the following:
+           LET YTEMP = Y**2 + 8
+           LET A = SUM YTEMP
+ 
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    GT       = Return 1 where the first number is greater than the second
+               number and 0 otherwise.
+    LT       = Return 1 where the first number is less than the second
+               number and 0 otherwise.
+    LE       = Return 1 where the first number is less than or
+               equal to the second number and zero otherwise.
+    EQ       = Return 1 where the first number is equal to the second
+               number and zero otherwise.
+    NE       = Return 1 where the first number is not equal to the second
+               number and zero otherwise.
+ 
+Applications:
+    Data Management
+ 
+Implementation Date:
+    2021/06
+ 
+Program:
+    SKIP 25
+    READ NATR332.DAT Y1 Y2
+    LET TAG = GE(Y1,Y2)
+    LET NGE = SUM TAG SUBSET TAG = 1
+    LET N = SIZE Y1
+    LET NLT = N - NGE
+    PRINT "Number of rows where Y1 >= Y2:   ^NGE"
+    PRINT "Number of rows where Y1 <  Y2:   ^NLT"
+ 
 -----GEECDF (LET)--------------------------------
  
 GEECDF
@@ -44848,6 +45964,251 @@ Program:
     JUSTIFICATION CENTER
     TEXT Generalized Inverse Gaussian Distribution
  
+-----GINI MEAN DIFFERENCE LOG RATIO (LET)----------------------------
+ 
+GINI MEAN DIFFERENCE LOG RATIO
+ 
+Name:
+    GINI MEAN DIFFERENCE LOG RATIO (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the log of the ratio of the Gini mean differences for two
+    response variables.
+ 
+Description:
+    Given a response variable X with observations x1, x2, ..., xn sorted
+    from low value to high value, the Gini mean difference is defined as:
+
+        GMD = (2/(n*(n-1))*SUM[i=1 to n][SUM[j < i]
+              [ABS(x(i) - x(j)]]
+            = (2/(n*(n-1))*SUM[i=1 to n-1][i*(n-i)*(x(i+1) - x(i))]
+
+    where ABS is the absolute value and n is the sample size.
+
+    The Gini mean difference was proposed by Gini (1912) and is
+    the average absolute differences in all pairs of observations.
+    Note that this is a measure of dispersion that does not depend
+    on a measure of location.
+
+    This command computes the log of the ratio of the Gini mean
+    differences of two variables.  If the Gini mean differences are
+    equal, the ratio of the Gini mean differences is equal to 1 and the
+    log of the ratio is equal to 0.  This can be the basis of a
+    robust alternative approach to testing for equal dispersion.
+    Tena (2009) discusses this in more detail.
+
+Syntax:
+    LET <par> = GINI MEAN DIFFERENCE LOG RATIO <y1> <y2>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first response variable;
+          <y2> is the second response variable;
+          <par> is a parameter where the computed Gini mean difference
+               log ratio is stored;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET A = GINI MEAN DIFFERENCE LOG RATIO Y1 Y2
+    LET A = GINI MEAN DIFFERENCE LOG RATIO Y1 Y2 SUBSET Y2 > 0
+
+Note:
+    Dataplot statistics can be used in a number of commands.  For
+    details, enter
+
+         HELP STATISTICS
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    GINI MEAN DIFFERENCE        = Compute the Gini mean differences of
+                                  a variable.
+    MEDIAN ABSOLUTE DEVIATION   = Compute the median absolute
+                                  deviation of a variable.
+    AVERAGE ABSOLUTE DEVIATION  = Compute the average absolute
+                                  deviation of a variable.
+    STANDARD DEVIATION          = Compute the standard deviation of a
+                                  variable.
+    VARIANCE                    = Compute the variance of a variable.
+    RANGE                       = Compute the range of a variable.
+ 
+References:
+    Tena (2009), "Test Procedures for Equality of Two Variances in
+    Delta Distributions," Dissertations, 695,
+    https://scholarworks.wmich.edu/dissertations/695.
+
+    Gini (1921), "Measurement of Inequality in Incomes," The Economic
+    Journal, 31, pp. 124-126.
+
+Applications:
+    Data Analysis
+ 
+Implementation Date:
+    2023/07
+ 
+Program:
+    SKIP 25
+    READ AUTO83B.DAT Y1 Y2
+    RETAIN Y2 SUBSET Y2 > 0
+    .
+    BOOTSTRAP SAMPLES 10000
+    TITLE CASE ASIS
+    LABEL CASE ASIS
+    CASE ASIS
+    .
+    TITLE Bootstrap Plot for Gini Mean Difference Log Ratio
+    X1LABEL Bootstrap Sample
+    X2LABEL Dataset: AUTO83B.DAT
+    Y1LABEL Gini Mean Difference Log Ratio
+    .
+    BOOTSTRAP GINI MEAN DIFFERENCE LOG RATIO PLOT Y1 Y2
+    .
+    LET LCL = ROUND(B025,3)
+    LET UCL = ROUND(B975,3)
+    JUSTIFICATION CENTER
+    MOVE 50 3
+    TEXT Lower 95% Confidence Limit: ^LCL, Upper 95% Confidence Limit: ^UCL
+    LINE DOTTED
+    LINE COLOR RED
+    DRAWSDSD 15 ^LCL 85 ^LCL
+    DRAWSDSD 15 ^UCL 85 ^UCL
+ 
+-----GINI MEAN DIFFERENCE (LET)-------------------------------
+ 
+GINI MEAN DIFFERENCE
+ 
+Name:
+    GINI MEAN DIFFERENCE (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the Gini mean difference for a variable.
+ 
+Description:
+    Given a response variable X with observations x1, x2, ..., xn sorted
+    from low value to high value, the Gini mean difference is defined as:
+
+        GMD = (2/(n*(n-1))*SUM[i=1 to n][SUM[j < i]
+              [ABS(x(i) - x(j)]]
+            = (2/(n*(n-1))*SUM[i=1 to n-1][i*(n-i)*(x(i+1) - x(i))]
+
+    where ABS is the absolute value and n is the sample size.
+
+    The Gini mean difference was proposed by Gini (1912) and is
+    the average absolute differences in all pairs of observations.
+    Note that this is a measure of dispersion that does not depend
+    on a measure of location.
+
+Syntax:
+    LET <par> = GINI MEAN DIFFERENCE <y>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <par> is a parameter where the computed Gini mean difference
+               is stored;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET A = GINI MEAN DIFFERENCE Y1
+    LET A = GINI MEAN DIFFERENCE Y1 SUBSET TAG > 2
+
+Note:
+    Dataplot statistics can be used in a number of commands.  For
+    details, enter
+
+         HELP STATISTICS
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    GINI MEAN DIFFERENCE LOG RATIO = Compute the log of the ratio
+                                     of the Gini mean differences of
+                                     two samples.
+    MEDIAN ABSOLUTE DEVIATION      = Compute the median absolute
+                                     deviation of a variable.
+    AVERAGE ABSOLUTE DEVIATION     = Compute the average absolute
+                                     deviation of a variable.
+    STANDARD DEVIATION             = Compute the standard deviation of a
+                                     variable.
+    VARIANCE                       = Compute the variance of a variable.
+    RANGE                          = Compute the range of a variable.
+ 
+References:
+    Tena (2009), "Test Procedures for Equality of Two Variances in
+    Delta Distributions," Dissertations, 695,
+    https://scholarworks.wmich.edu/dissertations/695.
+
+    Gini (1921), "Measurement of Inequality in Incomes," The Economic
+    Journal, 31, pp. 124-126.
+
+Applications:
+    Data Analysis
+ 
+Implementation Date:
+    2023/07
+ 
+Program 1:
+    SKIP 25
+    READ ROSNER.DAT Y
+    .
+    BOOTSTRAP SAMPLES 10000
+    TITLE CASE ASIS
+    LABEL CASE ASIS
+    CASE ASIS
+    .
+    TITLE Bootstrap Plot for Gini Mean Difference
+    X1LABEL Bootstrap Sample
+    X2LABEL Dataset: ROSNER.DAT
+    Y1LABEL Gini Mean Difference
+    .
+    BOOTSTRAP GINI MEAN DIFFERENCE PLOT Y
+    .
+    LET LCL = ROUND(B025,3)
+    LET UCL = ROUND(B975,3)
+    JUSTIFICATION CENTER
+    MOVE 50 5
+    TEXT Lower 95% Confidence Limit: ^LCL, Upper 95% Confidence Limit: ^UCL
+    LINE DOTTED
+    LINE COLOR RED
+    LINE THICKNESS 0.3
+    DRAWSDSD 15 ^LCL 85 ^LCL
+    DRAWSDSD 15 ^UCL 85 ^UCL
+ 
+Program 2:
+    SKIP 25
+    READ GEAR.DAT Y X
+    .
+    TITLE CASE ASIS
+    LABEL CASE ASIS
+    CASE ASIS
+    .
+    CHARACTER CIRCLE BLANK
+    CHARACTER HW 1 0.75
+    CHARACTER FILL ON
+    LINE BLANK SOLID
+    .
+    XLIMITS 1 10
+    MAJOR X1TIC MARK NUMBER 10
+    MINOR X1TIC MARK NUMBER 0
+    TIC MARK OFFSET UNITS DATA
+    X1TIC MARK OFFSET 0.5 0.5
+    .
+    Y1LABEL Gini Mean Difference
+    X1LABEL Batch ID
+    TITLE Gini Mean Difference Plot for GEAR.DAT
+    .
+    GINI MEAN DIFFERENCE PLOT Y X
+
 -----GLDCDF (LET)--------------------------------
  
 GLDCDF
@@ -52990,6 +54351,107 @@ Program:
        2.5%  97.5%            3.169      Accept H0
          1%    99%            3.355      Accept H0
 
+-----GT (LET)--------------------------------
+ 
+GT
+ 
+Name:
+    GT (LET)
+ 
+Type:
+    Library Function
+ 
+Purpose:
+    Return a 1 if the first number is greater than the second
+    and return a 0 otherwise.
+
+Description:
+    SUBSET clauses do not support syntax like the following:
+
+         LET Y = Y1  SUBSET Y1 > Y2
+         LET Y = Y1  SUBSET Y1 >= Y2
+         LET Y = Y1  SUBSET Y1 < Y2
+         LET Y = Y1  SUBSET Y1 <= Y2
+         LET Y = Y1  SUBSET Y1 = Y2
+         LET Y = Y1  SUBSET Y1 <> Y2
+
+    where Y1 and Y2 are both variables.
+
+    This command is most typically used to create a tag variable
+    that can be used on subsequent SUBSET clauses.  For example,
+    suppose that Y1 and Y2 are two previously created variables and
+    we want to sum the values of Y1 that are greater than the
+    corresponding rows of Y2.
+
+        LET TAG = GT(Y1,Y2)
+        LET Y1SUM = SUM Y1 SUBSET TAG = 1
+ 
+Syntax:
+    LET <tag> = GT(<y1>,<y2>)  <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is a variable or a parameter;
+          <y2> is a variable or a parameter;
+          <tag> is a variable or a parameter (depending on what <y1> and
+               <y2> are) where the computed values are stored;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET TAG = GT(Y1,Y2)
+    LET A = GT(3,2)
+
+Note:
+    Library functions are distinguished from let subcommands
+    in the following ways.
+    1) Functions enclose the input value in parenthesis.  Let
+       subcommands use spaces.
+    2) Functions can accept (and return) either parameters
+       (i.e., single values) or variables (i.e., an array of
+       values) while let subcommands are specific in which they
+       accept as input and what they return as output.
+    3) Functions can accept expressions while let subcommands
+       do not.  For example, the following is legal:
+           LET Y2 = ABS(Y1-INT(Y1))
+       For let subcommands, you typically have to do something
+       like the following:
+           LET YTEMP = Y**2 + 8
+           LET A = SUM YTEMP
+ 
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    GE       = Return 1 where the first number is greater than or
+               equal to the second number and 0 otherwise.
+    LT       = Return 1 where the first number is less than the second
+               number and 0 otherwise.
+    LE       = Return 1 where the first number is less than or
+               equal to the second number and zero otherwise.
+    EQ       = Return 1 where the first number is equal to the second
+               number and zero otherwise.
+    NE       = Return 1 where the first number is not equal to the second
+               number and zero otherwise.
+ 
+Applications:
+    Data Management
+ 
+Implementation Date:
+    2021/06
+ 
+Program:
+    SKIP 25
+    READ NATR332.DAT Y1 Y2
+    LET TAG = GT(Y1,Y2)
+    LET NGT = SUM TAG SUBSET TAG = 1
+    LET TAG = LT(Y1,Y2)
+    LET NLT = SUM TAG SUBSET TAG = 1
+    LET TAG = EQ(Y1,Y2)
+    LET NEQ = SUM TAG SUBSET TAG = 1
+    PRINT "Number of rows where Y1 > Y2:   ^NGT"
+    PRINT "Number of rows where Y1 < Y2:   ^NLT"
+    PRINT "Number of rows where Y1 = Y2:   ^NEQ"
+ 
 -----GTLCDF (LET)--------------------------------
  
 GTLCDF
@@ -54094,68 +55556,6 @@ Program:
  
  
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -75885,6 +77285,127 @@ Program:
     KERNEL DENSITY WIDTH 0.3
     KERNEL DENSITY PLOT Y
  
+-----KLOTZ SCORE (LET)-----------------------------------------------
+ 
+KLOTZ SCORE
+ 
+Name:
+    KLOTZ SCORE (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the Klotz scores of a variable.
+ 
+Description:
+    The Klotz scores are defined as
+
+        s(R(j)) = (NORPPF(R(j)/(n+1)))**2
+
+    where R(j) is the rank of the j-th observation, n is the number of
+    observations and NORPPF is the percent point function of the normal
+    distribution.
+
+    Klotz scores are used in the KLOTZ TEST command to test whether k
+    samples have equal variances.
+
+Syntax:
+    LET <s> = KLOTZ SCORE <y>  <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <s> is a variable where the computed Klotz scores are saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET KSCORE = KLOTZ SCORE Y
+ 
+Note:
+    Ties are assigned an average rank.  For example, if the 2nd and 3rd
+    highest values are equal, each is assigned a rank of 2.5.
+ 
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    KLOTZ TEST              = Perform a Klotz test for equal variances.
+    MEDIAN TEST             = Perform a median test.
+    ANOVA                   = Perform a fixed effects analysis of variance.
+    MOOD SCORES             = Generate Mood scores.
+    MEDIAN SCORES           = Generate median scores.
+    VAN DER WAERDEN SCORES  = Generate Van Der Waerden scores.
+    SAVAGE SCORES           = Generate Savage scores.
+    CONOVER SCORES          = Generate Conover scores.
+    ANSARI BRADLEY SCORES   = Generate Ansari Bradley scores.
+    PLACEMENT SCORES        = Generate placement scores.
+    RANK                    = Generate the ranks of a variable. 
+ 
+Reference:
+    W. J. Conover, (1999).  "Practical Nonparameteric Statistics",
+    Third Edition, Wiley, pp. 401-402.
+
+Applications:
+    Nonparametric statistics
+ 
+Implementation Date:
+    2023/06
+ 
+Program:
+    . Step 1:   Define the data
+    .
+    let y1 = data 16.55 15.36 15.94 16.43 16.01
+    let y2 = data 16.05 15.98 16.10 15.88 15.91
+    let n1 = size y1
+    let n2 = size y2
+    let n = n1 + n2
+    .
+    . Step 2:   Combine into single array
+    .
+    let y tag = stack y1 y2
+    if n1 <= n2
+       let tag = tag - 1
+       let n1t = n1
+    else
+       let tag = 0 subset tag = 2
+       let n1t = n2
+    end of if
+    .
+    . Step 3:   Compute the Klotz scores
+    .
+    let kscore = klotz scores y
+    .
+    . Step 4:   Two-Sample Linear Rank Test
+    .
+    let temp = tag*kscore
+    let s = sum temp
+    .
+    let aval = sum kscore
+    let smean = (n1t/n)*aval
+    let meanrank = mean kscore
+    let temp = (kscore - meanrank)**2
+    let aval = sum temp
+    let svar = ((n1*n2)/(n*(n-1)))*aval
+    let statval = (s - smean)/sqrt(svar)
+    let statval = round(statval,3)
+    let cv = norppf(0.975)
+    let upplim = round(cv,2)
+    let lowlim = -upplim
+    feedback off
+    print "Two Sample Linear Rank Sum Test Based on Klotz Scores"
+    print "H0: Variances are Equal"
+    print "Ha: Variances are Not Equal"
+    print "alpha: 0.05"
+    print "Test Statistic: ^statval"
+    print "Lower Critical Value: ^lowlim"
+    print "Upper Critical Value: ^upplim"
+    if statval < cv
+       print "Conclusion: Accept H0"
+    else
+       print "Conclusion: Reject H0"
+    end of if
+ 
 -----KLOTZ TEST-----------------------------------------
  
 KLOTZ TEST
@@ -78422,27 +79943,6 @@ Program:
  
 -------------------------------------------------------------
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

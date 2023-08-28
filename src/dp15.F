@@ -2130,6 +2130,7 @@ C     UPDATED         --DECEMBER  2015. LET ... = EXECUTE ...
 C     UPDATED         --MARCH     2019. CALL LIST TO DPNONP
 C     UPDATED         --JULY      2019. TWEAK SCRATCH STORAGE
 C     UPDATED         --AUGUST    2021. CALL LIST TO CKSTAT, DPSTAC
+C     UPDATED         --AUGUST    2023. CALL LIST TO CKSTAT, DPSTAC
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -2167,6 +2168,7 @@ C
       CHARACTER*4 ICASS7
       CHARACTER*4 ICASL8
       CHARACTER*4 ICASRA
+      CHARACTER*4 ISTARA
       CHARACTER*4 ITYW1L
       CHARACTER*4 ICAT1L
       CHARACTER*4 INLI1L
@@ -2219,6 +2221,7 @@ C
       INCLUDE 'DPCODA.INC'
 C
       INCLUDE 'DPCOZI.INC'
+      INCLUDE 'DPCOZZ.INC'
       INCLUDE 'DPCOZ3.INC'
       INCLUDE 'DPCOZD.INC'
 C
@@ -2228,6 +2231,8 @@ C
       DIMENSION TEMP4(MAXOBV)
       DIMENSION TEMP5(MAXOBV)
       DIMENSION TEMP6(MAXOBV)
+      DIMENSION TEMP7(MAXOBV)
+      DIMENSION TEMP8(MAXOBV)
       INTEGER ITEMP1(MAXOBV)
       INTEGER ITEMP2(MAXOBV)
       INTEGER ITEMP3(MAXOBV)
@@ -2241,6 +2246,8 @@ C
       EQUIVALENCE (G3RBAG(KGARB4),TEMP4(1))
       EQUIVALENCE (G3RBAG(KGARB5),TEMP5(1))
       EQUIVALENCE (G3RBAG(KGARB6),TEMP6(1))
+      EQUIVALENCE (GARBAG(IGAR24),TEMP7(1))
+      EQUIVALENCE (GARBAG(IGAR25),TEMP8(1))
 C
       EQUIVALENCE (IGARBG(IIGR12),ITEMP1(1))
       EQUIVALENCE (IGARBG(IIGR13),ITEMP2(1))
@@ -2587,13 +2594,14 @@ C
 C
 C        MATH LET SUBCOMMANDS.
 C
-        CALL CKMATH(IBUGA3,ISUBRO,IFOUN7,ICASL7,ICASS7,ISTANR,
+        CALL CKMATH(IBUGA3,ISUBRO,IFOUN7,ICASL7,ICASS7,ISTANR,ISTARA,
      1              IMSUBC,ILOCV)
         IF(IFOUN7.EQ.'YES'.AND.ICASL7.NE.'UNKN'.AND.
      1     ILOCV.GE.1)THEN
           ICASLE='MANI'
           IFOUND='NO'
-          CALL DPMATC(ICASL7,ICASS7,ISTANR,ILOCV,IFTEXP,IFTORD,ISEED,
+          CALL DPMATC(ICASL7,ICASS7,ISTANR,ISTARA,
+     1                ILOCV,IFTEXP,IFTORD,ISEED,
      1                IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
           IF(IFOUND.EQ.'YES')GOTO1000
 C
@@ -2653,14 +2661,15 @@ C
             CALL DPWRST('XXX','BUG ')
           ENDIF
 C
-          CALL CKSTAT(IBUGA3,IFOUN8,ICASL8,ILOCV,ISTANR)
+          CALL CKSTAT(IBUGA3,IFOUN8,ICASL8,ILOCV,ISTANR,ISTARA)
           IF(IFOUN8.EQ.'YES'.AND.ICASL8.NE.'UNKN'.AND.
      1       ILOCV.GE.1)THEN
             ICASLE='STAT'
-            CALL DPSTAC(ICASL8,ILOCV,ISTANR,
+            CALL DPSTAC(ICASL8,ILOCV,ISTANR,ISTARA,
      1                  IFOUNZ,IBEGIN,IEND,ITYPE,IHOL,IHOL2,INT1,
      1                  FLOAT1,IERRO1,
-     1                  TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,TEMP6,MAXOBV,
+     1                  TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,TEMP6,
+     1                  TEMP7,TEMP8,MAXOBV,
      1                  ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
@@ -8952,6 +8961,7 @@ C                                       DIFFERENCE OF BINOMIAL
 C                                       PROPORTIONS SUPPORT UNCERTAINTY
 C                                       INTERVALS
 C     UPDATED         --JULY      2019. TWEAK SCRATCH STORAGE
+C     UPDATED         --AUGUST    2023. CALL LIST TO EXTSTA, CMPSTA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -8979,6 +8989,7 @@ C
       CHARACTER*4 IH2
       CHARACTER*4 ISUBN0
       CHARACTER*4  ISTADF
+      CHARACTER*4  ISTARA
       CHARACTER*60 ICTNAM
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
@@ -9207,8 +9218,8 @@ C
         IFOUND='NO'
       ELSE
         CALL EXTSTA(ICOM,ICOM2,IHARG,IHARG2,IARGT,ARG,NUMARG,JMIN,JMAX,
-     1              ICASCT,ICTNAM,ISTANR,ISTADF,IFOUND,ILOCV,
-     1              ISUBRO,IBUGG3,IERROR)
+     1              ICASCT,ICTNAM,ISTANR,ISTADF,ISTARA,
+     1              IFOUND,ILOCV,ISUBRO,IBUGG3,IERROR)
       ENDIF
 C
       IF(IFOUND.EQ.'YES')THEN
@@ -9715,7 +9726,7 @@ C6999 CONTINUE
 C
       CALL DPFLU2(Y1,Y2,Y3,X1,X2,X3,X4,X5,X6,NLOCAL,
      1            YLEVEL,NLEVEL,
-     1            NUMV2,ICASCT,ICASE,ICASPL,
+     1            NUMV2,ICASCT,ICASE,ICASPL,ISTARA,
      1            XH1DIS,XH2DIS,XH3DIS,XH4DIS,XH5DIS,XH6DIS,
      1            TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,
      1            TEMP6,TEMP7,TEMP8,TEMP9,TMP10,
@@ -9804,7 +9815,7 @@ C
       END
       SUBROUTINE DPFLU2(Y1,Y2,Y3,TAG1,TAG2,TAG3,TAG4,TAG5,TAG6,N,
      1                  YLEVEL,NLEVEL,
-     1                  NUMV2,ICASCT,ICASE,ICASPL,
+     1                  NUMV2,ICASCT,ICASE,ICASPL,ISTARA,
      1                  XIDTEM,XIDTE2,XIDTE3,XIDTE4,XIDTE5,XIDTE6,
      1                  TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,
      1                  TEMP6,TEMP7,TEMP8,TEMP9,TMP10,
@@ -9827,7 +9838,7 @@ C     PURPOSE--GENERATE A PAIR OF COORDINATE VECTORS
 C              THAT WILL DEFINE AN FLUCUATION PLOT
 C     REFERENCE--UNWIN, THEUS, AND HOFMANN (2006), "GRAPHICS OF
 C                LARGE DATA SETS: VISUALIZING A MILLION", SPRINGER.
-C     WRITTEN BY--JAMES J. FILLIBEN
+C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
 C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
@@ -9861,10 +9872,12 @@ C     UPDATED         --NOVEMBER  2017. DIFFERENCE OF MEAN AND
 C                                       DIFFERENCE OF BINOMIAL
 C                                       PROPORTIONS SUPPORT UNCERTAINTY
 C                                       INTERVALS
+C     UPDATED         --AUGUST    2023. CALL LIST TO CMPSTA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICASCT
+      CHARACTER*4 ISTARA
       CHARACTER*4 IXVAR
       CHARACTER*4 IX2VAR
       CHARACTER*4 IYVAR
@@ -10283,10 +10296,11 @@ C
 C
       IF(NCRTV.EQ.1)THEN
         CALL DPFLU0(Y1,Y2,Y3,TAG1,N,
-     1              NUMV2,ICASCT,
+     1              NUMV2,ICASCT,ISTARA,
      1              XIDTEM,
      1              NUMSE1,
      1              TEMP1,TEMP2,TMP14,TEMP3,TEMP4,TEMP5,
+     1              TMP12,TMP14,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,IQUASE,IBINME,IBI2ME,ALPHA,
@@ -10369,10 +10383,11 @@ C       RANK WILL SERVE AS AN ARRAY INDEX, NEED TO CHECK FOR TIES.
 C
         IF(IFLUSO.EQ.'ON' .OR. IFLUSO.EQ.'ROW')THEN
           CALL DPFLU0(Y1,Y2,Y3,TAG1,N,
-     1                NUMV2,ICASCT,
+     1                NUMV2,ICASCT,ISTARA,
      1                XIDTEM,
      1                NUMSE1,
      1                TEMP1,TEMP2,TMP14,TEMP3,TEMP4,TEMP5,
+     1                TMP12,TMP14,
      1                ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                DTEMP1,DTEMP2,DTEMP3,
      1                ISEED,IQUASE,IBINME,IBI2ME,ALPHA,
@@ -10413,10 +10428,11 @@ C       SORT THE COLUMNS
 C
         IF(IFLUSO.EQ.'ON' .OR. IFLUSO.EQ.'COLU')THEN
           CALL DPFLU0(Y1,Y2,Y3,TAG1,N,
-     1                NUMV2,ICASCT,
+     1                NUMV2,ICASCT,ISTARA,
      1                XIDTEM,
      1                NUMSE1,
      1                TEMP1,TEMP2,TMP14,TEMP3,TEMP4,TEMP5,
+     1                TMP12,TMP14,
      1                ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                DTEMP1,DTEMP2,DTEMP3,
      1                ISEED,IQUASE,IBINME,IBI2ME,ALPHA,
@@ -10454,10 +10470,11 @@ C
         ENDIF
 C
         CALL DPFLU3(Y1,Y2,Y3,TAG1,TAG2,N,
-     1              NUMV2,ICASCT,
+     1              NUMV2,ICASCT,ISTARA,
      1              XIDTEM,XIDTE2,
      1              NUMSE1,NUMSE2,
      1              TEMP1,TEMP2,TMP14,TEMP3,TEMP4,TEMP5,
+     1              TMP11,TMP12,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ICASE,XMAT,MAXLEV,NROW,NCOL,
@@ -10577,10 +10594,11 @@ C
 C
       ELSEIF(NCRTV.EQ.3)THEN
         CALL DPFLU4(Y1,Y2,Y3,TAG1,TAG2,TAG3,N,
-     1              NUMV2,ICASCT,
+     1              NUMV2,ICASCT,ISTARA,
      1              XIDTEM,XIDTE2,XIDTE3,
      1              NUMSE1,NUMSE2,NUMSE3,
      1              TEMP1,TEMP2,TMP14,TEMP3,TEMP4,TEMP5,
+     1              TMP11,TMP12,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,IQUASE,IBINME,IBI2ME,ALPHA,
@@ -10655,10 +10673,11 @@ C
 C
       ELSEIF(NCRTV.EQ.4)THEN
         CALL DPFLU5(Y1,Y2,Y3,TAG1,TAG2,TAG3,TAG4,N,
-     1              NUMV2,ICASCT,
+     1              NUMV2,ICASCT,ISTARA,
      1              XIDTEM,XIDTE2,XIDTE3,XIDTE4,
      1              NUMSE1,NUMSE2,NUMSE3,NUMSE4,
      1              TEMP1,TEMP2,TMP14,TEMP3,TEMP4,TEMP5,
+     1              TMP11,TMP12,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,IQUASE,IBINME,IBI2ME,ALPHA,
@@ -10735,10 +10754,11 @@ C
 C
       ELSEIF(NCRTV.EQ.5)THEN
         CALL DPFLU6(Y1,Y2,Y3,TAG1,TAG2,TAG3,TAG4,TAG5,N,
-     1              NUMV2,ICASCT,
+     1              NUMV2,ICASCT,ISTARA,
      1              XIDTEM,XIDTE2,XIDTE3,XIDTE4,XIDTE5,
      1              NUMSE1,NUMSE2,NUMSE3,NUMSE4,NUMSE5,
      1              TEMP1,TEMP2,TMP14,TEMP3,TEMP4,TEMP5,
+     1              TMP12,TMP12,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,IQUASE,IBINME,IBI2ME,ALPHA,
@@ -10817,10 +10837,11 @@ C
 C
       ELSEIF(NCRTV.EQ.6)THEN
         CALL DPFLU7(Y1,Y2,Y3,TAG1,TAG2,TAG3,TAG4,TAG5,TAG6,N,
-     1              NUMV2,ICASCT,
+     1              NUMV2,ICASCT,ISTARA,
      1              XIDTEM,XIDTE2,XIDTE3,XIDTE4,XIDTE5,XIDTE6,
      1              NUMSE1,NUMSE2,NUMSE3,NUMSE4,NUMSE5,NUMSE6,
      1              TEMP1,TEMP2,TMP14,TEMP3,TEMP4,TEMP5,
+     1              TEMP5,TEMP5,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,IQUASE,IBINME,IBI2ME,ALPHA,
@@ -10925,9 +10946,10 @@ C
       RETURN
       END
       SUBROUTINE DPFLU0(Y,Z,Z2,TAG1,N,
-     1                  NUMV2,ICASCT,
+     1                  NUMV2,ICASCT,ISTARA,
      1                  XIDTEM,NUMSE1,
      1                  TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1                  XTEMP4,XTEMP5,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  ISEED,IQUASE,IBINME,IBI2ME,ALPHA,
@@ -10959,9 +10981,12 @@ C     UPDATED         --NOVEMBER  2017. DIFFERENCE OF MEAN AND
 C                                       DIFFERENCE OF BINOMIAL
 C                                       PROPORTIONS SUPPORT UNCERTAINTY
 C                                       INTERVALS
+C     UPDATED         --AUGUST    2023. CALL LIST TO CMPSTA
+C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICASCT
+      CHARACTER*4 ISTARA
       CHARACTER*4 IXVAR
       CHARACTER*4 IX2VAR
       CHARACTER*4 IYVAR
@@ -11001,6 +11026,8 @@ C
       DIMENSION XTEMP1(*)
       DIMENSION XTEMP2(*)
       DIMENSION XTEMP3(*)
+      DIMENSION XTEMP4(*)
+      DIMENSION XTEMP5(*)
 C
       DIMENSION XACLOW(*)
       DIMENSION XACUPP(*)
@@ -11116,8 +11143,9 @@ C
         ELSE
           CALL CMPSTA(
      1              TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1              XTEMP4,XTEMP5,
      1              MAXNXT,NTEMP,NTEMP,NTEMP,
-     1              NRESP,ICASCT,
+     1              NRESP,ICASCT,ISTARA,
      1              ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
 CCCCC1              IQUAME,IQUASE,PSTAMV,
@@ -11318,10 +11346,11 @@ C
       RETURN
       END
       SUBROUTINE DPFLU3(Y,Z,Z2,TAG1,TAG2,N,
-     1                  NUMV2,ICASCT,
+     1                  NUMV2,ICASCT,ISTARA,
      1                  XIDTEM,XIDTE2,
      1                  NUMSE1,NUMSE2,
      1                  TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1                  XTEMP4,XTEMP5,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  ICASE,XMAT,MAXLEV,NROW,NCOL,
@@ -11360,10 +11389,12 @@ C     UPDATED         --NOVEMBER  2017. DIFFERENCE OF MEAN AND
 C                                       DIFFERENCE OF BINOMIAL
 C                                       PROPORTIONS SUPPORT UNCERTAINTY
 C                                       INTERVALS
+C     UPDATED         --AUGUST    2023. CALL LIST TO CMPSTA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICASCT
+      CHARACTER*4 ISTARA
       CHARACTER*4 ICASE
       CHARACTER*4 IXVAR
       CHARACTER*4 IX2VAR
@@ -11407,6 +11438,8 @@ C
       DIMENSION XTEMP1(*)
       DIMENSION XTEMP2(*)
       DIMENSION XTEMP3(*)
+      DIMENSION XTEMP4(*)
+      DIMENSION XTEMP5(*)
 C
       DIMENSION XACLOW(*)
       DIMENSION XACUPP(*)
@@ -11526,8 +11559,9 @@ C
           ELSE
             CALL CMPSTA(
      1              TEMP,TEMPZ,TEMPZ,XTEMP1,XTEMP2,XTEMP3,
+     1              XTEMP4,XTEMP5,
      1              MAXNXT,NTEMP,NTEMP,NTEMP,
-     1              NRESP,ICASCT,
+     1              NRESP,ICASCT,ISTARA,
      1              ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
 CCCCC1              IQUAME,IQUASE,PSTAMV,
@@ -11774,10 +11808,11 @@ C
       RETURN
       END
       SUBROUTINE DPFLU4(Y,Z,Z2,TAG1,TAG2,TAG3,N,
-     1                  NUMV2,ICASCT,
+     1                  NUMV2,ICASCT,ISTARA,
      1                  XIDTEM,XIDTE2,XIDTE3,
      1                  NUMSE1,NUMSE2,NUMSE3,
      1                  TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1                  XTEMP4,XTEMP5,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  ISEED,IQUASE,IBINME,IBI2ME,ALPHA,
@@ -11810,10 +11845,12 @@ C     UPDATED         --NOVEMBER  2017. DIFFERENCE OF MEAN AND
 C                                       DIFFERENCE OF BINOMIAL
 C                                       PROPORTIONS SUPPORT UNCERTAINTY
 C                                       INTERVALS
+C     UPDATED         --AUGUST    2023. CALL LIST TO CMPSTA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICASCT
+      CHARACTER*4 ISTARA
       CHARACTER*4 IXVAR
       CHARACTER*4 IX2VAR
       CHARACTER*4 IYVAR
@@ -11859,6 +11896,8 @@ C
       DIMENSION XTEMP1(*)
       DIMENSION XTEMP2(*)
       DIMENSION XTEMP3(*)
+      DIMENSION XTEMP4(*)
+      DIMENSION XTEMP5(*)
 C
       DIMENSION XACLOW(*)
       DIMENSION XACUPP(*)
@@ -11975,8 +12014,9 @@ C
           ELSE
             CALL CMPSTA(
      1              TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1              XTEMP4,XTEMP5,
      1              MAXNXT,NTEMP,NTEMP,NTEMP,
-     1              NRESP,ICASCT,
+     1              NRESP,ICASCT,ISTARA,
      1              ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
 CCCCC1              IQUAME,IQUASE,PSTAMV,
@@ -12184,10 +12224,11 @@ C
       RETURN
       END
       SUBROUTINE DPFLU5(Y,Z,Z2,TAG1,TAG2,TAG3,TAG4,N,
-     1                  NUMV2,ICASCT,
+     1                  NUMV2,ICASCT,ISTARA,
      1                  XIDTEM,XIDTE2,XIDTE3,XIDTE4,
      1                  NUMSE1,NUMSE2,NUMSE3,NUMSE4,
      1                  TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1                  XTEMP4,XTEMP5,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  ISEED,IQUASE,IBINME,IBI2ME,ALPHA,
@@ -12221,10 +12262,12 @@ C     UPDATED         --NOVEMBER  2017. DIFFERENCE OF MEAN AND
 C                                       DIFFERENCE OF BINOMIAL
 C                                       PROPORTIONS SUPPORT UNCERTAINTY
 C                                       INTERVALS
+C     UPDATED         --AUGUST    2023. CALL LIST TO CMPSTA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICASCT
+      CHARACTER*4 ISTARA
       CHARACTER*4 IXVAR
       CHARACTER*4 IX2VAR
       CHARACTER*4 IYVAR
@@ -12273,6 +12316,8 @@ C
       DIMENSION XTEMP1(*)
       DIMENSION XTEMP2(*)
       DIMENSION XTEMP3(*)
+      DIMENSION XTEMP4(*)
+      DIMENSION XTEMP5(*)
 C
       DIMENSION XACLOW(*)
       DIMENSION XACUPP(*)
@@ -12414,8 +12459,9 @@ C
           ELSE
             CALL CMPSTA(
      1              TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1              XTEMP4,XTEMP5,
      1              MAXNXT,NTEMP,NTEMP,NTEMP,
-     1              NRESP,ICASCT,
+     1              NRESP,ICASCT,ISTARA,
      1              ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
 CCCCC1              IQUAME,IQUASE,PSTAMV,
@@ -12616,10 +12662,11 @@ C
       RETURN
       END
       SUBROUTINE DPFLU6(Y,Z,Z2,TAG1,TAG2,TAG3,TAG4,TAG5,N,
-     1                  NUMV2,ICASCT,
+     1                  NUMV2,ICASCT,ISTARA,
      1                  XIDTEM,XIDTE2,XIDTE3,XIDTE4,XIDTE5,
      1                  NUMSE1,NUMSE2,NUMSE3,NUMSE4,NUMSE5,
      1                  TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1                  XTEMP4,XTEMP5,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  ISEED,IQUASE,IBINME,IBI2ME,ALPHA,
@@ -12653,10 +12700,12 @@ C     UPDATED         --NOVEMBER  2017. DIFFERENCE OF MEAN AND
 C                                       DIFFERENCE OF BINOMIAL
 C                                       PROPORTIONS SUPPORT UNCERTAINTY
 C                                       INTERVALS
+C     UPDATED         --AUGUST    2023. CALL LIST TO CMPSTA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICASCT
+      CHARACTER*4 ISTARA
       CHARACTER*4 IXVAR
       CHARACTER*4 IX2VAR
       CHARACTER*4 IYVAR
@@ -12708,6 +12757,8 @@ C
       DIMENSION XTEMP1(*)
       DIMENSION XTEMP2(*)
       DIMENSION XTEMP3(*)
+      DIMENSION XTEMP4(*)
+      DIMENSION XTEMP5(*)
 C
       DIMENSION XACLOW(*)
       DIMENSION XACUPP(*)
@@ -12853,8 +12904,9 @@ C
           ELSE
             CALL CMPSTA(
      1              TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1              XTEMP4,XTEMP5,
      1              MAXNXT,NTEMP,NTEMP,NTEMP,
-     1              NRESP,ICASCT,
+     1              NRESP,ICASCT,ISTARA,
      1              ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
 CCCCC1              IQUAME,IQUASE,PSTAMV,
@@ -13058,10 +13110,11 @@ C
       RETURN
       END
       SUBROUTINE DPFLU7(Y,Z,Z2,TAG1,TAG2,TAG3,TAG4,TAG5,TAG6,N,
-     1                  NUMV2,ICASCT,
+     1                  NUMV2,ICASCT,ISTARA,
      1                  XIDTEM,XIDTE2,XIDTE3,XIDTE4,XIDTE5,XIDTE6,
      1                  NUMSE1,NUMSE2,NUMSE3,NUMSE4,NUMSE5,NUMSE6,
      1                  TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1                  XTEMP4,XTEMP5,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  ISEED,IQUASE,IBINME,IBI2ME,ALPHA,
@@ -13095,10 +13148,12 @@ C     UPDATED         --NOVEMBER  2017. DIFFERENCE OF MEAN AND
 C                                       DIFFERENCE OF BINOMIAL
 C                                       PROPORTIONS SUPPORT UNCERTAINTY
 C                                       INTERVALS
+C     UPDATED         --AUGUST    2023. CALL LIST TO CMPSTA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICASCT
+      CHARACTER*4 ISTARA
       CHARACTER*4 IXVAR
       CHARACTER*4 IX2VAR
       CHARACTER*4 IYVAR
@@ -13153,6 +13208,8 @@ C
       DIMENSION XTEMP1(*)
       DIMENSION XTEMP2(*)
       DIMENSION XTEMP3(*)
+      DIMENSION XTEMP4(*)
+      DIMENSION XTEMP5(*)
 C
       DIMENSION XACLOW(*)
       DIMENSION XACUPP(*)
@@ -13300,8 +13357,9 @@ C
           ELSE
             CALL CMPSTA(
      1              TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1              XTEMP4,XTEMP5,
      1              MAXNXT,NTEMP,NTEMP,NTEMP2,
-     1              NRESP,ICASCT,
+     1              NRESP,ICASCT,ISTARA,
      1              ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
 CCCCC1              IQUAME,IQUASE,PSTAMV,
@@ -14735,6 +14793,1231 @@ C
  9021     FORMAT('I,ISUB(I) = ',2I8)
           CALL DPWRST('XXX','BUG ')
  9020   CONTINUE
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPFPTE(MAXNXT,ICAPSW,IFORSW,
+     1                  IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+C
+C     PURPOSE--CARRY OUT A 2-SAMPLE FLIGNER POLICELLO TEST FOR EQUAL
+C              VARIATION.
+C     EXAMPLE--FLIGNER POLICELLO TEST Y1 Y2
+C              FLIGNER POLICELLO TEST Y1 Y2 Y3 Y4
+C              FLIGNER POLICELLO TEST Y1 TO Y10
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2023/08
+C     ORIGINAL VERSION--AUGUST    2023.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 IFORSW
+      CHARACTER*4 IBUGA2
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IBUGQ
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ICASAN
+      CHARACTER*4 ICASA2
+      CHARACTER*4 ICTMP1
+      CHARACTER*4 ICTMP2
+      CHARACTER*4 ICTMP3
+      CHARACTER*4 ICTMP4
+      CHARACTER*4 ICTMP5
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+C
+      CHARACTER*4 ICASE
+      CHARACTER*4 IVARID
+      CHARACTER*4 IVARI2
+      CHARACTER*4 IVARI3
+      CHARACTER*4 IVARI4
+      CHARACTER*40 INAME
+      PARAMETER (MAXSPN=30)
+      CHARACTER*4 IVARN1(MAXSPN)
+      CHARACTER*4 IVARN2(MAXSPN)
+      CHARACTER*4 IVARTY(MAXSPN)
+      REAL PVAR(MAXSPN)
+      INTEGER ILIS(MAXSPN)
+      INTEGER NRIGHT(MAXSPN)
+      INTEGER ICOLR(MAXSPN)
+C
+      CHARACTER*4 IFLAGU
+      LOGICAL IFRST
+      LOGICAL ILAST
+C
+C---------------------------------------------------------------------
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOZZ.INC'
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCOSU.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOST.INC'
+C
+      DIMENSION YTEMP(2*MAXOBV)
+      DIMENSION TEMP1(2*MAXOBV)
+      DIMENSION TEMP2(2*MAXOBV)
+      EQUIVALENCE(GARBAG(IGARB1),TEMP1(1))
+      EQUIVALENCE(GARBAG(IGARB2),TEMP2(1))
+      EQUIVALENCE(GARBAG(IGARB3),YTEMP(1))
+C
+C-----COMMON VARIABLES (GENERAL)--------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='DPFP'
+      ISUBN2='TE  '
+      IFOUND='NO'
+      IERROR='NO'
+C
+      MAXCP1=MAXCOL+1
+      MAXCP2=MAXCOL+2
+      MAXCP3=MAXCOL+3
+      MAXCP4=MAXCOL+4
+      MAXCP5=MAXCOL+5
+      MAXCP6=MAXCOL+6
+C
+C               ************************************************
+C               **  TREAT THE FLIGNER POLICELLO TEST CASE     **
+C               ************************************************
+C
+      IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'FPTE')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPFPTE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA2,IBUGA3,IBUGQ,ISUBRO,MAXNXT
+   52   FORMAT('IBUGA2,IBUGA3,IBUGQ,ISUBRO,MAXNXT = ',4(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *********************************************************
+C               **  STEP 1--                                           **
+C               **  EXTRACT THE COMMAND                                **
+C               *********************************************************
+C
+      ISTEPN='1'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'FPTE')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      ILASTZ=9999
+      ICASAN='FPTE'
+      ICASA2='TWOT'
+C
+C     LOOK FOR:
+C
+C          FLIGNER POLICELLO TEST
+C          LOWER TAILED
+C          UPPER TAILED
+C
+      DO100I=0,NUMARG-1
+C
+        IF(I.EQ.0)THEN
+          ICTMP1=ICOM
+        ELSE
+          ICTMP1=IHARG(I)
+        ENDIF
+        ICTMP2=IHARG(I+1)
+        ICTMP3=IHARG(I+2)
+        ICTMP4=IHARG(I+3)
+        ICTMP5=IHARG(I+4)
+C
+        IF(ICTMP1.EQ.'=')THEN
+          IFOUND='NO'
+          GOTO9000
+        ELSEIF(ICTMP1.EQ.'FLIG' .AND. ICTMP2.EQ.'POLI' .AND.
+     1         ICTMP3.EQ.'TEST')THEN
+          IFOUND='YES'
+          ICASAN='STTE'
+          ILASTZ=I+2
+        ELSEIF(ICTMP1.EQ.'FLIG' .AND. ICTMP2.EQ.'POLI')THEN
+          IFOUND='YES'
+          ICASAN='STTE'
+          ILASTZ=I+1
+        ELSEIF(ICTMP1.EQ.'LOWE' .AND. ICTMP2.EQ.'TAIL')THEN
+          ICASA2='LOWE'
+          ILASTZ=MAX(ILASTZ,I+1)
+        ELSEIF(ICTMP1.EQ.'UPPE' .AND. ICTMP2.EQ.'TAIL')THEN
+          ICASA2='UPPE'
+          ILASTZ=MAX(ILASTZ,I+1)
+        ENDIF
+  100 CONTINUE
+C
+      IF(IFOUND.EQ.'NO')GOTO9000
+C
+      ISHIFT=ILASTZ
+      CALL SHIFTL(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,
+     1            IBUGA2,IERROR)
+C
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'FPTE')THEN
+        WRITE(ICOUT,91)ICASAN,ICASA2,ISHIFT
+   91   FORMAT('DPFPTE: ICASAN,ICASA2,ISHIFT = ',
+     1         2(A4,2X),I5)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               ****************************************
+C               **  STEP 2--                          **
+C               **  EXTRACT THE VARIABLE LIST         **
+C               ****************************************
+C
+      ISTEPN='2'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'FPTE')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      INAME='FLIGNER POLICELLO TEST'
+      MINNA=1
+      MAXNA=100
+      MINN2=3
+      IFLAGE=0
+      IFLAGM=1
+      MINNVA=2
+      MAXNVA=MAXSPN
+      IFLAGP=0
+      JMIN=1
+      JMAX=NUMARG
+C
+      CALL DPPARS(IHARG,IHARG2,IARGT,ARG,NUMARG,IANS,IWIDTH,
+     1            IHNAME,IHNAM2,IUSE,NUMNAM,IN,IVALUE,VALUE,
+     1            JMIN,JMAX,
+     1            MINN2,MINNA,MAXNA,MAXSPN,IFLAGE,INAME,
+     1            IVARN1,IVARN2,IVARTY,PVAR,
+     1            ILIS,NRIGHT,ICOLR,ISUB,NQ,ILOCQ,NUMVAR,
+     1            MINNVA,MAXNVA,
+     1            IFLAGM,IFLAGP,
+     1            IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'FPTE')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,281)
+  281   FORMAT('***** AFTER CALL DPPARS--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,282)NQ,NUMVAR
+  282   FORMAT('NQ,NUMVAR = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NUMVAR.GT.0)THEN
+          DO285I=1,NUMVAR
+            WRITE(ICOUT,287)I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),
+     1                      ICOLR(I)
+  287       FORMAT('I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),',
+     1             'ICOLR(I) = ',I8,2X,A4,A4,2X,3I8)
+            CALL DPWRST('XXX','BUG ')
+  285     CONTINUE
+        ENDIF
+      ENDIF
+C
+C               ******************************************************
+C               **  STEP 3A--                                       **
+C               **  CASE 1: TWO RESPONSE VARIABLES, NO REPLICATION  **
+C               **          HANDLE MULTIPLE RESPONSE VARIABLES      **
+C               **          DIFFERENTLY FOR ONE SAMPLE AND TWO      **
+C               **          SAMPLE TESTS.                           **
+C               ******************************************************
+C
+      ISTEPN='3A'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'FPTE')
+     1  CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      NUMVA2=1
+      DO5210I=1,NUMVAR
+        ICOL=I
+        CALL DPPAR3(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,
+     1              INAME,IVARN1,IVARN2,IVARTY,
+     1              ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVA2,
+     1              MAXCOL,MAXCP1,MAXCP2,MAXCP3,
+     1              MAXCP4,MAXCP5,MAXCP6,
+     1              V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,
+     1              YTEMP,YTEMP,YTEMP,NS1,NLOCA2,NLOCA3,ICASE,
+     1              IBUGA3,ISUBRO,IFOUND,IERROR)
+        IF(IERROR.EQ.'YES')GOTO9000
+C
+        ISTRT2=I+1
+        ISTOP2=NUMVAR
+C
+        DO5220J=ISTRT2,ISTOP2
+C
+          ICOL=J
+          CALL DPPAR3(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,
+     1                INAME,IVARN1,IVARN2,IVARTY,
+     1                ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVA2,
+     1                MAXCOL,MAXCP1,MAXCP2,MAXCP3,
+     1                MAXCP4,MAXCP5,MAXCP6,
+     1                V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,
+     1                X,X,X,NS2,NLOCA2,NLOCA3,ICASE,
+     1                IBUGA3,ISUBRO,IFOUND,IERROR)
+          IF(IERROR.EQ.'YES')GOTO9000
+C
+C               *******************************************
+C               **  STEP 52--                            **
+C               **  PERFORM A FLIGNER POLICELLO TEST     **
+C               *******************************************
+C
+          ISTEPN='52'
+          IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'FPTE')THEN
+            CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,5211)
+ 5211       FORMAT('***** FROM DPFPTE, BEFORE CALL DPFPT2--')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,5212)I,J,NS1,NS2,MAXN
+ 5212       FORMAT('I,J,NS1,NS2,MAXN = ',5I8)
+            CALL DPWRST('XXX','BUG ')
+            DO5215II=1,MAX(NS1,NS2)
+              WRITE(ICOUT,5216)II,YTEMP(II),X(II)
+ 5216         FORMAT('I,YTEMP(I),X(I) = ',I8,2G15.7)
+              CALL DPWRST('XXX','BUG ')
+ 5215       CONTINUE
+          ENDIF
+C
+          IVARID=IVARN1(I)
+          IVARI2=IVARN2(I)
+          IVARI3=IVARN1(J)
+          IVARI4=IVARN2(J)
+          CALL DPFPT2(YTEMP,NS1,X,NS2,ICASA2,
+     1               TEMP1,TEMP2,MAXNXT,
+     1               ICAPSW,ICAPTY,IFORSW,
+     1               IVARID,IVARI2,IVARI3,IVARI4,
+     1               STATVA,STATCD,
+     1               PVAL2T,PVALLT,PVALUT,
+     1               CTL001,CTL005,CTL010,CTL025,CTL050,CTL100,
+     1               CTU999,CTU995,CTU990,CT975,CTU950,CTU900,
+     1               IBUGA3,ISUBRO,IERROR)
+          IF(IERROR.EQ.'YES')GOTO9000
+C
+C               ***************************************
+C               **  STEP 8C--                        **
+C               **  UPDATE INTERNAL DATAPLOT TABLES  **
+C               ***************************************
+C
+          ISTEPN='8C'
+          IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'FPTE')
+     1      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+          IF(NUMVAR.GT.2)THEN
+            IFLAGU='FILE'
+          ELSE
+            IFLAGU='ON'
+          ENDIF
+          IFRST=.FALSE.
+          ILAST=.FALSE.
+          IF(I.EQ.1 .AND. J.EQ.2)IFRST=.TRUE.
+          IF(I.EQ.NUMVAR .AND. J.EQ.NUMVAR)ILAST=.TRUE.
+          CALL DPMNN5(ICASA2,
+     1                STATVA,STATCD,
+     1                PVAL2T,PVALLT,PVALUT,
+     1                CTL001,CTL005,CTL010,CTL025,CTL050,CTL100,
+     1                CTU999,CTU995,CTU990,CT975,CTU950,CTU900,
+     1                IFLAGU,IFRST,ILAST,
+     1                IBUGA2,IBUGA3,ISUBRO,IERROR)
+C
+ 5220   CONTINUE
+ 5210 CONTINUE
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'FPTE')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPFPTE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9016)IFOUND,IERROR
+ 9016   FORMAT('IFOUND,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPFPT2(Y1,N1,Y2,N2,ICASAN,
+     1                  TEMP1,TEMP2,MAXNXT,
+     1                  ICAPSW,ICAPTY,IFORSW,
+     1                  IVARID,IVARI2,IVARI3,IVARI4,
+     1                  STATVA,STATCD,
+     1                  PVAL2T,PVALLT,PVALUT,
+     1                  CTL001,CTL005,CTL010,CTL025,CTL050,CTL100,
+     1                  CTU999,CTU995,CTU990,CTU975,CTU950,CTU900,
+     1                  IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--THIS ROUTINE CARRIES OUT A 2-SAMPLE FLIGNER POLICELLO TEST
+C     EXAMPLE--FLIGNER POLICELLO TEST Y1 Y2
+C     SAMPLE 1 IS IN INPUT VECTOR Y1 (WITH N1 OBSERVATIONS).
+C     SAMPLE 2 IS IN INPUT VECTOR Y2 (WITH N2 OBSERVATIONS).
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2023/08
+C     ORIGINAL VERSION--AUGUST    2023.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IVARID
+      CHARACTER*4 IVARI2
+      CHARACTER*4 IVARI3
+      CHARACTER*4 IVARI4
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 ICAPTY
+      CHARACTER*4 IFORSW
+      CHARACTER*4 ICASAN
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 IWRITE
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION Y1(*)
+      DIMENSION Y2(*)
+      DIMENSION TEMP1(*)
+      DIMENSION TEMP2(*)
+C
+      PARAMETER (NUMALP=6)
+      REAL ALPHA(NUMALP)
+      PARAMETER (NUMAL2=4)
+      REAL ALPHA2(NUMAL2)
+C
+      PARAMETER(NUMCLI=5)
+      PARAMETER(MAXLIN=3)
+      PARAMETER (MAXROW=40)
+      CHARACTER*60 ITITLE
+      CHARACTER*60 ITITLZ
+      CHARACTER*60 ITITL9
+      CHARACTER*60 ITEXT(MAXROW)
+      CHARACTER*4  ALIGN(NUMCLI)
+      CHARACTER*4  VALIGN(NUMCLI)
+      REAL         AVALUE(MAXROW)
+      INTEGER      NCTEXT(MAXROW)
+      INTEGER      IDIGIT(MAXROW)
+      INTEGER      NTOT(MAXROW)
+      CHARACTER*60 ITITL2(MAXLIN,NUMCLI)
+      CHARACTER*15 IVALUE(MAXROW,NUMCLI)
+      CHARACTER*4  ITYPCO(NUMCLI)
+      INTEGER      NCTIT2(MAXLIN,NUMCLI)
+      INTEGER      NCVALU(MAXROW,NUMCLI)
+      INTEGER      IWHTML(NUMCLI)
+      INTEGER      IWRTF(NUMCLI)
+      REAL         AMAT(MAXROW,NUMCLI)
+      LOGICAL IFRST
+      LOGICAL ILAST
+      LOGICAL IFLAGS
+      LOGICAL IFLAGE
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+      DATA ALPHA/0.90, 0.95, 0.975, 0.99, 0.995, 0.999/
+      DATA ALPHA2/0.80, 0.90, 0.95, 0.99/
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='DPFP'
+      ISUBN2='T2  '
+      IERROR='NO'
+      IWRITE='OFF'
+C
+      CTL001=0.0
+      CTL005=0.0
+      CTL010=0.0
+      CTL025=0.0
+      CTL050=0.0
+      CTL100=0.0
+      CTU999=0.0
+      CTU995=0.0
+      CTU990=0.0
+      CTU975=0.0
+      CTU950=0.0
+      CTU900=0.0
+      CVL001=0.0
+      CVL005=0.0
+      CVL010=0.0
+      CVL025=0.0
+      CVL050=0.0
+      CVL100=0.0
+      CVL999=0.0
+      CVL995=0.0
+      CVL990=0.0
+      CVL975=0.0
+      CVL950=0.0
+      CVL900=0.0
+C
+      NUMDIG=7
+      IF(IFORSW.EQ.'1')NUMDIG=1
+      IF(IFORSW.EQ.'2')NUMDIG=2
+      IF(IFORSW.EQ.'3')NUMDIG=3
+      IF(IFORSW.EQ.'4')NUMDIG=4
+      IF(IFORSW.EQ.'5')NUMDIG=5
+      IF(IFORSW.EQ.'6')NUMDIG=6
+      IF(IFORSW.EQ.'7')NUMDIG=7
+      IF(IFORSW.EQ.'8')NUMDIG=8
+      IF(IFORSW.EQ.'9')NUMDIG=9
+      IF(IFORSW.EQ.'0')NUMDIG=0
+      IF(IFORSW.EQ.'E')NUMDIG=-2
+      IF(IFORSW.EQ.'-2')NUMDIG=-2
+      IF(IFORSW.EQ.'-3')NUMDIG=-3
+      IF(IFORSW.EQ.'-4')NUMDIG=-4
+      IF(IFORSW.EQ.'-5')NUMDIG=-5
+      IF(IFORSW.EQ.'-6')NUMDIG=-6
+      IF(IFORSW.EQ.'-7')NUMDIG=-7
+      IF(IFORSW.EQ.'-8')NUMDIG=-8
+      IF(IFORSW.EQ.'-9')NUMDIG=-9
+C
+      CTL001=CPUMIN
+      CTL005=CPUMIN
+      CTL010=CPUMIN
+      CTL025=CPUMIN
+      CTL050=CPUMIN
+      CTL100=CPUMIN
+      CTU900=CPUMIN
+      CTU950=CPUMIN
+      CTU975=CPUMIN
+      CTU990=CPUMIN
+      CTU995=CPUMIN
+      CTU999=CPUMIN
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'FPT2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,51)
+   51   FORMAT('**** AT THE BEGINNING OF DPFPT2--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,ICASAN
+   52   FORMAT('IBUGA3,ISUBRO,ICASAN = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,53)IVARID,IVARI2,IVARI3,IVARI4
+   53   FORMAT('IVARID,IVARI2,IVARI3,IVARI4 = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,55)N1,NUMDIG
+   55   FORMAT('N1,NUMDIG = ',2I8)
+        CALL DPWRST('XXX','WRIT')
+        DO56I=1,MAX(N1,N2)
+          WRITE(ICOUT,57)I,Y1(I),Y2(I)
+   57     FORMAT('I,Y1(I),Y2(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','WRIT')
+   56   CONTINUE
+      ENDIF
+C
+C               ************************************
+C               **   STEP 1--                     **
+C               **   CALL DPFPT3 TO COMPUTE THE   **
+C               **   BASIC TEST STATISTIC         **
+C               ************************************
+C
+      ISTEPN='1'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'FPT2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      CALL MEAN(Y1,N1,IWRITE,YMEAN1,IBUGA3,IERROR)
+      CALL SD(Y1,N1,IWRITE,YSD1,IBUGA3,IERROR)
+      CALL MEDIAN(Y1,N1,IWRITE,TEMP1,MAXNXT,YMED1,IBUGA3,IERROR)
+      CALL MEAN(Y2,N2,IWRITE,YMEAN2,IBUGA3,IERROR)
+      CALL MEDIAN(Y2,N2,IWRITE,TEMP1,MAXNXT,YMED2,IBUGA3,IERROR)
+      CALL SD(Y2,N2,IWRITE,YSD2,IBUGA3,IERROR)
+C
+      CALL DPFPT3(Y1,N1,Y2,N2,TEMP1,TEMP2,
+     1            STATVA,STATCD,PVAL2T,PVALLT,PVALUT,
+     1            IBUGA3,ISUBRO,IERROR)
+C
+C               ***************************************
+C               **  STEP 21--                        **
+C               **  COMPUTE THE CRITICAL VALUES FOR  **
+C               **  VARIOUS VALUES OF ALPHA          **
+C               ***************************************
+C
+      ISTEPN='21'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'FPT2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      CALL NORPPF(.005,CTL005)
+      CALL NORPPF(.010,CTL010)
+      CALL NORPPF(.025,CTL025)
+      CALL NORPPF(.050,CTL050)
+      CALL NORPPF(.100,CTL100)
+      CALL NORPPF(.200,CTL200)
+      CALL NORPPF(.500,CTL500)
+      CALL NORPPF(.500,CTU500)
+      CALL NORPPF(.800,CTU800)
+      CALL NORPPF(.900,CTU900)
+      CALL NORPPF(.950,CTU950)
+      CALL NORPPF(.975,CTU975)
+      CALL NORPPF(.990,CTU990)
+      CALL NORPPF(.995,CTU995)
+C
+C               *************************************************
+C               **   STEP 22--                                 **
+C               **   WRITE OUT EVERYTHING                      **
+C               **   FOR A FLIGNER POLICELLO TEST              **
+C               *************************************************
+C
+      ISTEPN='22'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'FPT2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(IPRINT.EQ.'OFF')GOTO9000
+C
+      IF(ICASAN.EQ.'LOWE')THEN
+        ITITLE='Two Sample Lower-Tailed Fligner Policello Test'
+        NCTITL=46
+      ELSEIF(ICASAN.EQ.'UPPE')THEN
+        ITITLE='Two Sample Upper-Tailed Fligner Policello Test'
+        NCTITL=46
+      ELSE
+        ITITLE='Two Sample Two-Sided Fligner Policello Test'
+        NCTITL=43
+      ENDIF
+      ITITLZ='Test for Equal Medians'
+      NCTITZ=22
+C
+      ICNT=1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=0
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)='First Response Variable:  '
+      WRITE(ITEXT(ICNT)(27:30),'(A4)')IVARID(1:4)
+      WRITE(ITEXT(ICNT)(31:34),'(A4)')IVARI2(1:4)
+      NCTEXT(ICNT)=34
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Second Response Variable: '
+      WRITE(ITEXT(ICNT)(27:30),'(A4)')IVARI3(1:4)
+      WRITE(ITEXT(ICNT)(31:34),'(A4)')IVARI4(1:4)
+      NCTEXT(ICNT)=34
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)='H0: Median1 = Median2'
+      NCTEXT(ICNT)=21
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      IF(ICASAN.EQ.'LOWE')THEN
+        ICNT=ICNT+1
+        ITEXT(ICNT)='Ha: Median1 < Median2'
+        NCTEXT(ICNT)=21
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+      ELSEIF(ICASAN.EQ.'UPPE')THEN
+        ICNT=ICNT+1
+        ITEXT(ICNT)='Ha: Median1 > Median2'
+        NCTEXT(ICNT)=21
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+      ELSE
+        ICNT=ICNT+1
+        ITEXT(ICNT)='Ha: Median1 not equal Median2'
+        NCTEXT(ICNT)=29
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+      ENDIF
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Summary Statistics:'
+      NCTEXT(ICNT)=19
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Number of Observations for Sample 1:'
+      NCTEXT(ICNT)=36
+      AVALUE(ICNT)=REAL(N1)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Mean for Sample 1:'
+      NCTEXT(ICNT)=18
+      AVALUE(ICNT)=YMEAN1
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Median for Sample 1:'
+      NCTEXT(ICNT)=20
+      AVALUE(ICNT)=YMED1
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Standard Deviation for Sample 1:'
+      NCTEXT(ICNT)=32
+      AVALUE(ICNT)=YSD1
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Number of Observations for Sample 2:'
+      NCTEXT(ICNT)=36
+      AVALUE(ICNT)=REAL(N2)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Mean for Sample 2:'
+      NCTEXT(ICNT)=18
+      AVALUE(ICNT)=YMEAN2
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Median for Sample 2:'
+      NCTEXT(ICNT)=20
+      AVALUE(ICNT)=YMED2
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Standard Deviation for Sample 2:'
+      NCTEXT(ICNT)=32
+      AVALUE(ICNT)=YSD2
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Test Statistic Value:'
+      NCTEXT(ICNT)=21
+      AVALUE(ICNT)=STATVA
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='CDF Value:'
+      NCTEXT(ICNT)=10
+      AVALUE(ICNT)=STATCD
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='P-Value (2-tailed test):'
+      NCTEXT(ICNT)=24
+      AVALUE(ICNT)=PVAL2T
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='P-Value (lower-tailed test):'
+      NCTEXT(ICNT)=28
+      AVALUE(ICNT)=PVALLT
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='P-Value (upper-tailed test):'
+      NCTEXT(ICNT)=28
+      AVALUE(ICNT)=PVALUT
+      IDIGIT(ICNT)=NUMDIG
+C
+      NUMROW=ICNT
+      DO2110I=1,NUMROW
+        NTOT(I)=15
+ 2110 CONTINUE
+C
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+C
+      ISTEPN='21A'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'FPT2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      CALL DPDTA1(ITITLE,NCTITL,ITITLZ,NCTITZ,ITEXT,NCTEXT,
+     1            AVALUE,IDIGIT,
+     1            NTOT,NUMROW,
+     1            ICAPSW,ICAPTY,ILAST,IFRST,
+     1            ISUBRO,IBUGA3,IERROR)
+C
+      ISTEPN='21B'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'FPT2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(ICASAN.EQ.'LOWE')THEN
+        ITITLE='Lower-Tailed Test: Normal Approximation'
+        NCTITL=39
+      ELSEIF(ICASAN.EQ.'UPPE')THEN
+        ITITLE='Upper-Tailed Test: Normal Approximation'
+        NCTITL=39
+      ELSE
+        ITITLE='Two-Tailed Test: Normal Approximation'
+        NCTITL=37
+      ENDIF
+C
+      DO2130J=1,NUMCLI
+        DO2140I=1,MAXLIN
+          ITITL2(I,J)=' '
+          NCTIT2(I,J)=0
+ 2140   CONTINUE
+ 2130 CONTINUE
+C
+      IF(ICASAN.EQ.'LOWE' .OR. ICASAN.EQ.'UPPE')THEN
+        NUMCOL=4
+        ITITL2(2,1)='Significance'
+        NCTIT2(2,1)=12
+        ITITL2(3,1)='Level'
+        NCTIT2(3,1)=5
+C
+        ITITL2(2,2)='Test '
+        NCTIT2(2,2)=4
+        ITITL2(3,2)='Statistic'
+        NCTIT2(3,2)=9
+C
+        IF(ICASAN.EQ.'LOWE')THEN
+          ITITL2(1,3)='Lower'
+          NCTIT2(1,3)=5
+          ITITL2(2,3)='Critical'
+          NCTIT2(2,3)=8
+          ITITL2(3,3)='Value (<)'
+          NCTIT2(3,3)=9
+        ELSE
+          ITITL2(1,3)='Upper'
+          NCTIT2(1,3)=5
+          ITITL2(2,3)='Critical'
+          NCTIT2(2,3)=8
+          ITITL2(3,3)='Value (>)'
+          NCTIT2(3,3)=9
+        ENDIF
+C
+        ITITL2(1,4)='Null'
+        NCTIT2(1,4)=4
+        ITITL2(2,4)='Hypothesis'
+        NCTIT2(2,4)=10
+        ITITL2(3,4)='Conclusion'
+        NCTIT2(3,4)=10
+C
+      ELSE
+        NUMCOL=5
+        ITITL2(2,1)='Significance'
+        NCTIT2(2,1)=12
+        ITITL2(3,1)='Level'
+        NCTIT2(3,1)=5
+C
+        ITITL2(2,2)='Test '
+        NCTIT2(2,2)=4
+        ITITL2(3,2)='Statistic'
+        NCTIT2(3,2)=9
+C
+        ITITL2(1,3)='Lower'
+        NCTIT2(1,3)=5
+        ITITL2(2,3)='Critical'
+        NCTIT2(2,3)=8
+        ITITL2(3,3)='Value (<)'
+        NCTIT2(3,3)=9
+C
+        ITITL2(1,4)='Upper'
+        NCTIT2(1,4)=5
+        ITITL2(2,4)='Critical'
+        NCTIT2(2,4)=8
+        ITITL2(3,4)='Value (>)'
+        NCTIT2(3,4)=9
+C
+        ITITL2(1,5)='Null'
+        NCTIT2(1,5)=4
+        ITITL2(2,5)='Hypothesis'
+        NCTIT2(2,5)=10
+        ITITL2(3,5)='Conclusion'
+        NCTIT2(3,5)=10
+C
+      ENDIF
+C
+      NMAX=0
+      DO2150I=1,NUMCOL
+        VALIGN(I)='b'
+        ALIGN(I)='r'
+        NTOT(I)=15
+        NMAX=NMAX+NTOT(I)
+        ITYPCO(I)='NUME'
+        IDIGIT(I)=NUMDIG
+        IF(ICASAN.EQ.'LOWE' .OR. ICASAN.EQ.'UPPE')THEN
+          IF(I.EQ.1 .OR. I.EQ.4)THEN
+            ITYPCO(I)='ALPH'
+          ENDIF
+        ELSE
+          IF(I.EQ.1 .OR. I.EQ.5)THEN
+            ITYPCO(I)='ALPH'
+          ENDIF
+        ENDIF
+ 2150 CONTINUE
+C
+      IWHTML(1)=125
+      IWHTML(2)=175
+      IWHTML(3)=175
+      IWHTML(4)=175
+      IWHTML(5)=175
+      IINC=1800
+      IINC2=1400
+      IWRTF(1)=IINC
+      IWRTF(2)=IWRTF(1)+IINC
+      IWRTF(3)=IWRTF(2)+IINC
+      IWRTF(4)=IWRTF(3)+IINC
+      IWRTF(5)=IWRTF(4)+IINC
+C
+      ICNT=NUMAL2
+      DO2160J=1,NUMAL2
+C
+        ALPHAT=ALPHA2(J)
+        WRITE(IVALUE(J,1)(1:4),'(F4.1)')100.0*ALPHAT
+        IVALUE(J,1)(5:5)='%'
+        NCVALU(J,1)=5
+        AMAT(J,2)=STATVA
+C
+        ICNT3=2
+        IF(ICASAN.EQ.'LOWE')THEN
+          ATEMP=1.0 - ALPHAT
+          CALL NORPPF(ATEMP,CUTTMP)
+          AMAT(J,3)=CUTTMP
+          IVALUE(J,4)(1:6)='ACCEPT'
+          IF(STATVA.LT.CUTTMP)THEN
+            IVALUE(J,4)(1:6)='REJECT'
+          ENDIF
+          NCVALU(J,4)=6
+        ELSEIF(ICASAN.EQ.'UPPE')THEN
+          ATEMP=ALPHAT
+          CALL NORPPF(ATEMP,CUTTMP)
+          AMAT(J,3)=CUTTMP
+          IVALUE(J,4)(1:6)='ACCEPT'
+          IF(STATVA.GT.CUTTMP)THEN
+            IVALUE(J,4)(1:6)='REJECT'
+          ENDIF
+          NCVALU(J,4)=6
+        ELSE
+          ATEMP=(1.0 - ALPHAT)/2.0
+          ATEMP=1.0 - ATEMP
+          CALL NORPPF(ATEMP,CUTTMP)
+          CUTTM2=-CUTTMP
+          AMAT(J,3)=CUTTM2
+          AMAT(J,4)=CUTTMP
+          IVALUE(J,5)(1:6)='REJECT'
+          IF(ABS(STATVA).LT.CUTTMP)THEN
+            IVALUE(J,5)(1:6)='ACCEPT'
+          ENDIF
+          NCVALU(J,5)=6
+        ENDIF
+C
+ 2160 CONTINUE
+C
+      NUMLIN=3
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+      IFLAGS=.TRUE.
+      IFLAGE=.TRUE.
+C
+      CALL DPDTA5(ITITLE,NCTITL,
+     1            ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1            MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1            IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT,
+     1            IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1            ICAPSW,ICAPTY,IFRST,ILAST,
+     1            IFLAGS,IFLAGE,
+     1            ISUBRO,IBUGA3,IERROR)
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'FPT2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPFPT2--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9013)STATVA,STATCD,PVAL2T,PVALLT,PVALUT
+ 9013   FORMAT('STATVA,STATCD,PVAL2T,PVALLT,PVALUT = ',5G15.7)
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPFPT3(Y1,N1,Y2,N2,P1,P2,
+     1                  STATVA,STATCD,PVAL2T,PVALLT,PVALUT,
+     1                  IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--THIS ROUTINE COMPUTES A TWO SAMPLE FLIGNER-POLICELLO (F-P)
+C              TEST FOR EQUAL MEDIANS.  THIS TEST ASSUMES THAT BOTH SAMPLES
+C              ARE SYMMETRIC ABOUT THE MEDIAN, BUT DOES NOT ASSUME EQUAL
+C              VARIANCES OR EQUAL SHAPES.
+C
+C              THE F-P  TEST IS BASED ON PLACEMENT SCORES.  GIVEN
+C              SAMPLES X AND Y, THE PLACEMENT SCORES ARE DEFINED AS
+C
+C                 P(X(i)) = SUM[j=1 to Ny][I(Y(j) < X(i)) +
+C                           0.5*I(Y(j) = X(i))
+C
+C                 P(Y(j)) = SUM[i=1 to Nx][I(X(i) < Y(j)) +
+C                           0.5*I(X(i) = Y(j))
+C
+C              WHERE I IS AN INDICATOR FUNCTION (I.E., =1 IF CONDITION
+C              IS SATISFIED AND 0 OTHERWISE)).  IN OTHER WORDS, THE
+C              PLACEMENT SCORE FOR X(i) IS THE NUMBER OF OBSERVATIONS
+C              IN Y THAT ARE LESS THAN X(i) AND TIES COUNT AS 0.5 RATHER
+C              THAN 1.
+C
+C              THE AVERAGES FOR P(X) AND P(Y) ARE
+C
+C                  Pbar(x) = (SUM[i=1 to Nx][P(X(i))])/Nx
+C                  Pbar(y) = (SUM[j=1 to Ny][P(Y(i))])/Ny
+C
+C              THE F-P TEST STATISTIC IS THEN
+C
+C                  Z = (SUM[j=1 to Ny][P(Y(j))] - SUM[i=1 to Nx][P(X(i))])/
+C                      (2*SQRT(Vx + Vy + Pbar(x)*Pbar(y)))
+C
+C
+C              WHERE
+C
+C                  Vx      = SUM[i=1 to Nx][(P(X(i)) - Pbar(x))**2
+C                  Vy      = SUM[i=1 to Nx][(P(X(i)) - Pbar(x))**2
+C
+C              THE STANDARD DEVIATIONS OF THE PLACEMENTS ARE
+C
+C                  SD(P(X)) = SQRT(Vx/(Nx-1))
+C                  SD(P(y)) = SQRT(Vy/(Ny-1))
+C
+C     EXAMPLE--FLIGNER POLICELLO TEST Y1 Y2
+C              SAMPLE 1 IS IN INPUT VECTOR Y1 (WITH N1 OBSERVATIONS)
+C              SAMPLE 2 IS IN INPUT VECTOR Y2 (WITH N2 OBSERVATIONS).
+C     REFERENCE--FLIGNER AND POLICELLO (1981), "ROBUST RANK RANK
+C                PROCEDURES FOR THE BEHRENS-FISHER PROBLEM," JOURNAL
+C                OF THE AMERICAN STATISTICAL ASSOCIATION, VOL. 76, PP.
+C                162-168.
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2855
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2023/08
+C     ORIGINAL VERSION--AUGUST    2023.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION Y1(*)
+      DIMENSION Y2(*)
+      DIMENSION P1(*)
+      DIMENSION P2(*)
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='DPFP'
+      ISUBN2='T3  '
+      IERROR='NO'
+      IWRITE='OFF'
+C
+      STATVA=CPUMIN
+      STATCD=CPUMIN
+      PVAL2T=CPUMIN
+      PVALLT=CPUMIN
+      PVALUT=CPUMIN
+C
+      DO10I=1,MAX(N1,N2)
+        P1(I)=0.0
+        P2(I)=0.0
+   10 CONTINUE
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'FPT3')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,51)
+   51   FORMAT('**** AT THE BEGINNING OF DPFPT3--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,N1,N2
+   52   FORMAT('IBUGA3,ISUBRO,N1,N2 = ',2(A4,2X),2I8)
+        CALL DPWRST('XXX','WRIT')
+        DO56I=1,MAX(N1,N2)
+          WRITE(ICOUT,57)I,Y1(I),Y2(I)
+   57     FORMAT('I,Y1(I),Y2(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','WRIT')
+   56   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      ISTEPN='1'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'FPT3')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(N1.LE.2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,101)
+  101   FORMAT('***** ERROR IN FLIGNER-POLICELLO TEST--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)
+  112   FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE FIRST ',
+     1         'RESPONSE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+  113   FORMAT('      VARIABLE MUST BE 3 OR LARGER.  SUCH WAS NOT THE ',
+     1         'CASE HERE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)N1
+  117   FORMAT('      THE NUMBER OF OBSERVATIONS   = ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ELSEIF(N2.LE.2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,122)
+  122   FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE SECOND ',
+     1         'RESPONSE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)N2
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C               **********************************************
+C               **   STEP 2--                               **
+C               **   1. COMPUTE THE PLACEMENT SCORES        **
+C               **   2. COMPUTE THE AVERAGE PLACEMENTS      **
+C               **   3. COMPUTE THE MEAN AND STANDARD       **
+C               **      STANDARD DEVIATIONS OF THE          **
+C               **      PLACEMENTS                          **
+C               **********************************************
+C
+      ISTEPN='2'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'FPT3')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      CALL PSCORE(Y1,N1,Y2,N2,IWRITE,P1,P2,IBUGA3,ISUBRO,IERROR)
+      CALL MEAN(P1,N1,IWRITE,PBARX,IBUGA3,IERROR)
+      CALL MEAN(P2,N2,IWRITE,PBARY,IBUGA3,IERROR)
+C
+      VX=0.0
+      VY=0.0
+      SUM1=0.0
+      SUM2=0.0
+      DO210I=1,N1
+        AVAL=(P1(I) - PBARX)**2
+        VX=VX + AVAL
+        SUM1=SUM1 + P1(I)
+  210 CONTINUE
+      DO220I=1,N2
+        AVAL=(P2(I) - PBARY)**2
+        VY=VY + AVAL
+        SUM2=SUM2 + P2(I)
+  220 CONTINUE
+      SDPX=SQRT(VX/REAL(N1-1))
+      SDPY=SQRT(VY/REAL(N2-1))
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'FPT3')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,251)PBARX,PBARY,VX,VY,SDPX,SDPY
+  251   FORMAT('AT STEP 2: PBARX,PBARY,VX,VY,SDPX,SDPY = ',6G15.7)
+        CALL DPWRST('XXX','WRIT')
+        DO256I=1,MAX(N1,N2)
+          WRITE(ICOUT,257)I,P1(I),P2(I)
+  257     FORMAT('I,P1(I),P2(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','WRIT')
+  256   CONTINUE
+      ENDIF
+C
+C               **********************************************
+C               **   STEP 3--                               **
+C               **   COMPUTE THE TEST STATISTIC AND THE     **
+C               **   ASSOCIATED P-VALUES.                   **
+C               **********************************************
+C
+      ISTEPN='3'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'FPT3')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      ANUM=SUM1 - SUM2
+      DENOM=2*SQRT(VX + VY + PBARY*PBARX)
+      STATVA=ANUM/DENOM
+      CALL NORCDF(STATVA,STATCD)
+      PVALLT=STATCD
+      PVALUT=1.0 - STATCD
+      IF(STATVA.LE.0.0)THEN
+        PVAL2T=2.0*PVALLT
+      ELSE
+        PVAL2T=2.0*PVALUT
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'FPT3')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPFPT3--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','WRIT')
+        IF(IERROR.EQ.'NO')THEN
+          WRITE(ICOUT,9013)STATVA,STATCD,PVALLT,PVALUT,PVAL2T
+ 9013     FORMAT('STATVA,STATCD,PVALLT,PVALUT,PVAL2T = ',5G15.7)
+          CALL DPWRST('XXX','WRIT')
+          WRITE(ICOUT,9014)SUM1,SUM2,ANUM,DENOM
+ 9014     FORMAT('SUM1,SUM2,ANUM,DENOM = ',4G15.7)
+          CALL DPWRST('XXX','WRIT')
+        ENDIF
       ENDIF
 C
       RETURN

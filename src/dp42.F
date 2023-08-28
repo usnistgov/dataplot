@@ -5725,10 +5725,10 @@ C
       END IF
       RETURN
       END
-      SUBROUTINE MOVSTA(Y1,Y2,Y3,N,NUMV,ICASS7,MAXNXT,
+      SUBROUTINE MOVSTA(Y1,Y2,Y3,N,NUMV,ICASS7,ISTARA,MAXNXT,
      1                  ISEED,IQUAME,IQUASE,PSTAMV,
      1                  IMOVEP,IMOVDI,IFILT,
-     1                  TEMP1,TEMP2,TEMP3,
+     1                  TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  YOUT,NOUT,
@@ -5753,6 +5753,7 @@ C
       CHARACTER*4 ICASCT
       CHARACTER*4 ICASC2
       CHARACTER*4 ICASS7
+      CHARACTER*4 ISTARA
       CHARACTER*4 IQUAME
       CHARACTER*4 IQUASE
       CHARACTER*4 IMOVDI
@@ -5774,6 +5775,8 @@ C
       DIMENSION TEMP1(*)
       DIMENSION TEMP2(*)
       DIMENSION TEMP3(*)
+      DIMENSION TEMP4(*)
+      DIMENSION TEMP5(*)
       INTEGER ITEMP1(*)
       INTEGER ITEMP2(*)
       INTEGER ITEMP3(*)
@@ -5890,7 +5893,8 @@ C
           IF(NSTOP.GT.N)GOTO1010
           NTEMP=NSTOP-NSTRT+1
           CALL CMPSTA(Y1(NSTRT),Y2(NSTRT),Y3(NSTRT),TEMP1,TEMP2,TEMP3,
-     1                MAXNXT,NTEMP,NTEMP,NTEMP,NUMV,ICASS7,
+     1                TEMP4,TEMP5,
+     1                MAXNXT,NTEMP,NTEMP,NTEMP,NUMV,ICASS7,ISTARA,
      1                ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                DTEMP1,DTEMP2,DTEMP3,
 CCCCC1                IQUAME,IQUASE,PSTAMV,
@@ -5913,7 +5917,8 @@ CCCCC1                IQUAME,IQUASE,PSTAMV,
           NSTOP=I+ITEMP
           NTEMP=NSTOP-NSTRT+1
           CALL CMPSTA(Y1(NSTRT),Y2(NSTRT),Y3(NSTRT),TEMP1,TEMP2,TEMP3,
-     1                MAXNXT,NTEMP,NTEMP,NTEMP,NUMV,ICASS7,
+     1                TEMP4,TEMP5,
+     1                MAXNXT,NTEMP,NTEMP,NTEMP,NUMV,ICASS7,ISTARA,
      1                ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                DTEMP1,DTEMP2,DTEMP3,
 CCCCC1                IQUAME,IQUASE,PSTAMV,
@@ -5931,7 +5936,8 @@ CCCCC1                IQUAME,IQUASE,PSTAMV,
           IF(NSTOP.GT.N)NSTOP=N
           NTEMP=NSTOP-NSTRT+1
           CALL CMPSTA(Y1(NSTRT),Y2(NSTRT),Y3(NSTRT),TEMP1,TEMP2,TEMP3,
-     1                MAXNXT,NTEMP,NTEMP,NTEMP,NUMV,ICASS7,
+     1                TEMP4,TEMP5,
+     1                MAXNXT,NTEMP,NTEMP,NTEMP,NUMV,ICASS7,ISTARA,
      1                ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                DTEMP1,DTEMP2,DTEMP3,
 CCCCC1                IQUAME,IQUASE,PSTAMV,
@@ -18828,8 +18834,9 @@ c
         ani=ni
         scor=zero
         do 10 j=1,nstep
-   10   scor=scor+exp(work(2,j) + ai1 * work(3,j) + ani * work(4,j)
-     *        + c) * work(1,j)
+          scor=scor+exp(work(2,j) + ai1 * work(3,j) + ani * work(4,j)
+     *         + c) * work(1,j)
+   10   continue
         s(i)=scor * h
         c=c+log(ani/dble(i))
    20 continue
@@ -18906,8 +18913,10 @@ c
 c
 c     convert tail areas to normal deviates.
 c
-   20 do 30 i = 1,n2
-   30 s(i) = -ppnd(s(i),ier)
+   20 continue
+      do 30 i = 1,n2
+        s(i) = -ppnd(s(i),ier)
+   30 continue
       return
       end
       subroutine nsinit(work)

@@ -589,6 +589,18 @@ C
       CHARACTER*4 ISSAV3
       CHARACTER*4 ISSAV4
       CHARACTER (LEN=MAXSTR) :: ISTRIN
+#elif defined(CYGWIN)
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+      CHARACTER*4 ISSAV3
+      CHARACTER*4 ISSAV4
+      CHARACTER (LEN=MAXSTR) :: ISTRIN
+#elif defined(MACOSX)
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+      CHARACTER*4 ISSAV3
+      CHARACTER*4 ISSAV4
+      CHARACTER (LEN=MAXSTR) :: ISTRIN
 #endif
 C
 CCCCC THE FOLLOWING 2 LINES WERE ADDED JULY 1993
@@ -1600,7 +1612,9 @@ CCCCC IVERSI='5.01.0830 (2021/08/30)'
 CCCCC IVERSI='5.02.1231 (2022/12/31)'
 CCCCC IVERSI='5.03.0420 (2023/04/20)'
 CCCCC IVERSI='5.03.0712 (2023/07/12)'
-      IVERSI='5.03.0717 (2023/07/17)'
+CCCCC IVERSI='5.03.0717 (2023/07/17)'
+CCCCC IVERSI='5.03.0804 (2023/08/04)'
+      IVERSI='5.03.0824 (2023/08/24)'
       NCVERS=22
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
@@ -2786,13 +2800,13 @@ C
 C                     NOTE THAT "HAVE_XCLIP" IMPLIES WE ARE RUNNING ON
 C                     A LINUX PLATFORM.
 C
+      IF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
 #ifdef HAVE_XCLIP
 C
-C       ISSUE THE COMMAND
+C       FOR LINUX WITH XCLIP, ISSUE THE COMMAND:
 C
 C          xclip -o -selection <clipboard/primary/secondary>  > zzzz_clipboard.dp
 C
-      IF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
         IFLAG=0
         IF(ICOM.EQ.'CLIP' .AND. ICOM2.EQ.'BOAR' .AND.
      1     NUMARG.EQ.0)IFLAG=1
@@ -2876,8 +2890,168 @@ C
           IWIDTH=22
           GOTO1309
         ENDIF
-      ENDIF
+#elif defined(CYGWIN)
+C
+C       FOR CYGWIN, COPY "/dev/clipboard" TO A FILE:
+C
+C          cat /dev/clipboard  > zzzz_clipboard.dp
+C
+        IF(ICOM.EQ.'CLIP' .AND. ICOM2.EQ.'BOAR' .AND.
+     1     NUMARG.EQ.0)IFLAG=1
+        IF(ICOM.EQ.'CLIP' .AND. ICOM2.EQ.'BOAR' .AND.
+     1     IHARG(1).EQ.'RUN ')IFLAG=1
+        IF(ICOM.EQ.'RUN ' .AND. IHARG(1).EQ.'CLIP' .AND.
+     1     IHARG2(1).EQ.'BOAR')IFLAG=1
+        IF(ICOM.EQ.'CALL' .AND. IHARG(1).EQ.'CLIP' .AND.
+     1     IHARG2(1).EQ.'BOAR')IFLAG=1
+C
+          IF(IFLAG.EQ.1)THEN
+          ISTRIN=' '
+          ISTRIN='cat /dev/clipboard > zzzz_clipboard.dp'
+          NCSTR=38
+C
+          ISSAV1=ISYSPE
+          ISSAV2=ISYSHI
+          ISSAV3=ICLEWT
+          ISSAV4=ILINSY
+          ISYSPE='OFF'
+          ICLEWT='ON'
+          ILINSY='COMM'
+          CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+          ISYSPE=ISSAV1
+          ISYSHI=ISSAV2
+          ICLEWT=ISSAV3
+          ILINSY=ISSAV4
+          IF(IERROR.EQ.'YES')GOTO1000
+          IANSLC(1)='c'
+          IANSLC(2)='a'
+          IANSLC(3)='l'
+          IANSLC(4)='l'
+          IANSLC(5)=' '
+          IANSLC(6)='z'
+          IANSLC(7)='z'
+          IANSLC(8)='z'
+          IANSLC(9)='z'
+          IANSLC(10)='_'
+          IANSLC(11)='c'
+          IANSLC(12)='l'
+          IANSLC(13)='i'
+          IANSLC(14)='p'
+          IANSLC(15)='b'
+          IANSLC(16)='o'
+          IANSLC(17)='a'
+          IANSLC(18)='r'
+          IANSLC(19)='d'
+          IANSLC(20)='.'
+          IANSLC(21)='d'
+          IANSLC(22)='p'
+          IANS(1)='C'
+          IANS(2)='A'
+          IANS(3)='L'
+          IANS(4)='L'
+          IANS(5)=' '
+          IANS(6)='Z'
+          IANS(7)='Z'
+          IANS(8)='Z'
+          IANS(9)='Z'
+          IANS(10)='_'
+          IANS(11)='C'
+          IANS(12)='L'
+          IANS(13)='I'
+          IANS(14)='P'
+          IANS(15)='B'
+          IANS(16)='O'
+          IANS(17)='A'
+          IANS(18)='R'
+          IANS(19)='D'
+          IANS(20)='.'
+          IANS(21)='D'
+          IANS(22)='P'
+          IWIDTH=22
+          GOTO1309
+        ENDIF
+#elif defined(MACOSX)
+C
+C       FOR MACOS, USE PBPASTE TO COPY CLIPBOARD TO A FILE
+C
+C          pbpaste > zzzz_clipboard.dp
+C
+        IF(ICOM.EQ.'CLIP' .AND. ICOM2.EQ.'BOAR' .AND.
+     1     NUMARG.EQ.0)IFLAG=1
+        IF(ICOM.EQ.'CLIP' .AND. ICOM2.EQ.'BOAR' .AND.
+     1     IHARG(1).EQ.'RUN ')IFLAG=1
+        IF(ICOM.EQ.'RUN ' .AND. IHARG(1).EQ.'CLIP' .AND.
+     1     IHARG2(1).EQ.'BOAR')IFLAG=1
+        IF(ICOM.EQ.'CALL' .AND. IHARG(1).EQ.'CLIP' .AND.
+     1     IHARG2(1).EQ.'BOAR')IFLAG=1
+C
+          IF(IFLAG.EQ.1)THEN
+          ISTRIN=' '
+          ISTRIN='pbpaste > zzzz_clipboard.dp'
+          NCSTR=27
+C
+          ISSAV1=ISYSPE
+          ISSAV2=ISYSHI
+          ISSAV3=ICLEWT
+          ISSAV4=ILINSY
+          ISYSPE='OFF'
+          ICLEWT='ON'
+          ILINSY='COMM'
+          CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+          ISYSPE=ISSAV1
+          ISYSHI=ISSAV2
+          ICLEWT=ISSAV3
+          ILINSY=ISSAV4
+          IF(IERROR.EQ.'YES')GOTO1000
+          IANSLC(1)='c'
+          IANSLC(2)='a'
+          IANSLC(3)='l'
+          IANSLC(4)='l'
+          IANSLC(5)=' '
+          IANSLC(6)='z'
+          IANSLC(7)='z'
+          IANSLC(8)='z'
+          IANSLC(9)='z'
+          IANSLC(10)='_'
+          IANSLC(11)='c'
+          IANSLC(12)='l'
+          IANSLC(13)='i'
+          IANSLC(14)='p'
+          IANSLC(15)='b'
+          IANSLC(16)='o'
+          IANSLC(17)='a'
+          IANSLC(18)='r'
+          IANSLC(19)='d'
+          IANSLC(20)='.'
+          IANSLC(21)='d'
+          IANSLC(22)='p'
+          IANS(1)='C'
+          IANS(2)='A'
+          IANS(3)='L'
+          IANS(4)='L'
+          IANS(5)=' '
+          IANS(6)='Z'
+          IANS(7)='Z'
+          IANS(8)='Z'
+          IANS(9)='Z'
+          IANS(10)='_'
+          IANS(11)='C'
+          IANS(12)='L'
+          IANS(13)='I'
+          IANS(14)='P'
+          IANS(15)='B'
+          IANS(16)='O'
+          IANS(17)='A'
+          IANS(18)='R'
+          IANS(19)='D'
+          IANS(20)='.'
+          IANS(21)='D'
+          IANS(22)='P'
+          IWIDTH=22
+          GOTO1309
+        ENDIF
 #endif
+      ENDIF
 C
 C     NOTE JULY 2010: IF THE FIRST WORD ON THE COMMAND LINE IS
 C                     IDENTIFIED AS A FILE NAME, THEN TREAT THIS

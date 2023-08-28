@@ -1,5 +1,5 @@
 9.
-                                                     June 2023
+                                                     August 2023
 This is the DATAPLOT News file DPNEWF.TEX.  This NEWS file contains a
 list of DATAPLOT enhancements.  Some commands may be documented here
 that are not yet available in the standard documentation.
@@ -10,7 +10,59 @@ The complete news file can be viewed at
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
-September 2021 - June 2023.
+August 2023 - August 2023.
+-----------------------------------------------------------------------
+
+ 1. Made the following updates to Analysis commands.
+
+    a. Added the command
+
+         SET LINEAR RANK SUM TEST SCORE <WILCOXON/SAVAGE/CONOVER/MOOD/
+                                         VAN DER WAERDEN/ANSARI BRADLEY/
+                                         MEDIAN/KLOTZ>
+         TWO SAMPLE LINEAR RANK SUM TEST Y1 Y2
+
+    b. Added the command
+
+         FLIGNER POLICELLO TEST Y1 Y2
+
+    c. Added the command
+
+         SET PERMUTATION TEST SAMPLE SIZE <VALUE>
+         SET PERMUTATION TEST <DIFFERENCE/RATIO>
+         TWO SAMPLE <STAT> PERMUTATION TEST Y1 Y2
+
+ 2. Added the following LET statistic commands
+
+        LET STATVAL = TWO SAMPLE LINEAR RANK SUM TEST                   Y1 Y2
+        LET STATCDF = TWO SAMPLE LINEAR RANK SUM TEST CDF               Y1 Y2
+        LET PVALUE  = TWO SAMPLE LINEAR RANK SUM TEST PVALUE            Y1 Y2
+        LET PVALUE  = TWO SAMPLE LINEAR RANK SUM LOWER TAIL TEST PVALUE Y1 Y2
+        LET PVALUE  = TWO SAMPLE LINEAR RANK SUM UPPER TAIL TEST PVALUE Y1 Y2
+
+        LET STATVAL = FLIGNER POLICELLO TEST                     Y1 Y2
+        LET STATVAL = FLIGNER POLICELLO TEST CDF                 Y1 Y2
+        LET STATVAL = FLIGNER POLICELLO TEST PVALUE              Y1 Y2
+        LET STATVAL = FLIGNER POLICELLO TEST LOWER TAILED PVALUE Y1 Y2
+
+        LET A = RATIO OF <STAT>  Y1 Y2
+
+        where <STAT> is any supported statistic for a single response
+        variable.
+
+ 3. Support for the clipboard functions (READ CLIPBOARD, WRITE CLIPBOARD,
+    LIST CLIPBOARD, CLEAR CLIPBOARD, RUN CLIPBOARD) was added for
+    Cygwin and MacOS.  Under Cygwin, the clipboard contents are stored
+    in /dev/clipboard.   For MacOS, clipboard functions are implemented
+    using the pbcopy and pbpaste commands.
+
+ 4. Fixed a bug in the READ command when the file name is enclosed in
+    quotes.  It was extracting the default variable names (COL1, COL2,
+    etc.) rather than the listed variable names.
+
+-----------------------------------------------------------------------
+The following enhancements were made to DATAPLOT
+September 2021 - July 2023.
 -----------------------------------------------------------------------
 
  1. Added the following LET commands

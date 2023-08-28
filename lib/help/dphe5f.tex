@@ -1,9 +1,9 @@
-68700.      (VERSION 2023.07)  total number of lines in file (including this line)
+68800.      (VERSION 2023.08)  total number of lines in file (including this line)
  4.                          number of     sections below
   100.    P                  first line number of P section
 22500.    Q                  first line number of Q section
 25600.    R                  first line number of R section
-44300.    S                  first line number of S section
+44400.    S                  first line number of S section
  
 ----------------------------------------------------------
  
@@ -27579,6 +27579,89 @@ Program 2:
     RETAIN Y1 SUBSET Y1 > 0
     RANK SUM TEST Y1 Y2
 
+-----RATIO OF <STAT> (LET)-----------------------------------
+ 
+RATIO OF
+ 
+Name:
+    RATIO OF <STAT> (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the ratio of a user specified statistic for two response
+    variables.
+ 
+Description:
+    When comparing the scale statistics of two response variables, it
+    is common to compare the ratio of the statistics rather than the
+    difference.  For example, given the variables Y1 and Y2, the command
+
+        LET R = RATIO OF STANDARD DEVIATION Y1 Y2
+
+    is equivalent to entering
+
+        LET S1 = STANDARD DEVIATION Y1
+        LET S2 = STANDARD DEVIATION Y2
+        LET R  = S1/S2
+
+    The advantage of using the RATIO OF command is that you can use
+    the ratio statistic in commands such as the BOOTSTRAP PLOT and
+    <STAT> PLOT.
+
+    The statistic specified in the RATIO OF command must be one that
+    is computed for a single response variable (e.g., the CORRELATION
+    statistic is not supported by this command).  Although the RATIO OF
+    command was motivated by scale statistics, it can be used for any
+    supported statistic for a single response variable.
+
+Syntax:
+    LET <par> = RATIO OF  <stat>  <y>  <SUBSET/EXCEPT/FOR qualification>
+    where <stat> is one of Dataplot's supported statistics for a single
+              response variable;
+          <y> is the response variable;
+          <par> is a parameter where the computed ratio is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Examples:
+    LET A = RATIO OF STANDARD DEVIATIONS Y1 Y2
+    LET A = RATIO OF STANDARD DEVIATIONS Y1 Y2  SUBSET Y2 > 0
+    LET A = RATIO OF MEDIAN ABSOLUTE DEVIATIONS Y1 Y2
+    LET A = RATIO OF RANGE Y1 Y2
+    LET A = RATIO OF INTERQUARTILE RANGE Y1 Y2
+ 
+Note:
+    Dataplot statistics can be used in a number of commands.  For
+    details, enter
+
+         HELP STATISTICS
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    BOOTSTRAP PLOT       = Generate a bootstrap plot.
+    RANGE                = Compute the range of a variable.
+    STANDARD DEVIATION   = Compute the standard deviation of a variable.
+    VARIANCE             = Compute the variance of a variable.
+ 
+Applications:
+    Statistics
+ 
+Implementation Date:
+    2023/08
+ 
+Program:
+    SKIP 25
+    READ AUTO83B.DAT Y1 Y2
+    RETAIN Y2 SUBSET Y2 >= 0
+    .
+    BOOTSTRAP RATIO OF MEDIAN ABSOLUTE DEVIATION PLOT Y1 Y2
+ 
 -----RATIO (LET)-------------------------------------------
  
 RATIO
@@ -44297,6 +44380,23 @@ Program:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -------------------------  *S*  ZZZZZ--------------------
  
 -----S CHART-----------------------------------------------------
@@ -50731,19 +50831,23 @@ Note:
 
          CUTUPP90  - 90%   upper critical value
          CUTUPP95  - 95%   upper critical value
+         CUTUP975  - 97.5% upper critical value
          CUTUPP99  - 99%   upper critical value
          CUTUP995  - 99.5% upper critical value
          CUTUP999  - 99.9% upper critical value
 
-         CUTLOW90  - 10%   lower critical value
-         CUTLOW95  - 5%    lower critical value
-         CUTLOW99  - 1%    lower critical value
-         CUTLOW95  - 0.5%  lower critical value
-         CUTLW999  - 0.1%  lower critical value
+    For a lower tailed test, the following parameters are saved
+
+         CUTLOW10  - 10%   lower critical value
+         CUTLOW05  - 5%    lower critical value
+         CUTLO025  - 2.5%  lower critical value
+         CUTLOW01  - 1%    lower critical value
+         CUTLO005  - 0.5%  lower critical value
+         CUTLO001  - 0.1%  lower critical value
 
 Note:
-    In addition to the F TEST command, the following commands can
-    also be used:
+    In addition to the SIEGEL TUKEY TEST command, the
+    following commands can also be used:
 
         LET STATVAL = SIEGEL TUKEY TEST        Y1 Y2
         LET STATCDF = SIEGEL TUKEY TEST CDF    Y1 Y2
@@ -68652,10 +68756,6 @@ Program 2:
     feedback on
 
 ---------------------------------------------------------
-
-
-
-
 
 
 

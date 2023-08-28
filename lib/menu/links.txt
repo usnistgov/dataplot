@@ -1,0 +1,22 @@
+This is file links.txt             11/26/19 => 3/8/20
+Links, Websites & Resources:
+
+ w1.dp : Dataplot Summary
+ w2.dp : Dataplot Website
+ w3.dp : Dataplot Graphics Gallery from e-Handbook
+ w4.dp : Dataplot Graphics Gallery from Dataplot website
+ w5.dp : Dataplot User Manual
+ w6.dp : Dataplot Common Commands
+
+ w7.dp : NIST/SEMATECH e-Handbook
+ w8.dp : DEX 2-level Designs      (Excel Catalog)
+ w9.dp : DEX 10-Step Analysis     (NIST only)
+w10.dp : ASTM Tools & Analyses    (NIST only)
+
+w11.dp : NIST Uncertainty Machine                    (Possolo)
+w12.dp : NIST Consensus-Builder                      (Possolo)
+w13.dp : NIST Randomness Beacon                      (Kelsey)
+w14.dp : NIST Binary Randomness Tests                (Rukhin)
+w15.dp : NIST Standard Reference Materials           (Choquette)
+w16.dp : NIST WIPP (Web Imaging Processing Pipeline) (Bajcsy)
+w17.dp : NIST CAVE (Immersive Visualization)         (Terrill)

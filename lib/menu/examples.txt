@@ -1,0 +1,132 @@
+This is file   examples.txt                          11/26/19 => 3/8/20
+Contents: Auto-executable Dataplot tutorial examples.
+
+To auto-execute an example, enter the example ID which resides at the
+   beginning of the example's line; thus, e.g., to do a Comparative
+   analysis of the classic Wright Brothers first-plane pressure dat,
+   enter   3.3   and 3 files will be automatically produced:
+       the graphics output will be placed in    dataplot_out.pdf
+       the datalot script  will be placdd in    dataplot_out.dp
+       the input data      will be placed in    dataplot_out.dat
+
+To edit/tweak/customize the code (in examples.dp) to apply to your data:
+   1. Execute:    Run the example as is by entering the example #:
+                  for example,    3.3   for the Wright Brothers' analysis.
+   2. Edit:       With your editor-of-choice, edit/customize the dataplot
+                  script file    dataplot_out.dp     to suit your problem
+                  (e.g., edit/change dataplot's READ command, titles, labels, etc.)
+   3. Re-Execute: Re-enter dataplot and enter     call dataplot_out.dp
+                  to execute the just-edited script file     dtaplot_out.dp   .
+   4. View:       view the new graphics results which will reside/overwrite
+                  dataplot_out.pdf  .
+
+    Index                                       Code                                  Data                Output
+-----------------------------------------------------------------------------------------------------------------------
+ 0. General
+    Enter 0.1 for:  histogram                wright8.dp                                 wright11.dat      [3-page output]
+    Enter 0.2 for:  scatter plot             wright9.dp                                 wright11.dat      [2-page output]
+    Enter 0.3 for:  Plot functions           minitest_menu.dp                           junk1. and junk2. [13]
+    Enter 0.4 for:  2-Level Exp. Designs     2_level_designs.xlsx                       none              [excel sheet with ~ 15 tabs]
+    Enter 0.5 for:  Random Permutations      random_permutations.xlsx                   none              [excel sheet with ~ 10 tabs]
+    Enter 0.6 for:  Binomial Confidence Lim. binomial_acceptance_sampling.xlsx          none              [excel sheet with    1 tab ]
+    Enter 0.7 for:  Bin. Conf. Lim (large n) binomial_acceptance_sampling_large_n.xlsx  none              [excel sheet with    1 tab ]
+
+
+ 1. Univariate
+    1.1 : (k=0 factors) Test stat control    lew_menu.dp                            lew.dat           [1 page pdf file]
+    1.2 : (k=0 factors) Test stat control    mavro.dp                               mavro.dat         [1]
+    1.3 : (k=0)         Test stat control    zarr.dp                                zarr.dat          [1]
+    1.4 : (k=0)         Test stat control    univariate_classics.dp                 10 files          [10]
+    1.5 : (k=0)         Test best-fit dist.  simiu.dp                               simiu.dat         [1]
+    1.6 : (k=0)         SRM Certif. Value    cline153.dp                            cline153.dat      
+    1.7 : (k=0)         SRM Certif. Value    funnel__0_10.dp                        funnel_0_10.dat   [x]
+    1.8 : (k=0)         SRM Certif. Value    funnel_0_10_clipboard.dp               clipboard         [1]
+    1.9 : (k=0)         SRM Certif. Value    funnel_1_60_4plot.dp                   funnel_1_60_matrix.dat  [7]
+
+ 2. Interlab Consensus Value
+    2.1 : (k=1 factor)  (24 students)        youden_1_96.dp                         youden_1962_paper_thickness.dat
+    2.2 : (k=1)         ( 9 tables)          funnel_1_90.dp                         funnel_1_90_matrix.dat
+    2.3 : (k=1)         ( 8 vials)           dasilva141_menu.dp                     dasilva141.dat
+    2.4 : (k=1)         (20 vials)           dasilva143.dp                          dasilva143.dat
+    2.5 : (k=1)         (18 labs )           fletcher446.dp                         fletcher446.dat
+    2.6 : (k=1)         (35 devices,7 loops) gates12.dp                             gates12.dat
+    2.7 : (k=1)         ( 6 tables, Boulder) funnel_1_60.dp                         funnel_1_60_matrix.dat (DEX Class 2020)
+    2.8 : (k=1)         ( 6 tables, Boulder) funnel_1_60_clipboard.dp               clipboard
+    2.9 : (k=2)         (112 vials)          dasilva192.dp    (SRM 9-step)          dasilva175_coulter_yeast_all_seasons.dat [9]
+
+ 3. Comparative
+    3.1 : (k=1 factor)  draft69.dp     FIX THIS FIX THIS                            draft69.dat
+    3.2 : (k=1)         funnel_1_6.dp                                               funnel_1_6.dat
+    3.3 : (k=2)         wright11.dp                                                 wright11.dat
+    3.4 : (k=2)         boxshoes_2_20_block_plot.dp                                 boxshoes_2_20.dat
+    3.5 : (k=3)         funnel_3_12_block_plot.dp                                   funnel_3_12.dat
+    3.6 : (k=4)         sheesley_4_24_block_plot.dp                                 sheesley_4_24.dat
+    3.7 : (k=5)         boxreactor_5_32_block_plot.dp                               boxreactor_5_32.dat
+    3.8 : (k=3)         funnel_3_12_block_plot_clipboard.dp                         clipboard
+    3.9 : (k=2)         corona_virus_2_n_block_plot.dp                              corona_virus_2_n_matrix.dat
+    3.10: (k=2)         corona_virus_2_n_block_plot_clipboard.dp                    clipboard
+
+ 4. Sensitivity Analysis (DEX 10-step)
+    4.1 : (k=3 factors) boxsprings_3_8.dp        (full)                             boxsprings_3_8.dat      [10]
+    4.2 : (k=3)         funnel_3_8.dp            (full)                             funnel_3_8.dat          [10]
+    4.3 : (k=3)         bowen_3_8.dp             (full)                             bowen_3_8.dat           [10]
+    4.4 : (k=4)         boxconverter_4_16.dp     (full)                             boxconverter_4_16.dat   [10]
+    4.5 : (k=4)         boxcleanser_4_8.dp       (fractional)                       boxcleanser_4_8.dat     [10]
+
+    4.6 : (k=5)         krasny_5_32.dp           (full)                             krasny_5_32.dat         [10]
+    4.7 : (k=5)         boxreactor_5_32.dp       (full)                             boxreactor_5_32.dat     [10]
+    4.8 : (k=5)         boxreactor_5_16.dp       (fractional)                       boxreactor_5_16.dat     [10]
+    4.9 : (k=5)         boxreactor_5_8.dp        (fractional)                       boxreactor_5_8.dat      [10]
+   4.10 : (k=5)         tang_5_16.dp             (fractional)                       tang_5_16.dat           [10]
+   4.11 : (k=6)         zarr_6_16.dp             (fractional)                       zarr_6_16.dat           [10]
+
+   4.12 : (k=7)         kneifel_7_128.dp         (full)                             kneifel_7_128.dat       [10]
+   4.13 : (k=7)         fontana_7_128.dp         (full)                             fontana_7_128.dat       [10]
+   4.14 : (k=7)         fong_7_16.dp             (fractional)                       fong_7_16.dat           [10]
+   4.15 : (k=8)         scott_8_16.dp            (fractional)                       scott_8_16.dat          [10]
+   4.16 : (k=8)         inn_8_16.dp              (fractional)                       inn_8_16.dat            [10]
+
+   4.17 : (k=9)         hecht_9_64.dp            (fractional)                       hecht_9_64.dat          [10]
+   4.18 : (k=10)        ma_10_16.dp              (fractional)                       ma_10_16.dat            [10]
+
+   4.19 : (k=13)        wtc_13_16.dp             (fractional)                       wtc_13_16.dat           [10]
+   4.20 : (k=13)        fontana_15_256.dp        (fractional)                       fontana_15_256.dat      [10]
+   4.21 : (k=20)        mills_20_256.dp          (fractional)                       mills_20_256.dat        [10]
+   4.22 : (k=k)         generic_k_n.dp           (full or fractional)               generic_2_4.dat=>your choice[10]
+
+ 5. Modeling/regression
+    5.1 : (k=1 factor)  berger.dp                                                   berger.dat
+    5.2 : (k=1)         fletcher306.dp                                              fletcher306.dat
+
+ 6. Optimization        (Local & Global Opt.)
+    6.1 : (k=2 factors) wright11.dp                                                 wright11.dat
+    6.2 : (k=8)         sarkar71_menu.dp                                            sarkar71_allresponses_040219.dat
+    6.3 : (k=2)         boxchemyield1.dp                                            boxchemyield1.dat
+    6.4 : (k=2)         boxchemyield2.dp                                            boxchemyield2.dat
+    6.5 : (k=2)         boxchemyield3.dp                                            boxchemyield3.dat
+
+7. Classification       (Supervised ML)
+    7.1 : (4 features)  classification_iris.dp                                      iris.dat           [7 page pdf file]
+    7.2 : (6 features)  classification_flury.dp                                     flury5.dat
+    7.3 : (8=>64 feat.) sarkar80_menu.dp                                            sarkar71_allresponses_040219.dat
+
+ 8. Clustering          (Unsupervised ML)
+    8.1 : (18 resp.)    mills47b.dp                                                 mills28responses2.dat
+
+ 9. Time series
+    9.1 : 1 Series:     lew_timeseries_menu.dp                                      lew.dat
+    9.2 : 1 Series:     luther_menu.dp                                              luther.dat
+    9.3 : 2 Series:     runbinson23_menu.dp                                         rubinson23.dat
+
+
+
+ Note : To auto-run any example: enter the example's id #
+   (0.1, 0.2, 1.1, 1.2, 2.1, . . ., 9.1, 9.2)   at the prompt
+   (e.g., to run the   boxreactor_5_32 example,  enter 4.2).
+
+ Output:
+    pdf graphics file: dataplot_out.pdf
+    ps  graphics file: dataplot_out.ps
+    txt program  file: dataplot_out.dp
+    txt data     file: dataplot_out.dat
+

@@ -6733,11 +6733,25 @@ C
       NCTEXT(ICNT)=19
       AVALUE(ICNT)=0.0
       IDIGIT(ICNT)=-1
-      ICNT=ICNT+1
-      ITEXT(ICNT)='Ha: Sigma1 not equal Sigma2'
-      NCTEXT(ICNT)=27
-      AVALUE(ICNT)=0.0
-      IDIGIT(ICNT)=-1
+      IF(ICASAN.EQ.'LOWE')THEN
+        ICNT=ICNT+1
+        ITEXT(ICNT)='Ha: Sigma1 < Sigma2'
+        NCTEXT(ICNT)=19
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+      ELSEIF(ICASAN.EQ.'UPPE')THEN
+        ICNT=ICNT+1
+        ITEXT(ICNT)='Ha: Sigma1 > Sigma2'
+        NCTEXT(ICNT)=19
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+      ELSE
+        ICNT=ICNT+1
+        ITEXT(ICNT)='Ha: Sigma1 not equal Sigma2'
+        NCTEXT(ICNT)=27
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+      ENDIF
 C
       ICNT=ICNT+1
       ITEXT(ICNT)=' '
@@ -6857,14 +6871,32 @@ C
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'SGT2')
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-      IF(ITAB.EQ.0)THEN
-        ITITLE='Two-Tailed Test: Normal Approximation'
-        NCTITL=37
+      IF(ICASAN.EQ.'LOWE')THEN
+        IF(ITAB.EQ.0)THEN
+          ITITLE='Lower-Tailed Test: Normal Approximation'
+          NCTITL=39
+        ELSE
+          ITITLE='Lower-Tailed Test: Exact - Small Sample'
+          NCTITL=39
+        ENDIF
+      ELSEIF(ICASAN.EQ.'UPPE')THEN
+        IF(ITAB.EQ.0)THEN
+          ITITLE='Upper-Tailed Test: Normal Approximation'
+          NCTITL=39
+        ELSE
+          ITITLE='Upper-Tailed Test: Exact - Small Sample'
+          NCTITL=39
+        ENDIF
       ELSE
-        ITITLE='Two-Tailed Test: Exact - Small Sample'
-        NCTITL=37
+        IF(ITAB.EQ.0)THEN
+          ITITLE='Two-Tailed Test: Normal Approximation'
+          NCTITL=37
+        ELSE
+          ITITLE='Two-Tailed Test: Exact - Small Sample'
+          NCTITL=37
+        ENDIF
       ENDIF
-      ITITL9='H0: F(x) = G(x); Ha: F(x) <> G(x)  for some x'
+      ITITL9='H0: sigma1 = sigma2'
       NCTIT9=45
 C
       DO2130J=1,NUMCLI

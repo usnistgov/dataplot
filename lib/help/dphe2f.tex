@@ -1,7 +1,7 @@
- 67700.   (VERSION 2021.05)  total number of lines in file (including this line)
+ 68700.   (VERSION 2023.07)  total number of lines in file (including this line)
  3.                          number of     sections below
   100.    A                  first line number of A section
- 8200.    B                  first line number of B section
+ 8400.    B                  first line number of B section
 33300.    C                  first line number of C section
  
 ----------------------------------------------------------
@@ -123,7 +123,7 @@ Description:
 
     For m > 2, the following recurrence formula is used:
 
-        2f(m) = (m-1)*f(m-2) + x*f(m-3)
+        2f(m)(x) = (m-1)*f(m-2)(x) + x*f(m-3)(x)
     
     Dataplot computes this function using ACM Algorithm 757 (see
     Reference: below).
@@ -844,7 +844,7 @@ Program:
     set write format 14F5.0
     print adj
  
------ AGREE------------------------------------------------------
+-----AGREE------------------------------------------------------
 
 Name:
     AGREE (LET)
@@ -884,7 +884,8 @@ Default:
     None
  
 Synonyms:
-    None
+    EQ and EQUAL are synonyms for AGREE
+    NE and NOTEQUAL are synonyms for DISAGREE
  
 Related Commands:
     MAX     = Compute the maximum of two numbers.
@@ -894,7 +895,9 @@ Applications:
     Data Management
  
 Implementation Date:
-    2011/8
+    2011/08
+    2021/06: Add EQ and EQUAL as synonyms for AGREE
+    2021/06: Add NE and NOTEQUAL as synonyms for DISAGREE
  
 Program:
     LET Y1 = DATA 1 1 0 0 0 1
@@ -4541,7 +4544,7 @@ Applications:
     Analysis of Variance
  
 Implementation Date:
-    XX
+    Pre-1987
  
 Program:
     . READ FILE "SHEESLEY.DAT" IN DATAPLOT REFERENCE CATALOG
@@ -4573,6 +4576,133 @@ Program:
     PLOT RES VS PRED
     NORMAL PROBABILITY PLOT RES
     END OF MULTIPLOT
+ 
+-----ANSARI BRADLEY SCORE (LET)---------------------------------------
+ 
+ANSARI BRADLEY SCORE
+ 
+Name:
+    ANSARI BRADLEY SCORE (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the Ansari-Bradley scores of a variable.
+ 
+Description:
+    The Ansari-Bradley scores are defined as follows
+
+          a(1) = a(n) = 1
+          a(2) = a(n-1) = 2
+                .....
+
+    Alternatively, they can be computed as
+
+        s(R(j)) = (n+1)/2 - ABS(R(j) - (n+1)/2)
+
+    where R(j) is the rank of the j-th observation and n is the number
+    of observations.
+
+    Ansari-Bradley scores are typically used to compare the variances
+    of two samples.
+
+Syntax:
+    LET <s> = ANSARI BRADLEY SCORE <y>  <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <s> is a variable where the computed Ansari-Bradley scores are
+             saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET ANSARI = ANSARI BRADLEY SCORES Y
+ 
+Note:
+    Ties are assigned an average rank.  For example, if the 2nd and 3rd
+    highest values are equal, each is assigned a rank of 2.5.
+ 
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    SIEGEL TUKEY TEST       = Perform a Siegel-Tukey test.
+    SQUARED RANKS TEST      = Perform a squared ranks test.
+    ANOVA                   = Perform a fixed effects analysis of variance.
+    KLOTZ SCORES            = Generate Klotz scores.
+    CONOVER SCORES          = Generate Conover scores.
+    MOOD SCORES             = Generate Mood scores.
+    VAN DER WAERDEN SCORES  = Generate Van Der Waerden scores.
+    MEDIAN SCORES           = Generate median scores.
+    SAVAGE SCORES           = Generate Savage scores.
+    PLACEMENT SCORES        = Generate placement scores.
+    RANK                    = Generate the ranks of a variable. 
+ 
+Reference:
+    Higgins (2004), "Introduction to Modern Nonparametric Statisitcs,"
+    Duxbury Advanced Series, p. 50.
+
+Applications:
+    Nonparametric statistics
+ 
+Implementation Date:
+    2023/06
+ 
+Program:
+    . Step 1:   Define the data
+    .
+    let y1 = data 16.55 15.36 15.94 16.43 16.01
+    let y2 = data 16.05 15.98 16.10 15.88 15.91
+    let n1 = size y1
+    let n2 = size y2
+    let n = n1 + n2
+    .
+    . Step 2:   Combine into single array
+    .
+    let y tag = stack y1 y2
+    if n1 <= n2
+       let tag = tag - 1
+       let n1t = n1
+    else
+       let tag = 0 subset tag = 2
+       let n1t = n2
+    end of if
+    .
+    . Step 3:   Compute the Mood scores
+    .
+    let ascore = ansari bradley scores y
+    .
+    . Step 4:   Two-Sample Linear Rank Test
+    .
+    let temp = tag*ascore
+    let s = sum temp
+    .
+    let aval = sum ascore
+    let smean = (n1t/n)*aval
+    let meanrank = mean ascore
+    let temp = (ascore - meanrank)**2
+    let aval = sum temp
+    let svar = ((n1*n2)/(n*(n-1)))*aval
+    let statval = (s - smean)/sqrt(svar)
+    let statval = round(statval,3)
+    let cv = norppf(0.975)
+    let upplim = round(cv,2)
+    let lowlim = -upplim
+    feedback off
+    print "Two Sample Linear Rank Sum Test Based on Ansari-Bradley Scores"
+    print "H0: Variances are Equal"
+    print "Ha: Variances are Not Equal"
+    print "alpha: 0.05"
+    print "Test Statistic: ^statval"
+    print "Lower Critical Value: ^lowlim"
+    print "Upper Critical Value: ^upplim"
+    if statval < cv
+       print "Conclusion: Accept H0"
+    else
+       print "Conclusion: Reject H0"
+    end of if
  
 -----APPEND-------------------------------------------------------
  
@@ -8164,6 +8294,76 @@ Program:
     END OF MULTIPLOT
  
 ---------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -49797,6 +49997,123 @@ Program:
     PLOT SN(X,MC) FOR X = -10 0.1 10 AND
     PLOT DN(X,MC) FOR X = -10 0.1 10
  
+-----CNP (LET)-------------------------------------------------------
+ 
+CNP
+ 
+Name:
+    CNP (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the Cnp process capability index for a variable.
+ 
+Description:
+    This statistic computes the sample Cnp process capability
+    index of an industrial process and is defined as follows:
+
+       CNP = (ENGUSL -ENGLSL)/(P(.99865) - P(0.00135))
+
+    with P(x), ENGLSL and ENGUSL denoting the percentile function, lower
+    engineering specification limit and the upper engineering
+    specification limit, respectively.  This statistic has coverage
+    comparable to the normal-based Cp statistic for +/- 3*sigma.  An
+    alternative definition has 99% coverage and
+    is defined as
+
+       CNP = (ENGUSL -ENGLSL)/(P(.995) - P(0.005))
+
+    This is a non-parametric alternative to the normal-based
+    Cp process capability index.
+
+    The specification limits define the range within which a product is
+    considered acceptable (values outside this range indicate that a
+    product is defective).
+
+Syntax:
+    LET <par> = CNP <y>   <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <par> is a parameter where the computed CNP is stored;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET A = CNP Y1
+    LET A = CNP Y1 SUBSET TAG > 2
+ 
+Note:
+    The upper and lower specification limits must be specified by the
+    user as follows:
+        LET LSL = <value>
+        LET USL = <value>
+ 
+Note:
+    To use the alternative definition, enter the command
+
+        SET CNPK DEFINITION AIRFORCE
+
+    To reset the default, enter
+
+        SET CNPK DEFINITION PEARN
+
+Note:
+    Dataplot statistics can be used in a number of commands.  For
+    details, enter
+
+         HELP STATISTICS
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    CAPABILITY ANALYSIS  = Perform a capability analysis.
+    CP                   = Compute a Cp process capability index.
+    CPK                  = Compute a Cpk process capability index.
+    CNPK                 = Compute a Cnpk process capability index.
+    CPM                  = Compute a Cpm process capability index.
+    CC                   = Compute a Cc process capability index.
+    CPL                  = Compute a Cpl process capability index.
+    CPU                  = Compute a Cpu process capability index.
+    CNPM                 = Compute a Cnpm process capability index.
+    CNPKM                = Compute a Cnpkm process capability index.
+    CPMK                 = Compute a Cpmk process capability index.
+    PERCENT DEFECTIVE    = Compute the percentage of defectives in a
+                           sample.
+    EXPECTED LOSS        = Compute the expected loss of a sample.
+ 
+Reference:
+    Kotz and Johnson (1993), "Process Capability Indices,"
+    Chapman & Hall (chapter 2).
+
+    Chen and Ding (2001), "A New Process Capability Index for Non-Normal
+    Distributions," International Journal of Quality & Reliability
+    Management, Vol. 18, No. 7, pp. 762-770.
+ 
+Applications:
+    Quality Control
+ 
+Implementation Date:
+    2015/04
+ 
+Program:
+    SKIP 25
+    READ FURNACE.DAT X1 X2 X3 Y
+    LET LSL = 460
+    LET USL = 660
+    LET A = CNP Y 
+    MULTIPLOT CORNER COORDINATES 5 5 95 95
+    MULTIPLOT 2 2
+    MULTIPLOT SCALE FACTOR 2
+    TITLE AUTOMATIC
+    CNP PLOT Y X1
+    CNP PLOT Y X2
+    CNP PLOT Y X3
+    END OF MULTIPLOT
+ 
 -----CNPK (LET)----------------------------------------------------
  
 CNPK
@@ -49904,7 +50221,248 @@ Program:
     TITLE AUTOMATIC
     CNPK PLOT Y X
  
------COCHRAN VARIANCE OUTLIER TEST--------------------------------------------------
+-----CNPM (LET)-------------------------------------------------------
+ 
+CNPM
+ 
+Name:
+    CNPM (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the Cnpm process capability index for a variable.
+ 
+Description:
+    This statistic computes the sample Cnpm process capability
+    index of an industrial process and is defined as follows:
+
+       CNPM = (ENGUSL -ENGLSL)/
+              [6*SQRT{((P(0.99865)-P(0.00135)/6)**2 + (MEDIAN - TARGET)**2}]
+    with P(x), TARGET, ENGLSL, ENGUSL and MEDIAN denoting the percentile
+    function, the target engineering limit, the lower engineering
+    specification limit, the upper engineering specification limit and
+    the sample median, respectively.  This statistic has coverage
+    comparable to the normal-based Cpm statistic for +/- 3*sigma.  An
+    alternative definition has 99% coverage and uses P(0.995) and
+    P(0.005) in the above formula.
+
+    This statistic is a non-parametric alternative to the normal-based
+    Cpm process capability index.
+
+    The specification limits define the range within which a product is
+    considered acceptable (values outside this range indicate that a
+    product is defective).
+
+Syntax:
+    LET <par> = CNPM <y>   <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <par> is a parameter where the computed Cnpm is stored;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET A = CNPM Y1
+    LET A = CNPM Y1 SUBSET TAG > 2
+ 
+Note:
+    The target and upper and lower specification limits must be specified
+    by the user as follows:
+
+        LET TARGET = <value>
+        LET LSL = <value>
+        LET USL = <value>
+ 
+Note:
+    To use the alternative definition, enter the command
+
+        SET CNPK DEFINITION AIRFORCE
+
+    To reset the default, enter
+
+        SET CNPK DEFINITION PEARN
+
+Note:
+    Dataplot statistics can be used in a number of commands.  For
+    details, enter
+
+         HELP STATISTICS
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    CAPABILITY ANALYSIS  = Perform a capability analysis.
+    CP                   = Compute a Cp process capability index.
+    CPK                  = Compute a Cpk process capability index.
+    CNPK                 = Compute a Cnpk process capability index.
+    CPM                  = Compute a Cpm process capability index.
+    CC                   = Compute a Cc process capability index.
+    CPL                  = Compute a Cpl process capability index.
+    CPU                  = Compute a Cpu process capability index.
+    CNP                  = Compute a Cnp process capability index.
+    CNPKM                = Compute a Cnpkm process capability index.
+    CPMK                 = Compute a Cpmk process capability index.
+    PERCENT DEFECTIVE    = Compute the percentage of defectives in a
+                           sample.
+    EXPECTED LOSS        = Compute the expected loss of a sample.
+ 
+Reference:
+    Chen and Ding (2001), "A New Process Capability Index for Non-Normal
+    Distributions," International Journal of Quality & Reliability
+    Management, Vol. 18, No. 7, pp. 762-770.
+ 
+    Kaoru Ishikawa (1982), "Guide to Quality Control,"
+    Asian Productivity Organization, (chapter 13).
+ 
+Applications:
+    Quality Control
+ 
+Implementation Date:
+    2015/04
+ 
+Program:
+    SKIP 25
+    READ FURNACE.DAT X1 X2 X3 Y
+    LET TARGET = 550
+    LET LSL = 460
+    LET USL = 660
+    LET A = CNPM Y 
+    MULTIPLOT CORNER COORDINATES 5 5 95 95
+    MULTIPLOT 2 2
+    MULTIPLOT SCALE FACTOR 2
+    TITLE AUTOMATIC
+    CNPM PLOT Y X1
+    CNPM PLOT Y X2
+    CNPM PLOT Y X3
+    END OF MULTIPLOT
+ 
+-----CNPMK (LET)-------------------------------------------------------
+ 
+CNPMK
+ 
+Name:
+    CNPMK (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the Cnpmk process capability index for a variable.
+ 
+Description:
+    This statistic computes the sample Cnpmk process capability
+    index of an industrial process and is defined as follows:
+
+       CNPMK = MIN((ENGUSL - MED),(MED-ENGLSL))/
+               [3*SQRT{((P(0.99865)-P(0.00135)/6)**2 +
+               (MEDIAN - TARGET)**2}]
+
+    with P(x), TARGET, ENGLSL, ENGUSL and MEDIAN denoting the percentile
+    function, the target engineering limit, the lower engineering
+    specification limit, the upper engineering specification limit and
+    the sample median, respectively.  This statistic is a non-parametric
+    alternative to the normal-based Cpmk statistic and has coverage
+    comparable to Cpmk for +/- 3*sigma.  An alternative definition has
+    99% coverage and uses P(0.995) and P(0.005) in the above formula.
+    This capability index combines both precision and unbiasedness.
+
+    The Cnpmk statistic can have values from 0 to infinity with
+    values between 0.5 and 1 being typical.
+
+    The specification limits define the range within which a product is
+    considered acceptable (values outside this range indicate that a
+    product is defective).
+
+Syntax:
+    LET <par> = CNPMK <y>   <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <par> is a parameter where the computed Cnpmk is stored;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET A = CNPMK Y1
+    LET A = CNPMK Y1 SUBSET TAG > 2
+ 
+Note:
+    The target and upper and lower specification limits must be specified
+    by the user as follows:
+
+        LET TARGET = <value>
+        LET LSL = <value>
+        LET USL = <value>
+ 
+Note:
+    To use the alternative definition, enter the command
+
+        SET CNPK DEFINITION AIRFORCE
+
+    To reset the default, enter
+
+        SET CNPK DEFINITION PEARN
+
+Note:
+    Dataplot statistics can be used in a number of commands.  For
+    details, enter
+
+         HELP STATISTICS
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    CAPABILITY ANALYSIS  = Perform a capability analysis.
+    CP                   = Compute a Cp process capability index.
+    CPK                  = Compute a Cpk process capability index.
+    CNPK                 = Compute a Cnpk process capability index.
+    CPM                  = Compute a Cpm process capability index.
+    CC                   = Compute a Cc process capability index.
+    CPL                  = Compute a Cpl process capability index.
+    CPU                  = Compute a Cpu process capability index.
+    CNP                  = Compute a Cnp process capability index.
+    CNPKM                = Compute a Cnpkm process capability index.
+    CPMK                 = Compute a Cpmk process capability index.
+    PERCENT DEFECTIVE    = Compute the percentage of defectives in a
+                           sample.
+    EXPECTED LOSS        = Compute the expected loss of a sample.
+ 
+Reference:
+    Chen and Ding (2001), "A New Process Capability Index for Non-Normal
+    Distributions," International Journal of Quality & Reliability
+    Management, Vol. 18, No. 7, pp. 762-770.
+ 
+    Kaoru Ishikawa (1982), "Guide to Quality Control,"
+    Asian Productivity Organization, (chapter 13).
+ 
+Applications:
+    Quality Control
+ 
+Implementation Date:
+    2015/04
+ 
+Program:
+    SKIP 25
+    READ FURNACE.DAT X1 X2 X3 Y
+    LET TARGET = 550
+    LET LSL = 460
+    LET USL = 660
+    LET A = CNPM Y 
+    MULTIPLOT CORNER COORDINATES 5 5 95 95
+    MULTIPLOT 2 2
+    MULTIPLOT SCALE FACTOR 2
+    TITLE AUTOMATIC
+    CNPMK PLOT Y X1
+    CNPMK PLOT Y X2
+    CNPMK PLOT Y X3
+    END OF MULTIPLOT
+ 
+-----COCHRAN VARIANCE OUTLIER TEST-----------------------------------
  
 COCHRAN VARIANCE OUTLIER TEST
  
@@ -56056,6 +56614,136 @@ Program:
     move 50 97
     text Cumulative Distribution Functions for Consul
 
+-----CONOVER SCORES (LET)---------------------------------------
+ 
+CONOVER SCORES
+ 
+Name:
+    CONOVER SCORES (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the Conover scores of a variable.
+ 
+Description:
+    The Conover scores for a response variable and a group-id variable
+    are defined as follows
+
+        s(j) = (R(U(j)))**2
+
+    where
+
+        U(j) =  ABS(Y(j)(i) - YBAR(i))
+        
+    with Y(j)(i) denoting the j-th observation belonging to the i-th group
+    and YBAR(i) denoting the mean of the i-th group.
+
+    Conover scores are the squared ranks of the absolute deviations from
+    the sample group means.  They are used in the SQUARED RANKS command
+    to compare the variances of k samples.
+
+Syntax:
+    LET <s> = CONOVER SCORES <y> <x>   <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <x> is the group-id variable;
+          <s> is a variable where the computed Conover scores are
+             saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    The response variable and the group-id variable must have the same
+    number of observations.
+ 
+Examples:
+    LET CSCORE = CONOVER SCORE Y X
+ 
+Note:
+    Ties are assigned an average rank.  For example, if the 2nd and 3rd
+    highest values are equal, each is assigned a rank of 2.5.
+ 
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    SQUARED RANKS TEST      = Perform a squared ranks test.
+    SIEGEL TUKEY TEST       = Perform a Siegel-Tukey test.
+    ANOVA                   = Perform a fixed effects analysis of variance.
+    KLOTZ SCORES            = Generate Klotz scores.
+    MOOD SCORES             = Generate Mood scores.
+    VAN DER WAERDEN SCORES  = Generate Van Der Waerden scores.
+    MEDIAN SCORES           = Generate median scores.
+    SAVAGE SCORES           = Generate Savage scores.
+    PLACEMENT SCORES        = Generate placement scores.
+    RANK                    = Generate the ranks of a variable. 
+ 
+Reference:
+    Conover (1999), "Practical Nonparametric Statisitcs," Third Edition,
+    Wiley, p. 401.
+
+Applications:
+    Nonparametric statistics
+ 
+Implementation Date:
+    2023/06
+ 
+Program:
+    . Step 1:   Define the data
+    .
+    let y1 = data 16.55 15.36 15.94 16.43 16.01
+    let y2 = data 16.05 15.98 16.10 15.88 15.91
+    let n1 = size y1
+    let n2 = size y2
+    let n = n1 + n2
+    .
+    . Step 2:   Combine into single array
+    .
+    let y tag = stack y1 y2
+    if n1 <= n2
+       let tag = tag - 1
+       let n1t = n1
+    else
+       let tag = 0 subset tag = 2
+       let n1t = n2
+    end of if
+    .
+    . Step 3:   Compute the Conover scores
+    .
+    let cscore = conover scores y tag
+    .
+    . Step 4:   Two-Sample Linear Rank Test
+    .
+    let temp = tag*cscore
+    let s = sum temp
+    .
+    let aval = sum cscore
+    let smean = (n1t/n)*aval
+    let meanrank = mean cscore
+    let temp = (cscore - meanrank)**2
+    let aval = sum temp
+    let svar = ((n1*n2)/(n*(n-1)))*aval
+    let statval = (s - smean)/sqrt(svar)
+    let statval = round(statval,3)
+    let cv = norppf(0.975)
+    let upplim = round(cv,2)
+    let lowlim = -upplim
+    feedback off
+    print "Two Sample Linear Rank Sum Test Based on Conover Scores"
+    print "H0: Variances are Equal"
+    print "Ha: Variances are Not Equal"
+    print "alpha: 0.05"
+    print "Test Statistic: ^statval"
+    print "Lower Critical Value: ^lowlim"
+    print "Upper Critical Value: ^upplim"
+    if statval < cv
+       print "Conclusion: Accept H0"
+    else
+       print "Conclusion: Reject H0"
+    end of if
+ 
 -----CONPDF (LET)--------------------------------
  
 CONPDF
@@ -57230,6 +57918,52 @@ Some Additional Methods
        This method is an alternative to BOB for the case where there
        are a small number of labs (typically 5 or less).
 
+    5) Linear Pool
+
+       Stone introducd the linear pool model to aggregate the opinions
+       of multiple experts to produce a consensus.  Duewer recommended
+       this model in the analysis of key comparisons.  Koepke,
+       Lafarge, Possolo and Toman also  discuss this method.  The
+       Koepke paper was used as the basis for the Dataplot implementation
+       of this method.
+
+       Given k labs, the method is as follows
+
+           i) Assign weights to the labs.  These weights should
+              be positive and they will be normalized to sum to 1.
+              If weights are not assigned, each lab will be
+              assigned equal weight.  This is where the expert
+              opionion comes in (i.e., labs that are viewed as
+              "better" are assigned greater weight).
+ 
+          ii) Randomly select one of the labs based on the
+              assigned weights (i.e., labs with greater weight
+              will have a higher probability of being selected).
+
+         iii) If the sample size of the lab is given as zero or one,
+              then generate a normal random number with the location
+              parameter set to the lab mean and the scale parameter
+              set to the lab standard uncertainty.
+
+          iv) If the sample size of the lab is greater than one,
+              then generate a random number from a t distribution
+              with degrees of freedom equal to the sample size
+              minus one, the location parameter set to the lab mean
+              and the scale parameter set to the lab standard
+              deviation divided by the square root of the sample
+              size.
+
+           v) Repeat steps ii - iv a large number of times (by
+              default, Dataplot generates 50,000 samples).  Then
+              the consensus value is the mean of these 50,000
+              generated values and the associated standard
+              uncertainty is the standard deviation of this
+              sample.  A 95% confidence interval is obtained
+              by determining the 2.5 and 97.5 percentiles of the
+              sample.
+
+       
+
 Data Analytic Considerations:
     In determining the most appropriate estimate of the consensus
     mean, the following issues need to be addressed.
@@ -57497,6 +58231,13 @@ Note:
         H15OFMEA  = the consensus mean using the Huber mean (H15) of means
                     method.
         H15MEASE  = the standard error of the Huber mean of means method.
+        LINPMEAN  = the consensus mean using the linear pool method.
+        LINPSE    = the standard uncertainty of the linear pool
+                    consensus mean.
+        LINP95LL  = the lower 95% confidence limit for the linear
+                    pool consensus mean.
+        LINP95UL  = the upper 95% confidence limit for the linear
+                    pool consensus mean.
 
 Note:
     To allow additional analysis, a number of results are
@@ -57712,6 +58453,8 @@ Note:
         LET A = GRAYBILL DEAL NAIVE STANDARD ERROR Y X
         LET A = GRAYBILL DEAL ZHANG ONE STANDARD ERROR Y X
         LET A = GRAYBILL DEAL ZHANG TWO STANDARD ERROR Y X
+        LET A = LINEAR POOL Y X
+        LET A = LINEAR STANDARD ERROR Y X
 
     If you have summary data, you can enter one of the following
 
@@ -57743,6 +58486,8 @@ Note:
         LET A = SUMMARY GRAYBILL DEAL NAIVE STANDARD ERROR MEAN SD N
         LET A = SUMMARY GRAYBILL DEAL ZHANG ONE STANDARD ERROR MEAN SD N
         LET A = SUMMARY GRAYBILL DEAL ZHANG TWO STANDARD ERROR MEAN SD N
+        LET A = SUMMARY LINEAR POOL YMEAN YSD YN
+        LET A = SUMMARY LINEAR STANDARD ERROR YMEAN YSD YN
 
     Dataplot statistics can be used in a number of other commands.  For
     details, enter
@@ -57776,6 +58521,7 @@ Note:
         SET BAYESIAN CONSENSUS PROCEDURE <ON/OFF>     - default is OFF
         SET MEDIAN OF MEANS <ON/OFF>                  - default is OFF
         SET HUBER MEAN OF MEANS <ON/OFF>              - default is OFF
+        SET LINEAR POOL <ON/OFF>                      - default is OFF
 
     The following commands are available, but are for methods that are
     still under development.  These commands should not currently be used.
@@ -57783,6 +58529,34 @@ Note:
         SET VANGEL RUHKIN BOOTSTRAP <ON/OFF>          - default is OFF
         SET MEDIAN OF MEANS <ON/OFF>                  - default is OFF
         SET TRIMMED MEAN OF MEANS <ON/OFF>            - default is OFF
+
+Note:
+   The linear pool method supports the following commands
+
+        SET LINEAR POOL WEIGHTS <varname>
+        SET LINEAR POOL SAMPLE SIZE <value>
+
+    The WEIGHTS option lets you specify the name of a variable
+    that contains the weights for the labs.  By default, equal
+    weights are used for all labs.  Setting <varname> to OFF
+    (or DEFAULT or NONE) will reset to equal weights.  The
+    SAMPLE SIZE option lets you specify the number of samples
+    that are drawn.  The default value is 50,000 and this value
+    should typically be in the range 10,000 to 100,000.
+
+    The linear pool sampling can sometimes result in a
+    multi-modal distribution.  This may indicate that the linear
+    pool method is not appropriate.  If the linear pool method
+    is turned on, the sample values are written to the
+    file dpst5f.dat.  Note that several methods write to this
+    file.  Look for the line "VALUES FROM LINEAR POOL METHOD".
+    So if this string is on line 101 of dpst5f.dat, you can
+    do something like
+
+       SKIP 101
+       READ dpst5f.dat YLINPOOL
+       SKIP 0
+       HISTOGRAM YLINPOOL
 
 Default:
     None
@@ -57872,6 +58646,20 @@ References:
     "CCQM Guidance note: Estimation of a Consensus KCRV and associated
     Degrees of Equivalence", Version 10, 2013.
 
+    Stone (1961), "The Opinion Pool", Annals of Mathematical
+    Statistics, Vol. 32, pp. 1339-1342.
+
+    Duewer (2004), "A Robust Approach for the determination of
+    CCQM Key Comparison Reference Values and Uncertinties",
+    Technical Report Consultultive Committee for Amount of
+    Substance: Metrology in Chemistry (CCQM) International
+    Bureau of Weights and Measures (BIPM), Sevres, France
+    (9th Annual Meeting, Working Document CCQM/04-15).
+
+    Koepke, Lafarge, Possolo and Toman (2017), "Consensus
+    Building for Interlaboratory Studies, Key Comparisons, and
+    Meta-Analysis", Metrologia, Vol. 54, S34-S62.
+
 Applications:
     Interlaboratory Studies
  
@@ -57896,6 +58684,7 @@ Implementation Date:
              methods.
     2017/07: Changed the default for Schiller-Eberhardt, Fairweather,
              and Bayesian consensus procedure to OFF.
+    2023/04: Added support for linear pool method
  
 Program 1:
     SKIP 25
@@ -57944,6 +58733,62 @@ Program 2:
     consensus mean mx sx nx subset tag = 2
     consensus mean mx sx nx subset tag = 3
     consensus mean mx sx nx subset tag = 4
+
+Program 3:
+    . Consensus means analysis for data in Possolo,
+    . LaFarge and Koepke paper.  This example shows
+    . case where the standard deviation is based on
+    . an unknown degrees of freedom
+    .
+    . Step 1:  Read the data
+    .
+    read amean asd ni
+    6.67248      0.00043       0
+    6.6729       0.0005        0
+    6.67398      0.00070       0
+    6.674255     0.000092      0
+    6.67559      0.00027       0
+    6.67422      0.00098       0
+    6.67387      0.00027       0
+    6.67222      0.00087       0
+    6.67425      0.00012       0
+    6.67349      0.00018       0
+    6.67234      0.00014       0
+    6.67554      0.00016       0
+    6.67191      0.00099       0
+    6.67435      0.00013       0
+    end of data
+    .
+    . Step 2:  Set options
+    .
+    set write decimals -7
+    set modified mandel paule off
+    set vangel rukhin off
+    set vangel rukhin bootstrap off
+    set dersimonian laird minmax off
+    set dersimonian laird bootstrap off
+    set schiller eberhardt off
+    set mean of means on
+    set grand mean off
+    set graybill deal off
+    set generalized confidence interval off
+    set fairweather off
+    set bayesian consensus procedure off
+    set bob off
+    set linear pool on
+    set random number generator fibonacci congruential
+    seed 46551
+    .
+    print "Possolo, LaFarge, Koepke Test Data"
+    print " "
+    print " "
+    consensus mean amean asd ni
+    .
+    seed 46551
+    let consval = summary linear pool                amean asd ni
+    seed 46551
+    let consunc = summary linear pool standard error amean asd ni
+    print consval consunc
 
 -----CONSENSUS MEAN PLOT----------------------------------------------
  
@@ -63164,14 +64009,14 @@ Description:
     where XBAR is the sample mean.
 
 Syntax:
-    LET <param> = CPL <y1> <SUBSET/EXCEPT/FOR qualification>
+    LET <par> = CPL <y1> <SUBSET/EXCEPT/FOR qualification>
     where <y1> is the first  response variable;
-          <param> is a parameter where the computed CPL is stored;
+          <par> is a parameter where the computed CPL is stored;
     and where the <SUBSET/EXCEPT/FOR qualification> is optional.
  
 Examples:
     LET A = CPL Y1
-    LET A = CP Y1 SUBSET TAG > 2
+    LET A = CPL Y1 SUBSET TAG > 2
  
 Note:
     Recall that Chebychev's theorem states that at least 75% of the
@@ -63187,15 +64032,11 @@ Note:
         LET USL = <value>
  
 Note:
-    The following plots are also available:
+    Dataplot statistics can be used in a number of commands.  For
+    details, enter
 
-        CPL PLOT Y TAG1
-        CROSS TABULATE CPL PLOT Y TAG1 TAG2
+         HELP STATISTICS
 
-    These plot the CPL statistic for groups of data where there
-    can be one group variable (CPL PLOT) or two group variables
-    (CROSS TABULATE CPL PLOT).
- 
 Default:
     None
  
@@ -63212,14 +64053,14 @@ Related Commands:
     EXPECTED LOSS (LET)       = Compute the expected loss of a sample.
  
 Reference:
-    "Guide to Quality Control", Kaoru Ishikawa, Asian Productivity
-    Organization, 1982 (chapter 13).
+    Kotz and Johnson (1993), "Process Capability Indices,"
+    Chapman & Hall (chapter 2).
  
 Applications:
     Quality Control
  
 Implementation Date:
-    2001/4
+    2001/04
  
 Program:
     SKIP 25
@@ -63229,11 +64070,11 @@ Program:
     LET A = CPL Y 
     MULTIPLOT CORNER COORDINATES 5 5 95 95
     MULTIPLOT 2 2
+    MULTIPLOT SCALE FACTOR 2
     TITLE AUTOMATIC
     CPL PLOT Y X1
     CPL PLOT Y X2
     CPL PLOT Y X3
-    CROSS TABULATE CPL PLOT Y X2 X3
     END OF MULTIPLOT
  
 -----CPK (LET)-------------------------------------------------------
@@ -63302,8 +64143,8 @@ Related Commands:
     EXPECTED LOSS (LET)       = Compute the expected loss of a sample.
  
 Reference:
-    "Guide to Quality Control", Kaoru Ishikawa, Asian Productivity
-    Organization, 1982 (chapter 13).
+    Kaoru Ishikawa (1982), "Guide to Quality Control,"
+    Asian Productivity Organization, (chapter 13).
  
 Applications:
     Quality Control
@@ -63651,6 +64492,114 @@ Program:
     TIC OFFSET UNITS DATA
     CPM PLOT Y X
  
+-----CPMK (LET)-------------------------------------------------------
+ 
+CPMK
+ 
+Name:
+    CPMK (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the Cpmk process capability index for a variable.
+ 
+Description:
+    This statistic computes the sample Cpmk process capability
+    index of an industrial process and is defined as follows:
+
+       CPMK = MIN((ENGUSL - MEAN),(MEAN - ENGLSL)/
+              {3*SQRT(S**2 +(MEAN-TARGET)**2)}
+
+    with TARGET, ENGLSL, ENGUSL and MEAN denoting the target engineering
+    limit, the lower engineering specification limit, the upper
+    engineering specification limit and the sample mean, respectively.
+    This capability index combines both precision and unbiasedness.
+
+    The Cpmk statistic can have values from 0 to infinity with
+    values between 0.5 and 1 being typical.
+
+    The specification limits define the range within which a product is
+    considered acceptable (values outside this range indicate that a
+    product is defective).
+
+Syntax:
+    LET <par> = CPMK <y>   <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <par> is a parameter where the computed CPMK is stored;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET A = CPMK Y1
+    LET A = CPMK Y1 SUBSET TAG > 2
+ 
+Note:
+    The target and upper and lower specification limits must be specified
+    by the user as follows:
+
+        LET TARGET = <value>
+        LET LSL = <value>
+        LET USL = <value>
+ 
+Note:
+    Dataplot statistics can be used in a number of commands.  For
+    details, enter
+
+         HELP STATISTICS
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    CAPABILITY ANALYSIS  = Perform a capability analysis.
+    CP                   = Compute a Cp process capability index.
+    CPK                  = Compute a Cpk process capability index.
+    CNPK                 = Compute a Cnpk process capability index.
+    CPM                  = Compute a Cpm process capability index.
+    CC                   = Compute a Cc process capability index.
+    CPL                  = Compute a Cpl process capability index.
+    CPU                  = Compute a Cpu process capability index.
+    CNP                  = Compute a Cnp process capability index.
+    CNPM                 = Compute a Cnpm process capability index.
+    CNPKM                = Compute a Cnpkm process capability index.
+    PERCENT DEFECTIVE    = Compute the percentage of defectives in a
+                           sample.
+    EXPECTED LOSS        = Compute the expected loss of a sample.
+ 
+Reference:
+    Chen and Ding (2001), "A New Process Capability Index for Non-Normal
+    Distributions," International Journal of Quality & Reliability
+    Management, Vol. 18, No. 7, pp. 762-770.
+ 
+    Kaoru Ishikawa (1982), "Guide to Quality Control,"
+    Asian Productivity Organization, (chapter 13).
+ 
+Applications:
+    Quality Control
+ 
+Implementation Date:
+    2015/04
+ 
+Program:
+    SKIP 25
+    READ FURNACE.DAT X1 X2 X3 Y
+    LET TARGET = 550
+    LET LSL = 460
+    LET USL = 660
+    LET A = CPMK Y 
+    MULTIPLOT CORNER COORDINATES 5 5 95 95
+    MULTIPLOT 2 2
+    MULTIPLOT SCALE FACTOR 2
+    TITLE AUTOMATIC
+    CPMK PLOT Y X1
+    CPMK PLOT Y X2
+    CPMK PLOT Y X3
+    END OF MULTIPLOT
+ 
 -----CPSI (LET)--------------------------------
  
 CPSI
@@ -63880,9 +64829,9 @@ Description:
     where XBAR is the sample mean.
 
 Syntax:
-    LET <param> = CPU <y1> <SUBSET/EXCEPT/FOR qualification>
+    LET <par> = CPU <y1> <SUBSET/EXCEPT/FOR qualification>
     where <y1> is the first  response variable;
-          <param> is a parameter where the computed CPU is stored;
+          <par> is a parameter where the computed CPU is stored;
     and where the <SUBSET/EXCEPT/FOR qualification> is optional.
  
 Examples:
@@ -63904,15 +64853,11 @@ Note:
         LET USL = <value>
  
 Note:
-    The following plots are also available:
+    Dataplot statistics can be used in a number of commands.  For
+    details, enter
 
-        CPU PLOT Y TAG1
-        CROSS TABULATE CPU PLOT Y TAG1 TAG2
+         HELP STATISTICS
 
-    These plot the CPU statistic for groups of data where there
-    can be one group variable (CPU PLOT) or two group variables
-    (CROSS TABULATE CPU PLOT).
- 
 Default:
     None
  
@@ -63929,14 +64874,14 @@ Related Commands:
     EXPECTED LOSS (LET)       = Compute the expected loss of a sample.
  
 Reference:
-    "Guide to Quality Control", Kaoru Ishikawa, Asian Productivity
-    Organization, 1982 (chapter 13).
+    Kotz and Johnson (1993), "Process Capability Indices,"
+    Chapman & Hall (chapter 2).
  
 Applications:
     Quality Control
  
 Implementation Date:
-    2001/4
+    2001/04
  
 Program:
     SKIP 25
@@ -63946,11 +64891,11 @@ Program:
     LET A = CPU Y 
     MULTIPLOT CORNER COORDINATES 5 5 95 95
     MULTIPLOT 2 2
+    MULTIPLOT SCALE FACTOR 2
     TITLE AUTOMATIC
     CPU PLOT Y X1
     CPU PLOT Y X2
     CPU PLOT Y X3
-    CROSS TABULATE CPU PLOT Y X2 X3
     END OF MULTIPLOT
  
 -----CR-------------------------------------------------------
@@ -64372,6 +65317,14 @@ Examples:
     LET C = CREATE MATRIX X0 X1 X2 X3 X4
  
 Note:
+    The 2023/05 version of Dataplot update the CREATE MATRIX command
+    to support the "TO" syntax.  That is, you can now enter commands
+    such as
+
+         LET M = CREATE MATRIX X1 TO X50
+         LET M = CREATE MATRIX X3 X8 TO X24 X28
+
+Note:
     The columns of a matrix are accessible as variables by appending
     an index to the matrix name.  For example, the 4x4 matrix C has
     columns C1, C2, C3, and C4.  These columns can be operated on
@@ -64415,7 +65368,8 @@ Applications:
     Matrix Operations
  
 Implementation Date:
-    2002/7
+    2002/07
+    2023/05: Added support for "TO" syntax.
  
 Program:
     DIMENSION 100 COLUMNS
@@ -67533,6 +68487,52 @@ Program:
     CYCLE PLOT
  
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

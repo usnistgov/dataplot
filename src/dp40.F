@@ -15661,6 +15661,7 @@ C     UPDATED         --MAY       2023.  IPTESS, IPTESC, PPTEVA
 C     UPDATED         --JUNE      2023.  ISGTMC
 C     UPDATED         --JUNE      2023.  IFTESH, PFTEPV, PFTEPM, IFTEDI
 C     UPDATED         --JUNE      2023.  IMNWCC
+C     UPDATED         --JULY      2023.  ILRASC
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -18717,10 +18718,10 @@ C
 C               *****************************************************
 C               **  TREAT THE SET PERMUTATION TEST SAMPLE SIZE     **
 C               **                <VALUE>                          **
-C               **  TREAT THE SET PERMUTATION TEST SCALE           **
-C               **                <DIFFERENCE/RATIO>               **
 C               **  TREAT THE SET PERMUTATION TEST COMPARISON VALUE**
 C               **                <VALUE>                          **
+C               **  TREAT THE SET PERMUTATION TEST                 **
+C               **                <DIFFERENCE/RATIO>               **
 C               *****************************************************
 C
       IPTESS=4000
@@ -18763,6 +18764,17 @@ C               **            <UPPER TAILED/TWO SIDED>               **
 C               *******************************************************
 C
       IFTEDI='UPPE'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JULY      2023
+C
+C               *******************************************************
+C               **  TREAT THE SET LINEAR RANK SUM TEST SCORE         **
+C               **                <WILCOXON/SAVAGE/CONOVER/          **
+C               **                 VAN DER WAERDEN/ANSARI BRADLEY/   **
+C               **                 MOOD/MEDIAN/KLOTZ>                **
+C               *******************************************************
+C
+      ILRASC='WILC'
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    JUNE      2023
 C
@@ -54225,6 +54237,9 @@ C                  SIGN TEST Y1 Y2 or Y MU or MU Y OR Y1 Y2 D0 (HLR)
 C                  WILCOXON SIGNED RANK TEST Y1 Y2 or Y1 Y2 D0 (HLR)
 C                                            or Y MU
 C                  MANN-WHITNEY RANK SUM TEST Y1 Y2            (HLR)
+C                  FLIGNER POLICELLO TEST Y1 Y2                (HLR)
+C                  TWO SAMPLE LINEAR RANK SUM TEST Y1 Y2       (HLR)
+C                  TWO SAMPLE PERMUTATION TEST Y1 Y2           (HLR)
 C                  FISHER TWO SAMPLE RANDOMIZATION TEST Y1 Y2  (HLR)
 C
 C                  CHI-SQUARED TEST Y SIGMA or SIGMA Y         (HLR)
@@ -54566,6 +54581,10 @@ C     UPDATED         --OCTOBER   2019. SKEWNESS OUTLIER TEST
 C     UPDATED         --OCTOBER   2019. KURTOSIS OUTLIER TEST
 C     UPDATED         --JUNE      2023. SIEGEL-TUKEY TEST
 C     UPDATED         --JUNE      2023. RATIO OF SD CONFIDENCE LIMITS
+C     UPDATED         --JULY      2023. TWO SAMPLE LINEAR RANK SUM TEST
+C     UPDATED         --AUGUST    2023. FLIGNER POLICELLO TEST
+C     UPDATED         --AUGUST    2023. TWO SAMPLE <STAT> PERMUTATION TEST
+C                                       TWO SAMPLE <STAT> CONFIDENCE LIMITS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -55586,20 +55605,82 @@ C
          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
       ENDIF
 C
-CCCCC THE FOLLOWING SECTION WAS ADDED     JULNE 2023
+CCCCC THE FOLLOWING SECTION WAS ADDED     JUNE 2023
 C               *************************************************
-C               **  TREAT THE SIEGEL TUKEY          TEST  CASE **
+C               **  TREAT THE SIEGEL POLIY          TEST  CASE **
 C               *************************************************
 C
-      IF( (ICOM.EQ.'SIEG'     .AND. IHARG(1).EQ.'TUKE') .OR.
-     1    (IHARG(1).EQ.'SIEG' .AND. IHARG(2).EQ.'TUKE') .OR.
-     1    (IHARG(2).EQ.'SIEG' .AND. IHARG(3).EQ.'TUKE') .OR.
-     1    (IHARG(3).EQ.'SIEG' .AND. IHARG(4).EQ.'TUKE')
+      IF( (ICOM.EQ.'SIEG'     .AND. IHARG(1).EQ.'POLI') .OR.
+     1    (IHARG(1).EQ.'SIEG' .AND. IHARG(2).EQ.'POLI') .OR.
+     1    (IHARG(2).EQ.'SIEG' .AND. IHARG(3).EQ.'POLI') .OR.
+     1    (IHARG(3).EQ.'SIEG' .AND. IHARG(4).EQ.'POLI')
      1   )THEN
          CALL DPSGTU(MAXNXT,ICAPSW,IFORSW,
      1               IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
       ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED     AUGUST 2023
+C               *************************************************
+C               **  TREAT THE FLIGNER POLICELLO     TEST  CASE **
+C               *************************************************
+C
+      IF( (ICOM.EQ.'FLIG'     .AND. IHARG(1).EQ.'POLI') .OR.
+     1    (IHARG(1).EQ.'FLIG' .AND. IHARG(2).EQ.'POLI') .OR.
+     1    (IHARG(2).EQ.'FLIG' .AND. IHARG(3).EQ.'POLI') .OR.
+     1    (IHARG(3).EQ.'FLIG' .AND. IHARG(4).EQ.'POLI')
+     1   )THEN
+         CALL DPFPTE(MAXNXT,ICAPSW,IFORSW,
+     1               IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED     JULY 2023
+C               ******************************************************
+C               **  TREAT THE TWO SAMPLE LINEAR RANK SUM TEST  CASE **
+C               ******************************************************
+C
+      IF( (ICOM.EQ.'TWO '     .AND. IHARG(1).EQ.'SAMP') .OR.
+     1    (IHARG(1).EQ.'TWO ' .AND. IHARG(2).EQ.'SAMP') .OR.
+     1    (IHARG(2).EQ.'TWO ' .AND. IHARG(3).EQ.'SAMP') .OR.
+     1    (IHARG(3).EQ.'TWO ' .AND. IHARG(4).EQ.'SAMP')
+     1   )THEN
+         CALL DPLRST(MAXNXT,ICAPSW,IFORSW,
+     1               IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ELSEIF( (ICOM.EQ.'2   '     .AND. IHARG(1).EQ.'SAMP') .OR.
+     1    (IHARG(1).EQ.'2   ' .AND. IHARG(2).EQ.'SAMP') .OR.
+     1    (IHARG(2).EQ.'2   ' .AND. IHARG(3).EQ.'SAMP') .OR.
+     1    (IHARG(3).EQ.'2   ' .AND. IHARG(4).EQ.'SAMP')
+     1   )THEN
+         CALL DPLRST(MAXNXT,ICAPSW,IFORSW,
+     1               IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED     AUGUST 2023
+C               *********************************************************
+C               **  TREAT THE TWO SAMPLE <STAT> PERMUTATION TEST  CASE **
+C               *********************************************************
+C
+      IF( (ICOM.EQ.'TWO '     .AND. IHARG(1).EQ.'SAMP') .OR.
+     1    (IHARG(1).EQ.'TWO ' .AND. IHARG(2).EQ.'SAMP') .OR.
+     1    (IHARG(2).EQ.'TWO ' .AND. IHARG(3).EQ.'SAMP') .OR.
+     1    (IHARG(3).EQ.'TWO ' .AND. IHARG(4).EQ.'SAMP')
+     1   )THEN
+         CALL DPPTES(MAXNXT,ICAPSW,IFORSW,ISEED,
+     1               IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ELSEIF( (ICOM.EQ.'2   '     .AND. IHARG(1).EQ.'SAMP') .OR.
+     1    (IHARG(1).EQ.'2   ' .AND. IHARG(2).EQ.'SAMP') .OR.
+     1    (IHARG(2).EQ.'2   ' .AND. IHARG(3).EQ.'SAMP') .OR.
+     1    (IHARG(3).EQ.'2   ' .AND. IHARG(4).EQ.'SAMP')
+     1   )THEN
+         CALL DPPTES(MAXNXT,ICAPSW,IFORSW,ISEED,
+     1               IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ENDIF
+C
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED     JUNE 2011
 C               **************************************************

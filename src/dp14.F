@@ -14252,10 +14252,22 @@ C
             NCHAR=NCHAR+1
             ITEXT3(NCHAR:NCHAR+2)='3.6'
             NCHAR=NCHAR+2
+          ELSEIF(IPYTVR.EQ.'37')THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR+2)='3.7'
+            NCHAR=NCHAR+2
+          ELSEIF(IPYTVR.EQ.'38')THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR+2)='3.7'
+            NCHAR=NCHAR+2
           ELSEIF(IPYTVR.EQ.'39')THEN
             NCHAR=NCHAR+1
             ITEXT3(NCHAR:NCHAR+2)='3.9'
             NCHAR=NCHAR+2
+          ELSEIF(IPYTVR.EQ.'310')THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR+3)='3.10'
+            NCHAR=NCHAR+3
           ELSEIF(IPYTVR.EQ.'2')THEN
             NCHAR=NCHAR+1
             ITEXT3(NCHAR:NCHAR)='2'
@@ -14285,10 +14297,22 @@ C
             NCHAR=NCHAR+1
             ITEXT3(NCHAR:NCHAR+2)='3.6'
             NCHAR=NCHAR+2
+          ELSEIF(IPYTVR.EQ.'37')THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR+2)='3.7'
+            NCHAR=NCHAR+2
+          ELSEIF(IPYTVR.EQ.'38')THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR+2)='3.8'
+            NCHAR=NCHAR+2
           ELSEIF(IPYTVR.EQ.'39')THEN
             NCHAR=NCHAR+1
             ITEXT3(NCHAR:NCHAR+2)='3.9'
             NCHAR=NCHAR+2
+          ELSEIF(IPYTVR.EQ.'310')THEN
+            NCHAR=NCHAR+1
+            ITEXT3(NCHAR:NCHAR+3)='3.10'
+            NCHAR=NCHAR+3
           ELSEIF(IPYTVR.EQ.'2')THEN
             NCHAR=NCHAR+1
             ITEXT3(NCHAR:NCHAR)='2'

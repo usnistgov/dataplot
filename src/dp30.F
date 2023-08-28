@@ -6071,11 +6071,11 @@ C
       RETURN
       END
       SUBROUTINE DPTAC2(Y1,Y2,Y3,TAG1,TAG2,TAG3,TAG4,N,YLEVEL,NLEVEL,
-     1                  NUMV2,ICASCT,ICTNAM,ISTANR,
+     1                  NUMV2,ICASCT,ICTNAM,ISTANR,ISTARA,
      1                  XIDTEM,XIDTE2,XIDTE3,XIDTE4,
      1                  TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,
      1                  TEMP6,TEMP7,TEMP8,TEMP9,TMP10,TMP11,TMP12,
-     1                  XACLOW,XACUPP,
+     1                  XACLOW,XACUPP,XTEMP1,XTEMP2,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  ISEED,ICTAMV,PSTAMV,PCTAMV,ALPHA,IQUASE,
@@ -6122,10 +6122,12 @@ C     ORIGINAL VERSION--JUNE      2010. THIS VARIANT ADDED TO THE
 C                                       TABULATION PLOT
 C     UPDATED         --AUGUST    2010. ROW/COLUMN "MINMAX" OPTION
 C                                       FOR TWO GROUP-ID VARIABLES CASE
+C     UPDATED         --AUGUST    2023. CALL LIST TO CMPSTA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICASCT
+      CHARACTER*4 ISTARA
       CHARACTER*60 ICTNAM
       CHARACTER*4 ICTAMV
       CHARACTER*4 IQUASE
@@ -6175,6 +6177,8 @@ C
       DIMENSION TMP10(*)
       DIMENSION TMP11(*)
       DIMENSION TMP12(*)
+      DIMENSION XTEMP1(*)
+      DIMENSION XTEMP2(*)
 C
       DIMENSION ITEMP1(*)
       DIMENSION ITEMP2(*)
@@ -6439,10 +6443,11 @@ C
 C
       IF(NCRTV.EQ.1)THEN
         CALL DPTAP0(Y1,Y2,Y3,TAG1,N,
-     1              NUMV2,ICASCT,ISTANR,
+     1              NUMV2,ICASCT,ISTANR,ISTARA,
      1              XIDTEM,
      1              NUMSE1,
      1              TEMP1,TEMP2,TMP11,TEMP3,TEMP4,TEMP5,
+     1              XTEMP1,XTEMP2,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,ALPHA,
@@ -6500,10 +6505,11 @@ C       RANK WILL SERVE AS AN ARRAY INDEX, NEED TO CHECK FOR TIES.
 C
         IF(ITPLSO.EQ.'ON' .OR. ITPLSO.EQ.'ROW')THEN
           CALL DPTAP0(Y1,Y2,Y3,TAG1,N,
-     1                NUMV2,ICASCT,ISTANR,
+     1                NUMV2,ICASCT,ISTANR,ISTARA,
      1                XIDTEM,
      1                NUMSE1,
      1                TEMP1,TEMP2,TMP11,TEMP3,TEMP4,TEMP5,
+     1                XTEMP1,XTEMP2,
      1                ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                DTEMP1,DTEMP2,DTEMP3,
      1                ISEED,ALPHA,
@@ -6542,10 +6548,11 @@ C       SORT THE COLUMNS
 C
         IF(ITPLSO.EQ.'ON' .OR. ITPLSO.EQ.'COLU')THEN
           CALL DPTAP0(Y1,Y2,Y3,TAG2,N,
-     1                NUMV2,ICASCT,ISTANR,
+     1                NUMV2,ICASCT,ISTANR,ISTARA,
      1                XIDTE2,
      1                NUMSE2,
      1                TEMP1,TEMP2,TMP11,TEMP3,TEMP4,TEMP5,
+     1                XTEMP1,XTEMP2,
      1                ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                DTEMP1,DTEMP2,DTEMP3,
      1                ISEED,ALPHA,
@@ -6581,10 +6588,11 @@ C
         ENDIF
 C
         CALL DPTAP3(Y1,Y2,Y3,TAG1,TAG2,N,
-     1              NUMV2,ICASCT,ISTANR,
+     1              NUMV2,ICASCT,ISTANR,ISTARA,
      1              XIDTEM,XIDTE2,
      1              NUMSE1,NUMSE2,
      1              TEMP1,TEMP2,TMP11,TEMP3,TEMP4,TEMP5,
+     1              XTEMP1,XTEMP2,
      1              TMP10,TMP11,TMP12,ITPLCM,ITPLRM,ITPLGM,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
@@ -6841,10 +6849,11 @@ C
 C
       ELSEIF(NCRTV.EQ.3)THEN
         CALL DPTAP4(Y1,Y2,Y3,TAG1,TAG2,TAG3,N,
-     1              NUMV2,ICASCT,ISTANR,
+     1              NUMV2,ICASCT,ISTANR,ISTARA,
      1              XIDTEM,XIDTE2,XIDTE3,
      1              NUMSE1,NUMSE2,NUMSE3,
      1              TEMP1,TEMP2,TMP11,TEMP3,TEMP4,TEMP5,
+     1              XTEMP1,XTEMP2,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,ALPHA,
@@ -6914,10 +6923,11 @@ C
 C
       ELSEIF(NCRTV.EQ.4)THEN
         CALL DPTAP5(Y1,Y2,Y3,TAG1,TAG2,TAG3,TAG4,N,
-     1              NUMV2,ICASCT,ISTANR,
+     1              NUMV2,ICASCT,ISTANR,ISTARA,
      1              XIDTEM,XIDTE2,XIDTE3,XIDTE4,
      1              NUMSE1,NUMSE2,NUMSE3,NUMSE4,
      1              TEMP1,TEMP2,TMP11,TEMP3,TEMP4,TEMP5,
+     1              XTEMP1,XTEMP2,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,ALPHA,
@@ -7679,10 +7689,11 @@ C
       RETURN
       END
       SUBROUTINE DPTAP0(Y,Z,Z2,TAG1,N,
-     1                  NUMV2,ICASCT,ISTANR,
+     1                  NUMV2,ICASCT,ISTANR,ISTARA,
      1                  XIDTEM,
      1                  NUMSE1,
      1                  TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1                  XTEMP4,XTEMP5,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  ISEED,ALPHA,
@@ -7706,10 +7717,12 @@ C                                       BINOMIAL PROBABILITY, MEAN AND
 C                                       MEDIAN CONFIDENCE INTERVAL
 C     UPDATED         --JANUARY   2010. SUPPORT FOR UNCERTAINTY INTERVALS
 C                                       FOR BINOMIAL RATIO
+C     UPDATED         --AUGUST    2023. CALL LIST TO CMPSTA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICASCT
+      CHARACTER*4 ISTARA
       CHARACTER*4 ICTAMV
       CHARACTER*4 IQUASE
       CHARACTER*4 IBUGG3
@@ -7737,6 +7750,8 @@ C
       DIMENSION XTEMP1(*)
       DIMENSION XTEMP2(*)
       DIMENSION XTEMP3(*)
+      DIMENSION XTEMP4(*)
+      DIMENSION XTEMP5(*)
 C
       DIMENSION XACLOW(*)
       DIMENSION XACUPP(*)
@@ -7821,8 +7836,9 @@ C
         ELSE
           CALL CMPSTA(
      1              TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1              XTEMP4,XTEMP5,
      1              MAXNXT,NTEMP,NTEMP,NTEMP,
-     1              NRESP,ICASCT,
+     1              NRESP,ICASCT,ISTARA,
      1              ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
 CCCCC1              IQUAME,IQUASE,PSTAMV,
@@ -7959,6 +7975,7 @@ C                                       STATISTIC RATHER THAN A COLORED
 C                                       RECTANGLE
 C     UPDATED         --SEPTEMBER 2016. SUPPORT FOR MATRIX ARGUMENTS
 C     UPDATED         --JULY      2019. TWEAK SCRATCH SPACE
+C     UPDATED         --AUGUST    2023. CALL LIST TO CMPSTA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -7979,6 +7996,7 @@ C
       CHARACTER*4 MESSAG
       CHARACTER*4 ICASE
       CHARACTER*4 ISTADF
+      CHARACTER*4 ISTARA
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
@@ -8035,6 +8053,8 @@ C
       DIMENSION TMP10(MAXOBV)
       DIMENSION TMP11(MAXOBV)
       DIMENSION TMP12(MAXOBV)
+      DIMENSION XTEMP1(MAXOBV)
+      DIMENSION XTEMP2(MAXOBV)
 C
       DIMENSION XACLOW(MAXOBV)
       DIMENSION XACUPP(MAXOBV)
@@ -8075,6 +8095,8 @@ C
       EQUIVALENCE (GARBAG(IGAR14),Y3(1))
       EQUIVALENCE (GARBAG(IGAR15),TMP11(1))
       EQUIVALENCE (GARBAG(IGAR16),TMP12(1))
+      EQUIVALENCE (GARBAG(IGAR17),XTEMP1(1))
+      EQUIVALENCE (GARBAG(IGAR18),XTEMP2(1))
 C
       EQUIVALENCE (IGARBG(IIGAR1),ITEMP1(1))
       EQUIVALENCE (IGARBG(IIGAR2),ITEMP2(1))
@@ -8184,8 +8206,8 @@ C
   209 CONTINUE
 C
       CALL EXTSTA(ICOM,ICOM2,IHARG,IHARG2,IARGT,ARG,NUMARG,JMIN,JMAX,
-     1            ICASCT,ICTNAM,ISTANR,ISTADF,IFOUND,ILOCV,
-     1            ISUBRO,IBUGG3,IERROR)
+     1            ICASCT,ICTNAM,ISTANR,ISTADF,ISTARA,
+     1            IFOUND,ILOCV,ISUBRO,IBUGG3,IERROR)
 C
       IF(IFOUND.EQ.'NO')THEN
         ICTNAM='NUMBER'
@@ -8603,11 +8625,11 @@ C
 C
       IF(ICASPL.EQ.'TABU')THEN
         CALL DPTAP2(Y1,Y2,Y3,X1,X2,X3,X4,NLOCAL,YLEVEL,NLEVEL,
-     1              NUMVAR,ICASCT,ICTNAM,ISTANR,
+     1              NUMVAR,ICASCT,ICTNAM,ISTANR,ISTARA,
      1              XH1DIS,XH2DIS,XH3DIS,XH4DIS,
      1              TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,
      1              TEMP6,TEMP7,TEMP8,TEMP9,TMP10,TMP11,TMP12,
-     1              XACLOW,XACUPP,
+     1              XACLOW,XACUPP,XTEMP1,XTEMP2,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,ICTAMV,PSTAMV,PCTAMV,ALPHA,IQUASE,
@@ -8619,11 +8641,11 @@ C
      1              NPLOTP,NPLOTV,IBUGG3,ISUBRO,IERROR)
       ELSE
         CALL DPTAC2(Y1,Y2,Y3,X1,X2,X3,X4,NLOCAL,YLEVEL,NLEVEL,
-     1              NUMVAR,ICASCT,ICTNAM,ISTANR,
+     1              NUMVAR,ICASCT,ICTNAM,ISTANR,ISTARA,
      1              XH1DIS,XH2DIS,XH3DIS,XH4DIS,
      1              TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,
      1              TEMP6,TEMP7,TEMP8,TEMP9,TMP10,TMP11,TMP12,
-     1              XACLOW,XACUPP,
+     1              XACLOW,XACUPP,XTEMP1,XTEMP2,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,ICTAMV,PSTAMV,PCTAMV,ALPHA,IQUASE,
@@ -8691,11 +8713,11 @@ C
       RETURN
       END
       SUBROUTINE DPTAP2(Y1,Y2,Y3,TAG1,TAG2,TAG3,TAG4,N,YLEVEL,NLEVEL,
-     1                  NUMV2,ICASCT,ICTNAM,ISTANR,
+     1                  NUMV2,ICASCT,ICTNAM,ISTANR,ISTARA,
      1                  XIDTEM,XIDTE2,XIDTE3,XIDTE4,
      1                  TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,
      1                  TEMP6,TEMP7,TEMP8,TEMP9,TMP10,TMP11,TMP12,
-     1                  XACLOW,XACUPP,
+     1                  XACLOW,XACUPP,XTEMP1,XTEMP2,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  ISEED,ICTAMV,PSTAMV,PCTAMV,ALPHA,IQUASE,
@@ -8742,10 +8764,12 @@ C     UPDATED         --JANUARY   2010. OPTION TO LEAVE AXIS VARIABLES
 C                                       UNCODED
 C     UPDATED         --JUNE      2010. SUPPORT FOR "SORTED" OPTION FOR
 C                                       THE TWO GROUP-ID VARIABLE CASE
+C     UPDATED         --AUGUST    2023. CALL LIST TO CMPSTA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICASCT
+      CHARACTER*4 ISTARA
       CHARACTER*60 ICTNAM
       CHARACTER*4 ICTAMV
       CHARACTER*4 IQUASE
@@ -8795,6 +8819,8 @@ C
       DIMENSION TMP10(*)
       DIMENSION TMP11(*)
       DIMENSION TMP12(*)
+      DIMENSION XTEMP1(*)
+      DIMENSION XTEMP2(*)
 C
       DIMENSION ITEMP1(*)
       DIMENSION ITEMP2(*)
@@ -9042,10 +9068,11 @@ C
 C
       IF(NCRTV.EQ.1)THEN
         CALL DPTAP0(Y1,Y2,Y3,TAG1,N,
-     1              NUMV2,ICASCT,ISTANR,
+     1              NUMV2,ICASCT,ISTANR,ISTARA,
      1              XIDTEM,
      1              NUMSE1,
      1              TEMP1,TEMP2,TMP11,TEMP3,TEMP4,TEMP5,
+     1              XTEMP1,XTEMP2,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,ALPHA,
@@ -9229,10 +9256,11 @@ C       RANK WILL SERVE AS AN ARRAY INDEX, NEED TO CHECK FOR TIES.
 C
         IF(ITPLSO.EQ.'ON' .OR. ITPLSO.EQ.'ROW')THEN
           CALL DPTAP0(Y1,Y2,Y3,TAG1,N,
-     1                NUMV2,ICASCT,ISTANR,
+     1                NUMV2,ICASCT,ISTANR,ISTARA,
      1                XIDTEM,
      1                NUMSE1,
      1                TEMP1,TEMP2,TMP11,TEMP3,TEMP4,TEMP5,
+     1                XTEMP1,XTEMP2,
      1                ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                DTEMP1,DTEMP2,DTEMP3,
      1                ISEED,ALPHA,
@@ -9271,10 +9299,11 @@ C       SORT THE COLUMNS
 C
         IF(ITPLSO.EQ.'ON' .OR. ITPLSO.EQ.'COLU')THEN
           CALL DPTAP0(Y1,Y2,Y3,TAG2,N,
-     1                NUMV2,ICASCT,ISTANR,
+     1                NUMV2,ICASCT,ISTANR,ISTARA,
      1                XIDTE2,
      1                NUMSE2,
      1                TEMP1,TEMP2,TMP11,TEMP3,TEMP4,TEMP5,
+     1                XTEMP1,XTEMP2,
      1                ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                DTEMP1,DTEMP2,DTEMP3,
      1                ISEED,ALPHA,
@@ -9310,10 +9339,11 @@ C
         ENDIF
 C
         CALL DPTAP3(Y1,Y2,Y3,TAG1,TAG2,N,
-     1              NUMV2,ICASCT,ISTANR,
+     1              NUMV2,ICASCT,ISTANR,ISTARA,
      1              XIDTEM,XIDTE2,
      1              NUMSE1,NUMSE2,
      1              TEMP1,TEMP2,TMP11,TEMP3,TEMP4,TEMP5,
+     1              XTEMP1,XTEMP2,
      1              TMP10,TMP11,TMP12,ITPLRM,ITPLCM,ITPLGM,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
@@ -9555,10 +9585,11 @@ C
 C
       ELSEIF(NCRTV.EQ.3)THEN
         CALL DPTAP4(Y1,Y2,Y3,TAG1,TAG2,TAG3,N,
-     1              NUMV2,ICASCT,ISTANR,
+     1              NUMV2,ICASCT,ISTANR,ISTARA,
      1              XIDTEM,XIDTE2,XIDTE3,
      1              NUMSE1,NUMSE2,NUMSE3,
      1              TEMP1,TEMP2,TMP11,TEMP3,TEMP4,TEMP5,
+     1              XTEMP1,XTEMP2,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,ALPHA,
@@ -9771,10 +9802,11 @@ C
 C
       ELSEIF(NCRTV.EQ.4)THEN
         CALL DPTAP5(Y1,Y2,Y3,TAG1,TAG2,TAG3,TAG4,N,
-     1              NUMV2,ICASCT,ISTANR,
+     1              NUMV2,ICASCT,ISTANR,ISTARA,
      1              XIDTEM,XIDTE2,XIDTE3,XIDTE4,
      1              NUMSE1,NUMSE2,NUMSE3,NUMSE4,
      1              TEMP1,TEMP2,TMP11,TEMP3,TEMP4,TEMP5,
+     1              XTEMP1,XTEMP2,
      1              ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
      1              ISEED,ALPHA,
@@ -10012,10 +10044,11 @@ C
       RETURN
       END
       SUBROUTINE DPTAP3(Y,Z,Z2,TAG1,TAG2,N,
-     1                  NUMV2,ICASCT,ISTANR,
+     1                  NUMV2,ICASCT,ISTANR,ISTARA,
      1                  XIDTEM,XIDTE2,
      1                  NUMSE1,NUMSE2,
      1                  TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1                  XTEMP4,XTEMP5,
      1                  YCMNMX,YRMNMX,YGMNMX,ITPLCM,ITPLRM,ITPLGM,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
@@ -10045,10 +10078,12 @@ C                                       IT A ROW COLUMN MINIMUM OR
 C                                       MAXIMUM VALUE FOR THE STATISTIC
 C     UPDATED         --JULY      2021. SUPPORT FOR "GRAND" MINIMUM OR
 C                                       MAXIMUM
+C     UPDATED         --JULY      2023. CALL LIST TO CMPSTA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICASCT
+      CHARACTER*4 ISTARA
       CHARACTER*4 ICTAMV
       CHARACTER*4 IQUASE
       CHARACTER*4 ITPLCM
@@ -10084,6 +10119,8 @@ C
       DIMENSION XTEMP1(*)
       DIMENSION XTEMP2(*)
       DIMENSION XTEMP3(*)
+      DIMENSION XTEMP4(*)
+      DIMENSION XTEMP5(*)
       DIMENSION YCMNMX(*)
       DIMENSION YRMNMX(*)
       DIMENSION YGMNMX(*)
@@ -10173,8 +10210,9 @@ C
           ELSE
             CALL CMPSTA(
      1              TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1              XTEMP4,XTEMP5,
      1              MAXNXT,NTEMP,NTEMP,NTEMP,
-     1              NRESP,ICASCT,
+     1              NRESP,ICASCT,ISTARA,
      1              ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
 CCCCC1              IQUAME,IQUASE,PSTAMV,
@@ -10386,10 +10424,11 @@ C
       RETURN
       END
       SUBROUTINE DPTAP4(Y,Z,Z2,TAG1,TAG2,TAG3,N,
-     1                  NUMV2,ICASCT,ISTANR,
+     1                  NUMV2,ICASCT,ISTANR,ISTARA,
      1                  XIDTEM,XIDTE2,XIDTE3,
      1                  NUMSE1,NUMSE2,NUMSE3,
      1                  TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1                  XTEMP4,XTEMP5,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  ISEED,ALPHA,
@@ -10413,10 +10452,12 @@ C                                       BINOMIAL PROBABILITY, MEAN AND
 C                                       MEDIAN CONFIDENCE INTERVAL
 C     UPDATED         --JANUARY   2010. SUPPORT FOR UNCERTAINTY INTERVALS
 C                                       FOR BINOMIAL RATIO
+C     UPDATED         --AUGUST    2023. CALL LIST TO CMPSTA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICASCT
+      CHARACTER*4 ISTARA
       CHARACTER*4 ICTAMV
       CHARACTER*4 IQUASE
       CHARACTER*4 IBUGG3
@@ -10450,6 +10491,8 @@ C
       DIMENSION XTEMP1(*)
       DIMENSION XTEMP2(*)
       DIMENSION XTEMP3(*)
+      DIMENSION XTEMP4(*)
+      DIMENSION XTEMP5(*)
 C
       DIMENSION XACLOW(*)
       DIMENSION XACUPP(*)
@@ -10540,8 +10583,9 @@ C
           ELSE
             CALL CMPSTA(
      1              TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1              XTEMP4,XTEMP5,
      1              MAXNXT,NTEMP,NTEMP,NTEMP,
-     1              NRESP,ICASCT,
+     1              NRESP,ICASCT,ISTARA,
      1              ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
 CCCCC1              IQUAME,IQUASE,PSTAMV,
@@ -10637,10 +10681,11 @@ C
       RETURN
       END
       SUBROUTINE DPTAP5(Y,Z,Z2,TAG1,TAG2,TAG3,TAG4,N,
-     1                  NUMV2,ICASCT,ISTANR,
+     1                  NUMV2,ICASCT,ISTANR,ISTARA,
      1                  XIDTEM,XIDTE2,XIDTE3,XIDTE4,
      1                  NUMSE1,NUMSE2,NUMSE3,NUMSE4,
      1                  TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1                  XTEMP4,XTEMP5,
      1                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1                  DTEMP1,DTEMP2,DTEMP3,
      1                  ISEED,ALPHA,
@@ -10664,10 +10709,12 @@ C                                       BINOMIAL PROBABILITY, MEAN AND
 C                                       MEDIAN CONFIDENCE INTERVAL
 C     UPDATED         --JANUARY   2010. SUPPORT FOR UNCERTAINTY INTERVALS
 C                                       FOR BINOMIAL RATIO
+C     UPDATED         --AUGUST    2023. CALL LIST TO CMPSTA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICASCT
+      CHARACTER*4 ISTARA
       CHARACTER*4 ICTAMV
       CHARACTER*4 IQUASE
       CHARACTER*4 IBUGG3
@@ -10704,6 +10751,8 @@ C
       DIMENSION XTEMP1(*)
       DIMENSION XTEMP2(*)
       DIMENSION XTEMP3(*)
+      DIMENSION XTEMP4(*)
+      DIMENSION XTEMP5(*)
 C
       DIMENSION XACLOW(*)
       DIMENSION XACUPP(*)
@@ -10796,8 +10845,9 @@ C
           ELSE
             CALL CMPSTA(
      1              TEMP,TEMPZ,TEMPZ2,XTEMP1,XTEMP2,XTEMP3,
+     1              XTEMP4,XTEMP5,
      1              MAXNXT,NTEMP,NTEMP,NTEMP,
-     1              NRESP,ICASCT,
+     1              NRESP,ICASCT,ISTARA,
      1              ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,
      1              DTEMP1,DTEMP2,DTEMP3,
 CCCCC1              IQUAME,IQUASE,PSTAMV,

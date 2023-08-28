@@ -6855,6 +6855,7 @@ C     UPDATED         --JUNE       2023.  SET SHOEMAKER F TEST POOLED
 C                                             MU
 C     UPDATED         --JUNE       2023.  SET MANN WHITNEY CONTINUITY
 C                                             CORRECTION
+C     UPDATED         --JULY       2023.  SET LINEAR RANK SUM TEST SCORE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -8217,10 +8218,16 @@ C
           IPYTVR='36'
         ELSEIF(IHV.EQ.'3.6')THEN
           IPYTVR='36'
+        ELSEIF(IHV.EQ.'3.7')THEN
+          IPYTVR='37'
+        ELSEIF(IHV.EQ.'3.8')THEN
+          IPYTVR='38'
         ELSEIF(IHV.EQ.'39')THEN
           IPYTVR='39'
         ELSEIF(IHV.EQ.'3.9')THEN
           IPYTVR='39'
+        ELSEIF(IHV.EQ.'3.9')THEN
+          IPYTVR='310'
         ELSE
           IPYTVR='DEFA'
         ENDIF
@@ -10990,6 +10997,42 @@ C
         GOTO5160
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED JULY 2023
+C     *************************************************************
+C     **  SET LINEAR RANK SUM TEST SCORE                         **
+C     **      <WILCOXON/SAVAGE/CONOVER/VAN DER WAERDEN/          **
+C     **       ANSARI BRADLEY/MOOD/MEDIAN/KLOTZ>                 **
+C     *************************************************************
+C
+      IPART1='LINE'
+      IPART2='RANK'
+      IPART3='SUM '
+      IPART4='TEST'
+      IPART5='SCOR'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IF(IHARG(6).EQ.'SAVA')THEN
+          IHV='SAVA'
+        ELSEIF(IHARG(6).EQ.'CONO')THEN
+          IHV='CONO'
+        ELSEIF(IHARG(6).EQ.'VAN ' .OR. IHARG(6).EQ.'VAND')THEN
+          IHV='VAND'
+        ELSEIF(IHARG(6).EQ.'ANSA')THEN
+          IHV='ANSA'
+        ELSEIF(IHARG(6).EQ.'MOOD')THEN
+          IHV='MOOD'
+        ELSEIF(IHARG(6).EQ.'MEDI')THEN
+          IHV='MEDI'
+        ELSEIF(IHARG(6).EQ.'KLOT')THEN
+          IHV='KLOT'
+        ELSE
+          IHV='WILC'
+        ENDIF
+        ILRASC=IHV
+        GOTO5160
+      ENDIF
+C
 CCCCC FOLLOWING SECTION ADDED MAY 2023
 C     *************************************************************
 C     **  SET PERMUTATION TEST SAMPLE SIZE <VALUE>               **
@@ -11029,21 +11072,17 @@ C
           AV=0.0
         ENDIF
         PPTEVA=AV
-        IF(PPTEVA.LT.100)PPTEVA=100
-        IF(PPTEVA.GT.100000)PPTEVA=100000
         GOTO5150
       ENDIF
 C
 CCCCC FOLLOWING SECTION ADDED MAY 2023
 C     *************************************************************
-C     **  SET PERMUTATION TEST SCALE <DIFFERENCE/RATIO>          **
+C     **  SET PERMUTATION TEST <DIFFERENCE/RATIO>                **
 C     *************************************************************
 C
       IPART1='PERM'
       IPART2='TEST'
-      IPART3='SCAL'
-      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
-     1   IHARG(3).EQ.IPART3)THEN
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
         IF(IHV.EQ.'RATI')THEN
           IHV='RATI'
         ELSE
@@ -28883,6 +28922,8 @@ C     UPDATED         --JUNE       2023.  PROBE SHOEMAKER F TEST
 C                                               POOLED VARIANCE
 C     UPDATED         --JUNE       2023.  PROBE SHOEMAKER F TEST
 C                                               POOLED MU
+C     UPDATED         --JULY       2023.  PROBE LINEAR RANK SUM TEST
+C                                               SCORE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -32146,20 +32187,6 @@ C
 C
 CCCCC FOLLOWING SECTION ADDED MAY 2023
 C               *************************************************
-C               **  PROBE PERMUTATION TEST SCALE               **
-C               *************************************************
-C
-      IPART1='PERM'
-      IPART2='TEST'
-      IPART3='SCAL'
-      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
-     1   IHARG(3).EQ.IPART3)THEN
-        IHV=IPTESC
-        GOTO5160
-      ENDIF
-C
-CCCCC FOLLOWING SECTION ADDED MAY 2023
-C               *************************************************
 C               **  PROBE PERMUTATION TEST COMPARISON VALUE    **
 C               *************************************************
 C
@@ -32171,6 +32198,18 @@ C
      1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
         AV=PPTEVA
         GOTO5170
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED MAY 2023
+C               *************************************************
+C               **  PROBE PERMUTATION TEST                     **
+C               *************************************************
+C
+      IPART1='PERM'
+      IPART2='TEST'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IHV=IPTESC
+        GOTO5160
       ENDIF
 C
 CCCCC FOLLOWING SECTION ADDED MAY 2023
@@ -32305,6 +32344,23 @@ C
      1   IHARG(5).EQ.IPART5)THEN
         AV=PFTEPM
         GOTO5170
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JULY 2023
+C               *************************************************
+C               **  PROBE LINEAR RANK SUM TEST SCORE           **
+C               *************************************************
+C
+      IPART1='LINE'
+      IPART2='RANK'
+      IPART3='SUM '
+      IPART4='TEST'
+      IPART5='SCOR'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IHV=ILRASC
+        GOTO5160
       ENDIF
 C
 CCCCC FOLLOWING SECTION ADDED FEBRUARY 2007

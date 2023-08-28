@@ -1,13 +1,13 @@
-34900.      (VERSION 2021.05)   total number of lines in file (including this line)
+35500.      (VERSION 2023.08)   total number of lines in file (including this line)
  8.                          number of     sections below
   100.    T                  first line number of T section
-16200.    U                  first line number of U section
-18400.    V                  first line number of V section
-21500.    W                  first line number of W section
-29100.    X                  first line number of X section
-29900.    Y                  first line number of Y section
-31500.    Z                  first line number of Z section
-32900.    MISCELLANEOUS      first line number of MISCELLANEOUS section
+16700.    U                  first line number of U section
+18900.    V                  first line number of V section
+22100.    W                  first line number of W section
+29700.    X                  first line number of X section
+30500.    Y                  first line number of Y section
+32100.    Z                  first line number of Z section
+33500.    MISCELLANEOUS      first line number of MISCELLANEOUS section
  
 --------------------------------------------------------------
  
@@ -15493,6 +15493,512 @@ Program:
     line color black
     line blank
 
+-----TWO SAMPLE LINEAR RANK SUM TEST---------------------------------
+ 
+TWO SAMPLE LINEAR RANK SUM TEST
+ 
+Name:
+    TWO SAMPLE LINEAR RANK SUM TEST
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Perform a two sample two sample linear rank sum test for various
+    scores.
+ 
+Description:
+    Given two samples, Y1 and Y2, with sample sizes n1 and n2,
+    respectively, combine the two samples into a single sample and
+    determine the ranks of the combined samples.
+
+    Two sample linear rank sum tests are then based on the statistic
+
+        S = SUM[i=1 to n][tag(i)*a(R(i))]
+
+    with n denoting the combined sample size and R(i) denoting the
+    rank of the i-th observation.  The variable tag is an indicator
+    variable that has the value 1 for the observations from the smaller
+    sample size and the value 0 for the observations from the larger
+    sample size (if n1 = n2, tag will be set to 1 for the sample that
+    the first observation comes from).  The a(R(i)) is a score function
+    based on the ranks.  The supported score functions are described in
+    a Note section below.
+
+    The following test statistic is based on asymptotic normality
+
+        z = (S - E0(S))/SD0(S)
+
+    where
+
+        E0(S)  = the expected value of S under the null hypothesis
+               = (n1/n)*SUM[i=1 to n][a(R(i))]
+        SD0(S) = the standard deviation of S under the null hypothesis
+               = (n1*n2/(n*(n-1))*SUM[i=1 to n][(a(R(i) - abar)**2]
+        abar   = the average score
+               = SUM[i=1 to n][a(R(i))]/n
+
+    Note that n1 denotes the sample size for the smaller sample, not
+    necessarily the sample size of Y1.
+
+    Tied ranks use the average rank of the tied values.
+
+Syntax 1:
+    <LOWER TAILED/UPPER TAILED> TWO SAMPLE LINEAR RANK SUM TEST <y1> <y2>
+                                <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first response variable;
+          <y2> is the second response variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    If LOWER TAILED is specified, a lower tailed test is performed.  If
+    UPPER TAILED is specified, an upper tailed test is performed.  If
+    neither LOWER TAILED or UPPER TAILED is specified, a two-tailed test
+    is performed.
+
+Syntax 2:
+    <LOWER TAILED/UPPER TAILED> TWO SAMPLE LINEAR RANK SUM TEST
+                                <y1>  ... <yk>
+                                <SUBSET/EXCEPT/FOR qualification>
+    where <y1> ... <yk> is a list of two or more response variables;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs all the two-way two sample linear rank sum tests
+    for the listed variables.  This syntax supports the TO syntax.
+
+    If LOWER TAILED is specified, a lower tailed test is performed.  If
+    UPPER TAILED is specified, an upper tailed test is performed.  If
+    neither LOWER TAILED or UPPER TAILED is specified, a two-tailed test
+    is performed.
+
+Examples:
+    TWO SAMPLE LINEAR RANK SUM TEST Y1  Y2
+    TWO SAMPLE LINEAR RANK SUM TEST Y1  Y2 Y3
+    TWO SAMPLE LINEAR RANK SUM TEST Y1  TO Y6
+    TWO SAMPLE LINEAR RANK SUM TEST Y1  Y2  SUBSET Y2 > 0
+    LOWER TAILED TWO SAMPLE LINEAR RANK SUM TEST Y1  Y2
+    UPPER TAILED TWO SAMPLE LINEAR RANK SUM TEST Y1  Y2
+
+Note:
+    To specify the scoring function, enter the command
+
+       SET LINEAR RANK SUM TEST SCORE <case>
+
+    where <case> is one of the following
+
+       1. WILCOX
+
+          This option uses Wilcoxon scores
+
+              a(R(i)) = R(i)
+
+          That is, the Wilcoxon scores are simply the ranks.  Using
+          this score is essentially a rank sum test (also known as the
+          Mann-Whitney test).
+
+          This score is primarily used to test for equal locations.
+
+       2. MEDIAN
+
+          This option uses median scores
+
+              a(R(i)) = 1    if R(i) >  (n+1)/2
+                      = 0    if R(i) <= (n+1)/2
+
+          That is, ranks greater than the median rank are scored as a 1
+          and ranks less than or equal to the median rank are scored as 0.
+          Using this score is essentially a 2-sample median test.  Median
+          scores work best for distributions that are symmetric and
+          heavy-tailed.
+
+          This score is primarily used to test for equal locations.
+
+       3. VAN DER WAERDEN
+
+          This option uses the Van Der Waerden scores
+
+              a(R(i)) = NORPPF(R(i)/(n+1))
+
+          with NORPPF denoting the percent point function of the
+          standard normal distribution.  Van Der Waerden scores are
+          the percentiles of a standard normal distribution.  Using
+          this score is essentially a 2-sample Van Der Waerden test.
+
+          This score is primarily used to test for equal locations.
+
+       4. SAVAGE
+
+          This option uses the Savage scores
+
+              a(R(i)) = SUM[j = 1 to R(i)][1/(n-j+1)] - 1
+
+          Savage scores are the expected values of exponential order
+          statistics minus 1 (to center the scores around 0).  Savage
+          scores are typically used to test location differences in
+          extreme value distributions and to test scale differences in
+          exponential distributions.
+
+       5. MOOD
+
+          This option uses the Mood scores
+
+              a(R(i)) = (R(i) - (n+1)/2)**2
+
+          Mood scores are the square of the difference between the
+          observation rank and the average rank.
+
+          This score is primarily used to test for equal scales.
+
+       6. ANSARI BRADLEY
+
+          This option uses the Ansari-Bradley scores
+
+              a(R(i)) = (n+1)/2 + ABS(R(i) - (n+1)/2)
+
+          This score is often given in a different form, but the form
+          given here is useful for computational purposes.
+
+          This score is primarily used to test for equal scales.
+
+       7. KLOTZ
+
+          This option uses the Klotz scores
+
+              a(R(i)) = (NORPPF(R(i)/(n+1))**2
+
+          This score is the square of the Van Der Waerden score.
+          Using this score is essentially a 2-sample Klotz test.
+
+          This score is primarily used to test for equal scales.
+
+       8. CONOVER
+
+          This option uses the Conover scores
+
+              a(R(i)) = (R(U(i))**2
+
+          where
+
+              U(i) = ABS(Yi(j) - Ybar(j))
+
+          That is, the Conover scores are the squared ranks of the
+          absolute deviations from the group mean.  Using this score
+          is essentially a 2-sample squared ranks test.
+
+          This score is primarily used to test for equal scales.
+
+Note:
+    The following parameters are saved after the two sample
+    linear rank test is performed.
+
+         STATVAL   - value of the test statistic
+         STATCDF   - CDF of the test statistic
+         PVALUE    - p-value of the two tailed test statistic
+         PVALUELT  - p-value of the lower tailed test statistic
+         PVALUEUT  - p-value of the upper tailed test statistic
+
+         CUTUPP90  - 90%   upper critical value
+         CUTUPP95  - 95%   upper critical value
+         CUTUP975  - 97.5% upper critical value
+         CUTUPP99  - 99%   upper critical value
+         CUTUP995  - 99.5% upper critical value
+         CUTUP999  - 99.9% upper critical value
+
+         CUTLOW10  - 10%   lower critical value
+         CUTLOW05  - 5%    lower critical value
+         CUTLO025  - 2.5%  lower critical value
+         CUTLOW01  - 1%    lower critical value
+         CUTLO005  - 0.5%  lower critical value
+         CUTLO001  - 0.1%  lower critical value
+
+Note:
+    In addition to the TWO SAMPLE LINEAR RANK SUM TEST command, the
+    following commands can also be used:
+
+        LET STATVAL = TWO SAMPLE LINEAR RANK SUM TEST        Y1 Y2
+        LET STATCDF = TWO SAMPLE LINEAR RANK SUM TEST CDF    Y1 Y2
+        LET PVALUE  = TWO SAMPLE LINEAR RANK SUM TEST PVALUE Y1 Y2
+        LET PVALUE  = TWO SAMPLE LINEAR RANK SUM LOWER TAIL TEST PVALUE Y1 Y2
+        LET PVALUE  = TWO SAMPLE LINEAR RANK SUM UPPER TAIL TEST PVALUE Y1 Y2
+
+    In addition to the above LET commands, built-in statistics are
+    supported for 30+ different commands (enter HELP STATISTICS for
+    details).
+
+Default:
+    The default score function is WILCOX
+ 
+Synonyms:
+    2 SAMPLE is a synonym for TWO SAMPLE
+ 
+Related Commands:
+    RANK SUM TEST           = Perform a 2-sample rank sum test for location
+    MEDIAN TEST             = Perform a k-sample medians test
+    VAN DER WAERDEN TEST    = Perform a k-sample Van Der Waerden test
+    SIEGEL TUKEY TEST       = Perform a 2-sample Siegel Tukey test
+    SQUARED RANKS TEST      = Perform a k-sample squared ranks test for
+                              homogeneous variances.
+    KLOTZ TEST              = Perform a k-sample Klotz test for
+                              homogeneous variances.
+
+Applications:
+    Two Sample Analysis
+ 
+Implementation Date:
+    2023/07:
+ 
+Program:
+    . Step 1:   Read the data
+    .
+    skip 25
+    read shoemake.dat y1 y2
+    skip 0
+    let y x = stack y1 y2
+    .
+    . Step 2:   Generate the statistics
+    .
+    set linear rank sum test score van der waerden
+    let statval = linear rank sum test                        y1 y2
+    let statcdf = linear rank sum test cdf                    y1 y2
+    let pvalue  = linear rank sum test pvalue                 y1 y2
+    let pvallt  = linear rank sum test lower tail pvalue      y1 y2
+    let pvalut  = linear rank sum test upper tail pvalue      y1 y2
+    let statval = round(statval,2)
+    let statcdf = round(statcdf,2)
+    let pvalue  = round(pvalue,2)
+    let pvallt  = round(pvallt,2)
+    let pvalut  = round(pvalut,2)
+    .
+    print "Van Der Waerden Scores:"
+    print "Test Statistic:                        ^statval"
+    print "Test Statistic CDF:                    ^statcdf"
+    print "Test Statistic P-Value:                ^pvalue"
+    print "Test Statistic Lower Tailed P-Value:   ^pvallt"
+    print "Test Statistic Upper Tailed P-Value:   ^pvalut"
+    .
+    two sample linear rank sum test                y1 y2
+    van der waerden test                           y  x
+    .
+    set linear rank sum test score wilcox
+    two sample linear rank sum test                y1 y2
+    t test                                         y1 y2
+    .
+    set linear rank sum test score klotz
+    two sample linear rank sum test                y1 y2
+    klotz test                                     y1 y2
+
+-----TWO SAMPLE PERMUATION TEST---------------------------------
+ 
+TWO SAMPLE PERMUATION TEST
+ 
+Name:
+    TWO SAMPLE <STATISTIC> PERMUATION TEST
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Perform a two sample permutation test for a specified statistic.
+ 
+Description:
+    Given random variables Y1 and Y2 with sample sizes n1 and n2,
+    respectiively, permutation tests are performed as follows
+
+       1. Compute the desired statistic for the original data.
+
+       2. Combine the 2 data sets into a single data set.
+
+       3. Generate a permutation of the combined data.  Then compute the
+          desired statistic (the first n1 permuted values constitute the
+          first response variable and the following n2 permuted values
+          constitute the second response variable).
+
+       4. Repeat step 3 NITER number of times.
+
+    The NITER computed statistics represent the reference distribution.
+    The statistic for the original data is compared to this reference
+    distribution.  For example, the cut-offs for a two-sided 95% test are
+    obtained from the 2.5% and 97.5% percentiles of the reference
+    distribution.
+
+    The permutation test is based on all possible permutations of the
+    data.  However, the number of permutations ((n1+n2)!/(n1!n2!)) grows
+    rapidly as the sample sizes increase.  However, sampling a subset
+    of all possible permutations provides a reasonable approximation
+    for the permutation test.  By default, Dataplot generates 4,000
+    iterations.  To change this, enter the command
+
+          SET PERMUTATION TEST SAMPLE SIZE <value>
+
+    If <value> is less than 100, it will be set to 100.  If <value>
+    is greater than 100,000, it will be set to 100,000.
+
+    The specified statistic should be one that can be computed from a
+    single response variable (e.g., MEAN, MEDIAN, VARIANCE).  By default,
+    Dataplot will compute the difference of the statistic between the
+    two samples.  For scale statistics (e.g., STANDARD DEVIATION,
+    VARIANCE), it is often preferred to compute the ratio rather than
+    the difference.  To specify the ratio be computed, enter
+
+         SET PERMUTATION TEST RATIO
+
+    To reset the default, enter
+
+         SET PERMUTATION TEST DIFFERENCE
+
+    Permutation tests assume the observations are independent.  However,
+    no distributional assumptions are made about the response variables.
+
+Syntax 1:
+    <LOWER TAILED/UPPER TAILED> TWO SAMPLE PERMUATION TEST <y1> <y2>
+                                <SUBSET/EXCEPT/FOR qualification>
+    where <stat> is the desired statistic;
+          <y1> is the first response variable;
+          <y2> is the second response variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    If LOWER TAILED is specified, a lower tailed test is performed.  If
+    UPPER TAILED is specified, an upper tailed test is performed.  If
+    neither LOWER TAILED or UPPER TAILED is specified, a two-tailed test
+    is performed.
+
+    To see a list of supported statistics, enter HELP STATISTICS.
+
+Syntax 2:
+    <LOWER TAILED/UPPER TAILED> TWO SAMPLE <stat> PERMUATION TEST
+                                <y1>  ... <yk>
+                                <SUBSET/EXCEPT/FOR qualification>
+    where <stat> is the desired statistic;
+          <y1> ... <yk> is a list of two or more response variables;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs all the two-way two sample permutation tests
+    for the listed variables.  This syntax supports the TO syntax.
+
+    If LOWER TAILED is specified, a lower tailed test is performed.  If
+    UPPER TAILED is specified, an upper tailed test is performed.  If
+    neither LOWER TAILED or UPPER TAILED is specified, a two-tailed test
+    is performed.
+
+    To see a list of supported statistics, enter HELP STATISTICS.
+
+Examples:
+    TWO SAMPLE MEAN PERMUATION TEST Y1  Y2
+    TWO SAMPLE MEDIAN PERMUATION TEST Y1  Y2
+    TWO SAMPLE MEDIAN PERMUATION TEST Y1  Y2  SUBSET Y2 > 0
+    LOWER TAILED TWO SAMPLE MEDIAN PERMUATION TEST Y1  Y2
+    UPPER TAILED TWO SAMPLE MEDIAN PERMUATION TEST Y1  Y2
+
+    SET PERMUTATION TEST RATIO
+    TWO SAMPLE STANDARD DEVIATION PERMUATION TEST Y1  Y2
+
+Note:
+    This routine uses a random permutation algorithm suggested by Knuth.
+    Specifically, it adapts the RANDPERM routine of Knoble. 
+
+Note:
+    The following parameters are saved after the two sample
+    linear rank test is performed.
+
+         STATVAL   - value of the test statistic
+         STATCDF   - CDF of the test statistic
+         PVALUE    - p-value of the two tailed test statistic
+         PVALUELT  - p-value of the lower tailed test statistic
+         PVALUEUT  - p-value of the upper tailed test statistic
+
+         P80       - 80%   upper critical value
+         P90       - 90%   upper critical value
+         P95       - 95%   upper critical value
+         P975      - 97.5% upper critical value
+         P99       - 99%   upper critical value
+         P995      - 99.5% upper critical value
+         P999      - 99.9% upper critical value
+
+         P20       - 20%   lower critical value
+         P10       - 10%   lower critical value
+         P05       - 5%    lower critical value
+         P025      - 2.5%  lower critical value
+         P01       - 1%    lower critical value
+         P005      - 0.5%  lower critical value
+         P001      - 0.1%  lower critical value
+
+Default:
+    The difference (or the ratio) of the statistic for the two
+    samples will generated for 4,000 permutations.
+ 
+Synonyms:
+    2 SAMPLE is a synonym for TWO SAMPLE
+ 
+Related Commands:
+    LINEAR RANK SUM TEST    = Perform a 2-sample linear rank sum test.
+    T TEST                  = Perform a 2-sample t test.
+    RANK SUM TEST           = Perform a 2-sample rank sum test for location
+    MEDIAN TEST             = Perform a k-sample medians test
+    VAN DER WAERDEN TEST    = Perform a k-sample Van Der Waerden test
+    SIEGEL TUKEY TEST       = Perform a 2-sample Siegel Tukey test
+    SQUARED RANKS TEST      = Perform a k-sample squared ranks test for
+                              homogeneous variances.
+    KLOTZ TEST              = Perform a k-sample Klotz test for
+                              homogeneous variances.
+    BIHISTOGRAM             = Generate a bihistogram.
+    QUANTILE QUANTILE PLOT  = Generate a quantile-quantile plot.
+
+Applications:
+    Two Sample Analysis
+ 
+Implementation Date:
+    2023/08:
+ 
+Program:
+    set random number generator fibbonacci congruential
+    seed 32119
+    .
+    .           Read the data
+    .
+    skip 25
+    read auto83b.dat y1 y2
+    retain y2 subset y2 >= 0
+    .
+    .           Perform the permutation test
+    .
+    lower tailed two sample mean permutation test              y1 y2
+    upper tailed two sample mean permutation test              y1 y2
+    two sample mean permutation test                           y1 y2
+    .
+    .           Plot the results
+    .
+    title offset 7
+    title case asis
+    label case asis
+    y1label Count
+    x1label Difference of Means for Permutations
+    
+    let statval = round(statval,3)
+    let p025 = round(p025,3)
+    let p975 = round(p975,3)
+    let pval = round(pvalue2t,3)
+    let statcdf = round(statcdf,3)
+    .
+    x2label color red
+    x2label Difference of Means for Original Sample: ^statval
+    x3label color blue
+    x3label 2.5 Percentile: ^P025, 97.5 Percentile: ^P975
+    xlimits -15 5
+    let niter = 4000
+    skip 1
+    read dpst1f.dat z
+    title Histogram of Difference of Means for ^niter Permutationscr() ...
+          (Pvalue: ^pval, CDF: ^statcdf)
+    .
+    histogram z
+    .
+    line color red
+    line dash
+    drawdsds statval 20 statval 90
+    line color blue
+    line dash
+    drawdsds p025 20 p025 90
+    drawdsds p975 20 p975 90
+
 -----TWO WAY PLOT--------------------------------------
  
 TWO WAY PLOT
@@ -16078,12 +16584,6 @@ Program:
        PRINT A
     END OF IF
 -------------------------------------------------------------
-
-
-
-
-
-
 
 
 
@@ -18493,6 +18993,131 @@ Program 2:
     set write decimals 0
     print ycnt ylow yhigh x1id x2id
  
+-----VAN DER WAERDEN SCORE (LET)-----------------------------------------------
+ 
+VAN DER WAERDEN SCORE
+ 
+Name:
+    VAN DER WAERDEN SCORE (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the Van de Waerden scores of a variable.
+ 
+Description:
+    The Van der Waerden scores are defined as
+
+        s(R(j)) = NORPPF(R(j)/(n+1))
+
+    where R(j) is the rank of the j-th observation, n is the number of
+    observations and NORPPF is the percent point function of the normal
+    distribution.
+
+    Van der Waerden scores are used in the VAN DER WAERDEN command to test
+    whether k samples have equal location.  This test is an alternative to
+    the Kruskal Wallis test.
+
+Syntax:
+    LET <s> = VAN DER WAERDEN SCORE <y>  <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <s> is a variable where the computed Van der Waerden scores are
+              saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET VSCORE = VAN DER WAERDEN SCORE Y
+ 
+Note:
+    Ties are assigned an average rank.  For example, if the 2nd and 3rd
+    highest values are equal, each is assigned a rank of 2.5.
+ 
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    KRUSKAL WALLIS TEST     = Perform a Kruskal Wallis test for equal
+                              locations.
+    KLOTZ TEST              = Perform a Klotz test for equal variances.
+    MEDIAN TEST             = Perform a median test.
+    ANOVA                   = Perform a fixed effects analysis of variance.
+    MOOD SCORES             = Generate mood scores.
+    MEDIAN SCORES           = Generate median scores.
+    KLOTZ SCORES            = Generate Klotz scores.
+    SAVAGE SCORES           = Generate Savage scores.
+    CONOVER SCORES          = Generate Conover scores.
+    ANSARI BRADLEY SCORES   = Generate Ansari Bradley scores.
+    PLACEMENT SCORES        = Generate placement scores.
+    RANK                    = Generate the ranks of a variable. 
+ 
+Reference:
+    W. J. Conover, (1999).  "Practical Nonparameteric Statistics",
+    Third Edition, Wiley, pp. 396-406.
+
+Applications:
+    Nonparametric statistics
+ 
+Implementation Date:
+    2023/06
+ 
+Program:
+    . Step 1:   Define the data
+    .
+    let y1 = data 16.55 15.36 15.94 16.43 16.01
+    let y2 = data 16.05 15.98 16.10 15.88 15.91
+    let n1 = size y1
+    let n2 = size y2
+    let n = n1 + n2
+    .
+    . Step 2:   Combine into single array
+    .
+    let y tag = stack y1 y2
+    if n1 <= n2
+       let tag = tag - 1
+       let n1t = n1
+    else
+       let tag = 0 subset tag = 2
+       let n1t = n2
+    end of if
+    .
+    . Step 3:   Compute the Van der Waerden scores
+    .
+    let vscore = van der waerden scores y
+    .
+    . Step 4:   Two-Sample Linear Rank Test
+    .
+    let temp = tag*vscore
+    let s = sum temp
+    .
+    let aval = sum ymood
+    let smean = (n1t/n)*aval
+    let meanrank = mean vscore
+    let temp = (vscore - meanrank)**2
+    let aval = sum temp
+    let svar = ((n1*n2)/(n*(n-1)))*aval
+    let statval = (s - smean)/sqrt(svar)
+    let statval = round(statval,3)
+    let cv = norppf(0.975)
+    let upplim = round(cv,2)
+    let lowlim = -upplim
+    feedback off
+    print "Two Sample Linear Rank Sum Test Based on Van der Waerden Scores"
+    print "H0: Locations are Equal"
+    print "Ha: Locations are Not Equal"
+    print "alpha: 0.05"
+    print "Test Statistic: ^statval"
+    print "Lower Critical Value: ^lowlim"
+    print "Upper Critical Value: ^upplim"
+    if statval < cv
+       print "Conclusion: Accept H0"
+    else
+       print "Conclusion: Reject H0"
+    end of if
+ 
 -----VAN DER WAERDEN TEST-----------------------------------------
  
 VAN DER WAERDEN
@@ -18540,7 +19165,7 @@ Description:
     the ith value in the jth group.  Then compute the normal
     scores as follows:
 
-       A(ij) = NORPPF(R(X(ij))/(N+1)
+       A(ij) = NORPPF(R(X(ij))/(N+1))
 
     with R(X(ij)) and NORPPF denoting the rank of observation X(ij)
     and the normal percent point function, respectively.
@@ -18636,39 +19261,7 @@ Program:
     SKIP 25
     READ SPLETT2.DAT Y MACHINE
     VAN DER WAERDEN Y MACHINE
- 
-    The following output is generated.
 
-                   VAN DER WAERDEN (NORMAL SCORES) TEST
-                   THAT THE GROUPS COME FROM IDENTICAL POPULATIONS.
-      
-     1. STATISTICS
-           NUMBER OF OBSERVATIONS               =       99
-           NUMBER OF GROUPS                     =        4
-           VARIANCE OF NORMAL SCORES OF RANKS   =   0.9289047
-           VAN DER WAERDEN TEST STATISTIC       =    39.78569
-      
-     2. PERCENT POINTS OF THE CHI-SQUARE REFERENCE DISTRIBUTION
-        FOR VAN DER WAERDEN TEST STATISTIC
-           0          % POINT    =    0.000000
-           50         % POINT    =    2.365974
-           75         % POINT    =    4.108345
-           90         % POINT    =    6.251388
-           95         % POINT    =    7.814727
-           99         % POINT    =    11.34487
-           99.9       % POINT    =    16.26626
-      
-      
-              100.0000       % Point:     39.78569
-      
-     3. CONCLUSION (AT THE 5% LEVEL):
-           THE        4 SAMPLES DO NOT COME FROM IDENTICAL POPULATIONS.
-  
-  
- PAIRWISE MULTIPLE COMPARISONS WRITTEN TO FILE dpst1f.dat.
- INDEX, DATA, RANKS, NORMAL SCORE OF RANKS, GROUP AVERAGE OF
- NORMAL SCORES, GROUP SIZE WRITTEN TO FILE dpst2f.dat.
-  
 -----VARIABLE TO MATRIX--------------------------------------------
  
 VARIABLE TO MATRIX
@@ -21420,6 +22013,13 @@ Program:
  
  
  
+
+
+
+
+
+
+
 
 
 
@@ -26354,7 +26954,7 @@ Description:
 
              k       = the number of components
              s(i)    = the standard deviation of the i-th component
-             nu(i)   = the standard deviation of the i-th component
+             nu(i)   = the degrees of freedom of the i-th component
              a(i)    = the sensitivity coefficient of the i-th component
              u       = the standard uncertainty
                      = SQRT(SUM[i=1 to k][a(i)**2*s(i)**2])

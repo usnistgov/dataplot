@@ -15235,6 +15235,18 @@ C
       CHARACTER*4 ISSAV2
       CHARACTER*4 ISSAV3
       CHARACTER*4 ISSAV4
+#elif defined(CYGWIN)
+      CHARACTER (LEN=MAXSTR) :: ISTRIN
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+      CHARACTER*4 ISSAV3
+      CHARACTER*4 ISSAV4
+#elif defined(MACOSX)
+      CHARACTER (LEN=MAXSTR) :: ISTRIN
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+      CHARACTER*4 ISSAV3
+      CHARACTER*4 ISSAV4
 #endif
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
@@ -15443,6 +15455,10 @@ C                  xclip -i -selection clipboard < dpst5f.dat
 C
 #ifdef HAVE_XCLIP
    60 CONTINUE
+#elif defined(CYGWIN)
+   60 CONTINUE
+#elif defined(MACOSX)
+   60 CONTINUE
 #endif
 C
       IF(IHARG(1).EQ.'CLIP' .AND. IHARG2(1).EQ.'BOAR')THEN
@@ -15463,6 +15479,110 @@ C
         IF(IOFILE.EQ.'NO')THEN
           IF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
 #ifdef HAVE_XCLIP
+            IFLGCB=1
+            IHARG(1)='DPST'
+            IHARG2(1)='5F.D'
+            DO65II=1,IWIDTH-10
+              IP1=II+1
+              IP2=II+2
+              IP3=II+3
+              IP4=II+4
+              IP5=II+5
+              IP6=II+6
+              IP7=II+7
+              IP8=II+8
+              IP9=II+9
+              IP10=II+10
+              IF(IANS(II)(1:1).EQ.'C'  .AND. IANS(IP1)(1:1).EQ.'L' .AND.
+     1           IANS(IP2)(1:1).EQ.'I' .AND. IANS(IP3)(1:1).EQ.'P' .AND.
+     1           IANS(IP4)(1:1).EQ.'B' .AND. IANS(IP5)(1:1).EQ.'O' .AND.
+     1           IANS(IP6)(1:1).EQ.'A' .AND. IANS(IP7)(1:1).EQ.'R' .AND.
+     1           IANS(IP8)(1:1).EQ.'D' .AND. IANS(IP9)(1:1).EQ.' ')THEN
+                DO61JJ=IWIDTH,IP10,-1
+                  IANSLC(JJ+1)=IANSLC(JJ)
+                  IANS(JJ+1)=IANS(JJ)
+   61           CONTINUE
+                IWIDTH=IWIDTH+1
+                IANSLC(II:II)='d'
+                IANSLC(IP1:IP1)='p'
+                IANSLC(IP2:IP2)='s'
+                IANSLC(IP3:IP3)='t'
+                IANSLC(IP4:IP4)='5'
+                IANSLC(IP5:IP5)='f'
+                IANSLC(IP6:IP6)='.'
+                IANSLC(IP7:IP7)='d'
+                IANSLC(IP8:IP8)='a'
+                IANSLC(IP9:IP9)='t'
+                IANSLC(IP10:IP10)=' '
+                IANS(II:II)='D'
+                IANS(IP1:IP1)='P'
+                IANS(IP2:IP2)='S'
+                IANS(IP3:IP3)='T'
+                IANS(IP4:IP4)='5'
+                IANS(IP5:IP5)='F'
+                IANS(IP6:IP6)='.'
+                IANS(IP7:IP7)='D'
+                IANS(IP8:IP8)='A'
+                IANS(IP9:IP9)='T'
+                IANS(IP10:IP10)=' '
+                GOTO60
+              ENDIF
+   65       CONTINUE
+            GOTO60
+C
+#elif defined(CYGWIN)
+            IFLGCB=1
+            IHARG(1)='DPST'
+            IHARG2(1)='5F.D'
+            DO65II=1,IWIDTH-10
+              IP1=II+1
+              IP2=II+2
+              IP3=II+3
+              IP4=II+4
+              IP5=II+5
+              IP6=II+6
+              IP7=II+7
+              IP8=II+8
+              IP9=II+9
+              IP10=II+10
+              IF(IANS(II)(1:1).EQ.'C'  .AND. IANS(IP1)(1:1).EQ.'L' .AND.
+     1           IANS(IP2)(1:1).EQ.'I' .AND. IANS(IP3)(1:1).EQ.'P' .AND.
+     1           IANS(IP4)(1:1).EQ.'B' .AND. IANS(IP5)(1:1).EQ.'O' .AND.
+     1           IANS(IP6)(1:1).EQ.'A' .AND. IANS(IP7)(1:1).EQ.'R' .AND.
+     1           IANS(IP8)(1:1).EQ.'D' .AND. IANS(IP9)(1:1).EQ.' ')THEN
+                DO61JJ=IWIDTH,IP10,-1
+                  IANSLC(JJ+1)=IANSLC(JJ)
+                  IANS(JJ+1)=IANS(JJ)
+   61           CONTINUE
+                IWIDTH=IWIDTH+1
+                IANSLC(II:II)='d'
+                IANSLC(IP1:IP1)='p'
+                IANSLC(IP2:IP2)='s'
+                IANSLC(IP3:IP3)='t'
+                IANSLC(IP4:IP4)='5'
+                IANSLC(IP5:IP5)='f'
+                IANSLC(IP6:IP6)='.'
+                IANSLC(IP7:IP7)='d'
+                IANSLC(IP8:IP8)='a'
+                IANSLC(IP9:IP9)='t'
+                IANSLC(IP10:IP10)=' '
+                IANS(II:II)='D'
+                IANS(IP1:IP1)='P'
+                IANS(IP2:IP2)='S'
+                IANS(IP3:IP3)='T'
+                IANS(IP4:IP4)='5'
+                IANS(IP5:IP5)='F'
+                IANS(IP6:IP6)='.'
+                IANS(IP7:IP7)='D'
+                IANS(IP8:IP8)='A'
+                IANS(IP9:IP9)='T'
+                IANS(IP10:IP10)=' '
+                GOTO60
+              ENDIF
+   65       CONTINUE
+            GOTO60
+C
+#elif defined(MACOSX)
             IFLGCB=1
             IHARG(1)='DPST'
             IHARG2(1)='5F.D'
@@ -16772,6 +16892,50 @@ C
         NCSTR=NCSTR+1
         ISTRIN(NCSTR:NCSTR+12)=' < dpst5f.dat'
         NCSTR=NCSTR+12
+C
+        ISSAV1=ISYSPE
+        ISSAV2=ISYSHI
+        ISSAV3=ICLEWT
+        ISSAV4=ILINSY
+        ISYSPE='ON'
+        ICLEWT='OFF'
+        ILINSY='COMM'
+        CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+        ISYSPE=ISSAV1
+        ISYSHI=ISSAV2
+        ICLEWT=ISSAV3
+        ILINSY=ISSAV4
+#elif defined(CYGWIN)
+C
+C       FOR CYGWIN, ISSUE THE COMMAND:
+C
+C          cat dpst5f.dat > /dev/clipboard
+C
+        ISTRIN=' '
+        ISTRIN='cat dpst5f.dat > /dev/clipboard'
+        NCSTR=31
+C
+        ISSAV1=ISYSPE
+        ISSAV2=ISYSHI
+        ISSAV3=ICLEWT
+        ISSAV4=ILINSY
+        ISYSPE='ON'
+        ICLEWT='OFF'
+        ILINSY='COMM'
+        CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+        ISYSPE=ISSAV1
+        ISYSHI=ISSAV2
+        ICLEWT=ISSAV3
+        ILINSY=ISSAV4
+#elif defined(MACOSX)
+C
+C       FOR MacOS, ISSUE THE COMMAND:
+C
+C          pbcopy dpst5f.dat
+C
+        ISTRIN=' '
+        ISTRIN='cat dpst5f.dat | pbcopy'
+        NCSTR=23
 C
         ISSAV1=ISYSPE
         ISSAV2=ISYSHI

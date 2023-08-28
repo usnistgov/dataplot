@@ -1137,10 +1137,9 @@ C                                       WORKS DIFFERENTLY THAN ON
 C                                       WINDOWS SYSTEMS)
 C     UPDATED         --AUGUST    2020. SOME TWEAKS WHEN READING VARIABLE
 C                                       NAMES FROM THE FILE
-C     UPDATED         --SEPTEMBER 2022. PBCOPY/PBPASTE FOR MACOS
+C     UPDATED         --AUGUST    2023. PBCOPY/PBPASTE FOR MACOS
 C                                       CLIPBOARD
-C     UPDATED         --SEPTEMBER 2022. /dev/clipboard FOR cygwin
-C                                       CLIPBOARD
+C     UPDATED         --AUGUST    2023. FIX BUG WHEN FILE NAME IS QUOTED
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -1679,7 +1678,7 @@ C
         IF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
 #ifdef HAVE_XCLIP
 C
-C       ISSUE THE COMMAND
+C       TO READ STRING/FUNCTION, ISSUE THE COMMAND:
 C
 C          xclip -o -selection <clipboard/primary/secondary>  > dpst5f.dat
 C
@@ -1696,7 +1695,7 @@ C
           ENDIF
 C
           NCSTR=NCSTR+1
-          ISTRIN(NCSTR:NCSTR+12)=' < dpst5f.dat'
+          ISTRIN(NCSTR:NCSTR+12)=' > dpst5f.dat'
           NCSTR=NCSTR+12
 C
           ISSAV1=ISYSPE
@@ -1712,7 +1711,6 @@ C
           ICLEWT=ISSAV3
           ILINSY=ISSAV4
 C
-          IHARG(1)='DPST'
           IHARG(2)='DPST'
           IHARG2(2)='5F.D'
           DO65II=1,IWIDTH-10
@@ -1763,10 +1761,148 @@ C
    65     CONTINUE
 C
 #elif defined(MACOSX)
+C
+C       TO READ STRING/FUNCTION, ISSUE THE COMMAND:
+C
+C          pbpaste > dpst5f.dat
+C
+          ISTRIN=' '
+          ISTRIN='pbpaste > dpst5f.dat'
+          NCSTR=20
+C
+          ISSAV1=ISYSPE
+          ISSAV2=ISYSHI
+          ISSAV3=ICLEWT
+          ISSAV4=ILINSY
+          ISYSPE='ON'
+          ICLEWT='OFF'
+          ILINSY='COMM'
+          CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+          ISYSPE=ISSAV1
+          ISYSHI=ISSAV2
+          ICLEWT=ISSAV3
+          ILINSY=ISSAV4
+C
+          IHARG(2)='DPST'
+          IHARG2(2)='5F.D'
+          DO65II=1,IWIDTH-10
+            IP1=II+1
+            IP2=II+2
+            IP3=II+3
+            IP4=II+4
+            IP5=II+5
+            IP6=II+6
+            IP7=II+7
+            IP8=II+8
+            IP9=II+9
+            IP10=II+10
+            IF(IANS(II)(1:1).EQ.'C'  .AND. IANS(IP1)(1:1).EQ.'L' .AND.
+     1         IANS(IP2)(1:1).EQ.'I' .AND. IANS(IP3)(1:1).EQ.'P' .AND.
+     1         IANS(IP4)(1:1).EQ.'B' .AND. IANS(IP5)(1:1).EQ.'O' .AND.
+     1         IANS(IP6)(1:1).EQ.'A' .AND. IANS(IP7)(1:1).EQ.'R' .AND.
+     1         IANS(IP8)(1:1).EQ.'D' .AND. IANS(IP9)(1:1).EQ.' ')THEN
+              DO61JJ=IWIDTH,IP10,-1
+                IANSLC(JJ+1)=IANSLC(JJ)
+                IANS(JJ+1)=IANS(JJ)
+   61         CONTINUE
+              IWIDTH=IWIDTH+1
+              IANSLC(II:II)='d'
+              IANSLC(IP1:IP1)='p'
+              IANSLC(IP2:IP2)='s'
+              IANSLC(IP3:IP3)='t'
+              IANSLC(IP4:IP4)='5'
+              IANSLC(IP5:IP5)='f'
+              IANSLC(IP6:IP6)='.'
+              IANSLC(IP7:IP7)='d'
+              IANSLC(IP8:IP8)='a'
+              IANSLC(IP9:IP9)='t'
+              IANSLC(IP10:IP10)=' '
+              IANS(II:II)='D'
+              IANS(IP1:IP1)='P'
+              IANS(IP2:IP2)='S'
+              IANS(IP3:IP3)='T'
+              IANS(IP4:IP4)='5'
+              IANS(IP5:IP5)='F'
+              IANS(IP6:IP6)='.'
+              IANS(IP7:IP7)='D'
+              IANS(IP8:IP8)='A'
+              IANS(IP9:IP9)='T'
+              IANS(IP10:IP10)=' '
+              GOTO60
+            ENDIF
+   65     CONTINUE
+C
 #elif defined(CYGWIN)
 C
-C         CYGWIN READS/WRITES THE WINDOWS CLIPBOARD FROM THE FILE
-C         "/dev/clipboard".
+C       TO READ STRING/FUNCTION, ISSUE THE COMMAND:
+C
+C          cat /dev/clipboard > dpst5f.dat
+C
+          ISTRIN=' '
+          ISTRIN='cat /dev/clipboard > dpst5f.dat'
+          NCSTR=31
+C
+          ISSAV1=ISYSPE
+          ISSAV2=ISYSHI
+          ISSAV3=ICLEWT
+          ISSAV4=ILINSY
+          ISYSPE='ON'
+          ICLEWT='OFF'
+          ILINSY='COMM'
+          CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+          ISYSPE=ISSAV1
+          ISYSHI=ISSAV2
+          ICLEWT=ISSAV3
+          ILINSY=ISSAV4
+C
+          IHARG(2)='DPST'
+          IHARG2(2)='5F.D'
+          DO65II=1,IWIDTH-10
+            IP1=II+1
+            IP2=II+2
+            IP3=II+3
+            IP4=II+4
+            IP5=II+5
+            IP6=II+6
+            IP7=II+7
+            IP8=II+8
+            IP9=II+9
+            IP10=II+10
+            IF(IANS(II)(1:1).EQ.'C'  .AND. IANS(IP1)(1:1).EQ.'L' .AND.
+     1         IANS(IP2)(1:1).EQ.'I' .AND. IANS(IP3)(1:1).EQ.'P' .AND.
+     1         IANS(IP4)(1:1).EQ.'B' .AND. IANS(IP5)(1:1).EQ.'O' .AND.
+     1         IANS(IP6)(1:1).EQ.'A' .AND. IANS(IP7)(1:1).EQ.'R' .AND.
+     1         IANS(IP8)(1:1).EQ.'D' .AND. IANS(IP9)(1:1).EQ.' ')THEN
+              DO61JJ=IWIDTH,IP10,-1
+                IANSLC(JJ+1)=IANSLC(JJ)
+                IANS(JJ+1)=IANS(JJ)
+   61         CONTINUE
+              IWIDTH=IWIDTH+1
+              IANSLC(II:II)='d'
+              IANSLC(IP1:IP1)='p'
+              IANSLC(IP2:IP2)='s'
+              IANSLC(IP3:IP3)='t'
+              IANSLC(IP4:IP4)='5'
+              IANSLC(IP5:IP5)='f'
+              IANSLC(IP6:IP6)='.'
+              IANSLC(IP7:IP7)='d'
+              IANSLC(IP8:IP8)='a'
+              IANSLC(IP9:IP9)='t'
+              IANSLC(IP10:IP10)=' '
+              IANS(II:II)='D'
+              IANS(IP1:IP1)='P'
+              IANS(IP2:IP2)='S'
+              IANS(IP3:IP3)='T'
+              IANS(IP4:IP4)='5'
+              IANS(IP5:IP5)='F'
+              IANS(IP6:IP6)='.'
+              IANS(IP7:IP7)='D'
+              IANS(IP8:IP8)='A'
+              IANS(IP9:IP9)='T'
+              IANS(IP10:IP10)=' '
+              GOTO60
+            ENDIF
+   65     CONTINUE
 C
 #else
           WRITE(ICOUT,999)
@@ -1885,7 +2021,149 @@ C
    67     CONTINUE
 C
 #elif defined(CYGWIN)
+C
+C       FOR CYGWIN, ISSUE THE COMMAND:
+C
+C          cat /dev/clipboard  > dpst5f.dat
+C
+          ISTRIN=' '
+          ISTRIN='cat /dev/clipboard > dpst5f.dat'
+          NCSTR=21
+C
+          ISSAV1=ISYSPE
+          ISSAV2=ISYSHI
+          ISSAV3=ICLEWT
+          ISSAV4=ILINSY
+          ISYSPE='ON'
+          ICLEWT='OFF'
+          ILINSY='COMM'
+          CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+          ISYSPE=ISSAV1
+          ISYSHI=ISSAV2
+          ICLEWT=ISSAV3
+          ILINSY=ISSAV4
+C
+          IHARG(1)='DPST'
+          IHARG2(1)='5F.D'
+          DO67II=1,IWIDTH-10
+            IP1=II+1
+            IP2=II+2
+            IP3=II+3
+            IP4=II+4
+            IP5=II+5
+            IP6=II+6
+            IP7=II+7
+            IP8=II+8
+            IP9=II+9
+            IP10=II+10
+            IF(IANS(II)(1:1).EQ.'C'  .AND. IANS(IP1)(1:1).EQ.'L' .AND.
+     1         IANS(IP2)(1:1).EQ.'I' .AND. IANS(IP3)(1:1).EQ.'P' .AND.
+     1         IANS(IP4)(1:1).EQ.'B' .AND. IANS(IP5)(1:1).EQ.'O' .AND.
+     1         IANS(IP6)(1:1).EQ.'A' .AND. IANS(IP7)(1:1).EQ.'R' .AND.
+     1         IANS(IP8)(1:1).EQ.'D' .AND. IANS(IP9)(1:1).EQ.' ')THEN
+              DO68JJ=IWIDTH,IP10,-1
+                IANSLC(JJ+1)=IANSLC(JJ)
+                IANS(JJ+1)=IANS(JJ)
+   68         CONTINUE
+              IWIDTH=IWIDTH+1
+              IANSLC(II:II)='d'
+              IANSLC(IP1:IP1)='p'
+              IANSLC(IP2:IP2)='s'
+              IANSLC(IP3:IP3)='t'
+              IANSLC(IP4:IP4)='5'
+              IANSLC(IP5:IP5)='f'
+              IANSLC(IP6:IP6)='.'
+              IANSLC(IP7:IP7)='d'
+              IANSLC(IP8:IP8)='a'
+              IANSLC(IP9:IP9)='t'
+              IANSLC(IP10:IP10)=' '
+              IANS(II:II)='D'
+              IANS(IP1:IP1)='P'
+              IANS(IP2:IP2)='S'
+              IANS(IP3:IP3)='T'
+              IANS(IP4:IP4)='5'
+              IANS(IP5:IP5)='F'
+              IANS(IP6:IP6)='.'
+              IANS(IP7:IP7)='D'
+              IANS(IP8:IP8)='A'
+              IANS(IP9:IP9)='T'
+              IANS(IP10:IP10)=' '
+              GOTO60
+            ENDIF
+   67     CONTINUE
+C
 #elif defined(MACOSX)
+C
+C       FOR MacOS, ISSUE THE COMMAND:
+C
+C          pbpaste > dpst5f.dat
+C
+          ISTRIN=' '
+          ISTRIN='pbpaste > dpst5f.dat'
+          NCSTR=20
+C
+          ISSAV1=ISYSPE
+          ISSAV2=ISYSHI
+          ISSAV3=ICLEWT
+          ISSAV4=ILINSY
+          ISYSPE='ON'
+          ICLEWT='OFF'
+          ILINSY='COMM'
+          CALL DPSYS2(ISTRIN,NCSTR,ISUBRO,IERROR)
+          ISYSPE=ISSAV1
+          ISYSHI=ISSAV2
+          ICLEWT=ISSAV3
+          ILINSY=ISSAV4
+C
+          IHARG(1)='DPST'
+          IHARG2(1)='5F.D'
+          DO67II=1,IWIDTH-10
+            IP1=II+1
+            IP2=II+2
+            IP3=II+3
+            IP4=II+4
+            IP5=II+5
+            IP6=II+6
+            IP7=II+7
+            IP8=II+8
+            IP9=II+9
+            IP10=II+10
+            IF(IANS(II)(1:1).EQ.'C'  .AND. IANS(IP1)(1:1).EQ.'L' .AND.
+     1         IANS(IP2)(1:1).EQ.'I' .AND. IANS(IP3)(1:1).EQ.'P' .AND.
+     1         IANS(IP4)(1:1).EQ.'B' .AND. IANS(IP5)(1:1).EQ.'O' .AND.
+     1         IANS(IP6)(1:1).EQ.'A' .AND. IANS(IP7)(1:1).EQ.'R' .AND.
+     1         IANS(IP8)(1:1).EQ.'D' .AND. IANS(IP9)(1:1).EQ.' ')THEN
+              DO68JJ=IWIDTH,IP10,-1
+                IANSLC(JJ+1)=IANSLC(JJ)
+                IANS(JJ+1)=IANS(JJ)
+   68         CONTINUE
+              IWIDTH=IWIDTH+1
+              IANSLC(II:II)='d'
+              IANSLC(IP1:IP1)='p'
+              IANSLC(IP2:IP2)='s'
+              IANSLC(IP3:IP3)='t'
+              IANSLC(IP4:IP4)='5'
+              IANSLC(IP5:IP5)='f'
+              IANSLC(IP6:IP6)='.'
+              IANSLC(IP7:IP7)='d'
+              IANSLC(IP8:IP8)='a'
+              IANSLC(IP9:IP9)='t'
+              IANSLC(IP10:IP10)=' '
+              IANS(II:II)='D'
+              IANS(IP1:IP1)='P'
+              IANS(IP2:IP2)='S'
+              IANS(IP3:IP3)='T'
+              IANS(IP4:IP4)='5'
+              IANS(IP5:IP5)='F'
+              IANS(IP6:IP6)='.'
+              IANS(IP7:IP7)='D'
+              IANS(IP8:IP8)='A'
+              IANS(IP9:IP9)='T'
+              IANS(IP10:IP10)=' '
+              GOTO60
+            ENDIF
+   67     CONTINUE
+C
 #else
           WRITE(ICOUT,999)
           CALL DPWRST('XXX','BUG ')
@@ -2193,8 +2471,8 @@ C
           WRITE(ICOUT,1183)IOUNIT,ISUBN0,IERRFI
  1183     FORMAT('IOUNIT,ISUBN0,IERRFI = ',I8,A4,2X,A4)
           CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,1184)IFILE(1:80)
- 1184     FORMAT('IFILE = ',A80)
+          WRITE(ICOUT,1184)IFILE(1:255)
+ 1184     FORMAT('IFILE = ',A255)
           CALL DPWRST('XXX','BUG ')
           WRITE(ICOUT,1185)ISTAT,IFORM,IACCES,IPROT,ICURST
  1185     FORMAT('ISTAT,IFORM,IACCES,IPROT,ICURST = ',4(A12,2X),A12)
@@ -2274,6 +2552,13 @@ C
         CALL DPEXWO(ICANS,ISTART,ISTOP,IWORD,
      1              ICOL1,ICOL2,IFILE,NCFILE,
      1              IBUGS2,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO9000
+C
+        IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'READ')THEN
+          WRITE(ICOUT,1312)NCFILE,IFILE
+ 1312     FORMAT('AFTER DPEXWO: NCFILE,IFILE = ',I5,2X,A256)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
 C
         IF(IEXCEL.EQ.'ON')THEN
 C
@@ -2768,7 +3053,11 @@ CCCCC DETERMINE HOW MANY ARGUMENTS FILE NAME MAY CONTAIN.
 CCCCC JUNE 2003: UPDATE TO INCLUDE HYPHENS AS WELL AS SPACES.
 C
       IF(IOFILE.EQ.'YES' .AND. IFILE(1:1).EQ.'"')THEN
-        DO421I=MAXSTR,1,-1
+C
+CCCCC   2023/08: FIX BUG IN FOLLOWING LINE
+CCCCC   DO421I=MAXSTR,1,-1
+C
+        DO421I=NCFILE,1,-1
           IF(IFILE(I:I).NE.' ')THEN
             ILAST=I
             GOTO424
@@ -2788,6 +3077,13 @@ C
           ENDIF
   426   CONTINUE
         JMIN=JMIN+ICOUNT
+C
+        IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'READ')THEN
+          WRITE(ICOUT,427)ICOUNT,JMIN
+  427     FORMAT('ICOUNT,JMIN = ',2I8)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
       ENDIF
 C
       JMAX=ILOCQ-1
@@ -2797,7 +3093,6 @@ C
         IF(JMAX.GT.JMIN+MAXRDV-1)JMAX=JMIN+MAXRDV-1
         IHMAT1=IHARG(JMIN)
         IHMAT2=IHARG2(JMIN)
-        print *,'jmin,jmax: ',jmin,jmax
       ELSEIF(ICASRE.EQ.'MATZ')THEN
         JMAX=JMIN+2
       ELSEIF(ICASRE.EQ.'IMAZ')THEN

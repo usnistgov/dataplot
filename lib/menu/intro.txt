@@ -1,0 +1,45 @@
+This is file     intro.txt     3/8/20
+To (re)view this file, enter    intro.     or list intro.txt
+
+1. Default dataplot output graphics files:
+   postscript: dppl1f.dat (all plots) & dppl2f.dat (last plot)
+   pdf:        dppl1f.pdf (all plots) & dppl2f.pdf (last plot)
+
+2. Exiting Dataplot:
+   To terminate a dataplot session, enter    exit, stop, halt, or quit.
+
+3. Command Help/Assistance:
+   To invoke/display online command assistance, enter
+   help
+   help  normal
+   ?     normal
+   ??
+   ??    normal probability plot
+   ???   normal probability plot
+   ????  normal probability plot
+   ????? normal probability plot
+
+4. Examples (for auto-execution):
+   To view the colletion of 40+ short-cut, built-in examples, enter
+      list examples.txt
+   To auto-execute any of 40+ examples, enter the numeric tag at the
+   beginning of the line for the example.  For example, 
+       enter   1.1    to do a 4-plot  analysis of univariate beam data
+       enter   2.1    to do an interlab consensus value analysis of
+                      Youden's classic paper thickness data
+       enter   3.4    to do a block plot analysis of
+                      Sheesley's classic lightbulb weld data
+       enter   4.6    to do a 10-step analysis of 
+                      Box/Hunter/Hunter 2**(5-1) chemical reactor data
+       etc.
+   The  graphics pdf output, the dataplot script, and the input data 
+        will be placed in the files     dataplot_out.pdf/dp/dat
+        for perusal, editing, and customization/re-use.           
+
+5. Clipboard:
+   vcb.dp    : view clipboard    (a dataplot script, a file name, or an example ID)
+   xcb.dp    : execute clipboard (a dataplot script, a file name, or an example ID)
+
+6. list links.txt : to view related websites & resources
+
+
