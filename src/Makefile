@@ -2,29 +2,45 @@ FC = gfortran
 CC = gcc
 
 # FEATURES to enable during compilation
-# all: READLINE NCURSES GD TIFF VPX CAIRO X11 GKS OPENGL PLOT XCLIP
-FEATURES = GD CAIRO X11 READLINE NCURSES XCLIP
+# all: READLINE NCURSES GD TIFF VPX CAIRO X11 GKS OPENGL PLOT XCLIP TCL DISABLE_SYSTEM_COMMAND CYGWIN STACK_SIZE DEBUG
+FEATURES = GD CAIRO X11 READLINE NCURSES XCLIP STACK_SIZE
 
 # PREFIX is the parent of where are installed
 # for non-root install, consider PREFIX=$(HOME) or /var/tmp
 # DESTDIR is used by packaging programs (e.g., rpmbuild).
 PREFIX = $(DESTDIR)/usr/local
+#PREFIX = /home/heckert
 BINDIR = $(PREFIX)/bin
 
 # where to find additional dataplot files (help, menus, etc).
 DPLIBDIR=$(PREFIX)/lib/dataplot
 
 #FFLAGS += -O2 -DLINUX -fdefault-real-8 -fdefault-double-8 -fmax-stack-var-size=1000000 -Wall
+#FFLAGS += -O2 -g -DLINUX -fdefault-real-8 -fdefault-double-8 -Wall
 FFLAGS += -O2 -DLINUX -fdefault-real-8 -fdefault-double-8 -Wall
 CFLAGS += -O2
 
 # special flags for dp1
 DP1FLAGS = -DDDOUBLE -DINTEGER32 -DHAVE_ISNAN -DHAVE_EXECUTE_COMMAND_LINE -DDPLIBDIR=\'$(DPLIBDIR)\'
+ifneq (,$(findstring DISABLE_SYSTEM_COMMAND,$(FEATURES)))
+DP1FLAGS += -DDISABLE_SYSTEM_COMMAND
+endif
 
 
 # object files sorted by size for fastest parallel compilation; dp2.o first as it takes the longest
 # ls -S *.F | egrep -v 'msfort_intel' | sed 's/\.F/.o/g' | xargs
 OBJS = dp40.o dp36.o dp42.o dp19.o dp11.o dp38.o dp20.o dp21.o dp2.o dp3.o dp43.o dp18.o dp29.o dp4.o dp37.o dp16.o dp22.o dp9.o dp32.o dp8.o dp41.o dp17.o dp31.o dp15.o dp6.o dp45.o dp12.o dp5.o dp13.o dp30.o dp44.o dp10.o dp25.o starpac.o edsub.o dp27.o dp14.o dp33.o optimi.o dp28.o fit3b.o odrpck.o dp23.o dp26.o dp1.o dp35.o dp7.o dp34.o cluster.o dp24.o dp39.o main.o dpdds3.o edsear.o compgeom.o edmai2.o dpdds.o dpdds2.o edinit.o edwrst.o
+
+# Some versions of gfortran may require following line to avoid compiler warnings
+ifneq (,$(findstring STACK_SIZE,$(FEATURES)))
+FFLAGS += -fmax-stack-var-size=1000000
+endif
+
+# Turn on following to activate the "-g" compile option for more detailed
+# debug output (not on by default as it greatly increases the size of the exextable)
+ifneq (,$(findstring DEBUG,$(FEATURES)))
+FFLAGS += -g
+endif
 
 
 ifneq (,$(findstring READLINE,$(FEATURES)))
@@ -83,6 +99,17 @@ ifneq (,$(findstring XCLIP,$(FEATURES)))
 FFLAGS4 += -DHAVE_XCLIP
 endif
 
+#  CYGWIN is used to activate clipboard functions for CYWIN
+ifneq (,$(findstring CYGWIN,$(FEATURES)))
+FFLAGS4 += -DCYGWIN
+endif
+
+ifneq (,$(findstring TCL,$(FEATURES)))
+OBJS += ftcl_mod.o
+OBJS += ftcl_c.o
+FFLAGS4 += -DHAVE_TCL
+endif
+
 ifneq (,$(findstring GKS,$(FEATURES)))
 LDFLAGS += -lgks
 FFLAGS4 += -DHAVE_OPEN_GKS
@@ -102,12 +129,21 @@ dataplot: $(OBJS)
 	$(FC) -o $@  $(OBJS)  $(LDFLAGS)
 
 dp1.o: dp1.F
-	$(FC) $(FFLAGS) $(DP1FLAGS) -c -o $@ $<
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp11.o: dp11.F
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
 dp16.o: dp16.F
 	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
+dp18.o: dp18.F
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
 dp24.o: dp24.F
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp32.o: dp32.F
 	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
 dp38.o: dp38.F
