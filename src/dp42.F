@@ -51806,6 +51806,7 @@ c
 c        Check input parameters
 c
       qtrng = 0.0d0
+      p2=0.0d0
       ifault = 0
       nfault = 0
       if (v .lt. one .or. r.lt. two) ifault = 1

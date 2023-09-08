@@ -9914,6 +9914,9 @@ C
       IFRST=0
       ILAST=0
       ICNT9=0
+      DO1II=1,845
+        MD(II)=0
+   1  CONTINUE
       NUMDIG=7
       IF(IFORSW.EQ.'1')NUMDIG=1
       IF(IFORSW.EQ.'2')NUMDIG=2

@@ -6343,6 +6343,7 @@ C
       Q=0.0
       P=0.0
       M=0
+      L=0
 C
 C***FIRST EXECUTABLE STATEMENT  HQR
       IERR = 0
@@ -54240,6 +54241,7 @@ C                  MANN-WHITNEY RANK SUM TEST Y1 Y2            (HLR)
 C                  FLIGNER POLICELLO TEST Y1 Y2                (HLR)
 C                  TWO SAMPLE LINEAR RANK SUM TEST Y1 Y2       (HLR)
 C                  TWO SAMPLE PERMUTATION TEST Y1 Y2           (HLR)
+C                  K SAMPLE PERMUTATION TEST Y X               (HLR)
 C                  FISHER TWO SAMPLE RANDOMIZATION TEST Y1 Y2  (HLR)
 C
 C                  CHI-SQUARED TEST Y SIGMA or SIGMA Y         (HLR)
@@ -54584,7 +54586,7 @@ C     UPDATED         --JUNE      2023. RATIO OF SD CONFIDENCE LIMITS
 C     UPDATED         --JULY      2023. TWO SAMPLE LINEAR RANK SUM TEST
 C     UPDATED         --AUGUST    2023. FLIGNER POLICELLO TEST
 C     UPDATED         --AUGUST    2023. TWO SAMPLE <STAT> PERMUTATION TEST
-C                                       TWO SAMPLE <STAT> CONFIDENCE LIMITS
+C     UPDATED         --SEPTEMBER 2023. K SAMPLE <STAT> PERMUTATION TEST
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -55663,6 +55665,8 @@ C               *********************************************************
 C               **  TREAT THE TWO SAMPLE <STAT> PERMUTATION TEST  CASE **
 C               *********************************************************
 C
+      IF(ICOM.EQ.'ANDE' .AND. IHARG(1).EQ.'DARL')GOTO2019
+C
       IF( (ICOM.EQ.'TWO '     .AND. IHARG(1).EQ.'SAMP') .OR.
      1    (IHARG(1).EQ.'TWO ' .AND. IHARG(2).EQ.'SAMP') .OR.
      1    (IHARG(2).EQ.'TWO ' .AND. IHARG(3).EQ.'SAMP') .OR.
@@ -55679,7 +55683,17 @@ C
          CALL DPPTES(MAXNXT,ICAPSW,IFORSW,ISEED,
      1               IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ELSEIF( (ICOM.EQ.'K   '     .AND. IHARG(1).EQ.'SAMP') .OR.
+     1    (IHARG(1).EQ.'K   ' .AND. IHARG(2).EQ.'SAMP') .OR.
+     1    (IHARG(2).EQ.'K   ' .AND. IHARG(3).EQ.'SAMP') .OR.
+     1    (IHARG(3).EQ.'K   ' .AND. IHARG(4).EQ.'SAMP')
+     1   )THEN
+         CALL DPPTES(MAXNXT,ICAPSW,IFORSW,ISEED,
+     1               IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
       ENDIF
+C
+ 2019 CONTINUE
 C
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED     JUNE 2011

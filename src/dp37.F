@@ -30962,6 +30962,9 @@ C
       ISUBN2='HU  '
       IERROR='NO'
 C
+      IMINX=0
+      IMAXX=0
+C
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'PSHU')THEN
         WRITE(ICOUT,999)
   999   FORMAT(1X)

@@ -34187,6 +34187,300 @@ C
 C
       RETURN
       END
+      SUBROUTINE SSQTOT(Y,X,N,XDIST,YTEMP,IWRITE,ICASE,
+     1                  XSSQTO,XSSQTR,XSSQE,DFTO,DFTR,DFE,
+     1                  MSTR,MSE,FVAL,
+     1                  IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--FOR THE RESPONSE VARIABLE Y AND THE GROUP-ID VARIABLE X,
+C              THIS SUBROUTINE COMPUTES:
+C
+C              1. THE TOTAL SUM OF SQUARES FOR A ONE-FACTOR ANOVA
+C
+C                 SSQTOT = SUM[i=1 to k][SUM[j=1 to N(i)][(Y(ij) - YMEAN)**2]
+C
+C                 WHERE YMEAN IS THE GRAND MEAN
+C
+C              2. THE RESIDUAL (ERROR) SUM OF SQUARES (WITHIN LAB) FOR A
+C                 ONE-FACTOR ANOVA
+C
+C                 SSQRE = SUM[i=1 to k][SUM[j=1 to N(i)][(Y(ij) - YMEAN(i))**2]
+C
+C                 WHERE YMEAN(i) IS THE MEAN OF THE i-TH GROUP
+C
+C              3. THE TREATMENT (BETWEEN LAB) SUM OF SQUARES FOR A
+C                 ONE-FACTOR ANOVA
+C
+C                 SSQE = SUM[i=1 to k][(YMEAN(i) - YMEAN)**2]
+C
+C     INPUT  ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+C                                (UNSORTED OR SORTED) OBSERVATIONS.
+C                     --X      = THE SINGLE PRECISION VECTOR CONTAINING
+C                                THE GROUP-ID.
+C                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+C                                IN THE VECTORS Y AND X.
+C     OUTPUT ARGUMENTS--XSSQTO = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED TOTAL SUM OF SQUARES.
+C                       XSSQTR = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED TREATMENT SUM OF SQUARES.
+C                       XSSE   = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED RESIDUAL SUM OF SQUARES.
+C     OUTPUT--THE COMPUTED SINGLE PRECISION VALUES OF THE TOTAL SUM OF
+C             SQUARES, THE TREATMENT SUM OF SQUARES AND THE RESIDUAL
+C             SUM OF SQUARES FOR A ONE-FACTOR MODEL.
+C     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+C                   OF N FOR THIS SUBROUTINE.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATION INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2855
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATION INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2023.08
+C     ORIGINAL VERSION--AUGUST    2023.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ICASE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+      REAL MSE
+      REAL MSTR
+C
+      DOUBLE PRECISION DSUM1
+      DOUBLE PRECISION DSUM2
+C
+      DIMENSION Y(*)
+      DIMENSION X(*)
+      DIMENSION XDIST(*)
+      DIMENSION YTEMP(*)
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='SSQT'
+      ISUBN2='OT  '
+      IERROR='NO'
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'SQTO')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF SSQTOT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,N
+   52   FORMAT('IBUGA3,ISUBRO,N = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        DO55I=1,N
+          WRITE(ICOUT,56)I,Y(I),X(I)
+   56     FORMAT('I,Y(I),X(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      IF(N.LT.4)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN TOTAL SUM OF SQUARES (SSQTOT)--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)
+  112   FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE RESPONSE ',
+     1         'VARIABLE IS LESS THAN 4.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)N
+  117   FORMAT('      THE INPUT NUMBER OF OBSERVATIONS = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C               *****************************************
+C               **  STEP 2--                           **
+C               **  DETERMINE THE DISTINCT VALUES OF X **
+C               *****************************************
+C
+      CALL DISTIN(X,N,IWRITE,XDIST,NDIST,IBUGA3,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+      NTEMP=N/NDIST
+      IF(NTEMP.LT.2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,122)
+  122   FORMAT('      THE NUMBER OF GROUPS IS GREATER THAN N/2.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,124)NDIST
+  124   FORMAT('      THE NUMBER OF GROUPS IS      ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,126)N
+  126   FORMAT('      THE NUMBER OF OBSERVATION IS ',I8)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C               *************************************
+C               **  STEP 3--                       **
+C               **  COMPUTE THE SUMS OF SQUARES    **
+C               *************************************
+C
+      CALL MEAN(Y,N,IWRITE,YMEAN,IBUGA3,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+      DSUM1=0.0D0
+      DSUM2=0.0D0
+C
+      DO210K=1,NDIST
+        HOLD=XDIST(K)
+        NTEMP=0
+        DO220I=1,N
+          IF(X(I).EQ.HOLD)THEN
+            NTEMP=NTEMP+1
+            YTEMP(NTEMP)=Y(I)
+            AVAL=(Y(I) - YMEAN)**2
+            DSUM1=DSUM1 + DBLE(AVAL)
+          ENDIF
+  220   CONTINUE
+C
+        IF(NTEMP.LE.0)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,111)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,222)K,HOLD
+  222     FORMAT('      GROUP ',I6,' (VALUE: ',G15.7,') HAS NO ',
+     1           'OBSERVATIONS.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+C
+        CALL MEAN(YTEMP,NTEMP,IWRITE,GMEAN,IBUGA3,IERROR)
+        DO230I=1,NTEMP
+          AVAL=(YTEMP(I) - GMEAN)**2
+          DSUM2=DSUM2 + DBLE(AVAL)
+  230   CONTINUE
+C
+  210 CONTINUE
+C
+      XSSQTO=REAL(DSUM1)
+      XSSQE=REAL(DSUM2)
+      XSSQTR=XSSQTO - XSSQE
+      DFTR=REAL(NDIST-1)
+      DFTOT=REAL(N-1)
+      DFE=REAL(N-NDIST)
+      MSTR=XSSQTR/DFTR
+      MSE=XSSQE/DFE
+      FVAL=MSTR/MSE
+C
+C               *******************************
+C               **  STEP 3--                 **
+C               **  WRITE OUT A LINE         **
+C               **  OF SUMMARY INFORMATION.  **
+C               *******************************
+C
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IF(ICASE.EQ.'SSTO')THEN
+          WRITE(ICOUT,811)N,XSSQTO
+  811     FORMAT('THE TOTAL SUM OF SQUARES OF THE ',I8,
+     1           ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASE.EQ.'SSQE')THEN
+          WRITE(ICOUT,812)N,XSSQE
+  812     FORMAT('THE ERROR SUM OF SQUARES OF THE ',I8,
+     1           ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASE.EQ.'SSTR')THEN
+          WRITE(ICOUT,813)N,XSSQTR
+  813     FORMAT('THE TREATMENT SUM OF SQUARES OF THE ',I8,
+     1           ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASE.EQ.'DFTR')THEN
+          WRITE(ICOUT,814)N,DFTR
+  814     FORMAT('THE TREATMENT DEGREES OF FREEDOM OF THE ',I8,
+     1           ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASE.EQ.'DFTO')THEN
+          WRITE(ICOUT,815)N,DFTO
+  815     FORMAT('THE TOTAL DEGREES OF FREEDOM OF THE ',I8,
+     1           ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASE.EQ.'DFER')THEN
+          WRITE(ICOUT,816)N,DFER
+  816     FORMAT('THE ERROR DEGREES OF FREEDOM OF THE ',I8,
+     1           ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASE.EQ.'MSTR')THEN
+          WRITE(ICOUT,817)N,MSTR
+  817     FORMAT('THE TREATMENT MEAN SQUARE OF THE ',I8,
+     1           ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASE.EQ.'MSER')THEN
+          WRITE(ICOUT,818)N,MSER
+  818     FORMAT('THE ERROR MEAN SQUARE OF THE ',I8,
+     1           ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASE.EQ.'FVAL')THEN
+          WRITE(ICOUT,819)N,FVAL
+  819     FORMAT('THE ONE WAY ANOVA F-VALUE OF THE ',I8,
+     1           ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'SSQ')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END OF SSQ--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)IERROR,DSUM1,DSUM2
+ 9013   FORMAT('IERROR,DSUM1,DSUM2 = ',A4,2X,2G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)XSSQTO,XSSQTR,XSSQE,DFTO,DFTR,DFER
+ 9015   FORMAT('XSSQTO,XSSQTR,XSSQE,DFTO,DFTR,DFER = ',6G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9017)MSTR,MSER,FVAL
+ 9017   FORMAT('MSTR,MSER,FVAL = ',3G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      RETURN
+      END
       SUBROUTINE SSVDC(X,LDX,N,P,S,E,U,LDU,V,LDV,WORK,JOB,INFO)
 C***BEGIN PROLOGUE  SSVDC
 C***DATE WRITTEN   790319   (YYMMDD)

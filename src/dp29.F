@@ -16074,6 +16074,10 @@ CCCCC SOME CASES (RS_6000 COMPILED WITH f2c)
       ICOLR2=0
       ILISTL=0
 C
+      AVAL1=0.0
+      AVAL2=0.0
+      AVAL3=0.0
+C
 C               **********************************************************
 C               **  TREAT THE SUBCASE OF CALCULATING CERTAIN            **
 C               **  ELEMENTARY STATISTICS (MEAN, SD, ETC.)              **

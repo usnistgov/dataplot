@@ -25587,8 +25587,8 @@ C
       NCTIT2(1,5)=6
       ITITL2(1,6)='99% CV'
       NCTIT2(1,6)=6
-      ITITL2(1,6)='P-VALUE'
-      NCTIT2(1,6)=7
+      ITITL2(1,7)='P-VALUE'
+      NCTIT2(1,7)=7
 C
       NMAX=0
       NUMCOL=7
