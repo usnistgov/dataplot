@@ -1,4 +1,4 @@
-35500.      (VERSION 2023.08)   total number of lines in file (including this line)
+35500.      (VERSION 2023.11)   total number of lines in file (including this line)
  8.                          number of     sections below
   100.    T                  first line number of T section
 16700.    U                  first line number of U section
@@ -14812,6 +14812,8 @@ Implementation Date:
 Program 1:
     SKIP 25
     READ HAHN.DAT MILES TAG
+    LET CENSOR = TAG
+    LET CENSOR = 0 SUBSET TAG = 2
     .
     TITLE CASE ASIS
     TITLE Total Time on Test Plot for HAHN.DAT
@@ -14819,7 +14821,7 @@ Program 1:
     Y1LABEL TTT*(i)
     X1LABEL i/n
     .
-    TOTAL TIME ON TEST PLOT MILES TAG
+    TOTAL TIME ON TEST PLOT MILES CENSOR
  
 Program 2:
     . Step 1:   Define some data
@@ -15897,7 +15899,7 @@ Note:
 
 Note:
     The following parameters are saved after the two sample
-    linear rank test is performed.
+    permutation test is performed.
 
          STATVAL   - value of the test statistic
          STATCDF   - CDF of the test statistic
@@ -15941,6 +15943,17 @@ Related Commands:
                               homogeneous variances.
     BIHISTOGRAM             = Generate a bihistogram.
     QUANTILE QUANTILE PLOT  = Generate a quantile-quantile plot.
+
+References:
+    Higgins (2004), "Introduction to Modern Nonparametric Statistics,"
+    Duxbury Press, Chapter 2.
+
+    Knuth (1998), "The Art of Computer Programming: Volume 2 Seminumerical
+    Algorithms, Third Edition", Section 3.4.2, Addison-Wesley.
+
+    Knoble RANDPERM algorithm downloaded from:
+    "http://coding.derkeiler.com/Archive/Fortran/comp.lang.fortran/
+    2006-03/msg00748.html"
 
 Applications:
     Two Sample Analysis
@@ -16584,19 +16597,6 @@ Program:
        PRINT A
     END OF IF
 -------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -30245,7 +30245,7 @@ Note:
  
        In addition, most X11 implementations provide a large number of
        additional fonts.  The complete list available on a given
-       implementation can be retrieved with the "xlsfont" command.
+       implementation can be retrieved with the "xlsfonts" command.
        Since the list of fonts varies with the implementation,
        Dataplot provides no abbreviations of the font names (which
        tend to be long).
@@ -30292,6 +30292,47 @@ Note:
        entered by the user.  If the user enters this command manually, it
        will probably result in the graphics not being displayed on the
        X11 window of the GUI.
+
+Note:
+    The 2023/11 version of Dataplot added support for scalable fonts.
+    This is provided via the Xft library.
+
+    To specify the use of scalable fonts, enter the commands
+
+          set x11 font type scalable
+          set x11 scalable font <font-name>
+
+    Dataplot does no error checking as to whether or not a valid font name
+    was entered.  Typically, the font can be entered with a family name
+    plus a list of attributes.  For example
+
+      set x11 scalable font LiberationSans-Regular:weight=bold:antialias=true
+
+    Here, "LiberationSans-Regular" is the font family, weight specifies
+    that the "bold" version of the font will be used and "antialias=true"
+    specifies that the text will be drawn with anti-aliasing (this can
+    sharpen the text).
+
+    Some common options are
+
+        weight=<light/medium/demibold/bold/black>
+        slant=<roman/italic/oblique>
+        spacing=<proportional/mono/charcell>
+        antialias=<true/false>
+
+    Dataplot will append a "size=<value>" to the end of the font string
+    based on the requested character size.
+
+    Note that if the requested font is not matched exactly, the Xtf
+    library will try to match it to the "closest" avaiable font.
+
+    To see a list of available font family names, enter
+
+           fc-list : family | sort
+
+    To see what a font family will be matched to, enter something like
+
+           fc-match Arial
 
 Note:
     Dataplot automatically determines if the X11 device is color.  The
@@ -30342,6 +30383,7 @@ Applications:
 
 Implementation Date:
     1990/04
+    2023/11: Support for scalable fonts using the Xtf library
  
 Program:
     DEVICE 1 X11
@@ -30420,48 +30462,6 @@ Program:
  
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
 
 
 

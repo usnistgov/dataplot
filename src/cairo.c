@@ -2,6 +2,13 @@
  *
  *  Initial Implementation: 2017/10
  *
+ *  Note 2024/01/30: I am investigating the Quartz surface for
+ *                   MacOS.  Currently this is not working code,
+ *                   so for now the Quartz code is activated with
+ *                   "CAIRO_QUARTZ" rather than "MACOSX".  If I ever
+ *                   get this working, will revert this back to "MACOSX".
+ *                   For now "CAIRO_QUARTZ" should not be activated.
+ *
  *  The purpose of this library is to provide easy access from
  *  a Fortran program to the Cairo library.  Cairo is a graphics
  *  library that supports a number of common devices.  It has a
@@ -87,6 +94,9 @@
 #else
 #define INTEGER_PRECISION 0
 #endif
+#ifdef CAIRO_QUARTZ
+#define CAIRO_HAS_QUARTZ_SURFACE
+#endif
 
 /*  include files */
 
@@ -102,12 +112,15 @@
 #include <X11/Xutil.h>
 #endif
 #
+#ifdef CAIRO_QUARTZ
+#include <Carbon/Carbon.h>
+#endif
 #include <cairo/cairo.h>
 #include <cairo/cairo-ps.h>
 #include <cairo/cairo-pdf.h>
 #include <cairo/cairo-svg.h>
 #
-#ifdef HAVE_MAC_OSX
+#ifdef CAIRO_QUARTZ
 #include <cairo/cairo-quartz.h>
 #endif
 #
@@ -311,7 +324,7 @@ int  expose_flag_cairo_2[2];
  *    2 - Postscript
  *    3 - PDF
  *    4 - SVG
- *    5 - Quartz
+ *    5 - Quartz (MacOS only)
  *    6 - PNG
  *    7 - WIN32
  *    8 - Encapsulated Postscript
@@ -372,6 +385,10 @@ double  jgreen[2];
    int      numhp;
    int      numvp;
    char     file_string[160];
+
+#ifdef CAIRO_QUARTZ
+WindowRef    gTestWindow;
+#endif
 
 #if INTEGER_PRECISION == 0
    idev_temp   = *idev;
@@ -475,15 +492,19 @@ double  jgreen[2];
              }
 #endif
           } else if (imodel_temp == 5) {    /*  Quartz device */
-#ifdef CAIRO_HAS_QUARTZ_SURFACE
+#ifdef CAIRO_QUARTZ
              double  x1, y1, width, height;
              int  width2, height2;
+             CGContextRef      context;
+
              width2=anumhp_temp;
              height2=anumvp_temp;
-             /*
-             surface1 = cairo_quartz_surface_create (cr1,width2,height2);
+
+             QDBeginCGContext(GetWindowPort(window), &context);
+
+             surface1 = cairo_quartz_surface_create (context,width2,height2);
              cr1 = cairo_create (surface1);
-             */
+
              x1 = 0.;
              y1 = 0.;
              width=anumhp_temp;
@@ -947,10 +968,7 @@ int  imodel[2];
 #endif
          cairo_surface_destroy(surface1);
          cairo_destroy(cr1);
-#if HAVE_X11
-         if (imodel_temp == 1) {        /*  X11 device */
-            XCloseDisplay(dsp);
-         }
+#if CAIRO_QUARTZ
 #endif
          OPEN_FLAG_1 = 0;
       }

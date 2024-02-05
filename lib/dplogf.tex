@@ -12,12 +12,12 @@
 .     LET FLAGUSER = 2  => use Alan Heckert's preferred settings
 .     LET FLAGUSER = 3  => use generic preferred settings
 .                          (use these to customize your preferences
-.                          if you do not like either Jim's or Alan's.
-.                          These settings for "interactive" use.
+.                          if you do not like either Jim's or Alan's).
+.                          These settings are for "interactive" use.
 .     LET FLAGUSER = 4  => use generic preferred settings
 .                          (use these to customize your preferences
 .                          if you do not like either Jim's or Alan's.
-.                          These settings for "batch" use, for example
+.                          These settings are for "batch" use, for example
 .                          when using it for a web application.
 .     LET FLAGUSER = 5  => Create a "null" dplogf.tex file
 .
@@ -73,7 +73,7 @@ IF FLAGUSER = 1;      . Jim Filliben's preferences
    LET FLAGLIST = 1;  . Set number of list lines, open new window for LIST, HELP
 ELSE IF FLAGUSER = 2; . Alan Heckert preferences
    LET IBROWSE = 0;   . Use default via "xdg-open"
-   LET IOPS = 1;      . 1 => X11, 2 => Aquaterm (MacOS only)
+   LET IOPS = 0;      . 0 => no default screen device, 1 => X11, 2 => Aquaterm (MacOS only)
    LET FLAGCOLO = 1;  . Color settings
    LET FLAGWS = 1;    . Workspace settings
    LET FLAGDECI = 2;  . Number of decimals in output
@@ -95,7 +95,7 @@ ELSE IF FLAGUSER = 2; . Alan Heckert preferences
    LET FLAGLIST = 1;  . Set number of list lines, open new window for LIST, HELP
 ELSE IF FLAGUSER = 3; . Generic dplogf.tex file (interactive use)
    LET IBROWSE = 0;   . Use default via "xdg-open"
-   LET IOPS = 1;      . 1 => X11, 2 => Aquaterm (MacOS only)
+   LET IOPS = 0;      . 0 => no default screen device, 1 => X11, 2 => Aquaterm (MacOS only)
    LET FLAGCOLO = 1;  . Color settings
    LET FLAGWS = 1;    . Workspace settings
    LET FLAGDECI = 1;  . Number of decimals in output
@@ -347,6 +347,8 @@ end of if
 .
 if flagpdf = 1
    set postscript convert pdf
+else
+   set postscript convert null
 end of if
 .
 . ---Preference 11: Header Size-----
@@ -509,7 +511,7 @@ ELSE IF FLAGUSER = 4; . Custom commands for generic user (batch)
    . SET IMAGE VIEWER gimp
    SET POSTSCRIPT DEFAULT COLOR ON
    SET POSTSCRIPT FONT HELVETICA BOLD; . versus arial or verdanna or . . .
-   DEVICE 2 POSTSCRIPT
+   . DEVICE 2 POSTSCRIPT
 END OF IF
 .
 FEEDBACK ON

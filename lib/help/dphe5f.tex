@@ -1,9 +1,9 @@
-68800.      (VERSION 2023.08)  total number of lines in file (including this line)
+68900.      (VERSION 2023.11)  total number of lines in file (including this line)
  4.                          number of     sections below
   100.    P                  first line number of P section
-22500.    Q                  first line number of Q section
-25600.    R                  first line number of R section
-44400.    S                  first line number of S section
+22600.    Q                  first line number of Q section
+25700.    R                  first line number of R section
+44500.    S                  first line number of S section
  
 ----------------------------------------------------------
  
@@ -15025,6 +15025,66 @@ Note:
      Libplot and Cairo are graphics libraries that support
      a number of different graphics devices.
 
+Note:
+    The 2023/11 version of Dataplot was updated to allow you to
+    control the appearance of dashed and dotted lines.  Dash patterns
+    are given by a series of pairs of integer values.  The first
+    gives the number of units drawn as a solid line and the second
+    gives the number of units drawn as a blank line.  These units
+    are specified in Postscript 72 points per inch units (e.g., 2
+    means 2 points or 2/72 of an inch).
+
+    The defaults are:
+
+        dotted line:   2 4
+        dashed line:   4 4
+        da1    line:   4 2
+        da2    line:   6 4 2 4
+        da3    line:   6 4 6 4
+        da4    line:   6 4 4 4 2 4
+        da5    line:   6 4 2 4 2 4
+
+    To change the defaults, you can enter the commands
+
+        SET POSTSCRIPT DOTTED LINE <list of values>
+        SET POSTSCRIPT DASHED LINE <list of values>
+        SET POSTSCRIPT DA1    LINE <list of values>
+        SET POSTSCRIPT DA2    LINE <list of values>
+        SET POSTSCRIPT DA3    LINE <list of values>
+        SET POSTSCRIPT DA4    LINE <list of values>
+        SET POSTSCRIPT DA5    LINE <list of values>
+
+    Up to 10 pairs of points can be specified.  To reset the
+    default, enter the command with no arguments (or use
+    DEFAULT as the only argument).
+
+    There are corresponding PROBE commands that display the
+    current values.
+
+Note:
+    The ghostscript program can be used to convert Postscript to
+    Portable Document Format (PDF) or to other formats such as JPEG.
+    The SET POSTSCRIPT CONVERT command can be used to allow this to
+    be done automatically (i.e., when a Postscript file is closed,
+    a PDF version will automatically be created).  Independently
+    of Dataplot, you can enter the command
+
+        ps2pdf <postscript file name>
+
+    This creates a file with same base name but an extension of
+    "pdf" in PDF format.
+
+    The open source GIMP program can be used to convert Dataplot
+    postscript/PDF files to various popular image formats such as
+    JPEG or PNG.  This can be useful if you want to import the
+    Postscript file into a word processing program such as Word.
+    Note that there a number of other programs (both open source and
+    commercial) that can convert Postscript files to image formats.
+    We do not endorse any specific program for this purpose, but
+    it should be noted that better results are usually obtained if
+    the program performs anti-aliasing when converting the Postscript
+    file to a bit-map format.
+
 Default:
     Postscript is the default for the DEVICE 3 output.
  
@@ -15088,6 +15148,8 @@ Implementation Date:
     2004/06: Support for SET POSTSCRIPT COLOR DEFAULT
     2009/05: Automatic support (i.e.,  SYMBOL font does not need to be
              set) for Greek characters and certain special symbols
+    2023/11: Support for controlling the appearance of dashed/dotted
+             lines
  
 Program:
     DEVICE 2 POSTSCRIPT
@@ -22446,6 +22508,44 @@ Program 2:
     write2 ^fname3  "."
 
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

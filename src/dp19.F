@@ -2579,6 +2579,8 @@ C     UPDATED         --APRIL     1992. NPLOTP TO NS IN DEBUG SECTION
 C     UPDATED         --MARCH     1994. ADD ARGUMENT
 C     UPDATED         --FEBRUARY  1999. ADD SEASONAL LOESS
 C     UPDATED         --FEBRUARY  2012. USE DPPARS
+C     UPDATED         --JANUARY   2024. TWEAK PARSING OF SEASONAL
+C                                       LOWESS COMMAND
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -2709,13 +2711,19 @@ C
           ILASTC=1
         ENDIF
       ELSEIF(ICOM.EQ.'SEAS')THEN
-        IF(NUMARG.GE.1.AND.
+        IF(NUMARG.GE.2.AND.
+     1    (IHARG(1).EQ.'LOWE'.OR.IHARG(1).EQ.'LOES').AND.
+     1     IHARG(2).EQ.'FIT ')THEN
+          ILASTC=ILASTC+2
+          ICASAN='SLOW'
+        ELSEIF(NUMARG.GE.2.AND.
+     1    (IHARG(1).EQ.'LOWE'.OR.IHARG(1).EQ.'LOES').AND.
+     1     IHARG(2).EQ.'SMOO')THEN
+          ILASTC=ILASTC+2
+          ICASAN='SLOW'
+        ELSEIF(NUMARG.GE.1.AND.
      1    (IHARG(1).EQ.'LOWE'.OR.IHARG(1).EQ.'LOES'))THEN
           ILASTC=1
-        ELSEIF(NUMARG.GE.2.AND.IHARG(2).EQ.'FIT')THEN
-          ILASTC=ILASTC+1
-        ELSEIF(NUMARG.GE.2.AND.IHARG(2).EQ.'SMOO')THEN
-          ILASTC=ILASTC+1
           ICASAN='SLOW'
         ELSE
           IFOUND='NO'
@@ -25960,6 +25968,7 @@ C
       IF(ICASL7.EQ.'CONF')GOTO19090
       IF(ICASL7.EQ.'CKCL')GOTO19090
       IF(ICASL7.EQ.'CKCP')GOTO19090
+      IF(ICASL7.EQ.'2WDM')GOTO19090
 C
       IUPFLG='SUBS'
       ISUBN1='DPMA'
@@ -32825,6 +32834,7 @@ C     UPDATED         --SEPTEMBER 2018. DEX CHECK CENTER POINTS
 C     UPDATED         --JULY      2019. TWEAK SCRATCH STORAGE
 C     UPDATED         --SEPTEMBER 2022. INCREASE MAXIMUM NUMBER OF
 C                                       VARIABLES
+C     UPDATED         --JANUARY   2024. TWEAK EQUIVALENCE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -32932,12 +32942,10 @@ C
       DOUBLE PRECISION DTEMP3(MAXOBV)
 C
       EQUIVALENCE (DSIZE(1),TEMP1)
-      EQUIVALENCE (DSIZE(MAXOBV+1),TEMP2)
       EQUIVALENCE (DSYMB(1),TEMP3)
-      EQUIVALENCE (DSYMB(MAXOBV+1),TEMP4)
       EQUIVALENCE (DCOLOR(1),TEMP91)
-      EQUIVALENCE (DCOLOR(MAXOBV+1),TEMP92)
-      EQUIVALENCE (DFILL(1),TEMP12)
+      EQUIVALENCE (DFILL(1),TEMP92)
+      EQUIVALENCE (X3D(1),TEMP12)
 C
       EQUIVALENCE (IGARBG(IIGAR1),ITEMP1)
       EQUIVALENCE (IGARBG(IIGAR2),ITEMP2)
@@ -32951,6 +32959,8 @@ C
       EQUIVALENCE (DGARBG(IDGAR1),DTEMP1)
       EQUIVALENCE (DGARBG(IDGAR2),DTEMP2)
       EQUIVALENCE (DGARBG(IDGAR3),DTEMP3)
+      EQUIVALENCE (DGARBG(IDGAR4),TEMP2)
+      EQUIVALENCE (DGARBG(IDGAR5),TEMP4)
 C
       DIMENSION TEMPM1(MAXTOM)
       DIMENSION TEMPM2(MAXTOM)
@@ -44325,6 +44335,7 @@ C                                      AND NUMBER OF CARRY VARIABLES ARE
 C                                      BOTH SET TO 0.  FOR THIS CASE,
 C                                      GENERATE ALL PERMUTATIONS.
 C     UPDATED         --JULY     2019. MODIFY USE OF SCRATCH STORAGE
+C     UPDATED         --JANUARY  2024. MODIFY USE OF EQUIVALENCE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -44364,17 +44375,19 @@ C
       INTEGER ILISR(MAXRIG)
       INTEGER ICOLR(MAXRIG)
       INTEGER NIRIGH(MAXRIG)
-      REAL TEMPS(MAXRIG)
 C
 C---------------------------------------------------------------------
 C
       INCLUDE 'DPCOPA.INC'
       INCLUDE 'DPCOZZ.INC'
+      INCLUDE 'DPCOZD.INC'
       INCLUDE 'DPCOHO.INC'
 C
-      REAL YLEFT(MAXOBV,MAXLEF)
-      REAL YRIGH1(MAXOBV,MAXRI2)
-      REAL YRIGH2(MAXOBV,MAXRI2)
+      PARAMETER (MAXOB2=MAXOBV/2)
+      REAL TEMPS(MAXRIG)
+      REAL YLEFT(MAXOB2,MAXLEF)
+      REAL YRIGH1(MAXOB2,MAXRI2)
+      REAL YRIGH2(MAXOB2,MAXRI2)
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -44386,9 +44399,12 @@ C
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
-      EQUIVALENCE (YRIGH1(1,1),Y(1))
+CCCCC EQUIVALENCE (YRIGH1(1,1),Y(1))
+CCCCC EQUIVALENCE (YRIGH2(1,1),GARBAG(IGAR11))
+CCCCC EQUIVALENCE (YLEFT(1,1),GARBAG(IGARB1))
+      EQUIVALENCE (YRIGH1(1,1),GARBAG(IGARB1))
       EQUIVALENCE (YRIGH2(1,1),GARBAG(IGAR11))
-      EQUIVALENCE (YLEFT(1,1),GARBAG(IGARB1))
+      EQUIVALENCE (YLEFT(1,1),DGARBG(IDGAR1))
 C
 C---------------------------------------------------------------------
 C
@@ -44835,6 +44851,22 @@ C
       DO560I=1,NTEMP1
         IF(ISUB(I).EQ.0)GOTO560
         J=J+1
+C
+C       2024/01: CHECK THAT J <= MAXOB2
+C
+        IF(J.GT.MAXOB2)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,131)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,562)MAXOB2
+  562     FORMAT('      MAXIMUM NUMBER OF OUTPUT ROWS (',I10,
+     1           ') EXCEEDED.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+C
         DO570JJ=1,NTEMP9
           K=ICOLR(JJ)
           IJ=MAXN*(K-1)+I
@@ -44854,6 +44886,20 @@ C
       DO660I=1,NTEMP2
         IF(ISUB(I).EQ.0)GOTO660
         J=J+1
+C
+C       2024/01: CHECK THAT J <= MAXOB2
+C
+        IF(J.GT.MAXOB2)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,131)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,562)MAXOB2
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+C
         DO670JJ=1,NMATCH+NCARR2
           JJTEMP=NMATCH+NCARR1+JJ
           K=ICOLR(JJTEMP)
@@ -44927,7 +44973,7 @@ C
               AHOLD2=YRIGH1(ISET2,2)
               ICNT=ICNT+1
 C
-              IF(ICNT.GT.MAXN)THEN
+              IF(ICNT.GT.MAXN .OR. ICNT.GT.MAXOB2)THEN
                 WRITE(ICOUT,131)
                 CALL DPWRST('XXX','BUG ')
                 WRITE(ICOUT,6121)
@@ -44957,7 +45003,7 @@ C
               AHOLD3=YRIGH1(ISET3,3)
               ICNT=ICNT+1
 C
-              IF(ICNT.GT.MAXN)THEN
+              IF(ICNT.GT.MAXN .OR. ICNT.GT.MAXOB2)THEN
                 WRITE(ICOUT,131)
                 CALL DPWRST('XXX','BUG ')
                 WRITE(ICOUT,6231)
@@ -44991,7 +45037,7 @@ C
               AHOLD4=YRIGH1(ISET4,4)
               ICNT=ICNT+1
 C
-              IF(ICNT.GT.MAXN)THEN
+              IF(ICNT.GT.MAXN .OR. ICNT.GT.MAXOB2)THEN
                 WRITE(ICOUT,131)
                 CALL DPWRST('XXX','BUG ')
                 WRITE(ICOUT,6341)
@@ -45029,7 +45075,7 @@ C
               AHOLD5=YRIGH1(ISET5,5)
               ICNT=ICNT+1
 C
-              IF(ICNT.GT.MAXN)THEN
+              IF(ICNT.GT.MAXN .OR. ICNT.GT.MAXOB2)THEN
                 WRITE(ICOUT,131)
                 CALL DPWRST('XXX','BUG ')
                 WRITE(ICOUT,6451)
@@ -45071,7 +45117,7 @@ C
               AHOLD6=YRIGH1(ISET6,6)
               ICNT=ICNT+1
 C
-              IF(ICNT.GT.MAXN)THEN
+              IF(ICNT.GT.MAXN .OR. ICNT.GT.MAXOB2)THEN
                 WRITE(ICOUT,131)
                 CALL DPWRST('XXX','BUG ')
                 WRITE(ICOUT,6561)
@@ -45117,7 +45163,7 @@ C
               AHOLD7=YRIGH1(ISET7,7)
               ICNT=ICNT+1
 C
-              IF(ICNT.GT.MAXN)THEN
+              IF(ICNT.GT.MAXN .OR. ICNT.GT.MAXOB2)THEN
                 WRITE(ICOUT,131)
                 CALL DPWRST('XXX','BUG ')
                 WRITE(ICOUT,6671)
@@ -45167,7 +45213,7 @@ C
               AHOLD8=YRIGH1(ISET8,8)
               ICNT=ICNT+1
 C
-              IF(ICNT.GT.MAXN)THEN
+              IF(ICNT.GT.MAXN .OR. ICNT.GT.MAXOB2)THEN
                 WRITE(ICOUT,131)
                 CALL DPWRST('XXX','BUG ')
                 WRITE(ICOUT,6781)
@@ -45221,7 +45267,7 @@ C
               AHOLD9=YRIGH1(ISET9,9)
               ICNT=ICNT+1
 C
-              IF(ICNT.GT.MAXN)THEN
+              IF(ICNT.GT.MAXN .OR. ICNT.GT.MAXOB2)THEN
                 WRITE(ICOUT,131)
                 CALL DPWRST('XXX','BUG ')
                 WRITE(ICOUT,6891)
@@ -45279,7 +45325,7 @@ C
               AHOL10=YRIGH1(ISET10,10)
               ICNT=ICNT+1
 C
-              IF(ICNT.GT.MAXN)THEN
+              IF(ICNT.GT.MAXN .OR. ICNT.GT.MAXOB2)THEN
                 WRITE(ICOUT,131)
                 CALL DPWRST('XXX','BUG ')
                 WRITE(ICOUT,6996)
@@ -45352,7 +45398,7 @@ C
         DO2010I=1,NS1
           DO2020J=1,NS2
             ICNT=ICNT+1
-            IF(ICNT.GT.MAXN)GOTO1910
+            IF(ICNT.GT.MAXN .OR. ICNT.GT.MAXOB2)GOTO1910
             YLEFT(ICNT,1)=HOLD
             DO2030K=1,NCARR1
               YLEFT(ICNT,K)=YRIGH1(I,K)
@@ -45376,7 +45422,7 @@ C
           DO1020J=1,NS2
             IF(YRIGH2(J,1).EQ.HOLD)THEN
               ICNT=ICNT+1
-              IF(ICNT.GT.MAXN)GOTO1910
+              IF(ICNT.GT.MAXN .OR. ICNT.GT.MAXOB2)GOTO1910
               YLEFT(ICNT,1)=HOLD
               DO1030K=1,NCARR1
                 YLEFT(ICNT,1+K)=YRIGH1(I,K+1)
@@ -45402,7 +45448,7 @@ C
           DO1120J=1,NS2
             IF(YRIGH2(J,1).EQ.HOLD1 .AND. YRIGH2(J,2).EQ.HOLD2)THEN
               ICNT=ICNT+1
-              IF(ICNT.GT.MAXN)GOTO1910
+              IF(ICNT.GT.MAXN .OR. ICNT.GT.MAXOB2)GOTO1910
               YLEFT(ICNT,1)=HOLD1
               YLEFT(ICNT,2)=HOLD2
               DO1130K=1,NCARR1

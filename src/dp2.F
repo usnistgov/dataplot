@@ -6856,6 +6856,13 @@ C                                             MU
 C     UPDATED         --JUNE       2023.  SET MANN WHITNEY CONTINUITY
 C                                             CORRECTION
 C     UPDATED         --JULY       2023.  SET LINEAR RANK SUM TEST SCORE
+C     UPDATED         --SEPTEMBER  2023.  SET ANOVA MULTIPLE COMPARISONS
+C     UPDATED         --SEPTEMBER  2023.  SET ANOVA INTERACTION TERM
+C     UPDATED         --OCTOBER    2023.  SET GD HARDWARE FILL
+C     UPDATED         --OCTOBER    2023.  SET POSTSCRIPT DASH PATTERNS
+C     UPDATED         --NOVEMBER   2023.  SET ANOVA TWO TERM
+C                                             INTERACTIONS
+C     UPDATED         --NOVEMBER   2023.  SET ANOVA TYPE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -6973,6 +6980,7 @@ C
       ICASPR='    '
       IFILQZ=IFILQU
       IFILQU='ON'
+      ISTRIN=' '
 C
       IF(ISUBRO.EQ.'PSET')THEN
         WRITE(ICOUT,11)
@@ -11033,6 +11041,101 @@ C
         GOTO5160
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2023
+C
+C     *******************************************************
+C     **  TREAT THE SET ANOVA MULTIPLE COMPARISONS         **
+C     **                <OFF/BONFEERRONI/                  **
+C     **                 LEAST SIGNIFICANT DIFFERENCE/     **
+C     **                 TUKEY>                            **
+C     *******************************************************
+C
+      IPART1='ANOV'
+      IPART2='MULT'
+      IPART3='COMP'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHARG(4).EQ.'BONF')THEN
+          IHV='BONF'
+        ELSEIF(IHARG(4).EQ.'LSD ')THEN
+          IHV='LSD'
+        ELSEIF(IHARG(4).EQ.'FISH')THEN
+          IHV='LSD'
+        ELSEIF(IHARG(4).EQ.'LEAS' .OR. IHARG(5).EQ.'SIGI' .AND.
+     1         IHARG(6).EQ.'DIFF')THEN
+          IHV='LSD'
+        ELSEIF(IHARG(4).EQ.'TUKE' .OR. IHARG(4).EQ.'HSD ')THEN
+          IHV='TUKE'
+        ELSE
+          IHV='OFF'
+        ENDIF
+        IANOMC=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2023
+C
+C     *******************************************************
+C     **  TREAT THE SET ANOVA INTERACTION TERM <YES/NO>    **
+C     *******************************************************
+C
+      IPART1='ANOV'
+      IPART2='INTE'
+      IPART3='TERM'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHARG(4).EQ.'OFF ' .OR. IHARG(4).EQ.'NO  ' .OR.
+     1     IHARG(4).EQ.'FALS')THEN
+          IHV='OFF'
+        ELSE
+          IHV='ON'
+        ENDIF
+        IANOIN=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED NOVEMBER 2023
+C
+C     ***********************************************************
+C     **  TREAT THE SET ANOVA TWO TERM INTERACTION <YES/NO>    **
+C     ***********************************************************
+C
+      IPART1='ANOV'
+      IPART2='TWO '
+      IPART3='TERM'
+      IPART4='INTE'
+      IPART5='2   '
+      IF(IHARG(1).EQ.IPART1.AND.
+     1  (IHARG(2).EQ.IPART2.OR.IHARG(2).EQ.IPART5).AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(IHARG(4).EQ.'OFF ' .OR. IHARG(4).EQ.'NO  ' .OR.
+     1     IHARG(4).EQ.'FALS')THEN
+          IHV='OFF'
+        ELSE
+          IHV='ON'
+        ENDIF
+        IAOV2T=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED NOVEMBER 2023
+C
+C     ***********************************************************
+C     **  TREAT THE SET ANOVA TYPE <FIXED/RANDOM>              **
+C     ***********************************************************
+C
+      IPART1='ANOV'
+      IPART2='TYPE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(IHARG(3).EQ.'RAND')THEN
+          IHV='RAND'
+        ELSE
+          IHV='FIXE'
+        ENDIF
+        IAOVTY=IHV
+        GOTO5160
+      ENDIF
+C
 CCCCC FOLLOWING SECTION ADDED MAY 2023
 C     *************************************************************
 C     **  SET PERMUTATION TEST SAMPLE SIZE <VALUE>               **
@@ -11090,6 +11193,56 @@ C
         ENDIF
         IPTESC=IHV
         GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER 2023
+C
+C     *******************************************************
+C     **  TREAT THE SET ORDER STATISTICS METHOD            **
+C     **                <ANALYTIC/SIMULATION>              **
+C     *******************************************************
+C
+      IPART1='ORDE'
+      IPART2='STAT'
+      IPART3='METH'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHARG(4).EQ.'SIMU')THEN
+          IHV='SIMU'
+        ELSEIF(IHARG(4).EQ.'MONT' .OR. IHARG(5).EQ.'CARL')THEN
+          IHV='SIMU'
+        ELSE
+          IHV='ANAL'
+        ENDIF
+        IOSMET=IHV
+        GOTO5160
+      ENDIF
+C
+C     *******************************************************
+C     **  TREAT THE SET ORDER STATISTICS SAMPLE SIZE       **
+C     **                <VALUE>                            **
+C     *******************************************************
+C
+      IPART1='ORDE'
+      IPART2='STAT'
+      IPART3='SAMP'
+      IPART4='SIZE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(NUMARG.EQ.4)THEN
+          IV=10000
+        ELSEIF(IHARG(5).EQ.'ON  ' .OR. IHARG(5).EQ.'DEFA' .OR.
+     1         IHARG(5).EQ.'OFF ' .OR. IHARG(5).EQ.'NO  ' .OR.
+     1         IHARG(5).EQ.'YES ' .OR. IHARG(5).EQ.'TRUE' .OR.
+     1         IHARG(5).EQ.'FALS')THEN
+          IV=10000
+        ELSE
+          IV=IARG(NUMARG)
+        ENDIF
+        IF(IV.LE.100)IV=100
+        IF(IV.GE.1000000)IV=1000000
+        IOSSS=IV
+        GOTO5150
       ENDIF
 C
 CCCCC FOLLOWING SECTION ADDED FEBRUARY 2007
@@ -12511,21 +12664,278 @@ C
 CCCCC FOLLOWING SECTION ADDED JUNE      2020
 C     *************************************************************
 C     **  SET X11 SELECTION <CLIPBOARD/PRIMARY/SECONDARY>        **
+C     **  SET X11 CLIPBOARD <CUT BUFFER/SELECTION/PRIMARY>       **
+C     **  SET X11 FONT TYPE <FIXED/SCALABLE>                     **
+C     **  SET X11 CAP <CAP STYLE>                                **
+C     **  SET X11 JOIN <JOIN STYLE>                              **
+C     **  SET X11 PIXMAP <ON/OFF>                                **
+C     **  SET X11 PAUSE <ON/OFF>                                 **
+C     **  SET X11 HARDWARE FILL <ON/OFF>                         **
+C     **  SET X11 WINDOW ID <STRING>                             **
 C     *************************************************************
 C
       IPART1='X11 '
-      IPART2='SELE'
-      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
-        IF(IHV.EQ.'PRIM')THEN
-          IHV='PRIM'
-        ELSEIF(IHV.EQ.'SECO')THEN
-          IHV='SECO'
-        ELSE
-          IHV='CLIP'
+      IF(IHARG(1).EQ.IPART1)THEN
+        IF(IHARG(2).EQ.'SELE')THEN
+          IPART2='SELE'
+          IF(IHV.EQ.'PRIM')THEN
+            IHV='PRIM'
+          ELSEIF(IHV.EQ.'SECO')THEN
+            IHV='SECO'
+          ELSE
+            IHV='CLIP'
+          ENDIF
+          IX11SE=IHV
+          GOTO5160
+        ELSEIF(IHARG(2).EQ.'CLIP')THEN
+          IPART2='CLIP'
+          IF(IHARG(3).EQ.'CUT')THEN
+            IHV='CUTB'
+          ELSEIF(IHARG(3).EQ.'BUFF')THEN
+            IHV='CUTB'
+          ELSEIF(IHARG(3).EQ.'PRIM')THEN
+            IHV='PRIM'
+          ELSEIF(IHARG(3).EQ.'XA_P')THEN
+            IHV='PRIM'
+          ELSEIF(IHARG(3).EQ.'SECO')THEN
+            IHV='SECO'
+          ELSEIF(IHARG(3).EQ.'XA_S')THEN
+            IHV='SECO'
+          ELSEIF(IHARG(3).EQ.'CLIP')THEN
+            IHV='CLIP'
+          ELSEIF(IHARG(3).EQ.'XA_C')THEN
+            IHV='CLIP'
+          ELSE
+            IHV='CLIP'
+          ENDIF
+          IX11CB=IHV
+          GOTO5160
+        ELSEIF(IHARG(2).EQ.'FONT' .AND. IHARG(3).EQ.'TYPE')THEN
+          IPART2='FONT'
+          IF(IHARG(4).EQ.'SCAL')THEN
+            IHV='SCAL'
+          ELSE
+            IHV='FIXE'
+          ENDIF
+          IX11FT=IHV
+          GOTO5160
+        ELSEIF(IHARG(2).EQ.'PIXM')THEN
+          IPART2='PIXM'
+          IHV=IHARG(NUMARG)
+          IX11PM=IHV
+          GOTO5160
+        ELSEIF(IHARG(2).EQ.'PAUS')THEN
+          IPART2='PAUS'
+          IHV=IHARG(NUMARG)
+          IF(IHV.EQ.'ON  ' .OR. IHV.EQ.'YES ' .OR. IHV.EQ.'TRUE')THEN
+            IHV='ON  '
+          ELSEIF(IHV.EQ.'OFF ' .OR. IHV.EQ.'NO  ' .OR.
+     1           IHV.EQ.'FALS')THEN
+            IHV='OFF '
+          ELSE
+            IHV='ON  '
+          ENDIF
+          IX11PA=IHV
+          GOTO5160
+        ELSEIF(IHARG(2).EQ.'CAP ')THEN
+          IPART2='CAP '
+          IX11CS(1:4)=IHARG(NUMARG)
+          IX11CS(5:8)=IHARG2(NUMARG)
+          GOTO5165
+        ELSEIF(IHARG(2).EQ.'JOIN')THEN
+          IPART2='JOIN'
+          IX11JS(1:4)=IHARG(NUMARG)
+          IX11JS(5:8)=IHARG2(NUMARG)
+          GOTO5165
+        ELSEIF(IHARG(2).EQ.'WIND' .AND. IHARG(3).EQ.'ID  ')THEN
+          IPART2='WIND'
+          IX11W2(1:4)=IHARG(NUMARG)
+          IX11W2(5:8)=IHARG2(NUMARG)
+          GOTO5165
+        ELSEIF(IHARG(2).EQ.'HARD' .AND. IHARG(3).EQ.'FILL')THEN
+          IPART2='HARD'
+          IHV=IHARG(NUMARG)
+          IF(IHV.EQ.'ON  ' .OR. IHV.EQ.'YES ' .OR. IHV.EQ.'TRUE')THEN
+            IHV='ON  '
+          ELSEIF(IHV.EQ.'OFF ' .OR. IHV.EQ.'NO  ' .OR.
+     1           IHV.EQ.'FALS')THEN
+            IHV='OFF '
+          ELSE
+            IHV='ON  '
+          ENDIF
+          IX11FS=IHV
+          GOTO5160
+        ELSEIF(IHARG(2).EQ.'DISP' .AND. IHARG(3).EQ.'NAME')THEN
+C
+          IX11DN=' '
+          NCTEMP=0
+          IF(NUMARG.LE.2             .OR. IHARG(NUMARG).EQ.'OFF ' .OR.
+     1       IHARG(NUMARG).EQ.'AUTO' .OR. IHARG(NUMARG).EQ.'DEFA')THEN
+            IX11DN='DEFAULT'
+            GOTO2550
+          ENDIF
+C
+C  CHECK THE POSITION OF THE WORD  NAME  AND EXTRACT IANSLC FROM THE
+C  FIRST CHARACTER PAST "NAME" TO THE LAST NON-BLANK CHARACTER
+C
+          IX11DN='DEFAULT'
+          DO2530I=1,IWIDTH
+            IF(I+3.GT.IWIDTH)GOTO2550
+            IF(IANS(I).EQ.'N'   .AND. IANS(I+1).EQ.'A' .AND.
+     1         IANS(I+2).EQ.'M' .AND. IANS(I+3).EQ.'E' .AND.
+     1         IANS(I+4).EQ.' ')THEN
+C
+              ISTART=I+4+1
+              DO2540J=ISTART,IWIDTH
+                IF(IANS(J).EQ.' ')GOTO2540
+                ISTART=J
+                GOTO2545
+ 2540         CONTINUE
+              GOTO2550
+ 2545         CONTINUE
+              ISTOP=ISTART+79
+              IF(ISTOP.GT.IWIDTH)ISTOP=IWIDTH
+              IF(ISTART.GT.ISTOP)GOTO2550
+              NCTEMP=ISTOP-ISTART+1
+              ICOUNT=0
+              DO2548II=ISTART,ISTOP
+                ICOUNT=ICOUNT+1
+                IX11DN(ICOUNT:ICOUNT)=IANSLC(II)(1:1)
+ 2548         CONTINUE
+C
+            ENDIF
+ 2530     CONTINUE
+          GOTO2550
+C
+ 2550     CONTINUE
+          IFOUND='YES'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2551)
+ 2551       FORMAT('THE X11 DISPLAY NAME HAS BEEN SET TO ')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2552)IX11DN
+ 2552       FORMAT(A80)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+C
+        ELSEIF(IHARG(2).EQ.'SCAL' .AND. IHARG(3).EQ.'FONT')THEN
+          IX11SF(1:40)='                                        '
+          IX11SF(41:80)='                                        '
+          NCTEMP=0
+          IF(NUMARG.LE.3)GOTO2450
+          IF(IHARG(NUMARG).EQ.'OFF' .OR. IHARG(NUMARG).EQ.'AUTO' .OR.
+     1       IHARG(NUMARG).EQ.'DEFA')THEN
+            IX11SF='NULL'
+            GOTO2450
+          ENDIF
+C
+C         CHECK THE POSITION OF THE WORD SCALABLE FONT AND EXTRACT  IANS
+C         FROM THE FIRST CHARACTER PAST "FONT" TO THE LAST NON-BLANK
+C         CHARACTER
+C
+          IX11SF='NULL'
+          DO2430I=1,IWIDTH
+            IF(I+13.GT.IWIDTH)GOTO2450
+            IF(IANS(I).EQ.'S'    .AND. IANS(I+1).EQ.'C' .AND.
+     1         IANS(I+2).EQ.'A'  .AND. IANS(I+3).EQ.'L' .AND.
+     1         IANS(I+4).EQ.'A'  .AND. IANS(I+5).EQ.'B' .AND.
+     1         IANS(I+6).EQ.'L'  .AND. IANS(I+7).EQ.'E' .AND.
+     1         IANS(I+8).EQ.' '  .AND. IANS(I+9).EQ.'F' .AND.
+     1         IANS(I+10).EQ.'O' .AND. IANS(I+11).EQ.'N' .AND.
+     1         IANS(I+12).EQ.'T' .AND. IANS(I+13).EQ.' ')THEN
+C
+              ISTART=I+13+1
+              ISTOP=IWIDTH
+              DO2440J=IWIDTH,ISTART,-1
+                ISTOP=J
+                IF(IANS(J).NE.' ')THEN
+                  IF(ISTART.GT.ISTOP)GOTO2450
+                  NCTEMP=ISTOP-ISTART+1
+                  IF(NCTEMP.GT.80)ISTOP=ISTART+79
+                  IF(NCTEMP.GT.80)NCTEMP=80
+                  ICOUNT=0
+                  DO2448II=ISTART,ISTOP
+                    ICOUNT=ICOUNT+1
+                    IX11SF(ICOUNT:ICOUNT)=IANSLC(II)(1:1)
+ 2448             CONTINUE
+                ENDIF
+ 2440         CONTINUE
+              GOTO2450
+            ENDIF
+ 2430     CONTINUE
+C
+ 2450     CONTINUE
+          IFOUND='YES'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2451)
+ 2451       FORMAT('THE X11 SCALABLE FONT HAS BEEN SET TO ')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2452)IX11SF
+ 2452       FORMAT(A80)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
+        ELSEIF(IHARG(2).EQ.'FONT')THEN
+          IX11FN(1:40)='                                        '
+          IX11FN(41:80)='                                        '
+          NCTEMP=0
+          IF(NUMARG.LE.2)GOTO2250
+          IF(IHARG(NUMARG).EQ.'OFF' .OR. IHARG(NUMARG).EQ.'AUTO' .OR.
+     1       IHARG(NUMARG).EQ.'DEFA')THEN
+            IX11FN='8X13'
+            GOTO2250
+          ENDIF
+C
+C         CHECK THE POSITION OF THE WORD FONT AND EXTRACT  IANS  FROM
+C         THE FIRST CHARACTER PAST "FONT" TO THE LAST NON-BLANK CHARACTER
+C
+          IX11FN='8X13'
+          DO2230I=1,IWIDTH
+            IF(I+3.GT.IWIDTH)GOTO2250
+            IF(IANS(I).EQ.'F'  .AND. IANS(I+1).EQ.'O' .AND.
+     1         IANS(I+2).EQ.'N'.AND. IANS(I+3).EQ.'T' .AND.
+     1         IANS(I+4).EQ.' ')THEN
+C
+              ISTART=I+4+1
+              ISTOP=IWIDTH
+              DO2240J=IWIDTH,ISTART,-1
+                ISTOP=J
+                IF(IANS(J).NE.' ')THEN
+                  IF(ISTART.GT.ISTOP)GOTO2250
+                  NCTEMP=ISTOP-ISTART+1
+                  IF(NCTEMP.GT.80)ISTOP=ISTART+79
+                  IF(NCTEMP.GT.80)NCTEMP=80
+                  ICOUNT=0
+                  DO2248II=ISTART,ISTOP
+                    ICOUNT=ICOUNT+1
+                    IX11FN(ICOUNT:ICOUNT)=IANS(II)(1:1)
+ 2248             CONTINUE
+                ENDIF
+ 2240         CONTINUE
+              GOTO2250
+            ENDIF
+ 2230     CONTINUE
+C
+ 2250     CONTINUE
+          IFOUND='YES'
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2251)
+ 2251       FORMAT('THE X11 FONT HAS BEEN SET TO ')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2252)IX11FN
+ 2252       FORMAT(A80)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+          GOTO9000
         ENDIF
-        IX11SE=IHV
-        GOTO5160
       ENDIF
+C
 C
 CCCCC FOLLOWING SECTION ADDED SEPTEMBER  2010
 C     ******************************************************
@@ -15893,37 +16303,6 @@ C
           IHV='AUTO'
         ENDIF
         IAVANM=IHV
-        GOTO5160
-      ENDIF
-C
-CCCCC FOLLOWING SECTION ADDED DECEMBER  2014
-C     ******************************************************
-C     **  SET X11 CLIPBOARD <CUT BUFFER/SELECTION/PRIMARY>**
-C     ******************************************************
-C
-      IPART1='X11 '
-      IPART2='CLIP'
-      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
-        IF(IHARG(3).EQ.'CUT')THEN
-          IHV='CUTB'
-        ELSEIF(IHARG(3).EQ.'BUFF')THEN
-          IHV='CUTB'
-        ELSEIF(IHARG(3).EQ.'PRIM')THEN
-          IHV='PRIM'
-        ELSEIF(IHARG(3).EQ.'XA_P')THEN
-          IHV='PRIM'
-        ELSEIF(IHARG(3).EQ.'SECO')THEN
-          IHV='SECO'
-        ELSEIF(IHARG(3).EQ.'XA_S')THEN
-          IHV='SECO'
-        ELSEIF(IHARG(3).EQ.'CLIP')THEN
-          IHV='CLIP'
-        ELSEIF(IHARG(3).EQ.'XA_C')THEN
-          IHV='CLIP'
-        ELSE
-          IHV='CLIP'
-        ENDIF
-        IX11CB=IHV
         GOTO5160
       ENDIF
 C
@@ -24842,8 +25221,10 @@ C
 C
       IPART1='IPL1'
       IPART2='NA  '
-      IF(IHARG(1).EQ.IPART1.AND.IHARG2(1).EQ.IPART2)IPL1NA=ISTRIN(1:80)
-      IF(IHARG(1).EQ.IPART1.AND.IHARG2(1).EQ.IPART2)GOTO5370
+      IF(IHARG(1).EQ.IPART1.AND.IHARG2(1).EQ.IPART2)THEN
+        IPL1NA=ISTRIN(1:80)
+        GOTO5370
+      ENDIF
 C
       IPART1='IPL2'
       IPART2='NA  '
@@ -25540,21 +25921,28 @@ C
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)QUIPPI=AV
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)GOTO5170
 C
-C     ************************************************************
-C     **  ADDED SEPTEMBER 1988                                  **
-C     **  SET POSTSCRI FONT <NUMBER> OR                         **
-C     **  SET POSTSCRI LANDSCAPE LEFT MARGIN <NUMB>             **
-C     **  SET POSTSCRI LANDSCAPE RIGHT MARGIN <NUMB>            **
-C     **  SET POSTSCRI LANDSCAPE TOP  MARGIN <NUMB>             **
-C     **  SET POSTSCRI LANDSCAPE BOTTOM MARGIN <NUMB>           **
-C     **  SET POSTSCRI LANDSCAPE LEFT MARGIN <NUMB>             **
-C     **  SET POSTSCRI LANDSCAPE RIGHT MARGIN <NUMB>            **
-C     **  SET POSTSCRI LANDSCAPE TOP  MARGIN <NUMB>             **
-C     **  SET POSTSCRI LANDSCAPE BOTTOM MARGIN <NUMB>           **
-C     **  SET POSTSCRI PPI <NUMB>                               **
-C     **  SET POSTSCRIPT SPACE <ON/OFF>  (ADDED OCTOBER 1991)   **
-C     **  SET POSTSCRIPT HARDWARE FILL <ON/OFF> (JUNE 1994)     **
-C     ************************************************************
+C     ******************************************************************
+C     **  ADDED SEPTEMBER 1988                                        **
+C     **  SET POSTSCRI FONT <NUMBER> OR                               **
+C     **  SET POSTSCRI LANDSCAPE LEFT MARGIN <NUMB>                   **
+C     **  SET POSTSCRI LANDSCAPE RIGHT MARGIN <NUMB>                  **
+C     **  SET POSTSCRI LANDSCAPE TOP  MARGIN <NUMB>                   **
+C     **  SET POSTSCRI LANDSCAPE BOTTOM MARGIN <NUMB>                 **
+C     **  SET POSTSCRI LANDSCAPE LEFT MARGIN <NUMB>                   **
+C     **  SET POSTSCRI LANDSCAPE RIGHT MARGIN <NUMB>                  **
+C     **  SET POSTSCRI LANDSCAPE TOP  MARGIN <NUMB>                   **
+C     **  SET POSTSCRI LANDSCAPE BOTTOM MARGIN <NUMB>                 **
+C     **  SET POSTSCRI PPI <NUMB>                                     **
+C     **  SET POSTSCRIPT SPACE <ON/OFF>  (ADDED OCTOBER 1991)         **
+C     **  SET POSTSCRIPT HARDWARE FILL <ON/OFF> (JUNE 1994)           **
+C     **  SET POSTSCRIPT DASH PATTERN <list of values> (OCTOBER 2023) **
+C     **  SET POSTSCRIPT DOT  PATTERN <list of values> (OCTOBER 2023) **
+C     **  SET POSTSCRIPT DA1  PATTERN <list of values> (OCTOBER 2023) **
+C     **  SET POSTSCRIPT DA2  PATTERN <list of values> (OCTOBER 2023) **
+C     **  SET POSTSCRIPT DA3  PATTERN <list of values> (OCTOBER 2023) **
+C     **  SET POSTSCRIPT DA4  PATTERN <list of values> (OCTOBER 2023) **
+C     **  SET POSTSCRIPT DA5  PATTERN <list of values> (OCTOBER 2023) **
+C     ******************************************************************
 C
 C     ***********************************
 C     **  CHECK FOR FONT               **
@@ -25732,6 +26120,291 @@ C
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)GOTO5160
 C
 C     ***********************************
+C     **  CHECK FOR LINE PATTERNS      **
+C     ***********************************
+C
+      IPART1='POST'
+      IPART2='DASH'
+      IPART3='PATT'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IFOUND='YES'
+        DO36201II=1,10
+          IPSTDP(II,2)=-1
+36201   CONTINUE
+        IF(NUMARG.EQ.3 .OR. IHARG(4).EQ.'DEFA' .OR.
+     1     IHARG(4).EQ.'OFF' .OR. IHARG(4).EQ.'ON')THEN
+           WRITE(ICOUT,999)
+           CALL DPWRST('XXX','BUG ')
+           WRITE(ICOUT,36202)
+36202      FORMAT('THE POSTSCRIPT DASH PATTERN HAS BEEN RESET TO THE ',
+     1            'DEFAULT SETTING.')
+           CALL DPWRST('XXX','BUG ')
+           GOTO9000
+        ENDIF
+        DO36203II=4,NUMARG
+          IVAL1=IARG(II)
+          IF(IVAL1.LE.0 .OR. IVAL1.GT.20)GOTO36204
+          IPSTDP(II-3,2)=IVAL1
+36203   CONTINUE
+36204   CONTINUE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,36205)
+36205   FORMAT('THE POSTSCRIPT DASH PATTERN HAS BEEN SET TO:')
+        CALL DPWRST('XXX','BUG ')
+        DO36207II=1,10
+          IF(IPSTDP(II,2).LE.0)GOTO36209
+          WRITE(ICOUT,36208)II,IPSTDP(II,2)
+36208     FORMAT('    SETTING ',I2,' IS ',I5)
+          CALL DPWRST('XXX','BUG ')
+36207   CONTINUE
+36209   CONTINUE
+        GOTO9000
+      ENDIF
+C
+      IPART1='POST'
+      IPART2='DA1 '
+      IPART3='PATT'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IFOUND='YES'
+        DO36301II=1,10
+          IPSTDP(II,3)=-1
+36301   CONTINUE
+        IF(NUMARG.EQ.3 .OR. IHARG(4).EQ.'DEFA' .OR.
+     1     IHARG(4).EQ.'OFF' .OR. IHARG(4).EQ.'ON')THEN
+           WRITE(ICOUT,999)
+           CALL DPWRST('XXX','BUG ')
+           WRITE(ICOUT,36302)
+36302      FORMAT('THE POSTSCRIPT DA1 PATTERN HAS BEEN RESET TO THE ',
+     1            'DEFAULT SETTING.')
+           CALL DPWRST('XXX','BUG ')
+           GOTO9000
+        ENDIF
+        DO36303II=4,NUMARG
+          IVAL1=IARG(II)
+          IF(IVAL1.LE.0 .OR. IVAL1.GT.20)GOTO36304
+          IPSTDP(II-3,3)=IVAL1
+36303   CONTINUE
+36304   CONTINUE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,36305)
+36305   FORMAT('THE POSTSCRIPT DA1 PATTERN HAS BEEN SET TO:')
+        CALL DPWRST('XXX','BUG ')
+        DO36307II=1,10
+          IF(IPSTDP(II,3).LE.0)GOTO36309
+          WRITE(ICOUT,36308)II,IPSTDP(II,3)
+36308     FORMAT('    SETTING ',I2,' IS ',I5)
+          CALL DPWRST('XXX','BUG ')
+36307   CONTINUE
+36309   CONTINUE
+        GOTO9000
+      ENDIF
+C
+      IPART1='POST'
+      IPART2='DA2 '
+      IPART3='PATT'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IFOUND='YES'
+        DO36401II=1,10
+          IPSTDP(II,4)=-1
+36401   CONTINUE
+        IF(NUMARG.EQ.3 .OR. IHARG(4).EQ.'DEFA' .OR.
+     1     IHARG(4).EQ.'OFF' .OR. IHARG(4).EQ.'ON')THEN
+           WRITE(ICOUT,999)
+           CALL DPWRST('XXX','BUG ')
+           WRITE(ICOUT,36402)
+36402      FORMAT('THE POSTSCRIPT DA2 PATTERN HAS BEEN RESET TO THE ',
+     1            'DEFAULT SETTING.')
+           CALL DPWRST('XXX','BUG ')
+           GOTO9000
+        ENDIF
+        DO36403II=4,NUMARG
+          IVAL1=IARG(II)
+          IF(IVAL1.LE.0 .OR. IVAL1.GT.20)GOTO36404
+          IPSTDP(II-3,4)=IVAL1
+36403   CONTINUE
+36404   CONTINUE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,36405)
+36405   FORMAT('THE POSTSCRIPT DA2 PATTERN HAS BEEN SET TO:')
+        CALL DPWRST('XXX','BUG ')
+        DO36407II=1,10
+          IF(IPSTDP(II,4).LE.0)GOTO36409
+          WRITE(ICOUT,36408)II,IPSTDP(II,4)
+36408     FORMAT('    SETTING ',I2,' IS ',I5)
+          CALL DPWRST('XXX','BUG ')
+36407   CONTINUE
+36409   CONTINUE
+        GOTO9000
+      ENDIF
+C
+      IPART1='POST'
+      IPART2='DA3 '
+      IPART3='PATT'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IFOUND='YES'
+        DO36501II=1,10
+          IPSTDP(II,5)=-1
+36501   CONTINUE
+        IF(NUMARG.EQ.3 .OR. IHARG(4).EQ.'DEFA' .OR.
+     1     IHARG(4).EQ.'OFF' .OR. IHARG(4).EQ.'ON')THEN
+           WRITE(ICOUT,999)
+           CALL DPWRST('XXX','BUG ')
+           WRITE(ICOUT,36502)
+36502      FORMAT('THE POSTSCRIPT DA3 PATTERN HAS BEEN RESET TO THE ',
+     1            'DEFAULT SETTING.')
+           CALL DPWRST('XXX','BUG ')
+           GOTO9000
+        ENDIF
+        DO36503II=4,NUMARG
+          IVAL1=IARG(II)
+          IF(IVAL1.LE.0 .OR. IVAL1.GT.20)GOTO36504
+          IPSTDP(II-3,5)=IVAL1
+36503   CONTINUE
+36504   CONTINUE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,36505)
+36505   FORMAT('THE POSTSCRIPT DA3 PATTERN HAS BEEN SET TO:')
+        CALL DPWRST('XXX','BUG ')
+        DO36507II=1,10
+          IF(IPSTDP(II,5).LE.0)GOTO36509
+          WRITE(ICOUT,36508)II,IPSTDP(II,5)
+36508     FORMAT('    SETTING ',I2,' IS ',I5)
+          CALL DPWRST('XXX','BUG ')
+36507   CONTINUE
+36509   CONTINUE
+        GOTO9000
+      ENDIF
+C
+      IPART1='POST'
+      IPART2='DA4 '
+      IPART3='PATT'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IFOUND='YES'
+        DO36601II=1,10
+          IPSTDP(II,6)=-1
+36601   CONTINUE
+        IF(NUMARG.EQ.3 .OR. IHARG(4).EQ.'DEFA' .OR.
+     1     IHARG(4).EQ.'OFF' .OR. IHARG(4).EQ.'ON')THEN
+           WRITE(ICOUT,999)
+           CALL DPWRST('XXX','BUG ')
+           WRITE(ICOUT,36602)
+36602      FORMAT('THE POSTSCRIPT DA4 PATTERN HAS BEEN RESET TO THE ',
+     1            'DEFAULT SETTING.')
+           CALL DPWRST('XXX','BUG ')
+           GOTO9000
+        ENDIF
+        DO36603II=4,NUMARG
+          IVAL1=IARG(II)
+          IF(IVAL1.LE.0 .OR. IVAL1.GT.20)GOTO36604
+          IPSTDP(II-3,6)=IVAL1
+36603   CONTINUE
+36604   CONTINUE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,36605)
+36605   FORMAT('THE POSTSCRIPT DA4 PATTERN HAS BEEN SET TO:')
+        CALL DPWRST('XXX','BUG ')
+        DO36607II=1,10
+          IF(IPSTDP(II,6).LE.0)GOTO36609
+          WRITE(ICOUT,36608)II,IPSTDP(II,6)
+36608     FORMAT('    SETTING ',I2,' IS ',I5)
+          CALL DPWRST('XXX','BUG ')
+36607   CONTINUE
+36609   CONTINUE
+        GOTO9000
+      ENDIF
+C
+      IPART1='POST'
+      IPART2='DA5 '
+      IPART3='PATT'
+      IF(IHARG(1).EQ.IPART1 .AND. IHARG(2).EQ.IPART2 .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IFOUND='YES'
+        DO36701II=1,10
+          IPSTDP(II,7)=-1
+36701   CONTINUE
+        IF(NUMARG.EQ.3 .OR. IHARG(4).EQ.'DEFA' .OR.
+     1     IHARG(4).EQ.'OFF' .OR. IHARG(4).EQ.'ON')THEN
+           WRITE(ICOUT,999)
+           CALL DPWRST('XXX','BUG ')
+           WRITE(ICOUT,36702)
+36702      FORMAT('THE POSTSCRIPT DA5 PATTERN HAS BEEN RESET TO THE ',
+     1            'DEFAULT SETTING.')
+           CALL DPWRST('XXX','BUG ')
+           GOTO9000
+        ENDIF
+        DO36703II=4,NUMARG
+          IVAL1=IARG(II)
+          IF(IVAL1.LE.0 .OR. IVAL1.GT.20)GOTO36704
+          IPSTDP(II-3,7)=IVAL1
+36703   CONTINUE
+36704   CONTINUE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,36705)
+36705   FORMAT('THE POSTSCRIPT DA5 PATTERN HAS BEEN SET TO:')
+        CALL DPWRST('XXX','BUG ')
+        DO36707II=1,10
+          IF(IPSTDP(II,7).LE.0)GOTO36709
+          WRITE(ICOUT,36708)II,IPSTDP(II,7)
+36708     FORMAT('    SETTING ',I2,' IS ',I5)
+          CALL DPWRST('XXX','BUG ')
+36707   CONTINUE
+36709   CONTINUE
+        GOTO9000
+      ENDIF
+C
+      IPART1='POST'
+      IPART2='DOT '
+      IPART3='PATT'
+      IPART4='DOTT'
+      IF(IHARG(1).EQ.IPART1 .AND.
+     1   (IHARG(2).EQ.IPART2 .OR. IHARG(2).EQ.IPART4) .AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        DO36801II=1,10
+          IPSTDP(II,1)=-1
+36801   CONTINUE
+        IF(NUMARG.EQ.3 .OR. IHARG(4).EQ.'DEFA' .OR.
+     1     IHARG(4).EQ.'OFF' .OR. IHARG(4).EQ.'ON')THEN
+           WRITE(ICOUT,999)
+           CALL DPWRST('XXX','BUG ')
+           WRITE(ICOUT,36802)
+36802      FORMAT('THE POSTSCRIPT DOTTED PATTERN HAS BEEN RESET TO ',
+     1            'THE DEFAULT SETTING.')
+           CALL DPWRST('XXX','BUG ')
+           GOTO9000
+        ENDIF
+        DO36803II=4,NUMARG
+          IVAL1=IARG(II)
+          IF(IVAL1.LE.0 .OR. IVAL1.GT.20)GOTO36804
+          IPSTDP(II-3,1)=IVAL1
+36803   CONTINUE
+36804   CONTINUE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,36805)
+36805   FORMAT('THE POSTSCRIPT DOTTED PATTERN HAS BEEN SET TO:')
+        CALL DPWRST('XXX','BUG ')
+        DO36807II=1,10
+          IF(IPSTDP(II,1).LE.0)GOTO36809
+          WRITE(ICOUT,36808)II,IPSTDP(II,1)
+36808     FORMAT('    SETTING ',I2,' IS ',I5)
+          CALL DPWRST('XXX','BUG ')
+36807   CONTINUE
+36809   CONTINUE
+        GOTO9000
+      ENDIF
+C
+C     ***********************************
 C     **  CHECK FOR MARGINS            **
 C     ***********************************
 C
@@ -25840,281 +26513,6 @@ C
      1   IHARG(3).EQ.IPART3)GOTO5160
 C
 C     ************************************************************
-C     **  ADDED MARCH 1990                                      **
-C     **  SET X11 FONT <NAME>                                   **
-C     **  SET X11 CAP <CAP STYLE>                               **
-C     **  SET X11 JOIN <JOIN STYLE>                             **
-C     **  SET X11 PIXMAP <ON/OFF>                               **
-C     **  SET X11 PAUSE <ON/OFF>                                **
-C     **  SET X11 NAME  <NAME>                                  **
-C     **  SET X11 HARDWARE FILL <ON/OFF> (ADDED JUNE 1994)      **
-C     **  SET X11 WINDOW ID <STRING>     (ADDED OCTOBER 1997)   **
-C     **  SET X11 CLIPBOARD <CUT BUFFER/SELECTION/PRIMARY>      **
-C     ************************************************************
-C
-C     ******************************************************
-C     **  CHECK FOR FONT                                  **
-C     **  NOTE THAT FONT NAME CAN BE UP TO 80 CHARACTERS  **
-C     **  LONG, SO THIS HANDLED SOMEWHAT DIFFERENTLY THAN **
-C     **  THE OTHER COMMANDS.                             **
-C     ******************************************************
-C
-      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'X11 '.AND.
-     1IHARG(2).EQ.'FONT')GOTO2210
-      GOTO2290
-C
- 2210 CONTINUE
-      IX11FN(1:40)='                                        '
-      IX11FN(41:80)='                                        '
-      NCTEMP=0
-      IF(NUMARG.LE.2)GOTO2250
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO2250
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO2250
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO2250
-C
-C  CHECK THE POSITION OF THE WORD FONT
-C  EXTRACT IANS FROM THE FIRST CHARACTER PAST "FONT" TO
-C  THE LAST NON-BLANK CHARACTER
-C
-      DO2230I=1,IWIDTH
-      IP1=I+1
-      IP2=I+2
-      IP3=I+3
-      IP4=I+4
-      IF(IP3.GT.IWIDTH)GOTO2250
-      IF(IANS(I).EQ.'F'.AND.IANS(IP1).EQ.'O'.AND.
-     1IANS(IP2).EQ.'N'.AND.IANS(IP3).EQ.'T'.AND.
-     1IANS(IP4).EQ.' ')GOTO2235
- 2230 CONTINUE
-      GOTO2250
-C
- 2235 CONTINUE
-      ISTART=IP4+1
-C
-      ISTOP=IWIDTH
-      DO2240I=IWIDTH,ISTART,-1
-      ISTOP=I
-      IF(IANS(I).NE.' ')GOTO2245
- 2240 CONTINUE
-      GOTO2250
- 2245 CONTINUE
-      IF(ISTART.GT.ISTOP)GOTO2250
-      NCTEMP=ISTOP-ISTART+1
-      IF(NCTEMP.GT.80)ISTOP=ISTART+79
-      IF(NCTEMP.GT.80)NCTEMP=80
-      ICOUNT=0
-      DO2248I=ISTART,ISTOP
-      ICOUNT=ICOUNT+1
-      IX11FN(ICOUNT:ICOUNT)=IANS(I)(1:1)
- 2248 CONTINUE
-      IFOUND='YES'
-      IF(IFEEDB.EQ.'OFF')GOTO9000
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,2251)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,2252)IX11FN
-      CALL DPWRST('XXX','BUG ')
-      GOTO9000
-C
- 2250 CONTINUE
-      IX11FN='8X13'
-      IFOUND='YES'
-      IF(IFEEDB.EQ.'OFF')GOTO2259
-      WRITE(ICOUT,999)
-CCCCC OCTOBER 1993.  FOLLOWING SECZTION CHANGED TO AVOID "/"
-      CALL DPWRST('XXX','BUG ')
-CCCCC WRITE(ICOUT,2251)IX11FN
-      WRITE(ICOUT,2251)
- 2251 FORMAT('THE X11 FONT HAS BEEN SET TO ')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,2252)IX11FN
- 2252 FORMAT(A80)
-      CALL DPWRST('XXX','BUG ')
- 2259 CONTINUE
-      GOTO9000
- 2290 CONTINUE
-C
-C     ***********************************
-C     **  CHECK FOR X11 WINDOW ID      **
-C     ***********************************
-C
-      IPART1='X11 '
-      IPART2='WIND'
-      IPART3='ID  '
-      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
-     1   IHARG(3).EQ.IPART3)THEN
-        IX11W2(1:4)=IHARG(NUMARG)
-        IX11W2(5:8)=IHARG2(NUMARG)
-        IFOUND='YES'
-        IF(IFEEDB.EQ.'OFF')GOTO9000
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,2302)IX11W2
- 2302   FORMAT('THE X11 WINDOW ID (FOR REPEAT GRAPH) HAS BEEN SET TO ',
-     1A8)
-        CALL DPWRST('XXX','BUG ')
-        GOTO9000
-      ENDIF
-C
-C     ***********************************
-C     **  CHECK FOR X11 CAP            **
-C     ***********************************
-C
-      IPART1='X11 '
-      IPART2='CAP '
-      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
-        IX11CS(1:4)=IHARG(NUMARG)
-        IX11CS(5:8)=IHARG2(NUMARG)
-        IFOUND='YES'
-        IF(IFEEDB.EQ.'OFF')GOTO9000
-        WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,2310)IX11CS
- 2310   FORMAT('THE X11 CAP STYLE HAS BEEN SET TO ',A8)
-      CALL DPWRST('XXX','BUG ')
-        GOTO9000
-      ENDIF
-C
-C     ***********************************
-C     **  CHECK FOR X11 JOIN           **
-C     ***********************************
-C
-      IPART1='X11 '
-      IPART2='JOIN'
-      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
-        IX11JS(1:4)=IHARG(NUMARG)
-        IX11JS(5:8)=IHARG2(NUMARG)
-        IFOUND='YES'
-        IF(IFEEDB.EQ.'OFF')GOTO9000
-        WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,2410)IX11JS
- 2410   FORMAT('THE X11 JOIN STYLE HAS BEEN SET TO ',A8)
-      CALL DPWRST('XXX','BUG ')
-        GOTO9000
-      ENDIF
-C
-C     ***********************************
-C     **  CHECK FOR X11 PIXMAP FLAG    **
-C     ***********************************
-C
-      IPART1='X11 '
-      IPART2='PIXM'
-      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)IX11PM=IHV
-      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)GOTO5160
-C
-C     ***********************************
-C     **  CHECK FOR X11 HARDWARE FILL  **
-C     ***********************************
-C
-      IPART1='X11 '
-      IPART2='HARD'
-      IPART3='FILL'
-      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
-     1   IHARG(3).EQ.IPART3)IX11FS=IHV
-      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
-     1   IHARG(3).EQ.IPART3)GOTO5160
-C
-C     ***********************************
-C     **  CHECK FOR X11 PAUSE FLAG     **
-C     ***********************************
-C
-      IPART1='X11 '
-      IPART2='PAUS'
-      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)IX11PA=IHV
-      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)GOTO5160
-C
-C     ******************************************************
-C     **  CHECK FOR DISPLAY NAME                          **
-C     **  NOTE THAT DISPLAY NAME CAN BE UP TO 20 CHARACTERS **
-C     **  LONG, SO THIS HANDLED SOMEWHAT DIFFERENTLY THAN **
-C     **  THE OTHER COMMANDS.                             **
-C     ******************************************************
-C
-      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'X11 '.AND.
-     1IHARG(2).EQ.'NAME')GOTO2510
-      GOTO2590
-C
- 2510 CONTINUE
-      IX11DN=' '
-      NCTEMP=0
-      IF(NUMARG.LE.2)GOTO2550
-      IF(IHARG(NUMARG).EQ.'OFF')GOTO2550
-      IF(IHARG(NUMARG).EQ.'AUTO')GOTO2550
-      IF(IHARG(NUMARG).EQ.'DEFA')GOTO2550
-C
-C  CHECK THE POSITION OF THE WORD NAME
-C  EXTRACT IANSLC FROM THE FIRST CHARACTER PAST "NAME" TO
-C  THE LAST NON-BLANK CHARACTER
-C
-      DO2530I=1,IWIDTH
-      IP1=I+1
-      IP2=I+2
-      IP3=I+3
-      IP4=I+4
-      IF(IP3.GT.IWIDTH)GOTO2550
-      IF(IANS(I).EQ.'N'.AND.IANS(IP1).EQ.'A'.AND.
-     1IANS(IP2).EQ.'M'.AND.IANS(IP3).EQ.'E'.AND.
-     1IANS(IP4).EQ.' ')GOTO2535
- 2530 CONTINUE
-      GOTO2550
-C
- 2535 CONTINUE
-      ISTART=IP4+1
-C
-      DO2540I=ISTART,IWIDTH
-      IF(IANS(I).EQ.' ')GOTO2540
-      ISTART=I
-      GOTO2545
- 2540 CONTINUE
-      GOTO2550
- 2545 CONTINUE
-CCCCC THE FOLLOWING LINE WAS CHANGED MAY 1992 (ALAN)
-CCCCC ISTOP=ISTART+19
-      ISTOP=ISTART+79
-      IF(ISTOP.GT.IWIDTH)ISTOP=IWIDTH
-      IF(ISTART.GT.ISTOP)GOTO2550
-      NCTEMP=ISTOP-ISTART+1
-      ICOUNT=0
-      DO2548I=ISTART,ISTOP
-      ICOUNT=ICOUNT+1
-      IX11DN(ICOUNT:ICOUNT)=IANSLC(I)(1:1)
- 2548 CONTINUE
-      IFOUND='YES'
-      IF(IFEEDB.EQ.'OFF')GOTO9000
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,2551)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,2552)IX11DN
-      CALL DPWRST('XXX','BUG ')
-      GOTO9000
-C
- 2550 CONTINUE
-      IX11DN='DEFAULT'
-      IFOUND='YES'
-      IF(IFEEDB.EQ.'OFF')GOTO2559
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-CCCCC WRITE(ICOUT,2551)IX11DN
-      WRITE(ICOUT,2551)
-      CALL DPWRST('XXX','BUG ')
-CCCCC THE FOLLOWING LINE WAS FIXED MAY 1992 (ALAN)
-CCCCC THE FOLLOWING LINE WAS FIXED OCTOBER 1993 (ALAN)
-C2551 FORMAT('THE X11 DISPLAY NAME HAS BEEN SET TO:'/1H ,A20)
-C2551 FORMAT('THE X11 DISPLAY NAME HAS BEEN SET TO:'/1H ,A80)
- 2551 FORMAT('THE X11 DISPLAY NAME HAS BEEN SET TO ')
-      WRITE(ICOUT,2552)IX11DN
- 2552 FORMAT(A80)
-      CALL DPWRST('XXX','BUG ')
- 2559 CONTINUE
-C
- 2590 CONTINUE
-CCCCC JUNE, 1990.  THE FOLLOWING LINE WAS A TYPO.  DELETE IT.
-CCCCC GOTO9000
-C
-C     ************************************************************
 C     **  ADDED MARCH 2005                                      **
 C     **  SET AQUATERM FONT <NAME>                              **
 C     **  SET AQUATERM CAP <CAP STYLE>                          **
@@ -26190,16 +26588,17 @@ C
 22250 CONTINUE
       IAQUFN='Helvetica'
       IFOUND='YES'
-      IF(IFEEDB.EQ.'OFF')GOTO2259
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,22251)
-22251 FORMAT('THE AQUATERM FONT HAS BEEN SET TO ')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,22252)IAQUFN
-22252 FORMAT(A80)
-      CALL DPWRST('XXX','BUG ')
-      GOTO9000
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,22251)
+22251   FORMAT('THE AQUATERM FONT HAS BEEN SET TO ')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,22252)IAQUFN
+22252   FORMAT(A80)
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
 22290 CONTINUE
 C
 C     ***********************************
@@ -26360,6 +26759,25 @@ C
          IF(IHARG(3).EQ.'FALS')IHV='FIXE'
          IF(IHV.NE.'TRUE' .AND. IHV.NE.'FIXE')IHV='FIXE'
          IGDCO=IHV
+         GOTO5160
+      ENDIF
+C
+C     ****************************************
+C     **  CHECK FOR GD       HARDWARE FILL  **
+C     ****************************************
+C
+      IPART1='GD  '
+      IPART2='HARD'
+      IPART3='FILL'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+         IF(IHV.EQ.'ON' .OR. IHV.EQ.'TRUE' .OR. IHV.EQ.'YES'.OR.
+     1      IHV.EQ.'HARD')THEN
+           IHV='ON'
+         ELSE
+           IHV='OFF'
+         ENDIF
+         IGDFS=IHV
          GOTO5160
       ENDIF
 C
@@ -27983,8 +28401,20 @@ C
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,5161)IPART1,IPART2,IHV
- 5161   FORMAT('THE FORTRAN COMMON CHARACTER VARIABLE ',A4,A4,
+ 5161   FORMAT('THE FORTRAN COMMON CHARACTER VARIABLE ',A4,2X,A4,
      1         ' HAS JUST BEEN SET TO ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+      GOTO9000
+C
+ 5165 CONTINUE
+      IFOUND='YES'
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,5166)IPART1,IPART2,IHV,IHV2
+ 5166   FORMAT('THE FORTRAN COMMON CHARACTER VARIABLE ',A4,2X,A4,
+     1         ' HAS JUST BEEN SET TO ',2A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
       GOTO9000
@@ -28054,9 +28484,8 @@ C
       IF(IFEEDB.EQ.'ON')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,5371)IPART1,IPART2,ISTRIN
- 5371   FORMAT('THE FORTRAN COMMON CHAR. VAR. ',A4,A4,
-     1         ' = ',A80)
+        WRITE(ICOUT,5371)IPART1,IPART2,ISTRIN(1:80)
+ 5371   FORMAT('THE FORTRAN COMMON CHAR. VAR. ',2A4,' = ',A80)
         CALL DPWRST('XXX','BUG ')
       ENDIF
       GOTO9000
@@ -28924,6 +29353,20 @@ C     UPDATED         --JUNE       2023.  PROBE SHOEMAKER F TEST
 C                                               POOLED MU
 C     UPDATED         --JULY       2023.  PROBE LINEAR RANK SUM TEST
 C                                               SCORE
+C     UPDATED         --SEPTEMBER  2023.  PROBE ANOVA MULTIPLE
+C                                               COMPARISONS
+C     UPDATED         --SEPTEMBER  2023.  PROBE ANOVA INTERACTION
+C                                               TERM
+C     UPDATED         --OCTOBER    2023.  PROBE GD HARDWARE FILL
+C     UPDATED         --OCTOBER    2023.  PROBE ORDER STATISTICS
+C                                               METHOD
+C     UPDATED         --OCTOBER    2023.  PROBE ORDER STATISTICS
+C                                               SAMPLE SIZE
+C     UPDATED         --OCTOBER    2023.  PROBE X11 SETTINGS
+C     UPDATED         --OCTOBER    2023.  PROBE POSTSCRIPT DASH PATTERN
+C     UPDATED         --NOVEMBER   2023.  PROBE ANOVA TWO TERM
+C                                               INTERACTION
+C     UPDATED         --NOVEMBER   2023.  PROBE ANOVA TYPE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -29043,6 +29486,7 @@ C
       ICASPR='    '
       ISTRIN=' '
       IHV='    '
+      IHV2='    '
       IPART1='    '
       IPART2='    '
       IPART3='    '
@@ -30362,16 +30806,85 @@ C
         GOTO5160
       ENDIF
 C
-CCCCC THE FOLLOWING SECTION WAS ADDED        JUNE 2020.
+CCCCC X11 SWITCHES
 C     ******************************************
 C     **  PROBE X11 SELECTION                 **
+C     **  PROBE X11 PIXMAP                    **
+C     **  PROBE X11 FONT TYPE                 **
+C     **  PROBE X11 WINDOW OPEN               **
+C     **  PROBE X11 PAUSE                     **
+C     **  PROBE X11 HARDWARE FILL             **
+C     **  PROBE X11 CAP STYLE                 **
+C     **  PROBE X11 JOIN STYLE                **
+C     **  PROBE X11 WINDOW ID                 **
+C     **  PROBE X11 DISPLAY NAME              **
+C     **  PROBE X11 SCALABLE FONT             **
+C     **  PROBE X11 FONT                      **
 C     ******************************************
 C
       IPART1='X11 '
-      IPART2='SELE'
-      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
-        IHV=IX11SE
-        GOTO5160
+      IF(IHARG(1).EQ.IPART1)THEN
+        IF(IHARG(2).EQ.'SELE')THEN
+          IPART2='SELE'
+          IHV=IX11SE
+          GOTO5160
+        ELSEIF(IHARG(2).EQ.'PIXM')THEN
+          IPART2='PIXM'
+          IHV=IX11PM
+          GOTO5160
+        ELSEIF(IHARG(2).EQ.'PAUS')THEN
+          IPART2='PAUS'
+          IHV=IX11PA
+          GOTO5160
+        ELSEIF(IHARG(2).EQ.'FONT' .AND. IHARG(3).EQ.'TYPE')THEN
+          IPART2='FONT'
+          IHV=IX11FT
+          GOTO5160
+        ELSEIF(IHARG(2).EQ.'WIND' .AND. IHARG(3).EQ.'OPEN')THEN
+          IPART2='WIND'
+          IHV=IX11OF
+          GOTO5160
+        ELSEIF(IHARG(2).EQ.'HARD' .AND. IHARG(3).EQ.'FILL')THEN
+          IPART2='HARD'
+          IHV=IX11FS
+          GOTO5160
+        ELSEIF(IHARG(2).EQ.'CAP ' .AND. IHARG(3).EQ.'STYL')THEN
+          IPART2='CAP '
+          IHV=IX11CS(1:4)
+          IHV2=IX11CS(5:8)
+          GOTO5165
+        ELSEIF(IHARG(2).EQ.'JOIN' .AND. IHARG(3).EQ.'STYL')THEN
+          IPART2='JOIN'
+          IHV=IX11JS(1:4)
+          IHV2=IX11JS(5:8)
+          GOTO5165
+        ELSEIF(IHARG(2).EQ.'WIND' .AND. IHARG(3).EQ.'ID  ')THEN
+          IPART2='WIND'
+          IHV=IX11W2(1:4)
+          IHV2=IX11W2(5:8)
+          GOTO5165
+        ELSEIF(IHARG(2).EQ.'DISP' .AND. IHARG(3).EQ.'NAME')THEN
+          IPART2='DISP'
+          IPART3='NAME'
+          IPROBS=' '
+          IPROBS(1:80)=IX11DN
+          NCPROB=80
+          GOTO59165
+        ELSEIF(IHARG(2).EQ.'SCAL' .AND. IHARG(3).EQ.'FONT')THEN
+          IPART2='SCAL'
+          IPART3='FONT'
+          IPROBS=' '
+          IPROBS(1:80)=IX11SF
+          NCPROB=80
+          GOTO59165
+        ELSEIF(IHARG(2).EQ.'FONT')THEN
+          IPART2='FONT'
+          IPART3='    '
+          IPROBS=' '
+          IPROBS(1:80)=IX11FN
+          NCPROB=80
+          GOTO59165
+        ENDIF
       ENDIF
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED        MAY 2016.
@@ -32363,6 +32876,92 @@ C
         GOTO5160
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2023
+C               *************************************************
+C               **  PROBE ANOVA MULITPLE COMPARISONS           **
+C               *************************************************
+C
+      IPART1='ANOV'
+      IPART2='MULT'
+      IPART3='COMP'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IANOMC
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED SEPTEMBER 2023
+C               *************************************************
+C               **  PROBE ANOVA INTERACTION TERM               **
+C               *************************************************
+C
+      IPART1='ANOV'
+      IPART2='INTE'
+      IPART3='TERM'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IANOIN
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED NOVEMBER  2023
+C               *************************************************
+C               **  PROBE ANOVA TWO TERM INTERACTION TERM      **
+C               *************************************************
+C
+      IPART1='ANOV'
+      IPART2='TWO '
+      IPART3='TERM'
+      IPART4='INTE'
+      IPART5='2   '
+      IF(IHARG(1).EQ.IPART1.AND.
+     1  (IHARG(2).EQ.IPART2.OR.IHARG(2).EQ.IPART5).AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IHV=IAOV2T
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED NOVEMBER  2023
+C               *************************************************
+C               **  PROBE ANOVA TYPE                           **
+C               *************************************************
+C
+      IPART1='ANOV'
+      IPART2='TYPE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IHV=IAOVTY
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER   2023
+C               *************************************************
+C               **  PROBE ORDER STATISTCS METHOD               **
+C               *************************************************
+C
+      IPART1='ODER'
+      IPART2='STAT'
+      IPART3='METH'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IOSMET
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED OCTOBER   2023
+C               *************************************************
+C               **  PROBE ORDER STATISTCS SAMPLE SIZE          **
+C               *************************************************
+C
+      IPART1='ODER'
+      IPART2='STAT'
+      IPART3='SAMP'
+      IPART4='SIZE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IV=IOSSS
+        GOTO5150
+      ENDIF
+C
 CCCCC FOLLOWING SECTION ADDED FEBRUARY 2007
 C               ***********************************************
 C               **  PROBE BINOMIAL CONTINUITY CORRECTION     **
@@ -33523,8 +34122,8 @@ C
         IFOUND='YES'
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,55165)I691GL
-55165   FORMAT('THE E691 MATERIAL ID GROUP LABEL VARIABLE HAS ',
+        WRITE(ICOUT,61165)I691GL
+61165   FORMAT('THE E691 MATERIAL ID GROUP LABEL VARIABLE HAS ',
      1         'BEEN SET TO ',A8)
         CALL DPWRST('XXX','BUG ')
         IPROBS=' '
@@ -41256,6 +41855,167 @@ C
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
      1   IHARG(3).EQ.IPART3)GOTO5160
 C
+C     ***************************************************
+C     **  CHECK FOR:                                   **
+C     **        POSTSCRIPT DOTT PATTERN                **
+C     **        POSTSCRIPT DASH PATTERN                **
+C     **        POSTSCRIPT DA1  PATTERN                **
+C     **        POSTSCRIPT DA2  PATTERN                **
+C     **        POSTSCRIPT DA3  PATTERN                **
+C     **        POSTSCRIPT DA4  PATTERN                **
+C     **        POSTSCRIPT DA5  PATTERN                **
+C     **  ADDED NOVEMBER 2023.                         **
+C     ***************************************************
+C
+      IPART1='POST'
+      IPART2='DASH'
+      IPART3='PATT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,36205)
+36205   FORMAT('THE POSTSCRIPT DASH PATTERN HAS BEEN SET TO:')
+        CALL DPWRST('XXX','BUG ')
+        DO36207II=1,10
+          IF(IPSTDP(II,2).EQ.-1)GOTO36209
+          WRITE(ICOUT,36208)II,IPSTDP(II,2)
+36208     FORMAT('    SETTING ',I2,' IS ',I5)
+          CALL DPWRST('XXX','BUG ')
+36207   CONTINUE
+36209   CONTINUE
+        GOTO9000
+      ENDIF
+C
+      IPART1='POST'
+      IPART2='DA1 '
+      IPART3='PATT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,36215)
+36215   FORMAT('THE POSTSCRIPT DA1 PATTERN HAS BEEN SET TO:')
+        CALL DPWRST('XXX','BUG ')
+        DO36217II=1,10
+          IF(IPSTDP(II,3).LE.0)GOTO36219
+          WRITE(ICOUT,36218)II,IPSTDP(II,3)
+36218     FORMAT('    SETTING ',I2,' IS ',I5)
+          CALL DPWRST('XXX','BUG ')
+36217   CONTINUE
+36219   CONTINUE
+        GOTO9000
+      ENDIF
+C
+      IPART1='POST'
+      IPART2='DA2 '
+      IPART3='PATT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,36225)
+36225   FORMAT('THE POSTSCRIPT DA2 PATTERN HAS BEEN SET TO:')
+        CALL DPWRST('XXX','BUG ')
+        DO36227II=1,10
+          IF(IPSTDP(II,4).LE.0)GOTO36229
+          WRITE(ICOUT,36228)II,IPSTDP(II,4)
+36228     FORMAT('    SETTING ',I2,' IS ',I5)
+          CALL DPWRST('XXX','BUG ')
+36227   CONTINUE
+36229   CONTINUE
+        GOTO9000
+      ENDIF
+C
+      IPART1='POST'
+      IPART2='DA3 '
+      IPART3='PATT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,36235)
+36235   FORMAT('THE POSTSCRIPT DA3 PATTERN HAS BEEN SET TO:')
+        CALL DPWRST('XXX','BUG ')
+        DO36237II=1,10
+          IF(IPSTDP(II,5).LE.0)GOTO36239
+          WRITE(ICOUT,36238)II,IPSTDP(II,5)
+36238     FORMAT('    SETTING ',I2,' IS ',I5)
+          CALL DPWRST('XXX','BUG ')
+36237   CONTINUE
+36239   CONTINUE
+        GOTO9000
+      ENDIF
+C
+      IPART1='POST'
+      IPART2='DA4 '
+      IPART3='PATT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,36245)
+36245   FORMAT('THE POSTSCRIPT DA4 PATTERN HAS BEEN SET TO:')
+        CALL DPWRST('XXX','BUG ')
+        DO36247II=1,10
+          IF(IPSTDP(II,6).LE.0)GOTO36249
+          WRITE(ICOUT,36248)II,IPSTDP(II,6)
+36248     FORMAT('    SETTING ',I2,' IS ',I5)
+          CALL DPWRST('XXX','BUG ')
+36247   CONTINUE
+36249   CONTINUE
+        GOTO9000
+      ENDIF
+C
+      IPART1='POST'
+      IPART2='DA5 '
+      IPART3='PATT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,36255)
+36255   FORMAT('THE POSTSCRIPT DA5 PATTERN HAS BEEN SET TO:')
+        CALL DPWRST('XXX','BUG ')
+        DO36257II=1,10
+          IF(IPSTDP(II,7).LE.0)GOTO36259
+          WRITE(ICOUT,36258)II,IPSTDP(II,7)
+36258     FORMAT('    SETTING ',I2,' IS ',I5)
+          CALL DPWRST('XXX','BUG ')
+36257   CONTINUE
+36259   CONTINUE
+        GOTO9000
+      ENDIF
+C
+      IPART1='POST'
+      IPART2='DOTT'
+      IPART3='PATT'
+      IPART4='DOT '
+      IF(IHARG(1).EQ.IPART1.AND.
+     1  (IHARG(2).EQ.IPART2.OR.IHARG(2).EQ.IPART4).AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IFOUND='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,36265)
+36265   FORMAT('THE POSTSCRIPT DOT PATTERN HAS BEEN SET TO:')
+        CALL DPWRST('XXX','BUG ')
+        DO36267II=1,10
+          IF(IPSTDP(II,1).LE.0)GOTO36269
+          WRITE(ICOUT,36268)II,IPSTDP(II,1)
+36268     FORMAT('    SETTING ',I2,' IS ',I5)
+          CALL DPWRST('XXX','BUG ')
+36267   CONTINUE
+36269   CONTINUE
+        GOTO9000
+      ENDIF
+C
 C     ************************************************************
 C     **  ADDED SEPTEMBER 1988                                  **
 C     **  SET CALCOMP COLORS <NUMBER>                           **
@@ -41865,6 +42625,19 @@ C
       IPART2='COLO'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
         IHV=IGDCO
+        GOTO5160
+      ENDIF
+C
+C     ***********************************
+C     **  CHECK FOR GD HARDWARE FILL   **
+C     ***********************************
+C
+      IPART1='GD  '
+      IPART2='HARD'
+      IPART3='FILL'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IGDFS
         GOTO5160
       ENDIF
 C
@@ -42786,7 +43559,7 @@ C
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,5151)IPART1,IPART2,IV
- 5151   FORMAT('THE FORTRAN COMMON SCALAR ',A4,A4,
+ 5151   FORMAT('THE FORTRAN COMMON SCALAR ',A4,2X,A4,
      1         ' HAS THE VALUE ',I8)
         CALL DPWRST('XXX','BUG ')
       ENDIF
@@ -42800,8 +43573,8 @@ C
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,5161)IPART1,IPART2,IHV
- 5161   FORMAT('THE FORTRAN COMMON CHARACTER ',A4,A4,
-     1         ' HAS THE SETTING     ',A4,2X,A4)
+ 5161   FORMAT('THE FORTRAN COMMON CHARACTER ',A4,2X,A4,
+     1         ' HAS THE SETTING     ',A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
@@ -42809,6 +43582,35 @@ C
       IPROBS=' '
       IPROBS(1:4)=IHV(1:4)
       NCPROB=4
+      GOTO8100
+C
+ 5165 CONTINUE
+      IFOUND='YES'
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,5166)IPART1,IPART2,IHV,IHV2
+ 5166   FORMAT('THE FORTRAN COMMON CHARACTER ',A4,2X,A4,
+     1         ' HAS THE SETTING     ',2A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      IPROBS=' '
+      IPROBS(1:4)=IHV(1:4)
+      IPROBS(5:8)=IHV2(1:4)
+      NCPROB=8
+      GOTO8100
+C
+59165 CONTINUE
+      IFOUND='YES'
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,59166)IPART1,IPART2,IPROBS(1:80)
+59166   FORMAT('THE FORTRAN COMMON CHARACTER ',A4,2X,A4,
+     1         ' HAS THE SETTING     ',A80)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       GOTO8100
 C
  5170 CONTINUE

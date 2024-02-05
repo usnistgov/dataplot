@@ -1140,6 +1140,8 @@ C                                       NAMES FROM THE FILE
 C     UPDATED         --AUGUST    2023. PBCOPY/PBPASTE FOR MACOS
 C                                       CLIPBOARD
 C     UPDATED         --AUGUST    2023. FIX BUG WHEN FILE NAME IS QUOTED
+C     UPDATED         --JANUARY   2024. FIX BUG WHEN AUTOMATIC VARIABLE
+C                                       NAMES USED WITH SKIP AUTOMATIC
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -3117,6 +3119,7 @@ C
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
+      IVAR=0
       IF(IVRLST.EQ.'NO' .AND. ICASRE.EQ.'VARI' .AND.
      1   IOTERM.NE.'LOOP')THEN
 C
@@ -3179,6 +3182,7 @@ C
                 ENDIF
 44581         CONTINUE
 44582         CONTINUE
+              NTEMP=NLAST
               CALL DPUPPE(IASAVE,NTEMP,IASAVE,IBUGS2,IERROR)
               DO4583J=1,NTEMP
 CCCCC           IF(IASAVE(J)(1:1).EQ.' ' .OR. IASAVE(J)(1:1).EQ.',')THEN
@@ -3497,6 +3501,9 @@ CCCCC           NTEMP=255
                   ENDIF
  5581           CONTINUE
  5582           CONTINUE
+C
+C               2024/01: SET NTEMP TO NLAST
+C
                 NTEMP=NLAST
                 CALL DPUPPE(IASAVE,NTEMP,IASAVE,IBUGS2,IERROR)
                 DO5583J=1,NTEMP
@@ -6189,7 +6196,6 @@ C          IMATC1 = FIRST COLUMN OF THE MATRIX
 C          IMATNR = NUMBER OF ROWS    IN THE MATRIX
 C          IMATNC = NUMBER OF COLUMNS IN THE NATRIX
 C
-          print *,'matrix case: numlrd = ',numlrd
           IF(NUMLRD.EQ.1)THEN
 C
             INAM=NUMNAM

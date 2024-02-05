@@ -52,6 +52,16 @@
  *                    new format championed by Google.  Primarily
  *                    intended for viewing videos on the web.
  *
+ *  Updated:  11/2020
+ *            Increased the supported number of fixed colors from
+ *            89 to 163.
+ *
+ *  Updated:  10/2023
+ *            Made some tweaks to address a few issues.  Specifically,
+ *            dashed/dotted lines were not working, character fill not
+ *            working, unable to set background color in "true color"
+ *            mode.  These issues have been corrected.
+ *
  *  The purpose of this library is to provide easy access from
  *  a Fortran 77 program to the GD library.
  *
@@ -191,11 +201,8 @@
 /* 2021/03/12: with recent upgrade of color model, need to
  *             increase max colors to 163 from 89.
  *
- *             Color table limited to 255 entried, so truncate
- *             at 145 colors.
  */
 #define MAX_COLORS_GD   163
-/* #define MAX_COLORS_GD   145 */
 #define MAX_GRAY        100
 #define BORDER_WIDTH      3
 #define DEFAULT_X_SIZE  600
@@ -213,52 +220,79 @@ FILE          *jpegin;            /* File ID for Image (reading) */
 char          file_string_2[160]; /* Name of current file (reading) */
 
 /* common parameters */
-int    COLOR_OPTION_GD = 0;            /* Define current color */
+int    COLOR_OPTION_GD = 0;            /* Specify fixed/true color */
 int    CURRENT_COLOR_GD;               /* Define current color */
 int    CURRENT_LINE_STYLE_GD[12];      /* Define current line style */
 int    NPTS_STYLE_GD = 0;              /* Number of points in style */
 int    color_table[MAX_COLORS_GD + 100];  /* color table */
 int red[MAX_COLORS_GD] = {
-    /*  0 -  7 */ 255,   0, 255,   0,   0, 255, 255,   0,
-    /*  8 - 15 */ 255, 154,   0, 173, 138, 208,  47, 211,
-    /* 16 - 23 */ 127, 165,  95, 255, 100,  85, 153,  72,
-    /* 24 - 31 */   0, 178,  34, 255, 218, 192, 205, 240,
-    /* 32 - 39 */ 105, 176,  50, 176, 102,   0, 107, 250,
-    /* 40 - 47 */ 186,  60, 123,   0,  72, 199,  25,   0,
-    /* 48 - 55 */ 255, 218, 152, 255, 221, 160, 250,  46,
-    /* 56 - 63 */ 160, 125, 106,   0,  70, 210, 216,  64,
-    /* 64 - 71 */ 238, 245, 173, 224,   0,   0,   0,   0,
-    /* 72 - 79 */   0,   0,   0,   0,   0, 238, 205, 139,
-    /* 80 - 87 */ 238, 205, 139, 238, 205, 139, 238, 205,
-    /* 88 - 88 */ 139
+    /*   0 -   7 */ 255,   0, 255,   0,   0, 255, 255,   0,
+    /*   8 -  15 */ 255, 154,   0, 173, 138, 208,  47, 211,
+    /*  16 -  23 */ 127, 165,  95, 255, 100,  85, 153,  72,
+    /*  24 -  31 */   0, 178,  34, 255, 218, 192, 205, 240,
+    /*  32 -  39 */ 105, 176,  50, 176, 102,   0, 107, 250,
+    /*  40 -  47 */ 186,  60, 123,   0,  72, 199,  25,   0,
+    /*  48 -  55 */ 255, 218, 152, 255, 221, 160, 250,  46,
+    /*  56 -  63 */ 160, 125, 106,   0,  70, 210, 216,  64,
+    /*  64 -  71 */ 238, 245, 173, 224,   0,   0,   0,   0,
+    /*  72 -  79 */   0,   0,   0,   0,   0, 238, 205, 139,
+    /*  80 -  87 */ 238, 205, 139, 238, 205, 139, 238, 205,
+    /*  88 -  95 */ 139, 240, 233, 255, 220, 139, 255, 255,
+    /*  96 - 103 */ 255, 219, 255, 255, 255, 255, 255, 255,
+    /* 104 - 111 */ 255, 238, 189, 230, 255, 147, 153, 148,
+    /* 112 - 119 */ 139,  75, 127, 124,   0, 144, 107, 128,
+    /* 120 - 127 */ 143,  32,   0,   0, 175,   0, 176, 135,
+    /* 128 - 135 */   0,  30,  65,   0, 255, 255, 255, 255,
+    /* 136 - 143 */ 222, 188, 244, 184, 205, 210, 139, 255,
+    /* 144 - 151 */ 240, 245, 240, 240, 248, 245, 255, 245,
+    /* 152 - 159 */ 253, 255, 255, 255, 250, 250, 255, 192,
+    /* 160 - 162 */ 169, 119, 112
 };
 int green[MAX_COLORS_GD] = {
-    /*  0 -  7 */ 255,   0,   0,   0, 255,   0, 165, 255,
-    /*  8 - 15 */ 255, 205, 100, 216,  43,  32,  79, 211,
-    /* 16 - 23 */ 255,  42, 158, 127, 149, 107,  50,  61,
-    /* 24 - 31 */ 206,  34, 139, 215, 165, 192,  92, 230,
-    /* 32 - 39 */ 105, 196, 205,  48, 205,   0, 142, 250,
-    /* 40 - 47 */  85, 179, 104, 250, 209,  21,  25,   0,
-    /* 48 - 55 */  69, 112, 251, 192, 160,  32, 128, 139,
-    /* 56 - 63 */  82, 206,  90, 255, 130, 180, 191, 224,
-    /* 64 - 71 */ 130, 222, 255, 255,   0,   0,   0, 238,
-    /* 72 - 79 */ 205, 139, 238, 205, 139, 238, 205, 139,
-    /* 80 - 87 */ 154, 133,  90,   0,   0,   0,   0,   0,
-    /* 88 - 88 */   0
+    /*   0 -   7 */ 255,   0,   0,   0, 255,   0, 165, 255,
+    /*   8 -  15 */ 255, 205, 100, 216,  43,  32,  79, 211,
+    /*  16 -  23 */ 255,  42, 158, 127, 149, 107,  50,  61,
+    /*  24 -  31 */ 206,  34, 139, 215, 165, 192,  92, 230,
+    /*  32 -  39 */ 105, 196, 205,  48, 205,   0, 142, 250,
+    /*  40 -  47 */  85, 179, 104, 250, 209,  21,  25,   0,
+    /*  48 -  55 */  69, 112, 251, 192, 160,  32, 128, 139,
+    /*  56 -  63 */  82, 206,  90, 255, 130, 180, 191, 224,
+    /*  64 -  71 */ 130, 222, 255, 255,   0,   0,   0, 238,
+    /*  72 -  79 */ 205, 139, 238, 205, 139, 238, 205, 139,
+    /*  80 -  87 */ 154, 133,  90,   0,   0,   0,   0,   0,
+    /*  88 -  95 */   0, 128, 150, 160,  20,   0, 182, 105,
+    /*  96 - 103 */  20, 112,  99, 140, 255, 250, 239, 228,
+    /* 104 - 111 */ 218, 232, 183, 230,   0, 112, 102,   0,
+    /* 112 - 119 */   0,   0, 255, 252, 255, 238, 142, 128,
+    /* 120 - 127 */ 188, 178, 139, 128, 238, 255, 224, 206,
+    /* 128 - 135 */ 191, 144, 105,   0, 248, 235, 228, 222,
+    /* 136 - 143 */ 184, 143, 164, 134, 133, 105,  69, 250,
+    /* 144 - 151 */ 255, 255, 255, 248, 248, 245, 245, 245,
+    /* 152 - 159 */ 245, 250, 255, 235, 240, 228, 220, 192,
+    /* 160 - 162 */ 169, 136, 128
 };
 int blue[MAX_COLORS_GD] = {
-    /*  0 -  7 */ 255,   0,   0, 255,   0, 255,   0, 255,
-    /*  8 - 15 */   0,  50,   0, 230, 226, 144,  79, 211,
-    /* 16 - 23 */ 212,  42, 160,  80, 237,  47, 204, 139,
-    /* 24 - 31 */ 209,  34,  34,   0,  32, 192,  92, 140,
-    /* 32 - 39 */ 105, 222,  50,  96, 170, 205,  35, 210,
-    /* 40 - 47 */  85, 179, 104, 250, 209,  21,  25,   0,
-    /* 48 - 55 */   0, 214, 152, 203, 221, 240, 114,  87,
-    /* 56 - 63 */  45, 235, 205, 127, 180, 140, 216, 208,
-    /* 64 - 71 */ 238, 179,  47, 255, 238, 205, 139, 238,
-    /* 72 - 79 */ 205, 139,   0,   0,   0,   0,   0,   0,
-    /* 80 - 87 */   0,   0,   0,   0,   0,   0, 238, 205,
-    /* 88 - 88 */ 139
+    /*   0 -   7 */ 255,   0,   0, 255,   0, 255,   0, 255,
+    /*   8 -  15 */   0,  50,   0, 230, 226, 144,  79, 211,
+    /*  16 -  23 */ 212,  42, 160,  80, 237,  47, 204, 139,
+    /*  24 -  31 */ 209,  34,  34,   0,  32, 192,  92, 140,
+    /*  32 -  39 */ 105, 222,  50,  96, 170, 205,  35, 210,
+    /*  40 -  47 */  85, 179, 104, 250, 209,  21,  25,   0,
+    /*  48 -  55 */   0, 214, 152, 203, 221, 240, 114,  87,
+    /*  56 -  63 */  45, 235, 205, 127, 180, 140, 216, 208,
+    /*  64 -  71 */ 238, 179,  47, 255, 238, 205, 139, 238,
+    /*  72 -  79 */ 205, 139,   0,   0,   0,   0,   0,   0,
+    /*  80 -  87 */   0,   0,   0,   0,   0,   0, 238, 205,
+    /*  88 -  95 */ 139, 128, 122, 122,  60,   0, 193, 180,
+    /*  96 - 103 */ 147, 147,  71,   0, 224, 205, 213, 181,
+    /* 104 - 111 */ 185, 170, 107, 250, 255, 219, 204, 211,
+    /* 112 - 119 */ 139, 130,   0,   0,   0, 144,  35,   0,
+    /* 120 - 127 */ 143, 170, 139, 128, 238, 255, 230, 250,
+    /* 128 - 135 */ 255, 255, 225, 139, 220, 205, 196, 173,
+    /* 136 - 143 */ 135, 143,  96,  11,  63,  30,  19, 250,
+    /* 144 - 151 */ 240, 250, 255, 255, 255, 245, 238, 220,
+    /* 152 - 159 */ 230, 240, 240, 215, 230, 225, 220, 192,
+    /* 160 - 162 */ 169, 153, 144
 };
 
 /* flags for current attribute settings */
@@ -475,7 +509,7 @@ int file_name[];
     *              cases.
     */
 
-   if (icol_temp == 0) {
+   if (icol_temp == 0) {           /* Fixed color case */
       /*  Step 1: Open Image */
       im = gdImageCreate(xpixels_temp, ypixels_temp);
       /*  Step 2: Allocate colors */
@@ -495,7 +529,7 @@ int file_name[];
                                itemp2);
       }
    }
-   else {
+   else {                  /* True color case */
       /*  Step 1: Open Image */
       im = gdImageCreateTrueColor(xpixels_temp, ypixels_temp);
       /*  Step 2: Allocate colors for Dataplot's basic color map */
@@ -510,21 +544,6 @@ int file_name[];
          itemp2 = atemp2;
          color_table[itemp1] = gdImageColorAllocate(im,itemp2,itemp2,
                                itemp2);
-      }
-      /*  Step 3: For true color, their is no separate background
-       *          color.  The default is black, so if the requested
-       *          background color is not black, set all pixels to
-       *          this background color.
-       */
-      back_col_temp = back_col_temp - 1;
-      if (back_col_temp != 1) {
-         jcol_temp = gdImageColorExact(im,red[back_col_temp],
-                     green[back_col_temp],blue[back_col_temp]);
-         /*
-         gdImageFilledRectangle(im,0,0,xpixels_temp,ypixels_temp,
-                                jcol_temp);
-         */
-         CURRENT_COLOR_GD = jcol_temp;
          COLOR_OPTION_GD = 1;
       }
    }
@@ -726,6 +745,10 @@ int   jcol[2];
       jgreen_temp = green[jcol_temp-1];
       jblue_temp = blue[jcol_temp-1];
       jcol_temp = gdImageColorExact(im,jred_temp,jgreen_temp,jblue_temp);
+      if (jcol_temp == (-1)) {
+         jcol_temp = gdImageColorAllocate(im,jred_temp,jgreen_temp,jblue_temp);
+         jcol_temp = gdImageColorClosest(im,jred_temp,jgreen_temp,jblue_temp);
+      }
       CURRENT_COLOR_GD = jcol_temp;
    }
 
@@ -789,13 +812,22 @@ int   iretco[2];
       jblue_temp = 255;
    }
 
-   jcol_temp = gdImageColorExact(im,jred_temp,jgreen_temp,jblue_temp);
-   CURRENT_COLOR_GD = jcol_temp;
+   if (COLOR_OPTION_GD == 0) {  /* For fixed color, find closest match */
+      jcol_temp = gdImageColorClosest(im,jred_temp,jgreen_temp,jblue_temp);
+   }
+   else {
+      jcol_temp = gdImageColorExact(im,jred_temp,jgreen_temp,jblue_temp);
+      if (jcol_temp == (-1)) {
+         jcol_temp = gdImageColorAllocate(im,jred_temp,jgreen_temp,jblue_temp);
+         jcol_temp = gdImageColorClosest(im,jred_temp,jgreen_temp,jblue_temp);
+      }
+      CURRENT_COLOR_GD = jcol_temp;
 #if INTEGER_PRECISION == 0
-    *iretco = jcol_temp;
+       *iretco = jcol_temp;
 #else
-    iretco[0] = jcol_temp;
+       iretco[0] = jcol_temp;
 #endif
+   }
 
 }
 
@@ -1038,6 +1070,9 @@ int   npts[2], jcol[2];
 {
    int     points[MAX_REG_POINTS];
    int     npts_temp, jcol_temp, indx;
+   int     jred_temp;
+   int     jgreen_temp;
+   int     jblue_temp;
 
 #if INTEGER_PRECISION == 0
    npts_temp = *npts;
@@ -1051,6 +1086,25 @@ int   npts[2], jcol[2];
 #else
     indx = 2;
 #endif
+
+   /* Color set separately (just use CURRENT_COLOR_GD) 
+   if (COLOR_OPTION_GD == 0) {
+      if (jcol_temp >= 0 ) {
+         jcol_temp = jcol_temp - 1;
+         CURRENT_COLOR_GD = jcol_temp;
+      } else {
+         jcol_temp = -jcol_temp;
+         jcol_temp = jcol_temp + MAX_COLORS_GD - 1;
+         CURRENT_COLOR_GD = jcol_temp;
+      }
+   } else {
+      jred_temp = red[jcol_temp-1];
+      jgreen_temp = green[jcol_temp-1];
+      jblue_temp = blue[jcol_temp-1];
+      jcol_temp = gdImageColorExact(im,jred_temp,jgreen_temp,jblue_temp);
+      CURRENT_COLOR_GD = jcol_temp;
+   }
+   */
 
    if (npts_temp == 2) {      /* rectangle */
       int  x1, y1, x2, y2;
@@ -1072,13 +1126,13 @@ int   npts[2], jcol[2];
       }
       if (COLOR_OPTION_GD == 0) {
          gdImageFilledRectangle(im, x1, y1, x2, y2, 
-                                color_table[jcol_temp-1]);
+                                color_table[CURRENT_COLOR_GD]);
       } else {
          gdImageFilledRectangle(im, x1, y1, x2, y2, CURRENT_COLOR_GD);
       }
    }
    else if (npts_temp > 2) {     /* convex polygon */
-/*
+/* Do filled non-rectangular regions in software
       int  i, temp;
       temp = npts_temp;
       if(npts_temp > MAX_REG_POINTS) temp = MAX_REG_POINTS;
@@ -1092,7 +1146,7 @@ int   npts[2], jcol[2];
 #endif
       }
       if (COLOR_OPTION_GD == 0) {
-         gdImageFilledPolygon(im,points,temp,color_table[jcol_temp-1]);
+         gdImageFilledPolygon(im,points,temp,color_table[CURRENT_COLOR_GD]);
       } else {
          gdImageFilledPolygon(im,points,temp,CURRENT_COLOR_GD);
       }

@@ -88,6 +88,10 @@
  *                             Use -DXCLIP to indicate "xclib" from xclip
  *                             is available.  If not, then copy/paste
  *                             operations will not be available.
+ *  UPDATED  - NOVEMBER 2023.  Support for scalable fonts
+ *  UPDATED  - NOVEMBER 2023.  Remove "xfetch" routine (Linux cut and
+ *                             paste implemented via xclip command
+ *                             line rather than xclip library)
  */
 /*  This driver has been tested on Suns (both monochrome and color),
  *  Silicon Graphics Iris, HP-9000, a Cray Y-MP, DEC workstation, 
@@ -188,12 +192,15 @@
  *  xcirc      - draw a circle
  *  xregfl     - solid fill of a region
  *  xtexth     - draw a horizontal character string
+ *  xtexth2    - draw a horizontal character string using scalable fonts
  *  xtextv     - draw a vertical character string
+ *  xtextv2    - draw a vertical character string using scalable fonts
  *  xtattr     - set text attributes
  *  xsaveg     - copy pixmap to a specified file
  *  xrestg     - copy pixmap from a specified file to the screen
  *  xcycle     - cycle through previously saved pixmaps
  *  xfetch     - retrieve data from the clipboard
+ *               (removed 2023/11)
  *  i_to_s     - utility routine to convert array of ADE's to string array
  *  set_screen - utility routine to set screen height and width
  *
@@ -236,19 +243,22 @@
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <X11/Xft/Xft.h>
 #include <stdio.h>
 
+/* Following are used by xfetch which has been removed
 #if HAVE_XCLIP
 #include <unistd.h>
 #include <ctype.h>
 #include <X11/Xatom.h>
 #include <X11/Xmu/Atoms.h>
 #include <X11/Xresource.h>
-#include <X11/keysym.h>  */
+#include <X11/keysym.h>
 #include <xcdef.h>
 #include <xcprint.h>
 #include <xclib.h>
 #endif
+*/
 
 /* add following 2 lines MAY 1995   */
 #include <stdlib.h>
@@ -637,39 +647,44 @@ int           COLOR_CURRENT;          /* current color */
 int           PIXMAP_CURRENT;         /* 0 - closed, 1 - open */
 int           PIXMAP_CURRENT_2;       /* 0 - repeat graph closed, 1 - open */
 int           ORIENTATION_CURRENT;    /* current orientation */
+char          SCALABLE_FONT_CURRENT[80];  /* name of current scalable font */
 
 #if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void  xclear_(), xend_(), xcheck_();
-void  xinit_(), xlattr_(), xdraw_();
-void  xpoint_(), xcirc_(), xregfl_(), xrdloc_();
-void  xfore_(),  xerase_(), xupdat_();
-void  xsaveg_(),  xrestg_(), xcycle_();
-void  xtexth_(), xtextv_(),xtattr_();
-void  xfetch_();
+void  xclear_(), xend_(),    xcheck_();
+void  xinit_(),  xlattr_(),  xdraw_();
+void  xpoint_(), xcirc_(),   xregfl_(), xrdloc_();
+void  xfore_(),  xerase_(),  xupdat_();
+void  xsaveg_(), xrestg_(),  xcycle_();
+void  xtexth_(), xtexth2_(), xtextv_(), xtattr_();
+void  xtextv2_();
+/* void  xfetch_(); */
 #elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void  XCLEAR_(), XEND_(), XCHECK_();
-void  XINIT_(), XLATTR_(), XDRAW_();
-void  XPOINT_(), XCIRC_(), XREGFL_(), XRDLOC_();
+void  XCLEAR_(), XEND_(),   XCHECK_();
+void  XINIT_(),  XLATTR_(), XDRAW_();
+void  XPOINT_(), XCIRC_(),  XREGFL_(),  XRDLOC_();
 void  XFORE_(),  XERASE_(), XUPDAT_();
-void  XSAVEG_(),  XRESTG_(), XCYCLE_();
-void  XTEXTH_(), XTEXTV_(), XTATTR_();
-void  XFETCH_();
+void  XSAVEG_(), XRESTG_(), XCYCLE_();
+void  XTEXTH_(), XTEXTH2(), XTEXTV_(),  XTATTR_();
+void  XTEXTV2_();
+/* void  XFETCH_(); */
 #elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void  xclear(), xend(), xcheck();
-void  xinit(), xlattr(), xdraw();
-void  xpoint(), xcirc(), xregfl(), xrdloc();
-void  xfore(),  xerase(), xupdat();
-void  xsaveg(),  xrestg(), xcycle();
-void  xtexth(), xtextv(),xtattr();
-void  xfetch();
+void  xclear(), xend(),    xcheck();
+void  xinit(),  xlattr(),  xdraw();
+void  xpoint(), xcirc(),   xregfl(),  xrdloc();
+void  xfore(),  xerase(),  xupdat();
+void  xsaveg(), xrestg(),  xcycle();
+void  xtexth(), xtexth2(), xtextv(),  xtattr();
+void  xtextv2();
+/* void  xfetch(); */
 #elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void  XCLEAR(), XEND(), XCHECK();
-void  XINIT(), XLATTR(), XDRAW();
-void  XPOINT(), XCIRC(), XREGFL(), XRDLOC();
-void  XFORE(),  XERASE(), XUPDAT();
-void  XSAVEG(), XRESTG(), XCYCLE();
-void  XTEXTH(), XTEXTV(), XTATTR();
-void  XFETCH();
+void  XCLEAR(), XEND(),    XCHECK();
+void  XINIT(),  XLATTR(),  XDRAW();
+void  XPOINT(), XCIRC(),   XREGFL(),  XRDLOC();
+void  XFORE(),  XERASE(),  XUPDAT();
+void  XSAVEG(), XRESTG(),  XCYCLE();
+void  XTEXTH(), XTEXTH2(), XTEXTV(),  XTATTR();
+void  XTEXTV2();
+/* void  XFETCH(); */
 #endif
 void  i_to_s(), set_screen(), xback();
 
@@ -2924,6 +2939,150 @@ int    ixpos[2], iypos[2], ijusth[2], ijustv[2], error[2];
 
 }
 
+/* XTEXTH2 - draw a horizontal text string using scalable fonts.
+ *
+ *          Use XDrawString rather than XDrawText so that background pixels
+ *          are not changed.  This is so that other lines that may intersect
+ *          the character box will not be blanked out.
+ *
+ * string - text string to draw
+ * ixpos  - x position
+ * iypos  - y position
+ * ijusth - justification (horizontal)
+ *          0 - left justified
+ *          1 - center justified
+ *          2 - right justified
+ * ijustv - justiciation (vertical)
+ *          0 - center justified
+ *          1 - bottom justified
+ *          2 - top justified
+ * error  - error flag
+ *
+ */
+#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
+void xtexth2_(font, string, ixpos, iypos, ijusth, ijustv, error)
+#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
+void XTEXTH2_(font, string, ixpos, iypos, ijusth, ijustv, error)
+#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
+void xtexth2(font, string, ixpos, iypos, ijusth, ijustv, error)
+#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
+void XTEXTH2(font, string, ixpos, iypos, ijusth, ijustv, error)
+#endif
+int    font[];
+int    string[];
+#if INTEGER_PRECISION == 0
+int    *ixpos, *iypos, *ijusth, *ijustv, *error;
+#else
+int    ixpos[2], iypos[2], ijusth[2], ijustv[2], error[2];
+#endif
+{
+
+   int          itest, itempx, itempy;   /* temporary variables */
+   int          len, len2;               /* number of characters in string */
+   int          string_width;            /* width of string in pixels */
+   int          string_height;           /* width of string in pixels */
+   char         string2[130];            /* converted string */
+   char         font2[130];              /* converted font name */
+   int          i;
+   int          ixpos_temp, iypos_temp, ijusth_temp, ijustv_temp;
+
+#if INTEGER_PRECISION == 0
+   ixpos_temp = *ixpos;
+   iypos_temp = *iypos;
+   ijusth_temp = *ijusth;
+   ijustv_temp = *ijustv;
+#else
+   ixpos_temp = ixpos[0];
+   iypos_temp = iypos[0];
+   ijusth_temp = ijusth[0];
+   ijustv_temp = ijustv[0];
+#endif
+
+XftFont *font_name;
+XftDraw *drawxft;
+XftColor color;
+XGlyphInfo extents;
+
+/* Step 1: convert the text and font to C strings */
+#if INTEGER_PRECISION == 0
+   i_to_s(string, string2, 130, &len);
+   i_to_s(font,   font2,   130, &len2);
+#else
+   i_to_s(string, string2, 260, &len);
+   i_to_s(font,   font2,   260, &len2);
+#endif
+
+   /* Step 2: Open the font and set the color */
+   itest = strcmp(font2, SCALABLE_FONT_CURRENT);
+   if (itest != 0) {
+      font_name = XftFontOpenName(display, screen, font2);
+      /* font_name = XftFontOpenName(display, screen, "Arial-8"); */
+      if (!font_name) {
+         #if INTEGER_PRECISION == 0
+            *error = 1;
+         #else
+            error[0] = 1;
+         #endif
+         return;
+      }
+   }
+
+   if (!XftColorAllocName(display,vis,color_map,color_names[COLOR_CURRENT],&color)) {
+      #if INTEGER_PRECISION == 0
+          *error = 2;
+      #else
+          error[0] = 2;
+      #endif
+      return;
+   }
+
+   /* Step 3: Create Xft drawable */
+   drawxft = XftDrawCreate(display, window, vis, color_map);
+
+   /* Step 4: Justify the string */
+   XftTextExtents8(display, font_name, string2, len, &extents);
+   string_width = extents.width;
+   string_height = extents.height;
+
+   switch (ijusth_temp) {
+      case 0:                       /* Left justified string */
+          itempx = ixpos_temp;
+          break;
+      case 1:                       /* Center justified string */
+          itempx = ixpos_temp - (string_width/2);
+          break;
+      case 2:                       /* Right justified string */
+          itempx = ixpos_temp - string_width;
+          break;
+      default:
+          itempx = ixpos_temp;
+          break;
+   }
+   switch (ijustv_temp) {
+      case 0:                       /* Center justified string */
+          itempy = iypos_temp + string_height/2.0;
+          break;
+      case 1:                       /* Bottom justified string */
+          itempy = iypos_temp;
+          break;
+      case 2:                       /* Top justified string */
+          itempy = iypos_temp + string_height;
+          break;
+      default:
+          itempy = iypos_temp + (FONT_HEIGHT_CURRENT/2.0);
+          break;
+    }
+
+   /* Step 5: Draw the string */
+   XftDrawStringUtf8(drawxft, &color, font_name, itempx, itempy, string2, len);
+   if (PIXMAP_CURRENT == 1) {
+      XftDrawStringUtf8(drawxft, &color, font_name, itempx, itempy, string2, len);
+   }
+
+   XftColorFree(display, vis, color_map, &color);
+
+}
+
 /* XTEXTV - draw a horizontal text string.
  *
  *          Use XDrawString rather than XDrawText so that background pixels
@@ -3076,154 +3235,190 @@ int    ixpos[2], iypos[2], ijusth[2], ijustv[2], error[2];
 
 }
 
-/* XFETCH  - routine to retrieve contents of clipboard.
- *
- *           Note that copy/paste is somewhat complicated under Linux/Unix
- *           systems.  There is not a single system clipboard.  Furthermore
- *           this capability is tied to the X11 system (i.e., you have to
- *           do a device 1 X11 in Dataplot before you can access the
- *           clipboard).
- *
- *           There are several mechanisms for communicating between
- *           applications in X11:
- *
- *             1. X10 implemented "cut buffers".  Although up to 8
- *                cut buffers can be utilized, "cut buffer 0" is
- *                the default and is all we attempt to support.
- *
- *                Although the cut buffer is simple and more than adequate
- *                for Dataplot purposes (i.e., Dataplot only supports
- *                text, no images or binary data), it is basically
- *                considered obsolete.  It is still supported by some
- *                older X11 applications (most significantly, xterm
- *                implements cut/paste via cut buffer 0).  However, the
- *                use of cut buffers is generally discouraged these days.
- *
- *             2. X11 introduced the concept of "selections".  Selections
- *                are a general way for X11 applications to communicate
- *                with clipboard cut and paste being a subset of the
- *                selection capability.
- *
- *                There are several relevant selections:
- *
- *                  i. XA_PRIMARY - this is the "primary" selection and it
- *                                  contains the last text you highlighted.
- *
- *                 ii. XA_SECONDARY - this contains a "secondary" selection.
- *
- *                iii. XA_CLIPBOARD - contains text explicitly copied with
- *                                    Edit | Copy, Cntrl-C, etc.  That is,
- *                                    this is the system clipboard.
- *
- *                For Dataplot, we are primarily interested in XA_CLIPBOARD.
- *                However, the user can explicitly request any of the 3
- *                selections or the cut buffer 0.  If the xclip library is
- *                not available, only the cut buffer 0 will be available.
- *
- *           Note that the X11 device has to be open for the clipboard
- *           to be available.
- */
 #if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xfetch_(istr, nval, maxchr, ierror)
+void xtextv2_(font, string, ixpos, iypos, ijusth, ijustv, error)
 #elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XFETCH_(istr, nval, maxchr, ierror)
+void XTEXTV2_(font, string, ixpos, iypos, ijusth, ijustv, error)
 #elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xfetch(istr, nval, maxchr, ierror)
+void xtextv2(font, string, ixpos, iypos, ijusth, ijustv, error)
 #elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XFETCH(istr, nval, maxchr, ierror)
+void XTEXTV2(font, string, ixpos, iypos, ijusth, ijustv, error)
 #endif
+int    font[];
+int    string[];
 #if INTEGER_PRECISION == 0
-int    *nval;
-int    *maxchr;
-int    *ierror;
+int    *ixpos, *iypos, *ijusth, *ijustv, *error;
 #else
-int    nval[2];
-int    maxchr[2];
-int    ierror[2];
+int    ixpos[2], iypos[2], ijusth[2], ijustv[2], error[2];
 #endif
-int    istr[];
-
 {
-   int buffer_open;
-   int iptr;
-   int nbytes_return;
-   int nbytes_max;
-   int nval_temp;
-   int maxchr_temp;
-   int ierror_temp;
-   int ival;
-   int ilen;
-   int counter;
-   char chrtemp[1];
-   char *bytes_return = NULL;
-   char *bytes_return_save = NULL;
 
-   /* Step 0: Initialize */
+   int          itest, itempx, itempy;   /* temporary variables */
+   int          len;                     /* number of characters in string */
+   int          len2;                    /* number of characters in font */
+   int          y_pix_len;               /* height of entire string */
+   int          string_width;            /* width of string in pixels */
+   int          string_height;           /* height of string in pixels */
+   char         string2[130];            /* converted string */
+   char         font2[130];              /* converted font name */
+   int          i, ijunk;
 #if INTEGER_PRECISION == 0
-   maxchr_temp = *maxchr;
-   ierror_temp = *ierror;
+   int          string3[2];              /* one character at a time */
 #else
-   maxchr_temp = maxchr[0];
-   ierror_temp = ierror[0];
+   int          string3[4];              /* one character at a time */
+#endif
+   int          ixpos_temp, iypos_temp, ijusth_temp, ijustv_temp;
+
+#if INTEGER_PRECISION == 0
+   ixpos_temp = *ixpos;
+   iypos_temp = *iypos;
+   ijusth_temp = *ijusth;
+   ijustv_temp = *ijustv;
+#else
+   ixpos_temp = ixpos[0];
+   iypos_temp = iypos[0];
+   ijusth_temp = ijusth[0];
+   ijustv_temp = ijustv[0];
 #endif
 
-   *ierror = 0;
-   if ( OPEN_FLAG == 0 ){
+XftFont *font_name;
+XftDraw *drawxft;
+XftColor color;
+XGlyphInfo extents;
+
+/* Step 1: convert the text and font to C strings */
 #if INTEGER_PRECISION == 0
-      *ierror = 1;
+   i_to_s(string, string2, 130, &len);
+   i_to_s(font,   font2,   130, &len2);
 #else
-      ierror[0] = 1;
+   i_to_s(string, string2, 260, &len);
+   i_to_s(font,   font2,   260, &len2);
 #endif
+
+   /* Step 2: Open the font and set the color */
+   itest = strcmp(font2, SCALABLE_FONT_CURRENT);
+   if (itest != 0) {
+      font_name = XftFontOpenName(display, screen, font2);
+      if (!font_name) {
+         #if INTEGER_PRECISION == 0
+            *error = 1;
+         #else
+            error[0] = 1;
+         #endif
+         return;
+      }
+   }
+
+   if (!XftColorAllocName(display,vis,color_map,color_names[COLOR_CURRENT],&color)) {
+      #if INTEGER_PRECISION == 0
+          *error = 2;
+      #else
+          error[0] = 2;
+      #endif
       return;
    }
 
-   /* Step 1: fetch contents of buffer */
-   buffer_open = 0;
-   nbytes_return = 0;
-   if (bytes_return) XFree(bytes_return);
-   bytes_return = XFetchBytes(display, &nbytes_return);
-   nbytes_max = nbytes_return;
-   if (nbytes_return > 0) {
-      buffer_open = 1;
-      iptr= 0;
-      nbytes_max = nbytes_return;
-   } else {
-      if (bytes_return) XFree(bytes_return);
-#if INTEGER_PRECISION == 0
-      *nval = -1;
-#else
-      nval[0] = -1;
-#endif
-      return;
-   }
+   /* Step 3: Create Xft drawable */
+   drawxft = XftDrawCreate(display, window, vis, color_map);
 
-   /* Step 2: Convert contents of buffer to an array of ASCII Decimal
-    *         Equivalents */
-   nval_temp = 0;
-   iptr = 0;
-   bytes_return_save = bytes_return;
+   /* Step 4: Justify the string
+    *         The string is drawn one character at a time horizontally
+    *         rather than being rotated (this is doable, but more complicated
+    *         than I want to do for now).  So based on the height of the
+    *         characters, determine the length as the height times the
+    *         number of characters.
+    */
 
-   for ( counter = 0; counter < nbytes_return; counter++ ) {
-       ilen = 1;
-       strncpy(chrtemp, bytes_return, ilen);
-       ival = chrtemp[0];
-       istr[iptr] = ival;
-       nval_temp = nval_temp + 1;
-       iptr = iptr + 1;
-       bytes_return = bytes_return + 1;
-       if (ival == 0) {
+   XftTextExtents8(display, font_name, string2, len, &extents);
+   string_height = extents.height;
+   y_pix_len = len * string_height;
+
+   switch (ijustv_temp) {
+      case 0:                       /* Center justified string */
+          itempy = -(y_pix_len/2) + string_height;
           break;
-       }
-   }
-#if INTEGER_PRECISION == 0
-   *nval = nval_temp;
-#else
-   nval[0] = nval_temp;
-#endif
+      case 1:                       /* Bottom justified string */
+          itempy = -y_pix_len + string_height;
+          break;
+      case 2:                       /* Top justified string */
+          itempy = string_height;
+          break;
+      default:
+          itempy = -(y_pix_len/2) + string_height;
+          break;
+    }
+    itempy = iypos_temp + itempy;
 
-   /* Step 3: Free contents of buffer */
-   bytes_return = bytes_return_save;
-   if (bytes_return) XFree(bytes_return);
+#if INTEGER_PRECISION == 0
+   string3[1] = 0;
+   for (i = 0; i < len; i++) {  /* plot each character one at a time */
+      string3[0] = string[i];
+      i_to_s(string3,string2, 2, &ijunk);
+      XftTextExtents8(display, font_name, string2, 1, &extents);
+      string_width = extents.width;
+
+     switch (ijusth_temp) {
+        case 0:                       /* Left justified string */
+            itempx = 0;
+            break;
+        case 1:                       /* Center justified string */
+            itempx = (string_width/2);
+            break;
+        case 2:                       /* Right justified string */
+            itempx = string_width;
+            break;
+        default:
+            itempx = ixpos_temp;
+            break;
+     }
+
+     itempx = ixpos_temp - itempx;
+     XftDrawStringUtf8(drawxft, &color, font_name, itempx, itempy, string2, 1);
+     /* Skip the pixmap for now
+     if (PIXMAP_CURRENT) {
+       XftDrawStringUtf8(drawxft, &color, font_name, itempx, itempy, string2, 1);
+       XDrawString(display, pixmap, gc, itempx, itempy, string2, 1);
+     }
+     */
+     itempy = itempy + string_height;
+
+   }
+#else
+   string3[1] = 0;
+   string3[2] = 0;
+   string3[3] = 0;
+   for (i = 0; i < len; i++) {  /* plot each character one at a time */
+      string3[0] = string[2*i];
+      i_to_s(string3,string2, 4, &ijunk);
+      XftTextExtents8(display, font_name, string2, 1, &extents);
+      string_width = extents.width;
+
+     switch (ijusth_temp) {
+        case 0:                       /* Left justified string */
+            itempx = 0;
+            break;
+        case 1:                       /* Center justified string */
+            itempx = (string_width/2);
+            break;
+        case 2:                       /* Right justified string */
+            itempx = string_width;
+            break;
+        default:
+            itempx = ixpos_temp;
+            break;
+     }
+
+     itempx = ixpos_temp - itempx;
+     XftDrawStringUtf8(drawxft, &color, font_name, itempx, itempy, string2, 1);
+     /* Skip pixmap for now
+     if (PIXMAP_CURRENT) {
+       XDrawString(display, pixmap, gc, itempx, itempy, string2, 1);
+     }
+     */
+     itempy = itempy + string_height;
+
+   }
+#endif
 
 }
 

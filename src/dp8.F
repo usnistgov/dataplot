@@ -19991,12 +19991,14 @@ C
       END
       SUBROUTINE DPANO2(Y,F1,W,N,NUMFAC,IVARID,IVARI2,
      1                  F1ID,F1N,F1MEAN,F1EFFE,F1EFSD,
+     1                  CELLME,CELLV,CELLN,
+     1                  AINN,AINMEA,AINEFF,AINESD,
      1                  MAXOBV,MAXLEV,MAXFAC,
      1                  N1,ISET,AN1,E1,SS1,RESMS1,FVAL,F1CDF2,RSD,
      1                  B,SDB,FCUM,REPSD,REPDF,RESSD,RESDF,
      1                  PRED2,RES2,ALFCDF,
      1                  Z,
-     1                  ICAPSW,ICAPTY,IFORSW,
+     1                  ICAPSW,ICAPTY,IFORSW,IAOV2T,IAOVTY,
      1                  IBUGA3,ISUBRO,IERROR)
 C
 C     PURPOSE--DO A MULTI-WAY ANOVA
@@ -20044,12 +20046,15 @@ C                                       TABLES
 C     UPDATED         --MAY       2011. USE DPAUFI TO OPEN/CLOSE
 C                                       AUXILLARY FILES
 C     UPDATED         --JUNE      2018. PRINT VARIABLE NAMES IN OUTPUT
+C     UPDATED         --NOVEMBER  2023. SUPPORT FOR 2-TERM INTERACTIONS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 ICAPSW
       CHARACTER*4 ICAPTY
       CHARACTER*4 IFORSW
+      CHARACTER*4 IAOV2T
+      CHARACTER*4 IAOVTY
       CHARACTER*4 IBUGA3
       CHARACTER*4 ISUBRO
       CHARACTER*4 IERROR
@@ -20065,12 +20070,14 @@ C
       CHARACTER*4 ISTEPN
 C
       CHARACTER*4 IOP
+      CHARACTER*4 I2TERM
 C
 C---------------------------------------------------------------------
 C
       DIMENSION Y(*)
       DIMENSION W(*)
       DIMENSION F1(MAXOBV,MAXFAC)
+C
       DIMENSION F1ID(MAXLEV,MAXFAC)
       DIMENSION F1N(MAXLEV,MAXFAC)
       DIMENSION F1MEAN(MAXLEV,MAXFAC)
@@ -20094,6 +20101,18 @@ C
       DIMENSION F1CDF2(*)
       DIMENSION RSD(*)
       DIMENSION Z(*)
+C
+      DIMENSION CELLN(*)
+      DIMENSION CELLME(*)
+      DIMENSION CELLV(*)
+      DIMENSION AINN(*)
+      DIMENSION AINMEA(*)
+      DIMENSION AINEFF(*)
+      DIMENSION AINESD(*)
+C
+      DIMENSION SS2TIN(50)
+      REAL      MSEIN(50)
+      DIMENSION IDFIN(50)
 C
       PARAMETER(NUMCLI=7)
       PARAMETER(MAXLIN=2)
@@ -20138,6 +20157,7 @@ C
       AN=N
       J1=0
       NIOLD=0
+      NUMINT=0
 C
       NUMDIG=7
       IF(IFORSW.EQ.'1')NUMDIG=1
@@ -20167,8 +20187,8 @@ C
         WRITE(ICOUT,51)
    51   FORMAT('***** AT THE BEGINNING OF DPANO2--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,52)IBUGA3,ISUBRO,N,NUMFAC
-   52   FORMAT('IBUGA3,ISUBRO,N,NUMFAC = ',2(A4,2X),2I8)
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,IAOV2T,IAOVTY,N,NUMFAC
+   52   FORMAT('IBUGA3,ISUBRO,IAOV2T,IAOVTY,N,NUMFAC = ',4(A4,2X),2I8)
         CALL DPWRST('XXX','BUG ')
         DO55I=1,N
           WRITE(ICOUT,56)I,Y(I),(F1(I,J),J=1,MIN(NUMFAC,5)),W(I)
@@ -20265,6 +20285,9 @@ C
         GOTO9000
   150 CONTINUE
 C
+      I2TERM=IAOV2T
+      IF(NUMFAC.LT.2)I2TERM='NO'
+C
 C               ***********************************************
 C               **  STEP 1.1--                               **
 C               **  DETERMINE THE NUMBER OF DISTINCT VALUES  **
@@ -20332,6 +20355,26 @@ C
         CALL SORT(F1ID(1,K),N1(K),F1ID(1,K))
  1900 CONTINUE
 C
+C               *************************************************
+C               **  STEP 22--                                  **
+C               **  WRITE INFO TO FILES DPST1F.DAT, DPST2F.DAT **
+C               *************************************************
+C
+      ISTEPN='22'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ANO2')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IOP='OPEN'
+      IFLAG1=1
+      IFLAG2=1
+      IFLAG3=1
+      IFLAG4=1
+      IFLAG5=0
+      CALL DPAUFI(IOP,IFLAG1,IFLAG2,IFLAG3,IFLAG4,IFLAG5,
+     1            IOUNI1,IOUNI2,IOUNI3,IOUNI4,IOUNI5,
+     1            IBUGA3,ISUBRO,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
 C               ********************************************
 C               **  STEP 3--                              **
 C               **  DETERMINE IF HAVE                     **
@@ -20359,6 +20402,9 @@ C
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ANO2')
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
+      WRITE(IOUNI4,3501)
+ 3501 FORMAT('CELL COUNT     CELL MEAN      CELL SD        ',
+     1       'FACTOR LEVELS ...')
       K=0
       ICASBL='YES'
       DO3510ISET1=1,N1(1)
@@ -20394,8 +20440,8 @@ C
           ENDIF
 C
           K=K+1
-          CELLN=0.0
-          CELLME=0.0
+          CELLN(K)=0.0
+          CELLME(K)=0.0
 C
           NI=0
           DO3560I=1,N
@@ -20406,10 +20452,10 @@ C
             Z(NI)=Y(I)
  3560     CONTINUE
 C
-          CELLN=REAL(NI)
+          CELLN(K)=REAL(NI)
           IF(NI.LE.0)GOTO3590
           IF(NI.EQ.1)THEN
-            CELLME=Z(NI)
+            CELLME(K)=Z(NI)
             GOTO3590
           ENDIF
           IREP='YES'
@@ -20417,7 +20463,7 @@ C
           DO3570I=1,NI
             SUM=SUM+Z(I)
  3570     CONTINUE
-          CELLME=SUM/CELLN
+          CELLME(K)=SUM/CELLN(K)
 C
           IF(K.EQ.1)NIOLD=NI
           IF(NI.NE.NIOLD.AND.ICASBL.EQ.'YES')THEN
@@ -20432,9 +20478,12 @@ C
           NIOLD=NI
           SUM=0.0
           DO3580I=1,NI
-            SUM=SUM+(Z(I)-CELLME)**2
+            SUM=SUM+(Z(I)-CELLME(K))**2
  3580     CONTINUE
-          CELLV=SUM/(CELLN-1.0)
+          CELLV(K)=SUM/(CELLN(K)-1.0)
+C
+          WRITE(IOUNI4,'(3E15.7,10I5)')CELLN(K),CELLME(K),CELLV(K),
+     1                             (ISET(LL),LL=1,NUMFAC)
 C
           REPSS=REPSS+SUM
           IREPDF=IREPDF+NI-1
@@ -20453,7 +20502,6 @@ C
  3510 CONTINUE
       GOTO3900
 C
-C
  3900 CONTINUE
       NUMCEL=K
       IF(IREP.EQ.'YES')THEN
@@ -20461,6 +20509,24 @@ C
         REPMS=REPSS/REPDF
         IF(REPMS.LE.0.0)REPSD=0.0
         IF(REPMS.GT.0.0)REPSD=SQRT(REPMS)
+      ENDIF
+C
+      IF(ICASBL.EQ.'NO')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3901)
+ 3901   FORMAT('      UNBALANCED CASE DETETECTED.  THE ANOVA TABLE ',
+     1         'WILL NOT BE GENERATED.')
+        CALL DPWRST('XXX','BUG ')
+        I2TERM='NO'
+      ELSE
+C
+C       IF CELL COUNT IS 1, THEN DO NOT COMPUTE INTERACTION
+C       TERMS
+C
+        IF(CELLN(1).EQ.1)I2TERM='NO'
       ENDIF
 C
 C               ******************************
@@ -20731,6 +20797,124 @@ C
 13402 CONTINUE
       IDEFTO=N
 C
+C     2023/11: IF 2-TERM INTERACTION EFFECTS REQUESTED, THEN
+C              COMPUTE VARIOUS SUM OF SQUARES.  NOTE THAT DATAPLOT
+C              COMPUTES FACTOR SUM OF SQUARES IN A SOMEWHAT DIFFERENT
+C              MANNER, SO SOME REDUNDANCY MAY BE DONE HERE TO GET IN
+C              A FORM NEEDED FOR INTERACTION COMPUTATIONS.
+C
+      IF(I2TERM.EQ.'ON' .OR. I2TERM.EQ.'YES')THEN
+C
+        ISTEPN='110'
+        IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ANO2')
+     1     CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+        ICNT=0
+        ICNT4=0
+        DO13410KK=1,NUMFAC
+          NLEVEL1=N1(KK)
+          DO13420LL=KK+1,NUMFAC
+            NLEVEL2=N1(KK)
+C
+            SUM2=0.0
+            DO13430ISET1=1,NLEVEL1
+              AMEAN1=F1MEAN(ISET1,KK)
+              DO13435ISET2=1,NLEVEL2
+                AMEAN2=F1MEAN(ISET2,LL)
+                NTEMP=0
+                SUM=0.0
+                DO13450II=1,N
+                  IF(F1(II,KK).EQ.F1ID(ISET1,KK) .AND.
+     1               F1(II,LL).EQ.F1ID(ISET2,LL))THEN
+                    NTEMP=NTEMP+1
+                    SUM=SUM + Y(II)
+                  ENDIF
+13450           CONTINUE
+                ICNT4=ICNT4+1
+                AINN(ICNT4)=REAL(NTEMP)
+                AVAL=0.0
+                IF(NTEMP.GT.0)THEN
+                  AMEAN3=SUM/REAL(NTEMP)
+                  AVAL=AMEAN3 - AMEAN1 - AMEAN2 + GMEAN
+                  AINMEA(ICNT4)=AMEAN3
+                  AINEFF(ICNT4)=AVAL
+                  AVAL=AVAL**2
+                  AN=REAL(N)
+                  ANI=REAL(NTEMP)
+                  CONST=((1.0/ANI) - (1.0/AN))
+                  AINESD(ICNT4)=0.0
+                  IF(CONST.GT.0.0)AINESD(ICNT4)=RESSD*SQRT(CONST)
+                ELSE
+                  AINMEA(ICNT4)=0.0
+                  AINEFF(ICNT4)=0.0
+                  AINESD(ICNT4)=0.0
+                ENDIF
+                SUM2=SUM2 + AVAL
+C
+                IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ANO2')THEN
+                  WRITE(ICOUT,13455)KK,LL,ISET1,ISET2,NTEMP,SUM,SUM2
+13455             FORMAT('KK,LL,ISET1,ISET2,NTEMP,SUM,SUM2 = ',
+     1                   5I5,2G15.7)
+                  CALL DPWRST('XXX','BUG ')
+                  WRITE(ICOUT,13457)AMEAN1,AMEAN2,GMEAN,AMEAN3,AVAL
+13457             FORMAT('AMEAN1,AMEAN2,GMEAN,AMEAN3,AVAL = ',5G15.7)
+                  CALL DPWRST('XXX','BUG ')
+                ENDIF
+
+13435         CONTINUE
+13430       CONTINUE
+            ICNT=ICNT+1
+            IDFIN(ICNT)=(NLEVEL1-1)*(NLEVEL2-1)
+            MSEIN(ICNT)=SUM2
+            SS2TIN(ICNT)=SUM2*REAL(IDFIN(ICNT))
+C
+            IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ANO2')THEN
+              WRITE(ICOUT,13461)LL,KK,ICNT,IDFIN(ICNT),SS2TIN(ICNT),
+     1                          MSEIN(ICNT)
+13461         FORMAT('LL,KK,ICNT,IDFIN(ICNT),SS2TIN(ICNT),',
+     1               'MSEIN(ICNT) = ',4I5,2G15.7)
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+C
+13420     CONTINUE
+13410   CONTINUE
+C
+C       ADJUST SSE TO ACCOUNT FOR INTERACTIONS
+C
+        NUMINT=ICNT
+        SUM=0.
+        IDFTMP=0
+        DO13480II=1,NUMFAC
+          SUM=SUM + SS1(II)
+          IDFTMP=IDFTMP + (N1(II) - 1)
+13480   CONTINUE
+        DO13485II=1,NUMINT
+          SUM=SUM + SS2TIN(II)
+          IDFTMP=IDFTMP + IDFIN(II)
+13485   CONTINUE
+C
+        RESSS=GSS - SUM
+        RESDF=REAL((N-1) - IDFTMP)
+        IRESDF=INT(RESDF+0.1)
+        RESMS=RESSS/RESDF
+C
+        DO13490K=1,NUMFAC
+          IDF1=N1(K)-1
+          FVAL(K)=RESMS1(K)/RESMS
+          CALL FCDF(FVAL(K),IDF1,IRESDF,FCUM(K))
+          F1CDF2(K)=100.0*FCUM(K)
+13490   CONTINUE
+        NTERM=NUMFAC
+        DO13493K=1,NUMINT
+          IDF1=IDFIN(K)
+          NTERM=NTERM+1
+          FVAL(NTERM)=MSEIN(K)/RESMS
+          CALL FCDF(FVAL(NTERM),IDF1,IRESDF,FCUM(NTERM))
+          F1CDF2(NTERM)=100.0*FCUM(NTERM)
+13493   CONTINUE
+C
+      ENDIF
+C
 C     PRINT SUMMARY STATISTICS TABLE
 C
       NUMDIG=7
@@ -20947,6 +21131,7 @@ C
      1            ICAPSW,ICAPTY,ILAST,IFRST,
      1            ISUBRO,IBUGA3,IERROR)
 C
+      IF(ICASBL.EQ.'NO')GOTO13299
       ITITLE(1:13)='ANOVA Table'
       NCTITL=11
       ITITL9=' '
@@ -20982,7 +21167,11 @@ C
         VALIGN(I)='b'
         ALIGN(I)='r'
         NTOT(I)=15
-        IF(I.EQ.1)NTOT(I)=18
+        IF(IAOV2T.EQ.'ON' .OR. IAOV2T.EQ.'YES')THEN
+          IF(I.EQ.1)NTOT(I)=22
+        ELSE
+          IF(I.EQ.1)NTOT(I)=18
+        ENDIF
         IF(I.EQ.2)NTOT(I)=4
         IF(I.EQ.6)NTOT(I)=9
         IF(I.EQ.7)NTOT(I)=4
@@ -21047,8 +21236,46 @@ C
           IVALUE(ICNT,7)=''
           NCVALU(ICNT,7)=0
         ENDIF
-        IF(L.EQ.NUMFAC)ROWSEP(ICNT)=1
+        IF(IAOV2T.NE.'ON' .AND. IAOV2T.NE.'YES')THEN
+          IF(L.EQ.NUMFAC)ROWSEP(ICNT)=1
+        ENDIF
 13210 CONTINUE
+C
+C     LOOP THROUGH 2-TERM INTERACTION TERMS (IF REQUESTED)
+C
+      IF(I2TERM.EQ.'ON' .OR. I2TERM.EQ.'YES')THEN
+        ICNT2=NUMFAC
+        ICNT3=0
+        DO13215II=1,NUMFAC-1
+          DO13218JJ=II+1,NUMFAC
+            ICNT2=ICNT2+1
+            ICNT3=ICNT3+1
+            ICNT=ICNT+1
+            IVALUE(ICNT,1)='Interaction:    and '
+            WRITE(IVALUE(ICNT,1)(14:15),'(I2)')II
+            WRITE(IVALUE(ICNT,1)(21:22),'(I2)')JJ
+            NCVALU(ICNT,1)=22
+            AMAT(ICNT,2)=REAL(IDFIN(ICNT3))
+            AMAT(ICNT,3)=SS2TIN(ICNT3)
+            AMAT(ICNT,4)=MSEIN(ICNT3)
+            AMAT(ICNT,5)=FVAL(ICNT2)
+            WRITE(IVALUE(ICNT,6)(1:8),'(F8.3)')F1CDF2(ICNT2)
+            IVALUE(ICNT,6)(9:9)='%'
+            NCVALU(ICNT,6)=9
+            IF(F1CDF2(ICNT2).GE.99.0)THEN
+              IVALUE(ICNT,7)='**'
+              NCVALU(ICNT,7)=2
+            ELSEIF(F1CDF2(ICNT2).GE.95.0)THEN
+              IVALUE(ICNT,7)='*'
+              NCVALU(ICNT,7)=1
+            ELSE
+              IVALUE(ICNT,7)=''
+              NCVALU(ICNT,7)=0
+            ENDIF
+            IF(ICNT3.EQ.NUMINT)ROWSEP(ICNT)=1
+13218     CONTINUE
+13215   CONTINUE
+      ENDIF
 C
 C     LAST ROW (RESIDUAL)
 C
@@ -21093,6 +21320,8 @@ C
      1            IFLAGS,IFLAGE,
      1            ISUBRO,IBUGA3,IERROR)
 C
+13299 CONTINUE
+C
       ITITLE='Estimation'
       NCTITL=10
 C
@@ -21101,16 +21330,32 @@ C
 C
       ITITL2(1,1)=' '
       NCTIT2(1,1)=0
-      ITITL2(1,2)='Level-ID'
-      NCTIT2(1,2)=8
-      ITITL2(1,3)='NI'
-      NCTIT2(1,3)=2
-      ITITL2(1,4)='Mean'
-      NCTIT2(1,4)=4
-      ITITL2(1,5)='Effect'
-      NCTIT2(1,5)=6
-      ITITL2(1,6)='SD(Effect)'
-      NCTIT2(1,6)=10
+      IF(I2TERM.EQ.'NO' .OR. I2TERM.EQ.'OFF')THEN
+        ITITL2(1,2)='Level-ID'
+        NCTIT2(1,2)=8
+        ITITL2(1,3)='NI'
+        NCTIT2(1,3)=2
+        ITITL2(1,4)='Mean'
+        NCTIT2(1,4)=4
+        ITITL2(1,5)='Effect'
+        NCTIT2(1,5)=6
+        ITITL2(1,6)='SD(Effect)'
+        NCTIT2(1,6)=10
+      ELSE
+        ITITL2(1,2)=' '
+        NCTIT2(1,2)=0
+        ITITL2(1,3)='Level-ID'
+        NCTIT2(1,3)=8
+        ITITL2(1,4)='NI'
+        NCTIT2(1,4)=2
+        ITITL2(1,5)='Mean'
+        NCTIT2(1,5)=4
+        ITITL2(1,6)='Effect'
+        NCTIT2(1,6)=6
+        ITITL2(1,7)='SD(Effect)'
+        NCTIT2(1,7)=10
+        NUMCOL=7
+      ENDIF
 C
       IWHTML(1)=125
       IWHTML(2)=125
@@ -21118,31 +21363,51 @@ C
       IWHTML(4)=125
       IWHTML(5)=125
       IWHTML(6)=125
+      IWHTML(7)=125
       IWRTF(1)=IINC
       IWRTF(2)=IWRTF(1)+IINC
       IWRTF(3)=IWRTF(2)+IINC
       IWRTF(4)=IWRTF(3)+IINC
       IWRTF(5)=IWRTF(4)+IINC
       IWRTF(6)=IWRTF(5)+IINC
+      IWRTF(7)=IWRTF(6)+IINC
       IFRST=.TRUE.
       ILAST=.TRUE.
       IFLAGS=.TRUE.
       IFLAGE=.TRUE.
 C
       NMAX=0
-      DO23010I=1,NUMCOL
-        VALIGN(I)='b'
-        ALIGN(I)='r'
-        NTOT(I)=11
-        IF(I.EQ.1)NTOT(I)=10
-        IF(I.EQ.2)NTOT(I)=9
-        IF(I.EQ.3)NTOT(I)=8
-        NMAX=NMAX+NTOT(I)
-        ITYPCO(I)='NUME'
-        IF(I.EQ.1)ITYPCO(I)='ALPH'
-        IDIGIT(I)=5
-        IF(I.LE.3)IDIGIT(I)=0
-23010 CONTINUE
+      IF(I2TERM.EQ.'NO' .OR. I2TERM.EQ.'OFF')THEN
+        DO23010I=1,NUMCOL
+          VALIGN(I)='b'
+          ALIGN(I)='r'
+          NTOT(I)=11
+          IF(I.EQ.1)NTOT(I)=10
+          IF(I.EQ.2)NTOT(I)=9
+          IF(I.EQ.3)NTOT(I)=8
+          NMAX=NMAX+NTOT(I)
+          ITYPCO(I)='NUME'
+          IF(I.EQ.1)ITYPCO(I)='ALPH'
+          IDIGIT(I)=5
+          IF(I.LE.3)IDIGIT(I)=0
+23010   CONTINUE
+      ELSE
+        DO23015I=1,NUMCOL
+          VALIGN(I)='b'
+          ALIGN(I)='r'
+          NTOT(I)=11
+          IF(I.EQ.1)NTOT(I)=12
+          IF(I.EQ.2)NTOT(I)=9
+          IF(I.EQ.3)NTOT(I)=9
+          IF(I.EQ.4)NTOT(I)=8
+          NMAX=NMAX+NTOT(I)
+          ITYPCO(I)='NUME'
+          IF(I.EQ.1)ITYPCO(I)='ALPH'
+          IDIGIT(I)=5
+          IF(I.LE.4)IDIGIT(I)=0
+          IF(I.EQ.2)IDIGIT(I)=-1
+23015   CONTINUE
+      ENDIF
 C
       ICNT=0
       DO11590L=1,NUMFAC
@@ -21166,13 +21431,66 @@ C
             IVALUE(ICNT,1)='         '
           ENDIF
           NCVALU(ICNT,1)=9
-          AMAT(ICNT,2)=F1ID(I,L)
-          AMAT(ICNT,3)=F1N(I,L)
-          AMAT(ICNT,4)=F1MEAN(I,L)
-          AMAT(ICNT,5)=F1EFFE(I,L)
-          AMAT(ICNT,6)=F1EFSD(I,L)
+          IF(I2TERM.EQ.'NO' .OR. I2TERM.EQ.'OFF')THEN
+            AMAT(ICNT,2)=F1ID(I,L)
+            AMAT(ICNT,3)=F1N(I,L)
+            AMAT(ICNT,4)=F1MEAN(I,L)
+            AMAT(ICNT,5)=F1EFFE(I,L)
+            AMAT(ICNT,6)=F1EFSD(I,L)
+          ELSE
+            AMAT(ICNT,2)=0.0
+            AMAT(ICNT,3)=F1ID(I,L)
+            AMAT(ICNT,4)=F1N(I,L)
+            AMAT(ICNT,5)=F1MEAN(I,L)
+            AMAT(ICNT,6)=F1EFFE(I,L)
+            AMAT(ICNT,7)=F1EFSD(I,L)
+          ENDIF
 11595 CONTINUE
 11590 CONTINUE
+C
+      IF(I2TERM.EQ.'YES' .OR. I2TERM.EQ.'ON')THEN
+        IDIGIT(2)=0
+        ICNT4=0
+        DO15410KK=1,NUMFAC
+          NLEVEL1=N1(KK)
+          DO15420LL=KK+1,NUMFAC
+            NLEVEL2=N1(KK)
+            DO15430ISET1=1,NLEVEL1
+              DO15435ISET2=1,NLEVEL2
+                ICNT4=ICNT4+1
+                ICNT=ICNT+1
+                IF(ICNT.GT.55)THEN
+                  CALL DPDTA5(ITITLE,NCTITL,
+     1                        ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1                        MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1                        IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT,
+     1                        IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,
+     1                        NMAX,
+     1                        ICAPSW,ICAPTY,IFRST,ILAST,
+     1                        IFLAGS,IFLAGE,
+     1                        ISUBRO,IBUGA3,IERROR)
+                  ICNT=1
+                ENDIF
+                IF(ISET1.EQ.1 .AND. ISET2.EQ.1)THEN
+                  IVALUE(ICNT,1)='     and   :'
+                  WRITE(IVALUE(ICNT,1)(3:4),'(I2)')KK
+                  WRITE(IVALUE(ICNT,1)(10:11),'(I2)')LL
+                  NCVALU(ICNT,1)=12
+                ELSE
+                  IVALUE(ICNT,1)=' '
+                  NCVALU(ICNT,1)=0
+                ENDIF
+                AMAT(ICNT,2)=F1ID(ISET1,KK)
+                AMAT(ICNT,3)=F1ID(ISET2,LL)
+                AMAT(ICNT,4)=AINN(ICNT4)
+                AMAT(ICNT,5)=AINMEA(ICNT4)
+                AMAT(ICNT,6)=AINEFF(ICNT4)
+                AMAT(ICNT,7)=AINESD(ICNT4)
+15435         CONTINUE
+15430       CONTINUE
+15420     CONTINUE
+15410   CONTINUE
+      ENDIF
 C
       IF(ICNT.GE.1)THEN
         CALL DPDTA5(ITITLE,NCTITL,
@@ -21185,8 +21503,13 @@ C
      1              ISUBRO,IBUGA3,IERROR)
       ENDIF
 C
-      ITITLE='Models'
-      NCTITL=6
+      IF(I2TERM.EQ.'NO' .OR. I2TERM.EQ.'OFF')THEN
+        ITITLE='Models'
+        NCTITL=6
+      ELSE
+        ITITLE='Models (based on main effects only)'
+        NCTITL=36
+      ENDIF
 C
       NUMCOL=2
       NUMLIN=1
@@ -21244,26 +21567,6 @@ C
      1            ICAPSW,ICAPTY,IFRST,ILAST,
      1            IFLAGS,IFLAGE,
      1            ISUBRO,IBUGA3,IERROR)
-C
-C               *************************************************
-C               **  STEP 12--                                  **
-C               **  WRITE INFO TO FILES DPST1F.DAT, DPST2F.DAT **
-C               *************************************************
-C
-      ISTEPN='12'
-      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ANO2')
-     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-C
-      IOP='OPEN'
-      IFLAG1=1
-      IFLAG2=1
-      IFLAG3=1
-      IFLAG4=0
-      IFLAG5=0
-      CALL DPAUFI(IOP,IFLAG1,IFLAG2,IFLAG3,IFLAG4,IFLAG5,
-     1            IOUNI1,IOUNI2,IOUNI3,IOUNI4,IOUNI5,
-     1            IBUGA3,ISUBRO,IERROR)
-      IF(IERROR.EQ.'YES')GOTO9000
 C
 CCCCCC THE FOLLOWING SECTION WAS ADDED FEBRUARY  1998
 C               ********************************************
@@ -21359,6 +21662,1877 @@ C
      1           I8,6E11.4)
           CALL DPWRST('XXX','BUG ')
  9025   CONTINUE
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE DPANO4(YMEAN,YSD,YN,NGROUP,ALPHA,IVARID,IVARI2,IANOMC,
+     1                  ICASE1,ICASE2,Y,X,N,XDIST,TEMP1,
+     1                  PRED,RES,
+     1                  SSTOT,SSTR,SSE,MSE,MSTR,IDFTO,IDFTR,IDFE,
+     1                  FSTAT,FVAL,PVALUE,RESSD,
+     1                  ICAPSW,ICAPTY,IFORSW,
+     1                  IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--PERFORM A ONE WAY ANALYSIS OF VARIANCE (ANOVA).  THE DATA
+C              IS ASSUMED TO BE A RESPONSE VARIABLE AND A GROUP-ID
+C              VARIABLE.
+C
+C              COMPARED TO THE STANDARD ANOVA COMMAND IN DATAPLOT, THIS
+C              ROUTINE ADDS THE FOLLOWING:
+C
+C                1. SUPPORT FOR SUMMARY DATA (MEAN, SD, SAMPLE SIZE) IN
+C                   ADDITION TO RAW DATA
+C
+C                2. SUPPORT FOR RANDOM EFFECTS.  THIS ADDS A "VARIANCE
+C                   "COMPONENTS" TABLE.
+C
+C                3. ADDITIONAL TABLES FOR: CONFIDENCE LEVEL FOR
+C                   TREATMENT MEANS, CONFIDENCE INTERVAL FOR DIFFERENCE
+C                   OF TREATMENT MEANS (I.E., MULTIPLE COMPARISONS),
+C                   BONFERRONI CONFIDENCE INTERVALS FOR DIFFERENCE OF
+C                   TREATMENT MEANS, AND TUKEY-CRAMER CONFIDENCE
+C                   INTERVALS FOR DIFFERENCE OF TREATMENT MEANS.
+C                   NOTE THAT THESE TABLES ARE ONLY GENERATED FOR THE
+C                   FIXED EFFECTS CASE.
+C
+C                4. SUPPORT FOR UNBALANCED DATA.
+C
+C     PRINTING--YES
+C     SUBROUTINES NEEDED--FCDF
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2023/10
+C     ORIGINAL VERSION--SEPTEMBER 2023.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 ICAPTY
+      CHARACTER*4 IFORSW
+      CHARACTER*4 IANOMC
+      CHARACTER*4 ICASE1
+      CHARACTER*4 ICASE2
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+      CHARACTER*4 IVARID(*)
+      CHARACTER*4 IVARI2(*)
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 IOP
+      CHARACTER*4 ICASEZ
+      CHARACTER*4 IWRITE
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION YMEAN(*)
+      DIMENSION YSD(*)
+      DIMENSION YN(*)
+      DIMENSION Y(*)
+      DIMENSION X(*)
+      DIMENSION XDIST(*)
+      DIMENSION TEMP1(*)
+      DIMENSION PRED(*)
+      DIMENSION RES(*)
+C
+      REAL MSTR
+      REAL MSE
+      REAL MSEPCT
+      REAL MSERAT
+C
+      DOUBLE PRECISION DSUM1
+      DOUBLE PRECISION DSUM2
+      DOUBLE PRECISION QTRNG
+C
+      PARAMETER(NUMCLI=8)
+      PARAMETER(MAXLIN=3)
+      PARAMETER (MAXROW=60)
+      CHARACTER*70 ITITLE
+      CHARACTER*70 ITITLZ
+      CHARACTER*70 ITITL9
+      CHARACTER*60 ITEXT(MAXROW)
+      CHARACTER*4  ALIGN(NUMCLI)
+      CHARACTER*4  VALIGN(NUMCLI)
+      REAL         AVALUE(MAXROW)
+      INTEGER      NCTEXT(MAXROW)
+      INTEGER      IDIGIT(MAXROW)
+      INTEGER      IDIGI2(MAXROW,NUMCLI)
+      INTEGER      NTOT(MAXROW)
+      INTEGER      ROWSEP(MAXROW)
+      CHARACTER*60 ITITL2(MAXLIN,NUMCLI)
+      CHARACTER*30 IVALUE(MAXROW,NUMCLI)
+      CHARACTER*4  ITYPCO(NUMCLI)
+      INTEGER      NCTIT2(MAXLIN,NUMCLI)
+      INTEGER      NCVALU(MAXROW,NUMCLI)
+      INTEGER      NCOLSP(MAXLIN,NUMCLI)
+      INTEGER      IWHTML(NUMCLI)
+      INTEGER      IWRTF(NUMCLI)
+      REAL         AMAT(MAXROW,NUMCLI)
+      LOGICAL IFRST
+      LOGICAL ILAST
+      LOGICAL IFLAGS
+      LOGICAL IFLAGE
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      IERROR='NO'
+      ISUBN1='DPAN'
+      ISUBN2='O4  '
+      IWRITE='OFF '
+C
+      SSTOT=CPUMIN
+      SSTR=CPUMIN
+      SSE=CPUMIN
+      MSE=CPUMIN
+      MSTR=CPUMIN
+      FSTAT=CPUMIN
+      FVAL=CPUMIN
+      PVALUE=CPUMIN
+      RESSD=CPUMIN
+      SA2PCT=CPUMIN
+      MSEPCT=CPUMIN
+C
+      IDFTO=-1
+      IDFTR=-1
+      IDFE=-1
+C
+      NUMDIG=7
+      IF(IFORSW.EQ.'1')NUMDIG=1
+      IF(IFORSW.EQ.'2')NUMDIG=2
+      IF(IFORSW.EQ.'3')NUMDIG=3
+      IF(IFORSW.EQ.'4')NUMDIG=4
+      IF(IFORSW.EQ.'5')NUMDIG=5
+      IF(IFORSW.EQ.'6')NUMDIG=6
+      IF(IFORSW.EQ.'7')NUMDIG=7
+      IF(IFORSW.EQ.'8')NUMDIG=8
+      IF(IFORSW.EQ.'9')NUMDIG=9
+      IF(IFORSW.EQ.'0')NUMDIG=0
+      IF(IFORSW.EQ.'E')NUMDIG=-2
+      IF(IFORSW.EQ.'-2')NUMDIG=-2
+      IF(IFORSW.EQ.'-3')NUMDIG=-3
+      IF(IFORSW.EQ.'-4')NUMDIG=-4
+      IF(IFORSW.EQ.'-5')NUMDIG=-5
+      IF(IFORSW.EQ.'-6')NUMDIG=-6
+      IF(IFORSW.EQ.'-7')NUMDIG=-7
+      IF(IFORSW.EQ.'-8')NUMDIG=-8
+      IF(IFORSW.EQ.'-9')NUMDIG=-9
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'ANO4')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPANO4--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,IANOMC,NGROUP,N,ALPHA
+   52   FORMAT('IBUGA3,ISUBRO,IANOMC,NGROUP,N,ALPHA = ',
+     1         3(A4,2X),2I8,G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)ICASE1,ICASE2
+   53   FORMAT('ICASE1,ICASE2 = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        IF(ICASE1.EQ.'SUMM')THEN
+          DO55I=1,NGROUP
+            WRITE(ICOUT,56)I,YMEAN(I),YSD(I),YN(I)
+   56       FORMAT('I,YMEAN(I),YSD(I),YN(I) = ',I8,3G15.7)
+            CALL DPWRST('XXX','BUG ')
+   55     CONTINUE
+        ELSE
+          DO65I=1,N
+            WRITE(ICOUT,66)I,Y(I),X(I)
+   66       FORMAT('I,Y(I),X(I) = ',I8,2G15.7)
+            CALL DPWRST('XXX','BUG ')
+   65     CONTINUE
+        ENDIF
+      ENDIF
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      IF(ICASE1.EQ.'SUMM')THEN
+        IF(NGROUP.LE.1)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,101)
+  101     FORMAT('***** ERROR IN ONE WAY SUMMARY FIXED EFFECTS ANOVA--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,102)
+  102     FORMAT('      THE NUMBER OF GROUPS FOR THE ANOVA COMMAND ',
+     1           'BE AT LEAST 2.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,104)NGROUP
+  104     FORMAT('      THE NUMBER OF GROUPS HERE = ',I6)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+C
+        DO140I=1,NGROUP
+          NI=INT(YN(I)+0.1)
+          IF(YSD(I).LE.0.0)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,101)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,142)I,YSD(I)
+  142       FORMAT('      THE STANDARD DEVIATION FOR GROUP ',I6,
+     1             'IS NON-POSITIVE (',G15.7,').')
+            CALL DPWRST('XXX','BUG ')
+            IERROR='YES'
+            GOTO9000
+          ELSEIF(NI.LE.0)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,101)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,147)I,NI
+  147       FORMAT('      THE SAMPLE SIZE FOR GROUP ',I6,
+     1             'IS < 1 (',I6,').')
+            CALL DPWRST('XXX','BUG ')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+  140   CONTINUE
+      ELSE
+        IF(N.LE.3)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,151)
+  151     FORMAT('***** ERROR IN ONE WAY FIXED EFFECTS ANOVA--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,152)
+  152     FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE ANOVA ',
+     1           'COMMAND MUST BE AT LEAST 3.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,154)NGROUP
+  154     FORMAT('      THE NUMBER OF OBSERVATIONS = ',I6)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GOTO9000
+        ENDIF
+      ENDIF
+C
+      IFLAG1=1
+      IFLAG2=1
+      IFLAG3=1
+      IFLAG4=1
+      IFLAG5=1
+      IOP='OPEN'
+      CALL DPAUFI(IOP,IFLAG1,IFLAG2,IFLAG3,IFLAG4,IFLAG5,
+     1            IOUNI1,IOUNI2,IOUNI3,IOUNI4,IOUNI5,
+     1            IBUGA3,ISUBRO,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+C               ****************************************************
+C               **  STEP 2--                                      **
+C               **  COMPUTE THE TOTAL SAMPLE SIZE AND GRAND MEAN  **
+C               ****************************************************
+C
+      ISTEPN='2'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ANO4')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IF(ICASE1.EQ.'RAW ')THEN
+        CALL MEAN(Y,N,IWRITE,YGRAND,IBUGA3,IERROR)
+        CALL SD(Y,N,IWRITE,GSD,IBUGA3,IERROR)
+        NTOTAL=N
+      ELSE
+        NTOTAL=0
+        DSUM1=0.0D0
+        DO210I=1,NGROUP
+          NI=INT(YN(I) + 0.1)
+          NTOTAL=NTOTAL+NI
+          DSUM1=DSUM1 + DBLE(NI)*DBLE(YMEAN(I))
+  210   CONTINUE
+        YGRAND=REAL(DSUM1/DBLE(NTOTAL))
+      ENDIF
+C
+C               ******************************************************
+C               **  STEP 3--                                        **
+C               **  COMPUTE THE VARIOUS SUM OF SQUARES AND MEAN     **
+C               **  SQUARE ERROR TERMS.                             **
+C               ******************************************************
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ANO4')THEN
+        ISTEPN='3'
+        CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+        WRITE(ICOUT,301)YGRAND,DSUM1,NTOTAL,N
+  301   FORMAT('YGRAND,DSUM1,NTOTAL,N = ',2G15.7,2I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      IF(ICASE1.EQ.'RAW ')THEN
+        ICASEZ='FVAL'
+        CALL SSQTOT(Y,X,NTOTAL,XDIST,TEMP1,
+     1              YMEAN,YSD,YN,NGROUP,IWRITE,ICASEZ,
+     1              SSTOT,SSTR,SSE,SSX,DFTO,DFTR,DFE,
+     1              MSTR,MSE,FSTAT,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO9000
+        IDFTR=INT(DFTR+0.01)
+        IDFTO=INT(DFTO+0.01)
+        IDFE=INT(DFE+0.01)
+      ELSE
+        DSUM1=0.0D0
+        DSUM2=0.0D0
+        DO310I=1,NGROUP
+          NI=INT(YN(I) + 0.1)
+          DSUM1=DSUM1 + DBLE(NI)*DBLE((YMEAN(I) - YGRAND)**2)
+          DSUM2=DSUM2 + DBLE(NI-1)*DBLE(YSD(I)**2)
+  310   CONTINUE
+        SSTR=REAL(DSUM1)
+        IDFTR=NGROUP-1
+        MSTR=SSTR/REAL(IDFTR)
+        SSE=REAL(DSUM2)
+        IDFE=NTOTAL-NGROUP
+        MSE=SSE/REAL(IDFE)
+        SSTOT=SSTR+SSE
+        IDFTO=NTOTAL-1
+        FSTAT=MSTR/MSE
+      ENDIF
+C
+C     VARIANCE COMPONENTS FOR RANDOM EFFECTS
+C
+      IF(ICASE2.EQ.'RAND')THEN
+        SUM1=0.0
+        SUM2=0.0
+        C1=1.0/REAL(NGROUP-1)
+        DO370I=1,NGROUP
+          ANII=YN(I)
+          SUM1=SUM1 + ANII
+          SUM2=SUM2 + ANII**2
+  370   CONTINUE
+        AN0=C1*(SUM1 - (SUM2/SUM1))
+        SA2=(MSTR - MSE)/AN0
+        IF(SA2.LT.0.0)SA2=0.0
+        SA2RAT=SA2/(SA2 + MSE)
+        SA2PCT=100.*SA2/(SA2 + MSE)
+        MSERAT=MSE/(SA2+MSE)
+        MSEPCT=100.*MSE/(SA2+MSE)
+C
+        IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ANO4')THEN
+          WRITE(ICOUT,379)C1,SUM1,SUM2,AN0,SA2
+  379     FORMAT('C1,SUM1,SUM2,AN0,SA2 = ',5G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+      ENDIF
+      CALL FCDF(FSTAT,IDFTR,IDFE,FVAL)
+      PVALUE=1.0 - FVAL
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ANO4')THEN
+        WRITE(ICOUT,391)YGRAND,SSTOT,SSTR,SSE
+  391   FORMAT('YGRAND,SSTOT,SSTR,SSE = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,393)MSTR,MSE,FSTAT,FVAL,PVALUE
+  393   FORMAT('MSTR,MSE,FSTAT,FVAL,PVALUE = ',5G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               ****************************
+C               **  STEP 8--              **
+C               **  WRITE EVERYTHING OUT  **
+C               ****************************
+C
+      ISTEPN='8'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ANO4')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+C     PRINT SUMMARY STATISTICS TABLE
+C
+      IF(ICASE2.EQ.'RAND')THEN
+        ITITLE(1:45)='One-Way Random Effects Analysis of Variance: '
+        IF(ICASE1.EQ.'SUMM')THEN
+          ITITLE(46:58)='Summary Data'
+          NCTITL=58
+        ELSE
+          ITITLE(46:53)='Raw Data'
+          NCTITL=53
+        ENDIF
+        ITITLZ='H0: Variance of Effects = 0'
+        NCTITZ=27
+      ELSE
+        ITITLE(1:44)='One-Way Fixed Effects Analysis of Variance: '
+        IF(ICASE1.EQ.'SUMM')THEN
+          ITITLE(45:57)='Summary Data'
+          NCTITL=57
+        ELSE
+          ITITLE(45:52)='Raw Data'
+          NCTITL=52
+        ENDIF
+        ITITLZ='H0: Effect(1) = Effect(2) = ... - Effect(k) = 0'
+        NCTITZ=47
+      ENDIF
+C
+      IF(ICASE1.EQ.'SUMM')THEN
+        ICNT=1
+        ITEXT(ICNT)='Means Variable: '
+        WRITE(ITEXT(ICNT)(23:26),'(A4)')IVARID(1)(1:4)
+        WRITE(ITEXT(ICNT)(27:30),'(A4)')IVARI2(1)(1:4)
+        NCTEXT(ICNT)=27
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+C
+        ICNT=ICNT+1
+        ITEXT(ICNT)='SD Variable: '
+        WRITE(ITEXT(ICNT)(23:26),'(A4)')IVARID(2)(1:4)
+        WRITE(ITEXT(ICNT)(27:30),'(A4)')IVARI2(2)(1:4)
+        NCTEXT(ICNT)=27
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+C
+        ICNT=ICNT+1
+        ITEXT(ICNT)='Sample Size Variable: '
+        WRITE(ITEXT(ICNT)(23:26),'(A4)')IVARID(3)(1:4)
+        WRITE(ITEXT(ICNT)(27:30),'(A4)')IVARI2(3)(1:4)
+        NCTEXT(ICNT)=27
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+      ELSE
+        ICNT=1
+        ITEXT(ICNT)='Response Variable: '
+        WRITE(ITEXT(ICNT)(23:26),'(A4)')IVARID(1)(1:4)
+        WRITE(ITEXT(ICNT)(27:30),'(A4)')IVARI2(1)(1:4)
+        NCTEXT(ICNT)=27
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+C
+        ICNT=1
+        ITEXT(ICNT)='Group-ID Variable: '
+        WRITE(ITEXT(ICNT)(23:26),'(A4)')IVARID(1)(1:4)
+        WRITE(ITEXT(ICNT)(27:30),'(A4)')IVARI2(1)(1:4)
+        NCTEXT(ICNT)=27
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+C
+      ENDIF
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Summary Statistics:'
+      NCTEXT(ICNT)=19
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+C
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Total Number of Observations:'
+      NCTEXT(ICNT)=28
+      AVALUE(ICNT)=REAL(NTOTAL)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Number of Levels:'
+      NCTEXT(ICNT)=17
+      AVALUE(ICNT)=REAL(NGROUP)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Grand Mean:'
+      NCTEXT(ICNT)=11
+      AVALUE(ICNT)=YGRAND
+      IDIGIT(ICNT)=NUMDIG
+      IF(ICASE1.EQ.'RAW ')THEN
+        ICNT=ICNT+1
+        ITEXT(ICNT)='Grand Standard Deviation:'
+        NCTEXT(ICNT)=25
+        AVALUE(ICNT)=GSD
+        IDIGIT(ICNT)=NUMDIG
+      ENDIF
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=0
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+C
+      NUMROW=ICNT
+      DO1105I=1,NUMROW
+        NTOT(I)=15
+ 1105 CONTINUE
+C
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+      CALL DPDTA1(ITITLE,NCTITL,ITITLZ,NCTITZ,ITEXT,NCTEXT,
+     1            AVALUE,IDIGIT,
+     1            NTOT,NUMROW,
+     1            ICAPSW,ICAPTY,ILAST,IFRST,
+     1            ISUBRO,IBUGA3,IERROR)
+C
+C     PRINT OUT STANDARD ANOVA TABLE
+C
+      ITITLE(1:26)='ANOVA Table: Fixed Effects'
+      NCTITL=26
+      ITITL9=' '
+      NCTIT9=0
+C
+      NUMCOL=8
+      NUMLIN=1
+C
+      ITITL2(1,1)='Source'
+      NCTIT2(1,1)=6
+      NCOLSP(1,1)=1
+      ITITL2(1,2)='DF'
+      NCTIT2(1,2)=2
+      NCOLSP(1,2)=1
+      ITITL2(1,3)='Sum of Squares'
+      NCTIT2(1,3)=14
+      NCOLSP(1,3)=1
+      ITITL2(1,4)='Mean Square'
+      NCTIT2(1,4)=11
+      NCOLSP(1,4)=1
+      ITITL2(1,5)='F Statistic'
+      NCTIT2(1,5)=11
+      NCOLSP(1,5)=1
+      ITITL2(1,6)='F CDF (%)'
+      NCTIT2(1,6)=9
+      NCOLSP(1,6)=1
+      ITITL2(1,7)='P-Value'
+      NCTIT2(1,7)=7
+      NCOLSP(1,7)=1
+      ITITL2(1,8)='Sig'
+      NCTIT2(1,8)=3
+      NCOLSP(1,8)=1
+C
+      NMAX=0
+      DO13010I=1,NUMCOL
+        VALIGN(I)='b'
+        ALIGN(I)='r'
+        NTOT(I)=15
+        IF(I.EQ.1)NTOT(I)=20
+        IF(I.EQ.2)NTOT(I)=5
+        IF(I.EQ.6)NTOT(I)=12
+        IF(I.EQ.7)NTOT(I)=12
+        IF(I.EQ.8)NTOT(I)=4
+        NMAX=NMAX+NTOT(I)
+        ITYPCO(I)='NUME'
+        IF(I.EQ.1 .OR. I.EQ.8)ITYPCO(I)='ALPH'
+        DO13020J=1,MAXROW
+          IDIGI2(J,I)=-1
+          IF(I.EQ.3 .OR. I.EQ.4)THEN
+            IDIGI2(J,I)=NUMDIG
+          ELSEIF(I.EQ.2)THEN
+            IDIGI2(J,I)=0
+          ELSEIF(I.EQ.5)THEN
+            IDIGI2(J,I)=4
+          ELSEIF(I.EQ.6)THEN
+            IDIGI2(J,I)=4
+          ELSEIF(I.EQ.7)THEN
+            IDIGI2(J,I)=6
+          ENDIF
+13020   CONTINUE
+13010 CONTINUE
+C
+      DO13110J=1,MAXROW
+        DO13120I=1,NUMCOL
+          IVALUE(J,I)=' '
+          NCVALU(J,I)=0
+          AMAT(J,I)=0.0
+13120   CONTINUE
+        ROWSEP(J)=0
+13110 CONTINUE
+C
+C     TOP ROW (TOTAL)
+C
+      ICNT=1
+      IVALUE(ICNT,1)='Total (Corrected)'
+      NCVALU(ICNT,1)=17
+      AMAT(ICNT,2)=REAL(IDFTO)
+      AMAT(ICNT,3)=SSTOT
+      IDIGI2(ICNT,4)=-1
+      IDIGI2(ICNT,5)=-1
+      IDIGI2(ICNT,6)=-1
+      IDIGI2(ICNT,7)=-1
+      IDIGI2(ICNT,8)=-1
+      ROWSEP(ICNT)=1
+C
+C     TREATMENT (BETWEEN)
+C
+      ICNT=ICNT+1
+      IVALUE(ICNT,1)='Treatment (Between)'
+      NCVALU(ICNT,1)=19
+      AMAT(ICNT,2)=REAL(IDFTR)
+      AMAT(ICNT,3)=SSTR
+      AMAT(ICNT,4)=MSTR
+      AMAT(ICNT,5)=FSTAT
+      AMAT(ICNT,6)=100.0*FVAL
+      AMAT(ICNT,7)=PVALUE
+      IF(FVAL.GE.0.99)THEN
+        IVALUE(ICNT,8)='**'
+        NCVALU(ICNT,8)=2
+      ELSEIF(FVAL.GE.0.95)THEN
+        IVALUE(ICNT,8)='*'
+        NCVALU(ICNT,8)=1
+      ELSE
+        IVALUE(ICNT,8)=' '
+        NCVALU(ICNT,8)=0
+      ENDIF
+C
+C     LAST ROW (RESIDUAL = ERROR = WITHIN)
+C
+      ICNT=ICNT+1
+      IVALUE(ICNT,1)='Residual (Within)'
+      NCVALU(ICNT,1)=17
+      AMAT(ICNT,2)=REAL(IDFE)
+      AMAT(ICNT,3)=SSE
+      AMAT(ICNT,4)=MSE
+      IDIGI2(ICNT,5)=-1
+      IDIGI2(ICNT,6)=-1
+      IDIGI2(ICNT,7)=-1
+C
+      IWHTML(1)=125
+      IWHTML(2)=25
+      IWHTML(3)=125
+      IWHTML(4)=125
+      IWHTML(5)=125
+      IWHTML(6)=125
+      IWHTML(7)=25
+      IINC=1800
+      IINC2=200
+      IWRTF(1)=IINC
+      IWRTF(2)=IWRTF(1)+IINC2
+      IWRTF(3)=IWRTF(2)+IINC
+      IWRTF(4)=IWRTF(3)+IINC
+      IWRTF(5)=IWRTF(4)+IINC
+      IWRTF(6)=IWRTF(5)+IINC
+      IWRTF(7)=IWRTF(6)+IINC2
+C
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+      IFLAGS=.TRUE.
+      IFLAGE=.TRUE.
+      CALL DPDT5B(ITITLE,NCTITL,
+     1            ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1            MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1            IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT,
+     1            IDIGI2,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1            NCOLSP,ROWSEP,
+     1            ICAPSW,ICAPTY,IFRST,ILAST,
+     1            IFLAGS,IFLAGE,
+     1            ISUBRO,IBUGA3,IERROR)
+C
+C     GENERATE VARIANCE COMPONENTS TABLE FOR RANDOM EFFECTS MODEL
+C
+      IF(ICASE2.EQ.'RAND')THEN
+        ITITLE='Variance Components Table: Random Effects'
+        NCTITL=41
+        ITITL9=' '
+        NCTIT9=0
+C
+        NUMCOL=7
+        NUMLIN=3
+C
+        ITITL2(1,1)=' '
+        NCTIT2(1,1)=0
+        NCOLSP(1,1)=1
+        ITITL2(2,1)=' '
+        NCTIT2(2,1)=0
+        NCOLSP(2,1)=1
+        ITITL2(3,1)='Source'
+        NCTIT2(3,1)=6
+        NCOLSP(3,1)=1
+C
+        ITITL2(1,2)=' '
+        NCTIT2(1,2)=0
+        NCOLSP(1,2)=1
+        ITITL2(2,2)='Variance'
+        NCTIT2(2,2)=8
+        NCOLSP(2,2)=1
+        ITITL2(3,2)='Component'
+        NCTIT2(3,2)=9
+        NCOLSP(3,2)=1
+C
+        ITITL2(1,3)='Lower'
+        NCTIT2(1,3)=5
+        NCOLSP(1,3)=1
+        ITITL2(2,3)='Confidence'
+        NCTIT2(2,3)=10
+        NCOLSP(2,3)=1
+        ITITL2(3,3)='Limit'
+        NCTIT2(3,3)=5
+        NCOLSP(3,3)=1
+C
+        ITITL2(1,4)='Upper'
+        NCTIT2(1,4)=5
+        NCOLSP(1,4)=1
+        ITITL2(2,4)='Confidence'
+        NCTIT2(2,4)=10
+        NCOLSP(2,4)=1
+        ITITL2(3,4)='Limit'
+        NCTIT2(3,4)=5
+        NCOLSP(3,4)=1
+C
+        ITITL2(1,5)='Intraclass'
+        NCTIT2(1,5)=10
+        NCOLSP(1,5)=1
+        ITITL2(2,5)='Correlation'
+        NCTIT2(2,5)=11
+        NCOLSP(2,5)=1
+        ITITL2(3,5)='Coefficient (%)'
+        NCTIT2(3,5)=15
+        NCOLSP(3,5)=1
+C
+        ITITL2(1,6)='Lower'
+        NCTIT2(1,6)=5
+        NCOLSP(1,6)=1
+        ITITL2(2,6)='Confidence'
+        NCTIT2(2,6)=10
+        NCOLSP(2,6)=1
+        ITITL2(3,6)='Limit'
+        NCTIT2(3,6)=5
+        NCOLSP(3,6)=1
+C
+        ITITL2(1,7)='Upper'
+        NCTIT2(1,7)=5
+        NCOLSP(1,7)=1
+        ITITL2(2,7)='Confidence'
+        NCTIT2(2,7)=10
+        NCOLSP(2,7)=1
+        ITITL2(3,7)='Limit'
+        NCTIT2(3,7)=5
+        NCOLSP(3,7)=1
+C
+        NMAX=0
+        DO14010I=1,NUMCOL
+          ITYPCO(I)='NUME'
+          VALIGN(I)='b'
+          ALIGN(I)='r'
+          NTOT(I)=15
+          IF(I.EQ.1)THEN
+            NTOT(I)=20
+            ITYPCO(I)='ALPH'
+          ELSEIF(I.EQ.5)THEN
+            NTOT(I)=17
+          ENDIF
+          NMAX=NMAX+NTOT(I)
+          DO14020J=1,MAXROW
+            IDIGI2(J,I)=NUMDIG
+            IF(I.EQ.1)THEN
+              IDIGI2(J,I)=-1
+            ELSEIF(I.EQ.5)THEN
+              IDIGI2(J,I)=2
+            ENDIF
+14020     CONTINUE
+14010   CONTINUE
+C
+        DO14110J=1,MAXROW
+          DO14120I=1,NUMCOL
+            IVALUE(J,I)=' '
+            NCVALU(J,I)=0
+            AMAT(J,I)=0.0
+14120     CONTINUE
+          ROWSEP(J)=0
+14110   CONTINUE
+        ICNT=0
+C
+C     FIRST ROW (TREATMENT/BETWEEN)
+C
+        ALPHAT=ALPHA
+        IF(ALPHAT.GE.1.0 .AND. ALPHAT.LT.100.0)ALPHAT=ALPHAT/100.0
+        IF(ALPHAT.LE.0.0 .OR. ALPHAT.GE.1.0)THEN
+          ALPHAT=0.05
+        ELSEIF(ALPHAT.GT.0.5)THEN
+          ALPHAT=1.0 - ALPHAT
+        ENDIF
+        ALPHAL=ALPHAT/2.0
+        ALPHAU=1.0 - (ALPHAT/2.0)
+C
+        ICNT=ICNT+1
+        IVALUE(ICNT,1)='Treatment (Between)'
+        NCVALU(ICNT,1)=19
+        AMAT(ICNT,2)=SA2
+        AMAT(ICNT,5)=SA2PCT
+C
+        NU1=NGROUP-1
+        NU2=NTOTAL-NGROUP
+        CALL FPPF(ALPHAL,NU1,NU2,FL)
+        CALL FPPF(ALPHAU,NU1,NU2,FU)
+        F0=FSTAT
+        CONST1=1.0/AN0
+        AL=CONST1*((F0/FU) - 1.0)
+        AU=CONST1*((F0/FL) - 1.0)
+        ALL=AL/(1.0+AL)
+        AUL=AU/(1.0+AU)
+        NU=NGROUP-1
+        CALL CHSPPF(ALPHAL,NU,CHSL)
+        CALL CHSPPF(ALPHAU,NU,CHSU)
+        CONST1=1.0 - (FU/F0)
+        CONST2=1.0 - (FL/F0)
+        ANUM1=SSTR*CONST1
+        ANUM2=SSTR*CONST2
+        ADEN1=AN0*CHSL
+        ADEN2=AN0*CHSU
+        ALR=ANUM1/ADEN2
+        AUR=ANUM2/ADEN1
+C
+        IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ANO4')THEN
+          WRITE(ICOUT,1601)NU1,NU2,F0,FL,FU
+ 1601     FORMAT('NU1,NU2,F0,FL,FU = ',2I6,3G15.7)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1603)AL,AU,ALL,AUL
+ 1603     FORMAT('AL,AU,ALL,AUL = ',4G15.7)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1605)NU,CHSL,CHSU,CONST1,CONST2
+ 1605     FORMAT('NU,CHSL,CHSU,CONST1,CONST2 = ',I8,6G15.7)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1607)ANUM1,ANUM2,ADEN1,ADEN2,ALR,AUR
+ 1607     FORMAT('ANUM1,ANUM2,ADEN1,ADEN2,ALR,AUR = ',6G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+        AMAT(ICNT,3)=ALR
+        AMAT(ICNT,4)=AUR
+        IF(AMAT(ICNT,3).LT.0.0)AMAT(ICNT,3)=0.0
+        AMAT(ICNT,6)=100.*ALL
+        AMAT(ICNT,7)=100.*AUL
+        IF(AMAT(ICNT,6).LT.0.0)AMAT(ICNT,6)=0.0
+        IF(AMAT(ICNT,7).GT.100.0)AMAT(ICNT,7)=100.0
+C
+C       SECOND ROW (RESIDUAL = ERROR = WITHIN)
+C
+        ICNT=ICNT+1
+        IVALUE(ICNT,1)='Residual (Within)'
+        NCVALU(ICNT,1)=17
+        AMAT(ICNT,2)=MSE
+        AMAT(ICNT,5)=MSEPCT
+C
+        C1=REAL(NTOTAL-NGROUP)*MSE
+        NU=NTOTAL-NGROUP
+        ALPHAL=ALPHAT/2.0
+        CALL CHSPPF(ALPHAL,NU,ALCL)
+        ALPHAU=1.0 - (ALPHAT/2.0)
+        CALL CHSPPF(ALPHAU,NU,AUCL)
+        C3=C1/ALCL
+        C4=C1/AUCL
+        AMAT(ICNT,3)=MIN(C3,C4)
+        AMAT(ICNT,4)=MAX(C3,C4)
+        IDIGI2(ICNT,6)=-1
+        IDIGI2(ICNT,7)=-1
+C
+        IWHTML(1)=150
+        IWHTML(2)=125
+        IWHTML(3)=125
+        IWHTML(4)=125
+        IWHTML(5)=125
+        IWHTML(6)=125
+        IWHTML(7)=125
+        IINC=1800
+        IINC2=1600
+        IWRTF(1)=IINC
+        IWRTF(2)=IWRTF(1)+IINC2
+        IWRTF(3)=IWRTF(2)+IINC2
+        IWRTF(4)=IWRTF(3)+IINC2
+        IWRTF(5)=IWRTF(4)+IINC2
+        IWRTF(6)=IWRTF(5)+IINC2
+        IWRTF(7)=IWRTF(6)+IINC2
+C
+        IFRST=.TRUE.
+        ILAST=.TRUE.
+        IFLAGS=.TRUE.
+        IFLAGE=.TRUE.
+        CALL DPDT5B(ITITLE,NCTITL,
+     1              ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1              MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1              IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT,
+     1              IDIGI2,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1              NCOLSP,ROWSEP,
+     1              ICAPSW,ICAPTY,IFRST,ILAST,
+     1              IFLAGS,IFLAGE,
+     1              ISUBRO,IBUGA3,IERROR)
+        GOTO9000
+      ENDIF
+C
+C     FOLLOWING TABLES ARE GENERATED FOR FIXED EFFECTS
+C
+C       1. EFFECT ESTIMATES
+C
+C       2. MODEL RESIDUAL STANDARD DEVIATIONS
+C
+C       3. CONFIDENCE INTERVAL FOR TREATMENT MEANS
+C
+C              Ybar(i) +/- t(1-alpha/2,N-k)*SQRT(MSE/n(i))
+C
+C       4. CONFIDENCE INTERVAL FOR PAIRWISE DIFFERENCES
+C          BETWEEN TREATMENT MEANS
+C
+C       5. PAIRWISE MULTIPLE COMPARISONS (BONFERRONI OR
+C          OR FISHER LEAST SIGNIFICANT DIFFERENCE, TUKEY
+C          HONEST SIGNIFICANT DIFFERENCE)
+C          HONEST SIGNIFICANT DIFFERENCE)
+C
+C     EFFECT ESTIMATES
+C
+      ALPHAT=ALPHA
+      IF(ALPHAT.GE.1.0 .AND. ALPHAT.LT.100.0)ALPHAT=ALPHAT/100.0
+      IF(ALPHAT.LE.0.0 .OR. ALPHAT.GE.1.0)THEN
+        ALPHAT=0.05
+      ELSEIF(ALPHAT.GT.0.5)THEN
+        ALPHAT=1.0 - ALPHAT
+      ENDIF
+      ADF=REAL(NTOTAL-NGROUP)
+      CALL TPPF(ALPHAT,ADF,TVAL)
+      TVAL=ABS(TVAL)
+C
+      ITITLE=' '
+      ITITLE(1:25)='Estimation: Grand Mean = '
+      WRITE(ITITLE(26:40),'(E15.7)')YGRAND
+      NCTITL=40
+      ITITL9=' '
+      NCTIT9=0
+C
+      DO3001II=1,3
+        DO3003JJ=1,7
+          ITITL2(II,JJ)=' '
+          NCTIT2(II,JJ)=0
+ 3003  CONTINUE
+ 3001 CONTINUE
+C
+      WRITE(IOUNI1,3008)
+ 3008 FORMAT('Level-ID          NI           MEAN',
+     1       '         EFFECT     SD(EFFECT)')
+C
+      ITITL2(1,1)='Level'
+      NCTIT2(1,1)=5
+      ITITL2(2,1)='ID'
+      NCTIT2(2,1)=2
+      ITITL2(2,2)='N(i)'
+      NCTIT2(2,2)=4
+      ITITL2(2,3)='Mean'
+      NCTIT2(2,3)=4
+      ITITL2(2,4)='Effect'
+      NCTIT2(2,4)=6
+      ITITL2(2,5)='SD(Effect)'
+      NCTIT2(2,5)=10
+C
+      NMAX=0
+      NUMCOL=5
+      NUMLIN=2
+      DO3010I=1,NUMCOL
+        VALIGN(I)='b'
+        ALIGN(I)='r'
+        ITYPCO(I)='NUME'
+        IDIGIT(I)=NUMDIG
+        NTOT(I)=15
+        IF(I.EQ.1 .OR. I.EQ.2)THEN
+          NTOT(I)=5
+          IDIGIT(I)=0
+        ENDIF
+        NMAX=NMAX+NTOT(I)
+ 3010 CONTINUE
+      IWHTML(1)=50
+      IWHTML(2)=50
+      IWHTML(3)=150
+      IWHTML(4)=150
+      IWHTML(5)=150
+      IINC=1600
+      IINC2=200
+      IINC3=1000
+      IWRTF(1)=IINC2
+      IWRTF(2)=IWRTF(1)+IINC2
+      IWRTF(3)=IWRTF(2)+IINC
+      IWRTF(4)=IWRTF(3)+IINC
+      IWRTF(5)=IWRTF(4)+IINC
+C
+      ICNT=0
+      DO3020I=1,NGROUP
+C
+        IF(ICNT.GE.MAXROW)THEN
+          IFRST=.TRUE.
+          ILAST=.TRUE.
+          IFLAGS=.TRUE.
+          IFLAGE=.TRUE.
+          CALL DPDTA5(ITITLE,NCTITL,
+     1                ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1                MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1                IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT,
+     1                IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1                ICAPSW,ICAPTY,IFRST,ILAST,
+     1                IFLAGS,IFLAGE,
+     1                ISUBRO,IBUGA3,IERROR)
+          ICNT=0
+        ENDIF
+C
+
+        ICNT=ICNT+1
+        DO3025JJ=1,NUMCOL
+          IVALUE(ICNT,JJ)=' '
+          NCVALU(ICNT,JJ)=0
+ 3025   CONTINUE
+        NI=INT(YN(I)+0.1)
+        ANI=REAL(NI)
+        CONST=(1.0/ANI) - (1.0/REAL(NTOTAL))
+CCCCC   TERM1=SQRT(MSE/ANI)
+        TERM1=SQRT(CONST*MSE)
+        AMAT(ICNT,1)=REAL(I)
+        AMAT(ICNT,2)=ANI
+        AMAT(ICNT,3)=YMEAN(I)
+        AMAT(ICNT,4)=YMEAN(I) - YGRAND
+        AMAT(ICNT,5)=TERM1
+        WRITE(IOUNI1,'(F8.0,F12.0,3E15.7)')REAL(I),ANI,YMEAN(I),
+     1                                     AMAT(ICNT,4),AMAT(ICNT,5)
+ 3020 CONTINUE
+C
+      IF(ICNT.GE.1)THEN
+        IFRST=.TRUE.
+        ILAST=.TRUE.
+        IFLAGS=.TRUE.
+        IFLAGE=.TRUE.
+        CALL DPDTA5(ITITLE,NCTITL,
+     1              ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1              MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1              IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT,
+     1              IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1              ICAPSW,ICAPTY,IFRST,ILAST,
+     1              IFLAGS,IFLAGE,
+     1              ISUBRO,IBUGA3,IERROR)
+      ENDIF
+C
+C     RESIDUAL STANDARD DEVIATIONS FROM MODELS (RAW DATA CASE)
+C
+      IF(ICASE1.EQ.'SUMM')GOTO2699
+      DSUM1=0.0D0
+      DSUM2=0.0D0
+      DO2610I=1,NTOTAL
+        YVAL=Y(I)
+        XVAL=X(I)
+        IINDX=0
+        DO2620J=1,NGROUP
+          IF(XVAL.EQ.XDIST(J))THEN
+            IINDX=J
+            GOTO2629
+          ENDIF
+ 2620   CONTINUE
+        GOTO2699
+C
+ 2629   CONTINUE
+        PRED(I)=YMEAN(IINDX)
+        RES(I)=YVAL - PRED(I)
+        DSUM1=DSUM1 + (YVAL-YGRAND)**2
+        DSUM2=DSUM2 + (YVAL-YMEAN(IINDX))**2
+ 2610 CONTINUE
+C
+      RESSD=REAL(DSQRT(DSUM2/DBLE(IDFE)))
+      RESSD2=REAL(DSQRT(DSUM1/DBLE(NTOTAL-1)))
+C
+      ITITLE=' '
+      ITITLE='Models'
+      NCTITL=6
+      ITITL9=' '
+      NCTIT9=0
+C
+      DO2630II=1,3
+        DO2640JJ=1,7
+          ITITL2(II,JJ)=' '
+          NCTIT2(II,JJ)=0
+ 2640  CONTINUE
+ 2630 CONTINUE
+C
+      ITITL2(1,1)='Model'
+      NCTIT2(1,1)=5
+      ITITL2(1,2)='Residual Standard Deviation'
+      NCTIT2(1,2)=27
+C
+      NMAX=0
+      NUMCOL=2
+      NUMLIN=1
+      DO2650I=1,NUMCOL
+        VALIGN(I)='b'
+        ALIGN(I)='r'
+        ITYPCO(I)='NUME'
+        IDIGIT(I)=NUMDIG
+        NTOT(I)=15
+        IF(I.EQ.1)THEN
+          NTOT(I)=25
+          IDIGIT(I)=0
+          ITYPCO(I)='ALPH'
+          ALIGN(I)='l'
+        ELSEIF(I.EQ.2)THEN
+          NTOT(I)=30
+        ENDIF
+        NMAX=NMAX+NTOT(I)
+ 2650 CONTINUE
+      IWHTML(1)=200
+      IWHTML(2)=200
+      IINC=1600
+      IWRTF(1)=IINC
+      IWRTF(2)=IWRTF(1)+IINC
+C
+      ICNT=1
+      IVALUE(ICNT,1)='Constant'
+      NCVALU(ICNT,1)=8
+      AMAT(ICNT,1)=0.0
+      AMAT(ICNT,2)=RESSD2
+C
+      ICNT=2
+      IVALUE(ICNT,1)='Constant + Factor'
+      NCVALU(ICNT,1)=17
+      AMAT(ICNT,1)=0.0
+      AMAT(ICNT,2)=RESSD
+C
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+      IFLAGS=.TRUE.
+      IFLAGE=.TRUE.
+      CALL DPDTA5(ITITLE,NCTITL,
+     1            ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1            MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1            IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT,
+     1            IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1            ICAPSW,ICAPTY,IFRST,ILAST,
+     1            IFLAGS,IFLAGE,
+     1            ISUBRO,IBUGA3,IERROR)
+C
+ 2699 CONTINUE
+C
+C     CONFIDENCE INTERVALS FOR TREATMENT MEANS
+C
+      ALPHAT=ALPHA
+      IF(ALPHAT.GE.1.0 .AND. ALPHAT.LT.100.0)ALPHAT=ALPHAT/100.0
+      IF(ALPHAT.LE.0.0 .OR. ALPHAT.GE.1.0)THEN
+        ALPHAT=0.05
+      ELSEIF(ALPHAT.GT.0.5)THEN
+        ALPHAT=1.0 - ALPHAT
+      ENDIF
+      ADF=REAL(NTOTAL-NGROUP)
+      CALL TPPF(ALPHAT,ADF,TVAL)
+      TVAL=ABS(TVAL)
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ANO4')THEN
+        WRITE(ICOUT,4006)ALPHA,ALPHAT
+ 4006   FORMAT('ALPHA,ALPHAT = ',2G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      IF(ALPHAT.EQ.0.05)THEN
+        ITITLE(1:44)='95% Confidence Intervals for Treatment Means'
+        NCTITL=44
+      ELSEIF(ALPHAT.EQ.0.10)THEN
+        ITITLE(1:44)='90% Confidence Intervals for Treatment Means'
+        NCTITL=44
+      ELSEIF(ALPHAT.EQ.0.01)THEN
+        ITITLE(1:44)='99% Confidence Intervals for Treatment Means'
+        NCTITL=44
+      ELSE
+        ITITLE(1:46)='    % Confidence Intervals for Treatment Means'
+        WRITE(ITITLE(1:4),'(F4.1)')ALPHAT
+        NCTITL=46
+      ENDIF
+      ITITL9=' '
+      NCTIT9=0
+C
+      DO4001II=1,3
+        DO4003JJ=1,7
+          ITITL2(II,JJ)=' '
+          NCTIT2(II,JJ)=0
+ 4003  CONTINUE
+ 4001 CONTINUE
+C
+      WRITE(IOUNI2,4008)
+ 4008 FORMAT('    I           MEAN           SD',
+     1       '    SAMPLE SIZE           LCL            UCL')
+C
+      ITITL2(3,1)='I'
+      NCTIT2(3,1)=1
+      ITITL2(2,2)='Treatment'
+      NCTIT2(2,2)=9
+      ITITL2(3,2)='Mean'
+      NCTIT2(3,2)=4
+      ITITL2(2,3)='Treatment'
+      NCTIT2(2,3)=9
+      ITITL2(3,3)='SD'
+      NCTIT2(3,3)=2
+      ITITL2(1,4)='Treatment'
+      NCTIT2(1,4)=9
+      ITITL2(2,4)='Sample'
+      NCTIT2(2,4)=6
+      ITITL2(3,4)='Size'
+      NCTIT2(3,4)=4
+      ITITL2(1,5)='Lower'
+      NCTIT2(1,5)=5
+      ITITL2(2,5)='Confidence'
+      NCTIT2(2,5)=10
+      ITITL2(3,5)='Limit'
+      NCTIT2(3,5)=5
+      ITITL2(1,6)='Upper'
+      NCTIT2(1,6)=5
+      ITITL2(2,6)='Confidence'
+      NCTIT2(2,6)=10
+      ITITL2(3,6)='Limit'
+      NCTIT2(3,6)=5
+C
+      NMAX=0
+      NUMCOL=6
+      NUMLIN=3
+      DO4010I=1,NUMCOL
+        VALIGN(I)='b'
+        ALIGN(I)='r'
+        ITYPCO(I)='NUME'
+        IDIGIT(I)=NUMDIG
+        NTOT(I)=15
+        IF(I.EQ.1)THEN
+          NTOT(I)=5
+          IDIGIT(I)=0
+        ELSEIF(I.EQ.4)THEN
+          IDIGIT(I)=0
+        ENDIF
+        NMAX=NMAX+NTOT(I)
+ 4010 CONTINUE
+      IWHTML(1)=50
+      IWHTML(2)=150
+      IWHTML(3)=150
+      IWHTML(4)=150
+      IWHTML(5)=150
+      IWHTML(6)=150
+      IINC=1600
+      IINC2=200
+      IINC3=1000
+      IWRTF(1)=IINC2
+      IWRTF(2)=IWRTF(1)+IINC
+      IWRTF(3)=IWRTF(2)+IINC
+      IWRTF(4)=IWRTF(3)+IINC
+      IWRTF(5)=IWRTF(4)+IINC
+      IWRTF(6)=IWRTF(5)+IINC
+C
+      ICNT=0
+      DO4020I=1,NGROUP
+C
+        IF(ICNT.GE.MAXROW)THEN
+          IFRST=.TRUE.
+          ILAST=.TRUE.
+          IFLAGS=.TRUE.
+          IFLAGE=.TRUE.
+          CALL DPDTA5(ITITLE,NCTITL,
+     1                ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1                MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1                IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT,
+     1                IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1                ICAPSW,ICAPTY,IFRST,ILAST,
+     1                IFLAGS,IFLAGE,
+     1                ISUBRO,IBUGA3,IERROR)
+          ICNT=0
+        ENDIF
+C
+
+        ICNT=ICNT+1
+        DO4025JJ=1,NUMCOL
+          IVALUE(ICNT,JJ)=' '
+          NCVALU(ICNT,JJ)=0
+ 4025   CONTINUE
+        NI=INT(YN(I)+0.1)
+        ANI=REAL(NI)
+        TERM1=SQRT(MSE/ANI)
+        AMAT(ICNT,1)=REAL(I)
+        AMAT(ICNT,2)=YMEAN(I)
+        AMAT(ICNT,3)=YSD(I)
+        AMAT(ICNT,4)=ANI
+        AMAT(ICNT,5)=YMEAN(I) - TVAL*TERM1
+        AMAT(ICNT,6)=YMEAN(I) + TVAL*TERM1
+        WRITE(IOUNI2,'(F5.0,5E15.7)')REAL(I),YMEAN(I),YSD(I),ANI,
+     1                               AMAT(ICNT,5),AMAT(ICNT,6)
+ 4020 CONTINUE
+C
+      IF(ICNT.GE.1)THEN
+        IFRST=.TRUE.
+        ILAST=.TRUE.
+        IFLAGS=.TRUE.
+        IFLAGE=.TRUE.
+        CALL DPDTA5(ITITLE,NCTITL,
+     1              ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1              MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1              IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT,
+     1              IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1              ICAPSW,ICAPTY,IFRST,ILAST,
+     1              IFLAGS,IFLAGE,
+     1              ISUBRO,IBUGA3,IERROR)
+      ENDIF
+C
+C     CONFIDENCE INTERVALS FOR DIFFERENCES OF TREATMENT MEANS
+C
+      IF(ALPHAT.EQ.0.05)THEN
+        ITITLE(1:47)='95% Confidence Intervals for the Difference of '
+        ITITLE(48:62)='Treatment Means'
+        NCTITL=62
+      ELSEIF(ALPHAT.EQ.0.10)THEN
+        ITITLE(1:47)='90% Confidence Intervals for the Difference of '
+        ITITLE(48:62)='Treatment Means'
+        NCTITL=62
+      ELSEIF(ALPHAT.EQ.0.01)THEN
+        ITITLE(1:47)='99% Confidence Intervals for the Difference of '
+        ITITLE(48:62)='Treatment Means'
+        NCTITL=62
+      ELSE
+        ITITLE(1:49)='    % Confidence Intervals for the Difference of '
+        ITITLE(50:64)='Treatment Means'
+        NCTITL=64
+        WRITE(ITITLE(1:4),'(F4.1)')ALPHAT
+      ENDIF
+      ITITL9=' '
+      NCTIT9=0
+C
+      DO5001II=1,3
+        DO5003JJ=1,7
+          ITITL2(II,JJ)=' '
+          NCTIT2(II,JJ)=0
+ 5003  CONTINUE
+ 5001 CONTINUE
+C
+      WRITE(IOUNI3,5008)
+ 5008 FORMAT('    I    J XBAR(I)-XBAR(J)           LCL',
+     1       '            UCL        P-VALUE')
+C
+      ITITL2(3,1)='I'
+      NCTIT2(3,1)=1
+      ITITL2(3,2)='J'
+      NCTIT2(3,2)=1
+      ITITL2(1,3)='Difference of'
+      NCTIT2(1,3)=13
+      ITITL2(2,3)='Treatment'
+      NCTIT2(2,3)=9
+      ITITL2(3,3)='Means'
+      NCTIT2(3,3)=5
+      ITITL2(1,4)='Lower'
+      NCTIT2(1,4)=5
+      ITITL2(2,4)='Confidence'
+      NCTIT2(2,4)=10
+      ITITL2(3,4)='Limit'
+      NCTIT2(3,4)=5
+      ITITL2(1,5)='Upper'
+      NCTIT2(1,5)=5
+      ITITL2(2,5)='Confidence'
+      NCTIT2(2,5)=10
+      ITITL2(3,5)='Limit'
+      NCTIT2(3,5)=5
+      ITITL2(1,6)='Fisher'
+      NCTIT2(1,6)=6
+      ITITL2(2,6)='LSD'
+      NCTIT2(2,6)=3
+      ITITL2(3,6)='P-Value'
+      NCTIT2(3,6)=7
+C
+      NMAX=0
+      NUMCOL=6
+      NUMLIN=3
+      DO5010I=1,NUMCOL
+        VALIGN(I)='b'
+        ALIGN(I)='r'
+        ITYPCO(I)='NUME'
+        IDIGIT(I)=NUMDIG
+        NTOT(I)=15
+        IF(I.EQ.1 .OR. I.EQ.2)THEN
+          NTOT(I)=5
+          IDIGIT(I)=0
+        ENDIF
+        NMAX=NMAX+NTOT(I)
+ 5010 CONTINUE
+      IWHTML(1)=50
+      IWHTML(2)=50
+      IWHTML(3)=150
+      IWHTML(4)=150
+      IWHTML(5)=150
+      IWHTML(6)=150
+      IINC=1600
+      IINC2=200
+      IINC3=1000
+      IWRTF(1)=IINC2
+      IWRTF(2)=IWRTF(1)+IINC2
+      IWRTF(3)=IWRTF(2)+IINC
+      IWRTF(4)=IWRTF(3)+IINC
+      IWRTF(5)=IWRTF(4)+IINC
+      IWRTF(6)=IWRTF(5)+IINC
+C
+      ADF=REAL(NTOTAL-NGROUP)
+      CALL TPPF(ALPHAT,ADF,TVAL)
+      TVAL=ABS(TVAL)
+      ICNT=0
+      DO5081I=1,NGROUP
+        DO5083J=1,NGROUP
+          IF(I.LT.J)THEN
+C
+            IF(ICNT.GE.MAXROW)THEN
+              IFRST=.TRUE.
+              ILAST=.TRUE.
+              IFLAGS=.TRUE.
+              IFLAGE=.TRUE.
+              CALL DPDTA5(ITITLE,NCTITL,
+     1                    ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1                    MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1                    IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT,
+     1                    IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1                    ICAPSW,ICAPTY,IFRST,ILAST,
+     1                    IFLAGS,IFLAGE,
+     1                    ISUBRO,IBUGA3,IERROR)
+              ICNT=0
+            ENDIF
+C
+            ICNT=ICNT+1
+            IVALUE(ICNT,1)=' '
+            NCVALU(ICNT,1)=0
+            IVALUE(ICNT,2)=' '
+            NCVALU(ICNT,2)=0
+            IVALUE(ICNT,3)=' '
+            NCVALU(ICNT,3)=0
+            IVALUE(ICNT,4)=' '
+            NCVALU(ICNT,4)=0
+            IVALUE(ICNT,5)=' '
+            NCVALU(ICNT,5)=0
+            IVALUE(ICNT,6)=' '
+            NCVALU(ICNT,6)=0
+            AMAT(ICNT,1)=REAL(I)
+            AMAT(ICNT,2)=REAL(J)
+            ADIFF=YMEAN(I) - YMEAN(J)
+            AMAT(ICNT,3)=ADIFF
+            NII=INT(YN(I)+0.1)
+            NIJ=INT(YN(J)+0.1)
+            TERM1=MSE*(1.0/REAL(NII) + 1.0/REAL(NIJ))
+            AMAT(ICNT,4)=ADIFF - TVAL*SQRT(TERM1)
+            AMAT(ICNT,5)=ADIFF + TVAL*SQRT(TERM1)
+            STATVA=ADIFF/SQRT(TERM1)
+            CALL TCDF(STATVA,ADF,STATCD)
+            IF(STATVA.LE.0.0)THEN
+              PVAL=2.0*STATCD
+            ELSE
+              PVAL=2.0*(1.0 - STATCD)
+            ENDIF
+            AMAT(ICNT,6)=PVAL
+            WRITE(IOUNI3,'(2F5.0,4E15.7)')AMAT(ICNT,1),AMAT(ICNT,2),
+     1            AMAT(ICNT,3),AMAT(ICNT,4),AMAT(ICNT,5),AMAT(ICNT,6)
+          ENDIF
+ 5083   CONTINUE
+ 5081 CONTINUE
+C
+      IF(ICNT.GE.1)THEN
+        IFRST=.TRUE.
+        ILAST=.TRUE.
+        IFLAGS=.TRUE.
+        IFLAGE=.TRUE.
+        CALL DPDTA5(ITITLE,NCTITL,
+     1              ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1              MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1              IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT,
+     1              IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1              ICAPSW,ICAPTY,IFRST,ILAST,
+     1              IFLAGS,IFLAGE,
+     1              ISUBRO,IBUGA3,IERROR)
+      ENDIF
+C
+C     ALWAYS GENERATE BONFERRONI INTERVAL
+C
+CCCCC IF(IANOMC.EQ.'BONF')THEN
+C
+C        BONFERRONI MULTIPLE COMPARISONS
+C
+        ALPHAT=ALPHA
+        IF(ALPHAT.GE.1.0 .AND. ALPHAT.LT.100.0)ALPHAT=ALPHAT/100.0
+        IF(ALPHAT.LE.0.0 .OR. ALPHAT.GE.100.0)THEN
+          ALPHAT=0.05
+        ELSEIF(ALPHAT.GT.0.5)THEN
+          ALPHAT=1.0 - ALPHAT
+        ENDIF
+        AK=REAL(NGROUP)
+        DENOM=AK*(AK-1.0)/2.0
+        ALPHAP=ALPHAT/DENOM
+        ADF=REAL(NTOTAL-NGROUP)
+        CALL TPPF(ALPHAP,ADF,TVALB)
+        TVALB=ABS(TVALB)
+C
+        IF(ALPHAT.EQ.0.05)THEN
+          ITITLE(1:47)='95% Bonferroni Intervals for the Difference of '
+          ITITLE(48:62)='Treatment Means'
+          NCTITL=62
+        ELSEIF(ALPHAT.EQ.0.10)THEN
+          ITITLE(1:47)='90% Bonferroni Intervals for the Difference of '
+          ITITLE(48:62)='Treatment Means'
+          NCTITL=62
+        ELSEIF(ALPHAT.EQ.0.01)THEN
+          ITITLE(1:47)='99% Bonferroni Intervals for the Difference of '
+          ITITLE(48:62)='Treatment Means'
+          NCTITL=62
+        ELSE
+        ITITLE(1:49)='    % Bonferroni Intervals for the Difference of '
+          ITITLE(50:64)='Treatment Means'
+          NCTITL=64
+          WRITE(ITITLE(1:4),'(F4.1)')ALPHAT
+        ENDIF
+        ITITL9(1:28)='Bonferroni Adjusted Alpha = '
+        WRITE(ITITL9(29:34),'(F6.4)')ALPHAP
+        NCTIT9=34
+C
+        DO6001II=1,3
+          DO6003JJ=1,7
+            ITITL2(II,JJ)=' '
+            NCTIT2(II,JJ)=0
+ 6003  CONTINUE
+ 6001 CONTINUE
+C
+        WRITE(IOUNI4,6008)
+ 6008   FORMAT('    I    J XBAR(I)-XBAR(J)           LCL',
+     1         '            UCL        P-VALUE')
+C
+        ITITL2(1,1)='I'
+        NCTIT2(1,1)=1
+        ITITL2(1,2)='J'
+        NCTIT2(1,2)=1
+        ITITL2(1,3)='Difference of'
+        NCTIT2(1,3)=13
+        ITITL2(2,3)='Treatment'
+        NCTIT2(2,3)=9
+        ITITL2(3,3)='Means'
+        NCTIT2(3,3)=5
+        ITITL2(1,4)='Lower'
+        NCTIT2(1,4)=5
+        ITITL2(2,4)='Confidence'
+        NCTIT2(2,4)=10
+        ITITL2(3,4)='Limit'
+        NCTIT2(3,4)=5
+        ITITL2(1,5)='Upper'
+        NCTIT2(1,5)=5
+        ITITL2(2,5)='Confidence'
+        NCTIT2(2,5)=10
+        ITITL2(3,5)='Limit'
+        NCTIT2(3,5)=5
+        ITITL2(3,6)='P-Value'
+        NCTIT2(3,6)=7
+C
+        NMAX=0
+        NUMCOL=6
+        NUMLIN=3
+        DO6010I=1,NUMCOL
+          VALIGN(I)='b'
+          ALIGN(I)='r'
+          ITYPCO(I)='NUME'
+          IDIGIT(I)=NUMDIG
+          NTOT(I)=15
+          IF(I.EQ.1 .OR. I.EQ.2)THEN
+            NTOT(I)=5
+            IDIGIT(I)=0
+          ENDIF
+          NMAX=NMAX+NTOT(I)
+ 6010 CONTINUE
+        IWHTML(1)=50
+        IWHTML(2)=50
+        IWHTML(3)=150
+        IWHTML(4)=150
+        IWHTML(5)=150
+        IWHTML(6)=150
+        IINC=1600
+        IINC2=200
+        IINC3=1000
+        IWRTF(1)=IINC2
+        IWRTF(2)=IWRTF(1)+IINC2
+        IWRTF(3)=IWRTF(2)+IINC
+        IWRTF(4)=IWRTF(3)+IINC
+        IWRTF(5)=IWRTF(4)+IINC
+        IWRTF(6)=IWRTF(5)+IINC
+C
+        ICNT=0
+        DO6081I=1,NGROUP
+          DO6083J=1,NGROUP
+            IF(I.LT.J)THEN
+C
+              IF(ICNT.GE.MAXROW)THEN
+                IFRST=.TRUE.
+                ILAST=.TRUE.
+                IFLAGS=.TRUE.
+                IFLAGE=.TRUE.
+                CALL DPDTA5(ITITLE,NCTITL,
+     1                      ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1                      MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1                      IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT,
+     1                      IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1                      ICAPSW,ICAPTY,IFRST,ILAST,
+     1                      IFLAGS,IFLAGE,
+     1                      ISUBRO,IBUGA3,IERROR)
+                ICNT=0
+              ENDIF
+C
+              ICNT=ICNT+1
+              IVALUE(ICNT,1)=' '
+              NCVALU(ICNT,1)=0
+              IVALUE(ICNT,2)=' '
+              NCVALU(ICNT,2)=0
+              IVALUE(ICNT,3)=' '
+              NCVALU(ICNT,3)=0
+              IVALUE(ICNT,4)=' '
+              NCVALU(ICNT,4)=0
+              IVALUE(ICNT,5)=' '
+              NCVALU(ICNT,5)=0
+              IVALUE(ICNT,6)=' '
+              NCVALU(ICNT,6)=0
+              AMAT(ICNT,1)=REAL(I)
+              AMAT(ICNT,2)=REAL(J)
+              ADIFF=YMEAN(I) - YMEAN(J)
+              AMAT(ICNT,3)=ADIFF
+              NII=INT(YN(I)+0.1)
+              NIJ=INT(YN(J)+0.1)
+              TERM1=MSE*(1.0/REAL(NII) + 1.0/REAL(NIJ))
+              AMAT(ICNT,4)=ADIFF - TVALB*SQRT(TERM1)
+              AMAT(ICNT,5)=ADIFF + TVALB*SQRT(TERM1)
+              STATVA=ADIFF/SQRT(TERM1)
+              CALL TCDF(STATVA,ADF,STATCD)
+              IF(STATVA.LE.0.0)THEN
+                PVAL=2.0*STATCD
+              ELSE
+                PVAL=2.0*(1.0 - STATCD)
+              ENDIF
+              AMAT(ICNT,6)=PVAL
+              WRITE(IOUNI4,'(2F5.0,4E15.7)')AMAT(ICNT,1),AMAT(ICNT,2),
+     1              AMAT(ICNT,3),AMAT(ICNT,4),AMAT(ICNT,5),AMAT(ICNT,6)
+            ENDIF
+ 6083     CONTINUE
+ 6081   CONTINUE
+C
+        IF(ICNT.GE.1)THEN
+          IFRST=.TRUE.
+          ILAST=.TRUE.
+          IFLAGS=.TRUE.
+          IFLAGE=.TRUE.
+          CALL DPDTA5(ITITLE,NCTITL,
+     1              ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1              MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1              IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT,
+     1              IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1              ICAPSW,ICAPTY,IFRST,ILAST,
+     1              IFLAGS,IFLAGE,
+     1              ISUBRO,IBUGA3,IERROR)
+         ENDIF
+C
+C     ALWAYS GENERATE TUKEY-KRAMER MULTIPLE COMPARISONS
+C
+CCCCC ELSEIF(IANOMC.EQ.'TUKE')THEN
+C
+C       TUKEY-KRAMER MULTIPLE COMPARISONS
+C
+        ALPHAT=ALPHA
+        IF(ALPHAT.GE.1.0 .AND. ALPHAT.LT.100.0)ALPHAT=ALPHAT/100.0
+        IF(ALPHAT.LE.0.0 .OR. ALPHAT.GE.100.0)THEN
+          ALPHAT=0.05
+        ELSEIF(ALPHAT.GT.0.5)THEN
+          ALPHAT=1.0 - ALPHAT
+        ENDIF
+        IF(ALPHAT.NE.0.10 .AND. ALPHAT.NE.0.05 .AND.
+     1     ALPHAT.NE.0.01)ALPHAT=0.05
+
+        ALPHA1=0.90
+        ALPHA2=0.95
+        ALPHA3=0.99
+        DTERM1=QTRNG(DBLE(ALPHA1),DBLE(NGROUP*(NTOTAL-1)),
+     1               DBLE(NGROUP),IFAULT)
+        CV90T=REAL(DTERM1)
+        DTERM1=QTRNG(DBLE(ALPHA2),DBLE(NGROUP*(NTOTAL-1)),
+     1               DBLE(NGROUP),IFAULT)
+        CV95T=REAL(DTERM1)
+        DTERM1=QTRNG(DBLE(ALPHA3),DBLE(NGROUP*(NTOTAL-1)),
+     1               DBLE(NGROUP),IFAULT)
+        CV99T=REAL(DTERM1)
+C
+        ITITLE='Tukey-Kramer Honest Significant Difference (HSD)'
+        NCTITL=48
+        ITITL9='Multiple Comparisons: alpha = '
+        WRITE(ITITL9(31:34),'(F4.2)')ALPHAT
+        NCTIT9=34
+C
+        DO7001II=1,3
+          DO7003JJ=1,7
+            ITITL2(II,JJ)=' '
+            NCTIT2(II,JJ)=0
+ 7003     CONTINUE
+ 7001   CONTINUE
+C
+        WRITE(IOUNI5,7008)
+ 7008   FORMAT('    I    J |XBAR(I)-XBAR(J)|      STDERR',
+     1         '            LCL            UCL         90% CV',
+     1         '         95% CV         99% CV')
+        ITITL2(3,1)='I'
+        NCTIT2(3,1)=1
+        ITITL2(3,2)='J'
+        NCTIT2(3,2)=1
+        ITITL2(1,3)='|Difference|'
+        NCTIT2(1,3)=12
+        ITITL2(2,3)='of Treatment'
+        NCTIT2(2,3)=12
+        ITITL2(3,3)='Means'
+        NCTIT2(3,3)=5
+        ITITL2(2,4)='Standard'
+        NCTIT2(2,4)=8
+        ITITL2(3,4)='Error'
+        NCTIT2(3,4)=5
+        ITITL2(1,5)='Lower'
+        NCTIT2(1,5)=5
+        ITITL2(2,5)='Confidence'
+        NCTIT2(2,5)=10
+        ITITL2(3,5)='Limit'
+        NCTIT2(3,5)=5
+        ITITL2(1,6)='Upper'
+        NCTIT2(1,6)=5
+        ITITL2(2,6)='Confidence'
+        NCTIT2(2,6)=10
+        ITITL2(3,6)='Limit'
+        NCTIT2(3,6)=5
+C
+        NMAX=0
+        NUMCOL=6
+        NUMLIN=3
+        DO7010I=1,NUMCOL
+          VALIGN(I)='b'
+          ALIGN(I)='r'
+          ITYPCO(I)='NUME'
+          IDIGIT(I)=NUMDIG
+          NTOT(I)=15
+          IF(I.EQ.1 .OR. I.EQ.2)THEN
+            NTOT(I)=5
+            IDIGIT(I)=0
+          ENDIF
+          NMAX=NMAX+NTOT(I)
+ 7010 CONTINUE
+        IWHTML(1)=50
+        IWHTML(2)=50
+        IWHTML(3)=150
+        IWHTML(4)=150
+        IWHTML(5)=150
+        IWHTML(6)=150
+        IINC=1600
+        IINC2=200
+        IINC3=1000
+        IWRTF(1)=IINC2
+        IWRTF(2)=IWRTF(1)+IINC2
+        IWRTF(3)=IWRTF(2)+IINC
+        IWRTF(4)=IWRTF(3)+IINC
+        IWRTF(5)=IWRTF(4)+IINC
+        IWRTF(6)=IWRTF(5)+IINC
+C
+        ICNT=0
+        DO7081I=1,NGROUP
+          DO7083J=1,NGROUP
+            IF(I.LT.J)THEN
+C
+              IF(ICNT.GE.MAXROW)THEN
+                IFRST=.TRUE.
+                ILAST=.TRUE.
+                IFLAGS=.TRUE.
+                IFLAGE=.TRUE.
+                CALL DPDTA5(ITITLE,NCTITL,
+     1                      ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1                      MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1                      IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT,
+     1                      IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1                      ICAPSW,ICAPTY,IFRST,ILAST,
+     1                      IFLAGS,IFLAGE,
+     1                      ISUBRO,IBUGA3,IERROR)
+                ICNT=0
+              ENDIF
+C
+              ICNT=ICNT+1
+              IVALUE(ICNT,1)=' '
+              NCVALU(ICNT,1)=0
+              IVALUE(ICNT,2)=' '
+              NCVALU(ICNT,2)=0
+              IVALUE(ICNT,3)=' '
+              NCVALU(ICNT,3)=0
+              IVALUE(ICNT,4)=' '
+              NCVALU(ICNT,4)=0
+              IVALUE(ICNT,5)=' '
+              NCVALU(ICNT,5)=0
+              IVALUE(ICNT,6)=' '
+              NCVALU(ICNT,6)=0
+              AMAT(ICNT,1)=REAL(I)
+              AMAT(ICNT,2)=REAL(J)
+              ADIFF=ABS(YMEAN(I) - YMEAN(J))
+              AMAT(ICNT,3)=ADIFF
+              NII=INT(YN(I)+0.1)
+              NIJ=INT(YN(J)+0.1)
+              TERM1=(MSE/2.0)*(1.0/REAL(NII) + 1.0/REAL(NIJ))
+              TERM1=SQRT(TERM1)
+              AMAT(ICNT,4)=TERM1
+              IF(ALPHAT.EQ.0.10)THEN
+                AMAT(ICNT,5)=ADIFF - CV90T*TERM1
+                AMAT(ICNT,6)=ADIFF + CV90T*TERM1
+              ELSEIF(ALPHAT.EQ.0.05)THEN
+                AMAT(ICNT,5)=ADIFF - CV95T*TERM1
+                AMAT(ICNT,6)=ADIFF + CV95T*TERM1
+              ELSEIF(ALPHAT.EQ.0.01)THEN
+                AMAT(ICNT,5)=ADIFF - CV99T*TERM1
+                AMAT(ICNT,6)=ADIFF + CV99T*TERM1
+              ENDIF
+              WRITE(IOUNI5,'(2F5.0,7E15.7)')REAL(NII),REAL(NIJ),
+     1              ADIFF,TERM1,AMAT(ICNT,5),AMAT(ICNT,6),CV90T*TERM1,
+     1              CV95T*TERM1,CV99T*TERM1
+            ENDIF
+ 7083     CONTINUE
+ 7081   CONTINUE
+C
+        IF(ICNT.GE.1)THEN
+          IFRST=.TRUE.
+          ILAST=.TRUE.
+          IFLAGS=.TRUE.
+          IFLAGE=.TRUE.
+          CALL DPDTA5(ITITLE,NCTITL,
+     1              ITITL9,NCTIT9,ITITL2,NCTIT2,
+     1              MAXLIN,NUMLIN,NUMCLI,NUMCOL,
+     1              IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT,
+     1              IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1              ICAPSW,ICAPTY,IFRST,ILAST,
+     1              IFLAGS,IFLAGE,
+     1              ISUBRO,IBUGA3,IERROR)
+         ENDIF
+CCCCC  ENDIF
+C
+C               **************************************
+C               **  STEP 13--                       **
+C               **  CLOSE       THE STORAGE FILES.  **
+C               **************************************
+C
+      ISTEPN='13'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'ANO4')
+     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      IOP='CLOS'
+      CALL DPAUFI(IOP,IFLAG1,IFLAG2,IFLAG3,IFLAG4,IFLAG5,
+     1            IOUNI1,IOUNI2,IOUNI3,IOUNI4,IOUNI5,
+     1            IBUGA3,ISUBRO,IERROR)
+      IF(IERROR.EQ.'YES')GOTO9000
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'ANO4')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPANO4--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        IF(ICASE1.EQ.'RAW ')THEN
+          DO9020I=1,NTOTAL
+            WRITE(ICOUT,9025)I,Y(I),PRED(I),RES(I)
+ 9025       FORMAT('I,Y(I),PRED(I),RES(I) = ',I8,3G15.7)
+            CALL DPWRST('XXX','BUG ')
+ 9020     CONTINUE
+        ENDIF
       ENDIF
 C
       RETURN
@@ -21538,6 +23712,11 @@ C                                       IN DPANO2.
 C     UPDATED         --OCTOBER   2003. SUPPORT FOR HTML, LATEX OUTPUT
 C     UPDATED         --MAY       2011. IFORSW
 C     UPDATED         --JULY      2019. TWEAK USE OF SCRATCH STORAGE
+C     UPDATED         --SEPTEMBER 2023. ADD:
+C                                          ONE WAY ANOVA Y X
+C                                          ONE WAY RANDOM EFFECTS ANOVA Y X
+C                                          ONE WAY SUMMARY ANOVA YMEAN
+C                                                                YSD NI
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -21558,6 +23737,11 @@ C
       CHARACTER*4 ISUBN0
       CHARACTER*4 IH
       CHARACTER*4 IH2
+      CHARACTER*4 ICASE2
+      CHARACTER*4 ICASE3
+      CHARACTER*4 ICASE4
+      CHARACTER*4 IHWUSE
+      CHARACTER*4 MESSAG
 C
       CHARACTER*40 INAME
       PARAMETER (MAXSPN=30)
@@ -21588,50 +23772,70 @@ CCCCC DIMENSION F5(MAXOBV)
       DIMENSION F1MEAN(MAXLEV,MAXFAC)
       DIMENSION F1EFFE(MAXLEV,MAXFAC)
       DIMENSION F1EFSD(MAXLEV,MAXFAC)
+      DIMENSION CELLME(MAXOBV)
+      DIMENSION CELLV(MAXOBV)
+      DIMENSION CELLN(MAXOBV)
+      DIMENSION AINN(MAXOBV)
+      DIMENSION AINMEA(MAXOBV)
+      DIMENSION AINEFF(MAXOBV)
+      DIMENSION AINESD(MAXOBV)
 C
       DIMENSION PRED2(MAXOBV)
       DIMENSION RES2(MAXOBV)
-C
       DIMENSION W(MAXOBV)
-CCCCC FOLLOWING LINE ADDED JUNE, 1990.
       DIMENSION Z(MAXOBV)
+      DIMENSION TEMP1(MAXOBV)
+      DIMENSION TEMP2(MAXOBV)
+      DIMENSION TEMP3(MAXOBV)
+      DIMENSION TEMP4(MAXOBV)
 C
-      DIMENSION B(100)
-      DIMENSION SDB(100)
-      DIMENSION FCUM(100)
+      DIMENSION B(500)
+      DIMENSION SDB(500)
+      DIMENSION FCUM(500)
       DIMENSION N1(MAXFAC)
       DIMENSION ISET(MAXFAC)
       DIMENSION AN1(MAXFAC)
       DIMENSION E1(MAXFAC)
 C
-      DIMENSION SS1(MAXFAC)
-      DIMENSION RESMS1(MAXFAC)
-      DIMENSION FVAL(MAXFAC)
-      DIMENSION F1CDF2(MAXFAC)
-      DIMENSION RSD(MAXFAC)
+      DIMENSION SS1(500)
+      DIMENSION RESMS1(500)
+      DIMENSION FVAL(500)
+      DIMENSION F1CDF2(500)
+      DIMENSION RSD(500)
 C
 CCCCC FOLLOWING LINES ADDED JUNE, 1990
       INCLUDE 'DPCOZZ.INC'
       EQUIVALENCE (GARBAG(IGARB1),AN1(1))
-      EQUIVALENCE (GARBAG(IGARB1+100),E1(1))
-      EQUIVALENCE (GARBAG(IGARB1+200),SS1(1))
-      EQUIVALENCE (GARBAG(IGARB1+300),RESMS1(1))
-      EQUIVALENCE (GARBAG(IGARB1+400),FVAL(1))
-      EQUIVALENCE (GARBAG(IGARB1+500),F1CDF2(1))
-      EQUIVALENCE (GARBAG(IGARB1+600),RSD(1))
-      EQUIVALENCE (GARBAG(IGARB2),PRED2(1))
-      EQUIVALENCE (GARBAG(IGARB3),RES2(1))
-      EQUIVALENCE (GARBAG(IGARB4),Z(1))
-      EQUIVALENCE (GARBAG(IGARB5),B(1))
-      EQUIVALENCE (GARBAG(IGARB6),SDB(1))
-      EQUIVALENCE (GARBAG(IGARB7),FCUM(1))
-      EQUIVALENCE (GARBAG(IGARB8),F1ID(1,1))
-      EQUIVALENCE (GARBAG(IGARB9),F1N(1,1))
-      EQUIVALENCE (GARBAG(IGAR10),F1MEAN(1,1))
-      EQUIVALENCE (GARBAG(JGAR11),F1EFFE(1,1))
-      EQUIVALENCE (GARBAG(JGAR12),F1EFSD(1,1))
-      EQUIVALENCE (GARBAG(JGAR13),W(1))
-      EQUIVALENCE (GARBAG(JGAR14),F1(1,1))
+      EQUIVALENCE (GARBAG(IGARB1+1000),E1(1))
+      EQUIVALENCE (GARBAG(IGARB1+2000),SS1(1))
+      EQUIVALENCE (GARBAG(IGARB1+3000),RESMS1(1))
+      EQUIVALENCE (GARBAG(IGARB1+4000),FVAL(1))
+      EQUIVALENCE (GARBAG(IGARB1+5000),F1CDF2(1))
+      EQUIVALENCE (GARBAG(IGARB1+6000),RSD(1))
+      EQUIVALENCE (GARBAG(IGARB1+7000),B(1))
+      EQUIVALENCE (GARBAG(IGARB1+8000),SDB(1))
+      EQUIVALENCE (GARBAG(IGARB1+9000),FCUM(1))
+      EQUIVALENCE (GARBAG(IGARB2),F1ID(1,1))
+      EQUIVALENCE (GARBAG(IGARB2+10000),F1N(1,1))
+      EQUIVALENCE (GARBAG(IGARB2+20000),F1MEAN(1,1))
+      EQUIVALENCE (GARBAG(IGARB2+30000),F1EFFE(1,1))
+      EQUIVALENCE (GARBAG(IGARB2+40000),F1EFSD(1,1))
+      EQUIVALENCE (GARBAG(IGARB3),PRED2(1))
+      EQUIVALENCE (GARBAG(IGARB4),RES2(1))
+      EQUIVALENCE (GARBAG(IGARB5),Z(1))
+      EQUIVALENCE (GARBAG(IGARB6),W(1))
+      EQUIVALENCE (GARBAG(IGARB7),TEMP1(1))
+      EQUIVALENCE (GARBAG(IGARB8),TEMP2(1))
+      EQUIVALENCE (GARBAG(IGAR10),TEMP3(1))
+      EQUIVALENCE (GARBAG(JGAR11),TEMP4(1))
+      EQUIVALENCE (GARBAG(JGAR12),CELLME(1))
+      EQUIVALENCE (GARBAG(JGAR13),CELLV(1))
+      EQUIVALENCE (GARBAG(JGAR14),CELLN(1))
+      EQUIVALENCE (GARBAG(JGAR15),AINN(1))
+      EQUIVALENCE (GARBAG(JGAR16),AINMEA(1))
+      EQUIVALENCE (GARBAG(JGAR17),AINEFF(1))
+      EQUIVALENCE (GARBAG(JGAR18),AINESD(1))
+      EQUIVALENCE (GARBAG(JGAR19),F1(1,1))
 CCCCC END CHANGE
 C
 C-----COMMON----------------------------------------------------------
@@ -21640,6 +23844,7 @@ C
       INCLUDE 'DPCOHO.INC'
       INCLUDE 'DPCODA.INC'
       INCLUDE 'DPCOSU.INC'
+      INCLUDE 'DPCOST.INC'
 C
 C-----COMMON VARIABLES (GENERAL)--------------------------------------
 C
@@ -21649,6 +23854,11 @@ C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPAN'
       ISUBN2='OV  '
+      IERROR='NO'
+      IFOUND='NO'
+      ICASE2='KWAY'
+      ICASE3='FIXE'
+      ICASE4='RAW '
 C
       MAXCP1=MAXCOL+1
       MAXCP2=MAXCOL+2
@@ -21656,8 +23866,6 @@ C
       MAXCP4=MAXCOL+4
       MAXCP5=MAXCOL+5
       MAXCP6=MAXCOL+6
-C
-      IERROR='NO'
 C
 C               *******************************************
 C               **  TREAT THE ANALYSIS OF VARIANCE CASE  **
@@ -21684,14 +23892,162 @@ C
       IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'ANOV')
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
+      IF(ICOM.EQ.'LET ')GOTO9000
       IF(ICOM.EQ.'ANOV'.AND.ICOM2.EQ.'A   ')THEN
         ILASTC=0
       ELSEIF(NUMARG.GE.2.AND.ICOM.EQ.'ANAL'.AND.
      1       IHARG(1).EQ.'OF  '.AND.IHARG(2).EQ.'VARI')THEN
         ILASTC=2
+      ELSEIF(NUMARG.GE.1.AND.
+     1      (ICOM.EQ.'ONE ' .OR. ICOM.EQ.'1   ') .AND.
+     1      IHARG(1).EQ.'WAY ' .AND. IHARG(2).EQ.'ANOV')THEN
+        ILASTC=2
+        ICASE2='1WAY'
+      ELSEIF(NUMARG.GE.3.AND.
+     1      (ICOM.EQ.'ONE ' .OR. ICOM.EQ.'1   ') .AND.
+     1       IHARG(1).EQ.'WAY '.AND.
+     1       IHARG(2).EQ.'ANAL' .AND.IHARG(3).EQ.'OF  '.AND.
+     1       IHARG(4).EQ.'VARI')THEN
+        ILASTC=4
+        ICASE2='1WAY'
+CCCCC ELSEIF(NUMARG.GE.1.AND.
+CCCCC1      (ICOM.EQ.'TWO ' .OR. ICOM.EQ.'2   ') .AND.
+CCCCC1       IHARG(1).EQ.'WAY '.AND.IHARG(2).EQ.'ANOV')THEN
+CCCCC   ILASTC=2
+CCCCC   ICASE2='2WAY'
+CCCCC ELSEIF(NUMARG.GE.4.AND.
+CCCCC1      (ICOM.EQ.'TWO ' .OR. ICOM.EQ.'2   ') .AND.
+CCCCC1      IHARG(1).EQ.'WAY ' .AND.
+CCCCC1      IHARG(2).EQ.'ANAL' .AND.IHARG(3).EQ.'OF  '.AND.
+CCCCC1      IHARG(4).EQ.'VARI')THEN
+CCCCC   ILASTC=4
+CCCCC   ICASE2='2WAY'
+      ELSEIF(NUMARG.GE.4.AND.
+     1      (ICOM.EQ.'ONE ' .OR. ICOM.EQ.'1   ') .AND.
+     1       IHARG(1).EQ.'WAY '.AND.
+     1       IHARG(2).EQ.'FIXE' .AND.IHARG(3).EQ.'EFFE'.AND.
+     1       IHARG(4).EQ.'ANOV')THEN
+        ILASTC=4
+        ICASE2='1WAY'
+CCCCC ELSEIF(NUMARG.GE.4.AND.
+CCCCC1      (ICOM.EQ.'TWO ' .OR. ICOM.EQ.'2   ') .AND.
+CCCCC1       IHARG(1).EQ.'WAY '.AND.
+CCCCC1       IHARG(2).EQ.'FIXE' .AND.IHARG(3).EQ.'EFFE'.AND.
+CCCCC1       IHARG(4).EQ.'ANOV')THEN
+CCCCC   ILASTC=4
+CCCCC   ICASE2='2WAY'
+      ELSEIF(NUMARG.GE.6.AND.
+     1      (ICOM.EQ.'ONE ' .OR. ICOM.EQ.'1   ') .AND.
+     1       IHARG(1).EQ.'WAY '.AND.
+     1       IHARG(2).EQ.'FIXE' .AND.IHARG(3).EQ.'EFFE'.AND.
+     1       IHARG(4).EQ.'ANAL' .AND.IHARG(5).EQ.'OF  '.AND.
+     1       IHARG(6).EQ.'VARI')THEN
+        ILASTC=6
+        ICASE2='1WAY'
+CCCCC ELSEIF(NUMARG.GE.6.AND.
+CCCCC1      (ICOM.EQ.'TWO ' .OR. ICOM.EQ.'2   ') .AND.
+CCCCC1       IHARG(1).EQ.'WAY '.AND.
+CCCCC1       IHARG(2).EQ.'FIXE' .AND.IHARG(3).EQ.'EFFE'.AND.
+CCCCC1       IHARG(4).EQ.'ANAL' .AND.IHARG(5).EQ.'OF  '.AND.
+CCCCC1       IHARG(6).EQ.'VARI')THEN
+CCCCC   ILASTC=6
+CCCCC   ICASE2='2WAY'
+      ELSEIF(NUMARG.GE.4.AND.
+     1      (ICOM.EQ.'ONE ' .OR. ICOM.EQ.'1   ') .AND.
+     1       IHARG(1).EQ.'WAY '.AND.
+     1       IHARG(2).EQ.'RAND' .AND.IHARG(3).EQ.'EFFE'.AND.
+     1       IHARG(4).EQ.'ANOV')THEN
+        ILASTC=4
+        ICASE2='1WAY'
+        ICASE3='RAND'
+CCCCC ELSEIF(NUMARG.GE.4.AND.
+CCCCC1      (ICOM.EQ.'TWO ' .OR. ICOM.EQ.'2   ') .AND.
+CCCCC1       IHARG(1).EQ.'WAY '.AND.
+CCCCC1       IHARG(2).EQ.'RAND' .AND.IHARG(3).EQ.'EFFE'.AND.
+CCCCC1       IHARG(4).EQ.'ANOV')THEN
+CCCCC   ILASTC=4
+CCCCC   ICASE2='2WAY'
+CCCCC   ICASE3='RAND'
+      ELSEIF(NUMARG.GE.6.AND.
+     1      (ICOM.EQ.'ONE ' .OR. ICOM.EQ.'1   ') .AND.
+     1       IHARG(1).EQ.'WAY '.AND.
+     1       IHARG(2).EQ.'RAND' .AND.IHARG(3).EQ.'EFFE'.AND.
+     1       IHARG(4).EQ.'ANAL' .AND.IHARG(5).EQ.'OF  '.AND.
+     1       IHARG(6).EQ.'VARI')THEN
+        ILASTC=6
+        ICASE2='1WAY'
+        ICASE3='RAND'
+CCCCC ELSEIF(NUMARG.GE.6.AND.
+CCCCC1      (ICOM.EQ.'TWO ' .OR. ICOM.EQ.'2   ') .AND.
+CCCCC1       IHARG(1).EQ.'WAY '.AND.
+CCCCC1       IHARG(2).EQ.'RAND' .AND.IHARG(3).EQ.'EFFE'.AND.
+CCCCC1       IHARG(4).EQ.'ANAL' .AND.IHARG(5).EQ.'OF  '.AND.
+CCCCC1       IHARG(6).EQ.'VARI')THEN
+CCCCC   ILASTC=6
+CCCCC   ICASE2='2WAY'
+CCCCC   ICASE3='RAND'
+      ELSEIF(NUMARG.GE.3.AND.
+     1      (ICOM.EQ.'ONE ' .OR. ICOM.EQ.'1   ') .AND.
+     1       IHARG(1).EQ.'WAY '.AND.
+     1       IHARG(2).EQ.'SUMM' .AND.IHARG(3).EQ.'ANOV')THEN
+        ILASTC=3
+        ICASE2='1WAY'
+        ICASE4='SUMM'
+      ELSEIF(NUMARG.GE.5.AND.
+     1      (ICOM.EQ.'ONE ' .OR. ICOM.EQ.'1   ') .AND.
+     1       IHARG(1).EQ.'WAY '.AND.
+     1       IHARG(2).EQ.'SUMM'.AND.IHARG(3).EQ.'ANAL'.AND.
+     1       IHARG(4).EQ.'OF  '.AND.IHARG(5).EQ.'VARI')THEN
+        ILASTC=5
+        ICASE2='1WAY'
+        ICASE4='SUMM'
+      ELSEIF(NUMARG.GE.5.AND.
+     1      (ICOM.EQ.'ONE ' .OR. ICOM.EQ.'1   ') .AND.
+     1       IHARG(1).EQ.'WAY ' .AND.
+     1       IHARG(2).EQ.'SUMM' .AND. IHARG(3).EQ.'RAND' .AND.
+     1       IHARG(4).EQ.'EFFE' .AND. IHARG(5).EQ.'ANOV')THEN
+        ILASTC=5
+        ICASE2='1WAY'
+        ICASE3='RAND'
+        ICASE4='SUMM'
+      ELSEIF(NUMARG.GE.5.AND.
+     1      (ICOM.EQ.'ONE ' .OR. ICOM.EQ.'1   ') .AND.
+     1       IHARG(1).EQ.'WAY '.AND.
+     1       IHARG(2).EQ.'RAND' .AND.IHARG(3).EQ.'EFFE' .AND.
+     1       IHARG(4).EQ.'SUMM' .AND. IHARG(5).EQ.'ANOV')THEN
+        ILASTC=5
+        ICASE2='1WAY'
+        ICASE3='RAND'
+        ICASE4='SUMM'
+      ELSEIF(NUMARG.GE.7.AND.
+     1      (ICOM.EQ.'ONE ' .OR. ICOM.EQ.'1   ') .AND.
+     1       IHARG(1).EQ.'WAY ' .AND.
+     1       IHARG(2).EQ.'RAND' .AND. IHARG(3).EQ.'EFFE' .AND.
+     1       IHARG(4).EQ.'SUMM' .AND. IHARG(5).EQ.'ANAL'.AND.
+     1       IHARG(6).EQ.'OF  ' .AND. IHARG(7).EQ.'VARI')THEN
+        ILASTC=7
+        ICASE2='1WAY'
+        ICASE3='RAND'
+        ICASE4='SUMM'
+      ELSEIF(NUMARG.GE.7.AND.
+     1      (ICOM.EQ.'ONE ' .OR. ICOM.EQ.'1   ') .AND.
+     1       IHARG(1).EQ.'WAY ' .AND.
+     1       IHARG(2).EQ.'SUMM' .AND. IHARG(3).EQ.'RAND' .AND.
+     1       IHARG(4).EQ.'EFFE' .AND. IHARG(5).EQ.'ANAL'.AND.
+     1       IHARG(6).EQ.'OF  ' .AND. IHARG(7).EQ.'VARI')THEN
+        ILASTC=7
+        ICASE2='1WAY'
+        ICASE3='RAND'
+        ICASE4='SUMM'
       ELSE
         IFOUND='NO'
         GOTO9000
+      ENDIF
+C
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'ANOV')THEN
+        WRITE(ICOUT,192)ICASE2,ICASE3,ICASE4,ILASTC
+  192   FORMAT('ICASE2,ICASE3,ICASE4,ILASTC = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
       ENDIF
 C
       CALL ADJUST(ILASTC,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG)
@@ -21703,8 +24059,12 @@ C               **  EXTRACT THE VARIABLE LIST  **
 C               *********************************
 C
       ISTEPN='2'
-      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'ANOV')
-     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'ANOV')THEN
+        CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+        WRITE(ICOUT,92)ICASE2,ICASE3,ICASE4,IHARG(1)
+   92   FORMAT('ICASE2,ICASE3,ICASE4,IHARG(1) = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       INAME='ANALYSIS OF VARIANCE'
       MINNA=1
@@ -21717,6 +24077,16 @@ C
       JMAX=NUMARG
       MINNVA=2
       MAXNVA=MAXFAC+1
+      IF(ICASE2.EQ.'1WAY')THEN
+        IF(ICASE4.EQ.'RAW ')THEN
+          MAXNVA=2
+        ELSE
+          MINNVA=3
+          MAXNVA=3
+        ENDIF
+      ELSEIF(ICASE2.EQ.'2WAY')THEN
+        MAXNVA=3
+      ENDIF
 C
       CALL DPPARS(IHARG,IHARG2,IARGT,ARG,NUMARG,IANS,IWIDTH,
      1            IHNAME,IHNAM2,IUSE,NUMNAM,IN,IVALUE,VALUE,
@@ -21766,17 +24136,46 @@ C
         IF(ICOLR(1).EQ.MAXCP5)Y(J)=X2PLOT(I)
         IF(ICOLR(1).EQ.MAXCP6)Y(J)=TAGPLO(I)
 C
-        DO659LL=1,NUMFAC
-          ICOLT=ICOLR(LL+1)
-          IJ=MAXN*(ICOLT-1)+I
-          IF(ICOLT.LE.MAXCOL)F1(J,LL)=V(IJ)
-          IF(ICOLT.EQ.MAXCP1)F1(J,LL)=PRED(I)
-          IF(ICOLT.EQ.MAXCP2)F1(J,LL)=RES(I)
-          IF(ICOLT.EQ.MAXCP3)F1(J,LL)=YPLOT(I)
-          IF(ICOLT.EQ.MAXCP4)F1(J,LL)=XPLOT(I)
-          IF(ICOLT.EQ.MAXCP5)F1(J,LL)=X2PLOT(I)
-          IF(ICOLT.EQ.MAXCP6)F1(J,LL)=TAGPLO(I)
- 659    CONTINUE
+        IF(ICASE2.EQ.'1WAY' .AND. ICASE4.EQ.'RAW ')THEN
+          IJ=MAXN*(ICOLR(2)-1)+I
+          IF(ICOLR(1).LE.MAXCOL)W(J)=V(IJ)
+          IF(ICOLR(1).EQ.MAXCP1)W(J)=PRED(I)
+          IF(ICOLR(1).EQ.MAXCP2)W(J)=RES(I)
+          IF(ICOLR(1).EQ.MAXCP3)W(J)=YPLOT(I)
+          IF(ICOLR(1).EQ.MAXCP4)W(J)=XPLOT(I)
+          IF(ICOLR(1).EQ.MAXCP5)W(J)=X2PLOT(I)
+          IF(ICOLR(1).EQ.MAXCP6)W(J)=TAGPLO(I)
+        ELSEIF((ICASE2.EQ.'1WAY' .AND. ICASE4.EQ.'SUMM') .OR.
+     1         (ICASE2.EQ.'2WAY' .AND. ICASE4.EQ.'RAW '))THEN
+          IJ=MAXN*(ICOLR(2)-1)+I
+          IF(ICOLR(1).LE.MAXCOL)W(J)=V(IJ)
+          IF(ICOLR(1).EQ.MAXCP1)W(J)=PRED(I)
+          IF(ICOLR(1).EQ.MAXCP2)W(J)=RES(I)
+          IF(ICOLR(1).EQ.MAXCP3)W(J)=YPLOT(I)
+          IF(ICOLR(1).EQ.MAXCP4)W(J)=XPLOT(I)
+          IF(ICOLR(1).EQ.MAXCP5)W(J)=X2PLOT(I)
+          IF(ICOLR(1).EQ.MAXCP6)W(J)=TAGPLO(I)
+          IJ=MAXN*(ICOLR(3)-1)+I
+          IF(ICOLR(1).LE.MAXCOL)Z(J)=V(IJ)
+          IF(ICOLR(1).EQ.MAXCP1)Z(J)=PRED(I)
+          IF(ICOLR(1).EQ.MAXCP2)Z(J)=RES(I)
+          IF(ICOLR(1).EQ.MAXCP3)Z(J)=YPLOT(I)
+          IF(ICOLR(1).EQ.MAXCP4)Z(J)=XPLOT(I)
+          IF(ICOLR(1).EQ.MAXCP5)Z(J)=X2PLOT(I)
+          IF(ICOLR(1).EQ.MAXCP6)Z(J)=TAGPLO(I)
+        ELSE
+          DO659LL=1,NUMFAC
+            ICOLT=ICOLR(LL+1)
+            IJ=MAXN*(ICOLT-1)+I
+            IF(ICOLT.LE.MAXCOL)F1(J,LL)=V(IJ)
+            IF(ICOLT.EQ.MAXCP1)F1(J,LL)=PRED(I)
+            IF(ICOLT.EQ.MAXCP2)F1(J,LL)=RES(I)
+            IF(ICOLT.EQ.MAXCP3)F1(J,LL)=YPLOT(I)
+            IF(ICOLT.EQ.MAXCP4)F1(J,LL)=XPLOT(I)
+            IF(ICOLT.EQ.MAXCP5)F1(J,LL)=X2PLOT(I)
+            IF(ICOLT.EQ.MAXCP6)F1(J,LL)=TAGPLO(I)
+ 659      CONTINUE
+        ENDIF
 C
   660 CONTINUE
       NS=J
@@ -21791,9 +24190,11 @@ C
       IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'ANOV')
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-      DO680I=1,NS
-      W(I)=1.0
-  680 CONTINUE
+      IF(ICASE2.NE.'1WAY' .AND. ICASE2.NE.'2WAY')THEN
+        DO680I=1,NS
+          W(I)=1.0
+  680   CONTINUE
+      ENDIF
 C
 C               ***************************
 C               **  STEP 9--             **
@@ -21811,12 +24212,31 @@ C
         WRITE(ICOUT,712)ICOLR(1),MAXN,NS,NUMFAC
   712   FORMAT('ICOLR(1),MAXN,NS,NUMFAC = ',4I8)
         CALL DPWRST('XXX','BUG ')
-        DO715I=1,NS
-          WRITE(ICOUT,716)I,Y(I),(F1(I,LL),LL=1,MAXFAC),W(I)
-  716     FORMAT('I,Y(I),F1(I),F2(I),F3(I),F4(I),F5(I),W(I) = ',
-     1           I6,2X,7F10.5)
-          CALL DPWRST('XXX','BUG ')
-  715   CONTINUE
+        WRITE(ICOUT,714)ICASE2,ICASE3,ICASE4
+  714   FORMAT('ICASE2,ICASE3,ICASE4 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        IF(ICASE2.EQ.'KWAY')THEN
+          DO715I=1,NS
+            WRITE(ICOUT,716)I,Y(I),(F1(I,LL),LL=1,MIN(MAXFAC,5)),W(I)
+  716       FORMAT('I,Y(I),F1(I),F2(I),F3(I),F4(I),F5(I),W(I) = ',
+     1             I6,2X,7F10.5)
+            CALL DPWRST('XXX','BUG ')
+  715     CONTINUE
+        ELSE
+          IF(ICASE2.EQ.'SUMM')THEN
+            DO735I=1,NS
+              WRITE(ICOUT,736)I,Y(I),W(I),Z(I)
+  736         FORMAT('I,Y(I),W(I),Z(I) = ',I8,2X,3G15.7)
+              CALL DPWRST('XXX','BUG ')
+  735       CONTINUE
+          ELSE
+            DO725I=1,NS
+              WRITE(ICOUT,726)I,Y(I),W(I)
+  726         FORMAT('I,Y(I),W(I) = ',I8,2X,G15.7,F10.5)
+              CALL DPWRST('XXX','BUG ')
+  725       CONTINUE
+          ENDIF
+        ENDIF
       ENDIF
 C
 CCCCC JUNE, 1990.  DIMENSION Z IN DPANOV RATHER THAT DPANO2 (SO CAN
@@ -21824,14 +24244,105 @@ CCCCC EQUIVALENCE TO GARBAGE COMMON).
 CCCCC ARGUMENT LIST MODIFIED, ADDITIONAL DIMENSIONING IN
 CCCCC DPANOV INSTEAD OF DPANO2.  FEBRUARY 1998.
 CCCCC CALL DPANO2(Y,F1,F2,F3,F4,F5,W,NS,NUMFAC,
-      CALL DPANO2(Y,F1,W,NS,NUMFAC,IVARN1,IVARN2,
-     1            F1ID,F1N,F1MEAN,F1EFFE,F1EFSD,MAXOBV,MAXLEV,MAXFAC,
-     1            N1,ISET,AN1,E1,SS1,RESMS1,FVAL,F1CDF2,RSD,
-     1            B,SDB,FCUM,REPSD,REPDF,RESSD,RESDF,PRED2,RES2,ALFCDF,
-     1            Z,
-     1            ICAPSW,ICAPTY,IFORSW,
-     1            IBUGA3,ISUBRO,IERROR)
-      IF(IERROR.EQ.'YES')GOTO9000
+      IF(ICASE2.EQ.'KWAY')THEN
+        CALL DPANO2(Y,F1,W,NS,NUMFAC,IVARN1,IVARN2,
+     1              F1ID,F1N,F1MEAN,F1EFFE,F1EFSD,
+     1              CELLME,CELLV,CELLN,
+     1              AINN,AINMEA,AINEFF,AINESD,
+     1              MAXOBV,MAXLEV,MAXFAC,
+     1              N1,ISET,AN1,E1,SS1,RESMS1,FVAL,F1CDF2,RSD,
+     1              B,SDB,FCUM,REPSD,REPDF,RESSD,RESDF,
+     1              PRED2,RES2,ALFCDF,
+     1              Z,
+     1              ICAPSW,ICAPTY,IFORSW,IAOV2T,IAOVTY,
+     1              IBUGA3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GOTO9000
+      ELSEIF(ICASE2.EQ.'1WAY')THEN
+        IH='ALPH'
+        IH2='A   '
+        IHWUSE='P'
+        MESSAG='NO'
+        CALL CHECKN(IH,IH2,IHWUSE,
+     1              IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
+     1              ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOC,IERROR)
+        IF(IERROR.EQ.'YES')THEN
+          ALPHA=0.05
+        ELSE
+          ALPHA=VALUE(ILOC)
+        ENDIF
+        IF(ICASE4.EQ.'SUMM')THEN
+          CALL DPANO4(Y,W,Z,NS,ALPHA,IVARN1,IVARN2,IANOMC,
+     1                ICASE4,ICASE3,
+     1                TEMP1,TEMP2,NS,TEMP3,TEMP4,
+     1                PRED2,RES2,
+     1                SSTOT,SSTR,SSE,AMSE,AMSTR,IDFTO,IDFTR,IDFE,
+     1                FSTAT,FVALUE,PVALUE,RESSD,
+     1                ICAPSW,ICAPTY,IFORSW,
+     1                IBUGA3,ISUBRO,IERROR)
+        ELSE
+          CALL DPANO4(TEMP1,TEMP2,Z,NS,ALPHA,IVARN1,IVARN2,IANOMC,
+     1                ICASE4,ICASE3,
+     1                Y,W,NS,TEMP3,TEMP4,
+     1                PRED2,RES2,
+     1                SSTOT,SSTR,SSE,AMSE,AMSTR,IDFTO,IDFTR,IDFE,
+     1                FSTAT,FVALUE,PVALUE,RESSD,
+     1                ICAPSW,ICAPTY,IFORSW,
+     1                IBUGA3,ISUBRO,IERROR)
+        ENDIF
+        IF(IERROR.EQ.'YES')GOTO9000
+C
+        IH='STAT'
+        IH2='VAL '
+        VALUE0=FSTAT
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1              IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1              IANS,IWIDTH,IBUGA3,IERROR)
+        IH='STAT'
+        IH2='CDF '
+        VALUE0=FVALUE
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1              IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1              IANS,IWIDTH,IBUGA3,IERROR)
+        IH='PVAL'
+        IH2='UE  '
+        VALUE0=PVALUE
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1              IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1              IANS,IWIDTH,IBUGA3,IERROR)
+C
+        IH='MSTR'
+        IH2='    '
+        VALUE0=AMSTR
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1              IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1              IANS,IWIDTH,IBUGA3,IERROR)
+        IH='MSE '
+        IH2='    '
+        VALUE0=AMSE
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1              IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1              IANS,IWIDTH,IBUGA3,IERROR)
+        IH='SSTR'
+        IH2='    '
+        VALUE0=SSTR
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1              IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1              IANS,IWIDTH,IBUGA3,IERROR)
+        IH='SSE '
+        IH2='    '
+        VALUE0=SSE
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1              IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1              IANS,IWIDTH,IBUGA3,IERROR)
+        IH='SSTO'
+        IH2='TAL '
+        VALUE0=SSTOT
+        CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,
+     1              IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,
+     1              IANS,IWIDTH,IBUGA3,IERROR)
+        GOTO9000
+      ELSEIF(ICASE2.EQ.'2WAY')THEN
+      ENDIF
 C
 C               ***************************************
 C               **  STEP 10--                        **
@@ -24919,8 +27430,7 @@ C
       SUBROUTINE DPARMA(MAXNXT,
      1                  ISUBRO,IBUGA2,IBUGA3,IBUGQ,IFOUND,IERROR)
 C
-C     PURPOSE--CARRY OUT AN ARIMA ANALYSIS
-C              (1-SAMPLE)
+C     PURPOSE--CARRY OUT AN ARIMA ANALYSIS (1-SAMPLE)
 C     EXAMPLE--ARMA Y 1 0 1 
 C              THIS FITS AN AR(1) AND A MA(1) WITH NO DIFFERENCING.
 C              THE DATAPLOT ARIMA MODEL ALLOWS UP TO 7 TERMS:
@@ -24939,7 +27449,7 @@ C                 D2 = NUMBER OF DIFFERENCING FOR SEASONAL TERM
 C                 Q2 = ORDER OF SEASONAL MOVING AVERAGE
 C                 S2 = PERIOD FOR SEASONAL DIFFERENCING
 C
-C     WRITTEN BY--JAMES J. FILLIBEN
+C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
 C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
@@ -25058,8 +27568,11 @@ C-----START POINT-----------------------------------------------------
 C
       ISUBN1='DPAR'
       ISUBN2='MA  '
-      IFOUND='NO'
+      IFOUND='YES'
       IERROR='NO'
+      IUSE1='-999'
+      IUSE2='-999'
+      ICASEQ='UNKN'
 C
       MAXCP1=MAXCOL+1
       MAXCP2=MAXCOL+2
@@ -25072,45 +27585,29 @@ C
       N2=(-999)
       NUMVAR=(-999)
       ILOCV=(-999)
-C
-      IUSE1='-999'
-      IUSE2='-999'
+      ICOL1=(-999)
+      ICOL2=(-999)
+      MINN2=2
+      NLEFT=0
 C
       VALUE1=(-999.0)
       VALUE2=(-999.0)
-C
-      ICOL1=(-999)
-      ICOL2=(-999)
-C
-      MINN2=2
-C
-      IFOUND='YES'
-C
-      NLEFT=0
-C
-      ICASEQ='UNKN'
 C
 C               ********************************
 C               **  TREAT THE ARMA    CASE    **
 C               ********************************
 C
-      IF(IBUGA2.EQ.'OFF')GOTO90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF DPARMA--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBUGA2,IBUGA3
-   52 FORMAT('IBUGA2,IBUGA3 = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)IBUGQ
-   53 FORMAT('IBUGQ = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,55)MAXNXT
-   55 FORMAT('MAXNXT = ',I8)
-      CALL DPWRST('XXX','BUG ')
-   90 CONTINUE
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPARMA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)ISUBRO,IBUGA2,IBUGA3,IBUGQ,MAXNXT
+   52   FORMAT('ISUBRO,IBUGA2,IBUGA3,IBUGQ,MAXNXT = ',4(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               *******************************************************
 C               **  STEP 2--                                         **
@@ -25118,12 +27615,12 @@ C               **  CHECK FOR THE PROPER NUMBER OF INPUT ARGUMENTS.  **
 C               *******************************************************
 C
       ISTEPN='2'
-      IF(IBUGA2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       MINNA=1
       MAXNA=100
-      CALL CHECKA(NUMARG,MINNA,MAXNA,IANS,IWIDTH,ISUBN1,ISUBN2,
-     1IERROR)
+      CALL CHECKA(NUMARG,MINNA,MAXNA,IANS,IWIDTH,ISUBN1,ISUBN2,IERROR)
       IF(IERROR.EQ.'YES')GOTO9000
 C
 C               ****************************************
@@ -25133,15 +27630,16 @@ C               **  (THIS SHOULD BE A VARIABLE)       **
 C               ****************************************
 C
       ISTEPN='11'
-      IF(IBUGA2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       IH11=IHARG(1)
       IH12=IHARG2(1)
       IHWUSE='V'
       MESSAG='YES'
       CALL CHECKN(IH11,IH12,IHWUSE,
-     1IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
-     1ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCV,IERROR)
+     1            IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
+     1            ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCV,IERROR)
       IF(IERROR.EQ.'YES')GOTO9000
       IUSE1=IUSE(ILOCV)
       ICOL1=IVALUE(ILOCV)
@@ -25156,7 +27654,8 @@ C               **  FOR ARGUMENT 1 IS 2 OR MORE.                      **
 C               ********************************************************
 C
       ISTEPN='12'
-      IF(IBUGA2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       IF(IUSE1.NE.'V')GOTO1290
       IF(N1.GE.MINN2)GOTO1290
@@ -25166,32 +27665,26 @@ C
  1211 FORMAT('***** ERROR IN DPARMA--')
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,1212)
- 1212 FORMAT('      THE INPUT NUMBER OF OBSERVATIONS')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1213)
- 1213 FORMAT('      (FOR WHICH A DDS ANALYSIS ')
+ 1212 FORMAT('      THE INPUT NUMBER OF OBSERVATIONS FOR WHICH AN ARMA')
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,1214)
- 1214 FORMAT('      WAS TO HAVE BEEN CARRIED OUT)')
+ 1214 FORMAT('      ANALYSIS WAS TO HAVE BEEN CARRIED OUT')
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,1215)MINN2
- 1215 FORMAT('      MUST BE ',I8,' OR LARGER;')
+ 1215 FORMAT('      MUST BE ',I8,' OR LARGER; SUCH WAS NOT THE CASE ',
+     1       'HERE.')
       CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1216)
- 1216 FORMAT('      SUCH WAS NOT THE CASE HERE')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1217)IH11,IH12
- 1217 FORMAT('      FOR VARIABLE ',A4,A4,' WHICH HAD')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,1218)N1
- 1218 FORMAT('      NUMBER OF OBSERVATIONS = ',I8,';')
+      WRITE(ICOUT,1217)IH11,IH12,N1
+ 1217 FORMAT('      VARIABLE ',2A4,' HAS ',I8,' OBSERVATIONS.')
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,1219)
  1219 FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
       CALL DPWRST('XXX','BUG ')
-      IF(IWIDTH.GE.1)WRITE(ICOUT,1220)(IANS(I),I=1,IWIDTH)
- 1220 FORMAT(80A1)
-      IF(IWIDTH.GE.1)CALL DPWRST('XXX','BUG ')
+      IF(IWIDTH.GE.1)THEN
+        WRITE(ICOUT,1220)(IANS(I),I=1,MIN(80,IWIDTH))
+ 1220   FORMAT(80A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       IERROR='YES'
       GOTO9000
  1290 CONTINUE
@@ -25204,7 +27697,8 @@ C               **  A PARAMETER, OR A NUMBER).        **
 C               ****************************************
 C
       ISTEPN='22'
-      IF(IBUGA2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       IF(NUMARG.LE.1)IORDAR=1
       IF(NUMARG.GE.2)THEN
@@ -25225,7 +27719,8 @@ C               **  A PARAMETER, OR A NUMBER).        **
 C               ****************************************
 C
       ISTEPN='23'
-      IF(IBUGA2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       IF(NUMARG.LE.2)IDIFF=0
       IF(NUMARG.GE.3)THEN
@@ -25246,7 +27741,8 @@ C               **  A PARAMETER, OR A NUMBER).        **
 C               ****************************************
 C
       ISTEPN='24'
-      IF(IBUGA2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       IF(NUMARG.LE.3)IORDMA=0
       IF(NUMARG.GE.4)THEN
@@ -25267,7 +27763,8 @@ C               **  A PARAMETER, OR A NUMBER).        **
 C               ****************************************
 C
       ISTEPN='25'
-      IF(IBUGA2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       IF(NUMARG.LE.4)IORSAR=0
       IF(NUMARG.GE.5)THEN
@@ -25288,7 +27785,8 @@ C               **  A PARAMETER, OR A NUMBER).        **
 C               ****************************************
 C
       ISTEPN='26'
-      IF(IBUGA2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       IF(NUMARG.LE.5)ISDIFF=0
       IF(NUMARG.GE.6)THEN
@@ -25309,7 +27807,8 @@ C               **  A PARAMETER, OR A NUMBER).        **
 C               ****************************************
 C
       ISTEPN='27'
-      IF(IBUGA2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       IF(NUMARG.LE.6)IORSMA=0
       IF(NUMARG.GE.7)THEN
@@ -25330,7 +27829,8 @@ C               **  A PARAMETER, OR A NUMBER).        **
 C               ****************************************
 C
       ISTEPN='28'
-      IF(IBUGA2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       IF(NUMARG.LE.7)ISPER=12
       IF(NUMARG.GE.8)THEN
@@ -25345,14 +27845,13 @@ C
 C
 C               *******************************************************
 C               **  STEP 31--                                        **
-C               **  FOR AN ARIMA ANALYSIS,                           **
-C               **  THE FIRST ARGUMENT                               **
-C               **  MUST BE A VARIABLE.                              **
-C               **  CHECK FOR THIS.                                  **
+C               **  FOR AN ARIMA ANALYSIS, CHECK TO SEE IF THE FIRST **
+C               **  ARGUMENT IS A VARIABLE.                          **
 C               *******************************************************
 C
       ISTEPN='31'
-      IF(IBUGA2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       IF(IUSE1.NE.'V')GOTO3140
       GOTO3190
@@ -25360,17 +27859,11 @@ C
  3140 CONTINUE
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,3141)
- 3141 FORMAT('***** ERROR IN DPARMA--')
+      WRITE(ICOUT,1211)
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,3142)
- 3142 FORMAT('      FOR A DDS ANALYSIS,')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,3143)
- 3143 FORMAT('      THE FIRST ARGUMENT')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,3146)
- 3146 FORMAT('      MUST BE A VARIABLE')
+ 3142 FORMAT('      FOR AN ARMA ANALYSIS, THE FIRST ARGUMENT MUST BE ',
+     1       'A VARIABLE')
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,3147)
  3147 FORMAT('      (AS OPPOSED TO A PARAMETER OR FUNCTION).')
@@ -25381,9 +27874,10 @@ C
       WRITE(ICOUT,3149)
  3149 FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
       CALL DPWRST('XXX','BUG ')
-      IF(IWIDTH.GE.1)WRITE(ICOUT,3150)(IANS(I),I=1,IWIDTH)
- 3150 FORMAT(80A1)
-      IF(IWIDTH.GE.1)CALL DPWRST('XXX','BUG ')
+      IF(IWIDTH.GE.1)THEN
+        WRITE(ICOUT,1220)(IANS(I),I=1,IWIDTH)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       IERROR='YES'
       GOTO9000
 C
@@ -25398,7 +27892,8 @@ C               **    3) FOR.                          **
 C               *****************************************
 C
       ISTEPN='40'
-      IF(IBUGA2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ICASEQ='FULL'
       ILOCQ=NUMARG+1
@@ -25419,11 +27914,12 @@ C
       ILOCQ=J1
       GOTO4090
  4090 CONTINUE
-      IF(IBUGA2.EQ.'OFF')GOTO4095
-      WRITE(ICOUT,4091)NUMARG,ILOCQ
- 4091 FORMAT('NUMARG,ILOCQ = ',2I8)
-      CALL DPWRST('XXX','BUG ')
- 4095 CONTINUE
+C
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')THEN
+        WRITE(ICOUT,4091)NUMARG,ILOCQ
+ 4091   FORMAT('NUMARG,ILOCQ = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
 C               ***********************************************
 C               **  STEP 41--                                **
@@ -25437,7 +27933,8 @@ C
       IF(IUSE1.NE.'V')GOTO4190
 C
       ISTEPN='41'
-      IF(IBUGA2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       IF(ICASEQ.EQ.'FULL')GOTO4110
       IF(ICASEQ.EQ.'SUBS')GOTO4120
@@ -25467,22 +27964,17 @@ C
       IF(NQ.GE.MINN2)GOTO4160
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,4151)
- 4151 FORMAT('***** ERROR IN DPARMA--')
+      WRITE(ICOUT,1211)
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,4152)
- 4152 FORMAT('      AFTER THE APPROPRIATE SUBSET HAS BEEN ',
-     1'EXTRACTED,')
+ 4152 FORMAT('      AFTER THE APPROPRIATE SUBSET HAS BEEN EXTRACTED,')
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,4153)IH11,IH12
  4153 FORMAT('      THE NUMBER OF OBSERVATIONS REMAINING',
-     1'FROM VARIABLE ',A4,A4)
+     1       'FROM VARIABLE ',2A4)
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,4154)
- 4154 FORMAT('      (FOR WHICH A DDS ANALYSIS ')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,4155)
- 4155 FORMAT('      IS TO BE CARRIED OUT)')
+ 4154 FORMAT('      (FOR WHICH AN ARMA ANALYSIS IS TO BE CARRIED OUT(')
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,4156)MINN2
  4156 FORMAT('      MUST BE ',I8,' OR LARGER;')
@@ -25493,9 +27985,10 @@ C
       WRITE(ICOUT,4158)
  4158 FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
       CALL DPWRST('XXX','BUG ')
-      IF(IWIDTH.GE.1)WRITE(ICOUT,4159)(IANS(I),I=1,IWIDTH)
- 4159 FORMAT('      ',80A1)
-      IF(IWIDTH.GE.1)CALL DPWRST('XXX','BUG ')
+      IF(IWIDTH.GE.1)THEN
+        WRITE(ICOUT,1220)(IANS(I),I=1,MIN(80,IWIDTH))
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       IERROR='YES'
       GOTO9000
 C
@@ -25504,17 +27997,17 @@ C
       IMAX=N1
       IF(NQ.LT.N1)IMAX=NQ
       DO4170I=1,IMAX
-      IF(ISUB(I).EQ.0)GOTO4170
-      J=J+1
+        IF(ISUB(I).EQ.0)GOTO4170
+        J=J+1
 C
-      IJ=MAXN*(ICOL1-1)+I
-      IF(ICOL1.LE.MAXCOL)Y1(J)=DBLE(V(IJ))
-      IF(ICOL1.EQ.MAXCP1)Y1(J)=DBLE(PRED(I))
-      IF(ICOL1.EQ.MAXCP2)Y1(J)=DBLE(RES(I))
-      IF(ICOL1.EQ.MAXCP3)Y1(J)=DBLE(YPLOT(I))
-      IF(ICOL1.EQ.MAXCP4)Y1(J)=DBLE(XPLOT(I))
-      IF(ICOL1.EQ.MAXCP5)Y1(J)=DBLE(X2PLOT(I))
-      IF(ICOL1.EQ.MAXCP6)Y1(J)=DBLE(TAGPLO(I))
+        IJ=MAXN*(ICOL1-1)+I
+        IF(ICOL1.LE.MAXCOL)Y1(J)=DBLE(V(IJ))
+        IF(ICOL1.EQ.MAXCP1)Y1(J)=DBLE(PRED(I))
+        IF(ICOL1.EQ.MAXCP2)Y1(J)=DBLE(RES(I))
+        IF(ICOL1.EQ.MAXCP3)Y1(J)=DBLE(YPLOT(I))
+        IF(ICOL1.EQ.MAXCP4)Y1(J)=DBLE(XPLOT(I))
+        IF(ICOL1.EQ.MAXCP5)Y1(J)=DBLE(X2PLOT(I))
+        IF(ICOL1.EQ.MAXCP6)Y1(J)=DBLE(TAGPLO(I))
 C
  4170 CONTINUE
       N1=J
@@ -25560,8 +28053,8 @@ C
       IHWUSE='V'
       MESSAG='NO'
       CALL CHECKN(IHP,IHP2,IHWUSE,
-     1IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
-     1ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCP,IERROR)
+     1            IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
+     1            ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCP,IERROR)
       IF(IERROR.EQ.'YES')GOTO4690
       IFXFLG='ON'
       NTEMP=IN(ILOCP)
@@ -25589,8 +28082,8 @@ C
       IHWUSE='P'
       MESSAG='NO'
       CALL CHECKN(IHP,IHP2,IHWUSE,
-     1IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
-     1ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCP,IERROR)
+     1            IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,
+     1            ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCP,IERROR)
       IF(IERROR.EQ.'YES')GOTO4790
       NFORE=INT(VALUE(ILOCP) + 0.1)
       IF(NFORE.LT.1)NFORE=0
@@ -25605,35 +28098,35 @@ C               **  PERFORM THE ARIMA ANALYSIS **
 C               *********************************
 C
       ISTEPN='52'
-      IF(IBUGA2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
-      IF(IBUGA2.EQ.'OFF')GOTO5290
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,5211)
- 5211 FORMAT('***** FROM DPARMA, AS WE ARE ABOUT TO CALL DPARM2--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,5212)N1,N2,N1,N2,MAXN
- 5212 FORMAT('N1,N2,N1,N2,MAXN = ',5I8)
-      CALL DPWRST('XXX','BUG ')
-      DO5215I=1,N1
-      WRITE(ICOUT,5216)I,Y1(I)
- 5216 FORMAT('I,Y1(I) = ',I8,2E15.7)
-      CALL DPWRST('XXX','BUG ')
- 5215 CONTINUE
-      WRITE(ICOUT,5231)IBUGA3
- 5231 FORMAT('IBUGA3 = ',A4)
-      CALL DPWRST('XXX','BUG ')
- 5290 CONTINUE
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1211)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,5212)N1,N2,N1,N2,MAXN
+ 5212   FORMAT('N1,N2,N1,N2,MAXN = ',5I8)
+        CALL DPWRST('XXX','BUG ')
+        DO5215I=1,N1
+         WRITE(ICOUT,5216)I,Y1(I)
+ 5216    FORMAT('I,Y1(I) = ',I8,2E15.7)
+         CALL DPWRST('XXX','BUG ')
+ 5215   CONTINUE
+        WRITE(ICOUT,5231)IBUGA3
+ 5231   FORMAT('IBUGA3 = ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       CALL DPARM2(Y1,N1,
-     1IORDAR,IDIFF,IORDMA,IORSAR,ISDIFF,IORSMA,ISPER,
-     1PAR,STP,SCALE,PV,SDPV,SDRES,DRES,VCV,MAXPAR,IFIXED,
-     1PRED2,RES2,RESSD,RESDF,
-     1FCST,FCSTSD,MAXOBV,
-     1IPVFLG,IFXFLG,NFORE,
-     1AIC,AICC,
-     1ISUBRO,IBUGA3,IERROR)
+     1            IORDAR,IDIFF,IORDMA,IORSAR,ISDIFF,IORSMA,ISPER,
+     1            PAR,STP,SCALE,PV,SDPV,SDRES,DRES,VCV,MAXPAR,IFIXED,
+     1            PRED2,RES2,RESSD,RESDF,
+     1            FCST,FCSTSD,MAXOBV,
+     1            IPVFLG,IFXFLG,NFORE,
+     1            AIC,AICC,
+     1            ISUBRO,IBUGA3,IERROR)
 C
       IF(IERROR.EQ.'YES')GOTO9000
 C
@@ -25643,8 +28136,8 @@ C               **  UPDATE INTERNAL DATAPLOT TABLES  **
 C               ***************************************
 C
       ISTEPN='15'
-      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PDDS')
-     1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'ARMA')
+     1   CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
       ICOLPR=MAXCP1
       ICOLRE=MAXCP2
@@ -25676,28 +28169,19 @@ C               **  EXIT       **
 C               *****************
 C
  9000 CONTINUE
-      IF(IBUGA2.EQ.'OFF')GOTO9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF DPARMA--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)IBUGA2,IBUGA3
- 9012 FORMAT('IBUGA2,IBUGA3 = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)IBUGQ
- 9013 FORMAT('IBUGQ = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9014)NLEFT,NS
- 9014 FORMAT('NLEFT,NS = ',2I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9015)ICASEQ
- 9015 FORMAT('ICASEQ = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9016)IFOUND,IERROR
- 9016 FORMAT('IFOUND,IERROR = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
- 9090 CONTINUE
+      IF(ISUBRO.EQ.'ARMA' .OR. IBUGA2.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPARMA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)NLEFT,NS
+ 9014   FORMAT('NLEFT,NS = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9016)ICASEQ,IFOUND,IERROR
+ 9016   FORMAT('ICASEQ,IFOUND,IERROR = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 C
       RETURN
       END
@@ -25734,7 +28218,7 @@ C     DATAPLOT USES THE NIST STARPAC LIBRARY (WRITTEN BY
 C     JANET DONALDSON AND PETER TYRON.  STARPAC IS BASED ON THE
 C     NON-LINEAR LEAST SQUARES ROUTINES OF DENNIS AND SCHNABEL.
 C
-C     WRITTEN BY--JAMES J. FILLIBEN
+C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
 C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY

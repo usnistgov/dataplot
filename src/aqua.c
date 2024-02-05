@@ -142,7 +142,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include <strings.h>
-#include <aquaterm/aquaterm.h>
+/* #include <aquaterm/aquaterm.h> */
+#include <aquaterm.h>
 
 /* global definitions */
 

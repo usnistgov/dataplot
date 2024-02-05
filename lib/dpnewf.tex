@@ -1,5 +1,5 @@
 9.
-                                                     August 2023
+                                                     January 2024
 This is the DATAPLOT News file DPNEWF.TEX.  This NEWS file contains a
 list of DATAPLOT enhancements.  Some commands may be documented here
 that are not yet available in the standard documentation.
@@ -7,6 +7,102 @@ that are not yet available in the standard documentation.
 The complete news file can be viewed at
 
     http://www.itl.nist.gov/div898/software/dataplot/news.htm
+
+-----------------------------------------------------------------------
+The following enhancements were made to DATAPLOT
+September 2023 - January 2024.
+-----------------------------------------------------------------------
+
+ 1. Made the following updates to Analysis commands.
+
+    a. Added the command
+
+         K SAMPLE <STAT> PERMUTATION TEST Y1 Y2
+
+    b. Added the commands
+
+         ONE WAY ANOVA Y X
+         ONE WAY SUMMARY ANOVA Y X
+         ONE WAY RANDOM EFFECTS ANOVA Y X
+         ONE WAY SUMMARY RANDOM EFFECTS ANOVA Y X
+
+       This command adds tables/capabilities to the standard ANOVA
+       command in Dataplot for the one-factor case.  The ANOVA command
+       is intended for the balanced fixed effects case.  Specifically,
+       the ONE WAY ANOVA command adds
+
+           i. The ability to accept summary data (i.e., the
+              mean, standard deviation and sample size for
+              each level of the factor variable) rather than
+              raw data.
+
+          ii. The ability to generate a variance components table
+              for the random effects model.
+
+         iii. Additional tables for: confidence limits for the
+              treatment means, confidence intervals for the
+              difference of treatment means and Bonferroni and
+              Tukey-Kramer confidence intervals for the difference
+              of treatment means.
+
+          iv. Support for unbalanced data.
+
+ 2. Added the following LET statistic commands
+
+        LET STATVAL = ONE WAY ANOVA SUM OF SQUARES TOTAL          Y X
+        LET STATVAL = ONE WAY ANOVA SUM OF SQUARES TREATEMENT     Y X
+        LET STATVAL = ONE WAY ANOVA SUM OF SQUARES ERROR          Y X
+        LET STATVAL = ONE WAY ANOVA DEGREES OF FREEDOM TOTAL      Y X
+        LET STATVAL = ONE WAY ANOVA DEGREES OF FREEDOM TREATEMENT Y X
+        LET STATVAL = ONE WAY ANOVA DEGREES OF FREEDOM ERROR      Y X
+        LET STATVAL = ONE WAY ANOVA MEAN SQUARE TREATEMENT        Y X
+        LET STATVAL = ONE WAY ANOVA MEAN SQUARE ERROR             Y X
+        LET STATVAL = ONE WAY ANOVA F STATISTIC                   Y X
+
+ 3. Made the following updates to output devices
+
+    a. Updates were made to the GD graphics driver to correct a number
+       of issues.  Specifically,
+
+         i. Dashed and dotted lines now work.
+
+        ii. Region fills were fixed.  Rectangular regions are performed
+            in hardware (i.e., by the GD library) while non-rectangular
+            fills are performed in software (i.e., by Dataplot).
+
+            The following command was added
+
+                SET GD HARDWARE FILL <ON/OFF>
+
+            The default is OFF and this is recommended.  The ON
+            option is currently intended for testing purposes.
+
+       iii. Fixed the background color when true color mode is
+            specified.
+
+        iv. Added a "fonts" directory to the auxilary files
+            directory to provide a limited number of True Type
+            fonts with the Dataplot installation.
+
+    b. Some bug fixes were made to the Cairo device driver.
+
+    c. For the Postscript device, added the capability to
+       control the appearance of dashed/dotted lines.
+
+    d. The X11 driver was updated to support scalable fonts
+       using the Xtf library.
+
+ 4. A number of changes were made to address a compilation issue
+    on MacOS using the M1 chipset.  This did not change any
+    capabilities, but does allow for a cleaner build for MacOS
+    with the M1 chip.  Note that an additional compilation flag
+    is required for this case.  Also, provided some updated
+    Makefiles for various cases (MacPorts, Homebrew or no
+    Linux package manager).
+
+ 5. A number of miscellaneous bug fixes were made.  In particular,
+    the SEASONAL LOWESS command and the automatic variable names when
+    using SKIP AUTOMATIC were fixed.
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT

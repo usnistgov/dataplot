@@ -1,4 +1,4 @@
-49300.      (VERSION 2023.07)   total number of lines in file (including this line)
+49900.      (VERSION 2023.09)   total number of lines in file (including this line)
  4.                          number of     sections below
   100.    L                  first line number of L section
 20300.    M                  first line number of M section
@@ -47210,6 +47210,551 @@ Implementation Date:
 Program:
     XX
  
+-----ONE WAY ANOVA---------------------------------------------------
+ 
+ONE WAY ANOVA
+ 
+Name:
+    ONE WAY ANOVA
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Perform a One Way Analysis of Variance (ANOVA)
+ 
+Description:
+    Analysis of Variance (ANOVA) is a data analysis technique for
+    examining the significance of the factors (= independent variables)
+    in a multi-factor model.  Each factor has a certain number of values
+    it can have (these are referred to as the levels of a factor).  The
+    number of levels can vary betweeen factors.  Each factor and level
+    combination is a cell.  Balanced designs are those in which each
+    cell has an equal number of observations and unbalanced designs are
+    those in which the number of observations can vary among cells.
+    A treatment is defined as a single combination of the levels
+    of the factors.  For the one-factor case, a treatment is
+    equivalent to a level.
+
+    The basic ANOVA model for one factor is
+
+        y(ij) = mu + tau(i) + e(ij)  i = 1, ..., k, j = 1, 2, ..., n(i)
+
+    where
+
+        y(ij)   = the j-th observation of the i-th treatment
+        mu      = the population (grand) mean
+        tau(i)  = the effect of the i-th treatment
+        e(ij)   = the error for the j-th observation of the i-th
+                  treatment
+        n(i)    = the number of observations for treatment i
+        k       = the number of treatments
+
+    The errors are assumed to be independent and normally distributed
+    with mean 0 and standard deviation sigma and mu is assumed to be a
+    fixed parameter.
+
+    In the fixed effects ANOVA model, the levels of the factor are
+    assumed to be fixed and the tau(i) are also assumed to be fixed
+    parameters.  In the random effects ANOVA model, the levels of a
+    factor are assumed to be a random sample from a population of
+    possible level values and the tau(i) are assumed to be random
+    variables that are normally distributed with mean zero and standard
+    deviation sigma(tau).  The tau(i) and e(ij) are assumed to be
+    independent for all i and j.  Although the basic ANOVA calculations
+    are the same for the fixed and random effects model, the hypothesis
+    being tested is different.  In a fixed effects model, ANOVA is used to
+    test the hypothesis that tau(1) = tau(2) = ... = tau(k).  In a random
+    effects model, ANOVA is used to test the hypothesis that
+    sigma(tau) = 0.  Note that testing for the equality of the tau(i)
+    is not meaningful in the context of a random effects model.
+
+    For example, suppose one factor is the operator of a machine.  In a
+    fixed effects model, we would be testing whether the average
+    performance varies between the specific operators tested.  For a
+    random effects model, we assume that the specific operators tested
+    were randomly selected from a larger pool of available operators.  In
+    this case, we are not interested in the average performance of the
+    specific operators tested.  Rather we are interested in the
+    variability between operators.
+
+    The basic computations for the one factor fixed effects ANOVA are
+    given here (and in most introductory statistics text books)
+
+        https://www.itl.nist.gov/div898/handbook/prc/section4/prc431.htm
+        https://www.itl.nist.gov/div898/handbook/prc/section4/prc432.htm
+        https://www.itl.nist.gov/div898/handbook/prc/section4/prc433.htm
+
+    Basically, the sum of squares are decomposed into a "treatment"
+    sum of squares and an "error" sum of squares.  Essentially we are
+    comparing the ratio of the between treatment variability and the
+    within treatment variability.  For a fixed effects case, if the
+    between variability is small compared to the within variability
+    we conclude the treatment means are essentially equal.  Similarly
+    for the random effects model, if the between variability is small
+    compared to the within variability we conclude the variance between
+    treatments is essentially zero.
+
+    The Dataplot ANOVA command performs an analysis of variance for
+    up to 10 factors.  However, this command is intended for the
+    fixed effects case with balanced data (i.e., all cells have the
+    same sample size).
+
+    The ONE WAY ANOVA command specifically handles the case of a
+    single factor variable.  However, it handles a broader range
+    cases than the regular ANOVA command and provides some additional
+    output.  Specifically,
+
+       1. The ONE WAY ANOVA command allows summary data (i.e., the mean,
+          standard deviation and sample size for each level of the factor
+          variable) in addition to raw data.
+
+       2. The ONE WAY ANOVA command allows a random effects model to
+          be specified.  This case will generate a variance components
+          table (more will be said about this in the Notes section
+          below).
+
+       3. For the fixed effects case, the ONE WAY ANOVA command generates
+          several additional tables.  Specifically
+
+              a. A table containing confidence intervals for the
+                 treatment means is generated.
+
+              b. A table containg confidence intervals for the
+                 difference of the treatment means is generated.
+
+              c. A table containing Bonferroni adjusted confidence
+                 intervals for the difference of treatment means is
+                 generated.
+
+              d. A table containing Tukey-Kramer adjusted confidence
+                 intervals for the difference of treatment means is
+                 generated.
+
+          Details about these tables is given in the Notes section
+          below.
+
+          Since random effect models are not concerned with the mean
+          values and difference of the mean values for the specific
+          treatments, these tables will not be generated for that case.
+
+       4. The ONE WAY ANOVA command supports unbalanced data.
+
+          There are two warnings that should be noted when dealing
+          with unbalanced data.  The balanced ANOVA case is known to be
+          somewhat robust to the assumption of equal variances for the
+          treatments.  A common rule of thumb is that if the ratio of
+          the largest treatment variance to the smallest treatment
+          variance is less than 2, then the ANOVA should be robust
+          to unequal variances.  The unbalanced case is more sensitive
+          to the equal variances assumption (and there is no
+          corresponding rule of thumb in this case).  In addition,
+          the unbalanced ANOVA is known to be less powerful than the
+          balanced ANOVA case.  By less powerful, we mean that it takes
+          larger differences in the treatment means to detect a
+          statistically significant difference.
+ 
+Syntax 1:
+    ONE WAY ANOVA <y> <x>   <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response (= dependent) variable;
+          <x> is the factor (= independent) variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax generates a fixed effects ANOVA based on raw data.
+
+Syntax 2:
+    ONE WAY SUMMARY ANOVA <ymean> <ysd> <yn>
+                          <SUBSET/EXCEPT/FOR qualification>
+    where <ymean> is a variable containing the treatment means;
+          <ysd>   is a variable containing the treatment standard
+                  deviations;
+          <yn>    is a variable containing the treatment sample sizes;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax generates a fixed effects ANOVA based on summary data.
+
+Syntax 3:
+    ONE WAY RANDOM EFFECTS ANOVA <y> <x>
+                                 <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response (= dependent) variable;
+          <x> is the factor (= independent) variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax generates a random effects ANOVA based on raw data.
+
+Syntax 4:
+    ONE WAY SUMMARY RANDOM EFFECTS ANOVA <ymean> <ysd> <yn>
+                                         <SUBSET/EXCEPT/FOR qualification>
+    where <ymean> is a variable containing the treatment means;
+          <ysd>   is a variable containing the treatment standard
+                  deviations;
+          <yn>    is a variable containing the treatment sample sizes;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax generates a random effects ANOVA based on summary data.
+
+Examples:
+    ONE WAY ANOVA Y X
+    ONE WAY SUMMARY ANOVA YMEAN YSD YN
+    ONE WAY RANDOM EFFECTS ANOVA Y X
+    ONE WAY SUMMARY RANDOM EFFECTS ANOVA YMEAN YSD YN
+    ONE WAY ANOVA Y X  SUBSET Y > 0
+    ONE WAY ANOVA Y X  SUBSET X = 1 TO 6
+ 
+Note:
+    The ONE WAY ANOVA command saves the residuals in the variable RES
+    and the predicted values in the variable PRED.  These can be used to
+    generate various diagnostic plots.
+ 
+    The predicted values are the estimated grand mean plus the estimated
+    treatment effect.  The residuals are the response variable minus the
+    predicted values.
+ 
+    The PRED and RES variables will not be saved if summary data is used.
+
+Note:
+    For the random effects model, a variance component table will be
+    printed.  An example table is shown here
+
+                Variance Components Table: Random Effects
+
+     ----------------------------------------------------------------------------------------------------------------
+                                                  Lower          Upper       Intraclass          Lower          Upper
+                                Variance     Confidence     Confidence      Correlation     Confidence     Confidence
+                   Source      Component          Limit          Limit  Coefficient (%)          Limit          Limit
+     ----------------------------------------------------------------------------------------------------------------
+      Treatment (Between)      11.711111       3.456828     101.096603            86.68      54.490128      98.364796
+        Residual (Within)       1.800000       0.878770       5.543625            13.32
+
+    The variance component table is used to specify the percentage of
+    the variance that can be attributed to the treatment (between) and
+    how much to the error (within).
+
+    The variance component for the treatment is computed as
+
+         S(Treatment)**2 = MAX(0,(MSTR - MSE)/n0)
+
+    where MSTR denotes the mean square of the treatment and MSE denotes
+    the mean square error and
+
+        n0 = (1/(k-1)) *
+             (SUM[i=1 to k][n(i) - (SUM[i=1 to k][n(i)**2]/SUM[i=1 to k][n(i)])
+
+    The MSTR and MSE values are obtained from the standard ANOVA table.
+    In the balanced case, n0 is equal to the level sample size.  The
+    variance component for the error is simply the MSE.
+
+    The variance components are often given as a proportion of the total
+    variance.  In this case, the variance component is divided by the
+    sum of the treatment variance component and the error variance
+    component.  This is also referred to as the intraclass correlation
+    coefficient.  Dataplot prints this expressed as a percentage rather
+    than a proportion.
+
+    The confidence interval for the treatment variance component is
+    computed as
+
+          Lower CL = SSTR*(1 - (Fu/F0))/(n0*CHSPPF(alpha/2,k-1))
+          Upper CL = SSTR*(1 - (Fl/F0))/(n0*CHSPPF(1-(alpha/2),k-1))
+
+    where
+
+          CHSPPF = the chi-square percent point function
+          Fl     = FPPF(alpha/2,k-1,ntotal-k)
+          Fu     = FPPF(1 - (alpha/2),k-1,ntotal-k)
+          F0     = F statistic from the ANOVA
+          FPPF   = the F percent point function
+          ntotal = the total number of observations
+
+    The confidence interval for the error variance component is
+    computed as
+
+          LCL = (ntotal - k)*MSE/CHSPPF(alpha/2,ntotal-k)
+          UCL = (ntotal - k)*MSE/CHSPPF(1 - (alpha/2),ntotal-k)
+
+    Approximate confidence intervals for the intraclass correlation
+    coefficient are computed as
+
+          LCL = L/(1+L)
+          UCL = U/(1+U)
+
+    where
+
+          L = (1/n0)*((F0/Fu) - 1)
+          U = (1/n0)*((F0/Fl) - 1)
+
+    where F0, Fl and Fu are as defined above.
+
+Note:
+    For the fixed effects model, confidence intervals for the level
+    means are computed as follows
+
+         Ybar(i) +/- t(1-alpha/2,ntotal-k)*SQRT(MSE/n(i))
+
+    with Ybar((i) denoting the mean of the i-th level and t denoting
+    the t percent point function.
+
+    If the ANOVA shows a statistically significant difference in the
+    level means, a follow-up step is to compare the pairwise difference
+    in treatment means to determine which differences are statistically
+    significant.  This is a subset of possible multiple comparisons.
+    There are a number of different ways to perform these pairwise
+    comparisons.
+
+    The first table generates confidence intervals based on Fisher's
+    Least Protected Difference (LSD)
+
+         |Ybar(i) - Ybar(j)| +/- t(1-(alpha/2),ntotal-k)*
+                                 SQRT{MSE*((1/n(i)) + (1/n(j)))}
+
+    This is just the standard confidence interval for the difference
+    between means.  The protected part is based on the idea that these
+    differences are only analyzed if the F test from the ANOVA is
+    statistically significant.  The last column provides p-values
+    (p-values less than alpha indicate statistical significance).
+
+    The second table generates confidence intervals based on
+    Bonferroni's adjustment to alpha.  The LSD method provides pairwise
+    statistical signficance, but does not provide simultaneous
+    statistical significance.  Bonferroni addresses this with the
+    following correction to alpha
+
+         alpha' = alpha/(k*(k-1)/2)
+
+    The table header prints the adjusted alpha.  This can be compared
+    to the p-values in the last column to determine statistical
+    significance.
+
+    The third table generates Tukey-Kramer honest significant difference
+    (HSD) confidence intervals.  These confidence intervals are based on
+
+         |Ybar(i) - Ybar(j)| +/- q(alpha,k,ntotal-k)*
+                                 SQRT{MSE*((1/n(i)) + (1/n(j)))}
+
+    where q denotes the studentized range percent point function.  Like
+    the Bonferroni intervals, these intervals provide simultaneous
+    statistical significance.
+
+    The generated tables are based on pairwised differences between level
+    means.  More general comparisons are based on contrasts and linear
+    combnations.  A contrast is a linear combination of two or more factor
+    level means with coefficients that sum to zero
+
+         C = c1*mu1 + c2*mu2 + ... + cj*muj
+
+    with c1, c2, ..., cj denoting the contrast coefficients and mu1,
+    mu2, ..., muj denoting the factor level means and where
+
+         SUM[i=1 to k][c(i)] = 0
+
+    For example, the pairwise difference betweem two level means has
+    coefficients c1 = 1 and c2 = -1.  To compare levels 1 and 2 with
+    level 3, the coefficients are c1 = 1, c2 = 1, and c3 = -2.
+
+    Two contrasts are orthogonal if the sum of the products of
+    corresponding coefficients (i.e., coefficients for the same means)
+    also sum to zero.  That is
+
+        SUM[i=1 to r][c(i)*d(i)] = 0
+
+    where c and d are coefficients for two contrasts.
+
+    For the unbalanced case, this is
+
+        SUM[i=1 to r][n(i)*c(i)*d(i)] = 0
+
+    A linear combination is similar to a contrast, but it does not
+    require that the coefficients sum to zero.
+
+    A contrast is estimated by
+
+        Chat = SUM[i=1 to r][c(i)*Ybar(i)]
+
+    The variance of the contrast is
+
+        Var(Chat) = sigma**2*SUM[i=1 to r][c(i)**2/n(i)]
+
+    and a confidence interval is given by
+
+        Chat +/- t(1-(alpha/2),ntotal-r)*SQRT(Var(Chat))
+
+    Estimates and confidence intervals for linear combinations are
+    generated using the same formulas as contrasts.
+
+    Montgomery (pp. 60-62) shows how the treatment sum of squares can
+    be partitioned into contrast sum of squares for orthogonal
+    contrasts.  Note that constrasts should be chosen before the data
+    is collected.
+
+Note:
+    By default, an alpha = 0.05 is used in the above formulas.  To use
+    a different value of alpha, enter
+
+        LET ALPHA = <value>
+
+    Typical values for alpha are 0.01, 0.05 and 0.10.
+
+Note:
+    The following quantities are written to files
+
+       1. dpst1f.dat - the level id, the level mean, the effect
+                       estimate and the standard deviation of the
+                       effect estimate
+
+       2. dpst2f.dat - the level id, the level mean, the level standard
+                       deviation, and the lower and upper confidence
+                       limits for the level mean
+
+       3. dpst3f.dat - the first level id, the second level id, the
+                       Fisher LSD lower and upper confidence limits and
+                       the p-value for the difference of means
+
+       4. dpst4f.dat - the first level id, the second level id, the
+                       Bonferroni lower and upper confidence limits and
+                       the p-value for the difference of means
+
+       5. dpst5f.dat - the first level id, the second level id, the
+                       Tukey-Kramer standard error, the Tukey-Kramer
+                       lower and upper confidence limits and the 90%,
+                       95% and 99% critical values for Tukey-Kramer
+
+Note:
+    The following parameters are saved after the ONE WAY ANOVA command
+    is performed.
+
+         STATVAL   - value of the F test statistic
+         STATCDF   - CDF of the F test statistic
+         PVALUE    - p-value of the F test statistic
+         MSTR      - treatment mean square
+         MSE       - error mean square
+         SSTR      - treatment sum of squares
+         SSE       - error sum of squares
+         SSTOT     - total sum of squares
+
+Default:
+    None
+ 
+Synonyms:
+    ANALYSIS OF VARIANCE is a synonym for ANOVA
+    1 WAY is a synonym for ONE WAY
+    RANDOM EFFECTS SUMMARY is a synonym for SUMMARY RANDOM EFFECTS
+ 
+Related Commands:
+    ANOVA                 = Perform a fixed effects ANOVA for balanced
+                            data (up to 10 factors)
+    KRUSKAL WALLIS        = Perform a Kruskal Wallis test.
+    MEDIAN POLISH         = Carries out a robust ANOVA.
+    YATES ANALYSIS        = Analyze a Yate's design.
+    BLOCK PLOT            = Generate a block plot.
+    DEX SCATTER PLOT      = Generates a dex scatter plot.
+    DEX ... PLOT          = Generates a dex plot for a statistic.
+    DEX ... EFFECTS PLOT  = Generates a dex effects plot for a
+                            statistic.
+    T TEST                = Carries out a t test.
+    PLOT                  = Plots (e.g., residuals and GANOVA ).
+ 
+References:
+    One way analysis of variance is covered in most introductory
+    statistics books and more advanced books covering linear models.
+
+    Neter, Wasserman and Kunter (1990), "Applied Linear Statistical
+    Models," 3rd ed., Irwin.
+ 
+    Searle, Casella and McCulloch (1992), "Variance Components,"
+    Wiley, Chapter 3.
+
+    Montgomery (1976), "Design and Analysis of Experiments," Second
+    Edition, Wiley, chapters 3 and 4.
+ 
+Applications:
+    Analysis of Variance
+ 
+Implementation Date:
+    2023/09
+ 
+Program 1:
+    . Fixed Effects Case
+    .
+    . Step 1:   Create the data
+    .
+    read x y
+    1   6.9
+    1   5.4
+    1   5.8
+    1   4.6
+    1   4.0
+    2   8.3
+    2   6.8
+    2   7.8
+    2   9.2
+    2   6.5
+    3   8.0
+    3  10.5
+    3   8.1
+    3   6.9
+    3   9.3
+    4   5.8
+    4   3.8
+    4   6.1
+    4   5.6
+    4   6.2
+    end of data
+    .
+    set let cross tabulate collapse
+    let ymean = cross tabulate mean y x
+    let ysd   = cross tabulate sd   y x
+    let yn    = cross tabulate size x
+    .
+    . Step 2:   Run standard anova command and summary anova command
+    .
+    echo on
+    capture 1way.out
+    anova y x
+    one way summary anova ymean ysd yn
+    one way         anova y x
+    end of capture
+    echo off
+
+Program 2:
+    . Random Effects Case
+    .
+    . Step 1:   Create the data
+    .
+    capture screen on
+    .
+    read x y
+     1     74
+     1     76
+     1     75
+     2     68
+     2     71
+     2     72
+     3     75
+     3     77
+     3     77
+     4     72
+     4     74
+     4     73
+     5     79
+     5     81
+     5     79
+    end of data
+    .
+    set let cross tabulate collapse
+    let ymean = cross tabulate mean y x
+    let ysd   = cross tabulate sd   y x
+    let yn    = cross tabulate size x
+    .
+    . Step 2:   Run random effects ANOVA
+    .
+    echo on
+    capture 1way_rand.out
+    set write decimals 6
+    one way random effects anova y x
+    one way summary random effects anova ymean ysd yn
+    end of capture
+    echo off
+
 -----OR-------------------------------------------------------
  
 OR
@@ -49274,6 +49819,61 @@ Program:
  
  
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

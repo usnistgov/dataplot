@@ -18895,13 +18895,6 @@ C               ***************************************
 C               **  STEP 70.6--                     **
 C               **  PRINT OUT MATRIX    INFORMATION  **
 C               ***************************************
-              NUMFUN=NUMFUN+1
-              IF(NUMFUN.LE.1)THEN
-                WRITE(ICOUT,999)
-                CALL DPWRST('XXX','WRIT')
-                WRITE(ICOUT,999)
-                CALL DPWRST('XXX','WRIT')
-              ENDIF
 C
       ISTEPN='70.6'
       IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'STAT')

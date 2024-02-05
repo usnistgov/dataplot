@@ -1,13 +1,13 @@
- 80000.    (VERSION 2023.08)   total number of lines in file (including this line)
+ 80600.    (VERSION 2023.10)   total number of lines in file (including this line)
  8.                          number of     sections below
   100.    D                  first line number of D section
 18700.    E                  first line number of E section
 27800.    F                  first line number of F section
 37900.    G                  first line number of G section
-55600.    H                  first line number of H section
-62900.    I                  first line number of I section
-72200.    J                  first line number of J section
-74200.    K                  first line number of K section
+55900.    H                  first line number of H section
+63200.    I                  first line number of I section
+72500.    J                  first line number of J section
+74500.    K                  first line number of K section
 
 ----------------------------------------------------------
  
@@ -40193,7 +40193,7 @@ Type:
     Output Device Command
  
 Purpose:
-    Create PNG, JPEG or GIF format graphics files.
+    Create PNG, JPEG, GIF, BMP and TIFF format graphics files.
  
 Description:
     PNG, JPEG and GIF format graphics files are useful for web
@@ -40205,103 +40205,42 @@ Description:
     import these type of files directly.  In addition, if you
     need a graphic in a specific image format, many image
     conversion programs can convert these formats into a wide
-    variety of other image formats.
+    variety of other image formats.  Several additional formats are
+    supported (see Note section below), but PNG, JPEG and GIF are the
+    most commonly used.
 
-    GIF is still probably the most popular format for web
-    applications.  GIF was not supported in earlier versions
-    due to a patent issue.  The patent is no longer being enforced,
-    so GIF support was included starting in 3/2006.
+    Dataplot implements these formats using the GD library.   The GD
+    library was originally developed by Thomas Boutell.  It is now
+    maintained and developed as an open source library.  The web
+    page for GD is located at
 
-    JPEG is primarily intended for photographic type
-    images, although it can be used for basic plotting images as
-    well.
+        https://libgd.github.io/
 
-    PNG was developed as a free and non-patented alternative
-    to GIF.  It is the primary image format for a number of popular
-    software programs (for example, Perl).
+    and the source code can be downloaded at
 
-    Although GIF, JPEG, and PNG images can be created from Dataplot
-    Postscript files using one of the numerous image conversion
-    programs now available, it is still convenient to be able to
-    generate these files directly from Dataplot.  This can be
-    done using the GD device driver.  Note that Postscript files
-    may still be of interest for some applications due to the fact
-    that the Postscript graphs are rendered with greater
-    resolution.
+        https://github.com/libgd/libgd/releases
 
-    Dataplot uses the GD library, originally developed by
-    Thomas Boutell, to generate GIF, PNG and JPEG files.  This is
-    the library used by Perl (and many other programs) to generate
-    GIF, PNG, and JPEG images.  GD in turn uses four additional
-    libraries: zlib, libpng, libjpeg, and libfreetype.  These
-    libraries are all freely downloadable from the web.  If these
-    libraries are not currently installed on your system, the URL's
-    and current versions (as of 10/2014) are as follows:
-
-       1) GD library (2.1.0)  -  http://www.libgd.org/
-       2) zlib (1.2.8)        -  http://www.zlib.net/
-       3) png (1.6.12)        -  http://www.libpng.org/pub/png
-       4) jpeg (6b)           -  http://www.ijg.org
-                                 (not clear if this web site is
-                                 still being maintained)
-       5) Free Type (2.5.3)   -  http://www.freetype.org/
+    The GD library is used by the popular PHP, Perl and Ruby software
+    programs (as well as other programs), so it will be available on
+    most Linux/Unix platforms.  If it is not already installed, there
+    are packages for the most common Linux/Unix distros.
 
     Dataplot is not particularly sensitive to which version
     of the GD library you have on your system.  Any reasonably
     current version should suffice.  The major restriction is
     that GD 1.x versions are no longer supported (GD changed
-    some calling sequences in moving to the 2.x versions.  The
+    some calling sequences in moving to the 2.x versions).  The
     Dataplot code is now updated to use the 2.x calling
-    sequence  This change was made in the 3/2006 version of
-    Dataplot).
+    sequence  This change was made in the 03/2006 version of
+    Dataplot.
 
-    The availability of the GD device driver in Dataplot is
-    dependent on having these libraries built on the given
-    platform.  The pre-built Dataplot executables for Linux,
-    Cygwin, and Mac OS X should support this capability.
-    The GD library is not currently supported for the
-    Microsoft Windows executables.
-
-    Note: Dataplot upgraded to use the 2.1 version of GD July, 2014 (this
-    is the version that is now being maintained by the PHP organization).
-    With this upgrade, Dataplot now supports several additional image
-    formats.
-
-       1 - added support for the BMP format.  This device was available
-           in previous versions of GD, but I had not activated it for
-           Dataplot.  BMP is a common format in the Windows environment.
- 
-       2 - added support for the WBPM format.  This device was available
-           in previous versions of GD, but I had not activated it for
-           Dataplot.  WBMP is a black and white format that was originally
-           intended for mobile/wireless applications.  It is not commonly
-           used anymore.
- 
-       3 - added support for TGA (Targa format).
- 
-       4 - added support for TIFF.  Note that this option requires that
-           the "LIBTIFF" library be installed, so this format may not be
-           available in some Dataplot installations.
- 
-       5 - the webp format is supported if the VPX library is available.
-           This is a relatively new format championed by Google.  It is
-           primarily intended for viewing videos on the web.  This format
-           will probably not be available on most Dataplot installations.
-
-Syntax 1:
-    GD <format>
-    where <format> is one of PNG, JPEG, GIF, BMP, WBMP, TIFF, TARGA,
-    or WEBP.
- 
-    This form designates device 1 as an GD graphics device.
- 
-Syntax 2:
+Syntax:
     DEVICE <1/2/3> GD <format>
     where <format> is one of PNG, JPEG, GIF, BMP, WBMP, TIFF, TARGA,
     or WEBP.
  
-    This form designates one of DATAPLOT's 3 devices (typically
-    device 2) as an GD device.
+    This form designates one of DATAPLOT's 3 devices as an GD device.
+    For the GD device, DEVICE 2 is typically used.
  
 Examples:
     DEVICE 2 GD PNG
@@ -40313,6 +40252,75 @@ Note:
     the GD driver to work.  If this is not the case, contact your
     local Dataplot installer.
  
+Note:
+    Dataplot upgraded to the 2.1 version of GD July, 2014.  With this
+    upgrade, Dataplot now supports several additional image formats.
+
+       1 - added support for the BMP format.  This device was available
+           in previous versions of GD, but I had not activated it for
+           Dataplot.  BMP is a common format in the Windows environment.
+ 
+       2 - added support for the WBPM format.  This device was available
+           in previous versions of GD, but I had not activated it for
+           Dataplot.  WBMP is a black and white format that was originally
+           intended for mobile/wireless applications.  It is not commonly
+           used anymore.
+ 
+       3 - added support for TGA (Targa format).  Note that this format
+           is coded but has not been tested.
+ 
+       4 - added support for TIFF.  Note that this option requires that
+           the "libtiff" library be installed, so this format may not be
+           available in some Dataplot installations.
+ 
+       5 - the webp format is supported if the VPX library is available.
+           This is a relatively new format championed by Google.  It is
+           primarily intended for viewing videos on the web.  This format
+           will probably not be available on most Dataplot installations.
+
+    Version 2.3.2 added support for the AVIF and HEIF formats.  We have
+    not yet updated Dataplot to support these formats.
+
+    Be aware that some of these formats require external libraries
+    that may not be available with the version of the GD library
+    installed on your local platform.
+
+    The basic GD implementation uses the libraries: zlib, libpng,
+    libjpeg, and libfreetype.  These should be included with most GD
+    installations.  The libtiff library is typically available on most
+    Linux platforms.  However, the libraries for the webp, AVIF and HEIF
+    formats are less likely to be available.
+
+Note:
+    There are several alternative methods for generating PNG/JPEG/GIF
+    files with Dataplot.  For example,
+
+       1. Dataplot can generate Postscript (PDF files can be generated
+          using Ghostscript) and Scalable Vector Graphics (SVG) graphics
+          files.  Using the open source GIMP software, the Postscript or
+          SVG file can be converted to a number of different common image
+          formats.  The advantage of this method is that it maintains the
+          high quality of the original Postscript/SVG file (GIMP uses
+          anti-aliasing when converting from a vector format to a
+          bit map format).  The disadvantage is that it requires an
+          additional manual step.
+
+          There are other software programs that can convert
+          Postscript/SVG to bit map formats.  However, not all of these
+          programs perform anti-aliasing, so the quality may vary.
+
+       2. The Windows version of Ghostview can convert Postscript/PDF
+          files to JPEG.
+
+       3. Either Ghostscript or the ImageMagick convert program can be
+          used to automatically convert Dataplot's Postscript output
+          to PNG or JPEG.  For details, enter
+
+              HELP POSTSCRIPT CONVERT
+
+       4. The Dataplot CAIRO device driver supports PNG/JPEG/GIF.
+          However this driver is still in "beta" mode.
+
 Note:
     Typically, for PNG or JPEG output, it is desirable to put
     each plot in a separate file with a unique name.  This can
@@ -40343,51 +40351,81 @@ Note:
         DEVICE 2 CLOSE
 
 Note:
-    An alternative method for generating JPEG files using either
-    Ghostscript or the ImageMagick convert programs is now available
-    for Windows and Unix platforms.  For details, enter
-
-         HELP POSTSCRIPT CONVERT
-
-    Under Windows, an alternative is to use Ghostview to convert
-    postscript files to JPEG or PNG.  Once you import the Dataplot
-    postscript graph into Ghostview, select "File" and then select
-    "Convert".  This menu will then let you select the image
-    type and the resolution (we suggest using 300 dpi since this
-    is the default resolution Dataplot uses for Postscript
-    graphs).  This is preferred method under Windows since it allows
-    you to preserve the high quality fonts and 300 dpi resolution
-    of the original Postscript graph while providing a graphics
-    format that can be easily handled by most Windows applications.
-    The one drawback is that it doesn't work if you need a fully
-    automated process.
-
-Note:
     GD supports hardware text in the following two ways:
 
        1) There are 5 built-in fonts: TINY, SMALL, MEDIUM, LARGE,
-          or GIANT.  These will be available on platform where
-          you have the GD library installed.
+          or GIANT.  These will be available for all GD
+          installations.  These are fixed size fonts.
 
-       2) If you have True Type fonts installed on your system,
-          you can specify that Dataplot use these fonts.  There are
-          both commercial and freely downloadable true type fonts
-          available.  Note that Dataplot does not, and will not,
-          provide any of these fonts.  You are responsible for
-          knowing if you have any true type fonts installed on
-          your system and where these fonts are installed if you
-          do have them.  We will not provide any guidance on
-          where to find these fonts.
+       2) GD supports the use of True Type fonts using the Free Type
+          library.  If you have True Type fonts (these fonts are
+          identified with a ".ttf" file extension) installed on your
+          system, you can specify that Dataplot use these fonts with
+          the command
 
-    In either case, you can specify the font to use with the
-    command (there is no default font)
+              SET GD FONT <font name>
 
-        SET GD FONT <font name>
+          Note that you must specify the full path name for the font
+          name.  For example
 
-    GD renders fonts using the Free Type library.
+              SET GD FONT /usr/share/fonts/gnu-free/FreeSansBold.ttf
 
-    This capability was added to Dataplot 3/2008.  Versions prior
-    to this rendered text using one of Dataplot's software fonts.
+          There are several ways to locate or obtain True Type fonts.
+
+          a) Dataplot provides a limited number of True Type fonts in the
+             "fonts" directory in the Dataplot auxilary files directory.
+             On Linux systems, this is often one of
+
+                /usr/local/lib/dataplot/fonts
+                /usr/lib/dataplot/fonts
+
+             On Windows platforms, this is
+
+                C:\Program Files (x86)\NIST\DATAPLOT\FONTS
+
+          b) Many platforms will have libraries of True Type fonts
+             already installed.
+
+             For example, on the Red Hat Enterprise version 8 (including
+             derivative CentOS and Rocky) Linux system, a number of True
+             Type fonts are availabe in
+
+                 /usr/share/fonts
+
+             There are a number of sub-directories under this that
+             contain the fonts.  For example the "gnu-free" sub-directory
+             contains the following fonts
+
+                 FreeMonoBoldOblique.ttf
+                 FreeMonoBold.ttf
+                 FreeMonoOblique.ttf
+                 FreeMono.ttf
+                 FreeSansBoldOblique.ttf
+                 FreeSansBold.ttf
+                 FreeSansOblique.ttf
+                 FreeSans.ttf
+                 FreeSerifBoldItalic.ttf
+                 FreeSerifBold.ttf
+                 FreeSerifItalic.ttf
+                 FreeSerif.ttf
+
+             These directories contain some fonts with ".ttf" file
+             name extensions and some with ".otf" file name extensions.
+             Only the ".ttf" font files should be used with the GD
+             driver.
+
+             Under Windows 10, many fonts are stored in the
+
+                 C:\WINDOWS\FONTS
+
+             directory.  True Type fonts are identified with a ".ttf"
+             file name extension.  Note that you free to use these fonts
+             with Dataplot.  However, Microsoft does not grant
+             re-distribution rights, so none of these are included in the
+             Dataplot "fonts" directory.
+
+          c) There are both commercial and freely downloadable True Type
+             fonts available on the Internet.
 
 Note:
     There are two color models supported.  The "fixed" mode uses
@@ -40400,12 +40438,33 @@ Note:
         SET GD COLOR <TRUE/FIXED>
 
     The default is FIXED.  The TRUE mode is recommended if you are
-    going to be generating image plots.
+    going to be generating image plots.  Otherwise the FIXED option
+    should be sufficient for most applications.
 
 Note:
-    Dataplot also uses the GD library to read image data
-    in PNG, JPEG, or GIF format.  Enter HELP READ IMAGE for
-    details.
+    Dataplot also uses the GD library to read image data in the
+    supported formats.  Enter HELP READ IMAGE for details.
+
+Note:
+    The 2023/10 version of Dataplot corrected a number of issues with
+    the GD driver.
+
+       1) Dashed and dotted lines now work.
+
+       2) Region fills were fixed.  Rectangular regions are performed
+          in hardware (i.e., by the GD library) while non-rectangular
+          fills are performed in software (i.e., by Dataplot).
+
+          The following command was added
+
+                SET GD HARDWARE FILL <ON/OFF>
+
+          The default is OFF and this is recommended.  The ON option is
+          currently intended for testing purposes and it is recommended
+          that this option be left as OFF.  The ON option specifies
+          that non-rectangular regions be filled in hardware.
+
+       3) Fixed the background color when true color mode is specified.
 
 Default:
     If no device is specified, the default device is PNG.
@@ -40414,11 +40473,21 @@ Synonyms:
     None
 
 Device Notes:
-    1) HARDWARE TEXT - The font can be specified with SET GD FONT
+    1) HARDWARE TEXT - the GD driver supports 5 built-in fonts.  In
+       addition, True Type fonts are supported if available.  The
+       True Type font can be specified with the
+
+            SET GD FONT <font-name>
+
        command.
-    2) COLOR - GD supports the full range of 88 colors supported
-       by Dataplot.  Full RGB color is supported for image plots.
-    3) HARDWARE FILL - Solid area fills are done in hardware.
+
+    2) COLOR - GD supports the full range of 163 colors supported
+       by Dataplot.  Full RGB color is supported in true color mode.
+
+    3) HARDWARE FILL - Solid area fills for rectangles are performed in
+       hardware (i.e., by the GD library) and non-rectangular fills
+       are performed in software (i.e., by Dataplot).
+
     4) DASH PATTERNS - The following dash patterns are available:
                        DASH  - 3 pixels on, 3 pixels off;
                        DOT   - 1 pixel on, 1 pixels off;
@@ -40428,9 +40497,13 @@ Device Notes:
                        DASH4 - 2 pixels on, 2 pixels off.
                        DASH5 - 2 pixels on, 1 pixels off,
                                1 pixel on, 1 pixel off; 
-    5) LINE WIDTH - Thick lines are generated in software.
+
+    5) LINE WIDTH - Thick lines are generated in software (i.e., by
+       Dataplot).
+
     6) GRAPHICS INPUT - The CROSS-HAIR command is not supported
        for this device.
+
     7) The CHARACTER PIXEL option is supported on this device.
  
 Related Commands:
@@ -40446,21 +40519,213 @@ Applications:
     Web Applications, Graphics Import Into Other Programs
  
 Implementation Date:
-    2001/2
+    2001/02
+    2006/02: Upgraded to the 2.x version of the GD library
+    2008/03: Support for true color mode
+    2008/03: Support for hardware text
+    2008/03: Support for reading image files
+    2014/07: Added support for TIFF, BPM, WBPM, TGA and WEBPP formats
+    2020/11: Increased number of supported colors in FIXED mode from
+             89 to 163
+    2023/10: Fixed dashed/dotted lines
+    2023/10: Fixed region fill
+    2023/10: Fixed background color for true color mode
  
-Program:
-    SET IPL1NA PLOT1.PNG
-    DEVICE 2 GD PNG
-    DEVICE 2 PICTURE POINTS 400 300
-    TITLE SAMPLE PNG PLOT
-    PLOT X**2 FOR X = 1 1 9
-    DEVICE 2 CLOSE
-    SET IPL1NA PLOT2.PNG
-    DEVICE 2 GD PNG
-    DEVICE 2 PICTURE POINTS 500 400
-    TITLE SECOND SAMPLE PNG PLOT
-    PLOT X**3 FOR X = 1 1 9
-    DEVICE 2 CLOSE
+Program 1:
+    background color yellow
+    . Following path name is for a Rocky 8 system
+    set gd font /usr/share/fonts/gnu-free/FreeSansBold.ttf
+    set ipl1na gd.jpg
+    device 2 gd jpeg
+    device 2 font tektronix
+    .
+    char hw 1 0.75 2 1.5
+    char x y
+    char color blue red
+    line color blue red
+    .
+    title offset 2
+    title Sample Plot
+    title case asis
+    y1label y axis
+    x1label x axis
+    label color green
+    title color green
+    .
+    legend 1 direction vertical
+    legend 1 just lece
+    legend 1 coordinates 55 22
+    legend 1 left
+    legend 2 direction vertical
+    legend 2 just cece
+    legend 2 coordinates 55 32
+    legend 2 center
+    legend 3 direction vertical
+    legend 3 just rice
+    legend 3 coordinates 55 42
+    legend 3 top
+    .
+    plot x    for x = 1 1 9 and
+    plot x**2 for x = 1 1 9
+    .
+    just lebo
+    move 25 75
+    text Bottom
+    just cece
+    move 35 75
+    text Center
+    just rito
+    move 45 75
+    text Top
+    draw 25 75 55 75
+    draw 25 80 25 70
+    draw 35 80 35 70
+    draw 45 80 45 70
+    .
+    draw 50 22 60 22
+    draw 50 32 60 32
+    draw 50 42 60 42
+
+Program 2:
+    . Path name for font will be implementation dependent
+    set gd font /usr/local/lib/dataplot/fonts/futuram.ttf
+    set ipl1na gd2a.jpg
+    device 2 gd jpeg
+    device 2 font tektronix
+    .
+    char hw 1 0.75 2 1.5
+    char circle box
+    char color blue red
+    char fill on on
+    line solid solid
+    line color blue ivory
+    .
+    grid on
+    xgrid pattern dotted
+    ygrid pattern dashed
+    .
+    title offset 2
+    title Test Filled Characters/Futuram Font
+    title case asis
+    y1label y axis
+    x1label x axis
+    .
+    plot x    for x = 1 1 9 and
+    plot x**2 for x = 1 1 9
+    .
+    box shadow hw 0 0
+    box fill pattern solid
+    box fill color red
+    box 20 70 30 85
+    grid off
+    .
+    device 2 close
+    background color white
+    . Path name for font will be implementation dependent
+    set gd font /usr/local/lib/dataplot/fonts/arial.ttf
+    set ipl1na gd2b.jpg
+    device 2 gd jpeg
+    device 2 font tektronix
+    .
+    line color black black
+    line da3 da5
+    .
+    title offset 2
+    title Test Dash and Dot Lines/Arial Font
+    title case asis
+    y1label y axis
+    x1label x axis
+    .
+    plot x    for x = 1 1 9 and
+    plot x**2 for x = 1 1 9
+    .
+    device 2 close
+    background color white
+    set ipl1na gd2c.jpg
+    . Path name for font will be implementation dependent
+    set gd font /usr/local/lib/dataplot/fonts/Tahoma.ttf
+    device 2 gd jpeg
+    device 2 font tektronix
+    .
+    line solid solid
+    line thickness 0.2 0.3
+    .
+    title offset 2
+    title Test Line Thickness/Tahoma Font
+    title case asis
+    y1label y axis
+    x1label x axis
+    .
+    plot x    for x = 1 1 9 and
+    plot x**2 for x = 1 1 9
+    .
+    device 2 close
+    set gd color true
+    background color blue
+    . Path name for font will be implementation dependent
+    set gd font /usr/share/fonts/gnu-free/FreeSerifBold.ttf
+    set ipl1na gd2d.jpg
+    device 2 gd jpeg
+    device 2 font tektronix
+    .
+    frame color yellow
+    tic mark color yellow
+    tic mark label color yellow
+    title color cyan
+    label color cyan
+    .
+    line solid solid
+    line thickness 0.3 all
+    line color blue red
+    line rgb color 86 180 233 204 121 167
+    character size 3 3
+    character box circle
+    character fill on on
+    character rgb color 86 180 233 204 121 167
+    .
+    title offset 2
+    title Test True Color Mode/Serif Bold Font
+    title case asis
+    y1label y axis
+    x1label x axis
+    .
+    plot x    for x = 1 1 9 and
+    plot x**2 for x = 1 1 9
+    .
+    device 2 close
+    set gd color true
+    background rgb color 50 98 211
+    . Path name for font will be implementation dependent
+    set gd font /usr/share/fonts/gnu-free/FreeSans.ttf
+    set ipl1na gd2e.jpg
+    device 2 gd jpeg
+    device 2 font tektronix
+    .
+    frame color yellow
+    tic mark color yellow
+    tic mark label color yellow
+    title color cyan
+    label color cyan
+    .
+    line solid solid
+    line thickness 0.3 all
+    line color blue red
+    line rgb color 86 180 233 204 121 167
+    character size 3 3
+    character box circle
+    character fill on on
+    character rgb color 86 180 233 204 121 167
+    .
+    title offset 2
+    title Test True Color Mode/Sans Font
+    title case asis
+    y1label y axis
+    x1label x axis
+    .
+    plot x    for x = 1 1 9 and
+    plot x**2 for x = 1 1 9
+    .
+    device 2 close
 
 -----GE (LET)--------------------------------
  
@@ -55556,6 +55821,41 @@ Program:
  
  
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -77417,7 +77717,7 @@ Type:
     Analysis Command
  
 Purpose:
-    Perform a Klotz test that k samples have equal variances.
+    Perform a Klotz test that 2 samples have equal variances.
  
 Description:
     The F test is the standard parameteric test for testing the
@@ -78417,6 +78717,307 @@ Program:
     READ SPLETT2.DAT Y MACHINE
     SET WRITE DECIMALS 5
     KRUSKAL WALLIS Y MACHINE
+
+-----K SAMPLE PERMUATION TEST---------------------------------
+ 
+K SAMPLE PERMUATION TEST
+ 
+Name:
+    K SAMPLE <STATISTIC> PERMUATION TEST
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Perform a k-sample permutation test for a specified statistic.
+ 
+Description:
+    Given random variables Y and X, where Y is a response variable and X
+    is a group-id variable, with sample size n, k-sample permutation tests
+    are performed as follows
+
+       1. Compute the desired statistic for the original data.
+
+       2. Generate a permutation of the response data.  Then compute the
+          desired statistic for the permutation.
+
+       3. Repeat step 3 NITER number of times.
+
+    The NITER computed statistics represent the reference distribution.
+    The statistic for the original data is compared to this reference
+    distribution.  For example, the cut-offs for a two-sided 95% test are
+    obtained from the 2.5% and 97.5% percentiles of the reference
+    distribution.
+
+    The permutation test is based on all possible permutations of the
+    data.  However, the number of permutations grows rapidly as the sample
+    size increases.  sampling a subset of all possible permutations
+    provides a reasonable approximation for the permutation test.  By
+    default, Dataplot generates 4,000 iterations.  To change this, enter
+    the command
+
+          SET PERMUTATION TEST SAMPLE SIZE <value>
+
+    If <value> is less than 100, it will be set to 100.  If <value>
+    is greater than 100,000, it will be set to 100,000.
+
+    The specified statistic should be one that can be computed from a
+    single response variable with a corresponding group-id variable.
+
+    This test is most commonly used with F-statistic obtained from a
+    one way analysis of variance.
+
+    Permutation tests assume the observations are independent.  However,
+    no distributional assumptions are made about the response variable.
+
+Syntax:
+    <LOWER TAILED/UPPER TAILED> K SAMPLE PERMUATION TEST <y> <x>
+                                <SUBSET/EXCEPT/FOR qualification>
+    where <stat> is the desired statistic;
+          <y> is the response variable;
+          <x> is the group-id variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    If LOWER TAILED is specified, a lower tailed test is performed.  If
+    UPPER TAILED is specified, an upper tailed test is performed.  If
+    neither LOWER TAILED or UPPER TAILED is specified, a two-tailed test
+    is performed.
+
+Examples:
+    K SAMPLE ONE WAY ANOVA F STATISTIC PERMUATION TEST Y X
+    UPPER TAILED K SAMPLE ONE WAY ANOVA F STATISTIC PERMUATION TEST Y X
+    UPPER TAILED K SAMPLE KRUSKAL WALLIS TEST PERMUATION TEST Y X
+
+Note:
+    This test only works for statistics based on a single response
+    variable and a group-id variable.  Currently, the following
+    statistics are supported
+
+         ONE WAY ANOVA F STATISTIC
+         ONE WAY ANOVA SUM OF SQUARES TOTAL
+         ONE WAY ANOVA SUM OF SQUARES TREATEMENT
+         ONE WAY ANOVA SUM OF SQUARES ERROR
+         ONE WAY ANOVA MEAN SQUARE ERROR
+         ONE WAY ANOVA MEAN SQUARE TREATMENT
+         KRUSKAL WALLIS TEST
+         REPEATABILITY STANDARD DEVIATION
+         REPRODUCIBILITY STANDARD DEVIATION
+         ANDERSON DARLING K SAMPLE TEST
+         COCHRAN VARIANCE OUTLIER TEST
+         COCHRAN MINIMUM VARIANCE OUTLIER TEST
+         SQUARED RANKS TEST
+         MEDIAN TEST
+
+    Of these, the ONE WAY ANOVA F STATISTIC and KRUSKAL WALLIS TEST
+    statisics are probably the ones of most interest.
+
+Note:
+    This routine uses a random permutation algorithm suggested by Knuth.
+    Specifically, it adapts the RANDPERM routine of Knoble. 
+
+Note:
+    The following parameters are saved after the k sample
+    permutation test is performed.
+
+         STATVAL   - value of the test statistic
+         STATCDF   - CDF of the test statistic
+         PVALUE    - p-value of the two tailed test statistic
+         PVALUELT  - p-value of the lower tailed test statistic
+         PVALUEUT  - p-value of the upper tailed test statistic
+
+         P80       - 80%   upper critical value
+         P90       - 90%   upper critical value
+         P95       - 95%   upper critical value
+         P975      - 97.5% upper critical value
+         P99       - 99%   upper critical value
+         P995      - 99.5% upper critical value
+         P999      - 99.9% upper critical value
+
+         P20       - 20%   lower critical value
+         P10       - 10%   lower critical value
+         P05       - 5%    lower critical value
+         P025      - 2.5%  lower critical value
+         P01       - 1%    lower critical value
+         P005      - 0.5%  lower critical value
+         P001      - 0.1%  lower critical value
+
+Note:
+    To generate multiple comparisons for the ONE WAY F STATISTIC case,
+    you can perform a two sample permutation test for the pairwise factor
+    levels.  This is demonstrated in the program example below.
+
+    Note that although this example compares differences of means,
+    you could use other location statistics such as the MEDIAN or
+    BIWEIGHT LOCATION.
+
+Default:
+    The number of permutations defaults to 4,000.
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    TWO SAMPLE PERMUTATION TEST = Perform a 2-sample permutation test.
+    LINEAR RANK SUM TEST        = Perform a 2-sample linear rank sum test.
+    ONE WAY ANOVA               = Perform a one-way analysis of variance.
+    KRUSKAL WALLIS TEST         = Perform a k-sample Kruskal-Wallis test.
+    MEDIAN TEST                 = Perform a k-sample medians test.
+    SQUARED RANKS TEST          = Perform a k-sample squared ranks test
+                                  for homogeneous variances.
+
+References:
+    Higgins (2004), "Introduction to Modern Nonparametric Statistics,"
+    Duxbury Press, Chapter 3.
+
+    Knuth (1998), "The Art of Computer Programming: Volume 2 Seminumerical
+    Algorithms, Third Edition", Section 3.4.2, Addison-Wesley.
+
+    Knoble RANDPERM algorithm downloaded from:
+    "http://coding.derkeiler.com/Archive/Fortran/comp.lang.fortran/
+    2006-03/msg00748.html"
+
+Applications:
+    K Sample Analysis
+ 
+Implementation Date:
+    2023/09:
+ 
+Program 1:
+    set permutation test sample size 5000
+    set random number generator fibbonacci congruential
+    seed 88807
+    .
+    . Step 1:   Create the data (from Higgins, p. 85)
+    .
+    read x y
+     1    6.08
+     1   22.29
+     1    7.51
+     1   34.36
+     1   23.68
+     2   30.45
+     2   22.71
+     2   44.52
+     2   31.47
+     2   36.81
+     3   32.04
+     3   28.03
+     3   32.74
+     3   23.84
+     3   29.64
+    end of data
+    .
+    . Step 2:   Perform the permutation test
+    .
+    upper tailed k sample one way anova f statistic permutation test y x
+    .
+    .           Step 3: Plot the results
+    .
+    title offset 7
+    title case asis
+    label case asis
+    y1label Count
+    x1label One Way Anova F-Statistic for Permutations
+    
+    let statval = round(statval,4)
+    let p95  = round(p95,3)
+    let p99  = round(p99,3)
+    let pval = round(pvalueut,4)
+    let statcdf = round(statcdf,4)
+    .
+    x2label color red
+    x2label One Way Anova F-Statistic for Original Sample: ^statval
+    x3label color blue
+    x3label 95 Percentile: ^P95, 99 Percentile: ^P99
+    xlimits -5.0 10.0
+    let niter = 5000
+    skip 1
+    read dpst1f.dat z
+    title Histogram of One Way Anova F Statistic for ^niter Permutationscr() ...
+          (Pvalue: ^pval, CDF: ^statcdf)
+    .
+    histogram z
+    .
+    line color red
+    line dash
+    line thickness 0.3
+    drawdsds statval 20 statval 90
+    line thickness 0.1
+    line color blue
+    line dash
+    drawdsds p95 20 p95 90
+    drawdsds p99 20 p99 90
+    .
+    .           Step 4: Multiple comparisons
+    .
+    let xdist = distinct x
+    let ndist = size xdist
+    let icnt = 0
+    if ndist >= 3
+       loop for k = 1 1 ndist
+           let xval1 = xdist(k)
+           let jstrt = k + 1
+           loop for j = jstrt 1 ndist
+               let xval2 = xdist(j)
+               let ytemp1 = y
+               let ytemp2 = y
+               retain ytemp1 subset x = xval1
+               retain ytemp2 subset x = xval2
+               two sample mean permutation test ytemp1 ytemp2
+               let icnt = icnt + 1
+               let group1(icnt) = xval1
+               let group2(icnt) = xval2
+               let pvalmc(icnt)   = pvalue2t
+               delete ytemp1 ytemp2
+           end of loop
+       end of loop
+    end of if
+    write1 ksamp_mc.out "   Group-ID One   Group-ID Two         P-Value"
+    write1 ksamp_mc.out "----------------------------------------------"
+    write1 ksamp_mc.out group1 group2 pvalmc
+
+Program 2:
+    set permutation test sample size 5000
+    set random number generator fibbonacci congruential
+    seed 49217
+    .
+    . Step 1:   Create the data (from Higgins, p. 85)
+    .
+    read x y
+     1    6.08
+     1   22.29
+     1    7.51
+     1   34.36
+     1   23.68
+     2   30.45
+     2   22.71
+     2   44.52
+     2   31.47
+     2   36.81
+     3   32.04
+     3   28.03
+     3   32.74
+     3   23.84
+     3   29.64
+    end of data
+    .
+    . Step 2:   Perform the permutation test
+    .
+    echo on
+    upper tailed k sample one way anova f statistic permutation test y x
+    upper tailed k sample kruskal wallis test permutation test y x
+    kruskal wallis y x
+    upper tailed k sample squared ranks test permutation test y x
+    squared ranks y x
+    upper tailed k sample anderson darling k sample test permutation test y x
+    anderson darling k sample test y x
+    upper tailed k sample cochran variance outlier test permutation test y x
+    cochran variance outlier test y x
+    upper tailed k sample median test permutation test y x
+    median test y x
+    k sample common coefficient of variation permutation test y x
+    common coefficient of variation test y x
+    echo off
 
 -----KS PLOT-------------------------------------------------------
  
@@ -79943,7 +80544,6 @@ Program:
  
 -------------------------------------------------------------
  
-
 
 
 

@@ -14341,6 +14341,9 @@ C     UPDATED         --OCTOBER   2015. IQWNFL
 C     UPDATED         --DECEMBER  2015. ICNTD2, ICNTD3
 C     UPDATED         --DECEMBER  2018. PDSCAL
 C     UPDATED         --MAY       2022. PCHOSH, PCHOSV
+C     UPDATED         --OCTOBER   2023. IGDFS
+C     UPDATED         --OCTOBER   2023. IPSTDP
+C     UPDATED         --OCTOBER   2023. IX11SF, IX11FT
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -14805,6 +14808,14 @@ C  MAKE POSTSCRIPT FONTS TABLE DRIVEN FOR EASIER UPDATING
       IPSTT2(I)=' '
  910  CONTINUE
 C  END OF CHANGE
+C
+C     OCTOBER 2023: POSTSCRIPT DASH PATTERNS
+C
+      DO920JJ=1,7
+        DO925II=1,10
+          IPSTDP(II,JJ)=-1
+  925   CONTINUE
+  920   CONTINUE
 CCCCC THE FOLLOWING LINE WAS ADDED MAY 1992 (JJF)
 CCCCC SEE ALSO DPCODV.INC          MAY 1992
       IPSTBP='OFF'
@@ -15102,8 +15113,10 @@ CCCCC CHANGE DEFAULT.  APRIL 1997
 CCCCC IX11PM='OFF'
       IX11PM='ON'
       IX11FN='8X13'
+      IX11SF='NULL'
       IX11OF='OFF'
       IX11PA='OFF '
+      IX11FT='FIXE'
       IX11DN='DEFAULT'
 CCCCC JUNE 1994.  FOLLOWING LINE ADDED.
       IX11FS='ON'
@@ -15115,8 +15128,8 @@ CCCCC ADD FOLLOWING SECTION.  APRIL 1997
       IPXMFB='pixmap.'
       IPXMNC=7
       DO1010I=1,MAXPM
-      IPXMFN(I)=' '
-      IPXMCM(I)=' '
+        IPXMFN(I)=' '
+        IPXMCM(I)=' '
  1010 CONTINUE
 CCCCC ADD FOLLOWING SECTION.  OCTOBER 1997
       IX11W2=' '
@@ -15182,9 +15195,11 @@ C
 C----------GD (JPEG/PNG/GIF) CASE-----------
 C
 C  ADDED FOLLOWING LINES MARCH, 2008 FOR GD
+C  (IGDFS ADDED 2023/10)
 C
       IGDFN='Null'
       IGDCO='FIXE'
+      IGDFS='OFF'
 C
 C----------LIBPLOT CASE-----------
 C
@@ -15663,6 +15678,10 @@ C     UPDATED         --JUNE      2023.  ISGTMC
 C     UPDATED         --JUNE      2023.  IFTESH, PFTEPV, PFTEPM, IFTEDI
 C     UPDATED         --JUNE      2023.  IMNWCC
 C     UPDATED         --JULY      2023.  ILRASC
+C     UPDATED         --SEPTEMBER 2023.  IANOMC
+C     UPDATED         --SEPTEMBER 2023.  IANOIN
+C     UPDATED         --OCTOBER   2023.  IOSMET, IOSSS
+C     UPDATED         --NOVEMBER  2023.  IAOV2T, IAOVTY
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -18786,6 +18805,47 @@ C               **************************************************************
 C
       PFTEPV=CPUMIN
       PFTEPM=CPUMIN
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    SEPTEMBER 2023
+C
+C               *******************************************************
+C               **  TREAT THE SET ANOVA MULTIPLE COMPARISONS         **
+C               **                <OFF/BONFEERRONI/                  **
+C               **                 LEAST SIGNIFICANT DIFFERENCE/     **
+C               **                 TUKEY>                            **
+C               *******************************************************
+C
+      IANOMC='BONF'
+      IANOIN='ON'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    OCTOBER 2023
+C
+C               *******************************************************
+C               **  TREAT THE SET ORDER STATISTIC METHOD             **
+C               **                <ANALYTIC/SIMULATION>              **
+C               **            SET ORDER STATISTIC SAMPLE SIZE        **
+C               **                <VALUE>                            **
+C               *******************************************************
+C
+      IOSMET='ANAL'
+      IOSSS=10000
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER 2023
+C
+C               *******************************************************
+C               **  TREAT THE SET ANOVA TWO TERM INTERACTION         **
+C               **                <ON/OFF>                           **
+C               *******************************************************
+C
+      IAOV2T='OFF'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER 2023
+C
+C               *******************************************************
+C               **  TREAT THE SET ANOVA TYPE <FIXED/RANDOM>          **
+C               *******************************************************
+C
+      IAOVTY='FIXE'
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    JULY     2006
 C
@@ -54587,6 +54647,8 @@ C     UPDATED         --JULY      2023. TWO SAMPLE LINEAR RANK SUM TEST
 C     UPDATED         --AUGUST    2023. FLIGNER POLICELLO TEST
 C     UPDATED         --AUGUST    2023. TWO SAMPLE <STAT> PERMUTATION TEST
 C     UPDATED         --SEPTEMBER 2023. K SAMPLE <STAT> PERMUTATION TEST
+C     UPDATED         --SEPTEMBER 2023. ADD SOME ADDITIONAL COMMANDS FOR
+C                                       ANOVA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -54729,12 +54791,27 @@ C               *******************************************
 C               **  TREAT THE ANALYSIS OF VARIANCE CASE  **
 C               *******************************************
 C
-      IF(ICOM.EQ.'ANAL' .OR. ICOM.EQ.'ANOV')THEN
+C     2023/09: SUPPORT
+C
+C              ONE WAY ANOVA Y X
+C              ONE WAY RANDOM EFFECTS ANOVA Y X
+C              ONE WAY SUMMARY ANOVA Y X
+C              ONE WAY SUMMARY RANDOM EFFECTS ANOVA Y X
+C              TWO WAY ANOVA Y X
+C              TWO WAY RANDOM EFFECTS ANOVA Y X
+C              TWO WAY SUMMARY ANOVA Y X
+C              TWO WAY SUMMARY RANDOM EFFECTS ANOVA Y X
+C
+      IF((ICOM.EQ.'ANAL' .OR. ICOM.EQ.'ANOV') .OR.
+     1   (IHARG(1).EQ.'ANOV' .OR. IHARG(1).EQ.'ANAL') .OR.
+     1   (IHARG(2).EQ.'ANOV' .OR. IHARG(2).EQ.'ANAL') .OR.
+     1   (IHARG(3).EQ.'ANOV' .OR. IHARG(3).EQ.'ANAL') .OR.
+     1   (IHARG(4).EQ.'ANOV' .OR. IHARG(4).EQ.'ANAL') .OR.
+     1   (IHARG(5).EQ.'ANOV' .OR. IHARG(5).EQ.'ANAL'))THEN
         ICASAN='ANOV'
         CALL DPANOV(ICAPSW,IFORSW,
      1              IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
-        GOTO9000
       ENDIF
 C
 C               *********************************************
@@ -56407,6 +56484,21 @@ C
         ICOM='ONE '
       ENDIF
 C
+C     2023/09: CHECK FOR CONFLICT WITH "ONE WAY ... ANOVA"
+C
+      IF(IHARG(2).EQ.'ANOV')GOTO3099
+      IF(IHARG(2).EQ.'ANAL' .AND. IHARG(3).EQ.'OF  ' .AND.
+     1   IHARG(4).EQ.'VARI')GOTO3099
+      IF(IHARG(3).EQ.'ANOV')GOTO3099
+      IF(IHARG(3).EQ.'ANAL' .AND. IHARG(4).EQ.'OF  ' .AND.
+     1   IHARG(5).EQ.'VARI')GOTO3099
+      IF(IHARG(4).EQ.'ANOV')GOTO3099
+      IF(IHARG(4).EQ.'ANAL' .AND. IHARG(5).EQ.'OF  ' .AND.
+     1   IHARG(6).EQ.'VARI')GOTO3099
+      IF(IHARG(5).EQ.'ANOV')GOTO3099
+      IF(IHARG(5).EQ.'ANAL' .AND. IHARG(6).EQ.'OF  ' .AND.
+     1   IHARG(7).EQ.'VARI')GOTO3099
+C
       IF(ICOM.EQ.'ONE ' .AND. IHARG(1).NE.'PARA')THEN
          IF(NUMARG.GE.4.AND.IHARG(1).EQ.'WAY '.AND.
      1          IHARG(2).EQ.'NORM'.AND.IHARG(3).EQ.'SCOR'.AND.
@@ -56426,6 +56518,8 @@ C
      1               IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
       ENDIF
+C
+ 3099 CONTINUE
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED     OCTOBER 2003
 C               ********************************************
@@ -57287,14 +57381,12 @@ C               **  TREAT THE KURTOSIS OUTLIER TEST  CASE  **
 C               *********************************************
 C
       IF(ICOM.EQ.'SKEW' .OR. ICOM.EQ.'KURT')THEN
-        CALL DPSKOU(XTEMP1,MAXNXT,
-     1              ICAPSW,ICASAN,IFORSW,
+        CALL DPSKOU(MAXNXT,ICAPSW,ICASAN,IFORSW,
      1              IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
       ELSE
         DO7170I=1,NUMARG
           IF(IHARG(I).EQ.'SKEW' .OR. IHARG(I).EQ.'KURT')THEN
-            CALL DPSKOU(XTEMP1,MAXNXT,
-     1                  ICAPSW,ICASAN,IFORSW,
+            CALL DPSKOU(MAXNXT,ICAPSW,ICASAN,IFORSW,
      1                  IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
             GOTO7179
           ENDIF

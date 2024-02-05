@@ -67,14 +67,17 @@ CCPR                        GR-CO Generate a CCPR plot
 CHI-SQUARE PLOT             GR-CO Generate a chi-square goodness of fit plot
 CHI-SQUARED PPCC PLOT       GR-CO Generate chi-squared prob plot corr coef plot
 CHI-SQUARED PROB PLOT       GR-CO Generate a chi-squared probability plot
+CLASSIFICATION SCATTER PLOT GR-CO Generate a classification scatter plot
+CLASSIFICATION STATISI PLOT GR-CO Generate a classification statistic plot
 CME PLOT                    GR-CO Generate a conditional mean exceedance plot
 COCHRAN VARIANCE PLOT       GR-CO Generate a Cochran variance plot
 COMOVEMENT PLOT             GR-CO Generate a comovement plot
 CO-SPECTRAL PLOT            GR-CO Generate a co-spectral plot
 COHERENCY SPECTRAL PLOT     GR-CO Generate a coherency spectral plot
+COMOVEMENT PLOT             GR-CO Generate a comovement plot
 COMPLEX DEMOD AMPL PLOT     GR-CO Generate complex demodulation amplitude plot
 COMPLEX DEMOD PHASE PLOT    GR-CO Generate a complex demodulation phase plot
-CONDITIONAL PLOT            GR-CO Generate a conditional plot
+CONDITION PLOT              GR-CO Generate a condition plot
 CONSENSUS MEAN PLOT         GR-CO Generate a consensus mean plot
 CONTOUR PLOT                GR-CO Generate a contour plot
 ... CONTROL CHART           GR-CO Generate a mean, sd, or range control chart
@@ -308,6 +311,7 @@ TAGUCHI SN PLOT             GR-CO Generate Taguchi (target) S/N (subset) plot
 TAGUCHI SNL PLOT            GR-CO Generate Taguchi (large) S/N (vs subset) plot
 TAGUCHI SNS PLOT            GR-CO Generate Taguchi (small) S/N (vs subset) plot
 TAGUCHI SN2 PLOT            GR-CO Generate Taguchi (target2) S/N (subset) plot
+TOTAL TIME ON TEST PLOT     GR-CO Generate a total time on test plot
 TRIANGULAR PROB PLOT        GR-CO Generate a triangular probability plot
 TRILINEAR PLOT              GR-CO Generate a trilinear plot
 TRIMMED MEAN PLOT           GR-CO Generate a trimmed mean (vs. subset) plot
@@ -488,6 +492,7 @@ COX STUART TEST             AN-CO Perform the Cox Stuart test for trend
 CROSS TABULATE              AN-CO Perform a cross-tabulation
 CUSUM TEST                  AN-CO Perform a cumulative sum test for randomness
 
+DAVID TEST                  AN-CO Perform the David outlier test.
 DEHAAN                      AN-CO Generalized Pareto estimation using DeHaan method
 DEX PHD                     AN-CO Perform Yates analysis with principal Hessian directions
 DIFF OF MEAN CONF LIMITS    AN-CO Generate confidence limits for the difference of means
@@ -504,6 +509,7 @@ EXTR STUDENTIZED DEVI TEST  AN-CO Perform a test for multiple outliers for univa
 
 FISHER EXACT TEST           AN-CO Perform Fisher's exact test for two-way contingency tables
 FISHER TWO SAMP RAND TEST   AN-CO Perform Fisher's two sample randomization test
+FLIGNER POLICELLO TEST      AN-CO Perform a two sample Fligner-Policello test for equal medians.
 F LOCATION TEST             AN-CO Perform F-test for equal locations across groups
 F TEST                      AN-CO Perform the F-test for equal variances
 ... FIT                     AN-CO Perform a least squares fit (various kinds)
@@ -514,6 +520,8 @@ FUNCTION BLOCK              AN-CO Create a user defined function
 GOODNESS OF FIT             AN-CO Perform a distributional goodness of fit
 GRUBBS TEST                 AN-CO Perform Grubb's test for a single outlier in univariate data
 
+HEDGES G CONFIDENCE LIMITS  AN-CO Generates a confidence interval for the Hedge's g statistic.
+
 JARQUE BERA TEST            AN-CO Perform Jarque-Bera test for normality
 
 KENDELL TAU INDEPEND TEST   AN-CO Perform Kendell's tau test for independence
@@ -521,12 +529,15 @@ KLOTZ TEST                  AN-CO Perform Klotz's test for equal variances
 KOLM SMIR GOOD OF FIT TEST  AN-CO Perform Kolmogorov Smirnov goodness of fit test
 KOLM SMIR TWO SAMPLE TEST   AN-CO Perform Kolmogorov Smirnov two sample test
 KRUSKAL WALLIS TEST         AN-CO Perform Kruskal-Wallis non-parameteric 1-factor test
+K SAMPLE PERMUATION TEST    AN-CO Perform a k-sample permutation test for a specified statistic.
 KS GOOD OF FIT TEST         AN-CO Perform Kolmogorov Smirnov goodness of fit test
 KS TWO SAMPLE TEST          AN-CO Perform Kolmogorov Smirnov two sample test
+KURTOSIS OUTLIER TEST       AN-CO Perform the kurtosis test for univariate outliers from a normal distribution.
 
 LET                         AN-CO Define variables and parameters, calculations
 LET FUNCTION                AN-CO Define and operate on functions
 LEVENE TEST                 AN-CO Perform Levene's test for equal variances
+LIMITS OF DETECTION         AN-CO Perform a limits of detection (LOD) analysis based on the ASTM E-2677 standard.
 LINEAR CALIBRATION          AN-CO Perform a linear calibration
 LJUNG BOX TEST              AN-CO Perform Ljung Box test for autocorrelation
 LOWESS SMOOTH               AN-CO Perform locally-weighted scat. plot smoothing
@@ -561,14 +572,18 @@ QUADRATIC CALIBRATION       AN-CO Perform a linear calibration
 
 RANK CORRELAT INDEPEND TEST AN-CO Perform a rank correlation independence test
 RANK SUM TEST               AN-CO Perform a rank sum test for unpaired samples
+RATIO OF MEANS CONF INTE    AN-CO Generates a confidence interval for the ratio of two means for paired samples.
+RATIO OF VARIANCE CONF INTE AN-CO Generates a confidence interval for the ratio of two standard deviations (or variances).
 RECIPE                      AN-CO Compute REgression Confidence Intervals on PErcentiles
 RELIABILITY TREND TEST      AN-CO Perform a reliability trends test
 RUNS                        AN-CO Carry out a runs analysis
 
 SEASONAL LOWESS             AN-CO Decompose time series into trend, seasonal, residual components
+SIEGEL TUKEY TEST           AN-CO Perform a two sample Siegel-Tukey test that the standard deviations of two samples are equal.
 SIGN TEST                   AN-CO Perform a sign test
 SIGNED RANK TEST            AN-CO Perform a signed rank test
 SINGLE SAMPLE ACCEPT PLAN   AN-CO Generate a single sample acceptance plan
+SKEWNESS OUTLIER TEST       AN-CO Perform the skewness test for univariate outliers from a normal distribution.
 ... SMOOTH                  AN-CO Perform smoothing of equi-spaced data
 ... SPLINE FIT              AN-CO Perform a spline fit
 SQUARED RANKS TEST          AN-CO Perform a squared ranks test for equal variances
@@ -586,6 +601,8 @@ TIETJEN-MOORE TEST          AN-CO Perform the Tietjen-Moore test for multiple ou
 TOLERANCE LIMTS             AN-CO Generates tolerance intervals
 TRIMMED MEAN CONF LIMITS    AN-CO Generate a confidence limits for the trimmed mean
 T TEST                      AN-CO Carry out 1- or 2-sample t test
+TWO SAMPLE LINEAR RANK SUM  AN-CO Perform a two sample two sample linear rank sum test for various scores.
+TWO SAMPLE PERMUTATION TEST AN-CO Perform a two sample permutation test for a specified statistic.
 
 VAN DER WAERDEN TEST        AN-CO Perform a Van Der Waerden (normal scores) test
 

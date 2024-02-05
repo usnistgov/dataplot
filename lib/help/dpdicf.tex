@@ -326,6 +326,8 @@ CIRCLE                      AR-CH Set plot character to circle
 CIRCLE                      WC-CO Draw a circle
 CIRCLE.DP                   PR-FI Solve equation of circle (Matrix Cofactor)
 CIRCUIT.DP                  PR-FI Solve electrical circuit (Matrix Solve)
+CLASSIFICATION SCATTER PLOT GR-CO Generate a classification scatter plot
+CLASSIFICATION STATISI PLOT GR-CO Generate a classification statistic plot
 CLASS ...LOWER              SU-CO Spec. first class lower lim for HISTOGRAM
 CLASS ...UPPER              SU-CO Spec. last class upper lim for HISTOGRAM
 CLASS ...WIDTH              SU-CO Set class width for HISTOGRAM
@@ -378,7 +380,7 @@ COMPLEX SCRIPT              AR-FO Set font to complex script
 COMPLEX SQUARE ROOT         SC-LE Carry out complex square root
 COMPLEX SUBTRACTION         SC-LE Carry out complex subtraction
 CONCLUSIONS                 RESW  Symbolic name for DATAPLOT's Conclus. file
-CONDITIONAL PLOT            GR-CO Generate a conditional plot
+CONDITION PLOT              GR-CO Generate a condition plot
 CONFIDENCE LIMITS MEAN      AN-CO Compute confidence limits for mean
 CONNDOT.DP                  MM-FI Menu macro to connect dots via cross-hair
 CONSENSUS MEANS             AN-CO Perform a consensus means analysis
@@ -459,6 +461,7 @@ DASH4                       AR-LI Set line type to dashed type 4
 DASHED                      AR-LI Set line type to dashed
 DATA                        SC-LE Generate a set of data values
 DATAPLOT.DP                 PR-FI Generate a run sequence plot (BAKER.DAT)
+DAVID TEST                  AN-CO Perform the David outlier test.
 DDAG()                      CH/SY Write/draw double dagger
 ... DECILE                  SC-LE Compute decile
 ... DECILE PLOT             GR-CO Generate decile (vs. subset) plot
@@ -723,6 +726,7 @@ FIT ITERATIONS              SU-CO Set upper bound on iterations for FIT
 FIT POWER>>PRE-FIT          SU-CO Set fit criterion power for PRE-FIT
 FIT STANDARD DEVIATION      SU-CO Set lower bound on residual sd for FIT
 FLICKER.DAT                 DA-FI Flicker noise (Time Series)
+FLIGNER POLICELLO TEST      AN-CO Perform a two sample Fligner-Policello test for equal medians.
 F LOCATION TEST             AN-CO Perform F-test for equal locations across groups
 FLUCTUATION PLOT            GR-CO Generate  a fluctuation plot
 FONT                        WC-CO Set font for letters (TRIPLEX, COMPLEX, etc)
@@ -827,6 +831,7 @@ HAT()                       CH&SY Write/draw hat (= high carat)
 HAYES1.DAT                  DA-FI Fire research smoke obscuration (Time Series)
 HBAR()                      CH/SY Write/draw horizontal bar
 H CONSISTENCY PLOT          GR-CO Generate an H consistency plot
+HEDGES G CONFIDENCE LIMITS  AN-CO Generates a confidence interval for the Hedge's g statistic.
 HEIGHT                      WC-CO Set height of letters (0 to 100)
 HELP                        SU-CO Print short documentation for a command
 HELP LINES                  SC-SE Set number of lines/screen for HELP
@@ -954,10 +959,12 @@ KOLM SMIR GOOD OF FIT TEST  AN-CO Perform Kolmogorov Smirnov goodness of fit tes
 KOLM SMIR TWO SAMPLE TEST   AN-CO Perform Kolmogorov Smirnov two sample test
 KRASNY1.DAT                 DA-FI 9 response variables, 5 factors
 KRUSKAL WALLIS TEST         AN-CO Perform Kruskal-Wallis non-parameteric 1-factor test
+K SAMPLE PERMUATION TEST    AN-CO Perform a k-sample permutation test for a specified statistic.
 KS GOOD OF FIT TEST         AN-CO Perform Kolmogorov Smirnov goodness of fit test
 KS PLOT                     GR-CO Generate a Kolmogorov-Smirnov <dist> goodness of fit plot
 KS TWO SAMPLE TEST          AN-CO Perform Kolmogorov Smirnov two sample test
 KURTOSIS                    SC-LE Compute sample kurt (stand 4th cent mom)
+KURTOSIS OUTLIER TEST       AN-CO Perform the kurtosis test for univariate outliers from a normal distribution.
 KURTOSIS PLOT               GR-CO Generate kurtosis (vs. subset) plot
 
 -----L--------------------------------------------------
@@ -1011,6 +1018,7 @@ LF                          WC-CO Set automatic line feed after TEXT
 LGRE                        AR-CO Set color to lime green
 LHBA()                      CH/SY Write/draw long horizontal bar
 ...LIMITS                   PC-CO Set limits (min and max) for plot frame
+LIMITS OF DETECTION         AN-CO Perform a limits of detection (LOD) analysis based on the ASTM E-2677 standard.
 LINEAR CALIBRATION          AN-CO Perform a linear calibration
 LINE COLORS                 PC-CO Set colors for lines (plots & figures)
 LINE THICKNESS              PC-CO Set thicknesses of lines (plots & figures)
@@ -1475,6 +1483,8 @@ RANK COVARIANCE             SC-LE Compute sample rank covariance
 RANK SUM TEST               AN-CO Perform a rank sum test for unpaired samples
 RAPO()                      CH/SY Write/draw right apostrophe
 RARR()                      CH/SY Write/draw right arrow
+RATIO OF MEANS CONF INTE    AN-CO Generates a confidence interval for the ratio of two means for paired samples.
+RATIO OF VARIANCE CONF INTE AN-CO Generates a confidence interval for the ratio of two standard deviations (or variances).
 RBRA()                      CH/SY Write/draw right bracket
 RCBR()                      CH/SY Write/draw right curly bracket
 R CHART                     GR-CO Generate range control chart plot
@@ -1612,6 +1622,7 @@ SHOW COLORS TEKT 4027       GD-CO Show colors for Tektronix 4027
 SHOW COLORS X11             GD-CO Show colors for X11
 SHOW COLORS ZETA            GD-CO Show colors for Zeta plotter
 SHOW READ FORMAT            SU-CO Show current format for READ
+SIEGEL TUKEY TEST           AN-CO Perform a two sample Siegel-Tukey test that the standard deviations of two samples are equal.
 SIEN                        AR-CO Set color to sienna
 SIEVE PLOT                  GR-CO Generate a sieve plot for two-way contingency tables
 SIGM()                      CH/SY Write/draw Greek sigma
@@ -1634,6 +1645,7 @@ SINGULAR VALUE FACTOR       SC-LE Compute matrix singular value factorization
 SINH(X)                     FUNC  Compute hyperbolic sine
 SIZE                        SC-LE Compute sample size (number of observ)
 SKEWNESS                    SC-LE Compute sample skew (stand 3rd cent mom)
+SKEWNESS OUTLIER TEST       AN-CO Perform the skewness test for univariate outliers from a normal distribution.
 SKEWNESS PLOT               GR-CO Generate skewness (vs. subset) plot
 SKIP                        IO-CO Set num of header lines to skip for READ
 SKBL                        AR-CO Set color to sky blue
@@ -1815,6 +1827,7 @@ TITLE SIZE                  PC-CO Set the size (height) for plot title
 TITLE THICKNESS             PC-CO Set the line thickness for plot title
 TO                          RESW  Set interval of values within a variable
 TOLERANCE LIMTS             AN-CO Generates tolerance intervals
+TOTAL TIME ON TEST PLOT     GR-CO Generate a total time on test plot
 TPDF(X,NU)                  FUNC  Compute t probability density func
 TPPF(P,NU)                  FUNC  Compute t percent point function
 TRAFFIC.DAT                 DA-FI Traffic fatalaties by state (Pareto Analysis)
@@ -1844,6 +1857,8 @@ TUKEY LAMBDA RANDOM NUMBERS SC-LE Generate Tukey lambda random numbers
 TUKEY MEAN DIFFERENCE PLOT  GR-CO Generate a Tukey mean difference plot
 TURQUOISE                   AR-CO Set color to turquoise
 TWO FACTOR PLOT             GR-CO Generate a two-factor analysis with plot
+TWO SAMPLE LINEAR RANK SUM  AN-CO Perform a two sample two sample linear rank sum test for various scores.
+TWO SAMPLE PERMUTATION TEST AN-CO Perform a two sample permutation test for a specified statistic.
 TWO WAY PLOT                GR-CO Generate a plot and tables for Mandel's two-way analysis
 
 -----U--------------------------------------------------

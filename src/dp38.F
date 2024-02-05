@@ -5492,6 +5492,7 @@ C
      1                  IFIG,IPATT,IFONT,ICASE,IJUST,IDIR,ANGLE,
      1                  IFILL,ICOL,ICOLR,ICOLG,ICOLB,IRGBFL,
      1                  JPATT,JFONT,JCASE,JJUST,JDIR,ANGLE2,JFILL,JCOL,
+     1                  JSIZE,
      1                  PTHICK,JTHICK,PTHIC2,
      1                  PHEIGH,PWIDTH,PVEGAP,PHOGAP,
      1                  PHEIG2,PWIDT2,PVEGA2,PHOGA2,
@@ -5584,6 +5585,7 @@ C     UPDATED         --NOVEMBER  2015 FOR SVG, CHECK FOR "&" IN TEXT
 C     UPDATED         --OCTOBER   2016. ADD PRE-PROCESSOR DIRECTIVES
 C     UPDATED         --OCTOBER   2016. ADD TEMPLATES FOR SEVERL FUTURE
 C     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
+C     UPDATED         --OCTOBER   2023. SCALABLE FONTS FOR X11
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 C
@@ -7445,10 +7447,21 @@ CCCCC IS INTERPRETED AS AN INTEGER SCALE FACTOR, I.E. CHARACTER SIZE
 CCCCC 6 WILL DRAW A PIXEL BOX 6 WIDE AND 6 HIGH.  THIS CAPABILITY BEING
 CCCCC ADDED FOR FUTURE PLANNED IMPLEMENTATIONS, FOR EXAMPLE TO DO
 CCCCC SOME IMAGE PROCESSING.
+C
+C     2023/10: SUPPORT FOR SCALABLE FONTS
  9600 CONTINUE
 C
 #ifdef HAVE_X11
       IF(IX11OF.EQ.'OFF')GOTO9000
+C
+C     CHECK IF SCALABLE FONTS REQUESTED
+C
+      IF(IX11FT.EQ.'FIXE')THEN
+        IFTYPE=0
+      ELSE
+        IFTYPE=1
+        IF(IX11SF(1:4).EQ.'NULL')IFTYPE=0
+      ENDIF
 C
       IF(ISYMBL.EQ.'PIXE'.OR.ISYMBL.EQ.'pixe')THEN
         NCOL=INT(PHEIGH)
@@ -7484,39 +7497,95 @@ C
         STRING(1)=IJUNK
         STRING(2)=0
 C
-        ILAST=80
-        DO9610I=80,1,-1
-          ILAST=I
-          IF(IX11FN(I:I).NE.' ')GOTO9619
- 9610   CONTINUE
- 9619   CONTINUE
-        DO9620I=1,ILAST
-          CALL DPCOAN(IX11FN(I:I),IJUNK)
-          IADE(I)=IJUNK
- 9620   CONTINUE
-        IADE(ILAST+1)=0
+        IF(IFTYPE.EQ.0)THEN
+          ILAST=80
+          DO9610I=80,1,-1
+            ILAST=I
+            IF(IX11FN(I:I).NE.' ')GOTO9619
+ 9610     CONTINUE
+ 9619     CONTINUE
+          DO9620I=1,ILAST
+            CALL DPCOAN(IX11FN(I:I),IJUNK)
+            IADE(I)=IJUNK
+ 9620     CONTINUE
+          IADE(ILAST+1)=0
+          CALL XTATTR(IADE,IXERR)
+          IF(IXERR.EQ.1) THEN
+            WRITE(ICOUT,9621)
+ 9621       FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND.  USE ',
+     1             'CURRENT FONT.')
+            CALL DPWRST('XXX','BUG ')
+          ELSEIF(IXERR.EQ.2)THEN
+            WRITE(ICOUT,9622)
+ 9622       FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND.  USE ',
+     1            'DEFAULT FONT.')
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          ILAST=80
+          DO9630I=80,1,-1
+            ILAST=I
+            IF(IX11SF(I:I).NE.' ')GOTO9639
+ 9630     CONTINUE
+ 9639     CONTINUE
 C
-        CALL XTATTR(IADE,IXERR)
-        IF(IXERR.EQ.1) THEN
-          WRITE(ICOUT,9621)
- 9621     FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND.  USE ',
-     1           'CURRENT FONT.')
-          CALL DPWRST('XXX','BUG ')
-        ELSEIF(IXERR.EQ.2)THEN
-          WRITE(ICOUT,9622)
- 9622     FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND.  USE ',
-     1           'DEFAULT FONT.')
-          CALL DPWRST('XXX','BUG ')
-        END IF
+C         ADD SIZE TO FONT STRING
+C
+          JSIZET=JSIZE
+          IF(JSIZET.LE.6)JSIZET=6
+          IF(JSIZET.GE.24)JSIZET=24
+          ICSTR(1:ILAST)=IX11SF(1:ILAST)
+          ICSTR(ILAST+1:ILAST+6)=':size='
+          ILAST=ILAST+6
+          IF(JSIZET.LE.9)THEN
+            NCHTOT=1
+          ELSEIF(JSIZET.LE.99)THEN
+            NCHTOT=2
+          ELSE
+            NCHTOT=3
+          ENDIF
+          CALL GRTRIN(JSIZET,NCHTOT,ICSTR,ILAST)
+C
+          DO9640I=1,ILAST
+            CALL DPCOAN(IX11SF(I:I),IJUNK)
+            IADE(I)=IJUNK
+ 9640     CONTINUE
+          IADE(ILAST+1)=0
+        ENDIF
 C
         IXERR=0
 C
-        DO9650I=1,NP
-          PX1=PX(I)
-          PY1=PY(I)
-          CALL GRTRSD(PX1,PY1,IX,IY,ISUBN0)
-          CALL XTEXTH(STRING,IX,IY,IFONTH,IFONTV,IXERR)
- 9650   CONTINUE
+        IF(IFTYPE.EQ.0)THEN
+          DO9650I=1,NP
+            PX1=PX(I)
+            PY1=PY(I)
+            CALL GRTRSD(PX1,PY1,IX,IY,ISUBN0)
+            CALL XTEXTH(STRING,IX,IY,IFONTH,IFONTV,IXERR)
+ 9650     CONTINUE
+        ELSE
+          DO9660I=1,NP
+            PX1=PX(I)
+            PY1=PY(I)
+            CALL GRTRSD(PX1,PY1,IX,IY,ISUBN0)
+            CALL XTEXTH2(IADE,STRING,IX,IY,IFONTH,IFONTV,IXERR)
+            IF(IXERR.EQ.1)THEN
+              WRITE(ICOUT,999)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,9661)
+ 9661         FORMAT('IN GRWRTH: UNABLE TO LOAD SCALABLE X11 FONT')
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,9663)ICSTR(1:ILAST)
+ 9663         FORMAT('FONT NAME: ',A130)
+              CALL DPWRST('XXX','BUG ')
+            ELSEIF(IXERR.EQ.2)THEN
+              WRITE(ICOUT,999)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,9671)
+ 9671         FORMAT('IN GRWRTH: UNABLE TO ALLOCTE Xft COLOR')
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+ 9660     CONTINUE
+        ENDIF
       ENDIF
 #endif
       GOTO9000
@@ -10524,6 +10593,8 @@ C     UPDATED         --OCTOBER  2016. ADD PRE-PROCESSOR DIRECTIVES
 C     UPDATED         --OCTOBER  2016. ADD TEMPLATES FOR SEVERL FUTURE
 C                                      DEVICE DRIVERS (CAIRO, WMF, D3)
 C     UPDATED         --OCTOBER  2020. SUPPORT RGB COLOR FOR BACKGROUND
+C     UPDATED         --OCTOBER  2023. UPDATE TO GD DRIVER TO SET
+C                                      BACKGROUND COLOR
 C
 #ifdef HAVE_WININTERACTER
       USE WINTERACTER
@@ -10563,6 +10634,8 @@ C  JULY 1996.  ADD FOLLOWING SECTION.
 C  FEBRUARY 2001.  ADD FOLLOWING SECTION FOR JPEG, PNG DRIVER.
       INTEGER IADE(81)
       INTEGER IBACC2(3)
+      INTEGER IXTMP(2)
+      INTEGER IYTMP(2)
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -12304,8 +12377,92 @@ C
       IADE(ILAST+1)=0
       ICOLTY=0
       IF(IGDCO.EQ.'TRUE')ICOLTY=1
+C
+C     FOR BACKGROUND COLOR:
+C
+C        1. "TRUE" COLOR MODE ON
+C           A. RGB BACKGROUND COLOR BEEN SET
+C           B. RGB BACKGROUND COLOR NOT SET
+C        2. "FIXED" COLOR MODE ON
+C
+      IFLAG=0
+      JREDT=-1
+      JGREENT=-1
+      JBLUET=-1
 #ifdef HAVE_GD
-      CALL GDERAS(IXTEMP,IYTEMP,JCOL,ICOLTY,IADE)
+      IF(IGDCO.EQ.'FIXE')THEN
+        CALL GDERAS(IXTEMP,IYTEMP,JCOL,ICOLTY,IADE)
+      ELSE
+C
+C       FOR TRUE COLOR, DRAW FILLED RECTANGLE AFTER GDERAS
+C       ROUTINE
+C
+        IF(IBACC2(1).GE.0 .AND. IBACC2(2).GE.0 .AND.
+     1     IBACC2(3).GE.0)IFLAG=1
+        IF(IFLAG.EQ.1)THEN
+          AFACT=1.0
+          IF(IRGBMX.NE.255)THEN
+            AFACT=REAL(IRGBMX)/255.
+          ENDIF
+          AREDT=REAL(IBACC2(1))/AFACT
+          AGREENT=REAL(IBACC2(2))/AFACT
+          ABLUET=REAL(IBACC2(3))/AFACT
+          IREDT=INT(AREDT)
+          IGREENT=INT(AGREENT)
+          IBLUET=INT(ABLUET)
+          IF(IREDT.GT.255)IREDT=255
+          IF(IGREENT.GT.255)IGREENT=255
+          IF(IBLUET.GT.255)IBLUET=255
+        ENDIF
+        CALL GDERAS(IXTEMP,IYTEMP,JCOL,ICOLTY,IADE)
+        IXTMP(1)=0
+        IYTMP(1)=0
+        IXTMP(2)=IXTEMP
+        IYTMP(2)=IYTEMP
+        NPTS=2
+        IF(IFLAG.EQ.1)THEN
+          IF(IREDT.GE.0 .AND. IGREENT.GE.0 .AND. IBLUET.GE.0)THEN
+            CALL GDSEC2(IREDT,IGREENT,IBLUET,IRET)
+          ELSE
+            IF(JCOL.GE.1 .AND. JCOL.LE.163)THEN
+              IREDT=IRED(JCOL)
+              IGREENT=IGREEN(JCOL)
+              IBLUET=IBLUE(JCOL)
+              CALL GDSEC2(IREDT,IGREENT,IBLUET,IRET)
+            ELSEIF(JCOL.GE.-100 .AND. JCOL.LE.-1)THEN
+              AVAL=255.*ABS(REAL(JCOL)/100.)
+              IVALT=INT(AVAL+0.01)
+              IF(IVALT.LT.0)IVALT=0
+              IF(IVALT.GT.255)IVALT=255
+              IREDT=IVALT
+              IGREENT=IVALT
+              IBLUET=IVALT
+              CALL GDSEC2(IREDT,IGREENT,IBLUET,IRET)
+            ELSE
+              CALL GDSECO(JCOL)
+            ENDIF
+          ENDIF
+        ELSE
+          IF(JCOL.GE.1 .AND. JCOL.LE.163)THEN
+            IREDT=IRED(JCOL)
+            IGREENT=IGREEN(JCOL)
+            IBLUET=IBLUE(JCOL)
+            CALL GDSEC2(IREDT,IGREENT,IBLUET,IRET)
+          ELSEIF(JCOL.GE.-100 .AND. JCOL.LE.-1)THEN
+            AVAL=255.*ABS(REAL(JCOL)/100.)
+            IVALT=INT(AVAL+0.01)
+            IF(IVALT.LT.0)IVALT=0
+            IF(IVALT.GT.255)IVALT=255
+            IREDT=IVALT
+            IGREENT=IVALT
+            IBLUET=IVALT
+            CALL GDSEC2(IREDT,IGREENT,IBLUET,IRET)
+          ELSE
+            CALL GDSECO(JCOL)
+          ENDIF
+        ENDIF
+        CALL GDRGFL(IXTMP,IYTMP,NPTS,JCOL)
+      ENDIF
 #endif
       GOTO9000
 C
@@ -12371,7 +12528,7 @@ C
       IF(ILATCO.EQ.'ON' .AND. JCOL.NE.0)THEN
         ICSTR(1:1)=IBASLC
         ICSTR(2:16)='pagecolor{    }'
-        ICSTR(13:16)=ICOLT(1:4)
+        ICSTR(12:15)=ICOLT(1:4)
         NCSTR=16
         CALL GRWRST(ICSTR,NCSTR,ISUBN0)
       ENDIF
@@ -12658,12 +12815,17 @@ C
 17000 CONTINUE
 C
 #ifdef HAVE_CAIRO
-      CALL CACHEC(IEXPOSE,IERRNO)
-      IF(IERRNO.NE.0)THEN
-        WRITE(ICOUT,17621)
-17621   FORMAT(1X,'WARNING: X11 GRAPHICS WINDOW HAS BEEN DESTROYED.')
-        CALL DPWRST('XXX','BUG ')
-        GOTO9000
+C
+C     2023/10: ONLY CALL CACHEC FOR X11 MODEL
+C
+      IF(IMODEL.EQ.'X11')THEN
+        CALL CACHEC(IEXPOSE,IERRNO)
+        IF(IERRNO.NE.0)THEN
+          WRITE(ICOUT,17621)
+17621     FORMAT(1X,'WARNING: X11 GRAPHICS WINDOW HAS BEEN DESTROYED.')
+          CALL DPWRST('XXX','BUG ')
+          GOTO9000
+        ENDIF
       ENDIF
 C
       IVAL1=0
@@ -12687,6 +12849,7 @@ C
       IFLAG=0
       IF(IBACC2(1).GE.0 .AND. IBACC2(2).GE.0 .AND.
      1  IBACC2(3).GE.0)IFLAG=1
+      IF(IVAL1.EQ.1)IFLAG=0
       IF(IFLAG.EQ.0)THEN
         ARED=REAL(IRED(JCOL))/ATEMP
         AGREEN=REAL(IGREEN(JCOL))/ATEMP
@@ -12701,13 +12864,13 @@ C
 C
       IF(IVAL2.EQ.1)THEN
         CALL CAREND(IVAL2,IVAL1)
+        CALL CACHEC(IEXPOSE,IERRNO)
         CALL CAERAS(IVAL2,IVAL1,ANUMHP,ANUMVP,ARED,AGREEN,ABLUE,
      1              IXRET,IYRET)
       ELSE
         IF(IVAL2.EQ.2 .AND. IPSTPN.EQ.1)GOTO9000
         IF(IVAL2.EQ.3 .AND. IPSTP2.EQ.1)GOTO9000
         CALL CAREND(IVAL2,IVAL1)
-        CALL CACHEC(IEXPOSE,IERRNO)
         CALL CAERAS(IVAL2,IVAL1,ANUMHP,ANUMVP,ARED,AGREEN,ABLUE,
      1              IXRET,IYRET)
       ENDIF
@@ -12721,7 +12884,9 @@ C
         NUMVPP=INT(ANUMVP+0.1)
       ENDIF
 C
-      CALL CACHEC(IEXPOSE,IERRNO)
+      IF(IVAL2.EQ.1)THEN
+        CALL CACHEC(IEXPOSE,IERRNO)
+      ENDIF
       IF(IERRNO.NE.0)THEN
         WRITE(ICOUT,17621)
         CALL DPWRST('XXX','BUG ')
@@ -14659,33 +14824,29 @@ C               **  3) WINDOWS BMP (BLACK/WHITE ONLY)               **
 C               ******************************************************
 C
 12000 CONTINUE
-CCCCC GD SOLID FILL FOR NON-RECTANGULAR REGIONS BLOWS UP FOR
-CCCCC PIE CHARTS (MAYBE OTHERS).  MAKE SWITCHABLE, BUT FOR NOW
-CCCCC SIMPLY DO NON-RECTANGULAR SOLID FILLS IN SOFTWARE.
-CCCCC IF(IGDFS.EQ.'OFF'.AND.IFIG.NE.'BOX')GOTO12030
+#ifdef HAVE_GD
 C
-      IF(IPATT.EQ.'EMPT' .OR. IPATT.EQ.'BLAN' .OR. IPATT.EQ.'    ' .OR.
-     1   IPATT.EQ.'NONE' .OR. NP.LE.1)GOTO9000
-      IF(IPATT.EQ.'SOLI' .OR. IPATT.EQ.'FILL' .AND. IFIG.EQ.'BOX')THEN
+      IF(IGDFS.EQ.'OFF' .AND. IFIG.NE.'BOX ')THEN
+        IFACTO=-999
+        GOTO8900
+      ELSEIF(IPATT.EQ.'SOLI' .OR. IPATT.EQ.'FILL')THEN
         IF(NP.LE.3)GOTO9000
         CALL GRTRSD(PX(1),PY(1),IX(1),IY(1),ISUBN0)
         IF(IFIG.EQ.'BOX')THEN
           CALL GRTRSD(PX(3),PY(3),IX(2),IY(2),ISUBN0)
           NTEMP=2
         ELSE
-          DO12011I=2,MAX(100,NP)
+          DO12611I=2,NP
             CALL GRTRSD(PX(I),PY(I),IX(I),IY(I),ISUBN0)
-12011     CONTINUE
+12611     CONTINUE
           NTEMP=NP
         END IF
-#ifdef HAVE_GD
-      CALL GDRGFL(IX,IY,NTEMP,JCOLF)
-CCCCC CALL GDRGF2(IX,IY,NTEMP,ICOLR,ICOLG,ICOLB)
-#endif
+        CALL GDRGFL(IX,IY,NTEMP,JCOLF)
       ELSE
         IFACTO=-999
         GOTO8900
       ENDIF
+#endif
       GOTO9000
 C
 C               ******************************************************
@@ -20122,18 +20283,28 @@ C
 C
 C     NOTES:
 C
-C     1. X11 IS ONLY SUPPORTED FOR DEVICE 1
-C     2. POSTSCRIPT/PDF, SVG, PNG ONLY SUPPORTED FOR DEVICES 2 AND 3
+C     1. X11 AND QUARTZ ARE ONLY SUPPORTED FOR DEVICE 1
+C     2. POSTSCRIPT/ENCAPSULATED PDF/PDF, SVG, PNG ONLY SUPPORTED FOR
+C        DEVICES 2 AND 3
 C
-      IF(IVAL1.EQ.1 .AND. IVAL2.GT.1)THEN
+      IF((IVAL1.EQ.1.OR.IVAL1.EQ.5) .AND. IVAL2.GT.1)THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,17062)
-17062   FORMAT('****** ERROR IN OPENING CAIRO X11 DEVICE')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,17064)
-17064   FORMAT('       X11 IS ONLY SUPPORTED FOR DEVICE 1')
-        CALL DPWRST('XXX','BUG ')
+        IF(IVAL1.EQ.1)THEN
+          WRITE(ICOUT,17062)
+17062     FORMAT('****** ERROR IN OPENING CAIRO X11 DEVICE')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,17064)
+17064     FORMAT('       X11 IS ONLY SUPPORTED FOR DEVICE 1')
+          CALL DPWRST('XXX','BUG ')
+        ELSE
+          WRITE(ICOUT,17063)
+17063     FORMAT('****** ERROR IN OPENING CAIRO QUARTZ DEVICE')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,17065)
+17065     FORMAT('       QUARTZ IS ONLY SUPPORTED FOR DEVICE 1')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
         IERROR='YES'
         GOTO9000
       ELSEIF(IVAL1.EQ.2 .AND. IVAL2.EQ.1)THEN
@@ -29920,14 +30091,14 @@ C               **  [ <X> <X> ...] <OFFSET> SETDASH                 **
 C               **  THE FOLLOWING PATTERNS ARE USED, BUT THEY ARE   **
 C               **  SCALED TO THE DOTS PER INCH (PATTERNS ARE FOR   **
 C               **  72 DOTS PER INCH)                               **
-C               **  [ 0 4 ] 0                                       **
-C               **  [ ] 0                                           **
-C               **  [ 2 4 ] 0                                       **
-C               **  [ 4 4 ] 0                                       **
-C               **  [ 4 2 ] 0                                       **
-C               **  [ 6 4 2 4 ] 0                                   **
-C               **  [ 6 4 4 4 ] 0                                   **
-C               **  [ 6 4 4 4 2 4 ] 0                               **
+C               **  [ ] 0                - SOLID                    **
+C               **  [ 2 4 ] 0            - DOTTED                   **
+C               **  [ 4 4 ] 0            - DASH                     **
+C               **  [ 4 2 ] 0            - DA1                      **
+C               **  [ 6 4 2 4 ] 0        - DA2                      **
+C               **  [ 6 4 6 4 ] 0        - DA3                      **
+C               **  [ 6 4 4 4 2 4 ] 0    - DA4                      **
+C               **  [ 6 4 2 4 2 4 ] 0    - DA5                      **
 C               **  REFERENCE--POSTSCRIPT LANGUAGE, TUTORIAL AND    **
 C               **             COOKBOOK, ADOBE SYSTEMS              **
 C               ******************************************************
@@ -29948,129 +30119,296 @@ C
           ICSTR(1:13)='[ ] 0 setdash'
           NCSTR=13
         ELSEIF(JPATTT.EQ.2)THEN
+C
+C         DOTTED PATTERN (DEFAULT: 2 4)
+C
           ICSTR(1:2)='[ '
           NCHTOT=5
           NCSTR=2
-          IJUNK=INT(2.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=2
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(8:8)=' '
-          NCSTR=8
-          IJUNK=INT(4.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=4
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(14:25)=' ] 0 setdash'
-          NCSTR=25
+          IF(IPSTDP(1,1).GT.0 .AND. IPSTDP(2,1).GT.0)THEN
+            DO8610JJ=1,10
+              IVALZZ=IPSTDP(JJ,1)
+              IF(IVALZZ.LE.0)GOTO8619
+              IJUNK=INT(REAL(IVALZZ)*ASCALE+0.5)
+              IF(IJUNK.LT.1)IJUNK=1
+              CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+              NCSTR=NCSTR+1
+              ICSTR(NCSTR:NCSTR)=' '
+ 8610       CONTINUE
+ 8619       CONTINUE
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR+11)=' ] 0 setdash'
+            NCSTR=NCSTR+11
+          ELSE
+            IJUNK=INT(2.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=2
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(8:8)=' '
+            NCSTR=8
+            IJUNK=INT(4.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(14:25)=' ] 0 setdash'
+            NCSTR=25
+          ENDIF
         ELSEIF(JPATTT.EQ.3)THEN
+C
+C         DASHED PATTERN (DEFAULT: 4 4)
+C
           ICSTR(1:2)='[ '
           NCHTOT=5
           NCSTR=2
-          IJUNK=INT(4.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=4
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(8:8)=' '
-          NCSTR=8
-          IJUNK=INT(4.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=4
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(14:25)=' ] 0 setdash'
-          NCSTR=25
+          IF(IPSTDP(1,2).GT.0 .AND. IPSTDP(2,2).GT.0)THEN
+            DO8620JJ=1,10
+              IVALZZ=IPSTDP(JJ,2)
+              IF(IVALZZ.LE.0)GOTO8629
+              IJUNK=INT(REAL(IVALZZ)*ASCALE+0.5)
+              IF(IJUNK.LT.1)IJUNK=1
+              CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+              NCSTR=NCSTR+1
+              ICSTR(NCSTR:NCSTR)=' '
+ 8620       CONTINUE
+ 8629       CONTINUE
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR+11)=' ] 0 setdash'
+            NCSTR=NCSTR+11
+          ELSE
+            IJUNK=INT(4.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(8:8)=' '
+            NCSTR=8
+            IJUNK=INT(4.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(14:25)=' ] 0 setdash'
+            NCSTR=25
+          ENDIF
         ELSEIF(JPATTT.EQ.4)THEN
+C
+C         DA1    PATTERN (DEFAULT: 4 2 )
+C
           ICSTR(1:2)='[ '
           NCHTOT=5
           NCSTR=2
-          IJUNK=INT(4.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=4
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(8:8)=' '
-          NCSTR=8
-          IJUNK=INT(2.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=2
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(14:25)=' ] 0 setdash'
-          NCSTR=25
+          IF(IPSTDP(1,3).GT.0 .AND. IPSTDP(2,3).GT.0)THEN
+            DO8630JJ=1,10
+              IVALZZ=IPSTDP(JJ,3)
+              IF(IVALZZ.LE.0)GOTO8639
+              IJUNK=INT(REAL(IVALZZ)*ASCALE+0.5)
+              IF(IJUNK.LT.1)IJUNK=1
+              CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+              NCSTR=NCSTR+1
+              ICSTR(NCSTR:NCSTR)=' '
+ 8630       CONTINUE
+ 8639       CONTINUE
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR+11)=' ] 0 setdash'
+            NCSTR=NCSTR+11
+          ELSE
+            IJUNK=INT(4.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(8:8)=' '
+            NCSTR=8
+            IJUNK=INT(2.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=2
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(14:25)=' ] 0 setdash'
+            NCSTR=25
+          ENDIF
         ELSEIF(JPATTT.EQ.5)THEN
+C
+C         DA2    PATTERN (DEFAULT: 6 4 2 4 )
+C
           ICSTR(1:2)='[ '
           NCHTOT=5
           NCSTR=2
-          IJUNK=INT(6.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=6
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(8:8)=' '
-          NCSTR=8
-          IJUNK=INT(4.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=4
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(14:14)=' '
-          NCSTR=14
-          IJUNK=INT(2.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=2
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(20:20)=' '
-          NCSTR=20
-          IJUNK=INT(4.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=4
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(26:37)=' ] 0 setdash'
-          NCSTR=37
+          IF(IPSTDP(1,4).GT.0 .AND. IPSTDP(2,4).GT.0)THEN
+            DO8640JJ=1,10
+              IVALZZ=IPSTDP(JJ,4)
+              IF(IVALZZ.LE.0)GOTO8649
+              IJUNK=INT(REAL(IVALZZ)*ASCALE+0.5)
+              IF(IJUNK.LT.1)IJUNK=1
+              CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+              NCSTR=NCSTR+1
+              ICSTR(NCSTR:NCSTR)=' '
+ 8640       CONTINUE
+ 8649       CONTINUE
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR+11)=' ] 0 setdash'
+            NCSTR=NCSTR+11
+          ELSE
+            IJUNK=INT(6.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=6
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(8:8)=' '
+            NCSTR=8
+            IJUNK=INT(4.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(14:14)=' '
+            NCSTR=14
+            IJUNK=INT(2.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=2
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(20:20)=' '
+            NCSTR=20
+            IJUNK=INT(4.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(26:37)=' ] 0 setdash'
+            NCSTR=37
+          ENDIF
         ELSEIF(JPATTT.EQ.6)THEN
+C
+C         DA3    PATTERN (DEFAULT: 6 4 6 4 )
+C
           ICSTR(1:2)='[ '
           NCHTOT=5
           NCSTR=2
-          IJUNK=INT(6.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=6
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(8:8)=' '
-          NCSTR=8
-          IJUNK=INT(4.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=4
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(14:14)=' '
-          NCSTR=14
-          IJUNK=INT(6.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=6
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(20:20)=' '
-          NCSTR=20
-          IJUNK=INT(4.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=4
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(26:37)=' ] 0 setdash'
-          NCSTR=37
+          IF(IPSTDP(1,5).GT.0 .AND. IPSTDP(2,5).GT.0)THEN
+            DO8650JJ=1,10
+              IVALZZ=IPSTDP(JJ,5)
+              IF(IVALZZ.LE.0)GOTO8659
+              IJUNK=INT(REAL(IVALZZ)*ASCALE+0.5)
+              IF(IJUNK.LT.1)IJUNK=1
+              CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+              NCSTR=NCSTR+1
+              ICSTR(NCSTR:NCSTR)=' '
+ 8650       CONTINUE
+ 8659       CONTINUE
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR+11)=' ] 0 setdash'
+            NCSTR=NCSTR+11
+          ELSE
+            IJUNK=INT(6.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=6
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(8:8)=' '
+            NCSTR=8
+            IJUNK=INT(4.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(14:14)=' '
+            NCSTR=14
+            IJUNK=INT(6.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=6
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(20:20)=' '
+            NCSTR=20
+            IJUNK=INT(4.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(26:37)=' ] 0 setdash'
+            NCSTR=37
+          ENDIF
         ELSEIF(JPATTT.EQ.7)THEN
+C
+C         DA4    PATTERN (DEFAULT: 6 4 4 4 2 4 )
+C
           ICSTR(1:2)='[ '
           NCHTOT=5
           NCSTR=2
-          IJUNK=INT(6.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=6
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(8:8)=' '
-          NCSTR=8
-          IJUNK=INT(4.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=4
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(14:14)=' '
-          NCSTR=14
-          IJUNK=INT(4.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=4
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(20:20)=' '
-          NCSTR=20
-          IJUNK=INT(4.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=4
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(26:26)=' '
-          NCSTR=26
-          IJUNK=INT(2.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=2
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(32:32)=' '
-          NCSTR=32
-          IJUNK=INT(4.*ASCALE+0.5)
-          IF(IJUNK.LE.1)IJUNK=4
-          CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
-          ICSTR(38:49)=' ] 0 setdash'
-          NCSTR=49
+          IF(IPSTDP(1,6).GT.0 .AND. IPSTDP(2,6).GT.0)THEN
+            DO8660JJ=1,10
+              IVALZZ=IPSTDP(JJ,6)
+              IF(IVALZZ.LE.0)GOTO8669
+              IJUNK=INT(REAL(IVALZZ)*ASCALE+0.5)
+              IF(IJUNK.LT.1)IJUNK=1
+              CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+              NCSTR=NCSTR+1
+              ICSTR(NCSTR:NCSTR)=' '
+ 8660       CONTINUE
+ 8669       CONTINUE
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR+11)=' ] 0 setdash'
+            NCSTR=NCSTR+11
+          ELSE
+            IJUNK=INT(6.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=6
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(8:8)=' '
+            NCSTR=8
+            IJUNK=INT(4.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(14:14)=' '
+            NCSTR=14
+            IJUNK=INT(4.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(20:20)=' '
+            NCSTR=20
+            IJUNK=INT(4.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(26:26)=' '
+            NCSTR=26
+            IJUNK=INT(2.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=2
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(32:32)=' '
+            NCSTR=32
+            IJUNK=INT(4.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(38:49)=' ] 0 setdash'
+            NCSTR=49
+          ENDIF
+        ELSEIF(JPATTT.EQ.8)THEN
+C
+C         DA5    PATTERN (DEFAULT: 6 4 2 4 2 4 )
+C
+          ICSTR(1:2)='[ '
+          NCHTOT=5
+          NCSTR=2
+          IF(IPSTDP(1,7).GT.0 .AND. IPSTDP(2,7).GT.0)THEN
+            DO8670JJ=1,10
+              IVALZZ=IPSTDP(JJ,7)
+              IF(IVALZZ.LE.0)GOTO8679
+              IJUNK=INT(REAL(IVALZZ)*ASCALE+0.5)
+              IF(IJUNK.LT.1)IJUNK=1
+              CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+              NCSTR=NCSTR+1
+              ICSTR(NCSTR:NCSTR)=' '
+ 8670       CONTINUE
+ 8679       CONTINUE
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR+11)=' ] 0 setdash'
+            NCSTR=NCSTR+11
+          ELSE
+            IJUNK=INT(6.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=6
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(8:8)=' '
+            NCSTR=8
+            IJUNK=INT(4.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(14:14)=' '
+            NCSTR=14
+            IJUNK=INT(2.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(20:20)=' '
+            NCSTR=20
+            IJUNK=INT(4.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(26:26)=' '
+            NCSTR=26
+            IJUNK=INT(2.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=2
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(32:32)=' '
+            NCSTR=32
+            IJUNK=INT(4.*ASCALE+0.5)
+            IF(IJUNK.LE.1)IJUNK=4
+            CALL GRTRIN(IJUNK,NCHTOT,ICSTR,NCSTR)
+            ICSTR(38:49)=' ] 0 setdash'
+            NCSTR=49
+          ENDIF
         ELSE
           ICSTR(1:13)='[ ] 0 setdash'
           NCSTR=13
@@ -30192,7 +30530,7 @@ C
       ELSEIF(ICASE.EQ.'TEXT')THEN
         GOTO9000
       ELSE
-CCCCC   CALL GDSEPA(JPATTT)
+        CALL GDSEPA(JPATTT)
       ENDIF
 #endif
       GOTO9000
@@ -33791,7 +34129,6 @@ C
         JINDEX=57
         ICOL='SKBL'
       ENDIF
- 49   CONTINUE
 C
 C  CHECK FOR INDEX (0 THROUGH MAXCLR-1)
 C
@@ -33942,6 +34279,7 @@ C
       ENDIF
 C
    89 CONTINUE
+   49 CONTINUE
 C
       ISUBN0='TRCO'
       IERRG4='NO'
@@ -36390,7 +36728,7 @@ C
         IF(IPATTT.EQ.'DA2')JPATTT=5
         IF(IPATTT.EQ.'DA3')JPATTT=6
         IF(IPATTT.EQ.'DA4')JPATTT=7
-        IF(IPATTT.EQ.'DA5')JPATTT=7
+        IF(IPATTT.EQ.'DA5')JPATTT=8
       ENDIF
       GOTO9000
 C
@@ -36920,6 +37258,7 @@ C     UPDATED         --OCTOBER  2016. ADD PRE-PROCESSOR DIRECTIVES
 C     UPDATED         --OCTOBER  2016. ADD TEMPLATES FOR SEVERL FUTURE
 C                                      GRAPHICS DEVICES
 C     UPDATED         --DECEMBER 2018. SUPPORT  DEVICE <1/2/3> SCALE
+C     UPDATED         --NOVEMBER 2023. SUPPORT FOR SCALABLE X11 FONTS
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 C
@@ -37781,7 +38120,26 @@ C               **  SIZE, JUSTIFICATION, AND POSITIONING VIA XLIB   **
 C               **  CALLS.  THEREFORE, THIS IS A NULL ROUTINE.      **
 C               ******************************************************
 C
+C     2023/11: SUPPORT FOR SCALABLE FONTS ADDED.  TEXT SIZES ARE GIVEN
+C              AS POINT SIZES.   ASSUME A 72DPI RESOLUTION FOR X11.
+C              NOTE THAT ONLY INTEGER POINT SIZES SUPPORTED.
+C
  9600 CONTINUE
+      PHEIPP=ANUMVP*PHEIG2/100.
+      JSIZE=INT(PHEIPP+0.5)
+      APNT=REAL(INT(JSIZE))
+      PHEIPP=APNT
+      PVEGPP=0.0
+      PWIDPP=PHEIPP*0.6
+      PHOGPP=0.0
+      JHEIG2=INT(PHEIPP+0.5)
+      JVEGA2=INT(PVEGPP+0.5)
+      JWIDT2=INT(PWIDPP+0.5)
+      JHOGA2=INT(PHOGPP+0.5)
+      PWIDT2=(PWIDPP/ANUMHP)*100.0
+      PHOGA2=0.0
+      PHEIG2=0.75*(PHEIPP/ANUMVP)*100.0
+      PVEGA2=0.25*(PHEIPP/ANUMVP)*100.0
       GOTO9000
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED   MAY 1991  (JJF)
@@ -38864,6 +39222,7 @@ C     UPDATED         --OCTOBER   2016. ADD PRE-PROCESSOR DIRECTIVES
 C     UPDATED         --OCTOBER   2016. ADD TEMPLATES FOR SEVERL FUTURE
 C                                       GRAPHICS DEVICES
 C     UPDATED         --DECEMBER  2020. CHECK FOR > 130 FOR SVG DEVICE
+C     UPDATED         --OCTOBER   2023. SCALABLE FONTS FOR X11
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 C
@@ -40319,6 +40678,8 @@ C               **  CONTAINING THE ASCII DECIMAL EQUIVALENTS        **
 C               ******************************************************
 C
 C
+C     2023/11: SUPPORT FOR SCALABLE FONTS
+C
  9600 CONTINUE
 #ifdef HAVE_X11
       IF(IX11OF.EQ.'OFF')GOTO9000
@@ -40332,28 +40693,74 @@ C
  9605 CONTINUE
       STRING(NCTEXT+1)=0
 C
-      ILAST=80
-      DO9610I=80,1,-1
-        ILAST=I
-        IF(IX11FN(I:I).NE.' ')GOTO9619
- 9610 CONTINUE
- 9619 CONTINUE
-      DO9620I=1,ILAST
-        CALL DPCOAN(IX11FN(I:I),IJUNK)
-        IADE(I)=IJUNK
- 9620 CONTINUE
-      IADE(ILAST+1)=0
+C     CHECK IF SCALABLE FONTS REQUESTED
 C
-      CALL XTATTR(IADE,IXERR)
-      IF(IXERR.EQ.1) THEN
-        WRITE(ICOUT,9621)
- 9621   FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND--USE CURRENT FONT')
-        CALL DPWRST('XXX','BUG ')
-      ELSEIF(IXERR.EQ.2)THEN
-        WRITE(ICOUT,9622)
- 9622   FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND--USE DEFAULT FONT')
-        CALL DPWRST('XXX','BUG ')
-      END IF
+      IF(IX11FT.EQ.'FIXE')THEN
+        IFTYPE=0
+      ELSE
+        IFTYPE=1
+        IF(IX11SF(1:4).EQ.'NULL')IFTYPE=0
+      ENDIF
+C
+      ILAST=80
+      IF(IFTYPE.EQ.0)THEN
+        DO9610I=80,1,-1
+          ILAST=I
+          IF(IX11FN(I:I).NE.' ')GOTO9619
+ 9610   CONTINUE
+ 9619   CONTINUE
+        DO9620I=1,ILAST
+          CALL DPCOAN(IX11FN(I:I),IJUNK)
+          IADE(I)=IJUNK
+ 9620   CONTINUE
+        IADE(ILAST+1)=0
+C
+        CALL XTATTR(IADE,IXERR)
+        IF(IXERR.EQ.1) THEN
+          WRITE(ICOUT,9621)
+ 9621     FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND--USE CURRENT ',
+     1           'FONT')
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(IXERR.EQ.2)THEN
+          WRITE(ICOUT,9622)
+ 9622     FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND--USE DEFAULT ',
+     1           'FONT')
+          CALL DPWRST('XXX','BUG ')
+        END IF
+      ELSE
+        DO9630I=80,1,-1
+          ILAST=I
+          IF(IX11SF(I:I).NE.' ')GOTO9639
+ 9630   CONTINUE
+ 9639   CONTINUE
+C
+C       ADD SIZE TO FONT STRING
+C
+        ICSTR=' '
+        JSIZET=JSIZE
+        IF(JSIZET.LE.6)JSIZET=6
+        IF(JSIZET.GE.24)JSIZET=24
+        ICSTR(1:ILAST)=IX11SF(1:ILAST)
+        ICSTR(ILAST+1:ILAST+6)=':size='
+        ILAST=ILAST+6
+CCCCC   ILAST=ILAST+1
+CCCCC   ICSTR(ILAST:ILAST)='-'
+        IF(JSIZET.LE.9)THEN
+          NCHTOT=1
+        ELSEIF(JSIZET.LE.99)THEN
+          NCHTOT=2
+        ELSE
+          NCHTOT=3
+        ENDIF
+        CALL GRTRIN(JSIZET,NCHTOT,ICSTR,ILAST)
+C
+        DO9640I=1,ILAST
+          CALL DPCOAN(ICSTR(I:I),IJUNK)
+          IADE(I)=IJUNK
+ 9640   CONTINUE
+        IADE(ILAST+1)=0
+      ENDIF
+C
 C
       IFONTH=0
       IFONTV=0
@@ -40388,7 +40795,36 @@ C
       IF(IJUST.EQ.'CETO')IFONTV=2
       IF(IJUST.EQ.'RITO')IFONTV=2
       IXERR=0
-      CALL XTEXTH(STRING,IX,IY,IFONTH,IFONTV,IXERR)
+      IF(IFTYPE.EQ.0)THEN
+        CALL XTEXTH(STRING,IX,IY,IFONTH,IFONTV,IXERR)
+      ELSE
+C
+        IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'WRTH')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,9651)ILAST,ICSTR(1:ILAST)
+ 9651     FORMAT('X11 SCALABLE FONT: ILAST = ',I5,'ICSTR = ',A130)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+        CALL XTEXTH2(IADE,STRING,IX,IY,IFONTH,IFONTV,IXERR)
+        IF(IXERR.EQ.1)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,9661)
+ 9661     FORMAT('IN GRWRTH: UNABLE TO LOAD SCALABLE X11 FONT')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,9663)ICSTR(1:ILAST)
+ 9663     FORMAT('FONT NAME: ',A130)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(IXERR.EQ.2)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,9671)
+ 9671     FORMAT('IN GRWRTH: UNABLE TO ALLOCTE Xft COLOR')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
 #endif
       GOTO9000
 C
@@ -41258,6 +41694,7 @@ C     UPDATED         --OCTOBER   2016 ADD TEMPLATES FOR SEVERL FUTURE
 C                                      GRAPHICS DEVICES
 C     UPDATED         --DECEMBER  2020 CHECK FOR > 130 CHARACTERS FOR
 C                                      SVG DEVICE
+C     UPDATED         --OCTOBER   2023 SCALABLE FONTS FOR X11
 C
 C-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 C
@@ -42939,6 +43376,8 @@ C               **  STRING IS PASSED TO C AS AN INTEGER ARRAY       **
 C               **  CONTAINING THE ASCII DECIMAL EQUIVALENTS        **
 C               ******************************************************
 C
+C     2023/10: SUPPORT FOR SCALABLE FONTS
+C
  9600 CONTINUE
 #ifdef HAVE_X11
       IF(IX11OF.EQ.'OFF')GOTO9000
@@ -42952,28 +43391,71 @@ C
  9605 CONTINUE
       STRING(NCTEXT+1)=0
 C
-      ILAST=80
-      DO9610I=80,1,-1
-        ILAST=I
-        IF(IX11FN(I:I).NE.' ')GOTO9619
- 9610 CONTINUE
- 9619 CONTINUE
-      DO9620I=1,ILAST
-        CALL DPCOAN(IX11FN(I:I),IJUNK)
-        IADE(I)=IJUNK
- 9620 CONTINUE
-      IADE(ILAST+1)=0
+C     CHECK IF SCALABLE FONTS REQUESTED
 C
-      CALL XTATTR(IADE,IXERR)
-      IF(IXERR.EQ.1) THEN
-        WRITE(ICOUT,9621)
- 9621   FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND--USE CURRENT FONT')
-        CALL DPWRST('XXX','BUG ')
-      ELSEIF(IXERR.EQ.2)THEN
-        WRITE(ICOUT,9622)
- 9622   FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND--USE DEFAULT FONT')
-        CALL DPWRST('XXX','BUG ')
-      END IF
+      IF(IX11FT.EQ.'FIXE')THEN
+        IFTYPE=0
+      ELSE
+        IFTYPE=1
+        IF(IX11SF(1:4).EQ.'NULL')IFTYPE=0
+      ENDIF
+C
+      IF(IFTYPE.EQ.0)THEN
+        ILAST=80
+        DO9610I=80,1,-1
+          ILAST=I
+          IF(IX11FN(I:I).NE.' ')GOTO9619
+ 9610   CONTINUE
+ 9619   CONTINUE
+        DO9620I=1,ILAST
+          CALL DPCOAN(IX11FN(I:I),IJUNK)
+          IADE(I)=IJUNK
+ 9620   CONTINUE
+        IADE(ILAST+1)=0
+        CALL XTATTR(IADE,IXERR)
+        IF(IXERR.EQ.1) THEN
+          WRITE(ICOUT,9621)
+ 9621     FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND--USE CURRENT ',
+     1           'FONT')
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(IXERR.EQ.2)THEN
+          WRITE(ICOUT,9622)
+ 9622     FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND--USE DEFAULT ',
+     1           'FONT')
+          CALL DPWRST('XXX','BUG ')
+        END IF
+      ELSE
+        ILAST=80
+        DO9630I=80,1,-1
+          ILAST=I
+          IF(IX11SF(I:I).NE.' ')GOTO9639
+ 9630   CONTINUE
+ 9639   CONTINUE
+C
+C       ADD SIZE TO FONT STRING
+C
+        ICSTR=' '
+        JSIZET=JSIZE
+        IF(JSIZET.LE.6)JSIZET=6
+        IF(JSIZET.GE.24)JSIZET=24
+        ICSTR(1:ILAST)=IX11SF(1:ILAST)
+        ICSTR(ILAST+1:ILAST+6)=':size='
+        ILAST=ILAST+6
+        IF(JSIZET.LE.9)THEN
+          NCHTOT=1
+        ELSEIF(JSIZET.LE.99)THEN
+          NCHTOT=2
+        ELSE
+          NCHTOT=3
+        ENDIF
+        CALL GRTRIN(JSIZET,NCHTOT,ICSTR,ILAST)
+C
+        DO9640I=1,ILAST
+          CALL DPCOAN(IX11SF(I:I),IJUNK)
+          IADE(I)=IJUNK
+ 9640   CONTINUE
+        IADE(ILAST+1)=0
+      ENDIF
 C
       IFONTH=0
       IFONTV=0
@@ -43017,7 +43499,27 @@ C
       ENDIF
 C
       IXERR=0
-      CALL XTEXTV(STRING,IX,IY,IFONTH,IFONTV,IXERR)
+      IF(IFTYPE.EQ.0)THEN
+        CALL XTEXTV(STRING,IX,IY,IFONTH,IFONTV,IXERR)
+      ELSE
+        CALL XTEXTV2(IADE,STRING,IX,IY,IFONTH,IFONTV,IXERR)
+        IF(IXERR.EQ.1)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,9661)
+ 9661     FORMAT('IN GRWRTV: UNABLE TO LOAD SCALABLE X11 FONT')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,9663)ICSTR(1:ILAST)
+ 9663     FORMAT('FONT NAME: ',A130)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(IXERR.EQ.2)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,9671)
+ 9671     FORMAT('IN GRWRTV: UNABLE TO ALLOCTE Xft COLOR')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
 C
 #endif
       GOTO9000
