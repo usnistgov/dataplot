@@ -1,26 +1,21 @@
-#  This version of the Makefile assumes that you are not using a Linux
-#  package manager (e.g., Homebrew or Macports).
+#  This version of the Makefile assumes you are using Homebrew on MacOS
+#  with the Intel chips.
 #
 #  Note the following:
 #
-#  1. It is assumed that you have installled gfortran/gcc in "/usr/local/bin"
-#     and that you have installed X11 (typically via XQuartz).
+#  1. Homebrew changed the path for Homebrew installations for the
+#     M1 chips (/usr/local rather than /usr/local).
 #
-#  2. Dataplot is currently not compatible with the version of READLINE
-#     that comes with MacOS, so the READLINE and NCURSES features should
-#     not be activated.
+#  2. Homebrew uses the version of the READLINE library that comes
+#     with MacOS.  Dataplot is currently not compatible with this
+#     version, so the READLINE and NCURSES features should not be
+#     activated.
 #
-#  3. There are 2 differences that should be noted if your machine uses
-#     the M1 chips rather than Intel.  First, there is a Fortran compilation
-#     flag required with M1.  Second, the Aquaterm version from Github
-#     currently (as of 01/31/2024) only supports the Intel chips.  So if
-#     your machine has the M1 chips, be sure to include "MACOSX_M1" on the
-#     FEAATURES line and do not include AQUA on the FEATURES line.
+#  3. Homebrew uses the version of Aquaterm from github.  This works
+#     with the Intel chips, so the AQUA feature can be activated.
 #
-#  4. There are several libraries that Dataplot can optionally support.
-#     Although you could build these manually, it is recommended that you
-#     use one of the Linux package managers (e.g., Homebrew or Macports) if
-#     you want to utilize these libraries.
+#  4. It is assumed that the gfortran/gcc compilers and the X11 library
+#     have been installed using Homebrew.
 #
 # See the following web page for more details on installing for MacOS.
 #
@@ -28,26 +23,22 @@
 #
 FC = /usr/local/bin/gfortran
 CC = /usr/local/bin/gcc
-
+#
 # FEATURES to enable during compilation
-# all: FEATURES = X11 AQUA MACOSX MACOSX_M1 DEBUG
-# Following recommend line for Intel chips
-# FEATURES = X11 AQUA MACOSX
-# Following recommend line for M1 chips
-FEATURES = X11 MACOSX MACOSX_M1
+# all: READLINE NCURSES GD TIFF VPX CAIRO X11 PLOT AQUA DEBUG HOMEBREW
+FEATURES = GD TIFF CAIRO X11 PLOT AQUA HOMEBREW
 
 # PREFIX is the parent of where are installed (recommend /usr/local or /usr)
 # For non-root install, consider PREFIX=$(HOME)
 # DESTDIR is used by packaging programs (e.g., rpmbuild).
-# PREFIX = $(HOME)
 PREFIX = $(DESTDIR)/usr/local
 BINDIR = $(PREFIX)/bin
 
 # where to find additional dataplot files (help, menus, etc).
 DPLIBDIR=$(PREFIX)/lib/dataplot
 
-FFLAGS += -O2 -DLINUX -fdefault-real-8 -fdefault-double-8
-CFLAGS += -O2
+FFLAGS += -O2 -DLINUX -DMACOSX -fdefault-real-8 -fdefault-double-8
+CFLAGS += -O2 -DMACOSX
 
 # special flags for dp1
 DP1FLAGS = -DDDOUBLE -DINTEGER32 -DHAVE_ISNAN -DHAVE_EXECUTE_COMMAND_LINE -DMACOS -DDPLIBDIR=\'$(DPLIBDIR)\'
@@ -63,29 +54,85 @@ ifneq (,$(findstring DEBUG,$(FEATURES)))
 FFLAGS += -g
 endif
 
-#  MACOSX is used to activate clipboard functions using pbcopy/pbpaste
-ifneq (,$(findstring MACOSX,$(FEATURES)))
-FFLAGS4 += -DMACOSX
+
+# HOMEBREW: Specify location for libraries and include files
+ifneq (,$(findstring HOMEBREW,$(FEATURES)))
+LDFLAGS += -L/usr/local/lib
+CPPFLAGS += -I/usr/local/include -I/Applications/xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+CFLAGS   += -I/usr/local/include -I/Applications/xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
 endif
 
-#  MACOSX_M1 is used to specify an additional compilation flag
-ifneq (,$(findstring MACOSX_M1,$(FEATURES)))
-FFLAGS4 += -mcmodel=small
+#  Homebrew: sudo brew install readline
+# ifneq (,$(findstring READLINE,$(FEATURES)))
+# OBJS += rldp.o
+# FFLAGS4 = -DHAVE_READLINE
+# LDFLAGS += -lreadline
+# endif
+
+#  Homebrew: sudo brew install ncurses
+ifneq (,$(findstring NCURSES,$(FEATURES)))
+LDFLAGS += -lncurses
+endif
+
+#  Homebrew: sudo brew install tiff
+ifneq (,$(findstring TIFF,$(FEATURES)))
+FEATURES += GD
+CFLAGS += -DHAVE_GD_TIFF
+endif
+
+#  Homebrew: sudo brew install webp
+ifneq (,$(findstring VPX,$(FEATURES)))
+FEATURES += GD
+CFLAGS += -DHAVE_GD_VPX
+endif
+
+#  Homebrew: sudo brew install gd2
+ifneq (,$(findstring GD,$(FEATURES)))
+OBJS += gd.o
+LDFLAGS += -lgd
+FFLAGS4 += -DHAVE_GD
+endif
+
+#  Quartz driver for Cairo - not working so do not
+#  activate this feature
+ifneq (,$(findstring CAIRO_QUARTZ,$(FEATURES)))
+OBJS += cairo.o
+FEATURES += CAIRO
+LDFLAGS += -framework Carbon
+endif
+
+#  Homebrew: sudo brew install cairo
+ifneq (,$(findstring CAIRO,$(FEATURES)))
+OBJS += cairo.o
+FEATURES += X11
+FFLAGS4 += -DHAVE_CAIRO -DHAVE_X11
+CFLAGS += -DHAVE_X11 `pkg-config --cflags cairo`
+LDFLAGS += `pkg-config --libs cairo`
+endif
+
+#  Homebrew: sudo brew install plotutils
+ifneq (,$(findstring PLOT,$(FEATURES)))
+OBJS += libplot.o
+FEATURES += X11
+LDFLAGS += -lplot
+FFLAGS4 += -DHAVE_LIBPLOT
 endif
 
 ifneq (,$(findstring X11,$(FEATURES)))
 OBJS += x11.o
-CFLAGS  += -I/usr/X11/include
+CFLAGS  += -I/opt/X11/include
 FFLAGS4 += -DHAVE_X11
-LDFLAGS += -L/usr/X11/lib -lX11
+LDFLAGS += -L/opt/X11/lib -lX11 -lXft
 endif
 
 ifneq (,$(findstring AQUA,$(FEATURES)))
 OBJS += aqua.o
 LDFLAGS += -F/Library/Frameworks -framework AquaTerm -lobjc
 FFLAGS4 += -DHAVE_AQUA
+#CFLAGS += -I/usr/local/Library/Frameworks/AquaTerm.framework/Versions/Current/Headers
 CFLAGS += -I/Library/Frameworks/AquaTerm.framework/Versions/Current/Headers
 endif
+
 
 
 all: xdataplot dataplot
