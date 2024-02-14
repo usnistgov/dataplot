@@ -1,0 +1,5 @@
+Dataplot is distributed  under the NIST Public Domain
+Notice.   See the  following web page for the full text
+for this license
+
+     https://spdx.org/licenses/NIST-PD.html

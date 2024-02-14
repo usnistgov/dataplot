@@ -45,7 +45,7 @@ FFLAGS += -O2 -DLINUX -DMACOSX -fdefault-real-8 -fdefault-double-8 -mcmodel=smal
 CFLAGS += -O2 -DMACOSX
 
 # special flags for dp1
-DP1FLAGS = -DDDOUBLE -DINTEGER32 -DHAVE_ISNAN -DHAVE_EXECUTE_COMMAND_LINE -DMACOS -DDPLIBDIR=\'$(DPLIBDIR)\'
+DP1FLAGS = -DDDOUBLE -DINTEGER32 -DHAVE_ISNAN -DHAVE_EXECUTE_COMMAND_LINE -DDPLIBDIR=\'$(DPLIBDIR)\'
 
 
 # object files sorted by size for fastest parallel compilation; dp2.o first as it takes the longest

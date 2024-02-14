@@ -1616,7 +1616,8 @@ CCCCC IVERSI='5.03.0717 (2023/07/17)'
 CCCCC IVERSI='5.03.0804 (2023/08/04)'
 CCCCC IVERSI='5.03.0824 (2023/08/24)'
 CCCCC IVERSI='5.03.0907 (2023/09/07)'
-      IVERSI='5.04.0131 (2024/01/31)'
+CCCCC IVERSI='5.04.0131 (2024/01/31)'
+      IVERSI='5.04.0214 (2024/02/14)'
       NCVERS=22
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
@@ -2809,6 +2810,10 @@ C       FOR LINUX WITH XCLIP, ISSUE THE COMMAND:
 C
 C          xclip -o -selection <clipboard/primary/secondary>  > zzzz_clipboard.dp
 C
+        ISTEPN='22A1'
+        IF(IBUGMA.EQ.'ON'.OR.ISUBRO.EQ.'MAIN')
+     1    CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
         IFLAG=0
         IF(ICOM.EQ.'CLIP' .AND. ICOM2.EQ.'BOAR' .AND.
      1     NUMARG.EQ.0)IFLAG=1
@@ -2819,7 +2824,16 @@ C
         IF(ICOM.EQ.'CALL' .AND. IHARG(1).EQ.'CLIP' .AND.
      1     IHARG2(1).EQ.'BOAR')IFLAG=1
 C
-          IF(IFLAG.EQ.1)THEN
+        ISTEPN='22A2'
+        IF(IBUGMA.EQ.'ON'.OR.ISUBRO.EQ.'MAIN')
+     1    CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+        IF(IFLAG.EQ.1)THEN
+C
+          ISTEPN='22A3'
+          IF(IBUGMA.EQ.'ON'.OR.ISUBRO.EQ.'MAIN')
+     1      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
           ISTRIN=' '
           IF(IX11SE.EQ.'CLIP')THEN
             ISTRIN='xclip -o -selection clipboard > zzzz_clipboard.dp'
@@ -2898,6 +2912,11 @@ C       FOR CYGWIN, COPY "/dev/clipboard" TO A FILE:
 C
 C          cat /dev/clipboard  > zzzz_clipboard.dp
 C
+        ISTEPN='22B1'
+        IF(IBUGMA.EQ.'ON'.OR.ISUBRO.EQ.'MAIN')
+     1    CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+        IFLAG=0
         IF(ICOM.EQ.'CLIP' .AND. ICOM2.EQ.'BOAR' .AND.
      1     NUMARG.EQ.0)IFLAG=1
         IF(ICOM.EQ.'CLIP' .AND. ICOM2.EQ.'BOAR' .AND.
@@ -2907,7 +2926,12 @@ C
         IF(ICOM.EQ.'CALL' .AND. IHARG(1).EQ.'CLIP' .AND.
      1     IHARG2(1).EQ.'BOAR')IFLAG=1
 C
-          IF(IFLAG.EQ.1)THEN
+        IF(IFLAG.EQ.1)THEN
+C
+          ISTEPN='22B2'
+          IF(IBUGMA.EQ.'ON'.OR.ISUBRO.EQ.'MAIN')
+     1      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
           ISTRIN=' '
           ISTRIN='cat /dev/clipboard > zzzz_clipboard.dp'
           NCSTR=38
@@ -2978,6 +3002,11 @@ C       FOR MACOS, USE PBPASTE TO COPY CLIPBOARD TO A FILE
 C
 C          pbpaste > zzzz_clipboard.dp
 C
+        ISTEPN='22C1'
+        IF(IBUGMA.EQ.'ON'.OR.ISUBRO.EQ.'MAIN')
+     1    CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+        IFLAG=0
         IF(ICOM.EQ.'CLIP' .AND. ICOM2.EQ.'BOAR' .AND.
      1     NUMARG.EQ.0)IFLAG=1
         IF(ICOM.EQ.'CLIP' .AND. ICOM2.EQ.'BOAR' .AND.
@@ -2987,7 +3016,12 @@ C
         IF(ICOM.EQ.'CALL' .AND. IHARG(1).EQ.'CLIP' .AND.
      1     IHARG2(1).EQ.'BOAR')IFLAG=1
 C
-          IF(IFLAG.EQ.1)THEN
+        IF(IFLAG.EQ.1)THEN
+C
+          ISTEPN='22C2'
+          IF(IBUGMA.EQ.'ON'.OR.ISUBRO.EQ.'MAIN')
+     1      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
           ISTRIN=' '
           ISTRIN='pbpaste > zzzz_clipboard.dp'
           NCSTR=27

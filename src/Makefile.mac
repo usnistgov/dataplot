@@ -46,11 +46,11 @@ BINDIR = $(PREFIX)/bin
 # where to find additional dataplot files (help, menus, etc).
 DPLIBDIR=$(PREFIX)/lib/dataplot
 
-FFLAGS += -O2 -DLINUX -fdefault-real-8 -fdefault-double-8
+FFLAGS += -O2 -DLINUX -DMACOSX-fdefault-real-8 -fdefault-double-8
 CFLAGS += -O2
 
 # special flags for dp1
-DP1FLAGS = -DDDOUBLE -DINTEGER32 -DHAVE_ISNAN -DHAVE_EXECUTE_COMMAND_LINE -DMACOS -DDPLIBDIR=\'$(DPLIBDIR)\'
+DP1FLAGS = -DDDOUBLE -DINTEGER32 -DHAVE_ISNAN -DHAVE_EXECUTE_COMMAND_LINE -DDPLIBDIR=\'$(DPLIBDIR)\'
 
 
 # object files sorted by size for fastest parallel compilation; dp2.o first as it takes the longest
@@ -63,17 +63,11 @@ ifneq (,$(findstring DEBUG,$(FEATURES)))
 FFLAGS += -g
 endif
 
-#  MACOSX is used to activate clipboard functions using pbcopy/pbpaste
-ifneq (,$(findstring MACOSX,$(FEATURES)))
-FFLAGS4 += -DMACOSX
-endif
-
 #  MACOSX_M1 is used to specify an additional compilation flag
 ifneq (,$(findstring MACOSX_M1,$(FEATURES)))
 FFLAGS4 += -mcmodel=small
 endif
 
-ifneq (,$(findstring X11,$(FEATURES)))
 OBJS += x11.o
 CFLAGS  += -I/usr/X11/include
 FFLAGS4 += -DHAVE_X11

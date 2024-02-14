@@ -1932,7 +1932,7 @@ C
       IHMOD2='    '
       IOPSY1='UNIX'
       IOPSY2='    '
-#if defined(MACOS)
+#if defined(MACOSX)
       IOPSY2='MAC '
 #endif
       ICOMPI='gfor'
