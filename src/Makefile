@@ -34,7 +34,7 @@ OBJS = dp40.o dp36.o dp42.o dp19.o dp11.o dp38.o dp20.o dp21.o dp2.o dp3.o dp43.
 
 ifneq (,$(findstring READLINE,$(FEATURES)))
 OBJS += rldp.o
-CFLAGS += =Iusr/include/readline
+CFLAGS += -I/usr/include/readline
 FFLAGS4 = -DHAVE_READLINE
 LDFLAGS += -lreadline
 endif
