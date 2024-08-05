@@ -1,5 +1,5 @@
 9.
-                                                     January 2024
+                                                     July 2024
 This is the DATAPLOT News file DPNEWF.TEX.  This NEWS file contains a
 list of DATAPLOT enhancements.  Some commands may be documented here
 that are not yet available in the standard documentation.
@@ -7,6 +7,61 @@ that are not yet available in the standard documentation.
 The complete news file can be viewed at
 
     http://www.itl.nist.gov/div898/software/dataplot/news.htm
+
+-----------------------------------------------------------------------
+The following enhancements were made to DATAPLOT
+February 2024 - July 2024.
+-----------------------------------------------------------------------
+
+ 1. Made the following updates to Analysis commands.
+
+    a. Added the command
+
+         JONCKHEERE TERPSTRA TEST Y X
+
+    b. Updated the E691 command to support unbalanced data.
+
+    c. Added the command
+
+         RANDOMIZED COMPLETE BLOCK  Y TREAT BLOCK
+
+       This command will perform the standard F-test.  In addition,
+       it will optionally perform a permutation test.  This command
+       is for the case without replication.
+
+ 2. Made the following updates to Graphics commands.
+
+    a. Update the H CONSISTENCY PLOT and K CONSISTENCY PLOT commands
+       to support unbalanced data.
+
+    b. Added the commands
+
+          FISHER DISCRIMINANT PLOT X1 ... XK TAG
+          K NEAREST NEIGHBORS CLASSIFICATION PLOT X1 ... XK TAG
+
+ 3. Made the following updates to the Mathematics LET sub-commands.
+
+       LET Y2 = H CONSISTENCY STATISTIC Y LABID
+       LET Y2 = K CONSISTENCY STATISTIC Y LABID
+
+       LET Y = <dist> ORDER STATISTIC <stat> FOR I = 1 1 N
+
+ 4. Changed the default plot file names from dppl1f.dat and dppl2f.dat
+    to dppl1f.ps and dppl2f.ps.  This was done since many Postscript
+    viewers expect a ".ps" extension for the file.  In particular,
+    the Windows Ghostview 5.0 program (which did not require this)
+    is no longer working under current versions of Windows 10 and
+    Windows 11. The Ghostview 6.0 and Evince alternatives require
+    a ".ps" extension for Postscript files.
+
+    Made a few corrections so that the automatic conversion of
+    Postscript files to PDF (when the SET POSTSCRIPT CONVERT PDF
+    command is used) is now working again as expected.
+
+ 5. For the GD device, if the font name given on the SET GD FONT
+    command does not exist as given, Dataplot will check the Dataplot
+    fonts directory for the font name.  If the font is not found or
+    if no font is specified, the MEDIUMBOLD font will be used.
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
@@ -92,7 +147,7 @@ September 2023 - January 2024.
     d. The X11 driver was updated to support scalable fonts
        using the Xtf library.
 
- 4. A number of changes were made to address a compilation issue
+ 5. A number of changes were made to address a compilation issue
     on MacOS using the M1 chipset.  This did not change any
     capabilities, but does allow for a cleaner build for MacOS
     with the M1 chip.  Note that an additional compilation flag
@@ -100,7 +155,7 @@ September 2023 - January 2024.
     Makefiles for various cases (MacPorts, Homebrew or no
     Linux package manager).
 
- 5. A number of miscellaneous bug fixes were made.  In particular,
+ 6. A number of miscellaneous bug fixes were made.  In particular,
     the SEASONAL LOWESS command and the automatic variable names when
     using SKIP AUTOMATIC were fixed.
 

@@ -987,7 +987,8 @@ C
       RETURN
       END
       SUBROUTINE HCONS(Y,X,XIDTEM,TEMP,TEMP2,N,IWRITE,YOUT,NUMSET,
-     1ISUBRO,IBUGA3,IERROR)
+     1                 XBARIV,SDI,DXBARI,CELLWT,NCELL,
+     1                 ISUBRO,IBUGA3,IERROR)
 C
 C     PURPOSE--THIS SUBROUTINE COMPUTES THE H CONSISTENCY STATISTIC
 C              OF THE DATA IN THE INPUT VECTOR Y WITH LAB ID
@@ -1028,7 +1029,7 @@ C                 of a Test Method", ASTM International,
 C                 100 Barr Harbor Drive, PO BOX C700,
 C                 West Conshohoceken, PA 19428-2959, USA.
 C                 This document is in support of
-C                 ASTM Standard E 691 - 99.
+C                 ASTM Standard E 691 - 23.
 C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
@@ -1040,6 +1041,7 @@ C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--2005.2
 C     ORIGINAL VERSION--FEBRUARY  2005.
+C     UPDATED         --APRIL     2024. UPDATED FOR UNBALANCED DATA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -1050,6 +1052,7 @@ C
 C
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
+      CHARACTER*4 IBAL
 C
 C---------------------------------------------------------------------
 C
@@ -1059,6 +1062,12 @@ C
       DIMENSION XIDTEM(*)
       DIMENSION TEMP(*)
       DIMENSION TEMP2(*)
+      DIMENSION XBARIV(*)
+      DIMENSION SDI(*)
+      DIMENSION DXBARI(*)
+      DIMENSION CELLWT(*)
+C
+      INTEGER   NCELL(*)
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -1069,6 +1078,7 @@ C
       ISUBN1='HCON'
       ISUBN2='S   '
       IERROR='NO'
+      IBAL='YES'
 C
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CONS')THEN
         WRITE(ICOUT,999)
@@ -1092,7 +1102,7 @@ C               **  STEP 1--                              **
 C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
 C               ********************************************
 C
-      AN=N
+      N=N
 C
       IF(N.LE.1)THEN
         IERROR='YES'
@@ -1147,6 +1157,9 @@ C
       ANUMSE=NUMSET
 C
       J=0
+      NOUT=0
+      NHOLD=0
+      NTEMP=0
       DO1110ISET1=1,NUMSET
         K=0
         DO1130I=1,N
@@ -1156,9 +1169,20 @@ C
           ENDIF
  1130   CONTINUE
         NTEMP=K 
+C
+C     2024/04: CHECK FOR BALANCED DATA
+C
+        IF(ISET1.EQ.1)THEN
+          NHOLD=NTEMP
+        ELSEIF(NTEMP.NE.NHOLD)THEN
+           IBAL='NO'
+           GOTO2000
+        ENDIF
+C
         CALL MEAN(TEMP,NTEMP,IWRITE,XBARI,IBUGA3,IERROR)
         TEMP2(ISET1)=XBARI
         YOUT(ISET1)=XBARI - XBAR
+C
         IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CONS')THEN
           WRITE(ICOUT,1131)ISET1,XBARI
  1131     FORMAT('ISET1,XBARI = ',I8,G15.7)
@@ -1170,6 +1194,120 @@ C
       DO1150I=1,NUMSET
         YOUT(I)=YOUT(I)/SDBARI
  1150 CONTINUE
+      GOTO9000
+C
+ 2000 CONTINUE
+C
+      J=0
+      NTEMP=0
+      CALL MEAN(Y,N,IWRITE,XGRAND,IBUGA3,IERROR)
+C
+      DSUM=0.0D0
+      DO2110ISET1=1,NUMSET
+        K=0
+        DO2130I=1,N
+          IF(XIDTEM(ISET1).EQ.X(I))THEN
+            K=K+1
+            TEMP(K)=Y(I)
+          ENDIF
+ 2130   CONTINUE
+        NTEMP=K
+        NCELL(ISET1)=NTEMP
+        NOUT=ISET1
+C
+C       COMPUTE CELL MEAN, CELL SD, DIFFERENCE BETWEEN CELL
+C       MEAN AND OVERALL MEAN
+C
+        CALL MEAN(TEMP,NTEMP,IWRITE,XMEAN,IBUGA3,IERROR)
+        IF(NTEMP.EQ.1)THEN
+          XSD=0.0
+        ELSE
+          CALL SD(TEMP,NTEMP,IWRITE,XSD,IBUGA3,IERROR)
+        ENDIF
+        DSUM=DSUM + DBLE(XSD)**2
+        XBARIV(ISET1)=XMEAN
+        SDI(ISET1)=XSD
+        DXBARI(ISET1)=XBARIV(ISET1) - XGRAND
+C
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'EIN2')THEN
+          WRITE(ICOUT,2119)ISET1,NOUT,XGRAND,XBARIV(NOUT),
+     1                     SDI(NOUT),DXBARI(NOUT)
+ 2119     FORMAT('ISET1,NOUT,XGRAND,XBARIV(NOUT)SDI(NOUT),',
+     1           'DXBARI(NOUT) = ',2I8,4G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+ 2110 CONTINUE
+C
+C     2024/03: FOR UNBALANCED DATA, COMPUTE OPERATIONAL NUMBER OF
+C              REPLICATES (A2.6)
+C
+      SUM=0.0
+      SUM2=0.0
+      SUM3=0.0
+      DO2160ISET1=1,NUMSET
+        AVAL=REAL(NCELL(ISET1))
+        IINDX=ISET1
+        SUM=SUM + (AVAL**2/REAL(N))
+        SUM2=SUM2 + AVAL*DXBARI(ISET1)**2
+        SUM3=SUM3 + (AVAL-1.0)*SDI(ISET1)**2
+C
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CONS')THEN
+          WRITE(ICOUT,2163)ISET1,AVAL,DXBARI(ISET1),SDI(ISET1)
+ 2163     FORMAT('ISET1,AVAL,DXBARI(ISET1),SDI(ISET1) = ',I6,3G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+ 2160 CONTINUE
+C
+      ANSTAR=(AN - SUM)/REAL(NUMSET-1)
+      DENOM=ANSTAR*REAL(NUMSET-1)
+      SDXBRI=SQRT(SUM2/DENOM)
+      SRPT=SQRT(SUM3/REAL(N-NUMSET))
+      AVAL=SDXBRI**2 - (SRPT**2/ANSTAR)
+      SL=0.0
+      IF(AVAL.GT.0.0)SL=SQRT(AVAL)
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CONS')THEN
+        WRITE(ICOUT,2168)SUM,SUM2,SUM3,DENOM,ANSTAR,SDXBRI
+ 2168   FORMAT('SUM,SUM2,SUM3,DENOM,ANSTAR,SDXBRI = ',6G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+      SUM1=0.0
+      SUM2=0.0
+      AVAL1=SRPT**2
+      DO2170ISET1=1,NUMSET
+        AVAL2=REAL(NCELL(ISET1))
+        CELLWT(ISET1)=1.0/(SL**2 + (AVAL1/AVAL2))
+        SUM1=SUM1 + CELLWT(ISET1)*XBARIV(ISET1)
+        SUM2=SUM2 + CELLWT(ISET1)
+C
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'EIN2')THEN
+          WRITE(ICOUT,2171)ISET1,CELLWT(ISET1),XBARIV(ISET1)
+ 2171     FORMAT('ISET1,CELLWT(ISET1),XBARIV(ISET1) = ',I6,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+ 2170 CONTINUE
+      XHAT=SUM1/SUM2
+C
+      SSDBAR=0.0
+      DO2172ISET1=1,NUMSET
+        DBAR=XBARIV(ISET1) - XHAT
+        SSDBAR=SSDBAR + CELLWT(ISET1)*DBAR**2
+ 2172 CONTINUE
+C
+      AVAL2=SSDBAR*REAL(NUMSET)
+      DO2175ISET1=1,NUMSET
+        DBAR=XBARIV(ISET1) - XHAT
+        ANUM=DBAR*REAL(NUMSET-1)
+        AVAL1=(1.0/CELLWT(ISET1)) - (1.0/SUM2)
+        DENOM=SQRT(AVAL1*AVAL2)
+        YOUT(ISET1)=ANUM/DENOM
+ 2175 CONTINUE
+C
+      GOTO9000
 C
 C               *****************
 C               **  STEP 90--  **
@@ -1202,8 +1340,10 @@ C
       RETURN
       END
       SUBROUTINE HCONS2(Y,X1,X2,XIDTEM,XIDTE2,TEMP,TEMP2,N,IWRITE,
-     1YOUT,TAG,TAG2,NOUT,
-     1ISUBRO,IBUGA3,IERROR)
+     1                  YOUT,TAG,TAG2,NOUT,
+     1                  TEMP3,TEMP4,TEMP5,TEMP6,TEMP7,TEMP8,TEMP9,
+     1                  ITEMP1,
+     1                  ISUBRO,IBUGA3,IERROR)
 C
 C     PURPOSE--THIS SUBROUTINE COMPUTES THE H CONSISTENCY STATISTIC
 C              OF THE DATA IN THE INPUT VECTOR Y WITH LAB ID
@@ -1256,7 +1396,7 @@ C                 of a Test Method", ASTM International,
 C                 100 Barr Harbor Drive, PO BOX C700,
 C                 West Conshohoceken, PA 19428-2959, USA.
 C                 This document is in support of
-C                 ASTM Standard E 691 - 99.
+C                 ASTM Standard E 691 - 23.
 C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
@@ -1268,6 +1408,8 @@ C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--2005.2
 C     ORIGINAL VERSION--FEBRUARY  2005.
+C     UPDATED         --MAY       2024. SUPPORT FOR UNBALANCE DATA
+C                                       (REWRITE TO USE HCONS)
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -1291,6 +1433,15 @@ C
       DIMENSION XIDTE2(*)
       DIMENSION TEMP(*)
       DIMENSION TEMP2(*)
+      DIMENSION TEMP3(*)
+      DIMENSION TEMP4(*)
+      DIMENSION TEMP5(*)
+      DIMENSION TEMP6(*)
+      DIMENSION TEMP7(*)
+      DIMENSION TEMP8(*)
+      DIMENSION TEMP9(*)
+C
+      INTEGER   ITEMP1(*)
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -1359,22 +1510,8 @@ C               **  COMPUTE THE H CONSISTENCY STATISTIC           **
 C               ****************************************************
 C
       IWRITE='OFF'
-      CALL DISTIN(X1,N,IWRITE,XIDTEM,NUMSE1,IBUGA3,IERROR)
-      CALL SORT(XIDTEM,NUMSE1,XIDTEM)
       CALL DISTIN(X2,N,IWRITE,XIDTE2,NUMSE2,IBUGA3,IERROR)
       CALL SORT(XIDTE2,NUMSE2,XIDTE2)
-C
-      IF(NUMSE1.LT.1)THEN
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,111)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,192)
-  192   FORMAT('      NUMBER OF LABS    NUMSE1 < 1')
-        CALL DPWRST('XXX','BUG ')
-        IERROR='YES'
-        GOTO9000
-      ENDIF
 C
       IF(NUMSE2.LT.1)THEN
         WRITE(ICOUT,999)
@@ -1392,59 +1529,35 @@ C
       NOUT=0
       DO1110ISET2=1,NUMSE2
 C
-C  STEP 1: COMPUTE OVERALL MEAN FOR CURRENT MATERIAL
+C  STEP 1: EXTRACT DATA FOR A SINGLE MATERIAL AND CALL HCONS
+C          TO COMPUTE H-CONSISTENCY STATISTIC
 C
         K=0
-        DO1120I=1,N
+        DO1140I=1,N
           IF(XIDTE2(ISET2).EQ.X2(I))THEN
             K=K+1
             TEMP(K)=Y(I)
+            TEMP2(K)=X1(I)
           ENDIF
- 1120   CONTINUE
+ 1140   CONTINUE
         NTEMP=K
-        CALL MEAN(TEMP,NTEMP,IWRITE,XBAR,IBUGA3,IERROR)
 C
-        DO1130ISET1=1,NUMSE1
+        IERROR='NO'
+        CALL HCONS(TEMP,TEMP2,XIDTEM,TEMP3,TEMP4,NTEMP,
+     1             IWRITE,TEMP5,NUMSET,
+     1             TEMP6,TEMP7,TEMP8,TEMP9,ITEMP1,
+     1             ISUBRO,IBUGA3,IERROR)
+        IF(IERROR.EQ.'YES')GOTO9000
 C
-          K=0
-          DO1140I=1,N
-            IF(XIDTEM(ISET1).EQ.X1(I).AND.XIDTE2(ISET2).EQ.X2(I))THEN
-              K=K+1
-              TEMP(K)=Y(I)
-            ENDIF
- 1140     CONTINUE
-          NTEMP=K
-C
-          CALL MEAN(TEMP,NTEMP,IWRITE,XBARI,IBUGA3,IERROR)
-          TEMP2(ISET1)=XBARI
-          NOUT=(ISET2-1)*NUMSE1 + ISET1
-          YOUT(NOUT)=XBARI - XBAR
+        DO1160I=1,NUMSET
+          NOUT=NOUT+1
+          YOUT(NOUT)=TEMP5(I)
           TAG(NOUT)=XIDTE2(ISET2)
-          TAG2(NOUT)=XIDTEM(ISET1)
+          TAG2(NOUT)=XIDTEM(I)
+ 1160   CONTINUE
 C
-          IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'ONS2')THEN
-            WRITE(ICOUT,1141)ISET1,ISET2,NOUT,XBAR,XBARI,YOUT(NOUT)
- 1141       FORMAT('ISET1,ISET2,NOUT,XBAR,XBARI,YOUT(NOUT) = ',
-     1             3I8,3G15.7)
-            CALL DPWRST('XXX','BUG ')
-          ENDIF
-C
- 1130   CONTINUE
-C
-        CALL SD(TEMP2,NUMSE1,IWRITE,SDBARI,IBUGA3,IERROR)
-C
-        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'ONS2')THEN
-          WRITE(ICOUT,1147)ISET1,SDBARI
- 1147     FORMAT('ISET1,SDBARI = ',I8,G15.7)
-          CALL DPWRST('XXX','BUG ')
-        ENDIF
-C
-        DO1150I=(ISET2-1)*NUMSE1+1,ISET2*NUMSE1
-          YOUT(I)=YOUT(I)/SDBARI
- 1150   CONTINUE
 C
  1110 CONTINUE
-      NOUT=NUMSE1*NUMSE2
 C
 C               *****************
 C               **  STEP 90--  **
@@ -1458,14 +1571,8 @@ C
         WRITE(ICOUT,9011)
  9011   FORMAT('***** AT THE END       OF HCONS2--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9012)IBUGA3,ISUBRO,IERROR
- 9012   FORMAT('IBUGA3,ISUBRO,IERROR = ',A4,2X,A4,2X,A4)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9013)N,NUMSE1,NUMSE2,XBAR
- 9013   FORMAT('N,NUMSE1,NUMSE2,XBAR = ',I8,1X,I8,1X,I8,1X,G15.7)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9015)SDBARI
- 9015   FORMAT('SDBARI = ',G15.7)
+        WRITE(ICOUT,9013)IERROR,NUMSE2,NUMSE2
+ 9013   FORMAT('IERROR,NUMSET,NUMSE2 = ',A4,2X,2I8)
         CALL DPWRST('XXX','BUG ')
         DO9018I=1,NOUT
           WRITE(ICOUT,9019)I,TAG(I),TAG2(I),YOUT(I)
@@ -14344,6 +14451,7 @@ C     UPDATED         --MAY       2022. PCHOSH, PCHOSV
 C     UPDATED         --OCTOBER   2023. IGDFS
 C     UPDATED         --OCTOBER   2023. IPSTDP
 C     UPDATED         --OCTOBER   2023. IX11SF, IX11FT
+C     UPDATED         --FEBRUARY  2024. CHANGED DEFAULT X11 FONT
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -15112,7 +15220,10 @@ C  ADDED FOLLOWING LINES MARCH, 1990 FOR X11
 CCCCC CHANGE DEFAULT.  APRIL 1997
 CCCCC IX11PM='OFF'
       IX11PM='ON'
-      IX11FN='8X13'
+CCCCC 2024/02: CHANGE DEFAULT FONT TO SOMETHING THAT IS
+CCCCC          MORE LIKELY TO BE AVAILABLE ON ALL MACHINES
+CCCCC IX11FN='8X13'
+      IX11FN='FIXED'
       IX11SF='NULL'
       IX11OF='OFF'
       IX11PA='OFF '
@@ -15682,6 +15793,11 @@ C     UPDATED         --SEPTEMBER 2023.  IANOMC
 C     UPDATED         --SEPTEMBER 2023.  IANOIN
 C     UPDATED         --OCTOBER   2023.  IOSMET, IOSSS
 C     UPDATED         --NOVEMBER  2023.  IAOV2T, IAOVTY
+C     UPDATED         --FEBRUARY  2024.  IEDLED
+C     UPDATED         --MAY       2024.  IRCBPT
+C     UPDATED         --JUNE      2024.  IFDAND
+C     UPDATED         --JULY      2024.  IFDATY, PFDAEP
+C     UPDATED         --JULY      2024.  IKNNN,  IKNNPC, IKNNDI
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -18830,6 +18946,64 @@ C
       IOSMET='ANAL'
       IOSSS=10000
 C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JUNE 2024
+C
+C               *******************************************************
+C               **  TREAT THE SET FISHER NUMBER OF DISCRIMINANTS     **
+C               **                <VALUE>                            **
+C               *******************************************************
+C
+      IFDAND=2
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JULY 2024
+C
+C               *******************************************************
+C               **  TREAT THE SET FISHER DISCRIMINANT TYPE           **
+C               **                <LINEAR/QUADRATIC>                 **
+C               *******************************************************
+C
+      IFDATY='LINE'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JULY 2024
+C
+C               *******************************************************
+C               **  TREAT THE SET FISHER DISCRIMINANT EIGENVALUE     **
+C               **                EPSILON <VALUE>                    **
+C               *******************************************************
+C
+      PFDAEP=CPUMIN
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JULY 2024
+C
+C               *******************************************************
+C               **  TREAT THE SET NEAREST NEIGBOR CLASSIFICATION K   **
+C               **                <VALUE>                            **
+C               *******************************************************
+C
+      IKNNN=5
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JULY 2024
+C
+C               *******************************************************
+C               **  TREAT THE SET NEAREST NEIGBOR CLASSIFICATION     **
+C               **                PRINCIPLE COMPONENTS <YES/NO>      **
+C               *******************************************************
+C
+      IKNNPC='YES'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JULY 2024
+C
+C               *******************************************************
+C               **  TREAT THE SET NEAREST NEIGBOR CLASSIFICATION     **
+C               **                DISTANCE <EUCLIDEAN/MINKOWSKY/     **
+C               **                BLOCK/CANBERRA/CHEBYCHEV/          **
+C               **                COSINE DISTANCE/ANGULAR COSINE     **
+C               **                DISTANCE/JACCARD DISTANCE/         **
+C               **                PEARSON DISTANCE/HAMMING>          **
+C               *******************************************************
+C
+      IKNNDI='EUC'
+C
 CCCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER 2023
 C
 C               *******************************************************
@@ -19422,6 +19596,23 @@ C               **  TREAT THE SET READ LINE <ON/OF>                 **
 C               ******************************************************
 C
       IREALI='OFF'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    FEBRUARY 2024
+C
+C               ******************************************************
+C               **  TREAT THE SET EDIT LINE EDITOR <EMACS/VI>       **
+C               ******************************************************
+C
+      IEDLED='EMAC'
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    MAY 2024
+C
+C               ******************************************************
+C               **  TREAT THE SET RANDOMIZED COMPLETE BLOCK DESIGN  **
+C               **                PERMUTATION TEST <ON/OFF>         **
+C               ******************************************************
+C
+      IRCBPT='OFF'
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED    APRIL 2017
 C
@@ -29647,13 +29838,14 @@ C
 C
       RETURN
       END
-      SUBROUTINE KCONS(Y,X,XIDTEM,TEMP,N,IWRITE,YOUT,NUMSET,
-     1ISUBRO,IBUGA3,IERROR)
+      SUBROUTINE KCONS(Y,X,XIDTEM,TEMP,TEMP3,NCELL,N,
+     1                 IWRITE,YOUT,NUMSET,IBAL,AKCV,
+     1                 ISUBRO,IBUGA3,IERROR)
 C
 C     PURPOSE--THIS SUBROUTINE COMPUTES THE K CONSISTENCY STATISTIC
 C              OF THE DATA IN THE INPUT VECTOR Y WITH LAB ID
 C              VECTOR X.  THE K CONSISTENCY STATISTIC IS DEFINED AS:
-C             
+C
 C                 K(i) = SD(i)/Sr
 C
 C              WITH SD(i) DENOTING THE STANDARD DEVIATION OF
@@ -29667,6 +29859,9 @@ C              WITH
 C                 p      = NUMBER OF LABS
 C                 s(i)   = STANDARD DEVIATION OF GROUP i.
 C
+C              2024/04: THE 2023 VERSION OF THE E691 STANDARD UPDATED
+C                       THE FORMULAS TO SUPPORT THE UNBALANCED CASE.
+C                       SEE THE STANDARD FOR DETAILS.
 C     INPUT  ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 C                                (UNSORTED OR SORTED) OBSERVATIONS.
 C                     --X      = THE SINGLE PRECISION VECTOR OF
@@ -29693,21 +29888,23 @@ C                 100 Barr Harbor Drive, PO BOX C700,
 C                 West Conshohoceken, PA 19428-2959, USA.
 C                 This document is in support of
 C                 ASTM Standard E 691 - 99.
-C     WRITTEN BY--JAMES J. FILLIBEN
+C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
 C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
 C                 GAITHERSBURG, MD 20899-8980
-C                 PHONE--301-975-2855
+C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--2005.2
 C     ORIGINAL VERSION--FEBRUARY  2005.
+C     UPDATED         --APRIL     2024. SUPPORT FOR UNBALANCED DATA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 IWRITE
+      CHARACTER*4 IBAL
       CHARACTER*4 IBUGA3
       CHARACTER*4 ISUBRO
       CHARACTER*4 IERROR
@@ -29724,6 +29921,8 @@ C
       DIMENSION YOUT(*)
       DIMENSION XIDTEM(*)
       DIMENSION TEMP(*)
+      DIMENSION TEMP3(*)
+      DIMENSION NCELL(*)
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -29734,6 +29933,8 @@ C
       ISUBN1='KCON'
       ISUBN2='S   '
       IERROR='NO'
+      IBAL='YES'
+      AKCV=CPUMIN
 C
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CONS')THEN
         WRITE(ICOUT,999)
@@ -29743,7 +29944,7 @@ C
    51   FORMAT('***** AT THE BEGINNING OF KCONS--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)IBUGA3,ISUBRO,N
-   52   FORMAT('IBUGA3,ISUBRO,N = ',A4,1X,A4,1X,I8)
+   52   FORMAT('IBUGA3,ISUBRO,N = ',2(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
         DO55I=1,N
           WRITE(ICOUT,56)I,Y(I),X(I)
@@ -29807,8 +30008,12 @@ C
         GOTO9000
       ENDIF
 C
+C     2024/03: CHECK FOR UNBALANCED CASE AND PROCESS DIFFERENTLY IF
+C              DETECTED
+C
       DSUM=0.0D0
       J=0
+      NHOLD=-1
       DO1110ISET1=1,NUMSET
         K=0
         DO1130I=1,N
@@ -29817,21 +30022,111 @@ C
             TEMP(K)=Y(I)
           ENDIF
  1130   CONTINUE
-        NTEMP=K 
+        NTEMP=K
+C
+C       CHECK FOR UNBALANCED CASE
+C
+        IF(ISET1.EQ.1)THEN
+          NHOLD=NTEMP
+        ELSE
+          IF(NTEMP.NE.NHOLD)GOTO2000
+        ENDIF
+C
         CALL SD(TEMP,NTEMP,IWRITE,XSD,IBUGA3,IERROR)
         DSUM=DSUM + DBLE(XSD)**2
         YOUT(ISET1)=XSD
+        NCELL(ISET1)=NTEMP
+C
         IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CONS')THEN
-          WRITE(ICOUT,1131)NUMSET,XSD
+          WRITE(ICOUT,1131)ISET1,XSD
  1131     FORMAT('***** GROUP ',I8,' SD = ',G15.7)
           CALL DPWRST('XXX','BUG ')
         ENDIF
  1110 CONTINUE
 C
       XREP=REAL(DSQRT(DSUM/DBLE(NUMSET)))
+      P=REAL(NUMSET)
       DO1150I=1,NUMSET
         YOUT(I)=YOUT(I)/XREP
+C
+C       COMPUTE THE CRITICAL VALUE
+C
+        ANI=REAL(NHOLD)
+        IDF1=NHOLD-1
+        IDF2=(NUMSET-1)*(NHOLD-1)
+        ALP=0.995
+        CALL FPPF(ALP,IDF1,IDF2,APPF)
+        DENOM=1.0 + REAL(NUMSET-1)/APPF
+        AKCV=SQRT(P/DENOM)
+C
  1150 CONTINUE
+C
+      GOTO9000
+C
+C     2024/03: UNBALANCED CASE
+C
+ 2000 CONTINUE
+C
+      IBAL='NO'
+C
+C     DETERMINE CELL SIZES
+C
+      SUM=0.0
+      DO2110ISET1=1,NUMSET
+        K=0
+        DO2130I=1,N
+          IF(XIDTEM(ISET1).EQ.X(I))THEN
+            K=K+1
+            TEMP(K)=Y(I)
+          ENDIF
+ 2130   CONTINUE
+        NCELL(ISET1)=K
+        IF(K.GT.1)THEN
+          CALL SD(TEMP,K,IWRITE,XSD,IBUGA3,IERROR)
+        ELSE
+          XSD=0.0
+        ENDIF
+        TEMP3(ISET1)=XSD
+ 2110 CONTINUE
+C
+      P=REAL(NUMSET)
+      AN=REAL(N)
+      SUM3=0.0
+      DO2150ISET1=1,NUMSET
+        IINDX=ISET1
+        AVAL=REAL(NCELL(IINDX))
+        SDI=TEMP3(IINDX)
+        SUM3=SUM3 + (AVAL-1.0)*SDI**2
+        YOUT(ISET1)=SDI
+C
+C       COMPUTE THE CRITICAL VALUE
+C
+        ANI=REAL(NCELL(IINDX))
+        PI=(AN-P)/(ANI-1.0)
+        IDF1=NCELL(IINDX)-1
+        IDF2=N-NUMSET-NCELL(IINDX)+1
+        ALP=0.995
+        CALL FPPF(ALP,IDF1,IDF2,APPF)
+        DENOM=1.0 + ((PI-1.0)/APPF)
+        AKCV=SQRT(PI/DENOM)
+C
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CONS')THEN
+          WRITE(ICOUT,2153)ISET1,IINDX,AVAL,TEMP3(IINDX)
+ 2153     FORMAT('ISET1,IINDX,AVAL,TEMP3(IINDX) = ',2I6,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2154)P,ANI,PI,APPF,AKCV,IDF1,IDF2
+ 2154     FORMAT('P,ANI,PI,APPF,AKCV,IDF1,IDF2 = ',5G15.7,2I8)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+ 2150 CONTINUE
+      XREP=SQRT(SUM3/REAL(N-NUMSET))
+C
+      DO2160ISET1=1,NUMSET
+        YOUT(ISET1)=YOUT(ISET1)/XREP
+ 2160 CONTINUE
+C
+C
 C
 C               *****************
 C               **  STEP 90--  **
@@ -29848,29 +30143,27 @@ C
         WRITE(ICOUT,9012)IBUGA3,ISUBRO,IERROR
  9012   FORMAT('IBUGA3,ISUBRO,IERROR = ',A4,2X,A4,2X,A4)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9013)N,NUMSET
- 9013   FORMAT('N,NUMSET = ',I8,1X,I8)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9015)XREP
- 9015   FORMAT('XREP = ',E15.7)
+        WRITE(ICOUT,9013)N,NUMSET,XREP
+ 9013   FORMAT('N,NUMSET,XREP = ',2I8,G15.7)
         CALL DPWRST('XXX','BUG ')
         DO9018I=1,NUMSET
           WRITE(ICOUT,9019)I,YOUT(I)
- 9019     FORMAT('I,YOUT(I) = ',I8,E15.7)
+ 9019     FORMAT('I,YOUT(I) = ',I8,G15.7)
           CALL DPWRST('XXX','BUG ')
  9018   CONTINUE
       ENDIF
 C
       RETURN
       END
-      SUBROUTINE KCONS2(Y,X1,X2,XIDTEM,XIDTE2,TEMP,N,
-     1IWRITE,YOUT,TAG,TAG2,NOUT,
-     1ISUBRO,IBUGA3,IERROR)
+      SUBROUTINE KCONS2(Y,X1,X2,XIDTEM,XIDTE2,
+     1                  TEMP,TEMP2,TEMP3,TEMP4,TEMP5,ITEMP1,N,
+     1                  IWRITE,YOUT,TAG,TAG2,CVAL,NOUT,IBAL,
+     1                  ISUBRO,IBUGA3,IERROR)
 C
 C     PURPOSE--THIS SUBROUTINE COMPUTES THE K CONSISTENCY STATISTIC
 C              OF THE DATA IN THE INPUT VECTOR Y WITH LAB ID
 C              VECTOR X.  THE K CONSISTENCY STATISTIC IS DEFINED AS:
-C             
+C
 C                 K(i) = SD(i)/Sr
 C
 C              WITH SD(i) DENOTING THE STANDARD DEVIATION OF
@@ -29888,6 +30181,11 @@ C              THE DISTINCTION BETWEEN KCONS AND KCONS2 IS THAT
 C              KCONS IS USED TO COMPUTE THE K CONSISTENCY STATISTIC
 C              FOR A SINGLE MATERIAL WHILE KCONS2 COMPUTES THE
 C              K CONSISTENCY STATISTIC FOR MULTIPLE MATERIALS.
+C
+C              2024/04: E-691 WAS UPDATED TO SUPPORT UNBALANCED
+C                       DATA.  REWRITE THIS ROUTINE TO CALL
+C                       "KCONS" WHICH HAS BEEN UPDATED FOR UNBLANCED
+C                       DATA.
 C
 C     INPUT  ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 C                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -29910,9 +30208,9 @@ C     OUTPUT--THE COMPUTED SINGLE PRECISION VECTOR OF THE
 C             SAMPLE K CONSISTENCY STATISTIC.
 C     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 C                   OF N FOR THIS SUBROUTINE.
-C     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, DISTIN, SD.
-C     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-C     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, DISTIN, KCONS.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     REFERENCES--"Standard Practice for Conducting an
 C                 Interlaboratory Study to Determine the Precision
@@ -29921,21 +30219,23 @@ C                 100 Barr Harbor Drive, PO BOX C700,
 C                 West Conshohoceken, PA 19428-2959, USA.
 C                 This document is in support of
 C                 ASTM Standard E 691 - 99.
-C     WRITTEN BY--JAMES J. FILLIBEN
+C     WRITTEN BY--ALAN HECKERT
 C                 STATISTICAL ENGINEERING DIVISION
 C                 INFORMATION TECHNOLOGY LABORATORY
 C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
 C                 GAITHERSBURG, MD 20899-8980
-C                 PHONE--301-975-2855
+C                 PHONE--301-975-2899
 C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
 C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 C     LANGUAGE--ANSI FORTRAN (1977)
 C     VERSION NUMBER--2005.2
 C     ORIGINAL VERSION--FEBRUARY  2005.
+C     UPDATED         --APRIL     2024. REWRITE TO USE KCONS
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
       CHARACTER*4 IWRITE
+      CHARACTER*4 IBAL
       CHARACTER*4 IBUGA3
       CHARACTER*4 ISUBRO
       CHARACTER*4 IERROR
@@ -29945,17 +30245,21 @@ C
 C
 C---------------------------------------------------------------------
 C
-      DOUBLE PRECISION DSUM
-C
       DIMENSION Y(*)
       DIMENSION X1(*)
       DIMENSION X2(*)
       DIMENSION YOUT(*)
       DIMENSION TAG(*)
       DIMENSION TAG2(*)
+      DIMENSION CVAL(*)
       DIMENSION XIDTEM(*)
       DIMENSION XIDTE2(*)
       DIMENSION TEMP(*)
+      DIMENSION TEMP2(*)
+      DIMENSION TEMP3(*)
+      DIMENSION TEMP4(*)
+      DIMENSION TEMP5(*)
+      DIMENSION ITEMP1(*)
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -30024,22 +30328,8 @@ C               **  COMPUTE THE K CONSISTENCY STATISTIC           **
 C               ****************************************************
 C
       IWRITE='OFF'
-      CALL DISTIN(X1,N,IWRITE,XIDTEM,NUMSE1,IBUGA3,IERROR)
-      CALL SORT(XIDTEM,NUMSE1,XIDTEM)
       CALL DISTIN(X2,N,IWRITE,XIDTE2,NUMSE2,IBUGA3,IERROR)
       CALL SORT(XIDTE2,NUMSE2,XIDTE2)
-C
-      IF(NUMSE1.LT.1)THEN
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,111)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,192)
-  192   FORMAT('      NUMBER OF LABS    NUMSE1 < 1')
-        CALL DPWRST('XXX','BUG ')
-        IERROR='YES'
-        GOTO9000
-      ENDIF
 C
       IF(NUMSE2.LT.1)THEN
         WRITE(ICOUT,999)
@@ -30047,49 +30337,40 @@ C
         WRITE(ICOUT,111)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,194)
-  194   FORMAT('      NUMBER OF MATERIALS    NUMSE2 < 1')
+  194   FORMAT('      NUMBER OF MATERIALS IS LESS THAN 1.')
         CALL DPWRST('XXX','BUG ')
         IERROR='YES'
         GOTO9000
       ENDIF
 C
-      J=0
+      NOUT=0
       DO1110ISET2=1,NUMSE2
 C
-        DSUM=0.0D0
-        DO1130ISET1=1,NUMSE1
-C
-          K=0
-          DO1140I=1,N
-            IF(XIDTEM(ISET1).EQ.X1(I).AND.XIDTE2(ISET2).EQ.X2(I))THEN
-              K=K+1
-              TEMP(K)=Y(I)
-            ENDIF
- 1140     CONTINUE
-          NTEMP=K
-C
-          CALL SD(TEMP,NTEMP,IWRITE,XSD,IBUGA3,IERROR)
-          DSUM=DSUM + DBLE(XSD)**2
-          NOUT=(ISET2-1)*NUMSE1 + ISET1
-          YOUT(NOUT)=XSD
-          TAG(NOUT)=XIDTE2(ISET2)
-          TAG2(NOUT)=XIDTEM(ISET1)
-C
-          IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'ONS2')THEN
-            WRITE(ICOUT,1141)NUMSE1,NUMSE2,XSD
- 1141       FORMAT('***** GROUP ',I8,' SD = ',G15.7)
-            CALL DPWRST('XXX','BUG ')
+        K=0
+        DO1140I=1,N
+          IF(XIDTE2(ISET2).EQ.X2(I))THEN
+            K=K+1
+            TEMP(K)=Y(I)
+            TEMP2(K)=X1(I)
           ENDIF
+ 1140   CONTINUE
+        NTEMP=K
 C
- 1130   CONTINUE
+        IERROR='NO'
+        CALL KCONS(TEMP,TEMP2,XIDTEM,TEMP3,TEMP4,ITEMP1,NTEMP,
+     1             IWRITE,TEMP5,NUMSET,IBAL,AKCV,
+     1             ISUBRO,IBUGA3,IERROR)
+        IF(IERROR.EQ.'YES')GOTO9000
 C
-        XREP=REAL(DSQRT(DSUM/DBLE(NUMSE1)))
-        DO1150I=(ISET2-1)*NUMSE1+1,ISET2*NUMSE1
-          YOUT(I)=YOUT(I)/XREP
- 1150   CONTINUE
+        DO1160I=1,NUMSET
+          NOUT=NOUT+1
+          YOUT(NOUT)=TEMP5(I)
+          TAG(NOUT)=XIDTE2(ISET2)
+          TAG2(NOUT)=XIDTEM(I)
+          CVAL(NOUT)=AKCV
+ 1160   CONTINUE
 C
  1110 CONTINUE
-      NOUT=NUMSE1*NUMSE2
 C
 C               *****************
 C               **  STEP 90--  **
@@ -30103,15 +30384,12 @@ C
         WRITE(ICOUT,9011)
  9011   FORMAT('***** AT THE END       OF KCONS--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9012)IBUGA3,ISUBRO,IERROR
- 9012   FORMAT('IBUGA3,ISUBRO,IERROR = ',A4,2X,A4,2X,A4)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9013)N,NUMSE1,NUMSE2,XREP
- 9013   FORMAT('N,NUMSE1,NUMSE2,XREP = ',I8,1X,I8,1X,I8,G15.7)
+        WRITE(ICOUT,9012)IERROR,NUMSE2
+ 9012   FORMAT('IERROR,NUMSE2 = ',A4,2X,I8)
         CALL DPWRST('XXX','BUG ')
         DO9018I=1,NOUT
-          WRITE(ICOUT,9019)I,TAG(I),YOUT(I)
- 9019     FORMAT('I,TAG(I),YOUT(I) = ',I8,2G15.7)
+          WRITE(ICOUT,9019)I,TAG2(I),TAG(I),YOUT(I),CVAL(I)
+ 9019     FORMAT('I,TAG2(I),TAG(I),YOUT(I),CVAL(I) = ',I8,4G15.7)
           CALL DPWRST('XXX','BUG ')
  9018   CONTINUE
       ENDIF
@@ -30512,6 +30790,68 @@ C
         CALL DPWRST('XXX','BUG ')
       ENDIF
 C
+      RETURN
+      END
+      INTEGER FUNCTION KINDEX(N,I,J)
+C
+C     PURPOSE--FOR A SQUARE UPPER TRIANGULAR MATRIX WHERE WE DO NOT
+C              INCLUDE THE DIAGONAL, IT CAN SAVE CONSIDERABLE SPACE
+C              TO STORE THE DATA AS A ONE DIMENSIONAL VECTOR RATHER
+C              AS A MATRIX.  GIVEN THE I-TH ROW AND J-TH COLUMN,
+C              THIS FUNCTION RETURNS THE CORRESPONDING INDEX IN THE
+C              ONE DIMENSIONAL ARRAY.  SPECIFICALLY,
+C
+C                  K = (N*(N-1)/2) - (N-I)**((N-I)-1)/2*J + J - I -1
+C
+C              WHERE N IS THE NUMBER OF ROWS, I IS THE ROW INDEX AND
+C              J IS THE COLUMN INDEX.
+C     INPUT  ARGUMENTS--N      = THE INTEGER SCALAR THAT SPECIFIES THE
+C                                NUMBER OF ROWS/COLUMNS IN THE MATRIX.
+C                     --I      = THE INTEGER SCALAR THAT SPECIFIES THE
+C                                ROW INDEX OF THE MATRIX.
+C                     --J      = THE INTEGER SCALAR THAT SPECIFIES THE
+C                                COLUMN INDEX OF THE MATRIX.
+C     OUTPUT--THE SINGLE PRECISION FUNCTION VALUE KINDEX.
+C     PRINTING--NONE.
+C     RESTRICTIONS--NONE.
+C     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--INTEGER.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATION INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899-8980
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATION INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2024.07
+C     ORIGINAL VERSION--JULY      2024.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+C-----START POINT-----------------------------------------------------
+C
+      KINDEX=-1
+      IF(N.LT.1)GOTO9000
+      IF(I.GE.J)GOTO9000
+      IF(I.LT.1 .OR. I.GT.N)GOTO9000
+      IF(J.LT.1 .OR. J.GT.N)GOTO9000
+C
+C     FORMULAS ARE FOR ZERO-BASED ARRAYS, SO SUBTRACT 1 TO
+C     USE FOR ONe-BASE ARRAYS
+C
+      IT=I-1
+      JT=J-1
+      KINDEX=((2*N - 3 - IT)*IT/2) + JT
+C
+ 9000 CONTINUE
       RETURN
       END
       SUBROUTINE KLVNA(X,BER,BEI,GER,GEI,DER,DEI,HER,HEI)
@@ -54214,6 +54554,7 @@ C                  TABULATE/CROSS TABULATE                     (HLR)
 C                  POSITIONAL TABULATION                       (HLR)
 C
 C                  ANALYSIS OF VARIANCE                        (HLR)
+C                  RANDOMIZED COMPLETE BLOCK                   (HLR)
 C                  MEDIAN POLISH                               (HLR)
 C                  KRUSKAL-WALLIS TEST                         (HLR)
 C                  VAN DER WAERDEN TEST                        (HLR)
@@ -54302,6 +54643,7 @@ C                  FLIGNER POLICELLO TEST Y1 Y2                (HLR)
 C                  TWO SAMPLE LINEAR RANK SUM TEST Y1 Y2       (HLR)
 C                  TWO SAMPLE PERMUTATION TEST Y1 Y2           (HLR)
 C                  K SAMPLE PERMUTATION TEST Y X               (HLR)
+C                  JONCKHEERE-TERPSTRA TEST Y X                (HLR)
 C                  FISHER TWO SAMPLE RANDOMIZATION TEST Y1 Y2  (HLR)
 C
 C                  CHI-SQUARED TEST Y SIGMA or SIGMA Y         (HLR)
@@ -54649,6 +54991,9 @@ C     UPDATED         --AUGUST    2023. TWO SAMPLE <STAT> PERMUTATION TEST
 C     UPDATED         --SEPTEMBER 2023. K SAMPLE <STAT> PERMUTATION TEST
 C     UPDATED         --SEPTEMBER 2023. ADD SOME ADDITIONAL COMMANDS FOR
 C                                       ANOVA
+C     UPDATED         --FEBRUARY  2024. CALL LIST TO DPLET
+C     UPDATED         --MARCH     2024. JONCKHEERE-TERPSTRA TEST
+C     UPDATED         --MAY       2024. RANDOMIZED COMPLETE BLOCK
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -54979,7 +55324,7 @@ C
 CCCCC              AUGUST 1995.  ADD IFTORD
 CCCCC              JUNE   2015.  ADD IFORSW
 CCCCC1             IFTEXP,
-     1             IFTEXP,IFTORD,IFORSW,
+     1             IFTEXP,IFTORD,IFORSW,IOSMET,
 CCCCC              ADD FOLLOWING LINE.  FEBRUARY 1994.
 CCCCC              ADD OPTACC ARGUMENT JUNE 1994
 CCCCC              ADD IOTME, IOPTHE ARGUMENTS FEBRUARY 1995
@@ -55771,6 +56116,27 @@ C
       ENDIF
 C
  2019 CONTINUE
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED     MARCH 2024
+C               ******************************************************
+C               **  TREAT THE JONCKHEERE-TERPSTRA TEST         CASE **
+C               ******************************************************
+      IF(ICOM.EQ.'JONC')THEN
+         CALL DPJTTE(MAXNXT,ICAPSW,IFORSW,ISEED,
+     1               IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED     MAY 2024
+C               ******************************************************
+C               **  TREAT THE RANDOMIZED COMPLETE BLOCK        CASE **
+C               ******************************************************
+      IF(ICOM.EQ.'RAND' .AND. IHARG(1).EQ.'COMP' .AND.
+     1   IHARG(2).EQ.'BLOC')THEN
+         CALL DPRCBD(MAXNXT,ICAPSW,IFORSW,ISEED,
+     1               IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GOTO9000
+      ENDIF
 C
 C
 CCCCC THE FOLLOWING SECTION WAS ADDED     JUNE 2011

@@ -14238,7 +14238,7 @@ C
                       CALL DPWRST('XXX','BUG ')
                       WRITE(ICOUT,8003)
  8003                 FORMAT('       COSINE DISTANCE NOT SUPPORTED ',
-     1                       'NEGATIVE VALUES.')
+     1                       'FOR NEGATIVE VALUES.')
                       CALL DPWRST('XXX','BUG ')
                       WRITE(ICOUT,8005)I,K,AMAT(I,K)
  8005                 FORMAT('        ROW ',I6,' COLUMN ',I6,' HAS ',
@@ -14546,6 +14546,304 @@ C
             CALL DPWRST('XXX','BUG ')
  9030     CONTINUE
  9020   CONTINUE
+      ENDIF
+C
+      RETURN
+      END
+      SUBROUTINE EUCDI2(Y1,Y2,N,ICASE,P,IWRITE,ADIST,
+     1                  IBUGA3,ISUBRO,IERROR)
+C
+C     PURPOSE--THIS SUBROUTINE COMPUTES THE EUCLIDEAN DISTANCE BETWEEN
+C              TWO VECTORS.  THE FORMULA IS:
+C
+C                 D=SQRT{SUM[i=1 to n][(Y1(i) - Y2(i))**2)}
+C
+C              ALTERNATIVELY (BASED ON ICASE), THE FOLLOWING DISTANCES
+C              CAN BE COMPUTED:
+C
+C              MINKOWSKY DISTANCE:
+C
+C                 D=SUM[i=1 to n][(ABS|(Y1(i) - Y2(i))|**P)**(1/P)]
+C
+C              BLOCK (OR MANHATTAN) DISTANCE:
+C
+C                 D=SUM[i=1 to n][|Y1(i) - Y2(i)|]
+C
+C              CANBERRA DISTANCE:
+C
+C                 D=SUM[i=1 to n][|Y1(i) - Y2(i)|/
+C                       (|Y1(i)| + |Y2(i)|)]
+C
+C              CHEBYCHEV DISTANCE:
+C
+C                 D=MAX[i=1 to n][|Y1(i) - Y2(i)|]
+C
+C              COSINE SIMILARITY:
+C
+C                 S=SUM[i=1 to n][Y1(i)*Y2(i)]/
+C                   {SQRT(SUM[i=1 to n][Y1(i)**2])*
+C                   SQRT(SUM[i=1 to n][Y1(i)**2])}
+C
+C              COSINE DISTANCE:
+C
+C                 D = 1 - COSINE SIMILARITY
+C
+C              ANGULAR COSINE DISTANCE:
+C
+C                 D = 1 - COSINE SIMILARITY
+C
+C              JACCARD SIMILARITY:
+C
+C                 J = SUM[i=1 to n][MIN(Y1(i),Y2(i))/
+C                     SUM[i=1 to n][MAX(Y1(ik),Y2(i))]
+C
+C              JACCARD DISTANCE:
+C
+C                 D = 1 - JACCARD SIMILARITY
+C
+C              HAMMING DISTANCE:
+C
+C                 D = NUMBER OF ELEMENTS THAT DIFFER IN Y1 AND Y2
+C
+C              PEARSON DISTANCE:
+C
+C                 D = (1 - R)/2  (R = CORRELATION COEFFICIENT)
+C
+C              PEARSON SIMILARITY:
+C
+C                 S = 1 - PEARSON DISTANCE
+C
+C              THIS IS A VARIANT OF EUCDIS.  THE DISTINCTION IS THAT
+C              THIS ROUTINE WORKS ON TWO VECTORS WHILE EUCDIS WORKS WITH
+C              A MATRIX.
+C     INPUT  ARGUMENTS--Y1     = A SINGLE PRECISION VECTOR
+C                     --Y2     = A SINGLE PRECISION VECTOR
+C                     --N      = THE INTEGER NUMBER OF ROWS IN Y1 AND Y2
+C     OUTPUT ARGUMENTS--ADIST  = THE SINGLE PRECISION VALUE OF THE
+C                                COMPUTED DISTANCE.
+C     OUTPUT--A SCALAR VALUE CONTAINING THE DISTANCE.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     WRITTEN BY--ALAN HECKERT
+C                 STATISTICAL ENGINEERING DIVISION
+C                 INFORMATION TECHNOLOGY LABORATORY
+C                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+C                 GAITHERSBURG, MD 20899
+C                 PHONE--301-975-2899
+C     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+C           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     VERSION NUMBER--2024/07
+C     ORIGINAL VERSION--JULY      2024.
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+      CHARACTER*4 ICASE
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+C
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+C
+C---------------------------------------------------------------------
+C
+      DOUBLE PRECISION DSUM
+      DOUBLE PRECISION DSUM2
+      DOUBLE PRECISION DSUM3
+      DOUBLE PRECISION DYM1
+      DOUBLE PRECISION DYM2
+C
+      DIMENSION Y1(*)
+      DIMENSION Y2(*)
+C
+C-----COMMON----------------------------------------------------------
+C
+      INCLUDE 'DPCOP2.INC'
+C
+      DATA PI/3.1415926535898E0/
+C
+C-----START POINT-----------------------------------------------------
+C
+      ISUBN1='EUCD'
+      ISUBN2='I2  '
+      IERROR='NO'
+C
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CDI2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF EUCDI2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)ISUBRO,IBUGA3,ICASE,ICASE,N
+   52   FORMAT('ISUBRO,IBUGA3,ICASE,ICASE,N = ',4(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        DO60I=1,N
+          WRITE(ICOUT,62)I,Y1(I),Y2(I)
+   62     FORMAT('I,Y1(I),Y2(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+   60   CONTINUE
+      ENDIF
+C
+C               ********************************
+C               **  COMPUTE DISTANCE           *
+C               ********************************
+C
+      DSUM=0.0D0
+      DSUM2=0.0D0
+      DSUM3=0.0D0
+      ADIST=CPUMIN
+C
+      IF(ICASE.EQ.'EUC')THEN
+        DO5962I=1,N
+          DYM1=Y1(I)
+          DYM2=Y2(I)
+          DSUM=DSUM+(DYM1-DYM2)**2
+ 5962   CONTINUE
+        ADIST=REAL(DSQRT(DSUM))
+      ELSEIF(ICASE.EQ.'MINK')THEN
+        DO5963I=1,N
+          DYM1=Y1(I)
+          DYM2=Y2(I)
+          DSUM=DSUM + DABS(DYM1-DYM2)**DBLE(P)
+ 5963   CONTINUE
+        ADIST=REAL(DSUM**(1.0D0/DBLE(P)))
+      ELSEIF(ICASE.EQ.'BLOC')THEN
+        DO5964I=1,N
+          DYM1=Y1(I)
+          DYM2=Y2(I)
+          DSUM=DSUM+DABS(DYM1-DYM2)
+ 5964   CONTINUE
+        ADIST=REAL(DSUM)
+      ELSEIF(ICASE.EQ.'HAMM')THEN
+        DO55969I=1,N
+          DYM1=Y1(I)
+          DYM2=Y2(I)
+          IF(DYM1.NE.DYM2)DSUM=DSUM+1.0D0
+55969   CONTINUE
+        ADIST=REAL(DSUM)
+      ELSEIF(ICASE.EQ.'CHEB')THEN
+        DO5965I=1,N
+          DYM1=Y1(I)
+          DYM2=Y2(I)
+          DTEMP=DABS(DYM1-DYM2)
+          IF(DTEMP.GT.DSUM)DSUM=DTEMP
+ 5965   CONTINUE
+        ADIST=REAL(DSUM)
+      ELSEIF(ICASE.EQ.'COSS' .OR. ICASE.EQ.'COSD' .OR.
+     1       ICASE.EQ.'ACSS' .OR. ICASE.EQ.'ACSD')THEN
+        IFLAG=1
+        DO5966I=1,N
+          IF(ICASE.EQ.'COSD')THEN
+            IF(Y1(I).LT.0.0 .OR. Y2(I).LT.0.0)THEN
+              WRITE(ICOUT,999)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,8001)
+ 8001         FORMAT('****** ERROR IN DISTANCE--')
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,8003)
+ 8003         FORMAT('       COSINE DISTANCE NOT SUPPORTED ',
+     1               'FOR NEGATIVE VALUES.')
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,8005)I,Y1(I),Y2(I)
+ 8005         FORMAT('        ROW, Y1(I), Y2(I) = ',I6,2G15.7)
+              CALL DPWRST('XXX','BUG ')
+              IERROR='YES'
+              GOTO9000
+            ENDIF
+          ENDIF
+          IF(Y1(I).LT.0.0)IFLAG=0
+          IF(Y2(I).LT.0.0)IFLAG=0
+          DYM1=Y1(I)
+          DYM2=Y2(I)
+          DTEMP=DYM1*DYM2
+          DSUM=DSUM + DTEMP
+          DTEMP=DYM1*DYM1
+          DSUM2=DSUM2 + DTEMP
+          DTEMP=DYM2*DYM2
+          DSUM3=DSUM3 + DTEMP
+ 5966   CONTINUE
+C
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CDI2')THEN
+          WRITE(ICOUT,15861)I,DSUM,DSUM2,DSUM3
+15861     FORMAT('I,DSUM,DSUM2,DSUM3 = ',I6,3G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+C
+        IF(DSUM2.GT.0.0D0 .AND. DSUM3.GT.0.0D0)THEN
+          DTEMP=DSUM/(SQRT(DSUM2)*SQRT(DSUM3))
+          ADIST=REAL(DTEMP)
+          IF(ICASE.EQ.'COSD')THEN
+            ADIST=1.0 - ADIST
+          ELSEIF(ICASE.EQ.'ACSD')THEN
+            AFACT=1.0
+            IF(IFLAG.EQ.1)AFACT=2.0
+            ADIST=AFACT*ACOS(ADIST)/PI
+          ELSEIF(ICASE.EQ.'ACSS')THEN
+            AFACT=1.0
+            IF(IFLAG.EQ.1)AFACT=2.0
+            ADIST=1.0 - AFACT*ACOS(ADIST)/PI
+          ENDIF
+        ELSE
+          ADIST=CPUMIN
+        ENDIF
+      ELSEIF(ICASE.EQ.'JACS' .OR. ICASE.EQ.'JACD')THEN
+        DO5967I=1,N
+          DYM1=Y1(I)
+          DYM2=Y2(I)
+          DTEMP=MIN(DYM1,DYM2)
+          DSUM=DSUM + DTEMP
+          DTEMP=MAX(DYM1,DYM2)
+          DSUM2=DSUM2 + DTEMP
+ 5967   CONTINUE
+        ADIST=REAL(DSUM/DSUM2)
+        IF(ICASE.EQ.'JACD')THEN
+          ADIST=1.0 - ADIST
+        ENDIF
+      ELSEIF(ICASE.EQ.'PDIS' .OR. ICASE.EQ.'PSIM')THEN
+        CALL CORR(Y1,Y2,N,IWRITE,ACORR,IBUGA3,IERROR)
+        ADIST=(1.0 - ACORR)/2.0
+        IF(ICASE.EQ.'PSIM')ADIST=1.0 - ADIST
+      ELSEIF(ICASE.EQ.'CANB')THEN
+        DO5969I=1,N
+          DYM1=Y1(I)
+          DYM2=Y2(I)
+          DSUM=DSUM+DABS(DYM1-DYM2)/(DABS(DYM1)+DABS(DYM2))
+ 5969   CONTINUE
+        ADIST=REAL(DSUM)
+      ENDIF
+C
+C               *******************************
+C               **  STEP 3--                 **
+C               **  WRITE OUT A LINE         **
+C               **  OF SUMMARY INFORMATION.  **
+C               *******************************
+C
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,811)ADIST
+  811   FORMAT('THE COMPUTED DISTANCE = ',E15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT.      **
+C               *****************
+C
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'CDI2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF EUCDI2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR,ADIST
+ 9012   FORMAT('IERROR,ADIST = ',A4,2X,G15.7)
+        CALL DPWRST('XXX','BUG ')
       ENDIF
 C
       RETURN
@@ -33154,6 +33452,9 @@ C                 PAGE TEST PVALUE
 C                 QUADE TEST
 C                 QUADE TEST CDF
 C                 QUADE TEST PVALUE
+C                 RANDOMIZED COMPLETE BLOCK CDF
+C                 RANDOMIZED COMPLETE BLOCK PVALUE
+C                 RANDOMIZED COMPLETE BLOCK TEST STATISTIC STATISTIC
 C                 SUMMARY LOWER COEFFIENT OF VARIATION CONFIDENCE LIMITS
 C                 SUMMARY LOWER CONFIDENCE LIMITS
 C                 SUMMARY LOWER PREDICTION BOUNDS
@@ -33600,6 +33901,10 @@ C     UPDATED         --AUGUST    2023. ONE WAY ANOVA MEAN SQUARE TREATMENT
 C     UPDATED         --AUGUST    2023. ONE WAY ANOVA MEAN SQUARE ERROR
 C     UPDATED         --AUGUST    2023. ONE WAY ANOVA F-VALUE
 C     UPDATED         --SEPTEMBER 2023. ONE WAY ANOVA SSX
+C     UPDATED         --MAY       2024. RANDOMIZED COMPLETE BLOCK TEST
+C                                       STATISTIC
+C     UPDATED         --MAY       2024. RANDOMIZED COMPLETE BLOCK CDF
+C     UPDATED         --MAY       2024. RANDOMIZED COMPLETE BLOCK PVALUE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -33629,7 +33934,7 @@ C
       INCLUDE 'DPCOPA.INC'
 CCCCC INCLUDE 'DPCOZC.INC'
 C
-      PARAMETER (MAXSTA=1644)
+      PARAMETER (MAXSTA=1653)
       PARAMETER (MAXSCL=8)
       INTEGER      INFLAV(MAXSTA)
       CHARACTER*4  INAME(MAXSTA,MAXSCL)
@@ -43631,6 +43936,60 @@ C
      1'1   ','    ','WAY ','ANOV','SSX ','    ','    ','    '/
       DATA INFLAV(1644)/2/
       DATA INLONG(1644)/'ONE WAY ANOVA SSX'/
+C
+      DATA INCASE(1645)/'RCBS'/
+      DATA (INAME(1645,J),J=1,MAXSCL)/
+     1'RAND','    ','COMP','BLOC','TEST','STAT','    ','    '/
+      DATA INFLAV(1645)/3/
+      DATA INLONG(1645)/'RANDOMIZED COMPLETE BLOCK TEST STATISTIC'/
+C
+      DATA INCASE(1646)/'RCBC'/
+      DATA (INAME(1646,J),J=1,MAXSCL)/
+     1'RAND','    ','COMP','BLOC','CDF ','    ','    ','    '/
+      DATA INFLAV(1646)/3/
+      DATA INLONG(1646)/'RANDOMIZED COMPLETE BLOCK CDF'/
+C
+      DATA INCASE(1647)/'RCBP'/
+      DATA (INAME(1647,J),J=1,MAXSCL)/
+     1'RAND','    ','COMP','BLOC','PVAL','    ','    ','    '/
+      DATA INFLAV(1647)/3/
+      DATA INLONG(1647)/'RANDOMIZED COMPLETE BLOCK P-VALUE'/
+C
+      DATA INCASE(1648)/'RCBP'/
+      DATA (INAME(1648,J),J=1,MAXSCL)/
+     1'RAND','    ','COMP','BLOC','P   ','VALU','    ','    '/
+      DATA INFLAV(1648)/3/
+      DATA INLONG(1648)/'RANDOMIZED COMPLETE BLOCK P-VALUE'/
+C
+      DATA INCASE(1649)/'RCBS'/
+      DATA (INAME(1649,J),J=1,MAXSCL)/
+     1'RAND','    ','COMP','BLOC','STAT','    ','    ','    '/
+      DATA INFLAV(1649)/3/
+      DATA INLONG(1649)/'RANDOMIZED COMPLETE BLOCK TEST STATISTIC'/
+C
+      DATA INCASE(1650)/'RCBS'/
+      DATA (INAME(1650,J),J=1,MAXSCL)/
+     1'RAND','    ','COMP','BLOC','DESI','TEST','STAT','    '/
+      DATA INFLAV(1650)/3/
+      DATA INLONG(1650)/'RANDOMIZED COMPLETE BLOCK TEST STATISTIC'/
+C
+      DATA INCASE(1651)/'RCBC'/
+      DATA (INAME(1651,J),J=1,MAXSCL)/
+     1'RAND','    ','COMP','BLOC','DESI','CDF ','    ','    '/
+      DATA INFLAV(1651)/3/
+      DATA INLONG(1651)/'RANDOMIZED COMPLETE BLOCK CDF'/
+C
+      DATA INCASE(1652)/'RCBP'/
+      DATA (INAME(1652,J),J=1,MAXSCL)/
+     1'RAND','    ','COMP','BLOC','DESI','PVAL','    ','    '/
+      DATA INFLAV(1652)/3/
+      DATA INLONG(1652)/'RANDOMIZED COMPLETE BLOCK P-VALUE'/
+C
+      DATA INCASE(1653)/'RCBP'/
+      DATA (INAME(1653,J),J=1,MAXSCL)/
+     1'RAND','    ','COMP','BLOC','DESI','P   ','VALU','    '/
+      DATA INFLAV(1653)/3/
+      DATA INLONG(1653)/'RANDOMIZED COMPLETE BLOCK P-VALUE'/
 C
 C-----START POINT-----------------------------------------------------
 C

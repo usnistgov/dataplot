@@ -46,7 +46,7 @@ BINDIR = $(PREFIX)/bin
 # where to find additional dataplot files (help, menus, etc).
 DPLIBDIR=$(PREFIX)/lib/dataplot
 
-FFLAGS += -O2 -DLINUX -DMACOSX-fdefault-real-8 -fdefault-double-8
+FFLAGS += -O2 -DLINUX -DMACOSX -fdefault-real-8 -fdefault-double-8
 CFLAGS += -O2
 
 # special flags for dp1
@@ -68,10 +68,11 @@ ifneq (,$(findstring MACOSX_M1,$(FEATURES)))
 FFLAGS4 += -mcmodel=small
 endif
 
+ifneq (,$(findstring X11,$(FEATURES)))
 OBJS += x11.o
-CFLAGS  += -I/usr/X11/include
+CFLAGS  += -I/usr/X11/include  -I/usr/X11/include/freetype2
 FFLAGS4 += -DHAVE_X11
-LDFLAGS += -L/usr/X11/lib -lX11
+LDFLAGS += -L/usr/X11/lib -lX11 -lXft
 endif
 
 ifneq (,$(findstring AQUA,$(FEATURES)))

@@ -1,0 +1,63 @@
+This is file knn.men--K Nearest Neighbors Classification Analysis
+ 
+--------------------
+1. K Nearest Neighbors Classification Analysis
+2. K NEAREST NEIGHBORS CLASSIFICATION PLOT X1 .... XK  TAG
+3.
+4. This menu performs a k nearest neighbors
+5. classification.  The plot will be based on
+6. either the first two principal components
+7. or the first two variables listed.
+8. 
+9. List of Response Variables:
+10. @CE 1 0 1 50 ? gui-variable
+11. Group ID Variable:
+11. @CE 2 0 42 50 ? gui-variable
+12.
+13. Number of Nearest Neighbors (default: 5):
+13. @CE 3 0 42 50 ?
+14. Plot Principal Components (> 2 variables):
+14. @CE 4 0 42 50 gui-ooff
+15.
+16. Character Types:
+17. @CE 5 0 1 50 gui-char
+18. Character Fill:
+19. @CE 6 0 1 50 gui-ooff
+20. Character Color:
+21. @CE 7 0 1 50 gui-colo
+22.
+23. Title:
+23. @CE 8 0 15 50 *
+24. Left Axis Label:
+24. @CE 9 0 15 50 *
+25. Bottom Axis Label:
+25. @CE 10 0 15 50 *
+26.
+27. Subset/Except/For Specification: 
+28. @CE 11 0 1 50 *
+29.
+30.
+31. Perform the K Nearest Neighbors Classification?:
+--------------------
+GR FE
+SET NEAREST NEIGHBORS CLASSIFICATION K 5
+@IF 3 0 SET NEAREST NEIGHBORS CLASSIFICATION K _3
+SET NEAREST NEIGHBORS CLASSIFICATION PRINCIPAL COMPONENTS YES
+@IF 4 0 SET NEAREST NEIGHBORS CLASSIFICATION PRINCIPAL COMPONENTS _4
+LINE SAVE
+CHARACTER SAVE
+LINE BLANK ALL
+CHARACTER _5
+CHARACTER FILL _5
+CHARACTER FILL _6
+CHARACTER COLOR _7
+TITLE _7
+Y1LABEL _8
+X1LABEL _9
+K NEAREST NEIGHBORS CLASSIFICATION PLOT _1 _2 _11
+LINE RESTORE
+CHARACTER RESTORE
+LIST dpst1f.dat
+--------------------
+WEB HELP K NEAREST NEIGHBORS CLASSIFICATION PLOT
+--------------------

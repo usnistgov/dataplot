@@ -1209,7 +1209,7 @@ int    jheigh[2], ifontz[2];
    int    len2;                 /* number of characters in font name */
    int    string_width;         /* width of string in pixels */
    char   string2[130];         /* converted string */
-   char   font_name[130];       /* string for font name */
+   char   font_name[255];       /* string for font name */
    int    i;
    int    ixpos_temp, iypos_temp, ijusth_temp, ijustv_temp;
    int    jcol_temp;
@@ -1241,10 +1241,10 @@ int    jheigh[2], ifontz[2];
 
 #if INTEGER_PRECISION == 0
    i_to_s_2(string, string2, 130, &len);
-   i_to_s_2(font, font_name, 80, &len2);
+   i_to_s_2(font, font_name, 255, &len2);
 #else
    i_to_s_2(string, string2, 260, &len);
-   i_to_s_2(font, font_name, 160, &len2);
+   i_to_s_2(font, font_name, 510, &len2);
 #endif
 
    if (ifontz_temp == 1) {

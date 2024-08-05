@@ -19,7 +19,7 @@ This is file groupmea.men--Group Means for a Matrix
 14. @CE 3 0 42 50 ?
 15.
 16. Subset/Except/For Specification: 
-177777774 0 1 50 *
+17. @CE 4 0 1 50 *
 18.
 19.
 20. Generate the Group Means?:

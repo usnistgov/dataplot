@@ -22089,7 +22089,7 @@ C
         ITEXT(ICNT)='Means Variable: '
         WRITE(ITEXT(ICNT)(23:26),'(A4)')IVARID(1)(1:4)
         WRITE(ITEXT(ICNT)(27:30),'(A4)')IVARI2(1)(1:4)
-        NCTEXT(ICNT)=27
+        NCTEXT(ICNT)=30
         AVALUE(ICNT)=0.0
         IDIGIT(ICNT)=-1
 C
@@ -22097,7 +22097,7 @@ C
         ITEXT(ICNT)='SD Variable: '
         WRITE(ITEXT(ICNT)(23:26),'(A4)')IVARID(2)(1:4)
         WRITE(ITEXT(ICNT)(27:30),'(A4)')IVARI2(2)(1:4)
-        NCTEXT(ICNT)=27
+        NCTEXT(ICNT)=30
         AVALUE(ICNT)=0.0
         IDIGIT(ICNT)=-1
 C
@@ -22105,7 +22105,7 @@ C
         ITEXT(ICNT)='Sample Size Variable: '
         WRITE(ITEXT(ICNT)(23:26),'(A4)')IVARID(3)(1:4)
         WRITE(ITEXT(ICNT)(27:30),'(A4)')IVARI2(3)(1:4)
-        NCTEXT(ICNT)=27
+        NCTEXT(ICNT)=30
         AVALUE(ICNT)=0.0
         IDIGIT(ICNT)=-1
       ELSE
@@ -22113,7 +22113,7 @@ C
         ITEXT(ICNT)='Response Variable: '
         WRITE(ITEXT(ICNT)(23:26),'(A4)')IVARID(1)(1:4)
         WRITE(ITEXT(ICNT)(27:30),'(A4)')IVARI2(1)(1:4)
-        NCTEXT(ICNT)=27
+        NCTEXT(ICNT)=30
         AVALUE(ICNT)=0.0
         IDIGIT(ICNT)=-1
 C
@@ -22121,7 +22121,7 @@ C
         ITEXT(ICNT)='Group-ID Variable: '
         WRITE(ITEXT(ICNT)(23:26),'(A4)')IVARID(1)(1:4)
         WRITE(ITEXT(ICNT)(27:30),'(A4)')IVARI2(1)(1:4)
-        NCTEXT(ICNT)=27
+        NCTEXT(ICNT)=30
         AVALUE(ICNT)=0.0
         IDIGIT(ICNT)=-1
 C

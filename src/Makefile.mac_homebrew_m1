@@ -124,7 +124,7 @@ endif
 
 ifneq (,$(findstring X11,$(FEATURES)))
 OBJS += x11.o
-CFLAGS  += -I/opt/X11/include
+CFLAGS  += -I/opt/homebrew/X11/include    -I/opt/homebrew/include/freetype2
 FFLAGS4 += -DHAVE_X11
 LDFLAGS += -L/opt/X11/lib -lX11 -lXft
 endif

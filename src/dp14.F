@@ -283,8 +283,12 @@ C
       DIMENSION Z12(MAXOBV)
       DIMENSION Z13(MAXOBV)
       DIMENSION Z14(MAXOBV)
+      DIMENSION Z15(MAXOBV)
+      DIMENSION Z16(MAXOBV)
+      DIMENSION ITEMP1(MAXOBV)
 C
       INCLUDE 'DPCOZZ.INC'
+      INCLUDE 'DPCOZI.INC'
       EQUIVALENCE (GARBAG(IGARB1),Y1(1))
       EQUIVALENCE (GARBAG(IGARB2),Y2(1))
       EQUIVALENCE (GARBAG(IGARB3),Y3(1))
@@ -302,6 +306,9 @@ C
       EQUIVALENCE (GARBAG(JGAR18),Z12(1))
       EQUIVALENCE (GARBAG(JGAR19),Z13(1))
       EQUIVALENCE (GARBAG(JGAR20),Z14(1))
+      EQUIVALENCE (GARBAG(IGAR11),Z15(1))
+      EQUIVALENCE (GARBAG(IGAR12),Z16(1))
+      EQUIVALENCE (IGARBG(IIGAR1),ITEMP1(1))
 C
 C-----COMMON----------------------------------------------------
 C
@@ -492,10 +499,13 @@ C
   715   CONTINUE
       ENDIF
 C
+      MAXLAB=1000
+      MAXMAT=1000
       IWRITE='OFF'
       CALL DPEIN2(Y1,Y2,Y3,NS,
      1            Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,Z10,Z11,Z12,Z13,Z14,
-     1            ALPHA,HCV,KCV,
+     1            ITEMP1,MAXLAB,MAXMAT,
+     1            ALPHA,HCV,KCV,Z15,Z16,
      1            IGRPID,IGRPLA,MAXGLA,MAXGRP,
      1            IWRITE,IFORSW,ICAPSW,ICAPTY,
      1            ISUBRO,IBUGA3,IERROR)
@@ -545,8 +555,8 @@ C
       END
       SUBROUTINE DPEIN2(Y,X1,X2,N,XIDTEM,XIDTE2,
      1                  XBAR,XBARI,SDI,SDXBRI,DXBARI,H,AK,SRPT,SRPRD,
-     1                  TEMP1,TEMP2,TAG,
-     1                  ALPHA,HCV,KCV,
+     1                  TEMP1,TEMP2,TAG,NCELL,MAXLAB,MAXMAT,
+     1                  ALPHA,HCV,KCV,CELLWT,KCVUNB,
      1                  IGRPID,IGRPLA,MAXGLA,MAXGRP,
      1                  IWRITE,IFORSW,ICAPSW,ICAPTY,
      1                  ISUBRO,IBUGA3,IERROR)
@@ -607,6 +617,8 @@ C                                       TABLES
 C     UPDATED         --MARCH     2015. USER CAN SPECIFY WHICH TABLES
 C                                       TO PRINT
 C     UPDATED         --APRIL     2015. ADD TABLE TO PRINT RAW DATA
+C     UPDATED         --APRIL     2024. E-691 23 ADDS SUPPORT FOR
+C                                       UNBALANCED DATA
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES--------------
 C
@@ -623,6 +635,7 @@ C
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
       CHARACTER*4 IOP
+      CHARACTER*4 IBAL
       CHARACTER*20 IFORMT
 C
       REAL KCV
@@ -650,6 +663,10 @@ C
       REAL TEMP1(*)
       REAL TEMP2(*)
       REAL TAG(*)
+      REAL CELLWT(*)
+      REAL KCVUNB(*)
+C
+      INTEGER NCELL(MAXLAB,MAXMAT)
 C
       INCLUDE 'DPCOST.INC'
 C
@@ -834,6 +851,23 @@ C
         GOTO9000
       ENDIF
 C
+      IF(NLAB.GE.MAXLAB)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,212)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,264)MAXLAB
+  264   FORMAT('      LAB ID VARIABLE.  THE NUMBER OF LABS SHOULD ',
+     1         'BE LESS THAN ',I5,'.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,218)NLAB
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
       IF(NMAT.LT.2 .OR. NMAT.GE.N)THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','WRIT')
@@ -861,16 +895,108 @@ C
         GOTO9000
       ENDIF
 C
-      ISTEPN='2.2'
+      IF(NMAT.GE.MAXMAT)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,212)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,274)MAXMAT
+  274   FORMAT('      MATERIAL ID VARIABLE.  THE NUMBER OF MATERIALS ',
+     1         'SHOULD BE LESS THAN ',I5,'.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,228)NMAT
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GOTO9000
+      ENDIF
+C
+C     2024/03: CHEK WHETHER HAVE BALANCED OR UNBALANCED CASE AND
+C               SAVE CELL SIZES.
+C
+      ISTEPN='1.2'
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'EIN2')
      1CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
+      IBAL='YES'
+      ICNT=0
+      NTEMP=0
+      NSAVE=0
+      DO280II=1,NLAB
+        HOLD1=XIDTEM(II)
+        DO285JJ=1,NMAT
+          HOLD2=XIDTE2(JJ)
+          NTEMP=0
+          DO288KK=1,N
+            IF(X1(KK).EQ.HOLD1 .AND. X2(KK).EQ.HOLD2)THEN
+              NTEMP=NTEMP+1
+            ENDIF
+  288     CONTINUE
+C
+          IF(NTEMP.GE.1)THEN
+            NCELL(II,JJ)=NTEMP
+            ICNT=ICNT+1
+            IF(ICNT.EQ.1)THEN
+              NSAVE=NTEMP
+            ELSE
+              IF(NTEMP.NE.NSAVE)IBAL='NO'
+            ENDIF
+          ELSE
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,101)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,291)
+  291       FORMAT('      MISSING CELL DETECTED.')
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,292)HOLD1
+  292       FORMAT('      LAB-ID:         ',F12.2)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,293)HOLD2
+  293       FORMAT('      MATERIAL-ID:    ',F12.2)
+            CALL DPWRST('XXX','WRIT')
+            IERROR='YES'
+            GOTO9000
+          ENDIF
+C
+  285   CONTINUE
+  280 CONTINUE
+C
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'EIN2')THEN
+        WRITE(ICOUT,294)IBAL
+  294   FORMAT('IBAL = ',A4)
+        CALL DPWRST('XXX','WRIT')
+        IF(IBAL.EQ.'YES')THEN
+          WRITE(ICOUT,295)NSAVE
+  295     FORMAT('NSAVE = ',I5)
+          CALL DPWRST('XXX','WRIT')
+        ELSE
+          DO296II=1,NLAB
+            DO297JJ=1,NMAT
+              WRITE(ICOUT,298)II,JJ,XIDTEM(II),XIDTE2(JJ),NCELL(II,JJ)
+  298         FORMAT('II,JJ,XIDTEM(II),XIDTE2(JJ),NCEL(II,JJ) = ',
+     1               2I5,2F12.2,I5)
+              CALL DPWRST('XXX','WRIT')
+  297       CONTINUE
+  296     CONTINUE
+        ENDIF
+C
+        ISTEPN='2.2'
+        CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+      ENDIF
+C
       J=0
       NOUT=0
+      NTEMP=0
+      NHOLD=0
+      NSTRT=0
       DO1110ISET2=1,NUMSE2
 C
 C  STEP 1: COMPUTE OVERALL MEAN FOR CURRENT MATERIAL
 C
+        NTOTAL=0
         K=0
         DO1120I=1,N
           IF(XIDTE2(ISET2).EQ.X2(I))THEN
@@ -883,8 +1009,12 @@ C
         XBAR(ISET2)=XMEAN
 C
         IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'EIN2')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','WRIT')
           WRITE(ICOUT,1128)ISET2,XBAR(ISET2)
- 1128     FORMAT('ISET2,XBAR(ISET2) = ',I8,G15.7)
+ 1128     FORMAT('MATERIAL (ISET2),XBAR(ISET2) = ',I8,G15.7)
+          CALL DPWRST('XXX','WRIT')
+          WRITE(ICOUT,999)
           CALL DPWRST('XXX','WRIT')
         ENDIF
 C
@@ -893,6 +1023,7 @@ C
 C
           NOUT=(ISET2-1)*NUMSE1 + ISET1
           TAG(NOUT)=REAL(ISET2)
+          IF(ISET1.EQ.1)NSTRT=NOUT
 C
           IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'EIN2')THEN
             WRITE(ICOUT,1138)ISET1,NOUT
@@ -908,17 +1039,27 @@ C
             ENDIF
  1140     CONTINUE
           NTEMP=K
+          NTOTAL=NTOTAL+NTEMP
 C
           IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'EIN2')THEN
-            WRITE(ICOUT,1141)XIDTEM(ISET1),XIDTE2(ISET2),NTEMP
- 1141       FORMAT('XIDTEM(ISET1),XIDTE2(ISET2),NTEMP = ',2G15.7,I8)
+            WRITE(ICOUT,1141)XIDTEM(ISET1),XIDTE2(ISET2),NTEMP,NTOTAL
+ 1141       FORMAT('XIDTEM(ISET1),XIDTE2(ISET2),NTEMP,NTOTAL = ',
+     1             2G15.7,2I8)
             CALL DPWRST('XXX','WRIT')
+            DO1145KK=1,NTEMP
+              WRITE(ICOUT,1147)KK,TEMP1(KK)
+ 1147         FORMAT('KK,TEMP1(KK) = ',I5,G15.7)
+              CALL DPWRST('XXX','WRIT')
+ 1145       CONTINUE
           ENDIF
+C
+C         2024/03: CURRENT VERSION OF THE STANDARD NOW SUPPORTS
+C                  UNBALANCED DATA
 C
           IF(ISET1.EQ.1 .AND. ISET2.EQ.1)THEN
             NHOLD=NTEMP
           ELSE
-            IF(NTEMP.NE.NHOLD)THEN
+            IF(IBAL.EQ.'YES' .AND. NTEMP.NE.NHOLD)THEN
               WRITE(ICOUT,999)
               CALL DPWRST('XXX','BUG ')
               WRITE(ICOUT,101)
@@ -935,8 +1076,15 @@ C
             ENDIF
           ENDIF
 C
+C         COMPUTE CELL MEAN AND CELL SD, DIFFERENCE BETWEEN
+C         CELL MEAN AND MATERIAL MEAN
+C
           CALL MEAN(TEMP1,NTEMP,IWRITE,XMEAN,IBUGA3,IERROR)
-          CALL SD(TEMP1,NTEMP,IWRITE,XSD,IBUGA3,IERROR)
+          IF(NTEMP.EQ.1)THEN
+            XSD=0.0
+          ELSE
+            CALL SD(TEMP1,NTEMP,IWRITE,XSD,IBUGA3,IERROR)
+          ENDIF
           DSUM=DSUM + DBLE(XSD)**2
           XBARI(NOUT)=XMEAN
           SDI(NOUT)=XSD
@@ -945,28 +1093,137 @@ C
           H(NOUT)=XBARI(NOUT) - XBAR(ISET2)
           TEMP2(ISET1)=XBARI(NOUT)
 C
-          IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'ONS2')THEN
-            WRITE(ICOUT,1149)ISET1,ISET2,XBAR(ISET2),XBARI(NOUT)
- 1149       FORMAT('ISET1,ISET2,XBAR(ISET2),XBARI(NOUT) = ',
-     1             2I8,2G15.7)
+          IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'EIN2')THEN
+            WRITE(ICOUT,1149)ISET1,ISET2,NOUT,XBAR(ISET2),XBARI(NOUT)
+ 1149       FORMAT('ISET1,ISET2,NOUT,XBAR(ISET2),XBARI(NOUT) = ',
+     1             3I8,2G15.7)
             CALL DPWRST('XXX','BUG ')
           ENDIF
 C
  1130   CONTINUE
 C
-        CALL SD(TEMP2,NUMSE1,IWRITE,XSD,IBUGA3,IERROR)
-        SDXBRI(ISET2)=XSD
-        DXREP=DSQRT(DSUM/DBLE(NUMSE1))
-        SRPT(ISET2)=REAL(DXREP)
+C       2024/03: FOR UNBALANCED DATA, COMPUTE OPERATIONAL NUMBER OF
+C                REPLICATES (A2.6)
 C
-        DXREP=DSUM/DBLE(NUMSE1)
-        XREPRD=DSQRT(DBLE(XSD**2) + DXREP*DBLE(NHOLD-1)/DBLE(NHOLD))
-        SRPRD(ISET2)=REAL(MAX(DSQRT(DXREP),XREPRD))
+        IF(IBAL.EQ.'NO')THEN
+          SUM=0.0
+          SUM2=0.0
+          SUM3=0.0
+          DO1150ISET1=1,NUMSE1
+            AVAL=REAL(NCELL(ISET1,ISET2))
+            IINDX=(ISET2-1)*NLAB + ISET1
+            SUM=SUM + (AVAL**2/REAL(NTOTAL))
+            SUM2=SUM2 + AVAL*DXBARI(IINDX)**2
+            SUM3=SUM3 + (AVAL-1.0)*SDI(IINDX)**2
 C
-        DO1150I=(ISET2-1)*NUMSE1+1,ISET2*NUMSE1
-          H(I)=H(I)/SDXBRI(ISET2)
-          AK(I)=AK(I)/SRPT(ISET2)
- 1150   CONTINUE
+            IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'EIN2')THEN
+              WRITE(ICOUT,1153)ISET1,IINDX,AVAL,DXBARI(IINDX),
+     1                         SDI(IINDX)
+ 1153         FORMAT('ISET1,IINDX,AVAL,DXBARI(IINDX),SDI(IINDX) = ',
+     1                2I6,3G15.7)
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+C
+ 1150     CONTINUE
+          ANSTAR=(REAL(NTOTAL) - SUM)/REAL(NLAB-1)
+          DENOM=ANSTAR*REAL(NLAB-1)
+          SDXBRI(ISET2)=SQRT(SUM2/DENOM)
+          SRPT(ISET2)=SQRT(SUM3/REAL(NTOTAL-NLAB))
+          AVAL=SDXBRI(ISET2)**2 - (SRPT(ISET2)**2/ANSTAR)
+          SL=0.0
+          IF(AVAL.GT.0.0)SL=SQRT(AVAL)
+          SRPRD(ISET2)=SQRT(SL**2 + SRPT(ISET2)**2)
+C
+          IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'EIN2')THEN
+            WRITE(ICOUT,1158)SUM,SUM2,SUM3,DENOM,ANSTAR,SDXBRI(ISET2)
+ 1158       FORMAT('SUM,SUM2,SUM3,DENOM,ANSTAR,SDXBRI(ISET2) = ',
+     1             6G15.7)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+C
+C
+          SUM1=0.0
+          SUM2=0.0
+          AVAL1=SRPT(ISET2)**2
+          DO1170ISET1=1,NUMSE1
+            IINDX=(ISET2-1)*NLAB + ISET1
+            AVAL2=REAL(NCELL(ISET1,ISET2))
+            CELLWT(ISET1)=1.0/(SL**2 + (AVAL1/AVAL2))
+            SUM1=SUM1 + CELLWT(ISET1)*XBARI(IINDX)
+            SUM2=SUM2 + CELLWT(ISET1)
+C
+            IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'EIN2')THEN
+              WRITE(ICOUT,1171)ISET1,IINDX,CELLWT(ISET1),XBARI(IINDX)
+ 1171         FORMAT('ISET1,IINDX,CELLWT(ISET1),XBARI(IINDX) = ',
+     1               2I6,2G15.7)
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+C
+ 1170     CONTINUE
+          XHAT=SUM1/SUM2
+C
+          SSDBAR=0.0
+          DO1172ISET1=1,NUMSE1
+            IINDX=(ISET2-1)*NLAB + ISET1
+            DBAR=XBARI(IINDX) - XHAT
+            SSDBAR=SSDBAR + CELLWT(ISET1)*DBAR**2
+ 1172     CONTINUE
+C
+          AVAL2=SSDBAR*REAL(NLAB)
+          DO1175ISET1=1,NUMSE1
+            IINDX=(ISET2-1)*NLAB + ISET1
+            DBAR=XBARI(IINDX) - XHAT
+            ANUM=DBAR*REAL(NLAB-1)
+            AVAL1=(1.0/CELLWT(ISET1)) - (1.0/SUM2)
+            DENOM=SQRT(AVAL1*AVAL2)
+            H(IINDX)=ANUM/DENOM
+            AK(IINDX)=SDI(IINDX)/SRPT(ISET2)
+            NI=NCELL(ISET1,ISET2)
+            ANI=REAL(NI)
+            API=REAL(NTOTAL-NLAB)/(ANI-1.0)
+            IDF1=NI-1
+            IDF2=NTOTAL-NLAB-NI+1
+            ALPT=0.995
+            CALL FPPF(ALPT,IDF1,IDF2,FVAL)
+            DENOM=1.0 + (API-1.0)/FVAL
+            KCVUNB(IINDX)=SQRT(API/DENOM)
+ 1175     CONTINUE
+C
+          IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'EIN2')THEN
+            WRITE(ICOUT,1176)SUM,SUM2,ANSTAR,SDXBRI(ISET2)
+ 1176       FORMAT('SUM,SUM2,ANSTAR,SDXBRI(ISET2) = ',4G15.7)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1177)SRPT(ISET2),SL,SRPRD(ISET2),XHAT
+ 1177       FORMAT('SRPT(ISET2),SL,SRPRD(ISET2),XHAT = ',4G15.7)
+            CALL DPWRST('XXX','BUG ')
+            DO1178ISET1=1,NUMSE1
+              WRITE(ICOUT,1179)ISET1,CELLWT(ISET1)
+ 1179         FORMAT('ISET1,CELLWT(ISET1) = ',I5,G15.7)
+              CALL DPWRST('XXX','BUG ')
+ 1178       CONTINUE
+          ENDIF
+C
+        ELSE
+          CALL SD(TEMP2,NUMSE1,IWRITE,XSD,IBUGA3,IERROR)
+          SDXBRI(ISET2)=XSD
+          DXREP=DSQRT(DSUM/DBLE(NUMSE1))
+          SRPT(ISET2)=REAL(DXREP)
+          DXREP=DSUM/DBLE(NUMSE1)
+          XREPRD=DSQRT(DBLE(XSD**2) + DXREP*DBLE(NHOLD-1)/DBLE(NHOLD))
+          SRPRD(ISET2)=REAL(MAX(DSQRT(DXREP),XREPRD))
+C
+          DO1180I=(ISET2-1)*NUMSE1+1,ISET2*NUMSE1
+            H(I)=H(I)/SDXBRI(ISET2)
+            AK(I)=AK(I)/SRPT(ISET2)
+ 1180     CONTINUE
+C
+          IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'ONS2')THEN
+            WRITE(ICOUT,1156)ISET2,SRPT(ISET2),SRPRD(ISET2)
+ 1156       FORMAT('ISET2,SRPT(ISET2),SRPRD(ISET2) = ',I5,2G15.7)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+C
+        ENDIF
 C
  1110 CONTINUE
       NOUT=NUMSE1*NUMSE2
@@ -978,13 +1235,15 @@ C
       HCV=(ANLAB - 1.0)*TVAL/SQRT(ANLAB*(TVAL**2 + ANLAB - 2.0))
       HCV=REAL(INT(HCV*100.0 + 0.5))
       HCV=HCV/100.0
-      IDF1=NHOLD-1
-      IDF2=(NHOLD-1)*(NLAB-1)
-      ALP2=1.0 - ALPHA
-      CALL FPPF(ALP2,IDF1,IDF2,FVAL)
-      KCV=SQRT(ANLAB/(1.0 + (ANLAB-1.0)/FVAL))
-      KCV=REAL(INT(KCV*100.0 + 0.5))
-      KCV=KCV/100.0
+      IF(IBAL.EQ.'YES')THEN
+        IDF1=NSAVE-1
+        IDF2=(NSAVE-1)*(NLAB-1)
+        ALP2=1.0 - ALPHA
+        CALL FPPF(ALP2,IDF1,IDF2,FVAL)
+        KCV=SQRT(ANLAB/(1.0 + (ANLAB-1.0)/FVAL))
+        KCV=REAL(INT(KCV*100.0 + 0.5))
+        KCV=KCV/100.0
+      ENDIF
 C
 C               ***********************************************
 C               **  STEP 3.1--                               **
@@ -1001,9 +1260,16 @@ C
         DO3110ISET1=1,NUMSE1
           ILAB=INT(XIDTEM(ISET1)+0.5)
           ICNT=ICNT+1
-          WRITE(IOUNI1,3119)IMAT,ILAB,XBARI(ICNT),SDI(ICNT),
-     1                      DXBARI(ICNT),H(ICNT),AK(ICNT)
- 3119     FORMAT(I8,1X,I8,3(1X,E15.7),2(1X,F10.2))
+          IF(IBAL.EQ.'ON')THEN
+            WRITE(IOUNI1,3119)IMAT,ILAB,XBARI(ICNT),SDI(ICNT),
+     1                        DXBARI(ICNT),H(ICNT),AK(ICNT)
+ 3119       FORMAT(I8,1X,I8,3(1X,E15.7),2(1X,F10.2))
+          ELSE
+            WRITE(IOUNI1,13119)IMAT,ILAB,XBARI(ICNT),SDI(ICNT),
+     1                         DXBARI(ICNT),H(ICNT),AK(ICNT),
+     1                         KCVUNB(ICNT)
+13119       FORMAT(I8,1X,I8,3(1X,E15.7),3(1X,F10.2))
+          ENDIF
  3110   CONTINUE
  3100 CONTINUE
 C
@@ -1606,7 +1872,20 @@ C
 C
 C       TABLE 3
 C
+C       2024/03: FOR UNBALANCED CASE NEED TO PRINT K CRITICAL
+C                VALUE FOR EACH ENTRY INTO THE TABLE.  SO HANDLE
+C                THIS SEPARATELY FROM THE BALANCED CASE.
+C
+        ISTEPN='2.2'
+        IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'EIN2')
+     1     CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
         IF(I691KC.EQ.'OFF')GOTO4399
+        IF(IBAL.EQ.'NO')GOTO5001
+C
+        ISTEPN='2.2A'
+        IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'EIN2')
+     1     CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 C
 C       NOTE: DETERMINE HOW MANY MATERIALS CAN REASONABLY BE PRINTED FOR
 C             THE TABLE (I.E., DOES THE TABLE NEED TO BE PRINTED IN
@@ -1780,8 +2059,194 @@ C
         NCTIT9=0
 C
  4399   CONTINUE
+        GOTO4401
+C
+ 5001   CONTINUE
+C
+        ISTEPN='2.2B'
+        IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'EIN2')
+     1     CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+C
+C       NOTE: DETERMINE HOW MANY MATERIALS CAN REASONABLY BE PRINTED FOR
+C             THE TABLE (I.E., DOES THE TABLE NEED TO BE PRINTED IN
+C             MORE THAN 1 ITERATION).
+C
+C             BASE ON MAXIMUM OF 6 MATERIALS PER TABLE.
+C
+CCCCC   NITEMS=(ILPRCO - 11)/10
+CCCCC   NIT=(NMAT/NITEMS) + 1
+        NITEMS=6
+        NIT=(NMAT/NITEMS) + 1
+        IF(MOD(NMAT,NITEMS).EQ.0)NIT=NIT-1
+C
+        DO5310ITER=1,MAX(NIT,1)
+C
+          IFRST=(ITER-1)*NITEMS + 1
+          ILAST=MIN(ITER*NITEMS,NMAT)
+          NTEMP=ILAST-IFRST+1
+          NUMCOL=NTEMP+1
+C
+          ITITLE=' '
+          ITITLE(1:34)='k (Critical Values in parenthesis)'
+          NCTITL=34
+          NUMLIN=2
+          ITITL2(1,1)='Laboratory'
+          ITITL2(2,1)='Number'
+          ITITL2(1,2)='Material'
+          NCTIT2(1,1)=10
+          NCTIT2(2,1)=6
+          NCTIT2(1,2)=8
+          JTEMP=INT(XIDTE2(IFRST)+0.5)
+          IF(IGRPID.GT.0)THEN
+            ILAST2=1
+            DO5302II=10,1,-1
+              IF(IGRPLA(IFRST,IGRPID)(II:II).NE.' ')THEN
+                 LAST2=II
+                 GOTO5303
+              ENDIF
+ 5302       CONTINUE
+ 5303       CONTINUE
+            ITITL2(2,2)(1:ILAST2)=IGRPLA(IFRST,IGRPID)(1:ILAST2)
+            NCTIT2(2,2)=ILAST2
+          ELSE
+            IF(JTEMP.LE.9)THEN
+              WRITE(ITITL2(2,2)(1:1),'(I1)')JTEMP
+              NCTIT2(2,2)=1
+            ELSEIF(JTEMP.LE.99)THEN
+              WRITE(ITITL2(2,2)(1:2),'(I2)')JTEMP
+              NCTIT2(2,2)=2
+            ELSE
+              WRITE(ITITL2(2,2)(1:3),'(I3)')JTEMP
+              NCTIT2(2,2)=3
+            ENDIF
+          ENDIF
+C
+          IF(NUMCOL.GE.3)THEN
+            ICNT2=2
+            DO5315JJ=IFRST+1,ILAST
+              ICNT2=ICNT2+1
+              ITITL2(1,ICNT2)=' '
+              NCTIT2(1,ICNT2)=0
+              JTEMP=INT(XIDTE2(JJ)+0.5)
+              IF(IGRPID.GT.0)THEN
+                ILAST2=1
+                DO5312II=10,1,-1
+                  IF(IGRPLA(JJ,IGRPID)(II:II).NE.' ')THEN
+                    LAST2=II
+                    GOTO5313
+                  ENDIF
+ 5312           CONTINUE
+ 5313           CONTINUE
+                ITITL2(2,ICNT2)(1:ILAST2)=IGRPLA(JJ,IGRPID)(1:ILAST2)
+                NCTIT2(2,ICNT2)=ILAST2
+              ELSE
+                IF(JTEMP.LE.9)THEN
+                  WRITE(ITITL2(2,ICNT2)(1:1),'(I1)')JTEMP
+                  NCTIT2(2,ICNT2)=1
+                ELSEIF(JTEMP.LE.99)THEN
+                  WRITE(ITITL2(2,ICNT2)(1:2),'(I2)')JTEMP
+                  NCTIT2(2,ICNT2)=2
+                ELSEIF(JTEMP.LE.999)THEN
+                  WRITE(ITITL2(2,ICNT2)(1:3),'(I3)')JTEMP
+                  NCTIT2(2,ICNT2)=3
+                ELSE
+                  WRITE(ITITL2(2,ICNT2)(1:4),'(I4)')JTEMP
+                  NCTIT2(2,ICNT2)=4
+                ENDIF
+              ENDIF
+ 5315       CONTINUE
+          ENDIF
+C
+          NMAX=0
+          NTOT(1)=12
+          NTOT(2)=15
+          NTOT(3)=15
+          NTOT(4)=15
+          NTOT(5)=15
+          NTOT(6)=15
+          NTOT(7)=15
+          DO5320J=1,NUMCOL
+            VALIGN(J)='b'
+            ALIGN(J)='r'
+            IF(J.EQ.1)ALIGN(J)='c'
+            NMAX=NMAX+NTOT(J)
+            IDIGIT(J)=2
+            IWHTML(J)=100
+            IF(J.GE.2)IWHTML(J)=150
+            ITYPCO(J)='ALPH'
+ 5320     CONTINUE
+          ITYPCO(1)='NUME'
+          IDIGIT(1)=0
+          IINC=1400
+          IWRTF(1)=1200
+          IWRTF(2)=IWRTF(1)+IINC
+          IWRTF(3)=IWRTF(2)+IINC
+          IWRTF(4)=IWRTF(3)+IINC
+          IWRTF(5)=IWRTF(4)+IINC
+          IWRTF(6)=IWRTF(5)+IINC
+          IWRTF(7)=IWRTF(6)+IINC
+          IFRSTL=.TRUE.
+          ILASTL=.TRUE.
+C
+          ICNT3=0
+          DO5330ISET1=1,NUMSE1
+            ICNT3=ICNT3+1
+            IF(ICNT3.GT.MAXROW)THEN
+              ICNT3=MAXROW
+              CALL DPDTA4(ITITL9,NCTIT9,
+     1                    ITITLE,NCTITL,ITITL2,NCTIT2,
+     1                    MAXLIN,NUMLIN,MAXCOL,NUMCOL,
+     1                    IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT3,
+     1                    IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1                    ICAPSW,ICAPTY,IFRSTL,ILASTL,
+     1                    ISUBRO,IBUGA3,IERROR)
+              ICNT3=1
+            ENDIF
+            ILAB=ISET1
+            AMAT(ICNT3,1)=XIDTEM(ISET1)
+            NSTRT=ILAB + (IFRST-1)*NUMSE1
+            NSTOP=ILAST*NLAB
+            ICNT2=1
+            DO5335II=NSTRT,NSTOP,NUMSE1
+              ICNT2=ICNT2+1
+              AMAT(ICNT3,ICNT2)=AK(II)
+              IVALUE(ICNT3,ICNT2)='        (     )'
+              NCVALU(ICNT3,ICNT2)=15
+              WRITE(IVALUE(ICNT3,ICNT2)(1:7),'(F7.2)')AK(II)
+              WRITE(IVALUE(ICNT3,ICNT2)(10:14),'(F5.2)')KCVUNB(II)
+C
+              IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'EIN2')THEN
+                WRITE(ICOUT,5336)II,AK(II),KCVUNB(II)
+ 5336           FORMAT('II,AK(II),KCVUNB(II) = ',I6,2G15.7)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,5337)IVALUE(ICNT3,ICNT2)(1:15)
+ 5337           FORMAT('IVALUE(ICNT3,ICNT2) = ',A15)
+                CALL DPWRST('XXX','BUG ')
+              ENDIF
+C
+ 5335       CONTINUE
+ 5330     CONTINUE
+C
+          IF(ICNT3.GT.0)THEN
+            CALL DPDTA4(ITITL9,NCTIT9,
+     1                  ITITLE,NCTITL,ITITL2,NCTIT2,
+     1                  MAXLIN,NUMLIN,MAXCOL,NUMCOL,
+     1                  IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,ICNT3,
+     1                  IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,
+     1                  ICAPSW,ICAPTY,IFRSTL,ILASTL,
+     1                  ISUBRO,IBUGA3,IERROR)
+          ENDIF
+C
+ 5310   CONTINUE
+C
+        ITITL9=' '
+        NCTIT9=0
+C
+        GOTO4401
 C
 C       PRINT TABLE 4
+C
+ 4401   CONTINUE
 C
         IF(I691PS.EQ.'OFF')GOTO4499
 C
@@ -11666,6 +12131,8 @@ C                                       COMMAND
 C     UPDATED         --MARCH     2019. IF "SET POSTSCRIPT CONVERT" IS
 C                                       SET, CALL DPDEP3 TO DO THE
 C                                       REQUESTED CONVERSION
+C     UPDATED         --JUNE      2024. ONLY CALL DPDEP3 FOR POSTSCRIPT
+C                                       DEVICES OR IF CAPTURE ON
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -11879,8 +12346,14 @@ C
            IOPERA='CLOS'
            IGENNU=IPL1NU
            IGENID='PLO1'
-           CALL DPDEP3(IOPERA,IGENNU,IGENID,ICAPSW,IFILE,
-     1                 IBUGS2,ISUBRO,IFOUND,IERROR)
+           IMANUF=IDMANU(2)
+C
+C          2024/06: ONLY CALL DPDEP3 FOR POSTSCRIPT DEVICES
+C
+           IF(IMANUF.EQ.'POST' .OR. ICAPSW.EQ.'ON')THEN
+             CALL DPDEP3(IOPERA,IGENNU,IGENID,ICAPSW,IFILE,
+     1                   IBUGS2,ISUBRO,IFOUND,IERROR)
+           ENDIF
 C
         ENDIF
       ENDIF
@@ -11955,8 +12428,14 @@ C
            IOPERA='CLOS'
            IGENNU=IPL2NU
            IGENID='PLO2'
-           CALL DPDEP3(IOPERA,IGENNU,IGENID,ICAPSW,IFILE,
-     1                 IBUGS2,ISUBRO,IFOUND,IERROR)
+           IMANUF=IDMANU(3)
+C
+C          2024/06: ONLY CALL DPDEP3 FOR POSTSCRIPT DEVICES
+C
+           IF(IMANUF.EQ.'POST')THEN
+             CALL DPDEP3(IOPERA,IGENNU,IGENID,ICAPSW,IFILE,
+     1                   IBUGS2,ISUBRO,IFOUND,IERROR)
+           ENDIF
 C
         ENDIF
       ENDIF

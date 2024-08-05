@@ -1,4 +1,4 @@
-49900.      (VERSION 2023.09)   total number of lines in file (including this line)
+50000.      (VERSION 2024.07)   total number of lines in file (including this line)
  4.                          number of     sections below
   100.    L                  first line number of L section
 20300.    M                  first line number of M section
@@ -48227,6 +48227,151 @@ Program:
     .
     PLOT Y X
  
+-----ORDER STATISTICS (LET)--------------------------
+ 
+ORDER STATISTICS
+ 
+Name:
+    ORDER STATISTICS (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Generate the N order statistics for a given statistic from a given
+    distribution.
+
+Description:
+    Given a sample of size N from a distribution, the observations
+    can be ordered from smallest to largest.  The smallest value is
+    called the first order statistic and the largest value is called
+    the n-th order statistic.  There is an order statistic corresponding
+    to each observation (so there are N order statistics in all).  Each
+    of these order statistics has its own sampling distribution with
+    its own statistics (e.g., mean, standard deviation).
+
+    Dataplot supports analytic order statistics for a few specific
+    statistics (median, mean, standard deviation) for a limited number
+    of distributons.  Enter HELP ORDER STATISTIC MEDIANS or HELP ORDER
+    STATISTIC MEANS for details.
+
+    This command estimates the order statistics for an arbitrary
+    statistic and an arbitrary distribution.  Specifically, N random
+    numbers are generated from the specified distribution NSIM times.
+    Then for each order statistic there will be NSIM values.  The
+    specified statistic is computed for these NSIM values for each
+    order statistic.
+
+Syntax:
+    LET <resp> = <dist> ORDER STATISTICS <stat>
+                 FOR I = <start> <inc> <stop>
+    where <dist> specifies the distribution for which the order
+              statistics are computed;
+          <stat> specifies the desired statistic;
+          <start> is a number or parameter that identifies the first
+              row of <resp> in which the order statistics are saved
+              (typically it has a value of 1);
+          <inc> is a number or parameter that identifies the row
+              increment of <resp> in which the order statistics are saved
+              (typically it has a value of 1);
+          <stop> is a number or parameter that identifies the last row
+              of <resp> in which the order statistics are saved;
+    and where <resp> is a variable where the order statistics are saved.
+ 
+Examples:
+    LET Y1 = NORMAL ORDER STATISTICS INTERQUARTILE RANGE FOR I = 1 1 100
+    LET Y2 = EXPONENTIAL ORDER STATISTICS BIWEIGHT LOCATION FOR I = 1 1 1000
+    LET Y1 = LOGISTIC ORDER STATISTICS MAD FOR I = 1 1 100
+    LET Y1 = UNIFORM ORDER STATISTICS MIDRANGE FOR I = 1 1 100
+    LET Y1 = EV1 ORDER STATISTICS MIDMEAN FOR I = 1 1 100
+
+    LET GAMMA = 2.7
+    LET Y1 = WEIBULL ORDER STATISTICS SKEWNESS FOR I = 1 1 100
+
+    LET GAMMA = 2
+    LET Y1 = EV2 ORDER STATISTICS KURTOSIS FOR I = 1 1 100
+ 
+Note:
+    By default, 10,000 simulations are performed.  To specify a different
+    number of simulations, enter the command
+
+         SET ORDER STATISTICS SAMPLE SIZE <value>
+
+    where <value> is an integer between 100 and 1,000,000.  Values less
+    than 100 will be set to 100 and values greater than 1,000,000 will
+    be set to 1,000,000.
+ 
+Note:
+    For cases where an analytic approach is supported, you can specify
+    whether to use the analytic method (i.e., the ORDER STATISTIC MEDIAN
+    or the ORDER STATISTIC MEAN commands) or the simulation method
+    described here.  By default, the analytic method will be used.  To
+    specify the simulation method, enter the command
+
+         SET ORDER STATISTICS METHOD SIMULATION
+
+    To reset the default, enter
+
+         SET ORDER STATISTICS METHOD ANALYTIC
+
+Note:
+    To see a list of supported statistics, enter HELP STATISTICS.  Note
+    that only statistics based on a single response variable are
+    supported by this command.
+
+    To see a list of supported probability distributions, enter HELP
+    PROBABILITY DISTRIBUTIONS.
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    ORDER STATISTIC MEDIANS  = Compute order statistic medians for a few
+                               select distributions.
+    ORDER STATISTIC MEANS    = Compute order statistic means for a few
+                               select distributions.
+    RANDOM NUMBERS           = Generate a sequence of random numbers.
+ 
+Applications:
+    Extreme value analysis
+ 
+References:
+    Filliben (1975), "The Probability Plot Correlation Coefficient Test
+    for Normality," Technometrics, pp. 111-117.
+
+Implementation Date:
+    2024/06
+ 
+Program:
+    . Step 1:   Set some defaults
+    .
+    let n = 100
+    set write decimals 5
+    .
+    set order statistic method simulation
+    set order statistic sample size 10000
+    .
+    . Step 2:   Weibull, Gamma, Frechet SD
+    .
+    let gamma = 2.9
+    let ysd1   = weibull order statistic sd      for i = 1 1 n
+    let ysd2   = gamma   order statistic sd      for i = 1 1 n
+    let ysd3   = frechet order statistic sd      for i = 1 1 n
+    .
+    print ysd1 ysd2
+    .
+    . Step 3:   Weibull mean, median, midmean, biweight location
+    .
+    let yloc1   = weibull order statistic mean              for i = 1 1 n
+    let yloc2   = weibull order statistic median            for i = 1 1 n
+    let yloc3   = weibull order statistic midmean           for i = 1 1 n
+    let yloc4   = weibull order statistic biweight location for i = 1 1 n
+    .
+    print yloc1 yloc2 yloc3 yloc4
+ 
 -----ORD PLOT--------------------------------------
  
 ORD PLOT
@@ -49819,51 +49964,6 @@ Program:
  
  
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

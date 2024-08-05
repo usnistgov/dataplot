@@ -1,0 +1,41 @@
+Name:    JONCK.DAT
+Source:  Jonckheere (1954), "Distribution-Free k-Sample Test Against
+         Ordered Alternatives," Biometrika, Vol. 41, No. 1/2, pp. 133-145.
+
+         This data set is the example used in the Jonckheere paper.
+         No further information is given about this data.
+
+Description:  Column 1: Group-ID variable
+              Column 2: Response Variable
+
+To read this file into Dataplot, do the following
+
+    SKIP 25
+    READ JONCK.DAT X Y
+
+To perform the Jonckheere-Terpstra tests, do the following
+
+   JONCKHEERE TERPSTRA TEST Y X
+
+
+
+
+
+X     Y
+---------
+1     19
+1     20
+1     60
+1    130
+2     21
+2     61
+2     80
+2    129
+3     40
+3     99
+3    100
+3    149
+4     49
+4    110
+4    151
+4    160

@@ -5086,7 +5086,9 @@ C
 CCCCC DIMENSION XN(2)
 CCCCC DIMENSION U(2)
 C
-      COMMON/SGAMM/AA,AAA
+      COMMON/SGAMM/AA,AAA,S2,S,D,Q0,B,SI,C
+      REAL SGAMMA
+      EXTERNAL SGAMMA
 C
 C-----COMMON----------------------------------------------------------
 C
@@ -5173,6 +5175,8 @@ CCCCC GOTO150
 CC170 X(I)=XG
 CC100 CONTINUE
 C
+      AA=0.0
+      AAA=0.0
       DO100I=1,N
         ATEMP=SGAMMA(ISEED,GAMMA)
         X(I)=ATEMP

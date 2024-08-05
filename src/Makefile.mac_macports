@@ -58,6 +58,7 @@ endif
 #  MacPorts: sudo port install readline
 ifneq (,$(findstring READLINE,$(FEATURES)))
 OBJS += rldp.o
+CFLAGS4 = -I/usr/include/readline
 FFLAGS4 = -DHAVE_READLINE
 LDFLAGS += -lreadline
 endif
@@ -105,7 +106,7 @@ endif
 
 ifneq (,$(findstring X11,$(FEATURES)))
 OBJS += x11.o
-CFLAGS  += -I/opt/X11/include
+CFLAGS  += -I/opt/X11/include    -I/opt/X11/include/freetype2
 FFLAGS4 += -DHAVE_X11
 LDFLAGS += -L/opt/X11/lib -lX11 -lXft
 endif

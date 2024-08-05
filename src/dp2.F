@@ -4204,7 +4204,7 @@ C               **  STEP 8000--                             **
 C               **  GENERATE THE N RANDOM NUMBERS           **
 C               **  USING R250 ALGORITHM.                   **
 C               **  BASED ON KIRKPATRICK AND STOLL          **
-C               **  FAST SHOFT-REGISTER SEQUENCE GENERATOR. **
+C               **  FAST SHIFT-REGISTER SEQUENCE GENERATOR. **
 C               **********************************************
 C
  8000 CONTINUE
@@ -6863,6 +6863,20 @@ C     UPDATED         --OCTOBER    2023.  SET POSTSCRIPT DASH PATTERNS
 C     UPDATED         --NOVEMBER   2023.  SET ANOVA TWO TERM
 C                                             INTERACTIONS
 C     UPDATED         --NOVEMBER   2023.  SET ANOVA TYPE
+C     UPDATED         --MAY        2024.  SET RANDOMIZED COMPLETE BLOCK
+C                                             DESIGN PERMUTATION TEST
+C     UPDATED         --JUNE       2024.  SET FISHER NUMBER OF
+C                                             DISCRIMINANTS
+C     UPDATED         --JULY       2024.  SET FISHER DISCRIMINANT TYPE
+C     UPDATED         --JULY       2024.  SET FISHER DISCRIMINANT
+C                                             EIGENVALUE EPSILON
+C     UPDATED         --JULY       2024.  SET NEAREST NEIGHBOR
+C                                             CLASSIFICATION K
+C     UPDATED         --JULY       2024.  SET NEAREST NEIGHBOR
+C                                             CLASSIFICATION PRINCIPAL
+C                                             COMPONENTS
+C     UPDATED         --JULY       2024.  SET NEAREST NEIGHBOR
+C                                             CLASSIFICATION DISTANCE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -11243,6 +11257,171 @@ C
         IF(IV.GE.1000000)IV=1000000
         IOSSS=IV
         GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JULY 2024
+C     *******************************************************
+C     **  TREAT THE SET FISHER NUMBER OF DISCRIMINANTS     **
+C     **                <VALUE>                            **
+C     *******************************************************
+C
+      IPART1='FISH'
+      IPART2='NUMB'
+      IPART3='OF  '
+      IPART4='DISC'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(NUMARG.EQ.4)THEN
+          IV=2
+        ELSEIF(IHARG(5).EQ.'ON  ' .OR. IHARG(5).EQ.'DEFA' .OR.
+     1         IHARG(5).EQ.'OFF ' .OR. IHARG(5).EQ.'NO  ' .OR.
+     1         IHARG(5).EQ.'YES ' .OR. IHARG(5).EQ.'TRUE' .OR.
+     1         IHARG(5).EQ.'FALS')THEN
+          IV=2
+        ELSE
+          IV=IARG(NUMARG)
+        ENDIF
+        IF(IV.LT.1)IV=2
+        IF(IV.GE.20)IV=2
+        IFDAND=IV
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JULY 2024
+C     ************************************************
+C     **  TREAT THE SET FISHER DISCRIMINANT TYPE    **
+C     **                <VALUE>                     **
+C     ************************************************
+C
+      IPART1='FISH'
+      IPART2='DISC'
+      IPART3='TYPE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'QUAD')THEN
+          IHV='QUAD'
+        ELSE
+          IHV='LINE'
+        ENDIF
+        IFDATY=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JULY 2024
+C     ***********************************************************
+C     **  TREAT THE SET FISHER DISCRIMINANT EIGENVALUE EPSILON **
+C     **                <VALUE>                                **
+C     ***********************************************************
+C
+      IPART1='FISH'
+      IPART2='DISC'
+      IPART3='EIGE'
+      IPART4='EPSI'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(NUMARG.EQ.4)THEN
+          AV=CPUMIN
+        ELSE
+          AV=ARG(5)
+        ENDIF
+        IF(AV.LE.0.0)AV=CPUMIN
+        PFDAEP=AV
+        GOTO5170
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JULY 2024
+C     *******************************************************
+C     **  TREAT THE SET NEAREST NEIGHBOR CLASSIFICATION K  **
+C     **                <VALUE>                            **
+C     *******************************************************
+C
+      IPART1='NEAR'
+      IPART2='NEIG'
+      IPART3='CLAS'
+      IPART4='K   '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(NUMARG.EQ.4)THEN
+          IV=5
+        ELSEIF(IHARG(5).EQ.'ON  ' .OR. IHARG(5).EQ.'DEFA' .OR.
+     1         IHARG(5).EQ.'OFF ' .OR. IHARG(5).EQ.'NO  ' .OR.
+     1         IHARG(5).EQ.'YES ' .OR. IHARG(5).EQ.'TRUE' .OR.
+     1         IHARG(5).EQ.'FALS')THEN
+          IV=5
+        ELSE
+          IV=IARG(NUMARG)
+        ENDIF
+        IF(IV.LT.1)IV=1
+        IKNNN=IV
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JULY 2024
+C     *******************************************************
+C     **  TREAT THE SET NEAREST NEIGHBOR CLASSIFICATION    **
+C     **                PRINCIPAL COMPONENTS <ON/OFF>      **
+C     *******************************************************
+C
+      IPART1='NEAR'
+      IPART2='NEIG'
+      IPART3='CLAS'
+      IPART4='PRIN'
+      IPART5='COMP'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'TRUE')THEN
+          IHV='ON'
+        ELSE
+          IHV='OFF'
+        ENDIF
+        IKNNPC=IHV
+        GOTO5160
+      ENDIF
+C
+CCCCC THE FOLLOWING SECTION WAS ADDED    JULY 2024
+C               *******************************************************
+C               **  TREAT THE SET NEAREST NEIGBOR CLASSIFICATION     **
+C               **                DISTANCE <EUCLIDEAN/MINKOWSKY/     **
+C               **                BLOCK/CANBERRA/CHEBYCHEV/          **
+C               **                COSINE DISTANCE/ANGULAR COSINE     **
+C               **                DISTANCE/JACCARD DISTANCE/         **
+C               **                PEARSON DISTANCE/HAMMING>          **
+C               *******************************************************
+C
+      IPART1='NEAR'
+      IPART2='NEIG'
+      IPART3='CLAS'
+      IPART4='DIST'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(IHARG(5).EQ.'EUCL')THEN
+          IHV='EUC'
+        ELSEIF(IHARG(5).EQ.'MINK')THEN
+          IHV='MINK'
+        ELSEIF(IHARG(5).EQ.'BLOC')THEN
+          IHV='BLOC'
+        ELSEIF(IHARG(5).EQ.'HAMM')THEN
+          IHV='HAMM'
+        ELSEIF(IHARG(5).EQ.'CHEB')THEN
+          IHV='CHEB'
+        ELSEIF(IHARG(5).EQ.'CANB')THEN
+          IHV='CANB'
+        ELSEIF(IHARG(5).EQ.'COSI')THEN
+          IHV='COSD'
+        ELSEIF(IHARG(5).EQ.'ANGU' .AND. IHARG(6).EQ.'COSI')THEN
+          IHV='ACSD'
+        ELSEIF(IHARG(5).EQ.'JACC')THEN
+          IHV='JACD'
+        ELSEIF(IHARG(5).EQ.'CORR')THEN
+          IHV='PDIS'
+        ELSEIF(IHARG(5).EQ.'PEAR')THEN
+          IHV='PDIS'
+        ELSE
+          IHV='EUC'
+        ENDIF
+        IKNNDI=IHV
+        GOTO5160
       ENDIF
 C
 CCCCC FOLLOWING SECTION ADDED FEBRUARY 2007
@@ -21764,6 +21943,52 @@ C
         GOTO5160
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED FEBRUARY  2024
+C     *************************************************************
+C     **  SET EDIT LINE EDITOR <EMACS/VI>                        **
+C     *************************************************************
+C
+      IPART1='EDIT'
+      IPART2='LINE'
+      IPART3='EDIT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IF(IHARG(NUMARG).EQ.'VI  ')THEN
+          IEDLED='VI'
+        ELSEIF(IHARG(NUMARG).EQ.'VIM ')THEN
+          IEDLED='VI'
+        ELSE
+          IEDLED='EMAC'
+        ENDIF
+        IHV=IEDLED
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED MAY  2024
+C     *************************************************************
+C     **  SET RANDOMIZED COMPLTETE BLOCK DESIGN PERMUTATION TEST **
+C     **      <ON/OFF>                                           **
+C     *************************************************************
+C
+      IPART1='RAND'
+      IPART2='COMP'
+      IPART3='BLOC'
+      IPART4='DESI'
+      IPART5='PERM'
+      IPART6='TEST'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5.AND.IHARG(6).EQ.IPART6)THEN
+        IF(IHARG(NUMARG).EQ.'OFF ' .OR. IHARG(NUMARG).EQ.'NO  ' .OR.
+     1     IHARG(NUMARG).EQ.'FALS')THEN
+          IRCBPT='OFF'
+        ELSE
+          IRCBPT='ON'
+        ENDIF
+        IHV=IRCBPT
+        GOTO5160
+      ENDIF
+C
 CCCCC FOLLOWING SECTION ADDED SEPTEMBER  2009
 C     *************************************************************
 C     **  SET KOLM SMIR CRITICAL VALUE <TABLE/SIMULATION/NONE>   **
@@ -29367,6 +29592,22 @@ C     UPDATED         --OCTOBER    2023.  PROBE POSTSCRIPT DASH PATTERN
 C     UPDATED         --NOVEMBER   2023.  PROBE ANOVA TWO TERM
 C                                               INTERACTION
 C     UPDATED         --NOVEMBER   2023.  PROBE ANOVA TYPE
+C     UPDATED         --FEBRUARY   2024.  PROBE EDIT LINE EDITOR
+C     UPDATED         --MAY        2024.  PROBE RANDOMIZED COMPLETE
+C                                               BLOCK DESIGN
+C                                               PERMUTATION TEST
+C     UPDATED         --JUNE       2024.  PROBE FISHER NUMBER OF
+C                                               DISCRIMINANTS
+C     UPDATED         --JULY       2024.  PROBE FISHER DISCRIMINANT TYPE
+C     UPDATED         --JULY       2024.  PROBE FISHER DISCRIMINANT
+C                                               EIGENVALUE EPSILON
+C     UPDATED         --JULY       2024.  PROBE NEAREST NEIGHBOR
+C                                               CLASSIFICATION K
+C     UPDATED         --JULY       2024.  PROBE NEAREST NEIGHBOR
+C                                               CLASSIFICATION PRINCIPAL
+C                                               COMPONENT
+C     UPDATED         --JULY       2024.  PROBE NEAREST NEIGHBOR
+C                                               CLASSIFICATION DISTANCE
 C
 C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 C
@@ -29565,7 +29806,7 @@ C
           IHV=IREAMC(1:4)
           IHV2=IREAMC(5:8)
           GOTO5160
-        ELSEIF(IHARG(2).EQ.'SUBS')THEN
+        ELSEIF(IHARG(2).EQ.'LINE')THEN
           IHV=IREALI
           GOTO5160
         ELSEIF(IHARG(2).EQ.'REWI')THEN
@@ -32933,6 +33174,39 @@ C
         GOTO5160
       ENDIF
 C
+CCCCC FOLLOWING SECTION ADDED FEBRUARY  2024
+C               *************************************************
+C               **  PROBE EDIT LINE EDITOR                     **
+C               *************************************************
+C
+      IPART1='EDIT'
+      IPART2='LINE'
+      IPART3='EDIT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IEDLED
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED MAY  2024
+C               *************************************************
+C               **  PROBE RANDOMIZED COMPLETE BLOCK DESIGN     **
+C               **        PERMUTATION TEST                     **
+C               *************************************************
+C
+      IPART1='RAND'
+      IPART2='COMP'
+      IPART3='BLOC'
+      IPART4='DESI'
+      IPART5='PERM'
+      IPART6='TEST'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5.AND.IHARG(6).EQ.IPART6)THEN
+        IHV=IRCBPT
+        GOTO5160
+      ENDIF
+C
 CCCCC FOLLOWING SECTION ADDED OCTOBER   2023
 C               *************************************************
 C               **  PROBE ORDER STATISTCS METHOD               **
@@ -32960,6 +33234,98 @@ C
      1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
         IV=IOSSS
         GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JUNE      2024
+C               *************************************************
+C               **  PROBE FISHER NUMBER OF DISCRIMINANTS       **
+C               *************************************************
+C
+      IPART1='FISH'
+      IPART2='NUMB'
+      IPART3='OF  '
+      IPART4='DISC'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IV=IFDAND
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JULY      2024
+C               *********************************************
+C               **  PROBE FISHER DISCRIMINANT TYPE         **
+C               *********************************************
+C
+      IPART1='FISH'
+      IPART2='DISC'
+      IPART3='TYPE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3)THEN
+        IHV=IFDATY
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JULY      2024
+C               ***************************************************
+C               **  PROBE FISHER DISCRIMINANT EIGENVALUE EPSILON **
+C               ***************************************************
+C
+      IPART1='FISH'
+      IPART2='DISC'
+      IPART3='EIGE'
+      IPART4='EPSI'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        AV=PFDAEP
+        GOTO5170
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JULY      2024
+C               *************************************************
+C               **  PROBE NEAREST NEIGHBOR CLASSIFICATION K    **
+C               *************************************************
+C
+      IPART1='NEAR'
+      IPART2='NEIG'
+      IPART3='CLAS'
+      IPART4='K   '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IV=IKNNN
+        GOTO5150
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JULY      2024
+C               ******************************************************
+C               **  PROBE NEAREST NEIGHBOR CLASSIFICATION PRINCIPAL **
+C               **        COMPONENT                                 **
+C               ******************************************************
+C
+      IPART1='NEAR'
+      IPART2='NEIG'
+      IPART3='CLAS'
+      IPART4='PRIN'
+      IPART5='COMP'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4.AND.
+     1   IHARG(5).EQ.IPART5)THEN
+        IHV=IKNNPC
+        GOTO5160
+      ENDIF
+C
+CCCCC FOLLOWING SECTION ADDED JULY      2024
+C               ******************************************************
+C               **  PROBE NEAREST NEIGHBOR CLASSIFICATION DISTANCE  **
+C               ******************************************************
+C
+      IPART1='NEAR'
+      IPART2='NEIG'
+      IPART3='CLAS'
+      IPART4='DIST'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.
+     1   IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IHV=IKNNDI
+        GOTO5160
       ENDIF
 C
 CCCCC FOLLOWING SECTION ADDED FEBRUARY 2007

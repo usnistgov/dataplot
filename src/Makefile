@@ -34,6 +34,7 @@ OBJS = dp40.o dp36.o dp42.o dp19.o dp11.o dp38.o dp20.o dp21.o dp2.o dp3.o dp43.
 
 ifneq (,$(findstring READLINE,$(FEATURES)))
 OBJS += rldp.o
+CFLAGS += =Iusr/include/readline
 FFLAGS4 = -DHAVE_READLINE
 LDFLAGS += -lreadline
 endif
@@ -91,9 +92,9 @@ endif
 
 ifneq (,$(findstring X11,$(FEATURES)))
 OBJS += x11.o
+CFLAGS  += -I/usr/include/freetype2
 FFLAGS4 += -DHAVE_X11
 LDFLAGS += -lX11 -lXft
-CFLAGS += -I/usr/include/freetype2
 endif
 
 ifneq (,$(findstring XCLIP,$(FEATURES)))

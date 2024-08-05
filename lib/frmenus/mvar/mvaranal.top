@@ -21,11 +21,10 @@ Create a Matrix (from list of variables) <xemf: ~math\matr_cre.men>
 
 Graphical Technqiues         <~mvar\multplot.top>
 Quantitative Techniques
-   Discussion                <~mvar\discstat.top>
    2 Response Variables      <~mvar\tech2var.top>
    Inferences on Means and Covariances  <~mvar\inferenc.top>
-   Canonical Correlation     <~mvar\canncorr.top>
-   Discriminantion/Classification Analysis  <~mvar\discdisc.top>
+   Fisher Linear Classification Analysis  <xemf: ~mvar\fishdisc.men>
+   K Nearest Neighbors Classification Analysis  <xemf: ~mvar\knn.men>
    Matrix Arithmetic for Multivariate Analysis <~mvar\matrarit.top>
  
 Built-in data sets

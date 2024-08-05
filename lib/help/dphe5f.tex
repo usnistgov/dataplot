@@ -1,4 +1,4 @@
-68900.      (VERSION 2023.11)  total number of lines in file (including this line)
+68900.      (VERSION 2024.06)  total number of lines in file (including this line)
  4.                          number of     sections below
   100.    P                  first line number of P section
 22600.    Q                  first line number of Q section
@@ -26478,7 +26478,7 @@ Note:
            is optional.
 
 Default:
-    FIBONACCI
+    FIBONACCI CONGRUENTIAL
  
 Synonyms:
     None
@@ -26490,21 +26490,29 @@ Related Commands:
     RUNS TEST          = Generate a runs test.
  
 Reference:
-    "Applied Statistics Algorithms", P. Griffiths and I. D. Hill,
-    Ellis Horwood Limited, 1985.
+    P. Griffiths and I. D. Hill (1985), "Applied Statistics
+    Algorithms", Ellis Horwood Limited,
  
-    "Numerical Analysis for Statistics", John Monohan,
-    Oxford University Press, 2000.
+    John Monohan (2000), "Numerical Analysis for Statistics",
+    Oxford University Press.
  
-    "Combined Multiple Recursive Random Number Generators",
-    Pierre L'Ecuyer, Operations Research 44, 1996, pp. 816-822.
+    Pierre L'Ecuyer (1996), "Combined Multiple Recursive Random Number
+    Generators", Operations Research 44, pp. 816-822.
 
-    M. Luscher, Computer Physics Communications, 79 (1994) 100.
+    M. Luscher (1994), Computer Physics Communications, 79, 100.
 
-    F. James, Computer Physics Communications, 79 (1994) 111.
+    F. James (1994), Computer Physics Communications, 79, 111.
 
-    "Numerical Methods and Software", David Kahaner, Cleve Moler,
-    and Stephen Nash, Prentice-Hall, 1989.
+    David Kahaner, Cleve Moler, and Stephen Nash (1989), "Numerical
+    Methods and Software", Prentice-Hall.
+
+    T. G. Lewis and W. H. Payne (1973), "Generalize Feedback Shift
+    Register Pseudorandom Numbers", Journal of the ACM, Vol. 20,
+    pp. 456-468.
+
+    M. Fushimi and S. Tezuka (1983), "The K-Distribution of Generalized
+    Feedback Shift Register Pseudorandom Numbers", Communications of
+    the ACM, Vol. 26, No. 7, pp. 516-523.
 
 Applications:
     Random number generation
@@ -26515,6 +26523,8 @@ Implementation Date:
             generators
     2003/10: Added support for the Fibonnaci-Congruential and
              Mersenne twister random number generators
+    2018/05: Changed the default generator from FIBONACCI to
+             FIBONACCI CONGRUENTIAL
  
 Program:
     title case asis
@@ -30766,9 +30776,9 @@ Description:
     to gain.  However, if your data file is large (say more than 500
     lines) and formatted, then the time for I/O can be drastically
     reduced by making use of such format information.  Any
-    FORTRAN-like format must contain only F (floating-point), E
-    (exponential), and X (blanks) specifications.  I (integer), D
-    (double-precision), H (hollerith), etc.  specifications are not
+    FORTRAN-like format must contain only F (floating-point), E (or D)
+    (exponential), and X (blanks) specifications.  I (integer),
+    H (hollerith), A (character)  etc.  specifications are not
     permitted.  The restriction against I format is no restriction at
     all.  Simply use the corresponding F format (e.g., I2 becomes
     F2.0, I8 becomes F8.0).
@@ -30787,23 +30797,71 @@ Examples:
     READ CALIB.DAT X Y Z
  
 Note:
+    If you are not familiar with Fortran formats, these are the 
+    basic constructs supported for the Dataplot SET READ FORMAT.
+
+       1. The X format specifies blank spaces, so 18X means to
+          skip 18 columns.
+
+       2. The F format is used to read real numbers.  So 3F12.2
+          specifies that the width of the field is 12 columns and there
+          are 2 digits to the right of the decimal point and this
+          format will be repeated for 3 numbers.
+
+       3. The E  (or D) format is used to read real numbers in
+          exponential notation.  That is, the numbers look like
+
+                0.7575006E+00
+               -0.9003274E+00
+                0.2525207E+01
+
+           So 3E15.7 specifies that the width of the field is 15 columns
+           and there are 7 digits to the right of the decimal point and
+           this format will be repeated 3 times.
+
+    The E, F and X specifications may be repeated as many times as
+    needed.  There should be no spaces in the string given for the
+    SET READ FORMAT.
+
+Note:
+    Fortran formats expect the data to be aligned by the decimal
+    point.  That is,
+
+          2.34   4.16
+          5.81   9.22
+
+    Spreadsheets typically either left or right justify the entire field
+    when exporting to an ASCII file so that the decimal points are not
+    aligned.  If you have a large file that is not aligned by the
+    decimal point and you anticipate needing to read the file frequently,
+    it may be worthwhile to read the file once in free-format and save it
+    using a SET WRITE FORMAT to have a version of the file that is
+    aligned on the decimal point.  Then in subsequent reading of the
+    file, you can use the SET READ FORMAT with the version of the file
+    that is aligned on the decimal point.
+
+Note:
+     Dataplot does no error checking on the specified format string.
+     An improperly specified format will either result in an error on
+     the READ or generated unexpected results.
+
+Note:
     Support was added for reading Fortran unformatted data files.
-    This was done primarily for sites that have created "mega" size
-    versions of DATAPLOT where the time entailed in reading large
-    data files becomes important.  For standard size DATAPLOT
-    (typically a maximum of 10,000 rows with 10 columns for 100,000
-    data points total), the use of the SET READ FORMAT command
-    provides adequate performance.  However, the unformatted read
-    capability is available regardless of the workspace size.  The
-    advantage of unformatted reads is that the data files are much
+    This was done primarily  to accommodate reading very large
+    data files.  Note that in most cases using a SET READ FORMAT
+    will provide sufficient performance.  However, there may be cases
+    where very large data sets that are read frequently may benefit
+    from creating an unformatted version of the file.
+
+    The advantage of unformatted reads is that the data files are much
     smaller (typically by a factor of 10 or more) and reading the
-    data is significantly faster (e.g., reading 10,000 rows of data is
+    data is significantly faster (e.g., even reading large data files
     almost instantaneous).  The disadvantage is that unformatted
-    files are binary, and thus cannot be modified or viewed with a
+    files are binary and thus cannot be modified or viewed with a
     standard text editor.  Also, Fortran unformatted files are NOT
     transportable across different computer systems.
 
-    An unformatted read is accomplished by entering the command:
+    An unformatted read is performed by entering the command:
 
        SET READ FORMAT UNFORMATTED
 
@@ -30828,12 +30886,11 @@ Note:
           SET READ FORMAT COLUMNWISE (or UNFORMATTEDCOLUMNWISE)
 
     Unformatted reading is supported only for variables or matrices
-    (i.e., not for parameters or strings).  Also, it only applies
-    when reading from a file.  The limits for the maximum number of
-    rows and columns for a matrix still apply (500 rows and 100
-    columns on most systems).  When reading a matrix, the number of
-    columns must be specified via the SET UNFORMATTED COLUMNS
-    command.  For example,
+    (i.e., not for parameters, strings or character data).  Also, it
+    only applies when reading from a file.  The limits for the maximum
+    number of rows and columns for a matrix still apply.  When reading a
+    matrix, the number of columns must be specified via the SET
+    UNFORMATTED COLUMNS command.  For example,
 
           SET READ FORMAT UNFORMATTED
           SET UNFORMATTED COLUMNS 25
@@ -30886,13 +30943,10 @@ Implementation Date:
     1988/03 (support for reading unformatted Fortran files added 1995/04)
  
 Program:
-    SET READ FORMAT 2F10.1
-    READ X Y
-    21.0      110.7
-    31.2      120.6
-    55.4      100.2
-    END OF DATA
-    WRITE X Y
+    SKIP 25
+    SET READ FORMAT 3F7.0
+    READ ELLIOTTR.DAT RED ROWID COLID
+    SET READ FORMAT
  
 -----READ FUNCTION--------------------------------------------------
  
@@ -43334,7 +43388,7 @@ Program:
     # Purpose: Generate a sequence, square it, and plot it
     # Date: 11/4/19
     #
-    # -----start point-----
+    #  --start point--
     #
     x=seq(1,20,length.out=20)
     y=x^2
@@ -44425,60 +44479,6 @@ Program:
     PLOT YIELD
  
 -------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

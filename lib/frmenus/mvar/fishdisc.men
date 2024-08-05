@@ -1,43 +1,60 @@
-This is file fishdesc.men--Fisher Discriminant Analysis
+This is file fishdesc.men--Fisher Linear Discriminant Analysis
  
 --------------------
-1. Fisher Discriminant Analysis
-2. Macro
+1. Fisher Linear Discriminant Analysis
+2. FISHER DISCRIMINANT PLOT X1 .... XK  TAG
 3.
-4. This macro generates a plot of the first
-5. discriminant against the second discriminant.
-6. Each group in the original data is plotted
-7. with a separate character symbol (1, 2, 3, ...
-8. by default).  The discriminant functions are
-9. saved in the  matrix EVECT which can be used in further
-10. analyses (e.g., to classify new points).
-11. 
-12. List of Response Variables:
-13. @CE 1 0 1 50 ? gui-variable
-14. Group ID Variable:
-14. @CE 2 0 42 50 ? gui-variable
-15.
-16. Character Types:
-17. @CE 3 0 1 50 gui-char
-18. Character Fill:
-19. @CE 4 0 1 50 gui-ooff
+4. This menu plots the first linear discriminant
+5. against the second linear discrimination.
+6. 
+7. List of Response Variables:
+8. @CE 1 0 1 50 ? gui-variable
+9. Group ID Variable:
+9. @CE 2 0 42 50 ? gui-variable
+10.
+11. Number of Discriminants to Use (optional):
+11. @CE 3 0 42 50 ?
+12. Cut-Off Value for Eigenvalues (optional):
+12. @CE 4 0 42 50 ?
+13.
+14. Character Types:
+15. @CE 5 0 1 50 gui-char
+16. Character Fill:
+17. @CE 6 0 1 50 gui-ooff
+18. Character Color:
+19. @CE 7 0 1 50 gui-colo
 20.
-21. Subset/Except/For Specification: 
-22. @CE 5 0 1 50 *
-23.
+21. Title:
+21. @CE 8 0 15 50 *
+22. Left Axis Label:
+22. @CE 9 0 15 50 *
+23. Bottom Axis Label:
+23. @CE 10 0 15 50 *
 24.
-25. Run the Fisher Discriminant Analysis?:
+25. Subset/Except/For Specification: 
+26. @CE 11 0 1 50 *
+27.
+28.
+29. Perform the Fisher Discriminant Analysis?:
 --------------------
 GR FE
-DELETE ZZZZX
-WRITE ZZZZJUNK.DAT _1 _5
-SKIP 0
-READ MATRIX ZZZZJUNK.DAT ZZZZX
-LET ZTAG = _2 _5
-RETAIN ZTAG _5
-CHARACTER _3
-CHARACTER FILL _4
-CALL FISHDISC.DP
+@IF 3 0 SET FISHER NUMBER OF DISCRIMINANTS _3
+@IF 4 0 SET FISHER DISCRIMINANT EIGENVALUE EPSILON _4
+LINE SAVE
+CHARACTER SAVE
+LINE BLANK ALL
+CHARACTER _5
+CHARACTER FILL _5
+CHARACTER FILL _6
+CHARACTER COLOR _7
+TITLE _8
+Y1LABEL _9
+X1LABEL _10
+LET NCLASSZ = SIZE _2 _11 SUBSET _2 = 0
+FISHER DISCRIMINANT PLOT _1 _2 _11
+LINE RESTORE
+CHARACTER RESTORE
+IF NCLASSZ > 0; LIST dpst5f.dat; END OF IF
 --------------------
-WEB HELP VARIANCE-COVARIANCE MATRIX
+WEB HELP FISHER DISCRIMINANT PLOT
 --------------------

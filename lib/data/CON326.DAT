@@ -1,0 +1,57 @@
+This is Dataplot data file       CON326.DAT
+This data is used to test the Jonckheere-Terpstra test.
+This test is analogous to the Kruskal-Wallis test, but
+assumes their is an order to the treatment levels.
+
+    JONCKHEERE-TERPSTRA TEST Y X
+    RANK CORRELATION INDEPENDENCE TEST
+
+Source--Conover (1991), "Practical Nonparameteric Statistics",
+        Third Edition, Wiley, pp. 326.
+
+Number of Observations    = 32
+Number of Variables       = 2
+Order of Variables--
+   1. Y    = Distance (inches) where image becomes fuzzy
+   2. X    = Age of patient
+To read this file into Dataplot-
+
+   SKIP 25
+   READ CON326.DAT  Y X
+
+
+
+      Y             X
+-------------------------------------
+     4.6            15
+     4.9            15
+     5.0            15
+     5.7            15
+     6.3            15
+     6.8            15
+     7.4            15
+     7.9            15
+     4.7            20
+     5.0            20
+     5.1            20
+     5.8            20
+     6.4            20
+     6.6            20
+     7.1            20
+     8.3            20
+     5.6            25
+     5.9            25
+     6.6            25
+     6.7            25
+     6.8            25
+     7.4            25
+     8.3            25
+     9.6            25
+     6.0            30
+     6.8            30
+     8.1            30
+     8.4            30
+     8.6            30
+     8.9            30
+     9.8            30
+    11.5            30
